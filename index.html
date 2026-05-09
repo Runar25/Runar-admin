@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RÚNAR | KNOWLEDGE SHRINE</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
+
+        body { 
+            background: #050505; 
+            color: #ffffff; /* Zesílený kontrast */
+            font-family: 'Cormorant Garamond', serif;
+            margin: 0;
+            padding: 40px 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .shrine { max-width: 800px; width: 100%; }
+
+        .header {
+            text-align: left;
+            border-bottom: 1px solid #333;
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+        }
+
+        .brand {
+            font-family: 'Cinzel', serif;
+            font-size: 0.8em;
+            letter-spacing: 4px;
+            color: #d4af37;
+            text-transform: uppercase;
+        }
+
+        h1 { color: #fff; font-size: 3em; font-weight: 400; margin: 10px 0; }
+        .seeker { color: #d4af37; font-style: italic; }
+
+        .section-label {
+            font-family: 'Cinzel', serif;
+            text-transform: uppercase;
+            font-size: 0.75em;
+            letter-spacing: 2px;
+            color: #888;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .card {
+            background: #0d0d0d;
+            border: 1px solid #222;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        input, textarea { 
+            width: 100%; 
+            padding: 12px 0; 
+            background: transparent; 
+            border: none; 
+            border-bottom: 1px solid #333;
+            color: #fff; 
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3em;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        textarea { border: 1px solid #222; padding: 10px; background: #080808; }
+        input:focus, textarea:focus { outline: none; border-color: #d4af37; }
+
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; 
+        }
+
+        .lang-box label {
+            font-family: 'Cinzel', serif;
+            font-size: 0.7em;
+            color: #d4af37;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        button { 
+            cursor: pointer; 
+            font-family: 'Cinzel', serif;
+            text-transform: uppercase;
+            transition: 0.3s;
+            background: transparent;
+            letter-spacing: 1px;
+        }
+
+        .btn-translate { color: #d4af37; border: 1px solid #d4af37; padding: 10px 20px; font-size: 0.8em; margin-top: 10px; }
+        .btn-translate:hover { background: #d4af37; color: #000; }
+
+        .btn-save { background: #d4af37; color: #000; border: none; width: 100%; padding: 20px; font-size: 1.1em; font-weight: 700; margin-top: 30px; }
+        .btn-save:hover { background: #fff; }
+
+        /* Styl pro nahrávání knih */
+        .file-input-wrapper {
+            margin-bottom: 20px;
+            border: 1px dashed #444;
+            padding: 15px;
+            text-align: center;
+            color: #888;
+        }
+        
+        .status { margin-top: 25px; text-align: center; color: #d4af37; font-size: 0.9em; text-transform: uppercase; }
+        ::placeholder { color: #444; }
+    </style>
+</head>
+<body>
+
+<div class="shrine">
+    <div class="header">
+        <div class="brand">Agndofa · Spiritual Guide</div>
+        <h1>Feed the Spirit, <span class="seeker">Rúnar</span></h1>
+    </div>
+
+    <span class="section-label">Scan Book or Manual Entry</span>
+    <div class="card">
+        <div class="file-input-wrapper">
+            <label for="book-scan" style="cursor:pointer;">📷 Click to Upload or Take a Photo of a Book Page</label>
+            <input type="file" id="book-scan" accept="image/*" style="display:none;" onchange="handleImageUpload(this)">
+        </div>
+        <input type="text" id="kb-title" placeholder="Internal Reference Title...">
+        <textarea id="source-text" style="height: 100px;" placeholder="Text from scan will appear here, or type manually..."></textarea>
+        <button class="btn-translate" onclick="invokeRunar()">Invoke Translation →</button>
+    </div>
+
+    <span class="section-label">Linguistic Echoes</span>
+    <div class="grid">
+        <div class="lang-box"><label>Icelandic</label><textarea id="text-is"></textarea></div>
+        <div class="lang-box"><label>English</label><textarea id="text-en"></textarea></div>
+        <div class="lang-box"><label>Czech</label><textarea id="text-cs"></textarea></div>
+    </div>
+
+    <button class="btn-save" onclick="saveToRúnar()">Commit to Memory</button>
+    <div id="status-msg" class="status">The shrine is silent...</div>
+</div>
+
+<script>
+    const SUPABASE_URL = 'https://pmitxjvkeovijreepror.supabase.co';
+    const SUPABASE_KEY = 'sb_secret_2W4Qp50gd0dl1VMFRJ6t4g_uz9h9p_p';
+    const GEMINI_KEY = 'AIzaSyCrblTdYWIHmdk3tPPsyeLHTqtNCbRqOU0';
+
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // Funkce pro zpracování fotky z telefonu/PC
+    async function handleImageUpload(input) {
+        if (!input.files || !input.files[0]) return;
+        document.getElementById('status-msg').innerText = "Rúnar is reading the sacred pages...";
+        
+        const file = input.files[0];
+        const reader = new FileReader();
+        
+        reader.onloadend = async () => {
+            const base64Data = reader.result.split(',')[1];
+            
+            const payload = {
+                contents: [{
+                    parts: [
+                        { text: "Extract all text from this image and provide it as a clean string. Do not add any comments." },
+                        { inline_data: { mime_type: file.type, data: base64Data } }
+                    ]
+                }]
+            };
+
+            try {
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                document.getElementById('source-text').value = data.candidates[0].content.parts[0].text;
+                document.getElementById('status-msg').innerText = "Text extracted successfully.";
+            } catch (e) {
+                document.getElementById('status-msg').innerText = "Rúnar could not see clearly. Try again.";
+            }
+        };
+        reader.readAsDataURL(file);
+    }
+
+    async function invokeRunar() {
+        const source = document.getElementById('source-text').value;
+        if(!source) return;
+        document.getElementById('status-msg').innerText = "Rúnar is traversing the realms...";
+
+        const prompt = `You are Rúnar, the spiritual voice of Agndofa. 
+        Translate this text into Icelandic, English, and Czech. 
+        Style: Spiritual, grounded, poetic. 
+        Return ONLY a JSON object: {"cs": "...", "en": "...", "is": "..."}
+        Text: "${source}"`;
+
+        try {
+            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_KEY}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+            });
+            const data = await res.json();
+            const responseText = data.candidates[0].content.parts[0].text.replace(/```json|```/g, "").trim();
+            const translations = JSON.parse(responseText);
+
+            document.getElementById('text-cs').value = translations.cs;
+            document.getElementById('text-en').value = translations.en;
+            document.getElementById('text-is').value = translations.is;
+            document.getElementById('status-msg').innerText = "The realms have spoken.";
+        } catch (e) {
+            document.getElementById('status-msg').innerText = "The ritual failed.";
+        }
+    }
+
+    async function saveToRúnar() {
+        const title = document.getElementById('kb-title').value;
+        const cs = document.getElementById('text-cs').value;
+        const en = document.getElementById('text-en').value;
+        const is = document.getElementById('text-is').value;
+
+        if(!cs || !en || !is) return;
+
+        const { error } = await supabaseClient
+            .from('knowledge_base')
+            .insert([{ 
+                title: title, 
+                category: 'wisdom',
+                content: cs,
+                content_cs: cs, 
+                content_en: en, 
+                content_is: is 
+            }]);
+
+        if (!error) {
+            document.getElementById('status-msg').innerText = "Wisdom committed to the void.";
+            document.getElementById('source-text').value = "";
+            document.getElementById('kb-title').value = "";
+        }
+    }
+</script>
+
+</body>
+</html>
