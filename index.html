@@ -240,27 +240,27 @@ textarea::placeholder{color:var(--dim);}
 <!-- ═══ TEACH ═══ -->
 <div class="pane on" id="pane-teach">
   <div class="card">
-    <div class="card-lbl">📖 SOURCE TEXT FROM BOOK</div>
-    <p class="note">Open the book, find the page about a rune, and paste or type the text here.</p>
+    <div class="card-lbl" id="teach-card1-lbl">📖 SOURCE TEXT FROM BOOK</div>
+    <p class="note" id="teach-card1-note">Open the book, find the page about a rune, and paste or type the text here.</p>
     <textarea id="src-text" rows="6" placeholder="Paste or type the book text here…" oninput="checkTeach()"></textarea>
   </div>
   <div class="card">
-    <div class="card-lbl">ᚠ WHICH RUNE IS THIS ABOUT?</div>
+    <div class="card-lbl" id="teach-card2-lbl">ᚠ WHICH RUNE IS THIS ABOUT?</div>
     <div class="rune-grid" id="teach-grid"></div>
     <div class="rune-info" id="teach-rune-info">No rune selected.</div>
-    <label class="flbl">SOURCE REFERENCE</label>
+    <label class="flbl" id="src-ref-lbl">SOURCE REFERENCE</label>
     <input class="txt" id="src-ref" type="text" placeholder="e.g. Agndofa Rune Guide, p.1">
   </div>
   <div class="card">
-    <div class="card-lbl">✦ LET RÚNAR INTERPRET</div>
-    <p class="note">Rúnar will read the source and rewrite it in his own voice — not a translation, his interpretation.</p>
+    <div class="card-lbl" id="teach-card3-lbl">✦ LET RÚNAR INTERPRET</div>
+    <p class="note" id="teach-card3-note">Rúnar will read the source and rewrite it in his own voice — not a translation, his interpretation.</p>
     <button class="btn" id="btn-invoke" onclick="invokeRunar()" disabled>↯ INVOKE RÚNAR</button>
     <div class="runar-box" id="teach-output">
-      <div class="runar-box-lbl">RÚNAR SPEAKS</div>
+      <div class="runar-box-lbl" id="teach-output-lbl">RÚNAR SPEAKS</div>
       <div class="runar-txt" id="teach-txt"></div>
     </div>
     <div class="status" id="st-invoke"></div>
-    <button class="btn-full" id="btn-commit" onclick="commitKnowledge()" disabled>COMMIT TO RÚNAR'S MEMORY</button>
+    <button class="btn-full" id="btn-commit" onclick="commitKnowledge()" disabled>COMMIT TO RÚNAR’S MEMORY</button>
     <div class="status" id="st-commit"></div>
   </div>
 </div>
@@ -268,8 +268,8 @@ textarea::placeholder{color:var(--dim);}
 <!-- ═══ CHARACTER ═══ -->
 <div class="pane" id="pane-char">
   <div class="card">
-    <div class="card-lbl">👤 RÚNAR'S IDENTITY</div>
-    <p class="note">This is who Rúnar is. Edit freely — changes take effect on the next invocation.</p>
+    <div class="card-lbl" id="char-card-lbl">👤 RÚNAR’S IDENTITY</div>
+    <p class="note" id="char-note">This is who Rúnar is. Edit freely — changes take effect on the next invocation.</p>
     <div class="char-section-lbl">WHO HE IS</div>
     <label class="flbl">IDENTITY & APPEARANCE</label>
     <textarea id="ch-identity" rows="4"></textarea>
@@ -291,24 +291,24 @@ textarea::placeholder{color:var(--dim);}
     <textarea id="ch-imagery" rows="3"></textarea>
     <div class="char-preview" id="char-preview"></div>
     <div class="btn-row">
-      <button class="btn-half sec" onclick="previewChar()">PREVIEW FULL PROMPT</button>
-      <button class="btn-half" onclick="saveChar()">SAVE CHARACTER</button>
+      <button class="btn-half sec" id="preview-btn" onclick="previewChar()">PREVIEW FULL PROMPT</button>
+      <button class="btn-half" id="save-char-btn" onclick="saveChar()">SAVE CHARACTER</button>
     </div>
     <div class="status" id="st-char"></div>
   </div>
   <div class="card">
-    <div class="card-lbl">🧪 TEST RÚNAR'S VOICE</div>
-    <p class="note">Type something and hear how Rúnar responds with the current character.</p>
+    <div class="card-lbl" id="test-card-lbl">🧪 TEST RÚNAR’S VOICE</div>
+    <p class="note" id="test-note">Type something and hear how Rúnar responds with the current character.</p>
     <textarea id="test-txt" rows="3" placeholder="e.g. I drew Fehu today and I feel stuck…"></textarea>
-    <button class="btn" onclick="testVoice()">TEST CURRENT CHARACTER</button>
+    <button class="btn" id="test-btn" onclick="testVoice()">TEST CURRENT CHARACTER</button>
     <div class="runar-box" id="test-output" style="margin-top:14px;">
-      <div class="runar-box-lbl">RÚNAR RESPONDS</div>
+      <div class="runar-box-lbl" id="test-output-lbl">RÚNAR RESPONDS</div>
       <div class="runar-txt" id="test-result"></div>
     </div>
     <div class="status" id="st-test"></div>
   </div>
   <div class="card">
-    <div class="card-lbl">📜 VERSION HISTORY</div>
+    <div class="card-lbl" id="version-card-lbl">📜 VERSION HISTORY</div>
     <div id="version-list"><div class="empty">Loading versions…</div></div>
   </div>
 </div>
@@ -316,28 +316,28 @@ textarea::placeholder{color:var(--dim);}
 <!-- ═══ READER ═══ -->
 <div class="pane" id="pane-reader">
   <div class="card" id="reader-setup">
-    <div class="card-lbl">✦ BEFORE WE BEGIN</div>
-    <p class="note">Only your name is required. Everything else helps Rúnar speak more personally.</p>
-    <label class="flbl">YOUR NAME OR PREFERRED NAME</label>
+    <div class="card-lbl" id="reader-card1-lbl">✦ BEFORE WE BEGIN</div>
+    <p class="note" id="reader-note">Only your name is required. Everything else helps Rúnar speak more personally.</p>
+    <label class="flbl" id="name-lbl">YOUR NAME OR PREFERRED NAME</label>
     <input class="txt" id="r-name" type="text" placeholder="How shall Rúnar address you?">
-    <label class="flbl">DATE OF BIRTH <span class="opt">(OPTIONAL)</span></label>
+    <label class="flbl" id="dob-lbl">DATE OF BIRTH <span class="opt">(OPTIONAL)</span></label>
     <div class="dob-row">
       <input class="num" id="r-day" type="number" placeholder="Day" min="1" max="31">
       <input class="num" id="r-month" type="number" placeholder="Month" min="1" max="12">
       <input class="num" id="r-year" type="number" placeholder="Year" min="1930" max="2010">
     </div>
-    <label class="flbl">AREA OF LIFE <span class="opt">(OPTIONAL)</span></label>
+    <label class="flbl" id="area-lbl">AREA OF LIFE <span class="opt">(OPTIONAL)</span></label>
     <div class="pills" id="area-pills"></div>
-    <label class="flbl">WHAT ARE YOU SEEKING? <span class="opt">(OPTIONAL)</span></label>
+    <label class="flbl" id="seek-lbl">WHAT ARE YOU SEEKING? <span class="opt">(OPTIONAL)</span></label>
     <div class="pills" id="seek-pills"></div>
-    <label class="flbl">SPECIFIC QUESTION <span class="opt">(OPTIONAL)</span></label>
+    <label class="flbl" id="q-lbl">SPECIFIC QUESTION <span class="opt">(OPTIONAL)</span></label>
     <input class="txt" id="r-question" type="text" placeholder="e.g. What is holding me back?">
-    <button class="btn-full" onclick="startReading()">BEGIN THE READING</button>
+    <button class="btn-full" id="begin-btn" onclick="startReading()">BEGIN THE READING</button>
     <div class="status" id="st-setup"></div>
   </div>
   <div class="card" id="reader-rune-card" style="display:none;">
-    <div class="card-lbl">ᚠ DRAW YOUR RUNE</div>
-    <p class="note">Close your eyes. Hold your question. Then choose the rune that calls to you.</p>
+    <div class="card-lbl" id="draw-lbl">ᚠ DRAW YOUR RUNE</div>
+    <p class="note" id="draw-note">Close your eyes. Hold your question. Then choose the rune that calls to you.</p>
     <div class="rune-grid" id="reader-grid"></div>
     <div class="rune-info" id="reader-rune-info"></div>
     <button class="btn-full" id="btn-speak" onclick="readRune()" disabled>LET RÚNAR SPEAK</button>
@@ -345,27 +345,27 @@ textarea::placeholder{color:var(--dim);}
   <div id="reader-output" style="display:none;">
     <div class="badge" id="reader-badge" style="display:none;">
       <div>
-        <div class="badge-meta-lbl" style="color:var(--gold);">YOUR LIFE RUNE</div>
+        <div class="badge-meta-lbl" id="life-rune-lbl" style="color:var(--gold);">YOUR LIFE RUNE</div>
         <div class="badge-name" id="badge-life-name"></div>
         <div style="font-size:2em;" id="badge-life-g"></div>
       </div>
       <div style="margin-left:auto;text-align:right;">
-        <div class="badge-meta-lbl" style="color:var(--blue);">DRAWN RUNE</div>
+        <div class="badge-meta-lbl" id="drawn-lbl" style="color:var(--blue);">DRAWN RUNE</div>
         <div class="badge-name" id="badge-drawn-name"></div>
         <div style="font-size:2em;" id="badge-drawn-g"></div>
       </div>
     </div>
     <div class="layer1">
-      <div class="layer1-lbl">✦ RÚNAR SPEAKS</div>
+      <div class="layer1-lbl" id="layer1-lbl">✦ RÚNAR SPEAKS</div>
       <div class="out-txt" id="out-short"></div>
     </div>
     <div class="layer2">
-      <div class="layer2-lbl">~ DEEPER REFLECTION</div>
+      <div class="layer2-lbl" id="layer2-lbl">~ DEEPER REFLECTION</div>
       <div class="out-txt" id="out-deep"></div>
     </div>
     <div class="btn-row">
-      <button class="btn-half" onclick="drawAnother()">DRAW ANOTHER RUNE</button>
-      <button class="btn-half sec" onclick="resetReader()">START OVER</button>
+      <button class="btn-half" id="draw-another-btn" onclick="drawAnother()">DRAW ANOTHER RUNE</button>
+      <button class="btn-half sec" id="start-over-btn" onclick="resetReader()">START OVER</button>
     </div>
   </div>
   <div class="status" id="st-reader"></div>
@@ -374,34 +374,173 @@ textarea::placeholder{color:var(--dim);}
 <!-- ═══ CORRECTIONS ═══ -->
 <div class="pane" id="pane-correct">
   <div class="card">
-    <div class="card-lbl">✎ WORD CORRECTIONS</div>
-    <p class="note">Teach Rúnar better words. Enter what he said and what he should say instead.</p>
-    <label class="flbl">WORD OR PHRASE RÚNAR USED</label>
+    <div class="card-lbl" id="corr-card-lbl">✎ WORD CORRECTIONS</div>
+    <p class="note" id="corr-note">Teach Rúnar better words. Enter what he said and what he should say instead.</p>
+    <label class="flbl" id="orig-lbl">WORD OR PHRASE RÚNAR USED</label>
     <input class="txt" id="corr-from" type="text" placeholder='"good luck" or "you will succeed"…'>
-    <label class="flbl">REPLACE WITH</label>
+    <label class="flbl" id="repl-lbl">REPLACE WITH</label>
     <input class="txt" id="corr-to" type="text" placeholder='"may the path open before you"…'>
-    <label class="flbl">CONTEXT <span class="opt">(OPTIONAL)</span></label>
+    <label class="flbl" id="ctx-lbl">CONTEXT <span class="opt">(OPTIONAL)</span></label>
     <input class="txt" id="corr-ctx" type="text" placeholder='e.g. "when speaking about Fehu"'>
-    <label class="flbl">APPLIES TO</label>
+    <label class="flbl" id="applies-lbl">APPLIES TO</label>
     <div class="pills" style="margin-top:6px;">
       <div class="pill on" id="scope-both" onclick="setScope('both')">Both languages</div>
       <div class="pill" id="scope-en" onclick="setScope('en')">English only</div>
       <div class="pill" id="scope-is" onclick="setScope('is')">Icelandic only</div>
     </div>
-    <button class="btn-full" onclick="saveCorrection()">SAVE CORRECTION</button>
+    <button class="btn-full" id="save-corr-btn" onclick="saveCorrection()">SAVE CORRECTION</button>
     <div class="status" id="st-corr"></div>
   </div>
   <div class="card">
-    <div class="card-lbl">📜 SAVED CORRECTIONS</div>
+    <div class="card-lbl" id="saved-corr-lbl">📜 SAVED CORRECTIONS</div>
     <div id="corr-list"><div class="empty">Loading…</div></div>
   </div>
 </div>
 
 </div><!-- .app -->
 <script>
+// UI text translations
+const UI_TEXT = {
+  en: {
+    brand: 'AGNDOFA · RÚNAR SYSTEM',
+    title: 'Knowledge Shrine',
+    sub: 'Teach Rúnar. Shape his voice. Feed his wisdom.',
+    tab_teach: 'TEACH RÚNAR',
+    tab_char: 'CHARACTER',
+    tab_reader: 'RÚNAR THE RUNE KEEPER',
+    tab_correct: 'WORD CORRECTIONS',
+    // Teach tab
+    teach_card1_lbl: '📖 SOURCE TEXT FROM BOOK',
+    teach_card1_note: 'Open the book, find the page about a rune, and paste or type the text here.',
+    teach_src_ph: 'Paste or type the book text here…',
+    teach_card2_lbl: 'ᚠ WHICH RUNE IS THIS ABOUT?',
+    rune_none: 'No rune selected.',
+    src_ref_lbl: 'SOURCE REFERENCE',
+    src_ref_ph: 'e.g. Agndofa Rune Guide, p.1',
+    teach_card3_lbl: '✦ LET RÚNAR INTERPRET',
+    teach_card3_note: 'Rúnar will read the source and rewrite it in his own voice — not a translation, his interpretation.',
+    invoke_btn: '↯ INVOKE RÚNAR',
+    runar_speaks: 'RÚNAR SPEAKS',
+    commit_btn: 'COMMIT TO RÚNAR\u2019S MEMORY',
+    // Reader tab
+    reader_card1_lbl: '✦ BEFORE WE BEGIN',
+    reader_note: 'Only your name is required. Everything else helps Rúnar speak more personally.',
+    name_lbl: 'YOUR NAME OR PREFERRED NAME',
+    name_ph: 'How shall Rúnar address you?',
+    dob_lbl: 'DATE OF BIRTH',
+    area_lbl: 'AREA OF LIFE',
+    seek_lbl: 'WHAT ARE YOU SEEKING?',
+    q_lbl: 'SPECIFIC QUESTION',
+    q_ph: 'e.g. What is holding me back?',
+    opt: '(OPTIONAL)',
+    begin_btn: 'BEGIN THE READING',
+    draw_lbl: 'ᚠ DRAW YOUR RUNE',
+    draw_note: 'Close your eyes. Hold your question. Then choose the rune that calls to you.',
+    speak_btn: 'LET RÚNAR SPEAK',
+    life_rune_lbl: 'YOUR LIFE RUNE',
+    drawn_lbl: 'DRAWN RUNE',
+    layer1_lbl: '✦ RÚNAR SPEAKS',
+    layer2_lbl: '~ DEEPER REFLECTION',
+    draw_another: 'DRAW ANOTHER RUNE',
+    start_over: 'START OVER',
+    // Corrections tab
+    corr_lbl: '✎ WORD CORRECTIONS',
+    corr_note: 'Teach Rúnar better words. Enter what he said and what he should say instead.',
+    orig_lbl: 'WORD OR PHRASE RÚNAR USED',
+    orig_ph: '"good luck" or "you will succeed"…',
+    repl_lbl: 'REPLACE WITH',
+    repl_ph: '"may the path open before you"…',
+    ctx_lbl: 'CONTEXT',
+    ctx_ph: 'e.g. "when speaking about Fehu"',
+    applies_lbl: 'APPLIES TO',
+    scope_both: 'Both languages',
+    scope_en: 'English only',
+    scope_is: 'Icelandic only',
+    save_corr: 'SAVE CORRECTION',
+    saved_corr_lbl: '📜 SAVED CORRECTIONS',
+    no_corr: 'No corrections yet.',
+    // Character tab
+    char_lbl: '👤 RÚNAR\u2019S IDENTITY',
+    char_note: 'This is who Rúnar is. Edit freely — changes take effect on the next invocation.',
+    test_lbl: '🧪 TEST RÚNAR\u2019S VOICE',
+    test_note: 'Type something and hear how Rúnar responds with the current character.',
+    test_btn: 'TEST CURRENT CHARACTER',
+    runar_responds: 'RÚNAR RESPONDS',
+    version_lbl: '📜 VERSION HISTORY',
+    preview_btn: 'PREVIEW FULL PROMPT',
+    save_char_btn: 'SAVE CHARACTER',
+  },
+  is: {
+    brand: 'AGNDOFA · RÚNAR KERFI',
+    title: 'Þekkingarskrínn',
+    sub: 'Kenndu Rúnari. Móta rödd hans. Fæða visku hans.',
+    tab_teach: 'KENNA RÚNARI',
+    tab_char: 'PERSÓNULEIKI',
+    tab_reader: 'RÚNAR RÚNAVÖRÐURINN',
+    tab_correct: 'ORÐALEIÐRÉTTINGAR',
+    teach_card1_lbl: '📖 TEXTI ÚR BÓK',
+    teach_card1_note: 'Opnaðu bókina, finndu síðuna um rúnina og límdu eða skrifaðu textann hér.',
+    teach_src_ph: 'Límdu eða skrifaðu texta hér…',
+    teach_card2_lbl: 'ᚠ UM HVAÐA RÚNU ER ÞETTA?',
+    rune_none: 'Engin rúna valin.',
+    src_ref_lbl: 'HEIMILD',
+    src_ref_ph: 'T.d. Agndofa Rúnaleiðbeiningar, bls. 1',
+    teach_card3_lbl: '✦ LÁTUM RÚNAR TÚLKA',
+    teach_card3_note: 'Rúnar les textann og endurskrifar hann með sinni eigin rödd — ekki þýðing, heldur túlkun hans.',
+    invoke_btn: '↯ KALLA FRAM RÚNAR',
+    runar_speaks: 'RÚNAR TALAR',
+    commit_btn: 'VISTA Í MINNI RÚNARS',
+    reader_card1_lbl: '✦ ÁÐUR EN VIÐ BYRJUM',
+    reader_note: 'Aðeins nafnið þitt er nauðsynlegt. Allt annað hjálpar Rúnari að tala persónulegra.',
+    name_lbl: 'NAFNIÐ ÞÍT EÐA GÆLUNAFN',
+    name_ph: 'Hvernig á Rúnar að kalla þig?',
+    dob_lbl: 'FÆÐINGARDAGUR',
+    area_lbl: 'SVIÐ LÍFSINS',
+    seek_lbl: 'HVAÐ ERTU AÐ LEITA AÐ?',
+    q_lbl: 'SÉRSTÖK SPURNING',
+    q_ph: 'T.d. Hvað heldur mér aftur?',
+    opt: '(VALKVÆTT)',
+    begin_btn: 'HEFJA LESTURINN',
+    draw_lbl: 'ᚠ DRAGÐU RÚNINA ÞÍNA',
+    draw_note: 'Lokaðu augunum um stund. Haltu spurningunni í huga. Veldu síðan rúnina sem kallar til þín.',
+    speak_btn: 'LÁTUM RÚNAR TALA',
+    life_rune_lbl: 'LÍFSTÍÐARRÚNAN ÞÍN',
+    drawn_lbl: 'DREGIN RÚNA',
+    layer1_lbl: '✦ RÚNAR TALAR',
+    layer2_lbl: '~ DÝPRI HUGLEIÐING',
+    draw_another: 'DRAGA AÐRA RÚNU',
+    start_over: 'BYRJA AFTUR',
+    corr_lbl: '✎ ORÐALEIÐRÉTTINGAR',
+    corr_note: 'Kenndu Rúnari betri orð. Skráðu orðið sem hann notaði og hvað hann ætti að segja í staðinn.',
+    orig_lbl: 'ORÐ EÐA SETNING SEM RÚNAR NOTAÐI',
+    orig_ph: '"gangi þér vel" eða "þú munt ná árangri"…',
+    repl_lbl: 'SKIPTA ÚT FYRIR',
+    repl_ph: '"megi leiðin opnast fyrir þér"…',
+    ctx_lbl: 'SAMHENGI',
+    ctx_ph: 'T.d. "þegar talað er um Fehu"',
+    applies_lbl: 'GILDIR FYR',
+    scope_both: 'Bæði tungumál',
+    scope_en: 'Aðeins enska',
+    scope_is: 'Aðeins íslenska',
+    save_corr: 'VISTA LEIÐRÉTTINGU',
+    saved_corr_lbl: '📜 VISTAÐAR LEIÐRÉTTINGAR',
+    no_corr: 'Engar leiðréttingar enn.',
+    char_lbl: '👤 PERSÓNULEIKI RÚNARS',
+    char_note: 'Þetta er hver Rúnar er. Breyttu frjálslega — breytingar taka gildi við næstu köllun.',
+    test_lbl: '🧪 PRÓFAÐU RÖDD RÚNARS',
+    test_note: 'Skrifaðu eitthvað og heyrðu hvernig Rúnar svarar með núverandi persónuleika.',
+    test_btn: 'PRÓFA NÚVERANDI PERSÓNULEIKA',
+    runar_responds: 'RÚNAR SVARAR',
+    version_lbl: '📜 ÚTGÁFUSAGA',
+    preview_btn: 'FORSKOÐUN',
+    save_char_btn: 'VISTA PERSÓNULEIKA',
+  }
+};
+
+
 // ═══ CONFIG ═══════════════════════════════════════════
 const SB_URL = 'https://pmitxjvkeovijreepror.supabase.co';
-const SB_KEY = 'sb_secret_2W4Qp50gd0dl1VMFRJ6t4g_uz9h9p_p';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBtaXR4anZrZW92aWpyZWVwcm9yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyNzE0OTIsImV4cCI6MjA5Mzg0NzQ5Mn0.-qk3vHqZGkj9yplSlK1PUKbypxDeXOtllp49JLICGyw';
 const PROXY  = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/claude-proxy';
 const sb = supabase.createClient(SB_URL, SB_KEY);
 
@@ -502,6 +641,7 @@ const SEEKS = {
 
 // ═══ INIT ═════════════════════════════════════════════
 window.addEventListener('DOMContentLoaded', async () => {
+  updateUIText();
   buildGrid('teach-grid', false);
   buildPills();
   await loadChar();
@@ -521,10 +661,95 @@ function showTab(name) {
 }
 
 // ═══ LANGUAGE ═════════════════════════════════════════
+function t(key) { return (UI_TEXT[lang] && UI_TEXT[lang][key]) || UI_TEXT.en[key] || key; }
+
+function updateUIText() {
+  const u = UI_TEXT[lang];
+  // Header
+  setText('ui-brand', u.brand);
+  setText('ui-title', u.title);
+  setText('ui-sub', u.sub);
+  // Tabs
+  setText('tab-teach-btn', u.tab_teach);
+  setText('tab-char-btn', u.tab_char);
+  setText('tab-reader-btn', u.tab_reader);
+  setText('tab-correct-btn', u.tab_correct);
+  // Teach
+  setCardLbl('teach-card1-lbl', u.teach_card1_lbl);
+  setNote('teach-card1-note', u.teach_card1_note);
+  setPH('src-text', u.teach_src_ph);
+  setCardLbl('teach-card2-lbl', u.teach_card2_lbl);
+  setText('teach-rune-info', u.rune_none);
+  setFlbl('src-ref-lbl', u.src_ref_lbl);
+  setPH('src-ref', u.src_ref_ph);
+  setCardLbl('teach-card3-lbl', u.teach_card3_lbl);
+  setNote('teach-card3-note', u.teach_card3_note);
+  setText('btn-invoke', u.invoke_btn);
+  setText('teach-output-lbl', u.runar_speaks);
+  setText('btn-commit', u.commit_btn);
+  // Reader
+  setCardLbl('reader-card1-lbl', u.reader_card1_lbl);
+  setNote('reader-note', u.reader_note);
+  setFlbl('name-lbl', u.name_lbl);
+  setPH('r-name', u.name_ph);
+  setFlblOpt('dob-lbl', u.dob_lbl, u.opt);
+  setFlblOpt('area-lbl', u.area_lbl, u.opt);
+  setFlblOpt('seek-lbl', u.seek_lbl, u.opt);
+  setFlblOpt('q-lbl', u.q_lbl, u.opt);
+  setPH('r-question', u.q_ph);
+  setText('begin-btn', u.begin_btn);
+  setCardLbl('draw-lbl', u.draw_lbl);
+  setNote('draw-note', u.draw_note);
+  setText('btn-speak', u.speak_btn);
+  setText('life-rune-lbl', u.life_rune_lbl);
+  setText('drawn-lbl', u.drawn_lbl);
+  setText('layer1-lbl', u.layer1_lbl);
+  setText('layer2-lbl', u.layer2_lbl);
+  setText('draw-another-btn', u.draw_another);
+  setText('start-over-btn', u.start_over);
+  // Corrections
+  setCardLbl('corr-card-lbl', u.corr_lbl);
+  setNote('corr-note', u.corr_note);
+  setFlbl('orig-lbl', u.orig_lbl);
+  setPH('corr-from', u.orig_ph);
+  setFlbl('repl-lbl', u.repl_lbl);
+  setPH('corr-to', u.repl_ph);
+  setFlblOpt('ctx-lbl', u.ctx_lbl, u.opt);
+  setPH('corr-ctx', u.ctx_ph);
+  setFlbl('applies-lbl', u.applies_lbl);
+  setText('scope-both', u.scope_both);
+  setText('scope-en', u.scope_en);
+  setText('scope-is', u.scope_is);
+  setText('save-corr-btn', u.save_corr);
+  setCardLbl('saved-corr-lbl', u.saved_corr_lbl);
+  // Character
+  setCardLbl('char-card-lbl', u.char_lbl);
+  setNote('char-note', u.char_note);
+  setCardLbl('test-card-lbl', u.test_lbl);
+  setNote('test-note', u.test_note);
+  setText('test-btn', u.test_btn);
+  setText('test-output-lbl', u.runar_responds);
+  setCardLbl('version-card-lbl', u.version_lbl);
+  setText('preview-btn', u.preview_btn);
+  setText('save-char-btn', u.save_char_btn);
+}
+
+function setText(id, val) { const el=document.getElementById(id); if(el&&val) el.textContent=val; }
+function setPH(id, val) { const el=document.getElementById(id); if(el&&val) el.placeholder=val; }
+function setCardLbl(id, val) { const el=document.getElementById(id); if(el&&val) el.textContent=val; }
+function setNote(id, val) { const el=document.getElementById(id); if(el&&val) el.textContent=val; }
+function setFlbl(id, val) { const el=document.getElementById(id); if(el&&val) el.firstChild.textContent=val+' '; }
+function setFlblOpt(id, val, opt) {
+  const el=document.getElementById(id);
+  if(!el) return;
+  el.innerHTML = val + ' <span class="opt">'+opt+'</span>';
+}
+
 function setLang(l) {
   lang = l;
   document.getElementById('btn-en').classList.toggle('active', l === 'en');
   document.getElementById('btn-is').classList.toggle('active', l === 'is');
+  updateUIText();
   buildGrid('teach-grid', false);
   buildPills();
   if(document.getElementById('reader-rune-card').style.display !== 'none') {
