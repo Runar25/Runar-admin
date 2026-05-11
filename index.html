@@ -8,920 +8,908 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* Agndofa Sacred Colour Palette */
-  --bg:#0a0c12;           /* deep obsidian blue-black */
-  --bg2:#0e1018;
-  --card:#12161f;         /* slightly lighter obsidian */
-  --card2:#171b26;
-  --border:#2E4A70;       /* Rune Cloth Blue border */
-  --border2:#3a5a85;
-  --gold:#D6A85C;         /* Ember Gold */
-  --gold2:rgba(214,168,92,0.12);
-  --gold3:rgba(214,168,92,0.06);
-  --white:#F2F5F7;        /* Frost White */
-  --muted:#8ba5c0;        /* muted blue-white */
-  --dim:#3a4a60;
-  --blue:#5BB8FF;         /* Whisper Blue */
-  --teal:#7ED9B5;         /* Aurora Green */
-  --wood:#7D5838;         /* Hearthwood */
+  --bg:#0a0c12;--card:#12161f;--card2:#171b26;
+  --border:#2E4A70;--border2:#3a5a85;
+  --gold:#D6A85C;--gold2:rgba(214,168,92,0.12);
+  --white:#F2F5F7;--muted:#8ba5c0;--dim:#3a4a60;
+  --blue:#5BB8FF;--teal:#7ED9B5;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{
-  background:var(--bg);
-  color:var(--white);
+  background:var(--bg);color:var(--white);
   font-family:'Cormorant Garamond',serif;
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
+  min-height:100vh;display:flex;justify-content:center;
   padding:40px 16px 80px;
 }
 body::before{
-  content:'';
-  position:fixed;inset:0;
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   background:
-    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(46,74,112,0.3) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 30% at 90% 90%, rgba(126,217,181,0.05) 0%, transparent 50%);
-  pointer-events:none;z-index:0;
+    radial-gradient(ellipse 80% 40% at 50% 0%,rgba(46,74,112,0.3) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 30% at 90% 90%,rgba(126,217,181,0.05) 0%,transparent 50%);
 }
-.wrap{position:relative;z-index:1;}
-.wrap{max-width:720px;width:100%;}
+.app{position:relative;z-index:1;max-width:760px;width:100%;}
 
 /* HEADER */
-.hdr{border-bottom:1px solid var(--border);padding-bottom:24px;margin-bottom:32px;}
-.brand{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:4px;color:var(--gold);text-shadow:0 0 20px rgba(214,168,92,0.3);}
+.hdr{border-bottom:1px solid var(--border);padding-bottom:24px;margin-bottom:0;}
+.hdr-inner{display:flex;justify-content:space-between;align-items:flex-start;}
+.brand{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:4px;color:var(--gold);}
 h1{font-size:2.2em;font-weight:400;margin:6px 0 4px;}
 .sub{color:var(--muted);font-style:italic;}
+.lang-toggle{display:flex;border:1px solid var(--border);margin-top:8px;overflow:hidden;}
+.lang-btn{
+  padding:8px 18px;font-family:'Cinzel',serif;font-size:0.7em;
+  letter-spacing:2px;border:none;cursor:pointer;transition:all 0.2s;
+}
+.lang-btn.active{background:var(--gold);color:#000;}
+.lang-btn:not(.active){background:transparent;color:var(--muted);}
 
 /* TABS */
-.tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:32px;}
-.tab-btn{font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:2px;color:var(--muted);padding:12px 24px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:transparent;transition:all 0.25s;}
-.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold);text-shadow:0 0 12px rgba(214,168,92,0.4);}
-.tab-pane{display:none;}
-.tab-pane.active{display:block;}
+.tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:28px;overflow-x:auto;}
+.tab{
+  font-family:'Cinzel',serif;font-size:0.68em;letter-spacing:1.5px;
+  color:var(--muted);padding:14px 20px;cursor:pointer;
+  border:none;border-bottom:2px solid transparent;
+  background:transparent;white-space:nowrap;transition:all 0.25s;flex-shrink:0;
+}
+.tab:hover{color:var(--white);}
+.tab.on{color:var(--gold);border-bottom-color:var(--gold);}
 
-/* CARDS */
-.card{background:var(--card);border:1px solid var(--border);padding:24px;margin-bottom:20px;box-shadow:0 2px 20px rgba(0,0,0,0.4);}
-.card-title{font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:2px;color:var(--gold);margin-bottom:16px;}
+/* PANES */
+.pane{display:none;}.pane.on{display:block;}
+
+/* CARD */
+.card{background:var(--card);border:1px solid var(--border);padding:24px;margin-bottom:20px;}
+.card-lbl{font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:2px;color:var(--gold);margin-bottom:16px;}
 
 /* FORM */
-.field-lbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--gold);display:block;margin-top:18px;margin-bottom:6px;}
-.field-lbl:first-child{margin-top:0;}
-textarea{width:100%;background:#0a0e16;border:1px solid var(--border);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.1em;line-height:1.8;padding:14px;resize:vertical;}
+.flbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--gold);display:block;margin:16px 0 6px;}
+.flbl:first-child{margin-top:0;}
+.opt{opacity:0.45;font-size:0.85em;}
+textarea{
+  width:100%;background:#080e18;border:1px solid var(--border);
+  color:var(--white);font-family:'Cormorant Garamond',serif;
+  font-size:1.05em;line-height:1.8;padding:14px;resize:vertical;
+}
 textarea:focus{outline:none;border-color:var(--gold);}
-textarea::placeholder{color:#4a6080;}
-input[type=text]{width:100%;background:transparent;border:none;border-bottom:1px solid var(--border2);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.1em;padding:10px 0;}
-input[type=text]:focus{outline:none;border-bottom-color:var(--gold);}
-input[type=text]::placeholder{color:#4a6080;}
+textarea::placeholder{color:var(--dim);}
+.txt{
+  width:100%;background:transparent;border:none;
+  border-bottom:1px solid var(--border2);color:var(--white);
+  font-family:'Cormorant Garamond',serif;font-size:1.1em;padding:10px 0;
+}
+.txt:focus{outline:none;border-bottom-color:var(--gold);}
+.txt::placeholder{color:var(--dim);}
+.num{
+  background:#080e18;border:1px solid var(--border);color:var(--white);
+  font-family:'Cormorant Garamond',serif;font-size:1.05em;
+  padding:10px 12px;width:100%;outline:none;
+}
+.num:focus{border-color:var(--gold);}
+.num::placeholder{color:var(--dim);}
+.dob-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:4px;}
 
 /* RUNE GRID */
 .rune-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin-bottom:12px;}
-.rb{aspect-ratio:1;background:#0d1220;border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all 0.18s;gap:2px;}
-.rb:hover{background:rgba(91,184,255,0.08);border-color:var(--blue);} .rb.sel{background:rgba(91,184,255,0.12);border-color:var(--blue);box-shadow:0 0 10px rgba(91,184,255,0.15);}
-.rb-g{font-size:1.4em;color:var(--gold);} .rb.sel .rb-g{color:var(--blue);} .rb:hover .rb-g{color:var(--white);}
-.rb-n{font-family:'Cinzel',serif;font-size:0.38em;letter-spacing:0.5px;color:#6a8aaa;}
-.rb.sel .rb-n{color:var(--gold);} .rb:hover .rb-n{color:var(--white);}
-#rune-info{font-size:0.95em;color:#8bb8d8;font-style:italic;min-height:18px;margin-bottom:4px;margin-top:8px;}
+.rb{
+  aspect-ratio:1;background:#0d1220;border:1px solid var(--border);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;transition:all 0.18s;gap:2px;
+}
+.rb:hover{background:rgba(91,184,255,0.08);border-color:var(--blue);}
+.rb.on{background:rgba(91,184,255,0.12);border-color:var(--blue);box-shadow:0 0 10px rgba(91,184,255,0.15);}
+.rb-g{font-size:1.4em;color:var(--gold);}
+.rb.on .rb-g{color:var(--blue);}
+.rb-n{font-family:'Cinzel',serif;font-size:0.34em;letter-spacing:0.3px;color:var(--muted);margin-top:1px;}
+.rb.on .rb-n{color:var(--blue);}
+.rune-info{font-size:0.9em;color:#8bb8d8;font-style:italic;min-height:18px;margin:6px 0;}
 
-/* RUNAR OUTPUT */
-.runar-box{background:#0a0e18;border:1px solid var(--blue);padding:20px;margin-top:16px;display:none;border-left:3px solid var(--blue);}
-.runar-label{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--blue);margin-bottom:10px;}
-.runar-text{font-size:1.1em;line-height:1.9;font-style:italic;color:var(--white);}
-.stream-cursor{display:inline-block;width:2px;height:14px;background:var(--gold);margin-left:2px;animation:blink 0.9s step-end infinite;vertical-align:middle;}
+/* PILLS */
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
+.pill{
+  padding:6px 14px;border:1px solid var(--border);background:transparent;
+  font-family:'Cormorant Garamond',serif;font-size:0.95em;font-style:italic;
+  color:var(--muted);cursor:pointer;transition:all 0.2s;
+}
+.pill:hover{border-color:var(--border2);color:var(--white);}
+.pill.on{border-color:var(--gold);color:var(--gold);background:var(--gold2);}
+.pill.blue.on{border-color:var(--blue);color:var(--blue);background:rgba(91,184,255,0.08);}
+
+/* RUNAR OUTPUT BOX */
+.runar-box{
+  background:#0a0e18;border-left:3px solid var(--blue);
+  padding:20px;margin-top:14px;display:none;
+}
+.runar-box-lbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--blue);margin-bottom:10px;}
+.runar-txt{font-size:1.05em;line-height:1.9;font-style:italic;color:var(--white);}
+.stream-cur{display:inline-block;width:2px;height:14px;background:var(--gold);margin-left:2px;animation:blink 0.9s step-end infinite;vertical-align:middle;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 
-/* CHARACTER EDITOR */
-.char-section{margin-bottom:28px;}
-.char-section-title{font-family:'Cinzel',serif;font-size:0.75em;letter-spacing:2px;color:var(--teal);border-bottom:1px solid var(--border);padding-bottom:10px;margin-bottom:16px;}
-.char-note{font-size:0.95em;color:#8baabb;font-style:italic;line-height:1.7;margin-bottom:12px;}
-.char-preview{background:#0a0e16;border-left:2px solid var(--gold);padding:14px 16px;margin-top:12px;font-size:0.9em;line-height:1.75;color:#aac4d8;font-style:italic;display:none;white-space:pre-wrap;}
+/* READER OUTPUT */
+.badge{
+  display:flex;align-items:center;gap:16px;
+  padding:14px 18px;background:#0d1220;border:1px solid var(--border);margin-bottom:14px;
+}
+.badge-glyph{font-size:2.2em;}
+.badge-meta-lbl{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;margin-bottom:2px;}
+.badge-name{font-size:1em;}
+.layer1{background:#0a0e18;border-left:3px solid var(--gold);padding:18px 22px;margin-bottom:10px;}
+.layer1-lbl{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--gold);margin-bottom:8px;}
+.layer2{background:#0d1018;border-left:3px solid var(--blue);padding:18px 22px;margin-bottom:18px;}
+.layer2-lbl{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--blue);margin-bottom:8px;}
+.out-txt{font-size:1.05em;line-height:1.9;font-style:italic;color:rgba(242,245,247,0.88);}
 
-/* VERSION HISTORY */
-.version-list{display:flex;flex-direction:column;gap:8px;}
-.version-item{background:var(--card2);border:1px solid var(--border);padding:12px 16px;cursor:pointer;transition:all 0.2s;display:flex;justify-content:space-between;align-items:center;}
-.version-item:hover{border-color:var(--gold);}
-.vi-date{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:1px;color:#6a8aaa;}
-.vi-label{font-size:0.95em;color:var(--white);font-style:italic;}
-.vi-active{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1px;color:var(--gold);border:1px solid var(--gold);padding:2px 8px;}
+/* CORRECTIONS */
+.corr-item{
+  background:var(--card2);border:1px solid var(--border);
+  padding:12px 16px;margin-bottom:8px;display:flex;
+  justify-content:space-between;align-items:flex-start;gap:12px;
+}
+.corr-from{font-size:0.9em;color:#e07070;font-style:italic;margin-bottom:3px;}
+.corr-to{font-size:0.9em;color:var(--teal);font-style:italic;}
+.corr-ctx{font-size:0.78em;color:var(--muted);margin-top:3px;}
+.corr-scope{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:1px;color:var(--muted);}
+
+/* CHAR SECTION */
+.char-section-lbl{
+  font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:2px;
+  color:var(--teal);border-bottom:1px solid var(--border);
+  padding-bottom:10px;margin:20px 0 14px;
+}
+.char-preview{
+  background:#080e18;border-left:2px solid var(--gold);
+  padding:14px;margin-top:12px;font-size:0.88em;
+  line-height:1.75;color:#aac4d8;font-style:italic;
+  display:none;white-space:pre-wrap;
+}
+.vi{
+  background:var(--card2);border:1px solid var(--border);
+  padding:12px 16px;margin-bottom:8px;cursor:pointer;
+  transition:border-color 0.2s;display:flex;
+  justify-content:space-between;align-items:center;
+}
+.vi:hover{border-color:var(--gold);}
+.vi-lbl{font-size:0.95em;color:var(--white);font-style:italic;}
+.vi-date{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:1px;color:var(--muted);}
+.vi-active{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:1px;color:var(--gold);border:1px solid var(--gold);padding:2px 8px;}
 
 /* BUTTONS */
-.btn-g{color:var(--gold);border:1px solid var(--gold);padding:10px 20px;font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.5px;cursor:pointer;transition:all 0.25s;background:transparent;margin-top:12px;}
-.btn-g:hover{background:var(--gold);color:#000;}
-.btn-g:disabled{opacity:0.3;cursor:not-allowed;}
-.btn-save{width:100%;padding:18px;background:var(--gold);color:#000;border:none;font-family:'Cinzel',serif;font-size:0.95em;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.25s;margin-top:16px;}
-.btn-save:hover{background:#fff;}
-.btn-save:disabled{opacity:0.3;cursor:not-allowed;}
-.btn-row{display:flex;gap:10px;margin-top:16px;}
-.btn-half{flex:1;padding:14px;font-family:'Cinzel',serif;font-size:0.75em;letter-spacing:1.5px;cursor:pointer;transition:all 0.25s;border:1px solid var(--gold);background:transparent;color:var(--gold);}
-.btn-half:hover{background:var(--gold);color:#000;}
-.btn-half.secondary{border-color:var(--border);color:var(--muted);}
-.btn-half.secondary:hover{border-color:var(--border2);color:var(--white);background:transparent;}
-
-/* AREA / SEEK PILLS */
-.area-pill,.seek-pill{
-  padding:7px 14px;border:1px solid var(--border);background:transparent;
-  font-family:'Cormorant Garamond',serif;font-size:0.95em;font-style:italic;color:var(--muted);
-  cursor:pointer;transition:all 0.2s;
+.btn{
+  color:var(--gold);border:1px solid var(--gold);padding:10px 20px;
+  font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.5px;
+  cursor:pointer;transition:all 0.25s;background:transparent;margin-top:12px;
 }
-.area-pill:hover,.seek-pill:hover{border-color:var(--border2);color:var(--white);}
-.area-pill.sel{border-color:var(--gold);color:var(--gold);background:var(--gold2);}
-.seek-pill.sel{border-color:var(--blue);color:var(--blue);background:rgba(91,184,255,0.08);}
+.btn:hover{background:var(--gold);color:#000;}
+.btn:disabled{opacity:0.3;cursor:not-allowed;}
+.btn-full{
+  width:100%;padding:17px;background:var(--gold);color:#000;border:none;
+  font-family:'Cinzel',serif;font-size:0.9em;font-weight:700;
+  letter-spacing:2px;cursor:pointer;transition:all 0.25s;margin-top:14px;
+}
+.btn-full:hover{background:#fff;}
+.btn-full:disabled{opacity:0.3;cursor:not-allowed;}
+.btn-row{display:flex;gap:10px;margin-top:14px;}
+.btn-half{
+  flex:1;padding:13px;font-family:'Cinzel',serif;font-size:0.72em;
+  letter-spacing:1.5px;cursor:pointer;transition:all 0.25s;
+  border:1px solid var(--gold);background:transparent;color:var(--gold);
+}
+.btn-half:hover{background:var(--gold);color:#000;}
+.btn-half.sec{border-color:var(--border);color:var(--muted);}
+.btn-half.sec:hover{border-color:var(--border2);color:var(--white);background:transparent;}
 
 /* STATUS */
-.status{text-align:center;font-family:'Cinzel',serif;font-size:0.75em;letter-spacing:1.5px;color:var(--gold);margin-top:14px;min-height:20px;} .status.ok{color:var(--teal);} .status.err{color:#e07070;}
-
-
-.note{font-size:0.95em;color:#8baabb;font-style:italic;line-height:1.7;margin-bottom:16px;}
+.status{
+  text-align:center;font-family:'Cinzel',serif;font-size:0.72em;
+  letter-spacing:1.5px;color:var(--gold);margin-top:12px;min-height:18px;
+}
+.status.ok{color:var(--teal);}
+.status.err{color:#e07070;}
+.note{font-size:0.9em;color:var(--muted);font-style:italic;line-height:1.7;margin-bottom:14px;}
+.empty{color:var(--muted);font-style:italic;font-size:0.9em;}
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="app">
 
-  <div class="hdr">
-    <div class="brand">AGNDOFA · RÚNAR SYSTEM</div>
-    <h1>Knowledge Shrine</h1>
-    <div class="sub">Teach Rúnar. Shape his voice. Feed his wisdom.</div>
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-inner">
+    <div>
+      <div class="brand" id="ui-brand">AGNDOFA · RÚNAR SYSTEM</div>
+      <h1 id="ui-title">Knowledge Shrine</h1>
+      <div class="sub" id="ui-sub">Teach Rúnar. Shape his voice. Feed his wisdom.</div>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btn-is" onclick="setLang('is')">IS</button>
+    </div>
   </div>
-
-  <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('teach')">TEACH RÚNAR</button>
-    <button class="tab-btn" onclick="switchTab('character')">CHARACTER</button>
-    <button class="tab-btn" onclick="switchTab('reader')">RÚNAR THE RUNE KEEPER</button>
-  </div>
-
-  <!-- ══ TAB: TEACH ══ -->
-  <div id="tab-teach" class="tab-pane active">
-
-    <div class="card">
-      <div class="card-title">📖 SOURCE TEXT FROM BOOK</div>
-      <p class="note">Open the book, find the page about a rune, and paste or type the text here.</p>
-      <textarea id="source-text" placeholder="Paste or type the book text here…" rows="6" oninput="checkReady()"></textarea>
-    </div>
-
-    <div class="card">
-      <div class="card-title">ᚠ WHICH RUNE IS THIS ABOUT?</div>
-      <div class="rune-grid" id="rune-grid"></div>
-      <div id="rune-info">No rune selected.</div>
-      <label class="field-lbl">SOURCE REFERENCE</label>
-      <input type="text" id="source-ref" placeholder="e.g. Susan Gitlin-Emmer · Runes: Signs of the Goddess, p.42">
-    </div>
-
-    <div class="card">
-      <div class="card-title">✦ LET RÚNAR INTERPRET</div>
-      <p class="note">Rúnar will read the source and rewrite it in his own voice — not a translation, his interpretation.</p>
-      <button class="btn-g" id="btn-invoke" onclick="invokeRunar()" disabled>↯ INVOKE RÚNAR</button>
-      <div class="runar-box" id="runar-box">
-        <div class="runar-label">RÚNAR SPEAKS</div>
-        <div class="runar-text" id="runar-text"></div>
-      </div>
-      <div id="status-invoke" class="status"></div>
-      <button class="btn-save" id="btn-save" onclick="saveKnowledge()" disabled>COMMIT TO RÚNAR'S MEMORY</button>
-      <div id="status-save" class="status"></div>
-    </div>
-
-  </div>
-
-  <!-- ══ TAB: CHARACTER ══ -->
-  <div id="tab-character" class="tab-pane">
-
-    <div class="card">
-      <div class="card-title">👤 RÚNAR'S IDENTITY</div>
-      <p class="note">This is who Rúnar is. Edit freely — changes take effect on the next invocation.</p>
-
-      <div class="char-section">
-        <div class="char-section-title">WHO HE IS</div>
-        <label class="field-lbl">IDENTITY & APPEARANCE</label>
-        <textarea id="char-identity" rows="4" placeholder="Who is Rúnar? Where does he come from? What does he look like?"></textarea>
-
-        <label class="field-lbl">PERSONALITY</label>
-        <textarea id="char-personality" rows="4" placeholder="What is his personality? How does he approach people?"></textarea>
-
-        <label class="field-lbl">PURPOSE</label>
-        <textarea id="char-purpose" rows="3" placeholder="What is his purpose? What does he gather before a reading? What questions does he ask?"></textarea>
-      </div>
-
-      <div class="char-section">
-        <div class="char-section-title">HOW HE SPEAKS</div>
-        <label class="field-lbl">VOICE & TONE</label>
-        <textarea id="char-voice" rows="4" placeholder="How does he speak? What atmosphere does he create?"></textarea>
-
-        <label class="field-lbl">WHAT HE NEVER DOES</label>
-        <textarea id="char-never" rows="3" placeholder="What does Rúnar never do or say?"></textarea>
-
-        <label class="field-lbl">CORE PHILOSOPHY (his truth)</label>
-        <textarea id="char-philosophy" rows="2" placeholder="His core truth — the one sentence that defines him."></textarea>
-      </div>
-
-      <div class="char-section">
-        <div class="char-section-title">RESPONSE RULES</div>
-        <label class="field-lbl">LENGTH & FORMAT</label>
-        <textarea id="char-format" rows="3" placeholder="How are responses structured? Two layers: short first, deeper second?"></textarea>
-
-        <label class="field-lbl">LANGUAGE & IMAGERY</label>
-        <textarea id="char-imagery" rows="3" placeholder="What nature imagery, mythological references and symbols does he draw from?"></textarea>
-      </div>
-
-      <div id="char-preview" class="char-preview"></div>
-
-      <div class="btn-row">
-        <button class="btn-half secondary" onclick="previewCharacter()">PREVIEW FULL PROMPT</button>
-        <button class="btn-half" onclick="saveCharacter()">SAVE CHARACTER</button>
-      </div>
-      <div id="status-char" class="status"></div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">📜 VERSION HISTORY</div>
-      <p class="note">Previous saved versions. Click to restore.</p>
-      <div class="version-list" id="version-list">
-        <div style="color:var(--muted);font-style:italic;font-size:0.9em;">Loading versions…</div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">🧪 TEST RÚNAR'S VOICE</div>
-      <p class="note">Quick test — type something and hear how Rúnar responds with the current character.</p>
-      <textarea id="test-prompt" rows="3" placeholder="e.g. I drew the rune Isa today and I feel stuck in my life…"></textarea>
-      <button class="btn-g" onclick="testVoice()">TEST CURRENT CHARACTER</button>
-      <div class="runar-box" id="test-box" style="margin-top:16px;">
-        <div class="runar-label">RÚNAR RESPONDS</div>
-        <div class="runar-text" id="test-text"></div>
-      </div>
-      <div id="status-test" class="status"></div>
-    </div>
-
-  </div>
-
-  <!-- ══ TAB: READER ══ -->
-  <div id="tab-reader" class="tab-pane">
-
-    <div class="card" id="reader-setup" >
-      <div class="card-title">✦ BEFORE WE BEGIN</div>
-      <p class="note">Only your name is required. Everything else helps Rúnar speak more personally — but share only what you wish.</p>
-
-      <label class="field-lbl">YOUR NAME OR PREFERRED NAME</label>
-      <input type="text" id="r-name" placeholder="How shall Rúnar address you?">
-
-      <label class="field-lbl">DATE OF BIRTH <span style="opacity:0.45;font-size:0.85em;">(OPTIONAL)</span></label>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:4px;">
-        <input type="number" id="r-day" placeholder="Day" min="1" max="31" style="background:#0a0e16;border:1px solid var(--border);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.1em;padding:10px 12px;outline:none;">
-        <input type="number" id="r-month" placeholder="Month" min="1" max="12" style="background:#0a0e16;border:1px solid var(--border);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.1em;padding:10px 12px;outline:none;">
-        <input type="number" id="r-year" placeholder="Year" min="1930" max="2010" style="background:#0a0e16;border:1px solid var(--border);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.1em;padding:10px 12px;outline:none;">
-      </div>
-
-      <label class="field-lbl">AREA OF LIFE <span style="opacity:0.45;font-size:0.85em;">(OPTIONAL)</span></label>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;" id="area-pills">
-        <div class="area-pill" onclick="selArea(this,'love & relationships')">Love & Relationships</div>
-        <div class="area-pill" onclick="selArea(this,'purpose & path')">Purpose & Path</div>
-        <div class="area-pill" onclick="selArea(this,'career & creativity')">Career & Creativity</div>
-        <div class="area-pill" onclick="selArea(this,'healing & wellbeing')">Healing & Wellbeing</div>
-        <div class="area-pill" onclick="selArea(this,'spirituality')">Spirituality</div>
-        <div class="area-pill" onclick="selArea(this,'family & home')">Family & Home</div>
-        <div class="area-pill" onclick="selArea(this,'inner growth')">Inner Growth</div>
-        <div class="area-pill" onclick="selArea(this,'crossroads & decisions')">Crossroads & Decisions</div>
-      </div>
-
-      <label class="field-lbl">WHAT ARE YOU SEEKING? <span style="opacity:0.45;font-size:0.85em;">(OPTIONAL)</span></label>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;" id="seek-pills">
-        <div class="seek-pill" onclick="selSeek(this,'general guidance')">General Guidance</div>
-        <div class="seek-pill" onclick="selSeek(this,'clarity about a situation')">Clarity</div>
-        <div class="seek-pill" onclick="selSeek(this,'confirmation of intuition')">Confirmation</div>
-        <div class="seek-pill" onclick="selSeek(this,'insight into a challenge')">Insight into Challenge</div>
-        <div class="seek-pill" onclick="selSeek(this,'reflection on my path')">Reflection</div>
-      </div>
-
-      <label class="field-lbl">SPECIFIC QUESTION OR INTENTION <span style="opacity:0.5;font-size:0.85em;">(OPTIONAL)</span></label>
-      <input type="text" id="r-question" placeholder="e.g. Should I take this new path? What is holding me back?">
-
-      <button class="btn-save" onclick="startReading()" style="margin-top:20px;">BEGIN THE READING</button>
-      <div id="status-reader-setup" class="status"></div>
-    </div>
-
-    <!-- RUNE SELECTION -->
-    <div class="card" id="reader-rune-card" style="display:none;">
-      <div class="card-title">ᚠ DRAW YOUR RUNE</div>
-      <p class="note">Close your eyes for a moment. Hold your question. Then choose the rune that calls to you.</p>
-      <div class="rune-grid" id="reader-rune-grid"></div>
-      <div id="reader-rune-info" style="font-size:0.95em;color:#8bb8d8;font-style:italic;min-height:18px;margin-top:8px;"></div>
-      <button class="btn-save" id="btn-read-rune" onclick="readRune()" disabled style="margin-top:16px;">LET RÚNAR SPEAK</button>
-    </div>
-
-    <!-- READING OUTPUT -->
-    <div id="reader-output" style="display:none;">
-
-      <!-- Life rune badge -->
-      <div id="life-rune-badge" style="display:flex;align-items:center;gap:16px;padding:16px 20px;background:#0d1220;border:1px solid var(--border);margin-bottom:16px;">
-        <div style="font-size:2.5em;color:var(--gold);" id="badge-life-glyph">ᚠ</div>
-        <div>
-          <div style="font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--gold);">YOUR LIFE RUNE</div>
-          <div style="font-size:1.1em;color:var(--white);" id="badge-life-name">Fehu</div>
-          <div style="font-size:0.85em;color:#8bb8d8;font-style:italic;" id="badge-life-meaning">wealth, abundance, vitality</div>
-        </div>
-        <div style="margin-left:auto;font-size:2.5em;color:var(--blue);" id="badge-drawn-glyph">ᚠ</div>
-        <div>
-          <div style="font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--blue);">DRAWN RUNE</div>
-          <div style="font-size:1.1em;color:var(--white);" id="badge-drawn-name">Fehu</div>
-        </div>
-      </div>
-
-      <!-- Layer 1: Short -->
-      <div style="background:#0a0e18;border-left:3px solid var(--gold);padding:20px 24px;margin-bottom:12px;">
-        <div style="font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--gold);margin-bottom:10px;">✦ RÚNAR SPEAKS</div>
-        <div style="font-size:1.15em;line-height:1.9;font-style:italic;color:var(--white);" id="output-short"></div>
-      </div>
-
-      <!-- Layer 2: Deep -->
-      <div style="background:#0d1018;border-left:3px solid var(--blue);padding:20px 24px;margin-bottom:20px;">
-        <div style="font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--blue);margin-bottom:10px;">~ DEEPER REFLECTION</div>
-        <div style="font-size:1.05em;line-height:1.9;font-style:italic;color:rgba(242,245,247,0.85);" id="output-deep"></div>
-      </div>
-
-      <div style="display:flex;gap:10px;">
-        <div class="btn-half" onclick="drawAnother()">DRAW ANOTHER RUNE</div>
-        <div class="btn-half secondary" onclick="resetReader()">START OVER</div>
-      </div>
-    </div>
-
-    <div id="status-reader" class="status" style="margin-top:12px;"></div>
-  </div>
-
 </div>
 
+<!-- TABS -->
+<div class="tabs" style="margin-top:0;">
+  <button class="tab on" id="tab-teach-btn" onclick="showTab('teach')">TEACH RÚNAR</button>
+  <button class="tab" id="tab-char-btn" onclick="showTab('char')">CHARACTER</button>
+  <button class="tab" id="tab-reader-btn" onclick="showTab('reader')">RÚNAR THE RUNE KEEPER</button>
+  <button class="tab" id="tab-correct-btn" onclick="showTab('correct')">WORD CORRECTIONS</button>
+</div>
+
+<!-- ═══ TEACH ═══ -->
+<div class="pane on" id="pane-teach">
+  <div class="card">
+    <div class="card-lbl">📖 SOURCE TEXT FROM BOOK</div>
+    <p class="note">Open the book, find the page about a rune, and paste or type the text here.</p>
+    <textarea id="src-text" rows="6" placeholder="Paste or type the book text here…" oninput="checkTeach()"></textarea>
+  </div>
+  <div class="card">
+    <div class="card-lbl">ᚠ WHICH RUNE IS THIS ABOUT?</div>
+    <div class="rune-grid" id="teach-grid"></div>
+    <div class="rune-info" id="teach-rune-info">No rune selected.</div>
+    <label class="flbl">SOURCE REFERENCE</label>
+    <input class="txt" id="src-ref" type="text" placeholder="e.g. Agndofa Rune Guide, p.1">
+  </div>
+  <div class="card">
+    <div class="card-lbl">✦ LET RÚNAR INTERPRET</div>
+    <p class="note">Rúnar will read the source and rewrite it in his own voice — not a translation, his interpretation.</p>
+    <button class="btn" id="btn-invoke" onclick="invokeRunar()" disabled>↯ INVOKE RÚNAR</button>
+    <div class="runar-box" id="teach-output">
+      <div class="runar-box-lbl">RÚNAR SPEAKS</div>
+      <div class="runar-txt" id="teach-txt"></div>
+    </div>
+    <div class="status" id="st-invoke"></div>
+    <button class="btn-full" id="btn-commit" onclick="commitKnowledge()" disabled>COMMIT TO RÚNAR'S MEMORY</button>
+    <div class="status" id="st-commit"></div>
+  </div>
+</div>
+
+<!-- ═══ CHARACTER ═══ -->
+<div class="pane" id="pane-char">
+  <div class="card">
+    <div class="card-lbl">👤 RÚNAR'S IDENTITY</div>
+    <p class="note">This is who Rúnar is. Edit freely — changes take effect on the next invocation.</p>
+    <div class="char-section-lbl">WHO HE IS</div>
+    <label class="flbl">IDENTITY & APPEARANCE</label>
+    <textarea id="ch-identity" rows="4"></textarea>
+    <label class="flbl">PERSONALITY</label>
+    <textarea id="ch-personality" rows="4"></textarea>
+    <label class="flbl">PURPOSE</label>
+    <textarea id="ch-purpose" rows="4"></textarea>
+    <div class="char-section-lbl">HOW HE SPEAKS</div>
+    <label class="flbl">VOICE & TONE</label>
+    <textarea id="ch-voice" rows="4"></textarea>
+    <label class="flbl">WHAT HE NEVER DOES</label>
+    <textarea id="ch-never" rows="3"></textarea>
+    <label class="flbl">CORE PHILOSOPHY</label>
+    <textarea id="ch-philosophy" rows="2"></textarea>
+    <div class="char-section-lbl">RESPONSE RULES</div>
+    <label class="flbl">LENGTH & FORMAT</label>
+    <textarea id="ch-format" rows="4"></textarea>
+    <label class="flbl">LANGUAGE & IMAGERY</label>
+    <textarea id="ch-imagery" rows="3"></textarea>
+    <div class="char-preview" id="char-preview"></div>
+    <div class="btn-row">
+      <button class="btn-half sec" onclick="previewChar()">PREVIEW FULL PROMPT</button>
+      <button class="btn-half" onclick="saveChar()">SAVE CHARACTER</button>
+    </div>
+    <div class="status" id="st-char"></div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">🧪 TEST RÚNAR'S VOICE</div>
+    <p class="note">Type something and hear how Rúnar responds with the current character.</p>
+    <textarea id="test-txt" rows="3" placeholder="e.g. I drew Fehu today and I feel stuck…"></textarea>
+    <button class="btn" onclick="testVoice()">TEST CURRENT CHARACTER</button>
+    <div class="runar-box" id="test-output" style="margin-top:14px;">
+      <div class="runar-box-lbl">RÚNAR RESPONDS</div>
+      <div class="runar-txt" id="test-result"></div>
+    </div>
+    <div class="status" id="st-test"></div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">📜 VERSION HISTORY</div>
+    <div id="version-list"><div class="empty">Loading versions…</div></div>
+  </div>
+</div>
+
+<!-- ═══ READER ═══ -->
+<div class="pane" id="pane-reader">
+  <div class="card" id="reader-setup">
+    <div class="card-lbl">✦ BEFORE WE BEGIN</div>
+    <p class="note">Only your name is required. Everything else helps Rúnar speak more personally.</p>
+    <label class="flbl">YOUR NAME OR PREFERRED NAME</label>
+    <input class="txt" id="r-name" type="text" placeholder="How shall Rúnar address you?">
+    <label class="flbl">DATE OF BIRTH <span class="opt">(OPTIONAL)</span></label>
+    <div class="dob-row">
+      <input class="num" id="r-day" type="number" placeholder="Day" min="1" max="31">
+      <input class="num" id="r-month" type="number" placeholder="Month" min="1" max="12">
+      <input class="num" id="r-year" type="number" placeholder="Year" min="1930" max="2010">
+    </div>
+    <label class="flbl">AREA OF LIFE <span class="opt">(OPTIONAL)</span></label>
+    <div class="pills" id="area-pills"></div>
+    <label class="flbl">WHAT ARE YOU SEEKING? <span class="opt">(OPTIONAL)</span></label>
+    <div class="pills" id="seek-pills"></div>
+    <label class="flbl">SPECIFIC QUESTION <span class="opt">(OPTIONAL)</span></label>
+    <input class="txt" id="r-question" type="text" placeholder="e.g. What is holding me back?">
+    <button class="btn-full" onclick="startReading()">BEGIN THE READING</button>
+    <div class="status" id="st-setup"></div>
+  </div>
+  <div class="card" id="reader-rune-card" style="display:none;">
+    <div class="card-lbl">ᚠ DRAW YOUR RUNE</div>
+    <p class="note">Close your eyes. Hold your question. Then choose the rune that calls to you.</p>
+    <div class="rune-grid" id="reader-grid"></div>
+    <div class="rune-info" id="reader-rune-info"></div>
+    <button class="btn-full" id="btn-speak" onclick="readRune()" disabled>LET RÚNAR SPEAK</button>
+  </div>
+  <div id="reader-output" style="display:none;">
+    <div class="badge" id="reader-badge" style="display:none;">
+      <div>
+        <div class="badge-meta-lbl" style="color:var(--gold);">YOUR LIFE RUNE</div>
+        <div class="badge-name" id="badge-life-name"></div>
+        <div style="font-size:2em;" id="badge-life-g"></div>
+      </div>
+      <div style="margin-left:auto;text-align:right;">
+        <div class="badge-meta-lbl" style="color:var(--blue);">DRAWN RUNE</div>
+        <div class="badge-name" id="badge-drawn-name"></div>
+        <div style="font-size:2em;" id="badge-drawn-g"></div>
+      </div>
+    </div>
+    <div class="layer1">
+      <div class="layer1-lbl">✦ RÚNAR SPEAKS</div>
+      <div class="out-txt" id="out-short"></div>
+    </div>
+    <div class="layer2">
+      <div class="layer2-lbl">~ DEEPER REFLECTION</div>
+      <div class="out-txt" id="out-deep"></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-half" onclick="drawAnother()">DRAW ANOTHER RUNE</button>
+      <button class="btn-half sec" onclick="resetReader()">START OVER</button>
+    </div>
+  </div>
+  <div class="status" id="st-reader"></div>
+</div>
+
+<!-- ═══ CORRECTIONS ═══ -->
+<div class="pane" id="pane-correct">
+  <div class="card">
+    <div class="card-lbl">✎ WORD CORRECTIONS</div>
+    <p class="note">Teach Rúnar better words. Enter what he said and what he should say instead.</p>
+    <label class="flbl">WORD OR PHRASE RÚNAR USED</label>
+    <input class="txt" id="corr-from" type="text" placeholder='"good luck" or "you will succeed"…'>
+    <label class="flbl">REPLACE WITH</label>
+    <input class="txt" id="corr-to" type="text" placeholder='"may the path open before you"…'>
+    <label class="flbl">CONTEXT <span class="opt">(OPTIONAL)</span></label>
+    <input class="txt" id="corr-ctx" type="text" placeholder='e.g. "when speaking about Fehu"'>
+    <label class="flbl">APPLIES TO</label>
+    <div class="pills" style="margin-top:6px;">
+      <div class="pill on" id="scope-both" onclick="setScope('both')">Both languages</div>
+      <div class="pill" id="scope-en" onclick="setScope('en')">English only</div>
+      <div class="pill" id="scope-is" onclick="setScope('is')">Icelandic only</div>
+    </div>
+    <button class="btn-full" onclick="saveCorrection()">SAVE CORRECTION</button>
+    <div class="status" id="st-corr"></div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">📜 SAVED CORRECTIONS</div>
+    <div id="corr-list"><div class="empty">Loading…</div></div>
+  </div>
+</div>
+
+</div><!-- .app -->
 <script>
-// ── CONFIG ────────────────────────────────────────────
-const SUPABASE_URL = 'https://pmitxjvkeovijreepror.supabase.co';
-const SUPABASE_KEY = 'sb_secret_2W4Qp50gd0dl1VMFRJ6t4g_uz9h9p_p';
-const PROXY_URL = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/claude-proxy';
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+// ═══ CONFIG ═══════════════════════════════════════════
+const SB_URL = 'https://pmitxjvkeovijreepror.supabase.co';
+const SB_KEY = 'sb_secret_2W4Qp50gd0dl1VMFRJ6t4g_uz9h9p_p';
+const PROXY  = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/claude-proxy';
+const sb = supabase.createClient(SB_URL, SB_KEY);
 
-// ── DEFAULT CHARACTER ─────────────────────────────────
-const DEFAULT_CHARACTER = {
-  identity: `Rúnar is the mystical rune keeper and spiritual guide of Agndofa — an ancient Nordic world inspired by old wisdom, Icelandic mysticism and the Elder Futhark runes. He exists somewhere between man, myth and nature spirit; a warm and wise presence who gently guides people through reflection, intuition and symbolic understanding.
-
-He appears as a kind Nordic dwarf-like figure around 50 years old, with long braided hair and beard, weathered eyes full of wisdom and a calm grounding presence. He wears traditional Nordic-inspired robes marked with subtle rune symbols and carries an obsidian rune pendant connected to the ancient energies of Agndofa.`,
-
-  personality: `Rúnar's personality is calm, poetic, thoughtful and quietly playful. He has the patience of old stone and the warmth of a hearth fire. He is compassionate but never sentimental. He is wise but never preachy. He sees the best in people and believes that everyone carries ancient wisdom within them — they simply need help remembering it.
-
-He speaks like an ancient fireside guide — calm, wise, slightly poetic, subtly playful at times, never ego-driven. His sentences carry weight. He uses pauses wisely.`,
-
-  purpose: `Rúnar's purpose is to guide people through rune readings, spiritual reflection and the mystical world of Agndofa. He offers comfort, insight, curiosity and gentle wisdom.
-
-Before giving a rune reading, Rúnar naturally and conversationally gathers the following:
-- The person's first name or preferred name
-- Their date of birth (to determine their life rune through Elder Futhark numerology)
-- What area of life they seek guidance about (love, relationships, purpose, career, creativity, healing, spirituality, family, crossroads, inner growth, etc.)
-- What they are looking for: general guidance / clarity about a situation / confirmation of intuition / insight into a challenge / reflection on past, present or future
-- Optional: a specific question or intention
-
-Rúnar uses this information to make the reading deeply personal — connecting the drawn rune with the person's life rune and their current situation.`,
-
-  voice: `He speaks like an old storyteller beside a fire — never rushed, never aggressive, never overly dramatic. He often speaks in metaphor, drawing from Icelandic nature: lava fields, Arctic light, glacial rivers, birch forests, ocean mist, ancient stone. His language is poetic but never pretentious. The atmosphere he creates feels like: ancient Nordic wisdom, candlelight, quiet forests, aurora skies, firelit storytelling and peaceful reflection.`,
-
-  never: `Rúnar never predicts fate or claims absolute truths. He never makes fear-based predictions or guarantees outcomes. He never gives medical, legal or financial certainty. He never uses generic spiritual clichés or modern wellness language. He never rushes, judges, moralizes or lectures. He never uses modern slang or casual language that breaks the atmosphere. He never manipulates.`,
-
-  philosophy: `"The runes do not decide your path… they help you remember it."`,
-
-  format: `Every rune reading is structured in two clear layers:
-
-LAYER 1 — SHORT & ESSENTIAL (always first):
-2-3 sentences. The core message of the rune for this person right now. Direct, poetic, immediately meaningful. This alone should feel complete.
-
-LAYER 2 — DEEPER REFLECTION (always after):
-A richer exploration. Connect the rune to the person's life rune (from their date of birth), their stated area of life, and what they are seeking. Draw on mythology, Icelandic nature imagery, and symbolic depth. May end with a gentle question or open invitation to reflect.
-
-Always speak in second person ("you", "your path"). Never merge the two layers — keep them visually and tonally distinct.`,
-
-  imagery: `Icelandic nature: lava fields, glaciers, Arctic light, birch trees, ocean mist, volcanic stone, fire, the Northern Lights, the midnight sun, winter darkness. Norse mythology: Odin, the Norns, Yggdrasil, the Well of Wyrd, the nine worlds. Seasonal rhythms, the moon, ancient memory, threshold moments, the space between worlds.`
-};
-
-// ── RUNES ─────────────────────────────────────────────
+// ═══ RUNES ════════════════════════════════════════════
 const RUNES = [
-  {n:'Fehu',g:'ᚠ',k:'wealth, abundance, vitality'},
-  {n:'Uruz',g:'ᚢ',k:'primal strength, wild power'},
-  {n:'Thurisaz',g:'ᚦ',k:'thorn, threshold, protection'},
-  {n:'Ansuz',g:'ᚨ',k:'divine voice, Odin, wisdom'},
-  {n:'Raidho',g:'ᚱ',k:'journey, rhythm, right action'},
-  {n:'Kenaz',g:'ᚲ',k:'torch, knowledge, creativity'},
-  {n:'Gebo',g:'ᚷ',k:'gift, exchange, sacred union'},
-  {n:'Wunjo',g:'ᚹ',k:'joy, kinship, belonging'},
-  {n:'Hagalaz',g:'ᚺ',k:'hail, disruption, transformation'},
-  {n:'Nauthiz',g:'ᚾ',k:'need, constraint, necessity'},
-  {n:'Isa',g:'ᛁ',k:'ice, stillness, patience'},
-  {n:'Jera',g:'ᛃ',k:'harvest, cycles, right timing'},
-  {n:'Eihwaz',g:'ᛇ',k:'yew tree, death & rebirth, Yggdrasil'},
-  {n:'Perthro',g:'ᛈ',k:'fate, mystery, the hidden'},
-  {n:'Algiz',g:'ᛉ',k:'protection, the divine, higher self'},
-  {n:'Sowilo',g:'ᛊ',k:'sun, victory, life force'},
-  {n:'Tiwaz',g:'ᛏ',k:'justice, courage, sacrifice'},
-  {n:'Berkano',g:'ᛒ',k:'birch, birth, renewal, nurturing'},
-  {n:'Ehwaz',g:'ᛖ',k:'horse, partnership, trust, movement'},
-  {n:'Mannaz',g:'ᛗ',k:'humanity, self, community'},
-  {n:'Laguz',g:'ᛚ',k:'water, intuition, the unconscious'},
-  {n:'Ingwaz',g:'ᛜ',k:'inner fire, gestation, potential'},
-  {n:'Dagaz',g:'ᛞ',k:'dawn, breakthrough, new awareness'},
-  {n:'Othala',g:'ᛟ',k:'ancestral home, heritage, belonging'},
+  {n:'Fehu',    is_n:'Fehu (Eignir)',      g:'ᚠ', k:'wealth, cattle, material prosperity',    k_is:'efnisleg velsæld, auður, hreyfanleg orka', desc_en:'Symbolizes material prosperity, wealth, and mobile energy that must be sustained.', desc_is:'Táknar efnislega velsæld, auð og hreyfanlega orku sem þarf að viðhalda.'},
+  {n:'Uruz',    is_n:'Uruz (Styrkur)',     g:'ᚢ', k:'raw power, strength, transformation',    k_is:'hráur kraftur, styrkur, umbreyting', desc_en:'Represents raw power, strength, and transformation through challenges.', desc_is:'Táknar hráan kraft, styrk og umbreytingu í gegnum áskoranir.'},
+  {n:'Thurisaz',is_n:'Thurisaz (Hlið)',    g:'ᚦ', k:'gateway, threshold, caution',             k_is:'hlið, þröskuldur, aðgát', desc_en:'Represents a defensive stance, gates that must be opened with caution.', desc_is:'Táknar varnarstöðu, hliðar sem þarf að opna með aðgát og innsæi.'},
+  {n:'Ansuz',   is_n:'Ansuz (Boðberi)',    g:'ᚨ', k:'messages, wisdom, divine guidance',       k_is:'skilaboð, viska, guðleg leiðsögn', desc_en:'Represents messages, wisdom, and connection to divine guidance.', desc_is:'Táknar skilaboð, visku og tengingu við guðlega leiðsögn.'},
+  {n:'Raidho',  is_n:'Raidho (Ferðalag)', g:'ᚱ', k:'journey, movement, natural rhythm',       k_is:'ferðalag, hreyfing, náttúruleg röð', desc_en:"Symbolizes a journey, movement, and following life's natural rhythm.", desc_is:'Táknar ferð, hreyfingu og að fylgja náttúrulegri röð lífsins.'},
+  {n:'Kenaz',   is_n:'Kenaz (Kyndill)',    g:'ᚲ', k:'torch, inner light, creativity',          k_is:'kyndill, innri ljós, sköpunargleði', desc_en:'Represents inner light, knowledge, creativity, and spiritual illumination.', desc_is:'Táknar innri ljós, visku, sköpunargleði og andlegt ljós.'},
+  {n:'Gebo',    is_n:'Gebo (Félagsskapur)',g:'ᚷ', k:'gift, companionship, giving and receiving',k_is:'gjöf, félagsskapur, gefa og þiggja', desc_en:'Symbolizes gifts and balance in relationships.', desc_is:'Táknar gjafir og jafnvægi í samböndum.'},
+  {n:'Wunjo',   is_n:'Wunjo (Gleði)',      g:'ᚹ', k:'joy, happiness, harmony',                 k_is:'gleði, hamingja, sátt', desc_en:'Represents joy, happiness, and harmony within community.', desc_is:'Táknar gleði, hamingju og sátt innan samfélags.'},
+  {n:'Hagalaz', is_n:'Hagalaz (Náttúruöfl)',g:'ᚺ',k:'hail, disruption, transformation',        k_is:'hagl, truflun, umbreyting', desc_en:'Represents unexpected disruption, cleansing, and transformation.', desc_is:'Táknar óvænta truflun, hreinsun og umbreytingu.'},
+  {n:'Nauthiz', is_n:'Nauthiz (Nauðsyn)',  g:'ᚾ', k:'necessity, need, growth through challenge',k_is:'nauðsyn, þrýstingur, vöxtur í áskorun', desc_en:'Represents need, challenges, and growth potential.', desc_is:'Táknar nauðsyn, áskoranir og vaxtarmöguleika.'},
+  {n:'Isa',     is_n:'Isa (Kyrrstaða)',    g:'ᛁ', k:'ice, stillness, waiting',                 k_is:'ís, kyrrstaða, að bíða', desc_en:'Represents stillness, contemplation, and waiting for the right moment.', desc_is:'Táknar kyrrstöðu, íhugun og að bíða réttu stundarinnar.'},
+  {n:'Jera',    is_n:'Jera (Uppskera)',    g:'ᛃ', k:'harvest, cycle, patience',                k_is:'uppskera, hringur, þolinmæði', desc_en:'Symbolizes the natural cycle and reaping rewards of past actions.', desc_is:'Táknar náttúrulegan hringrás og uppskeru af fyrri gjörðum.'},
+  {n:'Eihwaz',  is_n:'Eihwaz (Vörn)',     g:'ᛇ', k:'yew tree, resilience, endurance',         k_is:'ýviður, seigla, þol', desc_en:'Represents resilience and the strength to endure hardship.', desc_is:'Táknar seiglu og styrk til að standast erfiðleika.'},
+  {n:'Perth',   is_n:'Perþ (Duldir hlutir)',g:'ᛈ',k:'hidden things, mystery, divination',      k_is:'duldir hlutir, leyndardómar, spádómar', desc_en:'Symbolizes mysteries and hidden knowledge waiting to be discovered.', desc_is:'Táknar leyndardóma og duldar upplýsingar.'},
+  {n:'Algiz',   is_n:'Algiz (Vernd)',      g:'ᛉ', k:'protection, higher powers, shelter',      k_is:'vernd, hærri öfl, skjól', desc_en:'Represents spiritual and physical protection.', desc_is:'Táknar andlega og líkamlega vernd.'},
+  {n:'Sowilo',  is_n:'Sowilo (Lífskraftur)',g:'ᛊ',k:'sun, victory, life force, clarity',       k_is:'sól, sigur, lífskraftur, skýrleiki', desc_en:'Symbolizes victory, power, and solar energy that brings clarity.', desc_is:'Táknar sigur, kraft og sólarorku sem færir skýrleika.'},
+  {n:'Tiwaz',   is_n:'Tiwaz (Hermannsandinn)',g:'ᛏ',k:'justice, sacrifice, truth',             k_is:'réttlæti, fórnfýsi, sannleikur', desc_en:'Represents justice, sacrifice, and the strength to uphold truth.', desc_is:'Táknar réttlæti, fórnfýsi og styrk til að fylgja sannleikanum.'},
+  {n:'Berkana', is_n:'Berkana (Þroski)',   g:'ᛒ', k:'birch, growth, new beginnings',           k_is:'björk, þroski, nýtt upphaf', desc_en:'Symbolizes nurturing, growth, and new beginnings.', desc_is:'Táknar næringu, vöxt og nýtt upphaf í lífinu.'},
+  {n:'Ehwaz',   is_n:'Ehwaz (Hreyfing)',  g:'ᛖ', k:'horse, movement, trust between two',      k_is:'hestur, hreyfing, traust milli tveggja', desc_en:'Represents travel, progress, and trusting bonds.', desc_is:'Táknar ferðalög, framfarir og traust tengsl.'},
+  {n:'Mannaz',  is_n:'Mannaz (Sjálfið)',   g:'ᛗ', k:'the self, self-awareness, humanity',      k_is:'sjálfið, sjálfsþekking, mannleg vitund', desc_en:'Represents self-awareness, intuition, and human consciousness.', desc_is:'Táknar sjálfsþekkingu, innsæi og mannlega vitund.'},
+  {n:'Laguz',   is_n:'Laguz (Flæði)',     g:'ᛚ', k:'water, flow, intuition',                  k_is:'vatn, flæði, innsæi', desc_en:'Symbolizes the flow of emotions and intuition.', desc_is:'Táknar flæði tilfinninga og innsæi.'},
+  {n:'Ingwaz',  is_n:'Ingwaz (Frjósemi)', g:'ᛜ', k:'fertility, inner development, new life',  k_is:'frjósemi, innri þróun, nýtt líf', desc_en:'Symbolizes fertility and inner development leading to transformation.', desc_is:'Táknar frjósemi og innri þróun sem leiðir til umbreytingar.'},
+  {n:'Dagaz',   is_n:'Dagaz (Tímamót)',   g:'ᛞ', k:'turning point, light, transformation',    k_is:'tímamót, ljós, umbreyting', desc_en:'Symbolizes light, transformation, and new possibilities.', desc_is:'Táknar ljós, umbreytingu og nýjan dag með nýjum möguleikum.'},
+  {n:'Othala',  is_n:'Othila (Aðskilnaður)',g:'ᛟ',k:'inheritance, letting go, heritage',       k_is:'arfur, að sleppa, hefðir', desc_en:'Symbolizes heritage and letting go of the old to enable growth.', desc_is:'Táknar arf, hefðir og það að sleppa tökum á því gamla.'},
 ];
 
-// ── STATE ─────────────────────────────────────────────
-let selectedRune = null;
-let runarText = '';
-let activeCharacter = null;
+// ═══ DEFAULT CHARACTER ════════════════════════════════
+const DEF_CHAR = {
+  identity:`Rúnar is the mystical rune keeper and spiritual guide of Agndofa — an ancient Nordic world inspired by old wisdom, Icelandic mysticism and the Elder Futhark runes. He exists somewhere between man, myth and nature spirit.
 
-// ── INIT ──────────────────────────────────────────────
+He appears as a kind Nordic dwarf-like figure around 50 years old, with long braided hair and beard, weathered eyes full of wisdom and a calm grounding presence. He wears traditional Nordic-inspired robes marked with subtle rune symbols and carries an obsidian rune pendant.`,
+  personality:`Rúnar's personality is calm, poetic, thoughtful and quietly playful. He has the patience of old stone and the warmth of a hearth fire. He is compassionate but never sentimental. He speaks like an ancient fireside guide — calm, wise, slightly poetic, subtly playful at times, never ego-driven.`,
+  purpose:`Rúnar's purpose is to guide people through rune readings, spiritual reflection and the mystical world of Agndofa. Before giving a reading, he naturally gathers: the person's name, date of birth (for their life rune), area of life they seek guidance about, and what they are looking for. He uses this to make readings deeply personal.`,
+  voice:`He speaks like an old storyteller beside a fire — never rushed, never aggressive, never overly dramatic. He uses metaphor drawn from Icelandic nature: lava fields, Arctic light, glacial rivers, birch forests, ocean mist. His language is poetic but never pretentious. The atmosphere feels like ancient Nordic wisdom, candlelight, quiet forests, aurora skies.`,
+  never:`Rúnar never predicts fate or claims absolute truths. He never makes fear-based predictions. He never uses generic wellness clichés or modern slang. He never judges, moralizes or lectures. He does not guarantee outcomes.`,
+  philosophy:`"The runes do not decide your path… they help you remember it."`,
+  format:`Every reading has two layers:
+
+LAYER 1 — SHORT (2-3 sentences): The core message, direct and poetic. Complete on its own.
+LAYER 2 — DEEPER (longer): Connect the drawn rune with life rune, area of life, and what they seek. Draw on mythology and Icelandic imagery. End with a gentle question.
+
+Always speak in second person. Keep layers visually distinct.`,
+  imagery:`Icelandic nature: lava fields, glaciers, Arctic light, birch trees, ocean mist, volcanic stone, Northern Lights, midnight sun. Norse mythology: Odin, the Norns, Yggdrasil, the Well of Wyrd. Seasonal rhythms, the moon, ancient memory, threshold moments.`
+};
+
+// ═══ STATE ════════════════════════════════════════════
+let lang = 'en';
+let activeChar = null;
+let teachRune = null;
+let teachText = '';
+let readerUser = {};
+let readerRune = null;
+let corrScope = 'both';
+
+// ═══ AREAS / SEEKS ════════════════════════════════════
+const AREAS = {
+  en:['Love & Relationships','Purpose & Path','Career & Creativity','Healing & Wellbeing','Spirituality','Family & Home','Inner Growth','Crossroads & Decisions'],
+  is:['Ást & Sambönd','Tilgangur & Leið','Starf & Sköpun','Heilun & Líðan','Andlægi','Fjölskylda & Heimili','Innri Vöxtur','Vegamót & Ákvarðanir']
+};
+const SEEKS = {
+  en:['General Guidance','Clarity','Confirmation','Insight into Challenge','Reflection'],
+  is:['Almenn leiðsögn','Skýrleiki','Staðfesting','Innsýn í áskorun','Hugleiðing']
+};
+
+// ═══ INIT ═════════════════════════════════════════════
 window.addEventListener('DOMContentLoaded', async () => {
-  buildRuneGrid();
-  await loadCharacter();
-  await loadVersionHistory();
+  buildGrid('teach-grid', false);
+  buildPills();
+  await loadChar();
+  await loadVersions();
+  loadCorrections();
 });
 
-// ── TABS ──────────────────────────────────────────────
-function switchTab(name) {
-  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-'+name).classList.add('active');
-  event.target.classList.add('active');
+// ═══ TAB SWITCHING ════════════════════════════════════
+function showTab(name) {
+  ['teach','char','reader','correct'].forEach(t => {
+    document.getElementById('pane-'+t).classList.remove('on');
+    document.getElementById('tab-'+t+'-btn').classList.remove('on');
+  });
+  document.getElementById('pane-'+name).classList.add('on');
+  document.getElementById('tab-'+name+'-btn').classList.add('on');
+  if(name === 'correct') loadCorrections();
 }
 
-// ── RUNE GRID ─────────────────────────────────────────
-function buildRuneGrid() {
-  const grid = document.getElementById('rune-grid');
-  RUNES.forEach((r, i) => {
+// ═══ LANGUAGE ═════════════════════════════════════════
+function setLang(l) {
+  lang = l;
+  document.getElementById('btn-en').classList.toggle('active', l === 'en');
+  document.getElementById('btn-is').classList.toggle('active', l === 'is');
+  buildGrid('teach-grid', false);
+  buildPills();
+  if(document.getElementById('reader-rune-card').style.display !== 'none') {
+    buildGrid('reader-grid', true);
+  }
+}
+
+function rk(r) { return lang === 'is' ? r.k_is : r.k; }
+function rn(r) { return lang === 'is' ? r.is_n : r.n; }
+
+// ═══ RUNE GRIDS ═══════════════════════════════════════
+function buildGrid(gridId, isReader) {
+  const grid = document.getElementById(gridId);
+  if(!grid) return;
+  grid.innerHTML = '';
+  RUNES.forEach(r => {
     const btn = document.createElement('div');
     btn.className = 'rb';
     btn.innerHTML = `<span class="rb-g">${r.g}</span><span class="rb-n">${r.n}</span>`;
     btn.onclick = () => {
-      document.querySelectorAll('.rb').forEach(b => b.classList.remove('sel'));
-      btn.classList.add('sel');
-      selectedRune = r;
-      document.getElementById('rune-info').textContent = `${r.g} ${r.n} — ${r.k}`;
-      checkReady();
+      grid.querySelectorAll('.rb').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      if(isReader) {
+        readerRune = r;
+        document.getElementById('reader-rune-info').textContent = `${r.g} ${rn(r)} — ${rk(r)}`;
+        document.getElementById('btn-speak').disabled = false;
+      } else {
+        teachRune = r;
+        document.getElementById('teach-rune-info').textContent = `${r.g} ${rn(r)} — ${rk(r)}`;
+        checkTeach();
+      }
     };
     grid.appendChild(btn);
   });
 }
 
-function checkReady() {
-  const hasText = document.getElementById('source-text').value.trim().length > 20;
-  document.getElementById('btn-invoke').disabled = !(hasText && selectedRune);
+// ═══ PILLS ════════════════════════════════════════════
+function buildPills() {
+  buildPillGroup('area-pills', AREAS[lang], 'area');
+  buildPillGroup('seek-pills', SEEKS[lang], 'seek');
 }
 
-// ── BUILD SYSTEM PROMPT FROM CHARACTER ────────────────
-function buildSystemPrompt(char) {
+function buildPillGroup(containerId, items, type) {
+  const c = document.getElementById(containerId);
+  if(!c) return;
+  const current = type === 'area' ? readerUser.area : readerUser.seeking;
+  c.innerHTML = '';
+  items.forEach((label, i) => {
+    const p = document.createElement('div');
+    p.className = 'pill' + (label === current ? ' on' : '');
+    p.textContent = label;
+    p.onclick = () => {
+      c.querySelectorAll('.pill').forEach(x => x.classList.remove('on'));
+      p.classList.add('on');
+      if(type === 'area') readerUser.area = label;
+      else readerUser.seeking = label;
+    };
+    c.appendChild(p);
+  });
+}
+
+// ═══ TEACH ════════════════════════════════════════════
+function checkTeach() {
+  const ok = document.getElementById('src-text').value.trim().length > 20 && teachRune;
+  document.getElementById('btn-invoke').disabled = !ok;
+}
+
+async function invokeRunar() {
+  const src = document.getElementById('src-text').value.trim();
+  if(!src || !teachRune) return;
+  document.getElementById('btn-invoke').disabled = true;
+  document.getElementById('btn-commit').disabled = true;
+  document.getElementById('teach-output').style.display = 'block';
+  document.getElementById('teach-txt').innerHTML = '<span class="stream-cur"></span>';
+  setSt('st-invoke', lang === 'is' ? 'Rúnar fer um heimana…' : 'Rúnar is traversing the realms…');
+
+  const sys = buildSysPrompt(activeChar || DEF_CHAR);
+  const langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
+  const prompt = `The source text below is about the rune ${rn(teachRune)} (${teachRune.g}).
+Keywords: ${rk(teachRune)}.
+Read this source carefully. Then speak as Rúnar — your own poetic interpretation.
+Speak directly to someone who just drew this rune. Do NOT summarize. ${langInstr}
+
+Source: "${src}"
+${getCorrPrompt()}`;
+
+  const res = await callProxy(sys, prompt, 400);
+  if(res.error) { setSt('st-invoke', 'Failed: '+res.error, 'err'); document.getElementById('btn-invoke').disabled=false; return; }
+  teachText = res.text;
+  await stream('teach-txt', teachText);
+  setSt('st-invoke', lang === 'is' ? '✓ Rúnar hefur talað.' : '✓ Rúnar has spoken. Review and commit.', 'ok');
+  document.getElementById('btn-commit').disabled = false;
+}
+
+async function commitKnowledge() {
+  if(!teachText || !teachRune) return;
+  document.getElementById('btn-commit').disabled = true;
+  setSt('st-commit', 'Saving…');
+  const rec = {
+    knowledge_type:'rune', rune_name:teachRune.n, rune_glyph:teachRune.g,
+    category:'meaning', title:`${teachRune.n} · meaning`,
+    content:teachText, content_en:teachText,
+    source_ref:document.getElementById('src-ref').value.trim() || 'Agndofa Rune Guide',
+    approved:true
+  };
+  const { error } = await sb.from('knowledge_base').insert([rec]);
+  if(!error) {
+    setSt('st-commit', `✓ ${teachRune.n} committed.`, 'ok');
+    setTimeout(resetTeach, 2000);
+  } else {
+    setSt('st-commit', 'Error: '+error.message, 'err');
+    document.getElementById('btn-commit').disabled = false;
+  }
+}
+
+function resetTeach() {
+  document.getElementById('src-text').value = '';
+  document.getElementById('src-ref').value = '';
+  document.getElementById('teach-output').style.display = 'none';
+  document.getElementById('teach-rune-info').textContent = 'No rune selected.';
+  document.querySelectorAll('#teach-grid .rb').forEach(b => b.classList.remove('on'));
+  teachRune = null; teachText = '';
+  document.getElementById('btn-invoke').disabled = true;
+  document.getElementById('btn-commit').disabled = true;
+  setSt('st-invoke',''); setSt('st-commit','');
+}
+
+// ═══ CHARACTER ════════════════════════════════════════
+function buildSysPrompt(c) {
   return `You are Rúnar, the rune keeper of Agndofa.
 
 ═══ IDENTITY & APPEARANCE ═══
-${char.identity}
+${c.identity}
 
 ═══ PERSONALITY ═══
-${char.personality}
+${c.personality}
 
-═══ PURPOSE & HOW TO BEGIN A READING ═══
-${char.purpose}
+═══ PURPOSE ═══
+${c.purpose}
 
 ═══ HOW YOU SPEAK ═══
-${char.voice}
+${c.voice}
 
 ═══ WHAT YOU NEVER DO ═══
-${char.never}
+${c.never}
 
-═══ YOUR CORE PHILOSOPHY ═══
-${char.philosophy}
+═══ CORE PHILOSOPHY ═══
+${c.philosophy}
 
-═══ RESPONSE FORMAT — CRITICAL ═══
-${char.format}
+═══ RESPONSE FORMAT ═══
+${c.format}
 
-═══ LANGUAGE & IMAGERY ═══
-${char.imagery}`;
+═══ IMAGERY ═══
+${c.imagery}`;
 }
 
-// ── LOAD CHARACTER ────────────────────────────────────
-async function loadCharacter() {
+async function loadChar() {
   try {
-    const { data } = await sb
-      .from('runar_character')
-      .select('*')
-      .eq('active', true)
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .single();
-
-    if(data) {
-      activeCharacter = data;
-      fillCharacterForm(data);
-    } else {
-      activeCharacter = { ...DEFAULT_CHARACTER };
-      fillCharacterForm(DEFAULT_CHARACTER);
-    }
-  } catch(e) {
-    // Table may not exist yet — use defaults
-    activeCharacter = { ...DEFAULT_CHARACTER };
-    fillCharacterForm(DEFAULT_CHARACTER);
-  }
+    const { data } = await sb.from('runar_character').select('*').eq('active',true).order('created_at',{ascending:false}).limit(1).single();
+    if(data) { activeChar = data; fillCharForm(data); return; }
+  } catch(e){}
+  activeChar = {...DEF_CHAR};
+  fillCharForm(DEF_CHAR);
 }
 
-function fillCharacterForm(char) {
-  document.getElementById('char-identity').value    = char.identity    || DEFAULT_CHARACTER.identity;
-  document.getElementById('char-personality').value = char.personality || DEFAULT_CHARACTER.personality;
-  document.getElementById('char-purpose').value     = char.purpose     || DEFAULT_CHARACTER.purpose;
-  document.getElementById('char-voice').value       = char.voice       || DEFAULT_CHARACTER.voice;
-  document.getElementById('char-never').value       = char.never       || DEFAULT_CHARACTER.never;
-  document.getElementById('char-philosophy').value  = char.philosophy  || DEFAULT_CHARACTER.philosophy;
-  document.getElementById('char-format').value      = char.format      || DEFAULT_CHARACTER.format;
-  document.getElementById('char-imagery').value     = char.imagery     || DEFAULT_CHARACTER.imagery;
+function fillCharForm(c) {
+  ['identity','personality','purpose','voice','never','philosophy','format','imagery'].forEach(k => {
+    const el = document.getElementById('ch-'+k);
+    if(el) el.value = c[k] || DEF_CHAR[k] || '';
+  });
 }
 
-function getCharacterFromForm() {
-  return {
-    identity:    document.getElementById('char-identity').value.trim(),
-    personality: document.getElementById('char-personality').value.trim(),
-    purpose:     document.getElementById('char-purpose').value.trim(),
-    voice:       document.getElementById('char-voice').value.trim(),
-    never:       document.getElementById('char-never').value.trim(),
-    philosophy:  document.getElementById('char-philosophy').value.trim(),
-    format:      document.getElementById('char-format').value.trim(),
-    imagery:     document.getElementById('char-imagery').value.trim(),
-  };
+function getCharFromForm() {
+  const keys = ['identity','personality','purpose','voice','never','philosophy','format','imagery'];
+  return Object.fromEntries(keys.map(k => [k, document.getElementById('ch-'+k).value.trim()]));
 }
 
-// ── PREVIEW CHARACTER ─────────────────────────────────
-function previewCharacter() {
-  const char = getCharacterFromForm();
-  const prompt = buildSystemPrompt(char);
-  const preview = document.getElementById('char-preview');
-  preview.style.display = 'block';
-  preview.textContent = prompt;
+function previewChar() {
+  const c = getCharFromForm();
+  const p = document.getElementById('char-preview');
+  p.style.display = 'block';
+  p.textContent = buildSysPrompt(c);
 }
 
-// ── SAVE CHARACTER ────────────────────────────────────
-async function saveCharacter() {
-  const char = getCharacterFromForm();
-  setStatus('status-char', 'Saving character…');
-
+async function saveChar() {
+  const c = getCharFromForm();
+  setSt('st-char','Saving…');
   try {
-    // Deactivate previous
-    await sb.from('runar_character').update({ active: false }).eq('active', true);
-
-    // Insert new version
+    await sb.from('runar_character').update({active:false}).eq('active',true);
     const { error } = await sb.from('runar_character').insert([{
-      ...char,
-      active: true,
-      label: `Version ${new Date().toLocaleDateString('en-GB')} ${new Date().toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit'})}`,
-      created_at: new Date().toISOString(),
+      ...c, active:true,
+      label:`Version ${new Date().toLocaleDateString('en-GB')} ${new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})}`,
+      created_at:new Date().toISOString()
     }]);
-
     if(error) throw error;
-
-    activeCharacter = char;
-    setStatus('status-char', '✓ Character saved. Rúnar has been updated.', 'ok');
-    await loadVersionHistory();
+    activeChar = c;
+    setSt('st-char','✓ Character saved.','ok');
+    loadVersions();
   } catch(e) {
-    // If table doesn't exist, just use in memory
-    activeCharacter = char;
-    setStatus('status-char', '✓ Character updated in memory. (Create runar_character table to persist)', 'ok');
+    activeChar = c;
+    setSt('st-char','✓ Updated in memory.','ok');
   }
 }
 
-// ── VERSION HISTORY ───────────────────────────────────
-async function loadVersionHistory() {
+async function testVoice() {
+  const prompt = document.getElementById('test-txt').value.trim();
+  if(!prompt) return;
+  const sys = buildSysPrompt(getCharFromForm());
+  document.getElementById('test-output').style.display='block';
+  document.getElementById('test-result').innerHTML='<span class="stream-cur"></span>';
+  setSt('st-test','Listening…');
+  const res = await callProxy(sys, prompt + (lang==='is'?'\n\nRespond in Icelandic.':''), 400);
+  if(res.error) { setSt('st-test','Failed: '+res.error,'err'); return; }
+  await stream('test-result', res.text);
+  setSt('st-test','');
+}
+
+async function loadVersions() {
   try {
-    const { data } = await sb
-      .from('runar_character')
-      .select('id, label, created_at, active')
-      .order('created_at', { ascending: false })
-      .limit(10);
-
+    const { data } = await sb.from('runar_character').select('id,label,created_at,active').order('created_at',{ascending:false}).limit(10);
     const list = document.getElementById('version-list');
-    if(!data || data.length === 0) {
-      list.innerHTML = '<div style="color:var(--muted);font-style:italic;font-size:0.9em;">No saved versions yet.</div>';
-      return;
-    }
-
-    list.innerHTML = '';
+    if(!data||data.length===0) { list.innerHTML='<div class="empty">No saved versions yet.</div>'; return; }
+    list.innerHTML='';
     data.forEach(v => {
-      const item = document.createElement('div');
-      item.className = 'version-item';
-      item.innerHTML = `
-        <div>
-          <div class="vi-label">${v.label || 'Character version'}</div>
-          <div class="vi-date">${new Date(v.created_at).toLocaleString('en-GB')}</div>
-        </div>
-        ${v.active ? '<span class="vi-active">ACTIVE</span>' : ''}
-      `;
-      if(!v.active) item.onclick = () => restoreVersion(v.id);
-      list.appendChild(item);
+      const d = document.createElement('div');
+      d.className='vi';
+      d.innerHTML=`<div><div class="vi-lbl">${v.label||'Character version'}</div><div class="vi-date">${new Date(v.created_at).toLocaleString('en-GB')}</div></div>${v.active?'<span class="vi-active">ACTIVE</span>':''}`;
+      if(!v.active) d.onclick=()=>restoreVersion(v.id);
+      list.appendChild(d);
     });
   } catch(e) {
-    document.getElementById('version-list').innerHTML =
-      '<div style="color:var(--muted);font-style:italic;font-size:0.9em;">Create runar_character table to enable version history.</div>';
+    document.getElementById('version-list').innerHTML='<div class="empty">Create runar_character table to enable history.</div>';
   }
 }
 
 async function restoreVersion(id) {
-  if(!confirm('Restore this version as active?')) return;
-  await sb.from('runar_character').update({ active: false }).eq('active', true);
-  await sb.from('runar_character').update({ active: true }).eq('id', id);
-  await loadCharacter();
-  await loadVersionHistory();
-  setStatus('status-char', '✓ Version restored.', 'ok');
+  if(!confirm('Restore this version?')) return;
+  await sb.from('runar_character').update({active:false}).eq('active',true);
+  await sb.from('runar_character').update({active:true}).eq('id',id);
+  await loadChar(); await loadVersions();
+  setSt('st-char','✓ Version restored.','ok');
 }
 
-// ── TEST VOICE ────────────────────────────────────────
-async function testVoice() {
-  const prompt = document.getElementById('test-prompt').value.trim();
-  if(!prompt) return;
-
-  const char = getCharacterFromForm();
-  const system = buildSystemPrompt(char);
-
-  document.getElementById('test-box').style.display = 'block';
-  document.getElementById('test-text').innerHTML = '<span class="stream-cursor"></span>';
-  setStatus('status-test', 'Rúnar is listening…');
-
-  const result = await callProxy(system, prompt, 400);
-  if(result.error) {
-    setStatus('status-test', 'Failed: ' + result.error, 'err');
-    return;
-  }
-  await streamText('test-text', result.text);
-  setStatus('status-test', '');
+// ═══ READER ═══════════════════════════════════════════
+function calcLifeRune(d,m,y) {
+  let s = String(d+m+y).split('').map(Number).reduce((a,b)=>a+b,0);
+  while(s>24) s=String(s).split('').map(Number).reduce((a,b)=>a+b,0);
+  return RUNES[(s-1+24)%24];
 }
 
-// ── INVOKE RUNAR (TEACH TAB) ──────────────────────────
-async function invokeRunar() {
-  const source = document.getElementById('source-text').value.trim();
-  if(!source || !selectedRune) return;
-
-  document.getElementById('btn-invoke').disabled = true;
-  document.getElementById('btn-save').disabled = true;
-  document.getElementById('runar-box').style.display = 'block';
-  document.getElementById('runar-text').innerHTML = '<span class="stream-cursor"></span>';
-  setStatus('status-invoke', 'Rúnar is traversing the realms…');
-
-  const char = activeCharacter || DEFAULT_CHARACTER;
-  const system = buildSystemPrompt(char);
-
-  const prompt = `The source text below is from a book about the rune ${selectedRune.n} (${selectedRune.g}).
-Core keywords for this rune: ${selectedRune.k}.
-
-Read this source text carefully. Then speak as Rúnar — give your own poetic interpretation.
-Speak directly to someone who just drew this rune today.
-Do NOT summarize the source — make it your own voice, your own wisdom.
-
-Source text:
-"${source}"`;
-
-  const result = await callProxy(system, prompt, 400);
-
-  if(result.error) {
-    setStatus('status-invoke', 'The ritual failed: ' + result.error, 'err');
-    document.getElementById('btn-invoke').disabled = false;
-    return;
-  }
-
-  runarText = result.text;
-  await streamText('runar-text', runarText);
-  setStatus('status-invoke', '✓ Rúnar has spoken. Review and commit.', 'ok');
-  document.getElementById('btn-save').disabled = false;
-}
-
-// ── SAVE KNOWLEDGE ────────────────────────────────────
-async function saveKnowledge() {
-  if(!runarText || !selectedRune) return;
-  document.getElementById('btn-save').disabled = true;
-  setStatus('status-save', 'Committing to memory…');
-
-  const record = {
-    knowledge_type: 'rune',
-    rune_name: selectedRune.n,
-    rune_glyph: selectedRune.g,
-    category: 'meaning',
-    title: `${selectedRune.n} · meaning`,
-    content: runarText,
-    content_en: runarText,
-    source_ref: document.getElementById('source-ref').value.trim() || 'Susan Gitlin-Emmer · Runes: Signs of the Goddess',
-    approved: true,
-  };
-
-  const { error } = await sb.from('knowledge_base').insert([record]);
-
-  if(!error) {
-    setStatus('status-save', `✓ ${selectedRune.n} committed to Rúnar's memory.`, 'ok');
-    setTimeout(resetTeachForm, 2000);
-  } else {
-    setStatus('status-save', `Error: ${error.message}`, 'err');
-    document.getElementById('btn-save').disabled = false;
-  }
-}
-
-function resetTeachForm() {
-  document.getElementById('source-text').value = '';
-  document.getElementById('source-ref').value = '';
-  document.getElementById('runar-box').style.display = 'none';
-  document.getElementById('runar-text').innerHTML = '';
-  document.getElementById('rune-info').textContent = 'No rune selected.';
-  document.querySelectorAll('.rb').forEach(b => b.classList.remove('sel'));
-  selectedRune = null;
-  runarText = '';
-  document.getElementById('btn-invoke').disabled = true;
-  document.getElementById('btn-save').disabled = true;
-  ['status-invoke','status-save'].forEach(id => setStatus(id, ''));
-}
-
-// ── READER STATE ─────────────────────────────────────
-let readerUser = { name:'', dob:'', lifeRune:null, area:'', seeking:'', question:'' };
-let readerSelectedRune = null;
-
-// ── AREA / SEEK SELECTION ─────────────────────────────
-function selArea(el, val) {
-  document.querySelectorAll('.area-pill').forEach(p => p.classList.remove('sel'));
-  el.classList.add('sel');
-  readerUser.area = val;
-}
-function selSeek(el, val) {
-  document.querySelectorAll('.seek-pill').forEach(p => p.classList.remove('sel'));
-  el.classList.add('sel');
-  readerUser.seeking = val;
-}
-
-// ── LIFE RUNE CALC ────────────────────────────────────
-function calcLifeRune(day, month, year) {
-  const digits = String(day + month + year).split('').map(Number);
-  let sum = digits.reduce((a,b) => a+b, 0);
-  while(sum > 24) {
-    sum = String(sum).split('').map(Number).reduce((a,b) => a+b, 0);
-  }
-  return RUNES[(sum - 1 + 24) % 24];
-}
-
-// ── START READING ─────────────────────────────────────
 function startReading() {
-  const name  = document.getElementById('r-name').value.trim();
-  const day   = parseInt(document.getElementById('r-day').value);
-  const month = parseInt(document.getElementById('r-month').value);
-  const year  = parseInt(document.getElementById('r-year').value);
-
-  if(!name) { setStatus('status-reader-setup','Please enter your name.','err'); return; }
-
-  const lifeRune = (day && month && year) ? calcLifeRune(day, month, year) : null;
-  readerUser = {
-    name, day, month, year,
-    lifeRune,
-    area: readerUser.area,
-    seeking: readerUser.seeking,
-    question: document.getElementById('r-question').value.trim(),
-  };
-
-  // Hide setup, show rune grid
-  document.getElementById('reader-setup').style.display = 'none';
-  document.getElementById('reader-rune-card').style.display = 'block';
-  document.getElementById('reader-output').style.display = 'none';
-
-  // Build reader rune grid
-  const grid = document.getElementById('reader-rune-grid');
-  grid.innerHTML = '';
-  RUNES.forEach((r, i) => {
-    const btn = document.createElement('div');
-    btn.className = 'rb';
-    btn.innerHTML = `<span class="rb-g">${r.g}</span><span class="rb-n">${r.n}</span>`;
-    btn.onclick = () => {
-      document.querySelectorAll('#reader-rune-grid .rb').forEach(b => b.classList.remove('sel'));
-      btn.classList.add('sel');
-      readerSelectedRune = r;
-      document.getElementById('reader-rune-info').textContent = `${r.g} ${r.n} — ${r.k}`;
-      document.getElementById('btn-read-rune').disabled = false;
-    };
-    grid.appendChild(btn);
-  });
-  setStatus('status-reader-setup','');
+  const name = document.getElementById('r-name').value.trim();
+  if(!name) { setSt('st-setup','Please enter your name.','err'); return; }
+  const d=parseInt(document.getElementById('r-day').value);
+  const m=parseInt(document.getElementById('r-month').value);
+  const y=parseInt(document.getElementById('r-year').value);
+  const lifeRune = (d&&m&&y&&d<=31&&m<=12&&y>=1930) ? calcLifeRune(d,m,y) : null;
+  readerUser = { name, d, m, y, lifeRune, area:readerUser.area||'', seeking:readerUser.seeking||'', question:document.getElementById('r-question').value.trim() };
+  document.getElementById('reader-setup').style.display='none';
+  document.getElementById('reader-rune-card').style.display='block';
+  document.getElementById('reader-output').style.display='none';
+  buildGrid('reader-grid', true);
+  setSt('st-setup','');
+  setSt('st-reader','');
 }
 
-// ── READ RUNE ─────────────────────────────────────────
 async function readRune() {
-  if(!readerSelectedRune) return;
-
-  document.getElementById('reader-rune-card').style.display = 'none';
-  document.getElementById('reader-output').style.display = 'block';
-  document.getElementById('status-reader').textContent = '';
-
+  if(!readerRune) return;
+  document.getElementById('reader-rune-card').style.display='none';
+  document.getElementById('reader-output').style.display='block';
   const u = readerUser;
-  const drawn = readerSelectedRune;
+  const drawn = readerRune;
   const life = u.lifeRune;
 
-  // Update badge
-  const lifeRuneBadge = document.getElementById('life-rune-badge');
+  // Badge
+  const badge = document.getElementById('reader-badge');
   if(life) {
-    lifeRuneBadge.style.display = 'flex';
-    document.getElementById('badge-life-glyph').textContent = life.g;
-    document.getElementById('badge-life-name').textContent = life.n;
-    document.getElementById('badge-life-meaning').textContent = life.k;
+    badge.style.display='flex';
+    document.getElementById('badge-life-name').textContent=rn(life);
+    document.getElementById('badge-life-g').textContent=life.g;
+    document.getElementById('badge-drawn-name').textContent=rn(drawn);
+    document.getElementById('badge-drawn-g').textContent=drawn.g;
   } else {
-    lifeRuneBadge.style.display = 'none';
-  }
-  document.getElementById('badge-drawn-glyph').textContent = drawn.g;
-  document.getElementById('badge-drawn-name').textContent = drawn.n;
-
-  // Clear outputs
-  document.getElementById('output-short').innerHTML = '<span class="stream-cursor"></span>';
-  document.getElementById('output-deep').innerHTML = '<span class="stream-cursor"></span>';
-
-  const char = activeCharacter || DEFAULT_CHARACTER;
-  const system = buildSystemPrompt(char);
-
-  const dobLine = (u.day && u.month && u.year) ? `DATE OF BIRTH: ${u.day}/${u.month}/${u.year}\nLIFE RUNE: ${life ? life.n+' ('+life.g+') — '+life.k : 'unknown'}` : '';
-  const areaLine = u.area ? `AREA OF LIFE: ${u.area}` : '';
-  const seekLine = u.seeking ? `SEEKING: ${u.seeking}` : '';
-  const questionLine = u.question ? `SPECIFIC QUESTION: "${u.question}"` : '';
-  const contextLines = [dobLine, areaLine, seekLine, questionLine].filter(Boolean).join('\n');
-
-  const prompt = `You are about to give a rune reading.
-
-PERSON: ${u.name}
-DRAWN RUNE: ${drawn.n} (${drawn.g}) — ${drawn.k}
-${contextLines}
-
-Give the reading in exactly two parts, separated by the marker |||
-
-PART 1 (SHORT & ESSENTIAL):
-2-3 sentences. The core message of ${drawn.n} for ${u.name} right now. Direct, poetic, complete on its own.
-
-PART 2 (DEEPER REFLECTION):
-A richer exploration. Connect ${drawn.n} with ${life ? 'their life rune '+life.n : 'their inner nature'}${u.area ? ', their area ('+u.area+')' : ''}${u.seeking ? ', and what they seek ('+u.seeking+')' : ''}. Draw on mythology, Icelandic nature imagery, and symbolic depth. End with a gentle question or invitation to reflect.
-
-Speak directly to ${u.name}. Use their name once. Be personal, warm and grounded.`;
-
-  const result = await callProxy(system, prompt, 700);
-
-  if(result.error) {
-    setStatus('status-reader', 'The reading failed: ' + result.error, 'err');
-    return;
+    badge.style.display='none';
   }
 
-  // Split on ||| marker
-  const parts = result.text.split('|||');
-  const short = parts[0]?.trim() || result.text;
-  const deep  = parts[1]?.trim() || '';
+  document.getElementById('out-short').innerHTML='<span class="stream-cur"></span>';
+  document.getElementById('out-deep').innerHTML='<span class="stream-cur"></span>';
 
-  await streamText('output-short', short);
-  if(deep) await streamText('output-deep', deep);
-  else document.getElementById('output-deep').innerHTML = '';
+  const sys = buildSysPrompt(activeChar||DEF_CHAR);
+  const langInstr = lang==='is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
+  const parts = [
+    `PERSON: ${u.name}`,
+    life ? `LIFE RUNE: ${rn(life)} (${life.g}) — ${rk(life)}` : '',
+    `DRAWN RUNE: ${rn(drawn)} (${drawn.g}) — ${rk(drawn)}`,
+    u.area ? `AREA: ${u.area}` : '',
+    u.seeking ? `SEEKING: ${u.seeking}` : '',
+    u.question ? `QUESTION: "${u.question}"` : '',
+  ].filter(Boolean).join('\n');
+
+  const prompt = `${parts}
+
+Give the reading in two parts separated by |||
+
+PART 1 (2-3 sentences, core message, direct and poetic):
+
+PART 2 (deeper, connect drawn rune with ${life?'life rune '+life.n+', ':''}${u.area||'their path'}${u.seeking?', seeking '+u.seeking:''}. End with a gentle question):
+
+Speak directly to ${u.name}. ${langInstr}
+${getCorrPrompt()}`;
+
+  const res = await callProxy(sys, prompt, 700);
+  if(res.error) { setSt('st-reader','Failed: '+res.error,'err'); return; }
+
+  const split = res.text.split('|||');
+  await stream('out-short', split[0]?.trim()||res.text);
+  if(split[1]?.trim()) await stream('out-deep', split[1].trim());
+  else document.getElementById('out-deep').innerHTML='';
 }
 
-// ── DRAW ANOTHER ──────────────────────────────────────
 function drawAnother() {
-  readerSelectedRune = null;
-  document.getElementById('reader-output').style.display = 'none';
-  document.getElementById('reader-rune-card').style.display = 'block';
-  document.querySelectorAll('#reader-rune-grid .rb').forEach(b => b.classList.remove('sel'));
-  document.getElementById('reader-rune-info').textContent = '';
-  document.getElementById('btn-read-rune').disabled = true;
+  readerRune=null;
+  document.getElementById('reader-output').style.display='none';
+  document.getElementById('reader-rune-card').style.display='block';
+  document.querySelectorAll('#reader-grid .rb').forEach(b=>b.classList.remove('on'));
+  document.getElementById('reader-rune-info').textContent='';
+  document.getElementById('btn-speak').disabled=true;
 }
 
 function resetReader() {
-  readerUser = { name:'', dob:'', lifeRune:null, area:'', seeking:'', question:'' };
-  readerSelectedRune = null;
-  document.getElementById('reader-setup').style.display = 'block';
-  document.getElementById('reader-rune-card').style.display = 'none';
-  document.getElementById('reader-output').style.display = 'none';
-  document.getElementById('r-name').value = '';
-  document.getElementById('r-day').value = '';
-  document.getElementById('r-month').value = '';
-  document.getElementById('r-year').value = '';
-  document.getElementById('r-question').value = '';
-  document.querySelectorAll('.area-pill,.seek-pill').forEach(p => p.classList.remove('sel'));
-  readerUser.area = ''; readerUser.seeking = '';
+  readerUser={}; readerRune=null;
+  document.getElementById('reader-setup').style.display='block';
+  document.getElementById('reader-rune-card').style.display='none';
+  document.getElementById('reader-output').style.display='none';
+  ['r-name','r-day','r-month','r-year','r-question'].forEach(id=>document.getElementById(id).value='');
+  buildPills();
 }
 
-// ── HELPERS ───────────────────────────────────────────
-async function callProxy(system, prompt, max_tokens = 400) {
+// ═══ CORRECTIONS ══════════════════════════════════════
+function setScope(s) {
+  corrScope=s;
+  ['both','en','is'].forEach(x=>{
+    document.getElementById('scope-'+x).classList.toggle('on',x===s);
+  });
+}
+
+async function saveCorrection() {
+  const from=document.getElementById('corr-from').value.trim();
+  const to=document.getElementById('corr-to').value.trim();
+  if(!from||!to) { setSt('st-corr','Fill in both fields.','err'); return; }
+  setSt('st-corr','Saving…');
+  const rec={original_phrase:from,replacement_phrase:to,context:document.getElementById('corr-ctx').value.trim()||null,lang_scope:corrScope,created_at:new Date().toISOString()};
   try {
-    const res = await fetch(PROXY_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ system, prompt, max_tokens })
-    });
-    const data = await res.json();
-    if(data.error) return { error: data.error };
-    return { text: data.text };
+    const {error}=await sb.from('runar_corrections').insert([rec]);
+    if(error) throw error;
+    setSt('st-corr','✓ Saved.','ok');
   } catch(e) {
-    return { error: e.message };
+    const saved=JSON.parse(localStorage.getItem('runar_corr')||'[]');
+    saved.push(rec); localStorage.setItem('runar_corr',JSON.stringify(saved));
+    setSt('st-corr','✓ Saved locally.','ok');
   }
+  document.getElementById('corr-from').value='';
+  document.getElementById('corr-to').value='';
+  document.getElementById('corr-ctx').value='';
+  loadCorrections();
 }
 
-async function streamText(elId, text) {
-  const el = document.getElementById(elId);
-  el.innerHTML = '';
-  const words = text.split(' ');
-  for(let i = 0; i < words.length; i++) {
-    el.innerHTML = words.slice(0, i+1).join(' ') + '<span class="stream-cursor"></span>';
-    await new Promise(r => setTimeout(r, 28));
-  }
-  el.innerHTML = text;
+async function loadCorrections() {
+  let items=[];
+  try {
+    const {data}=await sb.from('runar_corrections').select('*').order('created_at',{ascending:false}).limit(50);
+    items=data||[];
+  } catch(e) { items=JSON.parse(localStorage.getItem('runar_corr')||'[]'); }
+  const list=document.getElementById('corr-list');
+  if(!items.length) { list.innerHTML='<div class="empty">No corrections yet.</div>'; return; }
+  list.innerHTML='';
+  items.forEach(it=>{
+    const d=document.createElement('div');
+    d.className='corr-item';
+    d.innerHTML=`<div><div class="corr-from">"${it.original_phrase}"</div><div class="corr-to">→ "${it.replacement_phrase}"</div>${it.context?`<div class="corr-ctx">${it.context}</div>`:''}</div><div class="corr-scope">${(it.lang_scope||'both').toUpperCase()}</div>`;
+    list.appendChild(d);
+  });
 }
 
-function setStatus(id, msg, type='') {
-  const el = document.getElementById(id);
+function getCorrPrompt() {
+  const saved=JSON.parse(localStorage.getItem('runar_corr')||'[]');
+  const rel=saved.filter(c=>c.lang_scope==='both'||c.lang_scope===lang);
+  if(!rel.length) return '';
+  return '\n\nWORD CORRECTIONS — always apply:\n'+rel.map(c=>`• Instead of "${c.original_phrase}" say "${c.replacement_phrase}"`).join('\n');
+}
+
+// ═══ API ══════════════════════════════════════════════
+async function callProxy(system,prompt,max_tokens=500) {
+  try {
+    const res=await fetch(PROXY,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system,prompt,max_tokens})});
+    const data=await res.json();
+    if(data.error) return {error:data.error};
+    return {text:data.text};
+  } catch(e) { return {error:e.message}; }
+}
+
+async function stream(elId,text) {
+  const el=document.getElementById(elId);
+  el.innerHTML='';
+  const words=text.split(' ');
+  for(let i=0;i<words.length;i++) {
+    el.innerHTML=words.slice(0,i+1).join(' ')+'<span class="stream-cur"></span>';
+    await new Promise(r=>setTimeout(r,25));
+  }
+  el.innerHTML=text;
+}
+
+function setSt(id,msg,type='') {
+  const el=document.getElementById(id);
   if(!el) return;
-  el.textContent = msg;
-  el.className = 'status' + (type ? ' '+type : '');
+  el.textContent=msg;
+  el.className='status'+(type?' '+type:'');
 }
 </script>
 </body>
