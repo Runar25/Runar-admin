@@ -725,7 +725,7 @@ async function generateVoice(){
   btn.disabled=true;btn.textContent=t('voice_btn_loading');setSt('st-voice','');
   try{
     const res=await fetch(EL_PROXY,{
-      method:'POST',headers:{'Content-Type':'application/json'},
+      method:'POST',headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY},
       body:JSON.stringify({text:deepText,lang:lang,rune_name:readerRune?readerRune.n:'reading'})
     });
     const data=await res.json();
