@@ -149,32 +149,51 @@ audio{flex:1;height:36px;filter:invert(0.85) sepia(0.3) hue-rotate(180deg);}
 </div>
 
 <!-- ═══ TEACH ═══ -->
-<div class="pane on" id="pane-teach">
-  <div class="card">
-    <div class="card-lbl" id="teach-card1-lbl">📖 SOURCE TEXT FROM BOOK</div>
-    <p class="note" id="teach-card1-note">Open the book, find the page about a rune, and paste or type the text here.</p>
-    <textarea id="src-text" rows="6" placeholder="Paste or type the book text here…" oninput="checkTeach()"></textarea>
-  </div>
-  <div class="card">
-    <div class="card-lbl" id="teach-card2-lbl">ᚠ WHICH RUNE IS THIS ABOUT?</div>
-    <div class="rune-grid" id="teach-grid"></div>
-    <div class="rune-info" id="teach-rune-info">No rune selected.</div>
-    <label class="flbl" id="src-ref-lbl">SOURCE REFERENCE</label>
-    <input class="txt" id="src-ref" type="text" placeholder="e.g. Agndofa Rune Guide, p.1">
-  </div>
-  <div class="card">
-    <div class="card-lbl" id="teach-card3-lbl">✦ LET RÚNAR INTERPRET</div>
-    <p class="note" id="teach-card3-note">Rúnar will read the source and rewrite it in his own voice — not a translation, his interpretation.</p>
-    <button class="btn" id="btn-invoke" onclick="invokeRunar()" disabled>↯ INVOKE RÚNAR</button>
-    <div class="runar-box" id="teach-output">
-      <div class="runar-box-lbl" id="teach-output-lbl">RÚNAR SPEAKS</div>
-      <div class="runar-txt" id="teach-txt"></div>
-    </div>
-    <div class="status" id="st-invoke"></div>
-    <button class="btn-full" id="btn-commit" onclick="commitKnowledge()" disabled>COMMIT TO RÚNAR'S MEMORY</button>
-    <div class="status" id="st-commit"></div>
-  </div>
-</div>
+- <div class="card">
+-   <div class="card-lbl" id="teach-card1-lbl">📖 SOURCE TEXT FROM BOOK</div>
+-   <p class="note" id="teach-card1-note">Open the book, find the page about a rune, and paste or type the text here.</p>
+-   <textarea id="src-text" rows="6" placeholder="Paste or type the book text here…" oninput="checkTeach()"></textarea>
+- </div>
+- <div class="card">
+-   <div class="card-lbl" id="teach-card2-lbl">ᚠ WHICH RUNE IS THIS ABOUT?</div>
+-   <div class="rune-grid" id="teach-grid"></div>
+-   <div class="rune-info" id="teach-rune-info">No rune selected.</div>
+-   <label class="flbl" id="src-ref-lbl">SOURCE REFERENCE</label>
+-   <input class="txt" id="src-ref" type="text" placeholder="e.g. Agndofa Rune Guide, p.1">
+- </div>
+- <div class="card">
+-   <div class="card-lbl" id="teach-card3-lbl">✦ LET RÚNAR INTERPRET</div>
+-   <p class="note" id="teach-card3-note">Rúnar will read the source and rewrite it in his own voice — not a translation, his interpretation.</p>
+-   <button class="btn" id="btn-invoke" onclick="invokeRunar()" disabled>↯ INVOKE RÚNAR</button>
+-   <div class="runar-box" id="teach-output">
+-     <div class="runar-box-lbl" id="teach-output-lbl">RÚNAR SPEAKS</div>
+-     <div class="runar-txt" id="teach-txt"></div>
+-   </div>
+-   <div class="status" id="st-invoke"></div>
+-   <button class="btn-full" id="btn-commit" onclick="commitKnowledge()" disabled>COMMIT TO RÚNAR'S MEMORY</button>
+-   <div class="status" id="st-commit"></div>
+- </div>
+
++ <div class="card">
++   <div class="card-lbl">ᚠ SELECT RUNE</div>
++   <p class="note">Select a rune. Rúnar will speak directly about it in the current language.</p>
++   <div class="rune-grid" id="teach-grid"></div>
++   <div class="rune-info" id="teach-rune-info">No rune selected.</div>
++ </div>
++ <div class="card">
++   <div class="card-lbl">✦ RÚNAR SPEAKS</div>
++   <button class="btn" id="btn-invoke" onclick="invokeRunar()" disabled>↯ LET RÚNAR SPEAK</button>
++   <div class="runar-box" id="teach-output" style="margin-top:14px;">
++     <div class="runar-box-lbl">RÚNAR SPEAKS</div>
++     <div class="runar-txt" id="teach-txt"></div>
++   </div>
++   <div class="status" id="st-invoke"></div>
++   <button class="btn-full" id="btn-commit" onclick="commitKnowledge()" disabled>COMMIT TO RÚNAR'S MEMORY</button>
++   <div class="status" id="st-commit"></div>
++   <button class="btn-voice" id="btn-teach-voice" onclick="generateStaticVoice()" disabled style="display:none;">ᚢ GENERATE RÚNAR'S VOICE</button>
++   <button class="btn-full" id="btn-save-voice" onclick="saveStaticVoice()" disabled style="display:none;margin-top:8px;">SAVE VOICE TO MEMORY</button>
++   <div class="status" id="st-teach-voice"></div>
++ </div>
 
 <!-- ═══ CHARACTER ═══ -->
 <div class="pane" id="pane-char">
@@ -443,42 +462,178 @@ function buildPillGroup(containerId, items, type) {
 }
 
 // ─── TEACH ──────────────────────────────────────────────
-function checkTeach() { document.getElementById('btn-invoke').disabled = !(document.getElementById('src-text').value.trim().length > 20 && teachRune); }
+- function checkTeach() { 
+-   document.getElementById('btn-invoke').disabled = 
+-     !(document.getElementById('src-text').value.trim().length > 20 && teachRune); 
+- }
 
-async function invokeRunar() {
-  const src = document.getElementById('src-text').value.trim(); if (!src || !teachRune) return;
-  document.getElementById('btn-invoke').disabled = true; document.getElementById('btn-commit').disabled = true;
-  document.getElementById('teach-output').style.display = 'block';
-  document.getElementById('teach-txt').innerHTML = '<span class="stream-cur"></span>';
-  setSt('st-invoke', t('st_traversing'));
-  const sys = buildSysPrompt(activeChar);
-  const langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
-  const prompt = `The source text below is about the rune ${rn(teachRune)} (${teachRune.g}).\nKeywords: ${rk(teachRune)}.\nRead this source carefully. Then speak as Rúnar — your own poetic interpretation.\nSpeak directly to someone who just drew this rune. Do NOT summarize. ${langInstr}\n\nSource: "${src}"\n${getCorrPrompt()}`;
-  const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens);
-  if (res.error) { setSt('st-invoke', 'Failed: ' + res.error, 'err'); document.getElementById('btn-invoke').disabled = false; return; }
-  teachText = res.text; await stream('teach-txt', teachText);
-  setSt('st-invoke', t('st_spoken'), 'ok'); document.getElementById('btn-commit').disabled = false;
-}
++ function checkTeach() {
++   document.getElementById('btn-invoke').disabled = !teachRune;
++ }
 
-async function commitKnowledge() {
-  if (!teachText || !teachRune) return;
-  document.getElementById('btn-commit').disabled = true; setSt('st-commit', t('st_saving'));
-  const rec = { knowledge_type: 'rune', rune_name: teachRune.n, rune_glyph: teachRune.g, category: 'meaning', title: `${teachRune.n} · meaning`, content: teachText, content_en: teachText, source_ref: document.getElementById('src-ref').value.trim() || 'Agndofa Rune Guide', approved: true };
-  const { error } = await sb.from('knowledge_base').insert([rec]);
-  if (!error) { setSt('st-commit', `✓ ${teachRune.n} committed.`, 'ok'); setTimeout(resetTeach, 2000); }
-  else { setSt('st-commit', 'Error: ' + error.message, 'err'); document.getElementById('btn-commit').disabled = false; }
-}
+- async function invokeRunar() {
+-   const src = document.getElementById('src-text').value.trim(); if (!src || !teachRune) return;
+-   document.getElementById('btn-invoke').disabled = true; document.getElementById('btn-commit').disabled = true;
+-   document.getElementById('teach-output').style.display = 'block';
+-   document.getElementById('teach-txt').innerHTML = '<span class="stream-cur"></span>';
+-   setSt('st-invoke', t('st_traversing'));
+-   const sys = buildSysPrompt(activeChar);
+-   const langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
+-   const prompt = `The source text below is about the rune ${rn(teachRune)} (${teachRune.g}).\nKeywords: ${rk(teachRune)}.\nRead this source carefully. Then speak as Rúnar — your own poetic interpretation.\nSpeak directly to someone who just drew this rune. Do NOT summarize. ${langInstr}\n\nSource: "${src}"\n${getCorrPrompt()}`;
+-   const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens);
+-   if (res.error) { setSt('st-invoke', 'Failed: ' + res.error, 'err'); document.getElementById('btn-invoke').disabled = false; return; }
+-   teachText = res.text; await stream('teach-txt', teachText);
+-   setSt('st-invoke', t('st_spoken'), 'ok'); document.getElementById('btn-commit').disabled = false;
+- }
+
++ async function invokeRunar() {
++   if (!teachRune) return;
++   document.getElementById('btn-invoke').disabled = true;
++   document.getElementById('btn-commit').disabled = true;
++   document.getElementById('btn-teach-voice').style.display = 'none';
++   document.getElementById('btn-save-voice').style.display = 'none';
++   document.getElementById('teach-output').style.display = 'block';
++   document.getElementById('teach-txt').innerHTML = '<span class="stream-cur"></span>';
++   setSt('st-invoke', t('st_traversing'));
++
++   const sys = buildSysPrompt(activeChar);
++   const langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
++   const prompt = `You are speaking to someone who has just drawn the rune ${rn(teachRune)} (${teachRune.g}).
++ Keywords: ${rk(teachRune)}.
++ Speak directly to them as Rúnar — 2 to 3 sentences, poetic and timeless.
++ No personal context. No labels. No explanation of the rune.
++ ${langInstr}
++ ${getCorrPrompt()}`;
++
++   const res = await callProxy(sys, prompt, 300);
++   if (res.error) {
++     setSt('st-invoke', 'Failed: ' + res.error, 'err');
++     document.getElementById('btn-invoke').disabled = false;
++     return;
++   }
++   teachText = res.text;
++   await stream('teach-txt', teachText);
++   setSt('st-invoke', t('st_spoken'), 'ok');
++   document.getElementById('btn-commit').disabled = false;
++ }
+
+- async function commitKnowledge() {
+-   if (!teachText || !teachRune) return;
+-   document.getElementById('btn-commit').disabled = true; setSt('st-commit', t('st_saving'));
+-   const rec = { knowledge_type: 'rune', rune_name: teachRune.n, rune_glyph: teachRune.g, category: 'meaning', title: `${teachRune.n} · meaning`, content: teachText, content_en: teachText, source_ref: document.getElementById('src-ref').value.trim() || 'Agndofa Rune Guide', approved: true };
+-   const { error } = await sb.from('knowledge_base').insert([rec]);
+-   if (!error) { setSt('st-commit', `✓ ${teachRune.n} committed.`, 'ok'); setTimeout(resetTeach, 2000); }
+-   else { setSt('st-commit', 'Error: ' + error.message, 'err'); document.getElementById('btn-commit').disabled = false; }
+- }
+
++ async function commitKnowledge() {
++   if (!teachText || !teachRune) return;
++   document.getElementById('btn-commit').disabled = true;
++   setSt('st-commit', t('st_saving'));
++
++   const { error } = await sb.from('runar_static_audio').upsert({
++     rune_name:   teachRune.n,
++     rune_glyph:  teachRune.g,
++     lang:        lang,
++     text:        teachText,
++     ready:       false,
++     updated_at:  new Date().toISOString(),
++   }, { onConflict: 'rune_name,lang' });
++
++   if (error) {
++     setSt('st-commit', 'Error: ' + error.message, 'err');
++     document.getElementById('btn-commit').disabled = false;
++     return;
++   }
++
++   setSt('st-commit', `✓ ${teachRune.n} text saved.`, 'ok');
++   document.getElementById('btn-teach-voice').style.display = 'block';
++   document.getElementById('btn-teach-voice').disabled = false;
++ }
 
 function resetTeach() {
-  document.getElementById('src-text').value = ''; document.getElementById('src-ref').value = '';
-  document.getElementById('teach-output').style.display = 'none';
-  document.getElementById('teach-rune-info').textContent = t('rune_none');
-  document.querySelectorAll('#teach-grid .rb').forEach(b => b.classList.remove('on'));
-  teachRune = null; teachText = '';
-  document.getElementById('btn-invoke').disabled = true; document.getElementById('btn-commit').disabled = true;
-  setSt('st-invoke', ''); setSt('st-commit', '');
+-   document.getElementById('src-text').value = ''; 
+-   document.getElementById('src-ref').value = '';
+    document.getElementById('teach-output').style.display = 'none';
+    document.getElementById('teach-rune-info').textContent = t('rune_none');
+    document.querySelectorAll('#teach-grid .rb').forEach(b => b.classList.remove('on'));
+    teachRune = null; teachText = '';
++   teachAudioUrl = null;
+    document.getElementById('btn-invoke').disabled = true; 
+    document.getElementById('btn-commit').disabled = true;
++   document.getElementById('btn-teach-voice').style.display = 'none';
++   document.getElementById('btn-teach-voice').textContent = 'ᚢ GENERATE RÚNAR\'S VOICE';
++   document.getElementById('btn-save-voice').style.display = 'none';
+    setSt('st-invoke', ''); setSt('st-commit', '');
++   setSt('st-teach-voice', '');
+  }
+  
+// ─── STATIC VOICE ───────────────────────────────────────
+let teachAudioUrl = null;
+
+async function generateStaticVoice() {
+  if (!teachText || !teachRune) return;
+  const btn = document.getElementById('btn-teach-voice');
+  btn.disabled = true;
+  btn.textContent = 'ᚢ RÚNAR IS SPEAKING…';
+  setSt('st-teach-voice', '');
+
+  try {
+    const res = await fetch(EL_PROXY, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: teachText, lang: lang || 'en' })
+    });
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    if (!data.audio_url) throw new Error('No audio_url in response');
+
+    teachAudioUrl = data.audio_url;
+    btn.textContent = 'ᚢ REGENERATE VOICE';
+    btn.disabled = false;
+    document.getElementById('btn-save-voice').style.display = 'block';
+    document.getElementById('btn-save-voice').disabled = false;
+    setSt('st-teach-voice', '✓ Voice ready. Press Save to store.', 'ok');
+  } catch (err) {
+    setSt('st-teach-voice', `Voice error: ${err.message}`, 'err');
+    btn.textContent = 'ᚢ GENERATE RÚNAR\'S VOICE';
+    btn.disabled = false;
+  }
 }
 
+async function saveStaticVoice() {
+  if (!teachText || !teachRune) return;
+  const btn = document.getElementById('btn-save-voice');
+  btn.disabled = true;
+  setSt('st-teach-voice', 'Saving to memory…');
+
+  try {
+    const res = await fetch(EL_STATIC, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        text:       teachText,
+        rune_name:  teachRune.n,
+        rune_glyph: teachRune.g,
+        lang:       lang || 'en'
+      })
+    });
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    setSt('st-teach-voice', `✓ ${teachRune.n} voice saved.`, 'ok');
+    btn.textContent = 'SAVED ✓';
+    setTimeout(resetTeach, 2000);
+  } catch (err) {
+    setSt('st-teach-voice', `Save error: ${err.message}`, 'err');
+    btn.disabled = false;
+  }
+}
+  
 // ─── CHARACTER ──────────────────────────────────────────
 async function loadChar() {
   try { const { data } = await sb.from('runar_character').select('*').eq('active', true).order('created_at', { ascending: false }).limit(1).single(); if (data) { activeChar = data; fillCharForm(data); return; } } catch (e) {}
