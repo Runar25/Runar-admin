@@ -528,7 +528,7 @@ async function generateStaticVoice() {
     const res = await fetch(EL_PROXY, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text: teachText, lang: lang || 'en' })
+      body: JSON.stringify({ text: teachText, lang: lang || 'en', voice_id: elVoiceId(lang) })
     });
 
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -570,7 +570,8 @@ async function saveStaticVoice() {
         text:       teachText,
         rune_name:  teachRune.n,
         rune_glyph: teachRune.g,
-        lang:       lang || 'en'
+        lang:       lang || 'en',
+        voice_id:   elVoiceId(lang)
       })
     });
 
@@ -714,7 +715,7 @@ async function generateVoice() {
     const res = await fetch(EL_PROXY, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text: deepText, lang: lang || 'en' })
+      body: JSON.stringify({ text: deepText, lang: lang || 'en', voice_id: elVoiceId(lang) })
     });
 
     if (!res.ok) {

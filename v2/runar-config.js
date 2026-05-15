@@ -16,8 +16,14 @@ const EL_STATIC = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/elevenl
 // const LUNAR_PROXY  = '...functions/v1/lunar-context';
 
 // ─── ELEVENLABS ─────────────────────────────────────────
-const EL_VOICE_ID = '2UI8v2ibbwQTijaYAte1';
-const EL_MODEL    = 'eleven_multilingual_v2';
+const EL_VOICE_ID_EN = '2UI8v2ibbwQTijaYAte1'; // English — Rúnar EN
+const EL_VOICE_ID_IS = '4E6WbDOme312uWJ8z4pv'; // Icelandic — Rúnar IS
+const EL_MODEL       = 'eleven_multilingual_v2';
+// Helper — vybere správný voice ID podle jazyka
+function elVoiceId(lang) {
+  return lang === 'is' ? EL_VOICE_ID_IS : EL_VOICE_ID_EN;
+}
+
 const EL_VOICE_SETTINGS = {
   stability:        0.75,
   similarity_boost: 0.85,
