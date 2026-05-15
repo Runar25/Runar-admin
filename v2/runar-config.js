@@ -15,7 +15,7 @@ const EL_PROXY = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/elevenla
 // const LUNAR_PROXY  = '...functions/v1/lunar-context';
 
 const EL_PROXY    = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/elevenlabs-proxy';
-+ const EL_STATIC  = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/elevenlabs-static';
+const EL_STATIC  = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/elevenlabs-static';
 
 // ─── ELEVENLABS ─────────────────────────────────────────
 const EL_VOICE_ID = '2UI8v2ibbwQTijaYAte1';
