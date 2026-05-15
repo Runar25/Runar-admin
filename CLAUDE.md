@@ -21,13 +21,14 @@ runar-translations.js  ← UI_TEXT { en, is }
 runar-svgs.js          ← RUNE_SVGS (SVG glyfů)
 ```
 
-## Edge Functions (`~/supabase/functions/`)
+## Edge Functions (`/supabase/functions/`)
 ```
 claude-proxy           ← forwards to Claude API
 elevenlabs-proxy       ← real-time TTS, vrací base64 → Blob URL
 elevenlabs-static      ← admin: generuje + ukládá MP3 do Storage
 ```
-Všechny deploynuty s `--no-verify-jwt`. Deploy: `cd ~ && supabase functions deploy <name> --project-ref pmitxjvkeovijreepror --no-verify-jwt`
+Všechny deploynuty s `--no-verify-jwt`.
+Deploy z root repo: `supabase functions deploy <name> --project-ref pmitxjvkeovijreepror --no-verify-jwt`
 
 ## Supabase tabulky
 ```
