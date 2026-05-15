@@ -182,6 +182,7 @@ audio{flex:1;height:36px;filter:invert(0.85) sepia(0.3) hue-rotate(180deg);}
     </div>
     <button class="btn-full" id="btn-save-voice" onclick="saveStaticVoice()" disabled style="display:none;margin-top:8px;background:var(--teal);color:#000;">SAVE VOICE TO MEMORY</button>
     <div class="status" id="st-teach-voice"></div>
+    <button class="btn" id="btn-next-rune" onclick="resetTeach()" style="display:none;margin-top:8px;width:100%;">ᚠ TEACH ANOTHER RUNE</button>
   </div>
 </div>
 
@@ -593,9 +594,10 @@ async function saveStaticVoice() {
     const data = await res.json();
     if (data.error) throw new Error(data.error);
 
-    setSt('st-teach-voice', `✓ ${teachRune.n} voice saved.`, 'ok');
+    setSt('st-teach-voice', `✓ ${teachRune.n} (${teachRune.g}) voice saved to memory. Rune is ready.`, 'ok');
     btn.textContent = 'SAVED ✓';
-    setTimeout(resetTeach, 2000);
+    btn.disabled = true;
+    document.getElementById('btn-next-rune').style.display = 'block';
   } catch (err) {
     setSt('st-teach-voice', `Save error: ${err.message}`, 'err');
     btn.disabled = false;
@@ -617,6 +619,8 @@ function resetTeach() {
   document.getElementById('btn-teach-voice').textContent = 'ᚢ GENERATE RÚNAR\'S VOICE';
   document.getElementById('btn-save-voice').style.display = 'none';
   document.getElementById('btn-save-voice').textContent = 'SAVE VOICE TO MEMORY';
+  document.getElementById('btn-save-voice').disabled = true;
+  document.getElementById('btn-next-rune').style.display = 'none';
   setSt('st-invoke', ''); setSt('st-commit', ''); setSt('st-teach-voice', '');
 }
 
