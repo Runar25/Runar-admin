@@ -23,6 +23,13 @@ serve(async (req) => {
 
     const resolvedVoiceId = voice_id || (lang === 'is' ? EL_VOICE_ID_IS : EL_VOICE_ID_EN)
     const resolvedModel   = model_id || (lang === 'is' ? EL_MODEL_IS    : EL_MODEL_EN)
+    const elBody = {
+      text,
+      model_id: resolvedModel,
+      ...(lang === 'is' ? { language_code: 'is' } : {}),
+      voice_settings: { stability: 0.75, similarity_boost: 0.85, style: 0.35, use_speaker_boost: true },
+    }
+    console.log('EL request:', JSON.stringify({ voiceId: resolvedVoiceId, model: resolvedModel, lang, language_code: lang === 'is' ? 'is' : null }))
 
     const elRes = await fetch(
       `https://api.elevenlabs.io/v1/text-to-speech/${resolvedVoiceId}/stream`,
@@ -32,17 +39,7 @@ serve(async (req) => {
           'xi-api-key': EL_API_KEY,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          text,
-          model_id: resolvedModel,
-          ...(lang === 'is' ? { language_code: 'is' } : {}),
-          voice_settings: {
-            stability: 0.75,
-            similarity_boost: 0.85,
-            style: 0.35,
-            use_speaker_boost: true,
-          },
-        }),
+        body: JSON.stringify(elBody),
       }
     )
 

@@ -17,7 +17,7 @@ const EL_STATIC = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/elevenl
 
 // ─── ELEVENLABS ─────────────────────────────────────────
 const EL_VOICE_ID_EN = '2UI8v2ibbwQTijaYAte1'; // English — Rúnar EN
-const EL_VOICE_ID_IS = '2UI8v2ibbwQTijaYAte1'; // IS — stejný voice, eleven_v3 detekuje jazyk z textu
+const EL_VOICE_ID_IS = '4E6WbDOme312uWJ8z4pv'; // Icelandic — IS voice + eleven_v3 + language_code
 
 const EL_MODEL_EN = 'eleven_multilingual_v2'; // EN model
 const EL_MODEL_IS = 'eleven_v3';              // IS model — detekuje islandštinu automaticky
