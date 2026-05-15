@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RÚNAR · SHRINE</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+
+<!-- ═══ RÚNAR MODULES — load order matters ═══ -->
+<script src="runar-config.js"></script>
+<script src="runar-runes.js"></script>
+<script src="runar-translations.js"></script>
+<script src="runar-character.js"></script>
+<script src="runar-svgs.js"></script>
+
+<style>
+:root{
+  --bg:#0a0c12;--card:#12161f;--card2:#171b26;
+  --border:#2E4A70;--border2:#3a5a85;
+  --gold:#D6A85C;--gold2:rgba(214,168,92,0.12);
+  --white:#F2F5F7;--muted:#8ba5c0;--dim:#3a4a60;
+  --blue:#5BB8FF;--teal:#7ED9B5;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--white);font-family:'Cormorant Garamond',serif;min-height:100vh;display:flex;justify-content:center;padding:40px 16px 80px;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(46,74,112,0.3) 0%,transparent 60%),radial-gradient(ellipse 40% 30% at 90% 90%,rgba(126,217,181,0.05) 0%,transparent 50%);}
+.app{position:relative;z-index:1;max-width:760px;width:100%;}
+.hdr{border-bottom:1px solid var(--border);padding-bottom:24px;margin-bottom:0;}
+.hdr-inner{display:flex;justify-content:space-between;align-items:flex-start;}
+.brand{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:4px;color:var(--gold);}
+h1{font-size:2.2em;font-weight:400;margin:6px 0 4px;}
+.sub{color:var(--muted);font-style:italic;}
+.lang-toggle{display:flex;border:1px solid var(--border);margin-top:8px;overflow:hidden;}
+.lang-btn{padding:8px 18px;font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:2px;border:none;cursor:pointer;transition:all 0.2s;}
+.lang-btn.active{background:var(--gold);color:#000;}
+.lang-btn:not(.active){background:transparent;color:var(--muted);}
+.tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:28px;overflow-x:auto;}
+.tab{font-family:'Cinzel',serif;font-size:0.68em;letter-spacing:1.5px;color:var(--muted);padding:14px 20px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:transparent;white-space:nowrap;transition:all 0.25s;flex-shrink:0;}
+.tab:hover{color:var(--white);}
+.tab.on{color:var(--gold);border-bottom-color:var(--gold);}
+.pane{display:none;}.pane.on{display:block;}
+.card{background:var(--card);border:1px solid var(--border);padding:24px;margin-bottom:20px;}
+.card-lbl{font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:2px;color:var(--gold);margin-bottom:16px;}
+.flbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--gold);display:block;margin:16px 0 6px;}
+.flbl:first-child{margin-top:0;}
+.opt{opacity:0.45;font-size:0.85em;}
+textarea{width:100%;background:#080e18;border:1px solid var(--border);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.05em;line-height:1.8;padding:14px;resize:vertical;}
+textarea:focus{outline:none;border-color:var(--gold);}
+textarea::placeholder{color:var(--dim);}
+.txt{width:100%;background:transparent;border:none;border-bottom:1px solid var(--border2);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.1em;padding:10px 0;}
+.txt:focus{outline:none;border-bottom-color:var(--gold);}
+.txt::placeholder{color:var(--dim);}
+.num{background:#080e18;border:1px solid var(--border);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.05em;padding:10px 12px;width:100%;outline:none;}
+.num:focus{border-color:var(--gold);}
+.num::placeholder{color:var(--dim);}
+.dob-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:4px;}
+.rune-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px;}
+@media(max-width:480px){.rune-grid{grid-template-columns:repeat(3,1fr);gap:6px;}}
+.rb{aspect-ratio:1;background:#0d1220;border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all 0.18s;gap:2px;min-width:0;}
+.rb:hover{background:rgba(91,184,255,0.08);border-color:var(--blue);}
+.rb.on{background:rgba(91,184,255,0.12);border-color:var(--blue);box-shadow:0 0 10px rgba(91,184,255,0.15);}
+.rb-g{font-size:1.4em;color:var(--gold);}
+.rb-svg{width:72px;height:88px;display:block;}
+@media(max-width:480px){.rb-g{font-size:1.1em;}.rb-n{font-size:0.28em;}.rb-svg{width:52px;height:64px;}}
+.rb.on .rb-g{color:var(--blue);}
+.rb-n{font-family:'Cinzel',serif;font-size:0.85em;letter-spacing:0.5px;color:var(--muted);margin-top:4px;}
+.rb.on .rb-n{color:var(--blue);}
+.rune-info{font-size:0.9em;color:#8bb8d8;font-style:italic;min-height:18px;margin:6px 0;}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
+.pill{padding:6px 14px;border:1px solid var(--border);background:transparent;font-family:'Cormorant Garamond',serif;font-size:0.95em;font-style:italic;color:var(--muted);cursor:pointer;transition:all 0.2s;}
+.pill:hover{border-color:var(--border2);color:var(--white);}
+.pill.on{border-color:var(--gold);color:var(--gold);background:var(--gold2);}
+.runar-box{background:#0a0e18;border-left:3px solid var(--blue);padding:20px;margin-top:14px;display:none;}
+.runar-box-lbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--blue);margin-bottom:10px;}
+.runar-txt{font-size:1.05em;line-height:1.9;font-style:italic;color:var(--white);}
+.stream-cur{display:inline-block;width:2px;height:14px;background:var(--gold);margin-left:2px;animation:blink 0.9s step-end infinite;vertical-align:middle;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.badge{display:flex;align-items:center;gap:16px;padding:14px 18px;background:#0d1220;border:1px solid var(--border);margin-bottom:14px;}
+.badge-meta-lbl{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;margin-bottom:2px;}
+.badge-name{font-size:1em;}
+.layer1{background:#0a0e18;border-left:3px solid var(--gold);padding:18px 22px;margin-bottom:10px;}
+.layer1-lbl{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--gold);margin-bottom:8px;}
+.layer2{background:#0d1018;border-left:3px solid var(--blue);padding:18px 22px;margin-bottom:18px;}
+.layer2-lbl{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--blue);margin-bottom:8px;}
+.out-txt{font-size:1.05em;line-height:1.9;font-style:italic;color:rgba(242,245,247,0.88);}
+.audio-player{margin-top:16px;display:none;background:#080e18;border:1px solid var(--border);padding:14px 18px;}
+.audio-player.visible{display:block;}
+.audio-player-lbl{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--teal);margin-bottom:10px;}
+.audio-controls{display:flex;align-items:center;gap:12px;}
+audio{flex:1;height:36px;filter:invert(0.85) sepia(0.3) hue-rotate(180deg);}
+.btn-voice{color:var(--teal);border:1px solid var(--teal);padding:12px 20px;font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.5px;cursor:pointer;transition:all 0.25s;background:transparent;margin-top:14px;width:100%;display:block;}
+.btn-voice:hover{background:var(--teal);color:#000;}
+.btn-voice:disabled{opacity:0.3;cursor:not-allowed;}
+.corr-item{background:var(--card2);border:1px solid var(--border);padding:12px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+.corr-from{font-size:0.9em;color:#e07070;font-style:italic;margin-bottom:3px;}
+.corr-to{font-size:0.9em;color:var(--teal);font-style:italic;}
+.corr-ctx{font-size:0.78em;color:var(--muted);margin-top:3px;}
+.corr-scope{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:1px;color:var(--muted);}
+.char-section-lbl{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:2px;color:var(--teal);border-bottom:1px solid var(--border);padding-bottom:10px;margin:20px 0 14px;}
+.char-preview{background:#080e18;border-left:2px solid var(--gold);padding:14px;margin-top:12px;font-size:0.88em;line-height:1.75;color:#aac4d8;font-style:italic;display:none;white-space:pre-wrap;}
+.vi{background:var(--card2);border:1px solid var(--border);padding:12px 16px;margin-bottom:8px;cursor:pointer;transition:border-color 0.2s;display:flex;justify-content:space-between;align-items:center;}
+.vi:hover{border-color:var(--gold);}
+.vi-lbl{font-size:0.95em;color:var(--white);font-style:italic;}
+.vi-date{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:1px;color:var(--muted);}
+.vi-active{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:1px;color:var(--gold);border:1px solid var(--gold);padding:2px 8px;}
+.btn{color:var(--gold);border:1px solid var(--gold);padding:10px 20px;font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.5px;cursor:pointer;transition:all 0.25s;background:transparent;margin-top:12px;}
+.btn:hover{background:var(--gold);color:#000;}
+.btn:disabled{opacity:0.3;cursor:not-allowed;}
+.btn-full{width:100%;padding:17px;background:var(--gold);color:#000;border:none;font-family:'Cinzel',serif;font-size:0.9em;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.25s;margin-top:14px;}
+.btn-full:hover{background:#fff;}
+.btn-full:disabled{opacity:0.3;cursor:not-allowed;}
+.btn-row{display:flex;gap:10px;margin-top:14px;}
+.btn-half{flex:1;padding:13px;font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.5px;cursor:pointer;transition:all 0.25s;border:1px solid var(--gold);background:transparent;color:var(--gold);}
+.btn-half:hover{background:var(--gold);color:#000;}
+.btn-half.sec{border-color:var(--border);color:var(--muted);}
+.btn-half.sec:hover{border-color:var(--border2);color:var(--white);background:transparent;}
+.status{text-align:center;font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.5px;color:var(--gold);margin-top:12px;min-height:18px;}
+.status.ok{color:var(--teal);}
+.status.err{color:#e07070;}
+.note{font-size:0.9em;color:var(--muted);font-style:italic;line-height:1.7;margin-bottom:14px;}
+.empty{color:var(--muted);font-style:italic;font-size:0.9em;}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-inner">
+    <div>
+      <div class="brand" id="ui-brand">AGNDOFA · RÚNAR SYSTEM</div>
+      <h1 id="ui-title">Knowledge Shrine</h1>
+      <div class="sub" id="ui-sub">Teach Rúnar. Shape his voice. Feed his wisdom.</div>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btn-is" onclick="setLang('is')">IS</button>
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs" style="margin-top:0;">
+  <button class="tab on"  id="tab-teach-btn"   onclick="showTab('teach')">TEACH RÚNAR</button>
+  <button class="tab"     id="tab-char-btn"    onclick="showTab('char')">CHARACTER</button>
+  <button class="tab"     id="tab-reader-btn"  onclick="showTab('reader')">RÚNAR THE RUNE KEEPER</button>
+  <button class="tab"     id="tab-correct-btn" onclick="showTab('correct')">WORD CORRECTIONS</button>
+</div>
+
+<!-- ═══ TEACH ═══ -->
+<div class="pane on" id="pane-teach">
+  <div class="card">
+    <div class="card-lbl" id="teach-card1-lbl">📖 SOURCE TEXT FROM BOOK</div>
+    <p class="note" id="teach-card1-note">Open the book, find the page about a rune, and paste or type the text here.</p>
+    <textarea id="src-text" rows="6" placeholder="Paste or type the book text here…" oninput="checkTeach()"></textarea>
+  </div>
+  <div class="card">
+    <div class="card-lbl" id="teach-card2-lbl">ᚠ WHICH RUNE IS THIS ABOUT?</div>
+    <div class="rune-grid" id="teach-grid"></div>
+    <div class="rune-info" id="teach-rune-info">No rune selected.</div>
+    <label class="flbl" id="src-ref-lbl">SOURCE REFERENCE</label>
+    <input class="txt" id="src-ref" type="text" placeholder="e.g. Agndofa Rune Guide, p.1">
+  </div>
+  <div class="card">
+    <div class="card-lbl" id="teach-card3-lbl">✦ LET RÚNAR INTERPRET</div>
+    <p class="note" id="teach-card3-note">Rúnar will read the source and rewrite it in his own voice — not a translation, his interpretation.</p>
+    <button class="btn" id="btn-invoke" onclick="invokeRunar()" disabled>↯ INVOKE RÚNAR</button>
+    <div class="runar-box" id="teach-output">
+      <div class="runar-box-lbl" id="teach-output-lbl">RÚNAR SPEAKS</div>
+      <div class="runar-txt" id="teach-txt"></div>
+    </div>
+    <div class="status" id="st-invoke"></div>
+    <button class="btn-full" id="btn-commit" onclick="commitKnowledge()" disabled>COMMIT TO RÚNAR'S MEMORY</button>
+    <div class="status" id="st-commit"></div>
+  </div>
+</div>
+
+<!-- ═══ CHARACTER ═══ -->
+<div class="pane" id="pane-char">
+  <div class="card">
+    <div class="card-lbl" id="char-card-lbl">👤 RÚNAR'S IDENTITY</div>
+    <p class="note" id="char-note">This is who Rúnar is. Edit freely — changes take effect on the next invocation.</p>
+    <div class="char-section-lbl">WHO HE IS</div>
+    <label class="flbl">IDENTITY & APPEARANCE</label>
+    <textarea id="ch-identity" rows="4"></textarea>
+    <label class="flbl">PERSONALITY</label>
+    <textarea id="ch-personality" rows="4"></textarea>
+    <label class="flbl">PURPOSE</label>
+    <textarea id="ch-purpose" rows="4"></textarea>
+    <div class="char-section-lbl">HOW HE SPEAKS</div>
+    <label class="flbl">VOICE & TONE</label>
+    <textarea id="ch-voice" rows="4"></textarea>
+    <label class="flbl">WHAT HE NEVER DOES</label>
+    <textarea id="ch-never" rows="3"></textarea>
+    <label class="flbl">CORE PHILOSOPHY</label>
+    <textarea id="ch-philosophy" rows="2"></textarea>
+    <div class="char-section-lbl">RESPONSE RULES</div>
+    <label class="flbl">LENGTH & FORMAT</label>
+    <textarea id="ch-format" rows="4"></textarea>
+    <label class="flbl">LANGUAGE & IMAGERY</label>
+    <textarea id="ch-imagery" rows="3"></textarea>
+    <div class="char-preview" id="char-preview"></div>
+    <div class="btn-row">
+      <button class="btn-half sec" id="preview-btn"   onclick="previewChar()">PREVIEW FULL PROMPT</button>
+      <button class="btn-half"     id="save-char-btn" onclick="saveChar()">SAVE CHARACTER</button>
+    </div>
+    <div class="status" id="st-char"></div>
+  </div>
+  <div class="card">
+    <div class="card-lbl" id="test-card-lbl">🧪 TEST RÚNAR'S VOICE</div>
+    <p class="note" id="test-note">Type something and hear how Rúnar responds with the current character.</p>
+    <textarea id="test-txt" rows="3" placeholder="e.g. I drew Fehu today and I feel stuck…"></textarea>
+    <button class="btn" id="test-btn" onclick="testVoice()">TEST CURRENT CHARACTER</button>
+    <div class="runar-box" id="test-output" style="margin-top:14px;">
+      <div class="runar-box-lbl" id="test-output-lbl">RÚNAR RESPONDS</div>
+      <div class="runar-txt" id="test-result"></div>
+    </div>
+    <div class="status" id="st-test"></div>
+  </div>
+  <div class="card">
+    <div class="card-lbl" id="version-card-lbl">📜 VERSION HISTORY</div>
+    <div id="version-list"><div class="empty">Loading versions…</div></div>
+  </div>
+</div>
+
+<!-- ═══ READER ═══ -->
+<div class="pane" id="pane-reader">
+  <div class="card" id="reader-setup">
+    <div class="card-lbl" id="reader-card1-lbl">✦ BEFORE WE BEGIN</div>
+    <p class="note" id="reader-note">Only your name is required. Everything else helps Rúnar speak more personally.</p>
+    <label class="flbl" id="name-lbl">YOUR NAME OR PREFERRED NAME</label>
+    <input class="txt" id="r-name" type="text" placeholder="How shall Rúnar address you?">
+    <label class="flbl" id="dob-lbl">DATE OF BIRTH <span class="opt">(OPTIONAL)</span></label>
+    <div class="dob-row">
+      <input class="num" id="r-day"   type="number" placeholder="Day"   min="1"    max="31">
+      <input class="num" id="r-month" type="number" placeholder="Month" min="1"    max="12">
+      <input class="num" id="r-year"  type="number" placeholder="Year"  min="1930" max="2010">
+    </div>
+    <label class="flbl" id="area-lbl">AREA OF LIFE <span class="opt">(OPTIONAL)</span></label>
+    <div class="pills" id="area-pills"></div>
+    <label class="flbl" id="seek-lbl">WHAT ARE YOU SEEKING? <span class="opt">(OPTIONAL)</span></label>
+    <div class="pills" id="seek-pills"></div>
+    <label class="flbl" id="q-lbl">SPECIFIC QUESTION <span class="opt">(OPTIONAL)</span></label>
+    <input class="txt" id="r-question" type="text" placeholder="e.g. What is holding me back?">
+    <button class="btn-full" id="begin-btn" onclick="startReading()">BEGIN THE READING</button>
+    <div class="status" id="st-setup"></div>
+  </div>
+  <div class="card" id="reader-rune-card" style="display:none;">
+    <div class="card-lbl" id="draw-lbl">ᚠ DRAW YOUR RUNE</div>
+    <p class="note" id="draw-note">Close your eyes. Hold your question. Then choose the rune that calls to you.</p>
+    <div class="rune-grid" id="reader-grid"></div>
+    <div class="rune-info" id="reader-rune-info"></div>
+    <button class="btn-full" id="btn-speak" onclick="readRune()" disabled>LET RÚNAR SPEAK</button>
+  </div>
+  <div id="reader-output" style="display:none;">
+    <div class="badge" id="reader-badge" style="display:none;">
+      <div>
+        <div class="badge-meta-lbl" id="life-rune-lbl" style="color:var(--gold);">YOUR LIFE RUNE</div>
+        <div class="badge-name" id="badge-life-name"></div>
+        <div style="font-size:2em;" id="badge-life-g"></div>
+      </div>
+      <div style="margin-left:auto;text-align:right;">
+        <div class="badge-meta-lbl" id="drawn-lbl" style="color:var(--blue);">DRAWN RUNE</div>
+        <div class="badge-name" id="badge-drawn-name"></div>
+        <div style="font-size:2em;" id="badge-drawn-g"></div>
+      </div>
+    </div>
+    <div class="layer1">
+      <div class="layer1-lbl" id="layer1-lbl">✦ RÚNAR SPEAKS</div>
+      <div class="out-txt" id="out-short"></div>
+    </div>
+    <div class="layer2">
+      <div class="layer2-lbl" id="layer2-lbl">~ DEEPER REFLECTION</div>
+      <div class="out-txt" id="out-deep"></div>
+    </div>
+    <!-- VOICE PLAYER -->
+    <button class="btn-voice" id="btn-generate-voice" onclick="generateVoice()" disabled>ᚢ GENERATE RÚNAR'S VOICE</button>
+    <div class="audio-player" id="audio-player">
+      <div class="audio-player-lbl" id="audio-player-lbl">♪ RÚNAR SPEAKS</div>
+      <div class="audio-controls">
+        <audio id="runar-audio" controls preload="none"></audio>
+      </div>
+    </div>
+    <div class="status" id="st-voice"></div>
+    <div class="btn-row" style="margin-top:20px;">
+      <button class="btn-half"     id="draw-another-btn" onclick="drawAnother()">DRAW ANOTHER RUNE</button>
+      <button class="btn-half sec" id="start-over-btn"   onclick="resetReader()">START OVER</button>
+    </div>
+  </div>
+  <div class="status" id="st-reader"></div>
+</div>
+
+<!-- ═══ CORRECTIONS ═══ -->
+<div class="pane" id="pane-correct">
+  <div class="card">
+    <div class="card-lbl" id="corr-card-lbl">✎ WORD CORRECTIONS</div>
+    <p class="note" id="corr-note">Teach Rúnar better words. Enter what he said and what he should say instead.</p>
+    <label class="flbl" id="orig-lbl">WORD OR PHRASE RÚNAR USED</label>
+    <input class="txt" id="corr-from" type="text" placeholder='"good luck" or "you will succeed"…'>
+    <label class="flbl" id="repl-lbl">REPLACE WITH</label>
+    <input class="txt" id="corr-to"   type="text" placeholder='"may the path open before you"…'>
+    <label class="flbl" id="ctx-lbl">CONTEXT <span class="opt">(OPTIONAL)</span></label>
+    <input class="txt" id="corr-ctx"  type="text" placeholder='e.g. "when speaking about Fehu"'>
+    <label class="flbl" id="applies-lbl">APPLIES TO</label>
+    <div class="pills" style="margin-top:6px;">
+      <div class="pill on" id="scope-both" onclick="setScope('both')">Both languages</div>
+      <div class="pill"    id="scope-en"   onclick="setScope('en')">English only</div>
+      <div class="pill"    id="scope-is"   onclick="setScope('is')">Icelandic only</div>
+    </div>
+    <button class="btn-full" id="save-corr-btn" onclick="saveCorrection()">SAVE CORRECTION</button>
+    <div class="status" id="st-corr"></div>
+  </div>
+  <div class="card">
+    <div class="card-lbl" id="saved-corr-lbl">📜 SAVED CORRECTIONS</div>
+    <div id="corr-list"><div class="empty">Loading…</div></div>
+  </div>
+</div>
+
+</div><!-- .app -->
+<script>
+// ═══════════════════════════════════════════════════════
+// RÚNAR · SHRINE — Core application logic
+// Data lives in external modules (runar-*.js)
+// ═══════════════════════════════════════════════════════
+
+const sb = supabase.createClient(SB_URL, SB_KEY);
+
+// ─── STATE ──────────────────────────────────────────────
+let lang       = APP.default_lang;
+let activeChar = null;
+let teachRune  = null;
+let teachText  = '';
+let readerUser = {};
+let readerRune = null;
+let corrScope  = 'both';
+
+// ─── INIT ───────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', async () => {
+  updateUIText();
+  buildGrid('teach-grid', false);
+  buildPills();
+  await loadChar();
+  await loadVersions();
+  loadCorrections();
+});
+
+// ─── HELPERS ────────────────────────────────────────────
+function t(key)  { return (UI_TEXT[lang] && UI_TEXT[lang][key]) || UI_TEXT.en[key] || key; }
+function rk(r)   { return lang === 'is' ? r.k_is : r.k; }
+function rn(r)   { return lang === 'is' ? r.is_n : r.n; }
+function setText(id, val)         { const el = document.getElementById(id); if (el && val !== undefined) el.textContent = val; }
+function setPH(id, val)           { const el = document.getElementById(id); if (el && val) el.placeholder = val; }
+function setFlbl(id, val)         { const el = document.getElementById(id); if (el && val && el.firstChild) el.firstChild.textContent = val + ' '; }
+function setFlblOpt(id, val, opt) { const el = document.getElementById(id); if (!el) return; el.innerHTML = val + ' <span class="opt">' + opt + '</span>'; }
+function setSt(id, msg, type)     { const el = document.getElementById(id); if (!el) return; el.textContent = msg || ''; el.className = 'status' + (type ? ' ' + type : ''); }
+
+// ─── LANGUAGE ───────────────────────────────────────────
+function setLang(l) {
+  lang = l;
+  document.getElementById('btn-en').classList.toggle('active', l === 'en');
+  document.getElementById('btn-is').classList.toggle('active', l === 'is');
+  updateUIText();
+  buildGrid('teach-grid', false);
+  buildPills();
+  if (document.getElementById('reader-rune-card').style.display !== 'none') buildGrid('reader-grid', true);
+}
+
+function updateUIText() {
+  setText('ui-brand', t('brand')); setText('ui-title', t('title')); setText('ui-sub', t('sub'));
+  setText('tab-teach-btn', t('tab_teach')); setText('tab-char-btn', t('tab_char'));
+  setText('tab-reader-btn', t('tab_reader')); setText('tab-correct-btn', t('tab_correct'));
+  setText('teach-card1-lbl', t('teach_card1_lbl')); setText('teach-card1-note', t('teach_card1_note'));
+  setPH('src-text', t('teach_src_ph')); setText('teach-card2-lbl', t('teach_card2_lbl'));
+  setText('teach-rune-info', t('rune_none')); setFlbl('src-ref-lbl', t('src_ref_lbl')); setPH('src-ref', t('src_ref_ph'));
+  setText('teach-card3-lbl', t('teach_card3_lbl')); setText('teach-card3-note', t('teach_card3_note'));
+  setText('btn-invoke', t('invoke_btn')); setText('teach-output-lbl', t('runar_speaks')); setText('btn-commit', t('commit_btn'));
+  setText('reader-card1-lbl', t('reader_card1_lbl')); setText('reader-note', t('reader_note'));
+  setFlbl('name-lbl', t('name_lbl')); setPH('r-name', t('name_ph'));
+  setFlblOpt('dob-lbl', t('dob_lbl'), t('opt')); setFlblOpt('area-lbl', t('area_lbl'), t('opt'));
+  setFlblOpt('seek-lbl', t('seek_lbl'), t('opt')); setFlblOpt('q-lbl', t('q_lbl'), t('opt'));
+  setPH('r-question', t('q_ph')); setText('begin-btn', t('begin_btn'));
+  setText('draw-lbl', t('draw_lbl')); setText('draw-note', t('draw_note')); setText('btn-speak', t('speak_btn'));
+  setText('life-rune-lbl', t('life_rune_lbl')); setText('drawn-lbl', t('drawn_lbl'));
+  setText('layer1-lbl', t('layer1_lbl')); setText('layer2-lbl', t('layer2_lbl'));
+  setText('draw-another-btn', t('draw_another')); setText('start-over-btn', t('start_over'));
+  setText('btn-generate-voice', t('voice_btn')); setText('audio-player-lbl', t('voice_player_lbl'));
+  setText('corr-card-lbl', t('corr_lbl')); setText('corr-note', t('corr_note'));
+  setFlbl('orig-lbl', t('orig_lbl')); setPH('corr-from', t('orig_ph'));
+  setFlbl('repl-lbl', t('repl_lbl')); setPH('corr-to', t('repl_ph'));
+  setFlblOpt('ctx-lbl', t('ctx_lbl'), t('opt')); setFlbl('applies-lbl', t('applies_lbl')); setPH('corr-ctx', t('ctx_ph'));
+  setText('scope-both', t('scope_both')); setText('scope-en', t('scope_en')); setText('scope-is', t('scope_is'));
+  setText('save-corr-btn', t('save_corr')); setText('saved-corr-lbl', t('saved_corr_lbl'));
+  setText('char-card-lbl', t('char_lbl')); setText('char-note', t('char_note'));
+  setText('test-card-lbl', t('test_lbl')); setText('test-note', t('test_note')); setPH('test-txt', t('test_ph'));
+  setText('test-btn', t('test_btn')); setText('test-output-lbl', t('runar_responds'));
+  setText('version-card-lbl', t('version_lbl')); setText('preview-btn', t('preview_btn')); setText('save-char-btn', t('save_char_btn'));
+}
+
+// ─── TABS ───────────────────────────────────────────────
+function showTab(name) {
+  ['teach','char','reader','correct'].forEach(n => {
+    document.getElementById('pane-' + n).classList.remove('on');
+    document.getElementById('tab-' + n + '-btn').classList.remove('on');
+  });
+  document.getElementById('pane-' + name).classList.add('on');
+  document.getElementById('tab-' + name + '-btn').classList.add('on');
+  if (name === 'correct') loadCorrections();
+}
+
+// ─── RUNE GRID ──────────────────────────────────────────
+function buildGrid(gridId, isReader) {
+  const grid = document.getElementById(gridId); if (!grid) return;
+  grid.innerHTML = '';
+  RUNES.forEach(r => {
+    const btn = document.createElement('div'); btn.className = 'rb';
+    const svgData = (typeof RUNE_SVGS !== 'undefined') ? RUNE_SVGS[r.svg] : null;
+    const inner = svgData
+      ? `<svg viewBox="${svgData.vb}" xmlns="http://www.w3.org/2000/svg" class="rb-svg">${svgData.paths}</svg>`
+      : `<span class="rb-g">${r.g}</span>`;
+    btn.innerHTML = inner + `<span class="rb-n">${r.n}</span>`;
+    btn.onclick = () => {
+      grid.querySelectorAll('.rb').forEach(b => b.classList.remove('on')); btn.classList.add('on');
+      if (isReader) { readerRune = r; document.getElementById('reader-rune-info').textContent = `${r.g} ${rn(r)} — ${rk(r)}`; document.getElementById('btn-speak').disabled = false; }
+      else          { teachRune  = r; document.getElementById('teach-rune-info').textContent  = `${r.g} ${rn(r)} — ${rk(r)}`; checkTeach(); }
+    };
+    grid.appendChild(btn);
+  });
+}
+
+// ─── PILLS ──────────────────────────────────────────────
+function buildPills() { buildPillGroup('area-pills', AREAS[lang], 'area'); buildPillGroup('seek-pills', SEEKS[lang], 'seek'); }
+function buildPillGroup(containerId, items, type) {
+  const c = document.getElementById(containerId); if (!c) return;
+  const current = type === 'area' ? readerUser.area : readerUser.seeking;
+  c.innerHTML = '';
+  items.forEach(label => {
+    const p = document.createElement('div');
+    p.className = 'pill' + (label === current ? ' on' : ''); p.textContent = label;
+    p.onclick = () => { c.querySelectorAll('.pill').forEach(x => x.classList.remove('on')); p.classList.add('on'); if (type === 'area') readerUser.area = label; else readerUser.seeking = label; };
+    c.appendChild(p);
+  });
+}
+
+// ─── TEACH ──────────────────────────────────────────────
+function checkTeach() { document.getElementById('btn-invoke').disabled = !(document.getElementById('src-text').value.trim().length > 20 && teachRune); }
+
+async function invokeRunar() {
+  const src = document.getElementById('src-text').value.trim(); if (!src || !teachRune) return;
+  document.getElementById('btn-invoke').disabled = true; document.getElementById('btn-commit').disabled = true;
+  document.getElementById('teach-output').style.display = 'block';
+  document.getElementById('teach-txt').innerHTML = '<span class="stream-cur"></span>';
+  setSt('st-invoke', t('st_traversing'));
+  const sys = buildSysPrompt(activeChar);
+  const langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
+  const prompt = `The source text below is about the rune ${rn(teachRune)} (${teachRune.g}).\nKeywords: ${rk(teachRune)}.\nRead this source carefully. Then speak as Rúnar — your own poetic interpretation.\nSpeak directly to someone who just drew this rune. Do NOT summarize. ${langInstr}\n\nSource: "${src}"\n${getCorrPrompt()}`;
+  const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens);
+  if (res.error) { setSt('st-invoke', 'Failed: ' + res.error, 'err'); document.getElementById('btn-invoke').disabled = false; return; }
+  teachText = res.text; await stream('teach-txt', teachText);
+  setSt('st-invoke', t('st_spoken'), 'ok'); document.getElementById('btn-commit').disabled = false;
+}
+
+async function commitKnowledge() {
+  if (!teachText || !teachRune) return;
+  document.getElementById('btn-commit').disabled = true; setSt('st-commit', t('st_saving'));
+  const rec = { knowledge_type: 'rune', rune_name: teachRune.n, rune_glyph: teachRune.g, category: 'meaning', title: `${teachRune.n} · meaning`, content: teachText, content_en: teachText, source_ref: document.getElementById('src-ref').value.trim() || 'Agndofa Rune Guide', approved: true };
+  const { error } = await sb.from('knowledge_base').insert([rec]);
+  if (!error) { setSt('st-commit', `✓ ${teachRune.n} committed.`, 'ok'); setTimeout(resetTeach, 2000); }
+  else { setSt('st-commit', 'Error: ' + error.message, 'err'); document.getElementById('btn-commit').disabled = false; }
+}
+
+function resetTeach() {
+  document.getElementById('src-text').value = ''; document.getElementById('src-ref').value = '';
+  document.getElementById('teach-output').style.display = 'none';
+  document.getElementById('teach-rune-info').textContent = t('rune_none');
+  document.querySelectorAll('#teach-grid .rb').forEach(b => b.classList.remove('on'));
+  teachRune = null; teachText = '';
+  document.getElementById('btn-invoke').disabled = true; document.getElementById('btn-commit').disabled = true;
+  setSt('st-invoke', ''); setSt('st-commit', '');
+}
+
+// ─── CHARACTER ──────────────────────────────────────────
+async function loadChar() {
+  try { const { data } = await sb.from('runar_character').select('*').eq('active', true).order('created_at', { ascending: false }).limit(1).single(); if (data) { activeChar = data; fillCharForm(data); return; } } catch (e) {}
+  activeChar = { ...DEF_CHAR }; fillCharForm(DEF_CHAR);
+}
+function fillCharForm(c) { ['identity','personality','purpose','voice','never','philosophy','format','imagery'].forEach(k => { const el = document.getElementById('ch-' + k); if (el) el.value = c[k] || DEF_CHAR[k] || ''; }); }
+function getCharFromForm() { const keys = ['identity','personality','purpose','voice','never','philosophy','format','imagery']; return Object.fromEntries(keys.map(k => [k, document.getElementById('ch-' + k).value.trim()])); }
+function previewChar() { const p = document.getElementById('char-preview'); p.style.display = 'block'; p.textContent = buildSysPrompt(getCharFromForm()); }
+
+async function saveChar() {
+  const c = getCharFromForm(); setSt('st-char', t('st_saving'));
+  try {
+    await sb.from('runar_character').update({ active: false }).eq('active', true);
+    const { error } = await sb.from('runar_character').insert([{ ...c, active: true, label: `Version ${new Date().toLocaleDateString('en-GB')} ${new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}`, created_at: new Date().toISOString() }]);
+    if (error) throw error; activeChar = c; setSt('st-char', t('st_char_saved'), 'ok'); loadVersions();
+  } catch (e) { activeChar = c; setSt('st-char', t('st_char_memory'), 'ok'); }
+}
+
+async function testVoice() {
+  const prompt = document.getElementById('test-txt').value.trim(); if (!prompt) return;
+  document.getElementById('test-output').style.display = 'block';
+  document.getElementById('test-result').innerHTML = '<span class="stream-cur"></span>';
+  setSt('st-test', t('st_listening'));
+  const res = await callProxy(buildSysPrompt(getCharFromForm()), prompt + (lang === 'is' ? '\n\nRespond in Icelandic.' : ''), 400);
+  if (res.error) { setSt('st-test', 'Failed: ' + res.error, 'err'); return; }
+  await stream('test-result', res.text); setSt('st-test', '');
+}
+
+async function loadVersions() {
+  try {
+    const { data } = await sb.from('runar_character').select('id,label,created_at,active').order('created_at', { ascending: false }).limit(10);
+    const list = document.getElementById('version-list');
+    if (!data || data.length === 0) { list.innerHTML = '<div class="empty">' + t('st_no_versions') + '</div>'; return; }
+    list.innerHTML = '';
+    data.forEach(v => {
+      const d = document.createElement('div'); d.className = 'vi';
+      d.innerHTML = `<div><div class="vi-lbl">${v.label || 'Character version'}</div><div class="vi-date">${new Date(v.created_at).toLocaleString('en-GB')}</div></div>${v.active ? '<span class="vi-active">ACTIVE</span>' : ''}`;
+      if (!v.active) d.onclick = () => restoreVersion(v.id); list.appendChild(d);
+    });
+  } catch (e) { document.getElementById('version-list').innerHTML = '<div class="empty">' + t('st_no_table') + '</div>'; }
+}
+
+async function restoreVersion(id) {
+  if (!confirm('Restore this version?')) return;
+  await sb.from('runar_character').update({ active: false }).eq('active', true);
+  await sb.from('runar_character').update({ active: true }).eq('id', id);
+  await loadChar(); await loadVersions(); setSt('st-char', t('st_restored'), 'ok');
+}
+
+// ─── READER ─────────────────────────────────────────────
+function startReading() {
+  const name = document.getElementById('r-name').value.trim(); if (!name) { setSt('st-setup', t('st_name_req'), 'err'); return; }
+  const d = parseInt(document.getElementById('r-day').value), m = parseInt(document.getElementById('r-month').value), y = parseInt(document.getElementById('r-year').value);
+  const lifeRune = (d && m && y && d <= 31 && m <= 12 && y >= 1930) ? calcLifeRune(d, m, y) : null;
+  readerUser = { name, d, m, y, lifeRune, area: readerUser.area || '', seeking: readerUser.seeking || '', question: document.getElementById('r-question').value.trim() };
+  document.getElementById('reader-setup').style.display = 'none'; document.getElementById('reader-rune-card').style.display = 'block'; document.getElementById('reader-output').style.display = 'none';
+  buildGrid('reader-grid', true); setSt('st-setup', ''); setSt('st-reader', '');
+}
+
+async function readRune() {
+  if (!readerRune) return;
+  document.getElementById('reader-rune-card').style.display = 'none'; document.getElementById('reader-output').style.display = 'block';
+  const voiceBtn = document.getElementById('btn-generate-voice');
+  voiceBtn.disabled = true; voiceBtn.textContent = t('voice_btn');
+  document.getElementById('audio-player').classList.remove('visible'); document.getElementById('runar-audio').src = ''; setSt('st-voice', '');
+  const u = readerUser, drawn = readerRune, life = u.lifeRune;
+  const badge = document.getElementById('reader-badge');
+  if (life) { badge.style.display = 'flex'; document.getElementById('badge-life-name').textContent = rn(life); document.getElementById('badge-life-g').textContent = life.g; document.getElementById('badge-drawn-name').textContent = rn(drawn); document.getElementById('badge-drawn-g').textContent = drawn.g; }
+  else { badge.style.display = 'none'; }
+  document.getElementById('out-short').innerHTML = '<span class="stream-cur"></span>'; document.getElementById('out-deep').innerHTML = '<span class="stream-cur"></span>';
+  const sys = buildSysPrompt(activeChar);
+  const langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
+  const parts = [ `PERSON: ${u.name}`, life ? `LIFE RUNE: ${rn(life)} (${life.g}) — ${rk(life)}` : '', `DRAWN RUNE: ${rn(drawn)} (${drawn.g}) — ${rk(drawn)}`, u.area ? `AREA: ${u.area}` : '', u.seeking ? `SEEKING: ${u.seeking}` : '', u.question ? `QUESTION: "${u.question}"` : '' ].filter(Boolean).join('\n');
+  const prompt = `${parts}\n\nGive the reading in two parts separated by |||\n\nPART 1 (2-3 sentences, core message, direct and poetic):\n\nPART 2 (deeper reflection. Connect drawn rune with ${life ? 'life rune ' + life.n + ', ' : ''}${u.area || 'their path'}${u.seeking ? ', seeking ' + u.seeking : ''}. End with one gentle open question. Do NOT include a label like "PART 2" in the output):\n\nSpeak directly to ${u.name}. ${langInstr}\n${getCorrPrompt()}`;
+  const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens);
+  if (res.error) { setSt('st-reader', 'Failed: ' + res.error, 'err'); return; }
+  const split = res.text.split('|||');
+  await stream('out-short', split[0]?.trim() || res.text);
+  if (split[1]?.trim()) await stream('out-deep', split[1].trim()); else document.getElementById('out-deep').innerHTML = '';
+  voiceBtn.disabled = false;
+}
+
+function drawAnother() {
+  readerRune = null; document.getElementById('reader-output').style.display = 'none'; document.getElementById('reader-rune-card').style.display = 'block';
+  document.querySelectorAll('#reader-grid .rb').forEach(b => b.classList.remove('on'));
+  document.getElementById('reader-rune-info').textContent = ''; document.getElementById('btn-speak').disabled = true;
+}
+function resetReader() {
+  readerUser = {}; readerRune = null;
+  document.getElementById('reader-setup').style.display = 'block'; document.getElementById('reader-rune-card').style.display = 'none'; document.getElementById('reader-output').style.display = 'none';
+  ['r-name','r-day','r-month','r-year','r-question'].forEach(id => document.getElementById(id).value = ''); buildPills();
+}
+
+// ─── VOICE ──────────────────────────────────────────────
+async function generateVoice() {
+  const deepText = document.getElementById('out-deep').innerText.trim(); if (!deepText) return;
+  const btn = document.getElementById('btn-generate-voice');
+  btn.disabled = true; btn.textContent = t('voice_btn_loading'); setSt('st-voice', '');
+  try {
+    const res = await fetch(EL_PROXY, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: deepText, lang, rune_name: readerRune ? readerRune.n : 'reading' }) });
+    const data = await res.json();
+    if (data.error === 'NO_CREDITS') { setSt('st-voice', t('voice_err_credits'), 'err'); btn.textContent = t('voice_btn'); btn.disabled = false; return; }
+    if (data.error) { setSt('st-voice', t('voice_err_timeout'), 'err'); btn.textContent = t('voice_btn'); btn.disabled = false; return; }
+    document.getElementById('runar-audio').src = data.audio_url;
+    document.getElementById('audio-player').classList.add('visible');
+    btn.textContent = t('voice_btn_regen'); btn.disabled = false; setSt('st-voice', '');
+  } catch (err) { setSt('st-voice', t('voice_err_timeout'), 'err'); btn.textContent = t('voice_btn'); btn.disabled = false; }
+}
+
+// ─── CORRECTIONS ────────────────────────────────────────
+function setScope(s) { corrScope = s; ['both','en','is'].forEach(x => document.getElementById('scope-' + x).classList.toggle('on', x === s)); }
+
+async function saveCorrection() {
+  const from = document.getElementById('corr-from').value.trim(), to = document.getElementById('corr-to').value.trim();
+  if (!from || !to) { setSt('st-corr', t('st_fill_fields'), 'err'); return; }
+  setSt('st-corr', t('st_saving'));
+  const rec = { original_phrase: from, replacement_phrase: to, context: document.getElementById('corr-ctx').value.trim() || null, lang_scope: corrScope, created_at: new Date().toISOString() };
+  try { const { error } = await sb.from('runar_corrections').insert([rec]); if (error) throw error; setSt('st-corr', t('st_saved'), 'ok'); }
+  catch (e) { const saved = JSON.parse(localStorage.getItem('runar_corr') || '[]'); saved.push(rec); localStorage.setItem('runar_corr', JSON.stringify(saved)); setSt('st-corr', t('st_saved_local'), 'ok'); }
+  document.getElementById('corr-from').value = ''; document.getElementById('corr-to').value = ''; document.getElementById('corr-ctx').value = '';
+  loadCorrections();
+}
+
+async function loadCorrections() {
+  let items = [];
+  try { const { data } = await sb.from('runar_corrections').select('*').order('created_at', { ascending: false }).limit(50); items = data || []; }
+  catch (e) { items = JSON.parse(localStorage.getItem('runar_corr') || '[]'); }
+  const list = document.getElementById('corr-list');
+  if (!items.length) { list.innerHTML = '<div class="empty">' + t('no_corr') + '</div>'; return; }
+  list.innerHTML = '';
+  items.forEach(it => { const d = document.createElement('div'); d.className = 'corr-item'; d.innerHTML = `<div><div class="corr-from">"${it.original_phrase}"</div><div class="corr-to">→ "${it.replacement_phrase}"</div>${it.context ? `<div class="corr-ctx">${it.context}</div>` : ''}</div><div class="corr-scope">${(it.lang_scope || 'both').toUpperCase()}</div>`; list.appendChild(d); });
+}
+
+function getCorrPrompt() {
+  const saved = JSON.parse(localStorage.getItem('runar_corr') || '[]');
+  const rel = saved.filter(c => c.lang_scope === 'both' || c.lang_scope === lang);
+  if (!rel.length) return '';
+  return '\n\nWORD CORRECTIONS — always apply:\n' + rel.map(c => `• Instead of "${c.original_phrase}" say "${c.replacement_phrase}"`).join('\n');
+}
+
+// ─── API ────────────────────────────────────────────────
+async function callProxy(system, prompt, max_tokens = 500) {
+  try { const res = await fetch(PROXY, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ system, prompt, max_tokens }) }); const data = await res.json(); if (data.error) return { error: data.error }; return { text: data.text }; }
+  catch (e) { return { error: e.message }; }
+}
+
+async function stream(elId, text) {
+  const el = document.getElementById(elId); el.innerHTML = '';
+  const words = text.split(' ');
+  for (let i = 0; i < words.length; i++) { el.innerHTML = words.slice(0, i + 1).join(' ') + '<span class="stream-cur"></span>'; await new Promise(r => setTimeout(r, APP.stream_delay_ms)); }
+  el.innerHTML = text;
+}
+</script>
+</body>
+</html>
