@@ -3,7 +3,8 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 const EL_API_KEY     = Deno.env.get('ELEVENLABS_API_KEY')
 const EL_VOICE_ID_EN = '2UI8v2ibbwQTijaYAte1'
 const EL_VOICE_ID_IS = '4E6WbDOme312uWJ8z4pv'
-const EL_MODEL       = 'eleven_multilingual_v2'
+const EL_MODEL_EN    = 'eleven_multilingual_v2'
+const EL_MODEL_IS    = 'eleven_v3'
 
 const cors = {
   'Access-Control-Allow-Origin': '*',
@@ -17,10 +18,11 @@ serve(async (req) => {
   try {
     if (!EL_API_KEY) throw new Error('ELEVENLABS_API_KEY not set')
 
-    const { text, lang, voice_id } = await req.json()
+    const { text, lang, voice_id, model_id } = await req.json()
     if (!text) throw new Error('text is required')
 
     const resolvedVoiceId = voice_id || (lang === 'is' ? EL_VOICE_ID_IS : EL_VOICE_ID_EN)
+    const resolvedModel   = model_id || (lang === 'is' ? EL_MODEL_IS    : EL_MODEL_EN)
 
     const elRes = await fetch(
       `https://api.elevenlabs.io/v1/text-to-speech/${resolvedVoiceId}/stream`,
@@ -32,7 +34,7 @@ serve(async (req) => {
         },
         body: JSON.stringify({
           text,
-          model_id: EL_MODEL,
+          model_id: resolvedModel,
           voice_settings: {
             stability: 0.75,
             similarity_boost: 0.85,

@@ -18,11 +18,13 @@ const EL_STATIC = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/elevenl
 // ─── ELEVENLABS ─────────────────────────────────────────
 const EL_VOICE_ID_EN = '2UI8v2ibbwQTijaYAte1'; // English — Rúnar EN
 const EL_VOICE_ID_IS = '4E6WbDOme312uWJ8z4pv'; // Icelandic — Rúnar IS
-const EL_MODEL       = 'eleven_multilingual_v2';
-// Helper — vybere správný voice ID podle jazyka
-function elVoiceId(lang) {
-  return lang === 'is' ? EL_VOICE_ID_IS : EL_VOICE_ID_EN;
-}
+
+const EL_MODEL_EN = 'eleven_multilingual_v2'; // EN model
+const EL_MODEL_IS = 'eleven_v3';              // IS model — lepší islandská výslovnost
+
+// Helpers — vrátí správný voice ID / model podle jazyka
+function elVoiceId(lang) { return lang === 'is' ? EL_VOICE_ID_IS : EL_VOICE_ID_EN; }
+function elModel(lang)   { return lang === 'is' ? EL_MODEL_IS    : EL_MODEL_EN; }
 
 const EL_VOICE_SETTINGS = {
   stability:        0.75,

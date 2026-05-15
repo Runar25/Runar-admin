@@ -9,7 +9,8 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 const EL_API_KEY     = Deno.env.get('ELEVENLABS_API_KEY')
 const EL_VOICE_ID_EN = '2UI8v2ibbwQTijaYAte1'
 const EL_VOICE_ID_IS = '4E6WbDOme312uWJ8z4pv'
-const EL_MODEL       = 'eleven_multilingual_v2'
+const EL_MODEL_EN    = 'eleven_multilingual_v2'
+const EL_MODEL_IS    = 'eleven_v3'
 const SB_URL       = Deno.env.get('SUPABASE_URL')
 const SB_KEY       = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
 
@@ -27,7 +28,7 @@ serve(async (req) => {
     if (!SB_URL)      throw new Error('SUPABASE_URL not set')
     if (!SB_KEY)      throw new Error('SUPABASE_SERVICE_ROLE_KEY not set')
 
-    const { text, rune_name, rune_glyph, lang, voice_id } = await req.json()
+    const { text, rune_name, rune_glyph, lang, voice_id, model_id } = await req.json()
 
     if (!text)       throw new Error('text is required')
     if (!rune_name)  throw new Error('rune_name is required')
@@ -35,6 +36,7 @@ serve(async (req) => {
     if (!lang)       throw new Error('lang is required')
 
     const resolvedVoiceId = voice_id || (lang === 'is' ? EL_VOICE_ID_IS : EL_VOICE_ID_EN)
+    const resolvedModel   = model_id || (lang === 'is' ? EL_MODEL_IS    : EL_MODEL_EN)
 
     // 1. Generuj audio přes ElevenLabs
     const elRes = await fetch(
@@ -47,7 +49,7 @@ serve(async (req) => {
         },
         body: JSON.stringify({
           text,
-          model_id: EL_MODEL,
+          model_id: resolvedModel,
           voice_settings: {
             stability: 0.75,
             similarity_boost: 0.85,
