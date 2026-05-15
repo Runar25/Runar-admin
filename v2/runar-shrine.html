@@ -120,6 +120,7 @@ audio{flex:1;height:36px;filter:invert(0.85) sepia(0.3) hue-rotate(180deg);}
 .status.err{color:#e07070;}
 .note{font-size:0.9em;color:var(--muted);font-style:italic;line-height:1.7;margin-bottom:14px;}
 .empty{color:var(--muted);font-style:italic;font-size:0.9em;}
+.teach-edit-lbl{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--blue);margin-bottom:8px;margin-top:16px;display:block;}
 </style>
 </head>
 <body>
@@ -163,10 +164,22 @@ audio{flex:1;height:36px;filter:invert(0.85) sepia(0.3) hue-rotate(180deg);}
       <div class="runar-box-lbl">RÚNAR SPEAKS</div>
       <div class="runar-txt" id="teach-txt"></div>
     </div>
+    <!-- EDITABLE TEXT — shown after streaming completes -->
+    <div id="teach-edit-wrap" style="display:none;">
+      <span class="teach-edit-lbl">EDIT BEFORE SAVING — changes apply to both text and voice</span>
+      <textarea id="teach-edit" rows="5" oninput="teachText = this.value"></textarea>
+    </div>
     <div class="status" id="st-invoke"></div>
     <button class="btn-full" id="btn-commit" onclick="commitKnowledge()" disabled>COMMIT TO RÚNAR'S MEMORY</button>
     <div class="status" id="st-commit"></div>
     <button class="btn-voice" id="btn-teach-voice" onclick="generateStaticVoice()" disabled style="display:none;">ᚢ GENERATE RÚNAR'S VOICE</button>
+    <!-- TEACH AUDIO PREVIEW -->
+    <div class="audio-player" id="teach-audio-player">
+      <div class="audio-player-lbl">♪ RÚNAR SPEAKS — PREVIEW</div>
+      <div class="audio-controls">
+        <audio id="teach-audio" controls preload="none"></audio>
+      </div>
+    </div>
     <button class="btn-full" id="btn-save-voice" onclick="saveStaticVoice()" disabled style="display:none;margin-top:8px;background:var(--teal);color:#000;">SAVE VOICE TO MEMORY</button>
     <div class="status" id="st-teach-voice"></div>
   </div>
@@ -315,21 +328,17 @@ audio{flex:1;height:36px;filter:invert(0.85) sepia(0.3) hue-rotate(180deg);}
 
 </div><!-- .app -->
 <script>
-// ═══════════════════════════════════════════════════════
-// RÚNAR · SHRINE — Core application logic
-// ═══════════════════════════════════════════════════════
-
 const sb = supabase.createClient(SB_URL, SB_KEY);
 
 // ─── STATE ──────────────────────────────────────────────
-let lang         = APP.default_lang;
-let activeChar   = null;
-let teachRune    = null;
-let teachText    = '';
+let lang          = APP.default_lang;
+let activeChar    = null;
+let teachRune     = null;
+let teachText     = '';
 let teachAudioUrl = null;
-let readerUser   = {};
-let readerRune   = null;
-let corrScope    = 'both';
+let readerUser    = {};
+let readerRune    = null;
+let corrScope     = 'both';
 
 // ─── INIT ───────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', async () => {
@@ -444,9 +453,13 @@ async function invokeRunar() {
   document.getElementById('btn-commit').disabled = true;
   document.getElementById('btn-teach-voice').style.display = 'none';
   document.getElementById('btn-save-voice').style.display = 'none';
+  document.getElementById('teach-edit-wrap').style.display = 'none';
+  document.getElementById('teach-audio-player').classList.remove('visible');
+  document.getElementById('teach-audio').src = '';
   document.getElementById('teach-output').style.display = 'block';
   document.getElementById('teach-txt').innerHTML = '<span class="stream-cur"></span>';
   setSt('st-invoke', t('st_traversing'));
+  setSt('st-teach-voice', '');
 
   const sys = buildSysPrompt(activeChar);
   const langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
@@ -465,12 +478,20 @@ ${getCorrPrompt()}`;
   }
   teachText = res.text;
   await stream('teach-txt', teachText);
+
+  // Show editable textarea with generated text
+  const editEl = document.getElementById('teach-edit');
+  editEl.value = teachText;
+  document.getElementById('teach-edit-wrap').style.display = 'block';
+
   setSt('st-invoke', t('st_spoken'), 'ok');
   document.getElementById('btn-commit').disabled = false;
 }
 
 async function commitKnowledge() {
   if (!teachText || !teachRune) return;
+  // Use edited text if changed
+  teachText = document.getElementById('teach-edit').value.trim() || teachText;
   document.getElementById('btn-commit').disabled = true;
   setSt('st-commit', t('st_saving'));
 
@@ -501,6 +522,7 @@ async function generateStaticVoice() {
   btn.disabled = true;
   btn.textContent = 'ᚢ RÚNAR IS SPEAKING…';
   setSt('st-teach-voice', '');
+  document.getElementById('teach-audio-player').classList.remove('visible');
 
   try {
     const res = await fetch(EL_PROXY, {
@@ -515,11 +537,16 @@ async function generateStaticVoice() {
     if (!data.audio_url) throw new Error('No audio_url in response');
 
     teachAudioUrl = data.audio_url;
+
+    // Show audio preview
+    document.getElementById('teach-audio').src = data.audio_url;
+    document.getElementById('teach-audio-player').classList.add('visible');
+
     btn.textContent = 'ᚢ REGENERATE VOICE';
     btn.disabled = false;
     document.getElementById('btn-save-voice').style.display = 'block';
     document.getElementById('btn-save-voice').disabled = false;
-    setSt('st-teach-voice', '✓ Voice ready. Press Save to store.', 'ok');
+    setSt('st-teach-voice', '✓ Voice ready. Listen, then save.', 'ok');
   } catch (err) {
     setSt('st-teach-voice', `Voice error: ${err.message}`, 'err');
     btn.textContent = 'ᚢ GENERATE RÚNAR\'S VOICE';
@@ -560,6 +587,10 @@ async function saveStaticVoice() {
 
 function resetTeach() {
   document.getElementById('teach-output').style.display = 'none';
+  document.getElementById('teach-edit-wrap').style.display = 'none';
+  document.getElementById('teach-edit').value = '';
+  document.getElementById('teach-audio-player').classList.remove('visible');
+  document.getElementById('teach-audio').src = '';
   document.getElementById('teach-rune-info').textContent = 'No rune selected.';
   document.querySelectorAll('#teach-grid .rb').forEach(b => b.classList.remove('on'));
   teachRune = null; teachText = ''; teachAudioUrl = null;
@@ -675,6 +706,7 @@ async function generateVoice() {
   btn.disabled = true;
   btn.textContent = t('voice_btn_loading');
   setSt('st-voice', '');
+  document.getElementById('audio-player').classList.remove('visible');
 
   try {
     const res = await fetch(EL_PROXY, {
