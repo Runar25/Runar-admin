@@ -8,22 +8,20 @@ const SB_URL = 'https://pmitxjvkeovijreepror.supabase.co';
 const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBtaXR4anZrZW92aWpyZWVwcm9yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyNzE0OTIsImV4cCI6MjA5Mzg0NzQ5Mn0.-qk3vHqZGkj9yplSlK1PUKbypxDeXOtllp49JLICGyw';
 
 // ─── EDGE FUNCTIONS ─────────────────────────────────────
-const PROXY    = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/claude-proxy';
-const EL_PROXY = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/elevenlabs-proxy';
+const PROXY     = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/claude-proxy';
+const EL_PROXY  = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/elevenlabs-proxy';
+const EL_STATIC = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/elevenlabs-static';
 // Future proxies go here:
 // const NOTIFY_PROXY = '...functions/v1/notify';
 // const LUNAR_PROXY  = '...functions/v1/lunar-context';
-
-const EL_PROXY    = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/elevenlabs-proxy';
-const EL_STATIC  = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/elevenlabs-static';
 
 // ─── ELEVENLABS ─────────────────────────────────────────
 const EL_VOICE_ID = '2UI8v2ibbwQTijaYAte1';
 const EL_MODEL    = 'eleven_multilingual_v2';
 const EL_VOICE_SETTINGS = {
-  stability:       0.75,
+  stability:        0.75,
   similarity_boost: 0.85,
-  style:           0.35,
+  style:            0.35,
   use_speaker_boost: true,
 };
 
@@ -118,8 +116,8 @@ const TIERS = {
 
 // ─── APP SETTINGS ───────────────────────────────────────
 const APP = {
-  default_lang:      'en',
-  supported_langs:   ['en', 'is'],
-  stream_delay_ms:   25,        // word-by-word stream speed
-  version:           '0.1.0',  // increment on significant changes
+  default_lang:    'en',
+  supported_langs: ['en', 'is'],
+  stream_delay_ms: 25,        // word-by-word stream speed
+  version:         '0.1.0',  // increment on significant changes
 };
