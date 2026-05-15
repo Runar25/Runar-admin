@@ -167,7 +167,7 @@ audio{flex:1;height:36px;filter:invert(0.85) sepia(0.3) hue-rotate(180deg);}
     <!-- EDITABLE TEXT — shown after streaming completes -->
     <div id="teach-edit-wrap" style="display:none;">
       <span class="teach-edit-lbl">EDIT BEFORE SAVING — changes apply to both text and voice</span>
-      <textarea id="teach-edit" rows="5" oninput="teachText = this.value"></textarea>
+      <textarea id="teach-edit" rows="5" oninput="teachText = this.value; onTeachTextEdit();"></textarea>
     </div>
     <div class="status" id="st-invoke"></div>
     <button class="btn-full" id="btn-commit" onclick="commitKnowledge()" disabled>COMMIT TO RÚNAR'S MEMORY</button>
@@ -447,6 +447,15 @@ function checkTeach() {
   document.getElementById('btn-invoke').disabled = !teachRune;
 }
 
+function onTeachTextEdit() {
+  // Text changed — hide old audio preview so admin must regenerate voice
+  document.getElementById('teach-audio-player').classList.remove('visible');
+  document.getElementById('teach-audio').src = '';
+  document.getElementById('btn-save-voice').style.display = 'none';
+  document.getElementById('btn-teach-voice').textContent = 'ᚢ GENERATE RÚNAR\'S VOICE';
+  setSt('st-teach-voice', '');
+}
+
 async function invokeRunar() {
   if (!teachRune) return;
   document.getElementById('btn-invoke').disabled = true;
@@ -483,6 +492,11 @@ ${getCorrPrompt()}`;
   const editEl = document.getElementById('teach-edit');
   editEl.value = teachText;
   document.getElementById('teach-edit-wrap').style.display = 'block';
+
+  // Show voice button immediately — admin can preview before committing
+  document.getElementById('btn-teach-voice').style.display = 'block';
+  document.getElementById('btn-teach-voice').disabled = false;
+  document.getElementById('btn-teach-voice').textContent = 'ᚢ GENERATE RÚNAR\'S VOICE';
 
   setSt('st-invoke', t('st_spoken'), 'ok');
   document.getElementById('btn-commit').disabled = false;
