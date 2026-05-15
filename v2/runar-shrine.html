@@ -622,7 +622,7 @@ function resetTeach() {
 
 // ─── CHARACTER ──────────────────────────────────────────
 async function loadChar() {
-  try { const { data } = await sb.from('runar_character').select('*').eq('active', true).order('created_at', { ascending: false }).limit(1).single(); if (data) { activeChar = data; fillCharForm(data); return; } } catch (e) {}
+  try { const { data } = await sb.from('runar_character').select('*').eq('active', true).order('created_at', { ascending: false }).limit(1).maybeSingle(); if (data) { activeChar = data; fillCharForm(data); return; } } catch (e) {}
   activeChar = { ...DEF_CHAR }; fillCharForm(DEF_CHAR);
 }
 function fillCharForm(c) { ['identity','personality','purpose','voice','never','philosophy','format','imagery'].forEach(k => { const el = document.getElementById('ch-' + k); if (el) el.value = c[k] || DEF_CHAR[k] || ''; }); }
