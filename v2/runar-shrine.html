@@ -536,10 +536,12 @@ async function generateStaticVoice() {
     if (data.error) throw new Error(data.error);
     if (!data.audio_url) throw new Error('No audio_url in response');
 
+    const teachBlob = await fetch(data.audio_url).then(r => r.blob());
+    const teachBlobUrl = URL.createObjectURL(teachBlob);
     teachAudioUrl = data.audio_url;
 
     // Show audio preview
-    document.getElementById('teach-audio').src = data.audio_url;
+    document.getElementById('teach-audio').src = teachBlobUrl;
     document.getElementById('teach-audio-player').classList.add('visible');
 
     btn.textContent = 'ᚢ REGENERATE VOICE';
@@ -732,7 +734,9 @@ async function generateVoice() {
     }
     if (!data.audio_url) throw new Error('No audio_url in response');
 
-    document.getElementById('runar-audio').src = data.audio_url;
+    const audioBlob = await fetch(data.audio_url).then(r => r.blob());
+    const audioBlobUrl = URL.createObjectURL(audioBlob);
+    document.getElementById('runar-audio').src = audioBlobUrl;
     document.getElementById('audio-player').classList.add('visible');
     btn.textContent = t('voice_btn_regen');
     btn.disabled = false;
