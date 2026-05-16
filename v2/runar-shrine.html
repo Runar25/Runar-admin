@@ -519,12 +519,16 @@ async function commitKnowledge() {
   document.getElementById('btn-commit').disabled = true;
   setSt('st-commit', t('st_saving'));
 
-  // Count existing versions for this rune+lang → assign next version number
-  const { count } = await sb.from('runar_static_audio')
-    .select('*', { count: 'exact', head: true })
+  // Get highest existing version → next version = max + 1
+  const { data: maxRow, error: maxErr } = await sb.from('runar_static_audio')
+    .select('version')
     .eq('rune_name', teachRune.n)
-    .eq('lang', lang);
-  teachVersion = (count || 0) + 1;
+    .eq('lang', lang)
+    .order('version', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (maxErr) { setSt('st-commit', 'Error: ' + maxErr.message, 'err'); document.getElementById('btn-commit').disabled = false; return; }
+  teachVersion = (maxRow?.version ?? 0) + 1;
 
   const { error } = await sb.from('runar_static_audio').insert({
     rune_name:  teachRune.n,
@@ -596,13 +600,17 @@ async function saveStaticVoice() {
   setSt('st-teach-voice', t('teach_voice_saving'));
 
   try {
-    // Determine version — use committed version or query next available
+    // Determine version — use committed version or query max existing + 1
     if (!teachVersion) {
-      const { count } = await sb.from('runar_static_audio')
-        .select('*', { count: 'exact', head: true })
+      const { data: maxRow, error: maxErr } = await sb.from('runar_static_audio')
+        .select('version')
         .eq('rune_name', teachRune.n)
-        .eq('lang', lang);
-      teachVersion = (count || 0) + 1;
+        .eq('lang', lang)
+        .order('version', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      if (maxErr) throw new Error('Could not determine version: ' + maxErr.message);
+      teachVersion = (maxRow?.version ?? 0) + 1;
     }
 
     const res = await fetch(EL_STATIC, {
