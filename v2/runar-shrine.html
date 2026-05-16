@@ -121,6 +121,18 @@ audio{flex:1;height:36px;filter:invert(0.85) sepia(0.3) hue-rotate(180deg);}
 .note{font-size:0.9em;color:var(--muted);font-style:italic;line-height:1.7;margin-bottom:14px;}
 .empty{color:var(--muted);font-style:italic;font-size:0.9em;}
 .teach-edit-lbl{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--blue);margin-bottom:8px;margin-top:16px;display:block;}
+.prog-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:4px;}
+@media(max-width:480px){.prog-grid{grid-template-columns:repeat(3,1fr);}}
+.prog-cell{background:#0d1220;border:1px solid var(--border);padding:10px 6px;text-align:center;transition:border-color 0.2s;}
+.prog-cell.partial{border-color:var(--gold);}
+.prog-cell.full{border-color:var(--teal);background:rgba(126,217,181,0.04);}
+.prog-name{font-family:'Cinzel',serif;font-size:0.52em;letter-spacing:0.5px;color:var(--muted);margin:4px 0 6px;}
+.prog-langs{display:flex;gap:4px;justify-content:center;}
+.prog-badge{font-family:'Cinzel',serif;font-size:0.5em;letter-spacing:0.5px;padding:2px 5px;border:1px solid;}
+.prog-badge.has{color:var(--teal);border-color:var(--teal);}
+.prog-badge.none{color:var(--dim);border-color:var(--dim);opacity:0.4;}
+.prog-bar{height:3px;background:var(--border);margin-bottom:16px;border-radius:2px;}
+.prog-bar-fill{height:100%;background:var(--teal);border-radius:2px;transition:width 0.6s ease;}
 </style>
 </head>
 <body>
@@ -143,10 +155,10 @@ audio{flex:1;height:36px;filter:invert(0.85) sepia(0.3) hue-rotate(180deg);}
 
 <!-- TABS -->
 <div class="tabs" style="margin-top:0;">
-  <button class="tab on"  id="tab-teach-btn"   onclick="showTab('teach')">TEACH RÚNAR</button>
-  <button class="tab"     id="tab-char-btn"    onclick="showTab('char')">CHARACTER</button>
-  <button class="tab"     id="tab-reader-btn"  onclick="showTab('reader')">RÚNAR THE RUNE KEEPER</button>
-  <button class="tab"     id="tab-correct-btn" onclick="showTab('correct')">WORD CORRECTIONS</button>
+  <button class="tab on"  id="tab-teach-btn"    onclick="showTab('teach')">TEACH RÚNAR</button>
+  <button class="tab"     id="tab-progress-btn" onclick="showTab('progress')">PROGRESS</button>
+  <button class="tab"     id="tab-reader-btn"   onclick="showTab('reader')">RÚNAR THE RUNE KEEPER</button>
+  <button class="tab"     id="tab-correct-btn"  onclick="showTab('correct')">WORD CORRECTIONS</button>
 </div>
 
 <!-- ═══ TEACH ═══ -->
@@ -186,51 +198,14 @@ audio{flex:1;height:36px;filter:invert(0.85) sepia(0.3) hue-rotate(180deg);}
   </div>
 </div>
 
-<!-- ═══ CHARACTER ═══ -->
-<div class="pane" id="pane-char">
+<!-- ═══ PROGRESS ═══ -->
+<div class="pane" id="pane-progress">
   <div class="card">
-    <div class="card-lbl" id="char-card-lbl">👤 RÚNAR'S IDENTITY</div>
-    <p class="note" id="char-note">This is who Rúnar is. Edit freely — changes take effect on the next invocation.</p>
-    <div class="char-section-lbl">WHO HE IS</div>
-    <label class="flbl">IDENTITY & APPEARANCE</label>
-    <textarea id="ch-identity" rows="4"></textarea>
-    <label class="flbl">PERSONALITY</label>
-    <textarea id="ch-personality" rows="4"></textarea>
-    <label class="flbl">PURPOSE</label>
-    <textarea id="ch-purpose" rows="4"></textarea>
-    <div class="char-section-lbl">HOW HE SPEAKS</div>
-    <label class="flbl">VOICE & TONE</label>
-    <textarea id="ch-voice" rows="4"></textarea>
-    <label class="flbl">WHAT HE NEVER DOES</label>
-    <textarea id="ch-never" rows="3"></textarea>
-    <label class="flbl">CORE PHILOSOPHY</label>
-    <textarea id="ch-philosophy" rows="2"></textarea>
-    <div class="char-section-lbl">RESPONSE RULES</div>
-    <label class="flbl">LENGTH & FORMAT</label>
-    <textarea id="ch-format" rows="4"></textarea>
-    <label class="flbl">LANGUAGE & IMAGERY</label>
-    <textarea id="ch-imagery" rows="3"></textarea>
-    <div class="char-preview" id="char-preview"></div>
-    <div class="btn-row">
-      <button class="btn-half sec" id="preview-btn"   onclick="previewChar()">PREVIEW FULL PROMPT</button>
-      <button class="btn-half"     id="save-char-btn" onclick="saveChar()">SAVE CHARACTER</button>
-    </div>
-    <div class="status" id="st-char"></div>
-  </div>
-  <div class="card">
-    <div class="card-lbl" id="test-card-lbl">🧪 TEST RÚNAR'S VOICE</div>
-    <p class="note" id="test-note">Type something and hear how Rúnar responds with the current character.</p>
-    <textarea id="test-txt" rows="3" placeholder="e.g. I drew Fehu today and I feel stuck…"></textarea>
-    <button class="btn" id="test-btn" onclick="testVoice()">TEST CURRENT CHARACTER</button>
-    <div class="runar-box" id="test-output" style="margin-top:14px;">
-      <div class="runar-box-lbl" id="test-output-lbl">RÚNAR RESPONDS</div>
-      <div class="runar-txt" id="test-result"></div>
-    </div>
-    <div class="status" id="st-test"></div>
-  </div>
-  <div class="card">
-    <div class="card-lbl" id="version-card-lbl">📜 VERSION HISTORY</div>
-    <div id="version-list"><div class="empty">Loading versions…</div></div>
+    <div class="card-lbl" id="progress-lbl">♦ AUDIO PROGRESS</div>
+    <div class="note" id="progress-summary" style="margin-bottom:8px;"></div>
+    <div class="prog-bar"><div class="prog-bar-fill" id="prog-bar-fill" style="width:0%"></div></div>
+    <div class="prog-grid" id="prog-grid"></div>
+    <div class="status" id="st-progress"></div>
   </div>
 </div>
 
@@ -348,7 +323,6 @@ window.addEventListener('DOMContentLoaded', async () => {
   buildGrid('teach-grid', false);
   buildPills();
   await loadChar();
-  await loadVersions();
   loadCorrections();
 });
 
@@ -392,10 +366,8 @@ function updateUIText() {
   setFlblOpt('ctx-lbl', t('ctx_lbl'), t('opt')); setFlbl('applies-lbl', t('applies_lbl')); setPH('corr-ctx', t('ctx_ph'));
   setText('scope-both', t('scope_both')); setText('scope-en', t('scope_en')); setText('scope-is', t('scope_is'));
   setText('save-corr-btn', t('save_corr')); setText('saved-corr-lbl', t('saved_corr_lbl'));
-  setText('char-card-lbl', t('char_lbl')); setText('char-note', t('char_note'));
-  setText('test-card-lbl', t('test_lbl')); setText('test-note', t('test_note')); setPH('test-txt', t('test_ph'));
-  setText('test-btn', t('test_btn')); setText('test-output-lbl', t('runar_responds'));
-  setText('version-card-lbl', t('version_lbl')); setText('preview-btn', t('preview_btn')); setText('save-char-btn', t('save_char_btn'));
+  setText('tab-progress-btn', t('tab_progress'));
+  setText('progress-lbl', t('progress_lbl'));
   setText('reader-card1-lbl', t('reader_card1_lbl')); setText('reader-note', t('reader_note'));
   // Teach tab
   setText('teach-select-lbl', t('teach_select_lbl')); setText('teach-select-note', t('teach_select_note'));
@@ -410,13 +382,14 @@ function updateUIText() {
 
 // ─── TABS ───────────────────────────────────────────────
 function showTab(name) {
-  ['teach','char','reader','correct'].forEach(n => {
+  ['teach','progress','reader','correct'].forEach(n => {
     document.getElementById('pane-' + n).classList.remove('on');
     document.getElementById('tab-' + n + '-btn').classList.remove('on');
   });
   document.getElementById('pane-' + name).classList.add('on');
   document.getElementById('tab-' + name + '-btn').classList.add('on');
   if (name === 'correct') loadCorrections();
+  if (name === 'progress') loadProgress();
 }
 
 // ─── RUNE GRID ──────────────────────────────────────────
@@ -670,53 +643,51 @@ function resetTeach() {
   setSt('st-invoke', ''); setSt('st-commit', ''); setSt('st-teach-voice', '');
 }
 
-// ─── CHARACTER ──────────────────────────────────────────
+// ─── CHARACTER (background only — UI removed) ───────────
 async function loadChar() {
-  try { const { data } = await sb.from('runar_character').select('*').eq('active', true).order('created_at', { ascending: false }).limit(1).maybeSingle(); if (data) { activeChar = data; fillCharForm(data); return; } } catch (e) {}
-  activeChar = { ...DEF_CHAR }; fillCharForm(DEF_CHAR);
-}
-function fillCharForm(c) { ['identity','personality','purpose','voice','never','philosophy','format','imagery'].forEach(k => { const el = document.getElementById('ch-' + k); if (el) el.value = c[k] || DEF_CHAR[k] || ''; }); }
-function getCharFromForm() { const keys = ['identity','personality','purpose','voice','never','philosophy','format','imagery']; return Object.fromEntries(keys.map(k => [k, document.getElementById('ch-' + k).value.trim()])); }
-function previewChar() { const p = document.getElementById('char-preview'); p.style.display = 'block'; p.textContent = buildSysPrompt(getCharFromForm()); }
-
-async function saveChar() {
-  const c = getCharFromForm(); setSt('st-char', t('st_saving'));
   try {
-    await sb.from('runar_character').update({ active: false }).eq('active', true);
-    const { error } = await sb.from('runar_character').insert([{ ...c, active: true, label: `Version ${new Date().toLocaleDateString('en-GB')} ${new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}`, created_at: new Date().toISOString() }]);
-    if (error) throw error; activeChar = c; setSt('st-char', t('st_char_saved'), 'ok'); loadVersions();
-  } catch (e) { activeChar = c; setSt('st-char', t('st_char_memory'), 'ok'); }
+    const { data } = await sb.from('runar_character').select('*').eq('active', true).order('created_at', { ascending: false }).limit(1).maybeSingle();
+    if (data) { activeChar = data; return; }
+  } catch (e) {}
+  activeChar = { ...DEF_CHAR };
 }
 
-async function testVoice() {
-  const prompt = document.getElementById('test-txt').value.trim(); if (!prompt) return;
-  document.getElementById('test-output').style.display = 'block';
-  document.getElementById('test-result').innerHTML = '<span class="stream-cur"></span>';
-  setSt('st-test', t('st_listening'));
-  const res = await callProxy(buildSysPrompt(getCharFromForm()), prompt + (lang === 'is' ? '\n\nRespond in Icelandic.' : ''), 400);
-  if (res.error) { setSt('st-test', 'Failed: ' + res.error, 'err'); return; }
-  await stream('test-result', res.text); setSt('st-test', '');
-}
+// ─── PROGRESS ───────────────────────────────────────────
+async function loadProgress() {
+  setSt('st-progress', 'Loading…');
+  const { data, error } = await sb.from('runar_static_audio').select('rune_name, lang, version, ready').eq('ready', true);
+  if (error) { setSt('st-progress', 'Error: ' + error.message, 'err'); return; }
 
-async function loadVersions() {
-  try {
-    const { data } = await sb.from('runar_character').select('id,label,created_at,active').order('created_at', { ascending: false }).limit(10);
-    const list = document.getElementById('version-list');
-    if (!data || data.length === 0) { list.innerHTML = '<div class="empty">' + t('st_no_versions') + '</div>'; return; }
-    list.innerHTML = '';
-    data.forEach(v => {
-      const d = document.createElement('div'); d.className = 'vi';
-      d.innerHTML = `<div><div class="vi-lbl">${v.label || 'Character version'}</div><div class="vi-date">${new Date(v.created_at).toLocaleString('en-GB')}</div></div>${v.active ? '<span class="vi-active">ACTIVE</span>' : ''}`;
-      if (!v.active) d.onclick = () => restoreVersion(v.id); list.appendChild(d);
-    });
-  } catch (e) { document.getElementById('version-list').innerHTML = '<div class="empty">' + t('st_no_table') + '</div>'; }
-}
+  // Build map { runeName: { en: [1,2], is: [1] } }
+  const map = {};
+  RUNES.forEach(r => { map[r.n] = { en: [], is: [] }; });
+  (data || []).forEach(row => {
+    if (map[row.rune_name] && (row.lang === 'en' || row.lang === 'is'))
+      map[row.rune_name][row.lang].push(row.version);
+  });
 
-async function restoreVersion(id) {
-  if (!confirm('Restore this version?')) return;
-  await sb.from('runar_character').update({ active: false }).eq('active', true);
-  await sb.from('runar_character').update({ active: true }).eq('id', id);
-  await loadChar(); await loadVersions(); setSt('st-char', t('st_restored'), 'ok');
+  // Summary
+  let enDone = 0, isDone = 0;
+  RUNES.forEach(r => { if (map[r.n].en.length > 0) enDone++; if (map[r.n].is.length > 0) isDone++; });
+  const total = enDone + isDone, max = RUNES.length * 2;
+  document.getElementById('progress-summary').textContent = `EN: ${enDone}/25 · IS: ${isDone}/25 · Total: ${total}/${max}`;
+  document.getElementById('prog-bar-fill').style.width = Math.round(total / max * 100) + '%';
+
+  // Build grid
+  const grid = document.getElementById('prog-grid');
+  grid.innerHTML = '';
+  RUNES.forEach(r => {
+    const enV = map[r.n].en, isV = map[r.n].is;
+    const cell = document.createElement('div');
+    cell.className = 'prog-cell' + (enV.length > 0 && isV.length > 0 ? ' full' : enV.length > 0 || isV.length > 0 ? ' partial' : '');
+    const svgData = typeof RUNE_SVGS !== 'undefined' ? RUNE_SVGS[r.svg] : null;
+    const glyph = svgData
+      ? `<svg viewBox="${svgData.vb}" xmlns="http://www.w3.org/2000/svg" style="width:32px;height:40px;display:block;margin:0 auto;">${svgData.paths}</svg>`
+      : `<span style="font-size:1.4em;color:var(--gold);">${r.g}</span>`;
+    cell.innerHTML = `${glyph}<div class="prog-name">${r.n}</div><div class="prog-langs"><span class="prog-badge ${enV.length > 0 ? 'has' : 'none'}">${enV.length > 0 ? 'EN·' + enV.length : 'EN'}</span><span class="prog-badge ${isV.length > 0 ? 'has' : 'none'}">${isV.length > 0 ? 'IS·' + isV.length : 'IS'}</span></div>`;
+    grid.appendChild(cell);
+  });
+  setSt('st-progress', '');
 }
 
 // ─── READER ─────────────────────────────────────────────

@@ -12,10 +12,11 @@ const UI_TEXT = {
     sub:     'Teach Rúnar. Shape his voice. Feed his wisdom.',
 
     // Tabs
-    tab_teach:   'TEACH RÚNAR',
-    tab_char:    'CHARACTER',
-    tab_reader:  'RÚNAR THE RUNE KEEPER',
-    tab_correct: 'WORD CORRECTIONS',
+    tab_teach:    'TEACH RÚNAR',
+    tab_progress: 'PROGRESS',
+    tab_reader:   'RÚNAR THE RUNE KEEPER',
+    tab_correct:  'WORD CORRECTIONS',
+    progress_lbl: '♦ AUDIO PROGRESS',
 
     // Teach tab
     teach_select_lbl:   'ᚠ SELECT RUNE',
@@ -112,10 +113,11 @@ const UI_TEXT = {
     sub:     'Kenndu Rúnari. Móta rödd hans. Fæða visku hans.',
 
     // Tabs
-    tab_teach:   'KENNA RÚNARI',
-    tab_char:    'PERSÓNULEIKI',
-    tab_reader:  'RÚNAR RÚNAVÖRÐURINN',
-    tab_correct: 'ORÐALEIÐRÉTTINGAR',
+    tab_teach:    'KENNA RÚNARI',
+    tab_progress: 'FRAMVINDA',
+    tab_reader:   'RÚNAR RÚNAVÖRÐURINN',
+    tab_correct:  'ORÐALEIÐRÉTTINGAR',
+    progress_lbl: '♦ HLJÓÐFRAMVINDA',
 
     // Teach tab
     teach_select_lbl:   'ᚠ VELJA RÚNU',
