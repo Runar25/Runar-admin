@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RÚNAR · The World of Yggdrasil</title>
+<script src="runar-config.js"></script>
+<script src="runar-runes.js"></script>
+<script src="runar-character.js"></script>
+<script src="runar-svgs.js"></script>
+<style>
+  :root {
+    --bg:       #0a0a0f;
+    --card:     #11111a;
+    --border:   #2a2a3a;
+    --gold:     #c8a84b;
+    --gold-dim: #7a6530;
+    --blue:     #6ab4d4;
+    --teal:     #4ecdc4;
+    --text:     #d4cfc8;
+    --dim:      #7a7570;
+    --hel:      #6b3fa0;
+    --hel-dim:  #2e1a45;
+    --midgard:  #3a7a4a;
+    --mid-dim:  #1a3020;
+    --asgard:   #c8a84b;
+    --asg-dim:  #3a2e10;
+    --shadow:   rgba(0,0,0,0.6);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'Georgia', serif; }
+
+  /* ── TREE BACKGROUND ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, #1a0a2e 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 100%, #0a1a0a 0%, transparent 60%);
+    pointer-events: none; z-index: 0;
+  }
+
+  .wrap { max-width: 640px; margin: 0 auto; padding: 24px 16px 80px; position: relative; z-index: 1; }
+
+  /* ── HEADER ── */
+  .site-header { text-align: center; padding: 32px 0 24px; }
+  .site-brand { font-size: .7em; letter-spacing: .25em; color: var(--gold-dim); margin-bottom: 6px; }
+  .site-title { font-size: 1.5em; letter-spacing: .15em; color: var(--gold); }
+  .site-tree { font-size: 2.2em; margin: 8px 0; opacity: .6; }
+
+  /* ── LANG TOGGLE ── */
+  .lang-row { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; }
+  .lang-btn { padding: 4px 14px; border: 1px solid var(--border); background: none; color: var(--dim);
+              font-family: inherit; font-size: .75em; letter-spacing: .1em; cursor: pointer; border-radius: 2px; }
+  .lang-btn.active { border-color: var(--gold); color: var(--gold); }
+
+  /* ── SCREEN SYSTEM ── */
+  .screen { display: none; }
+  .screen.on { display: block; }
+
+  /* ── CARD ── */
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 4px;
+          padding: 24px; margin-bottom: 16px; }
+  .card-lbl { font-size: .65em; letter-spacing: .2em; color: var(--gold-dim); margin-bottom: 12px; }
+
+  /* ── WORLD HEADER BANDS ── */
+  .world-header { text-align: center; padding: 20px 0 16px; margin-bottom: 16px; }
+  .world-glyph { font-size: 2em; margin-bottom: 6px; }
+  .world-name { font-size: .8em; letter-spacing: .3em; margin-bottom: 4px; }
+  .world-desc { font-size: .85em; color: var(--dim); font-style: italic; line-height: 1.5; }
+  .world-hel    .world-name { color: var(--hel); }
+  .world-mid    .world-name { color: var(--teal); }
+  .world-asg    .world-name { color: var(--gold); }
+
+  /* ── RÚNAR SPEAKS ── */
+  .runar-speaks { background: linear-gradient(135deg, #0e0e18, #12121e);
+                  border: 1px solid var(--border); border-radius: 4px; padding: 20px; margin-bottom: 16px; }
+  .runar-speaks-lbl { font-size: .6em; letter-spacing: .2em; color: var(--gold-dim); margin-bottom: 10px; }
+  .runar-txt { font-size: 1em; line-height: 1.8; color: var(--text); }
+  .runar-txt.hel-tone  { color: #c4a8e0; }
+  .runar-txt.mid-tone  { color: #a8d4c0; }
+  .runar-txt.asg-tone  { color: #e0d090; }
+  .stream-cur { display: inline-block; width: 2px; height: 1em; background: var(--gold);
+                vertical-align: middle; animation: blink .8s steps(1) infinite; margin-left: 2px; }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+
+  /* ── RUNE GRID ── */
+  .rune-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(52px,1fr)); gap: 8px; margin: 16px 0; }
+  .rb { background: #16161f; border: 1px solid var(--border); border-radius: 3px;
+        padding: 8px 4px 6px; text-align: center; cursor: pointer; transition: all .15s; }
+  .rb:hover { border-color: var(--gold-dim); background: #1e1e2a; }
+  .rb.on { border-color: var(--gold); background: #1e1c10; }
+  .rb svg { width: 28px; height: 32px; display: block; margin: 0 auto 4px; }
+  .rb .rb-name { font-size: .55em; letter-spacing: .05em; color: var(--dim); }
+
+  /* ── FORMS ── */
+  .flbl { font-size: .65em; letter-spacing: .12em; color: var(--dim); display: block; margin-bottom: 6px; margin-top: 14px; }
+  .txt { width: 100%; background: #0d0d16; border: 1px solid var(--border); color: var(--text);
+         font-family: inherit; font-size: .9em; padding: 10px 12px; border-radius: 3px; outline: none; }
+  .txt:focus { border-color: var(--gold-dim); }
+  .dob-row { display: grid; grid-template-columns: 1fr 1fr 1.5fr; gap: 8px; }
+  .num { width: 100%; background: #0d0d16; border: 1px solid var(--border); color: var(--text);
+         font-family: inherit; font-size: .9em; padding: 10px; border-radius: 3px; outline: none; text-align: center; }
+
+  /* ── BUTTONS ── */
+  .btn-full { width: 100%; padding: 14px; background: none; border: 1px solid var(--gold-dim);
+              color: var(--gold); font-family: inherit; font-size: .75em; letter-spacing: .15em;
+              cursor: pointer; margin-top: 12px; border-radius: 3px; transition: all .2s; }
+  .btn-full:hover:not(:disabled) { background: var(--gold); color: #000; }
+  .btn-full:disabled { opacity: .4; cursor: default; }
+  .btn-full.world-hel { border-color: var(--hel); color: var(--hel); }
+  .btn-full.world-hel:hover:not(:disabled) { background: var(--hel); color: #fff; }
+  .btn-full.world-mid { border-color: var(--teal); color: var(--teal); }
+  .btn-full.world-mid:hover:not(:disabled) { background: var(--teal); color: #000; }
+
+  /* ── LIFE RUNE TOKEN ── */
+  .life-token { display: flex; align-items: center; gap: 16px;
+                background: #0d0d14; border: 1px solid var(--border);
+                border-radius: 4px; padding: 14px 16px; margin-bottom: 12px; }
+  .life-token-stone { width: 52px; height: 60px; background: #1a1a24;
+                      border: 1px solid var(--border); border-radius: 6px;
+                      display: flex; align-items: center; justify-content: center; font-size: 1.8em; }
+  .life-token-stone.revealed { border-color: var(--gold); }
+  .life-token-meta { flex: 1; }
+  .life-token-lbl { font-size: .6em; letter-spacing: .15em; color: var(--gold-dim); margin-bottom: 4px; }
+  .life-token-name { font-size: .95em; color: var(--gold); }
+  .life-token-sub { font-size: .75em; color: var(--dim); margin-top: 2px; }
+
+  /* ── WORLD PROGRESS ── */
+  .world-progress { display: flex; gap: 6px; margin-bottom: 20px; }
+  .wp-step { flex: 1; height: 3px; background: var(--border); border-radius: 2px; }
+  .wp-step.done-hel { background: var(--hel); }
+  .wp-step.done-mid { background: var(--teal); }
+  .wp-step.done-asg { background: var(--gold); }
+  .wp-step.active { background: rgba(200,168,75,.4); animation: pulse-bar 1.5s ease infinite; }
+  @keyframes pulse-bar { 0%,100% { opacity: .4; } 50% { opacity: 1; } }
+
+  /* ── DRAWN RUNE DISPLAY ── */
+  .drawn-rune-display { display: flex; align-items: center; gap: 16px; padding: 14px;
+                        background: #0d0d14; border: 1px solid var(--border); border-radius: 4px; margin-bottom: 12px; }
+  .drawn-rune-svg { width: 44px; height: 50px; }
+  .drawn-rune-svg svg { width: 100%; height: 100%; }
+  .drawn-rune-info .rune-n { font-size: 1em; color: var(--text); }
+  .drawn-rune-info .rune-g { font-size: 1.4em; }
+  .drawn-rune-info .rune-world { font-size: .65em; letter-spacing: .1em; color: var(--dim); margin-top: 2px; }
+
+  /* ── FINAL READING ── */
+  .final-section { border-top: 1px solid var(--border); padding-top: 20px; margin-top: 20px; }
+  .final-section-lbl { font-size: .6em; letter-spacing: .2em; color: var(--dim); margin-bottom: 10px; }
+  .final-rune-row { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .final-rune-chip { padding: 6px 12px; border-radius: 3px; font-size: .75em; letter-spacing: .08em; }
+  .frc-hel { background: var(--hel-dim); border: 1px solid var(--hel); color: #c4a8e0; }
+  .frc-mid { background: var(--mid-dim); border: 1px solid var(--midgard); color: #a8d4c0; }
+  .frc-asg { background: var(--asg-dim); border: 1px solid var(--asgard); color: #e0d090; }
+  .frc-life { background: #1a1a10; border: 1px solid var(--gold); color: var(--gold); }
+
+  /* ── AUDIO ── */
+  .audio-player { display: none; margin-top: 12px; padding: 12px 14px;
+                  background: #0d0d16; border: 1px solid var(--border); border-radius: 4px; }
+  .audio-player.visible { display: block; }
+  .audio-player-lbl { font-size: .6em; letter-spacing: .15em; color: var(--dim); margin-bottom: 8px; }
+  audio { width: 100%; height: 36px; }
+
+  /* ── STATUS ── */
+  .status { font-size: .75em; color: var(--dim); margin-top: 8px; min-height: 1.2em; }
+  .status.ok  { color: var(--teal); }
+  .status.err { color: #e07070; }
+
+  .note { font-size: .82em; color: var(--dim); line-height: 1.6; margin-bottom: 12px; font-style: italic; }
+
+  /* ── WELCOME VARIANTS ── */
+  .welcome-glyph { text-align: center; font-size: 3em; margin: 16px 0 8px; opacity: .7; }
+  .welcome-title { text-align: center; font-size: 1.1em; letter-spacing: .08em; color: var(--gold); margin-bottom: 16px; line-height: 1.5; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="site-header">
+    <div class="site-brand">AGNDOFA · RÚNAR</div>
+    <div class="site-tree">ᛉ</div>
+    <div class="site-title">THE WORLD OF YGGDRASIL</div>
+  </div>
+
+  <!-- LANG -->
+  <div class="lang-row">
+    <button class="lang-btn active" id="btn-en" onclick="setYLang('en')">EN</button>
+    <button class="lang-btn"        id="btn-is" onclick="setYLang('is')">IS</button>
+  </div>
+
+  <!-- ══ SCREEN: WELCOME ══ -->
+  <div class="screen on" id="screen-welcome">
+    <div class="card">
+      <div class="welcome-glyph" id="welcome-glyph">🌳</div>
+      <div class="welcome-title" id="welcome-title"></div>
+      <p class="note" id="welcome-note"></p>
+      <label class="flbl" id="lbl-name"></label>
+      <input class="txt" id="y-name" type="text">
+      <label class="flbl" id="lbl-dob"></label>
+      <div class="dob-row">
+        <input class="num" id="y-day"   type="number" placeholder="Day"   min="1"  max="31">
+        <input class="num" id="y-month" type="number" placeholder="Month" min="1"  max="12">
+        <input class="num" id="y-year"  type="number" placeholder="Year"  min="1920" max="2010">
+      </div>
+      <button class="btn-full" id="btn-enter" onclick="enterYggdrasil()"></button>
+      <div class="status" id="st-welcome"></div>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN: HEL ══ -->
+  <div class="screen" id="screen-hel">
+    <div class="world-progress">
+      <div class="wp-step active" id="wp-hel"></div>
+      <div class="wp-step" id="wp-mid"></div>
+      <div class="wp-step" id="wp-asg"></div>
+    </div>
+    <!-- Life token (hidden until end) -->
+    <div class="life-token" id="lt-hel">
+      <div class="life-token-stone" id="lt-hel-stone">◈</div>
+      <div class="life-token-meta">
+        <div class="life-token-lbl" id="lt-lbl-hel"></div>
+        <div class="life-token-name" id="lt-hel-name">· · ·</div>
+        <div class="life-token-sub" id="lt-hel-sub"></div>
+      </div>
+    </div>
+    <div class="world-header world-hel">
+      <div class="world-glyph">🌑</div>
+      <div class="world-name" id="hel-name">HEL</div>
+      <div class="world-desc" id="hel-desc"></div>
+    </div>
+    <!-- Rúnar speaks intro -->
+    <div class="runar-speaks" id="hel-intro-box">
+      <div class="runar-speaks-lbl" id="hel-intro-lbl"></div>
+      <div class="runar-txt hel-tone" id="hel-intro-txt"><span class="stream-cur"></span></div>
+    </div>
+    <div class="card">
+      <div class="card-lbl" id="hel-select-lbl"></div>
+      <div class="rune-grid" id="hel-grid"></div>
+      <div class="status" id="st-hel-select"></div>
+      <button class="btn-full world-hel" id="btn-hel-confirm" onclick="confirmHel()" disabled></button>
+    </div>
+    <!-- After selection: Rúnar speaks -->
+    <div class="runar-speaks" id="hel-reading-box" style="display:none;">
+      <div class="runar-speaks-lbl" id="hel-reading-lbl"></div>
+      <div class="runar-txt hel-tone" id="hel-reading-txt"></div>
+    </div>
+    <button class="btn-full" id="btn-to-midgard" onclick="goMidgard()" style="display:none;"></button>
+    <div class="status" id="st-hel"></div>
+  </div>
+
+  <!-- ══ SCREEN: MIDGARD ══ -->
+  <div class="screen" id="screen-mid">
+    <div class="world-progress">
+      <div class="wp-step done-hel"></div>
+      <div class="wp-step active" id="wp-mid2"></div>
+      <div class="wp-step" id="wp-asg2"></div>
+    </div>
+    <div class="life-token" id="lt-mid">
+      <div class="life-token-stone">◈</div>
+      <div class="life-token-meta">
+        <div class="life-token-lbl" id="lt-lbl-mid"></div>
+        <div class="life-token-name">· · ·</div>
+        <div class="life-token-sub" id="lt-mid-sub"></div>
+      </div>
+    </div>
+    <!-- Show Hel rune -->
+    <div class="drawn-rune-display" id="mid-hel-recap">
+      <div class="drawn-rune-svg" id="mid-hel-svg"></div>
+      <div class="drawn-rune-info">
+        <div class="rune-g" id="mid-hel-g"></div>
+        <div class="rune-n" id="mid-hel-n"></div>
+        <div class="rune-world" id="mid-hel-world"></div>
+      </div>
+    </div>
+    <div class="world-header world-mid">
+      <div class="world-glyph">🌍</div>
+      <div class="world-name" id="mid-name">MIDGARD</div>
+      <div class="world-desc" id="mid-desc"></div>
+    </div>
+    <div class="runar-speaks" id="mid-intro-box">
+      <div class="runar-speaks-lbl" id="mid-intro-lbl"></div>
+      <div class="runar-txt mid-tone" id="mid-intro-txt"><span class="stream-cur"></span></div>
+    </div>
+    <div class="card">
+      <div class="card-lbl" id="mid-select-lbl"></div>
+      <div class="rune-grid" id="mid-grid"></div>
+      <div class="status" id="st-mid-select"></div>
+      <button class="btn-full world-mid" id="btn-mid-confirm" onclick="confirmMid()" disabled></button>
+    </div>
+    <div class="runar-speaks" id="mid-reading-box" style="display:none;">
+      <div class="runar-speaks-lbl" id="mid-reading-lbl"></div>
+      <div class="runar-txt mid-tone" id="mid-reading-txt"></div>
+    </div>
+    <button class="btn-full" id="btn-to-asgard" onclick="goAsgard()" style="display:none;"></button>
+    <div class="status" id="st-mid"></div>
+  </div>
+
+  <!-- ══ SCREEN: ASGARD ══ -->
+  <div class="screen" id="screen-asg">
+    <div class="world-progress">
+      <div class="wp-step done-hel"></div>
+      <div class="wp-step done-mid"></div>
+      <div class="wp-step active"></div>
+    </div>
+    <div class="life-token" id="lt-asg">
+      <div class="life-token-stone">◈</div>
+      <div class="life-token-meta">
+        <div class="life-token-lbl" id="lt-lbl-asg"></div>
+        <div class="life-token-name">· · ·</div>
+        <div class="life-token-sub" id="lt-asg-sub"></div>
+      </div>
+    </div>
+    <div class="world-header world-asg">
+      <div class="world-glyph">✨</div>
+      <div class="world-name" id="asg-name">ASGARD</div>
+      <div class="world-desc" id="asg-desc"></div>
+    </div>
+    <div class="runar-speaks" id="asg-intro-box">
+      <div class="runar-speaks-lbl" id="asg-intro-lbl"></div>
+      <div class="runar-txt asg-tone" id="asg-intro-txt"><span class="stream-cur"></span></div>
+    </div>
+    <div class="card">
+      <div class="card-lbl" id="asg-select-lbl"></div>
+      <div class="rune-grid" id="asg-grid"></div>
+      <div class="status" id="st-asg-select"></div>
+      <button class="btn-full" id="btn-asg-confirm" onclick="confirmAsg()" disabled style="border-color:var(--gold);color:var(--gold);"></button>
+    </div>
+    <div class="runar-speaks" id="asg-reading-box" style="display:none;">
+      <div class="runar-speaks-lbl" id="asg-reading-lbl"></div>
+      <div class="runar-txt asg-tone" id="asg-reading-txt"></div>
+    </div>
+    <button class="btn-full" id="btn-to-final" onclick="goFinal()" style="display:none;border-color:var(--gold);color:var(--gold);"></button>
+    <div class="status" id="st-asg"></div>
+  </div>
+
+  <!-- ══ SCREEN: FINAL READING ══ -->
+  <div class="screen" id="screen-final">
+    <div class="world-progress">
+      <div class="wp-step done-hel"></div>
+      <div class="wp-step done-mid"></div>
+      <div class="wp-step done-asg"></div>
+    </div>
+    <!-- Life Rune reveal -->
+    <div class="life-token" id="lt-final" style="border-color:var(--gold);cursor:pointer;" onclick="revealLifeRune()">
+      <div class="life-token-stone" id="lt-final-stone">◈</div>
+      <div class="life-token-meta">
+        <div class="life-token-lbl" id="lt-final-lbl"></div>
+        <div class="life-token-name" id="lt-final-name">· · ·</div>
+        <div class="life-token-sub" id="lt-final-sub"></div>
+      </div>
+    </div>
+    <!-- Three rune chips -->
+    <div class="final-rune-row" id="final-chips"></div>
+    <!-- Reading -->
+    <div class="runar-speaks" id="final-reading-box">
+      <div class="runar-speaks-lbl" id="final-reading-lbl"></div>
+      <div class="runar-txt" id="final-reading-txt"><span class="stream-cur"></span></div>
+    </div>
+    <!-- Voice -->
+    <button class="btn-full" id="btn-final-voice" onclick="generateFinalVoice()" style="display:none;"></button>
+    <div class="audio-player" id="final-audio-player">
+      <div class="audio-player-lbl" id="final-audio-lbl"></div>
+      <div>
+        <audio id="final-audio" controls preload="none" controlsList="nodownload" oncontextmenu="return false;"></audio>
+      </div>
+    </div>
+    <div class="status" id="st-final"></div>
+    <button class="btn-full" id="btn-restart" onclick="restartJourney()" style="margin-top:24px;opacity:.6;font-size:.7em;"></button>
+  </div>
+
+</div><!-- /wrap -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+// ═══════════════════════════════════════════════════════
+// RÚNAR · YGGDRASIL JOURNEY
+// ═══════════════════════════════════════════════════════
+
+const sb = supabase.createClient(SB_URL, SB_KEY);
+
+// ─── STATE ──────────────────────────────────────────────
+let ylang      = 'en';
+let yUser      = {};        // { name, lifeRune }
+let helRune    = null;
+let midRune    = null;
+let asgRune    = null;
+let lifeRevealed = false;
+let activeChar = null;
+
+// ─── WELCOME VARIANTS ───────────────────────────────────
+const WELCOME = {
+  en: [
+    { glyph: '🌳', title: 'The roots of Yggdrasil reach into every world.\nYou have arrived at the threshold.', note: 'Rúnar has been waiting. He will guide you through three worlds — the roots, the trunk, and the crown — and read what the tree has to say about you.' },
+    { glyph: '🌑', title: 'The tree is old. Older than memory.\nSomething in you already knows this place.', note: 'Three worlds lie before you. You will pass through each one. In each world, a rune will speak. Rúnar will listen — and interpret.' },
+    { glyph: '⚡', title: 'Between the roots and the stars,\nthe World Tree holds everything.', note: 'Enter your name and the day you were born. Rúnar will calculate your Life Rune — the rune that walks with you always — and reveal it at the end.' },
+    { glyph: '🦅', title: 'Odin hung on Yggdrasil for nine nights\nto receive the runes. You need only three.', note: 'A descent into Hel. A walk through Midgard. An ascent to Asgard. Each world will ask you for one rune. Rúnar will weave the story.' },
+    { glyph: '🌊', title: 'The Well of Wyrd lies at the roots.\nYour story is already written there.', note: 'This is not a prediction. This is a reading — of who you are, what moves around you, and what is possible. Enter when you are ready.' },
+  ],
+  is: [
+    { glyph: '🌳', title: 'Rætur Yggdrasils ná inn í alla heima.\nÞú ert kominn að þröskuldi.', note: 'Rúnar hefur beðið. Hann mun leiðbeina þér í gegnum þrjá heima — ræturnar, búkinn og kórónuna — og lesa hvað trésins hefur að segja um þig.' },
+    { glyph: '🌑', title: 'Trésið er gamalt. Eldra en minnið.\nEitthvað í þér þekkir þennan stað þegar.', note: 'Þrír heimar bíða þín. Þú munt fara í gegnum hvern þeirra. Í hverjum heimi mun rúna tala. Rúnar mun hlusta — og túlka.' },
+    { glyph: '⚡', title: 'Á milli rótanna og stjarnanna\nheldur heimstrésið öllu.', note: 'Sláðu inn nafnið þitt og fæðingardag þinn. Rúnar mun reikna lífsrúnuna þína — rúnuna sem gengur alltaf með þér — og opinbera hana í lokin.' },
+    { glyph: '🦅', title: 'Óðinn hékk á Yggdrasil í níu nætur\ntil að fá rúnarnar. Þú þarft aðeins þrjár.', note: 'Niðurstigið í Hel. Gangan um Miðgarð. Uppstigning til Ásgarðs. Sérhver heimur mun biðja þig um eina rúnu. Rúnar mun vefa söguna.' },
+    { glyph: '🌊', title: 'Wyrd-brunnurinn liggur við ræturnar.\nSagan þín er þegar skrifuð þar.', note: 'Þetta er ekki spádómur. Þetta er lestur — um hver þú ert, hvað hreyfist í kringum þig og hvað er mögulegt. Komdu inn þegar þú ert tilbúinn.' },
+  ],
+};
+
+// ─── UI TEXT ────────────────────────────────────────────
+const YT = {
+  en: {
+    lbl_name:        'YOUR NAME',
+    lbl_dob:         'DATE OF BIRTH (for your Life Rune)',
+    btn_enter:       'ENTER THE WORLD OF YGGDRASIL',
+    st_name_req:     'Please enter your name.',
+    lt_lbl:          'YOUR LIFE RUNE',
+    lt_hidden:       'Carried in silence until the end',
+    hel_name:        'HEL — THE ROOTS',
+    hel_desc:        'What lies beneath. The hidden, the wound, the unspoken truth.',
+    hel_select_lbl:  'ᚠ WHICH RUNE DID YOU DRAW FROM HEL?',
+    hel_intro_lbl:   '✦ RÚNAR SPEAKS — THE DESCENT',
+    hel_reading_lbl: '✦ RÚNAR SPEAKS — THE ROOT',
+    btn_hel_confirm: 'THIS IS MY RUNE FROM HEL',
+    btn_to_midgard:  'RISE TO MIDGARD →',
+    mid_name:        'MIDGARD — THE TRUNK',
+    mid_desc:        'What is happening now. The lived life — relationships, movement, choices.',
+    mid_select_lbl:  'ᚠ WHICH RUNE DID YOU DRAW FROM MIDGARD?',
+    mid_intro_lbl:   '✦ RÚNAR SPEAKS — THE WALK',
+    mid_reading_lbl: '✦ RÚNAR SPEAKS — THE TRUNK',
+    btn_mid_confirm: 'THIS IS MY RUNE FROM MIDGARD',
+    btn_to_asgard:   'ASCEND TO ASGARD →',
+    asg_name:        'ASGARD — THE CROWN',
+    asg_desc:        'What is possible. The higher pattern, the guiding wisdom.',
+    asg_select_lbl:  'ᚠ WHICH RUNE DID YOU DRAW FROM ASGARD?',
+    asg_intro_lbl:   '✦ RÚNAR SPEAKS — THE ASCENT',
+    asg_reading_lbl: '✦ RÚNAR SPEAKS — THE CROWN',
+    btn_asg_confirm: 'THIS IS MY RUNE FROM ASGARD',
+    btn_to_final:    'THE TREE IS COMPLETE — REVEAL ALL ✦',
+    final_lbl:       '✦ THE FULL READING',
+    final_tap_life:  'Tap to reveal your Life Rune',
+    final_voice_btn: 'ᚢ HEAR RÚNAR SPEAK',
+    final_voice_loading: 'ᚢ RÚNAR IS SPEAKING…',
+    final_audio_lbl: '♪ RÚNAR SPEAKS — YGGDRASIL READING',
+    btn_restart:     'BEGIN A NEW JOURNEY',
+    st_generating:   'Rúnar is traversing the worlds…',
+    st_select_rune:  'Select your rune first.',
+  },
+  is: {
+    lbl_name:        'NAFNIÐ ÞÍT',
+    lbl_dob:         'FÆÐINGARDAGUR (fyrir lífsrúnuna þína)',
+    btn_enter:       'KOMA INN Í HEIM YGGDRASILS',
+    st_name_req:     'Vinsamlegast sláðu inn nafnið þitt.',
+    lt_lbl:          'LÍFSRÚNAN ÞÍN',
+    lt_hidden:       'Borin í þögn til loka',
+    hel_name:        'HEL — RÆTURNAR',
+    hel_desc:        'Það sem liggur undir. Hið leynda, sárin, ótalda sannleikurinn.',
+    hel_select_lbl:  'ᚠ HVAÐA RÚNU DRÓGSTU ÚR HEL?',
+    hel_intro_lbl:   '✦ RÚNAR TALAR — NIÐURSTEIGIÐ',
+    hel_reading_lbl: '✦ RÚNAR TALAR — RÓTIN',
+    btn_hel_confirm: 'ÞETTA ER RÚNAN MÍN ÚR HEL',
+    btn_to_midgard:  'RÍS TIL MIÐGARÐS →',
+    mid_name:        'MIÐGARÐUR — BÚKURINN',
+    mid_desc:        'Það sem gerist núna. Lifað líf — sambönd, hreyfing, val.',
+    mid_select_lbl:  'ᚠ HVAÐA RÚNU DRÓGSTU ÚR MIÐGARÐI?',
+    mid_intro_lbl:   '✦ RÚNAR TALAR — GANGAN',
+    mid_reading_lbl: '✦ RÚNAR TALAR — BÚKURINN',
+    btn_mid_confirm: 'ÞETTA ER RÚNAN MÍN ÚR MIÐGARÐI',
+    btn_to_asgard:   'STÍGÐU UPP TIL ÁSGARÐS →',
+    asg_name:        'ÁSGARÐUR — KÓRÓNANN',
+    asg_desc:        'Það sem er mögulegt. Hærra mynsturið, leiðbeinandi viskan.',
+    asg_select_lbl:  'ᚠ HVAÐA RÚNU DRÓGSTU ÚR ÁSGARÐI?',
+    asg_intro_lbl:   '✦ RÚNAR TALAR — UPPSTIGUNARINN',
+    asg_reading_lbl: '✦ RÚNAR TALAR — KÓRÓNANN',
+    btn_asg_confirm: 'ÞETTA ER RÚNAN MÍN ÚR ÁSGARÐI',
+    btn_to_final:    'TRÉSIÐ ER FULLKOMIÐ — OPNA ALLT ✦',
+    final_lbl:       '✦ HEILDARLESNIN',
+    final_tap_life:  'Pikkaðu til að opinbera lífsrúnuna þína',
+    final_voice_btn: 'ᚢ HEYRA RÚNAR TALA',
+    final_voice_loading: 'ᚢ RÚNAR TALAR…',
+    final_audio_lbl: '♪ RÚNAR TALAR — YGGDRASIL LESTUR',
+    btn_restart:     'BYRJA NÝJA FERÐ',
+    st_generating:   'Rúnar fer um heimana…',
+    st_select_rune:  'Veldu rúnuna þína fyrst.',
+  },
+};
+
+function yt(k) { return (YT[ylang] && YT[ylang][k]) || YT.en[k] || k; }
+function setSt(id, msg, type) { const el = document.getElementById(id); if (!el) return; el.textContent = msg || ''; el.className = 'status' + (type ? ' ' + type : ''); }
+
+// ─── LANG ───────────────────────────────────────────────
+function setYLang(l) {
+  ylang = l;
+  document.getElementById('btn-en').classList.toggle('active', l === 'en');
+  document.getElementById('btn-is').classList.toggle('active', l === 'is');
+  updateYText();
+}
+
+function updateYText() {
+  // Welcome
+  document.getElementById('lbl-name').textContent    = yt('lbl_name');
+  document.getElementById('lbl-dob').textContent     = yt('lbl_dob');
+  document.getElementById('btn-enter').textContent   = yt('btn_enter');
+  // World labels
+  document.getElementById('hel-name').textContent    = yt('hel_name');
+  document.getElementById('hel-desc').textContent    = yt('hel_desc');
+  document.getElementById('hel-intro-lbl').textContent  = yt('hel_intro_lbl');
+  document.getElementById('hel-reading-lbl').textContent = yt('hel_reading_lbl');
+  document.getElementById('hel-select-lbl').textContent  = yt('hel_select_lbl');
+  document.getElementById('btn-hel-confirm').textContent = yt('btn_hel_confirm');
+  document.getElementById('btn-to-midgard').textContent  = yt('btn_to_midgard');
+  document.getElementById('mid-name').textContent    = yt('mid_name');
+  document.getElementById('mid-desc').textContent    = yt('mid_desc');
+  document.getElementById('mid-intro-lbl').textContent   = yt('mid_intro_lbl');
+  document.getElementById('mid-reading-lbl').textContent = yt('mid_reading_lbl');
+  document.getElementById('mid-select-lbl').textContent  = yt('mid_select_lbl');
+  document.getElementById('btn-mid-confirm').textContent = yt('btn_mid_confirm');
+  document.getElementById('btn-to-asgard').textContent   = yt('btn_to_asgard');
+  document.getElementById('asg-name').textContent    = yt('asg_name');
+  document.getElementById('asg-desc').textContent    = yt('asg_desc');
+  document.getElementById('asg-intro-lbl').textContent   = yt('asg_intro_lbl');
+  document.getElementById('asg-reading-lbl').textContent = yt('asg_reading_lbl');
+  document.getElementById('asg-select-lbl').textContent  = yt('asg_select_lbl');
+  document.getElementById('btn-asg-confirm').textContent = yt('btn_asg_confirm');
+  document.getElementById('btn-to-final').textContent    = yt('btn_to_final');
+  document.getElementById('final-reading-lbl').textContent = yt('final_lbl');
+  document.getElementById('final-audio-lbl').textContent   = yt('final_audio_lbl');
+  document.getElementById('btn-restart').textContent       = yt('btn_restart');
+  // Life token labels
+  ['hel','mid','asg'].forEach(w => {
+    const el = document.getElementById('lt-lbl-' + w);
+    if (el) el.textContent = yt('lt_lbl');
+  });
+  ['hel-sub','mid-sub','asg-sub'].forEach(id => {
+    const el = document.getElementById('lt-' + id);
+    if (el) el.textContent = yt('lt_hidden');
+  });
+}
+
+// ─── SCREEN NAV ─────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('on'));
+  document.getElementById('screen-' + id).classList.add('on');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── RUNE GRID BUILDER ──────────────────────────────────
+function buildRuneGrid(containerId, onSelect) {
+  const grid = document.getElementById(containerId);
+  grid.innerHTML = '';
+  RUNES.forEach(r => {
+    const btn = document.createElement('button');
+    btn.className = 'rb';
+    btn.dataset.rune = r.n;
+    const svgKey = r.svg || r.n;
+    const svgMarkup = RUNE_SVGS[svgKey]
+      ? `<svg viewBox="${RUNE_SVGS[svgKey].viewBox}" fill="none" xmlns="http://www.w3.org/2000/svg">${RUNE_SVGS[svgKey].paths.map(p => `<path d="${p}" stroke="#c8a84b" stroke-width="1.2" stroke-linecap="round"/>`).join('')}</svg>`
+      : `<span style="font-size:1.4em">${r.g}</span>`;
+    btn.innerHTML = svgMarkup + `<div class="rb-name">${r.n}</div>`;
+    btn.onclick = () => onSelect(r, btn, containerId);
+    grid.appendChild(btn);
+  });
+}
+
+function selectRuneInGrid(r, btn, gridId) {
+  document.querySelectorAll('#' + gridId + ' .rb').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+// ─── CLAUDE PROXY ───────────────────────────────────────
+async function callClaude(sys, prompt, maxTokens = 600) {
+  try {
+    const res = await fetch(PROXY, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ system: sys, prompt, max_tokens: maxTokens }),
+    });
+    const data = await res.json();
+    if (data.error) return { error: data.error };
+    return { text: data.text || data.content || '' };
+  } catch (e) {
+    return { error: e.message };
+  }
+}
+
+// ─── STREAMING TEXT ─────────────────────────────────────
+async function streamTo(elId, text, delayMs = 22) {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  el.innerHTML = '';
+  const words = text.split(' ');
+  for (let i = 0; i < words.length; i++) {
+    el.innerHTML += (i > 0 ? ' ' : '') + words[i];
+    await new Promise(r => setTimeout(r, delayMs));
+  }
+}
+
+// ─── RUNE HELPERS ───────────────────────────────────────
+function yRn(r) { return ylang === 'is' ? r.is_n : r.n; }
+function yRk(r) { return ylang === 'is' ? r.k_is : r.k; }
+function worldLabel(w) {
+  const m = { Hel: 'Hel — the roots', Midgard: 'Midgard — the trunk', Asgard: 'Asgard — the crown' };
+  return m[w] || w;
+}
+
+// ─── INIT ────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', async () => {
+  // Load active character
+  try {
+    const { data } = await sb.from('runar_character').select('*').eq('active', true).limit(1).maybeSingle();
+    activeChar = data || null;
+  } catch(e) { activeChar = null; }
+
+  // Pick random welcome variant
+  const vars = WELCOME[ylang] || WELCOME.en;
+  const v = vars[Math.floor(Math.random() * vars.length)];
+  document.getElementById('welcome-glyph').textContent = v.glyph;
+  document.getElementById('welcome-title').textContent = v.title;
+  document.getElementById('welcome-note').textContent  = v.note;
+
+  updateYText();
+  buildRuneGrid('hel-grid', (r, btn) => { helRune = r; selectRuneInGrid(r, btn, 'hel-grid'); document.getElementById('btn-hel-confirm').disabled = false; setSt('st-hel-select', ''); });
+  buildRuneGrid('mid-grid', (r, btn) => { midRune = r; selectRuneInGrid(r, btn, 'mid-grid'); document.getElementById('btn-mid-confirm').disabled = false; setSt('st-mid-select', ''); });
+  buildRuneGrid('asg-grid', (r, btn) => { asgRune = r; selectRuneInGrid(r, btn, 'asg-grid'); document.getElementById('btn-asg-confirm').disabled = false; setSt('st-asg-select', ''); });
+});
+
+// ─── ENTER YGGDRASIL ────────────────────────────────────
+async function enterYggdrasil() {
+  const name = document.getElementById('y-name').value.trim();
+  if (!name) { setSt('st-welcome', yt('st_name_req'), 'err'); return; }
+  const d = parseInt(document.getElementById('y-day').value);
+  const m = parseInt(document.getElementById('y-month').value);
+  const yr = parseInt(document.getElementById('y-year').value);
+  const lifeRune = (d && m && yr) ? calcLifeRune(d, m, yr) : null;
+  yUser = { name, lifeRune };
+  document.getElementById('btn-enter').disabled = true;
+  showScreen('hel');
+  await generateHelIntro();
+}
+
+// ─── HEL INTRO ──────────────────────────────────────────
+async function generateHelIntro() {
+  setSt('st-hel', yt('st_generating'));
+  const sys = buildSysPrompt(activeChar);
+  const langInstr = ylang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
+  const lifeCtx = yUser.lifeRune
+    ? `The seeker's Life Rune is ${yRn(yUser.lifeRune)} (${yUser.lifeRune.g}) — but do NOT reveal it yet. It is face-down, carried in silence.`
+    : `The seeker's Life Rune is unknown.`;
+
+  const prompt = `You are welcoming ${yUser.name} into the World of Yggdrasil — the sacred World Tree.
+${lifeCtx}
+They are about to descend into Hel — the roots — to draw their first rune.
+Speak as Rúnar, the guide of Yggdrasil. 2-3 sentences. Atmospheric, ancient, welcoming but with weight.
+Name Hel as a place of truth, not fear. Invite them to reach into the dark and draw what calls to them.
+${langInstr}
+Do not mention the specific rune yet. Do not use exclamation marks.`;
+
+  const res = await callClaude(sys, prompt, 250);
+  setSt('st-hel', '');
+  if (res.error) { document.getElementById('hel-intro-txt').textContent = '…'; return; }
+  await streamTo('hel-intro-txt', res.text);
+}
+
+// ─── CONFIRM HEL RUNE ───────────────────────────────────
+async function confirmHel() {
+  if (!helRune) { setSt('st-hel-select', yt('st_select_rune'), 'err'); return; }
+  document.getElementById('btn-hel-confirm').disabled = true;
+  document.getElementById('hel-grid').style.opacity = '0.4';
+  document.getElementById('hel-grid').style.pointerEvents = 'none';
+  setSt('st-hel', yt('st_generating'));
+
+  const sys = buildSysPrompt(activeChar);
+  const langInstr = ylang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
+  const lifeCtx = yUser.lifeRune
+    ? `Their Life Rune is ${yRn(yUser.lifeRune)} — do not name it yet. Carry it silently.`
+    : '';
+  const formulaLine = (ylang === 'is' && helRune.formula_is) ? `\nIcelandic formula (weave in naturally): "${helRune.formula_is}"` : '';
+
+  const prompt = `The seeker is ${yUser.name}. They have descended into Hel — the roots of Yggdrasil — and drawn ${yRn(helRune)} (${helRune.g}).
+${lifeCtx}
+World context: ${worldLabel(helRune.world)} · Elements: ${helRune.elements ? helRune.elements.join(', ') : ''}
+Keywords: ${yRk(helRune)}${formulaLine}
+Speak as Rúnar. 2-3 sentences. Name the rune once, naturally woven in.
+This is Hel — speak of what lies at the root, what is hidden or unspoken. Dark, honest, but never frightening.
+Do not give the full reading yet — this is only the first world. Leave them wanting to continue.
+${langInstr}`;
+
+  const res = await callClaude(sys, prompt, 280);
+  setSt('st-hel', '');
+  if (res.error) { setSt('st-hel', 'Error: ' + res.error, 'err'); document.getElementById('btn-hel-confirm').disabled = false; return; }
+
+  document.getElementById('hel-reading-box').style.display = 'block';
+  await streamTo('hel-reading-txt', res.text);
+  document.getElementById('btn-to-midgard').style.display = 'block';
+}
+
+// ─── GO MIDGARD ─────────────────────────────────────────
+async function goMidgard() {
+  showScreen('mid');
+  // Show Hel rune recap
+  const svgKey = helRune.svg || helRune.n;
+  const svgMarkup = RUNE_SVGS[svgKey]
+    ? `<svg viewBox="${RUNE_SVGS[svgKey].viewBox}" fill="none" xmlns="http://www.w3.org/2000/svg">${RUNE_SVGS[svgKey].paths.map(p => `<path d="${p}" stroke="#6b3fa0" stroke-width="1.2" stroke-linecap="round"/>`).join('')}</svg>`
+    : helRune.g;
+  document.getElementById('mid-hel-svg').innerHTML = svgMarkup;
+  document.getElementById('mid-hel-g').textContent = helRune.g;
+  document.getElementById('mid-hel-n').textContent = yRn(helRune);
+  document.getElementById('mid-hel-world').textContent = '🌑 ' + yt('hel_name');
+  await generateMidIntro();
+}
+
+async function generateMidIntro() {
+  setSt('st-mid', yt('st_generating'));
+  const sys = buildSysPrompt(activeChar);
+  const langInstr = ylang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
+
+  const prompt = `The seeker is ${yUser.name}. They have risen from Hel carrying ${yRn(helRune)} (${helRune.g}).
+Now they stand in Midgard — the trunk of Yggdrasil, the world of the living.
+Speak as Rúnar. 1-2 sentences. Acknowledge what they found in Hel. Welcome them to Midgard — where what is hidden meets what is lived.
+Invite them to draw the rune that the living world is offering them. Leave space. Do not rush.
+${langInstr}`;
+
+  const res = await callClaude(sys, prompt, 180);
+  setSt('st-mid', '');
+  if (res.error) { document.getElementById('mid-intro-txt').textContent = '…'; return; }
+  await streamTo('mid-intro-txt', res.text);
+}
+
+// ─── CONFIRM MIDGARD RUNE ───────────────────────────────
+async function confirmMid() {
+  if (!midRune) { setSt('st-mid-select', yt('st_select_rune'), 'err'); return; }
+  document.getElementById('btn-mid-confirm').disabled = true;
+  document.getElementById('mid-grid').style.opacity = '0.4';
+  document.getElementById('mid-grid').style.pointerEvents = 'none';
+  setSt('st-mid', yt('st_generating'));
+
+  const sys = buildSysPrompt(activeChar);
+  const langInstr = ylang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
+  const formulaLine = (ylang === 'is' && midRune.formula_is) ? `\nIcelandic formula (weave in naturally): "${midRune.formula_is}"` : '';
+
+  // Check elemental resonance between Hel + Mid runes
+  const sharedEl = helRune.elements && midRune.elements
+    ? helRune.elements.filter(e => midRune.elements.includes(e))
+    : [];
+  const resonanceLine = sharedEl.length > 0
+    ? `\nNote: Hel rune and Midgard rune share the element of ${sharedEl.join(' and ')} — let this resonance colour the reading naturally.`
+    : '';
+
+  const prompt = `The seeker is ${yUser.name}.
+In Hel, they drew ${yRn(helRune)} (${helRune.g}) — ${yRk(helRune)}.
+Now in Midgard, they have drawn ${yRn(midRune)} (${midRune.g}).
+World: ${worldLabel(midRune.world)} · Elements: ${midRune.elements ? midRune.elements.join(', ') : ''}
+Keywords: ${yRk(midRune)}${formulaLine}${resonanceLine}
+Speak as Rúnar. 2-3 sentences. Name ${yRn(midRune)} once, naturally.
+Connect what was found in Hel with what the living world now shows. How do these two runes speak to each other?
+This is not the final reading — there is still Asgard. Leave the story open, with a sense of what is still coming.
+${langInstr}`;
+
+  const res = await callClaude(sys, prompt, 300);
+  setSt('st-mid', '');
+  if (res.error) { setSt('st-mid', 'Error: ' + res.error, 'err'); document.getElementById('btn-mid-confirm').disabled = false; return; }
+
+  document.getElementById('mid-reading-box').style.display = 'block';
+  await streamTo('mid-reading-txt', res.text);
+  document.getElementById('btn-to-asgard').style.display = 'block';
+}
+
+// ─── GO ASGARD ──────────────────────────────────────────
+async function goAsgard() {
+  showScreen('asg');
+  await generateAsgIntro();
+}
+
+async function generateAsgIntro() {
+  setSt('st-asg', yt('st_generating'));
+  const sys = buildSysPrompt(activeChar);
+  const langInstr = ylang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
+
+  const prompt = `The seeker is ${yUser.name}. They have passed through Hel (${yRn(helRune)}) and Midgard (${yRn(midRune)}).
+Now they ascend to Asgard — the crown of Yggdrasil, where what is possible lives.
+Speak as Rúnar. 1-2 sentences. Acknowledge the journey so far — the weight of Hel, the movement of Midgard.
+Welcome them to the crown. This is the realm of higher patterns and guiding wisdom. The last rune awaits.
+${langInstr}`;
+
+  const res = await callClaude(sys, prompt, 160);
+  setSt('st-asg', '');
+  if (res.error) { document.getElementById('asg-intro-txt').textContent = '…'; return; }
+  await streamTo('asg-intro-txt', res.text);
+}
+
+// ─── CONFIRM ASGARD RUNE ────────────────────────────────
+async function confirmAsg() {
+  if (!asgRune) { setSt('st-asg-select', yt('st_select_rune'), 'err'); return; }
+  document.getElementById('btn-asg-confirm').disabled = true;
+  document.getElementById('asg-grid').style.opacity = '0.4';
+  document.getElementById('asg-grid').style.pointerEvents = 'none';
+  setSt('st-asg', yt('st_generating'));
+
+  const sys = buildSysPrompt(activeChar);
+  const langInstr = ylang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
+  const formulaLine = (ylang === 'is' && asgRune.formula_is) ? `\nIcelandic formula (weave in naturally): "${asgRune.formula_is}"` : '';
+
+  const prompt = `The seeker is ${yUser.name}.
+Hel revealed: ${yRn(helRune)} (${helRune.g}) — ${yRk(helRune)}
+Midgard showed: ${yRn(midRune)} (${midRune.g}) — ${yRk(midRune)}
+Asgard offers: ${yRn(asgRune)} (${asgRune.g}) — World: ${worldLabel(asgRune.world)} · Elements: ${asgRune.elements ? asgRune.elements.join(', ') : ''}
+Keywords: ${yRk(asgRune)}${formulaLine}
+Speak as Rúnar. 2-3 sentences. Name ${yRn(asgRune)} once, naturally.
+This is Asgard — the crown. Speak of what is possible, what the higher pattern reveals.
+Connect all three runes into a flowing story — root, trunk, crown. The story is almost complete.
+One thing remains: the Life Rune. Speak of it as something waiting to be revealed. Build anticipation.
+${langInstr}`;
+
+  const res = await callClaude(sys, prompt, 320);
+  setSt('st-asg', '');
+  if (res.error) { setSt('st-asg', 'Error: ' + res.error, 'err'); document.getElementById('btn-asg-confirm').disabled = false; return; }
+
+  document.getElementById('asg-reading-box').style.display = 'block';
+  await streamTo('asg-reading-txt', res.text);
+  document.getElementById('btn-to-final').style.display = 'block';
+}
+
+// ─── GO FINAL ───────────────────────────────────────────
+function goFinal() {
+  showScreen('final');
+  // Build chips
+  const chips = document.getElementById('final-chips');
+  chips.innerHTML = `
+    <div class="final-rune-chip frc-hel">🌑 ${helRune.g} ${yRn(helRune)}</div>
+    <div class="final-rune-chip frc-mid">🌍 ${midRune.g} ${yRn(midRune)}</div>
+    <div class="final-rune-chip frc-asg">✨ ${asgRune.g} ${yRn(asgRune)}</div>
+  `;
+  // Life token
+  document.getElementById('lt-final-lbl').textContent = yt('lt_lbl');
+  document.getElementById('lt-final-sub').textContent = yUser.lifeRune ? yt('final_tap_life') : '—';
+  document.getElementById('final-reading-txt').innerHTML = '<span class="stream-cur"></span>';
+  if (!yUser.lifeRune) revealLifeRune();
+}
+
+// ─── REVEAL LIFE RUNE ───────────────────────────────────
+async function revealLifeRune() {
+  if (lifeRevealed) return;
+  lifeRevealed = true;
+  const lt = document.getElementById('lt-final');
+  lt.style.cursor = 'default';
+  lt.style.borderColor = 'var(--gold)';
+  const stone = document.getElementById('lt-final-stone');
+  stone.classList.add('revealed');
+
+  if (yUser.lifeRune) {
+    stone.textContent = yUser.lifeRune.g;
+    document.getElementById('lt-final-name').textContent = yRn(yUser.lifeRune);
+    document.getElementById('lt-final-sub').textContent = yRk(yUser.lifeRune).split(',')[0];
+    // Add life rune chip
+    const chips = document.getElementById('final-chips');
+    chips.innerHTML += `<div class="final-rune-chip frc-life">◈ ${yUser.lifeRune.g} ${yRn(yUser.lifeRune)}</div>`;
+  } else {
+    stone.textContent = '?';
+    document.getElementById('lt-final-name').textContent = '—';
+  }
+
+  await generateFinalReading();
+}
+
+// ─── FINAL READING ──────────────────────────────────────
+async function generateFinalReading() {
+  setSt('st-final', yt('st_generating'));
+  const sys = buildSysPrompt(activeChar);
+  const langInstr = ylang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
+  const life = yUser.lifeRune;
+  const lifeCtx = life
+    ? `LIFE RUNE: ${yRn(life)} (${life.g}) · World: ${life.world} · Elements: ${life.elements ? life.elements.join(', ') : ''} · ${yRk(life)}`
+    : 'Life Rune: unknown (no date of birth given)';
+
+  const prompt = `The seeker is ${yUser.name}. They have journeyed through all three worlds of Yggdrasil.
+
+HEL (the roots):    ${yRn(helRune)} (${helRune.g}) — ${yRk(helRune)}
+MIDGARD (the trunk): ${yRn(midRune)} (${midRune.g}) — ${yRk(midRune)}
+ASGARD (the crown):  ${yRn(asgRune)} (${asgRune.g}) — ${yRk(asgRune)}
+${lifeCtx}
+
+Now give the full reading. Four movements, woven into one continuous story:
+1. HEL — what ${yRn(helRune)} revealed in the roots (what lies beneath, what was hidden)
+2. MIDGARD — how ${yRn(midRune)} speaks to the living moment (what is active, what is in motion)
+3. ASGARD — what ${yRn(asgRune)} opens in the crown (what is possible, what guides)
+4. LIFE RUNE — close with who ${yUser.name} is through all of it. ${life ? `End with: "And through all of this — the roots, the path, the sky — it is ${yRn(life)} who walks. That is not a limitation. That is your gift."` : 'Close with a reflection on the unknown.'}
+
+This is the culmination. Speak with full presence and depth. 6-10 sentences total. Poetic, personal, unified.
+Do NOT use headers or labels like "HEL:" or "PART 1". Flow as one reading.
+${langInstr}`;
+
+  const res = await callClaude(sys, prompt, 700);
+  setSt('st-final', '');
+  if (res.error) { setSt('st-final', 'Error: ' + res.error, 'err'); return; }
+  await streamTo('final-reading-txt', res.text, 18);
+  document.getElementById('btn-final-voice').style.display = 'block';
+  document.getElementById('btn-final-voice').textContent = yt('final_voice_btn');
+}
+
+// ─── VOICE ──────────────────────────────────────────────
+async function generateFinalVoice() {
+  const text = document.getElementById('final-reading-txt').innerText.trim();
+  if (!text) return;
+  const btn = document.getElementById('btn-final-voice');
+  btn.disabled = true;
+  btn.textContent = yt('final_voice_loading');
+  document.getElementById('final-audio-player').classList.remove('visible');
+  setSt('st-final', '');
+
+  try {
+    const res = await fetch(EL_PROXY, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text, lang: ylang, voice_id: elVoiceId(ylang), model_id: elModel(ylang) }),
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    if (!data.audio_url) throw new Error('No audio_url');
+    const blob = await fetch(data.audio_url).then(r => r.blob());
+    document.getElementById('final-audio').src = URL.createObjectURL(blob);
+    document.getElementById('final-audio-player').classList.add('visible');
+    btn.textContent = yt('final_voice_btn');
+    btn.disabled = false;
+  } catch(e) {
+    setSt('st-final', 'Voice error: ' + e.message, 'err');
+    btn.textContent = yt('final_voice_btn');
+    btn.disabled = false;
+  }
+}
+
+// ─── RESTART ────────────────────────────────────────────
+function restartJourney() {
+  yUser = {}; helRune = null; midRune = null; asgRune = null; lifeRevealed = false;
+  document.getElementById('y-name').value = '';
+  document.getElementById('y-day').value = '';
+  document.getElementById('y-month').value = '';
+  document.getElementById('y-year').value = '';
+  document.getElementById('btn-enter').disabled = false;
+  document.getElementById('hel-reading-box').style.display = 'none';
+  document.getElementById('mid-reading-box').style.display = 'none';
+  document.getElementById('asg-reading-box').style.display = 'none';
+  document.getElementById('btn-to-midgard').style.display = 'none';
+  document.getElementById('btn-to-asgard').style.display = 'none';
+  document.getElementById('btn-to-final').style.display = 'none';
+  document.getElementById('btn-final-voice').style.display = 'none';
+  document.getElementById('final-audio-player').classList.remove('visible');
+  document.getElementById('hel-intro-txt').innerHTML = '<span class="stream-cur"></span>';
+  document.getElementById('mid-intro-txt').innerHTML = '<span class="stream-cur"></span>';
+  document.getElementById('asg-intro-txt').innerHTML = '<span class="stream-cur"></span>';
+  ['hel-grid','mid-grid','asg-grid'].forEach(id => {
+    const g = document.getElementById(id);
+    g.style.opacity = '1'; g.style.pointerEvents = 'auto';
+    g.querySelectorAll('.rb').forEach(b => b.classList.remove('on'));
+  });
+  ['btn-hel-confirm','btn-mid-confirm','btn-asg-confirm'].forEach(id => {
+    document.getElementById(id).disabled = true;
+  });
+  // Pick new welcome variant
+  const vars = WELCOME[ylang] || WELCOME.en;
+  const v = vars[Math.floor(Math.random() * vars.length)];
+  document.getElementById('welcome-glyph').textContent = v.glyph;
+  document.getElementById('welcome-title').textContent = v.title;
+  document.getElementById('welcome-note').textContent  = v.note;
+  showScreen('welcome');
+}
+</script>
+</body>
+</html>
