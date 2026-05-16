@@ -182,8 +182,6 @@ audio{flex:1;height:36px;filter:invert(0.85) sepia(0.3) hue-rotate(180deg);}
       <textarea id="teach-edit" rows="5" oninput="teachText = this.value; onTeachTextEdit();"></textarea>
     </div>
     <div class="status" id="st-invoke"></div>
-    <button class="btn-full" id="btn-commit" onclick="commitKnowledge()" disabled>COMMIT TO RÚNAR'S MEMORY</button>
-    <div class="status" id="st-commit"></div>
     <button class="btn-voice" id="btn-teach-voice" onclick="generateStaticVoice()" disabled style="display:none;">ᚢ GENERATE RÚNAR'S VOICE</button>
     <!-- TEACH AUDIO PREVIEW -->
     <div class="audio-player" id="teach-audio-player">
@@ -373,7 +371,7 @@ function updateUIText() {
   setText('teach-select-lbl', t('teach_select_lbl')); setText('teach-select-note', t('teach_select_note'));
   setText('teach-speak-lbl', t('teach_speak_lbl')); setText('btn-invoke', t('invoke_btn'));
   setText('teach-runar-box-lbl', t('runar_speaks')); setText('teach-edit-lbl-el', t('teach_edit_lbl'));
-  setText('btn-commit', t('commit_btn')); setText('teach-audio-lbl', t('teach_audio_lbl'));
+  setText('teach-audio-lbl', t('teach_audio_lbl'));
   setText('btn-save-voice', t('teach_save_btn')); setText('btn-next-rune', t('teach_next_btn'));
   setText('teach-rune-info', t('rune_none'));
   if (document.getElementById('btn-teach-voice').textContent.trim() !== '')
@@ -443,7 +441,6 @@ function onTeachTextEdit() {
 async function invokeRunar() {
   if (!teachRune) return;
   document.getElementById('btn-invoke').disabled = true;
-  document.getElementById('btn-commit').disabled = true;
   document.getElementById('btn-teach-voice').style.display = 'none';
   document.getElementById('btn-save-voice').style.display = 'none';
   document.getElementById('teach-edit-wrap').style.display = 'none';
@@ -483,52 +480,12 @@ ${getCorrPrompt()}`;
   editEl.value = teachText;
   document.getElementById('teach-edit-wrap').style.display = 'block';
 
-  // Show voice button immediately — admin can preview before committing
+  // Show voice button — admin can preview, edit, then save
   document.getElementById('btn-teach-voice').style.display = 'block';
   document.getElementById('btn-teach-voice').disabled = false;
   document.getElementById('btn-teach-voice').textContent = t('voice_btn');
 
   setSt('st-invoke', t('st_spoken'), 'ok');
-  document.getElementById('btn-commit').disabled = false;
-}
-
-async function commitKnowledge() {
-  if (!teachText || !teachRune) return;
-  teachText = document.getElementById('teach-edit').value.trim() || teachText;
-  document.getElementById('btn-commit').disabled = true;
-  setSt('st-commit', t('st_saving'));
-
-  // Get highest existing version → next version = max + 1
-  const { data: maxRow, error: maxErr } = await sb.from('runar_static_audio')
-    .select('version')
-    .eq('rune_name', teachRune.n)
-    .eq('lang', lang)
-    .order('version', { ascending: false })
-    .limit(1)
-    .maybeSingle();
-  if (maxErr) { setSt('st-commit', 'Error: ' + maxErr.message, 'err'); document.getElementById('btn-commit').disabled = false; return; }
-  teachVersion = (maxRow?.version ?? 0) + 1;
-
-  const { error } = await sb.from('runar_static_audio').insert({
-    rune_name:  teachRune.n,
-    rune_glyph: teachRune.g,
-    lang:       lang,
-    version:    teachVersion,
-    text:       teachText,
-    ready:      false,
-    updated_at: new Date().toISOString(),
-  });
-
-  if (error) {
-    setSt('st-commit', 'Error: ' + error.message, 'err');
-    document.getElementById('btn-commit').disabled = false;
-    teachVersion = null;
-    return;
-  }
-
-  setSt('st-commit', `✓ ${teachRune.n} — Version ${teachVersion} committed.`, 'ok');
-  document.getElementById('btn-teach-voice').style.display = 'block';
-  document.getElementById('btn-teach-voice').disabled = false;
 }
 
 // ─── STATIC VOICE ───────────────────────────────────────
@@ -639,14 +596,13 @@ function resetTeach() {
   document.querySelectorAll('#teach-grid .rb').forEach(b => b.classList.remove('on'));
   teachRune = null; teachText = ''; teachAudioUrl = null; teachVersion = null;
   document.getElementById('btn-invoke').disabled = true;
-  document.getElementById('btn-commit').disabled = true;
   document.getElementById('btn-teach-voice').style.display = 'none';
   document.getElementById('btn-teach-voice').textContent = t('voice_btn');
   document.getElementById('btn-save-voice').style.display = 'none';
   document.getElementById('btn-save-voice').textContent = 'SAVE VOICE TO MEMORY';
   document.getElementById('btn-save-voice').disabled = true;
   document.getElementById('btn-next-rune').style.display = 'none';
-  setSt('st-invoke', ''); setSt('st-commit', ''); setSt('st-teach-voice', '');
+  setSt('st-invoke', ''); setSt('st-teach-voice', '');
 }
 
 // ─── CHARACTER (background only — UI removed) ───────────
