@@ -123,14 +123,32 @@ audio{flex:1;height:36px;filter:invert(0.85) sepia(0.3) hue-rotate(180deg);}
 .teach-edit-lbl{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--blue);margin-bottom:8px;margin-top:16px;display:block;}
 .prog-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:4px;}
 @media(max-width:480px){.prog-grid{grid-template-columns:repeat(3,1fr);}}
-.prog-cell{background:#0d1220;border:1px solid var(--border);padding:10px 6px;text-align:center;transition:border-color 0.2s;}
+.prog-cell{background:#0d1220;border:1px solid var(--border);padding:10px 6px;text-align:center;transition:border-color 0.2s;cursor:pointer;}
+.prog-cell:hover{border-color:var(--gold-dim);}
 .prog-cell.partial{border-color:var(--gold);}
 .prog-cell.full{border-color:var(--teal);background:rgba(126,217,181,0.04);}
+.prog-cell.active-detail{border-color:#fff;background:#13131e;}
 .prog-name{font-family:'Cinzel',serif;font-size:0.52em;letter-spacing:0.5px;color:var(--muted);margin:4px 0 6px;}
 .prog-langs{display:flex;gap:4px;justify-content:center;}
 .prog-badge{font-family:'Cinzel',serif;font-size:0.5em;letter-spacing:0.5px;padding:2px 5px;border:1px solid;}
 .prog-badge.has{color:var(--teal);border-color:var(--teal);}
 .prog-badge.none{color:var(--dim);border-color:var(--dim);opacity:0.4;}
+/* ── RUNE DETAIL PANEL ── */
+.rune-detail{background:#0a0d18;border:1px solid var(--gold-dim);border-radius:3px;margin-top:12px;padding:16px;display:none;}
+.rune-detail.open{display:block;}
+.rune-detail-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.rune-detail-name{font-family:'Cinzel',serif;font-size:0.85em;letter-spacing:2px;color:var(--gold);}
+.rune-detail-close{background:none;border:none;color:var(--dim);font-size:1.2em;cursor:pointer;padding:0 4px;line-height:1;}
+.rune-detail-close:hover{color:var(--text);}
+.detail-lang-section{margin-bottom:16px;}
+.detail-lang-lbl{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--blue);margin-bottom:8px;}
+.detail-version{background:#0d1018;border:1px solid var(--border);border-radius:3px;padding:12px;margin-bottom:8px;}
+.detail-version-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.detail-version-lbl{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:1px;color:var(--dim);}
+.detail-delete{background:none;border:1px solid #5a2020;color:#c06060;font-family:'Cinzel',serif;font-size:0.55em;letter-spacing:1px;padding:3px 8px;cursor:pointer;border-radius:2px;transition:all 0.15s;}
+.detail-delete:hover{background:#5a2020;color:#fff;}
+.detail-text{font-size:0.82em;color:var(--muted);line-height:1.6;margin-bottom:10px;font-style:italic;border-left:2px solid var(--border);padding-left:10px;}
+.detail-empty{font-size:0.8em;color:var(--dim);font-style:italic;}
 .prog-bar{height:3px;background:var(--border);margin-bottom:16px;border-radius:2px;}
 .prog-bar-fill{height:100%;background:var(--teal);border-radius:2px;transition:width 0.6s ease;}
 </style>
@@ -204,6 +222,13 @@ audio{flex:1;height:36px;filter:invert(0.85) sepia(0.3) hue-rotate(180deg);}
     <div class="note" id="progress-summary" style="margin-bottom:8px;"></div>
     <div class="prog-bar"><div class="prog-bar-fill" id="prog-bar-fill" style="width:0%"></div></div>
     <div class="prog-grid" id="prog-grid"></div>
+    <div class="rune-detail" id="rune-detail">
+      <div class="rune-detail-header">
+        <div class="rune-detail-name" id="detail-rune-name"></div>
+        <button class="rune-detail-close" onclick="closeRuneDetail()">✕</button>
+      </div>
+      <div id="detail-body"></div>
+    </div>
     <div class="status" id="st-progress"></div>
   </div>
 </div>
@@ -624,10 +649,10 @@ async function loadChar() {
 // ─── PROGRESS ───────────────────────────────────────────
 async function loadProgress() {
   setSt('st-progress', 'Loading…');
+  closeRuneDetail();
   const { data, error } = await sb.from('runar_static_audio').select('rune_name, lang, version, ready').eq('ready', true);
   if (error) { setSt('st-progress', 'Error: ' + error.message, 'err'); return; }
 
-  // Build map { runeName: { en: [1,2], is: [1] } }
   const map = {};
   RUNES.forEach(r => { map[r.n] = { en: [], is: [] }; });
   (data || []).forEach(row => {
@@ -635,14 +660,12 @@ async function loadProgress() {
       map[row.rune_name][row.lang].push(row.version);
   });
 
-  // Summary
   let enDone = 0, isDone = 0;
   RUNES.forEach(r => { if (map[r.n].en.length > 0) enDone++; if (map[r.n].is.length > 0) isDone++; });
   const total = enDone + isDone, max = RUNES.length * 2;
   document.getElementById('progress-summary').textContent = `EN: ${enDone}/25 · IS: ${isDone}/25 · Total: ${total}/${max}`;
   document.getElementById('prog-bar-fill').style.width = Math.round(total / max * 100) + '%';
 
-  // Build grid
   const grid = document.getElementById('prog-grid');
   grid.innerHTML = '';
   RUNES.forEach(r => {
@@ -654,9 +677,86 @@ async function loadProgress() {
       ? `<svg viewBox="${svgData.vb}" xmlns="http://www.w3.org/2000/svg" style="width:32px;height:40px;display:block;margin:0 auto;">${svgData.paths}</svg>`
       : `<span style="font-size:1.4em;color:var(--gold);">${r.g}</span>`;
     cell.innerHTML = `${glyph}<div class="prog-name">${r.n}</div><div class="prog-langs"><span class="prog-badge ${enV.length > 0 ? 'has' : 'none'}">${enV.length > 0 ? 'EN·' + enV.length : 'EN'}</span><span class="prog-badge ${isV.length > 0 ? 'has' : 'none'}">${isV.length > 0 ? 'IS·' + isV.length : 'IS'}</span></div>`;
+    cell.onclick = () => openRuneDetail(r, cell);
     grid.appendChild(cell);
   });
   setSt('st-progress', '');
+}
+
+async function openRuneDetail(r, cell) {
+  // Toggle — clicking same rune closes it
+  const detail = document.getElementById('rune-detail');
+  if (detail.dataset.rune === r.n && detail.classList.contains('open')) {
+    closeRuneDetail(); return;
+  }
+  document.querySelectorAll('.prog-cell').forEach(c => c.classList.remove('active-detail'));
+  cell.classList.add('active-detail');
+  detail.dataset.rune = r.n;
+  detail.classList.add('open');
+  document.getElementById('detail-rune-name').textContent = `${r.g}  ${r.n}`;
+  document.getElementById('detail-body').innerHTML = '<div class="detail-empty">Loading…</div>';
+  detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  const { data, error } = await sb.from('runar_static_audio')
+    .select('id, lang, version, text, audio_url, ready')
+    .eq('rune_name', r.n)
+    .order('lang').order('version');
+  if (error) { document.getElementById('detail-body').innerHTML = `<div class="detail-empty">Error: ${error.message}</div>`; return; }
+
+  if (!data || data.length === 0) {
+    document.getElementById('detail-body').innerHTML = '<div class="detail-empty">No versions saved yet.</div>'; return;
+  }
+
+  // Group by lang
+  const byLang = { en: [], is: [] };
+  data.forEach(row => { if (byLang[row.lang]) byLang[row.lang].push(row); });
+
+  let html = '';
+  ['en', 'is'].forEach(l => {
+    if (!byLang[l].length) return;
+    html += `<div class="detail-lang-section"><div class="detail-lang-lbl">${l.toUpperCase()}</div>`;
+    byLang[l].forEach(row => {
+      html += `<div class="detail-version" id="dv-${row.id}">
+        <div class="detail-version-hdr">
+          <div class="detail-version-lbl">VERSION ${row.version}${row.ready ? '' : ' · NOT READY'}</div>
+          <button class="detail-delete" onclick="deleteVersion('${row.id}','${r.n}','${l}',${row.version})">✕ DELETE</button>
+        </div>
+        <div class="detail-text">${row.text || '—'}</div>
+        ${row.audio_url ? `<audio controls preload="none" controlsList="nodownload" style="width:100%;height:32px;" src="${row.audio_url}"></audio>` : '<div class="detail-empty">No audio saved</div>'}
+      </div>`;
+    });
+    html += '</div>';
+  });
+  document.getElementById('detail-body').innerHTML = html;
+}
+
+function closeRuneDetail() {
+  const detail = document.getElementById('rune-detail');
+  detail.classList.remove('open');
+  detail.dataset.rune = '';
+  document.querySelectorAll('.prog-cell').forEach(c => c.classList.remove('active-detail'));
+}
+
+async function deleteVersion(id, runeName, lang, version) {
+  if (!confirm(`Delete ${runeName} ${lang.toUpperCase()} v${version}? This cannot be undone.`)) return;
+  setSt('st-progress', 'Deleting…');
+
+  // Delete from Storage
+  const fileName = `static/${lang}/${runeName.toLowerCase()}_${version}.mp3`;
+  const { error: storErr } = await sb.storage.from('runar-audio').remove([fileName]);
+  if (storErr) console.warn('Storage delete:', storErr.message); // non-fatal — DB record still removed
+
+  // Delete from DB
+  const { error: dbErr } = await sb.from('runar_static_audio').delete().eq('id', id);
+  if (dbErr) { setSt('st-progress', 'Delete failed: ' + dbErr.message, 'err'); return; }
+
+  // Remove card from UI instantly
+  const el = document.getElementById('dv-' + id);
+  if (el) el.remove();
+  setSt('st-progress', `✓ ${runeName} ${lang.toUpperCase()} v${version} deleted.`, 'ok');
+
+  // Refresh grid counts
+  loadProgress();
 }
 
 // ─── READER ─────────────────────────────────────────────
