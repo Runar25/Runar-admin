@@ -95,6 +95,10 @@
   #asg-grid .rb.on { border-color: var(--gold); background: var(--asg-dim); }
   .rb svg { width: 28px; height: 32px; display: block; margin: 0 auto 4px; }
   .rb .rb-name { font-size: .55em; letter-spacing: .05em; color: var(--dim); }
+  /* Per-world SVG stroke colours */
+  #hel-grid .rb svg path { stroke: var(--hel); }
+  #mid-grid .rb svg path { stroke: var(--teal); }
+  #asg-grid .rb svg path { stroke: var(--gold); }
 
   /* ── FORMS ── */
   .flbl { font-size: .65em; letter-spacing: .12em; color: var(--dim); display: block; margin-bottom: 6px; margin-top: 14px; }
@@ -546,22 +550,17 @@ function showScreen(id) {
 }
 
 // ─── RUNE GRID BUILDER ──────────────────────────────────
-// stroke colour per world
-const WORLD_STROKE = { Hel: '#9b6fcc', Midgard: '#4ecdc4', Asgard: '#c8a84b' };
-
 function buildRuneGrid(containerId, onSelect, worldFilter) {
   const grid = document.getElementById(containerId);
   grid.innerHTML = '';
-  const stroke = WORLD_STROKE[worldFilter] || '#c8a84b';
   const runes = worldFilter ? RUNES.filter(r => r.world === worldFilter) : RUNES;
   runes.forEach(r => {
     const btn = document.createElement('button');
     btn.className = 'rb';
     btn.dataset.rune = r.n;
-    const svgKey = r.svg || r.n;
-    const svgData = (typeof RUNE_SVGS !== 'undefined') && RUNE_SVGS[svgKey];
+    const svgData = (typeof RUNE_SVGS !== 'undefined') && RUNE_SVGS[r.svg || r.n];
     const svgMarkup = svgData
-      ? `<svg viewBox="${svgData.viewBox}" fill="none" xmlns="http://www.w3.org/2000/svg">${svgData.paths.map(p => `<path d="${p}" stroke="${stroke}" stroke-width="1.2" stroke-linecap="round"/>`).join('')}</svg>`
+      ? `<svg viewBox="${svgData.vb}" fill="none" xmlns="http://www.w3.org/2000/svg">${svgData.paths}</svg>`
       : `<span style="font-size:1.6em;line-height:1;">${r.g}</span>`;
     btn.innerHTML = svgMarkup + `<div class="rb-name">${r.n}</div>`;
     btn.onclick = () => onSelect(r, btn, containerId);
@@ -705,10 +704,9 @@ ${langInstr}`;
 async function goMidgard() {
   showScreen('mid');
   // Show Hel rune recap
-  const svgKey = helRune.svg || helRune.n;
-  const svgData2 = (typeof RUNE_SVGS !== 'undefined') && RUNE_SVGS[svgKey];
+  const svgData2 = (typeof RUNE_SVGS !== 'undefined') && RUNE_SVGS[helRune.svg || helRune.n];
   const svgMarkup = svgData2
-    ? `<svg viewBox="${svgData2.viewBox}" fill="none" xmlns="http://www.w3.org/2000/svg">${svgData2.paths.map(p => `<path d="${p}" stroke="#6b3fa0" stroke-width="1.2" stroke-linecap="round"/>`).join('')}</svg>`
+    ? `<svg viewBox="${svgData2.vb}" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:44px;height:50px;">${svgData2.paths}</svg>`
     : helRune.g;
   document.getElementById('mid-hel-svg').innerHTML = svgMarkup;
   document.getElementById('mid-hel-g').textContent = helRune.g;
