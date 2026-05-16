@@ -456,10 +456,16 @@ async function invokeRunar() {
 
   const sys = buildSysPrompt(activeChar);
   const langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
+  const allKws = rk(teachRune).split(',').map(s => s.trim()).filter(Boolean);
+  const pickedKws = allKws.sort(() => 0.5 - Math.random()).slice(0, Math.min(3, allKws.length)).join(', ');
+  const formulaLine = (lang === 'is' && teachRune.formula_is)
+    ? `\nIcelandic rune formula (weave naturally once into the reading): "${teachRune.formula_is}"`
+    : '';
   const prompt = `You are speaking to someone who has just drawn the rune ${rn(teachRune)} (${teachRune.g}).
-Keywords: ${rk(teachRune)}.
 Speak directly to them as Rúnar — 2 to 3 sentences, poetic and timeless.
-No personal context. No labels. No explanation of the rune — speak through it, not about it.
+Mention the rune's name (${rn(teachRune)}) once, naturally — woven into the reading, not announced.
+Draw on these aspects (vary between readings): ${pickedKws}.${formulaLine}
+No labels. Speak through the rune, not about it.
 ${langInstr}
 ${getCorrPrompt()}`;
 
@@ -713,8 +719,13 @@ async function readRune() {
   document.getElementById('out-short').innerHTML = '<span class="stream-cur"></span>'; document.getElementById('out-deep').innerHTML = '<span class="stream-cur"></span>';
   const sys = buildSysPrompt(activeChar);
   const langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
-  const parts = [ `PERSON: ${u.name}`, life ? `LIFE RUNE: ${rn(life)} (${life.g}) — ${rk(life)}` : '', `DRAWN RUNE: ${rn(drawn)} (${drawn.g}) — ${rk(drawn)}`, u.area ? `AREA: ${u.area}` : '', u.seeking ? `SEEKING: ${u.seeking}` : '', u.question ? `QUESTION: "${u.question}"` : '' ].filter(Boolean).join('\n');
-  const prompt = `${parts}\n\nGive the reading in two parts separated by |||\n\nPART 1 (2-3 sentences, core message, direct and poetic):\n\nPART 2 (deeper reflection. Connect drawn rune with ${life ? 'life rune ' + life.n + ', ' : ''}${u.area || 'their path'}${u.seeking ? ', seeking ' + u.seeking : ''}. End with one gentle open question. Do NOT include a label like "PART 2" in the output):\n\nSpeak directly to ${u.name}. ${langInstr}\n${getCorrPrompt()}`;
+  const drawnKws = rk(drawn).split(',').map(s => s.trim()).filter(Boolean);
+  const pickedDrawnKws = drawnKws.sort(() => 0.5 - Math.random()).slice(0, Math.min(3, drawnKws.length)).join(', ');
+  const readingFormulaLine = (lang === 'is' && drawn.formula_is)
+    ? `\nIcelandic rune formula (weave naturally once into PART 1): "${drawn.formula_is}"`
+    : '';
+  const parts = [ `PERSON: ${u.name}`, life ? `LIFE RUNE: ${rn(life)} (${life.g}) — ${rk(life)}` : '', `DRAWN RUNE: ${rn(drawn)} (${drawn.g}) — focus on: ${pickedDrawnKws}`, u.area ? `AREA: ${u.area}` : '', u.seeking ? `SEEKING: ${u.seeking}` : '', u.question ? `QUESTION: "${u.question}"` : '' ].filter(Boolean).join('\n');
+  const prompt = `${parts}${readingFormulaLine}\n\nGive the reading in two parts separated by |||\n\nPART 1 (2-3 sentences, core message, direct and poetic. Mention the rune's name — ${rn(drawn)} — once, woven naturally into the reading):\n\nPART 2 (deeper reflection. Connect drawn rune with ${life ? 'life rune ' + rn(life) + ', ' : ''}${u.area || 'their path'}${u.seeking ? ', seeking ' + u.seeking : ''}. End with one gentle open question. Do NOT include a label like "PART 2" in the output):\n\nSpeak directly to ${u.name}. ${langInstr}\n${getCorrPrompt()}`;
   const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens);
   if (res.error) { setSt('st-reader', 'Failed: ' + res.error, 'err'); return; }
   const split = res.text.split('|||');
