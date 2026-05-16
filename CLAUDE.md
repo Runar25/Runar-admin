@@ -78,7 +78,8 @@ runar-audio (PUBLIC)   ← static/en/fehu_1.mp3, static/en/fehu_2.mp3, ...
 - [x] Life rune kalkulace (datum narození)
 - [x] Dvouvrstvý výklad (RÚNAR SPEAKS + DEEPER REFLECTION)
 - [x] Word corrections systém (Supabase + localStorage fallback)
-- [x] Character tab → odstraněn z UI, editace přes runar-character.js
+- [x] Character tab → nahrazen Progress tabem (grid 25 run × EN/IS stav)
+- [x] Blank runa → zobrazuje tvar kamene (stejný jako ostatní runy, jen bez rytiny)
 
 ### VRSTVA 1 — HLAS ← AKTUÁLNÍ PRIORITA
 
