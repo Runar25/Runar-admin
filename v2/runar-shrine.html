@@ -328,6 +328,12 @@ window.addEventListener('DOMContentLoaded', async () => {
 function t(key)  { return (UI_TEXT[lang] && UI_TEXT[lang][key]) || UI_TEXT.en[key] || key; }
 function rk(r)   { return lang === 'is' ? r.k_is : r.k; }
 function rn(r)   { return lang === 'is' ? r.is_n : r.n; }
+// World + element context for prompts
+function rworld(r) {
+  const labels = { Hel: 'Hel — the roots (what lies beneath)', Midgard: 'Midgard — the trunk (what is active now)', Asgard: 'Asgard — the crown (what is possible)' };
+  return r.world ? labels[r.world] || r.world : '';
+}
+function relements(r) { return r.elements ? r.elements.join(', ') : ''; }
 function setText(id, val)         { const el = document.getElementById(id); if (el && val !== undefined) el.textContent = val; }
 function setPH(id, val)           { const el = document.getElementById(id); if (el && val) el.placeholder = val; }
 function setFlbl(id, val)         { const el = document.getElementById(id); if (el && val && el.firstChild) el.firstChild.textContent = val + ' '; }
@@ -680,8 +686,13 @@ async function readRune() {
   const readingFormulaLine = (lang === 'is' && drawn.formula_is)
     ? `\nIcelandic rune formula (weave naturally once into PART 1): "${drawn.formula_is}"`
     : '';
-  const parts = [ `PERSON: ${u.name}`, life ? `LIFE RUNE: ${rn(life)} (${life.g}) — ${rk(life)}` : '', `DRAWN RUNE: ${rn(drawn)} (${drawn.g}) — focus on: ${pickedDrawnKws}`, u.area ? `AREA: ${u.area}` : '', u.seeking ? `SEEKING: ${u.seeking}` : '', u.question ? `QUESTION: "${u.question}"` : '' ].filter(Boolean).join('\n');
-  const prompt = `${parts}${readingFormulaLine}\n\nGive the reading in two parts separated by |||\n\nPART 1 (2-3 sentences, core message, direct and poetic. Mention the rune's name — ${rn(drawn)} — once, woven naturally into the reading):\n\nPART 2 (deeper reflection. Connect drawn rune with ${life ? 'life rune ' + rn(life) + ', ' : ''}${u.area || 'their path'}${u.seeking ? ', seeking ' + u.seeking : ''}. End with one gentle open question. Do NOT include a label like "PART 2" in the output):\n\nSpeak directly to ${u.name}. ${langInstr}\n${getCorrPrompt()}`;
+  const lifeContext = life
+    ? `LIFE RUNE: ${rn(life)} (${life.g}) — ${rk(life)}` + (life.world ? ` · World: ${life.world} · Elements: ${relements(life)}` : '')
+    : '';
+  const drawnContext = `DRAWN RUNE: ${rn(drawn)} (${drawn.g}) — focus on: ${pickedDrawnKws}` +
+    (drawn.world ? ` · World: ${rworld(drawn)} · Elements: ${relements(drawn)}` : '');
+  const parts = [ `PERSON: ${u.name}`, lifeContext, drawnContext, u.area ? `AREA: ${u.area}` : '', u.seeking ? `SEEKING: ${u.seeking}` : '', u.question ? `QUESTION: "${u.question}"` : '' ].filter(Boolean).join('\n');
+  const prompt = `${parts}${readingFormulaLine}\n\nGive the reading in two parts separated by |||\n\nPART 1 (2-3 sentences, core message, direct and poetic. Mention the rune's name — ${rn(drawn)} — once, woven naturally into the reading. Let the rune's world layer — ${drawn.world || 'Midgard'} — subtly colour the tone):\n\nPART 2 (deeper reflection. Connect drawn rune with ${life ? 'life rune ' + rn(life) + (life.world ? ' (' + life.world + ')' : '') + ', ' : ''}${u.area || 'their path'}${u.seeking ? ', seeking ' + u.seeking : ''}. If the drawn rune and life rune share an element (${relements(drawn)} / ${life ? relements(life) : '—'}), let that resonance surface. End with one gentle open question. Do NOT include a label like "PART 2" in the output):\n\nSpeak directly to ${u.name}. ${langInstr}\n${getCorrPrompt()}`;
   const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens);
   if (res.error) { setSt('st-reader', 'Failed: ' + res.error, 'err'); return; }
   const split = res.text.split('|||');
