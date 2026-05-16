@@ -189,7 +189,7 @@ audio{flex:1;height:36px;filter:invert(0.85) sepia(0.3) hue-rotate(180deg);}
     <div class="audio-player" id="teach-audio-player">
       <div class="audio-player-lbl" id="teach-audio-lbl">♪ RÚNAR SPEAKS — PREVIEW</div>
       <div class="audio-controls">
-        <audio id="teach-audio" controls preload="none"></audio>
+        <audio id="teach-audio" controls preload="none" controlsList="nodownload" oncontextmenu="return false;"></audio>
       </div>
     </div>
     <button class="btn-full" id="btn-save-voice" onclick="saveStaticVoice()" disabled style="display:none;margin-top:8px;background:var(--teal);color:#000;">SAVE VOICE TO MEMORY</button>
@@ -264,7 +264,7 @@ audio{flex:1;height:36px;filter:invert(0.85) sepia(0.3) hue-rotate(180deg);}
     <div class="audio-player" id="audio-player">
       <div class="audio-player-lbl" id="audio-player-lbl">♪ RÚNAR SPEAKS</div>
       <div class="audio-controls">
-        <audio id="runar-audio" controls preload="none"></audio>
+        <audio id="runar-audio" controls preload="none" controlsList="nodownload" oncontextmenu="return false;"></audio>
       </div>
     </div>
     <div class="status" id="st-voice"></div>
