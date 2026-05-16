@@ -88,7 +88,10 @@
   .rb { background: #16161f; border: 1px solid var(--border); border-radius: 3px;
         padding: 8px 4px 6px; text-align: center; cursor: pointer; transition: all .15s; }
   .rb:hover { border-color: var(--gold-dim); background: #1e1e2a; }
-  .rb.on { border-color: var(--gold); background: #1e1c10; }
+  .rb.on         { border-color: var(--gold);    background: #1e1c10; }
+  #hel-grid .rb.on { border-color: var(--hel);  background: var(--hel-dim); }
+  #mid-grid .rb.on { border-color: var(--teal); background: var(--mid-dim); }
+  #asg-grid .rb.on { border-color: var(--gold); background: var(--asg-dim); }
   .rb svg { width: 28px; height: 32px; display: block; margin: 0 auto 4px; }
   .rb .rb-name { font-size: .55em; letter-spacing: .05em; color: var(--dim); }
 
@@ -543,16 +546,21 @@ function showScreen(id) {
 }
 
 // ─── RUNE GRID BUILDER ──────────────────────────────────
-function buildRuneGrid(containerId, onSelect) {
+// stroke colour per world
+const WORLD_STROKE = { Hel: '#9b6fcc', Midgard: '#4ecdc4', Asgard: '#c8a84b' };
+
+function buildRuneGrid(containerId, onSelect, worldFilter) {
   const grid = document.getElementById(containerId);
   grid.innerHTML = '';
-  RUNES.forEach(r => {
+  const stroke = WORLD_STROKE[worldFilter] || '#c8a84b';
+  const runes = worldFilter ? RUNES.filter(r => r.world === worldFilter) : RUNES;
+  runes.forEach(r => {
     const btn = document.createElement('button');
     btn.className = 'rb';
     btn.dataset.rune = r.n;
     const svgKey = r.svg || r.n;
     const svgMarkup = RUNE_SVGS[svgKey]
-      ? `<svg viewBox="${RUNE_SVGS[svgKey].viewBox}" fill="none" xmlns="http://www.w3.org/2000/svg">${RUNE_SVGS[svgKey].paths.map(p => `<path d="${p}" stroke="#c8a84b" stroke-width="1.2" stroke-linecap="round"/>`).join('')}</svg>`
+      ? `<svg viewBox="${RUNE_SVGS[svgKey].viewBox}" fill="none" xmlns="http://www.w3.org/2000/svg">${RUNE_SVGS[svgKey].paths.map(p => `<path d="${p}" stroke="${stroke}" stroke-width="1.2" stroke-linecap="round"/>`).join('')}</svg>`
       : `<span style="font-size:1.4em">${r.g}</span>`;
     btn.innerHTML = svgMarkup + `<div class="rb-name">${r.n}</div>`;
     btn.onclick = () => onSelect(r, btn, containerId);
@@ -617,9 +625,9 @@ window.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('welcome-note').textContent  = v.note;
 
   updateYText();
-  buildRuneGrid('hel-grid', (r, btn) => { helRune = r; selectRuneInGrid(r, btn, 'hel-grid'); document.getElementById('btn-hel-confirm').disabled = false; setSt('st-hel-select', ''); });
-  buildRuneGrid('mid-grid', (r, btn) => { midRune = r; selectRuneInGrid(r, btn, 'mid-grid'); document.getElementById('btn-mid-confirm').disabled = false; setSt('st-mid-select', ''); });
-  buildRuneGrid('asg-grid', (r, btn) => { asgRune = r; selectRuneInGrid(r, btn, 'asg-grid'); document.getElementById('btn-asg-confirm').disabled = false; setSt('st-asg-select', ''); });
+  buildRuneGrid('hel-grid', (r, btn) => { helRune = r; selectRuneInGrid(r, btn, 'hel-grid'); document.getElementById('btn-hel-confirm').disabled = false; setSt('st-hel-select', ''); }, 'Hel');
+  buildRuneGrid('mid-grid', (r, btn) => { midRune = r; selectRuneInGrid(r, btn, 'mid-grid'); document.getElementById('btn-mid-confirm').disabled = false; setSt('st-mid-select', ''); }, 'Midgard');
+  buildRuneGrid('asg-grid', (r, btn) => { asgRune = r; selectRuneInGrid(r, btn, 'asg-grid'); document.getElementById('btn-asg-confirm').disabled = false; setSt('st-asg-select', ''); }, 'Asgard');
 });
 
 // ─── ENTER YGGDRASIL ────────────────────────────────────
@@ -945,10 +953,12 @@ function restartJourney() {
   document.getElementById('hel-intro-txt').innerHTML = '<span class="stream-cur"></span>';
   document.getElementById('mid-intro-txt').innerHTML = '<span class="stream-cur"></span>';
   document.getElementById('asg-intro-txt').innerHTML = '<span class="stream-cur"></span>';
+  buildRuneGrid('hel-grid', (r, btn) => { helRune = r; selectRuneInGrid(r, btn, 'hel-grid'); document.getElementById('btn-hel-confirm').disabled = false; setSt('st-hel-select', ''); }, 'Hel');
+  buildRuneGrid('mid-grid', (r, btn) => { midRune = r; selectRuneInGrid(r, btn, 'mid-grid'); document.getElementById('btn-mid-confirm').disabled = false; setSt('st-mid-select', ''); }, 'Midgard');
+  buildRuneGrid('asg-grid', (r, btn) => { asgRune = r; selectRuneInGrid(r, btn, 'asg-grid'); document.getElementById('btn-asg-confirm').disabled = false; setSt('st-asg-select', ''); }, 'Asgard');
   ['hel-grid','mid-grid','asg-grid'].forEach(id => {
     const g = document.getElementById(id);
     g.style.opacity = '1'; g.style.pointerEvents = 'auto';
-    g.querySelectorAll('.rb').forEach(b => b.classList.remove('on'));
   });
   ['btn-hel-confirm','btn-mid-confirm','btn-asg-confirm'].forEach(id => {
     document.getElementById(id).disabled = true;
