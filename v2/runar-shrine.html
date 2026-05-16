@@ -337,6 +337,7 @@ let activeChar    = null;
 let teachRune     = null;
 let teachText     = '';
 let teachAudioUrl = null;
+let teachVersion  = null;
 let readerUser    = {};
 let readerRune    = null;
 let corrScope     = 'both';
@@ -432,7 +433,7 @@ function buildGrid(gridId, isReader) {
     btn.onclick = () => {
       grid.querySelectorAll('.rb').forEach(b => b.classList.remove('on')); btn.classList.add('on');
       if (isReader) { readerRune = r; document.getElementById('reader-rune-info').textContent = `${r.g} ${rn(r)} — ${rk(r)}`; document.getElementById('btn-speak').disabled = false; }
-      else          { teachRune  = r; document.getElementById('teach-rune-info').textContent  = `${r.g} ${rn(r)} — ${rk(r)}`; checkTeach(); }
+      else          { teachRune  = r; document.getElementById('teach-rune-info').textContent  = `${r.g} ${rn(r)} — ${rk(r)}`; checkTeach(); loadRuneVersionCount(); }
     };
     grid.appendChild(btn);
   });
@@ -514,27 +515,35 @@ ${getCorrPrompt()}`;
 
 async function commitKnowledge() {
   if (!teachText || !teachRune) return;
-  // Use edited text if changed
   teachText = document.getElementById('teach-edit').value.trim() || teachText;
   document.getElementById('btn-commit').disabled = true;
   setSt('st-commit', t('st_saving'));
 
-  const { error } = await sb.from('runar_static_audio').upsert({
+  // Count existing versions for this rune+lang → assign next version number
+  const { count } = await sb.from('runar_static_audio')
+    .select('*', { count: 'exact', head: true })
+    .eq('rune_name', teachRune.n)
+    .eq('lang', lang);
+  teachVersion = (count || 0) + 1;
+
+  const { error } = await sb.from('runar_static_audio').insert({
     rune_name:  teachRune.n,
     rune_glyph: teachRune.g,
     lang:       lang,
+    version:    teachVersion,
     text:       teachText,
     ready:      false,
     updated_at: new Date().toISOString(),
-  }, { onConflict: 'rune_name,lang' });
+  });
 
   if (error) {
     setSt('st-commit', 'Error: ' + error.message, 'err');
     document.getElementById('btn-commit').disabled = false;
+    teachVersion = null;
     return;
   }
 
-  setSt('st-commit', `✓ ${teachRune.n} text saved.`, 'ok');
+  setSt('st-commit', `✓ ${teachRune.n} — Version ${teachVersion} committed.`, 'ok');
   document.getElementById('btn-teach-voice').style.display = 'block';
   document.getElementById('btn-teach-voice').disabled = false;
 }
@@ -587,6 +596,15 @@ async function saveStaticVoice() {
   setSt('st-teach-voice', t('teach_voice_saving'));
 
   try {
+    // Determine version — use committed version or query next available
+    if (!teachVersion) {
+      const { count } = await sb.from('runar_static_audio')
+        .select('*', { count: 'exact', head: true })
+        .eq('rune_name', teachRune.n)
+        .eq('lang', lang);
+      teachVersion = (count || 0) + 1;
+    }
+
     const res = await fetch(EL_STATIC, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -595,8 +613,7 @@ async function saveStaticVoice() {
         rune_name:  teachRune.n,
         rune_glyph: teachRune.g,
         lang:       lang || 'en',
-        voice_id:   elVoiceId(lang),
-        model_id:   elModel(lang)
+        version:    teachVersion,
       })
     });
 
@@ -604,14 +621,25 @@ async function saveStaticVoice() {
     const data = await res.json();
     if (data.error) throw new Error(data.error);
 
-    setSt('st-teach-voice', `✓ ${teachRune.n} (${teachRune.g}) voice saved to memory. Rune is ready.`, 'ok');
+    setSt('st-teach-voice', `✓ ${teachRune.n} (${teachRune.g}) Version ${teachVersion} saved. Rune is ready.`, 'ok');
     btn.textContent = 'SAVED ✓';
     btn.disabled = true;
     document.getElementById('btn-next-rune').style.display = 'block';
   } catch (err) {
     setSt('st-teach-voice', `Save error: ${err.message}`, 'err');
     btn.disabled = false;
+    teachVersion = null;
   }
+}
+
+async function loadRuneVersionCount() {
+  if (!teachRune) return;
+  const [{ count: enC }, { count: isC }] = await Promise.all([
+    sb.from('runar_static_audio').select('*', { count: 'exact', head: true }).eq('rune_name', teachRune.n).eq('lang', 'en').eq('ready', true),
+    sb.from('runar_static_audio').select('*', { count: 'exact', head: true }).eq('rune_name', teachRune.n).eq('lang', 'is').eq('ready', true),
+  ]);
+  const vInfo = `EN: ${enC || 0} · IS: ${isC || 0}`;
+  document.getElementById('teach-rune-info').textContent = `${teachRune.g} ${rn(teachRune)} — ${rk(teachRune)}  [${vInfo}]`;
 }
 
 function resetTeach() {
@@ -622,7 +650,7 @@ function resetTeach() {
   document.getElementById('teach-audio').src = '';
   document.getElementById('teach-rune-info').textContent = 'No rune selected.';
   document.querySelectorAll('#teach-grid .rb').forEach(b => b.classList.remove('on'));
-  teachRune = null; teachText = ''; teachAudioUrl = null;
+  teachRune = null; teachText = ''; teachAudioUrl = null; teachVersion = null;
   document.getElementById('btn-invoke').disabled = true;
   document.getElementById('btn-commit').disabled = true;
   document.getElementById('btn-teach-voice').style.display = 'none';
@@ -713,6 +741,20 @@ async function readRune() {
   const split = res.text.split('|||');
   await stream('out-short', split[0]?.trim() || res.text);
   if (split[1]?.trim()) await stream('out-deep', split[1].trim()); else document.getElementById('out-deep').innerHTML = '';
+
+  // Check for pre-recorded static audio — pick random version
+  const { data: staticRows } = await sb.from('runar_static_audio')
+    .select('audio_url, version')
+    .eq('rune_name', drawn.n)
+    .eq('lang', lang)
+    .eq('ready', true);
+  if (staticRows && staticRows.length > 0) {
+    const pick = staticRows[Math.floor(Math.random() * staticRows.length)];
+    document.getElementById('runar-audio').src = pick.audio_url;
+    document.getElementById('audio-player').classList.add('visible');
+    voiceBtn.textContent = t('voice_btn_regen');
+    setSt('st-voice', `♪ v${pick.version} of ${staticRows.length}`);
+  }
   voiceBtn.disabled = false;
 }
 

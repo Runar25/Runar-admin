@@ -21,8 +21,8 @@ serve(async (req) => {
     const { text, lang, voice_id, model_id } = await req.json()
     if (!text) throw new Error('text is required')
 
-    const resolvedVoiceId = voice_id || (lang === 'is' ? EL_VOICE_ID_IS : EL_VOICE_ID_EN)
-    const resolvedModel   = model_id || (lang === 'is' ? EL_MODEL_IS    : EL_MODEL_EN)
+    const resolvedVoiceId = EL_VOICE_ID_EN  // same voice for both langs — eleven_v3 auto-detects IS
+    const resolvedModel   = lang === 'is' ? EL_MODEL_IS : EL_MODEL_EN  // hardcoded — do not trust frontend
 
     const elRes = await fetch(
       `https://api.elevenlabs.io/v1/text-to-speech/${resolvedVoiceId}/stream`,

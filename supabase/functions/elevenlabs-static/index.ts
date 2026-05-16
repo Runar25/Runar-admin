@@ -28,15 +28,16 @@ serve(async (req) => {
     if (!SB_URL)      throw new Error('SUPABASE_URL not set')
     if (!SB_KEY)      throw new Error('SUPABASE_SERVICE_ROLE_KEY not set')
 
-    const { text, rune_name, rune_glyph, lang, voice_id, model_id } = await req.json()
+    const { text, rune_name, rune_glyph, lang, version } = await req.json()
 
     if (!text)       throw new Error('text is required')
     if (!rune_name)  throw new Error('rune_name is required')
     if (!rune_glyph) throw new Error('rune_glyph is required')
     if (!lang)       throw new Error('lang is required')
+    if (!version)    throw new Error('version is required')
 
-    const resolvedVoiceId = voice_id || (lang === 'is' ? EL_VOICE_ID_IS : EL_VOICE_ID_EN)
-    const resolvedModel   = model_id || (lang === 'is' ? EL_MODEL_IS    : EL_MODEL_EN)
+    const resolvedVoiceId = EL_VOICE_ID_EN  // same voice for both langs — eleven_v3 auto-detects IS
+    const resolvedModel   = lang === 'is' ? EL_MODEL_IS : EL_MODEL_EN  // hardcoded — do not trust frontend
 
     // 1. Generuj audio přes ElevenLabs
     const elRes = await fetch(
@@ -69,7 +70,7 @@ serve(async (req) => {
 
     // 2. Ulož audio do Supabase Storage
     const sb = createClient(SB_URL, SB_KEY)
-    const fileName = `static/${lang}/${rune_name.toLowerCase()}.mp3`
+    const fileName = `static/${lang}/${rune_name.toLowerCase()}_${version}.mp3`
 
     const { error: uploadError } = await sb.storage
       .from('runar-audio')
@@ -94,18 +95,19 @@ serve(async (req) => {
         rune_name,
         rune_glyph,
         lang,
+        version,
         text,
         audio_url: audioUrl,
         ready: true,
         updated_at: new Date().toISOString(),
       }, {
-        onConflict: 'rune_name,lang',  // přepíše existující záznam
+        onConflict: 'rune_name,lang,version',
       })
 
     if (dbError) throw new Error(`DB insert failed: ${dbError.message}`)
 
     return new Response(
-      JSON.stringify({ success: true, audio_url: audioUrl }),
+      JSON.stringify({ success: true, audio_url: audioUrl, version }),
       { headers: { ...cors, 'Content-Type': 'application/json' } }
     )
 
