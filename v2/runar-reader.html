@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RÚNAR · The Rune Keeper</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<script src="runar-config.js"></script>
+<script src="runar-runes.js"></script>
+<script src="runar-translations.js"></script>
+<script src="runar-character.js"></script>
+<script src="runar-svgs.js"></script>
+
+<style>
+:root {
+  --bg:#0a0c12; --card:#12161f; --card2:#171b26;
+  --border:#2E4A70; --border2:#3a5a85;
+  --gold:#D6A85C; --gold2:rgba(214,168,92,0.12); --gold-dim:#7a6530;
+  --white:#F2F5F7; --muted:#8ba5c0; --dim:#3a4a60;
+  --blue:#5BB8FF; --teal:#7ED9B5;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--white);font-family:'Cormorant Garamond',serif;min-height:100vh;display:flex;justify-content:center;padding:40px 16px 80px;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(46,74,112,0.3) 0%,transparent 60%),
+             radial-gradient(ellipse 40% 30% at 90% 90%,rgba(126,217,181,0.05) 0%,transparent 50%);}
+.app{position:relative;z-index:1;max-width:680px;width:100%;}
+
+/* ── HEADER ── */
+.hdr{border-bottom:1px solid var(--border);padding-bottom:24px;margin-bottom:28px;}
+.hdr-inner{display:flex;justify-content:space-between;align-items:flex-start;}
+.brand{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:4px;color:var(--gold);opacity:0.7;}
+h1{font-size:2em;font-weight:400;margin:6px 0 4px;letter-spacing:1px;}
+.sub{color:var(--muted);font-style:italic;font-size:0.95em;}
+.hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
+.lang-toggle{display:flex;border:1px solid var(--border);overflow:hidden;}
+.lang-btn{padding:8px 18px;font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:2px;border:none;cursor:pointer;transition:all 0.2s;}
+.lang-btn.active{background:var(--gold);color:#000;}
+.lang-btn:not(.active){background:transparent;color:var(--muted);}
+.auth-badge{display:flex;align-items:center;gap:8px;}
+.auth-user{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1.5px;color:var(--teal);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.auth-btn{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1.5px;padding:5px 12px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all 0.2s;}
+.auth-btn:hover{border-color:var(--gold);color:var(--gold);}
+.auth-btn.signin{border-color:var(--gold-dim);color:var(--gold);}
+
+/* ── TRIAL BANNER ── */
+.trial-banner{background:var(--card);border:1px solid var(--border);padding:12px 18px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.trial-text{font-size:0.85em;color:var(--muted);font-style:italic;}
+.trial-count{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:1.5px;color:var(--gold);white-space:nowrap;}
+
+/* ── AUTH GATE ── */
+.auth-gate{background:var(--card);border:1px solid var(--gold);padding:32px 24px;text-align:center;margin-top:8px;}
+.auth-gate-rune{font-size:3em;margin-bottom:12px;opacity:0.4;}
+.auth-gate-title{font-family:'Cinzel',serif;font-size:0.85em;letter-spacing:2px;color:var(--gold);margin-bottom:12px;}
+.auth-gate-note{font-size:0.92em;color:var(--muted);font-style:italic;margin-bottom:24px;line-height:1.8;max-width:400px;margin-left:auto;margin-right:auto;}
+.auth-gate-note b{color:var(--white);font-style:normal;font-weight:400;}
+
+/* ── CARDS & FORMS ── */
+.card{background:var(--card);border:1px solid var(--border);padding:24px;margin-bottom:20px;}
+.card-lbl{font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:2px;color:var(--gold);margin-bottom:16px;}
+.flbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--gold);display:block;margin:16px 0 6px;}
+.flbl:first-child{margin-top:0;}
+.opt{opacity:0.45;font-size:0.85em;}
+.note{font-size:0.9em;color:var(--muted);font-style:italic;line-height:1.7;margin-bottom:14px;}
+.txt{width:100%;background:transparent;border:none;border-bottom:1px solid var(--border2);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.1em;padding:10px 0;}
+.txt:focus{outline:none;border-bottom-color:var(--gold);}
+.txt::placeholder{color:var(--dim);}
+.num{background:#080e18;border:1px solid var(--border);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.05em;padding:10px 12px;width:100%;outline:none;}
+.num:focus{border-color:var(--gold);}
+.num::placeholder{color:var(--dim);}
+.dob-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:4px;}
+
+/* ── PILLS ── */
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
+.pill{padding:6px 14px;border:1px solid var(--border);background:transparent;font-family:'Cormorant Garamond',serif;font-size:0.95em;font-style:italic;color:var(--muted);cursor:pointer;transition:all 0.2s;}
+.pill:hover{border-color:var(--border2);color:var(--white);}
+.pill.on{border-color:var(--gold);color:var(--gold);background:var(--gold2);}
+
+/* ── BUTTONS ── */
+.btn-full{width:100%;padding:17px;background:var(--gold);color:#000;border:none;font-family:'Cinzel',serif;font-size:0.9em;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.25s;margin-top:14px;}
+.btn-full:hover{background:#fff;}
+.btn-full:disabled{opacity:0.3;cursor:not-allowed;}
+.btn-full.sec{background:transparent;color:var(--gold);border:1px solid var(--gold);}
+.btn-full.sec:hover{background:var(--gold);color:#000;}
+.btn-row{display:flex;gap:10px;margin-top:20px;}
+.btn-half{flex:1;padding:13px;font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.5px;cursor:pointer;transition:all 0.25s;border:1px solid var(--gold);background:transparent;color:var(--gold);}
+.btn-half:hover{background:var(--gold);color:#000;}
+.btn-half.sec{border-color:var(--border);color:var(--muted);}
+.btn-half.sec:hover{border-color:var(--border2);color:var(--white);background:transparent;}
+.status{text-align:center;font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.5px;color:var(--gold);margin-top:12px;min-height:18px;}
+.status.ok{color:var(--teal);}
+.status.err{color:#e07070;}
+
+/* ── RUNE GRID ── */
+.rune-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px;}
+@media(max-width:480px){.rune-grid{grid-template-columns:repeat(3,1fr);gap:6px;}}
+.rb{aspect-ratio:1;background:#0d1220;border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all 0.18s;gap:2px;min-width:0;}
+.rb:hover{background:rgba(91,184,255,0.08);border-color:var(--blue);}
+.rb.on{background:rgba(91,184,255,0.12);border-color:var(--blue);box-shadow:0 0 10px rgba(91,184,255,0.15);}
+.rb-svg{width:72px;height:88px;display:block;}
+.rb-n{font-family:'Cinzel',serif;font-size:0.85em;letter-spacing:0.5px;color:var(--muted);margin-top:4px;}
+.rb.on .rb-n{color:var(--blue);}
+@media(max-width:480px){.rb-n{font-size:0.28em;}.rb-svg{width:52px;height:64px;}}
+.rune-info{font-size:0.9em;color:#8bb8d8;font-style:italic;min-height:18px;margin:6px 0;}
+
+/* ── BADGE (Life Rune + Drawn) ── */
+.badge{display:flex;align-items:center;padding:14px 18px;background:#0d1220;border:1px solid var(--border);margin-bottom:14px;}
+.badge-meta-lbl{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;margin-bottom:2px;}
+.badge-name{font-family:'Cinzel',serif;font-size:0.75em;letter-spacing:1px;}
+
+/* ── READING OUTPUT ── */
+.layer1{background:#0a0e18;border-left:3px solid var(--blue);padding:20px;margin-bottom:16px;}
+.layer1-lbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--blue);margin-bottom:10px;}
+.layer2{background:#0a0e18;border-left:3px solid var(--teal);padding:20px;margin-bottom:16px;}
+.layer2-lbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--teal);margin-bottom:10px;}
+.out-txt{font-size:1.05em;line-height:1.9;font-style:italic;color:var(--white);}
+.stream-cur{display:inline-block;width:2px;height:14px;background:var(--gold);margin-left:2px;animation:blink 0.9s step-end infinite;vertical-align:middle;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* ── VOICE ── */
+.btn-voice{width:100%;padding:14px;background:transparent;border:1px solid var(--border2);color:var(--muted);font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.5px;cursor:pointer;transition:all 0.25s;margin-top:4px;}
+.btn-voice:hover:not(:disabled){border-color:var(--blue);color:var(--blue);}
+.btn-voice:disabled{opacity:0.35;cursor:not-allowed;}
+.audio-player{display:none;margin-top:12px;}
+.audio-player.visible{display:block;}
+.audio-player-lbl{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--gold);margin-bottom:8px;}
+.audio-controls audio{width:100%;outline:none;}
+audio::-webkit-media-controls-panel{background:#0d1220;}
+
+/* ── MODALS ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:100;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--card);border:1px solid var(--gold);padding:32px;max-width:420px;width:100%;position:relative;}
+.modal-title{font-family:'Cinzel',serif;font-size:0.9em;letter-spacing:3px;color:var(--gold);margin-bottom:6px;}
+.modal-sub{font-size:0.9em;color:var(--muted);font-style:italic;margin-bottom:20px;line-height:1.7;}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--dim);font-size:1.2em;cursor:pointer;}
+.modal-close:hover{color:var(--white);}
+.modal-success{text-align:center;padding:16px 0;}
+.modal-success-icon{font-size:2em;margin-bottom:10px;}
+.modal-success-txt{font-family:'Cinzel',serif;font-size:0.75em;letter-spacing:1.5px;color:var(--teal);}
+.modal-success-note{font-size:0.88em;color:var(--muted);font-style:italic;margin-top:8px;line-height:1.6;}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(20px);background:#0d1a12;border:1px solid var(--teal);color:var(--teal);font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:2px;padding:12px 24px;z-index:200;opacity:0;transition:opacity 0.4s,transform 0.4s;pointer-events:none;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ── CREDIT NOTE ── */
+.credit-note{text-align:center;font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:2px;color:var(--dim);margin-top:14px;}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<!-- ═══ AUTH MODAL ═══ -->
+<div class="modal-overlay" id="auth-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeAuthModal()">✕</button>
+    <div class="modal-title">ENTER RÚNAR'S WORLD</div>
+    <div class="modal-sub" id="auth-modal-sub">No password needed — a magic link will arrive in your inbox.</div>
+    <div id="auth-modal-body">
+      <label style="font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--gold);display:block;margin-bottom:8px;">YOUR EMAIL</label>
+      <input class="txt" id="auth-email" type="email" placeholder="your@email.com" style="margin-bottom:14px;">
+      <button class="btn-full" onclick="sendMagicLink()">SEND MAGIC LINK</button>
+      <div class="status" id="st-auth"></div>
+    </div>
+    <div id="auth-modal-success" style="display:none;">
+      <div class="modal-success">
+        <div class="modal-success-icon">✉</div>
+        <div class="modal-success-txt">MAGIC LINK SENT</div>
+        <div class="modal-success-note">Check your email and click the link to enter.<br>This page will open automatically.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ LANG SWITCH MODAL ═══ -->
+<div class="modal-overlay" id="lang-switch-modal">
+  <div class="modal">
+    <div class="modal-title" id="lsm-title">SPEAK AGAIN?</div>
+    <div class="modal-sub" id="lsm-body"></div>
+    <div class="btn-row" style="margin-top:20px;">
+      <button class="btn-half" id="lsm-confirm" onclick="confirmLangSwitch()"></button>
+      <button class="btn-half sec" id="lsm-cancel" onclick="cancelLangSwitch()"></button>
+    </div>
+    <div class="credit-note">1 CREDIT</div>
+  </div>
+</div>
+
+<!-- ═══ APP ═══ -->
+<div class="app">
+
+  <!-- HEADER -->
+  <div class="hdr">
+    <div class="hdr-inner">
+      <div>
+        <div class="brand" id="ui-brand">AGNDOFA · RÚNAR</div>
+        <h1 id="ui-title">Rúnar the Rune Keeper</h1>
+        <div class="sub" id="ui-sub">Draw a rune. Hear the old tongue speak.</div>
+      </div>
+      <div class="hdr-right">
+        <div class="lang-toggle">
+          <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+          <button class="lang-btn"        id="btn-is" onclick="setLang('is')">IS</button>
+        </div>
+        <div class="auth-badge">
+          <span class="auth-user" id="auth-user-label" style="display:none;"></span>
+          <button class="auth-btn signin" id="auth-action-btn" onclick="handleAuthBtn()">SIGN IN</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRIAL BANNER -->
+  <div class="trial-banner" id="trial-banner" style="display:none;">
+    <span class="trial-text" id="trial-text">You are exploring as a guest.</span>
+    <span class="trial-count" id="trial-count"></span>
+  </div>
+
+  <!-- AUTH GATE (trial exhausted) -->
+  <div class="auth-gate" id="auth-gate" style="display:none;">
+    <div class="auth-gate-rune">ᚠ</div>
+    <div class="auth-gate-title" id="gate-title">YOUR FREE READINGS ARE COMPLETE</div>
+    <div class="auth-gate-note" id="gate-note">
+      You have walked with Rúnar three times as a guest.<br>
+      <b>Create a free account</b> to continue — Rúnar remembers those who return.
+    </div>
+    <button class="btn-full" onclick="openAuthModal()" style="max-width:300px;margin:0 auto;display:block;" id="gate-btn">CREATE FREE ACCOUNT</button>
+  </div>
+
+  <!-- READER (shown when trial available or logged in) -->
+  <div id="reader-content">
+
+    <!-- SETUP CARD -->
+    <div class="card" id="reader-setup">
+      <div class="card-lbl" id="reader-card1-lbl">✦ BEFORE WE BEGIN</div>
+      <p class="note" id="reader-note">Only your name is required. Everything else helps Rúnar speak more personally.</p>
+      <label class="flbl" id="name-lbl">YOUR NAME OR PREFERRED NAME</label>
+      <input class="txt" id="r-name" type="text" placeholder="How shall Rúnar address you?">
+      <label class="flbl" id="dob-lbl">DATE OF BIRTH <span class="opt">(OPTIONAL)</span></label>
+      <div class="dob-row">
+        <input class="num" id="r-day"   type="number" placeholder="Day"   min="1"    max="31">
+        <input class="num" id="r-month" type="number" placeholder="Month" min="1"    max="12">
+        <input class="num" id="r-year"  type="number" placeholder="Year"  min="1930" max="2010">
+      </div>
+      <label class="flbl" id="area-lbl">AREA OF LIFE <span class="opt">(OPTIONAL)</span></label>
+      <div class="pills" id="area-pills"></div>
+      <label class="flbl" id="seek-lbl">WHAT ARE YOU SEEKING? <span class="opt">(OPTIONAL)</span></label>
+      <div class="pills" id="seek-pills"></div>
+      <label class="flbl" id="q-lbl">SPECIFIC QUESTION <span class="opt">(OPTIONAL)</span></label>
+      <input class="txt" id="r-question" type="text" placeholder="e.g. What is holding me back?">
+      <button class="btn-full" id="begin-btn" onclick="startReading()">BEGIN THE READING</button>
+      <div class="status" id="st-setup"></div>
+    </div>
+
+    <!-- RUNE DRAW CARD -->
+    <div class="card" id="reader-rune-card" style="display:none;">
+      <div class="card-lbl" id="draw-lbl">ᚠ DRAW YOUR RUNE</div>
+      <p class="note" id="draw-note">Close your eyes. Hold your question. Then choose the rune that calls to you.</p>
+      <div class="rune-grid" id="reader-grid"></div>
+      <div class="rune-info" id="reader-rune-info"></div>
+      <button class="btn-full" id="btn-speak" onclick="readRune()" disabled>LET RÚNAR SPEAK</button>
+    </div>
+
+    <!-- OUTPUT -->
+    <div id="reader-output" style="display:none;">
+      <!-- Life rune + drawn rune badge -->
+      <div class="badge" id="reader-badge" style="display:none;">
+        <div>
+          <div class="badge-meta-lbl" id="life-rune-lbl" style="color:var(--gold);">YOUR LIFE RUNE</div>
+          <div class="badge-name" id="badge-life-name"></div>
+          <div style="font-size:2em;" id="badge-life-g"></div>
+        </div>
+        <div style="margin-left:auto;text-align:right;">
+          <div class="badge-meta-lbl" id="drawn-lbl" style="color:var(--blue);">DRAWN RUNE</div>
+          <div class="badge-name" id="badge-drawn-name"></div>
+          <div style="font-size:2em;" id="badge-drawn-g"></div>
+        </div>
+      </div>
+      <!-- Reading layers -->
+      <div class="layer1">
+        <div class="layer1-lbl" id="layer1-lbl">✦ RÚNAR SPEAKS</div>
+        <div class="out-txt" id="out-short"></div>
+      </div>
+      <div class="layer2">
+        <div class="layer2-lbl" id="layer2-lbl">~ DEEPER REFLECTION</div>
+        <div class="out-txt" id="out-deep"></div>
+      </div>
+      <!-- Voice -->
+      <button class="btn-voice" id="btn-generate-voice" onclick="generateVoice()" disabled>ᚢ GENERATE RÚNAR'S VOICE</button>
+      <div class="audio-player" id="audio-player">
+        <div class="audio-player-lbl" id="audio-player-lbl">♪ RÚNAR SPEAKS</div>
+        <div class="audio-controls">
+          <audio id="runar-audio" controls preload="none" controlsList="nodownload" oncontextmenu="return false;"></audio>
+        </div>
+      </div>
+      <div class="status" id="st-voice"></div>
+      <!-- Actions -->
+      <div class="btn-row">
+        <button class="btn-half"     id="draw-another-btn" onclick="drawAnother()">DRAW ANOTHER RUNE</button>
+        <button class="btn-half sec" id="start-over-btn"   onclick="resetReader()">START OVER</button>
+      </div>
+    </div>
+
+    <div class="status" id="st-reader"></div>
+  </div><!-- /reader-content -->
+
+</div><!-- /app -->
+
+<script>
+// ═══════════════════════════════════════════════════════
+// RÚNAR · READER — user-facing
+// ═══════════════════════════════════════════════════════
+
+const sb = supabase.createClient(SB_URL, SB_KEY);
+
+// ─── STATE ──────────────────────────────────────────────
+let lang           = APP.default_lang;
+let activeChar     = null;
+let currentUser    = null;
+let readerUser     = {};
+let readerRune     = null;
+let readerTexts    = {};  // { en: {short,deep}, is: {short,deep} }
+let voiceGenerated = {};  // { en: bool, is: bool }
+let pendingLang    = null;
+let corrections    = [];
+
+const FREE_TRIAL_LIMIT = 3;
+function getTrialCount() { return parseInt(localStorage.getItem('runar_trial_count') || '0'); }
+function incTrialCount() { localStorage.setItem('runar_trial_count', String(getTrialCount() + 1)); }
+
+// ─── AUTH ────────────────────────────────────────────────
+function updateAuthUI() {
+  const label   = document.getElementById('auth-user-label');
+  const btn     = document.getElementById('auth-action-btn');
+  const banner  = document.getElementById('trial-banner');
+  const gate    = document.getElementById('auth-gate');
+  const content = document.getElementById('reader-content');
+
+  if (currentUser) {
+    label.style.display = 'block';
+    label.textContent   = currentUser.email.split('@')[0];
+    btn.textContent     = 'SIGN OUT';
+    btn.classList.remove('signin');
+    banner.style.display = 'none';
+    gate.style.display   = 'none';
+    content.style.display = 'block';
+  } else {
+    label.style.display = 'none';
+    btn.textContent = 'SIGN IN';
+    btn.classList.add('signin');
+    const remaining = Math.max(0, FREE_TRIAL_LIMIT - getTrialCount());
+    if (remaining > 0) {
+      banner.style.display = 'flex';
+      document.getElementById('trial-count').textContent =
+        `${remaining} free reading${remaining !== 1 ? 's' : ''} remaining`;
+      gate.style.display    = 'none';
+      content.style.display = 'block';
+    } else {
+      banner.style.display  = 'none';
+      gate.style.display    = 'block';
+      content.style.display = 'none';
+    }
+  }
+}
+
+function handleAuthBtn() {
+  if (currentUser) sb.auth.signOut();
+  else openAuthModal();
+}
+
+function openAuthModal() {
+  document.getElementById('auth-modal').classList.add('open');
+  document.getElementById('auth-modal-body').style.display = 'block';
+  document.getElementById('auth-modal-success').style.display = 'none';
+  setSt('st-auth', '');
+  setTimeout(() => document.getElementById('auth-email')?.focus(), 100);
+}
+function closeAuthModal() {
+  document.getElementById('auth-modal').classList.remove('open');
+}
+document.addEventListener('click', e => {
+  if (e.target.id === 'auth-modal') closeAuthModal();
+  if (e.target.id === 'lang-switch-modal') cancelLangSwitch();
+});
+
+async function sendMagicLink() {
+  const email = document.getElementById('auth-email').value.trim();
+  if (!email) { setSt('st-auth', 'Please enter your email.', 'err'); return; }
+  setSt('st-auth', 'Sending…');
+  const cleanUrl = window.location.origin + window.location.pathname;
+  const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: cleanUrl } });
+  if (error) { setSt('st-auth', error.message, 'err'); return; }
+  document.getElementById('auth-modal-body').style.display = 'none';
+  document.getElementById('auth-modal-success').style.display = 'block';
+}
+
+// ─── LANGUAGE ────────────────────────────────────────────
+function setLang(l) {
+  if (l === lang) return;
+  const outputVisible = document.getElementById('reader-output')?.style.display !== 'none';
+  if (outputVisible && readerRune) {
+    if (readerTexts[l]) {
+      lang = l; applyLangToggle(l); showCachedReading(l); updateUIText(); buildPills();
+    } else {
+      pendingLang = l; openLangSwitchModal(l); applyLangToggle(lang);
+    }
+    return;
+  }
+  lang = l; applyLangToggle(l); updateUIText(); buildPills();
+  if (document.getElementById('reader-rune-card').style.display !== 'none') buildGrid();
+}
+
+function applyLangToggle(l) {
+  document.getElementById('btn-en').classList.toggle('active', l === 'en');
+  document.getElementById('btn-is').classList.toggle('active', l === 'is');
+}
+
+function openLangSwitchModal(tl) {
+  const names = { en: 'English', is: 'Icelandic' };
+  document.getElementById('lsm-title').textContent   = `SPEAK AGAIN IN ${(names[tl]||tl).toUpperCase()}?`;
+  document.getElementById('lsm-body').textContent    =
+    `Rúnar's voice in ${names[tl]||tl} carries its own truth — not a translation, but a fresh reading of the same rune. This draws from Rúnar again and uses one credit.`;
+  document.getElementById('lsm-confirm').textContent = `YES — SPEAK IN ${(names[tl]||tl).toUpperCase()}`;
+  document.getElementById('lsm-cancel').textContent  = `STAY IN ${(names[lang]||lang).toUpperCase()}`;
+  document.getElementById('lang-switch-modal').classList.add('open');
+}
+function cancelLangSwitch() {
+  pendingLang = null;
+  document.getElementById('lang-switch-modal').classList.remove('open');
+  applyLangToggle(lang);
+}
+async function confirmLangSwitch() {
+  document.getElementById('lang-switch-modal').classList.remove('open');
+  if (!pendingLang) return;
+  lang = pendingLang; pendingLang = null;
+  applyLangToggle(lang); updateUIText(); buildPills();
+  await _generateReading();
+}
+function showCachedReading(l) {
+  const cached = readerTexts[l];
+  if (!cached) return;
+  document.getElementById('out-short').textContent = cached.short;
+  document.getElementById('out-deep').textContent  = cached.deep || '';
+  document.getElementById('audio-player').classList.remove('visible');
+  document.getElementById('runar-audio').src = '';
+  setSt('st-voice', '');
+  const vBtn = document.getElementById('btn-generate-voice');
+  if (voiceGenerated[l]) {
+    vBtn.textContent = '♪ RÚNAR HAS SPOKEN'; vBtn.disabled = true;
+  } else {
+    vBtn.textContent = t('voice_btn'); vBtn.disabled = false;
+  }
+  checkStaticAudio(readerRune, l);
+}
+
+// ─── UI TEXT ─────────────────────────────────────────────
+function t(key) { return (UI_TEXT[lang]?.[key]) || UI_TEXT.en[key] || key; }
+function rk(r)  { return lang === 'is' ? r.k_is : r.k; }
+function rn(r)  { return lang === 'is' ? r.is_n : r.n; }
+function rworld(r) {
+  const m = { Hel:'Hel — the roots', Midgard:'Midgard — the trunk', Asgard:'Asgard — the crown' };
+  return r.world ? (m[r.world] || r.world) : '';
+}
+function relements(r) { return r.elements ? r.elements.join(', ') : ''; }
+function setText(id, v)   { const el = document.getElementById(id); if (el && v !== undefined) el.textContent = v; }
+function setPH(id, v)     { const el = document.getElementById(id); if (el && v) el.placeholder = v; }
+function setSt(id, msg, type) {
+  const el = document.getElementById(id); if (!el) return;
+  el.textContent = msg || ''; el.className = 'status' + (type ? ' '+type : '');
+}
+function showToast(msg, dur = 3000) {
+  const el = document.getElementById('toast'); if (!el) return;
+  el.textContent = msg; el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), dur);
+}
+
+function updateUIText() {
+  document.documentElement.lang = lang;
+  setText('ui-brand', lang === 'is' ? 'AGNDOFA · RÚNAR' : 'AGNDOFA · RÚNAR');
+  setText('ui-title', lang === 'is' ? 'Rúnar Rúnavörðurinn' : 'Rúnar the Rune Keeper');
+  setText('ui-sub',   lang === 'is' ? 'Dragðu rúnu. Hlustaðu á gömlu tunguna.' : 'Draw a rune. Hear the old tongue speak.');
+  setText('reader-card1-lbl', t('reader_card1_lbl') || '✦ BEFORE WE BEGIN');
+  setText('reader-note', t('reader_note') || 'Only your name is required. Everything else helps Rúnar speak more personally.');
+  const nlbl = document.getElementById('name-lbl');
+  if (nlbl) nlbl.innerHTML = t('name_lbl') + ' ';
+  setPH('r-name', t('name_ph'));
+  const dlbl = document.getElementById('dob-lbl');
+  if (dlbl) dlbl.innerHTML = t('dob_lbl') + ' <span class="opt">'+t('opt')+'</span>';
+  const albl = document.getElementById('area-lbl');
+  if (albl) albl.innerHTML = t('area_lbl') + ' <span class="opt">'+t('opt')+'</span>';
+  const slbl = document.getElementById('seek-lbl');
+  if (slbl) slbl.innerHTML = t('seek_lbl') + ' <span class="opt">'+t('opt')+'</span>';
+  const qlbl = document.getElementById('q-lbl');
+  if (qlbl) qlbl.innerHTML = t('q_lbl') + ' <span class="opt">'+t('opt')+'</span>';
+  setPH('r-question', t('q_ph'));
+  setText('begin-btn', t('begin_btn'));
+  setText('draw-lbl', t('draw_lbl'));
+  setText('draw-note', t('draw_note'));
+  setText('btn-speak', t('speak_btn'));
+  setText('life-rune-lbl', t('life_rune_lbl'));
+  setText('drawn-lbl', t('drawn_lbl'));
+  setText('layer1-lbl', t('layer1_lbl'));
+  setText('layer2-lbl', t('layer2_lbl'));
+  setText('draw-another-btn', t('draw_another'));
+  setText('start-over-btn', t('start_over'));
+  setText('audio-player-lbl', t('voice_player_lbl'));
+  const vBtn = document.getElementById('btn-generate-voice');
+  if (vBtn && !vBtn.disabled) vBtn.textContent = t('voice_btn');
+  // Trial banner
+  const remaining = Math.max(0, FREE_TRIAL_LIMIT - getTrialCount());
+  setText('trial-count', `${remaining} free reading${remaining !== 1 ? 's' : ''} remaining`);
+  // Auth gate
+  setText('gate-title', lang === 'is' ? 'ÓKEYPIS LESTRAR ÞÍNIR ERU FULLNÝTTIR' : 'YOUR FREE READINGS ARE COMPLETE');
+  setText('gate-note', lang === 'is'
+    ? 'Þú hefur farið með Rúnar þrisvar sinnum sem gestur.\nStofnaðu reikning til að halda áfram.'
+    : 'You have walked with Rúnar three times as a guest.\nCreate a free account to continue.');
+  setText('gate-btn', lang === 'is' ? 'STOFNA REIKNING' : 'CREATE FREE ACCOUNT');
+  buildPills();
+}
+
+// ─── RUNE GRID ───────────────────────────────────────────
+function buildGrid() {
+  const grid = document.getElementById('reader-grid');
+  grid.innerHTML = '';
+  RUNES.forEach(r => {
+    const btn = document.createElement('button');
+    btn.className = 'rb';
+    let inner = '';
+    if (typeof RUNE_SVGS !== 'undefined' && RUNE_SVGS[r.svg]) {
+      const sd = RUNE_SVGS[r.svg];
+      inner = `<svg class="rb-svg" viewBox="${sd.vb}" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="${r.svg === 'Blank' ? '' : ''}" />
+        ${sd.paths}
+      </svg>`;
+    } else {
+      inner = `<span class="rb-g" style="font-size:1.4em;color:var(--gold);">${r.g}</span>`;
+    }
+    btn.innerHTML = inner + `<span class="rb-n">${rn(r)}</span>`;
+    btn.onclick = () => {
+      grid.querySelectorAll('.rb').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      readerRune = r;
+      document.getElementById('reader-rune-info').textContent = `${r.g} ${rn(r)} — ${rk(r)}`;
+      document.getElementById('btn-speak').disabled = false;
+    };
+    grid.appendChild(btn);
+  });
+}
+
+// ─── PILLS ───────────────────────────────────────────────
+function buildPills() {
+  buildPillGroup('area-pills', AREAS[lang], 'area');
+  buildPillGroup('seek-pills', SEEKS[lang], 'seek');
+}
+function buildPillGroup(containerId, items, type) {
+  const c = document.getElementById(containerId); if (!c) return;
+  const current = type === 'area' ? readerUser.area : readerUser.seeking;
+  c.innerHTML = '';
+  items.forEach(label => {
+    const p = document.createElement('div');
+    p.className = 'pill' + (label === current ? ' on' : '');
+    p.textContent = label;
+    p.onclick = () => {
+      c.querySelectorAll('.pill').forEach(x => x.classList.remove('on'));
+      p.classList.add('on');
+      if (type === 'area') readerUser.area = label; else readerUser.seeking = label;
+    };
+    c.appendChild(p);
+  });
+}
+
+// ─── CORRECTIONS ─────────────────────────────────────────
+async function loadCorrections() {
+  try {
+    const { data } = await sb.from('runar_corrections').select('*').order('created_at');
+    corrections = data || [];
+  } catch { corrections = []; }
+  const local = localStorage.getItem('runar_corrections');
+  if (local) {
+    try { corrections = [...corrections, ...JSON.parse(local)]; } catch {}
+  }
+}
+function getCorrPrompt() {
+  if (!corrections.length) return '';
+  const rel = corrections.filter(c => !c.lang || c.lang === 'both' || c.lang === lang);
+  if (!rel.length) return '';
+  const lines = rel.map(c => `- Never say "${c.from_word}" — say "${c.to_word}" instead${c.context ? ' ('+c.context+')' : ''}`).join('\n');
+  return `\nWord corrections (follow strictly):\n${lines}`;
+}
+
+// ─── PROXY ───────────────────────────────────────────────
+async function callProxy(sys, prompt, maxTokens) {
+  try {
+    const res = await fetch(PROXY, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ system: sys, prompt, max_tokens: maxTokens })
+    });
+    const data = await res.json();
+    if (!res.ok || data.error) return { error: data.error || `HTTP ${res.status}` };
+    return { text: data.content?.[0]?.text || data.text || '' };
+  } catch (e) { return { error: e.message }; }
+}
+
+// ─── STREAM ──────────────────────────────────────────────
+function stream(id, text) {
+  return new Promise(resolve => {
+    const el = document.getElementById(id); if (!el) { resolve(); return; }
+    el.innerHTML = '';
+    const words = text.split(' ');
+    let i = 0;
+    const cur = document.createElement('span'); cur.className = 'stream-cur'; el.appendChild(cur);
+    const tick = setInterval(() => {
+      if (i >= words.length) { clearInterval(tick); cur.remove(); resolve(); return; }
+      const span = document.createElement('span'); span.textContent = (i > 0 ? ' ' : '') + words[i++];
+      el.insertBefore(span, cur);
+    }, APP.stream_delay_ms);
+  });
+}
+
+// ─── STATIC AUDIO CHECK ──────────────────────────────────
+async function checkStaticAudio(drawn, l) {
+  const { data: rows } = await sb.from('runar_static_audio')
+    .select('audio_url, version').eq('rune_name', drawn.n).eq('lang', l).eq('ready', true);
+  if (rows && rows.length > 0) {
+    const pick = rows[Math.floor(Math.random() * rows.length)];
+    document.getElementById('runar-audio').src = pick.audio_url;
+    document.getElementById('audio-player').classList.add('visible');
+    setSt('st-voice', `♪ ${rows.length > 1 ? `v${pick.version} · ` : ''}static`);
+  }
+}
+
+// ─── READING CORE ────────────────────────────────────────
+async function _generateReading() {
+  if (!readerRune) return;
+  const vBtn = document.getElementById('btn-generate-voice');
+  vBtn.disabled = true; vBtn.textContent = t('voice_btn');
+  document.getElementById('audio-player').classList.remove('visible');
+  document.getElementById('runar-audio').src = ''; setSt('st-voice', '');
+  document.getElementById('out-short').innerHTML = '<span class="stream-cur"></span>';
+  document.getElementById('out-deep').innerHTML  = '<span class="stream-cur"></span>';
+
+  const u = readerUser, drawn = readerRune, life = u.lifeRune;
+  const sys = buildSysPrompt(activeChar);
+  const langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
+  const drawnKws = rk(drawn).split(',').map(s => s.trim()).filter(Boolean);
+  const pickedKws = drawnKws.sort(() => 0.5 - Math.random()).slice(0, Math.min(3, drawnKws.length)).join(', ');
+  const formulaLine = (lang === 'is' && drawn.formula_is)
+    ? `\nIcelandic rune formula (weave naturally once into PART 1): "${drawn.formula_is}"` : '';
+  const lifeCtx = life
+    ? `LIFE RUNE: ${rn(life)} (${life.g}) — ${rk(life)}` + (life.world ? ` · World: ${life.world} · Elements: ${relements(life)}` : '')
+    : '';
+  const drawnCtx = `DRAWN RUNE: ${rn(drawn)} (${drawn.g}) — focus on: ${pickedKws}` +
+    (drawn.world ? ` · World: ${rworld(drawn)} · Elements: ${relements(drawn)}` : '');
+  const parts = [`PERSON: ${u.name}`, lifeCtx, drawnCtx,
+    u.area    ? `AREA: ${u.area}` : '',
+    u.seeking ? `SEEKING: ${u.seeking}` : '',
+    u.question? `QUESTION: "${u.question}"` : ''].filter(Boolean).join('\n');
+  const prompt = `${parts}${formulaLine}\n\nGive the reading in two parts separated by |||\n\nPART 1 (2-3 sentences, core message, direct and poetic. Mention the rune's name — ${rn(drawn)} — once, woven naturally into the reading. Let the rune's world layer — ${drawn.world || 'Midgard'} — subtly colour the tone):\n\nPART 2 (deeper reflection. Connect drawn rune with ${life ? 'life rune ' + rn(life) + (life.world ? ' (' + life.world + ')' : '') + ', ' : ''}${u.area || 'their path'}${u.seeking ? ', seeking ' + u.seeking : ''}. If the drawn rune and life rune share an element (${relements(drawn)} / ${life ? relements(life) : '—'}), let that resonance surface. End with one gentle open question. Do NOT include a label like "PART 2" in the output):\n\nSpeak directly to ${u.name}. ${langInstr}\n${getCorrPrompt()}`;
+
+  const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens);
+  if (res.error) { setSt('st-reader', 'Failed: ' + res.error, 'err'); return; }
+
+  const split = res.text.split('|||');
+  const short = split[0]?.trim() || res.text;
+  const deep  = split[1]?.trim() || '';
+  readerTexts[lang] = { short, deep };
+
+  // Count trial for anonymous users (after reading is actually generated)
+  if (!currentUser) { incTrialCount(); updateAuthUI(); }
+
+  await stream('out-short', short);
+  if (deep) await stream('out-deep', deep); else document.getElementById('out-deep').innerHTML = '';
+
+  await checkStaticAudio(drawn, lang);
+  vBtn.disabled = false;
+}
+
+// ─── READER FLOW ─────────────────────────────────────────
+function startReading() {
+  if (!currentUser && getTrialCount() >= FREE_TRIAL_LIMIT) { updateAuthUI(); return; }
+  const name = document.getElementById('r-name').value.trim();
+  if (!name) { setSt('st-setup', t('st_name_req'), 'err'); return; }
+  const d  = parseInt(document.getElementById('r-day').value);
+  const m  = parseInt(document.getElementById('r-month').value);
+  const y  = parseInt(document.getElementById('r-year').value);
+  const lifeRune = (d && m && y && d <= 31 && m <= 12 && y >= 1930) ? calcLifeRune(d, m, y) : null;
+  readerUser = { name, d, m, y, lifeRune,
+    area: readerUser.area || '', seeking: readerUser.seeking || '',
+    question: document.getElementById('r-question').value.trim() };
+  document.getElementById('reader-setup').style.display = 'none';
+  document.getElementById('reader-rune-card').style.display = 'block';
+  document.getElementById('reader-output').style.display = 'none';
+  buildGrid(); setSt('st-setup', ''); setSt('st-reader', '');
+}
+
+async function readRune() {
+  if (!readerRune) return;
+  document.getElementById('reader-rune-card').style.display = 'none';
+  document.getElementById('reader-output').style.display = 'block';
+  const u = readerUser, drawn = readerRune, life = u.lifeRune;
+  const badge = document.getElementById('reader-badge');
+  if (life) {
+    badge.style.display = 'flex';
+    document.getElementById('badge-life-name').textContent = rn(life);
+    document.getElementById('badge-life-g').textContent    = life.g;
+    document.getElementById('badge-drawn-name').textContent = rn(drawn);
+    document.getElementById('badge-drawn-g').textContent   = drawn.g;
+  } else { badge.style.display = 'none'; }
+  readerTexts = {}; voiceGenerated = {};
+  await _generateReading();
+}
+
+function drawAnother() {
+  readerRune = null; readerTexts = {}; voiceGenerated = {};
+  document.getElementById('reader-output').style.display = 'none';
+  document.getElementById('reader-rune-card').style.display = 'block';
+  document.querySelectorAll('#reader-grid .rb').forEach(b => b.classList.remove('on'));
+  document.getElementById('reader-rune-info').textContent = '';
+  document.getElementById('btn-speak').disabled = true;
+}
+
+function resetReader() {
+  readerUser = {}; readerRune = null; readerTexts = {}; voiceGenerated = {};
+  document.getElementById('reader-setup').style.display = 'block';
+  document.getElementById('reader-rune-card').style.display = 'none';
+  document.getElementById('reader-output').style.display = 'none';
+  ['r-name','r-day','r-month','r-year','r-question'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  buildPills();
+}
+
+// ─── VOICE ───────────────────────────────────────────────
+async function generateVoice() {
+  const deepText = document.getElementById('out-deep').innerText.trim();
+  if (!deepText) return;
+  const btn = document.getElementById('btn-generate-voice');
+  btn.disabled = true; btn.textContent = t('voice_btn_loading');
+  setSt('st-voice', '');
+  document.getElementById('audio-player').classList.remove('visible');
+  try {
+    const res = await fetch(EL_PROXY, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: deepText, lang, voice_id: elVoiceId(lang), model_id: elModel(lang) })
+    });
+    if (!res.ok) {
+      const data = await res.json();
+      setSt('st-voice', data.error || `HTTP ${res.status}`, 'err');
+      btn.textContent = t('voice_btn'); btn.disabled = false; return;
+    }
+    const data = await res.json();
+    if (data.error) {
+      setSt('st-voice', data.error, 'err');
+      btn.textContent = t('voice_btn'); btn.disabled = false; return;
+    }
+    if (!data.audio_url) throw new Error('No audio_url');
+    const blob = await fetch(data.audio_url).then(r => r.blob());
+    document.getElementById('runar-audio').src = URL.createObjectURL(blob);
+    document.getElementById('audio-player').classList.add('visible');
+    voiceGenerated[lang] = true;
+    btn.textContent = '♪ RÚNAR HAS SPOKEN';
+    btn.disabled = true;
+    setSt('st-voice', '');
+  } catch (err) {
+    setSt('st-voice', `Voice error: ${err.message}`, 'err');
+    btn.textContent = t('voice_btn'); btn.disabled = false;
+  }
+}
+
+// ─── INIT ────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', async () => {
+  // Magic link callback
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('code')) {
+    const btn = document.getElementById('auth-action-btn');
+    if (btn) { btn.textContent = 'SIGNING IN…'; btn.disabled = true; }
+  }
+
+  // Auth state
+  const { data: { session } } = await sb.auth.getSession();
+  currentUser = session?.user || null;
+
+  sb.auth.onAuthStateChange((event, session) => {
+    currentUser = session?.user || null;
+    updateAuthUI();
+    if (currentUser) {
+      closeAuthModal();
+      if (window.location.search.includes('code=')) {
+        history.replaceState({}, document.title, window.location.pathname);
+      }
+      if (event === 'SIGNED_IN') showToast('✦ WELCOME · RÚNAR AWAITS');
+    }
+    if (event === 'SIGNED_OUT') showToast('YOU HAVE LEFT THE CIRCLE');
+  });
+
+  // Load character + corrections
+  try {
+    const { data } = await sb.from('runar_character').select('*').eq('active', true).limit(1).maybeSingle();
+    activeChar = data || null;
+  } catch { activeChar = null; }
+  await loadCorrections();
+
+  updateAuthUI();
+  updateUIText();
+});
+</script>
+</body>
+</html>
