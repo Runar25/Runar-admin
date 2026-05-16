@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RÚNAR · The World of Yggdrasil</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="runar-config.js"></script>
 <script src="runar-runes.js"></script>
 <script src="runar-character.js"></script>
@@ -373,7 +374,6 @@
 
 </div><!-- /wrap -->
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
 // ═══════════════════════════════════════════════════════
 // RÚNAR · YGGDRASIL JOURNEY
@@ -559,9 +559,10 @@ function buildRuneGrid(containerId, onSelect, worldFilter) {
     btn.className = 'rb';
     btn.dataset.rune = r.n;
     const svgKey = r.svg || r.n;
-    const svgMarkup = RUNE_SVGS[svgKey]
-      ? `<svg viewBox="${RUNE_SVGS[svgKey].viewBox}" fill="none" xmlns="http://www.w3.org/2000/svg">${RUNE_SVGS[svgKey].paths.map(p => `<path d="${p}" stroke="${stroke}" stroke-width="1.2" stroke-linecap="round"/>`).join('')}</svg>`
-      : `<span style="font-size:1.4em">${r.g}</span>`;
+    const svgData = (typeof RUNE_SVGS !== 'undefined') && RUNE_SVGS[svgKey];
+    const svgMarkup = svgData
+      ? `<svg viewBox="${svgData.viewBox}" fill="none" xmlns="http://www.w3.org/2000/svg">${svgData.paths.map(p => `<path d="${p}" stroke="${stroke}" stroke-width="1.2" stroke-linecap="round"/>`).join('')}</svg>`
+      : `<span style="font-size:1.6em;line-height:1;">${r.g}</span>`;
     btn.innerHTML = svgMarkup + `<div class="rb-name">${r.n}</div>`;
     btn.onclick = () => onSelect(r, btn, containerId);
     grid.appendChild(btn);
@@ -705,8 +706,9 @@ async function goMidgard() {
   showScreen('mid');
   // Show Hel rune recap
   const svgKey = helRune.svg || helRune.n;
-  const svgMarkup = RUNE_SVGS[svgKey]
-    ? `<svg viewBox="${RUNE_SVGS[svgKey].viewBox}" fill="none" xmlns="http://www.w3.org/2000/svg">${RUNE_SVGS[svgKey].paths.map(p => `<path d="${p}" stroke="#6b3fa0" stroke-width="1.2" stroke-linecap="round"/>`).join('')}</svg>`
+  const svgData2 = (typeof RUNE_SVGS !== 'undefined') && RUNE_SVGS[svgKey];
+  const svgMarkup = svgData2
+    ? `<svg viewBox="${svgData2.viewBox}" fill="none" xmlns="http://www.w3.org/2000/svg">${svgData2.paths.map(p => `<path d="${p}" stroke="#6b3fa0" stroke-width="1.2" stroke-linecap="round"/>`).join('')}</svg>`
     : helRune.g;
   document.getElementById('mid-hel-svg').innerHTML = svgMarkup;
   document.getElementById('mid-hel-g').textContent = helRune.g;
