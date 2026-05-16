@@ -19,23 +19,31 @@
   --gold:#D6A85C; --gold2:rgba(214,168,92,0.12); --gold-dim:#7a6530;
   --white:#F2F5F7; --muted:#8ba5c0; --dim:#3a4a60;
   --blue:#5BB8FF; --teal:#7ED9B5;
+  --hearthwood:#7D5838; --obsidian:#1E1E1E;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--white);font-family:'Cormorant Garamond',serif;min-height:100vh;display:flex;justify-content:center;padding:40px 16px 80px;}
-body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
-  background:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(46,74,112,0.3) 0%,transparent 60%),
-             radial-gradient(ellipse 40% 30% at 90% 90%,rgba(126,217,181,0.05) 0%,transparent 50%);}
-.app{position:relative;z-index:1;max-width:680px;width:100%;}
 
-/* ── HEADER ── */
-.hdr{border-bottom:1px solid var(--border);padding-bottom:24px;margin-bottom:28px;}
-.hdr-inner{display:flex;justify-content:space-between;align-items:flex-start;}
-.brand{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:4px;color:var(--gold);opacity:0.7;}
-h1{font-size:2em;font-weight:400;margin:6px 0 4px;letter-spacing:1px;}
-.sub{color:var(--muted);font-style:italic;font-size:0.95em;}
-.hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
+/* ── BODY ── */
+body{background:var(--bg);color:var(--white);font-family:'Cormorant Garamond',serif;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 120% 55% at 50% 0%,rgba(46,74,112,0.4) 0%,transparent 55%),
+    radial-gradient(ellipse 60% 40% at 85% 100%,rgba(126,217,181,0.04) 0%,transparent 50%),
+    radial-gradient(ellipse 35% 30% at 5% 55%,rgba(125,88,56,0.06) 0%,transparent 50%);}
+
+/* ── TOPBAR ── */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(10,12,18,0.94);
+  border-bottom:1px solid rgba(46,74,112,0.4);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+}
+.topbar-inner{max-width:1140px;margin:0 auto;padding:13px 28px;display:flex;align-items:center;justify-content:space-between;}
+.brand{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:4px;color:var(--gold);opacity:0.85;}
+.topbar-right{display:flex;align-items:center;gap:16px;}
 .lang-toggle{display:flex;border:1px solid var(--border);overflow:hidden;}
-.lang-btn{padding:8px 18px;font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:2px;border:none;cursor:pointer;transition:all 0.2s;}
+.lang-btn{padding:7px 16px;font-family:'Cinzel',serif;font-size:0.68em;letter-spacing:2px;border:none;cursor:pointer;transition:all 0.2s;}
 .lang-btn.active{background:var(--gold);color:#000;}
 .lang-btn:not(.active){background:transparent;color:var(--muted);}
 .auth-badge{display:flex;align-items:center;gap:8px;}
@@ -43,6 +51,89 @@ h1{font-size:2em;font-weight:400;margin:6px 0 4px;letter-spacing:1px;}
 .auth-btn{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1.5px;padding:5px 12px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all 0.2s;}
 .auth-btn:hover{border-color:var(--gold);color:var(--gold);}
 .auth-btn.signin{border-color:var(--gold-dim);color:var(--gold);}
+
+/* ── HERO ── */
+.hero{
+  position:relative;z-index:1;overflow:hidden;
+  border-bottom:1px solid rgba(46,74,112,0.22);
+  max-height:680px;opacity:1;
+  transition:max-height 0.65s cubic-bezier(0.4,0,0.2,1),
+             opacity 0.45s ease,
+             border-bottom-width 0.65s ease;
+}
+.hero.hidden{max-height:0;opacity:0;pointer-events:none;border-bottom-width:0;}
+.hero-inner{max-width:1140px;margin:0 auto;display:flex;align-items:stretch;min-height:460px;}
+
+/* Portrait column */
+.hero-portrait-col{
+  flex:0 0 42%;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#13192a 0%,#0e1520 60%,#0a0c12 100%);
+}
+.hero-portrait-wrap{position:absolute;inset:0;}
+.hero-portrait-wrap img{
+  display:block;width:100%;height:100%;
+  object-fit:cover;object-position:center top;
+  filter:brightness(0.85) sepia(0.12) contrast(1.06);
+}
+/* Right + bottom fade — blends white bg into dark bg */
+.hero-portrait-wrap::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(to right, transparent 35%, var(--bg) 88%),
+    linear-gradient(to top,   var(--bg) 0%, transparent 22%);
+}
+/* Subtle top vignette */
+.hero-portrait-wrap::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:1;
+  background:linear-gradient(to bottom,rgba(10,12,18,0.35) 0%,transparent 18%);
+}
+
+/* Text column */
+.hero-text-col{
+  flex:1;display:flex;flex-direction:column;justify-content:center;
+  padding:60px 64px 60px 32px;
+  position:relative;z-index:2;
+}
+.hero-eyebrow{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:5px;color:var(--gold);opacity:0.6;margin-bottom:16px;}
+.hero-title{font-family:'Cinzel',serif;font-size:2.65em;font-weight:400;letter-spacing:2px;color:var(--white);line-height:1.18;margin-bottom:14px;}
+.hero-sub{font-size:1.12em;color:var(--muted);font-style:italic;margin-bottom:28px;line-height:1.7;}
+.hero-sep{width:44px;height:1px;background:linear-gradient(to right,var(--gold),transparent);margin-bottom:26px;}
+.hero-quote{
+  font-size:1.08em;font-style:italic;
+  color:rgba(242,245,247,0.58);
+  line-height:1.9;
+  border-left:2px solid rgba(125,88,56,0.6);
+  padding-left:22px;
+  margin-bottom:36px;
+  max-width:400px;
+}
+.hero-runes{font-size:1.35em;letter-spacing:10px;color:var(--dim);user-select:none;letter-spacing:8px;}
+
+/* Mobile hero */
+@media(max-width:768px){
+  .hero{max-height:600px;}
+  .hero-inner{flex-direction:column;min-height:auto;}
+  .hero-portrait-col{flex:none;height:240px;width:100%;position:relative;}
+  .hero-portrait-wrap{position:absolute;inset:0;}
+  .hero-portrait-wrap img{object-position:center 10%;}
+  .hero-portrait-wrap::after{
+    background:
+      linear-gradient(to bottom, transparent 45%, var(--bg) 100%),
+      linear-gradient(to right,  transparent 55%, var(--bg) 100%);
+  }
+  .hero-text-col{padding:20px 20px 44px;text-align:center;}
+  .hero-title{font-size:1.85em;}
+  .hero-quote{margin:0 auto 28px;border-left:none;border-top:1px solid rgba(125,88,56,0.35);padding:18px 0 0;text-align:center;max-width:100%;}
+  .hero-sep{margin:0 auto 22px;}
+  .hero-runes{display:none;}
+}
+@media(max-width:420px){
+  .topbar-inner{padding:12px 16px;}
+  .lang-btn{padding:6px 12px;}
+}
+
+/* ── MAIN CONTENT ── */
+.app{position:relative;z-index:1;max-width:680px;width:100%;margin:0 auto;padding:40px 16px 80px;}
 
 /* ── TRIAL BANNER ── */
 .trial-banner{background:var(--card);border:1px solid var(--border);padding:12px 18px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
@@ -188,29 +279,47 @@ audio::-webkit-media-controls-panel{background:#0d1220;}
   </div>
 </div>
 
-<!-- ═══ APP ═══ -->
-<div class="app">
-
-  <!-- HEADER -->
-  <div class="hdr">
-    <div class="hdr-inner">
-      <div>
-        <div class="brand" id="ui-brand">AGNDOFA · RÚNAR</div>
-        <h1 id="ui-title">Rúnar the Rune Keeper</h1>
-        <div class="sub" id="ui-sub">Draw a rune. Hear the old tongue speak.</div>
+<!-- ═══ TOPBAR ═══ -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand" id="ui-brand">AGNDOFA · RÚNAR</div>
+    <div class="topbar-right">
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+        <button class="lang-btn"        id="btn-is" onclick="setLang('is')">IS</button>
       </div>
-      <div class="hdr-right">
-        <div class="lang-toggle">
-          <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
-          <button class="lang-btn"        id="btn-is" onclick="setLang('is')">IS</button>
-        </div>
-        <div class="auth-badge">
-          <span class="auth-user" id="auth-user-label" style="display:none;"></span>
-          <button class="auth-btn signin" id="auth-action-btn" onclick="handleAuthBtn()">SIGN IN</button>
-        </div>
+      <div class="auth-badge">
+        <span class="auth-user" id="auth-user-label" style="display:none;"></span>
+        <button class="auth-btn signin" id="auth-action-btn" onclick="handleAuthBtn()">SIGN IN</button>
       </div>
     </div>
   </div>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="reader-hero">
+  <div class="hero-inner">
+    <div class="hero-portrait-col">
+      <div class="hero-portrait-wrap">
+        <img src="runar-portrait.png" alt="Rúnar the Rune Keeper">
+      </div>
+    </div>
+    <div class="hero-text-col">
+      <div class="hero-eyebrow">THE RUNE KEEPER</div>
+      <h1 class="hero-title" id="ui-title">Rúnar the Rune Keeper</h1>
+      <p class="hero-sub" id="ui-sub">Draw a rune. Hear the old tongue speak.</p>
+      <div class="hero-sep"></div>
+      <blockquote class="hero-quote">
+        "The runes do not predict your fate.<br>
+        They remind you of the path<br>you already walk."
+      </blockquote>
+      <div class="hero-runes" aria-hidden="true">ᚠ ᚢ ᚦ ᚨ ᚱ ᚲ ᚷ ᚹ</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ APP ═══ -->
+<div class="app">
 
   <!-- TRIAL BANNER -->
   <div class="trial-banner" id="trial-banner" style="display:none;">
@@ -689,6 +798,7 @@ function startReading() {
   readerUser = { name, d, m, y, lifeRune,
     area: readerUser.area || '', seeking: readerUser.seeking || '',
     question: document.getElementById('r-question').value.trim() };
+  document.getElementById('reader-hero').classList.add('hidden');
   document.getElementById('reader-setup').style.display = 'none';
   document.getElementById('reader-rune-card').style.display = 'block';
   document.getElementById('reader-output').style.display = 'none';
@@ -723,6 +833,7 @@ function drawAnother() {
 
 function resetReader() {
   readerUser = {}; readerRune = null; readerTexts = {}; voiceGenerated = {};
+  document.getElementById('reader-hero').classList.remove('hidden');
   document.getElementById('reader-setup').style.display = 'block';
   document.getElementById('reader-rune-card').style.display = 'none';
   document.getElementById('reader-output').style.display = 'none';
