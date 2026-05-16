@@ -151,6 +151,29 @@ audio{flex:1;height:36px;filter:invert(0.85) sepia(0.3) hue-rotate(180deg);}
 .detail-empty{font-size:0.8em;color:var(--dim);font-style:italic;}
 .prog-bar{height:3px;background:var(--border);margin-bottom:16px;border-radius:2px;}
 .prog-bar-fill{height:100%;background:var(--teal);border-radius:2px;transition:width 0.6s ease;}
+/* ── AUTH ── */
+.auth-badge{display:flex;align-items:center;gap:8px;margin-top:8px;}
+.auth-user{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1.5px;color:var(--teal);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.auth-btn{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1.5px;padding:5px 12px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all 0.2s;}
+.auth-btn:hover{border-color:var(--gold);color:var(--gold);}
+.auth-btn.signin{border-color:var(--gold-dim,#7a6530);color:var(--gold);}
+.trial-banner{background:#0d1220;border:1px solid var(--border);padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.trial-text{font-size:0.82em;color:var(--muted);font-style:italic;}
+.trial-count{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:1.5px;color:var(--gold);}
+.auth-gate{background:#0a0e18;border:1px solid var(--gold);padding:24px;text-align:center;margin-top:14px;}
+.auth-gate-title{font-family:'Cinzel',serif;font-size:0.8em;letter-spacing:2px;color:var(--gold);margin-bottom:10px;}
+.auth-gate-note{font-size:0.88em;color:var(--muted);font-style:italic;margin-bottom:18px;line-height:1.6;}
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:100;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--card);border:1px solid var(--gold);padding:32px;max-width:400px;width:100%;}
+.modal-title{font-family:'Cinzel',serif;font-size:0.9em;letter-spacing:3px;color:var(--gold);margin-bottom:6px;}
+.modal-sub{font-size:0.88em;color:var(--muted);font-style:italic;margin-bottom:20px;line-height:1.6;}
+.modal-close{float:right;background:none;border:none;color:var(--muted);font-size:1.2em;cursor:pointer;margin-top:-8px;}
+.modal-success{text-align:center;padding:16px 0;}
+.modal-success-icon{font-size:2em;margin-bottom:10px;}
+.modal-success-txt{font-family:'Cinzel',serif;font-size:0.75em;letter-spacing:1.5px;color:var(--teal);}
+.modal-success-note{font-size:0.85em;color:var(--muted);font-style:italic;margin-top:8px;}
 </style>
 </head>
 <body>
@@ -164,9 +187,37 @@ audio{flex:1;height:36px;filter:invert(0.85) sepia(0.3) hue-rotate(180deg);}
       <h1 id="ui-title">Knowledge Shrine</h1>
       <div class="sub" id="ui-sub">Teach Rúnar. Shape his voice. Feed his wisdom.</div>
     </div>
-    <div class="lang-toggle">
-      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" id="btn-is" onclick="setLang('is')">IS</button>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" id="btn-is" onclick="setLang('is')">IS</button>
+      </div>
+      <div class="auth-badge" id="auth-badge">
+        <span class="auth-user" id="auth-user-label" style="display:none;"></span>
+        <button class="auth-btn signin" id="auth-action-btn" onclick="handleAuthBtn()">SIGN IN</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="auth-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeAuthModal()">✕</button>
+    <div class="modal-title">ENTER RÚNAR'S WORLD</div>
+    <div class="modal-sub" id="auth-modal-sub">A magic link will be sent to your email. No password needed.</div>
+    <div id="auth-modal-body">
+      <label class="flbl">YOUR EMAIL</label>
+      <input class="txt" id="auth-email" type="email" placeholder="your@email.com" style="margin-bottom:14px;">
+      <button class="btn-full" onclick="sendMagicLink()">SEND MAGIC LINK</button>
+      <div class="status" id="st-auth"></div>
+    </div>
+    <div id="auth-modal-success" style="display:none;">
+      <div class="modal-success">
+        <div class="modal-success-icon">✉</div>
+        <div class="modal-success-txt">MAGIC LINK SENT</div>
+        <div class="modal-success-note">Check your email and click the link to sign in.</div>
+      </div>
     </div>
   </div>
 </div>
@@ -235,6 +286,18 @@ audio{flex:1;height:36px;filter:invert(0.85) sepia(0.3) hue-rotate(180deg);}
 
 <!-- ═══ READER ═══ -->
 <div class="pane" id="pane-reader">
+  <!-- Trial / auth banner -->
+  <div class="trial-banner" id="trial-banner" style="display:none;">
+    <span class="trial-text" id="trial-text"></span>
+    <span class="trial-count" id="trial-count"></span>
+  </div>
+  <!-- Auth gate (shown when trial exhausted) -->
+  <div class="auth-gate" id="auth-gate" style="display:none;">
+    <div class="auth-gate-title">YOUR FREE READINGS ARE COMPLETE</div>
+    <div class="auth-gate-note">Create a free account to continue. Rúnar remembers those who return.</div>
+    <button class="btn-full" onclick="openAuthModal()" style="max-width:280px;margin:0 auto;display:block;">CREATE FREE ACCOUNT</button>
+  </div>
+  <div id="reader-content">
   <div class="card" id="reader-setup">
     <div class="card-lbl" id="reader-card1-lbl">✦ BEFORE WE BEGIN</div>
     <p class="note" id="reader-note">Only your name is required. Everything else helps Rúnar speak more personally.</p>
@@ -298,6 +361,7 @@ audio{flex:1;height:36px;filter:invert(0.85) sepia(0.3) hue-rotate(180deg);}
     </div>
   </div>
   <div class="status" id="st-reader"></div>
+  </div><!-- /reader-content -->
 </div>
 
 <!-- ═══ CORRECTIONS ═══ -->
@@ -340,9 +404,98 @@ let teachVersion  = null;
 let readerUser    = {};
 let readerRune    = null;
 let corrScope     = 'both';
+let currentUser   = null;
+
+const FREE_TRIAL_LIMIT = 3;
+function getTrialCount()  { return parseInt(localStorage.getItem('runar_trial_count') || '0'); }
+function incTrialCount()  { localStorage.setItem('runar_trial_count', getTrialCount() + 1); }
+
+// ─── AUTH UI ────────────────────────────────────────────
+function updateAuthUI() {
+  const label  = document.getElementById('auth-user-label');
+  const btn    = document.getElementById('auth-action-btn');
+  const banner = document.getElementById('trial-banner');
+  const gate   = document.getElementById('auth-gate');
+  const content= document.getElementById('reader-content');
+
+  if (currentUser) {
+    label.style.display = 'block';
+    label.textContent   = currentUser.email.split('@')[0];
+    btn.textContent     = 'SIGN OUT';
+    btn.classList.remove('signin');
+    // Logged in — no gate, no banner
+    if (banner) banner.style.display = 'none';
+    if (gate)   gate.style.display   = 'none';
+    if (content) content.style.display = 'block';
+  } else {
+    label.style.display = 'none';
+    btn.textContent     = 'SIGN IN';
+    btn.classList.add('signin');
+    const count = getTrialCount();
+    const remaining = Math.max(0, FREE_TRIAL_LIMIT - count);
+    if (remaining > 0) {
+      if (banner) {
+        banner.style.display = 'flex';
+        document.getElementById('trial-text').textContent = 'You are exploring as a guest.';
+        document.getElementById('trial-count').textContent = `${remaining} free reading${remaining !== 1 ? 's' : ''} remaining`;
+      }
+      if (gate)    gate.style.display    = 'none';
+      if (content) content.style.display = 'block';
+    } else {
+      if (banner)  banner.style.display  = 'none';
+      if (gate)    gate.style.display    = 'block';
+      if (content) content.style.display = 'none';
+    }
+  }
+}
+
+function handleAuthBtn() {
+  if (currentUser) { sb.auth.signOut(); }
+  else { openAuthModal(); }
+}
+
+function openAuthModal() {
+  document.getElementById('auth-modal').classList.add('open');
+  document.getElementById('auth-modal-body').style.display = 'block';
+  document.getElementById('auth-modal-success').style.display = 'none';
+  setSt('st-auth', '');
+  setTimeout(() => document.getElementById('auth-email')?.focus(), 100);
+}
+
+function closeAuthModal() {
+  document.getElementById('auth-modal').classList.remove('open');
+}
+
+// Close modal on overlay click
+document.addEventListener('click', e => {
+  if (e.target.id === 'auth-modal') closeAuthModal();
+});
+
+async function sendMagicLink() {
+  const email = document.getElementById('auth-email').value.trim();
+  if (!email) { setSt('st-auth', 'Please enter your email.', 'err'); return; }
+  setSt('st-auth', 'Sending…');
+  const { error } = await sb.auth.signInWithOtp({
+    email,
+    options: { emailRedirectTo: window.location.href }
+  });
+  if (error) { setSt('st-auth', error.message, 'err'); return; }
+  document.getElementById('auth-modal-body').style.display = 'none';
+  document.getElementById('auth-modal-success').style.display = 'block';
+}
 
 // ─── INIT ───────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', async () => {
+  // Auth state
+  const { data: { session } } = await sb.auth.getSession();
+  currentUser = session?.user || null;
+  sb.auth.onAuthStateChange((_event, session) => {
+    currentUser = session?.user || null;
+    updateAuthUI();
+    if (currentUser) closeAuthModal();
+  });
+  updateAuthUI();
+
   updateUIText();
   buildGrid('teach-grid', false);
   buildPills();
@@ -761,6 +914,7 @@ async function deleteVersion(id, runeName, lang, version) {
 
 // ─── READER ─────────────────────────────────────────────
 function startReading() {
+  if (!currentUser && getTrialCount() >= FREE_TRIAL_LIMIT) { updateAuthUI(); return; }
   const name = document.getElementById('r-name').value.trim(); if (!name) { setSt('st-setup', t('st_name_req'), 'err'); return; }
   const d = parseInt(document.getElementById('r-day').value), m = parseInt(document.getElementById('r-month').value), y = parseInt(document.getElementById('r-year').value);
   const lifeRune = (d && m && y && d <= 31 && m <= 12 && y >= 1930) ? calcLifeRune(d, m, y) : null;
@@ -814,6 +968,8 @@ async function readRune() {
     setSt('st-voice', `♪ v${pick.version} of ${staticRows.length}`);
   }
   voiceBtn.disabled = false;
+  // Track trial reading count for anonymous users
+  if (!currentUser) { incTrialCount(); updateAuthUI(); }
 }
 
 function drawAnother() {
