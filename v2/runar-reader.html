@@ -453,20 +453,21 @@ function updateAuthUI() {
   if (currentUser) {
     label.style.display = 'block';
     label.textContent   = currentUser.email.split('@')[0];
-    btn.textContent     = 'SIGN OUT';
+    btn.textContent     = lang === 'is' ? 'SKRÁ ÚT' : 'SIGN OUT';
     btn.classList.remove('signin');
     banner.style.display = 'none';
     gate.style.display   = 'none';
     content.style.display = 'block';
   } else {
     label.style.display = 'none';
-    btn.textContent = 'SIGN IN';
+    btn.textContent = lang === 'is' ? 'SKRÁ INN' : 'SIGN IN';
     btn.classList.add('signin');
     const remaining = Math.max(0, FREE_TRIAL_LIMIT - getTrialCount());
     if (remaining > 0) {
       banner.style.display = 'flex';
-      document.getElementById('trial-count').textContent =
-        `${remaining} free reading${remaining !== 1 ? 's' : ''} remaining`;
+      document.getElementById('trial-count').textContent = lang === 'is'
+        ? `${remaining} ókeypis lestur${remaining !== 1 ? 'ar' : ''} eftir`
+        : `${remaining} free reading${remaining !== 1 ? 's' : ''} remaining`;
       gate.style.display    = 'none';
       content.style.display = 'block';
     } else {
@@ -625,8 +626,11 @@ function updateUIText() {
   const vBtn = document.getElementById('btn-generate-voice');
   if (vBtn && !vBtn.disabled) vBtn.textContent = t('voice_btn');
   // Trial banner
+  setText('trial-text', lang === 'is' ? 'Þú ert að kanna sem gestur.' : 'You are exploring as a guest.');
   const remaining = Math.max(0, FREE_TRIAL_LIMIT - getTrialCount());
-  setText('trial-count', `${remaining} free reading${remaining !== 1 ? 's' : ''} remaining`);
+  setText('trial-count', lang === 'is'
+    ? `${remaining} ókeypis lestur${remaining !== 1 ? 'ar' : ''} eftir`
+    : `${remaining} free reading${remaining !== 1 ? 's' : ''} remaining`);
   // Auth gate
   setText('gate-title', lang === 'is' ? 'ÓKEYPIS LESTRAR ÞÍNIR ERU FULLNÝTTIR' : 'YOUR FREE READINGS ARE COMPLETE');
   setText('gate-note', lang === 'is'
