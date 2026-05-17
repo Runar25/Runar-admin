@@ -67,7 +67,7 @@ runar-audio (PUBLIC)   ← static/en/fehu_1.mp3, static/en/fehu_2.mp3, ...
 
 ---
 
-## ROADMAP v0.4 (2026-05-16)
+## ROADMAP v0.5 (2026-05-17)
 
 ### VRSTVA 0 — ZÁKLAD ✅ HOTOVO
 - [x] Single HTML aplikace (runar-shrine.html + 5 JS modulů)
@@ -103,22 +103,54 @@ runar-audio (PUBLIC)   ← static/en/fehu_1.mp3, static/en/fehu_2.mp3, ...
 - [x] EN/IS hlas + model podle aktivního jazyka
 - [x] "GENERATE RÚNAR'S VOICE" v Reader tabu
 - [x] Loading stav + error handling
+- [x] Audio player — Rúnarova barva (#2E4A70 gradient, ne černá)
 
 #### 1C — Admin nástroj ✅ HOTOVO
 - [x] Integrován v Teach Rúnar tabu
 - [x] Generate → edit → preview hlas → save flow
 - [x] Editovatelný text před uložením hlasu
 - [x] Preview hlasu PŘED uložením
+- [x] Google OAuth pro admin přihlášení (shrine)
 
-### VRSTVA 2 — AUTH & UŽIVATELSKÝ ÚČET
-- [ ] Supabase Auth (magic link + Google OAuth)
-- [ ] User profil tabulka (jméno, DOB, jazyk, life_rune, tier)
-- [ ] Anonymní session → account migrace (free trial výklady)
-- [ ] readings tabulka naplnit (základ EXISTS v DB)
-- [ ] Základní UI deník výkladů
+### VRSTVA 1.5 — UX & VIZUÁL ✅ HOTOVO (2026-05-16/17)
+Tato vrstva vznikla organicky — solidní základ před spuštěním Vrstvy 2.
+
+- [x] **Redesign runar-reader.html** — hero sekce, topbar, Sacred Color Palette
+  - Hero: dvousloupcový layout (portrét vlevo, text vpravo)
+  - Topbar: sticky, blur, brand + lang toggle + auth badge
+  - Hero collapse: plynulá animace při začátku čtení (max-height transition)
+- [x] **Portrét Rúnara** — runar-portrait.png v `v2/assets/`
+  - object-fit:contain + object-position:center bottom (celá postava včetně ruky)
+  - mask-image radial gradient — vignette, bílé pozadí zmizí přirozeně
+- [x] **Vizuální assety** — uloženy v `v2/assets/` (portrait, fullbody, travel, ceremonial, expressions, sacred-palette, moodboard)
+- [x] **IS jazyková kompletnost** — všechny UI řetězce přeloženy
+  - SIGN IN/OUT → SKRÁ INN/ÚT
+  - Trial banner, auth gate, hero quote, eyebrow, trial-end prompt
+- [x] **Trial gate UX** — čtení proběhne celé, join výzva se objeví 8s po dokončení streamu
+- [x] **Google OAuth** — shrine + reader, redirectTo na GitHub Pages
+  - Supabase URL Configuration: Site URL = `https://runar25.github.io`
+  - Google Cloud Console: OAuth client, External + In production
+  - Resend.com SMTP pro magic link (bypass 2/hod limit)
+- [x] **Free tier reading counter** (2026-05-17)
+  - Banner pro přihlášené uživatele: "X of 5 readings remaining this month"
+  - localStorage klíčovaný userId + YYYY-MM (automatický reset každý měsíc)
+  - Barevná signalizace: teal → gold (1 zbývá) → červená (vyčerpáno)
+  - Upgrade gate po vyčerpání (tlačítko disabled, "Coming Soon")
+  - IS překlady pro banner i gate
+  - Soft gate: nespustí se uprostřed čtení, respektuje outputVisible check
+
+### VRSTVA 2 — AUTH & UŽIVATELSKÝ ÚČET ← DALŠÍ PRIORITA
+- [x] Supabase Auth — magic link ✅
+- [x] Google OAuth ✅
+- [ ] **User profil tabulka** — `user_profiles` (id, email, name, dob_d, dob_m, dob_y, lang, life_rune, tier, created_at)
+- [ ] **Tier sloupec** — `free | credits | standard | premium` (default: `free`)
+- [ ] **readings tabulka** — ukládat každé čtení (user_id, rune_name, lang, short_text, deep_text, drawn_at)
+- [ ] **Přesun counteru do DB** — místo localStorage (přesné, multi-device, backend-enforceable)
+- [ ] **Anonymní migrace** — po registraci přenést trial výklady do readings tabulky
+- [ ] **Základní deník** — zobrazit posledních 5 výkladů pro free uživatele
 
 ### VRSTVA 3 — MONETIZACE
-Tiers definovány v `runar-config.js` → `TIERS`, backend zatím nevynucuje.
+Tiers definovány v `runar-config.js` → `TIERS`, frontend gate hotov, backend nevynucuje.
 
 | Tier | Výklady | Dynamický hlas | Deník |
 |------|---------|----------------|-------|
@@ -129,8 +161,8 @@ Tiers definovány v `runar-config.js` → `TIERS`, backend zatím nevynucuje.
 | PREMIUM | neomezené | ✅ | ✅ + audio uložení |
 
 - [ ] Stripe integrace (one-time + recurring)
-- [ ] user_entitlements tabulka — vynucování na backendu
-- [ ] Feature gates v UI (viditelné, s upgrade CTA)
+- [ ] `user_entitlements` tabulka — vynucování na backendu (Edge Function)
+- [ ] Feature gates v UI (viditelné, s upgrade CTA — tlačítka připravena)
 
 ### VRSTVA 4 — CEREMONIAL MODE (Premium)
 - [ ] Oddělený system prompt
@@ -155,7 +187,82 @@ Tiers definovány v `runar-config.js` → `TIERS`, backend zatím nevynucuje.
 
 ### TECHNICKÝ DLUH
 - [ ] Real streaming přes SSE (místo fake setTimeout)
-- [ ] Progress indicator: které runy mají statické audio
+- [ ] Progress tab: grid 25 run s EN/IS stavem (kolik verzí, chybí)
 - [ ] Rate limiting v Edge Functions
 - [ ] Cost monitoring per user
-- [ ] Frontend → Vite/React až řádků > 2000 (aktuálně ~800)
+- [ ] Audio player redesign (aktuální #2E4A70 gradient funguje, ale není ideální)
+- [ ] Frontend → Vite/React až řádků > 2000 (reader aktuálně ~1100)
+
+---
+
+## PLÁN NA DALŠÍ DEN (2026-05-18)
+
+### Priorita 1 — Vrstva 2: User profil v Supabase (základ dat)
+
+Cíl: přihlášený uživatel má svůj profil v DB, čtení se ukládají, counter přechází z localStorage do DB.
+
+**Supabase SQL — spustit v SQL Editoru:**
+```sql
+-- User profily
+CREATE TABLE user_profiles (
+  id          uuid PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+  email       text,
+  name        text,
+  dob_d       int, dob_m int, dob_y int,
+  lang        text DEFAULT 'en',
+  life_rune   text,
+  tier        text DEFAULT 'free',
+  created_at  timestamptz DEFAULT now()
+);
+ALTER TABLE user_profiles ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Users see own profile" ON user_profiles FOR ALL USING (auth.uid() = id);
+
+-- Výklady (readings)
+CREATE TABLE readings (
+  id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id     uuid REFERENCES auth.users(id) ON DELETE CASCADE,
+  rune_name   text NOT NULL,
+  rune_glyph  text,
+  lang        text NOT NULL,
+  short_text  text,
+  deep_text   text,
+  area        text,
+  seeking     text,
+  question    text,
+  drawn_at    timestamptz DEFAULT now()
+);
+ALTER TABLE readings ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Users see own readings" ON readings FOR ALL USING (auth.uid() = user_id);
+```
+
+**Frontend (runar-reader.html):**
+- [ ] Po přihlášení: `upsert` do `user_profiles` (jméno/lang si zapamatovat)
+- [ ] Po každém čtení: `insert` do `readings`
+- [ ] Monthly counter přečíst z DB místo localStorage: `count(*) WHERE user_id=X AND drawn_at >= start_of_month`
+- [ ] Deník: sekce "MOJE VÝKLADY" — posledních 5 karet (runa, datum, krátký text)
+
+### Priorita 2 — Progress tab v adminu (shrine)
+
+Cíl: rychlý přehled co chybí nahrát (bez nutnosti pamatovat si).
+
+**runar-shrine.html Progress tab:**
+- [ ] Grid 26 run (včetně Blank) × 2 jazyky
+- [ ] Pro každou: počet EN verzí + počet IS verzí z `runar_static_audio`
+- [ ] Barva: zelená (≥1), žlutá (pouze 1 verze — křehké), červená (0)
+- [ ] Klik na runu → přepne na Teach tab + předvyplní runu
+
+### Priorita 3 — Vyčistit audio player (estetika)
+
+Uživatel označil current blue player za "hruzu". Rychlý redesign:
+- [ ] Přidat textové ovládání místo native `<audio>` (play/pause tlačítko, progress bar, čas) — plná kontrola nad stylem
+- [ ] Nebo: native `<audio>` s `appearance: none` + custom CSS overlay
+- [ ] Zachovat Rúnarovu modrou paletu, ale elegantnější provedení
+
+### Pořadí práce:
+1. **SQL migrace** v Supabase → otestovat RLS
+2. **user_profiles upsert** po přihlášení → zkontrolovat v Table Editor
+3. **readings insert** po každém čtení → ověřit záznamy
+4. **Monthly counter z DB** → nahradit localStorage logiku
+5. **Deník sekce** v readeru → jednoduché karty
+6. **Progress tab** v shrine
+7. **(Volitelné)** Audio player redesign
