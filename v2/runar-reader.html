@@ -241,6 +241,25 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
 .auth-divider{display:flex;align-items:center;gap:12px;margin:16px 0;color:var(--dim);font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;}
 .auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--border);}
 
+/* ── JOURNAL ── */
+.journal-section{margin-bottom:20px;}
+.journal-header{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:var(--card);border:1px solid rgba(126,217,181,0.2);cursor:pointer;user-select:none;}
+.journal-header:hover{border-color:rgba(126,217,181,0.4);}
+.journal-header-left{display:flex;align-items:center;gap:10px;}
+.journal-header-lbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--teal);opacity:0.85;}
+.journal-count{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:1.5px;color:var(--dim);}
+.journal-toggle{font-size:0.75em;color:var(--dim);transition:transform 0.25s;}
+.journal-toggle.open{transform:rotate(180deg);}
+.journal-body{display:none;border:1px solid rgba(126,217,181,0.15);border-top:none;}
+.journal-body.open{display:block;}
+.journal-entry{padding:14px 18px;border-bottom:1px solid rgba(46,74,112,0.3);display:flex;align-items:flex-start;gap:14px;}
+.journal-entry:last-child{border-bottom:none;}
+.journal-rune-glyph{font-size:1.6em;line-height:1;flex-shrink:0;color:var(--gold);opacity:0.75;width:28px;text-align:center;}
+.journal-meta{flex:1;min-width:0;}
+.journal-rune-name{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:1.5px;color:var(--teal);margin-bottom:3px;}
+.journal-date{font-family:'Cinzel',serif;font-size:0.55em;letter-spacing:1px;color:var(--dim);margin-bottom:6px;}
+.journal-excerpt{font-size:0.88em;font-style:italic;color:var(--muted);line-height:1.6;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+
 /* ── TOAST ── */
 .toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(20px);background:#0d1a12;border:1px solid var(--teal);color:var(--teal);font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:2px;padding:12px 24px;z-index:200;opacity:0;transition:opacity 0.4s,transform 0.4s;pointer-events:none;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
@@ -370,6 +389,20 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
       <b>Create a free account</b> to continue — Rúnar remembers those who return.
     </div>
     <button class="btn-full" onclick="openAuthModal()" style="max-width:300px;margin:0 auto;display:block;" id="gate-btn">CREATE FREE ACCOUNT</button>
+  </div>
+
+  <!-- JOURNAL (logged-in users, last 5 readings) -->
+  <div class="journal-section" id="journal-section" style="display:none;">
+    <div class="journal-header" onclick="toggleJournal()">
+      <div class="journal-header-left">
+        <span class="journal-header-lbl" id="journal-lbl">✦ YOUR READINGS</span>
+        <span class="journal-count" id="journal-count"></span>
+      </div>
+      <span class="journal-toggle" id="journal-toggle">▾</span>
+    </div>
+    <div class="journal-body" id="journal-body">
+      <div id="journal-list"></div>
+    </div>
   </div>
 
   <!-- UPGRADE GATE (logged-in free user, monthly limit reached) -->
@@ -503,6 +536,110 @@ function freeMonthKey(userId) {
 }
 function getFreeMonthCount(userId) { return parseInt(localStorage.getItem(freeMonthKey(userId)) || '0'); }
 function incFreeMonthCount(userId) { localStorage.setItem(freeMonthKey(userId), String(getFreeMonthCount(userId) + 1)); }
+
+// ─── DB: USER PROFILE ────────────────────────────────────
+async function upsertProfile() {
+  if (!currentUser) return;
+  try {
+    await sb.from('user_profiles').upsert({
+      id:         currentUser.id,
+      email:      currentUser.email,
+      lang:       lang,
+      updated_at: new Date().toISOString(),
+    }, { onConflict: 'id' });
+  } catch(e) { console.warn('upsertProfile:', e.message); }
+}
+
+// ─── DB: READINGS ────────────────────────────────────────
+async function saveReading(rune, short, deep) {
+  if (!currentUser) return;
+  try {
+    await sb.from('readings').insert({
+      user_id:    currentUser.id,
+      rune_name:  rune.n,
+      rune_glyph: rune.g,
+      lang:       lang,
+      short_text: short,
+      deep_text:  deep,
+      area:       readerUser.area     || null,
+      seeking:    readerUser.seeking  || null,
+      question:   readerUser.question || null,
+    });
+  } catch(e) { console.warn('saveReading:', e.message); }
+}
+
+// Sync monthly count from DB → localStorage (accurate, multi-device)
+async function syncMonthlyCount(userId) {
+  const start = new Date(); start.setDate(1); start.setHours(0,0,0,0);
+  try {
+    const { count } = await sb.from('readings')
+      .select('id', { count: 'exact', head: true })
+      .eq('user_id', userId)
+      .gte('drawn_at', start.toISOString());
+    if (count !== null) {
+      localStorage.setItem(freeMonthKey(userId), String(count));
+      updateAuthUI();
+    }
+  } catch(e) { console.warn('syncMonthlyCount:', e.message); }
+}
+
+// ─── DB: JOURNAL ─────────────────────────────────────────
+async function loadJournal() {
+  if (!currentUser) { hideJournal(); return; }
+  try {
+    const { data } = await sb.from('readings')
+      .select('rune_name, rune_glyph, lang, short_text, drawn_at')
+      .eq('user_id', currentUser.id)
+      .order('drawn_at', { ascending: false })
+      .limit(5);
+    renderJournal(data || []);
+  } catch(e) { hideJournal(); }
+}
+
+function hideJournal() {
+  const s = document.getElementById('journal-section');
+  if (s) s.style.display = 'none';
+}
+
+function renderJournal(entries) {
+  const section = document.getElementById('journal-section');
+  const list    = document.getElementById('journal-list');
+  if (!section || !list) return;
+  if (!currentUser || entries.length === 0) { hideJournal(); return; }
+
+  const countEl = document.getElementById('journal-count');
+  if (countEl) countEl.textContent = lang === 'is'
+    ? `${entries.length} nýlegastir`
+    : `last ${entries.length}`;
+
+  const lblEl = document.getElementById('journal-lbl');
+  if (lblEl) lblEl.textContent = lang === 'is' ? '✦ LESTRAR ÞÍNIR' : '✦ YOUR READINGS';
+
+  list.innerHTML = entries.map(e => {
+    const d = new Date(e.drawn_at);
+    const locale = lang === 'is' ? 'is-IS' : 'en-GB';
+    const dateStr = d.toLocaleDateString(locale, { day:'numeric', month:'short', year:'numeric' });
+    const excerpt = (e.short_text || '').trim().slice(0, 120);
+    return `<div class="journal-entry">
+      <div class="journal-rune-glyph">${e.rune_glyph || '◻'}</div>
+      <div class="journal-meta">
+        <div class="journal-rune-name">${(e.rune_name || '').toUpperCase()} · ${(e.lang || '').toUpperCase()}</div>
+        <div class="journal-date">${dateStr}</div>
+        <div class="journal-excerpt">${excerpt}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  section.style.display = 'block';
+}
+
+function toggleJournal() {
+  const body   = document.getElementById('journal-body');
+  const toggle = document.getElementById('journal-toggle');
+  if (!body) return;
+  const open = body.classList.toggle('open');
+  if (toggle) toggle.classList.toggle('open', open);
+}
 
 // ─── AUTH ────────────────────────────────────────────────
 function updateAuthUI() {
@@ -919,10 +1056,13 @@ async function _generateReading() {
   // Count reading — anonymous trial or logged-in free tier
   if (!currentUser) {
     incTrialCount();
+    updateAuthUI();
   } else {
-    incFreeMonthCount(currentUser.id);
+    // Save to DB first, then sync count (localStorage updates async after DB confirms)
+    await saveReading(readerRune, short, deep);
+    await syncMonthlyCount(currentUser.id); // refreshes localStorage + banner
+    loadJournal(); // refresh journal in background (no await — don't block stream)
   }
-  updateAuthUI();
 
   await stream('out-short', short);
   if (deep) await stream('out-deep', deep); else document.getElementById('out-deep').innerHTML = '';
@@ -1059,8 +1199,12 @@ window.addEventListener('DOMContentLoaded', async () => {
   // Auth state
   const { data: { session } } = await sb.auth.getSession();
   currentUser = session?.user || null;
+  if (currentUser) {
+    syncMonthlyCount(currentUser.id); // sync counter from DB on page load
+    loadJournal();                    // load journal on page load
+  }
 
-  sb.auth.onAuthStateChange((event, session) => {
+  sb.auth.onAuthStateChange(async (event, session) => {
     currentUser = session?.user || null;
     updateAuthUI();
     if (currentUser) {
@@ -1068,9 +1212,17 @@ window.addEventListener('DOMContentLoaded', async () => {
       if (window.location.search.includes('code=')) {
         history.replaceState({}, document.title, window.location.pathname);
       }
-      if (event === 'SIGNED_IN') showToast('✦ WELCOME · RÚNAR AWAITS');
+      if (event === 'SIGNED_IN') {
+        showToast('✦ WELCOME · RÚNAR AWAITS');
+        upsertProfile();                      // save/update profile in DB
+        syncMonthlyCount(currentUser.id);     // sync reading counter from DB
+        loadJournal();                        // load last readings
+      }
     }
-    if (event === 'SIGNED_OUT') showToast('YOU HAVE LEFT THE CIRCLE');
+    if (event === 'SIGNED_OUT') {
+      hideJournal();
+      showToast('YOU HAVE LEFT THE CIRCLE');
+    }
   });
 
   // Load character + corrections

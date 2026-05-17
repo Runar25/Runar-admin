@@ -246,7 +246,7 @@ CREATE POLICY "Users see own readings" ON readings FOR ALL USING (auth.uid() = u
 Cíl: rychlý přehled co chybí nahrát (bez nutnosti pamatovat si).
 
 **runar-shrine.html Progress tab:**
-- [ ] Grid 26 run (včetně Blank) × 2 jazyky
+- [ ] Grid 25 run (24 Elder Futhark + Blank) × 2 jazyky
 - [ ] Pro každou: počet EN verzí + počet IS verzí z `runar_static_audio`
 - [ ] Barva: zelená (≥1), žlutá (pouze 1 verze — křehké), červená (0)
 - [ ] Klik na runu → přepne na Teach tab + předvyplní runu
