@@ -248,6 +248,12 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
 /* ── CREDIT NOTE ── */
 .credit-note{text-align:center;font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:2px;color:var(--dim);margin-top:14px;}
 
+/* ── FREE USER BANNER ── */
+.free-user-banner{background:var(--card);border:1px solid rgba(126,217,181,0.25);padding:12px 18px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.free-user-count{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:1.5px;color:var(--teal);white-space:nowrap;}
+.free-user-count.warn{color:var(--gold);}
+.free-user-count.exhausted{color:#e07070;}
+
 /* ── TRIAL END PROMPT ── */
 .trial-end{background:var(--card);border:1px solid var(--gold);padding:28px 24px;text-align:center;margin-top:20px;animation:trialFadeIn 0.7s ease;}
 @keyframes trialFadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
@@ -349,6 +355,12 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
     <span class="trial-count" id="trial-count"></span>
   </div>
 
+  <!-- FREE USER BANNER (logged-in, free tier) -->
+  <div class="free-user-banner" id="free-user-banner" style="display:none;">
+    <span class="trial-text" id="free-user-text">You are on the Free path.</span>
+    <span class="free-user-count" id="free-user-count"></span>
+  </div>
+
   <!-- AUTH GATE (trial exhausted) -->
   <div class="auth-gate" id="auth-gate" style="display:none;">
     <div class="auth-gate-rune">ᚠ</div>
@@ -358,6 +370,17 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
       <b>Create a free account</b> to continue — Rúnar remembers those who return.
     </div>
     <button class="btn-full" onclick="openAuthModal()" style="max-width:300px;margin:0 auto;display:block;" id="gate-btn">CREATE FREE ACCOUNT</button>
+  </div>
+
+  <!-- UPGRADE GATE (logged-in free user, monthly limit reached) -->
+  <div class="auth-gate" id="upgrade-gate" style="display:none;">
+    <div class="auth-gate-rune">ᚱ</div>
+    <div class="auth-gate-title" id="upgrade-gate-title">YOUR MONTHLY READINGS ARE COMPLETE</div>
+    <div class="auth-gate-note" id="upgrade-gate-note">
+      You have used all 5 free readings for this month.<br>
+      <b>Upgrade to Standard</b> for unlimited readings — or return when the new month begins.
+    </div>
+    <button class="btn-full" style="max-width:300px;margin:0 auto;display:block;opacity:0.45;cursor:not-allowed;" disabled id="upgrade-gate-btn">UPGRADE — COMING SOON</button>
   </div>
 
   <!-- READER (shown when trial available or logged in) -->
@@ -467,28 +490,80 @@ let voiceGenerated = {};  // { en: bool, is: bool }
 let pendingLang    = null;
 let corrections    = [];
 
-const FREE_TRIAL_LIMIT = 3;
+const FREE_TRIAL_LIMIT      = 3;
+const FREE_REGISTERED_LIMIT = 5;
+
 function getTrialCount() { return parseInt(localStorage.getItem('runar_trial_count') || '0'); }
 function incTrialCount() { localStorage.setItem('runar_trial_count', String(getTrialCount() + 1)); }
 
+// Monthly reading counter for logged-in free users (keyed by userId + YYYY-MM)
+function freeMonthKey(userId) {
+  const d = new Date();
+  return `runar_free_${userId}_${d.getFullYear()}_${String(d.getMonth()+1).padStart(2,'0')}`;
+}
+function getFreeMonthCount(userId) { return parseInt(localStorage.getItem(freeMonthKey(userId)) || '0'); }
+function incFreeMonthCount(userId) { localStorage.setItem(freeMonthKey(userId), String(getFreeMonthCount(userId) + 1)); }
+
 // ─── AUTH ────────────────────────────────────────────────
 function updateAuthUI() {
-  const label   = document.getElementById('auth-user-label');
-  const btn     = document.getElementById('auth-action-btn');
-  const banner  = document.getElementById('trial-banner');
-  const gate    = document.getElementById('auth-gate');
-  const content = document.getElementById('reader-content');
+  const label       = document.getElementById('auth-user-label');
+  const btn         = document.getElementById('auth-action-btn');
+  const banner      = document.getElementById('trial-banner');
+  const freeBanner  = document.getElementById('free-user-banner');
+  const gate        = document.getElementById('auth-gate');
+  const upgradeGate = document.getElementById('upgrade-gate');
+  const content     = document.getElementById('reader-content');
 
   if (currentUser) {
+    // ── Logged in ──
     label.style.display = 'block';
     label.textContent   = currentUser.email.split('@')[0];
     btn.textContent     = lang === 'is' ? 'SKRÁ ÚT' : 'SIGN OUT';
     btn.classList.remove('signin');
     banner.style.display = 'none';
     gate.style.display   = 'none';
-    content.style.display = 'block';
+
+    // Free tier monthly counter
+    const used      = getFreeMonthCount(currentUser.id);
+    const remaining = Math.max(0, FREE_REGISTERED_LIMIT - used);
+    const countEl   = document.getElementById('free-user-count');
+    freeBanner.style.display = 'flex';
+    document.getElementById('free-user-text').textContent = lang === 'is'
+      ? 'Þú ert á ókeypis leið.' : 'You are on the Free path.';
+    if (remaining > 0) {
+      countEl.textContent = lang === 'is'
+        ? `${remaining} af 5 lestrum eftir í mánuðinum`
+        : `${remaining} of ${FREE_REGISTERED_LIMIT} readings remaining this month`;
+      countEl.className = 'free-user-count' + (remaining === 1 ? ' warn' : '');
+      upgradeGate.style.display = 'none';
+      content.style.display     = 'block';
+    } else {
+      // Monthly limit exhausted
+      countEl.textContent = lang === 'is' ? 'Mánuðarlegar lestrar uppurnar' : 'Monthly readings used up';
+      countEl.className = 'free-user-count exhausted';
+      // Only gate if no reading is currently visible
+      const outputVisible = document.getElementById('reader-output')?.style.display !== 'none';
+      if (outputVisible) {
+        upgradeGate.style.display = 'none';
+      } else {
+        // Translate upgrade gate
+        setText('upgrade-gate-title', lang === 'is'
+          ? 'MÁNUÐARLEGIR LESTRAR ÞÍNIR ERU FULLNÝTTIR'
+          : 'YOUR MONTHLY READINGS ARE COMPLETE');
+        const ugNote = document.getElementById('upgrade-gate-note');
+        if (ugNote) ugNote.innerHTML = lang === 'is'
+          ? 'Þú hefur notað alla 5 ókeypis lestrana þína í þessum mánuði.<br><b>Uppfærðu til Standard</b> fyrir ótakmarkaða lestrana — eða bíddu til næsta mánaðar.'
+          : 'You have used all 5 free readings for this month.<br><b>Upgrade to Standard</b> for unlimited readings — or return when the new month begins.';
+        setText('upgrade-gate-btn', lang === 'is' ? 'UPPFÆRA — BRÁÐLEGA' : 'UPGRADE — COMING SOON');
+        upgradeGate.style.display = 'block';
+        content.style.display     = 'none';
+      }
+    }
   } else {
-    label.style.display = 'none';
+    // ── Anonymous ──
+    label.style.display      = 'none';
+    freeBanner.style.display = 'none';
+    upgradeGate.style.display = 'none';
     btn.textContent = lang === 'is' ? 'SKRÁ INN' : 'SIGN IN';
     btn.classList.add('signin');
     const remaining = Math.max(0, FREE_TRIAL_LIMIT - getTrialCount());
@@ -669,6 +744,8 @@ function updateUIText() {
   setText('audio-player-lbl', t('voice_player_lbl'));
   const vBtn = document.getElementById('btn-generate-voice');
   if (vBtn && !vBtn.disabled) vBtn.textContent = t('voice_btn');
+  // Free user banner (re-render if logged in)
+  if (currentUser) updateAuthUI();
   // Trial banner
   setText('trial-text', lang === 'is' ? 'Þú ert að kanna sem gestur.' : 'You are exploring as a guest.');
   const remaining = Math.max(0, FREE_TRIAL_LIMIT - getTrialCount());
@@ -839,8 +916,13 @@ async function _generateReading() {
   const deep  = split[1]?.trim() || '';
   readerTexts[lang] = { short, deep };
 
-  // Count trial for anonymous users (after reading is actually generated)
-  if (!currentUser) { incTrialCount(); updateAuthUI(); }
+  // Count reading — anonymous trial or logged-in free tier
+  if (!currentUser) {
+    incTrialCount();
+  } else {
+    incFreeMonthCount(currentUser.id);
+  }
+  updateAuthUI();
 
   await stream('out-short', short);
   if (deep) await stream('out-deep', deep); else document.getElementById('out-deep').innerHTML = '';
@@ -862,6 +944,7 @@ async function _generateReading() {
 // ─── READER FLOW ─────────────────────────────────────────
 function startReading() {
   if (!currentUser && getTrialCount() >= FREE_TRIAL_LIMIT) { updateAuthUI(); return; }
+  if (currentUser && getFreeMonthCount(currentUser.id) >= FREE_REGISTERED_LIMIT) { updateAuthUI(); return; }
   const name = document.getElementById('r-name').value.trim();
   if (!name) { setSt('st-setup', t('st_name_req'), 'err'); return; }
   const d  = parseInt(document.getElementById('r-day').value);
@@ -900,6 +983,7 @@ function drawAnother() {
   document.getElementById('reader-output').style.display = 'none';
   document.getElementById('trial-end').style.display = 'none';
   if (!currentUser && getTrialCount() >= FREE_TRIAL_LIMIT) { updateAuthUI(); return; }
+  if (currentUser && getFreeMonthCount(currentUser.id) >= FREE_REGISTERED_LIMIT) { updateAuthUI(); return; }
   document.getElementById('reader-rune-card').style.display = 'block';
   document.querySelectorAll('#reader-grid .rb').forEach(b => b.classList.remove('on'));
   document.getElementById('reader-rune-info').textContent = '';
@@ -913,8 +997,10 @@ function resetReader() {
   document.getElementById('reader-rune-card').style.display = 'none';
   document.getElementById('trial-end').style.display = 'none';
   if (!currentUser && getTrialCount() >= FREE_TRIAL_LIMIT) {
-    updateAuthUI(); // output hidden → shows gate
-    return;
+    updateAuthUI(); return;
+  }
+  if (currentUser && getFreeMonthCount(currentUser.id) >= FREE_REGISTERED_LIMIT) {
+    updateAuthUI(); return;
   }
   document.getElementById('reader-setup').style.display = 'block';
   ['r-name','r-day','r-month','r-year','r-question'].forEach(id => {
