@@ -72,20 +72,23 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .hero-portrait-wrap{position:absolute;inset:0;}
 .hero-portrait-wrap img{
   display:block;width:100%;height:100%;
-  object-fit:cover;object-position:center top;
-  filter:brightness(0.85) sepia(0.12) contrast(1.06);
+  object-fit:contain;object-position:center bottom;
+  filter:brightness(0.9) sepia(0.08) contrast(1.04);
+  /* Radial vignette — fades white bg while keeping Rúnar fully visible */
+  mask-image:radial-gradient(ellipse 78% 90% at 48% 44%, black 35%, rgba(0,0,0,0.6) 58%, transparent 100%);
+  -webkit-mask-image:radial-gradient(ellipse 78% 90% at 48% 44%, black 35%, rgba(0,0,0,0.6) 58%, transparent 100%);
 }
-/* Right + bottom fade — blends white bg into dark bg */
+/* Right edge fade → blends into text column */
 .hero-portrait-wrap::after{
   content:'';position:absolute;inset:0;pointer-events:none;
-  background:
-    linear-gradient(to right, transparent 35%, var(--bg) 88%),
-    linear-gradient(to top,   var(--bg) 0%, transparent 22%);
+  background:linear-gradient(to right, transparent 55%, var(--bg) 100%);
 }
-/* Subtle top vignette */
+/* Top + bottom edge fade */
 .hero-portrait-wrap::before{
   content:'';position:absolute;inset:0;pointer-events:none;z-index:1;
-  background:linear-gradient(to bottom,rgba(10,12,18,0.35) 0%,transparent 18%);
+  background:
+    linear-gradient(to bottom, var(--bg) 0%, transparent 10%),
+    linear-gradient(to top,    var(--bg) 0%, transparent 8%);
 }
 
 /* Text column */
@@ -115,10 +118,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   .hero-inner{flex-direction:column;min-height:auto;}
   .hero-portrait-col{flex:none;height:240px;width:100%;position:relative;}
   .hero-portrait-wrap{position:absolute;inset:0;}
-  .hero-portrait-wrap img{object-position:center 10%;}
+  .hero-portrait-wrap img{object-position:center center;}
   .hero-portrait-wrap::after{
     background:
-      linear-gradient(to bottom, transparent 45%, var(--bg) 100%),
+      linear-gradient(to bottom, transparent 50%, var(--bg) 100%),
       linear-gradient(to right,  transparent 55%, var(--bg) 100%);
   }
   .hero-text-col{padding:20px 20px 44px;text-align:center;}
@@ -305,11 +308,11 @@ audio::-webkit-media-controls-panel{background:#0d1220;}
       </div>
     </div>
     <div class="hero-text-col">
-      <div class="hero-eyebrow">THE RUNE KEEPER</div>
+      <div class="hero-eyebrow" id="hero-eyebrow">THE RUNE KEEPER</div>
       <h1 class="hero-title" id="ui-title">Rúnar the Rune Keeper</h1>
       <p class="hero-sub" id="ui-sub">Draw a rune. Hear the old tongue speak.</p>
       <div class="hero-sep"></div>
-      <blockquote class="hero-quote">
+      <blockquote class="hero-quote" id="hero-quote">
         "The runes do not predict your fate.<br>
         They remind you of the path<br>you already walk."
       </blockquote>
@@ -586,9 +589,14 @@ function showToast(msg, dur = 3000) {
 
 function updateUIText() {
   document.documentElement.lang = lang;
-  setText('ui-brand', lang === 'is' ? 'AGNDOFA · RÚNAR' : 'AGNDOFA · RÚNAR');
-  setText('ui-title', lang === 'is' ? 'Rúnar Rúnavörðurinn' : 'Rúnar the Rune Keeper');
-  setText('ui-sub',   lang === 'is' ? 'Dragðu rúnu. Hlustaðu á gömlu tunguna.' : 'Draw a rune. Hear the old tongue speak.');
+  setText('ui-brand',     lang === 'is' ? 'AGNDOFA · RÚNAR' : 'AGNDOFA · RÚNAR');
+  setText('hero-eyebrow', lang === 'is' ? 'RÚNAVÖRÐURINN' : 'THE RUNE KEEPER');
+  setText('ui-title',     lang === 'is' ? 'Rúnar Rúnavörðurinn' : 'Rúnar the Rune Keeper');
+  setText('ui-sub',       lang === 'is' ? 'Dragðu rúnu. Hlustaðu á gömlu tunguna.' : 'Draw a rune. Hear the old tongue speak.');
+  const heroQuote = document.getElementById('hero-quote');
+  if (heroQuote) heroQuote.innerHTML = lang === 'is'
+    ? '"Rúnirnar spá ekki um örlög þín.<br>Þær minna þig á veginn<br>sem þú gengur þegar."'
+    : '"The runes do not predict your fate.<br>They remind you of the path<br>you already walk."';
   setText('reader-card1-lbl', t('reader_card1_lbl') || '✦ BEFORE WE BEGIN');
   setText('reader-note', t('reader_note') || 'Only your name is required. Everything else helps Rúnar speak more personally.');
   const nlbl = document.getElementById('name-lbl');
