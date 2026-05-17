@@ -5,10 +5,11 @@ AI-powered mystický průvodce runami pro značku Agndofa (Island). Rúnar má v
 
 ## Stack
 - **Frontend:** Single HTML soubor + vanilla JS/CSS, GitHub Pages
-- **Backend:** Supabase (`pmitxjvkeovijreepror`) — PostgreSQL + Edge Functions + Storage
+- **Backend:** Supabase (`pmitxjvkeovijreepror`) — PostgreSQL + Edge Functions + Storage — **region: eu-west-1 (Irsko)** ✓ GDPR
 - **AI:** Claude API přes Supabase Edge Function proxy (`claude-proxy`)
 - **Voice:** ElevenLabs API přes Supabase Edge Function proxy (`elevenlabs-proxy`)
 - **Repo:** `runar25.github.io/Runar-admin/v2/`
+- **E-commerce:** Shopify — `agndofa.is` (islandský trh, plánovaná integrace)
 
 ## Soubory v `/v2/`
 ```
@@ -26,6 +27,7 @@ runar-svgs.js          ← RUNE_SVGS (SVG glyfů)
 claude-proxy           ← forwards to Claude API
 elevenlabs-proxy       ← real-time TTS, vrací base64 → Blob URL
 elevenlabs-static      ← admin: generuje + ukládá MP3 do Storage
+shopify-webhook        ← (plánováno) tier upgrade po nákupu v Agndofa shopu
 ```
 Všechny deploynuty s `--no-verify-jwt`.
 Deploy z root repo: `supabase functions deploy <name> --project-ref pmitxjvkeovijreepror --no-verify-jwt`
@@ -38,7 +40,14 @@ runar_corrections      ← stylistické opravy slov
 runar_static_audio     ← statické audio, UNIQUE (rune_name, lang, version)
                           sloupce: id, rune_name, rune_glyph, lang, version(int),
                                    text, audio_url, ready, created_at, updated_at
-readings               ← (připravena, zatím nepoužita — pro vrstvu 2)
+user_profiles          ← profily přihlášených uživatelů (RLS ✓)
+                          sloupce: id (= auth.users.id), email, name, dob_d/m/y,
+                                   lang, life_rune, tier, shopify_customer_id,
+                                   created_at, updated_at
+readings               ← každé čtení uživatele (RLS ✓)
+                          sloupce: id, user_id, rune_name, rune_glyph, lang,
+                                   short_text, deep_text, area, seeking, question,
+                                   drawn_at
 ```
 
 ## Supabase Storage
@@ -64,10 +73,52 @@ runar-audio (PUBLIC)   ← static/en/fehu_1.mp3, static/en/fehu_2.mp3, ...
 - Admin schvalování zrušeno — admin generuje a ukládá přímo
 - base64 → Blob URL pro audio player (funguje ve všech prohlížečích)
 - Character tab odstraněn z UI — charakter se edituje v runar-character.js
+- Supabase RLS: každý uživatel vidí jen svá vlastní data (auth.uid() = user_id)
+- Shopify integrace: zákazník Agndofa shopu = uživatel Rúnara (propojení přes email + shopify_customer_id)
+
+## Bezpečnost & GDPR
+Island je člen EEA → platí plné GDPR. Zpracování osobních dat:
+
+| Data | Právní základ |
+|------|---------------|
+| Email | Smlouva (ToS při registraci) |
+| Jméno, DOB | Souhlas — volitelné pole, uživatel zadává sám |
+| Runové výklady | Smlouva — součást poskytované služby |
+
+**Co je hotovo:**
+- [x] Supabase region: eu-west-1 (Irsko) — data fyzicky v EU
+- [x] RLS na user_profiles a readings — uživatel vidí jen svá data
+- [x] ON DELETE CASCADE — smazání účtu smaže vše (právo na výmaz)
+- [x] Citlivé API klíče pouze v Edge Functions, nikdy ve frontendu
+
+**Co zbývá (před ostrým spuštěním):**
+- [ ] DPA (Data Processing Agreement) se Supabase — podepsat v Supabase Dashboard → Settings → Legal
+- [ ] Privacy Policy — EN + IS, odkaz v footeru readeru i na webu agndofa.is
+- [ ] Delete account funkce v readeru — tlačítko v profilu, volá `auth.admin.deleteUser()` přes Edge Function
+- [ ] Shopify: zákazníci Agndofa shopu jako uživatelé Rúnara (viz Shopify integrace níže)
+
+## Shopify integrace (plán — Vrstva 3)
+Cíl: jeden zákazník, jeden záznam. Platba proběhne v Agndofa Shopify shopu, tier se automaticky přidělí v Rúnarovi.
+
+**Flow:**
+```
+Zákazník koupí "Standard" na agndofa.is (Shopify)
+→ Shopify webhook orders/paid → Edge Function shopify-webhook
+→ Funkce ověří HMAC signature (bezpečnost)
+→ Najde user_profiles WHERE email = zákazníkův email
+→ Nastaví tier = 'standard', uloží shopify_customer_id
+→ Uživatel otevře Rúnar → má Standard tier
+```
+
+**Proč tohle funguje pro GDPR:**
+- Shopify řeší platební data a PCI DSS — ty se o to nestaráš
+- Souhlas s GDPR při nákupu v Shopify pokryje i Rúnara (musí být explicitně v ToS/Privacy Policy)
+- Data v Rúnarovi (výklady, profil) zůstávají v EU (Supabase Irsko)
+- Shopify Customer ID je jen referenční odkaz, ne duplikace citlivých dat
 
 ---
 
-## ROADMAP v0.5 (2026-05-17)
+## ROADMAP v0.6 (2026-05-17)
 
 ### VRSTVA 0 — ZÁKLAD ✅ HOTOVO
 - [x] Single HTML aplikace (runar-shrine.html + 5 JS modulů)
@@ -139,30 +190,35 @@ Tato vrstva vznikla organicky — solidní základ před spuštěním Vrstvy 2.
   - IS překlady pro banner i gate
   - Soft gate: nespustí se uprostřed čtení, respektuje outputVisible check
 
-### VRSTVA 2 — AUTH & UŽIVATELSKÝ ÚČET ← DALŠÍ PRIORITA
-- [x] Supabase Auth — magic link ✅
-- [x] Google OAuth ✅
-- [ ] **User profil tabulka** — `user_profiles` (id, email, name, dob_d, dob_m, dob_y, lang, life_rune, tier, created_at)
-- [ ] **Tier sloupec** — `free | credits | standard | premium` (default: `free`)
-- [ ] **readings tabulka** — ukládat každé čtení (user_id, rune_name, lang, short_text, deep_text, drawn_at)
-- [ ] **Přesun counteru do DB** — místo localStorage (přesné, multi-device, backend-enforceable)
-- [ ] **Anonymní migrace** — po registraci přenést trial výklady do readings tabulky
-- [ ] **Základní deník** — zobrazit posledních 5 výkladů pro free uživatele
+### VRSTVA 2 — AUTH & UŽIVATELSKÝ ÚČET ✅ HOTOVO
+- [x] Supabase Auth — magic link
+- [x] Google OAuth (shrine + reader, redirectTo GitHub Pages)
+- [x] `user_profiles` tabulka — RLS, upsert při přihlášení, shopify_customer_id připraveno
+- [x] `readings` tabulka — RLS, insert po každém čtení, index na user_id + drawn_at
+- [x] Monthly counter synchronizován z DB (syncMonthlyCount → localStorage seed)
+- [x] Deník — posledních 5 výkladů, skládací panel, IS překlady
+- [x] Runes Collection tab — grid 25 run, audio dostupnost, inline detail + přehrávač
+- [ ] **Delete account** — tlačítko v UI, Edge Function která zavolá auth.admin.deleteUser() (GDPR)
+- [ ] **Anonymní migrace** — po registraci přenést trial výklady do readings (nice-to-have)
 
-### VRSTVA 3 — MONETIZACE
-Tiers definovány v `runar-config.js` → `TIERS`, frontend gate hotov, backend nevynucuje.
+### VRSTVA 3 — MONETIZACE ← DALŠÍ PRIORITA
+Tiers definovány v `runar-config.js` → `TIERS`. Frontend gate hotov, backend zatím nevynucuje.
+Platba přes Shopify (agndofa.is) → webhook → Supabase Edge Function → tier update.
 
-| Tier | Výklady | Dynamický hlas | Deník |
-|------|---------|----------------|-------|
-| FREE TRIAL (anon) | 3 celkem | ❌ | ❌ |
-| FREE (účet) | 5/měsíc | ❌ | 5 posledních |
-| CREDITS | balíčky (nevyprší) | ✅ | unlimited |
-| STANDARD | neomezené | ✅ | unlimited |
-| PREMIUM | neomezené | ✅ | ✅ + audio uložení |
+| Tier | Výklady | Dynamický hlas | Deník | Runes Collection |
+|------|---------|----------------|-------|-----------------|
+| FREE TRIAL (anon) | 3 celkem | ❌ | ❌ | ✅ (jen poslech) |
+| FREE (účet) | 5/měsíc | ❌ | 5 posledních | ✅ |
+| CREDITS | balíčky | ✅ | unlimited | ✅ |
+| STANDARD | neomezené | ✅ | unlimited | ✅ |
+| PREMIUM | neomezené | ✅ | unlimited | ✅ + ceremonial |
 
-- [ ] Stripe integrace (one-time + recurring)
-- [ ] `user_entitlements` tabulka — vynucování na backendu (Edge Function)
-- [ ] Feature gates v UI (viditelné, s upgrade CTA — tlačítka připravena)
+- [ ] **Shopify webhook** Edge Function (`shopify-webhook`) — ověření HMAC, tier update
+- [ ] **`user_entitlements` tabulka** — nebo tier přímo v user_profiles (jednodušší)
+- [ ] **Backend enforcement** v claude-proxy a elevenlabs-proxy (ověřit tier, ne jen frontend)
+- [ ] **Feature gates v UI** — upgrade CTA pro zamčené funkce (tlačítka připravena jako disabled)
+- [ ] **Privacy Policy** EN + IS — odkaz v readeru + agndofa.is
+- [ ] **DPA se Supabase** — Settings → Legal v Supabase Dashboard
 
 ### VRSTVA 4 — CEREMONIAL MODE (Premium)
 - [ ] Oddělený system prompt
@@ -187,82 +243,8 @@ Tiers definovány v `runar-config.js` → `TIERS`, frontend gate hotov, backend 
 
 ### TECHNICKÝ DLUH
 - [ ] Real streaming přes SSE (místo fake setTimeout)
-- [ ] Progress tab: grid 25 run s EN/IS stavem (kolik verzí, chybí)
-- [ ] Rate limiting v Edge Functions
-- [ ] Cost monitoring per user
-- [ ] Audio player redesign (aktuální #2E4A70 gradient funguje, ale není ideální)
-- [ ] Frontend → Vite/React až řádků > 2000 (reader aktuálně ~1100)
-
----
-
-## PLÁN NA DALŠÍ DEN (2026-05-18)
-
-### Priorita 1 — Vrstva 2: User profil v Supabase (základ dat)
-
-Cíl: přihlášený uživatel má svůj profil v DB, čtení se ukládají, counter přechází z localStorage do DB.
-
-**Supabase SQL — spustit v SQL Editoru:**
-```sql
--- User profily
-CREATE TABLE user_profiles (
-  id          uuid PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
-  email       text,
-  name        text,
-  dob_d       int, dob_m int, dob_y int,
-  lang        text DEFAULT 'en',
-  life_rune   text,
-  tier        text DEFAULT 'free',
-  created_at  timestamptz DEFAULT now()
-);
-ALTER TABLE user_profiles ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Users see own profile" ON user_profiles FOR ALL USING (auth.uid() = id);
-
--- Výklady (readings)
-CREATE TABLE readings (
-  id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id     uuid REFERENCES auth.users(id) ON DELETE CASCADE,
-  rune_name   text NOT NULL,
-  rune_glyph  text,
-  lang        text NOT NULL,
-  short_text  text,
-  deep_text   text,
-  area        text,
-  seeking     text,
-  question    text,
-  drawn_at    timestamptz DEFAULT now()
-);
-ALTER TABLE readings ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Users see own readings" ON readings FOR ALL USING (auth.uid() = user_id);
-```
-
-**Frontend (runar-reader.html):**
-- [ ] Po přihlášení: `upsert` do `user_profiles` (jméno/lang si zapamatovat)
-- [ ] Po každém čtení: `insert` do `readings`
-- [ ] Monthly counter přečíst z DB místo localStorage: `count(*) WHERE user_id=X AND drawn_at >= start_of_month`
-- [ ] Deník: sekce "MOJE VÝKLADY" — posledních 5 karet (runa, datum, krátký text)
-
-### Priorita 2 — Progress tab v adminu (shrine)
-
-Cíl: rychlý přehled co chybí nahrát (bez nutnosti pamatovat si).
-
-**runar-shrine.html Progress tab:**
-- [ ] Grid 25 run (24 Elder Futhark + Blank) × 2 jazyky
-- [ ] Pro každou: počet EN verzí + počet IS verzí z `runar_static_audio`
-- [ ] Barva: zelená (≥1), žlutá (pouze 1 verze — křehké), červená (0)
-- [ ] Klik na runu → přepne na Teach tab + předvyplní runu
-
-### Priorita 3 — Vyčistit audio player (estetika)
-
-Uživatel označil current blue player za "hruzu". Rychlý redesign:
-- [ ] Přidat textové ovládání místo native `<audio>` (play/pause tlačítko, progress bar, čas) — plná kontrola nad stylem
-- [ ] Nebo: native `<audio>` s `appearance: none` + custom CSS overlay
-- [ ] Zachovat Rúnarovu modrou paletu, ale elegantnější provedení
-
-### Pořadí práce:
-1. **SQL migrace** v Supabase → otestovat RLS
-2. **user_profiles upsert** po přihlášení → zkontrolovat v Table Editor
-3. **readings insert** po každém čtení → ověřit záznamy
-4. **Monthly counter z DB** → nahradit localStorage logiku
-5. **Deník sekce** v readeru → jednoduché karty
-6. **Progress tab** v shrine
-7. **(Volitelné)** Audio player redesign
+- [ ] Rate limiting v Edge Functions (ochrana před abuse)
+- [ ] Cost monitoring per user (kolik Claude/EL tokenů kdo spotřeboval)
+- [ ] Audio player redesign (aktuální #2E4A70 gradient "hruza" — custom controls)
+- [ ] Frontend → Vite/React až řádků > 2000 (reader aktuálně ~1300)
+- [ ] Delete account UI + Edge Function (GDPR právo na výmaz)
