@@ -72,23 +72,23 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .hero-portrait-wrap{position:absolute;inset:0;}
 .hero-portrait-wrap img{
   display:block;width:100%;height:100%;
-  object-fit:contain;object-position:center bottom;
-  filter:brightness(0.9) sepia(0.08) contrast(1.04);
-  /* Radial vignette — fades white bg while keeping Rúnar fully visible */
-  mask-image:radial-gradient(ellipse 78% 90% at 48% 44%, black 35%, rgba(0,0,0,0.6) 58%, transparent 100%);
-  -webkit-mask-image:radial-gradient(ellipse 78% 90% at 48% 44%, black 35%, rgba(0,0,0,0.6) 58%, transparent 100%);
+  object-fit:cover;object-position:40% 12%;
+  filter:brightness(0.95) contrast(1.02);
+  /* Dark-bg vignette — soft edge fade, charakter zůstává plně viditelný */
+  mask-image:radial-gradient(ellipse 88% 82% at 42% 46%, black 42%, rgba(0,0,0,0.88) 62%, rgba(0,0,0,0.35) 82%, transparent 100%);
+  -webkit-mask-image:radial-gradient(ellipse 88% 82% at 42% 46%, black 42%, rgba(0,0,0,0.88) 62%, rgba(0,0,0,0.35) 82%, transparent 100%);
 }
-/* Right edge fade → blends into text column */
+/* Right edge fade → blends into text column (obraz má tmavé pravé pozadí, jemný přechod) */
 .hero-portrait-wrap::after{
   content:'';position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(to right, transparent 55%, var(--bg) 100%);
+  background:linear-gradient(to right, transparent 58%, rgba(10,12,18,0.55) 78%, var(--bg) 100%);
 }
 /* Top + bottom edge fade */
 .hero-portrait-wrap::before{
   content:'';position:absolute;inset:0;pointer-events:none;z-index:1;
   background:
-    linear-gradient(to bottom, var(--bg) 0%, transparent 10%),
-    linear-gradient(to top,    var(--bg) 0%, transparent 8%);
+    linear-gradient(to bottom, var(--bg) 0%, transparent 14%),
+    linear-gradient(to top,    var(--bg) 0%, transparent 10%);
 }
 
 /* Text column */
@@ -397,7 +397,7 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
   <div class="hero-inner">
     <div class="hero-portrait-col">
       <div class="hero-portrait-wrap">
-        <img src="runar-portrait.png" alt="Rúnar the Rune Keeper">
+        <img src="https://pmitxjvkeovijreepror.supabase.co/storage/v1/object/public/runar-images/Runar_portrait.png" alt="Rúnar the Rune Keeper">
       </div>
     </div>
     <div class="hero-text-col">
