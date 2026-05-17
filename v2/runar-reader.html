@@ -136,7 +136,56 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 }
 
 /* ── MAIN CONTENT ── */
-.app{position:relative;z-index:1;max-width:680px;width:100%;margin:0 auto;padding:40px 16px 80px;}
+.app{position:relative;z-index:1;max-width:680px;width:100%;margin:0 auto;padding:24px 16px 80px;}
+
+/* ── APP TABS ── */
+.app-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:28px;}
+.app-tab{font-family:'Cinzel',serif;font-size:0.68em;letter-spacing:1.5px;color:var(--muted);padding:12px 22px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:transparent;white-space:nowrap;transition:all 0.2s;}
+.app-tab:hover{color:var(--white);}
+.app-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+/* ── COLLECTION ── */
+.coll-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:4px;}
+@media(max-width:480px){.coll-grid{grid-template-columns:repeat(4,1fr);}}
+.coll-cell{
+  aspect-ratio:1;background:#0d1220;border:1px solid var(--border);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;transition:all 0.18s;gap:2px;min-width:0;position:relative;
+}
+.coll-cell:hover{background:rgba(214,168,92,0.06);border-color:var(--gold);}
+.coll-cell.active{background:rgba(214,168,92,0.1);border-color:var(--gold);box-shadow:0 0 10px rgba(214,168,92,0.12);}
+.coll-cell.has-audio .coll-dots::before{background:var(--teal);}
+.coll-cell.partial-audio .coll-dots::before{background:var(--gold);}
+.coll-svg{width:64px;height:78px;display:block;}
+.coll-name{font-family:'Cinzel',serif;font-size:0.52em;letter-spacing:0.5px;color:var(--muted);margin-top:2px;}
+.coll-cell.active .coll-name{color:var(--gold);}
+.coll-dots{position:absolute;top:5px;right:6px;display:flex;gap:3px;}
+.coll-dot{width:5px;height:5px;border-radius:50%;background:var(--dim);}
+.coll-dot.en{background:var(--teal);}
+.coll-dot.is{background:var(--blue);}
+@media(max-width:480px){.coll-svg{width:44px;height:54px;}.coll-name{font-size:0.44em;}}
+
+/* Collection detail */
+.coll-detail{background:var(--card);border:1px solid var(--gold);margin-top:12px;padding:24px;animation:fadeUp 0.3s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.coll-detail-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;}
+.coll-detail-glyph{font-size:3.2em;line-height:1;color:var(--gold);opacity:0.8;}
+.coll-detail-names{flex:1;padding:0 18px;}
+.coll-detail-en{font-family:'Cinzel',serif;font-size:0.9em;letter-spacing:2px;color:var(--white);margin-bottom:3px;}
+.coll-detail-is{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.5px;color:var(--muted);}
+.coll-detail-close{background:none;border:none;color:var(--dim);font-size:1.1em;cursor:pointer;padding:4px;}
+.coll-detail-close:hover{color:var(--white);}
+.coll-detail-kw{font-size:0.9em;font-style:italic;color:var(--muted);line-height:1.7;margin-bottom:8px;}
+.coll-detail-meta{font-family:'Cinzel',serif;font-size:0.55em;letter-spacing:1.5px;color:var(--dim);margin-bottom:18px;}
+.coll-detail-sep{width:32px;height:1px;background:linear-gradient(to right,var(--gold),transparent);margin:14px 0;}
+.coll-audio-lbl{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--gold);margin-bottom:10px;}
+.coll-audio-text{font-size:0.92em;font-style:italic;color:var(--muted);line-height:1.85;margin-bottom:14px;}
+.coll-no-audio{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:1.5px;color:var(--dim);padding:12px 0;}
+.coll-lang-tabs{display:flex;gap:0;margin-bottom:16px;}
+.coll-lang-tab{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;padding:6px 16px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all 0.18s;}
+.coll-lang-tab:first-child{border-right:none;}
+.coll-lang-tab.active{background:var(--gold);color:#000;border-color:var(--gold);}
+.coll-audio-player{margin-top:10px;}
 
 /* ── TRIAL BANNER ── */
 .trial-banner{background:var(--card);border:1px solid var(--border);padding:12px 18px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
@@ -368,6 +417,15 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
 <!-- ═══ APP ═══ -->
 <div class="app">
 
+  <!-- APP TABS -->
+  <div class="app-tabs">
+    <button class="app-tab active" id="atab-reading"    onclick="showAppTab('reading')"   id="atab-reading-btn">✦ READING</button>
+    <button class="app-tab"        id="atab-collection" onclick="showAppTab('collection')" id="atab-collection-btn">◈ RUNES COLLECTION</button>
+  </div>
+
+  <!-- ═ READING PANE ═ -->
+  <div id="apane-reading">
+
   <!-- TRIAL BANNER -->
   <div class="trial-banner" id="trial-banner" style="display:none;">
     <span class="trial-text" id="trial-text">You are exploring as a guest.</span>
@@ -502,6 +560,38 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
 
     <div class="status" id="st-reader"></div>
   </div><!-- /reader-content -->
+
+  </div><!-- /apane-reading -->
+
+  <!-- ═ COLLECTION PANE ═ -->
+  <div id="apane-collection" style="display:none;">
+
+    <div class="coll-grid" id="coll-grid"></div>
+
+    <!-- Inline detail (appears below grid when rune clicked) -->
+    <div class="coll-detail" id="coll-detail" style="display:none;">
+      <div class="coll-detail-header">
+        <div class="coll-detail-glyph" id="cd-glyph"></div>
+        <div class="coll-detail-names">
+          <div class="coll-detail-en" id="cd-name-en"></div>
+          <div class="coll-detail-is" id="cd-name-is"></div>
+        </div>
+        <button class="coll-detail-close" onclick="closeCollDetail()">✕</button>
+      </div>
+      <div class="coll-detail-kw"  id="cd-kw"></div>
+      <div class="coll-detail-meta" id="cd-meta"></div>
+      <div class="coll-detail-sep"></div>
+      <!-- Lang selector for audio -->
+      <div class="coll-lang-tabs">
+        <button class="coll-lang-tab active" id="cdlang-en" onclick="loadCollAudio('en')">EN</button>
+        <button class="coll-lang-tab"        id="cdlang-is" onclick="loadCollAudio('is')">IS</button>
+      </div>
+      <div class="coll-audio-lbl" id="cd-audio-lbl">♪ RÚNAR'S TEACHING</div>
+      <div class="coll-audio-text" id="cd-audio-text"></div>
+      <div class="coll-audio-player" id="cd-audio-player"></div>
+    </div>
+
+  </div><!-- /apane-collection -->
 
 </div><!-- /app -->
 
@@ -779,6 +869,11 @@ function setLang(l) {
   }
   lang = l; applyLangToggle(l); updateUIText(); buildPills();
   if (document.getElementById('reader-rune-card').style.display !== 'none') buildGrid();
+  // Refresh collection if open
+  if (activeAppTab === 'collection') {
+    loadCollection();
+    if (activeCollRune) loadCollAudio(l);
+  }
 }
 
 function applyLangToggle(l) {
@@ -847,6 +942,8 @@ function showToast(msg, dur = 3000) {
 function updateUIText() {
   document.documentElement.lang = lang;
   setText('ui-brand',     lang === 'is' ? 'AGNDOFA · RÚNAR' : 'AGNDOFA · RÚNAR');
+  setText('atab-reading',    lang === 'is' ? '✦ LESTUR' : '✦ READING');
+  setText('atab-collection', lang === 'is' ? '◈ SAFN RÚNA' : '◈ RUNES COLLECTION');
   setText('hero-eyebrow', lang === 'is' ? 'RÚNAVÖRÐURINN' : 'THE RUNE KEEPER');
   setText('ui-title',     lang === 'is' ? 'Rúnar Rúnavörðurinn' : 'Rúnar the Rune Keeper');
   setText('ui-sub',       lang === 'is' ? 'Dragðu rúnu. Hlustaðu á gömlu tunguna.' : 'Draw a rune. Hear the old tongue speak.');
@@ -903,6 +1000,142 @@ function updateUIText() {
     : 'You have walked with Rúnar three times. <b>Create a free account</b> to continue your path — five readings each month, no payment needed.';
   setText('trial-end-btn', lang === 'is' ? 'STOFNA REIKNING' : 'CREATE FREE ACCOUNT');
   buildPills();
+}
+
+// ─── APP TABS ────────────────────────────────────────────
+let activeAppTab = 'reading';
+
+function showAppTab(tab) {
+  activeAppTab = tab;
+  document.getElementById('apane-reading').style.display    = tab === 'reading'    ? 'block' : 'none';
+  document.getElementById('apane-collection').style.display = tab === 'collection' ? 'block' : 'none';
+  document.getElementById('atab-reading').classList.toggle('active',    tab === 'reading');
+  document.getElementById('atab-collection').classList.toggle('active', tab === 'collection');
+  if (tab === 'collection') {
+    // Hero hides when browsing collection (no need for it there)
+    document.getElementById('reader-hero').classList.add('hidden');
+    loadCollection();
+  } else {
+    // Restore hero only if no reading is in progress
+    const inReading = document.getElementById('reader-output')?.style.display !== 'none'
+                   || document.getElementById('reader-rune-card')?.style.display !== 'none';
+    if (!inReading) document.getElementById('reader-hero').classList.remove('hidden');
+  }
+}
+
+// ─── COLLECTION ──────────────────────────────────────────
+let collAudioMap  = {};   // { runeName: { en: [rows], is: [rows] } }
+let activeCollRune = null;
+
+async function loadCollection() {
+  const grid = document.getElementById('coll-grid');
+  if (!grid) return;
+
+  // Fetch audio availability
+  const { data } = await sb.from('runar_static_audio')
+    .select('rune_name, lang, version, text, audio_url, ready')
+    .eq('ready', true)
+    .order('version');
+
+  collAudioMap = {};
+  RUNES.forEach(r => { collAudioMap[r.n] = { en: [], is: [] }; });
+  (data || []).forEach(row => {
+    if (collAudioMap[row.rune_name]?.[row.lang]) collAudioMap[row.rune_name][row.lang].push(row);
+  });
+
+  grid.innerHTML = '';
+  RUNES.forEach(r => {
+    const enRows = collAudioMap[r.n]?.en || [];
+    const isRows = collAudioMap[r.n]?.is || [];
+    const hasEn  = enRows.length > 0;
+    const hasIs  = isRows.length > 0;
+
+    const cell = document.createElement('button');
+    cell.className = 'coll-cell' + (hasEn && hasIs ? ' has-audio' : hasEn || hasIs ? ' partial-audio' : '');
+    if (activeCollRune?.n === r.n) cell.classList.add('active');
+
+    const sd = typeof RUNE_SVGS !== 'undefined' ? RUNE_SVGS[r.svg] : null;
+    const svgHtml = sd
+      ? `<svg class="coll-svg" viewBox="${sd.vb}" fill="none" xmlns="http://www.w3.org/2000/svg">${sd.paths}</svg>`
+      : `<span style="font-size:2em;color:var(--gold);">${r.g}</span>`;
+
+    cell.innerHTML = `
+      ${svgHtml}
+      <span class="coll-name">${rn(r)}</span>
+      <span class="coll-dots">
+        <span class="coll-dot${hasEn ? ' en' : ''}" title="EN"></span>
+        <span class="coll-dot${hasIs ? ' is' : ''}" title="IS"></span>
+      </span>`;
+
+    cell.dataset.rune = r.n;
+    cell.onclick = () => openCollDetail(r, cell);
+    grid.appendChild(cell);
+  });
+
+  // Re-open detail if a rune was already selected
+  if (activeCollRune) {
+    const activeCell = grid.querySelector(`[data-rune="${activeCollRune.n}"]`);
+    if (activeCell) openCollDetail(activeCollRune, activeCell, true);
+  }
+}
+
+function openCollDetail(r, cell, skipScroll) {
+  activeCollRune = r;
+  document.querySelectorAll('.coll-cell').forEach(c => c.classList.remove('active'));
+  cell.classList.add('active');
+
+  // Fill static info
+  document.getElementById('cd-glyph').textContent    = r.g;
+  document.getElementById('cd-name-en').textContent  = r.n;
+  document.getElementById('cd-name-is').textContent  = r.is_n || '';
+  document.getElementById('cd-kw').textContent        = lang === 'is' && r.k_is ? r.k_is : r.k;
+  const metaParts = [];
+  if (r.world)    metaParts.push(r.world);
+  if (r.elements) metaParts.push(r.elements.join(' · '));
+  document.getElementById('cd-meta').textContent = metaParts.join('  ·  ');
+
+  // Show detail
+  const det = document.getElementById('coll-detail');
+  det.style.display = 'block';
+
+  // Load audio for current lang
+  loadCollAudio(lang);
+
+  if (!skipScroll) det.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function closeCollDetail() {
+  document.getElementById('coll-detail').style.display = 'none';
+  document.querySelectorAll('.coll-cell').forEach(c => c.classList.remove('active'));
+  activeCollRune = null;
+}
+
+function loadCollAudio(l) {
+  if (!activeCollRune) return;
+
+  // Update lang tab UI
+  document.getElementById('cdlang-en').classList.toggle('active', l === 'en');
+  document.getElementById('cdlang-is').classList.toggle('active', l === 'is');
+
+  const rows = collAudioMap[activeCollRune.n]?.[l] || [];
+  const textEl   = document.getElementById('cd-audio-text');
+  const playerEl = document.getElementById('cd-audio-player');
+  const lblEl    = document.getElementById('cd-audio-lbl');
+
+  if (lblEl) lblEl.textContent = l === 'is' ? '♪ RÚNAR KENNIR' : '♪ RÚNAR\'S TEACHING';
+
+  if (rows.length === 0) {
+    textEl.textContent  = '';
+    playerEl.innerHTML  = `<div class="coll-no-audio">${l === 'is' ? 'Engin hljóðupptaka til.' : 'No recording available yet.'}</div>`;
+    return;
+  }
+
+  // Pick random version
+  const pick = rows[Math.floor(Math.random() * rows.length)];
+  textEl.textContent = pick.text || '';
+  playerEl.innerHTML = pick.audio_url
+    ? `<audio controls preload="none" controlsList="nodownload" style="width:100%;margin-top:4px;" src="${pick.audio_url}"></audio>`
+    : `<div class="coll-no-audio">Audio file missing.</div>`;
 }
 
 // ─── RUNE GRID ───────────────────────────────────────────
