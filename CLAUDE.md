@@ -203,22 +203,59 @@ Tato vrstva vznikla organicky — solidní základ před spuštěním Vrstvy 2.
 
 ### VRSTVA 3 — MONETIZACE ← DALŠÍ PRIORITA
 Tiers definovány v `runar-config.js` → `TIERS`. Frontend gate hotov, backend zatím nevynucuje.
-Platba přes Shopify (agndofa.is) → webhook → Supabase Edge Function → tier update.
+**Platba výhradně přes Shopify** (agndofa.is) — žádný Stripe. Webhook → Supabase Edge Function → credit/tier update.
+
+#### Platební model — Credits přes fyzickou kartu
+Klíčové rozhodnutí (2026-05-18): **credits se kupují jako fyzický produkt v Agndofa shopu.**
+- Fyzická karta Rúnara = gift card + reklamní karta + součást Agndofa brandu (kakao, runové sady)
+- Karta má unikátní kód (vytištěný nebo QR)
+- Zákazník koupí kartu v obchodě nebo ji dostane jako dárek / součást produktu
+- Zadá kód v Rúnar appce → dostane credits na účet
+- Credits nevyprší, fungují across devices
+
+**Flow fyzická karta → credits:**
+```
+Admin vygeneruje batch kódů v Supabase (gift_codes tabulka)
+→ Kódy se vytisknou na fyzické kartičky Rúnara
+→ Zákazník koupí kartu (v Agndofa shopu nebo fyzicky s kakaem)
+→ Zákazník zadá kód v Rúnar app → Edge Function ověří kód
+→ Kód označen jako použitý, user dostane N credits
+→ Credits se odečítají za každé čtení (nebo jiný premium úkon)
+```
+
+**Shopify webhook (pro digitální nákup přímo v shopu):**
+```
+Zákazník koupí credits online na agndofa.is
+→ Shopify webhook orders/paid → shopify-webhook Edge Function
+→ Ověření HMAC podpisu → update user_profiles.credits_balance
+```
 
 | Tier | Výklady | Dynamický hlas | Deník | Runes Collection |
 |------|---------|----------------|-------|-----------------|
 | FREE TRIAL (anon) | 3 celkem | ❌ | ❌ | ✅ (jen poslech) |
 | FREE (účet) | 5/měsíc | ❌ | 5 posledních | ✅ |
-| CREDITS | balíčky | ✅ | unlimited | ✅ |
+| CREDITS | 1 credit = 1 čtení | ✅ | unlimited | ✅ |
 | STANDARD | neomezené | ✅ | unlimited | ✅ |
 | PREMIUM | neomezené | ✅ | unlimited | ✅ + ceremonial |
 
-- [ ] **Shopify webhook** Edge Function (`shopify-webhook`) — ověření HMAC, tier update
-- [ ] **`user_entitlements` tabulka** — nebo tier přímo v user_profiles (jednodušší)
-- [ ] **Backend enforcement** v claude-proxy a elevenlabs-proxy (ověřit tier, ne jen frontend)
-- [ ] **Feature gates v UI** — upgrade CTA pro zamčené funkce (tlačítka připravena jako disabled)
+**Co postavit:**
+- [ ] **`gift_codes` tabulka** — `code` (unique), `credits`, `used_by`, `used_at`, `created_at`
+- [ ] **`credits_balance` sloupec** v user_profiles (nebo samostatná tabulka transakcí)
+- [ ] **`redeem-code` Edge Function** — ověří kód, přidá credits, označí jako použitý
+- [ ] **Redemption UI** v readeru — pole pro zadání kódu, potvrzení
+- [ ] **Admin: batch generátor kódů** v shrine (kolik kódů × kolik creditů)
+- [ ] **Shopify webhook** Edge Function (`shopify-webhook`) — pro online nákup
+- [ ] **Backend enforcement** v claude-proxy — ověřit credits/tier před každým čtením
+- [ ] **Feature gates v UI** — upgrade CTA pro zamčené funkce
 - [ ] **Privacy Policy** EN + IS — odkaz v readeru + agndofa.is
 - [ ] **DPA se Supabase** — Settings → Legal v Supabase Dashboard
+
+#### Fyzická karta — design brief (zatím jen myšlenky)
+- Formát: vizitka nebo menší (snadno do peněženky / přibalení k kakau)
+- Přední strana: Rúnar vizuál, Agndofa brand, runa
+- Zadní strana: kód (nebo QR → deeplink do app s předvyplněným kódem)
+- Použití: dárkové balení kakaa, runové sady, standalone gift card v shopu
+- Idea: různé runy na různých kartách (Fehu = bohatství, Berkana = nový začátek...)
 
 ### VRSTVA 4 — CEREMONIAL MODE (Premium)
 - [ ] Oddělený system prompt
@@ -237,9 +274,14 @@ Platba přes Shopify (agndofa.is) → webhook → Supabase Edge Function → tie
 - [ ] Konverzační follow-up
 
 ### VRSTVA 7 — FYZICKÝ EKOSYSTÉM
-- [ ] QR kód na runové sadě → unlock v aplikaci
-- [ ] NFC tag → spustí ceremonial mode
-- [ ] Fyzický produkt vázaný na user účet
+Fyzické produkty Agndofa jako vstupní bod do Rúnara.
+
+- [ ] **Rúnar gift card** — fyzická kartička s kódem (viz Vrstva 3 design brief)
+- [ ] **QR deeplink** na kartě → otevře reader s předvyplněným redemption kódem
+- [ ] **Runové sady** — každá sada obsahuje Rúnar kartu s credits
+- [ ] **Kakao ceremonial kit** — Rúnar karta přibalená k kakau (cross-sell)
+- [ ] NFC tag → spustí ceremonial mode (budoucnost)
+- [ ] Fyzický produkt vázaný na user účet (prémiový obsah při nákupu)
 
 ### TECHNICKÝ DLUH
 - [ ] Real streaming přes SSE (místo fake setTimeout)
