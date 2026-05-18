@@ -295,6 +295,7 @@ audio{flex:1;height:36px;filter:invert(0.85) sepia(0.3) hue-rotate(180deg);}
   <button class="tab"     id="tab-progress-btn" onclick="showTab('progress')">PROGRESS</button>
   <button class="tab"     id="tab-reader-btn"   onclick="showTab('reader')">RÚNAR THE RUNE KEEPER</button>
   <button class="tab"     id="tab-correct-btn"  onclick="showTab('correct')">WORD CORRECTIONS</button>
+  <button class="tab"     id="tab-codes-btn"    onclick="showTab('codes')">ᚠ GIFT CODES</button>
   <a class="tab" href="runar-yggdrasil.html" style="text-decoration:none;">🌳 YGGDRASIL</a>
   <a class="tab" href="runar-reader.html" style="text-decoration:none;">👁 USER VIEW</a>
 </div>
@@ -419,6 +420,52 @@ audio{flex:1;height:36px;filter:invert(0.85) sepia(0.3) hue-rotate(180deg);}
   </div>
   <div class="status" id="st-reader"></div>
   </div><!-- /reader-content -->
+</div>
+
+<!-- ═══ GIFT CODES ═══ -->
+<div class="pane" id="pane-codes">
+  <!-- Generator -->
+  <div class="card">
+    <div class="card-lbl">ᚠ GENERATE GIFT CODES</div>
+    <p class="note">Generate a batch of unique codes for physical Rúnar cards. Each code gives the holder N credits when redeemed.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px;">
+      <div>
+        <label class="flbl">RUNE (themed code prefix)</label>
+        <select id="gc-rune" style="width:100%;background:#080e18;border:1px solid var(--border);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1em;padding:9px 10px;outline:none;">
+          <option value="RUNAR">RUNAR (generic)</option>
+        </select>
+      </div>
+      <div>
+        <label class="flbl">CREDITS PER CODE</label>
+        <input class="txt" id="gc-credits" type="number" value="10" min="1" max="999" style="width:100%;">
+      </div>
+      <div>
+        <label class="flbl">NUMBER OF CODES</label>
+        <input class="txt" id="gc-count" type="number" value="50" min="1" max="500" style="width:100%;">
+      </div>
+      <div>
+        <label class="flbl">BATCH ID <span class="opt">(for tracking)</span></label>
+        <input class="txt" id="gc-batch" type="text" placeholder="e.g. kakao-launch-2026-09">
+      </div>
+    </div>
+    <button class="btn" id="gc-generate-btn" onclick="generateCodes()" style="margin-top:16px;width:100%;">GENERATE & SAVE CODES</button>
+    <div class="status" id="st-gc"></div>
+  </div>
+  <!-- Results / CSV -->
+  <div class="card" id="gc-result-card" style="display:none;">
+    <div class="card-lbl">✓ CODES GENERATED</div>
+    <p class="note" id="gc-result-note"></p>
+    <button class="btn" onclick="downloadCSV()" style="width:100%;margin-bottom:8px;">⬇ DOWNLOAD CSV (for Sigrun)</button>
+    <div style="max-height:260px;overflow-y:auto;border:1px solid var(--border);padding:12px;background:#080e18;">
+      <pre id="gc-code-list" style="font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1px;color:var(--teal);line-height:1.9;margin:0;white-space:pre-wrap;word-break:break-all;"></pre>
+    </div>
+  </div>
+  <!-- Batch overview -->
+  <div class="card">
+    <div class="card-lbl">📊 EXISTING BATCHES</div>
+    <button class="btn" onclick="loadBatches()" style="width:100%;margin-bottom:12px;">REFRESH</button>
+    <div id="gc-batches" style="font-size:0.9em;color:var(--muted);"></div>
+  </div>
 </div>
 
 <!-- ═══ CORRECTIONS ═══ -->
@@ -743,14 +790,131 @@ function updateUIText() {
 
 // ─── TABS ───────────────────────────────────────────────
 function showTab(name) {
-  ['teach','progress','reader','correct'].forEach(n => {
-    document.getElementById('pane-' + n).classList.remove('on');
-    document.getElementById('tab-' + n + '-btn').classList.remove('on');
+  ['teach','progress','reader','correct','codes'].forEach(n => {
+    document.getElementById('pane-' + n)?.classList.remove('on');
+    document.getElementById('tab-' + n + '-btn')?.classList.remove('on');
   });
-  document.getElementById('pane-' + name).classList.add('on');
-  document.getElementById('tab-' + name + '-btn').classList.add('on');
+  document.getElementById('pane-' + name)?.classList.add('on');
+  document.getElementById('tab-' + name + '-btn')?.classList.add('on');
   if (name === 'correct') loadCorrections();
   if (name === 'progress') loadProgress();
+  if (name === 'codes')    initCodesTab();
+}
+
+// ─── GIFT CODES ─────────────────────────────────────────
+let generatedCodes = []; // last batch for CSV download
+
+function initCodesTab() {
+  // Populate rune selector
+  const sel = document.getElementById('gc-rune');
+  if (sel && sel.options.length === 1) {
+    RUNES.forEach(r => {
+      if (r.n === 'Blank') return;
+      const o = document.createElement('option');
+      o.value = r.n.toUpperCase(); o.textContent = `${r.g}  ${r.n.toUpperCase()}`;
+      sel.appendChild(o);
+    });
+  }
+  loadBatches();
+}
+
+// Safe charset: no 0/O, no 1/I/l  (32 chars)
+const CODE_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+function randChars(n) {
+  return Array.from({ length: n }, () => CODE_CHARS[Math.floor(Math.random() * CODE_CHARS.length)]).join('');
+}
+function makeCode(prefix) {
+  return `${prefix}-${randChars(4)}-${randChars(4)}`;
+}
+
+async function generateCodes() {
+  const prefix  = document.getElementById('gc-rune').value    || 'RUNAR';
+  const credits = parseInt(document.getElementById('gc-credits').value) || 10;
+  const count   = Math.min(parseInt(document.getElementById('gc-count').value) || 50, 500);
+  const batchId = document.getElementById('gc-batch').value.trim() || `batch-${Date.now()}`;
+
+  const btn = document.getElementById('gc-generate-btn');
+  btn.disabled = true;
+  setSt('st-gc', `Generating ${count} codes…`);
+
+  // Build unique codes
+  const rows = [];
+  const seen = new Set();
+  let attempts = 0;
+  while (rows.length < count && attempts < count * 10) {
+    attempts++;
+    const code = makeCode(prefix);
+    if (!seen.has(code)) { seen.add(code); rows.push({ code, credits, rune_name: prefix === 'RUNAR' ? null : prefix, batch_id: batchId }); }
+  }
+
+  // Insert into Supabase in chunks of 100
+  let inserted = 0;
+  for (let i = 0; i < rows.length; i += 100) {
+    const chunk = rows.slice(i, i + 100);
+    const { error } = await sb.from('gift_codes').insert(chunk);
+    if (error) { setSt('st-gc', 'DB error: ' + error.message, 'err'); btn.disabled = false; return; }
+    inserted += chunk.length;
+  }
+
+  generatedCodes = rows;
+  setSt('st-gc', `✓ ${inserted} codes saved.`, 'ok');
+  btn.disabled = false;
+
+  // Show results
+  const card = document.getElementById('gc-result-card');
+  card.style.display = 'block';
+  document.getElementById('gc-result-note').textContent =
+    `${inserted} codes · ${credits} credits each · batch: ${batchId}`;
+  document.getElementById('gc-code-list').textContent = rows.map(r => r.code).join('\n');
+  loadBatches();
+}
+
+function downloadCSV() {
+  if (!generatedCodes.length) return;
+  const header = 'code,credits,rune_name,batch_id';
+  const lines  = generatedCodes.map(r =>
+    `${r.code},${r.credits},${r.rune_name || ''},${r.batch_id || ''}`
+  );
+  const csv  = [header, ...lines].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = `runar-codes-${generatedCodes[0].batch_id || 'batch'}.csv`;
+  a.click(); URL.revokeObjectURL(url);
+}
+
+async function loadBatches() {
+  const el = document.getElementById('gc-batches'); if (!el) return;
+  el.textContent = 'Loading…';
+  const { data, error } = await sb.from('gift_codes')
+    .select('batch_id, credits, used_by, created_at')
+    .order('created_at', { ascending: false });
+  if (error) { el.textContent = 'Error: ' + error.message; return; }
+
+  // Group by batch
+  const batches = {};
+  (data || []).forEach(row => {
+    const b = row.batch_id || '(no batch)';
+    if (!batches[b]) batches[b] = { total: 0, used: 0, credits: row.credits, date: row.created_at };
+    batches[b].total++;
+    if (row.used_by) batches[b].used++;
+  });
+
+  if (!Object.keys(batches).length) { el.textContent = 'No codes yet.'; return; }
+
+  el.innerHTML = Object.entries(batches).map(([name, b]) => {
+    const pct = Math.round(b.used / b.total * 100);
+    const date = new Date(b.date).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+    return `<div style="padding:10px 0;border-bottom:1px solid var(--border);">
+      <div style="font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:1.5px;color:var(--gold);margin-bottom:4px;">${name}</div>
+      <div style="font-size:0.85em;color:var(--muted);">
+        ${b.used}/${b.total} used (${pct}%) · ${b.credits} credits each · ${date}
+      </div>
+      <div style="height:3px;background:var(--border);margin-top:6px;border-radius:2px;">
+        <div style="height:100%;width:${pct}%;background:var(--teal);border-radius:2px;transition:width 0.4s;"></div>
+      </div>
+    </div>`;
+  }).join('');
 }
 
 // ─── RUNE GRID ──────────────────────────────────────────
