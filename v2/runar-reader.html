@@ -321,7 +321,7 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
 .credits-balance{font-family:'Cinzel',serif;font-size:0.68em;letter-spacing:2px;color:var(--gold);white-space:nowrap;}
 .credits-balance.low{color:#e09060;}
 .credits-balance.empty{color:#e07070;}
-.credits-redeem-link{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:1.5px;color:var(--dim);cursor:pointer;text-decoration:underline;text-decoration-color:rgba(58,74,96,0.6);white-space:nowrap;flex-shrink:0;}
+.credits-redeem-link{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:1.5px;color:rgba(214,168,92,0.6);cursor:pointer;text-decoration:underline;text-decoration-color:rgba(214,168,92,0.3);white-space:nowrap;flex-shrink:0;}
 .credits-redeem-link:hover{color:var(--gold);}
 
 /* ── REDEEM SECTION ── */
@@ -449,11 +449,11 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
 
   <!-- CREDITS BANNER (credits tier) -->
   <div class="credits-banner" id="credits-banner" style="display:none;">
-    <span class="trial-text" id="credits-text">Your credits</span>
     <div style="display:flex;align-items:center;gap:14px;">
-      <span class="credits-balance" id="credits-balance-lbl"></span>
+      <span class="trial-text" id="credits-text">Your readings</span>
       <span class="credits-redeem-link" onclick="toggleRedeem()" id="redeem-link">+ GIFT CARD</span>
     </div>
+    <span class="credits-balance" id="credits-balance-lbl"></span>
   </div>
 
   <!-- REDEEM SECTION (collapsible) -->
@@ -816,9 +816,9 @@ function updateAuthUI() {
     if (userTier === 'credits') {
       freeBanner.style.display   = 'none';
       creditsBanner.style.display = 'flex';
-      document.getElementById('credits-text').textContent = lang === 'is' ? 'Rúnakredit þínir' : 'Your credits';
+      document.getElementById('credits-text').textContent = lang === 'is' ? 'Lestur þínir' : 'Your readings';
       const balLbl = document.getElementById('credits-balance-lbl');
-      balLbl.textContent = lang === 'is' ? `${userCredits} kredit` : `${userCredits} credit${userCredits !== 1 ? 's' : ''}`;
+      balLbl.textContent = lang === 'is' ? `${userCredits} lestur` : `${userCredits} reading${userCredits !== 1 ? 's' : ''}`;
       balLbl.className   = 'credits-balance' + (userCredits === 0 ? ' empty' : userCredits <= 3 ? ' low' : '');
       document.getElementById('redeem-link').textContent = lang === 'is' ? '+ GJAFAKORT' : '+ GIFT CARD';
       if (userCredits <= 0) {
