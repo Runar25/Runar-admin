@@ -83,7 +83,7 @@ const TIERS = {
     languages:      ['en'],
   },
   free: {
-    label:          'Free',
+    label:          'The Curious',
     readings:       5,          // per month, requires account
     voice_dynamic:  false,
     voice_static:   true,
@@ -92,7 +92,7 @@ const TIERS = {
     languages:      ['en', 'is'],
   },
   credits: {
-    label:          'Credits',
+    label:          'Rune Seeker',
     readings:       null,       // consumed per reading (never expire)
     voice_dynamic:  true,
     voice_static:   true,

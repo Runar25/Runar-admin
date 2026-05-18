@@ -473,13 +473,13 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
     <span class="trial-count" id="trial-count"></span>
   </div>
 
-  <!-- FREE USER BANNER (logged-in, free tier) -->
+  <!-- FREE USER BANNER (logged-in, free tier / The Curious) -->
   <div class="free-user-banner" id="free-user-banner" style="display:none;">
-    <span class="trial-text" id="free-user-text">You are on the Free path.</span>
     <div style="display:flex;align-items:center;gap:14px;">
-      <span class="free-user-count" id="free-user-count"></span>
+      <span class="trial-text" id="free-user-text">The Curious</span>
       <span class="credits-redeem-link" onclick="toggleRedeem()" id="free-redeem-link">+ GIFT CARD</span>
     </div>
+    <span class="free-user-count" id="free-user-count"></span>
   </div>
 
   <!-- AUTH GATE (trial exhausted) -->
@@ -816,7 +816,7 @@ function updateAuthUI() {
     if (userTier === 'credits') {
       freeBanner.style.display   = 'none';
       creditsBanner.style.display = 'flex';
-      document.getElementById('credits-text').textContent = lang === 'is' ? 'Lestur þínir' : 'Your readings';
+      document.getElementById('credits-text').textContent = 'Rune Seeker';
       const balLbl = document.getElementById('credits-balance-lbl');
       balLbl.textContent = lang === 'is' ? `${userCredits} lestur` : `${userCredits} reading${userCredits !== 1 ? 's' : ''}`;
       balLbl.className   = 'credits-balance' + (userCredits === 0 ? ' empty' : userCredits <= 3 ? ' low' : '');
@@ -824,11 +824,11 @@ function updateAuthUI() {
       if (userCredits <= 0) {
         const outputVisible = document.getElementById('reader-output')?.style.display !== 'none';
         if (!outputVisible) {
-          setText('upgrade-gate-title', lang === 'is' ? 'KREDIT ÞÍNIR ERU BÚNIR' : 'YOUR CREDITS ARE USED UP');
+          setText('upgrade-gate-title', lang === 'is' ? 'LESTRAR ÞÍNIR ERU BÚNIR' : 'YOUR READINGS ARE USED UP');
           const ugNote = document.getElementById('upgrade-gate-note');
           if (ugNote) ugNote.innerHTML = lang === 'is'
-            ? 'Þú hefur notað alla kreditana þína.<br><b>Innleystu gjafakort</b> til að halda áfram — eða uppfærðu til Standard.'
-            : 'You have used all your credits.<br><b>Redeem a gift card</b> to continue — or upgrade to Standard for unlimited readings.';
+            ? 'Þú hefur notað alla lestrana þína.<br><b>Innleystu gjafakort</b> til að halda áfram — eða uppfærðu til Standard.'
+            : 'You have used all your readings.<br><b>Redeem a gift card</b> to continue — or upgrade to Standard for unlimited readings.';
           setText('upgrade-gate-btn', lang === 'is' ? 'UPPFÆRA — BRÁÐLEGA' : 'UPGRADE — COMING SOON');
           upgradeGate.style.display = 'block';
           content.style.display     = 'none';
@@ -855,8 +855,7 @@ function updateAuthUI() {
     const remaining = Math.max(0, FREE_REGISTERED_LIMIT - used);
     const countEl   = document.getElementById('free-user-count');
     freeBanner.style.display = 'flex';
-    document.getElementById('free-user-text').textContent = lang === 'is'
-      ? 'Þú ert á ókeypis leið.' : 'You are on the Free path.';
+    document.getElementById('free-user-text').textContent = 'The Curious';
     if (remaining > 0) {
       countEl.textContent = lang === 'is'
         ? `${remaining} af 5 lestrum eftir í mánuðinum`
