@@ -140,6 +140,39 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   .lang-btn{padding:6px 12px;}
 }
 
+/* ── HERO GREETING ── */
+.hero-greeting{font-size:1.08em;font-style:italic;color:var(--gold);opacity:0;margin-bottom:22px;transition:opacity 1.1s ease;line-height:1.6;}
+.hero-greeting.show{opacity:0.88;}
+
+/* ── NAME PROMPT MODAL ── */
+.name-overlay{position:fixed;inset:0;background:rgba(10,12,18,0.9);z-index:200;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
+.name-card{background:var(--card);border:1px solid rgba(214,168,92,0.3);padding:52px 56px;max-width:420px;width:90%;text-align:center;}
+.name-card-rune{font-size:3em;color:var(--gold);opacity:0.65;margin-bottom:20px;letter-spacing:0;}
+.name-card-title{font-family:'Cinzel',serif;font-size:0.68em;letter-spacing:3.5px;color:var(--gold);margin-bottom:16px;opacity:0.8;}
+.name-card-sub{font-size:1.05em;font-style:italic;color:var(--muted);margin-bottom:34px;line-height:1.8;}
+.name-card-input{width:100%;background:rgba(46,74,112,0.15);border:none;border-bottom:1px solid rgba(46,74,112,0.6);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.25em;padding:10px 4px;text-align:center;margin-bottom:28px;outline:none;transition:border-color 0.2s;}
+.name-card-input:focus{border-bottom-color:rgba(214,168,92,0.55);}
+.name-card-input::placeholder{color:var(--dim);}
+.name-card-btn{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2.5px;padding:13px 32px;background:transparent;border:1px solid rgba(214,168,92,0.4);color:var(--gold);cursor:pointer;transition:all 0.2s;display:block;width:100%;margin-bottom:14px;}
+.name-card-btn:hover{background:rgba(214,168,92,0.08);}
+.name-card-skip{font-size:0.8em;color:var(--dim);cursor:pointer;transition:color 0.2s;}
+.name-card-skip:hover{color:var(--muted);}
+
+/* ── TOPBAR DROPDOWN ── */
+.auth-user{cursor:pointer;position:relative;}
+.auth-user::after{content:' ▾';font-size:0.75em;opacity:0.5;}
+.auth-dropdown-wrap{position:relative;}
+.auth-dropdown{position:absolute;top:calc(100% + 10px);right:0;background:#13192a;border:1px solid rgba(46,74,112,0.55);min-width:230px;z-index:100;display:none;box-shadow:0 8px 32px rgba(0,0,0,0.45);}
+.auth-dropdown.open{display:block;}
+.dd-tier{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:2px;color:var(--gold);padding:15px 18px 10px;border-bottom:1px solid rgba(46,74,112,0.3);}
+.dd-email{font-size:0.78em;font-style:italic;color:var(--muted);padding:9px 18px 3px;}
+.dd-balance{font-family:'Cinzel',serif;font-size:0.56em;letter-spacing:1px;color:var(--teal);padding:3px 18px 12px;border-bottom:1px solid rgba(46,74,112,0.3);}
+.dd-item{display:block;width:100%;text-align:left;font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:1.5px;padding:11px 18px;background:none;border:none;color:var(--muted);cursor:pointer;transition:all 0.15s;}
+.dd-item:hover{color:var(--gold);background:rgba(214,168,92,0.05);}
+.dd-item.signout{color:rgba(180,100,100,0.65);border-top:1px solid rgba(46,74,112,0.3);}
+.dd-item.signout:hover{color:#e07070;background:rgba(200,80,80,0.05);}
+.dd-item.coming{opacity:0.38;pointer-events:none;}
+
 /* ── MAIN CONTENT ── */
 .app{position:relative;z-index:1;max-width:680px;width:100%;margin:0 auto;padding:24px 16px 80px;}
 
@@ -412,7 +445,17 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
       </div>
       <span id="topbar-greeting"></span>
       <div class="auth-badge">
-        <span class="auth-user" id="auth-user-label" style="display:none;"></span>
+        <div class="auth-dropdown-wrap" id="auth-dropdown-wrap">
+          <span class="auth-user" id="auth-user-label" style="display:none;" onclick="toggleDropdown()"></span>
+          <div class="auth-dropdown" id="auth-dropdown">
+            <div class="dd-tier" id="dd-tier">◈ Visitor</div>
+            <div class="dd-email" id="dd-email"></div>
+            <div class="dd-balance" id="dd-balance" style="display:none;"></div>
+            <button class="dd-item" id="dd-gift" onclick="toggleRedeem();closeDropdown()">+ GIFT CARD</button>
+            <button class="dd-item coming" id="dd-upgrade">UPGRADE → STANDARD</button>
+            <button class="dd-item signout" onclick="handleAuthBtn();closeDropdown()">SIGN OUT</button>
+          </div>
+        </div>
         <button class="auth-btn signin" id="auth-action-btn" onclick="handleAuthBtn()">SIGN IN</button>
       </div>
     </div>
@@ -431,6 +474,7 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
       <div class="hero-eyebrow" id="hero-eyebrow">THE RUNE KEEPER</div>
       <h1 class="hero-title" id="ui-title">Rúnar the Rune Keeper</h1>
       <p class="hero-sub" id="ui-sub">Draw a rune. Hear the old tongue speak.</p>
+      <p class="hero-greeting" id="hero-greeting"></p>
       <div class="hero-sep"></div>
       <blockquote class="hero-quote" id="hero-quote">
         "The runes do not predict your fate.<br>
@@ -660,6 +704,7 @@ let userTier       = 'free';    // 'free' | 'credits' | 'standard' | 'premium'
 let userCredits    = 0;         // credits_balance from user_profiles
 let readerUser     = {};
 let greetingShown  = false;     // show topbar greeting only once per session
+let userName       = '';        // display name from user_profiles.name
 let readerRune     = null;
 let readerTexts    = {};  // { en: {short,deep}, is: {short,deep} }
 let voiceGenerated = {};  // { en: bool, is: bool }
@@ -684,16 +729,20 @@ function incFreeMonthCount(userId) { localStorage.setItem(freeMonthKey(userId), 
 async function fetchUserProfile(userId) {
   try {
     const { data } = await sb.from('user_profiles')
-      .select('tier, credits_balance')
+      .select('tier, credits_balance, name')
       .eq('id', userId)
       .maybeSingle();
     if (data) {
       userTier    = data.tier            || 'free';
       userCredits = data.credits_balance || 0;
+      userName    = data.name            || '';
     }
   } catch(e) { console.warn('fetchUserProfile:', e.message); }
   updateAuthUI();
   showTopbarGreeting();
+  showHeroGreeting();
+  // Ask for name if not set yet (delay so UI settles first)
+  if (!userName) setTimeout(showNamePrompt, 1200);
 }
 
 async function upsertProfile() {
@@ -814,9 +863,8 @@ function updateAuthUI() {
   if (currentUser) {
     // ── Logged in ──
     label.style.display = 'block';
-    label.textContent   = currentUser.email.split('@')[0];
-    btn.textContent     = lang === 'is' ? 'SKRÁ ÚT' : 'SIGN OUT';
-    btn.classList.remove('signin');
+    label.textContent   = displayName();
+    btn.style.display   = 'none';   // SIGN OUT lives in dropdown now
     banner.style.display = 'none';
     gate.style.display   = 'none';
 
@@ -893,7 +941,8 @@ function updateAuthUI() {
     label.style.display      = 'none';
     freeBanner.style.display = 'none';
     upgradeGate.style.display = 'none';
-    btn.textContent = lang === 'is' ? 'SKRÁ INN' : 'SIGN IN';
+    btn.style.display = '';
+    btn.textContent   = lang === 'is' ? 'SKRÁ INN' : 'SIGN IN';
     btn.classList.add('signin');
     const remaining = Math.max(0, FREE_TRIAL_LIMIT - getTrialCount());
     if (remaining > 0) {
@@ -1115,6 +1164,12 @@ function showToast(msg, dur = 3000) {
   setTimeout(() => el.classList.remove('show'), dur);
 }
 
+function displayName() {
+  if (userName) return userName;
+  if (currentUser) return currentUser.email.split('@')[0];
+  return lang === 'is' ? 'Gestur' : 'Visitor';
+}
+
 function showTopbarGreeting() {
   if (greetingShown) return;
   greetingShown = true;
@@ -1125,21 +1180,110 @@ function showTopbarGreeting() {
   if (!currentUser) {
     msg = is ? 'Velkomin, Gestur.' : 'Welcome, Visitor.';
   } else {
-    const name = currentUser.email.split('@')[0];
-    if (userTier === 'credits') {
-      msg = is ? 'Velkomin aftur, Rúnaleitandi.' : 'Welcome back, Rune Seeker.';
-    } else if (userTier === 'standard' || userTier === 'premium') {
-      msg = is ? `Velkomin aftur, ${name}.` : `Welcome back, ${name}.`;
-    } else {
-      msg = is ? `Velkomin, ${name}.` : `Welcome, ${name}.`;
-    }
+    const n = displayName();
+    const returning = userTier === 'credits' || userTier === 'standard' || userTier === 'premium';
+    msg = is ? (returning ? `Velkomin aftur, ${n}.` : `Velkomin, ${n}.`)
+             : (returning ? `Welcome back, ${n}.`   : `Welcome, ${n}.`);
   }
   el.textContent = msg;
-  // fade in after short delay
   setTimeout(() => el.classList.add('show'), 200);
-  // fade out after 4.5s
   setTimeout(() => el.classList.remove('show'), 4700);
 }
+
+function showHeroGreeting() {
+  const el = document.getElementById('hero-greeting');
+  if (!el || !currentUser) return;
+  const is = lang === 'is';
+  const n = displayName();
+  el.textContent = is ? `Velkomin, ${n}.` : `Welcome, ${n}.`;
+  setTimeout(() => el.classList.add('show'), 600);
+}
+
+// ── NAME PROMPT ──────────────────────────────────────────
+function showNamePrompt() {
+  const ov = document.getElementById('name-overlay');
+  if (!ov) return;
+  const is = lang === 'is';
+  const card = ov.querySelector('.name-card-title');
+  const sub  = ov.querySelector('.name-card-sub');
+  const inp  = document.getElementById('name-prompt-input');
+  const skip = document.getElementById('name-prompt-skip');
+  const btn  = ov.querySelector('.name-card-btn');
+  if (card) card.textContent = is ? 'ÁÐUR EN STEINAR TALA' : 'BEFORE THE STONES SPEAK';
+  if (sub)  sub.innerHTML    = is ? 'Hvað á ég að kalla þig,<br>leitandi?' : 'What name shall I call you,<br>seeker?';
+  if (skip) skip.textContent = is ? 'Halda áfram án nafns' : 'Continue without a name';
+  if (btn)  btn.textContent  = is ? 'KOMA INN' : 'ENTER THE STONES';
+  if (inp)  inp.placeholder  = is ? 'Nafn þitt eða gælunafn' : 'Your name or nickname';
+  ov.style.display = 'flex';
+  setTimeout(() => inp && inp.focus(), 100);
+}
+
+async function saveName() {
+  const inp = document.getElementById('name-prompt-input');
+  const val = inp ? inp.value.trim() : '';
+  if (!val) { inp && inp.focus(); return; }
+  userName = val;
+  // Save to user_profiles
+  try {
+    await sb.from('user_profiles').update({ name: val }).eq('id', currentUser.id);
+  } catch(e) { console.warn('saveName:', e.message); }
+  document.getElementById('name-overlay').style.display = 'none';
+  // Update label + greetings
+  const lbl = document.getElementById('auth-user-label');
+  if (lbl) lbl.textContent = userName;
+  updateDropdown();
+  showHeroGreeting();
+  greetingShown = false;
+  showTopbarGreeting();
+}
+
+function skipName() {
+  document.getElementById('name-overlay').style.display = 'none';
+}
+
+// ── DROPDOWN ─────────────────────────────────────────────
+function toggleDropdown() {
+  const dd = document.getElementById('auth-dropdown');
+  if (!dd) return;
+  const open = dd.classList.toggle('open');
+  if (open) updateDropdown();
+}
+function closeDropdown() {
+  const dd = document.getElementById('auth-dropdown');
+  if (dd) dd.classList.remove('open');
+}
+function updateDropdown() {
+  if (!currentUser) return;
+  const is = lang === 'is';
+  const tierLabels = { free:'The Curious', credits:'Rune Seeker', standard:'Standard', premium:'Premium' };
+  setText('dd-tier',  '◈ ' + (tierLabels[userTier] || userTier));
+  setText('dd-email', currentUser.email);
+  const balEl = document.getElementById('dd-balance');
+  if (balEl) {
+    if (userTier === 'credits') {
+      balEl.textContent = is ? `${userCredits} lestur eftir` : `${userCredits} reading${userCredits !== 1 ? 's' : ''} remaining`;
+      balEl.style.display = 'block';
+    } else if (userTier === 'free') {
+      const used = getFreeMonthCount(currentUser.id);
+      const rem  = Math.max(0, FREE_REGISTERED_LIMIT - used);
+      balEl.textContent = is ? `${rem} af 5 lestrum eftir` : `${rem} of 5 readings this month`;
+      balEl.style.display = 'block';
+    } else {
+      balEl.style.display = 'none';
+    }
+  }
+  // Hide upgrade for Standard/Premium
+  const upEl = document.getElementById('dd-upgrade');
+  if (upEl) upEl.style.display = (userTier === 'standard' || userTier === 'premium') ? 'none' : 'block';
+  // Hide gift card for Standard/Premium (they don't need credits)
+  const giftEl = document.getElementById('dd-gift');
+  if (giftEl) giftEl.style.display = (userTier === 'standard' || userTier === 'premium') ? 'none' : 'block';
+}
+// Close dropdown on outside click
+document.addEventListener('click', e => {
+  const wrap = document.getElementById('auth-dropdown-wrap');
+  if (wrap && !wrap.contains(e.target)) closeDropdown();
+});
 
 function updateUIText() {
   document.documentElement.lang = lang;
@@ -1695,9 +1839,23 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   updateAuthUI();
   updateUIText();
-  // Greeting for anonymous visitors (logged-in users get it via fetchUserProfile)
-  if (!currentUser) showTopbarGreeting();
+  // Greetings for anonymous visitors (logged-in users get them via fetchUserProfile)
+  if (!currentUser) { showTopbarGreeting(); }
 });
 </script>
+
+<!-- ═══ NAME PROMPT MODAL ═══ -->
+<div class="name-overlay" id="name-overlay" style="display:none;">
+  <div class="name-card">
+    <div class="name-card-rune">ᚱ</div>
+    <div class="name-card-title">BEFORE THE STONES SPEAK</div>
+    <p class="name-card-sub">What name shall I call you,<br>seeker?</p>
+    <input class="name-card-input" id="name-prompt-input" type="text"
+      placeholder="Your name or nickname" maxlength="40"
+      onkeydown="if(event.key==='Enter')saveName()">
+    <button class="name-card-btn" onclick="saveName()">ENTER THE STONES</button>
+    <div class="name-card-skip" onclick="skipName()" id="name-prompt-skip">Continue without a name</div>
+  </div>
+</div>
 </body>
 </html>
