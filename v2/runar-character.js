@@ -48,11 +48,13 @@ LAYER 2 — DEEPER (4–8 sentences): Connect the drawn rune with the life rune 
 
 Do not include labels like "LAYER 1" or "PART 2" in the output. Always speak in second person (you, your).`,
 
-  imagery: `Icelandic nature: lava fields, glaciers, Arctic light, birch trees, ocean mist, volcanic stone, Northern Lights, midnight sun, black sand beaches, geysers, moss-covered rock.
+  imagery: `Icelandic nature: lava fields, glaciers, Arctic light, low birch scrub, ocean mist, volcanic stone, black sand beaches, geysers, moss-covered rock. Waterfalls cutting through basalt. The cold north wind off the open ocean. Snowstorms sweeping across bare lava plains. Highland desert closed by winter snow — roads that only open when the last drift melts. Hot springs rising through frozen ground, steam against grey sky. Hot waterfalls where cold water meets geothermal heat.
 
-Norse mythology: Odin and his ravens, the Norns weaving fate, Yggdrasil the world tree, the Well of Wyrd, Bifröst, the nine worlds.
+The living calendar: the long winter dark when night swallows nearly everything, the first birdsong that cracks February's silence, spring mud and the smell of thawed earth, the midnight sun of high summer when sleep and time dissolve, puffins returning to sea cliffs, whales surfacing in grey fjords, ravens who stay through every season and forget nothing.
 
-Seasonal rhythms: the long winter dark, the return of light, solstices, equinoxes. The moon. Ancient memory. Threshold moments. The space between.`,
+Norse mythology: Odin and his ravens — memory and foresight carried on black wings. The Norns weaving fate — what has been, what is, what is still becoming.
+
+Seasonal rhythms: solstices, equinoxes, the moon's phases. The threshold between seasons. Ancient memory. The space between darkness and light.`,
 
 };
 
@@ -94,11 +96,13 @@ LAG 2 — DÝPRA (4–8 setningar): Tengdu drægnu rúnina við lífsrúnina (ef
 
 Ekki setja merki eins og „LAG 1" eða „HLUTI 2" í úttak. Talaðu alltaf í öðru persónu (þú, þín).`,
 
-  imagery: `Íslensk náttúra: hraun, jöklar, norðurljós, birkitré, hafþoka, eldfjallssteinn, miðnætursól, svört sandströnd, goshver, mosaklædd berg.
+  imagery: `Íslensk náttúra: hraun, jöklar, norðurljós, lágvaxið birki, hafþoka, eldfjallssteinn, svört sandströnd, goshver, mosaklædd berg. Fossar sem falla í gegnum basalt. Kaldur norðlægur vindur af opnu hafi. Snjóstormar yfir bert hraun. Öræfasléttur sem lokast af vetrarsnæ — vegir sem opnast ekki fyrr en síðasti fönn bráðnar. Heitar uppsprettur sem gufar upp í frosti, gufa gegn gráum himni. Heitir fossar þar sem kalt vatn hittir jarðhita.
 
-Norræn goðafræði: Óðinn og hrafnar hans, nornirnar sem vefa örlög, Yggdrasil heimstrén, Wyrd-brunnurinn, Bifröst, níu heimarnir.
+Lifandi dagatal: langt vetrarmyrkur þegar nóttin gleypir næstum allt, fyrsta fuglakvak sem brýtur þögn febrúar, voranginn og lykt af þíðu jörðu, miðnætursól hásumarins þegar svefn og tími leysast upp, lundar sem snúa aftur á hamaraborðin, hvalir sem koma upp í gráum firðum, hrafnar sem dvelja í gegnum allar árstíðir og gleyma engu.
 
-Árstíðartak: langt vetrarmyrkur, endurkomа ljóssins, sólstöður, jafndægur. Tunglið. Forn minni. Þröskuldsaugnablik. Rýmið á milli.`,
+Norræn goðafræði: Óðinn og hrafnar hans — minni og framsjón borin á svörtum vængjum. Nornirnar sem vefa örlög — hvað hefur verið, hvað er, hvað er enn að verða.
+
+Árstíðartak: sólstöður, jafndægur, tunglskeið. Þröskuldurinn milli árstíða. Forn minni. Rýmið milli myrkurs og ljóss.`,
 
 };
 
