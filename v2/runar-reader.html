@@ -48,6 +48,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .lang-btn:not(.active){background:transparent;color:var(--muted);}
 .auth-badge{display:flex;align-items:center;gap:8px;}
 .auth-user{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1.5px;color:var(--teal);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+/* ── TOPBAR GREETING ── */
+#topbar-greeting{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.95em;color:var(--gold);opacity:0;white-space:nowrap;pointer-events:none;transition:opacity 0.7s ease;margin-right:4px;}
+#topbar-greeting.show{opacity:1;}
+/* ── TIER BADGE (in banners) ── */
+.tier-badge{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:rgba(214,168,92,0.72);white-space:nowrap;}
 .auth-btn{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1.5px;padding:5px 12px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all 0.2s;}
 .auth-btn:hover{border-color:var(--gold);color:var(--gold);}
 .auth-btn.signin{border-color:var(--gold-dim);color:var(--gold);}
@@ -405,6 +410,7 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
         <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
         <button class="lang-btn"        id="btn-is" onclick="setLang('is')">IS</button>
       </div>
+      <span id="topbar-greeting"></span>
       <div class="auth-badge">
         <span class="auth-user" id="auth-user-label" style="display:none;"></span>
         <button class="auth-btn signin" id="auth-action-btn" onclick="handleAuthBtn()">SIGN IN</button>
@@ -450,7 +456,7 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
   <!-- CREDITS BANNER (credits tier) -->
   <div class="credits-banner" id="credits-banner" style="display:none;">
     <div style="display:flex;align-items:center;gap:14px;">
-      <span class="trial-text" id="credits-text">Your readings</span>
+      <span class="tier-badge" id="credits-text">Rune Seeker</span>
       <span class="credits-redeem-link" onclick="toggleRedeem()" id="redeem-link">+ GIFT CARD</span>
     </div>
     <span class="credits-balance" id="credits-balance-lbl"></span>
@@ -476,7 +482,7 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
   <!-- FREE USER BANNER (logged-in, free tier / The Curious) -->
   <div class="free-user-banner" id="free-user-banner" style="display:none;">
     <div style="display:flex;align-items:center;gap:14px;">
-      <span class="trial-text" id="free-user-text">The Curious</span>
+      <span class="tier-badge" id="free-user-text">The Curious</span>
       <span class="credits-redeem-link" onclick="toggleRedeem()" id="free-redeem-link">+ GIFT CARD</span>
     </div>
     <span class="free-user-count" id="free-user-count"></span>
@@ -653,6 +659,7 @@ let currentUser    = null;
 let userTier       = 'free';    // 'free' | 'credits' | 'standard' | 'premium'
 let userCredits    = 0;         // credits_balance from user_profiles
 let readerUser     = {};
+let greetingShown  = false;     // show topbar greeting only once per session
 let readerRune     = null;
 let readerTexts    = {};  // { en: {short,deep}, is: {short,deep} }
 let voiceGenerated = {};  // { en: bool, is: bool }
@@ -686,6 +693,7 @@ async function fetchUserProfile(userId) {
     }
   } catch(e) { console.warn('fetchUserProfile:', e.message); }
   updateAuthUI();
+  showTopbarGreeting();
 }
 
 async function upsertProfile() {
@@ -1105,6 +1113,32 @@ function showToast(msg, dur = 3000) {
   const el = document.getElementById('toast'); if (!el) return;
   el.textContent = msg; el.classList.add('show');
   setTimeout(() => el.classList.remove('show'), dur);
+}
+
+function showTopbarGreeting() {
+  if (greetingShown) return;
+  greetingShown = true;
+  const el = document.getElementById('topbar-greeting');
+  if (!el) return;
+  const is = lang === 'is';
+  let msg = '';
+  if (!currentUser) {
+    msg = is ? 'Velkomin, Gestur.' : 'Welcome, Visitor.';
+  } else {
+    const name = currentUser.email.split('@')[0];
+    if (userTier === 'credits') {
+      msg = is ? 'Velkomin aftur, Rúnaleitandi.' : 'Welcome back, Rune Seeker.';
+    } else if (userTier === 'standard' || userTier === 'premium') {
+      msg = is ? `Velkomin aftur, ${name}.` : `Welcome back, ${name}.`;
+    } else {
+      msg = is ? `Velkomin, ${name}.` : `Welcome, ${name}.`;
+    }
+  }
+  el.textContent = msg;
+  // fade in after short delay
+  setTimeout(() => el.classList.add('show'), 200);
+  // fade out after 4.5s
+  setTimeout(() => el.classList.remove('show'), 4700);
 }
 
 function updateUIText() {
@@ -1661,6 +1695,8 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   updateAuthUI();
   updateUIText();
+  // Greeting for anonymous visitors (logged-in users get it via fetchUserProfile)
+  if (!currentUser) showTopbarGreeting();
 });
 </script>
 </body>
