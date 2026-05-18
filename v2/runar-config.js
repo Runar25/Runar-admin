@@ -74,7 +74,7 @@ const RUNAR_MODES = {
 // Values will evolve — update here only.
 const TIERS = {
   free_trial: {
-    label:          'Free Trial',
+    label:          'Visitor',
     readings:       3,          // total, no account needed
     voice_dynamic:  false,      // real-time ElevenLabs generation
     voice_static:   true,       // pre-generated rune audio
