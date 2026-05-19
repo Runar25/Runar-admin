@@ -283,6 +283,16 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .coll-audio-lbl{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--gold);margin-bottom:10px;}
 .coll-audio-text{font-size:0.92em;font-style:italic;color:var(--muted);line-height:1.85;margin-bottom:14px;}
 .coll-no-audio{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:1.5px;color:var(--dim);padding:12px 0;}
+/* ── VISITOR COLLECTION NOTICE ── */
+.visitor-coll-notice{border:1px solid rgba(255,191,0,0.2);padding:28px 24px 24px;margin-bottom:20px;text-align:center;background:rgba(255,191,0,0.04);}
+.vcn-rune{font-size:2.4em;color:var(--gold);opacity:0.7;margin-bottom:14px;line-height:1;}
+.vcn-text{font-size:1.02em;font-style:italic;color:var(--muted);line-height:1.85;margin-bottom:22px;}
+.vcn-text strong{color:var(--gold);font-style:normal;font-weight:400;}
+.vcn-btn{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2.5px;padding:12px 28px;background:transparent;border:1px solid rgba(255,191,0,0.45);color:var(--gold);cursor:pointer;transition:all 0.2s;}
+.vcn-btn:hover{background:rgba(255,191,0,0.08);}
+/* Locked rune cells */
+.coll-cell.locked{opacity:0.28;cursor:not-allowed;pointer-events:none;}
+.coll-cell.locked:hover{background:transparent;border-color:var(--border);}
 .coll-lang-tabs{display:flex;gap:0;margin-bottom:16px;}
 .coll-lang-tab{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;padding:6px 16px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all 0.18s;}
 .coll-lang-tab:first-child{border-right:none;}
@@ -716,6 +726,13 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
 
   <!-- ═ COLLECTION PANE ═ -->
   <div id="apane-collection" style="display:none;">
+
+    <!-- Visitor notice — shown only for anonymous/free_trial users -->
+    <div class="visitor-coll-notice" id="visitor-coll-notice" style="display:none;">
+      <div class="vcn-rune">ᚠ</div>
+      <p class="vcn-text" id="vcn-text"></p>
+      <button class="vcn-btn" onclick="openAuthModal()" id="vcn-btn"></button>
+    </div>
 
     <div class="coll-grid" id="coll-grid"></div>
 
@@ -1457,15 +1474,30 @@ async function loadCollection() {
     if (collAudioMap[row.rune_name]?.[row.lang]) collAudioMap[row.rune_name][row.lang].push(row);
   });
 
+  // ── Visitor gate: only Fehu is unlocked ──
+  const isVisitor = !currentUser || userTier === 'free_trial';
+  const notice = document.getElementById('visitor-coll-notice');
+  if (notice) {
+    notice.style.display = isVisitor ? 'block' : 'none';
+    if (isVisitor) {
+      const isIs = lang === 'is';
+      document.getElementById('vcn-text').innerHTML = isIs
+        ? `Þú gengur hér sem <strong>Gestur</strong>. Fehu — rúna upphafsins — opnar rödd sína fyrir þig frítt. Dragðu hana. Hlustaðu á það sem fornir steinar geyma.<br><br>Þegar þú ert tilbúinn að ganga með allar fimm og tuttugu rúnirnar og heyra Rúnar tala í lestur þinn, vertu <strong>Forvitinn</strong> — það kostar ekkert.`
+        : `You walk here as a <strong>Visitor</strong>. Fehu — the rune of beginnings — opens its voice to you freely. Draw it. Hear what the old stones hold.<br><br>When you are ready to walk with all twenty-five runes and hear Rúnar speak in your own reading, become <strong>The Curious</strong> — it costs nothing.`;
+      document.getElementById('vcn-btn').textContent = isIs ? 'GERAST FORVITINN →' : 'BECOME THE CURIOUS →';
+    }
+  }
+
   grid.innerHTML = '';
   RUNES.forEach(r => {
     const enRows = collAudioMap[r.n]?.en || [];
     const isRows = collAudioMap[r.n]?.is || [];
     const hasEn  = enRows.length > 0;
     const hasIs  = isRows.length > 0;
+    const locked  = isVisitor && r.n !== 'Fehu';
 
     const cell = document.createElement('button');
-    cell.className = 'coll-cell' + (hasEn && hasIs ? ' has-audio' : hasEn || hasIs ? ' partial-audio' : '');
+    cell.className = 'coll-cell' + (hasEn && hasIs ? ' has-audio' : hasEn || hasIs ? ' partial-audio' : '') + (locked ? ' locked' : '');
     if (activeCollRune?.n === r.n) cell.classList.add('active');
 
     const sd = typeof RUNE_SVGS !== 'undefined' ? RUNE_SVGS[r.svg] : null;
@@ -1482,7 +1514,7 @@ async function loadCollection() {
       </span>`;
 
     cell.dataset.rune = r.n;
-    cell.onclick = () => openCollDetail(r, cell);
+    if (!locked) cell.onclick = () => openCollDetail(r, cell);
     grid.appendChild(cell);
   });
 
