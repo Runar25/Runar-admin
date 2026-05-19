@@ -300,9 +300,19 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .coll-audio-player{margin-top:10px;}
 
 /* ── TRIAL BANNER ── */
-.trial-banner{background:var(--card);border:1px solid var(--border);padding:12px 18px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
-.trial-text{font-size:0.85em;color:var(--muted);font-style:italic;}
-.trial-count{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:1.5px;color:var(--gold);white-space:nowrap;}
+/* ── TIER NOTICES (Visitor + The Curious) ── */
+.tier-notice{background:var(--card);border:1px solid rgba(255,191,0,0.2);padding:22px 24px 20px;margin-bottom:22px;text-align:center;}
+.tier-notice.curious{border-color:rgba(126,217,181,0.2);}
+.tn-counter{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2.5px;color:var(--gold);margin-bottom:14px;opacity:0.9;}
+.tier-notice.curious .tn-counter{color:var(--teal);}
+.tn-counter.warn{color:var(--gold)!important;}
+.tn-counter.exhausted{color:#e07070!important;}
+.tn-text{font-size:0.95em;font-style:italic;color:var(--muted);line-height:1.85;margin-bottom:18px;}
+.tn-text strong{color:var(--white);font-style:normal;font-weight:400;}
+.tn-btn{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:2px;padding:10px 24px;background:transparent;border:1px solid rgba(255,191,0,0.4);color:var(--gold);cursor:pointer;transition:all 0.2s;}
+.tn-btn:hover{background:rgba(255,191,0,0.08);}
+.tier-notice.curious .tn-btn{border-color:rgba(126,217,181,0.35);color:var(--teal);}
+.tier-notice.curious .tn-btn:hover{background:rgba(126,217,181,0.06);}
 
 /* ── AUTH GATE ── */
 .auth-gate{background:var(--card);border:1px solid var(--gold);padding:32px 24px;text-align:center;margin-top:8px;}
@@ -450,10 +460,6 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
 .redeem-close:hover{color:var(--white);}
 
 /* ── FREE USER BANNER ── */
-.free-user-banner{background:var(--card);border:1px solid rgba(126,217,181,0.25);padding:12px 18px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
-.free-user-count{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:1.5px;color:var(--teal);white-space:nowrap;}
-.free-user-count.warn{color:var(--gold);}
-.free-user-count.exhausted{color:#e07070;}
 
 /* ── TRIAL END PROMPT ── */
 .trial-end{background:var(--card);border:1px solid var(--gold);padding:28px 24px;text-align:center;margin-top:20px;animation:trialFadeIn 0.7s ease;}
@@ -584,19 +590,18 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
     <div class="status" id="st-redeem" style="text-align:left;margin-top:10px;"></div>
   </div>
 
-  <!-- TRIAL BANNER -->
-  <div class="trial-banner" id="trial-banner" style="display:none;">
-    <span class="trial-text" id="trial-text">You are exploring as a guest.</span>
-    <span class="trial-count" id="trial-count"></span>
+  <!-- VISITOR NOTICE -->
+  <div class="tier-notice" id="trial-banner" style="display:none;">
+    <div class="tn-counter" id="trial-count"></div>
+    <p class="tn-text" id="trial-text"></p>
+    <button class="tn-btn" onclick="openAuthModal()" id="tn-visitor-btn"></button>
   </div>
 
-  <!-- FREE USER BANNER (logged-in, free tier / The Curious) -->
-  <div class="free-user-banner" id="free-user-banner" style="display:none;">
-    <div style="display:flex;align-items:center;gap:14px;">
-      <span class="tier-badge" id="free-user-text">The Curious</span>
-      <span class="credits-redeem-link" onclick="toggleRedeem()" id="free-redeem-link">+ GIFT CARD</span>
-    </div>
-    <span class="free-user-count" id="free-user-count"></span>
+  <!-- THE CURIOUS NOTICE -->
+  <div class="tier-notice curious" id="free-user-banner" style="display:none;">
+    <div class="tn-counter" id="free-user-count"></div>
+    <p class="tn-text" id="free-user-text"></p>
+    <button class="tn-btn" onclick="toggleRedeem()" id="tn-curious-btn"></button>
   </div>
 
   <!-- AUTH GATE (trial exhausted) -->
@@ -978,12 +983,27 @@ function updateAuthUI() {
       return;
     }
 
-    // ── Free tier monthly counter ──
+    // ── Free tier (The Curious) — notice + counter ──
     creditsBanner.style.display = 'none';
-    freeBanner.style.display    = 'none'; // info lives in dropdown
     const used      = getFreeMonthCount(currentUser.id);
     const remaining = Math.max(0, FREE_REGISTERED_LIMIT - used);
     if (remaining > 0) {
+      // Build The Curious notice
+      freeBanner.style.display = 'block';
+      const isIs = lang === 'is';
+      const cntEl = document.getElementById('free-user-count');
+      if (cntEl) {
+        cntEl.textContent = isIs
+          ? `${remaining} af ${FREE_REGISTERED_LIMIT} lestrum eftir í þessum mánuði`
+          : `${remaining} of ${FREE_REGISTERED_LIMIT} readings remaining this month`;
+        cntEl.className = 'tn-counter' + (remaining === 1 ? ' warn' : '');
+      }
+      const txtEl = document.getElementById('free-user-text');
+      if (txtEl) txtEl.innerHTML = isIs
+        ? `Þú gengur sem <strong>Forvitinn</strong> — ${FREE_REGISTERED_LIMIT} lestar á mánuði, allar tuttugu og fimm rúnirnar opnar, Rúnar hlustandi.<br><br>Þegar þeir eru genginn og steinarnir eiga enn eftir að segja, opnar lesturarkort dyrnar. Eitt kort. Jafn margir dragir og þú berð. Engin gildistími, engin áskrift — dragðu þegar stundin kallar.`
+        : `You walk as <strong>The Curious</strong> — ${FREE_REGISTERED_LIMIT} readings each month, all twenty-five runes open, Rúnar listening.<br><br>When they are walked and the stones still have more to say, a reading card keeps the door open. One card. As many draws as you carry. No subscription, no expiry — draw when the moment calls, not when the calendar allows.`;
+      const btnEl = document.getElementById('tn-curious-btn');
+      if (btnEl) btnEl.textContent = isIs ? '+ LESTURARKORT' : '+ GET A READING CARD';
       upgradeGate.style.display = 'none';
       content.style.display     = 'block';
     } else {
@@ -1011,10 +1031,22 @@ function updateAuthUI() {
     btn.classList.add('signin');
     const remaining = Math.max(0, FREE_TRIAL_LIMIT - getTrialCount());
     if (remaining > 0) {
-      banner.style.display = 'flex';
-      document.getElementById('trial-count').textContent = lang === 'is'
-        ? `${remaining} ókeypis lestur${remaining !== 1 ? 'ar' : ''} eftir`
-        : `${remaining} free reading${remaining !== 1 ? 's' : ''} remaining`;
+      // Build Visitor notice
+      banner.style.display = 'block';
+      const isIs = lang === 'is';
+      const cntEl = document.getElementById('trial-count');
+      if (cntEl) {
+        cntEl.textContent = isIs
+          ? `${remaining} af ${FREE_TRIAL_LIMIT} lestrum eftir`
+          : `${remaining} of ${FREE_TRIAL_LIMIT} readings remaining`;
+        cntEl.className = 'tn-counter' + (remaining === 1 ? ' warn' : '');
+      }
+      const txtEl = document.getElementById('trial-text');
+      if (txtEl) txtEl.innerHTML = isIs
+        ? `Þú gengur hér sem <strong>Gestur</strong>. Fehu — rúna upphafsins — opnar rödd sína fyrir þig frítt. Dragðu hana. Hlustaðu á það sem fornir steinar hvísla.<br><br>Þegar þú ert tilbúinn að ganga með allar tuttugu og fimm rúnirnar og heyra Rúnar tala í lestur þinn, vertu <strong>Forvitinn</strong> — það kostar ekkert.`
+        : `You walk here as a <strong>Visitor</strong>. Three readings open before you — draw a rune, ask your question, and hear what Rúnar sees in the stones.<br><br>When you are ready to walk with all twenty-five runes and hear Rúnar speak in your own reading, become <strong>The Curious</strong> — it costs nothing.`;
+      const btnEl = document.getElementById('tn-visitor-btn');
+      if (btnEl) btnEl.textContent = isIs ? 'GERAST FORVITINN →' : 'BECOME THE CURIOUS →';
       gate.style.display    = 'none';
       content.style.display = 'block';
     } else {
