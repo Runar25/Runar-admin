@@ -43,11 +43,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .tier-badge{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:rgba(214,168,92,0.72);white-space:nowrap;}
 /* ── AUTH ── */
 .auth-badge{display:flex;align-items:center;gap:8px;}
-.auth-user{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1.5px;color:var(--teal);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;}
-.auth-user::after{content:' ▾';font-size:0.75em;opacity:0.5;}
-.auth-btn{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1.5px;padding:5px 12px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all 0.2s;}
-.auth-btn:hover{border-color:var(--gold);color:var(--gold);}
-.auth-btn.signin{border-color:var(--gold-dim);color:var(--gold);}
+.auth-user{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:4px;color:var(--gold);opacity:0.85;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.auth-btn{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:4px;padding:0;border:none;background:transparent;color:var(--gold);opacity:0.85;cursor:pointer;transition:opacity 0.2s;}
+.auth-btn:hover{opacity:1;}
 /* ── HAMBURGER BUTTON ── */
 .hamburger-btn{background:none;border:none;cursor:pointer;padding:4px 2px;display:flex;flex-direction:column;justify-content:center;gap:5px;}
 .hamburger-btn span{display:block;width:22px;height:1.5px;background:var(--gold);opacity:0.82;transition:opacity 0.2s;}
@@ -61,12 +59,21 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .side-panel-brand{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:4px;color:var(--gold);opacity:0.85;}
 .side-panel-close{background:none;border:none;color:var(--gold);opacity:0.6;font-size:1.1em;cursor:pointer;padding:2px 4px;transition:opacity 0.2s;}
 .side-panel-close:hover{opacity:1;}
-.side-panel-section{padding:22px 22px 18px;border-bottom:1px solid rgba(46,74,112,0.25);}
-.side-panel-lbl{font-family:'Cinzel',serif;font-size:0.52em;letter-spacing:3px;color:var(--muted);opacity:0.7;margin-bottom:14px;}
-.lang-toggle{display:flex;border:1px solid var(--border);overflow:hidden;width:100%;}
+.side-panel-section{padding:20px 24px 16px;border-bottom:1px solid rgba(214,168,92,0.12);}
+.side-panel-lbl{font-family:'Cinzel',serif;font-size:0.52em;letter-spacing:3px;color:var(--gold);opacity:0.45;margin-bottom:14px;}
+.lang-toggle{display:flex;border:1px solid rgba(214,168,92,0.3);overflow:hidden;width:100%;}
 .lang-btn{flex:1;padding:9px 0;font-family:'Cinzel',serif;font-size:0.68em;letter-spacing:2px;border:none;cursor:pointer;transition:all 0.2s;text-align:center;}
 .lang-btn.active{background:var(--gold);color:#000;}
-.lang-btn:not(.active){background:transparent;color:var(--muted);}
+.lang-btn:not(.active){background:transparent;color:rgba(214,168,92,0.55);}
+/* side panel account items */
+.sp-name{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:3px;color:var(--gold);opacity:0.9;padding:18px 24px 4px;}
+.sp-tier{font-family:'Cinzel',serif;font-size:0.52em;letter-spacing:2.5px;color:var(--gold);opacity:0.5;padding:0 24px 16px;}
+.sp-row{font-family:'Cinzel',serif;font-size:0.52em;letter-spacing:1.5px;color:rgba(214,168,92,0.55);padding:3px 24px;}
+.sp-item{display:block;width:100%;text-align:left;font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;padding:13px 24px;background:none;border:none;color:var(--gold);opacity:0.72;cursor:pointer;transition:opacity 0.15s;}
+.sp-item:hover{opacity:1;}
+.sp-item.signout{color:var(--gold);opacity:0.4;border-top:1px solid rgba(214,168,92,0.1);margin-top:4px;}
+.sp-item.signout:hover{opacity:0.75;}
+.sp-item.coming{opacity:0.25;pointer-events:none;}
 
 /* ── HERO ── */
 .hero{
@@ -453,17 +460,7 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
     <div class="topbar-right">
       <span id="topbar-greeting"></span>
       <div class="auth-badge">
-        <div class="auth-dropdown-wrap" id="auth-dropdown-wrap">
-          <span class="auth-user" id="auth-user-label" style="display:none;" onclick="toggleDropdown()"></span>
-          <div class="auth-dropdown" id="auth-dropdown">
-            <div class="dd-tier" id="dd-tier">◈ Visitor</div>
-            <div class="dd-email" id="dd-email"></div>
-            <div class="dd-balance" id="dd-balance" style="display:none;"></div>
-            <button class="dd-item" id="dd-gift" onclick="toggleRedeem();closeDropdown()">+ GIFT CARD</button>
-            <button class="dd-item coming" id="dd-upgrade">UPGRADE → STANDARD</button>
-            <button class="dd-item signout" onclick="handleAuthBtn();closeDropdown()">SIGN OUT</button>
-          </div>
-        </div>
+        <span class="auth-user" id="auth-user-label" style="display:none;"></span>
         <button class="auth-btn signin" id="auth-action-btn" onclick="handleAuthBtn()">SIGN IN</button>
       </div>
       <button class="hamburger-btn" id="hamburger-btn" onclick="openSidePanel()" aria-label="Menu">
@@ -1239,52 +1236,44 @@ function skipName() {
   document.getElementById('name-overlay').style.display = 'none';
 }
 
-// ── DROPDOWN ─────────────────────────────────────────────
-function toggleDropdown() {
-  const dd = document.getElementById('auth-dropdown');
-  if (!dd) return;
-  const open = dd.classList.toggle('open');
-  if (open) updateDropdown();
-}
-function closeDropdown() {
-  const dd = document.getElementById('auth-dropdown');
-  if (dd) dd.classList.remove('open');
-}
-function updateDropdown() {
-  if (!currentUser) return;
+// ── SIDE PANEL ACCOUNT ───────────────────────────────────
+function updateSidePanel() {
+  const accEl = document.getElementById('sp-account');
+  if (!accEl) return;
+  if (!currentUser) { accEl.style.display = 'none'; return; }
+  accEl.style.display = 'block';
   const is = lang === 'is';
   const tierLabels = { free:'The Curious', credits:'Rune Seeker', standard:'Standard', premium:'Premium' };
-  setText('dd-tier',  '◈ ' + (tierLabels[userTier] || userTier));
-  setText('dd-email', currentUser.email);
-  const balEl = document.getElementById('dd-balance');
+  setText('sp-name',  displayName());
+  setText('sp-tier',  '◈ ' + (tierLabels[userTier] || userTier));
+  setText('sp-email', currentUser.email);
+  const balEl = document.getElementById('sp-balance');
   if (balEl) {
     if (userTier === 'credits') {
-      balEl.textContent = is ? `${userCredits} lestur eftir` : `${userCredits} reading${userCredits !== 1 ? 's' : ''} remaining`;
+      balEl.textContent   = is ? `${userCredits} lestur eftir` : `${userCredits} reading${userCredits !== 1 ? 's' : ''} remaining`;
       balEl.style.display = 'block';
     } else if (userTier === 'free') {
       const used = getFreeMonthCount(currentUser.id);
       const rem  = Math.max(0, FREE_REGISTERED_LIMIT - used);
-      balEl.textContent = is ? `${rem} af 5 lestrum eftir` : `${rem} of 5 readings this month`;
+      balEl.textContent   = is ? `${rem} af 5 lestrum eftir` : `${rem} of 5 readings this month`;
       balEl.style.display = 'block';
     } else {
       balEl.style.display = 'none';
     }
   }
-  // Hide upgrade for Standard/Premium
-  const upEl = document.getElementById('dd-upgrade');
-  if (upEl) upEl.style.display = (userTier === 'standard' || userTier === 'premium') ? 'none' : 'block';
-  // Hide gift card for Standard/Premium (they don't need credits)
-  const giftEl = document.getElementById('dd-gift');
-  if (giftEl) giftEl.style.display = (userTier === 'standard' || userTier === 'premium') ? 'none' : 'block';
+  const hide = userTier === 'standard' || userTier === 'premium';
+  const upEl   = document.getElementById('sp-upgrade');
+  const giftEl = document.getElementById('sp-gift');
+  if (upEl)   upEl.style.display   = hide ? 'none' : 'block';
+  if (giftEl) giftEl.style.display = hide ? 'none' : 'block';
+  // lang labels
+  setText('sp-gift',    is ? '+ GJAFAKORT' : '+ GIFT CARD');
+  setText('sp-upgrade', is ? 'UPPFÆRA → STANDARD' : 'UPGRADE → STANDARD');
 }
-// Close dropdown on outside click
-document.addEventListener('click', e => {
-  const wrap = document.getElementById('auth-dropdown-wrap');
-  if (wrap && !wrap.contains(e.target)) closeDropdown();
-});
 
 // ── SIDE PANEL ───────────────────────────────────────────
 function openSidePanel() {
+  updateSidePanel();
   document.getElementById('side-panel').classList.add('open');
   document.getElementById('side-overlay').classList.add('open');
 }
@@ -1869,6 +1858,21 @@ window.addEventListener('DOMContentLoaded', async () => {
     <span class="side-panel-brand">AGNDOFA</span>
     <button class="side-panel-close" onclick="closeSidePanel()">✕</button>
   </div>
+
+  <!-- Account (logged-in only) -->
+  <div id="sp-account" style="display:none;">
+    <div class="sp-name" id="sp-name"></div>
+    <div class="sp-tier" id="sp-tier"></div>
+    <div class="sp-row"  id="sp-email"></div>
+    <div class="sp-row"  id="sp-balance" style="display:none;"></div>
+    <div class="side-panel-section" style="padding-top:12px;padding-bottom:12px;">
+      <button class="sp-item" id="sp-gift" onclick="toggleRedeem();closeSidePanel()">+ GIFT CARD</button>
+      <button class="sp-item coming" id="sp-upgrade">UPGRADE → STANDARD</button>
+      <button class="sp-item signout" onclick="handleAuthBtn();closeSidePanel()">SIGN OUT</button>
+    </div>
+  </div>
+
+  <!-- Language -->
   <div class="side-panel-section">
     <div class="side-panel-lbl" id="sp-lang-lbl">LANGUAGE</div>
     <div class="lang-toggle">
