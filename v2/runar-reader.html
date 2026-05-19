@@ -63,12 +63,13 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .side-panel-section{padding:18px 24px 14px;border-bottom:1px solid rgba(214,168,92,0.1);}
 .side-panel-lbl{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:3px;color:var(--gold);opacity:0.38;margin-bottom:14px;}
 /* one font throughout — Cinzel, gold, varying opacity */
-.sp-row{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--gold);opacity:0.48;padding:4px 0;display:block;}
-.sp-item{display:block;width:100%;text-align:left;font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;padding:12px 0;background:none;border:none;color:var(--gold);opacity:0.7;cursor:pointer;transition:opacity 0.15s;}
+.sp-row{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--gold);opacity:0.85;padding:4px 0;display:block;}
+.sp-item{display:block;width:100%;text-align:left;font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;padding:12px 0;background:none;border:none;color:var(--gold);opacity:0.85;cursor:pointer;transition:opacity 0.15s;}
 .sp-item:hover{opacity:1;}
-.sp-item.signout{opacity:0.38;border-top:1px solid rgba(214,168,92,0.1);margin-top:6px;padding-top:14px;}
-.sp-item.signout:hover{opacity:0.7;}
-.sp-item.coming{opacity:0.2;pointer-events:none;}
+.sp-item.signout{opacity:0.85;border-top:1px solid rgba(214,168,92,0.15);margin-top:6px;padding-top:14px;}
+.sp-item.signout:hover{opacity:1;}
+.sp-item.coming{opacity:0.22;pointer-events:none;cursor:default;}
+.sp-item.coming.active{opacity:0.85;pointer-events:auto;cursor:pointer;}
 /* lang toggle in panel */
 .lang-toggle{display:flex;border:1px solid rgba(214,168,92,0.25);overflow:hidden;width:100%;}
 .lang-btn{flex:1;padding:10px 0;font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;border:none;cursor:pointer;transition:all 0.2s;text-align:center;}
