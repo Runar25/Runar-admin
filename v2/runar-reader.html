@@ -139,13 +139,14 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 @media(max-width:768px){
   .hero{max-height:none;overflow:visible;}
   .hero-inner{flex-direction:column;min-height:auto;}
-  .hero-portrait-col{flex:none;height:320px;width:100%;position:relative;}
-  .hero-portrait-wrap{position:absolute;inset:0;}
-  .hero-portrait-wrap img{object-position:center 8%;}
+  .hero-portrait-col{flex:none;width:100%;height:auto;}
+  .hero-portrait-wrap{position:relative;width:100%;}
+  .hero-portrait-wrap img{
+    position:relative;display:block;width:100%;height:auto;
+    object-fit:contain;object-position:center top;
+  }
   .hero-portrait-wrap::after{
-    background:
-      linear-gradient(to bottom, transparent 52%, var(--bg) 100%),
-      linear-gradient(to right,  transparent 60%, var(--bg) 100%);
+    background:linear-gradient(to bottom, transparent 70%, var(--bg) 100%);
   }
   .hero-text-col{padding:18px 22px 32px;text-align:center;}
   .hero-title{font-size:2em;}
