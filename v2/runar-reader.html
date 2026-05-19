@@ -633,11 +633,9 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
   <div class="auth-gate" id="upgrade-gate" style="display:none;">
     <div class="auth-gate-rune">ᚱ</div>
     <div class="auth-gate-title" id="upgrade-gate-title">YOUR MONTHLY READINGS ARE COMPLETE</div>
-    <div class="auth-gate-note" id="upgrade-gate-note">
-      You have used all 5 free readings for this month.<br>
-      <b>Upgrade to Standard</b> for unlimited readings — or return when the new month begins.
-    </div>
-    <button class="btn-full" style="max-width:300px;margin:0 auto;display:block;opacity:0.45;cursor:not-allowed;" disabled id="upgrade-gate-btn">UPGRADE — COMING SOON</button>
+    <div class="auth-gate-note" id="upgrade-gate-note"></div>
+    <button class="btn-full" id="upgrade-gate-btn" style="max-width:300px;margin:0 auto;display:block;"></button>
+    <div class="auth-gate-note" id="upgrade-gate-sub" style="margin-top:14px;font-size:0.82em;"></div>
   </div>
 
   <!-- READER (shown when trial available or logged in) -->
@@ -961,9 +959,18 @@ function updateAuthUI() {
           setText('upgrade-gate-title', lang === 'is' ? 'LESTRAR ÞÍNIR ERU BÚNIR' : 'YOUR READINGS ARE USED UP');
           const ugNote = document.getElementById('upgrade-gate-note');
           if (ugNote) ugNote.innerHTML = lang === 'is'
-            ? 'Þú hefur notað alla lestrana þína.<br><b>Innleystu gjafakort</b> til að halda áfram — eða uppfærðu til Standard.'
-            : 'You have used all your readings.<br><b>Redeem a gift card</b> to continue — or upgrade to Standard for unlimited readings.';
-          setText('upgrade-gate-btn', lang === 'is' ? 'UPPFÆRA — BRÁÐLEGA' : 'UPGRADE — COMING SOON');
+            ? 'Þú hefur gengið alla lestrana þína. Innleystu nýtt <b>lesturarkort</b> til að halda áfram.'
+            : 'You have walked all your readings. Redeem a new <b>reading card</b> to continue.';
+          const ugSub2 = document.getElementById('upgrade-gate-sub');
+          if (ugSub2) ugSub2.innerHTML = '';
+          const ugBtn2 = document.getElementById('upgrade-gate-btn');
+          if (ugBtn2) {
+            ugBtn2.textContent = lang === 'is' ? 'UPPFÆRA → STANDARD — BRÁÐLEGA' : 'UPGRADE → STANDARD — COMING SOON';
+            ugBtn2.disabled = true;
+            ugBtn2.style.opacity = '0.4';
+            ugBtn2.style.cursor = 'not-allowed';
+            ugBtn2.onclick = null;
+          }
           upgradeGate.style.display = 'block';
           content.style.display     = 'none';
         }
@@ -1014,9 +1021,18 @@ function updateAuthUI() {
         setText('upgrade-gate-title', lang === 'is' ? 'MÁNUÐARLEGIR LESTRAR ÞÍNIR ERU FULLNÝTTIR' : 'YOUR MONTHLY READINGS ARE COMPLETE');
         const ugNote = document.getElementById('upgrade-gate-note');
         if (ugNote) ugNote.innerHTML = lang === 'is'
-          ? 'Þú hefur notað alla 5 ókeypis lestrana þína í þessum mánuði.<br><b>Uppfærðu til Standard</b> fyrir ótakmarkaða lestrana — eða bíddu til næsta mánaðar.'
-          : 'You have used all 5 free readings for this month.<br><b>Upgrade to Standard</b> for unlimited readings — or return when the new month begins.';
-        setText('upgrade-gate-btn', lang === 'is' ? 'UPPFÆRA — BRÁÐLEGA' : 'UPGRADE — COMING SOON');
+          ? 'Þú hefur gengið alla fimm lestrana þína í þessum mánuði. Steinarnir hvíla til næsta mánaðar — eða opnaðu dyrnar með <b>Rúnar lesturarkort</b>. Eitt kort. Engin gildistími. Dragðu þegar stundin kallar.'
+          : 'You have walked all five readings this month. The stones rest until the new month — or keep the door open with a <b>Rune Seeker reading card</b>. One card. No expiry. Draw when the moment calls.';
+        const ugSub = document.getElementById('upgrade-gate-sub');
+        if (ugSub) ugSub.innerHTML = lang === 'is' ? 'eða bíddu til næsta mánaðar' : 'or return when the new month begins';
+        const ugBtn = document.getElementById('upgrade-gate-btn');
+        if (ugBtn) {
+          ugBtn.textContent = lang === 'is' ? '+ LESTURARKORT' : '+ GET A READING CARD';
+          ugBtn.disabled = false;
+          ugBtn.style.opacity = '1';
+          ugBtn.style.cursor = 'pointer';
+          ugBtn.onclick = () => { upgradeGate.style.display = 'none'; content.style.display = 'block'; toggleRedeem(); };
+        }
         upgradeGate.style.display = 'block';
         content.style.display     = 'none';
       }
