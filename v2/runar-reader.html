@@ -1310,9 +1310,10 @@ function showNamePrompt() {
   const skip = document.getElementById('name-prompt-skip');
   const btn  = ov.querySelector('.name-card-btn');
   if (card) card.textContent = is ? 'ÁÐUR EN STEINAR TALA' : 'BEFORE THE STONES SPEAK';
-  if (sub)  sub.innerHTML    = is ? 'Hvað á ég að kalla þig,<br>leitandi?' : 'What name shall I call you,<br>seeker?';
+  if (card) card.textContent = is ? 'ÁÐUR EN RÚNIRNAR TALA' : 'BEFORE THE RUNES SPEAK';
+  if (sub)  sub.innerHTML   = is ? 'Rúnirnar tala öðruvísi til þeirra sem þær þekkja að nafni.<br>Hvernig á ég að kalla þig?' : 'The runes speak differently to those whose name they know.<br>How shall I call you?';
   if (skip) skip.textContent = is ? 'Halda áfram án nafns' : 'Continue without a name';
-  if (btn)  btn.textContent  = is ? 'KOMA INN' : 'ENTER THE STONES';
+  if (btn)  btn.textContent  = is ? 'LÁTA LESTURINN HEFJAST' : 'LET THE READING BEGIN';
   if (inp)  inp.placeholder  = is ? 'Nafn þitt eða gælunafn' : 'Your name or nickname';
   ov.style.display = 'flex';
   setTimeout(() => inp && inp.focus(), 100);
@@ -2014,12 +2015,12 @@ window.addEventListener('DOMContentLoaded', async () => {
 <div class="name-overlay" id="name-overlay" style="display:none;">
   <div class="name-card">
     <div class="name-card-rune">ᚱ</div>
-    <div class="name-card-title">BEFORE THE STONES SPEAK</div>
-    <p class="name-card-sub">What name shall I call you,<br>seeker?</p>
+    <div class="name-card-title" id="name-card-title">BEFORE THE RUNES SPEAK</div>
+    <p class="name-card-sub" id="name-card-sub">The runes speak differently to those whose name they know.<br>How shall I call you?</p>
     <input class="name-card-input" id="name-prompt-input" type="text"
       placeholder="Your name or nickname" maxlength="40"
       onkeydown="if(event.key==='Enter')saveName()">
-    <button class="name-card-btn" onclick="saveName()">ENTER THE STONES</button>
+    <button class="name-card-btn" onclick="saveName()" id="name-card-btn">LET THE READING BEGIN</button>
     <div class="name-card-skip" onclick="skipName()" id="name-prompt-skip">Continue without a name</div>
   </div>
 </div>
