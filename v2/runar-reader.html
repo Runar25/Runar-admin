@@ -32,30 +32,41 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     radial-gradient(ellipse 35% 30% at 5% 55%,rgba(125,88,56,0.06) 0%,transparent 50%);}
 
 /* ── TOPBAR ── */
-.topbar{
-  position:sticky;top:0;z-index:50;
-  background:rgba(10,12,18,0.94);
-  border-bottom:1px solid rgba(46,74,112,0.4);
-  backdrop-filter:blur(16px);
-  -webkit-backdrop-filter:blur(16px);
-}
+.topbar{position:sticky;top:0;z-index:50;background:rgba(10,12,18,0.94);border-bottom:1px solid rgba(46,74,112,0.4);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);}
 .topbar-inner{max-width:1140px;margin:0 auto;padding:13px 28px;display:flex;align-items:center;justify-content:space-between;}
 .brand{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:4px;color:var(--gold);opacity:0.85;}
-.topbar-right{display:flex;align-items:center;gap:16px;}
-.lang-toggle{display:flex;border:1px solid var(--border);overflow:hidden;}
-.lang-btn{padding:7px 16px;font-family:'Cinzel',serif;font-size:0.68em;letter-spacing:2px;border:none;cursor:pointer;transition:all 0.2s;}
-.lang-btn.active{background:var(--gold);color:#000;}
-.lang-btn:not(.active){background:transparent;color:var(--muted);}
-.auth-badge{display:flex;align-items:center;gap:8px;}
-.auth-user{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1.5px;color:var(--teal);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.topbar-right{display:flex;align-items:center;gap:18px;}
 /* ── TOPBAR GREETING ── */
 #topbar-greeting{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.95em;color:var(--gold);opacity:0;white-space:nowrap;pointer-events:none;transition:opacity 0.7s ease;margin-right:4px;}
 #topbar-greeting.show{opacity:1;}
 /* ── TIER BADGE (in banners) ── */
 .tier-badge{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:rgba(214,168,92,0.72);white-space:nowrap;}
+/* ── AUTH ── */
+.auth-badge{display:flex;align-items:center;gap:8px;}
+.auth-user{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1.5px;color:var(--teal);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;}
+.auth-user::after{content:' ▾';font-size:0.75em;opacity:0.5;}
 .auth-btn{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1.5px;padding:5px 12px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all 0.2s;}
 .auth-btn:hover{border-color:var(--gold);color:var(--gold);}
 .auth-btn.signin{border-color:var(--gold-dim);color:var(--gold);}
+/* ── HAMBURGER BUTTON ── */
+.hamburger-btn{background:none;border:none;cursor:pointer;padding:4px 2px;display:flex;flex-direction:column;justify-content:center;gap:5px;}
+.hamburger-btn span{display:block;width:22px;height:1.5px;background:var(--gold);opacity:0.82;transition:opacity 0.2s;}
+.hamburger-btn:hover span{opacity:1;}
+/* ── SIDE PANEL ── */
+.side-overlay{position:fixed;inset:0;background:rgba(10,12,18,0.55);z-index:150;display:none;backdrop-filter:blur(3px);}
+.side-overlay.open{display:block;}
+.side-panel{position:fixed;top:0;right:-280px;width:260px;height:100dvh;background:#0d1220;border-left:1px solid rgba(46,74,112,0.5);z-index:151;transition:right 0.32s cubic-bezier(0.4,0,0.2,1);display:flex;flex-direction:column;padding:0;}
+.side-panel.open{right:0;}
+.side-panel-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px 16px;border-bottom:1px solid rgba(46,74,112,0.3);}
+.side-panel-brand{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:4px;color:var(--gold);opacity:0.85;}
+.side-panel-close{background:none;border:none;color:var(--gold);opacity:0.6;font-size:1.1em;cursor:pointer;padding:2px 4px;transition:opacity 0.2s;}
+.side-panel-close:hover{opacity:1;}
+.side-panel-section{padding:22px 22px 18px;border-bottom:1px solid rgba(46,74,112,0.25);}
+.side-panel-lbl{font-family:'Cinzel',serif;font-size:0.52em;letter-spacing:3px;color:var(--muted);opacity:0.7;margin-bottom:14px;}
+.lang-toggle{display:flex;border:1px solid var(--border);overflow:hidden;width:100%;}
+.lang-btn{flex:1;padding:9px 0;font-family:'Cinzel',serif;font-size:0.68em;letter-spacing:2px;border:none;cursor:pointer;transition:all 0.2s;text-align:center;}
+.lang-btn.active{background:var(--gold);color:#000;}
+.lang-btn:not(.active){background:transparent;color:var(--muted);}
 
 /* ── HERO ── */
 .hero{
@@ -119,20 +130,21 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 
 /* Mobile hero */
 @media(max-width:768px){
-  .hero{max-height:600px;}
+  .hero{max-height:none;overflow:visible;}
   .hero-inner{flex-direction:column;min-height:auto;}
-  .hero-portrait-col{flex:none;height:240px;width:100%;position:relative;}
+  .hero-portrait-col{flex:none;height:320px;width:100%;position:relative;}
   .hero-portrait-wrap{position:absolute;inset:0;}
-  .hero-portrait-wrap img{object-position:center center;}
+  .hero-portrait-wrap img{object-position:center 8%;}
   .hero-portrait-wrap::after{
     background:
-      linear-gradient(to bottom, transparent 50%, var(--bg) 100%),
-      linear-gradient(to right,  transparent 55%, var(--bg) 100%);
+      linear-gradient(to bottom, transparent 52%, var(--bg) 100%),
+      linear-gradient(to right,  transparent 60%, var(--bg) 100%);
   }
-  .hero-text-col{padding:20px 20px 44px;text-align:center;}
-  .hero-title{font-size:1.85em;}
-  .hero-quote{margin:0 auto 28px;border-left:none;border-top:1px solid rgba(125,88,56,0.35);padding:18px 0 0;text-align:center;max-width:100%;}
-  .hero-sep{margin:0 auto 22px;}
+  .hero-text-col{padding:18px 22px 32px;text-align:center;}
+  .hero-title{font-size:2em;}
+  .hero-greeting{margin-bottom:14px;font-size:1em;}
+  .hero-quote{display:none;}
+  .hero-sep{margin:0 auto 18px;}
   .hero-runes{display:none;}
 }
 @media(max-width:420px){
@@ -437,12 +449,8 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
 <!-- ═══ TOPBAR ═══ -->
 <header class="topbar">
   <div class="topbar-inner">
-    <div class="brand" id="ui-brand">AGNDOFA · RÚNAR</div>
+    <div class="brand" id="ui-brand">AGNDOFA</div>
     <div class="topbar-right">
-      <div class="lang-toggle">
-        <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
-        <button class="lang-btn"        id="btn-is" onclick="setLang('is')">IS</button>
-      </div>
       <span id="topbar-greeting"></span>
       <div class="auth-badge">
         <div class="auth-dropdown-wrap" id="auth-dropdown-wrap">
@@ -458,6 +466,9 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
         </div>
         <button class="auth-btn signin" id="auth-action-btn" onclick="handleAuthBtn()">SIGN IN</button>
       </div>
+      <button class="hamburger-btn" id="hamburger-btn" onclick="openSidePanel()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
 </header>
@@ -472,7 +483,7 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
     </div>
     <div class="hero-text-col">
       <div class="hero-eyebrow" id="hero-eyebrow">THE RUNE KEEPER</div>
-      <h1 class="hero-title" id="ui-title">Rúnar the Rune Keeper</h1>
+      <h1 class="hero-title" id="ui-title">Rúnar</h1>
       <p class="hero-sub" id="ui-sub">Draw a rune. Hear the old tongue speak.</p>
       <p class="hero-greeting" id="hero-greeting"></p>
       <div class="hero-sep"></div>
@@ -870,13 +881,8 @@ function updateAuthUI() {
 
     // ── Credits tier ──
     if (userTier === 'credits') {
-      freeBanner.style.display   = 'none';
-      creditsBanner.style.display = 'flex';
-      document.getElementById('credits-text').textContent = 'Rune Seeker';
-      const balLbl = document.getElementById('credits-balance-lbl');
-      balLbl.textContent = lang === 'is' ? `${userCredits} lestur` : `${userCredits} reading${userCredits !== 1 ? 's' : ''}`;
-      balLbl.className   = 'credits-balance' + (userCredits === 0 ? ' empty' : userCredits <= 3 ? ' low' : '');
-      document.getElementById('redeem-link').textContent = lang === 'is' ? '+ GJAFAKORT' : '+ GIFT CARD';
+      freeBanner.style.display    = 'none';
+      creditsBanner.style.display = 'none'; // info lives in dropdown
       if (userCredits <= 0) {
         const outputVisible = document.getElementById('reader-output')?.style.display !== 'none';
         if (!outputVisible) {
@@ -907,21 +913,13 @@ function updateAuthUI() {
 
     // ── Free tier monthly counter ──
     creditsBanner.style.display = 'none';
+    freeBanner.style.display    = 'none'; // info lives in dropdown
     const used      = getFreeMonthCount(currentUser.id);
     const remaining = Math.max(0, FREE_REGISTERED_LIMIT - used);
-    const countEl   = document.getElementById('free-user-count');
-    freeBanner.style.display = 'flex';
-    document.getElementById('free-user-text').textContent = 'The Curious';
     if (remaining > 0) {
-      countEl.textContent = lang === 'is'
-        ? `${remaining} af 5 lestrum eftir í mánuðinum`
-        : `${remaining} of ${FREE_REGISTERED_LIMIT} readings remaining this month`;
-      countEl.className = 'free-user-count' + (remaining === 1 ? ' warn' : '');
       upgradeGate.style.display = 'none';
       content.style.display     = 'block';
     } else {
-      countEl.textContent = lang === 'is' ? 'Mánuðarlegar lestrar uppurnar' : 'Monthly readings used up';
-      countEl.className = 'free-user-count exhausted';
       const outputVisible = document.getElementById('reader-output')?.style.display !== 'none';
       if (outputVisible) {
         upgradeGate.style.display = 'none';
@@ -1285,13 +1283,33 @@ document.addEventListener('click', e => {
   if (wrap && !wrap.contains(e.target)) closeDropdown();
 });
 
+// ── SIDE PANEL ───────────────────────────────────────────
+function openSidePanel() {
+  document.getElementById('side-panel').classList.add('open');
+  document.getElementById('side-overlay').classList.add('open');
+}
+function closeSidePanel() {
+  document.getElementById('side-panel').classList.remove('open');
+  document.getElementById('side-overlay').classList.remove('open');
+}
+function updateSidePanelLang() {
+  const isIs = lang === 'is';
+  const spEn = document.getElementById('sp-btn-en');
+  const spIs = document.getElementById('sp-btn-is');
+  if (spEn) { spEn.classList.toggle('active', !isIs); }
+  if (spIs) { spIs.classList.toggle('active',  isIs); }
+  const lbl = document.getElementById('sp-lang-lbl');
+  if (lbl) lbl.textContent = isIs ? 'TUNGUMÁL' : 'LANGUAGE';
+}
+
 function updateUIText() {
   document.documentElement.lang = lang;
-  setText('ui-brand',     lang === 'is' ? 'AGNDOFA · RÚNAR' : 'AGNDOFA · RÚNAR');
+  setText('ui-brand', 'AGNDOFA');
   setText('atab-reading',    lang === 'is' ? '✦ LESTUR' : '✦ READING');
   setText('atab-collection', lang === 'is' ? '◈ SAFN RÚNA' : '◈ RUNES COLLECTION');
   setText('hero-eyebrow', lang === 'is' ? 'RÚNAVÖRÐURINN' : 'THE RUNE KEEPER');
-  setText('ui-title',     lang === 'is' ? 'Rúnar Rúnavörðurinn' : 'Rúnar the Rune Keeper');
+  setText('ui-title', 'Rúnar');
+  updateSidePanelLang();
   setText('ui-sub',       lang === 'is' ? 'Dragðu rúnu. Hlustaðu á gömlu tunguna.' : 'Draw a rune. Hear the old tongue speak.');
   const heroQuote = document.getElementById('hero-quote');
   if (heroQuote) heroQuote.innerHTML = lang === 'is'
@@ -1843,6 +1861,22 @@ window.addEventListener('DOMContentLoaded', async () => {
   if (!currentUser) { showTopbarGreeting(); }
 });
 </script>
+
+<!-- ═══ SIDE PANEL ═══ -->
+<div class="side-overlay" id="side-overlay" onclick="closeSidePanel()"></div>
+<nav class="side-panel" id="side-panel">
+  <div class="side-panel-head">
+    <span class="side-panel-brand">AGNDOFA</span>
+    <button class="side-panel-close" onclick="closeSidePanel()">✕</button>
+  </div>
+  <div class="side-panel-section">
+    <div class="side-panel-lbl" id="sp-lang-lbl">LANGUAGE</div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="sp-btn-en" onclick="setLang('en');closeSidePanel()">EN</button>
+      <button class="lang-btn"        id="sp-btn-is" onclick="setLang('is');closeSidePanel()">IS</button>
+    </div>
+  </div>
+</nav>
 
 <!-- ═══ NAME PROMPT MODAL ═══ -->
 <div class="name-overlay" id="name-overlay" style="display:none;">
