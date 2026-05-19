@@ -1389,8 +1389,13 @@ function updateSidePanel() {
   if (upEl)   upEl.style.display   = hide ? 'none' : 'block';
   if (giftEl) giftEl.style.display = hide ? 'none' : 'block';
   // lang labels
-  setText('sp-gift',    is ? '+ GJAFAKORT' : '+ GIFT CARD');
-  setText('sp-upgrade', is ? 'UPPFÆRA → STANDARD' : 'UPGRADE → STANDARD');
+  setText('sp-gift', is ? '+ GJAFAKORT' : '+ GIFT CARD');
+  // Tier upgrade path: free → Rune Seeker → Standard → Premium
+  if (userTier === 'credits') {
+    setText('sp-upgrade', is ? 'UPPFÆRA → STANDARD — BRÁÐLEGA' : 'UPGRADE → STANDARD — COMING SOON');
+  } else {
+    setText('sp-upgrade', is ? 'UPPFÆRA → RUNE SEEKER' : 'UPGRADE → RUNE SEEKER');
+  }
 }
 
 // ── SIDE PANEL ───────────────────────────────────────────
@@ -2012,7 +2017,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       <span class="sp-row" id="sp-email"></span>
       <span class="sp-row" id="sp-balance" style="display:none;"></span>
       <button class="sp-item" id="sp-gift" onclick="toggleRedeem();closeSidePanel()">+ GIFT CARD</button>
-      <button class="sp-item coming" id="sp-upgrade">UPGRADE → STANDARD</button>
+      <button class="sp-item coming" id="sp-upgrade">UPGRADE → RUNE SEEKER</button>
       <button class="sp-item signout" onclick="handleAuthBtn();closeSidePanel()">SIGN OUT</button>
     </div>
   </div>
