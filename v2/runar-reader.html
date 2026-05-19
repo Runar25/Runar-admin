@@ -1418,6 +1418,49 @@ function updateSidePanelLang() {
   if (lbl) lbl.textContent = isIs ? 'TUNGUMÁL' : 'LANGUAGE';
 }
 
+// ─── ROTATING HERO PHRASES ───────────────────────────────
+const HERO_PHRASES = {
+  en: [
+    "You have returned. Good. The stones have been keeping something for you.",
+    "Close your eyes for a moment. Then draw. The right rune never misses its mark.",
+    "I have been sitting with these stones a long time. They know you better than you think.",
+    "Something brought you here today. It was not accident. Draw, and we will see what it was.",
+    "The rune you draw is rarely the one you expected. That is the point.",
+    "Before you draw — breathe. The stones read stillness as clearly as questions.",
+    "I have watched seekers come through darkness, doubt, and full moons. The runes receive all of it. Draw freely.",
+    "You do not need to know the question clearly. The rune will find what is asking.",
+    "Some days the stone speaks loudly. Other days it whispers. Either way — it speaks.",
+    "The runes have no bad days. They simply tell the truth. Are you ready for that today?",
+    "Whatever you carry through the door — leave it on the table. The reading begins from here.",
+    "Draw when you are ready. There is no wrong moment — only the one you chose.",
+  ],
+  is: [
+    // 🇮🇸 TO BE REVIEWED BY NATIVE SPEAKER
+    "Þú ert kominn aftur. Gott. Steinarnir höfðu eitthvað í geymslu fyrir þig.",
+    "Lokaðu augunum. Dragðu síðan. Rétta rúnan finnur alltaf leiðina.",
+    "Ég hef setið með þessa steina lengi. Þeir þekkja þig betur en þú veist.",
+    "Eitthvað leiddi þig hingað í dag — ekki tilviljun. Dragðu, og við sjáum hvað það var.",
+    "Rúnan sem þú dregur er sjaldan sú sem þú væntiðst. Þetta er einmitt málið.",
+    "Andaðu áður en þú dregur. Steinarnir lesa kyrrð jafn vel og spurningar.",
+    "Ég hef séð leitendur koma — í myrkri, í efi, undir fullri tungl. Rúnirnar taka á móti öllu. Dragðu.",
+    "Þú þarft ekki skýra spurningu. Rúnan finnur það sem er að leita.",
+    "Sum dög mælir steininn hátt. Önnur dög hvíslir hann. En hann mælir alltaf.",
+    "Rúnirnar hafa engar slæmar stundir. Þær segja bara það sem er. Ertu tilbúinn?",
+    "Hvað sem þú berð með þér — settu það niður. Lesturinn hefst hér.",
+    "Dragðu þegar þú ert tilbúinn. Enginn stund er rangur — aðeins sá sem þú velur.",
+  ],
+};
+
+// Pick once per session, stays the same if language switches
+let _heroPhrase = null;
+function getHeroPhrase() {
+  const pool = HERO_PHRASES[lang] || HERO_PHRASES.en;
+  if (_heroPhrase === null) {
+    _heroPhrase = Math.floor(Math.random() * pool.length);
+  }
+  return pool[_heroPhrase] || pool[0];
+}
+
 function updateUIText() {
   document.documentElement.lang = lang;
   setText('ui-brand', 'AGNDOFA');
@@ -1428,7 +1471,7 @@ function updateUIText() {
   setText('ui-title',   'Rúnar');
   setText('ui-title-m', 'Rúnar');
   updateSidePanelLang();
-  setText('ui-sub',       lang === 'is' ? 'Dragðu rúnu. Hlustaðu á gömlu tunguna.' : 'Draw a rune. Hear the old tongue speak.');
+  setText('ui-sub', getHeroPhrase());
   const heroQuote = document.getElementById('hero-quote');
   if (heroQuote) heroQuote.innerHTML = lang === 'is'
     ? '"Rúnirnar spá ekki um örlög þín.<br>Þær minna þig á veginn<br>sem þú gengur þegar."'
