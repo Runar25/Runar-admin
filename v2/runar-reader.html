@@ -59,21 +59,21 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .side-panel-brand{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:4px;color:var(--gold);opacity:0.85;}
 .side-panel-close{background:none;border:none;color:var(--gold);opacity:0.6;font-size:1.1em;cursor:pointer;padding:2px 4px;transition:opacity 0.2s;}
 .side-panel-close:hover{opacity:1;}
-.side-panel-section{padding:20px 24px 16px;border-bottom:1px solid rgba(214,168,92,0.12);}
-.side-panel-lbl{font-family:'Cinzel',serif;font-size:0.52em;letter-spacing:3px;color:var(--gold);opacity:0.45;margin-bottom:14px;}
-.lang-toggle{display:flex;border:1px solid rgba(214,168,92,0.3);overflow:hidden;width:100%;}
-.lang-btn{flex:1;padding:9px 0;font-family:'Cinzel',serif;font-size:0.68em;letter-spacing:2px;border:none;cursor:pointer;transition:all 0.2s;text-align:center;}
-.lang-btn.active{background:var(--gold);color:#000;}
-.lang-btn:not(.active){background:transparent;color:rgba(214,168,92,0.55);}
-/* side panel account items */
-.sp-name{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:3px;color:var(--gold);opacity:0.9;padding:18px 24px 4px;}
-.sp-tier{font-family:'Cinzel',serif;font-size:0.52em;letter-spacing:2.5px;color:var(--gold);opacity:0.5;padding:0 24px 16px;}
-.sp-row{font-family:'Cinzel',serif;font-size:0.52em;letter-spacing:1.5px;color:rgba(214,168,92,0.55);padding:3px 24px;}
-.sp-item{display:block;width:100%;text-align:left;font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;padding:13px 24px;background:none;border:none;color:var(--gold);opacity:0.72;cursor:pointer;transition:opacity 0.15s;}
+/* ── SIDE PANEL SECTIONS ── */
+.side-panel-section{padding:18px 24px 14px;border-bottom:1px solid rgba(214,168,92,0.1);}
+.side-panel-lbl{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:3px;color:var(--gold);opacity:0.38;margin-bottom:14px;}
+/* one font throughout — Cinzel, gold, varying opacity */
+.sp-row{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--gold);opacity:0.48;padding:4px 0;display:block;}
+.sp-item{display:block;width:100%;text-align:left;font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;padding:12px 0;background:none;border:none;color:var(--gold);opacity:0.7;cursor:pointer;transition:opacity 0.15s;}
 .sp-item:hover{opacity:1;}
-.sp-item.signout{color:var(--gold);opacity:0.4;border-top:1px solid rgba(214,168,92,0.1);margin-top:4px;}
-.sp-item.signout:hover{opacity:0.75;}
-.sp-item.coming{opacity:0.25;pointer-events:none;}
+.sp-item.signout{opacity:0.38;border-top:1px solid rgba(214,168,92,0.1);margin-top:6px;padding-top:14px;}
+.sp-item.signout:hover{opacity:0.7;}
+.sp-item.coming{opacity:0.2;pointer-events:none;}
+/* lang toggle in panel */
+.lang-toggle{display:flex;border:1px solid rgba(214,168,92,0.25);overflow:hidden;width:100%;}
+.lang-btn{flex:1;padding:10px 0;font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;border:none;cursor:pointer;transition:all 0.2s;text-align:center;}
+.lang-btn.active{background:var(--gold);color:#000;}
+.lang-btn:not(.active){background:transparent;color:rgba(214,168,92,0.5);}
 
 /* ── HERO ── */
 .hero{
@@ -737,13 +737,19 @@ function incFreeMonthCount(userId) { localStorage.setItem(freeMonthKey(userId), 
 async function fetchUserProfile(userId) {
   try {
     const { data } = await sb.from('user_profiles')
-      .select('tier, credits_balance, name')
+      .select('tier, credits_balance, name, lang')
       .eq('id', userId)
       .maybeSingle();
     if (data) {
       userTier    = data.tier            || 'free';
       userCredits = data.credits_balance || 0;
       userName    = data.name            || '';
+      // Restore language preference
+      if (data.lang && data.lang !== lang) {
+        lang = data.lang;
+        applyLangToggle(lang);
+        updateSidePanelLang();
+      }
     }
   } catch(e) { console.warn('fetchUserProfile:', e.message); }
   updateAuthUI();
@@ -1074,6 +1080,9 @@ async function sendMagicLink() {
 // ─── LANGUAGE ────────────────────────────────────────────
 function setLang(l) {
   if (l === lang) return;
+  localStorage.setItem('runar_lang', l);
+  // Save to profile async (best-effort)
+  if (currentUser) sb.from('user_profiles').update({ lang: l }).eq('id', currentUser.id).then(() => {});
   const outputVisible = document.getElementById('reader-output')?.style.display !== 'none';
   if (outputVisible && readerRune) {
     if (readerTexts[l]) {
@@ -1240,12 +1249,12 @@ function skipName() {
 function updateSidePanel() {
   const accEl = document.getElementById('sp-account');
   if (!accEl) return;
+  const tierLabels = { free:'THE CURIOUS', credits:'RUNE SEEKER', standard:'STANDARD', premium:'PREMIUM' };
+  const tierHeader = currentUser ? (tierLabels[userTier] || userTier.toUpperCase()) : 'VISITOR';
+  setText('sp-tier-header', tierHeader);
   if (!currentUser) { accEl.style.display = 'none'; return; }
   accEl.style.display = 'block';
   const is = lang === 'is';
-  const tierLabels = { free:'The Curious', credits:'Rune Seeker', standard:'Standard', premium:'Premium' };
-  setText('sp-name',  displayName());
-  setText('sp-tier',  '◈ ' + (tierLabels[userTier] || userTier));
   setText('sp-email', currentUser.email);
   const balEl = document.getElementById('sp-balance');
   if (balEl) {
@@ -1799,6 +1808,14 @@ async function generateVoice() {
 
 // ─── INIT ────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', async () => {
+  // Restore language from localStorage (before auth, so UI is correct immediately)
+  const savedLang = localStorage.getItem('runar_lang');
+  if (savedLang && savedLang !== lang) {
+    lang = savedLang;
+    applyLangToggle(lang);
+    updateSidePanelLang();
+  }
+
   // Magic link callback
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.has('code')) {
@@ -1855,25 +1872,23 @@ window.addEventListener('DOMContentLoaded', async () => {
 <div class="side-overlay" id="side-overlay" onclick="closeSidePanel()"></div>
 <nav class="side-panel" id="side-panel">
   <div class="side-panel-head">
-    <span class="side-panel-brand">AGNDOFA</span>
+    <span class="side-panel-brand" id="sp-tier-header">VISITOR</span>
     <button class="side-panel-close" onclick="closeSidePanel()">✕</button>
   </div>
 
   <!-- Account (logged-in only) -->
   <div id="sp-account" style="display:none;">
-    <div class="sp-name" id="sp-name"></div>
-    <div class="sp-tier" id="sp-tier"></div>
-    <div class="sp-row"  id="sp-email"></div>
-    <div class="sp-row"  id="sp-balance" style="display:none;"></div>
-    <div class="side-panel-section" style="padding-top:12px;padding-bottom:12px;">
+    <div class="side-panel-section">
+      <span class="sp-row" id="sp-email"></span>
+      <span class="sp-row" id="sp-balance" style="display:none;"></span>
       <button class="sp-item" id="sp-gift" onclick="toggleRedeem();closeSidePanel()">+ GIFT CARD</button>
       <button class="sp-item coming" id="sp-upgrade">UPGRADE → STANDARD</button>
       <button class="sp-item signout" onclick="handleAuthBtn();closeSidePanel()">SIGN OUT</button>
     </div>
   </div>
 
-  <!-- Language -->
-  <div class="side-panel-section">
+  <!-- Language — always last -->
+  <div class="side-panel-section" style="margin-top:auto;">
     <div class="side-panel-lbl" id="sp-lang-lbl">LANGUAGE</div>
     <div class="lang-toggle">
       <button class="lang-btn active" id="sp-btn-en" onclick="setLang('en');closeSidePanel()">EN</button>
