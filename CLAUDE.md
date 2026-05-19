@@ -24,9 +24,10 @@ runar-svgs.js          ← RUNE_SVGS (SVG glyfů)
 
 ## Edge Functions (`/supabase/functions/`)
 ```
-claude-proxy           ← forwards to Claude API
+claude-proxy           ← forwards to Claude API, enforces credits tier (402 při 0)
 elevenlabs-proxy       ← real-time TTS, vrací base64 → Blob URL
 elevenlabs-static      ← admin: generuje + ukládá MP3 do Storage
+redeem-code            ← (ZÍTRA) ověří gift code → přidá credits → tier = 'credits'
 shopify-webhook        ← (plánováno) tier upgrade po nákupu v Agndofa shopu
 ```
 Všechny deploynuty s `--no-verify-jwt`.
@@ -41,13 +42,16 @@ runar_static_audio     ← statické audio, UNIQUE (rune_name, lang, version)
                           sloupce: id, rune_name, rune_glyph, lang, version(int),
                                    text, audio_url, ready, created_at, updated_at
 user_profiles          ← profily přihlášených uživatelů (RLS ✓)
-                          sloupce: id (= auth.users.id), email, name, dob_d/m/y,
-                                   lang, life_rune, tier, shopify_customer_id,
-                                   created_at, updated_at
+                          sloupce: id (= auth.users.id), name, lang, tier,
+                                   credits_balance, created_at
+                          POZOR: email a updated_at sloupce NEEXISTUJÍ v DB!
+                          upsert posílá pouze: { id } s ignoreDuplicates:true
 readings               ← každé čtení uživatele (RLS ✓)
                           sloupce: id, user_id, rune_name, rune_glyph, lang,
                                    short_text, deep_text, area, seeking, question,
                                    drawn_at
+gift_codes             ← (ZÍTRA vytvořit) kódy na fyzických kartičkách
+                          sloupce: code (unique), credits, used_by, used_at, created_at
 ```
 
 ## Supabase Storage
@@ -62,28 +66,31 @@ runar-audio (PUBLIC)   ← static/en/fehu_1.mp3, static/en/fehu_2.mp3, ...
 - IS model: `eleven_v3` (auto-detekuje islandštinu z textu)
 - Model se určuje v Edge Function podle `lang` — NIKDY nevěř frontendu
 
+## Tier systém
+```
+Visitor    (free_trial) → 3 čtení celkem, anon, jen Fehu v kolekci
+The Curious (free)      → 5 čtení/měsíc, všech 25 run, no voice
+Rune Seeker (credits)   → 1 credit = 1 čtení, dynamický hlas, never expire
+Standard               → unlimited, dynamický hlas (coming soon)
+Premium                → unlimited + ceremonial (coming soon)
+```
+Upgrade path: Visitor → The Curious (zdarma) → Rune Seeker (fyzická karta) → Standard → Premium
+
 ## Klíčová rozhodnutí
 - Poetický hlas Rúnara — žádný tech žargon v UI, nikdy
 - Dva jazyky — EN a IS jsou samostatné výklady, ne překlady
-- EN app → EN hlas, IS app → IS hlas (žádný překlad)
+- IS překlady v UI zatím jen placeholdery — čekají na review rodilého mluvčího
+- Rotující hero fráze (12 EN + 12 IS) — náhodně při každém načtení, HERO_PHRASES v readeru
 - Statické audio = pre-generované MP3 v Storage (free tier, nulové náklady)
 - Dynamické audio = real-time ElevenLabs (placený tier, ephemeral blob)
-- Verzování: každý save = nová verze (fehu_1, fehu_2...), MAX(version) pro určení další
+- Verzování audio: každý save = nová verze (fehu_1.mp3, fehu_2.mp3...), MAX(version)
 - Reader tab: po tažení runy auto-přehraje náhodnou verzi static audio
-- Admin schvalování zrušeno — admin generuje a ukládá přímo
-- base64 → Blob URL pro audio player (funguje ve všech prohlížečích)
-- Character tab odstraněn z UI — charakter se edituje v runar-character.js
+- upsertProfile() → pouze { id } s ignoreDuplicates:true (ostatní sloupce mají DB defaults)
 - Supabase RLS: každý uživatel vidí jen svá vlastní data (auth.uid() = user_id)
-- Shopify integrace: zákazník Agndofa shopu = uživatel Rúnara (propojení přes email + shopify_customer_id)
+- Credits se kupují jako fyzická karta v Agndofa shopu — žádný Stripe
 
 ## Bezpečnost & GDPR
-Island je člen EEA → platí plné GDPR. Zpracování osobních dat:
-
-| Data | Právní základ |
-|------|---------------|
-| Email | Smlouva (ToS při registraci) |
-| Jméno, DOB | Souhlas — volitelné pole, uživatel zadává sám |
-| Runové výklady | Smlouva — součást poskytované služby |
+Island je člen EEA → platí plné GDPR.
 
 **Co je hotovo:**
 - [x] Supabase region: eu-west-1 (Irsko) — data fyzicky v EU
@@ -95,198 +102,96 @@ Island je člen EEA → platí plné GDPR. Zpracování osobních dat:
 - [ ] DPA (Data Processing Agreement) se Supabase — podepsat v Supabase Dashboard → Settings → Legal
 - [ ] Privacy Policy — EN + IS, odkaz v footeru readeru i na webu agndofa.is
 - [ ] Delete account funkce v readeru — tlačítko v profilu, volá `auth.admin.deleteUser()` přes Edge Function
-- [ ] Shopify: zákazníci Agndofa shopu jako uživatelé Rúnara (viz Shopify integrace níže)
-
-## Shopify integrace (plán — Vrstva 3)
-Cíl: jeden zákazník, jeden záznam. Platba proběhne v Agndofa Shopify shopu, tier se automaticky přidělí v Rúnarovi.
-
-**Flow:**
-```
-Zákazník koupí "Standard" na agndofa.is (Shopify)
-→ Shopify webhook orders/paid → Edge Function shopify-webhook
-→ Funkce ověří HMAC signature (bezpečnost)
-→ Najde user_profiles WHERE email = zákazníkův email
-→ Nastaví tier = 'standard', uloží shopify_customer_id
-→ Uživatel otevře Rúnar → má Standard tier
-```
-
-**Proč tohle funguje pro GDPR:**
-- Shopify řeší platební data a PCI DSS — ty se o to nestaráš
-- Souhlas s GDPR při nákupu v Shopify pokryje i Rúnara (musí být explicitně v ToS/Privacy Policy)
-- Data v Rúnarovi (výklady, profil) zůstávají v EU (Supabase Irsko)
-- Shopify Customer ID je jen referenční odkaz, ne duplikace citlivých dat
 
 ---
 
-## ROADMAP v0.6 (2026-05-17)
+## ROADMAP v0.7 (2026-05-19)
 
 ### VRSTVA 0 — ZÁKLAD ✅ HOTOVO
-- [x] Single HTML aplikace (runar-shrine.html + 5 JS modulů)
-- [x] Supabase (knowledge_base, runar_character, runar_corrections, runar_static_audio, readings)
-- [x] Claude proxy Edge Function
-- [x] 25 run Elder Futhark + Blank (SVG glyfy)
-- [x] EN + IS přepínač
-- [x] Life rune kalkulace (datum narození)
-- [x] Dvouvrstvý výklad (RÚNAR SPEAKS + DEEPER REFLECTION)
-- [x] Word corrections systém (Supabase + localStorage fallback)
-- [x] Character tab → nahrazen Progress tabem (grid 25 run × EN/IS stav)
-- [x] Blank runa → zobrazuje tvar kamene (stejný jako ostatní runy, jen bez rytiny)
 
-### VRSTVA 1 — HLAS ← AKTUÁLNÍ PRIORITA
-
-#### 1A — Statické audio (25 run × 2 jazyky)
-- [x] Supabase Storage bucket "runar-audio" (PUBLIC)
-- [x] runar_static_audio tabulka (UNIQUE rune_name+lang+version)
-- [x] elevenlabs-static Edge Function (generuj → Storage, verzované)
-- [x] Teach Rúnar tab = admin generátor statického audia
-- [x] IS: eleven_v3 hardcoded v Edge Function (spolehlivá islandština)
-- [x] Verzování: každý save = nová verze (fehu_1.mp3, fehu_2.mp3...)
-- [x] MAX(version) query — bezpečné přiřazení verze, nikdy nepřepíše
-- [x] Teach tab: zobrazuje počet EN/IS verzí pro vybranou runu
-- [x] Reader tab: auto-přehraje náhodnou verzi static audio po tažení runy
-- [x] UX: "TEACH ANOTHER RUNE" místo auto-resetu
+### VRSTVA 1 — HLAS ✅ PŘEVÁŽNĚ HOTOVO
+- [x] Statické audio pipeline (ElevenLabs → Storage → Reader)
+- [x] Dynamické audio (real-time TTS pro placené tiery)
+- [x] Admin generátor v shrine
 - [ ] Nahrát všech 25 × EN + 25 × IS run (zatím jen část)
-- [ ] Progress tab: grid všech 25 run s EN/IS stavem (kolik verzí, chybí)
 
-#### 1B — Dynamické audio (osobní výklady) ✅ HOTOVO
-- [x] elevenlabs-proxy Edge Function (real-time TTS)
-- [x] base64 → Blob URL (audio player funguje ve všech prohlížečích)
-- [x] EN/IS hlas + model podle aktivního jazyka
-- [x] "GENERATE RÚNAR'S VOICE" v Reader tabu
-- [x] Loading stav + error handling
-- [x] Audio player — Rúnarova barva (#2E4A70 gradient, ne černá)
-
-#### 1C — Admin nástroj ✅ HOTOVO
-- [x] Integrován v Teach Rúnar tabu
-- [x] Generate → edit → preview hlas → save flow
-- [x] Editovatelný text před uložením hlasu
-- [x] Preview hlasu PŘED uložením
-- [x] Google OAuth pro admin přihlášení (shrine)
-
-### VRSTVA 1.5 — UX & VIZUÁL ✅ HOTOVO (2026-05-16/17)
-Tato vrstva vznikla organicky — solidní základ před spuštěním Vrstvy 2.
-
-- [x] **Redesign runar-reader.html** — hero sekce, topbar, Sacred Color Palette
-  - Hero: dvousloupcový layout (portrét vlevo, text vpravo)
-  - Topbar: sticky, blur, brand + lang toggle + auth badge
-  - Hero collapse: plynulá animace při začátku čtení (max-height transition)
-- [x] **Portrét Rúnara** — runar-portrait.png v `v2/assets/`
-  - object-fit:contain + object-position:center bottom (celá postava včetně ruky)
-  - mask-image radial gradient — vignette, bílé pozadí zmizí přirozeně
-- [x] **Vizuální assety** — uloženy v `v2/assets/` (portrait, fullbody, travel, ceremonial, expressions, sacred-palette, moodboard)
-- [x] **IS jazyková kompletnost** — všechny UI řetězce přeloženy
-  - SIGN IN/OUT → SKRÁ INN/ÚT
-  - Trial banner, auth gate, hero quote, eyebrow, trial-end prompt
-- [x] **Trial gate UX** — čtení proběhne celé, join výzva se objeví 8s po dokončení streamu
-- [x] **Google OAuth** — shrine + reader, redirectTo na GitHub Pages
-  - Supabase URL Configuration: Site URL = `https://runar25.github.io`
-  - Google Cloud Console: OAuth client, External + In production
-  - Resend.com SMTP pro magic link (bypass 2/hod limit)
-- [x] **Free tier reading counter** (2026-05-17)
-  - Banner pro přihlášené uživatele: "X of 5 readings remaining this month"
-  - localStorage klíčovaný userId + YYYY-MM (automatický reset každý měsíc)
-  - Barevná signalizace: teal → gold (1 zbývá) → červená (vyčerpáno)
-  - Upgrade gate po vyčerpání (tlačítko disabled, "Coming Soon")
-  - IS překlady pro banner i gate
-  - Soft gate: nespustí se uprostřed čtení, respektuje outputVisible check
+### VRSTVA 1.5 — UX & VIZUÁL ✅ HOTOVO (2026-05-19)
+- [x] Topbar: AGNDOFA + jméno/tier + hamburger menu
+- [x] Side panel: tier v hlavičce, jazyk dole, account sekce
+- [x] Barva: #FFBF00 globálně (bylo #D6A85C)
+- [x] Hero mobile: eyebrow + title overlaid na portrét (position:absolute bottom:15%)
+- [x] Hero desktop: runes řádek odstraněn
+- [x] Hero subtitle: rotující fráze Rúnarova hlasu (12 EN, IS čeká na native review)
+- [x] Name prompt modal: "Before the Runes Speak" — Rúnarův hlas
+- [x] Tier notices v Reading tabu: Visitor (3 čtení) + The Curious (5/měsíc) s dynamickým počítadlem
+- [x] Visitor gate v Collection: jen Fehu klikatelná, ostatní dimmed
+- [x] Upgrade path: The Curious → Rune Seeker → Standard (coming soon)
 
 ### VRSTVA 2 — AUTH & UŽIVATELSKÝ ÚČET ✅ HOTOVO
-- [x] Supabase Auth — magic link
-- [x] Google OAuth (shrine + reader, redirectTo GitHub Pages)
-- [x] `user_profiles` tabulka — RLS, upsert při přihlášení, shopify_customer_id připraveno
-- [x] `readings` tabulka — RLS, insert po každém čtení, index na user_id + drawn_at
-- [x] Monthly counter synchronizován z DB (syncMonthlyCount → localStorage seed)
-- [x] Deník — posledních 5 výkladů, skládací panel, IS překlady
-- [x] Runes Collection tab — grid 25 run, audio dostupnost, inline detail + přehrávač
-- [ ] **Delete account** — tlačítko v UI, Edge Function která zavolá auth.admin.deleteUser() (GDPR)
-- [ ] **Anonymní migrace** — po registraci přenést trial výklady do readings (nice-to-have)
+- [x] Magic link + Google OAuth
+- [x] user_profiles (RLS), readings (RLS)
+- [x] Deník, Runes Collection
+- [x] Language persistence (localStorage + user_profiles.lang)
+- [ ] Delete account (GDPR)
 
-### VRSTVA 3 — MONETIZACE ← DALŠÍ PRIORITA
-Tiers definovány v `runar-config.js` → `TIERS`. Frontend gate hotov, backend zatím nevynucuje.
-**Platba výhradně přes Shopify** (agndofa.is) — žádný Stripe. Webhook → Supabase Edge Function → credit/tier update.
+### VRSTVA 3 — MONETIZACE ← ZÍTŘEJŠÍ PRIORITA
 
-#### Platební model — Credits přes fyzickou kartu
-Klíčové rozhodnutí (2026-05-18): **credits se kupují jako fyzický produkt v Agndofa shopu.**
-- Fyzická karta Rúnara = gift card + reklamní karta + součást Agndofa brandu (kakao, runové sady)
-- Karta má unikátní kód (vytištěný nebo QR)
-- Zákazník koupí kartu v obchodě nebo ji dostane jako dárek / součást produktu
-- Zadá kód v Rúnar appce → dostane credits na účet
+#### Co stavíme ZÍTRA (Rune Seeker komplet):
+
+**1. SQL — gift_codes tabulka (5 min)**
+```sql
+CREATE TABLE gift_codes (
+  code        text PRIMARY KEY,
+  credits     integer NOT NULL DEFAULT 5,
+  used_by     uuid REFERENCES auth.users(id),
+  used_at     timestamptz,
+  created_at  timestamptz DEFAULT now()
+);
+```
+
+**2. Edge Function: redeem-code (30 min)**
+```
+POST { code } → ověří kód existuje + není použitý
+→ UPDATE user_profiles SET credits_balance += N, tier = 'credits'
+→ UPDATE gift_codes SET used_by, used_at
+→ vrátí { credits_remaining }
+```
+
+**3. Reader: napojit redeem UI (15 min)**
+- Tlačítko REDEEM volá `redeem-code` Edge Function
+- Po úspěchu updatuje UI (balance, tier label)
+- Error handling: kód neexistuje / již použit
+
+**4. Shrine: admin generátor kódů (30 min)**
+- Input: počet kódů × počet kreditů
+- Generuje náhodné kódy (FEHU-XXXX-XXXX formát)
+- Vkládá do gift_codes tabulky
+- Export do CSV pro tisk na kartičky
+
+#### Platební model
+- Credits = fyzická karta Rúnara (gift card)
+- Karta má kód → zákazník zadá v appce → dostane credits
 - Credits nevyprší, fungují across devices
+- 1 credit = 1 čtení s Rúnarovým hlasem
 
-**Flow fyzická karta → credits:**
-```
-Admin vygeneruje batch kódů v Supabase (gift_codes tabulka)
-→ Kódy se vytisknou na fyzické kartičky Rúnara
-→ Zákazník koupí kartu (v Agndofa shopu nebo fyzicky s kakaem)
-→ Zákazník zadá kód v Rúnar app → Edge Function ověří kód
-→ Kód označen jako použitý, user dostane N credits
-→ Credits se odečítají za každé čtení (nebo jiný premium úkon)
-```
+| Tier | Výklady | Dynamický hlas | Kolekce |
+|------|---------|----------------|---------|
+| Visitor | 3 celkem | ❌ | jen Fehu |
+| The Curious | 5/měsíc | ❌ | všech 25 |
+| Rune Seeker | kredity | ✅ | všech 25 |
+| Standard | unlimited | ✅ | všech 25 |
+| Premium | unlimited | ✅ | + ceremonial |
 
-**Shopify webhook (pro digitální nákup přímo v shopu):**
-```
-Zákazník koupí credits online na agndofa.is
-→ Shopify webhook orders/paid → shopify-webhook Edge Function
-→ Ověření HMAC podpisu → update user_profiles.credits_balance
-```
-
-| Tier | Výklady | Dynamický hlas | Deník | Runes Collection |
-|------|---------|----------------|-------|-----------------|
-| FREE TRIAL (anon) | 3 celkem | ❌ | ❌ | ✅ (jen poslech) |
-| FREE (účet) | 5/měsíc | ❌ | 5 posledních | ✅ |
-| CREDITS | 1 credit = 1 čtení | ✅ | unlimited | ✅ |
-| STANDARD | neomezené | ✅ | unlimited | ✅ |
-| PREMIUM | neomezené | ✅ | unlimited | ✅ + ceremonial |
-
-**Co postavit:**
-- [ ] **`gift_codes` tabulka** — `code` (unique), `credits`, `used_by`, `used_at`, `created_at`
-- [ ] **`credits_balance` sloupec** v user_profiles (nebo samostatná tabulka transakcí)
-- [ ] **`redeem-code` Edge Function** — ověří kód, přidá credits, označí jako použitý
-- [ ] **Redemption UI** v readeru — pole pro zadání kódu, potvrzení
-- [ ] **Admin: batch generátor kódů** v shrine (kolik kódů × kolik creditů)
-- [ ] **Shopify webhook** Edge Function (`shopify-webhook`) — pro online nákup
-- [ ] **Backend enforcement** v claude-proxy — ověřit credits/tier před každým čtením
-- [ ] **Feature gates v UI** — upgrade CTA pro zamčené funkce
-- [ ] **Privacy Policy** EN + IS — odkaz v readeru + agndofa.is
-- [ ] **DPA se Supabase** — Settings → Legal v Supabase Dashboard
-
-#### Fyzická karta — design brief (zatím jen myšlenky)
-- Formát: vizitka nebo menší (snadno do peněženky / přibalení k kakau)
-- Přední strana: Rúnar vizuál, Agndofa brand, runa
-- Zadní strana: kód (nebo QR → deeplink do app s předvyplněným kódem)
-- Použití: dárkové balení kakaa, runové sady, standalone gift card v shopu
-- Idea: různé runy na různých kartách (Fehu = bohatství, Berkana = nový začátek...)
-
-### VRSTVA 4 — CEREMONIAL MODE (Premium)
-- [ ] Oddělený system prompt
-- [ ] Guided ritual flow (5 kroků)
-- [ ] Ambience audio loop
-- [ ] Premium-only gate
-
-### VRSTVA 5 — KONTEXTOVÁ INTELIGENCE
-- [ ] Časový kontext v promptu (ráno/večer, roční období, Island TZ)
-- [ ] Lunární kalendář (fáze měsíce)
-- [ ] Sezónní události (slunovraty, Þorrablót)
-
-### VRSTVA 6 — PAMĚŤ & PERSONALIZACE
-- [ ] Injektování posledních N výkladů do promptu
-- [ ] Multi-rune layouts (3 runy, Norský kříž)
-- [ ] Konverzační follow-up
-
-### VRSTVA 7 — FYZICKÝ EKOSYSTÉM
-Fyzické produkty Agndofa jako vstupní bod do Rúnara.
-
-- [ ] **Rúnar gift card** — fyzická kartička s kódem (viz Vrstva 3 design brief)
-- [ ] **QR deeplink** na kartě → otevře reader s předvyplněným redemption kódem
-- [ ] **Runové sady** — každá sada obsahuje Rúnar kartu s credits
-- [ ] **Kakao ceremonial kit** — Rúnar karta přibalená k kakau (cross-sell)
-- [ ] NFC tag → spustí ceremonial mode (budoucnost)
-- [ ] Fyzický produkt vázaný na user účet (prémiový obsah při nákupu)
+### VRSTVA 4+ — BUDOUCNOST
+- Ceremonial mode (Premium)
+- Kontextová inteligence (čas, lunární kalendář, sezóna)
+- Paměť & personalizace (multi-rune, follow-up)
+- Fyzický ekosystém (QR deeplink, NFC)
+- Shopify webhook pro online nákup
 
 ### TECHNICKÝ DLUH
+- [ ] IS texty — review rodilým mluvčím (rotující fráze, notices, gates)
+- [ ] Delete account UI + Edge Function (GDPR)
+- [ ] Rate limiting v Edge Functions
 - [ ] Real streaming přes SSE (místo fake setTimeout)
-- [ ] Rate limiting v Edge Functions (ochrana před abuse)
-- [ ] Cost monitoring per user (kolik Claude/EL tokenů kdo spotřeboval)
-- [ ] Audio player redesign (aktuální #2E4A70 gradient "hruza" — custom controls)
-- [ ] Frontend → Vite/React až řádků > 2000 (reader aktuálně ~1300)
-- [ ] Delete account UI + Edge Function (GDPR právo na výmaz)
+- [ ] Nahrát zbývající statické audio (25 EN + 25 IS run)
