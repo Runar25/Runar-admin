@@ -501,6 +501,16 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
   </div>
 </div>
 
+<!-- ═══ RESET NOTIFICATION MODAL ═══ -->
+<div class="modal-overlay" id="reset-notif-modal" onclick="if(event.target===this)closeResetModal()">
+  <div class="modal" style="text-align:center;max-width:340px;">
+    <div class="modal-rune" style="font-size:2em;color:var(--gold);margin-bottom:16px;opacity:0.7;">ᚱ</div>
+    <div class="modal-title" id="reset-notif-title">YOUR READINGS HAVE RENEWED</div>
+    <p class="modal-sub" id="reset-notif-body" style="margin:16px 0 24px;line-height:1.8;"></p>
+    <button class="btn-full" id="reset-notif-btn" onclick="closeResetModal()">CONTINUE</button>
+  </div>
+</div>
+
 <!-- ═══ LANG SWITCH MODAL ═══ -->
 <div class="modal-overlay" id="lang-switch-modal">
   <div class="modal">
@@ -801,6 +811,56 @@ function freeMonthKey(userId) {
 }
 function getFreeMonthCount(userId) { return parseInt(localStorage.getItem(freeMonthKey(userId)) || '0'); }
 function incFreeMonthCount(userId) { localStorage.setItem(freeMonthKey(userId), String(getFreeMonthCount(userId) + 1)); }
+
+// Datum příštího resetu (1. příštího měsíce)
+function nextResetDate() {
+  const d = new Date();
+  return new Date(d.getFullYear(), d.getMonth() + 1, 1);
+}
+function nextResetLabel(isIs) {
+  const r = nextResetDate();
+  const months = isIs
+    ? ['jan','feb','mar','apr','maí','jún','júl','ágú','sep','okt','nóv','des']
+    : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return isIs
+    ? `Endurnýjast ${r.getDate()}. ${months[r.getMonth()]}`
+    : `Resets ${months[r.getMonth()]} ${r.getDate()}`;
+}
+
+// Reset notifikace — zobrazí se jen jednou po prvním přihlášení v novém měsíci
+function resetNotifKey(userId) {
+  const d = new Date();
+  return `runar_reset_notified_${userId}_${d.getFullYear()}_${String(d.getMonth()+1).padStart(2,'0')}`;
+}
+function checkAndShowResetNotif(userId) {
+  if (!userId) return;
+  const key = resetNotifKey(userId);
+  if (localStorage.getItem(key)) return; // už viděl tento měsíc
+  // Najdi minulý měsíc — pokud existuje záznam o čtení, je to po resetu
+  const d = new Date();
+  const prevMonth = new Date(d.getFullYear(), d.getMonth() - 1, 1);
+  const prevKey = `runar_free_${userId}_${prevMonth.getFullYear()}_${String(prevMonth.getMonth()+1).padStart(2,'0')}`;
+  const hadReadings = parseInt(localStorage.getItem(prevKey) || '0') > 0;
+  localStorage.setItem(key, '1'); // označit jako viděno
+  if (!hadReadings) return; // první přihlášení (žádná minulá čtení) → netisknout
+  showResetModal();
+}
+function showResetModal() {
+  const el = document.getElementById('reset-notif-modal');
+  if (!el) return;
+  const isIs = lang === 'is';
+  const setText2 = (id, t) => { const e = document.getElementById(id); if (e) e.textContent = t; };
+  setText2('reset-notif-title', isIs ? 'LESTRAR ÞÍNIR ERU ENDURNÝJAÐIR' : 'YOUR READINGS HAVE RENEWED');
+  setText2('reset-notif-body',  isIs
+    ? 'Nýr mánuður — fimm frjáls lestur eru aftur að bíða þín. Steinarnir eru tilbúnir.'
+    : 'A new month has turned. Five free readings are waiting for you again. The stones are ready.');
+  setText2('reset-notif-btn', isIs ? 'HALDA ÁFRAM' : 'CONTINUE');
+  el.classList.add('open');
+}
+function closeResetModal() {
+  const el = document.getElementById('reset-notif-modal');
+  if (el) el.classList.remove('open');
+}
 
 // ─── DB: USER PROFILE ────────────────────────────────────
 async function fetchUserProfile(userId) {
@@ -1372,8 +1432,8 @@ function updateSidePanel() {
         ? (is ? ` · ${userCredits} kredit` : ` · ${userCredits} credit${userCredits !== 1 ? 's' : ''}`)
         : '';
       balEl.textContent   = is
-        ? `${rem} af 5 lestrum eftir í mánuði${creditPart}`
-        : `${rem} of 5 this month${creditPart}`;
+        ? `${rem} af 5 frjálsum lestrum í mánuði${creditPart} · ${nextResetLabel(true)}`
+        : `${rem} of 5 free readings this month${creditPart} · ${nextResetLabel(false)}`;
       balEl.style.display = 'block';
     } else {
       balEl.style.display = 'none';
@@ -2022,6 +2082,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         fetchUserProfile(currentUser.id); // tier + credits
         syncMonthlyCount(currentUser.id);
         loadJournal();
+        checkAndShowResetNotif(currentUser.id);
       }
     }
     if (event === 'SIGNED_OUT') {
