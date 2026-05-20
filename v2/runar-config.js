@@ -74,53 +74,54 @@ const RUNAR_MODES = {
 // Values will evolve — update here only.
 const TIERS = {
   free_trial: {
-    label:          'Visitor',
-    readings:       3,          // total, no account needed
-    voice_dynamic:  false,      // real-time ElevenLabs generation
-    voice_static:   true,       // pre-generated rune audio
-    journal:        false,
-    ceremonial:     false,
-    languages:      ['en'],
+    label:            'Visitor',
+    readings:         3,          // total, no account needed
+    // ↓ VOICE FLAGS — flip here to enable/disable without touching logic
+    voice_monthly:    false,      // voice for free monthly readings
+    voice_credits:    false,      // voice when using paid credits (n/a for visitor)
+    voice_static:     true,       // pre-generated rune audio in Collection
+    journal:          false,
+    ceremonial:       false,
+    languages:        ['en'],
   },
-  free: {
-    label:          'The Curious',
-    readings:       5,          // per month, requires account
-    voice_dynamic:  false,
-    voice_static:   true,
-    journal:        5,          // last N readings
-    ceremonial:     false,
-    languages:      ['en', 'is'],
-  },
-  credits: {
-    label:          'Rune Seeker',
-    readings:       null,       // consumed per reading (never expire)
-    voice_dynamic:  true,
-    voice_static:   true,
-    journal:        null,       // unlimited
-    ceremonial:     false,
-    languages:      ['en', 'is'],
+  rune_seeker: {
+    label:            'Rune Seeker',
+    monthly_readings: 5,          // free readings per month, resets monthly
+    // ↓ VOICE FLAGS — flip here when ready
+    voice_monthly:    false,      // voice for the 5 free monthly readings
+    voice_credits:    true,       // voice when using paid credits
+    voice_static:     true,       // pre-generated rune audio in Collection
+    journal:          5,          // last N readings
+    ceremonial:       false,
+    languages:        ['en', 'is'],
   },
   standard: {
-    label:          'Standard',
-    readings:       null,       // unlimited
-    voice_dynamic:  true,
-    voice_static:   true,
-    journal:        null,
-    ceremonial:     false,
-    languages:      ['en', 'is'],
+    label:            'Standard',
+    monthly_readings: null,       // unlimited
+    voice_monthly:    true,
+    voice_credits:    true,
+    voice_static:     true,
+    journal:          null,       // unlimited
+    ceremonial:       false,
+    languages:        ['en', 'is'],
   },
   premium: {
-    label:          'Premium',
-    readings:       null,
-    voice_dynamic:  true,
-    voice_static:   true,
-    journal:        null,
-    ceremonial:     true,
-    languages:      ['en', 'is'],
-    physical_unlock: true,      // QR/NFC product linking
-    seasonal_content: true,     // solstices, equinoxes, lunar events
+    label:            'Premium',
+    monthly_readings: null,
+    voice_monthly:    true,
+    voice_credits:    true,
+    voice_static:     true,
+    journal:          null,
+    ceremonial:       true,
+    languages:        ['en', 'is'],
+    physical_unlock:  true,       // QR/NFC product linking
+    seasonal_content: true,       // solstices, equinoxes, lunar events
   },
 };
+
+// Zpětná kompatibilita — staré DB hodnoty 'free' a 'credits' → rune_seeker
+TIERS.free    = TIERS.rune_seeker;
+TIERS.credits = TIERS.rune_seeker;
 
 // ─── ADMIN ACCESS ───────────────────────────────────────
 // Only these emails can access the Knowledge Shrine and Yggdrasil.

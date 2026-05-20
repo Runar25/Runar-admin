@@ -68,13 +68,21 @@ runar-audio (PUBLIC)   ← static/en/fehu_1.mp3, static/en/fehu_2.mp3, ...
 
 ## Tier systém
 ```
-Visitor    (free_trial) → 3 čtení celkem, anon, jen Fehu v kolekci
-The Curious (free)      → 5 čtení/měsíc, všech 25 run, no voice
-Rune Seeker (credits)   → 1 credit = 1 čtení, dynamický hlas, never expire
-Standard               → unlimited, dynamický hlas (coming soon)
-Premium                → unlimited + ceremonial (coming soon)
+Visitor     (free_trial)  → 3 čtení celkem, anon, jen Fehu v kolekci, no voice
+Rune Seeker (rune_seeker) → 5 čtení/měsíc ZDARMA (obnovuje se) + kredity navíc
+                            deník posledních 5 čtení, všech 25 run
+                            kredity = fyzická karta, 1 kredit = 1 čtení + Rúnarův hlas
+Standard                  → unlimited, dynamický hlas (coming soon)
+Premium                   → unlimited + ceremonial (coming soon)
 ```
-Upgrade path: Visitor → The Curious (zdarma) → Rune Seeker (fyzická karta) → Standard → Premium
+Upgrade path: Visitor → Rune Seeker (zdarma, účet) → Standard → Premium
+
+POZOR: Staré DB hodnoty 'free' a 'credits' jsou normalizovány na 'rune_seeker' ve frontendu i backendu.
+SQL migrace: UPDATE user_profiles SET tier = 'rune_seeker' WHERE tier IN ('free', 'credits');
+
+Voice flagy (v runar-config.js TIERS.rune_seeker):
+  voice_monthly: false  ← hlas pro 5 free/měsíc (flip na true až bude rozhodnuto)
+  voice_credits: true   ← hlas při použití kreditů
 
 ## Klíčová rozhodnutí
 - Poetický hlas Rúnara — žádný tech žargon v UI, nikdy
