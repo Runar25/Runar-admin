@@ -430,6 +430,20 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
 .journal-rune-name{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:1.5px;color:var(--teal);margin-bottom:3px;}
 .journal-date{font-family:'Cinzel',serif;font-size:0.55em;letter-spacing:1px;color:var(--dim);margin-bottom:6px;}
 .journal-excerpt{font-size:0.88em;font-style:italic;color:var(--muted);line-height:1.6;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.journal-area-tag{font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:1px;color:var(--dim);margin-left:8px;opacity:0.7;}
+.journal-expand-btn{background:none;border:none;font-family:'Cinzel',serif;font-size:0.55em;letter-spacing:2px;color:var(--gold);opacity:0.6;cursor:pointer;padding:6px 0 0;display:block;transition:opacity 0.2s;}
+.journal-expand-btn:hover{opacity:1;}
+.journal-deep{padding:12px 0 4px;border-top:1px solid rgba(46,74,112,0.3);margin-top:10px;}
+.journal-deep-text{font-size:0.9em;font-style:italic;color:var(--muted);line-height:1.8;margin-bottom:8px;}
+.journal-deep-divider{text-align:center;color:var(--dim);font-size:0.7em;letter-spacing:4px;margin:10px 0;}
+.journal-life-rune{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:2px;color:var(--gold);opacity:0.5;margin-top:10px;}
+/* Filter bar — Standard tier only */
+.journal-filter-bar{display:none;gap:8px;padding:10px 18px;background:var(--card);border:1px solid rgba(126,217,181,0.15);border-top:none;flex-wrap:wrap;}
+.journal-filter-select{background:#080e18;border:1px solid var(--border);color:var(--muted);font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1.5px;padding:6px 10px;outline:none;cursor:pointer;}
+.journal-filter-select:focus{border-color:var(--gold);}
+/* Standard upgrade teaser in journal */
+.journal-standard-teaser{padding:14px 18px;text-align:center;border-top:1px solid rgba(126,217,181,0.1);background:rgba(126,217,181,0.03);}
+.journal-standard-teaser-txt{font-size:0.82em;font-style:italic;color:var(--dim);line-height:1.7;}
 
 /* ── TOAST ── */
 .toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(20px);background:#0d1a12;border:1px solid var(--teal);color:var(--teal);font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:2px;padding:12px 24px;z-index:200;opacity:0;transition:opacity 0.4s,transform 0.4s;pointer-events:none;}
@@ -634,8 +648,28 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
       </div>
       <span class="journal-toggle" id="journal-toggle">▾</span>
     </div>
+    <!-- Filter bar — Standard tier only, hidden for rune_seeker -->
+    <div class="journal-filter-bar" id="journal-filter-bar">
+      <select class="journal-filter-select" id="jf-rune" onchange="filterJournal()">
+        <option value="">All runes</option>
+      </select>
+      <select class="journal-filter-select" id="jf-area" onchange="filterJournal()">
+        <option value="">All areas</option>
+      </select>
+      <select class="journal-filter-select" id="jf-lang" onchange="filterJournal()">
+        <option value="">EN + IS</option>
+        <option value="en">EN</option>
+        <option value="is">IS</option>
+      </select>
+    </div>
     <div class="journal-body" id="journal-body">
       <div id="journal-list"></div>
+      <!-- Standard teaser — jen pro rune_seeker, ukazuje co čeká -->
+      <div class="journal-standard-teaser" id="journal-standard-teaser" style="display:none;">
+        <p class="journal-standard-teaser-txt" id="journal-teaser-txt">
+          Every reading you have ever taken is kept. Move to Standard to open the full chronicle.
+        </p>
+      </div>
     </div>
   </div>
 
@@ -904,16 +938,20 @@ async function upsertProfile() {
 async function saveReading(rune, short, deep) {
   if (!currentUser) return;
   try {
+    // Životní runa — pokud ji známe z data narození
+    const lifeRune = readerUser.dob ? (calcLifeRune(readerUser.dob)?.n || null) : null;
     await sb.from('readings').insert({
-      user_id:    currentUser.id,
-      rune_name:  rune.n,
-      rune_glyph: rune.g,
-      lang:       lang,
-      short_text: short,
-      deep_text:  deep,
-      area:       readerUser.area     || null,
-      seeking:    readerUser.seeking  || null,
-      question:   readerUser.question || null,
+      user_id:      currentUser.id,
+      rune_name:    rune.n,
+      rune_glyph:   rune.g,
+      lang:         lang,
+      short_text:   short,
+      deep_text:    deep,
+      area:         readerUser.area     || null,
+      seeking:      readerUser.seeking  || null,
+      question:     readerUser.question || null,
+      life_rune:    lifeRune,
+      credits_used: shouldUseCredit(),   // true = kreditní čtení, false = free monthly
     });
   } catch(e) { console.warn('saveReading:', e.message); }
 }
@@ -934,15 +972,29 @@ async function syncMonthlyCount(userId) {
 }
 
 // ─── DB: JOURNAL ─────────────────────────────────────────
+// Limit podle tieru: rune_seeker = 5, standard/premium = bez limitu
+function journalLimit() {
+  if (userTier === 'standard' || userTier === 'premium') return null; // unlimited
+  return 5;
+}
+
 async function loadJournal() {
   if (!currentUser) { hideJournal(); return; }
   try {
-    const { data } = await sb.from('readings')
-      .select('rune_name, rune_glyph, lang, short_text, drawn_at')
+    let q = sb.from('readings')
+      .select('id, rune_name, rune_glyph, lang, short_text, deep_text, area, seeking, life_rune, credits_used, drawn_at')
       .eq('user_id', currentUser.id)
-      .order('drawn_at', { ascending: false })
-      .limit(5);
-    renderJournal(data || []);
+      .order('drawn_at', { ascending: false });
+    const lim = journalLimit();
+    if (lim) q = q.limit(lim);
+    const { data } = await q;
+    _journalCache = data || [];
+    renderJournal(_journalCache);
+    if (userTier === 'standard' || userTier === 'premium') {
+      populateJournalFilters(_journalCache);
+    } else {
+      updateJournalTeaser();
+    }
   } catch(e) { hideJournal(); }
 }
 
@@ -957,30 +1009,104 @@ function renderJournal(entries) {
   if (!section || !list) return;
   if (!currentUser || entries.length === 0) { hideJournal(); return; }
 
+  const isStandard = userTier === 'standard' || userTier === 'premium';
+  const isIs = lang === 'is';
+
   const countEl = document.getElementById('journal-count');
-  if (countEl) countEl.textContent = lang === 'is'
-    ? `${entries.length} nýlegastir`
-    : `last ${entries.length}`;
+  if (countEl) countEl.textContent = isStandard
+    ? (isIs ? `${entries.length} lestrar` : `${entries.length} readings`)
+    : (isIs ? `${entries.length} nýlegastir` : `last ${entries.length}`);
 
   const lblEl = document.getElementById('journal-lbl');
-  if (lblEl) lblEl.textContent = lang === 'is' ? '✦ LESTRAR ÞÍNIR' : '✦ YOUR READINGS';
+  if (lblEl) lblEl.textContent = isIs ? '✦ LESTRAR ÞÍNIR' : '✦ YOUR READINGS';
 
-  list.innerHTML = entries.map(e => {
+  // Filter bar — viditelný jen pro Standard (připraveno, zatím skryto)
+  const filterBar = document.getElementById('journal-filter-bar');
+  if (filterBar) filterBar.style.display = isStandard ? 'flex' : 'none';
+
+  list.innerHTML = entries.map((e, i) => {
     const d = new Date(e.drawn_at);
-    const locale = lang === 'is' ? 'is-IS' : 'en-GB';
+    const locale = isIs ? 'is-IS' : 'en-GB';
     const dateStr = d.toLocaleDateString(locale, { day:'numeric', month:'short', year:'numeric' });
-    const excerpt = (e.short_text || '').trim().slice(0, 120);
-    return `<div class="journal-entry">
+    const excerpt = (e.short_text || '').trim().slice(0, 140);
+    const areaTag = e.area ? `<span class="journal-area-tag">${e.area}</span>` : '';
+    const hasDeep = !!(e.deep_text);
+    return `<div class="journal-entry" id="jentry-${i}">
       <div class="journal-rune-glyph">${e.rune_glyph || '◻'}</div>
       <div class="journal-meta">
-        <div class="journal-rune-name">${(e.rune_name || '').toUpperCase()} · ${(e.lang || '').toUpperCase()}</div>
+        <div class="journal-rune-name">${(e.rune_name || '').toUpperCase()} · ${(e.lang || '').toUpperCase()}${areaTag}</div>
         <div class="journal-date">${dateStr}</div>
-        <div class="journal-excerpt">${excerpt}</div>
+        <div class="journal-excerpt">${excerpt}${excerpt.length >= 140 ? '…' : ''}</div>
+        ${hasDeep ? `<button class="journal-expand-btn" onclick="toggleJournalEntry(${i})" id="jbtn-${i}">${isIs ? 'LESA MEIRA ▾' : 'READ MORE ▾'}</button>` : ''}
+        <div class="journal-deep" id="jdeep-${i}" style="display:none;">
+          <div class="journal-deep-text">${e.short_text || ''}</div>
+          <div class="journal-deep-divider">· · ·</div>
+          <div class="journal-deep-text">${e.deep_text || ''}</div>
+          ${e.life_rune ? `<div class="journal-life-rune">${isIs ? 'Lífsrún' : 'Life rune'}: ${e.life_rune}</div>` : ''}
+        </div>
       </div>
     </div>`;
   }).join('');
 
   section.style.display = 'block';
+}
+
+// Teaser pro rune_seeker — kolik čtení celkem mají v DB
+async function updateJournalTeaser() {
+  if (userTier === 'standard' || userTier === 'premium') return;
+  const teaser = document.getElementById('journal-standard-teaser');
+  const txt    = document.getElementById('journal-teaser-txt');
+  if (!teaser || !txt || !currentUser) return;
+  try {
+    const { count } = await sb.from('readings')
+      .select('id', { count: 'exact', head: true })
+      .eq('user_id', currentUser.id);
+    if (count && count > 5) {
+      const isIs = lang === 'is';
+      txt.innerHTML = isIs
+        ? `Sérhver lestur sem þú hefur tekið er geymdur — ${count} samtals. Farðu yfir í <strong>Standard</strong> til að opna fulla króniku þína.`
+        : `Every reading you have ever taken is kept — ${count} in total. Move to <strong>Standard</strong> to open your full chronicle.`;
+      teaser.style.display = 'block';
+    }
+  } catch { /* silent */ }
+}
+
+// Filter journal (Standard only) — placeholder, data jsou načtená v paměti
+let _journalCache = [];
+function filterJournal() {
+  if (!_journalCache.length) return;
+  const rune = document.getElementById('jf-rune')?.value || '';
+  const area = document.getElementById('jf-area')?.value || '';
+  const jlng = document.getElementById('jf-lang')?.value || '';
+  const filtered = _journalCache.filter(e =>
+    (!rune || e.rune_name === rune) &&
+    (!area || e.area === area) &&
+    (!jlng || e.lang === jlng)
+  );
+  renderJournal(filtered);
+}
+
+// Naplní filter selektory unikátními hodnotami
+function populateJournalFilters(entries) {
+  const runeEl = document.getElementById('jf-rune');
+  const areaEl = document.getElementById('jf-area');
+  if (!runeEl || !areaEl) return;
+  const runes = [...new Set(entries.map(e => e.rune_name).filter(Boolean))].sort();
+  const areas = [...new Set(entries.map(e => e.area).filter(Boolean))].sort();
+  runeEl.innerHTML = `<option value="">All runes</option>` + runes.map(r => `<option value="${r}">${r}</option>`).join('');
+  areaEl.innerHTML = `<option value="">All areas</option>` + areas.map(a => `<option value="${a}">${a}</option>`).join('');
+}
+
+function toggleJournalEntry(i) {
+  const deep = document.getElementById(`jdeep-${i}`);
+  const btn  = document.getElementById(`jbtn-${i}`);
+  const isIs = lang === 'is';
+  if (!deep) return;
+  const open = deep.style.display !== 'none';
+  deep.style.display = open ? 'none' : 'block';
+  if (btn) btn.textContent = open
+    ? (isIs ? 'LESA MEIRA ▾' : 'READ MORE ▾')
+    : (isIs ? 'LOKA ▴' : 'CLOSE ▴');
 }
 
 function toggleJournal() {

@@ -49,7 +49,11 @@ user_profiles          ← profily přihlášených uživatelů (RLS ✓)
 readings               ← každé čtení uživatele (RLS ✓)
                           sloupce: id, user_id, rune_name, rune_glyph, lang,
                                    short_text, deep_text, area, seeking, question,
+                                   life_rune (text), credits_used (bool),
                                    drawn_at
+                          SQL pro nové sloupce (spustit v Supabase SQL Editor):
+                            ALTER TABLE readings ADD COLUMN IF NOT EXISTS life_rune text;
+                            ALTER TABLE readings ADD COLUMN IF NOT EXISTS credits_used boolean DEFAULT false;
 gift_codes             ← (ZÍTRA vytvořit) kódy na fyzických kartičkách
                           sloupce: code (unique), credits, used_by, used_at, created_at
 ```
@@ -239,6 +243,20 @@ Shopify: EUR pro export, ISK pro islandský trh (dvě cenové skupiny)
 - Paměť & personalizace (multi-rune, follow-up)
 - Fyzický ekosystém (QR deeplink, NFC)
 - Shopify webhook pro online nákup
+
+### DENÍK (JOURNAL) — architektura
+
+**Rune Seeker:** posledních 5 čtení, rozbalitelné (short + deep text)
+**Standard:** vše bez limitu + filter bar (runa, oblast, jazyk)
+
+Teaser pro Rune Seeker: pokud má >5 čtení celkem, zobrazí "X readings kept — move to Standard to see all"
+
+Každé čtení ukládá:
+- `life_rune` — životní runa v době čtení (z data narození)
+- `credits_used` — true = kreditní čtení (s hlasem), false = free monthly
+
+Filter bar (`#journal-filter-bar`) je v HTML, ale `display:none` pro rune_seeker.
+`_journalCache` = in-memory kopie pro filtrování bez nového DB dotazu.
 
 ### TECHNICKÝ DLUH
 - [ ] IS texty — review rodilým mluvčím (rotující fráze, notices, gates)
