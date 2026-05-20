@@ -2220,14 +2220,20 @@ async function generateVoice() {
   setSt('st-voice', '');
   document.getElementById('audio-player').classList.remove('visible');
   try {
+    const { data: { session: elSession } } = await sb.auth.getSession();
+    const elHeaders = { 'Content-Type': 'application/json' };
+    if (elSession?.access_token) elHeaders['Authorization'] = 'Bearer ' + elSession.access_token;
     const res = await fetch(EL_PROXY, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text: deepText, lang, voice_id: elVoiceId(lang), model_id: elModel(lang) })
+      headers: elHeaders,
+      body: JSON.stringify({ text: deepText, lang })
     });
     if (!res.ok) {
       const data = await res.json();
-      setSt('st-voice', data.error || `HTTP ${res.status}`, 'err');
+      const msg = res.status === 429
+        ? (lang === 'is' ? 'Of margar beiðnir. Bíddu aðeins.' : 'Too many requests. Please wait a moment.')
+        : (data.error || `HTTP ${res.status}`);
+      setSt('st-voice', msg, 'err');
       btn.textContent = t('voice_btn'); btn.disabled = false; return;
     }
     const data = await res.json();
