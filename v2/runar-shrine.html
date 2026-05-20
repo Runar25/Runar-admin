@@ -23,16 +23,22 @@
   --blue:#5BB8FF;--teal:#7ED9B5;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--white);font-family:'Cormorant Garamond',serif;min-height:100vh;display:flex;justify-content:center;padding:40px 16px 80px;}
+body{background:var(--bg);color:var(--white);font-family:'Cormorant Garamond',serif;min-height:100vh;padding-top:56px;}
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(46,74,112,0.3) 0%,transparent 60%),radial-gradient(ellipse 40% 30% at 90% 90%,rgba(126,217,181,0.05) 0%,transparent 50%);}
-.app{position:relative;z-index:1;max-width:760px;width:100%;}
-.hdr{border-bottom:1px solid var(--border);padding-bottom:24px;margin-bottom:0;}
-.hdr-inner{display:flex;justify-content:space-between;align-items:flex-start;}
-.brand{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:4px;color:var(--gold);}
+/* ── TOPBAR ── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(10,12,18,0.96);border-bottom:1px solid rgba(46,74,112,0.4);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);}
+.topbar-inner{max-width:860px;margin:0 auto;padding:13px 28px;display:flex;align-items:center;justify-content:space-between;}
+.topbar-right{display:flex;align-items:center;gap:14px;}
+.brand{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:4px;color:var(--gold);opacity:0.85;}
+.topbar-subtitle{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:2px;color:var(--muted);opacity:0.6;}
+.auth-btn{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;padding:8px 18px;border:1px solid rgba(255,191,0,0.4);background:transparent;color:var(--gold);cursor:pointer;transition:all 0.2s;}
+.auth-btn:hover{background:rgba(255,191,0,0.08);}
+.auth-user{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--gold);opacity:0.7;}
+.app{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:32px 16px 80px;}
 h1{font-size:2.2em;font-weight:400;margin:6px 0 4px;}
-.sub{color:var(--muted);font-style:italic;}
-.lang-toggle{display:flex;border:1px solid var(--border);margin-top:8px;overflow:hidden;}
-.lang-btn{padding:8px 18px;font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:2px;border:none;cursor:pointer;transition:all 0.2s;}
+.sub{color:var(--muted);font-style:italic;margin-bottom:24px;}
+.lang-toggle{display:flex;border:1px solid var(--border);overflow:hidden;}
+.lang-btn{padding:7px 16px;font-family:'Cinzel',serif;font-size:0.68em;letter-spacing:2px;border:none;cursor:pointer;transition:all 0.2s;}
 .lang-btn.active{background:var(--gold);color:#000;}
 .lang-btn:not(.active){background:transparent;color:var(--muted);}
 .tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:28px;overflow-x:auto;}
@@ -244,28 +250,25 @@ audio{flex:1;height:36px;filter:invert(0.85) sepia(0.3) hue-rotate(180deg);}
   </div>
 </div>
 
-<div class="app">
-
-<!-- HEADER -->
-<div class="hdr">
-  <div class="hdr-inner">
+<!-- ═══ TOPBAR ═══ -->
+<header class="topbar">
+  <div class="topbar-inner">
     <div>
-      <div class="brand" id="ui-brand">AGNDOFA · RÚNAR SYSTEM</div>
-      <h1 id="ui-title">Knowledge Shrine</h1>
-      <div class="sub" id="ui-sub">Teach Rúnar. Shape his voice. Feed his wisdom.</div>
+      <div class="brand">AGNDOFA</div>
+      <div class="topbar-subtitle">KNOWLEDGE SHRINE</div>
     </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+    <div class="topbar-right">
       <div class="lang-toggle">
         <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
         <button class="lang-btn" id="btn-is" onclick="setLang('is')">IS</button>
       </div>
-      <div class="auth-badge" id="auth-badge">
-        <span class="auth-user" id="auth-user-label" style="display:none;"></span>
-        <button class="auth-btn signin" id="auth-action-btn" onclick="handleAuthBtn()">SIGN IN</button>
-      </div>
+      <span class="auth-user" id="auth-user-label" style="display:none;"></span>
+      <button class="auth-btn" id="auth-action-btn" onclick="handleAuthBtn()">SIGN IN</button>
     </div>
   </div>
-</div>
+</header>
+
+<div class="app">
 
 <!-- AUTH MODAL -->
 <div class="modal-overlay" id="auth-modal">
