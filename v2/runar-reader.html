@@ -1394,7 +1394,7 @@ async function redeemCode() {
 
     // Success
     userCredits = data.new_balance;
-    userTier    = 'credits';
+    userTier    = 'rune_seeker'; // 'credits' je legacy alias — normalizujeme hned
     input.value = '';
     const runeMsg = data.rune_name ? ` · ${data.rune_name}` : '';
     setSt('st-redeem',
@@ -2034,6 +2034,15 @@ function shouldUseCredit() {
   return used >= FREE_REGISTERED_LIMIT;
 }
 
+// Vrátí true pokud může aktuální uživatel slyšet dynamický hlas Rúnara.
+// Logika čte TIERS config — stačí flipnout flag v runar-config.js.
+// Připraveno pro budoucí gating (např. Visitor jen 1 hlasité čtení ze 3).
+function canUseVoice() {
+  const tier = TIERS[userTier] || TIERS.free_trial;
+  if (shouldUseCredit()) return !!tier.voice_credits;
+  return !!tier.voice_monthly;
+}
+
 // ─── STREAM ──────────────────────────────────────────────
 function stream(id, text) {
   return new Promise(resolve => {
@@ -2139,8 +2148,14 @@ async function _generateReading() {
     }, 8000);
   }
 
-  // Audio player stays hidden until user clicks GENERATE RÚNAR'S VOICE
-  vBtn.disabled = false;
+  // Hlas — povol jen pokud tier dovoluje (viz canUseVoice() + runar-config.js TIERS)
+  if (canUseVoice()) {
+    vBtn.disabled = false;
+    vBtn.style.display = '';
+  } else {
+    vBtn.disabled = true;
+    vBtn.style.display = 'none'; // skrýt úplně — žádný "disabled" button
+  }
 }
 
 // ─── READER FLOW ─────────────────────────────────────────

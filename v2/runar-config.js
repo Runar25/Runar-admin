@@ -77,9 +77,11 @@ const TIERS = {
     label:            'Visitor',
     readings:         3,          // total, no account needed
     // ↓ VOICE FLAGS — flip here to enable/disable without touching logic
-    voice_monthly:    false,      // voice for free monthly readings
-    voice_credits:    false,      // voice when using paid credits (n/a for visitor)
-    voice_static:     true,       // pre-generated rune audio in Collection
+    // voice_monthly: true = Visitor slyší hlas při svých 3 čteních
+    // Až budeme limitovat: flip na false → Visitor dostane jen text
+    voice_monthly:    true,       // ← aktuálně otevřeno; připraveno pro gating
+    voice_credits:    false,      // n/a pro Visitor (nemůže mít kredity)
+    voice_static:     true,       // pre-generované audio v Collection
     journal:          false,
     ceremonial:       false,
     languages:        ['en'],
@@ -87,10 +89,12 @@ const TIERS = {
   rune_seeker: {
     label:            'Rune Seeker',
     monthly_readings: 5,          // free readings per month, resets monthly
-    // ↓ VOICE FLAGS — flip here when ready
-    voice_monthly:    false,      // voice for the 5 free monthly readings
-    voice_credits:    true,       // voice when using paid credits
-    voice_static:     true,       // pre-generated rune audio in Collection
+    // ↓ VOICE FLAGS — flip here to enable/disable without touching logic
+    // voice_monthly: true = hlas pro všech 5 free čtení/měsíc
+    // Až budeme limitovat: flip na false → hlas jen při kreditech
+    voice_monthly:    true,       // ← aktuálně otevřeno; připraveno pro gating
+    voice_credits:    true,       // hlas při kreditním čtení — vždy
+    voice_static:     true,       // pre-generované audio v Collection
     journal:          5,          // last N readings
     ceremonial:       false,
     languages:        ['en', 'is'],
