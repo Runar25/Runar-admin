@@ -34,6 +34,10 @@ serve(async (req) => {
     );
     if (authErr || !user) return json({ error: "Invalid session" }, 401);
 
+    // ── Uvolni foreign key v gift_codes (used_by → SET NULL) ──
+    // gift_codes.used_by nemá ON DELETE CASCADE — musíme nullovat ručně
+    await sb.from("gift_codes").update({ used_by: null }).eq("used_by", user.id);
+
     // ── Delete user (CASCADE removes user_profiles + readings) ──
     const { error: deleteErr } = await sb.auth.admin.deleteUser(user.id);
     if (deleteErr) return json({ error: "Failed to delete account: " + deleteErr.message }, 500);
