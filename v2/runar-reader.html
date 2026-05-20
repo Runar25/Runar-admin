@@ -2009,13 +2009,6 @@ window.addEventListener('DOMContentLoaded', async () => {
   // Auth state
   const { data: { session } } = await sb.auth.getSession();
   currentUser = session?.user || null;
-
-  // Admin check při načtení stránky (existující session)
-  if (currentUser && isAdmin(currentUser.email)) {
-    window.location.replace('runar-shrine.html');
-    return;
-  }
-
   if (currentUser) {
     fetchUserProfile(currentUser.id); // tier + credits (also calls updateAuthUI)
     syncMonthlyCount(currentUser.id);
@@ -2024,12 +2017,6 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   sb.auth.onAuthStateChange(async (event, session) => {
     currentUser = session?.user || null;
-
-    // Admin check po přihlášení (SIGNED_IN / INITIAL_SESSION)
-    if (currentUser && isAdmin(currentUser.email)) {
-      window.location.replace('runar-shrine.html');
-      return;
-    }
 
     updateAuthUI();
     if (currentUser) {
