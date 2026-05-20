@@ -221,14 +221,88 @@ Po islandském VSK (24%): marže ~75–80%
 - [x] DPA se Supabase — Request odeslán
 - [ ] Privacy Policy odkaz na agndofa.is
 
-### VRSTVA 4+ — BUDOUCNOST
-- Ceremonial mode (Premium)
-- Kontextová inteligence (čas, lunární kalendář, sezóna)
-- Paměť & personalizace (multi-rune, follow-up)
-- Fyzický ekosystém (QR deeplink, NFC)
-- Shopify webhook pro online nákup (tier upgrade po platbě)
+### VRSTVA 4 — STANDARD & PREMIUM FEATURES (NÁVRH)
+
+> ⚠️ Rozdělení mezi Standard a Premium ještě není finální — nutno rozhodnout.
+
+#### Délka výkladů (max_tokens)
+Současný stav v `RUNAR_MODES.quick_reading`:
+- Visitor / Rune Seeker: **700 tokenů** (~500 slov)
+- Standard: **1000–1200 tokenů** (návrh) — bohatší, hlubší výklad
+- Premium: **1500+ tokenů** (návrh) — plná hloubka + ceremonial
+
+#### Přehled navržených features
+
+**⚡ Prožitek & rychlost**
+- [ ] **Real SSE streaming** — první slova za ~0.5s místo čekání 3–5s; Rúnar "mluví" v reálném čase
+      Implementace: claude-proxy vrací ReadableStream, frontend čte SSE events
+- [ ] **Hlas pro všechna čtení** — flip `voice_monthly: true` pro Standard (teď jen credits)
+- [ ] **Delší výklady** — Standard 1000–1200 tokenů, Premium 1500+
+
+**📖 Journal**
+- [ ] **Neomezený deník** — unlimited čtení, bez limitu 5 (kód připraven, jen unlock)
+- [ ] **Filtry v deníku** — podle runy, oblasti, jazyka, data (HTML připraven, `display:none`)
+- [ ] **Export čtení** — stáhnout journal jako PDF nebo CSV
+
+**🔮 Rituální výklady (nový koncept)**
+- [ ] **Týdenní rituální výklad** — uživatel nakreslí run(y) během týdne → v pátek/sobotu
+      Rúnar udělá hlubší výklad ze všech run týdne dohromady jako jeden rituál
+      Runa se uloží jako "týdenní runa" a přispívá do kolektivního výkladu
+- [ ] **Měsíční rituální výklad** — stejný princip ale za celý měsíc
+      Na konci měsíce Rúnar vytvoří hluboký výklad z run celého měsíce
+      Propojení s měsíčním resetem free čtení (symbolický přechod)
+      Potřeba: nová tabulka `ritual_readings` nebo rozšíření `readings` o `ritual_type`
+
+**🧠 Hloubka & kontext**
+- [ ] **Třírunový spread** — minulost / přítomnost / budoucnost (jeden draw, tři runy)
+- [ ] **Follow-up otázka** — jedna doplňující otázka po čtení v rámci kontextu sezení
+- [ ] **Lunární / sezónní kontext** — Rúnar ví jaký je měsíční cyklus a roční období,
+      zapracuje to do výkladu (islandský lunární kalendář, slunovrat, rovnodennost)
+
+**🎭 Personalizace**
+- [ ] **Rúnarův tón** — výběr stylu výkladu (mystický / přímý / meditativní)
+- [ ] **Paměť kontextu** — Rúnar si pamatuje předchozí čtení a odkazuje na ně
+      (multi-turn history v claude-proxy)
+
+#### Návrh rozdělení (k diskuzi)
+| Feature | Standard | Premium |
+|---------|----------|---------|
+| SSE streaming | ✅ | ✅ |
+| Delší výklady (1000 tokenů) | ✅ | ✅ |
+| Hlas pro všechna čtení | ✅ | ✅ |
+| Neomezený journal + filtry | ✅ | ✅ |
+| Export čtení | ✅ | ✅ |
+| Follow-up otázka | ✅ | ✅ |
+| Týdenní rituální výklad | ✅ | ✅ |
+| Třírunový spread | ✅ | ✅ |
+| Měsíční rituální výklad | ❌ | ✅ |
+| Lunární / sezónní kontext | ❌ | ✅ |
+| Rúnarův tón | ❌ | ✅ |
+| Paměť kontextu | ❌ | ✅ |
+| Ceremonial mode (kakao) | ❌ | ✅ |
+| Fyzický ekosystém (QR/NFC) | ❌ | ✅ |
+
+#### Rituální výklady — architektura (návrh)
+```
+ritual_readings tabulka:
+  id, user_id, ritual_type (weekly/monthly),
+  period_start, period_end,
+  rune_names[] (pole run z daného období),
+  reading_text, lang,
+  created_at
+
+Flow:
+1. Uživatel táhne runy normálně (ukládají se do readings)
+2. Na konci týdne/měsíce: tlačítko "RÚNAR'S WEEKLY COUNSEL"
+3. Systém vytáhne runy z daného období → pošle jako kontext Rúnarovi
+4. Rúnar vygeneruje rituální výklad ze všech run najednou
+5. Uložení do ritual_readings
+```
+
+### VRSTVA 5+ — VZDÁLENÁ BUDOUCNOST
+- Shopify webhook — automatický tier upgrade po online nákupu
 - Online gift card (zatím jen fyzická)
-- Real streaming přes SSE (místo fake setTimeout)
+- Fyzický ekosystém (QR deeplink, NFC na produktech Agndofa)
 
 ### DENÍK (JOURNAL) — architektura
 
@@ -247,7 +321,5 @@ Filter bar (`#journal-filter-bar`) je v HTML, ale `display:none` pro rune_seeker
 ### TECHNICKÝ DLUH
 - [ ] IS texty — review rodilým mluvčím (rotující fráze, notices, gates, help, privacy)
 - [ ] Email-based tracking — zabránit delete+recreate workaround
-- [ ] Real streaming přes SSE (místo fake setTimeout)
 - [ ] Nahrát zbývající statické audio (25 EN + 25 IS run)
-- [ ] Rate limiting pro elevenlabs-proxy (zatím nechráněn)
-- [ ] elevenlabs-proxy: přidat rate limit (5 req/min per user)
+- [x] Rate limiting — claude-proxy + redeem-code + elevenlabs-proxy ✓
