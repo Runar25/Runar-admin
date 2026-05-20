@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RÚNAR · Privacy Policy</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<script src="runar-config.js"></script>
+<style>
+:root{
+  --bg:#0a0c12;--card:#12161f;--border:#2E4A70;
+  --gold:#FFBF00;--white:#F2F5F7;--muted:#8ba5c0;--dim:#3a4a60;--teal:#7ED9B5;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--white);font-family:'Cormorant Garamond',serif;min-height:100vh;padding-top:56px;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(46,74,112,0.25) 0%,transparent 60%);}
+
+/* TOPBAR */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(10,12,18,0.96);border-bottom:1px solid rgba(46,74,112,0.4);backdrop-filter:blur(16px);}
+.topbar-inner{max-width:760px;margin:0 auto;padding:13px 28px;display:flex;align-items:center;justify-content:space-between;}
+.brand{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:4px;color:var(--gold);opacity:0.85;}
+.topbar-sub{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:2px;color:var(--muted);opacity:0.6;}
+.back-btn{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--gold);opacity:0.7;text-decoration:none;transition:opacity 0.2s;padding:6px 14px;border:1px solid rgba(255,191,0,0.3);}
+.back-btn:hover{opacity:1;}
+
+/* LANG TOGGLE */
+.lang-toggle{display:flex;border:1px solid var(--border);overflow:hidden;margin-left:14px;}
+.lang-btn{padding:7px 14px;font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;border:none;cursor:pointer;transition:all 0.2s;}
+.lang-btn.active{background:var(--gold);color:#000;}
+.lang-btn:not(.active){background:transparent;color:var(--muted);}
+
+/* CONTENT */
+.app{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:40px 24px 100px;}
+
+/* HERO */
+.help-hero{text-align:center;padding:40px 0 48px;border-bottom:1px solid rgba(46,74,112,0.3);margin-bottom:48px;}
+.help-rune{font-size:3em;color:var(--gold);opacity:0.55;margin-bottom:20px;line-height:1;}
+.help-title{font-family:'Cinzel',serif;font-size:1.6em;letter-spacing:4px;color:var(--white);font-weight:400;margin-bottom:16px;}
+.help-sub{font-size:1.15em;font-style:italic;color:var(--muted);line-height:1.8;max-width:500px;margin:0 auto;}
+
+/* SECTIONS */
+.help-section{margin-bottom:48px;}
+.help-section-label{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:4px;color:var(--gold);opacity:0.5;margin-bottom:24px;padding-bottom:10px;border-bottom:1px solid rgba(255,191,0,0.12);}
+.help-block{margin-bottom:32px;}
+.help-block-title{font-family:'Cinzel',serif;font-size:0.78em;letter-spacing:2.5px;color:var(--white);margin-bottom:12px;opacity:0.9;}
+.help-block-body{font-size:1.05em;line-height:1.9;color:var(--muted);}
+.help-block-body p{margin-bottom:12px;}
+.help-block-body p:last-child{margin-bottom:0;}
+.help-block-body strong{color:var(--white);font-style:normal;font-weight:400;}
+.help-block-body em{color:var(--gold);font-style:normal;opacity:0.85;}
+.help-block-body ul{padding-left:20px;margin-top:8px;}
+.help-block-body li{margin-bottom:8px;}
+
+/* DATA TABLE */
+.data-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:0.9em;}
+.data-table th{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--gold);opacity:0.5;padding:10px 12px;text-align:left;border-bottom:1px solid rgba(46,74,112,0.4);}
+.data-table td{padding:12px;border-bottom:1px solid rgba(46,74,112,0.2);color:var(--muted);vertical-align:top;line-height:1.6;}
+.data-table td:first-child{font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:1.5px;color:var(--white);white-space:nowrap;}
+.data-table tr:last-child td{border-bottom:none;}
+
+/* RIGHTS LIST */
+.rights-list{list-style:none;padding:0;margin-top:8px;}
+.rights-list li{padding:14px 0;border-bottom:1px solid rgba(46,74,112,0.2);display:flex;gap:14px;align-items:flex-start;font-size:1.05em;line-height:1.8;color:var(--muted);}
+.rights-list li:last-child{border-bottom:none;}
+.rights-list .right-name{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--gold);opacity:0.85;white-space:nowrap;padding-top:4px;min-width:110px;}
+
+/* CONTACT */
+.contact-card{background:var(--card);border:1px solid rgba(255,191,0,0.15);padding:28px 24px;text-align:center;}
+.contact-card-lbl{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:3px;color:var(--gold);opacity:0.6;margin-bottom:14px;}
+.contact-card-text{font-size:1em;font-style:italic;color:var(--muted);line-height:1.8;margin-bottom:16px;}
+.contact-card a{color:var(--gold);opacity:0.85;text-decoration:none;}
+.contact-card a:hover{opacity:1;}
+
+/* UPDATED DATE */
+.updated{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--muted);opacity:0.4;text-align:center;margin-top:48px;}
+
+@media(max-width:600px){
+  .topbar-inner{padding:12px 18px;}
+  .app{padding:28px 18px 80px;}
+  .help-title{font-size:1.3em;}
+  .data-table{font-size:0.82em;}
+  .rights-list .right-name{min-width:80px;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div style="display:flex;align-items:center;gap:16px;">
+      <div>
+        <div class="brand">AGNDOFA</div>
+        <div class="topbar-sub" id="tp-sub">PRIVACY POLICY</div>
+      </div>
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" id="btn-is" onclick="setLang('is')">IS</button>
+      </div>
+    </div>
+    <a class="back-btn" href="runar-reader.html" id="back-btn">← BACK</a>
+  </div>
+</header>
+
+<div class="app">
+
+  <!-- HERO -->
+  <div class="help-hero">
+    <div class="help-rune">ᛜ</div>
+    <div class="help-title" id="h-title">WHAT RÚNAR REMEMBERS</div>
+    <p class="help-sub" id="h-sub">Some things must be spoken plainly. This is our promise to you — what we know, why we know it, and how to ask us to forget.</p>
+  </div>
+
+  <!-- 1. CONTROLLER -->
+  <div class="help-section">
+    <div class="help-section-label" id="s1-lbl">THE KEEPER OF RECORDS</div>
+    <div class="help-block">
+      <div class="help-block-body" id="s1-body">
+        <p><strong>Agndofa ehf.</strong> is responsible for your data within the Rúnar application. We are based in Iceland — a member of the European Economic Area — and are fully bound by the General Data Protection Regulation (GDPR).</p>
+        <p>Contact: <a href="mailto:info@agndofa.is" style="color:var(--gold);opacity:0.85;">info@agndofa.is</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. WHAT WE COLLECT -->
+  <div class="help-section">
+    <div class="help-section-label" id="s2-lbl">WHAT IS HELD</div>
+    <div class="help-block">
+      <div class="help-block-body">
+        <p id="s2-intro">When you walk through Rúnar, certain things are remembered. Here is everything, without omission:</p>
+      </div>
+    </div>
+    <table class="data-table" id="s2-table">
+      <thead>
+        <tr>
+          <th id="s2-th1">WHAT</th>
+          <th id="s2-th2">WHY</th>
+          <th id="s2-th3">HOW LONG</th>
+        </tr>
+      </thead>
+      <tbody id="s2-tbody"></tbody>
+    </table>
+  </div>
+
+  <!-- 3. LEGAL BASIS -->
+  <div class="help-section">
+    <div class="help-section-label" id="s3-lbl">THE REASON WE HOLD IT</div>
+    <div class="help-block">
+      <div class="help-block-body" id="s3-body">
+        <p>We process your data on the following legal grounds under GDPR Article 6:</p>
+        <p><strong>Contract</strong> — to provide you with readings, journal, and account features you have requested.</p>
+        <p><strong>Legitimate interest</strong> — to prevent abuse of the free reading allowance and to keep the service running reliably.</p>
+        <p><strong>Consent</strong> — for optional features such as voice and language preferences.</p>
+        <p>We do not use your data for advertising, profiling, or automated decision-making.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. WHO WE SHARE WITH -->
+  <div class="help-section">
+    <div class="help-section-label" id="s4-lbl">WHO ELSE SEES IT</div>
+    <div class="help-block">
+      <div class="help-block-body" id="s4-body">
+        <p>We share only what is necessary, and only with these processors:</p>
+        <p><strong>Supabase</strong> (database &amp; authentication) — servers in EU West (Ireland). Your data never leaves the European Economic Area. <a href="https://supabase.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">supabase.com/privacy</a></p>
+        <p><strong>Anthropic</strong> (AI readings) — your question and the rune drawn are sent to generate your reading. Anthropic does not store your data for training. <a href="https://www.anthropic.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">anthropic.com/privacy</a></p>
+        <p><strong>ElevenLabs</strong> (voice) — text of your reading is sent only when voice is active. <a href="https://elevenlabs.io/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">elevenlabs.io/privacy</a></p>
+        <p>No data is sold. No data is shared with advertisers or data brokers. Ever.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. YOUR RIGHTS -->
+  <div class="help-section">
+    <div class="help-section-label" id="s5-lbl">YOUR RIGHTS</div>
+    <div class="help-block">
+      <div class="help-block-body">
+        <p id="s5-intro">Under GDPR, these rights belong to you. They are not privileges — they are yours by law.</p>
+      </div>
+    </div>
+    <ul class="rights-list" id="s5-list"></ul>
+  </div>
+
+  <!-- 6. COOKIES & LOCAL STORAGE -->
+  <div class="help-section">
+    <div class="help-section-label" id="s6-lbl">COOKIES & LOCAL MEMORY</div>
+    <div class="help-block">
+      <div class="help-block-body" id="s6-body">
+        <p>Rúnar does not use tracking cookies or third-party analytics.</p>
+        <p>Your browser's local storage holds a small amount of information to keep the experience seamless: your chosen language, your name (if given), the count of readings this month, and a session token used to keep you signed in. This data never leaves your device unless explicitly synced to your account.</p>
+        <p>You can clear this at any time through your browser settings, or by signing out of Rúnar.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. DELETE YOUR ACCOUNT -->
+  <div class="help-section">
+    <div class="help-section-label" id="s7-lbl">THE RIGHT TO BE FORGOTTEN</div>
+    <div class="help-block">
+      <div class="help-block-body" id="s7-body">
+        <p>You may delete your account at any time. Open the <strong>menu</strong> in Rúnar and choose <em>Delete Account</em>. This permanently removes your account, all readings, your journal, and all associated data from our systems.</p>
+        <p>If you prefer, write to us at <a href="mailto:info@agndofa.is" style="color:var(--gold);opacity:0.85;">info@agndofa.is</a> and we will do it for you within 30 days, as required by GDPR.</p>
+        <p>Gift card codes you have redeemed remain in our records (without your personal data attached) for accounting purposes only.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. CHANGES -->
+  <div class="help-section">
+    <div class="help-section-label" id="s8-lbl">IF THINGS CHANGE</div>
+    <div class="help-block">
+      <div class="help-block-body" id="s8-body">
+        <p>If this policy changes in a way that affects your rights, we will notify you through the app before the change takes effect. The date of the last update is shown below.</p>
+        <p>The current version always lives at this address.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="contact-card">
+    <div class="contact-card-lbl" id="contact-lbl">QUESTIONS ABOUT YOUR DATA</div>
+    <p class="contact-card-text" id="contact-body">If something is unclear, or you wish to exercise any of your rights, speak directly to us.</p>
+    <a href="mailto:info@agndofa.is">info@agndofa.is</a>
+  </div>
+
+  <p class="updated" id="updated-line">Last updated: May 2026</p>
+
+</div><!-- .app -->
+
+<script>
+// ═══════════════════════════════════════════════════════
+// RÚNAR · PRIVACY POLICY — bilingual content
+// ═══════════════════════════════════════════════════════
+
+const C = {
+  en: {
+    tpSub:    'PRIVACY POLICY',
+    backBtn:  '← BACK',
+    hTitle:   'WHAT RÚNAR REMEMBERS',
+    hSub:     'Some things must be spoken plainly. This is our promise to you — what we know, why we know it, and how to ask us to forget.',
+
+    s1Lbl:  'THE KEEPER OF RECORDS',
+    s1Body: `<p><strong>Agndofa ehf.</strong> is responsible for your data within the Rúnar application. We are based in Iceland — a member of the European Economic Area — and are fully bound by the General Data Protection Regulation (GDPR).</p>
+             <p>Contact: <a href="mailto:info@agndofa.is" style="color:var(--gold);opacity:0.85;">info@agndofa.is</a></p>`,
+
+    s2Lbl:   'WHAT IS HELD',
+    s2Intro: 'When you walk through Rúnar, certain things are remembered. Here is everything, without omission:',
+    s2Th:    ['WHAT', 'WHY', 'HOW LONG'],
+    s2Rows:  [
+      ['Email address',      'Sign in, account identity',              'Until account deleted'],
+      ['Name (optional)',    'Personalise your experience',            'Until changed or account deleted'],
+      ['Date of birth (optional)', 'Calculate your Life Rune',        'Until changed or account deleted'],
+      ['Rune readings',      'Your journal — kept for your return',    'Until account deleted'],
+      ['Language preference','Show Rúnar in your tongue',              'Until changed'],
+      ['Reading count',      'Enforce fair monthly allowance',         'Resets monthly; deleted with account'],
+      ['Credits balance',    'Track gift card credits',                'Until spent or account deleted'],
+      ['Gift code used',     'Prevent duplicate redemption',           'Kept for accounting (anonymised on account deletion)'],
+    ],
+
+    s3Lbl:  'THE REASON WE HOLD IT',
+    s3Body: `<p>We process your data on the following legal grounds under GDPR Article 6:</p>
+             <p><strong>Contract</strong> — to provide you with readings, journal, and account features you have requested.</p>
+             <p><strong>Legitimate interest</strong> — to prevent abuse of the free reading allowance and to keep the service running reliably.</p>
+             <p><strong>Consent</strong> — for optional features such as voice and language preferences.</p>
+             <p>We do not use your data for advertising, profiling, or automated decision-making.</p>`,
+
+    s4Lbl:  'WHO ELSE SEES IT',
+    s4Body: `<p>We share only what is necessary, and only with these processors:</p>
+             <p><strong>Supabase</strong> (database &amp; authentication) — servers in EU West (Ireland). Your data never leaves the European Economic Area. <a href="https://supabase.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">supabase.com/privacy</a></p>
+             <p><strong>Anthropic</strong> (AI readings) — your question and the rune drawn are sent to generate your reading. Anthropic does not store your data for training. <a href="https://www.anthropic.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">anthropic.com/privacy</a></p>
+             <p><strong>ElevenLabs</strong> (voice) — text of your reading is sent only when voice is active. <a href="https://elevenlabs.io/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">elevenlabs.io/privacy</a></p>
+             <p>No data is sold. No data is shared with advertisers or data brokers. Ever.</p>`,
+
+    s5Lbl:   'YOUR RIGHTS',
+    s5Intro: 'Under GDPR, these rights belong to you. They are not privileges — they are yours by law.',
+    s5Rights: [
+      ['ACCESS',       'Request a copy of all data we hold about you.'],
+      ['CORRECTION',   'Ask us to correct anything inaccurate.'],
+      ['ERASURE',      'Delete your account in the app, or write to us. Everything goes.'],
+      ['PORTABILITY',  'Receive your readings in a machine-readable format.'],
+      ['RESTRICTION',  'Ask us to pause processing your data while a dispute is resolved.'],
+      ['OBJECTION',    'Object to processing based on legitimate interest.'],
+      ['COMPLAINT',    'Lodge a complaint with the Icelandic Data Protection Authority (Persónuvernd) at personuvernd.is.'],
+    ],
+
+    s6Lbl:  'COOKIES & LOCAL MEMORY',
+    s6Body: `<p>Rúnar does not use tracking cookies or third-party analytics.</p>
+             <p>Your browser's local storage holds a small amount of information to keep the experience seamless: your chosen language, your name (if given), the count of readings this month, and a session token used to keep you signed in. This data never leaves your device unless explicitly synced to your account.</p>
+             <p>You can clear this at any time through your browser settings, or by signing out of Rúnar.</p>`,
+
+    s7Lbl:  'THE RIGHT TO BE FORGOTTEN',
+    s7Body: `<p>You may delete your account at any time. Open the <strong>menu</strong> in Rúnar and choose <em>Delete Account</em>. This permanently removes your account, all readings, your journal, and all associated data from our systems.</p>
+             <p>If you prefer, write to us at <a href="mailto:info@agndofa.is" style="color:var(--gold);opacity:0.85;">info@agndofa.is</a> and we will do it for you within 30 days, as required by GDPR.</p>
+             <p>Gift card codes you have redeemed remain in our records (without your personal data attached) for accounting purposes only.</p>`,
+
+    s8Lbl:  'IF THINGS CHANGE',
+    s8Body: `<p>If this policy changes in a way that affects your rights, we will notify you through the app before the change takes effect. The date of the last update is shown below.</p>
+             <p>The current version always lives at this address.</p>`,
+
+    contactLbl:  'QUESTIONS ABOUT YOUR DATA',
+    contactBody: 'If something is unclear, or you wish to exercise any of your rights, speak directly to us.',
+    updated:     'Last updated: May 2026',
+  },
+
+  is: {
+    tpSub:    'PERSÓNUVERNDARSTEFNA',
+    backBtn:  '← TIL BAKA',
+    hTitle:   'HVAÐ RÚNAR MAN',
+    hSub:     'Sumt verður að segja beint frá. Þetta er loforð okkar til þín — hvað við vitum, hvers vegna við vitum það, og hvernig þú getur beðið okkur um að gleyma.',
+
+    s1Lbl:  'GÆSLUMAÐUR GAGNA',
+    s1Body: `<p><strong>Agndofa ehf.</strong> ber ábyrgð á gögnum þínum innan Rúnar-forritsins. Við erum staðsett á Íslandi — aðildarríki Evrópska efnahagssvæðisins — og við hlíðum að fullu við almennu persónuverndarreglugerðina (GDPR).</p>
+             <p>Hafðu samband: <a href="mailto:info@agndofa.is" style="color:var(--gold);opacity:0.85;">info@agndofa.is</a></p>`,
+
+    s2Lbl:   'HVAÐ ER GEYMT',
+    s2Intro: 'Þegar þú ferð um Rúnar, eru ákveðin hlutir munuð. Hér er allt, án undanskilnings:',
+    s2Th:    ['HVAÐ', 'HVERS VEGNA', 'HVE LENGI'],
+    s2Rows:  [
+      ['Netfang',                   'Innskráning, auðkenni reiknings',             'Þar til reikningi er eytt'],
+      ['Nafn (valkvætt)',           'Sérsníða upplifun þína',                      'Þar til breytt eða reikningi eytt'],
+      ['Fæðingardagur (valkvætt)', 'Reikna Lífsrún þína',                         'Þar til breytt eða reikningi eytt'],
+      ['Rúnalestur',               'Dagbók þín — geymd fyrir endurkomu þína',     'Þar til reikningi er eytt'],
+      ['Tungumál',                 'Sýna Rúnar á máli þínu',                      'Þar til breytt'],
+      ['Fjöldi lestrar',           'Tryggja sanngjarnar mánaðarlegar heimildir',   'Endurnýjast mánaðarlega; eytt með reikningi'],
+      ['Kreditjafnvægi',           'Fylgjast með gjafakorts-kreditum',             'Þar til eytt eða reikningi eytt'],
+      ['Notaður gjafakortskóði',   'Koma í veg fyrir tvítekna innlausn',           'Geymt vegna bókhalds (nafnlægt þegar reikningi eytt)'],
+    ],
+
+    s3Lbl:  'ÁSTÆÐAN FYRIR GEYMSLU',
+    s3Body: `<p>Við vinnslu gagna þinna byggist á eftirfarandi lagalegum grundvelli samkvæmt 6. gr. GDPR:</p>
+             <p><strong>Samningur</strong> — til að veita þér lestrar, dagbók og reikningseiginleika sem þú hefur óskað eftir.</p>
+             <p><strong>Lögmætur hagsmunir</strong> — til að koma í veg fyrir misnotkun á fríum lestrartíðni og til að halda þjónustunni áreiðanlegri.</p>
+             <p><strong>Samþykki</strong> — fyrir valkvæða eiginleika eins og rödd og tungumálastillingar.</p>
+             <p>Við notum ekki gögn þín í auglýsingar, snið eða sjálfvirka ákvarðanatöku.</p>`,
+
+    s4Lbl:  'HVERJIR SJÁ ÞAÐ',
+    s4Body: `<p>Við deilum aðeins því sem nauðsynlegt er, og aðeins með þessum vinnsluaðilum:</p>
+             <p><strong>Supabase</strong> (gagnagrunnur og auðkenning) — þjónar í Vestur-Evrópu (Írland). Gögn þín fara aldrei út fyrir Evrópska efnahagssvæðið. <a href="https://supabase.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">supabase.com/privacy</a></p>
+             <p><strong>Anthropic</strong> (gervigreind) — spurning þín og tekin rún eru send til að mynda lestur þinn. Anthropic geymir ekki gögn þín til þjálfunar. <a href="https://www.anthropic.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">anthropic.com/privacy</a></p>
+             <p><strong>ElevenLabs</strong> (rödd) — texti lesturs þíns er sendur aðeins þegar rödd er virk. <a href="https://elevenlabs.io/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">elevenlabs.io/privacy</a></p>
+             <p>Engin gögn eru seld. Engin gögn eru deilt með auglýsendum eða gagnasölum. Aldrei.</p>`,
+
+    s5Lbl:   'RÉTTINDI ÞÍN',
+    s5Intro: 'Samkvæmt GDPR tilheyra þér þessi réttindi. Þau eru ekki forréttindi — þau eru þín samkvæmt lögum.',
+    s5Rights: [
+      ['AÐGANGUR',      'Biddu um afrit af öllum gögnum sem við geymum um þig.'],
+      ['LEIÐRÉTTING',   'Biddu okkur um að leiðrétta eitthvað sem er rangt.'],
+      ['EYÐING',        'Eyddu reikningi þínum í forritinu, eða skrifaðu okkur. Allt hverfur.'],
+      ['FLUTNINGUR',    'Fáðu lestrana þína á véllæsilegu sniði.'],
+      ['TAKMÖRKUN',     'Biddu okkur um að gera hlé á vinnslu meðan ágreiningur er leystur.'],
+      ['MÓTMÆLI',       'Mótmæla vinnslu sem byggist á lögmætum hagsmunum.'],
+      ['KVÖRTUN',       'Leggðu fram kvörtun hjá Persónuvernd á personuvernd.is.'],
+    ],
+
+    s6Lbl:  'VAFRAKÖKUR OG STAÐBUNDIN MINNI',
+    s6Body: `<p>Rúnar notar ekki rakningarvafrakökur eða þriðja aðila greiningar.</p>
+             <p>Staðbundið minni vafrans þíns geymir litla magni upplýsinga til að halda upplifuninni óbrotnni: tungumál þitt, nafn þitt (ef gefið upp), fjölda lestrar þessa mánaðar og setu-tákn til að halda þér skráðum inn. Þessi gögn fara aldrei úr tæki þínu nema sérstaklega samstillt við reikning þinn.</p>
+             <p>Þú getur hreinsað þetta hvenær sem er í stillingum vafrans, eða með því að skrá þig út úr Rúnar.</p>`,
+
+    s7Lbl:  'RÉTTUR TIL AÐ VERA GLEYMDUR',
+    s7Body: `<p>Þú getur eytt reikningi þínum hvenær sem er. Opnaðu <strong>valmyndina</strong> í Rúnar og veldu <em>Eyða reikningi</em>. Þetta fjarlægir varanlega reikning þinn, alla lestrar, dagbókina þína og öll tengd gögn úr kerfum okkar.</p>
+             <p>Ef þú kýst frekar, skrifaðu okkur á <a href="mailto:info@agndofa.is" style="color:var(--gold);opacity:0.85;">info@agndofa.is</a> og við munum gera það fyrir þig innan 30 daga, eins og GDPR krefst.</p>
+             <p>Gjafakortskóðar sem þú hefur innleyst eru áfram í gögnum okkar (án persónulegra gagna þinna tengdum) eingöngu vegna bókhalds.</p>`,
+
+    s8Lbl:  'EF HLUTIR BREYTAST',
+    s8Body: `<p>Ef þessi stefna breytist á þann hátt sem hefur áhrif á réttindi þín, munum við tilkynna þér í gegnum forritið áður en breytingin tekur gildi. Dagsetning síðustu uppfærslu er sýnd hér að neðan.</p>
+             <p>Núverandi útgáfa er alltaf á þessum slóð.</p>`,
+
+    contactLbl:  'SPURNINGAR UM GÖGN ÞÍN',
+    contactBody: 'Ef eitthvað er óljóst, eða þú vilt nýta réttindi þín, talaðu beint við okkur.',
+    updated:     'Síðast uppfært: maí 2026',
+  },
+};
+
+let lang = localStorage.getItem('runar_lang') || 'en';
+
+function setLang(l) {
+  lang = l;
+  localStorage.setItem('runar_lang', l);
+  document.getElementById('btn-en').classList.toggle('active', l === 'en');
+  document.getElementById('btn-is').classList.toggle('active', l === 'is');
+  applyContent();
+}
+
+function applyContent() {
+  const t = C[lang] || C.en;
+
+  document.documentElement.lang = lang;
+  document.getElementById('tp-sub').textContent    = t.tpSub;
+  document.getElementById('back-btn').textContent  = t.backBtn;
+  document.getElementById('h-title').textContent   = t.hTitle;
+  document.getElementById('h-sub').textContent     = t.hSub;
+
+  document.getElementById('s1-lbl').textContent    = t.s1Lbl;
+  document.getElementById('s1-body').innerHTML     = t.s1Body;
+
+  document.getElementById('s2-lbl').textContent    = t.s2Lbl;
+  document.getElementById('s2-intro').textContent  = t.s2Intro;
+  document.getElementById('s2-th1').textContent    = t.s2Th[0];
+  document.getElementById('s2-th2').textContent    = t.s2Th[1];
+  document.getElementById('s2-th3').textContent    = t.s2Th[2];
+  const tbody = document.getElementById('s2-tbody');
+  tbody.innerHTML = t.s2Rows.map(([what, why, how]) =>
+    `<tr><td>${what}</td><td>${why}</td><td>${how}</td></tr>`
+  ).join('');
+
+  document.getElementById('s3-lbl').textContent    = t.s3Lbl;
+  document.getElementById('s3-body').innerHTML     = t.s3Body;
+
+  document.getElementById('s4-lbl').textContent    = t.s4Lbl;
+  document.getElementById('s4-body').innerHTML     = t.s4Body;
+
+  document.getElementById('s5-lbl').textContent    = t.s5Lbl;
+  document.getElementById('s5-intro').textContent  = t.s5Intro;
+  const list = document.getElementById('s5-list');
+  list.innerHTML = t.s5Rights.map(([name, desc]) =>
+    `<li><span class="right-name">${name}</span><span>${desc}</span></li>`
+  ).join('');
+
+  document.getElementById('s6-lbl').textContent    = t.s6Lbl;
+  document.getElementById('s6-body').innerHTML     = t.s6Body;
+
+  document.getElementById('s7-lbl').textContent    = t.s7Lbl;
+  document.getElementById('s7-body').innerHTML     = t.s7Body;
+
+  document.getElementById('s8-lbl').textContent    = t.s8Lbl;
+  document.getElementById('s8-body').innerHTML     = t.s8Body;
+
+  document.getElementById('contact-lbl').textContent  = t.contactLbl;
+  document.getElementById('contact-body').textContent = t.contactBody;
+  document.getElementById('updated-line').textContent  = t.updated;
+}
+
+applyContent();
+</script>
+</body>
+</html>
