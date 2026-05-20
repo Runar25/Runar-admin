@@ -1167,7 +1167,7 @@ function updateAuthUI() {
         ? `Þú gengur sem <strong>Rune Seeker</strong> — ${FREE_REGISTERED_LIMIT} lestar á mánuði, allar tuttugu og fimm rúnirnar opnar, Rúnar hlustandi.<br><br>Þegar þeir eru genginn og steinarnir eiga enn eftir að segja, opnar lesturarkort dyrnar. Eitt kort. Jafn margir dragir og þú berð. Engin gildistími, engin áskrift.`
         : `You walk as <strong>Rune Seeker</strong> — ${FREE_REGISTERED_LIMIT} readings each month, all twenty-five runes open, Rúnar listening.<br><br>When they are walked and the stones still have more to say, a reading card keeps the door open. One card. As many draws as you carry. No subscription, no expiry.`;
       const btnEl = document.getElementById('tn-curious-btn');
-      if (btnEl) btnEl.textContent = isIs ? '+ LESTURARKORT' : '+ GET A READING CARD';
+      if (btnEl) { btnEl.textContent = isIs ? '+ LESTURARKORT' : '+ GET A READING CARD'; btnEl.style.display = ''; }
       upgradeGate.style.display = 'none';
       content.style.display     = 'block';
 
@@ -1185,6 +1185,8 @@ function updateAuthUI() {
       if (txtEl) txtEl.innerHTML = isIs
         ? `Mánaðarlegir lestrar þínir eru uppgengnar. Rúnar mun nota kredit þinn fyrir næsta lestur.`
         : `Your monthly readings are complete. Rúnar will draw from your credits for the next reading.`;
+      const btnEl2 = document.getElementById('tn-curious-btn');
+      if (btnEl2) btnEl2.style.display = 'none'; // má kredity — nepotřebuje gift card button
       upgradeGate.style.display = 'none';
       content.style.display     = 'block';
 
@@ -2249,6 +2251,11 @@ window.addEventListener('DOMContentLoaded', async () => {
       <button class="sp-item coming" id="sp-upgrade">UPGRADE → RUNE SEEKER</button>
       <button class="sp-item signout" onclick="handleAuthBtn();closeSidePanel()">SIGN OUT</button>
     </div>
+  </div>
+
+  <!-- Help + About -->
+  <div class="side-panel-section">
+    <a class="sp-item" href="runar-help.html" style="text-decoration:none;">? GUIDE & FAQ</a>
   </div>
 
   <!-- Language — always last -->

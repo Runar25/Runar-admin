@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RÚNAR · Guide & FAQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<script src="runar-config.js"></script>
+<style>
+:root{
+  --bg:#0a0c12;--card:#12161f;--border:#2E4A70;
+  --gold:#FFBF00;--white:#F2F5F7;--muted:#8ba5c0;--dim:#3a4a60;--teal:#7ED9B5;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--white);font-family:'Cormorant Garamond',serif;min-height:100vh;padding-top:56px;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(46,74,112,0.25) 0%,transparent 60%);}
+
+/* TOPBAR */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(10,12,18,0.96);border-bottom:1px solid rgba(46,74,112,0.4);backdrop-filter:blur(16px);}
+.topbar-inner{max-width:760px;margin:0 auto;padding:13px 28px;display:flex;align-items:center;justify-content:space-between;}
+.brand{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:4px;color:var(--gold);opacity:0.85;}
+.topbar-sub{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:2px;color:var(--muted);opacity:0.6;}
+.back-btn{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--gold);opacity:0.7;text-decoration:none;transition:opacity 0.2s;padding:6px 14px;border:1px solid rgba(255,191,0,0.3);}
+.back-btn:hover{opacity:1;}
+
+/* LANG TOGGLE */
+.lang-toggle{display:flex;border:1px solid var(--border);overflow:hidden;margin-left:14px;}
+.lang-btn{padding:7px 14px;font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;border:none;cursor:pointer;transition:all 0.2s;}
+.lang-btn.active{background:var(--gold);color:#000;}
+.lang-btn:not(.active){background:transparent;color:var(--muted);}
+
+/* CONTENT */
+.app{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:40px 24px 100px;}
+
+/* HERO */
+.help-hero{text-align:center;padding:40px 0 48px;border-bottom:1px solid rgba(46,74,112,0.3);margin-bottom:48px;}
+.help-rune{font-size:3em;color:var(--gold);opacity:0.55;margin-bottom:20px;line-height:1;}
+.help-title{font-family:'Cinzel',serif;font-size:1.6em;letter-spacing:4px;color:var(--white);font-weight:400;margin-bottom:16px;}
+.help-sub{font-size:1.15em;font-style:italic;color:var(--muted);line-height:1.8;max-width:500px;margin:0 auto;}
+
+/* SECTIONS */
+.help-section{margin-bottom:48px;}
+.help-section-label{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:4px;color:var(--gold);opacity:0.5;margin-bottom:24px;padding-bottom:10px;border-bottom:1px solid rgba(255,191,0,0.12);}
+.help-block{margin-bottom:32px;}
+.help-block-title{font-family:'Cinzel',serif;font-size:0.78em;letter-spacing:2.5px;color:var(--white);margin-bottom:12px;opacity:0.9;}
+.help-block-body{font-size:1.05em;line-height:1.9;color:var(--muted);}
+.help-block-body p{margin-bottom:12px;}
+.help-block-body p:last-child{margin-bottom:0;}
+.help-block-body strong{color:var(--white);font-style:normal;font-weight:400;}
+.help-block-body em{color:var(--gold);font-style:normal;opacity:0.85;}
+
+/* TIER TABLE */
+.tier-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:0.9em;}
+.tier-table th{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--gold);opacity:0.5;padding:10px 12px;text-align:left;border-bottom:1px solid rgba(46,74,112,0.4);}
+.tier-table td{padding:12px;border-bottom:1px solid rgba(46,74,112,0.2);color:var(--muted);vertical-align:top;line-height:1.6;}
+.tier-table td:first-child{font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:1.5px;color:var(--white);white-space:nowrap;}
+.tier-table tr:last-child td{border-bottom:none;}
+
+/* PRICE TABLE */
+.price-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:0.9em;}
+.price-table th{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--gold);opacity:0.5;padding:8px 12px;text-align:left;border-bottom:1px solid rgba(46,74,112,0.4);}
+.price-table td{padding:10px 12px;border-bottom:1px solid rgba(46,74,112,0.2);color:var(--muted);}
+.price-table td:first-child{font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:1.5px;color:var(--white);}
+.price-table tr:last-child td{border-bottom:none;}
+
+/* FAQ */
+.faq-item{border-bottom:1px solid rgba(46,74,112,0.25);padding:18px 0;}
+.faq-item:last-child{border-bottom:none;}
+.faq-q{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.5px;color:var(--white);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;user-select:none;}
+.faq-q:hover{color:var(--gold);}
+.faq-arrow{color:var(--gold);opacity:0.5;transition:transform 0.25s;flex-shrink:0;}
+.faq-a{display:none;padding-top:14px;font-size:1em;line-height:1.85;color:var(--muted);}
+.faq-a.open{display:block;}
+.faq-arrow.open{transform:rotate(180deg);}
+
+/* CONTACT */
+.contact-card{background:var(--card);border:1px solid rgba(255,191,0,0.15);padding:28px 24px;text-align:center;}
+.contact-card-lbl{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:3px;color:var(--gold);opacity:0.6;margin-bottom:14px;}
+.contact-card-text{font-size:1em;font-style:italic;color:var(--muted);line-height:1.8;margin-bottom:16px;}
+.contact-card a{color:var(--gold);opacity:0.85;text-decoration:none;}
+.contact-card a:hover{opacity:1;}
+
+@media(max-width:600px){
+  .topbar-inner{padding:12px 18px;}
+  .app{padding:28px 18px 80px;}
+  .help-title{font-size:1.3em;}
+  .tier-table,.price-table{font-size:0.82em;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div style="display:flex;align-items:center;gap:16px;">
+      <div>
+        <div class="brand">AGNDOFA</div>
+        <div class="topbar-sub" id="tp-sub">GUIDE & FAQ</div>
+      </div>
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" id="btn-is" onclick="setLang('is')">IS</button>
+      </div>
+    </div>
+    <a class="back-btn" href="runar-reader.html" id="back-btn">← BACK</a>
+  </div>
+</header>
+
+<div class="app">
+
+  <!-- HERO -->
+  <div class="help-hero">
+    <div class="help-rune">ᚱ</div>
+    <div class="help-title" id="h-title">WELCOME TO RÚNAR'S CIRCLE</div>
+    <p class="help-sub" id="h-sub">A guide for those who have found their way here. Take what is useful. Leave what is not.</p>
+  </div>
+
+  <!-- 1. HOW IT WORKS -->
+  <div class="help-section">
+    <div class="help-section-label" id="s1-lbl">HOW A READING WORKS</div>
+    <div class="help-block">
+      <div class="help-block-body" id="s1-body">
+        <p>You come with a question — or without one. Both are welcome.</p>
+        <p>Before the stones speak, Rúnar asks a few things: your name, the area of life you are moving through, and what you are seeking. Not to judge. To listen more precisely.</p>
+        <p>Then you draw. One rune from twenty-five — plus the Blank, the rune of the unknown. What follows comes in two layers. The first is short and direct — the core of what the rune carries for you today. The second goes deeper, drawing on Norse mythology, the imagery of Iceland, and the thread between your drawn rune and your life rune.</p>
+        <p><em>The runes do not decide your path. They help you remember it.</em></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. ACCOUNTS -->
+  <div class="help-section">
+    <div class="help-section-label" id="s2-lbl">YOUR ACCOUNT</div>
+    <div class="help-block">
+      <div class="help-block-body">
+        <table class="tier-table" id="tier-table">
+          <thead>
+            <tr>
+              <th id="th-tier">TIER</th>
+              <th id="th-what">WHAT YOU GET</th>
+            </tr>
+          </thead>
+          <tbody id="tier-tbody">
+            <tr>
+              <td>VISITOR</td>
+              <td id="td-visitor">3 readings, no account needed. Only Fehu — the rune of beginnings — is open to you. Enough to sense what waits inside.</td>
+            </tr>
+            <tr>
+              <td>RUNE SEEKER</td>
+              <td id="td-seeker">Free account. 5 readings per month, renewed on the first of every month. All twenty-five runes open. A journal of your last five readings.</td>
+            </tr>
+            <tr>
+              <td>+ READING CARD</td>
+              <td id="td-card">When monthly readings are walked — a reading card keeps the door open. Credits never expire. Rúnar's voice speaks your reading aloud.</td>
+            </tr>
+            <tr>
+              <td>STANDARD <span style="opacity:0.4;font-size:0.85em">soon</span></td>
+              <td id="td-standard">Unlimited readings. Rúnar's voice always. Your full chronicle — every reading, going back to the beginning.</td>
+            </tr>
+            <tr>
+              <td>PREMIUM <span style="opacity:0.4;font-size:0.85em">soon</span></td>
+              <td id="td-premium">Everything in Standard. Ceremonial mode. Seasonal readings at solstices and equinoxes. Multi-rune spreads.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. READING CARDS -->
+  <div class="help-section">
+    <div class="help-section-label" id="s3-lbl">READING CARDS</div>
+    <div class="help-block">
+      <div class="help-block-title" id="s3-physical-title">PHYSICAL CARD</div>
+      <div class="help-block-body" id="s3-physical-body">
+        <p>Available at the Agndofa shop in Iceland and online at <a href="https://agndofa.is" target="_blank" style="color:var(--gold);opacity:0.85;">agndofa.is</a>. A small card with a unique code. Redeem it in the app — credits are added to your account immediately.</p>
+      </div>
+    </div>
+    <div class="help-block">
+      <div class="help-block-title" id="s3-online-title">ONLINE PURCHASE <span style="font-family:'Cormorant Garamond',serif;font-size:1em;font-style:italic;opacity:0.45;letter-spacing:0;"> — coming soon</span></div>
+      <div class="help-block-body" id="s3-online-body">
+        <p>Credits will soon be available to purchase directly through the app, without a physical card.</p>
+      </div>
+    </div>
+    <div class="help-block">
+      <div class="help-block-title" id="s3-redeem-title">HOW TO REDEEM</div>
+      <div class="help-block-body" id="s3-redeem-body">
+        <p>Sign in → open the menu → tap <strong>+ Gift Card</strong> → enter your code → REDEEM. Credits are added instantly. They never expire. They follow your account, not your device.</p>
+      </div>
+    </div>
+    <div class="help-block">
+      <div class="help-block-title" id="s3-price-title">PRICING</div>
+      <table class="price-table" id="price-table">
+        <thead>
+          <tr>
+            <th id="pt-card">CARD</th>
+            <th id="pt-credits">CREDITS</th>
+            <th>EUR</th>
+            <th>ISK</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td id="pt-starter">Starter</td><td>5</td><td>€10</td><td>1.490 kr</td></tr>
+          <tr><td id="pt-seeker">Seeker</td><td>10</td><td>€18</td><td>2.690 kr</td></tr>
+          <tr><td id="pt-wanderer">Wanderer</td><td>20</td><td>€34</td><td>5.050 kr</td></tr>
+          <tr><td id="pt-elder">Elder</td><td>50</td><td>€80</td><td>11.900 kr</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 4. VOICE -->
+  <div class="help-section">
+    <div class="help-section-label" id="s4-lbl">RÚNAR'S VOICE</div>
+    <div class="help-block">
+      <div class="help-block-body" id="s4-body">
+        <p>When you draw a rune in the collection, a sound plays — a pre-recorded tone of that rune's presence. Always the same. A note, not a reading.</p>
+        <p>When you use a reading card, Rúnar speaks your reading aloud. Not a recording. Generated in the moment, shaped around your specific words. Each time different. Each time his.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. JOURNAL -->
+  <div class="help-section">
+    <div class="help-section-label" id="s5-lbl">YOUR JOURNAL</div>
+    <div class="help-block">
+      <div class="help-block-body" id="s5-body">
+        <p>Every reading you take is remembered. As a Rune Seeker, your last five readings wait in the journal — the rune drawn, the date, the area, the words spoken.</p>
+        <p>When you move to <strong>Standard</strong>, the journal becomes a full chronicle. Every reading, going back to the beginning. Filterable by rune, area, and time.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. LANGUAGE -->
+  <div class="help-section">
+    <div class="help-section-label" id="s6-lbl">LANGUAGE</div>
+    <div class="help-block">
+      <div class="help-block-body" id="s6-body">
+        <p>Rúnar speaks two languages — English and Icelandic. These are not translations of each other. Each carries its own imagery, its own rhythm. Icelandic is older here. The runes were carved first in that tongue.</p>
+        <p>You can switch languages at any time from the menu. Your preference is remembered.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. PRIVACY -->
+  <div class="help-section">
+    <div class="help-section-label" id="s7-lbl">YOUR ACCOUNT & PRIVACY</div>
+    <div class="help-block">
+      <div class="help-block-body" id="s7-body">
+        <p>Sign in with a magic link — no password needed — or with Google. Your email is the only thing we keep. Readings are stored privately. Only you can see them.</p>
+        <p>Your data is stored in Europe (Ireland). Iceland is a member of the European Economic Area. GDPR applies.</p>
+        <p>To delete your account and all your data, write to <a href="mailto:info@agndofa.is" style="color:var(--gold);opacity:0.85;">info@agndofa.is</a>. A self-service delete button is coming soon.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. FAQ -->
+  <div class="help-section">
+    <div class="help-section-label" id="s8-lbl">FREQUENTLY ASKED</div>
+    <div id="faq-list">
+      <!-- populated by JS -->
+    </div>
+  </div>
+
+  <!-- 9. CONTACT -->
+  <div class="contact-card">
+    <div class="contact-card-lbl" id="contact-lbl">QUESTIONS & FEEDBACK</div>
+    <p class="contact-card-text" id="contact-text">Something feels wrong, or you want to share something. We read everything.</p>
+    <a href="mailto:info@agndofa.is">info@agndofa.is</a>
+  </div>
+
+</div><!-- /app -->
+
+<script>
+let lang = localStorage.getItem('runar_lang') || 'en';
+
+// ── CONTENT ──────────────────────────────────────────────
+const CONTENT = {
+  en: {
+    'tp-sub':        'GUIDE & FAQ',
+    'back-btn':      '← BACK',
+    'h-title':       'WELCOME TO RÚNAR\'S CIRCLE',
+    'h-sub':         'A guide for those who have found their way here. Take what is useful. Leave what is not.',
+    's1-lbl':        'HOW A READING WORKS',
+    's1-body':       `<p>You come with a question — or without one. Both are welcome.</p>
+      <p>Before the stones speak, Rúnar asks a few things: your name, the area of life you are moving through, and what you are seeking. Not to judge. To listen more precisely.</p>
+      <p>Then you draw. One rune from twenty-five — plus the Blank, the rune of the unknown. What follows comes in two layers. The first is short and direct — the core of what the rune carries for you today. The second goes deeper, drawing on Norse mythology, the imagery of Iceland, and the thread between your drawn rune and your life rune.</p>
+      <p><em>The runes do not decide your path. They help you remember it.</em></p>`,
+    's2-lbl':        'YOUR ACCOUNT',
+    'th-tier':       'TIER', 'th-what': 'WHAT YOU GET',
+    'td-visitor':    '3 readings, no account needed. Only Fehu — the rune of beginnings — is open to you. Enough to sense what waits inside.',
+    'td-seeker':     'Free account. 5 readings per month, renewed on the first of every month. All twenty-five runes open. A journal of your last five readings.',
+    'td-card':       'When monthly readings are walked — a reading card keeps the door open. Credits never expire. Rúnar\'s voice speaks your reading aloud.',
+    'td-standard':   'Unlimited readings. Rúnar\'s voice always. Your full chronicle — every reading, going back to the beginning.',
+    'td-premium':    'Everything in Standard. Ceremonial mode. Seasonal readings at solstices and equinoxes. Multi-rune spreads.',
+    's3-lbl':        'READING CARDS',
+    's3-physical-title': 'PHYSICAL CARD',
+    's3-physical-body':  `<p>Available at the Agndofa shop in Iceland and online at <a href="https://agndofa.is" target="_blank" style="color:var(--gold);opacity:0.85;">agndofa.is</a>. A small card with a unique code. Redeem it in the app — credits are added to your account immediately.</p>`,
+    's3-online-title':   'ONLINE PURCHASE',
+    's3-online-body':    `<p>Credits will soon be available to purchase directly through the app, without a physical card.</p>`,
+    's3-redeem-title':   'HOW TO REDEEM',
+    's3-redeem-body':    `<p>Sign in → open the menu → tap <strong>+ Gift Card</strong> → enter your code → REDEEM. Credits are added instantly. They never expire. They follow your account, not your device.</p>`,
+    's3-price-title':    'PRICING',
+    'pt-card': 'CARD', 'pt-credits': 'CREDITS',
+    'pt-starter': 'Starter', 'pt-seeker': 'Seeker', 'pt-wanderer': 'Wanderer', 'pt-elder': 'Elder',
+    's4-lbl':  'RÚNAR\'S VOICE',
+    's4-body': `<p>When you draw a rune in the collection, a sound plays — a pre-recorded tone of that rune's presence. Always the same. A note, not a reading.</p>
+      <p>When you use a reading card, Rúnar speaks your reading aloud. Not a recording. Generated in the moment, shaped around your specific words. Each time different. Each time his.</p>`,
+    's5-lbl':  'YOUR JOURNAL',
+    's5-body': `<p>Every reading you take is remembered. As a Rune Seeker, your last five readings wait in the journal — the rune drawn, the date, the area, the words spoken.</p>
+      <p>When you move to <strong>Standard</strong>, the journal becomes a full chronicle. Every reading, going back to the beginning. Filterable by rune, area, and time.</p>`,
+    's6-lbl':  'LANGUAGE',
+    's6-body': `<p>Rúnar speaks two languages — English and Icelandic. These are not translations of each other. Each carries its own imagery, its own rhythm. Icelandic is older here. The runes were carved first in that tongue.</p>
+      <p>You can switch languages at any time from the menu. Your preference is remembered.</p>`,
+    's7-lbl':  'YOUR ACCOUNT & PRIVACY',
+    's7-body': `<p>Sign in with a magic link — no password needed — or with Google. Your email is the only thing we keep. Readings are stored privately. Only you can see them.</p>
+      <p>Your data is stored in Europe (Ireland). Iceland is a member of the European Economic Area. GDPR applies.</p>
+      <p>To delete your account and all your data, write to <a href="mailto:info@agndofa.is" style="color:var(--gold);opacity:0.85;">info@agndofa.is</a>. A self-service delete button is coming soon.</p>`,
+    's8-lbl':     'FREQUENTLY ASKED',
+    'contact-lbl':  'QUESTIONS & FEEDBACK',
+    'contact-text': 'Something feels wrong, or you want to share something. We read everything.',
+    faq: [
+      { q: 'Do credits expire?',                   a: 'Never. They are yours until you use them.' },
+      { q: 'Can I use my credits on different devices?', a: 'Yes. Credits are tied to your account, not your phone or browser.' },
+      { q: 'My code isn\'t working.',              a: 'Make sure you are signed in. Codes look like FEHU-XXXX-XXXX. If it still fails, write to info@agndofa.is.' },
+      { q: 'When do my monthly readings reset?',   a: 'On the first day of every month. The app will let you know when they renew.' },
+      { q: 'Is Rúnar an AI?',                      a: 'Rúnar\'s words are shaped by Claude, made by Anthropic. His voice is rendered by ElevenLabs. His character — the imagery, the philosophy, the way he speaks — was written by the people behind Agndofa. The intelligence is artificial. The intention is not.' },
+      { q: 'How do I delete my account?',          a: 'Write to info@agndofa.is and we will remove everything. A self-service option is coming soon.' },
+    ],
+  },
+  is: {
+    'tp-sub':        'LEIÐARVÍSIR & SPURNINGAR',
+    'back-btn':      '← TIL BAKA',
+    'h-title':       'VELKOMIN Í HRING RÚNARS',
+    'h-sub':         'Leiðarvísir fyrir þá sem hafa fundið leið hingað. Taktu það sem gagnast. Skildu eftir það sem gerir það ekki.',
+    's1-lbl':        'HVERNIG LESTUR VIRKAR',
+    's1-body':       `<p>Þú kemur með spurningu — eða án hennar. Báðar eru velkomnar.</p>
+      <p>Áður en steinarnir tala spyr Rúnar nokkurra hluta: nafns þíns, þess sviðs lífsins sem þú ert að ganga í gegnum, og hvað þú ert að leita að. Ekki til að dæma. Til að hlusta nákvæmar.</p>
+      <p>Síðan dregurðu. Ein rún af tuttugu og fimm — auk Auðar, rúnar hins óþekkta. Það sem kemur á eftir kemur í tveimur lögum. Fyrsta lagið er stutt og beinlínis. Annað lagið fer dýpra, sækir í norrænar goðsagnir og myndir af Íslandi.</p>
+      <p><em>Rúnarnar ákveða ekki leið þína. Þær hjálpa þér að muna hana.</em></p>`,
+    's2-lbl':        'REIKNINGUR ÞINN',
+    'th-tier':       'STIG', 'th-what': 'HVAÐ FÆR ÞÚ',
+    'td-visitor':    '3 lestrar, enginn reikningur þarf. Aðeins Fehu — rún upphafanna — er opin. Nóg til að finna hvað bíður inni.',
+    'td-seeker':     'Ókeypis reikningur. 5 lestrar á mánuði, endurnýjaðir fyrsta dag hvers mánaðar. Allar tuttugu og fimm rúnirnar opnar. Dagbók síðustu fimm lestrana.',
+    'td-card':       'Þegar mánaðarlegir lestrar eru gengnar — lesturarkort heldur dyrunum opnum. Kreditarnir renna aldrei út. Rödd Rúnars les lesturinn þinn upphátt.',
+    'td-standard':   'Ótakmarkaðir lestrar. Rödd Rúnars alltaf. Full kronika þín — sérhver lestur, allt frá upphafi.',
+    'td-premium':    'Allt í Standard. Ceremonial ham. Árstíðarlestur við sólstöður og jafndægur. Dreifing á mörgum rúnum.',
+    's3-lbl':        'LESTURARKORT',
+    's3-physical-title': 'LÍKAMLEGT KORT',
+    's3-physical-body':  `<p>Fæst í Agndofa búð á Íslandi og á netinu á <a href="https://agndofa.is" target="_blank" style="color:var(--gold);opacity:0.85;">agndofa.is</a>. Lítið kort með einstökum kóða. Innleysið í appinu — kreditarnir bætast við samstundis.</p>`,
+    's3-online-title':   'NETKAUP',
+    's3-online-body':    `<p>Kreditarnir verða fljótlega tiltækir til kaups beint í gegnum appið, án líkamlegs korts.</p>`,
+    's3-redeem-title':   'HVERNIG Á AÐ INNLEYSA',
+    's3-redeem-body':    `<p>Skráðu þig inn → opnaðu valmyndina → ýttu á <strong>+ Gjafakort</strong> → sláðu inn kóðann → INNLEYSA. Kreditarnir bætast við samstundis. Þeir renna aldrei út. Þeir fylgja reikningnum þínum.</p>`,
+    's3-price-title':    'VERÐLISTI',
+    'pt-card': 'KORT', 'pt-credits': 'KREDITARNIR',
+    'pt-starter': 'Byrjandi', 'pt-seeker': 'Leitandinn', 'pt-wanderer': 'Ráfari', 'pt-elder': 'Eldri',
+    's4-lbl':  'RÖDD RÚNARS',
+    's4-body': `<p>Þegar þú dregur rún í safninu heyrist hljóð — fyrirfram tekið upp til að gefa til kynna nærveru þeirrar rúnar. Alltaf það sama. Tónn, ekki lestur.</p>
+      <p>Þegar þú notar lesturarkort talar Rúnar lesturinn þinn upphátt. Ekki upptaka. Myndað í augnablikinu, mótað í kringum sérstakar orðin þín. Í hvert skipti öðruvísi. Í hvert skipti hans.</p>`,
+    's5-lbl':  'DAGBÓK ÞÍN',
+    's5-body': `<p>Sérhver lestur sem þú tekur er muninn. Sem Rúnaleitandi bíða síðustu fimm lestrar þínir í dagbókinni — rúnan sem dregin var, dagsetningin, svæðið, orðin.</p>
+      <p>Þegar þú ferð yfir í <strong>Standard</strong> verður dagbókin full kronika. Sérhver lestur, allt aftur til upphafins. Hægt að sía eftir rún, svæði og tíma.</p>`,
+    's6-lbl':  'TUNGUMÁL',
+    's6-body': `<p>Rúnar talar tvær tungur — ensku og íslensku. Þetta eru ekki þýðingar á hvort annað. Sérhver ber sína eigin myndir, sinn eigin takt. Íslenskan er eldri hér.</p>
+      <p>Þú getur skipt um tungumál hvenær sem er í valmyndinni. Ósk þín er munin.</p>`,
+    's7-lbl':  'REIKNINGUR ÞINN & PERSÓNUVERND',
+    's7-body': `<p>Skráðu þig inn með töfralykli — ekkert lykilorð þarf — eða með Google. Netfangið þitt er það eina sem við geymum. Lestrar eru geymdir með leynd.</p>
+      <p>Gögnin þín eru geymd í Evrópu (Írland). Ísland er meðlimur í EES. GDPR gildir.</p>
+      <p>Til að eyða reikningnum þínum, skrifaðu á <a href="mailto:info@agndofa.is" style="color:var(--gold);opacity:0.85;">info@agndofa.is</a>.</p>`,
+    's8-lbl':     'ALGENGAR SPURNINGAR',
+    'contact-lbl':  'SPURNINGAR & ENDURGJÖF',
+    'contact-text': 'Eitthvað líður ekki vel, eða þú vilt deila einhverju. Við lesum allt.',
+    faq: [
+      { q: 'Renna kreditarnir út?',                a: 'Aldrei. Þeir eru þínir þar til þú notar þá.' },
+      { q: 'Get ég notað kreditana á mismunandi tækjum?', a: 'Já. Kreditarnir eru bundnir við reikninginn þinn, ekki tækið.' },
+      { q: 'Kóðinn minn virkar ekki.',             a: 'Gakktu úr skugga um að þú sért skráður inn. Kóðar líta svona út: FEHU-XXXX-XXXX. Ef það virkar enn ekki, skrifaðu á info@agndofa.is.' },
+      { q: 'Hvenær endurnýjast mánaðarlegir lestrar?', a: 'Fyrsta dag hvers mánaðar. Appið lætur þig vita þegar þeir endurnýjast.' },
+      { q: 'Er Rúnar gervigreind?',                a: 'Orð Rúnars eru mótuð af Claude frá Anthropic. Rödd hans er þjónað af ElevenLabs. Persóna hans var skrifuð af fólkinu á bak við Agndofa. Greindinn er gervi. Tilgangurinn er það ekki.' },
+      { q: 'Hvernig eyði ég reikningnum mínum?',   a: 'Skrifaðu á info@agndofa.is og við fjarlægjum allt. Sjálfþjónustutakki er að koma.' },
+    ],
+  },
+};
+
+function setLang(l) {
+  lang = l;
+  localStorage.setItem('runar_lang', l);
+  document.getElementById('btn-en').classList.toggle('active', l === 'en');
+  document.getElementById('btn-is').classList.toggle('active', l === 'is');
+  document.documentElement.lang = l;
+  applyContent();
+}
+
+function applyContent() {
+  const c = CONTENT[lang] || CONTENT.en;
+  Object.keys(c).forEach(id => {
+    if (id === 'faq') return;
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (id.endsWith('-body') || id.startsWith('td-')) {
+      el.innerHTML = c[id];
+    } else {
+      el.textContent = c[id];
+    }
+  });
+  buildFaq(c.faq || []);
+}
+
+function buildFaq(items) {
+  const list = document.getElementById('faq-list');
+  if (!list) return;
+  list.innerHTML = items.map((item, i) => `
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(${i})">
+        <span>${item.q}</span>
+        <span class="faq-arrow" id="fa-${i}">▾</span>
+      </div>
+      <div class="faq-a" id="faq-${i}">${item.a}</div>
+    </div>
+  `).join('');
+}
+
+function toggleFaq(i) {
+  const ans = document.getElementById(`faq-${i}`);
+  const arr = document.getElementById(`fa-${i}`);
+  if (!ans) return;
+  const open = ans.classList.toggle('open');
+  if (arr) arr.classList.toggle('open', open);
+}
+
+// Init
+setLang(lang);
+</script>
+</body>
+</html>
