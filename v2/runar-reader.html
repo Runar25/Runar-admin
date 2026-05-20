@@ -1544,7 +1544,7 @@ function showTopbarGreeting() {
     msg = is ? 'Velkomin, Gestur.' : 'Welcome, Visitor.';
   } else {
     const n = displayName();
-    const returning = userTier === 'credits' || userTier === 'standard' || userTier === 'premium';
+    const returning = userTier === 'rune_seeker' || userTier === 'standard' || userTier === 'premium';
     msg = is ? (returning ? `Velkomin aftur, ${n}.` : `Velkomin, ${n}.`)
              : (returning ? `Welcome back, ${n}.`   : `Welcome, ${n}.`);
   }
@@ -2349,7 +2349,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       <span class="sp-row" id="sp-balance" style="display:none;"></span>
       <a class="sp-item" id="sp-admin-link" href="runar-shrine.html" style="display:none;text-decoration:none;">⚿ KNOWLEDGE SHRINE</a>
       <button class="sp-item" id="sp-gift" onclick="toggleRedeem();closeSidePanel()">+ GIFT CARD</button>
-      <button class="sp-item coming" id="sp-upgrade">UPGRADE → RUNE SEEKER</button>
+      <button class="sp-item coming" id="sp-upgrade">UPGRADE → STANDARD</button>
       <button class="sp-item signout" onclick="handleAuthBtn();closeSidePanel()">SIGN OUT</button>
       <button class="sp-item" id="sp-delete-account" onclick="openDeleteModal();closeSidePanel()" style="opacity:0.38;font-size:0.55em;letter-spacing:2px;margin-top:4px;border-top:none;">✕ DELETE ACCOUNT</button>
     </div>

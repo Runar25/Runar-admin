@@ -322,4 +322,10 @@ Filter bar (`#journal-filter-bar`) je v HTML, ale `display:none` pro rune_seeker
 - [ ] IS texty — review rodilým mluvčím (rotující fráze, notices, gates, help, privacy)
 - [ ] Email-based tracking — zabránit delete+recreate workaround
 - [ ] Nahrát zbývající statické audio (25 EN + 25 IS run)
+- [ ] Language gating pro Visitor — TIERS.free_trial.languages=['en'] není vynucováno v UI
+      IS tlačítko je viditelné a funkční pro všechny (Visitor může přepnout na IS)
+      Odloženo — IS texty stejně čekají na native review
+- [ ] Side panel: balance zobrazit i pro Standard/Premium (pokud mají zbývající kredity z dřívějška)
 - [x] Rate limiting — claude-proxy + redeem-code + elevenlabs-proxy ✓
+- [x] Voice tier control — canUseVoice() + TIERS config flags ✓
+- [x] Bug: userTier='credits' dead code → normalizováno na 'rune_seeker' ✓
