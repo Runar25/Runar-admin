@@ -515,6 +515,20 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
   </div>
 </div>
 
+<!-- ═══ DELETE ACCOUNT MODAL ═══ -->
+<div class="modal-overlay" id="delete-account-modal" onclick="if(event.target===this)closeDeleteModal()">
+  <div class="modal" style="text-align:center;max-width:340px;">
+    <div class="modal-rune" style="font-size:2em;color:var(--gold);margin-bottom:16px;opacity:0.5;">ᚾ</div>
+    <div class="modal-title" id="dam-title">DELETE YOUR ACCOUNT?</div>
+    <p class="modal-sub" id="dam-body" style="margin:16px 0 24px;line-height:1.8;"></p>
+    <div class="btn-row">
+      <button class="btn-half" id="dam-confirm" onclick="confirmDeleteAccount()" style="background:rgba(180,40,40,0.18);border-color:rgba(180,40,40,0.5);color:#e07070;"></button>
+      <button class="btn-half sec" id="dam-cancel" onclick="closeDeleteModal()"></button>
+    </div>
+    <p id="dam-error" style="margin-top:14px;font-size:0.7em;color:#e07070;display:none;"></p>
+  </div>
+</div>
+
 <!-- ═══ RESET NOTIFICATION MODAL ═══ -->
 <div class="modal-overlay" id="reset-notif-modal" onclick="if(event.target===this)closeResetModal()">
   <div class="modal" style="text-align:center;max-width:340px;">
@@ -896,6 +910,58 @@ function closeResetModal() {
   if (el) el.classList.remove('open');
 }
 
+// ── Delete Account ──────────────────────────────────────
+function openDeleteModal() {
+  const isIs = lang === 'is';
+  const el = document.getElementById('delete-account-modal');
+  if (!el) return;
+  document.getElementById('dam-title').textContent   = isIs ? 'EYÐA REIKNINGI?' : 'DELETE YOUR ACCOUNT?';
+  document.getElementById('dam-body').textContent    = isIs
+    ? 'Þetta eyðir reikningi þínum, öllum lestrum og dagbókina að eilífu. Hægt er ekki að afturkalla þessa aðgerð.'
+    : 'This will permanently erase your account, all readings, and your journal. This cannot be undone.';
+  document.getElementById('dam-confirm').textContent = isIs ? 'EYÐA' : 'DELETE';
+  document.getElementById('dam-cancel').textContent  = isIs ? 'HÆTTA VIÐ' : 'CANCEL';
+  document.getElementById('dam-error').style.display = 'none';
+  el.classList.add('open');
+}
+function closeDeleteModal() {
+  const el = document.getElementById('delete-account-modal');
+  if (el) el.classList.remove('open');
+}
+async function confirmDeleteAccount() {
+  const confirmBtn = document.getElementById('dam-confirm');
+  const errEl      = document.getElementById('dam-error');
+  const isIs       = lang === 'is';
+
+  confirmBtn.disabled    = true;
+  confirmBtn.textContent = isIs ? 'EYÐIR...' : 'DELETING...';
+  errEl.style.display    = 'none';
+
+  try {
+    const session = await sb.auth.getSession();
+    const token   = session.data.session?.access_token;
+    if (!token) throw new Error('Not authenticated');
+
+    const res  = await fetch('https://pmitxjvkeovijreepror.supabase.co/functions/v1/delete-account', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+    });
+    const data = await res.json();
+    if (!res.ok || !data.success) throw new Error(data.error || 'Unknown error');
+
+    // Success — sign out locally and reload
+    await sb.auth.signOut();
+    localStorage.clear();
+    location.reload();
+
+  } catch (e) {
+    confirmBtn.disabled    = false;
+    confirmBtn.textContent = isIs ? 'EYÐA' : 'DELETE';
+    errEl.textContent      = e.message;
+    errEl.style.display    = 'block';
+  }
+}
+
 // ─── DB: USER PROFILE ────────────────────────────────────
 async function fetchUserProfile(userId) {
   try {
@@ -1272,8 +1338,9 @@ function closeAuthModal() {
   document.getElementById('auth-modal').classList.remove('open');
 }
 document.addEventListener('click', e => {
-  if (e.target.id === 'auth-modal') closeAuthModal();
-  if (e.target.id === 'lang-switch-modal') cancelLangSwitch();
+  if (e.target.id === 'auth-modal')         closeAuthModal();
+  if (e.target.id === 'lang-switch-modal')  cancelLangSwitch();
+  if (e.target.id === 'delete-account-modal') closeDeleteModal();
 });
 
 function toggleRedeem() {
@@ -2250,6 +2317,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       <button class="sp-item" id="sp-gift" onclick="toggleRedeem();closeSidePanel()">+ GIFT CARD</button>
       <button class="sp-item coming" id="sp-upgrade">UPGRADE → RUNE SEEKER</button>
       <button class="sp-item signout" onclick="handleAuthBtn();closeSidePanel()">SIGN OUT</button>
+      <button class="sp-item" id="sp-delete-account" onclick="openDeleteModal();closeSidePanel()" style="opacity:0.38;font-size:0.55em;letter-spacing:2px;margin-top:4px;border-top:none;">✕ DELETE ACCOUNT</button>
     </div>
   </div>
 
