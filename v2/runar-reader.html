@@ -1380,11 +1380,12 @@ async function redeemCode() {
 
     if (!res.ok || data.error) {
       const msgs = {
-        'Code not found':      lang === 'is' ? 'Kóði fannst ekki.' : 'Code not found.',
-        'Code already used':   lang === 'is' ? 'Þessi kóði hefur þegar verið notaður.' : 'This code has already been used.',
+        'Code not found':        lang === 'is' ? 'Kóði fannst ekki.' : 'Code not found.',
+        'Code already used':     lang === 'is' ? 'Þessi kóði hefur þegar verið notaður.' : 'This code has already been used.',
         'Code already redeemed': lang === 'is' ? 'Þessi kóði hefur þegar verið notaður.' : 'This code has already been used.',
-        'Not authenticated':   lang === 'is' ? 'Skráðu þig inn fyrst.' : 'Please sign in first.',
-        'Invalid session':     lang === 'is' ? 'Skráðu þig inn aftur.' : 'Please sign in again.',
+        'Not authenticated':     lang === 'is' ? 'Skráðu þig inn fyrst.' : 'Please sign in first.',
+        'Invalid session':       lang === 'is' ? 'Skráðu þig inn aftur.' : 'Please sign in again.',
+        'rate_limited':          lang === 'is' ? 'Of margar tilraunir. Bíddu 15 mínútur.' : 'Too many attempts. Please wait 15 minutes.',
       };
       setSt('st-redeem', msgs[data.error] || data.error || 'Error.', 'err');
       btn.disabled = false;
@@ -2012,6 +2013,8 @@ async function callProxy(sys, prompt, maxTokens, use_credit = false) {
 
     // 402 = no credits or monthly limit hit
     if (res.status === 402) return { error: data.error || 'no_credits', message: data.message || 'No credits remaining.' };
+    // 429 = rate limited
+    if (res.status === 429) return { error: 'rate_limited', message: data.message || 'Too many requests. Please wait a moment.' };
     if (!res.ok || data.error) return { error: data.error || `HTTP ${res.status}` };
 
     // Sync credits balance if backend returned updated value
@@ -2088,6 +2091,10 @@ async function _generateReading() {
   const prompt = `${parts}${formulaLine}\n\nGive the reading in two parts separated by |||\n\nPART 1 (2-3 sentences maximum, core message, direct and poetic. Mention the rune's name — ${rn(drawn)} — once, woven naturally into the reading. Let the rune's symbolic layer — ${rworld(drawn) || 'the living path'} — subtly colour the tone):\n\nPART 2 (3-4 sentences maximum. Deeper reflection — connect drawn rune with ${life ? 'life rune ' + rn(life) + (life.world ? ' (' + rworld(life) + ')' : '') + ', ' : ''}${u.area || 'their path'}${u.seeking ? ', seeking ' + u.seeking : ''}. If the drawn rune and life rune share an element (${relements(drawn)} / ${life ? relements(life) : '—'}), let that resonance surface briefly. End with one short, open question. Do NOT include a label like "PART 2" in the output):\n\nSpeak directly to ${u.name}. Be concise — every sentence must earn its place. ${langInstr}\n${getCorrPrompt()}`;
 
   const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens, shouldUseCredit());
+  if (res.error === 'rate_limited') {
+    setSt('st-reader', lang === 'is' ? 'Of margar beiðnir. Bíddu aðeins.' : 'Too many requests. Please wait a moment.', 'err');
+    return;
+  }
   if (res.error === 'no_credits' || res.error === 'monthly_limit') {
     document.getElementById('out-short').innerHTML = '';
     document.getElementById('out-deep').innerHTML  = '';

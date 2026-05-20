@@ -1,7 +1,8 @@
 // Supabase Edge Function: claude-proxy
 // Forwards to Claude API. Enforces tier logic:
-//   rune_seeker — 5 free/month (frontend tracks), paid credits deducted server-side
+//   rune_seeker — 5 free/month (server-side via readings table), paid credits deducted server-side
 //   standard / premium — unlimited, no deduction
+// Rate limit: 10 requests / 60s per user (or IP for anonymous)
 // Deploy: supabase functions deploy claude-proxy --project-ref pmitxjvkeovijreepror --no-verify-jwt
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
@@ -14,6 +15,14 @@ const cors = {
 };
 const json = (data: unknown, status = 200) =>
   new Response(JSON.stringify(data), { status, headers: { ...cors, "Content-Type": "application/json" } });
+
+// Shared Supabase client (service role)
+function sb() {
+  return createClient(
+    Deno.env.get("SUPABASE_URL")!,
+    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+  );
+}
 
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
@@ -31,14 +40,10 @@ serve(async (req) => {
     let creditsBalance = 0;
 
     if (authHeader) {
-      const sb = createClient(
-        Deno.env.get("SUPABASE_URL")!,
-        Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
-      );
-      const { data: { user } } = await sb.auth.getUser(authHeader.replace("Bearer ", ""));
+      const { data: { user } } = await sb().auth.getUser(authHeader.replace("Bearer ", ""));
       if (user) {
         userId = user.id;
-        const { data: profile } = await sb
+        const { data: profile } = await sb()
           .from("user_profiles")
           .select("tier, credits_balance")
           .eq("id", user.id)
@@ -51,6 +56,18 @@ serve(async (req) => {
     // Normalize legacy tier values
     if (userTier === "free" || userTier === "credits") userTier = "rune_seeker";
 
+    // ── Rate limiting: 10 req / 60s per user or IP ──
+    const ip      = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+    const rlKey   = userId ? `claude:user:${userId}` : `claude:ip:${ip}`;
+    const { data: allowed } = await sb().rpc("check_rate_limit", {
+      p_key:            rlKey,
+      p_window_seconds: 60,
+      p_max_requests:   10,
+    });
+    if (!allowed) {
+      return json({ error: "rate_limited", message: "Too many requests. Please wait a moment." }, 429);
+    }
+
     // ── Tier enforcement ──
     if (userTier === "rune_seeker") {
       if (use_credit) {
@@ -58,11 +75,7 @@ serve(async (req) => {
         if (creditsBalance <= 0) {
           return json({ error: "no_credits", message: "No credits remaining. Redeem a gift card or upgrade." }, 402);
         }
-        const sb2 = createClient(
-          Deno.env.get("SUPABASE_URL")!,
-          Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
-        );
-        const { data: remaining } = await sb2.rpc("use_credit", { p_user_id: userId });
+        const { data: remaining } = await sb().rpc("use_credit", { p_user_id: userId });
         if (remaining === -1) {
           return json({ error: "no_credits", message: "No credits remaining." }, 402);
         }
@@ -70,13 +83,9 @@ serve(async (req) => {
       } else {
         // Free monthly slot — enforce 5/month SERVER-SIDE via readings table
         if (userId) {
-          const sb3 = createClient(
-            Deno.env.get("SUPABASE_URL")!,
-            Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
-          );
           const now        = new Date();
           const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
-          const { count }  = await sb3
+          const { count }  = await sb()
             .from("readings")
             .select("id", { count: "exact", head: true })
             .eq("user_id", userId)
