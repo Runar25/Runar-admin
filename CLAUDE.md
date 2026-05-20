@@ -260,7 +260,8 @@ Filter bar (`#journal-filter-bar`) je v HTML, ale `display:none` pro rune_seeker
 
 ### TECHNICKÝ DLUH
 - [ ] IS texty — review rodilým mluvčím (rotující fráze, notices, gates)
-- [ ] Delete account UI + Edge Function (GDPR)
+- [x] Delete account UI + Edge Function (GDPR) ✓
+- [ ] Email-based tracking — zabránit delete+recreate workaround (nový účet stejný email = zachovat monthly count)
 - [ ] Rate limiting v Edge Functions
 - [ ] Real streaming přes SSE (místo fake setTimeout)
 - [ ] Nahrát zbývající statické audio (25 EN + 25 IS run)
