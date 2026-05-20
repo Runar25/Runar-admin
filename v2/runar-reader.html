@@ -1136,9 +1136,11 @@ async function redeemCode() {
 
     if (!res.ok || data.error) {
       const msgs = {
-        'Code not found':    lang === 'is' ? 'Kóði fannst ekki.' : 'Code not found.',
-        'Code already used': lang === 'is' ? 'Þessi kóði hefur þegar verið notaður.' : 'This code has already been used.',
-        'Not authenticated': lang === 'is' ? 'Skráðu þig inn fyrst.' : 'Please sign in first.',
+        'Code not found':      lang === 'is' ? 'Kóði fannst ekki.' : 'Code not found.',
+        'Code already used':   lang === 'is' ? 'Þessi kóði hefur þegar verið notaður.' : 'This code has already been used.',
+        'Code already redeemed': lang === 'is' ? 'Þessi kóði hefur þegar verið notaður.' : 'This code has already been used.',
+        'Not authenticated':   lang === 'is' ? 'Skráðu þig inn fyrst.' : 'Please sign in first.',
+        'Invalid session':     lang === 'is' ? 'Skráðu þig inn aftur.' : 'Please sign in again.',
       };
       setSt('st-redeem', msgs[data.error] || data.error || 'Error.', 'err');
       btn.disabled = false;
@@ -1369,6 +1371,9 @@ function updateSidePanel() {
   accEl.style.display = 'block';
   const is = lang === 'is';
   setText('sp-email', currentUser.email);
+  // Admin link — jen pro admin emaily
+  const adminLink = document.getElementById('sp-admin-link');
+  if (adminLink) adminLink.style.display = isAdmin(currentUser.email) ? 'block' : 'none';
   const balEl = document.getElementById('sp-balance');
   if (balEl) {
     if (userTier === 'credits') {
@@ -2004,6 +2009,13 @@ window.addEventListener('DOMContentLoaded', async () => {
   // Auth state
   const { data: { session } } = await sb.auth.getSession();
   currentUser = session?.user || null;
+
+  // Admin check při načtení stránky (existující session)
+  if (currentUser && isAdmin(currentUser.email)) {
+    window.location.replace('runar-shrine.html');
+    return;
+  }
+
   if (currentUser) {
     fetchUserProfile(currentUser.id); // tier + credits (also calls updateAuthUI)
     syncMonthlyCount(currentUser.id);
@@ -2012,6 +2024,13 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   sb.auth.onAuthStateChange(async (event, session) => {
     currentUser = session?.user || null;
+
+    // Admin check po přihlášení (SIGNED_IN / INITIAL_SESSION)
+    if (currentUser && isAdmin(currentUser.email)) {
+      window.location.replace('runar-shrine.html');
+      return;
+    }
+
     updateAuthUI();
     if (currentUser) {
       closeAuthModal();
@@ -2059,6 +2078,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     <div class="side-panel-section">
       <span class="sp-row" id="sp-email"></span>
       <span class="sp-row" id="sp-balance" style="display:none;"></span>
+      <a class="sp-item" id="sp-admin-link" href="runar-shrine.html" style="display:none;text-decoration:none;">⚿ KNOWLEDGE SHRINE</a>
       <button class="sp-item" id="sp-gift" onclick="toggleRedeem();closeSidePanel()">+ GIFT CARD</button>
       <button class="sp-item coming" id="sp-upgrade">UPGRADE → RUNE SEEKER</button>
       <button class="sp-item signout" onclick="handleAuthBtn();closeSidePanel()">SIGN OUT</button>

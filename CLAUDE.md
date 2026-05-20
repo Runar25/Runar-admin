@@ -138,41 +138,84 @@ Island je člen EEA → platí plné GDPR.
 
 #### Co stavíme ZÍTRA (Rune Seeker komplet):
 
-**1. SQL — gift_codes tabulka (5 min)**
+**1. SQL — gift_codes tabulka + RPC funkce** ← SPUSTIT V SUPABASE SQL EDITOR
 ```sql
+-- gift_codes tabulka
 CREATE TABLE gift_codes (
   code        text PRIMARY KEY,
   credits     integer NOT NULL DEFAULT 5,
+  rune_name   text,                              -- např. 'FEHU', 'URUZ' (z prefixu kódu)
+  batch_id    text,                              -- např. 'kakao-launch-2026-09'
   used_by     uuid REFERENCES auth.users(id),
   used_at     timestamptz,
   created_at  timestamptz DEFAULT now()
 );
+
+-- RPC: atomicky odečte 1 kredit, vrátí nový zůstatek (-1 = žádné kredity)
+CREATE OR REPLACE FUNCTION use_credit(p_user_id uuid)
+RETURNS integer LANGUAGE plpgsql SECURITY DEFINER AS $$
+DECLARE v_balance integer;
+BEGIN
+  SELECT credits_balance INTO v_balance FROM user_profiles WHERE id = p_user_id FOR UPDATE;
+  IF v_balance IS NULL OR v_balance <= 0 THEN RETURN -1; END IF;
+  UPDATE user_profiles SET credits_balance = credits_balance - 1 WHERE id = p_user_id;
+  RETURN v_balance - 1;
+END;
+$$;
+
+-- RPC: atomicky přidá N kreditů, vrátí nový zůstatek
+CREATE OR REPLACE FUNCTION add_credits(p_user_id uuid, p_amount integer)
+RETURNS integer LANGUAGE plpgsql SECURITY DEFINER AS $$
+DECLARE v_balance integer;
+BEGIN
+  UPDATE user_profiles
+    SET credits_balance = credits_balance + p_amount
+    WHERE id = p_user_id
+    RETURNING credits_balance INTO v_balance;
+  RETURN v_balance;
+END;
+$$;
 ```
 
-**2. Edge Function: redeem-code (30 min)**
+**2. Edge Function: redeem-code** ✅ HOTOVO (`supabase/functions/redeem-code/index.ts`)
 ```
-POST { code } → ověří kód existuje + není použitý
-→ UPDATE user_profiles SET credits_balance += N, tier = 'credits'
-→ UPDATE gift_codes SET used_by, used_at
-→ vrátí { credits_remaining }
+POST { code } → ověří kód existuje + není použitý (race-condition safe)
+→ RPC add_credits: credits_balance += N
+→ UPDATE tier = 'credits' (jen pokud free/free_trial)
+→ vrátí { credits_added, new_balance, rune_name }
 ```
+Deploy: `supabase functions deploy redeem-code --project-ref pmitxjvkeovijreepror --no-verify-jwt`
 
-**3. Reader: napojit redeem UI (15 min)**
-- Tlačítko REDEEM volá `redeem-code` Edge Function
-- Po úspěchu updatuje UI (balance, tier label)
-- Error handling: kód neexistuje / již použit
+**3. Reader: redeem UI** ✅ HOTOVO
+- Credits banner + collapsible redeem section v Reading tabu
+- Input → REDEEM btn → volá redeem-code → updatuje balance + tier v UI
+- Error handling: Code not found / already used / not authenticated
 
-**4. Shrine: admin generátor kódů (30 min)**
-- Input: počet kódů × počet kreditů
-- Generuje náhodné kódy (FEHU-XXXX-XXXX formát)
-- Vkládá do gift_codes tabulky
-- Export do CSV pro tisk na kartičky
+**4. Shrine: admin generátor kódů** ✅ HOTOVO
+- Tab ᚠ GIFT CODES — výběr runy jako prefix, počet kreditů, počet kódů, batch ID
+- Generuje FEHU-XXXX-XXXX formát (safe charset bez 0/O/1/I/l)
+- Vkládá do gift_codes po 100 najednou
+- Export CSV + přehled batchí s progress barem (použito/celkem)
 
 #### Platební model
 - Credits = fyzická karta Rúnara (gift card)
 - Karta má kód → zákazník zadá v appce → dostane credits
 - Credits nevyprší, fungují across devices
 - 1 credit = 1 čtení s Rúnarovým hlasem
+
+#### Ceník kreditních karet (EUR + ISK)
+Kurz: €1 ≈ 148 ISK · náklady ~€0.18/čtení (Claude + ElevenLabs)
+
+| Karta | Kredity | EUR | ISK | Náklady | Marže |
+|-------|---------|-----|-----|---------|-------|
+| Starter | 5 | €10 | 1.490 ISK | ~€0.90 | 91% |
+| Seeker | 10 | €18 | 2.690 ISK | ~€1.80 | 90% |
+| Wanderer | 20 | €34 | 5.050 ISK | ~€3.60 | 89% |
+| Elder | 50 | €80 | 11.900 ISK | ~€9.00 | 89% |
+
+Cena za kredit: €2.00 → €1.80 → €1.70 → €1.60 (množstevní sleva)
+Po islandském VSK (24%): marže ~75–80%
+Shopify: EUR pro export, ISK pro islandský trh (dvě cenové skupiny)
 
 | Tier | Výklady | Dynamický hlas | Kolekce |
 |------|---------|----------------|---------|

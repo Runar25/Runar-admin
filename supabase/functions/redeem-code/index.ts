@@ -35,44 +35,46 @@ serve(async (req) => {
     );
     if (authErr || !user) return json({ error: "Invalid session" }, 401);
 
-    // ── Find code ──
+    // ── Find code (code is the PK) ──
     const normalized = code.trim().toUpperCase();
     const { data: gift, error: fetchErr } = await sb
       .from("gift_codes")
-      .select("id, credits, rune_name, used_by")
+      .select("code, credits, rune_name, used_by")
       .eq("code", normalized)
       .maybeSingle();
 
     if (fetchErr || !gift) return json({ error: "Code not found" }, 404);
     if (gift.used_by)       return json({ error: "Code already used" }, 409);
 
-    // ── Atomic: mark as used (double-check with .is null filter) ──
-    const { error: markErr, count } = await sb
+    // ── Atomic: mark as used (race-condition guard via .is null filter) ──
+    const { data: markedRows, error: markErr } = await sb
       .from("gift_codes")
       .update({ used_by: user.id, used_at: new Date().toISOString() })
-      .eq("id", gift.id)
-      .is("used_by", null);   // race-condition guard
+      .eq("code", normalized)
+      .is("used_by", null)
+      .select();   // returns updated rows — empty array = someone else won the race
 
-    if (markErr || count === 0) return json({ error: "Code already redeemed" }, 409);
+    if (markErr) return json({ error: "Failed to redeem: " + markErr.message }, 500);
+    if (!markedRows || markedRows.length === 0) return json({ error: "Code already redeemed" }, 409);
 
-    // ── Add credits (atomic RPC) ──
+    // ── Add credits atomically via RPC ──
     const { data: newBalance, error: creditErr } = await sb.rpc("add_credits", {
       p_user_id: user.id,
       p_amount:  gift.credits,
     });
     if (creditErr) return json({ error: "Failed to add credits: " + creditErr.message }, 500);
 
-    // ── Update tier to 'credits' if still on 'free' ──
+    // ── Upgrade tier to 'credits' if still on free/trial ──
     await sb.from("user_profiles")
       .update({ tier: "credits" })
       .eq("id", user.id)
-      .eq("tier", "free");
+      .in("tier", ["free", "free_trial"]);
 
     return json({
-      success:      true,
+      success:       true,
       credits_added: gift.credits,
-      new_balance:  newBalance,
-      rune_name:    gift.rune_name ?? null,
+      new_balance:   newBalance,
+      rune_name:     gift.rune_name ?? null,
     });
 
   } catch (e) {
