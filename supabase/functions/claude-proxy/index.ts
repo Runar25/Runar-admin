@@ -58,17 +58,38 @@ serve(async (req) => {
         if (creditsBalance <= 0) {
           return json({ error: "no_credits", message: "No credits remaining. Redeem a gift card or upgrade." }, 402);
         }
-        const sb = createClient(
+        const sb2 = createClient(
           Deno.env.get("SUPABASE_URL")!,
           Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
         );
-        const { data: remaining } = await sb.rpc("use_credit", { p_user_id: userId });
+        const { data: remaining } = await sb2.rpc("use_credit", { p_user_id: userId });
         if (remaining === -1) {
           return json({ error: "no_credits", message: "No credits remaining." }, 402);
         }
         creditsBalance = remaining;
+      } else {
+        // Free monthly slot — enforce 5/month SERVER-SIDE via readings table
+        if (userId) {
+          const sb3 = createClient(
+            Deno.env.get("SUPABASE_URL")!,
+            Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+          );
+          const now        = new Date();
+          const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
+          const { count }  = await sb3
+            .from("readings")
+            .select("id", { count: "exact", head: true })
+            .eq("user_id", userId)
+            .gte("drawn_at", monthStart);
+
+          if ((count ?? 0) >= 5) {
+            return json({
+              error:   "monthly_limit",
+              message: "Monthly free readings exhausted. Use a credit or upgrade.",
+            }, 402);
+          }
+        }
       }
-      // else: using free monthly slot — frontend enforces the 5/month limit
     }
 
     // standard / premium — unlimited, no deduction needed
