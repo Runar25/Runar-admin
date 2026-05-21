@@ -304,6 +304,60 @@ Flow:
 - Online gift card (zatím jen fyzická)
 - Fyzický ekosystém (QR deeplink, NFC na produktech Agndofa)
 
+---
+
+## RÚNAR'S WHISPERS — kontext & budoucí vývoj
+
+### Co je hotovo (MVP, 2026-05-21)
+- 5-runový kombinovaný výklad v Journal tabu (Standard/Premium)
+- Uživatel ručně označí 5 run z journalu → Rúnar vytvoří 1200-token výklad
+- Rune Seeker vidí teaser "Unlocks with Standard"
+- Hlas přes ElevenLabs (stejný flow jako regular reading)
+- Výsledek se streamuje slovo po slovu
+
+### Zamýšlený rituální kontext (budoucí implementace)
+Rúnar's Whispers není jen klikání na runy. Je to rituál:
+1. Kakao ceremony — uživatel si připraví cacao (Agndofa produkt)
+2. Meditace — ticho, záměr, napojení
+3. Tah run — 5 run taženo vědomě, jedna po druhé, s pauzou
+4. Teprve pak: Rúnar's Whispers s těmito 5 runami
+
+**Budoucí implementace:**
+- Speciální "rituální tah" flow — jiný UX od běžného čtení
+- Runy z tohoto flow se automaticky vkládají do Whispers "košíku"
+- Možná integrace s Agndofa cacao produktem (QR/NFC)
+- Měsíční Whispers — automaticky z run celého měsíce
+
+### Alternativní názvy (uloženy pro budoucí použití)
+Všechny jsou silné — mohou se hodit pro různé varianty rituálu nebo tier features.
+
+| Název | Motiv |
+|-------|-------|
+| **RÚNAR'S WHISPERS** | ← **aktuálně používáno** |
+| THE COUNCIL OF RUNES | Runy zasedly jako rada moudrých |
+| RÚNAR'S COUNSEL | Rada/poradenství na základě celé cesty (Council/Counsel hříčka) |
+| THE WEAVING | Tkaní osudu z více run — nornský motiv, velmi islandský |
+| RUNE CIRCLE | Kruh run, rituální |
+| THE CHRONICLE | Celkový výklad cesty |
+| GODS' WHISPERS | Mystické, tajemné |
+| THE GATHERING | Shromáždění run |
+
+### Technické poznámky
+- `mode: 'ceremonial'` v API requestu (mapuje na RUNAR_MODES.ceremonial, max_tokens 1200)
+- `use_credit: false` — Whispers neodčítá kredity, je součástí Standard tieru
+- `_journalCache` slouží jako selection pool — uživatel vybírá z již existujících čtení
+- `_whispersMode`: 'idle' | 'selecting' | 'loading' | 'output'
+- `_selectedEntries[]`: max 5 záznamů z journalu
+- `_whispersText`: vygenerovaný text (pro voice generation)
+- Počet run (5) je konfigurovatelný — konstanta v `enterWhispersSelection()`
+
+### Měsíční Whispers (plánováno)
+- Automaticky na konci měsíce: Rúnar sestaví výklad ze všech run daného měsíce
+- Napojení na měsíční reset free čtení (symbolický přechod)
+- Potřeba: tabulka `ritual_readings` nebo rozšíření `readings` o `ritual_type`
+
+---
+
 ### DENÍK (JOURNAL) — architektura
 
 **Rune Seeker:** posledních 5 čtení, rozbalitelné (short + deep text)
