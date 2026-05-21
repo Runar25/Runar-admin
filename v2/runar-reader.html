@@ -1850,6 +1850,8 @@ function showAppTab(tab) {
     // Hero hides when browsing collection (no need for it there)
     document.getElementById('reader-hero').classList.add('hidden');
     loadCollection();
+    // Scroll to top so collection is immediately visible
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   } else {
     // Restore hero only if no reading is in progress
     const inReading = document.getElementById('reader-output')?.style.display !== 'none'
