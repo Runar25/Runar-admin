@@ -70,6 +70,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .sp-item.signout:hover{opacity:1;}
 .sp-item.coming{opacity:0.22;pointer-events:none;cursor:default;}
 .sp-item.coming.active{opacity:0.85;pointer-events:auto;cursor:pointer;}
+.sp-item.journal{color:var(--teal);opacity:0.85;}
+.sp-item.journal:hover{opacity:1;}
+/* danger zone — delete account */
+.sp-danger-zone{padding:10px 24px 18px;border-top:1px solid rgba(255,255,255,0.04);}
+.sp-delete-btn{display:block;width:100%;text-align:left;font-family:'Cinzel',serif;font-size:0.52em;letter-spacing:2px;padding:8px 0;background:none;border:none;color:var(--muted);opacity:0.28;cursor:pointer;transition:opacity 0.2s;}
+.sp-delete-btn:hover{opacity:0.55;color:#ff6b6b;}
 /* lang toggle in panel */
 .lang-toggle{display:flex;border:1px solid rgba(255,191,0,0.25);overflow:hidden;width:100%;}
 .lang-btn{flex:1;padding:10px 0;font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;border:none;cursor:pointer;transition:all 0.2s;text-align:center;}
@@ -612,7 +618,7 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
   <div class="credits-banner" id="credits-banner" style="display:none;">
     <div style="display:flex;align-items:center;gap:14px;">
       <span class="tier-badge" id="credits-text">Rune Seeker</span>
-      <span class="credits-redeem-link" onclick="toggleRedeem()" id="redeem-link">+ GIFT CARD</span>
+      <span class="credits-redeem-link" onclick="toggleRedeem()" id="redeem-link">+ READING CARD</span>
     </div>
     <span class="credits-balance" id="credits-balance-lbl"></span>
   </div>
@@ -620,7 +626,7 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
   <!-- REDEEM SECTION (collapsible) -->
   <div class="redeem-section" id="redeem-section" style="display:none;">
     <button class="redeem-close" onclick="toggleRedeem()">✕</button>
-    <div class="redeem-lbl" id="redeem-lbl">ᚠ ENTER GIFT CARD CODE</div>
+    <div class="redeem-lbl" id="redeem-lbl">ᚠ ENTER READING CARD CODE</div>
     <div class="redeem-row">
       <input class="redeem-input" id="redeem-input" type="text" placeholder="e.g. FEHU-7K3M-P9QX" maxlength="20" oninput="this.value=this.value.toUpperCase()">
       <button class="redeem-btn" id="redeem-btn" onclick="redeemCode()">REDEEM</button>
@@ -1255,7 +1261,7 @@ function updateAuthUI() {
       if (cntEl) {
         cntEl.textContent = isIs
           ? `${userCredits} kredit eftir`
-          : `${userCredits} credit${userCredits !== 1 ? 's' : ''} remaining`;
+          : `${userCredits} reading${userCredits !== 1 ? 's' : ''} remaining`;
         cntEl.className = 'tn-counter';
       }
       const txtEl = document.getElementById('free-user-text');
@@ -1631,35 +1637,57 @@ function updateSidePanel() {
   // Side panel navigation links — switch with language
   setText('sp-guide-link',   isIs ? '? LEIÐBEININGAR & SPURNINGAR' : '? GUIDE & FAQ');
   setText('sp-privacy-link', isIs ? 'PERSÓNUVERNDARSTEFNA'         : 'PRIVACY POLICY');
-  if (!currentUser) { accEl.style.display = 'none'; return; }
-  accEl.style.display = 'block';
+  // Show/hide session + danger sections
+  const sessionEl = document.getElementById('sp-session');
+  const dangerEl  = document.getElementById('sp-danger');
+  if (!currentUser) {
+    accEl.style.display     = 'none';
+    if (sessionEl) sessionEl.style.display = 'none';
+    if (dangerEl)  dangerEl.style.display  = 'none';
+    return;
+  }
+  accEl.style.display     = 'block';
+  if (sessionEl) sessionEl.style.display = 'block';
+  if (dangerEl)  dangerEl.style.display  = 'block';
+
   const is = isIs;
   setText('sp-email', currentUser.email);
-  // Admin link — jen pro admin emaily
+
+  // Admin link
   const adminLink = document.getElementById('sp-admin-link');
   if (adminLink) adminLink.style.display = isAdmin(currentUser.email) ? 'block' : 'none';
+
+  // Balance row — readings + credits renamed
   const balEl = document.getElementById('sp-balance');
   if (balEl) {
     if (userTier === 'rune_seeker') {
       const used = getFreeMonthCount(currentUser.id);
       const rem  = Math.max(0, FREE_REGISTERED_LIMIT - used);
-      const creditPart = userCredits > 0
-        ? (is ? ` · ${userCredits} kredit` : ` · ${userCredits} credit${userCredits !== 1 ? 's' : ''}`)
+      const extraPart = userCredits > 0
+        ? (is ? ` · ${userCredits} lestur` : ` · ${userCredits} reading${userCredits !== 1 ? 's' : ''}`)
         : '';
       balEl.textContent   = is
-        ? `${rem} af 5 frjálsum lestrum í mánuði${creditPart} · ${nextResetLabel(true)}`
-        : `${rem} of 5 free readings this month${creditPart} · ${nextResetLabel(false)}`;
+        ? `${rem} af 5 frjálsum lestrum í mánuði${extraPart} · ${nextResetLabel(true)}`
+        : `${rem} of 5 free readings this month${extraPart} · ${nextResetLabel(false)}`;
       balEl.style.display = 'block';
     } else {
       balEl.style.display = 'none';
     }
   }
-  const hide = userTier === 'standard' || userTier === 'premium';
+
+  // Journal link
+  const journalLink = document.getElementById('sp-journal-link');
+  if (journalLink) {
+    setText('sp-journal-link', is ? '✦ LESTRAR MÍNIR' : '✦ MY JOURNAL');
+  }
+
+  // Reading Card + Upgrade visibility
+  const hide   = userTier === 'standard' || userTier === 'premium';
   const upEl   = document.getElementById('sp-upgrade');
   const giftEl = document.getElementById('sp-gift');
   if (upEl)   upEl.style.display   = hide ? 'none' : 'block';
   if (giftEl) giftEl.style.display = hide ? 'none' : 'block';
-  setText('sp-gift', is ? '+ GJAFAKORT' : '+ GIFT CARD');
+  setText('sp-gift',    is ? '+ LESTURARKORT' : '+ READING CARD');
   setText('sp-upgrade', is ? 'UPPFÆRA → STANDARD — BRÁÐLEGA' : 'UPGRADE → STANDARD — COMING SOON');
 }
 
@@ -1668,6 +1696,19 @@ function openSidePanel() {
   updateSidePanel();
   document.getElementById('side-panel').classList.add('open');
   document.getElementById('side-overlay').classList.add('open');
+}
+
+function openJournalFromPanel() {
+  closeSidePanel();
+  setAppTab('reading');
+  setTimeout(() => {
+    const jSection = document.getElementById('journal-section');
+    if (!jSection || jSection.style.display === 'none') return;
+    jSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Open journal body if collapsed
+    const jBody = document.getElementById('journal-body');
+    if (jBody && !jBody.classList.contains('open')) toggleJournal();
+  }, 320);
 }
 function closeSidePanel() {
   document.getElementById('side-panel').classList.remove('open');
@@ -1772,7 +1813,7 @@ function updateUIText() {
   const vBtn = document.getElementById('btn-generate-voice');
   if (vBtn && !vBtn.disabled) vBtn.textContent = t('voice_btn');
   // Re-render auth UI + side panel vždy — zajistí správné texty i pro odhlášeného uživatele při změně jazyka
-  setText('free-redeem-link', lang === 'is' ? '+ GJAFAKORT' : '+ GIFT CARD');
+  setText('free-redeem-link', lang === 'is' ? '+ LESTURARKORT' : '+ READING CARD');
   updateAuthUI();
   updateSidePanel();
   // Trial banner — fallback texts (přepíše updateAuthUI pokud je logged out)
@@ -2357,31 +2398,43 @@ window.addEventListener('DOMContentLoaded', async () => {
 <!-- ═══ SIDE PANEL ═══ -->
 <div class="side-overlay" id="side-overlay" onclick="closeSidePanel()"></div>
 <nav class="side-panel" id="side-panel">
+
+  <!-- Header: tier name -->
   <div class="side-panel-head">
     <span class="side-panel-brand" id="sp-tier-header">VISITOR</span>
     <button class="side-panel-close" onclick="closeSidePanel()">✕</button>
   </div>
 
-  <!-- Account (logged-in only) -->
+  <!-- ① Account info — logged-in only -->
   <div id="sp-account" style="display:none;">
     <div class="side-panel-section">
       <span class="sp-row" id="sp-email"></span>
-      <span class="sp-row" id="sp-balance" style="display:none;"></span>
+      <span class="sp-row" id="sp-balance" style="display:none;font-size:0.56em;opacity:0.65;line-height:1.7;letter-spacing:1px;"></span>
+    </div>
+
+    <!-- ② Personal actions -->
+    <div class="side-panel-section">
+      <button class="sp-item journal" id="sp-journal-link" onclick="openJournalFromPanel()">✦ MY JOURNAL</button>
+      <button class="sp-item" id="sp-gift" onclick="toggleRedeem();closeSidePanel()">+ READING CARD</button>
       <a class="sp-item" id="sp-admin-link" href="runar-shrine.html" style="display:none;text-decoration:none;">⚿ KNOWLEDGE SHRINE</a>
-      <button class="sp-item" id="sp-gift" onclick="toggleRedeem();closeSidePanel()">+ GIFT CARD</button>
-      <button class="sp-item coming" id="sp-upgrade">UPGRADE → STANDARD</button>
-      <button class="sp-item signout" onclick="handleAuthBtn();closeSidePanel()">SIGN OUT</button>
-      <button class="sp-item" id="sp-delete-account" onclick="openDeleteModal();closeSidePanel()" style="opacity:0.38;font-size:0.55em;letter-spacing:2px;margin-top:4px;border-top:none;">✕ DELETE ACCOUNT</button>
+      <button class="sp-item coming" id="sp-upgrade">UPGRADE → STANDARD — COMING SOON</button>
     </div>
   </div>
 
-  <!-- Help + About -->
+  <!-- ③ Navigation — always visible -->
   <div class="side-panel-section">
     <a class="sp-item" id="sp-guide-link"   href="runar-help.html"    style="text-decoration:none;">? GUIDE &amp; FAQ</a>
     <a class="sp-item" id="sp-privacy-link" href="runar-privacy.html" style="text-decoration:none;opacity:0.55;font-size:0.9em;">PRIVACY POLICY</a>
   </div>
 
-  <!-- Language — always last -->
+  <!-- ④ Sign out — logged-in only -->
+  <div id="sp-session" style="display:none;">
+    <div class="side-panel-section">
+      <button class="sp-item" onclick="handleAuthBtn();closeSidePanel()">SIGN OUT</button>
+    </div>
+  </div>
+
+  <!-- ⑤ Language — always last, pushed to bottom -->
   <div class="side-panel-section" style="margin-top:auto;">
     <div class="side-panel-lbl" id="sp-lang-lbl">LANGUAGE</div>
     <div class="lang-toggle">
@@ -2389,6 +2442,14 @@ window.addEventListener('DOMContentLoaded', async () => {
       <button class="lang-btn"        id="sp-btn-is" onclick="setLang('is');closeSidePanel()">IS</button>
     </div>
   </div>
+
+  <!-- ⑥ Danger zone — logged-in only, separated at very bottom -->
+  <div id="sp-danger" style="display:none;">
+    <div class="sp-danger-zone">
+      <button class="sp-delete-btn" id="sp-delete-account" onclick="openDeleteModal();closeSidePanel()">× DELETE ACCOUNT</button>
+    </div>
+  </div>
+
 </nav>
 
 <!-- ═══ NAME PROMPT MODAL ═══ -->
