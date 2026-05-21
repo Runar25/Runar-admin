@@ -1,7 +1,7 @@
 # RÚNAR — Claude Code Context
 
 ## Co je Rúnar
-AI-powered mystický průvodce runami pro značku Agndofa (Island). Rúnar má vlastní poetický hlas, charakter a filozofii. Budoucí centrum předplatného produktu s fyzickým ekosystémem (runové sady, kakao ceremonial).
+AI-powered mystický průvodce runami pro značku Agndofa (Island). Rúnar má vlastní poetický hlas, charakter a filozofii. Centrum předplatného produktu s fyzickým ekosystémem (runové sady, kakao ceremonial).
 
 ## Stack
 - **Frontend:** Single HTML soubor + vanilla JS/CSS, GitHub Pages
@@ -13,13 +13,13 @@ AI-powered mystický průvodce runami pro značku Agndofa (Island). Rúnar má v
 
 ## Soubory v `/v2/`
 ```
-runar-shrine.html      ← hlavní app (admin)
-runar-reader.html      ← uživatelská app
+runar-shrine.html      ← admin app (Knowledge Shrine)
+runar-reader.html      ← uživatelská app (hlavní soubor, ~3000 řádků)
 runar-help.html        ← průvodce & FAQ (EN+IS, Rúnarův hlas)
 runar-privacy.html     ← Privacy Policy (EN+IS, GDPR-compliant)
 runar-config.js        ← SB_URL, SB_KEY, PROXY, EL_PROXY, EL_STATIC,
-                          EL_VOICE_ID_EN, EL_VOICE_ID_IS, elVoiceId(),
-                          TIERS, RUNAR_MODES, ADMIN_EMAILS, isAdmin()
+                          EL_VOICE_ID_EN, EL_VOICE_ID_IS, elVoiceId(), elModel(),
+                          TIERS (s label_is), RUNAR_MODES, ADMIN_EMAILS, isAdmin()
 runar-runes.js         ← 25 Elder Futhark + Blank, AREAS, SEEKS, calcLifeRune()
 runar-character.js     ← DEF_CHAR_EN, DEF_CHAR_IS, buildSysPrompt()
 runar-translations.js  ← UI_TEXT { en, is }
@@ -29,7 +29,9 @@ runar-svgs.js          ← RUNE_SVGS (SVG glyfů)
 ## Edge Functions (`/supabase/functions/`)
 ```
 claude-proxy           ← forwards to Claude API
+                          · ADMIN_EMAILS bypass: admins dostanou 'premium' bez DB check
                           · tier enforcement: rune_seeker 5/měsíc (DB check) + credits
+                          · standard/premium: unlimited, no deduction
                           · rate limit: 10 req/60s per user nebo IP
                           · 402 = no_credits nebo monthly_limit
                           · 429 = rate_limited
@@ -84,8 +86,9 @@ check_rate_limit(p_key, p_window_seconds, p_max_requests)
 
 ## Supabase Storage
 ```
-runar-audio (PUBLIC)   ← static/en/fehu_1.mp3, static/en/fehu_2.mp3, ...
-                          static/is/fehu_1.mp3, static/is/fehu_2.mp3, ...
+runar-audio (PUBLIC)   ← static/en/fehu_1.mp3 ... static/en/othalan_2.mp3
+                          static/is/fehu_1.mp3 ... static/is/othalan_2.mp3
+                          ✅ HOTOVO: všech 25 × EN + 25 × IS run nahráno
 ```
 
 ## Voice IDs (ElevenLabs)
@@ -96,26 +99,49 @@ runar-audio (PUBLIC)   ← static/en/fehu_1.mp3, static/en/fehu_2.mp3, ...
 
 ## Tier systém
 ```
-Visitor     (free_trial)  → 3 čtení celkem, anon, jen Fehu v kolekci, no voice
-Rune Seeker (rune_seeker) → 5 čtení/měsíc ZDARMA (server-side enforcement) + kredity navíc
-                            deník posledních 5 čtení, všech 25 run
-                            kredity = fyzická karta, 1 kredit = 1 čtení + Rúnarův hlas
-Standard                  → unlimited, dynamický hlas (coming soon)
-Premium                   → unlimited + ceremonial (coming soon)
+Visitor     (free_trial)  → 3 čtení celkem, anon, jen Fehu v kolekci
+Rune Seeker (rune_seeker) → 5 čtení/měsíc ZDARMA (server-side enforcement) + kredity
+                            journal: posledních 5 čtení
+                            The Gathering: teaser (locked)
+                            Specific Question: locked (teaser)
+Standard                  → unlimited čtení + hlas
+                            journal: unlimited + filtry
+                            The Gathering: plný přístup
+                            Specific Question: odemčena
+Premium                   → vše jako Standard + ceremonial (coming soon)
 ```
 Upgrade path: Visitor → Rune Seeker (zdarma, účet) → Standard → Premium
 
-POZOR: Staré DB hodnoty 'free' a 'credits' jsou normalizovány na 'rune_seeker' ve frontendu i backendu.
+POZOR: Staré DB hodnoty 'free' a 'credits' normalizovány na 'rune_seeker' ve frontendu i backendu.
 SQL migrace (již spuštěno): `UPDATE user_profiles SET tier = 'rune_seeker' WHERE tier IN ('free', 'credits');`
 
 Voice flagy (v runar-config.js TIERS.rune_seeker):
-  voice_monthly: false  ← hlas pro 5 free/měsíc (flip na true až bude rozhodnuto)
-  voice_credits: true   ← hlas při použití kreditů
+```
+voice_monthly: true   ← hlas pro 5 free/měsíc (aktuálně otevřeno)
+voice_credits: true   ← hlas při použití kreditů
+```
 
-## Admin přístup v readeru
-Admins (`ADMIN_EMAILS`) mají automaticky `userTier = 'premium'` v readeru bez ohledu na skutečný DB tier.
-Nastavuje se v `fetchUserProfile()` po načtení profilu: `if (isAdmin(currentUser?.email)) userTier = 'premium';`
-Důvod: admins musí mít přístup ke všem features pro testování, aniž by museli mít placený účet.
+IS názvy tierů (v TIERS config, pole `label_is`):
+```
+free_trial:  Gestur
+rune_seeker: Vegfarandi
+standard:    Standard
+premium:     Premium
+```
+
+## Admin přístup
+Admins (`ADMIN_EMAILS = ['kukula@agndofa.is', 'info@agndofa.is']`) mají:
+
+**Frontend (runar-reader.html):**
+`fetchUserProfile()` nastaví `userTier = 'premium'` pokud `isAdmin(currentUser.email)`.
+Odemkne všechny features bez ohledu na DB tier.
+
+**Backend (claude-proxy/index.ts):**
+Před DB lookupem zkontroluje email z JWT.
+Pokud admin → `userTier = 'premium'` server-side, bypass všech limitů.
+
+**Shrine (runar-shrine.html):**
+Přístup jen pro admin emails — link v side panelu viditelný jen pro `ADMIN_EMAILS`.
 
 ## Klíčová rozhodnutí
 - Poetický hlas Rúnara — žádný tech žargon v UI, nikdy
@@ -130,9 +156,7 @@ Důvod: admins musí mít přístup ke všem features pro testování, aniž by 
 - Supabase RLS: každý uživatel vidí jen svá vlastní data (auth.uid() = user_id)
 - Credits se kupují jako fyzická karta v Agndofa shopu — žádný Stripe
 - Monthly limit 5/měsíc je vynucován SERVER-SIDE (claude-proxy čte readings tabulku)
-  → localStorage je jen cache, nelze obejít manipulací JS
-- Admin přístup: jen odkaz v hamburgeru (⚿ KNOWLEDGE SHRINE), viditelný jen pro ADMIN_EMAILS
-  → žádné auto-redirecty, admin může normálně používat reader
+- Barva UI: `var(--gold)` = `#FFBF00` — používat vždy, žádná teal v primárních prvcích
 
 ## Bezpečnost & GDPR
 Island je člen EEA → platí plné GDPR.
@@ -154,49 +178,64 @@ Island je člen EEA → platí plné GDPR.
 
 ---
 
-## ROADMAP v0.8 (2026-05-20)
+## ROADMAP v0.9 (2026-05-21)
 
 ### VRSTVA 0 — ZÁKLAD ✅ HOTOVO
 
-### VRSTVA 1 — HLAS ✅ PŘEVÁŽNĚ HOTOVO
+### VRSTVA 1 — HLAS ✅ HOTOVO
 - [x] Statické audio pipeline (ElevenLabs → Storage → Reader)
 - [x] Dynamické audio (real-time TTS pro placené tiery)
 - [x] Admin generátor v shrine
-- [ ] Nahrát všech 25 × EN + 25 × IS run (zatím jen část)
+- [x] Všech 25 × EN + 25 × IS run nahráno do Storage ✅
 
 ### VRSTVA 1.5 — UX & VIZUÁL ✅ HOTOVO
 - [x] Topbar: AGNDOFA + jméno/tier + hamburger menu
-- [x] Side panel: tier v hlavičce, jazyk dole, account sekce
-- [x] Barva: #FFBF00 globálně
+- [x] Side panel: kompletně přepracován (journal link, Reading Card, danger zone)
+- [x] Barva: #FFBF00 amber/gold globálně — konzistentně ve všem UI
 - [x] Hero mobile: eyebrow + title overlaid na portrét
-- [x] Hero subtitle: rotující fráze Rúnarova hlasu (12 EN, IS čeká na native review)
+- [x] Hero subtitle: rotující fráze Rúnarova hlasu (12 EN + 12 IS)
 - [x] Name prompt modal: "Before the Runes Speak"
 - [x] Tier notices v Reading tabu s dynamickým počítadlem + reset datum
 - [x] Monthly reset modal — jednou za měsíc po prvním přihlášení
 - [x] Visitor gate v Collection: jen Fehu klikatelná
 - [x] Shrine: sticky topbar stejný styl jako reader
+- [x] IS tier názvy: Gestur / Vegfarandi
+- [x] DOB placeholder překlady (Dagur / Mánuður / Ár)
 
 ### VRSTVA 2 — AUTH & UŽIVATELSKÝ ÚČET ✅ HOTOVO
 - [x] Magic link + Google OAuth
 - [x] user_profiles (RLS), readings (RLS)
-- [x] Deník — posledních 5 čtení (rune_seeker), rozbalitelné, life_rune, credits_used
-- [x] Journal teaser pro Standard (X readings kept — move to Standard)
-- [x] Runes Collection
-- [x] Language persistence (localStorage + user_profiles.lang)
+- [x] Language persistence — localStorage priority + DB sync (multi-device)
 - [x] Delete account — GDPR, okamžité smazání všech dat
 - [x] Admin odkaz v hamburgeru (⚿ KNOWLEDGE SHRINE) — jen pro ADMIN_EMAILS
+- [x] Admin premium access — frontend + backend bypass
+
+### VRSTVA 2.5 — JOURNAL & KOLEKCE ✅ HOTOVO
+- [x] Runes Collection tab — 25 run s audio, Visitor vidí jen Fehu
+- [x] Journal — vlastní 3. tab (◌ JOURNAL)
+  - jcard design: zkrácený excerpt → expand na klik
+  - Plný text: short + deep, otázka (Standard+), life rune
+  - ♪ RÚNAR'S VOICE — statické audio per záznam
+  - Filter bar (rune / area / lang) pro Standard/Premium
+  - Rune Seeker: posledních 5, teaser pokud >5 celkem
+  - Standard/Premium: unlimited + filtry
+  - Gate pro nepřihlášené (ᚱ + výzva k registraci)
+- [x] Specific Question — gated na Standard/Premium, Rune Seeker vidí teaser
+- [x] Journal tab visible jen pro přihlášené (hide/show při auth change)
+- [x] Side panel: ✦ MY JOURNAL link → přepne na Journal tab
 
 ### VRSTVA 3 — MONETIZACE ✅ HOTOVO
 - [x] gift_codes tabulka + use_credit + add_credits RPC
 - [x] Edge Function: redeem-code (race-condition safe, rate limited)
 - [x] Reader: credits banner + collapsible redeem UI
 - [x] Shrine: admin generátor kódů (prefix, batch, CSV export)
-- [x] Tier merge: free + credits → rune_seeker (5 free/měsíc + extra credits)
+- [x] Tier merge: free + credits → rune_seeker
 - [x] Monthly limit vynucován server-side v claude-proxy
 - [x] Rate limiting: claude-proxy (10/min) + redeem-code (5/15min)
+- [x] Reading Card (dříve Gift Card) — název sjednocen EN+IS
 
 #### Platební model
-- Credits = fyzická karta Rúnara (gift card)
+- Credits = fyzická Reading Card Rúnara
 - Karta má kód → zákazník zadá v appce → dostane credits
 - Credits nevyprší, fungují across devices
 - 1 credit = 1 čtení s Rúnarovým hlasem
@@ -213,180 +252,184 @@ Kurz: €1 ≈ 148 ISK · náklady ~€0.18/čtení (Claude + ElevenLabs)
 
 Po islandském VSK (24%): marže ~75–80%
 
-| Tier | Výklady | Dynamický hlas | Kolekce |
-|------|---------|----------------|---------|
-| Visitor | 3 celkem | ❌ | jen Fehu |
-| Rune Seeker | 5/měsíc + kredity | ✅ (jen credits) | všech 25 |
-| Standard | unlimited | ✅ | všech 25 |
-| Premium | unlimited | ✅ | + ceremonial |
-
 ### VRSTVA 3.5 — GDPR & PRÁVNÍ ✅ HOTOVO
 - [x] Privacy Policy EN+IS (runar-privacy.html)
 - [x] Delete account UI + Edge Function
 - [x] DPA se Supabase — Request odeslán
 - [ ] Privacy Policy odkaz na agndofa.is
 
+### VRSTVA 3.6 — THE GATHERING ✅ MVP HOTOVO
+- [x] 5-runový kombinovaný výklad v Journal tabu (Standard/Premium)
+- [x] Uživatel označí 5 run z journalu → 1200-token hluboký výklad
+- [x] ★ SELECT tlačítka na jcard, counter Selected: X of 5
+- [x] LET RÚNAR WEAVE → streaming výstup
+- [x] ᚢ RÚNAR'S VOICE — ElevenLabs audio pro celý text
+- [x] Rune Seeker: teaser "The Gathering unlocks with Standard."
+- [x] Méně než 5 čtení: "X more readings needed"
+- [x] Plná EN/IS podpora
+
 ### VRSTVA 4 — STANDARD & PREMIUM FEATURES (NÁVRH)
 
 > ⚠️ Rozdělení mezi Standard a Premium ještě není finální — nutno rozhodnout.
 
 #### Délka výkladů (max_tokens)
-Současný stav v `RUNAR_MODES.quick_reading`:
 - Visitor / Rune Seeker: **700 tokenů** (~500 slov)
-- Standard: **1000–1200 tokenů** (návrh) — bohatší, hlubší výklad
+- The Gathering: **1200 tokenů** (již implementováno)
+- Standard: **1000–1200 tokenů** (návrh) — bohatší výklad
 - Premium: **1500+ tokenů** (návrh) — plná hloubka + ceremonial
 
 #### Přehled navržených features
 
 **⚡ Prožitek & rychlost**
-- [ ] **Real SSE streaming** — první slova za ~0.5s místo čekání 3–5s; Rúnar "mluví" v reálném čase
-      Implementace: claude-proxy vrací ReadableStream, frontend čte SSE events
-- [ ] **Hlas pro všechna čtení** — flip `voice_monthly: true` pro Standard (teď jen credits)
+- [ ] **Real SSE streaming** — první slova za ~0.5s místo čekání 3–5s
 - [ ] **Delší výklady** — Standard 1000–1200 tokenů, Premium 1500+
 
 **📖 Journal**
-- [ ] **Neomezený deník** — unlimited čtení, bez limitu 5 (kód připraven, jen unlock)
-- [ ] **Filtry v deníku** — podle runy, oblasti, jazyka, data (HTML připraven, `display:none`)
 - [ ] **Export čtení** — stáhnout journal jako PDF nebo CSV
+- [ ] **Filtry podle data** — přidat date range do filter baru
 
-**🔮 Rituální výklady (nový koncept)**
-- [ ] **Týdenní rituální výklad** — uživatel nakreslí run(y) během týdne → v pátek/sobotu
-      Rúnar udělá hlubší výklad ze všech run týdne dohromady jako jeden rituál
-      Runa se uloží jako "týdenní runa" a přispívá do kolektivního výkladu
-- [ ] **Měsíční rituální výklad** — stejný princip ale za celý měsíc
-      Na konci měsíce Rúnar vytvoří hluboký výklad z run celého měsíce
-      Propojení s měsíčním resetem free čtení (symbolický přechod)
-      Potřeba: nová tabulka `ritual_readings` nebo rozšíření `readings` o `ritual_type`
+**🔮 The Gathering — rituální evoluce**
+- [ ] **Rituální tah flow** — speciální UX: kakao, meditace, 5 vědomých tahů
+      Run z rituálního tahu se automaticky vkládají do Gathering košíku
+- [ ] **Měsíční Gathering** — automaticky z run celého měsíce
+      Napojení na měsíční reset (symbolický přechod)
+      Potřeba: tabulka `ritual_readings` nebo rozšíření `readings` o `ritual_type`
+- [ ] **Integrace s Agndofa cacao produktem** — QR/NFC spustí rituální flow
 
 **🧠 Hloubka & kontext**
-- [ ] **Třírunový spread** — minulost / přítomnost / budoucnost (jeden draw, tři runy)
-- [ ] **Follow-up otázka** — jedna doplňující otázka po čtení v rámci kontextu sezení
-- [ ] **Lunární / sezónní kontext** — Rúnar ví jaký je měsíční cyklus a roční období,
-      zapracuje to do výkladu (islandský lunární kalendář, slunovrat, rovnodennost)
+- [ ] **Třírunový spread** — minulost / přítomnost / budoucnost
+- [ ] **Follow-up otázka** — jedna doplňující otázka po čtení
+- [ ] **Lunární / sezónní kontext** — Rúnar ví jaký je měsíční cyklus a roční období
 
 **🎭 Personalizace**
 - [ ] **Rúnarův tón** — výběr stylu výkladu (mystický / přímý / meditativní)
-- [ ] **Paměť kontextu** — Rúnar si pamatuje předchozí čtení a odkazuje na ně
-      (multi-turn history v claude-proxy)
+- [ ] **Paměť kontextu** — Rúnar si pamatuje předchozí čtení (multi-turn history)
 
 #### Návrh rozdělení (k diskuzi)
 | Feature | Standard | Premium |
 |---------|----------|---------|
 | SSE streaming | ✅ | ✅ |
-| Delší výklady (1000 tokenů) | ✅ | ✅ |
+| Delší výklady (1200 tokenů) | ✅ | ✅ |
 | Hlas pro všechna čtení | ✅ | ✅ |
-| Neomezený journal + filtry | ✅ | ✅ |
+| Unlimited journal + filtry | ✅ | ✅ |
 | Export čtení | ✅ | ✅ |
+| The Gathering (5 run) | ✅ | ✅ |
 | Follow-up otázka | ✅ | ✅ |
-| Týdenní rituální výklad | ✅ | ✅ |
 | Třírunový spread | ✅ | ✅ |
-| Měsíční rituální výklad | ❌ | ✅ |
+| Měsíční Gathering | ❌ | ✅ |
 | Lunární / sezónní kontext | ❌ | ✅ |
 | Rúnarův tón | ❌ | ✅ |
 | Paměť kontextu | ❌ | ✅ |
-| Ceremonial mode (kakao) | ❌ | ✅ |
+| Ceremonial mode (kakao ritual) | ❌ | ✅ |
 | Fyzický ekosystém (QR/NFC) | ❌ | ✅ |
-
-#### Rituální výklady — architektura (návrh)
-```
-ritual_readings tabulka:
-  id, user_id, ritual_type (weekly/monthly),
-  period_start, period_end,
-  rune_names[] (pole run z daného období),
-  reading_text, lang,
-  created_at
-
-Flow:
-1. Uživatel táhne runy normálně (ukládají se do readings)
-2. Na konci týdne/měsíce: tlačítko "RÚNAR'S WEEKLY COUNSEL"
-3. Systém vytáhne runy z daného období → pošle jako kontext Rúnarovi
-4. Rúnar vygeneruje rituální výklad ze všech run najednou
-5. Uložení do ritual_readings
-```
 
 ### VRSTVA 5+ — VZDÁLENÁ BUDOUCNOST
 - Shopify webhook — automatický tier upgrade po online nákupu
-- Online gift card (zatím jen fyzická)
+- Online Reading Card (zatím jen fyzická)
 - Fyzický ekosystém (QR deeplink, NFC na produktech Agndofa)
 
 ---
 
-## THE GATHERING — kontext & budoucí vývoj
-*(pracovní název — viz tabulka alternativ níže)*
+## THE GATHERING — architektura & kontext
 
-### Co je hotovo (MVP, 2026-05-21)
-- 5-runový kombinovaný výklad v Journal tabu (Standard/Premium)
-- Uživatel ručně označí 5 run z journalu → Rúnar vytvoří 1200-token výklad
-- Rune Seeker vidí teaser "Unlocks with Standard"
-- Hlas přes ElevenLabs (stejný flow jako regular reading)
-- Výsledek se streamuje slovo po slovu
+### Technické detaily (aktuální implementace)
+- `mode: 'ceremonial'` v API requestu (mapuje na RUNAR_MODES.ceremonial, max_tokens 1200)
+- `use_credit: false` — Gathering neodčítá kredity, je součástí Standard tieru
+- `_journalCache` = selection pool — uživatel vybírá z existujících čtení v journalu
+- `_whispersMode`: `'idle' | 'selecting' | 'loading' | 'output'`
+- `_selectedEntries[]`: max 5 záznamů z journalu
+- `_whispersText`: vygenerovaný text (pro voice generation)
+- Počet run (5) je konfigurovatelný — konstanta v `enterWhispersSelection()`
+- CSS třída `.whispers-selecting` na `#journal-content` zobrazí ★ SELECT tlačítka
 
 ### Zamýšlený rituální kontext (budoucí implementace)
-Rúnar's Whispers není jen klikání na runy. Je to rituál:
-1. Kakao ceremony — uživatel si připraví cacao (Agndofa produkt)
-2. Meditace — ticho, záměr, napojení
-3. Tah run — 5 run taženo vědomě, jedna po druhé, s pauzou
-4. Teprve pak: Rúnar's Whispers s těmito 5 runami
-
-**Budoucí implementace:**
-- Speciální "rituální tah" flow — jiný UX od běžného čtení
-- Runy z tohoto flow se automaticky vkládají do Whispers "košíku"
-- Možná integrace s Agndofa cacao produktem (QR/NFC)
-- Měsíční Whispers — automaticky z run celého měsíce
+The Gathering není jen klikání na runy. Je to rituál:
+1. **Kakao ceremony** — uživatel si připraví cacao (Agndofa produkt)
+2. **Meditace** — ticho, záměr, napojení
+3. **Vědomý tah run** — 5 run taženo záměrně, jedna po druhé, s pauzou
+4. **Teprve pak** — The Gathering s těmito 5 runami
 
 ### Alternativní názvy (uloženy pro budoucí použití)
-Všechny jsou silné — mohou se hodit pro různé varianty rituálu nebo tier features.
-
 | Název | Motiv |
 |-------|-------|
 | **THE GATHERING** | ← **aktuálně používáno** (pracovní název) |
 | RÚNAR'S WHISPERS | původní název, odložen |
 | THE COUNCIL OF RUNES | Runy zasedly jako rada moudrých |
-| RÚNAR'S COUNSEL | Rada/poradenství na základě celé cesty (Council/Counsel hříčka) |
-| THE WEAVING | Tkaní osudu z více run — nornský motiv, velmi islandský |
+| RÚNAR'S COUNSEL | Rada na základě celé cesty (Council/Counsel hříčka) |
+| THE WEAVING | Tkaní osudu z více run — nornský motiv |
 | RUNE CIRCLE | Kruh run, rituální |
 | THE CHRONICLE | Celkový výklad cesty |
 | GODS' WHISPERS | Mystické, tajemné |
-| THE GATHERING | Shromáždění run |
-
-### Technické poznámky
-- `mode: 'ceremonial'` v API requestu (mapuje na RUNAR_MODES.ceremonial, max_tokens 1200)
-- `use_credit: false` — Whispers neodčítá kredity, je součástí Standard tieru
-- `_journalCache` slouží jako selection pool — uživatel vybírá z již existujících čtení
-- `_whispersMode`: 'idle' | 'selecting' | 'loading' | 'output'
-- `_selectedEntries[]`: max 5 záznamů z journalu
-- `_whispersText`: vygenerovaný text (pro voice generation)
-- Počet run (5) je konfigurovatelný — konstanta v `enterWhispersSelection()`
-
-### Měsíční Whispers (plánováno)
-- Automaticky na konci měsíce: Rúnar sestaví výklad ze všech run daného měsíce
-- Napojení na měsíční reset free čtení (symbolický přechod)
-- Potřeba: tabulka `ritual_readings` nebo rozšíření `readings` o `ritual_type`
 
 ---
 
-### DENÍK (JOURNAL) — architektura
+## JOURNAL — architektura
 
-**Rune Seeker:** posledních 5 čtení, rozbalitelné (short + deep text)
-**Standard:** vše bez limitu + filter bar (runa, oblast, jazyk)
+**Tab:** 3. záložka ◌ JOURNAL — viditelná jen pro přihlášené uživatele.
 
-Teaser pro Rune Seeker: pokud má >5 čtení celkem, zobrazí "X readings kept — move to Standard to see all"
+**Struktura pane:**
+1. `#whispers-section` — THE GATHERING (nahoře)
+2. `#journal-pane-header` — ✦ YOUR READINGS + count
+3. `#journal-filter-bar` — Standard/Premium only (rune / area / lang)
+4. `#journal-list` — entry cards
+5. `#journal-standard-teaser` — pro Rune Seeker pokud >5 čtení celkem
 
-Každé čtení ukládá:
-- `life_rune` — životní runa v době čtení (z data narození)
-- `credits_used` — true = kreditní čtení (s hlasem), false = free monthly
+**Tier přístup:**
+- Visitor: tab skrytý, gate zobrazena
+- Rune Seeker: posledních 5 čtení, The Gathering locked
+- Standard/Premium: unlimited, filtry, The Gathering odemčen
 
-Filter bar (`#journal-filter-bar`) je v HTML, ale `display:none` pro rune_seeker.
-`_journalCache` = in-memory kopie pro filtrování bez nového DB dotazu.
+**jcard design:**
+- Collapsed: glyf, rune name · lang, datum + oblast, 2-řádkový excerpt
+- Expanded (klik): short text + · · · + deep text + otázka + life rune + audio btn
+- `#jcard-${i}`, `#jbody-${i}`, `#jarr-${i}`, `#jselect-btn-${i}`
 
-### TECHNICKÝ DLUH
-- [ ] IS texty — review rodilým mluvčím (rotující fráze, notices, gates, help, privacy)
-- [ ] Email-based tracking — zabránit delete+recreate workaround
-- [ ] Nahrát zbývající statické audio (25 EN + 25 IS run)
-- [ ] Language gating pro Visitor — TIERS.free_trial.languages=['en'] není vynucováno v UI
-      IS tlačítko je viditelné a funkční pro všechny (Visitor může přepnout na IS)
+**Key state:**
+- `_journalCache[]` — in-memory kopie, filtry pracují bez nového DB dotazu
+- `_whispersMode`, `_selectedEntries[]`, `_whispersText` — The Gathering state
+
+**DB select:**
+```js
+.select('id, rune_name, rune_glyph, lang, short_text, deep_text, area, seeking, question, life_rune, credits_used, drawn_at')
+```
+
+---
+
+## TECHNICKÝ DLUH & CO ZBÝVÁ
+
+### Okamžité priority
+- [ ] **IS texty** — review rodilým mluvčím (hero fráze, notices, gates, help, privacy, The Gathering)
+- [ ] **Privacy Policy odkaz** na agndofa.is webu
+- [ ] **DPA podpis** — dokončit až přijde e-mail od Supabase
+
+### Střední priorita
+- [ ] **The Gathering — rituální flow** — speciální UX pro vědomý tah 5 run (kakao, meditace)
+- [ ] **Měsíční Gathering** — automatický výklad z run celého měsíce
+- [ ] **Export journalu** — PDF nebo CSV stažení
+- [ ] **Filtry podle data** v journalu
+- [ ] **SSE streaming** — real-time výstup místo čekání na celý response
+- [ ] **Delší výklady pro Standard** — 1000–1200 tokenů (nyní 700 pro všechny)
+- [ ] **Reading Card online** — Shopify integrace (zatím jen fyzická)
+
+### Nízká priorita / budoucnost
+- [ ] **Language gating pro Visitor** — TIERS.free_trial.languages=['en'] není vynucováno v UI
       Odloženo — IS texty stejně čekají na native review
-- [ ] Side panel: balance zobrazit i pro Standard/Premium (pokud mají zbývající kredity z dřívějška)
-- [x] Rate limiting — claude-proxy + redeem-code + elevenlabs-proxy ✓
-- [x] Voice tier control — canUseVoice() + TIERS config flags ✓
-- [x] Bug: userTier='credits' dead code → normalizováno na 'rune_seeker' ✓
+- [ ] **Side panel: balance pro Standard/Premium** — zobrazit zbývající kredity z dřívějška
+- [ ] **Email-based tracking** — zabránit delete+recreate workaround
+- [ ] **Třírunový spread** — minulost / přítomnost / budoucnost
+- [ ] **Follow-up otázka** po čtení
+- [ ] **Lunární / sezónní kontext**
+- [ ] **Paměť kontextu** — multi-turn history v claude-proxy
+- [ ] **Fyzický ekosystém** — QR/NFC na produktech Agndofa
+
+### Hotovo ✅ (tento session, 2026-05-21)
+- [x] Statické audio: všech 25 × EN + 25 × IS run nahráno
+- [x] Specific Question — gated na Standard/Premium
+- [x] Journal tab — vlastní 3. záložka, jcard design, audio per entry
+- [x] The Gathering — 5-runový kombinovaný výklad, 1200 tokenů
+- [x] Admin premium access — frontend (fetchUserProfile) + backend (claude-proxy)
+- [x] Barvy sjednoceny — amber #FFBF00 v celém journal UI
+- [x] IS tier názvy: Gestur / Vegfarandi
+- [x] Side panel redesign — journal link, Reading Card, danger zone
+- [x] DOB placeholder překlady
+- [x] Language persistence fix (localStorage priority nad DB při přihlášení)
