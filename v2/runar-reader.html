@@ -1461,8 +1461,10 @@ function setLang(l) {
 }
 
 function applyLangToggle(l) {
-  document.getElementById('btn-en').classList.toggle('active', l === 'en');
-  document.getElementById('btn-is').classList.toggle('active', l === 'is');
+  const enBtn = document.getElementById('sp-btn-en');
+  const isBtn = document.getElementById('sp-btn-is');
+  if (enBtn) enBtn.classList.toggle('active', l === 'en');
+  if (isBtn) isBtn.classList.toggle('active', l === 'is');
 }
 
 function openLangSwitchModal(tl) {
