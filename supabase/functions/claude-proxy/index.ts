@@ -39,17 +39,25 @@ serve(async (req) => {
     let userTier = "anonymous";
     let creditsBalance = 0;
 
+    // Admin emails — bypass all tier limits
+    const ADMIN_EMAILS = ["kukula@agndofa.is", "info@agndofa.is"];
+
     if (authHeader) {
       const { data: { user } } = await sb().auth.getUser(authHeader.replace("Bearer ", ""));
       if (user) {
         userId = user.id;
-        const { data: profile } = await sb()
-          .from("user_profiles")
-          .select("tier, credits_balance")
-          .eq("id", user.id)
-          .maybeSingle();
-        userTier       = profile?.tier           ?? "rune_seeker";
-        creditsBalance = profile?.credits_balance ?? 0;
+        // Admins get premium access regardless of DB tier
+        if (user.email && ADMIN_EMAILS.includes(user.email.toLowerCase())) {
+          userTier = "premium";
+        } else {
+          const { data: profile } = await sb()
+            .from("user_profiles")
+            .select("tier, credits_balance")
+            .eq("id", user.id)
+            .maybeSingle();
+          userTier       = profile?.tier           ?? "rune_seeker";
+          creditsBalance = profile?.credits_balance ?? 0;
+        }
       }
     }
 
