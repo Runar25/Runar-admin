@@ -259,13 +259,13 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .coll-cell.has-audio .coll-dots::before{background:var(--teal);}
 .coll-cell.partial-audio .coll-dots::before{background:var(--gold);}
 .coll-svg{width:64px;height:78px;display:block;}
-.coll-name{font-family:'Cinzel',serif;font-size:0.52em;letter-spacing:0.5px;color:var(--muted);margin-top:2px;}
+.coll-name{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:0.5px;color:var(--muted);margin-top:2px;}
 .coll-cell.active .coll-name{color:var(--gold);}
 .coll-dots{position:absolute;top:5px;right:6px;display:flex;gap:3px;}
 .coll-dot{width:5px;height:5px;border-radius:50%;background:var(--dim);}
 .coll-dot.en{background:var(--teal);}
 .coll-dot.is{background:var(--blue);}
-@media(max-width:480px){.coll-svg{width:44px;height:54px;}.coll-name{font-size:0.44em;}}
+@media(max-width:480px){.coll-svg{width:44px;height:54px;}.coll-name{font-size:0.55em;}}
 
 /* Collection detail */
 .coll-detail{background:var(--card);border:1px solid var(--gold);margin-top:12px;padding:24px;animation:fadeUp 0.3s ease;}
@@ -976,10 +976,21 @@ async function fetchUserProfile(userId) {
       userCredits = data.credits_balance || 0;
       userName    = data.name            || '';
       // Restore language preference
+      // Priority: localStorage (active user choice) > DB default
+      // If localStorage has a lang that matches current lang → user chose it while logged out;
+      // save it to DB instead of overriding with the DB default ('en').
       if (data.lang && data.lang !== lang) {
-        lang = data.lang;
-        applyLangToggle(lang);
-        updateSidePanelLang();
+        const localLang = localStorage.getItem('runar_lang');
+        if (localLang && localLang === lang) {
+          // User chose a language while logged out — persist to their profile, keep it
+          sb.from('user_profiles').update({ lang: localLang }).eq('id', userId).then(() => {});
+        } else {
+          // DB has a meaningful preference (set on another device) — apply it
+          lang = data.lang;
+          applyLangToggle(lang);
+          updateSidePanelLang();
+          updateUIText();
+        }
       }
     }
   } catch(e) { console.warn('fetchUserProfile:', e.message); }
@@ -1230,7 +1241,7 @@ function updateAuthUI() {
       }
       const txtEl = document.getElementById('free-user-text');
       if (txtEl) txtEl.innerHTML = isIs
-        ? `Þú gengur sem <strong>Rune Seeker</strong> — ${FREE_REGISTERED_LIMIT} lestar á mánuði, allar tuttugu og fimm rúnirnar opnar, Rúnar hlustandi.<br><br>Þegar þeir eru genginn og steinarnir eiga enn eftir að segja, opnar lesturarkort dyrnar. Eitt kort. Jafn margir dragir og þú berð. Engin gildistími, engin áskrift.`
+        ? `Þú gengur sem <strong>Vegfarandi</strong> — ${FREE_REGISTERED_LIMIT} lestar á mánuði, allar tuttugu og fimm rúnirnar opnar, Rúnar hlustandi.<br><br>Þegar þeir eru genginn og steinarnir eiga enn eftir að segja, opnar lesturarkort dyrnar. Eitt kort. Jafn margir dragir og þú berð. Engin gildistími, engin áskrift.`
         : `You walk as <strong>Rune Seeker</strong> — ${FREE_REGISTERED_LIMIT} readings each month, all twenty-five runes open, Rúnar listening.<br><br>When they are walked and the stones still have more to say, a reading card keeps the door open. One card. As many draws as you carry. No subscription, no expiry.`;
       const btnEl = document.getElementById('tn-curious-btn');
       if (btnEl) { btnEl.textContent = isIs ? '+ LESTURARKORT' : '+ GET A READING CARD'; btnEl.style.display = ''; }
@@ -1445,13 +1456,13 @@ function setLang(l) {
   const outputVisible = document.getElementById('reader-output')?.style.display !== 'none';
   if (outputVisible && readerRune) {
     if (readerTexts[l]) {
-      lang = l; applyLangToggle(l); showCachedReading(l); updateUIText(); buildPills();
+      lang = l; applyLangToggle(l); showCachedReading(l); updateUIText(); updateSidePanel(); buildPills();
     } else {
       pendingLang = l; openLangSwitchModal(l); applyLangToggle(lang);
     }
     return;
   }
-  lang = l; applyLangToggle(l); updateUIText(); buildPills();
+  lang = l; applyLangToggle(l); updateUIText(); updateSidePanel(); buildPills();
   if (document.getElementById('reader-rune-card').style.display !== 'none') buildGrid();
   // Refresh collection if open
   if (activeAppTab === 'collection') {
@@ -1611,12 +1622,18 @@ function skipName() {
 function updateSidePanel() {
   const accEl = document.getElementById('sp-account');
   if (!accEl) return;
-  const tierLabels = { rune_seeker:'RUNE SEEKER', free:'RUNE SEEKER', credits:'RUNE SEEKER', standard:'STANDARD', premium:'PREMIUM' };
-  const tierHeader = currentUser ? (tierLabels[userTier] || userTier.toUpperCase()) : 'VISITOR';
+  const isIs = lang === 'is';
+  const tierLabels = isIs
+    ? { rune_seeker:'VEGFARANDI', free:'VEGFARANDI', credits:'VEGFARANDI', standard:'STANDARD', premium:'PREMIUM' }
+    : { rune_seeker:'RUNE SEEKER', free:'RUNE SEEKER', credits:'RUNE SEEKER', standard:'STANDARD', premium:'PREMIUM' };
+  const tierHeader = currentUser ? (tierLabels[userTier] || userTier.toUpperCase()) : (isIs ? 'GESTUR' : 'VISITOR');
   setText('sp-tier-header', tierHeader);
+  // Side panel navigation links — switch with language
+  setText('sp-guide-link',   isIs ? '? LEIÐBEININGAR & SPURNINGAR' : '? GUIDE & FAQ');
+  setText('sp-privacy-link', isIs ? 'PERSÓNUVERNDARSTEFNA'         : 'PRIVACY POLICY');
   if (!currentUser) { accEl.style.display = 'none'; return; }
   accEl.style.display = 'block';
-  const is = lang === 'is';
+  const is = isIs;
   setText('sp-email', currentUser.email);
   // Admin link — jen pro admin emaily
   const adminLink = document.getElementById('sp-admin-link');
@@ -1731,6 +1748,9 @@ function updateUIText() {
   setPH('r-name', t('name_ph'));
   const dlbl = document.getElementById('dob-lbl');
   if (dlbl) dlbl.innerHTML = t('dob_lbl') + ' <span class="opt">'+t('opt')+'</span>';
+  setPH('r-day',   t('day_ph'));
+  setPH('r-month', t('month_ph'));
+  setPH('r-year',  t('year_ph'));
   const albl = document.getElementById('area-lbl');
   if (albl) albl.innerHTML = t('area_lbl') + ' <span class="opt">'+t('opt')+'</span>';
   const slbl = document.getElementById('seek-lbl');
@@ -2356,8 +2376,8 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   <!-- Help + About -->
   <div class="side-panel-section">
-    <a class="sp-item" href="runar-help.html" style="text-decoration:none;">? GUIDE & FAQ</a>
-    <a class="sp-item" href="runar-privacy.html" style="text-decoration:none;opacity:0.55;font-size:0.9em;">PRIVACY POLICY</a>
+    <a class="sp-item" id="sp-guide-link"   href="runar-help.html"    style="text-decoration:none;">? GUIDE &amp; FAQ</a>
+    <a class="sp-item" id="sp-privacy-link" href="runar-privacy.html" style="text-decoration:none;opacity:0.55;font-size:0.9em;">PRIVACY POLICY</a>
   </div>
 
   <!-- Language — always last -->

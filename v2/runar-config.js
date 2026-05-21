@@ -75,6 +75,7 @@ const RUNAR_MODES = {
 const TIERS = {
   free_trial: {
     label:            'Visitor',
+    label_is:         'Gestur',
     readings:         3,          // total, no account needed
     // ↓ VOICE FLAGS — flip here to enable/disable without touching logic
     // voice_monthly: true = Visitor slyší hlas při svých 3 čteních
@@ -88,6 +89,7 @@ const TIERS = {
   },
   rune_seeker: {
     label:            'Rune Seeker',
+    label_is:         'Vegfarandi',
     monthly_readings: 5,          // free readings per month, resets monthly
     // ↓ VOICE FLAGS — flip here to enable/disable without touching logic
     // voice_monthly: true = hlas pro všech 5 free čtení/měsíc
@@ -101,6 +103,7 @@ const TIERS = {
   },
   standard: {
     label:            'Standard',
+    label_is:         'Standard',
     monthly_readings: null,       // unlimited
     voice_monthly:    true,
     voice_credits:    true,
@@ -111,6 +114,7 @@ const TIERS = {
   },
   premium: {
     label:            'Premium',
+    label_is:         'Premium',
     monthly_readings: null,
     voice_monthly:    true,
     voice_credits:    true,
