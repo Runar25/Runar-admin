@@ -1239,22 +1239,37 @@ async function deleteVersion(id, runeName, lang, version) {
   if (!confirm(`Delete ${runeName} ${lang.toUpperCase()} v${version}? This cannot be undone.`)) return;
   setSt('st-progress', 'Deleting…');
 
-  // Delete from Storage
+  // Delete from Storage (non-fatal)
   const fileName = `static/${lang}/${runeName.toLowerCase()}_${version}.mp3`;
   const { error: storErr } = await sb.storage.from('runar-audio').remove([fileName]);
-  if (storErr) console.warn('Storage delete:', storErr.message); // non-fatal — DB record still removed
+  if (storErr) console.warn('Storage delete:', storErr.message);
 
-  // Delete from DB
-  const { error: dbErr } = await sb.from('runar_static_audio').delete().eq('id', id);
+  // Delete from DB — .select() verifies the row was actually deleted (catches silent RLS blocks)
+  const { data: deleted, error: dbErr } = await sb
+    .from('runar_static_audio').delete().eq('id', id).select();
   if (dbErr) { setSt('st-progress', 'Delete failed: ' + dbErr.message, 'err'); return; }
+  if (!deleted || deleted.length === 0) {
+    setSt('st-progress', 'Delete failed: 0 rows affected — check RLS permissions', 'err');
+    return;
+  }
 
   // Remove card from UI instantly
   const el = document.getElementById('dv-' + id);
   if (el) el.remove();
   setSt('st-progress', `✓ ${runeName} ${lang.toUpperCase()} v${version} deleted.`, 'ok');
 
-  // Refresh grid counts
-  loadProgress();
+  // Refresh grid, then reopen detail so user sees updated version list
+  const activeRune = RUNES.find(r => r.n === runeName);
+  await loadProgress();
+  if (activeRune) {
+    const cells = document.querySelectorAll('.prog-cell');
+    for (const cell of cells) {
+      if (cell.querySelector('.prog-name')?.textContent === runeName) {
+        openRuneDetail(activeRune, cell);
+        break;
+      }
+    }
+  }
 }
 
 // ─── READER ─────────────────────────────────────────────
