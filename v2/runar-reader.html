@@ -333,6 +333,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .flbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--gold);display:block;margin:16px 0 6px;}
 .flbl:first-child{margin-top:0;}
 .opt{opacity:0.45;font-size:0.85em;}
+.q-teaser-txt{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--muted);opacity:0.45;margin:14px 0 6px;}
 .note{font-size:0.9em;color:var(--muted);font-style:italic;line-height:1.7;margin-bottom:14px;}
 .txt{width:100%;background:transparent;border:none;border-bottom:1px solid var(--border2);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.1em;padding:10px 0;}
 .txt:focus{outline:none;border-bottom-color:var(--gold);}
@@ -721,8 +722,15 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
       <div class="pills" id="area-pills"></div>
       <label class="flbl" id="seek-lbl">WHAT ARE YOU SEEKING? <span class="opt">(OPTIONAL)</span></label>
       <div class="pills" id="seek-pills"></div>
-      <label class="flbl" id="q-lbl">SPECIFIC QUESTION <span class="opt">(OPTIONAL)</span></label>
-      <input class="txt" id="r-question" type="text" placeholder="e.g. What is holding me back?">
+      <!-- SPECIFIC QUESTION — Standard/Premium only -->
+      <div id="q-section" style="display:none;">
+        <label class="flbl" id="q-lbl">SPECIFIC QUESTION <span class="opt">(OPTIONAL)</span></label>
+        <input class="txt" id="r-question" type="text" placeholder="e.g. What is holding me back?">
+      </div>
+      <!-- Teaser for Visitor / Rune Seeker -->
+      <div id="q-teaser" style="display:none;">
+        <p class="q-teaser-txt" id="q-teaser-txt">Specific questions unlock with Standard.</p>
+      </div>
       <button class="btn-full" id="begin-btn" onclick="startReading()">BEGIN THE READING</button>
       <div class="status" id="st-setup"></div>
     </div>
@@ -1226,6 +1234,7 @@ function updateAuthUI() {
       creditsBanner.style.display = 'none';
       upgradeGate.style.display   = 'none';
       content.style.display       = 'block';
+      updateQuestionGate();
       return;
     }
 
@@ -1337,6 +1346,26 @@ function updateAuthUI() {
       }
     }
   }
+  updateQuestionGate();
+}
+
+// ── SPECIFIC QUESTION GATE ────────────────────────────────
+// Visible only for Standard / Premium. Visitor + Rune Seeker see a teaser.
+function updateQuestionGate() {
+  const qSection = document.getElementById('q-section');
+  const qTeaser  = document.getElementById('q-teaser');
+  const qInput   = document.getElementById('r-question');
+  if (!qSection || !qTeaser) return;
+  const canAsk = (userTier === 'standard' || userTier === 'premium');
+  qSection.style.display = canAsk ? 'block' : 'none';
+  qTeaser.style.display  = canAsk ? 'none'  : 'block';
+  // Clear question value when hidden so it doesn't leak into the prompt
+  if (!canAsk && qInput) qInput.value = '';
+  const isIs = lang === 'is';
+  const tEl = document.getElementById('q-teaser-txt');
+  if (tEl) tEl.textContent = isIs
+    ? 'Sérstök spurning opnast með Standard.'
+    : 'Specific questions unlock with Standard.';
 }
 
 function handleAuthBtn() {
@@ -1816,6 +1845,7 @@ function updateUIText() {
   setText('free-redeem-link', lang === 'is' ? '+ LESTURARKORT' : '+ READING CARD');
   updateAuthUI();
   updateSidePanel();
+  updateQuestionGate();
   // Trial banner — fallback texts (přepíše updateAuthUI pokud je logged out)
   const remaining = Math.max(0, FREE_TRIAL_LIMIT - getTrialCount());
   setText('trial-count', lang === 'is'
