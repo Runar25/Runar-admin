@@ -1771,9 +1771,10 @@ function updateUIText() {
   setText('audio-player-lbl', t('voice_player_lbl'));
   const vBtn = document.getElementById('btn-generate-voice');
   if (vBtn && !vBtn.disabled) vBtn.textContent = t('voice_btn');
-  // Re-render auth UI vždy — zajistí správné texty i pro odhlášeného uživatele při změně jazyka
+  // Re-render auth UI + side panel vždy — zajistí správné texty i pro odhlášeného uživatele při změně jazyka
   setText('free-redeem-link', lang === 'is' ? '+ GJAFAKORT' : '+ GIFT CARD');
   updateAuthUI();
+  updateSidePanel();
   // Trial banner — fallback texts (přepíše updateAuthUI pokud je logged out)
   const remaining = Math.max(0, FREE_TRIAL_LIMIT - getTrialCount());
   setText('trial-count', lang === 'is'
