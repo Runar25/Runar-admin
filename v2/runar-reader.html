@@ -452,6 +452,40 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
 .journal-standard-teaser{padding:14px 18px;text-align:center;border-top:1px solid rgba(126,217,181,0.1);background:rgba(126,217,181,0.03);}
 .journal-standard-teaser-txt{font-size:0.82em;font-style:italic;color:var(--dim);line-height:1.7;}
 
+/* ── JOURNAL PANE ── */
+.journal-pane-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:22px;}
+.journal-pane-title{font-family:'Cinzel',serif;font-size:0.75em;letter-spacing:3px;color:var(--teal);}
+.journal-pane-count{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:1.5px;color:var(--dim);}
+/* Entry cards */
+.jcard{border:1px solid rgba(126,217,181,0.15);margin-bottom:10px;background:var(--card);transition:border-color 0.2s;}
+.jcard:hover{border-color:rgba(126,217,181,0.28);}
+.jcard-header{display:flex;align-items:flex-start;justify-content:space-between;padding:14px 18px;cursor:pointer;gap:12px;}
+.jcard-left{display:flex;align-items:flex-start;gap:14px;flex:1;min-width:0;}
+.jcard-glyph{font-size:1.8em;line-height:1;color:var(--gold);opacity:0.75;flex-shrink:0;width:30px;text-align:center;}
+.jcard-info{flex:1;min-width:0;}
+.jcard-name{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:1.5px;color:var(--teal);margin-bottom:3px;}
+.jcard-date{font-family:'Cinzel',serif;font-size:0.55em;letter-spacing:1px;color:var(--dim);margin-bottom:7px;}
+.jcard-excerpt{font-size:0.86em;font-style:italic;color:var(--muted);line-height:1.6;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.jcard-arrow{font-size:0.75em;color:var(--dim);transition:transform 0.25s;flex-shrink:0;padding-top:4px;}
+.jcard-arrow.open{transform:rotate(180deg);}
+.jcard-body{padding:4px 18px 20px;border-top:1px solid rgba(46,74,112,0.3);}
+.jcard-layer-lbl{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:2.5px;color:var(--gold);opacity:0.7;margin:16px 0 8px;}
+.jcard-text{font-size:0.9em;font-style:italic;color:var(--muted);line-height:1.85;}
+.jcard-divider{text-align:center;color:var(--dim);font-size:0.7em;letter-spacing:4px;margin:16px 0;}
+.jcard-question{font-family:'Cormorant Garamond',serif;font-size:0.92em;font-style:italic;color:var(--dim);opacity:0.7;margin-top:14px;padding-top:14px;border-top:1px solid rgba(46,74,112,0.3);}
+.jcard-life-rune{font-family:'Cinzel',serif;font-size:0.53em;letter-spacing:2px;color:var(--gold);opacity:0.4;margin-top:10px;}
+.jcard-audio-btn{margin-top:18px;background:none;border:1px solid rgba(126,217,181,0.25);color:var(--teal);font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:2px;padding:8px 16px;cursor:pointer;transition:all 0.2s;display:inline-block;}
+.jcard-audio-btn:hover{border-color:rgba(126,217,181,0.6);}
+.jcard-audio-btn:disabled{opacity:0.4;cursor:default;}
+.jcard-audio-player{margin-top:10px;}
+.jcard-audio-player audio{width:100%;outline:none;}
+/* Journal gate (logged-out) */
+.journal-gate-wrap{text-align:center;padding:52px 20px;}
+.journal-gate-rune{font-size:2.4em;opacity:0.28;margin-bottom:14px;}
+.journal-gate-txt{font-family:'Cinzel',serif;font-size:0.63em;letter-spacing:1.5px;color:var(--muted);line-height:2.3;margin-bottom:26px;}
+/* Empty state */
+.journal-empty{text-align:center;padding:36px 20px;font-family:'Cinzel',serif;font-size:0.63em;letter-spacing:2px;color:var(--dim);line-height:2;}
+
 /* ── TOAST ── */
 .toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(20px);background:#0d1a12;border:1px solid var(--teal);color:var(--teal);font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:2px;padding:12px 24px;z-index:200;opacity:0;transition:opacity 0.4s,transform 0.4s;pointer-events:none;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
@@ -608,8 +642,9 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
 
   <!-- APP TABS -->
   <div class="app-tabs">
-    <button class="app-tab active" id="atab-reading"    onclick="showAppTab('reading')"   id="atab-reading-btn">✦ READING</button>
-    <button class="app-tab"        id="atab-collection" onclick="showAppTab('collection')" id="atab-collection-btn">◈ RUNES COLLECTION</button>
+    <button class="app-tab active" id="atab-reading"    onclick="showAppTab('reading')">✦ READING</button>
+    <button class="app-tab"        id="atab-journal"    onclick="showAppTab('journal')"  style="display:none;">◌ JOURNAL</button>
+    <button class="app-tab"        id="atab-collection" onclick="showAppTab('collection')">◈ RUNES COLLECTION</button>
   </div>
 
   <!-- ═ READING PANE ═ -->
@@ -658,40 +693,6 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
       <b>Create a free account</b> to continue — Rúnar remembers those who return.
     </div>
     <button class="btn-full" onclick="openAuthModal()" style="max-width:300px;margin:0 auto;display:block;" id="gate-btn">CREATE FREE ACCOUNT</button>
-  </div>
-
-  <!-- JOURNAL (logged-in users, last 5 readings) -->
-  <div class="journal-section" id="journal-section" style="display:none;">
-    <div class="journal-header" onclick="toggleJournal()">
-      <div class="journal-header-left">
-        <span class="journal-header-lbl" id="journal-lbl">✦ YOUR READINGS</span>
-        <span class="journal-count" id="journal-count"></span>
-      </div>
-      <span class="journal-toggle" id="journal-toggle">▾</span>
-    </div>
-    <!-- Filter bar — Standard tier only, hidden for rune_seeker -->
-    <div class="journal-filter-bar" id="journal-filter-bar">
-      <select class="journal-filter-select" id="jf-rune" onchange="filterJournal()">
-        <option value="">All runes</option>
-      </select>
-      <select class="journal-filter-select" id="jf-area" onchange="filterJournal()">
-        <option value="">All areas</option>
-      </select>
-      <select class="journal-filter-select" id="jf-lang" onchange="filterJournal()">
-        <option value="">EN + IS</option>
-        <option value="en">EN</option>
-        <option value="is">IS</option>
-      </select>
-    </div>
-    <div class="journal-body" id="journal-body">
-      <div id="journal-list"></div>
-      <!-- Standard teaser — jen pro rune_seeker, ukazuje co čeká -->
-      <div class="journal-standard-teaser" id="journal-standard-teaser" style="display:none;">
-        <p class="journal-standard-teaser-txt" id="journal-teaser-txt">
-          Every reading you have ever taken is kept. Move to Standard to open the full chronicle.
-        </p>
-      </div>
-    </div>
   </div>
 
   <!-- UPGRADE GATE (logged-in free user, monthly limit reached) -->
@@ -835,6 +836,56 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
     </div>
 
   </div><!-- /apane-collection -->
+
+  <!-- ═ JOURNAL PANE ═ -->
+  <div id="apane-journal" style="display:none;">
+
+    <!-- Gate: logged out -->
+    <div id="journal-gate">
+      <div class="journal-gate-wrap">
+        <div class="journal-gate-rune">ᚱ</div>
+        <p class="journal-gate-txt" id="journal-gate-txt">Create a free account to keep your readings.<br>Every rune you draw. Every word Rúnar speaks.<br>Kept.</p>
+        <button class="btn-full" onclick="openAuthModal()" style="max-width:280px;margin:0 auto;display:block;" id="journal-gate-btn">CREATE FREE ACCOUNT</button>
+      </div>
+    </div>
+
+    <!-- Content: logged in -->
+    <div id="journal-content" style="display:none;">
+
+      <!-- Pane header -->
+      <div class="journal-pane-header">
+        <span class="journal-pane-title" id="journal-pane-title">✦ YOUR READINGS</span>
+        <span class="journal-pane-count" id="journal-pane-count"></span>
+      </div>
+
+      <!-- Filter bar — Standard/Premium only -->
+      <div class="journal-filter-bar" id="journal-filter-bar">
+        <select class="journal-filter-select" id="jf-rune" onchange="filterJournal()">
+          <option value="">All runes</option>
+        </select>
+        <select class="journal-filter-select" id="jf-area" onchange="filterJournal()">
+          <option value="">All areas</option>
+        </select>
+        <select class="journal-filter-select" id="jf-lang" onchange="filterJournal()">
+          <option value="">EN + IS</option>
+          <option value="en">EN</option>
+          <option value="is">IS</option>
+        </select>
+      </div>
+
+      <!-- Entry list -->
+      <div id="journal-list"></div>
+
+      <!-- Standard teaser — rune_seeker with >5 total readings -->
+      <div class="journal-standard-teaser" id="journal-standard-teaser" style="display:none;">
+        <p class="journal-standard-teaser-txt" id="journal-teaser-txt">
+          Every reading you have ever taken is kept. Move to Standard to open the full chronicle.
+        </p>
+      </div>
+
+    </div><!-- /journal-content -->
+
+  </div><!-- /apane-journal -->
 
 </div><!-- /app -->
 
@@ -1065,7 +1116,7 @@ async function syncMonthlyCount(userId) {
 // ─── DB: JOURNAL ─────────────────────────────────────────
 // Limit podle tieru: rune_seeker = 5, standard/premium = bez limitu
 function journalLimit() {
-  if (userTier === 'standard' || userTier === 'premium') return null; // unlimited
+  if (userTier === 'standard' || userTier === 'premium') return null;
   return 5;
 }
 
@@ -1073,7 +1124,7 @@ async function loadJournal() {
   if (!currentUser) { hideJournal(); return; }
   try {
     let q = sb.from('readings')
-      .select('id, rune_name, rune_glyph, lang, short_text, deep_text, area, seeking, life_rune, credits_used, drawn_at')
+      .select('id, rune_name, rune_glyph, lang, short_text, deep_text, area, seeking, question, life_rune, credits_used, drawn_at')
       .eq('user_id', currentUser.id)
       .order('drawn_at', { ascending: false });
     const lim = journalLimit();
@@ -1090,56 +1141,79 @@ async function loadJournal() {
 }
 
 function hideJournal() {
-  const s = document.getElementById('journal-section');
-  if (s) s.style.display = 'none';
+  const gate    = document.getElementById('journal-gate');
+  const content = document.getElementById('journal-content');
+  if (gate)    gate.style.display    = 'block';
+  if (content) content.style.display = 'none';
 }
 
 function renderJournal(entries) {
-  const section = document.getElementById('journal-section');
-  const list    = document.getElementById('journal-list');
-  if (!section || !list) return;
-  if (!currentUser || entries.length === 0) { hideJournal(); return; }
+  const list = document.getElementById('journal-list');
+  if (!list) return;
+
+  const gate    = document.getElementById('journal-gate');
+  const content = document.getElementById('journal-content');
+
+  if (!currentUser) { hideJournal(); return; }
+  if (gate)    gate.style.display    = 'none';
+  if (content) content.style.display = 'block';
 
   const isStandard = userTier === 'standard' || userTier === 'premium';
   const isIs = lang === 'is';
 
-  const countEl = document.getElementById('journal-count');
-  if (countEl) countEl.textContent = isStandard
+  // Header counts
+  const titleEl = document.getElementById('journal-pane-title');
+  const countEl = document.getElementById('journal-pane-count');
+  if (titleEl) titleEl.textContent = isIs ? '✦ LESTRAR ÞÍNIR' : '✦ YOUR READINGS';
+  if (countEl) countEl.textContent = entries.length === 0 ? '' : isStandard
     ? (isIs ? `${entries.length} lestrar` : `${entries.length} readings`)
     : (isIs ? `${entries.length} nýlegastir` : `last ${entries.length}`);
 
-  const lblEl = document.getElementById('journal-lbl');
-  if (lblEl) lblEl.textContent = isIs ? '✦ LESTRAR ÞÍNIR' : '✦ YOUR READINGS';
-
-  // Filter bar — viditelný jen pro Standard (připraveno, zatím skryto)
+  // Filter bar
   const filterBar = document.getElementById('journal-filter-bar');
   if (filterBar) filterBar.style.display = isStandard ? 'flex' : 'none';
 
+  // Empty state
+  if (entries.length === 0) {
+    list.innerHTML = `<div class="journal-empty">${isIs ? 'Engar skráðar lestrar enn.<br>Dragðu fyrstu rúnina þína.' : 'No readings recorded yet.<br>Draw your first rune.'}</div>`;
+    return;
+  }
+
   list.innerHTML = entries.map((e, i) => {
-    const d = new Date(e.drawn_at);
-    const locale = isIs ? 'is-IS' : 'en-GB';
+    const d       = new Date(e.drawn_at);
+    const locale  = isIs ? 'is-IS' : 'en-GB';
     const dateStr = d.toLocaleDateString(locale, { day:'numeric', month:'short', year:'numeric' });
-    const excerpt = (e.short_text || '').trim().slice(0, 140);
-    const areaTag = e.area ? `<span class="journal-area-tag">${e.area}</span>` : '';
-    const hasDeep = !!(e.deep_text);
-    return `<div class="journal-entry" id="jentry-${i}">
-      <div class="journal-rune-glyph">${e.rune_glyph || '◻'}</div>
-      <div class="journal-meta">
-        <div class="journal-rune-name">${(e.rune_name || '').toUpperCase()} · ${(e.lang || '').toUpperCase()}${areaTag}</div>
-        <div class="journal-date">${dateStr}</div>
-        <div class="journal-excerpt">${excerpt}${excerpt.length >= 140 ? '…' : ''}</div>
-        ${hasDeep ? `<button class="journal-expand-btn" onclick="toggleJournalEntry(${i})" id="jbtn-${i}">${isIs ? 'LESA MEIRA ▾' : 'READ MORE ▾'}</button>` : ''}
-        <div class="journal-deep" id="jdeep-${i}" style="display:none;">
-          <div class="journal-deep-text">${e.short_text || ''}</div>
-          <div class="journal-deep-divider">· · ·</div>
-          <div class="journal-deep-text">${e.deep_text || ''}</div>
-          ${e.life_rune ? `<div class="journal-life-rune">${isIs ? 'Lífsrún' : 'Life rune'}: ${e.life_rune}</div>` : ''}
+    const excerpt = (e.short_text || '').trim().slice(0, 160);
+    const areaStr = e.area ? ` · ${e.area}` : '';
+    const safeRune = (e.rune_name || '').replace(/'/g, "\\'");
+    const safeLang = (e.lang || '').replace(/'/g, "\\'");
+
+    return `<div class="jcard">
+      <div class="jcard-header" onclick="toggleJournalEntry(${i})">
+        <div class="jcard-left">
+          <div class="jcard-glyph">${e.rune_glyph || '◻'}</div>
+          <div class="jcard-info">
+            <div class="jcard-name">${(e.rune_name || '').toUpperCase()} · ${(e.lang || '').toUpperCase()}</div>
+            <div class="jcard-date">${dateStr}${areaStr}</div>
+            <div class="jcard-excerpt">${excerpt}${excerpt.length >= 160 ? '…' : ''}</div>
+          </div>
         </div>
+        <div class="jcard-arrow" id="jarr-${i}">▾</div>
+      </div>
+      <div class="jcard-body" id="jbody-${i}" style="display:none;">
+        <div class="jcard-layer-lbl">${isIs ? '✦ RÚNAR TALAR' : '✦ RÚNAR SPEAKS'}</div>
+        <div class="jcard-text">${e.short_text || ''}</div>
+        ${e.deep_text ? `
+        <div class="jcard-divider">· · ·</div>
+        <div class="jcard-layer-lbl">${isIs ? '~ DÝPRI HUGLEIÐING' : '~ DEEPER REFLECTION'}</div>
+        <div class="jcard-text">${e.deep_text}</div>` : ''}
+        ${e.question ? `<div class="jcard-question">❝ ${e.question} ❞</div>` : ''}
+        ${e.life_rune ? `<div class="jcard-life-rune">${isIs ? 'Lífsrún' : 'Life rune'}: ${e.life_rune}</div>` : ''}
+        <button class="jcard-audio-btn" id="jaudio-btn-${i}" onclick="playJournalAudio('${safeRune}','${safeLang}',${i})">${isIs ? '♪ HLUSTA Á RÚNAR' : "♪ RÚNAR'S VOICE"}</button>
+        <div class="jcard-audio-player" id="jaudio-${i}"></div>
       </div>
     </div>`;
   }).join('');
-
-  section.style.display = 'block';
 }
 
 // Teaser pro rune_seeker — kolik čtení celkem mají v DB
@@ -1189,23 +1263,40 @@ function populateJournalFilters(entries) {
 }
 
 function toggleJournalEntry(i) {
-  const deep = document.getElementById(`jdeep-${i}`);
-  const btn  = document.getElementById(`jbtn-${i}`);
-  const isIs = lang === 'is';
-  if (!deep) return;
-  const open = deep.style.display !== 'none';
-  deep.style.display = open ? 'none' : 'block';
-  if (btn) btn.textContent = open
-    ? (isIs ? 'LESA MEIRA ▾' : 'READ MORE ▾')
-    : (isIs ? 'LOKA ▴' : 'CLOSE ▴');
+  const body  = document.getElementById(`jbody-${i}`);
+  const arrow = document.getElementById(`jarr-${i}`);
+  if (!body) return;
+  const open = body.style.display !== 'none';
+  body.style.display = open ? 'none' : 'block';
+  if (arrow) arrow.classList.toggle('open', !open);
 }
 
-function toggleJournal() {
-  const body   = document.getElementById('journal-body');
-  const toggle = document.getElementById('journal-toggle');
-  if (!body) return;
-  const open = body.classList.toggle('open');
-  if (toggle) toggle.classList.toggle('open', open);
+async function playJournalAudio(runeName, eLang, i) {
+  const btn    = document.getElementById(`jaudio-btn-${i}`);
+  const player = document.getElementById(`jaudio-${i}`);
+  if (!btn || !player) return;
+  btn.disabled = true;
+  const isIs = lang === 'is';
+  btn.textContent = isIs ? '♪ HLEÐ…' : '♪ LOADING…';
+  try {
+    const { data: rows } = await sb.from('runar_static_audio')
+      .select('audio_url, version')
+      .eq('rune_name', runeName)
+      .eq('lang', eLang.toLowerCase())
+      .eq('ready', true);
+    if (!rows || rows.length === 0) {
+      btn.textContent = isIs ? '— Ekkert hljóð tiltækt' : '— No audio available';
+      btn.disabled = false;
+      return;
+    }
+    const pick = rows[Math.floor(Math.random() * rows.length)];
+    player.innerHTML = `<audio controls autoplay preload="none" controlsList="nodownload" style="width:100%;margin-top:4px;" src="${pick.audio_url}"></audio>`;
+    btn.textContent  = isIs ? '♪ SPILANDI' : '♪ NOW PLAYING';
+    btn.style.opacity = '0.45';
+  } catch {
+    btn.textContent = isIs ? '— Villa' : '— Error';
+    btn.disabled = false;
+  }
 }
 
 // ─── AUTH ────────────────────────────────────────────────
@@ -1219,6 +1310,12 @@ function updateAuthUI() {
   const content     = document.getElementById('reader-content');
 
   const creditsBanner = document.getElementById('credits-banner');
+
+  // Journal tab visibility
+  const journalTabBtn = document.getElementById('atab-journal');
+  if (journalTabBtn) journalTabBtn.style.display = currentUser ? '' : 'none';
+  // If logged out while on journal tab — switch to reading
+  if (!currentUser && activeAppTab === 'journal') showAppTab('reading');
 
   if (currentUser) {
     // ── Logged in ──
@@ -1729,15 +1826,7 @@ function openSidePanel() {
 
 function openJournalFromPanel() {
   closeSidePanel();
-  setAppTab('reading');
-  setTimeout(() => {
-    const jSection = document.getElementById('journal-section');
-    if (!jSection || jSection.style.display === 'none') return;
-    jSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    // Open journal body if collapsed
-    const jBody = document.getElementById('journal-body');
-    if (jBody && !jBody.classList.contains('open')) toggleJournal();
-  }, 320);
+  showAppTab('journal');
 }
 function closeSidePanel() {
   document.getElementById('side-panel').classList.remove('open');
@@ -1864,6 +1953,16 @@ function updateUIText() {
     ? 'Þú hefur farið með Rúnar þrisvar sinnum. <b>Stofnaðu reikning</b> til að halda áfram — fimm lestrar á mánuði, án greiðslu.'
     : 'You have walked with Rúnar three times. <b>Create a free account</b> to continue your path — five readings each month, no payment needed.';
   setText('trial-end-btn', lang === 'is' ? 'STOFNA REIKNING' : 'CREATE FREE ACCOUNT');
+  // Journal tab label
+  setText('atab-journal', lang === 'is' ? '◌ LESTRAR' : '◌ JOURNAL');
+  // Journal gate
+  const jgTxt = document.getElementById('journal-gate-txt');
+  if (jgTxt) jgTxt.innerHTML = lang === 'is'
+    ? 'Stofnaðu reikning til að geyma lestrana þína.<br>Sérhver rúna sem þú dregur. Hvert orð sem Rúnar talar.<br>Geymt.'
+    : 'Create a free account to keep your readings.<br>Every rune you draw. Every word Rúnar speaks.<br>Kept.';
+  setText('journal-gate-btn', lang === 'is' ? 'STOFNA REIKNING' : 'CREATE FREE ACCOUNT');
+  // Re-render journal if it's open (picks up new lang)
+  if (activeAppTab === 'journal' && _journalCache.length > 0) renderJournal(_journalCache);
   buildPills();
 }
 
@@ -1874,13 +1973,17 @@ function showAppTab(tab) {
   activeAppTab = tab;
   document.getElementById('apane-reading').style.display    = tab === 'reading'    ? 'block' : 'none';
   document.getElementById('apane-collection').style.display = tab === 'collection' ? 'block' : 'none';
+  document.getElementById('apane-journal').style.display    = tab === 'journal'    ? 'block' : 'none';
   document.getElementById('atab-reading').classList.toggle('active',    tab === 'reading');
   document.getElementById('atab-collection').classList.toggle('active', tab === 'collection');
+  document.getElementById('atab-journal').classList.toggle('active',    tab === 'journal');
   if (tab === 'collection') {
-    // Hero hides when browsing collection (no need for it there)
     document.getElementById('reader-hero').classList.add('hidden');
     loadCollection();
-    // Scroll to top so collection is immediately visible
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else if (tab === 'journal') {
+    document.getElementById('reader-hero').classList.add('hidden');
+    loadJournal();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   } else {
     // Restore hero only if no reading is in progress
