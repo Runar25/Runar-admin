@@ -486,7 +486,7 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
 /* Empty state */
 .journal-empty{text-align:center;padding:36px 20px;font-family:'Cinzel',serif;font-size:0.63em;letter-spacing:2px;color:var(--dim);line-height:2;}
 
-/* ── RÚNAR'S WHISPERS ── */
+/* ── THE GATHERING ── */
 .whispers-section{border:1px solid rgba(255,191,0,0.18);background:rgba(255,191,0,0.025);padding:20px 22px;margin-bottom:28px;}
 .whispers-title{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:3px;color:var(--gold);margin-bottom:8px;}
 .whispers-sub{font-size:0.86em;font-style:italic;color:var(--dim);margin-bottom:16px;line-height:1.65;}
@@ -881,14 +881,14 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
     <!-- Content: logged in -->
     <div id="journal-content" style="display:none;">
 
-      <!-- ✦ RÚNAR'S WHISPERS -->
+      <!-- ✦ THE GATHERING -->
       <div class="whispers-section" id="whispers-section">
-        <div class="whispers-title">✦ RÚNAR'S WHISPERS</div>
+        <div class="whispers-title">✦ THE GATHERING</div>
 
         <!-- Idle state -->
         <div id="whispers-idle">
           <p class="whispers-sub" id="whispers-idle-sub">Five voices. One counsel.</p>
-          <button class="whispers-btn" id="whispers-request-btn" onclick="enterWhispersSelection()">REQUEST RÚNAR'S WHISPERS</button>
+          <button class="whispers-btn" id="whispers-request-btn" onclick="enterWhispersSelection()">REQUEST THE GATHERING</button>
           <div class="whispers-lock"  id="whispers-lock"     style="display:none;"></div>
           <div class="whispers-need-more" id="whispers-need-more" style="display:none;"></div>
         </div>
@@ -1104,6 +1104,8 @@ async function fetchUserProfile(userId) {
       userTier    = data.tier            || 'rune_seeker';
       // Normalize legacy DB values → rune_seeker
       if (userTier === 'free' || userTier === 'credits') userTier = 'rune_seeker';
+      // Admins always get full premium access for testing
+      if (isAdmin(currentUser?.email)) userTier = 'premium';
       userCredits = data.credits_balance || 0;
       userName    = data.name            || '';
       // Restore language preference
@@ -1368,7 +1370,7 @@ async function playJournalAudio(runeName, eLang, i) {
   }
 }
 
-// ─── RÚNAR'S WHISPERS ────────────────────────────────────
+// ─── THE GATHERING ───────────────────────────────────────
 // Ritual: user picks 5 runes from journal → 1200-token combined reading
 // Future: cacao ceremony + meditation mode (see CLAUDE.md)
 
@@ -1392,7 +1394,7 @@ function updateWhispersUI() {
   if (!isStandard) {
     // Rune Seeker — locked teaser
     if (reqBtn)   { reqBtn.disabled = true; reqBtn.style.opacity = '0.35'; reqBtn.style.cursor = 'default'; }
-    if (lockEl)   { lockEl.style.display = 'block'; lockEl.textContent = isIs ? 'Opnast með Standard.' : 'Unlocks with Standard.'; }
+    if (lockEl)   { lockEl.style.display = 'block'; lockEl.textContent = isIs ? 'The Gathering opnast með Standard.' : 'The Gathering unlocks with Standard.'; }
     if (needMore) needMore.style.display = 'none';
   } else if (!hasEnough) {
     // Standard+ but fewer than 5 readings
@@ -1402,8 +1404,8 @@ function updateWhispersUI() {
       needMore.style.display = 'block';
       const needed = 5 - _journalCache.length;
       needMore.textContent = isIs
-        ? `Þú þarft ${needed} fleiri lestur${needed !== 1 ? 'a' : ''} til að biðja um Hvíslan.`
-        : `${needed} more reading${needed !== 1 ? 's' : ''} needed to unlock Whispers.`;
+        ? `Þú þarft ${needed} fleiri lestur${needed !== 1 ? 'a' : ''} til að opna The Gathering.`
+        : `${needed} more reading${needed !== 1 ? 's' : ''} needed to unlock The Gathering.`;
     }
   } else {
     // Standard+ with enough readings
@@ -1412,7 +1414,7 @@ function updateWhispersUI() {
     if (needMore) needMore.style.display = 'none';
   }
 
-  if (reqBtn) reqBtn.textContent = isIs ? "BIÐJA UM RÚNAR'S WHISPERS" : "REQUEST RÚNAR'S WHISPERS";
+  if (reqBtn) reqBtn.textContent = isIs ? 'BIÐJA UM THE GATHERING' : 'REQUEST THE GATHERING';
 
   // Show correct state
   const states = { idle: 'whispers-idle', selecting: 'whispers-selecting', loading: 'whispers-loading', output: 'whispers-output' };
@@ -1441,7 +1443,7 @@ function updateWhispersUI() {
   const cancelBtn = document.getElementById('whispers-cancel-btn');
   if (cancelBtn) cancelBtn.textContent = isIs ? 'HÆTTA VIÐ' : 'CANCEL';
   const newBtn = document.getElementById('whispers-new-btn');
-  if (newBtn) newBtn.textContent = isIs ? 'NÝ HVÍSLAN' : 'NEW WHISPERS';
+  if (newBtn) newBtn.textContent = isIs ? 'NÝ SAMKOMA' : 'NEW GATHERING';
 
   // Voice button
   const vBtn = document.getElementById('whispers-voice-btn');

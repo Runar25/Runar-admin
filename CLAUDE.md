@@ -112,6 +112,11 @@ Voice flagy (v runar-config.js TIERS.rune_seeker):
   voice_monthly: false  ← hlas pro 5 free/měsíc (flip na true až bude rozhodnuto)
   voice_credits: true   ← hlas při použití kreditů
 
+## Admin přístup v readeru
+Admins (`ADMIN_EMAILS`) mají automaticky `userTier = 'premium'` v readeru bez ohledu na skutečný DB tier.
+Nastavuje se v `fetchUserProfile()` po načtení profilu: `if (isAdmin(currentUser?.email)) userTier = 'premium';`
+Důvod: admins musí mít přístup ke všem features pro testování, aniž by museli mít placený účet.
+
 ## Klíčová rozhodnutí
 - Poetický hlas Rúnara — žádný tech žargon v UI, nikdy
 - Dva jazyky — EN a IS jsou samostatné výklady, ne překlady
@@ -306,7 +311,8 @@ Flow:
 
 ---
 
-## RÚNAR'S WHISPERS — kontext & budoucí vývoj
+## THE GATHERING — kontext & budoucí vývoj
+*(pracovní název — viz tabulka alternativ níže)*
 
 ### Co je hotovo (MVP, 2026-05-21)
 - 5-runový kombinovaný výklad v Journal tabu (Standard/Premium)
@@ -333,7 +339,8 @@ Všechny jsou silné — mohou se hodit pro různé varianty rituálu nebo tier 
 
 | Název | Motiv |
 |-------|-------|
-| **RÚNAR'S WHISPERS** | ← **aktuálně používáno** |
+| **THE GATHERING** | ← **aktuálně používáno** (pracovní název) |
+| RÚNAR'S WHISPERS | původní název, odložen |
 | THE COUNCIL OF RUNES | Runy zasedly jako rada moudrých |
 | RÚNAR'S COUNSEL | Rada/poradenství na základě celé cesty (Council/Counsel hříčka) |
 | THE WEAVING | Tkaní osudu z více run — nornský motiv, velmi islandský |
