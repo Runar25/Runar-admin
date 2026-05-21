@@ -486,6 +486,35 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
 /* Empty state */
 .journal-empty{text-align:center;padding:36px 20px;font-family:'Cinzel',serif;font-size:0.63em;letter-spacing:2px;color:var(--dim);line-height:2;}
 
+/* ── RÚNAR'S WHISPERS ── */
+.whispers-section{border:1px solid rgba(255,191,0,0.18);background:rgba(255,191,0,0.025);padding:20px 22px;margin-bottom:28px;}
+.whispers-title{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:3px;color:var(--gold);margin-bottom:8px;}
+.whispers-sub{font-size:0.86em;font-style:italic;color:var(--dim);margin-bottom:16px;line-height:1.65;}
+.whispers-counter{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--teal);margin-bottom:14px;}
+.whispers-btn{width:100%;padding:12px;background:rgba(255,191,0,0.08);border:1px solid rgba(255,191,0,0.35);color:var(--gold);font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2.5px;cursor:pointer;transition:all 0.2s;margin-bottom:6px;}
+.whispers-btn:hover:not(:disabled){background:rgba(255,191,0,0.14);border-color:rgba(255,191,0,0.6);}
+.whispers-btn:disabled{opacity:0.35;cursor:default;}
+.whispers-btn.sec{background:transparent;border-color:var(--border2);color:var(--muted);margin-top:6px;}
+.whispers-btn.sec:hover:not(:disabled){border-color:var(--muted);color:var(--white);}
+.whispers-lock{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:1.5px;color:var(--dim);opacity:0.5;margin-top:10px;font-style:italic;}
+.whispers-need-more{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:1.5px;color:var(--dim);opacity:0.55;margin-top:8px;}
+/* Selection mode */
+.jcard-select-btn{display:none;margin-top:10px;background:none;border:1px solid rgba(255,191,0,0.3);color:var(--gold);font-family:'Cinzel',serif;font-size:0.55em;letter-spacing:2px;padding:6px 14px;cursor:pointer;transition:all 0.2s;opacity:0.7;}
+.jcard-select-btn:hover{opacity:1;border-color:rgba(255,191,0,0.7);}
+.jcard-select-btn.selected{background:rgba(255,191,0,0.1);border-color:var(--gold);opacity:1;}
+.whispers-selecting .jcard-select-btn{display:inline-block;}
+.jcard.whispers-selected{border-color:rgba(255,191,0,0.45);background:rgba(255,191,0,0.04);}
+/* Whispers output */
+.whispers-runes-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid rgba(255,191,0,0.12);}
+.whispers-rune-chip{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1.5px;color:var(--gold);opacity:0.9;}
+.whispers-rune-sep{color:var(--dim);opacity:0.4;font-size:0.7em;}
+.whispers-out-text{font-size:0.9em;font-style:italic;color:var(--muted);line-height:1.9;}
+.whispers-voice-btn{margin-top:20px;background:none;border:1px solid rgba(126,217,181,0.3);color:var(--teal);font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:2px;padding:9px 18px;cursor:pointer;transition:all 0.2s;display:block;width:100%;}
+.whispers-voice-btn:hover{border-color:rgba(126,217,181,0.65);}
+.whispers-voice-btn:disabled{opacity:0.35;cursor:default;}
+.whispers-audio-wrap{margin-top:10px;}
+.whispers-audio-wrap audio{width:100%;}
+
 /* ── TOAST ── */
 .toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(20px);background:#0d1a12;border:1px solid var(--teal);color:var(--teal);font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:2px;padding:12px 24px;z-index:200;opacity:0;transition:opacity 0.4s,transform 0.4s;pointer-events:none;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
@@ -852,6 +881,43 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
     <!-- Content: logged in -->
     <div id="journal-content" style="display:none;">
 
+      <!-- ✦ RÚNAR'S WHISPERS -->
+      <div class="whispers-section" id="whispers-section">
+        <div class="whispers-title">✦ RÚNAR'S WHISPERS</div>
+
+        <!-- Idle state -->
+        <div id="whispers-idle">
+          <p class="whispers-sub" id="whispers-idle-sub">Five voices. One counsel.</p>
+          <button class="whispers-btn" id="whispers-request-btn" onclick="enterWhispersSelection()">REQUEST RÚNAR'S WHISPERS</button>
+          <div class="whispers-lock"  id="whispers-lock"     style="display:none;"></div>
+          <div class="whispers-need-more" id="whispers-need-more" style="display:none;"></div>
+        </div>
+
+        <!-- Selecting state -->
+        <div id="whispers-selecting" style="display:none;">
+          <p class="whispers-counter" id="whispers-counter">Selected: 0 of 5</p>
+          <button class="whispers-btn" id="whispers-weave-btn" onclick="generateWhispersReading()" disabled>LET RÚNAR WEAVE</button>
+          <button class="whispers-btn sec" onclick="cancelWhispers()" id="whispers-cancel-btn">CANCEL</button>
+        </div>
+
+        <!-- Loading state -->
+        <div id="whispers-loading" style="display:none;">
+          <p class="whispers-sub" id="whispers-loading-txt">Rúnar is weaving the voices…</p>
+        </div>
+
+        <!-- Output state -->
+        <div id="whispers-output" style="display:none;">
+          <div class="whispers-runes-row" id="whispers-runes-row"></div>
+          <div class="whispers-out-text" id="whispers-out-text"></div>
+          <div class="status" id="st-whispers"></div>
+          <button class="whispers-voice-btn" id="whispers-voice-btn" onclick="generateWhispersVoice()">ᚢ RÚNAR'S VOICE</button>
+          <div class="whispers-audio-wrap" id="whispers-audio-wrap" style="display:none;">
+            <audio controls preload="none" controlsList="nodownload" id="whispers-audio"></audio>
+          </div>
+          <button class="whispers-btn sec" style="margin-top:16px;" onclick="resetWhispers()" id="whispers-new-btn">NEW WHISPERS</button>
+        </div>
+      </div>
+
       <!-- Pane header -->
       <div class="journal-pane-header">
         <span class="journal-pane-title" id="journal-pane-title">✦ YOUR READINGS</span>
@@ -1188,7 +1254,7 @@ function renderJournal(entries) {
     const safeRune = (e.rune_name || '').replace(/'/g, "\\'");
     const safeLang = (e.lang || '').replace(/'/g, "\\'");
 
-    return `<div class="jcard">
+    return `<div class="jcard" id="jcard-${i}">
       <div class="jcard-header" onclick="toggleJournalEntry(${i})">
         <div class="jcard-left">
           <div class="jcard-glyph">${e.rune_glyph || '◻'}</div>
@@ -1196,6 +1262,7 @@ function renderJournal(entries) {
             <div class="jcard-name">${(e.rune_name || '').toUpperCase()} · ${(e.lang || '').toUpperCase()}</div>
             <div class="jcard-date">${dateStr}${areaStr}</div>
             <div class="jcard-excerpt">${excerpt}${excerpt.length >= 160 ? '…' : ''}</div>
+            <button class="jcard-select-btn" id="jselect-btn-${i}" onclick="event.stopPropagation();toggleRuneSelection(${i})">${isIs ? '★ VELJA' : '★ SELECT'}</button>
           </div>
         </div>
         <div class="jcard-arrow" id="jarr-${i}">▾</div>
@@ -1214,6 +1281,8 @@ function renderJournal(entries) {
       </div>
     </div>`;
   }).join('');
+
+  updateWhispersUI();
 }
 
 // Teaser pro rune_seeker — kolik čtení celkem mají v DB
@@ -1297,6 +1366,313 @@ async function playJournalAudio(runeName, eLang, i) {
     btn.textContent = isIs ? '— Villa' : '— Error';
     btn.disabled = false;
   }
+}
+
+// ─── RÚNAR'S WHISPERS ────────────────────────────────────
+// Ritual: user picks 5 runes from journal → 1200-token combined reading
+// Future: cacao ceremony + meditation mode (see CLAUDE.md)
+
+let _whispersMode    = 'idle'; // 'idle' | 'selecting' | 'loading' | 'output'
+let _selectedEntries = [];     // up to 5 journal entries chosen by user
+let _whispersText    = '';     // generated reading text (for voice)
+
+function updateWhispersUI() {
+  const isStandard = userTier === 'standard' || userTier === 'premium';
+  const isIs       = lang === 'is';
+  const hasEnough  = _journalCache.length >= 5;
+
+  // Idle state contents
+  const idleSub  = document.getElementById('whispers-idle-sub');
+  const lockEl   = document.getElementById('whispers-lock');
+  const needMore = document.getElementById('whispers-need-more');
+  const reqBtn   = document.getElementById('whispers-request-btn');
+
+  if (idleSub) idleSub.textContent = isIs ? 'Fimm raddir. Eitt ráð.' : 'Five voices. One counsel.';
+
+  if (!isStandard) {
+    // Rune Seeker — locked teaser
+    if (reqBtn)   { reqBtn.disabled = true; reqBtn.style.opacity = '0.35'; reqBtn.style.cursor = 'default'; }
+    if (lockEl)   { lockEl.style.display = 'block'; lockEl.textContent = isIs ? 'Opnast með Standard.' : 'Unlocks with Standard.'; }
+    if (needMore) needMore.style.display = 'none';
+  } else if (!hasEnough) {
+    // Standard+ but fewer than 5 readings
+    if (reqBtn)   { reqBtn.disabled = true; reqBtn.style.opacity = '0.4'; reqBtn.style.cursor = 'default'; }
+    if (lockEl)   lockEl.style.display = 'none';
+    if (needMore) {
+      needMore.style.display = 'block';
+      const needed = 5 - _journalCache.length;
+      needMore.textContent = isIs
+        ? `Þú þarft ${needed} fleiri lestur${needed !== 1 ? 'a' : ''} til að biðja um Hvíslan.`
+        : `${needed} more reading${needed !== 1 ? 's' : ''} needed to unlock Whispers.`;
+    }
+  } else {
+    // Standard+ with enough readings
+    if (reqBtn)   { reqBtn.disabled = false; reqBtn.style.opacity = ''; reqBtn.style.cursor = ''; }
+    if (lockEl)   lockEl.style.display = 'none';
+    if (needMore) needMore.style.display = 'none';
+  }
+
+  if (reqBtn) reqBtn.textContent = isIs ? "BIÐJA UM RÚNAR'S WHISPERS" : "REQUEST RÚNAR'S WHISPERS";
+
+  // Show correct state
+  const states = { idle: 'whispers-idle', selecting: 'whispers-selecting', loading: 'whispers-loading', output: 'whispers-output' };
+  Object.entries(states).forEach(([state, id]) => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = _whispersMode === state ? 'block' : 'none';
+  });
+
+  // CSS class for selection mode (shows ★ SELECT buttons on jcards)
+  const content = document.getElementById('journal-content');
+  if (content) content.classList.toggle('whispers-selecting', _whispersMode === 'selecting');
+
+  // Loading text
+  const loadTxt = document.getElementById('whispers-loading-txt');
+  if (loadTxt) loadTxt.textContent = isIs ? 'Rúnar vefur raddir saman…' : 'Rúnar is weaving the voices…';
+
+  // Weave button label + state
+  const weaveBtn = document.getElementById('whispers-weave-btn');
+  if (weaveBtn) {
+    const n = _selectedEntries.length;
+    weaveBtn.disabled    = n !== 5;
+    weaveBtn.textContent = isIs ? 'LÁTUM RÚNAR VEFA' : 'LET RÚNAR WEAVE';
+  }
+
+  // Cancel / New buttons
+  const cancelBtn = document.getElementById('whispers-cancel-btn');
+  if (cancelBtn) cancelBtn.textContent = isIs ? 'HÆTTA VIÐ' : 'CANCEL';
+  const newBtn = document.getElementById('whispers-new-btn');
+  if (newBtn) newBtn.textContent = isIs ? 'NÝ HVÍSLAN' : 'NEW WHISPERS';
+
+  // Voice button
+  const vBtn = document.getElementById('whispers-voice-btn');
+  if (vBtn) vBtn.textContent = isIs ? 'ᚢ RÖDD RÚNARS' : "ᚢ RÚNAR'S VOICE";
+}
+
+function enterWhispersSelection() {
+  _selectedEntries = [];
+  _whispersMode    = 'selecting';
+  updateWhispersUI();
+  updateWhispersCounter();
+  // Scroll down to entry list so user can pick
+  setTimeout(() => {
+    const list = document.getElementById('journal-list');
+    if (list) list.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 120);
+}
+
+function toggleRuneSelection(i) {
+  const entry = _journalCache[i];
+  if (!entry) return;
+  const idx = _selectedEntries.findIndex(e => e.id === entry.id);
+  const isSelected = idx >= 0;
+  if (isSelected) {
+    _selectedEntries.splice(idx, 1);
+  } else {
+    if (_selectedEntries.length >= 5) return; // already full
+    _selectedEntries.push(entry);
+  }
+  const nowSelected = !isSelected;
+  const isIs = lang === 'is';
+  const jcard = document.getElementById(`jcard-${i}`);
+  if (jcard) jcard.classList.toggle('whispers-selected', nowSelected);
+  const btn = document.getElementById(`jselect-btn-${i}`);
+  if (btn) {
+    btn.textContent = nowSelected ? (isIs ? '★ VALIN' : '★ SELECTED') : (isIs ? '★ VELJA' : '★ SELECT');
+    btn.classList.toggle('selected', nowSelected);
+  }
+  updateWhispersCounter();
+}
+
+function updateWhispersCounter() {
+  const n    = _selectedEntries.length;
+  const isIs = lang === 'is';
+  const counterEl = document.getElementById('whispers-counter');
+  if (counterEl) counterEl.textContent = isIs ? `Valdar: ${n} af 5` : `Selected: ${n} of 5`;
+  const weaveBtn = document.getElementById('whispers-weave-btn');
+  if (weaveBtn) weaveBtn.disabled = n !== 5;
+}
+
+function cancelWhispers() {
+  _selectedEntries = [];
+  _whispersMode    = 'idle';
+  _clearJcardSelections();
+  updateWhispersUI();
+}
+
+function _clearJcardSelections() {
+  document.querySelectorAll('.jcard.whispers-selected').forEach(c => c.classList.remove('whispers-selected'));
+  const isIs = lang === 'is';
+  document.querySelectorAll('.jcard-select-btn').forEach(b => {
+    b.textContent = isIs ? '★ VELJA' : '★ SELECT';
+    b.classList.remove('selected');
+  });
+}
+
+function buildWhispersPrompt(entries, name) {
+  const isIs     = lang === 'is';
+  const runeParts = entries.map(e => `${e.rune_glyph || ''} ${e.rune_name || ''}`.trim()).join(', ');
+  const areas     = [...new Set(entries.map(e => e.area).filter(Boolean))];
+  const seekings  = [...new Set(entries.map(e => e.seeking).filter(Boolean))];
+
+  if (isIs) {
+    return [
+      name ? `${name} ber fimm rúnur að þér: ${runeParts}.` : `Fimm rúnur eru bornar að þér: ${runeParts}.`,
+      areas.length    ? `Svið lífsins: ${areas.join(', ')}.`   : '',
+      seekings.length ? `Leitað er: ${seekings.join(', ')}.`   : '',
+      '',
+      'Talaðu eins og Rúnar. Þessar fimm raddir hafa safnast — hver ber hluta af stærri sannleika.',
+      'Vindu þær saman í eitt óbrotið ráð. Túlkaðu þær ekki sér.',
+      'Finndu mynstrið sem þær mynda saman — þráðinn sem tengir þær, spennan á milli þeirra,',
+      'það sem þær opinbera þegar þær eru séðar sem ein mynd.',
+      'Talaðu djúpt. Taktu þér tíma. Leitandinn biður um fyllstu rödd þína.',
+    ].filter(Boolean).join('\n');
+  } else {
+    return [
+      name ? `${name} brings five runes before you: ${runeParts}.` : `Five runes are brought before you: ${runeParts}.`,
+      areas.length    ? `Area of life: ${areas.join(', ')}.`   : '',
+      seekings.length ? `Seeking: ${seekings.join(', ')}.`     : '',
+      '',
+      "Speak as Rúnar. These five voices have gathered — each carries a piece of the greater truth.",
+      "Weave them into one unbroken counsel. Do not interpret them separately.",
+      "Find the pattern they form together — the thread that connects them, the tension between them,",
+      "what they reveal when seen as one picture.",
+      "Speak deeply. Take your time. The seeker asks for your fullest voice.",
+    ].filter(Boolean).join('\n');
+  }
+}
+
+async function generateWhispersReading() {
+  if (_selectedEntries.length !== 5) return;
+  _whispersMode = 'loading';
+  _whispersText = '';
+  updateWhispersUI();
+
+  try {
+    const sysPrompt = buildSysPrompt(activeChar, lang);
+    const name      = readerUser?.name || '';
+    const userMsg   = buildWhispersPrompt(_selectedEntries, name);
+
+    const session  = await sb.auth.getSession();
+    const token    = session?.data?.session?.access_token;
+    const authHdr  = token ? { Authorization: `Bearer ${token}` } : {};
+
+    const resp = await fetch(PROXY, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json', ...authHdr },
+      body:    JSON.stringify({
+        user_id:    currentUser?.id,
+        lang,
+        prompt:     userMsg,
+        system:     sysPrompt,
+        max_tokens: 1200,
+        mode:       'ceremonial',
+        use_credit: false,
+      }),
+    });
+
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const data = await resp.json();
+    if (data.error) throw new Error(data.error);
+    const text = data.content?.[0]?.text || data.text || '';
+    if (!text) throw new Error('Empty response');
+
+    _whispersText = text;
+    _whispersMode = 'output';
+    updateWhispersUI();
+    _clearJcardSelections();
+
+    // Runes row
+    const runesRow = document.getElementById('whispers-runes-row');
+    if (runesRow) {
+      runesRow.innerHTML = _selectedEntries.map((e, i) =>
+        (i > 0 ? '<span class="whispers-rune-sep">·</span>' : '') +
+        `<span class="whispers-rune-chip">${e.rune_glyph || ''} ${(e.rune_name || '').toUpperCase()}</span>`
+      ).join('');
+    }
+
+    // Stream word by word
+    const outEl = document.getElementById('whispers-out-text');
+    if (outEl) {
+      outEl.textContent = '';
+      const words = text.split(' ');
+      let wi = 0;
+      const tick = setInterval(() => {
+        if (wi >= words.length) { clearInterval(tick); return; }
+        outEl.textContent += (wi > 0 ? ' ' : '') + words[wi++];
+      }, APP.stream_delay_ms);
+    }
+
+    // Scroll to output section
+    setTimeout(() => {
+      const wSection = document.getElementById('whispers-section');
+      if (wSection) wSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 200);
+
+  } catch(e) {
+    _whispersMode = 'idle';
+    updateWhispersUI();
+    const st = document.getElementById('st-whispers');
+    if (st) { st.textContent = (lang === 'is' ? 'Villa: ' : 'Error: ') + e.message; st.className = 'status err'; }
+  }
+}
+
+async function generateWhispersVoice() {
+  const btn = document.getElementById('whispers-voice-btn');
+  if (!btn || !_whispersText) return;
+  const isIs = lang === 'is';
+  btn.disabled    = true;
+  btn.textContent = isIs ? 'ᚢ RÚNAR TALAR…' : 'ᚢ RÚNAR IS SPEAKING…';
+
+  try {
+    const session = await sb.auth.getSession();
+    const token   = session?.data?.session?.access_token;
+    const resp    = await fetch(EL_PROXY, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+      body:    JSON.stringify({
+        text:     _whispersText,
+        voice_id: elVoiceId(lang),
+        model_id: elModel(lang),
+        voice_settings: EL_VOICE_SETTINGS,
+        lang,
+        user_id: currentUser?.id,
+      }),
+    });
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const data = await resp.json();
+    if (data.error) throw new Error(data.error);
+    if (!data.audio_url) throw new Error('No audio_url');
+    const blob = await fetch(data.audio_url).then(r => r.blob());
+    const url  = URL.createObjectURL(blob);
+    const audio = document.getElementById('whispers-audio');
+    const wrap  = document.getElementById('whispers-audio-wrap');
+    if (audio && wrap) { audio.src = url; wrap.style.display = 'block'; audio.play().catch(() => {}); }
+    btn.textContent = isIs ? '♪ SPILANDI' : '♪ NOW PLAYING';
+    btn.style.opacity = '0.45';
+  } catch(e) {
+    btn.disabled    = false;
+    btn.textContent = isIs ? 'ᚢ RÖDD RÚNARS' : "ᚢ RÚNAR'S VOICE";
+    const st = document.getElementById('st-whispers');
+    if (st) { st.textContent = (isIs ? 'Villa: ' : 'Error: ') + e.message; st.className = 'status err'; }
+  }
+}
+
+function resetWhispers() {
+  _selectedEntries = [];
+  _whispersText    = '';
+  _whispersMode    = 'idle';
+  _clearJcardSelections();
+  const outEl = document.getElementById('whispers-out-text');
+  if (outEl) outEl.textContent = '';
+  const runesRow = document.getElementById('whispers-runes-row');
+  if (runesRow) runesRow.innerHTML = '';
+  const wrap = document.getElementById('whispers-audio-wrap');
+  if (wrap) { wrap.style.display = 'none'; const a = document.getElementById('whispers-audio'); if (a) a.src = ''; }
+  const vBtn = document.getElementById('whispers-voice-btn');
+  if (vBtn) { vBtn.disabled = false; vBtn.style.opacity = ''; }
+  const st = document.getElementById('st-whispers');
+  if (st) { st.textContent = ''; st.className = 'status'; }
+  updateWhispersUI();
 }
 
 // ─── AUTH ────────────────────────────────────────────────
@@ -1961,8 +2337,9 @@ function updateUIText() {
     ? 'Stofnaðu reikning til að geyma lestrana þína.<br>Sérhver rúna sem þú dregur. Hvert orð sem Rúnar talar.<br>Geymt.'
     : 'Create a free account to keep your readings.<br>Every rune you draw. Every word Rúnar speaks.<br>Kept.';
   setText('journal-gate-btn', lang === 'is' ? 'STOFNA REIKNING' : 'CREATE FREE ACCOUNT');
-  // Re-render journal if it's open (picks up new lang)
+  // Re-render journal if it's open (picks up new lang labels)
   if (activeAppTab === 'journal' && _journalCache.length > 0) renderJournal(_journalCache);
+  else if (activeAppTab === 'journal') updateWhispersUI();
   buildPills();
 }
 
