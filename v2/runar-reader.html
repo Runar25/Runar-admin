@@ -542,6 +542,9 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
 .redeem-btn:disabled{opacity:0.35;cursor:not-allowed;}
 .redeem-close{float:right;background:none;border:none;color:var(--dim);font-size:1em;cursor:pointer;margin-top:-4px;}
 .redeem-close:hover{color:var(--white);}
+.redeem-shop-link{margin-top:14px;text-align:right;}
+.redeem-shop-link a{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:1.5px;color:var(--gold);opacity:0.75;text-decoration:none;transition:opacity 0.2s;}
+.redeem-shop-link a:hover{opacity:1;text-decoration:underline;}
 
 /* ── FREE USER BANNER ── */
 
@@ -683,7 +686,7 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
   <div class="credits-banner" id="credits-banner" style="display:none;">
     <div style="display:flex;align-items:center;gap:14px;">
       <span class="tier-badge" id="credits-text">Rune Seeker</span>
-      <span class="credits-redeem-link" onclick="toggleRedeem()" id="redeem-link">+ READING CARD</span>
+      <span class="credits-redeem-link" onclick="toggleRedeem()" id="redeem-link">+ READING GIFT CARD</span>
     </div>
     <span class="credits-balance" id="credits-balance-lbl"></span>
   </div>
@@ -691,12 +694,15 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
   <!-- REDEEM SECTION (collapsible) -->
   <div class="redeem-section" id="redeem-section" style="display:none;">
     <button class="redeem-close" onclick="toggleRedeem()">✕</button>
-    <div class="redeem-lbl" id="redeem-lbl">ᚠ ENTER READING CARD CODE</div>
+    <div class="redeem-lbl" id="redeem-lbl">ᚠ ENTER READING GIFT CARD CODE</div>
     <div class="redeem-row">
       <input class="redeem-input" id="redeem-input" type="text" placeholder="e.g. FEHU-7K3M-P9QX" maxlength="20" oninput="this.value=this.value.toUpperCase()">
       <button class="redeem-btn" id="redeem-btn" onclick="redeemCode()">REDEEM</button>
     </div>
     <div class="status" id="st-redeem" style="text-align:left;margin-top:10px;"></div>
+    <div class="redeem-shop-link" id="redeem-shop-link-wrap">
+      <a href="https://agndofa.is" target="_blank" rel="noopener" id="redeem-shop-link">→ Buy more Reading Gift Cards at Agndofa.is</a>
+    </div>
   </div>
 
   <!-- VISITOR NOTICE -->
@@ -1731,10 +1737,10 @@ function updateAuthUI() {
       }
       const txtEl = document.getElementById('free-user-text');
       if (txtEl) txtEl.innerHTML = isIs
-        ? `Þú gengur sem <strong>Vegfarandi</strong> — ${FREE_REGISTERED_LIMIT} lestar á mánuði, allar tuttugu og fimm rúnirnar opnar, Rúnar hlustandi.<br><br>Þegar þeir eru genginn og steinarnir eiga enn eftir að segja, opnar lesturarkort dyrnar. Eitt kort. Jafn margir dragir og þú berð. Engin gildistími, engin áskrift.`
-        : `You walk as <strong>Rune Seeker</strong> — ${FREE_REGISTERED_LIMIT} readings each month, all twenty-five runes open, Rúnar listening.<br><br>When they are walked and the stones still have more to say, a reading card keeps the door open. One card. As many draws as you carry. No subscription, no expiry.`;
+        ? `Þú gengur sem <strong>Vegfarandi</strong> — ${FREE_REGISTERED_LIMIT} lestar á mánuði, allar tuttugu og fimm rúnirnar opnar, Rúnar hlustandi.<br><br>Þegar þeir eru genginn og steinarnir eiga enn eftir að segja, opnar gjafa-lesturarkort dyrnar. Eitt kort. Jafn margir dragir og þú berð. Engin gildistími, engin áskrift.`
+        : `You walk as <strong>Rune Seeker</strong> — ${FREE_REGISTERED_LIMIT} readings each month, all twenty-five runes open, Rúnar listening.<br><br>When they are walked and the stones still have more to say, a reading gift card keeps the door open. One card. As many draws as you carry. No subscription, no expiry.`;
       const btnEl = document.getElementById('tn-curious-btn');
-      if (btnEl) { btnEl.textContent = isIs ? '+ LESTURARKORT' : '+ GET A READING CARD'; btnEl.style.display = ''; }
+      if (btnEl) { btnEl.textContent = isIs ? '+ GJAFA-LESTURARKORT' : '+ GET A READING GIFT CARD'; btnEl.style.display = ''; }
       upgradeGate.style.display = 'none';
       content.style.display     = 'block';
 
@@ -1767,13 +1773,13 @@ function updateAuthUI() {
         setText('upgrade-gate-title', isIs ? 'MÁNUÐARLEGIR LESTRAR ÞÍNIR ERU FULLNÝTTIR' : 'YOUR MONTHLY READINGS ARE COMPLETE');
         const ugNote = document.getElementById('upgrade-gate-note');
         if (ugNote) ugNote.innerHTML = isIs
-          ? 'Þú hefur gengið alla fimm lestrana þína í þessum mánuði. Steinarnir hvíla til næsta mánaðar — eða opnaðu dyrnar með <b>Rúnar lesturarkort</b>. Eitt kort. Engin gildistími.'
-          : 'You have walked all five readings this month. The stones rest until the new month — or keep the door open with a <b>Rune Seeker reading card</b>. One card. No expiry.';
+          ? 'Þú hefur gengið alla fimm lestrana þína í þessum mánuði. Steinarnir hvíla til næsta mánaðar — eða opnaðu dyrnar með <b>Rúnar gjafa-lesturarkort</b>. Eitt kort. Engin gildistími.'
+          : 'You have walked all five readings this month. The stones rest until the new month — or keep the door open with a <b>Rune Seeker reading gift card</b>. One card. No expiry.';
         const ugSub = document.getElementById('upgrade-gate-sub');
         if (ugSub) ugSub.innerHTML = isIs ? 'eða bíddu til næsta mánaðar' : 'or return when the new month begins';
         const ugBtn = document.getElementById('upgrade-gate-btn');
         if (ugBtn) {
-          ugBtn.textContent = isIs ? '+ LESTURARKORT' : '+ GET A READING CARD';
+          ugBtn.textContent = isIs ? '+ GJAFA-LESTURARKORT' : '+ GET A READING GIFT CARD';
           ugBtn.disabled = false; ugBtn.style.opacity = '1'; ugBtn.style.cursor = 'pointer';
           ugBtn.onclick = () => { upgradeGate.style.display = 'none'; content.style.display = 'block'; toggleRedeem(); };
         }
@@ -2191,7 +2197,7 @@ function updateSidePanel() {
   const giftEl = document.getElementById('sp-gift');
   if (upEl)   upEl.style.display   = hide ? 'none' : 'block';
   if (giftEl) giftEl.style.display = hide ? 'none' : 'block';
-  setText('sp-gift',    is ? '+ LESTURARKORT' : '+ READING CARD');
+  setText('sp-gift',    is ? '+ GJAFA-LESTURARKORT' : '+ READING GIFT CARD');
   setText('sp-upgrade', is ? 'UPPFÆRA → STANDARD — BRÁÐLEGA' : 'UPGRADE → STANDARD — COMING SOON');
 }
 
@@ -2309,7 +2315,10 @@ function updateUIText() {
   const vBtn = document.getElementById('btn-generate-voice');
   if (vBtn && !vBtn.disabled) vBtn.textContent = t('voice_btn');
   // Re-render auth UI + side panel vždy — zajistí správné texty i pro odhlášeného uživatele při změně jazyka
-  setText('free-redeem-link', lang === 'is' ? '+ LESTURARKORT' : '+ READING CARD');
+  setText('free-redeem-link', lang === 'is' ? '+ GJAFA-LESTURARKORT' : '+ READING GIFT CARD');
+  setText('redeem-lbl', lang === 'is' ? 'ᚠ SLÁÐU INN GJAFA-LESTURARKORT KÓÐ' : 'ᚠ ENTER READING GIFT CARD CODE');
+  const shopLink = document.getElementById('redeem-shop-link');
+  if (shopLink) shopLink.textContent = lang === 'is' ? '→ Kaupa fleiri gjafa-lesturarkort á Agndofa.is' : '→ Buy more Reading Gift Cards at Agndofa.is';
   updateAuthUI();
   updateSidePanel();
   updateQuestionGate();
@@ -2929,7 +2938,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     <!-- ② Personal actions -->
     <div class="side-panel-section">
       <button class="sp-item journal" id="sp-journal-link" onclick="openJournalFromPanel()">✦ MY JOURNAL</button>
-      <button class="sp-item" id="sp-gift" onclick="toggleRedeem();closeSidePanel()">+ READING CARD</button>
+      <button class="sp-item" id="sp-gift" onclick="toggleRedeem();closeSidePanel()">+ READING GIFT CARD</button>
       <a class="sp-item" id="sp-admin-link" href="runar-shrine.html" style="display:none;text-decoration:none;">⚿ KNOWLEDGE SHRINE</a>
       <button class="sp-item coming" id="sp-upgrade">UPGRADE → STANDARD — COMING SOON</button>
     </div>
