@@ -1990,8 +1990,17 @@ function closeInstallModal() {
   document.getElementById('install-modal').classList.remove('open');
 }
 
-// Register service worker
+// Register service worker + auto-reload when a new SW takes over old stale content
 if ('serviceWorker' in navigator) {
+  // If the page is being served by an outdated SW, reload once the new one activates
+  let _swRefreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (_swRefreshing) return;
+    _swRefreshing = true;
+    console.log('New service worker activated — reloading for fresh content.');
+    window.location.reload();
+  });
+
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/Runar-admin/v2/sw.js', { scope: '/Runar-admin/v2/' })
       .then(() => _updateInstallBtn())
@@ -2103,7 +2112,12 @@ async function sendMagicLink() {
   setSt('st-auth', 'Sending…');
   const cleanUrl = window.location.origin + window.location.pathname;
   const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: cleanUrl } });
-  if (error) { setSt('st-auth', error.message, 'err'); return; }
+  if (error) {
+    const msg = (error.status === 429 || /rate/i.test(error.message))
+      ? 'Too many requests — please wait a moment, or use Google sign-in above.'
+      : error.message;
+    setSt('st-auth', msg, 'err'); return;
+  }
   document.getElementById('auth-modal-body').style.display = 'none';
   document.getElementById('auth-modal-success').style.display = 'block';
 }
@@ -2897,7 +2911,7 @@ async function _generateReading() {
 
 // ─── READER FLOW ─────────────────────────────────────────
 function startReading() {
-  if (!currentUser && getTrialCount() >= FREE_TRIAL_LIMIT) { updateAuthUI(); return; }
+  if (!currentUser && getTrialCount() >= FREE_TRIAL_LIMIT) { updateAuthUI(); openAuthModal(); return; }
   if (currentUser && getFreeMonthCount(currentUser.id) >= FREE_REGISTERED_LIMIT) { updateAuthUI(); return; }
   const name = document.getElementById('r-name').value.trim();
   if (!name) { setSt('st-setup', t('st_name_req'), 'err'); return; }
@@ -3013,6 +3027,13 @@ window.addEventListener('DOMContentLoaded', async () => {
   const yearInput = document.getElementById('r-year');
   if (yearInput) yearInput.max = new Date().getFullYear();
 
+  // Hidden admin reset: ?reset_trial=1 clears visitor trial counter (dev/testing)
+  if (new URLSearchParams(window.location.search).get('reset_trial') === '1') {
+    localStorage.removeItem('runar_trial_count');
+    history.replaceState({}, document.title, window.location.pathname);
+    showToast('Trial count reset.');
+  }
+
   // Restore language from localStorage (before auth, so UI is correct immediately)
   const savedLang = localStorage.getItem('runar_lang');
   if (savedLang && savedLang !== lang) {
@@ -3029,7 +3050,11 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
 
   // Auth state — getSession() restores session from localStorage on refresh
-  const { data: { session } } = await sb.auth.getSession();
+  let session = null;
+  try {
+    const { data } = await sb.auth.getSession();
+    session = data?.session || null;
+  } catch(e) { console.warn('getSession failed:', e.message); }
   currentUser = session?.user || null;
   updateAuthUI(); // always sync UI with initial session state
   if (currentUser) {
