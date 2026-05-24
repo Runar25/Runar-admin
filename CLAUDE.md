@@ -436,7 +436,59 @@ The Gathering není jen klikání na runy. Je to rituál:
 - [ ] **Paměť kontextu** — multi-turn history v claude-proxy
 - [ ] **Fyzický ekosystém** — QR/NFC na produktech Agndofa
 
-### Hotovo ✅ (tento session, 2026-05-21)
+---
+
+## ⚠️ KRITICKÁ UPOZORNĚNÍ — NEOPAKOVAT TYTO CHYBY
+
+### 1. Neskrývat `reader-content` (reader-form) — NIKDY
+`updateAuthUI()` v minulosti nastavoval `content.style.display = 'none'` když se vyčerpaly
+trial nebo měsíční sloty. Toto bylo CHYBNÉ chování, které nebylo nikdy požadováno.
+
+**Správné chování:**
+- `reader-content` je VŽDY viditelný — bez výjimky
+- Tier bannery (`trial-banner`, `free-user-banner`) jsou informační a zobrazí "0 zbývá + CTA"
+- `auth-gate` a `upgrade-gate` jsou NEPOUŽÍVÁNY — nikdy je nenastavuj na `display:block`
+- `startReading()` blokuje jen rune_seeker u kterého jsou vyčerpány VŠECHNY sloty (monthly + credits)
+- Standard / Premium / Admin: nikdy blokovat
+
+### 2. Monthly limit check musí zohledňovat tier
+Starý kód blokoval VŠECHNY přihlášené uživatele (i premium/admin) když `getFreeMonthCount() >= 5`.
+Správná podmínka:
+```js
+if (currentUser && userTier === 'rune_seeker'
+    && getFreeMonthCount(currentUser.id) >= FREE_REGISTERED_LIMIT
+    && userCredits <= 0) { ... return; }
+```
+Standard/Premium jsou vždy propuštěni bez kontroly počítadla.
+
+### 3. Audio player — nepoužívat nativní `<audio controls>`
+Nativní browser controls nelze plně stylovat v Chrome/Safari:
+- Tři tečky (⋮), volume slider track, timeline fill ignorují CSS
+- Řešení: custom amber player (`.cap` třída) pro hlavní reading output
+- HTML: `<audio id="runar-audio" preload="none">` (BEZ `controls` atributu)
+- JS: `capToggle()`, `capSeek()`, `capMute()`, `_capReset()`, events na `runar-audio`
+- CSS: `.cap-seek::-webkit-slider-thumb` + `--pct` CSS variable pro fill gradient
+- Sekundární playery (kolekce, journal) mohou zůstat nativní s webkit pseudo-CSS
+
+### 4. Service Worker — musí mít network-first pro HTML
+Pokud SW slouží HTML z cache (cache-first), uživatelé nevidí aktualizace.
+SW cache name: `runar-v3` — při každé změně strategie bumpi verzi.
+HTML pages: network-first vždy. JS/icons: cache-first OK.
+
+---
+
+### Hotovo ✅ (session 2026-05-24)
+- [x] Fix: reader-content nikdy neskrývat — form vždy viditelný
+- [x] Fix: monthly limit check nyní zohledňuje tier (Standard/Premium nepodléhají)
+- [x] Fix: startReading() otevírá auth modal když visitor vyčerpal trial
+- [x] Fix: auto-reload po sign-out (1.2s delay po "YOU HAVE LEFT THE CIRCLE" toastu)
+- [x] Fix: getSession() wrappnut v try/catch — crash DOMContentLoaded nehrozí
+- [x] Fix: sendMagicLink() rate-limit error navrhuje Google přihlášení jako fallback
+- [x] Fix: SW bumpen na v3 + controllerchange auto-reload pro stale cache
+- [x] Fix: ?reset_trial=1 URL param pro reset visitor trial counteru (admin testování)
+- [x] Feat: custom amber audio player — play/pause, seek bar (16px thumb), mute, čas
+
+### Hotovo ✅ (session 2026-05-21)
 - [x] Statické audio: všech 25 × EN + 25 × IS run nahráno
 - [x] Specific Question — gated na Standard/Premium
 - [x] Journal tab — vlastní 3. záložka, jcard design, audio per entry
