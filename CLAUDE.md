@@ -14,7 +14,7 @@ AI-powered mystický průvodce runami pro značku Agndofa (Island). Rúnar má v
 ## Soubory v `/v2/`
 ```
 runar-shrine.html      ← admin app (Knowledge Shrine)
-runar-reader.html      ← uživatelská app (hlavní soubor, ~3000 řádků)
+runar-reader.html      ← uživatelská app (hlavní soubor, ~3500 řádků)
 runar-help.html        ← průvodce & FAQ (EN+IS, Rúnarův hlas)
 runar-privacy.html     ← Privacy Policy (EN+IS, GDPR-compliant)
 runar-config.js        ← SB_URL, SB_KEY, PROXY, EL_PROXY, EL_STATIC,
@@ -102,11 +102,11 @@ runar-audio (PUBLIC)   ← static/en/fehu_1.mp3 ... static/en/othalan_2.mp3
 Visitor     (free_trial)  → 3 čtení celkem, anon, jen Fehu v kolekci
 Rune Seeker (rune_seeker) → 5 čtení/měsíc ZDARMA (server-side enforcement) + kredity
                             journal: posledních 5 čtení
-                            The Gathering: teaser (locked)
+                            The Gathering: ODEMČENO — stojí 3 kredity
                             Specific Question: locked (teaser)
 Standard                  → unlimited čtení + hlas
                             journal: unlimited + filtry
-                            The Gathering: plný přístup
+                            The Gathering: plný přístup (zdarma, bez kreditů)
                             Specific Question: odemčena
 Premium                   → vše jako Standard + ceremonial (coming soon)
 ```
@@ -157,6 +157,29 @@ Přístup jen pro admin emails — link v side panelu viditelný jen pro `ADMIN_
 - Credits se kupují jako fyzická karta v Agndofa shopu — žádný Stripe
 - Monthly limit 5/měsíc je vynucován SERVER-SIDE (claude-proxy čte readings tabulku)
 - Barva UI: `var(--gold)` = `#FFBF00` — používat vždy, žádná teal v primárních prvcích
+- Python skripty pro JS změny — Edit tool mění `'` na curly quotes → SyntaxError
+
+## CSS systém — klíčové třídy
+```
+.btn-upgrade    ← SDÍLENÁ třída pro VŠECHNA upgrade CTA tlačítka
+                  transparent bg, gold border, gold fill on hover
+                  Použití: <button class="vcn-btn btn-upgrade">
+                  Konkrétní tlačítko přidá jen font-size + padding
+
+.cap            ← custom amber audio player (hlavní reading + whispers)
+                  capToggle(), capSeek(), capMute(), _capReset()
+                  audio element: id="runar-audio" (BEZ controls atributu)
+
+_makeCapPlayer(prefix, src, doPlay)  ← generický sekundární player
+                  Vrací HTML string s audio + .cap UI pro prefix
+                  _capWire(prefix, doPlay) drátuje eventy
+                  Použití: collection modal ('coll'), journal ('j'+i)
+
+.auth-dropdown-wrap / .auth-dropdown  ← topbar username dropdown
+                  toggleDropdown() — open/close
+                  updateDropdown() — naplní tier, email, balance
+                  Zavírá se klikem mimo (DOMContentLoaded listener)
+```
 
 ## Bezpečnost & GDPR
 Island je člen EEA → platí plné GDPR.
@@ -170,6 +193,8 @@ Island je člen EEA → platí plné GDPR.
 - [x] Privacy Policy — EN+IS stránka (runar-privacy.html), odkaz v hamburgeru
 - [x] DPA se Supabase — Request odeslán (čeká na potvrzení e-mailem)
 - [x] Rate limiting — claude-proxy + redeem-code chráněny proti spamu/brute-force
+- [x] Privacy consent checkbox v auth modalu — uživatel musí odsouhlasit před registrací
+- [x] First-visit privacy banner — zobrazí se jednou, uloženo v localStorage
 
 **Co zbývá:**
 - [ ] DPA podpis — dokončit až přijde e-mail od Supabase
@@ -178,7 +203,67 @@ Island je člen EEA → platí plné GDPR.
 
 ---
 
-## ROADMAP v0.9 (2026-05-21)
+## ══════════════════════════════════════════════
+## ⚡ PRIORITNÍ NEDODĚLKY — ŘEŠIT JAKO PRVNÍ
+## ══════════════════════════════════════════════
+
+### 🔴 KRITICKÉ (blokuje prodej / provoz)
+
+**1. Resend SMTP — magic link emaily**
+Aktuálně Supabase posílá magic linky z vlastní domény (`@supabase.io`). Uživatelé to vidí jako spam nebo nedůvěryhodné.
+- Resend Dashboard → Add Domain → `agndofa.is` → DNS záznamy (MX, SPF, DKIM)
+- Supabase → Project Settings → Auth → SMTP: `smtp.resend.com:465`, user=`resend`, sender=`noreply@agndofa.is`
+- ⚠️ MUSÍ BÝT HOTOVO PŘED SHOPIFY WEBHOOKEM (transakční emaily po nákupu)
+
+**2. Shopify webhook — automatický upgrade po nákupu**
+Bez toho zákazník musí ručně zadat kód z karty. Online prodej není možný.
+- Edge Function `shopify-webhook` je připravena (kostra)
+- Potřeba: HMAC ověření Shopify podpisu + `add_credits()` RPC + email potvrzení přes Resend
+- ⚠️ ZÁVISÍ NA: Resend SMTP (bod 1) musí být funkční první
+
+**3. DPA se Supabase**
+Zpracování osobních dat bez podepsané DPA je GDPR riziko.
+- Čekat na e-mail od Supabase s odkazem na podpis
+- Po podpisu označit jako hotovo
+
+### 🟡 DŮLEŽITÉ (viditelné uživateli, blokuje růst)
+
+**4. IS texty — review rodilým mluvčím**
+Všechny islandské texty v UI jsou strojové placeholdery. Žádný rodilý mluvčí je neviděl.
+Týká se: hero fráze, tier notices, gates, The Gathering popisy, help stránka, privacy policy, auth modal.
+- Exportovat všechny IS strings → dát k review → zapracovat zpětnou vazbu
+
+**5. Privacy Policy odkaz na agndofa.is**
+Zákazníci na hlavním webu nemají přístup k Privacy Policy před registrací.
+- Přidat odkaz na `runar-privacy.html` do footeru nebo auth sekce agndofa.is
+
+**6. Standard tier — způsob nákupu**
+Aktuálně neexistuje způsob jak si koupit Standard. Tlačítko "UPGRADE → STANDARD" je "COMING SOON".
+- Rozhodnout: Shopify produkt? Stripe? Ruční upgrade v Supabase?
+- Navrhnout flow a implementovat
+
+### 🟢 STŘEDNÍ PRIORITA (vylepšení, ne blokátor)
+
+- [ ] **SSE streaming** — první slova za ~0.5s místo čekání 3–5s (velký UX dopad)
+- [ ] **Delší výklady pro Standard** — 1000–1200 tokenů (nyní 700 pro všechny)
+- [ ] **Export journalu** — PDF nebo CSV stažení
+- [ ] **Filtry podle data** v journalu
+- [ ] **The Gathering — rituální flow** — kakao, meditace, vědomý tah 5 run
+- [ ] **Měsíční Gathering** — automatický výklad z run celého měsíce
+
+### ⚪ NÍZKÁ PRIORITA / BUDOUCNOST
+
+- [ ] **Language gating pro Visitor** — IS jen pro registrované (odloženo, čeká na IS review)
+- [ ] **Třírunový spread** — minulost / přítomnost / budoucnost
+- [ ] **Follow-up otázka** po čtení
+- [ ] **Lunární / sezónní kontext** — Rúnar ví o měsíčním cyklu
+- [ ] **Paměť kontextu** — multi-turn history v claude-proxy
+- [ ] **Fyzický ekosystém** — QR/NFC na produktech Agndofa
+- [ ] **Email-based tracking** — zabránit delete+recreate workaround
+
+---
+
+## ROADMAP v0.9 (aktualizováno 2026-05-24)
 
 ### VRSTVA 0 — ZÁKLAD ✅ HOTOVO
 
@@ -201,6 +286,13 @@ Island je člen EEA → platí plné GDPR.
 - [x] Shrine: sticky topbar stejný styl jako reader
 - [x] IS tier názvy: Gestur / Vegfarandi
 - [x] DOB placeholder překlady (Dagur / Mánuður / Ár)
+- [x] Topbar username dropdown — tier, email, readings balance + reset datum
+- [x] YOUR PATH — collapsible sekce v side panelu, dynamický render per tier
+- [x] HIGHER PATH — zobrazí tiery nad aktuálním, UPGRADE button uvnitř YOUR PATH
+- [x] Sdílená `.btn-upgrade` třída — sjednocené upgrade CTA napříč celou appkou
+- [x] Custom CAP player všude — collection modal + journal entries (žádný nativní browser player)
+- [x] Loading animace v Reading tabu: pulsující ᚱ overlay během AI generování
+- [x] Voice button přejmenován: "HEAR RÚNAR SPEAK"
 
 ### VRSTVA 2 — AUTH & UŽIVATELSKÝ ÚČET ✅ HOTOVO
 - [x] Magic link + Google OAuth
@@ -209,13 +301,15 @@ Island je člen EEA → platí plné GDPR.
 - [x] Delete account — GDPR, okamžité smazání všech dat
 - [x] Admin odkaz v hamburgeru (⚿ KNOWLEDGE SHRINE) — jen pro ADMIN_EMAILS
 - [x] Admin premium access — frontend + backend bypass
+- [x] Privacy consent checkbox v auth modalu
+- [x] First-visit privacy banner (localStorage `privacy_seen`)
 
 ### VRSTVA 2.5 — JOURNAL & KOLEKCE ✅ HOTOVO
 - [x] Runes Collection tab — 25 run s audio, Visitor vidí jen Fehu
 - [x] Journal — vlastní 3. tab (◌ JOURNAL)
   - jcard design: zkrácený excerpt → expand na klik
   - Plný text: short + deep, otázka (Standard+), life rune
-  - ♪ RÚNAR'S VOICE — statické audio per záznam
+  - ♪ RÚNAR'S VOICE — statické audio per záznam (custom CAP player)
   - Filter bar (rune / area / lang) pro Standard/Premium
   - Rune Seeker: posledních 5, teaser pokud >5 celkem
   - Standard/Premium: unlimited + filtry
@@ -238,7 +332,7 @@ Island je člen EEA → platí plné GDPR.
 - Credits = fyzická Reading Card Rúnara
 - Karta má kód → zákazník zadá v appce → dostane credits
 - Credits nevyprší, fungují across devices
-- 1 credit = 1 čtení s Rúnarovým hlasem
+- 1 credit = 1 čtení pro Rune Seeker (The Gathering = 3 kredity)
 
 #### Ceník kreditních karet (EUR + ISK)
 Kurz: €1 ≈ 148 ISK · náklady ~€0.18/čtení (Claude + ElevenLabs)
@@ -252,25 +346,31 @@ Kurz: €1 ≈ 148 ISK · náklady ~€0.18/čtení (Claude + ElevenLabs)
 
 Po islandském VSK (24%): marže ~75–80%
 
-### VRSTVA 3.5 — GDPR & PRÁVNÍ ✅ HOTOVO
+### VRSTVA 3.5 — GDPR & PRÁVNÍ ✅ HOTOVO (čeká DPA)
 - [x] Privacy Policy EN+IS (runar-privacy.html)
 - [x] Delete account UI + Edge Function
+- [x] Privacy consent v auth modalu + first-visit banner
 - [x] DPA se Supabase — Request odeslán
-- [ ] Privacy Policy odkaz na agndofa.is
+- [ ] **DPA podpis** — čeká na e-mail od Supabase ⚠️
+- [ ] **Privacy Policy odkaz na agndofa.is** ⚠️
 
 ### VRSTVA 3.6 — THE GATHERING ✅ MVP HOTOVO
-- [x] 5-runový kombinovaný výklad v Journal tabu (Standard/Premium)
-- [x] Uživatel označí 5 run z journalu → 1200-token hluboký výklad
+- [x] 5-runový kombinovaný výklad v Journal tabu
+- [x] Uživatel označí 3–7 run z journalu → 1200-token hluboký výklad
 - [x] ★ SELECT tlačítka na jcard, counter Selected: X of 5
 - [x] LET RÚNAR WEAVE → streaming výstup
-- [x] ᚢ RÚNAR'S VOICE — ElevenLabs audio pro celý text
-- [x] Rune Seeker: teaser "The Gathering unlocks with Standard."
-- [x] Méně než 5 čtení: "X more readings needed"
+- [x] HEAR RÚNAR SPEAK — ElevenLabs audio pro celý text (custom CAP player)
+- [x] Rune Seeker: přístup za 3 kredity (GATHERING_CREDITS = 3)
+- [x] Standard/Premium: plný přístup zdarma (bez odečítání kreditů)
+- [x] Méně než 3 čtení: "X more readings needed"
 - [x] Plná EN/IS podpora
+- [x] Výsledek uložen do journalu jako dedicated Gathering jcard
+- [x] 402 error správně ošetřen (nedostatek kreditů → jasná hláška)
 
 ### VRSTVA 4 — STANDARD & PREMIUM FEATURES (NÁVRH)
 
 > ⚠️ Rozdělení mezi Standard a Premium ještě není finální — nutno rozhodnout.
+> ⚠️ Standard tier nemá způsob nákupu — viz prioritní nedodělky bod 6.
 
 #### Délka výkladů (max_tokens)
 - Visitor / Rune Seeker: **700 tokenů** (~500 slov)
@@ -290,10 +390,7 @@ Po islandském VSK (24%): marže ~75–80%
 
 **🔮 The Gathering — rituální evoluce**
 - [ ] **Rituální tah flow** — speciální UX: kakao, meditace, 5 vědomých tahů
-      Run z rituálního tahu se automaticky vkládají do Gathering košíku
 - [ ] **Měsíční Gathering** — automaticky z run celého měsíce
-      Napojení na měsíční reset (symbolický přechod)
-      Potřeba: tabulka `ritual_readings` nebo rozšíření `readings` o `ritual_type`
 - [ ] **Integrace s Agndofa cacao produktem** — QR/NFC spustí rituální flow
 
 **🧠 Hloubka & kontext**
@@ -313,7 +410,7 @@ Po islandském VSK (24%): marže ~75–80%
 | Hlas pro všechna čtení | ✅ | ✅ |
 | Unlimited journal + filtry | ✅ | ✅ |
 | Export čtení | ✅ | ✅ |
-| The Gathering (5 run) | ✅ | ✅ |
+| The Gathering (3–7 run) | ✅ | ✅ |
 | Follow-up otázka | ✅ | ✅ |
 | Třírunový spread | ✅ | ✅ |
 | Měsíční Gathering | ❌ | ✅ |
@@ -348,13 +445,14 @@ Po islandském VSK (24%): marže ~75–80%
 
 ### Technické detaily (aktuální implementace)
 - `mode: 'ceremonial'` v API requestu (mapuje na RUNAR_MODES.ceremonial, max_tokens 1200)
-- `use_credit: false` — Gathering neodčítá kredity, je součástí Standard tieru
+- Rune Seeker: `use_credit: true`, odečte 3 kredity (GATHERING_CREDITS = 3)
+- Standard/Premium: `use_credit: false` — součástí tieru
 - `_journalCache` = selection pool — uživatel vybírá z existujících čtení v journalu
 - `_whispersMode`: `'idle' | 'selecting' | 'loading' | 'output'`
-- `_selectedEntries[]`: max 5 záznamů z journalu
+- `_selectedEntries[]`: 3–7 záznamů z journalu (GATHERING_MIN=3, GATHERING_MAX=7)
 - `_whispersText`: vygenerovaný text (pro voice generation)
-- Počet run (5) je konfigurovatelný — konstanta v `enterWhispersSelection()`
 - CSS třída `.whispers-selecting` na `#journal-content` zobrazí ★ SELECT tlačítka
+- Výsledek uložen do `readings` tabulky jako normální záznam (rune_name='GATHERING')
 
 ### Zamýšlený rituální kontext (budoucí implementace)
 The Gathering není jen klikání na runy. Je to rituál:
@@ -390,12 +488,12 @@ The Gathering není jen klikání na runy. Je to rituál:
 
 **Tier přístup:**
 - Visitor: tab skrytý, gate zobrazena
-- Rune Seeker: posledních 5 čtení, The Gathering locked
-- Standard/Premium: unlimited, filtry, The Gathering odemčen
+- Rune Seeker: posledních 5 čtení, The Gathering za 3 kredity
+- Standard/Premium: unlimited, filtry, The Gathering zdarma
 
 **jcard design:**
 - Collapsed: glyf, rune name · lang, datum + oblast, 2-řádkový excerpt
-- Expanded (klik): short text + · · · + deep text + otázka + life rune + audio btn
+- Expanded (klik): short text + · · · + deep text + otázka + life rune + audio btn (custom CAP)
 - `#jcard-${i}`, `#jbody-${i}`, `#jarr-${i}`, `#jselect-btn-${i}`
 
 **Key state:**
@@ -406,35 +504,6 @@ The Gathering není jen klikání na runy. Je to rituál:
 ```js
 .select('id, rune_name, rune_glyph, lang, short_text, deep_text, area, seeking, question, life_rune, credits_used, drawn_at')
 ```
-
----
-
-## TECHNICKÝ DLUH & CO ZBÝVÁ
-
-### Okamžité priority
-- [ ] **IS texty** — review rodilým mluvčím (hero fráze, notices, gates, help, privacy, The Gathering)
-- [ ] **Privacy Policy odkaz** na agndofa.is webu
-- [ ] **DPA podpis** — dokončit až přijde e-mail od Supabase
-
-### Střední priorita
-- [ ] **The Gathering — rituální flow** — speciální UX pro vědomý tah 5 run (kakao, meditace)
-- [ ] **Měsíční Gathering** — automatický výklad z run celého měsíce
-- [ ] **Export journalu** — PDF nebo CSV stažení
-- [ ] **Filtry podle data** v journalu
-- [ ] **SSE streaming** — real-time výstup místo čekání na celý response
-- [ ] **Delší výklady pro Standard** — 1000–1200 tokenů (nyní 700 pro všechny)
-- [ ] **Reading Card online** — Shopify integrace (zatím jen fyzická)
-
-### Nízká priorita / budoucnost
-- [ ] **Language gating pro Visitor** — TIERS.free_trial.languages=['en'] není vynucováno v UI
-      Odloženo — IS texty stejně čekají na native review
-- [ ] **Side panel: balance pro Standard/Premium** — zobrazit zbývající kredity z dřívějška
-- [ ] **Email-based tracking** — zabránit delete+recreate workaround
-- [ ] **Třírunový spread** — minulost / přítomnost / budoucnost
-- [ ] **Follow-up otázka** po čtení
-- [ ] **Lunární / sezónní kontext**
-- [ ] **Paměť kontextu** — multi-turn history v claude-proxy
-- [ ] **Fyzický ekosystém** — QR/NFC na produktech Agndofa
 
 ---
 
@@ -461,23 +530,47 @@ if (currentUser && userTier === 'rune_seeker'
 ```
 Standard/Premium jsou vždy propuštěni bez kontroly počítadla.
 
-### 3. Audio player — nepoužívat nativní `<audio controls>`
-Nativní browser controls nelze plně stylovat v Chrome/Safari:
-- Tři tečky (⋮), volume slider track, timeline fill ignorují CSS
-- Řešení: custom amber player (`.cap` třída) pro hlavní reading output
-- HTML: `<audio id="runar-audio" preload="none">` (BEZ `controls` atributu)
-- JS: `capToggle()`, `capSeek()`, `capMute()`, `_capReset()`, events na `runar-audio`
-- CSS: `.cap-seek::-webkit-slider-thumb` + `--pct` CSS variable pro fill gradient
-- Sekundární playery (kolekce, journal) mohou zůstat nativní s webkit pseudo-CSS
+### 3. Audio player — NIKDY nativní `<audio controls>`
+Nativní browser controls nelze plně stylovat v Chrome/Safari.
+**Všechny audio playery v appce používají custom CAP systém:**
+- Hlavní reading: `capToggle()`, `capSeek()`, `capMute()` — fixed IDs (`runar-audio`, `cap-*`)
+- The Gathering: `wcapToggle()`, `wcapSeek()` — fixed IDs (`whispers-audio`, `wcap-*`)
+- Sekundární (collection + journal): `_makeCapPlayer(prefix, src)` + `_capWire(prefix, doPlay)`
+  - collection: prefix `'coll'`
+  - journal záznam i: prefix `'j'+i`
 
 ### 4. Service Worker — musí mít network-first pro HTML
 Pokud SW slouží HTML z cache (cache-first), uživatelé nevidí aktualizace.
 SW cache name: `runar-v3` — při každé změně strategie bumpi verzi.
 HTML pages: network-first vždy. JS/icons: cache-first OK.
 
+### 5. Edit tool a curly quotes — JS změny přes Python
+Edit tool v Claude Code mění straight apostrofy `'` (U+0027) na curly `'`/`'` (U+2018/U+2019).
+V JS to způsobí SyntaxError. Všechny JS změny dělat přes Python skripty uložené v `/Runar-admin/`.
+CSS a HTML změny přes Edit tool jsou bezpečné.
+
 ---
 
-### Hotovo ✅ (session 2026-05-24)
+## Hotovo ✅ (session 2026-05-24 — část 2)
+- [x] The Gathering: Rune Seeker má přístup za 3 kredity (GATHERING_CREDITS = 3)
+- [x] The Gathering: 402 error správně ošetřen + cost text viditelný pro Rune Seeker
+- [x] GDPR: privacy consent checkbox v auth modalu
+- [x] GDPR: first-visit privacy banner (localStorage `privacy_seen`)
+- [x] Side panel YOUR PATH: collapsible toggle, přesunuto pod username
+- [x] Side panel YOUR PATH: dynamický render per tier (_renderYourPath)
+- [x] HIGHER PATH sekce: zobrazí tiery nad aktuálním + UPGRADE button uvnitř
+- [x] Topbar dropdown: klik na username → tier, email, readings + reset datum
+- [x] updateDropdown() + toggleDropdown() — zavírá se klikem mimo
+- [x] sp-email + sp-balance přesunuto z side panelu do topbar dropdownu
+- [x] Loading animace: pulsující ᚱ overlay v reading tabu během AI generování
+- [x] Voice button: "HEAR RÚNAR SPEAK" (dříve "RÚNAR'S VOICE")
+- [x] Sdílená .btn-upgrade třída — jednotný hover efekt pro všechna upgrade CTA
+- [x] BECOME A RUNE SEEKER → na obou místech (šipka + gold fill hover)
+- [x] Custom CAP player v collection modalu (nahrazuje nativní audio controls)
+- [x] Custom CAP player v journal záznamu (nahrazuje nativní audio controls)
+- [x] _makeCapPlayer + _capWire — generický prefix-based systém
+
+## Hotovo ✅ (session 2026-05-24 — část 1)
 - [x] Fix: reader-content nikdy neskrývat — form vždy viditelný
 - [x] Fix: monthly limit check nyní zohledňuje tier (Standard/Premium nepodléhají)
 - [x] Fix: startReading() otevírá auth modal když visitor vyčerpal trial
@@ -488,7 +581,7 @@ HTML pages: network-first vždy. JS/icons: cache-first OK.
 - [x] Fix: ?reset_trial=1 URL param pro reset visitor trial counteru (admin testování)
 - [x] Feat: custom amber audio player — play/pause, seek bar (16px thumb), mute, čas
 
-### Hotovo ✅ (session 2026-05-21)
+## Hotovo ✅ (session 2026-05-21)
 - [x] Statické audio: všech 25 × EN + 25 × IS run nahráno
 - [x] Specific Question — gated na Standard/Premium
 - [x] Journal tab — vlastní 3. záložka, jcard design, audio per entry
