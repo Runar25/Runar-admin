@@ -77,22 +77,24 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .side-panel-close:hover{opacity:1;}
 /* ── SIDE PANEL SECTIONS ── */
 .side-panel-section{padding:18px 24px 14px;border-bottom:1px solid rgba(255,191,0,0.1);}
-.side-panel-lbl{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:3px;color:var(--gold);opacity:0.38;margin-bottom:14px;}
+.side-panel-lbl{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:3px;color:var(--gold);opacity:0.55;margin-bottom:14px;}
 /* one font throughout — Cinzel, gold, varying opacity */
 .sp-row{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--gold);opacity:0.85;padding:4px 0;display:block;}
 .sp-item{display:block;width:100%;text-align:left;font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;padding:12px 0;background:none;border:none;color:var(--gold);opacity:0.85;cursor:pointer;transition:opacity 0.15s;}
 .sp-item:hover{opacity:1;}
 .sp-item.signout{opacity:0.85;border-top:1px solid rgba(255,191,0,0.15);margin-top:6px;padding-top:14px;}
 .sp-item.signout:hover{opacity:1;}
-.sp-item.coming{opacity:0.22;pointer-events:none;cursor:default;}
+.sp-item.coming{opacity:0.35;pointer-events:none;cursor:default;}
 /* ── YOUR PATH section ── */
-.sp-path-section{border-top:1px solid rgba(255,191,0,0.1);}
-.sp-path-row{display:flex;align-items:baseline;gap:8px;margin-bottom:8px;}
-.sp-path-tier{font-family:'Cinzel',serif;font-size:0.52em;letter-spacing:1.5px;color:var(--gold);flex-shrink:0;}
-.sp-path-desc{font-size:0.72em;color:var(--dim);font-style:italic;}
-.sp-path-divider{height:1px;background:rgba(255,191,0,0.1);margin:10px 0;}
-.sp-path-note{font-size:0.7em;color:var(--dim);line-height:1.6;font-style:italic;}
-.sp-path-note strong{color:var(--gold);font-style:normal;font-weight:400;}
+.sp-path-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;color:var(--gold);font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:3px;cursor:pointer;padding:10px 0 4px;opacity:0.55;transition:opacity 0.15s;text-align:left;}
+.sp-path-toggle:hover{opacity:1;}
+.sp-path-body{padding-bottom:4px;}
+.sp-tier-block{padding:7px 0;border-bottom:1px solid rgba(255,191,0,0.07);}
+.sp-tier-block:last-of-type{border-bottom:none;}
+.sp-tier-name{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--gold);opacity:0.85;}
+.sp-tier-detail{font-size:0.71em;color:var(--muted);font-style:italic;line-height:1.6;margin-top:2px;}
+.sp-tier-sub{font-size:0.68em;color:var(--gold);opacity:0.6;font-style:italic;margin-top:3px;letter-spacing:0.5px;}
+.sp-path-gift-note{font-size:0.68em;color:var(--muted);opacity:0.7;font-style:italic;line-height:1.55;margin-top:10px;padding-top:8px;border-top:1px solid rgba(255,191,0,0.07);}
 .sp-item.coming.active{opacity:0.85;pointer-events:auto;cursor:pointer;}
 .sp-item.journal{color:var(--gold);opacity:0.85;}
 .sp-item.journal:hover{opacity:1;}
@@ -548,8 +550,8 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .whispers-btn:disabled{opacity:0.35;cursor:default;}
 .whispers-btn.sec{background:transparent;border-color:var(--border2);color:var(--muted);margin-top:6px;}
 .whispers-btn.sec:hover:not(:disabled){border-color:var(--muted);color:var(--white);}
-.whispers-lock{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:1.5px;color:var(--dim);opacity:0.5;margin-top:10px;font-style:italic;}
-.whispers-need-more{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:1.5px;color:var(--dim);opacity:0.55;margin-top:8px;}
+.whispers-lock{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:1.5px;color:var(--muted);margin-top:10px;font-style:italic;}
+.whispers-need-more{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:1.5px;color:var(--muted);margin-top:8px;}
 /* Selection mode */
 .jcard-select-btn{display:none;margin-top:10px;background:none;border:1px solid rgba(255,191,0,0.3);color:var(--gold);font-family:'Cinzel',serif;font-size:0.55em;letter-spacing:2px;padding:6px 14px;cursor:pointer;transition:all 0.2s;opacity:0.7;}
 .jcard-select-btn:hover{opacity:1;border-color:rgba(255,191,0,0.7);}
@@ -873,6 +875,13 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
           <div style="font-size:2em;" id="badge-drawn-g"></div>
         </div>
       </div>
+      <!-- Reading loading overlay — pulsing ᚱ while AI generates -->
+      <div id="reading-loading" style="display:none;">
+        <div class="whispers-loading-inner">
+          <span class="whispers-loading-star">&#x16b1;</span>
+          <div class="whispers-loading-label" id="reading-loading-txt">RÚNAR READS THE THREADS…</div>
+        </div>
+      </div>
       <!-- Reading layers -->
       <div class="layer1">
         <div class="layer1-lbl" id="layer1-lbl">✦ RÚNAR SPEAKS</div>
@@ -999,7 +1008,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
         <!-- Loading state -->
         <div id="whispers-loading" style="display:none;">
           <div class="whispers-loading-inner">
-            <span class="whispers-loading-star">✦</span>
+            <span class="whispers-loading-star">ᚱ</span>
             <div class="whispers-loading-label" id="whispers-loading-txt">RÚNAR DRAWS THE PATTERN FROM THE STONES.</div>
           </div>
         </div>
@@ -1009,9 +1018,15 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
           <div class="whispers-runes-row" id="whispers-runes-row"></div>
           <div class="whispers-out-text" id="whispers-out-text"></div>
           <div class="status" id="st-whispers"></div>
-          <button class="whispers-voice-btn" id="whispers-voice-btn" onclick="generateWhispersVoice()">ᚢ RÚNAR'S VOICE</button>
+          <button class="whispers-voice-btn" id="whispers-voice-btn" onclick="generateWhispersVoice()">ᚢ HEAR RÚNAR SPEAK</button>
           <div class="whispers-audio-wrap" id="whispers-audio-wrap" style="display:none;">
-            <audio controls preload="none" controlsList="nodownload" id="whispers-audio"></audio>
+            <audio id="whispers-audio" preload="none"></audio>
+            <div class="cap" style="margin-top:10px;">
+              <button class="cap-btn" id="wcap-play" onclick="wcapToggle()" title="Play / Pause">&#9654;</button>
+              <span class="cap-time" id="wcap-current">0:00</span>
+              <input type="range" class="cap-seek" id="wcap-seek" value="0" min="0" max="100" step="0.1" oninput="wcapSeek(this.value)" title="Seek">
+              <span class="cap-time" id="wcap-dur">0:00</span>
+            </div>
           </div>
           <button class="whispers-btn sec" style="margin-top:16px;" onclick="resetWhispers()" id="whispers-new-btn">NEW WHISPERS</button>
         </div>
@@ -1641,7 +1656,7 @@ function updateWhispersUI() {
 
   // Voice button
   const vBtn = document.getElementById('whispers-voice-btn');
-  if (vBtn) vBtn.textContent = isIs ? 'ᚢ RÖDD RÚNARS' : "ᚢ RÚNAR'S VOICE";
+  if (vBtn && !vBtn.disabled) vBtn.textContent = isIs ? 'ᚢ HEYRA RÚNAR TALA' : 'ᚢ HEAR RÚNAR SPEAK';
 }
 
 function enterWhispersSelection() {
@@ -1894,12 +1909,22 @@ async function generateWhispersVoice() {
     const url  = URL.createObjectURL(blob);
     const audio = document.getElementById('whispers-audio');
     const wrap  = document.getElementById('whispers-audio-wrap');
-    if (audio && wrap) { audio.src = url; wrap.style.display = 'block'; audio.play().catch(() => {}); }
-    btn.textContent = isIs ? '♪ SPILANDI' : '♪ NOW PLAYING';
-    btn.style.opacity = '0.45';
+    if (audio && wrap) {
+      audio.src = url;
+      wrap.style.display = 'block';
+      const wcapBtn = document.getElementById('wcap-play');
+      const wcapSeekEl = document.getElementById('wcap-seek');
+      if (wcapBtn) wcapBtn.textContent = '▶';
+      if (wcapSeekEl) wcapSeekEl.value = 0;
+      audio.play().catch(() => {});
+    }
+    btn.textContent = isIs ? '♪ RÚNAR TALAR' : '♪ RÚNAR SPEAKS';
+    btn.style.opacity = '0.55';
+    btn.disabled = true;
   } catch(e) {
     btn.disabled    = false;
-    btn.textContent = isIs ? 'ᚢ RÖDD RÚNARS' : "ᚢ RÚNAR'S VOICE";
+    btn.textContent = isIs ? 'ᚢ HEYRA RÚNAR TALA' : 'ᚢ HEAR RÚNAR SPEAK';
+    btn.disabled = false;
     const st = document.getElementById('st-whispers');
     if (st) { st.textContent = (isIs ? 'Villa: ' : 'Error: ') + e.message; st.className = 'status err'; }
   }
@@ -1915,7 +1940,15 @@ function resetWhispers() {
   const runesRow = document.getElementById('whispers-runes-row');
   if (runesRow) runesRow.innerHTML = '';
   const wrap = document.getElementById('whispers-audio-wrap');
-  if (wrap) { wrap.style.display = 'none'; const a = document.getElementById('whispers-audio'); if (a) a.src = ''; }
+  if (wrap) {
+    wrap.style.display = 'none';
+    const a = document.getElementById('whispers-audio');
+    if (a) a.src = '';
+    const wcapBtn = document.getElementById('wcap-play');
+    if (wcapBtn) wcapBtn.textContent = '▶';
+    const wcapSeekEl = document.getElementById('wcap-seek');
+    if (wcapSeekEl) wcapSeekEl.value = 0;
+  }
   const vBtn = document.getElementById('whispers-voice-btn');
   if (vBtn) { vBtn.disabled = false; vBtn.style.opacity = ''; }
   const st = document.getElementById('st-whispers');
@@ -3020,6 +3053,10 @@ async function _generateReading() {
   document.getElementById('runar-audio').src = ''; setSt('st-voice', '');
   document.getElementById('out-short').innerHTML = '<span class="stream-cur"></span>';
   document.getElementById('out-deep').innerHTML  = '<span class="stream-cur"></span>';
+  const _rdLoadEl = document.getElementById('reading-loading');
+  const _rdLoadTxt = document.getElementById('reading-loading-txt');
+  if (_rdLoadTxt) _rdLoadTxt.textContent = lang === 'is' ? 'RÚNAR LES ÞRÁÐIRNAR…' : 'RÚNAR READS THE THREADS…';
+  if (_rdLoadEl) _rdLoadEl.style.display = 'block';
 
   const u = readerUser, drawn = readerRune, life = u.lifeRune;
   const sys = buildSysPrompt(activeChar);
@@ -3041,10 +3078,12 @@ async function _generateReading() {
 
   const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens, shouldUseCredit());
   if (res.error === 'rate_limited') {
+    if (_rdLoadEl) _rdLoadEl.style.display = 'none';
     setSt('st-reader', lang === 'is' ? 'Of margar beiðnir. Bíddu aðeins.' : 'Too many requests. Please wait a moment.', 'err');
     return;
   }
   if (res.error === 'no_credits' || res.error === 'monthly_limit') {
+    if (_rdLoadEl) _rdLoadEl.style.display = 'none';
     document.getElementById('out-short').innerHTML = '';
     document.getElementById('out-deep').innerHTML  = '';
     const isMonthly = res.error === 'monthly_limit';
@@ -3057,7 +3096,7 @@ async function _generateReading() {
     await fetchUserProfile(currentUser.id); // refresh balance + show gate
     return;
   }
-  if (res.error) { setSt('st-reader', 'Failed: ' + res.error, 'err'); return; }
+  if (res.error) { if (_rdLoadEl) _rdLoadEl.style.display = 'none'; setSt('st-reader', 'Failed: ' + res.error, 'err'); return; }
 
   const split = res.text.split('|||');
   const short = split[0]?.trim() || res.text;
@@ -3075,6 +3114,7 @@ async function _generateReading() {
     loadJournal(); // refresh journal in background (no await — don't block stream)
   }
 
+  if (_rdLoadEl) _rdLoadEl.style.display = 'none';
   await stream('out-short', short);
   if (deep) await stream('out-deep', deep); else document.getElementById('out-deep').innerHTML = '';
 
@@ -3223,6 +3263,29 @@ function _capReset() {
   if (seek) { seek.value = 0; _capTrack(0); }
   if (cur)  cur.textContent  = '0:00';
 }
+// ─── WHISPERS CAP PLAYER ─────────────────────────────────
+function _wcapFmt(s) { const m = Math.floor(s/60); return m + ':' + String(Math.floor(s%60)).padStart(2,'0'); }
+function wcapToggle() {
+  const a = document.getElementById('whispers-audio');
+  const btn = document.getElementById('wcap-play');
+  if (!a || !btn) return;
+  if (a.paused) { a.play(); btn.textContent = '⏸'; }
+  else          { a.pause(); btn.textContent = '▶'; }
+}
+function wcapSeek(v) {
+  const a = document.getElementById('whispers-audio');
+  if (!a || !a.duration) return;
+  a.currentTime = a.duration * (v / 100);
+}
+// ─── YOUR PATH TOGGLE ────────────────────────────────────
+function toggleYourPath() {
+  const body  = document.getElementById('sp-path-body');
+  const arrow = document.getElementById('sp-path-arrow');
+  if (!body) return;
+  const open = body.style.display !== 'none';
+  body.style.display = open ? 'none' : 'block';
+  if (arrow) arrow.textContent = open ? '▶' : '▼';
+}
 // Wire audio element events once DOM ready
 window.addEventListener('DOMContentLoaded', () => {
   const a = document.getElementById('runar-audio');
@@ -3251,6 +3314,33 @@ window.addEventListener('DOMContentLoaded', () => {
     const btn = document.getElementById('cap-play');
     if (btn) btn.textContent = '⏸';
   });
+  // ── Wire whispers-audio (wcap) ──
+  const wa = document.getElementById('whispers-audio');
+  if (wa) {
+    wa.addEventListener('timeupdate', () => {
+      const pct = wa.duration ? (wa.currentTime / wa.duration * 100) : 0;
+      const sk = document.getElementById('wcap-seek');
+      const cr = document.getElementById('wcap-current');
+      if (sk) sk.value = pct;
+      if (cr) cr.textContent = _wcapFmt(wa.currentTime);
+    });
+    wa.addEventListener('loadedmetadata', () => {
+      const dr = document.getElementById('wcap-dur');
+      if (dr) dr.textContent = _wcapFmt(wa.duration);
+    });
+    wa.addEventListener('ended', () => {
+      const btn = document.getElementById('wcap-play');
+      if (btn) btn.textContent = '▶';
+    });
+    wa.addEventListener('pause', () => {
+      const btn = document.getElementById('wcap-play');
+      if (btn) btn.textContent = '▶';
+    });
+    wa.addEventListener('play', () => {
+      const btn = document.getElementById('wcap-play');
+      if (btn) btn.textContent = '⏸';
+    });
+  }
 });
 
 // ─── VOICE ───────────────────────────────────────────────
@@ -3406,9 +3496,34 @@ window.addEventListener('DOMContentLoaded', async () => {
     <div class="side-panel-section">
       <span class="sp-row" id="sp-email"></span>
       <span class="sp-row" id="sp-balance" style="display:none;font-size:0.56em;opacity:0.65;line-height:1.7;letter-spacing:1px;"></span>
+      <!-- YOUR PATH — collapsible, shows tier ladder -->
+      <button class="sp-path-toggle" onclick="toggleYourPath()">
+        <span id="sp-path-toggle-lbl">YOUR PATH</span>
+        <span id="sp-path-arrow" style="font-size:0.9em;letter-spacing:0;">&#9656;</span>
+      </button>
+      <div id="sp-path-body" class="sp-path-body" style="display:none;">
+        <div class="sp-tier-block">
+          <div class="sp-tier-name">VISITOR</div>
+          <div class="sp-tier-detail">3 free trial readings. No account required.</div>
+        </div>
+        <div class="sp-tier-block">
+          <div class="sp-tier-name">RUNE SEEKER</div>
+          <div class="sp-tier-detail">5 readings / month + reading credits.</div>
+          <div class="sp-tier-sub">&#x2736; THE GATHERING costs 3 reading credits.</div>
+        </div>
+        <div class="sp-tier-block">
+          <div class="sp-tier-name">STANDARD</div>
+          <div class="sp-tier-detail">Unlimited readings. The Gathering included.</div>
+        </div>
+        <div class="sp-tier-block">
+          <div class="sp-tier-name">PREMIUM</div>
+          <div class="sp-tier-detail">All features &middot; coming soon.</div>
+        </div>
+        <div class="sp-path-gift-note">READING GIFT CARDs never expire and work across all devices.</div>
+      </div>
     </div>
 
-    <!-- ② Personal actions -->
+    <!-- &#x2461; Personal actions -->
     <div class="side-panel-section">
       <button class="sp-item journal" id="sp-journal-link" onclick="openJournalFromPanel()">✦ MY JOURNAL</button>
       <button class="sp-item" id="sp-gift" onclick="showAppTab('reading');toggleRedeem();closeSidePanel()">+ READING GIFT CARD</button>
@@ -3422,18 +3537,6 @@ window.addEventListener('DOMContentLoaded', async () => {
     <a class="sp-item" id="sp-guide-link"   href="runar-help.html"    style="text-decoration:none;">? GUIDE &amp; FAQ</a>
     <button class="sp-item" id="sp-install-btn" onclick="installPWA();closeSidePanel();" style="display:none;">⬇ INSTALL RÚNAR</button>
     <a class="sp-item" id="sp-privacy-link" href="runar-privacy.html" style="text-decoration:none;opacity:0.55;font-size:0.9em;">PRIVACY POLICY</a>
-  </div>
-
-  <!-- ④ Your Path — always visible, explains tiers + credits -->
-  <div class="side-panel-section sp-path-section">
-    <div class="side-panel-lbl">YOUR PATH</div>
-    <div class="sp-path-row"><span class="sp-path-tier">VISITOR</span><span class="sp-path-desc">3 free readings</span></div>
-    <div class="sp-path-row"><span class="sp-path-tier">RUNE SEEKER</span><span class="sp-path-desc">5 / month + credits</span></div>
-    <div class="sp-path-row"><span class="sp-path-tier">STANDARD</span><span class="sp-path-desc">Unlimited · The Gathering</span></div>
-    <div class="sp-path-row"><span class="sp-path-tier">PREMIUM</span><span class="sp-path-desc">All features · coming soon</span></div>
-    <div class="sp-path-divider"></div>
-    <div class="sp-path-note">✦ THE GATHERING costs <strong>3 reading credits</strong> for Rune Seeker. Included for Standard &amp; Premium.</div>
-    <div class="sp-path-note" style="margin-top:6px;">READING GIFT CARDs never expire and work across all devices.</div>
   </div>
 
   <!-- ④ Sign out — logged-in only -->
