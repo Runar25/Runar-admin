@@ -59,7 +59,7 @@ const UI_TEXT = {
     start_over:       'START OVER',
 
     // Voice
-    voice_btn:         'ᚢ GENERATE RÚNAR’S VOICE',
+    voice_btn:         ‘ᚢ HEAR RÚNAR SPEAK’,
     voice_btn_loading: 'ᚢ RÚNAR IS SPEAKING…',
     voice_btn_regen:   'ᚢ REGENERATE VOICE',
     voice_player_lbl:  '♪ RÚNAR SPEAKS',
@@ -163,7 +163,7 @@ const UI_TEXT = {
     start_over:       'BYRJA AFTUR',
 
     // Voice
-    voice_btn:         'ᚢ BÚA TIL RÖDD RÚNARS',
+    voice_btn:         'ᚢ HEYRA RÚNAR TALA',
     voice_btn_loading: 'ᚢ RÚNAR TALAR…',
     voice_btn_regen:   'ᚢ ENDURGERA RÖDD',
     voice_player_lbl:  '♪ RÚNAR TALAR',

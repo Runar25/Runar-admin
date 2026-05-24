@@ -527,8 +527,14 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .whispers-section{border:1px solid rgba(255,191,0,0.18);background:rgba(255,191,0,0.025);padding:20px 22px;margin-bottom:28px;}
 .whispers-title{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:3px;color:var(--gold);margin-bottom:8px;}
 .whispers-sub{font-size:0.86em;font-style:italic;color:var(--dim);margin-bottom:16px;line-height:1.65;}
-.whispers-desc{font-size:0.82em;color:var(--dim);line-height:1.75;margin-bottom:18px;opacity:0.85;}
+.whispers-desc{font-size:0.86em;font-style:italic;color:var(--dim);line-height:1.75;margin-bottom:18px;opacity:0.6;transition:color 0.4s,opacity 0.4s;}
+.whispers-desc.on{color:var(--muted);opacity:1;}
 .whispers-desc strong{color:var(--gold);font-style:normal;font-weight:400;}
+/* Loading pulse */
+@keyframes runar-breathe{0%,100%{opacity:0.4;}50%{opacity:1;}}
+.whispers-loading-inner{text-align:center;padding:22px 0 10px;}
+.whispers-loading-star{font-size:1.6em;color:var(--gold);display:block;margin-bottom:10px;animation:runar-breathe 2.4s ease-in-out infinite;}
+.whispers-loading-label{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2.5px;color:var(--gold);animation:runar-breathe 2.4s ease-in-out infinite;animation-delay:0.3s;}
 .whispers-counter{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--teal);margin-bottom:14px;}
 .whispers-btn{width:100%;padding:12px;background:rgba(255,191,0,0.08);border:1px solid rgba(255,191,0,0.35);color:var(--gold);font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2.5px;cursor:pointer;transition:all 0.2s;margin-bottom:6px;}
 .whispers-btn:hover:not(:disabled){background:rgba(255,191,0,0.14);border-color:rgba(255,191,0,0.6);}
@@ -588,11 +594,12 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 /* ── FREE USER BANNER ── */
 
 /* ── TRIAL END PROMPT ── */
-.trial-end{background:var(--card);border:1px solid var(--gold);padding:28px 24px;text-align:center;margin-top:20px;animation:trialFadeIn 0.7s ease;}
-@keyframes trialFadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
-.trial-end-rune{font-size:2.5em;opacity:0.3;margin-bottom:12px;}
-.trial-end-title{font-family:'Cinzel',serif;font-size:0.82em;letter-spacing:2px;color:var(--gold);margin-bottom:12px;}
-.trial-end-note{font-size:0.92em;color:var(--muted);font-style:italic;line-height:1.85;margin-bottom:20px;max-width:380px;margin-left:auto;margin-right:auto;}
+.trial-end{background:linear-gradient(160deg,rgba(255,191,0,0.055) 0%,rgba(18,22,31,0.92) 60%);border:1px solid rgba(255,191,0,0.42);padding:32px 24px 28px;text-align:center;margin-top:20px;animation:trialFadeIn 0.8s ease;box-shadow:0 0 40px rgba(255,191,0,0.07),0 0 0 1px rgba(255,191,0,0.08) inset;}
+@keyframes trialFadeIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.trial-end-rune{font-size:2.2em;opacity:0.45;margin-bottom:10px;filter:drop-shadow(0 0 8px rgba(255,191,0,0.3));}
+.trial-end-divider{width:40px;height:1px;background:rgba(255,191,0,0.3);margin:0 auto 16px;}
+.trial-end-title{font-family:'Cinzel',serif;font-size:0.8em;letter-spacing:3px;color:var(--gold);margin-bottom:14px;}
+.trial-end-note{font-size:0.9em;color:var(--muted);font-style:italic;line-height:1.9;margin-bottom:24px;max-width:360px;margin-left:auto;margin-right:auto;}
 .trial-end-note b{color:var(--white);font-style:normal;font-weight:400;}
 </style>
 </head>
@@ -855,7 +862,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
         <div class="out-txt" id="out-deep"></div>
       </div>
       <!-- Voice -->
-      <button class="btn-voice" id="btn-generate-voice" onclick="generateVoice()" disabled>ᚢ GENERATE RÚNAR'S VOICE</button>
+      <button class="btn-voice" id="btn-generate-voice" onclick="generateVoice()" disabled>ᚢ HEAR RÚNAR SPEAK</button>
       <div class="audio-player" id="audio-player">
         <div class="audio-player-lbl" id="audio-player-lbl">♪ RÚNAR SPEAKS</div>
         <!-- Hidden native audio — playback only, no browser controls -->
@@ -882,10 +889,11 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 
     <!-- TRIAL END PROMPT — appears after last free reading, with delay -->
     <div class="trial-end" id="trial-end" style="display:none;">
-      <div class="trial-end-rune">ᚠ</div>
+      <div class="trial-end-rune">ᚱ</div>
+      <div class="trial-end-divider"></div>
       <div class="trial-end-title" id="trial-end-title">YOUR JOURNEY AS GUEST IS COMPLETE</div>
       <div class="trial-end-note" id="trial-end-note">
-        You have walked with Rúnar three times. <b>Create a free account</b> to continue your path — five readings each month, no payment needed.
+        You have walked with Rúnar three times. The stones remember.<br><b>Create a free account</b> to continue — five readings each month, no payment ever needed.
       </div>
       <button class="btn-full" onclick="openAuthModal()" id="trial-end-btn" style="max-width:300px;margin:0 auto;display:block;">CREATE FREE ACCOUNT</button>
     </div>
@@ -969,7 +977,10 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 
         <!-- Loading state -->
         <div id="whispers-loading" style="display:none;">
-          <p class="whispers-sub" id="whispers-loading-txt">Rúnar is weaving the voices…</p>
+          <div class="whispers-loading-inner">
+            <span class="whispers-loading-star">✦</span>
+            <div class="whispers-loading-label" id="whispers-loading-txt">RÚNAR DRAWS THE PATTERN FROM THE STONES.</div>
+          </div>
         </div>
 
         <!-- Output state -->
@@ -1521,16 +1532,19 @@ function updateWhispersUI() {
 
   if (!isStandard) {
     // Rune Seeker — locked teaser
+    if (descEl)   descEl.classList.remove('on');
     if (reqBtn)   { reqBtn.disabled = true; reqBtn.style.opacity = '0.35'; reqBtn.style.cursor = 'default'; }
     if (lockEl)   { lockEl.style.display = 'block'; lockEl.textContent = isIs ? 'The Gathering opnast með Standard.' : 'The Gathering unlocks with Standard.'; }
     if (needMore) needMore.style.display = 'none';
   } else if (usedAlready) {
     // Already done this week
+    if (descEl)   descEl.classList.remove('on');
     if (reqBtn)   { reqBtn.disabled = true; reqBtn.style.opacity = '0.4'; reqBtn.style.cursor = 'default'; }
     if (lockEl)   { lockEl.style.display = 'block'; lockEl.textContent = isIs ? 'The Gathering hefur þegar verið kallað þennan viku. Komdu aftur í næstu viku.' : 'The Gathering has already spoken this week. Return when the new week begins.'; }
     if (needMore) needMore.style.display = 'none';
   } else if (!hasEnough) {
     // Standard+ but fewer than 3 readings
+    if (descEl)   descEl.classList.remove('on');
     if (reqBtn)   { reqBtn.disabled = true; reqBtn.style.opacity = '0.4'; reqBtn.style.cursor = 'default'; }
     if (lockEl)   lockEl.style.display = 'none';
     if (needMore) {
@@ -1541,7 +1555,8 @@ function updateWhispersUI() {
         : `${needed} more reading${needed !== 1 ? 's' : ''} needed to open The Gathering.`;
     }
   } else {
-    // Standard+ with enough readings, not yet used this week
+    // Standard+ with enough readings, not yet used this week — desc fully visible
+    if (descEl)   descEl.classList.add('on');
     if (reqBtn)   { reqBtn.disabled = false; reqBtn.style.opacity = ''; reqBtn.style.cursor = ''; }
     if (lockEl)   lockEl.style.display = 'none';
     if (needMore) needMore.style.display = 'none';
@@ -1562,7 +1577,7 @@ function updateWhispersUI() {
 
   // Loading text
   const loadTxt = document.getElementById('whispers-loading-txt');
-  if (loadTxt) loadTxt.textContent = isIs ? 'Rúnar vefur raddir saman…' : 'Rúnar is weaving the voices…';
+  if (loadTxt) loadTxt.textContent = isIs ? 'RÚNAR DREGUR MYNSTURIÐ ÚR STEINUNUM.' : 'RÚNAR DRAWS THE PATTERN FROM THE STONES.';
 
   // Weave button label + state
   const weaveBtn = document.getElementById('whispers-weave-btn');
@@ -2590,8 +2605,8 @@ function updateUIText() {
   setText('trial-end-title', lang === 'is' ? 'FERÐ ÞÍN SEM GESTUR ER LOKIÐ' : 'YOUR JOURNEY AS GUEST IS COMPLETE');
   const ten = document.getElementById('trial-end-note');
   if (ten) ten.innerHTML = lang === 'is'
-    ? 'Þú hefur farið með Rúnar þrisvar sinnum. <b>Stofnaðu reikning</b> til að halda áfram — fimm lestrar á mánuði, án greiðslu.'
-    : 'You have walked with Rúnar three times. <b>Create a free account</b> to continue your path — five readings each month, no payment needed.';
+    ? 'Þú hefur farið með Rúnar þrisvar sinnum. Steinarnir muna.<br><b>Stofnaðu reikning</b> til að halda áfram — fimm lestrar á mánuði, án greiðslu.'
+    : 'You have walked with Rúnar three times. The stones remember.<br><b>Create a free account</b> to continue — five readings each month, no payment ever needed.';
   setText('trial-end-btn', lang === 'is' ? 'STOFNA REIKNING' : 'CREATE FREE ACCOUNT');
   // Journal tab label
   setText('atab-journal', lang === 'is' ? '◌ LESTRAR' : '◌ JOURNAL');
