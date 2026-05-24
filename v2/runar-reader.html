@@ -418,11 +418,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .cap-btn{background:none;border:none;color:var(--gold);font-size:1.15em;cursor:pointer;padding:2px 4px;line-height:1;flex-shrink:0;transition:opacity 0.15s;}
 .cap-btn:hover{opacity:0.75;}
 .cap-time{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:1px;color:var(--gold);flex-shrink:0;min-width:38px;}
-/* height:20px = thumb height → webkit auto-centers thumb on track, no margin-top needed */
-.cap-seek{flex:1;-webkit-appearance:none;appearance:none;height:20px;background:transparent;outline:none;cursor:pointer;accent-color:var(--gold);}
-.cap-seek::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--gold);cursor:pointer;box-shadow:0 0 5px rgba(255,191,0,0.6);}
+/* height:5px = track height. margin-top:(5-16)/2=-5.5px centers 16px thumb exactly on track */
+.cap-seek{flex:1;-webkit-appearance:none;appearance:none;height:5px;border-radius:3px;outline:none;cursor:pointer;background:linear-gradient(to right,var(--gold) var(--pct,0%),rgba(255,191,0,0.18) var(--pct,0%));}
+.cap-seek::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--gold);cursor:pointer;box-shadow:0 0 5px rgba(255,191,0,0.6);margin-top:-5.5px;}
 .cap-seek::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--gold);cursor:pointer;border:none;box-shadow:0 0 5px rgba(255,191,0,0.6);}
-.cap-seek::-webkit-slider-runnable-track{height:5px;border-radius:3px;background:linear-gradient(to right,var(--gold) var(--pct,0%),rgba(255,191,0,0.18) var(--pct,0%));}
 .cap-seek::-moz-range-track{height:5px;border-radius:3px;background:rgba(255,191,0,0.18);}
 .cap-btn svg{display:block;}
 /* Global audio element — keep amber accent for secondary players (collection, journal) */
