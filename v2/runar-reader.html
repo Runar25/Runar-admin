@@ -342,10 +342,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .tn-counter.exhausted{color:#e07070!important;}
 .tn-text{font-size:0.95em;font-style:italic;color:var(--muted);line-height:1.85;margin-bottom:18px;}
 .tn-text strong,.tn-text b{color:var(--gold);font-style:normal;font-weight:400;}
-.tn-btn{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:2px;padding:10px 24px;background:transparent;border:1px solid rgba(255,191,0,0.4);color:var(--gold);cursor:pointer;transition:all 0.2s;}
-.tn-btn:hover{background:rgba(255,191,0,0.08);}
+.tn-btn{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:2px;padding:10px 24px;background:transparent;border:1px solid var(--gold);color:var(--gold);cursor:pointer;transition:all 0.25s;}
+.tn-btn:hover{background:var(--gold);color:#000;}
 .tier-notice.curious .tn-btn{border-color:rgba(255,191,0,0.35);color:var(--gold);}
-.tier-notice.curious .tn-btn:hover{background:rgba(255,191,0,0.06);}
+.tier-notice.curious .tn-btn:hover{background:var(--gold);color:#000;}
 
 /* ── AUTH GATE ── */
 .auth-gate{background:var(--card);border:1px solid var(--gold);padding:32px 24px;text-align:center;margin-top:8px;}
@@ -933,7 +933,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
       <div class="trial-end-note" id="trial-end-note">
         You have walked with Rúnar three times. The stones remember.<br><b style="color:var(--gold);">Become a Rune Seeker</b> to continue — five readings each month, no payment ever needed.
       </div>
-      <button class="btn-full sec" onclick="openAuthModal()" id="trial-end-btn" style="max-width:300px;margin:0 auto;display:block;">BECOME A RUNE SEEKER</button>
+      <button class="btn-full sec" onclick="openAuthModal()" id="trial-end-btn" style="max-width:300px;margin:0 auto;display:block;">BECOME A RUNE SEEKER &#x2192;</button>
     </div>
 
     <div class="status" id="st-reader"></div>
@@ -2711,7 +2711,7 @@ function updateUIText() {
   if (ten) ten.innerHTML = lang === 'is'
     ? 'Þú hefur farið með Rúnar þrisvar sinnum. Steinarnir muna.<br><b style="color:var(--gold);">Gerast Rúna-leitandi</b> til að halda áfram — fimm lestrar á mánuði, án greiðslu.'
     : 'You have walked with Rúnar three times as a Visitor. The stones remember.<br><b style="color:var(--gold);">Become a Rune Seeker</b> to continue — five readings each month, no payment ever needed.';
-  setText('trial-end-btn', lang === 'is' ? 'GERAST RÚNA-LEITANDI' : 'BECOME A RUNE SEEKER');
+  setText('trial-end-btn', lang === 'is' ? 'GERAST RÚNA-LEITANDI →' : 'BECOME A RUNE SEEKER →');
   // Journal tab label
   setText('atab-journal', lang === 'is' ? '◌ LESTRAR' : '◌ JOURNAL');
   // Journal gate
