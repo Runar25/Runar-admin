@@ -306,19 +306,19 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .coll-audio-player{margin-top:10px;}
 
 /* ── TRIAL BANNER ── */
-/* ── TIER NOTICES (Visitor + The Curious) ── */
+/* ── TIER NOTICES (Visitor + Rune Seeker) ── */
 .tier-notice{background:var(--card);border:1px solid rgba(255,191,0,0.2);padding:22px 24px 20px;margin-bottom:22px;text-align:center;}
-.tier-notice.curious{border-color:rgba(126,217,181,0.2);}
+.tier-notice.curious{border-color:rgba(255,191,0,0.2);}
 .tn-counter{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2.5px;color:var(--gold);margin-bottom:14px;opacity:0.9;}
-.tier-notice.curious .tn-counter{color:var(--teal);}
+.tier-notice.curious .tn-counter{color:var(--gold);}
 .tn-counter.warn{color:var(--gold)!important;}
 .tn-counter.exhausted{color:#e07070!important;}
 .tn-text{font-size:0.95em;font-style:italic;color:var(--muted);line-height:1.85;margin-bottom:18px;}
 .tn-text strong{color:var(--white);font-style:normal;font-weight:400;}
 .tn-btn{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:2px;padding:10px 24px;background:transparent;border:1px solid rgba(255,191,0,0.4);color:var(--gold);cursor:pointer;transition:all 0.2s;}
 .tn-btn:hover{background:rgba(255,191,0,0.08);}
-.tier-notice.curious .tn-btn{border-color:rgba(126,217,181,0.35);color:var(--teal);}
-.tier-notice.curious .tn-btn:hover{background:rgba(126,217,181,0.06);}
+.tier-notice.curious .tn-btn{border-color:rgba(255,191,0,0.35);color:var(--gold);}
+.tier-notice.curious .tn-btn:hover{background:rgba(255,191,0,0.06);}
 
 /* ── AUTH GATE ── */
 .auth-gate{background:var(--card);border:1px solid var(--gold);padding:32px 24px;text-align:center;margin-top:8px;}
@@ -1854,10 +1854,10 @@ function updateAuthUI() {
       }
       const txtEl = document.getElementById('trial-text');
       if (txtEl) txtEl.innerHTML = isIs
-        ? `Þú gengur hér sem <strong>Gestur</strong>. Fehu — rúna upphafsins — opnar rödd sína fyrir þig frítt. Dragðu hana. Hlustaðu á það sem fornir steinar hvísla.<br><br>Þegar þú ert tilbúinn að ganga með allar tuttugu og fimm rúnirnar og heyra Rúnar tala í lestur þinn, vertu <strong>Forvitinn</strong> — það kostar ekkert.`
-        : `You walk here as a <strong>Visitor</strong>. Three readings open before you — draw a rune, ask your question, and hear what Rúnar sees in the stones.<br><br>When you are ready to walk with all twenty-five runes and hear Rúnar speak in your own reading, become <strong>The Curious</strong> — it costs nothing.`;
+        ? `Þú gengur hér sem <strong>Gestur</strong>. Fehu — rúna upphafsins — opnar rödd sína fyrir þig frítt. Dragðu hana. Hlustaðu á það sem fornir steinar hvísla.<br><br>Þegar þú ert tilbúinn að ganga með allar tuttugu og fimm rúnirnar og heyra Rúnar tala í lestur þinn, vertu <strong>Vegfarandi</strong> — það kostar ekkert.`
+        : `You walk here as a <strong>Visitor</strong>. Three readings open before you — draw a rune, ask your question, and hear what Rúnar sees in the stones.<br><br>When you are ready to walk with all twenty-five runes and hear Rúnar speak in your own reading, become a <strong>Rune Seeker</strong> — it costs nothing.`;
       const btnEl = document.getElementById('tn-visitor-btn');
-      if (btnEl) btnEl.textContent = isIs ? 'GERAST FORVITINN →' : 'BECOME THE CURIOUS →';
+      if (btnEl) btnEl.textContent = isIs ? 'GERAST VEGFARANDI →' : 'BECOME A RUNE SEEKER →';
       gate.style.display    = 'none';
       content.style.display = 'block';
     } else {
@@ -2454,9 +2454,9 @@ async function loadCollection() {
     if (isVisitor) {
       const isIs = lang === 'is';
       document.getElementById('vcn-text').innerHTML = isIs
-        ? `Þú gengur hér sem <strong>Gestur</strong>. Fehu — rúna upphafsins — opnar rödd sína fyrir þig frítt. Dragðu hana. Hlustaðu á það sem fornir steinar geyma.<br><br>Þegar þú ert tilbúinn að ganga með allar tuttugu og fimm rúnirnar og heyra Rúnar tala í lestur þinn, vertu <strong>Forvitinn</strong> — það kostar ekkert.`
-        : `You walk here as a <strong>Visitor</strong>. Fehu — the rune of beginnings — opens its voice to you freely. Draw it. Hear what the old stones whisper.<br><br>When you are ready to walk with all twenty-five runes and hear Rúnar speak in your own reading, become <strong>The Curious</strong> — it costs nothing.`;
-      document.getElementById('vcn-btn').textContent = isIs ? 'GERAST FORVITINN →' : 'BECOME THE CURIOUS →';
+        ? `Þú gengur hér sem <strong>Gestur</strong>. Fehu — rúna upphafsins — opnar rödd sína fyrir þig frítt. Dragðu hana. Hlustaðu á það sem fornir steinar geyma.<br><br>Þegar þú ert tilbúinn að ganga með allar tuttugu og fimm rúnirnar og heyra Rúnar tala í lestur þinn, vertu <strong>Vegfarandi</strong> — það kostar ekkert.`
+        : `You walk here as a <strong>Visitor</strong>. Fehu — the rune of beginnings — opens its voice to you freely. Draw it. Hear what the old stones whisper.<br><br>When you are ready to walk with all twenty-five runes and hear Rúnar speak in your own reading, become a <strong>Rune Seeker</strong> — it costs nothing.`;
+      document.getElementById('vcn-btn').textContent = isIs ? 'GERAST VEGFARANDI →' : 'BECOME A RUNE SEEKER →';
     }
   }
 
