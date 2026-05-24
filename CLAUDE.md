@@ -323,8 +323,22 @@ Po islandském VSK (24%): marže ~75–80%
 | Ceremonial mode (kakao ritual) | ❌ | ✅ |
 | Fyzický ekosystém (QR/NFC) | ❌ | ✅ |
 
-### VRSTVA 5+ — VZDÁLENÁ BUDOUCNOST
-- Shopify webhook — automatický tier upgrade po online nákupu
+### VRSTVA 5+ — SHOPIFY & E-COMMERCE INTEGRACE
+
+#### Postup při implementaci webhooků (udělat vše najednou):
+1. **Resend SMTP** — nastavit před webhooky (magic link + transakční emaily)
+   - Resend Dashboard → Domains → Add Domain → `agndofa.is`
+   - Zkopírovat DNS záznamy (MX, SPF, DKIM) → vložit u DNS providera agndofa.is
+   - Počkat na verifikaci → pak Supabase → Project Settings → Authentication → SMTP:
+     - Host: `smtp.resend.com`, Port: `465`, Username: `resend`
+     - Password: Resend API klíč, Sender: `noreply@agndofa.is` / `Rúnar`
+2. **Shopify webhook** (`orders/paid`) → Edge Function `shopify-webhook`
+   - Zákazník koupí Reading Gift Card na agndofa.is
+   - Shopify pošle webhook → Edge Function ověří HMAC podpis
+   - Lookup zákazníka v Supabase podle emailu
+   - Volá `add_credits()` RPC → přidá kredity na účet
+   - Pošle potvrzovací email přes Resend (backup kód vždy emailem)
+3. **Reading Gift Card page** na agndofa.is (zatím odkaz na homepage)
 - Online Reading Card (zatím jen fyzická)
 - Fyzický ekosystém (QR deeplink, NFC na produktech Agndofa)
 
