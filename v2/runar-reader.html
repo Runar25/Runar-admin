@@ -3302,7 +3302,7 @@ function toggleHigherPath() {
   if (!body) return;
   const open = body.style.display !== 'none';
   body.style.display = open ? 'none' : 'block';
-  if (arrow) arrow.textContent = open ? '▶' : '▼';
+  if (arrow) arrow.textContent = open ? '+' : '−';
 }
 
 // ─── TOPBAR DROPDOWN ─────────────────────────────────────
@@ -3623,8 +3623,8 @@ window.addEventListener('DOMContentLoaded', async () => {
     <div class="sp-curr-tier-name" id="sp-curr-tier-name"></div>
     <div class="sp-tier-desc" id="sp-tier-desc"></div>
     <button class="sp-path-toggle" id="sp-higher-toggle" onclick="toggleHigherPath()" style="display:none;">
-      <span>HIGHER PATH</span>
-      <span id="sp-path-arrow" style="font-size:1.8em;letter-spacing:0;line-height:1;">&#9656;</span>
+      <span>THE JOURNEY BEYOND</span>
+      <span id="sp-path-arrow" style="font-size:1.4em;letter-spacing:0;line-height:1;">+</span>
     </button>
     <div id="sp-path-body" class="sp-path-body" style="display:none;"></div>
   </div>
