@@ -413,8 +413,16 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .audio-player{display:none;margin-top:14px;background:transparent;border:1px solid rgba(255,191,0,0.3);border-radius:6px;padding:16px 18px;}
 .audio-player.visible{display:block;}
 .audio-player-lbl{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:3px;color:var(--gold);margin-bottom:12px;opacity:0.9;}
-.audio-controls audio{width:100%;outline:none;}
-/* Global audio element — amber accent, transparent panel (all players) */
+/* ── CUSTOM AUDIO PLAYER (main reading voice) ── */
+.cap{display:flex;align-items:center;gap:12px;}
+.cap-btn{background:none;border:none;color:var(--gold);font-size:1.15em;cursor:pointer;padding:2px 4px;line-height:1;flex-shrink:0;transition:opacity 0.15s;}
+.cap-btn:hover{opacity:0.75;}
+.cap-time{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:1px;color:var(--gold);flex-shrink:0;min-width:38px;}
+.cap-seek{flex:1;-webkit-appearance:none;appearance:none;height:5px;background:rgba(255,191,0,0.18);border-radius:3px;outline:none;cursor:pointer;accent-color:var(--gold);}
+.cap-seek::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--gold);cursor:pointer;box-shadow:0 0 4px rgba(255,191,0,0.5);}
+.cap-seek::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--gold);cursor:pointer;border:none;box-shadow:0 0 4px rgba(255,191,0,0.5);}
+.cap-seek::-webkit-slider-runnable-track{height:5px;border-radius:3px;background:linear-gradient(to right,var(--gold) var(--pct,0%),rgba(255,191,0,0.18) var(--pct,0%));}
+/* Global audio element — keep amber accent for secondary players (collection, journal) */
 audio{accent-color:var(--gold);color-scheme:dark;}
 audio::-webkit-media-controls-panel{background-color:rgba(10,10,10,0.6)!important;}
 audio::-webkit-media-controls-enclosure{border-radius:6px;}
@@ -422,7 +430,9 @@ audio::-webkit-media-controls-current-time-display,
 audio::-webkit-media-controls-time-remaining-display{color:var(--gold);}
 audio::-webkit-media-controls-timeline{accent-color:var(--gold);}
 audio::-webkit-media-controls-play-button,
-audio::-webkit-media-controls-mute-button{filter:sepia(1) saturate(8) hue-rotate(-8deg);}
+audio::-webkit-media-controls-mute-button,
+audio::-webkit-media-controls-overflow-button{filter:sepia(1) saturate(8) hue-rotate(-8deg);}
+audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 
 /* ── MODALS ── */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:100;display:none;align-items:center;justify-content:center;padding:20px;}
@@ -845,8 +855,16 @@ audio::-webkit-media-controls-mute-button{filter:sepia(1) saturate(8) hue-rotate
       <button class="btn-voice" id="btn-generate-voice" onclick="generateVoice()" disabled>ᚢ GENERATE RÚNAR'S VOICE</button>
       <div class="audio-player" id="audio-player">
         <div class="audio-player-lbl" id="audio-player-lbl">♪ RÚNAR SPEAKS</div>
-        <div class="audio-controls">
-          <audio id="runar-audio" controls preload="none" controlsList="nodownload" oncontextmenu="return false;"></audio>
+        <!-- Hidden native audio — playback only, no browser controls -->
+        <audio id="runar-audio" preload="none"></audio>
+        <!-- Custom amber player UI -->
+        <div class="cap">
+          <button class="cap-btn" id="cap-play" onclick="capToggle()" title="Play / Pause">▶</button>
+          <span class="cap-time" id="cap-current">0:00</span>
+          <input type="range" class="cap-seek" id="cap-seek" value="0" min="0" max="100" step="0.1"
+                 oninput="capSeek(this.value)" title="Seek">
+          <span class="cap-time" id="cap-dur">0:00</span>
+          <button class="cap-btn" id="cap-mute" onclick="capMute()" title="Mute / Unmute">🔊</button>
         </div>
       </div>
       <div class="status" id="st-voice"></div>
@@ -2821,6 +2839,7 @@ async function checkStaticAudio(drawn, l) {
   if (rows && rows.length > 0) {
     const pick = rows[Math.floor(Math.random() * rows.length)];
     document.getElementById('runar-audio').src = pick.audio_url;
+    _capReset();
     document.getElementById('audio-player').classList.add('visible');
     setSt('st-voice', `♪ ${rows.length > 1 ? `v${pick.version} · ` : ''}static`);
   }
@@ -2991,6 +3010,73 @@ function resetReader() {
   buildPills();
 }
 
+// ─── CUSTOM AUDIO PLAYER (main reading voice) ────────────
+function _capFmt(s) {
+  s = Math.floor(s || 0);
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+}
+function _capTrack(pct) {
+  const seek = document.getElementById('cap-seek');
+  if (seek) seek.style.setProperty('--pct', pct.toFixed(1) + '%');
+}
+function capToggle() {
+  const a = document.getElementById('runar-audio');
+  const btn = document.getElementById('cap-play');
+  if (!a || !btn) return;
+  if (a.paused) { a.play(); btn.textContent = '⏸'; }
+  else          { a.pause(); btn.textContent = '▶'; }
+}
+function capSeek(v) {
+  const a = document.getElementById('runar-audio');
+  if (!a || !a.duration) return;
+  a.currentTime = a.duration * (v / 100);
+  _capTrack(+v);
+}
+function capMute() {
+  const a = document.getElementById('runar-audio');
+  const btn = document.getElementById('cap-mute');
+  if (!a || !btn) return;
+  a.muted = !a.muted;
+  btn.textContent = a.muted ? '🔇' : '🔊';
+}
+function _capReset() {
+  const btn = document.getElementById('cap-play');
+  const seek = document.getElementById('cap-seek');
+  const cur  = document.getElementById('cap-current');
+  if (btn)  btn.textContent  = '▶';
+  if (seek) { seek.value = 0; _capTrack(0); }
+  if (cur)  cur.textContent  = '0:00';
+}
+// Wire audio element events once DOM ready
+window.addEventListener('DOMContentLoaded', () => {
+  const a = document.getElementById('runar-audio');
+  if (!a) return;
+  a.addEventListener('timeupdate', () => {
+    const pct = a.duration ? (a.currentTime / a.duration * 100) : 0;
+    const seek = document.getElementById('cap-seek');
+    const cur  = document.getElementById('cap-current');
+    if (seek) { seek.value = pct; _capTrack(pct); }
+    if (cur)  cur.textContent = _capFmt(a.currentTime);
+  });
+  a.addEventListener('loadedmetadata', () => {
+    const dur = document.getElementById('cap-dur');
+    if (dur) dur.textContent = _capFmt(a.duration);
+  });
+  a.addEventListener('ended', () => {
+    const btn = document.getElementById('cap-play');
+    if (btn) btn.textContent = '▶';
+    _capTrack(100);
+  });
+  a.addEventListener('pause', () => {
+    const btn = document.getElementById('cap-play');
+    if (btn) btn.textContent = '▶';
+  });
+  a.addEventListener('play', () => {
+    const btn = document.getElementById('cap-play');
+    if (btn) btn.textContent = '⏸';
+  });
+});
+
 // ─── VOICE ───────────────────────────────────────────────
 async function generateVoice() {
   const deepText = document.getElementById('out-deep').innerText.trim();
@@ -3023,7 +3109,9 @@ async function generateVoice() {
     }
     if (!data.audio_url) throw new Error('No audio_url');
     const blob = await fetch(data.audio_url).then(r => r.blob());
-    document.getElementById('runar-audio').src = URL.createObjectURL(blob);
+    const audio = document.getElementById('runar-audio');
+    audio.src = URL.createObjectURL(blob);
+    _capReset();
     document.getElementById('audio-player').classList.add('visible');
     voiceGenerated[lang] = true;
     btn.textContent = '♪ RÚNAR HAS SPOKEN';
