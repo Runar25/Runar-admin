@@ -86,6 +86,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .sp-item.signout:hover{opacity:1;}
 .sp-item.coming{opacity:0.35;pointer-events:none;cursor:default;}
 /* ── YOUR PATH section ── */
+.sp-account-label{font-family:'Cinzel',serif;font-size:0.48em;letter-spacing:3px;color:var(--muted);opacity:0.5;padding:14px 0 2px;display:block;}
 .sp-path-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;color:var(--gold);font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:3px;cursor:pointer;padding:10px 0 4px;opacity:0.55;transition:opacity 0.15s;text-align:left;}
 .sp-path-toggle:hover{opacity:1;}
 .sp-path-body{padding-bottom:4px;}
@@ -2582,16 +2583,23 @@ function updateSidePanel() {
   setText('sp-guide-link',   isIs ? '? LEIÐBEININGAR & SPURNINGAR' : '? GUIDE & FAQ');
   setText('sp-install-btn', isIs ? '⬇ SETJA UP RÚNAR' : '⬇ INSTALL RÚNAR');
   setText('sp-privacy-link', isIs ? 'PERSÓNUVERNDARSTEFNA'         : 'PRIVACY POLICY');
-  // Show/hide session + danger sections
+  // Path section always visible — set toggle label + render for all tiers incl. Visitor
+  const toggleLbl = document.getElementById('sp-path-toggle-lbl');
+  const acctLbl   = document.getElementById('sp-account-label');
+  if (toggleLbl) toggleLbl.textContent = tierHeader;
+  if (acctLbl)   acctLbl.textContent   = isIs ? 'REIKNINGUR ÞINN' : 'YOUR ACCOUNT';
+  _renderYourPath();
+
+  // Show/hide session + danger + personal actions sections
   const sessionEl = document.getElementById('sp-session');
   const dangerEl  = document.getElementById('sp-danger');
   if (!currentUser) {
-    accEl.style.display     = 'none';
+    accEl.style.display = 'none';
     if (sessionEl) sessionEl.style.display = 'none';
     if (dangerEl)  dangerEl.style.display  = 'none';
     return;
   }
-  accEl.style.display     = 'block';
+  accEl.style.display = 'block';
   if (sessionEl) sessionEl.style.display = 'block';
   if (dangerEl)  dangerEl.style.display  = 'block';
 
@@ -2613,8 +2621,7 @@ function updateSidePanel() {
   if (giftEl) giftEl.style.display = hide ? 'none' : 'block';
   setText('sp-gift', is ? '+ GJAFA-LESTURARKORT' : '+ READING GIFT CARD');
 
-  // Dynamic YOUR PATH + topbar dropdown
-  _renderYourPath();
+  // Topbar dropdown (logged-in only)
   updateDropdown();
 }
 
@@ -3363,9 +3370,9 @@ function updateDropdown() {
 // ─── YOUR PATH DYNAMIC RENDER ────────────────────────────
 function _renderYourPath() {
   const body = document.getElementById('sp-path-body');
-  if (!body || !currentUser) return;
+  if (!body) return;
   const isIs = lang === 'is';
-  const tier = userTier || 'rune_seeker';
+  const tier = userTier || 'free_trial';
 
   const TIERS = [
     { id:'free_trial',  name: isIs ? 'GESTUR'      : 'VISITOR',     detail: isIs ? '3 ókeypis lestrar. Enginn reikningur.' : '3 free trial readings. No account required.', sub: null },
@@ -3622,18 +3629,18 @@ window.addEventListener('DOMContentLoaded', async () => {
     <button class="side-panel-close" onclick="closeSidePanel()">✕</button>
   </div>
 
-  <!-- ① Account info — logged-in only -->
-  <div id="sp-account" style="display:none;">
-    <div class="side-panel-section">
-      <!-- YOUR PATH — collapsible, shows tier ladder (content set by _renderYourPath) -->
-      <button class="sp-path-toggle" onclick="toggleYourPath()">
-        <span id="sp-path-toggle-lbl">YOUR PATH</span>
-        <span id="sp-path-arrow" style="font-size:0.9em;letter-spacing:0;">&#9656;</span>
-      </button>
-      <div id="sp-path-body" class="sp-path-body" style="display:none;"></div>
-    </div>
+  <!-- ① Path section — always visible (Visitor + logged-in) -->
+  <div class="side-panel-section" id="sp-path-section">
+    <span class="sp-account-label" id="sp-account-label">YOUR ACCOUNT</span>
+    <button class="sp-path-toggle" onclick="toggleYourPath()">
+      <span id="sp-path-toggle-lbl">VISITOR</span>
+      <span id="sp-path-arrow" style="font-size:0.9em;letter-spacing:0;">&#9656;</span>
+    </button>
+    <div id="sp-path-body" class="sp-path-body" style="display:none;"></div>
+  </div>
 
-    <!-- &#x2461; Personal actions -->
+  <!-- ② Personal actions — logged-in only -->
+  <div id="sp-account" style="display:none;">
     <div class="side-panel-section">
       <button class="sp-item journal" id="sp-journal-link" onclick="openJournalFromPanel()">✦ MY JOURNAL</button>
       <button class="sp-item" id="sp-gift" onclick="showAppTab('reading');toggleRedeem();closeSidePanel()">+ READING GIFT CARD</button>
