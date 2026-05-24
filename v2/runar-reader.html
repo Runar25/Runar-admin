@@ -611,13 +611,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .auth-consent a{color:var(--gold);opacity:0.75;text-decoration:none;}
 .auth-consent a:hover{opacity:1;}
 
-/* ── PRIVACY NOTICE BANNER ── */
-#privacy-banner{position:fixed;bottom:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 22px;background:rgba(10,12,18,0.97);border-top:1px solid rgba(255,191,0,0.18);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
-#privacy-banner-txt{font-size:0.75em;font-style:italic;color:var(--dim);line-height:1.6;flex:1;}
-#privacy-banner-txt a{color:var(--gold);opacity:0.8;text-decoration:none;}
-#privacy-banner-txt a:hover{opacity:1;}
-#privacy-banner-close{background:none;border:none;color:var(--dim);opacity:0.5;font-size:0.9em;cursor:pointer;flex-shrink:0;padding:4px 6px;transition:opacity 0.2s;}
-#privacy-banner-close:hover{opacity:1;}
+
 
 /* ── TRIAL END PROMPT ── */
 .trial-end{background:linear-gradient(160deg,rgba(255,191,0,0.055) 0%,rgba(18,22,31,0.92) 60%);border:1px solid rgba(255,191,0,0.42);padding:32px 24px 28px;text-align:center;margin-top:20px;animation:trialFadeIn 0.8s ease;box-shadow:0 0 40px rgba(255,191,0,0.07),0 0 0 1px rgba(255,191,0,0.08) inset;}
@@ -2389,7 +2383,7 @@ function setLang(l) {
     }
     return;
   }
-  lang = l; applyLangToggle(l); updateUIText(); updateSidePanel(); buildPills(); _updatePrivacyBannerText();
+  lang = l; applyLangToggle(l); updateUIText(); updateSidePanel(); buildPills();
   if (document.getElementById('reader-rune-card').style.display !== 'none') buildGrid();
   // Refresh collection if open
   if (activeAppTab === 'collection') {
@@ -2461,29 +2455,9 @@ function setSt(id, msg, type) {
   const el = document.getElementById(id); if (!el) return;
   el.textContent = msg || ''; el.className = 'status' + (type ? ' '+type : '');
 }
-// ─── PRIVACY BANNER ──────────────────────────────────────
-function _updatePrivacyBannerText() {
-  const txt  = document.getElementById('privacy-banner-txt');
-  const link = document.getElementById('privacy-banner-link');
-  const con  = document.getElementById('auth-consent-txt');
-  const isIs = lang === 'is';
-  if (txt) txt.innerHTML = isIs
-    ? `Rúnar geymir aðeins það sem þarf til að muna lestrana þína — engar vefkökur til rakningar, engar auglýsingar. <a href="runar-privacy.html" target="_blank" rel="noopener" id="privacy-banner-link">Friðhelgisstefna</a>`
-    : `Rúnar stores only what is needed to remember your readings — no tracking, no ads. <a href="runar-privacy.html" target="_blank" rel="noopener" id="privacy-banner-link">Privacy Policy</a>`;
-  if (con) con.innerHTML = isIs
-    ? `Með því að halda áfram samþykkir þú <a href="runar-privacy.html" target="_blank" rel="noopener">Friðhelgisstefnu</a> okkar. Við geymum aðeins það sem þarf til að muna lestrana þína.`
-    : `By continuing, you agree to our <a href="runar-privacy.html" target="_blank" rel="noopener">Privacy Policy</a>. We store only what is needed to remember your readings. No tracking, no ads.`;
-}
-function dismissPrivacyBanner() {
-  localStorage.setItem('runar_privacy_ack', '1');
-  const b = document.getElementById('privacy-banner');
-  if (b) b.style.display = 'none';
-}
-function _initPrivacyBanner() {
-  if (localStorage.getItem('runar_privacy_ack') === '1') return;
-  const b = document.getElementById('privacy-banner');
-  if (b) { _updatePrivacyBannerText(); b.style.display = 'flex'; }
-}
+function _updatePrivacyBannerText() {}
+function dismissPrivacyBanner() {}
+function _initPrivacyBanner() {}
 
 function showToast(msg, dur = 3000) {
   const el = document.getElementById('toast'); if (!el) return;
@@ -2582,20 +2556,20 @@ function updateSidePanel() {
   setText('sp-tier-header', isIs ? 'REIKNINGUR ÞÍNN' : 'YOUR ACCOUNT');
   // Current tier description (always visible under toggle)
   const TIER_DESCS_EN = {
-    free_trial:  'Your first three readings are a gift. No account, no payment. Step further when you are ready.',
-    rune_seeker: '5 readings / month + reading gift card.',
-    standard:    'Unlimited readings. The Gathering included.',
+    free_trial:  'Your first three readings are a gift.<br>No account, no payment.<br>Step further when you are ready.',
+    rune_seeker: '5 readings / month + reading credits.<br>Limited journal (last 5 readings).<br>READING GIFT CARDs never expire.',
+    standard:    'monthly / yearly subscription<br>Unlimited readings.<br>Full journal.<br>The Gathering once a week.',
     premium:     'All features · coming soon.',
   };
   const TIER_DESCS_IS = {
-    free_trial:  'Fyrstu þriðja lestrar þínir eru gjafir. Enginn reikningur, engin greidala. Fardu lengra þgar þu ert tilbuínn.',
-    rune_seeker: '5 lestrar / mánuð + lesturarkort.',
-    standard:    'Ótakmarkadir lestrar. The Gathering innifalid.',
-    premium:     'Allar adgerðir · braðlega.',
+    free_trial:  'Fyrstu þrír lestrar þínir eru gjafir.<br>Enginn reikningur, engin greiðsla.<br>Farðu lengra þegar þú ert tilbúinn.',
+    rune_seeker: '5 lestrar / mánuð + lesturarkort.<br>Takmörkuð dagbók (síðustu 5 lestrar).<br>Lesturarkort renna aldrei út.',
+    standard:    'mánaðar- / árslegt áskrift<br>Ótakmarkaðir lestrar.<br>Full dagbók.<br>The Gathering einu sinni á viku.',
+    premium:     'Allar aðgerðir · bráðlega.',
   };
-  const normTierForDesc = (userTier === 'free' || userTier === 'credits') ? 'rune_seeker' : (userTier || 'free_trial');
+  const normTierForDesc = !currentUser ? 'free_trial' : ((userTier === 'free' || userTier === 'credits') ? 'rune_seeker' : (userTier || 'free_trial'));
   const descEl2 = document.getElementById('sp-tier-desc');
-  if (descEl2) descEl2.textContent = (isIs ? TIER_DESCS_IS : TIER_DESCS_EN)[normTierForDesc] || '';
+  if (descEl2) descEl2.innerHTML = (isIs ? TIER_DESCS_IS : TIER_DESCS_EN)[normTierForDesc] || '';
   // Side panel navigation links — switch with language
   setText('sp-guide-link',   isIs ? '? LEIÐBEININGAR & SPURNINGAR' : '? GUIDE & FAQ');
   setText('sp-install-btn', isIs ? '⬇ SETJA UP RÚNAR' : '⬇ INSTALL RÚNAR');
@@ -3387,7 +3361,7 @@ function _renderYourPath() {
   const body = document.getElementById('sp-path-body');
   if (!body) return;
   const isIs = lang === 'is';
-  const tier = userTier || 'free_trial';
+  const tier = !currentUser ? 'free_trial' : (userTier || 'free_trial');
 
   const TIERS = [
     { id:'free_trial',  name: isIs ? 'GESTUR'     : 'VISITOR',     detail: isIs ? '3 ókeypis lestrar. Enginn reikningur.' : '3 free trial readings. No account required.' },
@@ -3411,17 +3385,10 @@ function _renderYourPath() {
            +  '<div class="sp-tier-detail">' + t.detail + '</div>'
            +  '</div>';
     });
-    // Upgrade button only for rune_seeker (not visitor)
-    if (normTier === 'rune_seeker') {
-      html += '<button class="sp-item coming" style="margin-top:6px;padding:8px 0;font-size:0.56em;">'
-           +  (isIs ? 'UPPFÆRA → STANDARD — BRÁÐLEGA' : 'UPGRADE → STANDARD — COMING SOON')
-           +  '</button>';
-    }
+
   }
 
-  html += '<div class="sp-path-gift-note">'
-       +  (isIs ? 'LESTURARKORT renna aldrei út og virka á öllum tækjum.' : 'READING GIFT CARDs never expire and work across all devices.')
-       +  '</div>';
+
 
   body.innerHTML = html;
 }
@@ -3640,7 +3607,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   <div class="side-panel-section" id="sp-path-section">
     <button class="sp-path-toggle" onclick="toggleYourPath()">
       <span id="sp-path-toggle-lbl">VISITOR</span>
-      <span id="sp-path-arrow" style="font-size:0.9em;letter-spacing:0;">&#9656;</span>
+      <span id="sp-path-arrow" style="font-size:1.8em;letter-spacing:0;line-height:1;">&#9656;</span>
     </button>
     <div class="sp-tier-desc" id="sp-tier-desc"></div>
     <div id="sp-path-body" class="sp-path-body" style="display:none;"></div>
@@ -3701,10 +3668,5 @@ window.addEventListener('DOMContentLoaded', async () => {
   </div>
 </div>
 
-<!-- ═══ PRIVACY NOTICE BANNER ═══ -->
-<div id="privacy-banner" style="display:none;">
-  <span id="privacy-banner-txt">Rúnar stores only what is needed to remember your readings — no tracking, no ads. <a href="runar-privacy.html" target="_blank" rel="noopener" id="privacy-banner-link">Privacy Policy</a></span>
-  <button onclick="dismissPrivacyBanner()" id="privacy-banner-close" aria-label="Dismiss">✕</button>
-</div>
 </body>
 </html>
