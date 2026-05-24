@@ -321,8 +321,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .vcn-rune{font-size:2.4em;color:var(--gold);opacity:0.7;margin-bottom:14px;line-height:1;}
 .vcn-text{font-size:1.02em;font-style:italic;color:var(--muted);line-height:1.85;margin-bottom:22px;}
 .vcn-text strong{color:var(--gold);font-style:normal;font-weight:400;}
-.vcn-btn{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2.5px;padding:12px 28px;background:transparent;border:1px solid rgba(255,191,0,0.45);color:var(--gold);cursor:pointer;transition:all 0.2s;}
-.vcn-btn:hover{background:rgba(255,191,0,0.08);}
+/* Shared upgrade button style — used for all tier-upgrade CTAs */
+.btn-upgrade{font-family:'Cinzel',serif;letter-spacing:2.5px;background:transparent;border:1px solid var(--gold);color:var(--gold);cursor:pointer;transition:all 0.25s;}
+.btn-upgrade:hover{background:var(--gold);color:#000;}
+.vcn-btn{font-size:0.62em;padding:12px 28px;}
+.vcn-btn:hover{}
 /* Locked rune cells */
 .coll-cell.locked{opacity:0.28;cursor:not-allowed;pointer-events:none;}
 .coll-cell.locked:hover{background:transparent;border-color:var(--border);}
@@ -342,10 +345,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .tn-counter.exhausted{color:#e07070!important;}
 .tn-text{font-size:0.95em;font-style:italic;color:var(--muted);line-height:1.85;margin-bottom:18px;}
 .tn-text strong,.tn-text b{color:var(--gold);font-style:normal;font-weight:400;}
-.tn-btn{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:2px;padding:10px 24px;background:transparent;border:1px solid var(--gold);color:var(--gold);cursor:pointer;transition:all 0.25s;}
-.tn-btn:hover{background:var(--gold);color:#000;}
-.tier-notice.curious .tn-btn{border-color:rgba(255,191,0,0.35);color:var(--gold);}
-.tier-notice.curious .tn-btn:hover{background:var(--gold);color:#000;}
+.tn-btn{font-size:0.58em;padding:10px 24px;}
+.tier-notice.curious .tn-btn{border-color:rgba(255,191,0,0.35);}
 
 /* ── AUTH GATE ── */
 .auth-gate{background:var(--card);border:1px solid var(--gold);padding:32px 24px;text-align:center;margin-top:8px;}
@@ -797,7 +798,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
   <div class="tier-notice" id="trial-banner" style="display:none;">
     <div class="tn-counter" id="trial-count"></div>
     <p class="tn-text" id="trial-text"></p>
-    <button class="tn-btn" onclick="openAuthModal()" id="tn-visitor-btn"></button>
+    <button class="tn-btn btn-upgrade" onclick="openAuthModal()" id="tn-visitor-btn"></button>
   </div>
 
   <!-- THE CURIOUS NOTICE -->
@@ -948,7 +949,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
     <div class="visitor-coll-notice" id="visitor-coll-notice" style="display:none;">
       <div class="vcn-rune">ᚠ</div>
       <p class="vcn-text" id="vcn-text"></p>
-      <button class="vcn-btn" onclick="openAuthModal()" id="vcn-btn"></button>
+      <button class="vcn-btn btn-upgrade" onclick="openAuthModal()" id="vcn-btn"></button>
     </div>
 
     <div class="coll-grid" id="coll-grid"></div>
