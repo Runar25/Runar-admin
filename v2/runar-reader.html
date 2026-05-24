@@ -95,6 +95,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .sp-tier-detail{font-size:0.71em;color:var(--muted);font-style:italic;line-height:1.6;margin-top:2px;}
 .sp-tier-sub{font-size:0.68em;color:var(--gold);opacity:0.6;font-style:italic;margin-top:3px;letter-spacing:0.5px;}
 .sp-path-gift-note{font-size:0.68em;color:var(--muted);opacity:0.7;font-style:italic;line-height:1.55;margin-top:10px;padding-top:8px;border-top:1px solid rgba(255,191,0,0.07);}
+.sp-higher-path-lbl{font-family:'Cinzel',serif;font-size:0.55em;letter-spacing:2.5px;color:var(--gold);opacity:0.38;margin:14px 0 6px;padding-top:12px;border-top:1px solid rgba(255,191,0,0.1);}
 .sp-item.coming.active{opacity:0.85;pointer-events:auto;cursor:pointer;}
 .sp-item.journal{color:var(--gold);opacity:0.85;}
 .sp-item.journal:hover{opacity:1;}
@@ -712,7 +713,14 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
     <div class="topbar-right">
       <span id="topbar-greeting"></span>
       <div class="auth-badge">
-        <span class="auth-user" id="auth-user-label" style="display:none;"></span>
+        <div class="auth-dropdown-wrap" id="auth-dropdown-wrap">
+          <span class="auth-user" id="auth-user-label" style="display:none;" onclick="toggleDropdown()"></span>
+          <div class="auth-dropdown" id="auth-dropdown">
+            <div class="dd-tier" id="dd-tier"></div>
+            <div class="dd-email" id="dd-email"></div>
+            <div class="dd-balance" id="dd-balance"></div>
+          </div>
+        </div>
         <button class="auth-btn signin" id="auth-action-btn" onclick="handleAuthBtn()">SIGN IN</button>
       </div>
       <button class="hamburger-btn" id="hamburger-btn" onclick="openSidePanel()" aria-label="Menu">
@@ -2543,29 +2551,10 @@ function updateSidePanel() {
   if (dangerEl)  dangerEl.style.display  = 'block';
 
   const is = isIs;
-  setText('sp-email', currentUser.email);
 
   // Admin link
   const adminLink = document.getElementById('sp-admin-link');
   if (adminLink) adminLink.style.display = isAdmin(currentUser.email) ? 'block' : 'none';
-
-  // Balance row — readings + credits renamed
-  const balEl = document.getElementById('sp-balance');
-  if (balEl) {
-    if (userTier === 'rune_seeker') {
-      const used = getFreeMonthCount(currentUser.id);
-      const rem  = Math.max(0, FREE_REGISTERED_LIMIT - used);
-      const extraPart = userCredits > 0
-        ? (is ? ` · ${userCredits} lestur` : ` · ${userCredits} reading${userCredits !== 1 ? 's' : ''}`)
-        : '';
-      balEl.textContent   = is
-        ? `${rem} af 5 frjálsum lestrum í mánuði${extraPart} · ${nextResetLabel(true)}`
-        : `${rem} of 5 free readings this month${extraPart} · ${nextResetLabel(false)}`;
-      balEl.style.display = 'block';
-    } else {
-      balEl.style.display = 'none';
-    }
-  }
 
   // Journal link
   const journalLink = document.getElementById('sp-journal-link');
@@ -2573,14 +2562,15 @@ function updateSidePanel() {
     setText('sp-journal-link', is ? '✦ LESTRAR MÍNIR' : '✦ MY JOURNAL');
   }
 
-  // Reading Card + Upgrade visibility
-  const hide   = userTier === 'standard' || userTier === 'premium';
-  const upEl   = document.getElementById('sp-upgrade');
+  // Gift card visibility (upgrade handled in YOUR PATH)
   const giftEl = document.getElementById('sp-gift');
-  if (upEl)   upEl.style.display   = hide ? 'none' : 'block';
+  const hide   = userTier === 'standard' || userTier === 'premium';
   if (giftEl) giftEl.style.display = hide ? 'none' : 'block';
-  setText('sp-gift',    is ? '+ GJAFA-LESTURARKORT' : '+ READING GIFT CARD');
-  setText('sp-upgrade', is ? 'UPPFÆRA → STANDARD — BRÁÐLEGA' : 'UPGRADE → STANDARD — COMING SOON');
+  setText('sp-gift', is ? '+ GJAFA-LESTURARKORT' : '+ READING GIFT CARD');
+
+  // Dynamic YOUR PATH + topbar dropdown
+  _renderYourPath();
+  updateDropdown();
 }
 
 // ── SIDE PANEL ───────────────────────────────────────────
@@ -3286,6 +3276,93 @@ function toggleYourPath() {
   body.style.display = open ? 'none' : 'block';
   if (arrow) arrow.textContent = open ? '▶' : '▼';
 }
+
+// ─── TOPBAR DROPDOWN ─────────────────────────────────────
+function toggleDropdown() {
+  const dd = document.getElementById('auth-dropdown');
+  if (!dd || !currentUser) return;
+  dd.classList.toggle('open');
+}
+function updateDropdown() {
+  const dd      = document.getElementById('auth-dropdown');
+  const tierEl  = document.getElementById('dd-tier');
+  const emailEl = document.getElementById('dd-email');
+  const balEl   = document.getElementById('dd-balance');
+  if (!dd || !currentUser) return;
+  const isIs = lang === 'is';
+  const tierNames = isIs
+    ? { rune_seeker:'VEGFARANDI', free_trial:'GESTUR', free:'VEGFARANDI', credits:'VEGFARANDI', standard:'STANDARD', premium:'PREMIUM' }
+    : { rune_seeker:'RUNE SEEKER', free_trial:'VISITOR', free:'RUNE SEEKER', credits:'RUNE SEEKER', standard:'STANDARD', premium:'PREMIUM' };
+  if (tierEl)  tierEl.textContent  = tierNames[userTier] || userTier.toUpperCase();
+  if (emailEl) emailEl.textContent = currentUser.email;
+  if (balEl) {
+    if (userTier === 'rune_seeker' || userTier === 'free' || userTier === 'credits') {
+      const used = getFreeMonthCount(currentUser.id);
+      const rem  = Math.max(0, FREE_REGISTERED_LIMIT - used);
+      const credPart = userCredits > 0
+        ? (isIs ? ' · ' + userCredits + ' lestur' : ' · ' + userCredits + ' credit' + (userCredits !== 1 ? 's' : ''))
+        : '';
+      balEl.textContent = isIs
+        ? rem + ' af 5 lestrum í mánuði' + credPart + ' · ' + nextResetLabel(true)
+        : rem + ' of 5 readings this month' + credPart + ' · ' + nextResetLabel(false);
+      balEl.style.display = '';
+    } else {
+      balEl.style.display = 'none';
+    }
+  }
+}
+
+// ─── YOUR PATH DYNAMIC RENDER ────────────────────────────
+function _renderYourPath() {
+  const body = document.getElementById('sp-path-body');
+  if (!body || !currentUser) return;
+  const isIs = lang === 'is';
+  const tier = userTier || 'rune_seeker';
+
+  const TIERS = [
+    { id:'free_trial',  name: isIs ? 'GESTUR'      : 'VISITOR',     detail: isIs ? '3 ókeypis lestrar. Enginn reikningur.' : '3 free trial readings. No account required.', sub: null },
+    { id:'rune_seeker', name: isIs ? 'VEGFARANDI'  : 'RUNE SEEKER', detail: isIs ? '5 lestrar / mánuð + lesturarkort.' : '5 readings / month + reading credits.', sub: isIs ? '✶ THE GATHERING kostar 3 lesturarkort.' : '✶ THE GATHERING costs 3 reading credits.' },
+    { id:'standard',    name: 'STANDARD',  detail: isIs ? 'Ótakmarkaðir lestrar. The Gathering innifalið.' : 'Unlimited readings. The Gathering included.', sub: null },
+    { id:'premium',     name: 'PREMIUM',   detail: isIs ? 'Allar aðgerðir · bráðlega.' : 'All features · coming soon.', sub: null },
+  ];
+  const ORDER  = ['free_trial','free','credits','rune_seeker','standard','premium'];
+  const normTier = (tier === 'free' || tier === 'credits') ? 'rune_seeker' : tier;
+  const currData = TIERS.find(t => t.id === normTier) || TIERS[1];
+  const currIdx  = TIERS.indexOf(currData);
+  const higher   = TIERS.slice(currIdx + 1);
+
+  let html = '';
+
+  // Current tier block
+  html += '<div class="sp-tier-block">'
+       +  '<div class="sp-tier-name">' + currData.name + '</div>'
+       +  '<div class="sp-tier-detail">' + currData.detail + '</div>'
+       +  (currData.sub ? '<div class="sp-tier-sub">' + currData.sub + '</div>' : '')
+       +  '</div>';
+
+  if (higher.length > 0) {
+    html += '<div class="sp-higher-path-lbl">' + (isIs ? 'HÆRRI BRAUT' : 'HIGHER PATH') + '</div>';
+    higher.forEach(function(t) {
+      html += '<div class="sp-tier-block">'
+           +  '<div class="sp-tier-name">' + t.name + '</div>'
+           +  '<div class="sp-tier-detail">' + t.detail + '</div>'
+           +  (t.sub ? '<div class="sp-tier-sub">' + t.sub + '</div>' : '')
+           +  '</div>';
+    });
+    // Upgrade button for rune_seeker
+    if (normTier === 'rune_seeker') {
+      html += '<button class="sp-item coming" style="margin-top:6px;padding:8px 0;font-size:0.56em;">'
+           +  (isIs ? 'UPPFÆRA → STANDARD — BRÁÐLEGA' : 'UPGRADE → STANDARD — COMING SOON')
+           +  '</button>';
+    }
+  }
+
+  html += '<div class="sp-path-gift-note">'
+       +  (isIs ? 'LESTURARKORT renna aldrei út og virka á öllum tækjum.' : 'READING GIFT CARDs never expire and work across all devices.')
+       +  '</div>';
+
+  body.innerHTML = html;
+}
 // Wire audio element events once DOM ready
 window.addEventListener('DOMContentLoaded', () => {
   const a = document.getElementById('runar-audio');
@@ -3313,6 +3390,12 @@ window.addEventListener('DOMContentLoaded', () => {
   a.addEventListener('play', () => {
     const btn = document.getElementById('cap-play');
     if (btn) btn.textContent = '⏸';
+  });
+  // ── Close topbar dropdown on outside click ──
+  document.addEventListener('click', function(e) {
+    const wrap = document.getElementById('auth-dropdown-wrap');
+    const dd   = document.getElementById('auth-dropdown');
+    if (wrap && dd && !wrap.contains(e.target)) dd.classList.remove('open');
   });
   // ── Wire whispers-audio (wcap) ──
   const wa = document.getElementById('whispers-audio');
@@ -3494,33 +3577,12 @@ window.addEventListener('DOMContentLoaded', async () => {
   <!-- ① Account info — logged-in only -->
   <div id="sp-account" style="display:none;">
     <div class="side-panel-section">
-      <span class="sp-row" id="sp-email"></span>
-      <span class="sp-row" id="sp-balance" style="display:none;font-size:0.56em;opacity:0.65;line-height:1.7;letter-spacing:1px;"></span>
-      <!-- YOUR PATH — collapsible, shows tier ladder -->
+      <!-- YOUR PATH — collapsible, shows tier ladder (content set by _renderYourPath) -->
       <button class="sp-path-toggle" onclick="toggleYourPath()">
         <span id="sp-path-toggle-lbl">YOUR PATH</span>
         <span id="sp-path-arrow" style="font-size:0.9em;letter-spacing:0;">&#9656;</span>
       </button>
-      <div id="sp-path-body" class="sp-path-body" style="display:none;">
-        <div class="sp-tier-block">
-          <div class="sp-tier-name">VISITOR</div>
-          <div class="sp-tier-detail">3 free trial readings. No account required.</div>
-        </div>
-        <div class="sp-tier-block">
-          <div class="sp-tier-name">RUNE SEEKER</div>
-          <div class="sp-tier-detail">5 readings / month + reading credits.</div>
-          <div class="sp-tier-sub">&#x2736; THE GATHERING costs 3 reading credits.</div>
-        </div>
-        <div class="sp-tier-block">
-          <div class="sp-tier-name">STANDARD</div>
-          <div class="sp-tier-detail">Unlimited readings. The Gathering included.</div>
-        </div>
-        <div class="sp-tier-block">
-          <div class="sp-tier-name">PREMIUM</div>
-          <div class="sp-tier-detail">All features &middot; coming soon.</div>
-        </div>
-        <div class="sp-path-gift-note">READING GIFT CARDs never expire and work across all devices.</div>
-      </div>
+      <div id="sp-path-body" class="sp-path-body" style="display:none;"></div>
     </div>
 
     <!-- &#x2461; Personal actions -->
@@ -3528,7 +3590,6 @@ window.addEventListener('DOMContentLoaded', async () => {
       <button class="sp-item journal" id="sp-journal-link" onclick="openJournalFromPanel()">✦ MY JOURNAL</button>
       <button class="sp-item" id="sp-gift" onclick="showAppTab('reading');toggleRedeem();closeSidePanel()">+ READING GIFT CARD</button>
       <a class="sp-item" id="sp-admin-link" href="runar-shrine.html" style="display:none;text-decoration:none;">⚿ KNOWLEDGE SHRINE</a>
-      <button class="sp-item coming" id="sp-upgrade">UPGRADE → STANDARD — COMING SOON</button>
     </div>
   </div>
 
