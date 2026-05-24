@@ -10,6 +10,7 @@
 <meta name="theme-color" content="#FFBF00">
 
 <!-- iOS / Safari -->
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="Rúnar">
@@ -788,7 +789,7 @@ audio::-webkit-media-controls-mute-button{filter:sepia(1) saturate(8) hue-rotate
       <div class="dob-row">
         <input class="num" id="r-day"   type="number" placeholder="Day"   min="1" max="31"   oninput="this.value=this.value.slice(0,2);if(+this.value>31)this.value=31;if(+this.value<0)this.value=''">
         <input class="num" id="r-month" type="number" placeholder="Month" min="1" max="12"   oninput="this.value=this.value.slice(0,2);if(+this.value>12)this.value=12;if(+this.value<0)this.value=''">
-        <input class="num" id="r-year"  type="number" placeholder="Year"  min="1900" max="2015" oninput="this.value=this.value.slice(0,4)">
+        <input class="num" id="r-year"  type="number" placeholder="Year"  min="1900" oninput="this.value=this.value.slice(0,4)">
       </div>
       <label class="flbl" id="area-lbl">AREA OF LIFE <span class="opt">(OPTIONAL)</span></label>
       <div class="pills" id="area-pills"></div>
@@ -2903,7 +2904,7 @@ function startReading() {
   const d  = parseInt(document.getElementById('r-day').value);
   const m  = parseInt(document.getElementById('r-month').value);
   const y  = parseInt(document.getElementById('r-year').value);
-  const lifeRune = (d && m && y && d <= 31 && m <= 12 && y >= 1930) ? calcLifeRune(d, m, y) : null;
+  const lifeRune = (d && m && y && d <= 31 && m <= 12 && y >= 1900) ? calcLifeRune(d, m, y) : null;
   readerUser = { name, d, m, y, lifeRune,
     area: readerUser.area || '', seeking: readerUser.seeking || '',
     question: document.getElementById('r-question').value.trim() };
@@ -3008,6 +3009,10 @@ async function generateVoice() {
 
 // ─── INIT ────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', async () => {
+  // Set DOB year max to current year
+  const yearInput = document.getElementById('r-year');
+  if (yearInput) yearInput.max = new Date().getFullYear();
+
   // Restore language from localStorage (before auth, so UI is correct immediately)
   const savedLang = localStorage.getItem('runar_lang');
   if (savedLang && savedLang !== lang) {

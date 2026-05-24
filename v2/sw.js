@@ -1,9 +1,9 @@
-// Rúnar Service Worker — v1
-// Cache-first for app shell; network-only for Supabase/external APIs
+// Rúnar Service Worker — v2
+// HTML: network-first (always fresh). JS/icons: cache-first (fast, offline ok).
+// External (Supabase, ElevenLabs, fonts): pass-through, never intercepted.
 
-const CACHE = 'runar-v1';
-const SHELL = [
-  '/Runar-admin/v2/runar-reader.html',
+const CACHE = 'runar-v2';
+const JS_SHELL = [
   '/Runar-admin/v2/runar-config.js',
   '/Runar-admin/v2/runar-runes.js',
   '/Runar-admin/v2/runar-translations.js',
@@ -17,7 +17,7 @@ const SHELL = [
 
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())
+    caches.open(CACHE).then(c => c.addAll(JS_SHELL)).then(() => self.skipWaiting())
   );
 });
 
@@ -32,25 +32,37 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
 
-  // Pass through: external origins (Supabase, ElevenLabs, CDN fonts, etc.)
+  // Never intercept: external origins (Supabase, ElevenLabs, CDN, fonts)
   if (url.hostname !== self.location.hostname) return;
-
-  // Pass through: Supabase Edge Functions and auth paths
-  if (url.pathname.includes('/functions/') || url.pathname.includes('/auth/')) return;
-
-  // Cache-first for same-origin GET requests
   if (e.request.method !== 'GET') return;
 
+  // ── HTML pages: network-first so user always gets latest code ──
+  if (url.pathname.endsWith('.html') || url.pathname.endsWith('/')) {
+    e.respondWith(
+      fetch(e.request)
+        .then(response => {
+          if (response.ok) {
+            const clone = response.clone();
+            caches.open(CACHE).then(c => c.put(e.request, clone));
+          }
+          return response;
+        })
+        .catch(() => caches.match(e.request)) // offline fallback
+    );
+    return;
+  }
+
+  // ── JS / icons / manifest: cache-first, update in background ──
   e.respondWith(
     caches.match(e.request).then(cached => {
-      if (cached) return cached;
-      return fetch(e.request).then(response => {
+      const networkFetch = fetch(e.request).then(response => {
         if (response.ok) {
           const clone = response.clone();
           caches.open(CACHE).then(c => c.put(e.request, clone));
         }
         return response;
-      }).catch(() => cached); // fallback to cache if network fails
+      });
+      return cached || networkFetch;
     })
   );
 });
