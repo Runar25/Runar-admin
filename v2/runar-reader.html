@@ -2912,7 +2912,11 @@ async function _generateReading() {
 // ─── READER FLOW ─────────────────────────────────────────
 function startReading() {
   if (!currentUser && getTrialCount() >= FREE_TRIAL_LIMIT) { updateAuthUI(); openAuthModal(); return; }
-  if (currentUser && getFreeMonthCount(currentUser.id) >= FREE_REGISTERED_LIMIT) { updateAuthUI(); return; }
+  // Only block rune_seeker who has used all free monthly slots AND has no credits left.
+  // Standard / Premium / Admin are never blocked here.
+  if (currentUser && userTier === 'rune_seeker'
+      && getFreeMonthCount(currentUser.id) >= FREE_REGISTERED_LIMIT
+      && userCredits <= 0) { updateAuthUI(); return; }
   const name = document.getElementById('r-name').value.trim();
   if (!name) { setSt('st-setup', t('st_name_req'), 'err'); return; }
   const d  = parseInt(document.getElementById('r-day').value);
@@ -2951,7 +2955,7 @@ function drawAnother() {
   document.getElementById('reader-output').style.display = 'none';
   document.getElementById('trial-end').style.display = 'none';
   if (!currentUser && getTrialCount() >= FREE_TRIAL_LIMIT) { updateAuthUI(); return; }
-  if (currentUser && getFreeMonthCount(currentUser.id) >= FREE_REGISTERED_LIMIT) { updateAuthUI(); return; }
+  if (currentUser && userTier === 'rune_seeker' && getFreeMonthCount(currentUser.id) >= FREE_REGISTERED_LIMIT && userCredits <= 0) { updateAuthUI(); return; }
   document.getElementById('reader-rune-card').style.display = 'block';
   document.querySelectorAll('#reader-grid .rb').forEach(b => b.classList.remove('on'));
   document.getElementById('reader-rune-info').textContent = '';
@@ -2967,7 +2971,7 @@ function resetReader() {
   if (!currentUser && getTrialCount() >= FREE_TRIAL_LIMIT) {
     updateAuthUI(); return;
   }
-  if (currentUser && getFreeMonthCount(currentUser.id) >= FREE_REGISTERED_LIMIT) {
+  if (currentUser && userTier === 'rune_seeker' && getFreeMonthCount(currentUser.id) >= FREE_REGISTERED_LIMIT && userCredits <= 0) {
     updateAuthUI(); return;
   }
   document.getElementById('reader-setup').style.display = 'block';
@@ -3093,6 +3097,8 @@ window.addEventListener('DOMContentLoaded', async () => {
     if (event === 'SIGNED_OUT') {
       hideJournal();
       showToast('YOU HAVE LEFT THE CIRCLE');
+      // Reset local state and reload so the page starts fresh for the next visitor
+      setTimeout(() => window.location.reload(), 1200);
     }
   });
 
