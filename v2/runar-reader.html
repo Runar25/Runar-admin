@@ -510,6 +510,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .jcard-divider{text-align:center;color:var(--dim);font-size:0.7em;letter-spacing:4px;margin:16px 0;}
 .jcard-question{font-family:'Cormorant Garamond',serif;font-size:0.92em;font-style:italic;color:var(--dim);opacity:0.7;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,191,0,0.1);}
 .jcard-life-rune{font-family:'Cinzel',serif;font-size:0.53em;letter-spacing:2px;color:var(--gold);opacity:0.4;margin-top:10px;}
+.jcard-gathering-runes{font-family:'Cinzel',serif;font-size:0.56em;letter-spacing:1px;color:var(--gold);opacity:0.65;margin-top:5px;line-height:1.6;}
 .jcard-audio-btn{margin-top:18px;background:none;border:1px solid rgba(255,191,0,0.25);color:var(--gold);font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:2px;padding:8px 16px;cursor:pointer;transition:all 0.2s;display:inline-block;}
 .jcard-audio-btn:hover{border-color:rgba(255,191,0,0.6);}
 .jcard-audio-btn:disabled{opacity:0.4;cursor:default;}
@@ -1317,11 +1318,36 @@ function renderJournal(entries) {
     const d       = new Date(e.drawn_at);
     const locale  = isIs ? 'is-IS' : 'en-GB';
     const dateStr = d.toLocaleDateString(locale, { day:'numeric', month:'short', year:'numeric' });
-    const excerpt = (e.short_text || '').trim().slice(0, 160);
-    const areaStr = e.area ? ` · ${e.area}` : '';
     const safeRune = (e.rune_name || '').replace(/'/g, "\\'");
     const safeLang = (e.lang || '').replace(/'/g, "\\'");
+    const isGathering = e.area === 'gathering';
 
+    if (isGathering) {
+      // ── THE GATHERING card ──
+      const excerpt = (e.deep_text || '').trim().slice(0, 160);
+      return `<div class="jcard" id="jcard-${i}">
+        <div class="jcard-header" onclick="toggleJournalEntry(${i})">
+          <div class="jcard-left">
+            <div class="jcard-glyph" style="opacity:0.7;">✦</div>
+            <div class="jcard-info">
+              <div class="jcard-name">✦ THE GATHERING · ${(e.lang || '').toUpperCase()}</div>
+              <div class="jcard-date">${dateStr}</div>
+              <div class="jcard-gathering-runes">${e.short_text || ''}</div>
+              <div class="jcard-excerpt">${excerpt}${excerpt.length >= 160 ? '…' : ''}</div>
+            </div>
+          </div>
+          <div class="jcard-arrow" id="jarr-${i}">▾</div>
+        </div>
+        <div class="jcard-body" id="jbody-${i}" style="display:none;">
+          <div class="jcard-layer-lbl">✦ ${isIs ? 'SAFN RÚNANNA' : 'THE GATHERING'}</div>
+          <div class="jcard-text" style="font-style:italic;line-height:1.9;">${e.deep_text || ''}</div>
+        </div>
+      </div>`;
+    }
+
+    // ── Regular reading card ──
+    const excerpt = (e.short_text || '').trim().slice(0, 160);
+    const areaStr = e.area ? ` · ${e.area}` : '';
     return `<div class="jcard" id="jcard-${i}">
       <div class="jcard-header" onclick="toggleJournalEntry(${i})">
         <div class="jcard-left">
@@ -1373,30 +1399,42 @@ async function updateJournalTeaser() {
   } catch { /* silent */ }
 }
 
-// Filter journal (Standard only) — placeholder, data jsou načtená v paměti
+// Filter journal (Standard only) — data loaded in memory
 let _journalCache = [];
 function filterJournal() {
   if (!_journalCache.length) return;
   const rune = document.getElementById('jf-rune')?.value || '';
   const area = document.getElementById('jf-area')?.value || '';
   const jlng = document.getElementById('jf-lang')?.value || '';
-  const filtered = _journalCache.filter(e =>
-    (!rune || e.rune_name === rune) &&
-    (!area || e.area === area) &&
-    (!jlng || e.lang === jlng)
-  );
+  const filtered = _journalCache.filter(e => {
+    const isGathering = e.area === 'gathering';
+    if (isGathering) {
+      // Gathering entries: ignore rune filter (multiple runes), respect area + lang
+      return (!area || area === 'gathering') && (!jlng || e.lang === jlng);
+    }
+    // Normal entries: hide if area filter is set to gathering
+    if (area === 'gathering') return false;
+    return (!rune || e.rune_name === rune) &&
+           (!area || e.area === area) &&
+           (!jlng || e.lang === jlng);
+  });
   renderJournal(filtered);
 }
 
-// Naplní filter selektory unikátními hodnotami
+// Populate filter selectors from journal data
 function populateJournalFilters(entries) {
   const runeEl = document.getElementById('jf-rune');
   const areaEl = document.getElementById('jf-area');
   if (!runeEl || !areaEl) return;
-  const runes = [...new Set(entries.map(e => e.rune_name).filter(Boolean))].sort();
-  const areas = [...new Set(entries.map(e => e.area).filter(Boolean))].sort();
+  // Exclude Gathering entries from the rune dropdown (they have no single rune)
+  const normal = entries.filter(e => e.area !== 'gathering');
+  const runes  = [...new Set(normal.map(e => e.rune_name).filter(Boolean))].sort();
+  const areas  = [...new Set(normal.map(e => e.area).filter(Boolean))].sort();
+  const hasGathering = entries.some(e => e.area === 'gathering');
   runeEl.innerHTML = `<option value="">All runes</option>` + runes.map(r => `<option value="${r}">${r}</option>`).join('');
-  areaEl.innerHTML = `<option value="">All areas</option>` + areas.map(a => `<option value="${a}">${a}</option>`).join('');
+  areaEl.innerHTML = `<option value="">All areas</option>`
+    + (hasGathering ? `<option value="gathering">✦ The Gathering</option>` : '')
+    + areas.map(a => `<option value="${a}">${a}</option>`).join('');
 }
 
 function toggleJournalEntry(i) {
@@ -1650,6 +1688,32 @@ function buildWhispersPrompt(entries, name) {
   }
 }
 
+// Save a completed Gathering to the readings table so it appears in the journal
+async function saveGathering(text, entries) {
+  if (!currentUser || !text || !entries?.length) return;
+  // short_text holds the rune display string; deep_text holds the full reading
+  const runeDisplay = entries.map(e =>
+    `${e.rune_glyph || ''} ${(e.rune_name || '').toUpperCase()}`.trim()
+  ).join(' · ');
+  try {
+    await sb.from('readings').insert({
+      user_id:      currentUser.id,
+      rune_name:    'THE GATHERING',
+      rune_glyph:   '✦',
+      lang:         lang,
+      short_text:   runeDisplay,   // "ᚹ WUNJO · ᛉ ALGIZ · …"
+      deep_text:    text,          // full gathering reading
+      area:         'gathering',   // special marker — drives journal filter
+      seeking:      null,
+      question:     null,
+      life_rune:    null,
+      credits_used: false,
+    });
+    // Reload journal so the new entry appears immediately
+    loadJournal();
+  } catch(e) { console.warn('saveGathering:', e.message); }
+}
+
 async function generateWhispersReading() {
   if (_selectedEntries.length < GATHERING_MIN) return;
   _whispersMode = 'loading';
@@ -1688,6 +1752,8 @@ async function generateWhispersReading() {
     _whispersText = text;
     _whispersMode = 'output';
     _markGatheringUsed();
+    // Save to journal so it appears in Your Readings
+    await saveGathering(text, _selectedEntries);
     updateWhispersUI();
     _clearJcardSelections();
 
