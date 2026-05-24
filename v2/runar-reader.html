@@ -782,7 +782,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
     <div class="auth-gate-title" id="gate-title">YOUR FREE READINGS ARE COMPLETE</div>
     <div class="auth-gate-note" id="gate-note">
       You have walked with Rúnar three times as a Visitor.<br>
-      <b>Create a free account</b> to continue — Rúnar remembers those who return.
+      <b style="color:var(--gold);">Become a Rune Seeker</b> to continue — Rúnar remembers those who return.
     </div>
     <button class="btn-full" onclick="openAuthModal()" style="max-width:300px;margin:0 auto;display:block;" id="gate-btn">BECOME A RUNE SEEKER</button>
   </div>
@@ -893,9 +893,9 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
       <div class="trial-end-divider"></div>
       <div class="trial-end-title" id="trial-end-title">YOUR JOURNEY AS VISITOR IS COMPLETE</div>
       <div class="trial-end-note" id="trial-end-note">
-        You have walked with Rúnar three times. The stones remember.<br><b>Create a free account</b> to continue — five readings each month, no payment ever needed.
+        You have walked with Rúnar three times. The stones remember.<br><b style="color:var(--gold);">Become a Rune Seeker</b> to continue — five readings each month, no payment ever needed.
       </div>
-      <button class="btn-full" onclick="openAuthModal()" id="trial-end-btn" style="max-width:300px;margin:0 auto;display:block;">BECOME A RUNE SEEKER</button>
+      <button class="btn-full sec" onclick="openAuthModal()" id="trial-end-btn" style="max-width:300px;margin:0 auto;display:block;">BECOME A RUNE SEEKER</button>
     </div>
 
     <div class="status" id="st-reader"></div>
@@ -2605,8 +2605,8 @@ function updateUIText() {
   setText('trial-end-title', lang === 'is' ? 'FERÐ ÞÍN SEM GESTIR ER LOKIÐ' : 'YOUR JOURNEY AS VISITOR IS COMPLETE');
   const ten = document.getElementById('trial-end-note');
   if (ten) ten.innerHTML = lang === 'is'
-    ? 'Þú hefur farið með Rúnar þrisvar sinnum. Steinarnir muna.<br><b>Stofnaðu reikning</b> til að halda áfram — fimm lestrar á mánuði, án greiðslu.'
-    : 'You have walked with Rúnar three times as a Visitor. The stones remember.<br><b>Create a free account</b> to continue — five readings each month, no payment ever needed.';
+    ? 'Þú hefur farið með Rúnar þrisvar sinnum. Steinarnir muna.<br><b style="color:var(--gold);">Gerast Rúna-leitandi</b> til að halda áfram — fimm lestrar á mánuði, án greiðslu.'
+    : 'You have walked with Rúnar three times as a Visitor. The stones remember.<br><b style="color:var(--gold);">Become a Rune Seeker</b> to continue — five readings each month, no payment ever needed.';
   setText('trial-end-btn', lang === 'is' ? 'GERAST RÚNA-LEITANDI' : 'BECOME A RUNE SEEKER');
   // Journal tab label
   setText('atab-journal', lang === 'is' ? '◌ LESTRAR' : '◌ JOURNAL');
