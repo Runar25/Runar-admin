@@ -87,7 +87,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .sp-item.coming{opacity:0.35;pointer-events:none;cursor:default;}
 /* ── YOUR PATH section ── */
 .sp-account-label{font-family:'Cinzel',serif;font-size:0.48em;letter-spacing:3px;color:var(--muted);opacity:0.5;padding:14px 0 2px;display:block;}
-.sp-tier-desc{font-size:0.78em;font-style:italic;color:var(--muted);line-height:1.6;padding:2px 0 8px;}
+.sp-curr-tier-name{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:3px;color:var(--gold);padding:10px 0 2px;display:block;}
+.sp-tier-desc{font-size:0.78em;font-style:italic;color:var(--muted);line-height:1.6;padding:2px 0 10px;}
 .sp-path-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;color:var(--gold);font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:3px;cursor:pointer;padding:10px 0 4px;opacity:0.55;transition:opacity 0.15s;text-align:left;}
 .sp-path-toggle:hover{opacity:1;}
 .sp-path-body{padding-bottom:4px;}
@@ -2554,29 +2555,11 @@ function updateSidePanel() {
     : { rune_seeker:'RUNE SEEKER', free:'RUNE SEEKER', credits:'RUNE SEEKER', standard:'STANDARD', premium:'PREMIUM' };
   const tierHeader = currentUser ? (tierLabels[userTier] || userTier.toUpperCase()) : (isIs ? 'GESTUR' : 'VISITOR');
   setText('sp-tier-header', isIs ? 'REIKNINGUR ÞÍNN' : 'YOUR ACCOUNT');
-  // Current tier description (always visible under toggle)
-  const TIER_DESCS_EN = {
-    free_trial:  'Your first three readings are a gift.<br>No account, no payment.<br>Step further when you are ready.',
-    rune_seeker: '5 readings / month + reading credits.<br>Limited journal (last 5 readings).<br>READING GIFT CARDs never expire.',
-    standard:    'monthly / yearly subscription<br>Unlimited readings.<br>Full journal.<br>The Gathering once a week.',
-    premium:     'All features · coming soon.',
-  };
-  const TIER_DESCS_IS = {
-    free_trial:  'Fyrstu þrír lestrar þínir eru gjafir.<br>Enginn reikningur, engin greiðsla.<br>Farðu lengra þegar þú ert tilbúinn.',
-    rune_seeker: '5 lestrar / mánuð + lesturarkort.<br>Takmörkuð dagbók (síðustu 5 lestrar).<br>Lesturarkort renna aldrei út.',
-    standard:    'mánaðar- / árslegt áskrift<br>Ótakmarkaðir lestrar.<br>Full dagbók.<br>The Gathering einu sinni á viku.',
-    premium:     'Allar aðgerðir · bráðlega.',
-  };
-  const normTierForDesc = !currentUser ? 'free_trial' : ((userTier === 'free' || userTier === 'credits') ? 'rune_seeker' : (userTier || 'free_trial'));
-  const descEl2 = document.getElementById('sp-tier-desc');
-  if (descEl2) descEl2.innerHTML = (isIs ? TIER_DESCS_IS : TIER_DESCS_EN)[normTierForDesc] || '';
   // Side panel navigation links — switch with language
   setText('sp-guide-link',   isIs ? '? LEIÐBEININGAR & SPURNINGAR' : '? GUIDE & FAQ');
   setText('sp-install-btn', isIs ? '⬇ SETJA UP RÚNAR' : '⬇ INSTALL RÚNAR');
   setText('sp-privacy-link', isIs ? 'PERSÓNUVERNDARSTEFNA'         : 'PRIVACY POLICY');
-  // Path section always visible — set toggle label + render for all tiers incl. Visitor
-  const toggleLbl = document.getElementById('sp-path-toggle-lbl');
-  if (toggleLbl) toggleLbl.textContent = tierHeader;
+  // Render current tier + higher path (PANEL_TIERS — single source of truth)
   _renderYourPath();
 
   // Show/hide session + danger + personal actions sections
@@ -3311,8 +3294,8 @@ function wcapSeek(v) {
   if (!a || !a.duration) return;
   a.currentTime = a.duration * (v / 100);
 }
-// ─── YOUR PATH TOGGLE ────────────────────────────────────
-function toggleYourPath() {
+// ─── HIGHER PATH TOGGLE ─────────────────────────────────
+function toggleHigherPath() {
   const body  = document.getElementById('sp-path-body');
   const arrow = document.getElementById('sp-path-arrow');
   if (!body) return;
@@ -3362,34 +3345,65 @@ function _renderYourPath() {
   if (!body) return;
   const isIs = lang === 'is';
   const tier = !currentUser ? 'free_trial' : (userTier || 'free_trial');
-
-  const TIERS = [
-    { id:'free_trial',  name: isIs ? 'GESTUR'     : 'VISITOR',     detail: isIs ? '3 ókeypis lestrar. Enginn reikningur.' : '3 free trial readings. No account required.' },
-    { id:'rune_seeker', name: isIs ? 'VEGFARANDI' : 'RUNE SEEKER', detail: isIs ? '5 lestrar / mánuð + lesturarkort.' : '5 readings / month + reading gift card.' },
-    { id:'standard',    name: 'STANDARD',          detail: isIs ? 'Ótakmarkaðir lestrar. The Gathering innifalið.' : 'Unlimited readings. The Gathering included.' },
-    { id:'premium',     name: 'PREMIUM',            detail: isIs ? 'Allar aðgerðir · bráðlega.' : 'All features · coming soon.' },
-  ];
   const normTier = (tier === 'free' || tier === 'credits') ? 'rune_seeker' : tier;
-  const currData = TIERS.find(t => t.id === normTier) || TIERS[0];
-  const currIdx  = TIERS.indexOf(currData);
-  const higher   = TIERS.slice(currIdx + 1);
+  const lk = isIs ? 'is' : 'en';
 
+  // ══ PANEL_TIERS — single source of truth for all side-panel tier data ══
+  const PANEL_TIERS = [
+    { id: 'free_trial',
+      name: { en: 'VISITOR',     is: 'GESTUR' },
+      props: {
+        en: ['Your first three readings are a gift.', 'No account, no payment.', 'Step further when you are ready.'],
+        is: ['Fyrstu þrír lestrar þínir eru gjafir.', 'Enginn reikningur, engin greiðsla.', 'Farðu lengra þegar þú ert tilbúinn.']
+      }
+    },
+    { id: 'rune_seeker',
+      name: { en: 'RUNE SEEKER', is: 'VEGFARANDI' },
+      props: {
+        en: ['5 readings / month + reading credits.', 'Limited journal (last 5 readings).', 'READING GIFT CARDs never expire.'],
+        is: ['5 lestrar / mánuð + lesturarkort.', 'Takmörkuð dagbók (síðustu 5 lestrar).', 'Lesturarkort renna aldrei út.']
+      }
+    },
+    { id: 'standard',
+      name: { en: 'STANDARD', is: 'STANDARD' },
+      props: {
+        en: ['monthly / yearly subscription', 'Unlimited readings.', 'Full journal.', 'The Gathering once a week.'],
+        is: ['mánaðar- / árslegt áskrift', 'Ótakmarkaðir lestrar.', 'Full dagbók.', 'The Gathering einu sinni á viku.']
+      }
+    },
+    { id: 'premium',
+      name: { en: 'PREMIUM', is: 'PREMIUM' },
+      props: {
+        en: ['All features · coming soon.'],
+        is: ['Allar aðgerðir · bráðlega.']
+      }
+    }
+  ];
+
+  const currData = PANEL_TIERS.find(function(t) { return t.id === normTier; }) || PANEL_TIERS[0];
+  const currIdx  = PANEL_TIERS.indexOf(currData);
+  const higher   = PANEL_TIERS.slice(currIdx + 1);
+
+  // Static current tier name
+  const nameEl = document.getElementById('sp-curr-tier-name');
+  if (nameEl) nameEl.textContent = currData.name[lk];
+
+  // Current tier properties (multi-line, always visible)
+  const descEl = document.getElementById('sp-tier-desc');
+  if (descEl) descEl.innerHTML = currData.props[lk].join('<br>');
+
+  // Show / hide HIGHER PATH toggle
+  const hToggle = document.getElementById('sp-higher-toggle');
+  if (hToggle) hToggle.style.display = higher.length > 0 ? '' : 'none';
+
+  // Fill HIGHER PATH body
   let html = '';
-
-  // Body: HIGHER PATH only — current tier shown via toggle label + sp-tier-desc above
-  if (higher.length > 0) {
-    html += '<div class="sp-higher-path-lbl">' + (isIs ? 'HÆRRI BRAUT' : 'HIGHER PATH') + '</div>';
-    higher.forEach(function(t) {
-      html += '<div class="sp-tier-block">'
-           +  '<div class="sp-tier-name">' + t.name + '</div>'
-           +  '<div class="sp-tier-detail">' + t.detail + '</div>'
-           +  '</div>';
-    });
-
-  }
-
-
-
+  higher.forEach(function(t) {
+    html += '<div class="sp-tier-block">'
+         +  '<div class="sp-tier-name">' + t.name[lk] + '</div>'
+         +  '<div class="sp-tier-detail">' + t.props[lk].join('<br>') + '</div>'
+         +  '</div>';
+  });
   body.innerHTML = html;
 }
 // Wire audio element events once DOM ready
@@ -3605,11 +3619,12 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   <!-- ① Path section — always visible (Visitor + logged-in) -->
   <div class="side-panel-section" id="sp-path-section">
-    <button class="sp-path-toggle" onclick="toggleYourPath()">
-      <span id="sp-path-toggle-lbl">VISITOR</span>
+    <div class="sp-curr-tier-name" id="sp-curr-tier-name"></div>
+    <div class="sp-tier-desc" id="sp-tier-desc"></div>
+    <button class="sp-path-toggle" id="sp-higher-toggle" onclick="toggleHigherPath()" style="display:none;">
+      <span>HIGHER PATH</span>
       <span id="sp-path-arrow" style="font-size:1.8em;letter-spacing:0;line-height:1;">&#9656;</span>
     </button>
-    <div class="sp-tier-desc" id="sp-tier-desc"></div>
     <div id="sp-path-body" class="sp-path-body" style="display:none;"></div>
   </div>
 
