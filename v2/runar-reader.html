@@ -527,8 +527,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .whispers-section{border:1px solid rgba(255,191,0,0.18);background:rgba(255,191,0,0.025);padding:20px 22px;margin-bottom:28px;}
 .whispers-title{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:3px;color:var(--gold);margin-bottom:8px;}
 .whispers-sub{font-size:0.86em;font-style:italic;color:var(--dim);margin-bottom:16px;line-height:1.65;}
-.whispers-desc{font-size:0.86em;font-style:italic;color:var(--dim);line-height:1.75;margin-bottom:18px;opacity:0.6;transition:color 0.4s,opacity 0.4s;}
-.whispers-desc.on{color:var(--muted);opacity:1;}
+.whispers-desc{font-size:0.86em;font-style:italic;color:var(--muted);line-height:1.75;margin-bottom:18px;}
 .whispers-desc strong{color:var(--gold);font-style:normal;font-weight:400;}
 /* Loading pulse */
 @keyframes runar-breathe{0%,100%{opacity:0.4;}50%{opacity:1;}}
@@ -1531,20 +1530,17 @@ function updateWhispersUI() {
   if (idleSub) idleSub.textContent = '';
 
   if (!isStandard) {
-    // Rune Seeker — locked teaser
-    if (descEl)   descEl.classList.remove('on');
+    // Rune Seeker — coming soon
     if (reqBtn)   { reqBtn.disabled = true; reqBtn.style.opacity = '0.35'; reqBtn.style.cursor = 'default'; }
-    if (lockEl)   { lockEl.style.display = 'block'; lockEl.textContent = isIs ? 'The Gathering opnast með Standard.' : 'The Gathering unlocks with Standard.'; }
+    if (lockEl)   { lockEl.style.display = 'block'; lockEl.textContent = isIs ? '— COMING SOON —' : '— COMING SOON —'; }
     if (needMore) needMore.style.display = 'none';
   } else if (usedAlready) {
-    // Already done this week
-    if (descEl)   descEl.classList.remove('on');
+    // Already used this week — button disabled, text visible
     if (reqBtn)   { reqBtn.disabled = true; reqBtn.style.opacity = '0.4'; reqBtn.style.cursor = 'default'; }
     if (lockEl)   { lockEl.style.display = 'block'; lockEl.textContent = isIs ? 'The Gathering hefur þegar verið kallað þennan viku. Komdu aftur í næstu viku.' : 'The Gathering has already spoken this week. Return when the new week begins.'; }
     if (needMore) needMore.style.display = 'none';
   } else if (!hasEnough) {
     // Standard+ but fewer than 3 readings
-    if (descEl)   descEl.classList.remove('on');
     if (reqBtn)   { reqBtn.disabled = true; reqBtn.style.opacity = '0.4'; reqBtn.style.cursor = 'default'; }
     if (lockEl)   lockEl.style.display = 'none';
     if (needMore) {
@@ -1555,8 +1551,7 @@ function updateWhispersUI() {
         : `${needed} more reading${needed !== 1 ? 's' : ''} needed to open The Gathering.`;
     }
   } else {
-    // Standard+ with enough readings, not yet used this week — desc fully visible
-    if (descEl)   descEl.classList.add('on');
+    // Standard+ with enough readings, not yet used this week
     if (reqBtn)   { reqBtn.disabled = false; reqBtn.style.opacity = ''; reqBtn.style.cursor = ''; }
     if (lockEl)   lockEl.style.display = 'none';
     if (needMore) needMore.style.display = 'none';
