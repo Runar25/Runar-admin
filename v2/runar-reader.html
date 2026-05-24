@@ -1844,28 +1844,23 @@ function updateAuthUI() {
       content.style.display     = 'block';
 
     } else {
-      // Měsíční i kredity vyčerpány
-      freeBanner.style.display = 'none';
-      const outputVisible = document.getElementById('reader-output')?.style.display !== 'none';
-      if (outputVisible) {
-        upgradeGate.style.display = 'none';
-      } else {
-        setText('upgrade-gate-title', isIs ? 'MÁNUÐARLEGIR LESTRAR ÞÍNIR ERU FULLNÝTTIR' : 'YOUR MONTHLY READINGS ARE COMPLETE');
-        const ugNote = document.getElementById('upgrade-gate-note');
-        if (ugNote) ugNote.innerHTML = isIs
-          ? 'Þú hefur gengið alla fimm lestrana þína í þessum mánuði. Steinarnir hvíla til næsta mánaðar — eða opnaðu dyrnar með <b>Rúnar gjafa-lesturarkort</b>. Eitt kort. Engin gildistími.'
-          : 'You have walked all five readings this month. The stones rest until the new month — or keep the door open with a <b>Rune Seeker reading gift card</b>. One card. No expiry.';
-        const ugSub = document.getElementById('upgrade-gate-sub');
-        if (ugSub) ugSub.innerHTML = isIs ? 'eða bíddu til næsta mánaðar' : 'or return when the new month begins';
-        const ugBtn = document.getElementById('upgrade-gate-btn');
-        if (ugBtn) {
-          ugBtn.textContent = isIs ? '+ GJAFA-LESTURARKORT' : '+ GET A READING GIFT CARD';
-          ugBtn.disabled = false; ugBtn.style.opacity = '1'; ugBtn.style.cursor = 'pointer';
-          ugBtn.onclick = () => { upgradeGate.style.display = 'none'; content.style.display = 'block'; toggleRedeem(); };
-        }
-        upgradeGate.style.display = 'block';
-        content.style.display     = 'none';
+      // Monthly readings AND credits exhausted — show 0 in banner, form stays visible
+      upgradeGate.style.display = 'none';
+      freeBanner.style.display  = 'block';
+      content.style.display     = 'block';
+      const cntEl = document.getElementById('free-user-count');
+      if (cntEl) {
+        cntEl.textContent = isIs
+          ? `0 af ${FREE_REGISTERED_LIMIT} lestrum eftir í þessum mánuði`
+          : `0 of ${FREE_REGISTERED_LIMIT} readings remaining this month`;
+        cntEl.className = 'tn-counter warn';
       }
+      const txtEl = document.getElementById('free-user-text');
+      if (txtEl) txtEl.innerHTML = isIs
+        ? `Þú hefur gengið alla fimm lestrana þína í þessum mánuði. Steinarnir hvíla til næsta mánaðar — eða opnaðu dyrnar með <b>Rúnar gjafa-lesturarkort</b>. Eitt kort. Engin gildistími, engin áskrift.`
+        : `You have walked all five readings this month. The stones rest until the new month — or keep the door open with a <b>reading gift card</b>. One card. No expiry, no subscription.`;
+      const btnEl = document.getElementById('tn-curious-btn');
+      if (btnEl) { btnEl.textContent = isIs ? '+ GJAFA-LESTURARKORT' : '+ GET A READING GIFT CARD'; btnEl.style.display = ''; }
     }
   } else {
     // ── Anonymous ──
@@ -1896,15 +1891,24 @@ function updateAuthUI() {
       gate.style.display    = 'none';
       content.style.display = 'block';
     } else {
-      // Trial exhausted — only gate if no reading is currently visible
-      const outputVisible = document.getElementById('reader-output')?.style.display !== 'none';
-      banner.style.display = 'none';
-      if (outputVisible) {
-        // Reading in progress — leave content visible, gate will appear via trial-end prompt
-      } else {
-        gate.style.display    = 'block';
-        content.style.display = 'none';
+      // Trial exhausted — show 0 in banner, form stays visible so visitor can sign up
+      gate.style.display   = 'none';
+      banner.style.display = 'block';
+      content.style.display = 'block';
+      const isIs = lang === 'is';
+      const cntEl = document.getElementById('trial-count');
+      if (cntEl) {
+        cntEl.textContent = isIs
+          ? `0 af ${FREE_TRIAL_LIMIT} lestrum eftir`
+          : `0 of ${FREE_TRIAL_LIMIT} readings remaining`;
+        cntEl.className = 'tn-counter warn';
       }
+      const txtEl = document.getElementById('trial-text');
+      if (txtEl) txtEl.innerHTML = isIs
+        ? `Þú hefur notað þrjár ókeypis heimsóknirnar þínar sem Gestur. Vertu <strong>Vegfarandi</strong> — það kostar ekkert og opnar allar tuttugu og fimm rúnirnar.`
+        : `Your three free readings as a Visitor are complete. Become a <strong>Rune Seeker</strong> — it costs nothing, and all twenty-five runes open before you.`;
+      const btnEl = document.getElementById('tn-visitor-btn');
+      if (btnEl) btnEl.textContent = isIs ? 'GERAST VEGFARANDI →' : 'BECOME A RUNE SEEKER →';
     }
   }
   updateQuestionGate();
@@ -2916,7 +2920,13 @@ function startReading() {
   // Standard / Premium / Admin are never blocked here.
   if (currentUser && userTier === 'rune_seeker'
       && getFreeMonthCount(currentUser.id) >= FREE_REGISTERED_LIMIT
-      && userCredits <= 0) { updateAuthUI(); return; }
+      && userCredits <= 0) {
+    updateAuthUI();
+    setSt('st-setup', lang === 'is'
+      ? 'Þú hefur gengið alla lestrana þína í þessum mánuði. Notaðu gjafa-lesturarkort til að halda áfram.'
+      : 'Your readings for this month are complete. Use a reading gift card to continue.');
+    return;
+  }
   const name = document.getElementById('r-name').value.trim();
   if (!name) { setSt('st-setup', t('st_name_req'), 'err'); return; }
   const d  = parseInt(document.getElementById('r-day').value);
