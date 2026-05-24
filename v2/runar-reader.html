@@ -418,10 +418,13 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .cap-btn{background:none;border:none;color:var(--gold);font-size:1.15em;cursor:pointer;padding:2px 4px;line-height:1;flex-shrink:0;transition:opacity 0.15s;}
 .cap-btn:hover{opacity:0.75;}
 .cap-time{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:1px;color:var(--gold);flex-shrink:0;min-width:38px;}
-.cap-seek{flex:1;-webkit-appearance:none;appearance:none;height:5px;background:rgba(255,191,0,0.18);border-radius:3px;outline:none;cursor:pointer;accent-color:var(--gold);}
-.cap-seek::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--gold);cursor:pointer;box-shadow:0 0 4px rgba(255,191,0,0.5);}
-.cap-seek::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--gold);cursor:pointer;border:none;box-shadow:0 0 4px rgba(255,191,0,0.5);}
+/* height:20px = thumb height → webkit auto-centers thumb on track, no margin-top needed */
+.cap-seek{flex:1;-webkit-appearance:none;appearance:none;height:20px;background:transparent;outline:none;cursor:pointer;accent-color:var(--gold);}
+.cap-seek::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--gold);cursor:pointer;box-shadow:0 0 5px rgba(255,191,0,0.6);}
+.cap-seek::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--gold);cursor:pointer;border:none;box-shadow:0 0 5px rgba(255,191,0,0.6);}
 .cap-seek::-webkit-slider-runnable-track{height:5px;border-radius:3px;background:linear-gradient(to right,var(--gold) var(--pct,0%),rgba(255,191,0,0.18) var(--pct,0%));}
+.cap-seek::-moz-range-track{height:5px;border-radius:3px;background:rgba(255,191,0,0.18);}
+.cap-btn svg{display:block;}
 /* Global audio element — keep amber accent for secondary players (collection, journal) */
 audio{accent-color:var(--gold);color-scheme:dark;}
 audio::-webkit-media-controls-panel{background-color:rgba(10,10,10,0.6)!important;}
@@ -864,7 +867,9 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
           <input type="range" class="cap-seek" id="cap-seek" value="0" min="0" max="100" step="0.1"
                  oninput="capSeek(this.value)" title="Seek">
           <span class="cap-time" id="cap-dur">0:00</span>
-          <button class="cap-btn" id="cap-mute" onclick="capMute()" title="Mute / Unmute">🔊</button>
+          <button class="cap-btn" id="cap-mute" onclick="capMute()" title="Mute / Unmute" style="display:flex;align-items:center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06C16.89 6.15 19 8.83 19 12c0 3.17-2.11 5.84-5 6.71v2.06c4.01-.91 7-4.49 7-8.77 0-4.28-2.99-7.86-7-8.77z"/></svg>
+          </button>
         </div>
       </div>
       <div class="status" id="st-voice"></div>
@@ -3032,12 +3037,14 @@ function capSeek(v) {
   a.currentTime = a.duration * (v / 100);
   _capTrack(+v);
 }
+const _SVG_VOL_ON  = `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06C16.89 6.15 19 8.83 19 12c0 3.17-2.11 5.84-5 6.71v2.06c4.01-.91 7-4.49 7-8.77 0-4.28-2.99-7.86-7-8.77z"/></svg>`;
+const _SVG_VOL_OFF = `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>`;
 function capMute() {
   const a = document.getElementById('runar-audio');
   const btn = document.getElementById('cap-mute');
   if (!a || !btn) return;
   a.muted = !a.muted;
-  btn.textContent = a.muted ? '🔇' : '🔊';
+  btn.innerHTML = a.muted ? _SVG_VOL_OFF : _SVG_VOL_ON;
 }
 function _capReset() {
   const btn = document.getElementById('cap-play');
