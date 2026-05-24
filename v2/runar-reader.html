@@ -1448,8 +1448,8 @@ async function updateJournalTeaser() {
     if (count && count > 5) {
       const isIs = lang === 'is';
       txt.innerHTML = isIs
-        ? `Sérhver lestur sem þú hefur tekið er geymdur — ${count} samtals. Farðu yfir í <strong>Standard</strong> til að opna fulla króniku þína.`
-        : `Every reading you have ever taken is kept — ${count} in total. Move to <strong>Standard</strong> to open your full chronicle.`;
+        ? `Sérhver lestur sem þú hefur tekið er geymdur — ${count} samtals. Farðu yfir í <strong style="color:var(--gold);font-style:normal;">Standard</strong> til að opna fulla króniku þína.`
+        : `Every reading you have ever taken is kept — ${count} in total. Move to <strong style="color:var(--gold);font-style:normal;">Standard</strong> to open your full chronicle.`;
       teaser.style.display = 'block';
     }
   } catch { /* silent */ }
@@ -2175,14 +2175,8 @@ function updateQuestionGate() {
   if (!qSection || !qTeaser) return;
   const canAsk = (userTier === 'standard' || userTier === 'premium');
   qSection.style.display = canAsk ? 'block' : 'none';
-  qTeaser.style.display  = canAsk ? 'none'  : 'block';
-  // Clear question value when hidden so it doesn't leak into the prompt
+  qTeaser.style.display  = 'none'; // hidden until Premium decision is made
   if (!canAsk && qInput) qInput.value = '';
-  const isIs = lang === 'is';
-  const tEl = document.getElementById('q-teaser-txt');
-  if (tEl) tEl.textContent = isIs
-    ? 'Sérstök spurning opnast með Standard.'
-    : 'Specific questions unlock with Standard.';
 }
 
 function handleAuthBtn() {
