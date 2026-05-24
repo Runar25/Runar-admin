@@ -3028,9 +3028,10 @@ window.addEventListener('DOMContentLoaded', async () => {
     if (btn) { btn.textContent = 'SIGNING IN…'; btn.disabled = true; }
   }
 
-  // Auth state
+  // Auth state — getSession() restores session from localStorage on refresh
   const { data: { session } } = await sb.auth.getSession();
   currentUser = session?.user || null;
+  updateAuthUI(); // always sync UI with initial session state
   if (currentUser) {
     fetchUserProfile(currentUser.id); // tier + credits (also calls updateAuthUI)
     syncMonthlyCount(currentUser.id);
@@ -3038,6 +3039,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
 
   sb.auth.onAuthStateChange(async (event, session) => {
+    const prevUser = currentUser;
     currentUser = session?.user || null;
 
     updateAuthUI();
@@ -3045,6 +3047,14 @@ window.addEventListener('DOMContentLoaded', async () => {
       closeAuthModal();
       if (window.location.search.includes('code=')) {
         history.replaceState({}, document.title, window.location.pathname);
+      }
+      // INITIAL_SESSION fires on refresh when session is restored from storage
+      // TOKEN_REFRESHED fires when Supabase silently refreshes an expired token
+      // Both need fetchUserProfile to restore tier/credits
+      if (event === 'INITIAL_SESSION' || event === 'TOKEN_REFRESHED') {
+        fetchUserProfile(currentUser.id);
+        syncMonthlyCount(currentUser.id);
+        loadJournal();
       }
       if (event === 'SIGNED_IN') {
         showToast('✦ WELCOME · RÚNAR AWAITS');
