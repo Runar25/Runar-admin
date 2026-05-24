@@ -59,7 +59,7 @@ const UI_TEXT = {
     start_over:       'START OVER',
 
     // Voice
-    voice_btn:         ‘ᚢ HEAR RÚNAR SPEAK’,
+    voice_btn:         'ᚢ HEAR RÚNAR SPEAK',
     voice_btn_loading: 'ᚢ RÚNAR IS SPEAKING…',
     voice_btn_regen:   'ᚢ REGENERATE VOICE',
     voice_player_lbl:  '♪ RÚNAR SPEAKS',

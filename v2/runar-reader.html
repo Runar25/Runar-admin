@@ -596,7 +596,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 /* ── TRIAL END PROMPT ── */
 .trial-end{background:linear-gradient(160deg,rgba(255,191,0,0.055) 0%,rgba(18,22,31,0.92) 60%);border:1px solid rgba(255,191,0,0.42);padding:32px 24px 28px;text-align:center;margin-top:20px;animation:trialFadeIn 0.8s ease;box-shadow:0 0 40px rgba(255,191,0,0.07),0 0 0 1px rgba(255,191,0,0.08) inset;}
 @keyframes trialFadeIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
-.trial-end-rune{font-size:2.2em;opacity:0.45;margin-bottom:10px;filter:drop-shadow(0 0 8px rgba(255,191,0,0.3));}
+.trial-end-rune{font-size:2.2em;color:var(--gold);opacity:0.7;margin-bottom:10px;filter:drop-shadow(0 0 10px rgba(255,191,0,0.4));}
 .trial-end-divider{width:40px;height:1px;background:rgba(255,191,0,0.3);margin:0 auto 16px;}
 .trial-end-title{font-family:'Cinzel',serif;font-size:0.8em;letter-spacing:3px;color:var(--gold);margin-bottom:14px;}
 .trial-end-note{font-size:0.9em;color:var(--muted);font-style:italic;line-height:1.9;margin-bottom:24px;max-width:360px;margin-left:auto;margin-right:auto;}
@@ -784,7 +784,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
       You have walked with Rúnar three times as a Visitor.<br>
       <b>Create a free account</b> to continue — Rúnar remembers those who return.
     </div>
-    <button class="btn-full" onclick="openAuthModal()" style="max-width:300px;margin:0 auto;display:block;" id="gate-btn">CREATE FREE ACCOUNT</button>
+    <button class="btn-full" onclick="openAuthModal()" style="max-width:300px;margin:0 auto;display:block;" id="gate-btn">BECOME A RUNE SEEKER</button>
   </div>
 
   <!-- UPGRADE GATE (logged-in free user, monthly limit reached) -->
@@ -895,7 +895,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
       <div class="trial-end-note" id="trial-end-note">
         You have walked with Rúnar three times. The stones remember.<br><b>Create a free account</b> to continue — five readings each month, no payment ever needed.
       </div>
-      <button class="btn-full" onclick="openAuthModal()" id="trial-end-btn" style="max-width:300px;margin:0 auto;display:block;">CREATE FREE ACCOUNT</button>
+      <button class="btn-full" onclick="openAuthModal()" id="trial-end-btn" style="max-width:300px;margin:0 auto;display:block;">BECOME A RUNE SEEKER</button>
     </div>
 
     <div class="status" id="st-reader"></div>
@@ -948,7 +948,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
       <div class="journal-gate-wrap">
         <div class="journal-gate-rune">ᚱ</div>
         <p class="journal-gate-txt" id="journal-gate-txt">Create a free account to keep your readings.<br>Every rune you draw. Every word Rúnar speaks.<br>Kept.</p>
-        <button class="btn-full" onclick="openAuthModal()" style="max-width:280px;margin:0 auto;display:block;" id="journal-gate-btn">CREATE FREE ACCOUNT</button>
+        <button class="btn-full" onclick="openAuthModal()" style="max-width:280px;margin:0 auto;display:block;" id="journal-gate-btn">BECOME A RUNE SEEKER</button>
       </div>
     </div>
 
@@ -2600,14 +2600,14 @@ function updateUIText() {
   setText('gate-note', lang === 'is'
     ? 'Þú hefur farið með Rúnar þrisvar sinnum sem gestir.\nStofnaðu reikning til að halda áfram.'
     : 'You have walked with Rúnar three times as a Visitor.\nCreate a free account to continue.');
-  setText('gate-btn', lang === 'is' ? 'STOFNA REIKNING' : 'CREATE FREE ACCOUNT');
+  setText('gate-btn', lang === 'is' ? 'GERAST RÚNA-LEITANDI' : 'BECOME A RUNE SEEKER');
   // Trial end prompt translations
   setText('trial-end-title', lang === 'is' ? 'FERÐ ÞÍN SEM GESTIR ER LOKIÐ' : 'YOUR JOURNEY AS VISITOR IS COMPLETE');
   const ten = document.getElementById('trial-end-note');
   if (ten) ten.innerHTML = lang === 'is'
     ? 'Þú hefur farið með Rúnar þrisvar sinnum. Steinarnir muna.<br><b>Stofnaðu reikning</b> til að halda áfram — fimm lestrar á mánuði, án greiðslu.'
     : 'You have walked with Rúnar three times as a Visitor. The stones remember.<br><b>Create a free account</b> to continue — five readings each month, no payment ever needed.';
-  setText('trial-end-btn', lang === 'is' ? 'STOFNA REIKNING' : 'CREATE FREE ACCOUNT');
+  setText('trial-end-btn', lang === 'is' ? 'GERAST RÚNA-LEITANDI' : 'BECOME A RUNE SEEKER');
   // Journal tab label
   setText('atab-journal', lang === 'is' ? '◌ LESTRAR' : '◌ JOURNAL');
   // Journal gate
@@ -2615,7 +2615,7 @@ function updateUIText() {
   if (jgTxt) jgTxt.innerHTML = lang === 'is'
     ? 'Stofnaðu reikning til að geyma lestrana þína.<br>Sérhver rúna sem þú dregur. Hvert orð sem Rúnar talar.<br>Geymt.'
     : 'Create a free account to keep your readings.<br>Every rune you draw. Every word Rúnar speaks.<br>Kept.';
-  setText('journal-gate-btn', lang === 'is' ? 'STOFNA REIKNING' : 'CREATE FREE ACCOUNT');
+  setText('journal-gate-btn', lang === 'is' ? 'GERAST RÚNA-LEITANDI' : 'BECOME A RUNE SEEKER');
   // Re-render journal if it's open (picks up new lang labels)
   if (activeAppTab === 'journal' && _journalCache.length > 0) renderJournal(_journalCache);
   else if (activeAppTab === 'journal') updateWhispersUI();
