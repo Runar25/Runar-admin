@@ -85,6 +85,14 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .sp-item.signout{opacity:0.85;border-top:1px solid rgba(255,191,0,0.15);margin-top:6px;padding-top:14px;}
 .sp-item.signout:hover{opacity:1;}
 .sp-item.coming{opacity:0.22;pointer-events:none;cursor:default;}
+/* ── YOUR PATH section ── */
+.sp-path-section{border-top:1px solid rgba(255,191,0,0.1);}
+.sp-path-row{display:flex;align-items:baseline;gap:8px;margin-bottom:8px;}
+.sp-path-tier{font-family:'Cinzel',serif;font-size:0.52em;letter-spacing:1.5px;color:var(--gold);flex-shrink:0;}
+.sp-path-desc{font-size:0.72em;color:var(--dim);font-style:italic;}
+.sp-path-divider{height:1px;background:rgba(255,191,0,0.1);margin:10px 0;}
+.sp-path-note{font-size:0.7em;color:var(--dim);line-height:1.6;font-style:italic;}
+.sp-path-note strong{color:var(--gold);font-style:normal;font-weight:400;}
 .sp-item.coming.active{opacity:0.85;pointer-events:auto;cursor:pointer;}
 .sp-item.journal{color:var(--gold);opacity:0.85;}
 .sp-item.journal:hover{opacity:1;}
@@ -1492,8 +1500,9 @@ let _whispersMode    = 'idle'; // 'idle' | 'selecting' | 'loading' | 'output'
 let _selectedEntries = [];     // 3–7 journal entries chosen by user
 let _whispersText    = '';     // generated reading text (for voice)
 
-const GATHERING_MIN = 3;
-const GATHERING_MAX = 7;
+const GATHERING_MIN     = 3;
+const GATHERING_MAX     = 7;
+const GATHERING_CREDITS = 3; // credits cost for Rune Seeker
 
 function _gatheringWeekKey() {
   const d = new Date();
@@ -1510,10 +1519,12 @@ function _markGatheringUsed() {
 }
 
 function updateWhispersUI() {
-  const isStandard = userTier === 'standard' || userTier === 'premium';
-  const isIs       = lang === 'is';
-  const hasEnough  = _journalCache.length >= GATHERING_MIN;
-  const usedAlready = _gatheringUsedThisWeek();
+  const isStandard   = userTier === 'standard' || userTier === 'premium';
+  const isSeeker     = userTier === 'rune_seeker';
+  const isIs         = lang === 'is';
+  const hasEnough    = _journalCache.length >= GATHERING_MIN;
+  const usedAlready  = _gatheringUsedThisWeek();
+  const seekerCanPay = isSeeker && userCredits >= GATHERING_CREDITS;
 
   // Description (always visible, bilingual)
   const descEl = document.getElementById('whispers-desc');
@@ -1529,11 +1540,33 @@ function updateWhispersUI() {
 
   if (idleSub) idleSub.textContent = '';
 
-  if (!isStandard) {
-    // Rune Seeker — coming soon
+  if (!isStandard && !isSeeker) {
+    // Visitor — not available
     if (reqBtn)   { reqBtn.disabled = true; reqBtn.style.opacity = '0.35'; reqBtn.style.cursor = 'default'; }
-    if (lockEl)   { lockEl.style.display = 'block'; lockEl.textContent = isIs ? '— COMING SOON —' : '— COMING SOON —'; }
+    if (lockEl)   { lockEl.style.display = 'block'; lockEl.textContent = '— COMING SOON —'; }
     if (needMore) needMore.style.display = 'none';
+  } else if (isSeeker && !hasEnough) {
+    // Rune Seeker — not enough readings yet
+    if (reqBtn)   { reqBtn.disabled = true; reqBtn.style.opacity = '0.4'; reqBtn.style.cursor = 'default'; }
+    if (lockEl)   lockEl.style.display = 'none';
+    if (needMore) {
+      needMore.style.display = 'block';
+      const needed = GATHERING_MIN - _journalCache.length;
+      needMore.textContent = isIs
+        ? `Þú þarft ${needed} fleiri lestur${needed !== 1 ? 'a' : ''} til að opna The Gathering.`
+        : `${needed} more reading${needed !== 1 ? 's' : ''} needed to open The Gathering.`;
+    }
+    if (idleSub) idleSub.textContent = isIs
+      ? `The Gathering kostar ${GATHERING_CREDITS} lesturarkort.`
+      : `The Gathering costs ${GATHERING_CREDITS} reading credits.`;
+  } else if (isSeeker && !seekerCanPay) {
+    // Rune Seeker — not enough credits
+    if (reqBtn)   { reqBtn.disabled = true; reqBtn.style.opacity = '0.4'; reqBtn.style.cursor = 'default'; }
+    if (lockEl)   { lockEl.style.display = 'block'; lockEl.textContent = isIs ? 'Þú þarft 3 lesturarkort til að opna The Gathering.' : 'You need 3 reading credits to use The Gathering.'; }
+    if (needMore) needMore.style.display = 'none';
+    if (idleSub) idleSub.textContent = isIs
+      ? `The Gathering kostar ${GATHERING_CREDITS} lesturarkort.`
+      : `The Gathering costs ${GATHERING_CREDITS} reading credits.`;
   } else if (usedAlready) {
     // Already used this week — button disabled, text visible
     if (reqBtn)   { reqBtn.disabled = true; reqBtn.style.opacity = '0.4'; reqBtn.style.cursor = 'default'; }
@@ -1551,10 +1584,14 @@ function updateWhispersUI() {
         : `${needed} more reading${needed !== 1 ? 's' : ''} needed to open The Gathering.`;
     }
   } else {
-    // Standard+ with enough readings, not yet used this week
+    // Standard / Premium / Rune Seeker with credits — available
     if (reqBtn)   { reqBtn.disabled = false; reqBtn.style.opacity = ''; reqBtn.style.cursor = ''; }
     if (lockEl)   lockEl.style.display = 'none';
     if (needMore) needMore.style.display = 'none';
+    // Show credit cost for Rune Seeker
+    if (idleSub && isSeeker) idleSub.textContent = isIs
+      ? `✦ Þessi lestur kostar ${GATHERING_CREDITS} lesturarkort.`
+      : `✦ This reading costs ${GATHERING_CREDITS} reading credits.`;
   }
 
   if (reqBtn) reqBtn.textContent = isIs ? 'BIÐJA UM THE GATHERING' : 'REQUEST THE GATHERING';
@@ -1762,6 +1799,16 @@ async function generateWhispersReading() {
     _whispersText = text;
     _whispersMode = 'output';
     _markGatheringUsed();
+
+    // Deduct 3 credits for Rune Seeker
+    if (currentUser && userTier === 'rune_seeker') {
+      for (let i = 0; i < GATHERING_CREDITS; i++) {
+        await sb.rpc('use_credit', { p_user_id: currentUser.id });
+      }
+      userCredits = Math.max(0, userCredits - GATHERING_CREDITS);
+      updateAuthUI();
+    }
+
     // Save to journal so it appears in Your Readings
     await saveGathering(text, _selectedEntries);
     updateWhispersUI();
@@ -3335,6 +3382,18 @@ window.addEventListener('DOMContentLoaded', async () => {
     <a class="sp-item" id="sp-guide-link"   href="runar-help.html"    style="text-decoration:none;">? GUIDE &amp; FAQ</a>
     <button class="sp-item" id="sp-install-btn" onclick="installPWA();closeSidePanel();" style="display:none;">⬇ INSTALL RÚNAR</button>
     <a class="sp-item" id="sp-privacy-link" href="runar-privacy.html" style="text-decoration:none;opacity:0.55;font-size:0.9em;">PRIVACY POLICY</a>
+  </div>
+
+  <!-- ④ Your Path — always visible, explains tiers + credits -->
+  <div class="side-panel-section sp-path-section">
+    <div class="side-panel-lbl">YOUR PATH</div>
+    <div class="sp-path-row"><span class="sp-path-tier">VISITOR</span><span class="sp-path-desc">3 free readings</span></div>
+    <div class="sp-path-row"><span class="sp-path-tier">RUNE SEEKER</span><span class="sp-path-desc">5 / month + credits</span></div>
+    <div class="sp-path-row"><span class="sp-path-tier">STANDARD</span><span class="sp-path-desc">Unlimited · The Gathering</span></div>
+    <div class="sp-path-row"><span class="sp-path-tier">PREMIUM</span><span class="sp-path-desc">All features · coming soon</span></div>
+    <div class="sp-path-divider"></div>
+    <div class="sp-path-note">✦ THE GATHERING costs <strong>3 reading credits</strong> for Rune Seeker. Included for Standard &amp; Premium.</div>
+    <div class="sp-path-note" style="margin-top:6px;">READING GIFT CARDs never expire and work across all devices.</div>
   </div>
 
   <!-- ④ Sign out — logged-in only -->
