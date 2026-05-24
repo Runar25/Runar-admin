@@ -333,7 +333,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .coll-lang-tab{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;padding:6px 16px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all 0.18s;}
 .coll-lang-tab:first-child{border-right:none;}
 .coll-lang-tab.active{background:var(--gold);color:#000;border-color:var(--gold);}
-.coll-audio-player{margin-top:10px;}
+.coll-audio-player{margin-top:10px;}.coll-audio-player .cap,.jcard-audio-player .cap{margin-top:0;}
 
 /* ── TRIAL BANNER ── */
 /* ── TIER NOTICES (Visitor + Rune Seeker) ── */
@@ -1521,12 +1521,62 @@ async function playJournalAudio(runeName, eLang, i) {
       return;
     }
     const pick = rows[Math.floor(Math.random() * rows.length)];
-    player.innerHTML = `<audio controls autoplay preload="none" controlsList="nodownload" style="width:100%;margin-top:4px;" src="${pick.audio_url}"></audio>`;
+    var jprefix = 'j' + i;
+    player.innerHTML = _makeCapPlayer(jprefix, pick.audio_url, true);
+    _capWire(jprefix, true);
     btn.textContent  = isIs ? '♪ SPILANDI' : '♪ NOW PLAYING';
     btn.style.opacity = '0.45';
   } catch {
     btn.textContent = isIs ? '— Villa' : '— Error';
     btn.disabled = false;
+  }
+}
+
+// ─── GENERIC SECONDARY CAP PLAYER ───────────────────────
+// Used by collection modal and journal entries.
+// prefix = unique string (e.g. 'coll', 'j0', 'j3')
+function _makeCapPlayer(prefix, src, autoplay) {
+  return '<audio id="' + prefix + '-a" src="' + src + '" preload="none"' + (autoplay ? ' autoplay' : '') + '></audio>'
+       + '<div class="cap" style="margin-top:0;">'
+       + '<button class="cap-btn" id="' + prefix + '-pb" onclick="_capPlay(\'' + prefix + '\')" title="Play / Pause">&#9654;</button>'
+       + '<span class="cap-time" id="' + prefix + '-ct">0:00</span>'
+       + '<input type="range" class="cap-seek" id="' + prefix + '-sk" value="0" min="0" max="100" step="0.1" oninput="_capSeekTo(\'' + prefix + '\',this.value)" title="Seek">'
+       + '<span class="cap-time" id="' + prefix + '-dr">0:00</span>'
+       + '</div>';
+}
+function _capFmt(s) { var m = Math.floor(s / 60); return m + ':' + String(Math.floor(s % 60)).padStart(2, '0'); }
+function _capPlay(p) {
+  var a = document.getElementById(p + '-a');
+  var b = document.getElementById(p + '-pb');
+  if (!a) return;
+  if (a.paused) { a.play(); if (b) b.innerHTML = '&#9646;&#9646;'; }
+  else          { a.pause(); if (b) b.innerHTML = '&#9654;'; }
+}
+function _capSeekTo(p, v) {
+  var a = document.getElementById(p + '-a');
+  if (a && a.duration) a.currentTime = (v / 100) * a.duration;
+}
+function _capWire(p, doPlay) {
+  var a  = document.getElementById(p + '-a');
+  var sk = document.getElementById(p + '-sk');
+  var ct = document.getElementById(p + '-ct');
+  var dr = document.getElementById(p + '-dr');
+  var pb = document.getElementById(p + '-pb');
+  if (!a) return;
+  a.addEventListener('timeupdate', function() {
+    if (ct) ct.textContent = _capFmt(a.currentTime);
+    if (sk && a.duration) sk.value = (a.currentTime / a.duration) * 100;
+  });
+  a.addEventListener('loadedmetadata', function() {
+    if (dr) dr.textContent = _capFmt(a.duration);
+  });
+  a.addEventListener('ended', function() {
+    if (pb) pb.innerHTML = '&#9654;';
+    if (sk) sk.value = 0;
+    if (ct) ct.textContent = '0:00';
+  });
+  if (doPlay) {
+    a.addEventListener('canplay', function() { _capPlay(p); }, { once: true });
   }
 }
 
@@ -2885,9 +2935,12 @@ function loadCollAudio(l) {
   // Pick random version
   const pick = rows[Math.floor(Math.random() * rows.length)];
   textEl.textContent = pick.text || '';
-  playerEl.innerHTML = pick.audio_url
-    ? `<audio controls preload="none" controlsList="nodownload" style="width:100%;margin-top:4px;" src="${pick.audio_url}"></audio>`
-    : `<div class="coll-no-audio">Audio file missing.</div>`;
+  if (!pick.audio_url) {
+    playerEl.innerHTML = '<div class="coll-no-audio">Audio file missing.</div>';
+  } else {
+    playerEl.innerHTML = _makeCapPlayer('coll', pick.audio_url, false);
+    _capWire('coll');
+  }
 }
 
 // ─── RUNE GRID ───────────────────────────────────────────
