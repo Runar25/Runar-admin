@@ -773,7 +773,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
   <div class="tier-notice curious" id="free-user-banner" style="display:none;">
     <div class="tn-counter" id="free-user-count"></div>
     <p class="tn-text" id="free-user-text"></p>
-    <button class="tn-btn" onclick="toggleRedeem()" id="tn-curious-btn"></button>
+    <button class="btn-full sec" onclick="toggleRedeem()" id="tn-curious-btn" style="margin-top:18px;"></button>
   </div>
 
   <!-- AUTH GATE (trial exhausted) -->
@@ -1960,8 +1960,8 @@ function updateAuthUI() {
       }
       const txtEl = document.getElementById('free-user-text');
       if (txtEl) txtEl.innerHTML = isIs
-        ? `Þú hefur gengið alla fimm lestrana þína í þessum mánuði. Steinarnir hvíla til næsta mánaðar — eða opnaðu dyrnar með <b>Rúnar gjafa-lesturarkort</b>. Eitt kort. Engin gildistími, engin áskrift.`
-        : `You have walked all five readings this month. The stones rest until the new month — or keep the door open with a <b>reading gift card</b>. One card. No expiry, no subscription.`;
+        ? `Þú hefur gengið alla fimm lestrana þína í þessum mánuði. Steinarnir hvíla til næsta mánaðar — eða opnaðu dyrnar með <b>RÚNAR GJAFA-LESTURARKORT</b>. Eitt kort. Engin gildistími, engin áskrift.`
+        : `You have walked all five readings this month. The stones rest until the new month — or keep the door open with a <b>READING GIFT CARD</b>. One card. No expiry, no subscription.`;
       const btnEl = document.getElementById('tn-curious-btn');
       if (btnEl) { btnEl.textContent = isIs ? '+ GJAFA-LESTURARKORT' : '+ GET A READING GIFT CARD'; btnEl.style.display = ''; }
     }
