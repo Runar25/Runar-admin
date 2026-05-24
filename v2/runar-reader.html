@@ -534,7 +534,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 /* ── THE GATHERING ── */
 .whispers-section{border:1px solid rgba(255,191,0,0.18);background:rgba(255,191,0,0.025);padding:20px 22px;margin-bottom:28px;}
 .whispers-title{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:3px;color:var(--gold);margin-bottom:8px;}
-.whispers-sub{font-size:0.86em;font-style:italic;color:var(--dim);margin-bottom:16px;line-height:1.65;}
+.whispers-sub{font-size:0.82em;font-style:italic;color:var(--gold);opacity:0.65;margin-bottom:16px;line-height:1.65;letter-spacing:0.5px;}
 .whispers-desc{font-size:0.86em;font-style:italic;color:var(--muted);line-height:1.75;margin-bottom:18px;}
 .whispers-desc strong{color:var(--gold);font-style:normal;font-weight:400;}
 /* Loading pulse */
@@ -1800,7 +1800,8 @@ async function generateWhispersReading() {
         system:     sysPrompt,
         max_tokens: 1200,
         mode:       'ceremonial',
-        use_credit: false,
+        // Rune Seeker pays with credits (bypasses monthly limit); Standard/Premium free
+        use_credit: userTier === 'rune_seeker',
       }),
     });
 
@@ -1814,9 +1815,9 @@ async function generateWhispersReading() {
     _whispersMode = 'output';
     _markGatheringUsed();
 
-    // Deduct 3 credits for Rune Seeker
+    // Deduct remaining 2 credits for Rune Seeker (proxy already deducted 1 via use_credit:true)
     if (currentUser && userTier === 'rune_seeker') {
-      for (let i = 0; i < GATHERING_CREDITS; i++) {
+      for (let i = 0; i < GATHERING_CREDITS - 1; i++) {
         await sb.rpc('use_credit', { p_user_id: currentUser.id });
       }
       userCredits = Math.max(0, userCredits - GATHERING_CREDITS);
