@@ -49,7 +49,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 /* ── TOPBAR ── */
 .topbar{position:sticky;top:0;z-index:50;background:rgba(10,12,18,0.94);border-bottom:1px solid rgba(46,74,112,0.4);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);}
 .topbar-inner{max-width:1140px;margin:0 auto;padding:13px 28px;display:flex;align-items:center;justify-content:space-between;}
-.brand{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:4px;color:var(--gold);opacity:0.85;}
+.brand{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:4px;color:var(--gold);opacity:0.85;text-decoration:none;cursor:pointer;}
 .topbar-right{display:flex;align-items:center;gap:18px;}
 /* ── TOPBAR GREETING ── */
 #topbar-greeting{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.95em;color:var(--gold);opacity:0;white-space:nowrap;pointer-events:none;transition:opacity 0.7s ease;margin-right:4px;}
@@ -664,7 +664,7 @@ audio::-webkit-media-controls-mute-button{filter:sepia(1) saturate(8) hue-rotate
 <!-- ═══ TOPBAR ═══ -->
 <header class="topbar">
   <div class="topbar-inner">
-    <div class="brand" id="ui-brand">AGNDOFA</div>
+    <a class="brand" id="ui-brand" href="https://agndofa.is" target="_blank" rel="noopener">AGNDOFA</a>
     <div class="topbar-right">
       <span id="topbar-greeting"></span>
       <div class="auth-badge">
@@ -786,9 +786,9 @@ audio::-webkit-media-controls-mute-button{filter:sepia(1) saturate(8) hue-rotate
       <input class="txt" id="r-name" type="text" placeholder="How shall Rúnar address you?">
       <label class="flbl" id="dob-lbl">DATE OF BIRTH <span class="opt">(OPTIONAL)</span></label>
       <div class="dob-row">
-        <input class="num" id="r-day"   type="number" placeholder="Day"   min="1"    max="31">
-        <input class="num" id="r-month" type="number" placeholder="Month" min="1"    max="12">
-        <input class="num" id="r-year"  type="number" placeholder="Year"  min="1930" max="2010">
+        <input class="num" id="r-day"   type="number" placeholder="Day"   min="1" max="31"   oninput="this.value=this.value.slice(0,2);if(+this.value>31)this.value=31;if(+this.value<0)this.value=''">
+        <input class="num" id="r-month" type="number" placeholder="Month" min="1" max="12"   oninput="this.value=this.value.slice(0,2);if(+this.value>12)this.value=12;if(+this.value<0)this.value=''">
+        <input class="num" id="r-year"  type="number" placeholder="Year"  min="1900" max="2015" oninput="this.value=this.value.slice(0,4)">
       </div>
       <label class="flbl" id="area-lbl">AREA OF LIFE <span class="opt">(OPTIONAL)</span></label>
       <div class="pills" id="area-pills"></div>
