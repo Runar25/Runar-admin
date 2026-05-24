@@ -409,11 +409,19 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .btn-voice{width:100%;padding:14px;background:transparent;border:1px solid var(--border2);color:var(--muted);font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.5px;cursor:pointer;transition:all 0.25s;margin-top:4px;}
 .btn-voice:hover:not(:disabled){border-color:var(--blue);color:var(--blue);}
 .btn-voice:disabled{opacity:0.45;cursor:not-allowed;}
-.audio-player{display:none;margin-top:14px;background:linear-gradient(135deg,#2E4A70 0%,#1d3352 100%);padding:20px 22px;}
+.audio-player{display:none;margin-top:14px;background:transparent;border:1px solid rgba(255,191,0,0.3);border-radius:6px;padding:16px 18px;}
 .audio-player.visible{display:block;}
 .audio-player-lbl{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:3px;color:var(--gold);margin-bottom:12px;opacity:0.9;}
 .audio-controls audio{width:100%;outline:none;}
-audio::-webkit-media-controls-panel{background:#2E4A70;}
+/* Global audio element — amber accent, transparent panel (all players) */
+audio{accent-color:var(--gold);color-scheme:dark;}
+audio::-webkit-media-controls-panel{background-color:rgba(10,10,10,0.6)!important;}
+audio::-webkit-media-controls-enclosure{border-radius:6px;}
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display{color:var(--gold);}
+audio::-webkit-media-controls-timeline{accent-color:var(--gold);}
+audio::-webkit-media-controls-play-button,
+audio::-webkit-media-controls-mute-button{filter:sepia(1) saturate(8) hue-rotate(-8deg);}
 
 /* ── MODALS ── */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:100;display:none;align-items:center;justify-content:center;padding:20px;}
@@ -639,6 +647,17 @@ audio::-webkit-media-controls-panel{background:#2E4A70;}
       <button class="btn-half sec" id="lsm-cancel" onclick="cancelLangSwitch()"></button>
     </div>
     <div class="credit-note">1 CREDIT</div>
+  </div>
+</div>
+
+<!-- ═══ INSTALL MODAL (iOS / fallback) ═══ -->
+<div class="modal-overlay" id="install-modal" onclick="if(event.target===this)closeInstallModal()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeInstallModal()">✕</button>
+    <div class="modal-rune" style="font-size:2em;color:var(--gold);margin-bottom:16px;opacity:0.7;">ᚱ</div>
+    <div class="modal-title" id="install-modal-title">INSTALL RÚNAR</div>
+    <p class="modal-sub" id="install-modal-body" style="margin:16px 0 24px;line-height:1.9;"></p>
+    <button class="btn-full" onclick="closeInstallModal()" id="install-modal-btn">GOT IT</button>
   </div>
 </div>
 
@@ -1914,6 +1933,71 @@ function handleAuthBtn() {
   else openAuthModal();
 }
 
+// ── PWA INSTALL ──────────────────────────────────────────
+let _installPrompt = null;
+
+function _isIOS()        { return /iphone|ipad|ipod/i.test(navigator.userAgent); }
+function _isStandalone() { return window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true; }
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  _installPrompt = e;
+  _updateInstallBtn();
+});
+window.addEventListener('appinstalled', () => {
+  _installPrompt = null;
+  _updateInstallBtn();
+});
+
+function _updateInstallBtn() {
+  const btn = document.getElementById('sp-install-btn');
+  if (!btn) return;
+  if (_isStandalone()) { btn.style.display = 'none'; return; }
+  // Android/Chrome/Brave: show when prompt is ready
+  // iOS Safari: always show (can't detect if installed)
+  btn.style.display = (_installPrompt || _isIOS()) ? '' : 'none';
+}
+
+async function installPWA() {
+  if (_installPrompt) {
+    _installPrompt.prompt();
+    const { outcome } = await _installPrompt.userChoice;
+    if (outcome === 'accepted') { _installPrompt = null; _updateInstallBtn(); }
+  } else {
+    // iOS or no prompt available — show instructions
+    const isIs = lang === 'is';
+    const title = document.getElementById('install-modal-title');
+    const body  = document.getElementById('install-modal-body');
+    const btn   = document.getElementById('install-modal-btn');
+    if (title) title.textContent = isIs ? 'SETJA UP RÚNAR' : 'INSTALL RÚNAR';
+    if (btn)   btn.textContent   = isIs ? 'SKILIÐ' : 'GOT IT';
+    if (body) {
+      if (_isIOS()) {
+        body.innerHTML = isIs
+          ? 'Í Safari: ýttu á <strong>Deila</strong> táknið (□↑) neðst á skjánum, veldu síðan <strong>Bæta við heimaskjá</strong> og ýttu á <strong>Bæta við</strong>.'
+          : 'In Safari: tap the <strong>Share</strong> button (□↑) at the bottom of your screen, then select <strong>Add to Home Screen</strong> and tap <strong>Add</strong>.';
+      } else {
+        body.innerHTML = isIs
+          ? 'Í Chrome eða Brave: ýttu á <strong>⋮ valmynd</strong> efst til hægri og veldu <strong>Setja upp forrit</strong> eða <strong>Bæta við heimaskjá</strong>.'
+          : 'In Chrome or Brave: tap the <strong>⋮ menu</strong> in the top right and select <strong>Install app</strong> or <strong>Add to Home Screen</strong>.';
+      }
+    }
+    document.getElementById('install-modal').classList.add('open');
+  }
+}
+function closeInstallModal() {
+  document.getElementById('install-modal').classList.remove('open');
+}
+
+// Register service worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/Runar-admin/v2/sw.js', { scope: '/Runar-admin/v2/' })
+      .then(() => _updateInstallBtn())
+      .catch(e => console.warn('SW:', e));
+  });
+}
+
 function openAuthModal() {
   document.getElementById('auth-modal').classList.add('open');
   document.getElementById('auth-modal-body').style.display = 'block';
@@ -2198,6 +2282,7 @@ function skipName() {
 function updateSidePanel() {
   const accEl = document.getElementById('sp-account');
   if (!accEl) return;
+  _updateInstallBtn();
   const isIs = lang === 'is';
   const tierLabels = isIs
     ? { rune_seeker:'VEGFARANDI', free:'VEGFARANDI', credits:'VEGFARANDI', standard:'STANDARD', premium:'PREMIUM' }
@@ -2206,6 +2291,7 @@ function updateSidePanel() {
   setText('sp-tier-header', tierHeader);
   // Side panel navigation links — switch with language
   setText('sp-guide-link',   isIs ? '? LEIÐBEININGAR & SPURNINGAR' : '? GUIDE & FAQ');
+  setText('sp-install-btn', isIs ? '⬇ SETJA UP RÚNAR' : '⬇ INSTALL RÚNAR');
   setText('sp-privacy-link', isIs ? 'PERSÓNUVERNDARSTEFNA'         : 'PRIVACY POLICY');
   // Show/hide session + danger sections
   const sessionEl = document.getElementById('sp-session');
@@ -2449,11 +2535,17 @@ async function loadCollection() {
   const grid = document.getElementById('coll-grid');
   if (!grid) return;
 
-  // Fetch audio availability
-  const { data } = await sb.from('runar_static_audio')
-    .select('rune_name, lang, version, text, audio_url, ready')
-    .eq('ready', true)
-    .order('version');
+  // Fetch audio availability — wrapped in try/catch so rune grid always renders
+  let data = null;
+  try {
+    const result = await sb.from('runar_static_audio')
+      .select('rune_name, lang, version, text, audio_url, ready')
+      .eq('ready', true)
+      .order('version');
+    data = result.data;
+  } catch(e) {
+    console.warn('Collection: audio fetch failed, rendering without audio markers', e);
+  }
 
   collAudioMap = {};
   RUNES.forEach(r => { collAudioMap[r.n] = { en: [], is: [] }; });
@@ -3007,6 +3099,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   <!-- ③ Navigation — always visible -->
   <div class="side-panel-section">
     <a class="sp-item" id="sp-guide-link"   href="runar-help.html"    style="text-decoration:none;">? GUIDE &amp; FAQ</a>
+    <button class="sp-item" id="sp-install-btn" onclick="installPWA();closeSidePanel();" style="display:none;">⬇ INSTALL RÚNAR</button>
     <a class="sp-item" id="sp-privacy-link" href="runar-privacy.html" style="text-decoration:none;opacity:0.55;font-size:0.9em;">PRIVACY POLICY</a>
   </div>
 
