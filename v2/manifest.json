@@ -1,0 +1,38 @@
+{
+  "name": "Rúnar — Rune Reader",
+  "short_name": "Rúnar",
+  "description": "Draw a rune. Hear what the old stones whisper.",
+  "start_url": "/Runar-admin/v2/runar-reader.html",
+  "scope": "/Runar-admin/v2/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0a0a",
+  "theme_color": "#FFBF00",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "icons/favicon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["lifestyle", "entertainment"],
+  "screenshots": []
+}
