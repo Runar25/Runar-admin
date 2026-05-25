@@ -95,6 +95,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .sp-tier-block{padding:7px 0;border-bottom:1px solid rgba(255,191,0,0.07);}
 .sp-tier-block:last-of-type{border-bottom:none;}
 .sp-tier-name{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--gold);opacity:0.85;}
+.sp-tier-note{font-family:'Cormorant Garamond',serif;font-size:0.88em;font-style:italic;color:var(--gold);opacity:0.5;letter-spacing:0.5px;margin-left:6px;}
 .sp-tier-detail{font-size:0.71em;color:var(--muted);font-style:italic;line-height:1.6;margin-top:2px;}
 .sp-tier-sub{font-size:0.68em;color:var(--gold);opacity:0.6;font-style:italic;margin-top:3px;letter-spacing:0.5px;}
 .sp-path-gift-note{font-size:0.68em;color:var(--muted);opacity:0.7;font-style:italic;line-height:1.55;margin-top:10px;padding-top:8px;border-top:1px solid rgba(255,191,0,0.07);}
@@ -3367,16 +3368,18 @@ function _renderYourPath() {
     },
     { id: 'standard',
       name: { en: 'STANDARD', is: 'STANDARD' },
+      note: { en: '— coming soon', is: '— bráðlega' },
       props: {
         en: ['monthly / yearly subscription', 'Unlimited readings.', 'Full journal.', 'The Gathering once a week.'],
-        is: ['mánaðar- / árslegt áskrift', 'Ótakmarkaðir lestrar.', 'Full dagbók.', 'The Gathering einu sinni á viku.']
+        is: ['mánaðar- / árslegt áskrift', 'Ótakmarkаðir lestrar.', 'Full dagbók.', 'The Gathering einu sinni á viku.']
       }
     },
     { id: 'premium',
       name: { en: 'PREMIUM', is: 'PREMIUM' },
+      note: { en: '— coming soon', is: '— bráðlega' },
       props: {
-        en: ['All features · coming soon.'],
-        is: ['Allar aðgerðir · bráðlega.']
+        en: ['monthly / yearly subscription', 'Unlimited readings.', 'Full journal.', 'The Gathering once a week.', 'Ceremonial mode.'],
+        is: ['mánaðar- / árslegt áskrift', 'Ótakmarkаðir lestrar.', 'Full dagbók.', 'The Gathering einu sinni á viku.', 'Ceremonial mode.']
       }
     }
   ];
@@ -3400,8 +3403,9 @@ function _renderYourPath() {
   // Fill HIGHER PATH body
   let html = '';
   higher.forEach(function(t) {
+    var note = t.note ? '<span class="sp-tier-note">' + t.note[lk] + '</span>' : '';
     html += '<div class="sp-tier-block">'
-         +  '<div class="sp-tier-name">' + t.name[lk] + '</div>'
+         +  '<div class="sp-tier-name">' + t.name[lk] + note + '</div>'
          +  '<div class="sp-tier-detail">' + t.props[lk].join('<br>') + '</div>'
          +  '</div>';
   });
