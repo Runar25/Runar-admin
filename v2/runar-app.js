@@ -516,7 +516,6 @@ let _whispersText    = '';     // generated reading text (for voice)
 
 const GATHERING_MIN     = 3;
 const GATHERING_MAX     = 7;
-const GATHERING_CREDITS = 3; // credits cost for Rune Seeker
 
 function _gatheringWeekKey() {
   const d = new Date();
@@ -538,7 +537,6 @@ function updateWhispersUI() {
   const isIs         = lang === 'is';
   const hasEnough    = _journalCache.length >= GATHERING_MIN;
   const usedAlready  = _gatheringUsedThisWeek();
-  const seekerCanPay = isSeeker && userCredits >= GATHERING_CREDITS;
 
   // Description (always visible, bilingual)
   const descEl = document.getElementById('whispers-desc');
@@ -570,17 +568,6 @@ function updateWhispersUI() {
         ? `Þú þarft ${needed} fleiri lestur${needed !== 1 ? 'a' : ''} til að opna The Gathering.`
         : `${needed} more reading${needed !== 1 ? 's' : ''} needed to open The Gathering.`;
     }
-    if (idleSub) idleSub.textContent = isIs
-      ? `The Gathering kostar ${GATHERING_CREDITS} lesturarkort.`
-      : `The Gathering costs ${GATHERING_CREDITS} reading credits.`;
-  } else if (isSeeker && !seekerCanPay) {
-    // Rune Seeker — not enough credits
-    if (reqBtn)   { reqBtn.disabled = true; reqBtn.style.opacity = '0.4'; reqBtn.style.cursor = 'default'; }
-    if (lockEl)   { lockEl.style.display = 'block'; lockEl.textContent = isIs ? 'Þú þarft 3 lesturarkort til að opna The Gathering.' : 'You need 3 reading credits to use The Gathering.'; }
-    if (needMore) needMore.style.display = 'none';
-    if (idleSub) idleSub.textContent = isIs
-      ? `The Gathering kostar ${GATHERING_CREDITS} lesturarkort.`
-      : `The Gathering costs ${GATHERING_CREDITS} reading credits.`;
   } else if (usedAlready) {
     // Already used this week — button disabled, text visible
     if (reqBtn)   { reqBtn.disabled = true; reqBtn.style.opacity = '0.4'; reqBtn.style.cursor = 'default'; }
@@ -598,14 +585,10 @@ function updateWhispersUI() {
         : `${needed} more reading${needed !== 1 ? 's' : ''} needed to open The Gathering.`;
     }
   } else {
-    // Standard / Premium / Rune Seeker with credits — available
+    // All tiers — available (Gathering is free, weekly limit enforced)
     if (reqBtn)   { reqBtn.disabled = false; reqBtn.style.opacity = ''; reqBtn.style.cursor = ''; }
     if (lockEl)   lockEl.style.display = 'none';
     if (needMore) needMore.style.display = 'none';
-    // Show credit cost for Rune Seeker
-    if (idleSub && isSeeker) idleSub.textContent = isIs
-      ? `✦ Þessi lestur kostar ${GATHERING_CREDITS} lesturarkort.`
-      : `✦ This reading costs ${GATHERING_CREDITS} reading credits.`;
   }
 
   if (reqBtn) reqBtn.textContent = isIs ? 'BIÐJA UM THE GATHERING' : 'REQUEST THE GATHERING';
@@ -800,8 +783,7 @@ async function generateWhispersReading() {
         system:     sysPrompt,
         max_tokens: 1200,
         mode:       'ceremonial',
-        // Rune Seeker pays with credits (bypasses monthly limit); Standard/Premium free
-        use_credit: userTier === 'rune_seeker',
+        use_credit: false,
       }),
     });
 
@@ -815,14 +797,6 @@ async function generateWhispersReading() {
     _whispersMode = 'output';
     _markGatheringUsed();
 
-    // Deduct remaining 2 credits for Rune Seeker (proxy already deducted 1 via use_credit:true)
-    if (currentUser && userTier === 'rune_seeker') {
-      for (let i = 0; i < GATHERING_CREDITS - 1; i++) {
-        await sb.rpc('use_credit', { p_user_id: currentUser.id });
-      }
-      userCredits = Math.max(0, userCredits - GATHERING_CREDITS);
-      updateAuthUI();
-    }
 
     // Save to journal so it appears in Your Readings
     await saveGathering(text, _selectedEntries);
@@ -2324,8 +2298,8 @@ function _renderYourPath() {
     { id: 'rune_seeker',
       name: { en: 'RUNE SEEKER', is: 'VEGFARANDI' },
       props: {
-        en: ['5 Readings / month + reading credits.', 'Limited journal (last 5 readings).', 'Reading gift cards never expire.'],
-        is: ['5 Lestrar / mánuð + lesturarkort.', 'Takmörkuð dagbók (síðustu 5 lestrar).', 'Lesturarkort renna aldrei út.']
+        en: ['5 Readings / month.', 'Reading Gift Card unlocks all features.', 'Limited journal (last 5 readings).'],
+        is: ['5 Lestrar / mánuð.', 'Reading Gift Card opnar allar aðgerðir.', 'Takmörkuð dagbók (síðustu 5 lestrar).']
       }
     },
     { id: 'standard',
