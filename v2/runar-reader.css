@@ -356,6 +356,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .pill{padding:6px 14px;border:1px solid var(--border);background:transparent;font-family:'Cormorant Garamond',serif;font-size:0.95em;font-style:italic;color:var(--muted);cursor:pointer;transition:all 0.2s;}
 .pill:hover{border-color:var(--border2);color:var(--white);}
 .pill.on{border-color:var(--gold);color:var(--gold);background:var(--gold2);}
+.pills-locked{opacity:0.35;pointer-events:none;}
+.visitor-lock-hint{font-size:0.72em;letter-spacing:1px;color:var(--gold);opacity:0.75;margin-left:8px;font-style:normal;}
 
 /* ── BUTTONS ── */
 .btn-full{width:100%;padding:17px;background:var(--gold);color:#000;border:none;font-family:'Cinzel',serif;font-size:0.9em;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.25s;margin-top:14px;}

@@ -1620,9 +1620,10 @@ function updateUIText() {
   setPH('r-month', t('month_ph'));
   setPH('r-year',  t('year_ph'));
   const albl = document.getElementById('area-lbl');
-  if (albl) albl.innerHTML = t('area_lbl') + ' <span class="opt">'+t('opt')+'</span>';
+  const _lockHint = !currentUser ? ' <span class="visitor-lock-hint">' + (lang === 'is' ? '· Gerast Rúna-leitandi til að opna' : '· Become a Rune Seeker to unlock') + '</span>' : '';
+  if (albl) albl.innerHTML = t('area_lbl') + ' <span class="opt">'+t('opt')+'</span>' + _lockHint;
   const slbl = document.getElementById('seek-lbl');
-  if (slbl) slbl.innerHTML = t('seek_lbl') + ' <span class="opt">'+t('opt')+'</span>';
+  if (slbl) slbl.innerHTML = t('seek_lbl') + ' <span class="opt">'+t('opt')+'</span>' + _lockHint;
   const qlbl = document.getElementById('q-lbl');
   if (qlbl) qlbl.innerHTML = t('q_lbl') + ' <span class="opt">'+t('opt')+'</span>';
   setPH('r-question', t('q_ph'));
@@ -1885,6 +1886,11 @@ function buildGrid() {
 function buildPills() {
   buildPillGroup('area-pills', AREAS[lang], 'area');
   buildPillGroup('seek-pills', SEEKS[lang], 'seek');
+  const _locked = !currentUser;
+  ['area-pills', 'seek-pills'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('pills-locked', _locked);
+  });
 }
 function buildPillGroup(containerId, items, type) {
   const c = document.getElementById(containerId); if (!c) return;
