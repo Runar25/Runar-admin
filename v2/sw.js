@@ -4,6 +4,7 @@
 
 const CACHE = 'runar-v3';
 const JS_SHELL = [
+  '/Runar-admin/v2/runar-reader.css',
   '/Runar-admin/v2/runar-config.js',
   '/Runar-admin/v2/runar-runes.js',
   '/Runar-admin/v2/runar-translations.js',
