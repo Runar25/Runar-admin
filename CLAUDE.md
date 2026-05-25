@@ -13,6 +13,15 @@ Toto jsou podmínky, které musí být vždy pravda. Pokud změna porušuje inva
   - Inline ternár (`isIs ? '...' : '...'`) je přijatelný v update funkcích. Do HTML nepatří.
 - **Přidáváš nový prvek s textem?** → okamžitě přidej klíč do `runar-translations.js` a `setText()` volání do `updateUIText()` nebo nejbližší update funkce.
 
+### Záměrně anglické pojmy (NEPŘEKLÁDAT do IS)
+Tyto pojmy jsou vlastní jména / brand koncepty — zůstávají anglicky ve všech jazycích:
+- `STANDARD`, `PREMIUM` — názvy tierů
+- `THE GATHERING` — název rituální funkce
+- `THE JOURNEY BEYOND` — název sekce v side panelu
+- `Ceremonial mode.` — název prémiové funkce
+- `READING GIFT CARD` / `Reading gift cards` — název produktu
+- `RÚNAR` — vlastní jméno (nikdy nepřekládat, jen zachovat diakritiku)
+
 ### JS změny
 - **Edit tool NESMÍ měnit JS kód** — přepisuje `'` (U+0027) na curly quotes → SyntaxError.
 - **Všechny JS změny = Python skripty** v `C:\Users\zkuku\Downloads\Runar-admin\`.
