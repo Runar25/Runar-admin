@@ -1409,11 +1409,11 @@ function showTopbarGreeting() {
   const is = lang === 'is';
   let msg = '';
   if (!currentUser) {
-    msg = is ? 'Velkomin, Gestur.' : 'Welcome, Visitor.';
+    msg = is ? 'Gaman að sjá þig, Gestur.' : 'Welcome, Visitor.';
   } else {
     const n = displayName();
     const returning = userTier === 'rune_seeker' || userTier === 'standard' || userTier === 'premium';
-    msg = is ? (returning ? `Velkomin aftur, ${n}.` : `Velkomin, ${n}.`)
+    msg = is ? (returning ? `Gaman að sjá þig aftur, ${n}.` : `Gaman að sjá þig, ${n}.`)
              : (returning ? `Welcome back, ${n}.`   : `Welcome, ${n}.`);
   }
   el.textContent = msg;
@@ -1426,7 +1426,7 @@ function showHeroGreeting() {
   if (!el || !currentUser) return;
   const is = lang === 'is';
   const n = displayName();
-  el.textContent = is ? `Velkomin, ${n}.` : `Welcome, ${n}.`;
+  el.textContent = is ? `Gaman að sjá þig, ${n}.` : `Welcome, ${n}.`;
   setTimeout(() => el.classList.add('show'), 600);
 }
 
@@ -1659,7 +1659,7 @@ function updateUIText() {
     : 'You have walked with Rúnar three times as a Visitor.\nCreate a free account to continue.');
   setText('gate-btn', lang === 'is' ? 'GERAST RÚNA-LEITANDI' : 'BECOME A RUNE SEEKER');
   // Trial end prompt translations
-  setText('trial-end-title', lang === 'is' ? 'FERÐ ÞÍN SEM GESTIR ER LOKIÐ' : 'YOUR JOURNEY AS VISITOR IS COMPLETE');
+  setText('trial-end-title', lang === 'is' ? 'FERÐ ÞÍN SEM GESTUR ER LOKIÐ' : 'YOUR JOURNEY AS VISITOR IS COMPLETE');
   const ten = document.getElementById('trial-end-note');
   if (ten) ten.innerHTML = lang === 'is'
     ? 'Þú hefur farið með Rúnar þrisvar sinnum. Steinarnir muna.<br><b style="color:var(--gold);">Gerast Rúna-leitandi</b> til að halda áfram — fimm lestrar á mánuði, án greiðslu.'
@@ -1678,7 +1678,7 @@ function updateUIText() {
   else if (activeAppTab === 'journal') updateWhispersUI();
   // Single-source text updates for elements not covered elsewhere
   setText('redeem-btn', lang === 'is' ? 'INNLEYSA' : 'REDEEM');
-  setText('auth-modal-sub', lang === 'is' ? 'Ekkert lykilorð þarð — töfralykill kemur í pósthólfið þtt.' : 'No password needed — a magic link will arrive in your inbox.');
+  setText('auth-modal-sub', lang === 'is' ? 'Ekkert lykilorð þarf — töfralykill kemur í pósthólfið þitt.' : 'No password needed — a magic link will arrive in your inbox.');
   const _consentEl = document.getElementById('auth-consent-txt');
   if (_consentEl) _consentEl.innerHTML = lang === 'is'
     ? 'Með því að halda áfram samþykkir þú <a href="runar-privacy.html" target="_blank" rel="noopener">persónuverndarstefnu okkar</a>. Við geymum aðeins það sem þarð til að muna lestrana þin. Engin rakning, engar auglýsingar.'
@@ -2524,7 +2524,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         loadJournal();
       }
       if (event === 'SIGNED_IN') {
-        showToast('✦ WELCOME · RÚNAR AWAITS');
+        showToast(lang === 'is' ? '✦ GAMAN AÐ SJÁ ÞIG · RÚNAR BÍÐUR' : '✦ WELCOME · RÚNAR AWAITS');
         upsertProfile();
         fetchUserProfile(currentUser.id); // tier + credits
         syncMonthlyCount(currentUser.id);

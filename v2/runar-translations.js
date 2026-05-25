@@ -113,7 +113,7 @@ const UI_TEXT = {
     // Header
     brand:   'AGNDOFA · RÚNAR KERFI',
     title:   'Þekkingarskrínn',
-    sub:     'Kenndu Rúnari. Móta rödd hans. Fæða visku hans.',
+    sub:     'Kenndu Rúnari. Mótaðu rödd hans. Fóðraðu hann af visku.',
 
     // Tabs
     tab_teach:    'KENNA RÚNARI',
@@ -139,7 +139,7 @@ const UI_TEXT = {
 
     // Reader tab
     reader_card1_lbl: '✦ ÁÐUR EN VIÐ BYRJUM',
-    reader_note:      'Aðeins nafnið þitt er nauðsynlegt. Allt annað hjálpar Rúnari að tala persónulegar.',
+    reader_note:      'Aðeins nafnið þitt er nauðsynlegt. Allt annað hjálpar Rúnari að tala persónulega.',
     name_lbl:         'NAFNIÐ ÞÍT EÐA GÆLUNAFN',
     name_ph:          'Hvernig á Rúnar að kalla þig?',
     dob_lbl:          'FÆÐINGARDAGUR',
@@ -177,7 +177,7 @@ const UI_TEXT = {
     repl_ph:        '"megi leiðin opnast fyrir þér"…',
     ctx_lbl:        'SAMHENGI',
     ctx_ph:         'T.d. "þegar talað er um Fehu"',
-    applies_lbl:    'GILDIR FYR',
+    applies_lbl:    'GILDIR FYRIR',
     scope_both:     'Bæði tungumál',
     scope_en:       'Aðeins enska',
     scope_is:       'Aðeins íslenska',
@@ -190,7 +190,7 @@ const UI_TEXT = {
     char_note:      'Þetta er hver Rúnar er. Breyttu frjálslega — breytingar taka gildi við næstu köllun.',
     test_lbl:       '\u{1F9EA} PRÓFAÐU RÖDD RÚNARS',
     test_note:      'Skrifaðu eitthvað og heyrðu hvernig Rúnar svarar með núverandi persónuleika.',
-    test_ph:        'T.d. Ég dró Fehu í dag og finn fyrir fastri…',
+    test_ph:        'T.d. Ég dró Fehu í dag og finn mig standa í stað…',
     test_btn:       'PRÓFA NÚVERANDI PERSÓNULEIKA',
     runar_responds: 'RÚNAR SVARAR',
     version_lbl:    '\u{1F4DC} ÚTGÁFUSAGA',
@@ -201,7 +201,7 @@ const UI_TEXT = {
     st_traversing:   'Rúnar fer um heimana…',
     st_spoken:       '✓ Rúnar hefur talað.',
     st_listening:    'Hlustandi…',
-    st_saving:       'Vista…',
+    st_saving:       'Vistandi…',
     st_saved:        '✓ Vistað.',
     st_saved_local:  '✓ Vistað staðbundið.',
     st_char_saved:   '✓ Persónuleiki vistaður.',
