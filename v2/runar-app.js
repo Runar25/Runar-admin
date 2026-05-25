@@ -1620,8 +1620,14 @@ function updateUIText() {
   setPH('r-month', t('month_ph'));
   setPH('r-year',  t('year_ph'));
   const albl = document.getElementById('area-lbl');
-  const _lockHint = !currentUser ? ' <span class="visitor-lock-hint">' + (lang === 'is' ? '· Gerast Rúna-leitandi til að opna' : '· Become a Rune Seeker to unlock') + '</span>' : '';
-  const _optSpan = !currentUser ? '' : ' <span class="opt">'+t('opt')+'</span>';
+  const _isVisitor = !currentUser;
+  const _isRSnoCredits = currentUser && userTier === 'rune_seeker' && userCredits <= 0;
+  const _lockHint = _isVisitor
+    ? ' <span class="visitor-lock-hint">' + (lang === 'is' ? '· Gerast Rúna-leitandi til að opna' : '· Become a Rune Seeker to unlock') + '</span>'
+    : _isRSnoCredits
+      ? ' <span class="visitor-lock-hint">' + (lang === 'is' ? '· Reading Gift Card opnar allt' : '· Reading Gift Card unlocks all') + '</span>'
+      : '';
+  const _optSpan = _isVisitor ? '' : ' <span class="opt">'+t('opt')+'</span>';
   if (albl) albl.innerHTML = t('area_lbl') + _optSpan + _lockHint;
   const slbl = document.getElementById('seek-lbl');
   if (slbl) slbl.innerHTML = t('seek_lbl') + _optSpan + _lockHint;
@@ -1885,27 +1891,33 @@ function buildGrid() {
 
 // ─── PILLS ───────────────────────────────────────────────
 function buildPills() {
-  buildPillGroup('area-pills', AREAS[lang], 'area');
-  buildPillGroup('seek-pills', SEEKS[lang], 'seek');
-  const _locked = !currentUser;
+  const _isVisitor = !currentUser;
+  const _isRSnoCredits = currentUser && userTier === 'rune_seeker' && userCredits <= 0;
+  const _areaUnlocked = _isRSnoCredits ? 3 : undefined;
+  const _seekUnlocked = _isRSnoCredits ? 1 : undefined;
+  buildPillGroup('area-pills', AREAS[lang], 'area', _areaUnlocked);
+  buildPillGroup('seek-pills', SEEKS[lang], 'seek', _seekUnlocked);
   ['area-pills', 'seek-pills'].forEach(id => {
     const el = document.getElementById(id);
-    if (el) el.classList.toggle('pills-locked', _locked);
+    if (el) el.classList.toggle('pills-locked', _isVisitor);
   });
 }
-function buildPillGroup(containerId, items, type) {
+function buildPillGroup(containerId, items, type, unlockedCount) {
   const c = document.getElementById(containerId); if (!c) return;
   const current = type === 'area' ? readerUser.area : readerUser.seeking;
   c.innerHTML = '';
-  items.forEach(label => {
+  items.forEach((label, idx) => {
+    const locked = unlockedCount !== undefined && idx >= unlockedCount;
     const p = document.createElement('div');
-    p.className = 'pill' + (label === current ? ' on' : '');
+    p.className = 'pill' + (label === current && !locked ? ' on' : '') + (locked ? ' pill-locked' : '');
     p.textContent = label;
-    p.onclick = () => {
-      c.querySelectorAll('.pill').forEach(x => x.classList.remove('on'));
-      p.classList.add('on');
-      if (type === 'area') readerUser.area = label; else readerUser.seeking = label;
-    };
+    if (!locked) {
+      p.onclick = () => {
+        c.querySelectorAll('.pill:not(.pill-locked)').forEach(x => x.classList.remove('on'));
+        p.classList.add('on');
+        if (type === 'area') readerUser.area = label; else readerUser.seeking = label;
+      };
+    }
     c.appendChild(p);
   });
 }

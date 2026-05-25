@@ -357,6 +357,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .pill:hover{border-color:var(--border2);color:var(--white);}
 .pill.on{border-color:var(--gold);color:var(--gold);background:var(--gold2);}
 .pills-locked{opacity:0.35;pointer-events:none;}
+.pill.pill-locked{opacity:0.35;pointer-events:none;cursor:default;}
 .visitor-lock-hint{font-size:0.72em;letter-spacing:1px;color:var(--gold);opacity:0.75;margin-left:8px;font-style:normal;}
 
 /* ── BUTTONS ── */
