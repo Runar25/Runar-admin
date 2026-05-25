@@ -42,7 +42,7 @@ Toto jsou podmínky, které musí být vždy pravda. Pokud změna porušuje inva
 AI-powered mystický průvodce runami pro značku Agndofa (Island). Rúnar má vlastní poetický hlas, charakter a filozofii. Centrum předplatného produktu s fyzickým ekosystémem (runové sady, kakao ceremonial).
 
 ## Stack
-- **Frontend:** Single HTML soubor + vanilla JS/CSS, GitHub Pages
+- **Frontend:** HTML (563 ř.) + CSS (`runar-reader.css`) + JS (`runar-app.js`) + vanilla JS modules, GitHub Pages
 - **Backend:** Supabase (`pmitxjvkeovijreepror`) — PostgreSQL + Edge Functions + Storage — **region: eu-west-1 (Irsko)** ✓ GDPR
 - **AI:** Claude API přes Supabase Edge Function proxy (`claude-proxy`)
 - **Voice:** ElevenLabs API přes Supabase Edge Function proxy (`elevenlabs-proxy`)
@@ -52,7 +52,9 @@ AI-powered mystický průvodce runami pro značku Agndofa (Island). Rúnar má v
 ## Soubory v `/v2/`
 ```
 runar-shrine.html      ← admin app (Knowledge Shrine)
-runar-reader.html      ← uživatelská app (hlavní soubor, ~3500 řádků)
+runar-reader.html      ← uživatelská app — čistá HTML struktura (563 řádků)
+runar-reader.css       ← veškeré styly readeru (603 řádků) ← EDIT TOOLEM OK
+runar-app.js           ← veškerá JS logika readeru (2555 řádků) ← PYTHON SKRIPTY
 runar-help.html        ← průvodce & FAQ (EN+IS, Rúnarův hlas)
 runar-privacy.html     ← Privacy Policy (EN+IS, GDPR-compliant)
 runar-config.js        ← SB_URL, SB_KEY, PROXY, EL_PROXY, EL_STATIC,
@@ -60,8 +62,9 @@ runar-config.js        ← SB_URL, SB_KEY, PROXY, EL_PROXY, EL_STATIC,
                           TIERS (s label_is), RUNAR_MODES, ADMIN_EMAILS, isAdmin()
 runar-runes.js         ← 25 Elder Futhark + Blank, AREAS, SEEKS, calcLifeRune()
 runar-character.js     ← DEF_CHAR_EN, DEF_CHAR_IS, buildSysPrompt()
-runar-translations.js  ← UI_TEXT { en, is }
+runar-translations.js  ← UI_TEXT { en, is }  ← EDIT TOOLEM OK
 runar-svgs.js          ← RUNE_SVGS (SVG glyfů)
+sw.js                  ← Service Worker v4, HTML network-first, JS/CSS cache-first
 ```
 
 ## Edge Functions (`/supabase/functions/`)
@@ -196,8 +199,11 @@ Přístup jen pro admin emails — link v side panelu viditelný jen pro `ADMIN_
 - Monthly limit 5/měsíc je vynucován SERVER-SIDE (claude-proxy čte readings tabulku)
 - Barva UI: `var(--gold)` = `#FFBF00` — používat vždy, žádná teal v primárních prvcích
 - Python skripty pro JS změny — Edit tool mění `'` na curly quotes → SyntaxError
+- CSS změny: Edit tool na `runar-reader.css` je bezpečný (žádné JS)
+- `speak_btn` v translations = "HEAR RÚNAR SPEAK" (reading trigger button, ne voice button)
 
 ## CSS systém — klíčové třídy
+**Soubor: `runar-reader.css`** — editovat přímo Edit toolem (bezpečné).
 ```
 .btn-upgrade    ← SDÍLENÁ třída pro VŠECHNA upgrade CTA tlačítka
                   transparent bg, gold border, gold fill on hover
@@ -330,7 +336,13 @@ Aktuálně neexistuje způsob jak si koupit Standard. Tlačítko "UPGRADE → ST
 - [x] Sdílená `.btn-upgrade` třída — sjednocené upgrade CTA napříč celou appkou
 - [x] Custom CAP player všude — collection modal + journal entries (žádný nativní browser player)
 - [x] Loading animace v Reading tabu: pulsující ᚱ overlay během AI generování
-- [x] Voice button přejmenován: "HEAR RÚNAR SPEAK"
+- [x] Loading animace: pulsující layer labels místo blinkajících cursor barů
+- [x] Loading text: "THE STONES SPEAK IN SILENCE…"
+- [x] Reading button: "HEAR RÚNAR SPEAK" (speak_btn v translations)
+- [x] Voice button přejmenován: "HEAR RÚNAR SPEAK" (voice_btn, jiný element)
+- [x] THE JOURNEY BEYOND — přejmenováno z HIGHER PATH, toggle +/−
+- [x] STANDARD + PREMIUM: "— coming soon" note, PREMIUM má plný feature list
+- [x] Architekturální split: runar-reader.html → HTML + runar-reader.css + runar-app.js
 
 ### VRSTVA 2 — AUTH & UŽIVATELSKÝ ÚČET ✅ HOTOVO
 - [x] Magic link + Google OAuth
@@ -579,15 +591,36 @@ Nativní browser controls nelze plně stylovat v Chrome/Safari.
 
 ### 4. Service Worker — musí mít network-first pro HTML
 Pokud SW slouží HTML z cache (cache-first), uživatelé nevidí aktualizace.
-SW cache name: `runar-v3` — při každé změně strategie bumpi verzi.
-HTML pages: network-first vždy. JS/icons: cache-first OK.
+SW cache name: `runar-v4` (aktuální) — při přidání nových souborů nebo změně strategie bumpi verzi.
+HTML pages: network-first vždy. JS/CSS/icons: cache-first OK.
+Nové JS/CSS soubory přidat do `JS_SHELL` v `sw.js`.
 
 ### 5. Edit tool a curly quotes — JS změny přes Python
 Edit tool v Claude Code mění straight apostrofy `'` (U+0027) na curly `'`/`'` (U+2018/U+2019).
-V JS to způsobí SyntaxError. Všechny JS změny dělat přes Python skripty uložené v `/Runar-admin/`.
-CSS a HTML změny přes Edit tool jsou bezpečné.
+V JS to způsobí SyntaxError.
+- **`runar-app.js`** — PYTHON SKRIPTY (obsahuje JS)
+- **`runar-reader.css`** — Edit tool OK (čisté CSS, žádné apostrofy v hodnotách)
+- **`runar-translations.js`** — Edit tool OK (hodnoty v dvojitých uvozovkách)
+- **`runar-reader.html`** — Edit tool OK (čistá HTML struktura bez inline JS)
+Python skripty ukládat v `C:\Users\zkuku\Downloads\Runar-admin\`.
 
 ---
+
+## Hotovo ✅ (session 2026-05-25)
+- [x] Loading animace: blinkající cursor bary odstraněny
+- [x] Loading animace: `layer1-lbl` / `layer2-lbl` pulsují (pulse-fade 1.4s) během AI generování
+- [x] Loading text: "RÚNAR READS THE THREADS…" → "THE STONES SPEAK IN SILENCE…" (EN) / "STEINARNIR TALA Í ÞAGNINNI…" (IS)
+- [x] stream() funkce: cursor odstraněn, text se appenduje čistě bez blikající lišty
+- [x] Reading button: "LET RÚNAR SPEAK" → "HEAR RÚNAR SPEAK" — přes `speak_btn` v `runar-translations.js`
+- [x] Text audit: 4 mezery opraveny — `sp-delete-account`, `redeem-btn`, `auth-modal-sub`, `auth-consent-txt` nyní přes `updateUIText()`
+- [x] Dead code odstraněn: duplicitní přepis `name-card-title` v `showNamePrompt()`
+- [x] CLAUDE.md: sekce INVARIANTY přidána jako první věc v souboru
+- [x] **Architekturální split** — `runar-reader.html` (3710 ř.) rozdělen:
+  - `runar-reader.css` — 603 řádků CSS (Edit tool OK)
+  - `runar-app.js` — 2555 řádků JS (Python skripty)
+  - `runar-reader.html` — 563 řádků čistá HTML struktura
+- [x] SW bumpen: `runar-v3` → `runar-v4`, nové soubory přidány do JS_SHELL
+- [x] Commit disciplína: každá změna = separátní commit (5 commitů dnes)
 
 ## Hotovo ✅ (session 2026-05-24 — část 2)
 - [x] The Gathering: Rune Seeker má přístup za 3 kredity (GATHERING_CREDITS = 3)
