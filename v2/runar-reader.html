@@ -278,7 +278,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 
 /* ── APP TABS ── */
 .app-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:28px;}
-.app-tab{flex:1;min-width:0;text-align:center;font-family:'Cinzel',serif;font-size:0.68em;letter-spacing:0.8px;color:var(--muted);padding:12px 4px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:transparent;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:all 0.2s;}
+.app-tab{flex:1;min-width:0;text-align:center;font-family:'Cinzel',serif;font-size:0.68em;letter-spacing:0.8px;color:var(--muted);padding:12px 4px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:transparent;white-space:nowrap;transition:all 0.2s;}
 .app-tab:hover{color:var(--white);}
 .app-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
 @media(max-width:400px){.app-tab{font-size:0.56em;letter-spacing:0.2px;}}
@@ -763,7 +763,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
   <div class="app-tabs">
     <button class="app-tab active" id="atab-reading"    onclick="showAppTab('reading')">✦ READING</button>
     <button class="app-tab"        id="atab-journal"    onclick="showAppTab('journal')"  style="display:none;">◌ JOURNAL</button>
-    <button class="app-tab"        id="atab-collection" onclick="showAppTab('collection')">◈ RUNES COLLECTION</button>
+    <button class="app-tab"        id="atab-collection" onclick="showAppTab('collection')">◈ COLLECTION</button>
   </div>
 
   <!-- ═ READING PANE ═ -->
