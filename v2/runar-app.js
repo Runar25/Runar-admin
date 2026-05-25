@@ -1621,9 +1621,10 @@ function updateUIText() {
   setPH('r-year',  t('year_ph'));
   const albl = document.getElementById('area-lbl');
   const _lockHint = !currentUser ? ' <span class="visitor-lock-hint">' + (lang === 'is' ? '· Gerast Rúna-leitandi til að opna' : '· Become a Rune Seeker to unlock') + '</span>' : '';
-  if (albl) albl.innerHTML = t('area_lbl') + ' <span class="opt">'+t('opt')+'</span>' + _lockHint;
+  const _optSpan = !currentUser ? '' : ' <span class="opt">'+t('opt')+'</span>';
+  if (albl) albl.innerHTML = t('area_lbl') + _optSpan + _lockHint;
   const slbl = document.getElementById('seek-lbl');
-  if (slbl) slbl.innerHTML = t('seek_lbl') + ' <span class="opt">'+t('opt')+'</span>' + _lockHint;
+  if (slbl) slbl.innerHTML = t('seek_lbl') + _optSpan + _lockHint;
   const qlbl = document.getElementById('q-lbl');
   if (qlbl) qlbl.innerHTML = t('q_lbl') + ' <span class="opt">'+t('opt')+'</span>';
   setPH('r-question', t('q_ph'));
