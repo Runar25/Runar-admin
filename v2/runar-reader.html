@@ -420,8 +420,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .layer2{background:#0a0e18;border-left:3px solid var(--teal);padding:20px;margin-bottom:16px;}
 .layer2-lbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--teal);margin-bottom:10px;}
 .out-txt{font-size:1.05em;line-height:1.9;font-style:italic;color:var(--white);}
-.stream-cur{display:inline-block;width:2px;height:14px;background:var(--gold);margin-left:2px;animation:blink 0.9s step-end infinite;vertical-align:middle;}
+.stream-cur{display:none;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes pulse-fade{0%,100%{opacity:0.35}50%{opacity:1}}
+.layer1-lbl.pulsing,.layer2-lbl.pulsing{animation:pulse-fade 1.4s ease-in-out infinite;}
 
 /* ── VOICE ── */
 .btn-voice{width:100%;padding:14px;background:transparent;border:1px solid var(--border2);color:var(--muted);font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.5px;cursor:pointer;transition:all 0.25s;margin-top:4px;}
@@ -887,7 +889,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
       <div id="reading-loading" style="display:none;">
         <div class="whispers-loading-inner">
           <span class="whispers-loading-star">&#x16b1;</span>
-          <div class="whispers-loading-label" id="reading-loading-txt">RÚNAR READS THE THREADS…</div>
+          <div class="whispers-loading-label" id="reading-loading-txt">THE STONES SPEAK IN SILENCE…</div>
         </div>
       </div>
       <!-- Reading layers -->
@@ -1067,7 +1069,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
       <!-- Standard teaser — rune_seeker with >5 total readings -->
       <div class="journal-standard-teaser" id="journal-standard-teaser" style="display:none;">
         <p class="journal-standard-teaser-txt" id="journal-teaser-txt">
-          Every reading you have ever taken is kept. Move to Standard to open the full chronicle.
+          Every reading you have ever taken is kept. Move to Standard to open your full journal.
         </p>
       </div>
 
@@ -1448,7 +1450,7 @@ async function updateJournalTeaser() {
       const isIs = lang === 'is';
       txt.innerHTML = isIs
         ? `Sérhver lestur sem þú hefur tekið er geymdur — ${count} samtals. Farðu yfir í <strong style="color:var(--gold);font-style:normal;">Standard</strong> til að opna fulla króniku þína.`
-        : `Every reading you have ever taken is kept — ${count} in total. Move to <strong style="color:var(--gold);font-style:normal;">Standard</strong> to open your full chronicle.`;
+        : `Every reading you have ever taken is kept — ${count} in total. Move to <strong style="color:var(--gold);font-style:normal;">Standard</strong> to open your full journal.`;
       teaser.style.display = 'block';
     }
   } catch { /* silent */ }
@@ -3041,11 +3043,10 @@ function stream(id, text) {
     el.innerHTML = '';
     const words = text.split(' ');
     let i = 0;
-    const cur = document.createElement('span'); cur.className = 'stream-cur'; el.appendChild(cur);
     const tick = setInterval(() => {
-      if (i >= words.length) { clearInterval(tick); cur.remove(); resolve(); return; }
+      if (i >= words.length) { clearInterval(tick); resolve(); return; }
       const span = document.createElement('span'); span.textContent = (i > 0 ? ' ' : '') + words[i++];
-      el.insertBefore(span, cur);
+      el.appendChild(span);
     }, APP.stream_delay_ms);
   });
 }
@@ -3070,12 +3071,16 @@ async function _generateReading() {
   vBtn.disabled = true; vBtn.textContent = t('voice_btn');
   document.getElementById('audio-player').classList.remove('visible');
   document.getElementById('runar-audio').src = ''; setSt('st-voice', '');
-  document.getElementById('out-short').innerHTML = '<span class="stream-cur"></span>';
-  document.getElementById('out-deep').innerHTML  = '<span class="stream-cur"></span>';
+  document.getElementById('out-short').innerHTML = '';
+  document.getElementById('out-deep').innerHTML  = '';
   const _rdLoadEl = document.getElementById('reading-loading');
   const _rdLoadTxt = document.getElementById('reading-loading-txt');
-  if (_rdLoadTxt) _rdLoadTxt.textContent = lang === 'is' ? 'RÚNAR LES ÞRÁÐIRNAR…' : 'RÚNAR READS THE THREADS…';
+  if (_rdLoadTxt) _rdLoadTxt.textContent = lang === 'is' ? 'STEINARNIR TALA Í ÞAGNINNI…' : 'THE STONES SPEAK IN SILENCE…';
   if (_rdLoadEl) _rdLoadEl.style.display = 'block';
+  var _pL1 = document.getElementById('layer1-lbl');
+  var _pL2 = document.getElementById('layer2-lbl');
+  if (_pL1) _pL1.classList.add('pulsing');
+  if (_pL2) _pL2.classList.add('pulsing');
 
   const u = readerUser, drawn = readerRune, life = u.lifeRune;
   const sys = buildSysPrompt(activeChar);
@@ -3098,11 +3103,15 @@ async function _generateReading() {
   const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens, shouldUseCredit());
   if (res.error === 'rate_limited') {
     if (_rdLoadEl) _rdLoadEl.style.display = 'none';
+    if (_pL1) _pL1.classList.remove('pulsing');
+    if (_pL2) _pL2.classList.remove('pulsing');
     setSt('st-reader', lang === 'is' ? 'Of margar beiðnir. Bíddu aðeins.' : 'Too many requests. Please wait a moment.', 'err');
     return;
   }
   if (res.error === 'no_credits' || res.error === 'monthly_limit') {
     if (_rdLoadEl) _rdLoadEl.style.display = 'none';
+    if (_pL1) _pL1.classList.remove('pulsing');
+    if (_pL2) _pL2.classList.remove('pulsing');
     document.getElementById('out-short').innerHTML = '';
     document.getElementById('out-deep').innerHTML  = '';
     const isMonthly = res.error === 'monthly_limit';
@@ -3115,7 +3124,7 @@ async function _generateReading() {
     await fetchUserProfile(currentUser.id); // refresh balance + show gate
     return;
   }
-  if (res.error) { if (_rdLoadEl) _rdLoadEl.style.display = 'none'; setSt('st-reader', 'Failed: ' + res.error, 'err'); return; }
+  if (res.error) { if (_rdLoadEl) _rdLoadEl.style.display = 'none'; if (_pL1) _pL1.classList.remove('pulsing'); if (_pL2) _pL2.classList.remove('pulsing'); setSt('st-reader', 'Failed: ' + res.error, 'err'); return; }
 
   const split = res.text.split('|||');
   const short = split[0]?.trim() || res.text;
@@ -3134,6 +3143,8 @@ async function _generateReading() {
   }
 
   if (_rdLoadEl) _rdLoadEl.style.display = 'none';
+  if (_pL1) _pL1.classList.remove('pulsing');
+  if (_pL2) _pL2.classList.remove('pulsing');
   await stream('out-short', short);
   if (deep) await stream('out-deep', deep); else document.getElementById('out-deep').innerHTML = '';
 
