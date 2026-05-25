@@ -1,10 +1,11 @@
-// Rúnar Service Worker — v3
-// HTML: network-first (always fresh). JS/icons: cache-first (fast, offline ok).
+// Rúnar Service Worker — v4
+// HTML: network-first (always fresh). JS/CSS/icons: cache-first (fast, offline ok).
 // External (Supabase, ElevenLabs, fonts): pass-through, never intercepted.
 
-const CACHE = 'runar-v3';
+const CACHE = 'runar-v4';
 const JS_SHELL = [
   '/Runar-admin/v2/runar-reader.css',
+  '/Runar-admin/v2/runar-app.js',
   '/Runar-admin/v2/runar-config.js',
   '/Runar-admin/v2/runar-runes.js',
   '/Runar-admin/v2/runar-translations.js',
