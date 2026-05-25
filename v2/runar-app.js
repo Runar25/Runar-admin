@@ -1409,12 +1409,12 @@ function showTopbarGreeting() {
   const is = lang === 'is';
   let msg = '';
   if (!currentUser) {
-    msg = is ? 'Gaman að sjá þig, Gestur.' : 'Welcome, Visitor.';
+    msg = is ? 'Gaman að sjá þig, Gestur.' : 'Good to see you, Visitor.';
   } else {
     const n = displayName();
     const returning = userTier === 'rune_seeker' || userTier === 'standard' || userTier === 'premium';
     msg = is ? (returning ? `Gaman að sjá þig aftur, ${n}.` : `Gaman að sjá þig, ${n}.`)
-             : (returning ? `Welcome back, ${n}.`   : `Welcome, ${n}.`);
+             : (returning ? `Good to see you again, ${n}.` : `Good to see you, ${n}.`);
   }
   el.textContent = msg;
   setTimeout(() => el.classList.add('show'), 200);
@@ -1426,7 +1426,7 @@ function showHeroGreeting() {
   if (!el || !currentUser) return;
   const is = lang === 'is';
   const n = displayName();
-  el.textContent = is ? `Gaman að sjá þig, ${n}.` : `Welcome, ${n}.`;
+  el.textContent = is ? `Gaman að sjá þig, ${n}.` : `Good to see you, ${n}.`;
   setTimeout(() => el.classList.add('show'), 600);
 }
 
