@@ -2515,7 +2515,6 @@ function showNamePrompt() {
   const inp  = document.getElementById('name-prompt-input');
   const skip = document.getElementById('name-prompt-skip');
   const btn  = ov.querySelector('.name-card-btn');
-  if (card) card.textContent = is ? 'ÁÐUR EN STEINAR TALA' : 'BEFORE THE STONES SPEAK';
   if (card) card.textContent = is ? 'ÁÐUR EN RÚNIRNAR TALA' : 'BEFORE THE RUNES SPEAK';
   if (sub)  sub.innerHTML   = is ? 'Rúnirnar tala öðruvísi til þeirra sem þær þekkja að nafni.<br>Hvernig á ég að kalla þig?' : 'The runes speak differently to those whose name they know.<br>How shall I call you?';
   if (skip) skip.textContent = is ? 'Halda áfram án nafns' : 'Continue without a name';
@@ -2596,6 +2595,7 @@ function updateSidePanel() {
   const hide   = userTier === 'standard' || userTier === 'premium';
   if (giftEl) giftEl.style.display = hide ? 'none' : 'block';
   setText('sp-gift', is ? '+ GJAFA-LESTURARKORT' : '+ READING GIFT CARD');
+  setText('sp-delete-account', is ? '× EYÐA REIKNINGI' : '× DELETE ACCOUNT');
 
   // Topbar dropdown (logged-in only)
   updateDropdown();
@@ -2751,6 +2751,13 @@ function updateUIText() {
   // Re-render journal if it's open (picks up new lang labels)
   if (activeAppTab === 'journal' && _journalCache.length > 0) renderJournal(_journalCache);
   else if (activeAppTab === 'journal') updateWhispersUI();
+  // Single-source text updates for elements not covered elsewhere
+  setText('redeem-btn', lang === 'is' ? 'INNLEYSA' : 'REDEEM');
+  setText('auth-modal-sub', lang === 'is' ? 'Ekkert lykilorð þarð — töfralykill kemur í pósthólfið þtt.' : 'No password needed — a magic link will arrive in your inbox.');
+  const _consentEl = document.getElementById('auth-consent-txt');
+  if (_consentEl) _consentEl.innerHTML = lang === 'is'
+    ? 'Með því að halda áfram samþykkir þú <a href="runar-privacy.html" target="_blank" rel="noopener">persónuverndarstefnu okkar</a>. Við geymum aðeins það sem þarð til að muna lestrana þin. Engin rakning, engar auglýsingar.'
+    : 'By continuing, you agree to our <a href="runar-privacy.html" target="_blank" rel="noopener">Privacy Policy</a>. We store only what is needed to remember your readings. No tracking, no ads.';
   buildPills();
 }
 

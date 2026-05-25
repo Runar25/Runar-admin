@@ -1,5 +1,43 @@
 # RÚNAR — Claude Code Context
 
+---
+
+## ⚡ INVARIANTY — PŘEČÍST JAKO PRVNÍ, PŘED KAŽDOU ZMĚNOU
+
+Toto jsou podmínky, které musí být vždy pravda. Pokud změna porušuje invariant, zastav se.
+
+### Texty
+- **Každý viditelný text → `runar-translations.js` → `t()` → `setText()` v `updateUIText()` nebo příslušné update funkci.**
+  - HTML soubor smí mít textový fallback, ale JS ho musí přepsat při initu.
+  - Nikdy nepřidávej nový viditelný text přímo do HTML jako finální hodnotu.
+  - Inline ternár (`isIs ? '...' : '...'`) je přijatelný v update funkcích. Do HTML nepatří.
+- **Přidáváš nový prvek s textem?** → okamžitě přidej klíč do `runar-translations.js` a `setText()` volání do `updateUIText()` nebo nejbližší update funkce.
+
+### JS změny
+- **Edit tool NESMÍ měnit JS kód** — přepisuje `'` (U+0027) na curly quotes → SyntaxError.
+- **Všechny JS změny = Python skripty** v `C:\Users\zkuku\Downloads\Runar-admin\`.
+- CSS a HTML (bez inline JS) lze měnit Edit toolem.
+
+### Barvy a vizuál
+- **Měň POUZE prvky explicitně specifikované v zadání.** Nikdy nepřidávej "vylepšení" barvy, fontu nebo stylu k prvkům, které nebyly zmíněny.
+- `var(--dim)` = #3a4a60 — NIKDY pro čitelný text.
+- `var(--gold)` = #FFBF00 — primární barva UI.
+
+### Testování
+- **Vždy testuj jako `rune_seeker`**, ne jen jako admin. Admin má premium přístup automaticky.
+- Změna textu? Otestuj při přepnutí jazyka EN→IS i IS→EN.
+
+### Git
+- Jeden commit = jedna věc. Ne "udělal jsem X, Y a Z".
+- Každý commit musí jít push okamžitě po dokončení funkční změny.
+
+### Architektura
+- `PANEL_TIERS` v `_renderYourPath()` = jediný zdroj pravdy pro tier data v side panelu.
+- `reader-content` (form) se NIKDY neskrývá — vždy viditelný bez ohledu na tier.
+- `updateUIText()` se volá při každé změně jazyka — sem patří všechny textové aktualizace.
+
+---
+
 ## Co je Rúnar
 AI-powered mystický průvodce runami pro značku Agndofa (Island). Rúnar má vlastní poetický hlas, charakter a filozofii. Centrum předplatného produktu s fyzickým ekosystémem (runové sady, kakao ceremonial).
 
