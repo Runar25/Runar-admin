@@ -173,7 +173,7 @@ runar-audio (PUBLIC)   ← static/en/fehu_1.mp3 ... static/en/othalan_2.mp3
 Visitor     (free_trial)  → 3 čtení celkem, anon, jen Fehu v kolekci
 Rune Seeker (rune_seeker) → 5 čtení/měsíc ZDARMA (server-side enforcement) + kredity
                             journal: posledních 5 čtení
-                            The Gathering: ODEMČENO — stojí 3 kredity
+                            The Gathering: ODEMČENO — zdarma (min. 3 čtení + 1×/týden)
                             Specific Question: locked (teaser)
 Standard                  → unlimited čtení + hlas
                             journal: unlimited + filtry
@@ -651,6 +651,50 @@ Python skripty ukládat v `C:\Users\zkuku\Downloads\Runar-admin\`.
 | IS | "en veistu í raun að það er ekki" | "en þú veist í raun að það er ekki" | |
 | IS | Mótaðu rödd hans. Fæða visku hans. | Mótaðu rödd hans. Fóðraðu hann af visku. | UI sub text (translations.js) |
 | IS | Velkomin | Gaman að sjá þig | uvítání ve všech místech |
+
+---
+
+## Hotovo ✅ (session 2026-05-25 — část 2)
+- [x] IS audit: 13 oprav — gramatika, překlepy, nekonzistentní imperativy (native speaker verze)
+- [x] IS uvítání: `Velkomin` → `Gaman að sjá þig` / `Gaman að sjá þig aftur` (všechna místa)
+- [x] Sign-in toast: přidána IS verze `✦ GAMAN AÐ SJÁ ÞIG · RÚNAR BÍÐUR`
+- [x] EN uvítání: `Welcome` → `Good to see you` / `Good to see you again`
+- [x] `show_corrections.py` — live query Supabase runar_corrections (anon key)
+- [x] CLAUDE.md: Word Corrections snapshot + pravidlo spouštět před IS změnami
+- [x] CLAUDE.md: workflow pro mockupy a features (textové návrhy, ne HTML)
+- [x] Visitor: Area of Life + What are you seeking — ztlumené, neklikatelné
+- [x] Visitor: hint `· Become a Rune Seeker to unlock` (bez odkazu, jen text)
+- [x] Visitor: skryto `(OPTIONAL)` u Area of Life a What are you seeking
+- [x] DOB label: hint `· to reveal your life rune` pro všechny uživatele
+- [x] Rune Seeker (0 kreditů): Area of Life — první 3 odemčeny, zbytek locked
+- [x] Rune Seeker (0 kreditů): What are you seeking — jen General Guidance odemčen
+- [x] Rune Seeker (kredity > 0): vše odemčeno automaticky
+- [x] Hint pro RS bez kreditů: `· Reading Gift Card unlocks all` (EN) / `· Reading Gift Card opnar allt` (IS)
+- [x] The Gathering: zrušena platba kredity — zdarma pro všechny přihlášené
+- [x] The Gathering: podmínky zachovány — min. 3 čtení + 1× týdně (localStorage)
+- [x] Rune Seeker side panel: `5 Readings / month.` + `Reading Gift Card unlocks all features.`
+- [x] CLAUDE.md: pill lock pravidlo zdokumentováno
+
+### Pill lock pravidla (runar-app.js)
+```
+Visitor       (!currentUser):              area-pills + seek-pills → .pills-locked (celý container)
+                                           hint: · Become a Rune Seeker to unlock
+RS 0 kreditů  (rune_seeker && credits≤0): první 3 area + první 1 seek → .pill-locked (individuální)
+                                           hint: · Reading Gift Card unlocks all
+RS s kredity  (rune_seeker && credits>0): vše odemčeno
+Standard/Premium/Admin:                   vše odemčeno
+```
+Implementace: `buildPills()` → `buildPillGroup(id, items, type, unlockedCount)`
+`unlockedCount=3` pro area, `unlockedCount=1` pro seek u RS bez kreditů.
+
+### The Gathering pravidla
+```
+Podmínky přístupu (všichni přihlášení):
+  - min. GATHERING_MIN=3 čtení v journalu
+  - max. 1× týdně (_gatheringUsedThisWeek() via localStorage)
+Cena: ZDARMA pro všechny (use_credit: false vždy)
+GATHERING_CREDITS konstanta: ODSTRANĚNA
+```
 
 ---
 
