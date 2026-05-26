@@ -1337,7 +1337,8 @@ async function _generateReading() {
   await stream('out-short', short);
   if (deep) await stream('out-deep', deep); else document.getElementById('out-deep').innerHTML = '';
 
-  await checkStaticAudio(drawn, lang);
+  // V2 lab: skip static audio — reading is contextual, voice must match actual text
+  // User generates dynamic TTS via "HEAR RÚNAR SPEAK" button
   voiceBtn.disabled = false;
 }
 
