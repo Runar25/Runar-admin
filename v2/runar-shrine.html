@@ -1407,13 +1407,13 @@ async function _generateReading() {
 
 PART 1 (2-3 sentences): Direct answer to the specific question through the lens of ${rn(drawn)}.
 The question is the center of gravity — every sentence must relate to it.
-Mention the rune name once, woven naturally. Do not say "the rune says" — let it speak through image.
+Mention ${rn(drawn)} by name once, woven naturally — it is a proper name, do not translate it. Do not say "the rune says" — let it speak through image.
 
 PART 2 (3-4 sentences): Broader perspective — what ${rn(drawn)} reveals beyond the question itself.${life ? ` Connect with life rune ${rn(life)}.` : ''} End with one question that goes deeper than what was asked.
 Do NOT include labels like "PART 1" in the output. Speak directly to ${u.name}.`
     : `Give the reading in two parts separated by |||
 
-PART 1 (2-3 sentences): Core message — direct and poetic. Mention ${rn(drawn)} once, woven naturally. Let the rune's quality — ${rworld(drawn) || 'the living moment'} — colour the tone.
+PART 1 (2-3 sentences): Core message — direct and poetic. Mention ${rn(drawn)} by name once, woven naturally — it is a proper name, never translate it. Let the rune's quality — ${rworld(drawn) || 'the living moment'} — colour the tone.
 
 PART 2 (3-4 sentences): Deeper reflection — connect drawn rune with ${life ? 'life rune ' + rn(life) + ', ' : ''}${u.area || 'their path'}${seekingLabel ? ', seeking ' + seekingLabel : ''}. If drawn and life rune share an element (${relements(drawn)} / ${life ? relements(life) : '—'}), let that resonate briefly. End with one short open question.
 Do NOT include labels like "PART 2" in the output. Speak directly to ${u.name}.`;
