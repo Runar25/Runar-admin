@@ -93,6 +93,13 @@ textarea::placeholder{color:var(--dim);}
 .audio-player{margin-top:14px;display:none;background:linear-gradient(135deg,#2E4A70 0%,#1d3352 100%);padding:20px 22px;}
 .audio-player.visible{display:block;}
 .audio-player-lbl{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:3px;color:var(--gold);margin-bottom:12px;opacity:0.9;}
+/* ── LOADING OVERLAY (same as V1 reader) ── */
+@keyframes pulse-fade{0%,100%{opacity:0.35}50%{opacity:1}}
+.layer1-lbl.pulsing,.layer2-lbl.pulsing{animation:pulse-fade 1.4s ease-in-out infinite;}
+@keyframes runar-breathe{0%,100%{opacity:0.4;transform:scale(1);}50%{opacity:1;transform:scale(1.06);}}
+.whispers-loading-inner{text-align:center;padding:22px 0 10px;}
+.whispers-loading-star{font-size:1.6em;color:var(--gold);display:block;margin-bottom:10px;animation:runar-breathe 2.4s ease-in-out infinite;}
+.whispers-loading-label{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2.5px;color:var(--gold);animation:runar-breathe 2.4s ease-in-out infinite;animation-delay:0.3s;}
 /* ── V2R CAP PLAYER ── */
 .cap{display:flex;align-items:center;gap:12px;}
 .cap-btn{background:none;border:none;color:var(--gold);font-size:1.15em;cursor:pointer;padding:2px 4px;line-height:1;flex-shrink:0;transition:opacity 0.15s;}
@@ -418,6 +425,13 @@ textarea::placeholder{color:var(--dim);}
     <button class="btn-full" id="btn-speak" onclick="readRune()" disabled>LET RÚNAR SPEAK</button>
   </div>
   <div id="reader-output" style="display:none;">
+    <!-- Loading overlay — pulsing ᚱ while AI generates (same as V1 reader) -->
+    <div id="reading-loading" style="display:none;">
+      <div class="whispers-loading-inner">
+        <span class="whispers-loading-star">&#x16b1;</span>
+        <div class="whispers-loading-label" id="reading-loading-txt">THE STONES SPEAK IN SILENCE…</div>
+      </div>
+    </div>
     <div class="badge" id="reader-badge" style="display:none;">
       <div>
         <div class="badge-meta-lbl" id="life-rune-lbl" style="color:var(--gold);">YOUR LIFE RUNE</div>
@@ -1367,6 +1381,30 @@ function startReading() {
   buildGrid('reader-grid', true); setSt('st-setup', ''); setSt('st-reader', '');
 }
 
+// ─── DB: SAVE READING (same as V1 reader) ────────────────
+async function saveReading(rune, short, deep) {
+  if (!currentUser) return;
+  try {
+    const lifeRune = readerUser.lifeRune ? readerUser.lifeRune.n : null;
+    // seeking is array in V2 — join to string for DB
+    const seekingStr = Array.isArray(readerUser.seeking)
+      ? readerUser.seeking.join(', ') : (readerUser.seeking || null);
+    await sb.from('readings').insert({
+      user_id:      currentUser.id,
+      rune_name:    rune.n,
+      rune_glyph:   rune.g,
+      lang:         lang,
+      short_text:   short,
+      deep_text:    deep,
+      area:         readerUser.area     || null,
+      seeking:      seekingStr,
+      question:     readerUser.question || null,
+      life_rune:    lifeRune,
+      credits_used: false,
+    });
+  } catch(e) { console.warn('saveReading (V2 lab):', e.message); }
+}
+
 // ─── READING CORE ───────────────────────────────────────
 // Called by readRune() (first draw) and confirmLangSwitch() (second lang).
 // Uses global: lang, readerUser, readerRune, activeChar.
@@ -1375,9 +1413,17 @@ async function _generateReading() {
   if (!readerRune) return;
   const voiceBtn = document.getElementById('btn-generate-voice');
   voiceBtn.disabled = true; voiceBtn.textContent = t('voice_btn');
-  _v2rReset(); setSt('st-voice', '');
-  document.getElementById('out-short').innerHTML = '<span class="stream-cur"></span>';
-  document.getElementById('out-deep').innerHTML  = '<span class="stream-cur"></span>';
+  _v2rReset(); setSt('st-voice', ''); setSt('st-reader', '');
+  document.getElementById('out-short').innerHTML = '';
+  document.getElementById('out-deep').innerHTML  = '';
+  const _rdLoadEl  = document.getElementById('reading-loading');
+  const _rdLoadTxt = document.getElementById('reading-loading-txt');
+  if (_rdLoadTxt) _rdLoadTxt.textContent = lang === 'is' ? 'STEINARNIR TALA Í ÞAGNINNI…' : 'THE STONES SPEAK IN SILENCE…';
+  if (_rdLoadEl)  _rdLoadEl.style.display = 'block';
+  const _pL1 = document.getElementById('layer1-lbl');
+  const _pL2 = document.getElementById('layer2-lbl');
+  if (_pL1) _pL1.classList.add('pulsing');
+  if (_pL2) _pL2.classList.add('pulsing');
 
   const u = readerUser, drawn = readerRune, life = u.lifeRune;
   const sys = buildSysPromptV2(); // V2: contextual intelligence (lunar + Icelandic season)
@@ -1420,20 +1466,34 @@ Do NOT include labels like "PART 2" in the output. Speak directly to ${u.name}.`
 
   const prompt = `${parts}${readingFormulaLine}\n\nREADING ANGLE: ${typeof _randomAngle === 'function' ? _randomAngle() : ''}\n\n${formatInstr}\n\nBe concise — every sentence must earn its place. ${langInstr}\n${getCorrPrompt()}`
   const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens);
-  if (res.error) { setSt('st-reader', 'Failed: ' + res.error, 'err'); return; }
+  if (res.error) {
+    if (_rdLoadEl) _rdLoadEl.style.display = 'none';
+    if (_pL1) _pL1.classList.remove('pulsing');
+    if (_pL2) _pL2.classList.remove('pulsing');
+    const msg = res.error === 'rate_limited'
+      ? 'Too many requests — wait a moment.'
+      : res.error === 'weekly_limit'
+        ? (lang === 'is' ? 'Steinar hvila til mánudags.' : 'The stones rest until Monday.')
+        : 'Failed: ' + res.error;
+    setSt('st-reader', msg, 'err');
+    return;
+  }
 
   const split = res.text.split('|||');
   const short = split[0]?.trim() || res.text;
   const deep  = split[1]?.trim() || '';
-
-  // Cache the result
   readerTexts[lang] = { short, deep };
 
+  // Save reading to DB (same as V1 reader — full flow test)
+  await saveReading(readerRune, short, deep);
+
+  if (_rdLoadEl) _rdLoadEl.style.display = 'none';
+  if (_pL1) _pL1.classList.remove('pulsing');
+  if (_pL2) _pL2.classList.remove('pulsing');
   await stream('out-short', short);
   if (deep) await stream('out-deep', deep); else document.getElementById('out-deep').innerHTML = '';
 
-  // V2 lab: skip static audio — reading is contextual, voice must match actual text
-  // User generates dynamic TTS via "HEAR RÚNAR SPEAK" button
+  // V2 lab: dynamic TTS only (contextual reading — static audio would mismatch)
   voiceBtn.disabled = false;
 }
 
@@ -1633,8 +1693,16 @@ function getCorrPrompt() {
 
 // ─── API ────────────────────────────────────────────────
 async function callProxy(system, prompt, max_tokens = 500) {
-  try { const res = await fetch(PROXY, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ system, prompt, max_tokens }) }); const data = await res.json(); if (data.error) return { error: data.error }; return { text: data.text }; }
-  catch (e) { return { error: e.message }; }
+  try {
+    const res = await fetch(PROXY, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ system, prompt, max_tokens, lang })
+    });
+    const data = await res.json();
+    if (data.error) return { error: data.error };
+    return { text: data.text };
+  } catch (e) { return { error: e.message }; }
 }
 
 async function stream(elId, text) {
