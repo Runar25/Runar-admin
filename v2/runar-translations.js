@@ -14,7 +14,7 @@ const UI_TEXT = {
     // Tabs
     tab_teach:    'TEACH RÚNAR',
     tab_progress: 'PROGRESS',
-    tab_reader:   'RÚNAR THE RUNE KEEPER',
+    tab_reader:   '⚗ V2 LAB',
     tab_correct:  'WORD CORRECTIONS',
     progress_lbl: '♦ AUDIO PROGRESS',
 
@@ -118,7 +118,7 @@ const UI_TEXT = {
     // Tabs
     tab_teach:    'KENNA RÚNARI',
     tab_progress: 'FRAMVINDA',
-    tab_reader:   'RÚNAR RÚNAVÖRÐURINN',
+    tab_reader:   '⚗ V2 RANNSÓKNARSTOFA',
     tab_correct:  'ORÐALEIÐRÉTTINGAR',
     progress_lbl: '♦ HLJÓÐFRAMVINDA',
 

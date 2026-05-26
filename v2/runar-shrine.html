@@ -93,9 +93,16 @@ textarea::placeholder{color:var(--dim);}
 .audio-player{margin-top:14px;display:none;background:linear-gradient(135deg,#2E4A70 0%,#1d3352 100%);padding:20px 22px;}
 .audio-player.visible{display:block;}
 .audio-player-lbl{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:3px;color:var(--gold);margin-bottom:12px;opacity:0.9;}
-audio::-webkit-media-controls-panel{background:#2E4A70;}
-.audio-controls{display:flex;align-items:center;gap:12px;}
-audio{flex:1;height:36px;filter:invert(0.85) sepia(0.3) hue-rotate(180deg);}
+/* ── V2R CAP PLAYER ── */
+.cap{display:flex;align-items:center;gap:12px;}
+.cap-btn{background:none;border:none;color:var(--gold);font-size:1.15em;cursor:pointer;padding:2px 4px;line-height:1;flex-shrink:0;transition:opacity 0.15s;}
+.cap-btn:hover{opacity:0.75;}
+.cap-time{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:1px;color:var(--gold);flex-shrink:0;min-width:38px;}
+.cap-seek{flex:1;-webkit-appearance:none;appearance:none;height:5px;border-radius:3px;outline:none;cursor:pointer;background:linear-gradient(to right,var(--gold) var(--pct,0%),rgba(255,191,0,0.18) var(--pct,0%));}
+.cap-seek::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--gold);cursor:pointer;box-shadow:0 0 5px rgba(255,191,0,0.6);margin-top:-5.5px;}
+.cap-seek::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--gold);cursor:pointer;border:none;box-shadow:0 0 5px rgba(255,191,0,0.6);}
+.cap-seek::-moz-range-track{height:5px;border-radius:3px;background:rgba(255,191,0,0.18);}
+.cap-btn svg{display:block;}
 .btn-voice{color:var(--teal);border:1px solid var(--teal);padding:12px 20px;font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.5px;cursor:pointer;transition:all 0.25s;background:transparent;margin-top:14px;width:100%;display:block;}
 .btn-voice:hover{background:var(--teal);color:#000;}
 .btn-voice:disabled{opacity:0.3;cursor:not-allowed;}
@@ -296,7 +303,7 @@ audio{flex:1;height:36px;filter:invert(0.85) sepia(0.3) hue-rotate(180deg);}
 <div class="tabs" style="margin-top:0;">
   <button class="tab on"  id="tab-teach-btn"    onclick="showTab('teach')">TEACH RÚNAR</button>
   <button class="tab"     id="tab-progress-btn" onclick="showTab('progress')">PROGRESS</button>
-  <button class="tab"     id="tab-reader-btn"   onclick="showTab('reader')">✦ RÚNAR V2</button>
+  <button class="tab"     id="tab-reader-btn"   onclick="showTab('reader')">⚗ V2 LAB</button>
   <button class="tab"     id="tab-correct-btn"  onclick="showTab('correct')">WORD CORRECTIONS</button>
   <button class="tab"     id="tab-codes-btn"    onclick="showTab('codes')">ᚠ GIFT CODES</button>
   <a class="tab" href="runar-yggdrasil.html" style="text-decoration:none;">🌳 YGGDRASIL</a>
@@ -358,6 +365,21 @@ audio{flex:1;height:36px;filter:invert(0.85) sepia(0.3) hue-rotate(180deg);}
 
 <!-- ═══ READER (V2 LAB) ═══ -->
 <div class="pane" id="pane-reader">
+  <!-- V2 status card -->
+  <div class="card" style="border-color:rgba(91,184,255,0.35);margin-bottom:14px;padding:14px 18px;">
+    <div class="char-section-lbl" style="margin-top:0;margin-bottom:10px;">⚗ V2 LAB — EXPERIMENTAL FEATURES</div>
+    <div style="font-size:0.82em;line-height:2;color:var(--muted);">
+      <div>🧪 <span style="color:var(--white);">Mood selector</span> — testing</div>
+      <div>🧪 <span style="color:var(--white);">Reading intention</span> — testing</div>
+      <div>🧪 <span style="color:var(--white);">Multi-seek (max 2)</span> — testing</div>
+      <div>🧪 <span style="color:var(--white);">Specific question</span> — testing · restructures entire prompt format</div>
+      <div>🧪 <span style="color:var(--white);">Context injection</span> — testing · lunar phase + Icelandic season</div>
+      <div style="margin-top:4px;">✅ <span style="color:var(--white);">Mobile font fix</span> — ready to promote → V1</div>
+      <div>✅ <span style="color:var(--white);">Reading angles (variability)</span> — ready to promote → V1</div>
+      <div>✅ <span style="color:var(--white);">Norse world translation</span> — ready to promote → V1</div>
+    </div>
+    <div style="margin-top:8px;font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:1.5px;color:var(--dim);">V1 PRODUCTION → runar-app.js · runar-reader.html</div>
+  </div>
   <!-- V2 context display — shows live injection for testing -->
   <div class="card" style="margin-bottom:16px;padding:12px 18px;">
     <div class="char-section-lbl" style="margin-top:0;">⚙ CONTEXT INJECTION</div>
@@ -420,8 +442,17 @@ audio{flex:1;height:36px;filter:invert(0.85) sepia(0.3) hue-rotate(180deg);}
     <button class="btn-voice" id="btn-generate-voice" onclick="generateVoice()" disabled>ᚢ GENERATE RÚNAR'S VOICE</button>
     <div class="audio-player" id="audio-player">
       <div class="audio-player-lbl" id="audio-player-lbl">♪ RÚNAR SPEAKS</div>
-      <div class="audio-controls">
-        <audio id="runar-audio" controls preload="none" controlsList="nodownload" oncontextmenu="return false;"></audio>
+      <audio id="runar-audio" preload="none" style="display:none;" oncontextmenu="return false;"></audio>
+      <div class="cap">
+        <button class="cap-btn" id="v2r-play" onclick="v2rToggle()" title="Play / Pause">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <span class="cap-time" id="v2r-ct">0:00</span>
+        <input type="range" class="cap-seek" id="v2r-sk" value="0" min="0" max="100" step="0.1" oninput="v2rSeek(this.value)" title="Seek">
+        <span class="cap-time" id="v2r-dr">0:00</span>
+        <button class="cap-btn" id="v2r-mute" onclick="v2rMute()" title="Mute / Unmute">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06C16.89 6.15 19 8.83 19 12c0 3.17-2.11 5.84-5 6.71v2.06c4.01-.91 7-4.49 7-8.77 0-4.28-2.99-7.86-7-8.77z"/></svg>
+        </button>
       </div>
     </div>
     <div class="status" id="st-voice"></div>
@@ -751,9 +782,7 @@ function showCachedReading(l) {
   document.getElementById('out-short').textContent = cached.short;
   document.getElementById('out-deep').textContent  = cached.deep || '';
   // Reset voice area
-  document.getElementById('audio-player').classList.remove('visible');
-  document.getElementById('runar-audio').src = '';
-  setSt('st-voice', '');
+  _v2rReset(); setSt('st-voice', '');
   const voiceBtn = document.getElementById('btn-generate-voice');
   if (voiceGenerated[l]) {
     // Already generated dynamic voice in this language this session — keep locked
@@ -769,7 +798,7 @@ function showCachedReading(l) {
 
 function updateUIText() {
   setText('ui-brand', t('brand')); setText('ui-title', t('title')); setText('ui-sub', t('sub'));
-  setText('tab-teach-btn', t('tab_teach')); setText('tab-char-btn', t('tab_char'));
+  setText('tab-teach-btn', t('tab_teach'));
   setText('tab-reader-btn', t('tab_reader')); setText('tab-correct-btn', t('tab_correct'));
   setFlbl('name-lbl', t('name_lbl')); setPH('r-name', t('name_ph'));
   setFlblOpt('dob-lbl', t('dob_lbl'), t('opt')); setFlblOpt('area-lbl', t('area_lbl'), t('opt'));
@@ -954,7 +983,7 @@ function buildGrid(gridId, isReader) {
   });
 }
 
-// ─── PILLS ──────────────────────────────────────────────
+// ─── PILLS (V2 ONLY — multi-seek, mood, intention) ──────
 const MOODS      = ['Grounded', 'Unsettled', 'Hopeful', 'Lost'];
 const INTENTIONS = ['Right now', 'Decision ahead', 'Understanding the past'];
 
@@ -1318,7 +1347,10 @@ async function deleteVersion(id, runeName, lang, version) {
   }
 }
 
-// ─── READER ─────────────────────────────────────────────
+// ═══ V2 READER ═══════════════════════════════════════════
+// V2 ONLY: mood / intention / multi-seek / question prompt + context injection
+// PROMOTE TO V1: copy _generateReading() + buildPills() logic to runar-app.js
+// ─────────────────────────────────────────────────────────
 function startReading() {
   const name = document.getElementById('r-name').value.trim(); if (!name) { setSt('st-setup', t('st_name_req'), 'err'); return; }
   const d = parseInt(document.getElementById('r-day').value), m = parseInt(document.getElementById('r-month').value), y = parseInt(document.getElementById('r-year').value);
@@ -1336,8 +1368,7 @@ async function _generateReading() {
   if (!readerRune) return;
   const voiceBtn = document.getElementById('btn-generate-voice');
   voiceBtn.disabled = true; voiceBtn.textContent = t('voice_btn');
-  document.getElementById('audio-player').classList.remove('visible');
-  document.getElementById('runar-audio').src = ''; setSt('st-voice', '');
+  _v2rReset(); setSt('st-voice', '');
   document.getElementById('out-short').innerHTML = '<span class="stream-cur"></span>';
   document.getElementById('out-deep').innerHTML  = '<span class="stream-cur"></span>';
 
@@ -1445,7 +1476,53 @@ function resetReader() {
   ['r-name','r-day','r-month','r-year','r-question'].forEach(id => document.getElementById(id).value = ''); readerUser.mood = ''; readerUser.intention = ''; readerUser.seeking = []; buildPills();
 }
 
-// ─── VOICE (READER) ─────────────────────────────────────
+// ─── VOICE (READER) — V2 uses custom v2r CAP player ─────
+// helper — format seconds as m:ss
+function _fmtTime(s) {
+  if (!s || isNaN(s)) return '0:00';
+  const m = Math.floor(s / 60), sec = Math.floor(s % 60);
+  return m + ':' + (sec < 10 ? '0' : '') + sec;
+}
+// Reset v2r CAP player to idle state
+function _v2rReset() {
+  const audio = document.getElementById('runar-audio');
+  const btn   = document.getElementById('v2r-play');
+  const sk    = document.getElementById('v2r-sk');
+  const ct    = document.getElementById('v2r-ct');
+  const dr    = document.getElementById('v2r-dr');
+  if (audio) { audio.pause(); audio.src = ''; audio.ontimeupdate = null; audio.onloadedmetadata = null; audio.onended = null; }
+  if (btn) btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+  if (sk)  { sk.value = 0; sk.style.setProperty('--pct', '0%'); }
+  if (ct)  ct.textContent = '0:00';
+  if (dr)  dr.textContent = '0:00';
+  document.getElementById('audio-player')?.classList.remove('visible');
+}
+function v2rToggle() {
+  const audio = document.getElementById('runar-audio');
+  const btn   = document.getElementById('v2r-play');
+  if (!audio || !audio.src) return;
+  const pauseIcon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+  const playIcon  = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+  if (audio.paused) { audio.play(); if (btn) btn.innerHTML = pauseIcon; }
+  else              { audio.pause(); if (btn) btn.innerHTML = playIcon; }
+}
+function v2rSeek(v) {
+  const audio = document.getElementById('runar-audio');
+  if (!audio || !audio.duration) return;
+  audio.currentTime = (v / 100) * audio.duration;
+  const sk = document.getElementById('v2r-sk');
+  if (sk) sk.style.setProperty('--pct', parseFloat(v).toFixed(1) + '%');
+}
+function v2rMute() {
+  const audio = document.getElementById('runar-audio');
+  const btn   = document.getElementById('v2r-mute');
+  if (!audio || !btn) return;
+  audio.muted = !audio.muted;
+  const volOn  = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06C16.89 6.15 19 8.83 19 12c0 3.17-2.11 5.84-5 6.71v2.06c4.01-.91 7-4.49 7-8.77 0-4.28-2.99-7.86-7-8.77z"/></svg>';
+  const volOff = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>';
+  btn.innerHTML = audio.muted ? volOff : volOn;
+}
+
 async function generateVoice() {
   const deepText = document.getElementById('out-deep').innerText.trim();
   if (!deepText) return;
@@ -1454,7 +1531,7 @@ async function generateVoice() {
   btn.disabled = true;
   btn.textContent = t('voice_btn_loading');
   setSt('st-voice', '');
-  document.getElementById('audio-player').classList.remove('visible');
+  _v2rReset();
 
   try {
     const res = await fetch(EL_PROXY, {
@@ -1482,7 +1559,26 @@ async function generateVoice() {
 
     const audioBlob = await fetch(data.audio_url).then(r => r.blob());
     const audioBlobUrl = URL.createObjectURL(audioBlob);
-    document.getElementById('runar-audio').src = audioBlobUrl;
+    const _a = document.getElementById('runar-audio');
+    _a.src = audioBlobUrl;
+    _a.ontimeupdate = () => {
+      const sk = document.getElementById('v2r-sk');
+      const ct = document.getElementById('v2r-ct');
+      if (!_a.duration || isNaN(_a.duration)) return;
+      const pct = (_a.currentTime / _a.duration) * 100;
+      if (sk) { sk.value = pct; sk.style.setProperty('--pct', pct.toFixed(1) + '%'); }
+      if (ct) ct.textContent = _fmtTime(_a.currentTime);
+    };
+    _a.onloadedmetadata = () => {
+      const dr = document.getElementById('v2r-dr');
+      if (dr) dr.textContent = _fmtTime(_a.duration);
+    };
+    _a.onended = () => {
+      const btn2 = document.getElementById('v2r-play');
+      if (btn2) btn2.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+      const sk2 = document.getElementById('v2r-sk');
+      if (sk2) { sk2.value = 0; sk2.style.setProperty('--pct', '0%'); }
+    };
     document.getElementById('audio-player').classList.add('visible');
     // Voice generated — lock the button for this language
     voiceGenerated[lang] = true;
