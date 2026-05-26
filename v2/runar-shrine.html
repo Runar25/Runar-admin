@@ -701,8 +701,15 @@ function rk(r)   { return lang === 'is' ? r.k_is : r.k; }
 function rn(r)   { return lang === 'is' ? r.is_n : r.n; }
 // World + element context for prompts
 function rworld(r) {
-  const labels = { Hel: 'Hel — the roots (what lies beneath)', Midgard: 'Midgard — the trunk (what is active now)', Asgard: 'Asgard — the crown (what is possible)' };
-  return r.world ? labels[r.world] || r.world : '';
+  // Translate world names to poetic labels — NEVER expose raw names (Hel/Midgard/Asgard) to the model
+  const labels = {
+    Hel:     'the roots, what lies beneath',
+    Midgard: 'the living moment, what is active now',
+    Asgard:  'the higher pattern, what reaches toward wider sky',
+    Vanaheim:'the quiet work of nature, what grows slowly',
+    Jotunheim:'the untamed, what resists form',
+  };
+  return r.world ? (labels[r.world] || r.world) : '';
 }
 function relements(r) { return r.elements ? r.elements.join(', ') : ''; }
 function setText(id, val)         { const el = document.getElementById(id); if (el && val !== undefined) el.textContent = val; }
@@ -1381,7 +1388,7 @@ async function _generateReading() {
     ? `\nIcelandic rune formula (weave naturally once into PART 1): "${drawn.formula_is}"`
     : '';
   const lifeContext = life
-    ? `LIFE RUNE: ${rn(life)} (${life.g}) — ${rk(life)}` + (life.world ? ` · World: ${life.world} · Elements: ${relements(life)}` : '')
+    ? `LIFE RUNE: ${rn(life)} (${life.g}) — ${rk(life)}` + (life.world ? ` · World: ${rworld(life)} · Elements: ${relements(life)}` : '')
     : '';
   const drawnContext = `DRAWN RUNE: ${rn(drawn)} (${drawn.g}) — focus on: ${pickedDrawnKws}` +
     (drawn.world ? ` · World: ${rworld(drawn)} · Elements: ${relements(drawn)}` : '');
