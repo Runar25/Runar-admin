@@ -2236,6 +2236,13 @@ function wcapToggle() {
   if (a.paused) { a.play(); btn.textContent = '⏸'; }
   else          { a.pause(); btn.textContent = '▶'; }
 }
+function wcapMute() {
+  const a = document.getElementById('whispers-audio');
+  const btn = document.getElementById('wcap-mute');
+  if (!a || !btn) return;
+  a.muted = !a.muted;
+  btn.innerHTML = a.muted ? _SVG_VOL_OFF : _SVG_VOL_ON;
+}
 function wcapSeek(v) {
   const a = document.getElementById('whispers-audio');
   if (!a || !a.duration) return;
