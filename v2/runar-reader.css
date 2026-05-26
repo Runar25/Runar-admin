@@ -384,7 +384,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .rb-svg{width:72px;height:88px;display:block;}
 .rb-n{font-family:'Cinzel',serif;font-size:0.85em;letter-spacing:0.5px;color:var(--muted);margin-top:4px;}
 .rb.on .rb-n{color:var(--blue);}
-@media(max-width:480px){.rb-n{font-size:0.28em;}.rb-svg{width:52px;height:64px;}}
+@media(max-width:480px){.rb-n{font-size:0.6em;letter-spacing:0;}.rb-svg{width:52px;height:64px;}}
 .rune-info{font-size:0.9em;color:#8bb8d8;font-style:italic;min-height:18px;margin:6px 0;}
 
 /* ── BADGE (Life Rune + Drawn) ── */
