@@ -29,6 +29,22 @@ let corrections    = [];
 const FREE_TRIAL_LIMIT      = 3;
 const FREE_REGISTERED_LIMIT = 5;
 
+// Reading angles — randomly injected per reading to force variability
+// Each angle pushes Claude to a different entry point and metaphor source
+const READING_ANGLES = [
+  'Lead with the shadow of this rune — what it quietly demands, not what it offers.',
+  'Lead with the gift — what this rune is already giving before the seeker has noticed.',
+  'Lead with timing — what specific moment in their life does this rune mark.',
+  'Lead with the body — where does this rune live as a physical sensation right now.',
+  'Lead with the land — open with a single Icelandic image that mirrors this situation exactly.',
+  'Lead with what is already in motion — name what has already begun that this rune makes visible.',
+  'Lead with the threshold — what is the seeker standing between right now.',
+  'Let the life rune speak first — the drawn rune answers it.',
+];
+function _randomAngle() {
+  return READING_ANGLES[Math.floor(Math.random() * READING_ANGLES.length)];
+}
+
 function getTrialCount() { return parseInt(localStorage.getItem('runar_trial_count') || '0'); }
 function incTrialCount() { localStorage.setItem('runar_trial_count', String(getTrialCount() + 1)); }
 
@@ -2029,7 +2045,7 @@ async function _generateReading() {
     u.area    ? `AREA: ${u.area}` : '',
     u.seeking ? `SEEKING: ${u.seeking}` : '',
     u.question? `QUESTION: "${u.question}"` : ''].filter(Boolean).join('\n');
-  const prompt = `${parts}${formulaLine}\n\nGive the reading in two parts separated by |||\n\nPART 1 (2-3 sentences maximum, core message, direct and poetic. Mention the rune's name — ${rn(drawn)} — once, woven naturally into the reading. Let the rune's symbolic layer — ${rworld(drawn) || 'the living path'} — subtly colour the tone):\n\nPART 2 (3-4 sentences maximum. Deeper reflection — connect drawn rune with ${life ? 'life rune ' + rn(life) + (life.world ? ' (' + rworld(life) + ')' : '') + ', ' : ''}${u.area || 'their path'}${u.seeking ? ', seeking ' + u.seeking : ''}. If the drawn rune and life rune share an element (${relements(drawn)} / ${life ? relements(life) : '—'}), let that resonance surface briefly. End with one short, open question. Do NOT include a label like "PART 2" in the output):\n\nSpeak directly to ${u.name}. Be concise — every sentence must earn its place. ${langInstr}\n${getCorrPrompt()}`;
+  const prompt = `${parts}${formulaLine}\n\nREADING ANGLE (follow this entry point — let it shape the opening and tone): ${_randomAngle()}\n\nGive the reading in two parts separated by |||\n\nPART 1 (2-3 sentences maximum, core message, direct and poetic. Mention the rune's name — ${rn(drawn)} — once, woven naturally into the reading. Let the rune's symbolic layer — ${rworld(drawn) || 'the living path'} — subtly colour the tone):\n\nPART 2 (3-4 sentences maximum. Deeper reflection — connect drawn rune with ${life ? 'life rune ' + rn(life) + (life.world ? ' (' + rworld(life) + ')' : '') + ', ' : ''}${u.area || 'their path'}${u.seeking ? ', seeking ' + u.seeking : ''}. If the drawn rune and life rune share an element (${relements(drawn)} / ${life ? relements(life) : '—'}), let that resonance surface briefly. End with one short, open question. Do NOT include a label like "PART 2" in the output):\n\nSpeak directly to ${u.name}. Be concise — every sentence must earn its place. ${langInstr}\n${getCorrPrompt()}`;
 
   const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens, shouldUseCredit());
   if (res.error === 'rate_limited') {
