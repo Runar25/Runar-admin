@@ -101,10 +101,14 @@ sw.js                  ← Service Worker v4, HTML network-first, JS/CSS cache-f
 ```
 claude-proxy           ← forwards to Claude API
                           · ADMIN_EMAILS bypass: admins dostanou 'premium' bez DB check
-                          · tier enforcement: rune_seeker 5/měsíc (DB check) + credits
+                          · tier enforcement:
+                            - rune_seeker: weekly drip — 3 free v prvních 7 dnech účtu,
+                              poté 1/týden; monthly cap 5 (credits_used=false)
+                            - use_credit=true: odečte 1 kredit server-side
+                            - mode='ceremonial' (The Gathering): bypass všech limitů
                           · standard/premium: unlimited, no deduction
                           · rate limit: 10 req/60s per user nebo IP
-                          · 402 = no_credits nebo monthly_limit
+                          · 402 = no_credits | weekly_limit | monthly_limit
                           · 429 = rate_limited
 elevenlabs-proxy       ← real-time TTS, vrací base64 → Blob URL
 elevenlabs-static      ← admin: generuje + ukládá MP3 do Storage
@@ -171,9 +175,15 @@ runar-audio (PUBLIC)   ← static/en/fehu_1.mp3 ... static/en/othalan_2.mp3
 ## Tier systém
 ```
 Visitor     (free_trial)  → 3 čtení celkem, anon, jen Fehu v kolekci
-Rune Seeker (rune_seeker) → 5 čtení/měsíc ZDARMA (server-side enforcement) + kredity
+Rune Seeker (rune_seeker) → WEEKLY DRIP (server-side enforcement):
+                              - první 7 dní: 3 čtení/týden (engagement bonus)
+                              - poté: 1 čtení/týden
+                              - monthly cap: 5 čtení/měsíc (credits_used=false)
+                            + kredity (Reading Gift Card) = bypass všech limitů
                             journal: posledních 5 čtení
-                            The Gathering: ODEMČENO — zdarma (min. 3 čtení + 1×/týden)
+                            The Gathering: 1× ZDARMA (pak jen Standard+)
+                              - min. 3 čtení v journalu
+                              - po 1. použití: "The Gathering unlocks with Standard."
                             Specific Question: locked (teaser)
 Standard                  → unlimited čtení + hlas
                             journal: unlimited + filtry
@@ -600,15 +610,19 @@ trial nebo měsíční sloty. Toto bylo CHYBNÉ chování, které nebylo nikdy p
 - `startReading()` blokuje jen rune_seeker u kterého jsou vyčerpány VŠECHNY sloty (monthly + credits)
 - Standard / Premium / Admin: nikdy blokovat
 
-### 2. Monthly limit check musí zohledňovat tier
+### 2. Limit check musí zohledňovat tier a use_credit
 Starý kód blokoval VŠECHNY přihlášené uživatele (i premium/admin) když `getFreeMonthCount() >= 5`.
-Správná podmínka:
+Správná podmínka (frontend pre-check):
 ```js
 if (currentUser && userTier === 'rune_seeker'
     && getFreeMonthCount(currentUser.id) >= FREE_REGISTERED_LIMIT
     && userCredits <= 0) { ... return; }
 ```
 Standard/Premium jsou vždy propuštěni bez kontroly počítadla.
+
+**Weekly drip (server-side):** claude-proxy vrací `weekly_limit` (402) pokud RS vyčerpal
+týdenní kvótu (3 v prvních 7 dnech / 1 poté). Frontend zpracovává v callProxy i generateWhispersReading.
+Chybová hláška: "The stones rest until Monday. Use a reading gift card to continue."
 
 ### 3. Audio player — NIKDY nativní `<audio controls>`
 Nativní browser controls nelze plně stylovat v Chrome/Safari.
@@ -654,6 +668,23 @@ Python skripty ukládat v `C:\Users\zkuku\Downloads\Runar-admin\`.
 
 ---
 
+## Hotovo ✅ (session 2026-05-26)
+- [x] **Weekly drip systém** — nový mechanismus pro Rune Seeker (místo 5/měsíc):
+  - První 7 dní účtu: 3 čtení/týden (engagement bonus)
+  - Po 7 dnech: 1 čtení/týden
+  - Monthly cap: 5 (credits_used=false)
+  - credits_used=true (Reading Gift Card): bypass všech limitů
+- [x] **claude-proxy** — `mode` param přidán, `ceremonial` bypass, weekly drip enforcement
+  - Týdenní kvóta počítána od pondělí (UTC), filtr `credits_used=false`
+  - `user_profiles.created_at` pro detekci prvních 7 dní
+  - Error `weekly_limit` (402): "The stones rest until Monday. Use a reading gift card to continue."
+- [x] **The Gathering** — Rune Seeker: 1× zdarma, pak "The Gathering unlocks with Standard."
+  - `isGatheringEverUsed` = `_journalCache.some(e => e.rune_name === 'THE GATHERING')`
+  - Backend ceremonial bypass: weekly/monthly limity se na Gathering nevztahují
+- [x] **runar-app.js** — `weekly_limit` zpracován v callProxy error handling
+  - Nová větev `isGatheringEverUsed` v `updateWhispersUI()` pro RS po 1. Gathering
+- [x] CLAUDE.md aktualizován (tier systém, The Gathering pravidla, Edge Function dokumentace)
+
 ## Hotovo ✅ (session 2026-05-25 — část 2)
 - [x] IS audit: 13 oprav — gramatika, překlepy, nekonzistentní imperativy (native speaker verze)
 - [x] IS uvítání: `Velkomin` → `Gaman að sjá þig` / `Gaman að sjá þig aftur` (všechna místa)
@@ -689,10 +720,16 @@ Implementace: `buildPills()` → `buildPillGroup(id, items, type, unlockedCount)
 
 ### The Gathering pravidla
 ```
-Podmínky přístupu (všichni přihlášení):
-  - min. GATHERING_MIN=3 čtení v journalu
-  - max. 1× týdně (_gatheringUsedThisWeek() via localStorage)
-Cena: ZDARMA pro všechny (use_credit: false vždy)
+Podmínky přístupu:
+  Standard/Premium: min. GATHERING_MIN=3 čtení + max. 1×/týden (localStorage)
+  Rune Seeker:      min. GATHERING_MIN=3 čtení + právě 1× zdarma celkem
+                    Po 1. použití: "The Gathering unlocks with Standard."
+                    Detekce: _journalCache.some(e => e.rune_name === 'THE GATHERING')
+
+Cena: ZDARMA (use_credit: false, mode: 'ceremonial')
+  → Backend ceremonial bypass: žádné weekly/monthly limity se neaplikují
+  → Frontend RS limit: isGatheringEverUsed check v updateWhispersUI()
+
 GATHERING_CREDITS konstanta: ODSTRANĚNA
 ```
 

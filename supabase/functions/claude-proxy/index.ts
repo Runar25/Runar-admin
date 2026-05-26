@@ -1,6 +1,7 @@
 // Supabase Edge Function: claude-proxy
 // Forwards to Claude API. Enforces tier logic:
-//   rune_seeker — 5 free/month (server-side via readings table), paid credits deducted server-side
+//   rune_seeker — weekly drip: 3 free in first 7 days, then 1/week; monthly cap 5 (credits_used=false)
+//                paid credits deducted server-side; ceremonial mode (The Gathering) bypasses all limits
 //   standard / premium — unlimited, no deduction
 // Rate limit: 10 requests / 60s per user (or IP for anonymous)
 // Deploy: supabase functions deploy claude-proxy --project-ref pmitxjvkeovijreepror --no-verify-jwt
@@ -30,7 +31,7 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { system, prompt, max_tokens = 600, use_credit = false } = body;
+    const { system, prompt, max_tokens = 600, use_credit = false, mode = '' } = body;
     if (!prompt) return json({ error: "Missing prompt" }, 400);
 
     // ── Auth & tier check ──
@@ -88,21 +89,58 @@ serve(async (req) => {
           return json({ error: "no_credits", message: "No credits remaining." }, 402);
         }
         creditsBalance = remaining;
+      } else if (mode === 'ceremonial') {
+        // The Gathering — bypass all monthly/weekly limits
+        // Frontend enforces 1× free for rune_seeker via journal check
       } else {
-        // Free monthly slot — enforce 5/month SERVER-SIDE via readings table
+        // Free slot — weekly drip enforcement (SERVER-SIDE via readings table)
         if (userId) {
-          const now        = new Date();
-          const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
-          const { count }  = await sb()
+          const now = new Date();
+
+          // Monday of current week (UTC-aware: Mon=0 … Sun=6)
+          const dow       = (now.getUTCDay() + 6) % 7;
+          const weekStart = new Date(now);
+          weekStart.setUTCDate(now.getUTCDate() - dow);
+          weekStart.setUTCHours(0, 0, 0, 0);
+
+          // Count free readings this week (credits_used = false)
+          const { count: weekCount } = await sb()
             .from("readings")
             .select("id", { count: "exact", head: true })
             .eq("user_id", userId)
+            .eq("credits_used", false)
+            .gte("drawn_at", weekStart.toISOString());
+
+          // Determine weekly limit: 3 for first 7 days of account, 1 thereafter
+          const { data: profileAge } = await sb()
+            .from("user_profiles")
+            .select("created_at")
+            .eq("id", userId)
+            .maybeSingle();
+          const createdAt     = new Date(profileAge?.created_at ?? now);
+          const accountAgeDays = (now.getTime() - createdAt.getTime()) / (1000 * 60 * 60 * 24);
+          const weeklyLimit   = accountAgeDays < 7 ? 3 : 1;
+
+          if ((weekCount ?? 0) >= weeklyLimit) {
+            return json({
+              error:   "weekly_limit",
+              message: "The stones rest until Monday. Use a reading gift card to continue.",
+            }, 402);
+          }
+
+          // Monthly cap: 5 free readings (credits_used = false)
+          const monthStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)).toISOString();
+          const { count: monthCount } = await sb()
+            .from("readings")
+            .select("id", { count: "exact", head: true })
+            .eq("user_id", userId)
+            .eq("credits_used", false)
             .gte("drawn_at", monthStart);
 
-          if ((count ?? 0) >= 5) {
+          if ((monthCount ?? 0) >= 5) {
             return json({
               error:   "monthly_limit",
-              message: "Monthly free readings exhausted. Use a credit or upgrade.",
+              message: "Monthly free readings exhausted. Use a reading gift card or upgrade.",
             }, 402);
           }
         }

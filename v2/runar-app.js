@@ -535,8 +535,9 @@ function updateWhispersUI() {
   const isStandard   = userTier === 'standard' || userTier === 'premium';
   const isSeeker     = userTier === 'rune_seeker';
   const isIs         = lang === 'is';
-  const hasEnough    = _journalCache.length >= GATHERING_MIN;
-  const usedAlready  = _gatheringUsedThisWeek();
+  const hasEnough              = _journalCache.length >= GATHERING_MIN;
+  const usedAlready            = _gatheringUsedThisWeek();
+  const isGatheringEverUsed    = isSeeker && _journalCache.some(e => e.rune_name === 'THE GATHERING');
 
   // Description (always visible, bilingual)
   const descEl = document.getElementById('whispers-desc');
@@ -568,6 +569,11 @@ function updateWhispersUI() {
         ? `Þú þarft ${needed} fleiri lestur${needed !== 1 ? 'a' : ''} til að opna The Gathering.`
         : `${needed} more reading${needed !== 1 ? 's' : ''} needed to open The Gathering.`;
     }
+  } else if (isGatheringEverUsed) {
+    // Rune Seeker used their 1× free Gathering — Standard only from here
+    if (reqBtn)   { reqBtn.disabled = true; reqBtn.style.opacity = '0.35'; reqBtn.style.cursor = 'default'; }
+    if (lockEl)   { lockEl.style.display = 'block'; lockEl.textContent = 'The Gathering unlocks with Standard.'; }
+    if (needMore) needMore.style.display = 'none';
   } else if (usedAlready) {
     // Already used this week — button disabled, text visible
     if (reqBtn)   { reqBtn.disabled = true; reqBtn.style.opacity = '0.4'; reqBtn.style.cursor = 'default'; }
@@ -2033,16 +2039,19 @@ async function _generateReading() {
     setSt('st-reader', lang === 'is' ? 'Of margar beiðnir. Bíddu aðeins.' : 'Too many requests. Please wait a moment.', 'err');
     return;
   }
-  if (res.error === 'no_credits' || res.error === 'monthly_limit') {
+  if (res.error === 'no_credits' || res.error === 'monthly_limit' || res.error === 'weekly_limit') {
     if (_rdLoadEl) _rdLoadEl.style.display = 'none';
     if (_pL1) _pL1.classList.remove('pulsing');
     if (_pL2) _pL2.classList.remove('pulsing');
     document.getElementById('out-short').innerHTML = '';
     document.getElementById('out-deep').innerHTML  = '';
+    const isWeekly  = res.error === 'weekly_limit';
     const isMonthly = res.error === 'monthly_limit';
-    const msg = isMonthly
-      ? (lang === 'is' ? 'Mánaðarleg lestrar þín eru búin.' : 'Monthly free readings exhausted. Use a credit or upgrade.')
-      : (lang === 'is' ? 'Kredit þínir eru búnir.' : 'No credits remaining. Redeem a gift card to continue.');
+    const msg = isWeekly
+      ? (lang === 'is' ? 'Steinar hvíla til mánudags. Notaðu lestur gjafakort til að halda áfram.' : 'The stones rest until Monday. Use a reading gift card to continue.')
+      : isMonthly
+        ? (lang === 'is' ? 'Mánaðarleg lestrar þín eru búnin.' : 'Monthly free readings exhausted. Use a reading gift card or upgrade.')
+        : (lang === 'is' ? 'Kredit þínir eru búnir.' : 'No credits remaining. Redeem a gift card to continue.');
     setSt('st-reader', msg, 'err');
     // Sync localStorage with real count from DB to fix any drift
     if (currentUser) syncMonthlyCount(currentUser.id);
