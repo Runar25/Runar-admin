@@ -5,6 +5,7 @@
 //   standard / premium — unlimited, no deduction
 // Rate limit: 10 requests / 60s per user (or IP for anonymous)
 // Tree context: injected into system prompt for tree-active readings (Vrstva A)
+// Session state: derived from tree + time, shapes reading tone (Vrstva B)
 // Deploy: supabase functions deploy claude-proxy --project-ref pmitxjvkeovijreepror --no-verify-jwt
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
@@ -18,7 +19,6 @@ const cors = {
 const json = (data: unknown, status = 200) =>
   new Response(JSON.stringify(data), { status, headers: { ...cors, "Content-Type": "application/json" } });
 
-// Shared Supabase client (service role)
 function sb() {
   return createClient(
     Deno.env.get("SUPABASE_URL")!,
@@ -26,14 +26,13 @@ function sb() {
   );
 }
 
-// Build tree context string to append to system prompt
+// ── Vrstva A: build tree context string ──────────────────────────────────────
 function buildTreeContext(tree: Record<string, unknown>): string {
-  const patterns = (tree.recurring_pattern as string[] ?? []).filter(Boolean);
-  const arc      = (tree.emotional_arc as string) || "opening";
-  const symbols  = tree.personal_symbols as Record<string, number> ?? {};
+  const patterns  = (tree.recurring_pattern as string[] ?? []).filter(Boolean);
+  const arc       = (tree.emotional_arc as string) || "opening";
+  const symbols   = tree.personal_symbols as Record<string, number> ?? {};
   const forbidden = (tree.forbidden_next as string[] ?? []).filter(Boolean);
 
-  // Top 3 symbols by frequency
   const topSymbols = Object.entries(symbols)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 3)
@@ -56,6 +55,89 @@ function buildTreeContext(tree: Record<string, unknown>): string {
   return ctx;
 }
 
+// ── Vrstva B: session state ───────────────────────────────────────────────────
+interface SessionState {
+  energy:   "high" | "low" | "still";
+  distance: "close" | "wide";
+  element:  "fire" | "water" | "air" | "earth" | "silence";
+  movement: "forward" | "inward" | "weaving" | "turning";
+}
+
+function deriveSessionState(
+  tree: Record<string, unknown> | null,
+  now: Date,
+): SessionState {
+  const arc          = (tree?.emotional_arc as string) || "opening";
+  const sessionCount = (tree?.session_count as number) || 0;
+
+  // Energy — arc drives this primarily
+  let energy: SessionState["energy"];
+  if (arc === "threshold")  energy = "high";
+  else if (arc === "deepening") energy = "still";
+  else {
+    const hour = now.getUTCHours();
+    energy = (hour >= 17 || hour < 6) ? "low" : "high";
+  }
+
+  // Distance — newer seekers stay close; experienced get wider view
+  const distance: SessionState["distance"] = sessionCount < 6 ? "close" : "wide";
+
+  // Element — rotates with session count + day of week (never purely random)
+  const elements: SessionState["element"][] = ["fire", "water", "air", "earth", "silence"];
+  const dayOfWeek = now.getUTCDay();
+  const element   = elements[(sessionCount + dayOfWeek) % elements.length];
+
+  // Movement — follows emotional arc
+  const movementMap: Record<string, SessionState["movement"]> = {
+    opening:     "forward",
+    deepening:   "inward",
+    integration: "weaving",
+    threshold:   "turning",
+  };
+  const movement = movementMap[arc] ?? "forward";
+
+  return { energy, distance, element, movement };
+}
+
+function buildSessionContext(s: SessionState): string {
+  const elementDesc: Record<string, string> = {
+    fire:    "Come as fire — direct, warming, consuming what needs to burn.",
+    water:   "Come as water — yielding, deep, finding what lies beneath.",
+    air:     "Come as air — sweeping, clarifying, seeing from above.",
+    earth:   "Come as earth — grounded, patient, rooted in what endures.",
+    silence: "Come as silence — spacious, waiting, letting the unspoken surface.",
+  };
+
+  const energyDesc: Record<string, string> = {
+    high:  "Speak with full presence.",
+    low:   "Speak quietly, as if by firelight.",
+    still: "Hold space. Let the words land gently.",
+  };
+
+  const distanceDesc: Record<string, string> = {
+    close: "Stay close to this moment, this person.",
+    wide:  "Hold the wider arc of their journey.",
+  };
+
+  const movementDesc: Record<string, string> = {
+    forward: "The current moves forward.",
+    inward:  "The current moves inward.",
+    weaving: "The threads are being woven together.",
+    turning: "Something is turning — meet it without hurry.",
+  };
+
+  return (
+    "\n\n--- THIS READING'S VOICE ---\n" +
+    (elementDesc[s.element]  ?? "") + " " +
+    (energyDesc[s.energy]    ?? "") + " " +
+    (distanceDesc[s.distance] ?? "") + " " +
+    (movementDesc[s.movement] ?? "") +
+    "\n---"
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
   if (req.method !== "POST")    return json({ error: "Method not allowed" }, 405);
@@ -71,14 +153,12 @@ serve(async (req) => {
     let userTier = "anonymous";
     let creditsBalance = 0;
 
-    // Admin emails — bypass all tier limits
     const ADMIN_EMAILS = ["kukula@agndofa.is", "info@agndofa.is"];
 
     if (authHeader) {
       const { data: { user } } = await sb().auth.getUser(authHeader.replace("Bearer ", ""));
       if (user) {
         userId = user.id;
-        // Admins get premium access regardless of DB tier
         if (user.email && ADMIN_EMAILS.includes(user.email.toLowerCase())) {
           userTier = "premium";
         } else {
@@ -93,12 +173,11 @@ serve(async (req) => {
       }
     }
 
-    // Normalize legacy tier values
     if (userTier === "free" || userTier === "credits") userTier = "rune_seeker";
 
-    // ── Rate limiting: 10 req / 60s per user or IP ──
-    const ip      = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
-    const rlKey   = userId ? `claude:user:${userId}` : `claude:ip:${ip}`;
+    // ── Rate limiting ──
+    const ip    = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+    const rlKey = userId ? `claude:user:${userId}` : `claude:ip:${ip}`;
     const { data: allowed } = await sb().rpc("check_rate_limit", {
       p_key:            rlKey,
       p_window_seconds: 60,
@@ -111,7 +190,6 @@ serve(async (req) => {
     // ── Tier enforcement ──
     if (userTier === "rune_seeker") {
       if (use_credit) {
-        // Using a paid credit — deduct server-side
         if (creditsBalance <= 0) {
           return json({ error: "no_credits", message: "No credits remaining. Redeem a gift card or upgrade." }, 402);
         }
@@ -121,20 +199,16 @@ serve(async (req) => {
         }
         creditsBalance = remaining;
       } else if (mode === "ceremonial") {
-        // The Gathering — bypass all monthly/weekly limits
-        // Frontend enforces 1x free for rune_seeker via journal check
+        // The Gathering — bypass all limits
       } else {
-        // Free slot — weekly drip enforcement (SERVER-SIDE via readings table)
         if (userId) {
           const now = new Date();
 
-          // Monday of current week (UTC-aware: Mon=0 … Sun=6)
           const dow       = (now.getUTCDay() + 6) % 7;
           const weekStart = new Date(now);
           weekStart.setUTCDate(now.getUTCDate() - dow);
           weekStart.setUTCHours(0, 0, 0, 0);
 
-          // Count free readings this week (credits_used = false)
           const { count: weekCount } = await sb()
             .from("readings")
             .select("id", { count: "exact", head: true })
@@ -142,7 +216,6 @@ serve(async (req) => {
             .eq("credits_used", false)
             .gte("drawn_at", weekStart.toISOString());
 
-          // Determine weekly limit: 3 for first 7 days of account, 1 thereafter
           const { data: profileAge } = await sb()
             .from("user_profiles")
             .select("created_at")
@@ -159,7 +232,6 @@ serve(async (req) => {
             }, 402);
           }
 
-          // Monthly cap: 5 free readings (credits_used = false)
           const monthStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)).toISOString();
           const { count: monthCount } = await sb()
             .from("readings")
@@ -178,30 +250,36 @@ serve(async (req) => {
       }
     }
 
-    // standard / premium — unlimited, no deduction needed
-
-    // ── Tree context injection (Vrstva A) ──
-    // Inject living tree memory into system prompt for tree-active readings.
-    // Tree is active for: Standard+, or Rune Seeker using a paid credit.
+    // ── Vrstva A + B: tree context & session state ────────────────────────────
+    // Active for: Standard+, or Rune Seeker using a paid credit.
     const treeMode =
       userTier === "standard" ||
       userTier === "premium"  ||
       (userTier === "rune_seeker" && use_credit === true);
 
-    let systemWithTree = system || "";
+    let systemWithContext = system || "";
+    let sessionState: SessionState | null = null;
+    let treeState: Record<string, unknown> | null = null;
 
     if (treeMode && userId && mode !== "extraction") {
-      const { data: treeState } = await sb()
+      // Load tree state
+      const { data } = await sb()
         .from("tree_state")
-        .select("recurring_pattern, emotional_arc, personal_symbols, forbidden_next")
+        .select("recurring_pattern, emotional_arc, personal_symbols, forbidden_next, session_count")
         .eq("user_id", userId)
         .maybeSingle();
+      treeState = data ?? null;
 
+      // Vrstva A: inject tree memory (only if tree has meaningful data)
       if (treeState &&
-          ((treeState.recurring_pattern?.length ?? 0) > 0 ||
-           (treeState.forbidden_next?.length ?? 0) > 0)) {
-        systemWithTree = systemWithTree + buildTreeContext(treeState);
+          ((treeState.recurring_pattern as string[] ?? []).length > 0 ||
+           (treeState.forbidden_next    as string[] ?? []).length > 0)) {
+        systemWithContext = systemWithContext + buildTreeContext(treeState);
       }
+
+      // Vrstva B: derive and inject session state (always for tree-mode users)
+      sessionState = deriveSessionState(treeState, new Date());
+      systemWithContext = systemWithContext + buildSessionContext(sessionState);
     }
 
     // ── Call Claude ──
@@ -218,7 +296,7 @@ serve(async (req) => {
       body: JSON.stringify({
         model:      "claude-sonnet-4-5",
         max_tokens,
-        system:     systemWithTree,
+        system:     systemWithContext,
         messages:   [{ role: "user", content: prompt }],
       }),
     });
@@ -228,9 +306,9 @@ serve(async (req) => {
 
     const text = data.content?.[0]?.text ?? "";
 
-    // Return updated credits balance when a credit was used
     return json({
       text,
+      ...(sessionState ? { session_state: sessionState } : {}),
       ...(use_credit && userTier === "rune_seeker" ? { credits_remaining: creditsBalance } : {}),
     });
 
