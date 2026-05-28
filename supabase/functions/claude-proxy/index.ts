@@ -4,6 +4,7 @@
 //                paid credits deducted server-side; ceremonial mode (The Gathering) bypasses all limits
 //   standard / premium — unlimited, no deduction
 // Rate limit: 10 requests / 60s per user (or IP for anonymous)
+// Tree context: injected into system prompt for tree-active readings (Vrstva A)
 // Deploy: supabase functions deploy claude-proxy --project-ref pmitxjvkeovijreepror --no-verify-jwt
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
@@ -25,13 +26,43 @@ function sb() {
   );
 }
 
+// Build tree context string to append to system prompt
+function buildTreeContext(tree: Record<string, unknown>): string {
+  const patterns = (tree.recurring_pattern as string[] ?? []).filter(Boolean);
+  const arc      = (tree.emotional_arc as string) || "opening";
+  const symbols  = tree.personal_symbols as Record<string, number> ?? {};
+  const forbidden = (tree.forbidden_next as string[] ?? []).filter(Boolean);
+
+  // Top 3 symbols by frequency
+  const topSymbols = Object.entries(symbols)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3)
+    .map(([sym]) => sym);
+
+  const arcDesc: Record<string, string> = {
+    opening:     "beginning to become aware",
+    deepening:   "turning inward",
+    integration: "weaving things together",
+    threshold:   "standing at a turning point",
+  };
+
+  let ctx = "\n\n--- SEEKER'S LIVING PATTERN ---\n";
+  if (patterns.length)   ctx += "What returns: " + patterns.join(", ") + "\n";
+  if (arc)               ctx += "Where they stand: " + (arcDesc[arc] ?? arc) + "\n";
+  if (topSymbols.length) ctx += "Images that speak to them: " + topSymbols.join(", ") + "\n";
+  if (forbidden.length)  ctx += "Avoid repeating this time: " + forbidden.join(", ") + "\n";
+  ctx += "---";
+
+  return ctx;
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
   if (req.method !== "POST")    return json({ error: "Method not allowed" }, 405);
 
   try {
     const body = await req.json();
-    const { system, prompt, max_tokens = 600, use_credit = false, mode = '' } = body;
+    const { system, prompt, max_tokens = 600, use_credit = false, mode = "" } = body;
     if (!prompt) return json({ error: "Missing prompt" }, 400);
 
     // ── Auth & tier check ──
@@ -89,9 +120,9 @@ serve(async (req) => {
           return json({ error: "no_credits", message: "No credits remaining." }, 402);
         }
         creditsBalance = remaining;
-      } else if (mode === 'ceremonial') {
+      } else if (mode === "ceremonial") {
         // The Gathering — bypass all monthly/weekly limits
-        // Frontend enforces 1× free for rune_seeker via journal check
+        // Frontend enforces 1x free for rune_seeker via journal check
       } else {
         // Free slot — weekly drip enforcement (SERVER-SIDE via readings table)
         if (userId) {
@@ -117,9 +148,9 @@ serve(async (req) => {
             .select("created_at")
             .eq("id", userId)
             .maybeSingle();
-          const createdAt     = new Date(profileAge?.created_at ?? now);
+          const createdAt      = new Date(profileAge?.created_at ?? now);
           const accountAgeDays = (now.getTime() - createdAt.getTime()) / (1000 * 60 * 60 * 24);
-          const weeklyLimit   = accountAgeDays < 7 ? 3 : 1;
+          const weeklyLimit    = accountAgeDays < 7 ? 3 : 1;
 
           if ((weekCount ?? 0) >= weeklyLimit) {
             return json({
@@ -149,6 +180,30 @@ serve(async (req) => {
 
     // standard / premium — unlimited, no deduction needed
 
+    // ── Tree context injection (Vrstva A) ──
+    // Inject living tree memory into system prompt for tree-active readings.
+    // Tree is active for: Standard+, or Rune Seeker using a paid credit.
+    const treeMode =
+      userTier === "standard" ||
+      userTier === "premium"  ||
+      (userTier === "rune_seeker" && use_credit === true);
+
+    let systemWithTree = system || "";
+
+    if (treeMode && userId && mode !== "extraction") {
+      const { data: treeState } = await sb()
+        .from("tree_state")
+        .select("recurring_pattern, emotional_arc, personal_symbols, forbidden_next")
+        .eq("user_id", userId)
+        .maybeSingle();
+
+      if (treeState &&
+          ((treeState.recurring_pattern?.length ?? 0) > 0 ||
+           (treeState.forbidden_next?.length ?? 0) > 0)) {
+        systemWithTree = systemWithTree + buildTreeContext(treeState);
+      }
+    }
+
     // ── Call Claude ──
     const anthropicKey = Deno.env.get("ANTHROPIC_API_KEY");
     if (!anthropicKey) return json({ error: "API key not configured" }, 500);
@@ -163,7 +218,7 @@ serve(async (req) => {
       body: JSON.stringify({
         model:      "claude-sonnet-4-5",
         max_tokens,
-        system:     system || "",
+        system:     systemWithTree,
         messages:   [{ role: "user", content: prompt }],
       }),
     });
