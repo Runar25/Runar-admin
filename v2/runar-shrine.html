@@ -477,6 +477,14 @@ textarea::placeholder{color:var(--dim);}
   </div>
   <div class="status" id="st-reader"></div>
   <div id="st-session" style="display:none;font-size:0.6em;letter-spacing:1.5px;color:var(--gold);opacity:0.6;margin-top:4px;font-family:'Cinzel',serif;"></div>
+  <div id="voice-arrows" style="display:none;margin-top:14px;display:none;">
+    <div style="font-size:0.55em;letter-spacing:2px;color:var(--gold);opacity:0.5;margin-bottom:8px;font-family:'Cinzel',serif;text-align:center;">VOICE CALIBRATION &middot; <span id="voice-scale-val">10</span>/20</div>
+    <div style="display:flex;gap:12px;justify-content:center;">
+      <button onclick="_clickVoiceArrow(-1)" style="background:none;border:1px solid var(--gold);color:var(--gold);padding:6px 14px;font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1.5px;cursor:pointer;opacity:0.75;">&#8592; MORE DIRECT</button>
+      <button onclick="_clickVoiceArrow(1)" style="background:none;border:1px solid var(--gold);color:var(--gold);padding:6px 14px;font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1.5px;cursor:pointer;opacity:0.75;">MORE METAPHORICAL &#8594;</button>
+    </div>
+    <div id="voice-arrows-msg" style="font-size:0.5em;letter-spacing:1px;color:var(--gold);opacity:0.4;margin-top:8px;font-family:'Cinzel',serif;text-align:center;min-height:1em;"></div>
+  </div>
   </div><!-- /reader-content -->
 </div>
 
@@ -1430,6 +1438,61 @@ async function _updateTree(rune, short, deep, area, lang, usedCredit) {
     }).catch(() => {}); // fire-and-forget, swallow errors
   } catch(e) { /* silent */ }
 }
+// ─── VOICE SCALE (Vrstva C) ─────────────────────────────
+let _voiceScale = 10;   // current scale, loaded from tree_state
+let _voiceClicks = 0;   // clicks this session, max 3
+const VOICE_MAX_CLICKS = 3;
+
+async function _showVoiceArrows() {
+  if (!currentUser) return;
+  // Load current voice_scale from tree_state
+  const { data: ts } = await sb.from('tree_state')
+    .select('voice_scale, voice_settled')
+    .eq('user_id', currentUser.id)
+    .maybeSingle();
+  if (!ts) return; // no tree yet — first reading just happened, skip
+  _voiceScale = ts.voice_scale ?? 10;
+  _voiceClicks = 0;
+  const el = document.getElementById('voice-arrows');
+  const valEl = document.getElementById('voice-scale-val');
+  const msgEl = document.getElementById('voice-arrows-msg');
+  if (!el) return;
+  if (valEl) valEl.textContent = _voiceScale;
+  if (msgEl) msgEl.textContent = ts.voice_settled ? 'settled · click to adjust' : '';
+  el.style.display = 'block';
+}
+
+async function _clickVoiceArrow(dir) {
+  if (!currentUser) return;
+  if (_voiceClicks >= VOICE_MAX_CLICKS) return;
+  const newScale = Math.max(0, Math.min(20, _voiceScale + dir));
+  if (newScale === _voiceScale) return; // already at limit
+  _voiceScale = newScale;
+  _voiceClicks++;
+  const valEl = document.getElementById('voice-scale-val');
+  const msgEl = document.getElementById('voice-arrows-msg');
+  if (valEl) valEl.textContent = newScale;
+  // Hide after max clicks
+  if (_voiceClicks >= VOICE_MAX_CLICKS) {
+    if (msgEl) msgEl.textContent = 'calibrated';
+    const btns = document.querySelectorAll('#voice-arrows button');
+    btns.forEach(b => { b.style.opacity = '0.3'; b.style.pointerEvents = 'none'; });
+  }
+  // Save to DB: update voice_scale + voice_last_changed_session + unsettled
+  try {
+    const { data: ts } = await sb.from('tree_state')
+      .select('session_count')
+      .eq('user_id', currentUser.id)
+      .maybeSingle();
+    await sb.from('tree_state').update({
+      voice_scale: newScale,
+      voice_settled: false,
+      voice_last_changed_session: ts?.session_count ?? 0,
+      updated_at: new Date().toISOString(),
+    }).eq('user_id', currentUser.id);
+  } catch(e) { console.warn('voice update:', e.message); }
+}
+
 // ─── READING CORE ───────────────────────────────────────
 // Called by readRune() (first draw) and confirmLangSwitch() (second lang).
 // Uses global: lang, readerUser, readerRune, activeChar.
@@ -1441,6 +1504,10 @@ async function _generateReading() {
   _v2rReset(); setSt('st-voice', ''); setSt('st-reader', '');
   document.getElementById('out-short').innerHTML = '';
   document.getElementById('out-deep').innerHTML  = '';
+  const _vaEl = document.getElementById('voice-arrows');
+  if (_vaEl) _vaEl.style.display = 'none';
+  const _ssEl2 = document.getElementById('st-session');
+  if (_ssEl2) _ssEl2.style.display = 'none';
   const _rdLoadEl  = document.getElementById('reading-loading');
   const _rdLoadTxt = document.getElementById('reading-loading-txt');
   if (_rdLoadTxt) _rdLoadTxt.textContent = lang === 'is' ? 'STEINARNIR TALA Í ÞAGNINNI…' : 'THE STONES SPEAK IN SILENCE…';
@@ -1529,6 +1596,8 @@ Do NOT include labels like "PART 2" in the output. Speak directly to ${u.name}.`
 
   // V2 lab: dynamic TTS only (contextual reading — static audio would mismatch)
   voiceBtn.disabled = false;
+  // Vrstva C: show voice scale arrows after reading
+  _showVoiceArrows();
 }
 
 async function checkStaticAudio(drawn, l) {
