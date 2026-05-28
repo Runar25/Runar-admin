@@ -328,7 +328,7 @@ function renderJournal(entries) {
           <div class="jcard-left">
             <div class="jcard-glyph" style="opacity:0.7;">✦</div>
             <div class="jcard-info">
-              <div class="jcard-name">✦ THE GATHERING · ${(e.lang || '').toUpperCase()}</div>
+              <div class="jcard-name">✦ ${t('ritual_gathering')} · ${(e.lang || '').toUpperCase()}</div>
               <div class="jcard-date">${dateStr}</div>
               <div class="jcard-gathering-runes">${e.short_text || ''}</div>
               <div class="jcard-excerpt">${excerpt}${excerpt.length >= 160 ? '…' : ''}</div>
@@ -337,7 +337,7 @@ function renderJournal(entries) {
           <div class="jcard-arrow" id="jarr-${i}">▾</div>
         </div>
         <div class="jcard-body" id="jbody-${i}" style="display:none;">
-          <div class="jcard-layer-lbl">✦ ${isIs ? 'SAFN RÚNANNA' : 'THE GATHERING'}</div>
+          <div class="jcard-layer-lbl">✦ ${t('ritual_gathering_jcard')}</div>
           <div class="jcard-text" style="font-style:italic;line-height:1.9;">${e.deep_text || ''}</div>
         </div>
       </div>`;
@@ -613,7 +613,7 @@ function updateWhispersUI() {
     if (needMore) needMore.style.display = 'none';
   }
 
-  if (reqBtn) reqBtn.textContent = isIs ? 'BIÐJA UM THE GATHERING' : 'REQUEST THE GATHERING';
+  if (reqBtn) reqBtn.textContent = t('ritual_gathering_request');
 
   // Show correct state
   const states = { idle: 'whispers-idle', selecting: 'whispers-selecting', loading: 'whispers-loading', output: 'whispers-output' };
@@ -642,7 +642,7 @@ function updateWhispersUI() {
   const cancelBtn = document.getElementById('whispers-cancel-btn');
   if (cancelBtn) cancelBtn.textContent = isIs ? 'HÆTTA VIÐ' : 'CANCEL';
   const newBtn = document.getElementById('whispers-new-btn');
-  if (newBtn) newBtn.textContent = isIs ? 'NÝ SAMKOMA' : 'NEW GATHERING';
+  if (newBtn) newBtn.textContent = t('ritual_gathering_new');
 
   // Voice button
   const vBtn = document.getElementById('whispers-voice-btn');
@@ -1642,6 +1642,7 @@ function updateUIText() {
   setText('layer2-lbl', t('layer2_lbl'));
   setText('draw-another-btn', t('draw_another'));
   setText('start-over-btn', t('start_over'));
+  setText('whispers-title', '✦ ' + t('ritual_gathering'));
   setText('audio-player-lbl', t('voice_player_lbl'));
   const vBtn = document.getElementById('btn-generate-voice');
   if (vBtn && !vBtn.disabled) vBtn.textContent = t('voice_btn');

@@ -64,6 +64,13 @@ const UI_TEXT = {
     voice_btn_regen:   'ᚢ REGENERATE VOICE',
     voice_player_lbl:  '♪ RÚNAR SPEAKS',
 
+    // Ritual names — change here, reflects everywhere
+    ritual_gathering:         "THE GATHERING",
+    ritual_gathering_jcard:   "THE GATHERING",
+    ritual_gathering_request: "REQUEST THE GATHERING",
+    ritual_gathering_new:     "NEW GATHERING",
+    ritual_3readings:         "3 READINGS",
+
     // Corrections tab
     corr_lbl:       '✒ WORD CORRECTIONS',
     corr_note:      'Teach Rúnar better words. Enter what he said and what he should say instead.',
@@ -167,6 +174,13 @@ const UI_TEXT = {
     voice_btn_loading: 'ᚢ RÚNAR TALAR…',
     voice_btn_regen:   'ᚢ ENDURGERA RÖDD',
     voice_player_lbl:  '♪ RÚNAR TALAR',
+
+    // Ritual names — change here, reflects everywhere
+    ritual_gathering:         "THE GATHERING",
+    ritual_gathering_jcard:   "SAFN RÚNANNA",
+    ritual_gathering_request: "BIÐJA UM THE GATHERING",
+    ritual_gathering_new:     "NÝ SAMKOMA",
+    ritual_3readings:         "3 LESTUR",
 
     // Corrections tab
     corr_lbl:       '✒ ORÐALEIÐRÉTTINGAR',
