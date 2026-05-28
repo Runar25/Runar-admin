@@ -1405,6 +1405,30 @@ async function saveReading(rune, short, deep) {
   } catch(e) { console.warn('saveReading (V2 lab):', e.message); }
 }
 
+
+// ─── TREE: FIRE-AND-FORGET UPDATE (Vrstva A) ─────────
+async function _updateTree(rune, short, deep, area, lang, usedCredit) {
+  if (!currentUser) return;
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) return;
+    fetch(TREE_UPDATE, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + session.access_token,
+      },
+      body: JSON.stringify({
+        rune_name:    rune.n,
+        short_text:   short,
+        deep_text:    deep,
+        area:         area,
+        lang:         lang,
+        credits_used: usedCredit,
+      }),
+    }).catch(() => {}); // fire-and-forget, swallow errors
+  } catch(e) { /* silent */ }
+}
 // ─── READING CORE ───────────────────────────────────────
 // Called by readRune() (first draw) and confirmLangSwitch() (second lang).
 // Uses global: lang, readerUser, readerRune, activeChar.
@@ -1486,6 +1510,8 @@ Do NOT include labels like "PART 2" in the output. Speak directly to ${u.name}.`
 
   // Save reading to DB (same as V1 reader — full flow test)
   await saveReading(readerRune, short, deep);
+  // Vrstva A: update living tree in background (fire-and-forget)
+  _updateTree(readerRune, short, deep, readerUser.area || null, lang, false);
 
   if (_rdLoadEl) _rdLoadEl.style.display = 'none';
   if (_pL1) _pL1.classList.remove('pulsing');
