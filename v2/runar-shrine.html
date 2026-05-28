@@ -476,6 +476,7 @@ textarea::placeholder{color:var(--dim);}
     </div>
   </div>
   <div class="status" id="st-reader"></div>
+  <div id="st-session" style="display:none;font-size:0.6em;letter-spacing:1.5px;color:var(--gold);opacity:0.6;margin-top:4px;font-family:'Cinzel',serif;"></div>
   </div><!-- /reader-content -->
 </div>
 
@@ -1516,6 +1517,13 @@ Do NOT include labels like "PART 2" in the output. Speak directly to ${u.name}.`
   if (_rdLoadEl) _rdLoadEl.style.display = 'none';
   if (_pL1) _pL1.classList.remove('pulsing');
   if (_pL2) _pL2.classList.remove('pulsing');
+  // Vrstva B: show session state in V2 lab (testing only)
+  const _ss = res.session_state;
+  const _ssEl = document.getElementById('st-session');
+  if (_ssEl && _ss) {
+    _ssEl.textContent = '⚗ ' + _ss.element + ' · ' + _ss.distance + ' · ' + _ss.energy + ' · ' + _ss.movement;
+    _ssEl.style.display = 'block';
+  }
   await stream('out-short', short);
   if (deep) await stream('out-deep', deep); else document.getElementById('out-deep').innerHTML = '';
 
@@ -1727,7 +1735,7 @@ async function callProxy(system, prompt, max_tokens = 500) {
     });
     const data = await res.json();
     if (data.error) return { error: data.error };
-    return { text: data.text };
+    return { text: data.text, session_state: data.session_state || null };
   } catch (e) { return { error: e.message }; }
 }
 
