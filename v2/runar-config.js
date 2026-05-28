@@ -45,6 +45,13 @@ const RUNAR_MODES = {
     layers:     2,        // how many output layers (short + deep)
     active:     true,
   },
+  spread_3: {
+    label:      '3 Readings',
+    max_tokens: 900,
+    voice:      true,
+    layers:     3,
+    active:     true,
+  },
   ceremonial: {
     label:      'Ceremonial — Cacao Ritual',
     max_tokens: 1200,

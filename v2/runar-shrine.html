@@ -93,6 +93,12 @@ textarea::placeholder{color:var(--dim);}
 .audio-player{margin-top:14px;display:none;background:linear-gradient(135deg,#2E4A70 0%,#1d3352 100%);padding:20px 22px;}
 .audio-player.visible{display:block;}
 .audio-player-lbl{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:3px;color:var(--gold);margin-bottom:12px;opacity:0.9;}
+.mode-btn{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;padding:8px 16px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all 0.2s;}
+.mode-btn.on{border-color:var(--gold);color:var(--gold);background:var(--gold2);}
+.s3-slot{display:flex;align-items:center;gap:10px;padding:6px 10px;background:#0a0e18;border-left:2px solid var(--border);margin-bottom:4px;}
+.s3-slot.filled{border-left-color:var(--gold);}
+.s3-pos-lbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:1.5px;color:var(--gold);opacity:0.7;min-width:80px;}
+.s3-rune-nm{color:var(--white);font-style:italic;font-size:0.9em;}
 /* ── LOADING OVERLAY (same as V1 reader) ── */
 @keyframes pulse-fade{0%,100%{opacity:0.35}50%{opacity:1}}
 .layer1-lbl.pulsing,.layer2-lbl.pulsing{animation:pulse-fade 1.4s ease-in-out infinite;}
@@ -420,10 +426,19 @@ textarea::placeholder{color:var(--dim);}
     <div class="status" id="st-setup"></div>
   </div>
   <div class="card" id="reader-rune-card" style="display:none;">
+    <div id="spread-mode-selector" style="display:flex;gap:8px;margin-bottom:16px;">
+      <button class="mode-btn on" id="mode-btn-single" onclick="_setSpreadMode('single')">SINGLE RUNE</button>
+      <button class="mode-btn" id="mode-btn-spread3" onclick="_setSpreadMode('spread3')">3 READINGS</button>
+    </div>
     <div class="card-lbl" id="draw-lbl">ᚠ DRAW YOUR RUNE</div>
     <p class="note" id="draw-note">Close your eyes. Hold your question. Then choose the rune that calls to you.</p>
     <div class="rune-grid" id="reader-grid"></div>
     <div class="rune-info" id="reader-rune-info"></div>
+    <div id="spread3-slots" style="display:none;margin:8px 0 10px;">
+      <div class="s3-slot" id="s3-slot-0"><span class="s3-pos-lbl" id="s3-pos-lbl-0">① PAST</span><span class="s3-rune-nm" id="s3-rune-0">—</span></div>
+      <div class="s3-slot" id="s3-slot-1"><span class="s3-pos-lbl" id="s3-pos-lbl-1">② PRESENT</span><span class="s3-rune-nm" id="s3-rune-1">—</span></div>
+      <div class="s3-slot" id="s3-slot-2"><span class="s3-pos-lbl" id="s3-pos-lbl-2">③ FUTURE</span><span class="s3-rune-nm" id="s3-rune-2">—</span></div>
+    </div>
     <button class="btn-full" id="btn-speak" onclick="readRune()" disabled>LET RÚNAR SPEAK</button>
   </div>
   <div id="reader-output" style="display:none;">
@@ -446,13 +461,20 @@ textarea::placeholder{color:var(--dim);}
         <div style="font-size:2em;" id="badge-drawn-g"></div>
       </div>
     </div>
-    <div class="layer1">
+    <div class="layer1" id="single-layer1">
       <div class="layer1-lbl" id="layer1-lbl">✦ RÚNAR SPEAKS</div>
       <div class="out-txt" id="out-short"></div>
     </div>
-    <div class="layer2">
+    <div class="layer2" id="single-layer2">
       <div class="layer2-lbl" id="layer2-lbl">~ DEEPER REFLECTION</div>
       <div class="out-txt" id="out-deep"></div>
+    </div>
+    <!-- SPREAD3 OUTPUT — Trojice unified reading -->
+    <div id="spread3-output" style="display:none;">
+      <div class="layer1">
+        <div class="layer1-lbl" id="s3-trojice-lbl">✶ TROJICE</div>
+        <div class="out-txt" id="s3-out"></div>
+      </div>
     </div>
     <!-- VOICE PLAYER -->
     <button class="btn-voice" id="btn-generate-voice" onclick="generateVoice()" disabled>ᚢ GENERATE RÚNAR'S VOICE</button>
@@ -578,6 +600,8 @@ let readerRune      = null;
 let readerTexts     = {};   // { en: {short, deep}, is: {short, deep} } — cached readings per lang
 let voiceGenerated  = {};   // { en: bool, is: bool } — was dynamic voice generated this session?
 let pendingLang     = null; // target lang waiting for user confirmation
+let _spreadMode   = 'single';   // 'single' | 'spread3'
+let _spread3Runes = [];         // [pastRune, presentRune, futureRune]
 let corrScope     = 'both';
 let currentUser   = null;
 
@@ -840,6 +864,11 @@ function updateUIText() {
   setText('life-rune-lbl', t('life_rune_lbl')); setText('drawn-lbl', t('drawn_lbl'));
   setText('layer1-lbl', t('layer1_lbl')); setText('layer2-lbl', t('layer2_lbl'));
   setText('draw-another-btn', t('draw_another')); setText('start-over-btn', t('start_over'));
+  // Vrstva D: spread3 mode labels
+  setText('mode-btn-single',  t('spread3_mode_single'));
+  setText('mode-btn-spread3', t('ritual_3readings'));
+  if (_spreadMode === 'spread3') document.getElementById('draw-note').textContent = t('spread3_draw_note');
+  _updateSpread3Slots();
   setText('btn-generate-voice', t('voice_btn')); setText('audio-player-lbl', t('voice_player_lbl'));
   setText('corr-card-lbl', t('corr_lbl')); setText('corr-note', t('corr_note'));
   setFlbl('orig-lbl', t('orig_lbl')); setPH('corr-from', t('orig_ph'));
@@ -1007,9 +1036,22 @@ function buildGrid(gridId, isReader) {
       : `<span class="rb-g">${r.g}</span>`;
     btn.innerHTML = inner + `<span class="rb-n">${r.n}</span>`;
     btn.onclick = () => {
-      grid.querySelectorAll('.rb').forEach(b => b.classList.remove('on')); btn.classList.add('on');
-      if (isReader) { readerRune = r; document.getElementById('reader-rune-info').textContent = `${r.g} ${rn(r)} — ${rk(r)}`; document.getElementById('btn-speak').disabled = false; }
-      else          { teachRune  = r; document.getElementById('teach-rune-info').textContent  = `${r.g} ${rn(r)} — ${rk(r)}`; checkTeach(); loadRuneVersionCount(); }
+      if (isReader && _spreadMode === 'spread3') {
+        const idx = _spread3Runes.indexOf(r);
+        if (idx >= 0) {
+          _spread3Runes.splice(idx, 1);
+          btn.classList.remove('on');
+        } else if (_spread3Runes.length < 3) {
+          _spread3Runes.push(r);
+          btn.classList.add('on');
+        }
+        _updateSpread3Slots();
+        document.getElementById('btn-speak').disabled = (_spread3Runes.length < 3);
+      } else {
+        grid.querySelectorAll('.rb').forEach(b => b.classList.remove('on')); btn.classList.add('on');
+        if (isReader) { readerRune = r; document.getElementById('reader-rune-info').textContent = `${r.g} ${rn(r)} — ${rk(r)}`; document.getElementById('btn-speak').disabled = false; }
+        else          { teachRune  = r; document.getElementById('teach-rune-info').textContent  = `${r.g} ${rn(r)} — ${rk(r)}`; checkTeach(); loadRuneVersionCount(); }
+      }
     };
     grid.appendChild(btn);
   });
@@ -1617,7 +1659,22 @@ async function checkStaticAudio(drawn, l) {
 }
 
 async function readRune() {
+  if (_spreadMode === 'spread3') {
+    if (_spread3Runes.length < 3) return;
+    document.getElementById('reader-rune-card').style.display = 'none';
+    document.getElementById('reader-output').style.display = 'block';
+    readerTexts = {}; voiceGenerated = {};
+    await _generateSpread3Reading();
+    return;
+  }
   if (!readerRune) return;
+  // Restore single-mode layers (may have been hidden by a previous spread3 session)
+  const _sl1 = document.getElementById('single-layer1');
+  const _sl2 = document.getElementById('single-layer2');
+  const _s3o = document.getElementById('spread3-output');
+  if (_sl1) _sl1.style.display = '';
+  if (_sl2) _sl2.style.display = '';
+  if (_s3o) _s3o.style.display = 'none';
   // Show output area, update badge
   document.getElementById('reader-rune-card').style.display = 'none';
   document.getElementById('reader-output').style.display = 'block';
@@ -1636,16 +1693,223 @@ async function readRune() {
 }
 
 function drawAnother() {
-  readerRune = null; readerTexts = {}; voiceGenerated = {};
+  readerRune = null; readerTexts = {}; voiceGenerated = {}; _spread3Runes = [];
+  // Restore single-mode layers for next reading
+  const _da1 = document.getElementById('single-layer1');
+  const _da2 = document.getElementById('single-layer2');
+  const _dao = document.getElementById('spread3-output');
+  if (_da1) _da1.style.display = '';
+  if (_da2) _da2.style.display = '';
+  if (_dao) _dao.style.display = 'none';
   document.getElementById('reader-output').style.display = 'none'; document.getElementById('reader-rune-card').style.display = 'block';
   document.querySelectorAll('#reader-grid .rb').forEach(b => b.classList.remove('on'));
   document.getElementById('reader-rune-info').textContent = ''; document.getElementById('btn-speak').disabled = true;
+  _updateSpread3Slots();
 }
 
 function resetReader() {
   readerUser = {}; readerRune = null; readerTexts = {}; voiceGenerated = {};
+  _spread3Runes = []; _spreadMode = 'single';
+  // Reset mode selector UI
+  const _rmS = document.getElementById('mode-btn-single');
+  const _rmT = document.getElementById('mode-btn-spread3');
+  if (_rmS) _rmS.classList.add('on'); if (_rmT) _rmT.classList.remove('on');
+  const _rmSlots = document.getElementById('spread3-slots');
+  const _rmInfo  = document.getElementById('reader-rune-info');
+  const _rmNote  = document.getElementById('draw-note');
+  if (_rmSlots) _rmSlots.style.display = 'none';
+  if (_rmInfo)  _rmInfo.style.display  = '';
+  if (_rmNote)  _rmNote.textContent    = t('draw_note');
+  // Restore single-mode layers
+  const _rm1 = document.getElementById('single-layer1');
+  const _rm2 = document.getElementById('single-layer2');
+  const _rmo = document.getElementById('spread3-output');
+  if (_rm1) _rm1.style.display = ''; if (_rm2) _rm2.style.display = '';
+  if (_rmo) _rmo.style.display = 'none';
   document.getElementById('reader-setup').style.display = 'block'; document.getElementById('reader-rune-card').style.display = 'none'; document.getElementById('reader-output').style.display = 'none';
   ['r-name','r-day','r-month','r-year','r-question'].forEach(id => document.getElementById(id).value = ''); readerUser.mood = ''; readerUser.intention = ''; readerUser.seeking = []; buildPills();
+}
+
+// ─── SPREAD3 MODE (Vrstva D) ──────────────────────────────────────
+function _setSpreadMode(mode) {
+  _spreadMode   = mode;
+  _spread3Runes = [];
+  document.querySelectorAll('#reader-grid .rb').forEach(b => b.classList.remove('on'));
+  document.getElementById('btn-speak').disabled = true;
+  document.getElementById('reader-rune-info').textContent = '';
+  const _ssS = document.getElementById('mode-btn-single');
+  const _ssT = document.getElementById('mode-btn-spread3');
+  if (_ssS) _ssS.classList.toggle('on', mode === 'single');
+  if (_ssT) _ssT.classList.toggle('on', mode === 'spread3');
+  const _sSlots = document.getElementById('spread3-slots');
+  const _sInfo  = document.getElementById('reader-rune-info');
+  const _sNote  = document.getElementById('draw-note');
+  if (mode === 'spread3') {
+    if (_sSlots) _sSlots.style.display = 'block';
+    if (_sInfo)  _sInfo.style.display  = 'none';
+    if (_sNote)  _sNote.textContent    = t('spread3_draw_note');
+  } else {
+    if (_sSlots) _sSlots.style.display = 'none';
+    if (_sInfo)  _sInfo.style.display  = '';
+    if (_sNote)  _sNote.textContent    = t('draw_note');
+  }
+  _updateSpread3Slots();
+}
+
+function _updateSpread3Slots() {
+  const posChars = ['①', '②', '③'];
+  const posKeys  = ['spread3_pos_past', 'spread3_pos_present', 'spread3_pos_future'];
+  for (let i = 0; i < 3; i++) {
+    const slot   = document.getElementById('s3-slot-'    + i);
+    const posEl  = document.getElementById('s3-pos-lbl-' + i);
+    const runeEl = document.getElementById('s3-rune-'    + i);
+    if (posEl)  posEl.textContent  = posChars[i] + ' ' + t(posKeys[i]);
+    if (runeEl) runeEl.textContent = _spread3Runes[i] ? _spread3Runes[i].g + ' ' + rn(_spread3Runes[i]) : '—';
+    if (slot)   slot.classList.toggle('filled', !!_spread3Runes[i]);
+  }
+}
+
+async function _generateSpread3Reading() {
+  if (_spread3Runes.length < 3) return;
+  const voiceBtn = document.getElementById('btn-generate-voice');
+  voiceBtn.disabled = true; voiceBtn.textContent = t('voice_btn');
+  _v2rReset(); setSt('st-voice', ''); setSt('st-reader', '');
+
+  // Show spread3 output, hide single-rune layers
+  const _gs1    = document.getElementById('single-layer1');
+  const _gs2    = document.getElementById('single-layer2');
+  const _gs3out = document.getElementById('spread3-output');
+  const _gbadge = document.getElementById('reader-badge');
+  if (_gs1)    _gs1.style.display    = 'none';
+  if (_gs2)    _gs2.style.display    = 'none';
+  if (_gbadge) _gbadge.style.display = 'none';
+  if (_gs3out) {
+    _gs3out.style.display = 'block';
+    const _s3o = document.getElementById('s3-out');
+    if (_s3o) _s3o.innerHTML = '';
+  }
+  const _gssEl = document.getElementById('st-session');
+  const _gvaEl = document.getElementById('voice-arrows');
+  if (_gssEl) _gssEl.style.display = 'none';
+  if (_gvaEl) _gvaEl.style.display = 'none';
+
+  const _gdLoadEl  = document.getElementById('reading-loading');
+  const _gdLoadTxt = document.getElementById('reading-loading-txt');
+  if (_gdLoadTxt) _gdLoadTxt.textContent = lang === 'is' ? 'STEINARNIR TALA Í ÞAGNINNI…' : 'THE STONES SPEAK IN SILENCE…';
+  if (_gdLoadEl)  _gdLoadEl.style.display = 'block';
+
+  const [rPast, rPres, rFut] = _spread3Runes;
+  const u   = readerUser;
+  const sys = buildSysPromptV2();
+  const langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
+
+  // ── Trojice prompt ────────────────────────────────────────────
+  const seekingLabel = Array.isArray(u.seeking) && u.seeking.length ? u.seeking.join(' & ') : (u.seeking || '');
+  const lifeCtx = u.lifeRune ? 'Life rune: ' + rn(u.lifeRune) + ' (' + u.lifeRune.g + ')' : '';
+  const kbLine  = function(r) { return rk(r).split(',').map(function(s){ return s.trim(); }).filter(Boolean).slice(0, 5).join(', '); };
+
+  const contextBlock = [
+    'Seeker: ' + u.name,
+    lifeCtx,
+    u.area       ? 'Area: '                + u.area       : '',
+    seekingLabel ? 'Seeking: '             + seekingLabel  : '',
+    u.mood       ? 'Feeling: '             + u.mood       : '',
+    u.intention  ? 'This reading is for: ' + u.intention  : '',
+  ].filter(Boolean).join('\n');
+
+  const runesBlock = [
+    'RUNE 1 — ' + rn(rPast) + ' (' + rPast.g + ')',
+    kbLine(rPast),
+    '',
+    'RUNE 2 — ' + rn(rPres) + ' (' + rPres.g + ')',
+    kbLine(rPres),
+    '',
+    'RUNE 3 — ' + rn(rFut)  + ' (' + rFut.g  + ')',
+    kbLine(rFut),
+  ].join('\n');
+
+  const variantBlock = [
+    'Choose the frame that fits this seeker and this moment:',
+    '  Past · Present · Future/Direction    (what was, what is, where this leads)',
+    '  Situation · Challenge · Action       (what is, what blocks, what to do)',
+    '  Root · Trunk · Crown                (where from, where now, where to)',
+    '  Self · Other · Relationship          (for relational questions)',
+    '  Body · Mind · Spirit                 (for personal questions)',
+  ].join('\n');
+
+  const promptTxt = [
+    contextBlock,
+    '',
+    'The seeker draws three runes — a Trojice.',
+    '',
+    runesBlock,
+    '',
+    variantBlock,
+    '',
+    'Read all three as one flowing passage. Do not name the positions — carry them in your voice.',
+    'The third rune is not prophecy. It is where this energy leads if nothing changes. You always carry this.',
+    'Speak directly to ' + u.name + '. Be concise — every sentence must earn its place.',
+    langInstr,
+    getCorrPrompt(),
+  ].filter(Boolean).join('\n');
+
+  // Update Trojice label with rune glyphs
+  const _s3lbl = document.getElementById('s3-trojice-lbl');
+  if (_s3lbl) _s3lbl.textContent = rPast.g + ' · ' + rPres.g + ' · ' + rFut.g;
+
+  const res = await callProxy(sys, promptTxt, RUNAR_MODES.spread_3 ? RUNAR_MODES.spread_3.max_tokens : 900);
+  if (_gdLoadEl) _gdLoadEl.style.display = 'none';
+
+  if (res.error) {
+    const msg = res.error === 'rate_limited' ? 'Too many requests — wait a moment.' : 'Failed: ' + res.error;
+    setSt('st-reader', msg, 'err');
+    voiceBtn.disabled = false;
+    return;
+  }
+
+  const text = res.text.trim();
+  readerTexts[lang] = { short: text, deep: '' };
+
+  await stream('s3-out', text);
+  await _saveSpread3Reading(rPast, rPres, rFut, text);
+  _updateTree(rPast, text, '', u.area || null, lang, false);
+
+  // Vrstva B: session state display
+  const _gss = res.session_state;
+  if (_gssEl && _gss) {
+    _gssEl.textContent = '⚗ ' + _gss.element + ' · ' + _gss.distance + ' · ' + _gss.energy + ' · ' + _gss.movement;
+    _gssEl.style.display = 'block';
+  }
+  voiceBtn.disabled = false;
+  _showVoiceArrows();
+}
+async function _saveSpread3Reading(rPast, rPres, rFut, unifiedText) {
+  if (!currentUser) return;
+  try {
+    const lifeRune   = readerUser.lifeRune ? readerUser.lifeRune.n : null;
+    const seekingStr = Array.isArray(readerUser.seeking) ? readerUser.seeking.join(', ') : (readerUser.seeking || null);
+    // spread_data: rune positions — text is unified, not split
+    const spreadData = {
+      runes: [
+        { n: rPast.n, g: rPast.g, pos: 0 },
+        { n: rPres.n, g: rPres.g, pos: 1 },
+        { n: rFut.n,  g: rFut.g,  pos: 2 },
+      ],
+    };
+    await sb.from('readings').insert({
+      user_id:      currentUser.id,
+      rune_name:    'SPREAD_3',
+      rune_glyph:   rPast.g + ' ' + rPres.g + ' ' + rFut.g,
+      lang:         lang,
+      short_text:   unifiedText,
+      deep_text:    null,
+      area:         readerUser.area || null,
+      seeking:      seekingStr,
+      life_rune:    lifeRune,
+      credits_used: false,
+      spread_data:  spreadData,
+    });
+  } catch(e) { console.warn('_saveSpread3Reading:', e.message); }
 }
 
 // ─── VOICE (READER) — V2 uses custom v2r CAP player ─────
@@ -1696,7 +1960,13 @@ function v2rMute() {
 }
 
 async function generateVoice() {
-  const deepText = document.getElementById('out-deep').innerText.trim();
+  let deepText;
+  if (_spreadMode === 'spread3') {
+    const _s3voiceEl = document.getElementById('s3-out');
+    deepText = _s3voiceEl ? _s3voiceEl.innerText.trim() : '';
+  } else {
+    deepText = document.getElementById('out-deep').innerText.trim();
+  }
   if (!deepText) return;
 
   const btn = document.getElementById('btn-generate-voice');

@@ -70,6 +70,11 @@ const UI_TEXT = {
     ritual_gathering_request: "REQUEST THE GATHERING",
     ritual_gathering_new:     "NEW GATHERING",
     ritual_3readings:         "3 READINGS",
+    spread3_mode_single:      "SINGLE RUNE",
+    spread3_pos_past:         "PAST",
+    spread3_pos_present:      "PRESENT",
+    spread3_pos_future:       "FUTURE",
+    spread3_draw_note:        "Draw three runes — past, present, future. Let each call to you in turn.",
 
     // Corrections tab
     corr_lbl:       '✒ WORD CORRECTIONS',
@@ -181,6 +186,11 @@ const UI_TEXT = {
     ritual_gathering_request: "BIÐJA UM THE GATHERING",
     ritual_gathering_new:     "NÝ SAMKOMA",
     ritual_3readings:         "3 LESTUR",
+    spread3_mode_single:      "EIN RÚNA",
+    spread3_pos_past:         "FORTÍÐ",
+    spread3_pos_present:      "NÚTÍÐ",
+    spread3_pos_future:       "FRAMTÍÐ",
+    spread3_draw_note:        "Dragðu þrjár rúnur — fortíð, nútíð, framtíð. Leyfðu hverri að kalla til þín.",
 
     // Corrections tab
     corr_lbl:       '✒ ORÐALEIÐRÉTTINGAR',
