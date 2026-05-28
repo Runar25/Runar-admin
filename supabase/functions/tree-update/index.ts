@@ -170,17 +170,26 @@ serve(async (req) => {
       .filter((f: unknown) => typeof f === "string")
       .slice(0, 3);
 
+    // ── Vrstva C: compute voice_settled ──
+    // Settled = user hasn't adjusted voice in 3+ sessions
+    const newSessionCount         = (current?.session_count ?? 0) + 1;
+    const voiceLastChanged        = (current?.voice_last_changed_session as number ?? 0);
+    const sessionsWithoutChange   = newSessionCount - voiceLastChanged;
+    const voiceSettled            = sessionsWithoutChange >= 3;
+
     // ── Upsert tree_state ──
     await sb().from("tree_state").upsert({
-      user_id:           userId,
-      recurring_pattern: mergedPatterns,
-      emotional_arc:     arc,
-      personal_symbols:  mergedSymbols,
-      forbidden_next:    forbidden,
-      voice_scale:       current?.voice_scale ?? 10,
-      session_count:     (current?.session_count ?? 0) + 1,
-      last_session_at:   new Date().toISOString(),
-      updated_at:        new Date().toISOString(),
+      user_id:                    userId,
+      recurring_pattern:          mergedPatterns,
+      emotional_arc:              arc,
+      personal_symbols:           mergedSymbols,
+      forbidden_next:             forbidden,
+      voice_scale:                current?.voice_scale ?? 10,
+      voice_settled:              voiceSettled,
+      voice_last_changed_session: voiceLastChanged,
+      session_count:              newSessionCount,
+      last_session_at:            new Date().toISOString(),
+      updated_at:                 new Date().toISOString(),
     });
 
     return json({ ok: true });

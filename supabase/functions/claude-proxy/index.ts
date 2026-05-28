@@ -6,6 +6,7 @@
 // Rate limit: 10 requests / 60s per user (or IP for anonymous)
 // Tree context: injected into system prompt for tree-active readings (Vrstva A)
 // Session state: derived from tree + time, shapes reading tone (Vrstva B)
+// Voice scale: 0-20 user preference injected as tonal instruction (Vrstva C)
 // Deploy: supabase functions deploy claude-proxy --project-ref pmitxjvkeovijreepror --no-verify-jwt
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
@@ -26,7 +27,7 @@ function sb() {
   );
 }
 
-// ── Vrstva A: build tree context string ──────────────────────────────────────
+// ── Vrstva A: tree context ────────────────────────────────────────────────────
 function buildTreeContext(tree: Record<string, unknown>): string {
   const patterns  = (tree.recurring_pattern as string[] ?? []).filter(Boolean);
   const arc       = (tree.emotional_arc as string) || "opening";
@@ -51,7 +52,6 @@ function buildTreeContext(tree: Record<string, unknown>): string {
   if (topSymbols.length) ctx += "Images that speak to them: " + topSymbols.join(", ") + "\n";
   if (forbidden.length)  ctx += "Avoid repeating this time: " + forbidden.join(", ") + "\n";
   ctx += "---";
-
   return ctx;
 }
 
@@ -63,36 +63,25 @@ interface SessionState {
   movement: "forward" | "inward" | "weaving" | "turning";
 }
 
-function deriveSessionState(
-  tree: Record<string, unknown> | null,
-  now: Date,
-): SessionState {
+function deriveSessionState(tree: Record<string, unknown> | null, now: Date): SessionState {
   const arc          = (tree?.emotional_arc as string) || "opening";
   const sessionCount = (tree?.session_count as number) || 0;
 
-  // Energy — arc drives this primarily
   let energy: SessionState["energy"];
-  if (arc === "threshold")  energy = "high";
+  if (arc === "threshold")      energy = "high";
   else if (arc === "deepening") energy = "still";
   else {
     const hour = now.getUTCHours();
     energy = (hour >= 17 || hour < 6) ? "low" : "high";
   }
 
-  // Distance — newer seekers stay close; experienced get wider view
   const distance: SessionState["distance"] = sessionCount < 6 ? "close" : "wide";
 
-  // Element — rotates with session count + day of week (never purely random)
   const elements: SessionState["element"][] = ["fire", "water", "air", "earth", "silence"];
-  const dayOfWeek = now.getUTCDay();
-  const element   = elements[(sessionCount + dayOfWeek) % elements.length];
+  const element = elements[(sessionCount + now.getUTCDay()) % elements.length];
 
-  // Movement — follows emotional arc
   const movementMap: Record<string, SessionState["movement"]> = {
-    opening:     "forward",
-    deepening:   "inward",
-    integration: "weaving",
-    threshold:   "turning",
+    opening: "forward", deepening: "inward", integration: "weaving", threshold: "turning",
   };
   const movement = movementMap[arc] ?? "forward";
 
@@ -107,33 +96,63 @@ function buildSessionContext(s: SessionState): string {
     earth:   "Come as earth — grounded, patient, rooted in what endures.",
     silence: "Come as silence — spacious, waiting, letting the unspoken surface.",
   };
-
   const energyDesc: Record<string, string> = {
     high:  "Speak with full presence.",
     low:   "Speak quietly, as if by firelight.",
     still: "Hold space. Let the words land gently.",
   };
-
   const distanceDesc: Record<string, string> = {
     close: "Stay close to this moment, this person.",
     wide:  "Hold the wider arc of their journey.",
   };
-
   const movementDesc: Record<string, string> = {
     forward: "The current moves forward.",
     inward:  "The current moves inward.",
     weaving: "The threads are being woven together.",
     turning: "Something is turning — meet it without hurry.",
   };
-
   return (
     "\n\n--- THIS READING'S VOICE ---\n" +
-    (elementDesc[s.element]  ?? "") + " " +
-    (energyDesc[s.energy]    ?? "") + " " +
+    (elementDesc[s.element]   ?? "") + " " +
+    (energyDesc[s.energy]     ?? "") + " " +
     (distanceDesc[s.distance] ?? "") + " " +
     (movementDesc[s.movement] ?? "") +
     "\n---"
   );
+}
+
+// ── Vrstva C: voice scale (0-20) ─────────────────────────────────────────────
+const VOICE_INSTRUCTIONS: Record<number, string> = {
+  0:  "Speak with absolute plainness. No image, no symbol. Only what is real and direct.",
+  1:  "Speak almost entirely in plain language. One concrete image may appear if unavoidable.",
+  2:  "Very direct. Ground everything. Let no metaphor linger.",
+  3:  "Mostly direct. Image may appear once, briefly.",
+  4:  "Predominantly direct. A single metaphor only if it earns its place.",
+  5:  "Direct with rare image. Keep both feet on the ground.",
+  6:  "Grounded. One image may open the door, nothing more.",
+  7:  "Lean direct. Let image appear only to clarify, not to decorate.",
+  8:  "Slight lean toward direct. Balance tips toward plain speech.",
+  9:  "Nearly balanced, direct has a slight edge.",
+  10: "Equal measure — direct and image in balance.",
+  11: "Nearly balanced, image has a slight edge.",
+  12: "Slight lean toward image. Let metaphor carry some weight.",
+  13: "Lean toward image. Direct is the anchor, metaphor the sail.",
+  14: "More image than plain speech. Ground once, then let it fly.",
+  15: "Image-forward. Reality appears as shadow beneath the symbol.",
+  16: "Mostly symbolic. Direct speech surfaces only to orient.",
+  17: "Strongly symbolic. Plain meaning is implied, not stated.",
+  18: "Almost entirely in image. Directness is a distant shore.",
+  19: "Near-pure symbol. One plain word at most, if needed.",
+  20: "Speak entirely in symbol and image. Nothing literal. Pure metaphor.",
+};
+
+function buildVoiceContext(scale: number, settled: boolean): string {
+  const clamped = Math.max(0, Math.min(20, Math.round(scale)));
+  const instruction = VOICE_INSTRUCTIONS[clamped] ?? VOICE_INSTRUCTIONS[10];
+  if (settled) {
+    return "\n\n--- VOICE ---\n" + instruction + " (This seeker's voice is known to you.)\n---";
+  }
+  return "\n\n--- VOICE ---\n" + instruction + "\n---";
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -179,9 +198,7 @@ serve(async (req) => {
     const ip    = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
     const rlKey = userId ? `claude:user:${userId}` : `claude:ip:${ip}`;
     const { data: allowed } = await sb().rpc("check_rate_limit", {
-      p_key:            rlKey,
-      p_window_seconds: 60,
-      p_max_requests:   10,
+      p_key: rlKey, p_window_seconds: 60, p_max_requests: 10,
     });
     if (!allowed) {
       return json({ error: "rate_limited", message: "Too many requests. Please wait a moment." }, 429);
@@ -203,7 +220,6 @@ serve(async (req) => {
       } else {
         if (userId) {
           const now = new Date();
-
           const dow       = (now.getUTCDay() + 6) % 7;
           const weekStart = new Date(now);
           weekStart.setUTCDate(now.getUTCDate() - dow);
@@ -227,7 +243,7 @@ serve(async (req) => {
 
           if ((weekCount ?? 0) >= weeklyLimit) {
             return json({
-              error:   "weekly_limit",
+              error: "weekly_limit",
               message: "The stones rest until Monday. Use a reading gift card to continue.",
             }, 402);
           }
@@ -242,7 +258,7 @@ serve(async (req) => {
 
           if ((monthCount ?? 0) >= 5) {
             return json({
-              error:   "monthly_limit",
+              error: "monthly_limit",
               message: "Monthly free readings exhausted. Use a reading gift card or upgrade.",
             }, 402);
           }
@@ -250,8 +266,7 @@ serve(async (req) => {
       }
     }
 
-    // ── Vrstva A + B: tree context & session state ────────────────────────────
-    // Active for: Standard+, or Rune Seeker using a paid credit.
+    // ── Vrstva A + B + C: tree context, session state, voice scale ────────────
     const treeMode =
       userTier === "standard" ||
       userTier === "premium"  ||
@@ -259,27 +274,33 @@ serve(async (req) => {
 
     let systemWithContext = system || "";
     let sessionState: SessionState | null = null;
-    let treeState: Record<string, unknown> | null = null;
 
     if (treeMode && userId && mode !== "extraction") {
-      // Load tree state
       const { data } = await sb()
         .from("tree_state")
-        .select("recurring_pattern, emotional_arc, personal_symbols, forbidden_next, session_count")
+        .select("recurring_pattern, emotional_arc, personal_symbols, forbidden_next, session_count, voice_scale, voice_settled")
         .eq("user_id", userId)
         .maybeSingle();
-      treeState = data ?? null;
 
-      // Vrstva A: inject tree memory (only if tree has meaningful data)
+      const treeState = data ?? null;
+
+      // Vrstva A: tree memory
       if (treeState &&
           ((treeState.recurring_pattern as string[] ?? []).length > 0 ||
            (treeState.forbidden_next    as string[] ?? []).length > 0)) {
         systemWithContext = systemWithContext + buildTreeContext(treeState);
       }
 
-      // Vrstva B: derive and inject session state (always for tree-mode users)
+      // Vrstva B: session state
       sessionState = deriveSessionState(treeState, new Date());
       systemWithContext = systemWithContext + buildSessionContext(sessionState);
+
+      // Vrstva C: voice scale
+      const voiceScale   = (treeState?.voice_scale   as number  ?? 10);
+      const voiceSettled = (treeState?.voice_settled  as boolean ?? false);
+      if (voiceScale !== 10 || voiceSettled) {
+        systemWithContext = systemWithContext + buildVoiceContext(voiceScale, voiceSettled);
+      }
     }
 
     // ── Call Claude ──
@@ -289,15 +310,15 @@ serve(async (req) => {
     const claudeRes = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: {
-        "Content-Type":      "application/json",
-        "x-api-key":         anthropicKey,
+        "Content-Type": "application/json",
+        "x-api-key": anthropicKey,
         "anthropic-version": "2023-06-01",
       },
       body: JSON.stringify({
-        model:      "claude-sonnet-4-5",
+        model:    "claude-sonnet-4-5",
         max_tokens,
-        system:     systemWithContext,
-        messages:   [{ role: "user", content: prompt }],
+        system:   systemWithContext,
+        messages: [{ role: "user", content: prompt }],
       }),
     });
 
