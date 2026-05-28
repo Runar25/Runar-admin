@@ -1367,12 +1367,14 @@ function t(key) { return (UI_TEXT[lang]?.[key]) || UI_TEXT.en[key] || key; }
 function rk(r)  { return lang === 'is' ? r.k_is : r.k; }
 function rn(r)  { return lang === 'is' ? r.is_n : r.n; }
 function rworld(r) {
-  const m = {
-    Hel:     'deep roots · what lies beneath',
-    Midgard: 'the living path · the world of everyday action',
-    Asgard:  'the heights · what seeks light and wide vision',
+  const labels = {
+    Hel:      'the roots, what lies beneath',
+    Midgard:  'the living moment, what is active now',
+    Asgard:   'the higher pattern, what reaches toward wider sky',
+    Vanaheim: 'the quiet work of nature, what grows slowly',
+    Jotunheim:'the untamed, what resists form',
   };
-  return r.world ? (m[r.world] || r.world) : '';
+  return r.world ? (labels[r.world] || '') : '';
 }
 function relements(r) { return r.elements ? r.elements.join(', ') : ''; }
 function setText(id, v)   { const el = document.getElementById(id); if (el && v !== undefined) el.textContent = v; }
