@@ -26,8 +26,8 @@ let voiceGenerated = {};  // { en: bool, is: bool }
 let pendingLang    = null;
 let corrections    = [];
 
-const FREE_TRIAL_LIMIT      = 3;
-const FREE_REGISTERED_LIMIT = 5;
+const FREE_TRIAL_LIMIT      = TIER_LIMITS.free_trial.onboarding;   // 1
+const FREE_REGISTERED_LIMIT = TIER_LIMITS.rune_seeker.onboarding;  // 3
 
 // Reading angles — randomly injected per reading to force variability
 // Each angle pushes Claude to a different entry point and metaphor source
@@ -1675,8 +1675,8 @@ function updateUIText() {
   // Auth gate
   setText('gate-title', lang === 'is' ? 'ÓKEYPIS LESTRAR ÞÍNIR ERU FULLNÝTTIR' : 'YOUR FREE READINGS ARE COMPLETE');
   setText('gate-note', lang === 'is'
-    ? 'Þú hefur farið með Rúnar þrisvar sinnum sem gestir.\nStofnaðu reikning til að halda áfram.'
-    : 'You have walked with Rúnar three times as a Visitor.\nCreate a free account to continue.');
+    ? 'Þú hefur farið með Rúnar einu sinni sem gestur.\nStofnaðu reikning til að halda áfram.'
+    : 'You have walked with Rúnar once as a Visitor.\nCreate a free account to continue.');
   setText('gate-btn', lang === 'is' ? 'GERAST RÚNA-LEITANDI' : 'BECOME A RUNE SEEKER');
   // Trial end prompt translations
   setText('trial-end-title', lang === 'is' ? 'FERÐ ÞÍN SEM GESTUR ER LOKIÐ' : 'YOUR JOURNEY AS VISITOR IS COMPLETE');

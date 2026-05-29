@@ -1,7 +1,11 @@
 // Supabase Edge Function: claude-proxy
 // Forwards to Claude API. Enforces tier logic:
-//   rune_seeker — weekly drip: 3 free in first 7 days, then 1/week; monthly cap 5 (credits_used=false)
-//                paid credits deducted server-side; ceremonial mode (The Gathering) bypasses all limits
+//   free_trial (anonymous) — frontend handles trial count (localStorage)
+//   rune_seeker — BALANCE SYSTEM (2026-05-29):
+//     free_balance in user_profiles: 3 at onboarding, +1 every Monday IF balance=0
+//     free readings: SINGLE RUNE ONLY (spread_cost must be 1)
+//     paid credits: any spread, cost = spread_cost param
+//     ceremonial mode (The Gathering): bypass all limits
 //   standard / premium — unlimited, no deduction
 // Rate limit: 10 requests / 60s per user (or IP for anonymous)
 // Tree context: injected into system prompt for tree-active readings (Vrstva A)
@@ -25,6 +29,16 @@ function sb() {
     Deno.env.get("SUPABASE_URL")!,
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
   );
+}
+
+// ── ISO week key (e.g. "2026-W22") ───────────────────────────────────────────
+function getISOWeekKey(date: Date): string {
+  const d = new Date(date);
+  d.setUTCHours(0, 0, 0, 0);
+  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  const weekNo = Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
+  return `${d.getUTCFullYear()}-W${String(weekNo).padStart(2, "0")}`;
 }
 
 // ── Vrstva A: tree context ────────────────────────────────────────────────────
@@ -163,7 +177,14 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { system, prompt, max_tokens = 600, use_credit = false, mode = "" } = body;
+    const {
+      system,
+      prompt,
+      max_tokens  = 600,
+      use_credit  = false,
+      mode        = "",
+      spread_cost = 1,     // number of credits/balance to deduct (= number of runes)
+    } = body;
     if (!prompt) return json({ error: "Missing prompt" }, 400);
 
     // ── Auth & tier check ──
@@ -206,62 +227,66 @@ serve(async (req) => {
 
     // ── Tier enforcement ──
     if (userTier === "rune_seeker") {
+
       if (use_credit) {
-        if (creditsBalance <= 0) {
-          return json({ error: "no_credits", message: "No credits remaining. Redeem a gift card or upgrade." }, 402);
+        // ── Paid credit reading ──
+        // spread_cost = number of runes = number of credits to deduct
+        const cost = Math.max(1, spread_cost);
+        if (creditsBalance < cost) {
+          return json({ error: "no_credits", message: "Not enough credits. Redeem a reading gift card or upgrade." }, 402);
         }
-        const { data: remaining } = await sb().rpc("use_credit", { p_user_id: userId });
-        if (remaining === -1) {
-          return json({ error: "no_credits", message: "No credits remaining." }, 402);
+        // Deduct credits one by one (use_credit RPC is atomic, deducts 1 per call)
+        for (let i = 0; i < cost; i++) {
+          const { data: remaining } = await sb().rpc("use_credit", { p_user_id: userId });
+          if (remaining === -1) {
+            return json({ error: "no_credits", message: "Not enough credits." }, 402);
+          }
+          creditsBalance = remaining;
         }
-        creditsBalance = remaining;
+
       } else if (mode === "ceremonial") {
-        // The Gathering — bypass all limits
+        // ── The Gathering — bypass all limits ──
+
       } else {
+        // ── Free balance reading (single rune only) ──
         if (userId) {
-          const now = new Date();
-          const dow       = (now.getUTCDay() + 6) % 7;
-          const weekStart = new Date(now);
-          weekStart.setUTCDate(now.getUTCDate() - dow);
-          weekStart.setUTCHours(0, 0, 0, 0);
-
-          const { count: weekCount } = await sb()
-            .from("readings")
-            .select("id", { count: "exact", head: true })
-            .eq("user_id", userId)
-            .eq("credits_used", false)
-            .gte("drawn_at", weekStart.toISOString());
-
-          const { data: profileAge } = await sb()
+          // Read current balance + drip_week
+          const { data: profile } = await sb()
             .from("user_profiles")
-            .select("created_at")
+            .select("free_balance, drip_week")
             .eq("id", userId)
             .maybeSingle();
-          const createdAt      = new Date(profileAge?.created_at ?? now);
-          const accountAgeDays = (now.getTime() - createdAt.getTime()) / (1000 * 60 * 60 * 24);
-          const weeklyLimit    = accountAgeDays < 7 ? 3 : 1;
 
-          if ((weekCount ?? 0) >= weeklyLimit) {
+          let freeBalance = profile?.free_balance ?? 0;
+          const dripWeek  = profile?.drip_week    ?? null;
+
+          // Monday drip: add 1 IF balance=0 AND haven't dripped this week yet
+          const now         = new Date();
+          const isMonday    = now.getUTCDay() === 1;
+          const currentWeek = getISOWeekKey(now);
+
+          if (isMonday && freeBalance === 0 && dripWeek !== currentWeek) {
+            const { error: dripError } = await sb()
+              .from("user_profiles")
+              .update({ free_balance: 1, drip_week: currentWeek })
+              .eq("id", userId)
+              .eq("free_balance", 0);  // atomic: only if still 0
+            if (!dripError) freeBalance = 1;
+          }
+
+          if (freeBalance <= 0) {
             return json({
-              error: "weekly_limit",
-              message: "The stones rest until Monday. Use a reading gift card to continue.",
+              error:   "weekly_limit",
+              message: "The stones rest. Your next reading arrives Monday — or open the door with a reading gift card.",
             }, 402);
           }
 
-          const monthStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)).toISOString();
-          const { count: monthCount } = await sb()
-            .from("readings")
-            .select("id", { count: "exact", head: true })
-            .eq("user_id", userId)
-            .eq("credits_used", false)
-            .gte("drawn_at", monthStart);
-
-          if ((monthCount ?? 0) >= 5) {
-            return json({
-              error: "monthly_limit",
-              message: "Monthly free readings exhausted. Use a reading gift card or upgrade.",
-            }, 402);
-          }
+          // Deduct 1 from free_balance (free readings always cost 1 regardless of spread_cost)
+          await sb()
+            .from("user_profiles")
+            .update({ free_balance: freeBalance - 1 })
+            .eq("id", userId)
+            .eq("free_balance", freeBalance);  // optimistic: if concurrent request beat us, this is a no-op
         }
       }
     }

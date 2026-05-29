@@ -84,7 +84,7 @@ const TIERS = {
   free_trial: {
     label:            'Visitor',
     label_is:         'Gestur',
-    readings:         3,          // total, no account needed
+    readings:         1,          // total, no account needed — CHANGED 2026-05-29
     // ↓ VOICE FLAGS — flip here to enable/disable without touching logic
     // voice_monthly: true = Visitor slyší hlas při svých 3 čteních
     // Až budeme limitovat: flip na false → Visitor dostane jen text
@@ -152,4 +152,49 @@ const APP = {
   supported_langs: ['en', 'is'],
   stream_delay_ms: 25,        // word-by-word stream speed
   version:         '0.1.0',  // increment on significant changes
+};
+
+// ─── TIER LIMITS — single source of truth ───────────────
+// Edit here only. All frontend constants read from this.
+// Backend (claude-proxy) uses parallel values — sync manually when changing.
+// Last updated: 2026-05-29
+const TIER_LIMITS = {
+  free_trial: {
+    onboarding:   1,     // lifetime readings for Visitor (was 3)
+    weekly_drip:  0,     // no drip for anonymous
+    free_spreads: ['single'],
+  },
+  rune_seeker: {
+    onboarding:   3,     // free readings at registration
+    weekly_drip:  1,     // +1 every Monday IF free_balance = 0 (non-cumulative)
+    free_spreads: ['single'],  // free balance covers ONLY single rune
+    journal_entries: 5,
+  },
+  standard: {
+    onboarding:   null,  // unlimited
+    weekly_drip:  null,
+    free_spreads: ['single', 'trojice', 'cross', 'horseshoe', 'norns', 'yggdrasil'],
+    journal_entries: null,
+  },
+  premium: {
+    onboarding:   null,
+    weekly_drip:  null,
+    free_spreads: ['single', 'trojice', 'cross', 'horseshoe', 'norns', 'yggdrasil'],
+    journal_entries: null,
+  },
+};
+
+// ─── SPREAD COSTS ────────────────────────────────────────
+// cost = number of runes in spread.
+// free: cost from free_balance (null = not available with free balance — credits only).
+// credits: cost in credits from Reading Gift Card.
+const SPREAD_COSTS = {
+  single:    { free: 1,    credits: 1  },
+  trojice:   { free: null, credits: 3  },
+  cross:     { free: null, credits: 5  },
+  gathering: { free: null, credits: -1 },  // -1 = variable (number of runes selected)
+  horseshoe: { free: null, credits: 7  },
+  norns:     { free: null, credits: 9  },
+  yggdrasil: { free: null, credits: 9  },
+  life_rune: { free: null, credits: 10 },  // deep life rune reading — implementation later
 };
