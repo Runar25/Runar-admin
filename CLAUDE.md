@@ -90,11 +90,13 @@ runar-privacy.html     ← Privacy Policy (EN+IS, GDPR-compliant)
 runar-config.js        ← SB_URL, SB_KEY, PROXY, EL_PROXY, EL_STATIC,
                           EL_VOICE_ID_EN, EL_VOICE_ID_IS, elVoiceId(), elModel(),
                           TIERS (s label_is), RUNAR_MODES, ADMIN_EMAILS, isAdmin()
+                          TIER_LIMITS — single source of truth pro limity (2026-05-29)
+                          SPREAD_COSTS — cost per spread type in free balance + credits
 runar-runes.js         ← 25 Elder Futhark + Blank, AREAS, SEEKS, calcLifeRune()
 runar-character.js     ← DEF_CHAR_EN, DEF_CHAR_IS, buildSysPrompt()
 runar-translations.js  ← UI_TEXT { en, is }  ← EDIT TOOLEM OK
 runar-svgs.js          ← RUNE_SVGS (SVG glyfů)
-sw.js                  ← Service Worker v4, HTML network-first, JS/CSS cache-first
+sw.js                  ← Service Worker v9, HTML network-first, JS/CSS cache-first
 ```
 
 ## Edge Functions (`/supabase/functions/`)
@@ -132,7 +134,9 @@ runar_static_audio     ← statické audio, UNIQUE (rune_name, lang, version)
                                    text, audio_url, ready, created_at, updated_at
 user_profiles          ← profily přihlášených uživatelů (RLS ✓)
                           sloupce: id (= auth.users.id), name, lang, tier,
-                                   credits_balance, created_at
+                                   credits_balance, created_at,
+                                   free_balance (int, default 1) ← PŘIDÁNO 2026-05-29
+                                   drip_week (text, ISO week "2026-W22") ← PŘIDÁNO 2026-05-29
                           POZOR: email a updated_at sloupce NEEXISTUJÍ v DB!
                           upsert posílá pouze: { id } s ignoreDuplicates:true
 readings               ← každé čtení uživatele (RLS ✓)
@@ -174,22 +178,41 @@ runar-audio (PUBLIC)   ← static/en/fehu_1.mp3 ... static/en/othalan_2.mp3
 
 ## Tier systém
 ```
-Visitor     (free_trial)  → 3 čtení celkem, anon, jen Fehu v kolekci
-Rune Seeker (rune_seeker) → WEEKLY DRIP (server-side enforcement):
-                              - první 7 dní: 3 čtení/týden (engagement bonus)
-                              - poté: 1 čtení/týden
-                              - monthly cap: 5 čtení/měsíc (credits_used=false)
-                            + kredity (Reading Gift Card) = bypass všech limitů
+Visitor     (free_trial)  → 1 čtení celkem (bylo 3 — změna 2026-05-29), anon, jen Fehu v kolekci
+                            DOB pole: locked/teaser
+                            Area of Life + Seeking: locked/teaser
+
+Rune Seeker (rune_seeker) → BALANCE SYSTÉM (2026-05-29):
+                              free_balance v DB (user_profiles.free_balance)
+                              onboarding: 3 free při registraci
+                              weekly drip: +1 každé pondělí POUZE pokud free_balance = 0
+                              free readings: POUZE single rune (1 balance = 1 čtení)
+                              free readings bez kreditů: Area + Seeking locked
+                            + kredity (Reading Gift Card) = plný přístup + Area + Seeking
                             journal: posledních 5 čtení
                             The Gathering: 1× ZDARMA (pak jen Standard+)
                               - min. 3 čtení v journalu
-                              - po 1. použití: "The Gathering unlocks with Standard."
+                              - po 1. použití: "The Gathering opens with Standard."
                             Specific Question: locked (teaser)
+
 Standard                  → unlimited čtení + hlas
                             journal: unlimited + filtry
                             The Gathering: plný přístup (zdarma, bez kreditů)
                             Specific Question: odemčena
+
 Premium                   → vše jako Standard + ceremonial (coming soon)
+```
+
+SPREAD_COSTS (v runar-config.js):
+```
+single:    free=1,    credits=1   ← free balance pokrývá POUZE toto
+trojice:   free=null, credits=3
+cross:     free=null, credits=5
+gathering: free=null, credits=-1  (= počet vybraných run)
+horseshoe: free=null, credits=7
+norns:     free=null, credits=9
+yggdrasil: free=null, credits=9
+life_rune: free=null, credits=10  (deep reading — implementace later)
 ```
 Upgrade path: Visitor → Rune Seeker (zdarma, účet) → Standard → Premium
 
@@ -338,7 +361,7 @@ Aktuálně neexistuje způsob jak si koupit Standard. Tlačítko "UPGRADE → ST
 ### ⚪ NÍZKÁ PRIORITA / BUDOUCNOST
 
 - [ ] **Language gating pro Visitor** — IS jen pro registrované (odloženo, čeká na IS review)
-- [ ] **Třírunový spread** — minulost / přítomnost / budoucnost
+- [x] **Třírunový spread (3 READINGS / Trojice)** ✅ — viz VRSTVA D
 - [ ] **Follow-up otázka** po čtení
 - [ ] **Lunární / sezónní kontext** — Rúnar ví o měsíčním cyklu
 - [ ] **Paměť kontextu** — multi-turn history v claude-proxy
@@ -457,6 +480,21 @@ Po islandském VSK (24%): marže ~75–80%
 - [x] Výsledek uložen do journalu jako dedicated Gathering jcard
 - [x] 402 error správně ošetřen (nedostatek kreditů → jasná hláška)
 
+### VRSTVA D — 3 READINGS (Trojice) ✅ V2 LAB HOTOVO
+
+- [x] Mode selector: SINGLE RUNE / 3 READINGS v reader-rune-card
+- [x] Slot tracker: ① ② ③ s rune glyfy při výběru
+- [x] Unified output: 1 blok `#s3-out`, label `#s3-trojice-lbl` (glyfy tří run)
+- [x] Trojice prompt: contextBlock + runesBlock + variantBlock, 900 tokenů
+- [x] Rúnar vybírá variantu automaticky (5 možností, žádný user input)
+- [x] Organic output: pozice v hlase, žádné labely
+- [x] Voice: čte celý unified text
+- [x] Save: `spread_data` = rune positions, `short_text` = unified text
+- [x] Design rozhodnutí zdokumentována v runar_system_design.md
+
+> ⚠️ Zatím jen V2 lab (shrine). Do produkce (runar-app.js) přejde v dalším sprintu.
+> ✅ SQL: `spread_data` jsonb column přidána do readings tabulky (spuštěno 2026-05-28)
+
 ### VRSTVA 4 — STANDARD & PREMIUM FEATURES (NÁVRH)
 
 > ⚠️ Rozdělení mezi Standard a Premium ještě není finální — nutno rozhodnout.
@@ -484,7 +522,7 @@ Po islandském VSK (24%): marže ~75–80%
 - [ ] **Integrace s Agndofa cacao produktem** — QR/NFC spustí rituální flow
 
 **🧠 Hloubka & kontext**
-- [ ] **Třírunový spread** — minulost / přítomnost / budoucnost
+- [x] **Třírunový spread (Trojice)** — implementováno v V2 lab (VRSTVA D)
 - [ ] **Follow-up otázka** — jedna doplňující otázka po čtení
 - [ ] **Lunární / sezónní kontext** — Rúnar ví jaký je měsíční cyklus a roční období
 
@@ -667,6 +705,43 @@ Python skripty ukládat v `C:\Users\zkuku\Downloads\Runar-admin\`.
 | IS | Velkomin | Gaman að sjá þig | uvítání ve všech místech |
 
 ---
+
+## Hotovo ✅ (session 2026-05-29 — Balance systém + UX copy)
+
+- [x] **Balance systém** — single source of truth pro tier limity
+  - `TIER_LIMITS` + `SPREAD_COSTS` přidány do `runar-config.js`
+  - Visitor: 1 čtení (bylo 3), DOB field locked/teaser pro Visitora
+  - Rune Seeker: free_balance DB sloupec, onboarding=3, weekly drip +1 v pondělí if balance=0
+  - Free readings: POUZE single rune; spreads (3+) vždy kredity
+  - Area of Life + Seeking: locked bez kreditů (free reading = basic)
+  - `FREE_TRIAL_LIMIT` + `FREE_REGISTERED_LIMIT` čtou z `TIER_LIMITS`
+  - Všechny texty přepsány: "five readings/month" → "3 to begin, then one each week"
+  - SQL migrace: `free_balance` + `drip_week` do `user_profiles` ✅ spuštěno
+  - claude-proxy: balance logika + Monday drip nasazeno
+  - `TIER_LIMITS.md` — editovatelná tabulka pro správu limitů
+- [x] **UX copy — unlock → unveil**
+  - Area of Life + Seeking: "unlock" → "unveil" (Visitor)
+  - RS bez kreditů: "unlocks all" → "unveils all"
+  - The Gathering gate: "unlocks with Standard" → "opens with Standard"
+  - Tier props: "unlocks all features" → "unveils all features"
+  - Specific question teaser: "unlock" → "Deeper questions open with Standard"
+- [x] **Visitor DOB field** — locked/disabled + teaser hint "Become a Rune Seeker to unveil your life rune"
+
+## Hotovo ✅ (session 2026-05-28 — Vrstva D)
+- [x] **3 READINGS (Trojice) — V2 lab** — implementován jako unified výklad
+  - HTML: `spread3-output` přepsán na 1 blok (`#s3-out`, `#s3-trojice-lbl` s glyfy run)
+  - `_generateSpread3Reading()`: nový Trojice prompt — Rúnar vybírá variantu automaticky
+  - `_saveSpread3Reading()`: unified text, `spread_data` = rune positions (bez split textu)
+  - `generateVoice()`: čte z `#s3-out` místo 3 elementů
+  - `runar-config.js`: `spread_3` mode přidán (max_tokens: 900, active: true)
+  - `runar-translations.js`: spread3 klíče přidány (EN + IS)
+- [x] **Trojice design rozhodnutí** — zdokumentováno v runar_system_design.md:
+  - Výstup: 1 celistvý organický text, 900 tokenů, žádné position labels
+  - Výběr varianty: Rúnar automaticky (na základě Area + Seeking + Feeling + This reading is for)
+  - Voice Scale platí stejně jako pro single reading
+  - Strom = přirozená etapa od Rune Seeker (ne side produkt)
+  - Každé čtení → strom automaticky; skip option = Standard/Premium (pro čtení pro jiného)
+  - Rituální mapa potvrzena (1 runa → uzel · 3 runy → větev · 5 kříž → silná větev · B → kmen · C → kořeny)
 
 ## Hotovo ✅ (session 2026-05-26)
 - [x] **Weekly drip systém** — nový mechanismus pro Rune Seeker (místo 5/měsíc):
