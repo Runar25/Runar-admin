@@ -588,7 +588,7 @@ function updateWhispersUI() {
   } else if (isGatheringEverUsed) {
     // Rune Seeker used their 1× free Gathering — Standard only from here
     if (reqBtn)   { reqBtn.disabled = true; reqBtn.style.opacity = '0.35'; reqBtn.style.cursor = 'default'; }
-    if (lockEl)   { lockEl.style.display = 'block'; lockEl.textContent = 'The Gathering unlocks with Standard.'; }
+    if (lockEl)   { lockEl.style.display = 'block'; lockEl.textContent = 'The Gathering opens with Standard.'; }
     if (needMore) needMore.style.display = 'none';
   } else if (usedAlready) {
     // Already used this week — button disabled, text visible
@@ -1621,9 +1621,9 @@ function updateUIText() {
   const _isVisitor = !currentUser;
   const _isRSnoCredits = currentUser && userTier === 'rune_seeker' && userCredits <= 0;
   const _lockHint = _isVisitor
-    ? ' <span class="visitor-lock-hint">' + (lang === 'is' ? '· Gerast Rúna-leitandi til að opna' : '· Become a Rune Seeker to unlock') + '</span>'
+    ? ' <span class="visitor-lock-hint">' + (lang === 'is' ? '· Gerast Rúna-leitandi til að opna' : '· Become a Rune Seeker to unveil') + '</span>'
     : _isRSnoCredits
-      ? ' <span class="visitor-lock-hint">' + (lang === 'is' ? '· Reading Gift Card opnar allt' : '· Reading Gift Card unlocks all') + '</span>'
+      ? ' <span class="visitor-lock-hint">' + (lang === 'is' ? '· Reading Gift Card opnar allt' : '· Reading Gift Card unveils all') + '</span>'
       : '';
   const _optSpan = _isVisitor ? '' : ' <span class="opt">'+t('opt')+'</span>';
   if (albl) albl.innerHTML = t('area_lbl') + _optSpan + _lockHint;
@@ -2333,7 +2333,7 @@ function _renderYourPath() {
     { id: 'rune_seeker',
       name: { en: 'RUNE SEEKER', is: 'VEGFARANDI' },
       props: {
-        en: ['5 Readings / month.', 'Reading Gift Card unlocks all features.', 'Limited journal (last 5 readings).'],
+        en: ['5 Readings / month.', 'Reading Gift Card unveils all features.', 'Limited journal (last 5 readings).'],
         is: ['5 Lestrar / mánuð.', 'Reading Gift Card opnar allar aðgerðir.', 'Takmörkuð dagbók (síðustu 5 lestrar).']
       }
     },
