@@ -1613,10 +1613,23 @@ function updateUIText() {
   if (nlbl) nlbl.innerHTML = t('name_lbl') + ' ';
   setPH('r-name', t('name_ph'));
   const dlbl = document.getElementById('dob-lbl');
-  if (dlbl) dlbl.innerHTML = t('dob_lbl') + ' <span class="opt">'+t('opt')+'</span>' + ' <span class="visitor-lock-hint">' + (lang === 'is' ? '· til að finna lífstíðarrúnina þína' : '· to reveal your life rune') + '</span>';
+  const _dobVisitor = !currentUser;
+  if (dlbl) {
+    const _dobHint = _dobVisitor
+      ? (lang === 'is' ? '· Gerast Rúna-leitandi til að birta lífstíðarrúnina þína' : '· Become a Rune Seeker to unveil your life rune')
+      : (lang === 'is' ? '· til að finna lífstíðarrúnina þína' : '· to reveal your life rune');
+    dlbl.innerHTML = t('dob_lbl') + ' <span class="opt">'+t('opt')+'</span>' + ' <span class="visitor-lock-hint">' + _dobHint + '</span>';
+  }
   setPH('r-day',   t('day_ph'));
   setPH('r-month', t('month_ph'));
   setPH('r-year',  t('year_ph'));
+  ['r-day', 'r-month', 'r-year'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.disabled = _dobVisitor;
+    el.style.opacity = _dobVisitor ? '0.35' : '';
+    el.style.cursor  = _dobVisitor ? 'default' : '';
+  });
   const albl = document.getElementById('area-lbl');
   const _isVisitor = !currentUser;
   const _isRSnoCredits = currentUser && userTier === 'rune_seeker' && userCredits <= 0;
