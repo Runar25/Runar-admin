@@ -60,6 +60,20 @@ const RUNAR_MODES = {
     steps:      [],       // populated when ceremonial mode is built (Layer 4)
     active:     false,    // not live yet
   },
+  life_rune_standard: {
+    label:      'Life Rune Reading',
+    max_tokens: 1200,
+    voice:      false,
+    layers:     null,
+    active:     true,
+  },
+  life_rune_premium: {
+    label:      'Life Rune Reading — Premium',
+    max_tokens: 2000,
+    voice:      false,
+    layers:     null,
+    active:     true,
+  },
   daily_reflection: {
     label:      'Daily Reflection',
     max_tokens: 400,
