@@ -45,6 +45,19 @@ function _randomAngle() {
   return READING_ANGLES[Math.floor(Math.random() * READING_ANGLES.length)];
 }
 
+// ─── TIMING CONSTANTS ───────────────────────────────────
+const DELAY_NAME_PROMPT  = 1200; // ms after login before name prompt appears
+const DELAY_RELOAD       = 1200; // ms after sign-out before page reloads
+const DELAY_TRIAL_END    = 8000; // ms after last free reading before join prompt
+const DELAY_GREETING     =  600; // ms before hero greeting fades in
+const DELAY_TOAST_IN     =  200; // ms before toast slides in
+const DURATION_TOAST     = 4700; // ms toast stays visible
+const DELAY_FOCUS        =  100; // ms before input receives focus
+const DELAY_SCROLL       =   80; // ms before scroll-into-view fires
+const DELAY_ERROR_RESET  = 2000; // ms before error button text resets
+const DURATION_SAVED     = 2500; // ms "saved" indicator stays visible
+
+
 function getTrialCount() { return parseInt(localStorage.getItem('runar_trial_count') || '0'); }
 function incTrialCount() { localStorage.setItem('runar_trial_count', String(getTrialCount() + 1)); }
 
@@ -213,7 +226,7 @@ async function fetchUserProfile(userId) {
   showTopbarGreeting();
   showHeroGreeting();
   // Ask for name if not set yet (delay so UI settles first)
-  if (!userName) setTimeout(showNamePrompt, 1200);
+  if (!userName) setTimeout(showNamePrompt, DELAY_NAME_PROMPT);
 }
 
 async function upsertProfile() {
@@ -1206,7 +1219,7 @@ function openAuthModal() {
   document.getElementById('auth-modal-body').style.display = 'block';
   document.getElementById('auth-modal-success').style.display = 'none';
   setSt('st-auth', '');
-  setTimeout(() => document.getElementById('auth-email')?.focus(), 100);
+  setTimeout(() => document.getElementById('auth-email')?.focus(), DELAY_FOCUS);
 }
 function closeAuthModal() {
   document.getElementById('auth-modal').classList.remove('open');
@@ -1223,7 +1236,7 @@ function toggleRedeem() {
   sec.style.display = visible ? 'none' : 'block';
   if (!visible) {
     setSt('st-redeem', '');
-    setTimeout(() => document.getElementById('redeem-input')?.focus(), 80);
+    setTimeout(() => document.getElementById('redeem-input')?.focus(), DELAY_SCROLL);
   }
 }
 
@@ -1436,8 +1449,8 @@ function showTopbarGreeting() {
              : (returning ? `Good to see you again, ${n}.` : `Good to see you, ${n}.`);
   }
   el.textContent = msg;
-  setTimeout(() => el.classList.add('show'), 200);
-  setTimeout(() => el.classList.remove('show'), 4700);
+  setTimeout(() => el.classList.add('show'), DELAY_TOAST_IN);
+  setTimeout(() => el.classList.remove('show'), DURATION_TOAST);
 }
 
 function showHeroGreeting() {
@@ -1446,7 +1459,7 @@ function showHeroGreeting() {
   const is = lang === 'is';
   const n = displayName();
   el.textContent = is ? `Gaman að sjá þig, ${n}.` : `Good to see you, ${n}.`;
-  setTimeout(() => el.classList.add('show'), 600);
+  setTimeout(() => el.classList.add('show'), DELAY_GREETING);
 }
 
 // ── NAME PROMPT ──────────────────────────────────────────
@@ -1465,7 +1478,7 @@ function showNamePrompt() {
   if (btn)  btn.textContent  = is ? 'LÁTA LESTURINN HEFJAST' : 'LET THE READING BEGIN';
   if (inp)  inp.placeholder  = is ? 'Nafn þitt eða gælunafn' : 'Your name or nickname';
   ov.style.display = 'flex';
-  setTimeout(() => inp && inp.focus(), 100);
+  setTimeout(() => inp && inp.focus(), DELAY_FOCUS);
 }
 
 async function saveName() {
@@ -1672,7 +1685,7 @@ function setTreeDOB() {
   var y = parseInt(document.getElementById('tree-dob-y').value);
   if (!d || !m || !y || d < 1 || d > 31 || m < 1 || m > 12 || y < 1900 || y > 2099) {
     var btn = document.getElementById('tree-dob-btn');
-    if (btn) { btn.textContent = lang === 'is' ? 'ÓGILT DAGSETNING' : 'INVALID DATE'; setTimeout(function(){ btn.textContent = lang === 'is' ? 'OPINBERA LÍFSRÚNUNA →' : 'REVEAL MY LIFE RUNE →'; }, 2000); }
+    if (btn) { btn.textContent = lang === 'is' ? 'ÓGILT DAGSETNING' : 'INVALID DATE'; setTimeout(function(){ btn.textContent = lang === 'is' ? 'OPINBERA LÍFSRÚNUNA →' : 'REVEAL MY LIFE RUNE →'; }, DELAY_ERROR_RESET); }
     return;
   }
   readerUser.d = d; readerUser.m = m; readerUser.y = y;
@@ -1694,7 +1707,7 @@ async function saveTreeName() {
     if (saved) {
       saved.textContent = lang === 'is' ? '✦ VISTAÐ' : '✦ SAVED';
       saved.style.display = 'block';
-      setTimeout(function(){ saved.style.display = 'none'; }, 2500);
+      setTimeout(function(){ saved.style.display = 'none'; }, DURATION_SAVED);
     }
   } catch(e) {
     console.warn('saveTreeName:', e.message);
@@ -2377,7 +2390,7 @@ async function _generateReading() {
       if (el && document.getElementById('reader-output')?.style.display !== 'none') {
         el.style.display = 'block';
       }
-    }, 8000);
+    }, DELAY_TRIAL_END);
   }
 
   // Hlas — povol jen pokud tier dovoluje (viz canUseVoice() + runar-config.js TIERS)
@@ -2396,7 +2409,7 @@ function _showTrialEnd() {
   const el = document.getElementById('trial-end');
   if (!el) return;
   el.style.display = 'block';
-  setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'center' }), 80);
+  setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'center' }), DELAY_SCROLL);
 }
 
 function startReading() {
@@ -2833,7 +2846,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       hideJournal();
       showToast('YOU HAVE LEFT THE CIRCLE');
       // Reset local state and reload so the page starts fresh for the next visitor
-      setTimeout(() => window.location.reload(), 1200);
+      setTimeout(() => window.location.reload(), DELAY_RELOAD);
     }
   });
 
