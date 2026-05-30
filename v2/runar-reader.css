@@ -546,7 +546,8 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .jcard-audio-player audio{width:100%;outline:none;}
 /* Journal gate (logged-out) */
 .journal-gate-wrap{text-align:center;padding:52px 20px;}
-.journal-gate-rune{font-size:2.4em;opacity:0.28;margin-bottom:14px;}
+/* ᚱ v gate — vždy zlaté, bez ozdob kolem */
+.journal-gate-rune{font-size:2.4em;color:var(--gold);margin-bottom:14px;opacity:0.85;}
 .journal-gate-txt{font-family:'Cinzel',serif;font-size:0.63em;letter-spacing:1.5px;color:var(--muted);line-height:2.3;margin-bottom:26px;}
 /* ── RS-LINK — šablona pro "Rune Seeker" gold inline text ── */
 /* Použití: <b class="rs-link">Rune Seeker</b> kdekoliv v textu */
