@@ -1562,7 +1562,7 @@ async function _generateReading() {
   if (_pL2) _pL2.classList.add('pulsing');
 
   const u = readerUser, drawn = readerRune, life = u.lifeRune;
-  const sys = buildSysPromptV2(); // V2: contextual intelligence (lunar + Icelandic season)
+  const sys = buildSysPromptV2(life); // V2: contextual intelligence + life rune (Standard/Premium)
   const langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
   const drawnKws = rk(drawn).split(',').map(s => s.trim()).filter(Boolean);
   const pickedDrawnKws = drawnKws.sort(() => 0.5 - Math.random()).slice(0, Math.min(3, drawnKws.length)).join(', ');
@@ -1800,7 +1800,7 @@ async function _generateSpread3Reading() {
 
   const [rPast, rPres, rFut] = _spread3Runes;
   const u   = readerUser;
-  const sys = buildSysPromptV2();
+  const sys = buildSysPromptV2(u.lifeRune); // V2: contextual intelligence + life rune
   const langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
 
   // ── Trojice prompt ────────────────────────────────────────────

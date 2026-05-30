@@ -282,9 +282,30 @@ function getContextLine() {
   return `[Context: ${dateStr}, ${_getTimeOfDay()}, ${_getLunarPhase()}, ${_getIcelandicSeason()}]`;
 }
 
+
+// Returns a context block about the user's life rune for the system prompt.
+// Used when user is Standard/Premium and has a known DOB.
+// rune = RUNES object from runar-runes.js (has .n, .g, .k, .elements, .world)
+function buildLifeRuneContext(rune) {
+  if (!rune) return '';
+  var elements = Array.isArray(rune.elements) ? rune.elements.join(' / ') : (rune.elements || '');
+  return [
+    '',
+    'USER LIFE RUNE',
+    'This user\'s life rune is ' + rune.n + ' ' + rune.g + '.',
+    'Core energy: ' + rune.k + '.',
+    'Element: ' + elements + '.  World: ' + rune.world + '.',
+    'Let this rune quietly shape how you read every rune that falls for this person.',
+    'Do not announce or explain it. Let it colour the reading from underneath.',
+    'In Layer 2, you may draw a natural connection between the drawn rune and the life rune — but only when it arises organically, never as a formula.',
+    ''
+  ].join('\n');
+}
+
 // System prompt for V2 — prepends live context to character
-function buildSysPromptV2() {
-  return `${getContextLine()}\n\n${DEF_CHAR_V2_EN}`;
+function buildSysPromptV2(lifeRune) {
+  var lifeCtx = lifeRune ? buildLifeRuneContext(lifeRune) : '';
+  return getContextLine() + '\n\n' + DEF_CHAR_V2_EN + lifeCtx;
 }
 
 // ─── SYSTEM PROMPT BUILDER ──────────────────────────────

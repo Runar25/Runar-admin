@@ -635,6 +635,158 @@ The Gathering není jen klikání na runy. Je to rituál:
 
 ---
 
+---
+
+## TREE OF LIFE ECOSYSTEM — architektura (2026-05-30)
+
+### Koncept — co to je
+
+Samostatný ekosystém (`runar-tree.html`) — **reader zůstane beze změny**.
+Tree of Life je longitudinální, rituální, vizuální zážitek. Reader je jednoduchý a čistý — dvě různé věci.
+
+**Propojení reader ↔ tree:**
+- Side panel odkaz → `runar-tree.html`
+- Life runa z tree → system prompt readeru (jednosměrné, přes Supabase)
+- Sdílená DB (readings tabulka), jinak oddělené HTML soubory
+
+---
+
+### Life runa — 5. element
+
+```
+4 živly (Fire / Water / Air / Earth)  ← dynamické, rostou z čtení
+Life runa                              ← 5. element = uživatel sám (fixní, z DOB)
+```
+
+**Life runa je celý obraz hned od začátku.** Není to semeno které teprve poroste.
+Ukazuje dominantní element, přirozený směr stromu, dar, stín — charakter člověka.
+Čtení run pak ukazují jak člověk tím územím prochází.
+
+**Rúnarova transformace:** Jakmile zná life runu, stává se průvodcem konkrétního člověka.
+Každé čtení, každý Area of Life, každá otázka tuto znalost prohlubuje.
+Rúnar se stává jejich echo, jejich zrcadlo — vyvíjí se s každým dalším čtením.
+
+Life runa je **fixní** — z data narození, nelze změnit. Výpočet: `calcLifeRune()` v `runar-runes.js`.
+Life rune výklad se **generuje Claudem** individuálně — není to statický obsah.
+
+**Jméno uživatele** (etymologie + mytologická postava — Sigrún styl) = tresničková vrstva,
+odloženo, přidáme pod life rune výklad pro islandský trh.
+
+---
+
+### Tier přístup — life runa
+
+```
+Visitor          nic — neví že life runa existuje
+
+Rune Seeker      teaser: symbol + jméno runy
+                 "Tvá životní runa je Gebo ᚷ"
+                 Rúnar zůstává generický (bez personalizace)
+
+Standard         plný life rune výklad (generovaný Claudem)
+                 Rúnar začne znát tohoto člověka
+                 Každé čtení ho dále formuje
+                 Tree of Life ekosystém
+
+Premium          vše jako Standard + hlubší vrstvy (TBD)
+```
+
+**Monetizační argument:** Standard neprodává "neomezená čtení" — prodává vztah.
+*"Rúnar tě začne znát. Čím déle zůstaneš, tím hlubší ten vztah je."*
+Teaser pro RS (vidí název, ne výklad) vytváří přirozený pull k upgradu.
+
+---
+
+### Zakládací rituál — vznik stromu
+
+Vědomý akt — uživatel se vědomě rozhodne. Klikne → iniciuje vznik stromu.
+
+```
+Session 1:  Trojice (3 runy)  →  první kořen  =  KDO JSI V JÁDRU
+Session 2:  1 runa             →  druhý kořen  =  KTERÝM SMĚREM SE TVŮj STROM SKLÁNÍ
+Session 3:  1 runa             →  třetí kořen  =  CO POHÁNÍ TVŮJ RŮST
+```
+
+- Timing: volný — záleží na uživateli, žádné minimum mezi sessions
+- Session 1 = Trojice (existuje ve V2 labu) ✓
+- Rúnar nedostane jiný typ otázky — dostane jiný **prompt framing** (jiná dimenze)
+- Po Session 3: strom poprvé viditelně stojí
+
+**Gating:**
+```
+Rune Seeker:      platí per runa — Session 1 = 3 kredity, S2 = 1, S3 = 1 → celkem 5 kreditů
+Standard/Premium: zdarma, ale rituál stále vědomě iniciují
+```
+
+---
+
+### Fáze výstavby
+
+```
+Fáze 0:  Life runa do system promptu readeru (V2 lab → produkce)
+         Standard/Premium + DOB → calcLifeRune() → context block v system promptu
+         Rúnar okamžitě personalizován. Žádná nová stránka, žádná nová tabulka.
+
+Fáze 1:  runar-tree.html — life rune reveal
+         Uživatel vidí svou life runu + textový výklad (generovaný Claudem, bez ElevenLabs)
+         Tlačítko "Plant your tree" (zakládací rituál)
+
+Fáze 2:  Zakládací rituál — 3 sessions, tři kořeny
+         tree_state tabulka + founding_status stavový automat
+         Po session 3: první textový popis stromu (Rúnarův prose)
+
+Fáze 3:  Každé čtení = větev
+         branch_data deterministicky (bez druhého Claude volání)
+         element_scores v tree_state se aktualizují
+
+Fáze 4:  Vizuální strom — SVG nebo generativní
+         Až po 10+ uživatelích s reálnými daty. Text prose = 80% dopadu za 5% práce.
+```
+
+---
+
+### DB schéma — plánováno (minimální, přidávat až potřeba)
+
+```sql
+TABLE: tree_state
+  user_id          uuid (FK → user_profiles)
+  life_rune        int (1–24)            ← index do RUNES[]
+  founding_status  text                  ← 'none'|'session_1'|'session_2'|'complete'
+  roots            jsonb                 ← 3 kořeny po rituálu
+  element_scores   jsonb                 ← {fire: 0, water: 0, air: 0, earth: 0}
+  trunk_themes     jsonb                 ← akumulace z opakujících se vzorců
+  last_updated     timestamptz
+
+TABLE: tree_readings
+  id               uuid
+  user_id          uuid (FK)
+  reading_id       uuid (FK → readings)  ← readings tabulka beze změny
+  branch_data      jsonb                 ← direction, element, length, aett
+  founding_session int nullable          ← 1/2/3 pokud součást rituálu
+  created_at       timestamptz
+```
+
+**Readings tabulka zůstane beze změny** — tree_readings ji jen referencuje.
+
+---
+
+### Branch data — deterministický výpočet (bez Claude)
+
+```
+Vstupy:
+  Rune element (fixní)          → Fire/Water/Air/Earth barva větve
+  Rune Ætt (1./2./3.)           → výška větve (nízká/střední/vysoká)
+  Area of Life                  → směr (levá = vnitřní, pravá = vnější)
+  Seeking                       → hloubkový multiplikátor (×1.0 až ×1.5)
+  Feeling                       → emocionální baseline
+  Time axis                     → temporal framing
+  Počet vyplněných polí         → celková váha větve (0→×1.0, 1-2→×1.5, 3+→×2.0)
+
+Hodnoty jsou orientační — testovat a upravovat na reálných datech.
+```
+
+---
+
 ## ⚠️ KRITICKÁ UPOZORNĚNÍ — NEOPAKOVAT TYTO CHYBY
 
 ### 1. Neskrývat `reader-content` (reader-form) — NIKDY
@@ -705,6 +857,31 @@ Python skripty ukládat v `C:\Users\zkuku\Downloads\Runar-admin\`.
 | IS | Velkomin | Gaman að sjá þig | uvítání ve všech místech |
 
 ---
+
+## Hotovo ✅ (session 2026-05-30 — Tree of Life design)
+
+- [x] **Tree of Life ecosystem** — kompletní architektura navržena a zdokumentována
+  - Samostatná stránka `runar-tree.html` — reader zůstane beze změny
+  - Life runa = 5. element, fixní, celý obraz člověka hned od začátku (ne semeno)
+  - Life rune výklad = generovaný Claudem individuálně, text only, bez ElevenLabs
+  - Rúnarova transformace: jakmile zná life runu → stává se průvodcem konkrétního člověka
+  - Tier model: Visitor nic | RS teaser (symbol+jméno) | Standard plný výklad + Tree
+  - Monetizační argument: Standard = vztah, ne jen "unlimited čtení"
+- [x] **Zakládací rituál** — 3 sessions, volný timing
+  - Session 1 (Trojice) → KDO JSI V JÁDRU
+  - Session 2 (1 runa) → KTERÝM SMĚREM SE SKLÁNÍŠ
+  - Session 3 (1 runa) → CO POHÁNÍ TVŮJ RŮST
+  - RS platí per runa (celkem 5 kreditů), Standard/Premium zdarma
+- [x] **Branch data = deterministický výpočet** — žádné druhé Claude volání
+- [x] **DB schéma** — minimální: tree_state + tree_readings (readings beze změny)
+- [x] **Fáze výstavby 0–4** zdokumentovány v CLAUDE.md
+- [x] **V2 lab strategie** — Fáze 0 (system prompt) jde přímo do produkce,
+  Tree features se vyvíjejí přímo v `runar-tree.html` (ne v shrine labu)
+- [x] **Referenční dokumenty** uloženy:
+  - `runar_prereading_context_EN.md` — pre-reading context systém
+  - `runar_tree_story.md` — příběh stromu (Rúnarův hlas)
+  - `GEBO_runar_life_rune_EN.md` — referenční styl life rune výkladu
+  - `runar_sigrún_ansuz_EN.md` — personalizovaný výklad (jméno + datum)
 
 ## Hotovo ✅ (session 2026-05-29 — Balance systém + UX copy)
 
