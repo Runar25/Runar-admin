@@ -150,6 +150,10 @@ user_profiles          ← profily přihlášených uživatelů (RLS ✓)
                                    credits_balance, created_at,
                                    free_balance (int, default 1) ← PŘIDÁNO 2026-05-29
                                    drip_week (text, ISO week "2026-W22") ← PŘIDÁNO 2026-05-29
+                                   dob_day (int) ← PŘIDÁNO 2026-05-30
+                                   dob_month (int) ← PŘIDÁNO 2026-05-30
+                                   dob_year (int) ← PŘIDÁNO 2026-05-30
+                                   tree_name (text) ← PŘIDÁNO 2026-05-30
                           POZOR: email a updated_at sloupce NEEXISTUJÍ v DB!
                           upsert posílá pouze: { id } s ignoreDuplicates:true
 readings               ← každé čtení uživatele (RLS ✓)
