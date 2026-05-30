@@ -217,10 +217,6 @@ function resetReader() {
 }
 
 // ─── CUSTOM AUDIO PLAYER (main reading voice) ────────────
-function _capFmt(s) {
-  s = Math.floor(s || 0);
-  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
-}
 function _capTrack(pct) {
   const seek = document.getElementById('cap-seek');
   if (seek) seek.style.setProperty('--pct', pct.toFixed(1) + '%');

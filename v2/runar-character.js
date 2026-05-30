@@ -479,3 +479,28 @@ ${base.format}
 IMAGERY
 ${base.imagery}`;
 }
+
+// ─── IS CORRECTION HELPERS ────────────────────────────────
+// getCorrPrompt + applyISCorrections live here (runar-character.js)
+// because they are IS language/character post-processing, not app logic.
+// Called by: runar-reading.js, runar-gathering.js, runar-tree.js, runar-app.js
+function getCorrPrompt(lang, corrections) {
+  if (!corrections || !corrections.length) return '';
+  const rel = corrections.filter(c => !c.lang || c.lang === 'both' || c.lang === lang);
+  if (!rel.length) return '';
+  const lines = rel.map(c => `- Never say "${c.from_word}" — say "${c.to_word}" instead${c.context ? ' ('+c.context+')' : ''}`).join('\n');
+  return `\nWord corrections (follow strictly):\n${lines}`;
+}
+
+// Post-processor: aplikuje IS korekce na Claude output (garantovano, deterministicke)
+// Vola se po kazdem Claude volani kde lang === 'is'
+function applyISCorrections(text, lang, corrections) {
+  if (lang !== 'is' || !corrections || !corrections.length || !text) return text;
+  const isCorr = corrections.filter(function(c) { return !c.lang || c.lang === 'is' || c.lang === 'both'; });
+  isCorr.forEach(function(c) {
+    if (!c.from_word || !c.to_word) return;
+    text = text.split(c.from_word).join(c.to_word);
+  });
+  return text;
+}
+

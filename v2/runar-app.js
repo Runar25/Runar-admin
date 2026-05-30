@@ -553,23 +553,12 @@ function getHeroPhrase() {
   return pool[_heroPhrase] || pool[0];
 }
 
-function updateUIText() {
-  document.documentElement.lang = lang;
-  setText('ui-brand', 'AGNDOFA');
-  setText('atab-reading',    lang === 'is' ? '✦ LESTUR' : '✦ READING');
-  setText('atab-collection', lang === 'is' ? '◈ SAFN RÚNA' : '◈ RUNES COLLECTION');
-  setText('hero-eyebrow',   lang === 'is' ? 'RÚNAVÖRÐURINN' : 'THE RUNE KEEPER');
-  setText('hero-eyebrow-m', lang === 'is' ? 'RÚNAVÖRÐURINN' : 'THE RUNE KEEPER');
-  setText('ui-title',   'Rúnar');
-  setText('ui-title-m', 'Rúnar');
-  updateSidePanelLang();
-  setText('ui-sub', getHeroPhrase());
-  const heroQuote = document.getElementById('hero-quote');
-  if (heroQuote) heroQuote.innerHTML = lang === 'is'
-    ? '"Rúnirnar spá ekki um örlög þín.<br>Þær minna þig á veginn<br>sem þú gengur þegar."'
-    : '"The runes do not predict your fate.<br>They remind you of the path<br>you already walk."';
-  setText('reader-card1-lbl', t('reader_card1_lbl') || '✦ BEFORE WE BEGIN');
-  setText('reader-note', t('reader_note') || 'Only your name is required. Everything else helps Rúnar speak more personally.');
+// ─── UI TEXT HELPERS ─────────────────────────────────────
+// Sub-functions of updateUIText() — each handles one concern.
+// Called only from updateUIText().
+
+// DOB field label with visitor/unveil hint
+function _updateDobLabel() {
   const nlbl = document.getElementById('name-lbl');
   if (nlbl) nlbl.innerHTML = t('name_lbl') + ' ';
   setPH('r-name', t('name_ph'));
@@ -591,6 +580,10 @@ function updateUIText() {
     el.style.opacity = _dobVisitor ? '0.35' : '';
     el.style.cursor  = _dobVisitor ? 'default' : '';
   });
+}
+
+// Area of Life + Seeking + Question labels with tier lock hints
+function _updateAreaSeekLabels() {
   const albl = document.getElementById('area-lbl');
   const _isVisitor = !currentUser;
   const _isRSnoCredits = currentUser && userTier === 'rune_seeker' && userCredits <= 0;
@@ -606,6 +599,72 @@ function updateUIText() {
   const qlbl = document.getElementById('q-lbl');
   if (qlbl) qlbl.innerHTML = t('q_lbl') + ' <span class="opt">'+t('opt')+'</span>';
   setPH('r-question', t('q_ph'));
+}
+
+// Trial banner, auth gate, trial-end modal texts
+function _updateTrialTexts() {
+  // Trial banner — fallback texts (přepíše updateAuthUI pokud je logged out)
+  const remaining = Math.max(0, FREE_TRIAL_LIMIT - getTrialCount());
+  setText('trial-count', lang === 'is'
+    ? `${remaining} ókeypis lestur${remaining !== 1 ? 'ar' : ''} eftir`
+    : `${remaining} free reading${remaining !== 1 ? 's' : ''} remaining`);
+  // Auth gate
+  setText('gate-title', lang === 'is' ? 'ÓKEYPIS LESTRAR ÞÍNIR ERU FULLNÝTTIR' : 'YOUR FREE READINGS ARE COMPLETE');
+  setText('gate-note', lang === 'is'
+    ? 'Þú hefur farið með Rúnar einu sinni sem gestur.\nStofnaðu reikning til að halda áfram.'
+    : 'You have walked with Rúnar once as a Visitor.\nCreate a free account to continue.');
+  setText('gate-btn', lang === 'is' ? 'GERAST RÚNA-LEITANDI' : 'BECOME A RUNE SEEKER');
+  // Trial end prompt translations
+  setText('trial-end-title', lang === 'is' ? 'FERÐ ÞÍN SEM GESTUR ER LOKIÐ' : 'YOUR JOURNEY AS VISITOR IS COMPLETE');
+  const ten = document.getElementById('trial-end-note');
+  if (ten) ten.innerHTML = lang === 'is'
+    ? 'Þú hefur farið með Rúnar þrisvar sinnum. Steinarnir muna.<br><b class="rs-link">Gerast Rúna-leitandi</b> til að halda áfram — fimm lestrar á mánuði, án greiðslu.'
+    : 'You have walked with Rúnar three times as a Visitor. The stones remember.<br><b class="rs-link">Become a Rune Seeker</b> to continue — five readings each month, no payment ever needed.';
+  setText('trial-end-btn', lang === 'is' ? 'GERAST RÚNA-LEITANDI →' : 'BECOME A RUNE SEEKER →');
+}
+
+// Journal gate, auth modal consent, journal re-render, buildPills
+function _updateGateTexts() {
+  // Journal tab label
+  setText('atab-journal', lang === 'is' ? '◌ LESTRAR' : '◌ JOURNAL');
+  // Journal gate — Visitor teaser
+  const jgTxt = document.getElementById('journal-gate-txt');
+  if (jgTxt) jgTxt.innerHTML = lang === 'is'
+    ? 'Thu gengur her sem gestur.<br>Dagbokin thin hefst um leid og thu maetir.<br>Gerdu ther <b class="rs-link">runa-leitanda</b> til ad opna dagbokina.'
+    : 'You walk here as a Visitor.<br>Your journal begins the moment you arrive.<br>Become a <b class="rs-link">Rune Seeker</b> to open the journal.';
+  setText('journal-gate-btn', lang === 'is' ? 'GERAST RÚNA-LEITANDI →' : 'BECOME A RUNE SEEKER →');
+  // Re-render journal if it's open (picks up new lang labels)
+  if (activeAppTab === 'journal' && _journalCache.length > 0) renderJournal(_journalCache);
+  else if (activeAppTab === 'journal') updateWhispersUI();
+  // Single-source text updates for elements not covered elsewhere
+  setText('redeem-btn', lang === 'is' ? 'INNLEYSA' : 'REDEEM');
+  setText('auth-modal-sub', lang === 'is' ? 'Ekkert lykilorð þarf — töfralykill kemur í pósthólfið þitt.' : 'No password needed — a magic link will arrive in your inbox.');
+  const _consentEl = document.getElementById('auth-consent-txt');
+  if (_consentEl) _consentEl.innerHTML = lang === 'is'
+    ? 'Með því að halda áfram samþykkir þú <a href="runar-privacy.html" target="_blank" rel="noopener">persónuverndarstefnu okkar</a>. Við geymum aðeins það sem þarð til að muna lestrana þin. Engin rakning, engar auglýsingar.'
+    : 'By continuing, you agree to our <a href="runar-privacy.html" target="_blank" rel="noopener">Privacy Policy</a>. We store only what is needed to remember your readings. No tracking, no ads.';
+  buildPills();
+}
+
+function updateUIText() {
+  document.documentElement.lang = lang;
+  setText('ui-brand', 'AGNDOFA');
+  setText('atab-reading',    lang === 'is' ? '✦ LESTUR' : '✦ READING');
+  setText('atab-collection', lang === 'is' ? '◈ SAFN RÚNA' : '◈ RUNES COLLECTION');
+  setText('hero-eyebrow',   lang === 'is' ? 'RÚNAVÖRÐURINN' : 'THE RUNE KEEPER');
+  setText('hero-eyebrow-m', lang === 'is' ? 'RÚNAVÖRÐURINN' : 'THE RUNE KEEPER');
+  setText('ui-title',   'Rúnar');
+  setText('ui-title-m', 'Rúnar');
+  updateSidePanelLang();
+  setText('ui-sub', getHeroPhrase());
+  const heroQuote = document.getElementById('hero-quote');
+  if (heroQuote) heroQuote.innerHTML = lang === 'is'
+    ? '"Rúnirnar spá ekki um örlög þín.<br>Þær minna þig á veginn<br>sem þú gengur þegar."'
+    : '"The runes do not predict your fate.<br>They remind you of the path<br>you already walk."';
+  setText('reader-card1-lbl', t('reader_card1_lbl') || '✦ BEFORE WE BEGIN');
+  setText('reader-note', t('reader_note') || 'Only your name is required. Everything else helps Rúnar speak more personally.');
+  _updateDobLabel();
+  _updateAreaSeekLabels();
   setText('begin-btn', t('begin_btn'));
   setText('draw-lbl', t('draw_lbl'));
   setText('draw-note', t('draw_note'));
@@ -628,43 +687,8 @@ function updateUIText() {
   updateAuthUI();
   updateSidePanel();
   updateQuestionGate();
-  // Trial banner — fallback texts (přepíše updateAuthUI pokud je logged out)
-  const remaining = Math.max(0, FREE_TRIAL_LIMIT - getTrialCount());
-  setText('trial-count', lang === 'is'
-    ? `${remaining} ókeypis lestur${remaining !== 1 ? 'ar' : ''} eftir`
-    : `${remaining} free reading${remaining !== 1 ? 's' : ''} remaining`);
-  // Auth gate
-  setText('gate-title', lang === 'is' ? 'ÓKEYPIS LESTRAR ÞÍNIR ERU FULLNÝTTIR' : 'YOUR FREE READINGS ARE COMPLETE');
-  setText('gate-note', lang === 'is'
-    ? 'Þú hefur farið með Rúnar einu sinni sem gestur.\nStofnaðu reikning til að halda áfram.'
-    : 'You have walked with Rúnar once as a Visitor.\nCreate a free account to continue.');
-  setText('gate-btn', lang === 'is' ? 'GERAST RÚNA-LEITANDI' : 'BECOME A RUNE SEEKER');
-  // Trial end prompt translations
-  setText('trial-end-title', lang === 'is' ? 'FERÐ ÞÍN SEM GESTUR ER LOKIÐ' : 'YOUR JOURNEY AS VISITOR IS COMPLETE');
-  const ten = document.getElementById('trial-end-note');
-  if (ten) ten.innerHTML = lang === 'is'
-    ? 'Þú hefur farið með Rúnar þrisvar sinnum. Steinarnir muna.<br><b class="rs-link">Gerast Rúna-leitandi</b> til að halda áfram — fimm lestrar á mánuði, án greiðslu.'
-    : 'You have walked with Rúnar three times as a Visitor. The stones remember.<br><b class="rs-link">Become a Rune Seeker</b> to continue — five readings each month, no payment ever needed.';
-  setText('trial-end-btn', lang === 'is' ? 'GERAST RÚNA-LEITANDI →' : 'BECOME A RUNE SEEKER →');
-  // Journal tab label
-  setText('atab-journal', lang === 'is' ? '◌ LESTRAR' : '◌ JOURNAL');
-  // Journal gate — Visitor teaser
-  const jgTxt = document.getElementById('journal-gate-txt');
-  if (jgTxt) jgTxt.innerHTML = lang === 'is'
-    ? 'Thu gengur her sem gestur.<br>Dagbokin thin hefst um leid og thu maetir.<br>Gerdu ther <b class="rs-link">runa-leitanda</b> til ad opna dagbokina.'
-    : 'You walk here as a Visitor.<br>Your journal begins the moment you arrive.<br>Become a <b class="rs-link">Rune Seeker</b> to open the journal.';
-  setText('journal-gate-btn', lang === 'is' ? 'GERAST RÚNA-LEITANDI →' : 'BECOME A RUNE SEEKER →');
-  // Re-render journal if it's open (picks up new lang labels)
-  if (activeAppTab === 'journal' && _journalCache.length > 0) renderJournal(_journalCache);
-  else if (activeAppTab === 'journal') updateWhispersUI();
-  // Single-source text updates for elements not covered elsewhere
-  setText('redeem-btn', lang === 'is' ? 'INNLEYSA' : 'REDEEM');
-  setText('auth-modal-sub', lang === 'is' ? 'Ekkert lykilorð þarf — töfralykill kemur í pósthólfið þitt.' : 'No password needed — a magic link will arrive in your inbox.');
-  const _consentEl = document.getElementById('auth-consent-txt');
-  if (_consentEl) _consentEl.innerHTML = lang === 'is'
-    ? 'Með því að halda áfram samþykkir þú <a href="runar-privacy.html" target="_blank" rel="noopener">persónuverndarstefnu okkar</a>. Við geymum aðeins það sem þarð til að muna lestrana þin. Engin rakning, engar auglýsingar.'
-    : 'By continuing, you agree to our <a href="runar-privacy.html" target="_blank" rel="noopener">Privacy Policy</a>. We store only what is needed to remember your readings. No tracking, no ads.';
-  buildPills();
+  _updateTrialTexts();
+  _updateGateTexts();
 }
 
 // ─── APP TABS ────────────────────────────────────────────
@@ -912,26 +936,6 @@ async function loadCorrections() {
     try { corrections = [...corrections, ...JSON.parse(local)]; } catch {}
   }
 }
-function getCorrPrompt(lang, corrections) {
-  if (!corrections || !corrections.length) return '';
-  const rel = corrections.filter(c => !c.lang || c.lang === 'both' || c.lang === lang);
-  if (!rel.length) return '';
-  const lines = rel.map(c => `- Never say "${c.from_word}" — say "${c.to_word}" instead${c.context ? ' ('+c.context+')' : ''}`).join('\n');
-  return `\nWord corrections (follow strictly):\n${lines}`;
-}
-
-// Post-processor: aplikuje IS korekce na Claude output (garantovano, deterministicke)
-// Vola se po kazdem Claude volani kde lang === 'is'
-function applyISCorrections(text, lang, corrections) {
-  if (lang !== 'is' || !corrections || !corrections.length || !text) return text;
-  const isCorr = corrections.filter(function(c) { return !c.lang || c.lang === 'is' || c.lang === 'both'; });
-  isCorr.forEach(function(c) {
-    if (!c.from_word || !c.to_word) return;
-    text = text.split(c.from_word).join(c.to_word);
-  });
-  return text;
-}
-
 // ─── PROXY ───────────────────────────────────────────────
 // use_credit: true = odečíst kredit na backendu (monthly slot vyčerpán)
 async function callProxy(sys, prompt, maxTokens, use_credit = false) {

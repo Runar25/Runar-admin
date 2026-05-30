@@ -11,6 +11,12 @@
 //   setSt(), showToast(), showNamePrompt(), displayName()
 // ═══════════════════════════════════════════════════════
 
+// ─── ADMIN CHECK ─────────────────────────────────────────
+// isAdmin() lives here (runar-auth.js) — auth logic, not config
+function isAdmin(email) {
+  return !!(email && ADMIN_EMAILS.includes(email.toLowerCase()));
+}
+
 // ── Delete Account ──────────────────────────────────────
 function openDeleteModal() {
   const isIs = lang === 'is';

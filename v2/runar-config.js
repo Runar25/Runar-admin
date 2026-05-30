@@ -156,10 +156,6 @@ TIERS.credits = TIERS.rune_seeker;
 // ─── ADMIN ACCESS ───────────────────────────────────────
 // Only these emails can access the Knowledge Shrine and Yggdrasil.
 const ADMIN_EMAILS = ['kukula@agndofa.is', 'info@agndofa.is'];
-function isAdmin(email) {
-  return !!(email && ADMIN_EMAILS.includes(email.toLowerCase()));
-}
-
 // ─── APP SETTINGS ───────────────────────────────────────
 const APP = {
   default_lang:    'en',
