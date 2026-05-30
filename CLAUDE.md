@@ -82,9 +82,15 @@ AI-powered mystický průvodce runami pro značku Agndofa (Island). Rúnar má v
 ## Soubory v `/v2/`
 ```
 runar-shrine.html      ← admin app (Knowledge Shrine)
-runar-reader.html      ← uživatelská app — čistá HTML struktura (563 řádků)
-runar-reader.css       ← veškeré styly readeru (603 řádků) ← EDIT TOOLEM OK
-runar-app.js           ← veškerá JS logika readeru (2555 řádků) ← PYTHON SKRIPTY
+runar-reader.html      ← uživatelská app — čistá HTML struktura ← EDIT TOOLEM OK
+runar-reader.css       ← veškeré styly readeru ← EDIT TOOLEM OK
+runar-app.js           ← core: state, DB, lang, UI helpers, tabs, collection, proxy, init
+                          (1276 ř.) ← PYTHON SKRIPTY
+runar-auth.js          ← auth UI, banners, PWA, modaly, sign-in, redeem (443 ř.) ← PYTHON SKRIPTY
+runar-reading.js       ← reading core, buildReadingPrompt(), reader flow, voice (325 ř.) ← PYTHON SKRIPTY
+runar-gathering.js     ← The Gathering ritual (425 ř.) ← PYTHON SKRIPTY
+runar-tree.js          ← Tree of Life, life rune, side panel controls (243 ř.) ← PYTHON SKRIPTY
+runar-journal.js       ← journal DB, render, filter, audio (236 ř.) ← PYTHON SKRIPTY
 runar-help.html        ← průvodce & FAQ (EN+IS, Rúnarův hlas)
 runar-privacy.html     ← Privacy Policy (EN+IS, GDPR-compliant)
 runar-config.js        ← SB_URL, SB_KEY, PROXY, EL_PROXY, EL_STATIC,
@@ -93,10 +99,17 @@ runar-config.js        ← SB_URL, SB_KEY, PROXY, EL_PROXY, EL_STATIC,
                           TIER_LIMITS — single source of truth pro limity (2026-05-29)
                           SPREAD_COSTS — cost per spread type in free balance + credits
 runar-runes.js         ← 25 Elder Futhark + Blank, AREAS, SEEKS, calcLifeRune()
-runar-character.js     ← DEF_CHAR_EN, DEF_CHAR_IS, buildSysPrompt()
-runar-translations.js  ← UI_TEXT { en, is }  ← EDIT TOOLEM OK
+runar-character.js     ← DEF_CHAR_EN, DEF_CHAR_IS, buildSysPrompt(), buildLifeRunePrompt()
+runar-translations.js  ← UI_TEXT { en, is } + 37 reader klíčů ← EDIT TOOLEM OK
 runar-svgs.js          ← RUNE_SVGS (SVG glyfů)
-sw.js                  ← Service Worker v9, HTML network-first, JS/CSS cache-first
+sw.js                  ← Service Worker v20, HTML network-first, JS/CSS cache-first
+```
+
+### Load order (HTML)
+```
+runar-config.js → runar-runes.js → runar-translations.js → runar-character.js → runar-svgs.js
+→ runar-journal.js → runar-tree.js → runar-gathering.js → runar-auth.js → runar-reading.js
+→ runar-app.js
 ```
 
 ## Edge Functions (`/supabase/functions/`)
@@ -825,7 +838,7 @@ Nativní browser controls nelze plně stylovat v Chrome/Safari.
 
 ### 4. Service Worker — musí mít network-first pro HTML
 Pokud SW slouží HTML z cache (cache-first), uživatelé nevidí aktualizace.
-SW cache name: `runar-v4` (aktuální) — při přidání nových souborů nebo změně strategie bumpi verzi.
+SW cache name: `runar-v20` (aktuální) — při přidání nových souborů nebo změně strategie bumpi verzi.
 HTML pages: network-first vždy. JS/CSS/icons: cache-first OK.
 Nové JS/CSS soubory přidat do `JS_SHELL` v `sw.js`.
 
@@ -857,6 +870,28 @@ Python skripty ukládat v `C:\Users\zkuku\Downloads\Runar-admin\`.
 | IS | Velkomin | Gaman að sjá þig | uvítání ve všech místech |
 
 ---
+
+## Hotovo ✅ (session 2026-05-30 — část 3: refaktoring #5-7 + monolith split)
+
+- [x] **Refaktoring #5** — `updateAuthUI()` (152 ř.) rozdělen:
+  - `updateTabVisibility()` — tab show/hide
+  - `updateAuthLabel()` — header label + sign-in button
+  - `updateBanners()` — veškerá banner/gate logika
+  - `updateAuthUI()` zůstal jako 4řádkový koordinátor
+- [x] **Refaktoring #6** — 52 inline `isIs ? '...' : '...'` ternárů → `t('key')`
+  - 37 nových klíčů přidáno do `UI_TEXT` v `runar-translations.js`
+  - Ponecháno: template literály s `${vars}`, long HTML, runtime hodnoty
+- [x] **Refaktoring #7** — `buildReadingPrompt(u, drawn, lang, corrections)` extrahována
+  - Čistá funkce bez globálů, splňuje parametrizační pravidlo
+  - `_generateReading()` teď jen: `const prompt = buildReadingPrompt(u, drawn, lang, corrections);`
+- [x] **Monolith split** — `runar-app.js` 2889 → 1276 řádků, 5 nových modulů:
+  - `runar-gathering.js` (425 ř.) — The Gathering ritual
+  - `runar-journal.js` (236 ř.) — Journal DB, render, filter, audio
+  - `runar-tree.js` (243 ř.) — Tree of Life, life rune, side panel
+  - `runar-reading.js` (325 ř.) — Reading core, prompt builder, voice
+  - `runar-auth.js` (443 ř.) — Auth UI, banners, PWA, modaly, sign-in
+- [x] **SW → v20**, všechny nové moduly v cache listu
+- [x] **Audit všech MD souborů** — CLAUDE.md, runar-project.md, working-style.md, MEMORY.md, AUDIT_REPORT.md aktualizovány
 
 ## Hotovo ✅ (session 2026-05-30 — část 2: refaktoring + Tree of Life features)
 

@@ -4,6 +4,36 @@ Prošlo souborů: 8 (runar-app.js, runar-character.js, runar-config.js, runar-ru
 
 ---
 
+## ✅ Stav po refaktoringu (aktualizováno 2026-05-30)
+
+Všech 7 refaktoringových položek dokončeno. Monolith rozbit na moduly.
+
+| # | Položka | Status | Poznámka |
+|---|---------|--------|----------|
+| #2 | Parametrizace funkcí | ✅ | buildSysPrompt(c,lang), getCorrPrompt(lang,corr), applyISCorrections(text,lang,corr) |
+| #3 | Fire-and-forget DB zápisy | ✅ | Všechny mají .catch() |
+| #4 | Magic timeout konstanty | ✅ | DELAY_* / DURATION_* pojmenované konstanty |
+| #5 | updateAuthUI() split | ✅ | → updateTabVisibility + updateAuthLabel + updateBanners |
+| #6 | Inline ternáry → t() | ✅ | 52 výskytů, 37 nových klíčů v UI_TEXT |
+| #7 | buildReadingPrompt() extrakce | ✅ | Čistá funkce, žádné globály |
+| #8 | Monolith split | ✅ | 2889 → 1276 ř., 5 nových modulů |
+
+Skóre zdraví projektu — aktualizované odhady:
+- Čistota vrstev:  7/10 (bylo 4/10) — moduly mají jasné hranice
+- Závislosti:      7/10 (bylo 5/10) — globály zůstávají, ale funkce je neduplikují
+- Komplexita:      7/10 (bylo 4/10) — největší funkce rozděleny
+- Ošetření chyb:   8/10 (bylo 6/10) — fire-and-forget opraveny
+
+Zbývající tech dluh:
+- isAdmin(), elVoiceId(), elModel() v runar-config.js (runtime funkce v config souboru)
+- getCorrPrompt() / applyISCorrections() v runar-app.js (patří do runar-character.js)
+- Duplicate _capFmt() — v runar-journal.js (secondary cap) a runar-reading.js (main cap)
+- updateUIText() — 113 řádků, kandidát na další split
+
+---
+
+---
+
 ## Skóre zdraví projektu
 
 - Čistota vrstev:     4/10 — runar-app.js dělá vše najednou (UI, business logika, DB, prompt building)
