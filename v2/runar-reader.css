@@ -253,11 +253,42 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .app{position:relative;z-index:1;max-width:680px;width:100%;margin:0 auto;padding:24px 16px 80px;}
 
 /* ── APP TABS ── */
+/* ── PRIMARY TAB ROW (Tree of Life) ── */
+.app-tabs-primary{display:flex;border-bottom:1px solid var(--gold-dim);margin-bottom:0;}
+.app-tab-primary{flex:1;text-align:center;font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.2px;color:var(--muted);padding:13px 4px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:transparent;white-space:nowrap;transition:all 0.2s;}
+.app-tab-primary:hover{color:var(--gold);}
+.app-tab-primary.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+/* ── SECONDARY TAB ROW (Reading, Journal, Collection) ── */
 .app-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:28px;}
 .app-tab{flex:1;min-width:0;text-align:center;font-family:'Cinzel',serif;font-size:0.68em;letter-spacing:0.8px;color:var(--muted);padding:12px 4px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:transparent;white-space:nowrap;transition:all 0.2s;}
 .app-tab:hover{color:var(--white);}
 .app-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
-@media(max-width:400px){.app-tab{font-size:0.56em;letter-spacing:0.2px;}}
+@media(max-width:400px){.app-tab{font-size:0.56em;letter-spacing:0.2px;}.app-tab-primary{font-size:0.62em;}}
+
+/* ── TREE OF LIFE PANE ── */
+.tree-life-rune-section{padding:24px 0 16px;}
+.tree-rune-display{text-align:center;padding:20px 0 16px;}
+.tree-rune-label{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--muted);display:block;margin-bottom:8px;}
+.tree-rune-name{font-family:'Cinzel',serif;font-size:1.3em;letter-spacing:1px;color:var(--gold);margin-bottom:6px;}
+.tree-rune-glyph{font-size:2.8em;color:var(--gold);opacity:0.85;line-height:1;}
+.tree-gate-text{text-align:center;color:var(--muted);font-size:0.9em;font-style:italic;padding:0 20px 16px;}
+.tree-rune-header{cursor:pointer;padding:16px 0 8px;}
+.tree-rune-name-row{display:flex;align-items:center;gap:10px;padding:4px 0;}
+.tree-rune-name{font-family:'Cinzel',serif;font-size:1.1em;color:var(--gold);}
+.tree-rune-glyph-inline{font-size:1.6em;color:var(--gold);opacity:0.85;}
+.tree-toggle-arrow{margin-left:auto;color:var(--muted);font-size:1.1em;transition:transform 0.2s;}
+.tree-toggle-arrow.open{transform:rotate(45deg);}
+.tree-static-open{font-family:'Cinzel',serif;font-size:0.85em;letter-spacing:0.5px;color:var(--muted);padding:12px 0 4px;}
+.tree-reading-text{font-size:1.05em;line-height:1.8;color:var(--white);padding:12px 0 20px;font-style:italic;}
+.tree-closing-quote{border-top:1px solid var(--border);padding:18px 0 8px;text-align:center;color:var(--muted);font-size:0.9em;line-height:1.7;}
+.tree-reveal-intro{text-align:center;font-style:italic;color:var(--muted);font-size:0.95em;line-height:1.7;padding:8px 16px 20px;}
+.btn-gold{background:var(--gold);color:#0a0c12;font-family:'Cinzel',serif;font-size:0.75em;letter-spacing:1.5px;padding:14px 28px;border:none;cursor:pointer;width:100%;transition:opacity 0.2s;}
+.btn-gold:hover{opacity:0.88;}
+.tree-loading-glyph{text-align:center;font-size:3em;color:var(--gold);opacity:0.6;padding:24px 0 8px;animation:pulse-fade 1.4s ease-in-out infinite;}
+.tree-loading-text{text-align:center;font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--muted);padding-bottom:24px;}
+.tree-growth-section{padding:24px 0 8px;border-top:1px solid var(--border);}
+.tree-growth-quote{text-align:center;font-style:italic;color:var(--muted);font-size:0.9em;line-height:1.9;padding:0 12px;}
 
 /* ── COLLECTION ── */
 .coll-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:4px;}

@@ -164,7 +164,12 @@
 <!-- ═══ APP ═══ -->
 <div class="app">
 
-  <!-- APP TABS -->
+  <!-- APP TABS — primary row: Tree of Life -->
+  <div class="app-tabs-primary">
+    <button class="app-tab-primary" id="atab-tree" onclick="showAppTab('tree')">◈ TREE OF LIFE</button>
+  </div>
+
+  <!-- APP TABS — secondary row: Reading, Journal, Collection -->
   <div class="app-tabs">
     <button class="app-tab active" id="atab-reading"    onclick="showAppTab('reading')">✦ READING</button>
     <button class="app-tab"        id="atab-journal"    onclick="showAppTab('journal')"  style="display:none;">◌ JOURNAL</button>
@@ -344,6 +349,79 @@
   </div><!-- /reader-content -->
 
   </div><!-- /apane-reading -->
+
+  <!-- ═ TREE OF LIFE PANE ═ -->
+  <div id="apane-tree" style="display:none;">
+
+    <!-- LIFE RUNE SECTION -->
+    <div class="tree-life-rune-section" id="tree-life-rune-section">
+
+      <!-- State: no DOB entered -->
+      <div id="tree-no-dob" style="display:none;">
+        <div class="tree-gate-text" id="tree-no-dob-text">Enter your date of birth to discover your life rune.</div>
+      </div>
+
+      <!-- State: RS teaser (has DOB, not Standard+) -->
+      <div id="tree-rs-teaser" style="display:none;">
+        <div class="tree-rune-display">
+          <span class="tree-rune-label" id="tree-rune-label">YOUR LIFE RUNE</span>
+          <div class="tree-rune-name" id="tree-rune-name-teaser"></div>
+          <div class="tree-rune-glyph" id="tree-rune-glyph-teaser"></div>
+        </div>
+        <div class="tree-gate-text" id="tree-teaser-text">Your story opens with Standard.</div>
+        <button class="vcn-btn btn-upgrade" id="tree-upgrade-btn" onclick="showAppTab('reading')">UPGRADE → STANDARD</button>
+      </div>
+
+      <!-- State: Standard/Premium — no reading yet -->
+      <div id="tree-reveal-cta" style="display:none;">
+        <div class="tree-rune-display">
+          <span class="tree-rune-label" id="tree-rune-label-cta">YOUR LIFE RUNE</span>
+          <div class="tree-rune-name" id="tree-rune-name-cta"></div>
+          <div class="tree-rune-glyph" id="tree-rune-glyph-cta"></div>
+        </div>
+        <p class="tree-reveal-intro" id="tree-reveal-intro">Before the runes speak of today — shall Rúnar reveal the rune you carry since birth?</p>
+        <button class="vcn-btn btn-gold" id="tree-reveal-btn" onclick="generateLifeRuneReading()">REVEAL YOUR LIFE RUNE</button>
+      </div>
+
+      <!-- State: loading -->
+      <div id="tree-loading" style="display:none;">
+        <div class="tree-loading-glyph" id="tree-loading-glyph"></div>
+        <div class="tree-loading-text" id="tree-loading-text">THE STONES SPEAK IN SILENCE…</div>
+      </div>
+
+      <!-- State: reading exists — collapsible -->
+      <div id="tree-reading-exists" style="display:none;">
+        <div class="tree-rune-header" onclick="toggleTreeReading()">
+          <span class="tree-rune-label" id="tree-rune-label-exists">YOUR LIFE RUNE</span>
+          <div class="tree-rune-name-row">
+            <span class="tree-rune-name" id="tree-rune-name-exists"></span>
+            <span class="tree-rune-glyph-inline" id="tree-rune-glyph-exists"></span>
+            <span class="tree-toggle-arrow" id="tree-toggle-arrow">+</span>
+          </div>
+        </div>
+        <div id="tree-reading-body" style="display:none;">
+          <div class="tree-static-open" id="tree-static-open"></div>
+          <div class="tree-reading-text" id="tree-reading-text"></div>
+          <div class="tree-closing-quote">
+            <em id="tree-closing-quote-text">"The runes do not predict your fate.<br>They remind you of the path<br>you already walk."</em>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tree-life-rune-section -->
+
+    <!-- TREE GROWTH SECTION -->
+    <div class="tree-growth-section" id="tree-growth-section">
+      <div class="tree-growth-quote" id="tree-growth-quote">
+        <em>"The tree does not grow between visits.<br>
+        It grows through them — slowly,<br>
+        the way birch roots find water under stone.<br>
+        Each rune you draw is already here.<br>
+        Come back. The tree remembers."</em>
+      </div>
+    </div>
+
+  </div><!-- /apane-tree -->
 
   <!-- ═ COLLECTION PANE ═ -->
   <div id="apane-collection" style="display:none;">
