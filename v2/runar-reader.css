@@ -276,8 +276,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .tree-intro{text-align:center;color:var(--muted);font-style:italic;line-height:2.2;padding:8px 24px 24px;max-width:480px;margin:0 auto;}
 .tree-intro p{margin:0 0 1.2em;}
 .tree-intro p:last-child{margin-bottom:0;font-size:1.05em;color:var(--white);opacity:0.75;}
-.tree-dob-row{display:flex;gap:10px;justify-content:center;padding:0 20px;}
-.tree-dob-inp{width:80px;text-align:center;padding:10px 8px;}
 .tree-name-section{padding:24px 20px 8px;text-align:center;border-top:1px solid var(--border);margin-top:8px;}
 .tree-name-label{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--muted);margin-bottom:12px;}
 .tree-name-inp{width:100%;max-width:360px;text-align:center;}

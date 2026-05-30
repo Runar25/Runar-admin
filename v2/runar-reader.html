@@ -359,10 +359,10 @@
       <!-- State: no DOB entered -->
       <div id="tree-no-dob" style="display:none;">
         <div class="tree-intro" id="tree-no-dob-text"></div>
-        <div class="tree-dob-row">
-          <input class="txt tree-dob-inp" id="tree-dob-d" type="number" min="1" max="31" placeholder="Day">
-          <input class="txt tree-dob-inp" id="tree-dob-m" type="number" min="1" max="12" placeholder="Month">
-          <input class="txt tree-dob-inp" id="tree-dob-y" type="number" min="1900" max="2099" placeholder="Year">
+        <div class="dob-row">
+          <input class="num" id="tree-dob-d" type="number" placeholder="Day"   min="1" max="31"   oninput="this.value=this.value.slice(0,2);if(+this.value>31)this.value=31;if(+this.value<0)this.value=''">
+          <input class="num" id="tree-dob-m" type="number" placeholder="Month" min="1" max="12"   oninput="this.value=this.value.slice(0,2);if(+this.value>12)this.value=12;if(+this.value<0)this.value=''">
+          <input class="num" id="tree-dob-y" type="number" placeholder="Year"  min="1900"         oninput="this.value=this.value.slice(0,4);if(+this.value>new Date().getFullYear())this.value=new Date().getFullYear()">
         </div>
         <button class="btn-full sec" onclick="setTreeDOB()" style="max-width:300px;margin:16px auto 0;display:block;white-space:nowrap;" id="tree-dob-btn">REVEAL MY LIFE RUNE →</button>
       </div>
