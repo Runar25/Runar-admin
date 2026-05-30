@@ -1874,8 +1874,8 @@ function updateUIText() {
   // Journal gate — Visitor teaser
   const jgTxt = document.getElementById('journal-gate-txt');
   if (jgTxt) jgTxt.innerHTML = lang === 'is'
-    ? 'Thu gengur her sem gestur.<br>Dagbokin thin hefst um leid og thu maetir.<br>Gerdu ther runa-leitanda til ad opna dagbokina.'
-    : 'You walk here as a Visitor.<br>Your journal begins the moment you arrive.<br>Become a Rune Seeker to open the journal.';
+    ? 'Thu gengur her sem gestur.<br>Dagbokin thin hefst um leid og thu maetir.<br>Gerdu ther <b class="rs-link">runa-leitanda</b> til ad opna dagbokina.'
+    : 'You walk here as a Visitor.<br>Your journal begins the moment you arrive.<br>Become a <b class="rs-link">Rune Seeker</b> to open the journal.';
   setText('journal-gate-btn', lang === 'is' ? 'GERAST RÚNA-LEITANDI →' : 'BECOME A RUNE SEEKER →');
   // Re-render journal if it's open (picks up new lang labels)
   if (activeAppTab === 'journal' && _journalCache.length > 0) renderJournal(_journalCache);
