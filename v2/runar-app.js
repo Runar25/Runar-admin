@@ -958,8 +958,11 @@ function updateAuthUI() {
   // Journal tab visibility
   const journalTabBtn = document.getElementById('atab-journal');
   if (journalTabBtn) journalTabBtn.style.display = currentUser ? '' : 'none';
-  // If logged out while on journal tab — switch to reading
-  if (!currentUser && activeAppTab === 'journal') showAppTab('reading');
+  // Tree tab — visible only for logged-in users
+  const treeTabBtn = document.getElementById('atab-tree');
+  if (treeTabBtn) treeTabBtn.style.display = currentUser ? '' : 'none';
+  // If logged out while on journal or tree tab — switch to reading
+  if (!currentUser && (activeAppTab === 'journal' || activeAppTab === 'tree')) showAppTab('reading');
 
   if (currentUser) {
     // ── Logged in ──
