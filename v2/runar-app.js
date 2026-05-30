@@ -198,7 +198,7 @@ async function fetchUserProfile(userId) {
         const localLang = localStorage.getItem('runar_lang');
         if (localLang && localLang === lang) {
           // User chose a language while logged out — persist to their profile, keep it
-          sb.from('user_profiles').update({ lang: localLang }).eq('id', userId).then(() => {});
+          sb.from('user_profiles').update({ lang: localLang }).eq('id', userId).then(() => {}).catch(e => console.warn('persist lang:', e.message));
         } else {
           // DB has a meaningful preference (set on another device) — apply it
           lang = data.lang;
@@ -1320,7 +1320,7 @@ function setLang(l) {
   if (l === lang) return;
   localStorage.setItem('runar_lang', l);
   // Save to profile async (best-effort)
-  if (currentUser) sb.from('user_profiles').update({ lang: l }).eq('id', currentUser.id).then(() => {});
+  if (currentUser) sb.from('user_profiles').update({ lang: l }).eq('id', currentUser.id).then(() => {}).catch(e => console.warn('persist lang switch:', e.message));
   const outputVisible = document.getElementById('reader-output')?.style.display !== 'none';
   if (outputVisible && readerRune) {
     if (readerTexts[l]) {
@@ -1678,7 +1678,7 @@ function setTreeDOB() {
   readerUser.d = d; readerUser.m = m; readerUser.y = y;
   // Save DOB to DB
   if (currentUser) {
-    sb.from('user_profiles').update({ dob_day: d, dob_month: m, dob_year: y }).eq('id', currentUser.id).then(function() {});
+    sb.from('user_profiles').update({ dob_day: d, dob_month: m, dob_year: y }).eq('id', currentUser.id).then(function() {}).catch(function(e) { console.warn('persist DOB:', e.message); });
   }
   updateTreeTab();
 }
@@ -1689,11 +1689,16 @@ async function saveTreeName() {
   if (!inp || !currentUser) return;
   var name = inp.value.trim();
   if (!name) return;
-  await sb.from('user_profiles').update({ tree_name: name }).eq('id', currentUser.id);
-  if (saved) {
-    saved.textContent = lang === 'is' ? '✦ VISTAÐ' : '✦ SAVED';
-    saved.style.display = 'block';
-    setTimeout(function(){ saved.style.display = 'none'; }, 2500);
+  try {
+    await sb.from('user_profiles').update({ tree_name: name }).eq('id', currentUser.id);
+    if (saved) {
+      saved.textContent = lang === 'is' ? '✦ VISTAÐ' : '✦ SAVED';
+      saved.style.display = 'block';
+      setTimeout(function(){ saved.style.display = 'none'; }, 2500);
+    }
+  } catch(e) {
+    console.warn('saveTreeName:', e.message);
+    if (saved) { saved.textContent = lang === 'is' ? 'Villa' : 'Error saving'; saved.style.display = 'block'; }
   }
 }
 
