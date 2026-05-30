@@ -1866,8 +1866,8 @@ function updateUIText() {
   setText('trial-end-title', lang === 'is' ? 'FERÐ ÞÍN SEM GESTUR ER LOKIÐ' : 'YOUR JOURNEY AS VISITOR IS COMPLETE');
   const ten = document.getElementById('trial-end-note');
   if (ten) ten.innerHTML = lang === 'is'
-    ? 'Þú hefur farið með Rúnar þrisvar sinnum. Steinarnir muna.<br><b style="color:var(--gold);">Gerast Rúna-leitandi</b> til að halda áfram — fimm lestrar á mánuði, án greiðslu.'
-    : 'You have walked with Rúnar three times as a Visitor. The stones remember.<br><b style="color:var(--gold);">Become a Rune Seeker</b> to continue — five readings each month, no payment ever needed.';
+    ? 'Þú hefur farið með Rúnar þrisvar sinnum. Steinarnir muna.<br><b class="rs-link">Gerast Rúna-leitandi</b> til að halda áfram — fimm lestrar á mánuði, án greiðslu.'
+    : 'You have walked with Rúnar three times as a Visitor. The stones remember.<br><b class="rs-link">Become a Rune Seeker</b> to continue — five readings each month, no payment ever needed.';
   setText('trial-end-btn', lang === 'is' ? 'GERAST RÚNA-LEITANDI →' : 'BECOME A RUNE SEEKER →');
   // Journal tab label
   setText('atab-journal', lang === 'is' ? '◌ LESTRAR' : '◌ JOURNAL');
