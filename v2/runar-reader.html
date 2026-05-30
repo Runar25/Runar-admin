@@ -172,7 +172,7 @@
   <!-- APP TABS — secondary row: Reading, Journal, Collection -->
   <div class="app-tabs">
     <button class="app-tab active" id="atab-reading"    onclick="showAppTab('reading')">✦ READING</button>
-    <button class="app-tab"        id="atab-journal"    onclick="showAppTab('journal')"  style="display:none;">◌ JOURNAL</button>
+    <button class="app-tab"        id="atab-journal"    onclick="showAppTab('journal')">◌ JOURNAL</button>
     <button class="app-tab"        id="atab-collection" onclick="showAppTab('collection')">◈ COLLECTION</button>
   </div>
 
@@ -463,12 +463,12 @@
   <!-- ═ JOURNAL PANE ═ -->
   <div id="apane-journal" style="display:none;">
 
-    <!-- Gate: logged out -->
+    <!-- Gate: logged out / Visitor -->
     <div id="journal-gate">
       <div class="journal-gate-wrap">
-        <div class="journal-gate-rune">ᚱ</div>
-        <p class="journal-gate-txt" id="journal-gate-txt">Create a free account to keep your readings.<br>Every rune you draw. Every word Rúnar speaks.<br>Kept.</p>
-        <button class="btn-full" onclick="openAuthModal()" style="max-width:280px;margin:0 auto;display:block;" id="journal-gate-btn">BECOME A RUNE SEEKER</button>
+        <div class="journal-gate-rune">◌ ᚱ ◌</div>
+        <p class="journal-gate-txt" id="journal-gate-txt">You walk here as a Visitor.<br>Your journal begins the moment you arrive.<br>Become a Rune Seeker to open the journal.</p>
+        <button class="btn-full btn-upgrade" onclick="openAuthModal()" style="max-width:280px;margin:0 auto;display:block;" id="journal-gate-btn">BECOME A RUNE SEEKER →</button>
       </div>
     </div>
 

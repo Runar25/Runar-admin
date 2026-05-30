@@ -955,9 +955,9 @@ function updateAuthUI() {
 
   const creditsBanner = document.getElementById('credits-banner');
 
-  // Journal tab visibility
+  // Journal tab — always visible (Visitor sees gate inside)
   const journalTabBtn = document.getElementById('atab-journal');
-  if (journalTabBtn) journalTabBtn.style.display = currentUser ? '' : 'none';
+  if (journalTabBtn) journalTabBtn.style.display = '';
   // Tree tab — visible only for logged-in users
   const treeTabBtn = document.getElementById('atab-tree');
   if (treeTabBtn) treeTabBtn.style.display = currentUser ? '' : 'none';
@@ -1868,12 +1868,12 @@ function updateUIText() {
   setText('trial-end-btn', lang === 'is' ? 'GERAST RÚNA-LEITANDI →' : 'BECOME A RUNE SEEKER →');
   // Journal tab label
   setText('atab-journal', lang === 'is' ? '◌ LESTRAR' : '◌ JOURNAL');
-  // Journal gate
+  // Journal gate — Visitor teaser
   const jgTxt = document.getElementById('journal-gate-txt');
   if (jgTxt) jgTxt.innerHTML = lang === 'is'
-    ? 'Stofnaðu reikning til að geyma lestrana þína.<br>Sérhver rúna sem þú dregur. Hvert orð sem Rúnar talar.<br>Geymt.'
-    : 'Create a free account to keep your readings.<br>Every rune you draw. Every word Rúnar speaks.<br>Kept.';
-  setText('journal-gate-btn', lang === 'is' ? 'GERAST RÚNA-LEITANDI' : 'BECOME A RUNE SEEKER');
+    ? 'Thu gengur her sem gestur.<br>Dagbokin thin hefst um leid og thu maetir.<br>Gerdu ther runa-leitanda til ad opna dagbokina.'
+    : 'You walk here as a Visitor.<br>Your journal begins the moment you arrive.<br>Become a Rune Seeker to open the journal.';
+  setText('journal-gate-btn', lang === 'is' ? 'GERAST RÚNA-LEITANDI →' : 'BECOME A RUNE SEEKER →');
   // Re-render journal if it's open (picks up new lang labels)
   if (activeAppTab === 'journal' && _journalCache.length > 0) renderJournal(_journalCache);
   else if (activeAppTab === 'journal') updateWhispersUI();
