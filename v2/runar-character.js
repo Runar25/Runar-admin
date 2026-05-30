@@ -336,7 +336,7 @@ function getBirthMonthEN(m) {
   var months = {
     1:  'Mörsugur — deep midwinter, silence and stillness between the old year and the new',
     2:  'Þorri — the harshest month, Þorrablót, endurance over defeat, fires in the dark',
-    3:  'Gói — light beginning to return, the first birdsong breaking February's silence',
+    3:  'Gói — light beginning to return, the first birdsong breaking the silence of February',
     4:  'Harpa — Sumardagurinn fyrsti, the first day of summer, spring opening',
     5:  'Skerpla — summer arrived, long days, the land in full motion',
     6:  'Sólmánuður — midnight sun, the veil thins, hidden people most active',
