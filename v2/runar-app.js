@@ -831,7 +831,7 @@ async function generateWhispersReading() {
     if (data.error) throw new Error(data.error);
     const rawText = data.content?.[0]?.text || data.text || '';
     if (!rawText) throw new Error('Empty response');
-    const text = applyISCorrections(rawText);
+    const text = applyISCorrections(rawText, lang, corrections);
 
     _whispersText = text;
     _whispersMode = 'output';
@@ -1720,9 +1720,9 @@ async function generateLifeRuneReading() {
   var name = readerUser.name || (currentUser ? currentUser.email.split('@')[0] : 'seeker');
   var mode = isPremium ? RUNAR_MODES.life_rune_premium : RUNAR_MODES.life_rune_standard;
   var prompt = buildLifeRunePrompt(name, rune, readerUser.d, readerUser.m, readerUser.y, lang, isPremium);
-  var corrBlock = getCorrPrompt();
+  var corrBlock = getCorrPrompt(lang, corrections);
   if (corrBlock) prompt = prompt + '\n' + corrBlock;
-  var sys = buildSysPrompt(activeChar);
+  var sys = buildSysPrompt(activeChar, lang);
 
   var res = await callProxy(sys, prompt, mode.max_tokens, false);
   if (loadEl) loadEl.style.display = 'none';
@@ -1732,7 +1732,7 @@ async function generateLifeRuneReading() {
     return;
   }
 
-  var text = applyISCorrections(res.text || '');
+  var text = applyISCorrections(res.text || '', lang, corrections);
   _lifeRuneText = text;
   _lifeRuneLang = lang;
   _lifeRuneNum  = RUNES.findIndex(function(r){ return r.n === rune.n; }) + 1;
@@ -2184,8 +2184,8 @@ async function loadCorrections() {
     try { corrections = [...corrections, ...JSON.parse(local)]; } catch {}
   }
 }
-function getCorrPrompt() {
-  if (!corrections.length) return '';
+function getCorrPrompt(lang, corrections) {
+  if (!corrections || !corrections.length) return '';
   const rel = corrections.filter(c => !c.lang || c.lang === 'both' || c.lang === lang);
   if (!rel.length) return '';
   const lines = rel.map(c => `- Never say "${c.from_word}" — say "${c.to_word}" instead${c.context ? ' ('+c.context+')' : ''}`).join('\n');
@@ -2194,8 +2194,8 @@ function getCorrPrompt() {
 
 // Post-processor: aplikuje IS korekce na Claude output (garantovano, deterministicke)
 // Vola se po kazdem Claude volani kde lang === 'is'
-function applyISCorrections(text) {
-  if (lang !== 'is' || !corrections.length || !text) return text;
+function applyISCorrections(text, lang, corrections) {
+  if (lang !== 'is' || !corrections || !corrections.length || !text) return text;
   const isCorr = corrections.filter(function(c) { return !c.lang || c.lang === 'is' || c.lang === 'both'; });
   isCorr.forEach(function(c) {
     if (!c.from_word || !c.to_word) return;
@@ -2297,7 +2297,7 @@ async function _generateReading() {
   if (_pL2) _pL2.classList.add('pulsing');
 
   const u = readerUser, drawn = readerRune, life = u.lifeRune;
-  const sys = buildSysPrompt(activeChar);
+  const sys = buildSysPrompt(activeChar, lang);
   const langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
   const drawnKws = rk(drawn).split(',').map(s => s.trim()).filter(Boolean);
   const pickedKws = drawnKws.sort(() => 0.5 - Math.random()).slice(0, Math.min(3, drawnKws.length)).join(', ');
@@ -2312,7 +2312,7 @@ async function _generateReading() {
     u.area    ? `AREA: ${u.area}` : '',
     u.seeking ? `SEEKING: ${u.seeking}` : '',
     u.question? `QUESTION: "${u.question}"` : ''].filter(Boolean).join('\n');
-  const prompt = `${parts}${formulaLine}\n\nREADING ANGLE (follow this entry point — let it shape the opening and tone): ${_randomAngle()}\n\nGive the reading in two parts separated by |||\n\nPART 1 (2-3 sentences maximum, core message, direct and poetic. Mention the rune's name — ${rn(drawn)} — once, woven naturally into the reading. Let the rune's symbolic layer — ${rworld(drawn) || 'the living path'} — subtly colour the tone):\n\nPART 2 (3-4 sentences maximum. Deeper reflection — connect drawn rune with ${life ? 'life rune ' + rn(life) + (life.world ? ' (' + rworld(life) + ')' : '') + ', ' : ''}${u.area || 'their path'}${u.seeking ? ', seeking ' + u.seeking : ''}. If the drawn rune and life rune share an element (${relements(drawn)} / ${life ? relements(life) : '—'}), let that resonance surface briefly. End with one short, open question. Do NOT include a label like "PART 2" in the output):\n\nSpeak directly to ${u.name}. Be concise — every sentence must earn its place. ${langInstr}\n${getCorrPrompt()}`;
+  const prompt = `${parts}${formulaLine}\n\nREADING ANGLE (follow this entry point — let it shape the opening and tone): ${_randomAngle()}\n\nGive the reading in two parts separated by |||\n\nPART 1 (2-3 sentences maximum, core message, direct and poetic. Mention the rune's name — ${rn(drawn)} — once, woven naturally into the reading. Let the rune's symbolic layer — ${rworld(drawn) || 'the living path'} — subtly colour the tone):\n\nPART 2 (3-4 sentences maximum. Deeper reflection — connect drawn rune with ${life ? 'life rune ' + rn(life) + (life.world ? ' (' + rworld(life) + ')' : '') + ', ' : ''}${u.area || 'their path'}${u.seeking ? ', seeking ' + u.seeking : ''}. If the drawn rune and life rune share an element (${relements(drawn)} / ${life ? relements(life) : '—'}), let that resonance surface briefly. End with one short, open question. Do NOT include a label like "PART 2" in the output):\n\nSpeak directly to ${u.name}. Be concise — every sentence must earn its place. ${langInstr}\n${getCorrPrompt(lang, corrections)}`;
 
   const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens, shouldUseCredit());
   if (res.error === 'rate_limited') {
@@ -2344,8 +2344,8 @@ async function _generateReading() {
   if (res.error) { if (_rdLoadEl) _rdLoadEl.style.display = 'none'; if (_pL1) _pL1.classList.remove('pulsing'); if (_pL2) _pL2.classList.remove('pulsing'); setSt('st-reader', 'Failed: ' + res.error, 'err'); return; }
 
   const split = res.text.split('|||');
-  const short = applyISCorrections(split[0]?.trim() || res.text);
-  const deep  = applyISCorrections(split[1]?.trim() || '');
+  const short = applyISCorrections(split[0]?.trim() || res.text, lang, corrections);
+  const deep  = applyISCorrections(split[1]?.trim() || '', lang, corrections);
   readerTexts[lang] = { short, deep };
 
   // Count reading — anonymous trial or logged-in free tier

@@ -274,7 +274,7 @@ function _getTimeOfDay() {
 }
 
 // Returns the context injection line for V2 readings
-function getContextLine() {
+function getContextLine(lang) {
   const now = new Date();
   const dateStr = now.toLocaleDateString('en-GB', {
     weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
@@ -303,9 +303,9 @@ function buildLifeRuneContext(rune) {
 }
 
 // System prompt for V2 — prepends live context to character
-function buildSysPromptV2(lifeRune) {
+function buildSysPromptV2(lifeRune, lang) {
   var lifeCtx = lifeRune ? buildLifeRuneContext(lifeRune) : '';
-  return getContextLine() + '\n\n' + DEF_CHAR_V2_EN + lifeCtx;
+  return getContextLine(lang) + '\n\n' + DEF_CHAR_V2_EN + lifeCtx;
 }
 
 
@@ -431,15 +431,15 @@ function buildLifeRunePrompt(name, rune, day, month, year, lang, isPremium) {
 // ─── SYSTEM PROMPT BUILDER ──────────────────────────────
 // Picks the right character version based on current UI language.
 // If a custom character is loaded from Supabase, it is used directly.
-function buildSysPrompt(c) {
+function buildSysPrompt(c, lang) {
   let base;
 
   if (c && c !== DEF_CHAR_EN && c !== DEF_CHAR_IS) {
     // Custom saved character from Supabase — use as-is
     base = c;
   } else {
-    // Default character — select by current language
-    const currentLang = (typeof lang !== 'undefined') ? lang : 'en';
+    // Default character — select by lang parameter
+    const currentLang = lang || 'en';
     switch (currentLang) {
       case 'is': base = DEF_CHAR_IS; break;
       // case 'cz': base = DEF_CHAR_CZ; break;
