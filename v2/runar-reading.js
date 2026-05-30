@@ -1,0 +1,325 @@
+// ═══════════════════════════════════════════════════════
+// RÚNAR · READING
+// Core reading flow: prompt builder, generate, stream, reader UI,
+// main audio player (cap), voice generation.
+// Depends on globals: lang, currentUser, userTier, readerUser,
+//   readerRune, readerTexts, activeChar, corrections, sb,
+//   RUNAR_MODES, READING_ANGLES, FREE_TRIAL_LIMIT, FREE_REGISTERED_LIMIT,
+//   DELAY_TRIAL_END, DELAY_SCROLL, DELAY_ERROR_RESET
+// Depends on functions: t(), callProxy(), buildSysPrompt(),
+//   getCorrPrompt(), applyISCorrections(), stream(), checkStaticAudio(),
+//   shouldUseCredit(), canUseVoice(), saveReading(), syncMonthlyCount(),
+//   loadJournal(), updateAuthUI(), setSt(), showToast(), incTrialCount(),
+//   getTrialCount(), getFreeMonthCount(), elVoiceId(), elModel(),
+//   EL_PROXY, EL_VOICE_SETTINGS
+// ═══════════════════════════════════════════════════════
+
+// ─── READING CORE ────────────────────────────────────────
+
+// ─── PURE PROMPT BUILDER ─────────────────────────────────────
+// Receives everything as parameters — no globals read.
+// Returns the full prompt string for _generateReading().
+function buildReadingPrompt(u, drawn, lang, corrections) {
+  const life = u.lifeRune;
+  const langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
+  const drawnKws = rk(drawn).split(',').map(s => s.trim()).filter(Boolean);
+  const pickedKws = drawnKws.sort(() => 0.5 - Math.random()).slice(0, Math.min(3, drawnKws.length)).join(', ');
+  const formulaLine = (lang === 'is' && drawn.formula_is)
+    ? `\nIcelandic rune formula (weave naturally once into PART 1): "${drawn.formula_is}"` : '';
+  const lifeCtx = life
+    ? `LIFE RUNE: ${rn(life)} (${life.g}) — ${rk(life)}` + (life.world ? ` · Realm: ${rworld(life)} · Elements: ${relements(life)}` : '')
+    : '';
+  const drawnCtx = `DRAWN RUNE: ${rn(drawn)} (${drawn.g}) — focus on: ${pickedKws}` +
+    (drawn.world ? ` · World: ${rworld(drawn)} · Elements: ${relements(drawn)}` : '');
+  const parts = [`PERSON: ${u.name}`, lifeCtx, drawnCtx,
+    u.area    ? `AREA: ${u.area}` : '',
+    u.seeking ? `SEEKING: ${u.seeking}` : '',
+    u.question? `QUESTION: "${u.question}"` : ''].filter(Boolean).join('\n');
+  return `${parts}${formulaLine}\n\nREADING ANGLE (follow this entry point — let it shape the opening and tone): ${_randomAngle()}\n\nGive the reading in two parts separated by |||\n\nPART 1 (2-3 sentences maximum, core message, direct and poetic. Mention the rune's name — ${rn(drawn)} — once, woven naturally into the reading. Let the rune's symbolic layer — ${rworld(drawn) || 'the living path'} — subtly colour the tone):\n\nPART 2 (3-4 sentences maximum. Deeper reflection — connect drawn rune with ${life ? 'life rune ' + rn(life) + (life.world ? ' (' + rworld(life) + ')' : '') + ', ' : ''}${u.area || 'their path'}${u.seeking ? ', seeking ' + u.seeking : ''}. If the drawn rune and life rune share an element (${relements(drawn)} / ${life ? relements(life) : '—'}), let that resonance surface briefly. End with one short, open question. Do NOT include a label like "PART 2" in the output):\n\nSpeak directly to ${u.name}. Be concise — every sentence must earn its place. ${langInstr}\n${getCorrPrompt(lang, corrections)}`;
+}
+
+async function _generateReading() {
+  if (!readerRune) return;
+  const vBtn = document.getElementById('btn-generate-voice');
+  vBtn.disabled = true; vBtn.textContent = t('voice_btn');
+  document.getElementById('audio-player').classList.remove('visible');
+  document.getElementById('runar-audio').src = ''; setSt('st-voice', '');
+  document.getElementById('out-short').innerHTML = '';
+  document.getElementById('out-deep').innerHTML  = '';
+  const _rdLoadEl = document.getElementById('reading-loading');
+  const _rdLoadTxt = document.getElementById('reading-loading-txt');
+  if (_rdLoadTxt) _rdLoadTxt.textContent = t('reading_loading');
+  if (_rdLoadEl) _rdLoadEl.style.display = 'block';
+  var _pL1 = document.getElementById('layer1-lbl');
+  var _pL2 = document.getElementById('layer2-lbl');
+  if (_pL1) _pL1.classList.add('pulsing');
+  if (_pL2) _pL2.classList.add('pulsing');
+
+  const u = readerUser, drawn = readerRune;
+  const sys = buildSysPrompt(activeChar, lang);
+  const prompt = buildReadingPrompt(u, drawn, lang, corrections);
+
+  const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens, shouldUseCredit());
+  if (res.error === 'rate_limited') {
+    if (_rdLoadEl) _rdLoadEl.style.display = 'none';
+    if (_pL1) _pL1.classList.remove('pulsing');
+    if (_pL2) _pL2.classList.remove('pulsing');
+    setSt('st-reader', lang === 'is' ? 'Of margar beiðnir. Bíddu aðeins.' : 'Too many requests. Please wait a moment.', 'err');
+    return;
+  }
+  if (res.error === 'no_credits' || res.error === 'monthly_limit' || res.error === 'weekly_limit') {
+    if (_rdLoadEl) _rdLoadEl.style.display = 'none';
+    if (_pL1) _pL1.classList.remove('pulsing');
+    if (_pL2) _pL2.classList.remove('pulsing');
+    document.getElementById('out-short').innerHTML = '';
+    document.getElementById('out-deep').innerHTML  = '';
+    const isWeekly  = res.error === 'weekly_limit';
+    const isMonthly = res.error === 'monthly_limit';
+    const msg = isWeekly
+      ? (lang === 'is' ? 'Steinar hvíla til mánudags. Notaðu lestur gjafakort til að halda áfram.' : 'The stones rest until Monday. Use a reading gift card to continue.')
+      : isMonthly
+        ? (lang === 'is' ? 'Mánaðarleg lestrar þín eru búnin.' : 'Monthly free readings exhausted. Use a reading gift card or upgrade.')
+        : (lang === 'is' ? 'Kredit þínir eru búnir.' : 'No credits remaining. Redeem a gift card to continue.');
+    setSt('st-reader', msg, 'err');
+    // Sync localStorage with real count from DB to fix any drift
+    if (currentUser) syncMonthlyCount(currentUser.id);
+    await fetchUserProfile(currentUser.id); // refresh balance + show gate
+    return;
+  }
+  if (res.error) { if (_rdLoadEl) _rdLoadEl.style.display = 'none'; if (_pL1) _pL1.classList.remove('pulsing'); if (_pL2) _pL2.classList.remove('pulsing'); setSt('st-reader', 'Failed: ' + res.error, 'err'); return; }
+
+  const split = res.text.split('|||');
+  const short = applyISCorrections(split[0]?.trim() || res.text, lang, corrections);
+  const deep  = applyISCorrections(split[1]?.trim() || '', lang, corrections);
+  readerTexts[lang] = { short, deep };
+
+  // Count reading — anonymous trial or logged-in free tier
+  if (!currentUser) {
+    incTrialCount();
+    updateAuthUI();
+  } else {
+    // Save to DB first, then sync count (localStorage updates async after DB confirms)
+    await saveReading(readerRune, short, deep);
+    await syncMonthlyCount(currentUser.id); // refreshes localStorage + banner
+    loadJournal(); // refresh journal in background (no await — don't block stream)
+  }
+
+  if (_rdLoadEl) _rdLoadEl.style.display = 'none';
+  if (_pL1) _pL1.classList.remove('pulsing');
+  if (_pL2) _pL2.classList.remove('pulsing');
+  await stream('out-short', short);
+  if (deep) await stream('out-deep', deep); else document.getElementById('out-deep').innerHTML = '';
+
+  // After streaming is done — if last free reading, show join prompt after 8s
+  if (!currentUser && getTrialCount() >= FREE_TRIAL_LIMIT) {
+    setTimeout(() => {
+      const el = document.getElementById('trial-end');
+      if (el && document.getElementById('reader-output')?.style.display !== 'none') {
+        el.style.display = 'block';
+      }
+    }, DELAY_TRIAL_END);
+  }
+
+  // Hlas — povol jen pokud tier dovoluje (viz canUseVoice() + runar-config.js TIERS)
+  if (canUseVoice()) {
+    vBtn.disabled = false;
+    vBtn.style.display = '';
+  } else {
+    vBtn.disabled = true;
+    vBtn.style.display = 'none'; // skrýt úplně — žádný "disabled" button
+  }
+}
+
+// ─── READER FLOW ─────────────────────────────────────────
+function _showTrialEnd() {
+  updateAuthUI();
+  const el = document.getElementById('trial-end');
+  if (!el) return;
+  el.style.display = 'block';
+  setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'center' }), DELAY_SCROLL);
+}
+
+function startReading() {
+  if (!currentUser && getTrialCount() >= FREE_TRIAL_LIMIT) { _showTrialEnd(); return; }
+  // Only block rune_seeker who has used all free monthly slots AND has no credits left.
+  // Standard / Premium / Admin are never blocked here.
+  if (currentUser && userTier === 'rune_seeker'
+      && getFreeMonthCount(currentUser.id) >= FREE_REGISTERED_LIMIT
+      && userCredits <= 0) {
+    updateAuthUI();
+    setSt('st-setup', lang === 'is'
+      ? 'Þú hefur gengið alla lestrana þína í þessum mánuði. Notaðu gjafa-lesturarkort til að halda áfram.'
+      : 'Your readings for this month are complete. Use a reading gift card to continue.');
+    return;
+  }
+  const name = document.getElementById('r-name').value.trim();
+  if (!name) { setSt('st-setup', t('st_name_req'), 'err'); return; }
+  const d  = parseInt(document.getElementById('r-day').value);
+  const m  = parseInt(document.getElementById('r-month').value);
+  const y  = parseInt(document.getElementById('r-year').value);
+  const lifeRune = (d && m && y && d <= 31 && m <= 12 && y >= 1900) ? calcLifeRune(d, m, y) : null;
+  readerUser = { name, d, m, y, lifeRune,
+    area: readerUser.area || '', seeking: readerUser.seeking || '',
+    question: document.getElementById('r-question').value.trim() };
+  document.getElementById('reader-hero').classList.add('hidden');
+  document.getElementById('reader-setup').style.display = 'none';
+  document.getElementById('reader-rune-card').style.display = 'block';
+  document.getElementById('reader-output').style.display = 'none';
+  buildGrid(); setSt('st-setup', ''); setSt('st-reader', '');
+}
+
+async function readRune() {
+  if (!readerRune) return;
+  document.getElementById('reader-rune-card').style.display = 'none';
+  document.getElementById('reader-output').style.display = 'block';
+  const u = readerUser, drawn = readerRune, life = u.lifeRune;
+  const badge = document.getElementById('reader-badge');
+  if (life) {
+    badge.style.display = 'flex';
+    document.getElementById('badge-life-name').textContent = rn(life);
+    document.getElementById('badge-life-g').textContent    = life.g;
+    document.getElementById('badge-drawn-name').textContent = rn(drawn);
+    document.getElementById('badge-drawn-g').textContent   = drawn.g;
+  } else { badge.style.display = 'none'; }
+  readerTexts = {}; voiceGenerated = {};
+  await _generateReading();
+}
+
+function drawAnother() {
+  readerRune = null; readerTexts = {}; voiceGenerated = {};
+  document.getElementById('reader-output').style.display = 'none';
+  document.getElementById('trial-end').style.display = 'none';
+  if (!currentUser && getTrialCount() >= FREE_TRIAL_LIMIT) { _showTrialEnd(); return; }
+  if (currentUser && userTier === 'rune_seeker' && getFreeMonthCount(currentUser.id) >= FREE_REGISTERED_LIMIT && userCredits <= 0) { updateAuthUI(); return; }
+  document.getElementById('reader-rune-card').style.display = 'block';
+  document.querySelectorAll('#reader-grid .rb').forEach(b => b.classList.remove('on'));
+  document.getElementById('reader-rune-info').textContent = '';
+  document.getElementById('btn-speak').disabled = true;
+}
+
+function resetReader() {
+  readerUser = {}; readerRune = null; readerTexts = {}; voiceGenerated = {};
+  document.getElementById('reader-hero').classList.remove('hidden');
+  document.getElementById('reader-output').style.display = 'none';
+  document.getElementById('reader-rune-card').style.display = 'none';
+  document.getElementById('trial-end').style.display = 'none';
+  if (!currentUser && getTrialCount() >= FREE_TRIAL_LIMIT) {
+    _showTrialEnd(); return;
+  }
+  if (currentUser && userTier === 'rune_seeker' && getFreeMonthCount(currentUser.id) >= FREE_REGISTERED_LIMIT && userCredits <= 0) {
+    updateAuthUI(); return;
+  }
+  document.getElementById('reader-setup').style.display = 'block';
+  ['r-name','r-day','r-month','r-year','r-question'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  buildPills();
+}
+
+// ─── CUSTOM AUDIO PLAYER (main reading voice) ────────────
+function _capFmt(s) {
+  s = Math.floor(s || 0);
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+}
+function _capTrack(pct) {
+  const seek = document.getElementById('cap-seek');
+  if (seek) seek.style.setProperty('--pct', pct.toFixed(1) + '%');
+}
+function capToggle() {
+  const a = document.getElementById('runar-audio');
+  const btn = document.getElementById('cap-play');
+  if (!a || !btn) return;
+  if (a.paused) { a.play(); btn.textContent = '⏸'; }
+  else          { a.pause(); btn.textContent = '▶'; }
+}
+function capSeek(v) {
+  const a = document.getElementById('runar-audio');
+  if (!a || !a.duration) return;
+  a.currentTime = a.duration * (v / 100);
+  _capTrack(+v);
+}
+const _SVG_VOL_ON  = `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06C16.89 6.15 19 8.83 19 12c0 3.17-2.11 5.84-5 6.71v2.06c4.01-.91 7-4.49 7-8.77 0-4.28-2.99-7.86-7-8.77z"/></svg>`;
+const _SVG_VOL_OFF = `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>`;
+function capMute() {
+  const a = document.getElementById('runar-audio');
+  const btn = document.getElementById('cap-mute');
+  if (!a || !btn) return;
+  a.muted = !a.muted;
+  btn.innerHTML = a.muted ? _SVG_VOL_OFF : _SVG_VOL_ON;
+}
+function _capReset() {
+  const btn = document.getElementById('cap-play');
+  const seek = document.getElementById('cap-seek');
+  const cur  = document.getElementById('cap-current');
+  if (btn)  btn.textContent  = '▶';
+  if (seek) { seek.value = 0; _capTrack(0); }
+  if (cur)  cur.textContent  = '0:00';
+}
+// ─── WHISPERS CAP PLAYER ─────────────────────────────────
+function _wcapFmt(s) { const m = Math.floor(s/60); return m + ':' + String(Math.floor(s%60)).padStart(2,'0'); }
+function wcapToggle() {
+  const a = document.getElementById('whispers-audio');
+  const btn = document.getElementById('wcap-play');
+  if (!a || !btn) return;
+  if (a.paused) { a.play(); btn.textContent = '⏸'; }
+  else          { a.pause(); btn.textContent = '▶'; }
+}
+function wcapMute() {
+  const a = document.getElementById('whispers-audio');
+  const btn = document.getElementById('wcap-mute');
+  if (!a || !btn) return;
+  a.muted = !a.muted;
+  btn.innerHTML = a.muted ? _SVG_VOL_OFF : _SVG_VOL_ON;
+}
+function wcapSeek(v) {
+  const a = document.getElementById('whispers-audio');
+  if (!a || !a.duration) return;
+  a.currentTime = a.duration * (v / 100);
+}
+
+// ─── VOICE ───────────────────────────────────────────────
+async function generateVoice() {
+  const deepText = document.getElementById('out-deep').innerText.trim();
+  if (!deepText) return;
+  const btn = document.getElementById('btn-generate-voice');
+  btn.disabled = true; btn.textContent = t('voice_btn_loading');
+  setSt('st-voice', '');
+  document.getElementById('audio-player').classList.remove('visible');
+  try {
+    const { data: { session: elSession } } = await sb.auth.getSession();
+    const elHeaders = { 'Content-Type': 'application/json' };
+    if (elSession?.access_token) elHeaders['Authorization'] = 'Bearer ' + elSession.access_token;
+    const res = await fetch(EL_PROXY, {
+      method: 'POST',
+      headers: elHeaders,
+      body: JSON.stringify({ text: deepText, lang })
+    });
+    if (!res.ok) {
+      const data = await res.json();
+      const msg = res.status === 429
+        ? (lang === 'is' ? 'Of margar beiðnir. Bíddu aðeins.' : 'Too many requests. Please wait a moment.')
+        : (data.error || `HTTP ${res.status}`);
+      setSt('st-voice', msg, 'err');
+      btn.textContent = t('voice_btn'); btn.disabled = false; return;
+    }
+    const data = await res.json();
+    if (data.error) {
+      setSt('st-voice', data.error, 'err');
+      btn.textContent = t('voice_btn'); btn.disabled = false; return;
+    }
+    if (!data.audio_url) throw new Error('No audio_url');
+    const blob = await fetch(data.audio_url).then(r => r.blob());
+    const audio = document.getElementById('runar-audio');
+    audio.src = URL.createObjectURL(blob);
+    _capReset();
+    document.getElementById('audio-player').classList.add('visible');
+    voiceGenerated[lang] = true;
+    btn.textContent = '♪ RÚNAR HAS SPOKEN';
+    btn.disabled = true;
+    setSt('st-voice', '');
+  } catch (err) {
+    setSt('st-voice', `Voice error: ${err.message}`, 'err');
+    btn.textContent = t('voice_btn'); btn.disabled = false;
+  }
+}
+

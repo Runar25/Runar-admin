@@ -858,6 +858,24 @@ Python skripty ukládat v `C:\Users\zkuku\Downloads\Runar-admin\`.
 
 ---
 
+## Hotovo ✅ (session 2026-05-30 — část 2: refaktoring + Tree of Life features)
+
+- [x] **Visitor Journal gate** — tab viditelný pro všechny, gate s Rúnarovým textem
+- [x] **`.rs-link` šablona** — gold "Rune Seeker" text, aplikována na všechna místa
+- [x] **ᚱ pravidlo** — vždy zlatá, nikdy ◌ ᚱ ◌
+- [x] **IS text quality automation** — `applyISCorrections(text, lang, corrections)` post-processor na všech 3 Claude voláních
+- [x] **SyntaxError fix** — `buildLifeRunePromptIS/EN` přepsány s `\n` místo literal newlines
+- [x] **Tree of Life DOB inputs** — pole Day/Month/Year v Tree tabu (kopie z readeru), `setTreeDOB()`, ukládá do DB
+- [x] **Tree name** — `saveTreeName()`, ukládá `tree_name` do user_profiles
+- [x] **Tree intro text** — Yggdrasil příběh v Rúnarově hlasu (Yggdrasil + "The ground is here. The stillness is ready.")
+- [x] **SQL migrace** — `dob_day, dob_month, dob_year, tree_name` do user_profiles (spustit manuálně)
+- [x] **Architektonický audit** — AUDIT_REPORT.md vytvořen, 6 fází
+- [x] **ARCHITECTURE.md** — živá dokumentace vyplněna (vrstvy, pravidla, anti-patterny, tech dluh)
+- [x] **Refaktoring #2** — `buildSysPrompt(c, lang)`, `getCorrPrompt(lang, corrections)`, `applyISCorrections(text, lang, corrections)` — žádné globály
+- [x] **Refaktoring #3** — fire-and-forget DB zápisy opraveny (lang, DOB, tree_name + catch)
+- [x] **Refaktoring #4** — magic timeout hodnoty → pojmenované konstanty (DELAY_*, DURATION_*)
+- [x] **Memory systém** — snapshots/, MEMORY.md, working-style.md, pre/post-compact protokol
+
 ## Hotovo ✅ (session 2026-05-30 — Tree of Life design)
 
 - [x] **Tree of Life ecosystem** — kompletní architektura navržena a zdokumentována
