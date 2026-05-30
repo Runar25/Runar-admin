@@ -358,7 +358,13 @@
 
       <!-- State: no DOB entered -->
       <div id="tree-no-dob" style="display:none;">
-        <div class="tree-gate-text" id="tree-no-dob-text">Enter your date of birth to discover your life rune.</div>
+        <div class="tree-gate-text" id="tree-no-dob-text">Enter your date of birth to reveal your life rune.</div>
+        <div class="tree-dob-row">
+          <input class="txt tree-dob-inp" id="tree-dob-d" type="number" min="1" max="31" placeholder="Day">
+          <input class="txt tree-dob-inp" id="tree-dob-m" type="number" min="1" max="12" placeholder="Month">
+          <input class="txt tree-dob-inp" id="tree-dob-y" type="number" min="1900" max="2099" placeholder="Year">
+        </div>
+        <button class="btn-full sec" onclick="setTreeDOB()" style="max-width:300px;margin:16px auto 0;display:block;white-space:nowrap;" id="tree-dob-btn">REVEAL MY LIFE RUNE →</button>
       </div>
 
       <!-- State: RS teaser (has DOB, not Standard+) -->
@@ -409,6 +415,14 @@
       </div>
 
     </div><!-- /tree-life-rune-section -->
+
+    <!-- TREE NAME SECTION — visible after life rune reading exists -->
+    <div class="tree-name-section" id="tree-name-section" style="display:none;">
+      <div class="tree-name-label" id="tree-name-label">NAME YOUR TREE</div>
+      <input class="txt tree-name-inp" id="tree-name-inp" type="text" maxlength="60" placeholder="A name only you will know...">
+      <button class="btn-full sec" onclick="saveTreeName()" style="max-width:200px;margin:10px auto 0;display:block;" id="tree-name-save-btn">SAVE</button>
+      <div class="tree-name-saved" id="tree-name-saved" style="display:none;"></div>
+    </div>
 
     <!-- TREE GROWTH SECTION -->
     <div class="tree-growth-section" id="tree-growth-section">

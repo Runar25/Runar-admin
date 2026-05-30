@@ -273,6 +273,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .tree-rune-name{font-family:'Cinzel',serif;font-size:1.3em;letter-spacing:1px;color:var(--gold);margin-bottom:6px;}
 .tree-rune-glyph{font-size:2.8em;color:var(--gold);opacity:0.85;line-height:1;}
 .tree-gate-text{text-align:center;color:var(--muted);font-size:0.9em;font-style:italic;padding:0 20px 16px;}
+.tree-dob-row{display:flex;gap:10px;justify-content:center;padding:0 20px;}
+.tree-dob-inp{width:80px;text-align:center;padding:10px 8px;}
+.tree-name-section{padding:24px 20px 8px;text-align:center;border-top:1px solid var(--border);margin-top:8px;}
+.tree-name-label{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--muted);margin-bottom:12px;}
+.tree-name-inp{width:100%;max-width:360px;text-align:center;}
+.tree-name-saved{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1.5px;color:var(--gold);margin-top:8px;}
 .tree-rune-header{cursor:pointer;padding:16px 0 8px;}
 .tree-rune-name-row{display:flex;align-items:center;gap:10px;padding:4px 0;}
 .tree-rune-name{font-family:'Cinzel',serif;font-size:1.1em;color:var(--gold);}

@@ -162,7 +162,7 @@ async function confirmDeleteAccount() {
 async function fetchUserProfile(userId) {
   try {
     const { data } = await sb.from('user_profiles')
-      .select('tier, credits_balance, name, lang, life_rune_number, life_rune_text, life_rune_lang')
+      .select('tier, credits_balance, name, lang, life_rune_number, life_rune_text, life_rune_lang, dob_day, dob_month, dob_year, tree_name')
       .eq('id', userId)
       .maybeSingle();
     if (data) {
@@ -177,6 +177,17 @@ async function fetchUserProfile(userId) {
         _lifeRuneText = data.life_rune_text;
         _lifeRuneLang = data.life_rune_lang;
         _lifeRuneNum  = data.life_rune_number;
+      }
+      // Load DOB from DB → Tree tab can find life rune without Reading form
+      if (data.dob_day && data.dob_month && data.dob_year) {
+        readerUser.d = data.dob_day;
+        readerUser.m = data.dob_month;
+        readerUser.y = data.dob_year;
+      }
+      // Load tree name
+      if (data.tree_name) {
+        var tni = document.getElementById('tree-name-inp');
+        if (tni) tni.value = data.tree_name;
       }
       userName    = data.name            || '';
       // Restore language preference
@@ -1601,6 +1612,13 @@ function updateTreeTab() {
   // Standard/Premium — has reading?
   if (_lifeRuneText) {
     _showTreeReading(rune, runeName, isIs);
+    // Show tree name section
+    var tns = document.getElementById('tree-name-section');
+    if (tns) tns.style.display = 'block';
+    var tnl = document.getElementById('tree-name-label');
+    if (tnl) tnl.textContent = isIs ? 'NAFN TRJANS THINS' : 'NAME YOUR TREE';
+    var tnb = document.getElementById('tree-name-save-btn');
+    if (tnb) tnb.textContent = isIs ? 'VISTA' : 'SAVE';
   } else {
     // Show reveal CTA
     var ctaEl = document.getElementById('tree-reveal-cta');
@@ -1645,6 +1663,37 @@ function toggleTreeReading() {
   if (arrow) {
     arrow.textContent = open ? '+' : '−';
     arrow.classList.toggle('open', !open);
+  }
+}
+
+function setTreeDOB() {
+  var d = parseInt(document.getElementById('tree-dob-d').value);
+  var m = parseInt(document.getElementById('tree-dob-m').value);
+  var y = parseInt(document.getElementById('tree-dob-y').value);
+  if (!d || !m || !y || d < 1 || d > 31 || m < 1 || m > 12 || y < 1900 || y > 2099) {
+    var btn = document.getElementById('tree-dob-btn');
+    if (btn) { btn.textContent = lang === 'is' ? 'ÓGILT DAGSETNING' : 'INVALID DATE'; setTimeout(function(){ btn.textContent = lang === 'is' ? 'OPINBERA LÍFSRÚNUNA →' : 'REVEAL MY LIFE RUNE →'; }, 2000); }
+    return;
+  }
+  readerUser.d = d; readerUser.m = m; readerUser.y = y;
+  // Save DOB to DB
+  if (currentUser) {
+    sb.from('user_profiles').update({ dob_day: d, dob_month: m, dob_year: y }).eq('id', currentUser.id).then(function() {});
+  }
+  updateTreeTab();
+}
+
+async function saveTreeName() {
+  var inp = document.getElementById('tree-name-inp');
+  var saved = document.getElementById('tree-name-saved');
+  if (!inp || !currentUser) return;
+  var name = inp.value.trim();
+  if (!name) return;
+  await sb.from('user_profiles').update({ tree_name: name }).eq('id', currentUser.id);
+  if (saved) {
+    saved.textContent = lang === 'is' ? '✦ VISTAÐ' : '✦ SAVED';
+    saved.style.display = 'block';
+    setTimeout(function(){ saved.style.display = 'none'; }, 2500);
   }
 }
 
