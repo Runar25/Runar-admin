@@ -818,8 +818,9 @@ async function generateWhispersReading() {
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const data = await resp.json();
     if (data.error) throw new Error(data.error);
-    const text = data.content?.[0]?.text || data.text || '';
-    if (!text) throw new Error('Empty response');
+    const rawText = data.content?.[0]?.text || data.text || '';
+    if (!rawText) throw new Error('Empty response');
+    const text = applyISCorrections(rawText);
 
     _whispersText = text;
     _whispersMode = 'output';
@@ -1670,6 +1671,8 @@ async function generateLifeRuneReading() {
   var name = readerUser.name || (currentUser ? currentUser.email.split('@')[0] : 'seeker');
   var mode = isPremium ? RUNAR_MODES.life_rune_premium : RUNAR_MODES.life_rune_standard;
   var prompt = buildLifeRunePrompt(name, rune, readerUser.d, readerUser.m, readerUser.y, lang, isPremium);
+  var corrBlock = getCorrPrompt();
+  if (corrBlock) prompt = prompt + '\n' + corrBlock;
   var sys = buildSysPrompt(activeChar);
 
   var res = await callProxy(sys, prompt, mode.max_tokens, false);
@@ -1680,7 +1683,7 @@ async function generateLifeRuneReading() {
     return;
   }
 
-  var text = res.text || '';
+  var text = applyISCorrections(res.text || '');
   _lifeRuneText = text;
   _lifeRuneLang = lang;
   _lifeRuneNum  = RUNES.findIndex(function(r){ return r.n === rune.n; }) + 1;
@@ -2140,6 +2143,18 @@ function getCorrPrompt() {
   return `\nWord corrections (follow strictly):\n${lines}`;
 }
 
+// Post-processor: aplikuje IS korekce na Claude output (garantovano, deterministicke)
+// Vola se po kazdem Claude volani kde lang === 'is'
+function applyISCorrections(text) {
+  if (lang !== 'is' || !corrections.length || !text) return text;
+  const isCorr = corrections.filter(function(c) { return !c.lang || c.lang === 'is' || c.lang === 'both'; });
+  isCorr.forEach(function(c) {
+    if (!c.from_word || !c.to_word) return;
+    text = text.split(c.from_word).join(c.to_word);
+  });
+  return text;
+}
+
 // ─── PROXY ───────────────────────────────────────────────
 // use_credit: true = odečíst kredit na backendu (monthly slot vyčerpán)
 async function callProxy(sys, prompt, maxTokens, use_credit = false) {
@@ -2280,8 +2295,8 @@ async function _generateReading() {
   if (res.error) { if (_rdLoadEl) _rdLoadEl.style.display = 'none'; if (_pL1) _pL1.classList.remove('pulsing'); if (_pL2) _pL2.classList.remove('pulsing'); setSt('st-reader', 'Failed: ' + res.error, 'err'); return; }
 
   const split = res.text.split('|||');
-  const short = split[0]?.trim() || res.text;
-  const deep  = split[1]?.trim() || '';
+  const short = applyISCorrections(split[0]?.trim() || res.text);
+  const deep  = applyISCorrections(split[1]?.trim() || '');
   readerTexts[lang] = { short, deep };
 
   // Count reading — anonymous trial or logged-in free tier
