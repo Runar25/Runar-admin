@@ -273,6 +273,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .tree-rune-name{font-family:'Cinzel',serif;font-size:1.3em;letter-spacing:1px;color:var(--gold);margin-bottom:6px;}
 .tree-rune-glyph{font-size:2.8em;color:var(--gold);opacity:0.85;line-height:1;}
 .tree-gate-text{text-align:center;color:var(--muted);font-size:0.9em;font-style:italic;padding:0 20px 16px;}
+.tree-intro{text-align:center;color:var(--muted);font-style:italic;line-height:2.2;padding:8px 24px 24px;max-width:480px;margin:0 auto;}
+.tree-intro p{margin:0 0 1.2em;}
+.tree-intro p:last-child{margin-bottom:0;font-size:1.05em;color:var(--white);opacity:0.75;}
 .tree-dob-row{display:flex;gap:10px;justify-content:center;padding:0 20px;}
 .tree-dob-inp{width:80px;text-align:center;padding:10px 8px;}
 .tree-name-section{padding:24px 20px 8px;text-align:center;border-top:1px solid var(--border);margin-top:8px;}
