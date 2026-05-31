@@ -208,3 +208,35 @@ const SPREAD_COSTS = {
   yggdrasil: { free: null, credits: 9  },
   life_rune: { free: null, credits: 10 },  // deep life rune reading — implementation later
 };
+// ─── SPREAD CONFIG — single source of truth ──────────────
+// rune_count: how many runes to draw
+// positions.en / positions.is: position labels (null = single rune, no positions)
+// credits: cost in credits (mirrors SPREAD_COSTS)
+// tokens: max_tokens for Claude
+const SPREAD_CONFIG = {
+  single: {
+    rune_count: 1,
+    positions:  null,
+    credits:    1,
+    tokens:     700,
+  },
+  trojice: {
+    rune_count: 3,
+    positions: {
+      en: ['Past / Foundation', 'Present / Core', 'Direction / Outlook'],
+      is: ['Úrslitir / Grótur', 'Nútíð / Kjarni', 'Stefna / Útlit'],
+    },
+    credits: 3,
+    tokens:  900,
+  },
+  cross: {
+    rune_count: 5,
+    positions: {
+      en: ['Centre / Core', 'Above / Aspiration', 'Below / Root', 'Behind / Past', 'Ahead / Direction'],
+      is: ['Miðja / Kjarni', 'Of an / Á leit', 'Undir / Rót', 'Að baki / Fortíð', 'Framar / Stefna'],
+    },
+    credits: 5,
+    tokens:  1100,
+  },
+};
+

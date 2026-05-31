@@ -149,7 +149,69 @@ function startReading() {
   buildGrid(); setSt('st-setup', ''); setSt('st-reader', '');
 }
 
+
+
+var _spreadMode   = 'single';
+var _spread3Runes = [];
+// ─── SPREAD MODE ─────────────────────────────────────────
+function _setSpreadMode(mode) {
+  _spreadMode   = mode;
+  _spread3Runes = [];
+  readerRune    = null;
+  // Toggle mode buttons
+  var btnSingle  = document.getElementById('mode-btn-single');
+  var btnTrojice = document.getElementById('mode-btn-trojice');
+  if (btnSingle)  btnSingle.classList.toggle('active', mode === 'single');
+  if (btnTrojice) btnTrojice.classList.toggle('active', mode === 'trojice');
+  // Reset output
+  _hideSpread3Output();
+  document.getElementById('reader-rune-card').style.display = 'block';
+  document.getElementById('reader-output').style.display    = 'none';
+  _updateSpread3Slots();
+}
+
+function _updateSpread3Slots() {
+  var slotEl = document.getElementById('spread3-slots');
+  if (!slotEl) return;
+  slotEl.style.display = (_spreadMode === 'trojice') ? 'flex' : 'none';
+  var slots = ['slot1','slot2','slot3'];
+  slots.forEach(function(id, i) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var rune = _spread3Runes[i];
+    el.textContent = rune ? rune.g : (i === 0 ? '①' : i === 1 ? '②' : '③');
+    el.classList.toggle('filled', !!rune);
+  });
+}
+
+function _hideSpread3Output() {
+  var out = document.getElementById('spread3-output');
+  if (out) out.style.display = 'none';
+  var s1 = document.getElementById('single-layer1');
+  var s2 = document.getElementById('single-layer2');
+  if (s1) s1.style.display = '';
+  if (s2) s2.style.display = '';
+}
 async function readRune() {
+  if (_spreadMode === 'trojice') {
+    // Trojice: accumulate runes until we have 3
+    if (!readerRune) return;
+    if (_spread3Runes.indexOf(readerRune) === -1) _spread3Runes.push(readerRune);
+    _updateSpread3Slots();
+    readerRune = null;
+    if (_spread3Runes.length < 3) {
+      // Show rune card again to draw next rune
+      document.getElementById('reader-rune-card').style.display = 'block';
+      return;
+    }
+    // All 3 drawn — generate
+    document.getElementById('reader-rune-card').style.display = 'none';
+    document.getElementById('reader-output').style.display = 'block';
+    readerTexts = {}; voiceGenerated = {};
+    await _generateSpread3Reading();
+    return;
+  }
+  // Single rune mode (original)
   if (!readerRune) return;
   document.getElementById('reader-rune-card').style.display = 'none';
   document.getElementById('reader-output').style.display = 'block';
@@ -167,6 +229,7 @@ async function readRune() {
 }
 
 function drawAnother() {
+  if (_spreadMode === 'trojice') { _spread3Runes = []; _updateSpread3Slots(); }
   readerRune = null; readerTexts = {}; voiceGenerated = {};
   document.getElementById('reader-output').style.display = 'none';
   document.getElementById('trial-end').style.display = 'none';
@@ -179,6 +242,7 @@ function drawAnother() {
 }
 
 function resetReader() {
+  _spreadMode = 'single'; _spread3Runes = []; _updateSpread3Slots();
   readerUser = {}; readerRune = null; readerTexts = {}; voiceGenerated = {};
   document.getElementById('reader-hero').classList.remove('hidden');
   document.getElementById('reader-output').style.display = 'none';

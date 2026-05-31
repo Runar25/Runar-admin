@@ -587,3 +587,108 @@ function buildReadingPrompt(u, drawn, lang, corrections) {
   if (lang === 'is') return buildReadingPromptIS(u, drawn, corrections);
   return buildReadingPromptEN(u, drawn, lang, corrections);
 }
+
+// ─── TROJICE PROMPT BUILDERS ───────────────────────────
+// Trojice = 3-rune spread. Runes: [rPast, rPres, rFut]
+// IS prompt psan primo v islandstine (3-vrstvy system).
+
+function buildTrojicePromptIS(u, runes, corrections) {
+  var rPast = runes[0], rPres = runes[1], rFut = runes[2];
+  var life = u.lifeRune;
+  var lifeRef = life ? (life.is_n || life.n) + ' ' + life.g : '';
+  var areaRef = u.area ? ' · Svið: ' + u.area : '';
+  var seekRef = u.seeking ? ' · Leiðin: ' + (Array.isArray(u.seeking) ? u.seeking.join(' & ') : u.seeking) : '';
+
+  function runaBlock(r, label) {
+    var kws = rk(r).split(',').map(function(s){ return s.trim(); }).filter(Boolean).slice(0,5).join(', ');
+    return label + ': ' + (r.is_n || r.n) + ' ' + r.g + '\n' + kws;
+  }
+
+  var parts = [
+    u.name ? 'Leiðandi: ' + u.name : '',
+    life    ? 'LífsRúna: ' + lifeRef : '',
+    u.area  ? 'Svið: ' + u.area : '',
+    u.seeking ? 'Leiðin: ' + (Array.isArray(u.seeking) ? u.seeking.join(' & ') : u.seeking) : '',
+    u.question ? 'Spurning: ' + u.question : '',
+  ].filter(Boolean).join('\n');
+
+  var runesBlock = [
+    runaBlock(rPast, 'RÚNAN 1 (Fortíð / Grótur)'),
+    '',
+    runaBlock(rPres, 'RÚNAN 2 (Nútíð / Kjarni)'),
+    '',
+    runaBlock(rFut,  'RÚNAN 3 (Stefna / Útlit)'),
+  ].join('\n');
+
+  var frameBlock = [
+    'Veldu rámgeirinn sem passar best:',
+    '  Fortíð · Nútíð · Framtíð/Stefna',
+    '  Staðan · Þverstur · Viðbragð',
+    '  Rót · Stofn · Króna',
+    '  Ego · Annað · Samband',
+  ].join('\n');
+
+  return [
+    parts,
+    '',
+    'Leiðandinn dregur þjár rúnar — Trojice.',
+    '',
+    runesBlock,
+    '',
+    frameBlock,
+    '',
+    'Lestu allar þjár sem einn stræm. Nefndu ekki staðsetningarnar — bærðu þeær í röddinn.',
+    'Þritðja rúnan er ekki spá. Hana sjáið sem stefnu ef ekkert breytist.',
+    'Talaðu beint við ' + u.name + '. Verðu hnitmiðaður — sérhær setning verður að eiga rétt á sér.'
+      + getCorrPrompt('is', corrections),
+  ].filter(Boolean).join('\n');
+}
+
+function buildTrojicePromptEN(u, runes, lang, corrections) {
+  var rPast = runes[0], rPres = runes[1], rFut = runes[2];
+  var life = u.lifeRune;
+  var langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Islenska).' : 'Respond in English.';
+
+  function kbLine(r) {
+    return rk(r).split(',').map(function(s){ return s.trim(); }).filter(Boolean).slice(0,5).join(', ');
+  }
+
+  var contextBlock = [
+    'Seeker: ' + u.name,
+    life ? 'Life rune: ' + rn(life) + ' ' + life.g : '',
+    u.area ? 'Area: ' + u.area : '',
+    u.seeking ? 'Seeking: ' + (Array.isArray(u.seeking) ? u.seeking.join(' & ') : u.seeking) : '',
+    u.question ? 'Question: ' + u.question : '',
+  ].filter(Boolean).join('\n');
+
+  var runesBlock = [
+    'RUNE 1 — ' + rn(rPast) + ' (' + rPast.g + ')', kbLine(rPast), '',
+    'RUNE 2 — ' + rn(rPres) + ' (' + rPres.g + ')', kbLine(rPres), '',
+    'RUNE 3 — ' + rn(rFut)  + ' (' + rFut.g  + ')', kbLine(rFut),
+  ].join('\n');
+
+  var variantBlock = [
+    'Choose the frame that fits this seeker:',
+    '  Past / Present / Direction',
+    '  Situation / Challenge / Action',
+    '  Root / Trunk / Crown',
+    '  Self / Other / Relationship',
+  ].join('\n');
+
+  return [
+    contextBlock, '',
+    'The seeker draws three runes — a Trojice.', '',
+    runesBlock, '',
+    variantBlock, '',
+    'Read all three as one flowing passage. Do not name the positions.',
+    'The third rune is not prophecy — it is where this energy leads if nothing changes.',
+    'Speak directly to ' + u.name + '. Every sentence must earn its place.',
+    langInstr,
+    getCorrPrompt(lang, corrections),
+  ].filter(Boolean).join('\n');
+}
+
+function buildTrojicePrompt(u, runes, lang, corrections) {
+  if (lang === 'is') return buildTrojicePromptIS(u, runes, corrections);
+  return buildTrojicePromptEN(u, runes, lang, corrections);
+}

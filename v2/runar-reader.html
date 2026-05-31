@@ -271,6 +271,19 @@
 
     <!-- RUNE DRAW CARD -->
     <div class="card" id="reader-rune-card" style="display:none;">
+      <!-- MODE SWITCHER -->
+      <div class="spread-mode-row" id="spread-mode-row">
+        <button class="mode-btn active" id="mode-btn-single"  onclick="_setSpreadMode('single')">SINGLE RUNE</button>
+        <button class="mode-btn"        id="mode-btn-trojice" onclick="_setSpreadMode('trojice')">3 READINGS</button>
+      </div>
+      <!-- SLOT TRACKER (Trojice only) -->
+      <div class="spread3-slots" id="spread3-slots" style="display:none;">
+        <span class="s3-slot" id="slot1">①</span>
+        <span class="s3-sep">·</span>
+        <span class="s3-slot" id="slot2">②</span>
+        <span class="s3-sep">·</span>
+        <span class="s3-slot" id="slot3">③</span>
+      </div>
       <div class="card-lbl" id="draw-lbl">ᚠ DRAW YOUR RUNE</div>
       <p class="note" id="draw-note">Close your eyes. Hold your question. Then choose the rune that calls to you.</p>
       <div class="rune-grid" id="reader-grid"></div>
@@ -300,14 +313,19 @@
           <div class="whispers-loading-label" id="reading-loading-txt">THE STONES SPEAK IN SILENCE…</div>
         </div>
       </div>
-      <!-- Reading layers -->
-      <div class="layer1">
+      <!-- Reading layers (single rune) -->
+      <div class="layer1" id="single-layer1">
         <div class="layer1-lbl" id="layer1-lbl">✦ RÚNAR SPEAKS</div>
         <div class="out-txt" id="out-short"></div>
       </div>
-      <div class="layer2">
+      <div class="layer2" id="single-layer2">
         <div class="layer2-lbl" id="layer2-lbl">~ DEEPER REFLECTION</div>
         <div class="out-txt" id="out-deep"></div>
+      </div>
+      <!-- Trojice output (3 readings) -->
+      <div id="spread3-output" style="display:none;">
+        <div class="layer1-lbl" id="s3-trojice-lbl" style="letter-spacing:0.18em;margin-bottom:12px;"></div>
+        <div class="out-txt" id="s3-out"></div>
       </div>
       <!-- Voice -->
       <button class="btn-voice" id="btn-generate-voice" onclick="generateVoice()" disabled>ᚢ HEAR RÚNAR SPEAK</button>

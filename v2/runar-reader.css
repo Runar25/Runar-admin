@@ -646,3 +646,18 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .trial-end-title{font-family:'Cinzel',serif;font-size:0.8em;letter-spacing:3px;color:var(--gold);margin-bottom:14px;}
 .trial-end-note{font-size:0.9em;color:var(--muted);font-style:italic;line-height:1.9;margin-bottom:24px;max-width:360px;margin-left:auto;margin-right:auto;}
 .trial-end-note b,.trial-end-note strong{color:var(--gold);font-style:normal;font-weight:400;}
+
+/* ── SPREAD MODE SWITCHER ── */
+.spread-mode-row{display:flex;gap:8px;margin-bottom:20px;}
+.mode-btn{flex:1;padding:8px 12px;background:transparent;border:1px solid var(--border);
+  color:var(--dim-text);font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;
+  cursor:pointer;border-radius:2px;transition:all 0.2s;}
+.mode-btn.active{border-color:var(--gold);color:var(--gold);}
+.mode-btn:hover:not(.active){border-color:rgba(255,191,0,0.4);color:rgba(255,191,0,0.7);}
+
+/* ── SPREAD3 SLOT TRACKER ── */
+.spread3-slots{display:flex;align-items:center;justify-content:center;gap:12px;
+  margin-bottom:18px;padding:10px;background:rgba(255,191,0,0.04);border-radius:4px;}
+.s3-slot{font-size:1.4em;color:var(--dim-text);transition:all 0.3s;min-width:1.4em;text-align:center;}
+.s3-slot.filled{color:var(--gold);text-shadow:0 0 12px rgba(255,191,0,0.4);}
+.s3-sep{color:var(--border);font-size:0.8em;}
