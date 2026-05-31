@@ -10,6 +10,10 @@ AI-powered průvodce runami pro Agndofa (Island). Poetický hlas, nordická filo
 Produkce: runar25.github.io/Runar-admin/v2/
 Lokální: C:\Users\zkuku\Downloads\Runar-admin\v2\
 
+Centrální narativ: každý uživatel je **Rune Seeker** — sleduje cestu Ódina.
+Ratatoskur nese runy po stromě. Huginn přináší připomínky. Muninn drží paměť kořenů.
+Viz RUNAR_DESIGN.md sekce "Příběh uživatele" — přečíst před psaním nových promptů.
+
 Stack: HTML + CSS + vanilla JS (GitHub Pages) · Supabase (pmitxjvkeovijreepror, eu-west-1)
 AI: Claude API přes Supabase Edge Function (claude-proxy)
 Voice: ElevenLabs přes Supabase Edge Function
@@ -58,9 +62,12 @@ Edit tool kazí apostrofy `'` → curly quotes → SyntaxError.
 - JS soubory: VŽDY Python skript (ukládat do C:\Users\zkuku\Downloads\Runar-admin\)
 - CSS, HTML (bez inline JS), translations.js: Edit tool OK
 
-### 2. IS je primární jazyk
+### 2. IS je primární jazyk + mytologický hlas
 Rúnar vzniká na Islandu, pro Islanďany. IS musí být vždy perfektní.
 EN je vedlejší. NIKDY nepřistupovat k IS jako k "překladu" EN.
+
+Každý nový prompt musí žít v mytologickém světě — viz RUNAR_DESIGN.md.
+Rúnar není asistent. Je průvodce na cestě Rune Seekera.
 
 Každé místo kde Claude generuje IS text MUSÍ mít 3 vrstvy:
 ```js
@@ -236,7 +243,8 @@ Systém je živý — příběh se vyvíjí. Dokumentace musí odrážet aktuál
 ### 🟢 Střední priorita
 - SSE streaming (první slova za ~0.5s místo čekání)
 - Delší výklady pro Standard (1000–1200 tokenů)
-- Kříž, Horseshoe, Norns — po Trojici
+- Kříž — další spread po Trojici
+- Specifická otázka reframing — instrukce v buildReadingPromptIS/EN (viz RUNAR_DESIGN.md)
 
 ---
 

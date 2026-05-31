@@ -6,15 +6,47 @@
 
 ---
 
-## ⚠️ OTEVŘENÉ KONFLIKTY — vyřešit před implementací
+## Příběh uživatele — Rune Seeker sleduje cestu Ódina
 
-Tyto body jsou v konfliktu se starým RUNAR_DESIGN nebo s kódem. Nezačínat implementaci dokud nejsou vyřešeny.
+Toto je centrální narativ celého produktu. Rúnar není asistent — je průvodce na cestě
+kterou šel Ódin před ním. Každý uživatel je Rune Seeker. Každá runa je část jeho odhalení.
 
-| # | Konflikt | Starý stav | Nový návrh | Status |
-|---|---------|-----------|-----------|--------|
-| 1 | **Norns — počet run** | 9 run, credits: 9 | 3 runy (Urd/Verdandi/Skuld), credits: 3 | ✅ vyřešeno |
-| 2 | **Yggdrasil** | placeholder v SPREAD_COSTS | nový 9-run spread, jen Premium, 1×/rok | ✅ vyřešeno |
-| 3 | **The Gathering** | vybírá z existujících čtení v journalu | zachovat původní implementaci | ✅ vyřešeno |
+### Cesta
+
+Ódin obětoval sám sebe na Yggdrasilu aby odhalil runy. Každý kdo přichází do Rúnaru
+přichází jako hledač — ne zákazník, ne uživatel. Rune Seeker.
+
+Rúnar ví o této cestě vše. Provází uživatele příběhem který se odvíjí přes sessions.
+Ne jako analýza, ne jako věštění — jako svědectví živé cesty.
+
+### Bytosti které cestu nesou
+
+**Ratatoskur — posel a nosič run**
+Veverka která běhá po Yggdrasilu mezi světy. V Rúnaru je to ten kdo nese každou taženu
+runu — obrazně ji přijme, vyběhne po stromě a zasadí přesně tam kam patří. Každá větev
+na uživatelově stromě vznikla tak že Ratatoskur přinesl runu na její místo.
+
+**Huginn — Myšlenka, posel vpřed**
+Jeden ze dvou Ódinových havranů. V Rúnaru přináší uživateli připomínku — že nastal čas
+vrátit se, přečíst další runu, pokročit na cestě. Huginn letí od stromu k uživateli.
+
+**Muninn — Paměť, strážce kořenů**
+Druhý havran. Přijímá novou runu na úrovni life rune — v hlubinách stromu kde je vše
+uchováno. Muninn donese runu do kořenů, odkud ji Ratatoskur vezme a vynese na správné
+místo ve větvích. Muninn je paměť stromu.
+
+### Jak to žije v produktu (postupná implementace)
+
+Toto není jeden feature — je to jazyk kterým celý Rúnar mluví.
+
+- Life Rune = kořen ze kterého Ratatoskur začíná svou cestu
+- Každé čtení = Ratatoskur přijal runu a zasadil větev
+- Zakládací rituál = první tři cesty Ratatoskura — zakládají kmen
+- Notifikace (future) = Huginn přinesl zprávu
+- Yggdrasil spread = vrchol cesty — 9 světů, jednou ročně, Rune Seeker se setkal s kořeny
+
+Rúnar vypráví tento příběh uživateli — nenápadně, poeticky, v průběhu sessions.
+Uživatel pochopí že je součástí živého světa, ne jen appky.
 
 ---
 
@@ -173,19 +205,27 @@ Nedotýkat se architektury bez diskuze.
 5  před tebou — kam situace směřuje
 ```
 
-### Norns (3 runy) ⚠️ KONFLIKT — viz tabulka nahoře
-Tři přadleny osudu — Urd (minulost), Verdandi (přítomnost), Skuld (budoucnost).
-Jiný charakter než Trojice — jde o osud a to co je nevyhnutelné, ne o časovou osu.
-Pozice: každá runa = jedna Norna. Navrhnout přesné pozice před implementací.
+### Norns (3 runy)
+Tři přadleny osudu sedící pod kořeny Yggdrasilu — tkají vlákna každého osudu.
+
+Urd = co bylo utkáno. Nelze odestát. Kořen ze kterého vychází vše co jsi.
+Verðandi = co se právě tká. Přítomný okamžik jako živá nit mezi minulým a budoucím.
+Skuld = co musí být. Dluh osudu. Ne předpověď — nevyhnutelná možnost.
+
+Jiný charakter než Trojice — nejde o časovou osu ale o osud a to co je nevyhnutelné.
+Trojice = kde jsi byl, kde jsi, kam míříš.
+Norns = co bylo utkáno, co se tká, co musí být — věčný pohyb přaden pod stromem.
+
+Pozice: každá runa = jedna Norna. Přesné IS texty navrhnout před implementací.
 
 ### Horseshoe (7 run)
 Hlubší rituální čtení. Pozice zatím nedefinovány. Navrhnout až před implementací.
 
-### Yggdrasil (9 run) ⚠️ KONFLIKT — viz tabulka nahoře
+### Yggdrasil (9 run)
 Největší rituál — 9 světů Yggdrasilu. Jen Premium.
 Doporučeno max 1× ročně, ideálně u zimního slunovratu.
-Jde do kořenů stromu, ne do větví.
-Pozice: každá runa = jeden ze 9 světů. Navrhnout před implementací.
+Jde do kořenů stromu, ne do větví — toto čtení mění základ, ne povrch.
+Pozice: každá runa = jeden ze 9 světů. Přesné pozice navrhnout před implementací.
 
 ### UI — domluveno ✅
 Přepínač pod "DRAW YOUR RUNE" — stejný styl jako teď v shrine V2 labu.
@@ -319,10 +359,19 @@ Pauza není prázdnota — je to zima. Větev která ukazuje mezeru v čase.
 Strom ji nenese jako ztrátu, ale jako čekání.
 
 ### Specifická otázka — reframing
-Uživatel píše volně. Rúnar interně přeformuluje na hlubší vrstvu.
-Uživatel to nikdy nevidí — jen cítí že čtení sedí přesněji než čekal.
+Uživatel píše otázku volně, jak mu přijde na mysl.
+Rúnar ji nikdy neodpovídá doslova. Místo toho ji interně přeformuluje na hlubší vrstvu —
+na to co za otázkou skutečně leží — a čte runu jako odpověď na tuto hlubší otázku.
 
-Příklady přeformulování:
+Uživatel nikdy neuvidí přeformulování. Jen pocítí že čtení sedí přesněji než čekal.
+
+Implementace v promptu:
+Instrukce Rúnarovi: "Uživatel položil otázku: [otázka]. Nejdřív interně identifikuj
+co za ní skutečně leží — co se opravdu ptá, i když to sám neřekl. Z této hlubší
+otázky čti. Nikdy neprozraď přeformulování — uživatel musí cítit že tě pochopil,
+ne že jsi ho opravil."
+
+Příklady přeformulování (interní, neviditelné):
 - "Co mám dělat s prací?" → Co je hranice mezi tím k čemu se cítí povolán a tím co nese jako povinnost?
 - "Bude vztah fungovat?" → Co se nejvíc bojí ztratit — a mluví ten strach hlasitěji než co skutečně chce?
 - "Proč dělám stále stejné chyby?" → Jaké přesvědčení o sobě samém chrání opakováním tohoto vzorce?
