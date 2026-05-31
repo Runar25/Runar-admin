@@ -26,7 +26,7 @@
 5  před tebou — kam situace směřuje
 ```
 
-### Trojice (3 runy)
+### Trojice (3 runy) ✅ IMPLEMENTOVÁNO v produkci (2026-05-31)
 ```
 [1] — [2] — [3]
 
