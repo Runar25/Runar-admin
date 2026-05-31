@@ -15,6 +15,11 @@ function isAdmin(email) {
   return !!(email && ADMIN_EMAILS.includes(email.toLowerCase()));
 }
 
+// Translation helper — reads from UI_TEXT[lang] (runar-translations.js)
+function t(key) {
+  return (UI_TEXT[lang] && UI_TEXT[lang][key]) || UI_TEXT.en[key] || key;
+}
+
 
 // ─── Reading angles EN ─────────────────────────────────────────
 const READING_ANGLES = [
