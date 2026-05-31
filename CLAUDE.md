@@ -265,9 +265,12 @@ Pokud admin → `userTier = 'premium'` server-side, bypass všech limitů.
 Přístup jen pro admin emails — link v side panelu viditelný jen pro `ADMIN_EMAILS`.
 
 ## Klíčová rozhodnutí
+- **IS JE PRIMÁRNÍ JAZYK — EN JE VEDLEJŠÍ.** Appka vzniká na Islandu, pro Islanďany.
+  IS musí být vždy perfektní. EN může být second priority.
+  NIKDY nepřistupovat k IS jako k "překladu" EN — je to samostatný primární výklad.
 - Poetický hlas Rúnara — žádný tech žargon v UI, nikdy
 - Dva jazyky — EN a IS jsou samostatné výklady, ne překlady
-- IS překlady v UI zatím jen placeholdery — čekají na review rodilého mluvčího
+- IS překlady v UI zatím jen strojové placeholdery — čekají na kompletní audit + review
 - Rotující hero fráze (12 EN + 12 IS) — náhodně při každém načtení, HERO_PHRASES v readeru
 - Statické audio = pre-generované MP3 v Storage (free tier, nulové náklady)
 - Dynamické audio = real-time ElevenLabs (placený tier, ephemeral blob)
@@ -874,6 +877,26 @@ Python skripty ukládat v `C:\Users\zkuku\Downloads\Runar-admin\`.
 | IS | Velkomin | Gaman að sjá þig | uvítání ve všech místech |
 
 ---
+
+## Hotovo ✅ (session 2026-05-31 — tech debt, IS kvalita, shrine sync)
+
+- [x] **Tech debt #1** — `isAdmin()` přesunuta z runar-config.js → runar-auth.js
+- [x] **Tech debt #2** — `getCorrPrompt()` + `applyISCorrections()` z runar-app.js → runar-character.js
+- [x] **Tech debt #3** — `_capFmt()` duplikát smazán z runar-reading.js
+- [x] **Tech debt #4** — `updateUIText()` (113 ř.) → koordinátor 44 ř. + 4 sub-funkce
+- [x] **SQL migrace** — `dob_day`, `dob_month`, `dob_year`, `tree_name` spuštěna v Supabase ✅
+- [x] **IS primární jazyk** — zaznamenáno v CLAUDE.md a working-style.md
+- [x] **IS 3-vrstvý systém — kompletní** ve všech 3 generováních:
+  - Normální čtení: `buildReadingPromptIS()` — celý prompt v IS (bylo: EN + "Respond in IS" na konci)
+  - The Gathering: `getCorrPrompt()` přidán do promptu (bylo: jen post-processing)
+  - Life rune: vždy bylo správně ✅
+  - `READING_ANGLES_IS` — 8 IS úhlů, `_randomAngle(lang)` lang-aware
+- [x] **Shrine sync Option A** — sdílené JS moduly, žádný manuální sync:
+  - `runar-utils.js` (nový) — READING_ANGLES/IS, _randomAngle, rk/rn/rworld/relements, setText/setSt/setPH, showToast, stream
+  - `buildReadingPromptIS/EN/dispatch` přesunuto z runar-reading.js → runar-character.js
+  - `runar-shrine.html` vyčištěn (~15 inline duplikátů smazáno)
+  - Shrine: buildSysPrompt(lang) ✅, getCorrPrompt(lang, corrections) ✅, applyISCorrections ✅
+  - SW bumped na v23
 
 ## Hotovo ✅ (session 2026-05-30 — část 3: refaktoring #5-7 + monolith split)
 
