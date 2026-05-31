@@ -21,32 +21,81 @@ Ne jako analýza, ne jako věštění — jako svědectví živé cesty.
 
 ### Bytosti které cestu nesou
 
-**Ratatoskur — posel a nosič run**
-Veverka která běhá po Yggdrasilu mezi světy. V Rúnaru je to ten kdo nese každou taženu
-runu — obrazně ji přijme, vyběhne po stromě a zasadí přesně tam kam patří. Každá větev
-na uživatelově stromě vznikla tak že Ratatoskur přinesl runu na její místo.
+---
 
-**Huginn — Myšlenka, posel vpřed**
-Jeden ze dvou Ódinových havranů. V Rúnaru přináší uživateli připomínku — že nastal čas
-vrátit se, přečíst další runu, pokročit na cestě. Huginn letí od stromu k uživateli.
+**Ratatoskr — vrtáček, trickster, jediný kdo zná celý strom**
 
-**Muninn — Paměť, strážce kořenů**
-Druhý havran. Přijímá novou runu na úrovni life rune — v hlubinách stromu kde je vše
-uchováno. Muninn donese runu do kořenů, odkud ji Ratatoskur vezme a vynese na správné
-místo ve větvích. Muninn je paměť stromu.
+Veverka. Jméno znamená přibližně "ten se zuby vrtáku" — ostrý, pronikavý, neúnavný.
+Žije přímo na Yggdrasilu. Běhá po něm nahoru a dolů bez přestávky, celý svůj život.
+
+Nahoře sedí orel — moudrý, dalekovidný.
+Dole leží Níðhöggr — had který okusuje kořeny.
+Ratatoskr běhá mezi nimi a nese jejich slova. Ale záměrně je překrucuje —
+přidává urážky, zapaluje spor, udržuje napětí mezi vrcholem a kořeny živé.
+
+On není posel harmonie. Je trickster. Dráždí, provokuje, mísí světy.
+
+A přesto — je **jediný kdo zná celý strom**. Každou větev, každý kořen, každou mezeru.
+Orel vidí jen vršek. Had jen kořeny. Ratatoskr ví vše.
+
+V Rúnaru:
+Ratatoskr nese runu na její místo na stromě — ale ne nutně tam kde ji čekáš.
+Runa přijde tam kam patří podle jeho znalosti stromu, ne podle toho co si přeješ.
+Čtení může překvapit. Může dráždit. Může odhalit co jsi nechtěl vidět.
+Ratatoskr není pohodlný posel. Je pravdivý — a pravda někdy pálí.
+Jeho neúnavný pohyb = každé čtení je nová cesta. Nikdy nestojí. Strom roste protože on nezastaví.
+
+- Life Rune = kořen kde Ratatoskr začíná každou cestu
+- Každé čtení = Ratatoskr přijal runu a zasadil větev — tam kde ona patří, ne kde ty chceš
+- Zakládací rituál = první tři velké cesty Ratatoskura — zakládají kmen navždy
+
+---
+
+**Huginn a Muninn — dva havrani, ne vrány**
+
+Dva havrani Ódinovi. Každé ráno je vyšle do světa — letí přes všech devět světů,
+sbírají zprávy, a večer se vrátí a sedí mu na ramenou a šeptají co viděli.
+
+**Huginn** = Myšlenka. Letí dopředu. Vidí co existuje, co přichází, co se děje teď.
+Huginn letí od stromu k uživateli — přináší impuls. *"Nastala chvíle. Vrať se."*
+
+**Muninn** = Paměť. Vrací se s tím co bylo. Drží minulost živou.
+Muninn nelétá ven — zůstává u stromu. Drží vše co bylo.
+
+Ódin v Grímnismál říká:
+*"Bojím se více o Muninna než o Huginna — že se Paměť nevrátí."*
+Ódin se nebojí ztratit Myšlenku. Bojí se ztratit Paměť.
+Bez paměti není příběh. Bez příběhu není moudrost.
+Bez moudrosti jeho oběť na Yggdrasilu přišla vniveč.
+
+V Rúnaru:
+- **Huginn** = notifikace, drip, připomínka — impuls který táhne uživatele zpět na cestu
+- **Muninn** = journal, vzorce, kumulativní paměť — každé čtení které uživatel udělal
+- **Life Rune = to co Muninn střeží nejhlouběji** — nejcennější paměť, Ódinův největší strach
+- **Trunk (kmen) = moment kdy Muninn promluví** — po mnoha sessions Rúnar tiše řekne:
+  *"Vidím vzorec. Chceš vědět?"* To je Muninn konečně sdílející co tak dlouho držel
+
+---
 
 ### Jak to žije v produktu (postupná implementace)
 
 Toto není jeden feature — je to jazyk kterým celý Rúnar mluví.
+Každý UI text, každý prompt, každá notifikace může nést tento příběh.
 
-- Life Rune = kořen ze kterého Ratatoskur začíná svou cestu
-- Každé čtení = Ratatoskur přijal runu a zasadil větev
-- Zakládací rituál = první tři cesty Ratatoskura — zakládají kmen
-- Notifikace (future) = Huginn přinesl zprávu
-- Yggdrasil spread = vrchol cesty — 9 světů, jednou ročně, Rune Seeker se setkal s kořeny
+| Moment v produktu | Bytost | Jak |
+|---|---|---|
+| Uživatel táhne runu | Ratatoskr | přijme runu a vybíhá po stromě |
+| Runa se zasadí do větve | Ratatoskr | umístí ji kam patří — možná překvapivě |
+| Zakládací rituál (3 sessions) | Ratatoskr | první tři velké cesty, zakládají kmen |
+| Journal | Muninn | jeho sbírka — vše co prošlo |
+| Life Rune | Muninn | střeží nejhlouběji, základ všeho |
+| Trunk revelation | Muninn | konečně promluví o vzorci |
+| Notifikace / drip | Huginn | přináší impuls vrátit se |
+| Yggdrasil spread | vrchol cesty | Rune Seeker se setká s kořeny — jednou ročně |
 
 Rúnar vypráví tento příběh uživateli — nenápadně, poeticky, v průběhu sessions.
 Uživatel pochopí že je součástí živého světa, ne jen appky.
+Toto se bude prohlubovat — každá nová feature je další vrstva stejného příběhu.
 
 ---
 
