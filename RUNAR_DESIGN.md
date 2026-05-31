@@ -49,8 +49,11 @@ const SPREAD_CONFIG = {
 ```
 Jedna funkce `generateSpread(type)` pro všechny spreads.
 
+### UI — domluveno ✅
+Přepínač pod "DRAW YOUR RUNE" — stejný styl jako teď v shrine V2 labu.
+[ SINGLE RUNE ]  [ 3 READINGS ]  [ KŘÍŽ ]  ...
+
 ### Otevřené otázky k spreads (zodpovědět před implementací)
-- UI: výběr spreadu pod "DRAW YOUR RUNE" nebo vlastní sekce?
 - Tier: Trojice patří Rune Seeker (za kredity) nebo jen Standard+?
 
 ---
