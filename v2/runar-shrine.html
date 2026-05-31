@@ -12,6 +12,7 @@
 <script src="runar-runes.js"></script>
 <script src="runar-translations.js"></script>
 <script src="runar-character.js"></script>
+<script src="runar-utils.js"></script>
 <script src="runar-svgs.js"></script>
 
 <style>
@@ -602,6 +603,7 @@ let voiceGenerated  = {};   // { en: bool, is: bool } — was dynamic voice gene
 let pendingLang     = null; // target lang waiting for user confirmation
 let _spreadMode   = 'single';   // 'single' | 'spread3'
 let _spread3Runes = [];         // [pastRune, presentRune, futureRune]
+let corrections    = [];        // shared format: [{from_word, to_word, lang}]
 let corrScope     = 'both';
 let currentUser   = null;
 
@@ -656,14 +658,6 @@ async function sgSendLink() {
   const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: cleanUrl } });
   if (error) { setSt('sg-status', error.message, 'err'); return; }
   showGateState('sg-sent');
-}
-
-function showToast(msg, dur = 3000) {
-  const el = document.getElementById('toast');
-  if (!el) return;
-  el.textContent = msg;
-  el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), dur);
 }
 
 function handleAuthBtn() {
@@ -745,28 +739,9 @@ window.addEventListener('DOMContentLoaded', async () => {
 });
 
 // ─── HELPERS ────────────────────────────────────────────
-function t(key)  { return (UI_TEXT[lang] && UI_TEXT[lang][key]) || UI_TEXT.en[key] || key; }
-function rk(r)   { return lang === 'is' ? r.k_is : r.k; }
-function rn(r)   { return lang === 'is' ? r.is_n : r.n; }
 // World + element context for prompts
-function rworld(r) {
-  // Translate world names to poetic labels — NEVER expose raw names (Hel/Midgard/Asgard) to the model
-  const labels = {
-    Hel:     'the roots, what lies beneath',
-    Midgard: 'the living moment, what is active now',
-    Asgard:  'the higher pattern, what reaches toward wider sky',
-    Vanaheim:'the quiet work of nature, what grows slowly',
-    Jotunheim:'the untamed, what resists form',
-  };
-  return r.world ? (labels[r.world] || r.world) : '';
-}
-function relements(r) { return r.elements ? r.elements.join(', ') : ''; }
-function setText(id, val)         { const el = document.getElementById(id); if (el && val !== undefined) el.textContent = val; }
-function setPH(id, val)           { const el = document.getElementById(id); if (el && val) el.placeholder = val; }
 function setFlbl(id, val)         { const el = document.getElementById(id); if (el && val && el.firstChild) el.firstChild.textContent = val + ' '; }
 function setFlblOpt(id, val, opt) { const el = document.getElementById(id); if (!el) return; el.innerHTML = val + ' <span class="opt">' + opt + '</span>'; }
-function setSt(id, msg, type)     { const el = document.getElementById(id); if (!el) return; el.textContent = msg || ''; el.className = 'status' + (type ? ' ' + type : ''); }
-
 // ─── LANGUAGE ───────────────────────────────────────────
 function setLang(l) {
   if (l === lang) return; // already this language
@@ -1130,20 +1105,11 @@ async function invokeRunar() {
   setSt('st-invoke', t('st_traversing'));
   setSt('st-teach-voice', '');
 
-  const sys = buildSysPrompt(activeChar);
-  const langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
-  const allKws = rk(teachRune).split(',').map(s => s.trim()).filter(Boolean);
-  const pickedKws = allKws.sort(() => 0.5 - Math.random()).slice(0, Math.min(3, allKws.length)).join(', ');
-  const formulaLine = (lang === 'is' && teachRune.formula_is)
-    ? `\nIcelandic rune formula (weave naturally once into the reading): "${teachRune.formula_is}"`
-    : '';
-  const prompt = `You are speaking to someone who has just drawn the rune ${rn(teachRune)} (${teachRune.g}).
-Speak directly to them as Rúnar — 2 to 3 sentences, poetic and timeless.
-Mention the rune's name (${rn(teachRune)}) once, naturally — woven into the reading, not announced.
-Draw on these aspects (vary between readings): ${pickedKws}.${formulaLine}
-No labels. Speak through the rune, not about it.
-${langInstr}
-${getCorrPrompt()}`;
+  const sys = buildSysPrompt(activeChar, lang);
+  // IS/EN prompt: use shared buildReadingPrompt() from runar-character.js
+  // IS: entire prompt in Icelandic. EN: English + langInstr.
+  const u = readerUser;
+  const prompt = buildReadingPrompt(u, drawn, lang, corrections);
 
   const res = await callProxy(sys, prompt, 300);
   if (res.error) {
@@ -1600,7 +1566,7 @@ PART 1 (2-3 sentences): Core message — direct and poetic. Mention ${rn(drawn)}
 PART 2 (3-4 sentences): Deeper reflection — connect drawn rune with ${life ? 'life rune ' + rn(life) + ', ' : ''}${u.area || 'their path'}${seekingLabel ? ', seeking ' + seekingLabel : ''}. If drawn and life rune share an element (${relements(drawn)} / ${life ? relements(life) : '—'}), let that resonate briefly. End with one short open question.
 Do NOT include labels like "PART 2" in the output. Speak directly to ${u.name}.`;
 
-  const prompt = `${parts}${readingFormulaLine}\n\nREADING ANGLE: ${typeof _randomAngle === 'function' ? _randomAngle() : ''}\n\n${formatInstr}\n\nBe concise — every sentence must earn its place. ${langInstr}\n${getCorrPrompt()}`
+  const prompt = `${parts}${readingFormulaLine}\n\nREADING ANGLE: ${typeof _randomAngle === 'function' ? _randomAngle(lang) : ''}\n\n${formatInstr}\n\nBe concise — every sentence must earn its place. ${langInstr}\n${getCorrPrompt(lang, corrections)}`
   const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens);
   if (res.error) {
     if (_rdLoadEl) _rdLoadEl.style.display = 'none';
@@ -1616,8 +1582,10 @@ Do NOT include labels like "PART 2" in the output. Speak directly to ${u.name}.`
   }
 
   const split = res.text.split('|||');
-  const short = split[0]?.trim() || res.text;
+  let short = split[0]?.trim() || res.text;
   const deep  = split[1]?.trim() || '';
+  short = applyISCorrections(short, lang, corrections);
+  deep  = applyISCorrections(deep,  lang, corrections);
   readerTexts[lang] = { short, deep };
 
   // Save reading to DB (same as V1 reader — full flow test)
@@ -1850,7 +1818,7 @@ async function _generateSpread3Reading() {
     'The third rune is not prophecy. It is where this energy leads if nothing changes. You always carry this.',
     'Speak directly to ' + u.name + '. Be concise — every sentence must earn its place.',
     langInstr,
-    getCorrPrompt(),
+    getCorrPrompt(lang, corrections),
   ].filter(Boolean).join('\n');
 
   // Update Trojice label with rune glyphs
@@ -2053,17 +2021,17 @@ async function loadCorrections() {
   let items = [];
   try { const { data } = await sb.from('runar_corrections').select('*').order('created_at', { ascending: false }).limit(50); items = data || []; }
   catch (e) { items = JSON.parse(localStorage.getItem('runar_corr') || '[]'); }
+  // Normalize to shared correction format for getCorrPrompt() + applyISCorrections()
+  corrections = items.map(function(c) { return {
+    from_word: c.original_phrase || c.from_word || '',
+    to_word:   c.replacement_phrase || c.to_word || '',
+    lang:      c.lang_scope || c.lang || 'both',
+    context:   c.context || null,
+  }; });
   const list = document.getElementById('corr-list');
   if (!items.length) { list.innerHTML = '<div class="empty">' + t('no_corr') + '</div>'; return; }
   list.innerHTML = '';
   items.forEach(it => { const d = document.createElement('div'); d.className = 'corr-item'; d.innerHTML = `<div><div class="corr-from">"${it.original_phrase}"</div><div class="corr-to">→ "${it.replacement_phrase}"</div>${it.context ? `<div class="corr-ctx">${it.context}</div>` : ''}</div><div class="corr-scope">${(it.lang_scope || 'both').toUpperCase()}</div>`; list.appendChild(d); });
-}
-
-function getCorrPrompt() {
-  const saved = JSON.parse(localStorage.getItem('runar_corr') || '[]');
-  const rel = saved.filter(c => c.lang_scope === 'both' || c.lang_scope === lang);
-  if (!rel.length) return '';
-  return '\n\nWORD CORRECTIONS — always apply:\n' + rel.map(c => `• Instead of "${c.original_phrase}" say "${c.replacement_phrase}"`).join('\n');
 }
 
 // ─── API ────────────────────────────────────────────────
