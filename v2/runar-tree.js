@@ -99,13 +99,16 @@ function _showTreeReading(rune, runeName, isIs) {
   var nm = document.getElementById('tree-rune-name-exists');
   var gl = document.getElementById('tree-rune-glyph-exists');
   var lbl = document.getElementById('tree-rune-label-exists');
-  if (nm) nm.textContent = runeName;
-  if (gl) gl.textContent = rune.g;
-  if (lbl) lbl.textContent = t('life_rune_lbl');
+  // Header: 'You carry life rune Gebo ᵏ' — label hidden, name carries full phrase
+  if (lbl) lbl.style.display = 'none';
+  if (nm) nm.textContent = (isIs ? 'Þú ber lífsrúnu ' : 'You carry life rune ') + runeName;
+  if (gl) gl.textContent = ' ' + rune.g;
   var open = document.getElementById('tree-static-open');
-  if (open) open.textContent = (isIs ? 'Þú ber ' : 'You carry ') + runeName + ' ' + rune.g + '.';
+  if (open) open.textContent = '';
   var txt = document.getElementById('tree-reading-text');
-  if (txt) txt.innerHTML = (_lifeRuneText || '').replace(/\n/g, '<br>');
+  // Strip any leading markdown header (# ...) from stored Claude output
+  var cleanText = (_lifeRuneText || '').replace(/^#[^\n]*\n+/, '').trim();
+  if (txt) txt.innerHTML = cleanText.replace(/\n/g, '<br>');
 }
 
 function toggleTreeReading() {
