@@ -496,7 +496,7 @@ const HERO_PHRASES = {
     "Eitthvað leiddi þig hingað í dag — ekki tilviljun. Dragðu, og við sjáum hvað það var.",
     "Rúnan sem þú dregur er sjaldan sú sem þú væntiðst. Þetta er einmitt málið.",
     "Andaðu áður en þú dregur. Steinarnir lesa kyrrð jafn vel og spurningar.",
-    "Ég hef séð leitendur koma — í myrkri, í efi, undir fullri tungl. Rúnirnar taka á móti öllu. Dragðu.",
+    "Ég hef séð leitendur koma — í myrkri, í efi, undir fullu tungli. Rúnirnar taka á móti öllu. Dragðu.",
     "Þú þarft ekki skýra spurningu. Rúnan finnur það sem er að leita.",
     "Sum dög mælir steininn hátt. Önnur dög hvíslir hann. En hann mælir alltaf.",
     "Rúnirnar hafa engar slæmar stundir. Þær segja bara það sem er. Ertu tilbúinn?",
@@ -528,8 +528,8 @@ function _updateDobLabel() {
   const _dobVisitor = !currentUser;
   if (dlbl) {
     const _dobHint = _dobVisitor
-      ? (lang === 'is' ? '· Gerast Rúna-leitandi til að birta lífstíðarrúnina þína' : '· Become a Rune Seeker to unveil your life rune')
-      : (lang === 'is' ? '· til að finna lífstíðarrúnina þína' : '· to reveal your life rune');
+      ? (lang === 'is' ? '· Gerast Vegfarandi til að birta lífstíðarrúnina þína' : '· Become a Rune Seeker to unveil your life rune')
+      : (lang === 'is' ? '· til að uppgötva lífstíðarrúnina þína' : '· to reveal your life rune');
     dlbl.innerHTML = t('dob_lbl') + ' <span class="opt">'+t('opt')+'</span>' + ' <span class="visitor-lock-hint">' + _dobHint + '</span>';
   }
   setPH('r-day',   t('day_ph'));
@@ -550,7 +550,7 @@ function _updateAreaSeekLabels() {
   const _isVisitor = !currentUser;
   const _isRSnoCredits = currentUser && userTier === 'rune_seeker' && userCredits <= 0;
   const _lockHint = _isVisitor
-    ? ' <span class="visitor-lock-hint">' + (lang === 'is' ? '· Gerast Rúna-leitandi til að opna' : '· Become a Rune Seeker to unveil') + '</span>'
+    ? ' <span class="visitor-lock-hint">' + (lang === 'is' ? '· Gerast Vegfarandi til að opna' : '· Become a Rune Seeker to unveil') + '</span>'
     : _isRSnoCredits
       ? ' <span class="visitor-lock-hint">' + (lang === 'is' ? '· Reading Gift Card opnar allt' : '· Reading Gift Card unveils all') + '</span>'
       : '';
@@ -575,14 +575,14 @@ function _updateTrialTexts() {
   setText('gate-note', lang === 'is'
     ? 'Þú hefur farið með Rúnar einu sinni sem gestur.\nStofnaðu reikning til að halda áfram.'
     : 'You have walked with Rúnar once as a Visitor.\nCreate a free account to continue.');
-  setText('gate-btn', lang === 'is' ? 'GERAST RÚNA-LEITANDI' : 'BECOME A RUNE SEEKER');
+  setText('gate-btn', lang === 'is' ? 'GERAST VEGFARANDI' : 'BECOME A RUNE SEEKER');
   // Trial end prompt translations
   setText('trial-end-title', lang === 'is' ? 'FERÐ ÞÍN SEM GESTUR ER LOKIÐ' : 'YOUR JOURNEY AS VISITOR IS COMPLETE');
   const ten = document.getElementById('trial-end-note');
   if (ten) ten.innerHTML = lang === 'is'
     ? 'Þú hefur farið með Rúnar þrisvar sinnum. Steinarnir muna.<br><b class="rs-link">Gerast Rúna-leitandi</b> til að halda áfram — fimm lestrar á mánuði, án greiðslu.'
     : 'You have walked with Rúnar three times as a Visitor. The stones remember.<br><b class="rs-link">Become a Rune Seeker</b> to continue — five readings each month, no payment ever needed.';
-  setText('trial-end-btn', lang === 'is' ? 'GERAST RÚNA-LEITANDI →' : 'BECOME A RUNE SEEKER →');
+  setText('trial-end-btn', lang === 'is' ? 'GERAST VEGFARANDI →' : 'BECOME A RUNE SEEKER →');
 }
 
 // Journal gate, auth modal consent, journal re-render, buildPills
@@ -594,7 +594,7 @@ function _updateGateTexts() {
   if (jgTxt) jgTxt.innerHTML = lang === 'is'
     ? 'Thu gengur her sem gestur.<br>Dagbokin thin hefst um leid og thu maetir.<br>Gerdu ther <b class="rs-link">runa-leitanda</b> til ad opna dagbokina.'
     : 'You walk here as a Visitor.<br>Your journal begins the moment you arrive.<br>Become a <b class="rs-link">Rune Seeker</b> to open the journal.';
-  setText('journal-gate-btn', lang === 'is' ? 'GERAST RÚNA-LEITANDI →' : 'BECOME A RUNE SEEKER →');
+  setText('journal-gate-btn', lang === 'is' ? 'GERAST VEGFARANDI →' : 'BECOME A RUNE SEEKER →');
   // Re-render journal if it's open (picks up new lang labels)
   if (activeAppTab === 'journal' && _journalCache.length > 0) renderJournal(_journalCache);
   else if (activeAppTab === 'journal') updateWhispersUI();
