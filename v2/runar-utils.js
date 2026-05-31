@@ -11,6 +11,11 @@
 //   stream(id, text)                   — word-by-word streaming display
 // ═══════════════════════════════════════════════════════
 
+function isAdmin(email) {
+  return !!(email && ADMIN_EMAILS.includes(email.toLowerCase()));
+}
+
+
 // ─── Reading angles EN ─────────────────────────────────────────
 const READING_ANGLES = [
   'Lead with the shadow of this rune — what it quietly demands, not what it offers.',
