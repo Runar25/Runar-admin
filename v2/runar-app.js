@@ -41,8 +41,21 @@ const READING_ANGLES = [
   'Lead with the threshold — what is the seeker standing between right now.',
   'Let the life rune speak first — the drawn rune answers it.',
 ];
-function _randomAngle() {
-  return READING_ANGLES[Math.floor(Math.random() * READING_ANGLES.length)];
+
+// IS reading angles — same 8 entry points, written directly in Icelandic.
+const READING_ANGLES_IS = [
+  'Byrjaðu á skugga þessarar rúnu — hvað hún krefst hljóðlægt, ekki hvað hún gefur.',
+  'Byrjaðu á gjöfinni — hvað þessi rúna er þegar að gefa áður en leitandinn hefur tekið eftir því.',
+  'Byrjaðu á tímasetningunni — hvaða sérstaka augnablik í lífi þeirra merkir þessi rúna.',
+  'Byrjaðu á líkamanum — hvar býr þessi rúna sem líkamleg tilfinning núna.',
+  'Byrjaðu á landinu — opnaðu með einni íslenskri mynd sem speglar þessa stöðu nákvæmlega.',
+  'Byrjaðu á því sem er þegar á hreyfingu — nefndu það sem hefur þegar hafist sem þessi rúna gerir sýnilegt.',
+  'Byrjaðu á þröskuldinum — á milli hvers stendur leitandinn núna.',
+  'Láttu lífsrúnina tala fyrst — dregna rúnan svarar henni.',
+];
+function _randomAngle(lang) {
+  var _pool = lang === 'is' ? READING_ANGLES_IS : READING_ANGLES;
+  return _pool[Math.floor(Math.random() * _pool.length)];
 }
 
 // ─── TIMING CONSTANTS ───────────────────────────────────

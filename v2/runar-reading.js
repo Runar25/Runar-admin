@@ -19,7 +19,59 @@
 // ─── PURE PROMPT BUILDER ─────────────────────────────────────
 // Receives everything as parameters — no globals read.
 // Returns the full prompt string for _generateReading().
-function buildReadingPrompt(u, drawn, lang, corrections) {
+// ─── READING PROMPT BUILDERS ────────────────────────
+// IS and EN are separate functions, each in its own language.
+
+// IS reading prompt — entire prompt in Icelandic.
+// Claude never translates from EN — thinks in IS from first word.
+function buildReadingPromptIS(u, drawn, corrections) {
+  var life = u.lifeRune;
+  var drawnKws = rk(drawn).split(',').map(function(s) { return s.trim(); }).filter(Boolean);
+  var pickedKws = drawnKws.sort(function() { return 0.5 - Math.random(); })
+    .slice(0, Math.min(3, drawnKws.length)).join(', ');
+  var angle = _randomAngle('is');
+  var formulaLine = drawn.formula_is
+    ? '\nÍslenskur rúnaformúll (flettu inn náttúrlega einu sinni í HLUTA 1): "' + drawn.formula_is + '"'
+    : '';
+  var lifeCtx = life
+    ? 'LÍFSRÚNA: ' + rn(life) + ' (' + life.g + ') — ' + rk(life)
+      + (life.world ? ' · Heimur: ' + rworld(life) + ' · Frumefni: ' + relements(life) : '')
+    : '';
+  var drawnCtx = 'DREGNA RÚNA: ' + rn(drawn) + ' (' + drawn.g + ') — beindur að: ' + pickedKws
+    + (drawn.world ? ' · Heimur: ' + rworld(drawn) + ' · Frumefni: ' + relements(drawn) : '');
+  var parts = [
+    'MANNESKJAN: ' + u.name,
+    lifeCtx,
+    drawnCtx,
+    u.area     ? 'SVIÐ: ' + u.area     : '',
+    u.seeking  ? 'LEITAÐ: ' + u.seeking  : '',
+    u.question ? 'SPURNING: ' + '"' + u.question + '"' : '',
+  ].filter(Boolean).join('\n');
+  var lifeRef = life
+    ? 'lífsrúninni ' + rn(life) + (life.world ? ' (' + rworld(life) + ')' : '') + ', '
+    : '';
+  var areaRef  = u.area    ? u.area    : 'leið þeirra';
+  var seekRef  = u.seeking ? ', leitað eftir ' + u.seeking : '';
+  var elemRef  = life ? relements(drawn) + ' / ' + relements(life) : '—';
+  var worldRef = rworld(drawn) || 'lifandi leiðin';
+  return [
+    parts + formulaLine,
+    '',
+    'LESTURHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og upphaf): ' + angle,
+    '',
+    'Gefðu lesturinn í tveimur hlutum aðskildum með |||',
+    '',
+    'HLUTI 1 (2–3 setningar að hámarki, kjarni, bein og ljóðræn. Nefndu nafn rúnarinnar — ' + rn(drawn) + ' — einu sinni, fléttað náttúrlega inn. Láttu táknlægt lag rúnarinnar — ' + worldRef + ' — lita tóninn hljóðlægt):',
+    '',
+    'HLUTI 2 (3–4 setningar að hámarki. Dýpri ígrundun — tengdu dregnu rúnu við ' + lifeRef + areaRef + seekRef + '. Ef dregna rúna og lífsrúna deila frumefni (' + elemRef + '), láttu þann samklang koma fram stuttlega. Enda með einni stuttri, opinni spurningu. EKKI setja “HLUTI 2” sem fyrirsogn í úttakinu):',
+    '',
+    'Talaðu beint við ' + u.name + '. Vertu hnitmiðaður — sérhver setning verður að eiga rétt á sér.'
+      + getCorrPrompt('is', corrections),
+  ].join('\n');
+}
+
+// EN reading prompt — original logic unchanged. Prompt in English.
+function buildReadingPromptEN(u, drawn, lang, corrections) {
   const life = u.lifeRune;
   const langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
   const drawnKws = rk(drawn).split(',').map(s => s.trim()).filter(Boolean);
@@ -35,7 +87,13 @@ function buildReadingPrompt(u, drawn, lang, corrections) {
     u.area    ? `AREA: ${u.area}` : '',
     u.seeking ? `SEEKING: ${u.seeking}` : '',
     u.question? `QUESTION: "${u.question}"` : ''].filter(Boolean).join('\n');
-  return `${parts}${formulaLine}\n\nREADING ANGLE (follow this entry point — let it shape the opening and tone): ${_randomAngle()}\n\nGive the reading in two parts separated by |||\n\nPART 1 (2-3 sentences maximum, core message, direct and poetic. Mention the rune's name — ${rn(drawn)} — once, woven naturally into the reading. Let the rune's symbolic layer — ${rworld(drawn) || 'the living path'} — subtly colour the tone):\n\nPART 2 (3-4 sentences maximum. Deeper reflection — connect drawn rune with ${life ? 'life rune ' + rn(life) + (life.world ? ' (' + rworld(life) + ')' : '') + ', ' : ''}${u.area || 'their path'}${u.seeking ? ', seeking ' + u.seeking : ''}. If the drawn rune and life rune share an element (${relements(drawn)} / ${life ? relements(life) : '—'}), let that resonance surface briefly. End with one short, open question. Do NOT include a label like "PART 2" in the output):\n\nSpeak directly to ${u.name}. Be concise — every sentence must earn its place. ${langInstr}\n${getCorrPrompt(lang, corrections)}`;
+  return `${parts}${formulaLine}\n\nREADING ANGLE (follow this entry point — let it shape the opening and tone): ${_randomAngle('en')}\n\nGive the reading in two parts separated by |||\n\nPART 1 (2-3 sentences maximum, core message, direct and poetic. Mention the rune's name — ${rn(drawn)} — once, woven naturally into the reading. Let the rune's symbolic layer — ${rworld(drawn) || 'the living path'} — subtly colour the tone):\n\nPART 2 (3-4 sentences maximum. Deeper reflection — connect drawn rune with ${life ? 'life rune ' + rn(life) + (life.world ? ' (' + rworld(life) + ')' : '') + ', ' : ''}${u.area || 'their path'}${u.seeking ? ', seeking ' + u.seeking : ''}. If the drawn rune and life rune share an element (${relements(drawn)} / ${life ? relements(life) : '—'}), let that resonance surface briefly. End with one short, open question. Do NOT include a label like "PART 2" in the output):\n\nSpeak directly to ${u.name}. Be concise — every sentence must earn its place. ${langInstr}\n${getCorrPrompt(lang, corrections)}`;
+}
+
+// Dispatcher: IS-native or EN based on lang.
+function buildReadingPrompt(u, drawn, lang, corrections) {
+  if (lang === 'is') return buildReadingPromptIS(u, drawn, corrections);
+  return buildReadingPromptEN(u, drawn, lang, corrections);
 }
 
 async function _generateReading() {

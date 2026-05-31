@@ -275,6 +275,8 @@ async function generateWhispersReading() {
     const sysPrompt = buildSysPrompt(activeChar, lang);
     const name      = readerUser?.name || '';
     const userMsg   = buildWhispersPrompt(_selectedEntries, name);
+    const corrBlock = getCorrPrompt(lang, corrections);
+    const userMsgWithCorr = corrBlock ? userMsg + corrBlock : userMsg;
 
     const session  = await sb.auth.getSession();
     const token    = session?.data?.session?.access_token;
@@ -286,7 +288,7 @@ async function generateWhispersReading() {
       body:    JSON.stringify({
         user_id:    currentUser?.id,
         lang,
-        prompt:     userMsg,
+        prompt:     userMsgWithCorr,
         system:     sysPrompt,
         max_tokens: 1200,
         mode:       'ceremonial',
