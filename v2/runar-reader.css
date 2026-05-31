@@ -658,6 +658,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 /* ── SPREAD3 SLOT TRACKER ── */
 .spread3-slots{display:flex;align-items:center;justify-content:center;gap:12px;
   margin-bottom:18px;padding:10px;background:rgba(255,191,0,0.04);border-radius:4px;}
-.s3-slot{font-size:1.4em;color:var(--dim-text);transition:all 0.3s;min-width:1.4em;text-align:center;}
+.s3-slot{font-size:1.4em;color:var(--dim-text);transition:all 0.3s;min-width:1.4em;text-align:center;border-radius:3px;padding:2px 4px;}
 .s3-slot.filled{color:var(--gold);text-shadow:0 0 12px rgba(255,191,0,0.4);}
+.s3-slot.filled:hover{background:rgba(255,191,0,0.08);text-decoration:line-through;opacity:0.7;}
 .s3-sep{color:var(--border);font-size:0.8em;}

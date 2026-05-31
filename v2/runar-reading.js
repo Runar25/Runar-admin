@@ -175,12 +175,24 @@ function _updateSpread3Slots() {
   if (!slotEl) return;
   slotEl.style.display = (_spreadMode === 'trojice') ? 'flex' : 'none';
   var slots = ['slot1','slot2','slot3'];
+  var empty = ['①','②','③'];
   slots.forEach(function(id, i) {
     var el = document.getElementById(id);
     if (!el) return;
     var rune = _spread3Runes[i];
-    el.textContent = rune ? rune.g : (i === 0 ? '①' : i === 1 ? '②' : '③');
+    el.textContent = rune ? rune.g : empty[i];
     el.classList.toggle('filled', !!rune);
+    // Klikatelny jen kdyz je vyplneny — klik ho vyprazdni
+    el.onclick = rune ? (function(idx) {
+      return function() {
+        _spread3Runes.splice(idx, 1);
+        _updateSpread3Slots();
+        var speakBtn = document.getElementById('btn-speak');
+        if (speakBtn) speakBtn.disabled = true;
+      };
+    })(i) : null;
+    el.style.cursor = rune ? 'pointer' : 'default';
+    el.title = rune ? (rune.n + ' — click to remove') : '';
   });
 }
 
@@ -194,21 +206,22 @@ function _hideSpread3Output() {
 }
 async function readRune() {
   if (_spreadMode === 'trojice') {
-    // Trojice: accumulate runes until we have 3
-    if (!readerRune) return;
-    if (_spread3Runes.indexOf(readerRune) === -1) _spread3Runes.push(readerRune);
-    _updateSpread3Slots();
-    readerRune = null;
-    if (_spread3Runes.length < 3) {
-      // Show rune card again to draw next rune
-      document.getElementById('reader-rune-card').style.display = 'block';
+    // Klik na btn-speak s 3 plnymi sloty = spust generovani
+    if (_spread3Runes.length === 3 && !readerRune) {
+      document.getElementById('reader-rune-card').style.display = 'none';
+      document.getElementById('reader-output').style.display = 'block';
+      readerTexts = {}; voiceGenerated = {};
+      await _generateSpread3Reading();
       return;
     }
-    // All 3 drawn — generate
-    document.getElementById('reader-rune-card').style.display = 'none';
-    document.getElementById('reader-output').style.display = 'block';
-    readerTexts = {}; voiceGenerated = {};
-    await _generateSpread3Reading();
+    if (!readerRune) return;
+    // Pridej do prvniho prazdneho slotu
+    if (_spread3Runes.length < 3) _spread3Runes.push(readerRune);
+    readerRune = null;
+    _updateSpread3Slots();
+    // Aktivuj btn-speak az po 3 plnych slotech
+    var speakBtn = document.getElementById('btn-speak');
+    if (speakBtn) speakBtn.disabled = (_spread3Runes.length < 3);
     return;
   }
   // Single rune mode (original)
