@@ -31,33 +31,7 @@ const FREE_REGISTERED_LIMIT = TIER_LIMITS.rune_seeker.onboarding;  // 3
 
 // Reading angles — randomly injected per reading to force variability
 // Each angle pushes Claude to a different entry point and metaphor source
-const READING_ANGLES = [
-  'Lead with the shadow of this rune — what it quietly demands, not what it offers.',
-  'Lead with the gift — what this rune is already giving before the seeker has noticed.',
-  'Lead with timing — what specific moment in their life does this rune mark.',
-  'Lead with the body — where does this rune live as a physical sensation right now.',
-  'Lead with the land — open with a single Icelandic image that mirrors this situation exactly.',
-  'Lead with what is already in motion — name what has already begun that this rune makes visible.',
-  'Lead with the threshold — what is the seeker standing between right now.',
-  'Let the life rune speak first — the drawn rune answers it.',
-];
-
 // IS reading angles — same 8 entry points, written directly in Icelandic.
-const READING_ANGLES_IS = [
-  'Byrjaðu á skugga þessarar rúnu — hvað hún krefst hljóðlægt, ekki hvað hún gefur.',
-  'Byrjaðu á gjöfinni — hvað þessi rúna er þegar að gefa áður en leitandinn hefur tekið eftir því.',
-  'Byrjaðu á tímasetningunni — hvaða sérstaka augnablik í lífi þeirra merkir þessi rúna.',
-  'Byrjaðu á líkamanum — hvar býr þessi rúna sem líkamleg tilfinning núna.',
-  'Byrjaðu á landinu — opnaðu með einni íslenskri mynd sem speglar þessa stöðu nákvæmlega.',
-  'Byrjaðu á því sem er þegar á hreyfingu — nefndu það sem hefur þegar hafist sem þessi rúna gerir sýnilegt.',
-  'Byrjaðu á þröskuldinum — á milli hvers stendur leitandinn núna.',
-  'Láttu lífsrúnina tala fyrst — dregna rúnan svarar henni.',
-];
-function _randomAngle(lang) {
-  var _pool = lang === 'is' ? READING_ANGLES_IS : READING_ANGLES;
-  return _pool[Math.floor(Math.random() * _pool.length)];
-}
-
 // ─── TIMING CONSTANTS ───────────────────────────────────
 const DELAY_NAME_PROMPT  = 1200; // ms after login before name prompt appears
 const DELAY_RELOAD       = 1200; // ms after sign-out before page reloads
@@ -355,34 +329,9 @@ function showCachedReading(l) {
 
 // ─── UI TEXT ─────────────────────────────────────────────
 function t(key) { return (UI_TEXT[lang]?.[key]) || UI_TEXT.en[key] || key; }
-function rk(r)  { return lang === 'is' ? r.k_is : r.k; }
-function rn(r)  { return lang === 'is' ? r.is_n : r.n; }
-function rworld(r) {
-  const labels = {
-    Hel:      'the roots, what lies beneath',
-    Midgard:  'the living moment, what is active now',
-    Asgard:   'the higher pattern, what reaches toward wider sky',
-    Vanaheim: 'the quiet work of nature, what grows slowly',
-    Jotunheim:'the untamed, what resists form',
-  };
-  return r.world ? (labels[r.world] || '') : '';
-}
-function relements(r) { return r.elements ? r.elements.join(', ') : ''; }
-function setText(id, v)   { const el = document.getElementById(id); if (el && v !== undefined) el.textContent = v; }
-function setPH(id, v)     { const el = document.getElementById(id); if (el && v) el.placeholder = v; }
-function setSt(id, msg, type) {
-  const el = document.getElementById(id); if (!el) return;
-  el.textContent = msg || ''; el.className = 'status' + (type ? ' '+type : '');
-}
 function _updatePrivacyBannerText() {}
 function dismissPrivacyBanner() {}
 function _initPrivacyBanner() {}
-
-function showToast(msg, dur = 3000) {
-  const el = document.getElementById('toast'); if (!el) return;
-  el.textContent = msg; el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), dur);
-}
 
 function displayName() {
   if (userName) return userName;
@@ -996,20 +945,6 @@ function canUseVoice() {
 }
 
 // ─── STREAM ──────────────────────────────────────────────
-function stream(id, text) {
-  return new Promise(resolve => {
-    const el = document.getElementById(id); if (!el) { resolve(); return; }
-    el.innerHTML = '';
-    const words = text.split(' ');
-    let i = 0;
-    const tick = setInterval(() => {
-      if (i >= words.length) { clearInterval(tick); resolve(); return; }
-      const span = document.createElement('span'); span.textContent = (i > 0 ? ' ' : '') + words[i++];
-      el.appendChild(span);
-    }, APP.stream_delay_ms);
-  });
-}
-
 // ─── STATIC AUDIO CHECK ──────────────────────────────────
 async function checkStaticAudio(drawn, l) {
   const { data: rows } = await sb.from('runar_static_audio')
