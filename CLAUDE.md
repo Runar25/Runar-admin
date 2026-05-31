@@ -1,5 +1,6 @@
 # CLAUDE.md — Rúnar Project
 # Přečíst na začátku KAŽDÉ session. Toto je jediný zdroj pravdy.
+# Vždy číst spolu s: RUNAR_DESIGN.md (designová rozhodnutí, neimplementováno)
 # Detailní archiv (roadmap, pricing, edge functions): CLAUDE_archive.md
 
 ---
@@ -139,34 +140,8 @@ POZOR: email a updated_at NEEXISTUJÍ v user_profiles.
 | Horseshoe | 7 | 7 | ❌ navrženo |
 | Norns | 9 | 9 | ❌ navrženo |
 
-### Navržená architektura — SPREAD_CONFIG
-Jeden config jako single source of truth + jedna funkce `generateSpread(type)` pro všechny:
-```js
-const SPREAD_CONFIG = {
-  single:    { rune_count: 1, positions: null,            credits: 1, tokens: 700  },
-  trojice:   { rune_count: 3, positions: {en:[...],is:[...]}, credits: 3, tokens: 900  },
-  cross:     { rune_count: 5, positions: {en:[...],is:[...]}, credits: 5, tokens: 1100 },
-  horseshoe: { rune_count: 7, positions: {en:[...],is:[...]}, credits: 7, tokens: 1300 },
-  norns:     { rune_count: 9, positions: {en:[...],is:[...]}, credits: 9, tokens: 1500 },
-};
-```
-
-### Kříž — pozice (domluveno 2026-05-31)
-```
-         [2]
-   [4] — [1] — [5]
-         [3]
-
-1  střed      — jádro situace
-2  nad        — co vědomě vidíš / co aspituješ
-3  pod        — co je skryté / kořen / podvědomí
-4  za tebou   — co přichází z minulosti
-5  před tebou — kam situace směřuje
-```
-
-### Otevřené otázky k spreads (zodpovědět před implementací)
-- UI: výběr spreadu pod "DRAW YOUR RUNE" (přepínač jako v shrine) nebo vlastní sekce?
-- Tier: Trojice patří k Rune Seeker (za kredity) nebo jen Standard+?
+### Architektura a pozice
+Viz RUNAR_DESIGN.md — kompletní SPREAD_CONFIG, pozice Kříže i Trojice, otevřené otázky.
 
 ---
 
@@ -181,45 +156,21 @@ const SPREAD_CONFIG = {
 - IS 3-vrstvý systém pro life rune ✅
 
 ### Co není implementováno ❌
-- Zakládací rituál (3 sessions → 3 kořeny)
+- Zakládací rituál, branch systém, elementy, vizuální strom
 - DB tabulky: tree_state, tree_readings
-- Branch systém — každá session = větev
-- Elementy (Fire/Water/Air/Earth) — kumulativní growth
-- Vizuální strom (SVG)
+- Viz RUNAR_DESIGN.md — kompletní design (branch logika, elementy, trunk, reframing...)
 
 ### Tree tab HTML struktura
 ```
 apane-tree
 ├── tree-life-rune-section
 │   ├── tree-no-dob          ← intro + DOB inputs
-│   ├── tree-rs-teaser       ← RS: symbol + jméno + "Your story opens with Standard."
-│   ├── tree-reveal-cta      ← Std+: REVEAL YOUR LIFE RUNE button
-│   ├── tree-loading         ← loading state
+│   ├── tree-rs-teaser       ← RS: symbol + jméno
+│   ├── tree-reveal-cta      ← Std+: REVEAL YOUR LIFE RUNE
+│   ├── tree-loading
 │   └── tree-reading-exists  ← výklad (collapsible)
-├── tree-name-section        ← "NAME YOUR TREE" input
-└── tree-growth-section      ← poetický citát
-```
-
-### Plánované DB tabulky
-```sql
-TABLE tree_state (
-  user_id uuid REFERENCES user_profiles(id),
-  life_rune int,
-  founding_status text,   -- 'none' | 'in_progress' | 'complete'
-  roots jsonb,            -- [{rune, session_id, set_at}] x3 — IMMUTABLE po nastavení
-  element_scores jsonb,   -- {fire, water, air, earth} — jen roste
-  trunk_revealed bool DEFAULT false,
-  trunk_description text
-);
-
-TABLE tree_readings (
-  id uuid DEFAULT gen_random_uuid(),
-  user_id uuid REFERENCES user_profiles(id),
-  reading_id uuid,        -- FK → readings
-  branch_data jsonb,      -- směr, délka, barva, element, sezóna, váha
-  founding_session int,   -- 1/2/3 nebo null
-  created_at timestamptz DEFAULT now()
-);
+├── tree-name-section
+└── tree-growth-section
 ```
 
 ---
