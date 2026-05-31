@@ -37,7 +37,7 @@ runar-app.js          — state, DB init, fetchUserProfile(), showAppTab(), koor
 runar-reader.html     — produkční app · Edit tool OK
 runar-reader.css      — styly · Edit tool OK
 runar-shrine.html     — admin app · Edit tool OK pro HTML
-sw.js                 — Service Worker v23 · bumpit při každé JS/CSS změně
+sw.js                 — Service Worker v24 · bumpit při každé JS/CSS změně
 ```
 
 ### Load order (reader i shrine sdílejí prefix)
@@ -86,7 +86,7 @@ runar-character.js a runar-utils.js načítají reader i shrine.
 Změna tam se projeví všude. NIKDY neduplikovat funkce do shrine inline JS.
 
 ### 4. SW verze
-Po každé JS nebo CSS změně: bumpit sw.js (aktuálně v23).
+Po každé JS nebo CSS změně: bumpit sw.js (aktuálně v24).
 
 ### 5. UI invarianty
 - var(--gold) = #FFBF00 — primární barva, NIKDY teal
@@ -135,10 +135,11 @@ POZOR: email a updated_at NEEXISTUJÍ v user_profiles.
 | Spread | Runy | Kredity | Stav |
 |--------|------|---------|------|
 | Single | 1 | 1 (free_balance) | ✅ produkce |
-| Trojice | 3 | 3 | ✅ shrine lab · ❌ produkce |
+| Trojice | 3 | 3 | ✅ produkce |
 | Kříž | 5 | 5 | ❌ navrženo |
 | Horseshoe | 7 | 7 | ❌ navrženo |
-| Norns | 9 | 9 | ❌ navrženo |
+| Norns | 3 | 3 | ❌ navrženo |
+| Yggdrasil | 9 | 9 | ❌ navrženo (jen Premium) |
 
 ### Architektura a pozice
 Viz RUNAR_DESIGN.md — kompletní SPREAD_CONFIG, pozice Kříže i Trojice, otevřené otázky.
@@ -229,7 +230,7 @@ Systém je živý — příběh se vyvíjí. Dokumentace musí odrážet aktuál
 
 ### 🟡 Důležité
 4. **Standard tier** — způsob nákupu (aktuálně "COMING SOON")
-5. **Trojice do produkce** — z shrine labu do readeru, s novou SPREAD_CONFIG architekturou
+5. **Kříž** — implementace (po Trojici)
 6. **Privacy Policy** — odkaz na agndofa.is
 
 ### 🟢 Střední priorita

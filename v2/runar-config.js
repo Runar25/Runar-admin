@@ -204,7 +204,7 @@ const SPREAD_COSTS = {
   cross:     { free: null, credits: 5  },
   gathering: { free: null, credits: -1 },  // -1 = variable (number of runes selected)
   horseshoe: { free: null, credits: 7  },
-  norns:     { free: null, credits: 9  },
+  norns:     { free: null, credits: 3  },
   yggdrasil: { free: null, credits: 9  },
   life_rune: { free: null, credits: 10 },  // deep life rune reading — implementation later
 };
@@ -237,6 +237,15 @@ const SPREAD_CONFIG = {
     },
     credits: 5,
     tokens:  1100,
+  },
+  norns: {
+    rune_count: 3,
+    positions: {
+      en: ['Urður / Past', 'Verðandi / Present', 'Skuld / Future'],
+      is: ['Urður / Fortíð', 'Verðandi / Nútíð', 'Skuld / Framtið'],
+    },
+    credits: 3,
+    tokens:  900,
   },
 };
 

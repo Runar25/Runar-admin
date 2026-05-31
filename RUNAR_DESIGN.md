@@ -12,9 +12,9 @@ Tyto body jsou v konfliktu se starým RUNAR_DESIGN nebo s kódem. Nezačínat im
 
 | # | Konflikt | Starý stav | Nový návrh | Status |
 |---|---------|-----------|-----------|--------|
-| 1 | **Norns — počet run** | 9 run, credits: 9 | 3 runy (Urd/Verdandi/Skuld), credits: 3 | ❓ čeká |
-| 2 | **Yggdrasil** | placeholder v SPREAD_COSTS | nový 9-run spread, jen Premium, 1×/rok | ❓ čeká |
-| 3 | **The Gathering** | vybírá z existujících čtení v journalu | táhne nové runy (3–5) s týdenním záměrem | ❓ čeká |
+| 1 | **Norns — počet run** | 9 run, credits: 9 | 3 runy (Urd/Verdandi/Skuld), credits: 3 | ✅ vyřešeno |
+| 2 | **Yggdrasil** | placeholder v SPREAD_COSTS | nový 9-run spread, jen Premium, 1×/rok | ✅ vyřešeno |
+| 3 | **The Gathering** | vybírá z existujících čtení v journalu | zachovat původní implementaci | ✅ vyřešeno |
 
 ---
 
@@ -142,13 +142,14 @@ K rozhodnutí až bude čas:
 ### Single (1 runa)
 Jedna runa, žádné pozice. Přímé čtení energie daného momentu.
 
-### The Gathering (3–5 run) ⚠️ KONFLIKT — viz tabulka nahoře
+### The Gathering (3–5 run)
 Týdenní rituál — uživatel táhne 3–5 run v průběhu týdne nebo najednou.
 Rúnar přečte výsledek jako jeden celek, jeden příběh týdne.
-Není to reflexe nad minulými čteními — je to tažení run s týdenním záměrem.
 Přispívá do stromu jako každé jiné čtení.
 Rune Seeker: za kredity (počet kreditů = počet tažených run).
-Zatím implementováno jako samostatný rituál — může být vyřazen pokud nezapadne do tree ekosystému.
+
+Implementace: čte z journalu (posledních N čtení z aktuálního týdne) — zachovat beze změny.
+Nedotýkat se architektury bez diskuze.
 
 ### Trojice (3 runy) ✅ IMPLEMENTOVÁNO v produkci (2026-05-31)
 ```
