@@ -63,13 +63,17 @@ Akvizice přes fyzický produkt: ~$0.135 na uživatele (IS). Marketing cost: nul
 - Účel: ukázat co Rúnar je
 
 ### Rune Seeker (rune_seeker)
-- 3 čtení/měsíc zdarma (1 s hlasem, 2 text only)
+- **1 čtení zdarma při registraci** (hlas zahrnut)
+- Žádný weekly drip — po onboardingu jen kredity
 - Další čtení přes kredity (Reading Gift Card)
 - 1 kredit = 1 runa tažená
 - Přístup přes kredity: Single, Trojice, Norns, The Gathering
 - Bez Kříže, Horseshoe, Yggdrasilu
 - Strom: zakládací rituál za 5 kreditů, teaser pouze
 - Journal: posledních 5 čtení
+
+**Fyzická cesta (Rune Card):** +1 kredit navíc → celkem 3 čtení zdarma před první platbou.
+Online cesta: Visitor 1 + RS 1 = 2 zdarma. Fyzická: Visitor 1 + Rune Card 1 + RS 1 = 3 zdarma.
 
 ### Standard (~2.490 ISK/měsíc)
 - **Limit: 50 run/měsíc**

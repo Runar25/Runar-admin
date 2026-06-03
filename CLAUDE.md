@@ -116,7 +116,7 @@ STANDARD · PREMIUM · THE GATHERING · RÚNAR · READING GIFT CARD
 | Tier | DB hodnota | Přístup |
 |------|-----------|---------|
 | Visitor | free_trial | 1 čtení, anon, jen Fehu, DOB locked |
-| Rune Seeker | rune_seeker | 3/měsíc zdarma + kredity, jen single zdarma, journal posledních 5 |
+| Rune Seeker | rune_seeker | **1 čtení zdarma** při registraci + kredity, bez weekly drip, journal posledních 5 |
 | Standard | standard | **50 run/měsíc**, hlas, journal+filtry, Kříž+Horseshoe, The Gathering |
 | Premium | premium | **75 run/měsíc**, vše + Yggdrasil + hlubší Life Rune |
 
