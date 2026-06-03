@@ -175,10 +175,15 @@ const TIER_LIMITS = {
     free_spreads: ['single'],
   },
   rune_seeker: {
-    onboarding:   3,     // free readings at registration
-    weekly_drip:  1,     // +1 every Monday IF free_balance = 0 (non-cumulative)
+    onboarding:   1,     // 1 free reading at registration
+    weekly_drip:  null,  // no weekly drip — credits only after onboarding
     free_spreads: ['single'],  // free balance covers ONLY single rune
     journal_entries: 5,
+    // Text labels for UI — update when numbers change
+    onboarding_label_en: 'one free reading',
+    onboarding_label_is: 'einn frjáls lestur',
+    journal_label_en:    'last 5 readings',
+    journal_label_is:    'síðustu 5 lestrar',
   },
   standard: {
     onboarding:   null,  // unlimited

@@ -27,7 +27,7 @@ let pendingLang    = null;
 let corrections    = [];
 
 const FREE_TRIAL_LIMIT      = TIER_LIMITS.free_trial.onboarding;   // 1
-const FREE_REGISTERED_LIMIT = TIER_LIMITS.rune_seeker.onboarding;  // 3
+const FREE_REGISTERED_LIMIT = TIER_LIMITS.rune_seeker.onboarding;  // 1
 
 // Reading angles — randomly injected per reading to force variability
 // Each angle pushes Claude to a different entry point and metaphor source
@@ -97,7 +97,7 @@ function showResetModal() {
   setText2('reset-notif-title', t('readings_renewed'));
   setText2('reset-notif-body',  isIs
     ? 'Nýr mánuður — fimm frjáls lestur eru aftur að bíða þín. Steinarnir eru tilbúnir.'
-    : 'A new month has turned. Five free readings are waiting for you again. The stones are ready.');
+    : 'A new month has turned. One free reading is waiting for you. The stones are ready.');
   setText2('reset-notif-btn', t('continue_btn'));
   el.classList.add('open');
 }
@@ -580,8 +580,8 @@ function _updateTrialTexts() {
   setText('trial-end-title', lang === 'is' ? 'FERÐ ÞÍN SEM GESTUR ER LOKIÐ' : 'YOUR JOURNEY AS VISITOR IS COMPLETE');
   const ten = document.getElementById('trial-end-note');
   if (ten) ten.innerHTML = lang === 'is'
-    ? 'Þú hefur farið með Rúnar þrisvar sinnum. Steinarnir muna.<br><b class="rs-link">Gerast Rúna-leitandi</b> til að halda áfram — fimm lestrar á mánuði, án greiðslu.'
-    : 'You have walked with Rúnar three times as a Visitor. The stones remember.<br><b class="rs-link">Become a Rune Seeker</b> to continue — five readings each month, no payment ever needed.';
+    ? 'Þú hefur farið með Rúnar sem Gestur. Steinarnir muna.<br><b class="rs-link">Gerast Rúna-leitandi</b> til að halda áfram — fimm lestrar á mánuði, án greiðslu.'
+    : 'You have walked with Rúnar as a Visitor. The stones remember.<br><b class="rs-link">Become a Rune Seeker</b> to continue — one free reading when you join. No payment ever needed.';
   setText('trial-end-btn', lang === 'is' ? 'GERAST VEGFARANDI →' : 'BECOME A RUNE SEEKER →');
 }
 
@@ -994,8 +994,8 @@ function updateDropdown() {
         ? (isIs ? ' · ' + userCredits + ' lestur' : ' · ' + userCredits + ' credit' + (userCredits !== 1 ? 's' : ''))
         : '';
       balEl.textContent = isIs
-        ? rem + ' af 5 lestrum í mánuði' + credPart + ' · ' + nextResetLabel(true)
-        : rem + ' of 5 readings this month' + credPart + ' · ' + nextResetLabel(false);
+        ? rem + ' frjáls lestur eftir' + credPart + ' · ' + nextResetLabel(true)
+        : rem + ' free reading' + (rem !== 1 ? 's' : '') + ' remaining' + credPart + ' · ' + nextResetLabel(false);
       balEl.style.display = '';
     } else {
       balEl.style.display = 'none';
@@ -1017,15 +1017,15 @@ function _renderYourPath() {
     { id: 'free_trial',
       name: { en: 'VISITOR',     is: 'GESTUR' },
       props: {
-        en: ['Your first three readings are a gift.', 'No account, no payment.', 'Step further when you are ready.'],
+        en: ['Your first reading is a gift.', 'No account, no payment.', 'Step further when you are ready.'],
         is: ['Fyrstu þrír lestrar þínir eru gjafir.', 'Enginn reikningur, engin greiðsla.', 'Farðu lengra þegar þú ert tilbúinn.']
       }
     },
     { id: 'rune_seeker',
       name: { en: 'RUNE SEEKER', is: 'VEGFARANDI' },
       props: {
-        en: ['5 Readings / month.', 'Reading Gift Card unveils all features.', 'Limited journal (last 5 readings).'],
-        is: ['5 Lestrar / mánuð.', 'Reading Gift Card opnar allar aðgerðir.', 'Takmörkuð dagbók (síðustu 5 lestrar).']
+        en: ['One free reading to start, then credits.', 'Reading Gift Card unveils all features.', 'Limited journal (' + TIER_LIMITS.rune_seeker.journal_label_en + ').'],
+        is: ['Einn frjáls lestur til að byrja, síðan kreditar.', 'Reading Gift Card opnar allar aðgerðir.', 'Takmörkuð dagbók (' + TIER_LIMITS.rune_seeker.journal_label_is + ').']
       }
     },
     { id: 'standard',

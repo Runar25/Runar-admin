@@ -109,6 +109,30 @@ STANDARD · PREMIUM · THE GATHERING · RÚNAR · READING GIFT CARD
 - Jeden commit = jedna věc. Push ihned po commitu.
 - SW bumpit v každém commitu kde se mění JS/CSS.
 
+### 8. Tier hodnoty = vždy z configu, NIKDY natvrdo v textu
+Čísla jako počet čtení, journal entries, kredity MUSÍ být v runar-config.js TIER_LIMITS.
+User-facing texty které zmiňují tato čísla MUSÍ je číst z configu — ne natvrdo.
+
+Vzor:
+```js
+// runar-config.js — hodnota I text label na jednom místě
+rune_seeker: {
+  onboarding: 1,
+  onboarding_label_en: 'one free reading',
+  onboarding_label_is: 'einn frjáls lestur',
+  journal_entries: 5,
+  journal_label_en: 'last 5 readings',
+  journal_label_is: 'síðustu 5 lestrar',
+}
+
+// runar-app.js — text z configu, ne natvrdo
+TIER_LIMITS.rune_seeker.onboarding_label_en  // ✅
+'five readings each month'                    // ❌ NIKDY
+```
+
+Při každé změně tier hodnoty: grep `runar-app.js`, `runar-reader.html`, `runar-translations.js`
+pro čísla která se mění — ujistit se že nejsou natvrdo.
+
 ---
 
 ## Tier systém
