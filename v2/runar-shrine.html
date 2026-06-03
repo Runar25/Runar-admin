@@ -1583,7 +1583,7 @@ Do NOT include labels like "PART 2" in the output. Speak directly to ${u.name}.`
 
   const split = res.text.split('|||');
   let short = split[0]?.trim() || res.text;
-  const deep  = split[1]?.trim() || '';
+  let deep  = split[1]?.trim() || '';
   short = applyISCorrections(short, lang, corrections);
   deep  = applyISCorrections(deep,  lang, corrections);
   readerTexts[lang] = { short, deep };
