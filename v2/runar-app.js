@@ -96,7 +96,7 @@ function showResetModal() {
   const setText2 = (id, t) => { const e = document.getElementById(id); if (e) e.textContent = t; };
   setText2('reset-notif-title', t('readings_renewed'));
   setText2('reset-notif-body',  isIs
-    ? 'Nýr mánuður — fimm frjáls lestur eru aftur að bíða þín. Steinarnir eru tilbúnir.'
+    ? 'Steinarnir eru tilbúnir.'
     : 'A new month has turned. One free reading is waiting for you. The stones are ready.');
   setText2('reset-notif-btn', t('continue_btn'));
   el.classList.add('open');
@@ -580,8 +580,8 @@ function _updateTrialTexts() {
   setText('trial-end-title', lang === 'is' ? 'FERÐ ÞÍN SEM GESTUR ER LOKIÐ' : 'YOUR JOURNEY AS VISITOR IS COMPLETE');
   const ten = document.getElementById('trial-end-note');
   if (ten) ten.innerHTML = lang === 'is'
-    ? 'Þú hefur farið með Rúnar sem Gestur. Steinarnir muna.<br><b class="rs-link">Gerast Rúna-leitandi</b> til að halda áfram — fimm lestrar á mánuði, án greiðslu.'
-    : 'You have walked with Rúnar as a Visitor. The stones remember.<br><b class="rs-link">Become a Rune Seeker</b> to continue — one free reading when you join. No payment ever needed.';
+    ? 'Þú hefur farið með Rúnar sem Gestur. Steinarnir muna.<br><b class="rs-link">Gerast Vegfarandi</b> til að halda áfram — ' + TIER_LIMITS.rune_seeker.onboarding_label_is + ' þegar þú skráir þig. Engin greiðsla.'
+    : 'You have walked with Rúnar as a Visitor. The stones remember.<br><b class="rs-link">Become a Rune Seeker</b> to continue — ' + TIER_LIMITS.rune_seeker.onboarding_label_en + ' when you join. No payment ever needed.';
   setText('trial-end-btn', lang === 'is' ? 'GERAST VEGFARANDI →' : 'BECOME A RUNE SEEKER →');
 }
 
@@ -1052,37 +1052,12 @@ function _renderYourPath() {
   const lk = isIs ? 'is' : 'en';
 
   // ══ PANEL_TIERS — single source of truth for all side-panel tier data ══
+  // PANEL_TIERS — reads from TIER_LIMITS.panel_props (Rule §8: never hardcode here)
   const PANEL_TIERS = [
-    { id: 'free_trial',
-      name: { en: 'VISITOR',     is: 'GESTUR' },
-      props: {
-        en: ['Your first reading is a gift.', 'No account, no payment.', 'Step further when you are ready.'],
-        is: ['Fyrstu þrír lestrar þínir eru gjafir.', 'Enginn reikningur, engin greiðsla.', 'Farðu lengra þegar þú ert tilbúinn.']
-      }
-    },
-    { id: 'rune_seeker',
-      name: { en: 'RUNE SEEKER', is: 'VEGFARANDI' },
-      props: {
-        en: ['One free reading to start, then credits.', 'Reading Gift Card unveils all features.', 'Limited journal (' + TIER_LIMITS.rune_seeker.journal_label_en + ').'],
-        is: ['Einn frjáls lestur til að byrja, síðan kreditar.', 'Reading Gift Card opnar allar aðgerðir.', 'Takmörkuð dagbók (' + TIER_LIMITS.rune_seeker.journal_label_is + ').']
-      }
-    },
-    { id: 'standard',
-      name: { en: 'STANDARD', is: 'STANDARD' },
-      note: { en: '— coming soon', is: '— bráðlega' },
-      props: {
-        en: ['monthly / yearly subscription', 'Unlimited readings.', 'Full journal.', 'The Gathering once a week.'],
-        is: ['mánaðar- / árslegt áskrift', 'Ótakmarkаðir lestrar.', 'Full dagbók.', 'The Gathering einu sinni á viku.']
-      }
-    },
-    { id: 'premium',
-      name: { en: 'PREMIUM', is: 'PREMIUM' },
-      note: { en: '— coming soon', is: '— bráðlega' },
-      props: {
-        en: ['monthly / yearly subscription', 'Unlimited readings.', 'Full journal.', 'The Gathering once a week.', 'Ceremonial mode.'],
-        is: ['mánaðar- / árslegt áskrift', 'Ótakmarkаðir lestrar.', 'Full dagbók.', 'The Gathering einu sinni á viku.', 'Ceremonial mode.']
-      }
-    }
+    { id: 'free_trial',  name: { en: 'VISITOR',     is: 'GESTUR'     }, props: TIER_LIMITS.free_trial.panel_props  },
+    { id: 'rune_seeker', name: { en: 'RUNE SEEKER', is: 'VEGFARANDI' }, props: TIER_LIMITS.rune_seeker.panel_props },
+    { id: 'standard',    name: { en: 'STANDARD',    is: 'STANDARD'   }, note: { en: '— coming soon', is: '— bráðlega' }, props: TIER_LIMITS.standard.panel_props  },
+    { id: 'premium',     name: { en: 'PREMIUM',     is: 'PREMIUM'    }, note: { en: '— coming soon', is: '— bráðlega' }, props: TIER_LIMITS.premium.panel_props   },
   ];
 
   const currData = PANEL_TIERS.find(function(t) { return t.id === normTier; }) || PANEL_TIERS[0];

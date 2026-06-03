@@ -59,7 +59,7 @@ async function _generateReading() {
     const msg = isWeekly
       ? (lang === 'is' ? 'Steinar hvíla til mánudags. Notaðu lestur gjafakort til að halda áfram.' : 'The stones rest until Monday. Use a reading gift card to continue.')
       : isMonthly
-        ? (lang === 'is' ? 'Mánaðarleg lestrar þín eru búnin.' : 'Monthly free readings exhausted. Use a reading gift card or upgrade.')
+        ? (lang === 'is' ? 'Mánaðarlegur lesturmark er náð. Notaðu lestur gjafakort eða uppfærðu áskrift.' : 'Monthly reading limit reached. Use a reading gift card or upgrade your plan.')
         : (lang === 'is' ? 'Kredit þínir eru búnir.' : 'No credits remaining. Redeem a gift card to continue.');
     setSt('st-reader', msg, 'err');
     // Sync localStorage with real count from DB to fix any drift

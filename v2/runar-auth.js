@@ -222,8 +222,8 @@ function updateBanners() {
       }
       const txtEl = document.getElementById('trial-text');
       if (txtEl) txtEl.innerHTML = isIs
-        ? `Þú hefur notað þrjár ókeypis heimsóknirnar þínar sem Gestur. Vertu <strong>Vegfarandi</strong> — það kostar ekkert og opnar allar tuttugu og fimm rúnirnar.`
-        : `Your three free readings as a Visitor are complete. Become a <strong>Rune Seeker</strong> — it costs nothing, and all twenty-five runes open before you.`;
+        ? `Þú hefur notað frjálsa lesturinn þinn sem Gestur. Vertu <strong>Vegfarandi</strong> — það kostar ekkert og opnar allar tuttugu og fimm rúnirnar.`
+        : `Your free reading as a Visitor is complete. Become a <strong>Rune Seeker</strong> — it costs nothing, and all twenty-five runes open before you.`;
       const btnEl = document.getElementById('tn-visitor-btn');
       if (btnEl) btnEl.textContent = t('become_rs_btn');
     }

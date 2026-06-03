@@ -112,7 +112,7 @@ const TIERS = {
   rune_seeker: {
     label:            'Rune Seeker',
     label_is:         'Vegfarandi',
-    monthly_readings: 5,          // free readings per month, resets monthly
+    monthly_readings: null,        // legacy — RS uses free_balance (1 onboarding), no monthly reset
     // ↓ VOICE FLAGS — flip here to enable/disable without touching logic
     // voice_monthly: true = hlas pro všech 5 free čtení/měsíc
     // Až budeme limitovat: flip na false → hlas jen při kreditech
@@ -126,11 +126,11 @@ const TIERS = {
   standard: {
     label:            'Standard',
     label_is:         'Standard',
-    monthly_readings: null,       // unlimited
+    monthly_readings: 50,          // Standard: 50/month
     voice_monthly:    true,
     voice_credits:    true,
     voice_static:     true,
-    journal:          null,       // unlimited
+    journal:          null,
     ceremonial:       false,
     languages:        ['en', 'is'],
   },
@@ -169,33 +169,52 @@ const APP = {
 // Backend (claude-proxy) uses parallel values — sync manually when changing.
 // Last updated: 2026-05-29
 const TIER_LIMITS = {
+  // Rule §8: ALL user-facing tier values live here — never hardcode in UI text.
+  // When any value changes, update here only. panel_props labels must match.
   free_trial: {
-    onboarding:   1,     // lifetime readings for Visitor (was 3)
-    weekly_drip:  0,     // no drip for anonymous
+    onboarding:   1,     // lifetime readings for Visitor
+    weekly_drip:  0,
     free_spreads: ['single'],
+    panel_props: {
+      en: ['Your first reading is a gift.', 'No account, no payment.', 'Step further when you are ready.'],
+      is: ['Fyrsti lesturinn er gjöf.', 'Enginn reikningur, engin greiðsla.', 'Farðu lengra þegar þú ert tilbúinn.'],
+    },
   },
   rune_seeker: {
     onboarding:   1,     // 1 free reading at registration
-    weekly_drip:  null,  // no weekly drip — credits only after onboarding
-    free_spreads: ['single'],  // free balance covers ONLY single rune
+    weekly_drip:  null,  // no weekly drip
+    free_spreads: ['single'],
     journal_entries: 5,
-    // Text labels for UI — update when numbers change
     onboarding_label_en: 'one free reading',
     onboarding_label_is: 'einn frjáls lestur',
     journal_label_en:    'last 5 readings',
     journal_label_is:    'síðustu 5 lestrar',
+    panel_props: {
+      en: ['One free reading to start, then credits.', 'Reading Gift Card unveils all features.', 'Limited journal (last 5 readings).'],
+      is: ['Einn frjáls lestur til að byrja, síðan kreditar.', 'Reading Gift Card opnar allar aðgerðir.', 'Takmörkuð dagbók (síðustu 5 lestrar).'],
+    },
   },
   standard: {
-    onboarding:   null,  // unlimited
-    weekly_drip:  null,
-    free_spreads: ['single', 'trojice', 'cross', 'horseshoe', 'norns', 'yggdrasil'],
+    onboarding:    null,
+    weekly_drip:   null,
+    monthly_limit: 50,   // readings per month — change here, UI updates automatically
+    free_spreads:  ['single', 'trojice', 'cross', 'horseshoe', 'norns'],
     journal_entries: null,
+    panel_props: {
+      en: ['50 readings / month.', 'Voice on every reading.', 'Full journal + filters.', 'The Gathering.'],
+      is: ['50 lestrar / mánuð.', 'Rödd á hverjum lestri.', 'Full dagbók + síur.', 'The Gathering.'],
+    },
   },
   premium: {
-    onboarding:   null,
-    weekly_drip:  null,
-    free_spreads: ['single', 'trojice', 'cross', 'horseshoe', 'norns', 'yggdrasil'],
+    onboarding:    null,
+    weekly_drip:   null,
+    monthly_limit: 75,   // readings per month
+    free_spreads:  ['single', 'trojice', 'cross', 'horseshoe', 'norns', 'yggdrasil'],
     journal_entries: null,
+    panel_props: {
+      en: ['75 readings / month.', 'Everything in Standard.', 'Yggdrasil — all nine worlds.', 'Ceremonial mode.'],
+      is: ['75 lestrar / mánuð.', 'Allt í Standard.', 'Yggdrasil — níu heimar.', 'Ceremonial mode.'],
+    },
   },
 };
 
