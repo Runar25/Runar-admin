@@ -35,7 +35,7 @@ const READING_ANGLES = [
 
 // ─── Reading angles IS ─────────────────────────────────────────
 const READING_ANGLES_IS = [
-  'Byrjaðu á skugga þessarar rúnu — hvað hún krefst hljóðlægt, ekki hvað hún gefur.',
+  'Byrjaðu á skugga þessarar rúnar — hvað hún krefst hljóðlægt, ekki hvað hún gefur.',
   'Byrjaðu á gjöfinni — hvað þessi rúna er þegar að gefa áður en leitandinn hefur tekið eftir því.',
   'Byrjaðu á tímasetningunni — hvaða sérstaka augnablik í lífi þeirra merkir þessi rúna.',
   'Byrjaðu á líkamanum — hvar býr þessi rúna sem líkamleg tilfinning núna.',

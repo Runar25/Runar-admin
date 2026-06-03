@@ -176,7 +176,7 @@ const UI_TEXT = {
 
     // Teach tab
     teach_select_lbl:   'ᚠ VELJA RÚNU',
-    teach_select_note:  'Veldu rúnu. Rúnar mun tala beint til þess sem dregur hana — í núverandi tungumáli.',
+    teach_select_note:  'Veldu rún. Rúnar mun tala beint til þess sem dregur hana — í núverandi tungumáli.',
     rune_none:          'Engin rúna valin.',
     teach_speak_lbl:    '✦ RÚNAR TALAR',
     invoke_btn:         '↯ LÁTUM RÚNAR TALA',
@@ -185,7 +185,7 @@ const UI_TEXT = {
     commit_btn:         'VISTA Í MINNI RÚNARS',
     teach_audio_lbl:    '♪ RÚNAR TALAR — FORSKOÐUN',
     teach_save_btn:     'VISTA RÖDD Í MINNI',
-    teach_next_btn:     'ᚠ KENNA AÐRA RÚNU',
+    teach_next_btn:     'ᚠ KENNA AÐRA RÚN',
     teach_voice_ready:  '✓ Rödd tilbúin. Hlustaðu, síðan vistaðu.',
     teach_voice_saving: 'Vista í minni…',
 
@@ -212,7 +212,7 @@ const UI_TEXT = {
     drawn_lbl:        'DREGIN RÚNA',
     layer1_lbl:       '✦ RÚNAR TALAR',
     layer2_lbl:       '~ DÝPRI HUGLEIÐING',
-    draw_another:     'DRAGA AÐRA RÚNU',
+    draw_another:     'DRAGA AÐRA RÚN',
     start_over:       'BYRJA AFTUR',
 
     // Voice

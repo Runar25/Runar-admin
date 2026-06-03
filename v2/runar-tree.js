@@ -101,7 +101,7 @@ function _showTreeReading(rune, runeName, isIs) {
   var lbl = document.getElementById('tree-rune-label-exists');
   // Header: 'You carry life rune Gebo ᵏ' — label hidden, name carries full phrase
   if (lbl) lbl.style.display = 'none';
-  if (nm) nm.textContent = (isIs ? 'Þú ber lífsrúnu ' : 'You carry life rune ') + runeName;
+  if (nm) nm.textContent = (isIs ? 'Þú ber lífsrún ' : 'You carry life rune ') + runeName;
   if (gl) gl.textContent = ' ' + rune.g;
   var open = document.getElementById('tree-static-open');
   if (open) open.textContent = '';
