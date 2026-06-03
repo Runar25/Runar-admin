@@ -1,8 +1,6 @@
 # CLAUDE.md — Rúnar Project
-# Přečíst na začátku KAŽDÉ session. Technická pravidla a kódová architektura.
-# Číst spolu s:
-#   RUNAR_DESIGN.md  — design, mytologie, strom, spready, charakter
-#   RUNAR_PRICING.md — business model, ceny, tiery, distribuce
+# Přečíst na začátku KAŽDÉ session. Toto je jediný zdroj pravdy pro kód.
+# Spolu s: RUNAR_DESIGN.md (design, mytologie, spready) · RUNAR_PRICING.md (business)
 
 ---
 
@@ -10,10 +8,6 @@
 AI-powered průvodce runami pro Agndofa (Island). Poetický hlas, nordická filozofie.
 Produkce: runar25.github.io/Runar-admin/v2/
 Lokální: C:\Users\zkuku\Downloads\Runar-admin\v2\
-
-Centrální narativ: každý uživatel je **Rune Seeker** — sleduje cestu Ódina.
-Ratatoskur nese runy po stromě. Huginn přináší připomínky. Muninn drží paměť kořenů.
-Viz RUNAR_DESIGN.md sekce "Příběh uživatele" — přečíst před psaním nových promptů.
 
 Stack: HTML + CSS + vanilla JS (GitHub Pages) · Supabase (pmitxjvkeovijreepror, eu-west-1)
 AI: Claude API přes Supabase Edge Function (claude-proxy)
@@ -25,7 +19,8 @@ Jazyky: IS (primární) + EN (vedlejší)
 ## Soubory a jejich zodpovědnost
 
 ```
-runar-config.js       — TIERS, RUNAR_MODES, TIER_LIMITS, SPREAD_COSTS, elVoiceId(), elModel()
+runar-config.js       — TIERS, RUNAR_MODES, TIER_LIMITS, SPREAD_COSTS, SPREAD_CONFIG,
+                         elVoiceId(), elModel()
 runar-runes.js        — 25 Elder Futhark + calcLifeRune()
 runar-translations.js — UI_TEXT {en, is} + t() · Edit tool OK
 runar-character.js    — DEF_CHAR_EN/IS, buildSysPrompt(), buildLifeRunePromptIS/EN(),
@@ -38,14 +33,14 @@ runar-tree.js         — updateTreeTab(), generateLifeRuneReading(), loadLifeRu
 runar-gathering.js    — The Gathering rituál, buildWhispersPrompt(), generateWhispersReading()
 runar-auth.js         — updateAuthUI(), isAdmin(), PWA, modaly, sign-in, redeem
 runar-reading.js      — buildReadingPrompt(), _generateReading(), startReading(), generateVoice()
-runar-app.js          — state, DB init, fetchUserProfile(), showAppTab(), koordinátor (~1276 ř.)
+runar-app.js          — state, DB init, fetchUserProfile(), showAppTab(), koordinátor
 runar-reader.html     — produkční app · Edit tool OK
 runar-reader.css      — styly · Edit tool OK
 runar-shrine.html     — admin app · Edit tool OK pro HTML
-sw.js                 — Service Worker v25 · bumpit při každé JS/CSS změně
+sw.js                 — Service Worker v26 · bumpit při každé JS/CSS změně
 ```
 
-### Load order (reader i shrine sdílejí prefix)
+### Load order
 ```
 runar-config.js → runar-runes.js → runar-translations.js → runar-character.js
 → runar-utils.js → runar-svgs.js
@@ -56,82 +51,53 @@ runar-config.js → runar-runes.js → runar-translations.js → runar-character
 
 ---
 
-## ABSOLUTNÍ PRAVIDLA — nikdy neporušit
+## ABSOLUTNÍ PRAVIDLA
 
-### 1. JS změny = Python skripty
+### §1 — JS změny = Python skripty
 Edit tool kazí apostrofy `'` → curly quotes → SyntaxError.
 - JS soubory: VŽDY Python skript (ukládat do C:\Users\zkuku\Downloads\Runar-admin\)
 - CSS, HTML (bez inline JS), translations.js: Edit tool OK
 
-### 2. IS je primární jazyk + mytologický hlas
-Rúnar vzniká na Islandu, pro Islanďany. IS musí být vždy perfektní.
-EN je vedlejší. NIKDY nepřistupovat k IS jako k "překladu" EN.
-
-Každý nový prompt musí žít v mytologickém světě — viz RUNAR_DESIGN.md.
-Rúnar není asistent. Je průvodce na cestě Rune Seekera.
-
-Každé místo kde Claude generuje IS text MUSÍ mít 3 vrstvy:
+### §2 — IS je primární jazyk
+IS musí být vždy perfektní. EN je vedlejší. NIKDY IS jako "překlad" EN.
+Každé Claude generování v IS musí mít 3 vrstvy:
 ```js
-// 1. System prompt v IS charakteru
-var sys = buildSysPrompt(activeChar, lang);
-
-// 2. User prompt psán přímo v IS (NIKDY "Respond in Icelandic" na konci EN promptu)
-var prompt = buildXxxPromptIS(...);
+var sys = buildSysPrompt(activeChar, lang);            // 1. IS system prompt
+var prompt = buildXxxPromptIS(...);                    // 2. prompt přímo v IS
 var corrBlock = getCorrPrompt(lang, corrections);
 if (corrBlock) prompt = prompt + '\n' + corrBlock;
-
-// 3. Post-processing — deterministické opravy
-var text = applyISCorrections(res.text || '', lang, corrections);
+var text = applyISCorrections(res.text || '', lang, corrections); // 3. post-processing
 ```
+Implementováno: buildReadingPromptIS(), buildLifeRunePromptIS(), buildWhispersPrompt() IS větev.
 
-Implementováno ve všech 3 generováních ✅:
-- Normální čtení: buildReadingPromptIS()
-- Life rune: buildLifeRunePromptIS()
-- The Gathering: buildWhispersPrompt() IS větev
-
-### 3. Sdílené moduly = automatický sync
+### §3 — Sdílené moduly = automatický sync
 runar-character.js a runar-utils.js načítají reader i shrine.
-Změna tam se projeví všude. NIKDY neduplikovat funkce do shrine inline JS.
+NIKDY neduplikovat funkce do shrine inline JS.
 
-### 4. SW verze
-Po každé JS nebo CSS změně: bumpit sw.js (aktuálně v25).
+### §4 — SW verze
+Po každé JS nebo CSS změně: bumpit sw.js (aktuálně v26).
 
-### 5. UI invarianty
+### §5 — UI invarianty
 - var(--gold) = #FFBF00 — primární barva, NIKDY teal
 - var(--dim) = #3a4a60 — NIKDY pro čitelný text
 - reader-content se NIKDY neskrývá
 - Runa ᚱ: vždy zlatá, NIKDY s ozdobami (◌ ᚱ ◌ zakázáno)
 
-### 6. Záměrně anglické pojmy (NEPŘEKLÁDAT do IS)
+### §6 — Záměrně anglické pojmy (NEPŘEKLÁDAT do IS)
 STANDARD · PREMIUM · THE GATHERING · RÚNAR · READING GIFT CARD
 
-### 7. Commit pravidla
-- Jeden commit = jedna věc. Push ihned po commitu.
-- SW bumpit v každém commitu kde se mění JS/CSS.
+### §7 — Commit pravidla
+Jeden commit = jedna věc. Push ihned. SW bumpit v každém commitu kde se mění JS/CSS.
 
-### 8. Tier hodnoty = vždy z configu, NIKDY natvrdo v textu
-Čísla jako počet čtení, journal entries, kredity MUSÍ být v runar-config.js TIER_LIMITS.
-User-facing texty které zmiňují tato čísla MUSÍ je číst z configu — ne natvrdo.
-
-Vzor:
+### §8 — Tier hodnoty = vždy z configu, NIKDY natvrdo v textu
 ```js
 // runar-config.js — hodnota I text label na jednom místě
-rune_seeker: {
-  onboarding: 1,
-  onboarding_label_en: 'one free reading',
-  onboarding_label_is: 'einn frjáls lestur',
-  journal_entries: 5,
-  journal_label_en: 'last 5 readings',
-  journal_label_is: 'síðustu 5 lestrar',
-}
+rune_seeker: { onboarding: 1, onboarding_label_en: 'one free reading', ... }
 
-// runar-app.js — text z configu, ne natvrdo
 TIER_LIMITS.rune_seeker.onboarding_label_en  // ✅
 'five readings each month'                    // ❌ NIKDY
 ```
-
-Při každé změně tier hodnoty: grep `runar-app.js`, `runar-reader.html`, `runar-translations.js`
-pro čísla která se mění — ujistit se že nejsou natvrdo.
+Při změně tier hodnoty: grep runar-app.js + runar-reader.html + runar-translations.js.
 
 ---
 
@@ -140,11 +106,9 @@ pro čísla která se mění — ujistit se že nejsou natvrdo.
 | Tier | DB hodnota | Přístup |
 |------|-----------|---------|
 | Visitor | free_trial | 1 čtení, anon, jen Fehu, DOB locked |
-| Rune Seeker | rune_seeker | **1 čtení zdarma** při registraci + kredity, bez weekly drip, journal posledních 5 |
-| Standard | standard | **50 run/měsíc**, hlas, journal+filtry, Kříž+Horseshoe, The Gathering |
-| Premium | premium | **75 run/měsíc**, vše + Yggdrasil + hlubší Life Rune |
-
-Viz RUNAR_PRICING.md pro kompletní tier tabulku, ceny a marže.
+| Rune Seeker | rune_seeker | 1 čtení zdarma při registraci + kredity, journal 5 |
+| Standard | standard | 50 run/měsíc, hlas, journal+filtry, Kříž+Horseshoe |
+| Premium | premium | 75 run/měsíc, vše + Yggdrasil + hlubší Life Rune |
 
 ADMIN_EMAILS: kukula@agndofa.is, info@agndofa.is → automaticky premium, bypass všeho.
 VŽDY testovat jako visitor a rune_seeker, ne jako admin.
@@ -165,7 +129,6 @@ POZOR: email a updated_at NEEXISTUJÍ v user_profiles.
 
 ## Spread systém
 
-### Stav spreadů
 | Spread | Runy | Kredity | Stav |
 |--------|------|---------|------|
 | Single | 1 | 1 (free_balance) | ✅ produkce |
@@ -175,76 +138,23 @@ POZOR: email a updated_at NEEXISTUJÍ v user_profiles.
 | Horseshoe | 7 | 7 | ❌ navrženo |
 | Yggdrasil | 9 | 9 | ❌ navrženo (jen Premium) |
 
-Pozice všech spreadů: viz RUNAR_DESIGN.md — Spreads sekce.
-
-### Architektura a pozice
-Viz RUNAR_DESIGN.md — kompletní SPREAD_CONFIG, pozice Kříže i Trojice, otevřené otázky.
+Pozice + SPREAD_CONFIG: viz RUNAR_DESIGN.md — Spreads sekce.
 
 ---
 
-## Tree of Life
+## Tree of Life — stav implementace
 
-### Co je hotové ✅
-- Life rune výpočet z DOB přes calcLifeRune() — fixní, nelze změnit
-- Life rune generování (Standard 1200 / Premium 2000 tokenů) — bez ElevenLabs
-- Uložení: life_rune_number, life_rune_text, life_rune_lang v user_profiles
-- Tree tab UI: no-dob / RS teaser / reveal CTA / výklad (collapsible)
-- setTreeDOB(), saveTreeName() funkční
-- IS 3-vrstvý systém pro life rune ✅
+**Hotové ✅:** calcLifeRune(), life rune generování + uložení, Tree tab UI, IS 3-vrstvý systém
+**Chybí ❌:** zakládací rituál, branch systém, elementy, vizuální strom, tree_state/tree_readings tabulky
 
-### Co není implementováno ❌
-- Zakládací rituál, branch systém, elementy, vizuální strom
-- DB tabulky: tree_state, tree_readings
-- Viz RUNAR_DESIGN.md — kompletní design (branch logika, elementy, trunk, reframing...)
+Tree tab HTML: `apane-tree > tree-life-rune-section > [tree-no-dob | tree-rs-teaser | tree-reveal-cta | tree-loading | tree-reading-exists]`
 
-### Tree tab HTML struktura
-```
-apane-tree
-├── tree-life-rune-section
-│   ├── tree-no-dob          ← intro + DOB inputs
-│   ├── tree-rs-teaser       ← RS: symbol + jméno
-│   ├── tree-reveal-cta      ← Std+: REVEAL YOUR LIFE RUNE
-│   ├── tree-loading
-│   └── tree-reading-exists  ← výklad (collapsible)
-├── tree-name-section
-└── tree-growth-section
-```
-
----
-
-## Workflow — jak pracujeme
-
-```
-1. Ty popíšeš záměr (nemusí být technicky přesně)
-2. Já ukážu co to znamená v praxi — kde to sáhne, co ovlivní, co je nejdřív
-3. Ty doplníš / upřesníš / zamítneš
-4. Teprve pak implementujeme — jeden krok najednou
-5. Po implementaci: snapshot do MEMORY.md + update CLAUDE.md
-```
-
-Systém je živý — příběh se vyvíjí. Dokumentace musí odrážet aktuální stav, ne historii.
-
----
-
-## Kde hledat co
-
-| Hledám | Kde |
-|--------|-----|
-| Tier logika, limity | runar-config.js: TIERS, TIER_LIMITS |
-| IS/EN prompt buildery | runar-character.js |
-| IS corrections systém | runar-character.js: getCorrPrompt(), applyISCorrections() |
-| UI texty (překlady) | runar-translations.js: UI_TEXT |
-| Stav uživatele | runar-app.js: currentUser, userTier, readerUser, lang |
-| Tree logika | runar-tree.js |
-| Auth + tier check | runar-auth.js: isAdmin(), updateAuthUI() |
-| Sdílené utility | runar-utils.js |
-| Runa data + výpočet | runar-runes.js: RUNES[], calcLifeRune() |
-| Spreads config | runar-config.js: SPREAD_COSTS, RUNAR_MODES |
+Kompletní design: viz RUNAR_DESIGN.md.
 
 ---
 
 ## Word Corrections — snapshot (runar_corrections DB)
-Živá data: `python show_corrections.py` — aktualizovat při každé nové korekci.
+Živá data: `python show_corrections.py`
 
 | Scope | Původní | → Oprava |
 |-------|---------|----------|
@@ -257,41 +167,38 @@ Systém je živý — příběh se vyvíjí. Dokumentace musí odrážet aktuál
 
 ---
 
-## Prioritní nedodělky
+## Kde hledat co
 
-### 🔴 Kritické (blokuje prodej)
-1. **Resend SMTP** — magic link emaily z agndofa.is (před Shopify webhookem)
-2. **Shopify webhook** — automatický upgrade po nákupu
-3. **DPA Supabase** — čeká na e-mail od Supabase
-
-### 🟡 Důležité
-4. **Standard tier** — způsob nákupu (aktuálně "COMING SOON")
-5. **Kříž** — implementace (po Trojici)
-6. **Privacy Policy** — odkaz na agndofa.is
-
-### 🟢 Střední priorita
-- SSE streaming (první slova za ~0.5s místo čekání)
-- Delší výklady pro Standard (1000–1200 tokenů)
-- Kříž — další spread po Trojici
-- Specifická otázka reframing — instrukce v buildReadingPromptIS/EN
-- Standard 50 / Premium 75 run limit — měsíční počítání z readings tabulky
+| Hledám | Kde |
+|--------|-----|
+| Tier logika, limity | runar-config.js: TIERS, TIER_LIMITS |
+| IS/EN prompt buildery | runar-character.js |
+| IS corrections systém | runar-character.js: getCorrPrompt(), applyISCorrections() |
+| UI texty | runar-translations.js: UI_TEXT |
+| Stav uživatele | runar-app.js: currentUser, userTier, readerUser, lang |
+| Tree logika | runar-tree.js |
+| Auth + tier check | runar-auth.js |
+| Sdílené utility | runar-utils.js |
+| Runa data | runar-runes.js: RUNES[], calcLifeRune() |
+| Spreads config | runar-config.js: SPREAD_COSTS, SPREAD_CONFIG |
 
 ---
 
-## Hotovo ✅ (poslední sessions)
+## Prioritní nedodělky
 
-### 2026-05-31
-- IS text audit — 11 gramatických a stylistických oprav (translations.js + app.js)
-- Ověření IS 3-vrstvého systému — všechna 3 generování OK
-- Kříž pozice — definovány (domluveno, neimplementováno)
+### 🔴 Kritické (blokuje prodej)
+1. **Resend SMTP** — magic link emaily z agndofa.is
+2. **Shopify webhook** — automatický upgrade po nákupu
+3. **DPA Supabase** — čeká na e-mail
 
-### 2026-05-31 (dřívější)
-- Tech debt #1-4 z monolith splitu (isAdmin, getCorrPrompt, _capFmt, updateUIText split)
-- IS 3-vrstvý systém kompletní — buildReadingPromptIS(), READING_ANGLES_IS
-- Shrine sync Option A — runar-utils.js, sdílené moduly, žádný manuální sync
-- SW bumped na v23
+### 🟡 Důležité
+4. **Standard tier** — způsob nákupu ("COMING SOON")
+5. **Kříž** — implementace (5-run spread)
+6. **Privacy Policy** — odkaz na agndofa.is
 
-### 2026-05-30
-- Monolith split (5 modulů: gathering, journal, tree, reading, auth)
-- Tree of Life: DOB inputs, saveTreeName, life rune výklad, IS kvalita
-- Refaktoring #2-7 (buildSysPrompt parametrizace, fire-and-forget fix, timing konstanty)
+### 🟢 Střední priorita
+- SSE streaming
+- Delší výklady pro Standard (1000–1200 tokenů)
+- Standard 50 / Premium 75 monthly limit — počítání z readings tabulky
+- Weekly drip odstranit z claude-proxy Edge Function
+- Specifická otázka reframing v buildReadingPromptIS/EN
