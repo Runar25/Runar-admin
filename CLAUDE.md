@@ -89,6 +89,15 @@ STANDARD · PREMIUM · THE GATHERING · RÚNAR · READING GIFT CARD
 ### §7 — Commit pravidla
 Jeden commit = jedna věc. Push ihned. SW bumpit v každém commitu kde se mění JS/CSS.
 
+### §9 — IS text = vždy zkontrolovat před commitem
+Před každým commitem který obsahuje islandský text spustit:
+```
+python check-is.py
+```
+Skript kontroluje known-bad IS slova/fráze ve všech souborech.
+Nová korekce → přidat do `BAD_PATTERNS` v `check-is.py` + do DB přes shrine.
+`applyISCorrections()` opravuje jen Claude-generovaný text — statické UI texty check-is.py.
+
 ### §8 — Tier hodnoty = vždy z configu, NIKDY natvrdo v textu
 ```js
 // runar-config.js — hodnota I text label na jednom místě

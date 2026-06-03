@@ -208,7 +208,7 @@ const UI_TEXT = {
     draw_note:        'Lokaðu augunum um stund. Haltu spurningunni í huga. Veldu síðan rúnina sem kallar til þín.',
     random_btn:       'ᚲ LÁTTU RÚNIRNAR VELJA',
     speak_btn:        'HEYRA RÚNAR TALA',
-    life_rune_lbl:    'LÍFSTÍÐARRÚNAN ÞÍN',
+    life_rune_lbl:    'LÍFSRÚNIN ÞÍN',
     drawn_lbl:        'DREGIN RÚNA',
     layer1_lbl:       '✦ RÚNAR TALAR',
     layer2_lbl:       '~ DÝPRI HUGLEIÐING',
