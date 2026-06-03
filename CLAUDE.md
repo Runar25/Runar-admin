@@ -1,7 +1,8 @@
 # CLAUDE.md — Rúnar Project
-# Přečíst na začátku KAŽDÉ session. Toto je jediný zdroj pravdy.
-# Vždy číst spolu s: RUNAR_DESIGN.md (designová rozhodnutí, neimplementováno)
-# Detailní archiv (roadmap, pricing, edge functions): CLAUDE_archive.md
+# Přečíst na začátku KAŽDÉ session. Technická pravidla a kódová architektura.
+# Číst spolu s:
+#   RUNAR_DESIGN.md  — design, mytologie, strom, spready, charakter
+#   RUNAR_PRICING.md — business model, ceny, tiery, distribuce
 
 ---
 
@@ -41,7 +42,7 @@ runar-app.js          — state, DB init, fetchUserProfile(), showAppTab(), koor
 runar-reader.html     — produkční app · Edit tool OK
 runar-reader.css      — styly · Edit tool OK
 runar-shrine.html     — admin app · Edit tool OK pro HTML
-sw.js                 — Service Worker v24 · bumpit při každé JS/CSS změně
+sw.js                 — Service Worker v25 · bumpit při každé JS/CSS změně
 ```
 
 ### Load order (reader i shrine sdílejí prefix)
@@ -93,7 +94,7 @@ runar-character.js a runar-utils.js načítají reader i shrine.
 Změna tam se projeví všude. NIKDY neduplikovat funkce do shrine inline JS.
 
 ### 4. SW verze
-Po každé JS nebo CSS změně: bumpit sw.js (aktuálně v24).
+Po každé JS nebo CSS změně: bumpit sw.js (aktuálně v25).
 
 ### 5. UI invarianty
 - var(--gold) = #FFBF00 — primární barva, NIKDY teal
@@ -115,9 +116,11 @@ STANDARD · PREMIUM · THE GATHERING · RÚNAR · READING GIFT CARD
 | Tier | DB hodnota | Přístup |
 |------|-----------|---------|
 | Visitor | free_trial | 1 čtení, anon, jen Fehu, DOB locked |
-| Rune Seeker | rune_seeker | free_balance z DB, jen single rune zdarma, journal posledních 5 |
-| Standard | standard | unlimited, hlas, journal+filtry, The Gathering, Specific Question |
-| Premium | premium | vše + ceremonial (coming soon) |
+| Rune Seeker | rune_seeker | 3/měsíc zdarma + kredity, jen single zdarma, journal posledních 5 |
+| Standard | standard | **50 run/měsíc**, hlas, journal+filtry, Kříž+Horseshoe, The Gathering |
+| Premium | premium | **75 run/měsíc**, vše + Yggdrasil + hlubší Life Rune |
+
+Viz RUNAR_PRICING.md pro kompletní tier tabulku, ceny a marže.
 
 ADMIN_EMAILS: kukula@agndofa.is, info@agndofa.is → automaticky premium, bypass všeho.
 VŽDY testovat jako visitor a rune_seeker, ne jako admin.
@@ -143,10 +146,12 @@ POZOR: email a updated_at NEEXISTUJÍ v user_profiles.
 |--------|------|---------|------|
 | Single | 1 | 1 (free_balance) | ✅ produkce |
 | Trojice | 3 | 3 | ✅ produkce |
+| Norns | 3 | 3 | ❌ navrženo |
 | Kříž | 5 | 5 | ❌ navrženo |
 | Horseshoe | 7 | 7 | ❌ navrženo |
-| Norns | 3 | 3 | ❌ navrženo |
 | Yggdrasil | 9 | 9 | ❌ navrženo (jen Premium) |
+
+Pozice všech spreadů: viz RUNAR_DESIGN.md — Spreads sekce.
 
 ### Architektura a pozice
 Viz RUNAR_DESIGN.md — kompletní SPREAD_CONFIG, pozice Kříže i Trojice, otevřené otázky.
@@ -244,7 +249,8 @@ Systém je živý — příběh se vyvíjí. Dokumentace musí odrážet aktuál
 - SSE streaming (první slova za ~0.5s místo čekání)
 - Delší výklady pro Standard (1000–1200 tokenů)
 - Kříž — další spread po Trojici
-- Specifická otázka reframing — instrukce v buildReadingPromptIS/EN (viz RUNAR_DESIGN.md)
+- Specifická otázka reframing — instrukce v buildReadingPromptIS/EN
+- Standard 50 / Premium 75 run limit — měsíční počítání z readings tabulky
 
 ---
 

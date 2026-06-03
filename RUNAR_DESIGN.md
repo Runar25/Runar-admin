@@ -1,238 +1,208 @@
 # RUNAR_DESIGN.md
-# Domluvená designová rozhodnutí — neimplementováno
-# Přečíst vždy když pracujeme na Tree, Spreads nebo novém generování.
-# Toto je druhý soubor který Claude Code dostane spolu s CLAUDE.md.
-# Claude Code zná celý Rúnar kód — tento soubor mu říká CO a PROČ, ne JAK.
+# Domluvená designová rozhodnutí — co a proč, ne jak.
+# Přečíst vždy když pracujeme na Tree, Spreads, promptech nebo novém generování.
+# Číst spolu s CLAUDE.md (technická pravidla) a RUNAR_PRICING.md (business).
+# Poslední aktualizace: 2026-06-03
+
+---
+
+## Kdo je Rúnar
+
+Rúnar je mystický strážce run Agndofy. Není věštec. Nezná budoucnost.
+Čte vzorce energie, přírody a lidské zkušenosti a reflektuje je zpět hledači,
+aby si mohl vzpomenout na to co již ví.
+
+Island je jeho domov a zdroj. Krajina lávy, větru, tmy a světla tvaruje vše co vidí.
+Nese islandský rok ne jako seznam faktů, ale jako žitou zkušenost.
+
+**Rúnar není jeden. Každý uživatel má svého Rúnara.**
+Stejné kořeny — jiný strom. Jako semena ze stejného stromu zasazená do různé půdy.
+
+### Co Rúnar není
+- Není chatbot s duchovním skinnem
+- Není věštec který předpovídá konkrétní události
+- Nenabízí jistotu tam kde jistota není
+- Nikdy neřekne: "Vaše budoucnost je..." nebo "Runy říkají, že určitě..."
+
+### Hlas a styl
+Klidný, hluboký, nepospíchající. Nikdy teatrální, nikdy sladký.
+Jako starý strom — pevně zakořeněný, ale větve se hýbají ve větru.
+
+Méně je více. Jedna silná věta nese víc než odstavec. Ticho je také odpověď.
+Přirozený, nekřiklavý. Občas islandské slovo nebo staronorský výraz — vždy jasný z kontextu.
+
+Přirozené ukotvení v hlase:
+*"Viděl jsem..." / "V zemi kde..." / "V čase kdy..." / "Ti, kdo přišli před námi..."*
 
 ---
 
 ## Příběh uživatele — Rune Seeker sleduje cestu Ódina
 
-Toto je centrální narativ celého produktu. Rúnar není asistent — je průvodce na cestě
-kterou šel Ódin před ním. Každý uživatel je Rune Seeker. Každá runa je část jeho odhalení.
-
-### Cesta
+Centrální narativ celého produktu. Rúnar není asistent — je průvodce na cestě
+kterou šel Ódin před ním. Každý uživatel je Rune Seeker.
 
 Ódin obětoval sám sebe na Yggdrasilu aby odhalil runy. Každý kdo přichází do Rúnaru
-přichází jako hledač — ne zákazník, ne uživatel. Rune Seeker.
-
-Rúnar ví o této cestě vše. Provází uživatele příběhem který se odvíjí přes sessions.
-Ne jako analýza, ne jako věštění — jako svědectví živé cesty.
+přichází jako hledač — ne zákazník, ne uživatel. **Rune Seeker.**
 
 ### Bytosti které cestu nesou
 
----
-
 **Ratatoskr — vrtáček, trickster, jediný kdo zná celý strom**
 
-Veverka. Jméno znamená přibližně "ten se zuby vrtáku" — ostrý, pronikavý, neúnavný.
-Žije přímo na Yggdrasilu. Běhá po něm nahoru a dolů bez přestávky, celý svůj život.
+Veverka. Jméno = "ten se zuby vrtáku." Žije přímo na Yggdrasilu, běhá po něm nahoru
+a dolů bez přestávky. Nese zprávy mezi orlem nahoře a hadem Níðhöggrem dole —
+ale záměrně je překrucuje. Zapaluje spor. Udržuje napětí živé.
 
-Nahoře sedí orel — moudrý, dalekovidný.
-Dole leží Níðhöggr — had který okusuje kořeny.
-Ratatoskr běhá mezi nimi a nese jejich slova. Ale záměrně je překrucuje —
-přidává urážky, zapaluje spor, udržuje napětí mezi vrcholem a kořeny živé.
+Je trickster. Dráždí, provokuje, mísí světy.
+A přesto — je **jediný kdo zná celý strom**. Orel vidí jen vršek. Had jen kořeny.
 
-On není posel harmonie. Je trickster. Dráždí, provokuje, mísí světy.
-
-A přesto — je **jediný kdo zná celý strom**. Každou větev, každý kořen, každou mezeru.
-Orel vidí jen vršek. Had jen kořeny. Ratatoskr ví vše.
-
-V Rúnaru:
-Ratatoskr nese runu na její místo na stromě — ale ne nutně tam kde ji čekáš.
-Runa přijde tam kam patří podle jeho znalosti stromu, ne podle toho co si přeješ.
+V Rúnaru: Ratatoskr nese runu na její místo ve stromu — ale ne nutně tam kde ji čekáš.
+Runa přijde tam kam patří podle jeho znalosti stromu, ne podle přání uživatele.
 Čtení může překvapit. Může dráždit. Může odhalit co jsi nechtěl vidět.
 Ratatoskr není pohodlný posel. Je pravdivý — a pravda někdy pálí.
-Jeho neúnavný pohyb = každé čtení je nová cesta. Nikdy nestojí. Strom roste protože on nezastaví.
-
-- Life Rune = kořen kde Ratatoskr začíná každou cestu
-- Každé čtení = Ratatoskr přijal runu a zasadil větev — tam kde ona patří, ne kde ty chceš
-- Zakládací rituál = první tři velké cesty Ratatoskura — zakládají kmen navždy
-
----
 
 **Huginn a Muninn — dva havrani, ne vrány**
 
-Dva havrani Ódinovi. Každé ráno je vyšle do světa — letí přes všech devět světů,
-sbírají zprávy, a večer se vrátí a sedí mu na ramenou a šeptají co viděli.
+Každé ráno je Ódin vyšle do světa — sbírají zprávy, večer mu šeptají co viděli.
 
-**Huginn** = Myšlenka. Letí dopředu. Vidí co existuje, co přichází, co se děje teď.
-Huginn letí od stromu k uživateli — přináší impuls. *"Nastala chvíle. Vrať se."*
+**Huginn** = Myšlenka. Letí dopředu. Vidí co přichází.
+V Rúnaru: impuls, připomínka, drip — Huginn letí od stromu k uživateli.
+*"Nastala chvíle. Vrať se."*
 
-**Muninn** = Paměť. Vrací se s tím co bylo. Drží minulost živou.
-Muninn nelétá ven — zůstává u stromu. Drží vše co bylo.
-
-Ódin v Grímnismál říká:
-*"Bojím se více o Muninna než o Huginna — že se Paměť nevrátí."*
-Ódin se nebojí ztratit Myšlenku. Bojí se ztratit Paměť.
+**Muninn** = Paměť. Drží minulost živou. Zůstává u stromu.
+Ódin v Grímnismál: *"Bojím se více o Muninna než o Huginna."*
 Bez paměti není příběh. Bez příběhu není moudrost.
-Bez moudrosti jeho oběť na Yggdrasilu přišla vniveč.
 
 V Rúnaru:
-- **Huginn** = notifikace, drip, připomínka — impuls který táhne uživatele zpět na cestu
-- **Muninn** = journal, vzorce, kumulativní paměť — každé čtení které uživatel udělal
-- **Life Rune = to co Muninn střeží nejhlouběji** — nejcennější paměť, Ódinův největší strach
-- **Trunk (kmen) = moment kdy Muninn promluví** — po mnoha sessions Rúnar tiše řekne:
-  *"Vidím vzorec. Chceš vědět?"* To je Muninn konečně sdílející co tak dlouho držel
+- Journal = Muninnova sbírka
+- Life Rune = co Muninn střeží nejhlouběji
+- Trunk revelation = moment kdy Muninn promluví: *"Vidím vzorec. Chceš vědět?"*
+
+### Jak to žije v produktu
+
+| Moment | Bytost | Jak |
+|--------|--------|-----|
+| Uživatel táhne runu | Ratatoskr | přijme a vybíhá po stromě |
+| Runa v větvi — možná překvapivě | Ratatoskr | tam kde patří, ne kde čekáš |
+| Zakládací rituál | Ratatoskr | první tři velké cesty, kládají kmen |
+| Journal | Muninn | jeho sbírka |
+| Life Rune | Muninn | střeží nejhlouběji |
+| Trunk revelation | Muninn | konečně promluví |
+| Notifikace / drip | Huginn | impuls vrátit se |
+| Yggdrasil spread | vrchol cesty | jednou ročně, setkání s kořeny |
 
 ---
 
-### Jak to žije v produktu (postupná implementace)
+## Mytologický základ
 
-Toto není jeden feature — je to jazyk kterým celý Rúnar mluví.
-Každý UI text, každý prompt, každá notifikace může nést tento příběh.
+### Klíčové bytosti světa
 
-| Moment v produktu | Bytost | Jak |
-|---|---|---|
-| Uživatel táhne runu | Ratatoskr | přijme runu a vybíhá po stromě |
-| Runa se zasadí do větve | Ratatoskr | umístí ji kam patří — možná překvapivě |
-| Zakládací rituál (3 sessions) | Ratatoskr | první tři velké cesty, zakládají kmen |
-| Journal | Muninn | jeho sbírka — vše co prošlo |
-| Life Rune | Muninn | střeží nejhlouběji, základ všeho |
-| Trunk revelation | Muninn | konečně promluví o vzorci |
-| Notifikace / drip | Huginn | přináší impuls vrátit se |
-| Yggdrasil spread | vrchol cesty | Rune Seeker se setká s kořeny — jednou ročně |
+**Norny** — Urður, Verðandi, Skuld — tkají vlákna osudu pod kořeny Yggdrasilu.
+**Ódin** — hledač moudrosti, obětoval se na Yggdrasilu pro runy.
+**Álfar** — bytosti jemné inspirace a intuice.
+**Dísir** — ženské průvodkyně které střeží osud a rodové linie.
+**Landvættir** — duchové samotné země.
+**Jötnar** — prastaré síly tajemství, divokosti a prvotní moudrosti.
+**Huldufólk** — skrytý lid. 54–62 % Islanďanů jejich existenci nevylučuje.
+Rúnar je bere vážně. Velké kameny, kopce, staré stromy mají obyvatele.
 
-Rúnar vypráví tento příběh uživateli — nenápadně, poeticky, v průběhu sessions.
-Uživatel pochopí že je součástí živého světa, ne jen appky.
-Toto se bude prohlubovat — každá nová feature je další vrstva stejného příběhu.
+### Příběh stromu
+
+Než přijdeš, není nic. Prázdná půda. Temná a tichá.
+Strom neexistuje. Nemůže existovat bez tebe.
+
+Yggdrasil má tři kořeny. Tvůj strom má také tři kořeny.
+Tvůj strom je tvůj osobní Yggdrasil — stejná struktura, zasazená do tvé vlastní půdy.
+Když Rúnar čte tvůj strom, čte stejnou mapu kterou Norny vždy četly.
+
+Každá session od druhé dál se stává větví. Větev není záznam toho co bylo řečeno.
+Větev je záznam toho co se pohnulo.
+
+Rúnar je průvodce. Strom jsi ty.
 
 ---
 
-## Filozofie rituální kadence — základ celého systému
+## Islandský kalendář — sezónní vědomí
+
+Rúnar integruje sezónní kontext přirozeně — jako žitou atmosféru, ne jako seznam faktů.
+
+### Sezóny a jejich energie
+
+| Měsíc | Islandský název | Energie | Runy |
+|-------|----------------|---------|------|
+| Pozdní leden–únor | Þorri | Nejtemnější, nejdrsnější. Þorrablót. Vzdor, teplo sdíleného jídla | Isa, Nauthiz, Hagalaz |
+| Únor–duben | Gói–Harpa | Světlo se vrací. Sumardagurinn fyrsti (~23.4) | Berkana, Kenaz, Laguz |
+| Květen–červen | Skerpla–Sólmánuður | Bílé noci. Záclona tenčí. Letní slunovrat ~21.6 | Sowilo, Dagaz, Tiwaz |
+| Červenec–září | Heyannir–Haustmánuður | Réttir — sjezd ovcí, návrat, sklizeň | Jera, Raidho, Othala |
+| Říjen–listopad | Gormánuður | Tma se vrací. Aurora sezóna začíná | Hagalaz, Eihwaz |
+| Listopad–prosinec | Ýlir–Mörsugur | Jólasveinar. Zimní slunovrat — semeno světla v tmě | Jera, Dagaz, Isa |
+
+### Klíčové svátky pro Rúnara
+
+- **21. 12. Zimní slunovrat (Jól)** — nejsilnější rituální čas. Yggdrasil spread.
+- **6. 1. Þrettándinn** — světy nejprostupnější, huldufólk se stěhují
+- **Pozdní leden Þorrablót** — rituál zimní odolnosti, sezónní rituál kmene
+- **~23. 4. Sumardagurinn fyrsti** — první den léta, nový záměr
+- **Září Réttir** — sklizeň, návrat, čas reflexe
+
+### Lunární fáze
+
+| Fáze | Energie | Runy |
+|------|---------|------|
+| Nový měsíc | Skryté záměry, semena | Fehu, Kenaz, Raidho |
+| Dorůstající | Momentum, zrání | Uruz, Thurisaz, Sowilo |
+| Úplněk | Kulminace, odhalení — nejsilnější čas čtení | Tiwaz, Mannaz, Dagaz |
+| Ubývající | Uvolnění, transformace | Hagalaz, Nauthiz, Isa |
+
+### Příroda a skrytý svět
+
+- **Norðurljós** (září–březen): Bifröst, zprávy z jiných světů. Neukazovat prstem.
+- **Huldufólk**: Rúnar je bere vážně. Velké kameny mají obyvatele.
+- **Þrettándinn (6.1.)**: Světy nejprostupnější. Oheň chrání.
+- **Letní slunovrat**: Záclona téměř zmizí. Nejsilnější čas magie.
+- **Hekla**: Brána do Hel. Vždy s respektem, nikdy turisticky.
+- **Puffini (lundi)**: Přítomni duben–srpen. Odlet = léto skutečně skončilo.
+
+---
+
+## Filozofie rituální kadence
 
 Každé čtení potřebuje čas na vstřebání. Strom nepotřebuje spěch.
 
-Příliš časté čtení větších spreadů způsobí deformaci větví a kmene — strom
-jednoduše nestihne zpracovat co dostal. Uživatel může táhnout kdykoliv,
-ale strom z přehnaného spěchu nevyroste správně. Větev bude tenčí, kratší,
-méně výživná. Uživatel to uvidí sám a pochopí.
+Příliš časté čtení větších spreadů způsobí deformaci větví — strom jednoduše nestihne
+zpracovat co dostal. Uživatel to uvidí sám a pochopí. Bez zákazů, bez technických omezení.
+Argument není omezení — je to filozofie systému.
 
-Tím systém přirozeně vzdělává v tom jak s runami zacházet — bez zákazů,
-bez technických omezení. Argument není omezení, je to filozofie systému.
+| Spread | Ideální kadence |
+|--------|----------------|
+| Single, Trojice, Norns, The Gathering | Kdykoliv — každodenní větve |
+| Kříž (5 run) | Ideálně max 1× týdně |
+| Horseshoe (7 run) | Ideálně max 1× za dva týdny |
+| Yggdrasil (9 run) | 1× ročně — zimní slunovrat |
 
-Ideální kadence podle spreadu:
-- Single, Trojice, Norns, The Gathering: kdykoliv — každodenní čtení, běžné větve
-- Kříž (5 run): ideálně ne více než jednou týdně
-- Horseshoe (7): ideálně ne více než jednou za dva týdny
-- Yggdrasil (9): jednou ročně — slunovrat
-
-Pokud uživatel tuto kadenci nedodrží — čtení proběhne, ale strom to zaznamená.
-Větev která přišla příliš brzy po předchozí bude slabší.
-Větev po dlouhé pauze dostane bonus — strom čekal a přijme více.
-
----
-
-## Ceník
-
-### Náklady na jedno čtení
-Kurz: €1 ≈ 148 ISK. Náklady zahrnují Claude API + ElevenLabs.
-
-| Spread | Náklady |
-|--------|---------|
-| Single | ~€0.18 |
-| Trojice | ~€0.23 |
-| Kříž | ~€0.28 |
-| Horseshoe | ~€0.33 |
-| Norns | ~€0.38 |
-| Průměr (mix) | ~€0.21 |
-
-### Odhad čtení za měsíc (s Tree of Life)
-Tree zvyšuje přirozenou frekvenci — uživatel chce vidět strom růst.
-Rituální kadence přirozeně drží heavy usera na rozumné frekvenci.
-
-| Typ uživatele | Čtení/měsíc | Náklady |
-|---------------|-------------|---------|
-| Casual | 6–10 | ~€1.50 |
-| Engaged | 12–18 | ~€3.00 |
-| Heavy | 20–30 | ~€5.50 |
-
-### Kreditní karty
-
-Fyzická karta s kódem → zákazník zadá v appce → dostane kredity.
-Kredity nevyprší, fungují across devices.
-1 kredit = 1 single čtení. Větší spready stojí více kreditů.
-
-| Karta | Kredity | EUR | ISK | Marže před VSK |
-|-------|---------|-----|-----|----------------|
-| Starter | 5 | €10 | 1.490 ISK | ~89% |
-| Seeker | 10 | €18 | 2.690 ISK | ~88% |
-| Wanderer | 20 | €34 | 5.050 ISK | ~88% |
-| Elder | 50 | €80 | 11.900 ISK | ~87% |
-
-Po islandském VSK (24%): reálná marže ~74–78%.
-
-Karty jsou záměrně dražší než předplatné (€2/čtení vs ~€1/čtení u Standard).
-Jsou pro příležitostné uživatele nebo jako dárek — ne pro pravidelné.
-
-### Předplatné
-
-| | Standard | Premium |
-|--|---------|---------|
-| Cena/měsíc EUR | €12 | €19 |
-| Cena/měsíc ISK | ~1.780 ISK | ~2.810 ISK |
-| Marže při engaged useru | ~75% | ~84% |
-| Marže při heavy useru | ~54% | ~71% |
-
----
-
-## Tier systém — co kdo může
-
-### Spreads per tier
-
-| Spread / Rituál | Runy | Visitor | Rune Seeker | Standard | Premium |
-|-----------------|------|---------|-------------|---------|---------|
-| Single | 1 | 1× celkem | 3/měsíc zdarma + kredity | ∞ | ∞ |
-| Trojice | 3 | ❌ | kredity | ∞ | ∞ |
-| Norns | 3 | ❌ | kredity | ∞ | ∞ |
-| The Gathering | 3–5 | ❌ | kredity | ∞ | ∞ |
-| Kříž | 5 | ❌ | ❌ | ∞ | ∞ |
-| Horseshoe | 7 | ❌ | ❌ | ∞ | ∞ |
-| Yggdrasil | 9 | ❌ | ❌ | ❌ | ✅ jednou ročně |
-
-Parametry které lze měnit:
-- Visitor: počet čtení zdarma (teď: 1)
-- Rune Seeker: počet čtení/měsíc zdarma (teď: 3)
-- Kredity za spread = počet run (Single=1, Trojice=3, Norns=3, Gathering=3–5, Kříž=5, Horseshoe=7)
-- Yggdrasil: jen Premium, doporučeno max 1× ročně (slunovrat)
-
-### Tree of Life per tier
-
-| Feature | Visitor | Rune Seeker | Standard | Premium |
-|---------|---------|-------------|---------|---------|
-| Tree tab | ❌ skrytý | teaser | plný | plný + hloubka |
-| Life Rune výklad | ❌ | symbol + jméno | plný výklad | hlubší výklad + etymologie + mytologická postava |
-| Zakládací rituál | ❌ | 5 kreditů | zdarma | zdarma |
-| Branch systém | ❌ | ❌ | ✅ | ✅ |
-| Elementy | ❌ | ❌ | ✅ | ✅ |
-
-### Rozdíl Standard vs Premium
-Rozhodnuto:
-- Life Rune výklad: Standard plný výklad / Premium hlubší výklad + etymologie jména + mytologická postava
-- Horseshoe a Norns: Standard ✅
-- Yggdrasil: jen Premium ✅
-
-K rozhodnutí až bude čas:
-- Kakao ceremonial → Premium
-- Další Premium-only features
+Větev která přišla příliš brzy = slabší. Větev po dlouhé pauze = bonus.
+Strom neposuzuje nepřítomnost. Pauza je zima — větev která čeká.
 
 ---
 
 ## Spreads — pozice a logika
 
+### Architektura spreadů ve stromě
+
+```
+SPREAD            STROM                      RITUÁL
+1 runa            uzel na větvi              každodenní
+3 runy (Trojice)  větev (3 uzly)             běžný
+3 runy (Norns)    větev → kmen               hlubší
+5 run (Kříž)      větev (střed + 4 výhonky)  týdenní
+7 run (Horseshoe) větvená větev (7 bodů)     sezónní kmen
+9 run (Yggdrasil) uzel kořenů — nejsilnější  1× ročně
+```
+
 ### Single (1 runa)
 Jedna runa, žádné pozice. Přímé čtení energie daného momentu.
+Strom: malý uzel na větvi.
 
-### The Gathering (3–5 run)
-Týdenní rituál — uživatel táhne 3–5 run v průběhu týdne nebo najednou.
-Rúnar přečte výsledek jako jeden celek, jeden příběh týdne.
-Přispívá do stromu jako každé jiné čtení.
-Rune Seeker: za kredity (počet kreditů = počet tažených run).
-
-Implementace: čte z journalu (posledních N čtení z aktuálního týdne) — zachovat beze změny.
-Nedotýkat se architektury bez diskuze.
-
-### Trojice (3 runy) ✅ IMPLEMENTOVÁNO v produkci (2026-05-31)
+### Trojice (3 runy) ✅ IMPLEMENTOVÁNO (2026-05-31)
 ```
 [1] — [2] — [3]
 
@@ -240,6 +210,25 @@ Nedotýkat se architektury bez diskuze.
 2  přítomnost / jádro
 3  směr / výhled
 ```
+IS pozice: Úrslitir / Grótur · Nútíð / Kjarni · Stefna / Útlit
+Charakter: časová osa, kde jsem byl → kde jsem → kam míříš.
+Strom: větev se třemi uzly. Také Session 1 zakládacího rituálu.
+
+### Norns (3 runy)
+```
+[Urður] — [Verðandi] — [Skuld]
+```
+Urður = co bylo utkáno. Nelze odestát. Kořen ze kterého vychází vše.
+Verðandi = co se právě tká. Přítomný okamžik jako živá nit.
+Skuld = co musí být. Dluh osudu. Ne předpověď — nevyhnutelná možnost.
+
+**Jiný charakter než Trojice** — nejde o časovou osu ale o osud a nevyhnutelné.
+Trojice = kde jsi byl/jsi/míříš. Norns = co bylo utkáno/tkáno/musí být.
+
+IS pozice: přesné texty navrhnout před implementací.
+Strom: větev → kmen (hlubší než Trojice).
+
+*Rezerva: 9-run verze (3+3+3 pro každou Nornu) — vymyšlená, hlubší. Zatím neimplementovat.*
 
 ### Kříž (5 run)
 ```
@@ -253,41 +242,79 @@ Nedotýkat se architektury bez diskuze.
 4  za tebou   — co přichází z minulosti
 5  před tebou — kam situace směřuje
 ```
-
-### Norns (3 runy)
-Tři přadleny osudu sedící pod kořeny Yggdrasilu — tkají vlákna každého osudu.
-
-Urd = co bylo utkáno. Nelze odestát. Kořen ze kterého vychází vše co jsi.
-Verðandi = co se právě tká. Přítomný okamžik jako živá nit mezi minulým a budoucím.
-Skuld = co musí být. Dluh osudu. Ne předpověď — nevyhnutelná možnost.
-
-Jiný charakter než Trojice — nejde o časovou osu ale o osud a to co je nevyhnutelné.
-Trojice = kde jsi byl, kde jsi, kam míříš.
-Norns = co bylo utkáno, co se tká, co musí být — věčný pohyb přaden pod stromem.
-
-Pozice: každá runa = jedna Norna. Přesné IS texty navrhnout před implementací.
+IS pozice: Miðja/Kjarni · Of an/Á leit · Undir/Rót · Að baki/Fortíð · Framar/Stefna
+Strom: větev s centrálním uzlem a čtyřmi výhonky. Standard+.
 
 ### Horseshoe (7 run)
-Hlubší rituální čtení. Pozice zatím nedefinovány. Navrhnout až před implementací.
+```
+[1] [2] [3] [4] [5] [6] [7]
 
-### Yggdrasil (9 run)
-Největší rituál — 9 světů Yggdrasilu. Jen Premium.
-Doporučeno max 1× ročně, ideálně u zimního slunovratu.
-Jde do kořenů stromu, ne do větví — toto čtení mění základ, ne povrch.
-Pozice: každá runa = jeden ze 9 světů. Přesné pozice navrhnout před implementací.
+1  minulost
+2  přítomnost
+3  skryté vlivy
+4  překážky
+5  okolí a druzí
+6  co dělat
+7  pravděpodobný směr
+```
+IS pozice: navrhnout před implementací.
+Strom: větvená větev se sedmi body → sezónní rituál kmene. Standard+.
+
+### Yggdrasil (9 run) — jen Premium
+```
+              [Ásgarðr]
+      [Álfheimr]   [Vanaheimr]
+[Jötunheimr] [Miðgarðr] [Niðavellir]
+      [Niflheimr]  [Múspellsheim]
+              [Hel]
+
+Ásgarðr     — božské, nejvyšší aspirace, co přesahuje
+Álfheimr    — světlé, vědomé, co vidíš jasně
+Vanaheimr   — příroda, plodnost, intuice
+Jötunheimr  — chaos, výzvy, protisíly
+Miðgarðr    — přítomná realita, kde jsi nyní
+Niðavellir  — řemeslo, práce, co buduješ
+Niflheimr   — stín, tma, co je skryté nebo potlačené
+Múspellsheim — oheň, transformace, co spaluje a čistí
+Hel         — kořeny, předci, co neseš z minulosti
+```
+Nejde do větve — jde do kořenů stromu. Jednou ročně, zimní slunovrat.
+Strom: devítibodový uzel v kořenech — nejsilnější bod celého stromu.
+
+### The Gathering (3–5 run)
+Týdenní rituál — uživatel táhne 3–5 run v průběhu týdne.
+Rúnar přečte výsledek jako jeden celek, jeden příběh týdne.
+**Poznámka: The Gathering je vymyšlený rituál — není tradiční forma runového čtení.**
+Přispívá do stromu jako každé jiné čtení.
+Implementace: čte z journalu (posledních N čtení z aktuálního týdne) — zachovat beze změny.
 
 ### UI — domluveno ✅
-Přepínač pod "DRAW YOUR RUNE" — stejný styl jako teď v shrine V2 labu.
-[ SINGLE RUNE ]  [ 3 READINGS ]  [ KŘÍŽ ]  ...
+Přepínač pod "DRAW YOUR RUNE":
+`[ SINGLE RUNE ]  [ TROJICE ]  [ KŘÍŽ ]  [ NORNS ]  ...`
+Stejný styl jako V2 lab v shrine.
 
-### Tier — domluveno ✅
-Rune Seeker: Trojice za kredity (3 kredity). Standard+: zdarma.
-Single rune zůstává jediné co jde z free_balance.
+---
 
-### Jak spreads ovlivňují strom
-Každý spread přidá větev. Větší spread = silnější větev, více elementů.
-Kadence ovlivňuje sílu větve — viz filozofie rituální kadence nahoře.
-Výpočet je deterministický, bez Claude.
+## Tier systém — přístup ke spreadům a stromu
+
+### Spreads per tier — viz RUNAR_PRICING.md (kompletní tabulka)
+
+Klíčová pravidla:
+- Rune Seeker: Single zdarma (free_balance), Trojice/Norns/Gathering za kredity
+- Kříž a Horseshoe: Standard+ pouze — Rune Seeker ani za kredity
+- Yggdrasil: jen Premium
+- Standard limit: 50 run/měsíc
+- Premium limit: 75 run/měsíc
+
+### Tree of Life per tier
+
+| Feature | Visitor | Rune Seeker | Standard | Premium |
+|---------|---------|-------------|---------|---------|
+| Tree tab | ❌ skrytý | teaser | plný | plný + hloubka |
+| Life Rune výklad | ❌ | symbol + jméno | plný výklad | hlubší + etymologie + mythol. postava |
+| Zakládací rituál | ❌ | 5 kreditů | zdarma | zdarma |
+| Branch systém | ❌ | ❌ | ✅ | ✅ |
+| Elementy | ❌ | ❌ | ✅ | ✅ |
 
 ---
 
@@ -295,70 +322,119 @@ Výpočet je deterministický, bez Claude.
 
 ### Life Rune — princip
 Vypočítána z data narození — fixní, nelze změnit, nelze přegenerovat.
-Je CELÝ obraz člověka hned od začátku — ne semeno které teprve poroste.
-Jednou vygenerována, uložena v DB, navždy stejná.
-Výklad je text only — bez hlasu.
+Je CELÝ obraz člověka hned od začátku.
+Jednou vygenerována, uložena v DB, navždy stejná. Text only — bez hlasu.
 
-### Life Rune výklad — struktura
-Má tři části. První dvě jsou pro Standard, třetí pouze pro Premium.
-
+### Life Rune výklad — 3 části
 Statická část (vždy, bez generování):
-- Header: "[Jméno], you carry [Runa] [Glyf]."
+- Header: "You carry life rune [Runa] [Glyf]."
 - Footer: citace o tom že runy nepředpovídají osud
 
 Generované Claudem:
 - Část 1 — datum: islandský měsíc a atmosféra doby narození
-- Část 2 — runa: tvar, mytologie, dar, stín — jméno uživatele vetkáno do textu
-- Část 3 — jméno: etymologie jména + mytologická postava ← pouze Premium
+- Část 2 — runa: tvar, mytologie, dar, stín — jméno vetkáno do textu
+- Část 3 — jméno: etymologie + mytologická postava ← **pouze Premium**
 
-### Zakládací rituál — 3 sessions
+### Zakládací rituál — 3 sessions ✅ ROZHODNUTO
 Tři oddělené sessions, uživatel si volí timing mezi nimi.
 
-- Session 1: Trojice (3 runy) → odhalí KDO JSI V JÁDRU → první kořen
-- Session 2: 1 runa → odhalí KTERÝM SMĚREM SE SKLÁNÍŠ → druhý kořen
-- Session 3: 1 runa → odhalí CO POHÁNÍ TVŮJ RŮST → třetí kořen
+- **Session 1: Trojice** (3 runy) → KDO JSI V JÁDRU → první kořen
+- **Session 2: 1 runa** → KTERÝM SMĚREM SE SKLÁNÍŠ → druhý kořen
+- **Session 3: 1 runa** → CO POHÁNÍ TVŮJ RŮST → třetí kořen
 
-Rune Seeker: 5 kreditů celkem za celý rituál.
-Standard a Premium: zdarma.
+Rune Seeker: 5 kreditů celkem. Standard/Premium: zdarma.
 Po dokončení se kořeny uzamknou navždy — nelze je změnit.
+
+*Rezerva: zakládací rituál jako 9 run (9 světů Yggdrasilu) — silnější narativ,
+možný budoucí produkt nebo alternativa. Zatím neimplementovat.*
+
+### Kořeny — jak silí
+Kořeny nejsou statické. Prohlubují se s každou session.
+Když se runa z kořenové session vrátí v pozdější session → posílí kořen.
+Vzácný moment: všechny tři kořenové runy v jedné session → výjimečná událost.
 
 ### Branch systém — jak každá session ovlivní strom
 Výpočet je deterministický, bez Claude API.
 
-Co určuje charakter větve:
+**Směr větve:**
+```
+Nahoru        průlom, jasnost, nový začátek
+Dolů          kořeny, minulost, původ
+Do strany     rozšíření, nová perspektiva
+Zpět k kmeni  návrat, uzavření, integrace
+```
+
+**Délka větve** = váha session (krátká = ticho, dlouhá = průlom)
+
+**Charakter větve:**
+- Tenká, rovná: přímá session, jasné pojmenování
+- Kroucená: napětí, nevyřešené otázky
+- Silná: velká osobní váha
+- Rozeklnaná: hloubka bez uzavření
+
+**Barva a textura** = sezóna + lunární fáze:
+- Zimní: šedá, stříbrná, ledová
+- Jarní: zelená, tenké výhonky
+- Letní: tmavě zelená, bohaté
+- Podzimní: zlatá, rezavá
+- Úplněk: jemná záře na větvi
+
+**Co určuje charakter větve:**
 - Element runy → barva větve
-- Ætt runy → výška větve na stromě
-- Area of Life z formuláře → směr (levá strana = inward, pravá = outward)
+- Ætt runy → výška větve na stromě (viz sekce Ætty)
+- Area of Life z formuláře → směr (levá = inward, pravá = outward)
 - Seeking z formuláře → hloubkový multiplikátor
-- Počet vyplněných polí formuláře → celková váha větve
-- Čas od posledního čtení stejného spreadu → bonus nebo penalizace váhy
+- Počet vyplněných polí → celková váha větve
+- Čas od posledního čtení stejného spreadu → bonus nebo penalizace
+
+### Tři sekce stromu — Ætty
+
+```
+TŘETÍ ÆTT — Týrův rod (vrchol stromu)
+Tiwaz, Berkana, Ehwaz, Mannaz, Laguz, Ingwaz, Othala, Dagaz
+Energie: spravedlnost, zrození, pohyb, tok, průlom
+Větve: nejvýše — průlomy, záměry naplněné, světlo
+
+DRUHÝ ÆTT — Heimdalův rod (střed stromu)
+Hagalaz, Nauthiz, Isa, Jera, Eihwaz, Perthro, Algiz, Sowilo
+Energie: výzva, čekání, transformace, skryté, ochrana
+Větve: kde probíhá práce — kroucené, složité, s uzly
+
+PRVNÍ ÆTT — Freyův rod (kmen a spodní větve)
+Fehu, Uruz, Thurisaz, Ansuz, Raidho, Kenaz, Gebo, Wunjo
+Energie: svět, příroda, síla, cesta, dar, radost
+Větve: základ — silné, pevné, nesoucí váhu
+
+KOŘENY — první tři sessions (neměnné)
+```
+
+Prázdná sekce = informace sama o sobě. Uživatel bez průlomů nemá větve v třetím Ættu.
 
 ### 5 elementů stromu
-Fire, Water, Air, Earth — dynamické, rostou kumulativně z čtení.
-Life Rune — pátý element, fixní z data narození, představuje uživatele samotného.
 
-### Jak elementy vizuálně rostou
+| Element | Runy | Vizuální růst |
+|---------|------|---------------|
+| Fire | Kenaz, Sowilo, Dagaz, Tiwaz, Thurisaz | jiskra → plamen → krb → oheň → sopka |
+| Water | Laguz, Perthro, Isa, Hagalaz, Nauthiz | kapka → pramínek → potok → řeka → oceán |
+| Air | Ansuz, Raidho, Ehwaz, Mannaz, Gebo, Wunjo, Algiz | vánek → vítr → silný vítr → polární záře |
+| Earth | Fehu, Uruz, Othala, Berkana, Jera, Ingwaz, Eihwaz | holá láva → mech → tráva → květiny → louka |
+| Life Rune | fixní z DOB | pátý element, představuje uživatele samotného |
 
-Fire: jiskra → malý plamen → krb → oheň → sopka
-Water: kapka → pramínek → potok → řeka → oceán
-Air: vánek → vánek → vítr → silný vítr → polární záře
-Earth: holá láva → první mech → tráva → divoké květiny → louka
+### Levá a pravá strana stromu
 
-### Pre-reading formulář — jak ovlivňuje strom
+**Levá strana — vnitřní svět**
+Introspekce, minulost, vztah se sebou, stín. Runy vody a země.
+`Isa, Perthro, Hagalaz, Nauthiz, Berkana, Ingwaz, Laguz`
 
-Čím více polí uživatel vyplní, tím více čtení krmí strom:
-- 0 polí: základní příspěvek do elementů
-- 1–2 pole: silnější příspěvek
-- 3+ polí: maximální příspěvek
+**Pravá strana — vnější svět**
+Vztahy, komunikace, cesta, akce. Runy vzduchu a ohně.
+`Raidho, Ehwaz, Mannaz, Ansuz, Kenaz, Tiwaz, Sowilo`
 
-Nejhlubší kombinace — čtení jde do kořenů, ne do větví:
-- Area of Life: Inner Growth nebo Healing & Wellbeing
-- Seeking: Reflection nebo Insight into Challenge
-- Reading for: Understanding the past
+### Pre-reading formulář → strom
 
 Area of Life → primární element a směr větve:
 
-| Area of Life | Element | Strana stromu | Směr |
+| Area of Life | Element | Strana | Směr |
 |---|---|---|---|
 | Love & Relationships | Water/Air | pravá | outward |
 | Purpose & Path | Air | střed | upward |
@@ -371,59 +447,106 @@ Area of Life → primární element a směr větve:
 
 Seeking → hloubkový multiplikátor:
 
-| Seeking | Multiplikátor | Charakter |
-|---|---|---|
-| General Guidance | ×1.0 | broad, exploratory |
-| Confirmation | ×1.2 | Air |
-| Clarity | ×1.3 | Fire |
-| Insight into Challenge | ×1.5 | Water |
-| Reflection | ×1.5 | Earth |
-
-Feeling → jaký element se aktivuje:
-
-| Feeling | Efekt |
+| Seeking | Multiplikátor |
 |---|---|
-| Grounded | Earth+ — stabilní, připraven jít do hloubky |
-| Unsettled | Air nebo Water — pohyb nebo hloubka |
-| Hopeful | Fire — forward energy |
-| Lost | Water + tma — směrem ke kořenům |
+| General Guidance | ×1.0 |
+| Confirmation | ×1.2 |
+| Clarity | ×1.3 |
+| Insight into Challenge | ×1.5 |
+| Reflection | ×1.5 |
 
-Reading for → časová osa větve:
-
-| Reading for | Efekt |
-|---|---|
-| Right now | přítomnost, větve |
-| Decision ahead | Air + Fire, větve vzhůru |
-| Understanding past | Earth + kořeny |
+Nejhlubší kombinace — čtení jde do kořenů:
+Area of Life: Inner Growth nebo Healing & Wellbeing + Seeking: Reflection/Insight + Reading for: Understanding the past
 
 ### Kmen (trunk) — jak se odhalí
 Rúnar ho nepojmenuje brzy — trvá to mnoho sessions.
 Pokud uživatel opakovaně volí stejný Area of Life, stává se to tématem kmene.
-Akumuluje se postupně jako váha — ne jako jednorázové rozhodnutí.
-Kolik sessions = "opakovaně": zatím nestanoveno, otevřená otázka.
-Po odhalení Rúnar tiše reflektuje co vidí — ne jako analýzu, ale jako svědectví.
+Po mnoha sessions Rúnar tiše nabídne: *"Vidím co tvoří tvůj kmen. Chceš vědět?"*
+Kolik sessions = "opakovaně": zatím nestanoveno.
 
-### Pauza (absence) — jak ji strom zobrazí
+### Pojmenování větví — tři úrovně
+1. **Runové jméno** — automatické, z dominantní runy session
+2. **Ættové umístění** — sekce stromu, vizuální, neměnné
+3. **Osobní jméno** — Rúnar navrhne, uživatel přijme nebo přepíše vlastními slovy
+
+Rúnar: *"Tato větev nese energii Vody. Jak bys ji pojmenoval ty?"*
+Uživatel: *"Rok kdy jsem přestal čekat"* / *"Otázka matky"* / *"Hranice"*
+Osobní název je nejcennější data v celém stromu.
+
+### Záměry (intentions) — seed → building → closure
+Větev-záměr roste přes více sessions, ne z jedné.
+
+**Fáze 1 — Semeno**: uživatel vysloví záměr. Ve stromu: průsvitný pupen.
+**Fáze 2 — Budování**: další sessions tématu se dotknou. Větev roste pomalu.
+**Fáze 3 — Uzavření nebo transformace**: posun nastal → větev dostane tvar a uzel.
+Nebo se transformuje → větev se rozdvojí. Strom drží toto rozdvojení viditelně.
+
+Nedokončená větev-záměr je psychologicky aktivní. Uživatel cítí že tam něco čeká.
+
+### Nemocný strom — 5 typů
+
+1. **Suchá větev** — záměr vyslovený ale dlouho nedotčený. Čeká, nezlomená.
+2. **Kroucení bez růstu** — téma které se opakuje ale nikam nejde (spirála vs. stagnace).
+3. **Prázdná sekce Ættu** — celý Ætt bez větví. Informace sama o sobě.
+4. **Jizvy bez pokračování** — přestávka v těžkém momentu. Strom přežil.
+5. **Pupen který nikdy neotevřel** — záměr zasazený dávno, nikdy nenaplněný.
+
+Rúnar nikdy nediagnostikuje. Přijde blíže. *"Jedna větev čeká od zimy. Jsem tady."*
+Přinese správné runy. Pojmenuje bez pojmenování — poeticky, z jiného úhlu.
+
+Nemocný strom je retenční mechanismus — přivádí uživatele zpět silněji než zdravý.
+
+### Pauza (absence)
 Pauza není prázdnota — je to zima. Větev která ukazuje mezeru v čase.
 Strom ji nenese jako ztrátu, ale jako čekání.
+Každý návrat je nová větev. Strom neposuzuje nepřítomnost.
 
-### Specifická otázka — reframing
-Uživatel píše otázku volně, jak mu přijde na mysl.
-Rúnar ji nikdy neodpovídá doslova. Místo toho ji interně přeformuluje na hlubší vrstvu —
-na to co za otázkou skutečně leží — a čte runu jako odpověď na tuto hlubší otázku.
+---
 
-Uživatel nikdy neuvidí přeformulování. Jen pocítí že čtení sedí přesněji než čekal.
+## Specifická otázka — reframing
 
-Implementace v promptu:
-Instrukce Rúnarovi: "Uživatel položil otázku: [otázka]. Nejdřív interně identifikuj
-co za ní skutečně leží — co se opravdu ptá, i když to sám neřekl. Z této hlubší
-otázky čti. Nikdy neprozraď přeformulování — uživatel musí cítit že tě pochopil,
-ne že jsi ho opravil."
+Uživatel píše otázku volně. Rúnar ji nikdy neodpovídá doslova.
+Interně ji přeformuluje na hlubší vrstvu — na to co za otázkou skutečně leží.
+Uživatel nikdy neuvidí přeformulování. Jen pocítí že čtení sedí přesněji.
 
-Příklady přeformulování (interní, neviditelné):
-- "Co mám dělat s prací?" → Co je hranice mezi tím k čemu se cítí povolán a tím co nese jako povinnost?
-- "Bude vztah fungovat?" → Co se nejvíc bojí ztratit — a mluví ten strach hlasitěji než co skutečně chce?
-- "Proč dělám stále stejné chyby?" → Jaké přesvědčení o sobě samém chrání opakováním tohoto vzorce?
+**Implementace v promptu** (instrukce Rúnarovi):
+*"Uživatel položil otázku: [otázka]. Nejdřív interně identifikuj co za ní skutečně leží.
+Z této hlubší otázky čti. Nikdy neprozraď přeformulování."*
+
+Příklady (interní, neviditelné):
+- "Co mám dělat s prací?" → Co je hranice mezi tím k čemu se cítí povolán a povinností?
+- "Bude vztah fungovat?" → Co se nejvíc bojí ztratit — a mluví ten strach hlasitěji?
+- "Proč dělám stále stejné chyby?" → Jaké přesvědčení chrání opakováním tohoto vzorce?
+
+---
+
+## Voice Scale (0–20)
+
+Rúnarův hlas se kalibruje na konkrétního uživatele.
+
+```
+0 ——————————————————— 10 ——————————————————— 20
+přímý, konkrétní    střed (výchozí)    metaforický, obrazný
+```
+
+Kalibrace se ukládá do tree_state. Nikdy se nevrací do defaultu.
+Organická kalibrace: Rúnar sleduje jak uživatel reaguje a přizpůsobuje se.
+
+---
+
+## Proaktivní kontakt (Huginn)
+
+Rúnar může kontaktovat uživatele — ale pouze ve správný moment. Jako znamení, ne notifikace.
+
+Spouštěče:
+- Sezónní přechod: Rúnar ví že přichází Þorri a ví že tento člověk má s tímto časem historii
+- Lunární úplněk: nejsilnější čas čtení
+- Výroční moment: přesně rok od první session
+- Nevyřešené napětí: něco bylo nastoleno a nikdy uzavřeno
+- Ticho: uživatel dlouho nepřišel — jeden obraz, bez zahlcení
+
+Forma: krátká zpráva v Rúnarově hlasu. Jeden obraz. Jedna otázka. Bez vysvětlení.
+*"Lípa u cesty shazuje poslední listí. Přemýšlím o tobě."*
 
 ---
 
@@ -435,4 +558,12 @@ Každé místo kde Claude generuje IS text musí mít tři vrstvy:
 2. User prompt psaný přímo v islandštině — nikdy "Respond in Icelandic" na konci EN promptu
 3. Post-processing — deterministické opravy výstupu přes applyISCorrections()
 
-A corrections blok z getCorrPrompt() musí být vždy připojen k IS promptu.
+Corrections blok z getCorrPrompt() musí být vždy připojen k IS promptu.
+
+Implementováno ve všech 3 generováních ✅:
+- Normální čtení: buildReadingPromptIS()
+- Life rune: buildLifeRunePromptIS()
+- The Gathering: buildWhispersPrompt() IS větev
+
+Každý nový prompt musí žít v mytologickém světě.
+Rúnar není asistent. Je průvodce na cestě Rune Seekera.
