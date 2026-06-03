@@ -630,6 +630,7 @@ function updateUIText() {
   setText('begin-btn', t('begin_btn'));
   setText('draw-lbl', t('draw_lbl'));
   setText('draw-note', t('draw_note'));
+  setText('btn-random', t('random_btn'));
   setText('btn-speak', t('speak_btn'));
   setText('life-rune-lbl', t('life_rune_lbl'));
   setText('drawn-lbl', t('drawn_lbl'));
@@ -823,6 +824,44 @@ function loadCollAudio(l) {
     playerEl.innerHTML = _makeCapPlayer('coll', pick.audio_url, false);
     _capWire('coll');
   }
+}
+
+
+// ─── RANDOM RUNE DRAW ────────────────────────────────────
+function drawRandomRune() {
+  var buttons = Array.from(document.querySelectorAll('#reader-grid .rb'));
+  if (!buttons.length) return;
+  var randomBtn = document.getElementById('btn-random');
+  if (randomBtn) randomBtn.disabled = true;
+
+  // Timing: fast start, then slow down to final stop
+  var delays = [];
+  for (var i = 0; i < 15; i++) delays.push(60);
+  for (var i = 0; i < 8; i++) delays.push(80 + i * 25);
+  delays.push(300); delays.push(450); delays.push(600);
+
+  var step = 0;
+  var lastBtn = null;
+
+  function tick() {
+    if (lastBtn) lastBtn.classList.remove('flashing');
+    var idx = Math.floor(Math.random() * buttons.length);
+    lastBtn = buttons[idx];
+    lastBtn.classList.add('flashing');
+    step++;
+    if (step < delays.length) {
+      setTimeout(tick, delays[step]);
+    } else {
+      setTimeout(function() {
+        if (lastBtn) {
+          lastBtn.classList.remove('flashing');
+          lastBtn.click();
+        }
+        if (randomBtn) randomBtn.disabled = false;
+      }, 250);
+    }
+  }
+  tick();
 }
 
 // ─── RUNE GRID ───────────────────────────────────────────
