@@ -603,7 +603,7 @@ function _updateGateTexts() {
   setText('auth-modal-sub', lang === 'is' ? 'Ekkert lykilorð þarf — töfralykill kemur í pósthólfið þitt.' : 'No password needed — a magic link will arrive in your inbox.');
   const _consentEl = document.getElementById('auth-consent-txt');
   if (_consentEl) _consentEl.innerHTML = lang === 'is'
-    ? 'Með því að halda áfram samþykkir þú <a href="runar-privacy.html" target="_blank" rel="noopener">persónuverndarstefnu okkar</a>. Við geymum aðeins það sem þarð til að muna lestrana þin. Engin rakning, engar auglýsingar.'
+    ? 'Með því að halda áfram samþykkir þú <a href="runar-privacy.html" target="_blank" rel="noopener">persónuverndarstefnu okkar</a>. Við geymum aðeins það sem þarf til að muna lestrana þín. Engin rakning, engar auglýsingar.'
     : 'By continuing, you agree to our <a href="runar-privacy.html" target="_blank" rel="noopener">Privacy Policy</a>. We store only what is needed to remember your readings. No tracking, no ads.';
   buildPills();
 }
