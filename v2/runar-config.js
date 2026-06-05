@@ -137,7 +137,7 @@ const TIERS = {
   premium: {
     label:            'Premium',
     label_is:         'Premium',
-    monthly_readings: null,
+    monthly_readings: 75,          // Premium: 75/month — matches TIER_LIMITS.premium.monthly_limit
     voice_monthly:    true,
     voice_credits:    true,
     voice_static:     true,
@@ -162,6 +162,18 @@ const APP = {
   supported_langs: ['en', 'is'],
   stream_delay_ms: 25,        // word-by-word stream speed
   version:         '0.1.0',  // increment on significant changes
+};
+
+// ─── PATTERN WINDOW ─────────────────────────────────────
+// Determines intensity of pattern reactions on the tree.
+// Does NOT gate whether a pattern triggers — only how strongly.
+// Adjust after first 50 users based on real data.
+// Used by: detectPatterns() in runar-gathering.js / runar-tree.js
+const PATTERN_WINDOW = {
+  high: 7,    // days — strong visual + heavier reading tone
+  mid:  14,   // days — medium visual
+  low:  30,   // days — subtle visual, Gathering still available
+  // beyond low: pattern still recorded, minimal visual response
 };
 
 // ─── TIER LIMITS — single source of truth ───────────────
@@ -226,7 +238,7 @@ const SPREAD_COSTS = {
   single:    { free: 1,    credits: 1  },
   trojice:   { free: null, credits: 3  },
   cross:     { free: null, credits: 5  },
-  gathering: { free: null, credits: -1 },  // -1 = variable (number of runes selected)
+  gathering: { free: null, credits: 3  },  // flat: 3 credits per Gathering reading
   horseshoe: { free: null, credits: 7  },
   norns:     { free: null, credits: 3  },
   yggdrasil: { free: null, credits: 9  },
@@ -266,10 +278,53 @@ const SPREAD_CONFIG = {
     rune_count: 3,
     positions: {
       en: ['Urður / Past', 'Verðandi / Present', 'Skuld / Future'],
-      is: ['Urður / Fortíð', 'Verðandi / Nútíð', 'Skuld / Framtið'],
+      is: ['Urður / Fortíð', 'Verðandi / Nútíð', 'Skuld / Framtíð'],
     },
     credits: 3,
     tokens:  900,
+  },
+  horseshoe: {
+    rune_count: 7,
+    positions: {
+      en: ['Past',       'Present',    'Hidden / Near future',
+           'Challenges', 'Outside forces', 'Inner state', 'Outcome'],
+      is: ['Fortíð',     'Nútíð',      'Dulið / Nánasta framtíð',
+           'Hindranir',  'Ytri kraftar', 'Innri staða', 'Niðurstaða'],
+    },
+    credits: 7,
+    tokens:  1300,
+  },
+  yggdrasil: {
+    rune_count: 9,
+    seasonal:  { month_start: 12, day_start: 14, day_end: 28 }, // Dec 14-28 only
+    positions: {
+      en: [
+        'Asgard — Highest self',        // 1 skuld
+        'Vanaheim — Harmony',           // 2 skuld
+        'Alfheim — Creativity',         // 3 skuld
+        'Midgard — Daily reality',      // 4 verdandi
+        'Jotunheim — Challenge',        // 5 verdandi
+        'Svartalfheim — Hidden craft',  // 6 urd
+        'Nidavellir — Deep source',     // 7 urd
+        'Niflheim — Origin',            // 8 urd
+        'Hel — Completion',             // 9 urd
+      ],
+      is: [
+        'Asgardr — Haesta sjalf',
+        'Vanaheimr — Samhljomur',
+        'Alfheimr — Skapaningur',
+        'Midgardr — Dagleg reind',
+        'Jotunheimr — Hindrun',
+        'Svartalfaheimr — Dulinn list',
+        'Nidavellir — Djupur uppspretta',
+        'Niflheimr — Uppruninn',
+        'Hel — Lokid',
+      ],
+    },
+    // Norns axis per position: skuld=1-3, verdandi=4-5, urd=6-9
+    norns_axis: ['skuld','skuld','skuld','verdandi','verdandi','urd','urd','urd','urd'],
+    credits: 9,
+    tokens:  1800,
   },
 };
 

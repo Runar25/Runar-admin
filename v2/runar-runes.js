@@ -236,6 +236,19 @@ const AREAS = {
     'Innri Vöxtur',
     'Vegamót & Ákvarðanir',
   ],
+  // Norns axis: branch placement on tree + pattern classification
+  // urd=roots (past/hidden), verdandi=middle (present), skuld=crown (future/ideals)
+  // Dual-axis areas (e.g. urd/verdandi): primary axis listed first in patch v0.9
+  norns: [
+    'verdandi',  // Love & Relationships
+    'skuld',     // Purpose & Path
+    'skuld',     // Career & Creativity
+    'urd',       // Healing & Wellbeing  (dual: urd/verdandi)
+    'skuld',     // Spirituality
+    'urd',       // Family & Home
+    'urd',       // Inner Growth         (dual: urd/skuld)
+    'verdandi',  // Crossroads & Decisions
+  ],
 };
 
 // ─── SEEKING OPTIONS ────────────────────────────────────
@@ -253,5 +266,14 @@ const SEEKS = {
     'Staðfesting',
     'Innsýn í áskorun',
     'Hugleiðing',
+  ],
+  // Seeking modifier: shifts branch axis tendency when combined with Area
+  // null = neutral (no axis shift)
+  norns: [
+    null,        // General Guidance — neutral
+    'verdandi',  // Clarity
+    'verdandi',  // Confirmation
+    'urd',       // Insight into Challenge
+    'urd',       // Reflection
   ],
 };

@@ -75,7 +75,7 @@ runar-character.js a runar-utils.js načítají reader i shrine.
 NIKDY neduplikovat funkce do shrine inline JS.
 
 ### §4 — SW verze
-Po každé JS nebo CSS změně: bumpit sw.js (aktuálně v26).
+Po každé JS nebo CSS změně: bumpit sw.js (aktuálně v31).
 
 ### §5 — UI invarianty
 - var(--gold) = #FFBF00 — primární barva, NIKDY teal
@@ -138,16 +138,54 @@ POZOR: email a updated_at NEEXISTUJÍ v user_profiles.
 
 ## Spread systém
 
-| Spread | Runy | Kredity | Stav |
-|--------|------|---------|------|
-| Single | 1 | 1 (free_balance) | ✅ produkce |
-| Trojice | 3 | 3 | ✅ produkce |
-| Norns | 3 | 3 | ❌ navrženo |
-| Kříž | 5 | 5 | ❌ navrženo |
-| Horseshoe | 7 | 7 | ❌ navrženo |
-| Yggdrasil | 9 | 9 | ❌ navrženo (jen Premium) |
+| Spread | Runy | Kredity | Tier | Stav |
+|--------|------|---------|------|------|
+| Single | 1 | 1 (free_balance) | Všichni | ✅ produkce |
+| Trojice | 3 | 3 | Všichni (kredity) | ✅ produkce |
+| Norns | 3 | 3 | Standard+ | ❌ navrženo |
+| Kříž | 5 | 5 | Standard+ | ❌ navrženo |
+| Horseshoe | 7 | 7 | Standard+ | ❌ navrženo |
+| Yggdrasil | 9 | 9 | Premium (Dec 14-28) | ❌ navrženo |
+| The Gathering | — | 3 (flat) | Všichni (kredity) | ❌ redesign v0.9 |
 
+SPREAD_CONFIG chybí: horseshoe, yggdrasil — přidat před implementací.
 Pozice + SPREAD_CONFIG: viz RUNAR_DESIGN.md — Spreads sekce.
+
+---
+
+## The Gathering — nový model (patch v0.9, 2026-06-05)
+
+**Strom je detektor. Gathering je výsledek.**
+
+Gathering se spouští AUTOMATICKY detekcí vzorců — ne manuálním výběrem z deníku.
+Vizuální signál na stromě = primární notifikace.
+
+### Detekce vzorců
+- Sleduje se: stejná runa, stejný element, stejná Area of Life, těžké kombinace, Ætta
+- Žádné pevné časové okno — vzorec je vzorec bez ohledu na timing
+
+### Vizuální signály na stromě
+```
+count=1  normální bloom větve
+count=2  listy září v element barvě — "děje se něco zajímavého"
+         kořenové vzorce: pulzace kořenů (tmavší, pomalejší)
+count=3+ záření zesílí — Gathering CTA se aktivuje (popup na stromě)
+```
+
+### Eagle + Níðhöggr zároveň
+- Orel = korunní vzorce (runa/element/Area skuld+verdandi)
+- Níðhöggr = kořenové vzorce (těžké runy, Area urd, stín)
+- Plný Gathering = oba mluví v jednom výkladu
+
+### Tier + cena
+- Dostupné všem tierům (i Visitor za kredity)
+- Cena: **3 kredity flat** (SPREAD_COSTS.gathering.credits = 3)
+- Možnost nevyužít — zůstane otevřená, nezaniká
+
+### Stav implementace
+- runar-gathering.js: stará logika (manuální výběr, 1×/týden) — NAHRADIT
+- Potřeba: pattern detection funkce, vizuální stavy větví na stromě, popup CTA
+- Závisí na: tree_state DB tabulce, branch datech
 
 ---
 
