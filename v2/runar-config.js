@@ -181,13 +181,13 @@ const PATTERN_WINDOW = {
 // Unavoidable — not inherently negative.
 // [list may expand after first 50 users]
 const HEAVY_RUNES = {
-  names: ['Hagalaz', 'Nauthiz', 'Isa', 'Thurisaz', 'Perthro', 'Tiwaz'],
+  names: ['Hagalaz', 'Nauthiz', 'Isa', 'Thurisaz', 'Perth',   'Tiwaz'],
   descriptions: {
     Hagalaz:  'storm from the north that closes paths',
     Nauthiz:  'polar night, light that does not come',
     Isa:      'path that vanished under snow',
     Thurisaz: 'volcano under the glacier, force without warning',
-    Perthro:  'geyser — you do not know when it erupts',
+    Perth:    'geyser — you do not know when it erupts',
     Tiwaz:    'deliberate wintering, intentional surrender',
   },
   // Visual + reading response by count (per pattern_window intensity)
