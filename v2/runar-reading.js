@@ -243,9 +243,9 @@ function _hideSpread5Output() {
 }
 async function readRune() {
   if (_spreadMode === 'kriz') {
-    // Tier check — Standard+ only
-    if (!currentUser || (userTier !== 'standard' && userTier !== 'premium')) {
-      showToast(lang === 'is' ? 'Kross krefsit Standard eda Premium askriftar.' : 'Cross spread requires Standard or Premium.');
+    // Tier check — block Visitor (anonymous) only
+    if (!currentUser) {
+      showToast(lang === 'is' ? 'Skráðu þig inn til að nota Kross.' : 'Sign in to use the Cross spread.');
       _setSpreadMode('single'); return;
     }
     if (_spread5Runes.length === 5 && !readerRune) {
@@ -396,6 +396,9 @@ async function generateVoice() {
   if (_spreadMode === 'kriz') {
     var s5el = document.getElementById('s5-out');
     voiceText = s5el ? s5el.innerText.trim() : '';
+  } else if (_spreadMode === 'trojice') {
+    var s3el = document.getElementById('s3-out');
+    voiceText = s3el ? s3el.innerText.trim() : '';
   } else {
     voiceText = document.getElementById('out-deep').innerText.trim();
   }
@@ -443,6 +446,87 @@ async function generateVoice() {
   }
 }
 
+
+// ─── TROJICE GENERATE (3-rune spread) ────────────────────────────
+async function _generateSpread3Reading() {
+  if (_spread3Runes.length < 3) return;
+
+  var vBtn = document.getElementById('btn-generate-voice');
+  if (vBtn) { vBtn.disabled = true; vBtn.textContent = t('voice_btn'); }
+  document.getElementById('audio-player').classList.remove('visible');
+  document.getElementById('runar-audio').src = '';
+  setSt('st-voice', '');
+
+  // Hide single layers, show spread3 output
+  var s1 = document.getElementById('single-layer1');
+  var s2 = document.getElementById('single-layer2');
+  if (s1) s1.style.display = 'none';
+  if (s2) s2.style.display = 'none';
+  var s3out = document.getElementById('spread3-output');
+  if (s3out) s3out.style.display = 'block';
+
+  var rdLoad = document.getElementById('reading-loading');
+  var rdLoadTxt = document.getElementById('reading-loading-txt');
+  if (rdLoadTxt) rdLoadTxt.textContent = t('reading_loading');
+  if (rdLoad) rdLoad.style.display = 'block';
+  var pL1 = document.getElementById('layer1-lbl');
+  var pL2 = document.getElementById('layer2-lbl');
+  if (pL1) pL1.classList.add('pulsing');
+  if (pL2) pL2.classList.add('pulsing');
+
+  var u = readerUser;
+  var sys = buildSysPrompt(activeChar, lang);
+  var prompt = buildTrojicePrompt(u, _spread3Runes, lang, corrections);
+  var tokens = (SPREAD_CONFIG && SPREAD_CONFIG.trojice) ? SPREAD_CONFIG.trojice.tokens : 900;
+
+  var res = await callProxy(sys, prompt, tokens, shouldUseCredit());
+
+  if (rdLoad) rdLoad.style.display = 'none';
+  if (pL1) pL1.classList.remove('pulsing');
+  if (pL2) pL2.classList.remove('pulsing');
+
+  if (res.error === 'rate_limited') {
+    setSt('st-reader', lang === 'is' ? 'Of margar beiðnir. Bíddu aðeins.' : 'Too many requests. Please wait a moment.', 'err');
+    return;
+  }
+  if (res.error === 'no_credits' || res.error === 'monthly_limit' || res.error === 'weekly_limit') {
+    var isMonthly = res.error === 'monthly_limit';
+    var msg = isMonthly
+      ? (lang === 'is' ? 'Mánaðarlegur lesturmark er náð.' : 'Monthly reading limit reached.')
+      : (lang === 'is' ? 'Kredit þínir eru búnir.' : 'No credits remaining.');
+    setSt('st-reader', msg, 'err');
+    if (currentUser) syncMonthlyCount(currentUser.id);
+    if (currentUser) await fetchUserProfile(currentUser.id);
+    return;
+  }
+  if (res.error) { setSt('st-reader', 'Failed: ' + res.error, 'err'); return; }
+
+  var text = applyISCorrections(res.text || '', lang, corrections);
+  readerTexts[lang] = { short: text, deep: '' };
+
+  // Update label with rune glyphs
+  var s3lbl = document.getElementById('s3-trojice-lbl');
+  if (s3lbl) s3lbl.textContent = _spread3Runes.map(function(r) { return r.g; }).join(' · ');
+
+  // Save to DB (first rune as anchor)
+  if (currentUser) {
+    await saveReading(_spread3Runes[0], text, '');
+    await syncMonthlyCount(currentUser.id);
+    loadJournal();
+  } else {
+    incTrialCount();
+    updateAuthUI();
+  }
+
+  await stream('s3-out', text);
+
+  // Voice
+  if (canUseVoice()) {
+    if (vBtn) { vBtn.disabled = false; vBtn.style.display = ''; }
+  } else {
+    if (vBtn) { vBtn.disabled = true; vBtn.style.display = 'none'; }
+  }
+}
 
 // ─── KRÍŽ GENERATE (5-rune cross) ────────────────────────
 async function _generateSpread5Reading() {

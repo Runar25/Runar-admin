@@ -67,8 +67,8 @@ Akvizice přes fyzický produkt: ~$0.135 na uživatele (IS). Marketing cost: nul
 - Žádný weekly drip — po onboardingu jen kredity
 - Další čtení přes kredity (Reading Gift Card)
 - 1 kredit = 1 runa tažená
-- Přístup přes kredity: Single, Trojice, Norns, The Gathering
-- Bez Kříže, Horseshoe, Yggdrasilu
+- Přístup přes kredity: všechny spready (Single, Trojice, Norns, Gathering, Kříž, Horseshoe, Yggdrasil)
+- Yggdrasil: sezónní omezení Dec 14–28 platí i pro RS
 - Strom: zakládací rituál za 5 kreditů, teaser pouze
 - Journal: posledních 5 čtení
 
@@ -103,17 +103,19 @@ Online cesta: Visitor 1 + RS 1 = 2 zdarma. Fyzická: Visitor 1 + Rune Card 1 + R
 
 | Spread | Runy | Visitor | Rune Seeker | Standard | Premium |
 |--------|------|---------|-------------|---------|---------|
-| Single | 1 | 1× celkem | 3/měsíc + kredity | ✅ (z limitu) | ✅ (z limitu) |
-| Trojice | 3 | ❌ | kredity | ✅ | ✅ |
-| Norns | 3 | ❌ | kredity | ✅ | ✅ |
-| The Gathering | 3–5 | ❌ | kredity | ✅ | ✅ |
-| Kříž | 5 | ❌ | ❌ | ✅ | ✅ |
-| Horseshoe | 7 | ❌ | ❌ | ✅ | ✅ |
-| Yggdrasil | 9 | ❌ | ❌ | ❌ | ✅ |
+| Single | 1 | 1× celkem | 1 free + kredity | ✅ (z limitu) | ✅ (z limitu) |
+| Trojice | 3 | ❌ | kredity (3) | ✅ | ✅ |
+| Norns | 3 | ❌ | kredity (3) | ✅ | ✅ |
+| The Gathering | — | ❌ | kredity (3) | ✅ | ✅ |
+| Kříž | 5 | ❌ | kredity (5) | ✅ | ✅ |
+| Horseshoe | 7 | ❌ | kredity (7) | ✅ | ✅ |
+| Yggdrasil | 9 | ❌ | kredity (9) | ✅ | ✅ |
 
 Počítání limitu: 1 runa tažená = 1 z měsíčního limitu.
 Kříž (5 run) = 5 z limitu. Yggdrasil (9 run) = 9 z limitu.
-Kredity (Rune Seeker): credit cost = počet run.
+Kredity (Rune Seeker): credit cost = počet run v spreadu.
+Sezónní omezení: Yggdrasil pouze Dec 14–28 (platí pro všechny tiery).
+Visitor = jediný tier bez přístupu ke spreadům (kromě Single 1×).
 
 ---
 

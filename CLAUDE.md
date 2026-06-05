@@ -141,14 +141,15 @@ POZOR: email a updated_at NEEXISTUJÍ v user_profiles.
 | Spread | Runy | Kredity | Tier | Stav |
 |--------|------|---------|------|------|
 | Single | 1 | 1 (free_balance) | Všichni | ✅ produkce |
-| Trojice | 3 | 3 | Všichni (kredity) | ✅ produkce |
-| Norns | 3 | 3 | Standard+ | ❌ navrženo |
-| Kříž | 5 | 5 | Standard+ | ❌ navrženo |
-| Horseshoe | 7 | 7 | Standard+ | ❌ navrženo |
-| Yggdrasil | 9 | 9 | Premium (Dec 14-28) | ❌ navrženo |
-| The Gathering | — | 3 (flat) | Všichni (kredity) | ❌ redesign v0.9 |
+| Trojice | 3 | 3 | RS+ (kredity) | ✅ shrine / ✅ reader |
+| Norns | 3 | 3 | RS+ (kredity) | ❌ prompt chybí |
+| Kříž | 5 | 5 | RS+ (kredity) | ✅ reader |
+| Horseshoe | 7 | 7 | RS+ (kredity) | ❌ prompt chybí |
+| Yggdrasil | 9 | 9 | RS+ (kredity, Dec 14-28) | ❌ navrženo |
+| The Gathering | — | 3 (flat) | RS+ (kredity) | ❌ redesign v0.9 |
 
-SPREAD_CONFIG chybí: horseshoe, yggdrasil — přidat před implementací.
+Visitor = jediný tier bez přístupu. RS = vše za kredity. Standard/Premium = z měsíčního limitu.
+Yggdrasil: sezónní omezení Dec 14–28 platí pro všechny tiery.
 Pozice + SPREAD_CONFIG: viz RUNAR_DESIGN.md — Spreads sekce.
 
 ---

@@ -244,7 +244,7 @@ const TIER_LIMITS = {
   rune_seeker: {
     onboarding:   1,     // 1 free reading at registration
     weekly_drip:  null,  // no weekly drip
-    free_spreads: ['single'],
+    free_spreads: ['single', 'trojice', 'norns', 'gathering', 'cross', 'horseshoe', 'yggdrasil'],
     journal_entries: 5,
     onboarding_label_en: 'one free reading',
     onboarding_label_is: 'einn frjáls lestur',
@@ -259,7 +259,7 @@ const TIER_LIMITS = {
     onboarding:    null,
     weekly_drip:   null,
     monthly_limit: 50,   // readings per month — change here, UI updates automatically
-    free_spreads:  ['single', 'trojice', 'cross', 'horseshoe', 'norns'],
+    free_spreads:  ['single', 'trojice', 'cross', 'horseshoe', 'norns', 'yggdrasil'],
     journal_entries: null,
     panel_props: {
       en: ['50 readings / month.', 'Voice on every reading.', 'Full journal + filters.', 'The Gathering.'],
