@@ -275,6 +275,7 @@
       <div class="spread-mode-row" id="spread-mode-row">
         <button class="mode-btn active" id="mode-btn-single"  onclick="_setSpreadMode('single')">SINGLE RUNE</button>
         <button class="mode-btn"        id="mode-btn-trojice" onclick="_setSpreadMode('trojice')">3 READINGS</button>
+        <button class="mode-btn"        id="mode-btn-kriz"    onclick="_setSpreadMode('kriz')">KRÍŽ ✦</button>
       </div>
       <!-- SLOT TRACKER (Trojice only) -->
       <div class="spread3-slots" id="spread3-slots" style="display:none;">
@@ -283,6 +284,18 @@
         <span class="s3-slot" id="slot2">②</span>
         <span class="s3-sep">·</span>
         <span class="s3-slot" id="slot3">③</span>
+      </div>
+      <!-- SLOT TRACKER (Kríž — 5 runes) -->
+      <div class="spread5-slots" id="spread5-slots" style="display:none;">
+        <span class="s5-slot" id="s5slot1" title="Centre">①</span>
+        <span class="s5-sep">·</span>
+        <span class="s5-slot" id="s5slot2" title="Above">②</span>
+        <span class="s5-sep">·</span>
+        <span class="s5-slot" id="s5slot3" title="Below">③</span>
+        <span class="s5-sep">·</span>
+        <span class="s5-slot" id="s5slot4" title="Behind">④</span>
+        <span class="s5-sep">·</span>
+        <span class="s5-slot" id="s5slot5" title="Ahead">⑤</span>
       </div>
       <div class="card-lbl" id="draw-lbl">ᚠ DRAW YOUR RUNE</div>
       <p class="note" id="draw-note">Close your eyes. Hold your question. Then choose the rune that calls to you.</p>
@@ -327,6 +340,11 @@
       <div id="spread3-output" style="display:none;">
         <div class="layer1-lbl" id="s3-trojice-lbl" style="letter-spacing:0.18em;margin-bottom:12px;"></div>
         <div class="out-txt" id="s3-out"></div>
+      </div>
+      <!-- Kríž output (5-rune cross) -->
+      <div id="spread5-output" style="display:none;">
+        <div class="layer1-lbl" id="s5-kriz-lbl" style="letter-spacing:0.18em;margin-bottom:12px;">✦ KRÍŽ</div>
+        <div class="out-txt" id="s5-out"></div>
       </div>
       <!-- Voice -->
       <button class="btn-voice" id="btn-generate-voice" onclick="generateVoice()" disabled>ᚢ HEAR RÚNAR SPEAK</button>

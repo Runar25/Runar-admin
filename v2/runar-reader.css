@@ -666,3 +666,11 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .s3-slot.filled{color:var(--gold);text-shadow:0 0 12px rgba(255,191,0,0.4);}
 .s3-slot.filled:hover{background:rgba(255,191,0,0.08);text-decoration:line-through;opacity:0.7;}
 .s3-sep{color:var(--border);font-size:0.8em;}
+
+/* ── SPREAD5 SLOT TRACKER (Kríž) ── */
+.spread5-slots{display:flex;align-items:center;justify-content:center;gap:8px;
+  margin-bottom:18px;padding:10px;background:rgba(255,191,0,0.04);border-radius:4px;}
+.s5-slot{font-size:1.3em;color:var(--dim-text);transition:all 0.3s;min-width:1.3em;text-align:center;border-radius:3px;padding:2px 3px;}
+.s5-slot.filled{color:var(--gold);text-shadow:0 0 12px rgba(255,191,0,0.4);}
+.s5-slot.filled:hover{background:rgba(255,191,0,0.08);text-decoration:line-through;opacity:0.7;}
+.s5-sep{color:var(--border);font-size:0.75em;}

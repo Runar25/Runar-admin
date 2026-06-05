@@ -705,3 +705,110 @@ function buildTrojicePrompt(u, runes, lang, corrections) {
   if (lang === 'is') return buildTrojicePromptIS(u, runes, corrections);
   return buildTrojicePromptEN(u, runes, lang, corrections);
 }
+
+// ─── KRÍŽ PROMPT BUILDERS ───────────────────────────────────────
+// Kríž = 5-run cross spread
+// runes[0]=center, [1]=above, [2]=below, [3]=behind, [4]=ahead
+// Built-in position norns axes:
+//   center(0) verdandi | above(1) skuld | below(2) urd
+//   behind(3) urd      | ahead(4) skuld
+
+function buildKrizPromptIS(u, runes, corrections) {
+  var rCtr = runes[0], rAbo = runes[1], rBel = runes[2];
+  var rBeh = runes[3], rAhe = runes[4];
+  var life = u.lifeRune;
+  var lifeRef = life ? (life.is_n || life.n) + ' ' + life.g : '';
+
+  function runaBlock(r, label) {
+    var kws = rk(r).split(',').map(function(s) { return s.trim(); }).filter(Boolean).slice(0, 4).join(', ');
+    return label + ': ' + (r.is_n || r.n) + ' ' + r.g + '\n' + kws;
+  }
+
+  var ctx = [
+    u.name    ? 'Leiðandi: ' + u.name : '',
+    life      ? 'LífsRúna: ' + lifeRef : '',
+    u.area    ? 'Svið: ' + u.area : '',
+    u.seeking ? 'Leiðin: ' + (Array.isArray(u.seeking) ? u.seeking.join(' og ') : u.seeking) : '',
+    u.question ? 'Spurning: ' + u.question : '',
+  ].filter(Boolean).join('\n');
+
+  var runesBlock = [
+    runaBlock(rCtr, 'RÚNAN 1 (Miðja / Kjarni — verdandi)'),
+    '',
+    runaBlock(rAbo, 'RÚNAN 2 (Of an / Á leit — skuld)'),
+    '',
+    runaBlock(rBel, 'RÚNAN 3 (Undir / Rót — urd)'),
+    '',
+    runaBlock(rBeh, 'RÚNAN 4 (Að baki / Fortíð — urd)'),
+    '',
+    runaBlock(rAhe, 'RÚNAN 5 (Framar / Stefna — skuld)'),
+  ].join('\n');
+
+  var ctrName = rCtr.is_n || rCtr.n;
+
+  return [
+    ctx,
+    '',
+    'Leiðandinn dregur fimm rúnar — Krossinn.',
+    '',
+    runesBlock,
+    '',
+    'Lesturinn fer í einum flæði — ekki fimm aðskildir lestrar.',
+    'Miðja rúnan (' + ctrName + ') er hjartað — hún litar allt.',
+    'Byrjaðu í miðjunni og flettu út. Nefndu ekki staðsetningarnar — bærðu þær í röddinn.',
+    'Þriðja rúnan (Undir): hvað liggur í undirmeðvitund eða duldu.',
+    'Fjórða rúnan (Að baki): það sem enn verkar úr fortíðinni — ekki sögun, heldur orkan.',
+    'Fimmta rúnan (Framar): ekki spá — þar sem þessi orka leiðir ef ekkert breytist.',
+    'Endaðu með einni opinni, hljóðlægri spurningu.',
+    'Talaðu beint við ' + u.name + '. Vertu hnitmiðaður — 6 til 8 setningar.'
+      + getCorrPrompt('is', corrections),
+  ].filter(Boolean).join('\n');
+}
+
+function buildKrizPromptEN(u, runes, lang, corrections) {
+  var rCtr = runes[0], rAbo = runes[1], rBel = runes[2];
+  var rBeh = runes[3], rAhe = runes[4];
+  var life = u.lifeRune;
+  var langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Islenska).' : 'Respond in English.';
+
+  function kbLine(r) {
+    return rk(r).split(',').map(function(s) { return s.trim(); }).filter(Boolean).slice(0, 4).join(', ');
+  }
+
+  var ctx = [
+    'Seeker: ' + u.name,
+    life ? 'Life rune: ' + rn(life) + ' ' + life.g : '',
+    u.area    ? 'Area: ' + u.area : '',
+    u.seeking ? 'Seeking: ' + (Array.isArray(u.seeking) ? u.seeking.join(' & ') : u.seeking) : '',
+    u.question ? 'Question: ' + u.question : '',
+  ].filter(Boolean).join('\n');
+
+  var runesBlock = [
+    'RUNE 1 (Centre / Core — present):', rn(rCtr) + ' ' + rCtr.g, kbLine(rCtr), '',
+    'RUNE 2 (Above / Aspiration — future):', rn(rAbo) + ' ' + rAbo.g, kbLine(rAbo), '',
+    'RUNE 3 (Below / Root — hidden):', rn(rBel) + ' ' + rBel.g, kbLine(rBel), '',
+    'RUNE 4 (Behind / Past — past):', rn(rBeh) + ' ' + rBeh.g, kbLine(rBeh), '',
+    'RUNE 5 (Ahead / Direction — future):', rn(rAhe) + ' ' + rAhe.g, kbLine(rAhe),
+  ].join('\n');
+
+  return [
+    ctx, '',
+    'The seeker draws five runes — the Cross.', '',
+    runesBlock, '',
+    'Read all five as one flowing passage — not five separate readings.',
+    'The centre rune (' + rn(rCtr) + ') is the heart — it colours everything.',
+    'Begin at the centre and spiral outward. Do not name the positions.',
+    'Rune 3 (Below): what lies in the subconscious or hidden.',
+    'Rune 4 (Behind): what still acts from the past — not the story, the energy.',
+    'Rune 5 (Ahead): not prophecy — where this energy leads if nothing changes.',
+    'End with one quiet, open question.',
+    'Speak directly to ' + u.name + '. 6-8 sentences, complete and whole.',
+    langInstr,
+    getCorrPrompt(lang, corrections),
+  ].filter(Boolean).join('\n');
+}
+
+function buildKrizPrompt(u, runes, lang, corrections) {
+  if (lang === 'is') return buildKrizPromptIS(u, runes, corrections);
+  return buildKrizPromptEN(u, runes, lang, corrections);
+}

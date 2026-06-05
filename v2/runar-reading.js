@@ -153,21 +153,27 @@ function startReading() {
 
 var _spreadMode   = 'single';
 var _spread3Runes = [];
+var _spread5Runes = [];
 // ─── SPREAD MODE ─────────────────────────────────────────
 function _setSpreadMode(mode) {
   _spreadMode   = mode;
   _spread3Runes = [];
+  _spread5Runes = [];
   readerRune    = null;
   // Toggle mode buttons
   var btnSingle  = document.getElementById('mode-btn-single');
   var btnTrojice = document.getElementById('mode-btn-trojice');
   if (btnSingle)  btnSingle.classList.toggle('active', mode === 'single');
   if (btnTrojice) btnTrojice.classList.toggle('active', mode === 'trojice');
+  var btnKriz = document.getElementById('mode-btn-kriz');
+  if (btnKriz) btnKriz.classList.toggle('active', mode === 'kriz');
   // Reset output
   _hideSpread3Output();
+  _hideSpread5Output();
   document.getElementById('reader-rune-card').style.display = 'block';
   document.getElementById('reader-output').style.display    = 'none';
   _updateSpread3Slots();
+  _updateSpread5Slots();
 }
 
 function _updateSpread3Slots() {
@@ -204,7 +210,59 @@ function _hideSpread3Output() {
   if (s1) s1.style.display = '';
   if (s2) s2.style.display = '';
 }
+function _updateSpread5Slots() {
+  var slotEl = document.getElementById('spread5-slots');
+  if (!slotEl) return;
+  slotEl.style.display = (_spreadMode === 'kriz') ? 'flex' : 'none';
+  var labels = ['①','②','③','④','⑤'];
+  for (var i = 0; i < 5; i++) {
+    var el = document.getElementById('s5slot' + (i + 1));
+    if (!el) continue;
+    var rune = _spread5Runes[i];
+    el.textContent = rune ? rune.g : labels[i];
+    el.classList.toggle('filled', !!rune);
+    el.onclick = rune ? (function(idx) {
+      return function() {
+        _spread5Runes.splice(idx, 1);
+        _updateSpread5Slots();
+        var speakBtn = document.getElementById('btn-speak');
+        if (speakBtn) speakBtn.disabled = true;
+      };
+    })(i) : null;
+    el.style.cursor = rune ? 'pointer' : 'default';
+    el.title = rune ? (rune.n + ' — click to remove') : '';
+  }
+}
+function _hideSpread5Output() {
+  var out = document.getElementById('spread5-output');
+  if (out) out.style.display = 'none';
+  var s1 = document.getElementById('single-layer1');
+  var s2 = document.getElementById('single-layer2');
+  if (s1) s1.style.display = '';
+  if (s2) s2.style.display = '';
+}
 async function readRune() {
+  if (_spreadMode === 'kriz') {
+    // Tier check — Standard+ only
+    if (!currentUser || (userTier !== 'standard' && userTier !== 'premium')) {
+      showToast(lang === 'is' ? 'Kross krefsit Standard eda Premium askriftar.' : 'Cross spread requires Standard or Premium.');
+      _setSpreadMode('single'); return;
+    }
+    if (_spread5Runes.length === 5 && !readerRune) {
+      document.getElementById('reader-rune-card').style.display = 'none';
+      document.getElementById('reader-output').style.display = 'block';
+      readerTexts = {}; voiceGenerated = {};
+      await _generateSpread5Reading();
+      return;
+    }
+    if (!readerRune) return;
+    if (_spread5Runes.length < 5) _spread5Runes.push(readerRune);
+    readerRune = null;
+    _updateSpread5Slots();
+    var speakBtn5 = document.getElementById('btn-speak');
+    if (speakBtn5) speakBtn5.disabled = (_spread5Runes.length < 5);
+    return;
+  }
   if (_spreadMode === 'trojice') {
     // Klik na btn-speak s 3 plnymi sloty = spust generovani
     if (_spread3Runes.length === 3 && !readerRune) {
@@ -243,6 +301,7 @@ async function readRune() {
 
 function drawAnother() {
   if (_spreadMode === 'trojice') { _spread3Runes = []; _updateSpread3Slots(); }
+  if (_spreadMode === 'kriz') { _spread5Runes = []; _updateSpread5Slots(); }
   readerRune = null; readerTexts = {}; voiceGenerated = {};
   document.getElementById('reader-output').style.display = 'none';
   document.getElementById('trial-end').style.display = 'none';
@@ -255,7 +314,7 @@ function drawAnother() {
 }
 
 function resetReader() {
-  _spreadMode = 'single'; _spread3Runes = []; _updateSpread3Slots();
+  _spreadMode = 'single'; _spread3Runes = []; _spread5Runes = []; _updateSpread3Slots(); _updateSpread5Slots();
   readerUser = {}; readerRune = null; readerTexts = {}; voiceGenerated = {};
   document.getElementById('reader-hero').classList.remove('hidden');
   document.getElementById('reader-output').style.display = 'none';
@@ -333,8 +392,15 @@ function wcapSeek(v) {
 
 // ─── VOICE ───────────────────────────────────────────────
 async function generateVoice() {
-  const deepText = document.getElementById('out-deep').innerText.trim();
-  if (!deepText) return;
+  var voiceText;
+  if (_spreadMode === 'kriz') {
+    var s5el = document.getElementById('s5-out');
+    voiceText = s5el ? s5el.innerText.trim() : '';
+  } else {
+    voiceText = document.getElementById('out-deep').innerText.trim();
+  }
+  if (!voiceText) return;
+  const deepText = voiceText;
   const btn = document.getElementById('btn-generate-voice');
   btn.disabled = true; btn.textContent = t('voice_btn_loading');
   setSt('st-voice', '');
@@ -377,3 +443,84 @@ async function generateVoice() {
   }
 }
 
+
+// ─── KRÍŽ GENERATE (5-rune cross) ────────────────────────
+async function _generateSpread5Reading() {
+  if (_spread5Runes.length < 5) return;
+
+  var vBtn = document.getElementById('btn-generate-voice');
+  if (vBtn) { vBtn.disabled = true; vBtn.textContent = t('voice_btn'); }
+  document.getElementById('audio-player').classList.remove('visible');
+  document.getElementById('runar-audio').src = '';
+  setSt('st-voice', '');
+
+  // Hide single layers, show spread5 output
+  var s1 = document.getElementById('single-layer1');
+  var s2 = document.getElementById('single-layer2');
+  if (s1) s1.style.display = 'none';
+  if (s2) s2.style.display = 'none';
+  var s5out = document.getElementById('spread5-output');
+  if (s5out) s5out.style.display = 'block';
+
+  var rdLoad = document.getElementById('reading-loading');
+  var rdLoadTxt = document.getElementById('reading-loading-txt');
+  if (rdLoadTxt) rdLoadTxt.textContent = t('reading_loading');
+  if (rdLoad) rdLoad.style.display = 'block';
+  var pL1 = document.getElementById('layer1-lbl');
+  var pL2 = document.getElementById('layer2-lbl');
+  if (pL1) pL1.classList.add('pulsing');
+  if (pL2) pL2.classList.add('pulsing');
+
+  var u = readerUser;
+  var sys = buildSysPrompt(activeChar, lang);
+  var prompt = buildKrizPrompt(u, _spread5Runes, lang, corrections);
+  var tokens = (SPREAD_CONFIG && SPREAD_CONFIG.cross) ? SPREAD_CONFIG.cross.tokens : 1100;
+
+  var res = await callProxy(sys, prompt, tokens, shouldUseCredit());
+
+  if (rdLoad) rdLoad.style.display = 'none';
+  if (pL1) pL1.classList.remove('pulsing');
+  if (pL2) pL2.classList.remove('pulsing');
+
+  if (res.error === 'rate_limited') {
+    setSt('st-reader', lang === 'is' ? 'Of margar beiðnir. Bíddu aðeins.' : 'Too many requests. Please wait a moment.', 'err');
+    return;
+  }
+  if (res.error === 'no_credits' || res.error === 'monthly_limit' || res.error === 'weekly_limit') {
+    var isMonthly = res.error === 'monthly_limit';
+    var msg = isMonthly
+      ? (lang === 'is' ? 'Mánaðarlegur lesturmark er náð.' : 'Monthly reading limit reached.')
+      : (lang === 'is' ? 'Kredit þínir eru búnir.' : 'No credits remaining.');
+    setSt('st-reader', msg, 'err');
+    if (currentUser) syncMonthlyCount(currentUser.id);
+    if (currentUser) await fetchUserProfile(currentUser.id);
+    return;
+  }
+  if (res.error) { setSt('st-reader', 'Failed: ' + res.error, 'err'); return; }
+
+  var text = applyISCorrections(res.text || '', lang, corrections);
+  readerTexts[lang] = { short: text, deep: '' };
+
+  // Update label with rune glyphs
+  var s5lbl = document.getElementById('s5-kriz-lbl');
+  if (s5lbl) s5lbl.textContent = _spread5Runes.map(function(r) { return r.g; }).join(' · ');
+
+  // Save to DB (center rune as anchor)
+  if (currentUser) {
+    await saveReading(_spread5Runes[0], text, '');
+    await syncMonthlyCount(currentUser.id);
+    loadJournal();
+  } else {
+    incTrialCount();
+    updateAuthUI();
+  }
+
+  await stream('s5-out', text);
+
+  // Voice
+  if (canUseVoice()) {
+    if (vBtn) { vBtn.disabled = false; vBtn.style.display = ''; }
+  } else {
+    if (vBtn) { vBtn.disabled = true; vBtn.style.display = 'none'; }
+  }
+}
