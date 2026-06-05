@@ -277,3 +277,19 @@ const SEEKS = {
     'urd',       // Reflection
   ],
 };
+
+// ─── MOOD OPTIONS (HOW ARE YOU FEELING) ────────────────────
+// norns: branch axis tendency | element: visual color on tree
+const MOODS = {
+  en: ['Grounded', 'Unsettled', 'Hopeful', 'Lost'],
+  is: ['Jarðtengdur', 'Órólegur', 'Voníull', 'Villtur'],
+  norns:   ['urd',   'verdandi', 'skuld',   'urd'],
+  element: ['Earth', 'Air',      'Fire',    'Water'],
+};
+
+// ─── INTENTION OPTIONS (THIS READING IS FOR) ─────────────
+const INTENTIONS = {
+  en: ['Right now', 'Decision ahead', 'Understanding the past'],
+  is: ['Í þssari stund', 'Ákvörðun framundan', 'Skilja fortíðina'],
+  norns: ['verdandi', 'skuld', 'urd'],
+};

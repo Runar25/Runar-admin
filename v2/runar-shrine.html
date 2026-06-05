@@ -1033,14 +1033,13 @@ function buildGrid(gridId, isReader) {
 }
 
 // ─── PILLS (V2 ONLY — multi-seek, mood, intention) ──────
-const MOODS      = ['Grounded', 'Unsettled', 'Hopeful', 'Lost'];
-const INTENTIONS = ['Right now', 'Decision ahead', 'Understanding the past'];
+// MOODS + INTENTIONS defined in runar-runes.js (shared module, with IS + norns axis)
 
 function buildPills() {
   buildPillGroup('area-pills',      AREAS[lang], 'area');
   buildPillGroupMulti('seek-pills', SEEKS[lang], 'seek', 2);
-  buildPillGroup('mood-pills',      MOODS,       'mood');
-  buildPillGroup('intention-pills', INTENTIONS,  'intention');
+  buildPillGroup('mood-pills',      MOODS[lang] || MOODS.en,       'mood');
+  buildPillGroup('intention-pills', INTENTIONS[lang] || INTENTIONS.en, 'intention');
 }
 function buildPillGroup(containerId, items, type) {
   const c = document.getElementById(containerId); if (!c) return; c.innerHTML = '';
