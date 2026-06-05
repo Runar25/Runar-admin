@@ -176,6 +176,55 @@ const PATTERN_WINDOW = {
   // beyond low: pattern still recorded, minimal visual response
 };
 
+// ─── HEAVY RUNES ────────────────────────────────────────
+// Icelandic natural forces that halt, absorb, or transform.
+// Unavoidable — not inherently negative.
+// [list may expand after first 50 users]
+const HEAVY_RUNES = {
+  names: ['Hagalaz', 'Nauthiz', 'Isa', 'Thurisaz', 'Perthro', 'Tiwaz'],
+  descriptions: {
+    Hagalaz:  'storm from the north that closes paths',
+    Nauthiz:  'polar night, light that does not come',
+    Isa:      'path that vanished under snow',
+    Thurisaz: 'volcano under the glacier, force without warning',
+    Perthro:  'geyser — you do not know when it erupts',
+    Tiwaz:    'deliberate wintering, intentional surrender',
+  },
+  // Visual + reading response by count (per pattern_window intensity)
+  thresholds: {
+    2: 'tension',      // roots deepen slightly — urd axis
+    3: 'nidhoggr',     // Nidhoggr trigger + heavier, slower reading tone
+    4: 'winter_dark',  // strongest root pattern — slowest bloom, deepest urd
+  },
+};
+
+// ─── TRANSFORMATION PAIRS ───────────────────────────────
+// Two runes: one = state, one = the force that changes it.
+// Together they form a story of change.
+// PRECEDENCE: pair takes priority over heavy combination
+//   when both runes match a defined pair (pair is more specific).
+// [to test after first 50 users — pairs may be refined]
+const TRANSFORMATION_PAIRS = {
+  // TYP 1 — CYCLE: natural circle, no beginning or end
+  cycle: [
+    { runes: ['Jera',    'Hagalaz'], desc_en: 'harvest and storm, the year turns'           },
+    { runes: ['Dagaz',   'Nauthiz'], desc_en: 'dawn after need — light arrives because it must' },
+    { runes: ['Berkano', 'Isa'],     desc_en: 'growth frozen, but roots hold'                },
+  ],
+  // TYP 2 — BREAKTHROUGH: something breaks so something new can emerge
+  breakthrough: [
+    { runes: ['Thurisaz', 'Dagaz'],  desc_en: 'force opens the gate of light'               },
+    { runes: ['Hagalaz',  'Sowilo'], desc_en: 'after the storm, sun'                         },
+    { runes: ['Nauthiz',  'Fehu'],   desc_en: 'from need, wealth is born'                    },
+  ],
+  // TYP 3 — SHADOW AND LIGHT: two forces in balance
+  shadow_light: [
+    { runes: ['Sowilo',  'Isa'],     desc_en: 'light paused — energy waits'                  },
+    { runes: ['Mannaz',  'Hagalaz'], desc_en: 'human facing chaos'                           },
+    { runes: ['Tiwaz',   'Nauthiz'], desc_en: 'sacrifice as necessity'                       },
+  ],
+};
+
 // ─── TIER LIMITS — single source of truth ───────────────
 // Edit here only. All frontend constants read from this.
 // Backend (claude-proxy) uses parallel values — sync manually when changing.
