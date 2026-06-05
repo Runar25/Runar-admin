@@ -192,7 +192,13 @@ count=3+ záření zesílí — Gathering CTA se aktivuje (popup na stromě)
 ## Tree of Life — stav implementace
 
 **Hotové ✅:** calcLifeRune(), life rune generování + uložení, Tree tab UI, IS 3-vrstvý systém
+**Hotové ✅:** isLifeRune detekce v buildReadingPromptIS/EN — když drawn == life rune, Rúnar dostane speciální instrukci
 **Chybí ❌:** zakládací rituál, branch systém, elementy, vizuální strom, tree_state/tree_readings tabulky
+
+### TREE_UPDATE Edge Function
+Definována v runar-config.js: `const TREE_UPDATE = '...functions/v1/tree-update'`
+Stav: ❌ není nasazena — závisí na tree_state + tree_readings DB tabulkách.
+Nasadit až po vytvoření tabulek a branch systému.
 
 Tree tab HTML: `apane-tree > tree-life-rune-section > [tree-no-dob | tree-rs-teaser | tree-reveal-cta | tree-loading | tree-reading-exists]`
 

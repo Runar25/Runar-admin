@@ -518,6 +518,7 @@ function applyISCorrections(text, lang, corrections) {
 // Claude never translates from EN — thinks in IS from first word.
 function buildReadingPromptIS(u, drawn, corrections) {
   var life = u.lifeRune;
+  var isLifeRune = !!(life && drawn.n === life.n); // drawn rune IS the life rune
   var drawnKws = rk(drawn).split(',').map(function(s) { return s.trim(); }).filter(Boolean);
   var pickedKws = drawnKws.sort(function() { return 0.5 - Math.random(); })
     .slice(0, Math.min(3, drawnKws.length)).join(', ');
@@ -531,12 +532,18 @@ function buildReadingPromptIS(u, drawn, corrections) {
     : '';
   var drawnCtx = 'DREGNA RÚNA: ' + rn(drawn) + ' (' + drawn.g + ') — beindur að: ' + pickedKws
     + (drawn.world ? ' · Heimur: ' + rworld(drawn) + ' · Frumefni: ' + relements(drawn) : '');
+  var lifeRuneNote = isLifeRune
+    ? 'MIKILVÆGT: Dregna rúna og lífsrúna eru EIN og sama rúna — ' + rn(drawn) + '. Þetta er sjaldgæft. Meðhöndlaðu þetta sem sérstæðan augnablik: "Stofninn talar um sig sjálfan."'
+    : '';
   var parts = [
     'MANNESKJAN: ' + u.name,
     lifeCtx,
     drawnCtx,
+    lifeRuneNote,
     u.area     ? 'SVIÐ: ' + u.area     : '',
     u.seeking  ? 'LEITAÐ: ' + u.seeking  : '',
+    u.mood      ? 'LÍÐAN: ' + u.mood      : '',
+    u.intention ? 'TILGANGUR: ' + u.intention : '',
     u.question ? 'SPURNING: ' + '"' + u.question + '"' : '',
   ].filter(Boolean).join('\n');
   var lifeRef = life
@@ -565,6 +572,7 @@ function buildReadingPromptIS(u, drawn, corrections) {
 // EN reading prompt — original logic unchanged. Prompt in English.
 function buildReadingPromptEN(u, drawn, lang, corrections) {
   const life = u.lifeRune;
+  const isLifeRune = !!(life && drawn.n === life.n); // drawn rune IS the life rune
   const langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
   const drawnKws = rk(drawn).split(',').map(s => s.trim()).filter(Boolean);
   const pickedKws = drawnKws.sort(() => 0.5 - Math.random()).slice(0, Math.min(3, drawnKws.length)).join(', ');
@@ -575,10 +583,15 @@ function buildReadingPromptEN(u, drawn, lang, corrections) {
     : '';
   const drawnCtx = `DRAWN RUNE: ${rn(drawn)} (${drawn.g}) — focus on: ${pickedKws}` +
     (drawn.world ? ` · World: ${rworld(drawn)} · Elements: ${relements(drawn)}` : '');
-  const parts = [`PERSON: ${u.name}`, lifeCtx, drawnCtx,
-    u.area    ? `AREA: ${u.area}` : '',
-    u.seeking ? `SEEKING: ${u.seeking}` : '',
-    u.question? `QUESTION: "${u.question}"` : ''].filter(Boolean).join('\n');
+  const lifeRuneNote = isLifeRune
+    ? `IMPORTANT: The drawn rune IS the life rune — ${rn(drawn)}. This is rare. Address it as a significant moment: "The trunk speaks of itself."`
+    : '';
+  const parts = [`PERSON: ${u.name}`, lifeCtx, drawnCtx, lifeRuneNote,
+    u.area      ? `AREA: ${u.area}` : '',
+    u.seeking   ? `SEEKING: ${u.seeking}` : '',
+    u.mood      ? `CURRENT STATE: ${u.mood}` : '',
+    u.intention ? `READING PURPOSE: ${u.intention}` : '',
+    u.question  ? `QUESTION: "${u.question}"` : ''].filter(Boolean).join('\n');
   return `${parts}${formulaLine}\n\nREADING ANGLE (follow this entry point — let it shape the opening and tone): ${_randomAngle('en')}\n\nGive the reading in two parts separated by |||\n\nPART 1 (2-3 sentences maximum, core message, direct and poetic. Mention the rune's name — ${rn(drawn)} — once, woven naturally into the reading. Let the rune's symbolic layer — ${rworld(drawn) || 'the living path'} — subtly colour the tone):\n\nPART 2 (3-4 sentences maximum. Deeper reflection — connect drawn rune with ${life ? 'life rune ' + rn(life) + (life.world ? ' (' + rworld(life) + ')' : '') + ', ' : ''}${u.area || 'their path'}${u.seeking ? ', seeking ' + u.seeking : ''}. If the drawn rune and life rune share an element (${relements(drawn)} / ${life ? relements(life) : '—'}), let that resonance surface briefly. End with one short, open question. Do NOT include a label like "PART 2" in the output):\n\nSpeak directly to ${u.name}. Be concise — every sentence must earn its place. ${langInstr}\n${getCorrPrompt(lang, corrections)}`;
 }
 
