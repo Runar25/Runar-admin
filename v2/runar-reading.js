@@ -271,7 +271,10 @@ async function readRune() {
     readerRune = null;
     _updateSpread5Slots();
     var speakBtn5 = document.getElementById('btn-speak');
-    if (speakBtn5) speakBtn5.disabled = (_spread5Runes.length < 5);
+    if (speakBtn5) {
+      speakBtn5.disabled = (_spread5Runes.length < 5);
+      if (_spread5Runes.length >= 5) speakBtn5.textContent = t('speak_btn');
+    }
     return;
   }
   if (_spreadMode === 'norns') {
@@ -292,7 +295,10 @@ async function readRune() {
     readerRune = null;
     _updateSpread3Slots();
     var speakBtnN = document.getElementById('btn-speak');
-    if (speakBtnN) speakBtnN.disabled = (_spread3Runes.length < 3);
+    if (speakBtnN) {
+      speakBtnN.disabled = (_spread3Runes.length < 3);
+      if (_spread3Runes.length >= 3) speakBtnN.textContent = t('speak_btn');
+    }
     return;
   }
   if (_spreadMode === 'trojice') {
@@ -311,7 +317,10 @@ async function readRune() {
     _updateSpread3Slots();
     // Aktivuj btn-speak az po 3 plnych slotech
     var speakBtn = document.getElementById('btn-speak');
-    if (speakBtn) speakBtn.disabled = (_spread3Runes.length < 3);
+    if (speakBtn) {
+      speakBtn.disabled = (_spread3Runes.length < 3);
+      if (_spread3Runes.length >= 3) speakBtn.textContent = t('speak_btn');
+    }
     return;
   }
   // Single rune mode (original)
