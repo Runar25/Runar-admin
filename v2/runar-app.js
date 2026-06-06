@@ -160,6 +160,7 @@ async function fetchUserProfile(userId) {
   updateAuthUI();
   showTopbarGreeting();
   showHeroGreeting();
+  if (typeof _updateReadingForm === 'function') _updateReadingForm();
   // Ask for name if not set yet (delay so UI settles first)
   if (!userName) setTimeout(showNamePrompt, DELAY_NAME_PROMPT);
 }
@@ -404,6 +405,7 @@ async function saveName() {
   showHeroGreeting();
   greetingShown = false;
   showTopbarGreeting();
+  if (typeof _updateReadingForm === 'function') _updateReadingForm();
 }
 
 function skipName() {
@@ -687,6 +689,8 @@ function showAppTab(tab) {
     const inReading = document.getElementById('reader-output')?.style.display !== 'none'
                    || document.getElementById('reader-rune-card')?.style.display !== 'none';
     if (!inReading) document.getElementById('reader-hero').classList.remove('hidden');
+    // Update reading form mode/state when switching to reading tab
+    if (typeof _updateReadingForm === 'function') _updateReadingForm();
   }
 }
 

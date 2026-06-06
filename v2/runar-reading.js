@@ -79,10 +79,12 @@ async function _generateReading() {
     incTrialCount();
     updateAuthUI();
   } else {
-    // Save to DB first, then sync count (localStorage updates async after DB confirms)
-    await saveReading(readerRune, short, deep);
-    await syncMonthlyCount(currentUser.id); // refreshes localStorage + banner
-    loadJournal(); // refresh journal in background (no await — don't block stream)
+    // Save journal only for own reading; always sync count (price same for both modes)
+    if (_readingMode === 'mine') {
+      await saveReading(readerRune, short, deep);
+      loadJournal();
+    }
+    await syncMonthlyCount(currentUser.id);
   }
 
   if (_rdLoadEl) _rdLoadEl.style.display = 'none';
@@ -133,13 +135,14 @@ function startReading() {
       : 'Your readings for this month are complete. Use a reading gift card to continue.');
     return;
   }
-  const name = document.getElementById('r-name').value.trim();
+  var isMine = (_readingMode === 'mine');
+  var knownUser = isMine && userName && _lifeRuneNum;
+  // Use stored name if own reading and name is known
+  var name = knownUser ? userName : document.getElementById('r-name').value.trim();
   if (!name) { setSt('st-setup', t('st_name_req'), 'err'); return; }
-  const d  = parseInt(document.getElementById('r-day').value);
-  const m  = parseInt(document.getElementById('r-month').value);
-  const y  = parseInt(document.getElementById('r-year').value);
-  const lifeRune = (d && m && y && d <= 31 && m <= 12 && y >= 1900) ? calcLifeRune(d, m, y) : null;
-  readerUser = { name, d, m, y, lifeRune,
+  // Life rune from DB (own reading) or null (reading for someone else)
+  var lifeRune = (isMine && _lifeRuneNum) ? RUNES[_lifeRuneNum - 1] : null;
+  readerUser = { name, d: null, m: null, y: null, lifeRune,
     area: readerUser.area || '', seeking: readerUser.seeking || '',
     question: document.getElementById('r-question').value.trim() };
   document.getElementById('reader-hero').classList.add('hidden');
@@ -151,6 +154,7 @@ function startReading() {
 
 
 
+var _readingMode  = 'mine';   // 'mine' = personal reading, 'someone' = for another person
 var _spreadMode   = 'single';
 var _spread3Runes = [];
 var _spread5Runes = [];
@@ -538,9 +542,11 @@ async function _generateSpread3Reading() {
 
   // Save to DB (first rune as anchor)
   if (currentUser) {
-    await saveReading(_spread3Runes[0], text, '');
+    if (_readingMode === 'mine') {
+      await saveReading(_spread3Runes[0], text, '');
+      loadJournal();
+    }
     await syncMonthlyCount(currentUser.id);
-    loadJournal();
   } else {
     incTrialCount();
     updateAuthUI();
@@ -619,9 +625,11 @@ async function _generateSpread5Reading() {
 
   // Save to DB (center rune as anchor)
   if (currentUser) {
-    await saveReading(_spread5Runes[0], text, '');
+    if (_readingMode === 'mine') {
+      await saveReading(_spread5Runes[0], text, '');
+      loadJournal();
+    }
     await syncMonthlyCount(currentUser.id);
-    loadJournal();
   } else {
     incTrialCount();
     updateAuthUI();
@@ -704,9 +712,11 @@ async function _generateNornsReading() {
 
   // Save to DB (Urður rune as anchor — urd position)
   if (currentUser) {
-    await saveReading(_spread3Runes[0], text, '');
+    if (_readingMode === 'mine') {
+      await saveReading(_spread3Runes[0], text, '');
+      loadJournal();
+    }
     await syncMonthlyCount(currentUser.id);
-    loadJournal();
   } else {
     incTrialCount();
     updateAuthUI();
@@ -719,4 +729,57 @@ async function _generateNornsReading() {
   } else {
     if (vBtn) { vBtn.disabled = true; vBtn.style.display = 'none'; }
   }
+}
+
+// ─── READING MODE ─────────────────────────────────────────────────────────────
+
+// Switch between 'mine' (personal) and 'someone' (for another person, no save).
+function switchReadingMode(mode) {
+  _readingMode = mode;
+  var nameInp = document.getElementById('r-name');
+  if (nameInp) nameInp.value = '';
+  setSt('st-setup', '');
+  _updateReadingForm();
+}
+
+// Update Reading setup form based on mode + user state.
+// Called on: showAppTab('reading'), lang change, login, name save.
+function _updateReadingForm() {
+  var isMine    = (_readingMode === 'mine');
+  var isRS      = currentUser && (userTier === 'rune_seeker' || userTier === 'standard'
+                  || userTier === 'premium' || isAdmin(currentUser.email));
+  // Known = mine mode + name known + life rune revealed in ToL
+  var knownUser = isMine && !!userName && !!_lifeRuneNum;
+
+  // Mode toggle visibility — RS+ only
+  var modeRow = document.getElementById('reading-mode-row');
+  if (modeRow) modeRow.style.display = isRS ? 'flex' : 'none';
+
+  // Mode button labels + active state
+  var btnMine = document.getElementById('rmode-btn-mine');
+  var btnSom  = document.getElementById('rmode-btn-someone');
+  if (btnMine) { btnMine.classList.toggle('active', isMine); btnMine.textContent = t('reading_mode_mine'); }
+  if (btnSom)  { btnSom.classList.toggle('active', !isMine); btnSom.textContent = t('reading_mode_someone'); }
+
+  // Card title
+  var titleEl = document.getElementById('reader-card1-lbl');
+  if (titleEl) titleEl.textContent = isMine ? t('reader_card1_lbl') : t('setup_someone_lbl');
+
+  // Note text
+  var noteEl = document.getElementById('reader-note');
+  if (noteEl) {
+    if (knownUser)  noteEl.textContent = t('reading_ready_note');
+    else if (!isMine) noteEl.textContent = t('setup_someone_note');
+    else            noteEl.textContent = t('reader_note');
+  }
+
+  // Name row — hidden when own reading and user is fully known
+  var nameRow = document.getElementById('setup-name-row');
+  if (nameRow) nameRow.style.display = knownUser ? 'none' : 'block';
+
+  // Name label + placeholder
+  var nameLbl = document.getElementById('name-lbl');
+  var nameInp = document.getElementById('r-name');
+  if (nameLbl) nameLbl.textContent = isMine ? t('name_lbl') : t('setup_for_name_lbl');
+  if (nameInp) nameInp.placeholder = isMine ? t('name_ph') : t('setup_for_name_ph');
 }

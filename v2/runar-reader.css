@@ -295,6 +295,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .tree-loading-text{text-align:center;font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--muted);padding-bottom:24px;}
 .tree-growth-section{padding:24px 0 8px;border-top:1px solid var(--border);}
 .tree-growth-quote{text-align:center;font-style:italic;color:var(--muted);font-size:0.9em;line-height:1.9;padding:0 12px;}
+/* ── READING MODE TOGGLE ── */
+.reading-mode-row{display:flex;gap:0;margin-bottom:22px;border:1px solid rgba(46,74,112,0.4);}
+.reading-mode-btn{flex:1;font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;padding:10px 8px;background:transparent;border:none;color:var(--muted);cursor:pointer;transition:all 0.2s;text-align:center;border-bottom:2px solid transparent;}
+.reading-mode-btn:hover{color:var(--gold);}
+.reading-mode-btn.active{color:var(--gold);background:rgba(255,191,0,0.05);border-bottom-color:var(--gold);}
 /* ── ADMIN BAR ── */
 .tree-admin-bar{display:flex;flex-wrap:wrap;gap:8px;padding:8px 12px;margin-bottom:16px;border:1px solid rgba(255,191,0,0.18);background:rgba(255,191,0,0.03);}
 .tree-admin-btn{font-family:'Cinzel',serif;font-size:0.55em;letter-spacing:2px;padding:6px 14px;background:transparent;border:1px solid rgba(255,191,0,0.35);color:var(--gold);opacity:0.6;cursor:pointer;transition:opacity 0.2s;white-space:nowrap;}
