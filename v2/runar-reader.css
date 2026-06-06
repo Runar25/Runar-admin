@@ -136,7 +136,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .hero-eyebrow{font-family:'Cinzel',serif;font-size:0.9em;letter-spacing:5px;color:var(--gold);opacity:0.85;margin-bottom:16px;}
 .hero-title{font-family:'Cinzel',serif;font-size:2.65em;font-weight:400;letter-spacing:2px;color:var(--white);line-height:1.18;margin-bottom:14px;}
 .hero-sub{font-size:1.12em;color:var(--muted);font-style:italic;margin-bottom:28px;line-height:1.7;}
-.hero-sep{width:44px;height:1px;background:linear-gradient(to right,var(--gold),transparent);margin-bottom:26px;display:none;}
 .hero-quote{
   font-size:1.08em;font-style:italic;
   color:rgba(242,245,247,0.58);
@@ -209,7 +208,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   }
   .hero-greeting{margin-bottom:14px;font-size:1em;}
   .hero-quote{margin:0 auto 22px;border-left:none;border-top:1px solid rgba(125,88,56,0.35);padding:16px 0 0;text-align:center;max-width:100%;font-size:0.95em;}
-  .hero-sep{display:block;margin:0 auto 16px;}
 }
 @media(max-width:420px){
   .topbar-inner{padding:12px 16px;}
