@@ -1468,6 +1468,16 @@ async function _updateTree(rune, short, deep, area, lang, usedCredit) {
 }
 // ─── VOICE SCALE (Vrstva C) ─────────────────────────────
 let _voiceScale = 10;   // current scale, loaded from tree_state
+
+// Returns a prompt instruction for the current voice scale (0–20).
+// 0 = direct/concrete, 10 = balanced (default), 20 = deeply metaphorical
+function _voiceScaleInstruction(scale) {
+  if (scale <= 3)  return 'VOICE REGISTER (scale ' + scale + '/20 — very direct): Plain language. Short sentences. No metaphor. Speak as if clarity matters more than beauty. Concrete nouns, active verbs. Nothing ornamental.';
+  if (scale <= 7)  return 'VOICE REGISTER (scale ' + scale + '/20 — direct): Grounded language. Minimal imagery — only when a single image is sharper than plain speech. Prioritise concrete over poetic.';
+  if (scale <= 13) return 'VOICE REGISTER (scale ' + scale + '/20 — balanced): Poetic but grounded. Some imagery, some direct statement. Let image and clarity alternate — neither dominates.';
+  if (scale <= 17) return 'VOICE REGISTER (scale ' + scale + '/20 — metaphorical): Let images carry the meaning. Speak through landscape, season, body. Plain statements are rare — the image does the work.';
+  return 'VOICE REGISTER (scale ' + scale + '/20 — deeply metaphorical): Never state directly what can be spoken through image or symbol. Layer Icelandic landscape, Norse myth, elemental imagery. Oblique and evocative — the meaning arrives through feeling, not statement.';
+}
 let _voiceClicks = 0;   // clicks this session, max 3
 const VOICE_MAX_CLICKS = 3;
 
@@ -1610,8 +1620,9 @@ async function _generateReading() {
   const _aspect    = typeof _randomAspect    === 'function' ? _randomAspect()    : '';
   const _imagery   = typeof _randomImagery   === 'function' ? _randomImagery()   : '';
   const _register  = typeof _randomRegister  === 'function' ? _randomRegister()  : '';
-  const _placement = typeof _randomPlacement === 'function' ? _randomPlacement() : '';
-  const prompt = `${parts}${readingFormulaLine}\n\nREADING ANGLE: ${typeof _randomAngle === 'function' ? _randomAngle(lang) : ''}\nLEAD ASPECT: ${_aspect}\nIMAGERY SOURCE: ${_imagery}\nREGISTER: ${_register}\nRUNE NAME PLACEMENT: ${_placement}\nOPENING RULE: Never open with the rune name or with \'[Rune] is / arrives / brings / speaks\'. The first sentence must be pure image, observation, or the person — the rune arrives later.\n\n${formatInstr}\n\nBe concise — every sentence must earn its place. ${langInstr}\n${getCorrPrompt(lang, corrections)}`
+  const _placement  = typeof _randomPlacement       === 'function' ? _randomPlacement()              : '';
+  const _voiceInstr = typeof _voiceScaleInstruction === 'function' ? _voiceScaleInstruction(_voiceScale) : '';
+  const prompt = `${parts}${readingFormulaLine}\n\nREADING ANGLE: ${typeof _randomAngle === 'function' ? _randomAngle(lang) : ''}\nLEAD ASPECT: ${_aspect}\nIMAGERY SOURCE: ${_imagery}\nREGISTER: ${_register}\nRUNE NAME PLACEMENT: ${_placement}\nOPENING RULE: Never open with the rune name or with \'[Rune] is / arrives / brings / speaks\'. The first sentence must be pure image, observation, or the person — the rune arrives later.\n${_voiceInstr}\n\n${formatInstr}\n\nBe concise — every sentence must earn its place. ${langInstr}\n${getCorrPrompt(lang, corrections)}`
   const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens);
   if (res.error) {
     if (_rdLoadEl) _rdLoadEl.style.display = 'none';
