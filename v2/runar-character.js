@@ -554,7 +554,7 @@ function buildReadingPromptIS(u, drawn, corrections) {
   var elemRef  = life ? relements(drawn) + ' / ' + relements(life) : '—';
   var worldRef = rworld(drawn) || 'lifandi leiðin';
   var hasQ = !!(u.question && u.question.trim());
-  var lifeNote2 = life ? ('MANNESKJAN ber ' + rn(life) + ' (' + life.g + ') sem lífsrúnu — flettu þessari tengingu inn ómeðvitað, án þess að tilkynna hana.') : '';
+  var lifeNote2 = life ? ('MANNESKJAN ber ' + rn(life) + ' (' + life.g + ') sem lífsrún — flettu þessari tengingu inn ómeðvitað, án þess að tilkynna hana.') : '';
   return [
     parts + formulaLine,
     '',

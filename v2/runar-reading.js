@@ -151,6 +151,7 @@ function startReading() {
   var lifeRune = (isMine && _lifeRuneNum) ? RUNES[_lifeRuneNum - 1] : null;
   readerUser = { name, d: null, m: null, y: null, lifeRune,
     area: readerUser.area || '', seeking: readerUser.seeking || '',
+    mood: readerUser.mood || '', intention: readerUser.intention || '',
     question: document.getElementById('r-question').value.trim() };
   document.getElementById('reader-hero').classList.add('hidden');
   document.getElementById('reader-setup').style.display = 'none';
@@ -383,6 +384,7 @@ function resetReader() {
   ['r-name','r-day','r-month','r-year','r-question'].forEach(id => {
     const el = document.getElementById(id); if (el) el.value = '';
   });
+  readerUser.mood = ''; readerUser.intention = '';
   buildPills();
 }
 

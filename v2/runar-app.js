@@ -563,6 +563,10 @@ function _updateAreaSeekLabels() {
   if (albl) albl.innerHTML = t('area_lbl') + _optSpan + _lockHint;
   const slbl = document.getElementById('seek-lbl');
   if (slbl) slbl.innerHTML = t('seek_lbl') + _optSpan + _lockHint;
+  const mlbl = document.getElementById('mood-lbl');
+  if (mlbl) mlbl.innerHTML = t('mood_lbl') + ' <span class="opt">' + t('opt') + '</span>';
+  const ilbl = document.getElementById('intention-lbl');
+  if (ilbl) ilbl.innerHTML = t('intention_lbl') + ' <span class="opt">' + t('opt') + '</span>';
   const qlbl = document.getElementById('q-lbl');
   if (qlbl) qlbl.innerHTML = t('q_lbl') + ' <span class="opt">'+t('opt')+'</span>';
   setPH('r-question', t('q_ph'));
@@ -917,6 +921,8 @@ function buildPills() {
   const _seekUnlocked = _isRSnoCredits ? 1 : undefined;
   buildPillGroup('area-pills', AREAS[lang], 'area', _areaUnlocked);
   buildPillGroup('seek-pills', SEEKS[lang], 'seek', _seekUnlocked);
+  buildPillGroup('mood-pills', MOODS[lang] || MOODS.en, 'mood');
+  buildPillGroup('intention-pills', INTENTIONS[lang] || INTENTIONS.en, 'intention');
   ['area-pills', 'seek-pills'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.toggle('pills-locked', _isVisitor);
@@ -924,7 +930,10 @@ function buildPills() {
 }
 function buildPillGroup(containerId, items, type, unlockedCount) {
   const c = document.getElementById(containerId); if (!c) return;
-  const current = type === 'area' ? readerUser.area : readerUser.seeking;
+  const current = type === 'area' ? readerUser.area
+    : type === 'seek' ? readerUser.seeking
+    : type === 'mood' ? readerUser.mood
+    : readerUser.intention;
   c.innerHTML = '';
   items.forEach((label, idx) => {
     const locked = unlockedCount !== undefined && idx >= unlockedCount;
@@ -935,7 +944,10 @@ function buildPillGroup(containerId, items, type, unlockedCount) {
       p.onclick = () => {
         c.querySelectorAll('.pill:not(.pill-locked)').forEach(x => x.classList.remove('on'));
         p.classList.add('on');
-        if (type === 'area') readerUser.area = label; else readerUser.seeking = label;
+        if (type === 'area') readerUser.area = label;
+        else if (type === 'seek') readerUser.seeking = label;
+        else if (type === 'mood') readerUser.mood = label;
+        else readerUser.intention = label;
       };
     }
     c.appendChild(p);
