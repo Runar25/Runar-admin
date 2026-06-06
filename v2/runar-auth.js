@@ -89,7 +89,7 @@ function updateAuthLabel() {
   } else {
     label.style.display = 'none';
     btn.style.display   = '';
-    btn.textContent     = lang === 'is' ? 'SKRÁ INN' : 'SIGN IN';
+    btn.textContent     = t('sign_in_btn');
     btn.classList.add('signin');
   }
 }

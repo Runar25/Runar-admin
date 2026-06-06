@@ -163,7 +163,7 @@ function setTreeDOB() {
   var y = parseInt(document.getElementById('tree-dob-y').value);
   if (!d || !m || !y || d < 1 || d > 31 || m < 1 || m > 12 || y < 1900 || y > 2099) {
     var btn = document.getElementById('tree-dob-btn');
-    if (btn) { btn.textContent = lang === 'is' ? 'ÓGILT DAGSETNING' : 'INVALID DATE'; setTimeout(function(){ btn.textContent = lang === 'is' ? 'OPINBERA LÍFSRÚNUNA →' : 'REVEAL MY LIFE RUNE →'; }, DELAY_ERROR_RESET); }
+    if (btn) { btn.textContent = t('invalid_date'); setTimeout(function(){ btn.textContent = t('tree_reveal_btn') + ' →'; }, DELAY_ERROR_RESET); }
     return;
   }
   readerUser.d = d; readerUser.m = m; readerUser.y = y;

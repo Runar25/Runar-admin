@@ -378,11 +378,11 @@ function showNamePrompt() {
   const inp  = document.getElementById('name-prompt-input');
   const skip = document.getElementById('name-prompt-skip');
   const btn  = ov.querySelector('.name-card-btn');
-  if (card) card.textContent = is ? 'ÁÐUR EN RÚNIRNAR TALA' : 'BEFORE THE RUNES SPEAK';
-  if (sub)  sub.innerHTML   = is ? 'Rúnirnar tala öðruvísi til þeirra sem þær þekkja að nafni.<br>Hvernig á ég að kalla þig?' : 'The runes speak differently to those whose name they know.<br>How shall I call you?';
-  if (skip) skip.textContent = is ? 'Halda áfram án nafns' : 'Continue without a name';
-  if (btn)  btn.textContent  = is ? 'LÁTA SPÁNA HEFJAST' : 'LET THE CAST BEGIN';
-  if (inp)  inp.placeholder  = is ? 'Nafn þitt eða gælunafn' : 'Your name or nickname';
+  if (card) card.textContent = t('name_modal_title');
+  if (sub)  sub.innerHTML   = t('name_modal_sub');
+  if (skip) skip.textContent = t('name_modal_skip');
+  if (btn)  btn.textContent  = t('name_modal_btn');
+  if (inp)  inp.placeholder  = t('name_modal_ph');
   ov.style.display = 'flex';
   setTimeout(() => inp && inp.focus(), DELAY_FOCUS);
 }
@@ -810,7 +810,7 @@ function loadCollAudio(l) {
   const playerEl = document.getElementById('cd-audio-player');
   const lblEl    = document.getElementById('cd-audio-lbl');
 
-  if (lblEl) lblEl.textContent = l === 'is' ? '♪ RÚNAR KENNIR' : '♪ RÚNAR\'S TEACHING';
+  if (lblEl) lblEl.textContent = t('shrine_audio_lbl');
 
   if (rows.length === 0) {
     textEl.textContent  = '';
