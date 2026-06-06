@@ -112,12 +112,15 @@ Při změně tier hodnoty: grep runar-app.js + runar-reader.html + runar-transla
 
 ## Tier systém
 
-| Tier | DB hodnota | Přístup |
-|------|-----------|---------|
-| Visitor | free_trial | 1 čtení, anon, jen Fehu, DOB locked |
-| Rune Seeker | rune_seeker | 1 čtení zdarma při registraci + kredity, journal 5 |
-| Standard | standard | 50 run/měsíc, hlas, journal+filtry, Kříž+Horseshoe |
-| Premium | premium | 75 run/měsíc, vše + Yggdrasil + hlubší Life Rune |
+| Tier | DB hodnota | Zobrazené jméno | Přístup |
+|------|-----------|----------------|---------|
+| Visitor | free_trial | Visitor | 1 čtení, anon, jen Fehu, DOB locked |
+| Rune Seeker | rune_seeker | Rune Seeker | 1 čtení zdarma + kredity, journal 5 |
+| Standard | standard | **Rune Walker** | 50 run/měsíc, hlas, full journal, všechny spready |
+| Premium | premium | **Rune Keeper** | 75 run/měsíc, vše + hlubší Life Rune |
+
+POZOR: DB hodnoty (free_trial, rune_seeker, standard, premium) se NEMĚNÍ.
+Jen UI label — Rune Walker a Rune Keeper. Implementovat v dalším commitu.
 
 ADMIN_EMAILS: kukula@agndofa.is, info@agndofa.is → automaticky premium, bypass všeho.
 VŽDY testovat jako visitor a rune_seeker, ne jako admin.

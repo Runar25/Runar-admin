@@ -75,19 +75,20 @@ Akvizice přes fyzický produkt: ~$0.135 na uživatele (IS). Marketing cost: nul
 **Fyzická cesta (Rune Card):** +1 kredit navíc → celkem 3 čtení zdarma před první platbou.
 Online cesta: Visitor 1 + RS 1 = 2 zdarma. Fyzická: Visitor 1 + Rune Card 1 + RS 1 = 3 zdarma.
 
-### Standard (~2.490 ISK/měsíc)
+### Rune Walker — Standard (~2.490 ISK/měsíc)
+*DB hodnota: standard | Nové UI jméno: Rune Walker (rozhodnutí 2026-06-06)*
 - **Limit: 50 run/měsíc**
-- Kříž a Horseshoe přístupné
+- Všechny spready včetně Yggdrasil (Dec 14–28)
 - Full Tree of Life + zakládací rituál zdarma
 - Full journal
 - Hlas zahrnut
 - Life Rune: plný výklad (1200 tokenů)
 - Účel: hlavní produkt, cíl všech funnelů
 
-### Premium (~3.490 ISK/měsíc)
+### Rune Keeper — Premium (~3.490 ISK/měsíc)
+*DB hodnota: premium | Nové UI jméno: Rune Keeper (rozhodnutí 2026-06-06)*
 - **Limit: 75 run/měsíc**
-- Vše jako Standard
-- Yggdrasil (doporučeno 1× ročně u zimního slunovratu)
+- Vše jako Rune Walker
 - Life Rune: hlubší výklad (2000 tokenů) + etymologie jména + mytologická postava
 - Budoucí: kakao ceremonial, další features
 - Účel: hloubka, pro oddané uživatele
