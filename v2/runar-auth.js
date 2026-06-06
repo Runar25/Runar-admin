@@ -129,13 +129,11 @@ function updateBanners() {
       freeBanner.style.display = 'block';
       const cntEl = document.getElementById('free-user-count');
       if (cntEl) {
-        cntEl.textContent = isIs
-          tp('rs_banner_counter', { casts: vn('cast', remaining, lang) });
+        cntEl.textContent = tp('rs_banner_counter', { casts: vn('cast', remaining, lang) });
         cntEl.className = 'tn-counter' + (remaining === 1 ? ' warn' : '');
       }
       const txtEl = document.getElementById('free-user-text');
-      if (txtEl) txtEl.innerHTML = isIs
-        tp('rs_banner_desc', {
+      if (txtEl) txtEl.innerHTML = tp('rs_banner_desc', {
           casts_month: vn('cast', FREE_REGISTERED_LIMIT, lang),
           card:        vl('card', lang)
         });
@@ -149,13 +147,11 @@ function updateBanners() {
       freeBanner.style.display = 'block';
       const cntEl = document.getElementById('free-user-count');
       if (cntEl) {
-        cntEl.textContent = isIs
-          tp('rs_credits_counter', { units: vn('unit', userCredits, lang) });
+        cntEl.textContent = tp('rs_credits_counter', { units: vn('unit', userCredits, lang) });
         cntEl.className = 'tn-counter';
       }
       const txtEl = document.getElementById('free-user-text');
-      if (txtEl) txtEl.innerHTML = isIs
-        tp('rs_credits_desc', { units: VOCAB.unit.en_pl });
+      if (txtEl) txtEl.innerHTML = tp('rs_credits_desc', { units: VOCAB.unit.en_pl });
       const btnEl2 = document.getElementById('tn-curious-btn');
       if (btnEl2) btnEl2.style.display = 'none'; // má kredity — nepotřebuje gift card button
       upgradeGate.style.display = 'none';
@@ -168,13 +164,11 @@ function updateBanners() {
       content.style.display     = 'block';
       const cntEl = document.getElementById('free-user-count');
       if (cntEl) {
-        cntEl.textContent = isIs
-          tp('rs_banner_counter', { casts: vn('cast', 0, lang) });
+        cntEl.textContent = tp('rs_banner_counter', { casts: vn('cast', 0, lang) });
         cntEl.className = 'tn-counter warn';
       }
       const txtEl = document.getElementById('free-user-text');
-      if (txtEl) txtEl.innerHTML = isIs
-        tp(FREE_REGISTERED_LIMIT === 1 ? 'rs_exhausted_one' : 'rs_exhausted_many', {
+      if (txtEl) txtEl.innerHTML = tp(FREE_REGISTERED_LIMIT === 1 ? 'rs_exhausted_one' : 'rs_exhausted_many', {
           n:    FREE_REGISTERED_LIMIT,
           card: vl('card', lang)
         });
@@ -192,13 +186,11 @@ function updateBanners() {
       const isIs = lang === 'is';
       const cntEl = document.getElementById('trial-count');
       if (cntEl) {
-        cntEl.textContent = isIs
-          tp('visitor_counter', { casts: vn('cast', remaining, lang) });
+        cntEl.textContent = tp('visitor_counter', { casts: vn('cast', remaining, lang) });
         cntEl.className = 'tn-counter' + (remaining === 1 ? ' warn' : '');
       }
       const txtEl = document.getElementById('trial-text');
-      if (txtEl) txtEl.innerHTML = isIs
-        t('visitor_desc');
+      if (txtEl) txtEl.innerHTML = t('visitor_desc');
       const btnEl = document.getElementById('tn-visitor-btn');
       if (btnEl) btnEl.textContent = t('become_rs_btn');
       gate.style.display    = 'none';
@@ -211,13 +203,11 @@ function updateBanners() {
       const isIs = lang === 'is';
       const cntEl = document.getElementById('trial-count');
       if (cntEl) {
-        cntEl.textContent = isIs
-          tp('visitor_counter', { casts: vn('cast', 0, lang) });
+        cntEl.textContent = tp('visitor_counter', { casts: vn('cast', 0, lang) });
         cntEl.className = 'tn-counter warn';
       }
       const txtEl = document.getElementById('trial-text');
-      if (txtEl) txtEl.innerHTML = isIs
-        t('visitor_exhausted');
+      if (txtEl) txtEl.innerHTML = t('visitor_exhausted');
       const btnEl = document.getElementById('tn-visitor-btn');
       if (btnEl) btnEl.textContent = t('become_rs_btn');
     }
