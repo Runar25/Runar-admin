@@ -95,6 +95,26 @@ vl('card', l)     ← label z VOCAB: 'Rune Card' / 'Rúnakort'
 ```
 Přidání jazyka = jen nový blok v UI_TEXT + VOCAB. Žádné jiné soubory.
 
+### §11 — IS text v Python skriptech = VŽDY literální znaky
+`\\u00faN` → JS: `úN` (velké N). `\\u00feEKK` → JS: `þEKK` (velká písmena).
+Escape sekvence NIKDY — pouze literal UTF-8 s `python -X utf8`.
+```python
+# ❌ NIKDY
+'R\\u00faNirnar tala \\u00f6\\u00f0ruv\\u00edsi'  # → RúNirnar tala öðruvísi (corrupt!)
+# ✅ VŽDY
+'Rúnirnar tala öðruvísi'                           # literální znaky, -X utf8
+```
+
+### §12 — Jméno uživatele: fallback = "you" / "þú"
+Pokud `userName` není nastaven, NIKDY nepoužívat `email.split('@')[0]`.
+```js
+// displayName() — jediný zdroj pravdy pro zobrazení jména
+if (userName) return userName;
+if (currentUser) return lang === 'is' ? 'þú' : 'you';
+return lang === 'is' ? 'Gestur' : 'Visitor';
+```
+Platí všude: greeting, prompty, Tree tab, banners.
+
 ---
 
 ## Tier systém

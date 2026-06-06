@@ -335,7 +335,7 @@ function _initPrivacyBanner() {}
 
 function displayName() {
   if (userName) return userName;
-  if (currentUser) return currentUser.email.split('@')[0];
+  if (currentUser) return lang === 'is' ? 'þú' : 'you';
   return lang === 'is' ? 'Gestur' : 'Visitor';
 }
 

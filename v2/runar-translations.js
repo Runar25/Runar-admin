@@ -371,7 +371,7 @@ const UI_TEXT = {
     tree_intro: '<p class="tree-intro-title">LÍFSRÚNIN</p><p>Sagt er að ekkert tré rísi til himins án þess að fyrst teygja rætur sínar niður í myrkrið.</p><p>Þannig er það einnig með okkur.</p><p>Á lífsleiðinni söfnum við reynslu, minningum og sögum.<br>Sumt vex sýnilegt.<br>Annað liggur dýpra og bíður þess að verða séð.</p><p>Rúnirnar eru ekki hér til að segja þér hver þú ert.</p><p>Þær eru hér til að hjálpa þér að muna.</p><p>Lífsrúnin er fyrsta skrefið.</p><p>Hún markar upphafið að ferðalagi inn á við — vegferð þar sem þitt eigið tré vex með hverri innsýn, hverri spurningu og hverju skrefi sem þú tekur.</p><p>Með tímanum mun tréð bera merki vaxtar þíns, lærdóms og þeirra slóða sem þú velur að feta.</p><p>Til að finna Lífsrúnina þína skaltu hefja leitina þar sem saga þín hófst.</p><p>Hvenær fæddist þú?</p>',
     sign_in_btn:      'SKR\u00c1 INN',
     name_modal_title: '\u00c1\u00d0UR EN R\u00daNIRNAR TALA',
-    name_modal_sub:   'R\u00faNirnar tala \u00f6\u00f0ruv\u00edsi til \u00feirra sem \u00fE\u00e6r \u00feEKKja a\u00f0 nafni.<br>Hvernig \u00e1 \u00e9g a\u00f0 kalla \u00feig?',
+    name_modal_sub:   'Rúnirnar tala öðruvísi til þeirra sem þær þekkja að nafni.<br>Hvernig á ég að kalla þig?',
     name_modal_skip:  'Halda \u00e1fram \u00e1n nafns',
     name_modal_btn:   'L\u00c1TA SP\u00c1NA HEFJAST',
     name_modal_ph:    'Nafn \u00feitt e\u00f0a g\u00e6lunafn',
