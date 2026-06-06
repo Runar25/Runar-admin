@@ -295,6 +295,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .tree-loading-text{text-align:center;font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--muted);padding-bottom:24px;}
 .tree-growth-section{padding:24px 0 8px;border-top:1px solid var(--border);}
 .tree-growth-quote{text-align:center;font-style:italic;color:var(--muted);font-size:0.9em;line-height:1.9;padding:0 12px;}
+/* ── ADMIN BAR ── */
+.tree-admin-bar{display:flex;flex-wrap:wrap;gap:8px;padding:8px 12px;margin-bottom:16px;border:1px solid rgba(255,191,0,0.18);background:rgba(255,191,0,0.03);}
+.tree-admin-btn{font-family:'Cinzel',serif;font-size:0.55em;letter-spacing:2px;padding:6px 14px;background:transparent;border:1px solid rgba(255,191,0,0.35);color:var(--gold);opacity:0.6;cursor:pointer;transition:opacity 0.2s;white-space:nowrap;}
+.tree-admin-btn:hover{opacity:1;}
 
 /* ── COLLECTION ── */
 .coll-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:4px;}

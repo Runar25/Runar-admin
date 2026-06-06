@@ -18,6 +18,7 @@ var _lifeRuneNum   = null;  // rune number 1-24
 
 // Show Tree tab — renders correct state based on tier + data
 function updateTreeTab() {
+  updateAdminBar();
   var isIs = lang === 'is';
   var hasDob = readerUser && readerUser.d && readerUser.m && readerUser.y;
   var isStdPlus = currentUser && (userTier === 'standard' || userTier === 'premium' || isAdmin(currentUser.email));
@@ -296,3 +297,32 @@ function updateSidePanelLang() {
   if (lbl) lbl.textContent = t('language_lbl');
 }
 
+
+// ─── ADMIN BAR ────────────────────────────────────────────────────────────────
+
+// Show/hide admin bar. Called from updateTreeTab() and on lang change.
+// More buttons will be added here (resetDOB, forceRegenerate, etc.)
+function updateAdminBar() {
+  var bar = document.getElementById('tree-admin-bar');
+  if (!bar) return;
+  bar.style.display = (currentUser && isAdmin(currentUser.email)) ? 'flex' : 'none';
+  var resetBtn = document.getElementById('tree-admin-reset-lr');
+  if (resetBtn) resetBtn.textContent = t('admin_reset_lr');
+}
+
+// Reset life rune for the current admin user (for testing).
+// Clears life_rune_number/text/lang in DB + local state, then re-renders tree tab.
+async function resetLifeRune() {
+  if (!currentUser || !isAdmin(currentUser.email)) return;
+  var who = (readerUser && readerUser.name) ? readerUser.name : (lang === 'is' ? 'þú' : 'you');
+  if (!confirm('Reset life rune for ' + who + '?')) return;
+  var res = await sb.from('user_profiles')
+    .update({ life_rune_number: null, life_rune_text: null, life_rune_lang: null })
+    .eq('id', currentUser.id);
+  if (res.error) { showToast('Reset failed: ' + res.error.message); return; }
+  _lifeRuneText = null;
+  _lifeRuneLang = null;
+  _lifeRuneNum  = null;
+  showToast(lang === 'is' ? 'Lífsrún endurstillt' : 'Life rune reset');
+  updateTreeTab();
+}

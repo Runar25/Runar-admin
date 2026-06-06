@@ -191,6 +191,7 @@ const UI_TEXT = {
     shrine_audio_lbl: "\u266a R\u00daNAR'S TEACHING",
     invalid_date:     'INVALID DATE',
     language_lbl:       'LANGUAGE',
+    admin_reset_lr:   'RESET LIFE RUNE',
   },
 
   is: {
@@ -378,6 +379,7 @@ const UI_TEXT = {
     shrine_audio_lbl: '\u266a R\u00daNAR KENNIR',
     invalid_date:     '\u00d3GILT DAGSETNING',
     language_lbl:       'TUNGUM\u00c1L',
+    admin_reset_lr:   'ENDURSTILLA L\u00cdFSR\u00daN',
   },
 
 };
