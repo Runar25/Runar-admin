@@ -299,8 +299,8 @@ const SPREAD_COSTS = {
 // use these to pluralize + translate everywhere in the UI.
 const VOCAB = {
   unit: { en: 'rune stone', en_pl: 'rune stones', is: 'r\u00fanasteinn', is_pl: 'r\u00fanasteinar' },
-  cast: { en: 'cast',       en_pl: 'casts',        is: 'sp\u00e1',        is_pl: 'sp\u00e1r'        },
-  card: { en: 'Rune Card',  en_pl: 'Rune Cards',   is: 'R\u00fanakort',   is_pl: 'R\u00fanakort'    },
+  cast: { en: 'rune reading', en_pl: 'rune readings', is: 'sp\u00e1',      is_pl: 'sp\u00e1r'        },
+  card: { en: 'Rune Reading Card', en_pl: 'Rune Reading Cards', is: 'R\u00fanakort', is_pl: 'R\u00fanakort' },
 };
 // ─── SPREAD CONFIG — single source of truth ──────────────
 // rune_count: how many runes to draw
