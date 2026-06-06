@@ -417,8 +417,8 @@ function updateSidePanel() {
   _updateInstallBtn();
   const isIs = lang === 'is';
   const tierLabels = isIs
-    ? { rune_seeker:'VEGFARANDI', free:'VEGFARANDI', credits:'VEGFARANDI', standard:'STANDARD', premium:'PREMIUM' }
-    : { rune_seeker:'RUNE SEEKER', free:'RUNE SEEKER', credits:'RUNE SEEKER', standard:'STANDARD', premium:'PREMIUM' };
+    ? { rune_seeker:'VEGFARANDI', free:'VEGFARANDI', credits:'VEGFARANDI', standard:'RUNE WALKER', premium:'RUNE KEEPER' }
+    : { rune_seeker:'RUNE SEEKER', free:'RUNE SEEKER', credits:'RUNE SEEKER', standard:'RUNE WALKER', premium:'RUNE KEEPER' };
   const tierHeader = currentUser ? (tierLabels[userTier] || userTier.toUpperCase()) : (t('visitor_label'));
   setText('sp-tier-header', t('sp_account_title'));
   // Side panel navigation links — switch with language
@@ -1030,8 +1030,8 @@ function updateDropdown() {
   if (!dd || !currentUser) return;
   const isIs = lang === 'is';
   const tierNames = isIs
-    ? { rune_seeker:'VEGFARANDI', free_trial:'GESTUR', free:'VEGFARANDI', credits:'VEGFARANDI', standard:'STANDARD', premium:'PREMIUM' }
-    : { rune_seeker:'RUNE SEEKER', free_trial:'VISITOR', free:'RUNE SEEKER', credits:'RUNE SEEKER', standard:'STANDARD', premium:'PREMIUM' };
+    ? { rune_seeker:'VEGFARANDI', free_trial:'GESTUR', free:'VEGFARANDI', credits:'VEGFARANDI', standard:'RUNE WALKER', premium:'RUNE KEEPER' }
+    : { rune_seeker:'RUNE SEEKER', free_trial:'VISITOR', free:'RUNE SEEKER', credits:'RUNE SEEKER', standard:'RUNE WALKER', premium:'RUNE KEEPER' };
   if (tierEl)  tierEl.textContent  = tierNames[userTier] || userTier.toUpperCase();
   if (emailEl) emailEl.textContent = currentUser.email;
   if (balEl) {
@@ -1065,8 +1065,8 @@ function _renderYourPath() {
   const PANEL_TIERS = [
     { id: 'free_trial',  name: { en: 'VISITOR',     is: 'GESTUR'     }, props: TIER_LIMITS.free_trial.panel_props  },
     { id: 'rune_seeker', name: { en: 'RUNE SEEKER', is: 'VEGFARANDI' }, props: TIER_LIMITS.rune_seeker.panel_props },
-    { id: 'standard',    name: { en: 'STANDARD',    is: 'STANDARD'   }, note: { en: '— coming soon', is: '— bráðlega' }, props: TIER_LIMITS.standard.panel_props  },
-    { id: 'premium',     name: { en: 'PREMIUM',     is: 'PREMIUM'    }, note: { en: '— coming soon', is: '— bráðlega' }, props: TIER_LIMITS.premium.panel_props   },
+    { id: 'standard',    name: { en: 'RUNE WALKER',  is: 'RUNE WALKER' }, note: { en: '— coming soon', is: '— bráðlega' }, props: TIER_LIMITS.standard.panel_props  },
+    { id: 'premium',     name: { en: 'RUNE KEEPER',  is: 'RUNE KEEPER' }, note: { en: '— coming soon', is: '— bráðlega' }, props: TIER_LIMITS.premium.panel_props   },
   ];
 
   const currData = PANEL_TIERS.find(function(t) { return t.id === normTier; }) || PANEL_TIERS[0];
