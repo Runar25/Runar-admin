@@ -120,7 +120,7 @@ function updateBanners() {
       return;
     }
 
-    // ── Rune Seeker — 5 free/month + paid credits ──
+    // ── Rune Seeker — FREE_REGISTERED_LIMIT free reading(s) + paid credits ──
     creditsBanner.style.display = 'none';
     const used      = getFreeMonthCount(currentUser.id);
     const remaining = Math.max(0, FREE_REGISTERED_LIMIT - used);
@@ -178,8 +178,12 @@ function updateBanners() {
       }
       const txtEl = document.getElementById('free-user-text');
       if (txtEl) txtEl.innerHTML = isIs
-        ? `Þú hefur gengið alla fimm lestrana þína í þessum mánuði. Steinarnir hvíla til næsta mánaðar — eða opnaðu dyrnar með <b>RÚNAR GJAFA-LESTURARKORT</b>. Eitt kort. Engin gildistími, engin áskrift.`
-        : `You have walked all five readings this month. The stones rest until the new month — or keep the door open with a <b>READING GIFT CARD</b>. One card. No expiry, no subscription.`;
+        ? (FREE_REGISTERED_LIMIT === 1
+          ? `Þú hefur gengið frálsa lesturinn Þin íessum mánuði. Steinarnir hvíla til næsta mánaðar — eða opnaðu dyrnar með <b>RÚNAR GJAFA-LESTURARKORT</b>. Eitt kort. Engin gildistími, engin áskrift.`
+          : `Þú hefur gengið alla ${FREE_REGISTERED_LIMIT} lestrana Þiná í Þssum mánuði. Steinarnir hvíla til næsta mánaðar — eða opnaðu dyrnar með <b>RÚNAR GJAFA-LESTURARKORT</b>. Eitt kort. Engin gildistími, engin áskrift.`)
+        : (FREE_REGISTERED_LIMIT === 1
+          ? `You have walked your free reading this month. The stones rest until the new month — or keep the door open with a <b>READING GIFT CARD</b>. One card. No expiry, no subscription.`
+          : `You have walked all ${FREE_REGISTERED_LIMIT} readings this month. The stones rest until the new month — or keep the door open with a <b>READING GIFT CARD</b>. One card. No expiry, no subscription.`);
       const btnEl = document.getElementById('tn-curious-btn');
       if (btnEl) { btnEl.textContent = t('gift_card_btn'); btnEl.style.display = ''; }
     }

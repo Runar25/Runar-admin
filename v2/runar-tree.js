@@ -70,6 +70,20 @@ function updateTreeTab() {
       if (costLbl) costLbl.textContent = t('tree_rs_cost');
       if (balLbl)  balLbl.textContent  = t('tree_rs_balance');
       if (balVal)  balVal.textContent  = bal;
+      // Free reading — oddelene od credits (credits_balance != onboarding free reading)
+      var freeLineEl = document.getElementById('tree-rs-free-line');
+      if (freeLineEl && typeof getFreeMonthCount === 'function' && currentUser) {
+        var freeUsed = getFreeMonthCount(currentUser.id);
+        var freeRem  = Math.max(0, FREE_REGISTERED_LIMIT - freeUsed);
+        if (freeRem > 0) {
+          freeLineEl.textContent = lang === 'is'
+            ? freeRem + ' fráls lestur fyrir venjulegar dregnar rúnar'
+            : freeRem + ' free reading available for regular draws';
+          freeLineEl.style.display = '';
+        } else {
+          freeLineEl.style.display = 'none';
+        }
+      }
       var orSep   = document.getElementById('tree-or-sep');
       if (orSep) orSep.textContent = t('tree_rs_or');
       var upgNote = document.getElementById('tree-upgrade-note');

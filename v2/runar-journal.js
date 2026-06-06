@@ -7,10 +7,10 @@
 // ═══════════════════════════════════════════════════════
 
 // ─── DB: JOURNAL ─────────────────────────────────────────
-// Limit podle tieru: rune_seeker = 5, standard/premium = bez limitu
+// Limit podle tieru: z TIER_LIMITS configu — Rule §8
 function journalLimit() {
   if (userTier === 'standard' || userTier === 'premium') return null;
-  return 5;
+  return TIER_LIMITS.rune_seeker.journal_entries;  // zmenit v runar-config.js
 }
 
 async function loadJournal() {

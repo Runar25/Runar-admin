@@ -353,6 +353,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .tree-cta-block{text-align:center;margin:16px 0 10px;}
 .tree-cta-cost{font-size:0.75em;color:var(--muted);margin-top:6px;letter-spacing:0.08em;}
 .tree-cta-cost #tree-rs-balance-val{color:var(--gold);}
+.tree-cta-free{font-size:0.7em;color:var(--muted);margin-top:3px;opacity:0.75;letter-spacing:0.06em;}
 .tree-or-sep{text-align:center;color:var(--border);font-size:0.8em;letter-spacing:0.15em;margin:14px 0;}
 .tree-upgrade-block{text-align:center;margin-bottom:8px;}
 .tree-upgrade-note{font-size:0.72em;color:var(--muted);margin-top:6px;font-style:italic;letter-spacing:0.04em;}

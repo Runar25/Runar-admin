@@ -416,9 +416,12 @@ function updateSidePanel() {
   if (!accEl) return;
   _updateInstallBtn();
   const isIs = lang === 'is';
-  const tierLabels = isIs
-    ? { rune_seeker:'VEGFARANDI', free:'VEGFARANDI', credits:'VEGFARANDI', standard:'RUNE WALKER', premium:'RUNE KEEPER' }
-    : { rune_seeker:'RUNE SEEKER', free:'RUNE SEEKER', credits:'RUNE SEEKER', standard:'RUNE WALKER', premium:'RUNE KEEPER' };
+  // Tier labels from TIERS config — Rule §8: never hardcode
+  var _lkSP = isIs ? 'label_is' : 'label';
+  var tierLabels = {};
+  Object.keys(TIERS).forEach(function(k) {
+    tierLabels[k] = (TIERS[k][_lkSP] || TIERS[k].label || k).toUpperCase();
+  });
   const tierHeader = currentUser ? (tierLabels[userTier] || userTier.toUpperCase()) : (t('visitor_label'));
   setText('sp-tier-header', t('sp_account_title'));
   // Side panel navigation links — switch with language
@@ -1029,9 +1032,12 @@ function updateDropdown() {
   const balEl   = document.getElementById('dd-balance');
   if (!dd || !currentUser) return;
   const isIs = lang === 'is';
-  const tierNames = isIs
-    ? { rune_seeker:'VEGFARANDI', free_trial:'GESTUR', free:'VEGFARANDI', credits:'VEGFARANDI', standard:'RUNE WALKER', premium:'RUNE KEEPER' }
-    : { rune_seeker:'RUNE SEEKER', free_trial:'VISITOR', free:'RUNE SEEKER', credits:'RUNE SEEKER', standard:'RUNE WALKER', premium:'RUNE KEEPER' };
+  // Tier names from TIERS config — Rule §8: never hardcode
+  var _lkDD = isIs ? 'label_is' : 'label';
+  var tierNames = {};
+  Object.keys(TIERS).forEach(function(k) {
+    tierNames[k] = (TIERS[k][_lkDD] || TIERS[k].label || k).toUpperCase();
+  });
   if (tierEl)  tierEl.textContent  = tierNames[userTier] || userTier.toUpperCase();
   if (emailEl) emailEl.textContent = currentUser.email;
   if (balEl) {
