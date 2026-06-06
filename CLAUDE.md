@@ -247,8 +247,7 @@ Kompletní design: viz RUNAR_DESIGN.md.
 
 ### 🟡 Důležité
 4. **Standard tier** — způsob nákupu ("COMING SOON")
-5. **Kříž** — implementace (5-run spread)
-6. **Privacy Policy** — odkaz na agndofa.is
+5. **Privacy Policy** — odkaz na agndofa.is
 
 ### 🟢 Střední priorita
 - SSE streaming
@@ -256,3 +255,19 @@ Kompletní design: viz RUNAR_DESIGN.md.
 - Standard 50 / Premium 75 monthly limit — počítání z readings tabulky
 - Weekly drip odstranit z claude-proxy Edge Function
 - Specifická otázka reframing v buildReadingPromptIS/EN
+
+### 🌿 Tree of Life — budoucí rozšíření readeru
+Dva nové módy čtení pro přihlášené uživatele (implementovat až Tree tab bude live):
+
+**A) "Neuložit do stromu"** — přihlášený uživatel může udělat čtení bez zápisu do stromu.
+  - Toggle / checkbox před čtením: "Save to my tree" (default: on)
+  - Pokud off: saveReading() proběhne normálně (journal), ale tree branch se nevytvoří
+  - Případ: rychlé čtení, experiment, "chci jen výklad"
+
+**B) "Čtení pro někoho jiného"** — přihlášený user zadá jiné jméno + DOB
+  - Výsledek se NEZAPÍŠE do stromu přihlášeného uživatele
+  - Uloží se do journalu jako speciální záznam (označen "for: Jméno")
+  - Tree branch se nevytvoří (čtení nepatří tomuto stromu)
+  - Kreditní cena stejná, z limitu uživatele
+
+Závisí na: tree_state DB tabulce, branch systému.

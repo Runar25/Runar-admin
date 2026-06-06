@@ -812,3 +812,111 @@ function buildKrizPrompt(u, runes, lang, corrections) {
   if (lang === 'is') return buildKrizPromptIS(u, runes, corrections);
   return buildKrizPromptEN(u, runes, lang, corrections);
 }
+
+// ─── NORNS PROMPT BUILDERS ──────────────────────────────────────
+// Norns = 3-rune spread on the fate axis
+// runes[0] = Urðr  (urd)      — what was woven, immutable
+// runes[1] = Verðandi (verdandi) — what is being woven now
+// runes[2] = Skuld  (skuld)   — what must come, inevitable possibility
+//
+// Tree of Life: norns_axis HARDCODED by position (not from area/seeking)
+//   runes[0] → urd | runes[1] → verdandi | runes[2] → skuld
+// Bloom duration: 24h (branch reaches toward kmen — deeper than Trojice)
+//
+// Difference from Trojice: not a timeline — a fate axis.
+// Each Norna has a distinct voice and weight.
+
+function buildNornsPromptIS(u, runes, corrections) {
+  var rUrd  = runes[0];  // Urður — urd
+  var rVerd = runes[1];  // Verðandi — verdandi
+  var rSkul = runes[2];  // Skuld — skuld
+  var life  = u.lifeRune;
+  var lifeRef = life ? (life.is_n || life.n) + ' ' + life.g : '';
+
+  function runaBlock(r, label) {
+    var kws = rk(r).split(',').map(function(s) { return s.trim(); }).filter(Boolean).slice(0, 4).join(', ');
+    return label + '\n' + (r.is_n || r.n) + ' ' + r.g + ' — ' + kws;
+  }
+
+  var ctx = [
+    u.name    ? 'Leiðandi: ' + u.name : '',
+    life      ? 'LífsRúna: ' + lifeRef : '',
+    u.area    ? 'Svið: ' + u.area : '',
+    u.seeking ? 'Leiðin: ' + (Array.isArray(u.seeking) ? u.seeking.join(' og ') : u.seeking) : '',
+    u.question ? 'Spurning: ' + u.question : '',
+  ].filter(Boolean).join('\n');
+
+  var runesBlock = [
+    runaBlock(rUrd,  'URÐUR (urd — það sem var ofið, ekki hægt að taka til baka):'),
+    '',
+    runaBlock(rVerd, 'VERÐANDI (verdandi — það sem er að verða til, lifandi þráðurinn):'),
+    '',
+    runaBlock(rSkul, 'SKULD (skuld — það sem verður að koma, skuldin við örlögin):'),
+  ].join('\n');
+
+  return [
+    ctx,
+    '',
+    'Leiðandinn dregur þrjár rúnar — Nornirnar tala.',
+    '',
+    runesBlock,
+    '',
+    'Þetta eru ekki þrír aðskildir lestrar — þetta er ein saga sem Nornirnar segja saman.',
+    'Urður talar af þyngd þess sem er þegar fast — röddin hennar er hlutlæg, óafturkallanleg.',
+    'Verðandi talar í nútíð — lifandi, að verða til, ekki lokið.',
+    'Skuld talar ekki um framtíðina eins og spámann — heldur um hvað verður að verða ef þráðurinn heldur áfram.',
+    'Lestu sem einn samfelldur stef — nefndu ekki Nornirnar nafnlega í úttakinu. Láttu röddirnar koma í gegnum Rúnar.',
+    'Talaðu beint við ' + u.name + '. Vertu hnitmiðaður — 7 til 9 setningar. Endaðu með einni mjúkri, opinni spurningu.'
+      + getCorrPrompt('is', corrections),
+  ].filter(Boolean).join('\n');
+}
+
+function buildNornsPromptEN(u, runes, lang, corrections) {
+  var rUrd  = runes[0];
+  var rVerd = runes[1];
+  var rSkul = runes[2];
+  var life  = u.lifeRune;
+  var langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Islenska).' : 'Respond in English.';
+
+  function kbLine(r) {
+    return rk(r).split(',').map(function(s) { return s.trim(); }).filter(Boolean).slice(0, 4).join(', ');
+  }
+
+  var ctx = [
+    'Seeker: ' + u.name,
+    life ? 'Life rune: ' + rn(life) + ' ' + life.g : '',
+    u.area    ? 'Area: ' + u.area : '',
+    u.seeking ? 'Seeking: ' + (Array.isArray(u.seeking) ? u.seeking.join(' & ') : u.seeking) : '',
+    u.question ? 'Question: ' + u.question : '',
+  ].filter(Boolean).join('\n');
+
+  var runesBlock = [
+    'URÐUR (urd — what was woven, cannot be undone):',
+    rn(rUrd) + ' ' + rUrd.g + ' — ' + kbLine(rUrd),
+    '',
+    'VERÐANDI (verdandi — what is being woven, alive now):',
+    rn(rVerd) + ' ' + rVerd.g + ' — ' + kbLine(rVerd),
+    '',
+    'SKULD (skuld — what must come, the debt of fate):',
+    rn(rSkul) + ' ' + rSkul.g + ' — ' + kbLine(rSkul),
+  ].join('\n');
+
+  return [
+    ctx, '',
+    'The seeker draws three runes — the Norns speak.', '',
+    runesBlock, '',
+    'This is not three separate readings — it is one story told by three voices.',
+    'Urður speaks with the weight of what is already fixed — her voice is declarative, immovable.',
+    'Verðandi speaks in the present — living, becoming, not yet complete.',
+    'Skuld does not predict — she speaks of what must come if this thread continues.',
+    'Read as one continuous weaving. Do not name the Norns in the output — let their voices come through Runar.',
+    'Speak directly to ' + u.name + '. 7-9 sentences. End with one quiet, open question.',
+    langInstr,
+    getCorrPrompt(lang, corrections),
+  ].filter(Boolean).join('\n');
+}
+
+function buildNornsPrompt(u, runes, lang, corrections) {
+  if (lang === 'is') return buildNornsPromptIS(u, runes, corrections);
+  return buildNornsPromptEN(u, runes, lang, corrections);
+}

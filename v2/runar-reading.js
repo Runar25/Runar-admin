@@ -165,8 +165,10 @@ function _setSpreadMode(mode) {
   var btnTrojice = document.getElementById('mode-btn-trojice');
   if (btnSingle)  btnSingle.classList.toggle('active', mode === 'single');
   if (btnTrojice) btnTrojice.classList.toggle('active', mode === 'trojice');
-  var btnKriz = document.getElementById('mode-btn-kriz');
-  if (btnKriz) btnKriz.classList.toggle('active', mode === 'kriz');
+  var btnKriz  = document.getElementById('mode-btn-kriz');
+  var btnNorns = document.getElementById('mode-btn-norns');
+  if (btnKriz)  btnKriz.classList.toggle('active', mode === 'kriz');
+  if (btnNorns) btnNorns.classList.toggle('active', mode === 'norns');
   // Reset output
   _hideSpread3Output();
   _hideSpread5Output();
@@ -179,7 +181,7 @@ function _setSpreadMode(mode) {
 function _updateSpread3Slots() {
   var slotEl = document.getElementById('spread3-slots');
   if (!slotEl) return;
-  slotEl.style.display = (_spreadMode === 'trojice') ? 'flex' : 'none';
+  slotEl.style.display = (_spreadMode === 'trojice' || _spreadMode === 'norns') ? 'flex' : 'none';
   var slots = ['slot1','slot2','slot3'];
   var empty = ['①','②','③'];
   slots.forEach(function(id, i) {
@@ -261,6 +263,27 @@ async function readRune() {
     _updateSpread5Slots();
     var speakBtn5 = document.getElementById('btn-speak');
     if (speakBtn5) speakBtn5.disabled = (_spread5Runes.length < 5);
+    return;
+  }
+  if (_spreadMode === 'norns') {
+    // Visitor gate — block anonymous users
+    if (!currentUser) {
+      showToast(lang === 'is' ? 'Skráðu þig inn til að nota Nornir.' : 'Sign in to use the Norns spread.');
+      _setSpreadMode('single'); return;
+    }
+    if (_spread3Runes.length === 3 && !readerRune) {
+      document.getElementById('reader-rune-card').style.display = 'none';
+      document.getElementById('reader-output').style.display = 'block';
+      readerTexts = {}; voiceGenerated = {};
+      await _generateNornsReading();
+      return;
+    }
+    if (!readerRune) return;
+    if (_spread3Runes.length < 3) _spread3Runes.push(readerRune);
+    readerRune = null;
+    _updateSpread3Slots();
+    var speakBtnN = document.getElementById('btn-speak');
+    if (speakBtnN) speakBtnN.disabled = (_spread3Runes.length < 3);
     return;
   }
   if (_spreadMode === 'trojice') {
@@ -602,6 +625,90 @@ async function _generateSpread5Reading() {
   await stream('s5-out', text);
 
   // Voice
+  if (canUseVoice()) {
+    if (vBtn) { vBtn.disabled = false; vBtn.style.display = ''; }
+  } else {
+    if (vBtn) { vBtn.disabled = true; vBtn.style.display = 'none'; }
+  }
+}
+
+// ─── NORNS GENERATE (3-rune fate axis) ─────────────────────────
+// Norns positions have hardcoded norns_axis (independent of area/seeking):
+//   _spread3Runes[0] → urd | [1] → verdandi | [2] → skuld
+// Tree branch: reaches toward kmen — deeper than Trojice
+// Bloom duration: 24h
+async function _generateNornsReading() {
+  if (_spread3Runes.length < 3) return;
+
+  var vBtn = document.getElementById('btn-generate-voice');
+  if (vBtn) { vBtn.disabled = true; vBtn.textContent = t('voice_btn'); }
+  document.getElementById('audio-player').classList.remove('visible');
+  document.getElementById('runar-audio').src = '';
+  setSt('st-voice', '');
+
+  // Hide single layers, show spread3 output
+  var s1 = document.getElementById('single-layer1');
+  var s2 = document.getElementById('single-layer2');
+  if (s1) s1.style.display = 'none';
+  if (s2) s2.style.display = 'none';
+  var s3out = document.getElementById('spread3-output');
+  if (s3out) s3out.style.display = 'block';
+
+  var rdLoad = document.getElementById('reading-loading');
+  var rdLoadTxt = document.getElementById('reading-loading-txt');
+  if (rdLoadTxt) rdLoadTxt.textContent = t('reading_loading');
+  if (rdLoad) rdLoad.style.display = 'block';
+  var pL1 = document.getElementById('layer1-lbl');
+  var pL2 = document.getElementById('layer2-lbl');
+  if (pL1) pL1.classList.add('pulsing');
+  if (pL2) pL2.classList.add('pulsing');
+
+  var u = readerUser;
+  var sys = buildSysPrompt(activeChar, lang);
+  var prompt = buildNornsPrompt(u, _spread3Runes, lang, corrections);
+  var tokens = (SPREAD_CONFIG && SPREAD_CONFIG.norns) ? SPREAD_CONFIG.norns.tokens : 900;
+
+  var res = await callProxy(sys, prompt, tokens, shouldUseCredit());
+
+  if (rdLoad) rdLoad.style.display = 'none';
+  if (pL1) pL1.classList.remove('pulsing');
+  if (pL2) pL2.classList.remove('pulsing');
+
+  if (res.error === 'rate_limited') {
+    setSt('st-reader', lang === 'is' ? 'Of margar beiðnir. Bíddu aðeins.' : 'Too many requests. Please wait a moment.', 'err');
+    return;
+  }
+  if (res.error === 'no_credits' || res.error === 'monthly_limit' || res.error === 'weekly_limit') {
+    var isMonthly = res.error === 'monthly_limit';
+    var msg = isMonthly
+      ? (lang === 'is' ? 'Mánaðarlegur lesturmark er náð.' : 'Monthly reading limit reached.')
+      : (lang === 'is' ? 'Kredit þínir eru búnir.' : 'No credits remaining.');
+    setSt('st-reader', msg, 'err');
+    if (currentUser) syncMonthlyCount(currentUser.id);
+    if (currentUser) await fetchUserProfile(currentUser.id);
+    return;
+  }
+  if (res.error) { setSt('st-reader', 'Failed: ' + res.error, 'err'); return; }
+
+  var text = applyISCorrections(res.text || '', lang, corrections);
+  readerTexts[lang] = { short: text, deep: '' };
+
+  // Label: Urður · Verðandi · Skuld glyphs
+  var s3lbl = document.getElementById('s3-trojice-lbl');
+  if (s3lbl) s3lbl.textContent = _spread3Runes[0].g + ' · ' + _spread3Runes[1].g + ' · ' + _spread3Runes[2].g;
+
+  // Save to DB (Urður rune as anchor — urd position)
+  if (currentUser) {
+    await saveReading(_spread3Runes[0], text, '');
+    await syncMonthlyCount(currentUser.id);
+    loadJournal();
+  } else {
+    incTrialCount();
+    updateAuthUI();
+  }
+
+  await stream('s3-out', text);
+
   if (canUseVoice()) {
     if (vBtn) { vBtn.disabled = false; vBtn.style.display = ''; }
   } else {
