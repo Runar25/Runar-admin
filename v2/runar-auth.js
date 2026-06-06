@@ -405,8 +405,7 @@ async function redeemCode() {
     input.value = '';
     const runeMsg = data.rune_name ? ` · ${data.rune_name}` : '';
     setSt('st-redeem',
-      lang === 'is'
-        tp('redeem_ok_msg', { units: vn('unit', data.credits_added, lang), rune: runeMsg, bal: data.new_balance }),
+      tp('redeem_ok_msg', { units: vn('unit', data.credits_added, lang), rune: runeMsg, bal: data.new_balance }),
       'ok'
     );
     updateAuthUI();
