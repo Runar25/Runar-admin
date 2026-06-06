@@ -77,8 +77,8 @@ function updateTreeTab() {
         var freeRem  = Math.max(0, FREE_REGISTERED_LIMIT - freeUsed);
         if (freeRem > 0) {
           freeLineEl.textContent = lang === 'is'
-            ? freeRem + ' fráls lestur fyrir venjulegar dregnar rúnar'
-            : freeRem + ' free reading available for regular draws';
+            ? vn('cast', freeRem, 'is') + ' fyrir venjulegar dregnar rúnar'
+            : vn('cast', freeRem, 'en') + ' available for regular draws';
           freeLineEl.style.display = '';
         } else {
           freeLineEl.style.display = 'none';
@@ -92,7 +92,7 @@ function updateTreeTab() {
       if (revBtn) {
         revBtn.disabled = bal < LIFE_RUNE_COST;
         revBtn.title = bal < LIFE_RUNE_COST
-          ? (lang === 'is' ? 'Þú þarft ' + LIFE_RUNE_COST + ' kredita' : 'You need ' + LIFE_RUNE_COST + ' credits')
+          ? (lang === 'is' ? 'Þú þarft ' + vn('unit', LIFE_RUNE_COST, 'is') : 'You need ' + vn('unit', LIFE_RUNE_COST, 'en'))
           : '';
       }
     }

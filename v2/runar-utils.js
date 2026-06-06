@@ -20,6 +20,23 @@ function t(key) {
   return (UI_TEXT[lang] && UI_TEXT[lang][key]) || UI_TEXT.en[key] || key;
 }
 
+// Vocabulary helpers — read from VOCAB (runar-config.js)
+// vn('unit', 9, 'en')  =>  '9 rune stones'
+// vn('cast', 1, 'is')  =>  '1 sp\u00e1'
+function vn(key, n, lang) {
+  var v = VOCAB && VOCAB[key];
+  if (!v) return n + ' ' + key;
+  if (lang === 'is') return n + '\u00a0' + (n === 1 ? v.is : v.is_pl);
+  return n + '\u00a0' + (n === 1 ? v.en : v.en_pl);
+}
+// vl('card', 'en')  =>  'Rune Card'
+// vl('card', 'is')  =>  'R\u00fanakort'
+function vl(key, lang) {
+  var v = VOCAB && VOCAB[key];
+  if (!v) return key;
+  return lang === 'is' ? (v.is || v.en) : v.en;
+}
+
 
 // ─── Reading angles EN ─────────────────────────────────────────
 const READING_ANGLES = [

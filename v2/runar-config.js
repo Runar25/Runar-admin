@@ -237,7 +237,7 @@ const TIER_LIMITS = {
     weekly_drip:  0,
     free_spreads: ['single'],
     panel_props: {
-      en: ['Your first reading is a gift.', 'No account, no payment.', 'Step further when you are ready.'],
+      en: ['Your first cast is a gift.', 'No account, no payment.', 'Step further when you are ready.'],
       is: ['Fyrsti lesturinn er gjöf.', 'Enginn reikningur, engin greiðsla.', 'Farðu lengra þegar þú ert tilbúinn.'],
     },
   },
@@ -246,35 +246,35 @@ const TIER_LIMITS = {
     weekly_drip:  null,  // no weekly drip
     free_spreads: ['single', 'trojice', 'norns', 'gathering', 'cross', 'horseshoe', 'yggdrasil'],
     journal_entries: 5,
-    onboarding_label_en: 'one free reading',
-    onboarding_label_is: 'einn frjáls lestur',
-    journal_label_en:    'last 5 readings',
-    journal_label_is:    'síðustu 5 lestrar',
+    onboarding_label_en: 'one free cast',
+    onboarding_label_is: 'ein frjáls spá',
+    journal_label_en:    'last 5 casts',
+    journal_label_is:    'síðustu 5 spár',
     panel_props: {
-      en: ['One free reading to start, then credits.', 'Reading Gift Card unveils all features.', 'Limited journal (last 5 readings).'],
-      is: ['Einn frjáls lestur til að byrja, síðan kreditar.', 'Reading Gift Card opnar allar aðgerðir.', 'Takmörkuð dagbók (síðustu 5 lestrar).'],
+      en: ['One free cast to start, then rune stones.', 'Rune Card unveils all features.', 'Limited journal (last 5 casts).'],
+      is: ['Ein frjáls spá til að byrja, síðan rúnasteinar.', 'Rúnakort opnar allar aðgerðir.', 'Takmörkuð dagbók (síðustu 5 spár).'],
     },
   },
   standard: {
     onboarding:    null,
     weekly_drip:   null,
-    monthly_limit: 50,   // readings per month — change here, UI updates automatically
+    monthly_limit: 50,   // casts per month — change here, UI updates automatically
     free_spreads:  ['single', 'trojice', 'cross', 'horseshoe', 'norns', 'yggdrasil'],
     journal_entries: null,
     panel_props: {
-      en: ['50 readings / month.', 'Voice on every reading.', 'Full journal + filters.', 'The Gathering.'],
-      is: ['50 lestrar / mánuð.', 'Rödd á hverjum lestri.', 'Full dagbók + síur.', 'The Gathering.'],
+      en: ['50 casts / month.', 'Voice on every cast.', 'Full journal + filters.', 'The Gathering.'],
+      is: ['50 spár / mánuð.', 'Rödd á hverri spá.', 'Full dagbók + síur.', 'The Gathering.'],
     },
   },
   premium: {
     onboarding:    null,
     weekly_drip:   null,
-    monthly_limit: 75,   // readings per month
+    monthly_limit: 75,   // casts per month
     free_spreads:  ['single', 'trojice', 'cross', 'horseshoe', 'norns', 'yggdrasil'],
     journal_entries: null,
     panel_props: {
-      en: ['75 readings / month.', 'Everything in Rune Walker.', 'Yggdrasil — all nine worlds.', 'Ceremonial mode.'],
-      is: ['75 lestrar / mánuð.', 'Allt í Rune Walker.', 'Yggdrasil — níu heimar.', 'Ceremonial mode.'],
+      en: ['75 casts / month.', 'Everything in Rune Walker.', 'Yggdrasil — all nine worlds.', 'Ceremonial mode.'],
+      is: ['75 spár / mánuð.', 'Allt í Rune Walker.', 'Yggdrasil — níu heimar.', 'Ceremonial mode.'],
     },
   },
 };
@@ -282,7 +282,7 @@ const TIER_LIMITS = {
 // ─── SPREAD COSTS ────────────────────────────────────────
 // cost = number of runes in spread.
 // free: cost from free_balance (null = not available with free balance — credits only).
-// credits: cost in credits from Reading Gift Card.
+// credits: cost in Rune Stones (from Rune Card).
 const SPREAD_COSTS = {
   single:    { free: 1,    credits: 1  },
   trojice:   { free: null, credits: 3  },
@@ -291,7 +291,16 @@ const SPREAD_COSTS = {
   horseshoe: { free: null, credits: 7  },
   norns:     { free: null, credits: 3  },
   yggdrasil: { free: null, credits: 9  },
-  life_rune: { free: null, credits: 3  },  // RS: 3 credits (Standard quality 1200t) | TODO: proxy needs credit_cost param for multi-credit deduction
+  life_rune: { free: null, credits: 3  },  // RS: 3 Rune Stones | TODO: proxy needs credit_cost param for multi-credit deduction
+};
+
+// ─── VOCABULARY — single source of truth ─────────────
+// Change here only — vn(key, n, lang) and vl(key, lang) in runar-utils.js
+// use these to pluralize + translate everywhere in the UI.
+const VOCAB = {
+  unit: { en: 'rune stone', en_pl: 'rune stones', is: 'r\u00fanasteinn', is_pl: 'r\u00fanasteinar' },
+  cast: { en: 'cast',       en_pl: 'casts',        is: 'sp\u00e1',        is_pl: 'sp\u00e1r'        },
+  card: { en: 'Rune Card',  en_pl: 'Rune Cards',   is: 'R\u00fanakort',   is_pl: 'R\u00fanakort'    },
 };
 // ─── SPREAD CONFIG — single source of truth ──────────────
 // rune_count: how many runes to draw

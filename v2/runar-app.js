@@ -97,7 +97,7 @@ function showResetModal() {
   setText2('reset-notif-title', t('readings_renewed'));
   setText2('reset-notif-body',  isIs
     ? 'Steinarnir eru tilbúnir.'
-    : 'A new month has turned. One free reading is waiting for you. The stones are ready.');
+    : 'A new month has turned. One free cast is waiting for you. The stones are ready.');
   setText2('reset-notif-btn', t('continue_btn'));
   el.classList.add('open');
 }
@@ -381,7 +381,7 @@ function showNamePrompt() {
   if (card) card.textContent = is ? 'ÁÐUR EN RÚNIRNAR TALA' : 'BEFORE THE RUNES SPEAK';
   if (sub)  sub.innerHTML   = is ? 'Rúnirnar tala öðruvísi til þeirra sem þær þekkja að nafni.<br>Hvernig á ég að kalla þig?' : 'The runes speak differently to those whose name they know.<br>How shall I call you?';
   if (skip) skip.textContent = is ? 'Halda áfram án nafns' : 'Continue without a name';
-  if (btn)  btn.textContent  = is ? 'LÁTA LESTURINN HEFJAST' : 'LET THE READING BEGIN';
+  if (btn)  btn.textContent  = is ? 'LÁTA SPÁNA HEFJAST' : 'LET THE CAST BEGIN';
   if (inp)  inp.placeholder  = is ? 'Nafn þitt eða gælunafn' : 'Your name or nickname';
   ov.style.display = 'flex';
   setTimeout(() => inp && inp.focus(), DELAY_FOCUS);
@@ -460,7 +460,7 @@ function updateSidePanel() {
   const giftEl = document.getElementById('sp-gift');
   const hide   = userTier === 'standard' || userTier === 'premium';
   if (giftEl) giftEl.style.display = hide ? 'none' : 'block';
-  setText('sp-gift', is ? '+ GJAFA-LESTURARKORT' : '+ READING GIFT CARD');
+  setText('sp-gift', is ? '+ RÚNAKORT' : '+ RUNE CARD');
   setText('sp-delete-account', is ? '× EYÐA REIKNINGI' : '× DELETE ACCOUNT');
 
   // Topbar dropdown (logged-in only)
@@ -574,7 +574,7 @@ function _updateTrialTexts() {
     ? `${remaining} ókeypis lestur${remaining !== 1 ? 'ar' : ''} eftir`
     : `${remaining} free reading${remaining !== 1 ? 's' : ''} remaining`);
   // Auth gate
-  setText('gate-title', lang === 'is' ? 'ÓKEYPIS LESTRAR ÞÍNIR ERU FULLNÝTTIR' : 'YOUR FREE READINGS ARE COMPLETE');
+  setText('gate-title', lang === 'is' ? 'ÓKEYPIS SPÁ ÞÍN ER FULLNÝTT' : 'YOUR FREE CAST IS COMPLETE');
   setText('gate-note', lang === 'is'
     ? 'Þú hefur farið með Rúnar einu sinni sem gestur.\nStofnaðu reikning til að halda áfram.'
     : 'You have walked with Rúnar once as a Visitor.\nCreate a free account to continue.');
@@ -614,7 +614,7 @@ function _updateGateTexts() {
 function updateUIText() {
   document.documentElement.lang = lang;
   setText('ui-brand', 'AGNDOFA');
-  setText('atab-reading',    lang === 'is' ? '✦ LESTUR' : '✦ READING');
+  setText('atab-reading',    lang === 'is' ? '✦ SPÁ' : '✦ CAST');
   setText('atab-collection', lang === 'is' ? '◈ SAFN RÚNA' : '◈ RUNES COLLECTION');
   setText('hero-eyebrow',   lang === 'is' ? 'RÚNAVÖRÐURINN' : 'THE RUNE KEEPER');
   setText('hero-eyebrow-m', lang === 'is' ? 'RÚNAVÖRÐURINN' : 'THE RUNE KEEPER');
@@ -646,10 +646,10 @@ function updateUIText() {
   const vBtn = document.getElementById('btn-generate-voice');
   if (vBtn && !vBtn.disabled) vBtn.textContent = t('voice_btn');
   // Re-render auth UI + side panel vždy — zajistí správné texty i pro odhlášeného uživatele při změně jazyka
-  setText('free-redeem-link', lang === 'is' ? '+ GJAFA-LESTURARKORT' : '+ READING GIFT CARD');
-  setText('redeem-lbl', lang === 'is' ? 'ᚠ SLÁÐU INN GJAFA-LESTURARKORT KÓÐ' : 'ᚠ ENTER READING GIFT CARD CODE');
+  setText('free-redeem-link', lang === 'is' ? '+ R\u00daNAKORT' : '+ RUNE CARD');
+  setText('redeem-lbl', lang === 'is' ? 'ᚠ SLÁÐU INN RÚNAKORT KÓÐ' : 'ᚠ ENTER RUNE CARD CODE');
   const shopLink = document.getElementById('redeem-shop-link');
-  if (shopLink) shopLink.textContent = lang === 'is' ? '→ Kaupa fleiri gjafa-lesturarkort á Agndofa.is' : '→ Buy more Reading Gift Cards at Agndofa.is';
+  if (shopLink) shopLink.textContent = lang === 'is' ? '→ Kaupa fleiri Rúnakort á Agndofa.is' : '→ Buy more Rune Cards at Agndofa.is';
   updateAuthUI();
   updateSidePanel();
   updateQuestionGate();

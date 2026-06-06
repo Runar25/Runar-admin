@@ -132,14 +132,14 @@ function updateBanners() {
       const cntEl = document.getElementById('free-user-count');
       if (cntEl) {
         cntEl.textContent = isIs
-          ? `${remaining} af ${FREE_REGISTERED_LIMIT} lestrum eftir í þessum mánuði`
-          : `${remaining} of ${FREE_REGISTERED_LIMIT} readings remaining this month`;
+          ? `${remaining} af ${FREE_REGISTERED_LIMIT} spám eftir í þessum mánuði`
+          : `${remaining} of ${FREE_REGISTERED_LIMIT} cast${remaining !== 1 ? 's' : ''} remaining this month`;
         cntEl.className = 'tn-counter' + (remaining === 1 ? ' warn' : '');
       }
       const txtEl = document.getElementById('free-user-text');
       if (txtEl) txtEl.innerHTML = isIs
-        ? `Þú gengur sem <strong>Vegfarandi</strong> — ${FREE_REGISTERED_LIMIT} lestar á mánuði, allar tuttugu og fimm rúnirnar opnar, Rúnar hlustandi.<br><br>Þegar þeir eru genginn og steinarnir eiga enn eftir að segja, opnar gjafa-lesturarkort dyrnar. Eitt kort. Jafn margir dragir og þú berð. Engin gildistími, engin áskrift.`
-        : `You walk as <strong>Rune Seeker</strong> — ${FREE_REGISTERED_LIMIT} readings each month, all twenty-five runes open, Rúnar listening.<br><br>When they are walked and the stones still have more to say, a reading gift card keeps the door open. One card. As many draws as you carry. No subscription, no expiry.`;
+        ? `Þú gengur sem <strong>Vegfarandi</strong> — ${FREE_REGISTERED_LIMIT} spár á mánuði, allar tuttugu og fimm rúnirnar opnar, Rúnar hlustandi.<br><br>Þegar þær eru gengnar og steinarnir eiga enn eftir að segja, opnar Rúnakort dyrnar. Eitt kort. Jafn margir dragir og þú berð. Engin gildistími, engin áskrift.`
+        : `You walk as <strong>Rune Seeker</strong> — ${FREE_REGISTERED_LIMIT} casts each month, all twenty-five runes open, Rúnar listening.<br><br>When they are walked and the stones still have more to say, a Rune Card keeps the door open. One card. As many draws as you carry. No subscription, no expiry.`;
       const btnEl = document.getElementById('tn-curious-btn');
       if (btnEl) { btnEl.textContent = t('gift_card_btn'); btnEl.style.display = ''; }
       upgradeGate.style.display = 'none';
@@ -151,14 +151,14 @@ function updateBanners() {
       const cntEl = document.getElementById('free-user-count');
       if (cntEl) {
         cntEl.textContent = isIs
-          ? `${userCredits} kredit eftir`
-          : `${userCredits} reading${userCredits !== 1 ? 's' : ''} remaining`;
+          ? vn('unit', userCredits, 'is') + ' eftir'
+          : vn('unit', userCredits, 'en') + ' remaining';
         cntEl.className = 'tn-counter';
       }
       const txtEl = document.getElementById('free-user-text');
       if (txtEl) txtEl.innerHTML = isIs
-        ? `Mánaðarlegir lestrar þínir eru uppgengnar. Rúnar mun nota kredit þinn fyrir næsta lestur.`
-        : `Your monthly readings are complete. Rúnar will draw from your credits for the next reading.`;
+        ? `Mánaðarleg spá þín er uppgengín. Rúnar mun nota rúnastein þinn fyrir næstu spá.`
+        : `Your monthly cast is complete. Rúnar will draw from your rune stones for the next cast.`;
       const btnEl2 = document.getElementById('tn-curious-btn');
       if (btnEl2) btnEl2.style.display = 'none'; // má kredity — nepotřebuje gift card button
       upgradeGate.style.display = 'none';
@@ -172,18 +172,18 @@ function updateBanners() {
       const cntEl = document.getElementById('free-user-count');
       if (cntEl) {
         cntEl.textContent = isIs
-          ? `0 af ${FREE_REGISTERED_LIMIT} lestrum eftir í þessum mánuði`
-          : `0 of ${FREE_REGISTERED_LIMIT} readings remaining this month`;
+          ? `0 af ${FREE_REGISTERED_LIMIT} spám eftir í þessum mánuði`
+          : `0 of ${FREE_REGISTERED_LIMIT} casts remaining this month`;
         cntEl.className = 'tn-counter warn';
       }
       const txtEl = document.getElementById('free-user-text');
       if (txtEl) txtEl.innerHTML = isIs
         ? (FREE_REGISTERED_LIMIT === 1
-          ? `Þú hefur gengið frálsa lesturinn Þin íessum mánuði. Steinarnir hvíla til næsta mánaðar — eða opnaðu dyrnar með <b>RÚNAR GJAFA-LESTURARKORT</b>. Eitt kort. Engin gildistími, engin áskrift.`
-          : `Þú hefur gengið alla ${FREE_REGISTERED_LIMIT} lestrana Þiná í Þssum mánuði. Steinarnir hvíla til næsta mánaðar — eða opnaðu dyrnar með <b>RÚNAR GJAFA-LESTURARKORT</b>. Eitt kort. Engin gildistími, engin áskrift.`)
+          ? `Þú hefur gengið frjálsu spá þína í þessum mánuði. Steinarnir hvíla til næsta mánaðar — eða opnaðu dyrnar með <b>RÚNAKORT</b>. Eitt kort. Engin gildistími, engin áskrift.`
+          : `Þú hefur gengið allar ${FREE_REGISTERED_LIMIT} spárnar þínar í þessum mánuði. Steinarnir hvíla til næsta mánaðar — eða opnaðu dyrnar með <b>RÚNAKORT</b>. Eitt kort. Engin gildistími, engin áskrift.`)
         : (FREE_REGISTERED_LIMIT === 1
-          ? `You have walked your free reading this month. The stones rest until the new month — or keep the door open with a <b>READING GIFT CARD</b>. One card. No expiry, no subscription.`
-          : `You have walked all ${FREE_REGISTERED_LIMIT} readings this month. The stones rest until the new month — or keep the door open with a <b>READING GIFT CARD</b>. One card. No expiry, no subscription.`);
+          ? `You have walked your free cast this month. The stones rest until the new month — or keep the door open with a <b>RUNE CARD</b>. One card. No expiry, no subscription.`
+          : `You have walked all ${FREE_REGISTERED_LIMIT} casts this month. The stones rest until the new month — or keep the door open with a <b>RUNE CARD</b>. One card. No expiry, no subscription.`);
       const btnEl = document.getElementById('tn-curious-btn');
       if (btnEl) { btnEl.textContent = t('gift_card_btn'); btnEl.style.display = ''; }
     }
@@ -199,14 +199,14 @@ function updateBanners() {
       const cntEl = document.getElementById('trial-count');
       if (cntEl) {
         cntEl.textContent = isIs
-          ? `${remaining} af ${FREE_TRIAL_LIMIT} lestrum eftir`
-          : `${remaining} of ${FREE_TRIAL_LIMIT} readings remaining`;
+          ? `${remaining} af ${FREE_TRIAL_LIMIT} spám eftir`
+          : `${remaining} of ${FREE_TRIAL_LIMIT} cast${remaining !== 1 ? 's' : ''} remaining`;
         cntEl.className = 'tn-counter' + (remaining === 1 ? ' warn' : '');
       }
       const txtEl = document.getElementById('trial-text');
       if (txtEl) txtEl.innerHTML = isIs
-        ? `Þú gengur hér sem <strong>Gestur</strong>. Fehu — rúna upphafsins — opnar rödd sína fyrir þig frítt. Dragðu hana. Hlustaðu á það sem fornir steinar hvísla.<br><br>Þegar þú ert tilbúinn að ganga með allar tuttugu og fimm rúnirnar og heyra Rúnar tala í lestur þinn, vertu <strong>Vegfarandi</strong> — það kostar ekkert.`
-        : `You walk here as a <strong>Visitor</strong>. Three readings open before you — draw a rune, ask your question, and hear what Rúnar sees in the stones.<br><br>When you are ready to walk with all twenty-five runes and hear Rúnar speak in your own reading, become a <strong>Rune Seeker</strong> — it costs nothing.`;
+        ? `Þú gengur hér sem <strong>Gestur</strong>. Fehu — rúna upphafsins — opnar rödd sína fyrir þig frítt. Dragðu hana. Hlustaðu á það sem fornir steinar hvísla.<br><br>Þegar þú ert tilbúinn að ganga með allar tuttugu og fimm rúnirnar og heyra Rúnar tala í spá þína, vertu <strong>Vegfarandi</strong> — það kostar ekkert.`
+        : `You walk here as a <strong>Visitor</strong>. One cast opens before you — draw a rune and hear what Rúnar sees in the stones.<br><br>When you are ready to walk with all twenty-five runes and hear Rúnar speak in your own cast, become a <strong>Rune Seeker</strong> — it costs nothing.`;
       const btnEl = document.getElementById('tn-visitor-btn');
       if (btnEl) btnEl.textContent = t('become_rs_btn');
       gate.style.display    = 'none';
@@ -220,14 +220,14 @@ function updateBanners() {
       const cntEl = document.getElementById('trial-count');
       if (cntEl) {
         cntEl.textContent = isIs
-          ? `0 af ${FREE_TRIAL_LIMIT} lestrum eftir`
-          : `0 of ${FREE_TRIAL_LIMIT} readings remaining`;
+          ? `0 af ${FREE_TRIAL_LIMIT} spám eftir`
+          : `0 of ${FREE_TRIAL_LIMIT} casts remaining`;
         cntEl.className = 'tn-counter warn';
       }
       const txtEl = document.getElementById('trial-text');
       if (txtEl) txtEl.innerHTML = isIs
-        ? `Þú hefur notað frjálsa lesturinn þinn sem Gestur. Vertu <strong>Vegfarandi</strong> — það kostar ekkert og opnar allar tuttugu og fimm rúnirnar.`
-        : `Your free reading as a Visitor is complete. Become a <strong>Rune Seeker</strong> — it costs nothing, and all twenty-five runes open before you.`;
+        ? `Þú hefur notað frjálsu spá þína sem Gestur. Vertu <strong>Vegfarandi</strong> — það kostar ekkert og opnar allar tuttugu og fimm rúnirnar.`
+        : `Your free cast as a Visitor is complete. Become a <strong>Rune Seeker</strong> — it costs nothing, and all twenty-five runes open before you.`;
       const btnEl = document.getElementById('tn-visitor-btn');
       if (btnEl) btnEl.textContent = t('become_rs_btn');
     }
@@ -416,12 +416,12 @@ async function redeemCode() {
     const runeMsg = data.rune_name ? ` · ${data.rune_name}` : '';
     setSt('st-redeem',
       lang === 'is'
-        ? `✦ ${data.credits_added} kredit bætt við${runeMsg} — staða: ${data.new_balance}`
-        : `✦ ${data.credits_added} credit${data.credits_added !== 1 ? 's' : ''} added${runeMsg} — balance: ${data.new_balance}`,
+        ? `✦ ${vn('unit', data.credits_added, 'is')} bætt við${runeMsg} — staða: ${data.new_balance}`
+        : `✦ ${vn('unit', data.credits_added, 'en')} added${runeMsg} — balance: ${data.new_balance}`,
       'ok'
     );
     updateAuthUI();
-    showToast(lang === 'is' ? `✦ ${data.credits_added} KREDIT BÆTT VIÐ` : `✦ ${data.credits_added} CREDITS ADDED`);
+    showToast(lang === 'is' ? `✦ ${vn('unit', data.credits_added, 'is').toUpperCase()} BÆTT VIÐ` : `✦ ${vn('unit', data.credits_added, 'en').toUpperCase()} ADDED`);
     setTimeout(() => {
       document.getElementById('redeem-section').style.display = 'none';
       setSt('st-redeem', '');
