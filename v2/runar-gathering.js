@@ -66,14 +66,12 @@ function updateWhispersUI() {
     if (needMore) {
       needMore.style.display = 'block';
       const needed = GATHERING_MIN - _journalCache.length;
-      needMore.textContent = isIs
-        ? `Þú þarft ${needed} fleiri lestur${needed !== 1 ? 'a' : ''} til að opna The Gathering.`
-        : `${needed} more reading${needed !== 1 ? 's' : ''} needed to open The Gathering.`;
+      needMore.textContent = tp('gathering_need_more', { casts: vn('cast', needed, lang) });
     }
   } else if (isGatheringEverUsed) {
     // Rune Seeker used their 1× free Gathering — Standard only from here
     if (reqBtn)   { reqBtn.disabled = true; reqBtn.style.opacity = '0.35'; reqBtn.style.cursor = 'default'; }
-    if (lockEl)   { lockEl.style.display = 'block'; lockEl.textContent = 'The Gathering opens with Standard.'; }
+    if (lockEl)   { lockEl.style.display = 'block'; lockEl.textContent = tp('gathering_upgrade', { tier: TIERS.standard.label }); }
     if (needMore) needMore.style.display = 'none';
   } else if (usedAlready) {
     // Already used this week — button disabled, text visible
@@ -87,9 +85,7 @@ function updateWhispersUI() {
     if (needMore) {
       needMore.style.display = 'block';
       const needed = GATHERING_MIN - _journalCache.length;
-      needMore.textContent = isIs
-        ? `Þú þarft ${needed} fleiri lestur${needed !== 1 ? 'a' : ''} til að opna The Gathering.`
-        : `${needed} more reading${needed !== 1 ? 's' : ''} needed to open The Gathering.`;
+      needMore.textContent = tp('gathering_need_more', { casts: vn('cast', needed, lang) });
     }
   } else {
     // All tiers — available (Gathering is free, weekly limit enforced)

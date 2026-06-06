@@ -179,6 +179,8 @@ const UI_TEXT = {
     redeem_toast_msg:   '\u2746 {UNITS} ADDED',
     dam_text:           'This will permanently erase your account, all casts, and your journal. This cannot be undone.',
     reset_body:         'A new month has turned. One free cast is waiting for you. The stones are ready.',
+    gathering_upgrade:   'The Gathering opens with {tier}.',
+    gathering_need_more: '{casts} more needed to open The Gathering.',
     language_lbl:       'LANGUAGE',
   },
 
@@ -355,6 +357,8 @@ const UI_TEXT = {
     redeem_toast_msg:   '\u2746 {UNITS} BÆTT VIÐ',
     dam_text:           'Þetta eyðir reikningi þínum, öllum spárum þínum og dagbókinni að eilífu. Hægt er ekki að afturkalla þessa aðgerð.',
     reset_body:         'Steinarnir eru tilbúnir.',
+    gathering_upgrade:   'The Gathering opnar með {tier}.',
+    gathering_need_more: 'Þú þarft {casts} fleiri til að opna The Gathering.',
     language_lbl:       'TUNGUM\u00c1L',
   },
 
