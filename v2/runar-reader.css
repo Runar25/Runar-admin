@@ -456,10 +456,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .badge-name{font-family:'Cinzel',serif;font-size:0.75em;letter-spacing:1px;}
 
 /* ── READING OUTPUT ── */
-.layer1{background:#0a0e18;border-left:3px solid var(--blue);padding:20px;margin-bottom:16px;}
-.layer1-lbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--blue);margin-bottom:10px;}
-.layer2{background:#0a0e18;border-left:3px solid var(--teal);padding:20px;margin-bottom:16px;}
-.layer2-lbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--teal);margin-bottom:10px;}
+.layer1{background:#0a0e18;padding:20px;margin-bottom:16px;}
+.layer1-lbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--muted);margin-bottom:10px;}
+.layer2{background:#0a0e18;padding:20px;margin-bottom:16px;}
+.layer2-lbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--muted);margin-bottom:10px;}
 .out-txt{font-size:1.05em;line-height:1.9;font-style:italic;color:var(--white);}
 .stream-cur{display:none;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}

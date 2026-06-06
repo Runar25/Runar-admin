@@ -33,7 +33,10 @@ async function _generateReading() {
   if (_rdLoadEl) _rdLoadEl.style.display = 'block';
   var _pL1 = document.getElementById('layer1-lbl');
   var _pL2 = document.getElementById('layer2-lbl');
-  if (_pL1) _pL1.classList.add('pulsing');
+  // Unified: hide layer2 + clear label before API call
+  var _preL2 = document.getElementById('single-layer2');
+  if (_preL2) _preL2.style.display = 'none';
+  if (_pL1) { _pL1.textContent = ''; _pL1.classList.add('pulsing'); }
   if (_pL2) _pL2.classList.add('pulsing');
 
   const u = readerUser, drawn = readerRune;
@@ -69,10 +72,9 @@ async function _generateReading() {
   }
   if (res.error) { if (_rdLoadEl) _rdLoadEl.style.display = 'none'; if (_pL1) _pL1.classList.remove('pulsing'); if (_pL2) _pL2.classList.remove('pulsing'); setSt('st-reader', 'Failed: ' + res.error, 'err'); return; }
 
-  const split = res.text.split('|||');
-  const short = applyISCorrections(split[0]?.trim() || res.text, lang, corrections);
-  const deep  = applyISCorrections(split[1]?.trim() || '', lang, corrections);
-  readerTexts[lang] = { short, deep };
+  // Unified reading — single block, no split
+  const reading = applyISCorrections(res.text.trim(), lang, corrections);
+  readerTexts[lang] = { short: reading, deep: '' };
 
   // Count reading — anonymous trial or logged-in free tier
   if (!currentUser) {
@@ -90,8 +92,13 @@ async function _generateReading() {
   if (_rdLoadEl) _rdLoadEl.style.display = 'none';
   if (_pL1) _pL1.classList.remove('pulsing');
   if (_pL2) _pL2.classList.remove('pulsing');
-  await stream('out-short', short);
-  if (deep) await stream('out-deep', deep); else document.getElementById('out-deep').innerHTML = '';
+  // Show drawn rune as label, stream unified text
+  var _ul2 = document.getElementById('single-layer2');
+  var _ul1lbl = document.getElementById('layer1-lbl');
+  if (_ul2) _ul2.style.display = 'none';
+  if (_ul1lbl) { _ul1lbl.textContent = drawn.g + '  ' + rn(drawn); _ul1lbl.classList.remove('pulsing'); }
+  await stream('out-short', reading);
+  document.getElementById('out-deep').innerHTML = '';
 
   // After streaming is done — if last free reading, show join prompt after 8s
   if (!currentUser && getTrialCount() >= FREE_TRIAL_LIMIT) {
@@ -341,6 +348,11 @@ async function readRune() {
 }
 
 function drawAnother() {
+  // Restore layer2 + reset layer1 label for next reading
+  var _daL2 = document.getElementById('single-layer2');
+  var _daLbl = document.getElementById('layer1-lbl');
+  if (_daL2) _daL2.style.display = '';
+  if (_daLbl) _daLbl.textContent = t('layer1_lbl');
   if (_spreadMode === 'trojice') { _spread3Runes = []; _updateSpread3Slots(); }
   if (_spreadMode === 'kriz') { _spread5Runes = []; _updateSpread5Slots(); }
   readerRune = null; readerTexts = {}; voiceGenerated = {};
@@ -441,7 +453,7 @@ async function generateVoice() {
     var s3el = document.getElementById('s3-out');
     voiceText = s3el ? s3el.innerText.trim() : '';
   } else {
-    voiceText = document.getElementById('out-deep').innerText.trim();
+    voiceText = document.getElementById('out-short').innerText.trim();
   }
   if (!voiceText) return;
   const deepText = voiceText;
