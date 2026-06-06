@@ -176,6 +176,11 @@ function _setSpreadMode(mode) {
   document.getElementById('reader-output').style.display    = 'none';
   _updateSpread3Slots();
   _updateSpread5Slots();
+  // Spread mode: reset btn-speak to 'DRAW YOUR RUNES'
+  if (mode !== 'single') {
+    var _sb = document.getElementById('btn-speak');
+    if (_sb) { _sb.textContent = t('speak_btn_draw'); _sb.disabled = true; }
+  }
 }
 
 function _updateSpread3Slots() {

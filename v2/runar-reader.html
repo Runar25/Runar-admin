@@ -274,11 +274,11 @@
       <!-- MODE SWITCHER -->
       <div class="spread-mode-row" id="spread-mode-row">
         <button class="mode-btn active" id="mode-btn-single"  onclick="_setSpreadMode('single')">SINGLE RUNE</button>
-        <button class="mode-btn"        id="mode-btn-trojice" onclick="_setSpreadMode('trojice')">TROJICE</button>
+        <button class="mode-btn"        id="mode-btn-trojice" onclick="_setSpreadMode('trojice')">3 READINGS</button>
         <button class="mode-btn"        id="mode-btn-norns"   onclick="_setSpreadMode('norns')">NORNS</button>
-        <button class="mode-btn"        id="mode-btn-kriz"    onclick="_setSpreadMode('kriz')">KRÍŽ</button>
+        <button class="mode-btn"        id="mode-btn-kriz"    onclick="_setSpreadMode('kriz')">CROSS</button>
       </div>
-      <!-- SLOT TRACKER (Trojice only) -->
+      <!-- SLOT TRACKER (3-rune spreads: Trojice / Norns) -->
       <div class="spread3-slots" id="spread3-slots" style="display:none;">
         <span class="s3-slot" id="slot1">①</span>
         <span class="s3-sep">·</span>
@@ -286,17 +286,21 @@
         <span class="s3-sep">·</span>
         <span class="s3-slot" id="slot3">③</span>
       </div>
-      <!-- SLOT TRACKER (Kríž — 5 runes) -->
+      <!-- SLOT TRACKER (Cross — 5 runes, cross layout) -->
       <div class="spread5-slots" id="spread5-slots" style="display:none;">
-        <span class="s5-slot" id="s5slot1" title="Centre">①</span>
-        <span class="s5-sep">·</span>
-        <span class="s5-slot" id="s5slot2" title="Above">②</span>
-        <span class="s5-sep">·</span>
-        <span class="s5-slot" id="s5slot3" title="Below">③</span>
-        <span class="s5-sep">·</span>
-        <span class="s5-slot" id="s5slot4" title="Behind">④</span>
-        <span class="s5-sep">·</span>
-        <span class="s5-slot" id="s5slot5" title="Ahead">⑤</span>
+        <div class="s5-cross">
+          <div class="s5-row">
+            <span class="s5-slot" id="s5slot2" title="Above / Aspiration">②</span>
+          </div>
+          <div class="s5-row">
+            <span class="s5-slot" id="s5slot4" title="Behind / Past">④</span>
+            <span class="s5-slot s5-center" id="s5slot1" title="Centre / Core">①</span>
+            <span class="s5-slot" id="s5slot5" title="Ahead / Direction">⑤</span>
+          </div>
+          <div class="s5-row">
+            <span class="s5-slot" id="s5slot3" title="Below / Root">③</span>
+          </div>
+        </div>
       </div>
       <div class="card-lbl" id="draw-lbl">ᚠ DRAW YOUR RUNE</div>
       <p class="note" id="draw-note">Close your eyes. Hold your question. Then choose the rune that calls to you.</p>

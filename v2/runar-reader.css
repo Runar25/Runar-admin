@@ -667,10 +667,13 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .s3-slot.filled:hover{background:rgba(255,191,0,0.08);text-decoration:line-through;opacity:0.7;}
 .s3-sep{color:var(--border);font-size:0.8em;}
 
-/* ── SPREAD5 SLOT TRACKER (Kríž) ── */
-.spread5-slots{display:flex;align-items:center;justify-content:center;gap:8px;
-  margin-bottom:18px;padding:10px;background:rgba(255,191,0,0.04);border-radius:4px;}
-.s5-slot{font-size:1.3em;color:var(--dim-text);transition:all 0.3s;min-width:1.3em;text-align:center;border-radius:3px;padding:2px 3px;}
+/* ── SPREAD5 SLOT TRACKER (Cross) — cross layout ── */
+.spread5-slots{margin-bottom:18px;padding:10px 10px 6px;background:rgba(255,191,0,0.04);border-radius:4px;}
+.s5-cross{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.s5-row{display:flex;align-items:center;justify-content:center;gap:20px;}
+.s5-slot{font-size:1.3em;color:var(--dim-text);transition:all 0.3s;min-width:1.6em;text-align:center;
+  border-radius:3px;padding:3px 5px;cursor:default;}
 .s5-slot.filled{color:var(--gold);text-shadow:0 0 12px rgba(255,191,0,0.4);}
-.s5-slot.filled:hover{background:rgba(255,191,0,0.08);text-decoration:line-through;opacity:0.7;}
-.s5-sep{color:var(--border);font-size:0.75em;}
+.s5-slot.filled:hover{background:rgba(255,191,0,0.08);text-decoration:line-through;opacity:0.7;cursor:pointer;}
+.s5-center{font-size:1.6em;color:rgba(255,191,0,0.55);}
+.s5-center.filled{color:var(--gold);font-size:1.7em;}
