@@ -118,6 +118,15 @@ function _randomAspect()  { return READING_ASPECTS[Math.floor(Math.random() * RE
 function _randomImagery() { return IMAGERY_SOURCES[Math.floor(Math.random() * IMAGERY_SOURCES.length)]; }
 function _randomRegister(){ return READING_REGISTERS[Math.floor(Math.random() * READING_REGISTERS.length)]; }
 
+// Where the rune's proper name appears in the reading.
+const RUNE_PLACEMENTS = [
+  'early — name the rune in the first or second sentence; let it anchor everything that follows',
+  'middle — build the image for 2 to 3 sentences first; name the rune as a recognition, not an introduction',
+  'late — withhold the rune name until the final third of the reading; by the time it arrives, it lands as confirmation',
+];
+
+function _randomPlacement(){ return RUNE_PLACEMENTS[Math.floor(Math.random() * RUNE_PLACEMENTS.length)]; }
+
 // ─── rk() ─────────────────────────────────────────
 function rk(r)  { return lang === 'is' ? r.k_is : r.k; }
 

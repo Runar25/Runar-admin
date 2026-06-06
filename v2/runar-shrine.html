@@ -1606,11 +1606,12 @@ async function _generateReading() {
         'One paragraph. No breaks. No labels. Speak directly to ' + u.name + '.'
       ].filter(Boolean).join('\n')
 
-  // Variability: pick aspect + imagery + register independently
-  const _aspect   = typeof _randomAspect   === 'function' ? _randomAspect()   : '';
-  const _imagery  = typeof _randomImagery  === 'function' ? _randomImagery()  : '';
-  const _register = typeof _randomRegister === 'function' ? _randomRegister() : '';
-  const prompt = `${parts}${readingFormulaLine}\n\nREADING ANGLE: ${typeof _randomAngle === 'function' ? _randomAngle(lang) : ''}\nLEAD ASPECT: ${_aspect}\nIMAGERY SOURCE: ${_imagery}\nREGISTER: ${_register}\n\n${formatInstr}\n\nBe concise — every sentence must earn its place. ${langInstr}\n${getCorrPrompt(lang, corrections)}`
+  // Variability: pick aspect + imagery + register + placement independently
+  const _aspect    = typeof _randomAspect    === 'function' ? _randomAspect()    : '';
+  const _imagery   = typeof _randomImagery   === 'function' ? _randomImagery()   : '';
+  const _register  = typeof _randomRegister  === 'function' ? _randomRegister()  : '';
+  const _placement = typeof _randomPlacement === 'function' ? _randomPlacement() : '';
+  const prompt = `${parts}${readingFormulaLine}\n\nREADING ANGLE: ${typeof _randomAngle === 'function' ? _randomAngle(lang) : ''}\nLEAD ASPECT: ${_aspect}\nIMAGERY SOURCE: ${_imagery}\nREGISTER: ${_register}\nRUNE NAME PLACEMENT: ${_placement}\nOPENING RULE: Never open with the rune name or with \'[Rune] is / arrives / brings / speaks\'. The first sentence must be pure image, observation, or the person — the rune arrives later.\n\n${formatInstr}\n\nBe concise — every sentence must earn its place. ${langInstr}\n${getCorrPrompt(lang, corrections)}`
   const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens);
   if (res.error) {
     if (_rdLoadEl) _rdLoadEl.style.display = 'none';
