@@ -1542,7 +1542,10 @@ async function _generateReading() {
   if (_rdLoadEl)  _rdLoadEl.style.display = 'block';
   const _pL1 = document.getElementById('layer1-lbl');
   const _pL2 = document.getElementById('layer2-lbl');
-  if (_pL1) _pL1.classList.add('pulsing');
+  // Unified mode: hide layer2 + clear label before API call
+  var _preL2 = document.getElementById('single-layer2');
+  if (_preL2) _preL2.style.display = 'none';
+  if (_pL1) { _pL1.textContent = ''; _pL1.classList.add('pulsing'); }
   if (_pL2) _pL2.classList.add('pulsing');
 
   const u = readerUser, drawn = readerRune, life = u.lifeRune;
