@@ -97,7 +97,7 @@ function showResetModal() {
   setText2('reset-notif-title', t('readings_renewed'));
   setText2('reset-notif-body',  isIs
     ? 'Steinarnir eru tilbúnir.'
-    : 'A new month has turned. One free cast is waiting for you. The stones are ready.');
+    : t('reset_body'));
   setText2('reset-notif-btn', t('continue_btn'));
   el.classList.add('open');
 }

@@ -89,6 +89,18 @@ STANDARD · PREMIUM · THE GATHERING · RÚNAR · READING GIFT CARD
 ### §7 — Commit pravidla
 Jeden commit = jedna věc. Push ihned. SW bumpit v každém commitu kde se mění JS/CSS.
 
+### §10 — NULA hardcoded strings v logice
+Každý user-visible string musí jít přes `t()`, `tp()`, `vn()` nebo `vl()`.
+```
+t('key')              ← statický string z UI_TEXT (translations.js)
+tp('key', {vars})     ← šablona s proměnnými: 'You have {n} {casts}'
+vn('cast', 3, lang)   ← plural z VOCAB: '3 casts' / '3 spár'
+vl('card', lang)      ← label z VOCAB: 'Rune Card' / 'Rúnakort'
+```
+Přidání nového jazyka = jeden nový blok v `UI_TEXT` + `VOCAB`. Žádné jiné soubory.
+NIKDY nepsat user-visible string přímo v .js nebo .html souboru.
+Kontrola: `grep -n '\"[A-Z]' runar-auth.js | grep -v t\(` by měl vrátit prázdno.
+
 ### §9 — IS text = vždy zkontrolovat před commitem
 Před každým commitem který obsahuje islandský text spustit:
 ```

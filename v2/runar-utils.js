@@ -37,6 +37,19 @@ function vl(key, lang) {
   return lang === 'is' ? (v.is || v.en) : v.en;
 }
 
+// Template helper — substitutes {placeholder} in a translation string
+// tp('rs_banner_desc', { casts_month: vn('cast', 1, 'en'), card: vl('card', 'en') })
+// Rule: ALL user-visible strings live in UI_TEXT (translations.js).
+// Adding a language = add new block to UI_TEXT + VOCAB. Zero other files change.
+function tp(key, vars) {
+  var s = t(key);
+  if (!s || !vars) return s || key;
+  Object.keys(vars).forEach(function(k) {
+    s = s.split('{' + k + '}').join(String(vars[k]));
+  });
+  return s;
+}
+
 
 // ─── Reading angles EN ─────────────────────────────────────────
 const READING_ANGLES = [
