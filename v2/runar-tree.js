@@ -61,6 +61,26 @@ function updateTreeTab() {
       if (gl) gl.textContent = rune.g;
       var tt = document.getElementById('tree-teaser-text');
       if (tt) tt.textContent = t('tree_rs_teaser');
+      // Credits balance + button state
+      var LIFE_RUNE_COST = (SPREAD_COSTS && SPREAD_COSTS.life_rune) ? SPREAD_COSTS.life_rune.credits : 3;
+      var bal = typeof userCredits !== 'undefined' ? userCredits : 0;
+      var costLbl = document.getElementById('tree-rs-cost-label');
+      var balLbl  = document.getElementById('tree-rs-balance-label');
+      var balVal  = document.getElementById('tree-rs-balance-val');
+      if (costLbl) costLbl.textContent = t('tree_rs_cost');
+      if (balLbl)  balLbl.textContent  = t('tree_rs_balance');
+      if (balVal)  balVal.textContent  = bal;
+      var orSep   = document.getElementById('tree-or-sep');
+      if (orSep) orSep.textContent = t('tree_rs_or');
+      var upgNote = document.getElementById('tree-upgrade-note');
+      if (upgNote) upgNote.textContent = t('tree_rs_upgrade_note');
+      var revBtn = document.getElementById('tree-rs-reveal-btn');
+      if (revBtn) {
+        revBtn.disabled = bal < LIFE_RUNE_COST;
+        revBtn.title = bal < LIFE_RUNE_COST
+          ? (lang === 'is' ? 'Þú þarft ' + LIFE_RUNE_COST + ' kredita' : 'You need ' + LIFE_RUNE_COST + ' credits')
+          : '';
+      }
     }
     return;
   }
@@ -159,6 +179,20 @@ async function saveTreeName() {
   }
 }
 
+
+// RS Life Rune reading — credit check + call generateLifeRuneReading
+function _rsLifeRuneReading() {
+  var COST = (SPREAD_COSTS && SPREAD_COSTS.life_rune) ? SPREAD_COSTS.life_rune.credits : 3;
+  var bal  = typeof userCredits !== 'undefined' ? userCredits : 0;
+  if (bal < COST) {
+    showToast(lang === 'is'
+      ? 'Þú þarft ' + COST + ' kredita. Kauptu reading gift card.'
+      : 'You need ' + COST + ' credits. Get a reading gift card.');
+    return;
+  }
+  generateLifeRuneReading();
+}
+
 async function generateLifeRuneReading() {
   if (!currentUser) return;
   var hasDob = readerUser && readerUser.d && readerUser.m && readerUser.y;
@@ -186,7 +220,11 @@ async function generateLifeRuneReading() {
   if (corrBlock) prompt = prompt + '\n' + corrBlock;
   var sys = buildSysPrompt(activeChar, lang);
 
-  var res = await callProxy(sys, prompt, mode.max_tokens, false);
+  // RS uses credit (deducts from balance via proxy)
+  var _useCredit = (typeof userTier !== 'undefined' && userTier === 'rune_seeker');
+  var res = await callProxy(sys, prompt, mode.max_tokens, _useCredit);
+  // TODO: Life Rune costs 3 credits — proxy currently deducts 1 per call.
+  // Fix: add credit_cost parameter to callProxy + update claude-proxy edge function.
   if (loadEl) loadEl.style.display = 'none';
 
   if (res.error) {

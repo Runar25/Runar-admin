@@ -330,6 +330,16 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+
+// ─── UPGRADE MODAL (stub — Standard purchase not yet implemented) ─
+// TODO: replace with real checkout flow when billing is ready
+function openUpgradeModal() {
+  // Until Standard purchase flow exists, show info and link to site
+  showToast(lang === 'is'
+    ? 'Standard - kemur bráðlega. Sjá agndofa.is'
+    : 'Standard subscription — coming soon. See agndofa.is');
+}
+
 function openAuthModal() {
   document.getElementById('auth-modal').classList.add('open');
   document.getElementById('auth-modal-body').style.display = 'block';

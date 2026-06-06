@@ -417,8 +417,27 @@
           <div class="tree-rune-name" id="tree-rune-name-teaser"></div>
           <div class="tree-rune-glyph" id="tree-rune-glyph-teaser"></div>
         </div>
-        <div class="tree-gate-text" id="tree-teaser-text">Your story opens with Standard.</div>
-        <button class="vcn-btn btn-upgrade" id="tree-upgrade-btn" onclick="showAppTab('reading')">UPGRADE → STANDARD</button>
+        <p class="tree-gate-text" id="tree-teaser-text"></p>
+
+        <!-- Primary CTA: Life Rune for 3 credits -->
+        <div class="tree-cta-block">
+          <button class="vcn-btn btn-gold" id="tree-rs-reveal-btn" onclick="_rsLifeRuneReading()">REVEAL YOUR LIFE RUNE</button>
+          <div class="tree-cta-cost">
+            <span id="tree-rs-cost-label"></span>
+            &nbsp;·&nbsp;
+            <span id="tree-rs-balance-label"></span>
+            <span id="tree-rs-balance-val"></span>
+          </div>
+        </div>
+
+        <!-- OR separator -->
+        <div class="tree-or-sep" id="tree-or-sep"></div>
+
+        <!-- Secondary: upgrade to Standard -->
+        <div class="tree-upgrade-block">
+          <button class="vcn-btn btn-outline" id="tree-upgrade-btn" onclick="openUpgradeModal()">UPGRADE → STANDARD</button>
+          <div class="tree-upgrade-note" id="tree-upgrade-note"></div>
+        </div>
       </div>
 
       <!-- State: Standard/Premium — no reading yet -->

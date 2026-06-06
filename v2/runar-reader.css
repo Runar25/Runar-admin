@@ -342,8 +342,20 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 /* Shared upgrade button style — used for all tier-upgrade CTAs */
 .btn-upgrade{font-family:'Cinzel',serif;letter-spacing:2.5px;background:transparent;border:1px solid var(--gold);color:var(--gold);cursor:pointer;transition:all 0.25s;}
 .btn-upgrade:hover{background:var(--gold);color:#000;}
+.btn-outline{font-family:'Cinzel',serif;letter-spacing:2.5px;background:transparent;border:1px solid rgba(255,191,0,0.45);color:rgba(255,191,0,0.7);cursor:pointer;transition:all 0.25s;}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+.btn-gold{font-family:'Cinzel',serif;letter-spacing:2.5px;background:var(--gold);color:#0d1824;cursor:pointer;border:none;transition:all 0.25s;}
+.btn-gold:hover{background:#e6ab00;}.btn-gold:disabled{background:rgba(255,191,0,0.25);color:rgba(255,191,0,0.5);cursor:not-allowed;}
 .vcn-btn{font-size:0.62em;padding:12px 28px;}
 .vcn-btn:hover{}
+
+/* ── RS TREE TEASER ── */
+.tree-cta-block{text-align:center;margin:16px 0 10px;}
+.tree-cta-cost{font-size:0.75em;color:var(--muted);margin-top:6px;letter-spacing:0.08em;}
+.tree-cta-cost #tree-rs-balance-val{color:var(--gold);}
+.tree-or-sep{text-align:center;color:var(--border);font-size:0.8em;letter-spacing:0.15em;margin:14px 0;}
+.tree-upgrade-block{text-align:center;margin-bottom:8px;}
+.tree-upgrade-note{font-size:0.72em;color:var(--muted);margin-top:6px;font-style:italic;letter-spacing:0.04em;}
 /* Locked rune cells */
 .coll-cell.locked{opacity:0.28;cursor:not-allowed;pointer-events:none;}
 .coll-cell.locked:hover{background:transparent;border-color:var(--border);}
