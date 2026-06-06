@@ -460,7 +460,7 @@ function updateSidePanel() {
   const giftEl = document.getElementById('sp-gift');
   const hide   = userTier === 'standard' || userTier === 'premium';
   if (giftEl) giftEl.style.display = hide ? 'none' : 'block';
-  setText('sp-gift', is ? '+ RÚNAKORT' : '+ RUNE CARD');
+  setText('sp-gift', '+ ' + vl('card', lang));
   setText('sp-delete-account', is ? '× EYÐA REIKNINGI' : '× DELETE ACCOUNT');
 
   // Topbar dropdown (logged-in only)
@@ -574,7 +574,7 @@ function _updateTrialTexts() {
     ? `${remaining} ókeypis lestur${remaining !== 1 ? 'ar' : ''} eftir`
     : `${remaining} free reading${remaining !== 1 ? 's' : ''} remaining`);
   // Auth gate
-  setText('gate-title', lang === 'is' ? 'ÓKEYPIS SPÁ ÞÍN ER FULLNÝTT' : 'YOUR FREE CAST IS COMPLETE');
+  setText('gate-title', lang === 'is' ? 'ÓKEYPIS SPÁ ÞÍN ER FULLNÝTT' : 'YOUR FREE RUNE READING IS COMPLETE');
   setText('gate-note', lang === 'is'
     ? 'Þú hefur farið með Rúnar einu sinni sem gestur.\nStofnaðu reikning til að halda áfram.'
     : 'You have walked with Rúnar once as a Visitor.\nCreate a free account to continue.');
@@ -614,7 +614,7 @@ function _updateGateTexts() {
 function updateUIText() {
   document.documentElement.lang = lang;
   setText('ui-brand', 'AGNDOFA');
-  setText('atab-reading',    lang === 'is' ? '✦ SPÁ' : '✦ CAST');
+  setText('atab-reading',    lang === 'is' ? '✦ SPÁ' : '✦ READING');
   setText('atab-collection', lang === 'is' ? '◈ SAFN RÚNA' : '◈ RUNES COLLECTION');
   setText('hero-eyebrow',   lang === 'is' ? 'RÚNAVÖRÐURINN' : 'THE RUNE KEEPER');
   setText('hero-eyebrow-m', lang === 'is' ? 'RÚNAVÖRÐURINN' : 'THE RUNE KEEPER');
@@ -646,10 +646,10 @@ function updateUIText() {
   const vBtn = document.getElementById('btn-generate-voice');
   if (vBtn && !vBtn.disabled) vBtn.textContent = t('voice_btn');
   // Re-render auth UI + side panel vždy — zajistí správné texty i pro odhlášeného uživatele při změně jazyka
-  setText('free-redeem-link', lang === 'is' ? '+ R\u00daNAKORT' : '+ RUNE CARD');
-  setText('redeem-lbl', lang === 'is' ? 'ᚠ SLÁÐU INN RÚNAKORT KÓÐ' : 'ᚠ ENTER RUNE CARD CODE');
+  setText('free-redeem-link', '+ ' + vl('card', lang));
+  setText('redeem-lbl', lang === 'is' ? 'ᚠ SLÁÐU INN RÚNAKORT KÓÐ' : 'ᚠ ENTER RUNE READING CARD CODE');
   const shopLink = document.getElementById('redeem-shop-link');
-  if (shopLink) shopLink.textContent = lang === 'is' ? '→ Kaupa fleiri Rúnakort á Agndofa.is' : '→ Buy more Rune Cards at Agndofa.is';
+  if (shopLink) shopLink.textContent = lang === 'is' ? '→ Kaupa fleiri Rúnakort á Agndofa.is' : '→ Buy more Rune Reading Cards at Agndofa.is';
   updateAuthUI();
   updateSidePanel();
   updateQuestionGate();
