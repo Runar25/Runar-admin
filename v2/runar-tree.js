@@ -43,7 +43,7 @@ function updateTreeTab() {
     if (noDob) {
       noDob.style.display = 'block';
       var txt = document.getElementById('tree-no-dob-text');
-      if (txt) txt.innerHTML = isIs ? '<p>Í upphafi var Yggdrasill —<br>hinn mikli askur sem rætur ná til djúpustu heima<br>og greinar halda himninum saman.</p><p>Tréð þitt hefur sömu rætur.<br>Sömu uppbyggingu, plantað í þínum eigin jarðvegi.</p><p>Jörðin er hér. Kyrrðin er tilbúin.<br>En tréð þitt getur ekki orðið til án þín —<br>og það hefst þar sem þú hófst.</p><p>Lífsrúnan þín er elsta hluturinn sem þú ber.<br>Hún var sett um leið og þú drógst fyrsta andardráttinn —<br>eitt fræ, borið í þögn,<br>þitt eigið Yggdrasill bíður þess að rísa.</p><p>Hvenær fæddist þú?</p>' : '<p>In the beginning there was Yggdrasil —<br>the great ash whose roots reach the deepest worlds<br>and whose branches hold the sky together.</p><p>Your tree has the same roots.<br>The same structure, planted in your own soil.</p><p>The ground is here. The stillness is ready.<br>But your tree cannot exist without you —<br>and it begins where you began.</p><p>Your life rune is the oldest thing about you.<br>It was set the moment you drew your first breath —<br>a single seed, carried in silence,<br>your own Yggdrasil waiting to rise.</p><p>When were you born?</p>';
+      if (txt) txt.innerHTML = t('tree_intro');
     }
     return;
   }
@@ -227,7 +227,7 @@ async function generateLifeRuneReading() {
   if (loadGlyph) loadGlyph.textContent = rune.g;
   if (loadTxt) loadTxt.textContent = t('reading_loading');
 
-  var name = readerUser.name || (currentUser ? currentUser.email.split('@')[0] : 'seeker');
+  var name = readerUser.name || (lang === 'is' ? 'þú' : 'you');
   var mode = isPremium ? RUNAR_MODES.life_rune_premium : RUNAR_MODES.life_rune_standard;
   var prompt = buildLifeRunePrompt(name, rune, readerUser.d, readerUser.m, readerUser.y, lang, isPremium);
   var corrBlock = getCorrPrompt(lang, corrections);
