@@ -81,6 +81,43 @@ function _randomAngle(lang) {
   return _pool[Math.floor(Math.random() * _pool.length)];
 }
 
+// ─── VARIABILITY POOLS (V2) ──────────────────────────────────────
+// Which dimension of the rune leads the reading.
+const READING_ASPECTS = [
+  'shadow — what this rune quietly demands, not what it offers; the cost beneath the gift',
+  'gift — what this rune is already giving before the seeker has noticed',
+  'timing — what specific moment or threshold in this person\'s life this rune marks',
+  'challenge — what this rune asks the person to face, move through, or stop avoiding',
+  'the body — where this rune lives right now as a physical sensation or held tension',
+  'relationship — how this rune shapes how this person connects to or separates from others',
+  'the land — this rune\'s elemental, earthly quality; let the landscape carry the meaning',
+];
+
+// Where the central image comes from.
+const IMAGERY_SOURCES = [
+  'the sea — Icelandic ocean; depth, tidal pull, what surfaces and what stays below',
+  'volcanic ground — lava fields, geothermal heat rising through stone that was once fire',
+  'the sky — aurora borealis, midnight sun, winter dark, storm light, the open emptiness above',
+  'an animal — raven, arctic fox, puffin, whale, or horse; let one animal carry the whole reading',
+  'the season — the specific quality of this Icelandic moment; what it asks of the land and the person',
+  'a threshold — shoreline, cliff edge, doorway, the breath before a step is taken',
+  'sound or silence — wind across bare rock, the creak of ice, the particular silence after snowfall',
+  'ancient stone — glacier-carved, basalt columns, a standing stone; what endures when everything else changes',
+];
+
+// Emotional register and tone of delivery.
+const READING_REGISTERS = [
+  'fierce and direct — no softening; cut to the bone with care but without cushioning',
+  'soft and still — speak as beside a fire in deep winter; close, unhurried, low',
+  'quietly playful — dry Icelandic wit beneath the gravity; a flicker of warmth, never sentimental',
+  'ancient and heavy — the weight of old stone; slow, measured, carrying long memory',
+  'tender — speak as if only this one person will ever hear these words',
+];
+
+function _randomAspect()  { return READING_ASPECTS[Math.floor(Math.random() * READING_ASPECTS.length)]; }
+function _randomImagery() { return IMAGERY_SOURCES[Math.floor(Math.random() * IMAGERY_SOURCES.length)]; }
+function _randomRegister(){ return READING_REGISTERS[Math.floor(Math.random() * READING_REGISTERS.length)]; }
+
 // ─── rk() ─────────────────────────────────────────
 function rk(r)  { return lang === 'is' ? r.k_is : r.k; }
 
