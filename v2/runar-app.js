@@ -614,7 +614,7 @@ function _updateGateTexts() {
 function updateUIText() {
   document.documentElement.lang = lang;
   setText('ui-brand', 'AGNDOFA');
-  setText('atab-reading',    lang === 'is' ? '✦ SPÁ' : '✦ READING');
+  setText('atab-reading',    lang === 'is' ? '✦ SPÁ' : '✦ RUNE READING');
   setText('atab-collection', lang === 'is' ? '◈ SAFN RÚNA' : '◈ RUNES COLLECTION');
   setText('hero-eyebrow',   lang === 'is' ? 'RÚNAVÖRÐURINN' : 'THE RUNE KEEPER');
   setText('hero-eyebrow-m', lang === 'is' ? 'RÚNAVÖRÐURINN' : 'THE RUNE KEEPER');
