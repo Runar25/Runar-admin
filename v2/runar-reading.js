@@ -123,7 +123,7 @@ function _showTrialEnd() {
 function startReading() {
   if (!currentUser && getTrialCount() >= FREE_TRIAL_LIMIT) { _showTrialEnd(); return; }
   // Only block rune_seeker who has used all free monthly slots AND has no credits left.
-  // Standard / Premium / Admin are never blocked here.
+  // Rune Walker / Rune Keeper / Admin are never blocked here.
   if (currentUser && userTier === 'rune_seeker'
       && getFreeMonthCount(currentUser.id) >= FREE_REGISTERED_LIMIT
       && userCredits <= 0) {

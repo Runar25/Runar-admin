@@ -150,14 +150,14 @@ async function updateJournalTeaser() {
     if (count && count > 5) {
       const isIs = lang === 'is';
       txt.innerHTML = isIs
-        ? `Sérhver lestur sem þú hefur tekið er geymdur — ${count} samtals. Farðu yfir í <strong style="color:var(--gold);font-style:normal;">Standard</strong> til að opna fulla króniku þína.`
-        : `Every reading you have ever taken is kept — ${count} in total. Move to <strong style="color:var(--gold);font-style:normal;">Standard</strong> to open your full journal.`;
+        ? `Sérhver lestur sem þú hefur tekið er geymdur — ${count} samtals. Farðu yfir í <strong style="color:var(--gold);font-style:normal;">Rune Walker</strong> til að opna fulla króniku þína.`
+        : `Every reading you have ever taken is kept — ${count} in total. Move to <strong style="color:var(--gold);font-style:normal;">Rune Walker</strong> to open your full journal.`;
       teaser.style.display = 'block';
     }
   } catch { /* silent */ }
 }
 
-// Filter journal (Standard only) — data loaded in memory
+// Filter journal (Rune Walker+) — data loaded in memory
 let _journalCache = [];
 function filterJournal() {
   if (!_journalCache.length) return;

@@ -85,7 +85,7 @@ function updateTreeTab() {
     return;
   }
 
-  // Standard/Premium — has reading?
+  // Rune Walker/Rune Keeper — has reading?
   if (_lifeRuneText) {
     _showTreeReading(rune, runeName, isIs);
     // Show tree name section

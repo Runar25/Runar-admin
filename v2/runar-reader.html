@@ -256,14 +256,14 @@
       <div class="pills" id="area-pills"></div>
       <label class="flbl" id="seek-lbl">WHAT ARE YOU SEEKING? <span class="opt">(OPTIONAL)</span></label>
       <div class="pills" id="seek-pills"></div>
-      <!-- SPECIFIC QUESTION — Standard/Premium only -->
+      <!-- SPECIFIC QUESTION — Rune Walker/Rune Keeper only -->
       <div id="q-section" style="display:none;">
         <label class="flbl" id="q-lbl">SPECIFIC QUESTION <span class="opt">(OPTIONAL)</span></label>
         <input class="txt" id="r-question" type="text" placeholder="e.g. What is holding me back?">
       </div>
       <!-- Teaser for Visitor / Rune Seeker -->
       <div id="q-teaser" style="display:none;">
-        <p class="q-teaser-txt" id="q-teaser-txt">Deeper questions open with Standard.</p>
+        <p class="q-teaser-txt" id="q-teaser-txt">Deeper questions open with Rune Walker.</p>
       </div>
       <button class="btn-full" id="begin-btn" onclick="startReading()">BEGIN THE READING</button>
       <div class="status" id="st-setup"></div>
@@ -433,14 +433,14 @@
         <!-- OR separator -->
         <div class="tree-or-sep" id="tree-or-sep"></div>
 
-        <!-- Secondary: upgrade to Standard -->
+        <!-- Secondary: upgrade to Rune Walker -->
         <div class="tree-upgrade-block">
           <button class="vcn-btn btn-outline" id="tree-upgrade-btn" onclick="openUpgradeModal()">UPGRADE → STANDARD</button>
           <div class="tree-upgrade-note" id="tree-upgrade-note"></div>
         </div>
       </div>
 
-      <!-- State: Standard/Premium — no reading yet -->
+      <!-- State: Rune Walker/Rune Keeper — no reading yet -->
       <div id="tree-reveal-cta" style="display:none;">
         <div class="tree-rune-display">
           <span class="tree-rune-label" id="tree-rune-label-cta">YOUR LIFE RUNE</span>
@@ -607,7 +607,7 @@
         <span class="journal-pane-count" id="journal-pane-count"></span>
       </div>
 
-      <!-- Filter bar — Standard/Premium only -->
+      <!-- Filter bar — Rune Walker/Rune Keeper only -->
       <div class="journal-filter-bar" id="journal-filter-bar">
         <select class="journal-filter-select" id="jf-rune" onchange="filterJournal()">
           <option value="">All runes</option>
@@ -625,10 +625,10 @@
       <!-- Entry list -->
       <div id="journal-list"></div>
 
-      <!-- Standard teaser — rune_seeker with >5 total readings -->
+      <!-- Rune Walker teaser — rune_seeker with >5 total readings -->
       <div class="journal-standard-teaser" id="journal-standard-teaser" style="display:none;">
         <p class="journal-standard-teaser-txt" id="journal-teaser-txt">
-          Every reading you have ever taken is kept. Move to Standard to open your full journal.
+          Every reading you have ever taken is kept. Move to Rune Walker to open your full journal.
         </p>
       </div>
 

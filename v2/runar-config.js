@@ -68,7 +68,7 @@ const RUNAR_MODES = {
     active:     true,
   },
   life_rune_premium: {
-    label:      'Life Rune Reading — Premium',
+    label:      'Life Rune Reading — Rune Keeper',
     max_tokens: 2000,
     voice:      false,
     layers:     null,
@@ -124,9 +124,9 @@ const TIERS = {
     languages:        ['en', 'is'],
   },
   standard: {
-    label:            'Standard',
-    label_is:         'Standard',
-    monthly_readings: 50,          // Standard: 50/month
+    label:            'Rune Walker',
+    label_is:         'Rune Walker',
+    monthly_readings: 50,          // Rune Walker: 50/month
     voice_monthly:    true,
     voice_credits:    true,
     voice_static:     true,
@@ -135,9 +135,9 @@ const TIERS = {
     languages:        ['en', 'is'],
   },
   premium: {
-    label:            'Premium',
-    label_is:         'Premium',
-    monthly_readings: 75,          // Premium: 75/month — matches TIER_LIMITS.premium.monthly_limit
+    label:            'Rune Keeper',
+    label_is:         'Rune Keeper',
+    monthly_readings: 75,          // Rune Keeper: 75/month — matches TIER_LIMITS.premium.monthly_limit
     voice_monthly:    true,
     voice_credits:    true,
     voice_static:     true,
@@ -273,8 +273,8 @@ const TIER_LIMITS = {
     free_spreads:  ['single', 'trojice', 'cross', 'horseshoe', 'norns', 'yggdrasil'],
     journal_entries: null,
     panel_props: {
-      en: ['75 readings / month.', 'Everything in Standard.', 'Yggdrasil — all nine worlds.', 'Ceremonial mode.'],
-      is: ['75 lestrar / mánuð.', 'Allt í Standard.', 'Yggdrasil — níu heimar.', 'Ceremonial mode.'],
+      en: ['75 readings / month.', 'Everything in Rune Walker.', 'Yggdrasil — all nine worlds.', 'Ceremonial mode.'],
+      is: ['75 lestrar / mánuð.', 'Allt í Rune Walker.', 'Yggdrasil — níu heimar.', 'Ceremonial mode.'],
     },
   },
 };

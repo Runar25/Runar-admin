@@ -110,7 +110,7 @@ function updateBanners() {
     banner.style.display = 'none';
     gate.style.display   = 'none';
 
-    // ── Standard / Premium — unlimited ──
+    // ── Rune Walker / Rune Keeper — unlimited ──
     if (userTier === 'standard' || userTier === 'premium') {
       freeBanner.style.display    = 'none';
       creditsBanner.style.display = 'none';
@@ -239,7 +239,7 @@ function updateAuthUI() {
 }
 
 // ── SPECIFIC QUESTION GATE ────────────────────────────────
-// Visible only for Standard / Premium. Visitor + Rune Seeker see a teaser.
+// Visible only for Rune Walker / Rune Keeper. Visitor + Rune Seeker see a teaser.
 function updateQuestionGate() {
   const qSection = document.getElementById('q-section');
   const qTeaser  = document.getElementById('q-teaser');
@@ -331,13 +331,13 @@ if ('serviceWorker' in navigator) {
 }
 
 
-// ─── UPGRADE MODAL (stub — Standard purchase not yet implemented) ─
+// ─── UPGRADE MODAL (stub — Rune Walker purchase not yet implemented) ─
 // TODO: replace with real checkout flow when billing is ready
 function openUpgradeModal() {
-  // Until Standard purchase flow exists, show info and link to site
+  // Until Rune Walker purchase flow exists, show info and link to site
   showToast(lang === 'is'
-    ? 'Standard - kemur bráðlega. Sjá agndofa.is'
-    : 'Standard subscription — coming soon. See agndofa.is');
+    ? 'Rune Walker - kemur bráðlega. Sjá agndofa.is'
+    : 'Rune Walker subscription — coming soon. See agndofa.is');
 }
 
 function openAuthModal() {
