@@ -315,14 +315,20 @@ function updateAdminBar() {
 async function resetLifeRune() {
   if (!currentUser || !isAdmin(currentUser.email)) return;
   var who = (readerUser && readerUser.name) ? readerUser.name : (lang === 'is' ? 'þú' : 'you');
-  if (!confirm('Reset life rune for ' + who + '?')) return;
+  if (!confirm('Reset life rune + DOB for ' + who + '?')) return;
+  // Clear life rune AND date of birth — returns to tree-no-dob state
   var res = await sb.from('user_profiles')
-    .update({ life_rune_number: null, life_rune_text: null, life_rune_lang: null })
+    .update({
+      life_rune_number: null, life_rune_text: null, life_rune_lang: null,
+      dob_day: null, dob_month: null, dob_year: null
+    })
     .eq('id', currentUser.id);
   if (res.error) { showToast('Reset failed: ' + res.error.message); return; }
+  // Clear local state
   _lifeRuneText = null;
   _lifeRuneLang = null;
   _lifeRuneNum  = null;
+  if (readerUser) { readerUser.d = null; readerUser.m = null; readerUser.y = null; }
   showToast(lang === 'is' ? 'Lífsrún endurstillt' : 'Life rune reset');
   updateTreeTab();
 }
