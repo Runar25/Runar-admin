@@ -1568,17 +1568,40 @@ async function _generateReading() {
 
   // Unified reading — one flowing paragraph, no sections or separators
   const hasQuestion = Boolean(u.question && u.question.trim());
+  // Build life rune context string (no nested template literals)
+  const lifeNote = life
+    ? (u.name + ' carries ' + rn(life) + ' (' + life.g + ') as life rune — weave it in without announcing it.')
+    : '';
+  const areaNote    = u.area       ? ('Area of focus: ' + u.area + '.')         : '';
+  const seekNote    = seekingLabel ? (u.name + ' is seeking ' + seekingLabel + '.') : '';
+  const formulaRef  = (lang === 'is' && drawn.formula_is)
+    ? ('Icelandic rune formula (weave naturally once): "' + drawn.formula_is + '"')
+    : '';
   const formatInstr = hasQuestion
-    ? `One flowing reading — 5 to 7 sentences, no sections, no labels, no line breaks between thoughts.
-
-Open with ${rn(drawn)} (${drawn.g}) answering the question: "${u.question}" — let the rune speak through image and symbol, not advice. Mention ${rn(drawn)} by name once, woven naturally.${life ? \` ${u.name} carries ${rn(life)} as life rune — bring it in without announcing it, as part of the same movement.\` : ''} Speak to what lies beneath the question, not just the surface. End with one open question that reaches deeper than the one asked.
-
-One paragraph. No breaks. No labels. Speak directly to ${u.name}.`
-    : `One flowing reading — 5 to 7 sentences, no sections, no labels, no line breaks between thoughts.
-
-Open with ${rn(drawn)} (${drawn.g}) arriving through its essential quality — ${rworld(drawn) || pickedDrawnKws} — not through explanation but through image. Mention ${rn(drawn)} by name once, woven naturally.${life ? \` ${u.name} carries ${rn(life)} as life rune — weave both runes into a single thread without announcing the connection.\` : ''} ${u.area ? `Let the area — ${u.area} — shape the imagery.` : ''} ${seekingLabel ? `${u.name} is seeking ${seekingLabel} — let that colour the tone.` : ''} Bring core insight and deeper reflection into one movement. End with one short open question.
-
-One paragraph. No breaks. No labels. Speak directly to ${u.name}.`;
+    ? [
+        'One flowing reading — 5 to 7 sentences, no sections, no labels, no line breaks between thoughts.',
+        '',
+        'Open with ' + rn(drawn) + ' (' + drawn.g + ') answering: "' + u.question + '" — through image and symbol, not advice.',
+        'Mention ' + rn(drawn) + ' by name once, woven naturally — a proper name, never translated.',
+        lifeNote,
+        formulaRef,
+        'Speak to what lies beneath the question. End with one open question that reaches deeper.',
+        '',
+        'One paragraph. No breaks. No labels. Speak directly to ' + u.name + '.'
+      ].filter(Boolean).join('\n')
+    : [
+        'One flowing reading — 5 to 7 sentences, no sections, no labels, no line breaks between thoughts.',
+        '',
+        'Open with ' + rn(drawn) + ' (' + drawn.g + ') — let its quality (' + (rworld(drawn) || pickedDrawnKws) + ') arrive through image, not explanation.',
+        'Mention ' + rn(drawn) + ' by name once, woven naturally — a proper name, never translated.',
+        lifeNote,
+        areaNote,
+        seekNote,
+        formulaRef,
+        'Bring core insight and deeper reflection into one movement — do not separate them. End with one short open question.',
+        '',
+        'One paragraph. No breaks. No labels. Speak directly to ' + u.name + '.'
+      ].filter(Boolean).join('\n')
 
   const prompt = `${parts}${readingFormulaLine}\n\nREADING ANGLE: ${typeof _randomAngle === 'function' ? _randomAngle(lang) : ''}\n\n${formatInstr}\n\nBe concise — every sentence must earn its place. ${langInstr}\n${getCorrPrompt(lang, corrections)}`
   const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens);
