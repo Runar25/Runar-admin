@@ -434,7 +434,14 @@ textarea::placeholder{color:var(--dim);}
     <div class="card-lbl" id="draw-lbl">ᚠ DRAW YOUR RUNE</div>
     <p class="note" id="draw-note">Close your eyes. Hold your question. Then choose the rune that calls to you.</p>
     <div class="rune-grid" id="reader-grid"></div>
-    <div class="rune-info" id="reader-rune-info"></div>
+    <div class="rune-info" id="reader-rune-info" style="display:none;"></div>
+    <!-- Single-rune slot — visible in single mode, hidden in spread3 -->
+    <div id="single-slot" style="margin:8px 0 10px;">
+      <div class="s3-slot" id="s1-slot-0">
+        <span class="s3-pos-lbl" id="s1-pos-lbl">① DRAWN RUNE</span>
+        <span class="s3-rune-nm" id="s1-rune-0">—</span>
+      </div>
+    </div>
     <div id="spread3-slots" style="display:none;margin:8px 0 10px;">
       <div class="s3-slot" id="s3-slot-0"><span class="s3-pos-lbl" id="s3-pos-lbl-0">① PAST</span><span class="s3-rune-nm" id="s3-rune-0">—</span></div>
       <div class="s3-slot" id="s3-slot-1"><span class="s3-pos-lbl" id="s3-pos-lbl-1">② PRESENT</span><span class="s3-rune-nm" id="s3-rune-1">—</span></div>
@@ -1024,7 +1031,19 @@ function buildGrid(gridId, isReader) {
         document.getElementById('btn-speak').disabled = (_spread3Runes.length < 3);
       } else {
         grid.querySelectorAll('.rb').forEach(b => b.classList.remove('on')); btn.classList.add('on');
-        if (isReader) { readerRune = r; document.getElementById('reader-rune-info').textContent = `${r.g} ${rn(r)} — ${rk(r)}`; document.getElementById('btn-speak').disabled = false; }
+        if (isReader) {
+          readerRune = r;
+          if (_spreadMode !== 'spread3') {
+            // Single mode: fill the slot
+            var _s1r = document.getElementById('s1-rune-0');
+            var _s1s = document.getElementById('s1-slot-0');
+            if (_s1r) _s1r.textContent = r.g + ' ' + rn(r);
+            if (_s1s) { _s1s.classList.add('filled'); _s1s.onclick = function() { _clearSingleSlot(); }; }
+          } else {
+            document.getElementById('reader-rune-info').textContent = `${r.g} ${rn(r)} — ${rk(r)}`;
+          }
+          document.getElementById('btn-speak').disabled = false;
+        }
         else          { teachRune  = r; document.getElementById('teach-rune-info').textContent  = `${r.g} ${rn(r)} — ${rk(r)}`; checkTeach(); loadRuneVersionCount(); }
       }
     };
@@ -1671,7 +1690,7 @@ function drawAnother() {
   document.getElementById('reader-output').style.display = 'none'; document.getElementById('reader-rune-card').style.display = 'block';
   document.querySelectorAll('#reader-grid .rb').forEach(b => b.classList.remove('on'));
   document.getElementById('reader-rune-info').textContent = ''; document.getElementById('btn-speak').disabled = true;
-  _updateSpread3Slots();
+  _updateSpread3Slots(); _clearSingleSlot();
 }
 
 function resetReader() {
@@ -1681,11 +1700,14 @@ function resetReader() {
   const _rmS = document.getElementById('mode-btn-single');
   const _rmT = document.getElementById('mode-btn-spread3');
   if (_rmS) _rmS.classList.add('on'); if (_rmT) _rmT.classList.remove('on');
-  const _rmSlots = document.getElementById('spread3-slots');
-  const _rmInfo  = document.getElementById('reader-rune-info');
-  const _rmNote  = document.getElementById('draw-note');
-  if (_rmSlots) _rmSlots.style.display = 'none';
-  if (_rmInfo)  _rmInfo.style.display  = '';
+  const _rmSlots  = document.getElementById('spread3-slots');
+  const _rmSingle = document.getElementById('single-slot');
+  const _rmInfo   = document.getElementById('reader-rune-info');
+  const _rmNote   = document.getElementById('draw-note');
+  if (_rmSlots)  _rmSlots.style.display  = 'none';
+  if (_rmSingle) _rmSingle.style.display = 'block';
+  if (_rmInfo)   _rmInfo.style.display   = 'none';
+  _clearSingleSlot();
   if (_rmNote)  _rmNote.textContent    = t('draw_note');
   // Restore single-mode layers
   const _rm1 = document.getElementById('single-layer1');
@@ -1698,6 +1720,18 @@ function resetReader() {
 }
 
 // ─── SPREAD3 MODE (Vrstva D) ──────────────────────────────────────
+function _clearSingleSlot() {
+  var _sr = document.getElementById('s1-rune-0');
+  var _ss = document.getElementById('s1-slot-0');
+  if (_sr) _sr.textContent = '—';
+  if (_ss) { _ss.classList.remove('filled'); _ss.onclick = null; }
+  readerRune = null;
+  var _bsp = document.getElementById('btn-speak');
+  if (_bsp) _bsp.disabled = true;
+  // Deselect any highlighted rune in grid
+  document.querySelectorAll('#reader-grid .rb').forEach(function(b){ b.classList.remove('on'); });
+}
+
 function _setSpreadMode(mode) {
   _spreadMode   = mode;
   _spread3Runes = [];
@@ -1711,14 +1745,18 @@ function _setSpreadMode(mode) {
   const _sSlots = document.getElementById('spread3-slots');
   const _sInfo  = document.getElementById('reader-rune-info');
   const _sNote  = document.getElementById('draw-note');
+  var _sSingle = document.getElementById('single-slot');
   if (mode === 'spread3') {
-    if (_sSlots) _sSlots.style.display = 'block';
-    if (_sInfo)  _sInfo.style.display  = 'none';
-    if (_sNote)  _sNote.textContent    = t('spread3_draw_note');
+    if (_sSlots)  _sSlots.style.display  = 'block';
+    if (_sSingle) _sSingle.style.display = 'none';
+    if (_sInfo)   _sInfo.style.display   = 'none';
+    if (_sNote)   _sNote.textContent     = t('spread3_draw_note');
   } else {
-    if (_sSlots) _sSlots.style.display = 'none';
-    if (_sInfo)  _sInfo.style.display  = '';
-    if (_sNote)  _sNote.textContent    = t('draw_note');
+    if (_sSlots)  _sSlots.style.display  = 'none';
+    if (_sSingle) _sSingle.style.display = 'block';
+    if (_sInfo)   _sInfo.style.display   = 'none';
+    if (_sNote)   _sNote.textContent     = t('draw_note');
+    _clearSingleSlot();
   }
   _updateSpread3Slots();
 }
