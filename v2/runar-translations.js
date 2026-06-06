@@ -340,7 +340,7 @@ const UI_TEXT = {
     sp_privacy_link:    'PERS\u00d3NUVERNDARSTEFNA',
     visitor_label:      'GESTUR',
     tree_signin_note:   'Skr\u00e1\u00f0u þig til a\u00f0 uppgötva l\u00edfs r\u00fanuna þ\u00edna.',
-    tree_rs_teaser:     'Þæ rúna hefur verð þín frá fyrsta andardráttinum. Rúnar hefur séð hana. Hún bíður.',
+    tree_rs_teaser:     'Þessi rúna hefur verið þín frá fyrsta andardráttinum. Rúnar hefur séð hana. Hún bíður.',
     tree_rs_cost:       '3 r\u00fanasteinar',
     tree_rs_balance:    'r\u00fanasteinar:',
     tree_rs_or:         '— eða —',
