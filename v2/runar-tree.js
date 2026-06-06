@@ -263,6 +263,11 @@ async function generateLifeRuneReading() {
 
   var runeName = isIs ? rune.is_n : rune.n;
   _showTreeReading(rune, runeName, isIs);
+  // Auto-expand reading body immediately after generation
+  var _trBody = document.getElementById('tree-reading-body');
+  var _trArrow = document.getElementById('tree-toggle-arrow');
+  if (_trBody) _trBody.style.display = 'block';
+  if (_trArrow) { _trArrow.textContent = '−'; _trArrow.classList.add('open'); }
 }
 
 // Load life rune reading from DB (called after fetchUserProfile)
