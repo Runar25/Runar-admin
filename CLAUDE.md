@@ -203,15 +203,5 @@ Nová korekce → přidat do BAD_PATTERNS v check-is.py + do DB přes shrine.
 ---
 
 ## Kde hledat co
-
-| Hledám | Kde |
-|--------|-----|
-| Tier logika, limity | runar-config.js: TIERS, TIER_LIMITS |
-| Vocabulary (unit/cast/card) | runar-config.js: VOCAB |
-| IS/EN prompt buildery | runar-character.js |
-| IS corrections | runar-character.js: getCorrPrompt(), applyISCorrections() |
-| UI texty | runar-translations.js: UI_TEXT |
-| Stav uživatele | runar-app.js: currentUser, userTier, lang |
-| Tree logika | runar-tree.js |
-| Auth + tier check | runar-auth.js |
-| Spreads config | runar-config.js: SPREAD_COSTS, SPREAD_CONFIG |
+Tiers/limity/vocab/spreads → `runar-config.js` · Prompty IS/EN + corrections → `runar-character.js`
+UI texty → `runar-translations.js` · User state → `runar-app.js` · Tree → `runar-tree.js`
