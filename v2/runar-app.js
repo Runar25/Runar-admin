@@ -942,12 +942,20 @@ function buildPillGroup(containerId, items, type, unlockedCount) {
     p.textContent = label;
     if (!locked) {
       p.onclick = () => {
+        const isOn = p.classList.contains('on');
         c.querySelectorAll('.pill:not(.pill-locked)').forEach(x => x.classList.remove('on'));
-        p.classList.add('on');
-        if (type === 'area') readerUser.area = label;
-        else if (type === 'seek') readerUser.seeking = label;
-        else if (type === 'mood') readerUser.mood = label;
-        else readerUser.intention = label;
+        if (!isOn) {
+          p.classList.add('on');
+          if (type === 'area') readerUser.area = label;
+          else if (type === 'seek') readerUser.seeking = label;
+          else if (type === 'mood') readerUser.mood = label;
+          else readerUser.intention = label;
+        } else {
+          if (type === 'area') readerUser.area = '';
+          else if (type === 'seek') readerUser.seeking = '';
+          else if (type === 'mood') readerUser.mood = '';
+          else readerUser.intention = '';
+        }
       };
     }
     c.appendChild(p);
