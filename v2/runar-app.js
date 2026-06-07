@@ -1004,7 +1004,7 @@ async function loadCorrections() {
 }
 // ─── PROXY ───────────────────────────────────────────────
 // use_credit: true = odečíst kredit na backendu (monthly slot vyčerpán)
-async function callProxy(sys, prompt, maxTokens, use_credit = false) {
+async function callProxy(sys, prompt, maxTokens, use_credit = false, credit_cost = 1) {
   try {
     const headers = { 'Content-Type': 'application/json' };
     const { data: { session } } = await sb.auth.getSession();
@@ -1012,7 +1012,7 @@ async function callProxy(sys, prompt, maxTokens, use_credit = false) {
 
     const res  = await fetch(PROXY, {
       method: 'POST', headers,
-      body: JSON.stringify({ system: sys, prompt, max_tokens: maxTokens, use_credit })
+      body: JSON.stringify({ system: sys, prompt, max_tokens: maxTokens, use_credit, spread_cost: credit_cost })
     });
     const data = await res.json();
 

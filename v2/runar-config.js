@@ -290,7 +290,7 @@ const SPREAD_COSTS = {
   horseshoe: { free: null, credits: 7  },
   norns:     { free: null, credits: 3  },
   yggdrasil: { free: null, credits: 9  },
-  life_rune: { free: null, credits: 3  },  // RS: 3 Rune Stones | TODO: proxy needs credit_cost param for multi-credit deduction
+  life_rune: { free: null, credits: 3  },  // RS: 3 Rune Stones
 };
 
 // ─── VOCABULARY — single source of truth ─────────────

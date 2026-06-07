@@ -43,7 +43,7 @@ async function _generateReading() {
   const sys = buildSysPrompt(activeChar, lang);
   const prompt = buildReadingPrompt(u, drawn, lang, corrections);
 
-  const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens, shouldUseCredit());
+  const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens, shouldUseCredit(), SPREAD_COSTS.single.credits);
   if (res.error === 'rate_limited') {
     if (_rdLoadEl) _rdLoadEl.style.display = 'none';
     if (_pL1) _pL1.classList.remove('pulsing');
@@ -667,7 +667,7 @@ async function _generateSpread5Reading() {
   var prompt = buildKrizPrompt(u, _spread5Runes, lang, corrections);
   var tokens = (SPREAD_CONFIG && SPREAD_CONFIG.cross) ? SPREAD_CONFIG.cross.tokens : 1100;
 
-  var res = await callProxy(sys, prompt, tokens, shouldUseCredit());
+  var res = await callProxy(sys, prompt, tokens, shouldUseCredit(), SPREAD_COSTS.cross.credits);
 
   if (rdLoad) rdLoad.style.display = 'none';
   if (pL1) pL1.classList.remove('pulsing');
@@ -749,7 +749,7 @@ async function _generateHorseshoeReading() {
   var prompt = buildHorseshoePrompt(u, _spread7Runes, lang, corrections);
   var tokens = (SPREAD_CONFIG && SPREAD_CONFIG.horseshoe) ? SPREAD_CONFIG.horseshoe.tokens : 1300;
 
-  var res = await callProxy(sys, prompt, tokens, shouldUseCredit());
+  var res = await callProxy(sys, prompt, tokens, shouldUseCredit(), SPREAD_COSTS.horseshoe.credits);
 
   if (rdLoad) rdLoad.style.display = 'none';
   if (pL1) pL1.classList.remove('pulsing');
@@ -822,7 +822,7 @@ async function _generateYggdrasilReading() {
   var prompt = buildYggdrasilPrompt(u, _spread9Runes, lang, corrections);
   var tokens = (SPREAD_CONFIG && SPREAD_CONFIG.yggdrasil) ? SPREAD_CONFIG.yggdrasil.tokens : 1800;
 
-  var res = await callProxy(sys, prompt, tokens, shouldUseCredit());
+  var res = await callProxy(sys, prompt, tokens, shouldUseCredit(), SPREAD_COSTS.yggdrasil.credits);
 
   if (rdLoad) rdLoad.style.display = 'none';
   if (pL1) pL1.classList.remove('pulsing');
@@ -900,7 +900,7 @@ async function _generateNornsReading() {
   var prompt = buildNornsPrompt(u, _spread3Runes, lang, corrections);
   var tokens = (SPREAD_CONFIG && SPREAD_CONFIG.norns) ? SPREAD_CONFIG.norns.tokens : 900;
 
-  var res = await callProxy(sys, prompt, tokens, shouldUseCredit());
+  var res = await callProxy(sys, prompt, tokens, shouldUseCredit(), SPREAD_COSTS.norns.credits);
 
   if (rdLoad) rdLoad.style.display = 'none';
   if (pL1) pL1.classList.remove('pulsing');

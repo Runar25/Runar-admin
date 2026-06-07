@@ -237,9 +237,7 @@ async function generateLifeRuneReading() {
 
   // RS uses credit (deducts from balance via proxy)
   var _useCredit = (typeof userTier !== 'undefined' && userTier === 'rune_seeker');
-  var res = await callProxy(sys, prompt, mode.max_tokens, _useCredit);
-  // TODO: Life Rune costs 3 credits — proxy currently deducts 1 per call.
-  // Fix: add credit_cost parameter to callProxy + update claude-proxy edge function.
+  var res = await callProxy(sys, prompt, mode.max_tokens, _useCredit, SPREAD_COSTS.life_rune.credits);
   if (loadEl) loadEl.style.display = 'none';
 
   if (res.error) {
