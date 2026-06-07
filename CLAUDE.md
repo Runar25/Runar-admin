@@ -193,12 +193,8 @@ Norns axis: `_moodContext(mood, lang)` + `_intentionContext(intention, lang)` v 
 
 ## Tree of Life — stav
 ✅ calcLifeRune(), generování + uložení, Tree tab UI, IS 3-vrstvý systém, isLifeRune detekce
-❌ zakládací rituál, branch systém, vizuální strom, tree_state/tree_readings tabulky
-TREE_UPDATE Edge Function definována v config — NENASAZENA, čeká na tree_state DB.
-Tree tab HTML: `apane-tree > [tree-no-dob | tree-rs-teaser | tree-reveal-cta | tree-loading | tree-reading-exists]`
+❌ branch systém, vizuální strom, tree_state/tree_readings DB tabulky — čeká na V3
 Design: viz RUNAR_DESIGN.md
-
----
 
 ## Word Corrections
 Živá data: `python show_corrections.py`
