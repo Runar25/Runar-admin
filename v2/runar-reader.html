@@ -278,10 +278,12 @@
     <div class="card" id="reader-rune-card" style="display:none;">
       <!-- MODE SWITCHER -->
       <div class="spread-mode-row" id="spread-mode-row">
-        <button class="mode-btn active" id="mode-btn-single"  onclick="_setSpreadMode('single')">SINGLE RUNE</button>
-        <button class="mode-btn"        id="mode-btn-trojice" onclick="_setSpreadMode('trojice')">3 READINGS</button>
-        <button class="mode-btn"        id="mode-btn-norns"   onclick="_setSpreadMode('norns')">NORNS</button>
-        <button class="mode-btn"        id="mode-btn-kriz"    onclick="_setSpreadMode('kriz')">CROSS</button>
+        <button class="mode-btn active" id="mode-btn-single"    onclick="_setSpreadMode('single')">SINGLE RUNE</button>
+        <button class="mode-btn"        id="mode-btn-trojice"  onclick="_setSpreadMode('trojice')">3 READINGS</button>
+        <button class="mode-btn"        id="mode-btn-norns"    onclick="_setSpreadMode('norns')">NORNS</button>
+        <button class="mode-btn"        id="mode-btn-kriz"     onclick="_setSpreadMode('kriz')">CROSS</button>
+        <button class="mode-btn"        id="mode-btn-horseshoe" onclick="_setSpreadMode('horseshoe')">HORSESHOE</button>
+        <button class="mode-btn"        id="mode-btn-yggdrasil" onclick="_setSpreadMode('yggdrasil')">YGGDRASIL</button>
       </div>
       <!-- SLOT TRACKER (3-rune spreads: Trojice / Norns) -->
       <div class="spread3-slots" id="spread3-slots" style="display:none;">
@@ -290,6 +292,45 @@
         <span class="s3-slot" id="slot2">②</span>
         <span class="s3-sep">·</span>
         <span class="s3-slot" id="slot3">③</span>
+      </div>
+      <!-- SLOT TRACKER (Horseshoe — 7 runes, linear) -->
+      <div class="spread3-slots" id="spread7-slots" style="display:none;">
+        <span class="s3-slot" id="s7slot1" title="Past">①</span>
+        <span class="s3-sep">·</span>
+        <span class="s3-slot" id="s7slot2" title="Present">②</span>
+        <span class="s3-sep">·</span>
+        <span class="s3-slot" id="s7slot3" title="Hidden">③</span>
+        <span class="s3-sep">·</span>
+        <span class="s3-slot" id="s7slot4" title="Challenges">④</span>
+        <span class="s3-sep">·</span>
+        <span class="s3-slot" id="s7slot5" title="Outside forces">⑤</span>
+        <span class="s3-sep">·</span>
+        <span class="s3-slot" id="s7slot6" title="Inner state">⑥</span>
+        <span class="s3-sep">·</span>
+        <span class="s3-slot" id="s7slot7" title="Outcome">⑦</span>
+      </div>
+      <!-- SLOT TRACKER (Yggdrasil — 9 worlds, Norns-axis tree layout) -->
+      <div class="spread3-slots" id="spread9-slots" style="display:none;flex-wrap:wrap;justify-content:center;gap:6px 4px;">
+        <!-- Skuld crown (1–3) -->
+        <span class="s3-slot" id="s9slot1" title="Asgard — Crown">①</span>
+        <span class="s3-sep">·</span>
+        <span class="s3-slot" id="s9slot2" title="Vanaheim — Crown">②</span>
+        <span class="s3-sep">·</span>
+        <span class="s3-slot" id="s9slot3" title="Alfheim — Crown">③</span>
+        <!-- Verdandi trunk (4–5) -->
+        <span class="s3-sep" style="width:100%;text-align:center;">·</span>
+        <span class="s3-slot" id="s9slot4" title="Midgard — Trunk">④</span>
+        <span class="s3-sep">·</span>
+        <span class="s3-slot" id="s9slot5" title="Jotunheim — Trunk">⑤</span>
+        <!-- Urd roots (6–9) -->
+        <span class="s3-sep" style="width:100%;text-align:center;">·</span>
+        <span class="s3-slot" id="s9slot6" title="Svartalfheim — Roots">⑥</span>
+        <span class="s3-sep">·</span>
+        <span class="s3-slot" id="s9slot7" title="Nidavellir — Roots">⑦</span>
+        <span class="s3-sep">·</span>
+        <span class="s3-slot" id="s9slot8" title="Niflheim — Roots">⑧</span>
+        <span class="s3-sep">·</span>
+        <span class="s3-slot" id="s9slot9" title="Hel — Roots">⑨</span>
       </div>
       <!-- SLOT TRACKER (Cross — 5 runes, cross layout) -->
       <div class="spread5-slots" id="spread5-slots" style="display:none;">
@@ -355,6 +396,16 @@
       <div id="spread5-output" style="display:none;">
         <div class="layer1-lbl" id="s5-kriz-lbl" style="letter-spacing:0.18em;margin-bottom:12px;">✦ KRÍŽ</div>
         <div class="out-txt" id="s5-out"></div>
+      </div>
+      <!-- Horseshoe output (7-rune) -->
+      <div id="spread7-output" style="display:none;">
+        <div class="layer1-lbl" id="s7-horseshoe-lbl" style="letter-spacing:0.18em;margin-bottom:12px;">✦ HORSESHOE</div>
+        <div class="out-txt" id="s7-out"></div>
+      </div>
+      <!-- Yggdrasil output (9 worlds) -->
+      <div id="spread9-output" style="display:none;">
+        <div class="layer1-lbl" id="s9-yggdrasil-lbl" style="letter-spacing:0.18em;margin-bottom:12px;">ᚱ YGGDRASIL</div>
+        <div class="out-txt" id="s9-out"></div>
       </div>
       <!-- Voice -->
       <button class="btn-voice" id="btn-generate-voice" onclick="generateVoice()" disabled>ᚢ HEAR RÚNAR SPEAK</button>

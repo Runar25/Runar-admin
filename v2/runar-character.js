@@ -988,3 +988,222 @@ function buildNornsPrompt(u, runes, lang, corrections) {
   if (lang === 'is') return buildNornsPromptIS(u, runes, corrections);
   return buildNornsPromptEN(u, runes, lang, corrections);
 }
+
+// ─── HORSESHOE PROMPT BUILDERS ─────────────────────────────────────────────
+// Horseshoe = 7-rune spread — sezónní hloubkové čtení. Standard+.
+// Pozice: [1]Past [2]Present [3]Hidden [4]Challenges [5]Outside [6]Inner [7]Outcome
+
+function buildHorseshoePromptIS(u, runes, corrections) {
+  var life = u.lifeRune;
+  var lifeRef = life ? (life.is_n || life.n) + ' ' + life.g : '';
+
+  function runaBlock(r, label) {
+    var kws = rk(r).split(',').map(function(s){return s.trim();}).filter(Boolean).slice(0,4).join(', ');
+    return label + '\n' + (r.is_n || r.n) + ' ' + r.g + ' — ' + kws;
+  }
+
+  var ctx = [
+    u.name    ? 'Leiðandi: ' + u.name : '',
+    life      ? 'LífsRúna: ' + lifeRef : '',
+    u.area    ? 'Svið: ' + u.area : '',
+    u.seeking ? 'Leiðin: ' + (Array.isArray(u.seeking) ? u.seeking.join(' og ') : u.seeking) : '',
+    u.mood      ? _moodContext(u.mood, 'is')      : '',
+    u.intention ? _intentionContext(u.intention, 'is') : '',
+    u.question ? 'Spurning: ' + u.question : '',
+  ].filter(Boolean).join('\n');
+
+  var runesBlock = [
+    runaBlock(runes[0], 'RÚNAN 1 — Fortíð (hvað hefur mótað):'),
+    '',
+    runaBlock(runes[1], 'RÚNAN 2 — Nútíð (hvað er að ríkja):'),
+    '',
+    runaBlock(runes[2], 'RÚNAN 3 — Dulið / Nánasta framtíð (hvað er að koma upp):'),
+    '',
+    runaBlock(runes[3], 'RÚNAN 4 — Hindranir (hvað þyngir eða hindrar):'),
+    '',
+    runaBlock(runes[4], 'RÚNAN 5 — Ytri kraftar (hvað kemur að utan):'),
+    '',
+    runaBlock(runes[5], 'RÚNAN 6 — Innri staða (hvað er inni í þér):'),
+    '',
+    runaBlock(runes[6], 'RÚNAN 7 — Niðurstaða (hvert er þetta að fara):'),
+  ].join('\n');
+
+  return [
+    ctx,
+    '',
+    'Leiðandinn dregur sjö rúnar — Podkova.',
+    '',
+    runesBlock,
+    '',
+    'Lestu allar sjö sem einn samfelldann stef — ekki sjö aðskildar lagnir.',
+    'Rúnan 7 (Niðurstaða) er ekki spá — sjáðu hana sem stefnu ef þráðurinn heldur áfram.',
+    'Nefndu ekki staðsetningarnar í úttakinu. Bærðu þær í röddinn.',
+    'Talaðu beint við ' + u.name + '. 9 til 12 setningar. Endaðu með einni opinni spurningu.'
+      + getCorrPrompt('is', corrections),
+  ].filter(Boolean).join('\n');
+}
+
+function buildHorseshoePromptEN(u, runes, lang, corrections) {
+  var life = u.lifeRune;
+  var langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Islenska).' : 'Respond in English.';
+
+  function kbLine(r) {
+    return rk(r).split(',').map(function(s){return s.trim();}).filter(Boolean).slice(0,4).join(', ');
+  }
+
+  var ctx = [
+    'Seeker: ' + u.name,
+    life ? 'Life rune: ' + rn(life) + ' ' + life.g : '',
+    u.area    ? 'Area: ' + u.area : '',
+    u.seeking ? 'Seeking: ' + (Array.isArray(u.seeking) ? u.seeking.join(' & ') : u.seeking) : '',
+    u.mood      ? _moodContext(u.mood)      : '',
+    u.intention ? _intentionContext(u.intention) : '',
+    u.question ? 'Question: ' + u.question : '',
+  ].filter(Boolean).join('\n');
+
+  var runesBlock = [
+    'RUNE 1 — Past (what has shaped this):',          rn(runes[0]) + ' ' + runes[0].g, kbLine(runes[0]), '',
+    'RUNE 2 — Present (what is active now):',         rn(runes[1]) + ' ' + runes[1].g, kbLine(runes[1]), '',
+    'RUNE 3 — Hidden / Near future (what is emerging):', rn(runes[2]) + ' ' + runes[2].g, kbLine(runes[2]), '',
+    'RUNE 4 — Challenges (what weighs or blocks):',   rn(runes[3]) + ' ' + runes[3].g, kbLine(runes[3]), '',
+    'RUNE 5 — Outside forces (what acts from beyond):', rn(runes[4]) + ' ' + runes[4].g, kbLine(runes[4]), '',
+    'RUNE 6 — Inner state (what lives inside):',      rn(runes[5]) + ' ' + runes[5].g, kbLine(runes[5]), '',
+    'RUNE 7 — Outcome (where this is heading):',      rn(runes[6]) + ' ' + runes[6].g, kbLine(runes[6]),
+  ].join('\n');
+
+  return [
+    ctx, '',
+    'The seeker draws seven runes — the Horseshoe.', '',
+    runesBlock, '',
+    'Read all seven as one continuous passage — not seven separate readings.',
+    'Rune 7 (Outcome) is not prophecy — it is where this energy leads if nothing changes.',
+    'Do not name the positions in the output. Carry them in your voice.',
+    'Speak directly to ' + u.name + '. 9 to 12 sentences. End with one open question.',
+    langInstr,
+    getCorrPrompt(lang, corrections),
+  ].filter(Boolean).join('\n');
+}
+
+function buildHorseshoePrompt(u, runes, lang, corrections) {
+  if (lang === 'is') return buildHorseshoePromptIS(u, runes, corrections);
+  return buildHorseshoePromptEN(u, runes, lang, corrections);
+}
+
+// ─── YGGDRASIL PROMPT BUILDERS ─────────────────────────────────────────────
+// Yggdrasil = 9-rune spread — jednou ročně, zimní slunovrat (Dec 14–28). Premium.
+// 9 světů — Norns axis: skuld=1–3 (crown), verdandi=4–5 (trunk), urd=6–9 (roots)
+// Pozice: Asgard·Vanaheim·Alfheim (crown) | Midgard·Jotunheim (trunk) | Svartalfheim·Nidavellir·Niflheim·Hel (roots)
+
+function buildYggdrasilPromptIS(u, runes, corrections) {
+  var life = u.lifeRune;
+  var lifeRef = life ? (life.is_n || life.n) + ' ' + life.g : '';
+
+  function runaBlock(r, label) {
+    var kws = rk(r).split(',').map(function(s){return s.trim();}).filter(Boolean).slice(0,4).join(', ');
+    return label + '\n' + (r.is_n || r.n) + ' ' + r.g + ' — ' + kws;
+  }
+
+  var ctx = [
+    u.name    ? 'Leiðandi: ' + u.name : '',
+    life      ? 'LífsRúna: ' + lifeRef : '',
+    u.area    ? 'Svið: ' + u.area : '',
+    u.seeking ? 'Leiðin: ' + (Array.isArray(u.seeking) ? u.seeking.join(' og ') : u.seeking) : '',
+    u.mood      ? _moodContext(u.mood, 'is')      : '',
+    u.intention ? _intentionContext(u.intention, 'is') : '',
+    u.question ? 'Spurning: ' + u.question : '',
+  ].filter(Boolean).join('\n');
+
+  var runesBlock = [
+    '── SKULD (króna — það sem verður að vera) ──',
+    runaBlock(runes[0], 'RÚNAN 1 — Ásgarðr (hæsta sjálf, hvað þú ert að verða):'),
+    '',
+    runaBlock(runes[1], 'RÚNAN 2 — Vanaheimr (samhljómur, hvað er í jafnvægi):'),
+    '',
+    runaBlock(runes[2], 'RÚNAN 3 — Álfheimr (skapaningur, hvað er að kvikna):'),
+    '',
+    '── VERÐANDI (stofn — það sem er að gerast) ──',
+    runaBlock(runes[3], 'RÚNAN 4 — Miðgarðr (daglegar raunir, hér og nú):'),
+    '',
+    runaBlock(runes[4], 'RÚNAN 5 — Jötunheimr (hindrun, hvað þrýstir gegn þér):'),
+    '',
+    '── URÐUR (rætur — það sem var og er fast) ──',
+    runaBlock(runes[5], 'RÚNAN 6 — Svartálfaheimr (dulinn list, hvað er unnið í myrkri):'),
+    '',
+    runaBlock(runes[6], 'RÚNAN 7 — Níðavellir (djúpur uppspretta, hvað berur þig án vitundar):'),
+    '',
+    runaBlock(runes[7], 'RÚNAN 8 — Niflheimr (uppruni, hvað er enn óleyst í þér):'),
+    '',
+    runaBlock(runes[8], 'RÚNAN 9 — Hel (lokið, hvað er að fullnægja sér):'),
+  ].join('\n');
+
+  return [
+    ctx,
+    '',
+    'Leiðandinn dregur níu rúnar — Yggdrasil, níu heimar. Einu sinni á ári.',
+    '',
+    runesBlock,
+    '',
+    'Þetta eru ekki níu aðskildir lestrar — þetta er eitt líf séð í gegnum níu glugga.',
+    'Rúnar 1–3 (Skuld/Króna): talaðu um þær af þunga og þekkningu — þetta eru þræðirnir sem eru að verða sniðnir.',
+    'Rúnar 4–5 (Verðandi/Stofn): þetta eru raunar raunirnar — talaðu um þær af nútíðarþunga.',
+    'Rúnar 6–9 (Urður/Rætur): þetta er það sem er fast — talaðu um þær af þyngd þess sem er þegar ofið.',
+    'Lestu frá Ásgarðr niður til Hel — eitt flæði, ein rödd.',
+    'Nefndu ekki heimanna nöfn í úttakinu. Nefndu ekki Norns-ásinn. Láttu þá lifa í röddinn.',
+    'Talaðu beint við ' + u.name + '. 13 til 16 setningar. Endaðu með einni djúpri, opinni spurningu — þeirri sem heldur áfram að hljóma.'
+      + getCorrPrompt('is', corrections),
+  ].filter(Boolean).join('\n');
+}
+
+function buildYggdrasilPromptEN(u, runes, lang, corrections) {
+  var life = u.lifeRune;
+  var langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Islenska).' : 'Respond in English.';
+
+  function kbLine(r) {
+    return rk(r).split(',').map(function(s){return s.trim();}).filter(Boolean).slice(0,4).join(', ');
+  }
+
+  var ctx = [
+    'Seeker: ' + u.name,
+    life ? 'Life rune: ' + rn(life) + ' ' + life.g : '',
+    u.area    ? 'Area: ' + u.area : '',
+    u.seeking ? 'Seeking: ' + (Array.isArray(u.seeking) ? u.seeking.join(' & ') : u.seeking) : '',
+    u.mood      ? _moodContext(u.mood)      : '',
+    u.intention ? _intentionContext(u.intention) : '',
+    u.question ? 'Question: ' + u.question : '',
+  ].filter(Boolean).join('\n');
+
+  var runesBlock = [
+    '── SKULD (Crown — what must come) ──',
+    'RUNE 1 — Asgard (highest self, what you are becoming):', rn(runes[0]) + ' ' + runes[0].g, kbLine(runes[0]), '',
+    'RUNE 2 — Vanaheim (harmony, what is in balance):', rn(runes[1]) + ' ' + runes[1].g, kbLine(runes[1]), '',
+    'RUNE 3 — Alfheim (creativity, what is kindling):', rn(runes[2]) + ' ' + runes[2].g, kbLine(runes[2]), '',
+    '── VERDANDI (Trunk — what is happening) ──',
+    'RUNE 4 — Midgard (daily reality, here and now):', rn(runes[3]) + ' ' + runes[3].g, kbLine(runes[3]), '',
+    'RUNE 5 — Jotunheim (challenge, what presses against you):', rn(runes[4]) + ' ' + runes[4].g, kbLine(runes[4]), '',
+    '── URD (Roots — what was woven) ──',
+    'RUNE 6 — Svartalfheim (hidden craft, what is worked in the dark):', rn(runes[5]) + ' ' + runes[5].g, kbLine(runes[5]), '',
+    'RUNE 7 — Nidavellir (deep source, what sustains you without your knowing):', rn(runes[6]) + ' ' + runes[6].g, kbLine(runes[6]), '',
+    'RUNE 8 — Niflheim (origin, what is still unresolved within you):', rn(runes[7]) + ' ' + runes[7].g, kbLine(runes[7]), '',
+    'RUNE 9 — Hel (completion, what is fulfilling itself):', rn(runes[8]) + ' ' + runes[8].g, kbLine(runes[8]),
+  ].join('\n');
+
+  return [
+    ctx, '',
+    'The seeker draws nine runes — the Yggdrasil, nine worlds. Once a year.', '',
+    runesBlock, '',
+    'This is not nine separate readings — it is one life seen through nine windows.',
+    'Runes 1–3 (Skuld / Crown): speak with weight and knowing — these are threads being cut.',
+    'Runes 4–5 (Verdandi / Trunk): these are the living realities — speak with present-tense weight.',
+    'Runes 6–9 (Urd / Roots): this is what is fixed — speak with the gravity of what has already been woven.',
+    'Read from Asgard down to Hel — one flow, one voice.',
+    'Do not name the worlds in the output. Do not name the Norns axis. Carry them in your voice.',
+    'Speak directly to ' + u.name + '. 13 to 16 sentences. End with one deep, open question — one that keeps resonating.',
+    langInstr,
+    getCorrPrompt(lang, corrections),
+  ].filter(Boolean).join('\n');
+}
+
+function buildYggdrasilPrompt(u, runes, lang, corrections) {
+  if (lang === 'is') return buildYggdrasilPromptIS(u, runes, corrections);
+  return buildYggdrasilPromptEN(u, runes, lang, corrections);
+}

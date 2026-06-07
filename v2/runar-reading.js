@@ -166,11 +166,15 @@ var _readingMode  = 'mine';   // 'mine' = personal reading, 'someone' = for anot
 var _spreadMode   = 'single';
 var _spread3Runes = [];
 var _spread5Runes = [];
+var _spread7Runes = [];   // Horseshoe (7 runes)
+var _spread9Runes = [];   // Yggdrasil (9 worlds)
 // ─── SPREAD MODE ─────────────────────────────────────────
 function _setSpreadMode(mode) {
   _spreadMode   = mode;
   _spread3Runes = [];
   _spread5Runes = [];
+  _spread7Runes = [];
+  _spread9Runes = [];
   readerRune    = null;
   // Toggle mode buttons
   var btnSingle  = document.getElementById('mode-btn-single');
@@ -181,13 +185,21 @@ function _setSpreadMode(mode) {
   var btnNorns = document.getElementById('mode-btn-norns');
   if (btnKriz)  btnKriz.classList.toggle('active', mode === 'kriz');
   if (btnNorns) btnNorns.classList.toggle('active', mode === 'norns');
+  var btnHorseshoe = document.getElementById('mode-btn-horseshoe');
+  var btnYggdrasil = document.getElementById('mode-btn-yggdrasil');
+  if (btnHorseshoe) btnHorseshoe.classList.toggle('active', mode === 'horseshoe');
+  if (btnYggdrasil) btnYggdrasil.classList.toggle('active', mode === 'yggdrasil');
   // Reset output
   _hideSpread3Output();
   _hideSpread5Output();
+  _hideSpread7Output();
+  _hideSpread9Output();
   document.getElementById('reader-rune-card').style.display = 'block';
   document.getElementById('reader-output').style.display    = 'none';
   _updateSpread3Slots();
   _updateSpread5Slots();
+  _updateSpread7Slots();
+  _updateSpread9Slots();
   // Spread mode: reset btn-speak to 'DRAW YOUR RUNES'
   if (mode !== 'single') {
     var _sb = document.getElementById('btn-speak');
@@ -260,6 +272,85 @@ function _hideSpread5Output() {
   if (s1) s1.style.display = '';
   if (s2) s2.style.display = '';
 }
+
+// ─── HORSESHOE (7 rune) helpers ──────────────────────────────────────────
+function _updateSpread7Slots() {
+  var slotEl = document.getElementById('spread7-slots');
+  if (!slotEl) return;
+  slotEl.style.display = (_spreadMode === 'horseshoe') ? 'flex' : 'none';
+  var empty = ['①','②','③','④','⑤','⑥','⑦'];
+  for (var i = 0; i < 7; i++) {
+    var el = document.getElementById('s7slot' + (i + 1));
+    if (!el) continue;
+    var rune = _spread7Runes[i];
+    el.textContent = rune ? rune.g : empty[i];
+    el.classList.toggle('filled', !!rune);
+    if (rune) {
+      el.title = rune.n + ' — click to remove';
+      el.style.cursor = 'pointer';
+      el.onclick = (function(idx) {
+        return function() {
+          _spread7Runes.splice(idx, 1);
+          _updateSpread7Slots();
+          var speakBtn = document.getElementById('btn-speak');
+          if (speakBtn) speakBtn.disabled = true;
+        };
+      })(i);
+    } else {
+      el.title = '';
+      el.style.cursor = 'default';
+      el.onclick = null;
+    }
+  }
+}
+function _hideSpread7Output() {
+  var out = document.getElementById('spread7-output');
+  if (out) out.style.display = 'none';
+  var s1 = document.getElementById('single-layer1');
+  var s2 = document.getElementById('single-layer2');
+  if (s1) s1.style.display = '';
+  if (s2) s2.style.display = '';
+}
+
+// ─── YGGDRASIL (9 rune) helpers ──────────────────────────────────────────
+function _updateSpread9Slots() {
+  var slotEl = document.getElementById('spread9-slots');
+  if (!slotEl) return;
+  slotEl.style.display = (_spreadMode === 'yggdrasil') ? 'flex' : 'none';
+  var empty = ['①','②','③','④','⑤','⑥','⑦','⑧','⑨'];
+  for (var i = 0; i < 9; i++) {
+    var el = document.getElementById('s9slot' + (i + 1));
+    if (!el) continue;
+    var rune = _spread9Runes[i];
+    el.textContent = rune ? rune.g : empty[i];
+    el.classList.toggle('filled', !!rune);
+    if (rune) {
+      el.title = rune.n + ' — click to remove';
+      el.style.cursor = 'pointer';
+      el.onclick = (function(idx) {
+        return function() {
+          _spread9Runes.splice(idx, 1);
+          _updateSpread9Slots();
+          var speakBtn = document.getElementById('btn-speak');
+          if (speakBtn) speakBtn.disabled = true;
+        };
+      })(i);
+    } else {
+      el.title = '';
+      el.style.cursor = 'default';
+      el.onclick = null;
+    }
+  }
+}
+function _hideSpread9Output() {
+  var out = document.getElementById('spread9-output');
+  if (out) out.style.display = 'none';
+  var s1 = document.getElementById('single-layer1');
+  var s2 = document.getElementById('single-layer2');
+  if (s1) s1.style.display = '';
+  if (s2) s2.style.display = '';
+}
+
 async function readRune() {
   if (_spreadMode === 'kriz') {
     // Tier check — block Visitor (anonymous) only
@@ -282,6 +373,62 @@ async function readRune() {
     if (speakBtn5) {
       speakBtn5.disabled = (_spread5Runes.length < 5);
       if (_spread5Runes.length >= 5) speakBtn5.textContent = t('speak_btn');
+    }
+    return;
+  }
+  if (_spreadMode === 'horseshoe') {
+    // Tier check — block Visitor (anonymous) only; rune_seeker can use with stones
+    if (!currentUser) {
+      showToast(lang === 'is' ? 'Skráðu þig inn til að nota Podkova.' : 'Sign in to use the Horseshoe spread.');
+      _setSpreadMode('single'); return;
+    }
+    if (_spread7Runes.length === 7 && !readerRune) {
+      document.getElementById('reader-rune-card').style.display = 'none';
+      document.getElementById('reader-output').style.display = 'block';
+      readerTexts = {}; voiceGenerated = {};
+      await _generateHorseshoeReading();
+      return;
+    }
+    if (!readerRune) return;
+    if (_spread7Runes.length < 7) _spread7Runes.push(readerRune);
+    readerRune = null;
+    _updateSpread7Slots();
+    var speakBtn7 = document.getElementById('btn-speak');
+    if (speakBtn7) {
+      speakBtn7.disabled = (_spread7Runes.length < 7);
+      if (_spread7Runes.length >= 7) speakBtn7.textContent = t('speak_btn');
+    }
+    return;
+  }
+  if (_spreadMode === 'yggdrasil') {
+    // Tier check — Premium only
+    if (!currentUser || (userTier !== 'premium' && !isAdmin(currentUser.email))) {
+      showToast(lang === 'is' ? 'Yggdrasil er eingöngu fyrir Rune Keeper.' : 'Yggdrasil is for Rune Keepers only.');
+      _setSpreadMode('single'); return;
+    }
+    // Seasonal gate: Dec 14–28 only (admin bypass)
+    var _ygNow = new Date();
+    var _ygM = _ygNow.getMonth() + 1;
+    var _ygD = _ygNow.getDate();
+    if (!(_ygM === 12 && _ygD >= 14 && _ygD <= 28) && !isAdmin(currentUser.email)) {
+      showToast(lang === 'is' ? 'Yggdrasil opnast 14. desember.' : 'Yggdrasil opens December 14th.');
+      _setSpreadMode('single'); return;
+    }
+    if (_spread9Runes.length === 9 && !readerRune) {
+      document.getElementById('reader-rune-card').style.display = 'none';
+      document.getElementById('reader-output').style.display = 'block';
+      readerTexts = {}; voiceGenerated = {};
+      await _generateYggdrasilReading();
+      return;
+    }
+    if (!readerRune) return;
+    if (_spread9Runes.length < 9) _spread9Runes.push(readerRune);
+    readerRune = null;
+    _updateSpread9Slots();
+    var speakBtn9 = document.getElementById('btn-speak');
+    if (speakBtn9) {
+      speakBtn9.disabled = (_spread9Runes.length < 9);
+      if (_spread9Runes.length >= 9) speakBtn9.textContent = t('speak_btn');
     }
     return;
   }
@@ -356,6 +503,8 @@ function drawAnother() {
   if (_daLbl) _daLbl.textContent = t('layer1_lbl');
   if (_spreadMode === 'trojice' || _spreadMode === 'norns') { _spread3Runes = []; _updateSpread3Slots(); }
   if (_spreadMode === 'kriz') { _spread5Runes = []; _updateSpread5Slots(); }
+  if (_spreadMode === 'horseshoe') { _spread7Runes = []; _updateSpread7Slots(); }
+  if (_spreadMode === 'yggdrasil') { _spread9Runes = []; _updateSpread9Slots(); }
   readerRune = null; readerTexts = {}; voiceGenerated = {};
   document.getElementById('reader-output').style.display = 'none';
   document.getElementById('trial-end').style.display = 'none';
@@ -368,7 +517,9 @@ function drawAnother() {
 }
 
 function resetReader() {
-  _spreadMode = 'single'; _spread3Runes = []; _spread5Runes = []; _updateSpread3Slots(); _updateSpread5Slots();
+  _spreadMode = 'single';
+  _spread3Runes = []; _spread5Runes = []; _spread7Runes = []; _spread9Runes = [];
+  _updateSpread3Slots(); _updateSpread5Slots(); _updateSpread7Slots(); _updateSpread9Slots();
   readerUser = {}; readerRune = null; readerTexts = {}; voiceGenerated = {};
   document.getElementById('reader-hero').classList.remove('hidden');
   document.getElementById('reader-output').style.display = 'none';
@@ -454,6 +605,15 @@ async function generateVoice() {
   } else if (_spreadMode === 'trojice') {
     var s3el = document.getElementById('s3-out');
     voiceText = s3el ? s3el.innerText.trim() : '';
+  } else if (_spreadMode === 'norns') {
+    var s3nEl = document.getElementById('s3-out');
+    voiceText = s3nEl ? s3nEl.innerText.trim() : '';
+  } else if (_spreadMode === 'horseshoe') {
+    var s7el = document.getElementById('s7-out');
+    voiceText = s7el ? s7el.innerText.trim() : '';
+  } else if (_spreadMode === 'yggdrasil') {
+    var s9el = document.getElementById('s9-out');
+    voiceText = s9el ? s9el.innerText.trim() : '';
   } else {
     voiceText = document.getElementById('out-short').innerText.trim();
   }
@@ -661,6 +821,152 @@ async function _generateSpread5Reading() {
   await stream('s5-out', text);
 
   // Voice
+  if (canUseVoice()) {
+    if (vBtn) { vBtn.disabled = false; vBtn.style.display = ''; }
+  } else {
+    if (vBtn) { vBtn.disabled = true; vBtn.style.display = 'none'; }
+  }
+}
+
+// ─── HORSESHOE READING (7 runes) ─────────────────────────────────────────
+async function _generateHorseshoeReading() {
+  if (_spread7Runes.length < 7) return;
+
+  var vBtn = document.getElementById('btn-generate-voice');
+  if (vBtn) { vBtn.disabled = true; vBtn.textContent = t('voice_btn'); }
+  document.getElementById('audio-player').classList.remove('visible');
+  document.getElementById('runar-audio').src = '';
+  setSt('st-voice', '');
+
+  var s1 = document.getElementById('single-layer1');
+  var s2 = document.getElementById('single-layer2');
+  if (s1) s1.style.display = 'none';
+  if (s2) s2.style.display = 'none';
+  var s7out = document.getElementById('spread7-output');
+  if (s7out) s7out.style.display = 'block';
+
+  var rdLoad = document.getElementById('reading-loading');
+  var rdLoadTxt = document.getElementById('reading-loading-txt');
+  if (rdLoadTxt) rdLoadTxt.textContent = t('reading_loading');
+  if (rdLoad) rdLoad.style.display = 'block';
+  var pL1 = document.getElementById('layer1-lbl');
+  var pL2 = document.getElementById('layer2-lbl');
+  if (pL1) pL1.classList.add('pulsing');
+  if (pL2) pL2.classList.add('pulsing');
+
+  var u = readerUser;
+  var sys = buildSysPrompt(activeChar, lang);
+  var prompt = buildHorseshoePrompt(u, _spread7Runes, lang, corrections);
+  var tokens = (SPREAD_CONFIG && SPREAD_CONFIG.horseshoe) ? SPREAD_CONFIG.horseshoe.tokens : 1300;
+
+  var res = await callProxy(sys, prompt, tokens, shouldUseCredit());
+
+  if (rdLoad) rdLoad.style.display = 'none';
+  if (pL1) pL1.classList.remove('pulsing');
+  if (pL2) pL2.classList.remove('pulsing');
+
+  if (res.error === 'rate_limited') {
+    setSt('st-reader', lang === 'is' ? 'Of margar beiðnir. Bíddu aðeins.' : 'Too many requests. Please wait a moment.', 'err');
+    return;
+  }
+  if (res.error === 'no_credits' || res.error === 'monthly_limit' || res.error === 'weekly_limit') {
+    var isMonthly7 = res.error === 'monthly_limit';
+    var msg7 = isMonthly7
+      ? (lang === 'is' ? 'Mánaðarlegur lesturmark er náð.' : 'Monthly reading limit reached.')
+      : (lang === 'is' ? 'Kredit þínir eru búnir.' : 'No credits remaining.');
+    setSt('st-reader', msg7, 'err');
+    if (currentUser) syncMonthlyCount(currentUser.id);
+    if (currentUser) await fetchUserProfile(currentUser.id);
+    return;
+  }
+  if (res.error) { setSt('st-reader', 'Failed: ' + res.error, 'err'); return; }
+
+  var text7 = applyISCorrections(res.text || '', lang, corrections);
+  readerTexts[lang] = { short: text7, deep: '' };
+
+  var s7lbl = document.getElementById('s7-horseshoe-lbl');
+  if (s7lbl) s7lbl.textContent = _spread7Runes.map(function(r) { return r.g; }).join(' · ');
+
+  if (currentUser) {
+    if (_readingMode === 'mine') { await saveReading(_spread7Runes[0], text7, ''); loadJournal(); }
+    await syncMonthlyCount(currentUser.id);
+  } else { incTrialCount(); updateAuthUI(); }
+
+  await stream('s7-out', text7);
+
+  if (canUseVoice()) {
+    if (vBtn) { vBtn.disabled = false; vBtn.style.display = ''; }
+  } else {
+    if (vBtn) { vBtn.disabled = true; vBtn.style.display = 'none'; }
+  }
+}
+
+// ─── YGGDRASIL READING (9 worlds) ────────────────────────────────────────
+async function _generateYggdrasilReading() {
+  if (_spread9Runes.length < 9) return;
+
+  var vBtn = document.getElementById('btn-generate-voice');
+  if (vBtn) { vBtn.disabled = true; vBtn.textContent = t('voice_btn'); }
+  document.getElementById('audio-player').classList.remove('visible');
+  document.getElementById('runar-audio').src = '';
+  setSt('st-voice', '');
+
+  var s1 = document.getElementById('single-layer1');
+  var s2 = document.getElementById('single-layer2');
+  if (s1) s1.style.display = 'none';
+  if (s2) s2.style.display = 'none';
+  var s9out = document.getElementById('spread9-output');
+  if (s9out) s9out.style.display = 'block';
+
+  var rdLoad = document.getElementById('reading-loading');
+  var rdLoadTxt = document.getElementById('reading-loading-txt');
+  if (rdLoadTxt) rdLoadTxt.textContent = t('reading_loading');
+  if (rdLoad) rdLoad.style.display = 'block';
+  var pL1 = document.getElementById('layer1-lbl');
+  var pL2 = document.getElementById('layer2-lbl');
+  if (pL1) pL1.classList.add('pulsing');
+  if (pL2) pL2.classList.add('pulsing');
+
+  var u = readerUser;
+  var sys = buildSysPrompt(activeChar, lang);
+  var prompt = buildYggdrasilPrompt(u, _spread9Runes, lang, corrections);
+  var tokens = (SPREAD_CONFIG && SPREAD_CONFIG.yggdrasil) ? SPREAD_CONFIG.yggdrasil.tokens : 1800;
+
+  var res = await callProxy(sys, prompt, tokens, shouldUseCredit());
+
+  if (rdLoad) rdLoad.style.display = 'none';
+  if (pL1) pL1.classList.remove('pulsing');
+  if (pL2) pL2.classList.remove('pulsing');
+
+  if (res.error === 'rate_limited') {
+    setSt('st-reader', lang === 'is' ? 'Of margar beiðnir. Bíddu aðeins.' : 'Too many requests. Please wait a moment.', 'err');
+    return;
+  }
+  if (res.error === 'no_credits' || res.error === 'monthly_limit' || res.error === 'weekly_limit') {
+    var isMonthly9 = res.error === 'monthly_limit';
+    var msg9 = isMonthly9
+      ? (lang === 'is' ? 'Mánaðarlegur lesturmark er náð.' : 'Monthly reading limit reached.')
+      : (lang === 'is' ? 'Kredit þínir eru búnir.' : 'No credits remaining.');
+    setSt('st-reader', msg9, 'err');
+    if (currentUser) syncMonthlyCount(currentUser.id);
+    if (currentUser) await fetchUserProfile(currentUser.id);
+    return;
+  }
+  if (res.error) { setSt('st-reader', 'Failed: ' + res.error, 'err'); return; }
+
+  var text9 = applyISCorrections(res.text || '', lang, corrections);
+  readerTexts[lang] = { short: text9, deep: '' };
+
+  var s9lbl = document.getElementById('s9-yggdrasil-lbl');
+  if (s9lbl) s9lbl.textContent = _spread9Runes.map(function(r) { return r.g; }).join(' · ');
+
+  if (currentUser) {
+    if (_readingMode === 'mine') { await saveReading(_spread9Runes[0], text9, ''); loadJournal(); }
+    await syncMonthlyCount(currentUser.id);
+  } else { incTrialCount(); updateAuthUI(); }
+
+  await stream('s9-out', text9);
+
   if (canUseVoice()) {
     if (vBtn) { vBtn.disabled = false; vBtn.style.display = ''; }
   } else {
