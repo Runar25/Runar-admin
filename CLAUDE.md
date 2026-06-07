@@ -175,8 +175,8 @@ tree_name (text), life_rune_number (int), life_rune_text (text), life_rune_lang 
 | Trojice | 3 | ✅ reader |
 | Norns | 3 | ✅ reader |
 | Kříž | 5 | ✅ reader |
-| Horseshoe | 7 | ❌ prompt chybí |
-| Yggdrasil | 9 | ❌ Dec 14–28 |
+| Horseshoe | 7 | ✅ reader (Standard+) |
+| Yggdrasil | 9 | ✅ reader (Premium, Dec 14–28) |
 | The Gathering | — | ❌ redesign (tree_state DB) |
 
 ---

@@ -401,6 +401,17 @@ textarea::placeholder{color:var(--dim);}
     <div class="char-section-lbl" style="margin-top:0;">⚙ CONTEXT INJECTION</div>
     <div id="v2-context-display" style="font-family:monospace;font-size:0.78em;color:var(--gold);opacity:0.8;letter-spacing:0.5px;"></div>
   </div>
+  <!-- VOICE PROFILE SWITCHER -->
+  <div id="voice-profile-bar" style="display:flex;align-items:center;gap:10px;margin-bottom:14px;font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:1.5px;color:var(--muted);">
+    <span>VOICE</span>
+    <select id="voice-profile-select"
+      onchange="setVoiceProfile(this.value)"
+      style="background:var(--panel);border:1px solid var(--border);color:var(--gold);font-family:'Cinzel',serif;font-size:1em;padding:4px 8px;cursor:pointer;letter-spacing:1px;">
+      <option value="focused">FOCUSED</option>
+      <option value="lyrical">LYRICAL (original)</option>
+    </select>
+    <span id="voice-profile-label" style="color:var(--dim);font-size:0.9em;"></span>
+  </div>
   <div id="reader-content">
   <div class="card" id="reader-setup">
     <div class="card-lbl" id="reader-card1-lbl">✦ BEFORE WE BEGIN</div>
@@ -605,7 +616,18 @@ let teachAudioUrl = null;
 let teachVersion  = null;
 let readerUser      = {};
 let readerRune      = null;
-let readerTexts     = {};   // { en: {short, deep}, is: {short, deep} } — cached readings per lang
+let readerTexts     = {};
+let shrineVoiceProfile = localStorage.getItem('shrine_voice_profile')
+  || (typeof ACTIVE_VOICE_PROFILE !== 'undefined' ? ACTIVE_VOICE_PROFILE : 'focused');
+
+function setVoiceProfile(key) {
+  shrineVoiceProfile = key;
+  localStorage.setItem('shrine_voice_profile', key);
+  var lbl = document.getElementById('voice-profile-label');
+  if (lbl && typeof VOICE_PROFILES !== 'undefined' && VOICE_PROFILES[key]) {
+    lbl.textContent = VOICE_PROFILES[key].label || key;
+  }
+}   // { en: {short, deep}, is: {short, deep} } — cached readings per lang
 let voiceGenerated  = {};   // { en: bool, is: bool } — was dynamic voice generated this session?
 let pendingLang     = null; // target lang waiting for user confirmation
 let _spreadMode   = 'single';   // 'single' | 'spread3'
@@ -1564,7 +1586,7 @@ async function _generateReading() {
   if (_pL2) _pL2.classList.add('pulsing');
 
   const u = readerUser, drawn = readerRune, life = u.lifeRune;
-  const sys = buildSysPromptV2(life); // V2: contextual intelligence + life rune (Standard/Premium)
+  const sys = buildSysPromptV2(life, lang, shrineVoiceProfile); // V2: contextual intelligence + life rune + voice profile
   const langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
   const drawnKws = rk(drawn).split(',').map(s => s.trim()).filter(Boolean);
   const pickedDrawnKws = drawnKws.sort(() => 0.5 - Math.random()).slice(0, Math.min(3, drawnKws.length)).join(', ');
