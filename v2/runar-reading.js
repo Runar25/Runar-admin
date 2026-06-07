@@ -83,7 +83,7 @@ async function _generateReading() {
   } else {
     // Save journal only for own reading; always sync count (price same for both modes)
     if (_readingMode === 'mine') {
-      await saveReading(readerRune, short, deep);
+      await saveReading(readerRune, reading, '');
       loadJournal();
     }
     await syncMonthlyCount(currentUser.id);
