@@ -115,6 +115,27 @@ return lang === 'is' ? 'Gestur' : 'Visitor';
 ```
 Platí všude: greeting, prompty, Tree tab, banners.
 
+### §13 — Nová věc musí projít VŠEMI cestami (Full-path rule)
+Každý nový vstupní field (`readerUser.X`), nový spread mode, nebo migrace formátu
+musí být zkontrolována na VŠECH větvích — ne jen na té první implementované.
+
+**Nový field v readerUser (např. mood, intention):**
+→ Musí být v: buildReadingPromptIS/EN · buildTrojicePromptIS/EN
+  · buildKrizPromptIS/EN · buildNornsPromptIS/EN
+  · (budoucí: buildHorseshoePromptIS/EN · buildYggdrasilPromptIS/EN)
+→ Musí být v: startReading() · resetReader() · shrine parts[]
+
+**Nový spread mode:**
+→ Zkontrolovat: readRune() · drawAnother() · resetReader()
+  · _setSpreadMode() · generateVoice() · _updateSpread3/5Slots()
+
+**Migrace formátu/konceptu (např. unified reading):**
+→ Grep pro starý text ("|||", "Layer 1", "Layer 2", "In Layer 2" atd.)
+→ Aktualizovat VŠECHNY výskyty — sdílené i lokální prompty.
+
+**Kontrolní otázka před každým commitem nové featury:**
+"Existuje jiná cesta kódem kde tohle chybí?"
+
 ---
 
 ## Tier systém
@@ -155,19 +176,18 @@ Všechna čtení = **jeden plynoucí blok, 5–7 vět, žádné sekce, žádné 
 
 ### Pre-reading formulář → prompt (v u objektu)
 `u.area`, `u.seeking`, `u.mood`, `u.intention`, `u.question` — všechny tečou do `parts` bloku v promptu.
-MOODS.norns + INTENTIONS.norns data jsou v runar-runes.js — zatím se nepoužívají (TODO: Contextual Intelligence).
+Norns axis: `_moodContext(mood, lang)` + `_intentionContext(intention, lang)` v runar-character.js.
 
 ### Spread systém
-
-| Spread | Runy | Rune stones | Stav |
-|--------|------|-------------|------|
-| Single | 1 | 1 | ✅ produkce |
-| Trojice | 3 | 3 | ✅ reader |
-| Norns | 3 | 3 | ❌ prompt chybí |
-| Kříž | 5 | 5 | ✅ reader |
-| Horseshoe | 7 | 7 | ❌ prompt chybí |
-| Yggdrasil | 9 | 9 | ❌ Dec 14–28 |
-| The Gathering | — | 3 flat | ❌ redesign (tree_state DB) |
+| Spread | Runy | Stav |
+|--------|------|------|
+| Single | 1 | ✅ produkce |
+| Trojice | 3 | ✅ reader |
+| Norns | 3 | ✅ reader |
+| Kříž | 5 | ✅ reader |
+| Horseshoe | 7 | ❌ prompt chybí |
+| Yggdrasil | 9 | ❌ Dec 14–28 |
+| The Gathering | — | ❌ redesign (tree_state DB) |
 
 ---
 
