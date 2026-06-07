@@ -488,10 +488,10 @@ textarea::placeholder{color:var(--dim);}
       <div class="layer2-lbl" id="layer2-lbl">~ DEEPER REFLECTION</div>
       <div class="out-txt" id="out-deep"></div>
     </div>
-    <!-- SPREAD3 OUTPUT — Trojice unified reading -->
+    <!-- SPREAD3 OUTPUT — Norns reading -->
     <div id="spread3-output" style="display:none;">
       <div class="layer1">
-        <div class="layer1-lbl" id="s3-trojice-lbl">✶ TROJICE</div>
+        <div class="layer1-lbl" id="s3-norns-lbl">✶ NORNS</div>
         <div class="out-txt" id="s3-out"></div>
       </div>
     </div>
@@ -1870,66 +1870,18 @@ async function _generateSpread3Reading() {
   if (_gdLoadTxt) _gdLoadTxt.textContent = lang === 'is' ? 'STEINARNIR TALA Í ÞÖGNINNI…' : 'THE STONES SPEAK IN SILENCE…';
   if (_gdLoadEl)  _gdLoadEl.style.display = 'block';
 
-  const [rPast, rPres, rFut] = _spread3Runes;
   const u   = readerUser;
-  const sys = buildSysPromptV2(u.lifeRune); // V2: contextual intelligence + life rune
-  const langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
+  const sys = buildSysPromptV2(u.lifeRune, lang, shrineVoiceProfile);
 
-  // ── Trojice prompt ────────────────────────────────────────────
-  const seekingLabel = Array.isArray(u.seeking) && u.seeking.length ? u.seeking.join(' & ') : (u.seeking || '');
-  const lifeCtx = u.lifeRune ? 'Life rune: ' + rn(u.lifeRune) + ' (' + u.lifeRune.g + ')' : '';
-  const kbLine  = function(r) { return rk(r).split(',').map(function(s){ return s.trim(); }).filter(Boolean).slice(0, 5).join(', '); };
+  // ── Norns prompt (shared builder from runar-character.js) ────────────────
+  const promptTxt = buildNornsPrompt(u, _spread3Runes, lang, corrections);
 
-  const contextBlock = [
-    'Seeker: ' + u.name,
-    lifeCtx,
-    u.area       ? 'Area: '                + u.area       : '',
-    seekingLabel ? 'Seeking: '             + seekingLabel  : '',
-    u.mood       ? 'Feeling: '             + u.mood       : '',
-    u.intention  ? 'This reading is for: ' + u.intention  : '',
-  ].filter(Boolean).join('\n');
+  // Update Norns label with rune glyphs
+  const _s3lbl = document.getElementById('s3-norns-lbl');
+  if (_s3lbl) _s3lbl.textContent = _spread3Runes.map(function(r) { return r.g; }).join(' · ');
 
-  const runesBlock = [
-    'RUNE 1 — ' + rn(rPast) + ' (' + rPast.g + ')',
-    kbLine(rPast),
-    '',
-    'RUNE 2 — ' + rn(rPres) + ' (' + rPres.g + ')',
-    kbLine(rPres),
-    '',
-    'RUNE 3 — ' + rn(rFut)  + ' (' + rFut.g  + ')',
-    kbLine(rFut),
-  ].join('\n');
-
-  const variantBlock = [
-    'Choose the frame that fits this seeker and this moment:',
-    '  Past · Present · Future/Direction    (what was, what is, where this leads)',
-    '  Situation · Challenge · Action       (what is, what blocks, what to do)',
-    '  Root · Trunk · Crown                (where from, where now, where to)',
-    '  Self · Other · Relationship          (for relational questions)',
-    '  Body · Mind · Spirit                 (for personal questions)',
-  ].join('\n');
-
-  const promptTxt = [
-    contextBlock,
-    '',
-    'The seeker draws three runes — a Trojice.',
-    '',
-    runesBlock,
-    '',
-    variantBlock,
-    '',
-    'Read all three as one flowing passage. Do not name the positions — carry them in your voice.',
-    'The third rune is not prophecy. It is where this energy leads if nothing changes. You always carry this.',
-    'Speak directly to ' + u.name + '. Be concise — every sentence must earn its place.',
-    langInstr,
-    getCorrPrompt(lang, corrections),
-  ].filter(Boolean).join('\n');
-
-  // Update Trojice label with rune glyphs
-  const _s3lbl = document.getElementById('s3-trojice-lbl');
-  if (_s3lbl) _s3lbl.textContent = rPast.g + ' · ' + rPres.g + ' · ' + rFut.g;
-
-  const res = await callProxy(sys, promptTxt, RUNAR_MODES.spread_3 ? RUNAR_MODES.spread_3.max_tokens : 900);
+  const tokens = (typeof SPREAD_CONFIG !== 'undefined' && SPREAD_CONFIG.norns) ? SPREAD_CONFIG.norns.tokens : 900;
+  const res = await callProxy(sys, promptTxt, tokens);
   if (_gdLoadEl) _gdLoadEl.style.display = 'none';
 
   if (res.error) {

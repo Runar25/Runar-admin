@@ -927,7 +927,7 @@ function buildGrid() {
       if (_bsp) {
         _bsp.disabled = false;
         var _sm = (typeof _spreadMode !== 'undefined') ? _spreadMode : 'single';
-        var _full3 = (_sm === 'trojice' || _sm === 'norns') && (typeof _spread3Runes !== 'undefined') && _spread3Runes.length >= 3;
+        var _full3 = (_sm === 'norns') && (typeof _spread3Runes !== 'undefined') && _spread3Runes.length >= 3;
         var _full5 = (_sm === 'kriz') && (typeof _spread5Runes !== 'undefined') && _spread5Runes.length >= 5;
         if (_sm !== 'single' && !_full3 && !_full5) {
           _bsp.textContent = t('speak_btn_add');

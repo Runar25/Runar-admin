@@ -120,9 +120,8 @@ Každý nový vstupní field (`readerUser.X`), nový spread mode, nebo migrace f
 musí být zkontrolována na VŠECH větvích — ne jen na té první implementované.
 
 **Nový field v readerUser (např. mood, intention):**
-→ Musí být v: buildReadingPromptIS/EN · buildTrojicePromptIS/EN
-  · buildKrizPromptIS/EN · buildNornsPromptIS/EN
-  · (budoucí: buildHorseshoePromptIS/EN · buildYggdrasilPromptIS/EN)
+→ Musí být v: buildReadingPromptIS/EN · buildNornsPromptIS/EN
+  · buildKrizPromptIS/EN · buildHorseshoePromptIS/EN · buildYggdrasilPromptIS/EN
 → Musí být v: startReading() · resetReader() · shrine parts[]
 
 **Nový spread mode:**
@@ -172,11 +171,10 @@ tree_name (text), life_rune_number (int), life_rune_text (text), life_rune_lang 
 | Spread | Runy | Stav |
 |--------|------|------|
 | Single | 1 | ✅ produkce |
-| Trojice | 3 | ✅ reader |
-| Norns | 3 | ✅ reader |
-| Kříž | 5 | ✅ reader |
+| Norns | 3 | ✅ reader (zakládací rituál) |
+| Kříž | 5 | ✅ reader (Standard+) |
 | Horseshoe | 7 | ✅ reader (Standard+) |
-| Yggdrasil | 9 | ✅ reader (Premium, Dec 14–28) |
+| Yggdrasil | 9 | ✅ reader (všichni přihlášení, Dec 14–28) |
 | The Gathering | — | ❌ redesign (tree_state DB) |
 
 ---

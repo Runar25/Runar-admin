@@ -174,7 +174,7 @@ Argument není omezení — je to filozofie systému.
 
 | Spread | Ideální kadence |
 |--------|----------------|
-| Single, Trojice, Norns, The Gathering | Kdykoliv — každodenní větve |
+| Single, Norns, The Gathering | Kdykoliv — každodenní větve |
 | Kříž (5 run) | Ideálně max 1× týdně |
 | Horseshoe (7 run) | Ideálně max 1× za dva týdny |
 | Yggdrasil (9 run) | 1× ročně — zimní slunovrat |
@@ -191,8 +191,7 @@ Strom neposuzuje nepřítomnost. Pauza je zima — větev která čeká.
 ```
 SPREAD            STROM                      RITUÁL
 1 runa            uzel na větvi              každodenní
-3 runy (Trojice)  větev (3 uzly)             běžný
-3 runy (Norns)    větev → kmen               hlubší
+3 runy (Norns)    větev → kmen               zakládací + hlubší
 5 run (Kříž)      větev (střed + 4 výhonky)  týdenní
 7 run (Horseshoe) větvená větev (7 bodů)     sezónní kmen
 9 run (Yggdrasil) uzel kořenů — nejsilnější  1× ročně
@@ -202,19 +201,7 @@ SPREAD            STROM                      RITUÁL
 Jedna runa, žádné pozice. Přímé čtení energie daného momentu.
 Strom: malý uzel na větvi.
 
-### Trojice (3 runy) ✅ IMPLEMENTOVÁNO (2026-05-31)
-```
-[1] — [2] — [3]
-
-1  minulost / základ
-2  přítomnost / jádro
-3  směr / výhled
-```
-IS pozice: Úrslitir / Grótur · Nútíð / Kjarni · Stefna / Útlit
-Charakter: časová osa, kde jsem byl → kde jsem → kam míříš.
-Strom: větev se třemi uzly. Také Session 1 zakládacího rituálu.
-
-### Norns (3 runy)
+### Norns (3 runy) ✅ ZAKLÁDACÍ RITUÁL
 ```
 [Urður] — [Verðandi] — [Skuld]
 ```
@@ -222,11 +209,9 @@ Urður = co bylo utkáno. Nelze odestát. Kořen ze kterého vychází vše.
 Verðandi = co se právě tká. Přítomný okamžik jako živá nit.
 Skuld = co musí být. Dluh osudu. Ne předpověď — nevyhnutelná možnost.
 
-**Jiný charakter než Trojice** — nejde o časovou osu ale o osud a nevyhnutelné.
-Trojice = kde jsi byl/jsi/míříš. Norns = co bylo utkáno/tkáno/musí být.
+Tři Norny = tři kořeny Yggdrasilu. Zakládací rituál stromu — jedním čtením jsou zasazeny všechny tři kořeny najednou. Fate axis, ne časová osa. Každá Norna mluví jiným hlasem a jinou vahou.
 
-IS pozice: přesné texty navrhnout před implementací.
-Strom: větev → kmen (hlubší než Trojice).
+Strom: větev → kmen. Zakládací rituál.
 
 *Rezerva: 9-run verze (3+3+3 pro každou Nornu) — vymyšlená, hlubší. Zatím neimplementovat.*
 
@@ -290,7 +275,7 @@ Implementace: čte z journalu (posledních N čtení z aktuálního týdne) — 
 
 ### UI — domluveno ✅
 Přepínač pod "DRAW YOUR RUNE":
-`[ SINGLE RUNE ]  [ TROJICE ]  [ KŘÍŽ ]  [ NORNS ]  ...`
+`[ SINGLE RUNE ]  [ NORNS ]  [ KŘÍŽ ]  [ HORSESHOE ]  [ YGGDRASIL ]`
 Stejný styl jako V2 lab v shrine.
 
 ---
@@ -300,9 +285,9 @@ Stejný styl jako V2 lab v shrine.
 ### Spreads per tier — viz RUNAR_PRICING.md (kompletní tabulka)
 
 Klíčová pravidla:
-- Rune Seeker: Single zdarma (free_balance), Trojice/Norns/Gathering za kredity
+- Rune Seeker: Single zdarma (free_balance), Norns/Gathering za kredity, Yggdrasil za kredity (sezónní)
 - Kříž a Horseshoe: Standard+ pouze — Rune Seeker ani za kredity
-- Yggdrasil: jen Premium
+- Yggdrasil: všichni přihlášení (RS za kredity, Standard/Premium z limitu) — jen Dec 14–28
 - Standard limit: 50 run/měsíc
 - Premium limit: 75 run/měsíc
 
@@ -312,7 +297,7 @@ Klíčová pravidla:
 |---------|---------|-------------|---------|---------|
 | Tree tab | ❌ skrytý | teaser | plný | plný + hloubka |
 | Life Rune výklad | ❌ | symbol + jméno | plný výklad | hlubší + etymologie + mythol. postava |
-| Zakládací rituál | ❌ | 5 kreditů | zdarma | zdarma |
+| Zakládací rituál (Norns) | ❌ | 3 kredity | zdarma | zdarma |
 | Branch systém | ❌ | ❌ | ✅ | ✅ |
 | Elementy | ❌ | ❌ | ✅ | ✅ |
 
@@ -338,15 +323,14 @@ Generované Claudem:
 ### Zakládací rituál — 3 sessions ✅ ROZHODNUTO
 Tři oddělené sessions, uživatel si volí timing mezi nimi.
 
-- **Session 1: Trojice** (3 runy) → KDO JSI V JÁDRU → první kořen
-- **Session 2: 1 runa** → KTERÝM SMĚREM SE SKLÁNÍŠ → druhý kořen
-- **Session 3: 1 runa** → CO POHÁNÍ TVŮJ RŮST → třetí kořen
+**Jediná session: Norns** (3 runy — Urður · Verðandi · Skuld)
+Tři Norny = tři kořeny. Jedno čtení zasadí všechny tři kořeny najednou.
+- Urður → první kořen: kdo jsi v jádru, co nespeš od začátku
+- Verðandi → druhý kořen: kterým směrem se skláníš teď
+- Skuld → třetí kořen: co pohání tvůj růst, co musí přijít
 
-Rune Seeker: 5 kreditů celkem. Standard/Premium: zdarma.
+Rune Seeker: 3 kredity. Standard/Premium: zdarma.
 Po dokončení se kořeny uzamknou navždy — nelze je změnit.
-
-*Rezerva: zakládací rituál jako 9 run (9 světů Yggdrasilu) — silnější narativ,
-možný budoucí produkt nebo alternativa. Zatím neimplementovat.*
 
 ### Kořeny — jak silí
 Kořeny nejsou statické. Prohlubují se s každou session.

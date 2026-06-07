@@ -178,9 +178,7 @@ function _setSpreadMode(mode) {
   readerRune    = null;
   // Toggle mode buttons
   var btnSingle  = document.getElementById('mode-btn-single');
-  var btnTrojice = document.getElementById('mode-btn-trojice');
   if (btnSingle)  btnSingle.classList.toggle('active', mode === 'single');
-  if (btnTrojice) btnTrojice.classList.toggle('active', mode === 'trojice');
   var btnKriz  = document.getElementById('mode-btn-kriz');
   var btnNorns = document.getElementById('mode-btn-norns');
   if (btnKriz)  btnKriz.classList.toggle('active', mode === 'kriz');
@@ -210,7 +208,7 @@ function _setSpreadMode(mode) {
 function _updateSpread3Slots() {
   var slotEl = document.getElementById('spread3-slots');
   if (!slotEl) return;
-  slotEl.style.display = (_spreadMode === 'trojice' || _spreadMode === 'norns') ? 'flex' : 'none';
+  slotEl.style.display = (_spreadMode === 'norns') ? 'flex' : 'none';
   var slots = ['slot1','slot2','slot3'];
   var empty = ['①','②','③'];
   slots.forEach(function(id, i) {
@@ -401,9 +399,9 @@ async function readRune() {
     return;
   }
   if (_spreadMode === 'yggdrasil') {
-    // Tier check — Premium only
-    if (!currentUser || (userTier !== 'premium' && !isAdmin(currentUser.email))) {
-      showToast(lang === 'is' ? 'Yggdrasil er eingöngu fyrir Rune Keeper.' : 'Yggdrasil is for Rune Keepers only.');
+    // Visitor gate — block anonymous only; all signed-in tiers can access (RS via credits)
+    if (!currentUser) {
+      showToast(lang === 'is' ? 'Skráðu þig inn til að nota Yggdrasil.' : 'Sign in to use Yggdrasil.');
       _setSpreadMode('single'); return;
     }
     // Seasonal gate: Dec 14–28 only (admin bypass)
@@ -456,28 +454,6 @@ async function readRune() {
     }
     return;
   }
-  if (_spreadMode === 'trojice') {
-    // Klik na btn-speak s 3 plnymi sloty = spust generovani
-    if (_spread3Runes.length === 3 && !readerRune) {
-      document.getElementById('reader-rune-card').style.display = 'none';
-      document.getElementById('reader-output').style.display = 'block';
-      readerTexts = {}; voiceGenerated = {};
-      await _generateSpread3Reading();
-      return;
-    }
-    if (!readerRune) return;
-    // Pridej do prvniho prazdneho slotu
-    if (_spread3Runes.length < 3) _spread3Runes.push(readerRune);
-    readerRune = null;
-    _updateSpread3Slots();
-    // Aktivuj btn-speak az po 3 plnych slotech
-    var speakBtn = document.getElementById('btn-speak');
-    if (speakBtn) {
-      speakBtn.disabled = (_spread3Runes.length < 3);
-      if (_spread3Runes.length >= 3) speakBtn.textContent = t('speak_btn');
-    }
-    return;
-  }
   // Single rune mode (original)
   if (!readerRune) return;
   document.getElementById('reader-rune-card').style.display = 'none';
@@ -501,7 +477,7 @@ function drawAnother() {
   var _daLbl = document.getElementById('layer1-lbl');
   if (_daL2) _daL2.style.display = '';
   if (_daLbl) _daLbl.textContent = t('layer1_lbl');
-  if (_spreadMode === 'trojice' || _spreadMode === 'norns') { _spread3Runes = []; _updateSpread3Slots(); }
+  if (_spreadMode === 'norns') { _spread3Runes = []; _updateSpread3Slots(); }
   if (_spreadMode === 'kriz') { _spread5Runes = []; _updateSpread5Slots(); }
   if (_spreadMode === 'horseshoe') { _spread7Runes = []; _updateSpread7Slots(); }
   if (_spreadMode === 'yggdrasil') { _spread9Runes = []; _updateSpread9Slots(); }
@@ -602,9 +578,6 @@ async function generateVoice() {
   if (_spreadMode === 'kriz') {
     var s5el = document.getElementById('s5-out');
     voiceText = s5el ? s5el.innerText.trim() : '';
-  } else if (_spreadMode === 'trojice') {
-    var s3el = document.getElementById('s3-out');
-    voiceText = s3el ? s3el.innerText.trim() : '';
   } else if (_spreadMode === 'norns') {
     var s3nEl = document.getElementById('s3-out');
     voiceText = s3nEl ? s3nEl.innerText.trim() : '';
@@ -661,89 +634,6 @@ async function generateVoice() {
   }
 }
 
-
-// ─── TROJICE GENERATE (3-rune spread) ────────────────────────────
-async function _generateSpread3Reading() {
-  if (_spread3Runes.length < 3) return;
-
-  var vBtn = document.getElementById('btn-generate-voice');
-  if (vBtn) { vBtn.disabled = true; vBtn.textContent = t('voice_btn'); }
-  document.getElementById('audio-player').classList.remove('visible');
-  document.getElementById('runar-audio').src = '';
-  setSt('st-voice', '');
-
-  // Hide single layers, show spread3 output
-  var s1 = document.getElementById('single-layer1');
-  var s2 = document.getElementById('single-layer2');
-  if (s1) s1.style.display = 'none';
-  if (s2) s2.style.display = 'none';
-  var s3out = document.getElementById('spread3-output');
-  if (s3out) s3out.style.display = 'block';
-
-  var rdLoad = document.getElementById('reading-loading');
-  var rdLoadTxt = document.getElementById('reading-loading-txt');
-  if (rdLoadTxt) rdLoadTxt.textContent = t('reading_loading');
-  if (rdLoad) rdLoad.style.display = 'block';
-  var pL1 = document.getElementById('layer1-lbl');
-  var pL2 = document.getElementById('layer2-lbl');
-  if (pL1) pL1.classList.add('pulsing');
-  if (pL2) pL2.classList.add('pulsing');
-
-  var u = readerUser;
-  var sys = buildSysPrompt(activeChar, lang);
-  var prompt = buildTrojicePrompt(u, _spread3Runes, lang, corrections);
-  var tokens = (SPREAD_CONFIG && SPREAD_CONFIG.trojice) ? SPREAD_CONFIG.trojice.tokens : 900;
-
-  var res = await callProxy(sys, prompt, tokens, shouldUseCredit());
-
-  if (rdLoad) rdLoad.style.display = 'none';
-  if (pL1) pL1.classList.remove('pulsing');
-  if (pL2) pL2.classList.remove('pulsing');
-
-  if (res.error === 'rate_limited') {
-    setSt('st-reader', lang === 'is' ? 'Of margar beiðnir. Bíddu aðeins.' : 'Too many requests. Please wait a moment.', 'err');
-    return;
-  }
-  if (res.error === 'no_credits' || res.error === 'monthly_limit' || res.error === 'weekly_limit') {
-    var isMonthly = res.error === 'monthly_limit';
-    var msg = isMonthly
-      ? (lang === 'is' ? 'Mánaðarlegur lesturmark er náð.' : 'Monthly reading limit reached.')
-      : (lang === 'is' ? 'Kredit þínir eru búnir.' : 'No credits remaining.');
-    setSt('st-reader', msg, 'err');
-    if (currentUser) syncMonthlyCount(currentUser.id);
-    if (currentUser) await fetchUserProfile(currentUser.id);
-    return;
-  }
-  if (res.error) { setSt('st-reader', 'Failed: ' + res.error, 'err'); return; }
-
-  var text = applyISCorrections(res.text || '', lang, corrections);
-  readerTexts[lang] = { short: text, deep: '' };
-
-  // Update label with rune glyphs
-  var s3lbl = document.getElementById('s3-trojice-lbl');
-  if (s3lbl) s3lbl.textContent = _spread3Runes.map(function(r) { return r.g; }).join(' · ');
-
-  // Save to DB — spread format (all runes)
-  if (currentUser) {
-    if (_readingMode === 'mine') {
-      await saveSpreadReading('TROJICE', _spread3Runes, text);
-      loadJournal();
-    }
-    await syncMonthlyCount(currentUser.id);
-  } else {
-    incTrialCount();
-    updateAuthUI();
-  }
-
-  await stream('s3-out', text);
-
-  // Voice
-  if (canUseVoice()) {
-    if (vBtn) { vBtn.disabled = false; vBtn.style.display = ''; }
-  } else {
-    if (vBtn) { vBtn.disabled = true; vBtn.style.display = 'none'; }
-  }
-}
 
 // ─── KRÍŽ GENERATE (5-rune cross) ────────────────────────
 async function _generateSpread5Reading() {
@@ -1036,7 +926,7 @@ async function _generateNornsReading() {
   readerTexts[lang] = { short: text, deep: '' };
 
   // Label: Urður · Verðandi · Skuld glyphs
-  var s3lbl = document.getElementById('s3-trojice-lbl');
+  var s3lbl = document.getElementById('s3-norns-lbl');
   if (s3lbl) s3lbl.textContent = _spread3Runes[0].g + ' · ' + _spread3Runes[1].g + ' · ' + _spread3Runes[2].g;
 
   // Save to DB — spread format (all runes)
