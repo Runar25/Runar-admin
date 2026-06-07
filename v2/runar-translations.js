@@ -78,7 +78,6 @@ const UI_TEXT = {
 
     // Ritual names — change here, reflects everywhere
     ritual_gathering:         "THE GATHERING",
-    ritual_gathering_jcard:   "THE GATHERING",
     ritual_gathering_request: "REQUEST THE GATHERING",
     ritual_gathering_new:     "NEW GATHERING",
     ritual_3readings:         "3 READINGS",
@@ -276,7 +275,6 @@ const UI_TEXT = {
 
     // Ritual names — change here, reflects everywhere
     ritual_gathering:         "THE GATHERING",
-    ritual_gathering_jcard:   "SAFN RÚNANNA",
     ritual_gathering_request: "BIÐJA UM THE GATHERING",
     ritual_gathering_new:     "NÝ SAMKOMA",
     ritual_3readings:         "3 LESTUR",
