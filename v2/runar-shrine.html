@@ -1469,14 +1469,16 @@ async function _updateTree(rune, short, deep, area, lang, usedCredit) {
 // ─── VOICE SCALE (Vrstva C) ─────────────────────────────
 let _voiceScale = 10;   // current scale, loaded from tree_state
 
-// Returns a prompt instruction for the current voice scale (0–20).
-// 0 = direct/concrete, 10 = balanced (default), 20 = deeply metaphorical
+// Returns a prompt instruction for the current voice scale (0-20).
+// The scale is about DEPTH and ACCESSIBILITY of poetry — not presence of metaphor.
+// Runar is always poetic. 0 = simple clear poetry anyone can receive.
+// 20 = layered, complex, requires slow reading. Never plain prose at either end.
 function _voiceScaleInstruction(scale) {
-  if (scale <= 3)  return 'VOICE REGISTER (scale ' + scale + '/20 — very direct): Plain language. Short sentences. No metaphor. Speak as if clarity matters more than beauty. Concrete nouns, active verbs. Nothing ornamental.';
-  if (scale <= 7)  return 'VOICE REGISTER (scale ' + scale + '/20 — direct): Grounded language. Minimal imagery — only when a single image is sharper than plain speech. Prioritise concrete over poetic.';
-  if (scale <= 13) return 'VOICE REGISTER (scale ' + scale + '/20 — balanced): Poetic but grounded. Some imagery, some direct statement. Let image and clarity alternate — neither dominates.';
-  if (scale <= 17) return 'VOICE REGISTER (scale ' + scale + '/20 — metaphorical): Let images carry the meaning. Speak through landscape, season, body. Plain statements are rare — the image does the work.';
-  return 'VOICE REGISTER (scale ' + scale + '/20 — deeply metaphorical): Never state directly what can be spoken through image or symbol. Layer Icelandic landscape, Norse myth, elemental imagery. Oblique and evocative — the meaning arrives through feeling, not statement.';
+  if (scale <= 3)  return 'VOICE REGISTER (scale ' + scale + '/20 — simple and clear): Poetry that anyone can receive on first reading. Short sentences. Single clear images — one at a time, never layered. Rune names land plainly. Accessible warmth. Nothing requires decoding. This person may be new to rune readings.';
+  if (scale <= 7)  return 'VOICE REGISTER (scale ' + scale + '/20 — clear with some depth): Accessible poetry. Images are present but simple — one clear metaphor at a time. The poetic quality is felt but never obscures the meaning. Sentences are followable on first read.';
+  if (scale <= 13) return 'VOICE REGISTER (scale ' + scale + '/20 — balanced): Runar at his natural depth. Poetic but followable. Some layering, some directness. Images that are vivid without being obscure. The default voice.';
+  if (scale <= 17) return 'VOICE REGISTER (scale ' + scale + '/20 — richer imagery): Multiple layers coexist. Images that reward sitting with. Some obliqueness — the meaning is present but arrives a moment after the image. This reader savours depth.';
+  return 'VOICE REGISTER (scale ' + scale + '/20 — deeply layered): Symbol speaks through symbol. Images fold into each other. The most ancient register of Runar — oblique, evocative, requiring the reader to slow down and feel their way through. Nothing is stated that can instead be felt.';
 }
 let _voiceClicks = 0;   // clicks this session, max 3
 const VOICE_MAX_CLICKS = 3;
