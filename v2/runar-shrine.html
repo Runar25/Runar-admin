@@ -512,8 +512,8 @@ textarea::placeholder{color:var(--dim);}
   <div id="voice-arrows" style="display:none;margin-top:14px;display:none;">
     <div style="font-size:0.55em;letter-spacing:2px;color:var(--gold);opacity:0.5;margin-bottom:8px;font-family:'Cinzel',serif;text-align:center;">VOICE CALIBRATION &middot; <span id="voice-scale-val">10</span>/20</div>
     <div style="display:flex;gap:12px;justify-content:center;">
-      <button onclick="_clickVoiceArrow(-1)" style="background:none;border:1px solid var(--gold);color:var(--gold);padding:6px 14px;font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1.5px;cursor:pointer;opacity:0.75;">&#8592; MORE DIRECT</button>
-      <button onclick="_clickVoiceArrow(1)" style="background:none;border:1px solid var(--gold);color:var(--gold);padding:6px 14px;font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1.5px;cursor:pointer;opacity:0.75;">MORE METAPHORICAL &#8594;</button>
+      <button onclick="_clickVoiceArrow(-1)" style="background:none;border:1px solid var(--gold);color:var(--gold);padding:6px 14px;font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1.5px;cursor:pointer;opacity:0.75;">&#8592; SIMPLER</button>
+      <button onclick="_clickVoiceArrow(1)" style="background:none;border:1px solid var(--gold);color:var(--gold);padding:6px 14px;font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1.5px;cursor:pointer;opacity:0.75;">DEEPER &#8594;</button>
     </div>
     <div id="voice-arrows-msg" style="font-size:0.5em;letter-spacing:1px;color:var(--gold);opacity:0.4;margin-top:8px;font-family:'Cinzel',serif;text-align:center;min-height:1em;"></div>
   </div>
@@ -1470,15 +1470,18 @@ async function _updateTree(rune, short, deep, area, lang, usedCredit) {
 let _voiceScale = 10;   // current scale, loaded from tree_state
 
 // Returns a prompt instruction for the current voice scale (0-20).
-// The scale is about DEPTH and ACCESSIBILITY of poetry — not presence of metaphor.
-// Runar is always poetic. 0 = simple clear poetry anyone can receive.
-// 20 = layered, complex, requires slow reading. Never plain prose at either end.
+// Runar is ALWAYS poetic — he never speaks without image, even at scale 0.
+// He does not explain — he reveals. He does not state — he evokes.
+// Scale = depth and accessibility of the poetic image:
+// 0  = one clear grounded image, lands immediately, warm and simple
+// 10 = natural balance — layered but followable
+// 20 = symbol through symbol, ancient, oblique, meaning arrives through feeling
 function _voiceScaleInstruction(scale) {
-  if (scale <= 3)  return 'VOICE REGISTER (scale ' + scale + '/20 — simple and clear): Poetry that anyone can receive on first reading. Short sentences. Single clear images — one at a time, never layered. Rune names land plainly. Accessible warmth. Nothing requires decoding. This person may be new to rune readings.';
-  if (scale <= 7)  return 'VOICE REGISTER (scale ' + scale + '/20 — clear with some depth): Accessible poetry. Images are present but simple — one clear metaphor at a time. The poetic quality is felt but never obscures the meaning. Sentences are followable on first read.';
-  if (scale <= 13) return 'VOICE REGISTER (scale ' + scale + '/20 — balanced): Runar at his natural depth. Poetic but followable. Some layering, some directness. Images that are vivid without being obscure. The default voice.';
-  if (scale <= 17) return 'VOICE REGISTER (scale ' + scale + '/20 — richer imagery): Multiple layers coexist. Images that reward sitting with. Some obliqueness — the meaning is present but arrives a moment after the image. This reader savours depth.';
-  return 'VOICE REGISTER (scale ' + scale + '/20 — deeply layered): Symbol speaks through symbol. Images fold into each other. The most ancient register of Runar — oblique, evocative, requiring the reader to slow down and feel their way through. Nothing is stated that can instead be felt.';
+  if (scale <= 3)  return 'VOICE REGISTER (scale ' + scale + '/20): Simple and grounded. One clear image at a time — let it land completely before moving to the next. Warm, close, unhurried. The image should arrive without decoding — seen immediately, felt immediately. Short sentences. No layering.';
+  if (scale <= 7)  return 'VOICE REGISTER (scale ' + scale + '/20): Clear and accessible. Images follow naturally, one at a time. Each sentence carries one idea, one image. The poetic quality is present but never asks the reader to pause and interpret. Gentle depth.';
+  if (scale <= 13) return 'VOICE REGISTER (scale ' + scale + '/20): Natural voice — Rúnar\'s default. Poetic and followable. Some images layer, some land cleanly. The reader can follow without effort but finds more on a second read. Neither too simple nor too oblique.';
+  if (scale <= 17) return 'VOICE REGISTER (scale ' + scale + '/20): Richer and more layered. Images accumulate — one evokes another. The meaning is fully present but arrives a breath after the image, not with it. Rewards sitting with. This reader savours depth and is comfortable with not grasping everything at once.';
+  return 'VOICE REGISTER (scale ' + scale + '/20): Deeply layered and ancient. Symbol speaks through symbol — images fold into each other without resolution. Oblique and evocative. The meaning arrives through feeling, not parsing. Never state what can instead be suggested. Rúnar at his most ancient register — slow, heavy with time, speaking from a place before explanation existed.';
 }
 let _voiceClicks = 0;   // clicks this session, max 3
 const VOICE_MAX_CLICKS = 3;
