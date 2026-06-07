@@ -197,6 +197,31 @@ async function saveReading(rune, short, deep) {
   } catch(e) { console.warn('saveReading:', e.message); }
 }
 
+// Multi-rune spread save — stejný vzor jako saveGathering()
+// area:'spread' = speciální marker pro journal rendering + filter
+async function saveSpreadReading(spreadName, runesArr, text) {
+  if (!currentUser) return;
+  const runeDisplay = runesArr.map(r =>
+    ((r.g || '') + ' ' + (r.n || '').toUpperCase()).trim()
+  ).join(' · ');
+  const lifeRune = readerUser.dob ? (calcLifeRune(readerUser.dob)?.n || null) : null;
+  try {
+    await sb.from('readings').insert({
+      user_id:      currentUser.id,
+      rune_name:    spreadName,
+      rune_glyph:   '✦',
+      lang:         lang,
+      short_text:   runeDisplay,   // 'ᚠ FEHU · ᚢ URUZ · ᚦ THURISAZ'
+      deep_text:    text,          // celý text čtení
+      area:         'spread',      // speciální marker — viz gathering
+      seeking:      readerUser.seeking  || null,
+      question:     readerUser.question || null,
+      life_rune:    lifeRune,
+      credits_used: shouldUseCredit(),
+    });
+  } catch(e) { console.warn('saveSpreadReading:', e.message); }
+}
+
 // Sync monthly count from DB → localStorage (accurate, multi-device)
 async function syncMonthlyCount(userId) {
   const start = new Date(); start.setDate(1); start.setHours(0,0,0,0);

@@ -79,6 +79,30 @@ function renderJournal(entries) {
     const safeRune = (e.rune_name || '').replace(/'/g, "\\'");
     const safeLang = (e.lang || '').replace(/'/g, "\\'");
     const isGathering = e.area === 'gathering';
+    const isSpread    = e.area === 'spread';
+
+    if (isSpread) {
+      // ── Multi-rune spread card (Trojice / Norns / Kříž / Horseshoe / Yggdrasil) ──
+      const excerpt = (e.deep_text || '').trim().slice(0, 160);
+      return `<div class="jcard" id="jcard-${i}">
+        <div class="jcard-header" onclick="toggleJournalEntry(${i})">
+          <div class="jcard-left">
+            <div class="jcard-glyph" style="opacity:0.7;">✦</div>
+            <div class="jcard-info">
+              <div class="jcard-name">✦ ${(e.rune_name || '').toUpperCase()} · ${(e.lang || '').toUpperCase()}</div>
+              <div class="jcard-date">${dateStr}</div>
+              <div class="jcard-gathering-runes">${e.short_text || ''}</div>
+              <div class="jcard-excerpt">${excerpt}${excerpt.length >= 160 ? '…' : ''}</div>
+            </div>
+          </div>
+          <div class="jcard-arrow" id="jarr-${i}">▾</div>
+        </div>
+        <div class="jcard-body" id="jbody-${i}" style="display:none;">
+          <div class="jcard-layer-lbl">✦ ${(e.rune_name || '').toUpperCase()}</div>
+          <div class="jcard-text" style="font-style:italic;line-height:1.9;">${e.deep_text || ''}</div>
+        </div>
+      </div>`;
+    }
 
     if (isGathering) {
       // ── THE GATHERING card ──
@@ -166,12 +190,17 @@ function filterJournal() {
   const jlng = document.getElementById('jf-lang')?.value || '';
   const filtered = _journalCache.filter(e => {
     const isGathering = e.area === 'gathering';
+    const isSpread    = e.area === 'spread';
     if (isGathering) {
       // Gathering entries: ignore rune filter (multiple runes), respect area + lang
       return (!area || area === 'gathering') && (!jlng || e.lang === jlng);
     }
-    // Normal entries: hide if area filter is set to gathering
-    if (area === 'gathering') return false;
+    if (isSpread) {
+      // Spread entries: filter by spread name OR show all spreads, respect lang
+      return (!area || area === 'spread' || e.rune_name === area) && (!jlng || e.lang === jlng);
+    }
+    // Normal entries: hide if area filter is set to gathering or spread
+    if (area === 'gathering' || area === 'spread') return false;
     return (!rune || e.rune_name === rune) &&
            (!area || e.area === area) &&
            (!jlng || e.lang === jlng);
@@ -184,14 +213,16 @@ function populateJournalFilters(entries) {
   const runeEl = document.getElementById('jf-rune');
   const areaEl = document.getElementById('jf-area');
   if (!runeEl || !areaEl) return;
-  // Exclude Gathering entries from the rune dropdown (they have no single rune)
-  const normal = entries.filter(e => e.area !== 'gathering');
+  // Exclude Gathering + Spread entries from the rune dropdown (they have no single rune)
+  const normal = entries.filter(e => e.area !== 'gathering' && e.area !== 'spread');
   const runes  = [...new Set(normal.map(e => e.rune_name).filter(Boolean))].sort();
   const areas  = [...new Set(normal.map(e => e.area).filter(Boolean))].sort();
   const hasGathering = entries.some(e => e.area === 'gathering');
+  const hasSpread    = entries.some(e => e.area === 'spread');
   runeEl.innerHTML = `<option value="">All runes</option>` + runes.map(r => `<option value="${r}">${r}</option>`).join('');
   areaEl.innerHTML = `<option value="">All areas</option>`
     + (hasGathering ? `<option value="gathering">✦ The Gathering</option>` : '')
+    + (hasSpread    ? `<option value="spread">✦ Spreads</option>` : '')
     + areas.map(a => `<option value="${a}">${a}</option>`).join('');
 }
 

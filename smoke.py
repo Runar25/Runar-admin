@@ -85,6 +85,7 @@ CAPS_PATTERN = re.compile(r"""(?<![:\w])['"]([A-Z][A-Z ]{3,}[A-Z])['"]""")
 IGNORE_VALS  = {
     'STANDARD', 'PREMIUM', 'FREE TRIAL', 'RUNE SEEKER',
     'RUNE WALKER', 'RUNE KEEPER', 'THE GATHERING',
+    'TROJICE', 'NORNS', 'KRIZ', 'HORSESHOE', 'YGGDRASIL',
     'RUNE CARD', 'GET A RUNE CARD',
     'VISITOR', 'GESTUR', 'VEGFARANDI',
     'EN', 'IS', 'OK', 'HTML', 'CSS', 'DB', 'URL', 'JS',

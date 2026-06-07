@@ -723,10 +723,10 @@ async function _generateSpread3Reading() {
   var s3lbl = document.getElementById('s3-trojice-lbl');
   if (s3lbl) s3lbl.textContent = _spread3Runes.map(function(r) { return r.g; }).join(' · ');
 
-  // Save to DB (first rune as anchor)
+  // Save to DB — spread format (all runes)
   if (currentUser) {
     if (_readingMode === 'mine') {
-      await saveReading(_spread3Runes[0], text, '');
+      await saveSpreadReading('TROJICE', _spread3Runes, text);
       loadJournal();
     }
     await syncMonthlyCount(currentUser.id);
@@ -806,10 +806,10 @@ async function _generateSpread5Reading() {
   var s5lbl = document.getElementById('s5-kriz-lbl');
   if (s5lbl) s5lbl.textContent = _spread5Runes.map(function(r) { return r.g; }).join(' · ');
 
-  // Save to DB (center rune as anchor)
+  // Save to DB — spread format (all runes)
   if (currentUser) {
     if (_readingMode === 'mine') {
-      await saveReading(_spread5Runes[0], text, '');
+      await saveSpreadReading('KRIZ', _spread5Runes, text);
       loadJournal();
     }
     await syncMonthlyCount(currentUser.id);
@@ -888,7 +888,7 @@ async function _generateHorseshoeReading() {
   if (s7lbl) s7lbl.textContent = _spread7Runes.map(function(r) { return r.g; }).join(' · ');
 
   if (currentUser) {
-    if (_readingMode === 'mine') { await saveReading(_spread7Runes[0], text7, ''); loadJournal(); }
+    if (_readingMode === 'mine') { await saveSpreadReading('HORSESHOE', _spread7Runes, text7); loadJournal(); }
     await syncMonthlyCount(currentUser.id);
   } else { incTrialCount(); updateAuthUI(); }
 
@@ -961,7 +961,7 @@ async function _generateYggdrasilReading() {
   if (s9lbl) s9lbl.textContent = _spread9Runes.map(function(r) { return r.g; }).join(' · ');
 
   if (currentUser) {
-    if (_readingMode === 'mine') { await saveReading(_spread9Runes[0], text9, ''); loadJournal(); }
+    if (_readingMode === 'mine') { await saveSpreadReading('YGGDRASIL', _spread9Runes, text9); loadJournal(); }
     await syncMonthlyCount(currentUser.id);
   } else { incTrialCount(); updateAuthUI(); }
 
@@ -1039,10 +1039,10 @@ async function _generateNornsReading() {
   var s3lbl = document.getElementById('s3-trojice-lbl');
   if (s3lbl) s3lbl.textContent = _spread3Runes[0].g + ' · ' + _spread3Runes[1].g + ' · ' + _spread3Runes[2].g;
 
-  // Save to DB (Urður rune as anchor — urd position)
+  // Save to DB — spread format (all runes)
   if (currentUser) {
     if (_readingMode === 'mine') {
-      await saveReading(_spread3Runes[0], text, '');
+      await saveSpreadReading('NORNS', _spread3Runes, text);
       loadJournal();
     }
     await syncMonthlyCount(currentUser.id);
