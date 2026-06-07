@@ -642,6 +642,11 @@ function _updateGateTexts() {
   buildPills();
 }
 
+// updateUIText() — STATIC translations only (t('key') with no user-state dependency).
+// Dynamic elements belong in dedicated functions:
+//   _updateReadingForm() — reader heading, note, name row (depends on userName, _readingMode, knownUser)
+//   _updateDobLabel()    — DOB field (depends on userTier, currentUser)
+// NEVER add user-state-dependent text here — it will overwrite dynamic content on lang switch.
 function updateUIText() {
   document.documentElement.lang = lang;
   setText('ui-brand', 'AGNDOFA');
@@ -657,8 +662,7 @@ function updateUIText() {
   if (heroQuote) heroQuote.innerHTML = lang === 'is'
     ? '"Rúnirnar spá ekki um örlög þín.<br>Þær minna þig á veginn<br>sem þú gengur þegar."'
     : '"The runes do not predict your fate.<br>They remind you of the path<br>you already walk."';
-  setText('reader-card1-lbl', t('reader_card1_lbl') || '✦ BEFORE WE BEGIN');
-  setText('reader-note', t('reader_note') || 'Only your name is required. Everything else helps Rúnar speak more personally.');
+  // reader-card1-lbl and reader-note are set by _updateReadingForm() — not here
   _updateDobLabel();
   _updateAreaSeekLabels();
   setText('begin-btn', t('begin_btn'));
@@ -1275,7 +1279,6 @@ window.addEventListener('DOMContentLoaded', async () => {
         loadJournal();
       }
       if (event === 'SIGNED_IN') {
-        showToast(lang === 'is' ? '✦ GAMAN AÐ SJÁ ÞIG · RÚNAR BÍÐUR' : '✦ WELCOME · RÚNAR AWAITS');
         upsertProfile();
         fetchUserProfile(currentUser.id); // tier + credits
         syncMonthlyCount(currentUser.id);

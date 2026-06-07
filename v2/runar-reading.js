@@ -980,16 +980,19 @@ function _updateReadingForm() {
   if (btnMine) { btnMine.classList.toggle('active', isMine); btnMine.textContent = t('reading_mode_mine'); }
   if (btnSom)  { btnSom.classList.toggle('active', !isMine); btnSom.textContent = t('reading_mode_someone'); }
 
-  // Card title
+  // Card title — always BEFORE WE BEGIN; append name when user is fully known (MY READING mode)
   var titleEl = document.getElementById('reader-card1-lbl');
-  if (titleEl) titleEl.textContent = isMine ? t('reader_card1_lbl') : t('setup_someone_lbl');
+  if (knownUser && userName && isMine) {
+    if (titleEl) titleEl.textContent = t('reader_card1_lbl') + ', ' + userName.toUpperCase();
+  } else {
+    if (titleEl) titleEl.textContent = t('reader_card1_lbl');
+  }
 
-  // Note text
+  // Note text — same message for both known and unknown (MY READING); different for FOR SOMEONE
   var noteEl = document.getElementById('reader-note');
   if (noteEl) {
-    if (knownUser)  noteEl.textContent = t('reading_ready_note');
-    else if (!isMine) noteEl.textContent = t('setup_someone_note');
-    else            noteEl.textContent = t('reader_note');
+    if (!isMine) noteEl.textContent = t('setup_someone_note');
+    else         noteEl.textContent = t('reader_note');
   }
 
   // Name row — hidden when own reading and user is fully known
