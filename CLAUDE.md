@@ -164,19 +164,9 @@ tree_name (text), life_rune_number (int), life_rune_text (text), life_rune_lang 
 
 ## Reading systém — stav
 
-### Unified format (od 2026-06-06)
-Všechna čtení = **jeden plynoucí blok, 5–7 vět, žádné sekce, žádné |||**.
-- `buildReadingPromptIS/EN()` → unified, `array.filter(Boolean).join('\n')`
-- `layer1-lbl` → glyf + jméno taženej runy (ne "RÚNAR SPEAKS")
-- `single-layer2` skryta (zobrazí se jen pro Layer 2 u multi-rune spreadů)
-- `border-left` odstraněna z `.layer1` a `.layer2`
-
-### _readingMode global
-`var _readingMode = 'mine';` — `'mine'` = vlastní čtení (ukládá do DB), `'someone'` = čtení pro druhého.
-
-### Pre-reading formulář → prompt (v u objektu)
-`u.area`, `u.seeking`, `u.mood`, `u.intention`, `u.question` — všechny tečou do `parts` bloku v promptu.
-Norns axis: `_moodContext(mood, lang)` + `_intentionContext(intention, lang)` v runar-character.js.
+**Unified format**: 1 plynoucí blok, 5–7 vět, žádné `|||`. `layer1-lbl` = glyf + jméno runy.
+`_readingMode` = `'mine'` (ukládá) | `'someone'` (neukládá).
+`u.area/seeking/mood/intention/question` → `parts[]` → Claude. Norns axis: `_moodContext(mood,lang)` + `_intentionContext(intention,lang)` v runar-character.js.
 
 ### Spread systém
 | Spread | Runy | Stav |
