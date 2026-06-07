@@ -329,7 +329,10 @@ Tři Norny = tři kořeny. Jedno čtení zasadí všechny tři kořeny najednou.
 - Verðandi → druhý kořen: kterým směrem se skláníš teď
 - Skuld → třetí kořen: co pohání tvůj růst, co musí přijít
 
-Rune Seeker: 3 kredity. Standard/Premium: zdarma.
+Rune Seeker: 3 rune stones (kredity).
+Standard: 3 z měsíčního limitu (viz TIER_LIMITS.standard.monthly_limit).
+Premium: 3 z měsíčního limitu (viz TIER_LIMITS.premium.monthly_limit).
+Hodnoty jsou vždy z configu — nikdy hardcoded.
 Po dokončení se kořeny uzamknou navždy — nelze je změnit.
 
 ### Kořeny — jak silí

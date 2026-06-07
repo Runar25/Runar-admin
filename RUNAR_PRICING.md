@@ -39,7 +39,7 @@ ElevenLabs: eleven_v3 (IS) / Flash (EN).
 | Spread | Tokeny | EL znaky | Claude | EL IS | EL EN | Total IS | Total EN |
 |--------|--------|----------|--------|-------|-------|----------|----------|
 | Single (1) | 430 | 430 | $0.006 | $0.129 | $0.043 | **$0.135** | **$0.049** |
-| Trojice/Norns (3) | 700 | 700 | $0.011 | $0.210 | $0.070 | **$0.221** | **$0.081** |
+| Norns (3) | 700 | 700 | $0.011 | $0.210 | $0.070 | **$0.221** | **$0.081** |
 | Kříž (5) | 900 | 900 | $0.014 | $0.270 | $0.090 | **$0.284** | **$0.104** |
 | Horseshoe (7) | 1200 | 1200 | $0.018 | $0.360 | $0.120 | **$0.378** | **$0.138** |
 | Yggdrasil (9) | 1500 | 1500 | $0.023 | $0.450 | $0.150 | **$0.473** | **$0.173** |
@@ -67,9 +67,9 @@ Akvizice přes fyzický produkt: ~$0.135 na uživatele (IS). Marketing cost: nul
 - Žádný weekly drip — po onboardingu jen kredity
 - Další čtení přes kredity (Reading Gift Card)
 - 1 kredit = 1 runa tažená
-- Přístup přes kredity: všechny spready (Single, Trojice, Norns, Gathering, Kříž, Horseshoe, Yggdrasil)
+- Přístup přes kredity: všechny spready (Single, Norns, Gathering, Kříž, Horseshoe, Yggdrasil)
 - Yggdrasil: sezónní omezení Dec 14–28 platí i pro RS
-- Strom: zakládací rituál za 5 kreditů, teaser pouze
+- Strom: zakládací rituál (Norns) za 3 rune stones, teaser pouze
 - Journal: posledních 5 čtení
 
 **Fyzická cesta (Rune Card):** +1 kredit navíc → celkem 3 čtení zdarma před první platbou.
@@ -79,7 +79,7 @@ Online cesta: Visitor 1 + RS 1 = 2 zdarma. Fyzická: Visitor 1 + Rune Card 1 + R
 *DB hodnota: standard | Nové UI jméno: Rune Walker (rozhodnutí 2026-06-06)*
 - **Limit: 50 run/měsíc**
 - Všechny spready včetně Yggdrasil (Dec 14–28)
-- Full Tree of Life + zakládací rituál zdarma
+- Full Tree of Life + zakládací rituál (3 z měsíčního limitu)
 - Full journal
 - Hlas zahrnut
 - Life Rune: plný výklad (1200 tokenů)
@@ -104,19 +104,18 @@ Online cesta: Visitor 1 + RS 1 = 2 zdarma. Fyzická: Visitor 1 + Rune Card 1 + R
 
 | Spread | Runy | Visitor | Rune Seeker | Standard | Premium |
 |--------|------|---------|-------------|---------|---------|
-| Single | 1 | 1× celkem | 1 free + kredity | ✅ (z limitu) | ✅ (z limitu) |
-| Trojice | 3 | ❌ | kredity (3) | ✅ | ✅ |
-| Norns | 3 | ❌ | kredity (3) | ✅ | ✅ |
-| The Gathering | — | ❌ | kredity (3) | ✅ | ✅ |
-| Kříž | 5 | ❌ | kredity (5) | ✅ | ✅ |
-| Horseshoe | 7 | ❌ | kredity (7) | ✅ | ✅ |
-| Yggdrasil | 9 | ❌ | kredity (9) | ✅ | ✅ |
+| Single | 1 | 1× celkem | 1 free + kredity | z limitu (1) | z limitu (1) |
+| Norns | 3 | ❌ | kredity (3) | z limitu (3) | z limitu (3) |
+| The Gathering | — | ❌ | kredity (3) | z limitu | z limitu |
+| Kříž | 5 | ❌ | ❌ | z limitu (5) | z limitu (5) |
+| Horseshoe | 7 | ❌ | ❌ | z limitu (7) | z limitu (7) |
+| Yggdrasil | 9 | ❌ | kredity (9) | z limitu (9) | z limitu (9) |
 
-Počítání limitu: 1 runa tažená = 1 z měsíčního limitu.
-Kříž (5 run) = 5 z limitu. Yggdrasil (9 run) = 9 z limitu.
-Kredity (Rune Seeker): credit cost = počet run v spreadu.
-Sezónní omezení: Yggdrasil pouze Dec 14–28 (platí pro všechny tiery).
-Visitor = jediný tier bez přístupu ke spreadům (kromě Single 1×).
+Počítání limitu: 1 runa tažená = 1 z měsíčního limitu (TIER_LIMITS.*.monthly_limit).
+Kredity (Rune Seeker): credit cost = počet run v spreadu (SPREAD_COSTS).
+Kříž a Horseshoe: Standard+ pouze — RS nemá přístup ani za kredity.
+Sezónní omezení: Yggdrasil pouze Dec 14–28 (platí pro všechny tiery, admin bypass).
+Visitor = jediný tier bez spreadů (jen Single 1× celkem).
 
 ---
 
