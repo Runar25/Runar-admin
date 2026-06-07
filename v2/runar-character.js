@@ -309,11 +309,12 @@ function buildSysPromptV2(lifeRune, lang) {
 // Data source: MOODS.norns + MOODS.element + INTENTIONS.norns (runar-runes.js)
 // Never surface these instructions in the reading output.
 
-function _moodContext(mood) {
+function _moodContext(mood, lang) {
   if (!mood || !MOODS) return '';
+  var label = (lang === 'is') ? 'LÍÐAN' : 'CURRENT STATE';
   var idx = (MOODS.en || []).indexOf(mood);
   if (idx === -1) idx = (MOODS.is || []).indexOf(mood);
-  if (idx === -1) return 'CURRENT STATE: ' + mood;
+  if (idx === -1) return label + ': ' + mood;
   var norn   = (MOODS.norns   || [])[idx] || '';
   var elem   = (MOODS.element || [])[idx] || '';
   var nornDesc = norn === 'urd'
@@ -323,16 +324,17 @@ function _moodContext(mood) {
     : norn === 'skuld'
     ? 'Skuld axis — what must be; the thread pulling toward what has not yet arrived'
     : '';
-  return 'CURRENT STATE: ' + mood
+  return label + ': ' + mood
     + (elem     ? ' — element: ' + elem                      : '')
     + (nornDesc ? ' — ' + nornDesc                           : '');
 }
 
-function _intentionContext(intention) {
+function _intentionContext(intention, lang) {
   if (!intention || !INTENTIONS) return '';
+  var label = (lang === 'is') ? 'TILGANGUR' : 'READING PURPOSE';
   var idx = (INTENTIONS.en || []).indexOf(intention);
   if (idx === -1) idx = (INTENTIONS.is || []).indexOf(intention);
-  if (idx === -1) return 'READING PURPOSE: ' + intention;
+  if (idx === -1) return label + ': ' + intention;
   var norn = (INTENTIONS.norns || [])[idx] || '';
   var timeDesc = norn === 'verdandi'
     ? 'present moment — what is unfolding now; speak from the living thread'
@@ -341,7 +343,7 @@ function _intentionContext(intention) {
     : norn === 'urd'
     ? 'past-rooted — what was woven; seek the pattern, not the event'
     : '';
-  return 'READING PURPOSE: ' + intention
+  return label + ': ' + intention
     + (timeDesc ? ' — temporal frame: ' + timeDesc : '');
 }
 
@@ -579,8 +581,8 @@ function buildReadingPromptIS(u, drawn, corrections) {
     lifeRuneNote,
     u.area     ? 'SVIÐ: ' + u.area     : '',
     u.seeking  ? 'LEITAÐ: ' + u.seeking  : '',
-    u.mood      ? 'LÍÐAN: ' + u.mood      : '',
-    u.intention ? 'TILGANGUR: ' + u.intention : '',
+    u.mood      ? _moodContext(u.mood, 'is')      : '',
+    u.intention ? _intentionContext(u.intention, 'is') : '',
     u.question ? 'SPURNING: ' + '"' + u.question + '"' : '',
   ].filter(Boolean).join('\n');
   var lifeRef = life
@@ -629,8 +631,8 @@ function buildReadingPromptEN(u, drawn, lang, corrections) {
   const parts = [`PERSON: ${u.name}`, lifeCtx, drawnCtx, lifeRuneNote,
     u.area      ? `AREA: ${u.area}` : '',
     u.seeking   ? `SEEKING: ${u.seeking}` : '',
-    u.mood      ? `CURRENT STATE: ${u.mood}` : '',
-    u.intention ? `READING PURPOSE: ${u.intention}` : '',
+    u.mood      ? _moodContext(u.mood)      : '',
+    u.intention ? _intentionContext(u.intention) : '',
     u.question  ? `QUESTION: "${u.question}"` : ''].filter(Boolean).join('\n');
   const hasQ = !!(u.question && u.question.trim());
   const lifeNote = life ? ('The person carries ' + rn(life) + ' (' + life.g + ') as life rune — weave this in without announcing it.') : '';
