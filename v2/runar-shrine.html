@@ -1580,8 +1580,8 @@ async function _generateReading() {
   const parts = [`PERSON: ${u.name}`, lifeContext, drawnContext,
     u.area       ? `AREA: ${u.area}`              : '',
     seekingLabel ? `SEEKING: ${seekingLabel}`      : '',
-    u.mood       ? `CURRENT STATE: ${u.mood}`      : '',
-    u.intention  ? `READING PURPOSE: ${u.intention}` : '',
+    u.mood       ? (typeof _moodContext      === 'function' ? _moodContext(u.mood)           : 'CURRENT STATE: '   + u.mood)      : '',
+    u.intention  ? (typeof _intentionContext === 'function' ? _intentionContext(u.intention) : 'READING PURPOSE: ' + u.intention)  : '',
     u.question   ? `SPECIFIC QUESTION: "${u.question}"` : ''].filter(Boolean).join('\n');
 
   // Unified reading — one flowing paragraph, no sections or separators

@@ -223,13 +223,9 @@ Norse mythology: Odin and his ravens — memory and foresight carried on black w
 Seasonal rhythms: solstices, equinoxes, the moon phases. The threshold between seasons. Ancient memory. The space between darkness and light.
 
 RESPONSE FORMAT
-Every reading has two layers, separated by |||
-
-LAYER 1 (2–3 sentences): The core message. Direct and poetic. Complete on its own.
-
-LAYER 2 (4–8 sentences): Connect the drawn rune with the life rune (if known), area of life, and what they seek. Draw on Norse mythology and Icelandic nature imagery. Let the season and lunar phase colour the imagery subtly. End with a single gentle open question.
-
-Do not include labels like "LAYER 1" or "PART 2" in the output. Always speak in second person (you, your).`;;
+One flowing reading — 5 to 7 sentences. No sections, no separators, no labels.
+Speak in second person (you, your). End with a single open question.
+The format, angle, imagery, register, and rune placement are specified in each reading prompt — follow them precisely.`;;
 
 // ─── CONTEXT HELPERS ──────────────────────────────────────────────────────────
 
@@ -306,6 +302,47 @@ function buildLifeRuneContext(rune) {
 function buildSysPromptV2(lifeRune, lang) {
   var lifeCtx = lifeRune ? buildLifeRuneContext(lifeRune) : '';
   return getContextLine(lang) + '\n\n' + DEF_CHAR_V2_EN + lifeCtx;
+}
+
+// ─── NORNS AXIS HELPERS (V2) ─────────────────────────────────────────────
+// Convert raw mood/intention labels into Norns-axis context instructions.
+// Data source: MOODS.norns + MOODS.element + INTENTIONS.norns (runar-runes.js)
+// Never surface these instructions in the reading output.
+
+function _moodContext(mood) {
+  if (!mood || !MOODS) return '';
+  var idx = (MOODS.en || []).indexOf(mood);
+  if (idx === -1) idx = (MOODS.is || []).indexOf(mood);
+  if (idx === -1) return 'CURRENT STATE: ' + mood;
+  var norn   = (MOODS.norns   || [])[idx] || '';
+  var elem   = (MOODS.element || [])[idx] || '';
+  var nornDesc = norn === 'urd'
+    ? 'Urður axis — what has already been woven; read from the root, not the horizon'
+    : norn === 'verdandi'
+    ? 'Verðandi axis — what is being woven right now; the living present moment'
+    : norn === 'skuld'
+    ? 'Skuld axis — what must be; the thread pulling toward what has not yet arrived'
+    : '';
+  return 'CURRENT STATE: ' + mood
+    + (elem     ? ' — element: ' + elem                      : '')
+    + (nornDesc ? ' — ' + nornDesc                           : '');
+}
+
+function _intentionContext(intention) {
+  if (!intention || !INTENTIONS) return '';
+  var idx = (INTENTIONS.en || []).indexOf(intention);
+  if (idx === -1) idx = (INTENTIONS.is || []).indexOf(intention);
+  if (idx === -1) return 'READING PURPOSE: ' + intention;
+  var norn = (INTENTIONS.norns || [])[idx] || '';
+  var timeDesc = norn === 'verdandi'
+    ? 'present moment — what is unfolding now; speak from the living thread'
+    : norn === 'skuld'
+    ? 'future-facing — what is yet to be woven; speak from possibility and weight'
+    : norn === 'urd'
+    ? 'past-rooted — what was woven; seek the pattern, not the event'
+    : '';
+  return 'READING PURPOSE: ' + intention
+    + (timeDesc ? ' — temporal frame: ' + timeDesc : '');
 }
 
 
