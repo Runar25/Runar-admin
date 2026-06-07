@@ -612,56 +612,6 @@
     <!-- Content: logged in -->
     <div id="journal-content" style="display:none;">
 
-      <!-- ✦ THE GATHERING -->
-      <div class="whispers-section" id="whispers-section">
-        <div class="whispers-title" id="whispers-title">✦ THE GATHERING</div>
-        <p class="whispers-desc" id="whispers-desc">One week. Your runes. One reading.<br><strong>Every day is a ritual</strong> — The Gathering is where they meet.</p>
-
-        <!-- Idle state -->
-        <div id="whispers-idle">
-          <p class="whispers-sub" id="whispers-idle-sub"></p>
-          <button class="whispers-btn" id="whispers-request-btn" onclick="enterWhispersSelection()">REQUEST THE GATHERING</button>
-          <div class="whispers-lock"  id="whispers-lock"     style="display:none;"></div>
-          <div class="whispers-need-more" id="whispers-need-more" style="display:none;"></div>
-        </div>
-
-        <!-- Selecting state -->
-        <div id="whispers-selecting" style="display:none;">
-          <p class="whispers-counter" id="whispers-counter">Selected: 0</p>
-          <button class="whispers-btn" id="whispers-weave-btn" onclick="generateWhispersReading()" disabled>LET RÚNAR WEAVE</button>
-          <button class="whispers-btn sec" onclick="cancelWhispers()" id="whispers-cancel-btn">CANCEL</button>
-        </div>
-
-        <!-- Loading state -->
-        <div id="whispers-loading" style="display:none;">
-          <div class="whispers-loading-inner">
-            <span class="whispers-loading-star">ᚱ</span>
-            <div class="whispers-loading-label" id="whispers-loading-txt">RÚNAR DRAWS THE PATTERN FROM THE STONES.</div>
-          </div>
-        </div>
-
-        <!-- Output state -->
-        <div id="whispers-output" style="display:none;">
-          <div class="whispers-runes-row" id="whispers-runes-row"></div>
-          <div class="whispers-out-text" id="whispers-out-text"></div>
-          <div class="status" id="st-whispers"></div>
-          <button class="whispers-voice-btn" id="whispers-voice-btn" onclick="generateWhispersVoice()">ᚢ HEAR RÚNAR SPEAK</button>
-          <div class="whispers-audio-wrap" id="whispers-audio-wrap" style="display:none;">
-            <audio id="whispers-audio" preload="none"></audio>
-            <div class="cap" style="margin-top:10px;">
-              <button class="cap-btn" id="wcap-play" onclick="wcapToggle()" title="Play / Pause">&#9654;</button>
-              <span class="cap-time" id="wcap-current">0:00</span>
-              <input type="range" class="cap-seek" id="wcap-seek" value="0" min="0" max="100" step="0.1" oninput="wcapSeek(this.value)" title="Seek">
-              <span class="cap-time" id="wcap-dur">0:00</span>
-              <button class="cap-btn" id="wcap-mute" onclick="wcapMute()" title="Mute / Unmute" style="display:flex;align-items:center;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06C16.89 6.15 19 8.83 19 12c0 3.17-2.11 5.84-5 6.71v2.06c4.01-.91 7-4.49 7-8.77 0-4.28-2.99-7.86-7-8.77z"/></svg>
-              </button>
-            </div>
-          </div>
-          <button class="whispers-btn sec" style="margin-top:16px;" onclick="resetWhispers()" id="whispers-new-btn">NEW WHISPERS</button>
-        </div>
-      </div>
-
       <!-- Pane header -->
       <div class="journal-pane-header">
         <span class="journal-pane-title" id="journal-pane-title">✦ YOUR READINGS</span>

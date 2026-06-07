@@ -134,7 +134,6 @@ function renderJournal(entries) {
     </div>`;
   }).join('');
 
-  updateWhispersUI();
 }
 
 // Teaser pro rune_seeker — kolik čtení celkem mají v DB
