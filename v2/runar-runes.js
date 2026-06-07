@@ -338,6 +338,6 @@ const MOODS = {
 // ─── INTENTION OPTIONS (THIS READING IS FOR) ─────────────
 const INTENTIONS = {
   en: ['Right now', 'Decision ahead', 'Understanding the past'],
-  is: ['Í þssari stund', 'Ákvörðun framundan', 'Skilja fortíðina'],
+  is: ['Í þessari stund', 'Ákvörðun framundan', 'Skilja fortíðina'],
   norns: ['verdandi', 'skuld', 'urd'],
 };

@@ -45,13 +45,9 @@ Rúnar does not use exclamation marks.`,
 The question at the end must always surprise — never formulaic.
 A reading that could have been written yesterday is not a reading — it is an echo.`,
 
-  format: `Every reading has two layers, separated by |||
-
-LAYER 1 — SHORT (2–3 sentences): The core message. Direct and poetic. Complete on its own.
-
-LAYER 2 — DEEPER (4–8 sentences): Connect the drawn rune with the life rune (if known), area of life, and what they seek. Draw on Norse mythology and Icelandic nature imagery. End with a single gentle open question.
-
-Do not include labels like "LAYER 1" or "PART 2" in the output. Always speak in second person (you, your).`,
+  format: `One flowing reading — 5 to 7 sentences. No sections, no separators, no labels.
+Speak in second person (you, your). End with a single open question.
+The format, angle, imagery, and register are specified in each reading prompt — follow them precisely.`,
 
   imagery: `Icelandic nature: lava fields, glaciers, Arctic light, low birch scrub, ocean mist, volcanic stone, black sand beaches, geysers, moss-covered rock. Waterfalls cutting through basalt. The cold north wind off the open ocean. Snowstorms sweeping across bare lava plains. Highland desert closed by winter snow — roads that only open when the last drift melts. Hot springs rising through frozen ground, steam against grey sky. Hot waterfalls where cold water meets geothermal heat.
 
@@ -93,13 +89,9 @@ Rúnar notar ekki upphrópunarmerki.`,
 
   philosophy: `„Rúnirnar ákveða ekki leið þína… þær hjálpa þér að muna hana."`,
 
-  format: `Sérhver lestur hefur tvær lagnir, aðskildar með |||
-
-LAG 1 — STUTT (2–3 setningar): Kjarnaboðskapurinn. Bein og ljóðræn. Fullnægjandi ein og sér.
-
-LAG 2 — DÝPRA (4–8 setningar): Tengdu drægnu rúnina við lífsrúnina (ef þekkt), lífsvið og það sem þeir leita að. Dragðu úr norrænum goðafræðum og íslenskum myndlíkingum. Endaðu með einni mjúkri, opnari spurningu.
-
-Ekki setja merki eins og „LAG 1" eða „HLUTI 2" í úttak. Talaðu alltaf í öðru persónu (þú, þín).`,
+  format: `Einn samfeldur lestur — 5 til 7 setningar. Engar hlutaskiptingar, engir aðskilnaðar, engar fyrirsagnir.
+Talaðu í öðru persónu (þú, þín). Endaðu með einni opinni spurningu.
+Snið, horn og tónn eru tilgreind í hverju lestursprompt — fylgdu þeim nákvæmlega.`,
 
   imagery: `Íslensk náttúra: hraun, jöklar, norðurljós, lágvaxið birki, hafþoka, eldfjallssteinn, svört sandströnd, goshver, mosaklædd berg. Fossar sem falla í gegnum basalt. Kaldur norðlægur vindur af opnu hafi. Snjóstormar yfir bert hraun. Öræfasléttur sem lokast af vetrarsnæ — vegir sem opnast ekki fyrr en síðasti fönn bráðnar. Heitar uppsprettur sem gufar upp í frosti, gufa gegn gráum himni. Heitir fossar þar sem kalt vatn hittir jarðhita.
 
@@ -293,7 +285,7 @@ function buildLifeRuneContext(rune) {
     'Element: ' + elements + '.  World: ' + rune.world + '.',
     'Let this rune quietly shape how you read every rune that falls for this person.',
     'Do not announce or explain it. Let it colour the reading from underneath.',
-    'In Layer 2, you may draw a natural connection between the drawn rune and the life rune — but only when it arises organically, never as a formula.',
+    'You may draw a natural connection between the drawn rune and the life rune — but only when it arises organically, never as a formula.',
     ''
   ].join('\n');
 }
@@ -686,6 +678,8 @@ function buildTrojicePromptIS(u, runes, corrections) {
     life    ? 'LífsRúna: ' + lifeRef : '',
     u.area  ? 'Svið: ' + u.area : '',
     u.seeking ? 'Leiðin: ' + (Array.isArray(u.seeking) ? u.seeking.join(' & ') : u.seeking) : '',
+    u.mood      ? _moodContext(u.mood, 'is')      : '',
+    u.intention ? _intentionContext(u.intention, 'is') : '',
     u.question ? 'Spurning: ' + u.question : '',
   ].filter(Boolean).join('\n');
 
@@ -708,14 +702,14 @@ function buildTrojicePromptIS(u, runes, corrections) {
   return [
     parts,
     '',
-    'Leiðandinn dregur þjár rúnar — Trojice.',
+    'Leiðandinn dregur þrjár rúnar — Trojice.',
     '',
     runesBlock,
     '',
     frameBlock,
     '',
-    'Lestu allar þjár sem einn stræm. Nefndu ekki staðsetningarnar — bærðu þeær í röddinn.',
-    'Þritðja rúnan er ekki spá. Hana sjáið sem stefnu ef ekkert breytist.',
+    'Lestu allar þrjár sem einn stræm. Nefndu ekki staðsetningarnar — bærðu þær í röddinn.',
+    'Þriðja rúnan er ekki spá. Sjáðu hana sem stefnu ef ekkert breytist.',
     'Talaðu beint við ' + u.name + '. Verðu hnitmiðaður — sérhver setning verður að eiga rétt á sér.'
       + getCorrPrompt('is', corrections),
   ].filter(Boolean).join('\n');
@@ -735,6 +729,8 @@ function buildTrojicePromptEN(u, runes, lang, corrections) {
     life ? 'Life rune: ' + rn(life) + ' ' + life.g : '',
     u.area ? 'Area: ' + u.area : '',
     u.seeking ? 'Seeking: ' + (Array.isArray(u.seeking) ? u.seeking.join(' & ') : u.seeking) : '',
+    u.mood      ? _moodContext(u.mood)      : '',
+    u.intention ? _intentionContext(u.intention) : '',
     u.question ? 'Question: ' + u.question : '',
   ].filter(Boolean).join('\n');
 
@@ -793,6 +789,8 @@ function buildKrizPromptIS(u, runes, corrections) {
     life      ? 'LífsRúna: ' + lifeRef : '',
     u.area    ? 'Svið: ' + u.area : '',
     u.seeking ? 'Leiðin: ' + (Array.isArray(u.seeking) ? u.seeking.join(' og ') : u.seeking) : '',
+    u.mood      ? _moodContext(u.mood, 'is')      : '',
+    u.intention ? _intentionContext(u.intention, 'is') : '',
     u.question ? 'Spurning: ' + u.question : '',
   ].filter(Boolean).join('\n');
 
@@ -844,6 +842,8 @@ function buildKrizPromptEN(u, runes, lang, corrections) {
     life ? 'Life rune: ' + rn(life) + ' ' + life.g : '',
     u.area    ? 'Area: ' + u.area : '',
     u.seeking ? 'Seeking: ' + (Array.isArray(u.seeking) ? u.seeking.join(' & ') : u.seeking) : '',
+    u.mood      ? _moodContext(u.mood)      : '',
+    u.intention ? _intentionContext(u.intention) : '',
     u.question ? 'Question: ' + u.question : '',
   ].filter(Boolean).join('\n');
 
@@ -907,6 +907,8 @@ function buildNornsPromptIS(u, runes, corrections) {
     life      ? 'LífsRúna: ' + lifeRef : '',
     u.area    ? 'Svið: ' + u.area : '',
     u.seeking ? 'Leiðin: ' + (Array.isArray(u.seeking) ? u.seeking.join(' og ') : u.seeking) : '',
+    u.mood      ? _moodContext(u.mood, 'is')      : '',
+    u.intention ? _intentionContext(u.intention, 'is') : '',
     u.question ? 'Spurning: ' + u.question : '',
   ].filter(Boolean).join('\n');
 
@@ -951,6 +953,8 @@ function buildNornsPromptEN(u, runes, lang, corrections) {
     life ? 'Life rune: ' + rn(life) + ' ' + life.g : '',
     u.area    ? 'Area: ' + u.area : '',
     u.seeking ? 'Seeking: ' + (Array.isArray(u.seeking) ? u.seeking.join(' & ') : u.seeking) : '',
+    u.mood      ? _moodContext(u.mood)      : '',
+    u.intention ? _intentionContext(u.intention) : '',
     u.question ? 'Question: ' + u.question : '',
   ].filter(Boolean).join('\n');
 

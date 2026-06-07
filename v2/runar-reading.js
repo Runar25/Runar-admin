@@ -354,7 +354,7 @@ function drawAnother() {
   var _daLbl = document.getElementById('layer1-lbl');
   if (_daL2) _daL2.style.display = '';
   if (_daLbl) _daLbl.textContent = t('layer1_lbl');
-  if (_spreadMode === 'trojice') { _spread3Runes = []; _updateSpread3Slots(); }
+  if (_spreadMode === 'trojice' || _spreadMode === 'norns') { _spread3Runes = []; _updateSpread3Slots(); }
   if (_spreadMode === 'kriz') { _spread5Runes = []; _updateSpread5Slots(); }
   readerRune = null; readerTexts = {}; voiceGenerated = {};
   document.getElementById('reader-output').style.display = 'none';
