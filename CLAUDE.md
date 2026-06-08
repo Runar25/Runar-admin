@@ -115,6 +115,13 @@ return lang === 'is' ? 'Gestur' : 'Visitor';
 ```
 Platí všude: greeting, prompty, Tree tab, banners.
 
+### §14 — updateUIText() = POUZE statické překlady
+`updateUIText()` se volá na každém přepnutí jazyka — NIKDY sem nepřidávat state-dependent obsah.
+Dynamický obsah patří do dedikovaných funkcí:
+- `_updateReadingForm()` — `reader-card1-lbl` (heading) + `reader-note`
+- `_updateDobLabel()` — DOB pole
+Porušení způsobí přepsání personalizovaného textu při přepnutí jazyka.
+
 ### §13 — Nová věc musí projít VŠEMI cestami (Full-path rule)
 Každý nový vstupní field (`readerUser.X`), nový spread mode, nebo migrace formátu
 musí být zkontrolována na VŠECH větvích — ne jen na té první implementované.
@@ -193,3 +200,13 @@ Nová korekce → přidat do BAD_PATTERNS v check-is.py + do DB přes shrine.
 ## Kde hledat co
 Tiers/limity/vocab/spreads → `runar-config.js` · Prompty IS/EN + corrections → `runar-character.js`
 UI texty → `runar-translations.js` · User state → `runar-app.js` · Tree → `runar-tree.js`
+
+---
+
+## Cowork sync
+Memory soubory (MEMORY.md, working-style.md, runar-project.md, tree-of-life.md, runar-patterns.md)
+a složku snapshots/ ukládat TAKÉ do:
+`C:\Users\zkuku\Claude\Projects\RÚNAR the rune keeper\`
+
+Primární zdroj zůstává `C:\Users\zkuku\AppData\Roaming\Claude\memory\`.
+Cowork složka = zrcadlo pro přímý přístup bez syncu.
