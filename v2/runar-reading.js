@@ -146,7 +146,7 @@ function startReading() {
   var knownUser = isMine && userName && _lifeRuneNum;
   // Use stored name if own reading and name is known
   var name = knownUser ? userName : document.getElementById('r-name').value.trim();
-  if (!name) { setSt('st-setup', t('st_name_req'), 'err'); return; }
+  if (!name) name = lang === 'is' ? 'þú' : 'you';
   // Life rune from DB (own reading) or null (reading for someone else)
   var lifeRune = (isMine && _lifeRuneNum) ? RUNES[_lifeRuneNum - 1] : null;
   readerUser = { name, d: null, m: null, y: null, lifeRune,
