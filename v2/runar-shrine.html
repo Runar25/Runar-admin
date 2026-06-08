@@ -1433,7 +1433,7 @@ async function deleteVersion(id, runeName, lang, version) {
 // PROMOTE TO V1: copy _generateReading() + buildPills() logic to runar-app.js
 // ─────────────────────────────────────────────────────────
 function startReading() {
-  const name = document.getElementById('r-name').value.trim(); if (!name) { setSt('st-setup', t('st_name_req'), 'err'); return; }
+  const nameVal = document.getElementById('r-name').value.trim(); const name = nameVal || (lang === 'is' ? 'þú' : 'you');
   const d = parseInt(document.getElementById('r-day').value), m = parseInt(document.getElementById('r-month').value), y = parseInt(document.getElementById('r-year').value);
   const lifeRune = (d && m && y && d <= 31 && m <= 12 && y >= 1930) ? calcLifeRune(d, m, y) : null;
   readerUser = { name, d, m, y, lifeRune, area: readerUser.area || '', seeking: Array.isArray(readerUser.seeking) ? readerUser.seeking : [], mood: readerUser.mood || '', intention: readerUser.intention || '', question: document.getElementById('r-question').value.trim() };
