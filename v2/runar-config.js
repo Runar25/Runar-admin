@@ -45,13 +45,7 @@ const RUNAR_MODES = {
     layers:     2,        // how many output layers (short + deep)
     active:     true,
   },
-  spread_3: {
-    label:      '3 Readings',
-    max_tokens: 900,
-    voice:      true,
-    layers:     3,
-    active:     true,
-  },
+
   ceremonial: {
     label:      'Ceremonial — Cacao Ritual',
     max_tokens: 1200,
@@ -244,7 +238,7 @@ const TIER_LIMITS = {
   rune_seeker: {
     onboarding:   1,     // 1 free reading at registration
     weekly_drip:  null,  // no weekly drip
-    free_spreads: ['single', 'norns', 'gathering', 'cross', 'horseshoe', 'yggdrasil'],
+    free_spreads: ['single', 'norns', 'cross', 'horseshoe', 'yggdrasil'],
     journal_entries: 5,
     onboarding_label_en: 'one free cast',
     onboarding_label_is: 'ein frjáls spá',

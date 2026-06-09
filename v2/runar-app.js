@@ -676,7 +676,6 @@ function updateUIText() {
   setText('layer2-lbl', t('layer2_lbl'));
   setText('draw-another-btn', t('draw_another'));
   setText('start-over-btn', t('start_over'));
-  setText('whispers-title', '✦ ' + t('ritual_gathering'));
   setText('audio-player-lbl', t('voice_player_lbl'));
   const vBtn = document.getElementById('btn-generate-voice');
   if (vBtn && !vBtn.disabled) vBtn.textContent = t('voice_btn');
@@ -1189,33 +1188,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const dd   = document.getElementById('auth-dropdown');
     if (wrap && dd && !wrap.contains(e.target)) dd.classList.remove('open');
   });
-  // ── Wire whispers-audio (wcap) ──
-  const wa = document.getElementById('whispers-audio');
-  if (wa) {
-    wa.addEventListener('timeupdate', () => {
-      const pct = wa.duration ? (wa.currentTime / wa.duration * 100) : 0;
-      const sk = document.getElementById('wcap-seek');
-      const cr = document.getElementById('wcap-current');
-      if (sk) sk.value = pct;
-      if (cr) cr.textContent = _wcapFmt(wa.currentTime);
-    });
-    wa.addEventListener('loadedmetadata', () => {
-      const dr = document.getElementById('wcap-dur');
-      if (dr) dr.textContent = _wcapFmt(wa.duration);
-    });
-    wa.addEventListener('ended', () => {
-      const btn = document.getElementById('wcap-play');
-      if (btn) btn.textContent = '▶';
-    });
-    wa.addEventListener('pause', () => {
-      const btn = document.getElementById('wcap-play');
-      if (btn) btn.textContent = '▶';
-    });
-    wa.addEventListener('play', () => {
-      const btn = document.getElementById('wcap-play');
-      if (btn) btn.textContent = '⏸';
-    });
-  }
+
 });
 
 // ─── INIT ────────────────────────────────────────────────

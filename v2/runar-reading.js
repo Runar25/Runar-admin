@@ -549,27 +549,6 @@ function _capReset() {
   if (seek) { seek.value = 0; _capTrack(0); }
   if (cur)  cur.textContent  = '0:00';
 }
-// ─── WHISPERS CAP PLAYER ─────────────────────────────────
-function _wcapFmt(s) { const m = Math.floor(s/60); return m + ':' + String(Math.floor(s%60)).padStart(2,'0'); }
-function wcapToggle() {
-  const a = document.getElementById('whispers-audio');
-  const btn = document.getElementById('wcap-play');
-  if (!a || !btn) return;
-  if (a.paused) { a.play(); btn.textContent = '⏸'; }
-  else          { a.pause(); btn.textContent = '▶'; }
-}
-function wcapMute() {
-  const a = document.getElementById('whispers-audio');
-  const btn = document.getElementById('wcap-mute');
-  if (!a || !btn) return;
-  a.muted = !a.muted;
-  btn.innerHTML = a.muted ? _SVG_VOL_OFF : _SVG_VOL_ON;
-}
-function wcapSeek(v) {
-  const a = document.getElementById('whispers-audio');
-  if (!a || !a.duration) return;
-  a.currentTime = a.duration * (v / 100);
-}
 
 // ─── VOICE ───────────────────────────────────────────────
 async function generateVoice() {
