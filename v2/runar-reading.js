@@ -404,13 +404,12 @@ async function readRune() {
       showToast(lang === 'is' ? 'Skráðu þig inn til að nota Yggdrasil.' : 'Sign in to use Yggdrasil.');
       _setSpreadMode('single'); return;
     }
-    // Seasonal gate: Dec 14–28 only (admin bypass)
+    // Seasonal info: full power Dec 14–28, reading available year-round
     var _ygNow = new Date();
     var _ygM = _ygNow.getMonth() + 1;
     var _ygD = _ygNow.getDate();
     if (!(_ygM === 12 && _ygD >= 14 && _ygD <= 28) && !isAdmin(currentUser.email)) {
-      showToast(lang === 'is' ? 'Yggdrasil opnast 14. desember.' : 'Yggdrasil opens December 14th.');
-      _setSpreadMode('single'); return;
+      showToast(lang === 'is' ? 'Yggdrasil er opinn — en krafturinn er mestur 14.–28. desember.' : 'Yggdrasil is open — its full power returns December 14–28.');
     }
     if (_spread9Runes.length === 9 && !readerRune) {
       document.getElementById('reader-rune-card').style.display = 'none';
