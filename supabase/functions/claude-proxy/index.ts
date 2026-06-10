@@ -297,7 +297,7 @@ serve(async (req) => {
       userTier === "premium"  ||
       (userTier === "rune_seeker" && use_credit === true);
 
-    let systemWithContext = system || "";
+    let dynamicContext = "";
     let sessionState: SessionState | null = null;
 
     if (treeMode && userId && mode !== "extraction") {
@@ -313,20 +313,28 @@ serve(async (req) => {
       if (treeState &&
           ((treeState.recurring_pattern as string[] ?? []).length > 0 ||
            (treeState.forbidden_next    as string[] ?? []).length > 0)) {
-        systemWithContext = systemWithContext + buildTreeContext(treeState);
+        dynamicContext += buildTreeContext(treeState);
       }
 
       // Vrstva B: session state
       sessionState = deriveSessionState(treeState, new Date());
-      systemWithContext = systemWithContext + buildSessionContext(sessionState);
+      dynamicContext += buildSessionContext(sessionState);
 
       // Vrstva C: voice scale
       const voiceScale   = (treeState?.voice_scale   as number  ?? 10);
       const voiceSettled = (treeState?.voice_settled  as boolean ?? false);
       if (voiceScale !== 10 || voiceSettled) {
-        systemWithContext = systemWithContext + buildVoiceContext(voiceScale, voiceSettled);
+        dynamicContext += buildVoiceContext(voiceScale, voiceSettled);
       }
     }
+
+    // ── Build system array: base (cacheable) + dynamic context ────────────────
+    // Base system prompt is stable across users — cache with ephemeral cache_control.
+    // Dynamic context (Vrstva A/B/C) changes per user per session — not cached.
+    const baseSystem = system || "";
+    const systemParts: Array<{ type: "text"; text: string; cache_control?: { type: "ephemeral" } }> = [];
+    if (baseSystem)      systemParts.push({ type: "text", text: baseSystem, cache_control: { type: "ephemeral" } });
+    if (dynamicContext)  systemParts.push({ type: "text", text: dynamicContext });
 
     // ── Call Claude ──
     const anthropicKey = Deno.env.get("ANTHROPIC_API_KEY");
@@ -340,10 +348,10 @@ serve(async (req) => {
         "anthropic-version": "2023-06-01",
       },
       body: JSON.stringify({
-        model:    "claude-sonnet-4-5",
+        model:      "claude-sonnet-4-5",
         max_tokens,
-        system:   systemWithContext,
-        messages: [{ role: "user", content: prompt }],
+        system:     systemParts.length > 0 ? systemParts : undefined,
+        messages:   [{ role: "user", content: prompt }],
       }),
     });
 
