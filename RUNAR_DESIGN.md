@@ -1,8 +1,13 @@
 # RUNAR_DESIGN.md
 # Domluvená designová rozhodnutí — co a proč, ne jak.
 # Přečíst vždy když pracujeme na Tree, Spreads, promptech nebo novém generování.
-# Číst spolu s CLAUDE.md (technická pravidla) a RUNAR_PRICING.md (business).
-# Poslední aktualizace: 2026-06-03
+# Poslední aktualizace: 2026-06-07
+#
+# Viz také:
+#   CLAUDE.md          — technická pravidla, absolutní zákazy, load order
+#   RUNAR_PRICING.md   — business model, tier ceny, EL kalkulace
+#   tree-of-life.md    — Tree of Life detaily: zakládací rituál, větve, kořeny, bloom, elementy
+#   runar-patterns.md  — Pattern detection: Eagle/Níðhöggr, transformační páry, The Gathering ⚠️ pracovní verze
 
 ---
 
@@ -174,7 +179,7 @@ Argument není omezení — je to filozofie systému.
 
 | Spread | Ideální kadence |
 |--------|----------------|
-| Single, Norns, The Gathering | Kdykoliv — každodenní větve |
+| Single, Norns | Kdykoliv — každodenní větve |
 | Kříž (5 run) | Ideálně max 1× týdně |
 | Horseshoe (7 run) | Ideálně max 1× za dva týdny |
 | Yggdrasil (9 run) | 1× ročně — zimní slunovrat |
@@ -267,16 +272,36 @@ Nejde do větve — jde do kořenů stromu. Jednou ročně, zimní slunovrat.
 Strom: devítibodový uzel v kořenech — nejsilnější bod celého stromu.
 
 ### The Gathering (3–5 run)
-Týdenní rituál — uživatel táhne 3–5 run v průběhu týdne.
-Rúnar přečte výsledek jako jeden celek, jeden příběh týdne.
-**Poznámka: The Gathering je vymyšlený rituál — není tradiční forma runového čtení.**
-Přispívá do stromu jako každé jiné čtení.
-Implementace: čte z journalu (posledních N čtení z aktuálního týdne) — zachovat beze změny.
+**Nová role (2026-06-07): tree pattern detection — již není viditelné v journalu.**
+
+Stará funkce (týdenní rituál, whispers-section, journal karta) odstraněna:
+- whispers-section HTML blok smazán z runar-reader.html
+- Gathering karty a filter odstraněny z runar-journal.js
+- updateWhispersUI() odstraněno z renderJournal()
+- Stará DB data (area='gathering') zůstávají v DB — tichý skip při renderování
+
+runar-gathering.js zachován beze změny — čeká na reimplementaci jako tree pattern detector.
+Nová logika potřebuje tree_state DB (neexistuje). Implementace: čeká na V3.
 
 ### UI — domluveno ✅
 Přepínač pod "DRAW YOUR RUNE":
 `[ SINGLE RUNE ]  [ NORNS ]  [ KŘÍŽ ]  [ HORSESHOE ]  [ YGGDRASIL ]`
 Stejný styl jako V2 lab v shrine.
+
+### Reading form — BEFORE WE BEGIN (2026-06-07)
+
+Heading (`reader-card1-lbl`) — logika:
+- MY READING + přihlášen se jménem → `✦ BEFORE WE BEGIN, {JMÉNO}`
+- MY READING + bez jména → `✦ BEFORE WE BEGIN`
+- FOR SOMEONE → `✦ BEFORE WE BEGIN` (nikdy "READING FOR SOMEONE")
+
+Note (`reader-note`) — obě situace (MY READING / FOR SOMEONE):
+*"The more you share, the more precisely I can speak. But the rune will find what needs finding either way."*
+
+Name field label: "NAME" (ne "THEIR NAME") — platí pro oba módy.
+SIGNED_IN toast odstraněn — žádné uvítací okno při přihlášení.
+
+⚠️ Heading a note řídí výhradně `_updateReadingForm()`. `updateUIText()` tyto prvky NESMÍ nastavovat.
 
 ---
 

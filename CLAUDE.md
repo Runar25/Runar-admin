@@ -180,6 +180,21 @@ Business model + ceny + EL kalkulace → `RUNAR_PRICING.md`
 
 ---
 
+## Před spuštěním (launch checklist)
+
+### 🔴 Blokuje launch
+- **Resend SMTP** — magic link emaily z agndofa.is (před Shopify webhookem)
+- **Shopify webhook** — automatický upgrade po nákupu
+- **Standard tier purchase** — způsob nákupu (aktuálně "COMING SOON")
+- **Capacitor native app** — iOS App Store = primární akviziční kanál na Islandu (70 % iOS). Subscriptions na webu, žádný App Store cut. Viz RUNAR_PRICING.md sekce PWA vs Native.
+
+### 🟡 Před prvním marketingem
+- **Privacy Policy** — odkaz na agndofa.is
+- **DPA Supabase** — čeká na e-mail od Supabase
+- **Trojice do produkce** — z shrine labu do readeru, s novou SPREAD_CONFIG architekturou
+
+---
+
 ## Cowork sync
 Memory soubory (MEMORY.md, working-style.md, runar-project.md, tree-of-life.md, runar-patterns.md)
 a složku snapshots/ ukládat TAKÉ do:
