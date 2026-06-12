@@ -375,7 +375,7 @@ async function readRune() {
     return;
   }
   if (_spreadMode === 'horseshoe') {
-    // Tier check — block Visitor (anonymous) only; rune_seeker can use with stones
+    // Tier check — block Visitor (anonymous) only; rune_seeker can use with rune readings
     if (!currentUser) {
       showToast(lang === 'is' ? 'Skráðu þig inn til að nota Podkova.' : 'Sign in to use the Horseshoe spread.');
       _setSpreadMode('single'); return;

@@ -21,7 +21,7 @@ function t(key) {
 }
 
 // Vocabulary helpers — read from VOCAB (runar-config.js)
-// vn('unit', 9, 'en')  =>  '9 rune stones'
+// vn('unit', 9, 'en')  =>  '9 rune readings'
 // vn('cast', 1, 'is')  =>  '1 sp\u00e1'
 function vn(key, n, lang) {
   var v = VOCAB && VOCAB[key];

@@ -243,8 +243,8 @@ const TIER_LIMITS = {
     journal_label_en:    'last 5 casts',
     journal_label_is:    'síðustu 5 spár',
     panel_props: {
-      en: ['One free cast to start, then rune stones.', '{card} unveils all features.', 'Limited journal (last 5 casts).'],
-      is: ['Ein frjáls spá til að byrja, síðan rúnasteinar.', '{card} opnar allar aðgerðir.', 'Takmörkuð dagbók (síðustu 5 spár).'],
+      en: ['One free cast to start, then rune readings.', '{card} unveils all features.', 'Limited journal (last 5 casts).'],
+      is: ['Ein frjáls spá til að byrja, síðan spár.', '{card} opnar allar aðgerðir.', 'Takmörkuð dagbók (síðustu 5 spár).'],
     },
   },
   standard: {
@@ -272,7 +272,7 @@ const TIER_LIMITS = {
 // ─── SPREAD COSTS ────────────────────────────────────────
 // cost = number of runes in spread.
 // free: cost from free_balance (null = not available with free balance — credits only).
-// credits: cost in Rune Stones (from Rune Reading Card).
+// credits: cost in rune readings (from Rune Reading Card).
 const SPREAD_COSTS = {
   single:    { free: 1,    credits: 1  },
   cross:     { free: null, credits: 5  },
@@ -280,14 +280,14 @@ const SPREAD_COSTS = {
   horseshoe: { free: null, credits: 7  },
   norns:     { free: null, credits: 3  },
   yggdrasil: { free: null, credits: 9  },
-  life_rune: { free: null, credits: 3  },  // RS: 3 Rune Stones
+  life_rune: { free: null, credits: 3  },  // RS: 3 rune readings
 };
 
 // ─── VOCABULARY — single source of truth ─────────────
 // Change here only — vn(key, n, lang) and vl(key, lang) in runar-utils.js
 // use these to pluralize + translate everywhere in the UI.
 const VOCAB = {
-  unit: { en: 'rune stone', en_pl: 'rune stones', is: 'r\u00fanasteinn', is_pl: 'r\u00fanasteinar' },
+  unit: { en: 'rune reading', en_pl: 'rune readings', is: 'spá', is_pl: 'spár' },
   cast: { en: 'rune reading', en_pl: 'rune readings', is: 'sp\u00e1',      is_pl: 'sp\u00e1r'        },
   card: { en: 'Rune Reading Card', en_pl: 'Rune Reading Cards', is: 'R\u00fanakort', is_pl: 'R\u00fanakort' },
 };
