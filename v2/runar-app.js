@@ -438,6 +438,12 @@ function skipName() {
 }
 
 // ── SIDE PANEL ACCOUNT ───────────────────────────────────
+// Tier display name (UPPER) from TIERS config — §8, nikdy nehardcodovat
+function _tierName(id) {
+  var ti = TIERS[id] || {};
+  return { en: (ti.label || id).toUpperCase(),
+           is: (ti.label_is || ti.label || id).toUpperCase() };
+}
 function updateSidePanel() {
   const accEl = document.getElementById('sp-account');
   if (!accEl) return;
@@ -681,6 +687,7 @@ function updateUIText() {
   if (vBtn && !vBtn.disabled) vBtn.textContent = t('voice_btn');
   // Re-render auth UI + side panel vždy — zajistí správné texty i pro odhlášeného uživatele při změně jazyka
   setText('free-redeem-link', '+ ' + vl('card', lang));
+  setText('redeem-link', '+ ' + vl('card', lang));
   setText('redeem-lbl', tp('redeem_card_code', { card: vl('card', lang).toUpperCase() }));
   const shopLink = document.getElementById('redeem-shop-link');
   if (shopLink) shopLink.textContent = tp('shop_buy_more', { card: vlp('card', lang) });
@@ -1121,10 +1128,10 @@ function _renderYourPath() {
   // ══ PANEL_TIERS — single source of truth for all side-panel tier data ══
   // PANEL_TIERS — reads from TIER_LIMITS.panel_props (Rule §8: never hardcode here)
   const PANEL_TIERS = [
-    { id: 'free_trial',  name: { en: 'VISITOR',     is: 'GESTUR'     }, props: TIER_LIMITS.free_trial.panel_props  },
-    { id: 'rune_seeker', name: { en: 'RUNE SEEKER', is: 'VEGFARANDI' }, props: TIER_LIMITS.rune_seeker.panel_props },
-    { id: 'standard',    name: { en: 'RUNE WALKER',  is: 'RUNE WALKER' }, note: { en: '— coming soon', is: '— bráðlega' }, props: TIER_LIMITS.standard.panel_props  },
-    { id: 'premium',     name: { en: 'RUNE KEEPER',  is: 'RUNE KEEPER' }, note: { en: '— coming soon', is: '— bráðlega' }, props: TIER_LIMITS.premium.panel_props   },
+    { id: 'free_trial',  name: _tierName('free_trial'),  props: TIER_LIMITS.free_trial.panel_props  },
+    { id: 'rune_seeker', name: _tierName('rune_seeker'), props: TIER_LIMITS.rune_seeker.panel_props },
+    { id: 'standard',    name: _tierName('standard'), note: { en: '— coming soon', is: '— bráðlega' }, props: TIER_LIMITS.standard.panel_props  },
+    { id: 'premium',     name: _tierName('premium'),  note: { en: '— coming soon', is: '— bráðlega' }, props: TIER_LIMITS.premium.panel_props   },
   ];
 
   const currData = PANEL_TIERS.find(function(t) { return t.id === normTier; }) || PANEL_TIERS[0];

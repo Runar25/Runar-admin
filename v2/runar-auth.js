@@ -138,7 +138,7 @@ function updateBanners() {
           card:        vl('card', lang)
         });
       const btnEl = document.getElementById('tn-curious-btn');
-      if (btnEl) { btnEl.textContent = t('gift_card_btn'); btnEl.style.display = ''; }
+      if (btnEl) { btnEl.textContent = tp('gift_card_btn', { card: vl('card', lang).toUpperCase() }); btnEl.style.display = ''; }
       upgradeGate.style.display = 'none';
       content.style.display     = 'block';
 
@@ -173,7 +173,7 @@ function updateBanners() {
           card: vl('card', lang)
         });
       const btnEl = document.getElementById('tn-curious-btn');
-      if (btnEl) { btnEl.textContent = t('gift_card_btn'); btnEl.style.display = ''; }
+      if (btnEl) { btnEl.textContent = tp('gift_card_btn', { card: vl('card', lang).toUpperCase() }); btnEl.style.display = ''; }
     }
   } else {
     // ── Anonymous ──
