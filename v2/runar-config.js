@@ -203,7 +203,7 @@ const TRANSFORMATION_PAIRS = {
   cycle: [
     { runes: ['Jera',    'Hagalaz'], desc_en: 'harvest and storm, the year turns'           },
     { runes: ['Dagaz',   'Nauthiz'], desc_en: 'dawn after need — light arrives because it must' },
-    { runes: ['Berkano', 'Isa'],     desc_en: 'growth frozen, but roots hold'                },
+    { runes: ['Berkana', 'Isa'],     desc_en: 'growth frozen, but roots hold'                },
   ],
   // TYP 2 — BREAKTHROUGH: something breaks so something new can emerge
   breakthrough: [
