@@ -132,7 +132,6 @@ const UI_TEXT = {
     st_no_versions:  'No saved versions yet.',
     st_no_table:     'Create runar_character table to enable history.',
     // ── Reader UI (added refactor #6) ──────────────────────
-    readings_renewed:   'YOUR RUNE READINGS HAVE RENEWED',
     continue_btn:       'CONTINUE',
     dam_title:          'DELETE YOUR ACCOUNT?',
     delete_btn:         'DELETE',
@@ -189,7 +188,6 @@ const UI_TEXT = {
     redeem_card_code:   '\u16a0 ENTER {card} CODE',
     shop_buy_more:      '\u2192 Buy more {card} at Agndofa.is',
     dam_text:           'This will permanently erase your account, all rune readings, and your journal. This cannot be undone.',
-    reset_body:         'A new month has turned. One free rune reading is waiting for you. The stones are ready.',
     gathering_upgrade:   'The Gathering opens with {tier}.',
     gathering_need_more: '{casts} more needed to open The Gathering.',
     tree_intro: '<p class="tree-intro-title">THE LIFE RUNE</p><p>It is said that no tree reaches toward the sky without first sending its roots into the darkness below.</p><p>So it is with us.</p><p>Throughout life we gather experiences, memories, and stories.<br>Some become visible.<br>Others wait beneath the surface, ready to be discovered.</p><p>The runes are not here to tell you who you are.</p><p>They are here to help you remember.</p><p>Your Life Rune is the first step.</p><p>It marks the beginning of an inward journey —<br>a path where your tree grows with every insight, every question, and every step you choose to take.</p><p>To discover your Life Rune, begin where your story began.</p>',
@@ -332,7 +330,6 @@ const UI_TEXT = {
     st_no_versions:  'Engar vistaðar útgáfur enn.',
     st_no_table:     'Búðu til runar_character töflu til að virkja sögu.',
     // ── Reader UI (added refactor #6) ──────────────────────
-    readings_renewed:   'SP\u00c1R \u00de\u00cdNAR ERU ENDURN\u00ddJA\u00d0AR',
     continue_btn:       'HALDA \u00c1FRAM',
     dam_title:          'EY\u00d0A REIKNINGI?',
     delete_btn:         'EY\u00d0A',
@@ -388,7 +385,6 @@ const UI_TEXT = {
     redeem_card_code:   'ᚠ SLÁÐU INN {card} KÓÐ',
     shop_buy_more:      '→ Kaupa fleiri {card} á Agndofa.is',
     dam_text:           'Þetta eyðir reikningi þínum, öllum spárum þínum og dagbókinni að eilífu. Hægt er ekki að afturkalla þessa aðgerð.',
-    reset_body:         'Steinarnir eru tilbúnir.',
     gathering_upgrade:   'The Gathering opnar með {tier}.',
     gathering_need_more: 'Þú þarft {casts} fleiri til að opna The Gathering.',
     tree_intro: '<p class="tree-intro-title">LÍFSRÚNIN</p><p>Sagt er að ekkert tré rísi til himins án þess að fyrst teygja rætur sínar niður í myrkrið.</p><p>Þannig er það einnig með okkur.</p><p>Á lífsleiðinni söfnum við reynslu, minningum og sögum.<br>Sumt vex sýnilegt.<br>Annað liggur dýpra og bíður þess að verða séð.</p><p>Rúnirnar eru ekki hér til að segja þér hver þú ert.</p><p>Þær eru hér til að hjálpa þér að muna.</p><p>Lífsrúnin er fyrsta skrefið.</p><p>Hún markar upphafið að ferðalagi inn á við — vegferð þar sem þitt eigið tré vex með hverri innsýn, hverri spurningu og hverju skrefi sem þú tekur.</p><p>Með tímanum mun tréð bera merki vaxtar þíns, lærdóms og þeirra slóða sem þú velur að feta.</p><p>Til að finna Lífsrúnina þína skaltu hefja leitina þar sem saga þín hófst.</p><p>Hvenær fæddist þú?</p>',

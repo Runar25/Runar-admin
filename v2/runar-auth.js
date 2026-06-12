@@ -6,7 +6,7 @@
 //   activeAppTab, sb, FREE_TRIAL_LIMIT, FREE_REGISTERED_LIMIT,
 //   DELAY_FOCUS, DELAY_SCROLL, DELAY_NAME_PROMPT, DELAY_RELOAD,
 //   DELAY_ERROR_RESET
-// Depends on functions: t(), getTrialCount(), getFreeMonthCount(),
+// Depends on functions: t(), getTrialCount(),
 //   updateQuestionGate(), showAppTab(), fetchUserProfile(),
 //   setSt(), showToast(), showNamePrompt(), displayName()
 // ═══════════════════════════════════════════════════════

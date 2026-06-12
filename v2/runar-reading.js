@@ -10,7 +10,7 @@
 //   getCorrPrompt(), applyISCorrections(), stream(), checkStaticAudio(),
 //   shouldUseCredit(), canUseVoice(), saveReading(), syncMonthlyCount(),
 //   loadJournal(), updateAuthUI(), setSt(), showToast(), incTrialCount(),
-//   getTrialCount(), getFreeMonthCount(), elVoiceId(), elModel(),
+//   getTrialCount(), elVoiceId(), elModel(),
 //   EL_PROXY, EL_VOICE_SETTINGS
 // ═══════════════════════════════════════════════════════
 

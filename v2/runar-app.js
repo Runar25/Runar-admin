@@ -49,65 +49,6 @@ const DURATION_SAVED     = 2500; // ms "saved" indicator stays visible
 function getTrialCount() { return parseInt(localStorage.getItem('runar_trial_count') || '0'); }
 function incTrialCount() { localStorage.setItem('runar_trial_count', String(getTrialCount() + 1)); }
 
-// Monthly reading counter for logged-in free users (keyed by userId + YYYY-MM)
-function freeMonthKey(userId) {
-  const d = new Date();
-  return `runar_free_${userId}_${d.getFullYear()}_${String(d.getMonth()+1).padStart(2,'0')}`;
-}
-function getFreeMonthCount(userId) { return parseInt(localStorage.getItem(freeMonthKey(userId)) || '0'); }
-function incFreeMonthCount(userId) { localStorage.setItem(freeMonthKey(userId), String(getFreeMonthCount(userId) + 1)); }
-
-// Datum příštího resetu (1. příštího měsíce)
-function nextResetDate() {
-  const d = new Date();
-  return new Date(d.getFullYear(), d.getMonth() + 1, 1);
-}
-function nextResetLabel(isIs) {
-  const r = nextResetDate();
-  const months = isIs
-    ? ['jan','feb','mar','apr','maí','jún','júl','ágú','sep','okt','nóv','des']
-    : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  return isIs
-    ? `Endurnýjast ${r.getDate()}. ${months[r.getMonth()]}`
-    : `Resets ${months[r.getMonth()]} ${r.getDate()}`;
-}
-
-// Reset notifikace — zobrazí se jen jednou po prvním přihlášení v novém měsíci
-function resetNotifKey(userId) {
-  const d = new Date();
-  return `runar_reset_notified_${userId}_${d.getFullYear()}_${String(d.getMonth()+1).padStart(2,'0')}`;
-}
-function checkAndShowResetNotif(userId) {
-  if (!userId) return;
-  const key = resetNotifKey(userId);
-  if (localStorage.getItem(key)) return; // už viděl tento měsíc
-  // Najdi minulý měsíc — pokud existuje záznam o čtení, je to po resetu
-  const d = new Date();
-  const prevMonth = new Date(d.getFullYear(), d.getMonth() - 1, 1);
-  const prevKey = `runar_free_${userId}_${prevMonth.getFullYear()}_${String(prevMonth.getMonth()+1).padStart(2,'0')}`;
-  const hadReadings = parseInt(localStorage.getItem(prevKey) || '0') > 0;
-  localStorage.setItem(key, '1'); // označit jako viděno
-  if (!hadReadings) return; // první přihlášení (žádná minulá čtení) → netisknout
-  showResetModal();
-}
-function showResetModal() {
-  const el = document.getElementById('reset-notif-modal');
-  if (!el) return;
-  const isIs = lang === 'is';
-  const setText2 = (id, t) => { const e = document.getElementById(id); if (e) e.textContent = t; };
-  setText2('reset-notif-title', t('readings_renewed'));
-  setText2('reset-notif-body',  isIs
-    ? 'Steinarnir eru tilbúnir.'
-    : t('reset_body'));
-  setText2('reset-notif-btn', t('continue_btn'));
-  el.classList.add('open');
-}
-function closeResetModal() {
-  const el = document.getElementById('reset-notif-modal');
-  if (el) el.classList.remove('open');
-}
-
-// ─── DB: USER PROFILE ────────────────────────────────────
 async function fetchUserProfile(userId) {
   try {
     const { data } = await sb.from('user_profiles')
