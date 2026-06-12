@@ -29,7 +29,7 @@ function vn(key, n, lang) {
   if (lang === 'is') return n + '\u00a0' + (n === 1 ? v.is : v.is_pl);
   return n + '\u00a0' + (n === 1 ? v.en : v.en_pl);
 }
-// vl('card', 'en')  =>  'Rune Card'
+// vl('card', 'en')  =>  'Rune Reading Card'
 // vl('card', 'is')  =>  'R\u00fanakort'
 function vl(key, lang) {
   var v = VOCAB && VOCAB[key];

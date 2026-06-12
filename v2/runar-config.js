@@ -245,7 +245,7 @@ const TIER_LIMITS = {
     journal_label_en:    'last 5 casts',
     journal_label_is:    'síðustu 5 spár',
     panel_props: {
-      en: ['One free cast to start, then rune stones.', 'Rune Card unveils all features.', 'Limited journal (last 5 casts).'],
+      en: ['One free cast to start, then rune stones.', 'Rune Reading Card unveils all features.', 'Limited journal (last 5 casts).'],
       is: ['Ein frjáls spá til að byrja, síðan rúnasteinar.', 'Rúnakort opnar allar aðgerðir.', 'Takmörkuð dagbók (síðustu 5 spár).'],
     },
   },
@@ -276,7 +276,7 @@ const TIER_LIMITS = {
 // ─── SPREAD COSTS ────────────────────────────────────────
 // cost = number of runes in spread.
 // free: cost from free_balance (null = not available with free balance — credits only).
-// credits: cost in Rune Stones (from Rune Card).
+// credits: cost in Rune Stones (from Rune Reading Card).
 const SPREAD_COSTS = {
   single:    { free: 1,    credits: 1  },
   cross:     { free: null, credits: 5  },
