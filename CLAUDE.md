@@ -218,6 +218,20 @@ tree_name (text), life_rune_number (int), life_rune_text (text), life_rune_lang 
      Bez záblesků na špičkách (dle dokumentu). Rozcestník v2/tree-lab-index.html = 3 karty.
      PRODUKČNÍ PRINCIP (domluveno): pozice větve se počítá JEDNOU při čtení a ukládá do
      tree_readings.branch_data — nikdy nepřepočítávat, jinak se lidem přeskládají stromy.
+   · V3.1 (2026-06-12, schváleno KUKYm): KMEN = liana prameny (těsné, sdílená fáze, ŽÁDNÝ
+     keltský cop — KUKY veto). VELKÉ ČTENÍ (horseshoe/yggdrasil) = NOVÝ pramen kmene
+     (kořen pod zemí → šplhá kmenem, bloom viditelný) → kmen roste rok za rokem (3→~8
+     pramenů/rok). Kostra se prodlužuje s věkem (scafExtend, log) = místo pro nové větve.
+     Crowding RANKUJE hostitele (penalizace, nikdy neveto — bug: bestScore=-1 shazoval
+     134/160 větví, fix -Infinity). ROOT ECHO: každé čtení zrcadlí kořínek na kořenový
+     systém (rootEcho slider) — jak nahoře tak dole. AGE SCALE: stromek (minScale 0.58)
+     → dospělý (ageSpan ~300 čtení ≈ 1 rok používání ≈ 100 let stromu). Lab: AUTOMAT
+     (náhodné runy/oblasti) + ČASOZBĚR tlačítka +1 měsíc/+1 ROK (reálná kadence: singles
+     ob den, horseshoe kvartálně, yggdrasil ročně). Life layer throttle 12 fps (tisíce
+     listů). window._r = debug handle. ESTETIKA (zásady): asymetrická rovnováha (ne
+     symetrie), da Vinci taper (dítě ~0.7 rodiče), gradient hustoty, chuchvalce s okny,
+     jedno gesto na větev. Ověřeno na 184 čteních (1 rok). _savepng.js = node helper
+     (port 7799) pro screenshoty když preview_screenshot timeoutuje na velkém stromu.
    KOŘENY: integrátor se silnou seeded křivostí — rozbíhají se do všech stran (rootFan),
    kroutí (rootCurl), kříží a proplétají (depth osciluje podél kořene); golden walk směrů.
    KORUNA: scaffoldFan pro hlavní větve do stran, crownFan + user.crownBias = asymetrie;
