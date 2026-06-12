@@ -307,22 +307,22 @@ const SEEKS = {
 // Blank/Odin has no Aett — outside the Futhark structure
 const AETTY = {
   freya: {
-    name_en: "Freya's Aett",    name_is: 'Freyju Aett',
+    name_en: "Freya's Aett",    name_is: 'Freyju ætt',
     runes:   ['Fehu','Uruz','Thurisaz','Ansuz','Raidho','Kenaz','Gebo','Wunjo'],
     theme_en: 'world, body, strength, communication, joy',
-    theme_is: 'heimur, likami, styrkur, samskipti, gledi',
+    theme_is: 'heimur, líkami, styrkur, samskipti, gleði',
   },
   heimdall: {
-    name_en: "Heimdall's Aett", name_is: 'Heimdalls Aett',
+    name_en: "Heimdall's Aett", name_is: 'Heimdalls ætt',
     runes:   ['Hagalaz','Nauthiz','Isa','Jera','Eihwaz','Perth','Algiz','Sowilo'],
     theme_en: 'fate, time, cycle, hidden, protection',
-    theme_is: 'orlög, timi, hringrás, dulid, vernd',
+    theme_is: 'örlög, tími, hringrás, dulið, vernd',
   },
   tyr: {
-    name_en: "Tyr's Aett",      name_is: 'Tys Aett',
+    name_en: "Tyr's Aett",      name_is: 'Týs ætt',
     runes:   ['Tiwaz','Berkana','Ehwaz','Mannaz','Laguz','Ingwaz','Dagaz','Othila'],
     theme_en: 'justice, growth, movement, humanity, completion',
-    theme_is: 'réttlaeti, voxtur, hreyfing, mannkyn, lokid',
+    theme_is: 'réttlæti, vöxtur, hreyfing, mannkyn, lokið',
   },
 };
 

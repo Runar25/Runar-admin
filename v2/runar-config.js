@@ -348,15 +348,15 @@ const SPREAD_CONFIG = {
         'Hel — Completion',             // 9 urd
       ],
       is: [
-        'Asgardr — Haesta sjalf',
-        'Vanaheimr — Samhljomur',
-        'Alfheimr — Skapaningur',
-        'Midgardr — Dagleg reind',
-        'Jotunheimr — Hindrun',
-        'Svartalfaheimr — Dulinn list',
-        'Nidavellir — Djupur uppspretta',
+        'Ásgarðr — Hæsta sjálf',
+        'Vanaheimr — Samhljómur',
+        'Álfheimr — Skapaningur',
+        'Miðgarðr — Dagleg reind',
+        'Jötunheimr — Hindrun',
+        'Svartálfaheimr — Dulinn list',
+        'Níðavellir — Djúpur uppspretta',
         'Niflheimr — Uppruninn',
-        'Hel — Lokid',
+        'Hel — Lokið',
       ],
     },
     // Norns axis per position: skuld=1-3, verdandi=4-5, urd=6-9
