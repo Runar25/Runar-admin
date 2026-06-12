@@ -127,7 +127,7 @@ Seznam zbývajících hardcoded míst k vyčištění → working-style.md.
 | DB hodnota | UI jméno | Přístup |
 |-----------|---------|---------|
 | free_trial | Visitor | 1 cast, anon, jen Fehu |
-| rune_seeker | Rune Seeker | 1 cast zdarma/měsíc + rune stones, journal 5 |
+| rune_seeker | Rune Seeker | 1 cast zdarma při registraci (pak rune stones), journal 5 |
 | standard | **Rune Walker** | 50 castů/měsíc, hlas, full journal |
 | premium | **Rune Keeper** | 75 castů/měsíc, vše + hlubší Life Rune |
 
