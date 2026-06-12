@@ -114,6 +114,12 @@ Nový spread → readRune() · drawAnother() · resetReader() · _setSpreadMode(
 Migrace → grep starý text, aktualizovat VŠECHNY výskyty (sdílené i lokální)
 Před commitem: "Existuje jiná cesta kódem kde tohle chybí?"
 
+### §15 — Vocab/tier termíny = z VOCAB/TIERS, NIKDY natvrdo
+Název karty/jednotky/spá a tier jména: přes `vl()`/`vlp()`/`vn()`/`tp({card})` / `TIERS[x].label`.
+Štítky a tlačítka templatuj s `{card}`/`{unit}` placeholderem; v dlouhé marketingové próze je brand jméno OK.
+Platí i pro hodnoty v translations.js (ne jen logiku) — gift_card_btn, panely atd.
+Seznam zbývajících hardcoded míst k vyčištění → working-style.md.
+
 ---
 
 ## Tier systém
