@@ -603,7 +603,7 @@ async function generateVoice() {
     _capReset();
     document.getElementById('audio-player').classList.add('visible');
     voiceGenerated[lang] = true;
-    btn.textContent = '♪ RÚNAR HAS SPOKEN';
+    btn.textContent = t('voice_btn_done');
     btn.disabled = true;
     setSt('st-voice', '');
   } catch (err) {

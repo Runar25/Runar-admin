@@ -74,6 +74,7 @@ const UI_TEXT = {
     voice_btn:         'ᚢ HEAR RÚNAR SPEAK',
     voice_btn_loading: 'ᚢ RÚNAR IS SPEAKING…',
     voice_btn_regen:   'ᚢ REGENERATE VOICE',
+    voice_btn_done:    '♪ RÚNAR HAS SPOKEN',
     voice_player_lbl:  '♪ RÚNAR SPEAKS',
 
     // Ritual names — change here, reflects everywhere
@@ -271,6 +272,7 @@ const UI_TEXT = {
     voice_btn:         'ᚢ HEYRA RÚNAR TALA',
     voice_btn_loading: 'ᚢ RÚNAR TALAR…',
     voice_btn_regen:   'ᚢ ENDURGERA RÖDD',
+    voice_btn_done:    '♪ RÚNAR HEFUR TALAÐ',
     voice_player_lbl:  '♪ RÚNAR TALAR',
 
     // Ritual names — change here, reflects everywhere

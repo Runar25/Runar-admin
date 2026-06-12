@@ -347,7 +347,7 @@ function showCachedReading(l) {
   setSt('st-voice', '');
   const vBtn = document.getElementById('btn-generate-voice');
   if (voiceGenerated[l]) {
-    vBtn.textContent = '♪ RÚNAR HAS SPOKEN'; vBtn.disabled = true;
+    vBtn.textContent = t('voice_btn_done'); vBtn.disabled = true;
   } else {
     vBtn.textContent = t('voice_btn'); vBtn.disabled = false;
   }

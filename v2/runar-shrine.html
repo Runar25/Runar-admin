@@ -847,7 +847,7 @@ function showCachedReading(l) {
   const voiceBtn = document.getElementById('btn-generate-voice');
   if (voiceGenerated[l]) {
     // Already generated dynamic voice in this language this session — keep locked
-    voiceBtn.textContent = '♪ RÚNAR HAS SPOKEN';
+    voiceBtn.textContent = t('voice_btn_done');
     voiceBtn.disabled = true;
   } else {
     voiceBtn.textContent = t('voice_btn');
@@ -2049,7 +2049,7 @@ async function generateVoice() {
     document.getElementById('audio-player').classList.add('visible');
     // Voice generated — lock the button for this language
     voiceGenerated[lang] = true;
-    btn.textContent = '♪ RÚNAR HAS SPOKEN';
+    btn.textContent = t('voice_btn_done');
     btn.disabled = true;
     setSt('st-voice', '');
   } catch (err) {
