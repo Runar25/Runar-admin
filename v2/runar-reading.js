@@ -634,9 +634,12 @@ async function generateVoice() {
 }
 
 
-// ─── KRÍŽ GENERATE (5-rune cross) ────────────────────────
-async function _generateSpread5Reading() {
-  if (_spread5Runes.length < 5) return;
+// ─── MULTI-RUNE SPREAD GENERATE (shared) ────────────────
+// One reading flow for all multi-rune spreads. The 4 wrappers below differ
+// only in: rune array, min count, prompt builder, tokens, credits, the
+// output/label element ids, and the journal kind.
+async function _generateSpreadReading(o) {
+  if (o.runes.length < o.min) return;
 
   var vBtn = document.getElementById('btn-generate-voice');
   if (vBtn) { vBtn.disabled = true; vBtn.textContent = t('voice_btn'); }
@@ -644,13 +647,12 @@ async function _generateSpread5Reading() {
   document.getElementById('runar-audio').src = '';
   setSt('st-voice', '');
 
-  // Hide single layers, show spread5 output
   var s1 = document.getElementById('single-layer1');
   var s2 = document.getElementById('single-layer2');
   if (s1) s1.style.display = 'none';
   if (s2) s2.style.display = 'none';
-  var s5out = document.getElementById('spread5-output');
-  if (s5out) s5out.style.display = 'block';
+  var out = document.getElementById(o.outputId);
+  if (out) out.style.display = 'block';
 
   var rdLoad = document.getElementById('reading-loading');
   var rdLoadTxt = document.getElementById('reading-loading-txt');
@@ -663,10 +665,9 @@ async function _generateSpread5Reading() {
 
   var u = readerUser;
   var sys = buildSysPrompt(activeChar, lang);
-  var prompt = buildKrizPrompt(u, _spread5Runes, lang, corrections);
-  var tokens = (SPREAD_CONFIG && SPREAD_CONFIG.cross) ? SPREAD_CONFIG.cross.tokens : 1100;
+  var prompt = o.buildPrompt(u, o.runes, lang, corrections);
 
-  var res = await callProxy(sys, prompt, tokens, shouldUseCredit(), SPREAD_COSTS.cross.credits);
+  var res = await callProxy(sys, prompt, o.tokens, shouldUseCredit(), o.credits);
 
   if (rdLoad) rdLoad.style.display = 'none';
   if (pL1) pL1.classList.remove('pulsing');
@@ -691,97 +692,15 @@ async function _generateSpread5Reading() {
   var text = applyISCorrections(res.text || '', lang, corrections);
   readerTexts[lang] = { short: text, deep: '' };
 
-  // Update label with rune glyphs
-  var s5lbl = document.getElementById('s5-kriz-lbl');
-  if (s5lbl) s5lbl.textContent = _spread5Runes.map(function(r) { return r.g; }).join(' · ');
-
-  // Save to DB — spread format (all runes)
-  if (currentUser) {
-    if (_readingMode === 'mine') {
-      await saveSpreadReading('KRIZ', _spread5Runes, text);
-      loadJournal();
-    }
-    await syncMonthlyCount(currentUser.id);
-  } else {
-    incTrialCount();
-    updateAuthUI();
-  }
-
-  await stream('s5-out', text);
-
-  // Voice
-  if (canUseVoice()) {
-    if (vBtn) { vBtn.disabled = false; vBtn.style.display = ''; }
-  } else {
-    if (vBtn) { vBtn.disabled = true; vBtn.style.display = 'none'; }
-  }
-}
-
-// ─── HORSESHOE READING (7 runes) ─────────────────────────────────────────
-async function _generateHorseshoeReading() {
-  if (_spread7Runes.length < 7) return;
-
-  var vBtn = document.getElementById('btn-generate-voice');
-  if (vBtn) { vBtn.disabled = true; vBtn.textContent = t('voice_btn'); }
-  document.getElementById('audio-player').classList.remove('visible');
-  document.getElementById('runar-audio').src = '';
-  setSt('st-voice', '');
-
-  var s1 = document.getElementById('single-layer1');
-  var s2 = document.getElementById('single-layer2');
-  if (s1) s1.style.display = 'none';
-  if (s2) s2.style.display = 'none';
-  var s7out = document.getElementById('spread7-output');
-  if (s7out) s7out.style.display = 'block';
-
-  var rdLoad = document.getElementById('reading-loading');
-  var rdLoadTxt = document.getElementById('reading-loading-txt');
-  if (rdLoadTxt) rdLoadTxt.textContent = t('reading_loading');
-  if (rdLoad) rdLoad.style.display = 'block';
-  var pL1 = document.getElementById('layer1-lbl');
-  var pL2 = document.getElementById('layer2-lbl');
-  if (pL1) pL1.classList.add('pulsing');
-  if (pL2) pL2.classList.add('pulsing');
-
-  var u = readerUser;
-  var sys = buildSysPrompt(activeChar, lang);
-  var prompt = buildHorseshoePrompt(u, _spread7Runes, lang, corrections);
-  var tokens = (SPREAD_CONFIG && SPREAD_CONFIG.horseshoe) ? SPREAD_CONFIG.horseshoe.tokens : 1300;
-
-  var res = await callProxy(sys, prompt, tokens, shouldUseCredit(), SPREAD_COSTS.horseshoe.credits);
-
-  if (rdLoad) rdLoad.style.display = 'none';
-  if (pL1) pL1.classList.remove('pulsing');
-  if (pL2) pL2.classList.remove('pulsing');
-
-  if (res.error === 'rate_limited') {
-    setSt('st-reader', lang === 'is' ? 'Of margar beiðnir. Bíddu aðeins.' : 'Too many requests. Please wait a moment.', 'err');
-    return;
-  }
-  if (res.error === 'no_credits' || res.error === 'monthly_limit' || res.error === 'weekly_limit') {
-    var isMonthly7 = res.error === 'monthly_limit';
-    var msg7 = isMonthly7
-      ? (lang === 'is' ? 'Mánaðarlegur lesturmark er náð.' : 'Monthly reading limit reached.')
-      : (lang === 'is' ? 'Kredit þínir eru búnir.' : 'No credits remaining.');
-    setSt('st-reader', msg7, 'err');
-    if (currentUser) syncMonthlyCount(currentUser.id);
-    if (currentUser) await fetchUserProfile(currentUser.id);
-    return;
-  }
-  if (res.error) { setSt('st-reader', 'Failed: ' + res.error, 'err'); return; }
-
-  var text7 = applyISCorrections(res.text || '', lang, corrections);
-  readerTexts[lang] = { short: text7, deep: '' };
-
-  var s7lbl = document.getElementById('s7-horseshoe-lbl');
-  if (s7lbl) s7lbl.textContent = _spread7Runes.map(function(r) { return r.g; }).join(' · ');
+  var lbl = document.getElementById(o.lblId);
+  if (lbl) lbl.textContent = o.runes.map(function(r) { return r.g; }).join(' · ');
 
   if (currentUser) {
-    if (_readingMode === 'mine') { await saveSpreadReading('HORSESHOE', _spread7Runes, text7); loadJournal(); }
+    if (_readingMode === 'mine') { await saveSpreadReading(o.kind, o.runes, text); loadJournal(); }
     await syncMonthlyCount(currentUser.id);
   } else { incTrialCount(); updateAuthUI(); }
 
-  await stream('s7-out', text7);
+  await stream(o.outId, text);
 
   if (canUseVoice()) {
     if (vBtn) { vBtn.disabled = false; vBtn.style.display = ''; }
@@ -790,163 +709,36 @@ async function _generateHorseshoeReading() {
   }
 }
 
-// ─── YGGDRASIL READING (9 worlds) ────────────────────────────────────────
-async function _generateYggdrasilReading() {
-  if (_spread9Runes.length < 9) return;
-
-  var vBtn = document.getElementById('btn-generate-voice');
-  if (vBtn) { vBtn.disabled = true; vBtn.textContent = t('voice_btn'); }
-  document.getElementById('audio-player').classList.remove('visible');
-  document.getElementById('runar-audio').src = '';
-  setSt('st-voice', '');
-
-  var s1 = document.getElementById('single-layer1');
-  var s2 = document.getElementById('single-layer2');
-  if (s1) s1.style.display = 'none';
-  if (s2) s2.style.display = 'none';
-  var s9out = document.getElementById('spread9-output');
-  if (s9out) s9out.style.display = 'block';
-
-  var rdLoad = document.getElementById('reading-loading');
-  var rdLoadTxt = document.getElementById('reading-loading-txt');
-  if (rdLoadTxt) rdLoadTxt.textContent = t('reading_loading');
-  if (rdLoad) rdLoad.style.display = 'block';
-  var pL1 = document.getElementById('layer1-lbl');
-  var pL2 = document.getElementById('layer2-lbl');
-  if (pL1) pL1.classList.add('pulsing');
-  if (pL2) pL2.classList.add('pulsing');
-
-  var u = readerUser;
-  var sys = buildSysPrompt(activeChar, lang);
-  var prompt = buildYggdrasilPrompt(u, _spread9Runes, lang, corrections);
-  var tokens = (SPREAD_CONFIG && SPREAD_CONFIG.yggdrasil) ? SPREAD_CONFIG.yggdrasil.tokens : 1800;
-
-  var res = await callProxy(sys, prompt, tokens, shouldUseCredit(), SPREAD_COSTS.yggdrasil.credits);
-
-  if (rdLoad) rdLoad.style.display = 'none';
-  if (pL1) pL1.classList.remove('pulsing');
-  if (pL2) pL2.classList.remove('pulsing');
-
-  if (res.error === 'rate_limited') {
-    setSt('st-reader', lang === 'is' ? 'Of margar beiðnir. Bíddu aðeins.' : 'Too many requests. Please wait a moment.', 'err');
-    return;
-  }
-  if (res.error === 'no_credits' || res.error === 'monthly_limit' || res.error === 'weekly_limit') {
-    var isMonthly9 = res.error === 'monthly_limit';
-    var msg9 = isMonthly9
-      ? (lang === 'is' ? 'Mánaðarlegur lesturmark er náð.' : 'Monthly reading limit reached.')
-      : (lang === 'is' ? 'Kredit þínir eru búnir.' : 'No credits remaining.');
-    setSt('st-reader', msg9, 'err');
-    if (currentUser) syncMonthlyCount(currentUser.id);
-    if (currentUser) await fetchUserProfile(currentUser.id);
-    return;
-  }
-  if (res.error) { setSt('st-reader', 'Failed: ' + res.error, 'err'); return; }
-
-  var text9 = applyISCorrections(res.text || '', lang, corrections);
-  readerTexts[lang] = { short: text9, deep: '' };
-
-  var s9lbl = document.getElementById('s9-yggdrasil-lbl');
-  if (s9lbl) s9lbl.textContent = _spread9Runes.map(function(r) { return r.g; }).join(' · ');
-
-  if (currentUser) {
-    if (_readingMode === 'mine') { await saveSpreadReading('YGGDRASIL', _spread9Runes, text9); loadJournal(); }
-    await syncMonthlyCount(currentUser.id);
-  } else { incTrialCount(); updateAuthUI(); }
-
-  await stream('s9-out', text9);
-
-  if (canUseVoice()) {
-    if (vBtn) { vBtn.disabled = false; vBtn.style.display = ''; }
-  } else {
-    if (vBtn) { vBtn.disabled = true; vBtn.style.display = 'none'; }
-  }
+function _spreadTokens(key, fallback) {
+  return (SPREAD_CONFIG && SPREAD_CONFIG[key]) ? SPREAD_CONFIG[key].tokens : fallback;
 }
 
-// ─── NORNS GENERATE (3-rune fate axis) ─────────────────────────
-// Norns positions have hardcoded norns_axis (independent of area/seeking):
-//   _spread3Runes[0] → urd | [1] → verdandi | [2] → skuld
-// Tree branch: reaches toward kmen — deeper than Trojice
-// Bloom duration: 24h
-async function _generateNornsReading() {
-  if (_spread3Runes.length < 3) return;
+// Kříž — 5-rune cross
+function _generateSpread5Reading() {
+  return _generateSpreadReading({ runes: _spread5Runes, min: 5, buildPrompt: buildKrizPrompt,
+    tokens: _spreadTokens('cross', 1100), credits: SPREAD_COSTS.cross.credits,
+    outputId: 'spread5-output', outId: 's5-out', lblId: 's5-kriz-lbl', kind: 'KRIZ' });
+}
 
-  var vBtn = document.getElementById('btn-generate-voice');
-  if (vBtn) { vBtn.disabled = true; vBtn.textContent = t('voice_btn'); }
-  document.getElementById('audio-player').classList.remove('visible');
-  document.getElementById('runar-audio').src = '';
-  setSt('st-voice', '');
+// Horseshoe — 7 runes
+function _generateHorseshoeReading() {
+  return _generateSpreadReading({ runes: _spread7Runes, min: 7, buildPrompt: buildHorseshoePrompt,
+    tokens: _spreadTokens('horseshoe', 1300), credits: SPREAD_COSTS.horseshoe.credits,
+    outputId: 'spread7-output', outId: 's7-out', lblId: 's7-horseshoe-lbl', kind: 'HORSESHOE' });
+}
 
-  // Hide single layers, show spread3 output
-  var s1 = document.getElementById('single-layer1');
-  var s2 = document.getElementById('single-layer2');
-  if (s1) s1.style.display = 'none';
-  if (s2) s2.style.display = 'none';
-  var s3out = document.getElementById('spread3-output');
-  if (s3out) s3out.style.display = 'block';
+// Yggdrasil — 9 worlds
+function _generateYggdrasilReading() {
+  return _generateSpreadReading({ runes: _spread9Runes, min: 9, buildPrompt: buildYggdrasilPrompt,
+    tokens: _spreadTokens('yggdrasil', 1800), credits: SPREAD_COSTS.yggdrasil.credits,
+    outputId: 'spread9-output', outId: 's9-out', lblId: 's9-yggdrasil-lbl', kind: 'YGGDRASIL' });
+}
 
-  var rdLoad = document.getElementById('reading-loading');
-  var rdLoadTxt = document.getElementById('reading-loading-txt');
-  if (rdLoadTxt) rdLoadTxt.textContent = t('reading_loading');
-  if (rdLoad) rdLoad.style.display = 'block';
-  var pL1 = document.getElementById('layer1-lbl');
-  var pL2 = document.getElementById('layer2-lbl');
-  if (pL1) pL1.classList.add('pulsing');
-  if (pL2) pL2.classList.add('pulsing');
-
-  var u = readerUser;
-  var sys = buildSysPrompt(activeChar, lang);
-  var prompt = buildNornsPrompt(u, _spread3Runes, lang, corrections);
-  var tokens = (SPREAD_CONFIG && SPREAD_CONFIG.norns) ? SPREAD_CONFIG.norns.tokens : 900;
-
-  var res = await callProxy(sys, prompt, tokens, shouldUseCredit(), SPREAD_COSTS.norns.credits);
-
-  if (rdLoad) rdLoad.style.display = 'none';
-  if (pL1) pL1.classList.remove('pulsing');
-  if (pL2) pL2.classList.remove('pulsing');
-
-  if (res.error === 'rate_limited') {
-    setSt('st-reader', lang === 'is' ? 'Of margar beiðnir. Bíddu aðeins.' : 'Too many requests. Please wait a moment.', 'err');
-    return;
-  }
-  if (res.error === 'no_credits' || res.error === 'monthly_limit' || res.error === 'weekly_limit') {
-    var isMonthly = res.error === 'monthly_limit';
-    var msg = isMonthly
-      ? (lang === 'is' ? 'Mánaðarlegur lesturmark er náð.' : 'Monthly reading limit reached.')
-      : (lang === 'is' ? 'Kredit þínir eru búnir.' : 'No credits remaining.');
-    setSt('st-reader', msg, 'err');
-    if (currentUser) syncMonthlyCount(currentUser.id);
-    if (currentUser) await fetchUserProfile(currentUser.id);
-    return;
-  }
-  if (res.error) { setSt('st-reader', 'Failed: ' + res.error, 'err'); return; }
-
-  var text = applyISCorrections(res.text || '', lang, corrections);
-  readerTexts[lang] = { short: text, deep: '' };
-
-  // Label: Urður · Verðandi · Skuld glyphs
-  var s3lbl = document.getElementById('s3-norns-lbl');
-  if (s3lbl) s3lbl.textContent = _spread3Runes[0].g + ' · ' + _spread3Runes[1].g + ' · ' + _spread3Runes[2].g;
-
-  // Save to DB — spread format (all runes)
-  if (currentUser) {
-    if (_readingMode === 'mine') {
-      await saveSpreadReading('NORNS', _spread3Runes, text);
-      loadJournal();
-    }
-    await syncMonthlyCount(currentUser.id);
-  } else {
-    incTrialCount();
-    updateAuthUI();
-  }
-
-  await stream('s3-out', text);
-
-  if (canUseVoice()) {
-    if (vBtn) { vBtn.disabled = false; vBtn.style.display = ''; }
-  } else {
-    if (vBtn) { vBtn.disabled = true; vBtn.style.display = 'none'; }
-  }
+// Norns — 3-rune fate axis (norns_axis: [0]=urd [1]=verdandi [2]=skuld)
+function _generateNornsReading() {
+  return _generateSpreadReading({ runes: _spread3Runes, min: 3, buildPrompt: buildNornsPrompt,
+    tokens: _spreadTokens('norns', 900), credits: SPREAD_COSTS.norns.credits,
+    outputId: 'spread3-output', outId: 's3-out', lblId: 's3-norns-lbl', kind: 'NORNS' });
 }
 
 // ─── READING MODE ─────────────────────────────────────────────────────────────
