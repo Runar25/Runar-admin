@@ -229,7 +229,6 @@ const TIER_LIMITS = {
   free_trial: {
     onboarding:   1,     // lifetime readings for Visitor
     weekly_drip:  0,
-    free_spreads: ['single'],
     panel_props: {
       en: ['Your first cast is a gift.', 'No account, no payment.', 'Step further when you are ready.'],
       is: ['Fyrsti lesturinn er gjöf.', 'Enginn reikningur, engin greiðsla.', 'Farðu lengra þegar þú ert tilbúinn.'],
@@ -238,7 +237,6 @@ const TIER_LIMITS = {
   rune_seeker: {
     onboarding:   1,     // 1 free reading at registration
     weekly_drip:  null,  // no weekly drip
-    free_spreads: ['single', 'norns', 'cross', 'horseshoe', 'yggdrasil'],
     journal_entries: 5,
     onboarding_label_en: 'one free cast',
     onboarding_label_is: 'ein frjáls spá',
@@ -253,7 +251,6 @@ const TIER_LIMITS = {
     onboarding:    null,
     weekly_drip:   null,
     monthly_limit: 50,   // casts per month — change here, UI updates automatically
-    free_spreads:  ['single', 'cross', 'horseshoe', 'norns', 'yggdrasil'],
     journal_entries: null,
     panel_props: {
       en: ['50 casts / month.', 'Voice on every cast.', 'Full journal + filters.', 'The Gathering.'],
@@ -264,7 +261,6 @@ const TIER_LIMITS = {
     onboarding:    null,
     weekly_drip:   null,
     monthly_limit: 75,   // casts per month
-    free_spreads:  ['single', 'cross', 'horseshoe', 'norns', 'yggdrasil'],
     journal_entries: null,
     panel_props: {
       en: ['75 casts / month.', 'Everything in Rune Walker.', 'Yggdrasil — all nine worlds.', 'Ceremonial mode.'],
