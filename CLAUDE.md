@@ -127,7 +127,7 @@ Seznam zbývajících hardcoded míst k vyčištění → working-style.md.
 | DB hodnota | UI jméno | Přístup |
 |-----------|---------|---------|
 | free_trial | Visitor | 1 cast, anon, jen Fehu |
-| rune_seeker | Rune Seeker | 1 cast zdarma při registraci (pak rune stones), journal 5 |
+| rune_seeker | Rune Seeker | 1 cast zdarma při registraci (pak rune readings), journal 5 |
 | standard | **Rune Walker** | 50 castů/měsíc, hlas, full journal |
 | premium | **Rune Keeper** | 75 castů/měsíc, vše + hlubší Life Rune |
 
@@ -157,8 +157,8 @@ tree_name (text), life_rune_number (int), life_rune_text (text), life_rune_lang 
 |--------|------|------|
 | Single | 1 | ✅ produkce |
 | Norns | 3 | ✅ reader (zakládací rituál) |
-| Kříž | 5 | ✅ reader (RS+ za rune stones) |
-| Horseshoe | 7 | ✅ reader (RS+ za rune stones) |
+| Kříž | 5 | ✅ reader (RS+ za rune readings) |
+| Horseshoe | 7 | ✅ reader (RS+ za rune readings) |
 | Yggdrasil | 9 | ✅ reader (všichni přihlášení, Dec 14–28) |
 | The Gathering | — | ❌ redesign (tree_state DB) |
 
@@ -204,6 +204,20 @@ tree_name (text), life_rune_number (int), life_rune_text (text), life_rune_lang 
      Norns spread: 3 runy = explicitní axisHint urd/verdandi/skuld. Ověřeno: slider mění tvar.
    Hlavní lab v2/runar-tree-lab.html zůstává = liana v0.7. Generátory: build_tree_lab.py (liana),
    build_tree_hybrid.py (hybrid). Stále NEKOMITOVÁNO — KUKY porovnává, která cesta je lepší.
+   · V3 SKELETON (2026-06-12, RUNAR_FABLE5_CONTEXT.md): v2/tree-lab-v3-skeleton/
+     (build_tree_v3.py, vlastní namespace RunarTree3Model/Renderer). Model kostra+rekurze:
+     kmen = PODSTATA (3 Norns kořeny se splétají vzhůru do sloupu — braid, + Life Rune seed
+     knot, charakter kmene z Life Rune čísla), koruna = AKTIVITA (čtení = krátké rozhodné
+     větve z růstových bodů, rekurzivně, level cap 5, growth budget maxKids 3 — anti brokolice).
+     Větve se liší ÚHLEM ne délkou (délka jen ±15 % šum). Runové signatury v tvaru větve
+     (curve/sub/taper, RUNE_SHAPE tabulka) — ZÁMĚRNĚ jemné, slider runeSignature (KUKY:
+     skryté, uživatel je má hledat). Kořeny jen o trochu tmavší (nízké ct, KUKY). Velká
+     čtení (horseshoe/yggdrasil) zakládají VLASTNÍ kořenovou linii za kmenem až do země
+     (vzácná „liana"). Kmen tloustne pomalu logaritmicky s korunou (trunkGrowth) — podstata
+     nese aktivitu, není z ní. Sémantická elevace (osa→výška napojení) přenesena z hybridu.
+     Bez záblesků na špičkách (dle dokumentu). Rozcestník v2/tree-lab-index.html = 3 karty.
+     PRODUKČNÍ PRINCIP (domluveno): pozice větve se počítá JEDNOU při čtení a ukládá do
+     tree_readings.branch_data — nikdy nepřepočítávat, jinak se lidem přeskládají stromy.
    KOŘENY: integrátor se silnou seeded křivostí — rozbíhají se do všech stran (rootFan),
    kroutí (rootCurl), kříží a proplétají (depth osciluje podél kořene); golden walk směrů.
    KORUNA: scaffoldFan pro hlavní větve do stran, crownFan + user.crownBias = asymetrie;
