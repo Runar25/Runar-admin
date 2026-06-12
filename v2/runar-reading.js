@@ -134,7 +134,7 @@ function startReading() {
   // Only block rune_seeker who has used all free monthly slots AND has no credits left.
   // Rune Walker / Rune Keeper / Admin are never blocked here.
   if (currentUser && userTier === 'rune_seeker'
-      && getFreeMonthCount(currentUser.id) >= FREE_REGISTERED_LIMIT
+      && userFreeBalance <= 0
       && userCredits <= 0) {
     updateAuthUI();
     setSt('st-setup', lang === 'is'
@@ -484,7 +484,7 @@ function drawAnother() {
   document.getElementById('reader-output').style.display = 'none';
   document.getElementById('trial-end').style.display = 'none';
   if (!currentUser && getTrialCount() >= FREE_TRIAL_LIMIT) { _showTrialEnd(); return; }
-  if (currentUser && userTier === 'rune_seeker' && getFreeMonthCount(currentUser.id) >= FREE_REGISTERED_LIMIT && userCredits <= 0) { updateAuthUI(); return; }
+  if (currentUser && userTier === 'rune_seeker' && userFreeBalance <= 0 && userCredits <= 0) { updateAuthUI(); return; }
   document.getElementById('reader-rune-card').style.display = 'block';
   document.querySelectorAll('#reader-grid .rb').forEach(b => b.classList.remove('on'));
   document.getElementById('reader-rune-info').textContent = '';
@@ -503,7 +503,7 @@ function resetReader() {
   if (!currentUser && getTrialCount() >= FREE_TRIAL_LIMIT) {
     _showTrialEnd(); return;
   }
-  if (currentUser && userTier === 'rune_seeker' && getFreeMonthCount(currentUser.id) >= FREE_REGISTERED_LIMIT && userCredits <= 0) {
+  if (currentUser && userTier === 'rune_seeker' && userFreeBalance <= 0 && userCredits <= 0) {
     updateAuthUI(); return;
   }
   document.getElementById('reader-setup').style.display = 'block';

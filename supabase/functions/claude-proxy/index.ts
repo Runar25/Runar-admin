@@ -248,36 +248,20 @@ serve(async (req) => {
         // ── The Gathering — bypass all limits ──
 
       } else {
-        // ── Free balance reading (single rune only) ──
+        // ── Free balance reading (single rune only) — 1 at registration, no replenish (model B) ──
         if (userId) {
-          // Read current balance + drip_week
           const { data: profile } = await sb()
             .from("user_profiles")
-            .select("free_balance, drip_week")
+            .select("free_balance")
             .eq("id", userId)
             .maybeSingle();
 
-          let freeBalance = profile?.free_balance ?? 0;
-          const dripWeek  = profile?.drip_week    ?? null;
-
-          // Monday drip: add 1 IF balance=0 AND haven't dripped this week yet
-          const now         = new Date();
-          const isMonday    = now.getUTCDay() === 1;
-          const currentWeek = getISOWeekKey(now);
-
-          if (isMonday && freeBalance === 0 && dripWeek !== currentWeek) {
-            const { error: dripError } = await sb()
-              .from("user_profiles")
-              .update({ free_balance: 1, drip_week: currentWeek })
-              .eq("id", userId)
-              .eq("free_balance", 0);  // atomic: only if still 0
-            if (!dripError) freeBalance = 1;
-          }
+          const freeBalance = profile?.free_balance ?? 0;
 
           if (freeBalance <= 0) {
             return json({
-              error:   "weekly_limit",
-              message: "The stones rest. Your next reading arrives Monday — or open the door with a reading gift card.",
+              error:   "no_credits",
+              message: "Your free reading has been drawn. Redeem a reading gift card to continue.",
             }, 402);
           }
 

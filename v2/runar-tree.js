@@ -73,9 +73,8 @@ function updateTreeTab() {
       if (balVal)  balVal.textContent  = bal;
       // Free reading — oddelene od credits (credits_balance != onboarding free reading)
       var freeLineEl = document.getElementById('tree-rs-free-line');
-      if (freeLineEl && typeof getFreeMonthCount === 'function' && currentUser) {
-        var freeUsed = getFreeMonthCount(currentUser.id);
-        var freeRem  = Math.max(0, FREE_REGISTERED_LIMIT - freeUsed);
+      if (freeLineEl && currentUser) {
+        var freeRem  = Math.max(0, userFreeBalance);
         if (freeRem > 0) {
           freeLineEl.textContent = lang === 'is'
             ? vn('cast', freeRem, 'is') + ' fyrir venjulegar dregnar rúnar'

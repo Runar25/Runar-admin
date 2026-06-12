@@ -17,6 +17,7 @@ let activeChar     = null;
 let currentUser    = null;
 let userTier       = 'free';    // 'free' | 'credits' | 'standard' | 'premium'
 let userCredits    = 0;         // credits_balance from user_profiles
+let userFreeBalance = 0;        // free_balance: 1 at registration, no replenish (model B)
 let readerUser     = {};
 let greetingShown  = false;     // show topbar greeting only once per session
 let userName       = '';        // display name from user_profiles.name
@@ -110,7 +111,7 @@ function closeResetModal() {
 async function fetchUserProfile(userId) {
   try {
     const { data } = await sb.from('user_profiles')
-      .select('tier, credits_balance, name, lang, life_rune_number, life_rune_text, life_rune_lang, dob_day, dob_month, dob_year, tree_name')
+      .select('tier, credits_balance, free_balance, name, lang, life_rune_number, life_rune_text, life_rune_lang, dob_day, dob_month, dob_year, tree_name')
       .eq('id', userId)
       .maybeSingle();
     if (data) {
@@ -120,6 +121,7 @@ async function fetchUserProfile(userId) {
       // Admins always get full premium access for testing
       if (isAdmin(currentUser?.email)) userTier = 'premium';
       userCredits = data.credits_balance || 0;
+      userFreeBalance = data.free_balance != null ? data.free_balance : 0;
       // Load life rune reading if stored
       if (data.life_rune_text) {
         _lifeRuneText = data.life_rune_text;
@@ -223,15 +225,16 @@ async function saveSpreadReading(spreadName, runesArr, text) {
 }
 
 // Sync monthly count from DB → localStorage (accurate, multi-device)
+// Refresh userFreeBalance z DB (free_balance: 1 při registraci, žádné doplnění — model B).
+// Název zachován kvůli stabilitě call-sites; už není měsíční.
 async function syncMonthlyCount(userId) {
-  const start = new Date(); start.setDate(1); start.setHours(0,0,0,0);
   try {
-    const { count } = await sb.from('readings')
-      .select('id', { count: 'exact', head: true })
-      .eq('user_id', userId)
-      .gte('drawn_at', start.toISOString());
-    if (count !== null) {
-      localStorage.setItem(freeMonthKey(userId), String(count));
+    const { data } = await sb.from('user_profiles')
+      .select('free_balance')
+      .eq('id', userId)
+      .maybeSingle();
+    if (data) {
+      userFreeBalance = data.free_balance != null ? data.free_balance : 0;
       updateAuthUI();
     }
   } catch(e) { console.warn('syncMonthlyCount:', e.message); }
@@ -1041,8 +1044,7 @@ async function callProxy(sys, prompt, maxTokens, use_credit = false, credit_cost
 // Vrátí true pokud je třeba použít kredit (monthly slot vyčerpán)
 function shouldUseCredit() {
   if (userTier !== 'rune_seeker') return false;
-  const used = getFreeMonthCount(currentUser?.id);
-  return used >= FREE_REGISTERED_LIMIT;
+  return userFreeBalance <= 0;
 }
 
 // Vrátí true pokud může aktuální uživatel slyšet dynamický hlas Rúnara.
@@ -1101,14 +1103,13 @@ function updateDropdown() {
   if (emailEl) emailEl.textContent = currentUser.email;
   if (balEl) {
     if (userTier === 'rune_seeker' || userTier === 'free' || userTier === 'credits') {
-      const used = getFreeMonthCount(currentUser.id);
-      const rem  = Math.max(0, FREE_REGISTERED_LIMIT - used);
+      const rem  = Math.max(0, userFreeBalance);
       const credPart = userCredits > 0
         ? (isIs ? ' · ' + userCredits + ' lestur' : ' · ' + userCredits + ' credit' + (userCredits !== 1 ? 's' : ''))
         : '';
       balEl.textContent = isIs
-        ? rem + ' frjáls lestur eftir' + credPart + ' · ' + nextResetLabel(true)
-        : rem + ' free reading' + (rem !== 1 ? 's' : '') + ' remaining' + credPart + ' · ' + nextResetLabel(false);
+        ? rem + ' frjáls lestur eftir' + credPart
+        : rem + ' free reading' + (rem !== 1 ? 's' : '') + ' remaining' + credPart;
       balEl.style.display = '';
     } else {
       balEl.style.display = 'none';
@@ -1263,7 +1264,6 @@ window.addEventListener('DOMContentLoaded', async () => {
         fetchUserProfile(currentUser.id); // tier + credits
         syncMonthlyCount(currentUser.id);
         loadJournal();
-        checkAndShowResetNotif(currentUser.id);
       }
     }
     if (event === 'SIGNED_OUT') {

@@ -120,8 +120,7 @@ function updateBanners() {
 
     // ── Rune Seeker — FREE_REGISTERED_LIMIT free reading(s) + paid credits ──
     creditsBanner.style.display = 'none';
-    const used      = getFreeMonthCount(currentUser.id);
-    const remaining = Math.max(0, FREE_REGISTERED_LIMIT - used);
+    const remaining = Math.max(0, userFreeBalance);
     const isIs      = lang === 'is';
 
     if (remaining > 0) {
