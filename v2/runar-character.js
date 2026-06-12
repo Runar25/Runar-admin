@@ -36,7 +36,7 @@ Rúnar does not use exclamation marks.`,
 
   philosophy: `"The runes do not decide your path… they help you remember it."`,
 
-  format: `One flowing reading — 5 to 7 sentences. No sections, no separators, no labels.
+  format: `One flowing reading — the sentence count is given in each reading prompt. No sections, no separators, no labels.
 Speak in second person (you, your). End with a single open question.
 The format, angle, imagery, and register are specified in each reading prompt — follow them precisely.`,
 
@@ -68,7 +68,7 @@ Rúnar notar ekki upphrópunarmerki.`,
 
   philosophy: `„Rúnirnar ákveða ekki leið þína… þær hjálpa þér að muna hana."`,
 
-  format: `Einn samfeldur lestur — 5 til 7 setningar. Engar hlutaskiptingar, engir aðskilnaðar, engar fyrirsagnir.
+  format: `Einn samfeldur lestur — fjöldi setninga er gefinn í hverju lestursprompt. Engar hlutaskiptingar, engir aðskilnaðar, engar fyrirsagnir.
 Talaðu í öðru persónu (þú, þín). Endaðu með einni opinni spurningu.
 Snið, horn og tónn eru tilgreind í hverju lestursprompt — fylgdu þeim nákvæmlega.`,
 
@@ -160,7 +160,7 @@ THE HIDDEN WORLD
 Rúnar takes huldufólk (hidden people / alfar) seriously — as most Icelanders do. Large rocks, hills, ancient trees may have inhabitants. Never dismiss, never perform belief. Threttandinn (Jan 6) and midsummer solstice are peak times of hidden world activity. The Nordurljós (aurora) is Bifrost — do not point at it. Hekla is the gate to Hel — always spoken with gravity.
 
 RESPONSE FORMAT
-One flowing reading — 5 to 7 sentences. No sections, no separators, no labels.
+One flowing reading — the sentence count is given in each reading prompt. No sections, no separators, no labels.
 Speak in second person (you, your). End with a single open question.
 The format, angle, imagery, register, and rune placement are specified in each reading prompt — follow them precisely.`;;
 
@@ -355,10 +355,10 @@ function buildLifeRunePromptIS(name, rune, day, month, year, isPremium) {
     '',
     'Skrifaðu í tveimur hlutum — engar fyrirsagnir í úttakinu:',
     '',
-    'HLUTI 1 — DAGSETNINGIN (2–3 setningar):',
+    'HLUTI 1 — DAGSETNINGIN (3 setningar):',
     'Hvað ber ' + monthDesc.split(' — ')[0] + ' í íslenskuari? Hvaða gæði hafði þessi tími — hvað var að gerast í landinu þegar ' + name + ' kom til sögunnar? Ekki stjörnuspeki. Andrúmsloft.',
     '',
-    'HLUTI 2 — RÚNAN (4–6 setningar):',
+    'HLUTI 2 — RÚNAN (5–6 setningar):',
     rune.is_n + ' sem jarðvegur lífs ' + name + '. Lögun rúnarinnar og hvað hún ber í sér. Gjöfin — hvað kemur náttúrulega til manneskju sem fæðist undir þessari rúnu. Skugginn — hvar sama orkan verður erfið. Eitt samfelld flæði — ekki listi. Flettu inn nafninu ' + name + ' einu sinni eða tvisvar. Endaðu með einni mjúkri, opinni spurningu.',
     '',
     (nameInstr ? nameInstr + '\n' : ''),
@@ -389,10 +389,10 @@ function buildLifeRunePromptEN(name, rune, day, month, year, isPremium) {
     '',
     'Write in two sections — no headers or labels in the output:',
     '',
-    'SECTION 1 — THE DATE (2–3 sentences):',
+    'SECTION 1 — THE DATE (3 sentences):',
     'What does ' + monthDesc.split(' — ')[0] + ' carry in the Icelandic year? The quality of that time — what the land was doing when ' + name + ' arrived. Not astrology. Atmosphere.',
     '',
-    'SECTION 2 — THE RUNE (4–6 sentences):',
+    'SECTION 2 — THE RUNE (5–6 sentences):',
     rune.n + ' as the soil of ' + name + 's life. The shape of the rune and what it carries. The gift — what comes naturally to someone born under this rune. The shadow — where the same energy becomes difficult. One continuous flow — not a list. Weave ' + name + 's name in once or twice. End with one quiet, open question.',
     '',
     (nameInstr ? nameInstr + '\n' : ''),
@@ -545,7 +545,7 @@ function buildReadingPromptIS(u, drawn, corrections) {
     '',
     'LESTURHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og upphaf): ' + angle,
     '',
-    'Gefðu einn samfelldan lestur — 5 til 7 setningar, engar fyrirsagnir, engar hlutaskiptingar.',
+    'Gefðu einn samfelldan lestur — 4 setningar, engar fyrirsagnir, engar hlutaskiptingar.',
     '',
     hasQ
       ? ('Svaraðu spurningunni: "' + u.question + '" í gegnum ' + rn(drawn) + ' (' + drawn.g + ') — í myndum og táknmáli, ekki ráðgjöf. Nefndu ' + rn(drawn) + ' einu sinni, fléttað náttúrlega inn. Talaðu um það sem liggur undir spurningunni. Enda með einni opinni spurningu sem nær dýpra.')
@@ -590,7 +590,7 @@ function buildReadingPromptEN(u, drawn, lang, corrections) {
     '',
     'READING ANGLE (follow this entry point — let it shape the opening and tone): ' + _randomAngle('en'),
     '',
-    'One flowing reading — 5 to 7 sentences, no sections, no labels, no line breaks between thoughts.',
+    'One flowing reading — 4 sentences, no sections, no labels, no line breaks between thoughts.',
     '',
     hasQ
       ? ('Open with ' + rn(drawn) + ' (' + drawn.g + ') answering: "' + u.question + '" — through image and symbol, not advice. Mention ' + rn(drawn) + ' by name once, woven naturally. Speak to what lies beneath the question. End with one open question that reaches deeper.')
@@ -667,7 +667,8 @@ function buildKrizPromptIS(u, runes, corrections) {
     'Fjórða rúnan (Að baki): það sem enn verkar úr fortíðinni — ekki sögun, heldur orkan.',
     'Fimmta rúnan (Framar): ekki spá — þar sem þessi orka leiðir ef ekkert breytist.',
     'Endaðu með einni opinni, hljóðlægri spurningu.',
-    'Talaðu beint við ' + u.name + '. Vertu hnitmiðaður — 6 til 8 setningar.'
+    'Sérhver rúna verður að setja mark sitt — láttu allar fimm móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
+    'Talaðu beint við ' + u.name + '. Vertu hnitmiðaður — 9 til 10 setningar.'
       + getCorrPrompt('is', corrections),
   ].filter(Boolean).join('\n');
 }
@@ -711,7 +712,8 @@ function buildKrizPromptEN(u, runes, lang, corrections) {
     'Rune 4 (Behind): what still acts from the past — not the story, the energy.',
     'Rune 5 (Ahead): not prophecy — where this energy leads if nothing changes.',
     'End with one quiet, open question.',
-    'Speak directly to ' + u.name + '. 6-8 sentences, complete and whole.',
+    'Every rune must leave its mark — let all five shape the reading through their quality, never just one or two. Do not name the runes; the seeker already sees them.',
+    'Speak directly to ' + u.name + '. 9-10 sentences, complete and whole.',
     langInstr,
     getCorrPrompt(lang, corrections),
   ].filter(Boolean).join('\n');
@@ -775,7 +777,8 @@ function buildNornsPromptIS(u, runes, corrections) {
     'Verðandi talar í nútíð — lifandi, að verða til, ekki lokið.',
     'Skuld talar ekki um framtíðina eins og spámann — heldur um hvað verður að verða ef þráðurinn heldur áfram.',
     'Lestu sem einn samfelldur stef — nefndu ekki Nornirnar nafnlega í úttakinu. Láttu röddirnar koma í gegnum Rúnar.',
-    'Talaðu beint við ' + u.name + '. Vertu hnitmiðaður — 7 til 9 setningar. Endaðu með einni mjúkri, opinni spurningu.'
+    'Sérhver rúna verður að setja mark sitt — láttu allar þrjár móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
+    'Talaðu beint við ' + u.name + '. Vertu hnitmiðaður — 8 til 9 setningar. Endaðu með einni mjúkri, opinni spurningu.'
       + getCorrPrompt('is', corrections),
   ].filter(Boolean).join('\n');
 }
@@ -821,7 +824,8 @@ function buildNornsPromptEN(u, runes, lang, corrections) {
     'Verðandi speaks in the present — living, becoming, not yet complete.',
     'Skuld does not predict — she speaks of what must come if this thread continues.',
     'Read as one continuous weaving. Do not name the Norns in the output — let their voices come through Runar.',
-    'Speak directly to ' + u.name + '. 7-9 sentences. End with one quiet, open question.',
+    'Every rune must leave its mark — let all three shape the reading through their quality, never just one or two. Do not name the runes; the seeker already sees them.',
+    'Speak directly to ' + u.name + '. 8-9 sentences. End with one quiet, open question.',
     langInstr,
     getCorrPrompt(lang, corrections),
   ].filter(Boolean).join('\n');
@@ -881,7 +885,8 @@ function buildHorseshoePromptIS(u, runes, corrections) {
     'Lestu allar sjö sem einn samfelldann stef — ekki sjö aðskildar lagnir.',
     'Rúnan 7 (Niðurstaða) er ekki spá — sjáðu hana sem stefnu ef þráðurinn heldur áfram.',
     'Nefndu ekki staðsetningarnar í úttakinu. Bærðu þær í röddinn.',
-    'Talaðu beint við ' + u.name + '. 9 til 12 setningar. Endaðu með einni opinni spurningu.'
+    'Sérhver rúna verður að setja mark sitt — láttu allar sjö móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
+    'Talaðu beint við ' + u.name + '. 11 til 12 setningar. Endaðu með einni opinni spurningu.'
       + getCorrPrompt('is', corrections),
   ].filter(Boolean).join('\n');
 }
@@ -921,7 +926,8 @@ function buildHorseshoePromptEN(u, runes, lang, corrections) {
     'Read all seven as one continuous passage — not seven separate readings.',
     'Rune 7 (Outcome) is not prophecy — it is where this energy leads if nothing changes.',
     'Do not name the positions in the output. Carry them in your voice.',
-    'Speak directly to ' + u.name + '. 9 to 12 sentences. End with one open question.',
+    'Every rune must leave its mark — let all seven shape the reading through their quality, never just one or two. Do not name the runes; the seeker already sees them.',
+    'Speak directly to ' + u.name + '. 11-12 sentences. End with one open question.',
     langInstr,
     getCorrPrompt(lang, corrections),
   ].filter(Boolean).join('\n');
@@ -992,7 +998,8 @@ function buildYggdrasilPromptIS(u, runes, corrections) {
     'Rúnar 6–9 (Urður/Rætur): þetta er það sem er fast — talaðu um þær af þyngd þess sem er þegar ofið.',
     'Lestu frá Ásgarðr niður til Hel — eitt flæði, ein rödd.',
     'Nefndu ekki heimanna nöfn í úttakinu. Nefndu ekki Norns-ásinn. Láttu þá lifa í röddinn.',
-    'Talaðu beint við ' + u.name + '. 13 til 16 setningar. Endaðu með einni djúpri, opinni spurningu — þeirri sem heldur áfram að hljóma.'
+    'Sérhver rúna verður að setja mark sitt — láttu allar níu móta lesturinn gegnum eðli sitt, aldrei aðeins fáeinar. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
+    'Talaðu beint við ' + u.name + '. 14 til 15 setningar. Endaðu með einni djúpri, opinni spurningu — þeirri sem heldur áfram að hljóma.'
       + getCorrPrompt('is', corrections),
   ].filter(Boolean).join('\n');
 }
@@ -1040,7 +1047,8 @@ function buildYggdrasilPromptEN(u, runes, lang, corrections) {
     'Runes 6–9 (Urd / Roots): this is what is fixed — speak with the gravity of what has already been woven.',
     'Read from Asgard down to Hel — one flow, one voice.',
     'Do not name the worlds in the output. Do not name the Norns axis. Carry them in your voice.',
-    'Speak directly to ' + u.name + '. 13 to 16 sentences. End with one deep, open question — one that keeps resonating.',
+    'Every rune must leave its mark — let all nine shape the reading through their quality, never just a few. Do not name the runes; the seeker already sees them.',
+    'Speak directly to ' + u.name + '. 14-15 sentences. End with one deep, open question — one that keeps resonating.',
     langInstr,
     getCorrPrompt(lang, corrections),
   ].filter(Boolean).join('\n');
