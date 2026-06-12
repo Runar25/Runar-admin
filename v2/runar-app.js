@@ -681,9 +681,9 @@ function updateUIText() {
   if (vBtn && !vBtn.disabled) vBtn.textContent = t('voice_btn');
   // Re-render auth UI + side panel vždy — zajistí správné texty i pro odhlášeného uživatele při změně jazyka
   setText('free-redeem-link', '+ ' + vl('card', lang));
-  setText('redeem-lbl', lang === 'is' ? 'ᚠ SLÁÐU INN RÚNAKORT KÓÐ' : 'ᚠ ENTER RUNE READING CARD CODE');
+  setText('redeem-lbl', tp('redeem_card_code', { card: vl('card', lang).toUpperCase() }));
   const shopLink = document.getElementById('redeem-shop-link');
-  if (shopLink) shopLink.textContent = lang === 'is' ? '→ Kaupa fleiri Rúnakort á Agndofa.is' : '→ Buy more Rune Reading Cards at Agndofa.is';
+  if (shopLink) shopLink.textContent = tp('shop_buy_more', { card: vlp('card', lang) });
   updateAuthUI();
   updateSidePanel();
   updateQuestionGate();
@@ -1137,7 +1137,7 @@ function _renderYourPath() {
 
   // Current tier properties (multi-line, always visible)
   const descEl = document.getElementById('sp-tier-desc');
-  if (descEl) descEl.innerHTML = currData.props[lk].join('<br>');
+  if (descEl) descEl.innerHTML = currData.props[lk].map(function(s){return s.split('{card}').join(vl('card', lang));}).join('<br>');
 
   // Show / hide HIGHER PATH toggle
   const hToggle = document.getElementById('sp-higher-toggle');
@@ -1149,7 +1149,7 @@ function _renderYourPath() {
     var note = t.note ? '<span class="sp-tier-note">' + t.note[lk] + '</span>' : '';
     html += '<div class="sp-tier-block">'
          +  '<div class="sp-tier-name">' + t.name[lk] + note + '</div>'
-         +  '<div class="sp-tier-detail">' + t.props[lk].join('<br>') + '</div>'
+         +  '<div class="sp-tier-detail">' + t.props[lk].map(function(s){return s.split('{card}').join(vl('card', lang));}).join('<br>') + '</div>'
          +  '</div>';
   });
   body.innerHTML = html;

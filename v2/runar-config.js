@@ -245,8 +245,8 @@ const TIER_LIMITS = {
     journal_label_en:    'last 5 casts',
     journal_label_is:    'síðustu 5 spár',
     panel_props: {
-      en: ['One free cast to start, then rune stones.', 'Rune Reading Card unveils all features.', 'Limited journal (last 5 casts).'],
-      is: ['Ein frjáls spá til að byrja, síðan rúnasteinar.', 'Rúnakort opnar allar aðgerðir.', 'Takmörkuð dagbók (síðustu 5 spár).'],
+      en: ['One free cast to start, then rune stones.', '{card} unveils all features.', 'Limited journal (last 5 casts).'],
+      is: ['Ein frjáls spá til að byrja, síðan rúnasteinar.', '{card} opnar allar aðgerðir.', 'Takmörkuð dagbók (síðustu 5 spár).'],
     },
   },
   standard: {

@@ -36,6 +36,12 @@ function vl(key, lang) {
   if (!v) return key;
   return lang === 'is' ? (v.is || v.en) : v.en;
 }
+// vlp('card', 'en')  =>  'Rune Reading Cards' (plural label, bez cisla)
+function vlp(key, lang) {
+  var v = VOCAB && VOCAB[key];
+  if (!v) return key;
+  return lang === 'is' ? (v.is_pl || v.is || v.en_pl) : (v.en_pl || v.en);
+}
 
 // Template helper — substitutes {placeholder} in a translation string
 // tp('rs_banner_desc', { casts_month: vn('cast', 1, 'en'), card: vl('card', 'en') })
