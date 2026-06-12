@@ -151,8 +151,8 @@ tree_name (text), life_rune_number (int), life_rune_text (text), life_rune_lang 
 |--------|------|------|
 | Single | 1 | ✅ produkce |
 | Norns | 3 | ✅ reader (zakládací rituál) |
-| Kříž | 5 | ✅ reader (Standard+) |
-| Horseshoe | 7 | ✅ reader (Standard+) |
+| Kříž | 5 | ✅ reader (RS+ za rune stones) |
+| Horseshoe | 7 | ✅ reader (RS+ za rune stones) |
 | Yggdrasil | 9 | ✅ reader (všichni přihlášení, Dec 14–28) |
 | The Gathering | — | ❌ redesign (tree_state DB) |
 
@@ -160,7 +160,54 @@ tree_name (text), life_rune_number (int), life_rune_text (text), life_rune_lang 
 
 ## Tree of Life — stav
 ✅ calcLifeRune(), generování + uložení, Tree tab UI, IS 3-vrstvý systém, isLifeRune detekce
-❌ branch systém, vizuální strom, tree_state/tree_readings DB tabulky — čeká na V3
+🧪 Rendering engine LAB v0.7 (2026-06-11): runar-tree-model.js (čistá logika, bez DOM) +
+   runar-tree-render.js (Canvas 2D, dual-canvas, pixelRatio, Page Visibility) +
+   runar-tree-lab.html (timeline ve dnech, cast tlačítka pro všechny spready, tuning panel).
+   KMEN: hloubkové vrstvení — fibresPerLayer (6) vláken na vrstvu, nejnovější vrstva
+   k pozorovateli (depth +0.9, světlejší), nejstarší vzadu (tmavší); vrstvy mírně offset
+   (golden) → kmen neroste do šířky ale do hloubky. Vlnění weaveAmp/weaveFreq (default 0.009/2.2).
+   PÁTEŘ: celý kmen se prohýbá v S-křivce (spineAmp/spineWaves); náklon a míra prohnutí
+   řízena M.setTreeBias(-1..1) = životní runa inner/outer world (0 = vyrovnaný → přímý strom).
+   SOUDRŽNOST: TUNING.cohesion — vlákna se u země přitahují ke společné páteři (kmen = jeden
+   celek bez mezer), individualizují se až s výškou, oddělená jsou jen ve větvích.
+   VĚTVE: oblouky, ne přímky — branchAngle() = blend od tečny hostitele (bendZone) + vnější
+   arc (flowCurve) + zvednutí špičky (tipLift). Akvarelová reference.
+   ATTACHMENT STRATEGIE (pojmenované, přepínatelné v labu, TUNING.attachMode):
+   · 'ride' (default): nové čtení se napojí na lianu stejného elementu, ~70 % jede kus po ní
+     (opticky ji zesílí — sdílený úsek je tlustší), pak se odpojí a vytvoří větev (rideLen)
+   · 'branch': napojí se bodově, drží sektor hostitele (sectorDir, sectorWidth)
+   · 'free': v0.5 globální golden fan (pro srovnání)
+   KŘÍŽENÍ: sektorové směry — větvička zkoumá jen okolí směru svého hostitele.
+   VÝPLŇ KORUNY: golden alokace exitů + strany alternují; nižší exit → horizontálnější.
+   BARVY: skutečný jasan — kůra teplá stříbřitě šedá, listy jasanová zeleň (tlumená).
+   TLOUŠŤKY: rootWidth/trunkWidth/branchWidth multiplikátory.
+   PAINTERLY RENDERING (v0.7): 3 vrstvy na segment — tmavá kontura pod tělem + tělo +
+   světlý hřbet na straně světla (zleva shora, LX/LY v rendereru) = kreslený dvojtahový look.
+   Listy = LEAF_CLUSTER trsy (5 lístků, 3 zelené tóny per element) místo jedné elipsy.
+   Jemnější špičky větví (0.55/0.5 px).
+   SROVNÁNÍ DVOU VARIANT (2026-06-12): KUKY se ptal, zda engine vychází z parametrů z jeho
+   dokumentů (render_spec v3 = rekurze+Bezier) nebo jiný systém. ODPOVĚĎ: liana engine je
+   z fable5_runar_context.md (start/branch_angle/branch_point), NE render_spec v3. Sémantické
+   mapování (význam→osa) z tree-of-life.md nebylo zapojeno — směr větve řídil golden alokátor.
+   → Dvě verze pro porovnání:
+   · LIANA v0.7 (zmrazená): v2/tree-snapshots/v07-liana/ — golden harmonie, bez sémantiky
+   · HYBRID: v2/tree-lab-hybrid/ — liana vzhled + Norns-osové řízení (build_tree_hybrid.py
+     patchuje v0.7 model). Význam (intention+area+mood+heavy / axisHint) → elevation [-1,1]
+     (urd dolů/ven · verdandi strany · skuld nahoru) + laterality (inner=vlevo/outer=vpravo).
+     TUNING.semanticWeight (0=harmonie, 1=čistý význam, default 0.8) — slider v labu.
+     Norns spread: 3 runy = explicitní axisHint urd/verdandi/skuld. Ověřeno: slider mění tvar.
+   Hlavní lab v2/runar-tree-lab.html zůstává = liana v0.7. Generátory: build_tree_lab.py (liana),
+   build_tree_hybrid.py (hybrid). Stále NEKOMITOVÁNO — KUKY porovnává, která cesta je lepší.
+   KOŘENY: integrátor se silnou seeded křivostí — rozbíhají se do všech stran (rootFan),
+   kroutí (rootCurl), kříží a proplétají (depth osciluje podél kořene); golden walk směrů.
+   KORUNA: scaffoldFan pro hlavní větve do stran, crownFan + user.crownBias = asymetrie;
+   attached větve pokračují podél hostitele ven (mix host tangent + fan dir), ne nahoru.
+   M.TUNING (16 parametrů, slidery v labu) · M.setUserSeed() = per-user strom.
+   Páry: love (srdce, heartSize) + flame (proplet kolem osy, flameSize/flameWaves).
+   Bloom: silhouette→growing→full→leafing, parent/child gating. Barvy: stříbrná kůra jasanu
+   + element tint ke špičce, modro-černé listy.
+   Generátor: build_tree_lab.py (§1). NENÍ napojeno na DB ani reader — čeká na vizuální schválení.
+❌ branch systém v produkci, tree_state/tree_readings DB tabulky — čeká na V3
 Design: viz RUNAR_DESIGN.md
 
 ## Word Corrections
