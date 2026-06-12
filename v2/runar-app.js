@@ -878,7 +878,7 @@ function loadCollAudio(l) {
 
 // ─── RANDOM RUNE DRAW ────────────────────────────────────
 function drawRandomRune() {
-  var buttons = Array.from(document.querySelectorAll('#reader-grid .rb'));
+  var buttons = Array.from(document.querySelectorAll('#reader-grid .rb')).filter(function(b){ return !b.disabled; });
   if (!buttons.length) return;
   var randomBtn = document.getElementById('btn-random');
   if (randomBtn) randomBtn.disabled = true;
@@ -920,6 +920,7 @@ function buildGrid() {
   RUNES.forEach(r => {
     const btn = document.createElement('button');
     btn.className = 'rb';
+    btn.dataset.rune = r.n;
     let inner = '';
     if (typeof RUNE_SVGS !== 'undefined' && RUNE_SVGS[r.svg]) {
       const sd = RUNE_SVGS[r.svg];

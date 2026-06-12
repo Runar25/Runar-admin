@@ -441,6 +441,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .rb:hover{background:rgba(91,184,255,0.08);border-color:var(--blue);}
 .rb.on{background:rgba(91,184,255,0.12);border-color:var(--blue);box-shadow:0 0 10px rgba(91,184,255,0.15);}
 .rb.flashing{background:rgba(255,191,0,0.12);border-color:var(--gold);box-shadow:0 0 14px rgba(255,191,0,0.35);}
+.rb:disabled,.rb.used{opacity:0.28;cursor:not-allowed;}
+.rb:disabled:hover,.rb.used:hover{background:#0d1220;border-color:var(--border);}
 .btn-random{width:100%;padding:10px;background:transparent;border:1px solid rgba(255,191,0,0.35);color:var(--gold);font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.5px;cursor:pointer;transition:all 0.25s;margin-bottom:8px;opacity:0.75;}
 .btn-random:hover:not(:disabled){border-color:var(--gold);opacity:1;background:rgba(255,191,0,0.06);}
 .btn-random:disabled{opacity:0.3;cursor:not-allowed;}

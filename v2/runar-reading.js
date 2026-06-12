@@ -205,6 +205,23 @@ function _setSpreadMode(mode) {
   }
 }
 
+// Runy aktuálního spreadu (multi-rune) → zabránit duplicitnímu výběru
+function _spreadRunesNow() {
+  if (_spreadMode === 'norns')     return _spread3Runes;
+  if (_spreadMode === 'kriz')      return _spread5Runes;
+  if (_spreadMode === 'horseshoe') return _spread7Runes;
+  if (_spreadMode === 'yggdrasil') return _spread9Runes;
+  return [];
+}
+// Označí grid tlačítka už vybraných run jako disabled (a uvolní ostatní)
+function _syncGridUsed() {
+  var names = _spreadRunesNow().map(function(x){ return x.n; });
+  document.querySelectorAll('#reader-grid .rb').forEach(function(b){
+    var used = names.indexOf(b.dataset.rune) !== -1;
+    b.classList.toggle('used', used);
+    b.disabled = used;
+  });
+}
 function _updateSpread3Slots() {
   var slotEl = document.getElementById('spread3-slots');
   if (!slotEl) return;
@@ -229,6 +246,7 @@ function _updateSpread3Slots() {
     el.style.cursor = rune ? 'pointer' : 'default';
     el.title = rune ? (rune.n + ' — click to remove') : '';
   });
+  _syncGridUsed();
 }
 
 function _hideSpread3Output() {
@@ -261,6 +279,7 @@ function _updateSpread5Slots() {
     el.style.cursor = rune ? 'pointer' : 'default';
     el.title = rune ? (rune.n + ' — click to remove') : '';
   }
+  _syncGridUsed();
 }
 function _hideSpread5Output() {
   var out = document.getElementById('spread5-output');
@@ -300,6 +319,7 @@ function _updateSpread7Slots() {
       el.onclick = null;
     }
   }
+  _syncGridUsed();
 }
 function _hideSpread7Output() {
   var out = document.getElementById('spread7-output');
@@ -339,6 +359,7 @@ function _updateSpread9Slots() {
       el.onclick = null;
     }
   }
+  _syncGridUsed();
 }
 function _hideSpread9Output() {
   var out = document.getElementById('spread9-output');
