@@ -206,6 +206,36 @@ function _getTimeOfDay() {
   return 'night';
 }
 
+// Per-reading seasonal imagery — injected into the reading prompt like the angle.
+// Binds the ONE nature image to the current Icelandic season so Rúnar stops
+// defaulting to winter/snow regardless of the real season. Cheap, per-reading.
+function _seasonalImagery(lang) {
+  var m = new Date().getMonth() + 1;
+  var en, is;
+  if (m === 12 || m <= 2) {
+    en = 'the long winter dark, candlelight against black, snow sweeping bare lava, the aurora, the seed of light waiting in the deepest night';
+    is = 'langt vetrarmyrkur, kertaljós gegn svörtu, snjór yfir bert hraun, norðurljósin, fræ ljóssins sem bíður í dýpstu nótt';
+  } else if (m <= 4) {
+    en = 'the first birdsong cracking the silence, spring mud and the smell of thawed earth, the last drifts melting, light returning fast';
+    is = 'fyrsti fuglasöngur sem brýtur þögnina, vorleðja og lykt af þíðri jörð, síðustu fannir að bráðna, ljósið sem kemur hratt aftur';
+  } else if (m <= 6) {
+    en = 'white nights, the midnight sun that sinks toward the sea but never sets, the red-gold light lingering near midnight, the thinning veil, green returning to the land';
+    is = 'bjartar nætur, miðnætursól sem hnígur að hafi en sest aldrei, rauðgyllt ljós sem dvelur um miðnættið, þynnandi hula, grænkan sem snýr aftur til landsins';
+  } else if (m <= 8) {
+    en = 'the long light, hay season, puffins on the sea cliffs, the open endless sky, whales surfacing in grey fjords';
+    is = 'langa ljósið, heyannir, lundar á bjargbrúnum, opinn endalaus himinn, hvalir sem koma upp í gráum fjörðum';
+  } else if (m === 9) {
+    en = 'the sheep coming home off the highland, harvest gold, the first chill at the edges of the day';
+    is = 'sauðféð sem kemur heim af fjalli, gullin uppskera, fyrsti kuldinn á jöðrum dagsins';
+  } else {
+    en = 'darkness returning fast, the first hard frost, the aurora season opening, the sky beginning to speak';
+    is = 'myrkrið sem kemur hratt aftur, fyrsta harða frostið, norðurljósatíðin að opnast, himinninn sem fer að tala';
+  }
+  if (lang === 'is')
+    return 'ÁRSTÍÐARMYND (bindandi): Þín eina náttúrumynd verður að koma frá þessari árstíð — ' + is + '. Aldrei úr annarri árstíð (enginn snjór að sumri). Köld rúna lagar sig að núinu: Isa er frosin jörð undir endalausu ljósi, ekki snjór.';
+  return 'SEASONAL IMAGE (binding): your one nature image must come from this season — ' + en + '. Never reach for another season (no snow in summer). A cold rune adapts to now: Isa is frozen ground beneath the endless light, not snow.';
+}
+
 // Returns the context injection line for V2 readings
 function getContextLine(lang) {
   const now = new Date();
@@ -544,6 +574,7 @@ function buildReadingPromptIS(u, drawn, corrections) {
     parts + formulaLine,
     '',
     'LESTURHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og upphaf): ' + angle,
+    _seasonalImagery('is'),
     '',
     'Gefðu einn samfelldan lestur — 3 stuttar setningar, 38 til 45 orð alls. Hann verður lesinn upphátt, svo hafðu hverja setningu létta — um 20 til 25 sekúndur. Engar fyrirsagnir, engar hlutaskiptingar.',
     '',
@@ -588,6 +619,7 @@ function buildReadingPromptEN(u, drawn, lang, corrections) {
     parts,
     '',
     'READING ANGLE (follow this entry point — let it shape the opening and tone): ' + _randomAngle('en'),
+    _seasonalImagery('en'),
     '',
     'One flowing reading — 3 short sentences, 38 to 45 words total. It will be read aloud, so keep every sentence lean — about 20 to 25 seconds spoken. No sections, no labels, no line breaks between thoughts.',
     '',
