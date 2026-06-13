@@ -545,14 +545,14 @@ function buildReadingPromptIS(u, drawn, corrections) {
     '',
     'LESTURHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og upphaf): ' + angle,
     '',
-    'Gefðu einn samfelldan lestur — 4 setningar, engar fyrirsagnir, engar hlutaskiptingar.',
+    'Gefðu einn samfelldan lestur — 4 stuttar setningar, 55 til 70 orð alls. Hann verður lesinn upphátt, svo hafðu hverja setningu létta — um 25 til 30 sekúndur. Engar fyrirsagnir, engar hlutaskiptingar.',
     '',
     hasQ
       ? ('Svaraðu spurningunni: "' + u.question + '" í gegnum ' + rn(drawn) + ' (' + drawn.g + ') — í myndum og táknmáli, ekki ráðgjöf. Nefndu ' + rn(drawn) + ' einu sinni, fléttað náttúrlega inn. Talaðu um það sem liggur undir spurningunni. Enda með einni opinni spurningu sem nær dýpra.')
-      : ('Byrjaðu á ' + rn(drawn) + ' (' + drawn.g + ') — láttu táknlæga gæði þess (' + worldRef + ') koma fram í myndum, ekki útskýringu. Nefndu ' + rn(drawn) + ' einu sinni, fléttað náttúrlega inn. Sameina kjarna og dýpri ígrundun í eina hreyfingu — tengdu ' + lifeRef + areaRef + seekRef + '. Enda með einni stuttri, opinni spurningu.'),
+      : ('Byrjaðu á ' + rn(drawn) + ' (' + drawn.g + ') — láttu táknlæga gæði þess (' + worldRef + ') koma fram í myndum, ekki útskýringu. Nefndu ' + rn(drawn) + ' einu sinni, fléttað náttúrlega inn. Ein skýr innsýn nægir — ekki troða öllu inn; tengdu létt við ' + lifeRef + areaRef + seekRef + '. Enda með einni stuttri, opinni spurningu.'),
     lifeNote2,
     '',
-    'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. Talaðu beint við ' + u.name + '. Vertu hnitmiðaður — sérhver setning verður að eiga rétt á sér.'
+    'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. Talaðu beint við ' + u.name + '. Haltu þig innan orðafjöldans — stuttar setningar, ekkert uppfyllingarefni.'
       + getCorrPrompt('is', corrections),
   ].filter(Boolean).join('\n');
 }
@@ -590,17 +590,17 @@ function buildReadingPromptEN(u, drawn, lang, corrections) {
     '',
     'READING ANGLE (follow this entry point — let it shape the opening and tone): ' + _randomAngle('en'),
     '',
-    'One flowing reading — 4 sentences, no sections, no labels, no line breaks between thoughts.',
+    'One flowing reading — 4 short sentences, 55 to 70 words total. It will be read aloud, so keep every sentence lean — about 25 to 30 seconds spoken. No sections, no labels, no line breaks between thoughts.',
     '',
     hasQ
       ? ('Open with ' + rn(drawn) + ' (' + drawn.g + ') answering: "' + u.question + '" — through image and symbol, not advice. Mention ' + rn(drawn) + ' by name once, woven naturally. Speak to what lies beneath the question. End with one open question that reaches deeper.')
-      : ('Open with ' + rn(drawn) + ' (' + drawn.g + ') — let its quality (' + (rworld(drawn) || pickedKws) + ') arrive through image, not explanation. Mention ' + rn(drawn) + ' by name once, woven naturally. Bring core insight and deeper reflection into one movement. End with one short open question.'),
+      : ('Open with ' + rn(drawn) + ' (' + drawn.g + ') — let its quality (' + (rworld(drawn) || pickedKws) + ') arrive through image, not explanation. Mention ' + rn(drawn) + ' by name once, woven naturally. One clear insight is enough — do not pack everything in. End with one short open question.'),
     lifeNote,
     areaNote2,
     seekNote2,
     formulaRef,
     '',
-    'One paragraph. No breaks. No labels. Speak directly to ' + u.name + '. Be concise — every sentence must earn its place. ' + langInstr,
+    'One paragraph. No breaks. No labels. Speak directly to ' + u.name + '. Stay within the word count — short sentences, no filler. ' + langInstr,
     getCorrPrompt(lang, corrections),
   ].filter(Boolean).join('\n');
 }
