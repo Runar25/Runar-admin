@@ -582,7 +582,7 @@ function buildReadingPromptIS(u, drawn, corrections) {
       ? ('Svaraðu spurningunni: "' + u.question + '" í gegnum ' + rn(drawn) + ' (' + drawn.g + ') — í myndum og táknmáli, ekki ráðgjöf. Nefndu ' + rn(drawn) + ' einu sinni, fléttað náttúrlega inn. Talaðu um það sem liggur undir spurningunni. Enda með einni opinni spurningu sem nær dýpra.')
       : ('Byrjaðu á ' + rn(drawn) + ' (' + drawn.g + ') — láttu táknlæga gæði þess (' + worldRef + ') koma fram í myndum, ekki útskýringu. Nefndu ' + rn(drawn) + ' einu sinni, fléttað náttúrlega inn. Ein skýr innsýn nægir — ekki troða öllu inn. Enda með mjög stuttri, opinni spurningu — fáein orð.'),
     '',
-    'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. Talaðu beint við ' + u.name + '. Haltu þig innan orðafjöldans — stuttar setningar, ekkert uppfyllingarefni.'
+    'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. Ávarpaðu ' + u.name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. Haltu þig innan orðafjöldans — stuttar setningar, ekkert uppfyllingarefni.'
       + getCorrPrompt('is', corrections),
   ].filter(Boolean).join('\n');
 }
@@ -628,7 +628,7 @@ function buildReadingPromptEN(u, drawn, lang, corrections) {
       : ('Open with ' + rn(drawn) + ' (' + drawn.g + ') — let its quality (' + (rworld(drawn) || pickedKws) + ') arrive through image, not explanation. Mention ' + rn(drawn) + ' by name once, woven naturally. One clear insight is enough — do not pack everything in. End with a very short open question — a few words.'),
     formulaRef,
     '',
-    'One paragraph. No breaks. No labels. Speak directly to ' + u.name + '. Stay within the word count — short sentences, no filler. ' + langInstr,
+    'One paragraph. No breaks. No labels. Address ' + u.name + ' once, woven naturally — never as the opening word. Stay within the word count — short sentences, no filler. ' + langInstr,
     getCorrPrompt(lang, corrections),
   ].filter(Boolean).join('\n');
 }
@@ -688,6 +688,7 @@ function buildKrizPromptIS(u, runes, corrections) {
     '',
     runesBlock,
     '',
+    _seasonalImagery('is'),
     'Lesturinn fer í einum flæði — ekki fimm aðskildir lestrar.',
     'Miðja rúnan (' + ctrName + ') er hjartað — hún litar allt.',
     'Byrjaðu í miðjunni og flettu út. Nefndu ekki staðsetningarnar — bærðu þær í röddinn.',
@@ -696,7 +697,7 @@ function buildKrizPromptIS(u, runes, corrections) {
     'Fimmta rúnan (Framar): ekki spá — þar sem þessi orka leiðir ef ekkert breytist.',
     'Endaðu með einni opinni, hljóðlægri spurningu.',
     'Sérhver rúna verður að setja mark sitt — láttu allar fimm móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
-    'Talaðu beint við ' + u.name + '. Vertu hnitmiðaður — 9 til 10 setningar.'
+    'Ávarpaðu ' + u.name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. Vertu hnitmiðaður — 9 til 10 setningar.'
       + getCorrPrompt('is', corrections),
   ].filter(Boolean).join('\n');
 }
@@ -733,6 +734,7 @@ function buildKrizPromptEN(u, runes, lang, corrections) {
     ctx, '',
     'The seeker draws five runes — the Cross.', '',
     runesBlock, '',
+    _seasonalImagery('en'),
     'Read all five as one flowing passage — not five separate readings.',
     'The centre rune (' + rn(rCtr) + ') is the heart — it colours everything.',
     'Begin at the centre and spiral outward. Do not name the positions.',
@@ -741,7 +743,7 @@ function buildKrizPromptEN(u, runes, lang, corrections) {
     'Rune 5 (Ahead): not prophecy — where this energy leads if nothing changes.',
     'End with one quiet, open question.',
     'Every rune must leave its mark — let all five shape the reading through their quality, never just one or two. Do not name the runes; the seeker already sees them.',
-    'Speak directly to ' + u.name + '. 9-10 sentences, complete and whole.',
+    'Address ' + u.name + ' once, woven naturally — never as the opening word. 9-10 sentences, complete and whole.',
     langInstr,
     getCorrPrompt(lang, corrections),
   ].filter(Boolean).join('\n');
@@ -800,13 +802,14 @@ function buildNornsPromptIS(u, runes, corrections) {
     '',
     runesBlock,
     '',
+    _seasonalImagery('is'),
     'Þetta eru ekki þrír aðskildir lestrar — þetta er ein saga sem Nornirnar segja saman.',
     'Urður talar af þyngd þess sem er þegar fast — röddin hennar er hlutlæg, óafturkallanleg.',
     'Verðandi talar í nútíð — lifandi, að verða til, ekki lokið.',
     'Skuld talar ekki um framtíðina eins og spámann — heldur um hvað verður að verða ef þráðurinn heldur áfram.',
     'Lestu sem einn samfelldur stef — nefndu ekki Nornirnar nafnlega í úttakinu. Láttu röddirnar koma í gegnum Rúnar.',
     'Sérhver rúna verður að setja mark sitt — láttu allar þrjár móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
-    'Talaðu beint við ' + u.name + '. Vertu hnitmiðaður — 8 til 9 setningar. Endaðu með einni mjúkri, opinni spurningu.'
+    'Ávarpaðu ' + u.name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. Vertu hnitmiðaður — 8 til 9 setningar. Endaðu með einni mjúkri, opinni spurningu.'
       + getCorrPrompt('is', corrections),
   ].filter(Boolean).join('\n');
 }
@@ -847,13 +850,14 @@ function buildNornsPromptEN(u, runes, lang, corrections) {
     ctx, '',
     'The seeker draws three runes — the Norns speak.', '',
     runesBlock, '',
+    _seasonalImagery('en'),
     'This is not three separate readings — it is one story told by three voices.',
     'Urður speaks with the weight of what is already fixed — her voice is declarative, immovable.',
     'Verðandi speaks in the present — living, becoming, not yet complete.',
     'Skuld does not predict — she speaks of what must come if this thread continues.',
     'Read as one continuous weaving. Do not name the Norns in the output — let their voices come through Runar.',
     'Every rune must leave its mark — let all three shape the reading through their quality, never just one or two. Do not name the runes; the seeker already sees them.',
-    'Speak directly to ' + u.name + '. 8-9 sentences. End with one quiet, open question.',
+    'Address ' + u.name + ' once, woven naturally — never as the opening word. 8-9 sentences. End with one quiet, open question.',
     langInstr,
     getCorrPrompt(lang, corrections),
   ].filter(Boolean).join('\n');
@@ -910,11 +914,12 @@ function buildHorseshoePromptIS(u, runes, corrections) {
     '',
     runesBlock,
     '',
+    _seasonalImagery('is'),
     'Lestu allar sjö sem einn samfelldann stef — ekki sjö aðskildar lagnir.',
     'Rúnan 7 (Niðurstaða) er ekki spá — sjáðu hana sem stefnu ef þráðurinn heldur áfram.',
     'Nefndu ekki staðsetningarnar í úttakinu. Bærðu þær í röddinn.',
     'Sérhver rúna verður að setja mark sitt — láttu allar sjö móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
-    'Talaðu beint við ' + u.name + '. 11 til 12 setningar. Endaðu með einni opinni spurningu.'
+    'Ávarpaðu ' + u.name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. 11 til 12 setningar. Endaðu með einni opinni spurningu.'
       + getCorrPrompt('is', corrections),
   ].filter(Boolean).join('\n');
 }
@@ -951,11 +956,12 @@ function buildHorseshoePromptEN(u, runes, lang, corrections) {
     ctx, '',
     'The seeker draws seven runes — the Horseshoe.', '',
     runesBlock, '',
+    _seasonalImagery('en'),
     'Read all seven as one continuous passage — not seven separate readings.',
     'Rune 7 (Outcome) is not prophecy — it is where this energy leads if nothing changes.',
     'Do not name the positions in the output. Carry them in your voice.',
     'Every rune must leave its mark — let all seven shape the reading through their quality, never just one or two. Do not name the runes; the seeker already sees them.',
-    'Speak directly to ' + u.name + '. 11-12 sentences. End with one open question.',
+    'Address ' + u.name + ' once, woven naturally — never as the opening word. 11-12 sentences. End with one open question.',
     langInstr,
     getCorrPrompt(lang, corrections),
   ].filter(Boolean).join('\n');
@@ -1020,6 +1026,7 @@ function buildYggdrasilPromptIS(u, runes, corrections) {
     '',
     runesBlock,
     '',
+    _seasonalImagery('is'),
     'Þetta eru ekki níu aðskildir lestrar — þetta er eitt líf séð í gegnum níu glugga.',
     'Rúnar 1–3 (Skuld/Króna): talaðu um þær af þunga og þekkningu — þetta eru þræðirnir sem eru að verða sniðnir.',
     'Rúnar 4–5 (Verðandi/Stofn): þetta eru raunar raunirnar — talaðu um þær af nútíðarþunga.',
@@ -1027,7 +1034,7 @@ function buildYggdrasilPromptIS(u, runes, corrections) {
     'Lestu frá Ásgarðr niður til Hel — eitt flæði, ein rödd.',
     'Nefndu ekki heimanna nöfn í úttakinu. Nefndu ekki Norns-ásinn. Láttu þá lifa í röddinn.',
     'Sérhver rúna verður að setja mark sitt — láttu allar níu móta lesturinn gegnum eðli sitt, aldrei aðeins fáeinar. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
-    'Talaðu beint við ' + u.name + '. 14 til 15 setningar. Endaðu með einni djúpri, opinni spurningu — þeirri sem heldur áfram að hljóma.'
+    'Ávarpaðu ' + u.name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. 14 til 15 setningar. Endaðu með einni djúpri, opinni spurningu — þeirri sem heldur áfram að hljóma.'
       + getCorrPrompt('is', corrections),
   ].filter(Boolean).join('\n');
 }
@@ -1069,6 +1076,7 @@ function buildYggdrasilPromptEN(u, runes, lang, corrections) {
     ctx, '',
     'The seeker draws nine runes — the Yggdrasil, nine worlds. Once a year.', '',
     runesBlock, '',
+    _seasonalImagery('en'),
     'This is not nine separate readings — it is one life seen through nine windows.',
     'Runes 1–3 (Skuld / Crown): speak with weight and knowing — these are threads being cut.',
     'Runes 4–5 (Verdandi / Trunk): these are the living realities — speak with present-tense weight.',
@@ -1076,7 +1084,7 @@ function buildYggdrasilPromptEN(u, runes, lang, corrections) {
     'Read from Asgard down to Hel — one flow, one voice.',
     'Do not name the worlds in the output. Do not name the Norns axis. Carry them in your voice.',
     'Every rune must leave its mark — let all nine shape the reading through their quality, never just a few. Do not name the runes; the seeker already sees them.',
-    'Speak directly to ' + u.name + '. 14-15 sentences. End with one deep, open question — one that keeps resonating.',
+    'Address ' + u.name + ' once, woven naturally — never as the opening word. 14-15 sentences. End with one deep, open question — one that keeps resonating.',
     langInstr,
     getCorrPrompt(lang, corrections),
   ].filter(Boolean).join('\n');
