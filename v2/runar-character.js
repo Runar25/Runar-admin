@@ -545,11 +545,11 @@ function buildReadingPromptIS(u, drawn, corrections) {
     '',
     'LESTURHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og upphaf): ' + angle,
     '',
-    'Gefðu einn samfelldan lestur — 3 stuttar setningar, 45 til 55 orð alls. Hann verður lesinn upphátt, svo hafðu hverja setningu létta — um 20 til 27 sekúndur. Engar fyrirsagnir, engar hlutaskiptingar.',
+    'Gefðu einn samfelldan lestur — 3 stuttar setningar, 38 til 45 orð alls. Hann verður lesinn upphátt, svo hafðu hverja setningu létta — um 20 til 25 sekúndur. Engar fyrirsagnir, engar hlutaskiptingar.',
     '',
     hasQ
       ? ('Svaraðu spurningunni: "' + u.question + '" í gegnum ' + rn(drawn) + ' (' + drawn.g + ') — í myndum og táknmáli, ekki ráðgjöf. Nefndu ' + rn(drawn) + ' einu sinni, fléttað náttúrlega inn. Talaðu um það sem liggur undir spurningunni. Enda með einni opinni spurningu sem nær dýpra.')
-      : ('Byrjaðu á ' + rn(drawn) + ' (' + drawn.g + ') — láttu táknlæga gæði þess (' + worldRef + ') koma fram í myndum, ekki útskýringu. Nefndu ' + rn(drawn) + ' einu sinni, fléttað náttúrlega inn. Ein skýr innsýn nægir — ekki troða öllu inn. Enda með einni stuttri, opinni spurningu.'),
+      : ('Byrjaðu á ' + rn(drawn) + ' (' + drawn.g + ') — láttu táknlæga gæði þess (' + worldRef + ') koma fram í myndum, ekki útskýringu. Nefndu ' + rn(drawn) + ' einu sinni, fléttað náttúrlega inn. Ein skýr innsýn nægir — ekki troða öllu inn. Enda með mjög stuttri, opinni spurningu — fáein orð.'),
     '',
     'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. Talaðu beint við ' + u.name + '. Haltu þig innan orðafjöldans — stuttar setningar, ekkert uppfyllingarefni.'
       + getCorrPrompt('is', corrections),
@@ -589,11 +589,11 @@ function buildReadingPromptEN(u, drawn, lang, corrections) {
     '',
     'READING ANGLE (follow this entry point — let it shape the opening and tone): ' + _randomAngle('en'),
     '',
-    'One flowing reading — 3 short sentences, 45 to 55 words total. It will be read aloud, so keep every sentence lean — about 20 to 27 seconds spoken. No sections, no labels, no line breaks between thoughts.',
+    'One flowing reading — 3 short sentences, 38 to 45 words total. It will be read aloud, so keep every sentence lean — about 20 to 25 seconds spoken. No sections, no labels, no line breaks between thoughts.',
     '',
     hasQ
       ? ('Open with ' + rn(drawn) + ' (' + drawn.g + ') answering: "' + u.question + '" — through image and symbol, not advice. Mention ' + rn(drawn) + ' by name once, woven naturally. Speak to what lies beneath the question. End with one open question that reaches deeper.')
-      : ('Open with ' + rn(drawn) + ' (' + drawn.g + ') — let its quality (' + (rworld(drawn) || pickedKws) + ') arrive through image, not explanation. Mention ' + rn(drawn) + ' by name once, woven naturally. One clear insight is enough — do not pack everything in. End with one short open question.'),
+      : ('Open with ' + rn(drawn) + ' (' + drawn.g + ') — let its quality (' + (rworld(drawn) || pickedKws) + ') arrive through image, not explanation. Mention ' + rn(drawn) + ' by name once, woven naturally. One clear insight is enough — do not pack everything in. End with a very short open question — a few words.'),
     formulaRef,
     '',
     'One paragraph. No breaks. No labels. Speak directly to ' + u.name + '. Stay within the word count — short sentences, no filler. ' + langInstr,
