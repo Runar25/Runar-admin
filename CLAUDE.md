@@ -152,22 +152,21 @@ tree_name (text), life_rune_number (int), life_rune_text (text), life_rune_lang 
 `_readingMode` = `'mine'` (ukládá) | `'someone'` (neukládá).
 `u.area/seeking/mood/intention/question` → `parts[]` → Claude. Norns axis: `_moodContext(mood,lang)` + `_intentionContext(intention,lang)` v runar-character.js.
 
-**Délky** (runar-character.js, věty / ~znaky měřeno 2026-06-14): Single 3 věty/~358 zn · Norns 5-6/~770 · Cross 6-7/~1030 · Horseshoe 11-12/~1370 · Yggdrasil 14-15/~1660 · Life Rune 8-9 (text, bez hlasu). Znaky = ElevenLabs náklad → řídí pricing (RUNAR_PRICING.md). Měřící skript: scripts/utils/measure_reading_costs.js. Jméno se NEvkládá vždy na začátek. Životní runa jen kontext (objeví se občas, ne pokaždé).
+**Délky** (runar-character.js): Single 3 věty · Norns 5-6 · Cross 6-7 · Horseshoe 11-12 · Yggdrasil 14-15 · Life Rune 8-9 (text). Délka = znaky = EL náklad → při změně přepočítat pricing (RUNAR_PRICING.md). Jméno ne vždy na začátek; životní runa jen kontext.
 
-**Sezónní obraznost**: `_seasonalImagery(lang, drawn)` injektuje obraz aktuální islandské sezóny per-čtení. `SEASON_POOLS` = **6 sezón × `bright`/`cold` pool** (každý obraz `{id,en,is}`). **Shuffle-bag v localStorage** (`seasonbag_<bucket>_<kind>`) rozdá každý obraz jednou než se opakuje, pak reset — per zařízení, no-repeat. **Cold-steering**: studené runy (`_COLD_RUNES` = Isa/Hagalaz/Nauthiz/Þurisaz) losují z `cold` setu → Isa zůstává studená, ale v sezóně (norðanvindur, ne sníh-mimo-sezónu). Single buildery předávají `drawn`; multi-rune kreslí z `bright`. KLÍČ: per-čtení user-prompt injekce model POSLECHNE, system prompt IGNORUJE. → `buildSysPromptV2` = REDUNDANTNÍ, jen shrine lab. Reader = `buildSysPrompt` (lean). Test: `scripts/utils/compare_seasonal.js` (localStorage shim → testuje sáček). **IS gramatika viz working-style.md** (rod podstatného první, pak přídavné).
+**Sezónní obraznost**: `_seasonalImagery(lang, drawn)` injektuje per-čtení 1 obraz islandské sezóny (`SEASON_POOLS` bright/cold, localStorage no-repeat sáček; studené runy → cold set). KLÍČ: per-čtení user-prompt injekce model POSLECHNE, system prompt IGNORUJE → `buildSysPromptV2` REDUNDANTNÍ (jen lab). Reader = `buildSysPrompt`.
 
 ### Spread systém
-**Kredity = per typ čtení** (NE počet run; odvozeno z nákladů 2026-06-14). Zdroj: `SPREAD_COSTS` v config (+ zrcadlo `SPREAD_CONFIG.credits`). Předplatné počítá stejné jednotky (sjednoceno). Founding = Norns = 2.
+Kredity = per typ čtení (NE počet run); hodnoty v `SPREAD_COSTS` (config = zdroj pravdy). Předplatné počítá stejné jednotky. Founding = Norns.
 
-| Spread | Runy | **Kredity** | Stav |
-|--------|------|------|------|
-| Single | 1 | 1 | ✅ produkce |
-| Norns | 3 | 2 | ✅ reader (zakládací rituál = 2) |
-| Kříž | 5 | 3 | ✅ reader (RS+ za rune readings) |
-| Horseshoe | 7 | 4 | ✅ reader (RS+ za rune readings) |
-| Yggdrasil | 9 | 5 | ✅ reader (všichni přihlášení, Dec 14–28) |
-| Life Rune | 1 | 3 | ✅ tree (text, bez hlasu) |
-| The Gathering | — | 3 | ❌ redesign (tree_state DB) |
+| Spread | Runy | Stav |
+|--------|------|------|
+| Single | 1 | ✅ produkce |
+| Norns | 3 | ✅ reader (zakládací rituál) |
+| Kříž | 5 | ✅ reader (RS+ za rune readings) |
+| Horseshoe | 7 | ✅ reader (RS+ za rune readings) |
+| Yggdrasil | 9 | ✅ reader (všichni přihlášení, Dec 14–28) |
+| The Gathering | — | ❌ redesign (tree_state DB) |
 
 ---
 
