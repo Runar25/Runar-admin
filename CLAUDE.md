@@ -154,7 +154,7 @@ tree_name (text), life_rune_number (int), life_rune_text (text), life_rune_lang 
 
 **Délky** (runar-character.js): Single 3 věty/38-45 slov (~25s, TTS) · Norns 8-9 · Cross 9-10 · Horseshoe 11-12 · Yggdrasil 14-15 · Life Rune 8-9. Jméno se NEvkládá vždy na začátek. Životní runa jen kontext (objeví se občas, ne pokaždé).
 
-**Sezónní obraznost**: `_seasonalImagery(lang)` injektuje obraz aktuální islandské sezóny per-čtení do všech builderů. KLÍČ: per-čtení user-prompt injekce model POSLECHNE, system prompt IGNORUJE. → `buildSysPromptV2` (kontext. inteligence) = REDUNDANTNÍ, jen shrine lab. Reader = `buildSysPrompt` (lean). Srovnávací nástroje: scripts/utils/compare_*.js.
+**Sezónní obraznost**: `_seasonalImagery(lang, drawn)` injektuje obraz aktuální islandské sezóny per-čtení. `SEASON_POOLS` = **6 sezón × `bright`/`cold` pool** (každý obraz `{id,en,is}`). **Shuffle-bag v localStorage** (`seasonbag_<bucket>_<kind>`) rozdá každý obraz jednou než se opakuje, pak reset — per zařízení, no-repeat. **Cold-steering**: studené runy (`_COLD_RUNES` = Isa/Hagalaz/Nauthiz/Þurisaz) losují z `cold` setu → Isa zůstává studená, ale v sezóně (norðanvindur, ne sníh-mimo-sezónu). Single buildery předávají `drawn`; multi-rune kreslí z `bright`. KLÍČ: per-čtení user-prompt injekce model POSLECHNE, system prompt IGNORUJE. → `buildSysPromptV2` = REDUNDANTNÍ, jen shrine lab. Reader = `buildSysPrompt` (lean). Test: `scripts/utils/compare_seasonal.js` (localStorage shim → testuje sáček). **IS gramatika viz working-style.md** (rod podstatného první, pak přídavné).
 
 ### Spread systém
 | Spread | Runy | Stav |
