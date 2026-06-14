@@ -2,6 +2,11 @@
 # Doménový dokument TREE session (Fable 5 / Cowork). MAIN session sem needituje.
 # CLAUDE.md drží jen krátký ukazatel sem. Detail/iterace patří SEM, ne do CLAUDE.md.
 # Living doc — aktualizuj při každém kroku engine. Související: tree-of-life.md (design), RUNAR_DESIGN.md.
+#
+# SDÍLENÁ DATA (runa → růst): kanonické atributy run (runar-runes.js: aett/world/element/keywords)
+# + config (AETTY, SPREAD_CONFIG.norns_axis, MOODS/INTENTIONS) čteš odsud, ale jsou SDÍLENÉ s readingem.
+# Růstové/tvarové mapování drž ve VLASTNÍM runar-branch.js. Když musíš editovat runar-runes.js/config:
+# jen ADITIVNĚ, §1 (Python skript), [tree] malý commit + push hned + řádek do MEMORY.md. Viz CLAUDE.md koordinace.
 
 ---
 

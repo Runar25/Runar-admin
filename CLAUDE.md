@@ -216,8 +216,9 @@ Repo zpracovávají DVĚ Claude Code session paralelně. Aby si nelezly do zelí
 - TREE (Fable 5 / Cowork): vizuální engine — runar-tree-model.js, runar-tree-render.js, runar-tree-lab*.html, runar-branch.js, tree-lab-*/, tree-snapshots/, build_tree_*.py / build_*composer.py. Doménový doc = RUNAR_TREE_LAB.md.
 
 **Hranice:**
-- TREE čte z configu (SPREAD_CONFIG pozice, RUNES) READ-ONLY; needituje config/character/translations.
-- Sdílená čtení/life-rune logika (runar-tree.js generateLifeRuneReading, buildLifeRunePrompt) = MAIN. TREE čte, needituje.
+- **Sdílená sémantická vrstva (runa → růst).** Kanonická data run (`runar-runes.js`: aett/world/element/keywords) + config (AETTY, SPREAD_CONFIG.norns_axis, MOODS/INTENTIONS) čtou OBĚ session. TREE růstové/tvarové mapování drž ve VLASTNÍM souboru (`runar-branch.js`). Když MUSÍŠ sáhnout do runar-runes.js/config kvůli růstu: **jen ADITIVNĚ** (přidej pole, neměň existující reading-pole), `[tree]` malý commit, push HNED + řádek do MEMORY.md (MAIN to musí vidět — sdílená data mění i výklad). Změna existujícího aett/element/world runy ovlivní i čtení → napřed flagni.
+- **Čistě MAIN (TREE needituje):** reading prompty (character.js reading buildery), pricing, translations UI, reader UI/CSS, auth. Life-rune logika (runar-tree.js generateLifeRuneReading, buildLifeRunePrompt) = MAIN.
+- `§1` (JS přes Python skript, NE Edit — kazí apostrofy) + `§13` (full-path) platí i pro TREE, když sahá do sdíleného JS.
 - CLAUDE.md: každá session edituje JEN svou sekci. Tree sekce = krátký ukazatel (detail v RUNAR_TREE_LAB.md). MAIN ho nepřepisuje.
 
 **Komunikace (session spolu nemluví → přes git + soubory):**
