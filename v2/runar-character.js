@@ -862,7 +862,7 @@ function buildKrizPromptIS(u, runes, corrections) {
     'Fimmta rúnan (Framar): ekki spá — þar sem þessi orka leiðir ef ekkert breytist.',
     'Endaðu með einni opinni, hljóðlægri spurningu.',
     'Sérhver rúna verður að setja mark sitt — láttu allar fimm móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
-    'Ávarpaðu ' + u.name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. Vertu hnitmiðaður — 9 til 10 setningar.'
+    'Ávarpaðu ' + u.name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. Vertu hnitmiðaður — 6 til 7 setningar.'
       + getCorrPrompt('is', corrections),
   ].filter(Boolean).join('\n');
 }
@@ -908,7 +908,7 @@ function buildKrizPromptEN(u, runes, lang, corrections) {
     'Rune 5 (Ahead): not prophecy — where this energy leads if nothing changes.',
     'End with one quiet, open question.',
     'Every rune must leave its mark — let all five shape the reading through their quality, never just one or two. Do not name the runes; the seeker already sees them.',
-    'Address ' + u.name + ' once, woven naturally — never as the opening word. 9-10 sentences, complete and whole.',
+    'Address ' + u.name + ' once, woven naturally — never as the opening word. 6-7 sentences, complete and whole.',
     langInstr,
     getCorrPrompt(lang, corrections),
   ].filter(Boolean).join('\n');
@@ -974,7 +974,7 @@ function buildNornsPromptIS(u, runes, corrections) {
     'Skuld talar ekki um framtíðina eins og spámann — heldur um hvað verður að verða ef þráðurinn heldur áfram.',
     'Lestu sem einn samfelldur stef — nefndu ekki Nornirnar nafnlega í úttakinu. Láttu röddirnar koma í gegnum Rúnar.',
     'Sérhver rúna verður að setja mark sitt — láttu allar þrjár móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
-    'Ávarpaðu ' + u.name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. Vertu hnitmiðaður — 8 til 9 setningar. Endaðu með einni mjúkri, opinni spurningu.'
+    'Ávarpaðu ' + u.name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. Vertu hnitmiðaður — 5 til 6 setningar. Endaðu með einni mjúkri, opinni spurningu.'
       + getCorrPrompt('is', corrections),
   ].filter(Boolean).join('\n');
 }
@@ -1022,7 +1022,7 @@ function buildNornsPromptEN(u, runes, lang, corrections) {
     'Skuld does not predict — she speaks of what must come if this thread continues.',
     'Read as one continuous weaving. Do not name the Norns in the output — let their voices come through Runar.',
     'Every rune must leave its mark — let all three shape the reading through their quality, never just one or two. Do not name the runes; the seeker already sees them.',
-    'Address ' + u.name + ' once, woven naturally — never as the opening word. 8-9 sentences. End with one quiet, open question.',
+    'Address ' + u.name + ' once, woven naturally — never as the opening word. 5-6 sentences. End with one quiet, open question.',
     langInstr,
     getCorrPrompt(lang, corrections),
   ].filter(Boolean).join('\n');
