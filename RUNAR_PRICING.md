@@ -1,8 +1,9 @@
 # Rúnar — Pricing & Business Model
 # Language: English (working document)
 # Status: In progress — numbers subject to change
-# Last updated: June 2026
+# Last updated: June 14 2026 (reading costs re-measured; credit scale 1/2/3/4/5)
 # ElevenLabs prices verified: June 9 2026 (elevenlabs.io/pricing/api)
+# Reading costs measured: June 14 2026 (scripts/utils/measure_reading_costs.js)
 
 ---
 
@@ -31,29 +32,32 @@ Standard subscription is the product.
 
 ## Cost per Reading (production cost)
 
-Base: Single rune = 430 ElevenLabs characters (real measurement).
+**Measured 2026-06-14** (script `scripts/utils/measure_reading_costs.js`, 3–4 real samples/type via prod proxy).
+Supersedes the old "430 char" base — readings were re-tuned 2026-06-12/14 (single shortened, Norns→~770, Kríž→~1030).
 Claude model: Sonnet 4-5 ($3/$15 per 1M in/out). Stored in claude-proxy/index.ts — not in frontend.
-Prompt caching: ✅ deployed (2026-06-09, commit 7bb6a55). System prompt cached with ephemeral TTL 5min.
-ElevenLabs: Multilingual v2/v3 (IS) $0.10/1k chars / Flash (EN) $0.05/1k chars.
+Prompt caching: ✅ deployed (2026-06-09). System prompt (~960 tok EN / ~1.045 IS) cached, ephemeral 5min TTL.
+ElevenLabs: Multilingual v2/v3 (IS) $0.10/1k chars / Flash (EN) $0.05/1k chars. EL chars = reading text length.
 
-System prompt: ~960 tokens EN / ~1.045 tokens IS. Tvoří 75–80 % každého input volání.
-Caching úspora: ~$0.0026/volání po prvním (960 tokenů za $0.30/1M místo $3.00/1M).
+| Reading | EL chars | ~out tok | Claude | EL IS | EL EN | Total IS | Total EN | Credits (RS) |
+|---------|----------|----------|--------|-------|-------|----------|----------|--------------|
+| Single | 358 | 90 | $0.002 | $0.036 | $0.018 | **$0.038** | **$0.020** | **1** |
+| Norns (3) | 773 | 145 | $0.004 | $0.077 | $0.039 | **$0.081** | **$0.043** | **2** |
+| Kríž (5) | 1.028 | 185 | $0.005 | $0.103 | $0.051 | **$0.108** | **$0.056** | **3** |
+| Horseshoe (7) | 1.367 | 342 | $0.006 | $0.137 | $0.068 | **$0.143** | **$0.074** | **4** |
+| Yggdrasil (9) | 1.661 | 415 | $0.008 | $0.166 | $0.083 | **$0.174** | **$0.091** | **5** |
+| Life Rune | 0 (text, no voice) | 293–363 | $0.006 | — | — | **$0.006** | **$0.006** | **3** |
+| Founding ritual (= Norns) | 773 | 145 | $0.004 | $0.077 | $0.039 | **$0.081** | **$0.043** | **2** |
 
-| Reading | Input EN | Input IS | Output | EL chars | Claude | EL IS | EL EN | Total IS | Total EN |
-|---------|----------|----------|--------|----------|--------|-------|-------|----------|----------|
-| Single | ~1.210 | ~1.355 | ~275 | 430 | $0.008 | $0.043 | $0.022 | **$0.051** | **$0.030** |
-| Life Rune | ~1.230 | ~1.365 | ~345 | 0 | $0.009 | — | — | **$0.009** | **$0.009** |
-| Norns (3) | ~1.240 | ~1.375 | ~365 | 700 | $0.009 | $0.070 | $0.035 | **$0.079** | **$0.044** |
-| Kříž (5) | ~1.265 | ~1.405 | ~320 | 900 | $0.009 | $0.090 | $0.045 | **$0.099** | **$0.054** |
-| Horseshoe (7) | ~1.280 | ~1.420 | ~480 | 1200 | $0.011 | $0.120 | $0.060 | **$0.131** | **$0.071** |
-| Yggdrasil (9) | ~1.355 | ~1.500 | ~660 | 1500 | $0.014 | $0.150 | $0.075 | **$0.164** | **$0.089** |
-| Founding S1 | ~1.240 | ~1.375 | ~365 | 1000 | $0.009 | $0.100 | $0.050 | **$0.109** | **$0.059** |
+**Credit scale derived from cost ratio vs single:** Norns 2.1× → 2 · Kríž 2.8× → 3 · Horseshoe 3.8× → 4 · Yggdrasil 4.6× → 5.
+Credits round up from raw cost ratio → margin per credit is uniform (~98 %) across all reading types. Life Rune is text-only
+(no TTS) so its compute cost is trivial; 3 credits reflects perceived value (permanent personal reading + Tree gateway).
 
-**Free credit acquisition cost: ~$0.049 per user (IS) / ~$0.028 (EN)**
+**Free credit acquisition cost (1 single w/ voice): ~$0.038 per user (IS) / ~$0.020 (EN).**
 This is the cost to bring a new user into Rúnar. Extremely low.
 
 Note: IS = Icelandic voice (Multilingual v2/v3). EN = international/tourist voice (Flash).
 Voice model follows app language — user switches language in app settings → readings use that language's model. ✅ implemented.
+Worst-case cost per reading-unit is the **single** (358 chars/unit); all spreads cost fewer chars per unit (Yggdrasil 332/unit).
 
 ---
 
@@ -66,17 +70,17 @@ Voice model follows app language — user switches language in app settings → 
 - Purpose: show what Rúnar is
 
 ### Rune Seeker (rune_seeker)
-- 3 free readings/month (1 with voice, 2 text only)
+- **Model B: 1 free reading at registration (with voice), no monthly reset.** Single source = DB `free_balance` (default 1).
 - Additional readings via credits
-- Credit = 1 rune drawn
+- **Credit cost = per reading type** (not rune count): Single 1 · Norns 2 · Kríž 3 · Horseshoe 4 · Yggdrasil 5 · Life Rune 3
 - Access: all spreads via credits (Single, Norns, Kříž, Horseshoe, Yggdrasil)
 - Credits are deliberately expensive — engaged user self-selects into subscription
-- Tree: founding ritual (5 credits), teaser only
+- Tree: founding ritual = Norns = **2 credits**, teaser only · Life Rune reading 3 credits
 - Journal: last 5 entries
 - Purpose: entry point, credit buyer, gift card recipient
 
 ### Standard (~$28/month)
-- 50 runes/month limit
+- 50 reading-units/month limit
 - All spreads including Yggdrasil (peak window: 1 week before/after solstice = full tree weight)
 - Full Tree of Life + founding ritual free
 - Full journal
@@ -85,48 +89,53 @@ Voice model follows app language — user switches language in app settings → 
 - Purpose: main product, target for all funnels
 
 ### Premium (~$36/month)
-- 75 runes/month limit
+- 75 reading-units/month limit
 - Everything in Standard
 - Life Rune: deeper reading (2000 tokens) + name etymology + mythological figure
 - Future: cacao ceremonial, other features TBD
 - Purpose: depth, for committed users
 
-Rune counting: 1 rune drawn = 1 rune from monthly limit.
-Kříž (5 runes) = 5 from limit. Yggdrasil (9 runes) = 9 from limit.
+**Counting (unified with RS credits):** a reading costs its credit value from the monthly limit —
+Single 1 · Norns 2 · Kríž 3 · Horseshoe 4 · Yggdrasil 5. One model app-wide.
+Worst case is unchanged: single = 1 unit = 358 chars is the cost ceiling (50 single = max 17.900 chars/mo).
+Spread-heavy users get more value (Yggdrasil 5 units, was 9 runes) at no extra worst-case cost.
+*(Note: monthly-limit enforcement in claude-proxy is still a TODO — when built it deducts the credit value.)*
 
 ---
 
 ## Spreads per Tier
 
-| Spread | Runes | Visitor | Rune Seeker | Standard | Premium |
-|--------|-------|---------|-------------|---------|---------|
-| Single | 1 | 1× total | 3/month + credits | ∞* | ∞* |
-| Norns | 3 | ❌ | credits | ∞* | ∞* |
-| Kříž | 5 | ❌ | credits | ∞* | ∞* |
-| Horseshoe | 7 | ❌ | credits | ∞* | ∞* |
-| Yggdrasil | 9 | ❌ | credits | ✅ anytime* | ✅ anytime* |
+| Spread | Runes | Credits | Visitor | Rune Seeker | Standard | Premium |
+|--------|-------|---------|---------|-------------|---------|---------|
+| Single | 1 | 1 | 1× total | 1 free at reg. + credits | ∞* | ∞* |
+| Norns | 3 | 2 | ❌ | credits | ∞* | ∞* |
+| Kříž | 5 | 3 | ❌ | credits | ∞* | ∞* |
+| Horseshoe | 7 | 4 | ❌ | credits | ∞* | ∞* |
+| Yggdrasil | 9 | 5 | ❌ | credits | ✅ anytime* | ✅ anytime* |
 
-*Within monthly rune limit (Standard: 50 runes, Premium: 75 runes).
+*Within monthly reading-unit limit (Standard: 50 units, Premium: 75 units) — a spread costs its credit value.
 *Yggdrasil: available anytime, but full branch_weight only within 1 week before/after solstice. Outside window → reading happens, reduced tree impact.
 
-Credit cost = number of runes drawn (1 rune = 1 credit).
+**Credit cost = per reading type** (cost-derived: Single 1 · Norns 2 · Kríž 3 · Horseshoe 4 · Yggdrasil 5 · Life Rune 3).
+Decoupled from rune count (old model was 1 rune = 1 credit).
 
 ---
 
 ## Credit Packages (Rune Seeker purchases)
 
 Credits are priced to make Standard subscription clearly more attractive.
-Engaged user (50 runes/month) at Master price = 9.990 ISK vs Standard 3.490 ISK.
+Engaged user (50 single/month = 50 credits) at Master price = 9.990 ISK vs Standard 3.490 ISK → saves ~6.500 ISK/mo.
 
-| Package | Runes | ISK | ISK/rune |
-|---------|-------|-----|----------|
+| Package | Credits | ISK | ISK/credit |
+|---------|---------|-----|------------|
 | Starter | 5 | 1.490 ISK | 298 ISK |
 | Seeker | 10 | 2.490 ISK | 249 ISK |
 | Wanderer | 20 | 4.490 ISK | 225 ISK |
 | Elder | 30 | 6.490 ISK | 216 ISK |
 | Master | 50 | 9.990 ISK | 200 ISK |
 
-This is the argument for upgrading to subscription — not marketing, real math.
+Credit value unchanged (200–298 ISK/credit). Under the new scale a credit buys a single reading; spreads cost 2–5 credits.
+A subscriber pays ~65–70 ISK/reading-unit (see below) — ~3× cheaper than the cheapest credit. This is the upgrade argument — real math.
 
 ---
 
@@ -148,75 +157,78 @@ Standard annual saves ~7.080 ISK/year vs monthly. Premium annual saves ~11.800 I
 Exchange rates (June 2026): €1 = 143.6 ISK / $1 = 123.5 ISK. ISK prices are fixed.
 
 ### Standard value vs credits
-Engaged user (50 runes/month):
+Engaged user (50 single/month = 50 credits):
 - At Master credit price: 9.990 ISK/month
 - Standard subscription: 3.490 ISK/month
 - **User saves ~6.500 ISK/month on Standard**
+
+Per-unit subscription price: Standard 3.490 / 50 = **~70 ISK/reading-unit** · Premium 4.900 / 75 = **~65 ISK/unit**.
+Premium is slightly cheaper per reading (volume discount) + deeper features → balanced. Both ~3× cheaper than the cheapest credit (200 ISK).
 
 ---
 
 ## Cost & Margin Analysis
 
-### API cost per user per month (50 rune Standard, IS voice)
+### API cost per user per month — worst case (50/75 units all-single = cost ceiling)
 
-| Cost item | Calculation | Monthly |
-|-----------|-------------|---------|
-| ElevenLabs IS (Multilingual v2/v3) | 50 × 430 chars × $0.10/1k | $2.15 |
-| ElevenLabs EN (Flash) | 50 × 430 chars × $0.05/1k | $1.08 |
-| Claude API | 50 readings × ~$0.009 avg | $0.45 |
-| **Total IS user** | | **$2.60/month** |
-| **Total EN user** | | **$1.53/month** |
+A single is the most expensive reading-unit (358 chars/unit); any spread usage lowers this. Numbers below are the ceiling.
 
-### Standard plan margins
+| Cost item | Standard (50) IS | Standard EN | Premium (75) IS | Premium EN |
+|-----------|------------------|-------------|-----------------|------------|
+| ElevenLabs (text length) | 50×358×$0.10/1k = $1.79 | $0.90 | 75×358×$0.10/1k = $2.69 | $1.34 |
+| Claude API | 50×~$0.002 = $0.10 | $0.10 | 75×~$0.002 = $0.15 | $0.15 |
+| **Total/month** | **$1.89** | **$1.00** | **$2.84** | **$1.49** |
 
-| Plan | ISK/month | USD/month | API cost (IS) | Margin (IS) | API cost (EN) | Margin (EN) |
-|------|-----------|-----------|---------------|-------------|---------------|-------------|
-| Standard monthly | 3.490 ISK | $28.27 | $2.60 | **91%** | $1.53 | **95%** |
-| Standard annual (equiv.) | 2.900 ISK | $23.48 | $2.60 | **89%** | $1.53 | **93%** |
+### Plan margins (at worst-case cost)
 
-### Premium plan margins (75 runes/month)
+| Plan | ISK/month | USD/month | Cost IS | Margin IS | Cost EN | Margin EN |
+|------|-----------|-----------|---------|-----------|---------|-----------|
+| Standard monthly | 3.490 ISK | $28.27 | $1.89 | **93%** | $1.00 | **96%** |
+| Standard annual (equiv.) | 2.900 ISK | $23.48 | $1.89 | **92%** | $1.00 | **96%** |
+| Premium monthly | 4.900 ISK | $39.68 | $2.84 | **93%** | $1.49 | **96%** |
+| Premium annual (equiv.) | 4.083 ISK | $33.06 | $2.84 | **91%** | $1.49 | **96%** |
 
-| Plan | ISK/month | USD/month | API cost (IS) | Margin (IS) | API cost (EN) | Margin (EN) |
-|------|-----------|-----------|---------------|-------------|---------------|-------------|
-| Premium monthly | 4.900 ISK | $39.68 | $3.89 | **90%** | $2.29 | **94%** |
-| Premium annual (equiv.) | 4.083 ISK | $33.06 | $3.89 | **88%** | $2.29 | **93%** |
+Standard and Premium margins are equal and healthy (~93% IS / ~96% EN). Prices remain balanced — no change needed.
 
 Fixed infra: ~$30/month (Hetzner + Supabase Pro).
 Break-even: 2 Standard monthly users.
 
 ### Revenue & profit projections (realistic mix: 70% Standard / 30% Premium, 60% annual / 40% monthly, 50% IS / 50% EN)
 
+Worst-case API cost (all-single) ≈ $1.66/user blended. Real usage (spreads) is lower → these are conservative.
+
 | Users | Revenue/month | API costs | Infra | Net profit | Margin |
 |-------|---------------|-----------|-------|-----------|--------|
-| 10 | ~$240 | ~$21 | $30 | ~$189 | 79% |
-| 50 | ~$1.200 | ~$103 | $30 | ~$1.067 | 89% |
-| 100 | ~$2.400 | ~$205 | $30 | ~$2.165 | 90% |
-| 200 | ~$4.800 | ~$410 | $30 | ~$4.360 | 91% |
-| 500 | ~$12.000 | ~$1.025 | $30 | ~$10.945 | 91% |
+| 10 | ~$240 | ~$17 | $30 | ~$193 | 80% |
+| 50 | ~$1.200 | ~$83 | $30 | ~$1.087 | 91% |
+| 100 | ~$2.400 | ~$166 | $30 | ~$2.204 | 92% |
+| 200 | ~$4.800 | ~$332 | $30 | ~$4.438 | 92% |
+| 500 | ~$12.000 | ~$830 | $30 | ~$11.140 | 93% |
 
 ---
 
 ## ElevenLabs Plan — When to Upgrade
 
 Model: Multilingual v2/v3, $0.10/1k chars. Overage rate = plan rate.
-Assumption: 50 readings/user/month × 430 chars = 21.500 chars/user/month.
+Assumption: worst-case 50 single/user/month × 358 chars = **17.900 chars/user/month** (was 21.500 at old 430-char single).
 
 | Plan | $/month | Multilingual chars included | Readings | ~Engaged users | Upgrade at |
 |------|---------|----------------------------|----------|----------------|------------|
-| Creator | $22 | 220.000 | 511 | ~10 | ~47 users |
-| Pro | $99 | 990.000 | 2.302 | ~46 | ~139 users |
-| Scale | $299 | 2.990.000 | 6.953 | ~139 | ~460 users |
-| Business | $990 | 9.900.000 | 23.023 | ~460 | 460+ → Enterprise |
-| Enterprise | Custom | Custom | — | 460+ | Contact ElevenLabs |
+| Creator | $22 | 220.000 | 614 | ~12 | ~56 users |
+| Pro | $99 | 990.000 | 2.765 | ~55 | ~167 users |
+| Scale | $299 | 2.990.000 | 8.352 | ~167 | ~553 users |
+| Business | $990 | 9.900.000 | 27.654 | ~553 | 553+ → Enterprise |
+| Enterprise | Custom | Custom | — | 553+ | Contact ElevenLabs |
 
 **Upgrade logic:** Stay on current plan until monthly overages + plan cost exceed next plan price.
-- Creator → Pro: at ~47 users
-- Pro → Scale: at ~139 users
-- Scale → Business: at ~460 users
-- Business → Enterprise: at 460+ users (at this revenue ~$120k+/year, strong negotiating position)
+- Creator → Pro: at ~56 users
+- Pro → Scale: at ~167 users
+- Scale → Business: at ~553 users
+- Business → Enterprise: at 553+ users (at this revenue ~$120k+/year, strong negotiating position)
 
-**Start on Creator.** Unlike previously assumed, Creator is cost-effective up to ~47 users.
-Do NOT jump to Pro at launch — overages are fine and cheaper until ~47 paid users.
+**Start on Creator.** Creator is cost-effective up to ~56 users (was ~47 — shorter single extended capacity ~20%).
+Do NOT jump to Pro at launch — overages are fine and cheaper until ~56 paid users.
+Real usage (spreads cost fewer chars/unit) pushes all these crossovers higher — these are conservative worst-case (all-single).
 
 Flash (EN) plan: same upgrade logic, but costs are 2× lower so crossover points roughly double.
 At mixed IS/EN user base, actual crossover points are higher than the IS-only estimates above.
@@ -227,7 +239,7 @@ At mixed IS/EN user base, actual crossover points are higher than the IS-only es
 
 ### Philosophy
 Physical rune set → free credit inside → Rúnar user.
-Acquisition cost: $0.049 per IS user / $0.028 per EN user. Marketing cost: effectively zero.
+Acquisition cost: $0.038 per IS user / $0.020 per EN user. Marketing cost: effectively zero.
 
 ### Physical products (in development — Sigrun)
 - Rune set: 25 Elder Futhark stones, pouch, design by Sigrun
@@ -384,5 +396,5 @@ Nativní appka tento funnel nenaruší — web verze zůstává paralelně.
 
 ---
 
-*Last updated: June 9 2026*
+*Last updated: June 14 2026 — reading costs re-measured, credit scale 1/2/3/4/5, RS Model B, subscription counts reading-units*
 *ElevenLabs pricing source: elevenlabs.io/pricing/api — verified June 9 2026*

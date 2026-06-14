@@ -275,11 +275,11 @@ const TIER_LIMITS = {
 // credits: cost in rune readings (from Rune Reading Card).
 const SPREAD_COSTS = {
   single:    { free: 1,    credits: 1  },
-  cross:     { free: null, credits: 5  },
+  cross:     { free: null, credits: 3  },
   gathering: { free: null, credits: 3  },  // flat: 3 credits per Gathering reading
-  horseshoe: { free: null, credits: 7  },
-  norns:     { free: null, credits: 3  },
-  yggdrasil: { free: null, credits: 9  },
+  horseshoe: { free: null, credits: 4  },
+  norns:     { free: null, credits: 2  },
+  yggdrasil: { free: null, credits: 5  },
   life_rune: { free: null, credits: 3  },  // RS: 3 rune readings
 };
 
@@ -309,7 +309,7 @@ const SPREAD_CONFIG = {
       en: ['Centre / Core', 'Above / Aspiration', 'Below / Root', 'Behind / Past', 'Ahead / Direction'],
       is: ['Miðja / Kjarni', 'Of an / Á leit', 'Undir / Rót', 'Að baki / Fortíð', 'Framar / Stefna'],
     },
-    credits: 5,
+    credits: 3,
     tokens:  1100,
   },
   norns: {
@@ -318,7 +318,7 @@ const SPREAD_CONFIG = {
       en: ['Urður / Past', 'Verðandi / Present', 'Skuld / Future'],
       is: ['Urður / Fortíð', 'Verðandi / Nútíð', 'Skuld / Framtíð'],
     },
-    credits: 3,
+    credits: 2,
     tokens:  900,
   },
   horseshoe: {
@@ -329,7 +329,7 @@ const SPREAD_CONFIG = {
       is: ['Fortíð',     'Nútíð',      'Dulið / Nánasta framtíð',
            'Hindranir',  'Ytri kraftar', 'Innri staða', 'Niðurstaða'],
     },
-    credits: 7,
+    credits: 4,
     tokens:  1300,
   },
   yggdrasil: {
@@ -361,7 +361,7 @@ const SPREAD_CONFIG = {
     },
     // Norns axis per position: skuld=1-3, verdandi=4-5, urd=6-9
     norns_axis: ['skuld','skuld','skuld','verdandi','verdandi','urd','urd','urd','urd'],
-    credits: 9,
+    credits: 5,
     tokens:  1800,
   },
 };
