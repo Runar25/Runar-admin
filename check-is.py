@@ -53,6 +53,11 @@ BAD_PATTERNS = [
     ('þrjár ókeypis',    '(check context)',   'old "three free" reference'),
     ('Ótakmarkaðir lestrar', '(check context)', 'old "unlimited readings" reference'),
     ('mánaðar- / árslegt', '(check context)', 'old subscription text'),
+    # Sezónní obraznost — rod/shoda (2026-06-14, KUKY ověřil). Rod podstatného PRVNÍ.
+    ('harður frost ',     'hart frost',         'gender: frost je hk → hart frost (mezera chrání harður frostbiti=kk)'),
+    ('harður næturfrost', 'hart næturfrost',    'gender: næturfrost je hk → hart næturfrost'),
+    ('grátt súld',        'grá súld',           'gender: súld je kvk → grá súld'),
+    ('fyrsti harði frostið', 'fyrsta harða frostið', 'gender+veik: frost hk, ákv. greinir -ið → veik beyging'),
 ]
 
 issues = []
