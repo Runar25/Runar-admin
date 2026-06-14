@@ -207,33 +207,166 @@ function _getTimeOfDay() {
 }
 
 // Per-reading seasonal imagery — injected into the reading prompt like the angle.
-// Binds the ONE nature image to the current Icelandic season so Rúnar stops
-// defaulting to winter/snow regardless of the real season. Cheap, per-reading.
-function _seasonalImagery(lang) {
-  var m = new Date().getMonth() + 1;
-  var en, is;
-  if (m === 12 || m <= 2) {
-    en = 'the long winter dark, candlelight against black, snow sweeping bare lava, the aurora, the seed of light waiting in the deepest night';
-    is = 'langt vetrarmyrkur, kertaljós gegn svörtu, snjór yfir bert hraun, norðurljósin, fræ ljóssins sem bíður í dýpstu nótt';
-  } else if (m <= 4) {
-    en = 'the first birdsong cracking the silence, spring mud and the smell of thawed earth, the last drifts melting, light returning fast';
-    is = 'fyrsti fuglasöngur sem brýtur þögnina, vorleðja og lykt af þíðri jörð, síðustu fannir að bráðna, ljósið sem kemur hratt aftur';
-  } else if (m <= 6) {
-    en = 'white nights, the midnight sun that sinks toward the sea but never sets, the red-gold light lingering near midnight, the thinning veil, green returning to the land';
-    is = 'bjartar nætur, miðnætursól sem hnígur að hafi en sest aldrei, rauðgyllt ljós sem dvelur um miðnættið, þynnandi hula, grænkan sem snýr aftur til landsins';
-  } else if (m <= 8) {
-    en = 'the long light, hay season, puffins on the sea cliffs, the open endless sky, whales surfacing in grey fjords';
-    is = 'langa ljósið, heyannir, lundar á bjargbrúnum, opinn endalaus himinn, hvalir sem koma upp í gráum fjörðum';
-  } else if (m === 9) {
-    en = 'the sheep coming home off the highland, harvest gold, the first chill at the edges of the day';
-    is = 'sauðféð sem kemur heim af fjalli, gullin uppskera, fyrsti kuldinn á jöðrum dagsins';
-  } else {
-    en = 'darkness returning fast, the first hard frost, the aurora season opening, the sky beginning to speak';
-    is = 'myrkrið sem kemur hratt aftur, fyrsta harða frostið, norðurljósatíðin að opnast, himinninn sem fer að tala';
+// Roots Rúnar's one nature image in the CURRENT Icelandic season, with a wide pool
+// per season so it never feels repetitive. A shuffle bag in localStorage (per device)
+// deals each image once before any repeat, then reshuffles. Cold/harsh runes draw from
+// the season's COLD set so e.g. Isa stays cold-but-seasonal (north wind, not off-season snow).
+// Each image: { id, en, is }. id is stable so the bag survives later pool edits.
+var SEASON_POOLS = {
+  deepwinter: {
+    bright: [
+      { id: 'dw_aurora',   en: 'the aurora unfurling green over the snow',              is: 'norðurljósin sem breiðast græn yfir snjóinn' },
+      { id: 'dw_candle',   en: 'candlelight steady against the long black',             is: 'kertaljós sem stendur stöðugt gegn löngu myrkri' },
+      { id: 'dw_steam',    en: 'geothermal steam rising into the frozen air',           is: 'jarðhitagufa sem stígur upp í frosið loft' },
+      { id: 'dw_noonsun',  en: 'the low pink noon sun barely clearing the horizon',     is: 'lág bleik hádegissól sem rétt sleppur yfir sjóndeildarhringinn' },
+      { id: 'dw_stars',    en: 'a sky thick with stars over the still fjord',           is: 'himinn þéttur af stjörnum yfir kyrrum firðinum' },
+      { id: 'dw_seed',     en: 'the seed of returning light waiting at the solstice',   is: 'fræ vaxandi ljóss sem bíður við vetrarsólstöður' }
+    ],
+    cold: [
+      { id: 'dw_blizzard', en: 'a blizzard sweeping bare across the lava',              is: 'hríðarbylur sem feykir bert yfir hraunið' },
+      { id: 'dw_polarnight', en: 'the long polar night that swallows the day',          is: 'langa pólnóttin sem gleypir daginn' },
+      { id: 'dw_icefall',  en: 'the waterfall locked and silent in ice',                is: 'fossinn læstur og þögull í ís' },
+      { id: 'dw_blackice', en: 'black ice and a wind off the sea in the dark',          is: 'svell og vindur af hafinu í myrkrinu' },
+      { id: 'dw_frost',    en: 'a hard frost biting through everything',                is: 'harður frostbiti sem nær gegnum allt' }
+    ]
+  },
+  spring: {
+    bright: [
+      { id: 'sp_loa',      en: 'the golden plover returning, the first herald of spring', is: 'lóan komin aftur, fyrsti vorboðinn' },
+      { id: 'sp_lightfast', en: 'the light returning fast, minutes longer each day',     is: 'ljósið sem kemur hratt aftur, mínútum lengra á hverjum degi' },
+      { id: 'sp_lambs',    en: 'new lambs unsteady in the field',                       is: 'nýborin lömb óstöðug á túni' },
+      { id: 'sp_meltwater', en: 'meltwater running bright down the slopes',             is: 'leysingavatn sem rennur tært niður hlíðarnar' },
+      { id: 'sp_thaw',     en: 'the smell of thawed earth, the last drifts shrinking',  is: 'lykt af þíðri jörð, síðustu fannir að minnka' },
+      { id: 'sp_swans',    en: 'whooper swans returning to the wetlands',               is: 'álftir sem snúa aftur að votlendinu' },
+      { id: 'sp_sumardagur', en: 'the first day of summer arriving while frost still holds', is: 'sumardagurinn fyrsti sem kemur þótt frost haldi enn' }
+    ],
+    cold: [
+      { id: 'sp_latesnow', en: 'a late snowstorm out of a clear sky',                   is: 'síðbúinn snjóstormur úr heiðskíru lofti' },
+      { id: 'sp_nightfrost', en: 'a hard night frost over the thawing ground',          is: 'hart næturfrost yfir þiðnandi jörð' },
+      { id: 'sp_icepuddle', en: 'ice skinned over the puddles by morning',              is: 'ís lagður yfir pollana að morgni' },
+      { id: 'sp_northwind', en: 'the biting north wind cutting through the new light',   is: 'nístandi norðanvindur sem sker gegnum nýja ljósið' },
+      { id: 'sp_coldsea',  en: 'the sea still cold and grey under the brightening sky',  is: 'hafið enn kalt og grátt undir birtandi himni' }
+    ]
+  },
+  earlysummer: {
+    bright: [
+      { id: 'es_whitenights', en: 'the white nights arriving, the dark never quite falling', is: 'bjartar nætur að koma, myrkrið sem fellur aldrei alveg' },
+      { id: 'es_midnightsun', en: 'the midnight sun climbing toward the solstice',       is: 'miðnætursólin sem stígur að sólstöðum' },
+      { id: 'es_birdcliffs', en: 'the bird cliffs filling and loud again',              is: 'fuglabjörgin sem fyllast og verða hávær á ný' },
+      { id: 'es_lupine',   en: 'lupine beginning to spread blue across the slopes',     is: 'lúpína sem byrjar að breiðast blá yfir brekkurnar' },
+      { id: 'es_green',    en: 'green flooding back over the land',                     is: 'grænkan sem flæðir aftur yfir landið' },
+      { id: 'es_eider',    en: 'eider ducks nesting along the shore',                   is: 'æður sem verpa með ströndinni' },
+      { id: 'es_rivers',   en: 'the rivers full and loud with the melt',                is: 'árnar fullar og háværar af leysingunni' }
+    ],
+    cold: [
+      { id: 'es_seasnap',  en: 'a cold snap blowing in off the sea',                    is: 'kuldakast sem blæs inn af hafinu' },
+      { id: 'es_coastfog', en: 'fog sitting grey on the coast',                         is: 'þoka sem situr grá á ströndinni' },
+      { id: 'es_latefrost', en: 'a late spring frost in the small hours',               is: 'síðbúið vorfrost á næturstund' },
+      { id: 'es_glacierwind', en: 'the wind off the glacier, cold under the long light', is: 'vindurinn af jöklinum, kaldur undir langa ljósinu' },
+      { id: 'es_drizzle',  en: 'a grey drizzle that will not lift',                     is: 'grá súld sem ekki léttir' }
+    ]
+  },
+  highsummer: {
+    bright: [
+      { id: 'hs_brightnights', en: 'bright nights that never fully darken',             is: 'bjartar nætur sem dimma aldrei alveg' },
+      { id: 'hs_midnightsun', en: 'the midnight sun low and gold over the sea',         is: 'miðnætursólin lág og gyllt yfir hafinu' },
+      { id: 'hs_lupine',   en: 'lupine spread purple across the hillsides',             is: 'lúpína breidd fjólublá yfir hlíðarnar' },
+      { id: 'hs_terns',    en: 'arctic terns wheeling and diving over the shore',       is: 'kríur sem sveima og steypa sér yfir fjöruna' },
+      { id: 'hs_puffins',  en: 'puffins crowding the sea cliffs',                       is: 'lundi þéttur á bjargbrúnum' },
+      { id: 'hs_hay',      en: 'hay drying in the long light',                          is: 'hey að þorna í langa ljósinu' },
+      { id: 'hs_whales',   en: 'whales surfacing in a calm fjord',                      is: 'hvalir sem koma upp í kyrrum firði' },
+      { id: 'hs_highland', en: 'the highland open at last and crossable',               is: 'hálendið loks opið og fært' }
+    ],
+    cold: [
+      { id: 'hs_northwind', en: 'the cold north wind cutting through the endless light', is: 'kaldur norðanvindur sem sker gegnum endalaust ljósið' },
+      { id: 'hs_seafog',   en: 'fog creeping grey off the cold sea',                    is: 'þoka sem læðist grá af köldu hafinu' },
+      { id: 'hs_siderain', en: 'summer rain driving sideways across the lava',          is: 'sumarrigning sem stendur á ská yfir hraunið' },
+      { id: 'hs_coldsea',  en: 'the sea still ice-cold beneath the bright sky',         is: 'hafið enn ískalt undir björtum himni' },
+      { id: 'hs_glacierbreath', en: 'the breath of the glacier drifting down the valley', is: 'andardráttur jökulsins sem berst niður dalinn' }
+    ]
+  },
+  autumn: {
+    bright: [
+      { id: 'au_rettir',   en: 'the sheep coming home off the highland for the round-up', is: 'sauðféð sem kemur heim af fjalli í réttirnar' },
+      { id: 'au_heath',    en: 'the heath turning red and gold',                        is: 'lyngið sem roðnar og gyllist' },
+      { id: 'au_berries',  en: 'bilberries ripe and dark in the heath',                 is: 'aðalbláber þroskuð og dökk í lynginu' },
+      { id: 'au_aurora',   en: 'the aurora returning to the darkening sky',             is: 'norðurljósin sem snúa aftur á dimmandi himin' },
+      { id: 'au_goldlight', en: 'low gold light stretched long across the fields',      is: 'lágt gyllt ljós sem teygir sig yfir túnin' },
+      { id: 'au_harvest',  en: 'the last of the harvest gathered in',                   is: 'síðustu uppskerunni safnað saman' }
+    ],
+    cold: [
+      { id: 'au_firstfrost', en: 'the first hard frost on the morning grass',           is: 'fyrsta harða frostið á morgungrasinu' },
+      { id: 'au_equinox',  en: 'the equinox storms rolling in off the Atlantic',        is: 'jafndægrastormarnir sem koma af Atlantshafi' },
+      { id: 'au_coldrain', en: 'cold rain beating the last colour down',                is: 'kalt regn sem lemur síðustu litina niður' },
+      { id: 'au_firstsnow', en: 'the first snow dusting the high peaks',                is: 'fyrsti snjórinn sem fýkur á háa tinda' }
+    ]
+  },
+  darkening: {
+    bright: [
+      { id: 'dk_auroraopen', en: 'the aurora season opening, the sky beginning to speak', is: 'norðurljósatíðin að opnast, himinninn sem fer að tala' },
+      { id: 'dk_firstsnowdusk', en: 'the first snow bright in the early dusk',          is: 'fyrsti snjórinn bjartur í snemmbúnu rökkri' },
+      { id: 'dk_advent',   en: 'Advent candles lit early against the dark',             is: 'aðventukerti tendruð snemma gegn myrkri' },
+      { id: 'dk_shortgold', en: 'the brief gold of a short afternoon',                  is: 'stutt gull síðdegis sem endist skammt' }
+    ],
+    cold: [
+      { id: 'dk_darkfast', en: 'the darkness returning fast now',                       is: 'myrkrið sem kemur hratt aftur núna' },
+      { id: 'dk_lowlandsnow', en: 'the first snow reaching the lowlands',               is: 'fyrsti snjórinn sem nær niður á láglendið' },
+      { id: 'dk_atlanticstorm', en: 'Atlantic storms battering the coast',              is: 'Atlantshafsstormar sem berja ströndina' },
+      { id: 'dk_hardfrost', en: 'a hard frost and the wind rising',                     is: 'hart frost og vindur sem vex' },
+      { id: 'dk_iceforming', en: 'ice beginning to form at the edge of the water',      is: 'ís sem byrjar að myndast við vatnsbakkann' }
+    ]
   }
+};
+
+function _seasonBucket(m) {
+  if (m === 12 || m <= 2) return 'deepwinter';
+  if (m <= 4) return 'spring';
+  if (m <= 6) return 'earlysummer';
+  if (m <= 8) return 'highsummer';
+  if (m === 9) return 'autumn';
+  return 'darkening';
+}
+
+// Cold/harsh runes draw the season's COLD images (keeps Isa cold but in-season).
+var _COLD_RUNES = ['Isa', 'Hagalaz', 'Nauthiz', 'Thurisaz'];
+function _isColdRune(drawn) { return !!(drawn && drawn.n && _COLD_RUNES.indexOf(drawn.n) !== -1); }
+
+// Shuffle bag in localStorage: returns one id, dealing each once before any repeat,
+// then reshuffles. Per device; falls back to plain random where localStorage is absent.
+function _seasonBagPick(bucket, kind, ids) {
+  var key = 'seasonbag_' + bucket + '_' + kind;
+  var remaining = null;
+  var ls = (typeof localStorage !== 'undefined') ? localStorage : null;
+  if (ls) {
+    try { remaining = JSON.parse(ls.getItem(key) || 'null'); } catch (e) { remaining = null; }
+    if (Array.isArray(remaining)) remaining = remaining.filter(function(id) { return ids.indexOf(id) !== -1; });
+    else remaining = null;
+  }
+  if (!remaining || !remaining.length) remaining = ids.slice();
+  var pick = remaining[Math.floor(Math.random() * remaining.length)];
+  if (ls) {
+    var next = remaining.filter(function(id) { return id !== pick; });
+    try { ls.setItem(key, JSON.stringify(next)); } catch (e) {}
+  }
+  return pick;
+}
+
+function _seasonalImagery(lang, drawn) {
+  var m = new Date().getMonth() + 1;
+  var bucket = _seasonBucket(m);
+  var pool = SEASON_POOLS[bucket];
+  if (!pool) return '';
+  var kind = _isColdRune(drawn) ? 'cold' : 'bright';
+  var images = pool[kind];
+  if (!images || !images.length) { kind = 'bright'; images = pool.bright; }
+  var ids = images.map(function(x) { return x.id; });
+  var pickId = _seasonBagPick(bucket, kind, ids);
+  var img = images[0];
+  for (var i = 0; i < images.length; i++) { if (images[i].id === pickId) { img = images[i]; break; } }
+  var phrase = (lang === 'is') ? img.is : img.en;
   if (lang === 'is')
-    return 'ÁRSTÍÐARMYND (bindandi): Þín eina náttúrumynd verður að koma frá þessari árstíð — ' + is + '. Aldrei úr annarri árstíð (enginn snjór að sumri). Köld rúna lagar sig að núinu: Isa er frosin jörð undir endalausu ljósi, ekki snjór.';
-  return 'SEASONAL IMAGE (binding): your one nature image must come from this season — ' + en + '. Never reach for another season (no snow in summer). A cold rune adapts to now: Isa is frozen ground beneath the endless light, not snow.';
+    return 'ÁRSTÍÐARMYND (ef hún kemur): ef náttúrumynd birtist í lestrinum, láttu hana koma frá þessari íslensku árstíð — ' + phrase + '. Aldrei úr annarri árstíð (enginn snjór að sumri); köld rúna verður kuldinn sem á heima núna, ekki vetur.';
+  return 'SEASONAL IMAGE (if one arises): if a nature image appears in the reading, let it come from this Icelandic season — ' + phrase + '. Never from another season (no snow in summer); a cold rune becomes the cold that belongs to now, not winter.';
 }
 
 // Returns the context injection line for V2 readings
@@ -574,7 +707,7 @@ function buildReadingPromptIS(u, drawn, corrections) {
     parts + formulaLine,
     '',
     'LESTURHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og upphaf): ' + angle,
-    _seasonalImagery('is'),
+    _seasonalImagery('is', drawn),
     '',
     'Gefðu einn samfelldan lestur — 3 stuttar setningar, 38 til 45 orð alls. Hann verður lesinn upphátt, svo hafðu hverja setningu létta — um 20 til 25 sekúndur. Engar fyrirsagnir, engar hlutaskiptingar.',
     '',
@@ -619,7 +752,7 @@ function buildReadingPromptEN(u, drawn, lang, corrections) {
     parts,
     '',
     'READING ANGLE (follow this entry point — let it shape the opening and tone): ' + _randomAngle('en'),
-    _seasonalImagery('en'),
+    _seasonalImagery('en', drawn),
     '',
     'One flowing reading — 3 short sentences, 38 to 45 words total. It will be read aloud, so keep every sentence lean — about 20 to 25 seconds spoken. No sections, no labels, no line breaks between thoughts.',
     '',
