@@ -1,6 +1,6 @@
 // runar-reporter.js — in-app tester reporter (bug_reports). Spec: runar_reporter_spec_CODE.md
 // Samostatný modul: injektuje plovoucí tlačítko + panel + styl, zachytí text/kontext,
-// offline fronta (localStorage) + dedupe upsert do Supabase přes client_uuid.
+// offline fronta (localStorage) + dedupe přes UNIQUE client_uuid (plain insert; 23505 = už odesláno).
 // Závisí na globálech: sb (supabase client), t() (translations), lang. Načítat po runar-app.js.
 (function () {
   var TESTER_KEY = 'bug_tester', QUEUE_KEY = 'bug_queue';
@@ -216,9 +216,9 @@
     if (!navigator.onLine || typeof sb === 'undefined' || !sb) return;
     var q = readQueue(); if (!q.length) return;
     q.forEach(function (rep) {
-      sb.from('bug_reports').upsert(rep, { onConflict: 'client_uuid', ignoreDuplicates: true })
+      sb.from('bug_reports').insert(rep)
         .then(function (res) {
-          if (res && !res.error) {
+          if (res && (!res.error || res.error.code === '23505')) {  // 23505 = duplicitni client_uuid (uz odeslano)
             writeQueue(readQueue().filter(function (x) { return x.client_uuid !== rep.client_uuid; }));
           }
         });
