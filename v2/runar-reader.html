@@ -240,25 +240,25 @@
       <p class="note" id="reader-note">Only your name is required. Everything else helps Rúnar speak more personally.</p>
       <!-- NAME ROW — hidden in 'mine' mode when name + life rune known -->
       <div id="setup-name-row">
-        <label class="flbl" id="name-lbl">YOUR NAME OR PREFERRED NAME</label>
+        <label class="flbl" id="name-lbl" data-i18n="name_lbl">YOUR NAME OR PREFERRED NAME</label>
         <input class="txt" id="r-name" type="text" placeholder="How shall Rúnar address you?">
       </div>
-      <label class="flbl" id="area-lbl">AREA OF LIFE <span class="opt">(OPTIONAL)</span></label>
+      <label class="flbl" id="area-lbl" data-i18n="area_lbl">AREA OF LIFE <span class="opt">(OPTIONAL)</span></label>
       <div class="pills" id="area-pills"></div>
-      <label class="flbl" id="seek-lbl">WHAT ARE YOU SEEKING? <span class="opt">(OPTIONAL)</span></label>
+      <label class="flbl" id="seek-lbl" data-i18n="seek_lbl">WHAT ARE YOU SEEKING? <span class="opt">(OPTIONAL)</span></label>
       <div class="pills" id="seek-pills"></div>
-      <label class="flbl" id="intention-lbl">THIS READING IS FOR <span class="opt">(OPTIONAL)</span></label>
+      <label class="flbl" id="intention-lbl" data-i18n="intention_lbl">THIS READING IS FOR <span class="opt">(OPTIONAL)</span></label>
       <div class="pills" id="intention-pills"></div>
       <!-- SPECIFIC QUESTION — Rune Walker/Rune Keeper only -->
       <div id="q-section" style="display:none;">
-        <label class="flbl" id="q-lbl">SPECIFIC QUESTION <span class="opt">(OPTIONAL)</span></label>
+        <label class="flbl" id="q-lbl" data-i18n="q_lbl">SPECIFIC QUESTION <span class="opt">(OPTIONAL)</span></label>
         <input class="txt" id="r-question" type="text" placeholder="e.g. What is holding me back?">
       </div>
       <!-- Teaser for Visitor / Rune Seeker -->
       <div id="q-teaser" style="display:none;">
         <p class="q-teaser-txt" id="q-teaser-txt">Deeper questions open with Rune Walker.</p>
       </div>
-      <button class="btn-full" id="begin-btn" onclick="startReading()">BEGIN THE READING</button>
+      <button class="btn-full" id="begin-btn" data-i18n="begin_btn" onclick="startReading()">BEGIN THE READING</button>
       <div class="status" id="st-setup"></div>
     </div>
 
