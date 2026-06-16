@@ -1,7 +1,7 @@
 # Rúnar — Pricing & Business Model
 # Language: English (working document)
 # Status: In progress — numbers subject to change
-# Last updated: June 14 2026 (reading costs re-measured; credit scale 1/2/3/4/5)
+# Last updated: June 16 2026 (reading costs; credit scale 1/2/3/4/5; operating costs + Iceland taxes + break-even)
 # ElevenLabs prices verified: June 9 2026 (elevenlabs.io/pricing/api)
 # Reading costs measured: June 14 2026 (scripts/utils/measure_reading_costs.js)
 
@@ -232,6 +232,71 @@ Real usage (spreads cost fewer chars/unit) pushes all these crossovers higher �
 
 Flash (EN) plan: same upgrade logic, but costs are 2× lower so crossover points roughly double.
 At mixed IS/EN user base, actual crossover points are higher than the IS-only estimates above.
+
+---
+
+## Operating costs, taxes & break-even (Agndofa ehf., Iceland)
+
+> Planning model (interactive calculator, 2026-06-15). **Estimates — verify with an accountant (endurskoðandi).**
+> Rates change yearly and depend on company form. Sources at the end of this section.
+> All listed costs are tax-deductible business expenses (reduce taxable profit).
+
+### Fixed monthly costs (USD)
+
+| Item | $/month | Note |
+|------|---------|------|
+| Claude (dev / Max) | 100.00 | development cost — drops once the app is built |
+| Shopify (Basic plan) | 39.00 | online store / gift cards / credits |
+| Supabase Pro | 25.00 | DB + edge functions |
+| ElevenLabs (Creator base) | 22.00 | voice; steps up to Pro $99 (~50 users), Scale $299 (~170) |
+| Apple Developer ($99/yr) | 8.25 | amortized |
+| Hetzner server | 6.00 | |
+| Domain agndofa.is | 1.50 | amortized |
+| Google Play ($25 one-time) | 0.70 | amortized over ~36 mo |
+| Resend (email) | 0.00 | free tier at launch volume |
+| **Total fixed** | **~$202.45** | |
+
+One-time: Google Play $25. Annual: Apple Developer $99.
+
+### Variable per paying user / month
+
+| Item | $/user | Note |
+|------|--------|------|
+| Claude API + ElevenLabs voice | ~0.85 | realistic blend IS/EN |
+| Payment processing (Shopify ~2.9% + ~$0.30/txn) | ~0.96 | on gross revenue |
+| **Total variable** | **~$1.81** | |
+
+Revenue per paying user ≈ 3.518 ISK/mo (~$28.5), blended 70% Standard / 30% Premium, 60% annual / 40% monthly.
+
+### Icelandic taxes & mandatory contributions
+
+- **VAT (VSK) 24 %** — consumer prices are VAT-inclusive → net revenue = price ÷ 1.24. Below ~2,000,000 ISK/yr turnover (~47 users) the business is VAT-exempt (kink in the curve). VAT on foreign (EN) customers follows place-of-supply (EU OSS / often 0 % outside EU) — model applies 24 % to all = conservative.
+- **Employer payroll on-costs (~19.5–21.5 % on top of gross salary):** tryggingagjald 6.35 % · lífeyrissjóður (mótframlag) 11.5 % · sjúkrasjóður 1 % · orlofssjóður 0.25 % · starfsmennta-/endurhæfingarsjóður ~0.35 % (+ optional séreign match 2 %).
+- **Personal (from your salary):** tekjuskattur + útsvar (progressive ~31.5 % / 37.95 % / 46.28 % after persónuafsláttur) · lífeyrissjóður (employee) 4 % · stéttarfélagsgjald ~0.7–1 %.
+- **Corporate income tax (ehf.) 20 %** on retained profit; dividend 22 %. Salary vs dividend split + deductions = the accountant's optimization (reiknað endurgjald sets a minimum salary).
+
+### Break-even & "living wage" (net take-home / month)
+
+Model: revenue − VAT − payment fees − operating costs = company money; − employer on-costs (~20 %) = gross salary; − personal tax/levies (~33 %) = net in pocket.
+
+| Net take-home / month | Paying users needed |
+|-----------------------|---------------------|
+| Break-even (covers all costs) | **~8** |
+| 200.000 ISK | ~147 |
+| 350.000 ISK | ~250 |
+| **500.000 ISK** (solid Icelandic living) | **~353** |
+| 700.000 ISK | ~490 |
+
+- Mandatory contributions (both layers) roughly **double** the user count vs a naive gross model.
+- **Claude $100 is a temporary dev cost** → drops post-launch → break-even falls to ~5 and the curve lifts.
+- Margins on revenue stay high (~93–96 %); the wedge to *personal net* is what raises the counts.
+
+### Sources (verified 2026-06-15)
+- Employer social security (tryggingagjald 6.35 %) — Rivermate / PwC Tax Summaries
+- Employer pension 11.5 % (mótframlag) — Pension Fund of Commerce (live.is)
+- Union funds: sjúkrasjóður 1 %, orlofssjóður 0.25 % — ASÍ
+- Corporate income tax 20 % — PwC Tax Summaries
+- Key rates 2025 — Skatturinn
 
 ---
 
