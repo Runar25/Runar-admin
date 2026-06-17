@@ -709,7 +709,9 @@ async function _generateSpreadReading(o) {
   }
   if (res.error) { setSt('st-reader', 'Failed: ' + res.error, 'err'); return; }
 
-  var text = applyISCorrections(res.text || '', lang, corrections);
+  var _seg = _parseSegments(res.text || '');
+  var text = applyISCorrections(_seg.reading, lang, corrections);
+  _lastDeeper = _seg.deeper; // Fáze A: deeper jen v paměti
   readerTexts[lang] = { short: text, deep: '' };
 
   var lbl = document.getElementById(o.lblId);

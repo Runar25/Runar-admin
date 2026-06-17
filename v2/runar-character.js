@@ -974,9 +974,8 @@ function buildNornsPromptIS(u, runes, corrections) {
     'Urður talar af þyngd þess sem er þegar fast — röddin hennar er hlutlæg, óafturkallanleg.',
     'Verðandi talar í nútíð — lifandi, að verða til, ekki lokið.',
     'Skuld talar ekki um framtíðina eins og spámann — heldur um hvað verður að verða ef þráðurinn heldur áfram.',
-    'Lestu sem einn samfelldur stef — nefndu ekki Nornirnar nafnlega í úttakinu. Láttu röddirnar koma í gegnum Rúnar.',
-    'Sérhver rúna verður að setja mark sitt — láttu allar þrjár móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
-    'Ávarpaðu ' + u.name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. Vertu hnitmiðaður — 5 til 6 setningar. Endaðu með einni mjúkri, opinni spurningu.'
+    'Gefðu hverri af þremur rúnunum sinn eigin takt, í röð — Urður (það sem var), Verðandi (það sem er að verða), Skuld (það sem verður að koma). Taktarnir þrír renna saman í EINN samfelldan straum, ekki þrjá aðskilda lestra. Nefndu ekki rúnirnar né Nornirnar; leiðandinn sér þær þegar. Ávarpaðu ' + u.name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. 5 til 6 setningar alls yfir taktana þrjá; síðasti takturinn endar með einni mjúkri, opinni spurningu.',
+    'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í röð (Urður, Verðandi, Skuld), engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)", "deeper_meaning": "(ein eða tvær setningar af faldri dýpt fyrir þessa rúnu, EKKI talað)"}]. Þrír text-reitir tengdir með bili verða að lesast sem ein samfelld heild.'
       + getCorrPrompt('is', corrections),
   ].filter(Boolean).join('\n');
 }
@@ -1022,9 +1021,8 @@ function buildNornsPromptEN(u, runes, lang, corrections) {
     'Urður speaks with the weight of what is already fixed — her voice is declarative, immovable.',
     'Verðandi speaks in the present — living, becoming, not yet complete.',
     'Skuld does not predict — she speaks of what must come if this thread continues.',
-    'Read as one continuous weaving. Do not name the Norns in the output — let their voices come through Runar.',
-    'Every rune must leave its mark — let all three shape the reading through their quality, never just one or two. Do not name the runes; the seeker already sees them.',
-    'Address ' + u.name + ' once, woven naturally — never as the opening word. 5-6 sentences. End with one quiet, open question.',
+    'Give each of the three runes its own beat, in order — Urður (what was), Verðandi (what is becoming), Skuld (what must come). The three beats connect into ONE flowing passage, not three separate readings. Do not name the runes or the Norns; the seeker already sees them. Address ' + u.name + ' once, woven naturally — never as the opening word. 5-6 sentences total across the three beats; the final beat ends with one quiet, open question.',
+    'Output format — return ONLY this JSON array, one object per rune in order (Urður, Verðandi, Skuld), nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)", "deeper_meaning": "(one or two sentences of hidden depth for this rune, NOT spoken)"}]. The three text fields joined with a space must read as one seamless passage.',
     langInstr,
     getCorrPrompt(lang, corrections),
   ].filter(Boolean).join('\n');
