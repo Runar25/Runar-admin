@@ -24,16 +24,19 @@
 var _lastDeeper = '';
 function _parseSegments(raw) {
   if (!raw) return { reading: '', deeper: '' };
-  var s = String(raw).trim().replace(/^```(?:json)?\s*/i, '').replace(/```\s*$/, '').trim();
-  try {
-    var j = JSON.parse(s);
-    if (Array.isArray(j) && j.length && j[0] && typeof j[0].text === 'string') {
-      return {
-        reading: j.map(function (x) { return x.text || ''; }).join(' ').trim(),
-        deeper:  j.map(function (x) { return x.deeper_meaning || ''; }).filter(Boolean).join('\n')
-      };
-    }
-  } catch (e) {}
+  var s = String(raw);
+  var a = s.indexOf('['), b = s.lastIndexOf(']');
+  if (a !== -1 && b > a) {
+    try {
+      var j = JSON.parse(s.slice(a, b + 1));
+      if (Array.isArray(j) && j.length && j[0] && typeof j[0].text === 'string') {
+        var reading = j.map(function (x) { return x.text || ''; }).join(' ').trim();
+        var tail = s.slice(b + 1).replace(/```/g, '').trim(); // próza za polem (externalizovaná otázka)
+        if (tail) reading = (reading + ' ' + tail).trim();
+        return { reading: reading, deeper: j.map(function (x) { return x.deeper_meaning || ''; }).filter(Boolean).join('\n') };
+      }
+    } catch (e) {}
+  }
   return { reading: String(raw), deeper: '' };
 }
 
