@@ -749,6 +749,7 @@ function buildReadingPromptIS(u, drawn, corrections) {
     '',
     'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. Ávarpaðu ' + u.name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. Haltu þig innan orðafjöldans — stuttar setningar, ekkert uppfyllingarefni.'
       + getCorrPrompt('is', corrections),
+    'Skilaðu EINGÖNGU þessu JSON fylki, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(lesturinn nákvæmlega eins og fyrirmælin að ofan segja, einn samfelldur texti)", "deeper_meaning": "(ein eða tvær setningar: merkingarlagið undir lestrinum, til kyrrlátrar íhugunar — EKKI hluti af töluðum lestri)"}]',
   ].filter(Boolean).join('\n');
 }
 
@@ -795,6 +796,7 @@ function buildReadingPromptEN(u, drawn, lang, corrections) {
     '',
     'One paragraph. No breaks. No labels. Address ' + u.name + ' once, woven naturally — never as the opening word. Stay within the word count — short sentences, no filler. ' + langInstr,
     getCorrPrompt(lang, corrections),
+    'Output format — return ONLY this JSON array, nothing before or after: [{"rune": "(the rune name)", "text": "(the reading exactly as instructed above, one flowing paragraph)", "deeper_meaning": "(one or two sentences naming the layer of meaning beneath the reading, for quiet reflection — NOT part of the spoken reading)"}]',
   ].filter(Boolean).join('\n');
 }
 

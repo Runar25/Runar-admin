@@ -19,6 +19,24 @@
 // ─── PURE PROMPT BUILDER ─────────────────────────────────────
 // Receives everything as parameters — no globals read.
 // Returns the full prompt string for _generateReading().
+// Fáze A — segmentovaný výstup: parse JSON [{rune,text,deeper_meaning}].
+// Fallback: když to není JSON, ber celý text jako jedno čtení (graceful). deeper drží jen v paměti.
+var _lastDeeper = '';
+function _parseSegments(raw) {
+  if (!raw) return { reading: '', deeper: '' };
+  var s = String(raw).trim().replace(/^```(?:json)?\s*/i, '').replace(/```\s*$/, '').trim();
+  try {
+    var j = JSON.parse(s);
+    if (Array.isArray(j) && j.length && j[0] && typeof j[0].text === 'string') {
+      return {
+        reading: j.map(function (x) { return x.text || ''; }).join(' ').trim(),
+        deeper:  j.map(function (x) { return x.deeper_meaning || ''; }).filter(Boolean).join('\n')
+      };
+    }
+  } catch (e) {}
+  return { reading: String(raw), deeper: '' };
+}
+
 async function _generateReading() {
   if (!readerRune) return;
   const vBtn = document.getElementById('btn-generate-voice');
@@ -73,7 +91,9 @@ async function _generateReading() {
   if (res.error) { if (_rdLoadEl) _rdLoadEl.style.display = 'none'; if (_pL1) _pL1.classList.remove('pulsing'); if (_pL2) _pL2.classList.remove('pulsing'); setSt('st-reader', 'Failed: ' + res.error, 'err'); return; }
 
   // Unified reading — single block, no split
-  const reading = applyISCorrections(res.text.trim(), lang, corrections);
+  var _seg = _parseSegments(res.text);
+  const reading = applyISCorrections(_seg.reading.trim(), lang, corrections);
+  _lastDeeper = _seg.deeper; // Fáze A: deeper jen v paměti (zatím se neukládá/nezobrazuje)
   readerTexts[lang] = { short: reading, deep: '' };
 
   // Count reading — anonymous trial or logged-in free tier
