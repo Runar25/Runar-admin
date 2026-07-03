@@ -21,10 +21,16 @@ jedno čtení (graceful, čtení se vždy zobrazí). Display jde do `#out-short`
 `.innerText` (viditelný text) → hlas beze změny; skrytý deeper (display:none) se do innertextu nedostane.
 
 ## Fázování (postupně, revertable)
-- **Fáze A — single, ✅ HOTOVO (008d520, SW v107):** single prompt (EN+IS) → JSON; `_parseSegments` složí text
-  (display+hlas beze změny); `deeper` drží **jen v paměti** (`_lastDeeper`), neukládá se ani nezobrazuje → fakt
-  neviditelné. Multi-rune NETKNUTÉ. Ověřeno 4 live čteními: 4/4 validní JSON, flow/register DRŽÍ (JSON prózu nezabil),
-  Isa v sezóně, deeper smysluplná.
+- **Fáze A — ✅ HOTOVO (single + všechny spready, SW v109):** všechny buildery (single, Norns, Kríž, Horseshoe,
+  Yggdrasil — EN+IS) → JSON; `_parseSegments` složí text (display+hlas beze změny); `deeper` drží **jen v paměti**
+  (`_lastDeeper`), neukládá/nezobrazuje → neviditelné, revertable.
+  - single (008d520): text=celé čtení; ověřeno 4/4 JSON, flow drží.
+  - Norns (e8be1f3): per-Norn beat = past/present/future oblouk; 2/2 JSON, ne seznam.
+  - Kríž/Horseshoe/Yggdrasil (aa6aacb): per-pozice beat; ověřeno Horseshoe 7/7, Yggdrasil 9/9, flow drží, tis u Eihwaz.
+  - **Robustní parser:** extrahuje `[…]` od prvního `[` po poslední `]` (přežije ```json fences + okolní text) +
+    připojí prózu ZA polem (model občas dá závěrečnou otázku mimo JSON). NIKDY neukáže raw JSON.
+  - **Pozn. pro Fázi B:** Kríž občas vrátí +1 segment (otázka jako vlastní objekt). Pro Fázi A OK (složí se);
+    ve Fázi B (tap-mapping runa↔segment) zarovnat počet segmentů na počet run (mapovat dle rune name).
 - **Fáze B — spready + tap UI (= Premium #1 / spread-map):** multi-rune buildery → JSON; tap na runu zvýrazní její
   segment (barva) + odhalí `deeper_meaning` + význam pozice; geometrie per spread. Persistovat `deeper` (reuse
   `readings.deep_text` nebo nový `segments jsonb`) + rozhodnout gating (premium vs free v journalu).
@@ -38,4 +44,6 @@ jedno čtení (graceful, čtení se vždy zobrazí). Display jde do `#out-short`
 - **IS:** JSON klíče EN, hodnoty IS; 3-vrstvý IS systém drží (applyISCorrections na složený text). IS draft promptu ověřit okem.
 
 ## Další krok
-Rozšířit Fázi A na **spready** (multi-rune buildery → stejný JSON formát + `_parseSegments` už hotový), pak teprve tap UI (Fáze B).
+Fáze A hotová (single + spready). Další = **Fáze B — tap UI / spread-map** (= Premium #1): persistovat `deeper`
+(reuse `readings.deep_text` nebo `segments jsonb`), zarovnat segmenty na runy, tap → zvýraznit segment + odhalit
+deeper + pozici, geometrie per spread. Před stavbou vlastní mini-rozhodnutí (persistence + gating premium/free).
