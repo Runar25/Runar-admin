@@ -236,7 +236,10 @@ function setLang(l) {
   // Save to profile async (best-effort)
   if (currentUser) sb.from('user_profiles').update({ lang: l }).eq('id', currentUser.id).then(() => {}).catch(e => console.warn('persist lang switch:', e.message));
   const outputVisible = document.getElementById('reader-output')?.style.display !== 'none';
-  if (outputVisible && readerRune) {
+  // Only the reading tab treats a language switch as "re-speak the reading". On
+  // collection/journal/tree the user is browsing -> fall through so the visible
+  // content re-renders in the new language (bug: collection rune popis stayed stale).
+  if (activeAppTab === 'reading' && outputVisible && readerRune) {
     if (readerTexts[l]) {
       lang = l; applyLangToggle(l); showCachedReading(l); updateUIText(); updateSidePanel(); buildPills();
     } else {
@@ -245,6 +248,9 @@ function setLang(l) {
     return;
   }
   lang = l; applyLangToggle(l); updateUIText(); updateSidePanel(); buildPills();
+  // Silently keep any existing reading's cached text on the current language so a
+  // later return to the reading tab is consistent (no credit spent, no modal).
+  if (readerRune && readerTexts[l]) showCachedReading(l);
   if (document.getElementById('reader-rune-card').style.display !== 'none') buildGrid();
   // Refresh collection if open
   if (activeAppTab === 'collection') {
