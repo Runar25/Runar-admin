@@ -11,7 +11,8 @@
 - [ ] **deeper_meaning re-add** — zahozeno z JSON kontraktu (`[{rune, text}]`). Vrátit s **Fází B** (Premium tap #1 / spread-map). Parser `_parseSegments` tolerantní.
 - [ ] **Mytologické obrazy (Óðinn/Nornir)** — byly v imagery katalogu voice profilu (seškrtán kvůli „1 zdroj obrazu"). Pokud je chceme zpět, přidat jako pool do `SEASON_POOLS` (NE zpět do profilu).
 - [ ] **IS eval harness** — postavit: N čtení × runy/kontexty → grader (silný model + owner spot-check) → chybovost gramatika+koherence. Měřit PŘED/PO každé promptové změně. `runar-eval.yaml` zatím NEstavěn (DECISIONS 2026-07-04).
-- [ ] **Reading-quality Fáze 4** — model tier pro IS (Opus) nebo 2-pass „IS korektor" průchod. JEN pokud eval po Fázi 1+2 ukáže zbytkové chyby.
+- [ ] **Reading-quality Fáze 4** — model tier pro IS (Opus) nebo 2-pass „IS korektor" průchod. JEN pokud eval po Fázi 1+2 ukáže zbytkové chyby. (Model = vyřešeno: Opus, viz DECISIONS 2026-07-04.)
+- [ ] **EN-polish pass** — EN head-to-head (2026-07-04) ukázal, že EN generování sklouzává do klišé + více obrazů víc než IS (13 %/0 % na style bráně, obě modely). Zvážit tvrdší anti-klišé / „jeden obraz" enforcement v EN (obdoba IS gramatického bloku). Model-nezávislé.
 
 ## Profil / personalizace
 
