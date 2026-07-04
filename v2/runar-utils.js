@@ -139,6 +139,15 @@ function rk(r)  { return lang === 'is' ? r.k_is : r.k; }
 // ─── rn() ─────────────────────────────────────────
 function rn(r)  { return lang === 'is' ? r.is_n : r.n; }
 
+// rnSplit() -- jmeno + (preklad) do dvou casti
+// IS: 'Fehu (Eignir)' -> {name:'Fehu', tr:'Eignir'} · EN: 'Fehu' -> {name:'Fehu', tr:''}
+function rnSplit(r) {
+  var full = rn(r);
+  var m = /^(.*?)\s*\(([^)]*)\)\s*$/.exec(full);
+  if (m) return { name: m[1], tr: m[2] };
+  return { name: full, tr: '' };
+}
+
 // ─── rworld() ─────────────────────────────────────────
 function rworld(r) {
   const labels = {

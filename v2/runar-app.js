@@ -739,9 +739,10 @@ async function loadCollection() {
       ? `<svg class="coll-svg" viewBox="${sd.vb}" fill="none" xmlns="http://www.w3.org/2000/svg">${sd.paths}</svg>`
       : `<span style="font-size:2em;color:var(--gold);">${r.g}</span>`;
 
+    const _cp = rnSplit(r);
     cell.innerHTML = `
       ${svgHtml}
-      <span class="coll-name">${rn(r)}</span>
+      <span class="coll-name">${_cp.name}</span>${_cp.tr ? `<span class="coll-tr">(${_cp.tr})</span>` : ''}
       <span class="coll-dots">
         <span class="coll-dot${hasEn ? ' en' : ''}" title="EN"></span>
         <span class="coll-dot${hasIs ? ' is' : ''}" title="IS"></span>
@@ -877,7 +878,8 @@ function buildGrid() {
     } else {
       inner = `<span class="rb-g" style="font-size:1.4em;color:var(--gold);">${r.g}</span>`;
     }
-    btn.innerHTML = inner + `<span class="rb-n">${rn(r)}</span>`;
+    var _rp = rnSplit(r);
+    btn.innerHTML = inner + `<span class="rb-n">${_rp.name}</span>` + (_rp.tr ? `<span class="rb-t">(${_rp.tr})</span>` : '');
     btn.onclick = () => {
       grid.querySelectorAll('.rb').forEach(b => b.classList.remove('on'));
       btn.classList.add('on');

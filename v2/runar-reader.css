@@ -306,10 +306,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .tree-admin-btn:hover{opacity:1;}
 
 /* ── COLLECTION ── */
-.coll-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:4px;}
+.coll-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:4px;align-items:stretch;}
 @media(max-width:480px){.coll-grid{grid-template-columns:repeat(4,1fr);}}
 .coll-cell{
-  aspect-ratio:1;background:#0d1220;border:1px solid var(--border);
+  min-height:120px;height:100%;box-sizing:border-box;padding:8px 4px;
+  background:#0d1220;border:1px solid var(--border);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   cursor:pointer;transition:all 0.18s;gap:2px;min-width:0;position:relative;
 }
@@ -320,6 +321,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .coll-svg{width:64px;height:78px;display:block;}
 .coll-name{font-family:'Cinzel',serif;font-size:0.78em;letter-spacing:0.5px;color:var(--muted);margin-top:2px;}
 .coll-cell.active .coll-name{color:var(--gold);}
+.coll-tr{display:block;font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:0.3px;line-height:1.05;margin-top:1px;color:#6f86a0;opacity:0.85;text-align:center;max-width:100%;overflow-wrap:anywhere;}
+.coll-cell.active .coll-tr{color:var(--gold);opacity:0.8;}
 .coll-dots{position:absolute;top:5px;right:6px;display:flex;gap:3px;}
 .coll-dot{width:5px;height:5px;border-radius:50%;background:var(--dim);}
 .coll-dot.en{background:var(--teal);}
@@ -435,9 +438,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .status.err{color:#e07070;}
 
 /* ── RUNE GRID ── */
-.rune-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px;}
+.rune-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px;align-items:stretch;}
 @media(max-width:480px){.rune-grid{grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:6px;}}
-.rb{aspect-ratio:1;background:#0d1220;border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all 0.18s;gap:2px;min-width:0;}
+.rb{min-height:120px;height:100%;box-sizing:border-box;padding:8px 4px;background:#0d1220;border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all 0.18s;gap:2px;min-width:0;}
 .rb:hover{background:rgba(91,184,255,0.08);border-color:var(--blue);}
 .rb.on{background:rgba(91,184,255,0.12);border-color:var(--blue);box-shadow:0 0 10px rgba(91,184,255,0.15);}
 .rb.flashing{background:rgba(255,191,0,0.12);border-color:var(--gold);box-shadow:0 0 14px rgba(255,191,0,0.35);}
@@ -449,7 +452,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .rb-svg{width:clamp(38px,11vw,72px);height:auto;aspect-ratio:72/88;display:block;}
 .rb-n{font-family:'Cinzel',serif;font-size:0.85em;letter-spacing:0.5px;color:var(--muted);margin-top:4px;}
 .rb.on .rb-n{color:var(--blue);}
-@media(max-width:480px){.rb-n{font-size:0.6em;letter-spacing:0;}}
+.rb-t{display:block;font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:0.3px;line-height:1.05;margin-top:1px;color:#6f86a0;opacity:0.85;text-align:center;max-width:100%;overflow-wrap:anywhere;}
+.rb.on .rb-t{color:var(--blue);opacity:0.75;}
+@media(max-width:480px){.rb-n{font-size:0.6em;letter-spacing:0;}.rb-t{font-size:0.56em;letter-spacing:0;line-height:1.02;}.rb{min-height:96px;padding:6px 3px;}}
 .rune-info{font-size:0.9em;color:#8bb8d8;font-style:italic;min-height:18px;margin:6px 0;}
 
 /* ── BADGE (Life Rune + Drawn) ── */
