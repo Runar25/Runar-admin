@@ -749,7 +749,7 @@ function buildReadingPromptIS(u, drawn, corrections) {
     '',
     'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. Ávarpaðu ' + u.name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. Haltu þig innan orðafjöldans — stuttar setningar, ekkert uppfyllingarefni.'
       + getCorrPrompt('is', corrections),
-    'Skilaðu EINGÖNGU þessu JSON fylki, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(lesturinn nákvæmlega eins og fyrirmælin að ofan segja, einn samfelldur texti)", "deeper_meaning": "(ein eða tvær setningar: merkingarlagið undir lestrinum, til kyrrlátrar íhugunar — EKKI hluti af töluðum lestri)"}]',
+    'Skilaðu EINGÖNGU þessu JSON fylki, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(lesturinn nákvæmlega eins og fyrirmælin að ofan segja, einn samfelldur texti)"}]',
   ].filter(Boolean).join('\n');
 }
 
@@ -796,7 +796,7 @@ function buildReadingPromptEN(u, drawn, lang, corrections) {
     '',
     'One paragraph. No breaks. No labels. Address ' + u.name + ' once, woven naturally — never as the opening word. Stay within the word count — short sentences, no filler. ' + langInstr,
     getCorrPrompt(lang, corrections),
-    'Output format — return ONLY this JSON array, nothing before or after: [{"rune": "(the rune name)", "text": "(the reading exactly as instructed above, one flowing paragraph)", "deeper_meaning": "(one or two sentences naming the layer of meaning beneath the reading, for quiet reflection — NOT part of the spoken reading)"}]',
+    'Output format — return ONLY this JSON array, nothing before or after: [{"rune": "(the rune name)", "text": "(the reading exactly as instructed above, one flowing paragraph)"}]',
   ].filter(Boolean).join('\n');
 }
 
@@ -866,7 +866,7 @@ function buildKrizPromptIS(u, runes, corrections) {
     'Sérhver rúna verður að setja mark sitt — láttu allar fimm móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
     'Ávarpaðu ' + u.name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. Vertu hnitmiðaður — 6 til 7 setningar.'
       + getCorrPrompt('is', corrections),
-    'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í þeirri röð sem listuð er að ofan, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)", "deeper_meaning": "(ein eða tvær setningar af faldri dýpt fyrir þessa rúnu, EKKI talað)"}]. Text-reitirnir tengdir með bili verða að lesast sem ein samfelld heild.',
+    'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í þeirri röð sem listuð er að ofan, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)"}]. Text-reitirnir tengdir með bili verða að lesast sem ein samfelld heild.',
   ].filter(Boolean).join('\n');
 }
 
@@ -912,7 +912,7 @@ function buildKrizPromptEN(u, runes, lang, corrections) {
     'End with one quiet, open question.',
     'Every rune must leave its mark — let all five shape the reading through their quality, never just one or two. Do not name the runes; the seeker already sees them.',
     'Address ' + u.name + ' once, woven naturally — never as the opening word. 6-7 sentences, complete and whole.',
-    'Output format — return ONLY this JSON array, one object per rune in the order listed above, nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)", "deeper_meaning": "(one or two sentences of hidden depth for this rune, NOT spoken)"}]. The text fields joined with a space must read as one seamless passage.',
+    'Output format — return ONLY this JSON array, one object per rune in the order listed above, nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)"}]. The text fields joined with a space must read as one seamless passage.',
     langInstr,
     getCorrPrompt(lang, corrections),
   ].filter(Boolean).join('\n');
@@ -977,7 +977,7 @@ function buildNornsPromptIS(u, runes, corrections) {
     'Verðandi talar í nútíð — lifandi, að verða til, ekki lokið.',
     'Skuld talar ekki um framtíðina eins og spámann — heldur um hvað verður að verða ef þráðurinn heldur áfram.',
     'Gefðu hverri af þremur rúnunum sinn eigin takt, í röð — Urður (það sem var), Verðandi (það sem er að verða), Skuld (það sem verður að koma). Taktarnir þrír renna saman í EINN samfelldan straum, ekki þrjá aðskilda lestra. Nefndu ekki rúnirnar né Nornirnar; leiðandinn sér þær þegar. Ávarpaðu ' + u.name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. 5 til 6 setningar alls yfir taktana þrjá; síðasti takturinn endar með einni mjúkri, opinni spurningu.',
-    'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í röð (Urður, Verðandi, Skuld), engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)", "deeper_meaning": "(ein eða tvær setningar af faldri dýpt fyrir þessa rúnu, EKKI talað)"}]. Þrír text-reitir tengdir með bili verða að lesast sem ein samfelld heild.'
+    'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í röð (Urður, Verðandi, Skuld), engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)"}]. Þrír text-reitir tengdir með bili verða að lesast sem ein samfelld heild.'
       + getCorrPrompt('is', corrections),
   ].filter(Boolean).join('\n');
 }
@@ -1024,7 +1024,7 @@ function buildNornsPromptEN(u, runes, lang, corrections) {
     'Verðandi speaks in the present — living, becoming, not yet complete.',
     'Skuld does not predict — she speaks of what must come if this thread continues.',
     'Give each of the three runes its own beat, in order — Urður (what was), Verðandi (what is becoming), Skuld (what must come). The three beats connect into ONE flowing passage, not three separate readings. Do not name the runes or the Norns; the seeker already sees them. Address ' + u.name + ' once, woven naturally — never as the opening word. 5-6 sentences total across the three beats; the final beat ends with one quiet, open question.',
-    'Output format — return ONLY this JSON array, one object per rune in order (Urður, Verðandi, Skuld), nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)", "deeper_meaning": "(one or two sentences of hidden depth for this rune, NOT spoken)"}]. The three text fields joined with a space must read as one seamless passage.',
+    'Output format — return ONLY this JSON array, one object per rune in order (Urður, Verðandi, Skuld), nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)"}]. The three text fields joined with a space must read as one seamless passage.',
     langInstr,
     getCorrPrompt(lang, corrections),
   ].filter(Boolean).join('\n');
@@ -1088,7 +1088,7 @@ function buildHorseshoePromptIS(u, runes, corrections) {
     'Sérhver rúna verður að setja mark sitt — láttu allar sjö móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
     'Ávarpaðu ' + u.name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. 11 til 12 setningar. Endaðu með einni opinni spurningu.'
       + getCorrPrompt('is', corrections),
-    'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í þeirri röð sem listuð er að ofan, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)", "deeper_meaning": "(ein eða tvær setningar af faldri dýpt fyrir þessa rúnu, EKKI talað)"}]. Text-reitirnir tengdir með bili verða að lesast sem ein samfelld heild.',
+    'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í þeirri röð sem listuð er að ofan, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)"}]. Text-reitirnir tengdir með bili verða að lesast sem ein samfelld heild.',
   ].filter(Boolean).join('\n');
 }
 
@@ -1130,7 +1130,7 @@ function buildHorseshoePromptEN(u, runes, lang, corrections) {
     'Do not name the positions in the output. Carry them in your voice.',
     'Every rune must leave its mark — let all seven shape the reading through their quality, never just one or two. Do not name the runes; the seeker already sees them.',
     'Address ' + u.name + ' once, woven naturally — never as the opening word. 11-12 sentences. End with one open question.',
-    'Output format — return ONLY this JSON array, one object per rune in the order listed above, nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)", "deeper_meaning": "(one or two sentences of hidden depth for this rune, NOT spoken)"}]. The text fields joined with a space must read as one seamless passage.',
+    'Output format — return ONLY this JSON array, one object per rune in the order listed above, nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)"}]. The text fields joined with a space must read as one seamless passage.',
     langInstr,
     getCorrPrompt(lang, corrections),
   ].filter(Boolean).join('\n');
@@ -1205,7 +1205,7 @@ function buildYggdrasilPromptIS(u, runes, corrections) {
     'Sérhver rúna verður að setja mark sitt — láttu allar níu móta lesturinn gegnum eðli sitt, aldrei aðeins fáeinar. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
     'Ávarpaðu ' + u.name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. 14 til 15 setningar. Endaðu með einni djúpri, opinni spurningu — þeirri sem heldur áfram að hljóma.'
       + getCorrPrompt('is', corrections),
-    'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í þeirri röð sem listuð er að ofan, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)", "deeper_meaning": "(ein eða tvær setningar af faldri dýpt fyrir þessa rúnu, EKKI talað)"}]. Text-reitirnir tengdir með bili verða að lesast sem ein samfelld heild.',
+    'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í þeirri röð sem listuð er að ofan, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)"}]. Text-reitirnir tengdir með bili verða að lesast sem ein samfelld heild.',
   ].filter(Boolean).join('\n');
 }
 
@@ -1255,7 +1255,7 @@ function buildYggdrasilPromptEN(u, runes, lang, corrections) {
     'Do not name the worlds in the output. Do not name the Norns axis. Carry them in your voice.',
     'Every rune must leave its mark — let all nine shape the reading through their quality, never just a few. Do not name the runes; the seeker already sees them.',
     'Address ' + u.name + ' once, woven naturally — never as the opening word. 14-15 sentences. End with one deep, open question — one that keeps resonating.',
-    'Output format — return ONLY this JSON array, one object per rune in the order listed above, nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)", "deeper_meaning": "(one or two sentences of hidden depth for this rune, NOT spoken)"}]. The text fields joined with a space must read as one seamless passage.',
+    'Output format — return ONLY this JSON array, one object per rune in the order listed above, nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)"}]. The text fields joined with a space must read as one seamless passage.',
     langInstr,
     getCorrPrompt(lang, corrections),
   ].filter(Boolean).join('\n');
