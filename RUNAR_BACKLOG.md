@@ -15,7 +15,7 @@
 
 ## Profil / personalizace
 
-- [ ] **Gender field v profilu** — přidat pohlaví tazatele (`user_profiles` + UI + předat do promptu) → Rúnar správně skloňuje oslovovací tvary (einn/ein, tilbúinn/tilbúin, sjálfan/sjálfa). Dokud není: IS grammar pravidlo #5 = kynhlutlaust orðalag. Owner 2026-07-04.
+- [x] **Gender field** — HOTOVO (kód, SW v118): selektor Hann/Hún/Hán (kk/kvk/hk=hán default) v side panelu, jen IS; ÁVARP do všech 5 IS builderů; rule#5 skloňuje dle rodu. **Čeká jen DB sloupec:** `alter table user_profiles add column if not exists address_gender text default 'hk';` (owner v SQL editoru). Do té doby jede přes localStorage.
 - [ ] **RUNAR_PRICING.md — model ref na Opus** — model čtení přepnut sonnet-4-5 → opus-4-8; cenový model může zmiňovat starý (delta zanedbatelný, hlas dominuje). Aktualizovat referenci.
 
 ## Multijazyčnost
