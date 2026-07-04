@@ -40,6 +40,12 @@ Rúnar does not use exclamation marks.`,
 Speak in second person (you, your). End with a single open question.
 The format, angle, imagery, and register are specified in each reading prompt — follow them precisely.`,
 
+  grammar: `LANGUAGE & STYLE — check every sentence before returning:
+1. Second person, consistent ("you", "your"); present tense unless the reading's frame says otherwise.
+2. Natural English idiom — nothing translated-sounding, stiff, or awkward.
+3. No clichés, no wellness-speak, no filler. One precise image, not three.
+Respond only in English.`,
+
 };
 
 // ─── ICELANDIC CHARACTER ────────────────────────────────
@@ -71,6 +77,14 @@ Rúnar notar ekki upphrópunarmerki.`,
   format: `Einn samfeldur lestur — fjöldi setninga er gefinn í hverju lestursprompt. Engar hlutaskiptingar, engir aðskilnaðar, engar fyrirsagnir.
 Talaðu í öðru persónu (þú, þín). Endaðu með einni opinni spurningu.
 Snið, horn og tónn eru tilgreind í hverju lestursprompt — fylgdu þeim nákvæmlega.`,
+
+  grammar: `ÍSLENSK MÁLFRÆÐI — SKYLDA (athugaðu HVERJA setningu áður en þú skilar):
+1. Önnur persóna eintölu (þú): sögnin í 2. persónu eintölu, ekki nafnhætti eða 3. persónu. Rétt: þú treystir, þú nærð, þú sérð, þú átt, þú ferð, þú heldur, þú stendur. (Sögn sem endar á -ar í 3. persónu tekur -ir/-ð í 2. persónu eintölu.)
+2. Samræmi lýsingarorðs við nafnorð í KYNI, TÖLU og FALLI — ákveða FYRST kyn nafnorðsins. Fleirtala: öllum böndum jöfnum; endurteknir straumar (kk.), endurteknar bænir (kvk.), endurtekin orð (hk.).
+3. Engar enskuslettur né beinar þýðingar úr ensku. Bannað að segja "er ekki um að" — segðu frekar "snýst ekki um". Ef orðasamband hljómar eins og bein ensk þýðing, umorðaðu á eðlilega íslensku.
+4. Fallstjórn: rún í þolfalli = rún; fleirtala nefnifall = rúnir / rúnirnar.
+5. Síðasta skref fyrir skil: lestu textann yfir — (a) hverja sögn í 2. persónu eintölu, (b) hvert lýsingarorð gagnvart kyni + tölu + falli nafnorðsins, (c) að engin ensk sletta sé eftir.
+Svaraðu einungis á íslensku — allur textinn á íslensku.`,
 
 };
 
@@ -473,15 +487,26 @@ function _intentionContext(intention, lang) {
   if (idx === -1) idx = (INTENTIONS.is || []).indexOf(intention);
   if (idx === -1) return label + ': ' + intention;
   var norn = (INTENTIONS.norns || [])[idx] || '';
-  var timeDesc = norn === 'verdandi'
-    ? 'present moment — what is unfolding now; speak from the living thread'
-    : norn === 'skuld'
-    ? 'future-facing — what is yet to be woven; speak from possibility and weight'
-    : norn === 'urd'
-    ? 'past-rooted — what was woven; seek the pattern, not the event'
-    : '';
+  var timeDesc;
+  if (lang === 'is') {
+    timeDesc = norn === 'verdandi'
+      ? 'snýr að því sem er að gerast núna; talaðu í nútíð'
+      : norn === 'skuld'
+      ? 'snýr að því sem er í vændum; talaðu um það sem gæti orðið, ekki sem spádóm'
+      : norn === 'urd'
+      ? 'snýr að því sem þegar er orðið; leitaðu mynstursins að baki'
+      : '';
+  } else {
+    timeDesc = norn === 'verdandi'
+      ? 'about what is happening now; speak in the present'
+      : norn === 'skuld'
+      ? 'about what lies ahead; speak of what may come, not as prophecy'
+      : norn === 'urd'
+      ? 'about what has already passed; look for the pattern behind it'
+      : '';
+  }
   return label + ': ' + intention
-    + (timeDesc ? ' — temporal frame: ' + timeDesc : '');
+    + (timeDesc ? ' — ' + timeDesc : '');
 }
 
 
@@ -657,7 +682,7 @@ CORE PHILOSOPHY
 ${base.philosophy}
 
 RESPONSE FORMAT
-${base.format}`;
+${base.format}${base.grammar ? '\n\n' + base.grammar : ''}`;
 }
 
 // ─── IS CORRECTION HELPERS ────────────────────────────────
