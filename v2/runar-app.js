@@ -53,7 +53,7 @@ function incTrialCount() { localStorage.setItem('runar_trial_count', String(getT
 async function fetchUserProfile(userId) {
   try {
     const { data } = await sb.from('user_profiles')
-      .select('tier, credits_balance, free_balance, name, lang, life_rune_number, life_rune_text, life_rune_lang, dob_day, dob_month, dob_year, tree_name, address_gender')
+      .select('tier, credits_balance, free_balance, name, lang, life_rune_number, life_rune_text, life_rune_lang, dob_day, dob_month, dob_year, tree_name')
       .eq('id', userId)
       .maybeSingle();
     if (data) {
@@ -82,8 +82,12 @@ async function fetchUserProfile(userId) {
         if (tni) tni.value = data.tree_name;
       }
       userName    = data.name            || '';
-      userGender = data.address_gender || localStorage.getItem('runar_gender') || 'hk';
+      userGender = localStorage.getItem('runar_gender') || 'hk';
       _updateGenderPills();
+      // Cross-device gender — best-effort own query (address_gender column may not exist yet; never blocks profile load)
+      sb.from('user_profiles').select('address_gender').eq('id', userId).maybeSingle()
+        .then(function (r) { if (r && r.data && r.data.address_gender) { userGender = r.data.address_gender; localStorage.setItem('runar_gender', userGender); _updateGenderPills(); } })
+        .catch(function () {});
       // Restore language preference
       // Priority: localStorage (active user choice) > DB default
       // If localStorage has a lang that matches current lang → user chose it while logged out;
