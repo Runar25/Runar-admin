@@ -91,7 +91,15 @@ async function _generateReading() {
     await fetchUserProfile(currentUser.id); // refresh balance + show gate
     return;
   }
-  if (res.error) { if (_rdLoadEl) _rdLoadEl.style.display = 'none'; if (_pL1) _pL1.classList.remove('pulsing'); if (_pL2) _pL2.classList.remove('pulsing'); setSt('st-reader', 'Failed: ' + res.error, 'err'); return; }
+  if (res.error) {
+    if (_rdLoadEl) _rdLoadEl.style.display = 'none';
+    if (_pL1) _pL1.classList.remove('pulsing');
+    if (_pL2) _pL2.classList.remove('pulsing');
+    console.error('reading failed:', res.error, res.status || '');
+    setSt('st-reader', lang === 'is' ? 'Rúnar hvílist — reyndu aftur eftir andartak.' : 'Rúnar is resting — please try again in a moment.', 'err');
+    if (currentUser) { syncMonthlyCount(currentUser.id); await fetchUserProfile(currentUser.id); }
+    return;
+  }
 
   // Unified reading — single block, no split
   var _seg = _parseSegments(res.text);
@@ -628,10 +636,12 @@ async function generateVoice() {
       body: JSON.stringify({ text: deepText, lang })
     });
     if (!res.ok) {
-      const data = await res.json();
+      let data = {};
+      try { data = await res.json(); } catch (_e) {}
+      console.error('voice failed:', res.status, (data && data.error) || '');
       const msg = res.status === 429
         ? (lang === 'is' ? 'Of margar beiðnir. Bíddu aðeins.' : 'Too many requests. Please wait a moment.')
-        : (data.error || `HTTP ${res.status}`);
+        : (lang === 'is' ? 'Rödd Rúnars hvílir — reyndu aftur eftir andartak.' : 'The voice of Rúnar is resting — please try again in a moment.');
       setSt('st-voice', msg, 'err');
       btn.textContent = t('voice_btn'); btn.disabled = false; return;
     }
@@ -710,7 +720,12 @@ async function _generateSpreadReading(o) {
     if (currentUser) await fetchUserProfile(currentUser.id);
     return;
   }
-  if (res.error) { setSt('st-reader', 'Failed: ' + res.error, 'err'); return; }
+  if (res.error) {
+    console.error('spread reading failed:', res.error, res.status || '');
+    setSt('st-reader', lang === 'is' ? 'Rúnar hvílist — reyndu aftur eftir andartak.' : 'Rúnar is resting — please try again in a moment.', 'err');
+    if (currentUser) { syncMonthlyCount(currentUser.id); await fetchUserProfile(currentUser.id); }
+    return;
+  }
 
   var _seg = _parseSegments(res.text || '');
   var text = applyISCorrections(_seg.reading, lang, corrections);

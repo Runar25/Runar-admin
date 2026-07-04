@@ -974,7 +974,7 @@ async function callProxy(sys, prompt, maxTokens, use_credit = false, credit_cost
     if (res.status === 402) return { error: data.error || 'no_credits', message: data.message || 'No credits remaining.' };
     // 429 = rate limited
     if (res.status === 429) return { error: 'rate_limited', message: data.message || 'Too many requests. Please wait a moment.' };
-    if (!res.ok || data.error) return { error: data.error || `HTTP ${res.status}` };
+    if (!res.ok || data.error) return { error: data.error || 'server_error', status: res.status };
 
     // Sync credits balance if backend returned updated value
     if (data.credits_remaining !== undefined) {
@@ -983,7 +983,7 @@ async function callProxy(sys, prompt, maxTokens, use_credit = false, credit_cost
     }
 
     return { text: data.content?.[0]?.text || data.text || '' };
-  } catch (e) { return { error: e.message }; }
+  } catch (e) { console.error('callProxy:', e && e.message); return { error: 'network_error' }; }
 }
 
 // Vrátí true pokud je třeba použít kredit (monthly slot vyčerpán)
