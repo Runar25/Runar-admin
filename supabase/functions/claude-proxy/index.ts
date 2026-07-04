@@ -418,7 +418,7 @@ serve(async (req) => {
     if (!anthropicKey) return json({ error: "API key not configured" }, 500);
 
     const result = await callClaudeWithRetry({
-      model:      "claude-sonnet-4-5",
+      model:      "claude-opus-4-8",
       max_tokens,
       system:     systemParts.length > 0 ? systemParts : undefined,
       messages:   [{ role: "user", content: prompt }],
