@@ -13,6 +13,11 @@
 - [ ] **IS eval harness** — postavit: N čtení × runy/kontexty → grader (silný model + owner spot-check) → chybovost gramatika+koherence. Měřit PŘED/PO každé promptové změně. `runar-eval.yaml` zatím NEstavěn (DECISIONS 2026-07-04).
 - [ ] **Reading-quality Fáze 4** — model tier pro IS (Opus) nebo 2-pass „IS korektor" průchod. JEN pokud eval po Fázi 1+2 ukáže zbytkové chyby.
 
+## Profil / personalizace
+
+- [ ] **Gender field v profilu** — přidat pohlaví tazatele (`user_profiles` + UI + předat do promptu) → Rúnar správně skloňuje oslovovací tvary (einn/ein, tilbúinn/tilbúin, sjálfan/sjálfa). Dokud není: IS grammar pravidlo #5 = kynhlutlaust orðalag. Owner 2026-07-04.
+- [ ] **RUNAR_PRICING.md — model ref na Opus** — model čtení přepnut sonnet-4-5 → opus-4-8; cenový model může zmiňovat starý (delta zanedbatelný, hlas dominuje). Aktualizovat referenci.
+
 ## Multijazyčnost
 
 - [ ] **EN parita + rozšiřitelnost** — každá reading-quality změna (grammar blok, lang-lock, intention gloss, few-shot, voice profil) musí být **per-jazyk**. Přidání Norštiny/Danštiny = nový `DEF_CHAR_XX` + voice profil `.xx` + `buildXxxPromptXX`, nic víc jinde. Owner directive 2026-07-04.
