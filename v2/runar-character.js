@@ -43,7 +43,9 @@ The format, angle, imagery, and register are specified in each reading prompt �
   grammar: `LANGUAGE & STYLE — check every sentence before returning:
 1. Second person, consistent ("you", "your"); present tense unless the reading's frame says otherwise.
 2. Natural English idiom — nothing translated-sounding, stiff, or awkward.
-3. No clichés, no wellness-speak, no filler. One precise image, not three.
+3. NO clichés or self-help/wellness phrasing. Banned: "journey", "embrace", "your truth", "the universe", "trust the process", "step into your power", "everything happens for a reason", "deep within", "the answers you seek", "let go and". If a line could be a horoscope or a fridge magnet, cut it.
+4. EXACTLY ONE concrete image for the whole reading — never a second image, never a simile stacked on a metaphor. Before returning, count the images; if more than one, keep the strongest and delete the rest.
+5. No filler, no throat-clearing — every sentence earns its place.
 Respond only in English.`,
 
 };
