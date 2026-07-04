@@ -33,6 +33,14 @@ const cors = {
 const json = (data: unknown, status = 200) =>
   new Response(JSON.stringify(data), { status, headers: { ...cors, "Content-Type": "application/json" } });
 
+// Vrstvy A/B/C (tree memory / session state / voice scale) OFF (2026-07-04).
+// The reading-quality audit found they stack ~8 conflicting tone directives onto
+// paid readings (e.g. "come as fire" from a calendar rotation vs the winter
+// seasonal image; voice-scale "pure metaphor" vs the base "one image, direct"),
+// degrading Icelandic coherence. Re-enable once each layer is driven by real UI
+// and validated by the IS eval. Flip to true to restore the previous behaviour.
+const ENABLE_DYNAMIC_CONTEXT = false;
+
 function sb() {
   return createClient(
     Deno.env.get("SUPABASE_URL")!,
@@ -371,7 +379,7 @@ serve(async (req) => {
     let dynamicContext = "";
     let sessionState: SessionState | null = null;
 
-    if (treeMode && userId && mode !== "extraction") {
+    if (ENABLE_DYNAMIC_CONTEXT && treeMode && userId && mode !== "extraction") {
       const { data } = await sb()
         .from("tree_state")
         .select("recurring_pattern, emotional_arc, personal_symbols, forbidden_next, session_count, voice_scale, voice_settled")
