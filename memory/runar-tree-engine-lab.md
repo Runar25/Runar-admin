@@ -11,6 +11,19 @@ metadata:
 RUNAR_TREE_HANDOFF.md — kompletní stav, laby, pravidla, defaulty, další kroky.
 Placement analýza: RUNAR_TREE_GROWTH_MAP.md. Vše standalone laby, nic v DB/readeru.
 
+⭐⭐ OPRAVA 2026-07-04 (po zbytečném kruhu — NEOPAKOVAT): KUKYho schválený „pěkný
+strom" = **crown-composer** (`v2/tree-lab-crown-composer/`, treeage ~520–1600 =
+S-kmen + kořenový vějíř + větve postupně po výšce + jemná fraktální koruna, stříbrná
+kůra). To je BÁZE, staví se na ní. NENÍ to liana (`v07-liana` = kostnatá 7-lian
+ZAVRŽENÁ hrůza) ani boughs. **Boughs = regrese z crown-composeru** (můj WIP, slepá
+ulička): zone-blend `frac=lerp(emergence, zoneFromAxis(průměr-osy-elementu), 0.5)`
+scvrkl vertikální rozptyl na ~¼ → „všechny větve z jednoho místa"; navíc kořeny
+změněny na „3 spletené Norny" místo vějíře + přidány members. SMĚR: pokračovat na
+crown-composeru, po malých krocích; zóna má být JEMNÝ posun výšky (jako liana
+`branch_point`: past→níž / future→výš), NE destruktivní blend. Render trik (velký
+strom sekne preview_screenshot): canvas → POST base64 na `localhost:7799` → čti
+`_tree_shot.jpg`. Boughs lab se musí nejdřív ručně založit (Norns 3 runy).
+
 Rúnar Tree of Life rendering engine existuje jako LAB v0.2 (2026-06-11) v
 `C:\Users\zkuku\Downloads\Runar-admin\v2\`: `runar-tree-model.js` (čistá logika,
 bez DOM — React Native ready), `runar-tree-render.js` (Canvas 2D, dual-canvas),

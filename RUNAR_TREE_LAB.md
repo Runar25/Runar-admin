@@ -1,4 +1,6 @@
 # RUNAR_TREE_LAB.md — Strom života: vizuální engine (lab)
+# ⭐ NA ČEM SE STROM TVOŘÍ (kanonická definice, Norns osa) → RUNAR_TREE_BUILD.md (v1.0, 2026-06-15).
+#    Tento soubor = JAK se to kreslí (engine/iterace). RUNAR_TREE_BUILD.md = Z ČEHO (vstupní mapování).
 # Doménový dokument TREE session (Fable 5 / Cowork). MAIN session sem needituje.
 # CLAUDE.md drží jen krátký ukazatel sem. Detail/iterace patří SEM, ne do CLAUDE.md.
 # Living doc — aktualizuj při každém kroku engine. Související: tree-of-life.md (design), RUNAR_DESIGN.md.
@@ -16,6 +18,156 @@
 - ❌ branch systém v produkci, tree_state/tree_readings DB tabulky — čeká na V3.
 
 ---
+
+## TREE COMPOSER v2 — AKTUÁLNÍ (2026-06-14) ⭐
+v2/tree-lab-crown-composer/ (build_crown_composer.py). JEDEN laditelný strom (kořeny+kmen+koruna),
+3 tuning panely (KORUNA/KMEN/KOŘENY). KONZUMUJE oba enginy READ-ONLY, nemění je:
+RunarTrunk.buildTrunk (prameny+kořeny) + RunarBranch.buildBranch (jeden limb/větev).
+Rozhodnutí KUKY "jeden lab, 2 enginy uvnitř" (ne monolitický přepis = nižší riziko).
+- **Větev = pokračování pramene** (kořen→kmen→hlavní větev, spojitelné z konstrukce).
+- **STAGGERED EMERGENCE**: pramen opustí kmen ve své výšce → kmen se zužuje vzhůru (da Vinci),
+  větve v patrech, žádný pinch. Zakládací 3: vůdčí (přední pramen) NAHORU + 2×~45°; další vyplní patra.
+- **HLADKÉ NAPOJENÍ**: každý limb ZAČNE podél tečny rodiče a ohne se k cíli (buildBranch spec.dev,
+  default null = beze změny). Platí na main z kmene, sub z mainu, kořenovou odbočku. "Kmen=přerostlá větev".
+- **RŮST DO VÝŠKY**: topY age-driven (crown composer počítá; trunk engine nedotčen) → rozprostře výstupy.
+- **KOŘENOVÉ ODBOČKY**: fraktál jako koruna, dolů/ven, tmavé (tipLift 0); ~40-50 % koruny (slider attachN).
+- **REINFORCEMENT MODEL** (KUKYho klíč): NE každé čtení = nová větev. targetN = lerp(linearN, logN, reinforce)
+  → málo větví (konec shluku). Extra prameny = HMOTA KMENE (mohutnost), ne nové větve. Slider reinforce
+  (default 0.8 = málo mohutných širokých, KUKYho devítka) + canopy (výška↔šířka).
+- **JUNCTION**: kořeny nesou tloušťku kmene (junctionThick, fat náběhová pata) + rootFan default -1
+  (KUKYho oblíbený rozjezd) → báze splývá s kořeny v jeden mohutný celek (vyřešen šev/krk).
+- buildBranch rozšířen jen ADITIVNĚ + opt: spec.ox/oy/baseAng/dev/twist (vše default = Branch Composer beze změny, ověřeno bit-identicky).
+ROUTING DEMO (2026-06-14, HOTOVO v labu): simulovaný proud čtení → strom se skládá podle CHARAKTERU.
+routing(seed,nR,diversity) v crown composeru: téma = ELEMENT (5); těžké téma se dělí na 2-3 mainy (mighty
+→ sourozenci); slabá témata (<4 čtení) = šum (nestanou se větví). Pozice: element→úhel (fire nahoru, air/water
+strana, earth/shadow dolů) + world→výška emergence + tiery dolů (k*0.05). Vigor (počet čtení tématu) → délka/
+tloušťka/hustota větve = POSÍLENÍ. Vícerunová big spready → EXPANZE: fire/air→výška, water/earth→šířka(canopy),
+shadow→mohutnost. STABILNÍ: témata řazená dle prvního výskytu (compute-once princip). Slider "diversity"
+(0=soustředěný=pár mohutných/jeden směr, 1=pestrý=vyvážený plný baldachýn). INFO ukazuje profil (portrét).
+Pomocné hashStr/mulberry32 lokálně v crown composeru (enginy je neexportují). element tint barví větve dle tématu.
+PRODUKCE (další krok, KOORDINOVAT s MAIN — sdílená sémantika): reálné čtení rozhodne routing místo simulace
+(jednoruná→do větve dle charakteru=posílí; vícerunová=expanze). Spočítat jednou → branch_data. Routing logiku
+držet v runar-branch.js; runar-runes.js/config jen číst. TVAR větví (ohyb/délka/křížení) = ladit až s reálnými čteními.
+TVAR větví (ohyb/délka/hustota/křížení) = KUKY odložil až k reálným čtením (pak max limity).
+Snapshoty: tree-smooth (po hladkém napojení), tree-reinforce (model+junction), crown-skeleton, crown-engine-v1 (zahozený starý engine).
+Permanentní server: serve.bat v rootu (http.server 7788 + _savepng.js 7799) + autostart shortcut.
+Pozn. capture: launch.json profil "cap"; preview tool drží 7788 → při focení dočasně volním 7788, pak serve.bat zpět.
+
+## PER-RUNE AUTHORING (2026-06-14) — abeceda tvarů run
+Branch composer (build_branch_composer.py) = nástroj na vyladění VŠECH 25 run. Každá runa má
+vlastní uložený TVAR: RUNE_TUNE[key]={curve,sub,taper,wob,tip,lenMul} (chybějící pole → signatura
+z RUNES). buildBranch čte efektivní tvar z RUNE_TUNE (eCurve/eSub/eTaper/eWob/eTip/eLen). Slidery
+"TVAR TÉTO RUNY" editují vybranou runu; ukládá se do localStorage 'runeTune'; grid (všech 25) ukazuje
+každou s jejím tvarem; tlačítka reset runy / EXPORT (prompt s JSON → zapéct do runar-branch.js).
+SDÍLENO: Tree composer čte stejný localStorage (loadRuneTune + storage event → živá synchronizace
+mezi taby) → vyladíš runu v Branch composeru a hned se projeví ve stromě. Globální slidery zúženy na
+náhled (length/width/jitter/steer/leaf); tvarové jsou per-runa. API: RunarBranch.setRuneTune/getRuneTune/
+exportTune/RUNE_TUNE. Snapshot: tree-routing (routing demo), rune-authoring (per-runa). DALŠÍ: KUKY ladí
+25 run → EXPORT → zapéct do runar-branch.js (kanonické); pak (3) vyčistit překryv forku, (4) klik-na-větev
+inspekce (význam runy z runar-runes.js = mind-blowing žurnál→příběh), pak ukotvit korunu na life rune.
+
+## SBÍHÁNÍ + INSPEKCE (2026-06-14)
+SBÍHÁNÍ pramenů (KUKY bug "spatny prechod"): hlavní větev je teď SPOJITÝ limb — pramen (root+
+trunk slice) + branch se MERGUJÍ do jedné cesty (mainLimb.pts = trunkPart.concat(branchPts)) →
+maluje se jako jeden tah, žádný šev/fork mess. growBranch vrací level-0 limb (me). Hmotné prameny
+se TAPERUJÍ do nuly nahoře (melt do svazku, žádný plovoucí pahýl). w0Want=ex.w (přesná shoda, vigor
+→ délka/hustota, ne base width). RESET VŠE v Branch composeru (clear all RUNE_TUNE + localStorage)
++ cache-bust na runar-branch.js include.
+INSPEKCE (klik na větev) — KUKYho vize žurnál→příběh: crown composer načítá runar-runes.js (sdílené,
+READ-ONLY) → KW lookup dle glyfu (k/k_is keywords). _pick[] = mainy s {pts(merged), meta}; klik na
+plátno → nejbližší pramen (práh 22px) → panel INSPEKCE: runa glyf+jméno + element/ætt/world + počet
+čtení (vigor) + VÝZNAM (keywords). Vybraný pramen se ZLATĚ vykreslí CELÝ (kořen→kmen→větev) = vidíš,
+co tu část stromu vytvořilo. Snapshot: tree-inspect. DALŠÍ: ukotvit korunu na life rune; rozbít
+opakování větví; reálné napojení čtení (MAIN koord). KUKY mezitím ladí 25 run → EXPORT → zapéct.
+
+## LIFE-RUNE KOSTRA + BALANCE + VARIACE (2026-06-14)
+KUKY: strom byl extrémně nakloněný (element→úhel = jeden dominantní element = vše na stranu) a větve
+se lišily jen úhlem. OPRAVA: hlavní větve se umisťují na VYVÁŽENOU KOSTRU (FAN seq: vůdčí nahoru +
+střídavě L/R, plní baldachýn) + jemný lifeLean (podpis z life rune, hashStr('lean'+rune)) + element
+už jen NUDGE (×0.22), ne celé umístění → nevyváženost zůstává, ale rozumná. VARIACE: každý main má
+per-seed mcfg (curve/wobble/childN/levelRatio) + length jitter → větve se liší DÉLKOU/ZAKŘIVENÍM/
+HUSTOTOU, ne jen náklonem (KUKY: "naklon neni to ceho si clovek vsimne"). crownT.curve 0.5→0.8.
+Snapshot: tree-inspect (aktuální). DALŠÍ: KUKY ladí 25 run → EXPORT; reálné napojení čtení (MAIN koord).
+
+## FOUNDATION OBNOVEN + POSÍLENÍ + VŠE SLIDERY (2026-06-14, KUKY schválil)
+KUKY: "ujeli jsme od základu, vem params z crown-skeletonu". OBNOVENO: placement = emergence(k)
+(vůdčí nahoru + 2×45° + patra, life-rune lean) — to je STABILNÍ KOSTRA. Routing/themes dávají JEN
+charakter (runa/barva) + vigor (velikost), NE pozici. POSÍLENÍ (KUKY bod 1): targetN cap = maxMains;
+témata nad cap nezaloží novou větev → reinforce[] přičte jejich count k existujícímu mainu STEJNÉHO
+elementu → mohutnější (vigor→délka/tloušťka/hustota), místo množení tenkých. VARIACE fyzická (KUKY:
+"naklon je slaby signal"): per-main mr seed mění curve/wobble/childN(0-4)/levelRatio/length, škálováno
+sliderem `variace`. VŠE SLIDERY (KORUNA 17): diversity, canopy, maxMains, variace, vigorMature,
+readingEvery, length, foundAng, exitTop, exitStep, curve, tipLift, twist, childN, maxDepth, levelRatio,
+childWidth (+ KMEN + KOŘENY panely). Snapshot: tree-inspect (aktuální).
+STEERING→FYZICKÉ (KUKY postřeh, DALŠÍ návrh): náklon je slabý; mapovat area→sektor/patro, intention
+(urð/verðandi/skuld)→délka+výška, mood→sukovitost/wobble (ne ohyb). Sémantická fáze + MAIN koord (reálná data).
+
+## TESTOVACÍ NÁSTROJE pro 14denní vzdálené testování (2026-06-15, KUKY)
+Rozsahy zvednuty: věk slider max 1100→2200 (~6 let) + tlačítka 5 let/max; maxMains max 14→20;
+strandEvery min 40→20 (rychlejší růst). POJISTKA: strandN cap v trunk enginu (T.strandMax=28) →
+nespadne na výkonu při krajních hodnotách (linearN v crown composeru capnut stejně pro display).
+NÁSTROJE karta v Tree composeru: RESET (vše na default + clear runeTune, přesync všech sliderů;
+funguje per zařízení = pro oba adminy), COPY STATE (celý config DOB/věk/skin/crownT/trunkT/rootsT/
+runeTune → clipboard JSON; KUKY vloží ke screenshotu → přesná reprodukce bug reportu na dálku),
+nahodne DOB (rychlé testování variant). Branch composer má RESET VŠE + EXPORT. Vzdálený feedback:
+COPY STATE + screenshot do Claude chatu → sem. Lab běží lokálně (serve.bat autostart) — testuje na svém stroji.
+
+## OPRAVA VĚTVE=PRAMENY + RŮST ČTEČKA + ČASOVÁ OSA (2026-06-15, KUKY)
+BUG: větve byly vázané na počet TÉMAT (elementů ≥4 čtení) → 9 měs = 6 kořenů ale jen 2 větve.
+OPRAVA: targetN = min(prameny, maxMains) → VĚTVE = PRAMENY = RŮST (9 měs → 6 větví = 6 kořenů,
+za rok ~7, roste + mohutní). Element-mix (charakter) se rozdělí na větve úměrně čtením
+(assignBranchEls = proporční largest-remainder + interleave; každý čtený element ≥1). Dominantní
+element = víc větví (proporčně) + mohutnější/hustší (domV = count/mx → sizeF×(0.6+0.5domV), childN×
+(0.7+0.5domV)). Velikost větve = věk pramene (ageLen: zakládací velké, nové malé) × dominance.
+routing vrací {els[],total,mx,big} (per-element, bez split/minC). Portrét = MIX + VELIKOST, ne počet.
+RŮST čtečka (#grow panel): živě věk → čtení → prameny → větve (cap) → kořeny → mix elementů % → expanze.
+ČASOVÁ OSA: tlačítko → 4 náhledy (180/365/730/1000 dní) on-demand (reuse draw → toDataURL → img).
+VARIACE vysvětlení: hodnota = základ×(1+variace×(rnd_násobek−1)); 0=klony, 1=plný rozptyl (délka/curve/
+hustota/wobble), per-branch seed (stabilní). Snapshot: tree-growth. (Růstová tabulka viz výše/chat.)
+
+## MOOD ZRUŠEN (2026-06-15, KUKY: "uplne zruseno, nadbytecne, zadna zpetna vazba")
+Mood odstraněn z tree logiky (moje doména): runar-branch.js — MOOD mapa pryč, buildBranch už nečte
+spec.mood (elev/wobBoost/sGnarl z mood pryč; gnarl teď jen z intention=understanding_past). Branch
+composer UI — mood select odstraněn (STEERING = jen area + intention + seed). Steering = JEN area
+(hustota) + intention (délka/dosah/gnarl). (Form/prompt mood = MAIN doména, už zrušeno tam.)
+
+## NÁKLON CAP + STEERING→FYZICKÉ (2026-06-15, KUKY)
+NÁKLON CAP: leanAmt v build_trunk_composer.py clampnut na ±0.45 (KUKY: "naklon u zadne zivotni runy
+nemel presahovat 0.45"). Snapshot před: trunk-precap. STEERING→FYZICKÉ (KUKY bod 1, "naklon je slaby
+signal, chce fyzickou zmenu"): buildBranch (runar-branch.js) — intention=DÉLKA+DOSAH (decision_ahead
+delší+výš sTip, understanding_past kratší+sukovitější), mood=GNARL (unsettled/lost +wobble, grounded
+rovná), area=HUSTOTA odboček (AREA_SUB: career +0.5, crossroads +0.4… → sSub). Aplikováno na L/subN/
+wobAmp/tipLift, ne na úhel. Ověřeno: decision_ahead len 204→270 tipY výš; career subvětve 1→2.
+Hodnoty first-cut, laditelné (AREA_SUB / sLen / sGnarl). Snapshot: tree-steering. POZN: reálná data
+steeringu (area/intention/mood z čtení) = MAIN/produkce; mapování (→fyzické) drž v runar-branch.js.
+
+## TVAR ŠPIČEK + RYTMUS ODBOČEK PER RUNA (2026-06-15, KUKY "ať runy mluví")
+runar-branch.js: RUNE_CHAR mapa (per runa) — tipc (špička: taper|fork|up|blunt) + rhy (rytmus
+odboček: alt|opp|base|tip|even). buildBranch: 'up'→tipLift×1.8, 'blunt'→tlustá špička (w1), 'fork'→
+Y na konci (2 twigy), rhy mění fu rozložení + opp=protilehlé páry. eTipc/eRhy = override (RUNE_TUNE)
+nebo default (RUNE_CHAR). Branch composer: 2 cyklovací tlačítka (spicka/rytmus) v SHAPE kartě, ukládá
+do RUNE_TUNE (merge, nepřepíše slidery) + localStorage → strom čte. RUNE_CHAR exportováno. Runy teď
+viditelně odlišné (Fehu fork, Uruz blunt, Tiwaz/Thurisaz up-trn, Gebo/Ehwaz opp páry, Isa jehla, Algiz
+paroží, Laguz vlna). Snapshot: tree-steering. Per-rune autoring (sliders + tipc/rhy) = KUKY ladí → EXPORT → zapéct.
+
+## KŮRA (BARK SKIN) + REZIM PŘEPÍNAČ (2026-06-15, KUKY "potáhnout kůži")
+Procedurální kůra v crown composeru paintLimb(pts,el,skin,tex) — NE foto-textura (ta tluče na zakřivené
+limby + stylizaci). Vrstvy: oblé stínování (tmavé okraje = válec 3D) + podélné rýhy (thin lines napříč
+šířkou, jitter sin, počet roste s tloušťkou) + silnější světlý hřbet. Jen na širších částech (twigy čisté).
+REZIM přepínač (KUKY: "potrebuju prepinani na kostru at ladim vetve"): kuze (bark) ↔ kostra (flat, rychlé
+na ladění). Slider `textura` (0..1, default 0.85). state.skin default true. Snapshot: tree-bark.
+DALŠÍ (v2 kůry): příčné praskliny (jasanový kosočtverec) na starých tlustých; LISTY (parkováno, svítící
+element). Per-runa ladění (tvar+špička+rytmus) čeká na KUKYho EXPORT.
+
+## PARKOVÁNO / SMĚR (2026-06-14, KUKY)
+- LISTY = hlavní budoucí "mluvící" vrstva: jemně SVÍTÍ (barva elementu) + mírný pohyb. Nejvíc
+  vyjadřovacího účinku ponesou ony → holé tvary větví nemusí nést všechno. Až později, "jen ať to víme".
+- BALANCE strategie (KUKY rozhodnutí): TEĎ raději vyváženější, pomalu povolovat. Reálný uživatel nemá
+  vyvážené rozložení run (lab diversity slider jen ukazuje statistický rozsah) → vyvážená kostra chrání
+  vzhled. Nevyváženost má jet hlavně přes VIGOR (tloušťka/délka = kolik na téma čteš = mohutnost), MÉNĚ
+  přes úhel (pozice). Soustředěný člověk = mohutné větve, ne padající strom.
+- "Mluvící" tvar větve (priorita kromě náklonu): rytmus odboček, charakter špičky, výrazné siluety per
+  runa (Isa rovná, Þurs zalomená, Laguz plynoucí) — ladí se v Branch composeru per-runa.
 
 ## Rendering engine LAB v0.7 (2026-06-11)
 runar-tree-model.js (čistá logika, bez DOM) + runar-tree-render.js (Canvas 2D, dual-canvas, pixelRatio,
@@ -101,9 +253,10 @@ Počítat větve vlevo/vpravo; když jedna strana dominuje (uživatel pořád č
 
 ## ROZHODNUTÍ pre-reading formulář (2026-06-12, KUKY)
 HOW ARE YOU FEELING (mood) = ZRUŠIT (nejslabší, dekorativní). THIS READING IS FOR (intention) = NECHAT (mění
-výklad). Area of Life + What seeking = otevřené ke změně/rozšíření. POZOR: produkční změna (runar-reader.html
-+ _moodContext/_intentionContext v runar-character.js + startReading + parts[] + §13 full-path) — NEPROVEDENO,
-čeká až po dokončení stromu. (= MAIN doména, koordinovat.)
+výklad). Area of Life + What seeking = otevřené ke změně/rozšíření.
+✅ MOOD ODSTRANĚN z produkce 2026-06-14 (commit 38f9713): form pill group + app.js/reading.js sběr + mood_lbl
+EN/IS. character.js `_moodContext` ponechán DORMANTNÍ (no-op, součást Norns-osy — pokud TREE mood nepoužije, lze smazat).
+intention ZŮSTÁVÁ. Area/seeking = stále otevřené k případné úpravě.
 
 ## NORNS frekvence (park)
 Norns je u reálných uživatelů jedno z nejčastějších čtení → najít vzorec jak často ho člověk dělá a tlumit
