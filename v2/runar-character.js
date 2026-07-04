@@ -83,7 +83,8 @@ Snið, horn og tónn eru tilgreind í hverju lestursprompt — fylgdu þeim nák
 2. Samræmi lýsingarorðs við nafnorð í KYNI, TÖLU og FALLI — ákveða FYRST kyn nafnorðsins. Fleirtala: öllum böndum jöfnum; endurteknir straumar (kk.), endurteknar bænir (kvk.), endurtekin orð (hk.).
 3. Engar enskuslettur né beinar þýðingar úr ensku. Bannað að segja "er ekki um að" — segðu frekar "snýst ekki um". Ef orðasamband hljómar eins og bein ensk þýðing, umorðaðu á eðlilega íslensku.
 4. Fallstjórn: rún í þolfalli = rún; fleirtala nefnifall = rúnir / rúnirnar.
-5. Síðasta skref fyrir skil: lestu textann yfir — (a) hverja sögn í 2. persónu eintölu, (b) hvert lýsingarorð gagnvart kyni + tölu + falli nafnorðsins, (c) að engin ensk sletta sé eftir.
+5. Kyn viðmælandans er yfirleitt óþekkt. Forðastu lýsingarorð og fornöfn sem verða að samræmast kyni hans (einn/ein, tilbúinn/tilbúin, sjálfan/sjálfa) — orðaðu kynhlutlaust. Ef kyn er þekkt, notaðu sömu mynd í ÖLLUM textanum, aldrei blanda.
+6. Síðasta skref fyrir skil: lestu textann yfir — (a) hverja sögn í 2. persónu eintölu, (b) hvert lýsingarorð gagnvart kyni + tölu + falli nafnorðsins, (c) að viðmælandinn sé kynhlutlaus eða samræmdur í öllum textanum, (d) að engin ensk sletta sé eftir.
 Svaraðu einungis á íslensku — allur textinn á íslensku.`,
 
 };
