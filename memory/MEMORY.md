@@ -165,7 +165,15 @@ VOCAB: unit(rune reading/spá), cast(cast/spá), card(Rune Reading Card/Rúnakor
 - [runar-project.md](runar-project.md) — stack, soubory, tier tabulka, DB schéma, edge functions
 - [tree-of-life.md](tree-of-life.md) — Tree design (branch objekt, Gathering, AETTY, vizuál, Yggdrasil)
 - [runar-patterns.md](runar-patterns.md) — Pattern detection design
-- **RUNAR_DECISIONS.md** (repo `Downloads\Runar-admin`, NE v Cowork sync setu) — append-only log architektonických rozhodnutí (§16 two-output rule)
+- **RUNAR_DECISIONS.md** (repo root `Downloads\Runar-admin\`) — append-only log architektonických rozhodnutí (§16 two-output rule)
+
+## Tree session paměť (Code)
+Frontmatter-paměť TREE session (Claude Code). Od 2026-07-04 sdílená s Cowork — obě platform složky jsou junction na `repo/memory/` (§17, jediný zdroj).
+
+- [Rúnar Tree of Life engine — lab stav a rozhodnutí](runar-tree-engine-lab.md) — liana Canvas 2D engine, stříbrná kůra + element tint, mock data, čeká na schválení
+- [Rúnar kmen — přírůstkové změny, ne přepisy](runar-trunk-incremental-rule.md) — schválenou verzi composeru měnit přírůstkově + snapshotovat před změnou
+- [Rúnar strom — živý pohyb + model založení](runar-tree-living-movement.md) — Norns=kořeny, life rune=kmen, čtení=větev; větve se hýbou (ne skáčou), mladé pružné/staré tuhnou; Founding Ritual lab
+- [IS gramatika — rod přídavného](is-grammar-adjective-gender.md) — nejdřív urči rod podstatného (frost=hk, súld=kvk), pak skloňuj; detail v working-style.md
 
 ## Index snapshots (nejnovější = poslední)
 

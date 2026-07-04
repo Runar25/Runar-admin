@@ -126,11 +126,13 @@ Task měnící chování/rozhodnutí (ne refactor/CSS) = Output A (práce) + Out
 Reconciliation (owner-triggered): „Reconciliation: `<doc|modul>`" → Code vypíše divergence list
 (doc vs kód) a STOP, owner rozhoduje. Formáty polí + detail → RUNAR_DOC_SYNC.md / RUNAR_DECISIONS.md.
 
-### §17 — Doc sync: jediný zdroj = git repo
-Všechny sdílené doc (MEMORY.md, working-style.md, runar-project.md, RUNAR_*.md, tree-of-life.md,
-runar-patterns.md, snapshots/) = git repo `Downloads\Runar-admin`. Cowork i Code editují PŘÍMO tam.
-`AppData\memory` + Cowork složka NEJSOU zdroj (max. auto-gen read-only kopie, ručně NIKDY needitovat).
-Každá změna doc = malý commit + push IHNED, prefix `[docsync]`. `sync-to-cowork.py` = retired. Detail → RUNAR_DECISIONS.md (2026-07-04).
+### §17 — Doc sync: jediný zdroj = git repo, sdílená paměť přes junction
+Auto-paměť žije v `Downloads\Runar-admin\memory\` (MEMORY.md, working-style.md, runar-project.md,
+snapshots/ + tree paměti). Obě platformní pamětové složky (`AppData\Roaming\Claude\memory` = Cowork,
+`.claude\projects\C--Users-zkuku\memory` = Code) jsou **junction na `repo\memory\`** → oba agenti čtou i
+píší STEJNÉ soubory, git verzuje, žádný sync skript, žádný drift. `RUNAR_*.md` + `CLAUDE.md` zůstávají
+v rootu (čtou se on-demand, ne jako auto-paměť). Každá změna = malý commit + push IHNED, prefix `[docsync]`.
+Rozbitý junction (app přepsala složku) → spustit `memory\relink-memory.ps1`. Detail → RUNAR_DECISIONS.md (2026-07-04).
 
 ---
 
