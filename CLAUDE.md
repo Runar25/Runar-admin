@@ -101,6 +101,12 @@ Escape sekvence NIKDY — pouze literal UTF-8 s `python -X utf8`. (detaily + př
 ### §12 — Jméno uživatele: fallback = "you" / "þú"
 NIKDY `email.split('@')[0]`. displayName() = jediný zdroj pravdy. (detaily → working-style.md)
 
+### §13 — Nová věc musí projít VŠEMI cestami (Full-path rule)
+Nový field → všechny buildXxxPromptIS/EN · startReading() · resetReader() · shrine parts[]
+Nový spread → readRune() · drawAnother() · resetReader() · _setSpreadMode() · generateVoice()
+Migrace → grep starý text, aktualizovat VŠECHNY výskyty (sdílené i lokální)
+Před commitem: "Existuje jiná cesta kódem kde tohle chybí?"
+
 ### §14 — updateUIText() = POUZE statické překlady
 `updateUIText()` se volá na každém přepnutí jazyka — NIKDY sem nepřidávat state-dependent obsah.
 Dynamický obsah patří do dedikovaných funkcí:
@@ -108,17 +114,23 @@ Dynamický obsah patří do dedikovaných funkcí:
 - `_updateDobLabel()` — DOB pole
 Porušení způsobí přepsání personalizovaného textu při přepnutí jazyka.
 
-### §13 — Nová věc musí projít VŠEMI cestami (Full-path rule)
-Nový field → všechny buildXxxPromptIS/EN · startReading() · resetReader() · shrine parts[]
-Nový spread → readRune() · drawAnother() · resetReader() · _setSpreadMode() · generateVoice()
-Migrace → grep starý text, aktualizovat VŠECHNY výskyty (sdílené i lokální)
-Před commitem: "Existuje jiná cesta kódem kde tohle chybí?"
-
 ### §15 — Vocab/tier termíny = z VOCAB/TIERS, NIKDY natvrdo
 Název karty/jednotky/spá a tier jména: přes `vl()`/`vlp()`/`vn()`/`tp({card})` / `TIERS[x].label`.
 Štítky a tlačítka templatuj s `{card}`/`{unit}` placeholderem; v dlouhé marketingové próze je brand jméno OK.
 Platí i pro hodnoty v translations.js (ne jen logiku) — gift_card_btn, panely atd.
 Seznam zbývajících hardcoded míst k vyčištění → working-style.md.
+
+### §16 — Two-output rule + Reconciliation (doc sync)
+Task měnící chování/rozhodnutí (ne refactor/CSS) = Output A (práce) + Output B = 1 záznam do
+`RUNAR_DECISIONS.md` (append-only) + oprav špatnou sekci dotčeného docu ve stejném turnu.
+Reconciliation (owner-triggered): „Reconciliation: `<doc|modul>`" → Code vypíše divergence list
+(doc vs kód) a STOP, owner rozhoduje. Formáty polí + detail → RUNAR_DOC_SYNC.md / RUNAR_DECISIONS.md.
+
+### §17 — Doc sync: jediný zdroj = git repo
+Všechny sdílené doc (MEMORY.md, working-style.md, runar-project.md, RUNAR_*.md, tree-of-life.md,
+runar-patterns.md, snapshots/) = git repo `Downloads\Runar-admin`. Cowork i Code editují PŘÍMO tam.
+`AppData\memory` + Cowork složka NEJSOU zdroj (max. auto-gen read-only kopie, ručně NIKDY needitovat).
+Každá změna doc = malý commit + push IHNED, prefix `[docsync]`. `sync-to-cowork.py` = retired. Detail → RUNAR_DECISIONS.md (2026-07-04).
 
 ---
 
@@ -186,25 +198,11 @@ Nová korekce → přidat do BAD_PATTERNS v check-is.py + do DB přes shrine.
 Tiers/limity/vocab/spreads → `runar-config.js` · Prompty IS/EN + corrections → `runar-character.js`
 UI texty → `runar-translations.js` · User state → `runar-app.js` · Tree logika → `runar-tree.js`
 
+Architektonická rozhodnutí (proč, one-way) → `RUNAR_DECISIONS.md`
 Designová rozhodnutí (co a proč) → `RUNAR_DESIGN.md`
 Tree of Life (zakládací rituál, větve, elementy, kořeny) → `tree-of-life.md`
 Pattern detection + The Gathering (Eagle/Níðhöggr, transformační páry) → `runar-patterns.md`
 Business model + ceny + EL kalkulace → `RUNAR_PRICING.md`
-
----
-
-## Před spuštěním (launch checklist)
-
-### 🔴 Blokuje launch
-- **Resend SMTP** — magic link emaily z agndofa.is (před Shopify webhookem)
-- **Shopify webhook** — automatický upgrade po nákupu
-- **Standard tier purchase** — způsob nákupu (aktuálně "COMING SOON")
-- **Capacitor native app** — iOS App Store = primární akviziční kanál na Islandu (70 % iOS). Subscriptions na webu, žádný App Store cut. Viz RUNAR_PRICING.md sekce PWA vs Native.
-
-### 🟡 Před prvním marketingem
-- **Privacy Policy** — odkaz na agndofa.is
-- **DPA Supabase** — čeká na e-mail od Supabase
-- **Trojice do produkce** — z shrine labu do readeru, s novou SPREAD_CONFIG architekturou
 
 ---
 
@@ -229,7 +227,6 @@ Repo zpracovávají DVĚ Claude Code session paralelně. Aby si nelezly do zelí
 - Git konflikt? Neforcuj — pull, vyřeš ručně JEN svou doménu.
 - Poslední stav každé session → MEMORY.md (SW + commit) + vlastní doc/snapshot. Před prací přečti druhý doc.
 
-## Cowork sync
-Memory soubory (MEMORY.md, working-style.md, runar-project.md, tree-of-life.md, runar-patterns.md) + snapshots/ ukládat TAKÉ do:
-`C:\Users\zkuku\Claude\Projects\RÚNAR the rune keeper\`
-Primární zdroj = `C:\Users\zkuku\AppData\Roaming\Claude\memory\`. Cowork složka = zrcadlo pro přímý přístup bez syncu.
+<!-- „Cowork sync" (zrcadlo do AppData/Cowork složky) ZRUŠENO — nahrazeno §17 (jediný zdroj = git repo). -->
+<!-- 2026-07-04 [docsync] -->
+
