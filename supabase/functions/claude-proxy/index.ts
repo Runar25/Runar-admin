@@ -11,6 +11,15 @@
 // Tree context: injected into system prompt for tree-active readings (Vrstva A)
 // Session state: derived from tree + time, shapes reading tone (Vrstva B)
 // Voice scale: 0-20 user preference injected as tonal instruction (Vrstva C)
+//
+// CREDIT SAFETY (2026-07-04): the balance/credit is deducted ONLY AFTER a
+//   verified-successful reading. Eligibility is checked up front (402 if the
+//   seeker cannot afford it) but the actual deduction runs after Claude returns
+//   real text — so a transient failure never costs a credit.
+// RESILIENCE (2026-07-04): the Claude fetch has an AbortController timeout and
+//   retries transient upstream errors (429/5xx/529) with backoff, then returns a
+//   clean 503 with a friendly message instead of leaking a platform 503 or
+//   masking overload as a 400.
 // Deploy: supabase functions deploy claude-proxy --project-ref pmitxjvkeovijreepror --no-verify-jwt
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
@@ -169,6 +178,97 @@ function buildVoiceContext(scale: number, settled: boolean): string {
   return "\n\n--- VOICE ---\n" + instruction + "\n---";
 }
 
+// ── Claude call with timeout + retry on transient upstream errors ────────────
+// Returns { ok:true, data } on a 2xx, or { ok:false, status, error } otherwise.
+// Retries 408/409/429/5xx/529 with exponential backoff + jitter; each attempt is
+// bounded by an AbortController so a hung upstream cannot push the invocation
+// past the platform execution limit (which is what surfaced as a raw 503).
+async function callClaudeWithRetry(
+  payload: unknown,
+  apiKey: string,
+): Promise<{ ok: true; data: any } | { ok: false; status: number; error: string }> {
+  const RETRYABLE = new Set([408, 409, 429, 500, 502, 503, 504, 529]);
+  const MAX_ATTEMPTS = 3;
+  const PER_ATTEMPT_MS = 30000;
+  let lastStatus = 503;
+  let lastError = "no response";
+
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), PER_ATTEMPT_MS);
+    try {
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": apiKey,
+          "anthropic-version": "2023-06-01",
+        },
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+      });
+      clearTimeout(timer);
+
+      if (res.ok) {
+        return { ok: true, data: await res.json() };
+      }
+
+      // Read the body defensively — it may be JSON (Anthropic error) or an HTML
+      // gateway page. Never assume .json() succeeds on a non-2xx.
+      const raw = await res.text().catch(() => "");
+      lastStatus = res.status;
+      lastError = `status ${res.status}: ${raw.slice(0, 300)}`;
+
+      if (!RETRYABLE.has(res.status) || attempt === MAX_ATTEMPTS) {
+        return { ok: false, status: res.status, error: lastError };
+      }
+    } catch (e) {
+      clearTimeout(timer);
+      const aborted = (e as Error).name === "AbortError";
+      lastStatus = aborted ? 504 : 503;
+      lastError = aborted ? "upstream timeout" : ((e as Error).message || "network error");
+      if (attempt === MAX_ATTEMPTS) {
+        return { ok: false, status: lastStatus, error: lastError };
+      }
+    }
+
+    // Backoff before the next attempt (400ms, 800ms, ... + jitter).
+    const backoff = 400 * Math.pow(2, attempt - 1) + Math.floor(Math.random() * 250);
+    await new Promise((r) => setTimeout(r, backoff));
+  }
+
+  return { ok: false, status: lastStatus, error: lastError };
+}
+
+// ── Deduction plan — decided up front, applied only after a successful reading ─
+type DeductPlan =
+  | { kind: "paid"; cost: number }
+  | { kind: "free"; freeBalance: number }
+  | { kind: "none" };
+
+// Apply the deduction AFTER Claude returned real text. Returns the remaining
+// credit balance for a paid reading (undefined otherwise).
+async function applyDeduction(plan: DeductPlan, userId: string | null): Promise<number | undefined> {
+  if (plan.kind === "paid" && userId) {
+    let remaining = 0;
+    for (let i = 0; i < plan.cost; i++) {
+      const { data } = await sb().rpc("use_credit", { p_user_id: userId });
+      if (data === -1) break; // ran out mid-deduct (rare race) — reading already delivered
+      remaining = data as number;
+    }
+    return remaining;
+  }
+  if (plan.kind === "free" && userId) {
+    // optimistic: if a concurrent request already spent the free balance, this is a no-op
+    await sb()
+      .from("user_profiles")
+      .update({ free_balance: plan.freeBalance - 1 })
+      .eq("id", userId)
+      .eq("free_balance", plan.freeBalance);
+  }
+  return undefined;
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 
 serve(async (req) => {
@@ -225,24 +325,18 @@ serve(async (req) => {
       return json({ error: "rate_limited", message: "Too many requests. Please wait a moment." }, 429);
     }
 
-    // ── Tier enforcement ──
-    if (userTier === "rune_seeker") {
+    // ── Eligibility (rune_seeker only) — decide the plan, DO NOT deduct yet ──
+    // Deduction is applied after a verified-successful reading (credit safety).
+    let deductPlan: DeductPlan = { kind: "none" };
 
+    if (userTier === "rune_seeker") {
       if (use_credit) {
-        // ── Paid credit reading ──
-        // spread_cost = number of runes = number of credits to deduct
+        // ── Paid credit reading — spread_cost = runes = credits ──
         const cost = Math.max(1, spread_cost);
         if (creditsBalance < cost) {
           return json({ error: "no_credits", message: "Not enough credits. Redeem a reading gift card or upgrade." }, 402);
         }
-        // Deduct credits one by one (use_credit RPC is atomic, deducts 1 per call)
-        for (let i = 0; i < cost; i++) {
-          const { data: remaining } = await sb().rpc("use_credit", { p_user_id: userId });
-          if (remaining === -1) {
-            return json({ error: "no_credits", message: "Not enough credits." }, 402);
-          }
-          creditsBalance = remaining;
-        }
+        deductPlan = { kind: "paid", cost };
 
       } else if (mode === "ceremonial") {
         // ── The Gathering — bypass all limits ──
@@ -257,20 +351,13 @@ serve(async (req) => {
             .maybeSingle();
 
           const freeBalance = profile?.free_balance ?? 0;
-
           if (freeBalance <= 0) {
             return json({
               error:   "no_credits",
               message: "Your free reading has been drawn. Redeem a reading gift card to continue.",
             }, 402);
           }
-
-          // Deduct 1 from free_balance (free readings always cost 1 regardless of spread_cost)
-          await sb()
-            .from("user_profiles")
-            .update({ free_balance: freeBalance - 1 })
-            .eq("id", userId)
-            .eq("free_balance", freeBalance);  // optimistic: if concurrent request beat us, this is a no-op
+          deductPlan = { kind: "free", freeBalance };
         }
       }
     }
@@ -313,41 +400,53 @@ serve(async (req) => {
     }
 
     // ── Build system array: base (cacheable) + dynamic context ────────────────
-    // Base system prompt is stable across users — cache with ephemeral cache_control.
-    // Dynamic context (Vrstva A/B/C) changes per user per session — not cached.
     const baseSystem = system || "";
     const systemParts: Array<{ type: "text"; text: string; cache_control?: { type: "ephemeral" } }> = [];
     if (baseSystem)      systemParts.push({ type: "text", text: baseSystem, cache_control: { type: "ephemeral" } });
     if (dynamicContext)  systemParts.push({ type: "text", text: dynamicContext });
 
-    // ── Call Claude ──
+    // ── Call Claude (timeout + retry) ──
     const anthropicKey = Deno.env.get("ANTHROPIC_API_KEY");
     if (!anthropicKey) return json({ error: "API key not configured" }, 500);
 
-    const claudeRes = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": anthropicKey,
-        "anthropic-version": "2023-06-01",
-      },
-      body: JSON.stringify({
-        model:      "claude-sonnet-4-5",
-        max_tokens,
-        system:     systemParts.length > 0 ? systemParts : undefined,
-        messages:   [{ role: "user", content: prompt }],
-      }),
-    });
+    const result = await callClaudeWithRetry({
+      model:      "claude-sonnet-4-5",
+      max_tokens,
+      system:     systemParts.length > 0 ? systemParts : undefined,
+      messages:   [{ role: "user", content: prompt }],
+    }, anthropicKey);
 
-    const data = await claudeRes.json();
-    if (data.error) return json({ error: data.error.message }, 400);
+    // Transient/upstream failure — NOTHING was deducted, so no credit is lost.
+    if (!result.ok) {
+      console.error("claude call failed:", result.status, result.error);
+      return json({
+        error:   "overloaded",
+        message: "The runes are quiet right now — please try again in a moment.",
+      }, 503);
+    }
 
-    const text = data.content?.[0]?.text ?? "";
+    const data = result.data;
+    // A 2xx body that still carries an error object = a genuine bad request; do
+    // not retry, do not deduct.
+    if (data?.error) return json({ error: data.error.message ?? "Claude error" }, 400);
+
+    const text = data?.content?.[0]?.text ?? "";
+    if (!text) {
+      return json({
+        error:   "empty",
+        message: "No reading came through — please try again.",
+      }, 503);
+    }
+
+    // ── Reading succeeded — NOW deduct the credit/balance ──
+    const creditsRemaining = await applyDeduction(deductPlan, userId);
 
     return json({
       text,
       ...(sessionState ? { session_state: sessionState } : {}),
-      ...(use_credit && userTier === "rune_seeker" ? { credits_remaining: creditsBalance } : {}),
+      ...(deductPlan.kind === "paid"
+        ? { credits_remaining: creditsRemaining ?? Math.max(0, creditsBalance - deductPlan.cost) }
+        : {}),
     });
 
   } catch (e) {
