@@ -734,116 +734,83 @@ function applyISCorrections(text, lang, corrections) {
 
 // IS reading prompt — entire prompt in Icelandic.
 // Claude never translates from EN — thinks in IS from first word.
-function buildReadingPromptIS(u, drawn, corrections) {
+// --- SINGLE READING PROMPT --- one generic builder + per-language strings.
+// Add a language = add RP_SINGLE.xx (translate the pack). No IS/EN builder pair.
+var RP_SINGLE = {
+  is: {
+    PERSON:'MANNESKJAN', LIFE:'LÍFSRÚNA', DRAWN:'DREGNA RÚNA', focus:'áhersla',
+    REALM_life:'Heimur', REALM_drawn:'Heimur', ELEM:'Frumefni',
+    AREA:'SVIÐ', SEEK:'LEITAÐ', Q:'SPURNING',
+    useFormula:true, langInstr:'',
+    worldFb:function(pk){ return 'lifandi leiðin'; },
+    formula:function(f){ return 'Íslensk rúnaþula (flettu inn náttúrlega einu sinni): "' + f + '"'; },
+    lifeRuneNote:function(rune){ return 'MIKILVÆGT: Dregna rúna og lífsrúna eru EIN og sama rúna — ' + rune + '. Þetta er sjaldgæft. Meðhöndlaðu þetta sem sérstæðan augnablik: "Stofninn talar um sig sjálfan."'; },
+    angleIntro:'LESTURHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og upphaf): ',
+    length:'Gefðu einn samfelldan lestur — 3 stuttar setningar, 38 til 45 orð alls. Hann verður lesinn upphátt, svo hafðu hverja setningu létta — um 20 til 25 sekúndur. Engar fyrirsagnir, engar hlutaskiptingar.',
+    qBranch:function(rune,g,q){ return 'Svaraðu spurningunni: "' + q + '" í gegnum ' + rune + ' (' + g + ') — í myndum og táknmáli, ekki ráðgjöf. Nefndu ' + rune + ' einu sinni, fléttað náttúrlega inn. Talaðu um það sem liggur undir spurningunni. Enda með einni opinni spurningu sem nær dýpra.'; },
+    noqBranch:function(rune,g,world){ return 'Byrjaðu á ' + rune + ' (' + g + ') — láttu táknlæga gæði þess (' + world + ') koma fram í myndum, ekki útskýringu. Nefndu ' + rune + ' einu sinni, fléttað náttúrlega inn. Ein skýr innsýn nægir — ekki troða öllu inn. Enda með mjög stuttri, opinni spurningu — fáein orð.'; },
+    closing:function(name){ return 'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. Ávarpaðu ' + name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. Haltu þig innan orðafjöldans — stuttar setningar, ekkert uppfyllingarefni.'; },
+    json:'Skilaðu EINGÖNGU þessu JSON fylki, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(lesturinn nákvæmlega eins og fyrirmælin að ofan segja, einn samfelldur texti)"}]',
+  },
+  en: {
+    PERSON:'PERSON', LIFE:'LIFE RUNE', DRAWN:'DRAWN RUNE', focus:'focus on',
+    REALM_life:'Realm', REALM_drawn:'World', ELEM:'Elements',
+    AREA:'AREA', SEEK:'SEEKING', Q:'QUESTION',
+    useFormula:false, langInstr:'Respond in English.',
+    worldFb:function(pk){ return pk; },
+    formula:function(f){ return 'Icelandic rune formula (weave naturally once): "' + f + '"'; },
+    lifeRuneNote:function(rune){ return 'IMPORTANT: The drawn rune IS the life rune — ' + rune + '. This is rare. Address it as a significant moment: "The trunk speaks of itself."'; },
+    angleIntro:'READING ANGLE (follow this entry point — let it shape the opening and tone): ',
+    length:'One flowing reading — 3 short sentences, 38 to 45 words total. It will be read aloud, so keep every sentence lean — about 20 to 25 seconds spoken. No sections, no labels, no line breaks between thoughts.',
+    qBranch:function(rune,g,q){ return 'Open with ' + rune + ' (' + g + ') answering: "' + q + '" — through image and symbol, not advice. Mention ' + rune + ' by name once, woven naturally. Speak to what lies beneath the question. End with one open question that reaches deeper.'; },
+    noqBranch:function(rune,g,world){ return 'Open with ' + rune + ' (' + g + ') — let its quality (' + world + ') arrive through image, not explanation. Mention ' + rune + ' by name once, woven naturally. One clear insight is enough — do not pack everything in. End with a very short open question — a few words.'; },
+    closing:function(name){ return 'One paragraph. No breaks. No labels. Address ' + name + ' once, woven naturally — never as the opening word. Stay within the word count — short sentences, no filler. '; },
+    json:'Output format — return ONLY this JSON array, nothing before or after: [{"rune": "(the rune name)", "text": "(the reading exactly as instructed above, one flowing paragraph)"}]',
+  },
+};
+
+function buildReadingPromptSingle(u, drawn, lang, corrections) {
+  var S = RP_SINGLE[lang] || RP_SINGLE.en;
   var life = u.lifeRune;
-  var isLifeRune = !!(life && drawn.n === life.n); // drawn rune IS the life rune
-  var drawnKws = rk(drawn).split(',').map(function(s) { return s.trim(); }).filter(Boolean);
-  var pickedKws = drawnKws.sort(function() { return 0.5 - Math.random(); })
-    .slice(0, Math.min(3, drawnKws.length)).join(', ');
-  var angle = _randomAngle('is');
-  var formulaLine = drawn.formula_is
-    ? '\nÍslensk rúnaþula (flettu inn náttúrlega einu sinni): "' + drawn.formula_is + '"'
-    : '';
+  var isLifeRune = !!(life && drawn.n === life.n);
+  var drawnKws = rk(drawn).split(',').map(function(s){ return s.trim(); }).filter(Boolean);
+  var pickedKws = drawnKws.sort(function(){ return 0.5 - Math.random(); }).slice(0, Math.min(3, drawnKws.length)).join(', ');
+  var worldRef = rworld(drawn) || S.worldFb(pickedKws);
+  var hasQ = !!(u.question && u.question.trim());
   var lifeCtx = life
-    ? 'LÍFSRÚNA: ' + rn(life) + ' (' + life.g + ') — ' + rk(life)
-      + (life.world ? ' · Heimur: ' + rworld(life) + ' · Frumefni: ' + relements(life) : '')
+    ? S.LIFE + ': ' + rn(life) + ' (' + life.g + ') — ' + rk(life)
+      + (life.world ? ' · ' + S.REALM_life + ': ' + rworld(life) + ' · ' + S.ELEM + ': ' + relements(life) : '')
     : '';
-  var drawnCtx = 'DREGNA RÚNA: ' + rn(drawn) + ' (' + drawn.g + ') — áhersla: ' + pickedKws
-    + (drawn.world ? ' · Heimur: ' + rworld(drawn) + ' · Frumefni: ' + relements(drawn) : '');
-  var lifeRuneNote = isLifeRune
-    ? 'MIKILVÆGT: Dregna rúna og lífsrúna eru EIN og sama rúna — ' + rn(drawn) + '. Þetta er sjaldgæft. Meðhöndlaðu þetta sem sérstæðan augnablik: "Stofninn talar um sig sjálfan."'
-    : '';
+  var drawnCtx = S.DRAWN + ': ' + rn(drawn) + ' (' + drawn.g + ') — ' + S.focus + ': ' + pickedKws
+    + (drawn.world ? ' · ' + S.REALM_drawn + ': ' + rworld(drawn) + ' · ' + S.ELEM + ': ' + relements(drawn) : '');
   var parts = [
-    'MANNESKJAN: ' + u.name,
+    S.PERSON + ': ' + u.name,
     lifeCtx,
     drawnCtx,
-    lifeRuneNote,
-    u.area     ? 'SVIÐ: ' + u.area     : '',
-    u.seeking  ? 'LEITAÐ: ' + u.seeking  : '',
-    u.mood      ? _moodContext(u.mood, 'is')      : '',
-    u.intention ? _intentionContext(u.intention, 'is') : '',
-    u.question ? 'SPURNING: ' + '"' + u.question + '"' : '',
+    isLifeRune ? S.lifeRuneNote(rn(drawn)) : '',
+    u.area     ? S.AREA + ': ' + u.area : '',
+    u.seeking  ? S.SEEK + ': ' + u.seeking : '',
+    u.intention ? _intentionContext(u.intention, lang) : '',
+    u.question ? S.Q + ': "' + u.question + '"' : '',
   ].filter(Boolean).join('\n');
-  var lifeRef = life
-    ? 'lífsrúninni ' + rn(life) + (life.world ? ' (' + rworld(life) + ')' : '') + ', '
-    : '';
-  var areaRef  = u.area    ? u.area    : 'leið þeirra';
-  var seekRef  = u.seeking ? ', leitað eftir ' + u.seeking : '';
-  var elemRef  = life ? relements(drawn) + ' / ' + relements(life) : '—';
-  var worldRef = rworld(drawn) || 'lifandi leiðin';
-  var hasQ = !!(u.question && u.question.trim());
-  var lifeNote2 = life ? ('MANNESKJAN ber ' + rn(life) + ' (' + life.g + ') sem lífsrún — flettu þessari tengingu inn ómeðvitað, án þess að tilkynna hana.') : '';
-  return [
-    parts + formulaLine,
-    '',
-    'LESTURHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og upphaf): ' + angle,
-    _seasonalImagery('is', drawn),
-    '',
-    'Gefðu einn samfelldan lestur — 3 stuttar setningar, 38 til 45 orð alls. Hann verður lesinn upphátt, svo hafðu hverja setningu létta — um 20 til 25 sekúndur. Engar fyrirsagnir, engar hlutaskiptingar.',
-    '',
-    hasQ
-      ? ('Svaraðu spurningunni: "' + u.question + '" í gegnum ' + rn(drawn) + ' (' + drawn.g + ') — í myndum og táknmáli, ekki ráðgjöf. Nefndu ' + rn(drawn) + ' einu sinni, fléttað náttúrlega inn. Talaðu um það sem liggur undir spurningunni. Enda með einni opinni spurningu sem nær dýpra.')
-      : ('Byrjaðu á ' + rn(drawn) + ' (' + drawn.g + ') — láttu táknlæga gæði þess (' + worldRef + ') koma fram í myndum, ekki útskýringu. Nefndu ' + rn(drawn) + ' einu sinni, fléttað náttúrlega inn. Ein skýr innsýn nægir — ekki troða öllu inn. Enda með mjög stuttri, opinni spurningu — fáein orð.'),
-    '',
-    'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. Ávarpaðu ' + u.name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. Haltu þig innan orðafjöldans — stuttar setningar, ekkert uppfyllingarefni.'
-      + getCorrPrompt('is', corrections),
-    _addressContext('is'),
-    'Skilaðu EINGÖNGU þessu JSON fylki, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(lesturinn nákvæmlega eins og fyrirmælin að ofan segja, einn samfelldur texti)"}]',
-  ].filter(Boolean).join('\n');
-}
-
-// EN reading prompt — original logic unchanged. Prompt in English.
-function buildReadingPromptEN(u, drawn, lang, corrections) {
-  const life = u.lifeRune;
-  const isLifeRune = !!(life && drawn.n === life.n); // drawn rune IS the life rune
-  const langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Íslenska).' : 'Respond in English.';
-  const drawnKws = rk(drawn).split(',').map(s => s.trim()).filter(Boolean);
-  const pickedKws = drawnKws.sort(() => 0.5 - Math.random()).slice(0, Math.min(3, drawnKws.length)).join(', ');
-  const formulaLine = (lang === 'is' && drawn.formula_is)
-    ? `\nIcelandic rune formula (weave naturally once into PART 1): "${drawn.formula_is}"` : '';
-  const lifeCtx = life
-    ? `LIFE RUNE: ${rn(life)} (${life.g}) — ${rk(life)}` + (life.world ? ` · Realm: ${rworld(life)} · Elements: ${relements(life)}` : '')
-    : '';
-  const drawnCtx = `DRAWN RUNE: ${rn(drawn)} (${drawn.g}) — focus on: ${pickedKws}` +
-    (drawn.world ? ` · World: ${rworld(drawn)} · Elements: ${relements(drawn)}` : '');
-  const lifeRuneNote = isLifeRune
-    ? `IMPORTANT: The drawn rune IS the life rune — ${rn(drawn)}. This is rare. Address it as a significant moment: "The trunk speaks of itself."`
-    : '';
-  const parts = [`PERSON: ${u.name}`, lifeCtx, drawnCtx, lifeRuneNote,
-    u.area      ? `AREA: ${u.area}` : '',
-    u.seeking   ? `SEEKING: ${u.seeking}` : '',
-    u.mood      ? _moodContext(u.mood)      : '',
-    u.intention ? _intentionContext(u.intention) : '',
-    u.question  ? `QUESTION: "${u.question}"` : ''].filter(Boolean).join('\n');
-  const hasQ = !!(u.question && u.question.trim());
-  const lifeNote = life ? ('The person carries ' + rn(life) + ' (' + life.g + ') as life rune — weave this in without announcing it.') : '';
-  const areaNote2 = u.area ? ('Area of focus: ' + u.area + '.') : '';
-  const seekNote2 = u.seeking ? (u.name + ' is seeking ' + u.seeking + '.') : '';
-  const formulaRef = (lang === 'is' && drawn.formula_is) ? ('Icelandic rune formula (weave naturally once): "' + drawn.formula_is + '"') : '';
+  var formula = (S.useFormula && drawn.formula_is) ? S.formula(drawn.formula_is) : '';
   return [
     parts,
-    '',
-    'READING ANGLE (follow this entry point — let it shape the opening and tone): ' + _randomAngle('en'),
-    _seasonalImagery('en', drawn),
-    '',
-    'One flowing reading — 3 short sentences, 38 to 45 words total. It will be read aloud, so keep every sentence lean — about 20 to 25 seconds spoken. No sections, no labels, no line breaks between thoughts.',
-    '',
-    hasQ
-      ? ('Open with ' + rn(drawn) + ' (' + drawn.g + ') answering: "' + u.question + '" — through image and symbol, not advice. Mention ' + rn(drawn) + ' by name once, woven naturally. Speak to what lies beneath the question. End with one open question that reaches deeper.')
-      : ('Open with ' + rn(drawn) + ' (' + drawn.g + ') — let its quality (' + (rworld(drawn) || pickedKws) + ') arrive through image, not explanation. Mention ' + rn(drawn) + ' by name once, woven naturally. One clear insight is enough — do not pack everything in. End with a very short open question — a few words.'),
-    formulaRef,
-    '',
-    'One paragraph. No breaks. No labels. Address ' + u.name + ' once, woven naturally — never as the opening word. Stay within the word count — short sentences, no filler. ' + langInstr,
-    getCorrPrompt(lang, corrections),
-    'Output format — return ONLY this JSON array, nothing before or after: [{"rune": "(the rune name)", "text": "(the reading exactly as instructed above, one flowing paragraph)"}]',
+    formula,
+    S.angleIntro + _randomAngle(lang),
+    _seasonalImagery(lang, drawn),
+    S.length,
+    hasQ ? S.qBranch(rn(drawn), drawn.g, u.question) : S.noqBranch(rn(drawn), drawn.g, worldRef),
+    S.closing(u.name) + (S.langInstr ? S.langInstr : '') + getCorrPrompt(lang, corrections),
+    _addressContext(lang),
+    S.json,
   ].filter(Boolean).join('\n');
 }
 
-// Dispatcher: IS-native or EN based on lang.
-function buildReadingPrompt(u, drawn, lang, corrections) {
-  if (lang === 'is') return buildReadingPromptIS(u, drawn, corrections);
-  return buildReadingPromptEN(u, drawn, lang, corrections);
-}
+// Back-compat wrappers + dispatcher (call sites unchanged).
+function buildReadingPromptIS(u, drawn, corrections) { return buildReadingPromptSingle(u, drawn, 'is', corrections); }
+function buildReadingPromptEN(u, drawn, lang, corrections) { return buildReadingPromptSingle(u, drawn, lang, corrections); }
+function buildReadingPrompt(u, drawn, lang, corrections) { return buildReadingPromptSingle(u, drawn, lang, corrections); }
 
 // ─── KRÍŽ PROMPT BUILDERS ───────────────────────────────────────
 // Kríž = 5-run cross spread
