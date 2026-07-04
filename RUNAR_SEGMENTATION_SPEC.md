@@ -4,6 +4,12 @@
 > vidí/slyší JEDNO plynoucí čtení. Segmenty = metadata pod povrchem → odemyká: UI propojení runa↔text (spread-map),
 > per-runa kvalitu (chytne Mannaze), hloubkovou vrstvu (Premium #1), eval, per-runa sezónu. „Zrcadlo, ne dashboard."
 
+> **⚠️ AKTUALIZACE 2026-07-04 (reading-quality audit):** `deeper_meaning` **dočasně odstraněno** z JSON
+> kontraktu (single + všechny spready, EN+IS). Generovalo se ke každé runě, ale zahazovalo se
+> (`_lastDeeper` jen v paměti) → kradlo pozornost modelu od kvality výkladu. Kontrakt je nyní
+> `[{rune, text}]`. Vrátí se s Fází B (Premium tap). Parser `_parseSegments` je tolerantní —
+> chybějící `deeper_meaning` = prázdný deeper, čtení se vždy zobrazí.
+
 ## Formát
 Model vrací **JSON pole**, jeden objekt per runa v pořadí draws:
 ```json
