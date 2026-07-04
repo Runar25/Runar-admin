@@ -83,7 +83,7 @@ Snið, horn og tónn eru tilgreind í hverju lestursprompt — fylgdu þeim nák
 2. Samræmi lýsingarorðs við nafnorð í KYNI, TÖLU og FALLI — ákveða FYRST kyn nafnorðsins. Fleirtala: öllum böndum jöfnum; endurteknir straumar (kk.), endurteknar bænir (kvk.), endurtekin orð (hk.).
 3. Engar enskuslettur né beinar þýðingar úr ensku. Bannað að segja "er ekki um að" — segðu frekar "snýst ekki um". Ef orðasamband hljómar eins og bein ensk þýðing, umorðaðu á eðlilega íslensku.
 4. Fallstjórn: rún í þolfalli = rún; fleirtala nefnifall = rúnir / rúnirnar.
-5. Kyn viðmælandans er yfirleitt óþekkt. Forðastu lýsingarorð og fornöfn sem verða að samræmast kyni hans (einn/ein, tilbúinn/tilbúin, sjálfan/sjálfa) — orðaðu kynhlutlaust. Ef kyn er þekkt, notaðu sömu mynd í ÖLLUM textanum, aldrei blanda.
+5. Kyn viðmælandans er gefið í lestrarbeiðninni (ÁVARP). Samræmdu ÖLL lýsingarorð og fornöfn um "þú" við það kyn í öllum textanum — aldrei blanda kynjum saman. Ef ekkert ÁVARP fylgir, notaðu hvorugkyn (hán).
 6. Síðasta skref fyrir skil: lestu textann yfir — (a) hverja sögn í 2. persónu eintölu, (b) hvert lýsingarorð gagnvart kyni + tölu + falli nafnorðsins, (c) að viðmælandinn sé kynhlutlaus eða samræmdur í öllum textanum, (d) að engin ensk sletta sé eftir.
 Svaraðu einungis á íslensku — allur textinn á íslensku.`,
 
@@ -510,6 +510,16 @@ function _intentionContext(intention, lang) {
     + (timeDesc ? ' — ' + timeDesc : '');
 }
 
+// Address gender (modern Icelandic): kk (karlkyn) / kvk (kvenkyn) / hk (hvorugkyn, han = default).
+// IS only — English has no gendered addressee forms. Reads the global userGender.
+function _addressContext(lang) {
+  if (lang !== 'is') return '';
+  var g = (typeof userGender !== 'undefined' && userGender) ? userGender : 'hk';
+  if (g === 'kk')  return 'ÁVARP: ávarpaðu viðmælandann í KARLKYNI — öll lýsingarorð og fornöfn um "þú" í karlkyni (tilbúinn, sjálfan þig, einn).';
+  if (g === 'kvk') return 'ÁVARP: ávarpaðu viðmælandann í KVENKYNI — öll lýsingarorð og fornöfn um "þú" í kvenkyni (tilbúin, sjálfa þig, ein).';
+  return 'ÁVARP: ávarpaðu viðmælandann í HVORUGKYNI (hán, kynhlutlaust) — öll lýsingarorð og fornöfn um "þú" í hvorugkyni (tilbúið, sjálft þig, eitt).';
+}
+
 
 // ─── LIFE RUNE PROMPT BUILDER ─────────────────────────────────────────────
 // Builds the prompt for the deep life rune reading.
@@ -775,6 +785,7 @@ function buildReadingPromptIS(u, drawn, corrections) {
     '',
     'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. Ávarpaðu ' + u.name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. Haltu þig innan orðafjöldans — stuttar setningar, ekkert uppfyllingarefni.'
       + getCorrPrompt('is', corrections),
+    _addressContext('is'),
     'Skilaðu EINGÖNGU þessu JSON fylki, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(lesturinn nákvæmlega eins og fyrirmælin að ofan segja, einn samfelldur texti)"}]',
   ].filter(Boolean).join('\n');
 }
@@ -892,6 +903,7 @@ function buildKrizPromptIS(u, runes, corrections) {
     'Sérhver rúna verður að setja mark sitt — láttu allar fimm móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
     'Ávarpaðu ' + u.name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. Vertu hnitmiðaður — 6 til 7 setningar.'
       + getCorrPrompt('is', corrections),
+    _addressContext('is'),
     'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í þeirri röð sem listuð er að ofan, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)"}]. Text-reitirnir tengdir með bili verða að lesast sem ein samfelld heild.',
   ].filter(Boolean).join('\n');
 }
@@ -1005,6 +1017,7 @@ function buildNornsPromptIS(u, runes, corrections) {
     'Gefðu hverri af þremur rúnunum sinn eigin takt, í röð — Urður (það sem var), Verðandi (það sem er að verða), Skuld (það sem verður að koma). Taktarnir þrír renna saman í EINN samfelldan straum, ekki þrjá aðskilda lestra. Nefndu ekki rúnirnar né Nornirnar; leiðandinn sér þær þegar. Ávarpaðu ' + u.name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. 5 til 6 setningar alls yfir taktana þrjá; síðasti takturinn endar með einni mjúkri, opinni spurningu.',
     'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í röð (Urður, Verðandi, Skuld), engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)"}]. Þrír text-reitir tengdir með bili verða að lesast sem ein samfelld heild.'
       + getCorrPrompt('is', corrections),
+    _addressContext('is'),
   ].filter(Boolean).join('\n');
 }
 
@@ -1114,6 +1127,7 @@ function buildHorseshoePromptIS(u, runes, corrections) {
     'Sérhver rúna verður að setja mark sitt — láttu allar sjö móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
     'Ávarpaðu ' + u.name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. 11 til 12 setningar. Endaðu með einni opinni spurningu.'
       + getCorrPrompt('is', corrections),
+    _addressContext('is'),
     'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í þeirri röð sem listuð er að ofan, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)"}]. Text-reitirnir tengdir með bili verða að lesast sem ein samfelld heild.',
   ].filter(Boolean).join('\n');
 }
@@ -1231,6 +1245,7 @@ function buildYggdrasilPromptIS(u, runes, corrections) {
     'Sérhver rúna verður að setja mark sitt — láttu allar níu móta lesturinn gegnum eðli sitt, aldrei aðeins fáeinar. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
     'Ávarpaðu ' + u.name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. 14 til 15 setningar. Endaðu með einni djúpri, opinni spurningu — þeirri sem heldur áfram að hljóma.'
       + getCorrPrompt('is', corrections),
+    _addressContext('is'),
     'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í þeirri röð sem listuð er að ofan, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)"}]. Text-reitirnir tengdir með bili verða að lesast sem ein samfelld heild.',
   ].filter(Boolean).join('\n');
 }

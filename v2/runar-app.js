@@ -19,6 +19,7 @@ let userTier       = 'free';    // 'free' | 'credits' | 'standard' | 'premium'
 let userCredits    = 0;         // credits_balance from user_profiles
 let userFreeBalance = 0;        // free_balance: 1 at registration, no replenish (model B)
 let readerUser     = {};
+let userGender     = 'hk';   // kk | kvk | hk (han, default) — how Runar addresses the seeker (IS)
 let greetingShown  = false;     // show topbar greeting only once per session
 let userName       = '';        // display name from user_profiles.name
 let readerRune     = null;
@@ -52,7 +53,7 @@ function incTrialCount() { localStorage.setItem('runar_trial_count', String(getT
 async function fetchUserProfile(userId) {
   try {
     const { data } = await sb.from('user_profiles')
-      .select('tier, credits_balance, free_balance, name, lang, life_rune_number, life_rune_text, life_rune_lang, dob_day, dob_month, dob_year, tree_name')
+      .select('tier, credits_balance, free_balance, name, lang, life_rune_number, life_rune_text, life_rune_lang, dob_day, dob_month, dob_year, tree_name, address_gender')
       .eq('id', userId)
       .maybeSingle();
     if (data) {
@@ -81,6 +82,8 @@ async function fetchUserProfile(userId) {
         if (tni) tni.value = data.tree_name;
       }
       userName    = data.name            || '';
+      userGender = data.address_gender || localStorage.getItem('runar_gender') || 'hk';
+      _updateGenderPills();
       // Restore language preference
       // Priority: localStorage (active user choice) > DB default
       // If localStorage has a lang that matches current lang → user chose it while logged out;
@@ -264,6 +267,28 @@ function applyLangToggle(l) {
   const isBtn = document.getElementById('sp-btn-is');
   if (enBtn) enBtn.classList.toggle('active', l === 'en');
   if (isBtn) isBtn.classList.toggle('active', l === 'is');
+}
+
+// ─── ADDRESS GENDER (modern Icelandic: kk / kvk / hk=han) ────────────────
+function setGender(g) {
+  if (g !== 'kk' && g !== 'kvk' && g !== 'hk') g = 'hk';
+  userGender = g;
+  localStorage.setItem('runar_gender', g);
+  if (currentUser) sb.from('user_profiles').update({ address_gender: g }).eq('id', currentUser.id).then(() => {}).catch(e => console.warn('persist gender:', e.message));
+  _updateGenderPills();
+}
+function _updateGenderPills() {
+  var ids = { kk: 'sp-g-kk', kvk: 'sp-g-kvk', hk: 'sp-g-hk' };
+  Object.keys(ids).forEach(function (k) {
+    var el = document.getElementById(ids[k]);
+    if (el) el.classList.toggle('active', userGender === k);
+  });
+}
+function _updateGenderVisibility() {
+  var sec = document.getElementById('sp-gender-section');
+  if (sec) sec.style.display = (lang === 'is') ? 'block' : 'none';
+  var lbl = document.getElementById('sp-gender-lbl');
+  if (lbl) lbl.textContent = t('sp_gender_lbl');
 }
 
 function openLangSwitchModal(tl) {
@@ -645,6 +670,7 @@ function updateUIText() {
   updateQuestionGate();
   _updateTrialTexts();
   _updateGateTexts();
+  _updateGenderVisibility();
 }
 
 // ─── APP TABS ────────────────────────────────────────────
@@ -1164,6 +1190,10 @@ window.addEventListener('DOMContentLoaded', async () => {
     applyLangToggle(lang);
     updateSidePanelLang();
   }
+
+  // Restore address gender from localStorage
+  userGender = localStorage.getItem('runar_gender') || 'hk';
+  _updateGenderPills();
 
   // Magic link callback
   const urlParams = new URLSearchParams(window.location.search);
