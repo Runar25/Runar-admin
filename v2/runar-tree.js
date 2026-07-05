@@ -77,7 +77,7 @@ function updateTreeTab() {
         var freeRem  = Math.max(0, userFreeBalance);
         if (freeRem > 0) {
           freeLineEl.textContent = lang === 'is'
-            ? vn('cast', freeRem, 'is') + ' fyrir venjulegar dregnar rúnar'
+            ? vn('cast', freeRem, 'is') + ' fyrir venjulegar dregnar rúnir'
             : vn('cast', freeRem, 'en') + ' available for regular draws';
           freeLineEl.style.display = '';
         } else {
@@ -200,7 +200,7 @@ function _rsLifeRuneReading() {
   var bal  = typeof userCredits !== 'undefined' ? userCredits : 0;
   if (bal < COST) {
     showToast(lang === 'is'
-      ? 'Þú þarft ' + COST + ' kredita. Kauptu reading gift card.'
+      ? 'Þú þarft ' + COST + ' kredit. Keyptu þér gjafakort.'
       : 'You need ' + COST + ' credits. Get a reading gift card.');
     return;
   }

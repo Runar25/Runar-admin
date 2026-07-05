@@ -513,18 +513,18 @@ const HERO_PHRASES = {
   ],
   is: [
     // 🇮🇸 TO BE REVIEWED BY NATIVE SPEAKER
-    "Þú ert kominn aftur. Gott. Steinarnir höfðu eitthvað í geymslu fyrir þig.",
+    "Þú snýrð aftur. Gott. Steinarnir geymdu eitthvað fyrir þig.",
     "Lokaðu augunum. Dragðu síðan. Rétta rúnan finnur alltaf leiðina.",
     "Ég hef setið með þessa steina lengi. Þeir þekkja þig betur en þú veist.",
     "Eitthvað leiddi þig hingað í dag — ekki tilviljun. Dragðu, og við sjáum hvað það var.",
-    "Rúnan sem þú dregur er sjaldan sú sem þú væntiðst. Þetta er einmitt málið.",
+    "Rúnan sem þú dregur er sjaldan sú sem þú bjóst við. Þetta er einmitt málið.",
     "Andaðu áður en þú dregur. Steinarnir lesa kyrrð jafn vel og spurningar.",
-    "Ég hef séð leitendur koma — í myrkri, í efi, undir fullu tungli. Rúnirnar taka á móti öllu. Dragðu.",
+    "Ég hef séð leitendur koma — í myrkri, í efa, undir fullu tungli. Rúnirnar taka á móti öllu. Dragðu.",
     "Þú þarft ekki skýra spurningu. Rúnan finnur það sem er að leita.",
-    "Sum dög mælir steininn hátt. Önnur dög hvíslir hann. En hann mælir alltaf.",
+    "Suma daga talar steinninn hátt. Aðra daga hvíslar hann. En hann talar alltaf.",
     "Rúnirnar hafa engar slæmar stundir. Þær segja bara það sem er. Ertu tilbúinn?",
     "Hvað sem þú berð með þér — settu það niður. Lesturinn hefst hér.",
-    "Dragðu þegar þú ert tilbúinn. Enginn stund er rangur — aðeins sá sem þú velur.",
+    "Dragðu þegar þú ert tilbúinn. Engin stund er röng — aðeins sú sem þú velur.",
   ],
 };
 
@@ -617,7 +617,7 @@ function _updateGateTexts() {
   // Journal gate — Visitor teaser
   const jgTxt = document.getElementById('journal-gate-txt');
   if (jgTxt) jgTxt.innerHTML = lang === 'is'
-    ? 'Thu gengur her sem gestur.<br>Dagbokin thin hefst um leid og thu maetir.<br>Gerdu ther <b class="rs-link">runa-leitanda</b> til ad opna dagbokina.'
+    ? 'Þú gengur hér sem Gestur.<br>Dagbókin þín hefst um leið og þú mætir.<br>Gerðu þig að <b class="rs-link">Vegfaranda</b> til að opna dagbókina.'
     : 'You walk here as a Visitor.<br>Your journal begins the moment you arrive.<br>Become a <b class="rs-link">Rune Seeker</b> to open the journal.';
   setText('journal-gate-btn', lang === 'is' ? 'GERAST VEGFARANDI →' : 'BECOME A RUNE SEEKER →');
   // Re-render journal if it's open (picks up new lang labels)
@@ -863,7 +863,7 @@ function loadCollAudio(l) {
   const pick = rows[Math.floor(Math.random() * rows.length)];
   textEl.textContent = pick.text || '';
   if (!pick.audio_url) {
-    playerEl.innerHTML = '<div class="coll-no-audio">Audio file missing.</div>';
+    playerEl.innerHTML = `<div class="coll-no-audio">${l === 'is' ? 'Hljóðskrá vantar.' : 'Audio file missing.'}</div>`;
   } else {
     playerEl.innerHTML = _makeCapPlayer('coll', pick.audio_url, false);
     _capWire('coll');

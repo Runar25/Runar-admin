@@ -345,7 +345,7 @@ async function readRune() {
   if (_spreadMode === 'horseshoe') {
     // Tier check — block Visitor (anonymous) only; rune_seeker can use with rune readings
     if (!currentUser) {
-      showToast(lang === 'is' ? 'Skráðu þig inn til að nota Podkova.' : 'Sign in to use the Horseshoe spread.');
+      showToast(lang === 'is' ? 'Skráðu þig inn til að nota Skeifuna.' : 'Sign in to use the Horseshoe spread.');
       _setSpreadMode('single'); return;
     }
     if (_spreadCount(_spread7Runes) === 7 && !readerRune) {
@@ -400,7 +400,7 @@ async function readRune() {
   if (_spreadMode === 'norns') {
     // Visitor gate — block anonymous users
     if (!currentUser) {
-      showToast(lang === 'is' ? 'Skráðu þig inn til að nota Nornir.' : 'Sign in to use the Norns spread.');
+      showToast(lang === 'is' ? 'Skráðu þig inn til að nota Nornirnar.' : 'Sign in to use the Norns spread.');
       _setSpreadMode('single'); return;
     }
     if (_spreadCount(_spread3Runes) === 3 && !readerRune) {
