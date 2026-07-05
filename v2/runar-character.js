@@ -819,116 +819,79 @@ function buildReadingPrompt(u, drawn, lang, corrections) { return buildReadingPr
 //   center(0) verdandi | above(1) skuld | below(2) urd
 //   behind(3) urd      | ahead(4) skuld
 
-function buildKrizPromptIS(u, runes, corrections) {
-  var rCtr = runes[0], rAbo = runes[1], rBel = runes[2];
-  var rBeh = runes[3], rAhe = runes[4];
+var RP_KRIZ = {
+  is: {
+    seeker:'Leiðandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leiðin', seekJoin:' og ', question:'Spurning',
+    positions:['RÚNAN 1 (Miðja / Kjarni — verdandi)','RÚNAN 2 (Of an / Á leit — skuld)','RÚNAN 3 (Undir / Rót — urd)','RÚNAN 4 (Að baki / Fortíð — urd)','RÚNAN 5 (Framar / Stefna — skuld)'],
+    intro:'Leiðandinn dregur fimm rúnar — Krossinn.',
+    langInstr:'',
+    instructions:function(ctrName){ return [
+      'Lesturinn fer í einum flæði — ekki fimm aðskildir lestrar.',
+      'Miðja rúnan (' + ctrName + ') er hjartað — hún litar allt.',
+      'Byrjaðu í miðjunni og flettu út. Nefndu ekki staðsetningarnar — bærðu þær í röddinn.',
+      'Þriðja rúnan (Undir): hvað liggur í undirmeðvitund eða duldu.',
+      'Fjórða rúnan (Að baki): það sem enn verkar úr fortíðinni — ekki sögun, heldur orkan.',
+      'Fimmta rúnan (Framar): ekki spá — þar sem þessi orka leiðir ef ekkert breytist.',
+      'Endaðu með einni opinni, hljóðlægri spurningu.',
+      'Sérhver rúna verður að setja mark sitt — láttu allar fimm móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
+    ]; },
+    closing:function(name){ return 'Ávarpaðu ' + name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. Vertu hnitmiðaður — 6 til 7 setningar.'; },
+    json:'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í þeirri röð sem listuð er að ofan, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)"}]. Text-reitirnir tengdir með bili verða að lesast sem ein samfelld heild.',
+  },
+  en: {
+    seeker:'Seeker', lifeRune:'Life rune', area:'Area', seeking:'Seeking', seekJoin:' & ', question:'Question',
+    positions:['RUNE 1 (Centre / Core — present)','RUNE 2 (Above / Aspiration — future)','RUNE 3 (Below / Root — hidden)','RUNE 4 (Behind / Past — past)','RUNE 5 (Ahead / Direction — future)'],
+    intro:'The seeker draws five runes — the Cross.',
+    langInstr:'Respond in English.',
+    instructions:function(ctrName){ return [
+      'Read all five as one flowing passage — not five separate readings.',
+      'The centre rune (' + ctrName + ') is the heart — it colours everything.',
+      'Begin at the centre and spiral outward. Do not name the positions.',
+      'Rune 3 (Below): what lies in the subconscious or hidden.',
+      'Rune 4 (Behind): what still acts from the past — not the story, the energy.',
+      'Rune 5 (Ahead): not prophecy — where this energy leads if nothing changes.',
+      'End with one quiet, open question.',
+      'Every rune must leave its mark — let all five shape the reading through their quality, never just one or two. Do not name the runes; the seeker already sees them.',
+    ]; },
+    closing:function(name){ return 'Address ' + name + ' once, woven naturally — never as the opening word. 6-7 sentences, complete and whole.'; },
+    json:'Output format — return ONLY this JSON array, one object per rune in the order listed above, nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)"}]. The text fields joined with a space must read as one seamless passage.',
+  },
+};
+
+function buildKrizPromptCross(u, runes, lang, corrections) {
+  var S = RP_KRIZ[lang] || RP_KRIZ.en;
+  var rCtr = runes[0], rAbo = runes[1], rBel = runes[2], rBeh = runes[3], rAhe = runes[4];
   var life = u.lifeRune;
-  var lifeRef = life ? (life.is_n || life.n) + ' ' + life.g : '';
-
-  function runaBlock(r, label) {
-    var kws = rk(r).split(',').map(function(s) { return s.trim(); }).filter(Boolean).slice(0, 4).join(', ');
-    return label + ': ' + (r.is_n || r.n) + ' ' + r.g + '\n' + kws;
-  }
-
+  function kb(r){ return rk(r).split(',').map(function(s){ return s.trim(); }).filter(Boolean).slice(0, 4).join(', '); }
+  function block(r, label){ return label + ': ' + rn(r) + ' ' + r.g + '\n' + kb(r); }
   var ctx = [
-    u.name    ? 'Leiðandi: ' + u.name : '',
-    life      ? 'LífsRúna: ' + lifeRef : '',
-    u.area    ? 'Svið: ' + u.area : '',
-    u.seeking ? 'Leiðin: ' + (Array.isArray(u.seeking) ? u.seeking.join(' og ') : u.seeking) : '',
-    u.mood      ? _moodContext(u.mood, 'is')      : '',
-    u.intention ? _intentionContext(u.intention, 'is') : '',
-    u.question ? 'Spurning: ' + u.question : '',
+    u.name    ? S.seeker + ': ' + u.name : '',
+    life      ? S.lifeRune + ': ' + rn(life) + ' ' + life.g : '',
+    u.area    ? S.area + ': ' + u.area : '',
+    u.seeking ? S.seeking + ': ' + (Array.isArray(u.seeking) ? u.seeking.join(S.seekJoin) : u.seeking) : '',
+    u.intention ? _intentionContext(u.intention, lang) : '',
+    u.question ? S.question + ': ' + u.question : '',
   ].filter(Boolean).join('\n');
-
+  var P = S.positions;
   var runesBlock = [
-    runaBlock(rCtr, 'RÚNAN 1 (Miðja / Kjarni — verdandi)'),
-    '',
-    runaBlock(rAbo, 'RÚNAN 2 (Of an / Á leit — skuld)'),
-    '',
-    runaBlock(rBel, 'RÚNAN 3 (Undir / Rót — urd)'),
-    '',
-    runaBlock(rBeh, 'RÚNAN 4 (Að baki / Fortíð — urd)'),
-    '',
-    runaBlock(rAhe, 'RÚNAN 5 (Framar / Stefna — skuld)'),
+    block(rCtr, P[0]), '', block(rAbo, P[1]), '', block(rBel, P[2]), '', block(rBeh, P[3]), '', block(rAhe, P[4]),
   ].join('\n');
-
-  var ctrName = rCtr.is_n || rCtr.n;
-
-  return [
-    ctx,
-    '',
-    'Leiðandinn dregur fimm rúnar — Krossinn.',
-    '',
-    runesBlock,
-    '',
-    _seasonalImagery('is'),
-    'Lesturinn fer í einum flæði — ekki fimm aðskildir lestrar.',
-    'Miðja rúnan (' + ctrName + ') er hjartað — hún litar allt.',
-    'Byrjaðu í miðjunni og flettu út. Nefndu ekki staðsetningarnar — bærðu þær í röddinn.',
-    'Þriðja rúnan (Undir): hvað liggur í undirmeðvitund eða duldu.',
-    'Fjórða rúnan (Að baki): það sem enn verkar úr fortíðinni — ekki sögun, heldur orkan.',
-    'Fimmta rúnan (Framar): ekki spá — þar sem þessi orka leiðir ef ekkert breytist.',
-    'Endaðu með einni opinni, hljóðlægri spurningu.',
-    'Sérhver rúna verður að setja mark sitt — láttu allar fimm móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
-    'Ávarpaðu ' + u.name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. Vertu hnitmiðaður — 6 til 7 setningar.'
-      + getCorrPrompt('is', corrections),
-    _addressContext('is'),
-    'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í þeirri röð sem listuð er að ofan, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)"}]. Text-reitirnir tengdir með bili verða að lesast sem ein samfelld heild.',
-  ].filter(Boolean).join('\n');
-}
-
-function buildKrizPromptEN(u, runes, lang, corrections) {
-  var rCtr = runes[0], rAbo = runes[1], rBel = runes[2];
-  var rBeh = runes[3], rAhe = runes[4];
-  var life = u.lifeRune;
-  var langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Islenska).' : 'Respond in English.';
-
-  function kbLine(r) {
-    return rk(r).split(',').map(function(s) { return s.trim(); }).filter(Boolean).slice(0, 4).join(', ');
-  }
-
-  var ctx = [
-    'Seeker: ' + u.name,
-    life ? 'Life rune: ' + rn(life) + ' ' + life.g : '',
-    u.area    ? 'Area: ' + u.area : '',
-    u.seeking ? 'Seeking: ' + (Array.isArray(u.seeking) ? u.seeking.join(' & ') : u.seeking) : '',
-    u.mood      ? _moodContext(u.mood)      : '',
-    u.intention ? _intentionContext(u.intention) : '',
-    u.question ? 'Question: ' + u.question : '',
-  ].filter(Boolean).join('\n');
-
-  var runesBlock = [
-    'RUNE 1 (Centre / Core — present):', rn(rCtr) + ' ' + rCtr.g, kbLine(rCtr), '',
-    'RUNE 2 (Above / Aspiration — future):', rn(rAbo) + ' ' + rAbo.g, kbLine(rAbo), '',
-    'RUNE 3 (Below / Root — hidden):', rn(rBel) + ' ' + rBel.g, kbLine(rBel), '',
-    'RUNE 4 (Behind / Past — past):', rn(rBeh) + ' ' + rBeh.g, kbLine(rBeh), '',
-    'RUNE 5 (Ahead / Direction — future):', rn(rAhe) + ' ' + rAhe.g, kbLine(rAhe),
-  ].join('\n');
-
+  var ctrName = rn(rCtr);
   return [
     ctx, '',
-    'The seeker draws five runes — the Cross.', '',
+    S.intro, '',
     runesBlock, '',
-    _seasonalImagery('en'),
-    'Read all five as one flowing passage — not five separate readings.',
-    'The centre rune (' + rn(rCtr) + ') is the heart — it colours everything.',
-    'Begin at the centre and spiral outward. Do not name the positions.',
-    'Rune 3 (Below): what lies in the subconscious or hidden.',
-    'Rune 4 (Behind): what still acts from the past — not the story, the energy.',
-    'Rune 5 (Ahead): not prophecy — where this energy leads if nothing changes.',
-    'End with one quiet, open question.',
-    'Every rune must leave its mark — let all five shape the reading through their quality, never just one or two. Do not name the runes; the seeker already sees them.',
-    'Address ' + u.name + ' once, woven naturally — never as the opening word. 6-7 sentences, complete and whole.',
-    'Output format — return ONLY this JSON array, one object per rune in the order listed above, nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)"}]. The text fields joined with a space must read as one seamless passage.',
-    langInstr,
-    getCorrPrompt(lang, corrections),
-  ].filter(Boolean).join('\n');
+    _seasonalImagery(lang),
+  ].concat(S.instructions(ctrName)).concat([
+    S.closing(u.name) + (S.langInstr ? ' ' + S.langInstr : '') + getCorrPrompt(lang, corrections),
+    _addressContext(lang),
+    S.json,
+  ]).filter(Boolean).join('\n');
 }
 
-function buildKrizPrompt(u, runes, lang, corrections) {
-  if (lang === 'is') return buildKrizPromptIS(u, runes, corrections);
-  return buildKrizPromptEN(u, runes, lang, corrections);
-}
+function buildKrizPromptIS(u, runes, corrections) { return buildKrizPromptCross(u, runes, 'is', corrections); }
+function buildKrizPromptEN(u, runes, lang, corrections) { return buildKrizPromptCross(u, runes, lang, corrections); }
+function buildKrizPrompt(u, runes, lang, corrections) { return buildKrizPromptCross(u, runes, lang, corrections); }
 
 // ─── NORNS PROMPT BUILDERS ──────────────────────────────────────
 // Norns = 3-rune spread on the fate axis
