@@ -68,7 +68,7 @@ function updateTreeTab() {
       var costLbl = document.getElementById('tree-rs-cost-label');
       var balLbl  = document.getElementById('tree-rs-balance-label');
       var balVal  = document.getElementById('tree-rs-balance-val');
-      if (costLbl) costLbl.textContent = t('tree_rs_cost');
+      if (costLbl) costLbl.textContent = vn('unit', LIFE_RUNE_COST, lang);
       if (balLbl)  balLbl.textContent  = t('tree_rs_balance');
       if (balVal)  balVal.textContent  = bal;
       // Free reading — oddelene od credits (credits_balance != onboarding free reading)
