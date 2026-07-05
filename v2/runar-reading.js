@@ -40,6 +40,15 @@ function _parseSegments(raw) {
   return { reading: String(raw), deeper: '' };
 }
 
+// One source for reading-flow error copy (§18). claude-proxy returns only
+// rate_limited | no_credits; model B has no weekly drip / monthly reset,
+// so those old error branches are gone.
+function _readingErrMsg(errorType) {
+  if (errorType === 'rate_limited') return t('err_rate_limited');
+  if (errorType === 'no_credits')   return tp('err_no_credits', { card: vl('card', lang) });
+  return t('err_generic');
+}
+
 async function _generateReading() {
   if (!readerRune) return;
   const vBtn = document.getElementById('btn-generate-voice');
@@ -69,26 +78,17 @@ async function _generateReading() {
     if (_rdLoadEl) _rdLoadEl.style.display = 'none';
     if (_pL1) _pL1.classList.remove('pulsing');
     if (_pL2) _pL2.classList.remove('pulsing');
-    setSt('st-reader', lang === 'is' ? 'Of margar beiðnir. Bíddu aðeins.' : 'Too many requests. Please wait a moment.', 'err');
+    setSt('st-reader', _readingErrMsg('rate_limited'), 'err');
     return;
   }
-  if (res.error === 'no_credits' || res.error === 'monthly_limit' || res.error === 'weekly_limit') {
+  if (res.error === 'no_credits') {
     if (_rdLoadEl) _rdLoadEl.style.display = 'none';
     if (_pL1) _pL1.classList.remove('pulsing');
     if (_pL2) _pL2.classList.remove('pulsing');
     document.getElementById('out-short').innerHTML = '';
     document.getElementById('out-deep').innerHTML  = '';
-    const isWeekly  = res.error === 'weekly_limit';
-    const isMonthly = res.error === 'monthly_limit';
-    const msg = isWeekly
-      ? (lang === 'is' ? 'Steinar hvíla til mánudags. Notaðu lestur gjafakort til að halda áfram.' : 'The stones rest until Monday. Use a reading gift card to continue.')
-      : isMonthly
-        ? (lang === 'is' ? 'Mánaðarlegur lesturmark er náð. Notaðu lestur gjafakort eða uppfærðu áskrift.' : 'Monthly reading limit reached. Use a reading gift card or upgrade your plan.')
-        : (lang === 'is' ? 'Kredit þínir eru búnir.' : 'No credits remaining. Redeem a gift card to continue.');
-    setSt('st-reader', msg, 'err');
-    // Sync localStorage with real count from DB to fix any drift
-    if (currentUser) syncMonthlyCount(currentUser.id);
-    await fetchUserProfile(currentUser.id); // refresh balance + show gate
+    setSt('st-reader', _readingErrMsg('no_credits'), 'err');
+    if (currentUser) { syncMonthlyCount(currentUser.id); await fetchUserProfile(currentUser.id); }
     return;
   }
   if (res.error) {
@@ -96,7 +96,7 @@ async function _generateReading() {
     if (_pL1) _pL1.classList.remove('pulsing');
     if (_pL2) _pL2.classList.remove('pulsing');
     console.error('reading failed:', res.error, res.status || '');
-    setSt('st-reader', lang === 'is' ? 'Rúnar hvílist — reyndu aftur eftir andartak.' : 'Rúnar is resting — please try again in a moment.', 'err');
+    setSt('st-reader', _readingErrMsg(), 'err');
     if (currentUser) { syncMonthlyCount(currentUser.id); await fetchUserProfile(currentUser.id); }
     return;
   }
@@ -162,15 +162,13 @@ function _showTrialEnd() {
 
 function startReading() {
   if (!currentUser && getTrialCount() >= FREE_TRIAL_LIMIT) { _showTrialEnd(); return; }
-  // Only block rune_seeker who has used all free monthly slots AND has no credits left.
+  // Only block rune_seeker who has used their free reading AND has no credits left.
   // Rune Walker / Rune Keeper / Admin are never blocked here.
   if (currentUser && userTier === 'rune_seeker'
       && userFreeBalance <= 0
       && userCredits <= 0) {
     updateAuthUI();
-    setSt('st-setup', lang === 'is'
-      ? 'Þú hefur gengið alla lestrana þína í þessum mánuði. Notaðu gjafa-lesturarkort til að halda áfram.'
-      : 'Your readings for this month are complete. Use a reading gift card to continue.');
+    setSt('st-setup', _readingErrMsg('no_credits'));
     return;
   }
   var isMine = (_readingMode === 'mine');
@@ -640,7 +638,7 @@ async function generateVoice() {
       try { data = await res.json(); } catch (_e) {}
       console.error('voice failed:', res.status, (data && data.error) || '');
       const msg = res.status === 429
-        ? (lang === 'is' ? 'Of margar beiðnir. Bíddu aðeins.' : 'Too many requests. Please wait a moment.')
+        ? t('err_rate_limited')
         : (lang === 'is' ? 'Rödd Rúnars hvílir — reyndu aftur eftir andartak.' : 'The voice of Rúnar is resting — please try again in a moment.');
       setSt('st-voice', msg, 'err');
       btn.textContent = t('voice_btn'); btn.disabled = false; return;
@@ -707,22 +705,17 @@ async function _generateSpreadReading(o) {
   if (pL2) pL2.classList.remove('pulsing');
 
   if (res.error === 'rate_limited') {
-    setSt('st-reader', lang === 'is' ? 'Of margar beiðnir. Bíddu aðeins.' : 'Too many requests. Please wait a moment.', 'err');
+    setSt('st-reader', _readingErrMsg('rate_limited'), 'err');
     return;
   }
-  if (res.error === 'no_credits' || res.error === 'monthly_limit' || res.error === 'weekly_limit') {
-    var isMonthly = res.error === 'monthly_limit';
-    var msg = isMonthly
-      ? (lang === 'is' ? 'Mánaðarlegur lesturmark er náð.' : 'Monthly reading limit reached.')
-      : (lang === 'is' ? 'Kredit þínir eru búnir.' : 'No credits remaining.');
-    setSt('st-reader', msg, 'err');
-    if (currentUser) syncMonthlyCount(currentUser.id);
-    if (currentUser) await fetchUserProfile(currentUser.id);
+  if (res.error === 'no_credits') {
+    setSt('st-reader', _readingErrMsg('no_credits'), 'err');
+    if (currentUser) { syncMonthlyCount(currentUser.id); await fetchUserProfile(currentUser.id); }
     return;
   }
   if (res.error) {
     console.error('spread reading failed:', res.error, res.status || '');
-    setSt('st-reader', lang === 'is' ? 'Rúnar hvílist — reyndu aftur eftir andartak.' : 'Rúnar is resting — please try again in a moment.', 'err');
+    setSt('st-reader', _readingErrMsg(), 'err');
     if (currentUser) { syncMonthlyCount(currentUser.id); await fetchUserProfile(currentUser.id); }
     return;
   }

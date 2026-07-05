@@ -1658,9 +1658,7 @@ async function _generateReading() {
     if (_pL2) _pL2.classList.remove('pulsing');
     const msg = res.error === 'rate_limited'
       ? 'Too many requests — wait a moment.'
-      : res.error === 'weekly_limit'
-        ? (lang === 'is' ? 'Steinar hvila til mánudags.' : 'The stones rest until Monday.')
-        : 'Failed: ' + res.error;
+      : 'Failed: ' + res.error;
     setSt('st-reader', msg, 'err');
     return;
   }

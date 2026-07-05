@@ -1,12 +1,13 @@
 // Supabase Edge Function: claude-proxy
 // Forwards to Claude API. Enforces tier logic:
 //   free_trial (anonymous) — frontend handles trial count (localStorage)
-//   rune_seeker — BALANCE SYSTEM (2026-05-29):
-//     free_balance in user_profiles: 3 at onboarding, +1 every Monday IF balance=0
+//   rune_seeker — BALANCE SYSTEM (model B, 2026-06-12):
+//     free_balance in user_profiles: 1 at onboarding, NO replenish (no weekly drip)
 //     free readings: SINGLE RUNE ONLY (spread_cost must be 1)
 //     paid credits: any spread, cost = spread_cost param
 //     ceremonial mode (The Gathering): bypass all limits
-//   standard / premium — unlimited, no deduction
+//     -> only error this path returns is no_credits (402); no weekly/monthly error
+//   standard / premium — unlimited, no deduction (monthly cap not yet enforced here)
 // Rate limit: 10 requests / 60s per user (or IP for anonymous)
 // Tree context: injected into system prompt for tree-active readings (Vrstva A)
 // Session state: derived from tree + time, shapes reading tone (Vrstva B)
