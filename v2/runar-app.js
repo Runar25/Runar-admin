@@ -175,7 +175,7 @@ async function saveSpreadReading(spreadName, runesArr, text) {
 // Sync monthly count from DB → localStorage (accurate, multi-device)
 // Refresh userFreeBalance z DB (free_balance: 1 při registraci, žádné doplnění — model B).
 // Název zachován kvůli stabilitě call-sites; už není měsíční.
-async function syncMonthlyCount(userId) {
+async function syncFreeBalance(userId) {
   try {
     const { data } = await sb.from('user_profiles')
       .select('free_balance')
@@ -185,7 +185,7 @@ async function syncMonthlyCount(userId) {
       userFreeBalance = data.free_balance != null ? data.free_balance : 0;
       updateAuthUI();
     }
-  } catch(e) { console.warn('syncMonthlyCount:', e.message); }
+  } catch(e) { console.warn('syncFreeBalance:', e.message); }
 }
 
 // ─── GENERIC SECONDARY CAP PLAYER ───────────────────────
@@ -1223,7 +1223,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   updateAuthUI(); // always sync UI with initial session state
   if (currentUser) {
     fetchUserProfile(currentUser.id); // tier + credits (also calls updateAuthUI)
-    syncMonthlyCount(currentUser.id);
+    syncFreeBalance(currentUser.id);
     loadJournal();
   }
 
@@ -1242,13 +1242,13 @@ window.addEventListener('DOMContentLoaded', async () => {
       // Both need fetchUserProfile to restore tier/credits
       if (event === 'INITIAL_SESSION' || event === 'TOKEN_REFRESHED') {
         fetchUserProfile(currentUser.id);
-        syncMonthlyCount(currentUser.id);
+        syncFreeBalance(currentUser.id);
         loadJournal();
       }
       if (event === 'SIGNED_IN') {
         upsertProfile();
         fetchUserProfile(currentUser.id); // tier + credits
-        syncMonthlyCount(currentUser.id);
+        syncFreeBalance(currentUser.id);
         loadJournal();
       }
     }

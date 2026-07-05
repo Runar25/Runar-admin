@@ -8,7 +8,7 @@
 //   DELAY_TRIAL_END, DELAY_SCROLL, DELAY_ERROR_RESET
 // Depends on functions: t(), callProxy(), buildSysPrompt(),
 //   getCorrPrompt(), applyISCorrections(), stream(), checkStaticAudio(),
-//   shouldUseCredit(), canUseVoice(), saveReading(), syncMonthlyCount(),
+//   shouldUseCredit(), canUseVoice(), saveReading(), syncFreeBalance(),
 //   loadJournal(), updateAuthUI(), setSt(), showToast(), incTrialCount(),
 //   getTrialCount(), elVoiceId(), elModel(),
 //   EL_PROXY, EL_VOICE_SETTINGS
@@ -88,7 +88,7 @@ async function _generateReading() {
     document.getElementById('out-short').innerHTML = '';
     document.getElementById('out-deep').innerHTML  = '';
     setSt('st-reader', _readingErrMsg('no_credits'), 'err');
-    if (currentUser) { syncMonthlyCount(currentUser.id); await fetchUserProfile(currentUser.id); }
+    if (currentUser) { syncFreeBalance(currentUser.id); await fetchUserProfile(currentUser.id); }
     return;
   }
   if (res.error) {
@@ -97,7 +97,7 @@ async function _generateReading() {
     if (_pL2) _pL2.classList.remove('pulsing');
     console.error('reading failed:', res.error, res.status || '');
     setSt('st-reader', _readingErrMsg(), 'err');
-    if (currentUser) { syncMonthlyCount(currentUser.id); await fetchUserProfile(currentUser.id); }
+    if (currentUser) { syncFreeBalance(currentUser.id); await fetchUserProfile(currentUser.id); }
     return;
   }
 
@@ -117,7 +117,7 @@ async function _generateReading() {
       await saveReading(readerRune, reading, '');
       loadJournal();
     }
-    await syncMonthlyCount(currentUser.id);
+    await syncFreeBalance(currentUser.id);
   }
 
   if (_rdLoadEl) _rdLoadEl.style.display = 'none';
@@ -710,13 +710,13 @@ async function _generateSpreadReading(o) {
   }
   if (res.error === 'no_credits') {
     setSt('st-reader', _readingErrMsg('no_credits'), 'err');
-    if (currentUser) { syncMonthlyCount(currentUser.id); await fetchUserProfile(currentUser.id); }
+    if (currentUser) { syncFreeBalance(currentUser.id); await fetchUserProfile(currentUser.id); }
     return;
   }
   if (res.error) {
     console.error('spread reading failed:', res.error, res.status || '');
     setSt('st-reader', _readingErrMsg(), 'err');
-    if (currentUser) { syncMonthlyCount(currentUser.id); await fetchUserProfile(currentUser.id); }
+    if (currentUser) { syncFreeBalance(currentUser.id); await fetchUserProfile(currentUser.id); }
     return;
   }
 
@@ -730,7 +730,7 @@ async function _generateSpreadReading(o) {
 
   if (currentUser) {
     if (_readingMode === 'mine') { await saveSpreadReading(o.kind, o.runes, text); loadJournal(); }
-    await syncMonthlyCount(currentUser.id);
+    await syncFreeBalance(currentUser.id);
   } else { incTrialCount(); updateAuthUI(); }
 
   await stream(o.outId, text);
