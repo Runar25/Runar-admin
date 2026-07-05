@@ -217,10 +217,7 @@ function _setSpreadMode(mode) {
   if (btnHorseshoe) btnHorseshoe.classList.toggle('active', mode === 'horseshoe');
   if (btnYggdrasil) btnYggdrasil.classList.toggle('active', mode === 'yggdrasil');
   // Reset output
-  _hideSpread3Output();
-  _hideSpread5Output();
-  _hideSpread7Output();
-  _hideSpread9Output();
+  _hideAllSpreadOutputs();
   document.getElementById('reader-rune-card').style.display = 'block';
   document.getElementById('reader-output').style.display    = 'none';
   _updateSpread3Slots();
@@ -251,153 +248,65 @@ function _syncGridUsed() {
     b.disabled = used;
   });
 }
-function _updateSpread3Slots() {
-  var slotEl = document.getElementById('spread3-slots');
-  if (!slotEl) return;
-  slotEl.style.display = (_spreadMode === 'norns') ? 'flex' : 'none';
-  var slots = ['slot1','slot2','slot3'];
-  var empty = ['①','②','③'];
-  slots.forEach(function(id, i) {
-    var el = document.getElementById(id);
-    if (!el) return;
-    var rune = _spread3Runes[i];
-    el.textContent = rune ? rune.g : empty[i];
-    el.classList.toggle('filled', !!rune);
-    // Klikatelny jen kdyz je vyplneny — klik ho vyprazdni
-    el.onclick = rune ? (function(idx) {
-      return function() {
-        _spread3Runes.splice(idx, 1);
-        _updateSpread3Slots();
-        var speakBtn = document.getElementById('btn-speak');
-        if (speakBtn) speakBtn.disabled = true;
-      };
-    })(i) : null;
-    el.style.cursor = rune ? 'pointer' : 'default';
-    el.title = rune ? (rune.n + ' — click to remove') : '';
-  });
-  _syncGridUsed();
-}
+// ─── Spread slot renderer (§18: one body, per-mode config) ───────────────
+var _SPREAD_SLOT_CFG = {
+  norns:     { slotsId: 'spread3-slots', mode: 'norns',     get: function() { return _spread3Runes; }, id: function(i) { return 'slot' + (i + 1); },   n: 3 },
+  kriz:      { slotsId: 'spread5-slots', mode: 'kriz',      get: function() { return _spread5Runes; }, id: function(i) { return 's5slot' + (i + 1); }, n: 5 },
+  horseshoe: { slotsId: 'spread7-slots', mode: 'horseshoe', get: function() { return _spread7Runes; }, id: function(i) { return 's7slot' + (i + 1); }, n: 7 },
+  yggdrasil: { slotsId: 'spread9-slots', mode: 'yggdrasil', get: function() { return _spread9Runes; }, id: function(i) { return 's9slot' + (i + 1); }, n: 9 },
+};
+var _SLOT_GLYPHS = ['①','②','③','④','⑤','⑥','⑦','⑧','⑨'];
 
-function _hideSpread3Output() {
-  var out = document.getElementById('spread3-output');
-  if (out) out.style.display = 'none';
-  var s1 = document.getElementById('single-layer1');
-  var s2 = document.getElementById('single-layer2');
-  if (s1) s1.style.display = '';
-  if (s2) s2.style.display = '';
-}
-function _updateSpread5Slots() {
-  var slotEl = document.getElementById('spread5-slots');
+function _updateSpreadSlots(cfg) {
+  var slotEl = document.getElementById(cfg.slotsId);
   if (!slotEl) return;
-  slotEl.style.display = (_spreadMode === 'kriz') ? 'flex' : 'none';
-  var labels = ['①','②','③','④','⑤'];
-  for (var i = 0; i < 5; i++) {
-    var el = document.getElementById('s5slot' + (i + 1));
+  slotEl.style.display = (_spreadMode === cfg.mode) ? 'flex' : 'none';
+  var runes = cfg.get();
+  for (var i = 0; i < cfg.n; i++) {
+    var el = document.getElementById(cfg.id(i));
     if (!el) continue;
-    var rune = _spread5Runes[i];
-    el.textContent = rune ? rune.g : labels[i];
+    var rune = runes[i];
+    el.textContent = rune ? rune.g : _SLOT_GLYPHS[i];
     el.classList.toggle('filled', !!rune);
-    el.onclick = rune ? (function(idx) {
-      return function() {
-        _spread5Runes.splice(idx, 1);
-        _updateSpread5Slots();
-        var speakBtn = document.getElementById('btn-speak');
-        if (speakBtn) speakBtn.disabled = true;
-      };
-    })(i) : null;
-    el.style.cursor = rune ? 'pointer' : 'default';
-    el.title = rune ? (rune.n + ' — click to remove') : '';
+    if (rune) {
+      el.title = rune.n + ' — click to remove';
+      el.style.cursor = 'pointer';
+      el.onclick = (function(idx) {
+        return function() {
+          cfg.get().splice(idx, 1);
+          _updateSpreadSlots(cfg);
+          var speakBtn = document.getElementById('btn-speak');
+          if (speakBtn) speakBtn.disabled = true;
+        };
+      })(i);
+    } else {
+      el.title = '';
+      el.style.cursor = 'default';
+      el.onclick = null;
+    }
   }
   _syncGridUsed();
 }
-function _hideSpread5Output() {
-  var out = document.getElementById('spread5-output');
-  if (out) out.style.display = 'none';
+
+function _updateSpread3Slots() { _updateSpreadSlots(_SPREAD_SLOT_CFG.norns); }
+
+function _hideAllSpreadOutputs() {
+  ['spread3-output','spread5-output','spread7-output','spread9-output'].forEach(function(id) {
+    var out = document.getElementById(id);
+    if (out) out.style.display = 'none';
+  });
   var s1 = document.getElementById('single-layer1');
   var s2 = document.getElementById('single-layer2');
   if (s1) s1.style.display = '';
   if (s2) s2.style.display = '';
 }
+function _updateSpread5Slots() { _updateSpreadSlots(_SPREAD_SLOT_CFG.kriz); }
 
 // ─── HORSESHOE (7 rune) helpers ──────────────────────────────────────────
-function _updateSpread7Slots() {
-  var slotEl = document.getElementById('spread7-slots');
-  if (!slotEl) return;
-  slotEl.style.display = (_spreadMode === 'horseshoe') ? 'flex' : 'none';
-  var empty = ['①','②','③','④','⑤','⑥','⑦'];
-  for (var i = 0; i < 7; i++) {
-    var el = document.getElementById('s7slot' + (i + 1));
-    if (!el) continue;
-    var rune = _spread7Runes[i];
-    el.textContent = rune ? rune.g : empty[i];
-    el.classList.toggle('filled', !!rune);
-    if (rune) {
-      el.title = rune.n + ' — click to remove';
-      el.style.cursor = 'pointer';
-      el.onclick = (function(idx) {
-        return function() {
-          _spread7Runes.splice(idx, 1);
-          _updateSpread7Slots();
-          var speakBtn = document.getElementById('btn-speak');
-          if (speakBtn) speakBtn.disabled = true;
-        };
-      })(i);
-    } else {
-      el.title = '';
-      el.style.cursor = 'default';
-      el.onclick = null;
-    }
-  }
-  _syncGridUsed();
-}
-function _hideSpread7Output() {
-  var out = document.getElementById('spread7-output');
-  if (out) out.style.display = 'none';
-  var s1 = document.getElementById('single-layer1');
-  var s2 = document.getElementById('single-layer2');
-  if (s1) s1.style.display = '';
-  if (s2) s2.style.display = '';
-}
+function _updateSpread7Slots() { _updateSpreadSlots(_SPREAD_SLOT_CFG.horseshoe); }
 
 // ─── YGGDRASIL (9 rune) helpers ──────────────────────────────────────────
-function _updateSpread9Slots() {
-  var slotEl = document.getElementById('spread9-slots');
-  if (!slotEl) return;
-  slotEl.style.display = (_spreadMode === 'yggdrasil') ? 'flex' : 'none';
-  var empty = ['①','②','③','④','⑤','⑥','⑦','⑧','⑨'];
-  for (var i = 0; i < 9; i++) {
-    var el = document.getElementById('s9slot' + (i + 1));
-    if (!el) continue;
-    var rune = _spread9Runes[i];
-    el.textContent = rune ? rune.g : empty[i];
-    el.classList.toggle('filled', !!rune);
-    if (rune) {
-      el.title = rune.n + ' — click to remove';
-      el.style.cursor = 'pointer';
-      el.onclick = (function(idx) {
-        return function() {
-          _spread9Runes.splice(idx, 1);
-          _updateSpread9Slots();
-          var speakBtn = document.getElementById('btn-speak');
-          if (speakBtn) speakBtn.disabled = true;
-        };
-      })(i);
-    } else {
-      el.title = '';
-      el.style.cursor = 'default';
-      el.onclick = null;
-    }
-  }
-  _syncGridUsed();
-}
-function _hideSpread9Output() {
-  var out = document.getElementById('spread9-output');
-  if (out) out.style.display = 'none';
-  var s1 = document.getElementById('single-layer1');
-  var s2 = document.getElementById('single-layer2');
-  if (s1) s1.style.display = '';
-  if (s2) s2.style.display = '';
-}
+function _updateSpread9Slots() { _updateSpreadSlots(_SPREAD_SLOT_CFG.yggdrasil); }
 
 async function readRune() {
   if (_spreadMode === 'kriz') {
