@@ -239,9 +239,18 @@ function _spreadRunesNow() {
   if (_spreadMode === 'yggdrasil') return _spread9Runes;
   return [];
 }
+// Positional spread model: fixed slots, holes = null. Removing a slot leaves a
+// hole (no shift); a re-draw fills the first empty position.
+function _spreadCount(arr) {
+  var c = 0; for (var i = 0; i < arr.length; i++) { if (arr[i]) c++; } return c;
+}
+function _spreadAdd(arr, n, rune) {
+  for (var i = 0; i < n; i++) { if (!arr[i]) { arr[i] = rune; return true; } }
+  return false;
+}
 // Označí grid tlačítka už vybraných run jako disabled (a uvolní ostatní)
 function _syncGridUsed() {
-  var names = _spreadRunesNow().map(function(x){ return x.n; });
+  var names = _spreadRunesNow().filter(Boolean).map(function(x){ return x.n; });
   document.querySelectorAll('#reader-grid .rb').forEach(function(b){
     var used = names.indexOf(b.dataset.rune) !== -1;
     b.classList.toggle('used', used);
@@ -273,7 +282,7 @@ function _updateSpreadSlots(cfg) {
       el.style.cursor = 'pointer';
       el.onclick = (function(idx) {
         return function() {
-          cfg.get().splice(idx, 1);
+          cfg.get()[idx] = null;
           _updateSpreadSlots(cfg);
           var speakBtn = document.getElementById('btn-speak');
           if (speakBtn) speakBtn.disabled = true;
@@ -315,7 +324,7 @@ async function readRune() {
       showToast(lang === 'is' ? 'Skráðu þig inn til að nota Kross.' : 'Sign in to use the Cross spread.');
       _setSpreadMode('single'); return;
     }
-    if (_spread5Runes.length === 5 && !readerRune) {
+    if (_spreadCount(_spread5Runes) === 5 && !readerRune) {
       document.getElementById('reader-rune-card').style.display = 'none';
       document.getElementById('reader-output').style.display = 'block';
       readerTexts = {}; voiceGenerated = {};
@@ -323,13 +332,13 @@ async function readRune() {
       return;
     }
     if (!readerRune) return;
-    if (_spread5Runes.length < 5) _spread5Runes.push(readerRune);
+    _spreadAdd(_spread5Runes, 5, readerRune);
     readerRune = null;
     _updateSpread5Slots();
     var speakBtn5 = document.getElementById('btn-speak');
     if (speakBtn5) {
-      speakBtn5.disabled = (_spread5Runes.length < 5);
-      if (_spread5Runes.length >= 5) speakBtn5.textContent = t('speak_btn');
+      speakBtn5.disabled = (_spreadCount(_spread5Runes) < 5);
+      if (_spreadCount(_spread5Runes) >= 5) speakBtn5.textContent = t('speak_btn');
     }
     return;
   }
@@ -339,7 +348,7 @@ async function readRune() {
       showToast(lang === 'is' ? 'Skráðu þig inn til að nota Podkova.' : 'Sign in to use the Horseshoe spread.');
       _setSpreadMode('single'); return;
     }
-    if (_spread7Runes.length === 7 && !readerRune) {
+    if (_spreadCount(_spread7Runes) === 7 && !readerRune) {
       document.getElementById('reader-rune-card').style.display = 'none';
       document.getElementById('reader-output').style.display = 'block';
       readerTexts = {}; voiceGenerated = {};
@@ -347,13 +356,13 @@ async function readRune() {
       return;
     }
     if (!readerRune) return;
-    if (_spread7Runes.length < 7) _spread7Runes.push(readerRune);
+    _spreadAdd(_spread7Runes, 7, readerRune);
     readerRune = null;
     _updateSpread7Slots();
     var speakBtn7 = document.getElementById('btn-speak');
     if (speakBtn7) {
-      speakBtn7.disabled = (_spread7Runes.length < 7);
-      if (_spread7Runes.length >= 7) speakBtn7.textContent = t('speak_btn');
+      speakBtn7.disabled = (_spreadCount(_spread7Runes) < 7);
+      if (_spreadCount(_spread7Runes) >= 7) speakBtn7.textContent = t('speak_btn');
     }
     return;
   }
@@ -370,7 +379,7 @@ async function readRune() {
     if (!(_ygM === 12 && _ygD >= 14 && _ygD <= 28) && !isAdmin(currentUser.email)) {
       showToast(lang === 'is' ? 'Yggdrasil er opinn — en krafturinn er mestur 14.–28. desember.' : 'Yggdrasil is open — its full power returns December 14–28.');
     }
-    if (_spread9Runes.length === 9 && !readerRune) {
+    if (_spreadCount(_spread9Runes) === 9 && !readerRune) {
       document.getElementById('reader-rune-card').style.display = 'none';
       document.getElementById('reader-output').style.display = 'block';
       readerTexts = {}; voiceGenerated = {};
@@ -378,13 +387,13 @@ async function readRune() {
       return;
     }
     if (!readerRune) return;
-    if (_spread9Runes.length < 9) _spread9Runes.push(readerRune);
+    _spreadAdd(_spread9Runes, 9, readerRune);
     readerRune = null;
     _updateSpread9Slots();
     var speakBtn9 = document.getElementById('btn-speak');
     if (speakBtn9) {
-      speakBtn9.disabled = (_spread9Runes.length < 9);
-      if (_spread9Runes.length >= 9) speakBtn9.textContent = t('speak_btn');
+      speakBtn9.disabled = (_spreadCount(_spread9Runes) < 9);
+      if (_spreadCount(_spread9Runes) >= 9) speakBtn9.textContent = t('speak_btn');
     }
     return;
   }
@@ -394,7 +403,7 @@ async function readRune() {
       showToast(lang === 'is' ? 'Skráðu þig inn til að nota Nornir.' : 'Sign in to use the Norns spread.');
       _setSpreadMode('single'); return;
     }
-    if (_spread3Runes.length === 3 && !readerRune) {
+    if (_spreadCount(_spread3Runes) === 3 && !readerRune) {
       document.getElementById('reader-rune-card').style.display = 'none';
       document.getElementById('reader-output').style.display = 'block';
       readerTexts = {}; voiceGenerated = {};
@@ -402,13 +411,13 @@ async function readRune() {
       return;
     }
     if (!readerRune) return;
-    if (_spread3Runes.length < 3) _spread3Runes.push(readerRune);
+    _spreadAdd(_spread3Runes, 3, readerRune);
     readerRune = null;
     _updateSpread3Slots();
     var speakBtnN = document.getElementById('btn-speak');
     if (speakBtnN) {
-      speakBtnN.disabled = (_spread3Runes.length < 3);
-      if (_spread3Runes.length >= 3) speakBtnN.textContent = t('speak_btn');
+      speakBtnN.disabled = (_spreadCount(_spread3Runes) < 3);
+      if (_spreadCount(_spread3Runes) >= 3) speakBtnN.textContent = t('speak_btn');
     }
     return;
   }
@@ -657,28 +666,28 @@ function _spreadTokens(key, fallback) {
 
 // Kříž — 5-rune cross
 function _generateSpread5Reading() {
-  return _generateSpreadReading({ runes: _spread5Runes, min: 5, buildPrompt: buildKrizPrompt,
+  return _generateSpreadReading({ runes: _spread5Runes.filter(Boolean), min: 5, buildPrompt: buildKrizPrompt,
     tokens: _spreadTokens('cross', 1100), credits: SPREAD_COSTS.cross.credits,
     outputId: 'spread5-output', outId: 's5-out', lblId: 's5-kriz-lbl', kind: 'KRIZ' });
 }
 
 // Horseshoe — 7 runes
 function _generateHorseshoeReading() {
-  return _generateSpreadReading({ runes: _spread7Runes, min: 7, buildPrompt: buildHorseshoePrompt,
+  return _generateSpreadReading({ runes: _spread7Runes.filter(Boolean), min: 7, buildPrompt: buildHorseshoePrompt,
     tokens: _spreadTokens('horseshoe', 1300), credits: SPREAD_COSTS.horseshoe.credits,
     outputId: 'spread7-output', outId: 's7-out', lblId: 's7-horseshoe-lbl', kind: 'HORSESHOE' });
 }
 
 // Yggdrasil — 9 worlds
 function _generateYggdrasilReading() {
-  return _generateSpreadReading({ runes: _spread9Runes, min: 9, buildPrompt: buildYggdrasilPrompt,
+  return _generateSpreadReading({ runes: _spread9Runes.filter(Boolean), min: 9, buildPrompt: buildYggdrasilPrompt,
     tokens: _spreadTokens('yggdrasil', 1800), credits: SPREAD_COSTS.yggdrasil.credits,
     outputId: 'spread9-output', outId: 's9-out', lblId: 's9-yggdrasil-lbl', kind: 'YGGDRASIL' });
 }
 
 // Norns — 3-rune fate axis (norns_axis: [0]=urd [1]=verdandi [2]=skuld)
 function _generateNornsReading() {
-  return _generateSpreadReading({ runes: _spread3Runes, min: 3, buildPrompt: buildNornsPrompt,
+  return _generateSpreadReading({ runes: _spread3Runes.filter(Boolean), min: 3, buildPrompt: buildNornsPrompt,
     tokens: _spreadTokens('norns', 900), credits: SPREAD_COSTS.norns.credits,
     outputId: 'spread3-output', outId: 's3-out', lblId: 's3-norns-lbl', kind: 'NORNS' });
 }
