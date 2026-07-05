@@ -806,7 +806,7 @@ function buildReadingPrompt(u, drawn, lang, corrections) { return buildReadingPr
 var RP_KRIZ = {
   is: {
     seeker:'Leiðandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leiðin', seekJoin:' og ', question:'Spurning',
-    positions:['RÚNAN 1 (Miðja / Kjarni — verdandi)','RÚNAN 2 (Of an / Á leit — skuld)','RÚNAN 3 (Undir / Rót — urd)','RÚNAN 4 (Að baki / Fortíð — urd)','RÚNAN 5 (Framar / Stefna — skuld)'],
+    positions:['RÚNAN 1 (Miðja / Kjarni — verdandi)','RÚNAN 2 (Ofan / Þrá — skuld)','RÚNAN 3 (Undir / Rót — urd)','RÚNAN 4 (Að baki / Fortíð — urd)','RÚNAN 5 (Framar / Stefna — skuld)'],
     intro:'Leiðandinn dregur fimm rúnir — Áttavitinn.',
     langInstr:'',
     instructions:function(ctrName){ return [
