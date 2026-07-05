@@ -547,6 +547,9 @@ function _updateDobLabel() {
   const nlbl = document.getElementById('name-lbl');
   if (nlbl) nlbl.innerHTML = t('name_lbl') + ' ';
   setPH('r-name', t('name_ph'));
+  setPH('tree-dob-d', t('day_ph'));
+  setPH('tree-dob-m', t('month_ph'));
+  setPH('tree-dob-y', t('year_ph'));
   const dlbl = document.getElementById('dob-lbl');
   const _dobVisitor = !currentUser;
   if (dlbl) {
@@ -671,6 +674,12 @@ function updateUIText() {
   setText('draw-lbl', t('draw_lbl'));
   setText('draw-note', t('draw_note'));
   setText('btn-random', t('random_btn'));
+  setText('mode-btn-single',    t('spread3_mode_single'));
+  setText('mode-btn-norns',     t('spread_mode_norns'));
+  setText('mode-btn-kriz',      t('spread_mode_kriz'));
+  setText('mode-btn-horseshoe', t('spread_mode_horseshoe'));
+  setText('mode-btn-yggdrasil', t('spread_mode_yggdrasil'));
+  setPH('redeem-input', t('redeem_ph'));
   setText('btn-speak', t('speak_btn'));
   setText('life-rune-lbl', t('life_rune_lbl'));
   setText('drawn-lbl', t('drawn_lbl'));

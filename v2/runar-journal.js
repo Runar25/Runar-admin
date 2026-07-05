@@ -189,9 +189,9 @@ function populateJournalFilters(entries) {
   const runes  = [...new Set(normal.map(e => e.rune_name).filter(Boolean))].sort();
   const areas  = [...new Set(normal.map(e => e.area).filter(Boolean))].sort();
   const hasSpread = entries.some(e => e.area === 'spread');
-  runeEl.innerHTML = `<option value="">All runes</option>` + runes.map(r => `<option value="${r}">${r}</option>`).join('');
-  areaEl.innerHTML = `<option value="">All areas</option>`
-    + (hasSpread ? `<option value="spread">✦ Spreads</option>` : '')
+  runeEl.innerHTML = `<option value="">${t('jf_all_runes')}</option>` + runes.map(r => `<option value="${r}">${r}</option>`).join('');
+  areaEl.innerHTML = `<option value="">${t('jf_all_areas')}</option>`
+    + (hasSpread ? `<option value="spread">${t('jf_spreads')}</option>` : '')
     + areas.map(a => `<option value="${a}">${a}</option>`).join('');
 }
 

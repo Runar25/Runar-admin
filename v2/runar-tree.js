@@ -62,6 +62,7 @@ function updateTreeTab() {
       if (gl) gl.textContent = rune.g;
       var tt = document.getElementById('tree-teaser-text');
       if (tt) tt.textContent = t('tree_rs_teaser');
+      var lb = document.getElementById('tree-rune-label'); if (lb) lb.textContent = t('life_rune_lbl');
       // Credits balance + button state
       var LIFE_RUNE_COST = (SPREAD_COSTS && SPREAD_COSTS.life_rune) ? SPREAD_COSTS.life_rune.credits : 3;
       var bal = typeof userCredits !== 'undefined' ? userCredits : 0;
@@ -119,6 +120,7 @@ function updateTreeTab() {
       if (nm) nm.textContent = runeName;
       if (gl) gl.textContent = rune.g;
       var intro = document.getElementById('tree-reveal-intro');
+      var lbc = document.getElementById('tree-rune-label-cta'); if (lbc) lbc.textContent = t('life_rune_lbl');
       if (intro) intro.textContent = t('tree_reveal_intro');
       var btn = document.getElementById('tree-reveal-btn');
       if (btn) btn.textContent = t('tree_reveal_btn');
@@ -143,6 +145,7 @@ function _showTreeReading(rune, runeName, isIs) {
   // Strip any leading markdown header (# ...) from stored Claude output
   var cleanText = (_lifeRuneText || '').replace(/^#[^\n]*\n+/, '').trim();
   if (txt) txt.innerHTML = cleanText.replace(/\n/g, '<br>');
+  setPH('tree-name-inp', t('tree_name_ph'));
 }
 
 function toggleTreeReading() {
