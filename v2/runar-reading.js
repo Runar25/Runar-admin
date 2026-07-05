@@ -278,7 +278,7 @@ function _updateSpreadSlots(cfg) {
     el.textContent = rune ? rune.g : _SLOT_GLYPHS[i];
     el.classList.toggle('filled', !!rune);
     if (rune) {
-      el.title = rune.n + ' — click to remove';
+      el.title = rune.n + ' — ' + t('slot_remove_hint');
       el.style.cursor = 'pointer';
       el.onclick = (function(idx) {
         return function() {
