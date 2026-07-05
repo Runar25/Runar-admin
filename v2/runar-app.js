@@ -445,6 +445,7 @@ function updateSidePanel() {
   setText('sp-tier-header', t('sp_account_title'));
   // Side panel navigation links — switch with language
   setText('sp-guide-link',   t('sp_guide_link'));
+  setText('sp-higher-lbl',   t('sp_higher_path'));
   setText('sp-install-btn', t('sp_install_btn'));
   setText('sp-privacy-link', t('sp_privacy_link'));
   // Render current tier + higher path (PANEL_TIERS — single source of truth)
@@ -629,6 +630,16 @@ function _updateGateTexts() {
   if (_consentEl) _consentEl.innerHTML = lang === 'is'
     ? 'Með því að halda áfram samþykkir þú <a href="runar-privacy.html" target="_blank" rel="noopener">persónuverndarstefnu okkar</a>. Við geymum aðeins það sem þarf til að muna lestrana þín. Engin rakning, engar auglýsingar.'
     : 'By continuing, you agree to our <a href="runar-privacy.html" target="_blank" rel="noopener">Privacy Policy</a>. We store only what is needed to remember your readings. No tracking, no ads.';
+  // Auth-modal static strings (co-located with sub/consent; §6 keeps RÚNAR + Google)
+  setText('auth-modal-title', lang === 'is' ? 'GAKKTU INN Í HEIM RÚNARS' : "ENTER RÚNAR'S WORLD");
+  setText('auth-google-lbl',  lang === 'is' ? 'HALDA ÁFRAM MEÐ GOOGLE' : 'CONTINUE WITH GOOGLE');
+  setText('auth-email-lbl',   lang === 'is' ? 'NETFANGIÐ ÞITT' : 'YOUR EMAIL');
+  setText('auth-magic-btn',   lang === 'is' ? 'SENDA TÖFRALYKIL' : 'SEND MAGIC LINK');
+  setText('auth-success-txt', lang === 'is' ? 'TÖFRALYKILL SENDUR' : 'MAGIC LINK SENT');
+  var _asn = document.getElementById('auth-success-note');
+  if (_asn) _asn.innerHTML = lang === 'is'
+    ? 'Athugaðu póstinn þinn og smelltu á tengilinn til að ganga inn.<br>Þessi síða opnast sjálfkrafa.'
+    : 'Check your email and click the link to enter.<br>This page will open automatically.';
   buildPills();
 }
 

@@ -39,25 +39,25 @@
 <div class="modal-overlay" id="auth-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeAuthModal()">✕</button>
-    <div class="modal-title">ENTER RÚNAR'S WORLD</div>
+    <div class="modal-title" id="auth-modal-title">ENTER RÚNAR'S WORLD</div>
     <div class="modal-sub" id="auth-modal-sub">No password needed — a magic link will arrive in your inbox.</div>
     <div id="auth-modal-body">
       <button class="btn-google" onclick="signInWithGoogle()">
         <svg width="18" height="18" viewBox="0 0 18 18" style="margin-right:10px;flex-shrink:0;"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/><path fill="#FBBC05" d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957C.347 6.175 0 7.55 0 9s.348 2.825.957 4.039l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z"/></svg>
-        CONTINUE WITH GOOGLE
+        <span id="auth-google-lbl">CONTINUE WITH GOOGLE</span>
       </button>
       <div class="auth-divider"><span>or</span></div>
-      <label style="font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--gold);display:block;margin-bottom:8px;">YOUR EMAIL</label>
+      <label id="auth-email-lbl" style="font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--gold);display:block;margin-bottom:8px;">YOUR EMAIL</label>
       <input class="txt" id="auth-email" type="email" placeholder="your@email.com" style="margin-bottom:14px;">
-      <button class="btn-full" onclick="sendMagicLink()">SEND MAGIC LINK</button>
+      <button class="btn-full" id="auth-magic-btn" onclick="sendMagicLink()">SEND MAGIC LINK</button>
       <div class="status" id="st-auth"></div>
       <p class="auth-consent" id="auth-consent-txt">By continuing, you agree to our <a href="runar-privacy.html" target="_blank" rel="noopener">Privacy Policy</a>. We store only what is needed to remember your readings. No tracking, no ads.</p>
     </div>
     <div id="auth-modal-success" style="display:none;">
       <div class="modal-success">
         <div class="modal-success-icon">✉</div>
-        <div class="modal-success-txt">MAGIC LINK SENT</div>
-        <div class="modal-success-note">Check your email and click the link to enter.<br>This page will open automatically.</div>
+        <div class="modal-success-txt" id="auth-success-txt">MAGIC LINK SENT</div>
+        <div class="modal-success-note" id="auth-success-note">Check your email and click the link to enter.<br>This page will open automatically.</div>
       </div>
     </div>
   </div>
@@ -670,7 +670,7 @@
     <div class="sp-tier-desc" id="sp-tier-desc"></div>
     <button class="sp-path-toggle" id="sp-higher-toggle" onclick="toggleHigherPath()" style="display:none;justify-content:flex-start;gap:10px;">
       <span id="sp-path-arrow" style="font-size:1.4em;letter-spacing:0;line-height:1;">+</span>
-      <span>THE JOURNEY BEYOND</span>
+      <span id="sp-higher-lbl">THE JOURNEY BEYOND</span>
     </button>
     <div id="sp-path-body" class="sp-path-body" style="display:none;"></div>
   </div>
