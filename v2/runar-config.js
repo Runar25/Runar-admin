@@ -307,7 +307,7 @@ const SPREAD_CONFIG = {
     rune_count: 5,
     positions: {
       en: ['Centre / Core', 'Above / Aspiration', 'Below / Root', 'Behind / Past', 'Ahead / Direction'],
-      is: ['Miðja / Kjarni', 'Of an / Á leit', 'Undir / Rót', 'Að baki / Fortíð', 'Framar / Stefna'],
+      is: ['Miðja / Kjarni', 'Ofan / Þrá', 'Undir / Rót', 'Að baki / Fortíð', 'Framar / Stefna'],
     },
     credits: 3,
     tokens:  1100,
@@ -348,13 +348,13 @@ const SPREAD_CONFIG = {
         'Hel — Completion',             // 9 urd
       ],
       is: [
-        'Ásgarðr — Hæsta sjálf',
+        'Ásgarðr — Æðsta sjálfið',
         'Vanaheimr — Samhljómur',
-        'Álfheimr — Skapaningur',
-        'Miðgarðr — Dagleg reind',
+        'Álfheimr — Sköpunarkraftur',
+        'Miðgarðr — Daglegur veruleiki',
         'Jötunheimr — Hindrun',
-        'Svartálfaheimr — Dulinn list',
-        'Níðavellir — Djúpur uppspretta',
+        'Svartálfaheimr — Dulin list',
+        'Níðavellir — Djúp uppspretta',
         'Niflheimr — Uppruninn',
         'Hel — Lokið',
       ],

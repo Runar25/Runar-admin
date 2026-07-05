@@ -162,8 +162,8 @@ const RUNES = [
     n: 'Berkana',  is_n: 'Berkana (Þroski)',
     g: 'ᛒ',        svg: 'Berkana',
     k:    'birch, growth, new beginnings, nurturing, birth',
-    k_is: 'björk, þroski, nýtt upphaf, hlúð',
-    formula_is: 'Berkana er rún þroska, nýs upphaf og þeirrar hlúðar sem lætur lífið vaxa.',
+    k_is: 'björk, þroski, nýtt upphaf, umhyggja, fæðing',
+    formula_is: 'Berkana er rún þroska, nýs upphafs og þeirrar umhyggju sem lætur lífið vaxa.',
     world: 'Midgard',   elements: ['Water'],
     aett: 'tyr',
   },
@@ -255,7 +255,7 @@ const AREAS = {
     'Tilgangur & Leið',
     'Starf & Sköpun',
     'Heilun & Líðan',
-    'Andlægi',
+    'Andleg málefni',
     'Fjölskylda & Heimili',
     'Innri Vöxtur',
     'Vegamót & Ákvarðanir',
@@ -330,7 +330,7 @@ const AETTY = {
 // norns: branch axis tendency | element: visual color on tree
 const MOODS = {
   en: ['Grounded', 'Unsettled', 'Hopeful', 'Lost'],
-  is: ['Jarðtengdur', 'Órólegur', 'Voníull', 'Villtur'],
+  is: ['Jarðtengdur', 'Órólegur', 'Vongóður', 'Villtur'],
   norns:   ['urd',   'verdandi', 'skuld',   'urd'],
   element: ['Earth', 'Air',      'Fire',    'Water'],
 };
