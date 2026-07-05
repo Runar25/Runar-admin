@@ -807,7 +807,7 @@ var RP_KRIZ = {
   is: {
     seeker:'Leiðandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leiðin', seekJoin:' og ', question:'Spurning',
     positions:['RÚNAN 1 (Miðja / Kjarni — verdandi)','RÚNAN 2 (Of an / Á leit — skuld)','RÚNAN 3 (Undir / Rót — urd)','RÚNAN 4 (Að baki / Fortíð — urd)','RÚNAN 5 (Framar / Stefna — skuld)'],
-    intro:'Leiðandinn dregur fimm rúnar — Krossinn.',
+    intro:'Leiðandinn dregur fimm rúnar — Áttavitinn.',
     langInstr:'',
     instructions:function(ctrName){ return [
       'Lesturinn fer í einum flæði — ekki fimm aðskildir lestrar.',
@@ -825,7 +825,7 @@ var RP_KRIZ = {
   en: {
     seeker:'Seeker', lifeRune:'Life rune', area:'Area', seeking:'Seeking', seekJoin:' & ', question:'Question',
     positions:['RUNE 1 (Centre / Core — present)','RUNE 2 (Above / Aspiration — future)','RUNE 3 (Below / Root — hidden)','RUNE 4 (Behind / Past — past)','RUNE 5 (Ahead / Direction — future)'],
-    intro:'The seeker draws five runes — the Cross.',
+    intro:'The seeker draws five runes — the Compass.',
     langInstr:'Respond in English.',
     instructions:function(ctrName){ return [
       'Read all five as one flowing passage — not five separate readings.',

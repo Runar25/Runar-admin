@@ -321,7 +321,7 @@ async function readRune() {
   if (_spreadMode === 'kriz') {
     // Tier check — block Visitor (anonymous) only
     if (!currentUser) {
-      showToast(lang === 'is' ? 'Skráðu þig inn til að nota Kross.' : 'Sign in to use the Cross spread.');
+      showToast(lang === 'is' ? 'Skráðu þig inn til að nota Áttavitann.' : 'Sign in to use the Compass spread.');
       _setSpreadMode('single'); return;
     }
     if (_spreadCount(_spread5Runes) === 5 && !readerRune) {
