@@ -24,8 +24,8 @@ Klíčové soubory pro Read (lokální):
 
 ## Aktuální stav projektu (2026-06-09)
 
-### SW verze: v109
-### Poslední commit: 1ff075d
+### SW verze: v133
+### Poslední commit: 241c58a
 
 ### Klíčová rozhodnutí (platná)
 - RS: 1 free cast při registraci, žádný weekly drip, ŽÁDNÝ měsíční reset (model B, implementováno 2026-06-12). Jediný signál = DB `free_balance` (default 1). 1 free MÁ hlas. Pak vše za rune readings (kredity).
@@ -177,30 +177,10 @@ Frontmatter-paměť TREE session (Claude Code). Od 2026-07-04 sdílená s Cowork
 
 ## Index snapshots (nejnovější = poslední)
 
-- [snapshots/2026-05-30-tree-functions.js](snapshots/2026-05-30-tree-functions.js)
-- [snapshots/2026-05-30-life-rune-prompt.js](snapshots/2026-05-30-life-rune-prompt.js)
-- [snapshots/2026-05-30-refactoring.md](snapshots/2026-05-30-refactoring.md)
-- [snapshots/2026-05-30-tree-tab-features.md](snapshots/2026-05-30-tree-tab-features.md)
-- [snapshots/2026-05-30-monolith-split.md](snapshots/2026-05-30-monolith-split.md)
-- [snapshots/2026-05-31-shrine-sync-is-quality.md](snapshots/2026-05-31-shrine-sync-is-quality.md)
-- [snapshots/2026-05-31-is-audit-spread-design.md](snapshots/2026-05-31-is-audit-spread-design.md)
-- [snapshots/2026-05-31-trojice-production-shrine-fixes.md](snapshots/2026-05-31-trojice-production-shrine-fixes.md)
-- [snapshots/2026-06-03-pricing-design-audit.md](snapshots/2026-06-03-pricing-design-audit.md)
-- [snapshots/2026-06-04-is-audit-tree-design.md](snapshots/2026-06-04-is-audit-tree-design.md)
-- [snapshots/2026-06-05-audit-patch-v09.md](snapshots/2026-06-05-audit-patch-v09.md)
-- [snapshots/2026-06-06-spreads-tree-rs-ui.md](snapshots/2026-06-06-spreads-tree-rs-ui.md)
-- [snapshots/2026-06-06-vocab-architecture.md](snapshots/2026-06-06-vocab-architecture.md)
-- [snapshots/2026-06-06-tooling-backtesting.md](snapshots/2026-06-06-tooling-backtesting.md)
-- [snapshots/2026-06-06-auth-bugs-tree-intro-rules.md](snapshots/2026-06-06-auth-bugs-tree-intro-rules.md)
-- [snapshots/2026-06-06-unified-reading-contextual-intelligence.md](snapshots/2026-06-06-unified-reading-contextual-intelligence.md)
-- [snapshots/2026-06-07-v3-tree-context-design.md](snapshots/2026-06-07-v3-tree-context-design.md)
-- [snapshots/2026-06-07-trojice-removal-voice-profiles-spread-journal.md](snapshots/2026-06-07-trojice-removal-voice-profiles-spread-journal.md)
-- [snapshots/2026-06-07-spread-design-voice-analysis.md](snapshots/2026-06-07-spread-design-voice-analysis.md)
-- [snapshots/2026-06-07-journal-gathering-ui-creditcost.md](snapshots/2026-06-07-journal-gathering-ui-creditcost.md)
-- [snapshots/2026-06-09-token-analysis-prompt-caching.md](snapshots/2026-06-09-token-analysis-prompt-caching.md)
-- [snapshots/2026-06-09-audit-fixes-docs.md](snapshots/2026-06-09-audit-fixes-docs.md)
+- _Starší snapshoty (2026-05-30 → 2026-06-09): viz složka `snapshots/` — tree/refactor/vocab/spread/audit historie._
 - [snapshots/2026-06-12-audit-modelB-terminology-ux.md](snapshots/2026-06-12-audit-modelB-terminology-ux.md)
 - [snapshots/2026-06-12-seasonal-imagery-reading-tuning.md](snapshots/2026-06-12-seasonal-imagery-reading-tuning.md)
 - [snapshots/2026-06-14-seasonal-cycle-bag-is-grammar.md](snapshots/2026-06-14-seasonal-cycle-bag-is-grammar.md)
 - [snapshots/2026-06-14-pricing-audit-reprice.md](snapshots/2026-06-14-pricing-audit-reprice.md)
-- [snapshots/2026-06-16-reporter-operating-costs-coordination.md](snapshots/2026-06-16-reporter-operating-costs-coordination.md) ← NEJNOVĚJŠÍ
+- [snapshots/2026-06-16-reporter-operating-costs-coordination.md](snapshots/2026-06-16-reporter-operating-costs-coordination.md)
+- [snapshots/2026-07-05-s18-drift-cleanup.md](snapshots/2026-07-05-s18-drift-cleanup.md) ← NEJNOVĚJŠÍ (limits messaging unified, dead model-A branches out, 8 §18 fixes, SW v133)
