@@ -16,3 +16,11 @@ Ověřené korekce (2026-06-14, KUKY potvrdil):
 - Určitý člen (-ið/-inn/-in) spouští VEIK (slabé) skloňování přídavného.
 
 Plný slovník rodu přírodních slov + detail je v Rúnar `working-style.md` (§ Islandská gramatika). **Proč:** Rúnar je IS-primární a hodně o islandštině; čím lepší moje IS, tím lepší produkt (KUKY). **Jak aplikovat:** před napsáním každého IS jmenného spojení pojmenuj rod, pak vyber tvar přídavného.
+
+**Velký IS audit (2026-07-05, KUKY potvrdil) — 58 nálezů opraveno + 2 drift kopie chycené guardem. Trvalá pravidla:**
+- `rún` = kvk, SILNÁ deklinace: **sg `rún` (EIN RÚN, ne rúna), pl `rúnir` (ne `rúnar` ani `rúnur`)**. „dregur X rúnar" → „X rúnir". Ověř: def pl = „rúnirnar". (Pozn.: pár starých stringů má slabé „rúnur" — neflagováno, nechat.)
+- **Jednotka čtení = `lestur`, NE `spá` tam, kde bychom měnili lestur→spá.** intention_lbl „ÞESSI LESTUR ER FYRIR" zůstává; „3 LESTUR"→„3 LESTRAR" (ne SPÁR). Existující `spá` (no_credits, rs_exhausted) = OK, nechat. `kredit`/`inneign` = placený kredit (jiné než lestur/spá); „Keyptu þér" (koupit), ne „Fáðu þér".
+- `gildistími` = kk → „enginn gildistími". `dagsetning`/`uppspretta`/`list`/`stund` = kvk. `flæði`/`frost` = hk.
+- **Spread jména IS**: Cross→Áttaviti, Horseshoe→Skeifa (skeifuna acc), Norns→Nornir, Single→Ein rún, Yggdrasil zůstává. „Podkova"/„Trojice" = české leftovery.
+- **Regression guardy** pro všechny tyto v `check-is.py` BAD_PATTERNS (2026-07-05 blok) + scan rozšířen o config/runes/journal. Před commitem IS: `python -X utf8 check-is.py`.
+- Wiring: mode buttons + tree labely + DOB + journal filtry se v readeru NEpřekládaly (hardcoded HTML) → teď přes `t()` v updateUIText/updateTreeTab. Deferováno: slot hover-tooltips (low).
