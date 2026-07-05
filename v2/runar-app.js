@@ -59,7 +59,7 @@ async function fetchUserProfile(userId) {
     if (data) {
       userTier    = data.tier            || 'rune_seeker';
       // Normalize legacy DB values → rune_seeker
-      if (userTier === 'free' || userTier === 'credits') userTier = 'rune_seeker';
+      userTier = normalizeTier(userTier);
       // Admins always get full premium access for testing
       if (isAdmin(currentUser?.email)) userTier = 'premium';
       userCredits = data.credits_balance || 0;
@@ -1095,7 +1095,7 @@ function updateDropdown() {
   if (tierEl)  tierEl.textContent  = tierNames[userTier] || userTier.toUpperCase();
   if (emailEl) emailEl.textContent = currentUser.email;
   if (balEl) {
-    if (userTier === 'rune_seeker' || userTier === 'free' || userTier === 'credits') {
+    if (normalizeTier(userTier) === 'rune_seeker') {
       const rem  = Math.max(0, userFreeBalance);
       const credPart = userCredits > 0
         ? (isIs ? ' · ' + userCredits + ' lestur' : ' · ' + userCredits + ' credit' + (userCredits !== 1 ? 's' : ''))
@@ -1116,7 +1116,7 @@ function _renderYourPath() {
   if (!body) return;
   const isIs = lang === 'is';
   const tier = !currentUser ? 'free_trial' : (userTier || 'free_trial');
-  const normTier = (tier === 'free' || tier === 'credits') ? 'rune_seeker' : tier;
+  const normTier = normalizeTier(tier);
   const lk = isIs ? 'is' : 'en';
 
   // ══ PANEL_TIERS — single source of truth for all side-panel tier data ══

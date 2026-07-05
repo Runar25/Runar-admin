@@ -20,6 +20,11 @@ function t(key) {
   return (UI_TEXT[lang] && UI_TEXT[lang][key]) || UI_TEXT.en[key] || key;
 }
 
+// Legacy DB tier aliases -> canonical (§18: one place for the free/credits mapping)
+function normalizeTier(tier) {
+  return (tier === 'free' || tier === 'credits') ? 'rune_seeker' : tier;
+}
+
 // Vocabulary helpers — read from VOCAB (runar-config.js)
 // vn('unit', 9, 'en')  =>  '9 rune readings'
 // vn('cast', 1, 'is')  =>  '1 sp\u00e1'
