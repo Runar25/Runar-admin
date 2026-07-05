@@ -724,7 +724,7 @@ function applyISCorrections(text, lang, corrections) {
 
 
 // ─── READING PROMPT BUILDERS ────────────────────────────
-// buildReadingPromptIS + buildReadingPromptEN + dispatcher.
+// buildReadingPromptSingle + lang dispatcher.
 // Defined here (runar-character.js) so runar-shrine.html can use them
 // without loading runar-reading.js.
 // Depends on: _randomAngle() from runar-utils.js (available at runtime).
@@ -807,9 +807,7 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
   ].filter(Boolean).join('\n');
 }
 
-// Back-compat wrappers + dispatcher (call sites unchanged).
-function buildReadingPromptIS(u, drawn, corrections) { return buildReadingPromptSingle(u, drawn, 'is', corrections); }
-function buildReadingPromptEN(u, drawn, lang, corrections) { return buildReadingPromptSingle(u, drawn, lang, corrections); }
+// Lang dispatcher (call sites unchanged).
 function buildReadingPrompt(u, drawn, lang, corrections) { return buildReadingPromptSingle(u, drawn, lang, corrections); }
 
 // ─── KRÍŽ PROMPT BUILDERS ───────────────────────────────────────
@@ -889,8 +887,6 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
   ]).filter(Boolean).join('\n');
 }
 
-function buildKrizPromptIS(u, runes, corrections) { return buildKrizPromptCross(u, runes, 'is', corrections); }
-function buildKrizPromptEN(u, runes, lang, corrections) { return buildKrizPromptCross(u, runes, lang, corrections); }
 function buildKrizPrompt(u, runes, lang, corrections) { return buildKrizPromptCross(u, runes, lang, corrections); }
 
 // ─── NORNS PROMPT BUILDERS ──────────────────────────────────────
@@ -963,8 +959,6 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
   ]).filter(Boolean).join('\n');
 }
 
-function buildNornsPromptIS(u, runes, corrections) { return buildNornsPromptFate(u, runes, 'is', corrections); }
-function buildNornsPromptEN(u, runes, lang, corrections) { return buildNornsPromptFate(u, runes, lang, corrections); }
 function buildNornsPrompt(u, runes, lang, corrections) { return buildNornsPromptFate(u, runes, lang, corrections); }
 
 // ─── HORSESHOE PROMPT BUILDERS ─────────────────────────────────────────────
@@ -1032,8 +1026,6 @@ function buildHorseshoePromptSeven(u, runes, lang, corrections) {
   ]).filter(Boolean).join('\n');
 }
 
-function buildHorseshoePromptIS(u, runes, corrections) { return buildHorseshoePromptSeven(u, runes, 'is', corrections); }
-function buildHorseshoePromptEN(u, runes, lang, corrections) { return buildHorseshoePromptSeven(u, runes, lang, corrections); }
 function buildHorseshoePrompt(u, runes, lang, corrections) { return buildHorseshoePromptSeven(u, runes, lang, corrections); }
 
 // ─── YGGDRASIL PROMPT BUILDERS ─────────────────────────────────────────────
@@ -1114,6 +1106,4 @@ function buildYggdrasilPromptNine(u, runes, lang, corrections) {
   ]).filter(Boolean).join('\n');
 }
 
-function buildYggdrasilPromptIS(u, runes, corrections) { return buildYggdrasilPromptNine(u, runes, 'is', corrections); }
-function buildYggdrasilPromptEN(u, runes, lang, corrections) { return buildYggdrasilPromptNine(u, runes, lang, corrections); }
 function buildYggdrasilPrompt(u, runes, lang, corrections) { return buildYggdrasilPromptNine(u, runes, lang, corrections); }

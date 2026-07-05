@@ -18,8 +18,8 @@ Stack: HTML + CSS + vanilla JS · Supabase (pmitxjvkeovijreepror, eu-west-1) · 
 runar-config.js       — TIERS, RUNAR_MODES, TIER_LIMITS, SPREAD_COSTS, SPREAD_CONFIG, VOCAB
 runar-runes.js        — 25 Elder Futhark + calcLifeRune()
 runar-translations.js — UI_TEXT {en, is} + t()  ← Edit tool OK
-runar-character.js    — DEF_CHAR_EN/IS, buildSysPrompt(), buildReadingPromptIS/EN(),
-                         buildLifeRunePromptIS/EN(), getCorrPrompt(), applyISCorrections()
+runar-character.js    — DEF_CHAR_EN/IS, buildSysPrompt(), RP_* packs + buildReadingPrompt()
+                         + spread dispatchers, buildLifeRunePromptIS/EN(), getCorrPrompt(), applyISCorrections()
 runar-utils.js        — t(), tp(), vn(), vl(), setText/setSt/showToast, stream
 runar-journal.js      — loadJournal(), renderJournal(), filterJournal()
 runar-tree.js         — updateTreeTab(), generateLifeRuneReading(), loadLifeRuneFromDB()
