@@ -528,45 +528,31 @@ function _addressContext(lang) {
 // Called when Rune Walker/Rune Keeper user requests their life rune reading.
 // IS prompt written directly in Icelandic for better language quality.
 
-function getBirthMonthIS(m) {
-  var months = {
-    1:  'Mörsugur — miðvetur, þögn og bið, tíminn á milli gamla og nýja',
-    2:  'Þorri — harðasti veturinn, Þorrablót, þol yfir ósigur, eldar í myrkri',
-    3:  'Gói — ljósið er að koma aftur, fyrsta fuglasöngurinn brýtur þögnina',
-    4:  'Harpa — Sumardagurinn fyrsti, vorið opnar sig, orka er að safnast',
-    5:  'Skerpla — sumar er komið, dagurinn er langur, náttúran er í fullum gangi',
-    6:  'Sólmánuður — miðnætursól, blær milli heimsins, huldufólk á ferð',
-    7:  'Heyannir — langur dagur, lundar, opinn himinn, uppskera er í gangi',
-    8:  'Haustmánuður — ljósið er að hverfa, uppskera, hlýtt og gult',
-    9:  'Haustmánuður — Réttir, sauðféð kemur heim, hlýtt og takkargjört',
-    10: 'Gormánuður — myrkur er að koma aftur, fyrsti vetrardagurinn, norðurljós',
-    11: 'Ýlir — veturinn er kominn í fullnustu, norðurljós, himillinn talar',
-    12: 'Jól — sólstöður, fræ ljóssins í myrkinu, Jólasveinar'
-  };
-  return months[m] || 'óþekktur mánuður';
-}
+// Birth-month lore (§18: one source; name + 1-12 keys shared, prose per language).
+var BIRTH_MONTHS = {
+  1:  { name: 'Mörsugur',     is: 'miðvetur, þögn og bið, tíminn á milli gamla og nýja',           en: 'deep midwinter, silence and stillness between the old year and the new' },
+  2:  { name: 'Þorri',        is: 'harðasti veturinn, Þorrablót, þol yfir ósigur, eldar í myrkri',  en: 'the harshest month, Þorrablót, endurance over defeat, fires in the dark' },
+  3:  { name: 'Gói',          is: 'ljósið er að koma aftur, fyrsta fuglasöngurinn brýtur þögnina',  en: 'light beginning to return, the first birdsong breaking the silence of February' },
+  4:  { name: 'Harpa',        is: 'Sumardagurinn fyrsti, vorið opnar sig, orka er að safnast',      en: 'Sumardagurinn fyrsti, the first day of summer, spring opening' },
+  5:  { name: 'Skerpla',      is: 'sumar er komið, dagurinn er langur, náttúran er í fullum gangi', en: 'summer arrived, long days, the land in full motion' },
+  6:  { name: 'Sólmánuður',   is: 'miðnætursól, blær milli heimsins, huldufólk á ferð',             en: 'midnight sun, the veil thins, hidden people most active' },
+  7:  { name: 'Heyannir',     is: 'langur dagur, lundar, opinn himinn, uppskera er í gangi',        en: 'the long light, puffins, hay season, open sky' },
+  8:  { name: 'Haustmánuður', is: 'ljósið er að hverfa, uppskera, hlýtt og gult',                   en: 'light beginning to leave, harvest, warm and golden' },
+  9:  { name: 'Haustmánuður', is: 'Réttir, sauðféð kemur heim, hlýtt og takkargjört',               en: 'Réttir, the sheep roundup, return and gratitude, warm and golden' },
+  10: { name: 'Gormánuður',   is: 'myrkur er að koma aftur, fyrsti vetrardagurinn, norðurljós',     en: 'darkness returning, first winter day, aurora season begins' },
+  11: { name: 'Ýlir',         is: 'veturinn er kominn í fullnustu, norðurljós, himillinn talar',    en: 'winter in full darkness, aurora, the sky speaks' },
+  12: { name: 'Jól',          is: 'sólstöður, fræ ljóssins í myrkinu, Jólasveinar',                 en: 'winter solstice, the seed of returning light in the darkest night' }
+};
 
-function getBirthMonthEN(m) {
-  var months = {
-    1:  'Mörsugur — deep midwinter, silence and stillness between the old year and the new',
-    2:  'Þorri — the harshest month, Þorrablót, endurance over defeat, fires in the dark',
-    3:  'Gói — light beginning to return, the first birdsong breaking the silence of February',
-    4:  'Harpa — Sumardagurinn fyrsti, the first day of summer, spring opening',
-    5:  'Skerpla — summer arrived, long days, the land in full motion',
-    6:  'Sólmánuður — midnight sun, the veil thins, hidden people most active',
-    7:  'Heyannir — the long light, puffins, hay season, open sky',
-    8:  'Haustmánuður — light beginning to leave, harvest, warm and golden',
-    9:  'Haustmánuður — Réttir, the sheep roundup, return and gratitude, warm and golden',
-    10: 'Gormánuður — darkness returning, first winter day, aurora season begins',
-    11: 'Ýlir — winter in full darkness, aurora, the sky speaks',
-    12: 'Jól — winter solstice, the seed of returning light in the darkest night'
-  };
-  return months[m] || 'unknown month';
+function getBirthMonth(m, lang) {
+  var e = BIRTH_MONTHS[m];
+  if (!e) return (lang === 'is') ? 'óþekktur mánuður' : 'unknown month';
+  return e.name + ' — ' + ((lang === 'is') ? e.is : e.en);
 }
 
 // IS prompt written directly in Icelandic for better language quality
 function buildLifeRunePromptIS(name, rune, day, month, year, isPremium) {
-  var monthDesc = getBirthMonthIS(month);
+  var monthDesc = getBirthMonth(month, 'is');
   var nameInstr = isPremium
     ? 'Baettu vid hluta um nafnid ' + name + ' — merkingu þss á norrænu, goðsagnalega mynd eða persónu sem tengist nafninu.'
     : '';
@@ -604,7 +590,7 @@ function buildLifeRunePromptIS(name, rune, day, month, year, isPremium) {
 
 // EN prompt for life rune reading
 function buildLifeRunePromptEN(name, rune, day, month, year, isPremium) {
-  var monthDesc = getBirthMonthEN(month);
+  var monthDesc = getBirthMonth(month, 'en');
   var nameInstr = isPremium
     ? 'Add a section about the name ' + name + ' — its meaning in Old Norse or Norse mythology, a mythological figure or quality that the name carries.'
     : '';
