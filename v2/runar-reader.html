@@ -243,6 +243,15 @@
         <label class="flbl" id="name-lbl" data-i18n="name_lbl">YOUR NAME OR PREFERRED NAME</label>
         <input class="txt" id="r-name" type="text" placeholder="How shall Rúnar address you?">
       </div>
+      <!-- ADDRESS GENDER (Icelandic) — how Rúnar addresses you; shown only in IS -->
+      <div id="setup-gender-row" style="display:none;">
+        <label class="flbl" id="setup-gender-lbl">HVERNIG RÚNAR ÁVARPAR ÞIG</label>
+        <div class="lang-toggle">
+          <button class="lang-btn"        id="fg-kk"  type="button" onclick="setGender('kk')">Hann</button>
+          <button class="lang-btn"        id="fg-kvk" type="button" onclick="setGender('kvk')">Hún</button>
+          <button class="lang-btn active" id="fg-hk"  type="button" onclick="setGender('hk')">Hán</button>
+        </div>
+      </div>
       <label class="flbl" id="area-lbl" data-i18n="area_lbl">AREA OF LIFE <span class="opt">(OPTIONAL)</span></label>
       <div class="pills" id="area-pills"></div>
       <label class="flbl" id="seek-lbl" data-i18n="seek_lbl">WHAT ARE YOU SEEKING? <span class="opt">(OPTIONAL)</span></label>

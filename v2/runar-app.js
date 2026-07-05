@@ -282,17 +282,24 @@ function setGender(g) {
   _updateGenderPills();
 }
 function _updateGenderPills() {
-  var ids = { kk: 'sp-g-kk', kvk: 'sp-g-kvk', hk: 'sp-g-hk' };
-  Object.keys(ids).forEach(function (k) {
-    var el = document.getElementById(ids[k]);
-    if (el) el.classList.toggle('active', userGender === k);
+  var sets = { kk: ['sp-g-kk', 'fg-kk'], kvk: ['sp-g-kvk', 'fg-kvk'], hk: ['sp-g-hk', 'fg-hk'] };
+  Object.keys(sets).forEach(function (k) {
+    sets[k].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.classList.toggle('active', userGender === k);
+    });
   });
 }
 function _updateGenderVisibility() {
+  var show = (lang === 'is');
   var sec = document.getElementById('sp-gender-section');
-  if (sec) sec.style.display = (lang === 'is') ? 'block' : 'none';
+  if (sec) sec.style.display = show ? 'block' : 'none';
+  var row = document.getElementById('setup-gender-row');
+  if (row) row.style.display = show ? 'block' : 'none';
   var lbl = document.getElementById('sp-gender-lbl');
   if (lbl) lbl.textContent = t('sp_gender_lbl');
+  var flbl = document.getElementById('setup-gender-lbl');
+  if (flbl) flbl.textContent = t('sp_gender_lbl');
 }
 
 function openLangSwitchModal(tl) {
