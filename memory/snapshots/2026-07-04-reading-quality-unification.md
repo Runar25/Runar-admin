@@ -27,8 +27,7 @@ Obří den. Chronologicky:
 ## 5. Prompt unification (ROZPRACOVÁNO)
 - **Cíl:** ~10 duplikovaných builderů (IS/EN páry) → generické + per-jazyk `RP_*` packy. Přidat jazyk = přeložit 1 pack.
 - **Golden harness** = `scripts/golden/golden_dump.js` + `golden_baseline.json` (14 case: single/no-Q/corr × spready × IS/EN). Deterministický (Math.random=0.5 + in-memory localStorage). **Postup:** node golden_dump.js → unify builder → node golden_dump.js golden_after.json → diff. Musí být identické (nebo sémanticky-ekvivalentní review).
-- ✅ **HOTOVO: single** (f0649f0) — `buildReadingPromptSingle` + `RP_SINGLE`. Golden 13/14 identických, 1 kosmetika (EN corr prázdný řádek). IS byte-identický.
-- ⏳ **ZBÝVÁ: 4 spready** — Kriz (855/913), Norns (977/1026), Horseshoe (1083/1137), Yggdrasil (1191/1255) IS/EN. Stejný postup. `buildXxxPrompt` dispečeři volají IS/EN — sloučit do generického + `RP_XXX` pack, golden-diff.
+- ✅ **HOTOVO — VŠECH 5** (SW v124, HEAD 0ab0dbc): single/Norns/Kříž/Horseshoe/Yggdrasil → generické buildery + `RP_*` packy. Golden-verified: **IS byte-identický všude**; EN single/Norns byte-identické, Kříž/Horseshoe/Yggdrasil jen kosmetická normalizace runesBlock (jméno+kws na řádek s „ — "). Strom nedotčen (roste z rune-dat). **Přidání jazyka = přeložit packy.** Golden nástroje v `scripts/golden/`.
 
 ## Pravidla připomínka
 §1 (JS přes Python skript), golden diff PŘED commitem spreadu, smoke.py, commit `[reading]`, push hned.

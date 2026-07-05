@@ -229,3 +229,16 @@
 - **Affected doc(s):** RUNAR_TREE_BOUGHS.md, RUNAR_TREE_TODO.md, memory/runar-tree-engine-lab.md (⭐⭐ 2026-07-04 = zdroj), docs/TREE_BRIEF_CODE_2026-07-04.md, tento záznam
 - **Reality note:** Báze = crown-composer (KUKYho schválený „pěkný strom"). Zóna = JEMNÝ posun výšky (à la liana `branch_point`: minulost níž / budoucnost výš), NE destruktivní blend. Krok 1 = element z reálných čtení (`routingFromLog` nahradí `routing(seed,nR)`; `realAge = log.length × growthPerCast`). Engine (growBranch / spojitá limba / fraktál / paint / kořeny) se NESAHÁ. Specials → `RUNAR_TREE_SPECIALS.md` (kandidáti, napřed probrat).
 - **Reversibility:** easy (jen směrová lekce; žádný kód se neruší)
+
+---
+
+## 2026-07-04 — Prompt unification: 10 IS/EN builderů → 5 generických + RP_* packy
+
+- **Typ:** implementation (refaktor) + drobná EN normalizace
+- **Scope:** reading
+- **Co se změnilo:** Sloučeny všechny duplikované IS/EN reading buildery do generických + per-jazyk stringových packů: single (`buildReadingPromptSingle`+`RP_SINGLE`), Norns (`buildNornsPromptFate`+`RP_NORNS`), Kříž (`buildKrizPromptCross`+`RP_KRIZ`), Horseshoe (`buildHorseshoePromptSeven`+`RP_HORSESHOE`), Yggdrasil (`buildYggdrasilPromptNine`+`RP_YGGDRASIL`). `buildXxxPromptIS/EN` zůstaly jako tenké wrappery (call-sites beze změny). **Přidání jazyka = přeložit packy, žádný nový builder.**
+- **Proč:** Buildery vznikly jako oddělené IS/EN kopie → za desítky změn se rozešly (drift: jiná struktura, mrtvý kód). Jeden zdroj struktury + stringy per jazyk = drift se nemůže vrátit + Norština/Danština = jen překlad.
+- **Bezpečnost:** Golden-output harness (`scripts/golden/`, deterministický Math.random=0.5 + in-memory localStorage, 14 case: single/no-Q/corr × spready × IS/EN). Diff PŘED/PO každém commitu. **IS byte-identický všude.** EN: single/Norns byte-identické; Kříž/Horseshoe/Yggdrasil = kosmetická normalizace runesBlock (jméno+kws na jeden řádek s „ — ", = IS formát) + langInstr do closing — sémanticky totožné.
+- **Affected doc(s):** RUNAR_BACKLOG.md (unification hotovo), memory snapshot, tento záznam
+- **Reality note:** `runar-character.js` (SW v124). Strom NEDOTČEN (roste z rune-dat, ne z prózy). Owner varován, že spready = normalizace (ne no-op), schválil „když nebude sedět vrátíme". Golden nástroje + baseline v `scripts/golden/`. Patch skripty `unify_*.py` v rootu (untracked).
+- **Reversibility:** easy (git revert per builder; golden baseline drží referenci)

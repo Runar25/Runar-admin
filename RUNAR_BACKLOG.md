@@ -25,7 +25,7 @@
 
 ## Struktura / refaktor
 
-- [ ] **Prompt unification (Fáze 2 refaktor)** — reading prompt je rozprostřen přes 5 souborů + ~10 duplikovaných builderů (`buildReadingPromptIS/EN` + 4 spready ×IS/EN). Sjednotit: jeden „language pack" per jazyk (character / voice / grammar / angles / seasons / gloss / lock) + 2 generické buildery místo 10 → přidání jazyka = přeložit 1 pack, ladění IS = 1 místo. **DĚLAT AŽ PO evalu** (zlatý baseline výstupů → ověřit, že refaktor nemění výklad). Owner dotaz 2026-07-04.
+- [x] **Prompt unification** — HOTOVO (SW v124): 10 IS/EN builderů → 5 generických (`buildReadingPromptSingle`/`buildNornsPromptFate`/`buildKrizPromptCross`/`buildHorseshoePromptSeven`/`buildYggdrasilPromptNine`) + 5 `RP_*` packů. Golden-verified: IS byte-identický, EN jen kosmetická normalizace runesBlock. **Přidání jazyka = přeložit packy.** Golden harness v `scripts/golden/`. (Detail → DECISIONS 2026-07-04.)
 
 ## Launch blockers (z CLAUDE.md)
 
