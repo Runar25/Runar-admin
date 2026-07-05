@@ -282,7 +282,7 @@ function setGender(g) {
   _updateGenderPills();
 }
 function _updateGenderPills() {
-  var sets = { kk: ['sp-g-kk', 'fg-kk'], kvk: ['sp-g-kvk', 'fg-kvk'], hk: ['sp-g-hk', 'fg-hk'] };
+  var sets = { kk: ['fg-kk'], kvk: ['fg-kvk'], hk: ['fg-hk'] };
   Object.keys(sets).forEach(function (k) {
     sets[k].forEach(function (id) {
       var el = document.getElementById(id);
@@ -292,12 +292,8 @@ function _updateGenderPills() {
 }
 function _updateGenderVisibility() {
   var show = (lang === 'is');
-  var sec = document.getElementById('sp-gender-section');
-  if (sec) sec.style.display = show ? 'block' : 'none';
   var row = document.getElementById('setup-gender-row');
   if (row) row.style.display = show ? 'block' : 'none';
-  var lbl = document.getElementById('sp-gender-lbl');
-  if (lbl) lbl.textContent = t('sp_gender_lbl');
   var flbl = document.getElementById('setup-gender-lbl');
   if (flbl) flbl.textContent = t('sp_gender_lbl');
 }
