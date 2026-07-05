@@ -971,108 +971,70 @@ function buildNornsPrompt(u, runes, lang, corrections) { return buildNornsPrompt
 // Horseshoe = 7-rune spread — sezónní hloubkové čtení. Standard+.
 // Pozice: [1]Past [2]Present [3]Hidden [4]Challenges [5]Outside [6]Inner [7]Outcome
 
-function buildHorseshoePromptIS(u, runes, corrections) {
+var RP_HORSESHOE = {
+  is: {
+    seeker:'Leiðandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leiðin', seekJoin:' og ', question:'Spurning', langInstr:'',
+    positions:['RÚNAN 1 — Fortíð (hvað hefur mótað):','RÚNAN 2 — Nútíð (hvað er að ríkja):','RÚNAN 3 — Dulið / Nánasta framtíð (hvað er að koma upp):','RÚNAN 4 — Hindranir (hvað þyngir eða hindrar):','RÚNAN 5 — Ytri kraftar (hvað kemur að utan):','RÚNAN 6 — Innri staða (hvað er inni í þér):','RÚNAN 7 — Niðurstaða (hvert er þetta að fara):'],
+    intro:'Leiðandinn dregur sjö rúnar — Podkova.',
+    beats:[
+      'Lestu allar sjö sem einn samfelldann stef — ekki sjö aðskildar lagnir.',
+      'Rúnan 7 (Niðurstaða) er ekki spá — sjáðu hana sem stefnu ef þráðurinn heldur áfram.',
+      'Nefndu ekki staðsetningarnar í úttakinu. Bærðu þær í röddinn.',
+      'Sérhver rúna verður að setja mark sitt — láttu allar sjö móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
+    ],
+    closing:function(name){ return 'Ávarpaðu ' + name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. 11 til 12 setningar. Endaðu með einni opinni spurningu.'; },
+    json:'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í þeirri röð sem listuð er að ofan, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)"}]. Text-reitirnir tengdir með bili verða að lesast sem ein samfelld heild.',
+  },
+  en: {
+    seeker:'Seeker', lifeRune:'Life rune', area:'Area', seeking:'Seeking', seekJoin:' & ', question:'Question', langInstr:'Respond in English.',
+    positions:['RUNE 1 — Past (what has shaped this):','RUNE 2 — Present (what is active now):','RUNE 3 — Hidden / Near future (what is emerging):','RUNE 4 — Challenges (what weighs or blocks):','RUNE 5 — Outside forces (what acts from beyond):','RUNE 6 — Inner state (what lives inside):','RUNE 7 — Outcome (where this is heading):'],
+    intro:'The seeker draws seven runes — the Horseshoe.',
+    beats:[
+      'Read all seven as one continuous passage — not seven separate readings.',
+      'Rune 7 (Outcome) is not prophecy — it is where this energy leads if nothing changes.',
+      'Do not name the positions in the output. Carry them in your voice.',
+      'Every rune must leave its mark — let all seven shape the reading through their quality, never just one or two. Do not name the runes; the seeker already sees them.',
+    ],
+    closing:function(name){ return 'Address ' + name + ' once, woven naturally — never as the opening word. 11-12 sentences. End with one open question.'; },
+    json:'Output format — return ONLY this JSON array, one object per rune in the order listed above, nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)"}]. The text fields joined with a space must read as one seamless passage.',
+  },
+};
+
+function buildHorseshoePromptSeven(u, runes, lang, corrections) {
+  var S = RP_HORSESHOE[lang] || RP_HORSESHOE.en;
   var life = u.lifeRune;
-  var lifeRef = life ? (life.is_n || life.n) + ' ' + life.g : '';
-
-  function runaBlock(r, label) {
-    var kws = rk(r).split(',').map(function(s){return s.trim();}).filter(Boolean).slice(0,4).join(', ');
-    return label + '\n' + (r.is_n || r.n) + ' ' + r.g + ' — ' + kws;
-  }
-
+  function kb(r){ return rk(r).split(',').map(function(s){ return s.trim(); }).filter(Boolean).slice(0, 4).join(', '); }
+  function block(r, label){ return label + '\n' + rn(r) + ' ' + r.g + ' — ' + kb(r); }
   var ctx = [
-    u.name    ? 'Leiðandi: ' + u.name : '',
-    life      ? 'LífsRúna: ' + lifeRef : '',
-    u.area    ? 'Svið: ' + u.area : '',
-    u.seeking ? 'Leiðin: ' + (Array.isArray(u.seeking) ? u.seeking.join(' og ') : u.seeking) : '',
-    u.mood      ? _moodContext(u.mood, 'is')      : '',
-    u.intention ? _intentionContext(u.intention, 'is') : '',
-    u.question ? 'Spurning: ' + u.question : '',
+    u.name    ? S.seeker + ': ' + u.name : '',
+    life      ? S.lifeRune + ': ' + rn(life) + ' ' + life.g : '',
+    u.area    ? S.area + ': ' + u.area : '',
+    u.seeking ? S.seeking + ': ' + (Array.isArray(u.seeking) ? u.seeking.join(S.seekJoin) : u.seeking) : '',
+    u.intention ? _intentionContext(u.intention, lang) : '',
+    u.question ? S.question + ': ' + u.question : '',
   ].filter(Boolean).join('\n');
-
+  var P = S.positions;
   var runesBlock = [
-    runaBlock(runes[0], 'RÚNAN 1 — Fortíð (hvað hefur mótað):'),
-    '',
-    runaBlock(runes[1], 'RÚNAN 2 — Nútíð (hvað er að ríkja):'),
-    '',
-    runaBlock(runes[2], 'RÚNAN 3 — Dulið / Nánasta framtíð (hvað er að koma upp):'),
-    '',
-    runaBlock(runes[3], 'RÚNAN 4 — Hindranir (hvað þyngir eða hindrar):'),
-    '',
-    runaBlock(runes[4], 'RÚNAN 5 — Ytri kraftar (hvað kemur að utan):'),
-    '',
-    runaBlock(runes[5], 'RÚNAN 6 — Innri staða (hvað er inni í þér):'),
-    '',
-    runaBlock(runes[6], 'RÚNAN 7 — Niðurstaða (hvert er þetta að fara):'),
+    block(runes[0], P[0]), '', block(runes[1], P[1]), '', block(runes[2], P[2]), '', block(runes[3], P[3]), '',
+    block(runes[4], P[4]), '', block(runes[5], P[5]), '', block(runes[6], P[6]),
   ].join('\n');
-
-  return [
-    ctx,
-    '',
-    'Leiðandinn dregur sjö rúnar — Podkova.',
-    '',
-    runesBlock,
-    '',
-    _seasonalImagery('is'),
-    'Lestu allar sjö sem einn samfelldann stef — ekki sjö aðskildar lagnir.',
-    'Rúnan 7 (Niðurstaða) er ekki spá — sjáðu hana sem stefnu ef þráðurinn heldur áfram.',
-    'Nefndu ekki staðsetningarnar í úttakinu. Bærðu þær í röddinn.',
-    'Sérhver rúna verður að setja mark sitt — láttu allar sjö móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
-    'Ávarpaðu ' + u.name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. 11 til 12 setningar. Endaðu með einni opinni spurningu.'
-      + getCorrPrompt('is', corrections),
-    _addressContext('is'),
-    'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í þeirri röð sem listuð er að ofan, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)"}]. Text-reitirnir tengdir með bili verða að lesast sem ein samfelld heild.',
-  ].filter(Boolean).join('\n');
-}
-
-function buildHorseshoePromptEN(u, runes, lang, corrections) {
-  var life = u.lifeRune;
-  var langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Islenska).' : 'Respond in English.';
-
-  function kbLine(r) {
-    return rk(r).split(',').map(function(s){return s.trim();}).filter(Boolean).slice(0,4).join(', ');
-  }
-
-  var ctx = [
-    'Seeker: ' + u.name,
-    life ? 'Life rune: ' + rn(life) + ' ' + life.g : '',
-    u.area    ? 'Area: ' + u.area : '',
-    u.seeking ? 'Seeking: ' + (Array.isArray(u.seeking) ? u.seeking.join(' & ') : u.seeking) : '',
-    u.mood      ? _moodContext(u.mood)      : '',
-    u.intention ? _intentionContext(u.intention) : '',
-    u.question ? 'Question: ' + u.question : '',
-  ].filter(Boolean).join('\n');
-
-  var runesBlock = [
-    'RUNE 1 — Past (what has shaped this):',          rn(runes[0]) + ' ' + runes[0].g, kbLine(runes[0]), '',
-    'RUNE 2 — Present (what is active now):',         rn(runes[1]) + ' ' + runes[1].g, kbLine(runes[1]), '',
-    'RUNE 3 — Hidden / Near future (what is emerging):', rn(runes[2]) + ' ' + runes[2].g, kbLine(runes[2]), '',
-    'RUNE 4 — Challenges (what weighs or blocks):',   rn(runes[3]) + ' ' + runes[3].g, kbLine(runes[3]), '',
-    'RUNE 5 — Outside forces (what acts from beyond):', rn(runes[4]) + ' ' + runes[4].g, kbLine(runes[4]), '',
-    'RUNE 6 — Inner state (what lives inside):',      rn(runes[5]) + ' ' + runes[5].g, kbLine(runes[5]), '',
-    'RUNE 7 — Outcome (where this is heading):',      rn(runes[6]) + ' ' + runes[6].g, kbLine(runes[6]),
-  ].join('\n');
-
   return [
     ctx, '',
-    'The seeker draws seven runes — the Horseshoe.', '',
+    S.intro, '',
     runesBlock, '',
-    _seasonalImagery('en'),
-    'Read all seven as one continuous passage — not seven separate readings.',
-    'Rune 7 (Outcome) is not prophecy — it is where this energy leads if nothing changes.',
-    'Do not name the positions in the output. Carry them in your voice.',
-    'Every rune must leave its mark — let all seven shape the reading through their quality, never just one or two. Do not name the runes; the seeker already sees them.',
-    'Address ' + u.name + ' once, woven naturally — never as the opening word. 11-12 sentences. End with one open question.',
-    'Output format — return ONLY this JSON array, one object per rune in the order listed above, nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)"}]. The text fields joined with a space must read as one seamless passage.',
-    langInstr,
+    _seasonalImagery(lang),
+  ].concat(S.beats).concat([
+    S.closing(u.name),
+    _addressContext(lang),
+    S.json,
+    (S.langInstr ? S.langInstr : ''),
     getCorrPrompt(lang, corrections),
-  ].filter(Boolean).join('\n');
+  ]).filter(Boolean).join('\n');
 }
 
-function buildHorseshoePrompt(u, runes, lang, corrections) {
-  if (lang === 'is') return buildHorseshoePromptIS(u, runes, corrections);
-  return buildHorseshoePromptEN(u, runes, lang, corrections);
-}
+function buildHorseshoePromptIS(u, runes, corrections) { return buildHorseshoePromptSeven(u, runes, 'is', corrections); }
+function buildHorseshoePromptEN(u, runes, lang, corrections) { return buildHorseshoePromptSeven(u, runes, lang, corrections); }
+function buildHorseshoePrompt(u, runes, lang, corrections) { return buildHorseshoePromptSeven(u, runes, lang, corrections); }
 
 // ─── YGGDRASIL PROMPT BUILDERS ─────────────────────────────────────────────
 // Yggdrasil = 9-rune spread — jednou ročně, zimní slunovrat (Dec 14–28). Premium.
