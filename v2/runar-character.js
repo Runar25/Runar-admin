@@ -904,107 +904,68 @@ function buildKrizPrompt(u, runes, lang, corrections) { return buildKrizPromptCr
 // Bloom duration: 24h (branch reaches toward kmen).
 // Fate axis — not a timeline. Each Norna has a distinct voice and weight.
 
-function buildNornsPromptIS(u, runes, corrections) {
-  var rUrd  = runes[0];  // Urður — urd
-  var rVerd = runes[1];  // Verðandi — verdandi
-  var rSkul = runes[2];  // Skuld — skuld
-  var life  = u.lifeRune;
-  var lifeRef = life ? (life.is_n || life.n) + ' ' + life.g : '';
+var RP_NORNS = {
+  is: {
+    seeker:'Leiðandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leiðin', seekJoin:' og ', question:'Spurning', langInstr:'',
+    labels:['URÐUR (urd — það sem var ofið, ekki hægt að taka til baka):','VERÐANDI (verdandi — það sem er að verða til, lifandi þráðurinn):','SKULD (skuld — það sem verður að koma, skuldin við örlögin):'],
+    intro:'Leiðandinn dregur þrjár rúnar — Nornirnar tala.',
+    beats:[
+      'Þetta eru ekki þrír aðskildir lestrar — þetta er ein saga sem Nornirnar segja saman.',
+      'Urður talar af þyngd þess sem er þegar fast — röddin hennar er hlutlæg, óafturkallanleg.',
+      'Verðandi talar í nútíð — lifandi, að verða til, ekki lokið.',
+      'Skuld talar ekki um framtíðina eins og spámann — heldur um hvað verður að verða ef þráðurinn heldur áfram.',
+    ],
+    bigInstruction:function(name){ return 'Gefðu hverri af þremur rúnunum sinn eigin takt, í röð — Urður (það sem var), Verðandi (það sem er að verða), Skuld (það sem verður að koma). Taktarnir þrír renna saman í EINN samfelldan straum, ekki þrjá aðskilda lestra. Nefndu ekki rúnirnar né Nornirnar; leiðandinn sér þær þegar. Ávarpaðu ' + name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. 5 til 6 setningar alls yfir taktana þrjá; síðasti takturinn endar með einni mjúkri, opinni spurningu.'; },
+    json:'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í röð (Urður, Verðandi, Skuld), engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)"}]. Þrír text-reitir tengdir með bili verða að lesast sem ein samfelld heild.',
+  },
+  en: {
+    seeker:'Seeker', lifeRune:'Life rune', area:'Area', seeking:'Seeking', seekJoin:' & ', question:'Question', langInstr:'Respond in English.',
+    labels:['URÐUR (urd — what was woven, cannot be undone):','VERÐANDI (verdandi — what is being woven, alive now):','SKULD (skuld — what must come, the debt of fate):'],
+    intro:'The seeker draws three runes — the Norns speak.',
+    beats:[
+      'This is not three separate readings — it is one story told by three voices.',
+      'Urður speaks with the weight of what is already fixed — her voice is declarative, immovable.',
+      'Verðandi speaks in the present — living, becoming, not yet complete.',
+      'Skuld does not predict — she speaks of what must come if this thread continues.',
+    ],
+    bigInstruction:function(name){ return 'Give each of the three runes its own beat, in order — Urður (what was), Verðandi (what is becoming), Skuld (what must come). The three beats connect into ONE flowing passage, not three separate readings. Do not name the runes or the Norns; the seeker already sees them. Address ' + name + ' once, woven naturally — never as the opening word. 5-6 sentences total across the three beats; the final beat ends with one quiet, open question.'; },
+    json:'Output format — return ONLY this JSON array, one object per rune in order (Urður, Verðandi, Skuld), nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)"}]. The three text fields joined with a space must read as one seamless passage.',
+  },
+};
 
-  function runaBlock(r, label) {
-    var kws = rk(r).split(',').map(function(s) { return s.trim(); }).filter(Boolean).slice(0, 4).join(', ');
-    return label + '\n' + (r.is_n || r.n) + ' ' + r.g + ' — ' + kws;
-  }
-
+function buildNornsPromptFate(u, runes, lang, corrections) {
+  var S = RP_NORNS[lang] || RP_NORNS.en;
+  var rUrd = runes[0], rVerd = runes[1], rSkul = runes[2];
+  var life = u.lifeRune;
+  function kb(r){ return rk(r).split(',').map(function(s){ return s.trim(); }).filter(Boolean).slice(0, 4).join(', '); }
+  function block(r, label){ return label + '\n' + rn(r) + ' ' + r.g + ' — ' + kb(r); }
   var ctx = [
-    u.name    ? 'Leiðandi: ' + u.name : '',
-    life      ? 'LífsRúna: ' + lifeRef : '',
-    u.area    ? 'Svið: ' + u.area : '',
-    u.seeking ? 'Leiðin: ' + (Array.isArray(u.seeking) ? u.seeking.join(' og ') : u.seeking) : '',
-    u.mood      ? _moodContext(u.mood, 'is')      : '',
-    u.intention ? _intentionContext(u.intention, 'is') : '',
-    u.question ? 'Spurning: ' + u.question : '',
+    u.name    ? S.seeker + ': ' + u.name : '',
+    life      ? S.lifeRune + ': ' + rn(life) + ' ' + life.g : '',
+    u.area    ? S.area + ': ' + u.area : '',
+    u.seeking ? S.seeking + ': ' + (Array.isArray(u.seeking) ? u.seeking.join(S.seekJoin) : u.seeking) : '',
+    u.intention ? _intentionContext(u.intention, lang) : '',
+    u.question ? S.question + ': ' + u.question : '',
   ].filter(Boolean).join('\n');
-
-  var runesBlock = [
-    runaBlock(rUrd,  'URÐUR (urd — það sem var ofið, ekki hægt að taka til baka):'),
-    '',
-    runaBlock(rVerd, 'VERÐANDI (verdandi — það sem er að verða til, lifandi þráðurinn):'),
-    '',
-    runaBlock(rSkul, 'SKULD (skuld — það sem verður að koma, skuldin við örlögin):'),
-  ].join('\n');
-
-  return [
-    ctx,
-    '',
-    'Leiðandinn dregur þrjár rúnar — Nornirnar tala.',
-    '',
-    runesBlock,
-    '',
-    _seasonalImagery('is'),
-    'Þetta eru ekki þrír aðskildir lestrar — þetta er ein saga sem Nornirnar segja saman.',
-    'Urður talar af þyngd þess sem er þegar fast — röddin hennar er hlutlæg, óafturkallanleg.',
-    'Verðandi talar í nútíð — lifandi, að verða til, ekki lokið.',
-    'Skuld talar ekki um framtíðina eins og spámann — heldur um hvað verður að verða ef þráðurinn heldur áfram.',
-    'Gefðu hverri af þremur rúnunum sinn eigin takt, í röð — Urður (það sem var), Verðandi (það sem er að verða), Skuld (það sem verður að koma). Taktarnir þrír renna saman í EINN samfelldan straum, ekki þrjá aðskilda lestra. Nefndu ekki rúnirnar né Nornirnar; leiðandinn sér þær þegar. Ávarpaðu ' + u.name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. 5 til 6 setningar alls yfir taktana þrjá; síðasti takturinn endar með einni mjúkri, opinni spurningu.',
-    'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í röð (Urður, Verðandi, Skuld), engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)"}]. Þrír text-reitir tengdir með bili verða að lesast sem ein samfelld heild.'
-      + getCorrPrompt('is', corrections),
-    _addressContext('is'),
-  ].filter(Boolean).join('\n');
-}
-
-function buildNornsPromptEN(u, runes, lang, corrections) {
-  var rUrd  = runes[0];
-  var rVerd = runes[1];
-  var rSkul = runes[2];
-  var life  = u.lifeRune;
-  var langInstr = lang === 'is' ? 'Respond entirely in Icelandic (Islenska).' : 'Respond in English.';
-
-  function kbLine(r) {
-    return rk(r).split(',').map(function(s) { return s.trim(); }).filter(Boolean).slice(0, 4).join(', ');
-  }
-
-  var ctx = [
-    'Seeker: ' + u.name,
-    life ? 'Life rune: ' + rn(life) + ' ' + life.g : '',
-    u.area    ? 'Area: ' + u.area : '',
-    u.seeking ? 'Seeking: ' + (Array.isArray(u.seeking) ? u.seeking.join(' & ') : u.seeking) : '',
-    u.mood      ? _moodContext(u.mood)      : '',
-    u.intention ? _intentionContext(u.intention) : '',
-    u.question ? 'Question: ' + u.question : '',
-  ].filter(Boolean).join('\n');
-
-  var runesBlock = [
-    'URÐUR (urd — what was woven, cannot be undone):',
-    rn(rUrd) + ' ' + rUrd.g + ' — ' + kbLine(rUrd),
-    '',
-    'VERÐANDI (verdandi — what is being woven, alive now):',
-    rn(rVerd) + ' ' + rVerd.g + ' — ' + kbLine(rVerd),
-    '',
-    'SKULD (skuld — what must come, the debt of fate):',
-    rn(rSkul) + ' ' + rSkul.g + ' — ' + kbLine(rSkul),
-  ].join('\n');
-
+  var L = S.labels;
+  var runesBlock = [ block(rUrd, L[0]), '', block(rVerd, L[1]), '', block(rSkul, L[2]) ].join('\n');
   return [
     ctx, '',
-    'The seeker draws three runes — the Norns speak.', '',
+    S.intro, '',
     runesBlock, '',
-    _seasonalImagery('en'),
-    'This is not three separate readings — it is one story told by three voices.',
-    'Urður speaks with the weight of what is already fixed — her voice is declarative, immovable.',
-    'Verðandi speaks in the present — living, becoming, not yet complete.',
-    'Skuld does not predict — she speaks of what must come if this thread continues.',
-    'Give each of the three runes its own beat, in order — Urður (what was), Verðandi (what is becoming), Skuld (what must come). The three beats connect into ONE flowing passage, not three separate readings. Do not name the runes or the Norns; the seeker already sees them. Address ' + u.name + ' once, woven naturally — never as the opening word. 5-6 sentences total across the three beats; the final beat ends with one quiet, open question.',
-    'Output format — return ONLY this JSON array, one object per rune in order (Urður, Verðandi, Skuld), nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)"}]. The three text fields joined with a space must read as one seamless passage.',
-    langInstr,
+    _seasonalImagery(lang),
+  ].concat(S.beats).concat([
+    S.bigInstruction(u.name),
+    S.json,
+    (S.langInstr ? S.langInstr : ''),
+    _addressContext(lang),
     getCorrPrompt(lang, corrections),
-  ].filter(Boolean).join('\n');
+  ]).filter(Boolean).join('\n');
 }
 
-function buildNornsPrompt(u, runes, lang, corrections) {
-  if (lang === 'is') return buildNornsPromptIS(u, runes, corrections);
-  return buildNornsPromptEN(u, runes, lang, corrections);
-}
+function buildNornsPromptIS(u, runes, corrections) { return buildNornsPromptFate(u, runes, 'is', corrections); }
+function buildNornsPromptEN(u, runes, lang, corrections) { return buildNornsPromptFate(u, runes, lang, corrections); }
+function buildNornsPrompt(u, runes, lang, corrections) { return buildNornsPromptFate(u, runes, lang, corrections); }
 
 // ─── HORSESHOE PROMPT BUILDERS ─────────────────────────────────────────────
 // Horseshoe = 7-rune spread — sezónní hloubkové čtení. Standard+.
