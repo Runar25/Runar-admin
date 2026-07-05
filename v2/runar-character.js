@@ -554,12 +554,12 @@ function getBirthMonth(m, lang) {
 function buildLifeRunePromptIS(name, rune, day, month, year, isPremium) {
   var monthDesc = getBirthMonth(month, 'is');
   var nameInstr = isPremium
-    ? 'Baettu vid hluta um nafnid ' + name + ' — merkingu þss á norrænu, goðsagnalega mynd eða persónu sem tengist nafninu.'
+    ? 'Bættu við hluta um nafnið ' + name + ' — merkingu þess á norrænu, goðsagnalega mynd eða persónu sem tengist nafninu.'
     : '';
   var parts = [
     'Þú ert Rúnar, rúnavörður Agndofa.',
     '',
-    'Þetta er lestur lítsrúnar ' + name + ' — ekki lestur dagsins, heldur lestur þess sem ' + name + ' hefur borið í sér frá fæðingu.',
+    'Þetta er lestur lífsrúnar ' + name + ' — ekki lestur dagsins, heldur lestur þess sem ' + name + ' hefur borið í sér frá fæðingu.',
     '',
     'MANNESKJAN: ' + name,
     'LÍFSRÚNA: ' + rune.is_n + ' ' + rune.g,
@@ -569,21 +569,21 @@ function buildLifeRunePromptIS(name, rune, day, month, year, isPremium) {
     'KJARNAORÐ: ' + rune.k_is,
     '',
     'Stíllíkan — læra af tóni, ekki nota beint:',
-    '"Þegar rúnan kemur til þín, er þà orkan sem er þegar á leið."',
-    '"Þú stendur á mörkum tveggja heimsins. Rúnirnar sjá hvað þú ert að ganga í gegnum."',
+    '"Þegar rúnan kemur til þín, er þá orkan sem er þegar á leið."',
+    '"Þú stendur á mörkum tveggja heima. Rúnirnar sjá hvað þú ert að ganga í gegnum."',
     '',
     'Skrifaðu í tveimur hlutum — engar fyrirsagnir í úttakinu:',
     '',
     'HLUTI 1 — DAGSETNINGIN (3 setningar):',
-    'Hvað ber ' + monthDesc.split(' — ')[0] + ' í íslenskuari? Hvaða gæði hafði þessi tími — hvað var að gerast í landinu þegar ' + name + ' kom til sögunnar? Ekki stjörnuspeki. Andrúmsloft.',
+    'Hvað ber ' + monthDesc.split(' — ')[0] + ' í íslensku ári? Hvaða gæði hafði þessi tími — hvað var að gerast í landinu þegar ' + name + ' kom til sögunnar? Ekki stjörnuspeki. Andrúmsloft.',
     '',
     'HLUTI 2 — RÚNAN (5–6 setningar):',
-    rune.is_n + ' sem jarðvegur lífs ' + name + '. Lögun rúnarinnar og hvað hún ber í sér. Gjöfin — hvað kemur náttúrulega til manneskju sem fæðist undir þessari rúnu. Skugginn — hvar sama orkan verður erfið. Eitt samfelld flæði — ekki listi. Flettu inn nafninu ' + name + ' einu sinni eða tvisvar. Endaðu með einni mjúkri, opinni spurningu.',
+    rune.is_n + ' sem jarðvegur lífs ' + name + '. Lögun rúnarinnar og hvað hún ber í sér. Gjöfin — hvað kemur náttúrulega til manneskju sem fæðist undir þessari rúnu. Skugginn — hvar sama orkan verður erfið. Eitt samfellt flæði — ekki listi. Flettu inn nafninu ' + name + ' einu sinni eða tvisvar. Endaðu með einni mjúkri, opinni spurningu.',
     '',
     (nameInstr ? nameInstr + '\n' : ''),
-    'Reglur: Rúnars rödd. Ljóðrænt, beint. Útskyrðu ekki — opinberaðu.',
+    'Reglur: Rúnars rödd. Ljóðrænt, beint. Útskýrðu ekki — opinberaðu.',
     'Ekki nota "ferðalag" sem myndlíkingu. Ekki "faðmaðu" eða "styrktu". Engar upphrópunarmerki.',
-    'Svaraðu einungis á íslenskum.'
+    'Svaraðu einungis á íslensku.'
   ];
   return parts.join('\n');
 }
@@ -807,7 +807,7 @@ var RP_KRIZ = {
   is: {
     seeker:'Leiðandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leiðin', seekJoin:' og ', question:'Spurning',
     positions:['RÚNAN 1 (Miðja / Kjarni — verdandi)','RÚNAN 2 (Of an / Á leit — skuld)','RÚNAN 3 (Undir / Rót — urd)','RÚNAN 4 (Að baki / Fortíð — urd)','RÚNAN 5 (Framar / Stefna — skuld)'],
-    intro:'Leiðandinn dregur fimm rúnar — Áttavitinn.',
+    intro:'Leiðandinn dregur fimm rúnir — Áttavitinn.',
     langInstr:'',
     instructions:function(ctrName){ return [
       'Lesturinn fer í einum flæði — ekki fimm aðskildir lestrar.',
@@ -890,7 +890,7 @@ var RP_NORNS = {
   is: {
     seeker:'Leiðandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leiðin', seekJoin:' og ', question:'Spurning', langInstr:'',
     labels:['URÐUR (urd — það sem var ofið, ekki hægt að taka til baka):','VERÐANDI (verdandi — það sem er að verða til, lifandi þráðurinn):','SKULD (skuld — það sem verður að koma, skuldin við örlögin):'],
-    intro:'Leiðandinn dregur þrjár rúnar — Nornirnar tala.',
+    intro:'Leiðandinn dregur þrjár rúnir — Nornirnar tala.',
     beats:[
       'Þetta eru ekki þrír aðskildir lestrar — þetta er ein saga sem Nornirnar segja saman.',
       'Urður talar af þyngd þess sem er þegar fast — röddin hennar er hlutlæg, óafturkallanleg.',
@@ -955,7 +955,7 @@ var RP_HORSESHOE = {
   is: {
     seeker:'Leiðandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leiðin', seekJoin:' og ', question:'Spurning', langInstr:'',
     positions:['RÚNAN 1 — Fortíð (hvað hefur mótað):','RÚNAN 2 — Nútíð (hvað er að ríkja):','RÚNAN 3 — Dulið / Nánasta framtíð (hvað er að koma upp):','RÚNAN 4 — Hindranir (hvað þyngir eða hindrar):','RÚNAN 5 — Ytri kraftar (hvað kemur að utan):','RÚNAN 6 — Innri staða (hvað er inni í þér):','RÚNAN 7 — Niðurstaða (hvert er þetta að fara):'],
-    intro:'Leiðandinn dregur sjö rúnar — Podkova.',
+    intro:'Leiðandinn dregur sjö rúnir — Skeifan.',
     beats:[
       'Lestu allar sjö sem einn samfelldann stef — ekki sjö aðskildar lagnir.',
       'Rúnan 7 (Niðurstaða) er ekki spá — sjáðu hana sem stefnu ef þráðurinn heldur áfram.',
@@ -1023,12 +1023,12 @@ var RP_YGGDRASIL = {
   is: {
     seeker:'Leiðandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leiðin', seekJoin:' og ', question:'Spurning', langInstr:'',
     tiers:['── SKULD (króna — það sem verður að vera) ──','── VERÐANDI (stofn — það sem er að gerast) ──','── URÐUR (rætur — það sem var og er fast) ──'],
-    positions:['RÚNAN 1 — Ásgarðr (hæsta sjálf, hvað þú ert að verða):','RÚNAN 2 — Vanaheimr (samhljómur, hvað er í jafnvægi):','RÚNAN 3 — Álfheimr (skapaningur, hvað er að kvikna):','RÚNAN 4 — Miðgarðr (daglegar raunir, hér og nú):','RÚNAN 5 — Jötunheimr (hindrun, hvað þrýstir gegn þér):','RÚNAN 6 — Svartálfaheimr (dulinn list, hvað er unnið í myrkri):','RÚNAN 7 — Níðavellir (djúpur uppspretta, hvað berur þig án vitundar):','RÚNAN 8 — Niflheimr (uppruni, hvað er enn óleyst í þér):','RÚNAN 9 — Hel (lokið, hvað er að fullnægja sér):'],
-    intro:'Leiðandinn dregur níu rúnar — Yggdrasil, níu heimar. Einu sinni á ári.',
+    positions:['RÚNAN 1 — Ásgarðr (hæsta sjálf, hvað þú ert að verða):','RÚNAN 2 — Vanaheimr (samhljómur, hvað er í jafnvægi):','RÚNAN 3 — Álfheimr (sköpunarkraftur, hvað er að kvikna):','RÚNAN 4 — Miðgarðr (daglegar raunir, hér og nú):','RÚNAN 5 — Jötunheimr (hindrun, hvað þrýstir gegn þér):','RÚNAN 6 — Svartálfaheimr (dulin list, hvað er unnið í myrkri):','RÚNAN 7 — Níðavellir (djúp uppspretta, hvað heldur þér uppi án þess að þú vitir):','RÚNAN 8 — Niflheimr (uppruni, hvað er enn óleyst í þér):','RÚNAN 9 — Hel (lokið, hvað er að fullnægja sér):'],
+    intro:'Leiðandinn dregur níu rúnir — Yggdrasil, níu heimar. Einu sinni á ári.',
     beats:[
       'Þetta eru ekki níu aðskildir lestrar — þetta er eitt líf séð í gegnum níu glugga.',
-      'Rúnar 1–3 (Skuld/Króna): talaðu um þær af þunga og þekkningu — þetta eru þræðirnir sem eru að verða sniðnir.',
-      'Rúnar 4–5 (Verðandi/Stofn): þetta eru raunar raunirnar — talaðu um þær af nútíðarþunga.',
+      'Rúnar 1–3 (Skuld/Króna): talaðu um þær af þunga og þekkingu — þetta eru þræðirnir sem eru að verða sniðnir.',
+      'Rúnar 4–5 (Verðandi/Stofn): þetta eru raunirnar sjálfar — talaðu um þær af nútíðarþunga.',
       'Rúnar 6–9 (Urður/Rætur): þetta er það sem er fast — talaðu um þær af þyngd þess sem er þegar ofið.',
       'Lestu frá Ásgarðr niður til Hel — eitt flæði, ein rödd.',
       'Nefndu ekki heimanna nöfn í úttakinu. Nefndu ekki Norns-ásinn. Láttu þá lifa í röddinn.',
