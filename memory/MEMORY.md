@@ -34,7 +34,7 @@ Klíčové soubory pro Read (lokální):
 - Rune Walker (Standard): 50 castů/měsíc | Rune Keeper (Premium): 75 castů/měsíc
 - Yggdrasil: Dec 14–28 pro VŠECHNY přihlášené (RS za kredity, Standard/Premium z limitu)
 - Visitor = jediný tier bez spreadů (jen Single 1×)
-- **Tier UI jména**: Standard→Rune Walker, Premium→Rune Keeper (DB hodnoty beze změny)
+- **Tier identita (2026-07-05, nahrazuje Walker/Keeper — Cowork+KUKY)**: VŠICHNI registrovaní = **Rune Seeker** (identita navždy, žádný rank/vrchol). standard/premium = NE hodnosti, jen víc čtení/bohatší features (access/value). **Rune Walker / Rune Keeper labely = RETIRED**, nová jména standard/premium TBD (Cowork `TIER-NAMING-brief.md`) → **NEPŘEJMENOVÁVAT** dokud nedodají. **Keeper = jen Rúnar** (průvodce), žádný tier. Óðin's Path = budoucí režim/obřad (NE vrchol). Zdroj labelů = TIERS §8, ALE reálně **scattered ~10 míst** (config panel_props/life_rune, help.html tabulka+próza, auth stub) → rename ≠ 1 místo. DB hodnoty (free_trial/rune_seeker/standard/premium) beze změny. Detail: RUNAR_DECISIONS.md 2026-07-05.
 - **Vocabulary**: credit→rune reading (dříve rune stone), reading→cast, karta→Rune Reading Card
 - Life Rune pro RS: 3 rune stones (proxy správně deductuje 3 — credit_cost fix hotov)
 - **Trojice ODSTRANĚNA** — nahrazena Norns jako zakládací rituál
