@@ -75,7 +75,7 @@ Worst-case cost per reading-unit is the **single** (358 chars/unit); all spreads
 - **Credit cost = per reading type** (not rune count): Single 1 · Norns 2 · Kríž 3 · Horseshoe 4 · Yggdrasil 5 · Life Rune 3
 - Access: all spreads via credits (Single, Norns, Kříž, Horseshoe, Yggdrasil)
 - Credits are deliberately expensive — engaged user self-selects into subscription
-- Tree: founding ritual = Norns = **2 credits**, teaser only · Life Rune reading 3 credits
+- Tree: **Founding ritual (Norns) = 2 credits** · **Life Rune reading = 3 credits** · **full tree founding = 3 + 2 = 5 credits** (viz RUNAR_CONTEXT.md). „Founding" bez přívlastku = Norns 2; „fundace stromu" = celých 5.
 - Journal: last 5 entries
 - Purpose: entry point, credit buyer, gift card recipient
 
@@ -105,8 +105,10 @@ Spread-heavy users get more value (Yggdrasil 5 units, was 9 runes) at no extra w
 
 ## Spreads per Tier
 
-| Spread | Runes | Credits | Visitor | Rune Seeker | Standard | Premium |
-|--------|-------|---------|---------|-------------|---------|---------|
+| Spread | Rune count | Credits | Visitor | Rune Seeker | Standard | Premium |
+|--------|-----------|---------|---------|-------------|---------|---------|
+<!-- "Rune count" = kolik run se táhne (info), NE cena. Cena = sloupec Credits. -->
+
 | Single | 1 | 1 | 1× total | 1 free at reg. + credits | ∞* | ∞* |
 | Norns | 3 | 2 | ❌ | credits | ∞* | ∞* |
 | Kříž | 5 | 3 | ❌ | credits | ∞* | ∞* |

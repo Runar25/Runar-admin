@@ -60,9 +60,9 @@ ale záměrně je překrucuje. Zapaluje spor. Udržuje napětí živé.
 Je trickster. Dráždí, provokuje, mísí světy.
 A přesto — je **jediný kdo zná celý strom**. Orel vidí jen vršek. Had jen kořeny.
 
-V Rúnaru: Ratatoskr nese runu na její místo ve stromu — ale ne nutně tam kde ji čekáš.
-Runa přijde tam kam patří podle jeho znalosti stromu, ne podle přání uživatele.
-Čtení může překvapit. Může dráždit. Může odhalit co jsi nechtěl vidět.
+V Rúnaru: Ratatoskr nepatří ani nahoře ani dole — je jediný, kdo zná obě krajnosti.
+Když mluví zároveň Eagle i Níðhöggr, koruna i kořeny najednou, je to jeho moment:
+Full Gathering — celý strom mluví.
 Ratatoskr není pohodlný posel. Je pravdivý — a pravda někdy pálí.
 
 **Huginn a Muninn — dva havrani, ne vrány**
@@ -86,9 +86,7 @@ V Rúnaru:
 
 | Moment | Bytost | Jak |
 |--------|--------|-----|
-| Uživatel táhne runu | Ratatoskr | přijme a vybíhá po stromě |
-| Runa v větvi — možná překvapivě | Ratatoskr | tam kde patří, ne kde čekáš |
-| Zakládací rituál | Ratatoskr | první tři velké cesty, kládají kmen |
+| Full Gathering (Eagle + Níðhöggr) | Ratatoskr | jediný kdo zná celý strom — dnes mluví oba konce |
 | Journal | Muninn | jeho sbírka |
 | Life Rune | Muninn | střeží nejhlouběji |
 | Trunk revelation | Muninn | konečně promluví |
@@ -123,6 +121,35 @@ Každá session od druhé dál se stává větví. Větev není záznam toho co 
 Větev je záznam toho co se pohnulo.
 
 Rúnar je průvodce. Strom jsi ty.
+
+### Co každá část stromu znamená
+
+*(Primární narativ v angličtině — CZ/IS překlad přes nativního mluvčího)*
+
+The roots were there before you arrived. You did not plant them.
+The founding reading names what was already true —
+the forces that shaped you did not begin the moment you first asked.
+
+The trunk is you. Not who you wish to become. Not who you are becoming.
+Who you are — from the first breath.
+Everything else grows toward the trunk, or away from it.
+
+The branches do not record what was said.
+They record what brought you here.
+
+The tree knows one thing:
+whether you are growing toward your trunk, or away from it.
+
+Harmony is not the goal. Tension is not failure.
+Both tell a story. The difference tells you where you are.
+
+### Vzorce jako jazyk stromu
+
+Eagle vzorce = strom si všiml něčeho nahoře. Opakuje se to v tvém stávání — v tom kam jdeš.
+Níðhöggr vzorce = strom si všiml něčeho dole. Opakuje se to v kořenech — v tom co nespeš nebo odmítáš vidět.
+Full Gathering = strom si všiml obojího najednou.
+
+Vzorec není diagnóza. Je to moment kdy strom přestane jen růst a začne ukazovat.
 
 ---
 
@@ -250,7 +277,7 @@ Strom: větev s centrálním uzlem a čtyřmi výhonky. Standard+.
 IS pozice: navrhnout před implementací.
 Strom: větvená větev se sedmi body → sezónní rituál kmene. Standard+.
 
-### Yggdrasil (9 run) — jen Premium
+### Yggdrasil (9 run) — všichni přihlášení (Dec 14–28)
 ```
               [Ásgarðr]
       [Álfheimr]   [Vanaheimr]
@@ -384,43 +411,46 @@ Zpět k kmeni  návrat, uzavření, integrace
 - Silná: velká osobní váha
 - Rozeklnaná: hloubka bez uzavření
 
-**Barva a textura** = sezóna + lunární fáze:
-- Zimní: šedá, stříbrná, ledová
-- Jarní: zelená, tenké výhonky
-- Letní: tmavě zelená, bohaté
-- Podzimní: zlatá, rezavá
-- Úplněk: jemná záře na větvi
-
 **Co určuje charakter větve:**
-- Element runy → barva větve
-- Ætt runy → výška větve na stromě (viz sekce Ætty)
-- Area of Life z formuláře → směr (levá = inward, pravá = outward)
-- Seeking z formuláře → hloubkový multiplikátor
-- Počet vyplněných polí → celková váha větve
-- Čas od posledního čtení stejného spreadu → bonus nebo penalizace
+- **Norns osa** (intention + area + seeking) → **VÝŠKA** větve (urð = kořeny · verðandi = střed · skuld = koruna)
+  Priorita: intention (nejsilnější) › area › seeking; fallback = world runy.
+- **Element runy** → **BARVA** větve (Fire/Water/Air/Earth; Life Rune = 5. element)
+- **Ætt runy** → **CHARAKTER** větve (způsob růstu, ne výška):
+  Freyjina = pevné/nesoucí · Heimdallova = kroucené/uzlovité · Týrova = světlé/průlomové
+- **Area of Life** → **STRANA** (levá = vnitřní svět / pravá = vnější svět)
+- **Seeking** → modifikátor Norns osy (Insight/Reflection→urð · Clarity/Confirmation→verðandi · General=neutrál)
+- **Počet vyplněných polí** → váha větve
+- **Čas od posledního čtení** → bonus (pauza) / penalizace (moc brzy)
 
-### Tři sekce stromu — Ætty
+Sezónní textura a lunární záře větve: vrstva smyslu, plánováno — implementace: druhá fáze.
+
+### Svislá osa — Norny (výška větve)
+
+Výška větve = Norns osa = kde ve tvém příběhu čtení žije.
+Větev roste nahoru ke skuld nebo dolů k urð podle **kontextu čtení** — ne podle runové rodiny.
 
 ```
-TŘETÍ ÆTT — Týrův rod (vrchol stromu)
-Tiwaz, Berkana, Ehwaz, Mannaz, Laguz, Ingwaz, Othala, Dagaz
-Energie: spravedlnost, zrození, pohyb, tok, průlom
-Větve: nejvýše — průlomy, záměry naplněné, světlo
-
-DRUHÝ ÆTT — Heimdalův rod (střed stromu)
-Hagalaz, Nauthiz, Isa, Jera, Eihwaz, Perthro, Algiz, Sowilo
-Energie: výzva, čekání, transformace, skryté, ochrana
-Větve: kde probíhá práce — kroucené, složité, s uzly
-
-PRVNÍ ÆTT — Freyův rod (kmen a spodní větve)
-Fehu, Uruz, Thurisaz, Ansuz, Raidho, Kenaz, Gebo, Wunjo
-Energie: svět, příroda, síla, cesta, dar, radost
-Větve: základ — silné, pevné, nesoucí váhu
-
-KOŘENY — první tři sessions (neměnné)
+SKULD    → koruna     co musí být · záměr · pohon · budoucnost
+VERÐANDI → střed      co se právě tká · přítomný okamžik · živá nit
+URÐ      → kořeny     co bylo utkáno · základ · původ · minulost
 ```
 
-Prázdná sekce = informace sama o sobě. Uživatel bez průlomů nemá větve v třetím Ættu.
+Výpočet: intention (nejsilnější) + area + seeking → vážené hlasování urð(−1)…skuld(+1).
+Fallback (prázdný formulář): world runy (Asgard→skuld · Midgard→verðandi · Hel→urð).
+→ Výška funguje vždy, i u rychlého single, a pořád je "osudová", ne jen taxonomie.
+
+Prázdná zóna = informace sama o sobě. Člověk bez korunních větví teprve ohlíží zpátky.
+
+**Ætty = charakter větve (způsob růstu, ne výška):**
+
+| Ætt | Runy | Charakter větve |
+|-----|------|----------------|
+| Freyjina (1. Ætt) | Fehu–Wunjo | pevné, nesoucí váhu — energie světa a těla |
+| Heimdallova (2. Ætt) | Hagalaz–Sowilo | kroucené, uzlovité — transformace a skryté |
+| Týrova (3. Ætt) | Tiwaz–Dagaz | světlé, průlomové — spravedlnost a završení |
+
+Ætta dominance (3+ run ze stejné skupiny) = vzorec → pulz větví dané skupiny.
+Implementace: vrstva smyslu, plánováno.
 
 ### 5 elementů stromu
 
@@ -444,69 +474,53 @@ Vztahy, komunikace, cesta, akce. Runy vzduchu a ohně.
 
 ### Pre-reading formulář → strom
 
-Area of Life → primární element a směr větve:
+Area of Life → strana + příspěvek k Norns ose:
 
-| Area of Life | Element | Strana | Směr |
+| Area of Life | Element | Strana | Norns příspěvek |
 |---|---|---|---|
-| Love & Relationships | Water/Air | pravá | outward |
-| Purpose & Path | Air | střed | upward |
-| Career & Creativity | Fire | střed | steeply upward |
-| Healing & Wellbeing | Water/Earth | levá | inward |
-| Spirituality | Air | střed | highest |
-| Family & Home | Earth | levá | lower |
-| Inner Growth | Water/Earth | levá | inward/root |
-| Crossroads & Decisions | Fire | střed | upward |
+| Inner Growth | Water/Earth | levá (dovnitř) | urð |
+| Healing & Wellbeing | Water/Earth | levá (dovnitř) | urð |
+| Family & Home | Earth | levá (dovnitř) | urð |
+| Love & Relationships | Water/Air | pravá (ven) | verðandi |
+| Crossroads & Decisions | Fire/Air | střed | verðandi |
+| Purpose & Path | Air | pravá (ven) | skuld |
+| Career & Creativity | Fire | pravá (ven) | skuld |
+| Spirituality | Air | střed | skuld |
 
-Seeking → hloubkový multiplikátor:
+Seeking → modifikátor Norns osy (ne multiplikátor váhy):
 
-| Seeking | Multiplikátor |
+| Seeking | Norns modifikátor |
 |---|---|
-| General Guidance | ×1.0 |
-| Confirmation | ×1.2 |
-| Clarity | ×1.3 |
-| Insight into Challenge | ×1.5 |
-| Reflection | ×1.5 |
+| General Guidance | neutrál |
+| Confirmation | → verðandi |
+| Clarity | → verðandi |
+| Insight into Challenge | → urð |
+| Reflection | → urð |
 
-Nejhlubší kombinace — čtení jde do kořenů:
-Area of Life: Inner Growth nebo Healing & Wellbeing + Seeking: Reflection/Insight + Reading for: Understanding the past
+Nejsilnější urð kombinace (čtení jde hluboko ke kořenům):
+Intention: Understanding the past + Area: Inner Growth / Healing + Seeking: Reflection / Insight
 
 ### Kmen (trunk) — jak se odhalí
-Rúnar ho nepojmenuje brzy — trvá to mnoho sessions.
-Pokud uživatel opakovaně volí stejný Area of Life, stává se to tématem kmene.
-Po mnoha sessions Rúnar tiše nabídne: *"Vidím co tvoří tvůj kmen. Chceš vědět?"*
-Kolik sessions = "opakovaně": zatím nestanoveno.
+Kmen je Life Rune — vždy tam byl, od prvního dne, z data narození.
+Co se teprve odhaluje v čase: zda čtení rostou *z* té runy, nebo se od ní vzdalují.
+Muninn sleduje vzorec. Po mnoha sessions tiše nabídne:
+*"Vidím vzorec. Chceš vědět?"*
 
-### Pojmenování větví — tři úrovně
-1. **Runové jméno** — automatické, z dominantní runy session
-2. **Ættové umístění** — sekce stromu, vizuální, neměnné
-3. **Osobní jméno** — Rúnar navrhne, uživatel přijme nebo přepíše vlastními slovy
+Toto není odhalení kmene samotného — je to odhalení vztahu mezi stromem a tím kdo roste.
 
-Rúnar: *"Tato větev nese energii Vody. Jak bys ji pojmenoval ty?"*
-Uživatel: *"Rok kdy jsem přestal čekat"* / *"Otázka matky"* / *"Hranice"*
-Osobní název je nejcennější data v celém stromu.
+### Pojmenování větví
+> **[VYŘAZENO 2026-06-15 — RUNAR_TREE_BUILD.md v1.0]**
+> Větve nemají jména. Příběh nese inspekce (klik na větev → runa + keywords + počet čtení).
 
 ### Záměry (intentions) — seed → building → closure
-Větev-záměr roste přes více sessions, ne z jedné.
+> **[PARKOVÁNO — pokročilá retence, odloženo na druhou fázi — RUNAR_TREE_BUILD.md v1.0 2026-06-15]**
+> Myšlenka: větev-záměr roste přes více sessions (semeno → budování → uzavření/transformace).
+> Psychologicky silné — vrátit se k tomu až budou reálná čtení v DB.
 
-**Fáze 1 — Semeno**: uživatel vysloví záměr. Ve stromu: průsvitný pupen.
-**Fáze 2 — Budování**: další sessions tématu se dotknou. Větev roste pomalu.
-**Fáze 3 — Uzavření nebo transformace**: posun nastal → větev dostane tvar a uzel.
-Nebo se transformuje → větev se rozdvojí. Strom drží toto rozdvojení viditelně.
-
-Nedokončená větev-záměr je psychologicky aktivní. Uživatel cítí že tam něco čeká.
-
-### Nemocný strom — 5 typů
-
-1. **Suchá větev** — záměr vyslovený ale dlouho nedotčený. Čeká, nezlomená.
-2. **Kroucení bez růstu** — téma které se opakuje ale nikam nejde (spirála vs. stagnace).
-3. **Prázdná sekce Ættu** — celý Ætt bez větví. Informace sama o sobě.
-4. **Jizvy bez pokračování** — přestávka v těžkém momentu. Strom přežil.
-5. **Pupen který nikdy neotevřel** — záměr zasazený dávno, nikdy nenaplněný.
-
-Rúnar nikdy nediagnostikuje. Přijde blíže. *"Jedna větev čeká od zimy. Jsem tady."*
-Přinese správné runy. Pojmenuje bez pojmenování — poeticky, z jiného úhlu.
-
-Nemocný strom je retenční mechanismus — přivádí uživatele zpět silněji než zdravý.
+### Nemocný strom — vizuální stavy
+> **[PARKOVÁNO — odloženo na druhou fázi — RUNAR_TREE_BUILD.md v1.0 2026-06-15]**
+> Myšlenka: strom může nést vizuální stopy stagnace, suchých větví, jizev.
+> Silný retenční mechanismus. Vrátit se až s reálnými daty a DB.
 
 ### Pauza (absence)
 Pauza není prázdnota — je to zima. Větev která ukazuje mezeru v čase.
