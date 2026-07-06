@@ -94,21 +94,21 @@ const TIERS = {
     label_is:         'Gestur',
     readings:         1,          // total, no account needed — CHANGED 2026-05-29
     // ↓ VOICE FLAGS — flip here to enable/disable without touching logic
-    // voice_monthly: true = Visitor slyší hlas při svých 3 čteních
+    // voice_monthly: true = Visitor slyší hlas při svém 1 čtení
     // Až budeme limitovat: flip na false → Visitor dostane jen text
     voice_monthly:    true,       // ← aktuálně otevřeno; připraveno pro gating
     voice_credits:    false,      // n/a pro Visitor (nemůže mít kredity)
     voice_static:     true,       // pre-generované audio v Collection
     journal:          false,
     ceremonial:       false,
-    languages:        ['en'],
+    languages:        ['en', 'is'],
   },
   rune_seeker: {
     label:            'Rune Seeker',
     label_is:         'Vegfarandi',
     monthly_readings: null,        // legacy — RS uses free_balance (1 onboarding), no monthly reset
     // ↓ VOICE FLAGS — flip here to enable/disable without touching logic
-    // voice_monthly: true = hlas pro všech 5 free čtení/měsíc
+    // voice_monthly: true = hlas pro free čtení (model B: 1 při registraci, bez měsíčního resetu)
     // Až budeme limitovat: flip na false → hlas jen při kreditech
     voice_monthly:    true,       // ← aktuálně otevřeno; připraveno pro gating
     voice_credits:    true,       // hlas při kreditním čtení — vždy
