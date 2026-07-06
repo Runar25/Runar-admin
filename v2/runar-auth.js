@@ -319,8 +319,8 @@ if ('serviceWorker' in navigator) {
 function openUpgradeModal() {
   // Until Rune Walker purchase flow exists, show info and link to site
   showToast(lang === 'is'
-    ? 'Rune Walker - kemur bráðlega. Sjá agndofa.is'
-    : 'Rune Walker subscription — coming soon. See agndofa.is');
+    ? TIERS.standard.label_is + ' - kemur bráðlega. Sjá agndofa.is'
+    : TIERS.standard.label + ' subscription — coming soon. See agndofa.is');
 }
 
 function openAuthModal() {

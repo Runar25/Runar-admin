@@ -154,11 +154,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
               <td id="td-card">When monthly readings are walked — a reading card keeps the door open. Credits never expire. Rúnar's voice speaks your reading aloud.</td>
             </tr>
             <tr>
-              <td>RUNE WALKER <span style="opacity:0.4;font-size:0.85em">soon</span></td>
+              <td><span id="tier-lbl-standard">RUNE WALKER</span> <span style="opacity:0.4;font-size:0.85em">soon</span></td>
               <td id="td-standard">Unlimited readings. Rúnar's voice always. Your full chronicle — every reading, going back to the beginning.</td>
             </tr>
             <tr>
-              <td>RUNE KEEPER <span style="opacity:0.4;font-size:0.85em">soon</span></td>
+              <td><span id="tier-lbl-premium">RUNE KEEPER</span> <span style="opacity:0.4;font-size:0.85em">soon</span></td>
               <td id="td-premium">Everything in Rune Walker. Ceremonial mode. Seasonal readings at solstices and equinoxes. Multi-rune spreads.</td>
             </tr>
           </tbody>
@@ -292,7 +292,7 @@ const CONTENT = {
     'td-seeker':     'Free account. One reading when you join. Reading Gift Card keeps the door open — credits never expire. All twenty-five runes open. A journal of your last five readings.',
     'td-card':       'Credits never expire and follow your account across devices. Rúnar\'s voice speaks your reading aloud.',
     'td-standard':   '50 readings per month. Rúnar\'s voice always. Full journal + filters — every reading, going back to the beginning.',
-    'td-premium':    '75 readings per month. Everything in Rune Walker. Yggdrasil — all nine worlds. Ceremonial mode.',
+    'td-premium':    '75 readings per month. Everything in ' + TIERS.standard.label + '. Yggdrasil — all nine worlds. Ceremonial mode.',
     's3-lbl':        'READING CARDS',
     's3-physical-title': 'PHYSICAL CARD',
     's3-physical-body':  `<p>Available at the Agndofa shop in Iceland and online at <a href="https://agndofa.is" target="_blank" style="color:var(--gold);opacity:0.85;">agndofa.is</a>. A small card with a unique code. Redeem it in the app — credits are added to your account immediately.</p>`,
@@ -344,7 +344,7 @@ const CONTENT = {
     'td-seeker':     'Ókeypis reikningur. Einn frjáls lestur þegar þú skráir þig. Lestur gjafakort heldur dyrunum opnum. Allar tuttugu og fimm rúnirnar opnar. Dagbók síðustu fimm lestrana.',
     'td-card':       'Þegar mánaðarlegir lestrar eru gengnar — lesturarkort heldur dyrunum opnum. Kreditarnir renna aldrei út. Rödd Rúnars les lesturinn þinn upphátt.',
     'td-standard':   '50 lestrar á mánuði. Rödd Rúnars alltaf. Full kronika þín — sérhver lestur, allt frá upphafi.',
-    'td-premium':    '75 lestrar á mánuði. Allt í Rune Walker. Yggdrasil — níu heimar. Ceremonial ham.',
+    'td-premium':    '75 lestrar á mánuði. Allt í ' + TIERS.standard.label_is + '. Yggdrasil — níu heimar. Ceremonial ham.',
     's3-lbl':        'LESTURARKORT',
     's3-physical-title': 'LÍKAMLEGT KORT',
     's3-physical-body':  `<p>Fæst í Agndofa búð á Íslandi og á netinu á <a href="https://agndofa.is" target="_blank" style="color:var(--gold);opacity:0.85;">agndofa.is</a>. Lítið kort með einstökum kóða. Innleysið í appinu — kreditarnir bætast við samstundis.</p>`,
@@ -403,6 +403,10 @@ function applyContent() {
       el.textContent = c[id];
     }
   });
+  var _tls = document.getElementById('tier-lbl-standard');
+  if (_tls) _tls.textContent = (lang === 'is' ? TIERS.standard.label_is : TIERS.standard.label).toUpperCase();
+  var _tlp = document.getElementById('tier-lbl-premium');
+  if (_tlp) _tlp.textContent = (lang === 'is' ? TIERS.premium.label_is : TIERS.premium.label).toUpperCase();
   buildFaq(c.faq || []);
 }
 

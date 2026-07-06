@@ -62,7 +62,7 @@ const RUNAR_MODES = {
     active:     true,
   },
   life_rune_premium: {
-    label:      'Life Rune Reading — Rune Keeper',
+    label:      'Life Rune Reading',
     max_tokens: 2000,
     voice:      false,
     layers:     null,
@@ -263,8 +263,8 @@ const TIER_LIMITS = {
     monthly_limit: 75,   // casts per month
     journal_entries: null,
     panel_props: {
-      en: ['75 casts / month.', 'Everything in Rune Walker.', 'Yggdrasil — all nine worlds.', 'Ceremonial mode.'],
-      is: ['75 spár / mánuð.', 'Allt í Rune Walker.', 'Yggdrasil — níu heimar.', 'Ceremonial mode.'],
+      en: ['75 casts / month.', 'Everything in ' + TIERS.standard.label + '.', 'Yggdrasil — all nine worlds.', 'Ceremonial mode.'],
+      is: ['75 spár / mánuð.', 'Allt í ' + TIERS.standard.label_is + '.', 'Yggdrasil — níu heimar.', 'Ceremonial mode.'],
     },
   },
 };
