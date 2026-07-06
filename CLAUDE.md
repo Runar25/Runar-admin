@@ -174,7 +174,7 @@ tree_name (text), life_rune_number (int), life_rune_text (text), life_rune_lang 
 `_readingMode` = `'mine'` (ukládá) | `'someone'` (neukládá).
 `u.area/seeking/mood/intention/question` → `parts[]` → Claude. Norns axis: `_moodContext(mood,lang)` + `_intentionContext(intention,lang)` v runar-character.js.
 
-**Délky** (runar-character.js): Single 3 věty · Norns 5-6 · Cross 6-7 · Horseshoe 11-12 · Yggdrasil 14-15 · Life Rune 8-9 (text). Délka = znaky = EL náklad → při změně přepočítat pricing (RUNAR_PRICING.md). Jméno ne vždy na začátek; životní runa jen kontext.
+**Délky čtení**: zdroj pravdy = buildery v `runar-character.js` (RP_* packy + `closing()` věty). Docs čísla NEopakují — když měníš délku, uprav builder + přepočítej pricing (RUNAR_PRICING.md). Délka = znaky = EL náklad. Jméno ne vždy na začátek; životní runa jen kontext.
 
 **Sezónní obraznost**: `_seasonalImagery(lang, drawn)` injektuje per-čtení 1 obraz islandské sezóny (`SEASON_POOLS` bright/cold, localStorage no-repeat sáček; studené runy → cold set). KLÍČ: per-čtení user-prompt injekce model POSLECHNE, system prompt IGNORUJE → `buildSysPromptV2` REDUNDANTNÍ (jen lab). Reader = `buildSysPrompt`.
 
@@ -213,6 +213,11 @@ Designová rozhodnutí (co a proč) → `RUNAR_DESIGN.md`
 Tree of Life (zakládací rituál, větve, elementy, kořeny) → `tree-of-life.md`
 Pattern detection + The Gathering (Eagle/Níðhöggr, transformační páry) → `runar-patterns.md`
 Business model + ceny + EL kalkulace → `RUNAR_PRICING.md`
+
+**Doc-owner pravidla (2026-07-05):**
+- **Čísla = jen v configu / builderech** (SPREAD_COSTS, TIERS, character.js). Docs je NEopakují — odkazují na zdroj (délky→character.js, ceny/kredity→config).
+- **1 téma = 1 vlastník doc.** Žádné nové samostatné docs — když téma patří jinam, jinde jen odkaz.
+- **Délka docu ~200 řádků** (250 OK, když to fakt pomáhá). Nad = rozdělit nebo přesunout detail do doménového doc/snapshotu.
 
 ---
 

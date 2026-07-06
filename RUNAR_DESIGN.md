@@ -49,6 +49,10 @@ kterou šel Ódin před ním. Každý uživatel je Rune Seeker.
 Ódin obětoval sám sebe na Yggdrasilu aby odhalil runy. Každý kdo přichází do Rúnaru
 přichází jako hledač — ne zákazník, ne uživatel. **Rune Seeker.**
 
+**Tier identita (2026-07-05, Cowork+KUKY).** Každý registrovaný je **Rune Seeker** — navždy, bez hodnosti, bez vrcholu. Standard a Premium NEJSOU vyšší rank; jen znamenají víc čtení v ceně / bohatší obsah a features (access & value, ne graduace). **Keeper = jen Rúnar** (průvodce) — žádný uživatelský tier se tak nesmí jmenovat. „Rune Walker" / „Rune Keeper" jako tier labely = retired; finální jména standard/premium se řeší v Coworku (`TIER-NAMING-brief.md`).
+
+**Óðin's Path (Óðinsvegur) — budoucí režim/obřad, NE vrchol.** Poutník vs Cesta: uživatel je *poutník* (Rune Seeker) na cestě, kterou šel Óðin; „Óðin's Path" je *ta cesta sama* zpřístupněná jako hlubší prožitek — obřad ponoru (oběť na Yggdrasilu, hledání run), který přijde později. Není to nejvyšší tier ani graduace — je to způsob, jak jít **hlouběji po téže cestě**, ne výš nad ostatní.
+
 ### Bytosti které cestu nesou
 
 **Ratatoskr — vrtáček, trickster, jediný kdo zná celý strom**

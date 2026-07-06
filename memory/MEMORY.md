@@ -105,7 +105,7 @@ VOCAB: unit(rune reading/spá), cast(cast/spá), card(Rune Reading Card/Rúnakor
 - **Native app strategie** (2026-06-09) — Island 70% iOS, App Store discovery = primární driver, push přes email, Capacitor cesta (RUNAR_PRICING.md)
 - **Audit fixes** (2026-06-12) — voice_btn_done i18n, Berkano→Berkana, card name z VOCAB (vlp helper), tier jména z TIERS, redeem-link lokalizace, gift_card_btn kanonický, §15 pravidlo, free_spreads smazán, IS akcenty (Yggdrasil+AETTY)
 - **RS free model B** (2026-06-12) — userFreeBalance global z DB free_balance; měsíční localStorage systém + pondělní drip ODSTRANĚNY; backend chyba weekly_limit→no_credits; deployed. TODO cleanup: mrtvé helpery (getFreeMonthCount, nextReset*, reset modal, reset_body/readings_renewed)
-- **Délky čtení + weaving** (2026-06-12) — Single 4, Norns 8-9, Kříž 9-10, Horseshoe 11-12, Yggdrasil 14-15, Life Rune 8-9; format default generický. Multi-rune: všechny runy prostoupí text kvalitou, runy se NEjmenují (BUG #2 fix — Horseshoe/Yggdrasil zmiňovaly jen 1). 8 builderů EN+IS.
+- **Délky čtení + weaving** (2026-06-12; ⚠️ konkrétní čísla SUPERSEDED — zdroj pravdy = buildery v character.js, docs čísla neopakují) — format default generický. Multi-rune: všechny runy prostoupí text kvalitou, runy se NEjmenují (BUG #2 fix — Horseshoe/Yggdrasil zmiňovaly jen 1). 8 builderů EN+IS.
 - **stones → rune reading** (2026-06-12) — VOCAB.unit 'rune stone'→'rune reading'/'spá' (propíše vn('unit')); hardcoded literály + IS rs_credits_desc + panely. Poetické "stones" (Rúnarův hlas) zůstávají.
 - **BUG #1 accepted** (2026-06-12) — delete account + re-register → 1 free znovu (free_balance default 1). PŘIJATO bez fixu: prevence vyžaduje persistent tracking přežívající smazání (email-hash, obejitelné novým emailem); hodnota zneužití = 1 čtení.
 - **RS Life Rune cost** = 3 rune readings (SPREAD_COSTS.life_rune.credits)
@@ -166,6 +166,7 @@ VOCAB: unit(rune reading/spá), cast(cast/spá), card(Rune Reading Card/Rúnakor
 - [tree-of-life.md](tree-of-life.md) — Tree design (branch objekt, Gathering, AETTY, vizuál, Yggdrasil)
 - [runar-patterns.md](runar-patterns.md) — Pattern detection design
 - **RUNAR_DECISIONS.md** (repo root `Downloads\Runar-admin\`) — append-only log architektonických rozhodnutí (§16 two-output rule)
+- **RUNAR_SIGIL_STUDIO.md** (repo root) — standalone bind-rune (bandrún) maker. v0 MVP HOTOVO+OVĚŘENO 2026-07-06 (`build_sigil_lab.py` → `v2/sigil-lab/`). Spine-collapse engine, 6 pastí+fixů, 3 třídy run, engrave-first. NENÍ v produkci.
 
 ## Tree session paměť (Code)
 Frontmatter-paměť TREE session (Claude Code). Od 2026-07-04 sdílená s Cowork — obě platform složky jsou junction na `repo/memory/` (§17, jediný zdroj).
