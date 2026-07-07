@@ -706,6 +706,20 @@ function updateUIText() {
   setText('sp-signout-btn', t('sign_out'));
   var _tgq = document.getElementById('tree-growth-quote');
   if (_tgq) _tgq.innerHTML = t('tree_growth_quote');
+  setText('name-prompt-skip', t('name_modal_skip'));
+  setText('auth-or', t('auth_or'));
+  var _stlbl = (lang === 'is' ? TIERS.standard.label_is : TIERS.standard.label);
+  setText('q-teaser-txt', tp('q_teaser', { tier: _stlbl }));
+  var _jtxt = document.getElementById('journal-teaser-txt');
+  if (_jtxt) _jtxt.innerHTML = tp('journal_teaser', { tier: _stlbl });
+  var _jr = document.querySelector('#jf-rune option[value=""]');
+  if (_jr) _jr.textContent = t('jf_all_runes');
+  var _ja = document.querySelector('#jf-area option[value=""]');
+  if (_ja) _ja.textContent = t('jf_all_areas');
+  var _ct = document.getElementById('credits-text');
+  if (_ct) _ct.textContent = (lang === 'is' ? TIERS.rune_seeker.label_is : TIERS.rune_seeker.label);
+  var _tbg = document.getElementById('topbar-greeting');
+  if (_tbg && _tbg.classList.contains('show') && typeof updateTopbarGreeting === 'function') updateTopbarGreeting();
 }
 
 // ─── APP TABS ────────────────────────────────────────────
