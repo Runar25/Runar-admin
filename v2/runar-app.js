@@ -698,6 +698,14 @@ function updateUIText() {
   _updateTrialTexts();
   _updateGateTexts();
   _updateGenderVisibility();
+  // Dynamic reader/tree/panel strings must refresh on language switch too
+  if (typeof _updateReadingForm === 'function') _updateReadingForm();
+  var _hg = document.getElementById('hero-greeting');
+  if (_hg && _hg.classList.contains('show') && typeof showHeroGreeting === 'function') showHeroGreeting();
+  setText('tree-dob-btn', t('tree_reveal_btn') + ' →');
+  setText('sp-signout-btn', t('sign_out'));
+  var _tgq = document.getElementById('tree-growth-quote');
+  if (_tgq) _tgq.innerHTML = t('tree_growth_quote');
 }
 
 // ─── APP TABS ────────────────────────────────────────────
