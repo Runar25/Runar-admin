@@ -630,9 +630,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .whispers-audio-wrap{margin-top:10px;}
 .whispers-audio-wrap audio{width:100%;}
 
-/* ── TOAST ── */
-.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(20px);background:#0d1a12;border:1px solid var(--teal);color:var(--teal);font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:2px;padding:12px 24px;z-index:200;opacity:0;transition:opacity 0.4s,transform 0.4s;pointer-events:none;}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+/* ── TOAST removed per owner (green showToast notification) ── */
 
 /* ── CREDIT NOTE ── */
 .credit-note{text-align:center;font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:2px;color:var(--dim);margin-top:14px;}
