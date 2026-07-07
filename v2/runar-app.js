@@ -550,7 +550,7 @@ function _updateDobLabel() {
   const _dobVisitor = !currentUser;
   if (dlbl) {
     const _dobHint = _dobVisitor
-      ? (lang === 'is' ? '· Gerast Vegfarandi til að birta lífstíðarrúnina þína' : '· Become a Rune Seeker to unveil your life rune')
+      ? (lang === 'is' ? '· Gerast Leitandi til að birta lífstíðarrúnina þína' : '· Become a Rune Seeker to unveil your life rune')
       : (lang === 'is' ? '· til að uppgötva lífstíðarrúnina þína' : '· to reveal your life rune');
     dlbl.innerHTML = t('dob_lbl') + ' <span class="opt">'+t('opt')+'</span>' + ' <span class="visitor-lock-hint">' + _dobHint + '</span>';
   }
@@ -572,7 +572,7 @@ function _updateAreaSeekLabels() {
   const _isVisitor = !currentUser;
   const _isRSnoCredits = currentUser && userTier === 'rune_seeker' && userCredits <= 0;
   const _lockHint = _isVisitor
-    ? ' <span class="visitor-lock-hint">' + (lang === 'is' ? '· Gerast Vegfarandi til að opna' : '· Become a Rune Seeker to unveil') + '</span>'
+    ? ' <span class="visitor-lock-hint">' + (lang === 'is' ? '· Gerast Leitandi til að opna' : '· Become a Rune Seeker to unveil') + '</span>'
     : _isRSnoCredits
       ? ' <span class="visitor-lock-hint">' + (lang === 'is' ? '· Reading Gift Card opnar allt' : '· Reading Gift Card unveils all') + '</span>'
       : '';
@@ -599,14 +599,14 @@ function _updateTrialTexts() {
   setText('gate-note', lang === 'is'
     ? 'Þú hefur farið með Rúnar einu sinni sem gestur.\nStofnaðu reikning til að halda áfram.'
     : 'You have walked with Rúnar once as a Visitor.\nCreate a free account to continue.');
-  setText('gate-btn', lang === 'is' ? 'GERAST VEGFARANDI' : 'BECOME A RUNE SEEKER');
+  setText('gate-btn', lang === 'is' ? 'GERAST LEITANDI' : 'BECOME A RUNE SEEKER');
   // Trial end prompt translations
   setText('trial-end-title', lang === 'is' ? 'FERÐ ÞÍN SEM GESTUR ER LOKIÐ' : 'YOUR JOURNEY AS VISITOR IS COMPLETE');
   const ten = document.getElementById('trial-end-note');
   if (ten) ten.innerHTML = lang === 'is'
-    ? 'Þú hefur farið með Rúnar sem Gestur. Steinarnir muna.<br><b class="rs-link">Gerast Vegfarandi</b> til að halda áfram — ' + TIER_LIMITS.rune_seeker.onboarding_label_is + ' þegar þú skráir þig. Engin greiðsla.'
+    ? 'Þú hefur farið með Rúnar sem Gestur. Steinarnir muna.<br><b class="rs-link">Gerast Leitandi</b> til að halda áfram — ' + TIER_LIMITS.rune_seeker.onboarding_label_is + ' þegar þú skráir þig. Engin greiðsla.'
     : 'You have walked with Rúnar as a Visitor. The stones remember.<br><b class="rs-link">Become a Rune Seeker</b> to continue — ' + TIER_LIMITS.rune_seeker.onboarding_label_en + ' when you join. No payment ever needed.';
-  setText('trial-end-btn', lang === 'is' ? 'GERAST VEGFARANDI →' : 'BECOME A RUNE SEEKER →');
+  setText('trial-end-btn', lang === 'is' ? 'GERAST LEITANDI →' : 'BECOME A RUNE SEEKER →');
 }
 
 // Journal gate, auth modal consent, journal re-render, buildPills
@@ -616,9 +616,9 @@ function _updateGateTexts() {
   // Journal gate — Visitor teaser
   const jgTxt = document.getElementById('journal-gate-txt');
   if (jgTxt) jgTxt.innerHTML = lang === 'is'
-    ? 'Þú gengur hér sem Gestur.<br>Dagbókin þín hefst um leið og þú mætir.<br>Gerðu þig að <b class="rs-link">Vegfaranda</b> til að opna dagbókina.'
+    ? 'Þú gengur hér sem Gestur.<br>Dagbókin þín hefst um leið og þú mætir.<br>Gerðu þig að <b class="rs-link">Leitanda</b> til að opna dagbókina.'
     : 'You walk here as a Visitor.<br>Your journal begins the moment you arrive.<br>Become a <b class="rs-link">Rune Seeker</b> to open the journal.';
-  setText('journal-gate-btn', lang === 'is' ? 'GERAST VEGFARANDI →' : 'BECOME A RUNE SEEKER →');
+  setText('journal-gate-btn', lang === 'is' ? 'GERAST LEITANDI →' : 'BECOME A RUNE SEEKER →');
   // Re-render journal if it's open (picks up new lang labels)
   if (activeAppTab === 'journal' && _journalCache.length > 0) renderJournal(_journalCache);
   else if (activeAppTab === 'journal') updateWhispersUI();
@@ -720,6 +720,8 @@ function updateUIText() {
   if (_ct) _ct.textContent = (lang === 'is' ? TIERS.rune_seeker.label_is : TIERS.rune_seeker.label);
   var _tbg = document.getElementById('topbar-greeting');
   if (_tbg && _tbg.classList.contains('show') && typeof updateTopbarGreeting === 'function') updateTopbarGreeting();
+  var _tub = document.getElementById('tree-upgrade-btn');
+  if (_tub) _tub.textContent = (lang === 'is' ? 'UPPFÆRA → ' : 'UPGRADE → ') + (lang === 'is' ? TIERS.standard.label_is : TIERS.standard.label).toUpperCase();
 }
 
 // ─── APP TABS ────────────────────────────────────────────
@@ -791,7 +793,7 @@ async function loadCollection() {
     if (isVisitor) {
       const isIs = lang === 'is';
       document.getElementById('vcn-text').innerHTML = isIs
-        ? `Þú gengur hér sem <strong>Gestur</strong>. Fehu — rúna upphafsins — opnar rödd sína fyrir þig frítt. Dragðu hana. Hlustaðu á það sem fornir steinar geyma.<br><br>Þegar þú ert tilbúinn að ganga með allar tuttugu og fimm rúnirnar og heyra Rúnar tala í lestur þinn, vertu <strong>Vegfarandi</strong> — það kostar ekkert.`
+        ? `Þú gengur hér sem <strong>Gestur</strong>. Fehu — rúna upphafsins — opnar rödd sína fyrir þig frítt. Dragðu hana. Hlustaðu á það sem fornir steinar geyma.<br><br>Þegar þú ert tilbúinn að ganga með allar tuttugu og fimm rúnirnar og heyra Rúnar tala í lestur þinn, vertu <strong>Leitandi</strong> — það kostar ekkert.`
         : `You walk here as a <strong>Visitor</strong>. Fehu — the rune of beginnings — opens its voice to you freely. Draw it. Hear what the old stones whisper.<br><br>When you are ready to walk with all twenty-five runes and hear Rúnar speak in your own reading, become a <strong>Rune Seeker</strong> — it costs nothing.`;
       document.getElementById('vcn-btn').textContent = t('become_rs_btn');
     }

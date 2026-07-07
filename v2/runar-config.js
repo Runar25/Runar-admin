@@ -105,7 +105,7 @@ const TIERS = {
   },
   rune_seeker: {
     label:            'Rune Seeker',
-    label_is:         'Vegfarandi',
+    label_is:         'Leitandi',
     monthly_readings: null,        // legacy — RS uses free_balance (1 onboarding), no monthly reset
     // ↓ VOICE FLAGS — flip here to enable/disable without touching logic
     // voice_monthly: true = hlas pro free čtení (model B: 1 při registraci, bez měsíčního resetu)
@@ -119,7 +119,7 @@ const TIERS = {
   },
   standard: {
     label:            'Rune Walker',
-    label_is:         'Rune Walker',
+    label_is:         'Vegfarandi',
     monthly_readings: 50,          // Rune Walker: 50/month
     voice_monthly:    true,
     voice_credits:    true,
@@ -129,8 +129,8 @@ const TIERS = {
     languages:        ['en', 'is'],
   },
   premium: {
-    label:            'Rune Keeper',
-    label_is:         'Rune Keeper',
+    label:            'Rune Wanderer',
+    label_is:         'Ferðalangur',
     monthly_readings: 75,          // Rune Keeper: 75/month — matches TIER_LIMITS.premium.monthly_limit
     voice_monthly:    true,
     voice_credits:    true,
