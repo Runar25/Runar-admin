@@ -355,17 +355,11 @@
     <!-- OUTPUT -->
     <div id="reader-output" style="display:none;">
       <!-- Life rune + drawn rune badge -->
-      <div class="badge" id="reader-badge" style="display:none;">
-        <div>
-          <div class="badge-meta-lbl" id="life-rune-lbl" style="color:var(--gold);">YOUR LIFE RUNE</div>
-          <div class="badge-name" id="badge-life-name"></div>
-          <div style="font-size:2em;" id="badge-life-g"></div>
-        </div>
-        <div style="margin-left:auto;text-align:right;">
-          <div class="badge-meta-lbl" id="drawn-lbl" style="color:var(--blue);">DRAWN RUNE</div>
-          <div class="badge-name" id="badge-drawn-name"></div>
-          <div style="font-size:2em;" id="badge-drawn-g"></div>
-        </div>
+      <!-- Life rune = quiet lens: small subordinate line; drawn rune(s) shown by layer1-lbl / sX-lbl -->
+      <div class="badge badge-life" id="reader-badge" style="display:none;">
+        <span class="badge-life-g" id="badge-life-g"></span>
+        <span class="badge-life-name" id="badge-life-name"></span>
+        <span class="badge-life-note" id="badge-life-note">your life rune</span>
       </div>
       <!-- Reading loading overlay — pulsing ᚱ while AI generates -->
       <div id="reading-loading" style="display:none;">

@@ -49,6 +49,24 @@ function _readingErrMsg(errorType) {
   return t('err_generic');
 }
 
+// Life rune badge = quiet lens line. Shared by single + spread render (fixes the
+// spread stale-rune bug: badge shows the user-level life rune, not a leftover drawn rune).
+function _renderLifeBadge(life) {
+  var badge = document.getElementById('reader-badge');
+  if (!badge) return;
+  if (life) {
+    var g = document.getElementById('badge-life-g');
+    var n = document.getElementById('badge-life-name');
+    var note = document.getElementById('badge-life-note');
+    if (g) g.textContent = life.g;
+    if (n) n.textContent = rn(life);
+    if (note) note.textContent = t('badge_life_note');
+    badge.style.display = 'flex';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
 async function _generateReading() {
   if (!readerRune) return;
   const vBtn = document.getElementById('btn-generate-voice');
@@ -426,14 +444,7 @@ async function readRune() {
   document.getElementById('reader-rune-card').style.display = 'none';
   document.getElementById('reader-output').style.display = 'block';
   const u = readerUser, drawn = readerRune, life = u.lifeRune;
-  const badge = document.getElementById('reader-badge');
-  if (life) {
-    badge.style.display = 'flex';
-    document.getElementById('badge-life-name').textContent = rn(life);
-    document.getElementById('badge-life-g').textContent    = life.g;
-    document.getElementById('badge-drawn-name').textContent = rn(drawn);
-    document.getElementById('badge-drawn-g').textContent   = drawn.g;
-  } else { badge.style.display = 'none'; }
+  _renderLifeBadge(life);
   readerTexts = {}; voiceGenerated = {};
   await _generateReading();
 }
@@ -602,6 +613,7 @@ async function _generateSpreadReading(o) {
   if (s2) s2.style.display = 'none';
   var out = document.getElementById(o.outputId);
   if (out) out.style.display = 'block';
+  _renderLifeBadge(readerUser.lifeRune);
 
   var rdLoad = document.getElementById('reading-loading');
   var rdLoadTxt = document.getElementById('reading-loading-txt');

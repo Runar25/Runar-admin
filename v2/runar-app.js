@@ -677,8 +677,7 @@ function updateUIText() {
   setText('mode-btn-yggdrasil', t('spread_mode_yggdrasil'));
   setPH('redeem-input', t('redeem_ph'));
   setText('btn-speak', t('speak_btn'));
-  setText('life-rune-lbl', t('life_rune_lbl'));
-  setText('drawn-lbl', t('drawn_lbl'));
+  setText('badge-life-note', t('badge_life_note'));
   setText('layer1-lbl', t('layer1_lbl'));
   setText('layer2-lbl', t('layer2_lbl'));
   setText('draw-another-btn', t('draw_another'));
