@@ -320,6 +320,7 @@ textarea::placeholder{color:var(--dim);}
   <button class="tab"     id="tab-reader-btn"   onclick="showTab('reader')">⚗ V2 LAB</button>
   <button class="tab"     id="tab-correct-btn"  onclick="showTab('correct')">WORD CORRECTIONS</button>
   <button class="tab"     id="tab-codes-btn"    onclick="showTab('codes')">ᚠ GIFT CODES</button>
+  <button class="tab"     id="tab-reports-btn"  onclick="showTab('reports')">⚑ REPORTS</button>
   <a class="tab" href="runar-yggdrasil.html" style="text-decoration:none;">🌳 YGGDRASIL</a>
   <a class="tab" href="runar-reader.html" style="text-decoration:none;">👁 USER VIEW</a>
 </div>
@@ -603,7 +604,35 @@ textarea::placeholder{color:var(--dim);}
   </div>
 </div>
 
+<div class="pane" id="pane-reports">
+  <style>
+    #pane-reports .rep-item{border:1px solid var(--border);border-left:3px solid var(--gold);padding:10px 12px;margin-bottom:8px;background:#0d1220;}
+    #pane-reports .rep-fixed{opacity:0.5;border-left-color:#3a4a60;}
+    #pane-reports .rep-head{display:flex;align-items:center;gap:8px;font-size:0.9em;}
+    #pane-reports .rep-when{color:#6f7c92;font-size:0.8em;margin-left:auto;}
+    #pane-reports .rep-badge{font-size:0.68em;letter-spacing:1px;text-transform:uppercase;color:#c9b77a;}
+    #pane-reports .rep-msg{margin:6px 0 2px;color:#e6e9f0;}
+    #pane-reports .rep-flagged{font-size:0.9em;color:#b9c4d6;}
+    #pane-reports .rep-meta{font-size:0.75em;color:#6f7c92;margin-top:4px;}
+    #pane-reports .rep-acts{margin-top:6px;display:flex;gap:6px;}
+    #pane-reports .rep-act{font-size:0.72em;padding:3px 9px;background:transparent;border:1px solid var(--border);color:#8a94a6;cursor:pointer;}
+    #pane-reports .rep-act:hover{border-color:var(--gold);color:var(--gold);}
+  </style>
+  <div class="card">
+    <div class="card-lbl">⚑ IN-APP REPORTS</div>
+    <p class="note">Reports submitted from the reader (⚑). Newest first. Mark triaged / fixed as you work through them.</p>
+    <div class="pills" style="margin-top:6px;align-items:center;">
+      <div class="pill on" id="rep-f-new" onclick="filterReports('new')">New</div>
+      <div class="pill"    id="rep-f-all" onclick="filterReports('all')">All</div>
+      <button class="rep-act" style="margin-left:auto;" onclick="loadReports()">↻ Refresh</button>
+    </div>
+    <div class="status" id="st-reports"></div>
+    <div id="reports-list"><div class="empty">Open this tab to load…</div></div>
+  </div>
+</div>
+
 </div><!-- .app -->
+<script src="runar-reports-admin.js"></script>
 <script>
 const sb = supabase.createClient(SB_URL, SB_KEY);
 
@@ -896,7 +925,7 @@ function updateUIText() {
 
 // ─── TABS ───────────────────────────────────────────────
 function showTab(name) {
-  ['teach','progress','reader','correct','codes'].forEach(n => {
+  ['teach','progress','reader','correct','codes','reports'].forEach(n => {
     document.getElementById('pane-' + n)?.classList.remove('on');
     document.getElementById('tab-' + n + '-btn')?.classList.remove('on');
   });
@@ -905,6 +934,7 @@ function showTab(name) {
   if (name === 'correct') loadCorrections();
   if (name === 'progress') loadProgress();
   if (name === 'codes')    initCodesTab();
+  if (name === 'reports') { window.initReportsTab(); window.loadReports(); }
   if (name === 'reader') {
     // Refresh V2 context display each time tab is opened
     const el = document.getElementById('v2-context-display');
