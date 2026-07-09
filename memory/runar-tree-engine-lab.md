@@ -24,8 +24,11 @@ Engine (growBranch/emergence/paint/kořeny) NETKNUTÝ — mění se jen KTERÝ e
 jde do slotu. **Pozorovatelnost**: karta HISTORIE (trace každého čtení + efekt + ⚠přeskup),
 step slider (přehrávání po čtení N), VYMAZAT (prázdná půda). **Konzultace bez screenshotů**:
 tlačítko ULOŽIT→Code → `_savestate.js` (helper 7798, v serve.bat) zapíše `_tree_state.json`
-→ Code čte přímo (sdílené repo). KUKY řekne „#14–#17" a Code načte přesný stav. Zbývá: Aett
-(charakter růstu). Pak produkce (DB/reader). realAge = počet čtení × readingEvery (roste pomalu).
+→ Code čte přímo (sdílené repo). KUKY řekne „#14–#17" a Code načte přesný stav. **Aett HOTOVO**
+(krok 5: runa→dominantní aett→charakter růstu větve — freya fluid/vzhůru · heimdall těžký/ukotvený ·
+tyr přímý; slider `aettStr`; mění jen tvar, ne napojení). **Celý signálový řetězec kompletní**
+(element/spread/intention/area/aett + stabilní umístění, 0 skoků). Zbývá: PRODUKCE (tree_state DB +
+reálná čtení z readeru) + volitelně per-runa sub-větve. realAge = počet čtení × readingEvery.
 ⭐⭐ OPRAVA 2026-07-04 (po zbytečném kruhu — NEOPAKOVAT): KUKYho schválený „pěkný
 strom" = **crown-composer** (`v2/tree-lab-crown-composer/`, treeage ~520–1600 =
 S-kmen + kořenový vějíř + větve postupně po výšce + jemná fraktální koruna, stříbrná

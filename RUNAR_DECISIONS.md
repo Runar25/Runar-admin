@@ -290,3 +290,31 @@
 - **Affected doc(s):** RUNAR_DESIGN.md (nová sekce „Reading contract"), runar-character.js (helpery + `RP_SINGLE.priority`), tento záznam. TODO: spready (4 packy), IS-first eval, backlog.
 - **Reality note:** Jen SINGLE. Spready (buildKriz/Norns/Horseshoe/Yggdrasil) = stejný vzor, čeká na owner „single OK". IS znění direktiv = draft, owner ověřuje naživo. Eval (gates + domain-lands + quiet-lens + register-fit + IS-gramatika) = TODO, má hlídat regresi. Contract je **DATA konzumovaná jednou cestou** (§18).
 - **Reversibility:** easy (git revert; helpery odstranit + vrátit AREA/SEEK štítky do `parts[]`)
+
+---
+
+## 2026-07-09 — Tree pojmy: Shadow = 5. element, „ke/od kmene" = vyváženost, audit prázdných pojmů
+
+- **Typ:** intent (design) + doc cleanup
+- **Scope:** tree
+- **Co se změnilo:** Owner-audit prázdných pojmů → doplněn význam + vazba, opraveny konflikty:
+  - **Shadow = 5. barva-element** (Fire/Water/Air/Earth/Shadow). „Life Rune = 5. element" byla pracovní verze → **PŘEPSÁNO** (Life Rune = KMEN = uživatel, NE barva-element) v RUNAR_TREE.md, RUNAR_TREE_BUILD.md, tree-of-life.md, RUNAR_DESIGN.md.
+  - **„Rosteš ke kmeni / od něj" = vyváženost** (mechanika, ne poezie): sebraná pozornost kolem osy (vyvážené zóny) vs náklon k jednomu okraji (holé zóny). Ne soud, zrcadlo. Řeší i „napětí/harmonie".
+  - **Transformační páry** (9) přepsány z poezie na konkrétní význam („co to o tobě říká, když ty dvě runy chodí spolu").
+  - **Ætt = charakter** dotažen (téma ættu → růst), **innangarðr/útangarðr** oglosováno (severská hranice uvnitř/venku).
+- **Proč:** Owner: „jméno bez vazby je nic." Pravidlo *pojem = význam + vazba* (working-style). Element count 4/5 + „pátý element = Life vs Shadow" si protiřečilo napříč doky.
+- **Affected doc(s):** RUNAR_TREE.md (§1/§2/§3/§7/§8), RUNAR_TREE_BUILD.md, tree-of-life.md, RUNAR_DESIGN.md (element tabulka → souhrn + odkaz na runar-runes.js), working-style.md (pravidla „pojmy+hlas"), tento záznam
+- **Reality note:** Kanonický rune→element = `runar-runes.js` (5 elementů vč. Shadow; dvojelementové Perth/Eihwaz/Blank). DESIGN element tabulka nahrazena souhrnem + odkazem = konec driftu. „Ke/od kmene" mechanika = měřit rozložení + mohutnost větví přes zóny (later, s `tree_state`).
+- **Reversibility:** easy (doc; git revert)
+
+---
+
+## 2026-07-04 — Aett zapojen (krok 5, reading-driven arc kompletní)
+
+- **Typ:** implementation (tree lab)
+- **Scope:** tree
+- **Co se změnilo:** Poslední signál **Aett** zapojen do crown-composeru. Runa→aett (Freya/Heimdall/Týr, per-runa z runar-runes.js přes glyf); element-větev bere DOMINANTNÍ aett svých run → **charakter růstu**: freya=fluid/vzhůru (víc curve+tipLift) · heimdall=těžký/ukotvený (min. tipLift) · tyr=přímý/směrovaný (min. curve/wobble). Slider `aettStr`. Mění JEN tvarové parametry, NE napojení (žádný šev). Snapshot `crown-step5-aett`. **Tím je celý signálový řetězec čtení→strom kompletní**: element (barva+rodina) + spread (víc run) + intention (výška) + area (strana) + aett (charakter) + stabilní umístění (0 skoků) + opakování (zesílí).
+- **Proč:** Aett = poslední intrinsic signál runy (mytologická rodina) → dává větvi gesto/charakter, ne jen barvu/tvar. Dokončuje „jednoduché pravidlo" (element=rodina, ostatní jen jemné posuny).
+- **Affected doc(s):** memory/runar-tree-engine-lab.md, tento záznam
+- **Reality note:** `build_crown_composer.py` (§1). Engine (growBranch/emergence/paint/kořeny/kmen) netknutý. Zbývá PRODUKCE (tree_state DB + zapojení na reálná čtení z readeru) + volitelně per-runa sub-větve (hlubší bough model). NENÍ v produkci, jen lab.
+- **Reversibility:** easy (lab; aettStr=0 vypne; snapshot crown-step5)
