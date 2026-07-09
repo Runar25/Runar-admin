@@ -24,6 +24,11 @@
 Claude zastaví když to "vypadá hotově" — bez verifikace se stáváš verifikační smyčkou sám.
 Při každém tasku: co konkrétně ověří že je to hotovo? (grep, browser check, python test)
 
+### i18n kontrola — po VĚTŠÍCH UI / translation změnách (standing rule, owner 2026-07-06)
+Po zásahu do UI stringů / překladů / lang-switch logiky spusť **`scripts/i18n-diff.js`** — runtime detektor „uvízlé angličtiny" (přepne EN↔IS napříč taby, nahlásí texty co se nepřeložily = natvrdo bez wiringu NEBO nepřekreslené při přepnutí jazyka).
+**Jak vyvolat (Code session):** `preview_start reader` → přejdi na `runar-reader.html` → vlož obsah `scripts/i18n-diff.js` přes `preview_eval`. Vrátí `{count, items}`. (Owner ručně: vložit do dev-console prohlížeče.)
+Caveat: transientní toasty co vyblednou = false-positive; rune názvy/gender jsou už vyfiltrované. Jsou to KANDIDÁTI, ne striktní gate — ověř vizuálně.
+
 ### Konkrétní prompty = méně oprav
 - Vždy uvádět: soubor, funkce, řádek (kde to sáhne)
 - Vždy uvést co se NEMÁ změnit (scope boundary)
