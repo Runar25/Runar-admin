@@ -391,7 +391,7 @@ textarea::placeholder{color:var(--dim);}
       <div>🧪 <span style="color:var(--white);">Living tree memory (Vrstva A)</span> — testing · tree_state DB, post-reading extraction</div>
       <div>🧪 <span style="color:var(--white);">Session state (Vrstva B)</span> — testing · 4-axis tone per reading</div>
       <div>✅ <span style="color:var(--white);">Voice Scale (Vrstva C)</span> — promoted to V1 ✓ · ACTIVE_VOICE_PROFILE (focused/lyrical)</div>
-      <div>🧪 <span style="color:var(--white);">Norns axis</span> — testing · _moodContext/_intentionContext ready v character.js, nezapojeno do buildReadingPrompt</div>
+      <div>🧪 <span style="color:var(--white);">Norns axis</span> — testing · _intentionContext ready v character.js, nezapojeno do buildReadingPrompt</div>
       <div style="margin-top:4px;">✅ <span style="color:var(--white);">Mobile font fix</span> — ready to promote → V1</div>
       <div>✅ <span style="color:var(--white);">Norse world translation</span> — promoted to V1 ✓</div>
     </div>
@@ -430,7 +430,6 @@ textarea::placeholder{color:var(--dim);}
     <label class="flbl" id="seek-lbl">WHAT ARE YOU SEEKING? <span class="opt">(OPTIONAL)</span></label>
     <div class="pills" id="seek-pills"></div>
     <label class="flbl">HOW ARE YOU FEELING? <span class="opt">(OPTIONAL)</span></label>
-    <div class="pills" id="mood-pills"></div>
     <label class="flbl" style="margin-top:14px;">THIS READING IS FOR <span class="opt">(OPTIONAL)</span></label>
     <div class="pills" id="intention-pills"></div>
     <label class="flbl" id="q-lbl" style="margin-top:14px;">SPECIFIC QUESTION <span class="opt">(OPTIONAL)</span></label>
@@ -1074,13 +1073,12 @@ function buildGrid(gridId, isReader) {
   });
 }
 
-// ─── PILLS (V2 ONLY — multi-seek, mood, intention) ──────
-// MOODS + INTENTIONS defined in runar-runes.js (shared module, with IS + norns axis)
+// ─── PILLS (V2 ONLY — multi-seek, intention) ──────
+// INTENTIONS defined in runar-runes.js (shared module, with IS + norns axis)
 
 function buildPills() {
   buildPillGroup('area-pills',      AREAS[lang], 'area');
   buildPillGroupMulti('seek-pills', SEEKS[lang], 'seek', 2);
-  buildPillGroup('mood-pills',      MOODS[lang] || MOODS.en,       'mood');
   buildPillGroup('intention-pills', INTENTIONS[lang] || INTENTIONS.en, 'intention');
 }
 function buildPillGroup(containerId, items, type) {
@@ -1436,7 +1434,7 @@ function startReading() {
   const nameVal = document.getElementById('r-name').value.trim(); const name = nameVal || (lang === 'is' ? 'þú' : 'you');
   const d = parseInt(document.getElementById('r-day').value), m = parseInt(document.getElementById('r-month').value), y = parseInt(document.getElementById('r-year').value);
   const lifeRune = (d && m && y && d <= 31 && m <= 12 && y >= 1930) ? calcLifeRune(d, m, y) : null;
-  readerUser = { name, d, m, y, lifeRune, area: readerUser.area || '', seeking: Array.isArray(readerUser.seeking) ? readerUser.seeking : [], mood: readerUser.mood || '', intention: readerUser.intention || '', question: document.getElementById('r-question').value.trim() };
+  readerUser = { name, d, m, y, lifeRune, area: readerUser.area || '', seeking: Array.isArray(readerUser.seeking) ? readerUser.seeking : [], intention: readerUser.intention || '', question: document.getElementById('r-question').value.trim() };
   document.getElementById('reader-setup').style.display = 'none'; document.getElementById('reader-rune-card').style.display = 'block'; document.getElementById('reader-output').style.display = 'none';
   buildGrid('reader-grid', true); setSt('st-setup', ''); setSt('st-reader', '');
 }
@@ -1603,7 +1601,6 @@ async function _generateReading() {
   const parts = [`PERSON: ${u.name}`, lifeContext, drawnContext,
     u.area       ? `AREA: ${u.area}`              : '',
     seekingLabel ? `SEEKING: ${seekingLabel}`      : '',
-    u.mood       ? (typeof _moodContext      === 'function' ? _moodContext(u.mood)           : 'CURRENT STATE: '   + u.mood)      : '',
     u.intention  ? (typeof _intentionContext === 'function' ? _intentionContext(u.intention) : 'READING PURPOSE: ' + u.intention)  : '',
     u.question   ? `SPECIFIC QUESTION: "${u.question}"` : ''].filter(Boolean).join('\n');
 
@@ -1782,7 +1779,7 @@ function resetReader() {
   if (_rm1) _rm1.style.display = ''; if (_rm2) _rm2.style.display = '';
   if (_rmo) _rmo.style.display = 'none';
   document.getElementById('reader-setup').style.display = 'block'; document.getElementById('reader-rune-card').style.display = 'none'; document.getElementById('reader-output').style.display = 'none';
-  ['r-name','r-day','r-month','r-year','r-question'].forEach(id => document.getElementById(id).value = ''); readerUser.mood = ''; readerUser.intention = ''; readerUser.seeking = []; buildPills();
+  ['r-name','r-day','r-month','r-year','r-question'].forEach(id => document.getElementById(id).value = ''); readerUser.intention = ''; readerUser.seeking = []; buildPills();
 }
 
 // ─── SPREAD3 MODE (Vrstva D) ──────────────────────────────────────

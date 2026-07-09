@@ -405,7 +405,7 @@ function _seasonalImagery(lang, drawn) {
   var bucket = _seasonBucket(m);
   var pool = SEASON_POOLS[bucket];
   if (!pool) return '';
-  var kind = _isColdRune(drawn) ? 'cold' : 'bright';
+  var kind = (Array.isArray(drawn) ? drawn.some(_isColdRune) : _isColdRune(drawn)) ? 'cold' : 'bright';
   var images = pool[kind];
   if (!images || !images.length) { kind = 'bright'; images = pool.bright; }
   var ids = images.map(function(x) { return x.id; });
@@ -458,30 +458,9 @@ function buildSysPromptV2(lifeRune, lang, profileKey) {
   return getContextLine(lang) + '\n\n' + DEF_CHAR_V2_EN + v2Voice + lifeCtx;
 }
 
-// ─── NORNS AXIS HELPERS (V2) ─────────────────────────────────────────────
-// Convert raw mood/intention labels into Norns-axis context instructions.
-// Data source: MOODS.norns + MOODS.element + INTENTIONS.norns (runar-runes.js)
-// Never surface these instructions in the reading output.
-
-function _moodContext(mood, lang) {
-  if (!mood || !MOODS) return '';
-  var label = (lang === 'is') ? 'LÍÐAN' : 'CURRENT STATE';
-  var idx = (MOODS.en || []).indexOf(mood);
-  if (idx === -1) idx = (MOODS.is || []).indexOf(mood);
-  if (idx === -1) return label + ': ' + mood;
-  var norn   = (MOODS.norns   || [])[idx] || '';
-  var elem   = (MOODS.element || [])[idx] || '';
-  var nornDesc = norn === 'urd'
-    ? 'Urður axis — what has already been woven; read from the root, not the horizon'
-    : norn === 'verdandi'
-    ? 'Verðandi axis — what is being woven right now; the living present moment'
-    : norn === 'skuld'
-    ? 'Skuld axis — what must be; the thread pulling toward what has not yet arrived'
-    : '';
-  return label + ': ' + mood
-    + (elem     ? ' — element: ' + elem                      : '')
-    + (nornDesc ? ' — ' + nornDesc                           : '');
-}
+// --- NORNS AXIS HELPER (V2) ---------------------------------------------
+// Convert the intention label into a Norns-axis time-framing instruction.
+// Data source: INTENTIONS.norns (runar-runes.js). Never surfaced verbatim.
 
 function _intentionContext(intention, lang) {
   if (!intention || !INTENTIONS) return '';
@@ -865,7 +844,7 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
     ctx, '',
     S.intro, '',
     runesBlock, '',
-    _seasonalImagery(lang),
+    _seasonalImagery(lang, runes),
   ].concat(S.instructions(ctrName)).concat([
     S.closing(u.name) + (S.langInstr ? ' ' + S.langInstr : '') + getCorrPrompt(lang, corrections),
     _addressContext(lang),
@@ -935,7 +914,7 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
     ctx, '',
     S.intro, '',
     runesBlock, '',
-    _seasonalImagery(lang),
+    _seasonalImagery(lang, runes),
   ].concat(S.beats).concat([
     S.bigInstruction(u.name),
     S.json,
@@ -1002,7 +981,7 @@ function buildHorseshoePromptSeven(u, runes, lang, corrections) {
     ctx, '',
     S.intro, '',
     runesBlock, '',
-    _seasonalImagery(lang),
+    _seasonalImagery(lang, runes),
   ].concat(S.beats).concat([
     S.closing(u.name),
     _addressContext(lang),
@@ -1082,7 +1061,7 @@ function buildYggdrasilPromptNine(u, runes, lang, corrections) {
     ctx, '',
     S.intro, '',
     runesBlock, '',
-    _seasonalImagery(lang),
+    _seasonalImagery(lang, runes),
   ].concat(S.beats).concat([
     S.closing(u.name),
     _addressContext(lang),
