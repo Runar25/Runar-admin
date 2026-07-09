@@ -334,6 +334,23 @@ SIGNED_IN toast odstraněn — žádné uvítací okno při přihlášení.
 
 ⚠️ Heading a note řídí výhradně `_updateReadingForm()`. `updateUIText()` tyto prvky NESMÍ nastavovat.
 
+### Reading contract — faktory tvarují výklad (2026-07-09)
+
+Čtení = funkce více faktorů, ne jen tažené runy. Každý faktor má **roli** a **úroveň viditelnosti**; do promptu jde jako **direktiva**, ne pasivní štítek (jinak model pod délkovým stropem faktory zahazuje → landují jen náhodou).
+
+| Faktor | Role | Viditelnost |
+|--------|------|-------------|
+| tažená runa | **předmět** | popředí, pojmenovaná |
+| životní runa | **čočka** — tvaruje *jak* se tažená runa čte | podtext; nepojmenovává se, leda organicky |
+| area (AREAS) | **doména** — čtení musí přistát | přes obraz, nikdy jako štítek |
+| seeking (SEEKS) | **rejstřík** — mód výkladu (Confirmation = potvrzuje · Challenge = pojmenuje tření · Reflection = zrcadlo …) | v tónu, nevyslovuje se |
+| intention (INTENTIONS) | **Norns čas** (teď / vpřed / zpět) | v čase sloves |
+| sezóna · gender · jméno · pozice | paleta · oslovení · struktura | — |
+
+**Pravidlo priority** (proti přeplácanosti i mizení): když se faktory neslijí do jednoho obrazu → tažená runa vepředu, drž rejstřík + doménu, čočka klidně ustoupí — nikdy nenutit, nikdy nevršit jako oddělené věty. **Délka se tím nemění.**
+
+Zdroj pravdy = helpery v `runar-character.js` (`_lensContext` / `_domainContext` / `_registerContext` + `RP_SINGLE.priority`). Rozhodnutí + validace naživo → RUNAR_DECISIONS.md (2026-07-09). Zatím **single**; spready stejný vzor (TODO). Měření = IS-first eval (TODO).
+
 ---
 
 ## Tier systém — přístup ke spreadům a stromu

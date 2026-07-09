@@ -278,3 +278,15 @@
 - **Affected doc(s):** memory/runar-tree-engine-lab.md (⭐ reading-driven blok), tento záznam; RUNAR_TREE_BUILD.md/RUNAR_TREE.md až po Aett + produkci
 - **Reality note:** Vše v `build_crown_composer.py` (generátor, §1) → `v2/tree-lab-crown-composer/`. **Engine (growBranch / emergence / paint / kořeny / kmen) NETKNUTÝ** — mění se jen KTERÝ element / výška / strana jde do slotu. `realAge = počet čtení × readingEvery` (pomalý růst, retence). Ladicí slidery: `intZone`, `areaSide`, konstanty `EXTRA`/`CAP` (stableAssign). Zbývá: **Aett** (charakter růstu větve) → pak produkce (tree_state DB + reálná čtení z readeru). NENÍ v produkci, jen lab.
 - **Reversibility:** easy (lab; snapshoty crown-step0..4; engine nedotčen)
+
+---
+
+## 2026-07-09 — Reading contract v1: faktory tvarují výklad, ne jen tažená runa (single)
+
+- **Typ:** implementation + rozhodnutí (reading quality)
+- **Scope:** reading (single; spready + eval = TODO)
+- **Co se změnilo:** Životní runa / area / seeking se posílaly do promptu jako **pasivní štítky** (model je pod délkovým stropem zahazoval → landovaly jen náhodou). Přepnuto na **aktivní direktivy** (nové sdílené helpery v `runar-character.js`): životní runa = **tichá ČOČKA** (`_lensContext` — tvaruje JAK se tažená runa čte, podtext, nepojmenovává se leda organicky) · area = **DOMÉNA** (`_domainContext` — čtení musí přistát, přes obraz) · seeking = **REJSTŘÍK** (`_registerContext` — 5-hodnotová mapa General/Clarity/Confirmation/Challenge/Reflection řídí mód) · **pravidlo priority** (`RP_SINGLE.priority` — když se faktory neslijí do jednoho obrazu, runa vepředu, drž rejstřík+doménu, čočka ustoupí, nikdy nenutit). Pasivní AREA/SEEK štítky pryč z `parts[]`. **Délka beze změny** (3 věty) — faktory tvarují, nepřidávají slova. INTENTION (Norns čas) už zapojeno dřív (`_intentionContext`).
+- **Proč:** „Všechno viditelné" = přeplácané (owner); „měkký kontext" = faktory mizí. Owner-schválený contract: každý faktor má ROLI + viditelnost, životní runa = podtext („tichá čočka"). Ověřeno naživo (SW v151): Wunjo/Gebo/Confirmation/Inner Growth → confirmation rejstřík + inner-growth doména + Gebo podtext, **spolehlivě**; těžký případ Hagalaz/Gebo/Family/Challenge (faktory se přirozeně neslijí) → Hagalaz vepředu, challenge rejstřík bez utěšování, dům jako doména, Gebo (reciprocita) jako čočka na rozvrat — vše ve 3 větách, bez přeplácání.
+- **Affected doc(s):** RUNAR_DESIGN.md (nová sekce „Reading contract"), runar-character.js (helpery + `RP_SINGLE.priority`), tento záznam. TODO: spready (4 packy), IS-first eval, backlog.
+- **Reality note:** Jen SINGLE. Spready (buildKriz/Norns/Horseshoe/Yggdrasil) = stejný vzor, čeká na owner „single OK". IS znění direktiv = draft, owner ověřuje naživo. Eval (gates + domain-lands + quiet-lens + register-fit + IS-gramatika) = TODO, má hlídat regresi. Contract je **DATA konzumovaná jednou cestou** (§18).
+- **Reversibility:** easy (git revert; helpery odstranit + vrátit AREA/SEEK štítky do `parts[]`)
