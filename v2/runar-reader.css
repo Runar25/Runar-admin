@@ -693,8 +693,8 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .mode-btn:hover:not(.active){border-color:rgba(255,191,0,0.4);color:rgba(255,191,0,0.7);}
 
 /* ── SPREAD3 SLOT TRACKER ── */
-.spread3-slots{display:flex;align-items:center;justify-content:center;gap:12px;
-  margin-bottom:18px;padding:10px;background:rgba(255,191,0,0.04);border-radius:4px;}
+.spread3-slots{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px;
+  margin-bottom:18px;padding:10px;background:rgba(255,191,0,0.04);border-radius:4px;max-width:100%;box-sizing:border-box;}
 .s3-slot{font-size:1.4em;color:var(--dim-text);transition:all 0.3s;min-width:1.4em;text-align:center;border-radius:3px;padding:2px 4px;}
 .s3-slot.filled{color:var(--gold);text-shadow:0 0 12px rgba(255,191,0,0.4);}
 .s3-slot.filled:hover{background:rgba(255,191,0,0.08);text-decoration:line-through;opacity:0.7;}
@@ -710,3 +710,13 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .s5-slot.filled:hover{background:rgba(255,191,0,0.08);text-decoration:line-through;opacity:0.7;cursor:pointer;}
 .s5-center{font-size:1.6em;color:rgba(255,191,0,0.55);}
 .s5-center.filled{color:var(--gold);font-size:1.7em;}
+
+/* ── Mobile: wrap spread slots + shrink glyphs so 5/7/9 fit the frame ── */
+@media(max-width:480px){
+  .spread3-slots{gap:6px 4px;padding:8px 6px;}
+  .s3-slot{font-size:1.15em;min-width:1.2em;padding:2px 3px;}
+  .s3-sep{font-size:0.7em;}
+  .spread5-slots{padding:8px 6px;}
+  .s5-row{gap:12px;}
+  .s5-slot{font-size:1.15em;min-width:1.3em;padding:2px 4px;}
+}
