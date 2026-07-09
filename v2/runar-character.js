@@ -491,6 +491,44 @@ function _intentionContext(intention, lang) {
     + (timeDesc ? ' — ' + timeDesc : '');
 }
 
+// --- READING CONTRACT HELPERS (single source; shared by reading builders) ---
+// Turn passive context into active shaping directives (contract 2026-07-09):
+//   life rune = quiet LENS (subtext) . area = DOMAIN (must land) . seeking = REGISTER.
+function _lensContext(life, drawn, lang) {
+  if (!life || (drawn && life.n === drawn.n)) return '';
+  if (lang === 'is')
+    return 'LÍFSRÚNAN ' + rn(life) + ' er linsan, ekki viðfangsefnið — láttu hana móta HVERNIG þú lest ' + rn(drawn) + '. Nefndu hana aldrei og útskýrðu hana ekki; láttu hana lita lesturinn neðan frá. Dragðu aðeins skýra tengingu milli rúnanna tveggja fram ef hún kemur af sjálfu sér.';
+  return 'The life rune ' + rn(life) + ' is the lens, not the subject — let it shape HOW you read ' + rn(drawn) + '. Never name or explain it; let it colour from underneath. Draw an explicit link between the two runes only if one arises naturally.';
+}
+function _domainContext(area, lang) {
+  if (!area) return '';
+  if (lang === 'is')
+    return 'Þessi lestur snýst um: ' + area + ' — láttu hann lenda skýrt á því sviði lífsins, gegnum mynd, aldrei sem yfirlýst umfjöllunarefni.';
+  return 'This reading is about: ' + area + ' — let it land clearly in that part of life, through image, never as a stated topic.';
+}
+function _registerContext(seeking, lang) {
+  if (!seeking || typeof SEEKS === 'undefined') return '';
+  var s = Array.isArray(seeking) ? seeking[0] : seeking;
+  var idx = (SEEKS.en || []).indexOf(s);
+  if (idx === -1) idx = (SEEKS.is || []).indexOf(s);
+  if (idx === -1) return '';
+  var mapIs = [
+    'Leitandinn biður um almenna leiðsögn — láttu rúnina leiða hvert sem hún vill; þvingaðu ekki fram tilgang.',
+    'Leitandinn biður um skýrleika — dragðu eitt skýrt fram; gerðu hið óljósa ljóst.',
+    'Leitandinn biður um staðfestingu — staðfestu það sem er þegar satt eða að vakna hljóðlega; hjálpaðu viðmælandanum að sjá það, ekki sá efa.',
+    'Leitandinn biður um innsýn í áskorun — nefndu núninginn heiðarlega, án þess að mýkja hann í huggun.',
+    'Leitandinn biður um hugleiðingu — opnaðu spegil, ekki svar; snúðu viðmælandanum inn á við.',
+  ];
+  var mapEn = [
+    'The seeker asks for general guidance — let the rune lead where it will; do not force a purpose.',
+    'The seeker asks for clarity — bring one thing into focus; make the unclear clear.',
+    'The seeker asks for confirmation — affirm what is already true or quietly emerging; help them recognise it, do not introduce doubt.',
+    'The seeker asks for insight into challenge — name the friction honestly, without softening it into comfort.',
+    'The seeker asks for reflection — open a mirror, not an answer; turn them inward.',
+  ];
+  return (lang === 'is' ? mapIs : mapEn)[idx];
+}
+
 // Address gender (modern Icelandic): kk (karlkyn) / kvk (kvenkyn) / hk (hvorugkyn, han = default).
 // IS only — English has no gendered addressee forms. Reads the global userGender.
 function _addressContext(lang) {
@@ -715,6 +753,7 @@ var RP_SINGLE = {
     qBranch:function(rune,g,q){ return 'Svaraðu spurningunni: "' + q + '" í gegnum ' + rune + ' (' + g + ') — í myndum og táknmáli, ekki ráðgjöf. Nefndu ' + rune + ' einu sinni, fléttað náttúrlega inn. Talaðu um það sem liggur undir spurningunni. Enda með einni opinni spurningu sem nær dýpra.'; },
     noqBranch:function(rune,g,world){ return 'Byrjaðu á ' + rune + ' (' + g + ') — láttu táknlæga gæði þess (' + world + ') koma fram í myndum, ekki útskýringu. Nefndu ' + rune + ' einu sinni, fléttað náttúrlega inn. Ein skýr innsýn nægir — ekki troða öllu inn. Enda með mjög stuttri, opinni spurningu — fáein orð.'; },
     closing:function(name){ return 'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. Ávarpaðu ' + name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. Haltu þig innan orðafjöldans — stuttar setningar, ekkert uppfyllingarefni.'; },
+    priority:function(drawn){ return 'Ef þetta rennur ekki saman í eina náttúrlega mynd: haltu ' + drawn + ' fremst, virtu leitina og sviðið, og láttu lífsrúnu-linsuna hopa — hún má hverfa alveg fremur en að vera þvinguð. Aldrei hlaða þessu upp sem aðskildum staðhæfingum.'; },
     json:'Skilaðu EINGÖNGU þessu JSON fylki, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(lesturinn nákvæmlega eins og fyrirmælin að ofan segja, einn samfelldur texti)"}]',
   },
   en: {
@@ -730,6 +769,7 @@ var RP_SINGLE = {
     qBranch:function(rune,g,q){ return 'Open with ' + rune + ' (' + g + ') answering: "' + q + '" — through image and symbol, not advice. Mention ' + rune + ' by name once, woven naturally. Speak to what lies beneath the question. End with one open question that reaches deeper.'; },
     noqBranch:function(rune,g,world){ return 'Open with ' + rune + ' (' + g + ') — let its quality (' + world + ') arrive through image, not explanation. Mention ' + rune + ' by name once, woven naturally. One clear insight is enough — do not pack everything in. End with a very short open question — a few words.'; },
     closing:function(name){ return 'One paragraph. No breaks. No labels. Address ' + name + ' once, woven naturally — never as the opening word. Stay within the word count — short sentences, no filler. '; },
+    priority:function(drawn){ return 'If these do not gather into one natural image: keep ' + drawn + ' in front, honour the seeking and the area, and let the life-rune lens recede — it may vanish entirely rather than be forced. Never stack them as separate statements.'; },
     json:'Output format — return ONLY this JSON array, nothing before or after: [{"rune": "(the rune name)", "text": "(the reading exactly as instructed above, one flowing paragraph)"}]',
   },
 };
@@ -753,8 +793,6 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     lifeCtx,
     drawnCtx,
     isLifeRune ? S.lifeRuneNote(rn(drawn)) : '',
-    u.area     ? S.AREA + ': ' + u.area : '',
-    u.seeking  ? S.SEEK + ': ' + u.seeking : '',
     u.intention ? _intentionContext(u.intention, lang) : '',
     u.question ? S.Q + ': "' + u.question + '"' : '',
   ].filter(Boolean).join('\n');
@@ -765,7 +803,11 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     S.angleIntro + _randomAngle(lang),
     _seasonalImagery(lang, drawn),
     S.length,
+    _lensContext(life, drawn, lang),
+    u.area ? _domainContext(u.area, lang) : '',
+    u.seeking ? _registerContext(u.seeking, lang) : '',
     hasQ ? S.qBranch(rn(drawn), drawn.g, u.question) : S.noqBranch(rn(drawn), drawn.g, worldRef),
+    (life || u.area || u.seeking) ? S.priority(rn(drawn)) : '',
     S.closing(u.name) + (S.langInstr ? S.langInstr : '') + getCorrPrompt(lang, corrections),
     _addressContext(lang),
     S.json,
