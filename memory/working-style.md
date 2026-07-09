@@ -289,6 +289,10 @@ Než uživatel spustí /compact, Claude musí:
 
 ---
 
+## Pojmy + hlas (2026-07-04, owner)
+- **Jméno bez vazby se maže.** Každý pojem v docích/designu = 1 věta významu + vazba na systém. „Orel", „skuld", „Gathering" nejsou nálepky — musí být jasné, co to JE a na co se to váže. Prázdný pojem → dohledat význam, nebo smazat.
+- **Rúnar reflektuje, nikdy nepředpovídá.** Zrcadlo pozornosti, ne věštba. V hlase: přítomný čas o vzorcích a směřování („pořád se vracíš k…", „táhne tě k…"), NIKDY „stane se ti…". Pozn.: **skuld = záměr / k čemu se táhneš**, ne budoucí události.
+
 ## Two-output rule (2026-07-03)
 
 Každý task = dva výstupy, ne jeden:

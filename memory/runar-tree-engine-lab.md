@@ -11,6 +11,21 @@ metadata:
 RUNAR_TREE_HANDOFF.md — kompletní stav, laby, pravidla, defaulty, další kroky.
 Placement analýza: RUNAR_TREE_GROWTH_MAP.md. Vše standalone laby, nic v DB/readeru.
 
+⭐ CROWN-COMPOSER = READING-DRIVEN (2026-07-04, kroky 1–4, snapshoty crown-step1..step4
+v tree-snapshots/): crown-composer už NENÍ age-mock maketa — je řízený reálným logem čtení.
+Čtení = objekt `{spread, runes:[{rune,el}], area, intention}` (localStorage `crownLog`).
+Zapojeno: **element**→barva+rodina (routingFromLog počítá mix z logu) · **spread**
+(Norns/Compass/Horseshoe/Ygg = víc run→víc do mixu+expanze) · **intention**→výška (Norns:
+past urð dole/decision skuld nahoře, jemný posun, slider `intZone`) · **area**→strana
+(dovnitř vlevo/ven vpravo, slider `areaSide`). **STABILNÍ umístění** (`stableAssign`,
+append-only: element=slot při 1.výskytu + extra při dominanci, strop CAP; sloty se JEN
+přidávají → ŽÁDNÉ přeskakování větví — ověřeno 0 skoků na sekvenci co dřív měla 3).
+Engine (growBranch/emergence/paint/kořeny) NETKNUTÝ — mění se jen KTERÝ element/výška/strana
+jde do slotu. **Pozorovatelnost**: karta HISTORIE (trace každého čtení + efekt + ⚠přeskup),
+step slider (přehrávání po čtení N), VYMAZAT (prázdná půda). **Konzultace bez screenshotů**:
+tlačítko ULOŽIT→Code → `_savestate.js` (helper 7798, v serve.bat) zapíše `_tree_state.json`
+→ Code čte přímo (sdílené repo). KUKY řekne „#14–#17" a Code načte přesný stav. Zbývá: Aett
+(charakter růstu). Pak produkce (DB/reader). realAge = počet čtení × readingEvery (roste pomalu).
 ⭐⭐ OPRAVA 2026-07-04 (po zbytečném kruhu — NEOPAKOVAT): KUKYho schválený „pěkný
 strom" = **crown-composer** (`v2/tree-lab-crown-composer/`, treeage ~520–1600 =
 S-kmen + kořenový vějíř + větve postupně po výšce + jemná fraktální koruna, stříbrná

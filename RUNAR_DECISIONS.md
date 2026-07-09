@@ -242,3 +242,39 @@
 - **Affected doc(s):** RUNAR_BACKLOG.md (unification hotovo), memory snapshot, tento záznam
 - **Reality note:** `runar-character.js` (SW v124). Strom NEDOTČEN (roste z rune-dat, ne z prózy). Owner varován, že spready = normalizace (ne no-op), schválil „když nebude sedět vrátíme". Golden nástroje + baseline v `scripts/golden/`. Patch skripty `unify_*.py` v rootu (untracked).
 - **Reversibility:** easy (git revert per builder; golden baseline drží referenci)
+
+---
+
+## 2026-07-04 — Tree: model významu (Norny × dovnitř/ven) + RUNAR_TREE.md konsolidace
+
+- **Typ:** intent (tree design) + doc konsolidace
+- **Scope:** tree
+- **Co se změnilo:** Ustálen KANONICKÝ model významu stromu (byl roztroušený v BUILD/placement/DESIGN): umístění větve = **ZÓNY** = **Norns osa** (výška: urð kořeny ↔ verðandi střed ↔ skuld koruna; řídí intention›area›seeking›world) **× dovnitř/ven** (strana: area of life). **Element = JEN barva** (+ mikro-výška/úhel), **runa = tvar**, **ætt = charakter**. Strom = „jsi ty; ukazuje, jestli rosteš ke kmeni, nebo od něj". **Počet hlavních větví NENÍ per-element** — emergentní, zastropený ~7–12 kvůli čitelnosti, přebytek → posílení. Systém otevřený: nová oblast/otázka = jen souřadnice na osách. Vytvořen **`RUNAR_TREE.md` = jediný kanonický vstupní bod** (duše + zóny + stavba + mapa doků se statusem). 4 mrtvé tree doky (growth-map, handoff, lab, boughs) → `docs/archive/tree/`.
+- **Proč:** Info roztroušené ve 14 souborech = pomalá práce, riziko ztráty, Code/Cowork si protiřečí. Owner: „chci to mít lépe přehledné kvůli rychlosti a přehlednosti." Model významu: element = náhoda (los), význam = pozornost v čase (Norny) + čího světa se týká (area) — potvrzeno vlastními kanonickými doky.
+- **Affected doc(s):** RUNAR_TREE.md (nový, kanonický), RUNAR_TREE_BUILD.md + runar-tree-placement.md (vstřebáno), docs/archive/tree/* (přesunuto), RUNAR_TREE_SPECIALS.md, tento záznam
+- **Reality note:** Element-primární crown-composer (krok 1) = správný PODKLAD (paleta/stavba), ne význam. Význam = vrstva navrch: krok 2 = Norns zóna jako jemná výška + area jako sektor/strana (zóny spojité, prolínají se — ne přihrádky). RUNAR_TREE.md §9 = mapa statusů. runar-patterns.md ponechán v rootu (owner „dá mu šanci"), ale ZASTARALÉ = vše probrat.
+- **Reversibility:** easy (doc konsolidace; archiv = přesun, vratné; model = design sever, ne kód)
+
+---
+
+## 2026-07-04 — Gathering = jen automatická (manuál mrtvý) + Rúnar reflektuje, nepředpovídá
+
+- **Typ:** intent (product/tree design)
+- **Scope:** tree + reading
+- **Co se změnilo:** Manuální Gathering („vyber 3–7 run z journalu", `runar-gathering.js`) = **MRTVÁ / retired** (UI dávno vytažené, kód dormant → ke smazání: modul + `<script>` v readeru + řádek v `sw.js` = reader/Code úklid). Gathering = **jen automatická**: `detectPatterns()` nad `tree_state` (Muninn) najde zralý vzorec → **Huginn CTA** (opt-in) → 3 kredity, všechny tiery. Tři hloubky = KDE vzorec dozrál: **Orel** (koruna/skuld = záměr) · **Níðhöggr** (kořeny/urð = minulost/stagnace) · **Ratatoskr** (oba naráz = Full). **Zásada: Rúnar reflektuje, nikdy nepředpovídá** — zrcadlo pozornosti, ne věštba; **skuld = záměr / k čemu se táhneš, NE budoucí události.**
+- **Proč:** Manuál = mrtvý kód. Auto-Gathering = payoff stromu (strom promluví zpět). Owner: skuld jako „budoucnost" zavání věštěním → přerámováno na záměr; jména tvorů = poloha (koruna/kořeny), ne věštecká moc. Každý pojem musí mít význam + vazbu.
+- **Affected doc(s):** RUNAR_TREE.md (§7 = plné znění + cast), working-style.md (2 pravidla), runar-gathering.js (ke smazání), runar-patterns.md (ZASTARALÉ surovina), tento záznam
+- **Reality note:** Závisí na `tree_state` DB + `detectPatterns()` — NEexistují (pozdější vrstva, po reading-driven stromu). Jedna detekce → Gathering (slova) + speciální vizuály + stavy větví. Cena 3 kr vs starý kód `use_credit:false` = při stavbě sladit.
+- **Reversibility:** easy (design směr; manuál smazat = git revert)
+
+---
+
+## 2026-07-04 — Crown-composer = reading-driven (kroky 1–4, tree lab)
+
+- **Typ:** implementation (tree lab)
+- **Scope:** tree
+- **Co se změnilo:** Crown-composer (schválený „pěkný strom") přepnut z age-mock makety na **řízený reálným logem čtení**. Čtení = objekt `{spread, runes:[{rune,el}], area, intention}` (localStorage `crownLog`). Postupně (snapshoty `crown-step1..step4` v tree-snapshots/): (1) **element z reálného logu** (`routingFromLog` nahradil simulaci `routing()`); (2) **pozorovatelnost** — karta HISTORIE (trace každého čtení + efekt + ⚠přeskup), step slider (přehrávání po čtení N), VYMAZAT (prázdná půda), tlačítko **ULOŽIT→Code** (`_savestate.js` helper 7798 → `_tree_state.json` → Code čte přímo = konzultace bez screenshotů); (3) **signály harness** — spready (Norns/Compass/Horseshoe/Yggdrasil = víceruna) + area/intention toggle; (4) **STABILNÍ umístění** (`stableAssign`, append-only → 0 přeskoků, ověřeno na sekvenci co dřív měla 3) + **area→strana** (slider `areaSide`) + **intention→výška** (slider `intZone`, jemný Norns posun: minulost níž / budoucnost výš).
+- **Proč:** Strom má růst z reálných čtení, ne z age-slideru. Pozorovatelnost = konzultace chyb bez screenshotů (KUKY řekne „#14–#17", Code načte přesný stav a přehraje). Stabilní umístění = konec přeskakování větví (přerozdělování slotů → append-only). Jednoduchost: element=rodina, ostatní signály jen jemné posuny.
+- **Affected doc(s):** memory/runar-tree-engine-lab.md (⭐ reading-driven blok), tento záznam; RUNAR_TREE_BUILD.md/RUNAR_TREE.md až po Aett + produkci
+- **Reality note:** Vše v `build_crown_composer.py` (generátor, §1) → `v2/tree-lab-crown-composer/`. **Engine (growBranch / emergence / paint / kořeny / kmen) NETKNUTÝ** — mění se jen KTERÝ element / výška / strana jde do slotu. `realAge = počet čtení × readingEvery` (pomalý růst, retence). Ladicí slidery: `intZone`, `areaSide`, konstanty `EXTRA`/`CAP` (stableAssign). Zbývá: **Aett** (charakter růstu větve) → pak produkce (tree_state DB + reálná čtení z readeru). NENÍ v produkci, jen lab.
+- **Reversibility:** easy (lab; snapshoty crown-step0..4; engine nedotčen)
