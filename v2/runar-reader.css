@@ -472,9 +472,15 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .layer1-lbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--muted);margin-bottom:10px;}
 /* Drawn rune(s) = the subject: prominent gold glyph. Shared by single (#layer1-lbl)
    + all spread labels (#sN-*-lbl, same .layer1-lbl class) -> one consistent size. */
-.rlbl-glyph{font-size:1.85rem;line-height:1;color:var(--gold);vertical-align:middle;}
+.rlbl-glyph{font-size:1.85rem;line-height:1;color:var(--gold);vertical-align:middle;cursor:pointer;transition:opacity 0.15s;}
+.rlbl-glyph:hover{opacity:0.72;}
 .rlbl-name{font-size:0.72rem;letter-spacing:2px;color:var(--muted);margin-left:9px;vertical-align:middle;}
 .rlbl-sep{font-size:1.4rem;color:var(--border);margin:0 6px;vertical-align:middle;}
+/* Tap-a-glyph popup: rune name + meaning (esp. for spreads with no names) */
+.rune-pop{position:absolute;z-index:200;background:#0d1220;border:1px solid rgba(255,191,0,0.5);border-radius:5px;padding:8px 12px;box-shadow:0 4px 18px rgba(0,0,0,0.55);text-align:center;max-width:230px;pointer-events:none;}
+.rune-pop-g{font-size:1.5em;color:var(--gold);display:block;line-height:1;}
+.rune-pop-n{font-family:'Cinzel',serif;font-size:0.82em;letter-spacing:1.5px;color:#e6e9f0;display:block;margin-top:5px;}
+.rune-pop-kw{font-size:0.72em;color:#8bb8d8;font-style:italic;display:block;margin-top:3px;}
 .layer2{background:#0a0e18;padding:20px;margin-bottom:16px;}
 .layer2-lbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--muted);margin-bottom:10px;}
 .out-txt{font-size:1.05em;line-height:1.9;font-style:italic;color:var(--white);}
