@@ -222,11 +222,11 @@ const RUNES = [
     aett: 'tyr',
   },
   {
-    n: 'Blank',    is_n: 'Auða rúnan (Óðinn)',
+    n: 'Blank',    is_n: 'Auða rúnin (Óðinn)',
     g: '○',        svg: 'Blank',
     k:    'the unknown, unwritten potential, destiny, the void, Odin',
     k_is: 'hið óþekkta, óskrifaður möguleiki, örlög, Óðinn',
-    formula_is: 'Auða rúnan er rún hins óþekkta, óskrifaðra möguleika og þeirrar þagnar sem geymir allt.',
+    formula_is: 'Auða rúnin er rún hins óþekkta, óskrifaðra möguleika og þeirrar þagnar sem geymir allt.',
     world: 'Hel',       elements: ['Water', 'Shadow'],
   },
 ];

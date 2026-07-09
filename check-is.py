@@ -30,6 +30,9 @@ FILES = [
 BAD_PATTERNS = [
     # Confirmed corrections from runar_corrections DB + manual review
     ('rúnarnar',         'rúnirnar',          'wrong plural'),
+    ('Þagninni',         'þögninni',          'wrong word (report 2026-07-09)'),
+    ('tóm blað',         'tómt blað',         'gender: blað hk -> tómt (report 2026-07-09)'),
+    ('Auða rúnan',       'Auða rúnin',        'rún definite = rúnin (fixed at source, guard)'),
     ('LÍFSTÍÐARRÚNAN',   'LÍFSRÚNIN',         'wrong compound'),
     ('lífstíðarrúnan',   'lífsrúnin',         'wrong compound'),
     ('fornars',          'fornar',             'wrong genitive ending'),
