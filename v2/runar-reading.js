@@ -145,7 +145,7 @@ async function _generateReading() {
   var _ul2 = document.getElementById('single-layer2');
   var _ul1lbl = document.getElementById('layer1-lbl');
   if (_ul2) _ul2.style.display = 'none';
-  if (_ul1lbl) { _ul1lbl.textContent = drawn.g + '  ' + rn(drawn); _ul1lbl.classList.remove('pulsing'); }
+  if (_ul1lbl) { _ul1lbl.innerHTML = '<span class="rlbl-glyph">' + drawn.g + '</span><span class="rlbl-name">' + rn(drawn).toUpperCase() + '</span>'; _ul1lbl.classList.remove('pulsing'); }
   await stream('out-short', reading);
   document.getElementById('out-deep').innerHTML = '';
 
@@ -656,7 +656,7 @@ async function _generateSpreadReading(o) {
   readerTexts[lang] = { short: text, deep: '' };
 
   var lbl = document.getElementById(o.lblId);
-  if (lbl) lbl.textContent = o.runes.map(function(r) { return r.g; }).join(' · ');
+  if (lbl) lbl.innerHTML = o.runes.map(function(r) { return '<span class="rlbl-glyph">' + r.g + '</span>'; }).join('<span class="rlbl-sep">·</span>');
 
   if (currentUser) {
     if (_readingMode === 'mine') { await saveSpreadReading(o.kind, o.runes, text); loadJournal(); }

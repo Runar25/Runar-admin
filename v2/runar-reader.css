@@ -446,7 +446,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .rb.flashing{background:rgba(255,191,0,0.12);border-color:var(--gold);box-shadow:0 0 14px rgba(255,191,0,0.35);}
 .rb:disabled,.rb.used{opacity:0.28;cursor:not-allowed;}
 .rb:disabled:hover,.rb.used:hover{background:#0d1220;border-color:var(--border);}
-.btn-random{width:100%;padding:10px;background:transparent;border:1px solid rgba(255,191,0,0.35);color:var(--gold);font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.5px;cursor:pointer;transition:all 0.25s;margin-bottom:8px;opacity:0.75;}
+.btn-random{width:100%;padding:10px;background:rgba(255,191,0,0.05);border:1px solid rgba(255,191,0,0.7);color:var(--gold);font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.5px;cursor:pointer;transition:all 0.25s;margin-bottom:8px;opacity:1;}
 .btn-random:hover:not(:disabled){border-color:var(--gold);opacity:1;background:rgba(255,191,0,0.06);}
 .btn-random:disabled{opacity:0.3;cursor:not-allowed;}
 .rb-svg{width:clamp(38px,11vw,72px);height:auto;aspect-ratio:72/88;display:block;}
@@ -470,6 +470,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 /* ── READING OUTPUT ── */
 .layer1{background:#0a0e18;padding:20px;margin-bottom:16px;}
 .layer1-lbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--muted);margin-bottom:10px;}
+/* Drawn rune(s) = the subject: prominent gold glyph. Shared by single (#layer1-lbl)
+   + all spread labels (#sN-*-lbl, same .layer1-lbl class) -> one consistent size. */
+.rlbl-glyph{font-size:1.85rem;line-height:1;color:var(--gold);vertical-align:middle;}
+.rlbl-name{font-size:0.72rem;letter-spacing:2px;color:var(--muted);margin-left:9px;vertical-align:middle;}
+.rlbl-sep{font-size:1.4rem;color:var(--border);margin:0 6px;vertical-align:middle;}
 .layer2{background:#0a0e18;padding:20px;margin-bottom:16px;}
 .layer2-lbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--muted);margin-bottom:10px;}
 .out-txt{font-size:1.05em;line-height:1.9;font-style:italic;color:var(--white);}
