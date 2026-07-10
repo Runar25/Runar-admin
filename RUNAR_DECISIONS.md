@@ -330,3 +330,15 @@
 - **Affected doc(s):** CLAUDE.md §2 (korekce = 4. vrstva, teď gated), MEMORY.md, tento záznam.
 - **Reality note:** Reverzibilní: flag `CORRECTIONS_ENABLED=true`. Licence OK (GreynirCorrect MIT / BÍN CC BY-SA). BÍN doménově chytré (rozloží `lífs-rún`), GreynirCorrect na fragmentech nespolehlivý (`lífsrúna→Lífbrúna`) → BÍN pro validitu slov, GreynirCorrect pro output. Owner-akce: zkontrolovat 2 flagnuté single-word korekce; Sigrún potvrdit borderline. Zbývá (b): prořezat model-output patterny z check-is.
 - **Reversibility:** easy (flag; git revert)
+
+---
+
+## 2026-07-10 — Korekce → PROMPT (in-context), ne substring (supersede téhož dne PAUZY)
+
+- **Typ:** decision (behavior)
+- **Scope:** reading (IS quality)
+- **Co se změnilo:** Pauza (výše) zjemněna: korekce jdou do **promptu** čtení, ne substring. `CORRECTIONS_ENABLED` → dva flagy: `CORRECTIONS_IN_PROMPT=true` (loadCorrections načte → `getCorrPrompt` injektuje do promptu) + `CORRECTIONS_POSTPROCESS=false` (`applyISCorrections` = no-op, slepý substring VYPNUTÝ). `getCorrPrompt` **IS-ifikován** (§2): blok „Orðaleiðréttingar (fylgdu nákvæmlega, í réttri beygingu eftir samhengi): - ekki X heldur Y" — signál skloňuj podle kontextu.
+- **Proč:** Dnešek dokázal, že model **prompt instrukce poslouchá** (kauzativum `láta+nafnháttur` 3× naživo, rod dle ÁVARP). Prompt korekce = model aplikuje **v kontextu** (správný pád/rod) — to substring neuměl (biðlar→biður dvojznačné). Velikost: cena zanedbatelná (hlas dominuje ~98 %); riziko = ředění pozornosti → držet blok krátký: **destilovat vzory do gramatických pravidel** (character.js), jen jednorázovky jako slovní korekce, dlouhý ocas → is-grammar-qa + native.
+- **Affected doc(s):** CLAUDE.md §2, MEMORY.md, tento záznam. `golden_contracts.js` (smoke ⑥) ověřuje: mapping + getCorrPrompt injektuje replacement + applyISCorrections no-op (§19).
+- **Reality note:** Owner-akce: kurátorovat DB korekce přes shrine (frázové jednorázovky ven, gramatické vzory → pravidla). Model-output patterny už archivované v check-is.
+- **Reversibility:** easy (flagy; git revert)
