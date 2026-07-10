@@ -36,7 +36,15 @@ function normalizeCorrections(rows) {
       lang:      c.lang_scope || c.lang || 'both',
       context:   c.context || null,
     };
-  }).filter(function(c) { return c.from_word && c.to_word; });
+  }).filter(function(c) {
+    var ok = c.from_word && c.to_word && c.from_word !== 'undefined' && c.to_word !== 'undefined';
+    // §19 CONTRACT: don't silently drop — a dropped row means the DB->code field shape
+    // may have drifted (the bug that ran dead for weeks); announce it loudly at runtime.
+    if (!ok && typeof console !== 'undefined') {
+      try { console.warn('[CONTRACT] normalizeCorrections dropped a row (empty/undefined mapping — DB field drift?):', c); } catch (e) {}
+    }
+    return ok;
+  });
 }
 
 // Vocabulary helpers — read from VOCAB (runar-config.js)

@@ -84,10 +84,10 @@ Snið, horn og tónn eru tilgreind í hverju lestursprompt — fylgdu þeim nák
 1. Önnur persóna eintölu (þú): sögnin í 2. persónu eintölu, ekki nafnhætti eða 3. persónu. Rétt: þú treystir, þú nærð, þú sérð, þú átt, þú ferð, þú heldur, þú stendur. (Sögn sem endar á -ar í 3. persónu tekur -ir/-ð í 2. persónu eintölu.)
 2. Samræmi lýsingarorðs við nafnorð í KYNI, TÖLU og FALLI — ákveða FYRST kyn nafnorðsins. Fleirtala: öllum böndum jöfnum; endurteknir straumar (kk.), endurteknar bænir (kvk.), endurtekin orð (hk.).
 3. Engar enskuslettur né beinar þýðingar úr ensku. Bannað að segja "er ekki um að" — segðu frekar "snýst ekki um". Ef orðasamband hljómar eins og bein ensk þýðing, umorðaðu á eðlilega íslensku.
-4. Fallstjórn: rún í þolfalli = rún; fleirtala nefnifall = rúnir / rúnirnar.
+4. Fallstjórn: rún í þolfalli = rún; fleirtala nefnifall = rúnir / rúnirnar. Sagnirnar "láta" og "gera" taka NAFNHÁTT á eftir sér, ekki lýsingarhátt: "láta sjá" (ekki "láta séð"), "láta koma". Orðasambandið "láta sjá til sín" merkir að koma fram.
 5. Kyn viðmælandans er gefið í lestrarbeiðninni (ÁVARP). Samræmdu ÖLL lýsingarorð og fornöfn um "þú" við það kyn í öllum textanum — aldrei blanda kynjum saman. Ef ekkert ÁVARP fylgir, notaðu hvorugkyn (hán).
 6. Notaðu EINGÖNGU þekkt, hefðbundin íslensk orð. Búðu ALDREI til ný orð, ný samsett orð eða óþekkta beygingu sem rótgróinn málnotandi þekkir ekki. Í vafa: veldu einfaldara, algengara orð. Skáldlegt og bókmenntalegt mál er í lagi — að finna upp orð er það EKKI.
-7. Síðasta skref fyrir skil: lestu textann yfir — (a) hverja sögn í 2. persónu eintölu, (b) hvert lýsingarorð gagnvart kyni + tölu + falli nafnorðsins, (c) að viðmælandinn sé kynhlutlaus eða samræmdur í öllum textanum, (d) að engin ensk sletta sé eftir, (e) að ekkert nýyrði eða óþekkt samsett orð sé eftir.
+7. Síðasta skref fyrir skil: lestu textann yfir — (a) hverja sögn í 2. persónu eintölu, (b) hvert lýsingarorð gagnvart kyni + tölu + falli nafnorðsins, (c) að viðmælandinn sé kynhlutlaus eða samræmdur í öllum textanum, (d) að engin ensk sletta sé eftir, (e) að ekkert nýyrði eða óþekkt samsett orð sé eftir, (f) að sagnir eins og "láta/gera" taki nafnhátt en ekki lýsingarhátt.
 Svaraðu einungis á íslensku — allur textinn á íslensku.`,
 
 };
