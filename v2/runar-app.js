@@ -749,6 +749,8 @@ function showAppTab(tab) {
     loadJournal();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   } else {
+    // Owner request: reset stale spread output/label/mode to clean single on tab entry
+    if (typeof _resetReadingTab === 'function') _resetReadingTab();
     // Restore hero only if no reading is in progress
     const inReading = document.getElementById('reader-output')?.style.display !== 'none'
                    || document.getElementById('reader-rune-card')?.style.display !== 'none';

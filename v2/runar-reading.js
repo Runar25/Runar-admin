@@ -470,10 +470,27 @@ function drawAnother() {
   document.getElementById('btn-speak').disabled = true;
 }
 
+// Owner request: on (re)entering the Rune Reading tab, clear any STALE spread output /
+// label / mode from a previous reading, so a spread result never lingers over a new single.
+function _resetReadingTab() {
+  _spreadMode = 'single';
+  _spread3Runes = []; _spread5Runes = []; _spread7Runes = []; _spread9Runes = [];
+  readerRune = null; readerTexts = {}; voiceGenerated = {};
+  _hideAllSpreadOutputs();
+  var _ro = document.getElementById('reader-output'); if (_ro) _ro.style.display = 'none';
+  ['single','kriz','norns','horseshoe','yggdrasil'].forEach(function(m){
+    var _b = document.getElementById('mode-btn-' + m); if (_b) _b.classList.toggle('active', m === 'single');
+  });
+  var _l1 = document.getElementById('layer1-lbl'); if (_l1) { _l1.textContent = t('layer1_lbl'); _l1.classList.remove('pulsing'); }
+  _updateSpread3Slots(); _updateSpread5Slots(); _updateSpread7Slots(); _updateSpread9Slots();
+}
+
 function resetReader() {
   _spreadMode = 'single';
   _spread3Runes = []; _spread5Runes = []; _spread7Runes = []; _spread9Runes = [];
   _updateSpread3Slots(); _updateSpread5Slots(); _updateSpread7Slots(); _updateSpread9Slots();
+  _hideAllSpreadOutputs();
+  ['single','kriz','norns','horseshoe','yggdrasil'].forEach(function(m){ var _b = document.getElementById('mode-btn-' + m); if (_b) _b.classList.toggle('active', m === 'single'); });
   readerUser = {}; readerRune = null; readerTexts = {}; voiceGenerated = {};
   document.getElementById('reader-hero').classList.remove('hidden');
   document.getElementById('reader-output').style.display = 'none';
