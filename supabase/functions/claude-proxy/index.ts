@@ -21,10 +21,11 @@
 //   retries transient upstream errors (429/5xx/529) with backoff, then returns a
 //   clean 503 with a friendly message instead of leaking a platform 503 or
 //   masking overload as a 400.
-// MODEL FALLBACK (2026-07-10): on a SUSTAINED overload of the primary model (all
-//   retries exhausted), fall back to a second model (Opus 4.8 -> Opus 4.7) before
-//   giving up, so a peak-load spike returns a reading instead of a 503. A genuine
-//   4xx (bad request) never falls through.
+// MODEL FALLBACK (2026-07-10): on a SUSTAINED overload of a model (all retries
+//   exhausted), fall through the chain Opus 4.8 -> Opus 4.7 -> Sonnet 5 before giving
+//   up, so even a broad Anthropic overload returns a reading instead of a 503. Sonnet
+//   is the last-resort safety net (more capacity, slightly lesser IS quality). A
+//   genuine 4xx (bad request) never falls through.
 // Deploy: supabase functions deploy claude-proxy --project-ref pmitxjvkeovijreepror --no-verify-jwt
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
@@ -426,7 +427,7 @@ serve(async (req) => {
     // exhausted) fall back to Opus 4.7 — near-identical quality, separate capacity — so a
     // peak-load overload returns a reading instead of a 503. A 4xx (genuine bad request)
     // does NOT fall through to the next model.
-    const MODELS = ["claude-opus-4-8", "claude-opus-4-7"];
+    const MODELS = ["claude-opus-4-8", "claude-opus-4-7", "claude-sonnet-5"];
     let result: { ok: true; data: any } | { ok: false; status: number; error: string } =
       { ok: false, status: 503, error: "no attempt" };
     for (const model of MODELS) {
