@@ -443,23 +443,15 @@ serve(async (req) => {
       console.warn(`model ${model} overloaded (${result.status}) — trying fallback`);
     }
 
-    // Upstream failure — NOTHING was deducted, so no credit is lost. Distinguish a
-    // TRANSIENT overload (retry-worthy) from an ADMIN-ACTION failure (auth / billing /
-    // config, e.g. the org running out of Anthropic credits). Masking every failure as
-    // "overloaded" once sent us chasing capacity while the real cause was an out-of-
-    // credits 4xx — surface the upstream status so the cause is diagnosable.
+    // Upstream failure — NOTHING was deducted, so no credit is lost. The USER only ever
+    // sees the graceful "runes are quiet" message — NEVER the real cause (billing / auth /
+    // config / overload). The real status is logged server-side only (edge logs), for the
+    // keeper to diagnose. Do NOT surface the cause to the client — that is intentional.
     if (!result.ok) {
-      const transient = result.status === 429 || result.status >= 500;
-      console.error(
-        transient ? "claude overloaded:" : "claude UPSTREAM ERROR (admin action?):",
-        result.status, result.error,
-      );
+      console.error("claude call failed:", result.status, result.error);
       return json({
-        error:           transient ? "overloaded" : "service_down",
-        upstream_status: result.status,
-        message:         transient
-          ? "The runes are quiet right now — please try again in a moment."
-          : "The reading service is unavailable — the keeper has been notified.",
+        error:   "overloaded",
+        message: "The runes are quiet right now — please try again in a moment.",
       }, 503);
     }
 
