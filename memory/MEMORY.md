@@ -42,7 +42,7 @@ Klíčové soubory pro Read (lokální):
 - Gathering: area='gathering', 3 rune stones flat, všechny tiery. Stará logika (runar-gathering.js) = NAHRADIT (čeká na tree_state DB).
 - Fyzická cesta: Visitor 1 + Rune Card 1 + RS 1 = 3 zdarma celkem.
 - Správná jména run: Perth (ne Perthro), Berkana (ne Berkano), Othila (ne Othala), Kenaz.
-- **Produkční model čtení = Opus 4.8** (claude-opus-4-8). Sonnet 5 zamítnut (kvalita remíza, delší výstup = dražší hlas). Náklad dominuje ElevenLabs hlas, ne model.
+- **Produkční model čtení = Opus 4.8** (claude-opus-4-8). Sonnet 5 zamítnut jako PRIMÁRNÍ (kvalita remíza, delší výstup = dražší hlas). Náklad dominuje ElevenLabs hlas, ne model. **Overload fallback chain (2026-07-10, claude-proxy): Opus 4.8 → Opus 4.7 → Sonnet 5.** Sonnet je jen poslední záchrana při přetížení (429/5xx po retry), NE primární — normální čtení běží na 4.8. `callClaudeWithRetry` (3× backoff) + fallback loop; 4xx nepropadá. Deploy: `supabase functions deploy claude-proxy --project-ref pmitxjvkeovijreepror --no-verify-jwt`.
 - **Voice profiles**: ACTIVE_VOICE_PROFILE='focused' (produkce). Revert = 'lyrical'.
 - **Spread journal**: saveSpreadReading() — area='spread', multi-rune spready ukládají jako Gathering.
 
