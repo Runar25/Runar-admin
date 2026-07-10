@@ -56,13 +56,15 @@ def main():
     if not texts:
         print('No input. Usage: python -X utf8 is-grammar-qa.py <file | --text "...">')
         return
-    codes = Counter(); flagged = 0
+    codes = Counter(); flagged = 0; unparsed = []
     for i, t in enumerate(texts, 1):
         try:
             anns = check(t)
         except Exception as e:
             print('  [%d] API error: %s' % (i, e)); continue
         real = [a for a in anns if a['code'] not in LOW_SIGNAL]
+        if any(a['code'] == 'E001' for a in anns):
+            unparsed.append((i, t))  # parse-fail can hide a subtle construction (láta séð class)
         if real:
             flagged += 1
             head = (t[:72] + '…') if len(t) > 72 else t
@@ -74,6 +76,11 @@ def main():
         time.sleep(0.4)  # be polite to the public API
     print('\n' + '=' * 52)
     print('%d texts, %d with flags. By code: %s' % (len(texts), flagged, dict(codes) or '{}'))
+    if unparsed:
+        print('\n⚠ %d unparseable (E001) -> NATIVE EYE. GreynirCorrect could not parse these;' % len(unparsed))
+        print('  a subtle construction may hide here (e.g. causative "láta séð" -> "láta sjá"):')
+        for _i, _t in unparsed:
+            print('    [%d] %s' % (_i, (_t[:80] + '…') if len(_t) > 80 else _t))
     print('U001 = unknown word (possible neologism) · S00x = spelling · rest = grammar.')
     print('FLAG-ONLY — Sigrún decides. Real fixes -> runar_corrections (shrine) or the prompt.')
 

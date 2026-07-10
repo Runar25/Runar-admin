@@ -171,14 +171,37 @@ try:
 except FileNotFoundError:
     check('sw.js nenalezen', False)
 
+# ── 6. Corrections contract (seed-and-assert, real path) ───
+print('\n⑥ CORRECTIONS CONTRACT (golden_contracts.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'golden_contracts.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+check(output.split('\n')[0] if output else 'contract ran', passed,
+      '' if passed else output)
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
 if fail_count == 0:
-    print(f'  ✅  SMOKE TEST PROŠEL  —  {ok_count}/5 kontrol OK')
+    print(f'  ✅  SMOKE TEST PROŠEL  —  {ok_count}/6 kontrol OK')
 else:
     print(f'  ❌  SMOKE TEST SELHAL  —  {fail_count} problém(ů), {ok_count} OK')
 print('══════════════════════════════════════════')
 print()
+
+# ── §16 DOC SYNC reminder (NEblokující — jen připomínka, neovlivňuje exit) ──
+try:
+    _staged = subprocess.run(['git', 'diff', '--cached', '--name-only'],
+                             cwd=ROOT, capture_output=True, text=True)
+    _files = [l.strip() for l in _staged.stdout.splitlines() if l.strip()]
+    _js_changed  = any(f.endswith('.js') for f in _files)
+    _dec_staged  = any('RUNAR_DECISIONS.md' in f for f in _files)
+    if _js_changed and not _dec_staged:
+        print('  ℹ  §16: staged JS beze změny RUNAR_DECISIONS.md')
+        print('       Pokud se změnilo CHOVÁNÍ/rozhodnutí → přidej záznam. Refactor/CSS ignoruj.')
+        print()
+except Exception:
+    pass  # git nedostupný / žádné staged soubory → připomínku tiše přeskoč
 
 sys.exit(0 if fail_count == 0 else 1)
