@@ -142,6 +142,12 @@ Kořen měsíce oprav = duplikace + rozsypané řetězce („všechno všude a n
 4. **Změny kvality čtení = MĚŘIT evalem** (Workflow: generuj → adversariální grader), ne hádat. Objektivní věci (IS gramatika) měř tvrdě; subjektivní styl = human judgment (auto-grader je moc přísný).
 5. **Nová věc → §13 full-path** (projít VŠECHNY cesty) PLUS zapsat do jednoho packu/configu, ne rozsypat po souborech.
 
+### §19 — Ověřuj VÝSLEDEK, ne tvar kódu (anti-tichá-chyba)
+Měsíc tichých chyb (korekce běžely mrtvé, check-is skenoval špatnou plochu, `láta séð` prošlo) měl JEDEN kořen: každá kontrola ověřovala **tvar kódu** (parsuje? string existuje ve zdroji? builder dává stejné byty?), ale nic neprotlačilo známý vstup **reálnou cestou** a neověřilo **výsledek**. Rozsypání (§18) chyby jen schovalo.
+1. **Seed-and-assert na hranici.** Kde data přechází hranici (DB→kód, zdroj→prompt, stav→reset), měj JEDEN drobný fixture co protlačí známý vstup skrz produkční funkce a ověří výsledek (očekávané JE přítomno / špatné NENÍ). Vzor = `golden_contracts.js` (smoke.py kontrola ⑥): seed raw DB řádku → `normalizeCorrections`→`getCorrPrompt`+`applyISCorrections` → replacement přežil, žádné „undefined". Fixture musí sám cvičit pravou hranici (ne test-double se špatnými klíči).
+2. **Žádné tiché zelené.** Co nástroj **prokazatelně neposoudí** (subtilní IS gramatika — kauzativa, vazby) NESMÍ projít zeleně → do **pojmenované lidské fronty** (is-grammar-qa: `E001` → NATIVE EYE; `IS_NATIVE_CHECKLIST.md` pro Sigrún). Filtrovaný signál = viditelný žlutý, ne zahozený.
+3. **Kontrola běží na TÉ PLOŠE, kde bug žije.** Dynamický model-output ≠ zdrojový string; DOM stav ≠ builder output. Kontrola na proxy ploše se nepočítá jako pokrytí.
+
 ---
 
 ## Tier systém
