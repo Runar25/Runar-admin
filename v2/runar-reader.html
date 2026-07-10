@@ -416,6 +416,17 @@
         </div>
       </div>
       <div class="status" id="st-voice"></div>
+      <!-- Ask Rúnar — follow-up Q&A (Premium, one question per reading) -->
+      <div id="ask-runar" style="display:none;">
+        <div class="ask-lbl" id="ask-lbl">Ask Rúnar about this reading</div>
+        <div class="ask-input-wrap" id="ask-input-wrap">
+          <input type="text" id="ask-input" class="ask-input" maxlength="240" placeholder="What caught your attention?"
+                 onkeydown="if(event.key==='Enter')askRunar();">
+          <button class="ask-btn" id="ask-btn" onclick="askRunar()">ASK</button>
+        </div>
+        <div class="out-txt ask-answer" id="ask-answer" style="display:none;"></div>
+        <div class="status" id="ask-status"></div>
+      </div>
       <!-- Actions -->
       <div class="btn-row">
         <button class="btn-half"     id="draw-another-btn" onclick="drawAnother()">DRAW ANOTHER RUNE</button>

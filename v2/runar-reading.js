@@ -172,6 +172,7 @@ async function _generateReading() {
   if (_ul1lbl) { _ul1lbl.innerHTML = '<span class="rlbl-glyph" data-rune="' + rn(drawn) + '" data-kw="' + rk(drawn) + '" data-seg="0">' + drawn.g + '</span><span class="rlbl-name">' + rn(drawn).toUpperCase() + '</span>'; _ul1lbl.classList.remove('pulsing'); }
   await stream('out-short', reading);
   _renderSegments('out-short', _lastSegs);
+  _showAsk();
   document.getElementById('out-deep').innerHTML = '';
 
   // After streaming is done — if last free reading, show join prompt after 8s
@@ -474,6 +475,50 @@ async function readRune() {
   await _generateReading();
 }
 
+// ─── Ask Rúnar — follow-up Q&A (Premium, one question per reading) ───────────
+var _askUsed = false;
+function _showAsk() {
+  var el = document.getElementById('ask-runar');
+  if (!el) return;
+  var isPremium = currentUser && (userTier === 'premium' || isAdmin(currentUser.email));
+  if (!isPremium) { el.style.display = 'none'; return; }
+  _askUsed = false;
+  var inp = document.getElementById('ask-input'); if (inp) inp.value = '';
+  var wrap = document.getElementById('ask-input-wrap'); if (wrap) wrap.style.display = '';
+  var ans = document.getElementById('ask-answer'); if (ans) { ans.textContent = ''; ans.style.display = 'none'; }
+  var btn = document.getElementById('ask-btn'); if (btn) { btn.disabled = false; btn.textContent = t('ask_btn'); }
+  setSt('ask-status', '');
+  el.style.display = 'block';
+}
+async function askRunar() {
+  if (_askUsed) return;
+  var inp = document.getElementById('ask-input');
+  var q = inp ? inp.value.trim() : '';
+  if (!q) return;
+  var reading = (readerTexts[lang] && readerTexts[lang].short) || '';
+  if (!reading) return;
+  var runes = (_lastSegs && _lastSegs.length)
+    ? _lastSegs.map(function (s) { return s.rune; }).filter(Boolean).join(', ')
+    : (readerRune ? rn(readerRune) : '');
+  var btn = document.getElementById('ask-btn');
+  if (btn) { btn.disabled = true; btn.textContent = t('ask_thinking'); }
+  setSt('ask-status', '');
+  var sys = buildSysPrompt(activeChar, lang);
+  var prompt = buildAskPrompt(reading, q, runes, lang, corrections);
+  var res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens, shouldUseCredit(), SPREAD_COSTS.single.credits);
+  if (res.error) {
+    if (btn) { btn.disabled = false; btn.textContent = t('ask_btn'); }
+    setSt('ask-status', _readingErrMsg(res.error === 'rate_limited' ? 'rate_limited' : (res.error === 'no_credits' ? 'no_credits' : '')), 'err');
+    return;
+  }
+  var answer = _parseSegments(res.text || '').reading || (res.text || '').trim(); // defensive: unwrap if model returns JSON
+  answer = applyISCorrections(answer, lang, corrections);
+  _askUsed = true;
+  var wrap = document.getElementById('ask-input-wrap'); if (wrap) wrap.style.display = 'none'; // one question -> close
+  var ans = document.getElementById('ask-answer'); if (ans) { ans.textContent = ''; ans.style.display = 'block'; }
+  await stream('ask-answer', answer);
+}
+
 function drawAnother() {
   // Restore layer2 + reset layer1 label for next reading
   var _daL2 = document.getElementById('single-layer2');
@@ -709,6 +754,7 @@ async function _generateSpreadReading(o) {
 
   await stream(o.outId, text);
   _renderSegments(o.outId, _lastSegs);
+  _showAsk();
 
   if (canUseVoice()) {
     if (vBtn) { vBtn.disabled = false; vBtn.style.display = ''; }

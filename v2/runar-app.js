@@ -126,6 +126,22 @@ async function upsertProfile() {
 }
 
 // ─── DB: READINGS ────────────────────────────────────────
+// FREE-SOLO tree: after saving a reading, append it to localStorage treeLog (data source for the Tree of Life).
+// Format expected by engine: { spread, runes:[{rune:<glyph>, el:<lowercase element>}], area, intention }
+function recordTreeReading(spreadKind, runeObjs, area, intention) {
+  try {
+    var toEl = function(r){ return ((r && r.elements && r.elements[0]) || 'Earth').toLowerCase(); };
+    var log = JSON.parse(localStorage.getItem('treeLog') || '[]');
+    log.push({
+      spread:    (spreadKind || 'single').toLowerCase(),
+      runes:     (runeObjs || []).filter(Boolean).map(function(r){ return { rune: r.g, el: toEl(r) }; }),
+      area:      area || null,
+      intention: intention || null
+    });
+    localStorage.setItem('treeLog', JSON.stringify(log));
+  } catch(e) {}
+}
+
 async function saveReading(rune, short, deep) {
   if (!currentUser) return;
   try {
@@ -144,6 +160,7 @@ async function saveReading(rune, short, deep) {
       life_rune:    lifeRune,
       credits_used: shouldUseCredit(),   // true = kreditní čtení, false = free monthly
     });
+    recordTreeReading('single', [rune], readerUser.area, readerUser.intention);
   } catch(e) { console.warn('saveReading:', e.message); }
 }
 
@@ -169,6 +186,7 @@ async function saveSpreadReading(spreadName, runesArr, text) {
       life_rune:    lifeRune,
       credits_used: shouldUseCredit(),
     });
+    recordTreeReading(spreadName, runesArr, readerUser.area, readerUser.intention);
   } catch(e) { console.warn('saveSpreadReading:', e.message); }
 }
 
@@ -683,6 +701,9 @@ function updateUIText() {
   setText('draw-another-btn', t('draw_another'));
   setText('start-over-btn', t('start_over'));
   setText('audio-player-lbl', t('voice_player_lbl'));
+  setText('ask-lbl', t('ask_lbl'));
+  var _askInp = document.getElementById('ask-input'); if (_askInp) _askInp.placeholder = t('ask_placeholder');
+  var _askBtn = document.getElementById('ask-btn'); if (_askBtn && !_askBtn.disabled) _askBtn.textContent = t('ask_btn');
   const vBtn = document.getElementById('btn-generate-voice');
   if (vBtn && !vBtn.disabled) vBtn.textContent = t('voice_btn');
   // Re-render auth UI + side panel vždy — zajistí správné texty i pro odhlášeného uživatele při změně jazyka
