@@ -32,6 +32,14 @@
 
 - [x] **Prompt unification** — HOTOVO (SW v124): 10 IS/EN builderů → 5 generických (`buildReadingPromptSingle`/`buildNornsPromptFate`/`buildKrizPromptCross`/`buildHorseshoePromptSeven`/`buildYggdrasilPromptNine`) + 5 `RP_*` packů. Golden-verified: IS byte-identický, EN jen kosmetická normalizace runesBlock. **Přidání jazyka = přeložit packy.** Golden harness v `scripts/golden/`. (Detail → DECISIONS 2026-07-04.)
 
+## Premium features / Fáze B (tap UI, Ask Rúnar)
+
+> Pozn.: Coworkův handoff `RUNAR_SEGMENTACE_FaseB_CODE.md` (07-07) předpokládá `deeper_meaning` v JSON — ale MAIN ho zahodil 07-04 (viz „deeper_meaning re-add" výše). B1 highlight ho NEpotřebuje; B2 ano.
+
+- [ ] **Fáze B1 — segment highlight** (owner vize 2026-07-10) — ťuk na runu ve stripu → její text-segment **zezlátne**, ostatní ztlumené (opacity .38). Data UŽ existují (`[{rune,text}]` segmenty). **Prototyp OVĚŘEN:** `_proto_highlight.html` (repo root, standalone, gold+dim funguje). Čeká owner: „používat?". Produkční wiring: `_parseSegments` vrátit `segs` pole → per-segment spany (`.rseg data-seg`) v renderu (po `stream()`) → tap handler (rozšířit `runar-rune-popup.js`) → CSS. **Hlas beze změny** (innerText netknutý). Mapování dle POZICE (index) = robustní (řeší Kříž +1). Žádná změna promptu ani nákladu.
+- [ ] **Fáze B2 — deeper_meaning reveal** (Premium) — NAVAZUJE na B1, TĚŽŠÍ. Vyžaduje: re-add `deeper_meaning` do builderů (extra generovaný text/runa; hlas 0 = `display:none`) + persistence `segments jsonb` (tree-aware, most na Fázi C) + tap → overlay panel. **Nejdřív ZMĚŘIT kvalitu deeper evalem** (distinktní, ne vata?). Gating (Cowork návrh B): highlight = Standard+, deeper = Premium. Rozhodnout AŽ po B1.
+- [ ] **Ask Rúnar — follow-up otázka** (Premium, owner nápad 2026-07-10) — po čtení může Premium user položit otázku k tomu, co ho ve VÝKLADU zaujalo. Rúnar odpovídá **VÝHRADNĚ k danému runovému čtení** (scope-lock, ne obecný chat, ne nové věštění). Čtení je v journalu → jde se zeptat i **zpětně přes journal** (backup když appka spadne). Délka = jako single rune čtení. Vyladit prompt „jak Rúnar odpovídá v tomto režimu". Otevřené: voice ano/ne · limit počtu otázek/čtení (náklad) · single Q→A vs multi-turn.
+
 ## Launch blockers (z CLAUDE.md)
 
 - [ ] Resend SMTP · Shopify webhook · Standard checkout
