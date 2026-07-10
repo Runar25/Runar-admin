@@ -86,7 +86,8 @@ Snið, horn og tónn eru tilgreind í hverju lestursprompt — fylgdu þeim nák
 3. Engar enskuslettur né beinar þýðingar úr ensku. Bannað að segja "er ekki um að" — segðu frekar "snýst ekki um". Ef orðasamband hljómar eins og bein ensk þýðing, umorðaðu á eðlilega íslensku.
 4. Fallstjórn: rún í þolfalli = rún; fleirtala nefnifall = rúnir / rúnirnar.
 5. Kyn viðmælandans er gefið í lestrarbeiðninni (ÁVARP). Samræmdu ÖLL lýsingarorð og fornöfn um "þú" við það kyn í öllum textanum — aldrei blanda kynjum saman. Ef ekkert ÁVARP fylgir, notaðu hvorugkyn (hán).
-6. Síðasta skref fyrir skil: lestu textann yfir — (a) hverja sögn í 2. persónu eintölu, (b) hvert lýsingarorð gagnvart kyni + tölu + falli nafnorðsins, (c) að viðmælandinn sé kynhlutlaus eða samræmdur í öllum textanum, (d) að engin ensk sletta sé eftir.
+6. Notaðu EINGÖNGU þekkt, hefðbundin íslensk orð. Búðu ALDREI til ný orð, ný samsett orð eða óþekkta beygingu sem rótgróinn málnotandi þekkir ekki. Í vafa: veldu einfaldara, algengara orð. Skáldlegt og bókmenntalegt mál er í lagi — að finna upp orð er það EKKI.
+7. Síðasta skref fyrir skil: lestu textann yfir — (a) hverja sögn í 2. persónu eintölu, (b) hvert lýsingarorð gagnvart kyni + tölu + falli nafnorðsins, (c) að viðmælandinn sé kynhlutlaus eða samræmdur í öllum textanum, (d) að engin ensk sletta sé eftir, (e) að ekkert nýyrði eða óþekkt samsett orð sé eftir.
 Svaraðu einungis á íslensku — allur textinn á íslensku.`,
 
 };
@@ -555,7 +556,7 @@ var BIRTH_MONTHS = {
   6:  { name: 'Sólmánuður',   is: 'miðnætursól, blær milli heimsins, huldufólk á ferð',             en: 'midnight sun, the veil thins, hidden people most active' },
   7:  { name: 'Heyannir',     is: 'langur dagur, lundar, opinn himinn, uppskera er í gangi',        en: 'the long light, puffins, hay season, open sky' },
   8:  { name: 'Haustmánuður', is: 'ljósið er að hverfa, uppskera, hlýtt og gult',                   en: 'light beginning to leave, harvest, warm and golden' },
-  9:  { name: 'Haustmánuður', is: 'Réttir, sauðféð kemur heim, hlýtt og takkargjört',               en: 'Réttir, the sheep roundup, return and gratitude, warm and golden' },
+  9:  { name: 'Haustmánuður', is: 'Réttir, sauðféð kemur heim, hlýtt og þakklátt',               en: 'Réttir, the sheep roundup, return and gratitude, warm and golden' },
   10: { name: 'Gormánuður',   is: 'myrkur er að koma aftur, fyrsti vetrardagurinn, norðurljós',     en: 'darkness returning, first winter day, aurora season begins' },
   11: { name: 'Ýlir',         is: 'veturinn er kominn í fullnustu, norðurljós, himillinn talar',    en: 'winter in full darkness, aurora, the sky speaks' },
   12: { name: 'Jól',          is: 'sólstöður, fræ ljóssins í myrkinu, Jólasveinar',                 en: 'winter solstice, the seed of returning light in the darkest night' }
@@ -747,11 +748,11 @@ var RP_SINGLE = {
     useFormula:true, langInstr:'',
     worldFb:function(pk){ return 'lifandi leiðin'; },
     formula:function(f){ return 'Íslensk rúnaþula (flettu inn náttúrlega einu sinni): "' + f + '"'; },
-    lifeRuneNote:function(rune){ return 'MIKILVÆGT: Dregna rúna og lífsrúna eru EIN og sama rúna — ' + rune + '. Þetta er sjaldgæft. Meðhöndlaðu þetta sem sérstæðan augnablik: "Stofninn talar um sig sjálfan."'; },
-    angleIntro:'LESTURHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og upphaf): ',
+    lifeRuneNote:function(rune){ return 'MIKILVÆGT: Dregna rúna og lífsrúna eru EIN og sama rúna — ' + rune + '. Þetta er sjaldgæft. Meðhöndlaðu þetta sem sérstætt augnablik: "Stofninn talar um sig sjálfan."'; },
+    angleIntro:'LESTRARHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og upphaf): ',
     length:'Gefðu einn samfelldan lestur — 3 stuttar setningar, 38 til 45 orð alls. Hann verður lesinn upphátt, svo hafðu hverja setningu létta — um 20 til 25 sekúndur. Engar fyrirsagnir, engar hlutaskiptingar.',
     qBranch:function(rune,g,q){ return 'Svaraðu spurningunni: "' + q + '" í gegnum ' + rune + ' (' + g + ') — í myndum og táknmáli, ekki ráðgjöf. Nefndu ' + rune + ' einu sinni, fléttað náttúrlega inn. Talaðu um það sem liggur undir spurningunni. Enda með einni opinni spurningu sem nær dýpra.'; },
-    noqBranch:function(rune,g,world){ return 'Byrjaðu á ' + rune + ' (' + g + ') — láttu táknlæga gæði þess (' + world + ') koma fram í myndum, ekki útskýringu. Nefndu ' + rune + ' einu sinni, fléttað náttúrlega inn. Ein skýr innsýn nægir — ekki troða öllu inn. Enda með mjög stuttri, opinni spurningu — fáein orð.'; },
+    noqBranch:function(rune,g,world){ return 'Byrjaðu á ' + rune + ' (' + g + ') — láttu táknræn gæði þess (' + world + ') koma fram í myndum, ekki útskýringu. Nefndu ' + rune + ' einu sinni, fléttað náttúrlega inn. Ein skýr innsýn nægir — ekki troða öllu inn. Enda með mjög stuttri, opinni spurningu — fáein orð.'; },
     closing:function(name){ return 'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. Ávarpaðu ' + name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. Haltu þig innan orðafjöldans — stuttar setningar, ekkert uppfyllingarefni.'; },
     priority:function(drawn){ return 'Ef þetta rennur ekki saman í eina náttúrlega mynd: haltu ' + drawn + ' fremst, virtu leitina og sviðið, og láttu lífsrúnu-linsuna hopa — hún má hverfa alveg fremur en að vera þvinguð. Aldrei hlaða þessu upp sem aðskildum staðhæfingum.'; },
     json:'Skilaðu EINGÖNGU þessu JSON fylki, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(lesturinn nákvæmlega eins og fyrirmælin að ofan segja, einn samfelldur texti)"}]',
@@ -837,7 +838,7 @@ var RP_KRIZ = {
       'Þriðja rúnan (Undir): hvað liggur í undirmeðvitund eða duldu.',
       'Fjórða rúnan (Að baki): það sem enn verkar úr fortíðinni — ekki sögun, heldur orkan.',
       'Fimmta rúnan (Framar): ekki spá — þar sem þessi orka leiðir ef ekkert breytist.',
-      'Endaðu með einni opinni, hljóðlægri spurningu.',
+      'Endaðu með einni opinni, hljóðlátri spurningu.',
       'Sérhver rúna verður að setja mark sitt — láttu allar fimm móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
     ]; },
     closing:function(name){ return 'Ávarpaðu ' + name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. Vertu hnitmiðaður — 6 til 7 setningar.'; },
