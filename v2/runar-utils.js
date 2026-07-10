@@ -25,6 +25,20 @@ function normalizeTier(tier) {
   return (tier === 'free' || tier === 'credits') ? 'rune_seeker' : tier;
 }
 
+// Corrections DB rows -> shared {from_word,to_word,lang,context} shape.
+// §18/§3: ONE normalizer so reader + shrine can never drift on field names
+// (DB columns are original_phrase / replacement_phrase / lang_scope). Drops empty rows.
+function normalizeCorrections(rows) {
+  return (rows || []).map(function(c) {
+    return {
+      from_word: c.original_phrase || c.from_word || '',
+      to_word:   c.replacement_phrase || c.to_word || '',
+      lang:      c.lang_scope || c.lang || 'both',
+      context:   c.context || null,
+    };
+  }).filter(function(c) { return c.from_word && c.to_word; });
+}
+
 // Vocabulary helpers — read from VOCAB (runar-config.js)
 // vn('unit', 9, 'en')  =>  '9 rune readings'
 // vn('cast', 1, 'is')  =>  '1 sp\u00e1'

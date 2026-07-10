@@ -2104,12 +2104,7 @@ async function loadCorrections() {
   try { const { data } = await sb.from('runar_corrections').select('*').order('created_at', { ascending: false }).limit(50); items = data || []; }
   catch (e) { items = JSON.parse(localStorage.getItem('runar_corr') || '[]'); }
   // Normalize to shared correction format for getCorrPrompt() + applyISCorrections()
-  corrections = items.map(function(c) { return {
-    from_word: c.original_phrase || c.from_word || '',
-    to_word:   c.replacement_phrase || c.to_word || '',
-    lang:      c.lang_scope || c.lang || 'both',
-    context:   c.context || null,
-  }; });
+  corrections = normalizeCorrections(items);
   const list = document.getElementById('corr-list');
   if (!items.length) { list.innerHTML = '<div class="empty">' + t('no_corr') + '</div>'; return; }
   list.innerHTML = '';

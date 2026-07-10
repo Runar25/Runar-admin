@@ -1023,14 +1023,16 @@ function buildPillGroup(containerId, items, type, unlockedCount) {
 
 // ─── CORRECTIONS ─────────────────────────────────────────
 async function loadCorrections() {
+  var raw = [];
   try {
     const { data } = await sb.from('runar_corrections').select('*').order('created_at');
-    corrections = data || [];
-  } catch { corrections = []; }
+    raw = data || [];
+  } catch { raw = []; }
   const local = localStorage.getItem('runar_corrections');
   if (local) {
-    try { corrections = [...corrections, ...JSON.parse(local)]; } catch {}
+    try { raw = [...raw, ...JSON.parse(local)]; } catch {}
   }
+  corrections = normalizeCorrections(raw);
 }
 // ─── PROXY ───────────────────────────────────────────────
 // use_credit: true = odečíst kredit na backendu (monthly slot vyčerpán)
