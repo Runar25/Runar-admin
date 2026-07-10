@@ -23,6 +23,14 @@ def get_staged_files():
 
 staged = get_staged_files()
 
+# ── IS source-linter gate (§9): block if a staged v2 source file has a bad IS literal ──
+is_src = [f for f in staged if f.startswith('v2/') and f.endswith(('.js', '.html'))]
+if is_src:
+    _r = subprocess.run([sys.executable, '-X', 'utf8', os.path.join(REPO, 'check-is.py')], cwd=REPO)
+    if _r.returncode != 0:
+        print('[hook] check-is: bad IS literal in staged source -> commit blocked (fix or update BAD_PATTERNS).')
+        sys.exit(1)
+
 # Je změněno JS/CSS v v2/?
 js_css = [f for f in staged
           if (f.startswith('v2/') or f == 'v2/sw.js')

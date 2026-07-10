@@ -1,33 +1,25 @@
-# check-is.py — IS text quality checker
-# Spustit před každým commitem který obsahuje islandský text.
-# Hlásí known-bad IS slova/fráze ve všech projektových souborech.
+# check-is.py — SOURCE-string IS linter (regression guard).
+# Scans project SOURCE files for known-bad Icelandic LITERALS (typos, wrong tier copy,
+# ASCII-stripped text, Czech leftovers) a human could reintroduce while editing source.
+# It does NOT see model OUTPUT — reading quality is checked by is-grammar-qa.py
+# (GreynirCorrect) + Sigrún (native); runtime fixes live in runar_corrections.
 #
-# Použití: python check-is.py
-# Přidat nový pattern: do BAD_PATTERNS níže.
+# Usage: python -X utf8 check-is.py   |   new SOURCE-typo pattern -> BAD_PATTERNS below.
 
-import os, re
+import os, re, glob, sys
 
 BASE = r'C:\Users\zkuku\Downloads\Runar-admin\v2'
 
-FILES = [
-    'runar-translations.js',
-    'runar-app.js',
-    'runar-character.js',
-    'runar-reader.html',
-    'runar-shrine.html',
-    'runar-help.html',
-    'runar-yggdrasil.html',
-    'runar-auth.js',
-    'runar-reading.js',
-    'runar-tree.js',
-    'runar-gathering.js',
-    'runar-config.js',
-    'runar-runes.js',
-    'runar-journal.js',
-]
+# Auto-discover every IS-bearing source file (no hand-maintained list to drift).
+_SKIP = {'runar-svgs.js'}  # pure SVG data, no IS prose
+FILES = sorted(p for p in glob.glob(os.path.join(BASE, '*.js')) + glob.glob(os.path.join(BASE, '*.html'))
+               if os.path.basename(p) not in _SKIP)
 
 # (bad_pattern, correct_form, note)
 BAD_PATTERNS = [
+    # SOURCE-authorable typos/phrases = this checker's real job. Model-output errors
+    # (prose the model invents) belong to is-grammar-qa + runar_corrections, NOT here;
+    # the model-output entries below are kept only as living documentation for now.
     # Confirmed corrections from runar_corrections DB + manual review
     ('rúnarnar',         'rúnirnar',          'wrong plural'),
     ('Þagninni',         'þögninni',          'wrong word (report 2026-07-09)'),
@@ -103,10 +95,8 @@ BAD_PATTERNS = [
 
 issues = []
 
-for fname in FILES:
-    fpath = os.path.join(BASE, fname)
-    if not os.path.exists(fpath):
-        continue
+for fpath in FILES:
+    fname = os.path.basename(fpath)
     with open(fpath, 'r', encoding='utf-8') as f:
         lines = f.readlines()
     for i, line in enumerate(lines, 1):
@@ -115,7 +105,8 @@ for fname in FILES:
                 issues.append((fname, i, bad, correct, note, line.strip()))
 
 if not issues:
-    print('OK: No IS issues found.')
+    print('OK: no known-bad IS literals in source. (Model output: is-grammar-qa + Sigrún.)')
+    sys.exit(0)
 else:
     print(f'FOUND {len(issues)} IS issue(s):\n')
     for fname, lineno, bad, correct, note, line in issues:
@@ -124,3 +115,4 @@ else:
         print(f'    CORRECT: "{correct}"')
         print(f'    LINE:    {line[:100]}')
         print()
+    sys.exit(1)
