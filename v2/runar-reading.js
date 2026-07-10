@@ -477,13 +477,22 @@ async function readRune() {
 
 // ─── Ask Rúnar — follow-up Q&A (Premium, one question per reading) ───────────
 var _askUsed = false;
+var _askPhIdx = -1;
+function _askPlaceholder() {
+  var phs = (typeof UI_TEXT !== 'undefined' && UI_TEXT[lang] && UI_TEXT[lang].ask_placeholders)
+    || (typeof UI_TEXT !== 'undefined' && UI_TEXT.en && UI_TEXT.en.ask_placeholders)
+    || [t('ask_placeholder')];
+  var i = _askPhIdx < 0 ? 0 : _askPhIdx;
+  return phs[i % phs.length] || '';
+}
 function _showAsk() {
   var el = document.getElementById('ask-runar');
   if (!el) return;
   var isPremium = currentUser && (userTier === 'premium' || isAdmin(currentUser.email));
   if (!isPremium) { el.style.display = 'none'; return; }
   _askUsed = false;
-  var inp = document.getElementById('ask-input'); if (inp) inp.value = '';
+  _askPhIdx++;  // rotate the placeholder each time the ask opens
+  var inp = document.getElementById('ask-input'); if (inp) { inp.value = ''; inp.placeholder = _askPlaceholder(); }
   var wrap = document.getElementById('ask-input-wrap'); if (wrap) wrap.style.display = '';
   var ans = document.getElementById('ask-answer'); if (ans) { ans.textContent = ''; ans.style.display = 'none'; }
   var btn = document.getElementById('ask-btn'); if (btn) { btn.disabled = false; btn.textContent = t('ask_btn'); }

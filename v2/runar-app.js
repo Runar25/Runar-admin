@@ -702,7 +702,7 @@ function updateUIText() {
   setText('start-over-btn', t('start_over'));
   setText('audio-player-lbl', t('voice_player_lbl'));
   setText('ask-lbl', t('ask_lbl'));
-  var _askInp = document.getElementById('ask-input'); if (_askInp) _askInp.placeholder = t('ask_placeholder');
+  var _askInp = document.getElementById('ask-input'); if (_askInp && typeof _askPlaceholder === 'function') _askInp.placeholder = _askPlaceholder();
   var _askBtn = document.getElementById('ask-btn'); if (_askBtn && !_askBtn.disabled) _askBtn.textContent = t('ask_btn');
   const vBtn = document.getElementById('btn-generate-voice');
   if (vBtn && !vBtn.disabled) vBtn.textContent = t('voice_btn');
