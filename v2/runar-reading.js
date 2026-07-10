@@ -69,6 +69,7 @@ function _renderLifeBadge(life) {
 
 async function _generateReading() {
   if (!readerRune) return;
+  _hideAllSpreadOutputs();  // isolate: no stale spread pane lingers over a single reading
   const vBtn = document.getElementById('btn-generate-voice');
   vBtn.disabled = true; vBtn.textContent = t('voice_btn');
   document.getElementById('audio-player').classList.remove('visible');
@@ -616,6 +617,7 @@ async function generateVoice() {
 // only in: rune array, min count, prompt builder, tokens, credits, the
 // output/label element ids, and the journal kind.
 async function _generateSpreadReading(o) {
+  _hideAllSpreadOutputs();  // isolate: clear any other spread's pane before this one
   if (o.runes.length < o.min) return;
 
   var vBtn = document.getElementById('btn-generate-voice');
