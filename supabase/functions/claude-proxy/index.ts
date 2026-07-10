@@ -21,6 +21,10 @@
 //   retries transient upstream errors (429/5xx/529) with backoff, then returns a
 //   clean 503 with a friendly message instead of leaking a platform 503 or
 //   masking overload as a 400.
+// MODEL FALLBACK (2026-07-10): on a SUSTAINED overload of the primary model (all
+//   retries exhausted), fall back to a second model (Opus 4.8 -> Opus 4.7) before
+//   giving up, so a peak-load spike returns a reading instead of a 503. A genuine
+//   4xx (bad request) never falls through.
 // Deploy: supabase functions deploy claude-proxy --project-ref pmitxjvkeovijreepror --no-verify-jwt
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
@@ -418,12 +422,25 @@ serve(async (req) => {
     const anthropicKey = Deno.env.get("ANTHROPIC_API_KEY");
     if (!anthropicKey) return json({ error: "API key not configured" }, 500);
 
-    const result = await callClaudeWithRetry({
-      model:      "claude-opus-4-8",
-      max_tokens,
-      system:     systemParts.length > 0 ? systemParts : undefined,
-      messages:   [{ role: "user", content: prompt }],
-    }, anthropicKey);
+    // Primary Opus 4.8; on a sustained overload-class failure (all internal retries
+    // exhausted) fall back to Opus 4.7 — near-identical quality, separate capacity — so a
+    // peak-load overload returns a reading instead of a 503. A 4xx (genuine bad request)
+    // does NOT fall through to the next model.
+    const MODELS = ["claude-opus-4-8", "claude-opus-4-7"];
+    let result: { ok: true; data: any } | { ok: false; status: number; error: string } =
+      { ok: false, status: 503, error: "no attempt" };
+    for (const model of MODELS) {
+      result = await callClaudeWithRetry({
+        model,
+        max_tokens,
+        system:   systemParts.length > 0 ? systemParts : undefined,
+        messages: [{ role: "user", content: prompt }],
+      }, anthropicKey);
+      if (result.ok) break;
+      const overloadClass = result.status === 429 || result.status >= 500;
+      if (!overloadClass) break;   // 4xx = real error; a fallback model won't help
+      console.warn(`model ${model} overloaded (${result.status}) — trying fallback`);
+    }
 
     // Transient/upstream failure — NOTHING was deducted, so no credit is lost.
     if (!result.ok) {
