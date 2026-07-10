@@ -318,3 +318,15 @@
 - **Affected doc(s):** memory/runar-tree-engine-lab.md, tento záznam
 - **Reality note:** `build_crown_composer.py` (§1). Engine (growBranch/emergence/paint/kořeny/kmen) netknutý. Zbývá PRODUKCE (tree_state DB + zapojení na reálná čtení z readeru) + volitelně per-runa sub-větve (hlubší bough model). NENÍ v produkci, jen lab.
 - **Reversibility:** easy (lab; aettStr=0 vypne; snapshot crown-step5)
+
+---
+
+## 2026-07-10 — Word corrections PAUZA (raw IS output, chyby chytat výš) + IS QC toolkit
+
+- **Typ:** decision (behavior) + tooling
+- **Scope:** reading (IS quality)
+- **Co se změnilo:** `runar_corrections` se v readeru **přestaly APLIKOVAT** — `CORRECTIONS_ENABLED=false` (config), gate v `loadCorrections` → prázdné pole → `getCorrPrompt` nic neinjektuje + `applyISCorrections` no-op. Korekce zůstávají v DB + shrine tabu pro správu. Nový IS QC toolkit: **check-is** = source-linter (typos v kódu, glob všech v2 souborů, pre-commit brána §9) · **is-grammar-qa** = GreynirCorrect (Yfirlestur API) nad celými čteními (output kvalita, flag-only) · **is-corr-qa** = BÍN (`islenska`, offline) validuje korekce (reálný tvar? single-word = kontextově slepé) pro non-native. Shrine reader-preview (V2 LAB) smazán (−971 ř., drift plocha). Stale-reading fix (reset na single při vstupu na reading tab).
+- **Proč:** Manuální substring korekce jsou **kontextově slepé** — jednoslovné X→Y může být správné v jednom pádě/čase/osobě a špatné jinde (is-corr-qa označil `biðlar→biður` jako dvojznačné kvk/so). Maskování outputu jimi skrývá, jestli model chybu pořád dělá. Pauza → syrový IS projde → když se dřív-opravené slovo vrátí = **reálný signál** opakující se mezery → oprava v **promptu** (řeší VŠECHNY kontexty), ne záplata. Princip prevence > blocklist (§18: jeden zdroj, měřit).
+- **Affected doc(s):** CLAUDE.md §2 (korekce = 4. vrstva, teď gated), MEMORY.md, tento záznam.
+- **Reality note:** Reverzibilní: flag `CORRECTIONS_ENABLED=true`. Licence OK (GreynirCorrect MIT / BÍN CC BY-SA). BÍN doménově chytré (rozloží `lífs-rún`), GreynirCorrect na fragmentech nespolehlivý (`lífsrúna→Lífbrúna`) → BÍN pro validitu slov, GreynirCorrect pro output. Owner-akce: zkontrolovat 2 flagnuté single-word korekce; Sigrún potvrdit borderline. Zbývá (b): prořezat model-output patterny z check-is.
+- **Reversibility:** easy (flag; git revert)

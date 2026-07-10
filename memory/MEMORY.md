@@ -24,8 +24,8 @@ Klíčové soubory pro Read (lokální):
 
 ## Aktuální stav projektu (2026-07-06)
 
-### SW verze: v143
-### Poslední commit: b1cd3dc
+### SW verze: v161
+### Poslední commit: 574a03d
 
 ### Klíčová rozhodnutí (platná)
 - RS: 1 free cast při registraci, žádný weekly drip, ŽÁDNÝ měsíční reset (model B). Jediný signál = DB `free_balance` (default 1). 1 free MÁ hlas. Pak vše za rune readings (kredity).
@@ -36,6 +36,7 @@ Klíčové soubory pro Read (lokální):
 - Visitor = jediný tier bez spreadů (jen Single 1×).
 - **Tier identita (2026-07-05, Cowork+KUKY)**: VŠICHNI registrovaní = **Rune Seeker** (identita navždy, žádný rank/vrchol). standard/premium = NE hodnosti, jen víc čtení/bohatší features. **Rune Walker / Rune Keeper labely = RETIRED**, nová jména standard/premium TBD (Cowork `TIER-NAMING-brief.md`) → **NEPŘEJMENOVÁVAT** dokud nedodají. **Keeper = jen Rúnar** (průvodce), žádný tier. Óðin's Path = budoucí režim/obřad (NE vrchol). Labely reálně **scattered ~10 míst** (config panel_props/life_rune, help.html, auth stub) → rename ≠ 1 místo. DB hodnoty (free_trial/rune_seeker/standard/premium) beze změny. Detail: RUNAR_DECISIONS.md 2026-07-05.
 - **Vocabulary**: credit→rune reading (dříve rune stone), reading→cast, karta→Rune Reading Card. Poetické "stones" (Rúnarův hlas) zůstávají.
+- **Word corrections PAUZA (2026-07-10)**: `CORRECTIONS_ENABLED=false` (config) → reader korekce NEAPLIKUJE (gate v `loadCorrections`, prázdné pole = getCorrPrompt '' + applyISCorrections no-op). Syrový IS projde, chyby chytat výš (prevence > blocklist). Korekce zůstávají v DB + shrine. Reverzibilní (flag=true). **IS QC toolkit**: check-is=source-linter (glob+pre-commit brána §9) · is-grammar-qa=GreynirCorrect (Yfirlestur) nad output · is-corr-qa=BÍN (`islenska`, offline, `pip install islenska`) validuje korekce. Shrine reader-preview SMAZÁN (−971 ř.). Detail: RUNAR_DECISIONS.md 2026-07-10.
 - **Trojice ODSTRANĚNA** — nahrazena Norns jako zakládací rituál (jediná session, 3 kořeny Urðr/Verðandi/Skuld). Cena = Norns = 2 kredity; NIKDY hardcoded "zdarma".
 - Life Rune pro RS: 3 rune readings (SPREAD_COSTS.life_rune.credits).
 - Gathering: area='gathering', 3 rune stones flat, všechny tiery. Stará logika (runar-gathering.js) = NAHRADIT (čeká na tree_state DB).
