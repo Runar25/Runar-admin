@@ -1034,7 +1034,9 @@ async function loadCorrections() {
   if (local) {
     try { raw = [...raw, ...JSON.parse(local)]; } catch {}
   }
-  corrections = normalizeCorrections(raw);
+  // Gated by CORRECTIONS_ENABLED (config). Paused -> apply nothing, let raw IS output show.
+  corrections = (typeof CORRECTIONS_ENABLED !== 'undefined' && !CORRECTIONS_ENABLED)
+    ? [] : normalizeCorrections(raw);
 }
 // ─── PROXY ───────────────────────────────────────────────
 // use_credit: true = odečíst kredit na backendu (monthly slot vyčerpán)

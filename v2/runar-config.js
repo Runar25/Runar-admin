@@ -16,6 +16,15 @@ const TREE_UPDATE = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/tree-
 // const NOTIFY_PROXY = '...functions/v1/notify';
 // const LUNAR_PROXY  = '...functions/v1/lunar-context';
 
+// ─── FEATURE FLAGS ──────────────────────────────────────
+// Word corrections (runar_corrections) — PAUSED 2026-07-10. Manual substring corrections
+// are context-blind (a single-word X->Y can be wrong in another case/tense/person). Paused
+// so the model's RAW Icelandic shows through: if a previously-corrected error recurs,
+// is-grammar-qa (GreynirCorrect) + review catch it as a REAL recurring gap -> fix it at the
+// prompt (fixes every context), not mask it with a patch. Corrections stay in the DB + the
+// shrine tab for management. Flip to true to re-apply.
+const CORRECTIONS_ENABLED = false;
+
 // ─── ELEVENLABS ─────────────────────────────────────────
 const EL_VOICE_ID_EN = '2UI8v2ibbwQTijaYAte1'; // English — Rúnar EN
 const EL_VOICE_ID_IS = '2UI8v2ibbwQTijaYAte1'; // IS — stejný voice, eleven_v3 auto-detekuje islandštinu z textu
