@@ -17,13 +17,14 @@ const TREE_UPDATE = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/tree-
 // const LUNAR_PROXY  = '...functions/v1/lunar-context';
 
 // ─── FEATURE FLAGS ──────────────────────────────────────
-// Word corrections (runar_corrections) — PAUSED 2026-07-10. Manual substring corrections
-// are context-blind (a single-word X->Y can be wrong in another case/tense/person). Paused
-// so the model's RAW Icelandic shows through: if a previously-corrected error recurs,
-// is-grammar-qa (GreynirCorrect) + review catch it as a REAL recurring gap -> fix it at the
-// prompt (fixes every context), not mask it with a patch. Corrections stay in the DB + the
-// shrine tab for management. Flip to true to re-apply.
-const CORRECTIONS_ENABLED = false;
+// Word corrections (runar_corrections) go into the reading PROMPT as guidance
+// (getCorrPrompt) so the model applies them IN CONTEXT — right case/tense/gender — instead
+// of a blind substring replace. The deterministic post-processor (applyISCorrections) stays
+// OFF: it is context-blind and can be wrong in another inflection. Keep the prompt block
+// short — distill recurring patterns into grammar rules (character.js), keep only genuine
+// one-offs as word-corrections; the long tail goes to is-grammar-qa + native, not the prompt.
+const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading prompt (in-context)
+const CORRECTIONS_POSTPROCESS  = false;  // blind substring replace after generation — keep OFF
 
 // ─── ELEVENLABS ─────────────────────────────────────────
 const EL_VOICE_ID_EN = '2UI8v2ibbwQTijaYAte1'; // English — Rúnar EN

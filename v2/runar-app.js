@@ -1034,8 +1034,8 @@ async function loadCorrections() {
   if (local) {
     try { raw = [...raw, ...JSON.parse(local)]; } catch {}
   }
-  // Gated by CORRECTIONS_ENABLED (config). Paused -> apply nothing, let raw IS output show.
-  corrections = (typeof CORRECTIONS_ENABLED !== 'undefined' && !CORRECTIONS_ENABLED)
+  // Gated by CORRECTIONS_IN_PROMPT (config): loaded for in-context prompt guidance (getCorrPrompt).
+  corrections = (typeof CORRECTIONS_IN_PROMPT !== 'undefined' && !CORRECTIONS_IN_PROMPT)
     ? [] : normalizeCorrections(raw);
 }
 // ─── PROXY ───────────────────────────────────────────────

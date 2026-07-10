@@ -710,6 +710,10 @@ function getCorrPrompt(lang, corrections) {
   if (!corrections || !corrections.length) return '';
   const rel = corrections.filter(c => c.from_word && c.to_word && (!c.lang || c.lang === 'both' || c.lang === lang));
   if (!rel.length) return '';
+  if (lang === 'is') {
+    const linesIS = rel.map(c => `- ekki "${c.from_word}" heldur "${c.to_word}"${c.context ? ' ('+c.context+')' : ''}`).join('\n');
+    return `\nOrðaleiðréttingar (fylgdu nákvæmlega, í réttri beygingu eftir samhengi):\n${linesIS}`;
+  }
   const lines = rel.map(c => `- Never say "${c.from_word}" — say "${c.to_word}" instead${c.context ? ' ('+c.context+')' : ''}`).join('\n');
   return `\nWord corrections (follow strictly):\n${lines}`;
 }
@@ -717,6 +721,7 @@ function getCorrPrompt(lang, corrections) {
 // Post-processor: aplikuje IS korekce na Claude output (garantovano, deterministicke)
 // Vola se po kazdem Claude volani kde lang === 'is'
 function applyISCorrections(text, lang, corrections) {
+  if (typeof CORRECTIONS_POSTPROCESS !== 'undefined' && !CORRECTIONS_POSTPROCESS) return text;
   if (lang !== 'is' || !corrections || !corrections.length || !text) return text;
   // Word-boundary aware (Icelandic letters) so a short key like "lífsrúna" does not
   // corrupt "lífsrúnan"/"lífsrúnalestur". No lookbehind (Safari-safe): capture the

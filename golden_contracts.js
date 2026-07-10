@@ -51,10 +51,11 @@ var block = getCorrPrompt('is', norm);
 ok(block.indexOf('Norðurljósin') !== -1, 'getCorrPrompt did not include the replacement');
 ok(block.toLowerCase().indexOf('undefined') === -1, 'getCorrPrompt injected literal "undefined" (poisoned prompt)');
 
-// 3) Post-processor must actually swap the phrase in the model output.
-var out = applyISCorrections('Yfir hrauninu var Arctic ljósið kalt.', 'is', norm);
-ok(out.indexOf('Norðurljósin') !== -1, 'applyISCorrections did not apply the replacement');
-ok(out.indexOf('Arctic ljósið') === -1, 'applyISCorrections left the original phrase in the output');
+// 3) Post-processor is OFF (CORRECTIONS_POSTPROCESS=false): it must be a NO-OP, not a
+//    context-blind substring replace. Assert it leaves the text untouched.
+var sample = 'Yfir hrauninu var Arctic ljósið kalt.';
+var out = applyISCorrections(sample, 'is', norm);
+ok(out === sample, 'applyISCorrections should be a no-op while CORRECTIONS_POSTPROCESS is off');
 `;
 
 vm.createContext(sandbox);
