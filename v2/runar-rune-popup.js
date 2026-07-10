@@ -15,9 +15,26 @@
   }
   function hide() { if (pop) pop.style.display = 'none'; }
 
+  // Fáze B1: gild the tapped rune's text segment (gold-only, others unchanged).
+  function clearSeg() {
+    document.querySelectorAll('.rseg.on').forEach(function (s) { s.classList.remove('on'); });
+    document.querySelectorAll('.rlbl-glyph.seg-active').forEach(function (x) { x.classList.remove('seg-active'); });
+  }
+  function toggleSeg(g) {
+    var idx = g.getAttribute('data-seg');
+    if (idx === null) return;
+    var alreadyOn = false;
+    document.querySelectorAll('.rseg[data-seg="' + idx + '"].on').forEach(function () { alreadyOn = true; });
+    clearSeg();
+    if (!alreadyOn) {
+      document.querySelectorAll('.rseg[data-seg="' + idx + '"]').forEach(function (s) { s.classList.add('on'); });
+      g.classList.add('seg-active');
+    }
+  }
+
   document.addEventListener('click', function (e) {
     var g = e.target && e.target.closest ? e.target.closest('.rlbl-glyph') : null;
-    if (!g || !g.getAttribute('data-rune')) { hide(); return; }
+    if (!g || !g.getAttribute('data-rune')) { hide(); clearSeg(); return; }
 
     var p = ensure();
     var kw = g.getAttribute('data-kw');
@@ -39,6 +56,7 @@
     left = Math.max(window.scrollX + 6, Math.min(left, window.scrollX + vw - pw - 6));
     p.style.left = left + 'px';
     p.style.top = top + 'px';
+    toggleSeg(g);
   });
 
   window.addEventListener('scroll', hide, true);

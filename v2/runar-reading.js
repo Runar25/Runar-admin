@@ -22,22 +22,44 @@
 // Fáze A — segmentovaný výstup: parse JSON [{rune,text,deeper_meaning}].
 // Fallback: když to není JSON, ber celý text jako jedno čtení (graceful). deeper drží jen v paměti.
 var _lastDeeper = '';
+var _lastSegs = [];  // Fáze B1: per-rune [{rune,text}] segments of the last reading (tap highlight)
 function _parseSegments(raw) {
-  if (!raw) return { reading: '', deeper: '' };
+  if (!raw) return { reading: '', deeper: '', segs: [] };
   var s = String(raw);
   var a = s.indexOf('['), b = s.lastIndexOf(']');
   if (a !== -1 && b > a) {
     try {
       var j = JSON.parse(s.slice(a, b + 1));
       if (Array.isArray(j) && j.length && j[0] && typeof j[0].text === 'string') {
-        var reading = j.map(function (x) { return x.text || ''; }).join(' ').trim();
+        var segs = j.map(function (x) { return { rune: x.rune || '', text: (x.text || '').trim() }; });
+        var reading = segs.map(function (x) { return x.text; }).join(' ').trim();
         var tail = s.slice(b + 1).replace(/```/g, '').trim(); // próza za polem (externalizovaná otázka)
-        if (tail) reading = (reading + ' ' + tail).trim();
-        return { reading: reading, deeper: j.map(function (x) { return x.deeper_meaning || ''; }).filter(Boolean).join('\n') };
+        if (tail) {
+          reading = (reading + ' ' + tail).trim();
+          if (segs.length) segs[segs.length - 1].text = (segs[segs.length - 1].text + ' ' + tail).trim();
+        }
+        return { reading: reading, deeper: j.map(function (x) { return x.deeper_meaning || ''; }).filter(Boolean).join('\n'), segs: segs };
       }
     } catch (e) {}
   }
-  return { reading: String(raw), deeper: '' };
+  return { reading: String(raw), deeper: '', segs: [] };
+}
+
+// Fáze B1: re-render the reading as per-rune spans so a tap can gild one segment.
+// innerText is unchanged (spans add no text) -> voice + displayed text identical.
+// Only for spreads (2+ segments); a single rune stays plain.
+function _renderSegments(elId, segs) {
+  var el = document.getElementById(elId);
+  if (!el || !segs || segs.length < 2) return;
+  el.innerHTML = '';
+  segs.forEach(function (sg, i) {
+    if (i) el.appendChild(document.createTextNode(' '));
+    var span = document.createElement('span');
+    span.className = 'rseg';
+    span.setAttribute('data-seg', String(i));
+    span.textContent = sg.text;
+    el.appendChild(span);
+  });
 }
 
 // One source for reading-flow error copy (§18). claude-proxy returns only
@@ -124,6 +146,7 @@ async function _generateReading() {
   var _seg = _parseSegments(res.text);
   const reading = applyISCorrections(_seg.reading.trim(), lang, corrections);
   _lastDeeper = _seg.deeper; // Fáze A: deeper jen v paměti (zatím se neukládá/nezobrazuje)
+  _lastSegs = _seg.segs;
   readerTexts[lang] = { short: reading, deep: '' };
 
   // Count reading — anonymous trial or logged-in free tier
@@ -146,8 +169,9 @@ async function _generateReading() {
   var _ul2 = document.getElementById('single-layer2');
   var _ul1lbl = document.getElementById('layer1-lbl');
   if (_ul2) _ul2.style.display = 'none';
-  if (_ul1lbl) { _ul1lbl.innerHTML = '<span class="rlbl-glyph" data-rune="' + rn(drawn) + '" data-kw="' + rk(drawn) + '">' + drawn.g + '</span><span class="rlbl-name">' + rn(drawn).toUpperCase() + '</span>'; _ul1lbl.classList.remove('pulsing'); }
+  if (_ul1lbl) { _ul1lbl.innerHTML = '<span class="rlbl-glyph" data-rune="' + rn(drawn) + '" data-kw="' + rk(drawn) + '" data-seg="0">' + drawn.g + '</span><span class="rlbl-name">' + rn(drawn).toUpperCase() + '</span>'; _ul1lbl.classList.remove('pulsing'); }
   await stream('out-short', reading);
+  _renderSegments('out-short', _lastSegs);
   document.getElementById('out-deep').innerHTML = '';
 
   // After streaming is done — if last free reading, show join prompt after 8s
@@ -672,10 +696,11 @@ async function _generateSpreadReading(o) {
   var _seg = _parseSegments(res.text || '');
   var text = applyISCorrections(_seg.reading, lang, corrections);
   _lastDeeper = _seg.deeper; // Fáze A: deeper jen v paměti
+  _lastSegs = _seg.segs;
   readerTexts[lang] = { short: text, deep: '' };
 
   var lbl = document.getElementById(o.lblId);
-  if (lbl) lbl.innerHTML = o.runes.map(function(r) { return '<span class="rlbl-glyph" data-rune="' + rn(r) + '" data-kw="' + rk(r) + '">' + r.g + '</span>'; }).join('<span class="rlbl-sep">·</span>');
+  if (lbl) lbl.innerHTML = o.runes.map(function(r, i) { return '<span class="rlbl-glyph" data-rune="' + rn(r) + '" data-kw="' + rk(r) + '" data-seg="' + i + '">' + r.g + '</span>'; }).join('<span class="rlbl-sep">·</span>');
 
   if (currentUser) {
     if (_readingMode === 'mine') { await saveSpreadReading(o.kind, o.runes, text); loadJournal(); }
@@ -683,6 +708,7 @@ async function _generateSpreadReading(o) {
   } else { incTrialCount(); updateAuthUI(); }
 
   await stream(o.outId, text);
+  _renderSegments(o.outId, _lastSegs);
 
   if (canUseVoice()) {
     if (vBtn) { vBtn.disabled = false; vBtn.style.display = ''; }
