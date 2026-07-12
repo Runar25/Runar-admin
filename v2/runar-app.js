@@ -691,6 +691,9 @@ function updateUIText() {
   setText('mode-btn-kriz',      t('spread_mode_kriz'));
   setText('mode-btn-horseshoe', t('spread_mode_horseshoe'));
   setText('mode-btn-yggdrasil', t('spread_mode_yggdrasil'));
+  setText('s5-kriz-lbl', '✦ ' + t('spread_mode_kriz'));
+  setText('s7-horseshoe-lbl', '✦ ' + t('spread_mode_horseshoe'));
+  setText('s9-yggdrasil-lbl', 'ᚱ ' + t('spread_mode_yggdrasil'));
   setPH('redeem-input', t('redeem_ph'));
   setText('btn-speak', t('speak_btn'));
   setText('badge-life-note', t('badge_life_note'));

@@ -102,6 +102,7 @@ async function _generateReading() {
   const _rdLoadTxt = document.getElementById('reading-loading-txt');
   if (_rdLoadTxt) _rdLoadTxt.textContent = t('reading_loading');
   if (_rdLoadEl) _rdLoadEl.style.display = 'block';
+  var _aqS = document.getElementById('ask-runar'); if (_aqS) _aqS.style.display = 'none';
   var _pL1 = document.getElementById('layer1-lbl');
   var _pL2 = document.getElementById('layer2-lbl');
   // Unified: hide layer2 + clear label before API call
@@ -514,7 +515,7 @@ async function askRunar() {
   setSt('ask-status', '');
   var sys = buildSysPrompt(activeChar, lang);
   var prompt = buildAskPrompt(reading, q, runes, lang, corrections);
-  var res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens, shouldUseCredit(), SPREAD_COSTS.single.credits);
+  var res = await callProxy(sys, prompt, 400, shouldUseCredit(), SPREAD_COSTS.single.credits); // follow-up = 2-3 sentences
   if (res.error) {
     if (btn) { btn.disabled = false; btn.textContent = t('ask_btn'); }
     setSt('ask-status', _readingErrMsg(res.error === 'rate_limited' ? 'rate_limited' : (res.error === 'no_credits' ? 'no_credits' : '')), 'err');
@@ -716,6 +717,7 @@ async function _generateSpreadReading(o) {
   var rdLoadTxt = document.getElementById('reading-loading-txt');
   if (rdLoadTxt) rdLoadTxt.textContent = t('reading_loading');
   if (rdLoad) rdLoad.style.display = 'block';
+  var _aqP = document.getElementById('ask-runar'); if (_aqP) _aqP.style.display = 'none';
   var pL1 = document.getElementById('layer1-lbl');
   var pL2 = document.getElementById('layer2-lbl');
   if (pL1) pL1.classList.add('pulsing');
