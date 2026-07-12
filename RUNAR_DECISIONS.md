@@ -342,3 +342,15 @@
 - **Affected doc(s):** CLAUDE.md §2, MEMORY.md, tento záznam. `golden_contracts.js` (smoke ⑥) ověřuje: mapping + getCorrPrompt injektuje replacement + applyISCorrections no-op (§19).
 - **Reality note:** Owner-akce: kurátorovat DB korekce přes shrine (frázové jednorázovky ven, gramatické vzory → pravidla). Model-output patterny už archivované v check-is.
 - **Reversibility:** easy (flagy; git revert)
+
+---
+
+## 2026-07-12 — Tree of Life do produkce (free-solo, admin-only beta)
+
+- **Typ:** implementation (tree → produkce)
+- **Scope:** tree + reading
+- **Co se změnilo:** Crown-composer strom napojen do produkčního readeru (Tree tab), free-solo. Nové: `v2/runar-tree-prod.js` (produkční modul kompozice, generovaný `build_tree_production.py` z labu, §1) + enginy `v2/tree-lab-{trunk,branch}-composer/runar-{trunk,branch}.js` (reader je načítá). `runar-tree.js` (patch `add_living_tree.py`): **`renderLivingTree()`** — **ADMIN-only gate** (`isAdmin(currentUser.email)`), načte VŠECHNA čtení uživatele z DB `readings` → `readingsToTreeLog()` (runa→element z glyfu, spread z rune_name, area) → `RunarTreeProd.render`. Trunk = life runa (od DOB); založení = holý kmen; čtení rostou korunu. `reader.html`: 3 engine skripty + `<canvas id=tree-living-canvas>` v Tree tabu (Life Rune stavy netknuté). Commit `bceec07` (+ sw.js bump).
+- **Proč:** Beta na ostrém bez rizika = admin gate (běžní uživatelé strom nevidí, launch ~měsíc). „Všechno předešlé čtení" = strom čte z `readings` (journal) → celá historie hned (Coworkovo „derive z readings").
+- **Affected doc(s):** memory/runar-tree-engine-lab.md, tento záznam
+- **Reality note:** Non-admin → skryté (ověřeno `display:none`). Živý DB dotaz `sb.from('readings').select('*').eq(user_id)` ověřen jen vzorem (sedí s `saveReading`) — naostro potvrdí admin prvním otevřením Tree tabu. **Cowork `recordTreeReading` (localStorage treeLog) = REDUNDANTNÍ** (strom čte z DB), ale jeho **2 DB opravy** (intention sloupec + reálná area u spreadů) doplní signál výška/strana novým i starým čtením. Stará spready dnes: area='spread'/žádná intention → neutrál (degraduje jemně). Engine (RunarTrunk/RunarBranch/kompozice) NETKNUTÝ. §1: JS přes Python. Snapshoty prod-step3..4. node --check validní. **Anti-drift debt (§18):** lab+prod sdílí kompozici KOPIÍ → TODO shared `runar-tree-core.js`. Enginy načteny z `tree-lab-*` cest (minor debt). Zbývá: live-update po čtení (dnes při otevření tabu), DB trvalost fáze 2 (Cowork opravy), per-runa sub-větve.
+- **Reversibility:** easy (admin gate = 1 podmínka; smazat canvas + 3 skripty; engine nedotčen)
