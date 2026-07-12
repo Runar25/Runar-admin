@@ -50,7 +50,7 @@ async function renderLivingTree(rune) {
     }
     var log = [];
     try {
-      var res = await sb.from('readings').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: true });
+      var res = await sb.from('readings').select('*').eq('user_id', currentUser.id).order('drawn_at', { ascending: true });
       if (res && res.data) log = readingsToTreeLog(res.data);
     } catch(e) {}
     var bk = (window.RunarBranch && window.RunarBranch.RUNES.filter(function(x){ return x.g === rune.g; })[0]);
