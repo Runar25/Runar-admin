@@ -17,6 +17,50 @@ var _lifeRuneLang  = null;  // lang of stored reading
 var _lifeRuneNum   = null;  // rune number 1-24
 
 // Show Tree tab — renders correct state based on tier + data
+// FREE-SOLO living tree (ADMIN-only beta) — crown-composer tree grown from ALL your readings.
+// Source = the `readings` table (journal). Trunk = life rune; branches grow from readings.
+function readingsToTreeLog(rows) {
+  var byGlyph = {};
+  RUNES.forEach(function(r){ byGlyph[r.g] = ((r.elements && r.elements[0]) || 'Earth').toLowerCase(); });
+  var out = [];
+  (rows || []).forEach(function(row) {
+    var name = (row.rune_name || '').toUpperCase();
+    var isSpread = /NORNS|KRIZ|CROSS|COMPASS|HORSESHOE|YGGDRASIL/.test(name);
+    var src = (row.rune_glyph || '') + ' ' + (row.short_text || '');
+    var runes = [];
+    for (var i = 0; i < src.length; i++) {
+      var c = src.charCodeAt(i);
+      if (c >= 0x16A0 && c <= 0x16FF) { var g = src.charAt(i); if (byGlyph[g]) runes.push({ rune: g, el: byGlyph[g] }); }
+    }
+    if (!runes.length) return;
+    if (!isSpread) runes = [runes[0]];
+    var area = (row.area && row.area !== 'spread') ? row.area : null;
+    out.push({ spread: isSpread ? name.toLowerCase() : 'single', runes: runes, area: area, intention: row.intention || null });
+  });
+  return out;
+}
+
+async function renderLivingTree(rune) {
+  try {
+    var wrap = document.getElementById('tree-living');
+    var cv   = document.getElementById('tree-living-canvas');
+    // BETA: living tree visible to ADMINS only for now
+    if (!wrap || !cv || !window.RunarTreeProd || !rune || !currentUser || !isAdmin(currentUser.email)) {
+      if (wrap) wrap.style.display = 'none'; return;
+    }
+    var log = [];
+    try {
+      var res = await sb.from('readings').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: true });
+      if (res && res.data) log = readingsToTreeLog(res.data);
+    } catch(e) {}
+    var bk = (window.RunarBranch && window.RunarBranch.RUNES.filter(function(x){ return x.g === rune.g; })[0]);
+    var rkey = bk ? bk.k : 'berkano';
+    var dob = { d: readerUser.d, m: readerUser.m, y: readerUser.y };
+    wrap.style.display = 'block';
+    window.RunarTreeProd.render(cv, { log: log, rune: rkey, dob: dob });
+  } catch(e) {}
+}
+
 function updateTreeTab() {
   updateAdminBar();
   var isIs = lang === 'is';
@@ -49,6 +93,7 @@ function updateTreeTab() {
     return;
   }
 
+  renderLivingTree(rune);
   var runeName = isIs ? rune.is_n : rune.n;
 
   if (!isStdPlus) {

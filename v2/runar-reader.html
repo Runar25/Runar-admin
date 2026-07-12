@@ -458,6 +458,11 @@
       <button class="tree-admin-btn" id="tree-admin-reset-lr" onclick="resetLifeRune()">RESET LIFE RUNE</button>
     </div>
 
+    <!-- LIVING TREE (free-solo: grows from your readings) -->
+    <div id="tree-living" style="display:none; text-align:center; margin:8px 0 4px;">
+      <canvas id="tree-living-canvas" style="width:min(300px,78vw); height:auto; display:block; margin:0 auto;"></canvas>
+    </div>
+
     <!-- LIFE RUNE SECTION -->
     <div class="tree-life-rune-section" id="tree-life-rune-section">
 
@@ -652,6 +657,9 @@
 </div><!-- /app -->
 
 <script src="runar-journal.js"></script>
+<script src="tree-lab-trunk-composer/runar-trunk.js"></script>
+<script src="tree-lab-branch-composer/runar-branch.js"></script>
+<script src="runar-tree-prod.js"></script>
 <script src="runar-tree.js"></script>
 <script src="runar-gathering.js"></script>
 <script src="runar-auth.js"></script>
