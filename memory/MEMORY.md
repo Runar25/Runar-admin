@@ -104,4 +104,5 @@ Frontmatter-paměť TREE session. Od 2026-07-04 sdílená s Cowork — obě plat
 ## Index snapshots (nejnovější = poslední)
 - _Starší snapshoty (2026-05-30 → 2026-06-16): viz složka `snapshots/`._
 - [snapshots/2026-06-16-reporter-operating-costs-coordination.md](snapshots/2026-06-16-reporter-operating-costs-coordination.md)
-- [snapshots/2026-07-05-s18-drift-cleanup.md](snapshots/2026-07-05-s18-drift-cleanup.md) ← NEJNOVĚJŠÍ (limits messaging unified, dead model-A branches out, 8 §18 fixes, SW v133)
+- [snapshots/2026-07-05-s18-drift-cleanup.md](snapshots/2026-07-05-s18-drift-cleanup.md) (limits messaging unified, dead model-A branches out, 8 §18 fixes, SW v133)
+- [snapshots/2026-07-12-tree-production-admin-beta.md](snapshots/2026-07-12-tree-production-admin-beta.md) ← NEJNOVĚJŠÍ (Tree of Life v produkci, admin-only beta; oba bugy OPRAVENY: readings-load = špatný order sloupec created_at→drawn_at [3067af9], tree-name save = swap na read-only display [460b0f3], SW v170; commity LOKÁLNÍ, push čeká na svolení)
