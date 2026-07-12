@@ -76,11 +76,9 @@ async function fetchUserProfile(userId) {
         readerUser.m = data.dob_month;
         readerUser.y = data.dob_year;
       }
-      // Load tree name
-      if (data.tree_name) {
-        var tni = document.getElementById('tree-name-inp');
-        if (tni) tni.value = data.tree_name;
-      }
+      // Load tree name (single source: currentUser.tree_name) -> render edit/display state
+      if (currentUser) currentUser.tree_name = data.tree_name || '';
+      if (typeof _renderTreeNameState === 'function') _renderTreeNameState();
       userName    = data.name            || '';
       userGender = localStorage.getItem('runar_gender') || 'hk';
       _updateGenderPills();

@@ -279,6 +279,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .tree-name-label{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--muted);margin-bottom:12px;}
 .tree-name-inp{width:100%;max-width:360px;text-align:center;font-variant-numeric:lining-nums;}
 .tree-name-saved{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1.5px;color:var(--gold);margin-top:8px;}
+.tree-named-lbl{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--muted);display:block;margin-bottom:6px;}
+.tree-named-nm{font-family:'Cinzel',serif;font-size:1.15em;color:var(--gold);letter-spacing:1px;}
+.tree-name-edit-link{background:none;border:none;color:var(--muted);font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:1.5px;cursor:pointer;margin-left:12px;padding:2px 4px;text-decoration:underline;text-underline-offset:3px;}
+.tree-name-edit-link:hover{color:var(--gold);}
 .tree-rune-header{cursor:pointer;padding:16px 0 8px;}
 .tree-rune-name-row{display:flex;align-items:center;gap:10px;padding:4px 0;}
 .tree-rune-name{font-family:'Cinzel',serif;font-size:1.1em;color:var(--gold);}

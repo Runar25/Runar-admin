@@ -148,13 +148,10 @@ function updateTreeTab() {
   // Rune Walker/Rune Keeper — has reading?
   if (_lifeRuneText) {
     _showTreeReading(rune, runeName, isIs);
-    // Show tree name section
+    // Show tree name section (edit vs saved-display state)
     var tns = document.getElementById('tree-name-section');
     if (tns) tns.style.display = 'block';
-    var tnl = document.getElementById('tree-name-label');
-    if (tnl) tnl.textContent = t('tree_name_label');
-    var tnb = document.getElementById('tree-name-save-btn');
-    if (tnb) tnb.textContent = t('save_btn');
+    _renderTreeNameState();
   } else {
     // Show reveal CTA
     var ctaEl = document.getElementById('tree-reveal-cta');
@@ -222,6 +219,39 @@ function setTreeDOB() {
   updateTreeTab();
 }
 
+// Render tree-name section in the right state: a saved name -> read-only display,
+// otherwise the edit input. Single source of truth = currentUser.tree_name.
+function _renderTreeNameState() {
+  var editV = document.getElementById('tree-name-edit');
+  var dispV = document.getElementById('tree-name-display');
+  var name = (currentUser && currentUser.tree_name) ? currentUser.tree_name : '';
+  // Keep all labels localized regardless of state
+  var tnl = document.getElementById('tree-name-label'); if (tnl) tnl.textContent = t('tree_name_label');
+  var tnb = document.getElementById('tree-name-save-btn'); if (tnb) tnb.textContent = t('save_btn');
+  var dlbl = document.getElementById('tree-named-lbl'); if (dlbl) dlbl.textContent = t('tree_named_label');
+  var elink = document.getElementById('tree-name-edit-link'); if (elink) elink.textContent = t('tree_name_edit');
+  setPH('tree-name-inp', t('tree_name_ph'));
+  if (name) {
+    var nmEl = document.getElementById('tree-named-nm'); if (nmEl) nmEl.textContent = name;
+    if (editV) editV.style.display = 'none';
+    if (dispV) dispV.style.display = 'block';
+  } else {
+    if (dispV) dispV.style.display = 'none';
+    if (editV) editV.style.display = 'block';
+  }
+}
+
+// 'edit' link: switch back to the input, pre-filled with the current name.
+function editTreeName() {
+  var editV = document.getElementById('tree-name-edit');
+  var dispV = document.getElementById('tree-name-display');
+  var inp = document.getElementById('tree-name-inp');
+  if (inp) inp.value = (currentUser && currentUser.tree_name) ? currentUser.tree_name : '';
+  if (dispV) dispV.style.display = 'none';
+  if (editV) editV.style.display = 'block';
+  if (inp) inp.focus();
+}
+
 async function saveTreeName() {
   var inp = document.getElementById('tree-name-inp');
   var saved = document.getElementById('tree-name-saved');
@@ -230,14 +260,15 @@ async function saveTreeName() {
   if (!name) return;
   try {
     await sb.from('user_profiles').update({ tree_name: name }).eq('id', currentUser.id);
+    currentUser.tree_name = name;
+    _renderTreeNameState();  // swap to read-only display = the confirmation
+  } catch(e) {
+    console.warn('saveTreeName:', e.message);
     if (saved) {
-      saved.textContent = lang === 'is' ? '✦ VISTAÐ' : '✦ SAVED';
+      saved.textContent = t('tree_name_err');
       saved.style.display = 'block';
       setTimeout(function(){ saved.style.display = 'none'; }, DURATION_SAVED);
     }
-  } catch(e) {
-    console.warn('saveTreeName:', e.message);
-    if (saved) { saved.textContent = lang === 'is' ? 'Villa' : 'Error saving'; saved.style.display = 'block'; }
   }
 }
 
