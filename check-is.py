@@ -23,6 +23,7 @@ BAD_PATTERNS = [
     # Confirmed corrections from runar_corrections DB + manual review
     ('rúnarnar',         'rúnirnar',          'wrong plural'),
     ('Auða rúnan',       'Auða rúnin',        'rún definite = rúnin (fixed at source, guard)'),
+    ('lífsrúnan',        'lífsrúnin',         'rún definite = rúnin, not -an (Sigrún 2026-07-13)'),
     ('LÍFSTÍÐARRÚNAN',   'LÍFSRÚNIN',         'wrong compound'),
     ('þarð til',        'þarf til',           'typo: þarð → þarf'),
     ('aðra rúnu',        'aðra rún',          'accusative: rún not rúnu'),

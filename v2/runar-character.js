@@ -498,7 +498,7 @@ function _intentionContext(intention, lang) {
 function _lensContext(life, drawn, lang) {
   if (!life || (drawn && life.n === drawn.n)) return '';
   if (lang === 'is')
-    return 'LÍFSRÚNAN ' + rn(life) + ' er linsan, ekki viðfangsefnið — láttu hana móta HVERNIG þú lest ' + rn(drawn) + '. Nefndu hana aldrei og útskýrðu hana ekki; láttu hana lita lesturinn neðan frá. Dragðu aðeins skýra tengingu milli rúnanna tveggja fram ef hún kemur af sjálfu sér.';
+    return 'LÍFSRÚNIN ' + rn(life) + ' er linsan, ekki viðfangsefnið — láttu hana móta HVERNIG þú lest ' + rn(drawn) + '. Nefndu hana aldrei og útskýrðu hana ekki; láttu hana lita lesturinn neðan frá. Dragðu aðeins skýra tengingu milli rúnanna tveggja fram ef hún kemur af sjálfu sér.';
   return 'The life rune ' + rn(life) + ' is the lens, not the subject — let it shape HOW you read ' + rn(drawn) + '. Never name or explain it; let it colour from underneath. Draw an explicit link between the two runes only if one arises naturally.';
 }
 function _domainContext(area, lang) {
@@ -724,7 +724,7 @@ function applyISCorrections(text, lang, corrections) {
   if (typeof CORRECTIONS_POSTPROCESS !== 'undefined' && !CORRECTIONS_POSTPROCESS) return text;
   if (lang !== 'is' || !corrections || !corrections.length || !text) return text;
   // Word-boundary aware (Icelandic letters) so a short key like "lífsrúna" does not
-  // corrupt "lífsrúnan"/"lífsrúnalestur". No lookbehind (Safari-safe): capture the
+  // corrupt "lífsrúnin"/"lífsrúnalestur". No lookbehind (Safari-safe): capture the
   // preceding non-letter (or start) and re-insert it.
   var L = 'A-Za-zÁÐÉÍÓÚÝÞÆÖáðéíóúýþæö';
   corrections.filter(function(c) { return !c.lang || c.lang === 'is' || c.lang === 'both'; }).forEach(function(c) {

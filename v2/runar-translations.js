@@ -339,7 +339,7 @@ const UI_TEXT = {
     speak_btn_draw:   'DRAGÐU RÚNIRNAR',
     life_rune_lbl:    'LÍFSRÚNIN ÞÍN',
     drawn_lbl:        'DREGIN RÚNA',
-    badge_life_note:  'lífsrúnan þín',
+    badge_life_note:  'lífsrúnin þín',
     layer1_lbl:       '✦ RÚNAR TALAR',
     layer2_lbl:       '~ DÝPRI HUGLEIÐING',
     draw_another:     'DRAGA AÐRA RÚN',
@@ -458,7 +458,7 @@ const UI_TEXT = {
     save_btn:           'VISTA',
     tree_reveal_btn:    'OPINBERA L\u00cdFSR\u00daNUNA',
     tree_reveal_intro:  '\u00c1\u00f0ur en r\u00fanarnar tala um daginn \u2014 vill R\u00fanar opinbera r\u00fanina sem þ\u00fa hefur bori\u00f0 fr\u00e1 fæ\u00f0ingu?',
-    reading_loading:    'STEINARNIR TALA \u00cd \u00dEAGNINNI\u2026',
+    reading_loading:    'STEINARNIR TALA \u00cd \u00dE\u00d6GNINNI\u2026',
     reading_error:      'Villa vi\u00f0 sp\u00e1.',
     // ── Dynamic banner strings — notaðar með tp(), breytur: {casts}, {casts_month}, {units}, {card}, {n}, {rune}, {bal}, {UNITS}
     rs_banner_counter:  '{casts} eftir',
