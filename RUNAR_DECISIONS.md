@@ -401,3 +401,14 @@
 - **Affected doc(s):** MEMORY.md, tento záznam.
 - **Reality note:** Edge fce NASAZENA + shrine tab ověřen v preview (tab/pane/filtry/modul integrují bez chyb, showTab OK; živá data za admin gate → owner otestuje loginem). VIEW-ONLY zatím. Další fáze: flag/annotate akce (review tabulka DB) + obohatit `readings` řádek (prompt_version, pořadí run, char_count, address_form — Cowork eval #1) + is-grammar-qa fronta „NATIVE EYE" nad IS výstupy. Rozhodnutí čekají na ownera: `is_tester` flag, ukládat i `someone` mód. §1: shrine inline JS přes Python.
 - **Reversibility:** easy (smazat tab + modul + fce; readings/RLS beze změny).
+
+
+## 2026-07-13 — Privacy kód zapojen: opt-out toggle + tester consent + viewer opt-out/tester
+
+- **Typ:** implementation (privacy/GDPR + admin tooling)
+- **Scope:** reading (privacy)
+- **Co se změnilo:** DB sloupce (`is_tester`, `analytics_opt_out`, `tester_consent_at`) zapojeny do readeru. `fetchUserProfile` je čte guarded (nikdy neblokuje load). **Side panel PRIVACY sekce** = opt-out toggle (`checked` = „use my readings", default opted-in — legitimate interest, **žádný popup pro běžné usery**). **Tester consent modal** = jednou pro `is_tester` účet bez `tester_consent_at` (freely-given → dismissible, re-show do souhlasu; „I agree" zapíše timestamp). translations +16 klíčů (EN + **IS draft → Sigrún**). **Readings viewer**: `list-readings` **vylučuje opt-out usery** (GDPR) + `is_tester` badge + „⚑ Testers" filtr (edge fce nasazena).
+- **Proč:** Realizuje RUNAR_PRIVACY.md v kódu. Sběr dat od testerů podchycen jejich souhlasem; běžný user má tichý opt-out bez friction (odpověď na „bude to lidi odrazovat").
+- **Affected doc(s):** RUNAR_PRIVACY.md (Code checklist → done), MEMORY.md, tento záznam.
+- **Reality note:** Ověřeno preview (elementy present, consent modal renderuje čitelně, žádné console chyby) + node --check + smoke 7/7. **Live save/consent/badge/opt-out-exkluze = owner login + tester data.** Opt-out/testers filtry běží PO limitu (admin tool, opt-out vzácný). IS texty draft → Sigrún (NATIVE-EYE). Commity 6b79b1b (Part A) + 996e315 (Part B). §1 JS přes Python.
+- **Reversibility:** medium (revert commity; DB sloupce zůstanou neškodné).

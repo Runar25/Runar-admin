@@ -73,11 +73,12 @@ opt-outu (ne opt-in brána). Výslovný souhlas jen u testerů — a ti CHTĚJÍ
 - `user_profiles.analytics_opt_out boolean default false` — user vypnul použití čtení pro zlepšování.
 - (volitelně) `user_profiles.tester_consent_at timestamptz` — kdy tester odsouhlasil.
 
-**Code (MAIN, po sloupcích):**
-- Opt-out toggle v reader nastavení („Don't use my readings to improve Rúnar") → `analytics_opt_out`.
-- `list-readings` + budoucí eval **respektují `analytics_opt_out`** (WHERE opt_out = false; nebo pseudonymizace).
-- Tester consent UI (modal při prvním loginu tester účtu; zapsat `tester_consent_at`). Texty výše přes UI_TEXT (§10).
-- Readings viewer: `is_tester` badge + filtr „jen testeři".
+**Code (MAIN) — HOTOVO (2026-07-13, commity 6b79b1b + 996e315):**
+- ✅ Opt-out toggle v side panelu (PRIVACY sekce) → `analytics_opt_out` (checked = opted in, default).
+- ✅ `list-readings` **vylučuje opt-out usery** (GDPR); budoucí eval taktéž (pseudonymizace).
+- ✅ Tester consent modal (první login is_tester bez `tester_consent_at`; freely-given = dismissible).
+- ✅ Readings viewer: `is_tester` badge + „⚑ Testers" filtr.
+- Texty přes UI_TEXT (§10); **IS = draft → Sigrún**. Zbývá: flag/annotate + obohacení řádku (prompt_version…).
 
 **Owner (mimo kód):**
 - **Supabase DPA** (už v TODO) — podepsat.
