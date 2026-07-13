@@ -63,6 +63,17 @@
   </div>
 </div>
 
+<!-- ═══ TESTER CONSENT MODAL ═══ -->
+<div class="modal-overlay" id="tester-consent-modal">
+  <div class="modal" style="max-width:420px;">
+    <button class="modal-close" onclick="closeTesterConsent()">✕</button>
+    <div class="modal-rune" style="font-size:2em;color:var(--gold);margin-bottom:12px;opacity:0.7;">ᛏ</div>
+    <div class="modal-title" id="tcm-title"></div>
+    <p class="modal-sub" id="tcm-body" style="margin:16px 0 24px;line-height:1.8;"></p>
+    <button class="btn-full" id="tcm-agree" onclick="acceptTesterConsent()"></button>
+  </div>
+</div>
+
 <!-- ═══ DELETE ACCOUNT MODAL ═══ -->
 <div class="modal-overlay" id="delete-account-modal" onclick="if(event.target===this)closeDeleteModal()">
   <div class="modal" style="text-align:center;max-width:340px;">
@@ -705,6 +716,17 @@
       <button class="sp-item journal" id="sp-journal-link" onclick="openJournalFromPanel()">✦ MY JOURNAL</button>
       <button class="sp-item" id="sp-gift" onclick="showAppTab('reading');toggleRedeem();closeSidePanel()">+ READING GIFT CARD</button>
       <a class="sp-item" id="sp-admin-link" href="runar-shrine.html" style="display:none;text-decoration:none;">⚿ KNOWLEDGE SHRINE</a>
+    </div>
+  </div>
+
+  <!-- ②b Privacy settings — logged-in only -->
+  <div id="sp-privacy-settings" style="display:none;">
+    <div class="side-panel-section">
+      <div class="side-panel-lbl" id="sp-privacy-lbl">PRIVACY</div>
+      <label class="sp-toggle">
+        <input type="checkbox" id="sp-optout-toggle" checked onchange="onOptOutToggle(this)">
+        <span id="sp-optout-label">Help improve Rúnar with my readings</span>
+      </label>
     </div>
   </div>
 

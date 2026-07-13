@@ -22,6 +22,9 @@ let readerUser     = {};
 let userGender     = 'hk';   // kk | kvk | hk (han, default) — how Runar addresses the seeker (IS)
 let greetingShown  = false;     // show topbar greeting only once per session
 let userName       = '';        // display name from user_profiles.name
+let isTester        = false;    // user_profiles.is_tester — tester account (explicit consent)
+let analyticsOptOut = false;    // user_profiles.analytics_opt_out — user excluded readings from quality analysis
+let testerConsentAt = null;     // user_profiles.tester_consent_at — when the tester accepted consent
 let readerRune     = null;
 let readerTexts    = {};  // { en: {short,deep}, is: {short,deep} }
 let voiceGenerated = {};  // { en: bool, is: bool }
@@ -85,6 +88,17 @@ async function fetchUserProfile(userId) {
       // Cross-device gender — best-effort own query (address_gender column may not exist yet; never blocks profile load)
       sb.from('user_profiles').select('address_gender').eq('id', userId).maybeSingle()
         .then(function (r) { if (r && r.data && r.data.address_gender) { userGender = r.data.address_gender; localStorage.setItem('runar_gender', userGender); _updateGenderPills(); } })
+        .catch(function () {});
+      // Privacy/tester flags — guarded (never blocks profile load). Drives opt-out toggle + tester consent.
+      sb.from('user_profiles').select('is_tester, analytics_opt_out, tester_consent_at').eq('id', userId).maybeSingle()
+        .then(function (r) {
+          if (!r || !r.data) return;
+          isTester        = !!r.data.is_tester;
+          analyticsOptOut = !!r.data.analytics_opt_out;
+          testerConsentAt = r.data.tester_consent_at || null;
+          if (typeof _syncPrivacyUI === 'function') _syncPrivacyUI();
+          if (typeof _maybeShowTesterConsent === 'function') _maybeShowTesterConsent();
+        })
         .catch(function () {});
       // Restore language preference
       // Priority: localStorage (active user choice) > DB default
@@ -400,6 +414,62 @@ function _tierName(id) {
   return { en: (ti.label || id).toUpperCase(),
            is: (ti.label_is || ti.label || id).toUpperCase() };
 }
+// ── Privacy / analytics opt-out + tester consent ────────────────────────────
+// Legitimate-interest model: readings help improve quality by default; the user can
+// opt out here (no popup for normal users). See RUNAR_PRIVACY.md.
+function _syncPrivacyUI() {
+  var sec = document.getElementById('sp-privacy-settings');
+  if (sec) sec.style.display = currentUser ? 'block' : 'none';
+  var cb = document.getElementById('sp-optout-toggle');
+  if (cb) cb.checked = !analyticsOptOut;   // checked = "use my readings" (opted IN)
+}
+
+// Checkbox checked = keep helping (opted in); unchecked = opt out.
+function onOptOutToggle(cb) { setAnalyticsOptOut(!cb.checked); }
+
+async function setAnalyticsOptOut(optOut) {
+  if (!currentUser) return;
+  var prev = analyticsOptOut;
+  analyticsOptOut = !!optOut;
+  try {
+    var r = await sb.from('user_profiles').update({ analytics_opt_out: analyticsOptOut }).eq('id', currentUser.id);
+    if (r.error) throw r.error;
+    if (typeof showToast === 'function') showToast(analyticsOptOut ? t('optout_saved_off') : t('optout_saved_on'), 'ok');
+  } catch (e) {
+    analyticsOptOut = prev;                 // revert on failure
+    _syncPrivacyUI();
+    if (typeof showToast === 'function') showToast(t('optout_err'), 'err');
+  }
+}
+
+// Tester consent modal — shows once for a tester account that has not consented yet.
+// Consent is freely given: the modal can be dismissed (re-shows next login until accepted).
+function _maybeShowTesterConsent() {
+  if (!currentUser || !isTester || testerConsentAt) return;
+  var m = document.getElementById('tester-consent-modal');
+  if (!m) return;
+  setText('tcm-title', t('tcm_title'));
+  setText('tcm-body',  t('tcm_body'));
+  setText('tcm-agree', t('tcm_agree'));
+  m.classList.add('open');
+}
+function closeTesterConsent() {
+  var m = document.getElementById('tester-consent-modal');
+  if (m) m.classList.remove('open');
+}
+async function acceptTesterConsent() {
+  if (!currentUser) { closeTesterConsent(); return; }
+  var stamp = new Date().toISOString();
+  try {
+    var r = await sb.from('user_profiles').update({ tester_consent_at: stamp }).eq('id', currentUser.id);
+    if (r.error) throw r.error;
+    testerConsentAt = stamp;
+    closeTesterConsent();
+  } catch (e) {
+    if (typeof showToast === 'function') showToast(t('optout_err'), 'err');
+  }
+}
+
 function updateSidePanel() {
   const accEl = document.getElementById('sp-account');
   if (!accEl) return;
@@ -424,13 +494,21 @@ function updateSidePanel() {
   // Show/hide session + danger + personal actions sections
   const sessionEl = document.getElementById('sp-session');
   const dangerEl  = document.getElementById('sp-danger');
+  var privEl = document.getElementById('sp-privacy-settings');
   if (!currentUser) {
     accEl.style.display = 'none';
     if (sessionEl) sessionEl.style.display = 'none';
     if (dangerEl)  dangerEl.style.display  = 'none';
+    if (privEl)    privEl.style.display    = 'none';
     return;
   }
   accEl.style.display = 'block';
+  if (privEl) {
+    privEl.style.display = 'block';
+    setText('sp-privacy-lbl', t('sp_privacy_settings_lbl'));
+    setText('sp-optout-label', t('optout_label'));
+    _syncPrivacyUI();
+  }
   if (sessionEl) sessionEl.style.display = 'block';
   if (dangerEl)  dangerEl.style.display  = 'block';
 

@@ -53,6 +53,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 /* ── SIDE PANEL SECTIONS ── */
 .side-panel-section{padding:18px 24px 14px;border-bottom:1px solid rgba(255,191,0,0.1);}
 .side-panel-lbl{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:3px;color:var(--gold);opacity:0.85;margin-bottom:14px;}
+/* privacy opt-out toggle — checkbox + label row */
+.sp-toggle{display:flex;align-items:center;gap:10px;cursor:pointer;font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:1.5px;color:var(--gold);opacity:0.85;line-height:1.5;padding:4px 0;}
+.sp-toggle:hover{opacity:1;}
+.sp-toggle input{accent-color:var(--gold);width:16px;height:16px;flex-shrink:0;cursor:pointer;}
 /* one font throughout — Cinzel, gold, varying opacity */
 .sp-row{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--gold);opacity:0.85;padding:4px 0;display:block;}
 .sp-item{display:block;width:100%;text-align:left;font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;padding:12px 0;background:none;border:none;color:var(--gold);opacity:0.85;cursor:pointer;transition:opacity 0.15s;}
