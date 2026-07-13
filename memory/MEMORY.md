@@ -82,8 +82,8 @@ Kořen driftu = duplikace. Jazyk/tier/spread varianty = DATA (RP_* packy, config
 - **Norns axis — produkce**: `_moodContext`/`_intentionContext` v runar-character.js (shared); produkční reading.js je nepoužívá — zapojit do builderů
 
 ### TODO
-🔴 **Kritické (blokuje prodej):** Resend SMTP (magic link z agndofa.is) · Shopify webhook (auto upgrade po nákupu) · DPA Supabase (čeká na e-mail)
-🟡 **Důležité:** standard tier — způsob nákupu ("COMING SOON") + reálný checkout · Privacy Policy odkaz na agndofa.is · runar-help.html inline JS (zbývající hardcoded strings) · **DB sloupec** `address_gender text default 'hk'` (owner v SQL editoru)
+🔴 **Kritické (blokuje prodej):** Resend SMTP (magic link z agndofa.is) · Shopify webhook (auto upgrade po nákupu) · DPA Supabase (čeká na e-mail; přístup → RUNAR_PRIVACY.md)
+🟡 **Důležité:** standard tier — způsob nákupu ("COMING SOON") + reálný checkout · Privacy Policy na agndofa.is (draft EN+IS + legal-basis = RUNAR_PRIVACY.md; IS→Sigrún, právní review) · runar-help.html inline JS (zbývající hardcoded strings) · **DB sloupec** `address_gender text default 'hk'` (owner v SQL editoru)
 🟢 **Střední:** SSE streaming · Monthly limit 50/75 enforcement v claude-proxy · Weekly drip odstranit z proxy · Shrine audit
 
 ## Index souborů
@@ -92,6 +92,7 @@ Kořen driftu = duplikace. Jazyk/tier/spread varianty = DATA (RP_* packy, config
 - [tree-of-life.md](tree-of-life.md) — Tree design (branch objekt, Gathering, AETTY, vizuál, Yggdrasil)
 - [runar-patterns.md](runar-patterns.md) — Pattern detection design (ZASTARALÉ, probrat)
 - **RUNAR_DECISIONS.md** (repo root) — append-only log architektonických rozhodnutí (§16 two-output rule)
+- **RUNAR_PRIVACY.md** (repo root) — GDPR/data handling: legal-basis mapa (smlouva/opráv. zájem/souhlas), tester consent + privacy policy drafty (EN+IS→Sigrún), opt-out, `sql/2026-07-13_privacy_columns.sql`. Klíč: běžný user BEZ popupu (opráv. zájem+opt-out), souhlas jen testeři
 - **RUNAR_SIGIL_STUDIO.md** (repo root) — standalone bind-rune (bandrún) maker. v0 MVP HOTOVO+OVĚŘENO 2026-07-06 (`build_sigil_lab.py` → `v2/sigil-lab/`). Spine-collapse engine, 6 pastí+fixů, 3 třídy run, engrave-first. NENÍ v produkci.
 - **RUNAR_TREE.md** (repo root) — kanonický vstupní bod Tree of Life (duše + zóny + stavba + mapa doků).
 
