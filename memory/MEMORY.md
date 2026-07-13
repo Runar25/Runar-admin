@@ -24,8 +24,8 @@ Klíčové soubory pro Read (lokální):
 
 ## Aktuální stav projektu (2026-07-06)
 
-### SW verze: v175
-### Poslední commit: 3d31a5e
+### SW verze: v176
+### Poslední commit: 09d2223
 
 ### Klíčová rozhodnutí (platná)
 - RS: 1 free cast při registraci, žádný weekly drip, ŽÁDNÝ měsíční reset (model B). Jediný signál = DB `free_balance` (default 1). 1 free MÁ hlas. Pak vše za rune readings (kredity).
@@ -45,6 +45,7 @@ Klíčové soubory pro Read (lokální):
 - **Produkční model čtení = Opus 4.8** (claude-opus-4-8). **Sonnet 5 (NOVÝ) přeměřen 2026-07-10** slepým evalem (single+Norns, 3 porotci: gramatik/básník/rodilé ucho) — **Opus vyhrál 6:0**. Gramatika ≈ remíza (Sonnetova jediná tvrdá chyba: „löngu"→„langa ljósinu"), ale Opus vyhrál **poetický hlas** (jádro produktu); Sonnet navíc porušil personu (otevřel jménem „Kuky,", použil zakázané „Ferðalag") + **slepil Norns 3 runy do 1 bloku** (rozbil by spread). **Už to NENÍ remíza** (ta byla se starým Sonnet 4.5). Náklad dominuje ElevenLabs hlas, ne model → −40 % Sonnetu irelevantní. **Overload fallback chain (2026-07-10, claude-proxy): Opus 4.8 → Opus 4.7 → Sonnet 5.** Sonnet je jen poslední záchrana při přetížení (429/5xx po retry), NE primární — normální čtení běží na 4.8. `callClaudeWithRetry` (3× backoff) + fallback loop; 4xx nepropadá. Deploy: `supabase functions deploy claude-proxy --project-ref pmitxjvkeovijreepror --no-verify-jwt`.
 - **Voice profiles**: ACTIVE_VOICE_PROFILE='focused' (produkce). Revert = 'lyrical'.
 - **Journal save = SERVER-SIDE (2026-07-13)**: čtení ukládá claude-proxy atomicky s odečtem kreditu (klient posílá journal META přes callProxy; saveReading/saveSpreadReading SMAZÁNY, §18). Řeší charged-but-lost při app-switchi (kredit stržen server-side, ale klient umřel před client-save). Ukládá SLOŽENÝ text (composeReading = věrné zrcadlo _parseSegments; smoke ⑦ scripts/verify_compose_mirror.js). credits_used + life_rune server-authoritative. Odečet bezpodmínečný (fail-open = exploit). Self-XSS journal renderu → **HOTOVO** (escapeHtml/jsAttr v utils, renderJournal escapuje user pole, commit 3d31a5e; shrine user-čtení nerenderuje = žádná admin plocha). area='spread' marker zůstává. Detail: RUNAR_DECISIONS.md 2026-07-13.
+- **Shrine Readings viewer (2026-07-13)**: admin záložka „📜 READINGS" ve shrine — vidí VŠECHNA čtení uživatelů (kvalita, testeři) bez screenshotů. Edge fce `list-readings` (admin-gated service-role, zrcadlo list-reports) + `runar-readings-admin.js` (karty, filtr lang, escapeHtml). VIEW-ONLY; další fáze = flag/annotate + obohatit řádek (prompt_version, rune order, char_count — eval #1) + is-grammar-qa NATIVE-EYE fronta. Cíl = sbírat/analyzovat kvalitativní data čtení od testerů (chyby neviditelné běžnému useru). Detail: RUNAR_DECISIONS.md 2026-07-13.
 
 ### Architektura §10 — NULA hardcoded strings
 Každý user-visible string přes helper. Přidání jazyka = jen UI_TEXT + VOCAB blok.
