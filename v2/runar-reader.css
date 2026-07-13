@@ -453,6 +453,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .btn-random{width:100%;padding:10px;background:rgba(255,191,0,0.05);border:1px solid rgba(255,191,0,0.7);color:var(--gold);font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.5px;cursor:pointer;transition:all 0.25s;margin-bottom:8px;opacity:1;}
 .btn-random:hover:not(:disabled){border-color:var(--gold);opacity:1;background:rgba(255,191,0,0.06);}
 .btn-random:disabled{opacity:0.3;cursor:not-allowed;}
+.rune-svg{vertical-align:middle;}
+.rune-svg-fb{color:var(--gold);font-size:1.5em;line-height:1;}
 .rb-svg{width:clamp(38px,11vw,72px);height:auto;aspect-ratio:72/88;display:block;}
 .rb-n{font-family:'Cinzel',serif;font-size:0.85em;letter-spacing:0.5px;color:var(--muted);margin-top:4px;}
 .rb.on .rb-n{color:var(--blue);}

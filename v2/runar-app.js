@@ -792,10 +792,7 @@ async function loadCollection() {
     cell.className = 'coll-cell' + (hasEn && hasIs ? ' has-audio' : hasEn || hasIs ? ' partial-audio' : '') + (locked ? ' locked' : '');
     if (activeCollRune?.n === r.n) cell.classList.add('active');
 
-    const sd = typeof RUNE_SVGS !== 'undefined' ? RUNE_SVGS[r.svg] : null;
-    const svgHtml = sd
-      ? `<svg class="coll-svg" viewBox="${sd.vb}" fill="none" xmlns="http://www.w3.org/2000/svg">${sd.paths}</svg>`
-      : `<span style="font-size:2em;color:var(--gold);">${r.g}</span>`;
+    const svgHtml = runeSvg(r, { frame: true, cls: 'coll-svg' });
 
     const _cp = rnSplit(r);
     cell.innerHTML = `
@@ -926,16 +923,7 @@ function buildGrid() {
     const btn = document.createElement('button');
     btn.className = 'rb';
     btn.dataset.rune = r.n;
-    let inner = '';
-    if (typeof RUNE_SVGS !== 'undefined' && RUNE_SVGS[r.svg]) {
-      const sd = RUNE_SVGS[r.svg];
-      inner = `<svg class="rb-svg" viewBox="${sd.vb}" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="${r.svg === 'Blank' ? '' : ''}" />
-        ${sd.paths}
-      </svg>`;
-    } else {
-      inner = `<span class="rb-g" style="font-size:1.4em;color:var(--gold);">${r.g}</span>`;
-    }
+    let inner = runeSvg(r, { frame: true, cls: 'rb-svg' });
     var _rp = rnSplit(r);
     btn.innerHTML = inner + `<span class="rb-n">${_rp.name}</span>` + (_rp.tr ? `<span class="rb-t">(${_rp.tr})</span>` : '');
     btn.onclick = () => {

@@ -15,6 +15,31 @@ function isAdmin(email) {
   return !!(email && ADMIN_EMAILS.includes(email.toLowerCase()));
 }
 
+// ── Rune glyph rendering — ONE source (RUNE_SVGS hand-drawn SVG), role-based framing (§3/§18).
+// frame:true (default) = STONE (rune + carved stone frame) — runes AS OBJECTS: grids, detail.
+// frame:false          = BARE LINE (rune only, no frame) — rune BESIDE TEXT: strip, inline.
+// Split is by fill: the frame path is the only one filled #1e2535; rune strokes are #D6A85C.
+// Blank has no rune strokes: framed = empty stone; frameless = bare gold outline (framed void).
+// Returns <svg> markup (or a font-glyph span fallback if the rune has no SVG entry).
+function runeSvg(rune, opts) {
+  opts = opts || {};
+  var frame = opts.frame !== false;
+  var cls   = opts.cls || '';
+  var key   = (rune && rune.svg) || opts.key || '';
+  var sd    = (typeof RUNE_SVGS !== 'undefined') ? RUNE_SVGS[key] : null;
+  if (!sd) {
+    var g = (rune && rune.g) || opts.glyph || '';
+    return '<span class="rune-svg-fb ' + cls + '">' + g + '</span>';
+  }
+  var paths = sd.paths;
+  if (!frame) {
+    var bare = paths.replace(new RegExp('<path[^>]*#1e2535[^>]*/>', 'g'), '');
+    // Blank (frame-only): keep the frame as a bare gold outline so the void stays visible
+    paths = bare.trim() ? bare : paths.replace(new RegExp('fill="#1e2535"', 'g'), 'fill="none"');
+  }
+  return '<svg class="rune-svg ' + cls + '" viewBox="' + sd.vb + '" fill="none" xmlns="http://www.w3.org/2000/svg">' + paths + '</svg>';
+}
+
 // HTML-escape a value before interpolating it into innerHTML. Reading/journal fields carry
 // user free text (question, area) + model text, so escaping prevents stored/self-XSS and
 // also renders any literal < & " in a reading correctly. ONE helper for reader + shrine (§3/§18).
