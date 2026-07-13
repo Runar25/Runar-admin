@@ -379,3 +379,14 @@
 - **Affected doc(s):** CLAUDE.md (Reading systém — save flow), MEMORY.md, tento záznam.
 - **Reality note:** Proxy NASAZEN (backward-compatible: starý živý klient dál client-saveuje dokud se nepushne nový; deploy proxy PŘED push klienta). Adversariální review (Workflow, 8 agentů, 4 osy) → 4 nálezy: insert-error-check + credits_used + life_rune OPRAVENY; self-XSS (neescapovaný journal render) = **pre-existing, samostatný task** `task_14f9f864` (+ ověřit shrine admin-view eskalaci). §19: `composeReading`(TS) == `_parseSegments`(JS) ověřeno 9 fixturami → smoke ⑦ (`scripts/verify_compose_mirror.js`); zrcadlený pár = drift-riziko, drženo komentáři + kontraktem. Ukládá se SLOŽENÝ text (ne raw JSON) → journal/tree read-path + live reader display NEDOTČENÉ. §1: JS přes Python.
 - **Reversibility:** medium (git revert klienta + redeploy staré proxy naráz; DB readings beze změny).
+
+
+## 2026-07-13 — Journal render escapován (stored/self-XSS hardening, řeší finding #2)
+
+- **Typ:** fix (security hardening)
+- **Scope:** reading (journal render)
+- **Co se změnilo:** Nové sdílené helpery `escapeHtml` + `jsAttr` (runar-utils.js, čtou reader i shrine). `renderJournal` (runar-journal.js) teď escapuje VŠECHNA dynamická pole před vložením do innerHTML: question, area, short_text, deep_text, rune_name, life_rune, glyph, excerpt. Audio onclick (`playJournalAudio('rune','lang',i)`) = JS-string-v-HTML-atributu → `jsAttr` (escape \ + ' pro string, HTML-encode " < > pro atribut). Gathering se renderuje toutéž cestou (spread karta) → pokryto. Shrine user-čtení NErenderuje (jen admin-authored corrections) → žádná admin-XSS plocha; až vznikne readings viewer, MUSÍ použít escapeHtml.
+- **Proč:** User free text (hlavně `question`) šel do innerHTML neescapovaný → `<img onerror=...>` by se spustil. Self-XSS (RLS own-rows, user_id z tokenu) → LOW, ale reálné + escapování opraví i legitimní `<` ve čtení. Pre-existing (ne regrese ze server-side-journal), řeší finding #2 z review 2026-07-13.
+- **Affected doc(s):** MEMORY.md, tento záznam.
+- **Reality note:** Ověřeno node unit testem (payloady zneškodněny) + reálným browser DOM testem (preview: imgCreated=0, xssFired=false, payload = inertní text). §1: JS přes Python. task_14f9f864 = HOTOVO inline.
+- **Reversibility:** easy (git revert; helpery zůstanou neškodné).

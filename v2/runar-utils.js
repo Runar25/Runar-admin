@@ -15,6 +15,25 @@ function isAdmin(email) {
   return !!(email && ADMIN_EMAILS.includes(email.toLowerCase()));
 }
 
+// HTML-escape a value before interpolating it into innerHTML. Reading/journal fields carry
+// user free text (question, area) + model text, so escaping prevents stored/self-XSS and
+// also renders any literal < & " in a reading correctly. ONE helper for reader + shrine (§3/§18).
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+// Safe for a JS single-quoted string that itself sits inside a double-quoted HTML attribute
+// (e.g. onclick="fn('<here>')"): escape backslash + JS-quote for the string, and HTML-encode
+// the double-quote/angle brackets so the attribute cannot be broken out of.
+function jsAttr(s) {
+  return String(s == null ? '' : s)
+    .replace(/\\/g, '\\\\').replace(/'/g, "\\'")
+    .replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
 // Translation helper — reads from UI_TEXT[lang] (runar-translations.js)
 function t(key) {
   return (UI_TEXT[lang] && UI_TEXT[lang][key]) || UI_TEXT.en[key] || key;

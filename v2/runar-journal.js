@@ -76,44 +76,54 @@ function renderJournal(entries) {
     const d       = new Date(e.drawn_at);
     const locale  = isIs ? 'is-IS' : 'en-GB';
     const dateStr = d.toLocaleDateString(locale, { day:'numeric', month:'short', year:'numeric' });
-    const safeRune = (e.rune_name || '').replace(/'/g, "\\'");
-    const safeLang = (e.lang || '').replace(/'/g, "\\'");
+    const safeRune = jsAttr(e.rune_name);   // JS-string-in-HTML-attr safe (audio onclick)
+    const safeLang = jsAttr(e.lang);
     const isSpread = e.area === 'spread';
 
+    // Every field below is user free text (question/area) or model text — escape before it
+    // goes into innerHTML (self-XSS hardening; also renders any literal < in a reading right).
+    const nameU  = escapeHtml((e.rune_name || '').toUpperCase());
+    const langU  = escapeHtml((e.lang || '').toUpperCase());
+    const glyph  = escapeHtml(e.rune_glyph || '◻');
+    const shortT = escapeHtml(e.short_text || '');
+    const deepT  = escapeHtml(e.deep_text || '');
+
     if (isSpread) {
-      // ── Multi-rune spread card (Trojice / Norns / Kříž / Horseshoe / Yggdrasil) ──
-      const excerpt = (e.deep_text || '').trim().slice(0, 160);
+      // ── Multi-rune spread card (Norns / Kríž / Horseshoe / Yggdrasil / Gathering) ──
+      const rawEx   = (e.deep_text || '').trim().slice(0, 160);
+      const excerpt = escapeHtml(rawEx);
       return `<div class="jcard" id="jcard-${i}">
         <div class="jcard-header" onclick="toggleJournalEntry(${i})">
           <div class="jcard-left">
             <div class="jcard-glyph" style="opacity:0.7;">✦</div>
             <div class="jcard-info">
-              <div class="jcard-name">✦ ${(e.rune_name || '').toUpperCase()} · ${(e.lang || '').toUpperCase()}</div>
+              <div class="jcard-name">✦ ${nameU} · ${langU}</div>
               <div class="jcard-date">${dateStr}</div>
-              <div class="jcard-gathering-runes">${e.short_text || ''}</div>
-              <div class="jcard-excerpt">${excerpt}${excerpt.length >= 160 ? '…' : ''}</div>
+              <div class="jcard-gathering-runes">${shortT}</div>
+              <div class="jcard-excerpt">${excerpt}${rawEx.length >= 160 ? '…' : ''}</div>
             </div>
           </div>
           <div class="jcard-arrow" id="jarr-${i}">▾</div>
         </div>
         <div class="jcard-body" id="jbody-${i}" style="display:none;">
-          <div class="jcard-layer-lbl">✦ ${(e.rune_name || '').toUpperCase()}</div>
-          <div class="jcard-text" style="font-style:italic;line-height:1.9;">${e.deep_text || ''}</div>
+          <div class="jcard-layer-lbl">✦ ${nameU}</div>
+          <div class="jcard-text" style="font-style:italic;line-height:1.9;">${deepT}</div>
         </div>
       </div>`;
     }
 
     // ── Regular reading card ──
-    const excerpt = (e.short_text || '').trim().slice(0, 160);
-    const areaStr = e.area ? ` · ${e.area}` : '';
+    const rawEx   = (e.short_text || '').trim().slice(0, 160);
+    const excerpt = escapeHtml(rawEx);
+    const areaStr = e.area ? ` · ${escapeHtml(e.area)}` : '';
     return `<div class="jcard" id="jcard-${i}">
       <div class="jcard-header" onclick="toggleJournalEntry(${i})">
         <div class="jcard-left">
-          <div class="jcard-glyph">${e.rune_glyph || '◻'}</div>
+          <div class="jcard-glyph">${glyph}</div>
           <div class="jcard-info">
-            <div class="jcard-name">${(e.rune_name || '').toUpperCase()} · ${(e.lang || '').toUpperCase()}</div>
+            <div class="jcard-name">${nameU} · ${langU}</div>
             <div class="jcard-date">${dateStr}${areaStr}</div>
-            <div class="jcard-excerpt">${excerpt}${excerpt.length >= 160 ? '…' : ''}</div>
+            <div class="jcard-excerpt">${excerpt}${rawEx.length >= 160 ? '…' : ''}</div>
             <button class="jcard-select-btn" id="jselect-btn-${i}" onclick="event.stopPropagation();toggleRuneSelection(${i})">${t('jcard_select')}</button>
           </div>
         </div>
@@ -121,13 +131,13 @@ function renderJournal(entries) {
       </div>
       <div class="jcard-body" id="jbody-${i}" style="display:none;">
         <div class="jcard-layer-lbl">${t('layer1_lbl')}</div>
-        <div class="jcard-text">${e.short_text || ''}</div>
+        <div class="jcard-text">${shortT}</div>
         ${e.deep_text ? `
         <div class="jcard-divider">· · ·</div>
         <div class="jcard-layer-lbl">${t('layer2_lbl')}</div>
-        <div class="jcard-text">${e.deep_text}</div>` : ''}
-        ${e.question ? `<div class="jcard-question">❝ ${e.question} ❞</div>` : ''}
-        ${e.life_rune ? `<div class="jcard-life-rune">${t('life_rune_short')}: ${e.life_rune}</div>` : ''}
+        <div class="jcard-text">${deepT}</div>` : ''}
+        ${e.question ? `<div class="jcard-question">❝ ${escapeHtml(e.question)} ❞</div>` : ''}
+        ${e.life_rune ? `<div class="jcard-life-rune">${t('life_rune_short')}: ${escapeHtml(e.life_rune)}</div>` : ''}
         <button class="jcard-audio-btn" id="jaudio-btn-${i}" onclick="playJournalAudio('${safeRune}','${safeLang}',${i})">${t('jcard_audio_btn')}</button>
         <div class="jcard-audio-player" id="jaudio-${i}"></div>
       </div>
