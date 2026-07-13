@@ -8,7 +8,7 @@
 //   DELAY_TRIAL_END, DELAY_SCROLL, DELAY_ERROR_RESET
 // Depends on functions: t(), callProxy(), buildSysPrompt(),
 //   getCorrPrompt(), applyISCorrections(), stream(), checkStaticAudio(),
-//   shouldUseCredit(), canUseVoice(), saveReading(), syncFreeBalance(),
+//   shouldUseCredit(), canUseVoice(), syncFreeBalance(),
 //   loadJournal(), updateAuthUI(), setSt(), showToast(), incTrialCount(),
 //   getTrialCount(), elVoiceId(), elModel(),
 //   EL_PROXY, EL_VOICE_SETTINGS
@@ -115,7 +115,14 @@ async function _generateReading() {
   const sys = buildSysPrompt(activeChar, lang);
   const prompt = buildReadingPrompt(u, drawn, lang, corrections);
 
-  const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens, shouldUseCredit(), SPREAD_COSTS.single.credits);
+  // Journal meta for the SERVER-SIDE save (proxy persists atomically with the deduction).
+  // Only for a logged-in user saving their own reading; null = do not save.
+  var _journal = (currentUser && _readingMode === 'mine') ? {
+    kind: 'single', rune_name: drawn.n, rune_glyph: drawn.g, lang: lang,
+    area: u.area || null, seeking: u.seeking || null, question: u.question || null,
+    life_rune: (u.lifeRune && u.lifeRune.n) || null   // credits_used derived server-side
+  } : null;
+  const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens, shouldUseCredit(), SPREAD_COSTS.single.credits, _journal);
   if (res.error === 'rate_limited') {
     if (_rdLoadEl) _rdLoadEl.style.display = 'none';
     if (_pL1) _pL1.classList.remove('pulsing');
@@ -155,9 +162,11 @@ async function _generateReading() {
     incTrialCount();
     updateAuthUI();
   } else {
-    // Save journal only for own reading; always sync count (price same for both modes)
+    // Journal is saved SERVER-SIDE by the proxy (atomic with the credit deduction) so a
+    // charged reading is always journaled — even if the app is backgrounded before this
+    // point. Here we only refresh local views: tree log (localStorage) + journal + balance.
     if (_readingMode === 'mine') {
-      await saveReading(readerRune, reading, '');
+      recordTreeReading('single', [readerRune], readerUser.area, readerUser.intention);
       loadJournal();
     }
     await syncFreeBalance(currentUser.id);
@@ -729,7 +738,15 @@ async function _generateSpreadReading(o) {
   var sys = buildSysPrompt(activeChar, lang);
   var prompt = o.buildPrompt(u, o.runes, lang, corrections);
 
-  var res = await callProxy(sys, prompt, o.tokens, shouldUseCredit(), o.credits);
+  // Journal meta for the SERVER-SIDE save (proxy persists atomically with the deduction).
+  var _runeDisplay = o.runes.map(function (r) { return ((r.g || '') + ' ' + (r.n || '').toUpperCase()).trim(); }).join(' · ');
+  var _journalS = (currentUser && _readingMode === 'mine') ? {
+    kind: 'spread', rune_name: o.kind, rune_glyph: '✦', lang: lang,
+    area: 'spread', seeking: u.seeking || null, question: u.question || null,
+    life_rune: (u.lifeRune && u.lifeRune.n) || null,   // credits_used derived server-side
+    rune_display: _runeDisplay
+  } : null;
+  var res = await callProxy(sys, prompt, o.tokens, shouldUseCredit(), o.credits, _journalS);
 
   if (rdLoad) rdLoad.style.display = 'none';
   if (pL1) pL1.classList.remove('pulsing');
@@ -761,7 +778,8 @@ async function _generateSpreadReading(o) {
   if (lbl) lbl.innerHTML = o.runes.map(function(r, i) { return '<span class="rlbl-glyph" data-rune="' + rn(r) + '" data-kw="' + rk(r) + '" data-seg="' + i + '">' + r.g + '</span>'; }).join('<span class="rlbl-sep">·</span>');
 
   if (currentUser) {
-    if (_readingMode === 'mine') { await saveSpreadReading(o.kind, o.runes, text); loadJournal(); }
+    // Journal saved SERVER-SIDE by the proxy (atomic with the deduction). Refresh local views.
+    if (_readingMode === 'mine') { recordTreeReading(o.kind, o.runes, readerUser.area, readerUser.intention); loadJournal(); }
     await syncFreeBalance(currentUser.id);
   } else { incTrialCount(); updateAuthUI(); }
 

@@ -287,6 +287,28 @@ async function applyDeduction(plan: DeductPlan, userId: string | null): Promise<
 
 // ─────────────────────────────────────────────────────────────────────────────
 
+// Compose the stored reading text from the model's segmented output.
+// MIRROR of runar-reading.js `_parseSegments(...).reading` — keep the two in sync.
+// The model returns a JSON array [{rune, text}] (+ optional prose tail); the readable
+// reading is the joined segment texts. Non-JSON output is stored as-is (robust fallback).
+function composeReading(raw: string): string {
+  if (!raw) return "";
+  const s = String(raw);
+  const a = s.indexOf("["), b = s.lastIndexOf("]");
+  if (a !== -1 && b > a) {
+    try {
+      const j = JSON.parse(s.slice(a, b + 1));
+      if (Array.isArray(j) && j.length && j[0] && typeof j[0].text === "string") {
+        let reading = j.map((x: any) => (x.text || "").trim()).join(" ").trim();
+        const tail = s.slice(b + 1).replace(/```/g, "").trim();
+        if (tail) reading = (reading + " " + tail).trim();
+        return reading;
+      }
+    } catch (_e) { /* not segmented JSON — fall through */ }
+  }
+  return String(raw);
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
   if (req.method !== "POST")    return json({ error: "Method not allowed" }, 405);
@@ -300,6 +322,7 @@ serve(async (req) => {
       use_credit  = false,
       mode        = "",
       spread_cost = 1,     // number of credits/balance to deduct (= number of runes)
+      journal     = null,  // reading meta to persist server-side (null = do not save)
     } = body;
     if (!prompt) return json({ error: "Missing prompt" }, 400);
 
@@ -474,6 +497,39 @@ serve(async (req) => {
 
     // ── Reading succeeded — NOW deduct the credit/balance ──
     const creditsRemaining = await applyDeduction(deductPlan, userId);
+
+    // ── Persist to the journal SERVER-SIDE, atomic with the deduction ──
+    // A charged reading is ALWAYS journaled — even if the app is backgrounded/killed
+    // before it could receive the response (charged <=> journaled). The client passes the
+    // reading meta; the model text is composed + stored here. Non-fatal: a save failure
+    // must never break a reading that already succeeded (logged for the keeper).
+    if (journal && userId) {
+      try {
+        const isSpread = journal.kind === "spread";
+        const { error: journalErr } = await sb().from("readings").insert({
+          user_id:      userId,
+          rune_name:    journal.rune_name  ?? null,
+          rune_glyph:   journal.rune_glyph ?? null,
+          lang:         journal.lang       ?? "en",
+          short_text:   isSpread ? (journal.rune_display ?? "") : composeReading(text),
+          deep_text:    isSpread ? composeReading(text) : "",
+          area:         journal.area       ?? null,
+          seeking:      journal.seeking    ?? null,
+          question:     journal.question   ?? null,
+          life_rune:    journal.life_rune  ?? null,
+          // Credit truth is server-side: the paid plan is the only one that spends a credit.
+          // Do NOT trust a client-supplied flag here (it is forgeable and can desync).
+          credits_used: deductPlan.kind === "paid",
+        });
+        // supabase-js resolves DB/constraint errors as { error } — it does NOT throw — so the
+        // try/catch alone would miss them. Check it so a charged-but-not-journaled event is at
+        // least visible to the keeper (edge logs). The charge stays; masking it would be a
+        // free-reading exploit (a crafted journal could force the insert to fail).
+        if (journalErr) console.error("journal insert failed:", journalErr.message);
+      } catch (e) {
+        console.error("journal insert threw:", (e as Error).message);
+      }
+    }
 
     return json({
       text,

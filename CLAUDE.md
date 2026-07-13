@@ -177,7 +177,7 @@ tree_name (text), life_rune_number (int), life_rune_text (text), life_rune_lang 
 ## Reading systém — stav
 
 **Unified format**: 1 plynoucí blok, žádné `|||`. `layer1-lbl` = glyf + jméno runy.
-`_readingMode` = `'mine'` (ukládá) | `'someone'` (neukládá).
+`_readingMode` = `'mine'` (ukládá — journal píše SERVER-SIDE claude-proxy, atomicky s odečtem kreditu; klient jen loadJournal) | `'someone'` (neukládá).
 `u.area/seeking/mood/intention/question` → `parts[]` → Claude. Norns axis: `_moodContext(mood,lang)` + `_intentionContext(intention,lang)` v runar-character.js.
 
 **Délky čtení**: zdroj pravdy = buildery v `runar-character.js` (RP_* packy + `closing()` věty). Docs čísla NEopakují — když měníš délku, uprav builder + přepočítej pricing (RUNAR_PRICING.md). Délka = znaky = EL náklad. Jméno ne vždy na začátek; životní runa jen kontext.

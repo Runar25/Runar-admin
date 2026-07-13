@@ -140,53 +140,11 @@ function recordTreeReading(spreadKind, runeObjs, area, intention) {
   } catch(e) {}
 }
 
-async function saveReading(rune, short, deep) {
-  if (!currentUser) return;
-  try {
-    // Životní runa — pokud ji známe z data narození
-    const lifeRune = readerUser.dob ? (calcLifeRune(readerUser.dob)?.n || null) : null;
-    await sb.from('readings').insert({
-      user_id:      currentUser.id,
-      rune_name:    rune.n,
-      rune_glyph:   rune.g,
-      lang:         lang,
-      short_text:   short,
-      deep_text:    deep,
-      area:         readerUser.area     || null,
-      seeking:      readerUser.seeking  || null,
-      question:     readerUser.question || null,
-      life_rune:    lifeRune,
-      credits_used: shouldUseCredit(),   // true = kreditní čtení, false = free monthly
-    });
-    recordTreeReading('single', [rune], readerUser.area, readerUser.intention);
-  } catch(e) { console.warn('saveReading:', e.message); }
-}
-
-// Multi-rune spread save — stejný vzor jako saveGathering()
-// area:'spread' = speciální marker pro journal rendering + filter
-async function saveSpreadReading(spreadName, runesArr, text) {
-  if (!currentUser) return;
-  const runeDisplay = runesArr.map(r =>
-    ((r.g || '') + ' ' + (r.n || '').toUpperCase()).trim()
-  ).join(' · ');
-  const lifeRune = readerUser.dob ? (calcLifeRune(readerUser.dob)?.n || null) : null;
-  try {
-    await sb.from('readings').insert({
-      user_id:      currentUser.id,
-      rune_name:    spreadName,
-      rune_glyph:   '✦',
-      lang:         lang,
-      short_text:   runeDisplay,   // 'ᚠ FEHU · ᚢ URUZ · ᚦ THURISAZ'
-      deep_text:    text,          // celý text čtení
-      area:         'spread',      // speciální marker — viz gathering
-      seeking:      readerUser.seeking  || null,
-      question:     readerUser.question || null,
-      life_rune:    lifeRune,
-      credits_used: shouldUseCredit(),
-    });
-    recordTreeReading(spreadName, runesArr, readerUser.area, readerUser.intention);
-  } catch(e) { console.warn('saveSpreadReading:', e.message); }
-}
+// saveReading / saveSpreadReading REMOVED — the reading journal is now written
+// SERVER-SIDE by claude-proxy (atomic with the credit deduction), so a charged reading
+// is always journaled even if the app is killed before the response arrives. The client
+// sends the reading meta via callProxy(..., journal); the proxy composes + inserts it.
+// recordTreeReading (localStorage tree log) stays client-side, called from the reader flow.
 
 // Sync monthly count from DB → localStorage (accurate, multi-device)
 // Refresh userFreeBalance z DB (free_balance: 1 při registraci, žádné doplnění — model B).
@@ -1062,7 +1020,7 @@ async function loadCorrections() {
 }
 // ─── PROXY ───────────────────────────────────────────────
 // use_credit: true = odečíst kredit na backendu (monthly slot vyčerpán)
-async function callProxy(sys, prompt, maxTokens, use_credit = false, credit_cost = 1) {
+async function callProxy(sys, prompt, maxTokens, use_credit = false, credit_cost = 1, journal = null) {
   try {
     const headers = { 'Content-Type': 'application/json' };
     const { data: { session } } = await sb.auth.getSession();
@@ -1070,7 +1028,7 @@ async function callProxy(sys, prompt, maxTokens, use_credit = false, credit_cost
 
     const res  = await fetch(PROXY, {
       method: 'POST', headers,
-      body: JSON.stringify({ system: sys, prompt, max_tokens: maxTokens, use_credit, spread_cost: credit_cost })
+      body: JSON.stringify({ system: sys, prompt, max_tokens: maxTokens, use_credit, spread_cost: credit_cost, journal })
     });
     const data = await res.json();
 
