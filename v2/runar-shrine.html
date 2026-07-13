@@ -286,6 +286,7 @@ textarea::placeholder{color:var(--dim);}
   <button class="tab"     id="tab-correct-btn"  onclick="showTab('correct')">WORD CORRECTIONS</button>
   <button class="tab"     id="tab-codes-btn"    onclick="showTab('codes')">ᚠ GIFT CODES</button>
   <button class="tab"     id="tab-reports-btn"  onclick="showTab('reports')">⚑ REPORTS</button>
+  <button class="tab"     id="tab-readings-btn" onclick="showTab('readings')">📜 READINGS</button>
   <a class="tab" href="runar-yggdrasil.html" style="text-decoration:none;">🌳 YGGDRASIL</a>
   <a class="tab" href="runar-reader.html" style="text-decoration:none;">👁 USER VIEW</a>
 </div>
@@ -443,8 +444,40 @@ textarea::placeholder{color:var(--dim);}
   </div>
 </div>
 
+<div class="pane" id="pane-readings">
+  <style>
+    #pane-readings .rd-item{border:1px solid var(--border);border-left:3px solid var(--gold);padding:10px 12px;margin-bottom:8px;background:#0d1220;}
+    #pane-readings .rd-head{display:flex;align-items:center;gap:8px;font-size:0.88em;flex-wrap:wrap;}
+    #pane-readings .rd-glyph{color:var(--gold);font-size:1.15em;}
+    #pane-readings .rd-lang{font-size:0.68em;letter-spacing:1px;color:#c9b77a;}
+    #pane-readings .rd-who{color:#8a94a6;font-size:0.82em;}
+    #pane-readings .rd-tier{font-size:0.64em;text-transform:uppercase;letter-spacing:1px;color:#6f7c92;border:1px solid var(--border);padding:1px 5px;border-radius:3px;}
+    #pane-readings .rd-when{color:#6f7c92;font-size:0.78em;margin-left:auto;}
+    #pane-readings .rd-runes{font-size:0.82em;color:#b9c4d6;margin:4px 0;}
+    #pane-readings .rd-q{font-style:italic;color:#c9b77a;margin:4px 0;font-size:0.9em;}
+    #pane-readings .rd-text{color:#e6e9f0;line-height:1.7;margin:6px 0;white-space:pre-wrap;}
+    #pane-readings .rd-meta{font-size:0.74em;color:#6f7c92;margin-top:4px;}
+    #pane-readings .rd-act{font-size:0.72em;padding:3px 9px;background:transparent;border:1px solid var(--border);color:#8a94a6;cursor:pointer;}
+    #pane-readings .rd-act:hover{border-color:var(--gold);color:var(--gold);}
+  </style>
+  <div class="card">
+    <div class="card-lbl">📜 READINGS</div>
+    <p class="note">Every reading users draw, server-saved. Review quality here instead of screenshots — filter by language, read the full text + inputs. Testers' readings are gold.</p>
+    <div class="pills" style="margin-top:6px;align-items:center;">
+      <div class="pill on" id="rd-f-all" onclick="filterReadings('all')">All</div>
+      <div class="pill"    id="rd-f-is"  onclick="filterReadings('is')">Íslenska</div>
+      <div class="pill"    id="rd-f-en"  onclick="filterReadings('en')">English</div>
+      <span id="rd-count" style="font-size:0.78em;color:#6f7c92;margin-left:8px;"></span>
+      <button class="rd-act" style="margin-left:auto;" onclick="loadReadings()">↻ Refresh</button>
+    </div>
+    <div class="status" id="st-readings"></div>
+    <div id="readings-list"><div class="empty">Open this tab to load…</div></div>
+  </div>
+</div>
+
 </div><!-- .app -->
 <script src="runar-reports-admin.js"></script>
+<script src="runar-readings-admin.js"></script>
 <script>
 const sb = supabase.createClient(SB_URL, SB_KEY);
 
@@ -633,7 +666,7 @@ function updateUIText() {
 
 // ─── TABS ───────────────────────────────────────────────
 function showTab(name) {
-  ['teach','progress','correct','codes','reports'].forEach(n => {
+  ['teach','progress','correct','codes','reports','readings'].forEach(n => {
     document.getElementById('pane-' + n)?.classList.remove('on');
     document.getElementById('tab-' + n + '-btn')?.classList.remove('on');
   });
@@ -643,6 +676,7 @@ function showTab(name) {
   if (name === 'progress') loadProgress();
   if (name === 'codes')    initCodesTab();
   if (name === 'reports') { window.initReportsTab(); window.loadReports(); }
+  if (name === 'readings') { window.initReadingsTab(); window.loadReadings(); }
 }
 
 // ─── GIFT CODES ─────────────────────────────────────────

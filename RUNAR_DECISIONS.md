@@ -390,3 +390,14 @@
 - **Affected doc(s):** MEMORY.md, tento záznam.
 - **Reality note:** Ověřeno node unit testem (payloady zneškodněny) + reálným browser DOM testem (preview: imgCreated=0, xssFired=false, payload = inertní text). §1: JS přes Python. task_14f9f864 = HOTOVO inline.
 - **Reversibility:** easy (git revert; helpery zůstanou neškodné).
+
+
+## 2026-07-13 — Shrine Readings viewer (admin quality review, konec screenshotů)
+
+- **Typ:** implementation (admin tooling / eval infra)
+- **Scope:** reading (kvalita)
+- **Co se změnilo:** Nová shrine záložka **„📜 READINGS"** — admin vidí VŠECHNA čtení uživatelů bez screenshotů. Edge fce `list-readings` (admin-gated service-role, zrcadlo `list-reports`; `readings` má own-rows RLS → nutná fce, anon read nestačí) vrací readings + `user_name`/`user_tier` (join user_profiles, který nemá email). Modul `runar-readings-admin.js` (zrcadlo reports-admin) renderuje karty: runa+glyf, lang, datum, tester+tier, area/seeking/question, plný text (single=short_text, spread=deep_text), filtr lang all/is/en, vše přes `escapeHtml`. Sběrná páteř = dnešní **server-side save** (čtení spolehlivě v DB i z mobilu).
+- **Proč:** Kuky sbírá kvalitativní data čtení (hlavně od TESTERŮ = zlato) na chytání chyb neviditelných běžnému useru (IS gramatika, posunutý význam). Screenshoty do chatu neškálují; s víc testery víc dat. Data už v `readings` jsou → jen je zpřístupnit k analýze.
+- **Affected doc(s):** MEMORY.md, tento záznam.
+- **Reality note:** Edge fce NASAZENA + shrine tab ověřen v preview (tab/pane/filtry/modul integrují bez chyb, showTab OK; živá data za admin gate → owner otestuje loginem). VIEW-ONLY zatím. Další fáze: flag/annotate akce (review tabulka DB) + obohatit `readings` řádek (prompt_version, pořadí run, char_count, address_form — Cowork eval #1) + is-grammar-qa fronta „NATIVE EYE" nad IS výstupy. Rozhodnutí čekají na ownera: `is_tester` flag, ukládat i `someone` mód. §1: shrine inline JS přes Python.
+- **Reversibility:** easy (smazat tab + modul + fce; readings/RLS beze změny).
