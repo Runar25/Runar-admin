@@ -495,6 +495,7 @@ function _showAsk() {
   _askPhIdx++;  // rotate the placeholder each time the ask opens
   var inp = document.getElementById('ask-input'); if (inp) { inp.value = ''; inp.placeholder = _askPlaceholder(); }
   var wrap = document.getElementById('ask-input-wrap'); if (wrap) wrap.style.display = '';
+  var qEl2 = document.getElementById('ask-question'); if (qEl2) { qEl2.textContent = ''; qEl2.style.display = 'none'; }
   var ans = document.getElementById('ask-answer'); if (ans) { ans.textContent = ''; ans.style.display = 'none'; }
   var btn = document.getElementById('ask-btn'); if (btn) { btn.disabled = false; btn.textContent = t('ask_btn'); }
   setSt('ask-status', '');
@@ -525,6 +526,7 @@ async function askRunar() {
   answer = applyISCorrections(answer, lang, corrections);
   _askUsed = true;
   var wrap = document.getElementById('ask-input-wrap'); if (wrap) wrap.style.display = 'none'; // one question -> close
+  var qEl = document.getElementById('ask-question'); if (qEl) { qEl.textContent = q; qEl.style.display = 'block'; } // keep the question visible
   var ans = document.getElementById('ask-answer'); if (ans) { ans.textContent = ''; ans.style.display = 'block'; }
   await stream('ask-answer', answer);
 }
