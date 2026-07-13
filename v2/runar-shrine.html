@@ -457,6 +457,7 @@ textarea::placeholder{color:var(--dim);}
     #pane-readings .rd-q{font-style:italic;color:#c9b77a;margin:4px 0;font-size:0.9em;}
     #pane-readings .rd-text{color:#e6e9f0;line-height:1.7;margin:6px 0;white-space:pre-wrap;}
     #pane-readings .rd-meta{font-size:0.74em;color:#6f7c92;margin-top:4px;}
+    #pane-readings .rd-tester{font-size:0.6em;text-transform:uppercase;letter-spacing:1px;color:#0d1220;background:var(--gold);padding:1px 6px;border-radius:3px;font-weight:600;}
     #pane-readings .rd-act{font-size:0.72em;padding:3px 9px;background:transparent;border:1px solid var(--border);color:#8a94a6;cursor:pointer;}
     #pane-readings .rd-act:hover{border-color:var(--gold);color:var(--gold);}
   </style>
@@ -467,6 +468,7 @@ textarea::placeholder{color:var(--dim);}
       <div class="pill on" id="rd-f-all" onclick="filterReadings('all')">All</div>
       <div class="pill"    id="rd-f-is"  onclick="filterReadings('is')">Íslenska</div>
       <div class="pill"    id="rd-f-en"  onclick="filterReadings('en')">English</div>
+      <div class="pill"    id="rd-f-testers" onclick="toggleTestersOnly()">⚑ Testers</div>
       <span id="rd-count" style="font-size:0.78em;color:#6f7c92;margin-left:8px;"></span>
       <button class="rd-act" style="margin-left:auto;" onclick="loadReadings()">↻ Refresh</button>
     </div>

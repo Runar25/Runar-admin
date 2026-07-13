@@ -7,6 +7,7 @@
   var FN = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/list-readings';
   var _lang = 'all';
   var _limit = 100;
+  var _testersOnly = false;
   var _wired = false;
 
   // Shared escapeHtml is loaded (runar-utils.js); fall back to identity-safe if not.
@@ -30,6 +31,13 @@
     window.loadReadings();
   };
 
+  window.toggleTestersOnly = function () {
+    _testersOnly = !_testersOnly;
+    var el = document.getElementById('rd-f-testers');
+    if (el) el.classList.toggle('on', _testersOnly);
+    window.loadReadings();
+  };
+
   window.loadReadings = async function () {
     var list = document.getElementById('readings-list');
     if (!list) return;
@@ -41,7 +49,7 @@
       var res = await fetch(FN, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + tk },
-        body: JSON.stringify({ action: 'list', lang: _lang, limit: _limit }),
+        body: JSON.stringify({ action: 'list', lang: _lang, limit: _limit, testers_only: _testersOnly }),
       });
       var data = await res.json();
       if (!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
@@ -66,6 +74,7 @@
       var lng   = esc((r.lang || '').toUpperCase());
       var who   = esc(r.user_name || (r.user_id ? r.user_id.slice(0, 8) : '—'));
       var tier  = r.user_tier ? '<span class="rd-tier">' + esc(r.user_tier) + '</span>' : '';
+      var tester = r.is_tester ? '<span class="rd-tester">TESTER</span>' : '';
       // Single: reading text is in short_text. Spread: short_text = rune display line,
       // deep_text = the reading. Show the full text either way (this is for analysis).
       var bodyTxt  = isSpread ? (r.deep_text || '') : (r.short_text || '');
@@ -82,7 +91,7 @@
           '<span class="rd-glyph">' + glyph + '</span>' +
           '<b>' + name + '</b>' +
           '<span class="rd-lang">' + lng + '</span>' +
-          '<span class="rd-who">' + who + '</span>' + tier +
+          '<span class="rd-who">' + who + '</span>' + tier + tester +
           '<span class="rd-when">' + esc(when) + '</span>' +
         '</div>' +
         (runeLine ? '<div class="rd-runes">' + runeLine + '</div>' : '') +

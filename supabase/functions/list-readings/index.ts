@@ -53,19 +53,30 @@ serve(async (req) => {
     if (error) return json({ error: error.message }, 500);
 
     const rows = data || [];
-    // Enrich with the reader's name + tier (user_profiles) so the admin can tell testers
-    // apart. user_profiles has no email column, so name/tier is the best label available.
+    // Enrich with the reader's name/tier + tester/opt-out flags (user_profiles has no email).
     const ids = [...new Set(rows.map((r: any) => r.user_id).filter(Boolean))];
-    const who: Record<string, { name: string | null; tier: string | null }> = {};
+    const who: Record<string, { name: string | null; tier: string | null; is_tester: boolean; opt_out: boolean }> = {};
     if (ids.length) {
-      const { data: profs } = await sb.from("user_profiles").select("id,name,tier").in("id", ids);
-      for (const p of (profs || [])) who[p.id] = { name: p.name ?? null, tier: p.tier ?? null };
+      const { data: profs } = await sb.from("user_profiles")
+        .select("id,name,tier,is_tester,analytics_opt_out").in("id", ids);
+      for (const p of (profs || [])) who[p.id] = {
+        name: p.name ?? null, tier: p.tier ?? null,
+        is_tester: !!p.is_tester, opt_out: !!p.analytics_opt_out,
+      };
     }
-    const enriched = rows.map((r: any) => ({
-      ...r,
-      user_name: who[r.user_id]?.name ?? null,
-      user_tier: who[r.user_id]?.tier ?? null,
-    }));
+    const testersOnly = body.testers_only === true;
+    const enriched = rows
+      // GDPR: never surface readings of users who opted out of quality analysis.
+      .filter((r: any) => !(who[r.user_id]?.opt_out))
+      .filter((r: any) => !testersOnly || who[r.user_id]?.is_tester)
+      .map((r: any) => ({
+        ...r,
+        user_name: who[r.user_id]?.name ?? null,
+        user_tier: who[r.user_id]?.tier ?? null,
+        is_tester: who[r.user_id]?.is_tester ?? false,
+      }));
+    // Note: opt-out/testers filters run after the row limit, so a filtered view can show
+    // fewer than `limit` rows — acceptable for an admin tool (opt-out is rare).
     return json({ readings: enriched });
 
   } catch (e) {
