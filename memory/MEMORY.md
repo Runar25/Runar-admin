@@ -1,6 +1,6 @@
 # Claude Memory Index
 # Zkukula (Kuky) — Agndofa / Rúnar project
-# Last updated: 2026-07-06
+# Last updated: 2026-07-13
 
 ## Session Start Protocol
 Na začátku každé session PŘEČÍST V TOMTO POŘADÍ:
@@ -24,8 +24,8 @@ Klíčové soubory pro Read (lokální):
 
 ## Aktuální stav projektu (2026-07-06)
 
-### SW verze: v161
-### Poslední commit: 574a03d
+### SW verze: v174
+### Poslední commit: 9d30f9e
 
 ### Klíčová rozhodnutí (platná)
 - RS: 1 free cast při registraci, žádný weekly drip, ŽÁDNÝ měsíční reset (model B). Jediný signál = DB `free_balance` (default 1). 1 free MÁ hlas. Pak vše za rune readings (kredity).
@@ -44,7 +44,7 @@ Klíčové soubory pro Read (lokální):
 - Správná jména run: Perth (ne Perthro), Berkana (ne Berkano), Othila (ne Othala), Kenaz.
 - **Produkční model čtení = Opus 4.8** (claude-opus-4-8). **Sonnet 5 (NOVÝ) přeměřen 2026-07-10** slepým evalem (single+Norns, 3 porotci: gramatik/básník/rodilé ucho) — **Opus vyhrál 6:0**. Gramatika ≈ remíza (Sonnetova jediná tvrdá chyba: „löngu"→„langa ljósinu"), ale Opus vyhrál **poetický hlas** (jádro produktu); Sonnet navíc porušil personu (otevřel jménem „Kuky,", použil zakázané „Ferðalag") + **slepil Norns 3 runy do 1 bloku** (rozbil by spread). **Už to NENÍ remíza** (ta byla se starým Sonnet 4.5). Náklad dominuje ElevenLabs hlas, ne model → −40 % Sonnetu irelevantní. **Overload fallback chain (2026-07-10, claude-proxy): Opus 4.8 → Opus 4.7 → Sonnet 5.** Sonnet je jen poslední záchrana při přetížení (429/5xx po retry), NE primární — normální čtení běží na 4.8. `callClaudeWithRetry` (3× backoff) + fallback loop; 4xx nepropadá. Deploy: `supabase functions deploy claude-proxy --project-ref pmitxjvkeovijreepror --no-verify-jwt`.
 - **Voice profiles**: ACTIVE_VOICE_PROFILE='focused' (produkce). Revert = 'lyrical'.
-- **Spread journal**: saveSpreadReading() — area='spread', multi-rune spready ukládají jako Gathering.
+- **Journal save = SERVER-SIDE (2026-07-13)**: čtení ukládá claude-proxy atomicky s odečtem kreditu (klient posílá journal META přes callProxy; saveReading/saveSpreadReading SMAZÁNY, §18). Řeší charged-but-lost při app-switchi (kredit stržen server-side, ale klient umřel před client-save). Ukládá SLOŽENÝ text (composeReading = věrné zrcadlo _parseSegments; smoke ⑦ scripts/verify_compose_mirror.js). credits_used + life_rune server-authoritative. Odečet bezpodmínečný (fail-open = exploit). Self-XSS neescapovaného journal renderu (pre-existing) = task_14f9f864. area='spread' marker zůstává. Detail: RUNAR_DECISIONS.md 2026-07-13.
 
 ### Architektura §10 — NULA hardcoded strings
 Každý user-visible string přes helper. Přidání jazyka = jen UI_TEXT + VOCAB blok.
