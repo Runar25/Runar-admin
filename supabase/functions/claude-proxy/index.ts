@@ -203,7 +203,7 @@ async function callClaudeWithRetry(
 ): Promise<{ ok: true; data: any } | { ok: false; status: number; error: string }> {
   const RETRYABLE = new Set([408, 409, 429, 500, 502, 503, 504, 529]);
   const MAX_ATTEMPTS = 3;
-  const PER_ATTEMPT_MS = 30000;
+  const PER_ATTEMPT_MS = 55000; // the 9-rune Yggdrasil reading legitimately takes ~40s; 30s cut it off
   let lastStatus = 503;
   let lastError = "no response";
 
@@ -241,7 +241,9 @@ async function callClaudeWithRetry(
       const aborted = (e as Error).name === "AbortError";
       lastStatus = aborted ? 504 : 503;
       lastError = aborted ? "upstream timeout" : ((e as Error).message || "network error");
-      if (attempt === MAX_ATTEMPTS) {
+      // A timeout = the generation is slow, not a transient blip — retrying just burns the
+      // invocation budget. Return immediately (a network error still retries).
+      if (aborted || attempt === MAX_ATTEMPTS) {
         return { ok: false, status: lastStatus, error: lastError };
       }
     }
@@ -438,8 +440,10 @@ serve(async (req) => {
         messages: [{ role: "user", content: prompt }],
       }, anthropicKey);
       if (result.ok) break;
-      const overloadClass = result.status === 429 || result.status >= 500;
-      if (!overloadClass) break;   // 4xx = real error; a fallback model won't help
+      // Fall back only on a genuine overload (429/5xx), NOT on a timeout (504) — a slow
+      // generation would just time out again on the next model and blow the time budget.
+      const overloadClass = result.status === 429 || (result.status >= 500 && result.status !== 504);
+      if (!overloadClass) break;   // 4xx or timeout = a fallback model won't help
       console.warn(`model ${model} overloaded (${result.status}) — trying fallback`);
     }
 
