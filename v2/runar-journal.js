@@ -85,6 +85,8 @@ function renderJournal(entries) {
     const nameU  = escapeHtml((e.rune_name || '').toUpperCase());
     const langU  = escapeHtml((e.lang || '').toUpperCase());
     const glyph  = escapeHtml(e.rune_glyph || '◻');
+    const _jr = (typeof RUNES !== 'undefined') ? RUNES.find(function(x){ return x.n === e.rune_name; }) : null;
+    const glyphHtml = _jr ? runeSvg(_jr, { frame: false, cls: 'rune-svg-fl' }) : glyph;
     const shortT = escapeHtml(e.short_text || '');
     const deepT  = escapeHtml(e.deep_text || '');
 
@@ -119,7 +121,7 @@ function renderJournal(entries) {
     return `<div class="jcard" id="jcard-${i}">
       <div class="jcard-header" onclick="toggleJournalEntry(${i})">
         <div class="jcard-left">
-          <div class="jcard-glyph">${glyph}</div>
+          <div class="jcard-glyph">${glyphHtml}</div>
           <div class="jcard-info">
             <div class="jcard-name">${nameU} · ${langU}</div>
             <div class="jcard-date">${dateStr}${areaStr}</div>

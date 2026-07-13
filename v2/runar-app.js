@@ -821,7 +821,7 @@ function openCollDetail(r, cell, skipScroll) {
   cell.classList.add('active');
 
   // Fill static info
-  document.getElementById('cd-glyph').textContent    = r.g;
+  document.getElementById('cd-glyph').innerHTML      = runeSvg(r, { frame: false, cls: 'rune-svg-fl' });
   document.getElementById('cd-name-en').textContent  = r.n;
   document.getElementById('cd-name-is').textContent  = r.is_n || '';
   document.getElementById('cd-kw').textContent        = lang === 'is' && r.k_is ? r.k_is : r.k;
@@ -930,7 +930,7 @@ function buildGrid() {
       grid.querySelectorAll('.rb').forEach(b => b.classList.remove('on'));
       btn.classList.add('on');
       readerRune = r;
-      document.getElementById('reader-rune-info').textContent = `${r.g} ${rn(r)} — ${rk(r)}`;
+      document.getElementById('reader-rune-info').innerHTML = runeSvg(r, { frame: false, cls: 'rune-svg-fl' }) + ' ' + escapeHtml(rn(r)) + ' — ' + escapeHtml(rk(r));
       var _bsp = document.getElementById('btn-speak');
       if (_bsp) {
         _bsp.disabled = false;

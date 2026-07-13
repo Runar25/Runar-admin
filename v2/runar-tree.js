@@ -104,7 +104,7 @@ function updateTreeTab() {
       var nm = document.getElementById('tree-rune-name-teaser');
       var gl = document.getElementById('tree-rune-glyph-teaser');
       if (nm) nm.textContent = runeName;
-      if (gl) gl.textContent = rune.g;
+      if (gl) gl.innerHTML = runeSvg(rune, { frame: false, cls: 'rune-svg-fl' });
       var tt = document.getElementById('tree-teaser-text');
       if (tt) tt.textContent = t('tree_rs_teaser');
       var lb = document.getElementById('tree-rune-label'); if (lb) lb.textContent = t('life_rune_lbl');
@@ -160,7 +160,7 @@ function updateTreeTab() {
       var nm = document.getElementById('tree-rune-name-cta');
       var gl = document.getElementById('tree-rune-glyph-cta');
       if (nm) nm.textContent = runeName;
-      if (gl) gl.textContent = rune.g;
+      if (gl) gl.innerHTML = runeSvg(rune, { frame: false, cls: 'rune-svg-fl' });
       var intro = document.getElementById('tree-reveal-intro');
       var lbc = document.getElementById('tree-rune-label-cta'); if (lbc) lbc.textContent = t('life_rune_lbl');
       if (intro) intro.textContent = t('tree_reveal_intro');
@@ -180,7 +180,7 @@ function _showTreeReading(rune, runeName, isIs) {
   // Header: 'You carry life rune Gebo ᵏ' — label hidden, name carries full phrase
   if (lbl) lbl.style.display = 'none';
   if (nm) nm.textContent = (isIs ? 'Þú ber lífsrún ' : 'You carry life rune ') + runeName;
-  if (gl) gl.textContent = ' ' + rune.g;
+  if (gl) gl.innerHTML = ' ' + runeSvg(rune, { frame: false, cls: 'rune-svg-fl' });
   var open = document.getElementById('tree-static-open');
   if (open) open.textContent = '';
   var txt = document.getElementById('tree-reading-text');
@@ -303,7 +303,7 @@ async function generateLifeRuneReading() {
   var loadGlyph = document.getElementById('tree-loading-glyph');
   var loadTxt = document.getElementById('tree-loading-text');
   if (loadEl) loadEl.style.display = 'block';
-  if (loadGlyph) loadGlyph.textContent = rune.g;
+  if (loadGlyph) loadGlyph.innerHTML = runeSvg(rune, { frame: false, cls: 'rune-svg-fl' });
   if (loadTxt) loadTxt.textContent = t('reading_loading');
 
   var name = readerUser.name || (lang === 'is' ? 'þú' : 'you');
