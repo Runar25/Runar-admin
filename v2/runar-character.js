@@ -419,6 +419,15 @@ function _seasonalImagery(lang, drawn) {
   return 'SEASONAL IMAGE (if one arises): if a nature image appears in the reading, let it come from this Icelandic season — ' + phrase + '. Never from another season (no snow in summer); a cold rune becomes the cold that belongs to now, not winter.';
 }
 
+// DESCRIBE, DO NOT EXPLAIN (eval v0.4 Priority 1, 9/9): every gate-fail sat in an explaining
+// sentence, not the image. Rúnar may say what happens in the world; never what it MEANS
+// (mechanism / verdict / fate). Ships together with the "the rune speaks for itself" intro.
+function _describeRule(lang) {
+  if (lang === 'is')
+    return 'LÝSTU, EKKI ÚTSKÝRÐU: segðu hvað rúnin gerir í heiminum; aldrei hvað hún þýðir. Engin vélræn skýring (uppdiktuð eðlisfræði), enginn dómur um leitandann, engin örlög. Láttu myndina standa — ekki ráða hana.';
+  return 'DESCRIBE, DO NOT EXPLAIN: say what the rune does in the world; never what it means. No mechanism (invented physics), no verdict about the seeker, no fate. Let the image stand — do not decode it.';
+}
+
 // Returns the context injection line for V2 readings
 function getContextLine(lang) {
   const now = new Date();
@@ -814,6 +823,7 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     formula,
     S.angleIntro + _randomAngle(lang),
     _seasonalImagery(lang, drawn),
+    _describeRule(lang),
     S.length,
     _lensContext(life, drawn, lang),
     u.area ? _domainContext(u.area, lang) : '',
@@ -938,6 +948,7 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
     S.intro, '',
     runesBlock, '',
     _seasonalImagery(lang, runes),
+    _describeRule(lang),
   ].concat(S.instructions(ctrName)).concat([
     S.closing(u.name) + (S.langInstr ? ' ' + S.langInstr : '') + getCorrPrompt(lang, corrections),
     _addressContext(lang),
@@ -1008,6 +1019,7 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
     S.intro, '',
     runesBlock, '',
     _seasonalImagery(lang, runes),
+    _describeRule(lang),
   ].concat(S.beats).concat([
     S.bigInstruction(u.name),
     S.json,
@@ -1075,6 +1087,7 @@ function buildHorseshoePromptSeven(u, runes, lang, corrections) {
     S.intro, '',
     runesBlock, '',
     _seasonalImagery(lang, runes),
+    _describeRule(lang),
   ].concat(S.beats).concat([
     S.closing(u.name),
     _addressContext(lang),
@@ -1155,6 +1168,7 @@ function buildYggdrasilPromptNine(u, runes, lang, corrections) {
     S.intro, '',
     runesBlock, '',
     _seasonalImagery(lang, runes),
+    _describeRule(lang),
   ].concat(S.beats).concat([
     S.closing(u.name),
     _addressContext(lang),

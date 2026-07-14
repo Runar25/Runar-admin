@@ -29,7 +29,7 @@ const CORRECTIONS_POSTPROCESS  = false;  // blind substring replace after genera
 // Reading-prompt version tag — stored on every reading so eval batches group by version
 // (separates a real improvement from variance). BUMP whenever the reading prompt changes
 // (character.js reading builders / injected context / grammar rules).
-const RUNAR_PROMPT_VERSION = 'v0.4';
+const RUNAR_PROMPT_VERSION = 'v0.5';
 
 // ─── ELEVENLABS ─────────────────────────────────────────
 const EL_VOICE_ID_EN = '2UI8v2ibbwQTijaYAte1'; // English — Rúnar EN
