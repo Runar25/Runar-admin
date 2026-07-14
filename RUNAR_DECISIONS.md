@@ -425,3 +425,14 @@
 - **Affected doc(s):** RUNAR_PRIVACY.md (Code checklist → done), MEMORY.md, tento záznam.
 - **Reality note:** Ověřeno preview (elementy present, consent modal renderuje čitelně, žádné console chyby) + node --check + smoke 7/7. **Live save/consent/badge/opt-out-exkluze = owner login + tester data.** Opt-out/testers filtry běží PO limitu (admin tool, opt-out vzácný). IS texty draft → Sigrún (NATIVE-EYE). Commity 6b79b1b (Part A) + 996e315 (Part B). §1 JS přes Python.
 - **Reversibility:** medium (revert commity; DB sloupce zůstanou neškodné).
+
+
+## 2026-07-14 — Čtení zachytí VŠECHNO: Ask Rúnar Q&A + intention + inputy ve vieweru
+
+- **Typ:** implementation (data completeness / eval infra)
+- **Scope:** reading
+- **Co se změnilo:** `readings` řádek teď nese celý obraz čtení. **Proxy:** insert ukládá `intention` + vrací `reading_id`; journal `kind:"ask"` → **UPDATE** připojí Ask Rúnar `{q,a}` do `follow_up` (jsonb pole), ne nový insert. **Klient:** `callProxy` vrací `reading_id`; single/spread posílají `intention` + drží `_lastReadingId`; `askRunar` posílá `{kind:"ask", reading_id, question}`. **list-readings** vrací `intention` + `follow_up`. **Viewer:** blok inputů (Area/Seeking/Intention/Question/Life rune) + **Ask Rúnar** blok (otázka nad odpovědí, jak v readeru). **DB:** `readings.intention text` + `follow_up jsonb` (owner spustil).
+- **Proč:** Kuky sbírá kvalitativní data testerů — „u čtení musí být úplně všechno" vč. Ask Rúnar follow-upu + zvolených inputů (AoL atd.). Konec screenshotů; kompletní záznam k analýze.
+- **Affected doc(s):** MEMORY.md, tento záznam.
+- **Reality note:** Nasazeno (proxy + list-readings) + push (SW v182). **Pořadí kritické:** proxy PŘED push klienta (starý proxy by `kind:"ask"` mis-insertoval jako čtení). Live end-to-end = owner test (1 čtení → objeví se ve vieweru s inputy; Ask → follow_up naskočí). **GAP:** spread `area='spread'` marker → reálná AoL u SPREADŮ se nezachytí (jen single); nabídnut sloupec `aol`, owner zatím nepotvrdil. §1 JS přes Python. Commit 481d313.
+- **Reversibility:** medium (revert commit + redeploy staré fce; sloupce neškodné).
