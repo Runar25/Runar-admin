@@ -1,7 +1,7 @@
 # RUNAR_PRIVACY.md — Data & GDPR handling
 # 2026-07-13. Island = EEA → GDPR platí plně. Jedeme STRIKTNĚ podle EU pravidel, žádné dělení.
 # ⚠️ Toto je pracovní podklad, ne právní posudek. Před spuštěním potvrdit s DPO/právníkem.
-#    IS texty = DRAFT → Sigrún (native) + právní kontrola před publikací.
+#    IS texty authored + ověřené (is-grammar-qa / BÍN); před publikací právní kontrola (Island/EEA).
 
 ## Co je osobní údaj v Rúnarovi
 - **`readings` řádek** = osobní údaj: `user_id` → identita (user_profiles: jméno, DOB; auth: email).
@@ -35,7 +35,7 @@ opt-outu (ne opt-in brána). Výslovný souhlas jen u testerů — a ti CHTĚJÍ
 > in the EU, we never sell it, and you can ask us to delete it at any time. You can stop testing whenever
 > you like. **[ I agree ]**
 
-**IS (DRAFT → Sigrún + právní kontrola):**
+**IS (ověřené is-grammar-qa / BÍN; právní kontrola):**
 > **Þú ert prófari fyrir Rúnar — takk fyrir.** Til að hjálpa okkur að bæta lestrana geymum við lestrana
 > sem þú dregur og förum yfir texta þeirra og upplýsingarnar sem þú slærð inn, til að bæta gæði Rúnars.
 > Gögnin þín eru geymd innan EES, við seljum þau aldrei, og þú getur beðið um að þeim verði eytt hvenær
@@ -52,8 +52,8 @@ opt-outu (ne opt-in brána). Výslovný souhlas jen u testerů — a ti CHTĚJÍ
 > is hosted within the EU (our processor, Supabase). You can opt out of quality analysis at any time in
 > your account settings, and you can ask us to delete your readings or account. We never sell your data.
 
-**IS (DRAFT → Sigrún + právní kontrola):**
-> **Lestrarnir þínir.** Þegar þú dregur lestur geymum við hann á aðgangnum þínum svo þú sjáir söguna þína;
+**IS (ověřené is-grammar-qa / BÍN; právní kontrola):**
+> **Lestrarnir þínir.** Þegar þú dregur lestur geymum við hann á aðganginum þínum svo þú sjáir söguna þína;
 > hann er saminn út frá upplýsingunum sem þú gefur. Við kunnum einnig að fara yfir og greina lestra —
 > textann og innslegnu upplýsingarnar — til að bæta gæði leiðsagnar Rúnars, á grundvelli lögmætra hagsmuna
 > okkar af því að bæta þjónustuna. Ef lestur inniheldur viðkvæmar upplýsingar sem þú kaust að slá inn,
