@@ -525,18 +525,21 @@ function _registerContext(seeking, lang) {
   var mapIs = [
     'Leitandinn biður um almenna leiðsögn — láttu rúnina leiða hvert sem hún vill; þvingaðu ekki fram tilgang.',
     'Leitandinn biður um skýrleika — dragðu eitt skýrt fram; gerðu hið óljósa ljóst.',
-    'Leitandinn biður um staðfestingu — staðfestu það sem er þegar satt eða að vakna hljóðlega; hjálpaðu viðmælandanum að sjá það, ekki sá efa.',
+    'Leitandinn leitar staðfestingar eða hefur þegar ákveðið sig — hvorki staðfestu né hrektu; lýstu jarðveginum undir ákvörðuninni og blindu hliðinni.',
     'Leitandinn biður um innsýn í áskorun — nefndu núninginn heiðarlega, án þess að mýkja hann í huggun.',
     'Leitandinn biður um hugleiðingu — opnaðu spegil, ekki svar; snúðu viðmælandanum inn á við.',
   ];
   var mapEn = [
     'The seeker asks for general guidance — let the rune lead where it will; do not force a purpose.',
     'The seeker asks for clarity — bring one thing into focus; make the unclear clear.',
-    'The seeker asks for confirmation — affirm what is already true or quietly emerging; help them recognise it, do not introduce doubt.',
+    'The seeker looks for confirmation or has already decided — neither confirm nor refute; describe the ground beneath the decision and its blind side.',
     'The seeker asks for insight into challenge — name the friction honestly, without softening it into comfort.',
     'The seeker asks for reflection — open a mirror, not an answer; turn them inward.',
   ];
-  return (lang === 'is' ? mapIs : mapEn)[idx];
+  var stance = (lang === 'is')
+    ? 'Þetta er tilhneiging, ekki pöntun — endurtaktu hana ekki né afhentu sem hlut; láttu hana aðeins lita tóninn.'
+    : 'This is a leaning, not an order — do not name it back or hand it over as a thing; let it colour the tone only.';
+  return stance + ' ' + (lang === 'is' ? mapIs : mapEn)[idx];
 }
 
 // Address gender (modern Icelandic): kk (karlkyn) / kvk (kvenkyn) / hk (hvorugkyn, han = default).
