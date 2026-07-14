@@ -90,7 +90,7 @@
         inRow('Intention', r.intention),
         inRow('Question', r.question),
         inRow('Life rune', r.life_rune),
-        inRow('Address', r.address ? _addr : null)
+        inRow('Address', (r.lang === 'is' && r.address) ? _addr : null)
       ].filter(Boolean).join('');
       var inputsHtml = inputs ? '<div class="rd-inputs">' + inputs + '</div>' : '';
 
