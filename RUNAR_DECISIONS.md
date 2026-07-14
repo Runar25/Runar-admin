@@ -413,6 +413,7 @@
 - **Affected doc(s):** CLAUDE.md §5 (nové pravidlo), tento záznam
 - **Reality note:** Ověřeno v reálném readeru: 25/25 obou rámování, Blank obrys, badge/strip/slot/rune-info renderují SVG, tap popup data zachována, žádné chyby. Screenshoty v preview sekají (env) → ověřeno strukturálně (DOM/getBBox) + kontextové velikosti změřeny. Velikost = `.rune-svg-fl{height:1.1em}` relativní ke kontejneru → runa sedne do své pozice (kalibrace: holá runa vyplňuje 0.65–0.91 viewBoxu). §1: JS přes Python (add_rune_svg_helper / switch_glyphs_to_svg / add_glyph_remaining). Coworkova souběžná WIP (tester/analytics consent v app.js/css/reader.html) NEcommitnuta — chirurgicky oddělena (filter_hunks.py). SW v178. **Follow-up:** shrine + yggdrasil.html mají stejný split (odloženo).
 - **Reversibility:** medium (revert 2 commity; helper zůstane neškodný; DB beze změny)
+- **Addendum 2026-07-14 (`24eed69`):** Frameless runy nechávaly drobné „čárky" — každá runa má 1 hlavní zlatý tah (index 0) + několik malých kamenických ozdůbek (taky #D6A85C → fill-strip je nechal, bez kamene „trčely"). Fix: frameless nechá JEN hlavní tah přes keep-mapu `RUNE_BARE_KEEP` (default `[0]`; Jera `[0,1]` = dva háčky), odvozeno z per-path bbox v prohlížeči (hlavní tah = 0.14–0.32 viewBoxu, ozdůbky ≤0.013). Kámen/framed netknutý (mřížky plné). Ověřeno: 25/25 frameless = 1 path (Jera 2, Blank obrys). SW v181.
 
 
 ## 2026-07-13 — Privacy kód zapojen: opt-out toggle + tester consent + viewer opt-out/tester
