@@ -530,7 +530,7 @@ async function askRunar() {
   var prompt = buildAskPrompt(reading, q, runes, lang, corrections);
   var _askJournal = (currentUser && _readingMode === 'mine' && _lastReadingId)
     ? { kind: 'ask', reading_id: _lastReadingId, question: q } : null;
-  var res = await callProxy(sys, prompt, 400, shouldUseCredit(), SPREAD_COSTS.single.credits, _askJournal); // follow-up = 2-3 sentences
+  var res = await callProxy(sys, prompt, 120, shouldUseCredit(), SPREAD_COSTS.single.credits, _askJournal); // follow-up capped short (~40 words)
   if (res.error) {
     if (btn) { btn.disabled = false; btn.textContent = t('ask_btn'); }
     setSt('ask-status', _readingErrMsg(res.error === 'rate_limited' ? 'rate_limited' : (res.error === 'no_credits' ? 'no_credits' : '')), 'err');

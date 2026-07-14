@@ -35,7 +35,7 @@ const UI_TEXT = {
 
     // Reader tab
     reader_card1_lbl: '✦ BEFORE WE BEGIN',
-    reader_note:      'The more you share, the more precisely I can speak. But the rune will find what needs finding either way.',
+    reader_note:      'Tell me where to look. The rune speaks for itself.',
     name_lbl:         'YOUR NAME OR PREFERRED NAME',
     name_ph:          'How shall Rúnar address you?',
     reading_mode_mine:    'MY READING',
@@ -49,7 +49,7 @@ const UI_TEXT = {
     setup_someone_note:   'Enter the name of the person you are reading for. This reading will not be saved.',
     setup_for_name_lbl:   'NAME',
     setup_for_name_ph:    'Name or nickname',
-    reading_ready_note:   'The more you share, the more precisely I can speak. But the rune will find what needs finding either way.',
+    reading_ready_note:   'Tell me where to look. The rune speaks for itself.',
     dob_lbl:          'DATE OF BIRTH',
     day_ph:           'Day',
     month_ph:         'Month',
@@ -290,7 +290,7 @@ const UI_TEXT = {
 
     // Reader tab
     reader_card1_lbl: '✦ ÁÐUR EN VIÐ BYRJUM',
-    reader_note:      'Því meira sem þú deilir, því nákvæmar get ég talað. En rúnan finnur það sem þarf að finna — hvort sem er.',
+    reader_note:      'Segðu mér hvert ég á að líta. Rúnin talar sínu máli.',
     name_lbl:         'NAFNIÐ ÞITT EÐA GÆLUNAFN',
     name_ph:          'Hvernig á Rúnar að kalla þig?',
     reading_mode_mine:    'MÍN SPÁ',
@@ -304,7 +304,7 @@ const UI_TEXT = {
     setup_someone_note:   'Sláðu inn nafn þess sem þú ert að spá fyrir. Þessi spá verður ekki vistuð.',
     setup_for_name_lbl:   'NAFN',
     setup_for_name_ph:    'Nafn eða gælunafn',
-    reading_ready_note:   'Því meira sem þú deilir, því nákvæmar get ég talað. En rúnan finnur það sem þarf að finna — hvort sem er.',
+    reading_ready_note:   'Segðu mér hvert ég á að líta. Rúnin talar sínu máli.',
     dob_lbl:          'FÆÐINGARDAGUR',
     day_ph:           'Dagur',
     month_ph:         'Mánuður',
