@@ -424,7 +424,7 @@ function _seasonalImagery(lang, drawn) {
 // (mechanism / verdict / fate). Ships together with the "the rune speaks for itself" intro.
 function _describeRule(lang) {
   if (lang === 'is')
-    return 'LÝSTU, EKKI ÚTSKÝRÐU: segðu hvað rúnin gerir í heiminum; aldrei hvað hún þýðir. Engin vélræn skýring (uppdiktuð eðlisfræði), enginn dómur um leitandann, engin örlög. Láttu myndina standa — ekki ráða hana.';
+    return 'LÝSTU, EKKI ÚTSKÝRÐU: Segðu hvað rúnin gerir í heiminum; aldrei hvað hún þýðir. Engin vélræn skýring (uppdiktuð eðlisfræði), enginn dómur um leitandann, engin örlög. Láttu myndina standa — ekki ráða hana.';
   return 'DESCRIBE, DO NOT EXPLAIN: say what the rune does in the world; never what it means. No mechanism (invented physics), no verdict about the seeker, no fate. Let the image stand — do not decode it.';
 }
 

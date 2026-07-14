@@ -245,7 +245,7 @@ const AREAS = {
     'Purpose & Path',
     'Career & Creativity',
     'Healing & Wellbeing',
-    'Spirituality',
+    'The Unseen',
     'Family & Home',
     'Inner Growth',
     'Crossroads & Decisions',
@@ -255,7 +255,7 @@ const AREAS = {
     'Tilgangur & Leið',
     'Starf & Sköpun',
     'Heilun & Líðan',
-    'Andleg málefni',
+    'Hið dulda',
     'Fjölskylda & Heimili',
     'Innri Vöxtur',
     'Vegamót & Ákvarðanir',
@@ -268,7 +268,7 @@ const AREAS = {
     'skuld',     // Purpose & Path
     'skuld',     // Career & Creativity
     'urd',       // Healing & Wellbeing  (dual: urd/verdandi)
-    'skuld',     // Spirituality
+    'skuld',     // The Unseen
     'urd',       // Family & Home
     'urd',       // Inner Growth         (dual: urd/skuld)
     'verdandi',  // Crossroads & Decisions
