@@ -120,7 +120,8 @@ async function _generateReading() {
   var _journal = (currentUser && _readingMode === 'mine') ? {
     kind: 'single', rune_name: drawn.n, rune_glyph: drawn.g, lang: lang,
     area: u.area || null, aol: u.area || null, seeking: u.seeking || null, intention: u.intention || null,
-    question: u.question || null, life_rune: (u.lifeRune && u.lifeRune.n) || null
+    question: u.question || null, life_rune: (u.lifeRune && u.lifeRune.n) || null,
+    prompt_version: RUNAR_PROMPT_VERSION
   } : null;
   _lastReadingId = null;
   const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens, shouldUseCredit(), SPREAD_COSTS.single.credits, _journal);
@@ -749,7 +750,7 @@ async function _generateSpreadReading(o) {
     kind: 'spread', rune_name: o.kind, rune_glyph: '✦', lang: lang,
     area: 'spread', aol: u.area || null, seeking: u.seeking || null, intention: u.intention || null,
     question: u.question || null, life_rune: (u.lifeRune && u.lifeRune.n) || null,
-    rune_display: _runeDisplay
+    rune_display: _runeDisplay, prompt_version: RUNAR_PROMPT_VERSION
   } : null;
   _lastReadingId = null;
   var res = await callProxy(sys, prompt, o.tokens, shouldUseCredit(), o.credits, _journalS);

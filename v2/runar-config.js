@@ -26,6 +26,11 @@ const TREE_UPDATE = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/tree-
 const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading prompt (in-context)
 const CORRECTIONS_POSTPROCESS  = false;  // blind substring replace after generation — keep OFF
 
+// Reading-prompt version tag — stored on every reading so eval batches group by version
+// (separates a real improvement from variance). BUMP whenever the reading prompt changes
+// (character.js reading builders / injected context / grammar rules).
+const RUNAR_PROMPT_VERSION = 'v0.4';
+
 // ─── ELEVENLABS ─────────────────────────────────────────
 const EL_VOICE_ID_EN = '2UI8v2ibbwQTijaYAte1'; // English — Rúnar EN
 const EL_VOICE_ID_IS = '2UI8v2ibbwQTijaYAte1'; // IS — stejný voice, eleven_v3 auto-detekuje islandštinu z textu

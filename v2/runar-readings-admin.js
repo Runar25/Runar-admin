@@ -107,6 +107,7 @@
           '<span class="rd-lang">' + lng + '</span>' +
           '<span class="rd-who">' + who + '</span>' + tier + tester +
           '<span class="rd-when">' + esc(when) + '</span>' +
+          (r.prompt_version ? '<span class="rd-ver">' + esc(r.prompt_version) + '</span>' : '') +
         '</div>' +
         (runeLine ? '<div class="rd-runes">' + runeLine + '</div>' : '') +
         inputsHtml +
