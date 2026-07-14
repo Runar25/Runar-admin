@@ -448,3 +448,14 @@
 - **Affected doc(s):** MEMORY.md, tento záznam.
 - **Reality note:** ① `prompt_version` čeká na sloupec (`alter table public.readings add column if not exists prompt_version text;`). Blank glyf ○→kámen potřebuje `RUNAR_glyph_unify_CODE.md` spec (nemám → flag ownerovi). IS intro **authored + ověřeno check-is** (ne „draft pro Sigrún" — viz working-style korekce 2026-07-14). Commit 3d19cc2, SW v184.
 - **Reversibility:** easy (revert commit).
+
+
+## 2026-07-14 — „Popiš, nedovysvětluj" pravidlo + prompt v0.5 (dvojice s intro copy)
+
+- **Typ:** decision (behavior) — reading quality
+- **Scope:** reading
+- **Co se změnilo:** Do všech 5 reading builderů (single + 4 spready) injektováno `_describeRule(lang)` vedle `_seasonalImagery`: „řekni CO runa dělá ve světě, nikdy CO to znamená — žádný mechanismus (vymyšlená fyzika), žádný verdikt o tazateli, žádná osudová tvrzení; nech obraz stát". `RUNAR_PROMPT_VERSION` 'v0.4' → 'v0.5'.
+- **Proč:** Eval v0.4 Priorita 1 (**9/9**): každý gate-fail sedí ve VYSVĚTLUJÍCÍ větě, ne v obraze. **Rozhodnutí #1 (copy-doc):** MUSÍ jet SPOLU s intro copy — intro = slib uživateli („the rune speaks for itself"), pravidlo = ten samý slib modelu; intro SAMO = elegantnější ozvěnová lež. Intro nasazeno v ② (samo, chyba), teď dorazil partner → dvojice konzistentní od v0.5.
+- **Affected doc(s):** MEMORY.md, tento záznam.
+- **Reality note:** Reading prompt = **client-built** (character.js) → jen push, žádný proxy deploy. Měření: zítřejší dávka = v0.5, porovnat vs v0.4 přes `prompt_version` tag (R1 + gate-fails). Zbývá z copy-doc: #2 Spirituality→The Unseen (dohledat AREA seznam), #4+5 SPECIFIC QUESTION→THE SITUATION+placeholder (`q_lbl` nalezen), #3 SEEKING prompt rule (+ F1-CLARITY kolize — přejmenovat INTERNÍ mód). Blank glyf = TREE (drawn→kámen, commity e3bf1ba/091addc). Commit b038f73, SW v189.
+- **Reversibility:** easy (revert; verze zpět na v0.4).
