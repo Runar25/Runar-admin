@@ -461,7 +461,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .rune-svg-fb{color:var(--gold);font-size:1.5em;line-height:1;}
 /* Frameless (bare-line) rune: height tracks the container font-size (~old glyph, slightly larger). */
 .rune-svg-fl{height:1.1em;width:auto;}
-.rlbl-glyph.seg-active .rune-svg-fl{filter:drop-shadow(0 0 9px rgba(255,191,0,0.45));}
+/* Stone (framed) runes = drawn runes you hold: reading strip, spread slots, collection detail, journal. */
+.rlbl-stone{width:clamp(22px,7vw,34px);height:auto;vertical-align:middle;}
+.slot-stone{height:1.7em;width:auto;vertical-align:middle;}
+.cd-stone{width:clamp(60px,20vw,88px);height:auto;}
+.jcard-stone{width:28px;height:auto;}
+.rlbl-glyph.seg-active .rune-svg{filter:drop-shadow(0 0 9px rgba(255,191,0,0.45));}
 .rb-svg{width:clamp(38px,11vw,72px);height:auto;aspect-ratio:72/88;display:block;}
 .rb-n{font-family:'Cinzel',serif;font-size:0.85em;letter-spacing:0.5px;color:var(--muted);margin-top:4px;}
 .rb.on .rb-n{color:var(--blue);}

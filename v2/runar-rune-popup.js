@@ -41,7 +41,7 @@
     // Build empty structure, then set text via textContent (no injection from data).
     p.innerHTML = '<span class="rune-pop-g"></span><span class="rune-pop-n"></span>' +
                   (kw ? '<span class="rune-pop-kw"></span>' : '');
-    p.querySelector('.rune-pop-g').textContent = g.textContent;
+    p.querySelector('.rune-pop-g').innerHTML = g.innerHTML;   // g holds a runeSvg SVG (trusted), not text
     p.querySelector('.rune-pop-n').textContent = g.getAttribute('data-rune');
     if (kw) p.querySelector('.rune-pop-kw').textContent = kw;
     p.style.display = 'block';

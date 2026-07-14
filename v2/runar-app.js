@@ -899,7 +899,7 @@ function openCollDetail(r, cell, skipScroll) {
   cell.classList.add('active');
 
   // Fill static info
-  document.getElementById('cd-glyph').innerHTML      = runeSvg(r, { frame: false, cls: 'rune-svg-fl' });
+  document.getElementById('cd-glyph').innerHTML      = runeSvg(r, { frame: true, cls: 'cd-stone' });
   document.getElementById('cd-name-en').textContent  = r.n;
   document.getElementById('cd-name-is').textContent  = r.is_n || '';
   document.getElementById('cd-kw').textContent        = lang === 'is' && r.k_is ? r.k_is : r.k;

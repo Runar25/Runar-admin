@@ -86,7 +86,7 @@ function renderJournal(entries) {
     const langU  = escapeHtml((e.lang || '').toUpperCase());
     const glyph  = escapeHtml(e.rune_glyph || '◻');
     const _jr = (typeof RUNES !== 'undefined') ? RUNES.find(function(x){ return x.n === e.rune_name; }) : null;
-    const glyphHtml = _jr ? runeSvg(_jr, { frame: false, cls: 'rune-svg-fl' }) : glyph;
+    const glyphHtml = _jr ? runeSvg(_jr, { frame: true, cls: 'jcard-stone' }) : glyph;
     const shortT = escapeHtml(e.short_text || '');
     const deepT  = escapeHtml(e.deep_text || '');
 

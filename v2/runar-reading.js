@@ -182,7 +182,7 @@ async function _generateReading() {
   var _ul2 = document.getElementById('single-layer2');
   var _ul1lbl = document.getElementById('layer1-lbl');
   if (_ul2) _ul2.style.display = 'none';
-  if (_ul1lbl) { _ul1lbl.innerHTML = '<span class="rlbl-glyph" data-rune="' + rn(drawn) + '" data-kw="' + rk(drawn) + '" data-seg="0">' + runeSvg(drawn, { frame: false, cls: 'rune-svg-fl' }) + '</span><span class="rlbl-name">' + rn(drawn).toUpperCase() + '</span>'; _ul1lbl.classList.remove('pulsing'); }
+  if (_ul1lbl) { _ul1lbl.innerHTML = '<span class="rlbl-glyph" data-rune="' + rn(drawn) + '" data-kw="' + rk(drawn) + '" data-seg="0">' + runeSvg(drawn, { frame: true, cls: 'rlbl-stone' }) + '</span><span class="rlbl-name">' + rn(drawn).toUpperCase() + '</span>'; _ul1lbl.classList.remove('pulsing'); }
   await stream('out-short', reading);
   _renderSegments('out-short', _lastSegs);
   _showAsk();
@@ -332,7 +332,7 @@ function _updateSpreadSlots(cfg) {
     var el = document.getElementById(cfg.id(i));
     if (!el) continue;
     var rune = runes[i];
-    el.innerHTML = rune ? runeSvg(rune, { frame: false, cls: 'rune-svg-fl' }) : _SLOT_GLYPHS[i];
+    el.innerHTML = rune ? runeSvg(rune, { frame: true, cls: 'slot-stone' }) : _SLOT_GLYPHS[i];
     el.classList.toggle('filled', !!rune);
     if (rune) {
       el.title = rune.n + ' — ' + t('slot_remove_hint');
@@ -783,7 +783,7 @@ async function _generateSpreadReading(o) {
   readerTexts[lang] = { short: text, deep: '' };
 
   var lbl = document.getElementById(o.lblId);
-  if (lbl) lbl.innerHTML = o.runes.map(function(r, i) { return '<span class="rlbl-glyph" data-rune="' + rn(r) + '" data-kw="' + rk(r) + '" data-seg="' + i + '">' + runeSvg(r, { frame: false, cls: 'rune-svg-fl' }) + '</span>'; }).join('<span class="rlbl-sep">·</span>');
+  if (lbl) lbl.innerHTML = o.runes.map(function(r, i) { return '<span class="rlbl-glyph" data-rune="' + rn(r) + '" data-kw="' + rk(r) + '" data-seg="' + i + '">' + runeSvg(r, { frame: true, cls: 'rlbl-stone' }) + '</span>'; }).join('<span class="rlbl-sep">·</span>');
 
   if (currentUser) {
     // Journal saved SERVER-SIDE by the proxy (atomic with the deduction). Refresh local views.
