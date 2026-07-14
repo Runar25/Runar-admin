@@ -402,6 +402,18 @@
 - **Reality note:** Edge fce NASAZENA + shrine tab ověřen v preview (tab/pane/filtry/modul integrují bez chyb, showTab OK; živá data za admin gate → owner otestuje loginem). VIEW-ONLY zatím. Další fáze: flag/annotate akce (review tabulka DB) + obohatit `readings` řádek (prompt_version, pořadí run, char_count, address_form — Cowork eval #1) + is-grammar-qa fronta „NATIVE EYE" nad IS výstupy. Rozhodnutí čekají na ownera: `is_tester` flag, ukládat i `someone` mód. §1: shrine inline JS přes Python.
 - **Reversibility:** easy (smazat tab + modul + fce; readings/RLS beze změny).
 
+---
+
+## 2026-07-13 — Sjednocení runových glyfů (font → jeden SVG zdroj, rámování dle role)
+
+- **Typ:** design + implementation (glyph rendering)
+- **Scope:** reader (UI rendering)
+- **Co se změnilo:** Zrušen dvojsystém glyfů (font `r.g` vs kreslené `RUNE_SVGS`). Nově JEDEN zdroj = RUNE_SVGS přes sdílený helper `runeSvg(rune,{frame,cls})` (runar-utils.js, §3/§18): `frame:true` = kámen (runa+rám), `frame:false` = holá runa (rám = první `#1e2535` path, strhne se při renderu; #D6A85C, ~1.1em vůči kontejneru). **Fáze 1** (`bdab466`): helper + refaktor 2 stávajících SVG mřížek (rune board, kolekce) na helper + smazán mrtvý `<path d="">`. **Fáze 2** (`83a350f`): přepnuta VŠECHNA font místa na frameless SVG — strip (single+spread, `.rlbl-glyph` span/data-* zachovány → tap popup jede), životní-runa badge, spread draw sloty, tree glyfy (teaser/cta/exists/loading), rune-info, coll-detail, journal single karty (runa dohledána dle `rune_name`; spready drží `✦`; escaped fallback = XSS zachováno). Blank = orámované prázdno (kámen=prázdný kámen · holá=zlatý obrys), NIKDY font `○`. Mřížky/kolekce zůstávají kámen. ᚱ brand (HTML chrome, loading „THE STONES SPEAK") NEDOTČEN. Pravidlo → CLAUDE.md §5.
+- **Proč:** Font glyfy (Cormorant) nekonzistentní napříč zařízeními (systémový runový font / prázdné čtverečky) + `○` Blank „trčel". SVG kresby už existují, dvoubarevný kámen + frameless zadarmo, výkon není problém. Font zvážen a zamítnut: běžný font neuveze dvoubarevný kámen + výrobní pipeline (KUKY rozhodl 2026-07-13).
+- **Affected doc(s):** CLAUDE.md §5 (nové pravidlo), tento záznam
+- **Reality note:** Ověřeno v reálném readeru: 25/25 obou rámování, Blank obrys, badge/strip/slot/rune-info renderují SVG, tap popup data zachována, žádné chyby. Screenshoty v preview sekají (env) → ověřeno strukturálně (DOM/getBBox) + kontextové velikosti změřeny. Velikost = `.rune-svg-fl{height:1.1em}` relativní ke kontejneru → runa sedne do své pozice (kalibrace: holá runa vyplňuje 0.65–0.91 viewBoxu). §1: JS přes Python (add_rune_svg_helper / switch_glyphs_to_svg / add_glyph_remaining). Coworkova souběžná WIP (tester/analytics consent v app.js/css/reader.html) NEcommitnuta — chirurgicky oddělena (filter_hunks.py). SW v178. **Follow-up:** shrine + yggdrasil.html mají stejný split (odloženo).
+- **Reversibility:** medium (revert 2 commity; helper zůstane neškodný; DB beze změny)
+
 
 ## 2026-07-13 — Privacy kód zapojen: opt-out toggle + tester consent + viewer opt-out/tester
 

@@ -70,6 +70,7 @@ Ruční bump pokud je sw.js already staged před commitem.
 ### §5 — UI invarianty
 var(--gold) = #FFBF00 · var(--dim) = #3a4a60 NIKDY pro text · reader-content se NIKDY neskrývá
 Runa ᚱ: vždy zlatá, NIKDY s ozdobami (◌ ᚱ ◌ zakázáno)
+**Runové glyfy = JEDEN zdroj kresby (RUNE_SVGS), rámování dle ROLE** — přes helper `runeSvg(rune,{frame})` (runar-utils.js, §3): `frame:true` = kámen (runa + rám) pro mřížky/kolekci (runy jako předměty); `frame:false` = holá linka (jen runa, #D6A85C) vedle textu (strip, tree glyf, rune-info, detail, badge, sloty, journal). NIKDY font glyf jako primární (nekonzistentní napříč zařízeními). Blank = orámované prázdno (kámen = prázdný kámen · holá linka = zlatý obrys), NIKDY `○`. ᚱ brand = ZVLÁŠŤ (font, chrome v HTML, neřeší se přes runeSvg).
 
 ### §6 — Záměrně anglické pojmy (NEPŘEKLÁDAT do IS)
 THE GATHERING · RÚNAR · RUNE WALKER · RUNE KEEPER
