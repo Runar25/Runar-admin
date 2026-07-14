@@ -70,7 +70,7 @@ Ruční bump pokud je sw.js already staged před commitem.
 ### §5 — UI invarianty
 var(--gold) = #FFBF00 · var(--dim) = #3a4a60 NIKDY pro text · reader-content se NIKDY neskrývá
 Runa ᚱ: vždy zlatá, NIKDY s ozdobami (◌ ᚱ ◌ zakázáno)
-**Runové glyfy = JEDEN zdroj kresby (RUNE_SVGS), rámování dle ROLE** — přes helper `runeSvg(rune,{frame})` (runar-utils.js, §3): `frame:true` = kámen (runa + rám) pro mřížky/kolekci (runy jako předměty); `frame:false` = holá linka (jen runa, #D6A85C) vedle textu (strip, tree glyf, rune-info, detail, badge, sloty, journal). NIKDY font glyf jako primární (nekonzistentní napříč zařízeními). Blank = orámované prázdno (kámen = prázdný kámen · holá linka = zlatý obrys), NIKDY `○`. ᚱ brand = ZVLÁŠŤ (font, chrome v HTML, neřeší se přes runeSvg).
+**Runové glyfy = JEDEN zdroj kresby (RUNE_SVGS), rámování dle ROLE** — přes helper `runeSvg(rune,{frame})` (runar-utils.js, §3). Pravidlo (KUKY 2026-07-14): **`frame:true` = KÁMEN pro runy, které TAHÁŠ/DRŽÍŠ** (draw grid, kolekce, kolekce detail, reading strip single+spread, spread sloty, journal karty); **`frame:false` = HOLÁ linka (#D6A85C) pro životní runu (esence, ne tažený kámen: badge + tree teaser/cta/exists/loading) + textové popisky (rune-info)**. NIKDY font glyf jako primární (nekonzistentní napříč zařízeními). Blank = orámované prázdno (kámen = prázdný kámen · holá = zlatý obrys), NIKDY `○`. Holá runa = jen hlavní tah (keep-mapa `RUNE_BARE_KEEP`, ozdůbky pryč). Tap popup kopíruje `g.innerHTML` (SVG), ne textContent. ᚱ brand = ZVLÁŠŤ (font, chrome v HTML, neřeší se přes runeSvg).
 
 ### §6 — Záměrně anglické pojmy (NEPŘEKLÁDAT do IS)
 THE GATHERING · RÚNAR · RUNE WALKER · RUNE KEEPER
