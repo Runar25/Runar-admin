@@ -530,6 +530,7 @@ serve(async (req) => {
             short_text:   isSpread ? (journal.rune_display ?? "") : composeReading(text),
             deep_text:    isSpread ? composeReading(text) : "",
             area:         journal.area       ?? null,
+            aol:          journal.aol        ?? null,
             seeking:      journal.seeking    ?? null,
             intention:    journal.intention  ?? null,
             question:     journal.question   ?? null,

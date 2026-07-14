@@ -84,7 +84,7 @@
 
       // Every input the user picked, shown clearly (area is the 'spread' marker for spreads -> skip).
       var inputs = [
-        inRow('Area', isSpread ? null : r.area),
+        inRow('Area', r.aol || (isSpread ? null : r.area)),
         inRow('Seeking', r.seeking),
         inRow('Intention', r.intention),
         inRow('Question', r.question),

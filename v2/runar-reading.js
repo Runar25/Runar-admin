@@ -119,7 +119,7 @@ async function _generateReading() {
   // Only for a logged-in user saving their own reading; null = do not save.
   var _journal = (currentUser && _readingMode === 'mine') ? {
     kind: 'single', rune_name: drawn.n, rune_glyph: drawn.g, lang: lang,
-    area: u.area || null, seeking: u.seeking || null, intention: u.intention || null,
+    area: u.area || null, aol: u.area || null, seeking: u.seeking || null, intention: u.intention || null,
     question: u.question || null, life_rune: (u.lifeRune && u.lifeRune.n) || null
   } : null;
   _lastReadingId = null;
@@ -747,7 +747,7 @@ async function _generateSpreadReading(o) {
   var _runeDisplay = o.runes.map(function (r) { return ((r.g || '') + ' ' + (r.n || '').toUpperCase()).trim(); }).join(' · ');
   var _journalS = (currentUser && _readingMode === 'mine') ? {
     kind: 'spread', rune_name: o.kind, rune_glyph: '✦', lang: lang,
-    area: 'spread', seeking: u.seeking || null, intention: u.intention || null,
+    area: 'spread', aol: u.area || null, seeking: u.seeking || null, intention: u.intention || null,
     question: u.question || null, life_rune: (u.lifeRune && u.lifeRune.n) || null,
     rune_display: _runeDisplay
   } : null;
