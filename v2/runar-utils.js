@@ -21,6 +21,9 @@ function isAdmin(email) {
 // Split is by fill: the frame path is the only one filled #1e2535; rune strokes are #D6A85C.
 // Blank has no rune strokes: framed = empty stone; frameless = bare gold outline (framed void).
 // Returns <svg> markup (or a font-glyph span fallback if the rune has no SVG entry).
+// RUNE_BARE_KEEP: which gold path indices are the actual rune (vs stone-carving flourishes).
+// Default = [0] (main stroke, always first). Jera = two hooks. See RUNAR_DECISIONS 2026-07-14.
+var RUNE_BARE_KEEP = { Jera: [0, 1] };
 function runeSvg(rune, opts) {
   opts = opts || {};
   var frame = opts.frame !== false;
@@ -33,9 +36,17 @@ function runeSvg(rune, opts) {
   }
   var paths = sd.paths;
   if (!frame) {
-    var bare = paths.replace(new RegExp('<path[^>]*#1e2535[^>]*/>', 'g'), '');
-    // Blank (frame-only): keep the frame as a bare gold outline so the void stays visible
-    paths = bare.trim() ? bare : paths.replace(new RegExp('fill="#1e2535"', 'g'), 'fill="none"');
+    // Bare line: keep only the main rune stroke(s); drop the stone frame AND its small #D6A85C
+    // flourishes that would otherwise float as stray marks without the carved stone.
+    var all = sd.paths.match(new RegExp('<path[^>]*>', 'g')) || [];
+    var gold = all.filter(function(p) { return p.indexOf('#1e2535') < 0; });
+    if (gold.length) {
+      var keep = RUNE_BARE_KEEP[key] || [0];
+      paths = keep.map(function(i) { return gold[i]; }).filter(Boolean).join('');
+    } else {
+      // Blank (frame-only): render the frame as a bare gold outline (framed void)
+      paths = sd.paths.replace(new RegExp('fill="#1e2535"', 'g'), 'fill="none"');
+    }
   }
   return '<svg class="rune-svg ' + cls + '" viewBox="' + sd.vb + '" fill="none" xmlns="http://www.w3.org/2000/svg">' + paths + '</svg>';
 }
