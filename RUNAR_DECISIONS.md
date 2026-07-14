@@ -436,3 +436,14 @@
 - **Affected doc(s):** MEMORY.md, tento záznam.
 - **Reality note:** Nasazeno (proxy + list-readings) + push (SW v182). **Pořadí kritické:** proxy PŘED push klienta (starý proxy by `kind:"ask"` mis-insertoval jako čtení). Live end-to-end = owner test (1 čtení → objeví se ve vieweru s inputy; Ask → follow_up naskočí). **GAP VYŘEŠEN (2026-07-14, commit 094f287, SW v183):** `aol` sloupec zachycuje reálnou AoL jednotně u single + spread (nezávisle na 'spread' markeru); viewer ukazuje AoL u VŠECH čtení. Princip „neselektujeme — vše pro všechny runy i čtení". §1 JS přes Python. Commit 481d313.
 - **Reversibility:** medium (revert commit + redeploy staré fce; sloupce neškodné).
+
+
+## 2026-07-14 — Eval v0.4 → přeskupení priorit + 2 compact fixy (②)
+
+- **Typ:** decision (plán) + fix
+- **Scope:** reading (kvalita)
+- **Co se změnilo:** Eval dávka v0.4 (Cowork, 16 výstupů, konstantní prompt) přeskupila priority. **Pořadí:** ① `prompt_version` + ADDRESS logging (**blokátor měření** — bez něj „každá dávka jen sbírka dojmů") → ② levné fixy → ③ **měřené** prompt páky (describe-don't-explain + „already/þegar" pryč + image pool; R1 a gate-fails ZVLÁŠŤ) → ④ owner (**přetížení čtení**: 7 pánů, runa 7. a prohrává; **G2b no-fate** gate). **② HOTOVO tímto commitem:** intro copy (cold-reading smlouva → „Tell me where to look. The rune speaks for itself." EN+IS) + follow-up **word cap** (~40 slov, max_tokens 400→120). **Železné pravidlo: prompt páky NEsahat před `prompt_version`.**
+- **Proč:** Držet Rúnara KOMPAKTNÍHO (owner: „minule se rozletěl na všechny strany a nedělal skoro nic dobře"). Eval: každý gate-fail sedí ve vysvětlující větě; R1 = vada zásoby (→pool, ledger i na kostry/jmenný slot); follow-up přetéká přes délku čtení.
+- **Affected doc(s):** MEMORY.md, tento záznam.
+- **Reality note:** ① `prompt_version` čeká na sloupec (`alter table public.readings add column if not exists prompt_version text;`). Blank glyf ○→kámen potřebuje `RUNAR_glyph_unify_CODE.md` spec (nemám → flag ownerovi). IS intro **authored + ověřeno check-is** (ne „draft pro Sigrún" — viz working-style korekce 2026-07-14). Commit 3d19cc2, SW v184.
+- **Reversibility:** easy (revert commit).

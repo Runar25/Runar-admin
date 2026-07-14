@@ -24,8 +24,8 @@ Klíčové soubory pro Read (lokální):
 
 ## Aktuální stav projektu (2026-07-06)
 
-### SW verze: v183
-### Poslední commit: 094f287
+### SW verze: v184
+### Poslední commit: 3d19cc2
 
 ### Klíčová rozhodnutí (platná)
 - RS: 1 free cast při registraci, žádný weekly drip, ŽÁDNÝ měsíční reset (model B). Jediný signál = DB `free_balance` (default 1). 1 free MÁ hlas. Pak vše za rune readings (kredity).
@@ -88,6 +88,8 @@ Kořen driftu = duplikace. Jazyk/tier/spread varianty = DATA (RP_* packy, config
 
 ## Index souborů
 - [working-style.md](working-style.md) — workflow pravidla, Python skripty, IS primární jazyk, verifikace, IS gramatika
+- [is-done-together-not-for-sigrun.md](is-done-together-not-for-sigrun.md) — IS tvoříme rovnou pořádně + ověřujeme; NIKDY „draft pro Sigrún"
+- [paste-sql-explicitly.md](paste-sql-explicitly.md) — když owner má spustit SQL, vlož přesné SQL do zprávy; žádné „jako minule"
 - [runar-project.md](runar-project.md) — stack, soubory, tier tabulka, DB schéma, edge functions
 - [tree-of-life.md](tree-of-life.md) — Tree design (branch objekt, Gathering, AETTY, vizuál, Yggdrasil)
 - [runar-patterns.md](runar-patterns.md) — Pattern detection design (ZASTARALÉ, probrat)
