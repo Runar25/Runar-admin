@@ -66,6 +66,9 @@
     var countEl = document.getElementById('rd-count');
     if (countEl) countEl.textContent = rows.length ? (rows.length + ' shown') : '';
     if (!rows.length) { list.innerHTML = '<div class="empty">No readings.</div>'; return; }
+    function inRow(lbl, val) {
+      return val ? '<div class="rd-in"><span class="rd-in-l">' + lbl + '</span> ' + esc(val) + '</div>' : '';
+    }
     list.innerHTML = rows.map(function (r) {
       var isSpread = r.area === 'spread';
       var when  = (r.drawn_at || '').replace('T', ' ').slice(0, 16);
@@ -75,17 +78,28 @@
       var who   = esc(r.user_name || (r.user_id ? r.user_id.slice(0, 8) : '—'));
       var tier  = r.user_tier ? '<span class="rd-tier">' + esc(r.user_tier) + '</span>' : '';
       var tester = r.is_tester ? '<span class="rd-tester">TESTER</span>' : '';
-      // Single: reading text is in short_text. Spread: short_text = rune display line,
-      // deep_text = the reading. Show the full text either way (this is for analysis).
+      // Single: reading text is in short_text. Spread: short_text = rune display, deep_text = reading.
       var bodyTxt  = isSpread ? (r.deep_text || '') : (r.short_text || '');
       var runeLine = isSpread ? esc(r.short_text || '') : '';
-      var meta = [
-        r.area ? 'area: ' + esc(r.area) : '',
-        r.seeking ? 'seeking: ' + esc(r.seeking) : '',
-        r.life_rune ? 'life: ' + esc(r.life_rune) : '',
-        r.credits_used ? 'credit' : 'free'
-      ].filter(Boolean).join(' · ');
-      var q = r.question ? '<div class="rd-q">❝ ' + esc(r.question) + ' ❞</div>' : '';
+
+      // Every input the user picked, shown clearly (area is the 'spread' marker for spreads -> skip).
+      var inputs = [
+        inRow('Area', isSpread ? null : r.area),
+        inRow('Seeking', r.seeking),
+        inRow('Intention', r.intention),
+        inRow('Question', r.question),
+        inRow('Life rune', r.life_rune)
+      ].filter(Boolean).join('');
+      var inputsHtml = inputs ? '<div class="rd-inputs">' + inputs + '</div>' : '';
+
+      // Ask Rúnar follow-up exchange(s) captured with the reading.
+      var fu = Array.isArray(r.follow_up) ? r.follow_up : [];
+      var fuHtml = fu.length ? '<div class="rd-followup"><div class="rd-fu-lbl">✦ ASK RÚNAR</div>' +
+        fu.map(function (x) {
+          return '<div class="rd-fu"><div class="rd-fu-q">❝ ' + esc(x.q || '') + ' ❞</div>' +
+                 '<div class="rd-fu-a">' + esc(x.a || '') + '</div></div>';
+        }).join('') + '</div>' : '';
+
       return '<div class="rd-item">' +
         '<div class="rd-head">' +
           '<span class="rd-glyph">' + glyph + '</span>' +
@@ -95,9 +109,10 @@
           '<span class="rd-when">' + esc(when) + '</span>' +
         '</div>' +
         (runeLine ? '<div class="rd-runes">' + runeLine + '</div>' : '') +
-        q +
+        inputsHtml +
         '<div class="rd-text">' + esc(bodyTxt) + '</div>' +
-        (meta ? '<div class="rd-meta">' + meta + '</div>' : '') +
+        fuHtml +
+        '<div class="rd-meta">' + (r.credits_used ? 'credit' : 'free') + '</div>' +
       '</div>';
     }).join('');
   }

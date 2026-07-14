@@ -119,10 +119,12 @@ async function _generateReading() {
   // Only for a logged-in user saving their own reading; null = do not save.
   var _journal = (currentUser && _readingMode === 'mine') ? {
     kind: 'single', rune_name: drawn.n, rune_glyph: drawn.g, lang: lang,
-    area: u.area || null, seeking: u.seeking || null, question: u.question || null,
-    life_rune: (u.lifeRune && u.lifeRune.n) || null   // credits_used derived server-side
+    area: u.area || null, seeking: u.seeking || null, intention: u.intention || null,
+    question: u.question || null, life_rune: (u.lifeRune && u.lifeRune.n) || null
   } : null;
+  _lastReadingId = null;
   const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens, shouldUseCredit(), SPREAD_COSTS.single.credits, _journal);
+  if (res && res.reading_id) _lastReadingId = res.reading_id;
   if (res.error === 'rate_limited') {
     if (_rdLoadEl) _rdLoadEl.style.display = 'none';
     if (_pL1) _pL1.classList.remove('pulsing');
@@ -487,6 +489,7 @@ async function readRune() {
 
 // ─── Ask Rúnar — follow-up Q&A (Premium, one question per reading) ───────────
 var _askUsed = false;
+var _lastReadingId = null;   // id of the last saved reading — links an Ask Runar follow-up to it
 var _askPhIdx = -1;
 function _askPlaceholder() {
   var phs = (typeof UI_TEXT !== 'undefined' && UI_TEXT[lang] && UI_TEXT[lang].ask_placeholders)
@@ -525,7 +528,9 @@ async function askRunar() {
   setSt('ask-status', '');
   var sys = buildSysPrompt(activeChar, lang);
   var prompt = buildAskPrompt(reading, q, runes, lang, corrections);
-  var res = await callProxy(sys, prompt, 400, shouldUseCredit(), SPREAD_COSTS.single.credits); // follow-up = 2-3 sentences
+  var _askJournal = (currentUser && _readingMode === 'mine' && _lastReadingId)
+    ? { kind: 'ask', reading_id: _lastReadingId, question: q } : null;
+  var res = await callProxy(sys, prompt, 400, shouldUseCredit(), SPREAD_COSTS.single.credits, _askJournal); // follow-up = 2-3 sentences
   if (res.error) {
     if (btn) { btn.disabled = false; btn.textContent = t('ask_btn'); }
     setSt('ask-status', _readingErrMsg(res.error === 'rate_limited' ? 'rate_limited' : (res.error === 'no_credits' ? 'no_credits' : '')), 'err');
@@ -742,11 +747,13 @@ async function _generateSpreadReading(o) {
   var _runeDisplay = o.runes.map(function (r) { return ((r.g || '') + ' ' + (r.n || '').toUpperCase()).trim(); }).join(' · ');
   var _journalS = (currentUser && _readingMode === 'mine') ? {
     kind: 'spread', rune_name: o.kind, rune_glyph: '✦', lang: lang,
-    area: 'spread', seeking: u.seeking || null, question: u.question || null,
-    life_rune: (u.lifeRune && u.lifeRune.n) || null,   // credits_used derived server-side
+    area: 'spread', seeking: u.seeking || null, intention: u.intention || null,
+    question: u.question || null, life_rune: (u.lifeRune && u.lifeRune.n) || null,
     rune_display: _runeDisplay
   } : null;
+  _lastReadingId = null;
   var res = await callProxy(sys, prompt, o.tokens, shouldUseCredit(), o.credits, _journalS);
+  if (res && res.reading_id) _lastReadingId = res.reading_id;
 
   if (rdLoad) rdLoad.style.display = 'none';
   if (pL1) pL1.classList.remove('pulsing');

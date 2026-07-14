@@ -503,36 +503,54 @@ serve(async (req) => {
     // before it could receive the response (charged <=> journaled). The client passes the
     // reading meta; the model text is composed + stored here. Non-fatal: a save failure
     // must never break a reading that already succeeded (logged for the keeper).
+    // The client sends a `journal` either for a reading (insert) or an Ask Rúnar follow-up
+    // (update) — so the stored record carries EVERYTHING, incl. the Ask Q&A + intention.
+    let readingId: string | null = null;
     if (journal && userId) {
       try {
-        const isSpread = journal.kind === "spread";
-        const { error: journalErr } = await sb().from("readings").insert({
-          user_id:      userId,
-          rune_name:    journal.rune_name  ?? null,
-          rune_glyph:   journal.rune_glyph ?? null,
-          lang:         journal.lang       ?? "en",
-          short_text:   isSpread ? (journal.rune_display ?? "") : composeReading(text),
-          deep_text:    isSpread ? composeReading(text) : "",
-          area:         journal.area       ?? null,
-          seeking:      journal.seeking    ?? null,
-          question:     journal.question   ?? null,
-          life_rune:    journal.life_rune  ?? null,
-          // Credit truth is server-side: the paid plan is the only one that spends a credit.
-          // Do NOT trust a client-supplied flag here (it is forgeable and can desync).
-          credits_used: deductPlan.kind === "paid",
-        });
-        // supabase-js resolves DB/constraint errors as { error } — it does NOT throw — so the
-        // try/catch alone would miss them. Check it so a charged-but-not-journaled event is at
-        // least visible to the keeper (edge logs). The charge stays; masking it would be a
-        // free-reading exploit (a crafted journal could force the insert to fail).
-        if (journalErr) console.error("journal insert failed:", journalErr.message);
+        if (journal.kind === "ask") {
+          // Ask Rúnar follow-up — append the Q&A to the parent reading's follow_up array.
+          const rid = journal.reading_id;
+          if (rid) {
+            const { data: cur } = await sb().from("readings")
+              .select("follow_up").eq("id", rid).eq("user_id", userId).maybeSingle();
+            const arr = Array.isArray(cur?.follow_up) ? cur.follow_up : [];
+            arr.push({ q: journal.question ?? "", a: composeReading(text) });
+            const { error: fuErr } = await sb().from("readings")
+              .update({ follow_up: arr }).eq("id", rid).eq("user_id", userId);
+            if (fuErr) console.error("follow_up update failed:", fuErr.message);
+          }
+        } else {
+          const isSpread = journal.kind === "spread";
+          const { data: ins, error: journalErr } = await sb().from("readings").insert({
+            user_id:      userId,
+            rune_name:    journal.rune_name  ?? null,
+            rune_glyph:   journal.rune_glyph ?? null,
+            lang:         journal.lang       ?? "en",
+            short_text:   isSpread ? (journal.rune_display ?? "") : composeReading(text),
+            deep_text:    isSpread ? composeReading(text) : "",
+            area:         journal.area       ?? null,
+            seeking:      journal.seeking    ?? null,
+            intention:    journal.intention  ?? null,
+            question:     journal.question   ?? null,
+            life_rune:    journal.life_rune  ?? null,
+            // Credit truth is server-side (a forgeable client flag is ignored).
+            credits_used: deductPlan.kind === "paid",
+          }).select("id").maybeSingle();
+          // supabase-js resolves DB/constraint errors as { error } — it does NOT throw — check it
+          // so a charged-but-not-journaled event is visible (a crafted journal that forces a
+          // failure must not skip the charge — that would be a free-reading exploit).
+          if (journalErr) console.error("journal insert failed:", journalErr.message);
+          else if (ins?.id) readingId = ins.id;
+        }
       } catch (e) {
-        console.error("journal insert threw:", (e as Error).message);
+        console.error("journal op threw:", (e as Error).message);
       }
     }
 
     return json({
       text,
+      ...(readingId ? { reading_id: readingId } : {}),
       ...(sessionState ? { session_state: sessionState } : {}),
       ...(deductPlan.kind === "paid"
         ? { credits_remaining: creditsRemaining ?? Math.max(0, creditsBalance - deductPlan.cost) }

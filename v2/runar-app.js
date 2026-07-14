@@ -1110,7 +1110,7 @@ async function callProxy(sys, prompt, maxTokens, use_credit = false, credit_cost
       updateAuthUI();
     }
 
-    return { text: data.content?.[0]?.text || data.text || '' };
+    return { text: data.content?.[0]?.text || data.text || '', reading_id: data.reading_id };
   } catch (e) { console.error('callProxy:', e && e.message); return { error: 'network_error' }; }
 }
 
