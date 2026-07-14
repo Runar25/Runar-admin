@@ -44,7 +44,7 @@ serve(async (req) => {
     const limit = Math.min(Math.max(Number(body.limit) || 100, 1), 500);
 
     let q = sb.from("readings")
-      .select("id,user_id,rune_name,rune_glyph,lang,short_text,deep_text,area,aol,seeking,intention,question,life_rune,follow_up,prompt_version,credits_used,drawn_at")
+      .select("id,user_id,rune_name,rune_glyph,lang,short_text,deep_text,area,aol,seeking,intention,question,life_rune,follow_up,prompt_version,address,credits_used,drawn_at")
       .order("drawn_at", { ascending: false })
       .limit(limit);
     if (lang && lang !== "all") q = q.eq("lang", lang);

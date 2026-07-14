@@ -83,12 +83,14 @@
       var runeLine = isSpread ? esc(r.short_text || '') : '';
 
       // Every input the user picked, shown clearly (area is the 'spread' marker for spreads -> skip).
+      var _addr = { kk: 'hann', kvk: 'hún', hk: 'hán' }[r.address] || r.address;
       var inputs = [
         inRow('Area', r.aol || (isSpread ? null : r.area)),
         inRow('Seeking', r.seeking),
         inRow('Intention', r.intention),
         inRow('Question', r.question),
-        inRow('Life rune', r.life_rune)
+        inRow('Life rune', r.life_rune),
+        inRow('Address', r.address ? _addr : null)
       ].filter(Boolean).join('');
       var inputsHtml = inputs ? '<div class="rd-inputs">' + inputs + '</div>' : '';
 
