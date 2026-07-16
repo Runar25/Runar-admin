@@ -492,3 +492,16 @@
 - **Affected doc(s):** RUNAR_BACKLOG.md (audit — položka odškrtnuta), MEMORY.md, tento záznam.
 - **Reality note:** **§19 lekce naživo:** první kontrola přes starý `golden_dump.js` hlásila FALSE MISS — jeho fixture posílá `seeking:'clarity'` (malé → `SEEKS.indexOf` = -1) a životní runu, která JE v taženém poolu. Fixture musí cvičit **pravou hranici reálnými hodnotami** (§19.1). Nový `scripts/verify_contract_wiring.js` staví REÁLNÉ prompty ve vm sandboxu a asertuje všechny 4 direktivy v single + 4 spreadech × EN/IS + že se linsa správně stáhne → **smoke ⑧** (8/8). IS ověřené námi přes BÍN: `rúnurnar`/`rúnunum` = lemma rúna/rún; GreynirCorrect návrhy `rúðurnar` (okenní tabulky) a `rútunum` (autobusy) = false-positives, stejná třída jako lestur/lest a hrekja/hrakinn. Reading prompt = client-built → jen push. Commit 39bf41d, SW v195.
 - **Reversibility:** easy (revert; verze zpět na v0.6).
+
+---
+
+## 2026-07-16 — Monthly cast cap 50/75 vynucen v proxy; Ask Rúnar se nepočítá
+
+- **Typ:** implementation
+- **Co se změnilo:** claude-proxy počítá a vynucuje měsíční limit placených tierů (standard 50 / premium 75 castů). Nové sloupce `user_profiles.month_units` + `month_key` ('YYYY-MM'); jiný měsíc = 0 použitých → **limit se resetuje sám, bez cronu a bez měsíční úlohy**. Odečet sedí u existujícího atomického odečtu kreditů. Překročení → 402 `monthly_limit` → `err_monthly_limit` (EN+IS). Smoke ⑨ (`scripts/verify_monthly_limits.js`) tvrdí `TIERS.*.monthly_readings == MONTHLY_LIMITS`.
+- **Proč:** Předplatné se prodávalo jako 50/75 castů měsíčně, ale proxy je nikdy nepočítala — předplatitel mohl čerpat neomezeně. Kapacita = přímý náklad (hlas ElevenLabs + model).
+- **Klíčové rozhodnutí — Ask Rúnar NENÍ cast:** follow-up visí na čtení, které se už započítalo, je omezený na 1 na čtení (`_askUsed`) a předplatitele dnes nestojí nic. Počítat ho by **tiše půlilo zaplacené předplatné**. Ask se proto hlásí `mode:'ask'` (týž kanál, jakým `runar-gathering.js` posílá `ceremonial`) — **ne** odvozením z journal payloadu: ten je `null`, když se čtení neukládá ('someone' u netestera), takže by se ask jedněm počítal a druhým ne (§18: „je to ask" ≠ „uložilo se to").
+- **Fail-open:** chyba čtení počítadla → čtení projde + server-side log. Zablokovat platícího předplatitele kvůli výpadku infry je horší než jedno nezapočítané čtení. (Odečet kreditů zůstává bezpodmínečný — tam by fail-open byl exploit.)
+- **Reality note:** Kredity RS = per typ čtení (SPREAD_COSTS); měsíční limit počítá TYTÉŽ jednotky (Yggdrasil = 5 z limitu). Proxy je Deno a nemůže importovat klientský config → kopie limitu je nevyhnutelná; poctivost drží smoke ⑨ (ověřeno záměrným rozejitím obou stran — check zčervenal). `mode` z `callProxy` se dosud vůbec neposílal (byl vždy `''`); teď se posílá.
+- **Affected doc(s):** CLAUDE.md (DB sloupce), RUNAR_BACKLOG.md, MEMORY.md, sql/2026-07-16_monthly_cap.sql
+- **Reverzibilita:** snadná (odstranit blok eligibility v proxy; sloupce mohou zůstat).

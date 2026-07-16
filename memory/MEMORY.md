@@ -24,8 +24,8 @@ Klíčové soubory pro Read (lokální):
 
 ## Aktuální stav projektu (2026-07-06)
 
-### SW verze: v195
-### Poslední commit: 39bf41d
+### SW verze: v196
+### Poslední commit: 1c584c3
 
 ### Klíčová rozhodnutí (platná)
 - RS: 1 free cast při registraci, žádný weekly drip, ŽÁDNÝ měsíční reset (model B). Jediný signál = DB `free_balance` (default 1). 1 free MÁ hlas. Pak vše za rune readings (kredity).
@@ -43,6 +43,7 @@ Klíčové soubory pro Read (lokální):
 - Fyzická cesta: Visitor 1 + Rune Card 1 + RS 1 = 3 zdarma celkem.
 - Správná jména run: Perth (ne Perthro), Berkana (ne Berkano), Othila (ne Othala), Kenaz.
 - **Produkční model čtení = Opus 4.8** (claude-opus-4-8). **Sonnet 5 (NOVÝ) přeměřen 2026-07-10** slepým evalem (single+Norns, 3 porotci: gramatik/básník/rodilé ucho) — **Opus vyhrál 6:0**. Gramatika ≈ remíza (Sonnetova jediná tvrdá chyba: „löngu"→„langa ljósinu"), ale Opus vyhrál **poetický hlas** (jádro produktu); Sonnet navíc porušil personu (otevřel jménem „Kuky,", použil zakázané „Ferðalag") + **slepil Norns 3 runy do 1 bloku** (rozbil by spread). **Už to NENÍ remíza** (ta byla se starým Sonnet 4.5). Náklad dominuje ElevenLabs hlas, ne model → −40 % Sonnetu irelevantní. **Overload fallback chain (2026-07-10, claude-proxy): Opus 4.8 → Opus 4.7 → Sonnet 5.** Sonnet je jen poslední záchrana při přetížení (429/5xx po retry), NE primární — normální čtení běží na 4.8. `callClaudeWithRetry` (3× backoff) + fallback loop; 4xx nepropadá. Deploy: `supabase functions deploy claude-proxy --project-ref pmitxjvkeovijreepror --no-verify-jwt`.
+- **Monthly cap 50/75 (2026-07-16)**: claude-proxy počítá a vynucuje měsíční limit placených tierů (`MONTHLY_LIMITS` = zrcadlo `TIERS.*.monthly_readings`; smoke ⑨ `verify_monthly_limits.js` to hlídá — ověřeno rozejitím obou stran). Sloupce `user_profiles.month_units` + `month_key` ('YYYY-MM'); jiný měsíc = 0 → **reset sám, bez cronu**. Překročení → 402 `monthly_limit` → `err_monthly_limit`. **Ask Rúnar se NEPOČÍTÁ** (není cast: visí na už započítaném čtení, 1 na čtení; počítat = tiše půlit předplatné) — hlásí se `mode:'ask'` přes `callProxy` (týž kanál jako `ceremonial`), NE odvozením z journalu (ten je null u neukládaných čtení → počítalo by se nespravedlivě). **Fail-open** při chybě čtení počítadla (odečet kreditů zůstává bezpodmínečný). SQL: `sql/2026-07-16_monthly_cap.sql`. Detail: RUNAR_DECISIONS.md 2026-07-16.
 - **Voice profiles**: ACTIVE_VOICE_PROFILE='focused' (produkce). Revert = 'lyrical'.
 - **Journal save = SERVER-SIDE (2026-07-13)**: čtení ukládá claude-proxy atomicky s odečtem kreditu (klient posílá journal META přes callProxy; saveReading/saveSpreadReading SMAZÁNY, §18). Řeší charged-but-lost při app-switchi (kredit stržen server-side, ale klient umřel před client-save). Ukládá SLOŽENÝ text (composeReading = věrné zrcadlo _parseSegments; smoke ⑦ scripts/verify_compose_mirror.js). credits_used + life_rune server-authoritative. Odečet bezpodmínečný (fail-open = exploit). Self-XSS journal renderu → **HOTOVO** (escapeHtml/jsAttr v utils, renderJournal escapuje user pole, commit 3d31a5e; shrine user-čtení nerenderuje = žádná admin plocha). area='spread' marker zůstává. Detail: RUNAR_DECISIONS.md 2026-07-13.
 - **Shrine Readings viewer (2026-07-13)**: admin záložka „📜 READINGS" ve shrine — vidí VŠECHNA čtení uživatelů (kvalita, testeři) bez screenshotů. Edge fce `list-readings` (admin-gated service-role, zrcadlo list-reports) + `runar-readings-admin.js` (karty, filtr lang, escapeHtml). VIEW-ONLY; další fáze = flag/annotate + obohatit řádek (prompt_version, rune order, char_count — eval #1) + is-grammar-qa NATIVE-EYE fronta. Cíl = sbírat/analyzovat kvalitativní data čtení od testerů (chyby neviditelné běžnému useru). Detail: RUNAR_DECISIONS.md 2026-07-13.
@@ -84,7 +85,7 @@ Kořen driftu = duplikace. Jazyk/tier/spread varianty = DATA (RP_* packy, config
 ### TODO
 🔴 **Kritické (blokuje prodej):** Resend SMTP (magic link z agndofa.is) · Shopify webhook (auto upgrade po nákupu) · DPA Supabase (čeká na e-mail; přístup → RUNAR_PRIVACY.md)
 🟡 **Důležité:** standard tier — způsob nákupu ("COMING SOON") + reálný checkout · Privacy Policy na agndofa.is (draft EN+IS + legal-basis = RUNAR_PRIVACY.md; IS→Sigrún, právní review) · runar-help.html inline JS (zbývající hardcoded strings) · **DB sloupec** `address_gender text default 'hk'` (owner v SQL editoru)
-🟢 **Střední:** SSE streaming · Monthly limit 50/75 enforcement v claude-proxy · Weekly drip odstranit z proxy · Shrine audit
+🟢 **Střední:** SSE streaming · Weekly drip odstranit z proxy · Shrine audit
 
 ## Index souborů
 - [working-style.md](working-style.md) — workflow pravidla, Python skripty, IS primární jazyk, verifikace, IS gramatika

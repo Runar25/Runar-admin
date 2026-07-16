@@ -61,7 +61,7 @@
 
 ### 🟠 CODE — odblokované, v pořadí
 - [x] **Reading contract → 4 spready** — HOTOVO 2026-07-14 (commit 39bf41d, prompt v0.7, smoke ⑧ hlídá). Bylo: ← `_lensContext`/`_domainContext`/`_registerContext` se volají JEN v single (character.js:831-833). Spready dostanou holé labely („Seeking: Clarity") bez direktiv → SEEKING stance rule + Confirmation reframe (v0.6) na ně NEJDOU. Dodělává copy-doc #5.
-- [ ] **Monthly cap 50/75 v claude-proxy** — standard/premium projdou bez počítání → předplatitel může přečerpat. Jednotka = reading-units (`SPREAD_COSTS`), ne runy. Patří server-side k atomickému odečtu.
+- [x] **Monthly cap 50/75 v claude-proxy** — HOTOVO 2026-07-16 (1c584c3, SW v196). `MONTHLY_LIMITS` + `month_units`/`month_key` na user_profiles; reset porovnáním `month_key` (bez cronu). Ask Rúnar = NEpočítá se (není cast, `mode:'ask'`). Fail-open při chybě čtení počítadla. Smoke ⑨ hlídá config==proxy. SQL: `sql/2026-07-16_monthly_cap.sql`.
 - [ ] **Vrátit `err_monthly_limit`** do `_readingErrMsg` — smazáno jako dead (2026-07-05); vrátit SPOLU s capem, jinak capnutý user dostane generickou chybu.
 - [ ] **Image pool** `RUNE_IMAGE_POOLS` + `_runeImagery` (③, odblokované prompt_version). Vzor = `SEASON_POOLS`. Floor-not-ceiling, per-čtení user injekce. Single první → měřit → spready až podle dat. Důkaz: Isa 5/5 zamrzlá voda = vada zásoby. Obsah: `RUNE_IMAGE_POOLS_draft.md` (EN hotové, IS napíšeme + ověříme sami).
 - [ ] **„already/þegar" ban** — nejlevnější fix (8×), motor cold-readingu. §19 past: výskyty v character.js jsou instrukce PRO model, ne output → ban musí mířit na output (prompt rule + output check), ne source ban.

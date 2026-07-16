@@ -167,7 +167,7 @@ ADMIN: kukula@agndofa.is, info@agndofa.is → automaticky premium. VŽDY testova
 ## DB — user_profiles sloupce
 ```
 id, name, lang, tier, credits_balance, created_at,
-free_balance (int), drip_week (text),
+free_balance (int), drip_week (text), month_units (int), month_key (text),
 dob_day, dob_month, dob_year (int),
 tree_name (text), life_rune_number (int), life_rune_text (text), life_rune_lang (text)
 ```
