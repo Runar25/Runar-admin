@@ -1,0 +1,81 @@
+// §19 seed-and-assert: the reading contract (life-rune lens · area domain · seeking register
+// · priority tie-breaker) must reach the ACTUAL generated prompt for single AND all 4 spreads,
+// in both languages. Guards the 2026-07-14 fix, where the contract was wired into single only
+// and the v0.6 SEEKING stance rule silently never reached a spread.
+//
+// Uses REAL input values (an exact SEEKS option; a life rune that is NOT among the drawn runes)
+// — the whole point: a fixture with fake data (seeking:'clarity' lowercase) reports a false MISS.
+//   node scripts/verify_contract_wiring.js
+const fs = require('fs');
+const vm = require('vm');
+const DIR = 'C:/Users/zkuku/Downloads/Runar-admin/v2/';
+const files = ['runar-config.js', 'runar-runes.js', 'runar-utils.js', 'runar-character.js'];
+
+const M = {}; Object.getOwnPropertyNames(Math).forEach(k => { M[k] = Math[k]; }); M.random = () => 0.5;
+const bag = {};
+const sandbox = {
+  Math: M, JSON, Date, console,
+  setTimeout: () => 0, clearTimeout: () => {},
+  localStorage: { getItem: k => (k in bag ? bag[k] : null), setItem: (k, v) => { bag[k] = String(v); }, removeItem: k => { delete bag[k]; } },
+  document: { getElementById: () => null, querySelector: () => null, querySelectorAll: () => [], createElement: () => ({ style: {}, classList: { add() {}, remove() {}, toggle() {} }, appendChild() {} }) },
+};
+sandbox.window = sandbox; sandbox.self = sandbox; sandbox.globalThis = sandbox;
+
+let code = 'var lang="en"; var userGender="hk"; var corrections=[]; var currentUser=null; var userName="";\n';
+for (const f of files) code += '\n/* ' + f + ' */\n' + fs.readFileSync(DIR + f, 'utf8') + '\n;\n';
+
+code += `
+var _OUT = {};
+function _R(n){ return RUNES.find(function(r){ return r.n===n; }); }
+// REAL values: seeking must be an exact SEEKS entry, life rune must NOT be among the drawn.
+var pool = ['Uruz','Thurisaz','Ansuz','Raidho','Kenaz','Gebo','Wunjo','Hagalaz','Isa'].map(_R);
+var drawn = _R('Raidho');
+['is','en'].forEach(function(L){
+  lang = L;
+  var u = {
+    name: 'Anna',
+    area: (AREAS[L] || AREAS.en)[1],
+    seeking: (SEEKS[L] || SEEKS.en)[1],   // exact option — 'Clarity' / 'Skýrleiki'
+    question: '',
+    lifeRune: _R('Fehu')                  // deliberately not in pool
+  };
+  _OUT['single_'+L]    = buildReadingPrompt(u, drawn, L, []);
+  _OUT['norns_'+L]     = buildNornsPrompt(u, pool.slice(0,3), L, []);
+  _OUT['kriz_'+L]      = buildKrizPrompt(u, pool.slice(0,5), L, []);
+  _OUT['horseshoe_'+L] = buildHorseshoePrompt(u, pool.slice(0,7), L, []);
+  _OUT['yggdrasil_'+L] = buildYggdrasilPrompt(u, pool, L, []);
+  // life rune AMONG the drawn runes -> the lens must step aside (it cannot be lens and subject)
+  var uIn = { name:'Anna', area:u.area, seeking:u.seeking, question:'', lifeRune:_R('Uruz') };
+  _OUT['norns_lifein_'+L] = buildNornsPrompt(uIn, pool.slice(0,3), L, []);
+});
+`;
+vm.createContext(sandbox);
+vm.runInContext(code, sandbox, { filename: 'contract.js' });
+const O = sandbox._OUT;
+
+const PARTS = {
+  lens:     ['is the lens, not the subject', 'er linsan, ekki viðfangsefnið'],
+  domain:   ['This reading is about:', 'Þessi lestur snýst um:'],
+  register: ['This is a leaning, not an order', 'Þetta er tilhneiging, ekki pöntun'],
+  priority: ['do not gather into one natural image', 'rennur ekki saman í eina náttúrlega mynd'],
+};
+const has = (txt, k) => PARTS[k].some(p => txt.includes(p));
+const BUILDERS = ['single', 'norns', 'kriz', 'horseshoe', 'yggdrasil'];
+let fail = 0;
+
+for (const L of ['en', 'is']) {
+  for (const b of BUILDERS) {
+    const txt = O[b + '_' + L] || '';
+    const missing = Object.keys(PARTS).filter(k => !has(txt, k));
+    if (missing.length) { fail++; console.log('FAIL  ' + b + '_' + L + '  missing: ' + missing.join(', ')); }
+    else console.log('OK    ' + b + '_' + L + '  lens+domain+register+priority');
+  }
+  // the lens must NOT appear when the life rune is itself one of the drawn runes
+  const t = O['norns_lifein_' + L] || '';
+  if (has(t, 'lens')) { fail++; console.log('FAIL  norns_lifein_' + L + '  lens present though the life rune was drawn'); }
+  else console.log('OK    norns_lifein_' + L + '  lens correctly steps aside');
+}
+
+console.log(fail === 0 ? '\nALL OK — contract reaches single + all 4 spreads, both languages.'
+                       : '\n' + fail + ' FAIL');
+process.exit(fail ? 1 : 0);

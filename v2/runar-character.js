@@ -504,11 +504,38 @@ function _intentionContext(intention, lang) {
 // --- READING CONTRACT HELPERS (single source; shared by reading builders) ---
 // Turn passive context into active shaping directives (contract 2026-07-09):
 //   life rune = quiet LENS (subtext) . area = DOMAIN (must land) . seeking = REGISTER.
+// drawn = one rune (single) or an array of runes (spread). The life rune can never be both
+// the lens and a subject of the same reading, so it steps aside when it was itself drawn.
 function _lensContext(life, drawn, lang) {
-  if (!life || (drawn && life.n === drawn.n)) return '';
-  if (lang === 'is')
-    return 'LÍFSRÚNIN ' + rn(life) + ' er linsan, ekki viðfangsefnið — láttu hana móta HVERNIG þú lest ' + rn(drawn) + '. Nefndu hana aldrei og útskýrðu hana ekki; láttu hana lita lesturinn neðan frá. Dragðu aðeins skýra tengingu milli rúnanna tveggja fram ef hún kemur af sjálfu sér.';
-  return 'The life rune ' + rn(life) + ' is the lens, not the subject — let it shape HOW you read ' + rn(drawn) + '. Never name or explain it; let it colour from underneath. Draw an explicit link between the two runes only if one arises naturally.';
+  if (!life) return '';
+  var list = (Array.isArray(drawn) ? drawn : [drawn]).filter(Boolean);
+  if (!list.length) return '';
+  if (list.some(function (r) { return r.n === life.n; })) return '';
+  var many = list.length > 1;
+  if (lang === 'is') {
+    var subjIs = many ? 'rúnurnar sem dregnar voru' : rn(list[0]);
+    var tailIs = many ? 'Dragðu aðeins skýra tengingu við þær fram ef hún kemur af sjálfu sér.'
+                      : 'Dragðu aðeins skýra tengingu milli rúnanna tveggja fram ef hún kemur af sjálfu sér.';
+    return 'LÍFSRÚNIN ' + rn(life) + ' er linsan, ekki viðfangsefnið — láttu hana móta HVERNIG þú lest ' + subjIs + '. Nefndu hana aldrei og útskýrðu hana ekki; láttu hana lita lesturinn neðan frá. ' + tailIs;
+  }
+  var subjEn = many ? 'the runes that were drawn' : rn(list[0]);
+  var tailEn = many ? 'Draw an explicit link to them only if one arises naturally.'
+                    : 'Draw an explicit link between the two runes only if one arises naturally.';
+  return 'The life rune ' + rn(life) + ' is the lens, not the subject — let it shape HOW you read ' + subjEn + '. Never name or explain it; let it colour from underneath. ' + tailEn;
+}
+
+// Tie-breaker when life rune + area + seeking do not gather into one image. Was duplicated
+// inside RP_SINGLE only (§18) — now ONE helper serving single + all spreads.
+function _priorityContext(drawn, lang) {
+  var list = (Array.isArray(drawn) ? drawn : [drawn]).filter(Boolean);
+  if (!list.length) return '';
+  var many = list.length > 1;
+  if (lang === 'is') {
+    var subjIs = many ? 'rúnunum sem dregnar voru' : rn(list[0]);
+    return 'Ef þetta rennur ekki saman í eina náttúrlega mynd: Haltu ' + subjIs + ' fremst, virtu leitina og sviðið, og láttu lífsrúnu-linsuna hopa — hún má hverfa alveg fremur en að vera þvinguð. Aldrei hlaða þessu upp sem aðskildum staðhæfingum.';
+  }
+  var subjEn = many ? 'the runes that were drawn' : rn(list[0]);
+  return 'If these do not gather into one natural image: keep ' + subjEn + ' in front, honour the seeking and the area, and let the life-rune lens recede — it may vanish entirely rather than be forced. Never stack them as separate statements.';
 }
 function _domainContext(area, lang) {
   if (!area) return '';
@@ -777,7 +804,6 @@ var RP_SINGLE = {
     qBranch:function(rune,g,q){ return 'Svaraðu spurningunni: "' + q + '" í gegnum ' + rune + ' (' + g + ') — í myndum og táknmáli, ekki ráðgjöf. Nefndu ' + rune + ' einu sinni, fléttað náttúrlega inn. Talaðu um það sem liggur undir spurningunni. Enda með einni opinni spurningu sem nær dýpra.'; },
     noqBranch:function(rune,g,world){ return 'Byrjaðu á ' + rune + ' (' + g + ') — láttu táknræn gæði þess (' + world + ') koma fram í myndum, ekki útskýringu. Nefndu ' + rune + ' einu sinni, fléttað náttúrlega inn. Ein skýr innsýn nægir — ekki troða öllu inn. Enda með mjög stuttri, opinni spurningu — fáein orð.'; },
     closing:function(name){ return 'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. Ávarpaðu ' + name + ' einu sinni, fléttað náttúrlega — aldrei sem fyrsta orð. Haltu þig innan orðafjöldans — stuttar setningar, ekkert uppfyllingarefni.'; },
-    priority:function(drawn){ return 'Ef þetta rennur ekki saman í eina náttúrlega mynd: haltu ' + drawn + ' fremst, virtu leitina og sviðið, og láttu lífsrúnu-linsuna hopa — hún má hverfa alveg fremur en að vera þvinguð. Aldrei hlaða þessu upp sem aðskildum staðhæfingum.'; },
     json:'Skilaðu EINGÖNGU þessu JSON fylki, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(lesturinn nákvæmlega eins og fyrirmælin að ofan segja, einn samfelldur texti)"}]',
   },
   en: {
@@ -793,7 +819,6 @@ var RP_SINGLE = {
     qBranch:function(rune,g,q){ return 'Open with ' + rune + ' (' + g + ') answering: "' + q + '" — through image and symbol, not advice. Mention ' + rune + ' by name once, woven naturally. Speak to what lies beneath the question. End with one open question that reaches deeper.'; },
     noqBranch:function(rune,g,world){ return 'Open with ' + rune + ' (' + g + ') — let its quality (' + world + ') arrive through image, not explanation. Mention ' + rune + ' by name once, woven naturally. One clear insight is enough — do not pack everything in. End with a very short open question — a few words.'; },
     closing:function(name){ return 'One paragraph. No breaks. No labels. Address ' + name + ' once, woven naturally — never as the opening word. Stay within the word count — short sentences, no filler. '; },
-    priority:function(drawn){ return 'If these do not gather into one natural image: keep ' + drawn + ' in front, honour the seeking and the area, and let the life-rune lens recede — it may vanish entirely rather than be forced. Never stack them as separate statements.'; },
     json:'Output format — return ONLY this JSON array, nothing before or after: [{"rune": "(the rune name)", "text": "(the reading exactly as instructed above, one flowing paragraph)"}]',
   },
 };
@@ -832,7 +857,7 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     u.area ? _domainContext(u.area, lang) : '',
     u.seeking ? _registerContext(u.seeking, lang) : '',
     hasQ ? S.qBranch(rn(drawn), drawn.g, u.question) : S.noqBranch(rn(drawn), drawn.g, worldRef),
-    (life || u.area || u.seeking) ? S.priority(rn(drawn)) : '',
+    (life || u.area || u.seeking) ? _priorityContext(drawn, lang) : '',
     S.closing(u.name) + (S.langInstr ? S.langInstr : '') + getCorrPrompt(lang, corrections),
     _addressContext(lang),
     S.json,
@@ -952,6 +977,10 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
     runesBlock, '',
     _seasonalImagery(lang, runes),
     _describeRule(lang),
+    _lensContext(u.lifeRune, runes, lang),
+    u.area ? _domainContext(u.area, lang) : '',
+    u.seeking ? _registerContext(u.seeking, lang) : '',
+    (u.lifeRune || u.area || u.seeking) ? _priorityContext(runes, lang) : '',
   ].concat(S.instructions(ctrName)).concat([
     S.closing(u.name) + (S.langInstr ? ' ' + S.langInstr : '') + getCorrPrompt(lang, corrections),
     _addressContext(lang),
@@ -1023,6 +1052,10 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
     runesBlock, '',
     _seasonalImagery(lang, runes),
     _describeRule(lang),
+    _lensContext(u.lifeRune, runes, lang),
+    u.area ? _domainContext(u.area, lang) : '',
+    u.seeking ? _registerContext(u.seeking, lang) : '',
+    (u.lifeRune || u.area || u.seeking) ? _priorityContext(runes, lang) : '',
   ].concat(S.beats).concat([
     S.bigInstruction(u.name),
     S.json,
@@ -1091,6 +1124,10 @@ function buildHorseshoePromptSeven(u, runes, lang, corrections) {
     runesBlock, '',
     _seasonalImagery(lang, runes),
     _describeRule(lang),
+    _lensContext(u.lifeRune, runes, lang),
+    u.area ? _domainContext(u.area, lang) : '',
+    u.seeking ? _registerContext(u.seeking, lang) : '',
+    (u.lifeRune || u.area || u.seeking) ? _priorityContext(runes, lang) : '',
   ].concat(S.beats).concat([
     S.closing(u.name),
     _addressContext(lang),
@@ -1172,6 +1209,10 @@ function buildYggdrasilPromptNine(u, runes, lang, corrections) {
     runesBlock, '',
     _seasonalImagery(lang, runes),
     _describeRule(lang),
+    _lensContext(u.lifeRune, runes, lang),
+    u.area ? _domainContext(u.area, lang) : '',
+    u.seeking ? _registerContext(u.seeking, lang) : '',
+    (u.lifeRune || u.area || u.seeking) ? _priorityContext(runes, lang) : '',
   ].concat(S.beats).concat([
     S.closing(u.name),
     _addressContext(lang),

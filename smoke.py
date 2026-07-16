@@ -190,11 +190,21 @@ last = output.split('\n')[-1] if output else 'mirror ran'
 check(last if passed else 'compose mirror MISMATCH — update proxy composeReading', passed,
       '' if passed else output)
 
+# ── 8. Reading contract wiring (single + all 4 spreads, both langs) ───
+print('\n⑧ CONTRACT WIRING (verify_contract_wiring.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_contract_wiring.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+last = output.split('\n')[-1] if output else 'contract check ran'
+check(last if passed else 'contract NEDORAZIL do všech builderů', passed,
+      '' if passed else output)
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
 if fail_count == 0:
-    print(f'  ✅  SMOKE TEST PROŠEL  —  {ok_count}/7 kontrol OK')
+    print(f'  ✅  SMOKE TEST PROŠEL  —  {ok_count}/8 kontrol OK')
 else:
     print(f'  ❌  SMOKE TEST SELHAL  —  {fail_count} problém(ů), {ok_count} OK')
 print('══════════════════════════════════════════')
