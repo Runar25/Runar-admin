@@ -7,7 +7,7 @@
 //     paid credits: any spread, cost = spread_cost param
 //     ceremonial mode (The Gathering): bypass all limits
 //     -> only error this path returns is no_credits (402); no weekly/monthly error
-//   standard / premium — unlimited, no deduction (monthly cap not yet enforced here)
+//   standard / premium — monthly cast cap (MONTHLY_LIMITS); asks + ceremonial do not count
 // Rate limit: 10 requests / 60s per user (or IP for anonymous)
 // Tree context: injected into system prompt for tree-active readings (Vrstva A)
 // Session state: derived from tree + time, shapes reading tone (Vrstva B)
@@ -257,9 +257,20 @@ async function callClaudeWithRetry(
 }
 
 // ── Deduction plan — decided up front, applied only after a successful reading ─
+// Monthly cast cap for the paid tiers. MIRROR of TIERS.standard/premium.monthly_readings
+// in v2/runar-config.js — the proxy is Deno and cannot import the client config, so the two
+// copies are kept honest by smoke ⑨ (scripts/verify_monthly_limits.js), which fails if they
+// drift. Counting unit = reading-units (SPREAD_COSTS), not runes: Yggdrasil costs 5, not 9.
+const MONTHLY_LIMITS: Record<string, number> = { standard: 50, premium: 75 };
+
+// Calendar month key, e.g. "2026-07". Stored next to the counter so the month rolls over
+// on first use instead of needing a scheduled reset.
+function monthKey(d = new Date()): string { return d.toISOString().slice(0, 7); }
+
 type DeductPlan =
   | { kind: "paid"; cost: number }
   | { kind: "free"; freeBalance: number }
+  | { kind: "monthly"; used: number; cost: number; mKey: string }
   | { kind: "none" };
 
 // Apply the deduction AFTER Claude returned real text. Returns the remaining
@@ -273,6 +284,16 @@ async function applyDeduction(plan: DeductPlan, userId: string | null): Promise<
       remaining = data as number;
     }
     return remaining;
+  }
+  if (plan.kind === "monthly" && userId) {
+    // Roll the counter forward. Same posture as the credit deduction: applied only after a
+    // verified-successful reading, so a failed generation never eats a subscriber's cast.
+    const { error } = await sb()
+      .from("user_profiles")
+      .update({ month_units: plan.used + plan.cost, month_key: plan.mKey })
+      .eq("id", userId);
+    if (error) console.error("monthly counter update failed:", error.message);
+    return undefined;
   }
   if (plan.kind === "free" && userId) {
     // optimistic: if a concurrent request already spent the free balance, this is a no-op
@@ -367,6 +388,33 @@ serve(async (req) => {
     // ── Eligibility (rune_seeker only) — decide the plan, DO NOT deduct yet ──
     // Deduction is applied after a verified-successful reading (credit safety).
     let deductPlan: DeductPlan = { kind: "none" };
+
+    // ── Paid tiers: monthly cast cap (the subscription they bought) ──
+    // A follow-up question is NOT a cast: it hangs off a reading that was already counted
+    // (one per reading — _askUsed), and it costs a subscriber nothing today. Counting it
+    // would quietly halve the subscription they bought.
+    const countsAsCast = mode !== "ceremonial" && mode !== "ask";
+    if ((userTier === "standard" || userTier === "premium") && userId && countsAsCast) {
+      const limit = MONTHLY_LIMITS[userTier];
+      const mKey = monthKey();
+      const { data: prof, error: mErr } = await sb()
+        .from("user_profiles").select("month_units, month_key").eq("id", userId).maybeSingle();
+      if (mErr) {
+        // Columns missing / read failed: fail OPEN. Blocking a paying subscriber over an
+        // infrastructure hiccup is worse than letting one reading through; it is logged.
+        console.error("monthly cap read failed (allowing reading):", mErr.message);
+      } else {
+        const used = prof?.month_key === mKey ? (prof?.month_units ?? 0) : 0;
+        const cost = Math.max(1, spread_cost);
+        if (used + cost > limit) {
+          return json({
+            error:   "monthly_limit",
+            message: "This month's readings are all drawn. They return with the new month.",
+          }, 402);
+        }
+        deductPlan = { kind: "monthly", used, cost, mKey };
+      }
+    }
 
     if (userTier === "rune_seeker") {
       if (use_credit) {

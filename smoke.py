@@ -200,11 +200,21 @@ last = output.split('\n')[-1] if output else 'contract check ran'
 check(last if passed else 'contract NEDORAZIL do všech builderů', passed,
       '' if passed else output)
 
+# ── 9. Monthly cap: config == proxy (§18 — the copy must not drift) ───
+print('\n⑨ MONTHLY CAP (verify_monthly_limits.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_monthly_limits.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+last = output.split('\n')[-1] if output else 'cap check ran'
+check(last if passed else 'cap v configu != cap vynucovaný proxy', passed,
+      '' if passed else output)
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
 if fail_count == 0:
-    print(f'  ✅  SMOKE TEST PROŠEL  —  {ok_count}/8 kontrol OK')
+    print(f'  ✅  SMOKE TEST PROŠEL  —  {ok_count}/9 kontrol OK')
 else:
     print(f'  ❌  SMOKE TEST SELHAL  —  {fail_count} problém(ů), {ok_count} OK')
 print('══════════════════════════════════════════')

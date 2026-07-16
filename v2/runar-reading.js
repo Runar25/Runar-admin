@@ -66,8 +66,9 @@ function _renderSegments(elId, segs) {
 // rate_limited | no_credits; model B has no weekly drip / monthly reset,
 // so those old error branches are gone.
 function _readingErrMsg(errorType) {
-  if (errorType === 'rate_limited') return t('err_rate_limited');
-  if (errorType === 'no_credits')   return tp('err_no_credits', { card: vl('card', lang) });
+  if (errorType === 'rate_limited')  return t('err_rate_limited');
+  if (errorType === 'no_credits')    return tp('err_no_credits', { card: vl('card', lang) });
+  if (errorType === 'monthly_limit') return t('err_monthly_limit');
   return t('err_generic');
 }
 
@@ -150,7 +151,7 @@ async function _generateReading() {
     if (_pL1) _pL1.classList.remove('pulsing');
     if (_pL2) _pL2.classList.remove('pulsing');
     console.error('reading failed:', res.error, res.status || '');
-    setSt('st-reader', _readingErrMsg(), 'err');
+    setSt('st-reader', _readingErrMsg(res.error), 'err');
     if (currentUser) { syncFreeBalance(currentUser.id); await fetchUserProfile(currentUser.id); }
     return;
   }
@@ -536,10 +537,11 @@ async function askRunar() {
   // 'someone' readings silently lost their Ask). Identical for mine + someone.
   var _askJournal = (currentUser && _lastReadingId)
     ? { kind: 'ask', reading_id: _lastReadingId, question: q } : null;
-  var res = await callProxy(sys, prompt, 120, shouldUseCredit(), SPREAD_COSTS.single.credits, _askJournal); // follow-up capped short (~40 words)
+  // mode 'ask' = not a cast: it must not draw down the monthly cap (see claude-proxy).
+  var res = await callProxy(sys, prompt, 120, shouldUseCredit(), SPREAD_COSTS.single.credits, _askJournal, 'ask'); // follow-up capped short (~40 words)
   if (res.error) {
     if (btn) { btn.disabled = false; btn.textContent = t('ask_btn'); }
-    setSt('ask-status', _readingErrMsg(res.error === 'rate_limited' ? 'rate_limited' : (res.error === 'no_credits' ? 'no_credits' : '')), 'err');
+    setSt('ask-status', _readingErrMsg(res.error), 'err');
     return;
   }
   var answer = _parseSegments(res.text || '').reading || (res.text || '').trim(); // defensive: unwrap if model returns JSON
@@ -777,7 +779,7 @@ async function _generateSpreadReading(o) {
   }
   if (res.error) {
     console.error('spread reading failed:', res.error, res.status || '');
-    setSt('st-reader', _readingErrMsg(), 'err');
+    setSt('st-reader', _readingErrMsg(res.error), 'err');
     if (currentUser) { syncFreeBalance(currentUser.id); await fetchUserProfile(currentUser.id); }
     return;
   }
