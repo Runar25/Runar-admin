@@ -288,11 +288,13 @@ async function applyDeduction(plan: DeductPlan, userId: string | null): Promise<
   if (plan.kind === "monthly" && userId) {
     // Roll the counter forward. Same posture as the credit deduction: applied only after a
     // verified-successful reading, so a failed generation never eats a subscriber's cast.
-    const { error } = await sb()
-      .from("user_profiles")
-      .update({ month_units: plan.used + plan.cost, month_key: plan.mKey })
-      .eq("id", userId);
-    if (error) console.error("monthly counter update failed:", error.message);
+    // Atomic (sql/2026-07-16_monthly_cap_atomic.sql) — writing back plan.used + cost would
+    // lose a count whenever two readings are in flight, and that window is the whole
+    // Claude call. use_credit and the free_balance CAS guard the same race.
+    const { error } = await sb().rpc("bump_month_units", {
+      p_user_id: userId, p_cost: plan.cost, p_key: plan.mKey,
+    });
+    if (error) console.error("monthly counter bump failed:", error.message);
     return undefined;
   }
   if (plan.kind === "free" && userId) {
