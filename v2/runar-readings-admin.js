@@ -78,6 +78,7 @@
       var who   = esc(r.user_name || (r.user_id ? r.user_id.slice(0, 8) : '—'));
       var tier  = r.user_tier ? '<span class="rd-tier">' + esc(r.user_tier) + '</span>' : '';
       var tester = r.is_tester ? '<span class="rd-tester">TESTER</span>' : '';
+      var mode = r.reading_mode === 'someone' ? '<span class="rd-mode">SOMEONE</span>' : '';
       // Single: reading text is in short_text. Spread: short_text = rune display, deep_text = reading.
       var bodyTxt  = isSpread ? (r.deep_text || '') : (r.short_text || '');
       var runeLine = isSpread ? esc(r.short_text || '') : '';
@@ -107,7 +108,7 @@
           '<span class="rd-glyph">' + glyph + '</span>' +
           '<b>' + name + '</b>' +
           '<span class="rd-lang">' + lng + '</span>' +
-          '<span class="rd-who">' + who + '</span>' + tier + tester +
+          '<span class="rd-who">' + who + '</span>' + tier + tester + mode +
           '<span class="rd-when">' + esc(when) + '</span>' +
           (r.prompt_version ? '<span class="rd-ver">' + esc(r.prompt_version) + '</span>' : '') +
         '</div>' +

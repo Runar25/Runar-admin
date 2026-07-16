@@ -117,11 +117,13 @@ async function _generateReading() {
 
   // Journal meta for the SERVER-SIDE save (proxy persists atomically with the deduction).
   // Only for a logged-in user saving their own reading; null = do not save.
-  var _journal = (currentUser && _readingMode === 'mine') ? {
+  // 'someone' readings are stored only for TESTERS (test data for the shrine) — a normal user's
+  // third-party reading is never stored (that person never consented). Journal filters them out.
+  var _journal = (currentUser && (_readingMode === 'mine' || isTester)) ? {
     kind: 'single', rune_name: drawn.n, rune_glyph: drawn.g, lang: lang,
     area: u.area || null, aol: u.area || null, seeking: u.seeking || null, intention: u.intention || null,
     question: u.question || null, life_rune: (u.lifeRune && u.lifeRune.n) || null,
-    prompt_version: RUNAR_PROMPT_VERSION, address: userGender
+    prompt_version: RUNAR_PROMPT_VERSION, address: userGender, reading_mode: _readingMode
   } : null;
   _lastReadingId = null;
   const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens, shouldUseCredit(), SPREAD_COSTS.single.credits, _journal);
@@ -746,11 +748,12 @@ async function _generateSpreadReading(o) {
 
   // Journal meta for the SERVER-SIDE save (proxy persists atomically with the deduction).
   var _runeDisplay = o.runes.map(function (r) { return ((r.g || '') + ' ' + (r.n || '').toUpperCase()).trim(); }).join(' · ');
-  var _journalS = (currentUser && _readingMode === 'mine') ? {
+  var _journalS = (currentUser && (_readingMode === 'mine' || isTester)) ? {
     kind: 'spread', rune_name: o.kind, rune_glyph: '✦', lang: lang,
     area: 'spread', aol: u.area || null, seeking: u.seeking || null, intention: u.intention || null,
     question: u.question || null, life_rune: (u.lifeRune && u.lifeRune.n) || null,
-    rune_display: _runeDisplay, prompt_version: RUNAR_PROMPT_VERSION, address: userGender
+    rune_display: _runeDisplay, prompt_version: RUNAR_PROMPT_VERSION, address: userGender,
+    reading_mode: _readingMode
   } : null;
   _lastReadingId = null;
   var res = await callProxy(sys, prompt, o.tokens, shouldUseCredit(), o.credits, _journalS);

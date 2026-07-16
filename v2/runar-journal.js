@@ -19,6 +19,8 @@ async function loadJournal() {
     let q = sb.from('readings')
       .select('id, rune_name, rune_glyph, lang, short_text, deep_text, area, seeking, question, life_rune, credits_used, drawn_at')
       .eq('user_id', currentUser.id)
+      // 'someone' readings (tester test data) never appear in the user's own journal
+      .or('reading_mode.is.null,reading_mode.eq.mine')
       .order('drawn_at', { ascending: false });
     const lim = journalLimit();
     if (lim) q = q.limit(lim);

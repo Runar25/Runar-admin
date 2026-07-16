@@ -537,6 +537,7 @@ serve(async (req) => {
             life_rune:    journal.life_rune  ?? null,
             prompt_version: journal.prompt_version ?? null,
             address:      journal.address ?? null,
+            reading_mode: journal.reading_mode ?? null,
             // Credit truth is server-side (a forgeable client flag is ignored).
             credits_used: deductPlan.kind === "paid",
           }).select("id").maybeSingle();
