@@ -237,7 +237,7 @@ var SEASON_POOLS = {
       { id: 'dw_candle',   en: 'candlelight steady against the long black',             is: 'kertaljós sem stendur stöðugt gegn löngu myrkri' },
       { id: 'dw_steam',    en: 'geothermal steam rising into the frozen air',           is: 'jarðhitagufa sem stígur upp í frosið loft' },
       { id: 'dw_noonsun',  en: 'the low pink noon sun barely clearing the horizon',     is: 'lág bleik hádegissól sem rétt sleppur yfir sjóndeildarhringinn' },
-      { id: 'dw_stars',    en: 'a sky thick with stars over the still fjord',           is: 'himinn þéttur af stjörnum yfir kyrrum firðinum' },
+      { id: 'dw_stars',    en: 'a sky thick with stars over the black lava',           is: 'himinn þéttur af stjörnum yfir svörtu hrauninu' },
       { id: 'dw_seed',     en: 'the seed of returning light waiting at the solstice',   is: 'fræ vaxandi ljóss sem bíður við vetrarsólstöður' },
       { id: 'dw_moonsnow', en: 'a full moon bright over new-fallen snow', is: 'fullt tungl bjart yfir nýföllnum snjó' },
       { id: 'dw_thorri', en: 'deep midwinter Thorri, the old feast against the cold', is: 'Þorri um hávetur, gamla þorrablótið gegn kuldanum' },
@@ -284,6 +284,8 @@ var SEASON_POOLS = {
       { id: 'es_birdcliffs', en: 'the bird cliffs filling and loud again',              is: 'fuglabjörgin sem fyllast og verða hávær á ný' },
       { id: 'es_lupine',   en: 'lupine beginning to spread blue across the slopes',     is: 'lúpína sem byrjar að breiðast blá yfir brekkurnar' },
       { id: 'es_green',    en: 'green flooding back over the land',                     is: 'grænkan sem flæðir aftur yfir landið' },
+      { id: 'es_mosslava', en: 'grey-green moss creeping over the old lava', is: 'grágrænn mosi sem breiðist yfir gamalt hraun' },
+      { id: 'es_mountain', en: 'a lone mountain sharp against the bright sky', is: 'stakt fjall sem stendur skýrt gegn björtum himni' },
       { id: 'es_eider',    en: 'eider ducks nesting along the shore',                   is: 'æður sem verpa með ströndinni' },
       { id: 'es_rivers',   en: 'the rivers full and loud with the melt',                is: 'árnar fullar og háværar af leysingunni' },
       { id: 'es_dandelion', en: 'dandelions opening yellow along the roadsides', is: 'fíflar sem opnast gulir með vegköntum' },
@@ -291,8 +293,6 @@ var SEASON_POOLS = {
       { id: 'es_birch', en: 'the birch breaking into new leaf', is: 'birkið sem springur út í nýju laufi' }
     ],
     cold: [
-      { id: 'es_seasnap',  en: 'a cold snap blowing in off the sea',                    is: 'kuldakast sem blæs inn af hafinu' },
-      { id: 'es_coastfog', en: 'fog sitting grey on the coast',                         is: 'þoka sem situr grá á ströndinni' },
       { id: 'es_latefrost', en: 'a late spring frost in the small hours',               is: 'síðbúið vorfrost á næturstund' },
       { id: 'es_glacierwind', en: 'the wind off the glacier, cold under the long light', is: 'vindurinn af jöklinum, kaldur undir langa ljósinu' },
       { id: 'es_drizzle',  en: 'a grey drizzle that will not lift',                     is: 'grá súld sem ekki léttir' },
@@ -305,9 +305,10 @@ var SEASON_POOLS = {
       { id: 'hs_brightnights', en: 'bright nights that never fully darken',             is: 'bjartar nætur sem dimma aldrei alveg' },
       { id: 'hs_midnightsun', en: 'the midnight sun low and gold over the sea',         is: 'miðnætursólin lág og gyllt yfir hafinu' },
       { id: 'hs_lupine',   en: 'lupine spread purple across the hillsides',             is: 'lúpína breidd fjólublá yfir hlíðarnar' },
-      { id: 'hs_terns',    en: 'arctic terns wheeling and diving over the shore',       is: 'kríur sem sveima og steypa sér yfir fjöruna' },
       { id: 'hs_puffins',  en: 'puffins crowding the sea cliffs',                       is: 'lundi þéttur á bjargbrúnum' },
       { id: 'hs_hay',      en: 'hay drying in the long light',                          is: 'hey að þorna í langa ljósinu' },
+      { id: 'hs_ravenmoor', en: 'a raven riding the wind high over the fells', is: 'hrafn sem ríður vindinum hátt yfir fjöllin' },
+      { id: 'hs_basalt', en: 'basalt columns standing in even ranks', is: 'stuðlaberg sem stendur í jöfnum röðum' },
       { id: 'hs_whales',   en: 'whales surfacing in a calm fjord',                      is: 'hvalir sem koma upp í kyrrum firði' },
       { id: 'hs_highland', en: 'the highland open at last and crossable',               is: 'hálendið loks opið og fært' },
       { id: 'hs_cottongrass', en: 'cotton-grass nodding white across the bog', is: 'fífa sem bærist hvít yfir mýrina' },
@@ -316,9 +317,7 @@ var SEASON_POOLS = {
     ],
     cold: [
       { id: 'hs_northwind', en: 'the cold north wind cutting through the endless light', is: 'kaldur norðanvindur sem sker gegnum endalaust ljósið' },
-      { id: 'hs_seafog',   en: 'fog creeping grey off the cold sea',                    is: 'þoka sem læðist grá af köldu hafinu' },
       { id: 'hs_siderain', en: 'summer rain driving sideways across the lava',          is: 'sumarrigning sem stendur á ská yfir hraunið' },
-      { id: 'hs_coldsea',  en: 'the sea still ice-cold beneath the bright sky',         is: 'hafið enn ískalt undir björtum himni' },
       { id: 'hs_glacierbreath', en: 'the breath of the glacier drifting down the valley', is: 'andardráttur jökulsins sem berst niður dalinn' },
       { id: 'hs_raindays', en: 'days of grey rain that will not clear', is: 'dagar af gráu regni sem ekki léttir' },
       { id: 'hs_coldnight', en: 'a cold clear night with frost in the hollows', is: 'köld heiðrík nótt með frosti í lægðum' }
