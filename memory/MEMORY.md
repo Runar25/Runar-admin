@@ -90,6 +90,8 @@ Kořen driftu = duplikace. Jazyk/tier/spread varianty = DATA (RP_* packy, config
 - [working-style.md](working-style.md) — workflow pravidla, Python skripty, IS primární jazyk, verifikace, IS gramatika
 - [is-done-together-not-for-sigrun.md](is-done-together-not-for-sigrun.md) — IS tvoříme rovnou pořádně + ověřujeme; NIKDY „draft pro Sigrún"
 - [paste-sql-explicitly.md](paste-sql-explicitly.md) — když owner má spustit SQL, vlož přesné SQL do zprávy; žádné „jako minule"
+- [proceed-dont-ask.md](proceed-dont-ask.md) — dohodnutý plán odjeď celý; neptej se „souhlas?" mezi kroky
+- [one-patch-script-path.md](one-patch-script-path.md) — §1 patche VŽDY do `scripts/_patch.py`; nový název = nový permission prompt
 - [runar-project.md](runar-project.md) — stack, soubory, tier tabulka, DB schéma, edge functions
 - [tree-of-life.md](tree-of-life.md) — Tree design (branch objekt, Gathering, AETTY, vizuál, Yggdrasil)
 - [runar-patterns.md](runar-patterns.md) — Pattern detection design (ZASTARALÉ, probrat)
