@@ -24,6 +24,7 @@ opt-outu (ne opt-in brána). Výslovný souhlas jen u testerů — a ti CHTĚJÍ
 3. **Special-category `question` neváž na identitu** v analýze (nebo jen s tester souhlasem).
 4. **Respektuj opt-out**: user s `analytics_opt_out=true` → jeho čtení se NEzahrnou do vieweru/evalu.
 5. **Data v EU** (Supabase eu-west-1) — nikdy nesypat osobní čtení mimo EU (Slack/US = jen anonymizované).
+6. **'someone' čtení (třetí osoba) = JEN u testerů.** Čtení „FOR SOMEONE" nese jméno třetí osoby v textu a ta nic neodsouhlasila → u testera testovací data krytá souhlasem; u běžného usera se NEUKLÁDÁ vůbec. Journal usera je nikdy nezobrazí (`reading_mode='someone'`).
 
 ---
 

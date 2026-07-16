@@ -24,8 +24,8 @@ Klíčové soubory pro Read (lokální):
 
 ## Aktuální stav projektu (2026-07-06)
 
-### SW verze: v189
-### Poslední commit: b038f73
+### SW verze: v193
+### Poslední commit: 0b101b1
 
 ### Klíčová rozhodnutí (platná)
 - RS: 1 free cast při registraci, žádný weekly drip, ŽÁDNÝ měsíční reset (model B). Jediný signál = DB `free_balance` (default 1). 1 free MÁ hlas. Pak vše za rune readings (kredity).

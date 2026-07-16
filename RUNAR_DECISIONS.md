@@ -459,3 +459,25 @@
 - **Affected doc(s):** MEMORY.md, tento záznam.
 - **Reality note:** Reading prompt = **client-built** (character.js) → jen push, žádný proxy deploy. Měření: zítřejší dávka = v0.5, porovnat vs v0.4 přes `prompt_version` tag (R1 + gate-fails). Zbývá z copy-doc: #2 Spirituality→The Unseen (dohledat AREA seznam), #4+5 SPECIFIC QUESTION→THE SITUATION+placeholder (`q_lbl` nalezen), #3 SEEKING prompt rule (+ F1-CLARITY kolize — přejmenovat INTERNÍ mód). Blank glyf = TREE (drawn→kámen, commity e3bf1ba/091addc). Commit b038f73, SW v189.
 - **Reversibility:** easy (revert; verze zpět na v0.4).
+
+
+## 2026-07-14 — 'someone' čtení = testovací data (jen testeři)
+
+- **Typ:** decision (behavior) + privacy
+- **Scope:** reading
+- **Co se změnilo:** „FOR SOMEONE" čtení se dřív **neukládalo vůbec**. Teď: **tester + 'someone' → uloží se** s `reading_mode='someone'` (nový sloupec `readings.reading_mode`). **Běžný user + 'someone' → NEukládá se** (beze změny). **Journal usera 'someone' NIKDY nezobrazí** (`.or('reading_mode.is.null,reading_mode.eq.mine')`). Shrine viewer = **SOMEONE** badge. Copy EN+IS: „This reading will not be **saved**" → „will not be added to your **journal**" (pravda pro obě větve; IS `Þessi spá fer ekki í dagbókina þína` ověřené 0 flagů).
+- **Proč:** Owner potřebuje testovat čtení **BEZ životní runy** — 'someone' je jediný mód, kde `lifeRune = null` (vlastní účet má vždy Gebo; eval to flagoval jako slepou skvrnu „8/8 Gebo"). **Tester-gate:** 'someone' čtení nese jméno **třetí osoby** uvnitř textu čtení a ta osoba nic neodsouhlasila → u testera = testovací data krytá jeho souhlasem, u běžného usera by to byla data třetí osoby bez právního základu.
+- **Affected doc(s):** RUNAR_PRIVACY.md (pravidlo analýzy #6), MEMORY.md, tento záznam.
+- **Reality note:** Sloupec `readings.reading_mode` (owner spustil). Proxy + list-readings nasazeny, klient pushnut. **Owner test:** označ se `is_tester=true` → udělej 'someone' čtení → shrine 📜 READINGS má **SOMEONE** badge; tvůj journal ho **nemá**. Držáno minimální (owner: „nechci to překombinovat") — na testování bez životní runy nic dalšího nestavěno. Commit 0b101b1, SW v193.
+- **Reversibility:** easy (revert + redeploy; sloupec neškodný).
+
+
+## 2026-07-14 — Copy-doc CODE lane dokončen: #4+5 (THE SITUATION) + #5 (SEEKING stance), prompt v0.6
+
+- **Typ:** decision (behavior) + copy
+- **Scope:** reading
+- **Co se změnilo:** **#4+5:** `q_lbl` SPECIFIC QUESTION → THE SITUATION / SÉRSTÖK SPURNING → STAÐAN; `q_ph` → popis situace („I am deciding whether to take on more work"), ne otázka na skrytou příčinu. **#5:** `_registerContext` prepend **stance** („SEEKING = postoj, ne objednávka; nedodat pojmenovanou věc ani neopakovat název pole; jen lita tón") + **Confirmation** řádek přepsán (z „affirm what is already true" = cold-reading potvrzování → „hvorki staðfestu né hrektu; lýstu jarðveginum undir ákvörðuninni og blindu hliðinni" = nepotvrzovat/nevyvracet, popsat půdu + slepou stranu). `RUNAR_PROMPT_VERSION` v0.5 → **v0.6**. **F1-CLARITY** = eval-rubrika (v kódu žádné „F1"), user-facing „Clarity" seek option NETKNUTÝ.
+- **Proč:** copy-doc rozhodnutí (unanswerable hidden-cause Q → F1=1; SEEKING jako cold-reading objednávka). Držet Rúnara upřímného + kompaktního.
+- **Affected doc(s):** MEMORY.md, tento záznam.
+- **Reality note:** Reading prompt = client-built → push (žádný proxy deploy). **VŠECHNO dnešní IS ověřené NÁMI** (is-grammar-qa + BÍN), nic pro Sigrún: `staðan` (staða def.), `aðgangnum→aðganginum` opraveno; `lestrunum` (lemma lestur) + `hrektu` (boðháttur hrekja) = GreynirCorrect false-positives potvrzené správné přes BÍN. **Celý copy-doc CODE lane hotový:** 1 logging ✅ · 2 intro+describe ✅ · 3 The Unseen ✅ · 4+5 The Situation ✅ · 5 SEEKING ✅ · 6 glyf = TREE. Zítřejší dávka = **v0.6 vs v0.4** (prompt_version tag → R1 + gate-fails). Commity c3dafb1 + 9ce6956, SW v192. **Debt:** AREAS/SEEKS vocab žije v runar-runes.js (kvůli norns-ose) — půl-oprávněné, možný split labely→config.
+- **Reversibility:** easy (revert; verze zpět).
