@@ -116,6 +116,7 @@ const TIERS = {
     voice_static:     true,       // pre-generované audio v Collection
     journal:          false,
     ceremonial:       false,
+    ask:              false,      // Ask Rúnar (follow-up question on a reading)
     languages:        ['en', 'is'],
   },
   rune_seeker: {
@@ -130,6 +131,7 @@ const TIERS = {
     voice_static:     true,       // pre-generované audio v Collection
     journal:          5,          // last N readings
     ceremonial:       false,
+    ask:              false,
     languages:        ['en', 'is'],
   },
   standard: {
@@ -141,6 +143,7 @@ const TIERS = {
     voice_static:     true,
     journal:          null,
     ceremonial:       false,
+    ask:              false,      // ← premium-only today; flip to true to give Walker the follow-up
     languages:        ['en', 'is'],
   },
   premium: {
@@ -152,6 +155,7 @@ const TIERS = {
     voice_static:     true,
     journal:          null,
     ceremonial:       true,
+    ask:              true,       // one follow-up per reading, text only (no voice)
     languages:        ['en', 'is'],
     physical_unlock:  true,       // QR/NFC product linking
     seasonal_content: true,       // solstices, equinoxes, lunar events

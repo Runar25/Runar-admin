@@ -505,8 +505,9 @@ function _askPlaceholder() {
 function _showAsk() {
   var el = document.getElementById('ask-runar');
   if (!el) return;
-  var isPremium = currentUser && (userTier === 'premium' || isAdmin(currentUser.email));
-  if (!isPremium) { el.style.display = 'none'; return; }
+  // Who gets the follow-up = TIERS.<tier>.ask (§8), not a tier name spelled out here.
+  var canAsk = currentUser && (((TIERS[userTier] || {}).ask === true) || isAdmin(currentUser.email));
+  if (!canAsk) { el.style.display = 'none'; return; }
   _askUsed = false;
   _askPhIdx++;  // rotate the placeholder each time the ask opens
   var inp = document.getElementById('ask-input'); if (inp) { inp.value = ''; inp.placeholder = _askPlaceholder(); }
