@@ -142,11 +142,11 @@ function tp(key, vars) {
 // ─── Reading angles EN ─────────────────────────────────────────
 const READING_ANGLES = [
   'Lead with the shadow of this rune — what it quietly demands, not what it offers.',
-  'Lead with the gift — what this rune is already giving before the seeker has noticed.',
+  'Lead with the gift — what this rune offers, and what it asks in return.',
   'Lead with timing — what specific moment in their life does this rune mark.',
   'Lead with the body — where does this rune live as a physical sensation right now.',
   'Lead with the land — open with a single Icelandic image that mirrors this situation exactly.',
-  'Lead with what is already in motion — name what has already begun that this rune makes visible.',
+  'Lead with what is stirring — name the movement this rune makes visible.',
   'Lead with the threshold — what is the seeker standing between right now.',
   'Let the life rune speak first — the drawn rune answers it.',
 ];
@@ -154,11 +154,11 @@ const READING_ANGLES = [
 // ─── Reading angles IS ─────────────────────────────────────────
 const READING_ANGLES_IS = [
   'Byrjaðu á skugga þessarar rúnar — hvað hún krefst hljóðlægt, ekki hvað hún gefur.',
-  'Byrjaðu á gjöfinni — hvað þessi rúna er þegar að gefa áður en leitandinn hefur tekið eftir því.',
+  'Byrjaðu á gjöfinni — hvað þessi rúna gefur og hvað hún biður um í staðinn.',
   'Byrjaðu á tímasetningunni — hvaða sérstaka augnablik í lífi þeirra merkir þessi rúna.',
   'Byrjaðu á líkamanum — hvar býr þessi rúna sem líkamleg tilfinning núna.',
   'Byrjaðu á landinu — opnaðu með einni íslenskri mynd sem speglar þessa stöðu nákvæmlega.',
-  'Byrjaðu á því sem er þegar á hreyfingu — nefndu það sem hefur þegar hafist sem þessi rúna gerir sýnilegt.',
+  'Byrjaðu á því sem hrærist — nefndu hreyfinguna sem þessi rúna gerir sýnilega.',
   'Byrjaðu á þröskuldinum — á milli hvers stendur leitandinn núna.',
   'Láttu lífsrúnina tala fyrst — dregna rúnan svarar henni.',
 ];
