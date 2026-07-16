@@ -531,7 +531,10 @@ async function askRunar() {
   setSt('ask-status', '');
   var sys = buildSysPrompt(activeChar, lang);
   var prompt = buildAskPrompt(reading, q, runes, lang, corrections);
-  var _askJournal = (currentUser && _readingMode === 'mine' && _lastReadingId)
+  // Attach the follow-up whenever the reading was actually stored — _lastReadingId is set
+  // only then, so it is the single gate (never re-check the save conditions here: that is how
+  // 'someone' readings silently lost their Ask). Identical for mine + someone.
+  var _askJournal = (currentUser && _lastReadingId)
     ? { kind: 'ask', reading_id: _lastReadingId, question: q } : null;
   var res = await callProxy(sys, prompt, 120, shouldUseCredit(), SPREAD_COSTS.single.credits, _askJournal); // follow-up capped short (~40 words)
   if (res.error) {
