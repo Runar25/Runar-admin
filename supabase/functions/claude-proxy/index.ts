@@ -351,6 +351,7 @@ serve(async (req) => {
     const authHeader = req.headers.get("Authorization");
     let userId: string | null = null;
     let userTier = "anonymous";
+    let isAdmin = false;
     let creditsBalance = 0;
 
     const ADMIN_EMAILS = ["kukula@agndofa.is", "info@agndofa.is"];
@@ -361,6 +362,7 @@ serve(async (req) => {
         userId = user.id;
         if (user.email && ADMIN_EMAILS.includes(user.email.toLowerCase())) {
           userTier = "premium";
+          isAdmin  = true;   // premium is how the owner gets full access — not a subscription to meter
         } else {
           const { data: profile } = await sb()
             .from("user_profiles")
@@ -394,7 +396,7 @@ serve(async (req) => {
     // (one per reading — _askUsed), and it costs a subscriber nothing today. Counting it
     // would quietly halve the subscription they bought.
     const countsAsCast = mode !== "ceremonial" && mode !== "ask";
-    if ((userTier === "standard" || userTier === "premium") && userId && countsAsCast) {
+    if ((userTier === "standard" || userTier === "premium") && userId && countsAsCast && !isAdmin) {
       const limit = MONTHLY_LIMITS[userTier];
       const mKey = monthKey();
       const { data: prof, error: mErr } = await sb()
