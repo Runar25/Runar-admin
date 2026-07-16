@@ -210,11 +210,21 @@ last = output.split('\n')[-1] if output else 'cap check ran'
 check(last if passed else 'cap v configu != cap vynucovaný proxy', passed,
       '' if passed else output)
 
+# ── 10. Write surface: co smí uživatel zapsat (§19 — the seam, not the file) ──
+print('\n⑩ WRITE SURFACE (verify_write_surface.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_write_surface.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+first = output.split('\n')[0] if output else 'write surface check ran'
+check(first if passed else 'klient vs granty se rozešly (tichá 403 nebo díra)', passed,
+      '' if passed else output)
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
 if fail_count == 0:
-    print(f'  ✅  SMOKE TEST PROŠEL  —  {ok_count}/9 kontrol OK')
+    print(f'  ✅  SMOKE TEST PROŠEL  —  {ok_count}/10 kontrol OK')
 else:
     print(f'  ❌  SMOKE TEST SELHAL  —  {fail_count} problém(ů), {ok_count} OK')
 print('══════════════════════════════════════════')
