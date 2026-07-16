@@ -125,9 +125,9 @@ const RUNES = [
   {
     n: 'Perth',    is_n: 'Perþ (Duldir hlutir)',
     g: 'ᛈ',        svg: 'Perth',
-    k:    'hidden things, mystery, fate, divination, the unseen',
-    k_is: 'duldir hlutir, leyndardómar, örlög, spádómar',
-    formula_is: 'Perþ er rún leyndarmálsins, örlaga og þess sem felst undir yfirborðinu.',
+    k:    'chance, hidden things, fate in the making, luck, the unseen',
+    k_is: 'tilviljun, duldir hlutir, örlög í mótun, happ, hið hulda',
+    formula_is: 'Perþ er rún tilviljunar, leyndarmálsins og örlaga sem enn eru að mótast.',
     world: 'Hel',       elements: ['Water', 'Shadow'],
     aett: 'heimdall',
   },

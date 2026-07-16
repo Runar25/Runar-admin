@@ -519,3 +519,16 @@
 - **Protokol Cowork ↔ Code (platí od teď):** Cowork **nezapisuje do repa vůbec** (ani docs). Čte **jen** přes `git show HEAD:<path>` — git objekty jsou checksumované, takže poškozené čtení spadne nahlas místo tichého uříznutí; to platí i pro ANALÝZU, ne jen pro patche (poměry v SEASON_POOLS se počítaly z mount readu — kdyby řez padl do poolů, vyjdou čísla, co nikdy neexistovala, a nic nevaruje). Patch předává **v chatu** jako přesné kotvy (starý → nový řetězec, doslovně) + čím to ověřil. NE do `scripts/_patch.py` — to je scratch cesta Code, přepisuje se každým úkolem. Code patch aplikuje, ověří (smoke + node --check + IS nástroje), commitne a pushne. **Signál zpět** = push + řádek v `memory/MEMORY.md` (SW verze + hash) — sdílený soubor přes junction, žádný jiný kanál. Cowork se pak srovná `git pull` a čte zase přes `git show HEAD:`.
 - **Affected doc(s):** MEMORY.md, RUNAR_DECISIONS.md
 - **Reverzibilita:** snadná (pool je data; vrátit 5 řezů + odebrat 4 přírůstky).
+
+---
+
+## 2026-07-16 — Perth: „divination/mystery" → „chance, luck, fate in the making"
+
+- **Typ:** intent + implementation (návrh: Cowork · schválil: KUKY 2026-07-16 · zápis + ověření: Code)
+- **Co se změnilo:** `runar-runes.js`, runa Perth — 3 řádky. `k:` 'hidden things, mystery, fate, divination, the unseen' → 'chance, hidden things, fate in the making, luck, the unseen'. `k_is:` 'duldir hlutir, leyndardómar, örlög, spádómar' → 'tilviljun, duldir hlutir, örlög í mótun, happ, hið hulda'. `formula_is:` 'Perþ er rún leyndarmálsins, örlaga og þess sem felst undir yfirborðinu.' → 'Perþ er rún tilviljunar, leyndarmálsins og örlaga sem enn eru að mótast.'
+- **Proč:** „divination"/„spádómar" je v aplikaci na věštění z run **kruhové** — runa, jejíž význam JE věštění, svádí model mluvit o té praktice místo o světě. To je přesně to, proti čemu stojí `_describeRule` („describe, do not explain", v0.5, eval Priority 1). Nové znění drží Perth u losu/náhody/osudu, který se teprve tká — což je i historicky obhajitelnější čtení (kostka/los) než „věštění".
+- **Reality note:** Klíčová slova tečou do promptů přes `rk(r)` ve všech builderech → MĚNÍ výstup čtení. **`RUNAR_PROMPT_VERSION` zůstává 'v0.8'** (nebumpuje se na v0.9) schválně: rebalance SEASON_POOLS i tahle změna dosedly ve stejné hodině, PŘED jakoukoli eval dávkou, takže tvoří **jednu kohortu** — bump by rozdělil eval buckety bez užitku a v0.8 by zůstala verze bez čtení. Pravidlo „bump při každé změně promptu" tímhle není porušené, je naplněné jeho účel (verze = to, co ta čtení vyrobilo).
+- **IS ověření:** is-grammar-qa čisté (jediný nález S004 „Perþ → Perú" = GreynirCorrect nezná jméno runy, falešný poplach téže třídy jako lestrunum/rúnurnar). Genitivy `tilviljunar` / `leyndarmálsins` / `örlaga` ověřeny; `sem enn eru að mótast` se váže na `örlaga` (plurál) → `eru` ✓.
+- **Nedořešeno (drobnost):** RUNAR_DESIGN.md ř. 486 píše „Perthro" — porušuje pravidlo správných jmen run (Perth). Nesaháno: soubor má rozdělaný Cowork.
+- **Affected doc(s):** žádný — význam Perth nikde v docs popsaný není (zmínky jsou jen element/Shadow, sigil tahová třída, pattern listy).
+- **Reverzibilita:** triviální (3 řádky dat).
