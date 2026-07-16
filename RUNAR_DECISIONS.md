@@ -534,3 +534,18 @@
 - **Nedořešeno (drobnost):** RUNAR_DESIGN.md ř. 486 píše „Perthro" — porušuje pravidlo správných jmen run (Perth). Nesaháno: soubor má rozdělaný Cowork.
 - **Affected doc(s):** žádný — význam Perth nikde v docs popsaný není (zmínky jsou jen element/Shadow, sigil tahová třída, pattern listy).
 - **Reverzibilita:** triviální (3 řádky dat).
+
+---
+
+## 2026-07-14 — Clarity register: zaostři, ale odpověď nedoručuj (prompt v0.9)
+
+- **Typ:** decision + implementation (reading prompt)
+- **Scope:** reading
+- **Co se změnilo:** `_registerContext` index 1 (Clarity/Skýrleiki) v `runar-character.js` — **jediná z 5 register-variant, co tlačila na rozuzlení** („make the unclear clear" / „gerðu hið óljósa ljóst") → runa se ohýbala na „odpověď už v tobě je". Nové znění drží focus (legitimní skýrleiki), ale zakazuje doručit odpověď:
+  - EN: „bring one thing into focus, **not one answer**; sharpen what matters and **leave the deciding to them**."
+  - IS: „dragðu eitt skýrt fram, **ekki eitt svar**; skerptu það sem máli skiptir, en **ákvörðunin er leitandans**."
+  Guard prefix („Þetta er tilhneiging, ekki pöntun…") beze změny — mění se jen `mapIs[1]`/`mapEn[1]`. `RUNAR_PROMPT_VERSION` v0.8 → **v0.9**.
+- **Proč:** Bylo to v rozporu s Rúnarovou filozofií („runy neurčují cestu") — Clarity jako jediná osa tlačila na doručení odpovědi. Nové znění zrcadlí sourozenecké registry (Reflection: „opnaðu spegil, ekki svar"; Confirmation: „hvorki staðfestu né hrektu"). Clarity = nejsledovanější osa driftu.
+- **Affected doc(s):** tento záznam
+- **Reality note:** Návrh + BÍN ověření = **Cowork** (`islenska`: `dragðu`/`skerptu` imp. · `svar` hk · `eitt` HK · `máli` þgf · `skiptir` 3.os · `ákvörðunin` nf+gr · `leitandans` ef+gr — všechny tvary čisté; idiomy „það sem máli skiptir" + „ákvörðunin er leitandans" přirozené). Aplikace + ověření = **Code**: seed-and-assert (oba staré řetězce přesně 1×), `node --check` OK, `check-is.py` čisté, **smoke 10/10**. §1: JS přes Python (`fix_clarity_register.py`). Verze bumpnuta → nová čtení nesou `prompt_version: v0.9` (readings viewer je odliší od v0.8 = podklad pro A/B). ⚠️ **NEZMĚŘENO evalem** (§18.4 „změny kvality čtení = MĚŘIT, ne hádat") — čeká na eval dávku v0.9 vs v0.8 na ose Clarity.
+- **Reversibility:** easy (2 řetězce zpět + verze zpět; DB beze změny)
