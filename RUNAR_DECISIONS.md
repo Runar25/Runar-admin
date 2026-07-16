@@ -481,3 +481,14 @@
 - **Affected doc(s):** MEMORY.md, tento záznam.
 - **Reality note:** Reading prompt = client-built → push (žádný proxy deploy). **VŠECHNO dnešní IS ověřené NÁMI** (is-grammar-qa + BÍN), nic pro Sigrún: `staðan` (staða def.), `aðgangnum→aðganginum` opraveno; `lestrunum` (lemma lestur) + `hrektu` (boðháttur hrekja) = GreynirCorrect false-positives potvrzené správné přes BÍN. **Celý copy-doc CODE lane hotový:** 1 logging ✅ · 2 intro+describe ✅ · 3 The Unseen ✅ · 4+5 The Situation ✅ · 5 SEEKING ✅ · 6 glyf = TREE. Zítřejší dávka = **v0.6 vs v0.4** (prompt_version tag → R1 + gate-fails). Commity c3dafb1 + 9ce6956, SW v192. **Debt:** AREAS/SEEKS vocab žije v runar-runes.js (kvůli norns-ose) — půl-oprávněné, možný split labely→config.
 - **Reversibility:** easy (revert; verze zpět).
+
+
+## 2026-07-14 — Reading contract dorazil do všech 4 spreadů (prompt v0.7) + §19 wiring check
+
+- **Typ:** fix (tichá díra) + decision (behavior)
+- **Scope:** reading
+- **Co se změnilo:** Contract (**životní runa = linsa · area = doména · seeking = registr · priority = tie-breaker**) byl zapojený **JEN v single** (character.js:831-833). Spready dostávaly **holé labely** („Seeking: Clarity") bez direktivy → **SEEKING stance rule + Confirmation reframe (v0.6) na ně NIKDY nedošly.** Půlka copy-doc #5 byla neviditelná. Teď: `_lensContext` bere runu NEBO pole (spread čte „rúnurnar sem dregnar voru"; linsa se **stáhne, když je životní runa mezi taženými** — nemůže být linsa i předmět); **`_priorityContext` = nový SDÍLENÝ helper** (tie-breaker byl duplikovaný uvnitř RP_SINGLE, §18 → jeden zdroj pro single i spready; při té příležitosti Z002 velké písmeno po dvojtečce). Všechny 4 spread buildery injektují lens/domain/register/priority vedle `_describeRule`. `RUNAR_PROMPT_VERSION` v0.6 → **v0.7**.
+- **Proč:** Nález z auditu restů (Workflow, 5 zdrojů). Bez tohohle je dnešní práce na SEEKING pravidle jen pro single — a spready jsou přesně tam, kde „Seeking: Clarity" jako holý label svádí model k „objednávce".
+- **Affected doc(s):** RUNAR_BACKLOG.md (audit — položka odškrtnuta), MEMORY.md, tento záznam.
+- **Reality note:** **§19 lekce naživo:** první kontrola přes starý `golden_dump.js` hlásila FALSE MISS — jeho fixture posílá `seeking:'clarity'` (malé → `SEEKS.indexOf` = -1) a životní runu, která JE v taženém poolu. Fixture musí cvičit **pravou hranici reálnými hodnotami** (§19.1). Nový `scripts/verify_contract_wiring.js` staví REÁLNÉ prompty ve vm sandboxu a asertuje všechny 4 direktivy v single + 4 spreadech × EN/IS + že se linsa správně stáhne → **smoke ⑧** (8/8). IS ověřené námi přes BÍN: `rúnurnar`/`rúnunum` = lemma rúna/rún; GreynirCorrect návrhy `rúðurnar` (okenní tabulky) a `rútunum` (autobusy) = false-positives, stejná třída jako lestur/lest a hrekja/hrakinn. Reading prompt = client-built → jen push. Commit 39bf41d, SW v195.
+- **Reversibility:** easy (revert; verze zpět na v0.6).
