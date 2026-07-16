@@ -549,3 +549,19 @@
 - **Affected doc(s):** tento záznam
 - **Reality note:** Návrh + BÍN ověření = **Cowork** (`islenska`: `dragðu`/`skerptu` imp. · `svar` hk · `eitt` HK · `máli` þgf · `skiptir` 3.os · `ákvörðunin` nf+gr · `leitandans` ef+gr — všechny tvary čisté; idiomy „það sem máli skiptir" + „ákvörðunin er leitandans" přirozené). Aplikace + ověření = **Code**: seed-and-assert (oba staré řetězce přesně 1×), `node --check` OK, `check-is.py` čisté, **smoke 10/10**. §1: JS přes Python (`fix_clarity_register.py`). Verze bumpnuta → nová čtení nesou `prompt_version: v0.9` (readings viewer je odliší od v0.8 = podklad pro A/B). ⚠️ **NEZMĚŘENO evalem** (§18.4 „změny kvality čtení = MĚŘIT, ne hádat"). **Rozhodnutí KUKY 2026-07-14: eval AŽ Z OSTRÝCH DAT** — nechat běžet, nasbírat reálná v0.9 čtení od uživatelů/testerů a teprve pak pustit A/B v0.9 vs v0.8 na ose Clarity („doručuje odpověď vs zaostřuje"). **NE syntetický eval teď** (levnější + reálnější signál, cena = pomalejší zpětná vazba). Podklad = `readings.prompt_version` + Shrine Readings viewer.
 - **Reversibility:** easy (2 řetězce zpět + verze zpět; DB beze změny)
+
+---
+
+## 2026-07-14 — „already" pryč z úhlů čtení (B5; jedna kohorta s Clarity, v0.9)
+
+- **Typ:** decision + implementation (reading prompt)
+- **Scope:** reading
+- **Co se změnilo:** `READING_ANGLES` #2/#6 (EN) + `READING_ANGLES_IS` #2/#6 (IS) v `runar-utils.js` — 2 z 8 úhlů sely „already"/„þegar" = **cold-reading motor „už to v tobě je"**. Úhel se losuje per čtení → **~25 % single čtení** dostalo „already"-úhel. Nové znění drží záměr úhlu (gift / pohyb), ale bez „already":
+  - EN #2: „what this rune **offers, and what it asks in return**." · EN #6: „Lead with what is **stirring** — name the movement this rune makes visible."
+  - IS #2: „hvað þessi rúna **gefur og hvað hún biður um í staðinn**." · IS #6: „Byrjaðu á því sem **hrærist** — nefndu hreyfinguna sem þessi rúna gerir sýnilega."
+- **Proč:** Stejné téma jako Clarity (2026-07-14): Rúnar nemá doručovat „odpověď už v tobě je". Úhly to sely losem u čtvrtiny čtení.
+- **Affected doc(s):** tento záznam
+- **Reality note:** Návrh + BÍN ověření = **Cowork** (`gefur`/`biður` 3.os · `í staðinn` idiom · `hrærist` hrærast MM · `hreyfinguna` þf+gr · `sýnilega` kvk þf = shoda s hreyfinguna — čisté). Aplikace + ověření = **Code**: seed-and-assert (4× přesně 1×), `node --check`, `check-is.py` čisté, **smoke 10/10**. §1: JS přes Python (`fix_already_angles.py`).
+  **Rozsah (schválně úzký):** `READING_ASPECTS` ř. 176 má podobné „already giving", ale **ověřeno §19, že je pool MRTVÝ** — `_randomAspect()` se nikde nevolá (jen definice); naopak `_randomAngle()` je živý (`runar-character.js:851`) → do čtení se dostanou jen opravené úhly. Zmizí, až se retiruje mrtvý kód. „already" v Confirmation-registru („has already decided") + spread-beats ponecháno = jiný kontext (stav leitanda / osudová osa), ne cold-read. Celoplošný zákaz „already/þegar" v banned listu = agresivnější, na eval, ne teď.
+  **⚠️ Verze NEBUMPLA schválně** (odchylka od Coworkova zadání, vědomá): v0.9 (Clarity) dosedla pár minut předtím s **nula ostrými čteními**, a tohle je totéž téma → **jedna kohorta v0.9 = „cold-read cleanup"**, eval pak měří v0.9 vs v0.8 jako celek. Bump na v0.10 by vyrobil prázdnou kohortu a rozštěpil jeden úklid. Stejný vzor jako precedens u Perth („verze se NEbumpla schválně: obojí dosedlo před eval dávkou = jedna kohorta").
+- **Reversibility:** easy (4 řetězce zpět; DB beze změny)
