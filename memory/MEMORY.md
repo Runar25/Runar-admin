@@ -87,7 +87,7 @@ Kořen driftu = duplikace. Jazyk/tier/spread varianty = DATA (RP_* packy, config
 ### TODO
 🔴 **Kritické (blokuje prodej):** Resend SMTP (magic link z agndofa.is) · Shopify webhook (auto upgrade po nákupu) · DPA Supabase (čeká na e-mail; přístup → RUNAR_PRIVACY.md)
 🟡 **Důležité:** standard tier — způsob nákupu ("COMING SOON") + reálný checkout · Privacy Policy na agndofa.is (draft EN+IS + legal-basis = RUNAR_PRIVACY.md; IS→Sigrún, právní review) · runar-help.html inline JS (zbývající hardcoded strings) · **DB sloupec** `address_gender text default 'hk'` (owner v SQL editoru)
-🟢 **Střední:** SSE streaming · Weekly drip odstranit z proxy · Shrine audit
+🟢 **Střední:** SSE streaming · Weekly drip odstranit z proxy · Shrine audit · **Eval Clarity v0.9 vs v0.8** (§18.4) — AŽ se nasbírají ostrá v0.9 čtení, pak A/B na ose „doručuje odpověď vs zaostřuje"; **NE syntetický eval** (KUKY 2026-07-14). Podklad = `readings.prompt_version` + Shrine Readings viewer
 
 ## Index souborů
 - [working-style.md](working-style.md) — workflow pravidla, Python skripty, IS primární jazyk, verifikace, IS gramatika
