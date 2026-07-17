@@ -926,7 +926,6 @@ var RP_KRIZ = {
       'Þriðja rúnan (Undir): hvað liggur í undirmeðvitund eða duldu.',
       'Fjórða rúnan (Að baki): það sem enn verkar úr fortíðinni — ekki sögun, heldur orkan.',
       'Fimmta rúnan (Framar): ekki spá — þar sem þessi orka leiðir ef ekkert breytist.',
-      'Endaðu með einni opinni, hljóðlátri spurningu.',
       'Sérhver rúna verður að setja mark sitt — láttu allar fimm móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
     ]; },
     closing:function(name){ return '' + _namePlacement(name, 'is') + ' Vertu hnitmiðaður — 6 til 7 setningar.'; },
@@ -944,7 +943,6 @@ var RP_KRIZ = {
       'Rune 3 (Below): what lies in the subconscious or hidden.',
       'Rune 4 (Behind): what still acts from the past — not the story, the energy.',
       'Rune 5 (Ahead): not prophecy — where this energy leads if nothing changes.',
-      'End with one quiet, open question.',
       'Every rune must leave its mark — let all five shape the reading through their quality, never just one or two. Do not name the runes; the seeker already sees them.',
     ]; },
     closing:function(name){ return '' + _namePlacement(name, 'en') + ' 6-7 sentences, complete and whole.'; },
@@ -980,6 +978,7 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
     _lensContext(u.lifeRune, runes, lang),
     u.area ? _domainContext(u.area, lang) : '',
     u.seeking ? _registerContext(u.seeking, lang) : '',
+    _endingShape(runes, lang),
     (u.lifeRune || u.area || u.seeking) ? _priorityContext(runes, lang) : '',
   ].concat(S.instructions(ctrName)).concat([
     S.closing(u.name) + (S.langInstr ? ' ' + S.langInstr : '') + getCorrPrompt(lang, corrections),
@@ -1012,7 +1011,7 @@ var RP_NORNS = {
       'Verðandi talar í nútíð — lifandi, að verða til, ekki lokið.',
       'Skuld talar ekki um framtíðina eins og spámann — heldur um hvað verður að verða ef þráðurinn heldur áfram.',
     ],
-    bigInstruction:function(name){ return 'Gefðu hverri af þremur rúnunum sinn eigin takt, í röð — Urður (það sem var), Verðandi (það sem er að verða), Skuld (það sem verður að koma). Taktarnir þrír renna saman í EINN samfelldan straum, ekki þrjá aðskilda lestra. Nefndu ekki rúnirnar né Nornirnar; leiðandinn sér þær þegar. ' + _namePlacement(name, 'is') + ' 5 til 6 setningar alls yfir taktana þrjá; síðasti takturinn endar með einni mjúkri, opinni spurningu.'; },
+    bigInstruction:function(name){ return 'Gefðu hverri af þremur rúnunum sinn eigin takt, í röð — Urður (það sem var), Verðandi (það sem er að verða), Skuld (það sem verður að koma). Taktarnir þrír renna saman í EINN samfelldan straum, ekki þrjá aðskilda lestra. Nefndu ekki rúnirnar né Nornirnar; leiðandinn sér þær þegar. ' + _namePlacement(name, 'is') + ' 5 til 6 setningar alls yfir taktana þrjá.'; },
     json:'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í röð (Urður, Verðandi, Skuld), engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)"}]. Þrír text-reitir tengdir með bili verða að lesast sem ein samfelld heild.',
   },
   en: {
@@ -1025,7 +1024,7 @@ var RP_NORNS = {
       'Verðandi speaks in the present — living, becoming, not yet complete.',
       'Skuld does not predict — she speaks of what must come if this thread continues.',
     ],
-    bigInstruction:function(name){ return 'Give each of the three runes its own beat, in order — Urður (what was), Verðandi (what is becoming), Skuld (what must come). The three beats connect into ONE flowing passage, not three separate readings. Do not name the runes or the Norns; the seeker already sees them. ' + _namePlacement(name, 'en') + ' 5-6 sentences total across the three beats; the final beat ends with one quiet, open question.'; },
+    bigInstruction:function(name){ return 'Give each of the three runes its own beat, in order — Urður (what was), Verðandi (what is becoming), Skuld (what must come). The three beats connect into ONE flowing passage, not three separate readings. Do not name the runes or the Norns; the seeker already sees them. ' + _namePlacement(name, 'en') + ' 5-6 sentences total across the three beats.'; },
     json:'Output format — return ONLY this JSON array, one object per rune in order (Urður, Verðandi, Skuld), nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)"}]. The three text fields joined with a space must read as one seamless passage.',
   },
 };
@@ -1055,6 +1054,7 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
     _lensContext(u.lifeRune, runes, lang),
     u.area ? _domainContext(u.area, lang) : '',
     u.seeking ? _registerContext(u.seeking, lang) : '',
+    _endingShape(runes, lang),
     (u.lifeRune || u.area || u.seeking) ? _priorityContext(runes, lang) : '',
   ].concat(S.beats).concat([
     S.bigInstruction(u.name),
@@ -1082,7 +1082,7 @@ var RP_HORSESHOE = {
       'Nefndu ekki staðsetningarnar í úttakinu. Bærðu þær í röddinn.',
       'Sérhver rúna verður að setja mark sitt — láttu allar sjö móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
     ],
-    closing:function(name){ return '' + _namePlacement(name, 'is') + ' 11 til 12 setningar. Endaðu með einni opinni spurningu.'; },
+    closing:function(name){ return '' + _namePlacement(name, 'is') + ' 11 til 12 setningar.'; },
     json:'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í þeirri röð sem listuð er að ofan, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)"}]. Text-reitirnir tengdir með bili verða að lesast sem ein samfelld heild.',
   },
   en: {
@@ -1095,7 +1095,7 @@ var RP_HORSESHOE = {
       'Do not name the positions in the output. Carry them in your voice.',
       'Every rune must leave its mark — let all seven shape the reading through their quality, never just one or two. Do not name the runes; the seeker already sees them.',
     ],
-    closing:function(name){ return '' + _namePlacement(name, 'en') + ' 11-12 sentences. End with one open question.'; },
+    closing:function(name){ return '' + _namePlacement(name, 'en') + ' 11-12 sentences.'; },
     json:'Output format — return ONLY this JSON array, one object per rune in the order listed above, nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)"}]. The text fields joined with a space must read as one seamless passage.',
   },
 };
@@ -1127,6 +1127,7 @@ function buildHorseshoePromptSeven(u, runes, lang, corrections) {
     _lensContext(u.lifeRune, runes, lang),
     u.area ? _domainContext(u.area, lang) : '',
     u.seeking ? _registerContext(u.seeking, lang) : '',
+    _endingShape(runes, lang),
     (u.lifeRune || u.area || u.seeking) ? _priorityContext(runes, lang) : '',
   ].concat(S.beats).concat([
     S.closing(u.name),
@@ -1159,7 +1160,7 @@ var RP_YGGDRASIL = {
       'Nefndu ekki heimanna nöfn í úttakinu. Nefndu ekki Norns-ásinn. Láttu þá lifa í röddinn.',
       'Sérhver rúna verður að setja mark sitt — láttu allar níu móta lesturinn gegnum eðli sitt, aldrei aðeins fáeinar. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
     ],
-    closing:function(name){ return '' + _namePlacement(name, 'is') + ' 14 til 15 setningar. Endaðu með einni djúpri, opinni spurningu — þeirri sem heldur áfram að hljóma.'; },
+    closing:function(name){ return '' + _namePlacement(name, 'is') + ' 14 til 15 setningar.'; },
     json:'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í þeirri röð sem listuð er að ofan, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)"}]. Text-reitirnir tengdir með bili verða að lesast sem ein samfelld heild.',
   },
   en: {
@@ -1176,7 +1177,7 @@ var RP_YGGDRASIL = {
       'Do not name the worlds in the output. Do not name the Norns axis. Carry them in your voice.',
       'Every rune must leave its mark — let all nine shape the reading through their quality, never just a few. Do not name the runes; the seeker already sees them.',
     ],
-    closing:function(name){ return '' + _namePlacement(name, 'en') + ' 14-15 sentences. End with one deep, open question — one that keeps resonating.'; },
+    closing:function(name){ return '' + _namePlacement(name, 'en') + ' 14-15 sentences.'; },
     json:'Output format — return ONLY this JSON array, one object per rune in the order listed above, nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)"}]. The text fields joined with a space must read as one seamless passage.',
   },
 };
@@ -1212,6 +1213,7 @@ function buildYggdrasilPromptNine(u, runes, lang, corrections) {
     _lensContext(u.lifeRune, runes, lang),
     u.area ? _domainContext(u.area, lang) : '',
     u.seeking ? _registerContext(u.seeking, lang) : '',
+    _endingShape(runes, lang),
     (u.lifeRune || u.area || u.seeking) ? _priorityContext(runes, lang) : '',
   ].concat(S.beats).concat([
     S.closing(u.name),

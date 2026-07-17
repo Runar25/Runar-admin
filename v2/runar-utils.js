@@ -205,7 +205,7 @@ function _namePlacement(name, lang) {
 // How a reading closes varies per reading AND follows the rune's valence (HEAVY_RUNES):
 // a heavy rune must not be softened into comfort; the rest may rest instead of asking.
 const ENDING_HEAVY = [
-  'End on a line that stays standing — no soft question, no comfort; let the rune stand.',
+  'End on a line that stays standing — no soft question, no comfort; let it stand.',
   'End with one hard question that asks for honesty, not comfort.',
 ];
 const ENDING_OPEN = [
@@ -214,7 +214,7 @@ const ENDING_OPEN = [
   'End on a quiet line that rests — not a question this time.',
 ];
 const ENDING_HEAVY_IS = [
-  'Endaðu á línu sem stendur — engin mjúk spurning, engin huggun; láttu rúnina standa.',
+  'Endaðu á línu sem stendur — engin mjúk spurning, engin huggun; láttu það standa.',
   'Endaðu á einni harðri spurningu sem biður um heiðarleika, ekki huggun.',
 ];
 const ENDING_OPEN_IS = [
@@ -223,7 +223,8 @@ const ENDING_OPEN_IS = [
   'Endaðu á hljóðlátri línu sem hvílir — ekki spurningu í þetta sinn.',
 ];
 function _endingShape(drawn, lang) {
-  var heavy = !!(drawn && drawn.n && typeof HEAVY_RUNES !== 'undefined' && HEAVY_RUNES.names.indexOf(drawn.n) !== -1);
+  function _isHeavy(r) { return !!(r && r.n && typeof HEAVY_RUNES !== 'undefined' && HEAVY_RUNES.names.indexOf(r.n) !== -1); }
+  var heavy = Array.isArray(drawn) ? drawn.some(_isHeavy) : _isHeavy(drawn);
   var pool = heavy ? (lang === 'is' ? ENDING_HEAVY_IS : ENDING_HEAVY)
                    : (lang === 'is' ? ENDING_OPEN_IS : ENDING_OPEN);
   return pool[Math.floor(Math.random() * pool.length)];
