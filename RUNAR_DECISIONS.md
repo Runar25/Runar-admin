@@ -619,3 +619,15 @@
 - **Zásada (owner):** kredity uděluj JEN vyražením kódu, NIKDY ručním sáhnutím na `credits_balance`. Ledger/účetnictví se NESTAVÍ — není checkout ani platící zákazník; předčasné.
 - **Affected doc(s):** CLAUDE.md (DB sloupce už měly month_*), MEMORY.md, sql/ (3 soubory), smoke.py (⑩)
 - **Reverzibilita:** granty snadno (re-grant); proxy fixy snadno; guard je jen kontrola.
+
+---
+
+## 2026-07-17 — Durable journal queue: čtení přežije výpadek DB
+
+- **Typ:** decision + implementation (resilience)
+- **Scope:** reading (klient + proxy)
+- **Co se změnilo:** Po dnešním Supabase výpadku (07-17), který sežral celé čtení (insert i follow_up = DB zápisy, spadly s DB), zavedena **klientská fronta + idempotentní retry** (KUKY schválil Fázi 1+2). **Klient:** `_uuid()` per čtení/ask; po `callProxy` když server nepotvrdí zápis (chybí `reading_id`/`ask_saved`) → čtení (meta + model text) do localStorage fronty (`pendingReadings`/`pendingAsks`, cap 50). `_flushPending` (utils.js) dosype **při startu appky + po každém čtení**: readings first (aby ask měl parent), pak asks. UUID = **kanonický reading id napříč** (`_lastReadingId = res.reading_id || _journal.id`) → ask linkuje správně, ať čtení uložilo živě nebo je ve frontě. **Proxy** (`claude-proxy`): `persistJournal` helper sdílený živou cestou i novým `mode:'resave'` (bez Claude/kreditu/capu/rate-limitu); insert **idempotentní na klientské `id`** (dup = 23505 = už uloženo, retry nezdvojí); follow_up **deduped přes `ask_entry_id`**; vrací `saved`/`ask_saved`. `credits_used` server-authoritative (**resave = false → outage čtení zdarma**; deduction je taky DB zápis, spadl s outage, takže nebylo naúčtováno).
+- **Proč:** čtení = eval zlato; výpadek DB je nesmí tiše ztratit. Pokrývá přesně dnešní scénář (Claude jelo, DB zápis spadl).
+- **Affected doc(s):** tento záznam
+- **Reality note:** Ověřeno: node --check klient, smoke 10/10, funkční probe (fronta drží při DB-dole, vyprázdní při DB-nahoře, pořadí reads<asks, idempotence dle id, UUID v4). **Proxy TS NEOVĚŘEN lokálně** (žádný deno v prostředí) → **Cowork review + `supabase functions deploy claude-proxy`** (deploy sám kompiluje/bundluje → TS chyba **spadne deploy**, ne rozbije live proxy). **Pořadí deploy: proxy PŘED klientem** — ale klient **degraduje bezpečně**: resave na starý proxy = 400 (prázdný prompt) → `saved` undefined → položka zůstane ve frontě (retry po deployi); normální čtení na starém proxy jede (staré proxy ignoruje klientské `id`, vrátí vlastní reading_id, klient ho použije). Commity `8ef1546` [proxy] + `2319b10` [reading]. **Meze:** user smaže storage / nevrátí se před zotavením = to jedno čtení pryč (localStorage per-zařízení); pravá nulová ztráta = durable store nezávislý na DB = na betu overkill. §1: klient JS via Python; proxy TS via Edit (double-quoted, apostrof-riziko nulové).
+- **Reversibility:** medium (revert 4 soubory + re-deploy starý proxy; fronta aditivní, helper neškodný)
