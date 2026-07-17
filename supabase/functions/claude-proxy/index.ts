@@ -396,8 +396,18 @@ serve(async (req) => {
     // A follow-up question is NOT a cast: it hangs off a reading that was already counted
     // (one per reading — _askUsed), and it costs a subscriber nothing today. Counting it
     // would quietly halve the subscription they bought.
-    // Only a follow-up (ask) is cap-exempt; ceremonial was a client-string bypass, now gone.
-    const countsAsCast = mode !== "ask";
+    // A follow-up (ask) is cap-exempt ONLY when it is a genuine follow-up: kind 'ask' on a
+    // reading that exists, is this user's, and has not been asked yet. Otherwise mode:'ask'
+    // on an ordinary reading would skip the cap forever. The lookup mirrors the follow_up
+    // append below, so if it passes here the append will too. Any doubt -> it counts.
+    let legitAsk = false;
+    if (mode === "ask" && journal?.kind === "ask" && journal?.reading_id && userId) {
+      const { data: parent } = await sb().from("readings")
+        .select("follow_up").eq("id", journal.reading_id).eq("user_id", userId).maybeSingle();
+      legitAsk = !!parent && (parent.follow_up == null ||
+        (Array.isArray(parent.follow_up) && parent.follow_up.length === 0));
+    }
+    const countsAsCast = !legitAsk;
     if ((userTier === "standard" || userTier === "premium") && userId && countsAsCast && !isAdmin) {
       const limit = MONTHLY_LIMITS[userTier];
       const mKey = monthKey();
