@@ -667,3 +667,9 @@ stav až potom a vyvodil závěr o minulosti → owner musel arbitrovat. Stav be
 2026-07-17 22:40 · CODE · zapsal tento AKČNÍ PROTOKOL + log do RUNAR_DECISIONS.md a commitnul
   · PROČ: Cowork ho předal v chatu, protože sám nemohl commitnout (viděl lock); Code = jediný zapisovatel
   · OVĚŘENÍ: git commit + push (hash v handoffu zpět).
+2026-07-17 22:44 · CODE · review durable-journal proxy práce (Cowork, commity 8ef1546..b920598) + deploy HEAD proxy
+  · PROČ: klientská půlka (mode:'resave') už živá přes Pages, ale nasazená proxy (ddd4c46) handler neměla
+    → rozštěp; proxy = doména CODE, review před live je na mně
+  · OVĚŘENÍ: celý money-path diff ddd4c46..HEAD přečten — mé fixy (cappedMaxTokens/legitAsk/ceremonial)
+    netknuté; credits_used zůstává server-authoritative; resave = bez Claude/odečtu/capu, idempotent
+    (client-id 23505 dedup), rate-limited, credits_used=false (žádný money exploit). Deploy OK, prod == HEAD.
