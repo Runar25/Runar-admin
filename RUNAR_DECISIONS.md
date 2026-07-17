@@ -631,3 +631,39 @@
 - **Affected doc(s):** tento záznam
 - **Reality note:** Ověřeno: node --check klient, smoke 10/10, funkční probe (fronta drží při DB-dole, vyprázdní při DB-nahoře, pořadí reads<asks, idempotence dle id, UUID v4). **Proxy TS NEOVĚŘEN lokálně** (žádný deno v prostředí) → **Cowork review + `supabase functions deploy claude-proxy`** (deploy sám kompiluje/bundluje → TS chyba **spadne deploy**, ne rozbije live proxy). **Pořadí deploy: proxy PŘED klientem** — ale klient **degraduje bezpečně**: resave na starý proxy = 400 (prázdný prompt) → `saved` undefined → položka zůstane ve frontě (retry po deployi); normální čtení na starém proxy jede (staré proxy ignoruje klientské `id`, vrátí vlastní reading_id, klient ho použije). Commity `8ef1546` [proxy] + `2319b10` [reading]. **Meze:** user smaže storage / nevrátí se před zotavením = to jedno čtení pryč (localStorage per-zařízení); pravá nulová ztráta = durable store nezávislý na DB = na betu overkill. §1: klient JS via Python; proxy TS via Edit (double-quoted, apostrof-riziko nulové).
 - **Reversibility:** medium (revert 4 soubory + re-deploy starý proxy; fronta aditivní, helper neškodný)
+
+---
+
+## 2026-07-17 — AKČNÍ PROTOKOL CODE ↔ Cowork  (po sporu o claude-proxy)
+Platí pro OBĚ session. Vzniklo z reálné události: Cowork zasáhl do repa bez stopy → CODE viděl
+stav až potom a vyvodil závěr o minulosti → owner musel arbitrovat. Stav bez historie nejde přečíst.
+
+1. NESAHAT na sdílené repo bez stopy. Zásah = commit ([cowork]/[code]) + push ihned.
+   Nejde commitnout (lock/přístup) → NESAHAT, jen ohlásit. Neviditelná změna je horší než žádná.
+2. AKČNÍ LOG: jedna řádka na KAŽDÝ zásah do repa, sem do RUNAR_DECISIONS.md:
+   YYYY-MM-DD HH:MM · KDO · CO · PROČ · OVĚŘENÍ
+3. Tvrzení o stavu nese ČAS + KANÁL. „675 řádků" bez „22:20, přes můj strom" = dojem, ne tvrzení.
+4. Jeden kanál na třídu faktu (§18): stav repa = git (git show HEAD:, hash-object), NE něčí mount.
+   Cowork worktree NETVRDÍ — ptá se CODE.
+5. Handoff obsahuje sekci ZMĚNĚNO: (co jsem změnil), ne jen co jsem našel. Povinná i prázdná.
+6. Než druhého opravíš, přečti AKČNÍ LOG. Timeline před závěrem.
+
+### AKČNÍ LOG — první záznamy
+2026-07-17 22:16 · COWORK · přepsal supabase/functions/claude-proxy/index.ts obsahem z HEAD
+  · PROČ: přes mount viděl worktree jako 528 ř./useknutý; git status M + diff 529/675; esbuild i tsc
+    hlásily syntax error (unexpected EOF); `git restore` odmítl kvůli zaseklému .git/index.lock
+  · OVĚŘENÍ: git hash-object worktree == HEAD blob (5481208…)
+  · ⚠️ SPORNÉ/NEROZHODNUTO: CODE na svém autoritativním stromě hlásí 675 ř./kompletní i PŘED tím
+    → možný Cowork mount artefakt. Obsah je tak jako tak == HEAD, deploy bezpečný.
+    Poučení = pravidla 1+2: kdyby byl záznam, spor nevznikne.
+2026-07-17 22:16 · SYSTEM · .git/index.lock zaseklý; Cowork nemá práva smazat („Operation not permitted")
+  → OWNER smaže ve Windows. Dokud tam je, nejdou git add/commit/restore.
+2026-07-17 22:37 · CODE · ověřil stav na autoritativním (nativním) stromě, ne přes mount
+  · PROČ: pravidla 3+4 — tvrzení o stavu se ověřuje přes git, ne cizí mount
+  · OVĚŘENÍ: `ls .git/index.lock` → neexistuje (žádný lock); claude-proxy má obě mé edity
+    (cappedMaxTokens + legitAsk, grep=5); `git hash-object` worktree == HEAD blob; HEAD=b920598, pushnutý.
+  · ZÁVĚR sporného bodu výše: „528 ř./useknutý" byl Cowork MOUNT ARTEFAKT — autoritativní strom
+    byl kompletní po celou dobu (pravidlo 4: autorita = git na nativním stromě, ne mount view).
+2026-07-17 22:40 · CODE · zapsal tento AKČNÍ PROTOKOL + log do RUNAR_DECISIONS.md a commitnul
+  · PROČ: Cowork ho předal v chatu, protože sám nemohl commitnout (viděl lock); Code = jediný zapisovatel
+  · OVĚŘENÍ: git commit + push (hash v handoffu zpět).
