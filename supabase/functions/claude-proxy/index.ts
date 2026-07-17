@@ -5,9 +5,8 @@
 //     free_balance in user_profiles: 1 at onboarding, NO replenish (no weekly drip)
 //     free readings: SINGLE RUNE ONLY (spread_cost must be 1)
 //     paid credits: any spread, cost = spread_cost param
-//     ceremonial mode (The Gathering): bypass all limits
 //     -> only error this path returns is no_credits (402); no weekly/monthly error
-//   standard / premium — monthly cast cap (MONTHLY_LIMITS); asks + ceremonial do not count
+//   standard / premium — monthly cast cap (MONTHLY_LIMITS); a follow-up (ask) does not count
 // Rate limit: 10 requests / 60s per user (or IP for anonymous)
 // Tree context: injected into system prompt for tree-active readings (Vrstva A)
 // Session state: derived from tree + time, shapes reading tone (Vrstva B)
@@ -397,7 +396,8 @@ serve(async (req) => {
     // A follow-up question is NOT a cast: it hangs off a reading that was already counted
     // (one per reading — _askUsed), and it costs a subscriber nothing today. Counting it
     // would quietly halve the subscription they bought.
-    const countsAsCast = mode !== "ceremonial" && mode !== "ask";
+    // Only a follow-up (ask) is cap-exempt; ceremonial was a client-string bypass, now gone.
+    const countsAsCast = mode !== "ask";
     if ((userTier === "standard" || userTier === "premium") && userId && countsAsCast && !isAdmin) {
       const limit = MONTHLY_LIMITS[userTier];
       const mKey = monthKey();
@@ -429,9 +429,11 @@ serve(async (req) => {
         }
         deductPlan = { kind: "paid", cost };
 
-      } else if (mode === "ceremonial") {
-        // ── The Gathering — bypass all limits ──
-
+      // (Removed here: an empty `else if (mode === "ceremonial")` that handed a free reading
+      // — no deduction, no check — to ANY request carrying the client string mode:'ceremonial'.
+      // The Gathering reading that used it is unreachable from the UI, so it served only
+      // crafted abuse. When the Gathering returns with the Tree it pays its credits via the
+      // paid path above, not a bypass.)
       } else {
         // ── Free balance reading (single rune only) — 1 at registration, no replenish (model B) ──
         if (userId) {
