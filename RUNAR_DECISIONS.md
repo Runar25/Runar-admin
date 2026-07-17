@@ -578,3 +578,20 @@
 - **Reality note:** Návrh + BÍN ověření IS poolu = **Cowork** (`snemma` ao · `miðjunni` þgf+gr · `viðurkenningu` þf · `fremur` ao · `kynningu` þf · `seint` ao · `lokin` hk ft+gr · `hljóðláta` kvk þf = shoda s viðurkenningu · `skaltu` 2.os · `nota`/`standa` nh — čisté). Aplikace + ověření = **Code**: seed-and-assert (EN přesně 5×, IS přesně 5×), `node --check` obou souborů, `check-is.py` čisté, **smoke 10/10**, 10 call sites. **Funkční ověření (§19):** node probe × 400 → reálně padají **4 EN + 4 IS varianty**, **0 nedosazených `{name}`**. Ověřeno i, že `opening word`/`fyrsta orð` v character.js **už nejsou vůbec** (klauze plně přesunuta do poolu). **Falešný poplach vyloučen:** zbylé 4 výskyty „woven naturally/fléttað náttúrlega" jsou o jménu **RUNY** (`Mention <rune> by name once`), ne leitanda → správně netknuté. Load-order OK: character.js se parsuje dřív, ale helper se volá až za běhu (týž vzor jako `_randomAngle`). §1: JS přes Python (`add_name_placement.py`).
   **⚠️ Verze NEBUMPLA** (vědomě, i proti Coworkově domněnce v0.10): v0.9 má **stále ~nula ostrých čtení** a **B10 je ještě ve frontě** → per-téma kohorty jsou při nulovém provozu fantomy (vyrobily by řadu prázdných štítků). **v0.9 = celá úklidová vlna** (cold-read + anti-slot + B10), bump až vlna dosedne a začne provoz. Atribuce jednotlivých fixů by stejně chtěla ostré A/B s trafficem, ne štítek na prázdné kohortě.
 - **Reversibility:** easy (revert 2 soubory; pool je aditivní, helper by zůstal neškodný)
+
+---
+
+## 2026-07-14 — Konec čtení dle valence runy, ne vždy otázka (B10 stage 1: single)
+
+- **Typ:** decision + implementation (reading prompt)
+- **Scope:** reading
+- **Co se změnilo:** Každé single čtení mělo natvrdo „End with a single open question" (charakter format) **a** q/noq větve to opakovaly → **pevný formální slot**: čtení vždy končilo měkkou otázkou, i pod těžkou runou, kde je útěcha špatně. Nově **`_endingShape(drawn, lang)`** (`runar-utils.js`, vedle `_namePlacement`) losuje tvar konce **dle valence runy** (`HEAVY_RUNES.names`):
+  - **těžké** (Hagalaz/Nauthiz/Isa/Thurisaz/Perth/Tiwaz) → „line that stays standing" **nebo** tvrdá otázka na heiðarleika — **bez měkké útěchy** (2 varianty)
+  - **ostatní** → otevřená otázka / krátká otázka / **spočinutí bez otázky** (3 varianty ≈ 2:1 otázka:spočinutí)
+  Odebráno „vždy otázka" z charakter formátu (EN 2× vč. mrtvého DEF_CHAR_V2, IS 1×) + ze single q/noq větví (EN 2, IS 2). Injektáž do `buildReadingPromptSingle` hned za q/noq větev.
+- **Proč:** Anti-slot (§D1/F2). Povinná otázka na konci = strojový podpis; navíc pod těžkou runou měkký konec **popírá samotnou runu**. Poměr je laditelný poolem, finál rozhodne eval.
+- **Affected doc(s):** tento záznam
+- **Reality note:** Návrh + BÍN ověření IS = **Cowork** (`snýr` 3.os · `leitandanum` þgf+gr · `stuttri`/`harðri`/`hljóðlátri` kvk þgf · `línu` · `hvílir` 3.os · `stendur` · `huggun` kvk · `heiðarleika` kk · `rúnina` þf+gr — čisté; homografy `þunga`/`létti` schválně ven, `standa`/`huggun` dovnitř). Aplikace + ověření = **Code**: seed-and-assert (EN format přesně 2×, ostatní 1×), `node --check`, `check-is.py` čisté, **smoke 10/10**. **Funkční probe (§19):** node × 400 na runu → **těžké dávají 2 varianty (obě bez útěchy), ostatní 3 vč. spočinutí; leak-check „dostala těžká runa měkký konec" = 0**. Ověřeno i, že v single cestě nezbyl žádný natvrdo daný konec. §1: JS přes Python (`add_ending_shape.py`).
+  **Rozsah = STAGE 1 (jen single).** Spready + life-rune builder (ř. ~671/1085/1098/1179) **zatím drží „end with question"** = vědomá dočasná nekonzistence; stage 2 (spready) ji zavře a tím uzavře i vlnu.
+  **Verze NEBUMPLA** — pokračuje **vlna v0.9** (cold-read + anti-slot). Bump až vlna dosedne (po stage 2) a začne provoz.
+- **Reversibility:** easy (revert 2 soubory; pooly aditivní)
