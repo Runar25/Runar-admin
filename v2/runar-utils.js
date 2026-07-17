@@ -5,6 +5,7 @@
 //
 // Contents:
 //   READING_ANGLES / READING_ANGLES_IS / _randomAngle(lang)
+//   NAME_PLACEMENTS / NAME_PLACEMENTS_IS / _namePlacement(name, lang)
 //   rk(), rn(), rworld(), relements()  — rune data helpers (read global lang)
 //   setText(), setPH(), setSt()        — DOM helpers
 //   showToast()                        — toast notification
@@ -167,6 +168,27 @@ const READING_ANGLES_IS = [
 function _randomAngle(lang) {
   var _pool = lang === 'is' ? READING_ANGLES_IS : READING_ANGLES;
   return _pool[Math.floor(Math.random() * _pool.length)];
+}
+
+// ─── NAME PLACEMENT (anti-slot) ──────────────────────────────────
+// Where the seeker's name lands varies per reading: early / middle / late / not at all.
+// Replaces a fixed clause that was copy-pasted 5x per language into the pack closings (§18).
+// {name} is substituted; the 'not at all' variant still has the seeker in the PERSON: context.
+const NAME_PLACEMENTS = [
+  'Address {name} early, woven in — but never as the opening word.',
+  'Address {name} once in the middle, as a recognition rather than an introduction.',
+  'Let the name {name} arrive late, near the close, as a quiet recognition.',
+  'This time do not use the name {name} at all — let the reading stand without it.',
+];
+const NAME_PLACEMENTS_IS = [
+  'Ávarpaðu {name} snemma, fléttað inn — en aldrei sem fyrsta orð.',
+  'Ávarpaðu {name} einu sinni í miðjunni, sem viðurkenningu fremur en kynningu.',
+  'Láttu nafn {name} koma seint, undir lokin, sem hljóðláta viðurkenningu.',
+  'Í þetta sinn skaltu ekki nota nafn {name} — láttu lesturinn standa án þess.',
+];
+function _namePlacement(name, lang) {
+  var pool = lang === 'is' ? NAME_PLACEMENTS_IS : NAME_PLACEMENTS;
+  return pool[Math.floor(Math.random() * pool.length)].split('{name}').join(name);
 }
 
 // ─── VARIABILITY POOLS (V2) ──────────────────────────────────────
