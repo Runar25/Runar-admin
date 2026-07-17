@@ -348,6 +348,11 @@ serve(async (req) => {
     } = body;
     if (!prompt) return json({ error: "Missing prompt" }, 400);
 
+    // Clamp max_tokens (client-supplied, passed straight to Claude). Largest legit reading is
+    // life_rune_premium at 2000; 2500 is headroom. Stops a crafted request ordering an
+    // oversized, expensive generation.
+    const cappedMaxTokens = Math.min(Math.max(1, Number(max_tokens) || 600), 2500);
+
     // ── Auth & tier check ──
     const authHeader = req.headers.get("Authorization");
     let userId: string | null = null;
@@ -522,7 +527,7 @@ serve(async (req) => {
     for (const model of MODELS) {
       result = await callClaudeWithRetry({
         model,
-        max_tokens,
+        max_tokens: cappedMaxTokens,
         system:   systemParts.length > 0 ? systemParts : undefined,
         messages: [{ role: "user", content: prompt }],
       }, anthropicKey);

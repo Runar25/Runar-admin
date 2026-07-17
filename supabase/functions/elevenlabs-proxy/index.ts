@@ -57,6 +57,8 @@ serve(async (req) => {
     // ── Parse body ──
     const { text, lang } = await req.json();
     if (!text) return json({ error: "text is required" }, 400);
+    // Text is billed per character — clamp it. Longest legit narration (Yggdrasil) ~1661.
+    if (typeof text !== "string" || text.length > 3000) return json({ error: "text too long" }, 400);
 
     // lang determines model — NEVER trust frontend for voice/model selection
     const resolvedModel = lang === "is" ? EL_MODEL_IS : EL_MODEL_EN;
