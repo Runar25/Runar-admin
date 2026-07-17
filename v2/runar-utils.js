@@ -189,7 +189,12 @@ const NAME_PLACEMENTS_IS = [
 ];
 function _namePlacement(name, lang) {
   var pool = lang === 'is' ? NAME_PLACEMENTS_IS : NAME_PLACEMENTS;
-  return pool[Math.floor(Math.random() * pool.length)].split('{name}').join(name);
+  // Owner: a name in every reading grates -> omit it in at least half of them (~55%).
+  // INVARIANT: the "do not use the name" variant must stay LAST in both pools — this
+  // picks it by position. Reordering a pool without moving it silently breaks the ratio.
+  if (Math.random() < 0.55) return pool[pool.length - 1].split('{name}').join(name);
+  var placed = pool.slice(0, pool.length - 1); // early / middle / late
+  return placed[Math.floor(Math.random() * placed.length)].split('{name}').join(name);
 }
 
 // ─── ENDING SHAPE (anti-slot) ────────────────────────────────────
