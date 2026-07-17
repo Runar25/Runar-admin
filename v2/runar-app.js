@@ -1110,7 +1110,7 @@ async function callProxy(sys, prompt, maxTokens, use_credit = false, credit_cost
       updateAuthUI();
     }
 
-    return { text: data.content?.[0]?.text || data.text || '', reading_id: data.reading_id };
+    return { text: data.content?.[0]?.text || data.text || '', reading_id: data.reading_id, saved: data.saved, ask_saved: data.ask_saved };
   } catch (e) { console.error('callProxy:', e && e.message); return { error: 'network_error' }; }
 }
 
@@ -1316,6 +1316,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     fetchUserProfile(currentUser.id); // tier + credits (also calls updateAuthUI)
     syncFreeBalance(currentUser.id);
     loadJournal();
+    _flushPending(); // re-send any reading/ask the last DB outage dropped
   }
 
   sb.auth.onAuthStateChange(async (event, session) => {

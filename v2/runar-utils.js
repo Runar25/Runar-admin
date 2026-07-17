@@ -53,6 +53,47 @@ function runeSvg(rune, opts) {
   return '<svg class="rune-svg ' + cls + '" viewBox="' + sd.vb + '" fill="none" xmlns="http://www.w3.org/2000/svg">' + paths + '</svg>';
 }
 
+// ─── DURABLE JOURNAL QUEUE — a reading survives a DB outage ───────────────────────
+// If the server-side save does not confirm (no reading_id / ask_saved — e.g. the DB was down),
+// stash the reading/ask (text + meta are both known here) in localStorage and re-send it,
+// idempotent on a client-generated id, once things recover. See claude-proxy mode:'resave'.
+// Loss window: the user clears storage / never returns before recovery.
+function _uuid() {
+  try { if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID(); } catch (e) {}
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    var r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+  });
+}
+function _pendGet(key) { try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) { return []; } }
+function _pendSet(key, arr) { try { localStorage.setItem(key, JSON.stringify(arr.slice(-50))); } catch (e) {} }
+function _pendAdd(key, item) { var a = _pendGet(key); if (!a.some(function (x) { return x.id === item.id; })) { a.push(item); _pendSet(key, a); } }
+function _pendRemove(key, id) { _pendSet(key, _pendGet(key).filter(function (x) { return x.id !== id; })); }
+
+// Re-send anything the server never confirmed. Readings first (so an Ask can attach to its parent
+// row), then Asks. Idempotent server-side; a still-failing item just stays queued for next time.
+var _flushing = false;
+async function _flushPending() {
+  if (_flushing || typeof currentUser === 'undefined' || !currentUser || typeof callProxy !== 'function') return;
+  _flushing = true;
+  try {
+    var reads = _pendGet('pendingReadings');
+    for (var i = 0; i < reads.length; i++) {
+      var r = reads[i];
+      var meta = Object.assign({}, r.journal, { model_text: r.model_text });
+      var res = await callProxy('', '', 0, false, 0, meta, 'resave');
+      if (res && !res.error && res.saved) _pendRemove('pendingReadings', r.id);
+    }
+    var asks = _pendGet('pendingAsks');
+    for (var j = 0; j < asks.length; j++) {
+      var a = asks[j];
+      var meta2 = { kind: 'ask', reading_id: a.reading_id, ask_entry_id: a.id, question: a.question, answer: a.answer };
+      var res2 = await callProxy('', '', 0, false, 0, meta2, 'resave');
+      if (res2 && !res2.error && res2.saved) _pendRemove('pendingAsks', a.id);
+    }
+  } catch (e) { console.warn('_flushPending:', e && e.message); }
+  _flushing = false;
+}
+
 // HTML-escape a value before interpolating it into innerHTML. Reading/journal fields carry
 // user free text (question, area) + model text, so escaping prevents stored/self-XSS and
 // also renders any literal < & " in a reading correctly. ONE helper for reader + shrine (§3/§18).

@@ -121,14 +121,16 @@ async function _generateReading() {
   // 'someone' readings are stored only for TESTERS (test data for the shrine) — a normal user's
   // third-party reading is never stored (that person never consented). Journal filters them out.
   var _journal = (currentUser && (_readingMode === 'mine' || isTester)) ? {
-    kind: 'single', rune_name: drawn.n, rune_glyph: drawn.g, lang: lang,
+    kind: 'single', id: _uuid(), rune_name: drawn.n, rune_glyph: drawn.g, lang: lang,
     area: u.area || null, aol: u.area || null, seeking: u.seeking || null, intention: u.intention || null,
     question: u.question || null, life_rune: (u.lifeRune && u.lifeRune.n) || null,
     prompt_version: RUNAR_PROMPT_VERSION, address: userGender, reading_mode: _readingMode
   } : null;
   _lastReadingId = null;
   const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens, shouldUseCredit(), SPREAD_COSTS.single.credits, _journal);
-  if (res && res.reading_id) _lastReadingId = res.reading_id;
+  _lastReadingId = (res && res.reading_id) || (_journal ? _journal.id : null);
+  if (_journal && res && !res.error && res.text && !res.reading_id) _pendAdd('pendingReadings', { id: _journal.id, journal: _journal, model_text: res.text });
+  _flushPending();
   if (res.error === 'rate_limited') {
     if (_rdLoadEl) _rdLoadEl.style.display = 'none';
     if (_pL1) _pL1.classList.remove('pulsing');
@@ -536,8 +538,9 @@ async function askRunar() {
   // Attach the follow-up whenever the reading was actually stored — _lastReadingId is set
   // only then, so it is the single gate (never re-check the save conditions here: that is how
   // 'someone' readings silently lost their Ask). Identical for mine + someone.
+  var _askEntryId = _uuid();
   var _askJournal = (currentUser && _lastReadingId)
-    ? { kind: 'ask', reading_id: _lastReadingId, question: q } : null;
+    ? { kind: 'ask', reading_id: _lastReadingId, ask_entry_id: _askEntryId, question: q } : null;
   // mode 'ask' = not a cast: it must not draw down the monthly cap (see claude-proxy).
   var res = await callProxy(sys, prompt, 120, shouldUseCredit(), SPREAD_COSTS.single.credits, _askJournal, 'ask'); // follow-up capped short (~40 words)
   if (res.error) {
@@ -547,6 +550,7 @@ async function askRunar() {
   }
   var answer = _parseSegments(res.text || '').reading || (res.text || '').trim(); // defensive: unwrap if model returns JSON
   answer = applyISCorrections(answer, lang, corrections);
+  if (_askJournal && res && !res.error && !res.ask_saved) { _pendAdd('pendingAsks', { id: _askEntryId, reading_id: _lastReadingId, question: q, answer: answer }); _flushPending(); }
   _askUsed = true;
   var wrap = document.getElementById('ask-input-wrap'); if (wrap) wrap.style.display = 'none'; // one question -> close
   var qEl = document.getElementById('ask-question'); if (qEl) { qEl.textContent = q; qEl.style.display = 'block'; } // keep the question visible
@@ -755,7 +759,7 @@ async function _generateSpreadReading(o) {
   // Journal meta for the SERVER-SIDE save (proxy persists atomically with the deduction).
   var _runeDisplay = o.runes.map(function (r) { return ((r.g || '') + ' ' + (r.n || '').toUpperCase()).trim(); }).join(' · ');
   var _journalS = (currentUser && (_readingMode === 'mine' || isTester)) ? {
-    kind: 'spread', rune_name: o.kind, rune_glyph: '✦', lang: lang,
+    kind: 'spread', id: _uuid(), rune_name: o.kind, rune_glyph: '✦', lang: lang,
     area: 'spread', aol: u.area || null, seeking: u.seeking || null, intention: u.intention || null,
     question: u.question || null, life_rune: (u.lifeRune && u.lifeRune.n) || null,
     rune_display: _runeDisplay, prompt_version: RUNAR_PROMPT_VERSION, address: userGender,
@@ -763,7 +767,9 @@ async function _generateSpreadReading(o) {
   } : null;
   _lastReadingId = null;
   var res = await callProxy(sys, prompt, o.tokens, shouldUseCredit(), o.credits, _journalS);
-  if (res && res.reading_id) _lastReadingId = res.reading_id;
+  _lastReadingId = (res && res.reading_id) || (_journalS ? _journalS.id : null);
+  if (_journalS && res && !res.error && res.text && !res.reading_id) _pendAdd('pendingReadings', { id: _journalS.id, journal: _journalS, model_text: res.text });
+  _flushPending();
 
   if (rdLoad) rdLoad.style.display = 'none';
   if (pL1) pL1.classList.remove('pulsing');
