@@ -397,7 +397,7 @@ async function persistJournal(
   return { readingId, askSaved };
 }
 
-serve(async (req) => {
+serve(async (req: Request) => {
   if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
   if (req.method !== "POST")    return json({ error: "Method not allowed" }, 405);
 
@@ -449,15 +449,6 @@ serve(async (req) => {
 
     if (userTier === "free" || userTier === "credits") userTier = "rune_seeker";
 
-    // ── RESAVE: re-persist a reading/ask the client stashed locally when the DB was down.
-    // No Claude call, no deduction, no cap, no rate limit — just the durable journal write,
-    // idempotent on the client id / ask_entry_id. Returns { saved } so the client can drop it.
-    if (mode === "resave") {
-      if (!journal || !userId) return json({ saved: false });
-      const r = await persistJournal(journal, userId, journal.model_text ?? "", false);
-      return json({ saved: journal.kind === "ask" ? r.askSaved : !!r.readingId });
-    }
-
     // ── Rate limiting ──
     const ip    = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
     const rlKey = userId ? `claude:user:${userId}` : `claude:ip:${ip}`;
@@ -466,6 +457,15 @@ serve(async (req) => {
     });
     if (!allowed) {
       return json({ error: "rate_limited", message: "Too many requests. Please wait a moment." }, 429);
+    }
+
+    // ── RESAVE: re-persist a reading/ask the client stashed locally when the DB was down.
+    // No Claude call, no deduction, no cap — but rate-limited (same bucket, above) so a client
+    // cannot spam its own journal. Idempotent on the client id / ask_entry_id; returns { saved }.
+    if (mode === "resave") {
+      if (!journal || !userId) return json({ saved: false });
+      const r = await persistJournal(journal, userId, journal.model_text ?? "", false);
+      return json({ saved: journal.kind === "ask" ? r.askSaved : !!r.readingId });
     }
 
     // ── Eligibility (rune_seeker only) — decide the plan, DO NOT deduct yet ──
