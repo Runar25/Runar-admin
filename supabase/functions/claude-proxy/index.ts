@@ -331,6 +331,72 @@ function composeReading(raw: string): string {
   return String(raw);
 }
 
+// ── Durable journal write, idempotent — used by the live path AND the resave retry ──
+// Reading insert is keyed on the client-generated id (a duplicate = code 23505 = already saved,
+// so a retry never double-inserts). Ask follow-up is deduped by ask_entry_id. `creditsUsed` is
+// server-authoritative (never trusted from the client): resave passes false = an outage reading
+// is free (it was never charged, since the deduction is a DB write that failed with the insert).
+async function persistJournal(
+  journal: any, userId: string, text: string, creditsUsed: boolean,
+): Promise<{ readingId: string | null; askSaved: boolean }> {
+  let readingId: string | null = null;
+  let askSaved = false;
+  try {
+    if (journal.kind === "ask") {
+      const rid = journal.reading_id;
+      if (rid) {
+        const { data: cur, error: selErr } = await sb().from("readings")
+          .select("follow_up").eq("id", rid).eq("user_id", userId).maybeSingle();
+        if (!selErr && cur) {
+          const arr = Array.isArray(cur.follow_up) ? cur.follow_up : [];
+          const eid = journal.ask_entry_id ?? null;
+          if (eid && arr.some((e: any) => e && e.id === eid)) {
+            askSaved = true; // already appended -> idempotent success
+          } else {
+            arr.push({ id: eid, q: journal.question ?? "", a: journal.answer ?? composeReading(text) });
+            const { error: fuErr } = await sb().from("readings")
+              .update({ follow_up: arr }).eq("id", rid).eq("user_id", userId);
+            if (fuErr) console.error("follow_up update failed:", fuErr.message);
+            else askSaved = true;
+          }
+        }
+      }
+    } else {
+      const isSpread = journal.kind === "spread";
+      const row: Record<string, unknown> = {
+        user_id:        userId,
+        rune_name:      journal.rune_name  ?? null,
+        rune_glyph:     journal.rune_glyph ?? null,
+        lang:           journal.lang       ?? "en",
+        short_text:     isSpread ? (journal.rune_display ?? "") : composeReading(text),
+        deep_text:      isSpread ? composeReading(text) : "",
+        area:           journal.area       ?? null,
+        aol:            journal.aol        ?? null,
+        seeking:        journal.seeking    ?? null,
+        intention:      journal.intention  ?? null,
+        question:       journal.question   ?? null,
+        life_rune:      journal.life_rune  ?? null,
+        prompt_version: journal.prompt_version ?? null,
+        address:        journal.address ?? null,
+        reading_mode:   journal.reading_mode ?? null,
+        credits_used:   creditsUsed,
+      };
+      if (journal.id) row.id = journal.id; // client-generated id = idempotency key
+      const { data: ins, error: journalErr } = await sb().from("readings")
+        .insert(row).select("id").maybeSingle();
+      if (journalErr) {
+        if (journalErr.code === "23505") readingId = journal.id ?? null; // duplicate = already saved
+        else console.error("journal insert failed:", journalErr.message);
+      } else if (ins?.id) {
+        readingId = ins.id;
+      }
+    }
+  } catch (e) {
+    console.error("persistJournal threw:", (e as Error).message);
+  }
+  return { readingId, askSaved };
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
   if (req.method !== "POST")    return json({ error: "Method not allowed" }, 405);
@@ -346,7 +412,7 @@ serve(async (req) => {
       spread_cost = 1,     // number of credits/balance to deduct (= number of runes)
       journal     = null,  // reading meta to persist server-side (null = do not save)
     } = body;
-    if (!prompt) return json({ error: "Missing prompt" }, 400);
+    if (!prompt && mode !== "resave") return json({ error: "Missing prompt" }, 400);
 
     // Clamp max_tokens (client-supplied, passed straight to Claude). Largest legit reading is
     // life_rune_premium at 2000; 2500 is headroom. Stops a crafted request ordering an
@@ -382,6 +448,15 @@ serve(async (req) => {
     }
 
     if (userTier === "free" || userTier === "credits") userTier = "rune_seeker";
+
+    // ── RESAVE: re-persist a reading/ask the client stashed locally when the DB was down.
+    // No Claude call, no deduction, no cap, no rate limit — just the durable journal write,
+    // idempotent on the client id / ask_entry_id. Returns { saved } so the client can drop it.
+    if (mode === "resave") {
+      if (!journal || !userId) return json({ saved: false });
+      const r = await persistJournal(journal, userId, journal.model_text ?? "", false);
+      return json({ saved: journal.kind === "ask" ? r.askSaved : !!r.readingId });
+    }
 
     // ── Rate limiting ──
     const ip    = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
@@ -574,56 +649,20 @@ serve(async (req) => {
     // must never break a reading that already succeeded (logged for the keeper).
     // The client sends a `journal` either for a reading (insert) or an Ask Rúnar follow-up
     // (update) — so the stored record carries EVERYTHING, incl. the Ask Q&A + intention.
+    // Persist server-side (idempotent). A save failure is non-fatal — the reading already
+    // succeeded; the client stashes it locally and re-sends via mode:'resave' when the DB is back.
     let readingId: string | null = null;
+    let askSaved = false;
     if (journal && userId) {
-      try {
-        if (journal.kind === "ask") {
-          // Ask Rúnar follow-up — append the Q&A to the parent reading's follow_up array.
-          const rid = journal.reading_id;
-          if (rid) {
-            const { data: cur } = await sb().from("readings")
-              .select("follow_up").eq("id", rid).eq("user_id", userId).maybeSingle();
-            const arr = Array.isArray(cur?.follow_up) ? cur.follow_up : [];
-            arr.push({ q: journal.question ?? "", a: composeReading(text) });
-            const { error: fuErr } = await sb().from("readings")
-              .update({ follow_up: arr }).eq("id", rid).eq("user_id", userId);
-            if (fuErr) console.error("follow_up update failed:", fuErr.message);
-          }
-        } else {
-          const isSpread = journal.kind === "spread";
-          const { data: ins, error: journalErr } = await sb().from("readings").insert({
-            user_id:      userId,
-            rune_name:    journal.rune_name  ?? null,
-            rune_glyph:   journal.rune_glyph ?? null,
-            lang:         journal.lang       ?? "en",
-            short_text:   isSpread ? (journal.rune_display ?? "") : composeReading(text),
-            deep_text:    isSpread ? composeReading(text) : "",
-            area:         journal.area       ?? null,
-            aol:          journal.aol        ?? null,
-            seeking:      journal.seeking    ?? null,
-            intention:    journal.intention  ?? null,
-            question:     journal.question   ?? null,
-            life_rune:    journal.life_rune  ?? null,
-            prompt_version: journal.prompt_version ?? null,
-            address:      journal.address ?? null,
-            reading_mode: journal.reading_mode ?? null,
-            // Credit truth is server-side (a forgeable client flag is ignored).
-            credits_used: deductPlan.kind === "paid",
-          }).select("id").maybeSingle();
-          // supabase-js resolves DB/constraint errors as { error } — it does NOT throw — check it
-          // so a charged-but-not-journaled event is visible (a crafted journal that forces a
-          // failure must not skip the charge — that would be a free-reading exploit).
-          if (journalErr) console.error("journal insert failed:", journalErr.message);
-          else if (ins?.id) readingId = ins.id;
-        }
-      } catch (e) {
-        console.error("journal op threw:", (e as Error).message);
-      }
+      const r = await persistJournal(journal, userId, text, deductPlan.kind === "paid");
+      readingId = r.readingId;
+      askSaved  = r.askSaved;
     }
 
     return json({
       text,
       ...(readingId ? { reading_id: readingId } : {}),
+      ...(mode === "ask" ? { ask_saved: askSaved } : {}),
       ...(sessionState ? { session_state: sessionState } : {}),
       ...(deductPlan.kind === "paid"
         ? { credits_remaining: creditsRemaining ?? Math.max(0, creditsBalance - deductPlan.cost) }
