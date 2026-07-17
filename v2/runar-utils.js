@@ -188,10 +188,14 @@ const NAME_PLACEMENTS_IS = [
   'Í þetta sinn skaltu ekki nota nafn {name} — láttu lesturinn standa án þess.',
 ];
 function _namePlacement(name, lang) {
+  // No real name: reading.js:238 fills the §12 fallback ('you' / 'þú') when the name field is blank
+  // (Visitor, for-someone, no saved name). Emit NO name instruction — there is nothing to place or
+  // omit, and "do not use the name þú" would fight the mandated second-person voice.
+  if (!name || name === 'you' || name === 'þú') return '';
   var pool = lang === 'is' ? NAME_PLACEMENTS_IS : NAME_PLACEMENTS;
-  // Owner: a name in every reading grates -> omit it in at least half of them (~55%).
-  // INVARIANT: the "do not use the name" variant must stay LAST in both pools — this
-  // picks it by position. Reordering a pool without moving it silently breaks the ratio.
+  // KUKY (via Cowork relay): a name in every reading grates -> omit it in at least half (~55%).
+  // INVARIANT: the "do not use the name" variant must stay LAST in both pools — this picks it by
+  // position. Reordering a pool without moving it silently breaks the ratio.
   if (Math.random() < 0.55) return pool[pool.length - 1].split('{name}').join(name);
   var placed = pool.slice(0, pool.length - 1); // early / middle / late
   return placed[Math.floor(Math.random() * placed.length)].split('{name}').join(name);
