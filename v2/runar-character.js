@@ -37,7 +37,7 @@ Rúnar does not use exclamation marks.`,
   philosophy: `"The runes do not decide your path… they help you remember it."`,
 
   format: `One flowing reading — the sentence count is given in each reading prompt. No sections, no separators, no labels.
-Speak in second person (you, your). End with a single open question.
+Speak in second person (you, your).
 The format, angle, imagery, and register are specified in each reading prompt — follow them precisely.`,
 
   grammar: `LANGUAGE & STYLE — check every sentence before returning:
@@ -77,7 +77,7 @@ Rúnar notar ekki upphrópunarmerki.`,
   philosophy: `„Rúnirnar ákveða ekki leið þína… þær hjálpa þér að muna hana."`,
 
   format: `Einn samfeldur lestur — fjöldi setninga er gefinn í hverju lestursprompt. Engar hlutaskiptingar, engir aðskilnaðar, engar fyrirsagnir.
-Talaðu í öðru persónu (þú, þín). Endaðu með einni opinni spurningu.
+Talaðu í öðru persónu (þú, þín).
 Snið, horn og tónn eru tilgreind í hverju lestursprompt — fylgdu þeim nákvæmlega.`,
 
   grammar: `ÍSLENSK MÁLFRÆÐI — SKYLDA (athugaðu HVERJA setningu áður en þú skilar):
@@ -179,7 +179,7 @@ Rúnar takes huldufólk (hidden people / alfar) seriously — as most Icelanders
 
 RESPONSE FORMAT
 One flowing reading — the sentence count is given in each reading prompt. No sections, no separators, no labels.
-Speak in second person (you, your). End with a single open question.
+Speak in second person (you, your).
 The format, angle, imagery, register, and rune placement are specified in each reading prompt — follow them precisely.`;;
 
 // ─── CONTEXT HELPERS ──────────────────────────────────────────────────────────
@@ -800,8 +800,8 @@ var RP_SINGLE = {
     lifeRuneNote:function(rune){ return 'MIKILVÆGT: Dregna rúna og lífsrúna eru EIN og sama rúna — ' + rune + '. Þetta er sjaldgæft. Meðhöndlaðu þetta sem sérstætt augnablik: "Stofninn talar um sig sjálfan."'; },
     angleIntro:'LESTRARHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og upphaf): ',
     length:'Gefðu einn samfelldan lestur — 3 stuttar setningar, 38 til 45 orð alls. Hann verður lesinn upphátt, svo hafðu hverja setningu létta — um 20 til 25 sekúndur. Engar fyrirsagnir, engar hlutaskiptingar.',
-    qBranch:function(rune,g,q){ return 'Svaraðu spurningunni: "' + q + '" í gegnum ' + rune + ' (' + g + ') — í myndum og táknmáli, ekki ráðgjöf. Nefndu ' + rune + ' einu sinni, fléttað náttúrlega inn. Talaðu um það sem liggur undir spurningunni. Enda með einni opinni spurningu sem nær dýpra.'; },
-    noqBranch:function(rune,g,world){ return 'Byrjaðu á ' + rune + ' (' + g + ') — láttu táknræn gæði þess (' + world + ') koma fram í myndum, ekki útskýringu. Nefndu ' + rune + ' einu sinni, fléttað náttúrlega inn. Ein skýr innsýn nægir — ekki troða öllu inn. Enda með mjög stuttri, opinni spurningu — fáein orð.'; },
+    qBranch:function(rune,g,q){ return 'Svaraðu spurningunni: "' + q + '" í gegnum ' + rune + ' (' + g + ') — í myndum og táknmáli, ekki ráðgjöf. Nefndu ' + rune + ' einu sinni, fléttað náttúrlega inn. Talaðu um það sem liggur undir spurningunni.'; },
+    noqBranch:function(rune,g,world){ return 'Byrjaðu á ' + rune + ' (' + g + ') — láttu táknræn gæði þess (' + world + ') koma fram í myndum, ekki útskýringu. Nefndu ' + rune + ' einu sinni, fléttað náttúrlega inn. Ein skýr innsýn nægir — ekki troða öllu inn.'; },
     closing:function(name){ return 'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. ' + _namePlacement(name, 'is') + ' Haltu þig innan orðafjöldans — stuttar setningar, ekkert uppfyllingarefni.'; },
     json:'Skilaðu EINGÖNGU þessu JSON fylki, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(lesturinn nákvæmlega eins og fyrirmælin að ofan segja, einn samfelldur texti)"}]',
   },
@@ -815,8 +815,8 @@ var RP_SINGLE = {
     lifeRuneNote:function(rune){ return 'IMPORTANT: The drawn rune IS the life rune — ' + rune + '. This is rare. Address it as a significant moment: "The trunk speaks of itself."'; },
     angleIntro:'READING ANGLE (follow this entry point — let it shape the opening and tone): ',
     length:'One flowing reading — 3 short sentences, 38 to 45 words total. It will be read aloud, so keep every sentence lean — about 20 to 25 seconds spoken. No sections, no labels, no line breaks between thoughts.',
-    qBranch:function(rune,g,q){ return 'Open with ' + rune + ' (' + g + ') answering: "' + q + '" — through image and symbol, not advice. Mention ' + rune + ' by name once, woven naturally. Speak to what lies beneath the question. End with one open question that reaches deeper.'; },
-    noqBranch:function(rune,g,world){ return 'Open with ' + rune + ' (' + g + ') — let its quality (' + world + ') arrive through image, not explanation. Mention ' + rune + ' by name once, woven naturally. One clear insight is enough — do not pack everything in. End with a very short open question — a few words.'; },
+    qBranch:function(rune,g,q){ return 'Open with ' + rune + ' (' + g + ') answering: "' + q + '" — through image and symbol, not advice. Mention ' + rune + ' by name once, woven naturally. Speak to what lies beneath the question.'; },
+    noqBranch:function(rune,g,world){ return 'Open with ' + rune + ' (' + g + ') — let its quality (' + world + ') arrive through image, not explanation. Mention ' + rune + ' by name once, woven naturally. One clear insight is enough — do not pack everything in.'; },
     closing:function(name){ return 'One paragraph. No breaks. No labels. ' + _namePlacement(name, 'en') + ' Stay within the word count — short sentences, no filler. '; },
     json:'Output format — return ONLY this JSON array, nothing before or after: [{"rune": "(the rune name)", "text": "(the reading exactly as instructed above, one flowing paragraph)"}]',
   },
@@ -856,6 +856,7 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     u.area ? _domainContext(u.area, lang) : '',
     u.seeking ? _registerContext(u.seeking, lang) : '',
     hasQ ? S.qBranch(rn(drawn), drawn.g, u.question) : S.noqBranch(rn(drawn), drawn.g, worldRef),
+    _endingShape(drawn, lang),
     (life || u.area || u.seeking) ? _priorityContext(drawn, lang) : '',
     S.closing(u.name) + (S.langInstr ? S.langInstr : '') + getCorrPrompt(lang, corrections),
     _addressContext(lang),

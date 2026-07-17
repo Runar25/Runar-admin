@@ -6,6 +6,7 @@
 // Contents:
 //   READING_ANGLES / READING_ANGLES_IS / _randomAngle(lang)
 //   NAME_PLACEMENTS / NAME_PLACEMENTS_IS / _namePlacement(name, lang)
+//   ENDING_HEAVY / ENDING_OPEN (+_IS) / _endingShape(drawn, lang)
 //   rk(), rn(), rworld(), relements()  — rune data helpers (read global lang)
 //   setText(), setPH(), setSt()        — DOM helpers
 //   showToast()                        — toast notification
@@ -189,6 +190,34 @@ const NAME_PLACEMENTS_IS = [
 function _namePlacement(name, lang) {
   var pool = lang === 'is' ? NAME_PLACEMENTS_IS : NAME_PLACEMENTS;
   return pool[Math.floor(Math.random() * pool.length)].split('{name}').join(name);
+}
+
+// ─── ENDING SHAPE (anti-slot) ────────────────────────────────────
+// How a reading closes varies per reading AND follows the rune's valence (HEAVY_RUNES):
+// a heavy rune must not be softened into comfort; the rest may rest instead of asking.
+const ENDING_HEAVY = [
+  'End on a line that stays standing — no soft question, no comfort; let the rune stand.',
+  'End with one hard question that asks for honesty, not comfort.',
+];
+const ENDING_OPEN = [
+  'End with one open question that turns the seeker inward.',
+  'End with a short open question — only a few words.',
+  'End on a quiet line that rests — not a question this time.',
+];
+const ENDING_HEAVY_IS = [
+  'Endaðu á línu sem stendur — engin mjúk spurning, engin huggun; láttu rúnina standa.',
+  'Endaðu á einni harðri spurningu sem biður um heiðarleika, ekki huggun.',
+];
+const ENDING_OPEN_IS = [
+  'Endaðu á einni opinni spurningu sem snýr leitandanum inn á við.',
+  'Endaðu á stuttri opinni spurningu — aðeins fáein orð.',
+  'Endaðu á hljóðlátri línu sem hvílir — ekki spurningu í þetta sinn.',
+];
+function _endingShape(drawn, lang) {
+  var heavy = !!(drawn && drawn.n && typeof HEAVY_RUNES !== 'undefined' && HEAVY_RUNES.names.indexOf(drawn.n) !== -1);
+  var pool = heavy ? (lang === 'is' ? ENDING_HEAVY_IS : ENDING_HEAVY)
+                   : (lang === 'is' ? ENDING_OPEN_IS : ENDING_OPEN);
+  return pool[Math.floor(Math.random() * pool.length)];
 }
 
 // ─── VARIABILITY POOLS (V2) ──────────────────────────────────────
