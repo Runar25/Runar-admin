@@ -17,7 +17,7 @@ const SB_KEY       = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
 const cors = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 }
 
 serve(async (req) => {
@@ -28,9 +28,23 @@ serve(async (req) => {
     if (!SB_URL)      throw new Error('SUPABASE_URL not set')
     if (!SB_KEY)      throw new Error('SUPABASE_SERVICE_ROLE_KEY not set')
 
+    // ── Admin only — enforced here, not just claimed in a comment (was: not at all). ──
+    // This tool spends the ElevenLabs key and overwrites shared Collection audio; a public
+    // caller must not reach it. Verified against the real user JWT, same as claude-proxy.
+    const ADMIN_EMAILS = ['kukula@agndofa.is', 'info@agndofa.is']
+    const authHeader = req.headers.get('Authorization')
+    if (!authHeader) return new Response(JSON.stringify({ error: 'unauthorized' }),
+      { status: 401, headers: { ...cors, 'Content-Type': 'application/json' } })
+    const authClient = createClient(SB_URL, SB_KEY)
+    const { data: { user: caller } } = await authClient.auth.getUser(authHeader.replace('Bearer ', ''))
+    if (!caller?.email || !ADMIN_EMAILS.includes(caller.email.toLowerCase()))
+      return new Response(JSON.stringify({ error: 'forbidden' }),
+        { status: 403, headers: { ...cors, 'Content-Type': 'application/json' } })
+
     const { text, rune_name, rune_glyph, lang, version } = await req.json()
 
     if (!text)       throw new Error('text is required')
+    if (typeof text !== 'string' || text.length > 3000) throw new Error('text too long')
     if (!rune_name)  throw new Error('rune_name is required')
     if (!rune_glyph) throw new Error('rune_glyph is required')
     if (!lang)       throw new Error('lang is required')

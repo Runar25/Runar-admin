@@ -972,9 +972,11 @@ async function saveStaticVoice() {
       teachVersion = (maxRow?.version ?? 0) + 1;
     }
 
+    const { data: { session: _elSession } } = await sb.auth.getSession();
     const res = await fetch(EL_STATIC, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json',
+                 ...(_elSession?.access_token ? { Authorization: 'Bearer ' + _elSession.access_token } : {}) },
       body: JSON.stringify({
         text:       teachText,
         rune_name:  teachRune.n,
