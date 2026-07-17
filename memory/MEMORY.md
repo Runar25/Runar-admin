@@ -95,6 +95,7 @@ Kořen driftu = duplikace. Jazyk/tier/spread varianty = DATA (RP_* packy, config
 - [paste-sql-explicitly.md](paste-sql-explicitly.md) — když owner má spustit SQL, vlož přesné SQL do zprávy; žádné „jako minule"
 - [proceed-dont-ask.md](proceed-dont-ask.md) — dohodnutý plán odjeď celý; neptej se „souhlas?" mezi kroky
 - [one-patch-script-path.md](one-patch-script-path.md) — §1 patche VŽDY do `scripts/_patch.py`; nový název = nový permission prompt
+- [bash-no-cd-prefix.md](bash-no-cd-prefix.md) — NIKDY `cd … &&` ani `| tail` na Bash; boří allowlist. Adresář drž jednou, příkazy holé; investigace přes Grep/Read/Glob
 - [runar-project.md](runar-project.md) — stack, soubory, tier tabulka, DB schéma, edge functions
 - [tree-of-life.md](tree-of-life.md) — Tree design (branch objekt, Gathering, AETTY, vizuál, Yggdrasil)
 - [runar-patterns.md](runar-patterns.md) — Pattern detection design (ZASTARALÉ, probrat)
