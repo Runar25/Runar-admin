@@ -230,11 +230,23 @@ first = output.split('\n')[0] if output else 'memory index check ran'
 check(first if passed else 'rozbitý odkaz nebo neverzovaný soubor v memory/', passed,
       '' if passed else output)
 
+# ⑫ — táž vada jako ⑪, o patro výš: kanonický doc, co není v gitu, neexistuje
+# (clean checkout ho nemá, Cowork přes `git show HEAD:` ho nevidí). 2026-07-17: RUNAR_TREE.md
+# ležel untracked 13 dní a Cowork navrhoval udělat konsolidaci, která už byla hotová.
+print('\n⑫ KANONICKÉ DOKY (verify_canonical_docs.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_canonical_docs.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+first = output.split('\n')[0] if output else 'canonical docs check ran'
+check(first if passed else 'kanonický doc (RUNAR_*.md / CLAUDE.md) NENÍ v gitu — §17', passed,
+      '' if passed else output)
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
 if fail_count == 0:
-    print(f'  ✅  SMOKE TEST PROŠEL  —  {ok_count}/11 kontrol OK')
+    print(f'  ✅  SMOKE TEST PROŠEL  —  {ok_count}/{ok_count + fail_count} kontrol OK')
 else:
     print(f'  ❌  SMOKE TEST SELHAL  —  {fail_count} problém(ů), {ok_count} OK')
 print('══════════════════════════════════════════')
