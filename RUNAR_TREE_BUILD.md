@@ -25,7 +25,7 @@ tento dokument definuje **vstupní mapování** = co rozhoduje, KDE a JAKÁ vět
 
 ## 2. IDENTITA (pevná, jednou)
 - **Life Rune** (z data narození, calcLifeRune) → **KMEN** (charakter: náklon ≤0.45, twist, barva
-  elementu). Je „5. element" = sám uživatel. Neměnná navždy.
+  elementu). Je KMEN = sám uživatel — NE barva-element (těch je 5: Fire/Water/Air/Earth/Shadow). Neměnná navždy.
 - **3 Norny** (zakládací Norns čtení — Urður / Verðandi / Skuld) → **3 KOŘENY**:
   urð = jádro/minulost · verðandi = směr/teď · skuld = pohon/budoucnost.
   Kořeny jsou **živé**: když se runa z kořene vrátí v pozdějším čtení → ten kořen prohloubí/posílí.

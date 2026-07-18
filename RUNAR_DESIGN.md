@@ -435,7 +435,7 @@ Zpět k kmeni  návrat, uzavření, integrace
 **Co určuje charakter větve:**
 - **Norns osa** (intention + area + seeking) → **VÝŠKA** větve (urð = kořeny · verðandi = střed · skuld = koruna)
   Priorita: intention (nejsilnější) › area › seeking; fallback = world runy.
-- **Element runy** → **BARVA** větve (Fire/Water/Air/Earth; Life Rune = 5. element)
+- **Element runy** → **BARVA** větve (Fire/Water/Air/Earth/Shadow). Life Rune = KMEN (uživatel), NE barva-element.
 - **Ætt runy** → **CHARAKTER** větve (způsob růstu, ne výška):
   Freyjina = pevné/nesoucí · Heimdallova = kroucené/uzlovité · Týrova = světlé/průlomové
 - **Area of Life** → **STRANA** (levá = vnitřní svět / pravá = vnější svět)
@@ -473,15 +473,11 @@ Prázdná zóna = informace sama o sobě. Člověk bez korunních větví teprve
 Ætta dominance (3+ run ze stejné skupiny) = vzorec → pulz větví dané skupiny.
 Implementace: vrstva smyslu, plánováno.
 
-### 5 elementů stromu
+### 5 elementů (barva větve)
 
-| Element | Runy | Vizuální růst |
-|---------|------|---------------|
-| Fire | Kenaz, Sowilo, Dagaz, Tiwaz, Thurisaz | jiskra → plamen → krb → oheň → sopka |
-| Water | Laguz, Perthro, Isa, Hagalaz, Nauthiz | kapka → pramínek → potok → řeka → oceán |
-| Air | Ansuz, Raidho, Ehwaz, Mannaz, Gebo, Wunjo, Algiz | vánek → vítr → silný vítr → polární záře |
-| Earth | Fehu, Uruz, Othala, Berkana, Jera, Ingwaz, Eihwaz | holá láva → mech → tráva → květiny → louka |
-| Life Rune | fixní z DOB | pátý element, představuje uživatele samotného |
+5 barev-elementů: **Fire · Water · Air · Earth · Shadow** (Shadow = studené/skryté runy: Isa, Hagalaz, Perth, Eihwaz, Blank).
+Element = barva + růstová obraznost (Fire: jiskra→sopka · Water: kapka→oceán · Air: vánek→polární záře · Earth: láva→louka · Shadow: šero→led→propast).
+**Life Rune = KMEN = uživatel, NE barva-element.** Kanonický rune→element mapping = `runar-runes.js` (některé runy dvojelementové).
 
 ### Levá a pravá strana stromu
 
