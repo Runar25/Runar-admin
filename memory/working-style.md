@@ -212,6 +212,20 @@ Pravidla:
 - NIKDY "Respond entirely in Icelandic" jako jediná IS instrukce
 - Nová korekce → přidat přes shrine do runar_corrections DB → platí všude
 
+### Korekce = frázová (nese kontext) > jednoslovná (slepá) — lekce 2026-07-07
+Korekce X→Y se aplikuje VŠUDE naslepo. V silně flektivní IS: Y správné v jednom pádu/osobě/čase může být
+špatné jinde. **Fráze nese svůj kontext = bezpečná. Jednoslovná = kontextově slepá = riziko.**
+- Nová korekce → nejdřív zkus FRÁZI. Jednoslovnou jen když je Y jednoznačné ve všech kontextech.
+- Validace: `is-corr-qa.py` — BÍN ověří, že Y je reálný tvar/kompozitum + flagne jednoslovné (offline, GDPR).
+- **Mrtvá korekce** (model už chybu nedělá / kryje ji grammar guard) → SMAZAT, neschovávat.
+
+**IS QC toolkit — tři plochy, tři nástroje (nezaměňovat; jména ověřena 2026-07-17):**
+- `check-is.py` — ZDROJ (kód): source-linter, pre-commit brána. Model-output chyby sem NEPATŘÍ.
+- `is-grammar-qa.py` — OUTPUT (čtení): GreynirCorrect nad CELÝMI větami, flag-only. **E001 = nerozparsováno
+  → NATIVE EYE**, nesmí projít tiše zeleně (§19.2).
+- `is-corr-qa.py` — KOREKCE: BÍN validuje Y (offline).
+- BÍN (`islenska`) — pevná slova (jména run, tier vocab); rozloží kompozita (lífs-rún) tam, kde GreynirCorrect selže.
+
 ### Islandská gramatika — shoda přídavného jména (lekce 2026-06-14, KUKY ověřil)
 Moje chyby v sezónních obrazech byly VŠECHNY špatný ROD podstatného → špatný tvar přídavného.
 **Postup: nejdřív urči rod podstatného (kk/kvk/hk), AŽ POTOM skloňuj přídavné.** Rod NEodhadovat

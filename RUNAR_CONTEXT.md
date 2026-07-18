@@ -1,12 +1,34 @@
 # RÚNAR — kompletní kontext projektu (pro Claude chat / Drive)
 
 > **Účel:** jeden samostatný dokument se VŠÍM podstatným — aby čerstvý Claude chat (např. na cestách, mobil) byl
-> okamžitě v obraze, bez nahrávání desítek souborů. Stav k **2026-06-16, SW v105**.
+> okamžitě v obraze, bez nahrávání desítek souborů. Stav k **2026-07-17, SW v209**.
 > **Konvence:** narativ česky; app termíny / názvy run / spready anglicky (single rune, Norns, Cross/Kříž, Horseshoe,
 > Yggdrasil, Area of Life, Seeking…). Detailní zdroje pravdy → sekce 10.
 > **Pozn.:** Tohle je SHRNUTÍ. Pro úpravy kódu platí pravidla v CLAUDE.md (v repu).
 
 ---
+
+## 0. Rychlá orientace (mobil)
+- **Co:** AI průvodce runami pro Agndofa (Island). Poetický, konkrétní hlas. IS primární + EN.
+- **Funnel:** Visitor (1 tah) → Rune Seeker (1 free s hlasem, pak pay-per-use) → Standard/Premium (předplatné).
+- **Ceny (jednotky čtení):** zdroj pravdy = `SPREAD_COSTS` v `v2/runar-config.js`. Čísla se sem NEopisují —
+  přesně tím vzniká drift (doc-owner pravidlo).
+- **Narativ:** každý uživatel = **Rune Seeker** na Óðinově cestě. **Rúnar = průvodce** (Keeper; hlas se NEMĚNÍ).
+- **Otevřené:** tree vizuální engine (LAB) · tree paměť · Óðin's Path (forma) · The Gathering (název).
+
+---
+
+## ⭐ Tier jména — FINÁLNÍ (2026-07-07, ověřeno nativně Sigrún)
+Poutníci Óðinovy cesty (METAFORA, nikdy „jsi Óðin" — je nedostižný, jdeme po jeho cestě).
+EN: **Rune Seeker → Rune Walker → Rune Wanderer**. IS (živá slova): **Leitandi → Vegfarandi → Ferðalangur**.
+Keeper uvolněn Rúnarovi (premium už NENÍ Keeper). NE Root/Deep (superseded). DB beze změny, label z TIERS (§8).
+
+## ⭐ Óðinova cesta (centrální narativ → RUNAR_DESIGN.md)
+Uživatel = Rune Seeker jdoucí Óðinovou cestou; strom = mapa cesty. Bytosti = mechaniky: **Huginn**
+(notifikace vrať se), **Muninn** (journal / Life Rune / vzorec), **Ratatoskr** (Full Gathering).
+Dva režimy: **Poutník** (volný, havrani mlčí) vs **Cesta** (opt-in, Rúnar navádí na rituály ve správný čas).
+**Žádný vrchol — cesta nekončí.** Čtení pro druhé (`_readingMode='someone'`) = schopnost (Premium), ne titul.
+Detail → `memory/snapshots/2026-07-05-odinova-cesta-poutnik-cesta.md`.
 
 ## 1. Co je Rúnar
 AI-powered mystický průvodce runami pro značku **Agndofa** (Island). Poetický hlas, nordická filozofie, vlastní charakter.
@@ -83,7 +105,10 @@ vstupy Area/Seeking/For = test, jestli kontext funguje; opakovaně potvrzeno; u 
    pozic klesá s počtem run. 10. Konkrétní obraz řeší genericnost *i* přístupnost zároveň.
 
 **Úkoly generátoru (pořadí implementace):**
-1. **⭐ Segmentovaný výstup `{ rune, position, text, deeper_meaning }`** — blokuje zbytek (UI propojení runa↔text,
+1. **⭐ Segmentovaný výstup `{ rune, text }`** — **✅ HOTOVO Fáze A** (buildery → JSON, `_parseSegments` složí text).
+   ⚠️ Tvar je `{rune,text}` — **ne** `position` ani `deeper_meaning` (ověřeno v `json:` polích builderů 2026-07-17;
+   `deeper_meaning` zahozen 2026-07-04, v `runar-reading.js` zbyl jen mrtvý defenzivní read).
+   Fáze B (tap UI / spread-map) = Premium #1, neimplementováno. (UI propojení runa↔text,
    per-runa kvalita, eval, per-runa sezóna). **POZOR (háček, který strategie neřeší):** čtení se **čte nahlas (TTS)**
    a dnes je **jeden plynoucí blok** (vědomé rozhodnutí). Segmenty musí být **metadata** — text/hlas zůstane plynulý,
    tap teprve odhalí per-runa vrstvu. NE udělat z čtení formulář (Rúnar = zrcadlo, ne dashboard).
@@ -148,5 +173,9 @@ translations.js → Edit OK. Workflow: **Explore → Plan → schválení → Im
 (git hook). Žádné hardcoded user-visible stringy (vše přes t()/VOCAB/TIERS). Před commitem: `smoke.py`.
 
 ---
-*Stav: 2026-06-16 · SW v105 · poslední pricing commit d60d082. Tento dokument = aktuální shrnutí; při rozporu se
+**Doc-sync:** změna chování = práce + záznam do `RUNAR_DECISIONS.md` + oprava dotčené sekce docu, vše
+v jednom turnu (§16). Paměť se NEKOPÍRUJE — `memory/` je v repu a obě platformy na ni míří junctionem (§17).
+Kanonický doc žije JEN v repu; zrcadlo je nanejvýš dočasný draft.
+
+*Stav: 2026-07-17 · SW v209 · prompt v1.0. Tento dokument = aktuální shrnutí; při rozporu se
 starším dokumentem platí TENTO (a CLAUDE.md/RUNAR_PRICING.md v repu).*
