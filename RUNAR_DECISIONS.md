@@ -673,3 +673,19 @@ stav až potom a vyvodil závěr o minulosti → owner musel arbitrovat. Stav be
   · OVĚŘENÍ: celý money-path diff ddd4c46..HEAD přečten — mé fixy (cappedMaxTokens/legitAsk/ceremonial)
     netknuté; credits_used zůstává server-authoritative; resave = bez Claude/odečtu/capu, idempotent
     (client-id 23505 dedup), rate-limited, credits_used=false (žádný money exploit). Deploy OK, prod == HEAD.
+
+---
+
+## 2026-07-17 — No-cold-read gate + follow-up gaty (prompt v1.0)
+
+- **Typ:** implementation (zadání: Cowork eval hand-off; ověření + zápis: Code)
+- **Co se změnilo:** nový sdílený `_noColdRead(lang)` v runar-character.js, zapojený do **všech 5 čtecích builderů** (single + 4 spready) **i do `buildAskPrompt`**. Follow-up navíc dostal `_describeRule` (nikdy ho neměl) a **anti-mirror** pravidlo. `RP_ASK.rules` přestalo modelu říkat, ať prohloubí co runy „already said / sögðu þegar". `RUNAR_PROMPT_VERSION` v0.9 → **v1.0**.
+- **Proč:** eval v0.9 = „already"/„þegar" ve 4 z 5 čtení + follow-up sklouzával do cold-read a fate-in-world, kdykoli ho dotaz navedl, zatímco tělo drželo. Vada NENÍ to slovo, ale **tah**: říct leitandovi, co je v něm „už" pravda, je nevyvratitelná domněnka v hávu vědění; „svět to připravoval" je týž tah otočený ven (G2b).
+- **§18:** gate je JEDEN helper, ne stejná věta nakopírovaná do RP_ASK per jazyk. Anti-mirror je ask-specifický (jen follow-up má uživatelské tvrzení, kterému lze přitakat) → žije v RP_ASK packu, což je zavedený vzor pro jazykové varianty.
+- **IS ověření (§19.2):** prostřední věta gate byla nejdřív bezslovesný výčet za dvojtečkou. Rod/číslo ručně ověřeny správně, ale GreynirCorrect ji **nerozparsoval (E001)** → nástroj za ni nemohl ručit. Přepsáno na plné věty: **0 nálezů**, a pojmenovává přesně tu vadu („hefur ekki verið að undirbúa neitt"). Zbylé flagy = známé falešné poplachy (Z002 u instrukčního fragmentu; `rúnin→rúmin`, tvar, který už používá `_describeRule`).
+- **Guard:** smoke ⑧ rozšířen — staví **reálný ask prompt** a tvrdí, že gaty dotečou do single + 4 spreadů + follow-upu v obou jazycích, a že RP_ASK už neobsahuje „already said". Ověřeno odpojením gatů od asku → červená.
+- **NEUDĚLÁNO záměrně (task 1a):** angl „gift — what this rune is **already** giving" je v `READING_ASPECTS` = **mrtvý kód** (`_randomAspect()` nemá v celém repu jediného volajícího; grep js+html). Živý pool `READING_ANGLES` (konzumovaný `_randomAngle`, ř. 851) „already" **neobsahuje vůbec**. Přeformulovat ho by v produkci nezměnilo nic → skutečné živé zdroje jsou RP_ASK a přirozený jazyk modelu, proto bylo 1c (gate i do hlavního těla) povýšeno z „volitelné" na nutné. Mrtvé pooly (`READING_ASPECTS`, `IMAGERY_SOURCES`, `READING_REGISTERS`) → do úklidové fronty.
+- **NEUDĚLÁNO (task 3 — mylná premisa):** Cowork tvrdil, že hlavička čtecí karty tahá pro IS latinské `n` („PERTH"). **Neplatí:** `rn(r)` vrací `lang==='is' ? r.is_n : r.n` (runar-utils.js:324) a hlavička renderuje `rn(drawn)` (runar-reading.js:188) → už teď ukazuje „PERÞ (DULDIR HLUTIR)", což potvrzuje i owner screenshot. Rozhodnutí „IS = islandský název všude" je tedy **už splněné**. Jediná možná změna = uříznout závorkový gloss, což je designové rozhodnutí (dotklo by se i badge životní runy) a použil by se **existující** `rnSplit().name`, ne nový split. Čeká na KUKYho.
+- **Měření:** efekt NEZMĚŘEN — čeká na v1.0 kohortu. Cíl = „already" rate dolů proti baseline (EN 46 %) i proti v0.9. Export stejným SELECTem (`order by drawn_at desc limit 500`), rozdělit dle `prompt_version`.
+- **Affected doc(s):** MEMORY.md
+- **Reverzibilita:** snadná (odebrat helper + 6 zapojení, vrátit verzi).
