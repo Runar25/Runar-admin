@@ -220,11 +220,21 @@ first = output.split('\n')[0] if output else 'write surface check ran'
 check(first if passed else 'klient vs granty se rozešly (tichá 403 nebo díra)', passed,
       '' if passed else output)
 
+# ── 11. Memory index: odkazy vedou někam + nic neverzovaného (§17) ───
+print('\n⑪ MEMORY INDEX (verify_memory_index.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_memory_index.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+first = output.split('\n')[0] if output else 'memory index check ran'
+check(first if passed else 'rozbitý odkaz nebo neverzovaný soubor v memory/', passed,
+      '' if passed else output)
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
 if fail_count == 0:
-    print(f'  ✅  SMOKE TEST PROŠEL  —  {ok_count}/10 kontrol OK')
+    print(f'  ✅  SMOKE TEST PROŠEL  —  {ok_count}/11 kontrol OK')
 else:
     print(f'  ❌  SMOKE TEST SELHAL  —  {fail_count} problém(ů), {ok_count} OK')
 print('══════════════════════════════════════════')
