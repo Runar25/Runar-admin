@@ -234,21 +234,38 @@ Business model + ceny + EL kalkulace → `RUNAR_PRICING.md`
 
 ---
 
-## N paralelních session — lanes a koordinace
+## N paralelních session — kdo o čem mluví
 Repo zpracovává VÍC session naráz (2× Code + N× Cowork). **Git je všechny podepisuje „Runar Admin"**, takže
 jediné, co v historii rozliší autora, je **commit prefix**. Bez něj nikdo nepozná, kdo co udělal.
+
+### ⭐ Vedoucí pravidlo: dělíme se podle toho, kdo co VIDÍ (2026-07-17, KUKY)
+- **Cowork mluví o DATECH** — čtení, evaly, screenshoty, copy, design, obsah. To vidí celé a správně.
+- **CODE mluví o KÓDU** — git, soubory, stav, chování. To vidí jen on.
+- **Cowork NIKDY nediagnostikuje kód. CODE NIKDY nerozhoduje o obsahu a designu.**
+
+Cokoli o kódu formuluje Cowork jako **otázku na CODE**, ne jako úkol: ne „přeformuluj angl na ř. 278", ale
+„vidím `already` ve 4 z 5 čtení — najdi zdroj". **Otázka nemůže být špatně; diagnóza ano.**
+**Proč:** 2026-07-17 stály ČTYŘI spory na tomtéž kořeni — useknutý claude-proxy · mrtvý `already` angl ·
+„hlavička tahá latinské PERTH" · „junction nežije". Pokaždé Cowork tvrdil něco o kódu, na který nevidí
+(vadný mount, vlastní kopie, nemůže commitnout). **Není to nekázeň, je to strukturální** — a owner to pak
+musí rozsuzovat, čímž mu den sežere koordinace.
+
+**Handoff začíná řádkou `psáno proti commitu <hash>`.** CODE ji porovná s HEAD a zastaralý handoff odmítne
+SÁM — bez ownera.
 
 **Lanes (kdo co vlastní):**
 - **CODE-tune** → prefix `[tune]` (+ `[reading]`/`[fix]`/`[pricing]` jako téma): reading systém, prompty (buildery v runar-character.js), config (TIERS/SPREAD_COSTS/SPREAD_CONFIG/VOCAB), pricing, translations, reader UI/CSS, reporter, auth, app, journal, eval-IMPLEMENTACE, copy. = vše KROMĚ tree vizuálu.
 - **CODE-tree** → prefix `[tree]`: vizuální engine — runar-tree-model.js, runar-tree-render.js, runar-tree-lab*.html, runar-branch.js, tree-lab-*/, tree-snapshots/, build_tree_*.py / build_*composer.py, `RUNAR_TREE_*` docs, `tree_state` DB. Doménový doc = RUNAR_TREE_LAB.md.
 - **Cowork** → prefix `[cowork]`: design, docs, eval-OBSAH, copy audit, handoffy. Repo **READ-ONLY přes `git show HEAD:`** (ne `git status`, ten zapisuje do indexu); do repa píše VÝHRADNĚ přes CODE. Další Cowork session = táž lane, táž pravidla.
 
-**Mechanika (platí pro všechny lanes):**
-- Každý zásah do repa = řádka v akčním logu (`RUNAR_DECISIONS.md`): `YYYY-MM-DD HH:MM · KDO(lane) · CO · PROČ · OVĚŘENÍ`.
+**Mechanika (co ZBYLO — zbytek obstará git):**
+- **Commit prefix = LANE. `git log` s prefixy JE akční log.** Samostatnou řádku do `RUNAR_DECISIONS.md` piš
+  jen pro to, co git NEVIDÍ: deploy, SQL puštěné ownerem, rozhodnutí. (Logovat každý commit dvakrát = práce navíc.)
 - Nejde commitnout (lock/přístup) → NESAHAT, jen ohlásit. Neviditelná změna je horší než žádná.
-- Jeden kanál na fakt (§18): stav repa = git, ne něčí mount. Cowork o worktree NETVRDÍ — ptá se CODE.
-- Handoff má povinnou sekci `ZMĚNĚNO:` (co jsem změnil), i prázdnou.
-- Než druhého opravíš, přečti akční log. Timeline před závěrem.
+- Handoff má sekci `ZMĚNĚNO:` (co jsem změnil), i prázdnou.
+- ⭐ **Pravidlo, které musí hlídat člověk, dřív nebo později spadne na ownera → kde to jde, udělej
+  z pravidla KONTROLU ve smoke.** Vzory: ⑩ zapisovatelná plocha (klient vs granty), ⑪ memory index
+  (odkazy + neverzované soubory). Obojí vzniklo z chyby, kterou žádné pravidlo nechytilo.
 
 **Hranice:**
 - **Sdílená sémantická vrstva (runa → růst).** Kanonická data run (`runar-runes.js`: aett/world/element/keywords) + config (AETTY, SPREAD_CONFIG.norns_axis, MOODS/INTENTIONS) čtou OBĚ session. TREE růstové/tvarové mapování drž ve VLASTNÍM souboru (`runar-branch.js`). Když MUSÍŠ sáhnout do runar-runes.js/config kvůli růstu: **jen ADITIVNĚ** (přidej pole, neměň existující reading-pole), `[tree]` malý commit, push HNED + řádek do MEMORY.md (MAIN to musí vidět — sdílená data mění i výklad). Změna existujícího aett/element/world runy ovlivní i čtení → napřed flagni.

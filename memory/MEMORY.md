@@ -98,6 +98,7 @@ Kořen driftu = duplikace. Jazyk/tier/spread varianty = DATA (RP_* packy, config
 - [proceed-dont-ask.md](proceed-dont-ask.md) — dohodnutý plán odjeď celý; neptej se „souhlas?" mezi kroky
 - [one-patch-script-path.md](one-patch-script-path.md) — §1 patche VŽDY do `scripts/_patch.py`; nový název = nový permission prompt
 - [match-existing-visual-first.md](match-existing-visual-first.md) — nové UI: NEJDŘÍV načíst existující vizuál a zkopírovat ho (radius/barvy/fonty); nevymýšlet
+- [verify-agent-claims-about-code.md](verify-agent-claims-about-code.md) — handoff od jiné session = žádost, ne fakt; tvrzení o kódu VŽDY ověřit (4/4 mylná 2026-07-17)
 - [bash-no-cd-prefix.md](bash-no-cd-prefix.md) — NIKDY `cd … &&` ani `| tail` na Bash; boří allowlist. Adresář drž jednou, příkazy holé; investigace přes Grep/Read/Glob
 - [runar-project.md](runar-project.md) — stack, soubory, tier tabulka, DB schéma, edge functions
 - [tree-of-life.md](tree-of-life.md) — Tree design (branch objekt, Gathering, AETTY, vizuál, Yggdrasil)
