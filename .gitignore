@@ -1,3 +1,7 @@
 
 # Scratch patch runner (Code rewrites it per task — never commit)
 scripts/_patch.py
+
+# Eval export — user reading text + follow-ups. NEVER commit (PII). Local only.
+readings_export.json
+readings_export.csv
