@@ -202,7 +202,7 @@ function toggleTreeReading() {
   }
 }
 
-function setTreeDOB() {
+async function setTreeDOB() {
   var d = parseInt(document.getElementById('tree-dob-d').value);
   var m = parseInt(document.getElementById('tree-dob-m').value);
   var y = parseInt(document.getElementById('tree-dob-y').value);
@@ -212,9 +212,16 @@ function setTreeDOB() {
     return;
   }
   readerUser.d = d; readerUser.m = m; readerUser.y = y;
-  // Save DOB to DB
+  // Save DOB to DB. supabase-js RESOLVES a failed write as { error } — it never throws — so
+  // the old .then(noop).catch() could not see a failure at all. A lost DOB is invisible until
+  // the next login, when the life rune (computed from memory) is simply gone.
   if (currentUser) {
-    sb.from('user_profiles').update({ dob_day: d, dob_month: m, dob_year: y }).eq('id', currentUser.id).then(function() {}).catch(function(e) { console.warn('persist DOB:', e.message); });
+    var _dobRes = await sb.from('user_profiles')
+      .update({ dob_day: d, dob_month: m, dob_year: y }).eq('id', currentUser.id);
+    if (_dobRes && _dobRes.error) {
+      console.error('persist DOB failed:', _dobRes.error.message);
+      showToast(t('err_save_failed'));
+    }
   }
   updateTreeTab();
 }
@@ -328,13 +335,18 @@ async function generateLifeRuneReading() {
   _lifeRuneLang = lang;
   _lifeRuneNum  = RUNES.findIndex(function(r){ return r.n === rune.n; }) + 1;
 
-  // Save to DB
+  // Save to DB — the result MUST be checked (see setTreeDOB): discarding it leaves a life rune
+  // that exists only in this session.
   if (currentUser) {
-    await sb.from('user_profiles').update({
+    var _lrRes = await sb.from('user_profiles').update({
       life_rune_number: _lifeRuneNum,
       life_rune_text:   _lifeRuneText,
       life_rune_lang:   _lifeRuneLang
     }).eq('id', currentUser.id);
+    if (_lrRes && _lrRes.error) {
+      console.error('persist life rune failed:', _lrRes.error.message);
+      showToast(t('err_save_failed'));
+    }
   }
 
   var runeName = isIs ? rune.is_n : rune.n;
