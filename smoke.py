@@ -233,13 +233,13 @@ check(first if passed else 'rozbitý odkaz nebo neverzovaný soubor v memory/', 
 # ⑫ — táž vada jako ⑪, o patro výš: kanonický doc, co není v gitu, neexistuje
 # (clean checkout ho nemá, Cowork přes `git show HEAD:` ho nevidí). 2026-07-17: RUNAR_TREE.md
 # ležel untracked 13 dní a Cowork navrhoval udělat konsolidaci, která už byla hotová.
-print('\n⑫ KANONICKÉ DOKY (verify_canonical_docs.js)')
-r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_canonical_docs.js')],
+print('\n⑫ KANONICKÉ SOUBORY (verify_canonical_files.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_canonical_files.js')],
                    capture_output=True, text=True, encoding='utf-8')
 passed = r.returncode == 0
 output = (r.stdout + r.stderr).strip()
-first = output.split('\n')[0] if output else 'canonical docs check ran'
-check(first if passed else 'kanonický doc (RUNAR_*.md / CLAUDE.md) NENÍ v gitu — §17', passed,
+first = output.split('\n')[0] if output else 'canonical files check ran'
+check(first if passed else 'kanonický doc nebo SQL migrace NENÍ v gitu — §17', passed,
       '' if passed else output)
 
 # ── Výsledek ─────────────────────────────────────────────────
