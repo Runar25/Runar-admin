@@ -117,6 +117,15 @@ old_line = c[line_start:line_end]   # přečti repr() pro ověření
 c = c[:line_start] + new_line + c[line_end:]
 ```
 
+## Cowork: flaky bash mount uřezává repo soubory — JS patch bezpečně (2026-07-09, lekce)
+Bash mount v Coworku občas **uřízne repo soubor při čtení** (podstrčí kratší verzi než host). Přímý mount-read → patch → write-back pak zapíše **useknutý = poškozený** soubor. Chytlo to 2× (MEMORY.md, runar-app.js — produkční JS).
+**Postup pro JS/repo patch v Coworku (povinné):**
+1. Zdroj čti z **git objektu**, ne z mountu: `git show HEAD:<path> > /tmp/x` (nebo Read tool = host-direct).
+2. Patchni v `/tmp` (Python, §1 — ne Edit tool, kazí apostrofy).
+3. `node --check /tmp/x` (JS) — chytne truncation i syntax error.
+4. Teprve validní verzi nasaď na host (`cp /tmp/x <path>`) a ověř **Read toolem** (ne bash), že je celý (končí správně).
+**Nikdy** nepiš zpět z přímého mount readu. (Code = nativní repo → nepotká ho to; pravidlo je pro Cowork.)
+
 ## Kde ukládat soubory — povinné
 
 | Typ | Umístění |
