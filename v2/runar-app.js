@@ -567,13 +567,13 @@ const HERO_PHRASES = {
   is: [
     // 🇮🇸 TO BE REVIEWED BY NATIVE SPEAKER
     "Þú snýrð aftur. Gott. Steinarnir geymdu eitthvað fyrir þig.",
-    "Lokaðu augunum. Dragðu síðan. Rétta rúnan finnur alltaf leiðina.",
+    "Lokaðu augunum. Dragðu síðan. Rétta rúnin finnur alltaf leiðina.",
     "Ég hef setið með þessa steina lengi. Þeir þekkja þig betur en þú veist.",
     "Eitthvað leiddi þig hingað í dag — ekki tilviljun. Dragðu, og við sjáum hvað það var.",
-    "Rúnan sem þú dregur er sjaldan sú sem þú bjóst við. Þetta er einmitt málið.",
+    "Rúnin sem þú dregur er sjaldan sú sem þú bjóst við. Þetta er einmitt málið.",
     "Andaðu áður en þú dregur. Steinarnir lesa kyrrð jafn vel og spurningar.",
     "Ég hef séð leitendur koma — í myrkri, í efa, undir fullu tungli. Rúnirnar taka á móti öllu. Dragðu.",
-    "Þú þarft ekki skýra spurningu. Rúnan finnur það sem er að leita.",
+    "Þú þarft ekki skýra spurningu. Rúnin finnur það sem er að leita.",
     "Suma daga talar steinninn hátt. Aðra daga hvíslar hann. En hann talar alltaf.",
     "Rúnirnar hafa engar slæmar stundir. Þær segja bara það sem er. Ertu tilbúinn?",
     "Hvað sem þú berð með þér — settu það niður. Lesturinn hefst hér.",

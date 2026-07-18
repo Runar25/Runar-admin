@@ -203,7 +203,7 @@ const READING_ANGLES_IS = [
   'Byrjaðu á landinu — opnaðu með einni íslenskri mynd sem speglar þessa stöðu nákvæmlega.',
   'Byrjaðu á því sem hrærist — nefndu hreyfinguna sem þessi rúna gerir sýnilega.',
   'Byrjaðu á þröskuldinum — á milli hvers stendur leitandinn núna.',
-  'Láttu lífsrúnina tala fyrst — dregna rúnan svarar henni.',
+  'Láttu lífsrúnina tala fyrst — dregna rúnin svarar henni.',
 ];
 
 // ─── _randomAngle(lang) ─────────────────────────────────────────

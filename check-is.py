@@ -22,6 +22,7 @@ BAD_PATTERNS = [
     # the model-output entries below are kept only as living documentation for now.
     # Confirmed corrections from runar_corrections DB + manual review
     ('rúnarnar',         'rúnirnar',          'wrong plural'),
+    ('Rúnan ',           'Rúnin ',            'standalone definite: rún -> rúnin (Sigrún 2026-07-15, front page)'),
     ('Auða rúnan',       'Auða rúnin',        'rún definite = rúnin (fixed at source, guard)'),
     ('lífsrúnan',        'lífsrúnin',         'rún definite = rúnin, not -an (Sigrún 2026-07-13)'),
     ('LÍFSTÍÐARRÚNAN',   'LÍFSRÚNIN',         'wrong compound'),

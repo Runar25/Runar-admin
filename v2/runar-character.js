@@ -525,7 +525,7 @@ function _lensContext(life, drawn, lang) {
   if (lang === 'is') {
     var subjIs = many ? 'rúnurnar sem dregnar voru' : rn(list[0]);
     var tailIs = many ? 'Dragðu aðeins skýra tengingu við þær fram ef hún kemur af sjálfu sér.'
-                      : 'Dragðu aðeins skýra tengingu milli rúnanna tveggja fram ef hún kemur af sjálfu sér.';
+                      : 'Dragðu aðeins skýra tengingu milli rúninna tveggja fram ef hún kemur af sjálfu sér.';
     return 'LÍFSRÚNIN ' + rn(life) + ' er linsan, ekki viðfangsefnið — láttu hana móta HVERNIG þú lest ' + subjIs + '. Nefndu hana aldrei og útskýrðu hana ekki; láttu hana lita lesturinn neðan frá. ' + tailIs;
   }
   var subjEn = many ? 'the runes that were drawn' : rn(list[0]);
@@ -636,7 +636,7 @@ function buildLifeRunePromptIS(name, rune, day, month, year, isPremium) {
     'KJARNAORÐ: ' + rune.k_is,
     '',
     'Stíllíkan — læra af tóni, ekki nota beint:',
-    '"Þegar rúnan kemur til þín, er þá orkan sem er þegar á leið."',
+    '"Þegar rúnin kemur til þín, er þá orkan sem er þegar á leið."',
     '"Þú stendur á mörkum tveggja heima. Rúnirnar sjá hvað þú ert að ganga í gegnum."',
     '',
     'Skrifaðu í tveimur hlutum — engar fyrirsagnir í úttakinu:',
@@ -644,7 +644,7 @@ function buildLifeRunePromptIS(name, rune, day, month, year, isPremium) {
     'HLUTI 1 — DAGSETNINGIN (3 setningar):',
     'Hvað ber ' + monthDesc.split(' — ')[0] + ' í íslensku ári? Hvaða gæði hafði þessi tími — hvað var að gerast í landinu þegar ' + name + ' kom til sögunnar? Ekki stjörnuspeki. Andrúmsloft.',
     '',
-    'HLUTI 2 — RÚNAN (5–6 setningar):',
+    'HLUTI 2 — RÚNIN (5–6 setningar):',
     rune.is_n + ' sem jarðvegur lífs ' + name + '. Lögun rúnarinnar og hvað hún ber í sér. Gjöfin — hvað kemur náttúrulega til manneskju sem fæðist undir þessari rúnu. Skugginn — hvar sama orkan verður erfið. Eitt samfellt flæði — ekki listi. Flettu inn nafninu ' + name + ' einu sinni eða tvisvar. Endaðu með einni mjúkri, opinni spurningu.',
     '',
     (nameInstr ? nameInstr + '\n' : ''),
@@ -932,16 +932,16 @@ function buildReadingPrompt(u, drawn, lang, corrections) { return buildReadingPr
 var RP_KRIZ = {
   is: {
     seeker:'Leiðandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leiðin', seekJoin:' og ', question:'Spurning',
-    positions:['RÚNAN 1 (Miðja / Kjarni — verdandi)','RÚNAN 2 (Ofan / Þrá — skuld)','RÚNAN 3 (Undir / Rót — urd)','RÚNAN 4 (Að baki / Fortíð — urd)','RÚNAN 5 (Framar / Stefna — skuld)'],
+    positions:['RÚNIN 1 (Miðja / Kjarni — verdandi)','RÚNIN 2 (Ofan / Þrá — skuld)','RÚNIN 3 (Undir / Rót — urd)','RÚNIN 4 (Að baki / Fortíð — urd)','RÚNIN 5 (Framar / Stefna — skuld)'],
     intro:'Leiðandinn dregur fimm rúnir — Áttavitinn.',
     langInstr:'',
     instructions:function(ctrName){ return [
       'Lesturinn fer í einum flæði — ekki fimm aðskildir lestrar.',
-      'Miðja rúnan (' + ctrName + ') er hjartað — hún litar allt.',
+      'Miðja rúnin (' + ctrName + ') er hjartað — hún litar allt.',
       'Byrjaðu í miðjunni og flettu út. Nefndu ekki staðsetningarnar — bærðu þær í röddinn.',
-      'Þriðja rúnan (Undir): hvað liggur í undirmeðvitund eða duldu.',
-      'Fjórða rúnan (Að baki): það sem enn verkar úr fortíðinni — ekki sögun, heldur orkan.',
-      'Fimmta rúnan (Framar): ekki spá — þar sem þessi orka leiðir ef ekkert breytist.',
+      'Þriðja rúnin (Undir): hvað liggur í undirmeðvitund eða duldu.',
+      'Fjórða rúnin (Að baki): það sem enn verkar úr fortíðinni — ekki sögun, heldur orkan.',
+      'Fimmta rúnin (Framar): ekki spá — þar sem þessi orka leiðir ef ekkert breytist.',
       'Sérhver rúna verður að setja mark sitt — láttu allar fimm móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
     ]; },
     closing:function(name){ return '' + _namePlacement(name, 'is') + ' Vertu hnitmiðaður — 6 til 7 setningar.'; },
@@ -1092,11 +1092,11 @@ function buildNornsPrompt(u, runes, lang, corrections) { return buildNornsPrompt
 var RP_HORSESHOE = {
   is: {
     seeker:'Leiðandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leiðin', seekJoin:' og ', question:'Spurning', langInstr:'',
-    positions:['RÚNAN 1 — Fortíð (hvað hefur mótað):','RÚNAN 2 — Nútíð (hvað er að ríkja):','RÚNAN 3 — Dulið / Nánasta framtíð (hvað er að koma upp):','RÚNAN 4 — Hindranir (hvað þyngir eða hindrar):','RÚNAN 5 — Ytri kraftar (hvað kemur að utan):','RÚNAN 6 — Innri staða (hvað er inni í þér):','RÚNAN 7 — Niðurstaða (hvert er þetta að fara):'],
+    positions:['RÚNIN 1 — Fortíð (hvað hefur mótað):','RÚNIN 2 — Nútíð (hvað er að ríkja):','RÚNIN 3 — Dulið / Nánasta framtíð (hvað er að koma upp):','RÚNIN 4 — Hindranir (hvað þyngir eða hindrar):','RÚNIN 5 — Ytri kraftar (hvað kemur að utan):','RÚNIN 6 — Innri staða (hvað er inni í þér):','RÚNIN 7 — Niðurstaða (hvert er þetta að fara):'],
     intro:'Leiðandinn dregur sjö rúnir — Skeifan.',
     beats:[
       'Lestu allar sjö sem einn samfelldann stef — ekki sjö aðskildar lagnir.',
-      'Rúnan 7 (Niðurstaða) er ekki spá — sjáðu hana sem stefnu ef þráðurinn heldur áfram.',
+      'Rúnin 7 (Niðurstaða) er ekki spá — sjáðu hana sem stefnu ef þráðurinn heldur áfram.',
       'Nefndu ekki staðsetningarnar í úttakinu. Bærðu þær í röddinn.',
       'Sérhver rúna verður að setja mark sitt — láttu allar sjö móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
     ],
@@ -1168,7 +1168,7 @@ var RP_YGGDRASIL = {
   is: {
     seeker:'Leiðandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leiðin', seekJoin:' og ', question:'Spurning', langInstr:'',
     tiers:['── SKULD (króna — það sem verður að vera) ──','── VERÐANDI (stofn — það sem er að gerast) ──','── URÐUR (rætur — það sem var og er fast) ──'],
-    positions:['RÚNAN 1 — Ásgarðr (hæsta sjálf, hvað þú ert að verða):','RÚNAN 2 — Vanaheimr (samhljómur, hvað er í jafnvægi):','RÚNAN 3 — Álfheimr (sköpunarkraftur, hvað er að kvikna):','RÚNAN 4 — Miðgarðr (daglegar raunir, hér og nú):','RÚNAN 5 — Jötunheimr (hindrun, hvað þrýstir gegn þér):','RÚNAN 6 — Svartálfaheimr (dulin list, hvað er unnið í myrkri):','RÚNAN 7 — Níðavellir (djúp uppspretta, hvað heldur þér uppi án þess að þú vitir):','RÚNAN 8 — Niflheimr (uppruni, hvað er enn óleyst í þér):','RÚNAN 9 — Hel (lokið, hvað er að fullnægja sér):'],
+    positions:['RÚNIN 1 — Ásgarðr (hæsta sjálf, hvað þú ert að verða):','RÚNIN 2 — Vanaheimr (samhljómur, hvað er í jafnvægi):','RÚNIN 3 — Álfheimr (sköpunarkraftur, hvað er að kvikna):','RÚNIN 4 — Miðgarðr (daglegar raunir, hér og nú):','RÚNIN 5 — Jötunheimr (hindrun, hvað þrýstir gegn þér):','RÚNIN 6 — Svartálfaheimr (dulin list, hvað er unnið í myrkri):','RÚNIN 7 — Níðavellir (djúp uppspretta, hvað heldur þér uppi án þess að þú vitir):','RÚNIN 8 — Niflheimr (uppruni, hvað er enn óleyst í þér):','RÚNIN 9 — Hel (lokið, hvað er að fullnægja sér):'],
     intro:'Leiðandinn dregur níu rúnir — Yggdrasil, níu heimar. Einu sinni á ári.',
     beats:[
       'Þetta eru ekki níu aðskildir lestrar — þetta er eitt líf séð í gegnum níu glugga.',
