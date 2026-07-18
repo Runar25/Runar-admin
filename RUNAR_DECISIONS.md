@@ -689,3 +689,7 @@ stav až potom a vyvodil závěr o minulosti → owner musel arbitrovat. Stav be
 - **Měření:** efekt NEZMĚŘEN — čeká na v1.0 kohortu. Cíl = „already" rate dolů proti baseline (EN 46 %) i proti v0.9. Export stejným SELECTem (`order by drawn_at desc limit 500`), rozdělit dle `prompt_version`.
 - **Affected doc(s):** MEMORY.md
 - **Reverzibilita:** snadná (odebrat helper + 6 zapojení, vrátit verzi).
+2026-07-17 23:05 · KUKY → CODE · rozhodnuto: hlavička čtení zůstává „PERÞ (DULDIR HLUTIR)" —
+  závorková glosa ZŮSTÁVÁ (dává významový klíč). Task 3 z Coworkova hand-offu tím UZAVŘEN
+  bez jakékoli změny kódu · OVĚŘENÍ: `rn()` už IS název vrací (utils.js:324), hlavička ho
+  renderuje (reading.js:188) — stav odpovídá rozhodnutí, není co měnit.
