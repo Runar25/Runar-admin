@@ -82,6 +82,11 @@ async function fetchUserProfile(userId) {
       // Load tree name (single source: currentUser.tree_name) -> render edit/display state
       if (currentUser) currentUser.tree_name = data.tree_name || '';
       if (typeof _renderTreeNameState === 'function') _renderTreeNameState();
+      // The Tree tab may already be on screen: this profile load is fire-and-forget, so a
+      // slow connection lets updateTreeTab() run while readerUser.d is still empty — it draws
+      // the "when were you born?" onboarding and, without this, never redraws. To the user
+      // that reads as the app forgetting a life rune it actually has (Sigrún, iPhone, 3×).
+      if (activeAppTab === 'tree' && typeof updateTreeTab === 'function') updateTreeTab();
       userName    = data.name            || '';
       userGender = localStorage.getItem('runar_gender') || 'hk';
       _updateGenderPills();
