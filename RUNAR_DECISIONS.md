@@ -744,3 +744,12 @@ stav až potom a vyvodil závěr o minulosti → owner musel arbitrovat. Stav be
 - **Affected doc(s):** CLAUDE.md (sekce Tree of Life — tvrdila „engine = LAB, NEKOMITOVÁNO,
   nenapojeno na DB/reader", což je od 2026-07-10 nepravda), MEMORY.md
 - **Reverzibilita:** snadná (jeden výraz zpět na `: null`).
+- ⚠️ **Kde to reálně leží:** commit **`d3bb6ff`**, ne pod `[tree]`. Souběžná `[docsync]` session
+  commitla, zatímco jsem měl soubory nastagované — `git commit` bere CELÝ index, takže jí do commitu
+  spadl můj guard, smoke ⑬, oprava v runar-tree.js i tenhle zápis, pod hlavičkou o portu
+  CLAUDE_CODE_FILE_RULES. Obsah ověřen nedotčený (obě sady změn v CLAUDE.md koexistují, nic se
+  neztratilo); commit už byl na originu → historie se nepřepisuje, jen se sem píše ukazatel.
+- ⭐ **Proces (stojí za zvážení):** „commit prefix = LANE, `git log` JE akční log" tiše předpokládá,
+  že index patří jedné session. Nepatří — **index je sdílený**. Kdokoli commitne, sebere i cizí
+  rozpracované staged soubory a schová je pod svůj prefix. Nestačí kázeň v psaní zpráv; buď stagovat
+  a commitovat v jednom kroku (`git commit -- <cesty>`), nebo počítat s tím, že akční log lže.
