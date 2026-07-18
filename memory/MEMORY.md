@@ -98,6 +98,7 @@ Kořen driftu = duplikace. Jazyk/tier/spread varianty = DATA (RP_* packy, config
 - [paste-sql-explicitly.md](paste-sql-explicitly.md) — když owner má spustit SQL, vlož přesné SQL do zprávy; žádné „jako minule"
 - [function-not-ceremony.md](function-not-ceremony.md) — nestavět proces pro uspokojení; nepomůže-li to reálně mně, říct to a vynechat
 - [proceed-dont-ask.md](proceed-dont-ask.md) — dohodnutý plán odjeď celý; neptej se „souhlas?" mezi kroky
+- [commit-by-pathspec.md](commit-by-pathspec.md) — commitovat VŽDY s pathspec; `git commit` bere celý index včetně cizí lane
 - [one-patch-script-path.md](one-patch-script-path.md) — §1 patche VŽDY do `scripts/_patch.py`; nový název = nový permission prompt
 - [match-existing-visual-first.md](match-existing-visual-first.md) — nové UI: NEJDŘÍV načíst existující vizuál a zkopírovat ho (radius/barvy/fonty); nevymýšlet
 - [verify-agent-claims-about-code.md](verify-agent-claims-about-code.md) — handoff od jiné session = žádost, ne fakt; tvrzení o kódu VŽDY ověřit (4/4 mylná 2026-07-17)
