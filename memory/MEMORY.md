@@ -95,6 +95,7 @@ Kořen driftu = duplikace. Jazyk/tier/spread varianty = DATA (RP_* packy, config
 - [working-style.md](working-style.md) — workflow pravidla, Python skripty, IS primární jazyk, verifikace, IS gramatika
 - [is-done-together-not-for-sigrun.md](is-done-together-not-for-sigrun.md) — IS tvoříme rovnou pořádně + ověřujeme; NIKDY „draft pro Sigrún"
 - [paste-sql-explicitly.md](paste-sql-explicitly.md) — když owner má spustit SQL, vlož přesné SQL do zprávy; žádné „jako minule"
+- [function-not-ceremony.md](function-not-ceremony.md) — nestavět proces pro uspokojení; nepomůže-li to reálně mně, říct to a vynechat
 - [proceed-dont-ask.md](proceed-dont-ask.md) — dohodnutý plán odjeď celý; neptej se „souhlas?" mezi kroky
 - [one-patch-script-path.md](one-patch-script-path.md) — §1 patche VŽDY do `scripts/_patch.py`; nový název = nový permission prompt
 - [match-existing-visual-first.md](match-existing-visual-first.md) — nové UI: NEJDŘÍV načíst existující vizuál a zkopírovat ho (radius/barvy/fonty); nevymýšlet
