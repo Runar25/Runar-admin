@@ -47,6 +47,9 @@ var drawn = _R('Raidho');
   // life rune AMONG the drawn runes -> the lens must step aside (it cannot be lens and subject)
   var uIn = { name:'Anna', area:u.area, seeking:u.seeking, question:'', lifeRune:_R('Uruz') };
   _OUT['norns_lifein_'+L] = buildNornsPrompt(uIn, pool.slice(0,3), L, []);
+  // Ask Rúnar follow-up — until v1.0 it carried persona + scope only, so a leading question
+  // pulled it into cold-read/fate while the body held. It must now carry the body's gates.
+  _OUT['ask_'+L] = buildAskPrompt('A short reading about Raidho.', 'So the road is already opening for me?', 'Raidho', L, []);
 });
 `;
 vm.createContext(sandbox);
@@ -58,6 +61,7 @@ const PARTS = {
   domain:   ['This reading is about:', 'Þessi lestur snýst um:'],
   register: ['This is a leaning, not an order', 'Þetta er tilhneiging, ekki pöntun'],
   priority: ['do not gather into one natural image', 'rennur ekki saman í eina náttúrlega mynd'],
+  coldread: ['NO COLD READING', 'ENGIN KÖLD LESNING'],
 };
 const has = (txt, k) => PARTS[k].some(p => txt.includes(p));
 const BUILDERS = ['single', 'norns', 'kriz', 'horseshoe', 'yggdrasil'];
@@ -68,7 +72,7 @@ for (const L of ['en', 'is']) {
     const txt = O[b + '_' + L] || '';
     const missing = Object.keys(PARTS).filter(k => !has(txt, k));
     if (missing.length) { fail++; console.log('FAIL  ' + b + '_' + L + '  missing: ' + missing.join(', ')); }
-    else console.log('OK    ' + b + '_' + L + '  lens+domain+register+priority');
+    else console.log('OK    ' + b + '_' + L + '  lens+domain+register+priority+coldread');
   }
   // the lens must NOT appear when the life rune is itself one of the drawn runes
   const t = O['norns_lifein_' + L] || '';
@@ -76,6 +80,22 @@ for (const L of ['en', 'is']) {
   else console.log('OK    norns_lifein_' + L + '  lens correctly steps aside');
 }
 
-console.log(fail === 0 ? '\nALL OK — contract reaches single + all 4 spreads, both languages.'
+// ── Ask Rúnar: the follow-up gates (v1.0) ────────────────────────────────────
+const ASK = {
+  describe:  ['DESCRIBE, DO NOT EXPLAIN', 'LÝSTU, EKKI ÚTSKÝRÐU'],
+  coldread:  ['NO COLD READING', 'ENGIN KÖLD LESNING'],
+  antimirror:['Do not mirror the seeker', 'Speglaðu ekki leitandann'],
+};
+for (const L of ['en', 'is']) {
+  const txt = O['ask_' + L] || '';
+  const missing = Object.keys(ASK).filter(k => !ASK[k].some(x => txt.includes(x)));
+  if (missing.length) { fail++; console.log('FAIL  ask_' + L + '  missing: ' + missing.join(', ')); }
+  else console.log('OK    ask_' + L + '  describe+coldread+antimirror');
+  // the instruction itself must not model the move it forbids
+  const echo = L === 'is' ? 'rúnirnar sögðu þegar' : 'the runes already said';
+  if (txt.includes(echo)) { fail++; console.log('FAIL  ask_' + L + '  still says "' + echo + '"'); }
+}
+
+console.log(fail === 0 ? '\nALL OK — contract reaches single + all 4 spreads + the follow-up, both languages.'
                        : '\n' + fail + ' FAIL');
 process.exit(fail ? 1 : 0);
