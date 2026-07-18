@@ -134,6 +134,12 @@ snapshots/ + tree paměti). Obě platformní pamětové složky (`AppData\Roamin
 píší STEJNÉ soubory, git verzuje, žádný sync skript, žádný drift. `RUNAR_*.md` + `CLAUDE.md` zůstávají
 v rootu (čtou se on-demand, ne jako auto-paměť). Každá změna = malý commit + push IHNED, prefix `[docsync]`.
 Rozbitý junction (app přepsala složku) → spustit `memory\relink-memory.ps1`. Detail → RUNAR_DECISIONS.md (2026-07-04).
+**Kanonický doc žije JEN v repu (2026-07-17).** Cowork výstupy jdou do repa VÝHRADNĚ přes CODE. Zrcadlo
+(`C:\Users\zkuku\Claude\Projects\RÚNAR the rune keeper\`) NENÍ paralelní kopie — nanejvýš dočasný draft
+označený „→ CODE", který po převzetí zmizí. Zrcadlo-kopie = zdroj driftu (ověřeno 2026-07-17: zrcadlové
+`RUNAR_CONTEXT` a `working-style` se od repo verzí rozešly OBĚMA směry → nelze slít automaticky).
+⚠️ **Junction ≠ zrcadlo.** Junction (memory/) je JEDEN soubor přes link a funguje; kopie v Projects/ je něco
+jiného. Než se jakákoli zrcadlová kopie smaže, MUSÍ se ověřit diffem, co je v ní navíc — a přenést to.
 
 ### §18 — Jeden zdroj pravdy, žádné paralelní kopie (ANTI-DRIFT)
 Kořen měsíce oprav = duplikace + rozsypané řetězce („všechno všude a nikde"). Prevence:
@@ -228,12 +234,21 @@ Business model + ceny + EL kalkulace → `RUNAR_PRICING.md`
 
 ---
 
-## Dvě paralelní session — koordinace
-Repo zpracovávají DVĚ Claude Code session paralelně. Aby si nelezly do zelí:
+## N paralelních session — lanes a koordinace
+Repo zpracovává VÍC session naráz (2× Code + N× Cowork). **Git je všechny podepisuje „Runar Admin"**, takže
+jediné, co v historii rozliší autora, je **commit prefix**. Bez něj nikdo nepozná, kdo co udělal.
 
-**Domény (kdo co edituje):**
-- MAIN (Opus): reading systém, prompty (reading buildery v runar-character.js), config (TIERS/SPREAD_COSTS/SPREAD_CONFIG/VOCAB), pricing, translations, reader UI/CSS, auth, app, journal. = vše KROMĚ tree vizuálu.
-- TREE (Fable 5 / Cowork): vizuální engine — runar-tree-model.js, runar-tree-render.js, runar-tree-lab*.html, runar-branch.js, tree-lab-*/, tree-snapshots/, build_tree_*.py / build_*composer.py. Doménový doc = RUNAR_TREE_LAB.md.
+**Lanes (kdo co vlastní):**
+- **CODE-tune** → prefix `[tune]` (+ `[reading]`/`[fix]`/`[pricing]` jako téma): reading systém, prompty (buildery v runar-character.js), config (TIERS/SPREAD_COSTS/SPREAD_CONFIG/VOCAB), pricing, translations, reader UI/CSS, reporter, auth, app, journal, eval-IMPLEMENTACE, copy. = vše KROMĚ tree vizuálu.
+- **CODE-tree** → prefix `[tree]`: vizuální engine — runar-tree-model.js, runar-tree-render.js, runar-tree-lab*.html, runar-branch.js, tree-lab-*/, tree-snapshots/, build_tree_*.py / build_*composer.py, `RUNAR_TREE_*` docs, `tree_state` DB. Doménový doc = RUNAR_TREE_LAB.md.
+- **Cowork** → prefix `[cowork]`: design, docs, eval-OBSAH, copy audit, handoffy. Repo **READ-ONLY přes `git show HEAD:`** (ne `git status`, ten zapisuje do indexu); do repa píše VÝHRADNĚ přes CODE. Další Cowork session = táž lane, táž pravidla.
+
+**Mechanika (platí pro všechny lanes):**
+- Každý zásah do repa = řádka v akčním logu (`RUNAR_DECISIONS.md`): `YYYY-MM-DD HH:MM · KDO(lane) · CO · PROČ · OVĚŘENÍ`.
+- Nejde commitnout (lock/přístup) → NESAHAT, jen ohlásit. Neviditelná změna je horší než žádná.
+- Jeden kanál na fakt (§18): stav repa = git, ne něčí mount. Cowork o worktree NETVRDÍ — ptá se CODE.
+- Handoff má povinnou sekci `ZMĚNĚNO:` (co jsem změnil), i prázdnou.
+- Než druhého opravíš, přečti akční log. Timeline před závěrem.
 
 **Hranice:**
 - **Sdílená sémantická vrstva (runa → růst).** Kanonická data run (`runar-runes.js`: aett/world/element/keywords) + config (AETTY, SPREAD_CONFIG.norns_axis, MOODS/INTENTIONS) čtou OBĚ session. TREE růstové/tvarové mapování drž ve VLASTNÍM souboru (`runar-branch.js`). Když MUSÍŠ sáhnout do runar-runes.js/config kvůli růstu: **jen ADITIVNĚ** (přidej pole, neměň existující reading-pole), `[tree]` malý commit, push HNED + řádek do MEMORY.md (MAIN to musí vidět — sdílená data mění i výklad). Změna existujícího aett/element/world runy ovlivní i čtení → napřed flagni.
@@ -243,7 +258,7 @@ Repo zpracovávají DVĚ Claude Code session paralelně. Aby si nelezly do zelí
 
 **Komunikace (session spolu nemluví → přes git + soubory):**
 - `git pull` PŘED prací · `git push` IHNED po commitu · malé commity.
-- Commit prefix: `[tree]` (tree session) vs `[reading]`/`[pricing]`/`[fix]` (main) → čitelná historie + jasné vlastnictví.
+- Commit prefix = LANE (`[tune]` · `[tree]` · `[cowork]`, volitelně + téma) → čitelná historie + jasné vlastnictví. Git podpis je u všech stejný, prefix je jediný rozlišovač.
 - Musíš sáhnout do cizí domény? Drž změnu minimální + zapiš „co a proč" do svého doc (RUNAR_TREE_LAB.md / snapshot) + push hned.
 - sw.js: git hook auto-bumpuje; když oba commitnou JS, vyšší číslo vyhrává (jen cache-buster, ne konflikt obsahu).
 - Git konflikt? Neforcuj — pull, vyřeš ručně JEN svou doménu.
