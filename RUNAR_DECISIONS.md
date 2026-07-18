@@ -693,3 +693,17 @@ stav až potom a vyvodil závěr o minulosti → owner musel arbitrovat. Stav be
   závorková glosa ZŮSTÁVÁ (dává významový klíč). Task 3 z Coworkova hand-offu tím UZAVŘEN
   bez jakékoli změny kódu · OVĚŘENÍ: `rn()` už IS název vrací (utils.js:324), hlavička ho
   renderuje (reading.js:188) — stav odpovídá rozhodnutí, není co měnit.
+2026-07-18 · CODE-tune · zrcadlo `Claude/Projects/RÚNAR the rune keeper/` vyřazeno — 13 duplicitních
+  docs + `sync-to-cowork.py` PŘESUNUTY do `_archived-2026-07-18/` (přesun, ne smazání = vratné)
+  · PROČ: kanonický doc žije jen v repu (§17); dvě kopie = zdroj driftu, který stál 2026-07-17 půl dne
+  · OVĚŘENÍ: každý soubor porovnán s repem PŘED přesunem — CLAUDE/SEGMENTATION_SPEC/tree-of-life 0 řádků
+    navíc · runar-project/tree-forces/tree-placement identické · patterns 1 ř. (zalomení) · PRICING 4 ř.
+    (přeformátovaná tabulka) · DESIGN obsah v repu (:476) + zrcadlo má stará jména run = zastaralé
+    · MEMORY zastaralý snapshot 2026-07-04 (jeho „navíc" jsou dnes nepravdivá fakta) · CONTEXT/working-style
+    unikátní sekce portnuty v 798b8b5 · TREE_LAB v repu jako docs/archive/tree/.
+  · ⭐ KOŘEN NALEZEN: duplikáty nevznikaly nedbalostí — vyráběl je `sync-to-cowork.py` (repo→zrcadlo,
+    CLAUDE/DESIGN/PRICING/MEMORY + snapshots). Pozůstatek z doby PŘED junctionem, odporuje §17. NENÍ v repu
+    ani v git hooku (nespouští se sám), ale kdo ho spustí, kopie se vrátí → vyřazen spolu s nimi.
+  · ZŮSTALO v zrcadle (NENÍ v repu, Coworkovy výstupy k předání): AUDIT-docs · CLAUDE_CODE_FILE_RULES
+    · RUNAR_EVAL_CHAT_mobil · RUNAR_FEATURES · RUNAR_IS_GRAMMAR_CHECK_CODE · RUNAR_SEGMENTACE_FaseB
+    · RUNE_IMAGE_POOLS_draft · tento handoff.
