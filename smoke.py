@@ -242,6 +242,18 @@ first = output.split('\n')[0] if output else 'canonical files check ran'
 check(first if passed else 'kanonický doc nebo SQL migrace NENÍ v gitu — §17', passed,
       '' if passed else output)
 
+# ⑬ — signál z DB musí DOJET do stromu. 2026-07-18: osa B (area → strana) byla pro každý
+# spread mrtvá — klient ukládá area='spread' (marker) + oblast do `aol`, strom četl jen `area`.
+# Data v DB ležela, strom je zahodil. Nic nespadlo → kontrola na výsledku, ne na tvaru kódu.
+print('\n⑬ TREE SIGNÁLY (verify_tree_signals.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_tree_signals.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+first = output.split('\n')[0] if output else 'tree signals check ran'
+check(first if passed else 'signál z DB nedojel do stromu (tichá ztráta umístění)', passed,
+      '' if passed else output)
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

@@ -33,6 +33,10 @@ runar-shrine.html     — admin app      ← Edit tool OK pro HTML
 sw.js                 — Service Worker (auto-bump via git hook · hooks/pre-commit.py)
 ```
 
+**Kam ukládat nové soubory:** SQL migrace → `sql/` jako `YYYY-MM-DD_popis.sql` · archivní nebo
+dočasné dokumenty a POC/experiment HTML → `docs/archive/` · patch skript → VŽDY `scripts/_patch.py`
+(jedna stabilní cesta, přepisuje se; nový název = nový permission prompt).
+
 ### Load order
 ```
 runar-config.js → runar-runes.js → runar-translations.js → runar-character.js
@@ -207,9 +211,14 @@ Kredity = per typ čtení (NE počet run); hodnoty v `SPREAD_COSTS` (config = zd
 
 ## Tree of Life — stav
 ✅ Produkce (logika): calcLifeRune(), generování + uložení Life Rune, Tree tab UI, IS 3-vrstvý systém.
-🧪 Vizuální engine = LAB (Canvas 2D), NEKOMITOVÁNO, nenapojeno na DB/reader — čeká na schválení.
-❌ branch systém v produkci, tree_state/tree_readings DB — čeká na V3.
-**Detail (engine, iterace, lab soubory) → RUNAR_TREE_LAB.md** (doménový doc TREE session). Design → tree-of-life.md + RUNAR_DESIGN.md.
+✅ **Vizuální engine JE v produkci** (2026-07-10, admin-only beta): `runar-tree-prod.js` (generovaný
+`build_tree_production.py`, crown-composer 1:1) roste z REÁLNÝCH čtení — `readings` → `readingsToTreeLog()`
+→ `RunarTreeProd.render()`. Signály z labu dojely: intention→výška (`intZone`), area→strana (`areaSide`),
+ætt→charakter růstu (`aettStr`). Gating na `isAdmin()` v `renderLivingTree()`.
+❌ `tree_state` / `tree_readings` DB (= Muninn, paměť stromu) — na tom visí The Gathering + `detectPatterns()`.
+⚠️ Strom se krmí **regexem přes text čtení** (glyfy 0x16A0–0x16FF z `rune_glyph + short_text`) — změna
+formátu skládaného textu = tichá ztráta větví. Hlídá smoke ⑬ (`verify_tree_signals.js`).
+**Kanonický vstupní bod = RUNAR_TREE.md** (duše + zóny + stavba + mapa doků). `RUNAR_TREE_LAB.md` = HISTORIE.
 
 ## Word Corrections
 Živá data: `python show_corrections.py`

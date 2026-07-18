@@ -34,7 +34,7 @@ function readingsToTreeLog(rows) {
     }
     if (!runes.length) return;
     if (!isSpread) runes = [runes[0]];
-    var area = (row.area && row.area !== 'spread') ? row.area : null;
+    var area = (row.area && row.area !== 'spread') ? row.area : (row.aol || null);
     out.push({ spread: isSpread ? name.toLowerCase() : 'single', runes: runes, area: area, intention: row.intention || null });
   });
   return out;

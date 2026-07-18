@@ -707,3 +707,40 @@ stav až potom a vyvodil závěr o minulosti → owner musel arbitrovat. Stav be
   · ZŮSTALO v zrcadle (NENÍ v repu, Coworkovy výstupy k předání): AUDIT-docs · CLAUDE_CODE_FILE_RULES
     · RUNAR_EVAL_CHAT_mobil · RUNAR_FEATURES · RUNAR_IS_GRAMMAR_CHECK_CODE · RUNAR_SEGMENTACE_FaseB
     · RUNE_IMAGE_POOLS_draft · tento handoff.
+
+## 2026-07-18 — Strom: signály z DB nedojely (osa B opravena, zbytek POJMENOVÁN)
+
+- **Typ:** fix + nález (CODE-tree; zadání KUKY „pokračuj na stromě" → Explore napřed)
+- **Co se změnilo:** `readingsToTreeLog` (runar-tree.js:37) čte u spreadů `row.aol` jako fallback,
+  když je v `area` marker `'spread'`. Nový guard **smoke ⑬** `scripts/verify_tree_signals.js`.
+- **Proč:** klient u spreadu ukládá `area:'spread'` (marker) a skutečnou oblast života do `aol`
+  (runar-reading.js:763); proxy zapisuje OBA sloupce (claude-proxy:373-374); strom marker poznal,
+  vrátil `null` a `aol` **nikdy nepřečetl**. Data v DB ležela, strom je zahodil — bez chyby, bez pádu.
+  Bralo to zrovna nejvýznamnější čtení: Norny (zakládací rituál) a Yggdrasil.
+- **OVĚŘENÍ:** guard puštěn PŘED opravou → červená na jediném assertu (ostatní signály prošly
+  = přesná lokalizace vady), po opravě zelená. `node --check` OK, smoke 13/13.
+- ⚠️ **MŮJ VLASTNÍ FALSE GREEN (zapsáno schválně):** první verze fixture nasadila `aol:'career'` —
+  slug, který jsem si vymyslel. Prošla zeleně, aniž co ověřila. Přesně past, před kterou varuje
+  hlavička `verify_contract_wiring.js`. Opraveno: hodnoty se **tahají z `AREAS`/`INTENTIONS`**,
+  takže nemohou odrejvovat od reality. **Poučení: fixture, kde si autor vymyslí tvar hodnoty,
+  netestuje hranici — testuje autorovu představu.**
+- ⭐ **VĚTŠÍ NÁLEZ (ověřeno oběma stranami, ČEKÁ NA OWNERA):** oprava je nutná, ale **nestačí**.
+  Renderer má vlastní slovník hodnot, který klient nikdy nepřijal:
+  `runar-tree-prod.js:41 AREA_LAT` je klíčované slugy (`love/career/…`) a `:40 INT_AXIS`
+  (`past/present/decision`), ale klient ukládá **lokalizovaný popisek** (`readerUser.area = label`,
+  runar-app.js:1058 → `'Career & Creativity'` / `'Ást & Sambönd'`). Lookup dá `undefined`
+  → `areaLat`/`intAxis` zůstanou 0 → **obě nosné osy §3 nepřispívají nic.**
+  Dekódovací tabulky **UŽ EXISTUJÍ** a jsou index-paralelní (`AREAS.norns`, `SEEKS.norns`,
+  `INTENTIONS.norns` v runar-runes.js — komentář u nich říká doslova „branch placement on tree");
+  `character.js:488` je správně dekóduje přes `indexOf`. Strom je jediný, kdo to nedělá.
+  Další: **Blank/Óðinn** má glyf `'○'` (mimo 0x16A0–0x16FF) → runar-tree.js:35 zahodí **celé čtení**
+  (zaplacené, v journalu, ve stromě nic) · `seeking`/`drawn_at`/počet vyplněných polí se do logu
+  nedostanou vůbec · runa dojede do logu, ale renderer si tvar větve bere z elementového poolu
+  (`tree-prod:200`), takže „runa = tvar" (§4) není implementované.
+  **Skóre §4: z devíti dokumentovaných signálů větve je plně zapojený JEDEN (element = barva).**
+- **§18:** až se to bude opravovat, dekódování musí být JEDNA cesta (sdílené `AREAS/SEEKS/INTENTIONS`
+  + `indexOf` jako v character.js), NE druhá kopie slugů v tree-prod. `runar-runes.js` = sdílená
+  sémantická vrstva → zásah jen ADITIVNĚ a předem flagnout (CLAUDE.md, Hranice).
+- **Affected doc(s):** CLAUDE.md (sekce Tree of Life — tvrdila „engine = LAB, NEKOMITOVÁNO,
+  nenapojeno na DB/reader", což je od 2026-07-10 nepravda), MEMORY.md
+- **Reverzibilita:** snadná (jeden výraz zpět na `: null`).
