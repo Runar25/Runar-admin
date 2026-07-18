@@ -501,13 +501,16 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 /* Ask Rúnar — follow-up Q&A (Premium, one question per reading) */
 #ask-runar{margin-top:22px;padding-top:20px;border-top:1px solid rgba(255,191,0,0.14);}
 .ask-lbl{font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:12px;}
-.ask-input-wrap{display:flex;gap:8px;align-items:stretch;}
-.ask-input{flex:1;min-width:0;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:6px;color:#e9e1d1;padding:11px 14px;font-family:inherit;font-size:0.98rem;outline:none;}
-.ask-input:focus{border-color:rgba(255,191,0,0.5);}
-.ask-input::placeholder{color:var(--muted);opacity:0.75;}
-.ask-btn{background:transparent;border:1px solid var(--gold);color:var(--gold);border-radius:6px;padding:0 18px;letter-spacing:2px;font-size:0.78rem;cursor:pointer;font-family:inherit;white-space:nowrap;transition:background 0.2s;}
-.ask-btn:hover:not(:disabled){background:rgba(255,191,0,0.1);}
-.ask-btn:disabled{opacity:0.5;cursor:default;}
+/* Layout copies .redeem-row (the existing input+button row); the field copies .txt
+   (the app's prose input: underline, no box) and the button the outlined-gold convention.
+   No border-radius anywhere — nothing else in this app has one. */
+.ask-input-wrap{display:flex;gap:10px;align-items:flex-end;}
+.ask-input{flex:1;min-width:0;background:transparent;border:none;border-bottom:1px solid var(--border2);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.1em;padding:10px 0;}
+.ask-input:focus{outline:none;border-bottom-color:var(--gold);}
+.ask-input::placeholder{color:var(--dim);}
+.ask-btn{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:1.5px;padding:9px 18px;background:transparent;border:1px solid var(--gold);color:var(--gold);cursor:pointer;white-space:nowrap;transition:all 0.25s;flex-shrink:0;}
+.ask-btn:hover:not(:disabled){background:var(--gold);color:#000;}
+.ask-btn:disabled{opacity:0.35;cursor:not-allowed;}
 .ask-question{font-style:italic;color:var(--muted);margin:2px 0 15px;padding-left:13px;border-left:2px solid rgba(255,191,0,0.28);line-height:1.6;}
 .ask-answer{margin-top:16px;font-style:italic;}
 /* Tap-a-glyph popup: rune name + meaning (esp. for spreads with no names) */
