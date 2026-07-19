@@ -48,10 +48,10 @@ strom sekne preview_screenshot): canvas → POST base64 na `localhost:7799` → 
 `_tree_shot.jpg`. Boughs lab se musí nejdřív ručně založit (Norns 3 runy).
 
 Rúnar Tree of Life rendering engine existuje jako LAB v0.2 (2026-06-11) v
-`C:\Users\zkuku\Downloads\Runar-admin\v2\`: `runar-tree-model.js` (čistá logika,
-bez DOM — React Native ready), `runar-tree-render.js` (Canvas 2D, dual-canvas),
-`runar-tree-lab.html` (mock data + time-travel slider). Generuje se přes
-`build_tree_lab.py` (pravidlo §1: JS jen přes Python skripty).
+`C:\Users\zkuku\Downloads\Runar-admin\v2\`: `runar-tree-model.js` (čistá logika,  <!-- doc-links:ok -->
+bez DOM — React Native ready), `runar-tree-render.js` (Canvas 2D, dual-canvas),  <!-- doc-links:ok -->
+`runar-tree-lab.html` (mock data + time-travel slider). Generuje se přes  <!-- doc-links:ok -->
+`build_tree_lab.py` (pravidlo §1: JS jen přes Python skripty).  <!-- doc-links:ok -->
 
 **Why:** KUKY rozhodl (2026-06-11): engine stavět nad mock daty, jako standalone
 test stránku, DB tabulky tree_state/tree_readings až později. Vizuál: základ
@@ -200,7 +200,7 @@ hybrid pro srovnání, "význam vede, harmonie uhlazuje".
   verdandi strany, skuld nahoru) + laterality inner/outer (vlevo/vpravo).
   TUNING.semanticWeight slider (0 harmonie .. 1 čistý význam, default 0.8). Norns
   spread = 3 runy s explicitním axisHint urd/verdandi/skuld. Ověřeno funkční.
-  Hlavní lab v2/runar-tree-lab.html = pořád liana v0.7.
+  Hlavní lab v2/runar-tree-lab.html = pořád liana v0.7.  <!-- doc-links:ok -->
 
 v0.7: painterly rendering — 3 vrstvy na segment (tmavá kontura + tělo + světlý hřbet
 od světla zleva shora), listové trsy LEAF_CLUSTER (5 lístků, 3 tóny), jemnější špičky.

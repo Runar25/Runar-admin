@@ -9,7 +9,7 @@ tabulky jsou přesně to, co §20 zakazuje. (Napsal jsem ji sem 2026-07-18 omyle
 
 Do 2026-07-18 to bylo „shrnutí všeho" — tiery, ceny, spready, VOCAB, DB sloupce, seznam souborů.
 Všechno opsané odjinud, naposledy aktualizované 2026-06-08, a rozešlé **ve všech tabulkách naráz**:
-„Rune Keeper" (retirováno), „rune stones" (retirováno), „Yggdrasil Dec 14–28" (žádná brána
+„Rune Keeper" (retirováno), „rune stones" (retirováno), „Yggdrasil Dec 14–28" (žádná brána  <!-- doc-values:ok -->
 neexistuje), „Kříž jen Standard+" (Rune Seeker na něj dosáhne), buildery `buildReadingPromptIS/EN`
 (v kódu nejsou), SW v74 (dnes v211). Sám vygeneroval ~15 nálezů z auditu duplicity.
 

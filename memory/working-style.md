@@ -134,7 +134,7 @@ Bash mount v Coworku občas **uřízne repo soubor při čtení** (podstrčí kr
 | Nový patch skript (jednorázový) | `Runar-admin/scripts/` → po použití přesunout do `scripts/archive/` |
 | Utility skript (opakovaný) | `Runar-admin/scripts/utils/` |
 | SQL migrace | `Runar-admin/sql/` — název: `YYYY-MM-DD_popis.sql` |
-| Nový design dokument | `Runar-admin/` root (RUNAR_NAZEV.md) |
+| Nový design dokument | `Runar-admin/` root (RUNAR_NAZEV.md) |  <!-- doc-links:ok -->
 | Archivní / dočasný dokument | `Runar-admin/docs/archive/` |
 | POC / experiment HTML | `Runar-admin/docs/archive/` |
 | Živé docs (CLAUDE.md, RUNAR_DESIGN.md, RUNAR_PRICING.md) | `Runar-admin/` root — nikam se nekopírují (§17) |
@@ -149,11 +149,11 @@ Ověřovací skripty (volané ze smoke) žijí v `scripts/verify_*.js`.
 Po úspěšném použití patche: `mv scripts/fix-xyz.py scripts/archive/`
 
 ### Naming conventions
-- Patch skript: `fix-popis.py` nebo `add-popis.py` (např. `fix-norns-is.py`)
-- Refactor skript: `refactor-popis.py`
+- Patch skript: `fix-popis.py` nebo `add-popis.py` (např. `fix-norns-is.py`)  <!-- doc-links:ok -->
+- Refactor skript: `refactor-popis.py`  <!-- doc-links:ok -->
 - Utility: `název.py` bez prefixu (např. `smoke.py`)
 - SQL: `YYYY-MM-DD_popis.sql`
-- Dokumentace: `RUNAR_NAZEV.md` (velká písmena)
+- Dokumentace: `RUNAR_NAZEV.md` (velká písmena)  <!-- doc-links:ok -->
 
 ---
 

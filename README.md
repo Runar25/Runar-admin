@@ -62,7 +62,7 @@ Runar-admin/
 |---|---|
 | **Teach Rúnar** | Paste book text → Rúnar interprets → commit to knowledge base |
 | **Character** | Edit Rúnar's identity, voice, format. Save versions. Test responses. |
-| **Rúnar the Rune Keeper** | Full reading flow: name, life rune, drawn rune, voice generation |
+| **Rúnar the Rune Keeper** | Full reading flow: name, life rune, drawn rune, voice generation |  <!-- doc-values:ok -->
 | **Word Corrections** | Teach Rúnar better words — applied to every output |
 
 ---

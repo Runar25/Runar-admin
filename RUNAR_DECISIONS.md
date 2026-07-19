@@ -708,6 +708,40 @@ stav až potom a vyvodil závěr o minulosti → owner musel arbitrovat. Stav be
     · RUNAR_EVAL_CHAT_mobil · RUNAR_FEATURES · RUNAR_IS_GRAMMAR_CHECK_CODE · RUNAR_SEGMENTACE_FaseB
     · RUNE_IMAGE_POOLS_draft · tento handoff.
 
+## 2026-07-19 — Dokumentační linie dokončena: smoke ⑯ odkazy + ⑰ hodnoty z configu
+
+Poslední dva guardy z konsolidačního plánu. Tím je série ⑭–⑰ kompletní a dokumentace
+má poprvé strojovou obranu na všech čtyřech vrstvách: **mrtvé pojmy** (⑭) · **nesplněný
+slib opravy** (⑮) · **odkaz do prázdna** (⑯) · **hodnota opsaná z configu** (⑰).
+
+**⑯ `verify_doc_links.js`** — markdown odkazy i cesty v backtickách musí mířit na existující
+soubor. Klíčové rozhodnutí návrhu: kontroluje **existenci na disku, ne stav v gitu**. První
+verze hlásila 36 nálezů, ale většina byla legitimní — `scripts/_patch.py` (scratch cesta),
+`.claude/settings.json` (gitignored), untracked `.py` v kořeni (konvence ownera z 2026-07-17).
+Kontrola má hlídat prázdno, ne index. Po opravě 24 → po roztřídění 0.
+
+**⑰ `verify_doc_values.js`** — jména tierů v docích musí být v `TIERS`. Rozdíl proti ⑭ je
+podstatný: ⑭ zná JMENOVITĚ seznam mrtvých pojmů a po každém přejmenování se musí ručně
+doplnit; ⑰ čte **aktuální config** a odvozuje, co je platné. „Rune Keeper" propadne ne proto,
+že je na seznamu, ale proto, že v configu není — takže chytí i přejmenování, které ještě
+nikoho nenapadlo. Tolerantní k české deklinaci („Rune Seekera"), protože doky jsou česky.
+Čísla (50/75) hlásí jen **žlutě** — plošný zákaz by v PRICING dělal šum a ten doc má jednu
+tabulku povolenou.
+
+**Obojí ověřeno rozbitím:** vložen mrtvý odkaz (obě formy) i vymyšlený tier „Rune Guardian" →
+nahlášeno, exit 1; po vrácení zeleně.
+
+**Opraveno při tom:** jména tierů byla v `RUNAR_BACKLOG.md` a `RUNAR_DESIGN.md` pořád vedená
+jako TBD s odkazem na Coworkův `TIER-NAMING-brief.md`, který v repu není — přitom KUKY je
+2026-07-18 rozhodl. Backlog položka uzavřena. Dále přiznáno u tří dalších specí, že v repu
+nejsou (Coworkovy výstupy nedodané přes CODE, §17).
+
+**Escape značky** (`doc-links:ok`, `doc-values:ok`, `check-docs:ok`) jsou schválně inline
+HTML komentáře — neruší render a jsou grepovatelné. Použity tam, kde doc jmenuje mrtvý pojem
+JAKO mrtvý nebo uvádí ilustrativní jméno souboru (konvence pojmenování patchů).
+
+**Affected doc(s):** RUNAR_BACKLOG.md · RUNAR_DESIGN.md · README.md · smoke.py
+
 ## 2026-07-18 — Konsolidace dokumentace: 7 docs archivováno + dvě kontroly do smoke
 
 **Zadání KUKY:** „chci to mít čistě… žádné duplikáty" + k `RUNAR_CONTEXT.md`: *„potřebuju ten

@@ -285,6 +285,38 @@ summary = outl[-1].strip() if outl else 'followthrough ran'
 check(summary if passed else 'rozhodnuti slibilo opravu docu, ktera se nestala', passed,
       '' if passed else output)
 
+# ⑯ — odkaz do prázdna pošle čtenáře hledat náhradu, a ta se najde v zastaralé kopii.
+# 2026-07-18: RUNAR_DOC_SYNC.md (nikdy neexistoval), RUNAR_TREE_LAB.md vedený jako živý
+# (byl v archivu), scripts/utils/ cesty (nástroje jsou v kořeni). Rozšíření ⑪ na celý repo.
+print('\n⑯ DOC ODKAZY (verify_doc_links.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_doc_links.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+outl = [l for l in output.split('\n') if l.strip()]
+for l in outl:
+    if l.startswith(chr(8505)) or l.startswith('     '):
+        print('       ' + l.strip())
+summary = outl[-1].strip() if outl else 'verify_doc_links.js ran'
+check(summary if passed else 'odkaz do prazdna — doc posila ctenare na neexistujici soubor', passed,
+      '' if passed else output)
+
+# ⑰ — na rozdíl od ⑭ nezná seznam mrtvých pojmů; čte AKTUÁLNÍ config a odvozuje, co
+# je platné. Chytí i přejmenování, které ještě nikoho nenapadlo: „Rune Keeper" propadne
+# ne proto, že je na seznamu, ale proto, že v TIERS není. Čísla hlásí jen žlutě.
+print('\n⑰ DOC HODNOTY (verify_doc_values.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_doc_values.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+outl = [l for l in output.split('\n') if l.strip()]
+for l in outl:
+    if l.startswith(chr(8505)) or l.startswith('     '):
+        print('       ' + l.strip())
+summary = outl[-1].strip() if outl else 'verify_doc_values.js ran'
+check(summary if passed else 'jmeno tieru, ktere v configu neni (§20 — hodnoty se neopisuji)', passed,
+      '' if passed else output)
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
