@@ -748,7 +748,10 @@ který čte přes Python. NULy odstraněny, obsah nedotčen; proskenován celý 
 **Efekt měřeno:** po auditu (97 nálezů) A čtyřech fázích ručního úklidu našel linter **dalších 25
 míst**, z toho **5× Yggdrasil jako bránu**. To je doklad, že ruční úklid tuhle třídu chyby nedozoruje.
 
-**Affected doc(s):** RUNAR_PRICING.md · CLAUDE.md · memory/tree-of-life.md · smoke.py
+**Affected doc(s):** RUNAR_PRICING.md · memory/tree-of-life.md · smoke.py
+(CLAUDE.md tu byl původně taky — vyškrtnut, protože se měnit nepotřeboval: jeho zmínka
+o RUNAR_CONTEXT je historická poznámka o driftu a platí dál. Chytila to kontrola ⑮
+pár minut po svém vzniku, na vlastním autorovi.)
 
 ## 2026-07-10 — Model čtení: Opus 4.8 + overload fallback chain (ZPĚTNĚ DOPLNĚNO 2026-07-18)
 

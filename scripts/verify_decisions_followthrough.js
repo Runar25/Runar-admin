@@ -51,7 +51,12 @@ for (const t of targets) {
     sha  = bl.split('\n')[0].split(' ')[0];
     const m = bl.match(/^author-time (\d+)$/m);
     when = m ? new Date(+m[1] * 1000).toISOString().slice(0, 10) : '?';
-  } catch (e) { continue; }              // neocommitnutý řádek = ještě se needituje
+  } catch (e) { continue; }
+  // Rozepsaný, ještě nezacommitovaný řádek: blame vrací samé nuly. Nelze soudit slib,
+  // který zatím není v historii — a hlavně: PRÁVĚ TEĎ ho autor možná plní. Kontrola
+  // ho uvidí při dalším běhu, až bude commitnutý. (Chyba nalezena 2026-07-19: bez
+  // tohohle guard hlásil vlastní rozepsanou opravu jako porušení.)
+  if (/^0+$/.test(sha)) continue;
 
   // soubory dotčené TÍMŽ commitem se počítají jako splněné
   let sameCommit = [];
