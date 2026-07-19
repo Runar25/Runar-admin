@@ -41,6 +41,7 @@ var _g = RUNES.filter(function(r){ return r.g && r.g.charCodeAt(0) >= 0x16A0; })
 var _AREA_EN = AREAS.en[2];          // 'Career & Creativity'
 var _AREA_IS = AREAS.is[0];          // 'Ást & Sambönd'  — IS user ukládá IS popisek
 var _INT_EN  = INTENTIONS.en[1];     // 'Decision ahead'
+var _BLANK   = RUNES.filter(function(r){ return r.n === 'Blank'; })[0].g;   // '○', mimo runový rozsah
 var _rows = [
   { rune_name: 'Fehu', rune_glyph: _g[0], short_text: '',
     area: _AREA_IS, aol: _AREA_IS, intention: _INT_EN },
@@ -48,6 +49,11 @@ var _rows = [
     area: 'spread', aol: _AREA_EN, intention: _INT_EN },
   { rune_name: 'YGGDRASIL', rune_glyph: '', short_text: _g[4] + ' ' + _g[5],
     area: 'spread', aol: null,     intention: null },
+  // Blank/Óðinn — zaplacené čtení, které se do 2026-07-19 celé ZAHODILO:
+  // glyf je mimo runový rozsah, takže filtr nenašel nic a prázdný seznam run
+  // řádek smazal. User zaplatil, v journalu čtení má, ve stromě po něm nezbylo nic.
+  { rune_name: 'Blank', rune_glyph: _BLANK, short_text: '',
+    area: AREAS.en[0], aol: AREAS.en[0], intention: _INT_EN },
 ];
 var _out = readingsToTreeLog(_rows);
 // Očekáváme DEKÓDOVANÝ tvar: strom mluví slugy, ne popisky, které user naklikal.
@@ -62,11 +68,11 @@ const EX  = sandbox._EXPECT;
 const fails = [];
 function assert(label, cond, detail) { if (!cond) fails.push(label + (detail ? ' — ' + detail : '')); }
 
-assert('fixture sám nic nevrátil (glyfy se nenačetly?)', out && out.length === 3,
-       'dostal jsem ' + (out ? out.length : 0) + ' řádků místo 3');
+assert('fixture sám nic nevrátil (glyfy se nenačetly?)', out && out.length === 4,
+       'dostal jsem ' + (out ? out.length : 0) + ' řádků místo 4 — spolkla se Blank runa?');
 
-if (out && out.length === 3) {
-  const [single, norns, ygg] = out;
+if (out && out.length === 4) {
+  const [single, norns, ygg, blank] = out;
 
   assert('single: oblast se ztratila', single.area === EX.single, 'area=' + JSON.stringify(single.area));
   assert('single: má být 1 runa',      single.runes.length === 1);
@@ -89,6 +95,18 @@ if (out && out.length === 3) {
          'area=' + JSON.stringify(ygg.area));
 
   assert('intention se ztratila', norns.intention === EX.intention);
+
+  // Blank/Óðinn: čtení MUSÍ přežít. Renderer na něj má připravenou duchovní větev
+  // (runar-branch.js: k:'odinn', el:'shadow', blank:true) — jen se k ní nikdy nedostal.
+  assert('Blank runa se ztratila — zaplacené čtení zmizelo ze stromu',
+         blank && blank.runes && blank.runes.length === 1,
+         'runes=' + (blank && blank.runes ? blank.runes.length : 'chybí celý řádek'));
+  if (blank && blank.runes && blank.runes.length === 1) {
+    assert('Blank patří k Shadow (§3 RUNAR_TREE.md), ne k Water',
+           blank.runes[0].el === 'shadow', 'el=' + blank.runes[0].el);
+    assert('Blank nemá příznak blank:true — renderer ho nepozná jako duchovní větev',
+           blank.runes[0].blank === true);
+  }
 }
 
 // ⭐ JÁDRO: rozumí PŘIJÍMAJÍCÍ STRANA tomu, co producent posílá?

@@ -120,7 +120,15 @@ Ostatní (později, decentně): pulzy dominance (element/ætt), bloom fáze, lis
   ho sám se sebou. **Opraveno dekódováním** popisek→index→slug (`readingsToTreeLog`), osa času
   přešla na jazyk Noren (`urd/verdandi/skuld`). Hlídá smoke ⑬ — nově tvrdí i to, že hodnotě
   **rozumí přijímající strana**, ne jen že dojela. Ze signálů §4 tím žijí **tři**: element,
-  ætt, a nově obě osy umístění. Zbytek (runa→tvar · váha · čas od minula · Blank) čeká.
+  ætt, a nově obě osy umístění.
+- ⚠️ **Blank/Óðinn mazal celé zaplacené čtení** (do 2026-07-19). Glyf `○` je mimo runový rozsah,
+  na který se ptal filtr → prázdný seznam run → řádek se zahodil. Ve stromě po něm nezbylo nic
+  a nepočítal se ani do věku. **Opraveno:** dojede jako `el:'shadow'` (§3, studené a skryté runy)
+  s příznakem `blank:true`. Renderer měl duchovní větev připravenou celou dobu
+  (`runar-branch.js`, `k:'odinn'`) — jen se k ní nikdy nedostal. **Vizuál ducha (průsvitnost,
+  bez listů) zatím NENÍ** — to je práce v enginu, čeká na vlastní krok.
+- **Zbývá ze signálů §4:** runa→tvar (renderer bere tvar z elementového poolu) · váha z počtu
+  vyplněných polí · bonus za pauzu · seeking jako třetí hlas do vážené volby §3A.
 - **Zbývá (velký směr = owner volba):** **produkce** (`tree_state` DB + reálná čtení z readeru) · **per-runa** (runa se odštěpí z elementového ramene ve své zóně = hlubší bough) · nebo **ladit** stávající. Aktuální stav labu = `RUNAR_TREE_TODO.md`.
 - **Boughs velká přestavba = ZAMÍTNUTO** (regrese — viz RUNAR_DECISIONS 2026-07-04). Koncept „runa=větev" OK jako cíl, cesta = jemné kroky.
 

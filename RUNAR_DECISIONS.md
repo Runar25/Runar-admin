@@ -708,6 +708,36 @@ stav až potom a vyvodil závěr o minulosti → owner musel arbitrovat. Stav be
     · RUNAR_EVAL_CHAT_mobil · RUNAR_FEATURES · RUNAR_IS_GRAMMAR_CHECK_CODE · RUNAR_SEGMENTACE_FaseB
     · RUNE_IMAGE_POOLS_draft · tento handoff.
 
+## 2026-07-19 — Strom, krok 2: Blank/Óðinn přestal mazat zaplacené čtení
+
+**Vada.** Blank má glyf `○` (U+25CB), tedy MIMO runový rozsah `0x16A0–0x16FF`, na který se ptal
+filtr v `readingsToTreeLog`. Nenašel nic → prázdný seznam run → `if (!runes.length) return;`
+zahodil **celý řádek**. Uživatel zaplatil, čtení má v journalu, ale ve stromě po něm nezbylo nic —
+ani větev, ani duch, a nepočítalo se ani do věku stromu. U spreadu se Blank tiše vynechala
+z výčtu run, takže Norny se třemi runami dorazily jako dvě.
+
+**Renderer měl duchovní větev připravenou celou dobu:** `runar-branch.js:50` — `{ k:'odinn',
+aett:'none', el:'shadow', blank:true }`. Nikdy se k ní nedostal, protože data k němu nedošla.
+
+**Oprava.** Filtr se nově ptá, jestli je znak **známý glyf**, ne jestli padne do rozsahu. Blank
+dojede jako `el:'shadow'` (§3 — studené a skryté runy) s příznakem `blank:true`.
+Element se přepisuje **na straně stromu**, ne v `runar-runes.js`: tam má Blank
+`elements:['Water','Shadow']` a pořadí čte i výklad čtení, takže do sdílených dat nesahám.
+
+**Zbytkové riziko, vědomě přijaté:** kdyby model napsal `○` do prózy čtení, přibude fantomová
+duchovní větev. Menší zlo než mazat zaplacené čtení — a §5 zakazuje `○` jako zobrazení Blank runy,
+takže do Rúnarova slovníku nepatří. Zapsáno v komentáři u kódu, ať to není překvapení.
+
+**Ověřeno:** guard ⑬ rozšířen o čtvrtý řádek fixture (čtení, kde padla jen Blank). Puštěn PŘED
+opravou → červená s hláškou „3 řádky místo 4 — spolkla se Blank runa?". Po opravě zelená.
+Ruční kontrola výstupu: Blank single přežije, Norny s Blank uprostřed si udrží všechny tři runy.
+
+⚠️ **Co tím NEVZNIKLO:** vizuál ducha (průsvitná větev bez listů, §4). To je práce v enginu —
+„jak se kreslí", ne „kam vyjde" — a čeká na vlastní krok. Dnes Blank vyroste jako běžná
+shadow větev; příznak `blank:true` je hook, na kterém to půjde postavit.
+
+**Affected doc(s):** RUNAR_TREE.md
+
 ## 2026-07-19 — Strom, krok 1: obě nosné osy umístění poprvé fungují
 
 **Kořen (ověřeno na obou stranách).** Lab si vyrobil VLASTNÍ slovník —

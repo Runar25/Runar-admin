@@ -47,15 +47,28 @@ function _intentionNorn(label) {
 function readingsToTreeLog(rows) {
   var byGlyph = {};
   RUNES.forEach(function(r){ byGlyph[r.g] = ((r.elements && r.elements[0]) || 'Earth').toLowerCase(); });
+  // Blank/Óðinn: v runar-runes.js má elements ['Water','Shadow'], takže první je Water.
+  // Strom ji ale řadí ke SHADOW (§3 RUNAR_TREE.md — studené a skryté runy) a renderer
+  // pro ni má připravenou duchovní větev jako el:'shadow' (runar-branch.js, k:'odinn').
+  // Přepisuje se TADY, ne ve sdílených datech — pořadí elementů čte i výklad čtení.
+  var BLANK_G = null;
+  RUNES.forEach(function(r){ if (r.n === 'Blank') { BLANK_G = r.g; byGlyph[r.g] = 'shadow'; } });
   var out = [];
   (rows || []).forEach(function(row) {
     var name = (row.rune_name || '').toUpperCase();
     var isSpread = /NORNS|KRIZ|CROSS|COMPASS|HORSESHOE|YGGDRASIL/.test(name);
     var src = (row.rune_glyph || '') + ' ' + (row.short_text || '');
     var runes = [];
+    // Ptáme se, jestli je znak ZNÁMÝ GLYF, ne jestli padne do runového rozsahu.
+    // Rozsahová podmínka tiše vynechávala Blank ('○' je U+25CB) a tím maže celé čtení.
+    // Zbytkové riziko, které tím vědomě beru: kdyby model napsal '○' do prózy, přibude
+    // fantomová duchovní větev. Menší zlo než mazat zaplacené čtení — a §5 stejně
+    // zakazuje '○' jako zobrazení Blank runy, takže do Rúnarova slovníku nepatří.
     for (var i = 0; i < src.length; i++) {
-      var c = src.charCodeAt(i);
-      if (c >= 0x16A0 && c <= 0x16FF) { var g = src.charAt(i); if (byGlyph[g]) runes.push({ rune: g, el: byGlyph[g] }); }
+      var g = src.charAt(i);
+      if (!byGlyph[g]) continue;
+      runes.push(g === BLANK_G ? { rune: g, el: 'shadow', blank: true }
+                               : { rune: g, el: byGlyph[g] });
     }
     if (!runes.length) return;
     if (!isSpread) runes = [runes[0]];
