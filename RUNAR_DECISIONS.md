@@ -1331,3 +1331,40 @@ Přesně tím byl `memory/runar-project.md` (sám vygeneroval ~15 nálezů) a č
   celou dobu moje lane.
 - **Affected doc(s):** žádný.
 - **Reverzibilita:** snadná.
+
+---
+
+## 2026-07-19 — Evidence pohybů kreditu, fáze 1 (záznam) [tune]
+
+- **Proč:** owner se dnes nemohl dozvědět, jestli se mu strhl kredit. `credits_balance` je stav,
+  ne historie, a jiná stopa neexistuje. Táž díra brání odpovědět na zadání „není kód, není kredit".
+- **Podklad:** fanout přes 5 nezávislých čoček našel **65 pohybů kreditu**; tři lovci, jejichž
+  jediný úkol bylo najít, co sweep minul, přidali **dalších 27**. Nestavěl jsem to od boku —
+  děravá evidence je horší než žádná, protože se pak podle ní rozhodne, že zůstatek sedí.
+- ⭐ **Klíčové rozhodnutí: evidenci zajišťuje TRIGGER NA TABULCE, ne kázeň volajícího.**
+  Kdyby zapisovaly edge funkce, evidence by chyběla přesně tam, kde nejvíc chybí — u ručního
+  UPDATE v SQL editoru, který git nikdy neuvidí. Pohyb bez důvodu není mezera, ale **signál**
+  (`reason='unattributed'`, `actor <> 'service_role'`).
+- **Nasazuje se jako čistý přírůstek:** žádná existující cesta se nemění, nic se nepřepisuje.
+  Od spuštění se zaznamenává všechno, i když kód pořád volá staré RPC.
+
+### Co to NEPOKRÝVÁ (vyjmenováno schválně, ať se to nemusí hádat)
+1. **„Nevydali jsme víc, než jsme prodali?" — neodpoví.** Prodejní strana v systému neexistuje
+   (není checkout ani záznam o tržbě). Ledger umí „přiděleno vs. spotřebováno". Celá odpověď
+   přijde až se Shopify webhookem (`RUNAR_BACKLOG.md`).
+2. **Minulost je nezískatelná.** Otevírací řádek `reason='migration'` je čára („odsud měříme"),
+   ne pravda o minulosti.
+3. **Ownera s právy vlastníka tabulky neubrání** (`disable trigger`). Jde to jen odhalit —
+   proto je kontrola driftu součástí migrace, ne příslušenství.
+4. **Neověřuje správnost částky.** `spread_cost` je pořád číslo od klienta. Evidence není kontrola.
+
+### Vady nalezené při mapování (NEOPRAVENO, samostatné položky)
+- **Odečet kreditů běží ve SMYČCE** `for (i < plan.cost) rpc('use_credit')` (claude-proxy:280).
+  Jednotlivý krok je atomický, celek ne → pád uprostřed strhne ČÁST ceny spreadu.
+- **`free_balance` je CAS bez retry a bez kontroly počtu dotčených řádků** (:301) → při prohrané
+  race se tiše neodečte nic. Komentář to označuje za záměr.
+- **Měsíční strop se kontroluje před voláním Claude** → dvě souběžná čtení na hranici projdou obě.
+- **Těla `use_credit` a `add_credits` NEJSOU v repu** — žijí jen v produkční DB. Jejich atomicita
+  je odvozená z komentářů, ne doložená definicí.
+- **Affected doc(s):** RUNAR_BACKLOG.md (položka evidence → odkaz na fázi 2).
+- **NEPUŠTĚNO** — čeká na ownera. Rozhodnutí pro něj: GDPR retence uzavíracích řádků po smazání účtu.
