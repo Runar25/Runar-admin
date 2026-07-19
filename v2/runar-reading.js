@@ -362,6 +362,8 @@ function _updateSpreadSlots(cfg) {
 function _updateSpread3Slots() { _updateSpreadSlots(_SPREAD_SLOT_CFG.norns); }
 
 function _hideAllSpreadOutputs() {
+  var _fd = document.getElementById('founding-done');
+  if (_fd) _fd.style.display = 'none';
   ['spread3-output','spread5-output','spread7-output','spread9-output'].forEach(function(id) {
     var out = document.getElementById(id);
     if (out) out.style.display = 'none';
@@ -828,6 +830,17 @@ async function _generateSpreadReading(o) {
   if (_isFounding && !res.error) {
     _foundingPending = false;
     userTreeFounded  = true;
+    _syncFoundingLock();          // odemknout ostatni spready
+    // Bez tohohle bloku se po zalozeni nestalo nic viditelneho: zadne potvrzeni,
+    // zadna cesta do stromu (KUKY, ostry pruchod 2026-07-19).
+    var fd = document.getElementById('founding-done');
+    if (fd) {
+      var ft = document.getElementById('founding-done-text');
+      var fbtn = document.getElementById('founding-done-btn');
+      if (ft)   ft.textContent   = t('founding_done_text');
+      if (fbtn) fbtn.textContent = t('founding_done_btn');
+      fd.style.display = 'block';
+    }
   }
 }
 
@@ -923,6 +936,20 @@ function _updateReadingForm() {
 // Duvod je rituálni i prakticky: Norny jsou zakladani stromu a to je KROK 2 —
 // server je bez zivotni runy stejne odmitne (claude-proxy, mode 'founding').
 // Tohle je jen dusledna nabidka, ne ochrana; branou je proxy.
+// Behem zakladani jsou ostatni spready NEDOSTUPNE. Zalozeni je ritual s jednim
+// krokem, ne nabidka — a kdyby uzivatel odesel do jineho spreadu, priznak
+// _foundingPending by mu zdarma zaplatil neco jineho, nez si vybral.
+function _syncFoundingLock() {
+  var lock = (typeof _foundingPending !== 'undefined') && _foundingPending;
+  ['single','kriz','horseshoe','yggdrasil'].forEach(function (m) {
+    var b = document.getElementById('mode-btn-' + m);
+    if (!b) return;
+    b.disabled = lock;
+    b.style.opacity = lock ? '0.35' : '';
+    b.style.pointerEvents = lock ? 'none' : '';
+  });
+}
+
 function _syncNornsGate() {
   var has = (typeof _lifeRuneText !== 'undefined') && !!_lifeRuneText;
   var btn = document.getElementById('mode-btn-norns');
@@ -934,4 +961,5 @@ function _syncNornsGate() {
   if (!has && typeof _spreadMode !== 'undefined' && _spreadMode === 'norns') {
     _setSpreadMode('single');
   }
+  _syncFoundingLock();
 }

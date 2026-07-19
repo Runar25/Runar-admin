@@ -246,7 +246,9 @@ function updateTreeTab() {
   var rune = hasDob ? calcLifeRune(readerUser.d, readerUser.m, readerUser.y) : null;
 
   // Hide all states
-  var states = ['tree-no-dob','tree-rs-teaser','tree-reveal-cta','tree-loading','tree-reading-exists'];
+  // 'tree-founding-cta' tu 2026-07-19 CHYBELO -> jednou zobrazene uz se neskrylo
+  // a prosakovalo i do stavu bez zivotni runy (pod formular na datum narozeni).
+  var states = ['tree-no-dob','tree-rs-teaser','tree-reveal-cta','tree-loading','tree-reading-exists','tree-founding-cta'];
   states.forEach(function(id){ var el=document.getElementById(id); if(el) el.style.display='none'; });
 
   if (!currentUser) {

@@ -1476,3 +1476,35 @@ Text už je v `RUNAR_PRIVACY.md`; do backlogu patří proto, že mají **spoušt
    mapování nezbyde. Připsáno k položce Shopify webhook jako spouštěč přezkumu.
 2. **Právní/DPO review** — `credit_ledger` přidán na seznam k posouzení, s poznámkou, že můj
    závěr je technický rozbor, ne posudek.
+
+---
+
+## 2026-07-19 — Tři opravy z ostrého průchodu zakládáním [tune]
+
+Owner prošel celý rituál naživo. Tři nálezy, jeden z nich moje chyba.
+
+### 1) BUG (moje): zakládací CTA prosakovalo do cizích stavů
+`updateTreeTab()` skrývá stavy seznamem `states = [...]` a `'tree-founding-cta'` jsem do něj
+**nepřidal**. Jednou zobrazené CTA se už nikdy neskrylo — owner ho viděl viset pod formulářem
+na datum narození, tedy ve stavu, kde životní runa ještě neexistuje.
+**Poučení:** nový stavový prvek musí do seznamu stavů v tomtéž kroku, jinak je to §13 full-path
+porušené hned při vzniku. Nový prvek se ukázal, protože jsem napsal `display='block'`;
+skrývání obstarává někdo jiný — a na toho jsem se nepodíval.
+
+### 2) Během zakládání jsou ostatní spready nedostupné
+Zakládání je rituál s jedním krokem, ne nabídka. A prakticky: kdyby uživatel odešel do jiného
+spreadu, příznak `_foundingPending` by mu zdarma zaplatil něco jiného, než si vybral.
+
+### 3) Po dokončení se nedělo nic viditelného
+Owner: „výklad hotovo, jak to teď poznám ve stromě? Nejsem tam přesměrován ani odkázán a mně
+přijde, že se nic nestalo." Přidán potvrzovací blok s cestou do stromu — **odkaz, ne
+přesměrování**, aby uživatele nevytrhlo z čtení, které si právě čte.
+
+- **OVĚŘENO V PROHLÍŽEČI, ne úvahou** — šest stavů: bez runy (Norny skryté) · s runou
+  (vše dostupné) · při zakládání (jen Norny, zbytek zamčený) · po založení (odemčeno) ·
+  CTA se po překreslení skryje · potvrzení mizí s výstupy.
+- ⚠️ **Past při ověřování (zapsáno schválně):** první běh hlásil `_syncNornsGate is not defined`,
+  ačkoli funkce v souboru byla. Prohlížeč držel `runar-reading.js` z **předchozího** náhledu na
+  témž portu. Skoro jsem začal hledat chybu v kódu, který byl v pořádku.
+  **Než se diagnostikuje „funkce neexistuje", ověř, co má prohlížeč doopravdy načtené.**
+- **Affected doc(s):** žádný.
