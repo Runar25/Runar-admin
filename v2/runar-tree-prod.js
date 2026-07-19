@@ -37,7 +37,9 @@ function render(canvas, opts) {
   var ELEMS=['fire','water','air','earth','shadow'];
   var ELEM_WORLD={ fire:'asgard', air:'asgard', water:'midgard', earth:'midgard', shadow:'hel' };
   var ELEM_AETT={ fire:'freya', air:'tyr', water:'tyr', earth:'heimdall', shadow:'heimdall' };
-  var INT_AXIS={ past:-1, present:0, decision:1 };
+  /* Osa Noren, §3A RUNAR_TREE.md: urd(-1) ... skuld(+1). Klíče = INTENTIONS.norns
+     (runar-runes.js), aby existoval JEDEN slovník pro tuhle osu, ne tři. */
+  var INT_AXIS={ urd:-1, verdandi:0, skuld:1 };
   var AREA_LAT={ healing:-0.7, family:-0.6, inner:-0.7, love:-0.2, crossroads:0, purpose:0.6, career:0.7, spirituality:0.5 };
   var runesByEl={}; B.RUNES.forEach(function(r){ (runesByEl[r.el]=runesByEl[r.el]||[]).push(r); });
   var G_AETT={}; try{ (typeof RUNES!=='undefined'?RUNES:[]).forEach(function(r){ G_AETT[r.g]=r.aett; }); }catch(e){}

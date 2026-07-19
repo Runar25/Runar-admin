@@ -708,6 +708,50 @@ stav až potom a vyvodil závěr o minulosti → owner musel arbitrovat. Stav be
     · RUNAR_EVAL_CHAT_mobil · RUNAR_FEATURES · RUNAR_IS_GRAMMAR_CHECK_CODE · RUNAR_SEGMENTACE_FaseB
     · RUNE_IMAGE_POOLS_draft · tento handoff.
 
+## 2026-07-19 — Strom, krok 1: obě nosné osy umístění poprvé fungují
+
+**Kořen (ověřeno na obou stranách).** Lab si vyrobil VLASTNÍ slovník —
+`build_crown_composer.py:317-318`: `AREAS=['healing','family',…]`, `INTENTS=['present','decision','past']`
+— a jeho tlačítka posílala tyhle slugy. Produkce ale posílá to, co uživatel naklikal:
+**lokalizovaný popisek** (`readerUser.area = label`, runar-app.js:1058 → `'Ást & Sambönd'`).
+`AREA_LAT[popisek]` → `undefined`, guard v kompozici nikdy nespustil, `areaLat` i `intAxis`
+zůstaly **0**. Osy A i B z §3 tedy od nasazení do produkce (2026-07-10) **nepřispívaly nic**.
+
+**Proč to nikdo nechytil:** signální řetězec byl odladěn a odsouhlasen v labu — tedy **na ploše,
+kde ta vada nemůže vzniknout**, protože si tam vokabulář testoval sám se sebou. Učebnicové §19.3.
+
+**Oprava (krok 1).** `readingsToTreeLog` dekóduje popisek → index → slug přes `AREAS`/`INTENTIONS`
+(index-paralelní pole, čte se z nich, NEZAPISUJE — hranice lane). Vzor je `character.js:488`, kde
+totéž funguje správně už dlouho. Osa času přešla z `{past,present,decision}` na **jazyk Noren**
+`{urd,verdandi,skuld}` = `INTENTIONS.norns` — tím zmizel TŘETÍ paralelní slovník pro tutéž osu.
+Slugy oblastí (`TREE_AREA_SLUG`) drží strom u sebe: je to tvarové mapování, ne sdílená sémantika.
+**Engine netknutý** — mění se „kam větev vyjde", ne „jak se kreslí" (Pravidlo 3).
+
+**Guard ⑬ přepsán na správnou otázku.** Dřív tvrdil jen „hodnota dojela z DB do logu". Teď tvrdí
+i **„rozumí jí přijímající strana"** — klíče `AREA_LAT`/`INT_AXIS` čte ZE SKUTEČNÉHO rendereru,
+ne z kopie. Přesně ta otázka, kterou nikdo nepoložil. Plus anti-drift: `TREE_AREA_SLUG` musí mít
+tolik položek co `AREAS`.
+
+**Tři vady, které jsem našel ve VLASTNÍM guardu** (zapsáno schválně — [[guard-test-the-lifecycle]]):
+1. regex držel jen náhodou (`'\s'` v JS stringu je pouhé `s`; sedlo to, protože `s*` smí být nulakrát),
+2. anti-drift assert byl **tichá zelená** — `const AREAS` se v `vm` kontextu neobjeví jako property
+   sandboxu, takže se porovnávalo `null === null`,
+3. potřetí za den mi escapování zpětných lomítek zmizelo cestou přes nástroj → `keysOf` je teď
+   **bez regexu**, prostým hledáním závorek. Rozbitý regex tiše nenajde NIC, což je u kontroly
+   nejhorší možný výsledek: tváří se, že mapa neexistuje, místo aby porovnal obsah.
+
+**Ověřeno rozbitím** (obě nové cesty): ubrání slugu → nahlášen rozchod s `AREAS`; odebrání
+`career` z rendereru → „renderer neumí přečíst". Po vrácení zeleně. Smoke 20/20.
+
+⚠️ **Co NENÍ ověřeno:** vizuální výsledek. Guard dokazuje, že signál dojde a je srozumitelný;
+že se strom viditelně naklonil, musí potvrdit oko v produkci (admin beta). Netvrdím to.
+
+**Zbývá ze signálů §4:** runa→tvar (renderer si tvar bere z elementového poolu, `tree-prod:200`)
+· váha z počtu polí · bonus za pauzu · Blank/Óðinn (glyf `○` mimo runový rozsah → `runar-tree.js`
+zahodí CELÉ zaplacené čtení). Seeking jako třetí hlas do vážené volby §3A taky čeká.
+
+**Affected doc(s):** RUNAR_TREE.md
+
 ## 2026-07-19 — Dokumentační linie dokončena: smoke ⑯ odkazy + ⑰ hodnoty z configu
 
 Poslední dva guardy z konsolidačního plánu. Tím je série ⑭–⑰ kompletní a dokumentace

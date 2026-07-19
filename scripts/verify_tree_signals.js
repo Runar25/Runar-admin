@@ -50,7 +50,8 @@ var _rows = [
     area: 'spread', aol: null,     intention: null },
 ];
 var _out = readingsToTreeLog(_rows);
-var _EXPECT = { single: _AREA_IS, spread: _AREA_EN, intention: _INT_EN };
+// Očekáváme DEKÓDOVANÝ tvar: strom mluví slugy, ne popisky, které user naklikal.
+var _EXPECT = { single: 'love', spread: 'career', intention: 'skuld' };
 `;
 
 vm.createContext(sandbox);
@@ -89,6 +90,52 @@ if (out && out.length === 3) {
 
   assert('intention se ztratila', norns.intention === EX.intention);
 }
+
+// ⭐ JÁDRO: rozumí PŘIJÍMAJÍCÍ STRANA tomu, co producent posílá?
+// Tohle je ta otázka, kterou nikdo nepoložil a která stála dva měsíce tichého
+// stromu: lab si vymyslel vlastní slovník ('healing', 'decision'), produkce
+// posílala lokalizované popisky, lookup dal undefined a obě nosné osy §3 mlčely.
+// Lab byl přitom zelený — protože si testoval vlastní vokabulář sám se sebou.
+// Proto se klíče čtou ZE SKUTEČNÉHO rendereru, ne z kopie v tomhle souboru.
+var prod = fs.readFileSync(DIR + 'runar-tree-prod.js', 'utf8');
+// Klíče se čtou BEZ REGEXU — schválně. Escapování zpětných lomítek se cestou přes
+// nástroje ztrácí (2026-07-19 mě to dnes chytlo třikrát: jednou v smoke.py, dvakrát
+// tady) a rozbitý regex tiše nenajde NIC, což je u kontroly nejhorší možný výsledek:
+// vypadá to, že mapa neexistuje, místo aby se porovnal obsah. Prosté hledání závorek
+// je hloupé, ale nemá co pokazit.
+function keysOf(name) {
+  var i = prod.indexOf('var ' + name);
+  if (i < 0) { fails.push('v runar-tree-prod.js nenalezena mapa ' + name + ' — změnil se tvar?'); return []; }
+  var a = prod.indexOf('{', i), b = prod.indexOf('}', a);
+  if (a < 0 || b < 0) { fails.push('mapa ' + name + ' nemá závorky — změnil se tvar?'); return []; }
+  return prod.slice(a + 1, b).split(',').map(function (part) {
+    return part.split(':')[0].trim();
+  }).filter(Boolean);
+}
+var AREA_KEYS = keysOf('AREA_LAT'), INT_KEYS = keysOf('INT_AXIS');
+
+(out || []).forEach(function (r, i) {
+  if (r.area != null && AREA_KEYS.indexOf(r.area) === -1) {
+    fails.push('renderer neumí přečíst area ' + JSON.stringify(r.area) + ' (řádek ' + i + ') — '
+      + 'AREA_LAT zná jen [' + AREA_KEYS.join(', ') + '] → osa B (strana) mlčí');
+  }
+  if (r.intention != null && INT_KEYS.indexOf(r.intention) === -1) {
+    fails.push('renderer neumí přečíst intention ' + JSON.stringify(r.intention) + ' (řádek ' + i + ') — '
+      + 'INT_AXIS zná jen [' + INT_KEYS.join(', ') + '] → osa A (výška) mlčí');
+  }
+});
+
+// Anti-drift: slugová tabulka stromu musí mít tolik položek co sdílené AREAS.
+// Kdyby přibyla 9. oblast života, dekódování by na ni tiše vracelo null.
+// `const` deklarace se v vm kontextu NEobjeví jako property sandboxu (jen `var`),
+// takže sandbox.AREAS je undefined a porovnání null===null by prošlo NAPRÁZDNO.
+// Čte se proto výrazem uvnitř kontextu. (Nalezeno na sobě 2026-07-19 — tichá zelená.)
+function inCtx(expr) { try { return vm.runInContext(expr, sandbox); } catch (e) { return null; } }
+var nAreas = inCtx('typeof AREAS !== "undefined" ? AREAS.en.length : null');
+var nSlugs = inCtx('typeof TREE_AREA_SLUG !== "undefined" ? TREE_AREA_SLUG.length : null');
+assert('TREE_AREA_SLUG nenalezen nebo se rozešel s AREAS (přibyla oblast života?)',
+       nAreas !== null && nAreas === nSlugs,
+       'AREAS.en=' + nAreas + ' vs TREE_AREA_SLUG=' + nSlugs);
 
 // ⚠️ CO TENHLE GUARD ZÁMĚRNĚ NEHLÍDÁ (2026-07-18, čeká na rozhodnutí ownera — §19.2:
 // filtrovaný signál musí být VIDĚT, ne zahozený). Hlídá jen, že hodnota dojede z DB do

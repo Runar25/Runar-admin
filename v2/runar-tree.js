@@ -19,6 +19,31 @@ var _lifeRuneNum   = null;  // rune number 1-24
 // Show Tree tab — renders correct state based on tier + data
 // FREE-SOLO living tree (ADMIN-only beta) — crown-composer tree grown from ALL your readings.
 // Source = the `readings` table (journal). Trunk = life rune; branches grow from readings.
+// Popisek, který uživatel naklikal -> kanonický slug, kterým mluví strom.
+// AREAS/INTENTIONS (runar-runes.js) jsou index-paralelní pole; tady se z nich
+// jen ČTE. Tvarové mapování (co znamená která oblast pro růst) si strom drží
+// sám — proto slugy bydlí tady, ne ve sdílené vrstvě.
+// Pořadí MUSÍ sedět na AREAS.en/AREAS.is. Hlídá smoke ⑬ (porovnává délky).
+var TREE_AREA_SLUG = ['love', 'purpose', 'career', 'healing', 'spirituality', 'family', 'inner', 'crossroads'];
+
+function _labelIndex(label, pack) {
+  if (!label || typeof pack === 'undefined') return -1;
+  var i = (pack.en || []).indexOf(label);
+  if (i < 0) i = (pack.is || []).indexOf(label);
+  return i;
+}
+function _areaSlug(label) {
+  var i = _labelIndex(label, typeof AREAS !== 'undefined' ? AREAS : null);
+  return i >= 0 ? (TREE_AREA_SLUG[i] || null) : null;
+}
+// Osa času mluví jazykem Noren (urd/verdandi/skuld) — týmž, jakým je psaná
+// RUNAR_TREE.md §3A. INTENTIONS.norns je index-paralelní tabulka v runar-runes.js.
+function _intentionNorn(label) {
+  var i = _labelIndex(label, typeof INTENTIONS !== 'undefined' ? INTENTIONS : null);
+  if (i < 0 || typeof INTENTIONS === 'undefined') return null;
+  return (INTENTIONS.norns || [])[i] || null;
+}
+
 function readingsToTreeLog(rows) {
   var byGlyph = {};
   RUNES.forEach(function(r){ byGlyph[r.g] = ((r.elements && r.elements[0]) || 'Earth').toLowerCase(); });
@@ -35,7 +60,8 @@ function readingsToTreeLog(rows) {
     if (!runes.length) return;
     if (!isSpread) runes = [runes[0]];
     var area = (row.area && row.area !== 'spread') ? row.area : (row.aol || null);
-    out.push({ spread: isSpread ? name.toLowerCase() : 'single', runes: runes, area: area, intention: row.intention || null });
+    out.push({ spread: isSpread ? name.toLowerCase() : 'single', runes: runes,
+               area: _areaSlug(area), intention: _intentionNorn(row.intention) });
   });
   return out;
 }

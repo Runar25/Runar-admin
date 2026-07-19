@@ -114,6 +114,13 @@ Ostatní (později, decentně): pulzy dominance (element/ætt), bloom fáze, lis
 ## 8. STAVBA / ENGINE (jak, ne co)
 - **Engine = crown-composer** (`growBranch` / spojitá limba / fraktál / paint / kořeny). **NESAHAT** — měnit jen „kam/co" vyroste, ne „jak" se kreslí. Kopie + snapshot + malé kroky.
 - **Signálový řetězec čtení→strom HOTOVÝ (kroky 1–5, lab; snapshoty `crown-step1..5`):** element → barva + rodina · spread → expanze (výška/šířka/mohutnost) · intention → výška (Norns: minulost↓/budoucnost↑) · area → strana · **ætt → charakter růstu** (fluid/těžký/přímý) · opakování → zesílí + **stabilní umístění** (0 přeskoků). Pozorovatelnost (HISTORIE, step slider, ULOŽIT→Code přes `_tree_state.json`). Prázdný log = demo strom. Engine (`growBranch`/emergence/paint/kořeny/kmen) celou dobu netknutý. (Detail → RUNAR_DECISIONS „reading-driven" + „Aett".)
+- ⚠️ **Stav signálů (2026-07-19).** Osa A (Norny→výška) a osa B (area→strana) byly od nasazení
+  do produkce **mrtvé**: renderer četl slugy, klient ukládal lokalizovaný popisek, lookup dal
+  `undefined`. V labu to fungovalo, protože si lab vymyslel vlastní slugový slovník a testoval
+  ho sám se sebou. **Opraveno dekódováním** popisek→index→slug (`readingsToTreeLog`), osa času
+  přešla na jazyk Noren (`urd/verdandi/skuld`). Hlídá smoke ⑬ — nově tvrdí i to, že hodnotě
+  **rozumí přijímající strana**, ne jen že dojela. Ze signálů §4 tím žijí **tři**: element,
+  ætt, a nově obě osy umístění. Zbytek (runa→tvar · váha · čas od minula · Blank) čeká.
 - **Zbývá (velký směr = owner volba):** **produkce** (`tree_state` DB + reálná čtení z readeru) · **per-runa** (runa se odštěpí z elementového ramene ve své zóně = hlubší bough) · nebo **ladit** stávající. Aktuální stav labu = `RUNAR_TREE_TODO.md`.
 - **Boughs velká přestavba = ZAMÍTNUTO** (regrese — viz RUNAR_DECISIONS 2026-07-04). Koncept „runa=větev" OK jako cíl, cesta = jemné kroky.
 
