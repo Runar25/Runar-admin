@@ -493,23 +493,35 @@ serve(async (req: Request) => {
     // bez overeni, ze runa jeste neexistuje, by slo mode:'life_rune' spamovat —
     // zapis by DB trigger odmitl, ale Claude by se zavolal (a zaplatil) pokazde.
     const isLifeRune = mode === "life_rune";
-    if (isLifeRune) {
+    const isFounding = mode === "founding";
+    // Dva RITUALNI mody. Oba zdarma, oba textove (hlas = 95 % ceny cteni, a ten se
+    // nekona). Zdarma je nedela cislo od klienta, ale tenhle `mode` — proto zustava
+    // podlaha Math.max(1, spread_cost) niz: klient si zdarma rict nesmi.
+    const isRitual = isLifeRune || isFounding;
+    if (isRitual) {
       if (!userId) {
         return json({ error: "unavailable", message: "The runes are quiet. Try again shortly." }, 401);
       }
-      const { data: lr, error: lrErr } = await sb()
-        .from("user_profiles").select("life_rune_text").eq("id", userId).maybeSingle();
-      if (lrErr) {
-        // Fail OPEN, stejna posture jako mesicni strop: vypadek cteni nesmi
-        // zablokovat zalozeni stromu. Cena omylu je jedno volani za ~$0.006,
-        // a zapis stejne hlida trigger trg_life_rune_immutable.
-        console.error("life rune precheck failed (allowing):", lrErr.message);
-      } else if (lr?.life_rune_text) {
+      const { data: pr, error: prErr } = await sb()
+        .from("user_profiles").select("life_rune_text, tree_founded_at")
+        .eq("id", userId).maybeSingle();
+      if (prErr) {
+        // Fail OPEN, stejna posture jako mesicni strop: vypadek cteni nesmi zablokovat
+        // zalozeni stromu. Cena omylu je jedno textove volani za ~$0.005 a zapis
+        // zivotni runy stejne hlida trigger trg_life_rune_immutable.
+        console.error("ritual precheck failed (allowing):", prErr.message);
+      } else if (isLifeRune && pr?.life_rune_text) {
+        return json({ error: "unavailable", message: "The runes are quiet. Try again shortly." }, 409);
+      } else if (isFounding && !pr?.life_rune_text) {
+        // Zalozeni je KROK 2. Bez zivotni runy neni z ceho stavet kmen — a hlavne
+        // by tenhle mod jinak byl Norny zdarma pro kohokoli, kdo si o nej rekne.
+        return json({ error: "unavailable", message: "The runes are quiet. Try again shortly." }, 409);
+      } else if (isFounding && pr?.tree_founded_at) {
         return json({ error: "unavailable", message: "The runes are quiet. Try again shortly." }, 409);
       }
     }
 
-    const countsAsCast = !legitAsk && !isLifeRune;
+    const countsAsCast = !legitAsk && !isRitual;
     if ((userTier === "standard" || userTier === "premium") && userId && countsAsCast && !isAdmin) {
       const limit = MONTHLY_LIMITS[userTier];
       const mKey = monthKey();
@@ -532,7 +544,7 @@ serve(async (req: Request) => {
       }
     }
 
-    if (userTier === "rune_seeker" && !isLifeRune) {
+    if (userTier === "rune_seeker" && !isRitual) {
       if (use_credit) {
         // ── Paid credit reading — spread_cost = runes = credits ──
         const cost = Math.max(1, spread_cost);
@@ -679,6 +691,16 @@ serve(async (req: Request) => {
       const r = await persistJournal(journal, userId, text, deductPlan.kind === "paid");
       readingId = r.readingId;
       askSaved  = r.askSaved;
+    }
+
+    // Zalozeni se znaci AZ PO uspesnem cteni, a CAS (`is null`): dva soubezne
+    // pozadavky tak zalozi strom jednou. Kdyby se znacilo pred volanim Claude,
+    // selhani modelu by uzivateli sebralo zalozeni a uz by ho nezopakoval.
+    if (isFounding && userId) {
+      const { error: fErr } = await sb().from("user_profiles")
+        .update({ tree_founded_at: new Date().toISOString(), founding_reading_id: readingId })
+        .eq("id", userId).is("tree_founded_at", null);
+      if (fErr) console.error("founding mark failed:", fErr.message);
     }
 
     return json({

@@ -13,6 +13,8 @@
 
 // Cached life rune reading from DB
 var _lifeRuneText  = null;  // text of generated reading
+var userTreeFounded = false;   // z DB (tree_founded_at) — server-only sloupec
+var _foundingPending = false;  // uzivatel klikl na zalozeni; ceka se na Norny
 var _lifeRuneLang  = null;  // lang of stored reading
 var _lifeRuneNum   = null;  // rune number 1-24
 
@@ -281,6 +283,15 @@ function updateTreeTab() {
     var tnsAll = document.getElementById('tree-name-section');
     if (tnsAll) tnsAll.style.display = 'block';
     _renderTreeNameState();
+    // Krok 2 ritualu: zivotni runa je, strom jeste ne -> nabidnout zalozeni.
+    var fcta = document.getElementById('tree-founding-cta');
+    if (fcta) {
+      fcta.style.display = userTreeFounded ? 'none' : 'block';
+      var fi = document.getElementById('tree-founding-intro');
+      var fb = document.getElementById('tree-founding-btn');
+      if (fi) fi.textContent = t('tree_founding_intro');
+      if (fb) fb.textContent = t('tree_founding_btn');
+    }
     return;
   }
 
@@ -582,3 +593,15 @@ function updateSidePanelLang() {
 }
 
 
+
+// Zalozeni stromu = jedny Norny, zdarma a bez hlasu. Tenhle prechod jen nastavi
+// priznak a prepne do readeru; o tom, ze je cteni zdarma, rozhoduje PROXY podle
+// mode='founding' (klient si zdarma rict nesmi). Server navic overi, ze zivotni
+// runa uz existuje a ze strom jeste zalozeny neni.
+async function startTreeFounding() {
+  if (!currentUser || !_lifeRuneText || userTreeFounded) return;
+  _foundingPending = true;
+  if (typeof showAppTab === 'function') showAppTab('reading');
+  if (typeof _setSpreadMode === 'function') _setSpreadMode('norns');
+  if (typeof showToast === 'function') showToast(t('tree_founding_toast'));
+}

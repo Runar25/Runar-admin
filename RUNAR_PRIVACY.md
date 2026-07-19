@@ -67,6 +67,15 @@ opt-outu (ne opt-in brána). Výslovný souhlas jen u testerů — a ti CHTĚJÍ
 - **Retence:** rozhodnout dobu (návrh: čtení drž po dobu účtu; při zrušení účtu smazat, nebo anonymizovat pro eval).
 - **Práva subjektu:** přístup (Readings viewer to částečně pokrývá pro adminy; user si vidí své v journalu) +
   smazání (delete account → smazat/anonymizovat jeho readings). Export na vyžádání.
+- **Evidence pohybů kreditu (`credit_ledger`) přežívá smazání účtu — a je to v pořádku, protože
+  po smazání se to UUID nemá s čím spojit.** `delete-account` nuluje `gift_codes.used_by` a pak
+  smaže `auth.users`, což kaskádou bere `user_profiles` i `readings`. Nezůstane **žádná** tabulka,
+  která by UUID přeložila na e-mail nebo jméno — klíč je zničen, takže řádek je fakticky
+  anonymní účetní záznam (recitál 26). Hashovat UUID by ochranu nepřidalo (mapování už neexistuje),
+  jen by zabilo možnost dohledat historii u ŽIVÉHO účtu — což je právě to, kvůli čemu evidence vznikla.
+  ⚠️ **Platí jen dokud žádná jiná tabulka mapování nedrží.** Až přibude Shopify / objednávky,
+  tenhle závěr se musí přezkoumat — objednávka s e-mailem a `user_id` mapování obnoví.
+  ⚠️ Tohle je technický rozbor, ne posudek — patří na seznam pro právní/DPO review (viz backlog).
 
 ## Implementační checklist
 **DB (owner v SQL editoru — viz `sql/2026-07-13_privacy_columns.sql`):**

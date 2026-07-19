@@ -766,7 +766,13 @@ async function _generateSpreadReading(o) {
     reading_mode: _readingMode
   } : null;
   _lastReadingId = null;
-  var res = await callProxy(sys, prompt, o.tokens, shouldUseCredit(), o.credits, _journalS);
+  // Zakladaci Norny: zdarma a BEZ HLASU (hlas = 95 % ceny cteni, proto se nekona).
+  // Cenu vynucuje proxy podle mode='founding', ne tahle dve cisla.
+  var _isFounding = (o.mode === 'norns' && typeof _foundingPending !== 'undefined' && _foundingPending);
+  var res = await callProxy(sys, prompt, o.tokens,
+                            _isFounding ? false : shouldUseCredit(),
+                            _isFounding ? 0 : o.credits,
+                            _journalS, _isFounding ? 'founding' : '');
   _lastReadingId = (res && res.reading_id) || (_journalS ? _journalS.id : null);
   if (_journalS && res && !res.error && res.text && !res.reading_id) _pendAdd('pendingReadings', { id: _journalS.id, journal: _journalS, model_text: res.text });
   _flushPending();
@@ -810,10 +816,17 @@ async function _generateSpreadReading(o) {
   _renderSegments(o.outId, _lastSegs);
   _showAsk();
 
-  if (canUseVoice()) {
+  // U zalozeni se hlas NENABIZI — je to textovy ritual a jeho bezplatnost stoji
+  // prave na tom, ze se TTS nekona. (Skryte tlacitko neni ochrana, jen dusledna
+  // nabidka; EL proxy o typu cteni nevi — zapsano v RUNAR_DECISIONS.)
+  if (canUseVoice() && !_isFounding) {
     if (vBtn) { vBtn.disabled = false; vBtn.style.display = ''; }
   } else {
     if (vBtn) { vBtn.disabled = true; vBtn.style.display = 'none'; }
+  }
+  if (_isFounding && !res.error) {
+    _foundingPending = false;
+    userTreeFounded  = true;
   }
 }
 

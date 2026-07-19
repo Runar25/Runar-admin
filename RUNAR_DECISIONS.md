@@ -1405,3 +1405,42 @@ Přesně tím byl `memory/runar-project.md` (sám vygeneroval ~15 nálezů) a č
   je odvozená z komentářů, ne doložená definicí.
 - **Affected doc(s):** RUNAR_BACKLOG.md (položka evidence → odkaz na fázi 2).
 - **NEPUŠTĚNO** — čeká na ownera. Rozhodnutí pro něj: GDPR retence uzavíracích řádků po smazání účtu.
+
+---
+
+## 2026-07-19 — Zakládací Norny zdarma + GDPR odpověď k ledgeru [tune]
+
+### A) Zakládací Norny = mód `founding`
+- **Rozhodnutí (KUKY):** založení stromu je zdarma. Textové čtení bez hlasu (~$0.004), takže
+  je to zdarma **nákladově**, ne dotací — a hlavně to nevyrábí výjimku v placené cestě.
+- **Stejná posture jako životní runa:** cenu určuje SERVER podle `mode`, ne číslo od klienta.
+  Podlaha `Math.max(1, spread_cost)` proto zůstává — klient si zdarma říct nesmí.
+- **Dvě podmínky navíc, které životní runa nemá:**
+  1. **Založení je KROK 2** — proxy vyžaduje už existující `life_rune_text`. Bez toho by
+     `mode:'founding'` byly Norny zdarma pro kohokoli, kdo si o ně řekne.
+  2. **Jednou za život účtu** — marker `tree_founded_at`, zapsaný **CAS** (`is null`) až
+     PO úspěšném čtení. Kdyby se značilo předem, selhání modelu by uživateli sebralo založení.
+- **Marker NENÍ v klientském grantu** (hlídá ⑩) — jinak si ho uživatel z konzole vynuluje.
+- **Hlas se u založení nenabízí.** Skryté tlačítko není ochrana, jen důsledná nabídka:
+  `elevenlabs-proxy` o typu čtení neví (destrukturuje jen `{text, lang}`). Bezplatnost stojí
+  na tom, že se TTS nekoná — ne na tom, že by ho někdo zakazoval.
+- **Vizuál se nevymýšlel:** zakládací CTA je kopie tvaru `tree-reveal-cta`
+  (`tree-reveal-intro` + `vcn-btn btn-gold`), žádné nové CSS.
+- **Založení stromu tím vychází na 0 kreditů** (životní runa 0 + zakládací Norny 0).
+
+### B) GDPR: ledger po smazání účtu — ODPOVĚĎ, ne otázka na ownera
+- **Řádky zůstávají, hashovat se nemají.** Doloženo v kódu: `delete-account` nuluje
+  `gift_codes.used_by` a pak volá `auth.admin.deleteUser()`, což kaskádou maže `user_profiles`
+  i `readings`. Po smazání **neexistuje žádná tabulka, která by UUID přeložila na e-mail nebo
+  jméno** — klíč je zničen, řádek je fakticky anonymní účetní záznam (recitál 26).
+- **Hashování by ochranu nepřidalo** (mapování už neexistuje) a zabilo by dohledání historie
+  u ŽIVÉHO účtu, tedy přesně to, kvůli čemu evidence vznikla.
+- ⚠️ **Platí jen dokud mapování nedrží jiná tabulka.** Až přibude Shopify / objednávky
+  (objednávka nese e-mail i `user_id`), závěr se musí přezkoumat.
+- ⚠️ **Technický rozbor, ne posudek** — patří na seznam pro právní/DPO review (už v backlogu).
+- **Affected doc(s):** RUNAR_PRIVACY.md (řádek o retenci ledgeru doplněn v témže commitu).
+
+### Nasazení — ZÁLEŽÍ NA POŘADÍ
+1. SQL `sql/2026-07-19_tree_founding.sql` (owner)
+2. `supabase functions deploy claude-proxy` — MUSÍ být před klientem
+3. push klienta

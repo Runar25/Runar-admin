@@ -56,7 +56,7 @@ function incTrialCount() { localStorage.setItem('runar_trial_count', String(getT
 async function fetchUserProfile(userId) {
   try {
     const { data } = await sb.from('user_profiles')
-      .select('tier, credits_balance, free_balance, name, lang, life_rune_number, life_rune_text, life_rune_lang, dob_day, dob_month, dob_year, tree_name')
+      .select('tier, credits_balance, free_balance, name, lang, life_rune_number, life_rune_text, life_rune_lang, dob_day, dob_month, dob_year, tree_name, tree_founded_at')
       .eq('id', userId)
       .maybeSingle();
     if (data) {
@@ -66,6 +66,9 @@ async function fetchUserProfile(userId) {
       // Admins always get full premium access for testing
       if (isAdmin(currentUser?.email)) userTier = 'premium';
       userCredits = data.credits_balance || 0;
+      // Marker zalozeni stromu. Zapisuje VYHRADNE server (neni v klientskem
+      // grantu) — klient ho jen cte, aby vedel, jestli nabidnout zalozeni.
+      userTreeFounded = !!data.tree_founded_at;
       userFreeBalance = data.free_balance != null ? data.free_balance : 0;
       // Load life rune reading if stored
       if (data.life_rune_text) {
