@@ -362,10 +362,7 @@ function _updateSpreadSlots(cfg) {
 function _updateSpread3Slots() { _updateSpreadSlots(_SPREAD_SLOT_CFG.norns); }
 
 function _hideAllSpreadOutputs() {
-  var _fd = document.getElementById('founding-done');
-  if (_fd) _fd.style.display = 'none';
-  var _fb = document.getElementById('founding-done-btn');
-  if (_fb) _fb.classList.remove('calling');
+
   ['spread3-output','spread5-output','spread7-output','spread9-output'].forEach(function(id) {
     var out = document.getElementById(id);
     if (out) out.style.display = 'none';
@@ -833,21 +830,15 @@ async function _generateSpreadReading(o) {
     _foundingPending = false;
     userTreeFounded  = true;
     _syncFoundingLock();          // odemknout ostatni spready
-    // Bez tohohle bloku se po zalozeni nestalo nic viditelneho: zadne potvrzeni,
-    // zadna cesta do stromu (KUKY, ostry pruchod 2026-07-19).
-    var fd = document.getElementById('founding-done');
-    if (fd) {
-      var ft = document.getElementById('founding-done-text');
-      var fbtn = document.getElementById('founding-done-btn');
-      if (ft)   ft.textContent   = t('founding_done_text');
-      if (fbtn) fbtn.textContent = t('founding_done_btn');
-      fd.style.display = 'block';
+    // Vyusteni ritualu patri do STROMU, ne do ctecky (KUKY 2026-07-19: „kdyz na to
+    // koukam, tak by se to tam neveslo"). Ctecka uz nese vyklad, hlas a dve tlacitka;
+    // treti potvrzovaci blok se tam necpe. Ve strome na uzivatele ceka text
+    // zakladacich Norn, ktery tam zustane naporad — to je to potvrzeni.
+    if (currentUser && typeof _loadFoundingReading === 'function' && res.reading_id) {
+      await _loadFoundingReading(res.reading_id);
     }
-    // Automaticky skok byl prilis: vytrhl by uzivatele z vykladu, ktery si cte.
-    // Misto toho se tlacitko po prodleve ROZSVITI a ceka (KUKY 2026-07-19).
     setTimeout(function () {
-      var b = document.getElementById('founding-done-btn');
-      if (b) b.classList.add('calling');
+      if (typeof showAppTab === 'function') showAppTab('tree');
     }, DELAY_FOUNDING_TO_TREE);
   }
 }

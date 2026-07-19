@@ -57,6 +57,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [handoff-text-in-code-block.md](handoff-text-in-code-block.md) — text k předání jiné session VŽDY do code blocku
 - [paste-sql-explicitly.md](paste-sql-explicitly.md) — když má owner spustit SQL, vlož přesné SQL; žádné „jako minule"
 - [full-path-and-numbered-lists.md](full-path-and-numbered-lists.md) - uplna cesta k souboru (pracovni adresar je C:/Users/zkuku, ne repo) + cislovane seznamy tam, kde zalezi na poradi
+- [ask-owner-for-checks-you-cannot-run.md](ask-owner-for-checks-you-cannot-run.md) - co Code sam neoveri (prod DB, prihlasena appka), vyzadat po ownerovi, nededukovat
 - [function-not-ceremony.md](function-not-ceremony.md) — nestavět proces pro uspokojení; nepomůže-li reálně, říct to a vynechat
 - [proceed-dont-ask.md](proceed-dont-ask.md) — dohodnutý plán odjeď celý; neptej se „souhlas?" mezi kroky
 - [commit-by-pathspec.md](commit-by-pathspec.md) — commitovat VŽDY s pathspec; `git commit` bere celý index včetně cizí lane

@@ -1625,3 +1625,28 @@ vypadala v migraci samozřejmě a obě byla mimo.
 - **OVĚŘENO V PROHLÍŽEČI:** animace tlačítka + zhasnutí při skrytí · blok bez textu skrytý,
   s textem viditelný · markdown hlavička oříznutá · rozbalování · islandský nadpis.
 - **Affected doc(s):** žádný.
+
+---
+
+## 2026-07-19 — Vyústění rituálu patří do stromu, ne do čtečky [tune]
+
+- **Rozhodnutí (KUKY, třetí ostrý průchod):** *„když na to koukám, tak by se to tam nevešlo…
+  asi bude lepší to dát do stromu života přes root your tree, než to cpát někam jinam."*
+- **Blok `founding-done` ve čtečce SMAZÁN celý.** Čtečka už nese výklad, „HEAR RÚNAR SPEAK",
+  „DRAW ANOTHER RUNE" a „START OVER" — třetí potvrzovací blok se tam nevejde, ani vizuálně
+  ani významově. Po založení se rovnou přepne do Tree tabu, kde na uživatele čeká text
+  zakládacích Norn, který tam **zůstává napořad**. To je to potvrzení; druhé není potřeba.
+- **Uklizeno CELÉ, ne jen skryto** (§10, žádný mrtvý kód): HTML blok · JS větev · CSS animace
+  `founding-call` · **4 překladové klíče** (`founding_done_text`/`_btn` × 2 jazyky).
+  `git grep` po `founding-done|founding_done|calling` ve `v2/` vrací prázdno.
+  Poznámka: dvě hodiny stará animace šla pryč beze zbytku — funkce, která přežila jen jako
+  „už to tam je", je horší než ta, co nikdy nevznikla.
+- **Affected doc(s):** žádný.
+
+### Nové pravidlo od ownera — ověření si vyžádat
+KUKY: *„tam kde ti tahle kontrola pomůže a sám ji nemůžeš dostat, tak ji po mě žádej.
+Aspoň to máme potvrzené."* Uloženo jako `memory/ask-owner-for-checks-you-cannot-run.md`.
+Kam Code nevidí: produkční DB · appka v přihlášeném stavu (lokální náhled uvízne na auth
+branách) · logy edge funkcí (CLI verze tu nemá `functions logs`). Dnes jsem dvakrát odvodil
+správně a měl štěstí, jednou odvodil špatně (kořeny stromu). **Dedukce z kódu je hypotéza,
+i když zní jistě.**
