@@ -321,6 +321,15 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .tree-insp b{opacity:1;}
 .tree-insp .ti-glyph{font-size:2.2em;line-height:1;vertical-align:-0.15em;margin-right:8px;}
 .tree-insp .ti-dim{color:var(--gold);opacity:0.45;}
+/* Export stavu stromu (admin diagnostika). Tón převzatý ze zrušeného .tree-admin-btn —
+   je to nástroj, ne obsah. Textarea je záloha pro případ, že schránka selže. */
+.tree-export{width:min(300px,78vw);margin:10px auto 0;text-align:center;}
+.tree-export-btn{font-family:'Cinzel',serif;font-size:0.55em;letter-spacing:2px;padding:6px 14px;
+  background:transparent;border:1px solid rgba(255,191,0,0.35);color:var(--gold);
+  opacity:0.6;cursor:pointer;transition:opacity 0.2s;white-space:nowrap;}
+.tree-export-btn:hover{opacity:1;}
+.tree-export-ta{width:100%;height:90px;margin-top:8px;background:rgba(0,0,0,0.35);
+  border:1px solid rgba(255,191,0,0.18);color:var(--gold);font-size:0.7em;padding:6px;}
 
 /* ── COLLECTION ── */
 .coll-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:4px;align-items:stretch;}

@@ -158,6 +158,53 @@ function _treeHighlight(cv) {
   _inspShow(sel.meta);
 }
 
+// ── EXPORT STAVU (admin) ──────────────────────────────────────────────────
+// Zkopíruje log stromu do schránky. Owner ho vloží do chatu a Code si strom
+// postaví přesně u sebe — místo aby usuzoval z obrázků.
+function exportTreeState() {
+  var box = document.getElementById('tree-insp');
+  var ta  = document.getElementById('tree-export-ta');
+  var payload = {
+    v: 1,
+    ts: new Date().toISOString(),
+    lang: lang,
+    dob: _treeDob,            // dobSeed = hash(d-m-y) -> bez toho reprodukce nesedne
+    rune: _treeRkey,          // klic zivotni runy (kmen: naklon + barva)
+    viewN: _treeViewN,        // poloha posuvniku, na ktere si owner necheho vsiml
+    n: _treeLog.length,
+    // Popis sloupcu primo v datech — at se to da precist i bez tohohle kodu.
+    // Priznak blank MUSI ven: Blank ma v runar-runes.js glyf '○', ale v branch datech
+    // je jako 'odinn' s glyfem '◇' — mapovani jde pres priznak, ne pres glyf. Bez nej
+    // by Odinn v rekonstrukci vypadl z poradi run a strom by se rozesel.
+    // (Nalezeno zpatecni zkouskou 2026-07-19: 4 blank v originale, 0 v rekonstrukci.)
+    cols: ['spread', 'area', 'intention', 'runes[glyph,el,blank?1]'],
+    log: _treeLog.map(function (r) {
+      return [ r.spread, r.area || '', r.intention || '',
+               (r.runes || []).map(function (x) {
+                 return x.blank ? [x.rune, x.el, 1] : [x.rune, x.el];
+               }) ];
+    })
+  };
+  var json = JSON.stringify(payload);
+  var kb   = (json.length / 1024).toFixed(1);
+
+  function hotovo() {
+    if (box) box.innerHTML = '<span class="ti-dim">' +
+      tp('tree_export_ok', { casts: vn('cast', _treeLog.length, lang), kb: kb }) + '</span>';
+  }
+  function nouzovka() {
+    // Schranka umi selhat (odepreny pristup, nezabezpeceny kontext) — pak at ma
+    // owner text aspon oznaceny k rucnimu zkopirovani, ne prazdny klik.
+    if (ta) { ta.style.display = 'block'; ta.value = json; ta.focus(); ta.select(); }
+    if (box) box.innerHTML = '<span class="ti-dim">' + t('tree_export_fail') + '</span>';
+  }
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(json).then(hotovo, nouzovka);
+    } else { nouzovka(); }
+  } catch (e) { nouzovka(); }
+}
+
 // Klik/tap -> nejbližší bod větve do 22 px. Souřadnice jsou v prostoru plátna
 // (W×H z rendereru), ne v CSS pixelech — proto přepočet přes getBoundingClientRect.
 function _inspHit(ev) {
@@ -226,6 +273,9 @@ async function renderLivingTree(rune) {
         });
       }
     }
+    var exp = document.getElementById('tree-export');
+    var expBtn = document.getElementById('tree-export-btn');
+    if (exp && expBtn) { exp.style.display = 'block'; expBtn.textContent = t('tree_export_btn'); }
     var insp = document.getElementById('tree-insp');
     if (insp) {
       insp.style.display = 'block';

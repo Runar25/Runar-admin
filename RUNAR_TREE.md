@@ -145,7 +145,12 @@ Ostatní (později, decentně): pulzy dominance (element/ætt), bloom fáze, lis
   jako závada. Tohle už jednou opravené bylo (zmrazením na první viděnou runu) a krok 3
   to zmrazení zrušil. Návrh: hystereze (převzít tvar, až nová runa vede o práh).
   ČEKÁ NA ROZHODNUTÍ. Detail → RUNAR_DECISIONS.md 2026-07-19.
-- ⚠️ **Renderer NENÍ deterministický** (vada předchází všem třem krokům, ověřeno i na produkci):
+- ✅ **Export stavu (2026-07-19, admin).** Tlačítko zkopíruje log stromu do schránky; owner
+  ho vloží do chatu a Code si strom postaví PŘESNĚ. Klíče stejné jako lab, ~9 kB na 168 čtení,
+  bez textu čtení. Ověřeno zpáteční zkouškou (rekonstrukce z exportu = shodný otisk).
+- ⚠️ **Obraz se mění kolem přepnutí stavu**, pak se ustálí; osm kreseb po sobě je identických.
+  Dřívější formulace o nedeterminismu byla širší než co je změřeno. Měření se musí zahřát.
+  Nediagnostikováno (vada předchází všem třem krokům, ověřeno i na produkci):
   týž log dá jiný obraz od 3. překreslení. Uživatel uvidí, jak se strom sám změnil bez nového
   čtení; nám to znemožňuje porovnávat obrazy. Detail → RUNAR_DECISIONS.md 2026-07-19.
 - **Zbývá ze signálů §4:** váha z počtu vyplněných polí · seeking jako třetí hlas (§3A)

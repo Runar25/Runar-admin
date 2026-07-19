@@ -492,6 +492,14 @@
            mohl hlásit „tahle, Kenaz/oheň/skuld" místo „nějaká větev poskočila".
            Portováno z labu (crown-composer.html · _pick + showInspect). -->
       <div class="tree-insp" id="tree-insp" style="display:none;"></div>
+      <!-- EXPORT STAVU (admin): zkopíruje log stromu do schránky, owner ho vloží
+           do chatu a Code si strom postaví PŘESNĚ u sebe. Konec hádání z obrázků.
+           Klíče dob/rune/log/viewN schválně stejné jako lab (_tree_state.json).
+           NEOBSAHUJE text čtení — jen glyf, element, oblast, intenci a typ spreadu. -->
+      <div class="tree-export" id="tree-export" style="display:none;">
+        <button class="tree-export-btn" id="tree-export-btn" onclick="exportTreeState()"></button>
+        <textarea class="tree-export-ta" id="tree-export-ta" readonly style="display:none;"></textarea>
+      </div>
     </div>
 
     <!-- LIFE RUNE SECTION -->

@@ -708,6 +708,51 @@ stav až potom a vyvodil závěr o minulosti → owner musel arbitrovat. Stav be
     · RUNAR_EVAL_CHAT_mobil · RUNAR_FEATURES · RUNAR_IS_GRAMMAR_CHECK_CODE · RUNAR_SEGMENTACE_FaseB
     · RUNE_IMAGE_POOLS_draft · tento handoff.
 
+## 2026-07-19 - Export stavu stromu (admin) + upresneni nalezu o nedeterminismu
+
+**Zadani KUKY:** "export stavu. at prestanes hadat." Kontext: hlasil preskakovani mezi polohou
+144 a 148 svych 168 cteni. Jeho strom nemam, takze jsem si musel vyrabet synteticky log - a
+v jednu chvili jsem dokonce usuzoval ze screenshotu, coz bylo spatne ([[measure-dont-eyeball]]).
+Tenhle export ten duvod odstranuje: owner klikne, vlozi JSON, Code si strom postavi PRESNE.
+
+**Format.** Klice `dob` / `rune` / `log` / `viewN` **schvalne stejne jako lab** (`_tree_state.json`),
+takze export pujde nacpat i do labu. Log je pole poli + samopopisne `cols`, at se to da precist
+i bez kodu. Ladici hodnoty (`crownT`/`trunkT`/`rootsT`) se NEexportuji, i kdyz je lab uklada:
+produkce je ma zapecene v buildu, takze by to byl sum.
+**`dob` je povinne** - `dobSeed = hashStr(d-m-y)` (tree-prod:195) ridi veskerou nahodu ve strome.
+**Velikost:** ~2,1 kB na 40 cteni -> ownerovych 168 vyjde kolem 9 kB, tedy vlozitelne do chatu.
+**Neobsahuje text cteni** - jen glyf, element, oblast, intenci a typ spreadu. Napsano i v UI.
+
+**Vada, kterou odhalila az zpatecni zkouska:** export **ztracel priznak `blank`** (9 v originale,
+0 v rekonstrukci). Blank ma v `runar-runes.js` glyf U+25CB, ale v branch datech je `odinn` s jinym
+glyfem - mapovani jde pres priznak, ne pres glyf. Bez nej by Odinn v rekonstrukci vypadl z poradi
+run. V prvnim testu to nahodou nevadilo, protoze Odinn nevedl zadny element; jakmile povede,
+rozejde se. **Opraveno** - rune tuple je nove `[glyph, el, 1]` pro Blank. Overeno na logu, kde
+Blank stin VEDE.
+
+**Overeno zpatecni zkouskou** (u exportu jediny test, ktery neco znamena): postaven strom,
+exportovan, log **rekonstruovan JEN z exportu**, znovu vykreslen -> **shodny otisk** (`407f419c`).
+Otestovana i zalozni cesta, kdyz schranka odmitne (textarea + hlaska).
+
+---
+
+### UPRESNENI (dolu) drivejsiho nalezu o nedeterminismu
+
+2026-07-19 jsem zapsal, ze "renderer NENI deterministicky - tyz log da od 3. prekresleni jiny
+obraz". **Zmereno presneji: osm po sobe jdoucich kreseb tehoz logu je IDENTICKYCH** a log se
+nemutuje. Rozdil se objevuje jen **kolem prepnuti stavu** (jiny log a zpet, cerstve nactena
+stranka) a pak se ustali. To je mnohem uzsi jev nez "renderer je nedeterministicky".
+
+Vylouceno merenim: `Math.random` (vse pres seedovany `mulberry32`), cas (zadny `Date`/`performance`
+v rendereru ani v trunk/branch), mutace vstupniho logu, kolize globalniho `RUNES` (trunk i branch
+jsou v IIFE), zmena `devicePixelRatio`.
+
+**Nediagnostikovano.** Prakticky dopad: mereni obrazu se musi zahrat, jinak lze - coz platilo
+i pro me dnes. Zustava jako samostatna polozka.
+
+**Affected doc(s):** RUNAR_TREE.md
+
+
 ## 2026-07-19 — Zvýraznění vybrané větve + DIAGNÓZA „přeskakování"
 
 **Zadání KUKY:** „vybraná větev by se měla označit stejně, jako jsme to měli v labu."
