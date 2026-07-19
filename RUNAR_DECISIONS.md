@@ -708,6 +708,55 @@ stav až potom a vyvodil závěr o minulosti → owner musel arbitrovat. Stav be
     · RUNAR_EVAL_CHAT_mobil · RUNAR_FEATURES · RUNAR_IS_GRAMMAR_CHECK_CODE · RUNAR_SEGMENTACE_FaseB
     · RUNE_IMAGE_POOLS_draft · tento handoff.
 
+## 2026-07-19 — Strom, krok 3: RUNA → TVAR větve (§4) + nález nedeterminismu
+
+**Nález, ne návrh.** Tvarová data jsou v repu hotová: každá z 25 run má `curve`, `sub`, `taper`,
+`tipc`, `rhy` (`runar-branch.js`) + elementové archetypy. Renderer je ignoroval a bral tvar podle
+POŘADÍ větve: `var brune = bpool[k % bpool.length]` (`tree-prod:202`). Pole `be.rune` (nastavené
+na `pool[0]`) se nepoužívalo vůbec. **Důsledek: každý uživatel měl stejné siluety větví.**
+Potřetí týž vzorec jako u os (špatný slovník) a Blank (filtr) — hotová věc napojená na špatný vstup.
+
+**Struktura, která to komplikuje:** větev NENÍ jedno čtení, ale elementové téma; `stableAssign`
+navíc dává jednomu elementu VÍC větví (každých ~5 čtení další). Varianta „1 čtení = 1 větev"
+už jednou rozbila engine (`RUNAR_TREE_TODO.md` bod 5, zahozeno, snapshot `ritual-stable-v2`).
+
+**Řešení: n-tá větev elementu = n-tá NEJČASTĚJŠÍ runa toho elementu.** Největší ohnivá větev nese
+tvar runy, kterou v ohni taháš nejvíc; druhá tu druhou. Pestrost zůstává (bez toho by všechny
+větve elementu vypadaly stejně), ale začne něco znamenat. Mechanismus je 1:1 podle toho, co kód
+UŽ dělá pro ætt (`aettCnt` → `domAett`). **Engine netknutý** — `growBranch` dostává klíč runy
+jako dosud, jen smysluplný.
+
+**Rozhodnutí ownera (2026-07-19):**
+- *Přetvarovat, když se pořadí změní?* **ANO** — „to je dobrá pointa a řešilo by to ten pohyb,
+  přirozeně." Strom mluví o tom, kdo jsi teď; s posuvníkem je změna čitelná jako příběh.
+- *Remíza?* **Vyhrává dřívější** — „ta, která ten pohyb zahájila."
+
+**Blank/Óðinn:** mapuje se přes příznak `blank:true` z kroku 2, NE přes glyf — v `runar-runes.js`
+má `○`, v branch datech je `odinn` s `◇`. Přes glyf by Óðinn tvar nikdy nedostal.
+
+**OVĚŘENO V PROHLÍŽEČI** (otisk obrazu, ne tvrzení):
+- převaha Kenaz `bcbb5a30` vs převaha Fehu `71e7fe7c` → **tvar jde za runou**
+- remíza 5:5 s Kenaz první = `bcbb5a30` (shodné s převahou Kenaz); s Fehu první = `71e7fe7c`
+  → **tie-break podle dřívější doložen**, ne jen naprogramován
+
+---
+
+### ⚠️ NÁLEZ MIMO ZADÁNÍ: renderer není deterministický (PŘEDCHÁZÍ mé změně)
+
+Týž log vykreslený opakovaně dává **dva různé obrazy**: kresby 1–2 shodné, od 3. jiné a pak už
+stabilní. Ověřeno, že to NENÍ moje změna — **stejná signatura na produkci**, která krok 3 nemá
+(`f57b81c4`, `f57b81c4`, pak 3× `242d2a74`). Lokálně totéž (`bce01e16` ×2, pak `b1f1dfc0`).
+
+Proč to vadí: strom se překreslí při přepnutí tabu, jazyka nebo po čtení — uživatel tedy uvidí,
+jak se mu strom **sám od sebe změnil**, bez jakéhokoli nového čtení. A pro nás je to horší:
+znemožňuje to porovnávat obrazy, což je jediný způsob, jak jsme dnes vůbec dokázali, že signály
+fungují. Měření se musí „zahřát", jinak lže.
+
+Nediagnostikováno (podezření: líně plněná cache v `RunarTrunk`/`RunarBranch`, ne `Math.random` —
+ten je seedovaný přes `mulberry32(dobSeed…)`). **Doporučuju jako další krok**, dřív než další signál.
+
+**Affected doc(s):** RUNAR_TREE.md
+
 ## 2026-07-19 — Přehrávání růstu stromu + „bonus za pauzu" zrušen
 
 **Zadání KUKY:** *„potřeboval bych nad strom posuvník, kterým bych se vracel zpět až na počátek

@@ -131,6 +131,9 @@ function render(canvas, opts) {
   function routingFromLog(lg){
     var cnt=[0,0,0,0,0], first=[-1,-1,-1,-1,-1], big={h:0,wd:0,ms:0};
     var intS=[0,0,0,0,0], intN=[0,0,0,0,0], areaS=[0,0,0,0,0], areaN=[0,0,0,0,0], aettCnt=[{},{},{},{},{}];
+    /* RUNA -> TVAR: kolikrat kterou runu v tomhle elementu tahas + kdy poprve (remiza) */
+    var runeCnt=[{},{},{},{},{}], runeFirst=[{},{},{},{},{}];
+    var G2K={}; B.RUNES.forEach(function(r){ G2K[r.g]=r.k; G2K[r.k]=r.k; });
     for(var i=0;i<lg.length;i++){
       var rd=lg[i], runes=rd.runes||[], multi=(rd.spread&&rd.spread!=='single');
       var ia=(rd.intention!=null)?INT_AXIS[rd.intention]:undefined, al=(rd.area!=null)?AREA_LAT[rd.area]:undefined;
@@ -138,7 +141,11 @@ function render(canvas, opts) {
         var e=ELEMS.indexOf(runes[j].el); if(e<0) e=3;
         if(first[e]<0) first[e]=i;
         cnt[e]+=1;
-        var ae=KEY_AETT[runes[j].rune]||G_AETT[runes[j].rune]||'freya'; aettCnt[e][ae]=(aettCnt[e][ae]||0)+1;   /* rune muze byt engine-key NEBO glyf (reader) */
+        var ae=KEY_AETT[runes[j].rune]||G_AETT[runes[j].rune]||'freya'; aettCnt[e][ae]=(aettCnt[e][ae]||0)+1;
+        /* Blank ma v runar-runes.js glyf '○', v branch datech je jako 'odinn' s jinym glyfem
+           -> mapovat pres priznak blank, ne pres glyf, jinak by Odinn nikdy tvar nedostal. */
+        var rk=runes[j].blank ? 'odinn' : (G2K[runes[j].rune]||null);
+        if(rk){ runeCnt[e][rk]=(runeCnt[e][rk]||0)+1; if(runeFirst[e][rk]===undefined) runeFirst[e][rk]=i; }   /* rune muze byt engine-key NEBO glyf (reader) */
         if(ia!==undefined){ intS[e]+=ia; intN[e]++; }
         if(al!==undefined){ areaS[e]+=al; areaN[e]++; }
         if(multi){ var eN=ELEMS[e];
@@ -148,9 +155,15 @@ function render(canvas, opts) {
       }
     }
     function domAett(m){ var best='freya', bc=-1; for(var a in m){ if(m[a]>bc){bc=m[a];best=a;} } return best; }
+    /* Nejcastejsi runy elementu, sestupne. Pri REMIZE vyhrava ta drivejsi
+       (KUKY 2026-07-19: „ta, ktera ten pohyb zahajila") -> strom se nepreklapi
+       sem a tam kvuli jednomu cteni. */
+    function rankRunes(cm, fm){ var ks=[]; for(var k in cm) ks.push(k);
+      ks.sort(function(a,b){ return (cm[b]-cm[a]) || (fm[a]-fm[b]); }); return ks; }
     var els=[];
     for(var e3=0;e3<5;e3++){ if(cnt[e3]>0){ var elN=ELEMS[e3], pool=runesByEl[elN]||B.RUNES;
       els.push({ el:elN, count:cnt[e3], first:first[e3], world:ELEM_WORLD[elN], aett:domAett(aettCnt[e3]), rune:pool[0],
+                 runeRank:rankRunes(runeCnt[e3], runeFirst[e3]),
                  intAxis: intN[e3]?intS[e3]/intN[e3]:0, areaLat: areaN[e3]?areaS[e3]/areaN[e3]:0 }); } }
     els.sort(function(a,b){return a.first-b.first;});
     var total=0, mx=1; els.forEach(function(x){ total+=x.count; mx=Math.max(mx,x.count); });
@@ -167,7 +180,12 @@ function render(canvas, opts) {
         while(have<want && slots.length<maxN){ slots.push(el); have++; nb[el]=have; }
       }
     }
-    return slots.map(function(nm){ return elByName[nm]||{el:nm, count:cnt[nm]||1, world:ELEM_WORLD[nm], aett:ELEM_AETT[nm], rune:(runesByEl[nm]||B.RUNES)[0]}; });
+    /* ord = kolikata vetev SVEHO elementu tohle je (0,1,2...). Jeden element dostava
+       vic vetvi (kazdych ~5 cteni dalsi), takze bez ord by vsechny mely tentyz tvar. */
+    var seen={};
+    return slots.map(function(nm){ var o=(seen[nm]=(seen[nm]===undefined?0:seen[nm]+1));
+      var base=elByName[nm]||{el:nm, count:cnt[nm]||1, world:ELEM_WORLD[nm], aett:ELEM_AETT[nm], rune:(runesByEl[nm]||B.RUNES)[0], runeRank:[]};
+      var out={}; for(var p in base) out[p]=base[p]; out.ord=o; return out; });
   }
 
   function emergence(k){
@@ -218,7 +236,11 @@ function render(canvas, opts) {
       if(rE>2){ for(var rj=0;rj<rE;rj++){ var ru=(rE-rj)/rE; L.pts[rj].w*=1+(rootsT.junctionThick-1)*Math.pow(1-ru,2); } }
       if(k<targetN){
         var be=branchEls[k]||branchEls[branchEls.length-1]||{el:'earth',world:'midgard',aett:'heimdall',count:5};
-        var bpool=runesByEl[be.el]||B.RUNES; var brune=bpool[k%bpool.length];
+        var bpool=runesByEl[be.el]||B.RUNES;
+        /* RUNA -> TVAR (§4). n-ta vetev elementu = n-ta nejcastejsi runa toho elementu.
+           Fallback na puvodni cyklovani poolem, kdyz rank chybi (prazdny log, stara data). */
+        var bkey=(be.runeRank||[])[be.ord||0];
+        var brune=(bkey && B.RUNES.filter(function(x){return x.k===bkey;})[0]) || bpool[k%bpool.length];
         var e=emergence(k);
         var ang=e.ang + lifeLean*0.6 + (be.areaLat||0)*crownT.areaSide;
         var frac=clamp(e.frac + (be.intAxis||0)*crownT.intZone, 0.30, 0.98);

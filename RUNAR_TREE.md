@@ -62,7 +62,7 @@ Rohy (budoucnost+nitro, minulost+svět) = volné pro vzácnější kombinace.
 | **Norns osa** (§3A) | ZÓNA = výška (kořeny/střed/koruna) |
 | **area** | STRANA (dovnitř vlevo / ven vpravo) |
 | **element** | BARVA + mikro-výška + úhel (šířka) |
-| **runa** | TVAR / silueta |
+| **runa** | TVAR / silueta — ✅ ŽIVÉ od 2026-07-19 (n-tá větev elementu = n-tá nejčastější runa) |
 | **ætt** | sekundární charakter růstu |
 | **spread** | KOMPLEXITA (single=uzel · Norns=3 kořeny · Kříž=větev+4 · Horseshoe=větvená · Yggdrasil=roční prsten) |
 | **počet vyplněných polí** | VÁHA / mohutnost |
@@ -132,8 +132,15 @@ Ostatní (později, decentně): pulzy dominance (element/ætt), bloom fáze, lis
   u čtení č. 3 vypadá jako tehdy, ne jako dnešek s méně větvemi. Engine netknutý.
   **Je to měřicí přístroj, ne ozdoba** — bez něj nešlo poznat, jestli změna umístění větví
   vůbec něco udělala, a přesně proto obě osy mlčely dva měsíce.
-- **Zbývá ze signálů §4:** runa→tvar (renderer bere tvar z elementového poolu) · váha z počtu
-  vyplněných polí · seeking jako třetí hlas do vážené volby §3A.
+- ✅ **Runa → tvar (2026-07-19).** Tvarová data (curve/sub/taper/tipc/rhy per runa) byla hotová,
+  jen renderer bral tvar podle POŘADÍ větve — takže všichni uživatelé měli stejné siluety.
+  Nově: **n-tá větev elementu = n-tá nejčastější runa toho elementu** (pestrost zůstává, ale
+  něco znamená). Přetvaruje se, když se pořadí změní; při remíze vyhrává dřívější runa.
+- ⚠️ **Renderer NENÍ deterministický** (vada předchází všem třem krokům, ověřeno i na produkci):
+  týž log dá jiný obraz od 3. překreslení. Uživatel uvidí, jak se strom sám změnil bez nového
+  čtení; nám to znemožňuje porovnávat obrazy. Detail → RUNAR_DECISIONS.md 2026-07-19.
+- **Zbývá ze signálů §4:** váha z počtu vyplněných polí · seeking jako třetí hlas (§3A)
+  · vizuál duchovní větve pro Blank.
   (**Bonus za pauzu ZRUŠEN** 2026-07-19 — byla to druhá půlka zrušené penalizace.)
 - **Zbývá (velký směr = owner volba):** **produkce** (`tree_state` DB + reálná čtení z readeru) · **per-runa** (runa se odštěpí z elementového ramene ve své zóně = hlubší bough) · nebo **ladit** stávající. Aktuální stav labu = `RUNAR_TREE_TODO.md`.
 - **Boughs velká přestavba = ZAMÍTNUTO** (regrese — viz RUNAR_DECISIONS 2026-07-04). Koncept „runa=větev" OK jako cíl, cesta = jemné kroky.
