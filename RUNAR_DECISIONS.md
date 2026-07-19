@@ -708,6 +708,39 @@ stav až potom a vyvodil závěr o minulosti → owner musel arbitrovat. Stav be
     · RUNAR_EVAL_CHAT_mobil · RUNAR_FEATURES · RUNAR_IS_GRAMMAR_CHECK_CODE · RUNAR_SEGMENTACE_FaseB
     · RUNE_IMAGE_POOLS_draft · tento handoff.
 
+## 2026-07-19 — Přehrávání růstu stromu + „bonus za pauzu" zrušen
+
+**Zadání KUKY:** *„potřeboval bych nad strom posuvník, kterým bych se vracel zpět až na počátek
+zrození a viděl, jak se strom vyvíjel."* Původní nápad byl krok po 10 čteních; změněno po dohodě
+na **krok po jednom** — kdo má 12 čtení, dostal by u desítky dvě polohy.
+
+**Není to ozdoba, je to chybějící měřicí přístroj.** Owner k tomu ve stejné zprávě napsal:
+*„koukl jsem na produkci, ale nedá se určit, jestli se něco změnilo."* Přesně tahle slepota nechala
+obě nosné osy mlčet dva měsíce — výsledek nešlo s ničím porovnat. Zelený test dokazuje data, ne obraz.
+
+**Engine netknutý.** Posílá se jen KRATŠÍ log (`log.slice(0, n)`). `realAge` se v rendereru počítá
+z délky logu, takže strom u čtení č. 3 vypadá tak, jak vypadal tehdy (mladší), ne jako dnešní strom
+s méně větvemi. Na nule vyjede zakládací stav (`founding = log.length === 0`) = tři kořeny.
+Portováno z labu (`crown-composer.html`, `state._viewN` + `#stepN`) — hotové chování, ne nový nápad.
+Posuvník používá **existující třídu `.cap-seek`** (týž vizuál co audio seek), ne druhou kopii (§18).
+
+**OVĚŘENO V PROHLÍŽEČI** (a to je na tom to podstatné — dosud se ověřovala jen data):
+- řezání i popisky ve všech čtyřech stavech, oba jazyky (`3. spá af 5` · `allt tréð · 5 spár` · `upphaf trésins`)
+- hmota kresby monotónně ubývá: 14 čtení = 7593 px · 10 = 6729 · 5 = 5878 · 0 = 3319 (zakládací stav)
+- ⭐ **osy fakt hýbou stromem:** otisk obrazu s dekódovanými slugy `a349a89e` vs s popisky
+  (stav před krokem 1) `e5460990` — a opakování prvního dalo znovu `a349a89e`, takže to není šum.
+  Tím je krok 1 doložen na OBRAZE, ne jen na datech.
+
+**Zrušeno: „bonus za pauzu".** Owner: *„neznám, přijde mi to jako stará poznámka, která ani neměla
+být vytažena na povrch."* Měl pravdu — pochází z téže sekce „Filozofie rituální kadence", kterou
+zrušil, a je to **druhá půlka zrušené penalizace** („větev příliš brzy = slabší / po pauze = bonus").
+Já smazal penalizaci a bonus nechal žít, protože `RUNAR_TREE_TODO.md` bod 9 zní „bonus za pauzu,
+ŽÁDNÁ penalizace" — přečetl jsem to jako „bonus platí". Byl to zápis téhož zrušeného konceptu.
+**Poučení:** při čištění zastaralého konceptu se musí zrušit i jeho druhá půlka jinde; jinak zbyde
+fragment, který příští session přečte jako živý design. Přesně to jsem udělal v úklidu proti fragmentům.
+
+**Affected doc(s):** RUNAR_TREE.md · RUNAR_TREE_TODO.md
+
 ## 2026-07-19 — Strom, krok 2: Blank/Óðinn přestal mazat zaplacené čtení
 
 **Vada.** Blank má glyf `○` (U+25CB), tedy MIMO runový rozsah `0x16A0–0x16FF`, na který se ptal
@@ -1108,3 +1141,27 @@ Přesně tím byl `memory/runar-project.md` (sám vygeneroval ~15 nálezů) a č
   se počítá ZNOVU z repa, ne z natvrdo psaného výčtu (ten by zastaral stejně jako všechno ostatní).
 - Root: 250 → 27. `scripts/_patch_tune.py` doplněn do `.gitignore` (dvě lane, dvě cesty).
 - **Affected doc(s):** RUNAR_BACKLOG.md (přepsáno v témže commitu).
+
+---
+
+## 2026-07-19 — Fáze 1: životní runa je neměnná (brána PŘED zlevněním) [tune]
+
+- **Rozhodnutí:** jednou vygenerovaná životní runa se nedá přepsat. Vynucuje DB trigger
+  `trg_life_rune_immutable` (`sql/2026-07-19_life_rune_immutable.sql`), ne klient.
+- **PROČ TEĎ a ne až s přeceněním:** dnes je jediná brzda proti přepsání **cena 3 kredity**.
+  `generateLifeRuneReading()` existující runu netestovala a sloupce `life_rune_*` jsou pro
+  roli `authenticated` zapisovatelné. Zlevnit na 0 dřív, než tahle brána existuje, znamená
+  mezi dvěma commity otevřít neomezený generátor s destruktivním přepisem.
+  **Pořadí je závazné: brána, pak cena.**
+- **Zamyká se i DOB.** Runa se z data narození POČÍTÁ (`calcLifeRune`), ale uložený text se
+  nepřepočítá. Kdyby šlo DOB po založení změnit, strom by ukazoval jednu runu a text vykládal
+  jinou — tiše. Buď zamknout obojí, nebo ani jedno.
+- ⚠️ **Admin reset přestane fungovat jako tlačítko.** `resetLifeRune()` běží jako `authenticated`,
+  takže po migraci selže (a klient chybu uvidí — ⑱ hlídá, že se výsledek čte). Záměr: reset je
+  destruktivní a patří přes service_role. SQL příkaz je na konci migrace — a **maže i `tree_name`**,
+  což staré tlačítko nedělalo, takže po resetu zůstávalo jméno viset nad neexistujícím stromem.
+- **Klientský guard** (`if (_lifeRuneText) return;`) přidán, ale je to jen zdvořilost — obejde ho
+  každý, kdo umí otevřít konzoli. Je tam proto, aby se nestrhl kredit za zápis, který server odmítne.
+- **Affected doc(s):** žádný — RUNAR_BACKLOG.md dostane položku, až bude migrace puštěná.
+- **Reverzibilita:** snadná (`drop trigger trg_life_rune_immutable on public.user_profiles;`).
+- **NEPUŠTĚNO** — čeká na ownera v SQL editoru.

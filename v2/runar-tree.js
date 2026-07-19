@@ -79,6 +79,35 @@ function readingsToTreeLog(rows) {
   return out;
 }
 
+// Přehrávání růstu. Celý log si držíme tady; posuvník mění jen KOLIK z něj se pošle.
+var _treeLog  = [];      // všechna čtení, chronologicky
+var _treeRkey = null;    // klíč životní runy pro renderer
+var _treeDob  = null;
+var _treeSeekWired = false;
+
+// Vykreslí strom ve stavu „po n čteních". n === null nebo n === délka logu = celý strom.
+// Renderer počítá věk z délky logu, takže kratší log = MLADŠÍ strom, ne jen chudší.
+// Na nule se rozsvítí zakládací stav (founding), tedy tři kořeny bez koruny.
+function _drawTreeAt(n) {
+  var cv = document.getElementById('tree-living-canvas');
+  if (!cv || !window.RunarTreeProd || !_treeRkey) return;
+  var full = (n == null || n >= _treeLog.length);
+  var view = full ? _treeLog : _treeLog.slice(0, n);
+  window.RunarTreeProd.render(cv, { log: view, rune: _treeRkey, dob: _treeDob });
+
+  var lbl = document.getElementById('tree-seek-lbl');
+  if (!lbl) return;
+  if (full)            lbl.textContent = tp('tree_hist_all', { casts: vn('cast', _treeLog.length, lang) });
+  else if (view.length === 0) lbl.textContent = t('tree_hist_seed');
+  else                 lbl.textContent = tp('tree_hist_at', { k: view.length, n: _treeLog.length });
+}
+
+// Zlatá výplň dráhy — týž mechanismus jako audio seek (runar-reading.js:625).
+function _treeSeekPaint(el) {
+  var max = +el.max || 1;
+  el.style.setProperty('--pct', ((+el.value / max) * 100).toFixed(1) + '%');
+}
+
 async function renderLivingTree(rune) {
   try {
     var wrap = document.getElementById('tree-living');
@@ -93,10 +122,28 @@ async function renderLivingTree(rune) {
       if (res && res.data) log = readingsToTreeLog(res.data);
     } catch(e) {}
     var bk = (window.RunarBranch && window.RunarBranch.RUNES.filter(function(x){ return x.g === rune.g; })[0]);
-    var rkey = bk ? bk.k : 'berkano';
-    var dob = { d: readerUser.d, m: readerUser.m, y: readerUser.y };
+    _treeLog  = log;
+    _treeRkey = bk ? bk.k : 'berkano';
+    _treeDob  = { d: readerUser.d, m: readerUser.m, y: readerUser.y };
     wrap.style.display = 'block';
-    window.RunarTreeProd.render(cv, { log: log, rune: rkey, dob: dob });
+
+    var bar  = document.getElementById('tree-seek-bar');
+    var seek = document.getElementById('tree-seek');
+    if (bar && seek) {
+      // Jedno čtení se přehrávat nedá — posuvník by měl jedinou polohu.
+      bar.style.display = (log.length >= 2) ? 'flex' : 'none';
+      seek.max   = log.length;
+      seek.value = log.length;          // start vždy u dneška
+      _treeSeekPaint(seek);
+      if (!_treeSeekWired) {
+        _treeSeekWired = true;
+        seek.addEventListener('input', function () {
+          _treeSeekPaint(seek);
+          _drawTreeAt(+seek.value);
+        });
+      }
+    }
+    _drawTreeAt(null);
   } catch(e) {}
 }
 
@@ -340,6 +387,11 @@ async function generateLifeRuneReading() {
   if (!currentUser) return;
   var hasDob = readerUser && readerUser.d && readerUser.m && readerUser.y;
   if (!hasDob) return;
+  // Zivotni runa je NEMENNA. Skutecna brana je DB trigger trg_life_rune_immutable
+  // (sql/2026-07-19_life_rune_immutable.sql) — sloupce life_rune_* jsou pro klienta
+  // zapisovatelne, takze tenhle radek obejde kazdy, kdo umi otevrit konzoli.
+  // Je tu proto, aby se nestrhl kredit za zapis, ktery server stejne odmitne.
+  if (_lifeRuneText) return;
 
   var rune = calcLifeRune(readerUser.d, readerUser.m, readerUser.y);
   var isIs = lang === 'is';
