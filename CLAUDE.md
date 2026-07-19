@@ -203,14 +203,18 @@ ADMIN → `isAdmin()` v `runar-auth.js` (jediný seznam). **VŽDY testovat i jak
 
 ---
 
-## DB — user_profiles sloupce
-```
-id, name, lang, tier, credits_balance, created_at,
-free_balance (int), drip_week (text), month_units (int), month_key (text),
-dob_day, dob_month, dob_year (int),
-tree_name (text), life_rune_number (int), life_rune_text (text), life_rune_lang (text)
-```
-⚠️ email a updated_at NEEXISTUJÍ v user_profiles.
+## DB — user_profiles
+**Schéma vlastní databáze + `sql/` migrace. Tady se NEOPISUJE** (§20) — ručně vedený seznam
+se rozešel o 4 sloupce dřív, než si toho kdokoli všiml (2026-07-19: chyběly `address_gender`,
+`is_tester`, `analytics_opt_out`, `tester_consent_at` — a do všech tří klient zapisuje).
+Aktuální sloupce: `supabase db query --linked "select column_name from information_schema.columns
+where table_name='user_profiles'"`.
+
+Co databáze sama neřekne, a proto bydlí tady:
+- ⚠️ **`email` a `updated_at` v `user_profiles` NEEXISTUJÍ** — časté chybné hledání; e-mail je v `auth.users`.
+- **Zapisovatelnou plochu** (které sloupce smí klient měnit) vlastní `sql/2026-07-16_user_profiles_column_grants.sql`
+  a hlídá ji smoke ⑩. Peníze a oprávnění (`tier`, `credits_balance`, `free_balance`, `month_*`) píše
+  VÝHRADNĚ server přes service_role.
 
 ---
 
