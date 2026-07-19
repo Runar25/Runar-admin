@@ -70,13 +70,13 @@ přes vl()/vlp()/vn()/tp({card})/TIERS[x].label. Níže zbývající hardcoded m
 
 Rychlý audit:
 ```
-grep -nE "rune stones?|rúnastein|Rune (Seeker|Walker|Keeper)|rune reading" v2/*.js v2/*.html  <!-- check-docs:ok -->
+grep -nE "rune stones?|rúnastein|Rune (Seeker|Walker|Keeper)|rune reading" v2/*.js v2/*.html  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
 ```
 
-**VOCAB.unit ('rune stone(s)' / 'rúnasteinn/ar') — štítky → templatovat {unit}:**  <!-- check-docs:ok -->
-- translations.js: tree_rs_cost '3 rune stones', tree_rs_balance 'your rune stones:'  <!-- check-docs:ok -->
-- translations.js: rs_credits_desc (EN + IS 'rúnastein')  <!-- check-docs:ok -->
-- config.js panely: 'then rune stones' / 'síðan rúnasteinar'  <!-- check-docs:ok -->
+**VOCAB.unit ('rune stone(s)' / 'rúnasteinn/ar') — štítky → templatovat {unit}:**  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
+- translations.js: tree_rs_cost '3 rune stones', tree_rs_balance 'your rune stones:'  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
+- translations.js: rs_credits_desc (EN + IS 'rúnastein')  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
+- config.js panely: 'then rune stones' / 'síðan rúnasteinar'  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
 
 **Tier jména v próze ('Rune Seeker/Walker/Keeper', 'Vegfarandi') — POLICY:**
 v dlouhých marketingových větách OK nechat, jinde → TIERS[x].label:
@@ -134,7 +134,7 @@ Bash mount v Coworku občas **uřízne repo soubor při čtení** (podstrčí kr
 | Nový patch skript (jednorázový) | `Runar-admin/scripts/` → po použití přesunout do `scripts/archive/` |
 | Utility skript (opakovaný) | `Runar-admin/scripts/utils/` |
 | SQL migrace | `Runar-admin/sql/` — název: `YYYY-MM-DD_popis.sql` |
-| Nový design dokument | `Runar-admin/` root (RUNAR_NAZEV.md) |  <!-- doc-links:ok -->
+| Nový design dokument | `Runar-admin/` root (RUNAR_NAZEV.md) |  <!-- doc-links:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
 | Archivní / dočasný dokument | `Runar-admin/docs/archive/` |
 | POC / experiment HTML | `Runar-admin/docs/archive/` |
 | Živé docs (CLAUDE.md, RUNAR_DESIGN.md, RUNAR_PRICING.md) | `Runar-admin/` root — nikam se nekopírují (§17) |
@@ -149,11 +149,11 @@ Ověřovací skripty (volané ze smoke) žijí v `scripts/verify_*.js`.
 Po úspěšném použití patche: `mv scripts/fix-xyz.py scripts/archive/`
 
 ### Naming conventions
-- Patch skript: `fix-popis.py` nebo `add-popis.py` (např. `fix-norns-is.py`)  <!-- doc-links:ok -->
-- Refactor skript: `refactor-popis.py`  <!-- doc-links:ok -->
+- Patch skript: `fix-popis.py` nebo `add-popis.py` (např. `fix-norns-is.py`)  <!-- doc-links:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
+- Refactor skript: `refactor-popis.py`  <!-- doc-links:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
 - Utility: `název.py` bez prefixu (např. `smoke.py`)
 - SQL: `YYYY-MM-DD_popis.sql`
-- Dokumentace: `RUNAR_NAZEV.md` (velká písmena)  <!-- doc-links:ok -->
+- Dokumentace: `RUNAR_NAZEV.md` (velká písmena)  <!-- doc-links:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
 
 ---
 
@@ -359,7 +359,7 @@ Nová verze říká JEDNOHO vlastníka. Ostatní místa nanejvýš odkazují.
 - **Než někam napíšeš fakt, zeptej se: kde už bydlí?** Bydlí-li v kódu → odkaž, neopisuj.
   Bydlí-li v jiném docu → odkaz, ne převyprávění (převyprávění je taky kopie, jen ho grep nenajde).
 - **`MEMORY.md` = JEN index a rozcestník.** Žádná fakta, žádný stav, žádná SW verze ani commit hash.
-  (Do 2026-07-18 to byl sklad faktů a odporoval si sám se sebou — ř. 33 „enforcement = TODO"  <!-- check-docs:ok -->
+  (Do 2026-07-18 to byl sklad faktů a odporoval si sám se sebou — ř. 33 „enforcement = TODO"  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
   vs ř. 46 popis toho, jak enforcement funguje. Obojí četla každá session.)
 - **`snapshots/` = historie ke svému datu.** Nikdy z nich nepřebírej aktuální stav; nikdy nemazat.
 - **`memory/runar-project.md` je prázdný záměrně** — byl to duplikát CLAUDE.md a sám vyrobil ~15 rozporů.

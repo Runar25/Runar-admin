@@ -6,7 +6,7 @@ a **rozcestník** (kde co bydlí). Žádná čísla, žádné SW verze, žádné
 „hotovo/TODO", žádné tier tabulky. Všechno tohle má vlastníka jinde — viz tabulka níž.
 
 **Proč tak přísně:** do 2026-07-18 tady ta fakta byla, zastarala a **odporovala si navzájem**
-(ř. 33 tvrdila „enforcement limitu = TODO", ř. 46 popisovala, jak ten enforcement funguje — obojí  <!-- check-docs:ok -->
+(ř. 33 tvrdila „enforcement limitu = TODO", ř. 46 popisovala, jak ten enforcement funguje — obojí  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
 četla každá session a hodila si mincí). Audit našel 97 rozporů nad ~12 fakty. Detail a pravidlo §20
 → `RUNAR_DECISIONS.md` 2026-07-18.
 

@@ -34,11 +34,11 @@
 
 ## Premium features / Fáze B (tap UI, Ask Rúnar)
 
-> Pozn.: Coworkův handoff `RUNAR_SEGMENTACE_FaseB_CODE.md` (07-07) předpokládá `deeper_meaning` v JSON — ale MAIN ho zahodil 07-04 (viz „deeper_meaning re-add" výše). B1 highlight ho NEpotřebuje; B2 ano. **[spec NENÍ v repu — Coworkův výstup, nedodán přes CODE (§17)]**  <!-- doc-links:ok -->
+> Pozn.: Coworkův handoff `RUNAR_SEGMENTACE_FaseB_CODE.md` (07-07) předpokládá `deeper_meaning` v JSON — ale MAIN ho zahodil 07-04 (viz „deeper_meaning re-add" výše). B1 highlight ho NEpotřebuje; B2 ano. **[spec NENÍ v repu — Coworkův výstup, nedodán přes CODE (§17)]**  <!-- doc-links:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
 
 - [x] **Fáze B1 — segment highlight** (owner vize 2026-07-10) — HOTOVO + OVĚŘENO (SW v165): ťuk na runu → její text-segment **zezlátne**, ostatní text **beze změny** (owner: žádné ztlumení, subtilní; „někdo si skoro nevšimne, to je cajk"). `_parseSegments` vrací `segs`; `_renderSegments` = per-runa spany (`.rseg data-seg`) po `stream()`; tap toggle v `runar-rune-popup.js`; CSS `.rseg.on{color:var(--gold)}`. Hlas beze změny (innerText netknutý), žádný náklad ani změna promptu. Jen spready (2+ run); single plain. Mapování dle POZICE (index) = robustní (řeší Kříž +1).
 - [~] **Fáze B2 — deeper_meaning reveal** — **ZRUŠENO (owner 2026-07-10): nebudeme dělat.** Nahrazeno feature „Ask Rúnar" (níže) — organičtější a levnější způsob jít do hloubky (generuje se jen NA DOTAZ, ne pokaždé; čtení zůstane čisté). deeper_meaning zůstává zahozený.
-- [~] **Ask Rúnar — follow-up otázka** (Premium, owner nápad 2026-07-10; NAHRAZUJE B2; feature spec = Coworkův `RUNAR_FEATURES.md`) — **v1 HOTOVO (SW v166): in-reader.** Premium user položí **JEDNU** otázku k výkladu → Q&A se **uzavře**. `buildAskPrompt`+`RP_ASK` (is/en), `askRunar()`+`_showAsk()` (Premium gate). Jen text, délka jako single, bez odečtu (Premium). **Scope-lock OVĚŘEN adversariálním evalem: 7/7, 0 leaks** (on-topic zodpoví; off-topic/jailbreak/language-switch/nový-spádóm odmítne v roli, zůstane islandsky) → **ship as-is, prompt netřeba ladit.** **Zbývá (v2):** journal 7-day okno + persistence (asked-flag, uložit Q&A) · víc eval coverage (combo re-draw próba) · účtování proti Premium stropu (až bude cap enforcement) · multi-turn (později). **Implementace = MAIN doména.** **[spec NENÍ v repu — Coworkův výstup, nedodán přes CODE (§17)]**  <!-- doc-links:ok -->
+- [~] **Ask Rúnar — follow-up otázka** (Premium, owner nápad 2026-07-10; NAHRAZUJE B2; feature spec = Coworkův `RUNAR_FEATURES.md`) — **v1 HOTOVO (SW v166): in-reader.** Premium user položí **JEDNU** otázku k výkladu → Q&A se **uzavře**. `buildAskPrompt`+`RP_ASK` (is/en), `askRunar()`+`_showAsk()` (Premium gate). Jen text, délka jako single, bez odečtu (Premium). **Scope-lock OVĚŘEN adversariálním evalem: 7/7, 0 leaks** (on-topic zodpoví; off-topic/jailbreak/language-switch/nový-spádóm odmítne v roli, zůstane islandsky) → **ship as-is, prompt netřeba ladit.** **Zbývá (v2):** journal 7-day okno + persistence (asked-flag, uložit Q&A) · víc eval coverage (combo re-draw próba) · účtování proti Premium stropu (až bude cap enforcement) · multi-turn (později). **Implementace = MAIN doména.** **[spec NENÍ v repu — Coworkův výstup, nedodán přes CODE (§17)]**  <!-- doc-links:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
 
 ## Launch blockers (z CLAUDE.md)
 
@@ -63,7 +63,7 @@
 - [x] **Reading contract → 4 spready** — HOTOVO 2026-07-14 (commit 39bf41d, prompt v0.7, smoke ⑧ hlídá). Bylo: ← `_lensContext`/`_domainContext`/`_registerContext` se volají JEN v single (character.js:831-833). Spready dostanou holé labely („Seeking: Clarity") bez direktiv → SEEKING stance rule + Confirmation reframe (v0.6) na ně NEJDOU. Dodělává copy-doc #5.
 - [x] **Monthly cap 50/75 v claude-proxy** — HOTOVO 2026-07-16 (1c584c3, SW v196). `MONTHLY_LIMITS` + `month_units`/`month_key` na user_profiles; reset porovnáním `month_key` (bez cronu). Ask Rúnar = NEpočítá se (není cast, `mode:'ask'`). Fail-open při chybě čtení počítadla. Smoke ⑨ hlídá config==proxy. SQL: `sql/2026-07-16_monthly_cap.sql`.
 - [ ] **Vrátit `err_monthly_limit`** do `_readingErrMsg` — smazáno jako dead (2026-07-05); vrátit SPOLU s capem, jinak capnutý user dostane generickou chybu.
-- [ ] **Image pool** `RUNE_IMAGE_POOLS` + `_runeImagery` (③, odblokované prompt_version). Vzor = `SEASON_POOLS`. Floor-not-ceiling, per-čtení user injekce. Single první → měřit → spready až podle dat. Důkaz: Isa 5/5 zamrzlá voda = vada zásoby. Obsah: `RUNE_IMAGE_POOLS_draft.md` (EN hotové, IS napíšeme + ověříme sami). **[spec NENÍ v repu — Coworkův výstup, nedodán přes CODE (§17)]**  <!-- doc-links:ok -->
+- [ ] **Image pool** `RUNE_IMAGE_POOLS` + `_runeImagery` (③, odblokované prompt_version). Vzor = `SEASON_POOLS`. Floor-not-ceiling, per-čtení user injekce. Single první → měřit → spready až podle dat. Důkaz: Isa 5/5 zamrzlá voda = vada zásoby. Obsah: `RUNE_IMAGE_POOLS_draft.md` (EN hotové, IS napíšeme + ověříme sami). **[spec NENÍ v repu — Coworkův výstup, nedodán přes CODE (§17)]**  <!-- doc-links:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
 - [ ] **„already/þegar" ban** — nejlevnější fix (8×), motor cold-readingu. §19 past: výskyty v character.js jsou instrukce PRO model, ne output → ban musí mířit na output (prompt rule + output check), ne source ban.
 - [ ] **IS ban-list (D-16)** — G1 v IS je neměřitelné (EN ban-list existuje, IS ne). Adaptovat EN + islandský kýč do IS grammar bloku.
 - [ ] **No-recur regresní sada** — opravená model-output fráze se VRACÍ („Sittu með": F-001 ✗ · F-005 ✓ · F-006 ✗). Musí běžet nad OUTPUTEM (is-grammar-qa plocha), NE `check-is` (= source linter). Korpus už existuje (server-side save).
@@ -90,12 +90,12 @@
 - [ ] **Další eval dávka: v0.6 vs v0.4** přes `prompt_version` (R1 + gate-fails zvlášť). Odemyká G2b.
 - [ ] Rubrika v0.4→v0.5 (mobilní pravidla, NE repo).
 - [x] **Tier jména — ROZHODNUTO** (KUKY 2026-07-18): Rune Seeker · Rune Walker · Rune Wanderer,
-      IS Leitandi · Vegfarandi · Ferðalangur. Zdroj pravdy = `TIERS` v configu; „Rune Keeper" retired  <!-- doc-values:ok -->
+      IS Leitandi · Vegfarandi · Ferðalangur. Zdroj pravdy = `TIERS` v configu; „Rune Keeper" retired  <!-- doc-values:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
       (Keeper zůstává Rúnarovi). Zbývá jen dotáhnout label na ~10 místech v kódu (§13 full-path).
 - [ ] Tree DB fáze 2 — přeškálovat: `intention` + `aol` už logujeme server-side (481d313, 094f287).
 
 ### 🟢 Dlouhý ocas (kód, nízká priorita)
-- [ ] **§18 debt:** lab i prod drží kompozici stromu 2× (`build_tree_production.py`) → vytáhnout `runar-tree-core.js`. Prod navíc načítá enginy z `tree-lab-*` cest. *(soubor zatím neexistuje — je to cíl toho refaktoru)*  <!-- doc-links:ok -->
+- [ ] **§18 debt:** lab i prod drží kompozici stromu 2× (`build_tree_production.py`) → vytáhnout `runar-tree-core.js`. Prod navíc načítá enginy z `tree-lab-*` cest. *(soubor zatím neexistuje — je to cíl toho refaktoru)*  <!-- doc-links:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
 - [ ] Strom se **neaktualizuje po čtení** (`renderLivingTree` jen při otevření tabu).
 - [ ] `tree_state`/`tree_readings` — `sql/tree_state.sql` je STARÉ schéma (Vrstva A) pro tree-update; produkční strom čte z `readings` → rozhodnout: rozšířit / nahradit / zahodit.
 - [ ] `detectPatterns()` — motor Gatheringu, neimplementováno (čeká na patterns doc + tree_state).
@@ -104,9 +104,9 @@
 - [ ] Ask Rúnar v2 — journal 7denní okno + asked-flag (persistence HOTOVÁ).
 - [ ] Export dat subjektu (mazání už kaskáduje přes delete-account).
 - [ ] Eval pipeline: pseudonymizace (opt-out exkluze HOTOVÁ).
-- [ ] `_moodContext`/`_intentionContext` — zapojit intention, nebo smazat mood (mood z UI ODSTRANĚN, helper dřímá).  <!-- check-docs:ok -->
+- [ ] `_moodContext`/`_intentionContext` — zapojit intention, nebo smazat mood (mood z UI ODSTRANĚN, helper dřímá).  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
 - [ ] Zahodit stale `_lastDeeper` + `deeper_meaning` extrakci (nikde se nečte; deeper_meaning zrušen 2026-07-04). Guard: `composeReading` musí zůstat zrcadlo `_parseSegments` (smoke ⑦).
-- [ ] Segmentace Fáze B (tap UI / spread-map) — Fáze A hotová, spec `RUNAR_SEGMENTACE_FaseB_CODE.md`. **[spec NENÍ v repu — Coworkův výstup, nedodán přes CODE (§17)]**  <!-- doc-links:ok -->
+- [ ] Segmentace Fáze B (tap UI / spread-map) — Fáze A hotová, spec `RUNAR_SEGMENTACE_FaseB_CODE.md`. **[spec NENÍ v repu — Coworkův výstup, nedodán přes CODE (§17)]**  <!-- doc-links:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
 - [ ] Journal SPREAD historie renderuje font glyfy (single karty už SVG); shrine + yggdrasil.html obchází `runeSvg` (§5).
 - [ ] Server-side no-repeat sáček (dnes localStorage = per-zařízení) — FÁZE 2, po poolu.
 - [ ] A/B/C re-enable · EN polish pass · Fáze 4 (podmíněné) · sigil cut-out export · RUNAR_PRICING model ref (Sonnet→Opus 4.8) · smoke shorthand-check (chybí blocklist).

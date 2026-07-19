@@ -327,6 +327,16 @@ first = output.split('\n')[0] if output else 'db write check ran'
 check(first if passed else 'DB zápis, který tiše selže (supabase-js nevyhazuje)', passed,
       '' if passed else output)
 
+# ── Escape značky: každá musí nést důvod + datum (§19.2) ─────────────
+print('\n' + chr(0x2472) + ' ESCAPE ZNAČKY (verify_escape_marks.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_escape_marks.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+first = output.split('\n')[0] if output else 'escape mark check ran'
+check(first if passed else 'escape značka umlčuje kontrolu bez zdůvodnění', passed,
+      '' if passed else output)
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
