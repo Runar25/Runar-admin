@@ -41,14 +41,20 @@ begin
   end if;
 
   update public.user_profiles set
-    life_rune_number = null,
-    life_rune_text   = null,
-    life_rune_lang   = null,
-    dob_day          = null,
-    dob_month        = null,
-    dob_year         = null,
-    tree_name        = null      -- staré tlačítko tohle NEMAZALO, takže jméno
-  where id = v_id;               -- zůstávalo viset nad neexistujícím stromem
+    life_rune_number    = null,
+    life_rune_text      = null,
+    life_rune_lang      = null,
+    dob_day             = null,
+    dob_month           = null,
+    dob_year            = null,
+    tree_name           = null,  -- staré tlačítko tohle NEMAZALO, takže jméno
+                                 -- zůstávalo viset nad neexistujícím stromem
+    -- §13 full-path: sloupce zakládání přibyly 2026-07-19 a musí padnout SPOLU
+    -- s životní runou. Jinak by po resetu zůstal strom „založený" bez runy,
+    -- ze které vyrostl — a nabídka zakládání by se už nikdy neukázala.
+    tree_founded_at     = null,
+    founding_reading_id = null
+  where id = v_id;
 
   raise notice 'RESETOVÁNO: %  (měl životní runu: % / runa č. % / strom se jmenoval: %)',
     v_email, v_had, coalesce(v_rune::text, '—'), coalesce(v_tree, '(bez jména)');
