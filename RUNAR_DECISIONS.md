@@ -708,6 +708,83 @@ stav až potom a vyvodil závěr o minulosti → owner musel arbitrovat. Stav be
     · RUNAR_EVAL_CHAT_mobil · RUNAR_FEATURES · RUNAR_IS_GRAMMAR_CHECK_CODE · RUNAR_SEGMENTACE_FaseB
     · RUNE_IMAGE_POOLS_draft · tento handoff.
 
+## 2026-07-10 — Model čtení: Opus 4.8 + overload fallback chain (ZPĚTNĚ DOPLNĚNO 2026-07-18)
+
+⚠️ **Doplněno zpětně.** Tohle rozhodnutí padlo 2026-07-10, ale záznam tady **nikdy nevznikl** — fakt
+žil výhradně v `memory/MEMORY.md`. Audit duplicity (2026-07-18) ho našel jako jediný výskyt, takže
+při čištění MEMORY.md by se ztratil. Je to učebnicový příklad, proč §16 output B není formalita:
+co není tady, nemá se čeho chytit, a MEMORY.md je index, ne archiv.
+
+- **Produkční model = Opus 4.8** (`claude-opus-4-8`).
+- **Fallback chain při přetížení** (claude-proxy): **Opus 4.8 → Opus 4.7 → Sonnet 5.**
+  Sonnet je poslední záchrana při 429/5xx po retry, NE primární cesta. `callClaudeWithRetry`
+  (3× backoff) + fallback loop; **4xx nepropadá** (permanentní chyba se nemá opakovat na jiném modelu).
+- **Proč Opus:** slepý eval 2026-07-10 (single + Norns, 3 porotci — gramatik / básník / rodilé ucho),
+  **Opus 6:0**. Gramatika ≈ remíza; Opus vyhrál **poetický hlas** = jádro produktu. Sonnet porušil
+  personu (otevřel jménem, použil zakázané „Ferðalag") a **slepil 3 runy Norn do jednoho bloku**,
+  což by rozbilo spread. Náklad dominuje ElevenLabs hlas, ne model → −40 % u Sonnetu je irelevantní.
+- **Zdroj pravdy pro model = `claude-proxy/index.ts` MODELS.** Doky ho neopisují, jen odkazují.
+- ⚠️ **Nesrovnalost, NEROZHODNUTO:** MEMORY.md tvrdila, že dřívější remíza byla proti **Sonnet 4.5**,
+  zatímco popis evalu mluví o **Sonnet 5**. Z repa se to rozhodnout nedá. Závěr (jedeme Opus) je tím
+  nedotčen, ale kdyby se eval opakoval, tenhle údaj se musí ověřit, ne převzít.
+- **Deploy:** `supabase functions deploy claude-proxy --project-ref pmitxjvkeovijreepror --no-verify-jwt`
+
+## 2026-07-18 — KUKY: šest rozhodnutí + pravidlo „jedna informace, jedno místo"
+
+Vzniklo z auditu duplicity dokumentace (97 potvrzených nálezů, ~12 faktů opsaných na 4–7 místech).
+**Tenhle záznam je AUTORITA** — když se doc rozejde s tímhle, opravuje se doc. Důvod, proč to píšu
+takhle důrazně: Yggdrasil (níž, ①) musel KUKY opravovat **pětkrát**, protože jeho rozhodnutí nikdy
+neskončilo v DECISIONS. Doky se neměly čemu podřídit, takže vyhrála většina — a většina byla špatně.
+
+**① Yggdrasil = KDYKOLIV, KDOKOLIV přihlášený.** Žádná brána na datum, jednou provždy.
+Zimní slunovrat = **větší SÍLA ve stromě**, ne podmínka přístupu. Půjde o **rituální čtení**, kterých
+bude ve stromě víc — je to zamýšlená kategorie, ne výjimka pro Yggdrasil.
+Zdroj pravdy = kód (`runar-reading.js`, žádný gate) + `RUNAR_PRICING.md`. Mrtvé pole
+`SPREAD_CONFIG.yggdrasil.seasonal` („Dec 14-28 only") z configu PRYČ — dokud tam je, drift se vrací.
+
+**② Jména tierů = Rune Seeker · Rune Walker · Rune Wanderer** (přesně jak je to v produkci).
+„Rune Keeper" = RETIRED. Zdroj pravdy = `runar-config.js` TIERS, doky jen odkazují.
+⭐ **A obecné pravidlo z toho:** *„produkce je nejblíž tomu, jak to má být."* Když se doky rozejdou,
+**vyhrává produkce**, pak nejnovější datovaný záznam tady. KUKY se nemá co ptát na věc, která už je
+rozhodnutá a datovaná — to je práce Code: dohledat a vzít.
+
+**③ Zakládací rituál (Norns) = PLACENÝ.** Ne „zdarma". Mechanika: stojí kredity jako každé jiné
+čtení; předplatitelé ho platí ze svých jednotek. **Rune Seeker** může dostat kredity na založení
+**darem** — ale to je *marketingový nástroj* (kampaň, nalákání), NE vlastnost produktu.
+→ V `RUNAR_PRICING.md` přeformulovat: mechanicky placené, marketingově darovatelné.
+
+**④ Fronta „NATIVE EYE / Sigrún" = ZRUŠENA.** Žádné odkládání IS na Sigrún.
+Navazuje na [[is-done-together-not-for-sigrun]]: islandštinu děláme rovnou pořádně a ověřenou.
+POZOR na rozsah: ruší se **fronta jako mechanismus**, NE princip §19.2 („žádné tiché zelené" —
+co nástroj neposoudí, musí být vidět jako žluté, ne zahozené). §19.2 se přepíše tak, aby
+viditelnost zůstala a Sigrún z něj zmizela jako adresát.
+
+**⑤ Penalizace za brzké/časté čtení NEEXISTUJE a existovat nebude.** KUKY doslova: „totální nesmysl."
+Pryč z `RUNAR_TREE_BUILD.md:71`, `RUNAR_DESIGN.md:218,:444`. Bonus za pauzu tím NENÍ dotčen.
+Tím padá i sekce „Filozofie rituální kadence" (`RUNAR_DESIGN.md:203-219`) — KUKY: „naprostá blbost,
+tohle jsem taky dávno odstranil", ale přežila to a 2026-07-18 byla znovu citována jako platný princip.
+
+**⑥ Odklad launch blockerů (`RUNAR_BACKLOG.md`, trigger 6. 9. 2026) = NEPOTVRZENO.**
+KUKY: „nevím co je!" → **nezapisovat jako pravdu ani nemazat.** Zůstává označené jako sporné,
+dokud se nedohledá původ. Do té doby platí, že blockery jsou blockery.
+
+---
+
+### ⭐ PRAVIDLO: jedna informace = jedno místo. Nikdy dvě.
+KUKY 2026-07-18, doslova: *„nechci aby tyhle informace, žádné informace žily na více než 1 místě!
+už když to jsou dvě místa tak nám to vytváří problémy… žádné duplikáty!"*
+
+Není to preference, je to **doložené**: audit našel 97 rozporů/duplikátů nad ~12 fakty. Dvě kopie
+nejsou riziko rozporu — jsou **odložený rozpor**. Jedna se dřív nebo později změní a druhá zůstane.
+
+Zapsáno jako **§20 v CLAUDE.md**, aby platilo i při DOPLŇOVÁNÍ informací, ne jen při úklidu.
+Nejdůležitější část §20: **„shrnutí všeho" doc je zakázaný** — nevlastní žádné téma, jen kopíruje cizí.
+Přesně tím byl `memory/runar-project.md` (sám vygeneroval ~15 nálezů) a částečně `RUNAR_CONTEXT.md`.
+
+**Affected doc(s):** CLAUDE.md (§20 nové, §6, §19.2, tier+spread tabulky, DB) · memory/MEMORY.md
+· memory/runar-project.md (redukce na rozcestník) · RUNAR_PRICING.md · RUNAR_DESIGN.md
+· RUNAR_TREE_BUILD.md · RUNAR_BACKLOG.md · runar-config.js (mrtvé `seasonal` pole)
+
 ## 2026-07-18 — Strom: signály z DB nedojely (osa B opravena, zbytek POJMENOVÁN)
 
 - **Typ:** fix + nález (CODE-tree; zadání KUKY „pokračuj na stromě" → Explore napřed)
