@@ -841,6 +841,11 @@ async function _generateSpreadReading(o) {
       if (fbtn) fbtn.textContent = t('founding_done_btn');
       fd.style.display = 'block';
     }
+    // Owner zadal presmerovani dvakrat: samotny odkaz mu unikl. Prodleva je
+    // schvalne — okamzity skok by ho vytrhl z vykladu drive, nez ho uvidi.
+    setTimeout(function () {
+      if (typeof showAppTab === 'function') showAppTab('tree');
+    }, DELAY_FOUNDING_TO_TREE);
   }
 }
 
@@ -941,6 +946,20 @@ function _updateReadingForm() {
 // _foundingPending by mu zdarma zaplatil neco jineho, nez si vybral.
 function _syncFoundingLock() {
   var lock = (typeof _foundingPending !== 'undefined') && _foundingPending;
+  // Formular (oblast zivota, co hledas, pro koho) u zakladani nedava smysl —
+  // ritual je dany, ne konfigurovatelny. Owner na nej narazil a nevedel, proc tam je.
+  var setup = document.getElementById('reader-setup');
+  var story = document.getElementById('founding-story');
+  if (setup) setup.style.display = lock ? 'none' : '';
+  if (story) {
+    story.style.display = lock ? 'block' : 'none';
+    if (lock) {
+      var sl = document.getElementById('founding-story-lbl');
+      var stx = document.getElementById('founding-story-text');
+      if (sl)  sl.textContent  = t('founding_story_lbl');
+      if (stx) stx.textContent = t('founding_story_text');
+    }
+  }
   ['single','kriz','horseshoe','yggdrasil'].forEach(function (m) {
     var b = document.getElementById('mode-btn-' + m);
     if (!b) return;

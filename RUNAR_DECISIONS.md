@@ -1508,3 +1508,34 @@ přesměrování**, aby uživatele nevytrhlo z čtení, které si právě čte.
   témž portu. Skoro jsem začal hledat chybu v kódu, který byl v pořádku.
   **Než se diagnostikuje „funkce neexistuje", ověř, co má prohlížeč doopravdy načtené.**
 - **Affected doc(s):** žádný.
+
+---
+
+## 2026-07-19 — Zakládání dostalo příběh; formulář zmizel; přesměrování do stromu [tune]
+
+Druhý ostrý průchod ownera. Tři nálezy.
+
+### 1) Formulář „BEFORE WE BEGIN" u rituálu nedával smysl
+Owner: *„objeví se tohle okno, ale to je zablokované. Vůbec nevím, proč tu je!"*
+Oblast života / co hledáš / pro koho jsou volby, které zakládací Norny **nemají** — rituál je
+daný, ne konfigurovatelný. Formulář se během zakládání skryje a místo něj se ukáže **příběh
+Rúnarovým hlasem** (owner: „dát tomu příběh"). Není to návod („teď klikni sem"), je to vyprávění
+o tom, co se právě děje: životní runa byla tvoje od začátku, teď přicházejí kořeny — tři runy
+pro tři, které sedí u studny pod stromem.
+
+### 2) Přesměrování do stromu (owner o to žádal podruhé)
+Odkaz „GO TO YOUR TREE" mu unikl, takže po dokončení následuje **skok do Tree tabu**
+s prodlevou `DELAY_FOUNDING_TO_TREE = 4000 ms` — okamžitý skok by uživatele vytrhl z výkladu
+dřív, než ho vůbec uvidí. Konstanta je u ostatních v `runar-app.js`, ne magické číslo v logice (§10).
+- ⚠️ **Co owner na stromě uvidí, není moje lane.** Přivedu ho tam; jestli je na stromu vidět,
+  že vznikl, závisí na rendereru (CODE-tree). Slibovat to nemůžu.
+
+### 3) Odečet 2 kreditů — na tohle poprvé odpoví EVIDENCE
+Owner si nebyl jistý, jestli šlo o zakládání nebo o běžné placené Norny (2 kredity).
+`credit_ledger` (nasazený dnes) tuhle otázku poprvé zodpoví daty místo dedukce: `reason` u toho
+řádku ukáže, jestli pohyb přišel z kódu, nebo je `unattributed`. **Kód se kvůli tomu neměnil** —
+dokud se nepotvrdí, že šlo o zakládání, není co opravovat.
+
+- **OVĚŘENO V PROHLÍŽEČI:** běžný stav (formulář ano / příběh ne) · zakládání (formulář ne /
+  příběh ano, oba jazyky) · po dokončení (zpět na formulář).
+- **Affected doc(s):** žádný.

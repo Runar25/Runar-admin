@@ -48,6 +48,8 @@ const DELAY_FOCUS        =  100; // ms before input receives focus
 const DELAY_SCROLL       =   80; // ms before scroll-into-view fires
 const DELAY_ERROR_RESET  = 2000; // ms before error button text resets
 const DURATION_SAVED     = 2500; // ms "saved" indicator stays visible
+const DELAY_FOUNDING_TO_TREE = 4000; // ms — po zalozeni stromu nechat precist potvrzeni,
+                                     // teprve pak prepnout do Tree tabu
 
 
 function getTrialCount() { return parseInt(localStorage.getItem('runar_trial_count') || '0'); }
