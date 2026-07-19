@@ -322,7 +322,9 @@ SÁM — bez ownera.
 - Musíš sáhnout do cizí domény? Drž změnu minimální + zapiš „co a proč" do svého doc (RUNAR_TREE.md / snapshot) + push hned.
 - sw.js: git hook auto-bumpuje; když oba commitnou JS, vyšší číslo vyhrává (jen cache-buster, ne konflikt obsahu).
 - Git konflikt? Neforcuj — pull, vyřeš ručně JEN svou doménu.
-- Poslední stav každé session → MEMORY.md (SW + commit) + vlastní doc/snapshot. Před prací přečti druhý doc.
+- Stav session **nepiš do docu** (§20.4 — SW verze i hash zastarají do druhého dne). Stav vlastní
+  `git log` (prefix = lane) a `v2/sw.js`. Signál hotovo pro druhou session = **push**, nic víc.
+  Před prací si přečti `git log` druhé lane, ne cizí doc.
 
 <!-- „Cowork sync" (zrcadlo do AppData/Cowork složky) ZRUŠENO — nahrazeno §17 (jediný zdroj = git repo). -->
 <!-- 2026-07-04 [docsync] -->

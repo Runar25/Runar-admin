@@ -243,7 +243,7 @@ async function saveGathering(text, entries) {
     `${e.rune_glyph || ''} ${(e.rune_name || '').toUpperCase()}`.trim()
   ).join(' · ');
   try {
-    await sb.from('readings').insert({
+    const _gRes = await sb.from('readings').insert({
       user_id:      currentUser.id,
       rune_name:    'THE GATHERING',
       rune_glyph:   '✦',
@@ -256,6 +256,8 @@ async function saveGathering(text, entries) {
       life_rune:    null,
       credits_used: false,
     });
+    // supabase-js does not throw on a DB failure, so the catch below never sees one.
+    if (_gRes && _gRes.error) { console.error('saveGathering failed:', _gRes.error.message); return; }
     // Reload journal so the new entry appears immediately
     loadJournal();
   } catch(e) { console.warn('saveGathering:', e.message); }

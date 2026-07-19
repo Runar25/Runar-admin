@@ -113,7 +113,7 @@ async function fetchUserProfile(userId) {
         const localLang = localStorage.getItem('runar_lang');
         if (localLang && localLang === lang) {
           // User chose a language while logged out — persist to their profile, keep it
-          sb.from('user_profiles').update({ lang: localLang }).eq('id', userId).then(() => {}).catch(e => console.warn('persist lang:', e.message));
+          sb.from('user_profiles').update({ lang: localLang }).eq('id', userId).then(r => { if (r && r.error) console.error('persist lang failed:', r.error.message); });
         } else {
           // DB has a meaningful preference (set on another device) — apply it
           lang = data.lang;
@@ -137,8 +137,11 @@ async function upsertProfile() {
   try {
     // Insert row if it doesn't exist yet — all columns have DB defaults.
     // ignoreDuplicates: true → ON CONFLICT DO NOTHING (no overwrite of existing data)
-    await sb.from('user_profiles')
+    // If this fails the user is signed in with NO profile row and every later read returns
+    // nothing — the loudest possible failure to hide. supabase-js does not throw, so check it.
+    const _upRes = await sb.from('user_profiles')
       .upsert({ id: currentUser.id }, { onConflict: 'id', ignoreDuplicates: true });
+    if (_upRes && _upRes.error) console.error('upsertProfile failed:', _upRes.error.message);
   } catch(e) { console.warn('upsertProfile:', e.message); }
 }
 
@@ -234,7 +237,7 @@ function setLang(l) {
   if (l === lang) return;
   localStorage.setItem('runar_lang', l);
   // Save to profile async (best-effort)
-  if (currentUser) sb.from('user_profiles').update({ lang: l }).eq('id', currentUser.id).then(() => {}).catch(e => console.warn('persist lang switch:', e.message));
+  if (currentUser) sb.from('user_profiles').update({ lang: l }).eq('id', currentUser.id).then(r => { if (r && r.error) console.error('persist lang switch failed:', r.error.message); });
   const outputVisible = document.getElementById('reader-output')?.style.display !== 'none';
   // Only the reading tab treats a language switch as "re-speak the reading". On
   // collection/journal/tree the user is browsing -> fall through so the visible
@@ -271,7 +274,7 @@ function setGender(g) {
   if (g !== 'kk' && g !== 'kvk' && g !== 'hk') g = 'hk';
   userGender = g;
   localStorage.setItem('runar_gender', g);
-  if (currentUser) sb.from('user_profiles').update({ address_gender: g }).eq('id', currentUser.id).then(() => {}).catch(e => console.warn('persist gender:', e.message));
+  if (currentUser) sb.from('user_profiles').update({ address_gender: g }).eq('id', currentUser.id).then(r => { if (r && r.error) console.error('persist gender failed:', r.error.message); });
   _updateGenderPills();
 }
 function _updateGenderPills() {
@@ -395,7 +398,11 @@ async function saveName() {
   userName = val;
   // Save to user_profiles
   try {
-    await sb.from('user_profiles').update({ name: val }).eq('id', currentUser.id);
+    const _nameRes = await sb.from('user_profiles').update({ name: val }).eq('id', currentUser.id);
+    if (_nameRes && _nameRes.error) {
+      console.error('persist name failed:', _nameRes.error.message);
+      showToast(t('err_save_failed'));
+    }
   } catch(e) { console.warn('saveName:', e.message); }
   document.getElementById('name-overlay').style.display = 'none';
   // Update label + greetings

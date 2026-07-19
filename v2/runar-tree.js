@@ -266,7 +266,11 @@ async function saveTreeName() {
   var name = inp.value.trim();
   if (!name) return;
   try {
-    await sb.from('user_profiles').update({ tree_name: name }).eq('id', currentUser.id);
+    const _treeRes = await sb.from('user_profiles').update({ tree_name: name }).eq('id', currentUser.id);
+    if (_treeRes && _treeRes.error) {
+      console.error('persist tree name failed:', _treeRes.error.message);
+      showToast(t('err_save_failed'));
+    }
     currentUser.tree_name = name;
     _renderTreeNameState();  // swap to read-only display = the confirmation
   } catch(e) {

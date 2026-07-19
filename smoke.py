@@ -317,6 +317,16 @@ summary = outl[-1].strip() if outl else 'verify_doc_values.js ran'
 check(summary if passed else 'jmeno tieru, ktere v configu neni (§20 — hodnoty se neopisuji)', passed,
       '' if passed else output)
 
+# ── DB zápisy: každý musí pozorovat svůj výsledek (§19) ──────────────
+print('\n⑱ DB ZÁPISY (verify_db_write_checked.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_db_write_checked.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+first = output.split('\n')[0] if output else 'db write check ran'
+check(first if passed else 'DB zápis, který tiše selže (supabase-js nevyhazuje)', passed,
+      '' if passed else output)
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
