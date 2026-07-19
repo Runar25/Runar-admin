@@ -337,6 +337,19 @@ first = output.split('\n')[0] if output else 'escape mark check ran'
 check(first if passed else 'escape značka umlčuje kontrolu bez zdůvodnění', passed,
       '' if passed else output)
 
+# ── Ceny spreadů: jeden vlastník (SPREAD_COSTS) ──────────────────────
+# ⑰ uměla jen jména tierů; cena byla na TŘECH místech (SPREAD_COSTS, jeho vlastní
+# kopie v SPREAD_CONFIG, tabulka v RUNAR_PRICING) a nic je neporovnávalo. Tak vznikl
+# „founding ritual free": doc sliboval jedno, kód dělal druhé.
+print('\n' + chr(0x2473) + ' CENY SPREADŮ (verify_spread_prices.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_spread_prices.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+first = output.split('\n')[0] if output else 'spread price check ran'
+check(first if passed else 'cena spreadu se rozešla se SPREAD_COSTS (§20 — hodnoty se neopisují)', passed,
+      '' if passed else output)
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

@@ -909,3 +909,47 @@ Přesně tím byl `memory/runar-project.md` (sám vygeneroval ~15 nálezů) a č
   že index patří jedné session. Nepatří — **index je sdílený**. Kdokoli commitne, sebere i cizí
   rozpracované staged soubory a schová je pod svůj prefix. Nestačí kázeň v psaní zpráv; buď stagovat
   a commitovat v jednom kroku (`git commit -- <cesty>`), nebo počítat s tím, že akční log lže.
+
+---
+
+## 2026-07-19 — Cena spreadu má jednoho vlastníka; kontrola ⑳ [tune]
+
+- **Rozhodnutí:** vlastník ceny je `SPREAD_COSTS` v `v2/runar-config.js`. Nová kontrola
+  `verify_spread_prices.js` (smoke ⑳) porovnává s ním dvě věci: kopii `SPREAD_CONFIG.credits`
+  a každou tabulkovou zmínku ceny v docích.
+- **Proč:** cena byla na TŘECH místech a nic je neporovnávalo. `SPREAD_CONFIG.credits` má
+  v komentáři doslova „mirrors SPREAD_COSTS" (runar-config.js:316) — §18 porušené přímo v kódu.
+  Přecenění znamenalo změnit tři místa a na zapomenuté jedno se přijde tím, že se uživateli
+  strhne jiná částka, než jakou viděl. Přesně takhle vznikl „founding ritual free".
+- **⚠️ PRÓZA SE VĚDOMĚ NEKONTROLUJE.** První verze prózu uměla a na ostrém repu dala **5 nálezů,
+  z nichž 5 falešných**: „50 single/month = 50 credits" (množství, ne cena) a „Life Rune (3 kredity)
+  + Norns (2 kredity) = 5 kreditů" (všechna tři čísla správně, jen spárovaná se špatným spreadem).
+  V próze nejde odlišit cenu od množství ani od součtu bez hádání. Kontrola, která pálí na správný
+  obsah, se naučí ignorovat — nebo se umlčí značkou, což je totéž. U tabulky ta nejednoznačnost
+  není: hlavička „Credits" je autorovo prohlášení, co ten sloupec znamená.
+  **Důsledek, který se nezakrývá: cenu v běžné větě (RUNAR_PRICING.md:126) nikdo nehlídá.**
+  Kontrola to říká i ve svém zeleném výstupu, aby zelená neznamenala víc, než pokrývá.
+- **OVĚŘENÍ (§19, celý životní cyklus):** kopie v kódu se rozejde → CHYTL · tabulka v docu se
+  rozejde → CHYTL · vlastník přejmenován (`SPREAD_COSTS` → `SPREAD_PRICES`) → CHYTL, ne tichá
+  zelená · po obnovení ZELENÁ, soubory bajtově nedotčené. Smoke 20/20.
+- **Affected doc(s):** žádný — kontrola nic netvrdí, jen vymáhá to, co už `SPREAD_COSTS` říká.
+- **Reverzibilita:** snadná (smazat soubor + blok v smoke.py).
+
+### Čeká na ownera — přecenění (rozhodnuto v principu, neimplementováno)
+- **Návrh KUKY:** Life Rune **0 kreditů** (marketing) a zakládací Norny **textové** (bez hlasu),
+  čímž je založení stromu zdarma **nákladově**, ne dotací.
+- **Podklad:** hlas je **95 % ceny** čtení (single: $0.036 z $0.038 · Norns: $0.077 z $0.081).
+  Textové čtení stojí ~$0.005. Vzniká jedno vysvětlitelné pravidlo: **platíš za hlas, text je zdarma.**
+- **Proč tahle varianta a ne „účtuj 2, daruj 2":** dárek staví zpět placenou cestu s výjimkou —
+  tu samou konstrukci, kterou jsme 2026-07-16 odstraňovali — a jde proti pravidlu „není kód,
+  není kredit" (dárek je zdroj kreditů, který není kód). Textové založení žádnou výjimku nevyrábí,
+  protože nikdy cenu nemělo. Není co prolomit.
+- **⚠️ PODMÍNKA IMPLEMENTACE:** zakládací Norny musí být **vlastní `mode` v proxy**, ne `norns`
+  s příznakem. Jednou za život účtu, gate na `tree_founded IS NULL` **ověřený v DB**, hlas vypnutý
+  **serverem**, ne tím, že si klient řekne o `voice:false`. Kdyby si klient mohl vyžádat `founding`
+  podruhé nebo s hlasem, je to díra za $0.077 na požádání.
+- **Známé důsledky:** (a) zamyká to pravidlo „placené = hlasové" — placené textové čtení už
+  nepřidáš, aniž rozbiješ příběh; (b) **nula jsou jednosměrné dveře** — zdražit z 0 nejde,
+  marketingový přínos je hypotéza, ne měření. (c) farmení účtů ekonomicky nezajímavé (~$0.01/účet).
+- **Až se to udělá:** přepsat v `RUNAR_PRICING.md:53` větu „3 credits reflects perceived value" —
+  zdůvodňuje cenu, která přestane existovat. Sedm tabulkových zmínek hlídá ⑳; prózu na ř. 126 ne.
