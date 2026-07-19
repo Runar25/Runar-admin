@@ -209,6 +209,7 @@ function render(canvas, opts) {
   var branchEls=founding ? [] : stableAssign(log, els, targetN);
 
   var all=[], crown=[], roots=[]; var strandK=0, strands=[];
+  var pick=[];   /* {k, pts, meta} pro inspekci klepnutim (admin) */
   gt.limbs.forEach(function(L){
     var last=L.pts[L.pts.length-1];
     if(last.y<=trunkT.topY+2){
@@ -220,7 +221,11 @@ function render(canvas, opts) {
         var bpool=runesByEl[be.el]||B.RUNES;
         /* RUNA -> TVAR (§4). n-ta vetev elementu = n-ta nejcastejsi runa toho elementu.
            Fallback na puvodni cyklovani poolem, kdyz rank chybi (prazdny log, stara data). */
-        var bkey=(be.runeRank||[])[be.ord||0];
+        /* Poradi se ZASTAVI na poslednim skutecnem zaznamu — nikdy neukazuj tvar runy,
+           kterou uzivatel netahl. Mas-li v ohni jen Kenaz, obe ohnive vetve jsou Kenaz
+           (opakovani = posileni, §5). Do poolu se propadne jen kdyz rank chybi uplne. */
+        var rr=be.runeRank||[];
+        var bkey=rr.length ? rr[Math.min(be.ord||0, rr.length-1)] : null;
         var brune=(bkey && B.RUNES.filter(function(x){return x.k===bkey;})[0]) || bpool[k%bpool.length];
         var e=emergence(k);
         var ang=e.ang + lifeLean*0.6 + (be.areaLat||0)*crownT.areaSide;
@@ -244,7 +249,15 @@ function render(canvas, opts) {
         var tang=Math.atan2(ex.y-exq.y, ex.x-exq.x);
         var mainLimb=growBranch(crown, mcfg, ex.x, ex.y, tang, ang-tang, 'main', brune.k,
                    (dobSeed ^ (k*0x9e37))>>>0, lenF, ex.w, ex.depth, 0, sizeF);
-        if(mainLimb){ mainLimb.pts = trunkPart.concat(mainLimb.pts); }
+        if(mainLimb){
+          /* PRED spojenim s kmenem: kmenovou cast sdileji vsechny vetve,
+             takze klik do kmene by vybiral nahodne. Trefuje se jen vetev. */
+          pick.push({ k:k, pts:mainLimb.pts.slice(), meta:{
+            g:brune.g, name:brune.name, key:brune.k, el:be.el, aett:be.aett,
+            world:be.world, count:be.count, ord:(be.ord||0),
+            blank:!!brune.blank, rank:(be.runeRank||[]).slice(0,3) } });
+          mainLimb.pts = trunkPart.concat(mainLimb.pts);
+        }
       } else {
         var mh=0.40+0.26*(((k*2654435761)>>>0)%100)/100;
         var mi=exitIndex(L.pts, mh);
@@ -282,6 +295,10 @@ function render(canvas, opts) {
   roots.forEach(function(L){ all.push(L); });
   all.sort(function(a,b){ return a.depth-b.depth; });
   all.forEach(function(L){ paintLimb(L.pts, L.el||el, crownT.textura); });
+  /* Ven pro inspekci: souradnice jsou v prostoru PLATNA (W x H), ne CSS pixelu,
+     proto se W/H vraci taky — klik se musi prepocitat pres getBoundingClientRect. */
+  render.lastPick = { pick:pick, W:W, H:H };
+  return render.lastPick;
 }
 
 global.RunarTreeProd = { render: render };

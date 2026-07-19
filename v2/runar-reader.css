@@ -313,6 +313,14 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
    jeden vizuál, ne druhá skoro stejná kopie (§18). Tady jen obal a popisek. */
 .tree-seek-bar{display:flex;flex-direction:column;gap:7px;width:min(300px,78vw);margin:12px auto 0;}
 .tree-seek-lbl{font-family:'Cinzel',serif;font-size:0.5em;letter-spacing:2px;color:var(--gold);opacity:0.55;text-align:center;}
+/* Inspekce větve (admin diagnostika). Rámeček i tón převzaty z .tree-admin-bar —
+   je to nástroj, ne obsah, a má tak i vypadat. */
+.tree-insp{width:min(300px,78vw);margin:12px auto 0;padding:10px 12px;text-align:left;
+  border:1px solid rgba(255,191,0,0.18);background:rgba(255,191,0,0.03);
+  font-family:'Cinzel',serif;font-size:0.55em;letter-spacing:1px;line-height:2;color:var(--gold);opacity:0.75;}
+.tree-insp b{opacity:1;}
+.tree-insp .ti-glyph{font-size:2.2em;line-height:1;vertical-align:-0.15em;margin-right:8px;}
+.tree-insp .ti-dim{color:var(--gold);opacity:0.45;}
 
 /* ── COLLECTION ── */
 .coll-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:4px;align-items:stretch;}

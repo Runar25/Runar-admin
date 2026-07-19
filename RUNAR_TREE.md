@@ -136,6 +136,9 @@ Ostatní (později, decentně): pulzy dominance (element/ætt), bloom fáze, lis
   jen renderer bral tvar podle POŘADÍ větve — takže všichni uživatelé měli stejné siluety.
   Nově: **n-tá větev elementu = n-tá nejčastější runa toho elementu** (pestrost zůstává, ale
   něco znamená). Přetvaruje se, když se pořadí změní; při remíze vyhrává dřívější runa.
+- ✅ **Inspekce klepnutím (2026-07-19, admin).** Klik na větev řekne runu · element · ætt ·
+  svět · počet čtení · kolikátá větev elementu. Aby owner místo „nějaká větev poskočila"
+  předal diagnózu. Souřadnice = **poloha na posuvníku**, ne číslo runy.
 - ⚠️ **Renderer NENÍ deterministický** (vada předchází všem třem krokům, ověřeno i na produkci):
   týž log dá jiný obraz od 3. překreslení. Uživatel uvidí, jak se strom sám změnil bez nového
   čtení; nám to znemožňuje porovnávat obrazy. Detail → RUNAR_DECISIONS.md 2026-07-19.

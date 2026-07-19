@@ -708,6 +708,47 @@ stav až potom a vyvodil závěr o minulosti → owner musel arbitrovat. Stav be
     · RUNAR_EVAL_CHAT_mobil · RUNAR_FEATURES · RUNAR_IS_GRAMMAR_CHECK_CODE · RUNAR_SEGMENTACE_FaseB
     · RUNE_IMAGE_POOLS_draft · tento handoff.
 
+## 2026-07-19 — Inspekce větve klepnutím (admin) + dvě opravy kroku 3
+
+**Proč.** KUKY vidí ve stromě „přeskakování větví" a nabídl, že bude hlásit čísla run. To by
+z ownera dělalo měřicí přístroj. Místo toho portována **inspekce z labu** (`crown-composer.html`
+— `_pick` + `showInspect`): klepnutí na větev řekne runu · element · ætt · svět · počet čtení
+· kolikátá větev svého elementu · pořadí run. Owner pak místo dojmu předá diagnózu.
+Souřadnice hlásí jako **polohu na posuvníku**, ne číslo runy — dva stavy jde postavit vedle sebe.
+
+**Admin-only vychází zadarmo** — celý blok `#tree-living` je už gatovaný na `isAdmin()`.
+
+**Rozdíl proti labu (vědomý):** body pro trefování se sbírají PŘED spojením s kmenem. Lab pická
+na spojených bodech, takže klik do kmene vybere libovolnou větev — ten úsek sdílejí všechny.
+
+---
+
+### Dvě vady kroku 3, které odhalilo až ověřování inspekce
+
+**(1) Tvar ukazoval runu, kterou uživatel nikdy nevytáhl.** Když má element víc větví než různých
+run (9× Kenaz v ohni → dvě ohnivé větve, ale jen jedna runa v pořadí), druhá větev spadla do
+starého cyklování poolem a dostala tvar **Thurisaz — runy, která v logu vůbec není.** To je přesně
+ta bezvýznamná pestrost, kterou měl krok 3 odstranit; napsal jsem ji tam znovu jako fallback.
+**Opraveno:** pořadí se zastaví na posledním skutečném záznamu. Máš-li v ohni jen Kenaz, obě
+ohnivé větve jsou Kenaz — opakování se čte jako posílení (§5), ne jako cizí runa. Do poolu se
+propadne jen tehdy, když pořadí neexistuje vůbec.
+⚠️ Vědomý kompromis: dvě stejné siluety vedle sebe. Lepší než ukazovat runu, kterou uživatel nezná.
+
+**(2) Nulová šířka plátna = tiché nic.** Ve skrytém panelu vrací `getBoundingClientRect()` nuly,
+přepočet dělí nulou → `Infinity` → trefování mlčky nefunguje. V produkci k tomu nedojde (při
+klepnutí je panel vidět), ale tichý no-op je přesně to, co se pak hledá hodinu. Přidána pojistka.
+Nalezeno na vlastním testu — a je to učebnicová ukázka [[guard-test-the-lifecycle]]: netestoval
+jsem stav „prvek existuje, ale má nulové rozměry".
+
+**OVĚŘENO V PROHLÍŽEČI** (simulované klepnutí na známý bod větve):
+- tři větve správně identifikovány: `Kenaz · 1. · fire · freya · asgard · 9 čtení`,
+  `Thurisaz · 2. · fire`, `Uruz · 1. · earth · midgard · 7 čtení`
+- klik mimo strom vrací nápovědu
+- po opravě (1): jen Kenaz v ohni → `Kenaz · Kenaz · Uruz`; Kenaz 9× + Thurisaz 4× →
+  `Kenaz · Thurisaz · Uruz`. **Každá silueta odpovídá runě, která je v logu.**
+
+**Affected doc(s):** RUNAR_TREE.md
+
 ## 2026-07-19 — Strom, krok 3: RUNA → TVAR větve (§4) + nález nedeterminismu
 
 **Nález, ne návrh.** Tvarová data jsou v repu hotová: každá z 25 run má `curve`, `sub`, `taper`,

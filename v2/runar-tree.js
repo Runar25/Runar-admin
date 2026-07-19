@@ -93,13 +93,66 @@ function _drawTreeAt(n) {
   if (!cv || !window.RunarTreeProd || !_treeRkey) return;
   var full = (n == null || n >= _treeLog.length);
   var view = full ? _treeLog : _treeLog.slice(0, n);
-  window.RunarTreeProd.render(cv, { log: view, rune: _treeRkey, dob: _treeDob });
+  _treePick = window.RunarTreeProd.render(cv, { log: view, rune: _treeRkey, dob: _treeDob }) || null;
 
   var lbl = document.getElementById('tree-seek-lbl');
   if (!lbl) return;
   if (full)            lbl.textContent = tp('tree_hist_all', { casts: vn('cast', _treeLog.length, lang) });
   else if (view.length === 0) lbl.textContent = t('tree_hist_seed');
   else                 lbl.textContent = tp('tree_hist_at', { k: view.length, n: _treeLog.length });
+}
+
+// ── INSPEKCE VĚTVE (admin diagnostika) ────────────────────────────────────
+// Aby owner mohl místo „nějaká větev poskočila" říct „tahle: Kenaz / oheň / 4 čtení".
+// Portováno z labu (crown-composer.html · _pick + showInspect).
+var _treePick = null;
+var _treeInspWired = false;
+
+function _inspHint() {
+  var box = document.getElementById('tree-insp');
+  if (box) box.innerHTML = '<span class="ti-dim">' + t('tree_insp_hint') + '</span>';
+}
+
+function _inspShow(m) {
+  var box = document.getElementById('tree-insp');
+  if (!box) return;
+  // Hodnoty jsou NAŠE data (runar-branch.js), ne uživatelský vstup — proto se
+  // nescreenují. Kdyby sem někdy šel text od uživatele, musí projít escapeHtml.
+  var poradi = (m.ord != null) ? (' <span class="ti-dim">· ' + (m.ord + 1) + '.</span>') : '';
+  var dalsi  = (m.rank && m.rank.length > 1)
+      ? ('<br><span class="ti-dim">pořadí run: ' + m.rank.join(' › ') + '</span>') : '';
+  box.innerHTML =
+    '<span class="ti-glyph">' + m.g + '</span><b>' + (m.name || '') + '</b>' + poradi +
+    '<br>' + m.el + ' <span class="ti-dim">·</span> ' + m.aett +
+    ' <span class="ti-dim">·</span> ' + m.world +
+    '<br>' + tp('tree_insp_count', { casts: vn('cast', m.count || 0, lang) }) +
+    dalsi;
+}
+
+// Klik/tap -> nejbližší bod větve do 22 px. Souřadnice jsou v prostoru plátna
+// (W×H z rendereru), ne v CSS pixelech — proto přepočet přes getBoundingClientRect.
+function _inspHit(ev) {
+  if (!_treePick || !_treePick.pick || !_treePick.pick.length) return;
+  var cv = document.getElementById('tree-living-canvas');
+  if (!cv) return;
+  var r = cv.getBoundingClientRect();
+  // Skryty panel -> rect 0x0 -> deleni nulou -> Infinity -> trefovani mlcky nefunguje.
+  // Radsi nahlas nic nedelat nez tise pocitat s nekonecnem.
+  if (!r.width || !r.height || !_treePick.W || !_treePick.H) return;
+  var px = (ev.touches && ev.touches[0]) ? ev.touches[0].clientX : ev.clientX;
+  var py = (ev.touches && ev.touches[0]) ? ev.touches[0].clientY : ev.clientY;
+  var mx = (px - r.left) * (_treePick.W / r.width);
+  var my = (py - r.top)  * (_treePick.H / r.height);
+  var best = null, bd = 22;
+  for (var i = 0; i < _treePick.pick.length; i++) {
+    var p = _treePick.pick[i];
+    for (var j = 0; j < p.pts.length; j++) {
+      var dx = p.pts[j].x - mx, dy = p.pts[j].y - my;
+      var d = Math.sqrt(dx * dx + dy * dy);
+      if (d < bd) { bd = d; best = p; }
+    }
+  }
+  if (best) _inspShow(best.meta); else _inspHint();
 }
 
 // Zlatá výplň dráhy — týž mechanismus jako audio seek (runar-reading.js:625).
@@ -141,6 +194,16 @@ async function renderLivingTree(rune) {
           _treeSeekPaint(seek);
           _drawTreeAt(+seek.value);
         });
+      }
+    }
+    var insp = document.getElementById('tree-insp');
+    if (insp) {
+      insp.style.display = 'block';
+      _inspHint();
+      if (!_treeInspWired) {
+        _treeInspWired = true;
+        cv.style.cursor = 'pointer';
+        cv.addEventListener('click', _inspHit);
       }
     }
     _drawTreeAt(null);
