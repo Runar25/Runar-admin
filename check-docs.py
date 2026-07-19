@@ -25,13 +25,6 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 SKIP_DIRS  = ('docs/archive', 'memory/snapshots', 'node_modules', '.git')
 SKIP_FILES = ('RUNAR_DECISIONS.md', 'check-docs.py')
 
-# Soubory, které čeká archivace (Fáze 5) — hlásí se jako ŽLUTÉ, neblokují.
-PENDING_ARCHIVE = (
-    'AUDIT_REPORT.md', 'TIER_LIMITS_archive.md',
-    'runar_patch_v1.0_design.md', 'runar_patch_v0.9_status.md',
-    'IS_REVIEW_NATIVE.md', 'RUNAR_BACKTESTING.md',
-)
-
 # (regex, proč je to špatně, slova která výskyt OMLUVÍ na témž řádku)
 # `unless` je tu schválně: doc SMÍ o mrtvém pojmu mluvit jako o mrtvém
 # („applyISCorrections je VYPNUTÝ"). Bez toho by kontrola trestala právě ty věty,
@@ -86,7 +79,7 @@ def live_docs():
             if fn.endswith('.md') and fn not in SKIP_FILES:
                 yield os.path.join(dirpath, fn)
 
-hard, soft = [], []
+hard = []
 for path in sorted(live_docs()):
     rel = os.path.relpath(path, ROOT).replace('\\', '/')
     try:
@@ -104,13 +97,9 @@ for path in sorted(live_docs()):
             if any(u in line for u in unless):
                 continue
             hit = '%s:%d  „%s"\n        %s' % (rel, i, m.group(0), why)
-            (soft if os.path.basename(path) in PENDING_ARCHIVE else hard).append(hit)
+            hard.append(hit)
 
 print('check-docs.py — živá dokumentace')
-if soft:
-    print('\n  ŽLUTÉ (%d) — soubory čekající na archivaci, neblokují:' % len(soft))
-    for h in sorted(set(os.path.basename(x.split(':')[0]) for x in soft)):
-        print('       %s' % h)
 if hard:
     print('\n  ❌ NALEZENO %d mrtvých tvrzení v živých docích:\n' % len(hard))
     for h in hard:

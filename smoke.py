@@ -268,6 +268,23 @@ summary = lines[-1].strip() if lines else 'doc lint ran'
 check(summary if passed else 'mrtvé tvrzení v živém docu (retirovaný pojem / neplatné pravidlo)',
       passed, '' if passed else output)
 
+# ⑮ — kontrola na MECHANISMUS, ne na obsah. Ostatni kontroly chytaji nasledky
+# rozsypane dokumentace; tahle chyta pricinu: nesplneny radek `Affected doc(s)`
+# v RUNAR_DECISIONS.md. Prace se udela, rozhodnuti zapise, doc zustane spatne —
+# presne tak vzniklo 97 rozporu nalezenych 2026-07-18. Zpetne nevymaha.
+print('\n⑮ §16 OUTPUT B (verify_decisions_followthrough.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_decisions_followthrough.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+outl = [l for l in output.split('\n') if l.strip()]
+for l in outl:
+    if l.startswith(chr(8505)) or l.startswith('     '):
+        print('       ' + l.strip())
+summary = outl[-1].strip() if outl else 'followthrough ran'
+check(summary if passed else 'rozhodnuti slibilo opravu docu, ktera se nestala', passed,
+      '' if passed else output)
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

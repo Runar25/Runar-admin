@@ -76,7 +76,8 @@ Worst-case cost per reading-unit is the **single** (358 chars/unit); all spreads
   (`v2/runar-config.js`) — the table further down is the single copy in this doc (§20).
 - Access: all spreads via credits (Single, Norns, Kříž, Horseshoe, Yggdrasil)
 - Credits are deliberately expensive — engaged user self-selects into subscription
-- Tree: **Founding ritual (Norns) = 2 credits** · **Life Rune reading = 3 credits** · **full tree founding = 3 + 2 = 5 credits** (viz RUNAR_CONTEXT.md). „Founding" bez přívlastku = Norns 2; „fundace stromu" = celých 5.
+- Tree founding = Life Rune + founding Norns. Costs = SPREAD_COSTS (config), not repeated here.
+  Terminology: „founding" alone = the Norns reading; „tree founding" = Life Rune + Norns together.
 - Journal: last 5 entries
 - Purpose: entry point, credit buyer, gift card recipient
 

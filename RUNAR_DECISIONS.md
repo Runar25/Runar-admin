@@ -708,6 +708,48 @@ stav až potom a vyvodil závěr o minulosti → owner musel arbitrovat. Stav be
     · RUNAR_EVAL_CHAT_mobil · RUNAR_FEATURES · RUNAR_IS_GRAMMAR_CHECK_CODE · RUNAR_SEGMENTACE_FaseB
     · RUNE_IMAGE_POOLS_draft · tento handoff.
 
+## 2026-07-18 — Konsolidace dokumentace: 7 docs archivováno + dvě kontroly do smoke
+
+**Zadání KUKY:** „chci to mít čistě… žádné duplikáty" + k `RUNAR_CONTEXT.md`: *„potřebuju ten
+runar context?? jedna věc je, že se mi to předtím hodilo, ale čas jde dál — je to teď potřeba?
+spousta věcí, co jsme udělali před 2 měsíci, může být teď zastaralá."*
+
+**Archivováno do `docs/archive/`** (přesun, ne smazání = vratné): `RUNAR_CONTEXT.md` ·
+`AUDIT_REPORT.md` · `TIER_LIMITS_archive.md` · `runar_patch_v1.0_design.md` ·
+`runar_patch_v0.9_status.md` · `IS_REVIEW_NATIVE.md` · `RUNAR_BACKTESTING.md`.
+
+**Proč zrovna `RUNAR_CONTEXT.md`:** byl to poslední velký „shrnutí všeho" doc, který §20 zakazuje
+jako druh. Jeho účel („kontext pro chat bez přístupu k repu") přestal platit — Cowork čte repo přes
+`git show HEAD:`, Code běží i na webu, a `MEMORY.md` je po dnešku krátký rozcestník, co se vejde do
+jedné zprávy. **Cena, kterou účtoval:** nesl Yggdrasila jako bránu na datum **a k tomu zápis, že
+návrh „bez gate, jen váha" byl 2026-06-16 zamítnut** — takže vypadal autoritativně a aktivně
+potvrzoval verzi, kterou owner musel opravovat popáté. Jediný živý příchozí odkaz (PRICING:79)
+navíc opisoval čísla, která patří do `SPREAD_COSTS`.
+
+**Nové kontroly:**
+- **smoke ⑭ `check-docs.py`** — linter živé dokumentace, sourozenec `check-is.py`. Hlídá retirované
+  pojmy a neplatná pravidla. Klíč návrhu = `unless` seznam: doc SMÍ mluvit o mrtvém pojmu jako
+  o mrtvém, jinak by kontrola trestala právě ty věty, které problém pojmenovávají. Escape
+  `check-docs:ok`. **Ověřeno rozbitím.** Nehlídá `RUNAR_DECISIONS.md` (append-only log MUSÍ citovat
+  i to, co dřív platilo), `snapshots/`, `docs/archive/`.
+- **smoke ⑮ `verify_decisions_followthrough.js`** — kontrola na **mechanismus**: když záznam řekne
+  `Affected doc(s): X`, ověří přes `git blame`, že se X od té chvíle aspoň jednou pohnul. Nesoudí
+  obsah opravy (na to stroj nemá), jen že se doc vůbec hnul. **Zpětně nevymáhá** (hranice
+  2026-07-18) — retroaktivní červená, kterou nikdo nemůže opravit, se do týdne vypne. Historii
+  vypisuje informativně: 4 nesplněné sliby z 07-04 až 07-10. Ověřeno posunutím hranice do minulosti.
+- ⚠️ **Známé omezení ⑮:** vidí jen commitnuté řádky, takže porušení chytí až při dalším běhu smoke,
+  ne v tomtéž commitu. Víc než jeden commit napřed před slibem se ale ujít nedá.
+
+**Nález mimo zadání:** `memory/tree-of-life.md` měl na konci **52 NUL bajtů** (už od `HEAD~8`, ne
+moje práce). Kvůli nim ho **grep považoval za binární a přeskakoval** — takže byl pro všechny
+grep-based audity neviditelný, včetně dnešního hledání Yggdrasilu. Našel ho až `check-docs.py`,
+který čte přes Python. NULy odstraněny, obsah nedotčen; proskenován celý repo — jediný takový soubor.
+
+**Efekt měřeno:** po auditu (97 nálezů) A čtyřech fázích ručního úklidu našel linter **dalších 25
+míst**, z toho **5× Yggdrasil jako bránu**. To je doklad, že ruční úklid tuhle třídu chyby nedozoruje.
+
+**Affected doc(s):** RUNAR_PRICING.md · CLAUDE.md · memory/tree-of-life.md · smoke.py
+
 ## 2026-07-10 — Model čtení: Opus 4.8 + overload fallback chain (ZPĚTNĚ DOPLNĚNO 2026-07-18)
 
 ⚠️ **Doplněno zpětně.** Tohle rozhodnutí padlo 2026-07-10, ale záznam tady **nikdy nevznikl** — fakt
