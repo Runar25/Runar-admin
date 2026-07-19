@@ -1236,3 +1236,30 @@ Přesně tím byl `memory/runar-project.md` (sám vygeneroval ~15 nálezů) a č
 - **ODBLOKOVÁNO:** zlevnění Life Rune na 0 kreditů. Brzda proti přepsání už není cena, ale DB.
 - **Affected doc(s):** RUNAR_BACKLOG.md (odškrtnuto v témže commitu).
 - **Reverzibilita:** kód snadná (git revert); trigger `drop trigger trg_life_rune_immutable on public.user_profiles;`.
+
+---
+
+## 2026-07-19 — Životní runa ZDARMA (0 kreditů) [tune]
+
+- **Rozhodnutí (KUKY):** Life Rune = 0 kreditů. Marketing — přiláká víc lidí. Nákladově obhajitelné:
+  textové čtení bez hlasu, ~$0.006, zatímco hlas je ~95 % ceny čtení.
+- ⚠️ **NESTAČILO změnit config, a to je na tom to podstatné.** Proxy má `Math.max(1, spread_cost)`
+  a ta podlaha tam **je schválně** — brání klientovi poslat si `spread_cost: 0` a číst zadarmo.
+  Cenu proto u životní runy určuje **server podle `mode === "life_rune"`**, ne číslo od klienta.
+  `SPREAD_COSTS.life_rune.credits = 0` je jen zdroj pravdy pro UI a doky; vynucuje to proxy.
+- **Druhá půlka je stejně důležitá:** bez serverového ověření, že runa ještě neexistuje, by šlo
+  `mode:'life_rune'` spamovat — zápis by trigger `trg_life_rune_immutable` odmítl, ale Claude by
+  se zavolal (a zaplatil) pokaždé. Precheck **fail-open** (stejná posture jako měsíční strop):
+  výpadek čtení nesmí zablokovat založení stromu, cena omylu je jedno volání za ~$0.006.
+- **Vyňato z měsíčního stropu** (`countsAsCast = !legitAsk && !isLifeRune`) i z odečtu kreditů
+  (`userTier === "rune_seeker" && !isLifeRune`).
+- ⚠️ **POŘADÍ NASAZENÍ: PROXY PŘED KLIENTEM** (pravidlo z 2026-07-17). Klient tu **nedegraduje
+  bezpečně**: posílá `use_credit: false`, takže na STARÉM proxy spadne Rune Seeker do větve
+  free-balance → buď mu to sebere jeho čtení zdarma, nebo dostane 402 a životní runu **vůbec
+  nevygeneruje**. Nový proxy je naopak zpětně kompatibilní (starý klient `mode:'life_rune'`
+  neposílá, takže se pro něj nic nemění) → nasadit ho jde kdykoli.
+- **UI:** popisek ceny při 0 → `t('life_rune_free')` („Free" / „Frítt"), ne „0 spár".
+- **Affected doc(s):** RUNAR_PRICING.md — věta „3 credits reflects perceived value" **retirována**
+  (zdůvodňovala cenu, která přestala existovat) a próza na ř. 126, která opisovala ceny z configu,
+  přepsána na odkaz + pravidlo „platí se za hlas". Obojí v tomtéž commitu.
+- **Reverzibilita:** snadná (config zpět na 3 + revert proxy větve).

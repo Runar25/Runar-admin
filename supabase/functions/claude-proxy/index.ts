@@ -487,7 +487,29 @@ serve(async (req: Request) => {
       legitAsk = !!parent && (parent.follow_up == null ||
         (Array.isArray(parent.follow_up) && parent.follow_up.length === 0));
     }
-    const countsAsCast = !legitAsk;
+    // ── Zivotni runa je ZDARMA — a cenu urcuje SERVER, ne klient ─────────────
+    // Neceni se podle `spread_cost` (to je cislo od klienta, proto ta podlaha
+    // Math.max(1,...) niz), ale podle `mode`. Druha pulka je stejne dulezita:
+    // bez overeni, ze runa jeste neexistuje, by slo mode:'life_rune' spamovat —
+    // zapis by DB trigger odmitl, ale Claude by se zavolal (a zaplatil) pokazde.
+    const isLifeRune = mode === "life_rune";
+    if (isLifeRune) {
+      if (!userId) {
+        return json({ error: "unavailable", message: "The runes are quiet. Try again shortly." }, 401);
+      }
+      const { data: lr, error: lrErr } = await sb()
+        .from("user_profiles").select("life_rune_text").eq("id", userId).maybeSingle();
+      if (lrErr) {
+        // Fail OPEN, stejna posture jako mesicni strop: vypadek cteni nesmi
+        // zablokovat zalozeni stromu. Cena omylu je jedno volani za ~$0.006,
+        // a zapis stejne hlida trigger trg_life_rune_immutable.
+        console.error("life rune precheck failed (allowing):", lrErr.message);
+      } else if (lr?.life_rune_text) {
+        return json({ error: "unavailable", message: "The runes are quiet. Try again shortly." }, 409);
+      }
+    }
+
+    const countsAsCast = !legitAsk && !isLifeRune;
     if ((userTier === "standard" || userTier === "premium") && userId && countsAsCast && !isAdmin) {
       const limit = MONTHLY_LIMITS[userTier];
       const mKey = monthKey();
@@ -510,7 +532,7 @@ serve(async (req: Request) => {
       }
     }
 
-    if (userTier === "rune_seeker") {
+    if (userTier === "rune_seeker" && !isLifeRune) {
       if (use_credit) {
         // ── Paid credit reading — spread_cost = runes = credits ──
         const cost = Math.max(1, spread_cost);

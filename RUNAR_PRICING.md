@@ -45,12 +45,20 @@ ElevenLabs: Multilingual v2/v3 (IS) $0.10/1k chars / Flash (EN) $0.05/1k chars. 
 | Kríž (5) | 1.028 | 185 | $0.005 | $0.103 | $0.051 | **$0.108** | **$0.056** | **3** |
 | Horseshoe (7) | 1.367 | 342 | $0.006 | $0.137 | $0.068 | **$0.143** | **$0.074** | **4** |
 | Yggdrasil (9) | 1.661 | 415 | $0.008 | $0.166 | $0.083 | **$0.174** | **$0.091** | **5** |
-| Life Rune | 0 (text, no voice) | 293–363 | $0.006 | — | — | **$0.006** | **$0.006** | **3** |
+| Life Rune | 0 (text, no voice) | 293–363 | $0.006 | — | — | **$0.006** | **$0.006** | **0** |
 | Founding ritual (= Norns) | 773 | 145 | $0.004 | $0.077 | $0.039 | **$0.081** | **$0.043** | **2** |
 
 **Credit scale derived from cost ratio vs single:** Norns 2.1× → 2 · Kríž 2.8× → 3 · Horseshoe 3.8× → 4 · Yggdrasil 4.6× → 5.
-Credits round up from raw cost ratio → margin per credit is uniform (~98 %) across all reading types. Life Rune is text-only
-(no TTS) so its compute cost is trivial; 3 credits reflects perceived value (permanent personal reading + Tree gateway).
+Credits round up from raw cost ratio → margin per credit is uniform (~98 %) across all reading types.
+
+**Life Rune is FREE — 0 credits (KUKY 2026-07-19).** It is text-only, so the voice never happens, and voice is
+~95 % of what a reading costs us; the true cost is ~$0.006. This is deliberate acquisition spend, not a pricing
+accident: the Life Rune is the gateway into the Tree of Life, and the Tree is what brings people back.
+The earlier rationale („3 credits reflects perceived value“) is **retired** — it priced against cost while every
+other row in the table priced with it, and an exception nobody remembers choosing eventually reads as a bug.
+
+⚠️ Enforced by the PROXY (`mode === "life_rune"`), not by the number in `SPREAD_COSTS`. The client may not
+declare its own reading free — that is why `Math.max(1, spread_cost)` stays.
 
 **Free credit acquisition cost (1 single w/ voice): ~$0.038 per user (IS) / ~$0.020 (EN).**
 This is the cost to bring a new user into Rúnar. Extremely low.
@@ -123,7 +131,9 @@ value and returns 402 `monthly_limit` when exceeded. Guarded by smoke ⑨.)*
 *Within monthly reading-unit limit (Standard: 50 units, Premium: 75 units) — a spread costs its credit value.
 *Yggdrasil: available anytime, but full branch_weight only within 1 week before/after solstice. Outside window → reading happens, reduced tree impact.
 
-**Credit cost = per reading type** (cost-derived: Single 1 · Norns 2 · Kríž 3 · Horseshoe 4 · Yggdrasil 5 · Life Rune 3).
+**Credit cost = per reading type.** Konkrétní čísla vlastní `SPREAD_COSTS` v `v2/runar-config.js` — zde se
+neopisují (§20). Pravidlo, které je pod nimi: **platí se za hlas.** Textové čtení je zdarma, protože
+~95 % ceny čtení je TTS.
 Decoupled from rune count (old model was 1 rune = 1 credit).
 
 ---

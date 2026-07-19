@@ -199,7 +199,9 @@ function updateTreeTab() {
       var costLbl = document.getElementById('tree-rs-cost-label');
       var balLbl  = document.getElementById('tree-rs-balance-label');
       var balVal  = document.getElementById('tree-rs-balance-val');
-      if (costLbl) costLbl.textContent = vn('unit', LIFE_RUNE_COST, lang);
+      if (costLbl) costLbl.textContent = LIFE_RUNE_COST > 0
+        ? vn('unit', LIFE_RUNE_COST, lang)
+        : t('life_rune_free');
       if (balLbl)  balLbl.textContent  = t('tree_rs_balance');
       if (balVal)  balVal.textContent  = bal;
       // Free reading — oddelene od credits (credits_balance != onboarding free reading)
@@ -413,9 +415,9 @@ async function generateLifeRuneReading() {
   var prompt = buildLifeRunePrompt(name, rune, readerUser.d, readerUser.m, readerUser.y, lang, isPremium, corrections);
   var sys = buildSysPrompt(activeChar, lang);
 
-  // RS uses credit (deducts from balance via proxy)
-  var _useCredit = (typeof userTier !== 'undefined' && userTier === 'rune_seeker');
-  var res = await callProxy(sys, prompt, mode.max_tokens, _useCredit, SPREAD_COSTS.life_rune.credits);
+  // Zivotni runa je zdarma pro vsechny. O cene rozhoduje PROXY podle mode='life_rune',
+  // ne tahle dve cisla — klient si zdarma rict nesmi (viz claude-proxy, isLifeRune).
+  var res = await callProxy(sys, prompt, mode.max_tokens, false, 0, null, 'life_rune');
   if (loadEl) loadEl.style.display = 'none';
 
   if (res.error) {

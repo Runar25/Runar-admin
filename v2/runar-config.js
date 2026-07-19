@@ -299,7 +299,9 @@ const SPREAD_COSTS = {
   horseshoe: { free: null, credits: 4  },
   norns:     { free: null, credits: 2  },
   yggdrasil: { free: null, credits: 5  },
-  life_rune: { free: null, credits: 3  },  // RS: 3 rune readings
+  life_rune: { free: null, credits: 0  },  // ZDARMA (KUKY 2026-07-19) — textove cteni,
+                                           // bez hlasu, ~$0.006. Vynucuje PROXY (mode),
+                                           // ne tohle cislo; klient si zdarma rict nesmi.
 };
 
 // ─── VOCABULARY — single source of truth ─────────────
