@@ -11,4 +11,6 @@ When telling Kuky to run a migration or take an action, ALWAYS paste the exact S
 
 **Why:** Kuky pushed back twice (2026-07-13 file-reference; 2026-07-14 "jako minule nevím co je"). The owner runs SQL in the Supabase editor by copy-paste; a back-reference forces them to hunt.
 
-**How to apply:** Every "run this" → self-contained code block with the literal SQL right there, plus one line of what it does. Related: [[working-style]].
+**Say WHERE it goes.** The exact SQL is not enough — name the destination on the line above the block: „**Supabase → SQL Editor → New query → Run**", „konzole prohlížeče (F12)", „terminál v repu". Kuky runs several tools at once and pasted SQL into the browser console once because I had only said „run this" (2026-07-17). He asked for it explicitly on 2026-07-18.
+
+**How to apply:** Every "run this" → destination named, then a self-contained code block with the literal SQL, plus one line of what it does. Related: [[working-style]].
