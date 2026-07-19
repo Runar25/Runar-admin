@@ -1674,3 +1674,23 @@ i když zní jistě.**
 - **OVĚŘENO ROZBITÍM, tři stavy:** původní chyba (`o.kind`→`o.mode`) · špatná hodnota
   (`'NORNS'`→`'norns'`) · volající přestane `kind` posílat. **3× CHYTL**, po obnovení zelená.
 - **Affected doc(s):** žádný.
+
+---
+
+## 2026-07-19 — Táž chybná domněnka na dvou místech; opravil jsem jen jedno [tune]
+
+- **Co se stalo:** trigger `guard_life_rune_immutable` propouštěl jen
+  `current_user = 'service_role'`. V Supabase SQL editoru je ale role `postgres`,
+  takže trigger **zablokoval i ownera** — reset účtu nešel spustit vůbec (42501).
+- ⚠️ **Tuhle domněnku mi data vyvrátila UŽ PŘED TÍM.** Ledger téhož dne ukázal
+  `actor = postgres` u všech pohybů; zapsal jsem si, že to rozbíjí detekci driftu,
+  a **opravil jen ověřovací dotaz v ledgeru**. Že tatáž věta („serverové = service_role")
+  stojí i v podmínce triggeru, mě nenapadlo — díval jsem se na místo, které zrovna svítilo.
+  **Poučení: když se ukáže, že domněnka neplatí, musí se dohledat VŠUDE.** Trvalo to
+  30 sekund (`grep -rn "current_user" sql/`) a našlo přesně jeden další výskyt.
+- **Oprava:** branka míří na klienta a jen na něj — `current_user not in ('authenticated','anon')`.
+  To je i správnější tvar: účel triggeru je zastavit prohlížeč, ne vyjmenovávat serverové role
+  (kterých může přibýt).
+- **Bezpečnostní dopad = žádný.** Klient byl blokovaný správně po celou dobu, edge funkce
+  (service_role) procházely správně. Rozbitá byla jen administrátorská cesta.
+- **Affected doc(s):** žádný.

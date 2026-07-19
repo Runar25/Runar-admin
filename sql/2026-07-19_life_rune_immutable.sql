@@ -24,8 +24,16 @@ security definer
 set search_path = public
 as $$
 begin
-  -- service_role smí vše (edge funkce, admin úkony, tento soubor)
-  if current_user = 'service_role' then
+  -- ⚠️ Branka míří na KLIENTA a jen na něj. Cokoli serverové projde:
+  -- `service_role` (edge funkce) i `postgres` (SQL editor, admin úkony).
+  --
+  -- Do 2026-07-19 tu stálo `current_user = 'service_role'` — a to zablokovalo
+  -- i ownera v SQL editoru, takže reset účtu nešel spustit vůbec. Táž chybná
+  -- domněnka („serverové = service_role") byla i v ověřovacím dotazu ledgeru;
+  -- data ukázala, že `current_user` je tam `postgres`. Opravil jsem tehdy jen
+  -- to místo, na které jsem se díval. **Když se ukáže, že domněnka neplatí,
+  -- musí se dohledat všude, ne jen tam, kde zrovna svítí.**
+  if current_user not in ('authenticated', 'anon') then
     return new;
   end if;
 
