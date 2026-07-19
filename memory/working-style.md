@@ -137,13 +137,13 @@ Bash mount v Coworku občas **uřízne repo soubor při čtení** (podstrčí kr
 | Nový design dokument | `Runar-admin/` root (RUNAR_NAZEV.md) |
 | Archivní / dočasný dokument | `Runar-admin/docs/archive/` |
 | POC / experiment HTML | `Runar-admin/docs/archive/` |
-| Živé docs (CLAUDE.md, RUNAR_DESIGN.md, RUNAR_PRICING.md) | `Runar-admin/` root — NEKOPÍROVAT do Cowork (viz Cowork sync pravidla) |
+| Živé docs (CLAUDE.md, RUNAR_DESIGN.md, RUNAR_PRICING.md) | `Runar-admin/` root — nikam se nekopírují (§17) |
 
-**Aktivní utility** (nepřesouvat do archive):
-- `scripts/utils/smoke.py` — spustit před každým commitem
-- `scripts/utils/check-is.py` — kontrola IS textu
-- `scripts/utils/show_corrections.py` — živá data korekcí
-- `scripts/utils/compare_models.py` — porovnání Haiku/Sonnet/Opus
+**Aktivní utility** (v KOŘENI repa, ne v `scripts/utils/`):
+- `smoke.py` — spustit před každým commitem
+- `check-is.py` — kontrola IS textu · `check-translations.py` — chybějící IS klíče
+- `show_corrections.py` — živá data korekcí
+Ověřovací skripty (volané ze smoke) žijí v `scripts/verify_*.js`.
 
 **NIKDY** nenechávat patch skripty v rootu `Runar-admin/` natrvalo.
 Po úspěšném použití patche: `mv scripts/fix-xyz.py scripts/archive/`
@@ -157,20 +157,14 @@ Po úspěšném použití patche: `mv scripts/fix-xyz.py scripts/archive/`
 
 ---
 
-## Cowork sync — přesná pravidla (2026-06-15, lekce z chyb)
+## Cowork sync — ZRUŠENO (§17, 2026-07-04)
 
-**DO Cowork složky (`C:\Users\zkuku\Claude\Projects\RÚNAR the rune keeper\`) patří POUZE:**
-- MEMORY.md
-- working-style.md
-- runar-project.md
-- tree-of-life.md
-- runar-patterns.md
-- snapshots/ (složka)
+**Nic se nikam nekopíruje.** `memory/` žije v repu a obě platformní složky na ni míří junctionem,
+takže Cowork i Code čtou a píší TYTÉŽ soubory. Zrcadlo v `Claude\Projects\` bylo 2026-07-18
+vyřazeno — ověřilo se, že se od repa rozešlo OBĚMA směry a nešlo slít automaticky.
 
-**NIKDY do Cowork:** CLAUDE.md · RUNAR_PRICING.md · produkční JS/HTML/CSS
-
-Pravidlo: i když uživatel řekne "sdílej všechno do Cowork" — nejdřív zkontroluj
-"Cowork sync" sekci v CLAUDE.md. Obecná instrukce nepřebíjí specifické pravidlo souboru.
+Cowork do repa nezapisuje vůbec a čte výhradně přes `git show HEAD:<path>`; do repa jde jeho
+výstup VÝHRADNĚ přes CODE. Detail → CLAUDE.md §17 + sekce „N paralelních session".
 
 ---
 
@@ -204,8 +198,9 @@ var prompt = buildXxxPromptIS(...);
 var corrBlock = getCorrPrompt(lang, corrections);
 if (corrBlock) prompt = prompt + '\n' + corrBlock;
 
-// 3. Post-processing — deterministické opravy
-var text = applyISCorrections(res.text || '', lang, corrections);
+// ⚠️ ŽÁDNÁ 3. vrstva: applyISCorrections je VYPNUTÝ od 2026-07-10
+// (CORRECTIONS_POSTPROCESS=false). Byl kontextově slepý — neuměl pád ani rod.
+// Korekce se aplikují v promptu (výše), kde je model umí ohnout podle kontextu.
 ```
 
 Pravidla:
@@ -304,11 +299,8 @@ Než uživatel spustí /compact, Claude musí:
 5. Říct: "Vše uloženo, /compact je bezpečný."
 
 ## Post-compact / Session Start protokol
-1. Přečíst MEMORY.md (obsahuje odkaz na nejnovější snapshot)
-2. Přečíst working-style.md — workflow pravidla
-3. Přečíst nejnovější snapshot (cesta v MEMORY.md)
-4. Přečíst CLAUDE.md + RUNAR_DESIGN.md + RUNAR_PRICING.md
-5. Přečíst zdrojové soubory dle aktuálního úkolu
+**Vlastník = `MEMORY.md`** (sekce Session Start Protocol). Sem se nekopíruje — dvě kopie pořadí
+čtení se rozešly a každá session pak četla něco jiného.
 
 ---
 
@@ -325,10 +317,11 @@ Každý task = dva výstupy, ne jeden:
 Task bez Output B je **nedokončený**, pokud změnil rozhodnutí nebo chování.
 
 **Kde je Output B:**
-- Architektonické rozhodnutí s "proč" → `RUNAR_DECISIONS.md` (append-only, repo)
-- Technický stav/feature → MEMORY.md (Implementováno sekce)
-- Workflow pravidlo → working-style.md
-- Design → RUNAR_DESIGN.md + snapshot
+- Rozhodnutí s „proč" → `RUNAR_DECISIONS.md` (append-only) — **a oprav doc jmenovaný
+  v `Affected doc(s)` VE STEJNÉM COMMITU.** Nesplněný `Affected doc(s)` je přesně ten mechanismus,
+  který 2026-07-18 vygeneroval 97 rozporů v dokumentaci.
+- Workflow pravidlo → tenhle soubor · Design → `RUNAR_DESIGN.md`
+- **Technický stav NIKAM** — vlastní ho kód a `git log` (§20). Do docu nepatří.
 
 **Reconciliation check** (owner-triggered, ne autonomní):
 - Scope: jeden soubor nebo jeden modul
@@ -341,32 +334,37 @@ Task bez Output B je **nedokončený**, pokud změnil rozhodnutí nebo chování
 
 Při každé změně systému (příběh, design, pricing, code, workflow) — tato tabulka říká KAM.
 
-### Typ změny → soubory
+### Typ změny → KDO to vlastní (§20: jedna informace, jedno místo)
 
-| Typ změny | Soubory k aktualizaci |
-|-----------|----------------------|
-| **Příběh / mytologie** | RUNAR_DESIGN.md + snapshot |
-| **Design rozhodnutí** (UI chování, spread logika, hlas) | RUNAR_DESIGN.md + snapshot |
-| **Pricing / tier** (cena, limit, spreads per tier) | RUNAR_PRICING.md + CLAUDE.md (tier tabulka) + MEMORY.md (klíčová rozhodnutí) + snapshot |
-| **Technická feature** (nová funkce, nový spread) | CLAUDE.md (stav spreads/tree) + MEMORY.md (Implementováno) + snapshot |
-| **Coding rule / workflow pravidlo** | working-style.md + CLAUDE.md (jako §N pokud kritické) |
-| **Tree of Life** (branch, vizuál, Gathering, rituál) | RUNAR_DESIGN.md (Tree sekce) + tree-of-life.md + snapshot |
-| **DB schéma** (nový sloupec, nová tabulka) | CLAUDE.md (DB sekce) + runar-project.md |
-| **Nový soubor / přejmenování** | CLAUDE.md (zodpovědnost souborů) + runar-project.md |
-| **Vocabulary** (credit→rune stone, atd.) | CLAUDE.md + working-style.md §13 grep list + MEMORY.md |
-| **Každá session** (vždy, bez výjimky) | MEMORY.md (SW verze, commit, Implementováno) + snapshot před /compact |
-| **Architektonické rozhodnutí** (proč, one-way, neobvyklé) | `RUNAR_DECISIONS.md` (append-only, repo) |
+⚠️ Tahle tabulka do 2026-07-18 přikazovala psát tytéž fakty do 3–4 souborů naráz
+(„CLAUDE.md + MEMORY.md + runar-project.md + snapshot"). **Tím ten nepořádek vznikal.**
+Nová verze říká JEDNOHO vlastníka. Ostatní místa nanejvýš odkazují.
+
+| Typ změny | Jediný vlastník |
+|-----------|-----------------|
+| Cena, kredit, limit, kapacita, tier jméno, VOCAB | `v2/runar-config.js` — **žádný doc to neopisuje** |
+| Délka čtení, struktura promptu | buildery v `v2/runar-character.js` |
+| Model + fallback chain | `claude-proxy/index.ts` MODELS |
+| Business model, marže, break-even, fyzické produkty | `RUNAR_PRICING.md` |
+| Příběh, mytologie, význam částí | `RUNAR_DESIGN.md` |
+| Strom — duše, zóny, signály, Gathering | `RUNAR_TREE.md` |
+| Architektura, pravidla §N, DB sloupce, lanes | `CLAUDE.md` |
+| Workflow, jak spolu pracujeme | tenhle soubor |
+| Rozhodnutí + PROČ (datované) | `RUNAR_DECISIONS.md` (append-only) |
+| Otevřené úkoly, blockery, priority | `RUNAR_BACKLOG.md` |
+| **Stav** — co je hotové, SW verze, commit, co je nasazené | **kód + `git log`. Do docu NEPATŘÍ.** |
 
 ### Pravidla
 
-- **CLAUDE.md** = technická pravidla (§N sekce) + stav spreads/tree + DB schema + tier tabulka. NIKDY historická "Hotovo" — ta patří do snapshotů.
-- **RUNAR_DESIGN.md** = design + mytologie + spreads + voice + tree design. Živý dokument — aktualizovat datum při každé změně.
-- **RUNAR_PRICING.md** = business model + pricing + tier struktura + EL plán. Jediný zdroj pravdy pro ceny.
-- **working-style.md** = workflow pravidla + coding rules + protokoly. Tento soubor.
-- **MEMORY.md** = index + SW verze + commit + Implementováno + TODO.
-- **runar-project.md** = stack + soubory + DB schéma + edge functions.
-- **tree-of-life.md** = tree design (branch objekt, Gathering, AETTY, vizuál, Yggdrasil).
-- **snapshots/** = archiv co bylo uděláno — NIKDY mazat, přidávat odkaz do MEMORY.md.
+- **Než někam napíšeš fakt, zeptej se: kde už bydlí?** Bydlí-li v kódu → odkaž, neopisuj.
+  Bydlí-li v jiném docu → odkaz, ne převyprávění (převyprávění je taky kopie, jen ho grep nenajde).
+- **`MEMORY.md` = JEN index a rozcestník.** Žádná fakta, žádný stav, žádná SW verze ani commit hash.
+  (Do 2026-07-18 to byl sklad faktů a odporoval si sám se sebou — ř. 33 „enforcement = TODO"
+  vs ř. 46 popis toho, jak enforcement funguje. Obojí četla každá session.)
+- **`snapshots/` = historie ke svému datu.** Nikdy z nich nepřebírej aktuální stav; nikdy nemazat.
+- **`memory/runar-project.md` je prázdný záměrně** — byl to duplikát CLAUDE.md a sám vyrobil ~15 rozporů.
+- **Při sporu vyhrává PRODUKCE**, pak nejnovější datovaný záznam v `RUNAR_DECISIONS.md`.
+  (KUKY 2026-07-18: „produkce je nejblíž tomu, jak to má být.")
 
 ### Trigger: kdy zapsat
 
