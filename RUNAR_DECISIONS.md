@@ -1165,3 +1165,25 @@ Přesně tím byl `memory/runar-project.md` (sám vygeneroval ~15 nálezů) a č
 - **Affected doc(s):** žádný — RUNAR_BACKLOG.md dostane položku, až bude migrace puštěná.
 - **Reverzibilita:** snadná (`drop trigger trg_life_rune_immutable on public.user_profiles;`).
 - **NEPUŠTĚNO** — čeká na ownera v SQL editoru.
+
+---
+
+## 2026-07-19 — SQL puštěno · admin reset životní runy odstraněn [tune]
+
+- **PUŠTĚNO OWNEREM:** `sql/2026-07-19_life_rune_immutable.sql`. Trigger `trg_life_rune_immutable`
+  je v produkci; `life_rune_*` i `dob_*` jsou po prvním zápisu neměnné pro roli `authenticated`.
+  (Tohle git nevidí, proto to má vlastní řádek — §20.4.)
+- **Rozhodnutí (KUKY):** tlačítko admin resetu odstranit **úplně**, ne opravit.
+  Po migraci by stejně selhalo — běží jako `authenticated`, tedy přesně pod tou rolí, kterou
+  trigger blokuje. Destruktivní operace nemá viset v DOM; reset se dělá SQL příkazem z konce
+  té migrace (ten navíc maže i `tree_name`, což staré tlačítko nedělalo).
+- **§13 full-path — šest míst, ověřeno grepem že nezbyl odkaz:** tlačítko a celý admin bar
+  (`runar-reader.html`) · volání `updateAdminBar()` · funkce `updateAdminBar()` + `resetLifeRune()`
+  (34 řádků, `runar-tree.js`) · klíč `admin_reset_lr` v OBOU jazycích (`runar-translations.js`)
+  · `.tree-admin-bar` / `.tree-admin-btn` (`runar-reader.css`).
+  Admin bar měl jediné tlačítko, takže padl celý — prázdný bar by se adminovi zobrazoval
+  jako pruh bez obsahu. Komentář „will grow with more tools" sliboval nástroje, které nikdy
+  nevznikly; **spekulativní kontejner je taky mrtvý kód.**
+- **ODBLOKOVÁNO:** zlevnění Life Rune na 0 kreditů. Brzda proti přepsání už není cena, ale DB.
+- **Affected doc(s):** RUNAR_BACKLOG.md (odškrtnuto v témže commitu).
+- **Reverzibilita:** kód snadná (git revert); trigger `drop trigger trg_life_rune_immutable on public.user_profiles;`.

@@ -148,7 +148,6 @@ async function renderLivingTree(rune) {
 }
 
 function updateTreeTab() {
-  updateAdminBar();
   var isIs = lang === 'is';
   var hasDob = readerUser && readerUser.d && readerUser.m && readerUser.y;
   var isStdPlus = currentUser && (userTier === 'standard' || userTier === 'premium' || isAdmin(currentUser.email));
@@ -485,37 +484,3 @@ function updateSidePanelLang() {
 }
 
 
-// ─── ADMIN BAR ────────────────────────────────────────────────────────────────
-
-// Show/hide admin bar. Called from updateTreeTab() and on lang change.
-// More buttons will be added here (resetDOB, forceRegenerate, etc.)
-function updateAdminBar() {
-  var bar = document.getElementById('tree-admin-bar');
-  if (!bar) return;
-  bar.style.display = (currentUser && isAdmin(currentUser.email)) ? 'flex' : 'none';
-  var resetBtn = document.getElementById('tree-admin-reset-lr');
-  if (resetBtn) resetBtn.textContent = t('admin_reset_lr');
-}
-
-// Reset life rune for the current admin user (for testing).
-// Clears life_rune_number/text/lang in DB + local state, then re-renders tree tab.
-async function resetLifeRune() {
-  if (!currentUser || !isAdmin(currentUser.email)) return;
-  var who = (readerUser && readerUser.name) ? readerUser.name : (lang === 'is' ? 'þú' : 'you');
-  if (!confirm('Reset life rune + DOB for ' + who + '?')) return;
-  // Clear life rune AND date of birth — returns to tree-no-dob state
-  var res = await sb.from('user_profiles')
-    .update({
-      life_rune_number: null, life_rune_text: null, life_rune_lang: null,
-      dob_day: null, dob_month: null, dob_year: null
-    })
-    .eq('id', currentUser.id);
-  if (res.error) { showToast('Reset failed: ' + res.error.message); return; }
-  // Clear local state
-  _lifeRuneText = null;
-  _lifeRuneLang = null;
-  _lifeRuneNum  = null;
-  if (readerUser) { readerUser.d = null; readerUser.m = null; readerUser.y = null; }
-  showToast(lang === 'is' ? 'Lífsrún endurstillt' : 'Life rune reset');
-  updateTreeTab();
-}
