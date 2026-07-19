@@ -47,7 +47,7 @@ jedno čtení (graceful, čtení se vždy zobrazí). Display jde do `#out-short`
   přes reporter. Případně zpřísnit fallback (regex extrakce `text`).
 - **Velké spready (Yggdrasil 9):** 9 vynucených beatů = riziko „seznamovitosti" → ladit promptem (beaty krátké+plynulé).
 - **max_tokens:** spready ve Fázi B potřebují bump (JSON+deeper). Single 700 stačí (ověřeno). EL beze změny (hlas čte jen viditelný text).
-- **IS:** JSON klíče EN, hodnoty IS; 3-vrstvý IS systém drží (applyISCorrections na složený text). IS draft promptu ověřit okem.
+- **IS:** JSON klíče EN, hodnoty IS; 3-vrstvý IS systém drží (applyISCorrections (VYPNUTÝ od 2026-07-10) na složený text). IS draft promptu ověřit okem.
 
 ## Další krok
 Fáze A hotová (single + spready). Další = **Fáze B — tap UI / spread-map** (= Premium #1): persistovat `deeper`

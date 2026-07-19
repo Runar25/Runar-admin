@@ -19,7 +19,7 @@ runar-config.js       — TIERS, RUNAR_MODES, TIER_LIMITS, SPREAD_COSTS, SPREAD_
 runar-runes.js        — 25 Elder Futhark + calcLifeRune()
 runar-translations.js — UI_TEXT {en, is} + t()  ← Edit tool OK
 runar-character.js    — DEF_CHAR_EN/IS, buildSysPrompt(), RP_* packs + buildReadingPrompt()
-                         + spread dispatchers, buildLifeRunePromptIS/EN(), getCorrPrompt(), applyISCorrections()
+                         + spread dispatchers, buildLifeRunePromptIS/EN(), getCorrPrompt(), applyISCorrections() [VYPNUTÝ]
 runar-utils.js        — t(), tp(), vn(), vl(), setText/setSt/showToast, stream
 runar-journal.js      — loadJournal(), renderJournal(), filterJournal()
 runar-tree.js         — updateTreeTab(), generateLifeRuneReading(), loadLifeRuneFromDB()
@@ -158,7 +158,7 @@ Kořen měsíce oprav = duplikace + rozsypané řetězce („všechno všude a n
 
 ### §19 — Ověřuj VÝSLEDEK, ne tvar kódu (anti-tichá-chyba)
 Měsíc tichých chyb (korekce běžely mrtvé, check-is skenoval špatnou plochu, `láta séð` prošlo) měl JEDEN kořen: každá kontrola ověřovala **tvar kódu** (parsuje? string existuje ve zdroji? builder dává stejné byty?), ale nic neprotlačilo známý vstup **reálnou cestou** a neověřilo **výsledek**. Rozsypání (§18) chyby jen schovalo.
-1. **Seed-and-assert na hranici.** Kde data přechází hranici (DB→kód, zdroj→prompt, stav→reset), měj JEDEN drobný fixture co protlačí známý vstup skrz produkční funkce a ověří výsledek (očekávané JE přítomno / špatné NENÍ). Vzor = `golden_contracts.js` (smoke.py kontrola ⑥): seed raw DB řádku → `normalizeCorrections`→`getCorrPrompt`+`applyISCorrections` → replacement přežil, žádné „undefined". Fixture musí sám cvičit pravou hranici (ne test-double se špatnými klíči).
+1. **Seed-and-assert na hranici.** Kde data přechází hranici (DB→kód, zdroj→prompt, stav→reset), měj JEDEN drobný fixture co protlačí známý vstup skrz produkční funkce a ověří výsledek (očekávané JE přítomno / špatné NENÍ). Vzor = `golden_contracts.js` (smoke.py kontrola ⑥): seed raw DB řádku → `normalizeCorrections`→`getCorrPrompt`+`applyISCorrections` → replacement přežil, žádné „undefined". Fixture musí sám cvičit pravou hranici (ne test-double se špatnými klíči).  <!-- check-docs:ok -->
 2. **Žádné tiché zelené.** Co nástroj **prokazatelně neposoudí** (subtilní IS gramatika — kauzativa, vazby) NESMÍ projít zeleně. Filtrovaný signál = **viditelný žlutý, ne zahozený** (is-grammar-qa: `E001` = „nerozparsováno" ≠ „v pořádku"). ⚠️ **Fronta „NATIVE EYE / Sigrún" ZRUŠENA (KUKY 2026-07-18).** Nesrozumitelný výstup se **přepíše, dokud mu nástroj nerozumí** (přesně tak byl vyřešen E001 2026-07-17 — přepsáním na plné věty), ne odloží na někoho jiného. IS děláme rovnou hotovou a ověřenou → [[is-done-together-not-for-sigrun]].
 3. **Kontrola běží na TÉ PLOŠE, kde bug žije.** Dynamický model-output ≠ zdrojový string; DOM stav ≠ builder output. Kontrola na proxy ploše se nepočítá jako pokrytí.
 
@@ -218,7 +218,7 @@ tree_name (text), life_rune_number (int), life_rune_text (text), life_rune_lang 
 
 **Unified format**: 1 plynoucí blok, žádné `|||`. `layer1-lbl` = glyf + jméno runy.
 `_readingMode` = `'mine'` (ukládá — journal píše SERVER-SIDE claude-proxy, atomicky s odečtem kreditu; klient jen loadJournal) | `'someone'` (neukládá).
-`u.area/seeking/mood/intention/question` → `parts[]` → Claude. Norns axis: `_moodContext(mood,lang)` + `_intentionContext(intention,lang)` v runar-character.js.
+`u.area/seeking/mood/intention/question` → `parts[]` → Claude. Norns axis: `_intentionContext(intention,lang)` v runar-character.js.
 
 **Délky čtení**: zdroj pravdy = buildery v `runar-character.js` (RP_* packy + `closing()` věty). Docs čísla NEopakují — když měníš délku, uprav builder + přepočítej pricing (RUNAR_PRICING.md). Délka = znaky = EL náklad. Jméno ne vždy na začátek; životní runa jen kontext.
 
@@ -235,7 +235,7 @@ Stav (tohle v configu není, proto bydlí tady): Single · Norns · Kříž · H
 na všechno; Rune Seeker platí kredity, předplatitelé to berou z měsíčních jednotek.
 ⭐ **Yggdrasil = KDYKOLIV, KDOKOLIV přihlášený. Žádná brána na datum.** Zimní slunovrat = větší
 **síla ve stromě**, ne podmínka přístupu (rituální čtení; bude jich víc). KUKY 2026-07-18, po páté
-opravě téhož — detail `RUNAR_DECISIONS.md`. Kdo sem napíše „Dec 14–28" jako podmínku, dělá to znovu.
+opravě téhož — detail `RUNAR_DECISIONS.md`. Kdo sem napíše „Dec 14–28" jako podmínku, dělá to znovu.  <!-- check-docs:ok -->
 
 ---
 
@@ -248,7 +248,7 @@ opravě téhož — detail `RUNAR_DECISIONS.md`. Kdo sem napíše „Dec 14–28
 ❌ `tree_state` / `tree_readings` DB (= Muninn, paměť stromu) — na tom visí The Gathering + `detectPatterns()`.
 ⚠️ Strom se krmí **regexem přes text čtení** (glyfy 0x16A0–0x16FF z `rune_glyph + short_text`) — změna
 formátu skládaného textu = tichá ztráta větví. Hlídá smoke ⑬ (`verify_tree_signals.js`).
-**Kanonický vstupní bod = RUNAR_TREE.md** (duše + zóny + stavba + mapa doků). `RUNAR_TREE_LAB.md` = HISTORIE.
+**Kanonický vstupní bod = RUNAR_TREE.md** (duše + zóny + stavba + mapa doků). `RUNAR_TREE_LAB.md` = HISTORIE (docs/archive/tree/).
 
 ## Word Corrections
 Živá data: `python show_corrections.py`

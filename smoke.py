@@ -254,6 +254,20 @@ first = output.split('\n')[0] if output else 'tree signals check ran'
 check(first if passed else 'signál z DB nedojel do stromu (tichá ztráta umístění)', passed,
       '' if passed else output)
 
+# ⑭ — sourozenec ③ check-is.py, o patro výš: mrtvá tvrzení v ŽIVÉ dokumentaci.
+# 2026-07-18: audit našel 97 rozporů nad ~12 fakty (4-7 míst každý). Owner opravoval
+# Yggdrasil POPÁTÉ — a i po cíleném auditu zbylo 5 dalších míst, která našla až tahle
+# kontrola. Pozná řetězec, ne význam: „founding ritual free" proti kódu neodhalí.
+print('\n⑭ ŽIVÁ DOKUMENTACE (check-docs.py)')
+r = subprocess.run([sys.executable, '-X', 'utf8', os.path.join(ROOT, 'check-docs.py')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+lines = [l for l in output.split('\n') if l.strip()]
+summary = lines[-1].strip() if lines else 'doc lint ran'
+check(summary if passed else 'mrtvé tvrzení v živém docu (retirovaný pojem / neplatné pravidlo)',
+      passed, '' if passed else output)
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

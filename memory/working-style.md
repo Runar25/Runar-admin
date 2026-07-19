@@ -70,13 +70,13 @@ přes vl()/vlp()/vn()/tp({card})/TIERS[x].label. Níže zbývající hardcoded m
 
 Rychlý audit:
 ```
-grep -nE "rune stones?|rúnastein|Rune (Seeker|Walker|Keeper)|rune reading" v2/*.js v2/*.html
+grep -nE "rune stones?|rúnastein|Rune (Seeker|Walker|Keeper)|rune reading" v2/*.js v2/*.html  <!-- check-docs:ok -->
 ```
 
-**VOCAB.unit ('rune stone(s)' / 'rúnasteinn/ar') — štítky → templatovat {unit}:**
-- translations.js: tree_rs_cost '3 rune stones', tree_rs_balance 'your rune stones:'
-- translations.js: rs_credits_desc (EN + IS 'rúnastein')
-- config.js panely: 'then rune stones' / 'síðan rúnasteinar'
+**VOCAB.unit ('rune stone(s)' / 'rúnasteinn/ar') — štítky → templatovat {unit}:**  <!-- check-docs:ok -->
+- translations.js: tree_rs_cost '3 rune stones', tree_rs_balance 'your rune stones:'  <!-- check-docs:ok -->
+- translations.js: rs_credits_desc (EN + IS 'rúnastein')  <!-- check-docs:ok -->
+- config.js panely: 'then rune stones' / 'síðan rúnasteinar'  <!-- check-docs:ok -->
 
 **Tier jména v próze ('Rune Seeker/Walker/Keeper', 'Vegfarandi') — POLICY:**
 v dlouhých marketingových větách OK nechat, jinde → TIERS[x].label:
@@ -359,7 +359,7 @@ Nová verze říká JEDNOHO vlastníka. Ostatní místa nanejvýš odkazují.
 - **Než někam napíšeš fakt, zeptej se: kde už bydlí?** Bydlí-li v kódu → odkaž, neopisuj.
   Bydlí-li v jiném docu → odkaz, ne převyprávění (převyprávění je taky kopie, jen ho grep nenajde).
 - **`MEMORY.md` = JEN index a rozcestník.** Žádná fakta, žádný stav, žádná SW verze ani commit hash.
-  (Do 2026-07-18 to byl sklad faktů a odporoval si sám se sebou — ř. 33 „enforcement = TODO"
+  (Do 2026-07-18 to byl sklad faktů a odporoval si sám se sebou — ř. 33 „enforcement = TODO"  <!-- check-docs:ok -->
   vs ř. 46 popis toho, jak enforcement funguje. Obojí četla každá session.)
 - **`snapshots/` = historie ke svému datu.** Nikdy z nich nepřebírej aktuální stav; nikdy nemazat.
 - **`memory/runar-project.md` je prázdný záměrně** — byl to duplikát CLAUDE.md a sám vyrobil ~15 rozporů.

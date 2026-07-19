@@ -264,8 +264,8 @@ const TIERS = {
 ## Roadmap
 
 See project roadmap for planned features:
-- Auth & user accounts (Supabase Auth)
-- Subscription monetisation (Stripe)
+- ~~Auth & user accounts~~ — live (Supabase Auth: magic link + Google)
+- Subscription monetisation — **Shopify**, not Stripe (Stripe is not used anywhere)
 - Ceremonial mode — cacao ritual flow
 - Contextual intelligence — lunar calendar, seasonal events
 - Personal reading journal

@@ -274,7 +274,7 @@ Strom: větev s centrálním uzlem a čtyřmi výhonky. Standard+.
 IS pozice: navrhnout před implementací.
 Strom: větvená větev se sedmi body → sezónní rituál kmene. Standard+.
 
-### Yggdrasil (9 run) — všichni přihlášení (Dec 14–28)
+### Yggdrasil (9 run) — všichni přihlášení, KDYKOLIV
 ```
               [Ásgarðr]
       [Álfheimr]   [Vanaheimr]
@@ -353,7 +353,8 @@ Zdroj pravdy = helpery v `runar-character.js` (`_lensContext` / `_domainContext`
 Klíčová pravidla:
 - Rune Seeker: Single zdarma (free_balance), Norns/Gathering za kredity, Yggdrasil za kredity (sezónní)
 - Kříž a Horseshoe: Standard+ pouze — Rune Seeker ani za kredity
-- Yggdrasil: všichni přihlášení (RS za kredity, Standard/Premium z limitu) — jen Dec 14–28
+- Yggdrasil: všichni přihlášení, kdykoliv (RS za kredity, Standard/Premium z limitu).
+  Zimní slunovrat = větší síla ve stromě, NE podmínka přístupu (KUKY 2026-07-18).
 - Standard limit: 50 run/měsíc
 - Premium limit: 75 run/měsíc
 
@@ -396,7 +397,7 @@ Tři Norny = tři kořeny. Jedno čtení zasadí všechny tři kořeny najednou.
 - Verðandi → druhý kořen: kterým směrem se skláníš teď
 - Skuld → třetí kořen: co pohání tvůj růst, co musí přijít
 
-Rune Seeker: 3 rune stones (kredity).
+Rune Seeker: platí kredity (hodnota = SPREAD_COSTS).
 Standard: 3 z měsíčního limitu (viz TIER_LIMITS.standard.monthly_limit).
 Premium: 3 z měsíčního limitu (viz TIER_LIMITS.premium.monthly_limit).
 Hodnoty jsou vždy z configu — nikdy hardcoded.

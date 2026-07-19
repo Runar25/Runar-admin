@@ -3,7 +3,7 @@
 #
 # JEDINÝ ZDROJ PRAVDY pro to, NA ZÁKLADĚ ČEHO se Strom života staví.
 # Nahrazuje/zpřesňuje starší texty (viz §9 „Konflikty ke sladění").
-# Doplňuje: RUNAR_TREE_LAB.md (engine/lab = JAK se to kreslí) · RUNAR_DESIGN.md (příběh)
+# Doplňuje: RUNAR_TREE_LAB.md (ARCHIV: docs/archive/tree/) (engine/lab = JAK se to kreslí) · RUNAR_DESIGN.md (příběh)
 #           tree-of-life.md · runar-patterns.md (vrstva významu, většina = později).
 #
 # Koordinace: vizuál = TREE session (runar-branch.js, build_*composer.py, tree-lab-*).

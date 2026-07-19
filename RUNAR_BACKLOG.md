@@ -102,7 +102,7 @@
 - [ ] Ask Rúnar v2 — journal 7denní okno + asked-flag (persistence HOTOVÁ).
 - [ ] Export dat subjektu (mazání už kaskáduje přes delete-account).
 - [ ] Eval pipeline: pseudonymizace (opt-out exkluze HOTOVÁ).
-- [ ] `_moodContext`/`_intentionContext` — zapojit intention, nebo smazat mood (mood z UI ODSTRANĚN, helper dřímá).
+- [ ] `_moodContext`/`_intentionContext` — zapojit intention, nebo smazat mood (mood z UI ODSTRANĚN, helper dřímá).  <!-- check-docs:ok -->
 - [ ] Zahodit stale `_lastDeeper` + `deeper_meaning` extrakci (nikde se nečte; deeper_meaning zrušen 2026-07-04). Guard: `composeReading` musí zůstat zrcadlo `_parseSegments` (smoke ⑦).
 - [ ] Segmentace Fáze B (tap UI / spread-map) — Fáze A hotová, spec `RUNAR_SEGMENTACE_FaseB_CODE.md`.
 - [ ] Journal SPREAD historie renderuje font glyfy (single karty už SVG); shrine + yggdrasil.html obchází `runeSvg` (§5).

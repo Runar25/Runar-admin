@@ -130,6 +130,7 @@ Ostatní (později, decentně): pulzy dominance (element/ætt), bloom fáze, lis
 | RUNAR_DESIGN.md (tree části) | příběh, mytologie, „co část znamená" | KANONICKÉ pro příběh |
 | RUNAR_TREE_TODO.md | stav labu + fronta bodů | AKTIVNÍ (zdroj stavu enginu) |
 | RUNAR_TREE_SPECIALS.md | katalog speciálních motivů | AKTIVNÍ (kandidáti, probrat) |
+| RUNAR_TREE_RENDER.md | vizualizace / materiál (jak vypadá) | AKTIVNÍ (foundation) |
 | docs/TREE_BRIEF_CODE_2026-07-04.md | brief pro Code (krok 1/boughs/specials) | AKTIVNÍ (handoff) |
 | memory/runar-tree-living-movement.md | recept kroku 1 + živý pohyb (odložen) | ČÁSTEČNĚ AKTIVNÍ |
 | runar-tree-forces.md | síly mezi runami | ODLOŽENO (pozdější lak, ne základ) |
@@ -137,7 +138,7 @@ Ostatní (později, decentně): pulzy dominance (element/ætt), bloom fáze, lis
 | RUNAR_TREE_BOUGHS.md | hierarchie ramen | SUPERSEDED (přestavba = regrese) |
 | RUNAR_TREE_GROWTH_MAP.md | analýza starého v3.2 modelu | HISTORIE (diagnóza) |
 | memory/runar-tree-engine-lab.md | engine iterace + ⭐ oprava boughs | HISTORIE (+ 1 live korekce nahoře) |
-| RUNAR_TREE_HANDOFF.md · RUNAR_TREE_LAB.md | starší master handoff / lab historie | HISTORIE / reference |
+| RUNAR_TREE_HANDOFF.md · RUNAR_TREE_LAB.md (ARCHIV: docs/archive/tree/) | starší master handoff / lab historie | HISTORIE / reference |
 | runar-patterns.md | Gathering/vzorce | ZASTARALÉ (surovina, vše probrat) |
 
 **Archivováno do `docs/archive/tree/`** (2026-07-04): RUNAR_TREE_BOUGHS · RUNAR_TREE_GROWTH_MAP · RUNAR_TREE_HANDOFF · RUNAR_TREE_LAB. Nic se neztratilo — jen uklizeno z rootu.

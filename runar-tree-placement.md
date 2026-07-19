@@ -195,7 +195,7 @@ Zóny definovány v configu (norns_axis per pozici):
   verðandi: pozice 4–5 (Midgard, Jotunheim)
   urd: pozice 6–9 (Svartalfheim, Nidavellir, Niflheim, Hel)
 9 otisky přes celý strom = vertikální prsten.
-Jednou za rok (Dec 14–28). Největší otisk ze všech spreadů.
+Kdykoliv (slunovrat = větší síla, ne brána). Největší otisk ze všech spreadů.
 
 ---
 
@@ -258,7 +258,7 @@ Strom je zrcadlo. Žádný popis není potřeba — tvar mluví sám.
 
 ## Co tento dokument NEOBSAHUJE (patří jinam)
 
-- Vizuální engine (canvas, growBranch, prameny) → RUNAR_TREE_LAB.md
+- Vizuální engine (canvas, growBranch, prameny) → RUNAR_TREE_LAB.md (ARCHIV: docs/archive/tree/)
 - Gathering / Eagle / Níðhöggr detekce → runar-patterns.md
 - Bloom animace, listy, sezóna → tree-of-life.md (⏳ LATER)
 - Konkrétní JS implementace → CODE session
