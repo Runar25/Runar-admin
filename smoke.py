@@ -350,6 +350,19 @@ first = output.split('\n')[0] if output else 'spread price check ran'
 check(first if passed else 'cena spreadu se rozešla se SPREAD_COSTS (§20 — hodnoty se neopisují)', passed,
       '' if passed else output)
 
+# ── Vlastnictví se testuje PŘED tierem ───────────────────────────────
+# Owner 2026-07-19: životní runa se vygenerovala, zobrazila a při dalším překreslení
+# tabu zmizela. Příčina bylo POŘADÍ — větev podle tieru se vracela dřív, než se kód
+# zeptal, jestli hotové čtení existuje. Nic nespadlo, obsah prostě zmizel.
+print(chr(0x3251) + ' VLASTNICTVÍ PŘED TIEREM (verify_owned_before_tier.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_owned_before_tier.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+first = output.split('\n')[0] if output else 'owned-before-tier check ran'
+check(first if passed else 'hotové čtení schované za kontrolou tieru', passed,
+      '' if passed else output)
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

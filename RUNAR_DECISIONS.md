@@ -1304,3 +1304,30 @@ Přesně tím byl `memory/runar-project.md` (sám vygeneroval ~15 nálezů) a č
   (zdůvodňovala cenu, která přestala existovat) a próza na ř. 126, která opisovala ceny z configu,
   přepsána na odkaz + pravidlo „platí se za hlas". Obojí v tomtéž commitu.
 - **Reverzibilita:** snadná (config zpět na 3 + revert proxy větve).
+
+---
+
+## 2026-07-19 — Rune Seeker svou životní runu neviděl (pořadí, ne oprávnění) [tune]
+
+- **Vada, nahlásil owner na vlastním účtu:** životní runa se vygenerovala, zobrazila —
+  a při dalším překreslení Tree tabu zmizela a vrátil se teaser s tlačítkem „REVEAL".
+- **Příčina bylo POŘADÍ, ne oprávnění.** V `updateTreeTab()` se větev podle tieru
+  (`if (!isStdPlus) { … return; }`) vracela **dřív**, než se kód vůbec zeptal
+  `if (_lifeRuneText)`. Text byl přitom v DB i v paměti. Nic nespadlo, nic se nezalogovalo —
+  obsah prostě zmizel.
+- **Oprava:** test hotového čtení vytažen NAD větvení podle tieru. Tier rozhoduje o tom,
+  jak se čtení **nabízí**, ne jestli hotové čtení uživatel uvidí.
+- **Třída chyby: vlastnictví se testuje až za bránou oprávnění.** Nový guard ㉑
+  (`verify_owned_before_tier.js`) hlídá pořadí těch dvou testů v `updateTreeTab()`.
+  Kontrola je **záměrně úzká** — obecné „vlastnictví před oprávněním" staticky poznat
+  neumím a předstírat, že ano, by bylo horší než nekontrolovat nic.
+- ⚠️ **Vlastní ověření rozbitím napoprvé NEPLATILO** (zapsáno schválně): první test blok
+  `_lifeRuneText` smazal, kontrola zčervenala — ale hláškou „chybí `_lifeRuneText`", tedy
+  na JINOU vadu. Teprve druhý test blok **přesunul** za tierovou větev, což je přesný tvar
+  regrese, a chytl ho správnou hláškou. **Červená sama o sobě nic nedokazuje; musí zčervenat
+  na tu vadu, kterou hlídá.**
+- **Historie nálezu:** tuhle vadu jsem našel a doložil už při ranním auditu a předal ji
+  CODE-tree. Bylo to zbytečné — `CLAUDE.md` říká „Life-rune logika = MAIN", takže to byla
+  celou dobu moje lane.
+- **Affected doc(s):** žádný.
+- **Reverzibilita:** snadná.

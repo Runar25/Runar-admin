@@ -244,6 +244,19 @@ function updateTreeTab() {
   renderLivingTree(rune);
   var runeName = isIs ? rune.is_n : rune.n;
 
+  // Hotove cteni se ukazuje VSEM tierum. Do 2026-07-19 tenhle test zil az ZA
+  // `return` z RS vetve, takze Rune Seeker svou zivotni runu nikdy neuvidel:
+  // vygenerovala se, jednou zobrazila, a pri prvnim prekresleni tabu se vratil
+  // teaser s tlacitkem REVEAL. Tier rozhoduje o tom, jak se cteni NABIZI —
+  // ne o tom, jestli uz hotove cteni smi uzivatel videt.
+  if (_lifeRuneText) {
+    _showTreeReading(rune, runeName, isIs);
+    var tnsAll = document.getElementById('tree-name-section');
+    if (tnsAll) tnsAll.style.display = 'block';
+    _renderTreeNameState();
+    return;
+  }
+
   if (!isStdPlus) {
     // RS teaser
     var teaserEl = document.getElementById('tree-rs-teaser');
@@ -295,15 +308,8 @@ function updateTreeTab() {
     return;
   }
 
-  // Rune Walker/Rune Keeper — has reading?
-  if (_lifeRuneText) {
-    _showTreeReading(rune, runeName, isIs);
-    // Show tree name section (edit vs saved-display state)
-    var tns = document.getElementById('tree-name-section');
-    if (tns) tns.style.display = 'block';
-    _renderTreeNameState();
-  } else {
-    // Show reveal CTA
+  // Sem se dojde jen bez hotoveho cteni (test vys) a jako std+ -> nabidka.
+  {
     var ctaEl = document.getElementById('tree-reveal-cta');
     if (ctaEl) {
       ctaEl.style.display = 'block';
