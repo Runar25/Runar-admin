@@ -63,6 +63,8 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [match-existing-visual-first.md](match-existing-visual-first.md) — nové UI: nejdřív načíst existující vizuál a zkopírovat ho
 - [verify-agent-claims-about-code.md](verify-agent-claims-about-code.md) — handoff od jiné session = žádost, ne fakt; ověřit
 - [bash-no-cd-prefix.md](bash-no-cd-prefix.md) — NIKDY `cd … &&` ani `| tail` na Bash; boří allowlist
+- [guard-test-the-lifecycle.md](guard-test-the-lifecycle.md) — novou kontrolu testuj proti VŠEM stavům toho, co hlídá, ne jen dobrý/špatný případ
+- [read-the-check-before-push.md](read-the-check-before-push.md) — pipe do grepu zahodí exit kód; přečti verdikt, teprve pak push
 - [runar-project.md](runar-project.md) — vyprázdněno 2026-07-18, jen rozcestník
 - [tree-of-life.md](tree-of-life.md) — starší tree design; kanonický je `RUNAR_TREE.md`
 - [runar-patterns.md](runar-patterns.md) — pattern detection, ZASTARALÉ (kanonicky `RUNAR_TREE.md` §7)
