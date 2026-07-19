@@ -689,10 +689,21 @@ function buildLifeRunePromptEN(name, rune, day, month, year, isPremium) {
   return parts.join('\n');
 }
 
-// Main entry point — picks IS or EN prompt based on lang
-function buildLifeRunePrompt(name, rune, day, month, year, lang, isPremium) {
-  if (lang === 'is') return buildLifeRunePromptIS(name, rune, day, month, year, isPremium);
-  return buildLifeRunePromptEN(name, rune, day, month, year, isPremium);
+// Main entry point — picks IS or EN prompt based on lang, then adds the gates.
+// The gates hang HERE and not in the two language builders: one path, not two copies (§18).
+// The life rune had none of them until 2026-07-19 — and it is the reading most exposed to
+// cold reading, because its whole subject is what the seeker has carried since birth.
+// getCorrPrompt is part of it: without it the IS path had only 2 of the 3 layers (§2).
+function buildLifeRunePrompt(name, rune, day, month, year, lang, isPremium, corrections) {
+  var base = (lang === 'is')
+    ? buildLifeRunePromptIS(name, rune, day, month, year, isPremium)
+    : buildLifeRunePromptEN(name, rune, day, month, year, isPremium);
+  return [
+    base,
+    _describeRule(lang),
+    _noColdRead(lang),
+    getCorrPrompt(lang, corrections),
+  ].filter(Boolean).join('\n\n');
 }
 
 // ─── VOICE PROFILE HELPER ──────────────────────────────

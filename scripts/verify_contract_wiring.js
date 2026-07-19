@@ -50,6 +50,10 @@ var drawn = _R('Raidho');
   // Ask Rúnar follow-up — until v1.0 it carried persona + scope only, so a leading question
   // pulled it into cold-read/fate while the body held. It must now carry the body's gates.
   _OUT['ask_'+L] = buildAskPrompt('A short reading about Raidho.', 'So the road is already opening for me?', 'Raidho', L, []);
+  // Life rune — a PAID reading (3 credits) and the first one in the Tree. It carried none of
+  // the gates until 2026-07-19, and it is the reading most exposed to cold reading: its whole
+  // subject is what the seeker has carried since birth.
+  _OUT['liferune_'+L] = buildLifeRunePrompt('Anna', _R('Gebo'), 12, 5, 1990, L, false, []);
 });
 `;
 vm.createContext(sandbox);
@@ -78,6 +82,18 @@ for (const L of ['en', 'is']) {
   const t = O['norns_lifein_' + L] || '';
   if (has(t, 'lens')) { fail++; console.log('FAIL  norns_lifein_' + L + '  lens present though the life rune was drawn'); }
   else console.log('OK    norns_lifein_' + L + '  lens correctly steps aside');
+}
+
+// ── Life rune: a full reading, so it carries the body's gates ────────────────
+for (const L of ['en', 'is']) {
+  const txt = O['liferune_' + L] || '';
+  const need = {
+    describe: ['DESCRIBE, DO NOT EXPLAIN', 'LÝSTU, EKKI ÚTSKÝRÐU'],
+    coldread: ['NO COLD READING', 'ENGIN KÖLD LESNING'],
+  };
+  const missing = Object.keys(need).filter(k => !need[k].some(x => txt.includes(x)));
+  if (missing.length) { fail++; console.log('FAIL  liferune_' + L + '  missing: ' + missing.join(', ')); }
+  else console.log('OK    liferune_' + L + '  describe+coldread');
 }
 
 // ── Ask Rúnar: the follow-up gates (v1.0) ────────────────────────────────────

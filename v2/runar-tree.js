@@ -319,7 +319,7 @@ async function generateLifeRuneReading() {
 
   var name = readerUser.name || (lang === 'is' ? 'þú' : 'you');
   var mode = isPremium ? RUNAR_MODES.life_rune_premium : RUNAR_MODES.life_rune_standard;
-  var prompt = buildLifeRunePrompt(name, rune, readerUser.d, readerUser.m, readerUser.y, lang, isPremium);
+  var prompt = buildLifeRunePrompt(name, rune, readerUser.d, readerUser.m, readerUser.y, lang, isPremium, corrections);
   var corrBlock = getCorrPrompt(lang, corrections);
   if (corrBlock) prompt = prompt + '\n' + corrBlock;
   var sys = buildSysPrompt(activeChar, lang);
