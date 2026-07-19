@@ -664,6 +664,11 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .whispers-desc strong{color:var(--gold);font-style:normal;font-weight:400;}
 /* Loading pulse */
 @keyframes runar-breathe{0%,100%{opacity:0.4;}50%{opacity:1;}}
+/* Tlacitko do stromu se po zalozeni rozsviti — misto toho, aby uzivatele
+   automaticky prepnulo. Ztlumeni (pulse-fade) by se u zlateho CTA cetlo jako
+   „nedostupne", proto svetlo ven, ne dovnitr. */
+@keyframes founding-call{0%,100%{box-shadow:0 0 0 0 rgba(255,191,0,0);}50%{box-shadow:0 0 0 7px rgba(255,191,0,0.16);}}
+.vcn-btn.calling{animation:founding-call 1.8s ease-in-out infinite;}
 .whispers-loading-inner{text-align:center;padding:22px 0 10px;}
 .whispers-loading-star{font-size:1.6em;color:var(--gold);display:block;margin-bottom:10px;animation:runar-breathe 2.4s ease-in-out infinite;}
 .whispers-loading-label{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2.5px;color:var(--gold);animation:runar-breathe 2.4s ease-in-out infinite;animation-delay:0.3s;}

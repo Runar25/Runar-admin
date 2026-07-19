@@ -1539,3 +1539,44 @@ dokud se nepotvrdí, že šlo o zakládání, není co opravovat.
 - **OVĚŘENO V PROHLÍŽEČI:** běžný stav (formulář ano / příběh ne) · zakládání (formulář ne /
   příběh ano, oba jazyky) · po dokončení (zpět na formulář).
 - **Affected doc(s):** žádný.
+
+---
+
+## 2026-07-19 — Evidence hned první den dokázala vadu odečtu; a dvě chyby v ní samé [tune]
+
+### Co ledger ukázal na ostrých datech
+```
+21:50:08.658  credit  -1  →5  unattributed  postgres
+21:50:08.519  credit  -1  →6  unattributed  postgres
+```
+**Dva samostatné řádky po −1, 139 ms od sebe** — to není odečet za 2 kredity, to je
+**smyčka `for (i < plan.cost) rpc('use_credit')`** (claude-proxy:280), zapsaná ráno jako vada č. 1.
+Evidence ji doložila **prvním použitím**, a to bez toho, aby ji kdokoli hledal. Zároveň potvrdila,
+že šlo o běžné placené Norny, ne o zakládání (to by neodečetlo nic) — takže se neopravovalo nic,
+co nebylo rozbité.
+
+### Dvě chyby v mém vlastním návrhu evidence (obě odhalila realita, ne úvaha)
+1. **`actor` je `postgres` u všeho, ne `service_role`.** `use_credit` je SECURITY DEFINER, takže
+   `current_user` uvnitř je vlastník funkce. Signál „actor ≠ service_role = lidská ruka",
+   který jsem do migrace napsal, **neplatí**.
+2. **`reason` je `unattributed` u všeho**, protože žádná RPC zatím nevolá `ledger_ctx()`.
+   Takže ani druhá půlka detekce driftu zatím nefunguje.
+
+**Důsledek, který se nezakrývá:** evidence je dnes úplná v tom, ŽE pohyb zaznamená, ale neumí říct
+PROČ. Ověřovací dotaz (B) v migraci je proto opatřen varováním místo toho, aby budil dojem hlídače.
+Spraví to až fáze 2 (RPC nastaví důvod).
+**Poučení:** kontrolní signál se musí ověřit na ostrých datech, ne odvodit. Obě ta tvrzení
+vypadala v migraci samozřejmě a obě byla mimo.
+
+### UX zakládání — dvě změny od ownera
+- **Automatický skok do stromu ZRUŠEN.** Vytrhával by uživatele z výkladu, který si čte. Místo
+  toho se tlačítko do stromu po `DELAY_FOUNDING_TO_TREE` **rozsvítí** (`founding-call`, glow ven —
+  ztlumení by se u zlatého CTA četlo jako „nedostupné") a čeká.
+- **Zakládací Norny zůstávají ve stromě natrvalo**, stejně jako životní runa (KUKY: „měl by se
+  přesunout ke stromu tak, aby tam zůstal navždy"). Text se načítá z `readings` podle
+  `user_profiles.founding_reading_id`, který při zakládání zapsal **server** — klient si ho
+  nevybírá, jinak by si do stromu mohl nechat zobrazit cizí čtení.
+  Blok je kopie tvaru `tree-reading-exists`, žádné nové CSS kromě animace.
+- **OVĚŘENO V PROHLÍŽEČI:** animace tlačítka + zhasnutí při skrytí · blok bez textu skrytý,
+  s textem viditelný · markdown hlavička oříznutá · rozbalování · islandský nadpis.
+- **Affected doc(s):** žádný.

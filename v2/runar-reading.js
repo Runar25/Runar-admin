@@ -364,6 +364,8 @@ function _updateSpread3Slots() { _updateSpreadSlots(_SPREAD_SLOT_CFG.norns); }
 function _hideAllSpreadOutputs() {
   var _fd = document.getElementById('founding-done');
   if (_fd) _fd.style.display = 'none';
+  var _fb = document.getElementById('founding-done-btn');
+  if (_fb) _fb.classList.remove('calling');
   ['spread3-output','spread5-output','spread7-output','spread9-output'].forEach(function(id) {
     var out = document.getElementById(id);
     if (out) out.style.display = 'none';
@@ -841,10 +843,11 @@ async function _generateSpreadReading(o) {
       if (fbtn) fbtn.textContent = t('founding_done_btn');
       fd.style.display = 'block';
     }
-    // Owner zadal presmerovani dvakrat: samotny odkaz mu unikl. Prodleva je
-    // schvalne — okamzity skok by ho vytrhl z vykladu drive, nez ho uvidi.
+    // Automaticky skok byl prilis: vytrhl by uzivatele z vykladu, ktery si cte.
+    // Misto toho se tlacitko po prodleve ROZSVITI a ceka (KUKY 2026-07-19).
     setTimeout(function () {
-      if (typeof showAppTab === 'function') showAppTab('tree');
+      var b = document.getElementById('founding-done-btn');
+      if (b) b.classList.add('calling');
     }, DELAY_FOUNDING_TO_TREE);
   }
 }

@@ -578,6 +578,20 @@
     </div><!-- /tree-life-rune-section -->
 
     <!-- TREE NAME SECTION — visible after life rune reading exists -->
+      <!-- Zakladaci Norny — zustavaji ve strome naporad, stejne jako zivotni runa.
+           Tvar je kopie bloku tree-reading-exists vyse. -->
+      <div id="tree-founding-reading" style="display:none;">
+        <div class="tree-rune-header" onclick="toggleFoundingReading()">
+          <div class="tree-rune-name-row">
+            <span class="tree-rune-name" id="tree-founding-name"></span>
+            <span class="tree-toggle-arrow" id="tree-founding-arrow">+</span>
+          </div>
+        </div>
+        <div id="tree-founding-body" style="display:none;">
+          <div class="tree-reading-text" id="tree-founding-text"></div>
+        </div>
+      </div>
+
       <!-- State: zivotni runa hotova, strom jeste nezalozeny — zakladaci ritual -->
       <div id="tree-founding-cta" style="display:none;">
         <p class="tree-reveal-intro" id="tree-founding-intro"></p>

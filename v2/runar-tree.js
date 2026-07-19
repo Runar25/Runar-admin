@@ -15,6 +15,7 @@
 var _lifeRuneText  = null;  // text of generated reading
 var userTreeFounded = false;   // z DB (tree_founded_at) — server-only sloupec
 var _foundingPending = false;  // uzivatel klikl na zalozeni; ceka se na Norny
+var _foundingText = null;      // text zakladacich Norn (z readings)
 var _lifeRuneLang  = null;  // lang of stored reading
 var _lifeRuneNum   = null;  // rune number 1-24
 
@@ -285,6 +286,20 @@ function updateTreeTab() {
     var tnsAll = document.getElementById('tree-name-section');
     if (tnsAll) tnsAll.style.display = 'block';
     _renderTreeNameState();
+    // Zakladaci Norny zustavaji ve strome naporad, stejne jako zivotni runa
+    // (KUKY 2026-07-19: „mel by se presunout ke stromu tak, aby tam zustal navzdy").
+    var fr = document.getElementById('tree-founding-reading');
+    if (fr) {
+      fr.style.display = _foundingText ? 'block' : 'none';
+      if (_foundingText) {
+        var fn = document.getElementById('tree-founding-name');
+        var ft2 = document.getElementById('tree-founding-text');
+        if (fn)  fn.textContent = t('tree_founding_reading_lbl');
+        if (ft2) ft2.innerHTML = String(_foundingText)
+          .replace(/^#[^\n]*\n+/, '').trim().replace(/\n/g, '<br>');
+      }
+    }
+
     // Krok 2 ritualu: zivotni runa je, strom jeste ne -> nabidnout zalozeni.
     var fcta = document.getElementById('tree-founding-cta');
     if (fcta) {
@@ -608,4 +623,31 @@ async function startTreeFounding() {
   if (typeof showAppTab === 'function') showAppTab('reading');
   if (typeof _setSpreadMode === 'function') _setSpreadMode('norns');
   if (typeof showToast === 'function') showToast(t('tree_founding_toast'));
+}
+
+// Text zakladacich Norn se do stromu nacita podle id, ktere pri zalozeni zapsal
+// SERVER (user_profiles.founding_reading_id). Klient si ho nevybira — jinak by si
+// do stromu mohl nechat zobrazit libovolne cizi cteni.
+async function _loadFoundingReading(id) {
+  if (!currentUser || !id) return;
+  var res = await sb.from('readings')
+    .select('deep_text, short_text')
+    .eq('id', id).eq('user_id', currentUser.id).maybeSingle();
+  if (res.error) { console.warn('founding reading load failed:', res.error.message); return; }
+  if (!res.data) return;
+  _foundingText = res.data.deep_text || res.data.short_text || null;
+  if (typeof activeAppTab !== 'undefined' && activeAppTab === 'tree') updateTreeTab();
+}
+
+// Kopie chovani toggleTreeReading() — jina data, tentyz tvar.
+function toggleFoundingReading() {
+  var body = document.getElementById('tree-founding-body');
+  var arrow = document.getElementById('tree-founding-arrow');
+  if (!body) return;
+  var open = body.style.display !== 'none';
+  body.style.display = open ? 'none' : 'block';
+  if (arrow) {
+    arrow.textContent = open ? '+' : '\u2212';
+    arrow.classList.toggle('open', !open);
+  }
 }

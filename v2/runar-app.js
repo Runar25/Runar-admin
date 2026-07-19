@@ -48,8 +48,8 @@ const DELAY_FOCUS        =  100; // ms before input receives focus
 const DELAY_SCROLL       =   80; // ms before scroll-into-view fires
 const DELAY_ERROR_RESET  = 2000; // ms before error button text resets
 const DURATION_SAVED     = 2500; // ms "saved" indicator stays visible
-const DELAY_FOUNDING_TO_TREE = 4000; // ms — po zalozeni stromu nechat precist potvrzeni,
-                                     // teprve pak prepnout do Tree tabu
+const DELAY_FOUNDING_TO_TREE = 4000; // ms — jak dlouho po zalozeni nechat uzivatele cist,
+                                     // nez se tlacitko do stromu rozsviti (neprepina samo)
 
 
 function getTrialCount() { return parseInt(localStorage.getItem('runar_trial_count') || '0'); }
@@ -58,7 +58,7 @@ function incTrialCount() { localStorage.setItem('runar_trial_count', String(getT
 async function fetchUserProfile(userId) {
   try {
     const { data } = await sb.from('user_profiles')
-      .select('tier, credits_balance, free_balance, name, lang, life_rune_number, life_rune_text, life_rune_lang, dob_day, dob_month, dob_year, tree_name, tree_founded_at')
+      .select('tier, credits_balance, free_balance, name, lang, life_rune_number, life_rune_text, life_rune_lang, dob_day, dob_month, dob_year, tree_name, tree_founded_at, founding_reading_id')
       .eq('id', userId)
       .maybeSingle();
     if (data) {
@@ -71,6 +71,9 @@ async function fetchUserProfile(userId) {
       // Marker zalozeni stromu. Zapisuje VYHRADNE server (neni v klientskem
       // grantu) — klient ho jen cte, aby vedel, jestli nabidnout zalozeni.
       userTreeFounded = !!data.tree_founded_at;
+      if (data.founding_reading_id && typeof _loadFoundingReading === 'function') {
+        _loadFoundingReading(data.founding_reading_id);
+      }
       // Zivotni runa dorazi az sem, takze brana Norn se musi prepocitat
       // POTOM — jinak zustanou skryte i tomu, kdo ji ma.
       if (typeof _syncNornsGate === 'function') _syncNornsGate();

@@ -177,7 +177,14 @@ join public.credit_ledger l on l.user_id = p.id and l.asset = 'credit'
 group by p.id, p.credits_balance
 having sum(l.delta) <> coalesce(p.credits_balance, 0);
 
--- (B) Sáhl někdo na zůstatek mimo kód? (prázdné = nikdo)
+-- (B) Sáhl někdo na zůstatek mimo kód?
+-- ⚠️ TENHLE DOTAZ ZATÍM NEFUNGUJE JAKO SIGNÁL — ověřeno na ostrých datech 2026-07-19:
+--   · `actor` je u VŠECH pohybů `postgres`, ne `service_role`. Odečet jde přes RPC
+--     `use_credit`, která je SECURITY DEFINER, takže `current_user` uvnitř je vlastník
+--     funkce. „actor ≠ service_role = lidská ruka" tedy neplatí.
+--   · `reason` je u všeho `unattributed`, protože žádná RPC zatím nevolá `ledger_ctx()`.
+-- Obojí spraví až fáze 2 (RPC nastaví důvod). DO TÉ DOBY je evidence úplná v tom,
+-- ŽE pohyb zaznamená, ale neumí říct PROČ — a tenhle dotaz vrátí všechno.
 select * from public.credit_ledger
 where reason = 'unattributed' or actor not in ('service_role','baseline')
 order by at desc limit 50;
