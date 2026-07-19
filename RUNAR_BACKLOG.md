@@ -10,8 +10,8 @@
 - [ ] **Vrstvy A/B/C re-enable** — vypnuto (`ENABLE_DYNAMIC_CONTEXT=false` v `supabase/functions/claude-proxy/index.ts`). Vrátit AŽ: (a) každá vrstva pohání reálné UI (tree memory, session mood, voice-scale slider), (b) projde IS evalem. Do té doby placené čtení jede jen na base promptu. Funkce buildTreeContext/deriveSessionState/buildSessionContext/buildVoiceContext ponechány.
 - [~] **deeper_meaning re-add** — **ZRUŠENO (owner 2026-07-10):** B2 se dělat nebude, nahrazeno „Ask Rúnar" (viz Premium sekce). deeper_meaning zůstává zahozený. Parser `_parseSegments` je tolerantní (přečte `deeper_meaning` kdyby byl, ale buildery ho negenerují).
 - [ ] **Mytologické obrazy (Óðinn/Nornir)** — byly v imagery katalogu voice profilu (seškrtán kvůli „1 zdroj obrazu"). Pokud je chceme zpět, přidat jako pool do `SEASON_POOLS` (NE zpět do profilu).
-- [ ] **IS eval harness** — postavit: N čtení × runy/kontexty → grader (silný model + owner spot-check) → chybovost gramatika+koherence. Měřit PŘED/PO každé promptové změně. `runar-eval.yaml` zatím NEstavěn (DECISIONS 2026-07-04).
-- [ ] **Reading-quality Fáze 4** — model tier pro IS (Opus) nebo 2-pass „IS korektor" průchod. JEN pokud eval po Fázi 1+2 ukáže zbytkové chyby. (Model = vyřešeno: Opus, viz DECISIONS 2026-07-04.)
+- [~] **IS eval harness** — **z vetsi casti STOJI** (audit 2026-07-19): `scripts/utils/gen_batch.js` jede pres realne produkcni buildery a zivy claude-proxy, vystup JSONL -> `is-grammar-qa.py`. Chybi uz jen: grader na KOHERENCI (dnes jen gramatika pres yfirlestur.is) a automaticke PRED/PO porovnani dvou davek. `runar-eval.yaml` se stavet NEBUDE (DECISIONS 2026-07-04) — nazev v teto polozce byl zastaraly.
+- [~] **Reading-quality Faze 4** — model VYRESEN A NASAZEN (Opus 4.8, jednotny pro oba jazyky; fallback chain v claude-proxy). Otevrena zustava jen druha, PODMINENA varianta: 2-pass „IS korektor" pruchod, jen kdyby eval ukazal zbytkove chyby. = ceka na eval, ne na praci.
 - [x] **EN-polish pass** — HOTOVO + ZMĚŘENO (SW v119): zesílen `DEF_CHAR_EN.grammar` (banned-cliché list + hard one-image + read-over). Eval: clean-rate 13 %→13 % (nehnulo), ALE délka líp (over-length 6→2, ⌀42 slov). **Poučení: auto-grader je moc přísný na subjektivní styl** (sám hedguje „borderline/mild") → 13 % ≠ špatná čtení; skutečný soudce EN stylu = owner naživo, ne auto-eval. Blok nechán (neškodí, pomohl délce). Jediný reálný zbytek = multi-image (sezónní obraz přilepený navrch runového) = strukturální, ne cliché-list.
 
 ## Profil / personalizace
@@ -55,30 +55,30 @@
 ### 🔴 Blockery prodeje — OWNER (odloženo, trigger = **6. 9. 2026**, scheduled task `runar-launch-blockers-reminder`)
 - [ ] **Resend SMTP** — magic link z agndofa.is (Resend účet + DNS SPF/DKIM + Supabase Auth). Rozhodnout adresu (runar@agndofa.is?).
 - [ ] **Supabase DPA** — podepsat (čeká na e-mail).
-- [ ] **Publikovat privacy policy** na agndofa.is + odkaz z appky. Text EN+IS hotový v `RUNAR_PRIVACY.md`. Bez publikace neplatí legitimate-interest model (transparentnost).
+- [ ] **Publikovat privacy policy na agndofa.is** — OWNER krok mimo repo. (Wiring v appce je HOTOVY: `v2/runar-privacy.html` je vysazena produkcni stranka EN+IS a odkaz z appky vede. Overeno 2026-07-19.) Bez publikace neplati legitimate-interest model.
 - [ ] **Právní/DPO review** (Island/EEA) IS textů + legal-basis modelu. `RUNAR_PRIVACY.md` je pracovní podklad, ne posudek.
 - [ ] **Shopify webhook + checkout** — owner: webhook v Shopify admin + secret + mapa produkt→tier. CODE: edge fce (HMAC verify → `user_profiles.tier`) + odpojit „coming soon" stuby (`runar-auth.js:317-323`, `runar-app.js:1207-1208`, `runar-help.html:180`). Platby na webu (EEA/DMA).
 
 ### 🟠 CODE — odblokované, v pořadí
 - [x] **Reading contract → 4 spready** — HOTOVO 2026-07-14 (commit 39bf41d, prompt v0.7, smoke ⑧ hlídá). Bylo: ← `_lensContext`/`_domainContext`/`_registerContext` se volají JEN v single (character.js:831-833). Spready dostanou holé labely („Seeking: Clarity") bez direktiv → SEEKING stance rule + Confirmation reframe (v0.6) na ně NEJDOU. Dodělává copy-doc #5.
 - [x] **Monthly cap 50/75 v claude-proxy** — HOTOVO 2026-07-16 (1c584c3, SW v196). `MONTHLY_LIMITS` + `month_units`/`month_key` na user_profiles; reset porovnáním `month_key` (bez cronu). Ask Rúnar = NEpočítá se (není cast, `mode:'ask'`). Fail-open při chybě čtení počítadla. Smoke ⑨ hlídá config==proxy. SQL: `sql/2026-07-16_monthly_cap.sql`.
-- [ ] **Vrátit `err_monthly_limit`** do `_readingErrMsg` — smazáno jako dead (2026-07-05); vrátit SPOLU s capem, jinak capnutý user dostane generickou chybu.
+- [x] **Vratit `err_monthly_limit`** — HOTOVO (overeno 2026-07-19, skeptik potvrdil cely retez): claude-proxy vraci `error:"monthly_limit"` -> `runar-reading.js` mapuje na `t('err_monthly_limit')` -> obe jazykove verze v translations existuji. Capnuty user dostane spravnou hlasku, ne generickou.
 - [ ] **Image pool** `RUNE_IMAGE_POOLS` + `_runeImagery` (③, odblokované prompt_version). Vzor = `SEASON_POOLS`. Floor-not-ceiling, per-čtení user injekce. Single první → měřit → spready až podle dat. Důkaz: Isa 5/5 zamrzlá voda = vada zásoby. Obsah: `RUNE_IMAGE_POOLS_draft.md` (EN hotové, IS napíšeme + ověříme sami). **[spec NENÍ v repu — Coworkův výstup, nedodán přes CODE (§17)]**  <!-- doc-links:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
-- [ ] **„already/þegar" ban** — nejlevnější fix (8×), motor cold-readingu. §19 past: výskyty v character.js jsou instrukce PRO model, ne output → ban musí mířit na output (prompt rule + output check), ne source ban.
+- [~] **„already/þegar" ban** — PROMPT PRAVIDLO HOTOVO (`_noColdRead`, miri na MOVE ne na slovo, zapojeno v 5 builderech + follow-up + zivotni runa). CHYBI druha pulka: kontrola nad model-OUTPUTEM. Dokud neni, nikdo nemeri, jestli to pravidlo funguje. §19: kontrola musi bezet na plose, kde bug zije = output, ne zdroj.
 - [ ] **IS ban-list (D-16)** — G1 v IS je neměřitelné (EN ban-list existuje, IS ne). Adaptovat EN + islandský kýč do IS grammar bloku.
 - [ ] **No-recur regresní sada** — opravená model-output fráze se VRACÍ („Sittu með": F-001 ✗ · F-005 ✓ · F-006 ✗). Musí běžet nad OUTPUTEM (is-grammar-qa plocha), NE `check-is` (= source linter). Korpus už existuje (server-side save).
 - [ ] **Obohatit řádek:** pořadí tažených run (strukturovaně — model může přeskládat sloty) + char_count. Potřebuje ALTER (owner).
 - [ ] **Readings viewer: flag/annotate** — dnes view-only (`initReadingsTab` = prázdný stub). Potřebuje review tabulku (owner ALTER).
-- [ ] **R1 ledger → i KOSTRY** (ne jen slova/obrazy) — Berkana 11:36 = nové obrazy, recyklovaná kostra; jmenný slot `[klauze], Kuky, [obraz]` identický všude. Váže se na pool architekturu SELECT→WRITE→CHECK.
+- [~] **R1 ledger -> i KOSTRY** — konkretni dolozena vada je OPRAVENA (jmenny slot `[klauze], Kuky, [obraz]` -> pooled placement, commit 7dd1b9f + ending shape 1cf115c/57e8324). Zustava vlastni ask: rozsirit no-repeat LEDGER i na KOSTRY vet — dnes je kostra nahodna, bez pameti mezi ctenimi.
 - [ ] **is-grammar-qa nad uloženými IS výstupy** → E001 do pojmenované fronty (§19.2 žádné tiché zelené). Korpus existuje.
 - [ ] **Zvětšit SEASON_POOLS** — sáček bere z JEDNÉ sady (bright NEBO cold), a ty jsou tenké: darkening/bright 5, autumn/cold 6. Při ~100 čteních/rok se protočí.
-- [ ] **IS eval harness** (`runar-eval.yaml`) — N čtení → grader → error rate PŘED/PO každé změně promptu. Poučení: auto-grader je moc přísný na styl → tvrdě měřit jen objektivní věci (IS gramatika). Gatuje A/B/C re-enable + Fázi 4.
+- [ ] **Eval harness: dokoncit + ZACOMMITOVAT** — ⚠️ `scripts/utils/` NEBYL v gitu (zjisteno 2026-07-19). Cely eval harness (`gen_batch.js`) i `measure_reading_costs.js` existovaly jen lokalne, prestoze je RUNAR_DECISIONS.md cituje jako soucast repa. Jedno `git clean` = pryc. Zbyva: automaticke PRED/PO porovnani dvou davek (dnes se obe casti poustí rucne a nic je nesrovnava).
 - [ ] **Report 3 odpovědí Coworku** (ověřeno, jen poslat): IS few-shoty JSOU islandské (`VOICE_PROFILES` config:392, `.is` bloky) · D-14 = jeden generický builder + RP_* packy · délky spreadů JSOU tvrdá čísla v `closing()`.
 
 ### 🟡 OWNER rozhodnutí
-- [ ] **Přetížení čtení** — ~48 slov slouží SEDMI pánům (AoL·Seeking·Intention·Life Rune·jméno·závěrečná otázka), runa je 7. a prohrává. Follow-up má 2 pány → runa věrnější. Ubrat pány / udělat runu primární? Produktová volba.
+- [~] **Pretizeni cteni — 7 panu** — varianta „udelat runu primarni" JE implementovana (explicitni priorita + ustup life-rune linse). Varianta „ubrat pany" ne: v builderu porad stoji _lensContext/_domainContext/_registerContext/_endingShape vedle sebe. Zbyva PRODUKTOVE rozhodnuti, jestli ta priorita staci.
 - [ ] **G2b no-fate gate** — „only one has your name on the wind" prošlo všemi 7 gates. Částečně kryto `_describeRule` („no fate"), ale ne specificky „odpověď je VE SVĚTĚ". Nejdřív změřit v0.6 dávku.
-- [ ] **Yggdrasil timing** — eval chytil 9-run spread v ČERVENCI; hard-blok mimo Dec 14–28 odstraněn (toast, SW v74), ale koncept = roční rituál. Celoročně + upravit framing, nebo re-enforce prosinec?
+- [x] **Yggdrasil timing — ROZHODNUTO A DOTAZENO** (KUKY 2026-07-18: celorocne, kdykoliv, kdokoliv prihlaseny). Kodovy zbytek, ktery si rozhodnuti vyzadalo, byl 2026-07-19 dodelan: `SPREAD_CONFIG.yggdrasil.seasonal` („Dec 14-28 only") smazan z configu.  <!-- check-docs:ok 2026-07-19 cituje zrusenou datumovou branu jako ZRUSENOU; prave o jejim smazani ta polozka je --> Byla to mrtva data — nikdo je necetl, ale kdo config cetl, precetl si tam zrusene pravidlo. Presne proto to owner opravoval PETKRAT.
 - [ ] **Retence čtení** — nerozhodnuto. Návrh: po dobu účtu; při zrušení smazat/anonymizovat pro eval. Blokuje konkrétní číslo v policy.
 - [ ] **Living tree: sundat admin gate** (`runar-tree.js:47-50`) — až uznáš betu za hotovou.
 - [ ] **runar-patterns.md** = ZASTARALÉ, „vše probrat" — refresh nebo retire (spec pro detectPatterns).
@@ -87,7 +87,7 @@
 - [ ] **Sigil Studio v0** — postavené+ověřené, ale nikde nestojí, že se má nasadit. Je to vůbec TODO?
 
 ### 🔵 COWORK
-- [ ] **Další eval dávka: v0.6 vs v0.4** přes `prompt_version` (R1 + gate-fails zvlášť). Odemyká G2b.
+- [ ] **Eval davka: v1.0 kohorta vs v0.9** pres `prompt_version`. (Puvodni zneni „v0.6 vs v0.4" je ZASTARALE — ta davka se nikdy neodjela a verze mezitim projela pres v0.7/v0.8/v0.9 az na v1.0.) Infrastruktura STOJI: `readings.prompt_version` se uklada, cte to list-readings i gen_batch. Odemyka G2b (r. 80).
 - [ ] Rubrika v0.4→v0.5 (mobilní pravidla, NE repo).
 - [x] **Tier jména — ROZHODNUTO** (KUKY 2026-07-18): Rune Seeker · Rune Walker · Rune Wanderer,
       IS Leitandi · Vegfarandi · Ferðalangur. Zdroj pravdy = `TIERS` v configu; „Rune Keeper" retired  <!-- doc-values:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
@@ -106,7 +106,7 @@
 - [ ] Eval pipeline: pseudonymizace (opt-out exkluze HOTOVÁ).
 - [ ] `_moodContext`/`_intentionContext` — zapojit intention, nebo smazat mood (mood z UI ODSTRANĚN, helper dřímá).  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
 - [ ] Zahodit stale `_lastDeeper` + `deeper_meaning` extrakci (nikde se nečte; deeper_meaning zrušen 2026-07-04). Guard: `composeReading` musí zůstat zrcadlo `_parseSegments` (smoke ⑦).
-- [ ] Segmentace Fáze B (tap UI / spread-map) — Fáze A hotová, spec `RUNAR_SEGMENTACE_FaseB_CODE.md`. **[spec NENÍ v repu — Coworkův výstup, nedodán přes CODE (§17)]**  <!-- doc-links:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
+- [~] **Segmentace Faze B — zbytek** — B1 (tap -> segment zezlatne) HOTOVO a v produkci. B2 (deeper_meaning) ZRUSENO ownerem 2026-07-10. NEHOTOVO a nikde jinde nedrzene: „tap odhali VYZNAM POZICE" (popup dnes ukazuje jen jmeno runy + keywords, zadny nazev pozice ze SPREAD_CONFIG) a „geometrie per spread". Zadne datovane rozhodnuti to nerusi -> nemazat bez rozhodnuti ownera.
 - [ ] Journal SPREAD historie renderuje font glyfy (single karty už SVG); shrine + yggdrasil.html obchází `runeSvg` (§5).
 - [ ] Server-side no-repeat sáček (dnes localStorage = per-zařízení) — FÁZE 2, po poolu.
 - [ ] A/B/C re-enable · EN polish pass · Fáze 4 (podmíněné) · sigil cut-out export · RUNAR_PRICING model ref (Sonnet→Opus 4.8) · smoke shorthand-check (chybí blocklist).

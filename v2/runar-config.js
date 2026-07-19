@@ -350,7 +350,9 @@ const SPREAD_CONFIG = {
   },
   yggdrasil: {
     rune_count: 9,
-    seasonal:  { month_start: 12, day_start: 14, day_end: 28 }, // Dec 14-28 only
+    // POZOR: zadne `seasonal` pole. Yggdrasil je KDYKOLIV pro kazdeho prihlaseneho
+    // (KUKY 2026-07-18, po pate oprave tehoz). Zimni slunovrat = vetsi sila ve strome,
+    // NE podminka pristupu. Kdo sem vrati datumovou branu, dela to posesté.
     positions: {
       en: [
         'Asgard — Highest self',        // 1 skuld

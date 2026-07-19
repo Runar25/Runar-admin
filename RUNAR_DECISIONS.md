@@ -1070,3 +1070,41 @@ Přesně tím byl `memory/runar-project.md` (sám vygeneroval ~15 nálezů) a č
 - **SW:** v215 → v216 (mění se klientské JS; bez bumpu si uživatel drží starý soubor z cache).
 - **Affected doc(s):** žádný.
 - **Reverzibilita:** snadná.
+
+---
+
+## 2026-07-19 — Audit backlogu proti kódu + úklid rootu [tune]
+
+### A) Backlog: 52 otevřených položek ověřeno proti kódu
+- **Metoda:** fanout (9 dávek) + **skeptik na každé tvrzení „HOTOVO"**. Asymetrie záměrná:
+  falešné „hotovo" práci **smaže** a nikdo se k ní nevrátí, falešné „otevřeno" je jen šum.
+  Skeptik ze 4 tvrzení HOTOVO **srazil 2 zpět** — bez něj by se dvě věci ztratily.
+- **Výsledek:** 2 hotové a neodškrtnuté · 8 částečných · 13 owner · 26 skutečně otevřených.
+- ⭐ **Hlavní nález není nezaškrtnuté políčko, ale ZASTARALÝ TEXT.** Osm položek popisovalo
+  problém, který se mezitím posunul (ř. 75 jmenovala `runar-eval.yaml`, o kterém bylo 10 dní
+  PŘED jejím sepsáním rozhodnuto, že se stavět nebude). Zastaralé zadání pošle člověka řešit
+  neexistující věc — to mate víc než chybějící odškrtnutí. Přepsáno 11 položek.
+
+### B) `SPREAD_CONFIG.yggdrasil.seasonal` smazán — přímý důsledek auditu
+- Rozhodnutí „Yggdrasil kdykoliv, žádná brána na datum" padlo 2026-07-18 a **tenhle záznam si
+  sám vyžádal** smazání pole z configu („dokud tam je, drift se vrací"). Nikdo to neudělal.
+- Pole **nikdo nečetl** (`git grep '\.seasonal\b'` = prázdné) — ale kdo četl config, přečetl si
+  tam zrušené pravidlo a implementoval ho znovu. **Proto to owner opravoval pětkrát.**
+- Stejná třída jako `SPREAD_CONFIG.credits`: mrtvá data, která vypadají autoritativně.
+
+### C) `scripts/utils/` NEBYLO v gitu
+- Celý eval harness (`gen_batch.js`, 24 kB) i `measure_reading_costs.js` existovaly **jen lokálně**,
+  přestože je `RUNAR_DECISIONS.md` cituje jako součást repa. Jedno `git clean` a jsou pryč.
+- **Odhalila to smoke ⑯**, ne člověk: přepsal jsem backlog tak, aby na ty soubory odkazoval,
+  a kontrola odkazů zčervenala. Správná reakce byla soubory **zacommitovat**, ne značku umlčet.
+- `measure_reading_costs.js` je navíc přesně nástroj, kterým jde ověřit tvrzení „hlas = 95 % ceny
+  čtení", na kterém stojí celá úvaha o přecenění — a které je zatím jen odhad z tabulky.
+
+### D) Úklid rootu: 223 souborů
+- V rootu leželo **250 netrackovaných souborů**, převážně jednorázové patch skripty z doby před §1
+  („patch VŽDY do `scripts/_patch.py`"). Pravidlo platí, ale nikdo neuklidil, co bylo předtím.
+- Přesunuto (NE smazáno) do `scripts/archive/root-patches-2026-07-19/` + MANIFEST.
+  **16 souborů zůstalo v rootu**, protože se na ně odkazuje z trackovaných souborů — a seznam
+  se počítá ZNOVU z repa, ne z natvrdo psaného výčtu (ten by zastaral stejně jako všechno ostatní).
+- Root: 250 → 27. `scripts/_patch_tune.py` doplněn do `.gitignore` (dvě lane, dvě cesty).
+- **Affected doc(s):** RUNAR_BACKLOG.md (přepsáno v témže commitu).

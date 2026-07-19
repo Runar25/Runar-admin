@@ -1,7 +1,16 @@
 
 # Scratch patch runner (Code rewrites it per task — never commit)
+# _patch.py = CODE-tree · _patch_tune.py = CODE-tune (dvě lane, dvě cesty, ať si
+# session nepřepisují rozdělaný skript pod rukama)
 scripts/_patch.py
+scripts/_patch_tune.py
+
+__pycache__/
 
 # Eval export — user reading text + follow-ups. NEVER commit (PII). Local only.
 readings_export.json
 readings_export.csv
+
+# Synthetic eval batches (scripts/utils/gen_batch.js). Generated, bulky, never
+# a source of truth — and must never be mistaken for real readings. Local only.
+eval_out/
