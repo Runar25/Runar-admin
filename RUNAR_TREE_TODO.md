@@ -68,7 +68,11 @@ Stavět až po doladění (KUKY ladí v chatu na cestách) + na KOPII. Body 7-12
 
 **8. Počet vyplněných polí = váha větve** (rozepsáno níž — KUKYmu to zatím nedávalo smysl).
 
-**9. Čas od posledního čtení = bonus (pauza → silnější). ŽÁDNÁ penalizace** (KUKY: bez penalizace).
+**9. ~~Čas od posledního čtení = bonus za pauzu~~ — ZRUŠENO (KUKY 2026-07-19).**
+   „Neznám, přijde mi to jako stará poznámka, která ani neměla být vytažena na povrch.“
+   Je to druhá půlka zrušené penalizace ze sekce „Filozofie rituální kadence“
+   (RUNAR_DESIGN.md, smazána 2026-07-18). Bez penalizace nemá o co se opřít.
+   Žádná penalizace ANI bonus — čas od posledního čtení strom neřeší.
 
 **10. Posílení opakováním.** Stejná runa/téma → zesílí existující větev (2× blíž · 3× cluster ·
    4× srůst), ne nová tenká. Soustředěný člověk = pár mohutných větví.

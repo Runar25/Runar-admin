@@ -312,6 +312,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .tree-admin-bar{display:flex;flex-wrap:wrap;gap:8px;padding:8px 12px;margin-bottom:16px;border:1px solid rgba(255,191,0,0.18);background:rgba(255,191,0,0.03);}
 .tree-admin-btn{font-family:'Cinzel',serif;font-size:0.55em;letter-spacing:2px;padding:6px 14px;background:transparent;border:1px solid rgba(255,191,0,0.35);color:var(--gold);opacity:0.6;cursor:pointer;transition:opacity 0.2s;white-space:nowrap;}
 .tree-admin-btn:hover{opacity:1;}
+/* Přehrávání růstu stromu. Posuvník sám je .cap-seek (týž, co audio seek) —
+   jeden vizuál, ne druhá skoro stejná kopie (§18). Tady jen obal a popisek. */
+.tree-seek-bar{display:flex;flex-direction:column;gap:7px;width:min(300px,78vw);margin:12px auto 0;}
+.tree-seek-lbl{font-family:'Cinzel',serif;font-size:0.5em;letter-spacing:2px;color:var(--gold);opacity:0.55;text-align:center;}
 
 /* ── COLLECTION ── */
 .coll-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:4px;align-items:stretch;}

@@ -66,7 +66,7 @@ Rohy (budoucnost+nitro, minulost+svět) = volné pro vzácnější kombinace.
 | **ætt** | sekundární charakter růstu |
 | **spread** | KOMPLEXITA (single=uzel · Norns=3 kořeny · Kříž=větev+4 · Horseshoe=větvená · Yggdrasil=roční prsten) |
 | **počet vyplněných polí** | VÁHA / mohutnost |
-| **čas od minula** | bonus (pauza = silnější) |
+| ~~čas od minula~~ | ZRUŠENO 2026-07-19 — druhá půlka zrušené penalizace, strom čas neřeší |
 | **Blank/Óðinn** | průsvitná duch-větev (~15 %, bez listů) |
 
 ---
@@ -127,8 +127,14 @@ Ostatní (později, decentně): pulzy dominance (element/ætt), bloom fáze, lis
   s příznakem `blank:true`. Renderer měl duchovní větev připravenou celou dobu
   (`runar-branch.js`, `k:'odinn'`) — jen se k ní nikdy nedostal. **Vizuál ducha (průsvitnost,
   bez listů) zatím NENÍ** — to je práce v enginu, čeká na vlastní krok.
+- ✅ **Přehrávání růstu (2026-07-19).** Posuvník nad stromem, krok po JEDNOM čtení, až
+  k zakládacímu stavu. Posílá se jen kratší log; věk se počítá z jeho délky, takže strom
+  u čtení č. 3 vypadá jako tehdy, ne jako dnešek s méně větvemi. Engine netknutý.
+  **Je to měřicí přístroj, ne ozdoba** — bez něj nešlo poznat, jestli změna umístění větví
+  vůbec něco udělala, a přesně proto obě osy mlčely dva měsíce.
 - **Zbývá ze signálů §4:** runa→tvar (renderer bere tvar z elementového poolu) · váha z počtu
-  vyplněných polí · bonus za pauzu · seeking jako třetí hlas do vážené volby §3A.
+  vyplněných polí · seeking jako třetí hlas do vážené volby §3A.
+  (**Bonus za pauzu ZRUŠEN** 2026-07-19 — byla to druhá půlka zrušené penalizace.)
 - **Zbývá (velký směr = owner volba):** **produkce** (`tree_state` DB + reálná čtení z readeru) · **per-runa** (runa se odštěpí z elementového ramene ve své zóně = hlubší bough) · nebo **ladit** stávající. Aktuální stav labu = `RUNAR_TREE_TODO.md`.
 - **Boughs velká přestavba = ZAMÍTNUTO** (regrese — viz RUNAR_DECISIONS 2026-07-04). Koncept „runa=větev" OK jako cíl, cesta = jemné kroky.
 

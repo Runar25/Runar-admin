@@ -473,6 +473,13 @@
     <!-- LIVING TREE (free-solo: grows from your readings) -->
     <div id="tree-living" style="display:none; text-align:center; margin:8px 0 4px;">
       <canvas id="tree-living-canvas" style="width:min(300px,78vw); height:auto; display:block; margin:0 auto;"></canvas>
+      <!-- Přehrávání růstu: posuvník po JEDNOM čtení zpět až k zakládacímu stavu.
+           Není to ozdoba — bez něj nejde poznat, jestli změna v umístění větví
+           vůbec něco udělala (2026-07-19: osy mlčely dva měsíce a nikdo to neviděl). -->
+      <div class="tree-seek-bar" id="tree-seek-bar" style="display:none;">
+        <input type="range" class="cap-seek" id="tree-seek" min="0" max="0" step="1" value="0">
+        <div class="tree-seek-lbl" id="tree-seek-lbl"></div>
+      </div>
     </div>
 
     <!-- LIFE RUNE SECTION -->
