@@ -66,9 +66,20 @@ for (const t of targets) {
     const base = name.split('/').pop();
     if (sameCommit.some(f => f.endsWith(base))) continue;
 
-    // commitnutý kdykoli PO rozhodnutí? (soubor mohl být i přesunut do archivu)
+    // Pohnul se ten doc v DEN rozhodnutí nebo po něm?
+    //
+    // Schválně podle DATA, ne podle předků commitu. Původní verze ptala
+    // `git log <sha>..HEAD` — jenže jakákoli pozdější editace toho řádku
+    // (překlep, doplnění dalšího docu) přepsala blame na nový commit a tím
+    // RESETOVALA HODINY: splněné sliby najednou spadly mimo okno a guard
+    // hlásil porušení u práce, která byla dávno hotová. Našlo se to 2026-07-19
+    // hned první opravou vlastního záznamu.
+    //
+    // Kompromis, který tím beru vědomě: doc commitnutý dřív TÝŽ den se počítá
+    // jako splněný. Volnější, ale nikdy nelže obráceně — a falešný poplach je
+    // u kontroly, která má běžet před každým commitem, dražší než průchod.
     let after = '';
-    try { after = git(`log ${sha}..HEAD --oneline -- "*${base}"`).trim(); } catch (e) {}
+    try { after = git(`log --since="${when}T00:00:00" --oneline -- "*${base}"`).trim(); } catch (e) {}
     if (after) continue;
 
     // existuje ten soubor vůbec?
