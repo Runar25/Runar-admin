@@ -1650,3 +1650,27 @@ Kam Code nevidí: produkční DB · appka v přihlášeném stavu (lokální ná
 branách) · logy edge funkcí (CLI verze tu nemá `functions logs`). Dnes jsem dvakrát odvodil
 správně a měl štěstí, jednou odvodil špatně (kořeny stromu). **Dedukce z kódu je hypotéza,
 i když zní jistě.**
+
+---
+
+## 2026-07-19 — Zakládání se NIKDY nespustilo: četlo vlastnost, která neexistuje [tune]
+
+- **Vada:** `_isFounding` četlo `o.mode`, ale `_generateNornsReading()` posílá objekt
+  `{ runes, min, buildPrompt, tokens, credits, outputId, outId, lblId, kind:'NORNS' }` —
+  **žádný `mode` tam není**. Výraz byl proto **vždy false**. Zakládání stromu se nespustilo
+  ani jednou: owner klikal na „ROOT YOUR TREE", dostal běžné placené Norny a zaplatil je.
+- **Jak se to našlo:** ne z kódu, ale z DB. `tree_founded_at = NULL` a `founding_reading_id = NULL`
+  při `life_rune_text` vyplněném. Owner ten dotaz pustil na moji žádost — přesně to nové pravidlo
+  [[ask-owner-for-checks-you-cannot-run]] v praxi. Z kódu jsem si toho nevšiml ani při psaní,
+  ani při dvou kolech oprav.
+- ⚠️ **Jak chyba vznikla (stojí za pojmenování):** `mode: 'norns'` v tom souboru EXISTUJE — jen
+  v úplně jiném objektu (`_SPREAD_SLOT_CFG`) o pár set řádků výš. Sáhl jsem po tvaru, který jsem
+  v souboru viděl, místo po tom, který se na tomhle místě předává. **JS nepomůže: čtení
+  neexistující vlastnosti je `undefined`, ne chyba** — takže se to tvářilo, že funguje, a jen
+  tiše nikdy nenastalo.
+- **Guard ㉒** (`verify_founding_flag.js`): porovná vlastnost, kterou rozpoznání čte, s objektem,
+  který volající posílá — včetně hodnoty. Záměrně úzký; obecné „čteš vlastnost, kterou nikdo
+  nenastavuje" chce typový systém, ne grep.
+- **OVĚŘENO ROZBITÍM, tři stavy:** původní chyba (`o.kind`→`o.mode`) · špatná hodnota
+  (`'NORNS'`→`'norns'`) · volající přestane `kind` posílat. **3× CHYTL**, po obnovení zelená.
+- **Affected doc(s):** žádný.

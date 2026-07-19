@@ -770,7 +770,10 @@ async function _generateSpreadReading(o) {
   _lastReadingId = null;
   // Zakladaci Norny: zdarma a BEZ HLASU (hlas = 95 % ceny cteni, proto se nekona).
   // Cenu vynucuje proxy podle mode='founding', ne tahle dve cisla.
-  var _isFounding = (o.mode === 'norns' && typeof _foundingPending !== 'undefined' && _foundingPending);
+  // `o.kind` je to, co _generateNornsReading() skutecne posila ('NORNS').
+  // Do 2026-07-19 tu stalo `o.mode`, coz na predavanem objektu NEEXISTUJE —
+  // vyraz byl vzdy false a zakladani se nespustilo ani jednou.
+  var _isFounding = (o.kind === 'NORNS' && typeof _foundingPending !== 'undefined' && _foundingPending);
   var res = await callProxy(sys, prompt, o.tokens,
                             _isFounding ? false : shouldUseCredit(),
                             _isFounding ? 0 : o.credits,

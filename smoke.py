@@ -363,6 +363,20 @@ first = output.split('\n')[0] if output else 'owned-before-tier check ran'
 check(first if passed else 'hotové čtení schované za kontrolou tieru', passed,
       '' if passed else output)
 
+# ── Rozpoznání zakládání čte vlastnost, kterou volající posílá ───────
+# 2026-07-19: `_isFounding` cetlo `o.mode`, ktere v predavanem objektu neexistuje
+# (posila se `kind`). Vyraz byl vzdy false -> zalozeni stromu se nespustilo ani
+# jednou, uzivatel misto nej dostal placene Norny. JS na to neupozorni: cteni
+# neexistujici vlastnosti je undefined, ne chyba.
+print(chr(0x3252) + ' PRIZNAK ZAKLADANI (verify_founding_flag.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_founding_flag.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+first = output.split('\n')[0] if output else 'founding flag check ran'
+check(first if passed else 'zalozeni cte vlastnost, kterou nikdo neposila', passed,
+      '' if passed else output)
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
