@@ -93,7 +93,9 @@ function _drawTreeAt(n) {
   if (!cv || !window.RunarTreeProd || !_treeRkey) return;
   var full = (n == null || n >= _treeLog.length);
   var view = full ? _treeLog : _treeLog.slice(0, n);
+  _treeViewN = n;
   _treePick = window.RunarTreeProd.render(cv, { log: view, rune: _treeRkey, dob: _treeDob }) || null;
+  _treeHighlight(cv);
 
   var lbl = document.getElementById('tree-seek-lbl');
   if (!lbl) return;
@@ -107,6 +109,8 @@ function _drawTreeAt(n) {
 // Portováno z labu (crown-composer.html · _pick + showInspect).
 var _treePick = null;
 var _treeInspWired = false;
+var _treeSelK = null;    // index vybrane vetve; drzi se pres posun posuvniku
+var _treeViewN = null;   // aktualni poloha posuvniku (kvuli prekresleni po kliku)
 
 function _inspHint() {
   var box = document.getElementById('tree-insp');
@@ -127,6 +131,28 @@ function _inspShow(m) {
     ' <span class="ti-dim">·</span> ' + m.world +
     '<br>' + tp('tree_insp_count', { casts: vn('cast', m.count || 0, lang) }) +
     dalsi;
+}
+
+// Obtáhne vybranou větev zlatou linkou a zároveň obnoví panel — takže když
+// posuneš posuvník, VIDÍŠ, jestli ta samá větev změnila runu. To je celý smysl:
+// odlišit „strom se změnil, protože přibylo čtení" od „změnil se sám".
+function _treeHighlight(cv) {
+  if (_treeSelK == null || !_treePick || !_treePick.pick) return;
+  var sel = null, p = _treePick.pick;
+  for (var i = 0; i < p.length; i++) if (p[i].k === _treeSelK) sel = p[i];
+  if (!sel) { _inspHint(); return; }   // vetev v tomhle stavu jeste neexistuje
+  var ctx = cv.getContext('2d');
+  ctx.save();
+  ctx.strokeStyle = 'rgba(255,191,0,0.75)';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  for (var j = 0; j < sel.pts.length; j++) {
+    var q = sel.pts[j];
+    if (j) ctx.lineTo(q.x, q.y); else ctx.moveTo(q.x, q.y);
+  }
+  ctx.stroke();
+  ctx.restore();
+  _inspShow(sel.meta);
 }
 
 // Klik/tap -> nejbližší bod větve do 22 px. Souřadnice jsou v prostoru plátna
@@ -152,7 +178,8 @@ function _inspHit(ev) {
       if (d < bd) { bd = d; best = p; }
     }
   }
-  if (best) _inspShow(best.meta); else _inspHint();
+  if (best) { _treeSelK = best.k; _drawTreeAt(_treeViewN); }
+  else { _treeSelK = null; _drawTreeAt(_treeViewN); _inspHint(); }
 }
 
 // Zlatá výplň dráhy — týž mechanismus jako audio seek (runar-reading.js:625).

@@ -708,6 +708,43 @@ stav až potom a vyvodil závěr o minulosti → owner musel arbitrovat. Stav be
     · RUNAR_EVAL_CHAT_mobil · RUNAR_FEATURES · RUNAR_IS_GRAMMAR_CHECK_CODE · RUNAR_SEGMENTACE_FaseB
     · RUNE_IMAGE_POOLS_draft · tento handoff.
 
+## 2026-07-19 — Zvýraznění vybrané větve + DIAGNÓZA „přeskakování"
+
+**Zadání KUKY:** „vybraná větev by se měla označit stejně, jako jsme to měli v labu."
+Portováno z `crown-composer.html:675-678` (zlatá linka přes body větve, kreslí se po vykreslení).
+Kreslí se na KLIENTOVI, ne v rendereru — transformace po `render()` zůstává nastavená (dpr),
+takže se trefí do stejných souřadnic a builder se nemusí měnit.
+
+**Navíc oproti labu: výběr přežije posun posuvníku** a panel se překresluje. Owner tak vybere
+větev, posune se a VIDÍ, jestli mu ta samá větev změnila runu. Z inspekce se tím stal nástroj
+na přesně tu otázku, kterou dnes řešil.
+
+### ⭐ DIAGNÓZA: „144 skok, 148 Berkano se vrací zpět" NENÍ nedeterminismus
+
+Reprodukováno v prohlížeči na syntetickém logu (10× Berkano, pak 14× Perth), jedna a TÁŽ větev:
+```
+poloha 24 → Perthro      poloha 18 → Berkano
+poloha 14 → Berkano      poloha  6 → Berkano
+```
+Je to **krok 3, který dělá přesně to, co owner schválil** (přetvarovat při změně pořadí).
+Když jsou dvě runy v elementu skoro nastejno, pořadí se **překlápí sem a tam** a vypadá to
+jako závada. Ownerova data (skok na 144, návrat na 148) mají přesně tvar oscilace kolem remízy.
+
+⚠️ **Historická poznámka, která to předpověděla:** `RUNAR_TREE_TODO.md` log — *„[OPRAVENO] Větve
+přeskakovaly … nejčastější runa tématu se měnila → runa tématu = první viděná."* Tehdejší oprava
+byla zmrazení na první viděnou. Krok 3 to zmrazení zrušil; oscilace se vrátila.
+
+**Návrh k rozhodnutí ownera: hystereze.** Nepřeklápět při těsném vedení — nová runa převezme tvar,
+teprve když vede o práh (např. 2 čtení). Genuinní dlouhodobý posun projde, blikání kolem remízy ne.
+Alternativy: nechat jak je (poctivé, ale nervózní), nebo zmrazit na první viděnou (stabilní, ale
+strom přestane mluvit o dnešku). NEROZHODNUTO — čeká na ownera.
+
+**Ověřeno:** zvýraznění kreslí (364 zlatých pixelů s výběrem vs 0 bez), výběr drží přes posun,
+panel se aktualizuje. Pojistka proti nulovému rozměru plátna se během testu sama uplatnila
+a zabránila nesmyslné trefě — přesně proč vznikla.
+
+**Affected doc(s):** RUNAR_TREE.md
+
 ## 2026-07-19 — Inspekce větve klepnutím (admin) + dvě opravy kroku 3
 
 **Proč.** KUKY vidí ve stromě „přeskakování větví" a nabídl, že bude hlásit čísla run. To by

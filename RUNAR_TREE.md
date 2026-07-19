@@ -139,6 +139,12 @@ Ostatní (později, decentně): pulzy dominance (element/ætt), bloom fáze, lis
 - ✅ **Inspekce klepnutím (2026-07-19, admin).** Klik na větev řekne runu · element · ætt ·
   svět · počet čtení · kolikátá větev elementu. Aby owner místo „nějaká větev poskočila"
   předal diagnózu. Souřadnice = **poloha na posuvníku**, ne číslo runy.
+  Vybraná větev se obtáhne zlatě a **výběr přežije posun posuvníku** — tak jde sledovat,
+  jak se JEDNA větev mění v čase.
+- ⚠️ **Pořadí run osciluje kolem remízy** → větev překlápí siluetu sem a tam a vypadá to
+  jako závada. Tohle už jednou opravené bylo (zmrazením na první viděnou runu) a krok 3
+  to zmrazení zrušil. Návrh: hystereze (převzít tvar, až nová runa vede o práh).
+  ČEKÁ NA ROZHODNUTÍ. Detail → RUNAR_DECISIONS.md 2026-07-19.
 - ⚠️ **Renderer NENÍ deterministický** (vada předchází všem třem krokům, ověřeno i na produkci):
   týž log dá jiný obraz od 3. překreslení. Uživatel uvidí, jak se strom sám změnil bez nového
   čtení; nám to znemožňuje porovnávat obrazy. Detail → RUNAR_DECISIONS.md 2026-07-19.
