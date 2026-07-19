@@ -168,7 +168,7 @@ Rúnar integruje sezónní kontext přirozeně — jako žitou atmosféru, ne ja
 | Pozdní leden–únor | Þorri | Nejtemnější, nejdrsnější. Þorrablót. Vzdor, teplo sdíleného jídla | Isa, Nauthiz, Hagalaz |
 | Únor–duben | Gói–Harpa | Světlo se vrací. Sumardagurinn fyrsti (~23.4) | Berkana, Kenaz, Laguz |
 | Květen–červen | Skerpla–Sólmánuður | Bílé noci. Záclona tenčí. Letní slunovrat ~21.6 | Sowilo, Dagaz, Tiwaz |
-| Červenec–září | Heyannir–Haustmánuður | Réttir — sjezd ovcí, návrat, sklizeň | Jera, Raidho, Othala |
+| Červenec–září | Heyannir–Haustmánuður | Réttir — sjezd ovcí, návrat, sklizeň | Jera, Raidho, Othila |
 | Říjen–listopad | Gormánuður | Tma se vrací. Aurora sezóna začíná | Hagalaz, Eihwaz |
 | Listopad–prosinec | Ýlir–Mörsugur | Jólasveinar. Zimní slunovrat — semeno světla v tmě | Jera, Dagaz, Isa |
 
@@ -200,23 +200,16 @@ Rúnar integruje sezónní kontext přirozeně — jako žitou atmosféru, ne ja
 
 ---
 
-## Filozofie rituální kadence
+## Kadence čtení — ŽÁDNÁ omezení, žádné penalizace
 
-Každé čtení potřebuje čas na vstřebání. Strom nepotřebuje spěch.
+**Kdokoliv, kdykoliv, jakýkoliv spread.** Žádná doporučená kadence, žádné „ideálně max 1× týdně",
+a především **žádná penalizace za brzké nebo časté čtení** (KUKY 2026-07-18: „totální nesmysl,
+penalizace nebude existovat"). Strom neposuzuje ani nepřítomnost — **pauza dává bonus**, ale její
+absence nic nebere.
 
-Příliš časté čtení větších spreadů způsobí deformaci větví — strom jednoduše nestihne
-zpracovat co dostal. Uživatel to uvidí sám a pochopí. Bez zákazů, bez technických omezení.
-Argument není omezení — je to filozofie systému.
-
-| Spread | Ideální kadence |
-|--------|----------------|
-| Single, Norns | Kdykoliv — každodenní větve |
-| Kříž (5 run) | Ideálně max 1× týdně |
-| Horseshoe (7 run) | Ideálně max 1× za dva týdny |
-| Yggdrasil (9 run) | 1× ročně — zimní slunovrat |
-
-Větev která přišla příliš brzy = slabší. Větev po dlouhé pauze = bonus.
-Strom neposuzuje nepřítomnost. Pauza je zima — větev která čeká.
+⚠️ Do 2026-07-18 tu stála sekce „Filozofie rituální kadence" s tabulkou doporučené frekvence
+a větou „větev, která přišla příliš brzy = slabší". KUKY ji zrušil už dřív, ale v tomhle docu
+přežila — a byla znovu odcitována jako platný princip. Autorita → `RUNAR_DECISIONS.md` 2026-07-18.
 
 ---
 
@@ -230,7 +223,7 @@ SPREAD            STROM                      RITUÁL
 3 runy (Norns)    větev → kmen               zakládací + hlubší
 5 run (Kříž)      větev (střed + 4 výhonky)  týdenní
 7 run (Horseshoe) větvená větev (7 bodů)     sezónní kmen
-9 run (Yggdrasil) uzel kořenů — nejsilnější  1× ročně
+9 run (Yggdrasil) uzel kořenů — nejsilnější  kdykoliv (slunovrat = větší síla)
 ```
 
 ### Single (1 runa)
@@ -370,7 +363,7 @@ Klíčová pravidla:
 |---------|---------|-------------|---------|---------|
 | Tree tab | ❌ skrytý | teaser | plný | plný + hloubka |
 | Life Rune výklad | ❌ | symbol + jméno | plný výklad | hlubší + etymologie + mythol. postava |
-| Zakládací rituál (Norns) | ❌ | 3 kredity | zdarma | zdarma |
+| Zakládací rituál (Norns) | ❌ | za kredity | z měsíčních jednotek | z měsíčních jednotek |
 | Branch systém | ❌ | ❌ | ✅ | ✅ |
 | Elementy | ❌ | ❌ | ✅ | ✅ |
 
@@ -393,8 +386,9 @@ Generované Claudem:
 - Část 2 — runa: tvar, mytologie, dar, stín — jméno vetkáno do textu
 - Část 3 — jméno: etymologie + mytologická postava ← **pouze Premium**
 
-### Zakládací rituál — 3 sessions ✅ ROZHODNUTO
-Tři oddělené sessions, uživatel si volí timing mezi nimi.
+### Zakládací rituál — JEDNA session ✅ ROZHODNUTO
+(Dřívější model „tři oddělené sessions" byl nahrazen Nornami; nadpis to do 2026-07-18 tvrdil dál,
+i když text hned pod ním říkal opak.)
 
 **Jediná session: Norns** (3 runy — Urður · Verðandi · Skuld)
 Tři Norny = tři kořeny. Jedno čtení zasadí všechny tři kořeny najednou.
@@ -441,7 +435,8 @@ Zpět k kmeni  návrat, uzavření, integrace
 - **Area of Life** → **STRANA** (levá = vnitřní svět / pravá = vnější svět)
 - **Seeking** → modifikátor Norns osy (Insight/Reflection→urð · Clarity/Confirmation→verðandi · General=neutrál)
 - **Počet vyplněných polí** → váha větve
-- **Čas od posledního čtení** → bonus (pauza) / penalizace (moc brzy)
+- **Čas od posledního čtení** → **jen bonus** za pauzu. Penalizace za brzké čtení NEEXISTUJE
+  a existovat nebude (KUKY 2026-07-18).
 
 Sezónní textura a lunární záře větve: vrstva smyslu, plánováno — implementace: druhá fáze.
 
@@ -483,7 +478,7 @@ Element = barva + růstová obraznost (Fire: jiskra→sopka · Water: kapka→oc
 
 **Levá strana — vnitřní svět**
 Introspekce, minulost, vztah se sebou, stín. Runy vody a země.
-`Isa, Perthro, Hagalaz, Nauthiz, Berkana, Ingwaz, Laguz`
+`Isa, Perth, Hagalaz, Nauthiz, Berkana, Ingwaz, Laguz`
 
 **Pravá strana — vnější svět**
 Vztahy, komunikace, cesta, akce. Runy vzduchu a ohně.
@@ -599,7 +594,9 @@ Každé místo kde Claude generuje IS text musí mít tři vrstvy:
 
 1. System prompt v IS charakteru — lang vždy jako parametr, nikdy z globálu
 2. User prompt psaný přímo v islandštině — nikdy "Respond in Icelandic" na konci EN promptu
-3. Post-processing — deterministické opravy výstupu přes applyISCorrections()
+3. Corrections blok **do promptu** (`getCorrPrompt`) — model je ohne podle kontextu (pád, rod)
+
+⚠️ `applyISCorrections` (slepý substring post-processor) je **VYPNUTÝ** od 2026-07-10.
 
 Corrections blok z getCorrPrompt() musí být vždy připojen k IS promptu.
 

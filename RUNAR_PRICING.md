@@ -72,7 +72,8 @@ Worst-case cost per reading-unit is the **single** (358 chars/unit); all spreads
 ### Rune Seeker (rune_seeker)
 - **Model B: 1 free reading at registration (with voice), no monthly reset.** Single source = DB `free_balance` (default 1).
 - Additional readings via credits
-- **Credit cost = per reading type** (not rune count): Single 1 · Norns 2 · Kríž 3 · Horseshoe 4 · Yggdrasil 5 · Life Rune 3
+- **Credit cost = per reading type**, not rune count. Values live in `SPREAD_COSTS`
+  (`v2/runar-config.js`) — the table further down is the single copy in this doc (§20).
 - Access: all spreads via credits (Single, Norns, Kříž, Horseshoe, Yggdrasil)
 - Credits are deliberately expensive — engaged user self-selects into subscription
 - Tree: **Founding ritual (Norns) = 2 credits** · **Life Rune reading = 3 credits** · **full tree founding = 3 + 2 = 5 credits** (viz RUNAR_CONTEXT.md). „Founding" bez přívlastku = Norns 2; „fundace stromu" = celých 5.
@@ -82,7 +83,9 @@ Worst-case cost per reading-unit is the **single** (358 chars/unit); all spreads
 ### Standard (~$28/month)
 - 50 reading-units/month limit
 - All spreads including Yggdrasil (peak window: 1 week before/after solstice = full tree weight)
-- Full Tree of Life + founding ritual free
+- Full Tree of Life. **Founding ritual is NOT free** — it costs its reading-units like any other
+  reading (KUKY 2026-07-18). Rune Seekers may be *gifted* founding credits as a marketing move
+  (campaign, onboarding push), but that is promotion, not a product entitlement.
 - Full journal
 - Voice included
 - Life Rune: full reading (1200 tokens)
@@ -95,11 +98,12 @@ Worst-case cost per reading-unit is the **single** (358 chars/unit); all spreads
 - Future: cacao ceremonial, other features TBD
 - Purpose: depth, for committed users
 
-**Counting (unified with RS credits):** a reading costs its credit value from the monthly limit —
-Single 1 · Norns 2 · Kríž 3 · Horseshoe 4 · Yggdrasil 5. One model app-wide.
+**Counting (unified with RS credits):** a reading costs its credit value from the monthly limit.
+One model app-wide; values = `SPREAD_COSTS`, not repeated here (§20).
 Worst case is unchanged: single = 1 unit = 358 chars is the cost ceiling (50 single = max 17.900 chars/mo).
 Spread-heavy users get more value (Yggdrasil 5 units, was 9 runes) at no extra worst-case cost.
-*(Note: monthly-limit enforcement in claude-proxy is still a TODO — when built it deducts the credit value.)*
+*(Monthly-limit enforcement is **live** in claude-proxy since 2026-07-16 — it deducts the credit
+value and returns 402 `monthly_limit` when exceeded. Guarded by smoke ⑨.)*
 
 ---
 
@@ -192,8 +196,10 @@ A single is the most expensive reading-unit (358 chars/unit); any spread usage l
 
 Standard and Premium margins are equal and healthy (~93% IS / ~96% EN). Prices remain balanced — no change needed.
 
-Fixed infra: ~$30/month (Hetzner + Supabase Pro).
-Break-even: 2 Standard monthly users.
+⚠️ Fixed infra is **~$202/month**, not ~$30 — the full breakdown (Claude, Shopify, Supabase,
+ElevenLabs, Apple, Hetzner, domain) is in „Operating costs, taxes & break-even" below, and
+**break-even is ~8 users, not 2**. This paragraph counted only Hetzner + Supabase and contradicted
+its own document; corrected 2026-07-18. Do not restate the number here — that section owns it.
 
 ### Revenue & profit projections (realistic mix: 70% Standard / 30% Premium, 60% annual / 40% monthly, 50% IS / 50% EN)
 
