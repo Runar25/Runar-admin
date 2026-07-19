@@ -953,3 +953,46 @@ Přesně tím byl `memory/runar-project.md` (sám vygeneroval ~15 nálezů) a č
   marketingový přínos je hypotéza, ne měření. (c) farmení účtů ekonomicky nezajímavé (~$0.01/účet).
 - **Až se to udělá:** přepsat v `RUNAR_PRICING.md:53` větu „3 credits reflects perceived value" —
   zdůvodňuje cenu, která přestane existovat. Sedm tabulkových zmínek hlídá ⑳; prózu na ř. 126 ne.
+
+---
+
+## 2026-07-19 — Duplicitní korekce v promptu životní runy + duplikát ceny smazán [tune]
+
+### A) Korekční blok šel do promptu životní runy DVAKRÁT (regres z 2026-07-18)
+- **Co:** `runar-tree.js:322` předával `corrections` do `buildLifeRunePrompt()` a hned na dalších
+  dvou řádcích si připojil `getCorrPrompt()` ještě jednou. Snapshoty z 2026-07-10 ukazují původní
+  správný stav: dispečer `corrections` **nebral**, takže kopie u volajícího byla na místě.
+  Když jsem 2026-07-18 přesouval gaty (`_describeRule`, `_noColdRead`) do dispečera, přidal jsem
+  tam i `getCorrPrompt` a **kopii u volajícího nesmazal**. Moje chyba, ne cizí.
+- **Dopad:** korekční instrukce v každém promptu životní runy dvakrát → zbytečné tokeny a hlavně
+  převážená instrukce (opakovaný příkaz model váží silněji než jednorázový).
+- **⚠️ PROČ TO ⑧ NECHYTLA:** ptala se `includes()` — tedy jestli gate **dorazí**. Dorazit dvakrát
+  je pořád dorazit. Ověřoval jsem přítomnost, ne počet. Přesně to, před čím §19 varuje.
+
+### B) ⑧ rozšířena o dvě věci
+1. **Multiplicita:** každý gate se v promptu smí vyskytnout právě jednou (spready i životní runa).
+2. **Statická kontrola volajícího:** kdo předá `corrections` do `build*Prompt()`, nesmí sám volat
+   `getCorrPrompt()`. Dynamická část tohle **nikdy neuvidí** — volá buildery přímo, ne přes
+   volajícího. Navíc fixture posílá `corrections: []`, takže `getCorrPrompt` vrátí prázdno
+   a duplicita je dynamicky neviditelná. Proto staticky.
+- ⚠️ **MŮJ DRUHÝ FALSE GREEN TÉHOŽ DNE (zapsáno schválně):** první verze toho statického bloku
+  skončila **za `process.exit()`** — mrtvý kód, nikdy neproběhl, kontrola svítila zeleně.
+  Postavil jsem kontrolu proti tiché zelené a udělal v ní tichou zelenou. Odhalilo to až
+  ověření rozbitím; bez něj by to bylo v repu jako „hotová kontrola".
+  **Poučení (opakovaně stejné): zelená bez předchozí červené nic netvrdí.**
+- **OVĚŘENÍ (§19, celý cyklus):** 5 stavů — původní regres u volajícího · gate dvakrát u životní
+  runy · gate zmizí u životní runy · gate dvakrát u spreadu · gate zmizí u spreadu → **5× CHYTL**,
+  po obnovení zelená, soubory bajtově nedotčené.
+
+### C) SPREAD_CONFIG.credits smazáno (ne hlídáno)
+- **Změřeno:** `SPREAD_CONFIG.credits` **nikdo nečetl**. Všichni konzumenti berou `SPREAD_COSTS`
+  (runar-reading.js:827-848, runar-tree.js:112/289/329, gen_batch.js:245). Ze `SPREAD_CONFIG`
+  se čtou jen `.tokens` a `.positions`.
+- **Proč to bylo horší než živá kopie:** mrtvá data, která vypadají autoritativně. Kdo by přecenil
+  v `SPREAD_CONFIG` (ten název zní jako ten hlavní), **nezmění nic** a nedozví se to.
+- **Důsledek pro ⑳ (z včerejška):** změněno z „kopie musí souhlasit" na **„kopie nesmí existovat"**.
+  Hlídat duplikát je druhá nejlepší věc; první je nemít ho. KUKY 2026-07-19: „pokud je něco
+  ve SPREAD_COSTS špatně, mělo by se to opravit."
+- **SW:** v215 → v216 (mění se klientské JS; bez bumpu si uživatel drží starý soubor z cache).
+- **Affected doc(s):** žádný.
+- **Reverzibilita:** snadná.

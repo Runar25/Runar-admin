@@ -313,13 +313,13 @@ const VOCAB = {
 // ─── SPREAD CONFIG — single source of truth ──────────────
 // rune_count: how many runes to draw
 // positions.en / positions.is: position labels (null = single rune, no positions)
-// credits: cost in credits (mirrors SPREAD_COSTS)
+// credits: ZDE NENI — vlastnikem ceny je SPREAD_COSTS (§18). Kopie tu do 2026-07-19
+// byla, nikdo ji necetl, a precenit v ni znamenalo nezmenit nic. Hlida smoke.
 // tokens: max_tokens for Claude
 const SPREAD_CONFIG = {
   single: {
     rune_count: 1,
     positions:  null,
-    credits:    1,
     tokens:     700,
   },
   cross: {
@@ -328,7 +328,6 @@ const SPREAD_CONFIG = {
       en: ['Centre / Core', 'Above / Aspiration', 'Below / Root', 'Behind / Past', 'Ahead / Direction'],
       is: ['Miðja / Kjarni', 'Ofan / Þrá', 'Undir / Rót', 'Að baki / Fortíð', 'Framar / Stefna'],
     },
-    credits: 3,
     tokens:  1100,
   },
   norns: {
@@ -337,7 +336,6 @@ const SPREAD_CONFIG = {
       en: ['Urður / Past', 'Verðandi / Present', 'Skuld / Future'],
       is: ['Urður / Fortíð', 'Verðandi / Nútíð', 'Skuld / Framtíð'],
     },
-    credits: 2,
     tokens:  900,
   },
   horseshoe: {
@@ -348,7 +346,6 @@ const SPREAD_CONFIG = {
       is: ['Fortíð',     'Nútíð',      'Dulið / Nánasta framtíð',
            'Hindranir',  'Ytri kraftar', 'Innri staða', 'Niðurstaða'],
     },
-    credits: 4,
     tokens:  1300,
   },
   yggdrasil: {
@@ -380,7 +377,6 @@ const SPREAD_CONFIG = {
     },
     // Norns axis per position: skuld=1-3, verdandi=4-5, urd=6-9
     norns_axis: ['skuld','skuld','skuld','verdandi','verdandi','urd','urd','urd','urd'],
-    credits: 5,
     tokens:  1800,
   },
 };

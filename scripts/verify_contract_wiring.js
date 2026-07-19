@@ -68,6 +68,12 @@ const PARTS = {
   coldread: ['NO COLD READING', 'ENGIN KÖLD LESNING'],
 };
 const has = (txt, k) => PARTS[k].some(p => txt.includes(p));
+// Kolikrat gate v promptu je. Pritomnost NESTACI: 2026-07-19 sel korekcni blok do
+// promptu zivotni runy dvakrat (dispecer + volajici) a tahle kontrola svitila zelene,
+// protoze se ptala jen `includes`. Duplikovana instrukce navic prevazi ostatni.
+const times = (txt, k) => PARTS[k].reduce(function (n, p) {
+  return n + (p ? txt.split(p).length - 1 : 0);
+}, 0);
 const BUILDERS = ['single', 'norns', 'kriz', 'horseshoe', 'yggdrasil'];
 let fail = 0;
 
@@ -77,6 +83,8 @@ for (const L of ['en', 'is']) {
     const missing = Object.keys(PARTS).filter(k => !has(txt, k));
     if (missing.length) { fail++; console.log('FAIL  ' + b + '_' + L + '  missing: ' + missing.join(', ')); }
     else console.log('OK    ' + b + '_' + L + '  lens+domain+register+priority+coldread');
+    const dup = Object.keys(PARTS).filter(k => times(txt, k) > 1);
+    if (dup.length) { fail++; console.log('FAIL  ' + b + '_' + L + '  gate dvakrat v promptu: ' + dup.join(', ')); }
   }
   // the lens must NOT appear when the life rune is itself one of the drawn runes
   const t = O['norns_lifein_' + L] || '';
@@ -94,6 +102,11 @@ for (const L of ['en', 'is']) {
   const missing = Object.keys(need).filter(k => !need[k].some(x => txt.includes(x)));
   if (missing.length) { fail++; console.log('FAIL  liferune_' + L + '  missing: ' + missing.join(', ')); }
   else console.log('OK    liferune_' + L + '  describe+coldread');
+  // pritomnost nestaci — gate dvakrat prevazi zbytek promptu
+  const dupLR = Object.keys(need).filter(function (k) {
+    return need[k].reduce(function (n, p) { return n + (txt.split(p).length - 1); }, 0) > 1;
+  });
+  if (dupLR.length) { fail++; console.log('FAIL  liferune_' + L + '  gate dvakrat v promptu: ' + dupLR.join(', ')); }
 }
 
 // ── Ask Rúnar: the follow-up gates (v1.0) ────────────────────────────────────
@@ -110,6 +123,24 @@ for (const L of ['en', 'is']) {
   // the instruction itself must not model the move it forbids
   const echo = L === 'is' ? 'rúnirnar sögðu þegar' : 'the runes already said';
   if (txt.includes(echo)) { fail++; console.log('FAIL  ask_' + L + '  still says "' + echo + '"'); }
+}
+
+// ── Volající nesmí přidávat korekce podruhé (§18) ────────────────────────────
+// Tvar chyby z 2026-07-19: runar-tree.js predal `corrections` do buildLifeRunePrompt()
+// A ZAROVEN si sam pripojil getCorrPrompt(). Dynamicka cast tohle nikdy neuvidi —
+// vola buildery primo, ne pres volajici. Proto staticky.
+const V2 = 'C:/Users/zkuku/Downloads/Runar-admin/v2/';
+const CALL = /\bbuild\w*Prompt\s*\([^;]*\bcorrections\b[^;]*\)/;
+for (const f of fs.readdirSync(V2).filter(n => n.endsWith('.js'))) {
+  const L = fs.readFileSync(V2 + f, 'utf8').split('\n');
+  L.forEach(function (line, i) {
+    if (!CALL.test(line)) return;
+    const win = L.slice(i + 1, i + 8).join('\n');
+    if (!/getCorrPrompt\s*\(/.test(win)) return;
+    fail++;
+    console.log('FAIL  ' + f + ':' + (i + 1) + '  builder uz korekce dostal, volajici je pridava znovu');
+    console.log('      ' + line.trim().slice(0, 96));
+  });
 }
 
 console.log(fail === 0 ? '\nALL OK — contract reaches single + all 4 spreads + the follow-up, both languages.'

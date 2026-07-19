@@ -2,7 +2,7 @@
 //
 // PROČ tahle kontrola vznikla (2026-07-19): cena je dnes na TŘECH místech.
 //   1) SPREAD_COSTS            <- vlastník
-//   2) SPREAD_CONFIG.credits   <- komentář sám přiznává „mirrors SPREAD_COSTS"
+//   2) SPREAD_CONFIG.credits   <- MRTVE pole, nikdo ho necetl (smazano 2026-07-19)
 //   3) tabulka v RUNAR_PRICING.md
 // Nic nehlídalo, že se shodují. Přecenění znamená změnit tři místa a na to,
 // že jsi jedno zapomněl, přijdeš až tím, že se uživateli strhne jiná částka,
@@ -42,17 +42,14 @@ if (!Object.keys(OWNER).length) { console.log('FAIL  SPREAD_COSTS nemá žádné
 
 let fail = 0;
 
-// ── A) kód vs kód: SPREAD_CONFIG.credits musí sedět na vlastníka ──────
-if (configSrc) {
-  for (const m of configSrc.matchAll(/(\w+)\s*:\s*\{[\s\S]*?credits\s*:\s*(\d+)/g)) {
-    const [, key, val] = [m[0], m[1], +m[2]];
-    if (!(key in OWNER)) continue;          // spread jen v SPREAD_CONFIG — jiná kontrola
-    if (OWNER[key] === val) continue;
-    fail++;
-    console.log('FAIL  runar-config.js  SPREAD_CONFIG.' + key + '.credits = ' + val
-              + ', ale SPREAD_COSTS.' + key + '.credits = ' + OWNER[key]);
-    console.log('      -> vlastník je SPREAD_COSTS; kopie v SPREAD_CONFIG se rozešla.');
-  }
+// ── A) kód: kopie ceny NESMÍ existovat ───────────────────────────────
+// Puvodne tu bylo mekci „kopie musi souhlasit". Jenze SPREAD_CONFIG.credits
+// nikdo necetl — precenit v ni znamenalo nezmenit nic a nedozvedet se to.
+// Hlidat duplikat je druha nejlepsi vec; prvni je nemit ho.
+if (configSrc && /^\s*credits\s*:/m.test(configSrc)) {
+  fail++;
+  console.log('FAIL  runar-config.js  SPREAD_CONFIG obsahuje `credits:` — vlastnik ceny je SPREAD_COSTS');
+  console.log('      -> smaz to pole; nikdo ho necte a precenovani v nem tise nic neudela.');
 }
 
 // ── B) doc vs kód ─────────────────────────────────────────────────────
@@ -129,7 +126,7 @@ for (const doc of docs) {
 
 if (fail === 0) {
   console.log('OK    ceny spreadů: ' + checked + ' tabulkových zmínek sedí na SPREAD_COSTS ('
-            + Object.keys(OWNER).length + ' spreadů) + kopie v SPREAD_CONFIG.');
+            + Object.keys(OWNER).length + ' spreadu), SPREAD_CONFIG cenu neduplikuje.');
   console.log('      (próza se nekontroluje — viz komentář v souboru; cenu v běžné větě nikdo nehlídá)');
 } else {
   console.log('\n' + fail + ' zmínek ceny se rozešlo s configem.');

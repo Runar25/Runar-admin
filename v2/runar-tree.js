@@ -319,9 +319,8 @@ async function generateLifeRuneReading() {
 
   var name = readerUser.name || (lang === 'is' ? 'þú' : 'you');
   var mode = isPremium ? RUNAR_MODES.life_rune_premium : RUNAR_MODES.life_rune_standard;
+  // Korekce pridava DISPECER buildLifeRunePrompt (character.js) — tady uz ne (§18).
   var prompt = buildLifeRunePrompt(name, rune, readerUser.d, readerUser.m, readerUser.y, lang, isPremium, corrections);
-  var corrBlock = getCorrPrompt(lang, corrections);
-  if (corrBlock) prompt = prompt + '\n' + corrBlock;
   var sys = buildSysPrompt(activeChar, lang);
 
   // RS uses credit (deducts from balance via proxy)
