@@ -63,9 +63,8 @@ create trigger trg_life_rune_immutable
 -- ── OVĚŘENÍ (uživatel, který životní runu JEŠTĚ NEMÁ) ──
 --   založení musí projít normálně (null -> hodnota není blokované)
 
--- ── ADMIN RESET (nahrazuje tlačítko; pusť v SQL editoru, běží jako service_role) ──
--- update public.user_profiles set
---   life_rune_number = null, life_rune_text = null, life_rune_lang = null,
---   dob_day = null, dob_month = null, dob_year = null,
---   tree_name = null                      -- POZOR: staré resetLifeRune() tree_name NEMAZALO,
--- where id = '<user-uuid>';               -- takže jméno zůstalo viset nad neexistujícím stromem.
+-- ── ADMIN RESET ───────────────────────────────────────────────────────────────
+-- Nebydlí tady. Je to opakovaně použitelný NÁSTROJ, ne součást téhle migrace:
+--     sql/admin_reset_life_rune.sql
+-- (Tenhle soubor se pouští jednou. Reset se pouští, kdykoli je potřeba —
+--  míchat obojí do jednoho souboru znamená, že se jednou omylem pustí i to druhé.)
