@@ -534,6 +534,8 @@ async function generateLifeRuneReading() {
 
   var text = applyISCorrections(res.text || '', lang, corrections);
   _lifeRuneText = text;
+  // Zivotni runa prave vznikla -> Norny se maji objevit hned, bez reloadu.
+  if (typeof _syncNornsGate === 'function') _syncNornsGate();
   _lifeRuneLang = lang;
   _lifeRuneNum  = RUNES.findIndex(function(r){ return r.n === rune.n; }) + 1;
 

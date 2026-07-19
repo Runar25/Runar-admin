@@ -592,6 +592,7 @@ function _resetReadingTab() {
   });
   var _l1 = document.getElementById('layer1-lbl'); if (_l1) { _l1.textContent = t('layer1_lbl'); _l1.classList.remove('pulsing'); }
   _updateSpread3Slots(); _updateSpread5Slots(); _updateSpread7Slots(); _updateSpread9Slots();
+  _syncNornsGate();
 }
 
 function resetReader() {
@@ -916,4 +917,21 @@ function _updateReadingForm() {
   var nameInp = document.getElementById('r-name');
   if (nameLbl) nameLbl.textContent = isMine ? t('name_lbl') : t('setup_for_name_lbl');
   if (nameInp) nameInp.placeholder = isMine ? t('name_ph') : t('setup_for_name_ph');
+}
+
+// Norny se ukazuji az potom, co uzivatel ma zivotni runu (KUKY 2026-07-19).
+// Duvod je rituálni i prakticky: Norny jsou zakladani stromu a to je KROK 2 —
+// server je bez zivotni runy stejne odmitne (claude-proxy, mode 'founding').
+// Tohle je jen dusledna nabidka, ne ochrana; branou je proxy.
+function _syncNornsGate() {
+  var has = (typeof _lifeRuneText !== 'undefined') && !!_lifeRuneText;
+  var btn = document.getElementById('mode-btn-norns');
+  var row = document.getElementById('spread-mode-row');
+  if (btn) btn.style.display = has ? '' : 'none';
+  if (row) row.classList.toggle('no-norns', !has);
+  // Kdyby uzivatel v Nornach stal a runu ztratil (odhlaseni, reset), nesmi
+  // zustat ve skrytem modu — spadl by do slotu, ktery nevidi.
+  if (!has && typeof _spreadMode !== 'undefined' && _spreadMode === 'norns') {
+    _setSpreadMode('single');
+  }
 }

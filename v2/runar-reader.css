@@ -746,6 +746,10 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
   color:var(--dim-text);font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;
   cursor:pointer;border-radius:2px;transition:all 0.2s;text-align:center;}
 .mode-btn:nth-child(4),.mode-btn:nth-child(5){grid-column:span 3;}
+/* Norny skryte (uzivatel jeste nema zivotni runu) = 4 tlacitka misto 5.
+   nth-child pocita i skryte prvky, takze puvodni spany by nechaly v rade
+   diru po Nornach. Tady dostane kazde viditelne span 3 -> dve rady po dvou. */
+.spread-mode-row.no-norns .mode-btn{grid-column:span 3;}
 .mode-btn.active{border-color:var(--gold);color:var(--gold);}
 .mode-btn:hover:not(.active){border-color:rgba(255,191,0,0.4);color:rgba(255,191,0,0.7);}
 

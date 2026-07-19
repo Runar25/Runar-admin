@@ -69,6 +69,9 @@ async function fetchUserProfile(userId) {
       // Marker zalozeni stromu. Zapisuje VYHRADNE server (neni v klientskem
       // grantu) — klient ho jen cte, aby vedel, jestli nabidnout zalozeni.
       userTreeFounded = !!data.tree_founded_at;
+      // Zivotni runa dorazi az sem, takze brana Norn se musi prepocitat
+      // POTOM — jinak zustanou skryte i tomu, kdo ji ma.
+      if (typeof _syncNornsGate === 'function') _syncNornsGate();
       userFreeBalance = data.free_balance != null ? data.free_balance : 0;
       // Load life rune reading if stored
       if (data.life_rune_text) {

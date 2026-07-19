@@ -1444,3 +1444,35 @@ Přesně tím byl `memory/runar-project.md` (sám vygeneroval ~15 nálezů) a č
 1. SQL `sql/2026-07-19_tree_founding.sql` (owner)
 2. `supabase functions deploy claude-proxy` — MUSÍ být před klientem
 3. push klienta
+
+---
+
+## 2026-07-19 — Norny viditelné až po životní runě [tune]
+
+- **Rozhodnutí (KUKY):** „Norns se objeví až potom, co uživatel udělá life rune, jinak jsou
+  neviditelné." Dává to smysl rituálně i technicky: Norny JSOU zakládání stromu a to je krok 2 —
+  proxy je bez `life_rune_text` stejně odmítne. Skrytí je důsledná nabídka, ne ochrana; branou
+  zůstává server.
+- ⚠️ **PAST V MŘÍŽCE, kvůli které to není jednořádková změna.** `.spread-mode-row` je
+  `grid-template-columns: repeat(6,1fr)` a spany se rozdávají přes `:nth-child(4)/(5)`.
+  `display:none` prvek z rozložení vyřadí, **ale `nth-child` ho dál počítá** — spany by zůstaly
+  u původních pořadí a spodní řada by se rozjela. Proto modifikátor `.no-norns`, který dá všem
+  čtyřem zbylým `span 3` (dvě řady po dvou) místo spoléhání na pořadí.
+- **OVĚŘENO V PROHLÍŽEČI, ne úvahou:** změřeno `getBoundingClientRect()` ve třech stavech.
+  Bez `.no-norns` vyjde spodní řada nesouměrná (horseshoe 43 px vs yggdrasil 32 px);
+  s ním jsou všechna čtyři stejná. Absolutní čísla jsou bezcenná (karta má nulovou šířku
+  za auth stavy), poměry sedí — a rozdíl souměrné/nesouměrné je přesně to, co se ověřovalo.
+- **§13 full-path:** brána se přepočítá na třech místech, protože `_lifeRuneText` dorazí v každém
+  jinak — při vstupu do reading tabu (`_resetReadingTab`), po načtení profilu z DB
+  (`fetchUserProfile`) a hned po vygenerování životní runy (bez reloadu).
+  Navíc: kdo stojí v Nornách a runu ztratí (odhlášení), spadne zpět na single — jinak by zůstal
+  v módu, který nevidí.
+- **Affected doc(s):** žádný.
+
+### Zapsány dvě výhrady k GDPR závěru (KUKY: „ok, zapsat")
+Text už je v `RUNAR_PRIVACY.md`; do backlogu patří proto, že mají **spouštěč**:
+1. **Shopify** — objednávka nese e-mail I `user_id`, čímž OBNOVÍ mapování UUID → osoba.
+   Celý závěr „řádky v ledgeru smí přežít smazání účtu" stojí na tom, že po smazání žádné
+   mapování nezbyde. Připsáno k položce Shopify webhook jako spouštěč přezkumu.
+2. **Právní/DPO review** — `credit_ledger` přidán na seznam k posouzení, s poznámkou, že můj
+   závěr je technický rozbor, ne posudek.
