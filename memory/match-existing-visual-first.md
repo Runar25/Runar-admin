@@ -16,4 +16,4 @@ Before adding ANY new UI to Rúnar, FIRST read how the existing UI does that sam
 2. Read its rules in `v2/runar-reader.css` and copy the structure; vary ONLY what genuinely differs.
 3. Verify by comparing **computed styles in the browser** against the precedent (preview_start → javascript_tool → getComputedStyle), not by eye.
 
-**Established conventions (2026-07-17):** NO `border-radius` on any button or input · inputs = `background:transparent; border:none; border-bottom:1px solid var(--border2)`, focus turns the underline `var(--gold)` · prose inputs = `'Cormorant Garamond',serif`; code inputs = `'Cinzel',serif` uppercase · buttons = `'Cinzel',serif`, square; outlined-gold hovers to `background:var(--gold);color:#000` · colours ONLY from palette vars, never a hardcoded hex. Related: [[proceed-dont-ask]].
+**The conventions live in `v2/runar-reader.css`, not here** (§20 — a list of radii and hex values in a memory drifts the moment someone restyles). This memory owns the METHOD only: find the nearest existing component, read its rules, copy them. The invariants that are genuinely rules rather than values are in `CLAUDE.md` §5. Related: [[proceed-dont-ask]].
