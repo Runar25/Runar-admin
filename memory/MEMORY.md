@@ -65,6 +65,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [bash-no-cd-prefix.md](bash-no-cd-prefix.md) — NIKDY `cd … &&` ani `| tail` na Bash; boří allowlist
 - [guard-test-the-lifecycle.md](guard-test-the-lifecycle.md) — novou kontrolu testuj proti VŠEM stavům toho, co hlídá, ne jen dobrý/špatný případ
 - [read-the-check-before-push.md](read-the-check-before-push.md) — pipe do grepu zahodí exit kód; přečti verdikt, teprve pak push
+- [measure-dont-eyeball.md](measure-dont-eyeball.md) — dojem z obrázku není nález; změř to, nebo řekni „nevím"
 - [runar-project.md](runar-project.md) — vyprázdněno 2026-07-18, jen rozcestník
 - [tree-of-life.md](tree-of-life.md) — starší tree design; kanonický je `RUNAR_TREE.md`
 - [runar-patterns.md](runar-patterns.md) — pattern detection, ZASTARALÉ (kanonicky `RUNAR_TREE.md` §7)
