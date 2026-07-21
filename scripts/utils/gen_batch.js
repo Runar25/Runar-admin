@@ -31,7 +31,10 @@ const V2   = path.join(REPO, 'v2');
 // deliberately excluded: it redeclares t()/UI_TEXT, and character.js never calls t().
 const FILES = ['runar-config.js', 'runar-runes.js', 'runar-utils.js', 'runar-character.js'];
 
-const DEFAULT_DELAY_MS = 6500;   // 10 req / 60 s -> 6 s spacing, plus headroom
+const DEFAULT_DELAY_MS = 12000;  // ~5 req/min = HALF the shared 10/60s IP bucket,
+                                 // so a parallel session / the app keeps the other half.
+                                 // --solo drops it to SOLO_DELAY_MS when nobody else is on.
+const SOLO_DELAY_MS    = 6500;   // ~9 req/min — only safe when the proxy IP is yours alone
 const REQUEST_TIMEOUT  = 180000; // proxy worst case is ~170 s per model before it answers
 const MAX_RETRIES      = 2;      // 503 also masks permanent 4xx (index.ts:621) -> never loop
 const MAX_JOBS_NO_YES  = 60;     // guard against an accidental five-figure run
@@ -47,7 +50,7 @@ const SPREADS = {
 };
 
 // ─── CLI ───────────────────────────────────────────────
-const FLAGS = ['dry-run', 'list', 'help', 'yes', 'allow-blank', 'all-runes'];
+const FLAGS = ['dry-run', 'list', 'help', 'yes', 'allow-blank', 'all-runes', 'solo'];
 
 function die(msg) { console.error('\n  ERROR: ' + msg + '\n'); process.exit(1); }
 
@@ -90,6 +93,7 @@ const USAGE = [
   '  --delay     6500           ms between requests',
   '  --dry-run   build prompts, write JSONL, make NO network calls (free)',
   '  --allow-blank  let the random sampler draw the Blank rune',
+  '  --solo      nobody else is on the proxy IP — go faster (' + SOLO_DELAY_MS + ' ms spacing)',
   '  --yes       required above ' + MAX_JOBS_NO_YES + ' requests',
   '  --list      print rune names + enum labels and exit',
   '',
@@ -182,7 +186,8 @@ async function main() {
   vm.runInContext('userGender = ' + JSON.stringify(gender) + ';', ctx);
 
   const n     = Math.max(1, parseInt(args.n || '1', 10));
-  const delay = Math.max(0, parseInt(args.delay || String(DEFAULT_DELAY_MS), 10));
+  const delay = Math.max(0, parseInt(
+    args.delay || String(args['solo'] ? SOLO_DELAY_MS : DEFAULT_DELAY_MS), 10));
 
   function runeByName(name) {
     const r = RUNES.find(function (x) { return x.n === name; });
@@ -281,6 +286,27 @@ async function main() {
   console.log('  prompt_version=' + PROMPT_VERSION + ' · max_tokens=' + maxTokens +
     ' · season=' + seasonBucket + ' · sys=' + sysSha);
   console.log('  -> ' + outPath + '\n');
+
+  // The proxy rate-limits per IP (10 req / 60 s, one shared bucket). Say OUT LOUD how
+  // much of it this run takes and for how long, BEFORE spending it — a silent long run
+  // starves every other anonymous caller on this IP (the app, a tester, the other session).
+  const runMarker = path.join(path.dirname(outPath), '.gen_batch-running');
+  if (!args['dry-run']) {
+    const reqPerMin = Math.round(60000 / delay);
+    const bucketPct = Math.min(100, Math.round(reqPerMin / 10 * 100));
+    const estMin    = Math.max(1, Math.ceil(totalRequests * delay / 60000));
+    console.log('  ! SHARED rate-limit: ~' + reqPerMin + ' of 10 req/min (~' + bucketPct +
+      '% of the IP bucket) for ~' + estMin + ' min.');
+    console.log('    Other anonymous traffic on this IP hits 429 ("the runes are quiet") meanwhile.' +
+      (args['solo'] ? '' : ' --solo goes faster if nobody else is on.'));
+    console.log('');
+    try {
+      fs.writeFileSync(runMarker, JSON.stringify({ pid: process.pid, started: genTs,
+        requests: totalRequests, est_minutes: estMin, req_per_min: reqPerMin, out: outPath }, null, 2), 'utf8');
+      // Clear the marker however we exit — clean finish, thrown error, or Ctrl-C.
+      process.on('exit', function () { try { fs.unlinkSync(runMarker); } catch (e) {} });
+    } catch (e) { /* marker is best-effort */ }
+  }
 
   fs.writeFileSync(outPath + '.meta.json', JSON.stringify({
     source: 'synthetic', gen_ts: genTs, argv: process.argv.slice(2),
