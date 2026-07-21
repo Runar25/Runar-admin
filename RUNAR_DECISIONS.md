@@ -1751,3 +1751,30 @@ i když zní jistě.**
   jako u zakládání. Zapsáno s tímhle omezením, ať se to nepřehlédne.
 - **Affected doc(s):** RUNAR_BACKLOG.md (tester tier položka).
 - **NASAZENO:** edge funkce `reset-tree` deployed. Owner nastaví `is_tester = true` pro svůj účet.
+
+---
+
+## 2026-07-19 — Anti-kolize guard: scratch se necommituje (pre-commit) [tune]
+
+- **Kontext:** CODE-reader předal souběhový problém (dvě/tři Code session, jeden worktree).
+  Worktree owner zamítl. Zbylá volba = konvence, jenže „kázeň" je přesně to, co dnes selhalo
+  (`commit-by-pathspec` jsem měl v paměti a stejně 3× sebral cizí soubory). Řešení = převést
+  vynutitelnou část na KONTROLU, protože ta se vynutí sama napříč lanes.
+- **Ověřeno (handoff = žádost, ne fakt):** `commit-msg` hook fakt neexistuje (jen `pre-commit`,
+  `pre-push`). ALE dvě zjištění mění návrh CODE-readera k lepšímu:
+  1. **Adresáře, co dnešní `git add -A` sebral (`tree-snapshots/`, `tree-lab-*/`, `sigil-lab/`,
+     `_backup/`), jsou UNTRACKED scratch — 0 trackovaných souborů.** Guard tedy nepotřebuje znát
+     lane vůbec: pravidlo je „scratch se necommituje", což je maximálně lane-agnostické a chytí
+     i dvě session v téže `[tune]` lane.
+  2. **Nepotřebuje `commit-msg` ani re-install.** Rozšířil jsem existující `pre-commit.py`, který
+     je nainstalovaný a volá repo soubor → účinné hned, nikdo nic nepřeinstalovává.
+- **Break-test:** stagnutý scratch → BLOK (exit 1, s `git reset` nápovědou) · normální doc → OK.
+- ⚠️ **Co guard NEŘEŠÍ (schválně pojmenováno):** kolizi na SDÍLENÉM TRACKOVANÉM souboru
+  (`RUNAR_DECISIONS.md`, `runar-app.js`) — git nepozná, čí řádky jsou čí. To kryje jen `git pull`
+  před prací + pathspec commit. A funguje jen tomu, kdo má hook nainstalovaný (jako SW bump/IS lint).
+- **CODE-reader potvrdil** svoji rate-limit část (gen_batch, jeho scratchpad, mimo repo — nesahá
+  na mě) a ostrý postřeh: CODE-tune i CODE-reader jsou OBA `[tune]`, takže „jeden patch soubor na
+  lane" pořád sdílí dvě session. Můj guard je na to odpověď (lane-agnostický).
+- **Affected doc(s):** žádný.
+- **Nabídnuto ownerovi (NEuděláno unilaterálně):** přidat ty scratch dirs i do `.gitignore`
+  (prevence u zdroje) — je to CODE-tree doména, tak čekám na kývnutí.

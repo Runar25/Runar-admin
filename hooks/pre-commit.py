@@ -23,6 +23,31 @@ def get_staged_files():
 
 staged = get_staged_files()
 
+# ── ANTI-KOLIZE: scratch/lab/backup adresáře nesmí do commitu ──────────────
+# Tyhle adresáře jsou UNTRACKED scratch (0 trackovaných souborů) — patří jedné
+# session jako pracovní plocha a NEMÁ je commitovat NIKDO. 2026-07-19 `git add -A v2`
+# nastagoval 112 z nich; bez pathspecu by je sebral do cizí lane.
+# Guard je LANE-AGNOSTICKÝ: nezná prefix, jen "scratch se necommituje" — takže chytí
+# i dvě session v téže lane ([tune] × [tune]), kde dělení podle lane selhává.
+# NEřeší kolizi na SDÍLENÉM TRACKOVANÉM souboru (RUNAR_DECISIONS.md, runar-app.js) —
+# tam git nepozná, čí řádky jsou čí; to kryje jen `git pull` + pathspec commit.
+_SCRATCH_PREFIX = ('v2/tree-snapshots/', 'v2/sigil-lab/', '_backup/', '__pycache__/')
+def _is_scratch(f):
+    return f.startswith(_SCRATCH_PREFIX) or f.startswith('v2/tree-lab-')
+
+scratch_staged = [f for f in staged if _is_scratch(f)]
+if scratch_staged:
+    print('[hook] KOLIZE: nastagované scratch/lab soubory — ty se NEcommitují')
+    print('       (untracked pracovní plocha jedné session; nejspíš je sebral `git add -A`):')
+    for f in scratch_staged[:12]:
+        print('         ' + f)
+    if len(scratch_staged) > 12:
+        print('         … a dalších ' + str(len(scratch_staged) - 12))
+    print('[hook] Odstaguj je:  git reset -- ' + ' '.join(sorted(set(
+        p.split('/')[0] + ('/' + p.split('/')[1] if p.startswith('v2/') else '') for p in scratch_staged))))
+    print('[hook] Vědomě přesto: git commit --no-verify')
+    sys.exit(1)
+
 # ── IS source-linter gate (§9): block if a staged v2 source file has a bad IS literal ──
 is_src = [f for f in staged if f.startswith('v2/') and f.endswith(('.js', '.html'))]
 if is_src:
