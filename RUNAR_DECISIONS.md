@@ -1907,3 +1907,17 @@ i když zní jistě.**
   snapshot poolu byl starší než HEAD. **Náprava = handoff nemá uvádět POČTY** (derivovaná hodnota,
   bydlí v souboru, drifuje) — jen entries + anchor; počty spočítá CODE z živého souboru.
 - **Affected doc(s):** žádný (počty poolů se nikde neopisují — §20).
+
+---
+
+## 2026-07-21 — FU strop doladěn: 240/150 → 140 flat (KUKY) [tune]
+
+- **Mění** hodnotu z předchozího záznamu (Cowork navrhl 240 IS / 150 EN — příliš velkoryse).
+- **Owner:** *„máme to omezené kvůli ceně… dlouhé čtení taky nedává úplně smysl."* Follow-up má
+  být krátký. Strop **rovných 140**, ne jazykový.
+- **Proč flat stačí:** EN se stropu nedotkne (prompt drží ~40 slov = ~60 tok). Jediný, kdo o 140
+  zavadí, je IS (~1,5-2× hustší, ~40 slov ≈ 120 tok) — 140 dá mírnou rezervu, a **Fix B
+  (`_trimToSentence`) jistí, že IS follow-up u horní hranice délky přijde jen o poslední větu,
+  nikdy o půl věty.** Při záměrně krátké odpovědi žádoucí.
+- **Ověřeno:** node --check · Fix B regres-test 8/8 (nezměněn) · smoke 22/22.
+- **Affected doc(s):** žádný.

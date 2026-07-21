@@ -553,10 +553,13 @@ async function askRunar() {
   var _askJournal = (currentUser && _lastReadingId)
     ? { kind: 'ask', reading_id: _lastReadingId, ask_entry_id: _askEntryId, question: q } : null;
   // mode 'ask' = not a cast: it must not draw down the monthly cap (see claude-proxy).
-  // Cap je JAZYKOVY: IS je ~1,5-2x hustsi na tokeny (delsi slova, þ/ð/æ/ö), takze
-  // ~40 slov IS = ~200+ tokenu. Puvodni 120 usekaval IS follow-up uprostred vety.
-  // Delku pořad drzi PROMPT (buildAskPrompt: 'no more than ~40 words'); cap je jen strop.
-  var askCap = (lang === 'is') ? 240 : 150;
+  // Follow-up ma byt KRATKY (odpoved na jednu otazku, ne cteni). Strop 140 (KUKY: cost
+  // + dlouhy FU nedava smysl). Puvodni 120 usekaval IS uprostred vety — IS je ~1,5-2x
+  // hustsi na tokeny, takze ~40 slov IS = ~120 tok. 140 da mirnou rezervu; EN se stropu
+  // stejne nedotkne (prompt ho drzi na ~40 slov). Fix B (_trimToSentence) zaridi, ze se
+  // nikdy nezobrazi useknuty fragment — IS FU u horni hranice delky prijde o posledni
+  // vetu, coz je pri zamerne kratke odpovedi v poradku. Delku primarne drzi PROMPT.
+  var askCap = 140;
   var res = await callProxy(sys, prompt, askCap, shouldUseCredit(), SPREAD_COSTS.single.credits, _askJournal, 'ask'); // FU: lang-aware cap
   if (res.error) {
     if (btn) { btn.disabled = false; btn.textContent = t('ask_btn'); }
