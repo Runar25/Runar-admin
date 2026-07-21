@@ -14,3 +14,12 @@ readings_export.csv
 # Synthetic eval batches (scripts/utils/gen_batch.js). Generated, bulky, never
 # a source of truth — and must never be mistaken for real readings. Local only.
 eval_out/
+
+# Scratch/backup — untracked pracovní plocha, JEDNOZNAČNĚ se necommitují.
+# 2026-07-19: `git add -A v2` jich sebral 112 do cizí lane. Gitignore je zastaví
+# u zdroje (git add -A je přeskočí). Zálohu proti sweepu jistí i pre-commit hook.
+# POZOR: lab dirs (v2/tree-lab-*, v2/sigil-lab) tu NEJSOU — mají trackovaný zdroj
+# (runar-branch.js, runar-trunk.js), který CODE-tree edituje. Ty kryje jen hook
+# (blokuje nový ADD, pustí modifikaci trackovaného).
+v2/tree-snapshots/
+_backup/

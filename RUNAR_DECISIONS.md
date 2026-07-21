@@ -1778,3 +1778,17 @@ i když zní jistě.**
 - **Affected doc(s):** žádný.
 - **Nabídnuto ownerovi (NEuděláno unilaterálně):** přidat ty scratch dirs i do `.gitignore`
   (prevence u zdroje) — je to CODE-tree doména, tak čekám na kývnutí.
+
+### Oprava téhož dne: guard měl false-positive (opraveno před nasazením do praxe)
+- První verze guardu (453a1ec) blokovala **celý prefix** `v2/tree-lab-`. Jenže dva lab dirs
+  mají TRACKOVANÝ zdroj (`tree-lab-branch-composer/runar-branch.js`, `tree-lab-trunk/runar-trunk.js`),
+  který CODE-tree legitimně edituje — guard by je **falešně zablokoval**. Break-test jsem udělal
+  jen proti `tree-snapshots` (0 tracked) a přehlédl to.
+- **Odhaleno tím, že owner řekl „přidej gitignore"** — při kontrole tracked/untracked pro gitignore
+  vylezlo, že tree-lab NENÍ celé scratch. Bez toho kroku by guard tikal jako mina až do prvního
+  commitu CODE-tree do lab zdroje.
+- **Oprava:** guard hlídá STAV, ne adresář — blokuje jen `A` (nově přidaný untracked), pustí `M`
+  (modifikace trackovaného). Ověřeno predikátem na 8 stavech + ostře (scratch add → blok,
+  doc modify → OK). **Poučení (opět): break-test proti JEDNOMU případu netestuje hranici.**
+- **`.gitignore`:** přidány jen `v2/tree-snapshots/` a `_backup/` (jednoznačně nikdy-trackované).
+  Lab dirs se NEgitignorují — mají trackovaný zdroj; ty kryje hook.
