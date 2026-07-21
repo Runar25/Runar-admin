@@ -151,7 +151,7 @@ Případ 1 — Single Blank:
 
 Případ 2 — Blank ve spreadu:
 - Ostatní runy = oblast a energie | Blank = výsledek neznámý
-- Vizuál: průhledný obrys větve na Canvas (opacity ~15%), bez listů
+- ~~Vizuál: průhledný obrys větve na Canvas (opacity ~15%), bez listů~~ — ZRUŠENO 2026-07-21 (KUKY: zbytečnost)
 - Žádný nový branch_type — Canvas overlay
 
 Případ 3 — Blank opakovaně:

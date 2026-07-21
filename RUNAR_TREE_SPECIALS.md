@@ -57,7 +57,7 @@ Tři knoflíky: **co ho spustí · jak vypadá · jak je vzácný.**
 
 ## Existující (roztroušené → sem konsolidováno; status u každého)
 - **love = srdce · flame = proplet kolem osy** — engine-lab ř.208 (starý liana lab; koncept přenést)
-- **Blank / Óðin = průsvitná duch-větev** (~15 %, bez listů) — runar-patterns.md · k diskusi
+- ~~Blank / Óðin = průsvitná duch-větev~~ — ZRUŠENO 2026-07-21 (KUKY: zbytečnost). Blank = běžná runa Shadow.
 - **Life Rune = nejsilnější větev přímo z kmene** — runar-patterns.md · k diskusi
 - **Ætty pulz · shimmer listy** — runar-patterns.md · zastaralé, k diskusi
 - **Gathering: Eagle (koruna) / Níðhöggr (kořeny) / Ratatoskr (celý strom)** — runar-patterns.md · koncept významu, ne vizuál · k diskusi

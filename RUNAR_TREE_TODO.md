@@ -80,7 +80,8 @@ Stavět až po doladění (KUKY ladí v chatu na cestách) + na KOPII. Body 7-12
 **11. Kořeny se prohlubují, když se runa z kořene vrátí.** ← „oprava kořenů", NENÍ hotová.
    Kořen = zrcadlo větve; návrat runy z kořene ho prohloubí/zesílí.
 
-**12. Blank / Óðinn = průsvitná duch-větev** (~15 %, bez listů).
+**12. ~~Blank / Óðinn = průsvitná duch-větev~~ — ZRUŠENO 2026-07-21 (KUKY: „zbytečnost").**
+   Blank = běžná runa Shadow. Žádná průhlednost, žádná vyhrazená větev, žádné listy.
 
 **2-4. Živý pohyb = VZTAHOVÝ MODEL** (předefinováno dle handoff dok. sekce 8). Hloubka = síly
    MEZI runami, ne jen kde runa je. **Síly se ZAPEČOU do tvaru (růstový sklon), NEhýbou se živě

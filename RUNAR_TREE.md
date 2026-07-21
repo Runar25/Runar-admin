@@ -67,7 +67,7 @@ Rohy (budoucnost+nitro, minulost+svět) = volné pro vzácnější kombinace.
 | **spread** | KOMPLEXITA (single=uzel · Norns=3 kořeny · Kříž=větev+4 · Horseshoe=větvená · Yggdrasil=roční prsten) |
 | **počet vyplněných polí** | VÁHA / mohutnost |
 | ~~čas od minula~~ | ZRUŠENO 2026-07-19 — druhá půlka zrušené penalizace, strom čas neřeší |
-| **Blank/Óðinn** | průsvitná duch-větev (~15 %, bez listů) |
+| ~~Blank/Óðinn~~ | duch-větev ZRUŠENA 2026-07-21 (KUKY: zbytečnost) — Blank = běžná runa Shadow |
 
 ---
 
@@ -124,9 +124,10 @@ Ostatní (později, decentně): pulzy dominance (element/ætt), bloom fáze, lis
 - ⚠️ **Blank/Óðinn mazal celé zaplacené čtení** (do 2026-07-19). Glyf `○` je mimo runový rozsah,
   na který se ptal filtr → prázdný seznam run → řádek se zahodil. Ve stromě po něm nezbylo nic
   a nepočítal se ani do věku. **Opraveno:** dojede jako `el:'shadow'` (§3, studené a skryté runy)
-  s příznakem `blank:true`. Renderer měl duchovní větev připravenou celou dobu
-  (`runar-branch.js`, `k:'odinn'`) — jen se k ní nikdy nedostal. **Vizuál ducha (průsvitnost,
-  bez listů) zatím NENÍ** — to je práce v enginu, čeká na vlastní krok.
+  s příznakem `blank:true`. Od té doby se chová jako **běžná runa Shadow** — účastní se pořadí
+  run jako každá jiná. **Vizuál ducha (průsvitnost, bez listů) ZRUŠEN** 2026-07-21 (KUKY:
+  „zbytečnost, jsem s tím v míru") — navíc by na reálných datech nebyl vidět (Blank bývá
+  outrankovaná ve Shadow). Detail → RUNAR_DECISIONS.md 2026-07-21.
 - ✅ **Přehrávání růstu (2026-07-19).** Posuvník nad stromem, krok po JEDNOM čtení, až
   k zakládacímu stavu. Posílá se jen kratší log; věk se počítá z jeho délky, takže strom
   u čtení č. 3 vypadá jako tehdy, ne jako dnešek s méně větvemi. Engine netknutý.

@@ -708,6 +708,35 @@ stav až potom a vyvodil závěr o minulosti → owner musel arbitrovat. Stav be
     · RUNAR_EVAL_CHAT_mobil · RUNAR_FEATURES · RUNAR_IS_GRAMMAR_CHECK_CODE · RUNAR_SEGMENTACE_FaseB
     · RUNE_IMAGE_POOLS_draft · tento handoff.
 
+## 2026-07-21 - Blank duch-vetev ZRUSENA (KUKY): Blank je bezna stinova runa
+
+**Rozhodnuti KUKY (design):** *"me vubec nevadi, ze se neztlumi. tohle tam ani nechci. ani at
+neni pruhledna. jestli je to v dokumentech tak opravit.. je to zbytecnost. budeme mit 4 elementy
+a stin, vsechny budou vypadat stejne. ja jsem s tim v miru."*
+
+Blank/Odinn tedy zustava jak je od kroku 2: **bezna stinova runa** (el:'shadow'), ktera se ucastni
+poradi run jako kazda jina. ZADNA vyhrazena duch-vetev, ZADNA pruhlednost, zadne listy.
+Engine se NESAHAL vubec.
+
+**Kontext, ktery to spustil (a moje chyba v navrhu):** navrhl jsem "duch-vetev" jako viditelny
+prinos, aniz jsem to zmeril. Kdyz jsem to zmeril na KUKYho exportu (18 Blank cteni): Odinn je
+ve stinu TRETI runa (hagalaz > isa > odinn) a stin vyrusta jen ze 2 run -> Blank se na vetev vubec
+nedostane. Na jeho strome by duch-vetev BYLA NEVIDITELNA, at bych ji postavil jakkoli. Tataz past
+jako cely tyden: tvrdit "viditelne" bez mereni ([[measure-dont-eyeball]]).
+Pri opravnem cteni jsem navic zjistil, ze §4 vede Blank jako VLASTNI signal (vyhrazena vetev),
+ne jen "pruhledna odinnovska stinova vetev" -- takze verny design by byl jeste vic prace.
+KUKY to cele zrusil: zbytecnost.
+
+**Srovnano v docich** (duch-vetev byla zivá v 5 tree docich): RUNAR_TREE.md §4 + poznamka,
+RUNAR_TREE_BUILD.md, RUNAR_TREE_SPECIALS.md, RUNAR_TREE_TODO.md, memory/runar-patterns.md.
+Historicke zminky v RUNAR_DECISIONS.md (append-only) zustavaji -- byly pravdive ke svemu datu.
+
+**Zbyva ze signalu §4:** vaha z poctu poli a seeking do Norns osy -- oba na realnych datech
+SLABE (pole vetsinou prazdna). Prace na tree signalech se tim v podstate vycerpala.
+
+**Affected doc(s):** RUNAR_TREE.md · RUNAR_TREE_BUILD.md · RUNAR_TREE_SPECIALS.md · RUNAR_TREE_TODO.md · runar-patterns.md
+
+
 ## 2026-07-21 - Hystereze poradi run (prah 2): konec blikani tvaru vetve kolem remizy
 
 **Zadani:** KUKY poslal dva exporty (n=175, viewN 144) s tim, ze kolem polohy 144 se DVE vetve

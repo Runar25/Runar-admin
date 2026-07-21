@@ -69,7 +69,7 @@ Deterministicky, bez AI. Větev nese:
 | **spread** | KOMPLEXITA: single=uzel · Norns=zakládací (3 kořeny) · Kříž(5)=větev+4 výhonky · Horseshoe(7)=větvená · Yggdrasil(9)=uzel kořenů, 1×/rok |
 | **počet vyplněných polí** | VÁHA větve |
 | **čas od posledního čtení** | bonus (pauza = silnější) / penalizace (moc brzy = slabší) |
-| **Blank/Óðinn** | PONECHÁNO — průsvitný obrys větve (~15 %), bez listů (minimální duch-větev) |
+| ~~Blank/Óðinn~~ | duch-větev ZRUŠENA 2026-07-21 (KUKY) — Blank = běžná runa Shadow, žádný zvláštní vizuál |
 
 ---
 
@@ -94,7 +94,7 @@ Deterministicky, bez AI. Větev nese:
 - Listy (svítící element — nejvíc „mluvící" vrstva, decentní pohyb).
 - Sezóna (decentně, barva/textura dle islandského kalendáře) — nízká priorita, ještě probrat.
 - Záměry (semeno → budování → uzavření/rozdvojení) — pokročilá retence přes víc sessions; KUKY: „na později".
-- Blank/Óðin = PONECHÁNO (minimální duch-větev) — viz §5.
+- Blank/Óðin = běžná runa Shadow (duch-větev ZRUŠENA 2026-07-21, KUKY: zbytečnost).
 
 **VYŘAZENO (KUKY 2026-06-15):**
 - těžké runy → kořeny tmavnou ✗
