@@ -22,7 +22,7 @@ sebral `[tree]` soubor), NE intra-lane (dvě `[tune]` session, týž soubor).
 - **Commit VŽDY úzce přes pathspec** (`git commit -- <path>`), nikdy `git add -A` / `commit -a` —
   ty berou celý index včetně cizí lane. Viz [[commit-by-pathspec]].
 - **Patch nástroj (`scripts/_patch*.py`) pro MŮJ scratch soubor NEPATŘÍ do sdílené repo cesty** —
-  napiš ho do session scratchpadu. `_patch.py`=CODE-tree, `_patch_tune.py`=CODE-tune, ale i to
+  napiš ho do session scratchpadu. `scripts/_patch.py`=CODE-tree, `scripts/_patch_tune.py`=CODE-tune, ale i to
   kolabuje, když jsou v jedné lane dvě session.
 - **`git status -- <path>` PŘED každým sáhnutím do tracked souboru** — ověř, že do něj druhá session
   zrovna nesahá. A znovu před Write — stav se mění během session (gen_batch.js se z untracked stal
