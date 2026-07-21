@@ -521,6 +521,16 @@ function _showAsk() {
   setSt('ask-status', '');
   el.style.display = 'block';
 }
+// Pojistka proti useknutemu follow-upu: kdyz text nekonci terminalni interpunkci,
+// orizni ho k posledni cele vete. Radsi kratsi cela myslenka nez fragment bez tecky.
+// Nema-li zadnou celou vetu, nech ho byt (fragment > prazdno).
+function _trimToSentence(t) {
+  if (!t) return t;
+  if (/[.!?\u2026]["\u201d\u00bb)]?\s*$/.test(t)) return t;
+  var i = Math.max(t.lastIndexOf('.'), t.lastIndexOf('!'), t.lastIndexOf('?'), t.lastIndexOf('\u2026'));
+  return i > 0 ? t.slice(0, i + 1).trim() : t;
+}
+
 async function askRunar() {
   if (_askUsed) return;
   var inp = document.getElementById('ask-input');
@@ -543,7 +553,11 @@ async function askRunar() {
   var _askJournal = (currentUser && _lastReadingId)
     ? { kind: 'ask', reading_id: _lastReadingId, ask_entry_id: _askEntryId, question: q } : null;
   // mode 'ask' = not a cast: it must not draw down the monthly cap (see claude-proxy).
-  var res = await callProxy(sys, prompt, 120, shouldUseCredit(), SPREAD_COSTS.single.credits, _askJournal, 'ask'); // follow-up capped short (~40 words)
+  // Cap je JAZYKOVY: IS je ~1,5-2x hustsi na tokeny (delsi slova, þ/ð/æ/ö), takze
+  // ~40 slov IS = ~200+ tokenu. Puvodni 120 usekaval IS follow-up uprostred vety.
+  // Delku pořad drzi PROMPT (buildAskPrompt: 'no more than ~40 words'); cap je jen strop.
+  var askCap = (lang === 'is') ? 240 : 150;
+  var res = await callProxy(sys, prompt, askCap, shouldUseCredit(), SPREAD_COSTS.single.credits, _askJournal, 'ask'); // FU: lang-aware cap
   if (res.error) {
     if (btn) { btn.disabled = false; btn.textContent = t('ask_btn'); }
     setSt('ask-status', _readingErrMsg(res.error), 'err');
@@ -551,6 +565,7 @@ async function askRunar() {
   }
   var answer = _parseSegments(res.text || '').reading || (res.text || '').trim(); // defensive: unwrap if model returns JSON
   answer = applyISCorrections(answer, lang, corrections);
+  answer = _trimToSentence(answer);  // FU pojistka: nikdy useknuty fragment
   if (_askJournal && res && !res.error && !res.ask_saved) { _pendAdd('pendingAsks', { id: _askEntryId, reading_id: _lastReadingId, question: q, answer: answer }); _flushPending(); }
   _askUsed = true;
   var wrap = document.getElementById('ask-input-wrap'); if (wrap) wrap.style.display = 'none'; // one question -> close

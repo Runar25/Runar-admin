@@ -1860,3 +1860,29 @@ i když zní jistě.**
   (assert) · žádné duplicitní id v highsummer (assert) · žádná kolize nových 12 id s existujícími ·
   check-is OK · smoke 22/22.
 - **Affected doc(s):** žádný (čísla poolů nikde neopisujeme — §20; jsou v configu-builderu).
+
+---
+
+## 2026-07-21 — Ask Rúnar follow-up se usekával uprostřed věty (IS token-density) [tune]
+
+- **Vada (Cowork report, 2× doloženo v1.0, obojí ISLANDSKY):** follow-up odpověď se utnula
+  uprostřed věty, bez tečky („…krefst trausts á öðrum. Spurningin um" [utnuto]).
+- **Root cause:** `askRunar()` volalo `callProxy(..., 120, ...)` — strop 120 tokenů. 120 tok ≈ 40
+  slov ANGLICKY, ale ISLANDŠTINA je ~1,5–2× hustší na tokeny (delší slova, þ/ð/æ/ö), takže ~40
+  slov IS = ~200+ tokenů → usekne se kolem 120. Proto obě pozorované trunkace islandské, ne náhoda.
+- **Fix A (strop):** `askCap = (lang === 'is') ? 240 : 150`. Délku pořád drží PROMPT
+  (`buildAskPrompt`: „no more than ~40 words"); cap je jen strop s rezervou. EN se prakticky nemění.
+- **Fix B (pojistka):** `_trimToSentence()` — když odpověď nekončí terminální interpunkcí, ořízne
+  ji k poslední celé větě. Uživatel nikdy neuvidí useknutý fragment, i kdyby strop přece jen padl.
+- ⚠️ **Cowork uvedl ř. 536, reálně ř. 546** (řádek driftoval — Cowork diagnostikuje kód, na který
+  nevidí). Substance claimu ale seděla. Ověřeno proti HEAD.
+- **OVĚŘENÍ (§19, na ploše kde bug žije = zobrazený text):** `_trimToSentence` unit-testována
+  přímo z runar-reading.js na 8 případech vč. OBOU reálných bugů z reportu → ořízne je na celou
+  větu; správně ukončené texty nechá beze změny. Fix A ověřen že dorazí do volání. node --check,
+  check-is, smoke 22/22.
+- ⚠️ **LIVE potvrzení nezbytné, ale nemůžu ho spustit** ([[ask-owner-for-checks-you-cannot-run]]):
+  že Fix A dává IS follow-upu DOST místa (finish_reason != length), poznám jen z živého volání
+  proxy. Fix B ale činí user-visible výsledek bezpečným BEZ OHLEDU na to — takže live check je
+  potvrzení, ne bloker. Owner může ověřit: polož delší IS follow-up (např. „endursagt á mannamáli"
+  na spreadu) → má končit tečkou a ne uprostřed.
+- **Affected doc(s):** žádný.
