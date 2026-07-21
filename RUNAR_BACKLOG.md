@@ -21,6 +21,7 @@
 
 ## Multijazyčnost
 
+- [ ] **Tester tier — text-only + hlas po redeem** (KUKY 2026-07-19, blizka budoucnost). Testovaci ucty pro kamarady: textova cteni zdarma (setri EL rozpocet), hlas az po redeem kodu — stejne jako bezny rune_seeker. Zaklad UZ STOJI: sloupec is_tester (server-owned), edge funkce reset-tree (gate na is_tester), tester reset tlacitko ve strome. ZBYVA: (1) skryt hlas testerum defaultne (canUseVoice() ma vracet false pokud is_tester a nema redeem) — ⚠️ jen UI gate, EL_PROXY tier nezna, takze tester s konzoli si hlas pusti (jako u zakladani); tvrda ochrana rozpoctu az kdyz EL_PROXY dostane identitu cteni. (2) onboarding/pozvani pro tester ucty. (3) rozhodnout, jestli testeri maji vlastni monthly strop nebo neomezene.
 - [ ] **EN parita + rozšiřitelnost** — každá reading-quality změna (grammar blok, lang-lock, intention gloss, few-shot, voice profil) musí být **per-jazyk**. Přidání Norštiny/Danštiny = nový `DEF_CHAR_XX` + voice profil `.xx` + `buildXxxPromptXX`, nic víc jinde. Owner directive 2026-07-04.
 
 ## i18n / prevence uvízlé angličtiny

@@ -12,6 +12,7 @@ const PROXY     = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/claude-
 const EL_PROXY  = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/elevenlabs-proxy';
 const EL_STATIC = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/elevenlabs-static';
 const TREE_UPDATE = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/tree-update';
+const RESET_TREE  = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/reset-tree';
 // Future proxies go here:
 // const NOTIFY_PROXY = '...functions/v1/notify';
 // const LUNAR_PROXY  = '...functions/v1/lunar-context';

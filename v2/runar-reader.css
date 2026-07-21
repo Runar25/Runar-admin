@@ -673,6 +673,9 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .whispers-desc strong{color:var(--gold);font-style:normal;font-weight:400;}
 /* Loading pulse */
 @keyframes runar-breathe{0%,100%{opacity:0.4;}50%{opacity:1;}}
+/* Tester bar — viditelny jen tester uctum, drzeny stranou (mala, ztlumena). */
+.tree-tester-btn{font-family:'Cinzel',serif;font-size:0.55em;letter-spacing:2px;padding:6px 14px;background:transparent;border:1px solid rgba(255,191,0,0.35);color:var(--gold);opacity:0.55;cursor:pointer;transition:opacity 0.2s;}
+.tree-tester-btn:hover{opacity:1;}
 .whispers-loading-inner{text-align:center;padding:22px 0 10px;}
 .whispers-loading-star{font-size:1.6em;color:var(--gold);display:block;margin-bottom:10px;animation:runar-breathe 2.4s ease-in-out infinite;}
 .whispers-loading-label{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2.5px;color:var(--gold);animation:runar-breathe 2.4s ease-in-out infinite;animation-delay:0.3s;}

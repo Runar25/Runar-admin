@@ -1694,3 +1694,28 @@ i když zní jistě.**
 - **Bezpečnostní dopad = žádný.** Klient byl blokovaný správně po celou dobu, edge funkce
   (service_role) procházely správně. Rozbitá byla jen administrátorská cesta.
 - **Affected doc(s):** žádný.
+
+---
+
+## 2026-07-19 — Tester reset stromu (edge funkce, gate na is_tester) [tune]
+
+- **Účel:** owner testuje zakládání jako běžný uživatel (`zkukula@gmail.com`, ne admin — admin
+  se auto-povyšuje na premium a reálnou rune_seeker cestu neprojde). Potřebuje strom mezi testy
+  resetovat bez SQL editoru, aby našel další chyby.
+- **Reset je server-side edge funkce `reset-tree`**, ne klientský zápis: sloupce `life_rune_*`,
+  `tree_founded_at` atd. nejsou v klientském grantu a immutability trigger by klienta stejně
+  zablokoval. Edge funkce běží jako service_role → trigger ji propustí.
+- ⭐ **Gate = `is_tester`, NE admin e-mail.** Reset je schopnost testera. Kdyby se gatovalo na
+  admina, musel by se admin e-mail seznam (dnes jen v `isAdmin()`) zduplikovat do edge funkce =
+  §20. Jedna podmínka, jeden zdroj pravdy. `zkukula@gmail.com` dostane přístup nastavením
+  `is_tester = true`, i když admin není.
+- **Rozšiřuje existující koncept, nezakládá nový:** `is_tester` už žije (privacy sloupce
+  2026-07-13, journal storage, consent flow, admin readings view). Klient ho čte do `isTester`.
+- **Tester bar viditelný jen když `isTester`** — ověřeno v prohlížeči (běžný účet nevidí,
+  tester vidí, oba jazyky). Bezpečnost je na serveru: běžný účet, který funkci zavolá z konzole,
+  dostane 403.
+- **Tester tier jako produkt = backlog** (KUKY „blízká budoucnost"): text-only zdarma, hlas po
+  redeem. ⚠️ „text-only" půjde vynutit jen v UI — EL_PROXY tier nezná, takže je to stejná mez
+  jako u zakládání. Zapsáno s tímhle omezením, ať se to nepřehlédne.
+- **Affected doc(s):** RUNAR_BACKLOG.md (tester tier položka).
+- **NASAZENO:** edge funkce `reset-tree` deployed. Owner nastaví `is_tester = true` pro svůj účet.

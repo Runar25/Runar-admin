@@ -472,6 +472,12 @@
   <!-- ═ TREE OF LIFE PANE ═ -->
   <div id="apane-tree" style="display:none;">
 
+    <!-- TESTER BAR — jen pro tester ucty (is_tester), skryte vsem ostatnim.
+         Resetuje strom, aby sel rituál otestovat znovu. -->
+    <div id="tree-tester-bar" style="display:none;">
+      <button class="tree-tester-btn" id="tree-tester-reset" onclick="resetTreeTester()"></button>
+    </div>
+
     <!-- LIVING TREE (free-solo: grows from your readings) -->
     <div id="tree-living" style="display:none; text-align:center; margin:8px 0 4px;">
       <canvas id="tree-living-canvas" style="width:min(300px,78vw); height:auto; display:block; margin:0 auto;"></canvas>

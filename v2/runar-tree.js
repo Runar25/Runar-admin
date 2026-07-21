@@ -292,6 +292,17 @@ async function renderLivingTree(rune) {
 
 function updateTreeTab() {
   var isIs = lang === 'is';
+  // Tester bar: viditelny jen tester uctum (is_tester). Server-owned flag,
+  // klient ho jen cte (runar-app.js). Ostatni ho nikdy nevidi.
+  var _tb = document.getElementById('tree-tester-bar');
+  if (_tb) {
+    var _isT = (typeof isTester !== 'undefined') && isTester;
+    _tb.style.display = _isT ? 'block' : 'none';
+    if (_isT) {
+      var _rb = document.getElementById('tree-tester-reset');
+      if (_rb) _rb.textContent = t('tester_reset_btn');
+    }
+  }
   var hasDob = readerUser && readerUser.d && readerUser.m && readerUser.y;
   var isStdPlus = currentUser && (userTier === 'standard' || userTier === 'premium' || isAdmin(currentUser.email));
   var rune = hasDob ? calcLifeRune(readerUser.d, readerUser.m, readerUser.y) : null;
@@ -700,4 +711,35 @@ function toggleFoundingReading() {
     arrow.textContent = open ? '+' : '\u2212';
     arrow.classList.toggle('open', !open);
   }
+}
+
+// Tester-only reset stromu. Sama brana je na SERVERU (edge funkce reset-tree
+// overuje is_tester); tohle je jen vyvolani + osetreni odpovedi. Bezny ucet,
+// ktery by funkci zavolal z konzole, dostane 403.
+async function resetTreeTester() {
+  if (typeof isTester === 'undefined' || !isTester || !currentUser) return;
+  var btn = document.getElementById('tree-tester-reset');
+  if (!confirm(t('tester_reset_confirm'))) return;
+  if (btn) { btn.disabled = true; btn.style.opacity = '0.3'; }
+  try {
+    var session = await sb.auth.getSession();
+    var token = session.data.session && session.data.session.access_token;
+    if (!token) throw new Error('no session');
+    var res = await fetch(RESET_TREE, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token }
+    });
+    var data = await res.json();
+    if (!res.ok || !data.success) throw new Error(data.error || 'reset failed');
+    // Vycistit lokalni stav + prenacist profil, at strom spadne na zacatek.
+    _lifeRuneText = null; _lifeRuneLang = null; _lifeRuneNum = null;
+    _foundingText = null; userTreeFounded = false;
+    if (readerUser) { readerUser.d = null; readerUser.m = null; readerUser.y = null; }
+    if (typeof fetchUserProfile === 'function') await fetchUserProfile(currentUser.id);
+    updateTreeTab();
+    showToast(t('tester_reset_done'));
+  } catch (e) {
+    showToast('reset: ' + e.message);
+  }
+  if (btn) { btn.disabled = false; btn.style.opacity = ''; }
 }
