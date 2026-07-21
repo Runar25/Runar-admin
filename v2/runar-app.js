@@ -498,13 +498,6 @@ function updateSidePanel() {
   if (!accEl) return;
   _updateInstallBtn();
   const isIs = lang === 'is';
-  // Tier labels from TIERS config — Rule §8: never hardcode
-  var _lkSP = isIs ? 'label_is' : 'label';
-  var tierLabels = {};
-  Object.keys(TIERS).forEach(function(k) {
-    tierLabels[k] = (TIERS[k][_lkSP] || TIERS[k].label || k).toUpperCase();
-  });
-  const tierHeader = currentUser ? (tierLabels[userTier] || userTier.toUpperCase()) : (t('visitor_label'));
   setText('sp-tier-header', t('sp_account_title'));
   // Side panel navigation links — switch with language
   setText('sp-guide-link',   t('sp_guide_link'));
@@ -1235,9 +1228,13 @@ function _renderYourPath() {
   const currIdx  = PANEL_TIERS.indexOf(currData);
   const higher   = PANEL_TIERS.slice(currIdx + 1);
 
-  // Static current tier name
+  // Static current tier name (+ tester priznak, je-li ucet tester)
   const nameEl = document.getElementById('sp-curr-tier-name');
-  if (nameEl) nameEl.textContent = currData.name[lk];
+  if (nameEl) {
+    var _tierNm = currData.name[lk];
+    if (typeof isTester !== 'undefined' && isTester) _tierNm += ' ' + t('tester_suffix');
+    nameEl.textContent = _tierNm;
+  }
 
   // Current tier properties (multi-line, always visible)
   const descEl = document.getElementById('sp-tier-desc');
