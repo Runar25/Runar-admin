@@ -1842,3 +1842,21 @@ i když zní jistě.**
   doc modify → OK). **Poučení (opět): break-test proti JEDNOMU případu netestuje hranici.**
 - **`.gitignore`:** přidány jen `v2/tree-snapshots/` a `_backup/` (jednoznačně nikdy-trackované).
   Lab dirs se NEgitignorují — mají trackovaný zdroj; ty kryje hook.
+
+---
+
+## 2026-07-21 — SEASON_POOLS: highsummer rozšířen (+12) [tune]
+
+- **Co:** `SEASON_POOLS.highsummer` v `runar-character.js` — +8 bright, +4 cold. Nová `id` se
+  sama zapojí do shuffle-bagu (`_seasonBagPick` bere id z listu za běhu), žádná jiná změna kódu.
+- **Zdroj:** Cowork handoff. Obrazy schváleny KUKY, IS tvary ověřeny BÍN **A Sigrún (naturalness)**
+  — highsummer je jediný koš se Sigrúniným kývnutím, proto ship. Zbylých **23 entries**
+  (autumn/darkening/deepwinter/spring/earlysummer) **NEVLOŽENO** — čekají na Sigrúninu IS-naturalness (§19).
+- ⚠️ **Coworkovy POČTY v handoffu byly ŠPATNĚ** (ověřeno programově, ne okem): tvrdil bright 11 /
+  cold 7, realita byla **12 / 5**. Pool se od jeho snapshotu posunul (jiná session ho editovala),
+  stejně jako jeho ř. 536 byl reálně 546. Handoff = žádost, ne fakt — ověřeno proti HEAD.
+  **Výsledek: highsummer bright 20, cold 9** (NE handoff-předpokládané 19/11).
+- **OVĚŘENÍ (§19, výsledek ne tvar):** node --check OK · programový přepočet po vložení = 20/9
+  (assert) · žádné duplicitní id v highsummer (assert) · žádná kolize nových 12 id s existujícími ·
+  check-is OK · smoke 22/22.
+- **Affected doc(s):** žádný (čísla poolů nikde neopisujeme — §20; jsou v configu-builderu).

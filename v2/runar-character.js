@@ -313,14 +313,26 @@ var SEASON_POOLS = {
       { id: 'hs_highland', en: 'the highland open at last and crossable',               is: 'hálendið loks opið og fært' },
       { id: 'hs_cottongrass', en: 'cotton-grass nodding white across the bog', is: 'fífa sem bærist hvít yfir mýrina' },
       { id: 'hs_warmrock', en: 'sun-warmed lava and the smell of crowberry', is: 'sólvolgið hraun og lykt af krækiberjalyngi' },
-      { id: 'hs_glacierriver', en: 'a milky glacial river braided across black sand', is: 'jökulá grá og kvísluð yfir svartan sand' }
+      { id: 'hs_glacierriver', en: 'a milky glacial river braided across black sand', is: 'jökulá grá og kvísluð yfir svartan sand' },
+      { id: 'hs_rainbowvalley', en: 'a rainbow standing over the green valley after a summer shower', is: 'regnbogi yfir grænum dal eftir sumarskúr' },
+      { id: 'hs_waterfall',     en: 'a waterfall thundering full and white in the midday light',       is: 'foss sem dunar hvítur og fullur í hádegisljósinu' },
+      { id: 'hs_skerries',      en: 'the sea flat and blue out to the far skerries',                    is: 'hafið slétt og blátt út að ystu skerjum' },
+      { id: 'hs_thyme',         en: 'wild thyme low and pink across a sun-warmed slope',                is: 'blóðberg lágt og bleikt yfir sólvolgri brekku' },
+      { id: 'hs_angelica',      en: 'angelica standing tall and green by the stream',                   is: 'hvönn há og græn við lækinn' },
+      { id: 'hs_summersheep',   en: 'sheep grazing high on the green mountainside',                     is: 'fé á beit hátt í grænni fjallshlíð' },
+      { id: 'hs_turfroof',      en: 'sun on the green turf roof of an old farmhouse',                   is: 'sól á grænu torfþaki gamals bæjar' },
+      { id: 'hs_hotspring',     en: 'a hot spring steaming quietly in a green meadow',                  is: 'hver sem rýkur hljóðlega á grænni grund' }
     ],
     cold: [
       { id: 'hs_northwind', en: 'the cold north wind cutting through the endless light', is: 'kaldur norðanvindur sem sker gegnum endalaust ljósið' },
       { id: 'hs_siderain', en: 'summer rain driving sideways across the lava',          is: 'sumarrigning sem stendur á ská yfir hraunið' },
       { id: 'hs_glacierbreath', en: 'the breath of the glacier drifting down the valley', is: 'andardráttur jökulsins sem berst niður dalinn' },
       { id: 'hs_raindays', en: 'days of grey rain that will not clear', is: 'dagar af gráu regni sem ekki léttir' },
-      { id: 'hs_coldnight', en: 'a cold clear night with frost in the hollows', is: 'köld heiðrík nótt með frosti í lægðum' }
+      { id: 'hs_coldnight', en: 'a cold clear night with frost in the hollows', is: 'köld heiðrík nótt með frosti í lægðum' },
+      { id: 'hs_highlanddesert', en: 'the bare grey gravel of the empty highland', is: 'ber grá möl á auðu hálendinu' },
+      { id: 'hs_cairn',          en: 'a lone cairn on a bare mountain pass',        is: 'einmana varða á berum fjallvegi' },
+      { id: 'hs_cloudmountain',  en: 'the mountain lost in cold cloud all day',     is: 'fjallið hulið köldum skýjum allan daginn' },
+      { id: 'hs_raven',          en: 'a raven riding the wind over the empty moor', is: 'hrafn á flugi í vindinum yfir auðri heiði' }
     ]
   },
   autumn: {
