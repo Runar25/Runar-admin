@@ -133,6 +133,8 @@ function render(canvas, opts) {
     var intS=[0,0,0,0,0], intN=[0,0,0,0,0], areaS=[0,0,0,0,0], areaN=[0,0,0,0,0], aettCnt=[{},{},{},{},{}];
     /* RUNA -> TVAR: kolikrat kterou runu v tomhle elementu tahas + kdy poprve (remiza) */
     var runeCnt=[{},{},{},{},{}], runeFirst=[{},{},{},{},{}];
+    var runeOrder=[[],[],[],[],[]];   /* sticky poradi run per element (hystereze) */
+    var RUNE_HYST=2;   /* o kolik musi nova runa vest, nez prevezme tvar vetve (KUKY 2026-07-21) */
     var G2K={}; B.RUNES.forEach(function(r){ G2K[r.g]=r.k; G2K[r.k]=r.k; });
     for(var i=0;i<lg.length;i++){
       var rd=lg[i], runes=rd.runes||[], multi=(rd.spread&&rd.spread!=='single');
@@ -145,7 +147,18 @@ function render(canvas, opts) {
         /* Blank ma v runar-runes.js glyf '○', v branch datech je jako 'odinn' s jinym glyfem
            -> mapovat pres priznak blank, ne pres glyf, jinak by Odinn nikdy tvar nedostal. */
         var rk=runes[j].blank ? 'odinn' : (G2K[runes[j].rune]||null);
-        if(rk){ runeCnt[e][rk]=(runeCnt[e][rk]||0)+1; if(runeFirst[e][rk]===undefined) runeFirst[e][rk]=i; }   /* rune muze byt engine-key NEBO glyf (reader) */
+        if(rk){
+          runeCnt[e][rk]=(runeCnt[e][rk]||0)+1;
+          if(runeFirst[e][rk]===undefined) runeFirst[e][rk]=i;   /* rune muze byt engine-key NEBO glyf (reader) */
+          /* HYSTEREZE: nova runa zacina DOLE a stoupa, jen kdyz vede nad predchudcem
+             o >= RUNE_HYST. Tim se tvar vetve nepreklapi kolem remizy (KUKY: Berkano/Perth
+             se mijely o 1 a blikaly ob cteni na pozici 144-145). Trvaly posun (vede o 2+) projde. */
+          var ord=runeOrder[e], pos=ord.indexOf(rk);
+          if(pos<0){ ord.push(rk); pos=ord.length-1; }
+          while(pos>0 && (runeCnt[e][rk]-(runeCnt[e][ord[pos-1]]||0))>=RUNE_HYST){
+            ord[pos]=ord[pos-1]; ord[pos-1]=rk; pos--;
+          }
+        }
         if(ia!==undefined){ intS[e]+=ia; intN[e]++; }
         if(al!==undefined){ areaS[e]+=al; areaN[e]++; }
         if(multi){ var eN=ELEMS[e];
@@ -155,15 +168,14 @@ function render(canvas, opts) {
       }
     }
     function domAett(m){ var best='freya', bc=-1; for(var a in m){ if(m[a]>bc){bc=m[a];best=a;} } return best; }
-    /* Nejcastejsi runy elementu, sestupne. Pri REMIZE vyhrava ta drivejsi
-       (KUKY 2026-07-19: „ta, ktera ten pohyb zahajila") -> strom se nepreklapi
-       sem a tam kvuli jednomu cteni. */
-    function rankRunes(cm, fm){ var ks=[]; for(var k in cm) ks.push(k);
-      ks.sort(function(a,b){ return (cm[b]-cm[a]) || (fm[a]-fm[b]); }); return ks; }
+    /* Poradi run = STICKY (runeOrder, udrzovane vyse s hysterezi). Jednorazovy sort
+       podle poctu by preklapel tvar vetve kolem remizy; sticky poradi to drzi, dokud
+       vyzyvatel nevede o >= RUNE_HYST. Pri prvnim vyskytu runa zacina dole = "ta drivejsi
+       drzi tvar" (KUKY 2026-07-19), a soupere ustoupi az realnemu trvalemu posunu. */
     var els=[];
     for(var e3=0;e3<5;e3++){ if(cnt[e3]>0){ var elN=ELEMS[e3], pool=runesByEl[elN]||B.RUNES;
       els.push({ el:elN, count:cnt[e3], first:first[e3], world:ELEM_WORLD[elN], aett:domAett(aettCnt[e3]), rune:pool[0],
-                 runeRank:rankRunes(runeCnt[e3], runeFirst[e3]),
+                 runeRank:runeOrder[e3],
                  intAxis: intN[e3]?intS[e3]/intN[e3]:0, areaLat: areaN[e3]?areaS[e3]/areaN[e3]:0 }); } }
     els.sort(function(a,b){return a.first-b.first;});
     var total=0, mx=1; els.forEach(function(x){ total+=x.count; mx=Math.max(mx,x.count); });

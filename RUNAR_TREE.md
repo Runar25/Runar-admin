@@ -62,7 +62,7 @@ Rohy (budoucnost+nitro, minulost+svět) = volné pro vzácnější kombinace.
 | **Norns osa** (§3A) | ZÓNA = výška (kořeny/střed/koruna) |
 | **area** | STRANA (dovnitř vlevo / ven vpravo) |
 | **element** | BARVA + mikro-výška + úhel (šířka) |
-| **runa** | TVAR / silueta — ✅ ŽIVÉ od 2026-07-19 (n-tá větev elementu = n-tá nejčastější runa) |
+| **runa** | TVAR / silueta — ✅ ŽIVÉ od 2026-07-19 · hystereze prahu 2 (2026-07-21) proti blikání kolem remízy |
 | **ætt** | sekundární charakter růstu |
 | **spread** | KOMPLEXITA (single=uzel · Norns=3 kořeny · Kříž=větev+4 · Horseshoe=větvená · Yggdrasil=roční prsten) |
 | **počet vyplněných polí** | VÁHA / mohutnost |

@@ -708,6 +708,38 @@ stav až potom a vyvodil závěr o minulosti → owner musel arbitrovat. Stav be
     · RUNAR_EVAL_CHAT_mobil · RUNAR_FEATURES · RUNAR_IS_GRAMMAR_CHECK_CODE · RUNAR_SEGMENTACE_FaseB
     · RUNE_IMAGE_POOLS_draft · tento handoff.
 
+## 2026-07-21 - Hystereze poradi run (prah 2): konec blikani tvaru vetve kolem remizy
+
+**Zadani:** KUKY poslal dva exporty (n=175, viewN 144) s tim, ze kolem polohy 144 se DVE vetve
+preklapi ob jedno cteni. Zvolil prah 2.
+
+**Diagnoza na jeho datech** (ne na vymyslenych): pri posunu 144 -> 145 se hnou presne dve vetve --
+voda (Berkano/Perth se mijely o 1 runu) a stin (Isa/Odinn taky o 1). Nejde o zavadu ani
+nedeterminismus: krok 3 poctive zrcadli remizu, kde jedno cteni prehodi poradi run, a tvar vetve
+se prehodi s nim.
+
+**Reseni: hystereze.** Poradi run per element se drzi STICKY (inkrementalne, jak se log scita).
+Nova runa prevezme misto nad predchudcem, jen kdyz vede o >= RUNE_HYST (=2). Blikani kolem remizy
+zmizi; skutecny trvaly posun (runa zacne vest o 2+) projde. Prah 1 = puvodni chovani.
+Mechanika je v `build_tree_production.py` v miste, kde uz krok 3 pocita poradi run -- z jednorazoveho
+sortu podle poctu se stalo sticky bublani. Engine netknuty.
+
+**Overeno DVAKRAT, na KUKYho datech:**
+- deterministicky replay logiky na jeho log: prah 1 = 10 prekloneni tvaru hlavni vetve za cely log,
+  prah 2 = 7. Ty tri, co zmizely, jsou remizy; sedm zbylych jsou skutecne trvale posuny.
+- end-to-end na vykreslenem strome (jeho export protlacen realnym RunarTreeProd): pred hysterezi
+  water Berkano->Perthro a shadow Odinn->Isa pri 144->145; PO hysterezi voda i stin drzi tvar
+  pres 144/145/146. Presne ty dve vetve, co owner hlasil.
+
+**Metodicka poznamka:** prvni pokus o end-to-end test lhal -- prohlizec mel v pameti STAROU verzi
+runar-tree-prod.js z doby pred regeneraci (soubor na disku uz hysterezi mel, nactena funkce ne).
+Chyceno kontrolou `render.toString().indexOf('RUNE_HYST')`, opraveno eval cerstveho zdroje. Bez teto
+kontroly bych byl ohlasil "nefunguje to" na kodu, ktery fungoval. [[measure-dont-eyeball]] plati
+i na to, CO se meri: overit, ze merim aktualni kod, ne cache.
+
+**Affected doc(s):** RUNAR_TREE.md
+
+
 ## 2026-07-19 - Export stavu stromu (admin) + upresneni nalezu o nedeterminismu
 
 **Zadani KUKY:** "export stavu. at prestanes hadat." Kontext: hlasil preskakovani mezi polohou
