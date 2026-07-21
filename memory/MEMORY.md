@@ -61,7 +61,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [function-not-ceremony.md](function-not-ceremony.md) — nestavět proces pro uspokojení; nepomůže-li reálně, říct to a vynechat
 - [proceed-dont-ask.md](proceed-dont-ask.md) — dohodnutý plán odjeď celý; neptej se „souhlas?" mezi kroky
 - [commit-by-pathspec.md](commit-by-pathspec.md) — commitovat VŽDY s pathspec; `git commit` bere celý index včetně cizí lane
-- [one-patch-script-path.md](one-patch-script-path.md) — §1 patche VŽDY do `scripts/_patch.py`
+- [one-patch-script-path.md](one-patch-script-path.md) — §1 patch do VLASTNÍHO gitignored slotu session (`scripts/_patch.py` tree · `scripts/_patch_tune.py` tune), nikdy sdílený
 - [match-existing-visual-first.md](match-existing-visual-first.md) — nové UI: nejdřív načíst existující vizuál a zkopírovat ho
 - [verify-agent-claims-about-code.md](verify-agent-claims-about-code.md) — handoff od jiné session = žádost, ne fakt; ověřit
 - [bash-no-cd-prefix.md](bash-no-cd-prefix.md) — NIKDY `cd … &&` ani `| tail` na Bash; boří allowlist

@@ -708,6 +708,27 @@ stav až potom a vyvodil závěr o minulosti → owner musel arbitrovat. Stav be
     · RUNAR_EVAL_CHAT_mobil · RUNAR_FEATURES · RUNAR_IS_GRAMMAR_CHECK_CODE · RUNAR_SEGMENTACE_FaseB
     · RUNE_IMAGE_POOLS_draft · tento handoff.
 
+## 2026-07-21 - §1 upraveno: patch skript = vlastni slot session, ne sdileny
+
+**Rozhodnuti KUKY** (po handoffu CODE-tune o anti-kolizi): §1 prestal sedet, kdyz bezi 3 Code
+session, dve v `[tune]`. Puvodni pravidlo "patch VZDY scripts/_patch.py" byl SDILENY slot ->
+session si scratch prepisovaly pod rukama (2026-07-19 se to stalo 3x za den).
+
+**Nove:** patch skript = VLASTNI gitignored slot session. `scripts/_patch.py`=CODE-tree ·
+`scripts/_patch_tune.py`=CODE-tune · `_patch_<session>.py` dalsi. Reconcile dvou protichudnych
+pameti: stabilni cesta per session splnuje OBOJI - jeden allowlist radek na slot (zadny
+permission-prompt treadmill) I zadna kolize (kazda session vlastni soubor). Gitignored ->
+`git add -A` ho nesebere.
+
+**§20 hlidany pri tom:** stejne pravidlo zilo ve DVOU pametich, ktere si odporovaly -
+`one-patch-script-path` ("vzdy sdilene _patch.py") vs `parallel-code-sessions-collision`
+("nikdy sdilene, do scratchpadu"). Srovnano: one-patch je ted vlastnik pravidla (vlastni slot +
+allowlist duvod), parallel vlastni sirsi kolizni protokol. parallel byla zrovna rozdelana jinou
+session (`M`) -> NESAHAL jsem na ni, presne dle protokolu, ktery tenhle zaznam kodifikuje.
+
+**Affected doc(s):** CLAUDE.md · memory/MEMORY.md
+
+
 ## 2026-07-21 - Blank duch-vetev ZRUSENA (KUKY): Blank je bezna stinova runa
 
 **Rozhodnuti KUKY (design):** *"me vubec nevadi, ze se neztlumi. tohle tam ani nechci. ani at

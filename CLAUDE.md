@@ -51,8 +51,13 @@ runar-config.js → runar-runes.js → runar-translations.js → runar-character
 
 ### §1 — JS změny = Python skripty
 Edit tool kazí apostrofy `'` → curly quotes → SyntaxError.
-JS soubory: VŽDY Python skript (C:\Users\zkuku\Downloads\Runar-admin\)
-CSS + HTML (bez inline JS) + translations.js: Edit tool OK
+JS soubory: VŽDY přes Python patch skript. CSS + HTML (bez inline JS) + translations.js: Edit tool OK.
+
+**Patch skript = VLASTNÍ gitignored slot session, NIKDY sdílený** (2026-07-21, po přechodu na 3 session,
+dvě v `[tune]`): `scripts/_patch.py` = CODE-tree · `scripts/_patch_tune.py` = CODE-tune ·
+`_patch_<session>.py` = další. Sdílený slot si session přepisovaly scratch pod rukama. Gitignored →
+`git add -A` ho nesebere; každý slot = jeden stabilní allowlist řádek (žádný permission-prompt treadmill).
+Kolize a předávání mezi session → sekce „N paralelních session" + memory `parallel-code-sessions-collision`.
 
 ### §2 — IS je primární jazyk
 IS musí být vždy perfektní. EN je vedlejší. NIKDY IS jako "překlad" EN.
