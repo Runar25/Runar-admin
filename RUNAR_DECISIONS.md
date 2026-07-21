@@ -1886,3 +1886,24 @@ i když zní jistě.**
   potvrzení, ne bloker. Owner může ověřit: polož delší IS follow-up (např. „endursagt á mannamáli"
   na spreadu) → má končit tečkou a ne uprostřed.
 - **Affected doc(s):** žádný.
+
+---
+
+## 2026-07-21 — SEASON_POOLS: zbylých 23 entries (Sigrún schválila) [tune]
+
+- **Co:** dokončení Cowork handoffu — +23 obrazů do 7 košů: autumn.bright +3, autumn.cold +4,
+  darkening.bright +4, darkening.cold +3, deepwinter.cold +3, spring.cold +3, earlysummer.cold +3.
+- **Odblokováno:** Sigrún kývla na IS-naturalness (poslední chybějící §19 článek; obrazy KUKY
+  a IS tvary BÍN byly hotové z minula).
+- **OVĚŘENÍ (§19, výsledek):** node --check · id v SEASON_POOLS 110 → 133 (delta přesně 23,
+  assert) · žádný duplikát id v celém SEASON_POOLS (assert) · žádná kolize 23 nových id
+  s existujícími (grep před vložením) · check-is OK · smoke 22/22.
+- **Kotveno na poslední entry každého koše** (přečteno), ne na počty — počty v handoffu opět
+  seděly jen zčásti (earlysummer.cold reálně 5, handoff tvrdil 7). Insertion je proto anchor-based,
+  drift-proof.
+- ⚠️ **KOŘEN driftu Coworkových počtů IDENTIFIKOVÁN:** Cowork čte ze zrcadla
+  `C:\Users\zkuku\Claude\Projects\RÚNAR the rune keeper\`, ne z živého repa. CLAUDE.md §17 to
+  zrcadlo výslovně jmenuje jako zdroj driftu. Zrcadlo se nesynchronizuje s commity, takže jeho
+  snapshot poolu byl starší než HEAD. **Náprava = handoff nemá uvádět POČTY** (derivovaná hodnota,
+  bydlí v souboru, drifuje) — jen entries + anchor; počty spočítá CODE z živého souboru.
+- **Affected doc(s):** žádný (počty poolů se nikde neopisují — §20).
