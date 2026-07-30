@@ -89,6 +89,14 @@ Nová oblast, nový typ čtení, **pozdější osobní otázky na Rúnara** = do
 
 ⭐ **KDE Gathering bydlí (KUKY 2026-07-30).** Každé čtení se ukládá do **journalu** — a journal je *databáze stromu*: drží každé čtení, každou runu, area, intention, spread. **Přesah přes víc čtení** (opakující se runy, kombinace, „síly" mezi runami / ætt / elementy) je tedy informace **v journalu**, ne v geometrii stromu. **Strom je jen vizuální forma týchž dat.** → Gathering = analytická vrstva **nad journalem** (`detectPatterns()` čte uložená čtení), NE něco zapečeného do tree enginu. Proto taky „živé síly mezi runami" nehýbou větvemi (§0 model) — jsou to vztahy **v datech**, které umí Rúnar pojmenovat.
 
+⭐ **CO se ve tvaru čte (KUKY 2026-07-30) — směr, ne hotová věc.** Umístění (§3–§5) strom jen *postaví*; Gathering pak **čte jeho výsledný TVAR**. To jsou ty „speciální výklady". Signály tvaru:
+- **strana:** víc větví vpravo × vlevo → zaměření **ven** (svět/kariéra/směr) × **dovnitř** (nitro/rodina/léčení).
+- **výška:** vysoká koruna × hluboké/těžké kořeny → tah k **budoucnosti/ideálům** × **držení minulostí**.
+- **šířka:** široký × úzký strom → **pestrost** (hodně oblastí) × **soustředění** na málo.
+- **náklon + holá místa:** strom se kloní / jedna strana holá → **nerovnováha** („rosteš od kmene" — mechanika §1); holá zóna = oblast, které se nevěnuješ.
+
+Data pro tohle **už leží v journalu** (area/intention/runy každého čtení) — nic nového se nesbírá. **Umístění tvar vyrobí, Gathering ho přečte.** Dnes strom ten tvar už *kreslí*, ale *číst* ho zatím neumí (`detectPatterns` nepostaveno → RUNAR_BACKLOG).
+
 **Normální čtení** přidá řádek do journalu (a strom o větev povyroste). **Gathering** ten journal *přečte jako celek* — najde zralý opakující se vzorec a Rúnar mluví o TOM vzorci (ne o čerstvé runě).
 
 **Tři hloubky = KDE vzorec dozrál (jména = poloha, ne věštecká moc):**

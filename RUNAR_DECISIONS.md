@@ -1999,6 +1999,25 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 
 ---
 
+## 2026-07-30 — Tvar stromu = zdroj speciálních výkladů (Gathering čte rozložení) [tree]
+
+- **Typ:** intent (owner směr; navazuje na model výše).
+- **Co:** Umístění větví (§3–§5: element = trs, intention = výška, area = strana) strom jen **postaví**.
+  Smysl je **až ve čtení výsledného TVARU** — a to jsou „speciální výklady" = **The Gathering**.
+  Čtené signály tvaru: **strana** (víc vpravo/vlevo → zaměření ven/dovnitř) · **výška** (vysoká koruna ×
+  hluboké kořeny → budoucnost × minulost) · **šířka** (pestrost × soustředění) · **náklon + holá místa**
+  (nerovnováha, „rosteš od kmene" — mechanika RUNAR_TREE.md §1). Data pro to **už leží v journalu**.
+- **Proč:** KUKY 2026-07-30: umístění nám pomáhá rozhodnout KAM větev dát; smysl je ale AŽ v tom, co
+  se z hotového tvaru přečte („víc čtení vpravo/vlevo něco znamená; vysoká koruna, široký strom…").
+  „Výborně. To je ono."
+- **Reality note:** NEPOSTAVENO — strom tvar dnes kreslí, ale číst ho neumí (`detectPatterns` chybí,
+  DB tree_state/tree_readings neexistuje). Je to **směr, ne hotová věc**; mění se novým datovaným záznamem.
+  „Umístění tvar vyrobí, Gathering ho přečte" — vrstva nad journalem, ne engine kreslení.
+- **Affected doc(s):** RUNAR_TREE.md (§7 — nový blok „CO se ve tvaru čte") · RUNAR_BACKLOG.md (nový úkol).
+- **Reversibility:** easy (směr, zatím bez kódu).
+
+---
+
 ## 2026-07-30 — IS Native Checklist: fronta pro Sigrún → učící smyčka
 
 - **Typ:** intent + doc-fix
