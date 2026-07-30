@@ -34,20 +34,34 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 
 ## Rozcestník — kde co bydlí (jediné místo)
 
-| Co hledáš | Vlastník |
-|---|---|
-| Tiery, jejich jména, limity · ceny spreadů · VOCAB · SPREAD_CONFIG | `v2/runar-config.js` — **doky to NEOPISUJÍ** |
-| Runy, ætty, AREAS/SEEKS/INTENTIONS (+ `.norns` osy) | `v2/runar-runes.js` |
-| Prompty, buildery, délky čtení, IS gramatický blok | `v2/runar-character.js` |
-| Model čtení + fallback chain | `supabase/functions/claude-proxy/index.ts` MODELS |
-| Architektura, pravidla §1–§20, DB sloupce, lanes a commit prefixy | `CLAUDE.md` |
-| Proč je něco tak, jak to je (datovaná rozhodnutí) | `RUNAR_DECISIONS.md` |
-| Business model, kredity, break-even, fyzické produkty | `RUNAR_PRICING.md` |
-| Design, mytologie, význam částí | `RUNAR_DESIGN.md` |
-| Strom života — duše, zóny, signály, Gathering | `RUNAR_TREE.md` |
-| Otevřené úkoly, blockery, priority | `RUNAR_BACKLOG.md` |
-| GDPR, privacy, tester consent | `RUNAR_PRIVACY.md` |
-| Aktuální SW verze / commit / co je nasazené | `v2/sw.js` a `git log` — **nikdy ne v docu** |
+**Druh** = jak se to mění (kde smí náraz):
+- 🔒 **externě ukotveno** — pravda mimo nás (etymologie, zdroje, IS gramatika/BÍN). Změna = lepší zdroj / oprava přepisu; náraz proti externímu zdroji.
+- 📜 **vytvořený kánon** — pravda, kterou jsme stvořili a je zamčená (Rúnar, Agndofa, mytologie, hlas). Změna = rozhodnutí o kontinuitě + sweep; náraz proti vlastní konzistenci.
+- 🔄 **interně rozhodnuto** — proměnlivé páky (tiery, ceny, spready). Změna = nový datovaný DECISIONS.
+- 🏛 **architektonické** — pravidla §1–§20, lanes. One-way; mění datované rozhodnutí.
+
+| Co hledáš | Vlastník | Druh |
+|---|---|---|
+| Tiery, jejich jména, limity · ceny spreadů · VOCAB · SPREAD_CONFIG | `v2/runar-config.js` — **doky to NEOPISUJÍ** | 🔄 |
+| Runy, ætty, AREAS/SEEKS/INTENTIONS (+ `.norns` osy) | `v2/runar-runes.js` | 🔒 |
+| Prompty, buildery, délky čtení, IS gramatický blok | `v2/runar-character.js` | 🔒 gramatika · 📜 hlas (DEF_CHAR) |
+| Model čtení + fallback chain | `supabase/functions/claude-proxy/index.ts` MODELS | 🔄 |
+| Architektura, pravidla §1–§20, DB sloupce, lanes a commit prefixy | `CLAUDE.md` | 🏛 |
+| Proč je něco tak, jak to je (datovaná rozhodnutí) | `RUNAR_DECISIONS.md` | log |
+| Business model, kredity, break-even, fyzické produkty | `RUNAR_PRICING.md` | 🔄 · fyz. produkt 🔒 |
+| Design, mytologie, význam částí | `RUNAR_DESIGN.md` | 📜 |
+| Strom života — duše, zóny, signály, Gathering | `RUNAR_TREE.md` | 📜 |
+| Otevřené úkoly, blockery, priority | `RUNAR_BACKLOG.md` | stav |
+| GDPR, privacy, tester consent | `RUNAR_PRIVACY.md` | 🔒 |
+| Aktuální SW verze / commit / co je nasazené | `v2/sw.js` a `git log` — **nikdy ne v docu** | stav |
+
+---
+
+## Vrstvy pravdy
+- **Kanonická (pravda):** root `RUNAR_*.md` · `memory/*.md` · `CLAUDE.md` — ukazuje sem index.
+- **Supersedovaná (živá historie):** `memory/snapshots/` · `docs/archive/` · `RUNAR_DECISIONS.md` (append-only).
+- **Neklasifikováno (intake, chaos OK):** `docs/inbox/` — Cowork vysává, třídí při dotyku. NENÍ pravda.
+- **Mrtvá (scratch / slepé uličky):** mimo index; smí být v chaosu.
 
 ---
 
@@ -58,6 +72,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [paste-sql-explicitly.md](paste-sql-explicitly.md) — když má owner spustit SQL, vlož přesné SQL; žádné „jako minule"
 - [full-path-and-numbered-lists.md](full-path-and-numbered-lists.md) - uplna cesta k souboru (pracovni adresar je C:/Users/zkuku, ne repo) + cislovane seznamy tam, kde zalezi na poradi
 - [ask-owner-for-checks-you-cannot-run.md](ask-owner-for-checks-you-cannot-run.md) - co Code sam neoveri (prod DB, prihlasena appka), vyzadat po ownerovi, nededukovat
+- [dont-invent-fact-critical.md](dont-invent-fact-critical.md) — 🔒 fakt / 📜 lore chybějící v kánonu → zastav a flagni, nikdy nedomýšlej
 - [function-not-ceremony.md](function-not-ceremony.md) — nestavět proces pro uspokojení; nepomůže-li reálně, říct to a vynechat
 - [proceed-dont-ask.md](proceed-dont-ask.md) — dohodnutý plán odjeď celý; neptej se „souhlas?" mezi kroky
 - [one-patch-script-path.md](one-patch-script-path.md) — §1 patch do VLASTNÍHO gitignored slotu session (`scripts/_patch.py` tree · `scripts/_patch_tune.py` tune), nikdy sdílený
