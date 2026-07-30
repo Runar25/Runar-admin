@@ -1955,16 +1955,17 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 
 ---
 
-## 2026-07-30 — Model stromu ZAMČEN · Gathering = vrstva nad journalem · tree doky 9→2 [tree]
+## 2026-07-30 — Model stromu ROZSOUZEN (směr, ne dogma) · Gathering = vrstva nad journalem · tree doky 9→2 [tree]
 
 - **Typ:** intent (owner rozhodnutí) + docsync (konsolidace). Rozsuzuje dlouhý spor „co je větev".
 - **Co se rozhodlo (KUKY):**
-  1. **MODEL ZAMČEN.** *Element = kostra* — seskupuje větve, jde kořeny→kmen→koruna, dává barvu.
+  1. **MODEL — rozsouzené dilema** (ne trvalý zámek; strom NENÍ hotový, jen jsme vyřešili „co je
+     větev"). *Element = kostra* — seskupuje větve, jde kořeny→kmen→koruna, dává barvu.
      *Runa = tvář korunní větve* — větve rostou z elementů (plošně) a runa jim dává tvar. **Runa
      přišla první** (děláme runová čtení), element/ætt k ní přišly později. KUKY: „je trochu jedno
-     jak to bude udělané, pokud to bude hezké a bude to obraz člověka." **ZAMÍTNUTO navždy:**
-     boughs velká přestavba (regrese, 2026-07-04) · duch-větev pro Blank (2026-07-21) · **živé
-     síly mezi runami** (magnety hýbající větvemi).
+     jak to bude udělané, pokud to bude hezké a bude to obraz člověka." **Teď mimo hru (vrátí se
+     jen novým datovaným rozhodnutím + varováním, ne potají):** boughs velká přestavba (regrese,
+     2026-07-04) · duch-větev pro Blank (2026-07-21) · **živé síly mezi runami** (magnety hýbající větvemi).
   2. **The Gathering = vrstva NAD JOURNALEM, ne v enginu stromu.** Každé čtení jde do journalu;
      journal JE databáze stromu (každé čtení, runa, area, intention, spread). Přesah přes víc
      čtení — opakování, kombinace, „síly" mezi runami/ætt/elementy — je informace **v datech**,

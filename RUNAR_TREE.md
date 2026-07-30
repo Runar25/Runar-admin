@@ -7,7 +7,7 @@
 ## 0. TL;DR (30 sekund)
 - **Strom jsi ty.** Kmen = kdo jsi (Life Rune). Strom ukazuje jednu věc: **rosteš ke svému kmeni, nebo od něj.**
 - **Umístění = ZÓNY:** čas (Norns osa, z intention → výška) × dovnitř/ven (area → strana).
-- ⭐ **MODEL (zamčeno 2026-07-30, KUKY):** **Element = kostra** — seskupuje větve, jde kořeny→kmen→koruna, dává barvu. **Runa = tvář větve** — korunní větve rostou z elementů (plošně) a runa jim dává tvar. Runa přišla první (děláme runová čtení), element/ætt k ní přišly později. **Zamítnuto: boughs-přestavba · duch-větev pro Blank · živé síly mezi runami** (síly = význam v journalu, ne pohyb větví — §7).
+- ⭐ **MODEL — vyřešené dilema (2026-07-30, KUKY), NE dogma. Strom není hotový.** **Element = kostra** — seskupuje větve, jde kořeny→kmen→koruna, dává barvu. **Runa = tvář větve** — korunní větve rostou z elementů (plošně) a runa jim dává tvar. Runa přišla první (děláme runová čtení), element/ætt k ní přišly později. **Teď mimo hru** (vrátí se jen novým datovaným rozhodnutím, ne potají): boughs-přestavba · duch-větev pro Blank · živé síly mezi runami (síly = význam v journalu, ne pohyb větví — §7). ⚠️ Chceš něco z toho změnit? Nejdřív **varování + nový záznam do RUNAR_DECISIONS**, ne tichý drift.
 - **Opakování** posílí element (víc a mohutnějších větví jeho rodiny) + posune, která runa drží tvar. Strop hlavních větví = `maxMains` v builderu (čitelnost) — **ne per-element.**
 - **Systém je otevřený:** nová oblast (i pozdější osobní otázky) = jen souřadnice na osách. Žádná přestavba.
 - **Engine = crown-composer, NESAHAT.** Mění se jen data + umístění, po malých krocích na kopii.
@@ -166,7 +166,7 @@ Ostatní (později, decentně): pulzy dominance (element/ætt), bloom fáze, lis
 - **Zbývá ze signálů §4:** váha z počtu vyplněných polí · seeking jako třetí hlas výškové osy (§3A).
   (**Bonus za pauzu ZRUŠEN** 2026-07-19 · **Blank duch-větev ZRUŠENA** 2026-07-21 — obojí retired.)
 - **Zbývá (velký směr = owner volba):** **produkce** (DB `tree_readings`/`tree_state` + „spočti jednou, ulož" výše) · nebo **ladit** stávající umístění. Stav labu vlastní `git log` + snapshoty, ne doc (§20.4).
-- **Model je ZAMČENÝ (§0):** element = kostra, runa = tvář korunní větve (roste z elementu plošně). **Boughs velká přestavba i „per-runa hlubší bough" = ZAMÍTNUTO** (regrese — RUNAR_DECISIONS 2026-07-04; model lock 2026-07-30).
+- **Model = vyřešené dilema (§0), ne zámek navždy.** element = kostra, runa = tvář korunní větve (roste z elementu plošně). **Boughs velká přestavba i „per-runa hlubší bough" jsou teď mimo hru** (regrese — RUNAR_DECISIONS 2026-07-04; směr 2026-07-30) — vrátit lze novým datovaným rozhodnutím. Rozsoudili jsme „co je větev", ne že je strom hotový.
 
 ---
 
