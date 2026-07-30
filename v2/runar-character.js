@@ -719,6 +719,7 @@ function buildLifeRunePromptEN(name, rune, day, month, year, isPremium) {
     (nameInstr ? nameInstr + '\n' : ''),
     'Rules: Runar voice. Poetic, direct. Do not explain — reveal.',
     'Do not use journey as a metaphor. Do not use embrace or empower. No exclamation marks.',
+    'If you name the Icelandic month, gloss it in English at first mention — e.g. "Sólmánuður, the month of the midnight sun". Never open the reading with an unglossed Icelandic word.',
     'Respond in English.'
   ];
   return parts.join('\n');

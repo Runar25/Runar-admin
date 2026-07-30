@@ -312,6 +312,8 @@ function updateTreeTab() {
   // a prosakovalo i do stavu bez zivotni runy (pod formular na datum narozeni).
   var states = ['tree-no-dob','tree-rs-teaser','tree-reveal-cta','tree-loading','tree-reading-exists','tree-founding-cta'];
   states.forEach(function(id){ var el=document.getElementById(id); if(el) el.style.display='none'; });
+  var _gsec = document.getElementById('tree-growth-section');
+  if (_gsec) _gsec.style.display = 'block';
 
   if (!currentUser) {
     // Not logged in — show no-dob gate
@@ -344,6 +346,8 @@ function updateTreeTab() {
   // ne o tom, jestli uz hotove cteni smi uzivatel videt.
   if (_lifeRuneText) {
     _showTreeReading(rune, runeName, isIs);
+    var _gsecR = document.getElementById('tree-growth-section');
+    if (_gsecR) _gsecR.style.display = 'none';
     var tnsAll = document.getElementById('tree-name-section');
     if (tnsAll) tnsAll.style.display = 'block';
     _renderTreeNameState();
@@ -414,6 +418,7 @@ function updateTreeTab() {
       var upgNote = document.getElementById('tree-upgrade-note');
       if (upgNote) upgNote.textContent = t('tree_rs_upgrade_note');
       var revBtn = document.getElementById('tree-rs-reveal-btn');
+      if (revBtn) revBtn.textContent = t('tree_read_btn');
       if (revBtn) {
         revBtn.disabled = bal < LIFE_RUNE_COST;
         revBtn.title = bal < LIFE_RUNE_COST
@@ -437,7 +442,7 @@ function updateTreeTab() {
       var lbc = document.getElementById('tree-rune-label-cta'); if (lbc) lbc.textContent = t('life_rune_lbl');
       if (intro) intro.textContent = t('tree_reveal_intro');
       var btn = document.getElementById('tree-reveal-btn');
-      if (btn) btn.textContent = t('tree_reveal_btn');
+      if (btn) btn.textContent = t('tree_read_btn');
     }
   }
 }
