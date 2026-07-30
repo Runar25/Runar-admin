@@ -377,6 +377,22 @@ first = output.split('\n')[0] if output else 'founding flag check ran'
 check(first if passed else 'zalozeni cte vlastnost, kterou nikdo neposila', passed,
       '' if passed else output)
 
+# ── Inbox freshness: ŽLUTÝ alarm, nikdy neblokuje ────────────────────
+# docs/inbox/ je mimo doc-kontroly (chaos OK). Když se přestane vysávat, stane se
+# tichým junk drawerem. Tenhle check to dělá HLUČNÝM — ⚠ řádek, ale VŽDY zelená
+# (exit 0). Cadence = práce (Cowork), check = pojistka. Vzor: ⑰ tiskne ℹ, prochází.
+print('\n' + chr(0x3253) + ' INBOX FRESHNESS (verify_inbox_freshness.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_inbox_freshness.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+output = (r.stdout + r.stderr).strip()
+outl = [l for l in output.split('\n') if l.strip()]
+for l in outl:
+    if l.startswith('⚠') or l.startswith('ℹ'):   # ⚠ / ℹ
+        print('       ' + l.strip())
+warn = [l for l in outl if l.startswith('⚠')]
+summary = warn[0].strip() if warn else (outl[-1].strip() if outl else 'inbox check ran')
+check(summary, True)   # VŽDY True — informační, nikdy neblokuje push
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

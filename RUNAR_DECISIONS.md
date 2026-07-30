@@ -1921,3 +1921,34 @@ i když zní jistě.**
   nikdy o půl věty.** Při záměrně krátké odpovědi žádoucí.
 - **Ověřeno:** node --check · Fix B regres-test 8/8 (nezměněn) · smoke 22/22.
 - **Affected doc(s):** žádný.
+
+---
+
+## 2026-07-21 — Vrstvy pravdy + druh pravdy + docs/inbox + freshness alarm (Cowork handoff, owner promoval) [docsync]
+
+Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druhý zdroj pravdy):
+1. **Rozcestník v MEMORY.md dostal sloupec „Druh"** — 🔒 externě ukotveno / 📜 vytvořený kánon /
+   🔄 interně rozhodnuto / 🏛 architektonické. Říká, KDE u čeho smí proběhnout náraz.
+2. **MEMORY.md „Vrstvy pravdy"**: kanonická / supersedovaná (živá historie) / neklasifikováno
+   (docs/inbox) / mrtvá.
+3. **Nová memory `dont-invent-fact-critical`**: 🔒 fakt / 📜 lore chybějící v kánonu → zastav
+   a flagni, nikdy nedomýšlej. Sebejisté vymýšlení roste s chytrostí modelu.
+4. **working-style: adversariální náraz na SHODU** (jen fact-critical) — shoda dvou session
+   čtoucích týž doc je ozvěna, ne důkaz; boří se proti VNĚJŠÍMU měřítku.
+5. **docs/inbox/** — neklasifikovaná intake vrstva, mimo doc-kontroly, index sem neukazuje.
+
+### ⚠️ Odchylky od handoffu (ověřuj sousední fakty, ne jen tvrzení)
+- Cowork řekl vyloučit `check-docs / verify_doc_* / verify_canonical_files`. **verify_canonical_files
+  NEPOTŘEBUJE** (glob jen `RUNAR_*.md`/`CLAUDE.md`). **Zato verify_escape_marks a verify_spread_prices
+  ANO** (skenují všechny *.md) — ty Cowork nejmenoval. Full-path → 5 kontrol, ne 3.
+- Break-test obojísměrný: tripwire v inbox/ → žádná z 5 nechytí; týž obsah v docs/ → dvě chytnou.
+
+### Freshness alarm ㉓ (Cowork požádal, check = doména CODE)
+- **Riziko:** inbox mimo kontroly = tichý junk drawer, když se přestane vysávat. Cadence
+  (Cowork tridi na zacatku doc-session) je práce; check je pojistka — „co musí hlídat člověk → kontrola".
+- **verify_inbox_freshness.js**: práh počtu (>6) NEBO stáří (>10 dní). Dva vědomé návrhy:
+  (a) **ŽLUTÝ, ne červený** — vždy exit 0, jen tiskne ⚠; plný inbox nesmí blokovat nesouvisející
+  push (vzor ⑰). (b) **stáří z GITU** (commit, který soubor přidal), ne z filesystem mtime — ten
+  se při checkoutu resetuje. Untracked kryje práh počtu.
+- Break-test: zdravý → OK zelená · 7 souborů → ⚠ ale smoke PROŠEL 23/23 · výpočet stáří parsuje.
+- **Affected doc(s):** žádný.
