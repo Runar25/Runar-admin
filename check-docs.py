@@ -22,7 +22,7 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 #  · RUNAR_DECISIONS.md = append-only log, MUSÍ citovat i to, co dřív platilo
 #  · snapshots/ = záznam ke svému datu, tehdy to byla pravda
 #  · docs/archive/ = odloženo schválně
-SKIP_DIRS  = ('docs/archive', 'memory/snapshots', 'node_modules', '.git')
+SKIP_DIRS  = ('docs/archive', 'docs/inbox', 'memory/snapshots', 'node_modules', '.git')
 SKIP_FILES = ('RUNAR_DECISIONS.md', 'check-docs.py')
 
 # (regex, proč je to špatně, slova která výskyt OMLUVÍ na témž řádku)

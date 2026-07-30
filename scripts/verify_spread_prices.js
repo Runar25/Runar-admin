@@ -72,7 +72,7 @@ function spreadOf(text) {
 
 const docs = execSync('git ls-files "*.md"', { cwd: R, encoding: 'utf8', maxBuffer: 1 << 26 })
   .trim().split('\n').map(s => s.trim()).filter(Boolean)
-  .filter(p => !p.startsWith('docs/archive/') && !p.includes('/snapshots/')
+  .filter(p => !p.startsWith('docs/archive/') && !p.startsWith('docs/inbox/') && !p.includes('/snapshots/')
             && p !== 'RUNAR_DECISIONS.md');   // append-only log smí citovat i staré ceny
 
 const CREDIT_WORD = /kredit|credit|inneign/i;

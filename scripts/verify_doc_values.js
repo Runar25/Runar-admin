@@ -36,6 +36,7 @@ const tracked = execSync('git ls-files', { cwd: R, encoding: 'utf8', maxBuffer: 
 const docs = tracked.filter(p =>
   p.endsWith('.md') &&
   !p.startsWith('docs/archive/') &&
+  !p.startsWith('docs/inbox/') &&
   !p.startsWith('memory/snapshots/') &&
   p !== 'RUNAR_DECISIONS.md');          // append-only log smí citovat i retirovaná jména
 

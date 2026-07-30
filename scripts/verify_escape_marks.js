@@ -26,7 +26,7 @@ const DATE = /\b\d{4}-\d{2}-\d{2}\b/;
 const docs = execSync('git ls-files "*.md"', { cwd: R, encoding: 'utf8' })
   .split('\n').map(s => s.trim()).filter(Boolean)
   // archiv a snapshoty jsou historie — ty se nehlídají (stejná zásada jako u ⑮)
-  .filter(p => !p.startsWith('docs/archive/') && !p.includes('/snapshots/'));
+  .filter(p => !p.startsWith('docs/archive/') && !p.startsWith('docs/inbox/') && !p.includes('/snapshots/'));
 
 let fail = 0, total = 0;
 

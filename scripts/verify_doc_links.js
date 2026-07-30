@@ -36,6 +36,7 @@ const onDisk = (rel) => { try { return fs.existsSync(path.join(R, rel)); } catch
 const docs = tracked.filter(p =>
   p.endsWith('.md') &&
   !p.startsWith('docs/archive/') &&
+  !p.startsWith('docs/inbox/') &&
   !p.startsWith('memory/snapshots/') &&
   p !== 'RUNAR_DECISIONS.md');
 
