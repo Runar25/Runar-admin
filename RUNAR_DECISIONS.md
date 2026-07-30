@@ -1996,3 +1996,14 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
   ⚠️ Zbývá pro Cowork: RUNAR_DESIGN.md „Viz také" hlavička ř.9–10 pořád ukazuje na přesunuté
   `tree-of-life.md`/`runar-patterns.md` (plain text, neboří smoke; design doc = Cowork lane).
 - **Reversibility:** medium (model = owner rozhodnutí; archiv vratný přes `git mv` zpět).
+
+---
+
+## 2026-07-30 — IS Native Checklist: fronta pro Sigrún → učící smyčka
+
+- **Typ:** intent + doc-fix
+- **Co se změnilo:** `IS_NATIVE_CHECKLIST.md` přerámován z „fronty pro Sigrún" (odkládání nedodělané IS) na **učící smyčku**: my píšeme IS hotovou a ověřenou → native (Sigrún + islandští testeři) ji opraví při živém testování → z každé opravy uděláme jedno pravidlo. Přidán **bod 6 „Kolokace a idiom"** se třemi Sigrúninými opravami (réttir sig aftur → réttir aftur úr sér · stígur af hvernum → rís upp frá hvernum · þokan taki → þokan yfirtaki). Smazáno falešné tvrzení „is-grammar-qa.py píše E001 do needs-native-eye listu" (kód říká REWRITE). §19.2 dostal řádek rozlišující zrušenou frontu od učící smyčky.
+- **Proč:** Meta-poznatek (Cowork): všechny tři opravy jsou tool-green (platná slova + platná gramatika) → přesně třída, kterou BÍN/GreynirCorrect minou. Ukazuje konkrétní slabý bod modelu: sloveso + předložka/částice, ne shody. Dokument na disku byl z 10.7. = předcházel zrušení fronty (18.7.), proto zněl jako rozpor s §19.2 a jednu session skutečně zmátl. Rozlišení „odkládat nedodělané ≠ sbírat opravy do pravidel" žije teď na JEDNOM místě (§19.2), §20.
+- **Affected doc(s):** IS_NATIVE_CHECKLIST.md (přepis), CLAUDE.md §19.2 (rozlišovací řádek).
+- **Reality note:** Tři opravy = Sigrúniny (native-authoritative). „Proč" u nich = Coworkova interpretace, v dokumentu označena „ověřit se Sigrún před zatvrdnutím v pravidlo" — nekanonizováno. Operativní pravidla (kolokační průchod) patří časem do IS gramatického bloku v `v2/runar-character.js` (§20 = jeden domov gramatiky); checklist drží jen scan-guide + příklady.
+- **Reversibility:** easy (doc přepis; §19.2 řádek vratný).
