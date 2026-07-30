@@ -33,6 +33,16 @@
 
 - [x] **Prompt unification** — HOTOVO (SW v124): 10 IS/EN builderů → 5 generických (`buildReadingPromptSingle`/`buildNornsPromptFate`/`buildKrizPromptCross`/`buildHorseshoePromptSeven`/`buildYggdrasilPromptNine`) + 5 `RP_*` packů. Golden-verified: IS byte-identický, EN jen kosmetická normalizace runesBlock. **Přidání jazyka = přeložit packy.** Golden harness v `scripts/golden/`. (Detail → DECISIONS 2026-07-04.)
 
+## Tree — pozastavené signály + vrstva významu (konsolidace 2026-07-30)
+> Přeneseno sem z archivovaných tree doků (`docs/archive/tree/`: RUNAR_TREE_TODO · RUNAR_TREE_SPECIALS · runar-patterns · runar-tree-forces · placement · tree-of-life · BUILD), ať živé nápady nezmizí. Kanonický model + signály = `RUNAR_TREE.md`. Nic z níže uvedeného není v kódu; **nic se nestaví bez probrání s KUKYm.**
+
+- [ ] **Váha větve = počet vyplněných polí** (area/intention/seeking). Víc kontextu = záměrnější čtení = mohutnější/výraznější větev; prázdné rychlé single = drobná větvička. Signál §4 „počet vyplněných polí → VÁHA", v kódu zatím není. (KUKY k tomu byl vlažný — jeden ze signálů síly, klidně vyřaditelný.)
+- [ ] **Živé kořeny — prohloubení návratem runy.** Když se runa z některého kořene (zakládací Norn) vrátí v pozdějším čtení → ten kořen prohloubí/posílí (kořen = zrcadlo větve). Vykreslení kořenů HOTOVÉ; „živost" (prohloubení návratem) v kódu není. (TODO bod 11 · RUNAR_TREE.md §2.)
+- [ ] **Seeking jako třetí hlas výškové osy** (§3A). Dnes výšku řídí jen intention; area řídí stranu. Plnější model (area.norns + seeking modifikátor + world fallback) = návrh, ne kód.
+- [ ] **Prahy + okna pro `detectPatterns()`** (spec, dřív `runar-patterns.md`). Okno `PATTERN_WINDOW` {high 7, mid 14, low 30 dní}. **Korunní (Orel):** 3+ táž runa · 4+ týž element · stejná area 5+ · návrat runy po 6+ měs (HIGH) · protiklady (flood_fire / roots_in_wind) v týdnu (HIGH) · 3+ táž ætt · transformační pár. **Kořenové (Níðhöggr):** těžká runa 3+ v urð · 2+ těžké v jednom čtení · opakovaná urð area · stagnace 30/60/90 dní. **Ratatoskr** = korunní i kořenový vzorec naráz. Precedence: transformační pár > těžká kombinace. Jména `HEAVY_RUNES` / `TRANSFORMATION_PAIRS` = v `runar-config.js` (logika chybí). Vše „k otestování po 50 uživatelích", nefinální.
+- [ ] **Katalog speciálních motivů** (dřív `RUNAR_TREE_SPECIALS.md`). Vzácné, decentní, VEDLE základní struktury; kreslí je `growBranch` jako běžnou větev (engine-safe, odstranitelné). Recept: spouštěč (předpoklady se SEJDOU) → jemný motiv → umístění → volitelně Rúnarova věta. Nápady (k diskusi): Srdce (2+ Love) · Hnízdo (3+ Family) · Urðina studna (Healing v kořeni) · Práh (Crossroads + průlomový pár) · Řeřavý hrot / Kapka rosy / Jinovatka (dominance elementu) · Srůst (4× táž runa) · Můstek (spojenecký pár) · Trn (protiklady vedle sebe) · Návrat (runa chyběla 6+ měs) · Life Rune = nejsilnější větev z kmene. Blank duch-větev = ZRUŠENA (2026-07-21).
+- [ ] **Síly mezi runami — jako VÝZNAM v journalu, ne pohyb větví** (dřív `runar-tree-forces.md`). Živé magnety mezi větvemi = ZAMÍTNUTO (model lock 2026-07-30, regrese). Vztahy (přitažlivost stejného elementu, napětí protikladů, transformační páry, World rezonance) zůstávají jako vrstva významu v journalu → Rúnar je může pojmenovat (§7). Pokud by se někdy „zapekly do tvaru", pak deterministicky (seed = hash(runa+index+stav)), NIKDY živě.
+
 ## Premium features / Fáze B (tap UI, Ask Rúnar)
 
 > Pozn.: Coworkův handoff `RUNAR_SEGMENTACE_FaseB_CODE.md` (07-07) předpokládá `deeper_meaning` v JSON — ale MAIN ho zahodil 07-04 (viz „deeper_meaning re-add" výše). B1 highlight ho NEpotřebuje; B2 ano. **[spec NENÍ v repu — Coworkův výstup, nedodán přes CODE (§17)]**  <!-- doc-links:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
@@ -86,7 +96,7 @@
 - [x] **Yggdrasil timing — ROZHODNUTO A DOTAZENO** (KUKY 2026-07-18: celorocne, kdykoliv, kdokoliv prihlaseny). Kodovy zbytek, ktery si rozhodnuti vyzadalo, byl 2026-07-19 dodelan: `SPREAD_CONFIG.yggdrasil.seasonal` („Dec 14-28 only") smazan z configu.  <!-- check-docs:ok 2026-07-19 cituje zrusenou datumovou branu jako ZRUSENOU; prave o jejim smazani ta polozka je --> Byla to mrtva data — nikdo je necetl, ale kdo config cetl, precetl si tam zrusene pravidlo. Presne proto to owner opravoval PETKRAT.
 - [ ] **Retence čtení** — nerozhodnuto. Návrh: po dobu účtu; při zrušení smazat/anonymizovat pro eval. Blokuje konkrétní číslo v policy.
 - [ ] **Living tree: sundat admin gate** (`runar-tree.js:47-50`) — až uznáš betu za hotovou.
-- [ ] **runar-patterns.md** = ZASTARALÉ, „vše probrat" — refresh nebo retire (spec pro detectPatterns).
+- [x] **runar-patterns.md** — VYŘEŠENO 2026-07-30: retired do `docs/archive/tree/`, prahy pro `detectPatterns()` přeneseny do sekce „Tree — pozastavené signály" výše.
 - [ ] **Mytologické obrazy** (Óðinn/Nornir) zpět? Cesta = nový pool v SEASON_POOLS, NE zpět do voice profilu.
 - [ ] **Shrine audit** — bare TODO bez rozsahu; definovat nebo smazat.
 - [ ] **Sigil Studio v0** — postavené+ověřené, ale nikde nestojí, že se má nasadit. Je to vůbec TODO?

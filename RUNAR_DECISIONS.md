@@ -1952,3 +1952,46 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
   se při checkoutu resetuje. Untracked kryje práh počtu.
 - Break-test: zdravý → OK zelená · 7 souborů → ⚠ ale smoke PROŠEL 23/23 · výpočet stáří parsuje.
 - **Affected doc(s):** žádný.
+
+---
+
+## 2026-07-30 — Model stromu ZAMČEN · Gathering = vrstva nad journalem · tree doky 9→2 [tree]
+
+- **Typ:** intent (owner rozhodnutí) + docsync (konsolidace). Rozsuzuje dlouhý spor „co je větev".
+- **Co se rozhodlo (KUKY):**
+  1. **MODEL ZAMČEN.** *Element = kostra* — seskupuje větve, jde kořeny→kmen→koruna, dává barvu.
+     *Runa = tvář korunní větve* — větve rostou z elementů (plošně) a runa jim dává tvar. **Runa
+     přišla první** (děláme runová čtení), element/ætt k ní přišly později. KUKY: „je trochu jedno
+     jak to bude udělané, pokud to bude hezké a bude to obraz člověka." **ZAMÍTNUTO navždy:**
+     boughs velká přestavba (regrese, 2026-07-04) · duch-větev pro Blank (2026-07-21) · **živé
+     síly mezi runami** (magnety hýbající větvemi).
+  2. **The Gathering = vrstva NAD JOURNALEM, ne v enginu stromu.** Každé čtení jde do journalu;
+     journal JE databáze stromu (každé čtení, runa, area, intention, spread). Přesah přes víc
+     čtení — opakování, kombinace, „síly" mezi runami/ætt/elementy — je informace **v datech**,
+     ne v geometrii. **Strom je jen vizuální forma týchž dat.** `detectPatterns()` čte journal;
+     Rúnar může vztahy pojmenovat, ale větve se kvůli nim nehýbou.
+  3. **Konsolidace 9 tree doků → 2 živé** (RUNAR_TREE.md + RUNAR_TREE_RENDER.md) + BACKLOG + archiv.
+- **Proč:** §20 (jedna informace = jedno místo). Devět tree doků si protiřečilo a odkazovalo na
+  moved/mrtvé soubory. Model se „leštil v rohu" bez zámku → každá session ho četla jinak.
+- **Opravené lži proti kódu** (ověřeno v `build_tree_production.py`, ne odhadem):
+  - §3A: „vážené hlasování intention›area›seeking›world → výška" **NEPRAVDA**. Výšku (`frac`)
+    řídí JEN intention (`INT_AXIS`, průměr přes čtení elementu, váha `intZone` 0.12). **Area řídí
+    STRANU** (`AREA_LAT`, `areaSide` 0.35), do výšky nevstupuje. Seeking + world-fallback nepostaveny.
+  - §5: žebřík „2× blíž · 3× cluster · 4× srůst" **v kódu NENÍ**. Opakování → víc větví elementu
+    (`stableAssign`, ~1 na 5 čtení) + posun, která runa drží tvar (sticky pořadí, hystereze 2).
+  - §0: „Element = jen barva. Větev = runa" → sladěno se zámkem modelu.
+- **Pojistka před archivem (KUKY „ano s pojistkou"):** živý obsah NEJDŘÍV přenesen (BUILD §8
+  produkční princip „spočti jednou, ulož do `tree_readings.branch_data`, nepřepočítávej" → TREE §8;
+  prahy Gatheringu z patterns.md, katalog motivů ze SPECIALS.md, váha polí / živé kořeny / síly
+  z TODO+forces → RUNAR_BACKLOG), teprve pak `git mv` (historie zachována).
+- **Archivováno do `docs/archive/tree/`:** RUNAR_TREE_BUILD · runar-tree-placement · RUNAR_TREE_TODO
+  · RUNAR_TREE_SPECIALS · runar-tree-forces · tree-of-life (memory) · runar-patterns (memory).
+- **Reality note:** tabulky `tree_readings`/`tree_state` stále NEEXISTUJÍ — produkční princip je
+  budoucí pravidlo. Dnešní strom se skládá při každém otevření tabu z `readings` regexem, proto
+  se přeskládá (známá vada); „spočti jednou, ulož" je její lék, až vznikne DB.
+- **Affected doc(s):** RUNAR_TREE.md (§0/§1/§3/§5/§7/§8/§9 + footer) · RUNAR_TREE_RENDER.md (footer)
+  · RUNAR_BACKLOG.md (nová tree sekce + patterns položka) · CLAUDE.md (Kde hledat co) · MEMORY.md
+  (index -2 řádky) · memory/working-style.md (tree pointery) · 7× docs/archive/tree/ (přesun).
+  ⚠️ Zbývá pro Cowork: RUNAR_DESIGN.md „Viz také" hlavička ř.9–10 pořád ukazuje na přesunuté
+  `tree-of-life.md`/`runar-patterns.md` (plain text, neboří smoke; design doc = Cowork lane).
+- **Reversibility:** medium (model = owner rozhodnutí; archiv vratný přes `git mv` zpět).

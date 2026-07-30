@@ -45,4 +45,4 @@ STATUS: **foundation / úvaha.** Nic z toho není spec ani v kódu.
 Další praktický krok: zadat Gemini **2–3 art-direction studie jasanu** (různé směry — akvarel / rytina / realismus), vybrat vzhled, teprve pak konstanty.
 
 ---
-*Vazba: RUNAR_TREE.md = struktura/význam (co/proč) · tento doc = materiál/vzhled (jak) · RUNAR_TREE_SPECIALS.md = speciální motivy · RUNAR_TREE_TODO.md = stav labu.*
+*Vazba: RUNAR_TREE.md = struktura/význam (co/proč) · tento doc = materiál/vzhled (jak). Speciální motivy + stav labu → RUNAR_BACKLOG.md / `git log` (starší doky v `docs/archive/tree/`).*

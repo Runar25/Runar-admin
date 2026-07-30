@@ -269,8 +269,7 @@ Když uživatel přinese soubor zvenku (@soubor nebo obsah vložen do chatu):
 2. AUDIT: Co z toho už je v kódu? Co je jen design? Co je nové rozhodnutí?
 3. ZAPSAT do správných souborů:
    - Rozhodnutí + pravidla → CLAUDE.md (repo)
-   - Pattern detection, vizuální chování, vzorce → runar-patterns.md
-   - Tree design, branch, Gathering → tree-of-life.md
+   - Tree (model, zóny, signály, Gathering) → RUNAR_TREE.md · vzhled → RUNAR_TREE_RENDER.md · úkoly → RUNAR_BACKLOG.md
    - Stack, soubory, DB, tier → runar-project.md
    - Workflow, coding rules → working-style.md
    - Snapshot co bylo uděláno → snapshots/YYYY-MM-DD-nazev.md
@@ -295,7 +294,7 @@ Než uživatel spustí /compact, Claude musí:
 1. Uložit nové funkce do snapshots/: `C:\Users\zkuku\AppData\Roaming\Claude\memory\snapshots\YYYY-MM-DD-nazev.md`
 2. Aktualizovat MEMORY.md — přidat odkaz na nový snapshot + nové soubory
 3. Aktualizovat CLAUDE.md — jen pravidla a stav, ne historii
-4. Aktualizovat memory soubory — runar-project.md, tree-of-life.md, runar-patterns.md
+4. Aktualizovat dotčené doky dle rozcestníku (tree → RUNAR_TREE.md/RUNAR_BACKLOG.md; ne archivované suroviny)
 5. Říct: "Vše uloženo, /compact je bezpečný."
 
 ## Post-compact / Session Start protokol

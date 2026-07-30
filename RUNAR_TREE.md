@@ -6,8 +6,9 @@
 
 ## 0. TL;DR (30 sekund)
 - **Strom jsi ty.** Kmen = kdo jsi (Life Rune). Strom ukazuje jednu věc: **rosteš ke svému kmeni, nebo od něj.**
-- **Umístění = ZÓNY:** čas (Norny → výška) × dovnitř/ven (area → strana). **Element = jen barva. Runa = tvar.**
-- **Větev = runa**, posílená opakováním (ne nová tenká). Hlavní větve zastropené (~7–12) kvůli vzhledu — **ne per-element.**
+- **Umístění = ZÓNY:** čas (Norns osa, z intention → výška) × dovnitř/ven (area → strana).
+- ⭐ **MODEL (zamčeno 2026-07-30, KUKY):** **Element = kostra** — seskupuje větve, jde kořeny→kmen→koruna, dává barvu. **Runa = tvář větve** — korunní větve rostou z elementů (plošně) a runa jim dává tvar. Runa přišla první (děláme runová čtení), element/ætt k ní přišly později. **Zamítnuto: boughs-přestavba · duch-větev pro Blank · živé síly mezi runami** (síly = význam v journalu, ne pohyb větví — §7).
+- **Opakování** posílí element (víc a mohutnějších větví jeho rodiny) + posune, která runa drží tvar. Strop hlavních větví = `maxMains` v builderu (čitelnost) — **ne per-element.**
 - **Systém je otevřený:** nová oblast (i pozdější osobní otázky) = jen souřadnice na osách. Žádná přestavba.
 - **Engine = crown-composer, NESAHAT.** Mění se jen data + umístění, po malých krocích na kopii.
 
@@ -17,7 +18,7 @@
 Z `RUNAR_TREE_BUILD.md`: *„Strom jsi ty. Větev není záznam toho, co bylo řečeno — je záznam toho, co se pohnulo. Strom je mapa významu, ne geometrie."*
 Z `RUNAR_DESIGN.md`: *„Kmen jsi ty. Vše ostatní roste ke kmeni, nebo od něj. Strom ví jednu věc: jestli rosteš ke svému kmeni, nebo od něj. Harmonie není cíl, napětí není selhání — rozdíl ti řekne, kde jsi."*
 
-Strom NEukazuje „87 % oheň". Ukazuje **kdo jsi (kmen) + kam dáváš pozornost + jestli k sobě rosteš, nebo od sebe.** Element je barva toho příběhu, ne jeho kostra.
+Strom NEukazuje „87 % oheň". Ukazuje **kdo jsi (kmen) + kam dáváš pozornost + jestli k sobě rosteš, nebo od sebe.** Element je sice **kostra kresby** (seskupuje větve, nese barvu — §0 model), ale strom není *o* elementech; ty jsou jen řeč, kterou ten příběh mluví.
 
 **„Ke kmeni / od kmene" = konkrétně (mechanika, ne poezie):** kmen = tvůj střed. **Ke kmeni** = pozornost sebraná — zóny se plní vyváženě, strom roste plný kolem osy. **Od kmene** = ujela k jednomu okraji — jedna zóna/strana bobtná, ostatní zůstávají holé, strom se naklání a je z druhé strany dutý. Měří se **rozložením + mohutností větví přes zóny.** **Není to soud** (vyvážený ≠ dobrý) — sám náklon je zpráva („vyrostl jsi celý do koruny-svět, kořeny a nitro máš holé"). „Napětí" = tah mezi protilehlými okraji; „harmonie" = sebráno kolem středu; *rozdíl ti řekne, kde jsi.*
 
@@ -37,7 +38,7 @@ Dvě **spojité, prolínající se** osy. Box (runa/oblast) do zóny jen *míř�
 
 **Osa A — ČAS / NORNY (výška):**
 `urð = kořeny (minulost, co tě utvořilo) ↔ verðandi = střed (teď) ↔ skuld = koruna (kam míříš)`
-Řídí (priorita): **intention › area › seeking › (fallback) world runy.** Vážené hlasování na škále urð(−1)…skuld(+1) → **spojitá výška**, ne tři přihrádky.
+Řídí **intention** (`INT_AXIS`: urð −1 / verðandi 0 / skuld +1, průměr přes čtení elementu, váha `intZone`) → **spojitá výška**, ne tři přihrádky. ⚠️ **Postaveno je jen intention.** Plnější model (+ area.norns + seeking modifikátor + world fallback) je NÁVRH, ne kód — a **area dnes řídí STRANU** (osa B), do výšky nevstupuje. Kdo sem napíše „hlasování intention›area›seeking", popisuje nepostavené.
 
 **Osa B — DOVNITŘ / VEN (strana):**
 `vlevo = nitro (innangard) ↔ střed = liminál ↔ vpravo = svět (útangard)`
@@ -51,8 +52,8 @@ kořeny + nitro  →   Healing · Family · Inner Growth    (odkud jdeš)
 ```
 Rohy (budoucnost+nitro, minulost+svět) = volné pro vzácnější kombinace.
 
-**Element ≠ zóna:** dává jen **barvu** + mikro-výšku uvnitř zóny (fire +0.15 … shadow −0.25) + úhel odchodu (šířka). **5 barev-elementů: Fire · Water · Air · Earth · Shadow** — Shadow = studené/skryté runy (Isa/Hagalaz/Perth/Eihwaz/Blank; váže se na cold-steering ve čtení). **Life Rune NENÍ barva-element — je to KMEN = ty.**
-**Runa = tvar/silueta. Ætt = charakter růstu** — z tématu ættu: Freya (svět/tělo/radost) → plynulé · Heimdall (osud/skryté/cyklus) → gnarled/uzlovité · Týr (řád/dokončení) → řízené. Ætt NEurčuje výšku.
+**Element = kostra, ne Norns zóna:** seskupuje větve (kořeny→kmen→koruna), dává **barvu** a rodinu + spoluurčuje úhel/šířku odchodu. **NEurčuje výšku** — tu řídí intention (osa A). **5 barev-elementů: Fire · Water · Air · Earth · Shadow** — Shadow = studené/skryté runy (Isa/Hagalaz/Perth/Eihwaz/Blank; váže se na cold-steering ve čtení). **Life Rune NENÍ barva-element — je to KMEN = ty.**
+**Runa = tvar/silueta** (n-tá větev elementu = n-tá nejčastější runa toho elementu → §5). **Ætt = charakter růstu** — z tématu ættu: Freya (svět/tělo/radost) → plynulé · Heimdall (osud/skryté/cyklus) → gnarled/uzlovité · Týr (řád/dokončení) → řízené. Ætt NEurčuje výšku.
 
 ---
 
@@ -72,9 +73,9 @@ Rohy (budoucnost+nitro, minulost+svět) = volné pro vzácnější kombinace.
 ---
 
 ## 5. RŮST + POSÍLENÍ
-- **Opakování posílí** existující větev (2× blíž · 3× cluster · 4× srůst = shared root), NEtvoří tenkou novou.
-- **Portrét = mix + velikost, ne počet.** Soustředěný člověk = pár mohutných větví; pestrý = široký baldachýn.
-- **Strop hlavních větví ~7–12** (čitelnost — „moc = přeplácané"). Přebytek → posílí nejbližší / hmota kmene. **Strop NENÍ per-element** (elementy mají prostor přes svých ~5 run + posílení).
+- **Opakování posílí ELEMENT, ne konkrétní větev-runu.** Víc čtení téhož elementu → přibude větev jeho rodiny (~1 na každých ~5 čtení, `stableAssign`) a **posune se, která runa drží tvar** (n-tá větev = n-tá nejčastější runa elementu, sticky pořadí + hystereze prahu 2). Geometrický žebřík „2× blíž · 3× cluster · 4× srůst = shared root" je NÁVRH (→ RUNAR_BACKLOG), **v kódu NENÍ.**
+- **Portrét = mix + velikost, ne počet.** Soustředěný člověk = pár mohutných rodin větví; pestrý = široký baldachýn.
+- **Strop hlavních větví = `maxMains`** v builderu (čitelnost — „moc = přeplácané"). Přebytek → posílí stávající / hmota kmene. **Strop NENÍ per-element.**
 
 ---
 
@@ -83,19 +84,21 @@ Nová oblast, nový typ čtení, **pozdější osobní otázky na Rúnara** = do
 
 ---
 
-## 7. VRSTVA VÝZNAMU — The Gathering (později: až `tree_state` DB + `detectPatterns()`)
+## 7. VRSTVA VÝZNAMU — The Gathering (vrstva NAD JOURNALEM, ne v enginu stromu)
 **Zásada:** Rúnar = **zrcadlo tvé pozornosti, ne předpověď událostí.** Reflektuje, nepředpovídá (rule → working-style). Proto **skuld = záměr / k čemu se táhneš**, NE věštba budoucnosti.
 
-**The Gathering = strom se ČTE jako celek.** Normální čtení strom *roste* (přidá větev = zápis). Gathering strom *čte* — `detectPatterns()` projde nasčítané (Muninn = `tree_state`), najde zralý opakující se vzorec, a Rúnar mluví o TOM vzorci (ne o čerstvé runě).
+⭐ **KDE Gathering bydlí (KUKY 2026-07-30).** Každé čtení se ukládá do **journalu** — a journal je *databáze stromu*: drží každé čtení, každou runu, area, intention, spread. **Přesah přes víc čtení** (opakující se runy, kombinace, „síly" mezi runami / ætt / elementy) je tedy informace **v journalu**, ne v geometrii stromu. **Strom je jen vizuální forma týchž dat.** → Gathering = analytická vrstva **nad journalem** (`detectPatterns()` čte uložená čtení), NE něco zapečeného do tree enginu. Proto taky „živé síly mezi runami" nehýbou větvemi (§0 model) — jsou to vztahy **v datech**, které umí Rúnar pojmenovat.
+
+**Normální čtení** přidá řádek do journalu (a strom o větev povyroste). **Gathering** ten journal *přečte jako celek* — najde zralý opakující se vzorec a Rúnar mluví o TOM vzorci (ne o čerstvé runě).
 
 **Tři hloubky = KDE vzorec dozrál (jména = poloha, ne věštecká moc):**
-- **Orel** (koruna / skuld) = vzorec v korunních větvích → *k čemu se pořád vztahuješ* (záměr/směr). Tón širší, „co tě to učí?".
-- **Níðhöggr** (kořeny / urð) = vzorec v kořenových větvích, nebo **stagnace** (přestal jsi číst) → *co tě drží / co nechceš vidět.* Tón těžší, „co odmítáš vidět?".
+- **Orel** (koruna / skuld) = vzorec v korunních čteních → *k čemu se pořád vztahuješ* (záměr/směr). Tón širší, „co tě to učí?".
+- **Níðhöggr** (kořeny / urð) = vzorec v kořenových čteních, nebo **stagnace** (přestal jsi číst) → *co tě drží / co nechceš vidět.* Tón těžší, „co odmítáš vidět?".
 - **Ratatoskr** (celý strom) = korunní **A** kořenový vzorec zralý naráz = **Full Gathering** (vzácný) → napětí mezi „odkud jdeš" a „kam míříš".
 
-**Vzorec** = prahové opakování v okně (3× runa · 4× element · 5× area · návrat runy…). **Vzácné a zasloužené** — vždy dozraje jen jeden nejsilnější; naskočí jako **Huginn CTA** (posel „strom ti chce něco ukázat") → opt-in, **3 kredity, všechny tiery.** Po spuštění se vzorec označí „viděno" (nespustí znovu, dokud výrazně nenaroste / nedozraje jiný). Manuální „vyber runy z journalu" Gathering = **MRTVÁ** (retired).
+**Vzorec** = prahové opakování v okně (3× runa · 4× element · 5× area · návrat runy…; **přesné prahy + okna = spec v RUNAR_BACKLOG**, čeká na `detectPatterns()`). **Vzácné a zasloužené** — vždy dozraje jen jeden nejsilnější; naskočí jako **Huginn CTA** (posel „strom ti chce něco ukázat") → opt-in, všechny tiery (cena = rozhodnutí, dnes nikde v kódu). Po spuštění se vzorec označí „viděno" (nespustí znovu, dokud výrazně nenaroste / nedozraje jiný). Manuální „vyber runy z journalu" Gathering = **MRTVÁ** (retired).
 
-**Jedna detekce, dvě tváře:** `detectPatterns()` pohání Gathering (Rúnarova slova) i **speciální vizuály** (`RUNAR_TREE_SPECIALS.md`) + stavy větví (pulz/shimmer).
+**Jedna detekce, dvě tváře:** `detectPatterns()` pohání Gathering (Rúnarova slova) i **speciální vizuály** (katalog motivů → RUNAR_BACKLOG) + stavy větví (pulz/shimmer).
 
 **Mytologický cast (každé jméno = význam + vazba):**
 - Norny = svislá osa = čas tvé pozornosti: **urð** (kořeny) = minulost / co tě utvořilo · **verðandi** (střed) = přítomnost / kde stojíš · **skuld** (koruna) = záměr / k čemu se táhneš.
@@ -154,37 +157,33 @@ Ostatní (později, decentně): pulzy dominance (element/ætt), bloom fáze, lis
   Nediagnostikováno (vada předchází všem třem krokům, ověřeno i na produkci):
   týž log dá jiný obraz od 3. překreslení. Uživatel uvidí, jak se strom sám změnil bez nového
   čtení; nám to znemožňuje porovnávat obrazy. Detail → RUNAR_DECISIONS.md 2026-07-19.
-- **Zbývá ze signálů §4:** váha z počtu vyplněných polí · seeking jako třetí hlas (§3A)
-  · vizuál duchovní větve pro Blank.
-  (**Bonus za pauzu ZRUŠEN** 2026-07-19 — byla to druhá půlka zrušené penalizace.)
-- **Zbývá (velký směr = owner volba):** **produkce** (`tree_state` DB + reálná čtení z readeru) · **per-runa** (runa se odštěpí z elementového ramene ve své zóně = hlubší bough) · nebo **ladit** stávající. Aktuální stav labu = `RUNAR_TREE_TODO.md`.
-- **Boughs velká přestavba = ZAMÍTNUTO** (regrese — viz RUNAR_DECISIONS 2026-07-04). Koncept „runa=větev" OK jako cíl, cesta = jemné kroky.
+- 🔒 **PRODUKČNÍ PRINCIP (budoucí pravidlo, až vznikne DB).** Poloha + charakter větve se spočítá
+  **JEDNOU při čtení** a uloží do `tree_readings.branch_data`; renderer pak už jen kreslí uložené,
+  **NIKDY nepřepočítává z logu.** To je přímý lék na „obraz se mění bez nového čtení" výše — dnes
+  se strom skládá při každém otevření tabu z `readings` (regexem), a proto se přeskládá. `tree_state`
+  drží souhrn (roots, element_scores, dominant_element, trunk_themes, pattern_cache).
+  ⚠️ **Tabulky `tree_readings` / `tree_state` zatím NEEXISTUJÍ** — je to cíl, ne stav.
+- **Zbývá ze signálů §4:** váha z počtu vyplněných polí · seeking jako třetí hlas výškové osy (§3A).
+  (**Bonus za pauzu ZRUŠEN** 2026-07-19 · **Blank duch-větev ZRUŠENA** 2026-07-21 — obojí retired.)
+- **Zbývá (velký směr = owner volba):** **produkce** (DB `tree_readings`/`tree_state` + „spočti jednou, ulož" výše) · nebo **ladit** stávající umístění. Stav labu vlastní `git log` + snapshoty, ne doc (§20.4).
+- **Model je ZAMČENÝ (§0):** element = kostra, runa = tvář korunní větve (roste z elementu plošně). **Boughs velká přestavba i „per-runa hlubší bough" = ZAMÍTNUTO** (regrese — RUNAR_DECISIONS 2026-07-04; model lock 2026-07-30).
 
 ---
 
 ## 9. MAPA TREE DOKŮ (kde co je + status)
-**Čti podle potřeby, ne všechno. Status říká, čemu věřit.**
+**Po konsolidaci 2026-07-30 jsou ŽIVÉ jen dva tree doky — zbytek je v archivu / BACKLOGu.**
 
-| Doc | Co obsahuje | Status |
+| Doc | Co vlastní | Status |
 |---|---|---|
-| **RUNAR_TREE.md** (tenhle) | duše + zóny + stavba + mapa | **★ KANONICKÝ — čti první** |
-| RUNAR_TREE_BUILD.md | z čeho se strom tvoří (signály, Norns osa) | KANONICKÉ (vstřebáno sem) |
-| runar-tree-placement.md | kde runa je (zóny/strana/úhel, data run) | KANONICKÉ (vstřebáno sem) |
-| RUNAR_DESIGN.md (tree části) | příběh, mytologie, „co část znamená" | KANONICKÉ pro příběh |
-| RUNAR_TREE_TODO.md | stav labu + fronta bodů | AKTIVNÍ (zdroj stavu enginu) |
-| RUNAR_TREE_SPECIALS.md | katalog speciálních motivů | AKTIVNÍ (kandidáti, probrat) |
-| RUNAR_TREE_RENDER.md | vizualizace / materiál (jak vypadá) | AKTIVNÍ (foundation) |
-| docs/TREE_BRIEF_CODE_2026-07-04.md | brief pro Code (krok 1/boughs/specials) | AKTIVNÍ (handoff) |
-| memory/runar-tree-living-movement.md | recept kroku 1 + živý pohyb (odložen) | ČÁSTEČNĚ AKTIVNÍ |
-| runar-tree-forces.md | síly mezi runami | ODLOŽENO (pozdější lak, ne základ) |
-| tree-of-life.md | branch objekt, bloom, Gathering přehled | ČÁSTEČNĚ (vstřebáno) |
-| RUNAR_TREE_BOUGHS.md | hierarchie ramen | SUPERSEDED (přestavba = regrese) |
-| RUNAR_TREE_GROWTH_MAP.md | analýza starého v3.2 modelu | HISTORIE (diagnóza) |
-| memory/runar-tree-engine-lab.md | engine iterace + ⭐ oprava boughs | HISTORIE (+ 1 live korekce nahoře) |
-| RUNAR_TREE_HANDOFF.md · RUNAR_TREE_LAB.md (ARCHIV: docs/archive/tree/) | starší master handoff / lab historie | HISTORIE / reference |
-| runar-patterns.md | Gathering/vzorce | ZASTARALÉ (surovina, vše probrat) |
+| **RUNAR_TREE.md** (tenhle) | duše + zóny + model + signály + stavba + Gathering | **★ KANONICKÝ — čti první** |
+| **RUNAR_TREE_RENDER.md** | materiál / vzhled (jak strom vypadá, art direction) | ŽIVÝ (foundation) |
+| RUNAR_DESIGN.md (tree části) | příběh, mytologie, „co část znamená" | ŽIVÝ pro příběh |
+| RUNAR_BACKLOG.md | pozastavené tree úkoly (váha polí · živé kořeny · prahy Gatheringu · katalog motivů) | ŽIVÝ (fronta) |
+| `docs/archive/tree/` | vstřebané / odložené / historické tree doky | ARCHIV (reference) |
 
-**Archivováno do `docs/archive/tree/`** (2026-07-04): RUNAR_TREE_BOUGHS · RUNAR_TREE_GROWTH_MAP · RUNAR_TREE_HANDOFF · RUNAR_TREE_LAB. Nic se neztratilo — jen uklizeno z rootu.
+**Konsolidováno do `docs/archive/tree/` 2026-07-30:** `RUNAR_TREE_BUILD.md` · `runar-tree-placement.md` · `RUNAR_TREE_TODO.md` · `RUNAR_TREE_SPECIALS.md` · `runar-tree-forces.md` · `tree-of-life.md` · `runar-patterns.md`. Živý obsah přenesen **sem** (model, signály, Gathering) nebo do **RUNAR_BACKLOG** (úkoly, prahy, katalog motivů). Dřív archivováno (2026-07-04): `RUNAR_TREE_BOUGHS` · `RUNAR_TREE_GROWTH_MAP` · `RUNAR_TREE_HANDOFF` · `RUNAR_TREE_LAB`. Nic se neztratilo — jen uklizeno.
+
+**Historické lab poznámky** = `memory/runar-tree-engine-lab.md` · `memory/runar-tree-living-movement.md` · `memory/runar-trunk-incremental-rule.md` (indexováno v MEMORY.md) + `docs/TREE_BRIEF_CODE_2026-07-04.md`. **Stav labu / enginu vlastní `git log` (prefix `[tree]`) + snapshoty, ne doc** (§20.4).
 
 ---
-*Když se něco z tohoto změní rozhodnutím → nový záznam do RUNAR_DECISIONS.md + oprava tady (§16). Tento soubor drží „co a proč"; RUNAR_TREE_TODO.md drží „co zrovna děláme".*
+*Když se něco z tohoto změní rozhodnutím → nový záznam do RUNAR_DECISIONS.md + oprava tady (§16). Tento soubor drží „co a proč"; „co zrovna děláme" vlastní `git log` (prefix `[tree]`) + RUNAR_BACKLOG.md.*

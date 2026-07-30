@@ -84,8 +84,6 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [parallel-code-sessions-collision.md](parallel-code-sessions-collision.md) — víc Code session ve sdíleném stromě; pathspec commit, patch do scratchpadu, status před sáhnutím
 - [measure-dont-eyeball.md](measure-dont-eyeball.md) — dojem z obrázku není nález; změř to, nebo řekni „nevím"
 - [runar-project.md](runar-project.md) — vyprázdněno 2026-07-18, jen rozcestník
-- [tree-of-life.md](tree-of-life.md) — starší tree design; kanonický je `RUNAR_TREE.md`
-- [runar-patterns.md](runar-patterns.md) — pattern detection, ZASTARALÉ (kanonicky `RUNAR_TREE.md` §7)
 - [is-grammar-adjective-gender.md](is-grammar-adjective-gender.md) — nejdřív rod podstatného, pak skloňuj přídavné
 - [runar-tree-engine-lab.md](runar-tree-engine-lab.md) — historie iterací enginu (boughs přestavba = regrese)
 - [runar-trunk-incremental-rule.md](runar-trunk-incremental-rule.md) — schválenou verzi měnit přírůstkově + snapshot

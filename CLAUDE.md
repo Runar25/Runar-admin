@@ -272,7 +272,8 @@ UI texty → `runar-translations.js` · User state → `runar-app.js` · Tree lo
 Architektonická rozhodnutí (proč, one-way) → `RUNAR_DECISIONS.md`
 Designová rozhodnutí (co a proč) → `RUNAR_DESIGN.md`
 Tree of Life — duše, zóny, signály, Gathering, mapa tree doků → `RUNAR_TREE.md` (KANONICKÝ)
-  (`memory/tree-of-life.md` + `memory/runar-patterns.md` = starší surovina, ne zdroj pravdy)
+  · materiál/vzhled → `RUNAR_TREE_RENDER.md` · pozastavené tree úkoly → `RUNAR_BACKLOG.md`
+  (starší tree suroviny konsolidovány 2026-07-30 do `docs/archive/tree/`)
 Business model + ceny + EL kalkulace → `RUNAR_PRICING.md`
 
 **Doc-owner pravidla (2026-07-05):**
