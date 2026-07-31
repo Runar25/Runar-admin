@@ -29,7 +29,8 @@ Test „je zajímavé se dívat": *přečteš ve stromě vlastní život?* (velk
 ## 2. IDENTITA (pevná, jednou)
 - **Kmen = Life Rune** (z data narození, `calcLifeRune`) = ty. **Life Rune NENÍ barva-element** (těch je 5 — §3); je to KMEN, sám uživatel. Neměnné navždy. Náklon ≤0.45, barva dle elementu Life Rune.
 - **3 kořeny = 3 Norny** (zakládací Norns čtení): urð = jádro/minulost · verðandi = směr/teď · skuld = pohon/budoucnost.
-- **Kořeny jsou živé:** když se runa z kořene vrátí v pozdějším čtení → ten kořen prohloubí/posílí.
+- **Kořeny = odkud jdeš** (minulost / základ) — **zrcadlo koruny, ale ve VELIKOSTI/mohutnosti** (Yggdrasil), ne aby dole vypadalo stejně jako nahoře. Čtou minulostní půlku journalu a krmí výklad tvaru (§7: hluboké/těžké kořeny = drží tě minulost).
+- **Kořeny jsou živé:** když se runa z kořene vrátí v pozdějším čtení → ten kořen prohloubí/posílí. ⚠️ Zatím jen **KRESLENÉ** (ozdoba: rostou s věkem, barva z Life Rune); **význam** (Norny → 3 kořeny · prohloubení návratem) **NEPOSTAVEN** → RUNAR_BACKLOG. V labu ještě pořádně nevyzkoušeno.
 
 ---
 

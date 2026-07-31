@@ -2018,6 +2018,28 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 
 ---
 
+## 2026-07-30 — Kořeny = minulost/základ, zrcadlo koruny (směr; stavba lab-first) [tree]
+
+- **Typ:** intent (owner směr; navazuje na „tvar stromu = výklad" výše).
+- **Co:** Dnes se kořeny jen **kreslí** (ozdoba: rostou s věkem, barva z Life Rune) — **význam nemají**.
+  Směr: **kořeny = odkud jdeš** (minulost / základ), **zrcadlo koruny ve VELIKOSTI/mohutnosti**
+  (Yggdrasil — ne aby dole vypadalo stejně jako nahoře). Tvarovat je má (dle kánonu §2 = **obojí**):
+  **(a) 3 zakládací Norny → 3 hlavní kořeny** (urð/verðandi/skuld, dnes jen lore, ne kód) a
+  **(b) prohloubení návratem** — runa z kořene se vrátí ve čtení → kořen zesílí; minulostní/nitro
+  čtení živí hloubku. Krmí čtení tvaru (§7: hluboké kořeny = drží tě minulost).
+- **Proč:** KUKY 2026-07-30 — směr už dřív probraný, patří do docí; kořeny v labu ještě pořádně
+  nevyzkoušené. Zrcadlení je o proporci, ne o zrcadlovém obraze.
+- **Postup (potvrzeno):** **lab-first → port do produkce.** Iterace v trunk/crown-composer labu,
+  pak CODE-tree portne do `build_tree_production.py` + přegeneruje `runar-tree-prod.js` + snapshot
+  + smoke ⑬. Drift labu↔prod je dnes ~nulový (prod načítá tracklé lab composery přímo;
+  `runar-tree-prod.js` je 1:1 generát z `build_tree_production.py`), jediné riziko = §18 kopie
+  crown-composeru ve dvou místech.
+- **Reality note:** NEPOSTAVENO, směr — ne rozhodnutí o hotové věci; mění se novým záznamem.
+- **Affected doc(s):** RUNAR_TREE.md (§2 kořeny) · RUNAR_BACKLOG.md (kořeny úkol + parkovaný #6 zakládací vizuál).
+- **Reversibility:** easy (směr, zatím bez kódu).
+
+---
+
 ## 2026-07-30 — IS Native Checklist: fronta pro Sigrún → učící smyčka
 
 - **Typ:** intent + doc-fix
