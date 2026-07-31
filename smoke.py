@@ -393,6 +393,19 @@ warn = [l for l in outl if l.startswith('⚠')]
 summary = warn[0].strip() if warn else (outl[-1].strip() if outl else 'inbox check ran')
 check(summary, True)   # VŽDY True — informační, nikdy neblokuje push
 
+# ── Interní tagy: provenience [kánon]/[Agndofa] nesmí prosáknout do user-facing ──
+# 2026-07-30: Yggdrasil bytosti přišly do RUNAR_DESIGN.md s tagy [kánon]/[Agndofa].
+# Ty jsou INTERNÍ — nesmí do UI/promptu/HTML, jinak je uživatel uvidí ve čtení.
+# (KUKY: „aby se Agndofa nikde nezobrazovala. je to jen interní poznámka.")
+print('\n' + chr(0x3254) + ' INTERNÍ TAGY (verify_internal_tags.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_internal_tags.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+first = output.split('\n')[0] if output else 'internal-tags check ran'
+check(first if passed else 'interní tag [kánon]/[Agndofa] v user-facing ploše', passed,
+      '' if passed else output)
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
