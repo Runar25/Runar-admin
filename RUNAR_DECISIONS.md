@@ -2048,3 +2048,14 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 - **Affected doc(s):** IS_NATIVE_CHECKLIST.md (přepis), CLAUDE.md §19.2 (rozlišovací řádek).
 - **Reality note:** Tři opravy = Sigrúniny (native-authoritative). „Proč" u nich = Coworkova interpretace, v dokumentu označena „ověřit se Sigrún před zatvrdnutím v pravidlo" — nekanonizováno. Operativní pravidla (kolokační průchod) patří časem do IS gramatického bloku v `v2/runar-character.js` (§20 = jeden domov gramatiky); checklist drží jen scan-guide + příklady.
 - **Reversibility:** easy (doc přepis; §19.2 řádek vratný).
+
+---
+
+## 2026-07-30 — Yggdrasil bytosti do RUNAR_DESIGN: Dvergar · zvířata stromu · Óðinovi vlci
+
+- **Typ:** intent (kánon obsahu) + implementation (Cowork handoff, commit CODE)
+- **Co se změnilo:** Do `RUNAR_DESIGN.md` přidány tři bloky: **A) Dvergar** (roster + katalog: čtyři směroví, Mótsognir, Durinn, Dvalin, Brokkr/Eitri, synové Ivaldiho, Fjalar/Galar, Alvíss, Andvari + agndofští Móberg/Lyngri + „další známí" + Dvergatal roll-call) do „Klíčové bytosti světa"; **B) zvířata Yggdrasilu** (Veðrfölnir, čtyři jeleni, hadi pod kořenem) k Ratatoskrovi; **C) Geri a Freki** za Huginn/Muninn.
+- **Proč:** Rozšíření mytologického základu Agndofy. Provenience taguje text: [kánon] = z pramenů (Grímnismál 33, World History Encyclopedia, vikingr.org, The Warrior Lodge, Wikipedia), [Agndofa] = naše umístění/výtvor. **Klíčové rozhodnutí: „čtyři jeleni = čtyři větry" je AGNDOFA (ne elementy)** — proto v textu tag [Agndofa].
+- **Affected doc(s):** RUNAR_DESIGN.md.
+- **Reality note:** §20 hlídáno — Örn/Níðhöggr/Ratatoskr/Huginn/Muninn se NEduplikují, jen se na ně odkazuje („viz Eagle vzorce" / „viz Níðhöggr vzorce"). Ověřeno auditem 2026-07-30 (žádná skutečná duplikace v kánonu). Roll-call z Dvergatalu = jen jména, obsah se nevymýšlí (dokud bytost nedostane roli).
+- **Reversibility:** easy (čistě aditivní doc obsah).

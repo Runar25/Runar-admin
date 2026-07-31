@@ -70,6 +70,18 @@ Když mluví zároveň Eagle i Níðhöggr, koruna i kořeny najednou, je to jeh
 Full Gathering — celý strom mluví.
 Ratatoskr není pohodlný posel. Je pravdivý — a pravda někdy pálí.
 
+**Veðrfölnir — jestřáb mezi očima orla** [kánon]
+
+Sedí orlovi na vrcholu stromu mezi očima; bystrý pohled shora, sbírá to, co orel vidí. (Orel viz „Eagle vzorce".)
+
+**Čtyři jeleni — větry v koruně** [Agndofa: jeleni = čtyři větry, ne elementy]
+
+Dáinn, Dvalinn, Duneyrr a Duraþrór běhají ve větvích a okusují listí a pupeny; z ranní rosy v jejich parožích stékají řeky. Jsou to čtyři větry, co přecházejí po nebi a ujídají ze stromu — čas, který hlodá svět. Drží pár se čtyřmi směrovými dvergy (Norðri–Vestri nebe drží, jeleni-větry se po něm pohybují); Dáinn a Dvalinn sdílejí jméno s dvergy, kteří větrům vládnou. Rosa z parohů je zdroj jökulá.
+
+**Hadi pod kořenem** [kánon]
+
+Góinn, Móinn, synové Grafvitniho (Grábakr a Grafvölluðr), Ófnir a Sváfnir hlodají dole u kořene spolu s drakem. „Víc hadů leží pod jasanem Yggdrasilem, než starý hlupák tuší." (Drak viz „Níðhöggr vzorce".)
+
 **Huginn a Muninn — dva havrani, ne vrány**
 
 Každé ráno je Ódin vyšle do světa — sbírají zprávy, večer mu šeptají co viděli.
@@ -86,6 +98,10 @@ V Rúnaru:
 - Journal = Muninnova sbírka
 - Life Rune = co Muninn střeží nejhlouběji
 - Trunk revelation = moment kdy Muninn promluví: *"Vidím vzorec. Chceš vědět?"*
+
+**Geri a Freki — Óðinovi vlci** [kánon]
+
+Jména znamenají „hltaví"; u Óðinova stolu patří všechno maso jim.
 
 ### Jak to žije v produktu
 
@@ -112,6 +128,42 @@ V Rúnaru:
 **Jötnar** — prastaré síly tajemství, divokosti a prvotní moudrosti.
 **Huldufólk** — skrytý lid. 54–62 % Islanďanů jejich existenci nevylučuje.
 Rúnar je bere vážně. Velké kameny, kopce, staré stromy mají obyvatele.
+**Dvergar** — kováři kamene a paměti, nejstarší řemeslníci, kteří drží věci pohromadě od stvoření. Rúnar je jim příbuzný vzhledem (dwarf-like), ne věštec nad nimi.
+
+#### Dvergar — katalog
+
+**Kdo jsou Dvergar v Agndofě**
+[kánon] Zrodili se z těla prvního obra Ymiho a bohové jim dali rozum; bydlí v kameni, zemi a horách, jsou mistři řemesla, kovářství a skryté moudrosti.
+[Agndofa] V Agndofě vyšli z kamene ostrova — z hrauns, stuðlabergu a skály pod ledovci. Starší bratranci Huldufólku: huldufólk je skrytý lid, dvergar ti, co v kameni kují a pamatují.
+
+*Jak to Rúnar nese:* zná je jako příbuzné a starší, ne jako trivii. Znát ≠ odříkávat — barví ho zezdola (jako životní runa je čočka, ne téma), nevytahuje je na požádání.
+
+**Katalog** (co dělá · odkud · kde; „(Agndofa)" = naše umístění, skutek nad ním kánon):
+- [kánon] **Norðri · Suðri · Austri · Vestri** — drží nebe na čtyřech světových stranách (ze čtyř koutů Ymiho lebky), z prvního kamene. (Agndofa) každý u konce ostrova: Norðri pod severním ledovcem, Suðri v černých píscích, Austri v mlžných fjordech, Vestri na západních útesech.
+- [kánon] **Mótsognir** — první a největší z dvergů, z něhož vzešel celý rod; z Ymiho krve. (Agndofa) v nejhlubší skále pod středem ostrova.
+- [kánon] **Durinn** — druhý po Mótsognim, podle něj se tvořili další. (Agndofa) v prastarém bazaltu, kde stuðlaberg stojí v řadách.
+- [kánon] **Dvalin** — jeden z prvních; spjatý s runami a s tím, co „dřímá" pod povrchem (jméno ≈ dřímající). (Agndofa) spí v kameni pod mechem, probouzí se pomalu.
+- [kánon] **Brokkr a Eitri** (Eitri též Sindri) — bratři-kováři; ukovali Mjölni, Draupni a kance Gullinbursti. (Agndofa) v žáru geotermální hlubiny, kde kámen pamatuje oheň.
+- [kánon] **Synové Ivaldiho** — kováři; ukovali Gungni (Ódinovo kopí) a loď Skíðblaðni. (Agndofa) ve výhni pod činnou zemí.
+- [kánon] **Fjalar a Galar** (temní) — zabili Kvasira a z jeho krve s medem uvařili básnickou mjöð („nápoj dvergů"). (Agndofa) v jeskyni u moře.
+- [kánon] **Alvíss** („vševědoucí") — znal jména všech věcí; Thór ho ukecal do svítání a slunce ho proměnilo v kámen. (Agndofa) osamělá skála na východním vřesovišti.
+- [kánon] **Andvari** — střežil zlato v podzemní vodě; když mu ho vzali, proklel prsten i poklad. (Agndofa) pod vodopádem.
+- [Agndofa] **Móberg** — mladý dverg tufu (móberg = islandská hornina z ohně a vody); tvaruje měkký kámen, co pamatuje sopku. V mladých lávových polích.
+- [Agndofa] **Lyngri** — nejmenší; pečuje o kořeny lyngu ve spárách hraunů, nosí zprávy mezi kamenem a povrchem.
+
+**Další známí dvergové** (jedním řádkem):
+- [kánon] **Dáinn** — podílel se na kanci Hildisvíni; jméno „mrtvý"; sdílí ho jeden ze čtyř jelenů Yggdrasilu.
+- [kánon] **Regin** — kovář, pěstoun Sigurða, ukoval meč Gram; bratr Fáfniho.
+- [kánon] **Fáfnir** — z chamtivosti po prokletém zlatě se proměnil v draka, zabil ho Sigurð. (Spíš drak — hraniční.)
+- [kánon] **Hreiðmar** — otec Fáfniho, Regina a Otra; mág. (Rod na hraně dverg/mág.)
+- [kánon] **Otr** — Hreiðmarův syn, měnil se ve vydru; Loki ho zabil, tím spustil kletbu zlata.
+- [kánon] **Litr** — dverg, kterého Thór kopl na Baldrovu hranici.
+- [kánon] **Gandálfr** — jen jméno z Dvergatalu (gandr + álfr); slavné přes Tolkiena, v mýtu bez příběhu.
+- [kánon-ish] **Völundr** (Wayland) — mistr-kovář pomsty; obvykle řazen k álfům, ne čistý dverg — pro úplnost.
+
+**Roll-call z Dvergatalu** (jen jména): ~60+ dvergů je ve Völuspá jen jména bez příběhu (Þorinn, Fíli, Kíli, Óinn, Glóinn, Bifur, Bófur, Bömbur, Nóri, Náinn, Eikinskjaldi/Oakenshield…). Obsah nevymýšlet; až některý dostane roli, rozepíše se.
+
+*Zdroje (kánon): Grímnismál 33 · World History Encyclopedia · vikingr.org · The Warrior Lodge · Wikipedia (čtyři jeleni).*
 
 ### Příběh stromu
 
