@@ -451,6 +451,8 @@ function _showTreeReading(rune, runeName, isIs) {
   var existsEl = document.getElementById('tree-reading-exists');
   if (!existsEl) return;
   existsEl.style.display = 'block';
+  var _cq = document.getElementById('tree-closing-quote-text');
+  if (_cq) _cq.innerHTML = t('tree_closing_quote');
   var nm = document.getElementById('tree-rune-name-exists');
   var gl = document.getElementById('tree-rune-glyph-exists');
   var lbl = document.getElementById('tree-rune-label-exists');
