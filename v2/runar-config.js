@@ -150,7 +150,7 @@ const TIERS = {
   premium: {
     label:            'Rune Wanderer',
     label_is:         'Ferðalangur',
-    monthly_readings: 75,          // Rune Keeper: 75/month — matches TIER_LIMITS.premium.monthly_limit
+    monthly_readings: 75,          // Rune Wanderer: 75/month — matches TIER_LIMITS.premium.monthly_limit
     voice_monthly:    true,
     voice_credits:    true,
     voice_static:     true,
