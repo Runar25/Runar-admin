@@ -195,6 +195,20 @@ Na rozhodnutou a datovanou věc se ownera neptej — dohledej ji (KUKY 2026-07-1
 **§16 output B není formalita.** Když záznam řekne `Affected doc(s): X`, oprav X **v tomtéž commitu**.
 Nesplněný řádek `Affected doc(s)` je přesný mechanismus, který tenhle nepořádek vyrobil.
 
+### §21 — Ownerův nápad = směr k dopracování, ne hotové zadání (platí pro VŠECHNY session)
+KUKY 2026-08-02: *„mám myšlenku, ale ta potřebuje korekci."* Když owner přinese nápad nebo rozhodnutí,
+**NEjen souhlasit a stavět.** Nejdřív dát **kritický pohled + proveditelnost**: kde to drhne, co je slabé,
+co je tautologie / riziko / „střecha před základy". Navrhnout **korekci nebo zúžení**, teprve pak konat.
+Souhlas bez kritiky ownerovi nepomáhá — výslovně ji chce slyšet. **Rozhodnutí = směr, ne zámek navždy**:
+mění se novým datovaným záznamem v `RUNAR_DECISIONS.md`; při rozporu dej **VAROVÁNÍ**, ne tichý drift.
+Detail → [[decisions-are-directions-not-locks]].
+
+### §22 — Duplikát / chyba → hned oprav, nebo zapiš (nikdy tiše přejít) (platí pro VŠECHNY session)
+KUKY 2026-08-02: *„pokud narazíš na duplikát, chybu, tak budeme opravovat nebo zapsat, ať se nezapomene."*
+Narazíš při práci na **duplikát** (§20) nebo **chybu/bug** — i mimo zadání: buď to **hned oprav** (malé
++ v rozsahu úkolu), nebo **zapiš do `RUNAR_BACKLOG.md`** (příp. spawn_task chip) s dost kontextem, aby
+to šlo vyřešit bez téhle konverzace. Nikdy jen zmínit a nechat být. Detail → [[fix-or-log-duplicates-and-errors]].
+
 ---
 
 ## Tier systém
