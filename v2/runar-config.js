@@ -250,7 +250,7 @@ const TIER_LIMITS = {
     onboarding:   1,     // lifetime readings for Visitor
     weekly_drip:  0,
     panel_props: {
-      en: ['Your first cast is a gift.', 'No account, no payment.', 'Step further when you are ready.'],
+      en: ['Your first reading is a gift.', 'No account, no payment.', 'Step further when you are ready.'],
       is: ['Fyrsti lesturinn er gjöf.', 'Enginn reikningur, engin greiðsla.', 'Farðu lengra þegar þú ert tilbúinn.'],
     },
   },
@@ -258,12 +258,12 @@ const TIER_LIMITS = {
     onboarding:   1,     // 1 free reading at registration
     weekly_drip:  null,  // no weekly drip
     journal_entries: 5,
-    onboarding_label_en: 'one free cast',
+    onboarding_label_en: 'one free reading',
     onboarding_label_is: 'ein frjáls spá',
-    journal_label_en:    'last 5 casts',
+    journal_label_en:    'last 5 readings',
     journal_label_is:    'síðustu 5 spár',
     panel_props: {
-      en: ['One free cast to start, then rune readings.', '{card} unveils all features.', 'Limited journal (last 5 casts).'],
+      en: ['One free reading to start, then rune readings.', '{card} unveils all features.', 'Limited journal (last 5 readings).'],
       is: ['Ein frjáls spá til að byrja, síðan spár.', '{card} opnar allar aðgerðir.', 'Takmörkuð dagbók (síðustu 5 spár).'],
     },
   },
@@ -273,7 +273,7 @@ const TIER_LIMITS = {
     monthly_limit: 50,   // casts per month — change here, UI updates automatically
     journal_entries: null,
     panel_props: {
-      en: ['50 casts / month.', 'Voice on every cast.', 'Full journal + filters.', 'The Gathering.'],
+      en: ['50 readings / month.', 'Voice on every reading.', 'Full journal + filters.', 'The Gathering.'],
       is: ['50 spár / mánuð.', 'Rödd á hverri spá.', 'Full dagbók + síur.', 'The Gathering.'],
     },
   },
@@ -283,7 +283,7 @@ const TIER_LIMITS = {
     monthly_limit: 75,   // casts per month
     journal_entries: null,
     panel_props: {
-      en: ['75 casts / month.', 'Everything in ' + TIERS.standard.label + '.', 'Yggdrasil — all nine worlds.', 'Ceremonial mode.'],
+      en: ['75 readings / month.', 'Everything in ' + TIERS.standard.label + '.', 'Yggdrasil — all nine worlds.', 'Ceremonial mode.'],
       is: ['75 spár / mánuð.', 'Allt í ' + TIERS.standard.label_is + '.', 'Yggdrasil — níu heimar.', 'Ceremonial mode.'],
     },
   },
