@@ -886,8 +886,12 @@ async function invokeRunar() {
   const sys = buildSysPrompt(activeChar, lang);
   // IS/EN prompt: use shared buildReadingPrompt() from runar-character.js
   // IS: entire prompt in Icelandic. EN: English + langInstr.
-  const u = readerUser;
-  const prompt = buildReadingPrompt(u, drawn, lang, corrections);
+  // Teach = generic reading for whoever draws this rune (shrine has no reader form).
+  // readerUser (runar-app.js) + drawn (renamed to teachRune) are NOT loaded here —
+  // referencing them threw before callProxy, so 'traversing' hung forever.
+  const u = { name: (lang === 'is' ? 'þú' : 'you'),
+              area: '', seeking: '', question: '', intention: '', lifeRune: null };
+  const prompt = buildReadingPrompt(u, teachRune, lang, corrections);
 
   const res = await callProxy(sys, prompt, 300);
   if (res.error) {
