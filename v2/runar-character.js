@@ -833,6 +833,29 @@ function applyISCorrections(text, lang, corrections) {
   return text;
 }
 
+// ─── SEGMENT PARSER (model JSON output -> flowing text) ──
+// Shared reader+shrine (§18/§20). Server mirror = claude-proxy composeReading (smoke ⑦).
+function _parseSegments(raw) {
+  if (!raw) return { reading: '', deeper: '', segs: [] };
+  var s = String(raw);
+  var a = s.indexOf('['), b = s.lastIndexOf(']');
+  if (a !== -1 && b > a) {
+    try {
+      var j = JSON.parse(s.slice(a, b + 1));
+      if (Array.isArray(j) && j.length && j[0] && typeof j[0].text === 'string') {
+        var segs = j.map(function (x) { return { rune: x.rune || '', text: (x.text || '').trim() }; });
+        var reading = segs.map(function (x) { return x.text; }).join(' ').trim();
+        var tail = s.slice(b + 1).replace(/```/g, '').trim(); // próza za polem (externalizovaná otázka)
+        if (tail) {
+          reading = (reading + ' ' + tail).trim();
+          if (segs.length) segs[segs.length - 1].text = (segs[segs.length - 1].text + ' ' + tail).trim();
+        }
+        return { reading: reading, deeper: j.map(function (x) { return x.deeper_meaning || ''; }).filter(Boolean).join('\n'), segs: segs };
+      }
+    } catch (e) {}
+  }
+  return { reading: String(raw), deeper: '', segs: [] };
+}
 
 // ─── READING PROMPT BUILDERS ────────────────────────────
 // buildReadingPromptSingle + lang dispatcher.

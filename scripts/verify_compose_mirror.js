@@ -7,7 +7,7 @@ const fs = require('fs');
 const path = require('path');
 
 // ── extract the REAL _parseSegments source from the client file (brace-match) ──
-const src = fs.readFileSync(path.join(__dirname, '..', 'v2', 'runar-reading.js'), 'utf8');
+const src = fs.readFileSync(path.join(__dirname, '..', 'v2', 'runar-character.js'), 'utf8');
 const start = src.indexOf('function _parseSegments(raw) {');
 if (start === -1) throw new Error('_parseSegments not found');
 let i = src.indexOf('{', start), depth = 0, end = -1;

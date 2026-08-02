@@ -134,7 +134,7 @@ function makeSandbox() {
 // (segments joined by one space + any prose tail), never the raw JSON array.
 // Same brace-match trick as scripts/verify_compose_mirror.js.
 function loadParseSegments() {
-  const src   = fs.readFileSync(path.join(V2, 'runar-reading.js'), 'utf8');
+  const src   = fs.readFileSync(path.join(V2, 'runar-character.js'), 'utf8');
   const start = src.indexOf('function _parseSegments(raw) {');
   if (start === -1) die('_parseSegments not found in runar-reading.js — cannot compose text the way production does.');
   let i = src.indexOf('{', start), depth = 0, end = -1;

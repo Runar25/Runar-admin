@@ -23,27 +23,9 @@
 // Fallback: když to není JSON, ber celý text jako jedno čtení (graceful). deeper drží jen v paměti.
 var _lastDeeper = '';
 var _lastSegs = [];  // Fáze B1: per-rune [{rune,text}] segments of the last reading (tap highlight)
-function _parseSegments(raw) {
-  if (!raw) return { reading: '', deeper: '', segs: [] };
-  var s = String(raw);
-  var a = s.indexOf('['), b = s.lastIndexOf(']');
-  if (a !== -1 && b > a) {
-    try {
-      var j = JSON.parse(s.slice(a, b + 1));
-      if (Array.isArray(j) && j.length && j[0] && typeof j[0].text === 'string') {
-        var segs = j.map(function (x) { return { rune: x.rune || '', text: (x.text || '').trim() }; });
-        var reading = segs.map(function (x) { return x.text; }).join(' ').trim();
-        var tail = s.slice(b + 1).replace(/```/g, '').trim(); // próza za polem (externalizovaná otázka)
-        if (tail) {
-          reading = (reading + ' ' + tail).trim();
-          if (segs.length) segs[segs.length - 1].text = (segs[segs.length - 1].text + ' ' + tail).trim();
-        }
-        return { reading: reading, deeper: j.map(function (x) { return x.deeper_meaning || ''; }).filter(Boolean).join('\n'), segs: segs };
-      }
-    } catch (e) {}
-  }
-  return { reading: String(raw), deeper: '', segs: [] };
-}
+// _parseSegments lives in runar-character.js now (shared reader+shrine, §18/§20 —
+// same reason the reading-prompt builders do). character.js loads before this file,
+// so callers below still see it as a global.
 
 // Fáze B1: re-render the reading as per-rune spans so a tap can gild one segment.
 // innerText is unchanged (spans add no text) -> voice + displayed text identical.
