@@ -893,13 +893,15 @@ async function invokeRunar() {
               area: '', seeking: '', question: '', intention: '', lifeRune: null };
   const prompt = buildReadingPrompt(u, teachRune, lang, corrections);
 
-  const res = await callProxy(sys, prompt, 300);
+  const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens); // stejná délka jako produkční single
   if (res.error) {
     setSt('st-invoke', 'Failed: ' + res.error, 'err');
     document.getElementById('btn-invoke').disabled = false;
     return;
   }
-  teachText = res.text;
+  // Sklad text PRESNE jako produkce (reader, runar-reading.js): JSON segmenty -> plynouci
+  // text, pak (aktualne no-op) IS post-processor. Shrine driv ukazoval/ukladal syrove JSON.
+  teachText = applyISCorrections(_parseSegments(res.text).reading.trim(), lang, corrections);
   await stream('teach-txt', teachText);
 
   // Show editable textarea with generated text
@@ -1201,9 +1203,14 @@ async function loadCorrections() {
 // ─── API ────────────────────────────────────────────────
 async function callProxy(system, prompt, max_tokens = 500) {
   try {
+    // Proxy requires auth since FAZE 1 security (fd78a91): send the admin session
+    // token like the reader does (app.js) and like shrine already does for voice.
+    const headers = { 'Content-Type': 'application/json' };
+    const { data: { session } } = await sb.auth.getSession();
+    if (session && session.access_token) headers['Authorization'] = 'Bearer ' + session.access_token;
     const res = await fetch(PROXY, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers,
       body: JSON.stringify({ system, prompt, max_tokens, lang })
     });
     const data = await res.json();
