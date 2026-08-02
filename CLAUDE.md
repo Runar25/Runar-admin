@@ -209,6 +209,16 @@ Narazíš při práci na **duplikát** (§20) nebo **chybu/bug** — i mimo zad�
 + v rozsahu úkolu), nebo **zapiš do `RUNAR_BACKLOG.md`** (příp. spawn_task chip) s dost kontextem, aby
 to šlo vyřešit bez téhle konverzace. Nikdy jen zmínit a nechat být. Detail → [[fix-or-log-duplicates-and-errors]].
 
+### §23 — Nevymýšlej fakta ani lore → zastav a flagni (platí pro VŠECHNY session, Code i Cowork)
+Chybí-li v kánonu 🔒 **fakt** (etymologie, IS gramatika, čísla, DB) nebo 📜 **lore** (Rúnar, mytologie,
+hlas), **zastav a řekni „nevím / chybí"** — nikdy nedomýšlej a nevydávej domněnku za pravdu. ⚠️ **Riziko
+roste s chytrostí modelu:** čím lepší model, tím sebejistěji zní i výmysl. Detail → [[dont-invent-fact-critical]].
+
+### §24 — Ověř, než tvrdíš (měř, nehádej) (platí pro VŠECHNY session, Code i Cowork)
+Než něco prohlásíš za nález/pravdu, **změř / protlač produkční cestou / porovnej** — dojem z obrázku
+ani „vypadá to" se nepočítá. Kód: seed-and-assert na výsledek (§19). Obsah/data (Cowork): claim o
+datech/screenshotu opři o měření, ne o dojem; nejde-li změřit, řekni „nevím". Detail → [[measure-dont-eyeball]].
+
 ---
 
 ## Tier systém
