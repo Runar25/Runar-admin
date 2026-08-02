@@ -83,6 +83,30 @@ if not js_css:
 # Je sw.js už staged?
 sw_staged = any('sw.js' in f for f in staged)
 if sw_staged:
+    # DOWNGRADE GUARD (2026-08-02): sw.js verze je monotonni cache-buster. Bary `git commit`
+    # (misto `git commit -- <cesty>`) sebere cely index vcetne cizi STALE staged sw.js jine
+    # session -> verze jde dolu -> klienti servuji stare cteni. Chyti to KAZDOU session:
+    # staged sw.js musi byt > HEAD, jinak auto-oprav dopredu. (Discipline: viz memory
+    # parallel-code-sessions-collision + CLAUDE.md N-session.)
+    def _swver(text):
+        mm = re.search(r"CACHE\s*=\s*'runar-v(\d+)'", text or '')
+        return int(mm.group(1)) if mm else None
+    try:
+        _sv = _swver(subprocess.run(['git', 'show', ':v2/sw.js'], cwd=REPO, capture_output=True, text=True).stdout)
+        _hv = _swver(subprocess.run(['git', 'show', 'HEAD:v2/sw.js'], cwd=REPO, capture_output=True, text=True).stdout)
+        if _sv is not None and _hv is not None and _sv <= _hv:
+            _fix = _hv + 1
+            with open(SW_PATH, 'r', encoding='utf-8') as _f:
+                _c = _f.read()
+            _c = re.sub(r'(Service Worker[^\n]*?v)\d+', lambda m: m.group(1) + str(_fix), _c, count=1)
+            _c = re.sub(r"(CACHE\s*=\s*'runar-v)\d+(')", lambda m: m.group(1) + str(_fix) + m.group(2), _c, count=1)
+            with open(SW_PATH, 'w', encoding='utf-8') as _f:
+                _f.write(_c)
+            subprocess.run(['git', 'add', SW_PATH], cwd=REPO)
+            print('[hook] SW: staged v%s <= HEAD v%s (DOWNGRADE) -> auto-fixed forward to v%s' % (_sv, _hv, _fix))
+            sys.exit(0)
+    except Exception as _e:
+        print('[hook] SW: downgrade-guard skipped (%s)' % _e)
     print('[hook] SW: sw.js already staged — skipping auto-bump')
     sys.exit(0)
 
