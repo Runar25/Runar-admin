@@ -348,6 +348,7 @@ SÁM — bez ownera.
 
 **Komunikace (session spolu nemluví → přes git + soubory):**
 - `git pull` PŘED prací · `git push` IHNED po commitu · malé commity.
+- **Commit ÚZCE: `git commit -F <msg> -- <cesty>`** (pathspec NA COMMITU, ne jen na `git add`). Holý `git commit` / `git add -A` bere CELÝ index — vč. cizí STALE staged změny jiné session. **2026-08-02: holý commit sebral cizí staged `sw.js` → downgrade v249→v248** (klienti by servírovali staré čtení). Pre-commit má teď guard proti sw.js downgrade, ale disciplína je levnější. Detail → memory `parallel-code-sessions-collision`.
 - Commit prefix = LANE (`[tune]` · `[tree]` · `[cowork]`, volitelně + téma) → čitelná historie + jasné vlastnictví. Git podpis je u všech stejný, prefix je jediný rozlišovač.
 - Musíš sáhnout do cizí domény? Drž změnu minimální + zapiš „co a proč" do svého doc (RUNAR_TREE.md / snapshot) + push hned.
 - sw.js: git hook auto-bumpuje; když oba commitnou JS, vyšší číslo vyhrává (jen cache-buster, ne konflikt obsahu).
