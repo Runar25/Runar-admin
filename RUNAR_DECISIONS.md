@@ -2040,6 +2040,31 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 
 ---
 
+## 2026-08-02 — Strom = jádro Rúnara (vize) + metadata „proč" ZÚŽENO po kritice [tree]
+
+- **Typ:** intent (owner vize + směr; zúženo vlastní kritikou PŘED zápisem — KUKY: „chci kritický pohled").
+- **Vize (KUKY):** Strom života = **hlavní znak Rúnara**; přidaná hodnota = **čtení v čase**
+  (databáze osobnosti). Hypotéza: i samostatná appka (vkládáš čtení z tarotu/run → journal → strom).
+  ⚠️ **Caveat:** hodnota přijde až s retencí + dost čteními (do ~27 čtení jen 3 větve) → strom musí
+  **ohromit BRZO**, jinak je „hlavní hodnota" pro nového uživatele neviditelná. Standalone = jen
+  hypotéza, teď neřídí stavbu.
+- **Metadata „proč" — ZÚŽENO (kritika).** Síly, co tvar dělají, se UŽ počítají (vstupy §3–§5).
+  Původní nápad „uložit proč u každé části + krmit tím Rúnara" má tři díry: (1) u PEVNÉ kostry
+  (kmen / tvar runy z Life Rune) je „proč" **tautologie** (převyprávěný vstup) a v čase se nemění =
+  nízká hodnota; (2) riziko **falešné hloubky** (pseudo-vhled = věštba, proti „zrcadlo ne věštba");
+  (3) **sekvenční riziko** — stavět datovou vrstvu + výklad na admin-beta stromu krmeném regexem,
+  bez DB = střecha před základy.
+- **Co DĚLÁME:** „proč" **ukázat v labu** (inspekce) — levné, pro NÁS k ladění. **Nestavět**
+  produkční metadata vrstvu ani výklad z nich, dokud (a) nebude `tree_state` DB a (b) neověříme na
+  reálných stromech, že výklad řekne něco pravdivého a neotřelého. Číst se má hlavně **měnící se**
+  signál (rozložení v čase), ne pevný skelet.
+- **Pořadí:** kořeny (vizuál) → tree DB → teprve pak metadata měnících se signálů + test výkladu.
+- **Reality note:** NEPOSTAVENO, směr. Metadata odvozená (ne nový vstup).
+- **Affected doc(s):** RUNAR_TREE.md (§7 „proč zatím jen lab") · RUNAR_BACKLOG.md (úkoly).
+- **Reversibility:** easy (směr, zatím bez kódu).
+
+---
+
 ## 2026-07-30 — IS Native Checklist: fronta pro Sigrún → učící smyčka
 
 - **Typ:** intent + doc-fix

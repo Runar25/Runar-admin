@@ -98,6 +98,8 @@ Nová oblast, nový typ čtení, **pozdější osobní otázky na Rúnara** = do
 
 Data pro tohle **už leží v journalu** (area/intention/runy každého čtení) — nic nového se nesbírá. **Umístění tvar vyrobí, Gathering ho přečte.** Dnes strom ten tvar už *kreslí*, ale *číst* ho zatím neumí (`detectPatterns` nepostaveno → RUNAR_BACKLOG).
 
+⭐ **„Proč" (síly) — zatím jen v LABU, opatrně (KUKY 2026-08-02).** Síly, co tvar dělají, se už počítají (vstupy §3–§5: life-rune element → náklon/křivka kmene · rovnováha area → strana · intention → výška · počty elementů → větve · ætt → charakter · věk+spread → velikost). V **labu** je ukázat v inspekci (klik na část → runa/element/ætt/počet + proč náklon/strana/výška) — levné, užitečné k ladění. ⚠️ **Pozor (kritika):** u PEVNÉ kostry (kmen, tvar runy z Life Rune) je „proč" jen **tautologie** (převyprávěný vstup) a v čase se nemění → nízká hodnota; číst se má hlavně to, co se **mění v čase** (rozložení z čtení). **Produkční datovou vrstvu ani výklad z metadat NESTAVĚT dřív**, než bude DB a než se výklad **ověří na reálných stromech** — jinak hrozí falešná hloubka = věštba. → RUNAR_BACKLOG.
+
 **Normální čtení** přidá řádek do journalu (a strom o větev povyroste). **Gathering** ten journal *přečte jako celek* — najde zralý opakující se vzorec a Rúnar mluví o TOM vzorci (ne o čerstvé runě).
 
 **Tři hloubky = KDE vzorec dozrál (jména = poloha, ne věštecká moc):**

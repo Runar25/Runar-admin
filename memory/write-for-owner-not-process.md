@@ -5,7 +5,7 @@ metadata:
   type: feedback
 ---
 
-KUKY 2026-07-30: „píšeš mi hodně věcí o tom co jsem ti řekl a co budeš hledat, ale v tom se ztrácím a nevím co je důležité a co ne. piš mi to tak ať se v tom můžu zorientovat."
+KUKY 2026-07-30 (řečeno VÍCEKRÁT, podruhé naštvaně): „píšeš hrozně moc informací jak nad tím přemýšlíš… já nemám čas si to číst a zaplňuje mi to chat!! celá stránka je jak nad tím přemýšlíš — to mi nic nedá."
 
 **Why:** KUKY je netechnický founder. Když převyprávím jeho zadání a svoje interní kroky (co načtu, co ověřím), utopí to signál — nepozná, co je důležité. Interní přemýšlení patří do práce, ne do zprávy pro něj.
 
