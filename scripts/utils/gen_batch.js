@@ -8,10 +8,10 @@
 // hard Icelandic grammar, countable prompt behaviour. NOT a verdict on voice
 // quality — that needs real readings grouped by readings.prompt_version.
 //
-// Anonymous path: no Authorization JWT -> claude-proxy treats us as "anonymous"
-// (index.ts:425), so no credits, no monthly cap, and NO readings row is written.
-// It still spends the project's real Anthropic budget. Throttled to the proxy's
-// 10 req / 60 s per-IP limit (index.ts:452-460).
+// Auth: proxy requires a JWT since FAZE 1 security (fd78a91) -> anon/publishable = 401.
+// Pass an ADMIN session token via env RUNAR_EVAL_TOKEN (admin -> generates free, no cap,
+// and journal is skipped because we send no journal -> no readings row). Still spends the
+// project's real Anthropic budget. Throttled to the proxy's 10 req / 60 s limit.
 //
 //   node scripts/utils/gen_batch.js --spread single --rune Perth --lang is --n 3
 //   node scripts/utils/gen_batch.js --list
@@ -270,6 +270,12 @@ async function main() {
   // ── constants straight from the config (single source of truth) ──
   const PROXY  = G('PROXY');
   const SB_KEY = G('SB_KEY');
+  // Admin session JWT — get it in the shrine browser console:
+  //   (await sb.auth.getSession()).data.session.access_token
+  const EVAL_TOKEN = process.env.RUNAR_EVAL_TOKEN || '';
+  if (!args['dry-run'] && !EVAL_TOKEN)
+    die('Proxy requires auth (fd78a91). Set RUNAR_EVAL_TOKEN=<admin session JWT>.\n'
+      + '  Get it in the shrine console: (await sb.auth.getSession()).data.session.access_token');
   const PROMPT_VERSION = G('RUNAR_PROMPT_VERSION');
   const maxTokens = (spreadName === 'single')
     ? G('RUNAR_MODES').quick_reading.max_tokens
@@ -344,7 +350,7 @@ async function main() {
     try {
       const res = await fetch(PROXY, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + SB_KEY, 'apikey': SB_KEY },
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + EVAL_TOKEN },
         body: JSON.stringify({
           system: sysPrompt, prompt: prompt, max_tokens: tokens,
           use_credit: false, spread_cost: cost, journal: null, mode: mode,
