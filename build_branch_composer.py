@@ -341,6 +341,14 @@ HTML = r"""<!DOCTYPE html>
         </div>
       </div>
 
+      <div class="card" id="mode-card">
+        <div class="lbl">TVAR JAKO</div>
+        <div class="seg" id="mode-seg">
+          <button data-m="branch" class="on">vetev</button>
+          <button data-m="root">koren</button>
+        </div>
+      </div>
+
       <div class="card" id="rune-card">
         <div class="lbl">RUNE</div>
         <div class="runebtns" id="runebtns"></div>
@@ -406,7 +414,7 @@ HTML = r"""<!DOCTYPE html>
   cv.width=W*dpr; cv.height=H*dpr;
   var ctx=cv.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0);
 
-  var state = { view:'single', rune:'berkano', role:'main', area:'', intention:'', seed:1 };
+  var state = { view:'single', mode:'branch', rune:'berkano', role:'main', area:'', intention:'', seed:1 };
   var T = { length:95, width:6.0, curve:1, wobble:0.5, subScale:1, tipLift:0.22,
             jitter:0.12, leaf:0, steer:1, cx:230, baseY:535 };
   /* per-rune shape store (shared with the tree via localStorage 'runeTune') */
@@ -454,9 +462,15 @@ HTML = r"""<!DOCTYPE html>
   document.getElementById('view-seg').addEventListener('click', function(e){
     if(e.target.dataset.v){ state.view=e.target.dataset.v;
       document.querySelectorAll('#view-seg button').forEach(function(x){x.classList.toggle('on',x.dataset.v===state.view);});
-      ['rune-card','role-card','steer-card','info-card','shape-card','global-card'].forEach(function(id){
+      ['rune-card','role-card','steer-card','info-card','shape-card','global-card','mode-card'].forEach(function(id){
         document.getElementById(id).style.display = (state.view==='grid' && id!=='role-card') ? 'none':'block';
       });
+      draw(); }
+  });
+
+  document.getElementById('mode-seg').addEventListener('click', function(e){
+    if(e.target.dataset.m){ state.mode=e.target.dataset.m;
+      document.querySelectorAll('#mode-seg button').forEach(function(x){x.classList.toggle('on',x.dataset.m===state.mode);});
       draw(); }
   });
 
@@ -559,11 +573,16 @@ HTML = r"""<!DOCTYPE html>
 
   function drawSingle(){
     ctx.clearRect(0,0,W,H);
+    var isRoot=(state.mode==='root');
     /* stub for context */
     ctx.strokeStyle='rgba(135,132,120,0.5)'; ctx.lineWidth=8; ctx.lineCap='round';
-    ctx.beginPath(); ctx.moveTo(T.cx,548); ctx.lineTo(T.cx,T.baseY); ctx.stroke();
-    var g=B.buildBranch({rune:state.rune, role:state.role, area:state.area, intention:state.intention, seed:state.seed}, T);
-    paintBranch(g, 0, 0, 1, null);
+    if(isRoot){ ctx.beginPath(); ctx.moveTo(T.cx-60,42); ctx.lineTo(T.cx+60,42); ctx.stroke(); }
+    else { ctx.beginPath(); ctx.moveTo(T.cx,548); ctx.lineTo(T.cx,T.baseY); ctx.stroke(); }
+    var TT={}; for(var key in T) TT[key]=T[key];
+    var spec={rune:state.rune, role:state.role, area:state.area, intention:state.intention, seed:state.seed};
+    if(isRoot){ spec.baseAng=Math.PI/2; spec.ox=T.cx; spec.oy=46; TT.leaf=0; }
+    var g=B.buildBranch(spec, TT);
+    paintBranch(g, 0, 0, 1, isRoot?0.7:null);
     var i=g.info;
     document.getElementById('info').innerHTML =
       'rune: <b>'+i.rune.name+'</b> '+i.rune.g+'<br>'+
