@@ -119,6 +119,17 @@ function t(key) {
 }
 
 // Legacy DB tier aliases -> canonical (§18: one place for the free/credits mapping)
+function spreadLabel(kind, lang) {
+  // Spread cteni ukladaji rune_name = interni kind (KRIZ/NORNS/HORSESHOE/YGGDRASIL).
+  // User-facing jmeno zije v spread_mode_* (per lang) -> ukaz ho v jazyce CTENI.
+  // Fallback = syrovy kind. Jeden zdroj mapovani pro journal + admin viewer (par20).
+  var k = 'spread_mode_' + String(kind || '').toLowerCase();
+  var v = (typeof UI_TEXT !== 'undefined')
+    ? ((UI_TEXT[lang] && UI_TEXT[lang][k]) || (UI_TEXT.en && UI_TEXT.en[k]))
+    : null;
+  return v || String(kind || '').toUpperCase();
+}
+
 function normalizeTier(tier) {
   return (tier === 'free' || tier === 'credits') ? 'rune_seeker' : tier;
 }

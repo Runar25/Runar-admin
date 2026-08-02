@@ -73,7 +73,7 @@
       var isSpread = r.area === 'spread';
       var when  = (r.drawn_at || '').replace('T', ' ').slice(0, 16);
       var glyph = esc(r.rune_glyph || '◻');
-      var name  = esc((r.rune_name || '').toUpperCase());
+      var name  = esc(isSpread ? spreadLabel(r.rune_name, r.lang) : (r.rune_name || '').toUpperCase());
       var lng   = esc((r.lang || '').toUpperCase());
       var who   = esc(r.user_name || (r.user_id ? r.user_id.slice(0, 8) : '—'));
       var tier  = r.user_tier ? '<span class="rd-tier">' + esc(r.user_tier) + '</span>' : '';

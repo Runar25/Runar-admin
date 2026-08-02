@@ -95,13 +95,14 @@ function renderJournal(entries) {
     if (isSpread) {
       // ── Multi-rune spread card (Norns / Kríž / Horseshoe / Yggdrasil / Gathering) ──
       const rawEx   = (e.deep_text || '').trim().slice(0, 160);
+      const spreadNm = escapeHtml(spreadLabel(e.rune_name, e.lang));
       const excerpt = escapeHtml(rawEx);
       return `<div class="jcard" id="jcard-${i}">
         <div class="jcard-header" onclick="toggleJournalEntry(${i})">
           <div class="jcard-left">
             <div class="jcard-glyph" style="opacity:0.7;">✦</div>
             <div class="jcard-info">
-              <div class="jcard-name">✦ ${nameU} · ${langU}</div>
+              <div class="jcard-name">✦ ${spreadNm} · ${langU}</div>
               <div class="jcard-date">${dateStr}</div>
               <div class="jcard-gathering-runes">${shortT}</div>
               <div class="jcard-excerpt">${excerpt}${rawEx.length >= 160 ? '…' : ''}</div>
@@ -110,7 +111,7 @@ function renderJournal(entries) {
           <div class="jcard-arrow" id="jarr-${i}">▾</div>
         </div>
         <div class="jcard-body" id="jbody-${i}" style="display:none;">
-          <div class="jcard-layer-lbl">✦ ${nameU}</div>
+          <div class="jcard-layer-lbl">✦ ${spreadNm}</div>
           <div class="jcard-text" style="font-style:italic;line-height:1.9;">${deepT}</div>
         </div>
       </div>`;
