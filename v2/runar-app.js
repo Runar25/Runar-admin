@@ -649,7 +649,7 @@ function _updateAreaSeekLabels() {
   const slbl = document.getElementById('seek-lbl');
   if (slbl) slbl.innerHTML = t('seek_lbl') + _optSpan + _lockHint;
   const ilbl = document.getElementById('intention-lbl');
-  if (ilbl) ilbl.innerHTML = t('intention_lbl') + ' <span class="opt">' + t('opt') + '</span>';
+  if (ilbl) ilbl.innerHTML = t('intention_lbl') + _optSpan + _lockHint;
   const qlbl = document.getElementById('q-lbl');
   if (qlbl) qlbl.innerHTML = t('q_lbl') + ' <span class="opt">'+t('opt')+'</span>';
   setPH('r-question', t('q_ph'));
@@ -1049,7 +1049,7 @@ function buildPills() {
   buildPillGroup('area-pills', AREAS[lang], 'area', _areaUnlocked);
   buildPillGroup('seek-pills', SEEKS[lang], 'seek', _seekUnlocked);
   buildPillGroup('intention-pills', INTENTIONS[lang] || INTENTIONS.en, 'intention');
-  ['area-pills', 'seek-pills'].forEach(id => {
+  ['area-pills', 'seek-pills', 'intention-pills'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.toggle('pills-locked', _isVisitor);
   });
