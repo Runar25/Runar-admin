@@ -672,8 +672,8 @@ function _updateTrialTexts() {
   setText('trial-end-title', lang === 'is' ? 'FERÐ ÞÍN SEM GESTUR ER LOKIÐ' : 'YOUR JOURNEY AS VISITOR IS COMPLETE');
   const ten = document.getElementById('trial-end-note');
   if (ten) ten.innerHTML = lang === 'is'
-    ? 'Þú hefur farið með Rúnar sem Gestur. Steinarnir muna.<br><b class="rs-link">Gerast Leitandi</b> til að halda áfram — ' + TIER_LIMITS.rune_seeker.onboarding_label_is + ' þegar þú skráir þig. Engin greiðsla.'
-    : 'You have walked with Rúnar as a Visitor. The stones remember.<br><b class="rs-link">Become a Rune Seeker</b> to continue — ' + TIER_LIMITS.rune_seeker.onboarding_label_en + ' when you join. No payment ever needed.';
+    ? 'Þú hefur farið með Rúnar sem Gestur. Steinarnir muna.<br><b class="rs-link">Gerast Leitandi</b> til að halda áfram — ' + TIER_LIMITS.rune_seeker.onboarding_label_is + ' þegar þú skráir þig.'
+    : 'You have walked with Rúnar as a Visitor. The stones remember.<br><b class="rs-link">Become a Rune Seeker</b> to continue — ' + TIER_LIMITS.rune_seeker.onboarding_label_en + ' when you join.';
   setText('trial-end-btn', lang === 'is' ? 'GERAST LEITANDI →' : 'BECOME A RUNE SEEKER →');
 }
 
@@ -868,8 +868,8 @@ async function loadCollection() {
     if (isVisitor) {
       const isIs = lang === 'is';
       document.getElementById('vcn-text').innerHTML = isIs
-        ? `Þú gengur hér sem <strong>Gestur</strong>. Fehu — rúna upphafsins — opnar rödd sína fyrir þig frítt. Dragðu hana. Hlustaðu á það sem fornir steinar geyma.<br><br>Þegar þú ert tilbúinn að ganga með allar tuttugu og fimm rúnirnar og heyra Rúnar tala í lestur þinn, vertu <strong>Leitandi</strong> — það kostar ekkert.`
-        : `You walk here as a <strong>Visitor</strong>. Fehu — the rune of beginnings — opens its voice to you freely. Draw it. Hear what the old stones whisper.<br><br>When you are ready to walk with all twenty-five runes and hear Rúnar speak in your own reading, become a <strong>Rune Seeker</strong> — it costs nothing.`;
+        ? `Þú gengur hér sem <strong>Gestur</strong>. Fehu — rúna upphafsins — opnar rödd sína fyrir þig frítt. Dragðu hana. Hlustaðu á það sem fornir steinar geyma.<br><br>Þegar þú ert tilbúinn að ganga með allar tuttugu og fimm rúnirnar og heyra Rúnar tala í lestur þinn, vertu <strong>Leitandi</strong> — skráning er ókeypis.`
+        : `You walk here as a <strong>Visitor</strong>. Fehu — the rune of beginnings — opens its voice to you freely. Draw it. Hear what the old stones whisper.<br><br>When you are ready to walk with all twenty-five runes and hear Rúnar speak in your own reading, become a <strong>Rune Seeker</strong> — free to join.`;
       document.getElementById('vcn-btn').textContent = t('become_rs_btn');
     }
   }
