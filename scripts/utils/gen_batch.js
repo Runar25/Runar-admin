@@ -146,6 +146,16 @@ function loadParseSegments() {
   return new Function(src.slice(start, end) + '\nreturn _parseSegments;')();
 }
 
+// ─── follow-up token cap, read LIVE from runar-reading.js ──
+// §20: the cap lives in production (var askCap = N), gen_batch READS it — never a copy.
+// Was hardcoded 120; production moved it to 140 (92255b9) and the copy silently drifted.
+function loadAskCap() {
+  const src = fs.readFileSync(path.join(V2, 'runar-reading.js'), 'utf8');
+  const m = src.match(/var\s+askCap\s*=\s*(\d+)\s*;/);
+  if (!m) die('askCap not found in runar-reading.js — follow-up cap moved; gen_batch would use a stale value.');
+  return parseInt(m[1], 10);
+}
+
 // ─── main ──────────────────────────────────────────────
 async function main() {
   const args = parseArgs(process.argv.slice(2));
@@ -265,7 +275,7 @@ async function main() {
     ? G('RUNAR_MODES').quick_reading.max_tokens
     : G('SPREAD_CONFIG')[spec.key].tokens;
   const spreadCost = G('SPREAD_COSTS')[spec.key].credits;
-  const ASK_TOKENS = 120; // hardcoded in production (runar-reading.js:545)
+  const ASK_TOKENS = loadAskCap(); // live from runar-reading.js askCap (§20, no stale copy)
 
   const parseSegments = loadParseSegments();
 
