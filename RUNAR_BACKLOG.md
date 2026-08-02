@@ -62,6 +62,34 @@
 
 ---
 
+## AUDIT PRAVIDEL / DOCÍ — 2026-08-02 (Workflow: 5 úhlů → ověřeno proti repu)
+# A (rozpory/stale) OPRAVENO v témže commitu. B + C sem zapsáno (§22), ať nespadne.
+# C = provozní/SRE vrstva — OWNER chce před realizací každý bod podrobně vysvětlit.
+
+### B — rozpory / duplikáty k rozhodnutí
+- [ ] **§N kolize:** working-style.md používá §11–§15 s JINÝMI pravidly než CLAUDE.md → citace „řiď se §13" je nejednoznačná. Fix: sekce WS přejmenovat (namespace §N vlastní JEN CLAUDE.md).
+- [ ] **Tree-mechanika DESIGN.md ↔ TREE.md si odporuje** (DESIGN má „vážené hlasování" + pauza-bonus jako živé, TREE = zrušeno). Cowork lane: z DESIGN smazat mechaniku, odkázat na TREE §3–§5.
+- [ ] **Mapa vlastnictví existuje 3–4×** (MEMORY rozcestník · CLAUDE „Kde hledat co" · working-style tabulka) — §20. Určit JEDNOHO vlastníka (rozcestník v MEMORY), ostatní na odkaz.
+- [ ] **Config hodnoty opsané do docí** (jména tierů: DESIGN, BACKLOG · 50/75: DESIGN, PRICING ~8× · Yggdrasil timing 4+ míst) — §20. Nahradit odkazem na config / DECISIONS.
+- [ ] **Další §20 duplikáty:** IS pravidla verbatim v DESIGN · element/Shadow v TREE+DESIGN · kreditní hodnoty 2× v PRICING. Nechat u vlastníka + odkaz.
+- [ ] **working-style učí zakládat nové docy** vs CLAUDE §20 „žádné nové docs" — dnes jen umlčeno escape-markem. Sladit.
+- [ ] **RUNAR_SEGMENTATION_SPEC.md** popisuje zrušenou featuru (deeper_meaning), není v indexu → archiv nebo index s poznámkou.
+- [ ] **Session Start Protocol** nařizuje číst celý RUNAR_DECISIONS.md (~2086 ř.) — nereálné. Změnit na „grepni dle tématu" + živý index posledních N rozhodnutí nahoře.
+
+### C — profi / SRE mezery (OWNER: vysvětlit podrobně před realizací)
+- [ ] **Runtime testy peníze-kritických edge funkcí** (deno test: deduct až po úspěchu · hranice měsíčního stropu · idempotence · anonymous nedostane placené). Dnes 0 runtime testů, jen 24 statických.
+- [ ] **CI brána** (GitHub Actions: smoke.py + deno test na push/PR do main). Dnes jediná brána = lokální hook (jde obejít --no-verify).
+- [ ] **Zálohy / DR** pro Supabase DB (peníze + PII): ověřit PITR, runbook kadence + restore, jednou nasucho vyzkoušet.
+- [ ] **Monitoring / alerting** (error rate + fail-open události → Slack/Sentry). Dnes jen pull logy.
+- [ ] **Staging / preview** prostředí pro migrace + edge fn (dnes vše proti prod DB).
+- [ ] **Deploy / rollback runbook** pro edge funkce (živý stav je mimo git, neviditelný).
+- [ ] **Review brána** na citlivé cesty (supabase/functions, sql, auth) — jinak jdou peníze/bezpečnost/migrace zlive bez druhého páru očí.
+- [ ] **Pinned Deno deps + deno.lock** (dnes plovoucí MAJOR, žádný lock) + Dependabot.
+- [ ] **SECURITY.md / inventář tajemství** (kde bydlí, rotace, incident při leaku).
+- [ ] **Proxy: zúžit CORS + zablokovat neautentizovaný request** (dnes Opus zdarma z jakéhokoli originu, jen 10 req/60s per IP).
+
+---
+
 ## AUDIT RESTŮ — 2026-07-14 (Workflow: 5 zdrojů → ověřeno proti repu + git logu)
 # Zdroje: MEMORY TODO · RUNAR_DECISIONS reality-notes · privacy/backlog/tree docs · TODO v kódu · Cowork eval handoffy.
 # Handoffy vytěžené sem → přesunuty do Cowork `archive/`. Zůstává: RUNE_IMAGE_POOLS_draft (vstup pro pool),
@@ -99,7 +127,7 @@
 - [ ] **G2b no-fate gate** — „only one has your name on the wind" prošlo všemi 7 gates. Částečně kryto `_describeRule` („no fate"), ale ne specificky „odpověď je VE SVĚTĚ". Nejdřív změřit v0.6 dávku.
 - [x] **Yggdrasil timing — ROZHODNUTO A DOTAZENO** (KUKY 2026-07-18: celorocne, kdykoliv, kdokoliv prihlaseny). Kodovy zbytek, ktery si rozhodnuti vyzadalo, byl 2026-07-19 dodelan: `SPREAD_CONFIG.yggdrasil.seasonal` („Dec 14-28 only") smazan z configu.  <!-- check-docs:ok 2026-07-19 cituje zrusenou datumovou branu jako ZRUSENOU; prave o jejim smazani ta polozka je --> Byla to mrtva data — nikdo je necetl, ale kdo config cetl, precetl si tam zrusene pravidlo. Presne proto to owner opravoval PETKRAT.
 - [ ] **Retence čtení** — nerozhodnuto. Návrh: po dobu účtu; při zrušení smazat/anonymizovat pro eval. Blokuje konkrétní číslo v policy.
-- [ ] **Living tree: sundat admin gate** (`runar-tree.js:47-50`) — až uznáš betu za hotovou.
+- [ ] **Living tree: sundat admin gate** (`renderLivingTree()` v `runar-tree.js`) — až uznáš betu za hotovou.
 - [x] **runar-patterns.md** — VYŘEŠENO 2026-07-30: retired do `docs/archive/tree/`, prahy pro `detectPatterns()` přeneseny do sekce „Tree — pozastavené signály" výše.
 - [ ] **Mytologické obrazy** (Óðinn/Nornir) zpět? Cesta = nový pool v SEASON_POOLS, NE zpět do voice profilu.
 - [ ] **Shrine audit** — bare TODO bez rozsahu; definovat nebo smazat.

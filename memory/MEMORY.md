@@ -18,7 +18,7 @@ a **rozcestník** (kde co bydlí). Žádná čísla, žádné SW verze, žádné
 Na začátku každé session PŘEČÍST V TOMTO POŘADÍ:
 1. Tento soubor (MEMORY.md)
 2. [working-style.md](working-style.md) — jak spolu pracujeme (Explore→Plan→Implement)
-3. `CLAUDE.md` (repo root) — architektura + pravidla §1–§20
+3. `CLAUDE.md` (repo root) — architektura + pravidla §1+
 4. `RUNAR_DECISIONS.md` (repo root) — **datovaný log rozhodnutí; při sporu vyhrává novější záznam**
 5. Doc podle úkolu (viz rozcestník) + cílový zdrojový soubor
 
@@ -38,7 +38,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - 🔒 **externě ukotveno** — pravda mimo nás (etymologie, zdroje, IS gramatika/BÍN). Změna = lepší zdroj / oprava přepisu; náraz proti externímu zdroji.
 - 📜 **vytvořený kánon** — pravda, kterou jsme stvořili a je zamčená (Rúnar, Agndofa, mytologie, hlas). Změna = rozhodnutí o kontinuitě + sweep; náraz proti vlastní konzistenci.
 - 🔄 **interně rozhodnuto** — proměnlivé páky (tiery, ceny, spready). Změna = nový datovaný DECISIONS.
-- 🏛 **architektonické** — pravidla §1–§20, lanes. One-way; mění datované rozhodnutí.
+- 🏛 **architektonické** — pravidla §1+, lanes. One-way; mění datované rozhodnutí.
 
 | Co hledáš | Vlastník | Druh |
 |---|---|---|
@@ -46,7 +46,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 | Runy, ætty, AREAS/SEEKS/INTENTIONS (+ `.norns` osy) | `v2/runar-runes.js` | 🔒 |
 | Prompty, buildery, délky čtení, IS gramatický blok | `v2/runar-character.js` | 🔒 gramatika · 📜 hlas (DEF_CHAR) |
 | Model čtení + fallback chain | `supabase/functions/claude-proxy/index.ts` MODELS | 🔄 |
-| Architektura, pravidla §1–§20, DB sloupce, lanes a commit prefixy | `CLAUDE.md` | 🏛 |
+| Architektura, pravidla §1+, DB sloupce, lanes a commit prefixy | `CLAUDE.md` | 🏛 |
 | Proč je něco tak, jak to je (datovaná rozhodnutí) | `RUNAR_DECISIONS.md` | log |
 | Business model, kredity, break-even, fyzické produkty | `RUNAR_PRICING.md` | 🔄 · fyz. produkt 🔒 |
 | Design, mytologie, význam částí | `RUNAR_DESIGN.md` | 📜 |

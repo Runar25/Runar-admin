@@ -13,7 +13,7 @@ import threading
 
 # ─── CONFIG ───────────────────────────────────────────────────────────────────
 
-API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")   # or paste key here
+API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")   # jen z env — NIKDY klic do souboru
 
 MODELS = [
     ("Haiku 4.5",   "claude-haiku-4-5",   1.00,  5.00),

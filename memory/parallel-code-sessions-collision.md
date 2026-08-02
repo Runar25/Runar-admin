@@ -32,9 +32,9 @@ souboru dvěma session neřeší nic než worktree.
   PŘED commitem.** Je-li počet větší než tvoje změna, přebytek je cizí — commitni ho vědomě a řekni to,
   nebo počkej, až to druhá session zaveze. NEopravuj, cos sebral — je to jejich lane, jejich slib.
   `RUNAR_DECISIONS.md` tuhle kolizi GARANTUJE: připisuje do něj každá lane. Vždy `git pull` → append → pathspec.
-- **Patch nástroj (`scripts/_patch*.py`) pro MŮJ scratch NEPATŘÍ do sdílené repo cesty** — do session
-  scratchpadu (mimo repo, git ho nikdy nevidí). `scripts/_patch.py`=CODE-tree, `scripts/_patch_tune.py`=CODE-tune, ale
-  i to kolabuje se dvěma session v jedné lane. Viz [[one-patch-script-path]].
+- **Patch nástroj = VLASTNÍ gitignored slot session** (`scripts/_patch.py`=CODE-tree, `scripts/_patch_tune.py`=CODE-tune;
+  gitignored → `git add -A` ho nesebere; NIKDY sdílený slot mezi session). I tak kolabuje se dvěma session
+  v jedné lane. Viz §1 / [[one-patch-script-path]].
 - **`git status -- <path>` PŘED každým sáhnutím do tracked souboru** — a znovu před Write; stav se mění
   během session (gen_batch.js se z untracked stal tracked, protože ho druhá session mezitím commitla).
 - **Necommitnuté změny ve sdíleném tracked souboru = živé riziko sebrání** — commitni je úzce brzy.

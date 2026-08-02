@@ -23,3 +23,6 @@ eval_out/
 # (blokuje nový ADD, pustí modifikaci trackovaného).
 v2/tree-snapshots/
 _backup/
+
+# Cowork snapshot kopie kanonu — zdroj driftu, necommitovat (audit 2026-08-02)
+_cowork_snap/

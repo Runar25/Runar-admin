@@ -20,11 +20,11 @@ runar-runes.js        — 25 Elder Futhark + calcLifeRune()
 runar-translations.js — UI_TEXT {en, is} + t()  ← Edit tool OK
 runar-character.js    — DEF_CHAR_EN/IS, buildSysPrompt(), RP_* packs + buildReadingPrompt()
                          + spread dispatchers, buildLifeRunePromptIS/EN(), getCorrPrompt(), applyISCorrections() [VYPNUTÝ]
-runar-utils.js        — t(), tp(), vn(), vl(), setText/setSt/showToast, stream
+runar-utils.js        — t(), tp(), vn(), vl(), setText/setSt/showToast, stream, isAdmin() (seznam ADMIN_EMAILS v runar-config.js)
 runar-journal.js      — loadJournal(), renderJournal(), filterJournal()
 runar-tree.js         — updateTreeTab(), generateLifeRuneReading(), loadLifeRuneFromDB()
 runar-gathering.js    — The Gathering (NAHRADIT — stará logika, čeká na tree_state DB)
-runar-auth.js         — updateAuthUI(), isAdmin(), PWA, sign-in, redeem
+runar-auth.js         — updateAuthUI(), PWA, sign-in, redeem
 runar-reading.js      — startReading(), _generateReading(), generateVoice()
 runar-app.js          — state, DB init, fetchUserProfile(), showAppTab()
 runar-reader.html     — produkční app  ← Edit tool OK
@@ -34,8 +34,7 @@ sw.js                 — Service Worker (auto-bump via git hook · hooks/pre-co
 ```
 
 **Kam ukládat nové soubory:** SQL migrace → `sql/` jako `YYYY-MM-DD_popis.sql` · archivní nebo
-dočasné dokumenty a POC/experiment HTML → `docs/archive/` · patch skript → VŽDY `scripts/_patch.py`
-(jedna stabilní cesta, přepisuje se; nový název = nový permission prompt).
+dočasné dokumenty a POC/experiment HTML → `docs/archive/` · patch skript → **viz §1** (vlastní gitignored slot session).
 
 ### Load order
 ```
@@ -229,7 +228,7 @@ měnila dvakrát a každá opsaná tabulka to přežila jako zastaralá.
 
 DB hodnoty (neměnné): `free_trial` · `rune_seeker` · `standard` · `premium`.
 Identita: **všichni registrovaní jsou Rune Seeker**; standard/premium nejsou hodnosti, jen víc čtení.
-ADMIN → `isAdmin()` v `runar-auth.js` (jediný seznam). **VŽDY testovat i jako visitor/rune_seeker.**
+ADMIN → `isAdmin()` v `runar-utils.js`, seznam `ADMIN_EMAILS` v `runar-config.js`. **VŽDY testovat i jako visitor/rune_seeker.**
 
 ---
 
@@ -329,7 +328,7 @@ SÁM — bez ownera.
 
 **Lanes (kdo co vlastní):**
 - **CODE-tune** → prefix `[tune]` (+ `[reading]`/`[fix]`/`[pricing]` jako téma): reading systém, prompty (buildery v runar-character.js), config (TIERS/SPREAD_COSTS/SPREAD_CONFIG/VOCAB), pricing, translations, reader UI/CSS, reporter, auth, app, journal, eval-IMPLEMENTACE, copy. = vše KROMĚ tree vizuálu.
-- **CODE-tree** → prefix `[tree]`: vizuální engine — runar-tree-model.js, runar-tree-render.js, runar-tree-lab*.html, runar-branch.js, tree-lab-*/, tree-snapshots/, build_tree_*.py / build_*composer.py, `RUNAR_TREE_*` docs, `tree_state` DB. Doménový doc = RUNAR_TREE.md.
+- **CODE-tree** → prefix `[tree]`: vizuální engine — runar-tree-prod.js (generovaný `build_tree_production.py`), tree-lab composery (runar-branch.js, runar-trunk.js), build_*composer.py, tree-lab-*/, tree-snapshots/, `RUNAR_TREE_*` docs, `tree_state` DB. Doménový doc = RUNAR_TREE.md.
 - **Cowork** → prefix `[cowork]`: design, docs, eval-OBSAH, copy audit, handoffy. Repo **READ-ONLY přes `git show HEAD:`** (ne `git status`, ten zapisuje do indexu); do repa píše VÝHRADNĚ přes CODE. Další Cowork session = táž lane, táž pravidla.
 
 **Mechanika (co ZBYLO — zbytek obstará git):**

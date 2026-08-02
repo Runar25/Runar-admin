@@ -131,7 +131,7 @@ Bash mount v Coworku občas **uřízne repo soubor při čtení** (podstrčí kr
 | Typ | Umístění |
 |-----|----------|
 | Produkční JS/HTML/CSS | `Runar-admin/v2/` — vždy přes Python skript |
-| Nový patch skript (jednorázový) | `Runar-admin/scripts/` → po použití přesunout do `scripts/archive/` |
+| Patch skript (session) | vlastní gitignored slot dle §1 — přepisuje se, NEarchivovat ([[one-patch-script-path]]) |
 | Utility skript (opakovaný) | `Runar-admin/scripts/utils/` |
 | SQL migrace | `Runar-admin/sql/` — název: `YYYY-MM-DD_popis.sql` |
 | Nový design dokument | `Runar-admin/` root (RUNAR_NAZEV.md) |  <!-- doc-links:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
@@ -145,11 +145,10 @@ Bash mount v Coworku občas **uřízne repo soubor při čtení** (podstrčí kr
 - `show_corrections.py` — živá data korekcí
 Ověřovací skripty (volané ze smoke) žijí v `scripts/verify_*.js`.
 
-**NIKDY** nenechávat patch skripty v rootu `Runar-admin/` natrvalo.
-Po úspěšném použití patche: `mv scripts/fix-xyz.py scripts/archive/`
+**Patch skript = vlastní gitignored slot session** (viz §1) — přepisuje se; NIKDY čerstvé jméno per patch, NIKDY nearchivovat. Detail → [[one-patch-script-path]].
 
 ### Naming conventions
-- Patch skript: `fix-popis.py` nebo `add-popis.py` (např. `fix-norns-is.py`)  <!-- doc-links:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
+- Patch skript: **vlastní gitignored slot session** (viz §1), ne per-patch jméno.
 - Refactor skript: `refactor-popis.py`  <!-- doc-links:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
 - Utility: `název.py` bez prefixu (např. `smoke.py`)
 - SQL: `YYYY-MM-DD_popis.sql`
@@ -270,7 +269,7 @@ Když uživatel přinese soubor zvenku (@soubor nebo obsah vložen do chatu):
 3. ZAPSAT do správných souborů:
    - Rozhodnutí + pravidla → CLAUDE.md (repo)
    - Tree (model, zóny, signály, Gathering) → RUNAR_TREE.md · vzhled → RUNAR_TREE_RENDER.md · úkoly → RUNAR_BACKLOG.md
-   - Stack, soubory, DB, tier → runar-project.md
+   - Stack, soubory, DB, tier → CLAUDE.md („Soubory") + `runar-config.js` (runar-project.md je prázdný, §20)
    - Workflow, coding rules → working-style.md
    - Snapshot co bylo uděláno → snapshots/YYYY-MM-DD-nazev.md
 4. Implementovat co jde BEZ stromu/DB — datové definice do kódu

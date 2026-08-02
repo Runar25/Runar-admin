@@ -12,7 +12,7 @@
 // ═══════════════════════════════════════════════════════
 
 // ─── ADMIN CHECK ─────────────────────────────────────────
-// isAdmin() lives here (runar-auth.js) — auth logic, not config
+// isAdmin() je v runar-utils.js (+ ADMIN_EMAILS v runar-config.js), ne tady
 
 // ── Delete Account ──────────────────────────────────────
 function openDeleteModal() {
