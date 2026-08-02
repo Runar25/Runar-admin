@@ -91,7 +91,9 @@
 - [ ] **Review brána** na citlivé cesty (supabase/functions, sql, auth) — jinak jdou peníze/bezpečnost/migrace zlive bez druhého páru očí.
 - [ ] **Pinned Deno deps + deno.lock** (dnes plovoucí MAJOR, žádný lock) + Dependabot.
 - [ ] **SECURITY.md / inventář tajemství** (kde bydlí, rotace, incident při leaku).
-- [ ] **Proxy: zúžit CORS + zablokovat neautentizovaný request** (dnes Opus zdarma z jakéhokoli originu, jen 10 req/60s per IP).
+- [x] **Proxy: zablokovat neautentizovaný request** — HOTOVO + NASAZENO 2026-08-02 (Fáze 1): `if(!userId) return 401` na claude-proxy (v51) i elevenlabs-proxy (v28) + rate-limit klíčovaný jen na `userId` (padá XFF spoof). Ověřeno naživo: anonymní POST → `{"error":"unauthorized"}` 401. **Zbývá: zúžit CORS** z `*` na origin appky (defense-in-depth).
+- [ ] **Proxy Fáze 2 — zbývající díry z auditu 2026-08-02** (visitor už zavřen; tyhle jsou pro PŘIHLÁŠENÉ): **#2b** hlas napojit na ZAPLACENÉ čtení — dnes přihlášený rune_seeker s 0 kredity má hlas zdarma (elevenlabs-proxy nečte tier/kredit; hlas = 95 % ceny) · **#3** `mode=life_rune` gate čte sloupec, který server nikdy nezapíše → replay = free Opus; zrcadlit founding CAS · **#4** `spread_cost` je od klienta → odvodit cenu server-side z validovaného `mode` · **#6/#7** `tree-update` věří `credits_used` + `short_text/deep_text` od klienta (neměřené Haiku) → odvodit ze saved readings row.
+- [ ] **Proxy defense-in-depth** (audit 2026-08-02, ne urgentní): bound fail-open větve (monthly cap `:530`, ritual precheck `:508`) · legitAsk concurrency race (1 extra free ask) · ověřit tělo `check_rate_limit` RPC (audit nečetl) · client visitor gate → „registruj se" CTA místo volání proxy.
 
 ---
 

@@ -2084,3 +2084,14 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 - **Affected doc(s):** RUNAR_DESIGN.md.
 - **Reality note:** §20 hlídáno — Örn/Níðhöggr/Ratatoskr/Huginn/Muninn se NEduplikují, jen se na ně odkazuje („viz Eagle vzorce" / „viz Níðhöggr vzorce"). Ověřeno auditem 2026-07-30 (žádná skutečná duplikace v kánonu). Roll-call z Dvergatalu = jen jména, obsah se nevymýšlí (dokud bytost nedostane roli).
 - **Reversibility:** easy (čistě aditivní doc obsah).
+
+---
+
+## 2026-08-02 — Fáze 1 security: require-auth na obou proxy (NASAZENO)
+
+- **Typ:** security fix + deploy (git deploy NEVIDÍ — proto sem)
+- **Co se změnilo:** `claude-proxy` (v50→**v51**) i `elevenlabs-proxy` (v27→**v28**) dostaly `if(!userId) return json({error:"unauthorized"},401)` — visitor nemá živé čtení ani hlas (jen statická Rune Collection). Rate-limit klíčovaný **jen na `userId`** (odstraněna spoofovatelná XFF cesta). Zdroj = commit `fd78a91`; nasazeno `supabase functions deploy claude-proxy|elevenlabs-proxy --project-ref pmitxjvkeovijreepror --no-verify-jwt`.
+- **Proč:** audit 2026-08-02 (workflow, ověřeno proti zdroji): anonym z jakéhokoli originu dostal free Opus 4.8 s libovolným promptem (claude-proxy) **a** neomezený hlas (elevenlabs-proxy, který nekontroloval NIC — hlas = 95 % ceny). Rozhodnutí ownera: „nechci to mít děravé, zavřeme to; visitor = jen statická Collection."
+- **Affected doc(s):** RUNAR_BACKLOG.md (C10 auth-část odškrtnuta; Fáze 2 díry zapsány).
+- **Reality note:** **OVĚŘENO NAŽIVO** — anonymní POST na obě proxy → `{"error":"unauthorized"}` HTTP 401 (zpráva z našeho kódu, ne gateway). DB write-surface (`sql/audit_write_surface.sql` B) = 0 řádků, granty na prod live. Zbývající díry (Fáze 2: voice→zaplacené čtení #2b, spread_cost #4, life_rune flag #3, tree-update #6/#7) → BACKLOG.
+- **Reversibility:** easy (`supabase functions deploy` předchozí verze z git historie).
