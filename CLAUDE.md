@@ -61,6 +61,7 @@ Kolize a předávání mezi session → sekce „N paralelních session" + memor
 
 ### §2 — IS je primární jazyk
 IS musí být vždy perfektní. EN je vedlejší. NIKDY IS jako "překlad" EN.
+**Platí pro Code i Cowork:** IS se dělá **hotová a ověřená** (`check-is` / yfirlestur / is-grammar-qa), nikdy odhadem ani odkladem na rodilého mluvčího (§19.2). → [[is-done-together-not-for-sigrun]]
 Každé Claude generování v IS má **3 vrstvy** (všechny v promptu — korekce se řeší v kontextu):
 ```js
 var sys    = buildSysPrompt(activeChar, lang);        // 1. IS system prompt
