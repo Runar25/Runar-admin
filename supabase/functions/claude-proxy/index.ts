@@ -449,9 +449,12 @@ serve(async (req: Request) => {
 
     if (userTier === "free" || userTier === "credits") userTier = "rune_seeker";
 
+    // SECURITY: require a logged-in user. Visitor has only the static Rune Collection,
+    // no live reading -> anonymous is rejected here before any Claude cost.
+    if (!userId) return json({ error: "unauthorized" }, 401);
+
     // ── Rate limiting ──
-    const ip    = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
-    const rlKey = userId ? `claude:user:${userId}` : `claude:ip:${ip}`;
+    const rlKey = `claude:user:${userId}`;
     const { data: allowed } = await sb().rpc("check_rate_limit", {
       p_key: rlKey, p_window_seconds: 60, p_max_requests: 10,
     });

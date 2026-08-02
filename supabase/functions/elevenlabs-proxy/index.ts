@@ -42,9 +42,12 @@ serve(async (req) => {
       if (user) userId = user.id;
     }
 
-    // ── Rate limit: 5 req/60s per user or IP ──
-    const ip    = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
-    const rlKey = userId ? `elevenlabs:user:${userId}` : `elevenlabs:ip:${ip}`;
+    // SECURITY: require a logged-in user. Visitor has only the static Rune Collection,
+    // no live voice -> anonymous is rejected here before any ElevenLabs cost.
+    if (!userId) return json({ error: "unauthorized" }, 401);
+
+    // ── Rate limit: 5 req/60s per user ──
+    const rlKey = `elevenlabs:user:${userId}`;
     const { data: allowed } = await sb().rpc("check_rate_limit", {
       p_key:            rlKey,
       p_window_seconds: 60,
