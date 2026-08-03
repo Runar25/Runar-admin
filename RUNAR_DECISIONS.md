@@ -2106,3 +2106,14 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 - **Affected doc(s):** RUNAR_BACKLOG.md (#2b odškrtnuto, navazující flagy zapsány).
 - **Reality note:** OVĚŘENO: `readings` má teď jen SELECT policy · `voiced_at`+`mark_voiced` existují · service_role smí `mark_voiced`, authenticated ne · `mark_voiced` na neexistující řádek = null (ne error) · anonym → 401. **Owner musí naživo (admin):** čtení → hlas jednou; retry → blok. Otevřené (backlog): „someone" čtení se neukládá → nemá hlas; premium „question gate" jen klientsky.
 - **Reversibility:** medium (SQL: obnovit ALL policy + drop voiced_at/mark_voiced; proxy: redeploy předchozí).
+
+---
+
+## 2026-08-03 — #2b voice gate VRÁCENO (rozbil tree/life-rune hlas)
+
+- **Typ:** oprava předchozího záznamu (append-only) + deploy + SQL (owner)
+- **Co se změnilo:** #2b (výše) VRÁCENO. Voice gate vyžadovala `reading_id` (= `_lastReadingId`), ale ten se nastavuje JEN v hlavním reader toku (`runar-reading.js:113/781`) — **tree/life-rune čtení (`runar-tree.js`) ani „someone" ho nenastaví** → jejich hlas dostal 403 „resting" (owner to nahlásil na reálném life-rune čtení). Proxy vrácena na Fázi 1 (require-auth, bez gate; redeploy), klient zpět na `body:{text,lang}` (commit `c58c8a1`). **`readings`→SELECT-only ZŮSTALO** (samostatný fix, nic nerozbíjí — ověřeno: čtení/hlas/Ask jedou). Owner spustil úklid: `drop function mark_voiced` + `drop column voiced_at`.
+- **Proč selhalo:** postavena brána na jedné voice cestě bez zmapování VŠECH (reader · tree/life-rune · someone) a **nasazeno do živého toku bez reálného E2E testu** (jen logika + DB kontroly). Poučení: money-critical změna živého toku = napřed zmapovat všechny cesty + proklikat reálný user-flow, teprve pak deploy.
+- **Affected doc(s):** RUNAR_BACKLOG.md (#2b znovu otevřeno s podmínkou).
+- **Reality note:** OVĚŘENO NAŽIVO — hlas i Ask Rúnar zas fungují (owner potvrdil). Anonym stále 401 (Fáze 1 drží). DB: `readings` jen SELECT policy, `voiced_at`/`mark_voiced` smazané.
+- **Reversibility:** n/a (návrat do funkčního stavu).
