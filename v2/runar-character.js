@@ -664,7 +664,7 @@ function buildLifeRunePromptIS(name, rune, day, month, year, isPremium) {
     'Þetta er lestur lífsrúnar ' + name + ' — ekki lestur dagsins, heldur lestur þess sem ' + name + ' hefur borið í sér frá fæðingu.',
     '',
     'MANNESKJAN: ' + name,
-    'LÍFSRÚNA: ' + rune.is_n + ' ' + rune.g,
+    'LÍFSRÚNA: ' + rune.is_n,
     'FÆDD/UR: ' + day + '. ' + month + '. ' + year,
     'ÍSLENSKUR MÁNUÐUR: ' + monthDesc,
     'FRUMEFNI: ' + (Array.isArray(rune.elements) ? rune.elements.join(' / ') : rune.elements),
@@ -702,7 +702,7 @@ function buildLifeRunePromptEN(name, rune, day, month, year, isPremium) {
     'This is the life rune reading of ' + name + ' — not a reading of today, but of what ' + name + ' has carried since birth.',
     '',
     'PERSON: ' + name,
-    'LIFE RUNE: ' + rune.n + ' ' + rune.g,
+    'LIFE RUNE: ' + rune.n,
     'BORN: ' + day + ' ' + month + ' ' + year,
     'ICELANDIC MONTH: ' + monthDesc,
     'ELEMENT: ' + (Array.isArray(rune.elements) ? rune.elements.join(' / ') : rune.elements),
@@ -881,8 +881,8 @@ var RP_SINGLE = {
     lifeRuneNote:function(rune){ return 'MIKILVÆGT: Dregna rúna og lífsrúna eru EIN og sama rúna — ' + rune + '. Þetta er sjaldgæft. Meðhöndlaðu þetta sem sérstætt augnablik: "Stofninn talar um sig sjálfan."'; },
     angleIntro:'LESTRARHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og upphaf): ',
     length:'Gefðu einn samfelldan lestur — 3 stuttar setningar, 38 til 45 orð alls. Hann verður lesinn upphátt, svo hafðu hverja setningu létta — um 20 til 25 sekúndur. Engar fyrirsagnir, engar hlutaskiptingar.',
-    qBranch:function(rune,g,q){ return 'Svaraðu spurningunni: "' + q + '" í gegnum ' + rune + ' (' + g + ') — í myndum og táknmáli, ekki ráðgjöf. Nefndu ' + rune + ' einu sinni, fléttað náttúrlega inn. Talaðu um það sem liggur undir spurningunni.'; },
-    noqBranch:function(rune,g,world){ return 'Byrjaðu á ' + rune + ' (' + g + ') — láttu táknræn gæði þess (' + world + ') koma fram í myndum, ekki útskýringu. Nefndu ' + rune + ' einu sinni, fléttað náttúrlega inn. Ein skýr innsýn nægir — ekki troða öllu inn.'; },
+    qBranch:function(rune,g,q){ return 'Svaraðu spurningunni: "' + q + '" í gegnum ' + rune + ' — í myndum og táknmáli, ekki ráðgjöf. Nefndu ' + rune + ' einu sinni, fléttað náttúrlega inn. Talaðu um það sem liggur undir spurningunni.'; },
+    noqBranch:function(rune,g,world){ return 'Byrjaðu á ' + rune + ' — láttu táknræn gæði þess (' + world + ') koma fram í myndum, ekki útskýringu. Nefndu ' + rune + ' einu sinni, fléttað náttúrlega inn. Ein skýr innsýn nægir — ekki troða öllu inn.'; },
     closing:function(name){ return 'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. ' + _namePlacement(name, 'is') + ' Haltu þig innan orðafjöldans — stuttar setningar, ekkert uppfyllingarefni.'; },
     json:'Skilaðu EINGÖNGU þessu JSON fylki, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(lesturinn nákvæmlega eins og fyrirmælin að ofan segja, einn samfelldur texti)"}]',
   },
@@ -896,8 +896,8 @@ var RP_SINGLE = {
     lifeRuneNote:function(rune){ return 'IMPORTANT: The drawn rune IS the life rune — ' + rune + '. This is rare. Address it as a significant moment: "The trunk speaks of itself."'; },
     angleIntro:'READING ANGLE (follow this entry point — let it shape the opening and tone): ',
     length:'One flowing reading — 3 short sentences, 38 to 45 words total. It will be read aloud, so keep every sentence lean — about 20 to 25 seconds spoken. No sections, no labels, no line breaks between thoughts.',
-    qBranch:function(rune,g,q){ return 'Open with ' + rune + ' (' + g + ') answering: "' + q + '" — through image and symbol, not advice. Mention ' + rune + ' by name once, woven naturally. Speak to what lies beneath the question.'; },
-    noqBranch:function(rune,g,world){ return 'Open with ' + rune + ' (' + g + ') — let its quality (' + world + ') arrive through image, not explanation. Mention ' + rune + ' by name once, woven naturally. One clear insight is enough — do not pack everything in.'; },
+    qBranch:function(rune,g,q){ return 'Open with ' + rune + ' answering: "' + q + '" — through image and symbol, not advice. Mention ' + rune + ' by name once, woven naturally. Speak to what lies beneath the question.'; },
+    noqBranch:function(rune,g,world){ return 'Open with ' + rune + ' — let its quality (' + world + ') arrive through image, not explanation. Mention ' + rune + ' by name once, woven naturally. One clear insight is enough — do not pack everything in.'; },
     closing:function(name){ return 'One paragraph. No breaks. No labels. ' + _namePlacement(name, 'en') + ' Stay within the word count — short sentences, no filler. '; },
     json:'Output format — return ONLY this JSON array, nothing before or after: [{"rune": "(the rune name)", "text": "(the reading exactly as instructed above, one flowing paragraph)"}]',
   },
@@ -912,10 +912,10 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
   var worldRef = rworld(drawn) || S.worldFb(pickedKws);
   var hasQ = !!(u.question && u.question.trim());
   var lifeCtx = life
-    ? S.LIFE + ': ' + rn(life) + ' (' + life.g + ') — ' + rk(life)
+    ? S.LIFE + ': ' + rn(life) + ' — ' + rk(life)
       + (life.world ? ' · ' + S.REALM_life + ': ' + rworld(life) + ' · ' + S.ELEM + ': ' + relements(life) : '')
     : '';
-  var drawnCtx = S.DRAWN + ': ' + rn(drawn) + ' (' + drawn.g + ') — ' + S.focus + ': ' + pickedKws
+  var drawnCtx = S.DRAWN + ': ' + rn(drawn) + ' — ' + S.focus + ': ' + pickedKws
     + (drawn.world ? ' · ' + S.REALM_drawn + ': ' + rworld(drawn) + ' · ' + S.ELEM + ': ' + relements(drawn) : '');
   var parts = [
     S.PERSON + ': ' + u.name,
@@ -1041,10 +1041,10 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
   var rCtr = runes[0], rAbo = runes[1], rBel = runes[2], rBeh = runes[3], rAhe = runes[4];
   var life = u.lifeRune;
   function kb(r){ return rk(r).split(',').map(function(s){ return s.trim(); }).filter(Boolean).slice(0, 4).join(', '); }
-  function block(r, label){ return label + ': ' + rn(r) + ' ' + r.g + '\n' + kb(r); }
+  function block(r, label){ return label + ': ' + rn(r) + '\n' + kb(r); }
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
-    life      ? S.lifeRune + ': ' + rn(life) + ' ' + life.g : '',
+    life      ? S.lifeRune + ': ' + rn(life) : '',
     u.area    ? S.area + ': ' + u.area : '',
     u.seeking ? S.seeking + ': ' + (Array.isArray(u.seeking) ? u.seeking.join(S.seekJoin) : u.seeking) : '',
     u.intention ? _intentionContext(u.intention, lang) : '',
@@ -1121,10 +1121,10 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
   var rUrd = runes[0], rVerd = runes[1], rSkul = runes[2];
   var life = u.lifeRune;
   function kb(r){ return rk(r).split(',').map(function(s){ return s.trim(); }).filter(Boolean).slice(0, 4).join(', '); }
-  function block(r, label){ return label + '\n' + rn(r) + ' ' + r.g + ' — ' + kb(r); }
+  function block(r, label){ return label + '\n' + rn(r) + ' — ' + kb(r); }
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
-    life      ? S.lifeRune + ': ' + rn(life) + ' ' + life.g : '',
+    life      ? S.lifeRune + ': ' + rn(life) : '',
     u.area    ? S.area + ': ' + u.area : '',
     u.seeking ? S.seeking + ': ' + (Array.isArray(u.seeking) ? u.seeking.join(S.seekJoin) : u.seeking) : '',
     u.intention ? _intentionContext(u.intention, lang) : '',
@@ -1192,10 +1192,10 @@ function buildHorseshoePromptSeven(u, runes, lang, corrections) {
   var S = RP_HORSESHOE[lang] || RP_HORSESHOE.en;
   var life = u.lifeRune;
   function kb(r){ return rk(r).split(',').map(function(s){ return s.trim(); }).filter(Boolean).slice(0, 4).join(', '); }
-  function block(r, label){ return label + '\n' + rn(r) + ' ' + r.g + ' — ' + kb(r); }
+  function block(r, label){ return label + '\n' + rn(r) + ' — ' + kb(r); }
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
-    life      ? S.lifeRune + ': ' + rn(life) + ' ' + life.g : '',
+    life      ? S.lifeRune + ': ' + rn(life) : '',
     u.area    ? S.area + ': ' + u.area : '',
     u.seeking ? S.seeking + ': ' + (Array.isArray(u.seeking) ? u.seeking.join(S.seekJoin) : u.seeking) : '',
     u.intention ? _intentionContext(u.intention, lang) : '',
@@ -1275,10 +1275,10 @@ function buildYggdrasilPromptNine(u, runes, lang, corrections) {
   var S = RP_YGGDRASIL[lang] || RP_YGGDRASIL.en;
   var life = u.lifeRune;
   function kb(r){ return rk(r).split(',').map(function(s){ return s.trim(); }).filter(Boolean).slice(0, 4).join(', '); }
-  function block(r, label){ return label + '\n' + rn(r) + ' ' + r.g + ' — ' + kb(r); }
+  function block(r, label){ return label + '\n' + rn(r) + ' — ' + kb(r); }
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
-    life      ? S.lifeRune + ': ' + rn(life) + ' ' + life.g : '',
+    life      ? S.lifeRune + ': ' + rn(life) : '',
     u.area    ? S.area + ': ' + u.area : '',
     u.seeking ? S.seeking + ': ' + (Array.isArray(u.seeking) ? u.seeking.join(S.seekJoin) : u.seeking) : '',
     u.intention ? _intentionContext(u.intention, lang) : '',

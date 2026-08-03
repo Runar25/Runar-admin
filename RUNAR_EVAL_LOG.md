@@ -42,7 +42,7 @@ nepozná se, která zabrala (proto se bumpuje `RUNAR_PROMPT_VERSION`, ať nová 
 
 | verze | co změním | proč (nález) | očekávaný efekt | naměřeno | verdikt |
 |---|---|---|---|---|---|
-| v1.1 | **DEFEKT: glyf (ᚠ) ven z textu čtení** (~11 míst character.js, oba jazyky) | model kopíruje glyf z promptu do prózy — 3/50 EN | glyf v próze = 0 | — | čeká |
+| v1.1 | **DEFEKT: glyf (ᚠ) ven z textu čtení** — vyříznut z 16 míst / 7 produkčních builderů (single·4 spready·life-rune IS+EN), oba jazyky. `:495` lab a `:940` mrtvý param nechány (glyf se do textu nedostane). | model kopíroval glyf z promptu do prózy — 3/50 EN | glyf v próze = 0 | **prompt: 0 glyfů ve všech 7 builderech ×2 jazyky (sandbox probe)** · čtení: sledovat příští dávkou (model může glyf znát z tréninku i bez vzoru v promptu) | opraveno (zdroj vzoru pryč) |
 | v1.1 | **DEFEKT: tvrdé IS tvary** (höndin, skilur…) → korekce/pravidlo | model-slip ve skloňování | konkrétní tvary zmizí | — | čeká |
 | v1.2 | **focused voice profil přepsán** (config.js): obrazy = víc domén (ne jen příroda) · vzorové příklady různé tvary · „na konci VŽDY otázka" → „když otázka, ať překvapí" | eval: 100 % obrazů příroda · 34/50 konec „Hvað?" · 2 stejné příklady | domény pestré · konec „otázka" klesne k ~1/3 · obrazy z domova/práce/těla | — | čeká |
 | v1.3 | **imagery cesta 3 (hybrid)**: SEASON_POOLS dostane per-runa značku „hodí se k této runě" | tentýž obraz zdobí nesouvisející runy (season-keyed, ne rune-keyed) | obraz sedí k významu runy · sezónnost zachována | — | čeká |
