@@ -2140,3 +2140,17 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 - **Affected doc(s):** RUNAR_BACKLOG.md (#4 znovu otevřeno + pre-existující CRITICAL NaN + „prompt není svázán s cenou").
 - **Reality note:** OVĚŘENO NAŽIVO — anonym → 401 (pre-#4 auth drží), regrese 402 pryč. Pre-#4 = stejný underpay přes `spread_cost` jako předtím (nezhoršeno, nevyřešeno). `readings` SELECT-only (samostatný fix) drží. Audit report: `tasks/wqxu3uuar.output` (9 confirmed, 0 uncertain).
 - **Reversibility:** n/a (návrat do funkčního known-good).
+
+---
+
+## 2026-08-03 — Reading-UI regrese z Tree/Norns founding: 3 opravy + Norns dual-role
+
+- **Typ:** bugfix (regrese) + vyjasnění Norns dual-role
+- **Co se změnilo:** Tři regrese, co přinesla práce na founding ritualu (Norns) + chybějící full-path wiring (§13):
+  1. **Redeem nepřekreslil pilulky** — `redeemCode()` (runar-auth.js) volal jen `updateAuthUI()`; area/seeking pilulky (tier-lock přes `_isRSnoCredits`) se refreshovaly jen v `updateUIText`/`fetchUserProfile`. Po dobití kreditu zůstaly zamčené. Fix: redeem po `updateAuthUI()` volá `buildPills()` + `_updateAreaSeekLabels()`.
+  2. **Norns skrytý jako normální spread** — `_syncNornsGate()` (runar-reading.js) skrýval `mode-btn-norns`, dokud uživatel neměl životní runu (`_lifeRuneText`). To zaměnilo **normální placený Norns spread (2 kredity)** s **founding ritualem**. Fix: `var has = !!currentUser` → Norns viditelný pro každého přihlášeného. Founding se rozlišuje `_foundingPending` (ne viditelností tlačítka), takže free founding drží.
+  3. **Setup formulář se vracel přes rozdělané čtení** — `_syncFoundingLock()` při `lock=false` bezpodmínečně ukázal `reader-setup`; běží i z async `fetchUserProfile` ~1-2s po startu čtení → překryl rozdělané čtení. Fix: v else-větvi ukázat setup jen když neběží čtení (`reader-rune-card`/`reader-output` skryté).
+- **Norns dual-role (vyjasnění):** Norns je SOUČASNĚ (a) normální placený 3-rune spread (2 kredity, `SPREAD_COSTS.norns`) pro každého přihlášeného, a (b) zakládací ritual stromu (zdarma). Rozlišuje je `_foundingPending` + server přes `mode='founding'`. NENÍ to „jen founding".
+- **Affected doc(s):** — (čísla/labely beze změny; jen chování UI).
+- **Reality note:** smoke 24/24, node --check OK. **Owner ověří naživo** (přihlášený klient, Code nevidí): po redeem se pilulky odemknou · Norns je v selektoru (5 tlačítek) · setup nepřeskočí přes čtení · founding Norns (z tree tabu) je pořád zdarma. Bug 5 (Ask v Yggdrasilu) NEřešen — čeká na vyjasnění (admin vs rune_seeker; Ask je premium/admin-only).
+- **Reversibility:** easy (3 malé UI patche).

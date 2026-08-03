@@ -934,7 +934,8 @@ function _updateReadingForm() {
   if (nameInp) nameInp.placeholder = isMine ? t('name_ph') : t('setup_for_name_ph');
 }
 
-// Norny se ukazuji az potom, co uzivatel ma zivotni runu (KUKY 2026-07-19).
+// Norns = NORMALNI placeny spread (2 kredity) pro KAZDEHO prihlaseneho (KUKY 2026-08-03,
+// oprava regrese: founding gate driv skryl Norns i jako normalni spread). Nize je o FOUNDINGU:
 // Duvod je rituálni i prakticky: Norny jsou zakladani stromu a to je KROK 2 —
 // server je bez zivotni runy stejne odmitne (claude-proxy, mode 'founding').
 // Tohle je jen dusledna nabidka, ne ochrana; branou je proxy.
@@ -947,7 +948,19 @@ function _syncFoundingLock() {
   // ritual je dany, ne konfigurovatelny. Owner na nej narazil a nevedel, proc tam je.
   var setup = document.getElementById('reader-setup');
   var story = document.getElementById('founding-story');
-  if (setup) setup.style.display = lock ? 'none' : '';
+  if (setup) {
+    if (lock) {
+      setup.style.display = 'none';
+    } else {
+      // Neukazovat setup zpet, kdyz uz bezi cteni (rune-card nebo output viditelny).
+      // _syncFoundingLock jede i z async fetchUserProfile ~1-2s po startu cteni; bez teto
+      // podminky prekryl rozdelane cteni formularem (oprava KUKY 2026-08-03).
+      var _rc = document.getElementById('reader-rune-card');
+      var _ro = document.getElementById('reader-output');
+      var _mid = (_rc && _rc.style.display !== 'none') || (_ro && _ro.style.display !== 'none');
+      if (!_mid) setup.style.display = '';
+    }
+  }
   if (story) {
     story.style.display = lock ? 'block' : 'none';
     if (lock) {
@@ -967,7 +980,7 @@ function _syncFoundingLock() {
 }
 
 function _syncNornsGate() {
-  var has = (typeof _lifeRuneText !== 'undefined') && !!_lifeRuneText;
+  var has = !!currentUser;   // Norns viditelny pro kazdeho prihlaseneho; founding rozlisuje _foundingPending, ne viditelnost
   var btn = document.getElementById('mode-btn-norns');
   var row = document.getElementById('spread-mode-row');
   if (btn) btn.style.display = has ? '' : 'none';

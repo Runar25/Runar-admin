@@ -398,6 +398,10 @@ async function redeemCode() {
       'ok'
     );
     updateAuthUI();
+    // Po dobiti kreditu prekreslit pilulky (area/seeking): redeem menil jen banner,
+    // tier-lock pilulek se refreshoval jen v updateUIText/fetchUserProfile (§13 full-path).
+    if (typeof buildPills === 'function') buildPills();
+    if (typeof _updateAreaSeekLabels === 'function') _updateAreaSeekLabels();
     showToast(tp('redeem_toast_msg', { UNITS: vn('unit', data.credits_added, lang).toUpperCase() }));
     setTimeout(() => {
       document.getElementById('redeem-section').style.display = 'none';
