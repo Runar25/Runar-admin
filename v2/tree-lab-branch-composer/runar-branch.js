@@ -148,8 +148,8 @@ function buildBranch(spec, T) {
   var eCurve = (tu.curve!=null)?tu.curve:R.curve;
   var eSub   = (tu.sub!=null)?tu.sub:R.sub;
   var eTaper = (tu.taper!=null)?tu.taper:R.taper;
-  var eWob   = (tu.wob!=null)?tu.wob:1;
-  var eTip   = (tu.tip!=null)?tu.tip:1;
+  var eWob   = (tu.wob!=null)?tu.wob:(0.5+eCurve*1.3);   /* per-runa wobble odvozeno z curve (kriva runa = vlnitejsi), RUNE_TUNE prebiji */
+  var eTip   = (tu.tip!=null)?tu.tip:(0.7+eCurve*0.9);   /* per-runa tip lift z curve */
   var eLen   = (tu.lenMul!=null)?tu.lenMul:1;
   var rc = RUNE_CHAR[R.k] || {};
   var eTipc = (tu.tipc!=null)?tu.tipc:(rc.tipc||'taper');   /* tip ending: taper|fork|up|blunt */
