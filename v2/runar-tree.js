@@ -609,7 +609,7 @@ async function generateLifeRuneReading() {
 
   // Zivotni runa je zdarma pro vsechny. O cene rozhoduje PROXY podle mode='life_rune',
   // ne tahle dve cisla — klient si zdarma rict nesmi (viz claude-proxy, isLifeRune).
-  var res = await callProxy(sys, prompt, mode.max_tokens, false, 0, null, 'life_rune');
+  var res = await callProxy(sys, prompt, mode.max_tokens, false, 0, null, 'life_rune', 'life_rune');
   if (loadEl) loadEl.style.display = 'none';
 
   if (res.error) {

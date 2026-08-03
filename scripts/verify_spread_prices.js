@@ -124,6 +124,37 @@ for (const doc of docs) {
   // prohlášení, co ten sloupec znamená. Proto se kontroluje jen tabulka.
 }
 
+// -- C) proxy mirror: server si cenu drzi sam a musi se shodovat s vlastnikem --
+// #4 (2026-08-03): claude-proxy oceni kazde cteni z VLASTNI kopie SPREAD_COSTS
+// (Deno neumi importovat runar-config -- stejny duvod jako MONTHLY_LIMITS). Kdyz
+// se mirror rozejde, server strhne jinou cenu, nez jakou uzivatel videl v configu.
+// life_rune v mirroru ZAMERNE neni: je to ritual (cena pres mode, ne slug), cestou
+// pres cenu na nej proxy vraci 400 -- ta vyjimka se overuje, neni to dira.
+{
+  const proxy = fs.readFileSync(R + '/supabase/functions/claude-proxy/index.ts', 'utf8');
+  const pm = proxy.match(/const\s+SPREAD_COSTS\s*:\s*Record<[^>]*>\s*=\s*\{([^}]*)\}/);
+  if (!pm) {
+    fail++;
+    console.log('FAIL  claude-proxy: SPREAD_COSTS mirror nenalezen -- zmenil se tvar? (#4)');
+  } else {
+    const failC = fail;
+    const MIRROR = {};
+    for (const m of pm[1].matchAll(/(\w+)\s*:\s*(\d+)/g)) MIRROR[m[1]] = +m[2];
+    for (const key of Object.keys(OWNER)) {
+      if (key === 'life_rune') {
+        if (key in MIRROR) { fail++; console.log('FAIL  claude-proxy: life_rune JE v mirroru -- ma byt ritual (cena pres mode), ne slug'); }
+        continue;
+      }
+      if (!(key in MIRROR)) { fail++; console.log('FAIL  claude-proxy: ' + key + ' chybi v proxy SPREAD_COSTS -- server ho neoceni'); continue; }
+      if (MIRROR[key] !== OWNER[key]) { fail++; console.log('FAIL  claude-proxy: ' + key + ' mirror=' + MIRROR[key] + ' ale config=' + OWNER[key]); }
+    }
+    for (const key of Object.keys(MIRROR)) {
+      if (!(key in OWNER)) { fail++; console.log('FAIL  claude-proxy: mirror ma `' + key + '`, ktery v SPREAD_COSTS neni'); }
+    }
+    if (fail === failC) console.log('OK    proxy mirror: ' + Object.keys(MIRROR).length + ' spreadu oceneno serverove == config (life_rune vyloucen = ritual)');
+  }
+}
+
 if (fail === 0) {
   console.log('OK    ceny spreadů: ' + checked + ' tabulkových zmínek sedí na SPREAD_COSTS ('
             + Object.keys(OWNER).length + ' spreadu), SPREAD_CONFIG cenu neduplikuje.');

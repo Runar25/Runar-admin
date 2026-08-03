@@ -262,6 +262,28 @@ async function callClaudeWithRetry(
 // drift. Counting unit = reading-units (SPREAD_COSTS), not runes: Yggdrasil costs 5, not 9.
 const MONTHLY_LIMITS: Record<string, number> = { standard: 50, premium: 75 };
 
+// Per-spread reading cost. MIRROR of SPREAD_COSTS.*.credits in v2/runar-config.js (same
+// Deno-cannot-import reason as MONTHLY_LIMITS above). Kept honest by smoke verify_spread_prices.js
+// (section C), which fails on drift. life_rune is absent on purpose: it is a ritual priced by
+// mode, never by a slug, so the cost path 400s on it. The client sends the spread SLUG and the
+// server prices the reading from THIS table, ignoring the numeric spread_cost a request can spoof.
+const SPREAD_COSTS: Record<string, number> = {
+  single: 1, cross: 3, gathering: 3, horseshoe: 4, norns: 2, yggdrasil: 5,
+};
+
+// Server-authoritative cost for a reading. `spread` is the client slug; when present and known
+// it is the price. Returns null for an unknown slug (caller answers 400). A stale client that
+// sends no slug falls back to its numeric spread_cost (+warn) so it keeps working until the SW
+// propagates - the pre-slug behavior, no worse than before; tighten to strict once deployed.
+function costFor(spread: string, clientSpreadCost: number): number | null {
+  if (!spread) {
+    console.warn("no spread slug (stale client) - falling back to client spread_cost");
+    return Math.max(1, clientSpreadCost);
+  }
+  const c = SPREAD_COSTS[spread];
+  return c === undefined ? null : Math.max(1, c);
+}
+
 // Calendar month key, e.g. "2026-07". Stored next to the counter so the month rolls over
 // on first use instead of needing a scheduled reset.
 function monthKey(d = new Date()): string { return d.toISOString().slice(0, 7); }
@@ -409,7 +431,8 @@ serve(async (req: Request) => {
       max_tokens  = 600,
       use_credit  = false,
       mode        = "",
-      spread_cost = 1,     // number of credits/balance to deduct (= number of runes)
+      spread_cost = 1,     // legacy numeric hint - server no longer trusts it (see costFor)
+      spread      = "",    // spread slug - server prices the reading from SPREAD_COSTS
       journal     = null,  // reading meta to persist server-side (null = do not save)
     } = body;
     if (!prompt && mode !== "resave") return json({ error: "Missing prompt" }, 400);
@@ -536,7 +559,8 @@ serve(async (req: Request) => {
         console.error("monthly cap read failed (allowing reading):", mErr.message);
       } else {
         const used = prof?.month_key === mKey ? (prof?.month_units ?? 0) : 0;
-        const cost = Math.max(1, spread_cost);
+        const cost = costFor(spread, spread_cost);
+        if (cost === null) return json({ error: "invalid_spread" }, 400);
         if (used + cost > limit) {
           return json({
             error:   "monthly_limit",
@@ -550,7 +574,8 @@ serve(async (req: Request) => {
     if (userTier === "rune_seeker" && !isRitual) {
       if (use_credit) {
         // ── Paid credit reading — spread_cost = runes = credits ──
-        const cost = Math.max(1, spread_cost);
+        const cost = costFor(spread, spread_cost);
+        if (cost === null) return json({ error: "invalid_spread" }, 400);
         if (creditsBalance < cost) {
           return json({ error: "no_credits", message: "Not enough credits. Redeem a reading gift card or upgrade." }, 402);
         }
@@ -563,6 +588,10 @@ serve(async (req: Request) => {
       // paid path above, not a bypass.)
       } else {
         // ── Free balance reading (single rune only) — 1 at registration, no replenish (model B) ──
+        if (spread && spread !== "single") {
+          if (SPREAD_COSTS[spread] === undefined) return json({ error: "invalid_spread" }, 400);
+          return json({ error: "spread_needs_credits", message: "This reading needs credits. Redeem a reading gift card." }, 402);
+        }
         if (userId) {
           const { data: profile } = await sb()
             .from("user_profiles")

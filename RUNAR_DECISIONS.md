@@ -2117,3 +2117,14 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 - **Affected doc(s):** RUNAR_BACKLOG.md (#2b znovu otevřeno s podmínkou).
 - **Reality note:** OVĚŘENO NAŽIVO — hlas i Ask Rúnar zas fungují (owner potvrdil). Anonym stále 401 (Fáze 1 drží). DB: `readings` jen SELECT policy, `voiced_at`/`mark_voiced` smazané.
 - **Reversibility:** n/a (návrat do funkčního stavu).
+
+---
+
+## 2026-08-03 — Fáze 2 #4: cena spreadu = server-authoritative (klient posílá slug)
+
+- **Typ:** security fix + implementation (transitional deploy) — kód hotový, deploy + test dělá owner
+- **Co se změnilo:** claude-proxy si cenu čtení počítá SÁM z nové kopie `SPREAD_COSTS` (mirror configu) přes `costFor()`, podle **slugu spreadu**, který klient nově posílá (8. param `callProxy(..., spread)`; `runar-app.js` → do body, `runar-reading.js` odvozuje slug z `o.kind`, single/ask = `single`, `runar-tree.js` life_rune). Číslo `spread_cost` už NENÍ směrodatné (dá se podvrhnout). Neznámý slug → 400 `invalid_spread`. Free větev je single-only → podvržený free spread (např. Yggdrasil zdarma) → 402 `spread_needs_credits`. Mirror hlídá smoke ⑳ (verify_spread_prices.js sekce C). **Transitional:** starý klient bez slugu spadne na `spread_cost` (+warn) → nic se nerozbije, dokud SW nepropadne; pak zpřísnit (odebrat fallback).
+- **Proč:** audit Fáze 2 #4: `spread_cost` bylo klientem řízené číslo → přihlášený rune_seeker mohl podvrhnout `spread_cost:1` pro Yggdrasil (cena 5), nebo `use_credit:false` na spread a dostat drahé čtení za free-jednotku. Cenu smí určit jen server — mirroring configu na serveru je týž vzor jako `MONTHLY_LIMITS` (Deno neumí importovat runar-config).
+- **Affected doc(s):** RUNAR_BACKLOG.md (#4 odškrtnout po deployi).
+- **Reality note:** OVĚŘENO lokálně — smoke 24/24 (⑳ mirror 6 spreadů == config, life_rune vyloučen = rituál), `node --check` všech souborů, per-path audit: **žádná poctivá cesta se nemění** (honest slug → stejná cena jako dnes; stale klient → fallback = dnešní chování; jen podvrhy dostanou 400/402). life_rune/founding = rituál → cenové bloky se přeskočí, `costFor` se nevolá. **Pending (owner):** deploy proxy + E2E na test-účtu (Yggdrasil odečte 5 & funguje, single 1) + volitelně token → curl podvrh (402). Pak zpřísnit na strict.
+- **Reversibility:** easy (proxy redeploy předchozí; klient posílá slug navíc, který starý proxy ignoruje).
