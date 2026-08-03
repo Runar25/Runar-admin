@@ -84,8 +84,13 @@ v dlouhých marketingových větách OK nechat, jinde → TIERS[x].label:
 - auth.js upgrade modal (~323–324)
 - translations.js: become_rs_btn, rs_banner_desc, visitor_desc, visitor_exhausted
 
-**VOCAB.cast ('rune reading' / 'spá' / 'cast') — KONTEXTOVÉ (Kuky: nedávat globálně):**
-- translations.js visitor_desc / reset_body, config panely 'casts' / 'spár' — nechat jako próza
+**„cast" → „reading" — OBRÁCENO (owner 2026-08-03).** Reading→cast (2026-06-06) zrušeno.
+User-facing „cast" je PRYČ: config panely + name_modal → „rune reading" (de90bb2, ověřeno).
+Zbytek je jen INTERNÍ a neviditelné: VOCAB klíč `cast` (hodnota už 'rune reading') · `{casts}`
+placeholdery · `vn('cast')` → renderují „reading". SERVER `countsAsCast` / claude-proxy komenty
+= PŘESNÝ pojem (čtení počítané do stropu; `ask` JE čtení, ale NENÍ cast) — nepřejmenovávat,
+ztratilo by to smysl. Otevřené: přejmenovat i neviditelný klientský klíč/placeholder (kosmetika)?
+Viz [[decisions-are-directions-not-locks]].
 
 **Fallback (no-JS), nízká priorita:**
 - reader.html:194 statický 'ENTER RUNE READING CARD CODE' (app.js:684 přepíše přes tp())
