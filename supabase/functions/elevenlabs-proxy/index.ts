@@ -58,10 +58,23 @@ serve(async (req) => {
     }
 
     // ── Parse body ──
-    const { text, lang } = await req.json();
+    const { text, lang, reading_id } = await req.json();
     if (!text) return json({ error: "text is required" }, 400);
     // Text is billed per character — clamp it. Longest legit narration (Yggdrasil) ~1661.
     if (typeof text !== "string" || text.length > 3000) return json({ error: "text too long" }, 400);
+
+    // ── #2b VOICE GATE ─ bind voice to a paid+metered reading, once per reading ──
+    // claude-proxy already charged the reading and wrote the readings row (clients are now
+    // SELECT-only on readings). mark_voiced atomically flips voiced_at null->now for the
+    // caller's OWN row and returns true only on the FIRST voicing -> replay, double-voice and
+    // fake-reading are all closed. No paid reading = no reading_id = no voice. Generic message.
+    if (typeof reading_id !== "string") {
+      return json({ error: "unavailable", message: "The voice of Rúnar is resting. Please try again in a moment." }, 403);
+    }
+    const { data: firstVoicing } = await sb().rpc("mark_voiced", { p_id: reading_id, p_user: userId });
+    if (!firstVoicing) {
+      return json({ error: "unavailable", message: "The voice of Rúnar is resting. Please try again in a moment." }, 403);
+    }
 
     // lang determines model — NEVER trust frontend for voice/model selection
     const resolvedModel = lang === "is" ? EL_MODEL_IS : EL_MODEL_EN;
@@ -89,6 +102,8 @@ serve(async (req) => {
     );
 
     if (!elRes.ok) {
+      // A transient ElevenLabs failure must NOT burn the reading's one voice — release the claim.
+      await sb().from("readings").update({ voiced_at: null }).eq("id", reading_id).eq("user_id", userId);
       const err = await elRes.text();
       return json({ error: `ElevenLabs ${elRes.status}: ${err}` }, 502);
     }
