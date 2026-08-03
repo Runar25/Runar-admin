@@ -2095,3 +2095,14 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 - **Affected doc(s):** RUNAR_BACKLOG.md (C10 auth-část odškrtnuta; Fáze 2 díry zapsány).
 - **Reality note:** **OVĚŘENO NAŽIVO** — anonymní POST na obě proxy → `{"error":"unauthorized"}` HTTP 401 (zpráva z našeho kódu, ne gateway). DB write-surface (`sql/audit_write_surface.sql` B) = 0 řádků, granty na prod live. Zbývající díry (Fáze 2: voice→zaplacené čtení #2b, spread_cost #4, life_rune flag #3, tree-update #6/#7) → BACKLOG.
 - **Reversibility:** easy (`supabase functions deploy` předchozí verze z git historie).
+
+---
+
+## 2026-08-03 — Fáze 2 #2b: hlas jen na zaplacené čtení + readings zamčené na SELECT (NASAZENO)
+
+- **Typ:** security fix + deploy + SQL (owner spustil) — git nevidí ani deploy, ani SQL
+- **Co se změnilo:** (1) **`readings` zamčené klientovi na SELECT-only** — RLS policy `„Users manage own readings"` (cmd=ALL, `auth.uid()=user_id`) nahrazena `„Users read own readings"` (SELECT). Klient si přes veřejný anon klíč mohl PŘÍMO (mimo appku) podvrhnout/přepsat/smazat vlastní řádky readings. Zápis teď JEN server (claude-proxy, service_role). (2) **Voice gate #2b:** `readings.voiced_at timestamptz` + RPC `mark_voiced(id,user)` (SECURITY DEFINER, CAS jako `use_credit`; revoke z public/anon/authenticated, service_role smí). Klient posílá `reading_id` (`_lastReadingId`); elevenlabs-proxy (**v29**) atomicky zabere hlas přes `mark_voiced` PŘED EL, při selhání EL claim uvolní (`voiced_at=null`). Commit `a1d9d10`.
+- **Proč:** audit #2b: elevenlabs-proxy po Fázi 1 vyžadoval login, ale NEMĚŘIL nic → přihlášený rune_seeker s 0 kredity měl neomezený hlas (95 % ceny). Model: hlas dědí metering čtení (čtení už odečteno v claude-proxy); kdo nemá zaplacené čtení, nemá `reading_id`, nemá hlas. Produktové rozhodnutí (KUKY 2026-08-03): **hlas jednou za čtení** (ne debit voice-unitu).
+- **Affected doc(s):** RUNAR_BACKLOG.md (#2b odškrtnuto, navazující flagy zapsány).
+- **Reality note:** OVĚŘENO: `readings` má teď jen SELECT policy · `voiced_at`+`mark_voiced` existují · service_role smí `mark_voiced`, authenticated ne · `mark_voiced` na neexistující řádek = null (ne error) · anonym → 401. **Owner musí naživo (admin):** čtení → hlas jednou; retry → blok. Otevřené (backlog): „someone" čtení se neukládá → nemá hlas; premium „question gate" jen klientsky.
+- **Reversibility:** medium (SQL: obnovit ALL policy + drop voiced_at/mark_voiced; proxy: redeploy předchozí).
