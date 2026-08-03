@@ -684,8 +684,8 @@ function _updateGateTexts() {
   // Journal gate — Visitor teaser
   const jgTxt = document.getElementById('journal-gate-txt');
   if (jgTxt) jgTxt.innerHTML = lang === 'is'
-    ? 'Þú gengur hér sem Gestur.<br>Dagbókin þín hefst um leið og þú mætir.<br>Gerðu þig að <b class="rs-link">Leitanda</b> til að opna dagbókina.'
-    : 'You walk here as a Visitor.<br>Your journal begins the moment you arrive.<br>Become a <b class="rs-link">Rune Seeker</b> to open the journal.';
+    ? 'Þú ert hér <strong>Gestur</strong>.<br>Dagbókin geymir hvern lestur svo enginn glatist.<br>Hún opnast þegar þú gerist <strong>Leitandi</strong> — skráning er ókeypis.'
+    : 'You walk here as a <strong>Visitor</strong>.<br>The journal keeps every reading, so none is lost.<br>It opens when you become a <strong>Rune Seeker</strong> — free to join.';
   setText('journal-gate-btn', lang === 'is' ? 'GERAST LEITANDI →' : 'BECOME A RUNE SEEKER →');
   // Re-render journal if it's open (picks up new lang labels)
   if (activeAppTab === 'journal' && _journalCache.length > 0) renderJournal(_journalCache);
@@ -868,8 +868,8 @@ async function loadCollection() {
     if (isVisitor) {
       const isIs = lang === 'is';
       document.getElementById('vcn-text').innerHTML = isIs
-        ? `Þú gengur hér sem <strong>Gestur</strong>. Fehu — rúna upphafsins — opnar rödd sína fyrir þig frítt. Dragðu hana. Hlustaðu á það sem fornir steinar geyma.<br><br>Þegar þú ert tilbúinn að ganga með allar tuttugu og fimm rúnirnar og heyra Rúnar tala í lestur þinn, vertu <strong>Leitandi</strong> — skráning er ókeypis.`
-        : `You walk here as a <strong>Visitor</strong>. Fehu — the rune of beginnings — opens its voice to you freely. Draw it. Hear what the old stones whisper.<br><br>When you are ready to walk with all twenty-five runes and hear Rúnar speak in your own reading, become a <strong>Rune Seeker</strong> — free to join.`;
+        ? `Þú ert hér <strong>Gestur</strong>. Fimm rúnir bíða þín — dragðu eina og hlustaðu á fornu steinana.<br><br>Viljir þú allar tuttugu og fimm rúnirnar, og lestur sem á aðeins við þig, gerðu þig að <strong>Leitanda</strong>. Skráning er ókeypis.`
+        : `You walk here as a <strong>Visitor</strong>. Five runes await you — draw one, and listen to the ancient stones.<br><br>Should you want all twenty-five, and a reading that speaks to you alone, become a <strong>Rune Seeker</strong>. Free to join.`;
       document.getElementById('vcn-btn').textContent = t('become_rs_btn');
     }
   }
