@@ -60,6 +60,11 @@ Kolize a předávání mezi session → sekce „N paralelních session" + memor
 
 ### §2 — IS je primární jazyk
 IS musí být vždy perfektní. EN je vedlejší. NIKDY IS jako "překlad" EN.
+**Mysli islandsky od začátku** (Code i Cowork) — začni islandským obrazem, ne anglickou frází
+k přeložení; kalk z EN (vazba, slovosled, obraz) je vada, ne východisko. IS se **VYMÝŠLÍ**, ne
+překládá. „Líp to neumím" NENÍ přípustná odpověď: styl a hlas je řemeslo — udělá se a ověří (níže).
+Flaguje se **jen chybějící 🔒 fakt / 📜 lore** (§23), NIKDY vlastní formulace; Sigrún není fronta
+na nedodělky (§19.2).
 **Platí pro Code i Cowork:** IS se dělá **hotová a ověřená** (`check-is` / yfirlestur / is-grammar-qa), nikdy odhadem ani odkladem na rodilého mluvčího (§19.2). → [[is-done-together-not-for-sigrun]]
 Každé Claude generování v IS má **3 vrstvy** (všechny v promptu — korekce se řeší v kontextu):
 ```js
