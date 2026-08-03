@@ -89,8 +89,8 @@ User-facing „cast" je PRYČ: config panely + name_modal → „rune reading" (
 Zbytek je jen INTERNÍ a neviditelné: VOCAB klíč `cast` (hodnota už 'rune reading') · `{casts}`
 placeholdery · `vn('cast')` → renderují „reading". SERVER `countsAsCast` / claude-proxy komenty
 = PŘESNÝ pojem (čtení počítané do stropu; `ask` JE čtení, ale NENÍ cast) — nepřejmenovávat,
-ztratilo by to smysl. Otevřené: přejmenovat i neviditelný klientský klíč/placeholder (kosmetika)?
-Viz [[decisions-are-directions-not-locks]].
+ztratilo by to smysl. **Owner 2026-08-03 potvrdil: JEN user-facing; neviditelný interní kód
+(VOCAB klíč, `{casts}`, server pojem) NECHAT — nerozbíjet.** Viz [[decisions-are-directions-not-locks]].
 
 **Fallback (no-JS), nízká priorita:**
 - reader.html:194 statický 'ENTER RUNE READING CARD CODE' (app.js:684 přepíše přes tp())
