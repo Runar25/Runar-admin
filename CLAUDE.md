@@ -304,6 +304,7 @@ Tree of Life — duše, zóny, signály, Gathering, mapa tree doků → `RUNAR_T
   · materiál/vzhled → `RUNAR_TREE_RENDER.md` · pozastavené tree úkoly → `RUNAR_BACKLOG.md`
   (starší tree suroviny konsolidovány 2026-07-30 do `docs/archive/tree/`)
 Business model + ceny + EL kalkulace → `RUNAR_PRICING.md`
+Pákové změny hlasu (prompt · pooly · pravidla) + jejich MĚŘENÍ → `RUNAR_EVAL_LOG.md` (jedno místo, §20; každý zásah do hlasu tam)
 
 **Doc-owner pravidla (2026-07-05):**
 - **Čísla = jen v configu / builderech** (SPREAD_COSTS, TIERS, character.js). Docs je NEopakují — odkazují na zdroj (délky→character.js, ceny/kredity→config).
