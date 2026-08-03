@@ -109,7 +109,7 @@ async function _generateReading() {
     prompt_version: RUNAR_PROMPT_VERSION, address: userGender, reading_mode: _readingMode
   } : null;
   _lastReadingId = null;
-  const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens, shouldUseCredit(), SPREAD_COSTS.single.credits, _journal, '', 'single');
+  const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens, shouldUseCredit(), SPREAD_COSTS.single.credits, _journal);
   _lastReadingId = (res && res.reading_id) || (_journal ? _journal.id : null);
   if (_journal && res && !res.error && res.text && !res.reading_id) _pendAdd('pendingReadings', { id: _journal.id, journal: _journal, model_text: res.text });
   _flushPending();
@@ -542,7 +542,7 @@ async function askRunar() {
   // nikdy nezobrazi useknuty fragment — IS FU u horni hranice delky prijde o posledni
   // vetu, coz je pri zamerne kratke odpovedi v poradku. Delku primarne drzi PROMPT.
   var askCap = 140;
-  var res = await callProxy(sys, prompt, askCap, shouldUseCredit(), SPREAD_COSTS.single.credits, _askJournal, 'ask', 'single'); // FU: lang-aware cap
+  var res = await callProxy(sys, prompt, askCap, shouldUseCredit(), SPREAD_COSTS.single.credits, _askJournal, 'ask'); // FU: lang-aware cap
   if (res.error) {
     if (btn) { btn.disabled = false; btn.textContent = t('ask_btn'); }
     setSt('ask-status', _readingErrMsg(res.error), 'err');
@@ -774,11 +774,10 @@ async function _generateSpreadReading(o) {
   // Do 2026-07-19 tu stalo `o.mode`, coz na predavanem objektu NEEXISTUJE —
   // vyraz byl vzdy false a zakladani se nespustilo ani jednou.
   var _isFounding = (o.kind === 'NORNS' && typeof _foundingPending !== 'undefined' && _foundingPending);
-  var _slug = ({ KRIZ: 'cross', NORNS: 'norns', HORSESHOE: 'horseshoe', YGGDRASIL: 'yggdrasil' })[o.kind] || '';
   var res = await callProxy(sys, prompt, o.tokens,
                             _isFounding ? false : shouldUseCredit(),
                             _isFounding ? 0 : o.credits,
-                            _journalS, _isFounding ? 'founding' : '', _slug);
+                            _journalS, _isFounding ? 'founding' : '');
   _lastReadingId = (res && res.reading_id) || (_journalS ? _journalS.id : null);
   if (_journalS && res && !res.error && res.text && !res.reading_id) _pendAdd('pendingReadings', { id: _journalS.id, journal: _journalS, model_text: res.text });
   _flushPending();
