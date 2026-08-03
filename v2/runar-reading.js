@@ -688,7 +688,7 @@ async function generateVoice() {
     const res = await fetch(EL_PROXY, {
       method: 'POST',
       headers: elHeaders,
-      body: JSON.stringify({ text: deepText, lang, reading_id: _lastReadingId })
+      body: JSON.stringify({ text: deepText, lang })
     });
     if (!res.ok) {
       let data = {};
