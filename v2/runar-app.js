@@ -25,6 +25,7 @@ let userName       = '';        // display name from user_profiles.name
 let isTester        = false;    // user_profiles.is_tester — tester account (explicit consent)
 let analyticsOptOut = false;    // user_profiles.analytics_opt_out — user excluded readings from quality analysis
 let testerConsentAt = null;     // user_profiles.tester_consent_at — when the tester accepted consent
+let profileLoaded   = false;    // fetchUserProfile dobehl (data aplikovana) — Tree tab drzi loading dokud false
 let readerRune     = null;
 let readerTexts    = {};  // { en: {short,deep}, is: {short,deep} }
 let voiceGenerated = {};  // { en: bool, is: bool }
@@ -56,6 +57,7 @@ function getTrialCount() { return parseInt(localStorage.getItem('runar_trial_cou
 function incTrialCount() { localStorage.setItem('runar_trial_count', String(getTrialCount() + 1)); }
 
 async function fetchUserProfile(userId) {
+  profileLoaded = false;
   try {
     const { data } = await sb.from('user_profiles')
       .select('tier, credits_balance, free_balance, name, lang, life_rune_number, life_rune_text, life_rune_lang, dob_day, dob_month, dob_year, tree_name, tree_founded_at, founding_reading_id')
@@ -135,6 +137,9 @@ async function fetchUserProfile(userId) {
       }
     }
   } catch(e) { console.warn('fetchUserProfile:', e.message); }
+  profileLoaded = true;
+  // Profil dobehl -> na Tree tabu prekresli (loading -> spravny stav: founding CTA / no-dob formular).
+  if (activeAppTab === 'tree' && typeof updateTreeTab === 'function') updateTreeTab();
   updateAuthUI();
   showTopbarGreeting();
   showHeroGreeting();

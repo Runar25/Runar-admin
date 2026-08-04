@@ -327,6 +327,14 @@ function updateTreeTab() {
   }
 
   if (!hasDob) {
+    // Profil se jeste nacita (currentUser je hned, readerUser.d dorazi z DB ~1-2s):
+    // ukaz loading misto no-dob formulare, jinak to blikne jako "kdy ses narodil?" a vypada rozbite.
+    if (currentUser && typeof profileLoaded !== 'undefined' && !profileLoaded) {
+      var _tl = document.getElementById('tree-loading'); if (_tl) _tl.style.display = 'block';
+      var _tlt = document.getElementById('tree-loading-text'); if (_tlt) _tlt.textContent = t('reading_loading');
+      var _tlg = document.getElementById('tree-loading-glyph'); if (_tlg) _tlg.innerHTML = '';
+      return;
+    }
     var noDob = document.getElementById('tree-no-dob');
     if (noDob) {
       noDob.style.display = 'block';
