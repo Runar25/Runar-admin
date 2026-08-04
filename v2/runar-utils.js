@@ -283,6 +283,15 @@ function _endingShape(drawn, lang) {
 }
 
 // ─── VARIABILITY POOLS (V2) ──────────────────────────────────────
+// DEAD CODE (kept for history, NOT wired). WHY / WHO / WHEN:
+//   Shrine-only variability pools (aspect / imagery / register / placement),
+//   created in ef31d1c (2026-06-06, "reading variability pools -- shrine only").
+//   Their ONLY caller was the "V2 LAB" reader-preview, removed in c6eb89c
+//   (2026-07-10, "-971 lines, drift surface"). The defs below are NEVER called.
+//   Do NOT wire into production without a decision -- reviving them brings back
+//   the drift layer that was deliberately removed. Production imagery lives in
+//   SEASON_POOLS (runar-character.js), injected per-reading by _seasonalImagery
+//   (user-prompt path, which the model obeys).
 // Which dimension of the rune leads the reading.
 const READING_ASPECTS = [
   'shadow — what this rune quietly demands, not what it offers; the cost beneath the gift',
