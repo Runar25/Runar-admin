@@ -66,6 +66,7 @@ překládá. „Líp to neumím" NENÍ přípustná odpověď: styl a hlas je ř
 Flaguje se **jen chybějící 🔒 fakt / 📜 lore** (§23), NIKDY vlastní formulace; Sigrún není fronta
 na nedodělky (§19.2).
 **Platí pro Code i Cowork:** IS se dělá **hotová a ověřená** (`check-is` / yfirlestur / is-grammar-qa), nikdy odhadem ani odkladem na rodilého mluvčího (§19.2). → [[is-done-together-not-for-sigrun]]
+**Vazba ≠ tvar — rekci/pád/kolokaci/idiom NEHÁDEJ (vrstva NAD BÍN).** BÍN dá jen tvary; vazbu ověř nástrojem `python -X utf8 is-vazba.py <slovo>` (Íslensk nútímamálsorðabók JSON API + Risamálheild korpus), nikdy odhadem, z Wiktionary ani „pohledem". Recept + limity + zdroje → [[is-vazba-check]].
 Každé Claude generování v IS má **3 vrstvy** (všechny v promptu — korekce se řeší v kontextu):
 ```js
 var sys    = buildSysPrompt(activeChar, lang);        // 1. IS system prompt
