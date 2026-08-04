@@ -742,6 +742,11 @@ async function _generateSpreadReading(o) {
   if (s2) s2.style.display = 'none';
   var out = document.getElementById(o.outputId);
   if (out) out.style.display = 'block';
+  // Vymaz THIS spread strip (o.lblId) + text (o.outId) PRED renderem, jinak zustanou
+  // glyfy z predesleho cteni (single _generateReading uz maze; spready ne = bug).
+  // Sdilene telo => pokryva norns/kriz/horseshoe/yggdrasil + founding najednou (§13).
+  var _lbl0 = document.getElementById(o.lblId); if (_lbl0) _lbl0.innerHTML = '';
+  var _out0 = document.getElementById(o.outId); if (_out0) _out0.innerHTML = '';
   _renderLifeBadge(readerUser.lifeRune);
 
   var rdLoad = document.getElementById('reading-loading');

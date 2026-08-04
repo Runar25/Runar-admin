@@ -385,6 +385,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .btn-gold:hover{background:#e6ab00;}.btn-gold:disabled{background:rgba(255,191,0,0.25);color:rgba(255,191,0,0.5);cursor:not-allowed;}
 .vcn-btn{font-size:0.62em;padding:12px 28px;}
 .vcn-btn:hover{}
+/* RS teaser "Read what it carries": stejná velikost jako sousední Upgrade (auto šířka, ne 100%) */
+#tree-rs-reveal-btn{width:auto;}
 
 /* ── RS TREE TEASER ── */
 .tree-cta-block{text-align:center;margin:16px 0 10px;}
