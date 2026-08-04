@@ -242,8 +242,9 @@ async function renderLivingTree(rune) {
   try {
     var wrap = document.getElementById('tree-living');
     var cv   = document.getElementById('tree-living-canvas');
-    // BETA: living tree visible to ADMINS only for now
-    if (!wrap || !cv || !window.RunarTreeProd || !rune || !currentUser || !isAdmin(currentUser.email)) {
+    // BETA: living tree visible to ADMINS + TESTERS (is_tester) for now (owner test as rune_seeker)
+    if (!wrap || !cv || !window.RunarTreeProd || !rune || !currentUser ||
+        !(isAdmin(currentUser.email) || ((typeof isTester !== 'undefined') && isTester))) {
       if (wrap) wrap.style.display = 'none'; return;
     }
     var log = [];

@@ -2154,3 +2154,16 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 - **Affected doc(s):** — (čísla/labely beze změny; jen chování UI).
 - **Reality note:** smoke 24/24, node --check OK. **Owner ověří naživo** (přihlášený klient, Code nevidí): po redeem se pilulky odemknou · Norns je v selektoru (5 tlačítek) · setup nepřeskočí přes čtení · founding Norns (z tree tabu) je pořád zdarma. Bug 5 (Ask v Yggdrasilu) NEřešen — čeká na vyjasnění (admin vs rune_seeker; Ask je premium/admin-only).
 - **Reversibility:** easy (3 malé UI patche).
+
+---
+
+## 2026-08-04 — Living-tree vizuál viditelný i pro TESTERY (is_tester), ne jen adminy
+
+- **Typ:** beta access change (CODE-tune sáhl do CODE-tree domény — flag)
+- **Co se změnilo:** `renderLivingTree` gate (runar-tree.js:246) rozšířen z `isAdmin` na `isAdmin || is_tester`. Owner (rune_seeker) potřebuje vidět strom při testování **jako rune_seeker, bez admin práv**. Tester (`is_tester=true`) teď strom vidí; normální rune_seeker pořád ne (beta drží). Voice/Ask/nic jiného se nemění — `is_tester` ovlivňuje JEN viditelnost stromu.
+- **Proč:** test rune_seeker cesty vyžaduje vidět strom bez toho stát se adminem (admin = premium + všechna práva → nečistý test).
+- **⚠️ CODE-tree:** `renderLivingTree` je váš vizuál. Tohle je JEN access gate (1 řádek), ne rendering. Beta stromu (root composer) řešíte vy — tester teď uvidí i rozdělaný stav.
+- **⚠️ Caveat:** `is_tester` je client-writable (grant set) → gate je teoreticky self-grantable. Přijatelné pro vizuál (žádné peníze); kdyby na `is_tester` viselo něco placeného, přehodnotit.
+- **Affected doc(s):** —
+- **Reality note:** Owner nastaví `is_tester=true` na svém účtu (SQL). Voice je per reading-MODE (RUNAR_MODES.voice), NE per-tier/tester — is_tester hlas nedává. node --check OK.
+- **Reversibility:** easy (vrátit gate na isAdmin).
