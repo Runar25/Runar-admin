@@ -87,6 +87,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [decisions-are-directions-not-locks.md](decisions-are-directions-not-locks.md) — rozhodnutí = směr + varování při rozporu, ne zámek navždy
 - [fix-or-log-duplicates-and-errors.md](fix-or-log-duplicates-and-errors.md) — duplikát/chyba → hned opravit, nebo zapsat do BACKLOGu; netiše přejít
 - [fix-substance-not-shape.md](fix-substance-not-shape.md) — security/metering: oprav podstatu ne tvar; ověř, že díra nejde obejít jinudy (2× stejná chyba)
+- [copy-always-in-runar-voice.md](copy-always-in-runar-voice.md) — veškerá copy VŽDY hlasem Rúnara (přečti charakter), nikdy slepé generické vymýšlení; spíš stručně
 - [runar-project.md](runar-project.md) — vyprázdněno 2026-07-18, jen rozcestník
 - [is-grammar-adjective-gender.md](is-grammar-adjective-gender.md) — nejdřív rod podstatného, pak skloňuj přídavné
 - [runar-tree-engine-lab.md](runar-tree-engine-lab.md) — historie iterací enginu (boughs přestavba = regrese)
