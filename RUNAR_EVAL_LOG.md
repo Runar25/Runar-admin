@@ -5,6 +5,35 @@ gramatická pravidla, voice profil, konce, openery. Cíl: po dalších čteních
 jestli změna zabrala** — ne hádat. Žádný drift: co se sáhlo do hlasu, stojí TADY, ne
 roztroušené po git logu a cizích sandboxech. (KUKY 2026-08-02.)
 
+## Kontrolní mapa hlasu — co lze měnit, co ne, nad čím uvažovat (§20: jen ukazatele)
+⭐ **Rozhodující fakt:** model POSLECHNE **user** prompt, **system** prompt z velké části IGNORUJE.
+→ Reálné páky jsou v USER promptu. Úpravy system promptu (identita, zákazy, voice profil) mají
+SLABÝ účinek — proto „přepiš voice profil" většinou nehne jehlou; sáhni na user-prompt pooly.
+
+**🔄 PÁKY (tady se hlas reálně mění — každou změnu loguj níž):**
+- Obraznost: `SEASON_POOLS` / `_seasonalImagery` (utils/character.js)
+- Úhel otevření: `READING_ANGLES` / `_randomAngle` (utils, jen single)
+- Tvar konce (dle valence): `ENDING_*` / `_endingShape` (utils)
+- Jméno (umístění/vynechání): `_namePlacement` (utils)
+- Reading contract (čočka/doména/registr): `_lensContext`/`_domainContext`/`_registerContext`/`_priorityContext` (character.js)
+- Norns čas: `_intentionContext` (character.js)
+- Gates (nevysvětluj / no cold-read): `_describeRule`/`_noColdRead` (character.js, vždy on)
+- Délka/počet vět: `RP_* length` (character.js) — ⚠️ = náklad na hlas (RUNAR_PRICING.md)
+- Slovní/vazbové korekce: `runar_corrections` → `getCorrPrompt` (character.js)
+- Voice profil `focused`: `VOICE_PROFILES` (config) — ⚠️ system prompt → SLABÁ páka
+- Model: proxy `MODELS` (dnes opus-4-8; měnit = eval + cena)
+
+**⛔ NEMĚNIT tuningem (kánon / fakt / architektura):**
+- Kdo Rúnar je · osobnost · filozofie · zákazy (`never`) = 📜 kánon → RUNAR_DESIGN.md (mění rozhodnutí o kontinuitě)
+- IS gramatika = 🔒 (musí být správně, ne stylová volba) — enforcement přes korekce + is-grammar-qa
+- Data run + význam pozic spreadů = 🔒/📜 (runar-runes.js / RUNAR_DESIGN.md)
+- Struktura pipeline + JSON kontrakt = 🏛 architektura (CLAUDE.md „Reading systém — stav")
+
+**❓ NAD ČÍM UVAŽOVAT:** tabulka „nadcházející" níž (v1.2/v1.3) · zda voice profil vůbec držet
+v system promptu (model ho ignoruje) · dead/lab zapojit-nebo-zabít (`buildSysPromptV2`, `VARIABILITY POOLS`).
+
+> Jak se čtení skládá (pořadí toku pipeline) → CLAUDE.md „Reading systém — stav". Proč každé změny → RUNAR_DECISIONS.md.
+
 ## Co sem NEpatří (§20 — neopisovat)
 Samotný obsah bydlí v kódu; deník na něj jen odkazuje:
 - prompty + gramatika + korekce → `v2/runar-character.js`
