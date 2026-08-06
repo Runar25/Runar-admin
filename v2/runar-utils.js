@@ -262,7 +262,7 @@ const ENDING_HEAVY = [
 ];
 const ENDING_OPEN = [
   'End with one open question that turns the seeker inward.',
-  'End with a short open question — only a few words.',
+  'End on a plain, steady line — name where the seeker stands, not a question.',
   'End on a quiet line that rests — not a question this time.',
 ];
 const ENDING_HEAVY_IS = [
@@ -271,7 +271,7 @@ const ENDING_HEAVY_IS = [
 ];
 const ENDING_OPEN_IS = [
   'Endaðu á einni opinni spurningu sem snýr leitandanum inn á við.',
-  'Endaðu á stuttri opinni spurningu — aðeins fáein orð.',
+  'Endaðu á staðfastri línu — nefndu hvar leitandinn stendur, ekki spurningu.',
   'Endaðu á hljóðlátri línu sem hvílir — ekki spurningu í þetta sinn.',
 ];
 function _endingShape(drawn, lang) {
