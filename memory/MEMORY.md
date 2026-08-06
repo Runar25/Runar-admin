@@ -88,12 +88,14 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [fix-or-log-duplicates-and-errors.md](fix-or-log-duplicates-and-errors.md) — duplikát/chyba → hned opravit, nebo zapsat do BACKLOGu; netiše přejít
 - [fix-substance-not-shape.md](fix-substance-not-shape.md) — security/metering: oprav podstatu ne tvar; ověř, že díra nejde obejít jinudy (2× stejná chyba)
 - [copy-always-in-runar-voice.md](copy-always-in-runar-voice.md) — veškerá copy VŽDY hlasem Rúnara (přečti charakter), nikdy slepé generické vymýšlení; spíš stručně
+- [prompt-map-artifact.md](prompt-map-artifact.md) — vizuální reference mapa Rúnarova promptu (artifact URL); snapshot, pravda = kód
 - [runar-project.md](runar-project.md) — vyprázdněno 2026-07-18, jen rozcestník
 - [is-grammar-adjective-gender.md](is-grammar-adjective-gender.md) — nejdřív rod podstatného, pak skloňuj přídavné
 - [is-vazba-check.md](is-vazba-check.md) — islandskou vazbu (rekce/pád/kolokace/idiom) ověř `is-vazba.py` (nútímamálsorðabók API + korpus), vrstva nad BÍN, nehádej
 - [runar-tree-engine-lab.md](runar-tree-engine-lab.md) — historie iterací enginu (boughs přestavba = regrese)
 - [runar-trunk-incremental-rule.md](runar-trunk-incremental-rule.md) — schválenou verzi měnit přírůstkově + snapshot
 - [runar-tree-living-movement.md](runar-tree-living-movement.md) — živý pohyb větví, Founding Ritual lab
+- [tree-roots-rebuild.md](tree-roots-rebuild.md) — přestavba kořenů (1 pramen=1 runa=větev+kořen, max 25); NIKDY neshlukovat větve
 
 ## Index snapshots (nejnovější = poslední)
 Snapshot = **historický záznam ke svému datu**, ne popis dneška. Nikdy z něj nepřebírej aktuální stav.

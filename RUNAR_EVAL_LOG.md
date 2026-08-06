@@ -6,6 +6,9 @@ jestli změna zabrala** — ne hádat. Žádný drift: co se sáhlo do hlasu, st
 roztroušené po git logu a cizích sandboxech. (KUKY 2026-08-02.)
 
 ## Kontrolní mapa hlasu — co lze měnit, co ne, nad čím uvažovat (§20: jen ukazatele)
+**🗺 Vizuální mapa (snapshot):** https://claude.ai/code/artifact/e32dbd2b-5277-414a-a187-8277efe99f69 — celý oblouk vrstev (system prompt · reading stack · korekce → opus-4-8 → JSON), „kde ladit nuanci" a „co je mrtvé". Pravda = kód (character.js/config/proxy); po změnách přepublikovat na stejné URL. Detail → memory `prompt-map-artifact`.
+⚠️ **Nález k ověření v DB:** reader načítá charakter z `runar_character` (active=true, app.js:1380) i když je editor mrtvý → starý řádek by přebil file `DEF_CHAR`. Ověřit `select id,active from public.runar_character where active=true;`.
+
 ⭐ **Rozhodující fakt:** model POSLECHNE **user** prompt, **system** prompt z velké části IGNORUJE.
 → Reálné páky jsou v USER promptu. Úpravy system promptu (identita, zákazy, voice profil) mají
 SLABÝ účinek — proto „přepiš voice profil" většinou nehne jehlou; sáhni na user-prompt pooly.
