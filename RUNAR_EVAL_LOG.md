@@ -81,3 +81,20 @@ nepozná se, která zabrala (proto se bumpuje `RUNAR_PROMPT_VERSION`, ať nová 
 
 > Pořadí: defekty (v1.1) hned. Pak jedna páka za verzi (v1.2 focused, v1.3 imagery) — ať je
 > každý posun měřitelný. Cesta 3 (v1.3) je i obsah: Coworkových 50+17 ověřených obrazů = semínko.
+
+## Překombinovanost promptu — kritika 2026-08-06 (plán oprav, k EVALU)
+⚠️ **Runar FUNGUJE — opravit, ne rozbít.** Pravidlo stejné jako výš: **1 páka/verze, bump `PROMPT_VERSION`, eval PŘED/PO, ship jen bez regrese** (§18.4/§24). Dokázáno = co se DUPLIKUJE; efekt škrtu na kvalitu = **hypotéza**, ne jistota. Detail kritiky: task `wd54cabfp` (ephemeral) · vizuální mapa: memory `prompt-map-artifact`.
+
+**VERDIKT:** ~50-60 příkazů na ~40 slov (~15-20:1); stejné pravidlo 3-4× → ředí + staví „zeď zákazů".
+
+**DUPLIKÁTY (říct 1×):** „jeden obraz" 4× (grammar#4 + voice profil 3×) · „no sections/labels" 3× (format+length+closing) · „describe don't explain" 2× (voice + `_describeRule`) · zakázaná slova 2× (never + grammar#3) · 2. osoba 3× · studená-runa-v-létě 2× (voice verze **MRTVÁ** — system sezóna se ignoruje).
+
+**ROZPORY:** angle#8 „life rune first" × noqBranch „Open with drawn" × lens „runu NEjmenuj" · voice „otázka VŽDY překvapí" × `_endingShape` „bez otázky" · PURPOSE „posbírej kontext" (už je vložený → svádí k doptávání).
+
+**NEVER→DO:** uděláno JEN v user/voice vrstvě (Confirmation reframe v0.6, voice ~90 % pozitivní, angles pozitivní); **system `never` blok zůstal negativní.** ⭐ `_noColdRead` SÁM jmenuje „already/þegar" **3×** = přesně slovo, co eval našel unikat **4/5** → negace zasadila token, v user promptu, každé čtení = **FIX #1 (má eval data).**
+
+**DÍRY (§19):** `journey/embrace/empower` BEZ output kontroly (`check-is` čte ZDROJ, ne výstup) → přidat deterministický output linter · produkce nemá pravidlo „nikdy nepřekládej jména run" (jen mrtvá V2).
+
+**POŘADÍ (nejbezpečnější signál první, 1 páka/verze):** T1 dedup (neutrální/lepší) → T2 `_noColdRead` reframe (měřitelný, má data) → output linter → T3 rozpory (angle#8 gate · ending wording) → T4 škrty (vzhled Rúnara · purpose „gather context").
+
+**NESAHAT:** NEmergovat `_describeRule` + `_noColdRead` (každá platí za JINOU eval-chybu) · JSON kontrakt · IS 7-bod gramatika · length (audio budget) · variabilita (angle/name/ending pooly). `DEF_CHAR.never` + data run = 📜 kánon / 🔒 fakt → reframe = **datované DECISIONS, ne tichý tune.**
