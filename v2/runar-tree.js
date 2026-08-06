@@ -422,10 +422,6 @@ function updateTreeTab() {
           freeLineEl.style.display = 'none';
         }
       }
-      var orSep   = document.getElementById('tree-or-sep');
-      if (orSep) orSep.textContent = t('tree_rs_or');
-      var upgNote = document.getElementById('tree-upgrade-note');
-      if (upgNote) upgNote.textContent = t('tree_rs_upgrade_note');
       var revBtn = document.getElementById('tree-rs-reveal-btn');
       if (revBtn) revBtn.textContent = t('tree_read_btn');
       if (revBtn) {

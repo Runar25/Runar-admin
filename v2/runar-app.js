@@ -798,8 +798,6 @@ function updateUIText() {
   if (_ct) _ct.textContent = (lang === 'is' ? TIERS.rune_seeker.label_is : TIERS.rune_seeker.label);
   var _tbg = document.getElementById('topbar-greeting');
   if (_tbg && _tbg.classList.contains('show') && typeof updateTopbarGreeting === 'function') updateTopbarGreeting();
-  var _tub = document.getElementById('tree-upgrade-btn');
-  if (_tub) _tub.textContent = (lang === 'is' ? 'UPPFÆRA → ' : 'UPGRADE → ') + (lang === 'is' ? TIERS.standard.label_is : TIERS.standard.label).toUpperCase();
 }
 
 // ─── APP TABS ────────────────────────────────────────────
