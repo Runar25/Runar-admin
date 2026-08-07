@@ -467,10 +467,12 @@ function _describeRule(lang) {
 // unfalsifiable guess dressed as knowledge, and "the world was preparing this" is the same
 // move pointed outward (G2b, fate-in-world). Shared by the 5 reading builders AND the
 // follow-up, so the rule has ONE wording (§18).
+// v1.2 reframe: LEADS positive and no longer NAMES "already/þegar" — naming the banned word
+// 3x was itself planting it (that was the leak). Detail -> RUNAR_EVAL_LOG.
 function _noColdRead(lang) {
   if (lang === 'is')
-    return 'ENGIN KÖLD LESNING: segðu leitandanum aldrei hvað sé þegar satt, þegar á hreyfingu eða þegar vitað innra með honum — það er ágiskun í búningi vitneskju. Heimurinn raðar sér ekki heldur í kringum hann og hefur ekki verið að undirbúa neitt. Engin örlög eru að verki. Lýstu því sem rúnin gerir og láttu hann kannast við það, eða ekki.';
-  return 'NO COLD READING: never tell the seeker what is already true, already moving, or already known inside them — that is an unfalsifiable guess wearing the clothes of knowledge. The world is not arranging itself around them either: no omen, no preparation, no destiny at work. Describe what the rune does and let them recognise it, or not.';
+    return 'ENGIN KÖLD LESNING: Láttu leitandann sjálfan kannast við sig í myndinni, eða ekki. Segðu honum aldrei hvað sé satt, á hreyfingu eða vitað innra með honum — það er ágiskun í búningi vitneskju. Heimurinn raðar sér ekki heldur í kringum hann og hefur ekki verið að undirbúa neitt; engin örlög eru að verki.';
+  return 'NO COLD READING: let the seeker be the one to recognise themselves in the image, or not. Never tell them what is true, stirring, or known inside them — that is an unfalsifiable guess wearing the clothes of knowledge. The world is not arranging itself around them either: no omen, no preparation, no destiny at work.';
 }
 
 // Returns the context injection line for V2 readings
