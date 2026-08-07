@@ -77,6 +77,7 @@ Rohy (budoucnost+nitro, minulost+svět) = volné pro vzácnější kombinace.
 - **Opakování posílí ELEMENT, ne konkrétní větev-runu.** Víc čtení téhož elementu → přibude větev jeho rodiny (~1 na každých ~5 čtení, `stableAssign`) a **posune se, která runa drží tvar** (n-tá větev = n-tá nejčastější runa elementu, sticky pořadí + hystereze prahu 2). Geometrický žebřík „2× blíž · 3× cluster · 4× srůst = shared root" je NÁVRH (→ RUNAR_BACKLOG), **v kódu NENÍ.**
 - **Portrét = mix + velikost, ne počet.** Soustředěný člověk = pár mohutných rodin větví; pestrý = široký baldachýn.
 - **Strop hlavních větví = `maxMains`** v builderu (čitelnost — „moc = přeplácané"). Přebytek → posílí stávající / hmota kmene. **Strop NENÍ per-element.**
+- **1 pramen = 1 runa = větev nahoru + kořen dolů; max 25 = 25 run (KUKY 2026-08-04).** Počet pramenů kmene je svázán se stropem větví (`strandMax = maxMains` v crown composeru před `buildTrunk`). Dřív měl trunk-engine vlastní `strandMax=28` → při vyšším věku vznikaly „random" prameny navíc, co nepatřily žádné runě (reinforce). Vypnuto: **kmen mohutní tloušťkou (girth), ne přibýváním pramenů.** **Kořeny přestavěny (2026-08-05, lab):** každý pramen = větev nahoru + kořen dolů TOUTÉŽ runou (`buildBranch`, **bez `dev`** — `dev:0` zplošťuje tvar), kořen bezešvě vpleten do kmene (spine reversed + kmen = jeden tah), báze hledaná od vrchu. ⚠️ **NIKDY neshlukovat větve** — musí být rozprostřené (pokus o shlukování #1 revertován). Detaily → RUNAR_DECISIONS 2026-08-05 [tree].
 
 ---
 

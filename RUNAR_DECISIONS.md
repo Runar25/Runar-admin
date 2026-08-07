@@ -2167,3 +2167,35 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 - **Affected doc(s):** —
 - **Reality note:** Owner nastaví `is_tester=true` na svém účtu (SQL). Voice je per reading-MODE (RUNAR_MODES.voice), NE per-tier/tester — is_tester hlas nedává. node --check OK.
 - **Reversibility:** easy (vrátit gate na isAdmin).
+
+---
+
+## 2026-08-05 — Strom: kořeny přestavěny (branch engine, bezešvě do kmene) + zákon 25=25 [tree]
+
+- **Typ:** tree engine (lab crown-composer; port do produkce zatím NE)
+- **Zákon (KUKY):** **1 pramen = 1 runa = větev nahoru + kořen dolů (kořen = zrcadlo větve). Max 25 = 25 run.** Kořen kreslí TÝŽ branch-composer engine (`buildBranch`, per-runa `RUNE_TUNE`) co větev.
+- **Co se udělalo (po krůčcích, každý ověřen):**
+  - **Krok 1:** `trunkT.strandMax = maxMains` před `buildTrunk` → prameny = větve = max 25. Dřív trunk-engine `strandMax=28` dělal „random" prameny navíc (reinforce) → vypnuto. **Kmen mohutní tloušťkou (girth), ne přibýváním pramenů.**
+  - **Krok 2:** kořen každého pramene = táž runa jako jeho větev (párově sedí).
+  - **Krok 3:** kořen `buildBranch` vpleten do JEDNOHO tahu s kmenem (spine reversed + kmen = souvislá limba, bezešvě jako větev). Báze se hledá od VRCHU (backward scan) → vlastní kořen trunk-enginu se vždy vyloučí. Minor floatery (nedodělané prameny) se nekreslí.
+- **Bug (dny hledaný):** kořen `buildBranch` s `dev:0` zplošťoval per-runa tvar na svislý prut (všechny kořeny stejné). Oprava: `dev` NEposílat.
+- **⚠️ NIKDY neshlukovat větve.** Od začátku cíl = větve **rozprostřené** (emergence spread). Pokus o shlukování rodin/elementů „vedle sebe" (#1) rozbil korunu → **REVERTOVÁNO**. Neopakovat.
+- **Affected doc(s):** RUNAR_TREE.md
+- **Reality note:** ověřeno v labu (crown-composer.html; tvrdý reload — HTML se necachebustuje, jinak owner vidí starou verzi). Produkce (`build_tree_production.py`) zatím netknuta. Zbývá backlog: #3 curl per-runa · #4 twigs = kreslené runy elementu · #5 „proč" v inspekci · #6 port do produkce.
+- **Reversibility:** lab, snadné.
+
+---
+
+## 2026-08-05 — Enforcement „piš průběžně": tree-guard hook pro VŠECHNY session [meta]
+
+- **Typ:** proces / infrastruktura (Claude Code hooks, ne app kód)
+- **Problém (KUKY):** „všechny session nakonec serou na vytvořená pravidla." Soft pravidlo „zapisuj průběžně" každá session dřív nebo později ignoruje → znalost se ztrácí při compactu.
+- **Rozhodnutí:** udělat z pravidla KONTROLU (princip: co musí hlídat člověk, spadne na ownera → dej to do checku). Dva hooky v `C:\Users\zkuku\.claude\settings.json` volají `C:\Users\zkuku\.claude\tree-guard.sh`:
+  - **SessionStart:** vloží do kontextu KAŽDÉ session nepřekročitelná pravidla (zákon stromu + „piš průběžně") a orazítkuje čas startu session.
+  - **Stop:** když session sáhla TUTO session do TREE ENGINE (`build_*composer.py`, `build_tree_production.py`, `runar-branch/trunk/tree-prod.js` — hlas ani config se NEhlídají, mají domov jinde dle §20) a NEzapsala rozhodnutí do `RUNAR_DECISIONS.md` NEBO `RUNAR_TREE.md` → **jednou zablokuje stop**. Blok-once (sentinel) = žádná nekonečná smyčka.
+  - **Rozsah zúžen 2026-08-07:** původně hlídal celé `v2/runar-*.js` → nutil CODE-tune duplikovat změnu hlasu i do DECISIONS (domov hlasu = EVAL_LOG) = porušení §20. Teď hlídá jen tree engine a přijme oba tree domovy.
+- **Proč „změněno tuto session", ne git dirty:** pracovní strom je TRVALE špinavý necommitnutými lab soubory → `git status` je jako signál k ničemu. Signál = mtime souboru novější než session-start marker.
+- **Stav:** skript napsán + logika ověřena (5/5 scénářů v sandboxu s řízenými mtime). Zapnutí = RUČNÍ (owner), protože zápis do `~/.claude/settings.json` je gated auto-mode klasifikátorem (správně — trvalá změna nastavení = rozhodnutí ownera).
+- **Affected doc(s):** — (jen user-global infra mimo git)
+- **Reality note:** vlastní fire hooku nejde ověřit v této session (fire mimo turn); logika ověřena sandboxem. Hook je user-global → platí pro všechny Rúnar session (Code i tune).
+- **Reversibility:** snadné (smazat hooks blok ze settings.json + tree-guard.sh).
