@@ -2199,3 +2199,13 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 - **Affected doc(s):** — (jen user-global infra mimo git)
 - **Reality note:** vlastní fire hooku nejde ověřit v této session (fire mimo turn); logika ověřena sandboxem. Hook je user-global → platí pro všechny Rúnar session (Code i tune).
 - **Reversibility:** snadné (smazat hooks blok ze settings.json + tree-guard.sh).
+
+---
+
+## 2026-08-04 — Tree-of-Life copy oblouk sladěn (pryč „first breath"; rodina kořen/vzpomenout)
+
+- **Typ:** copy (harmonizace oblouku, KUKY vybral)
+- **Co se změnilo:** `tree_rs_teaser` (translations.js) přepsán — **pryč „first breath"** (jen metafora, ne timestamp) i „Rúnar has seen it / it waits" (věštba). EN: „This rune is the root you grew from, carried since birth. Rúnar does not foretell it — he helps you remember it." IS napsán **vlastním obrazem** (rótin undir öllu sem þú ert · les enga framtíð úr henni · muna), ověřeno `is-vazba` + `is-grammar-qa` (0 flagů). `founding_story_text` zkrácen (smazána 1. věta o životní runě — uživatel ji právě dočetl, redundance).
+- **Proč:** celý Tree-of-Life copy má jednu rodinu obrazů (**kořen/strom · vzpomenout, ne věštit**); teaser byl jediný, co se lámal. **Pravidlo pro budoucí copy:** nikdy „first breath" doslova · nikdy Muninn/interní bytosti · Rúnarův spořivý hlas, jeden obraz. Analýza celého oblouku: `tasks/wi34g1nmq.output`. → [[copy-always-in-runar-voice]]
+- **Affected doc(s):** — (copy shipnuta zvlášť; konkrétní soubor viz tělo záznamu)
+- **Reversibility:** easy.
