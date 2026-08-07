@@ -38,6 +38,7 @@ souboru dvěma session neřeší nic než worktree.
 - **`git status -- <path>` PŘED každým sáhnutím do tracked souboru** — a znovu před Write; stav se mění
   během session (gen_batch.js se z untracked stal tracked, protože ho druhá session mezitím commitla).
 - **Necommitnuté změny ve sdíleném tracked souboru = živé riziko sebrání** — commitni je úzce brzy.
+- **Necommitnutý rozhodovací záznam v `RUNAR_DECISIONS.md` BLOKUJE PUSHE VŠECH session** (2026-08-07). Smoke ⑮ (`verify_decisions_followthrough.js`) blamuje i necommitnuté entry → jejich `Affected doc(s)` nesedí v žádném commitu → pre-push padá KAŽDÉMU, ne jen tobě. Proto: (a) rozhodovací záznam commitni+pushni **HNED** (pathspec, týž turn), nenech ho viset; (b) **tree rozhodnutí piš radši do `RUNAR_TREE.md` (vlastní doc), ne do sdíleného DECISIONS** — vlastní doc jinou session neblokuje; (c) `git reset` commitu, co sáhl do DECISIONS, nechá entry **OSIŘET** v pracovním stromě = znovu blokuje — buď ho hned dotáhni čistě, nebo zkoordinuj; (d) na řádku `Affected doc(s)` u „—" NEuváděj název souboru (`.js/.md/.py/.json` → ⑮ ho vyzobne a spadne i na správném „žádný doc" záznamu). Detaily patří do těla záznamu.
 - **Přepis TÉHOŽ souboru dvěma session odstraní JEN fyzické oddělení (`git worktree`)** — guard ani
   konvence to z principu neřeší. Owner worktree zatím odložil; do té doby je to pojmenovaná mez, ne díra.
 - Historii nepřepisuj kvůli minulému případu — zapiš a jeď dál.
