@@ -221,7 +221,7 @@ function buildBranch(spec, T) {
     var fAng = Math.atan2(fp.y - fq.y, fp.x - fq.x);
     var fw1 = rnd() * 6.283, fw2 = 1.4 + rnd() * 1.6;
     var tAng = fAng + fSide * (0.45 + 0.3 * rnd());
-    paths.push({ pts: integrate(fp.x, fp.y, L * role.subLen, 16,
+    paths.push({ pts: integrate(fp.x, fp.y, L * role.subLen * (T.subLenMul||1), 16,   /* subLenMul: delsi vybezky (koren saha) - default 1 */
       function(u){ return branchAngle(u, fAng, tAng, fSide * arch.curveMul * eCurve * T.curve, fw1, fw2, wobAmp, tipLift*0.8); },
       fp.ct, 1.0, fp.w * 0.72, Math.max(0.4, fp.w * 0.12), taper) });
   }
