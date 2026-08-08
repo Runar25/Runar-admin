@@ -669,72 +669,78 @@ function getBirthMonth(m, lang) {
   return e.name + ' — ' + ((lang === 'is') ? e.is : e.en);
 }
 
-// IS prompt written directly in Icelandic for better language quality
-function buildLifeRunePromptIS(name, rune, day, month, year, isPremium) {
-  var monthDesc = getBirthMonth(month, 'is');
-  var nameInstr = isPremium
-    ? 'Bættu við hluta um nafnið ' + name + ' — merkingu þess á norrænu, goðsagnalega mynd eða persónu sem tengist nafninu.'
-    : '';
-  var parts = [
-    'Þú ert Rúnar, rúnavörður Agndofa.',
-    '',
-    'Þetta er lestur lífsrúnar ' + name + ' — ekki lestur dagsins, heldur lestur þess sem ' + name + ' hefur borið í sér frá fæðingu.',
-    '',
-    'MANNESKJAN: ' + name,
-    'LÍFSRÚNA: ' + rune.is_n,
-    'FÆDD/UR: ' + day + '. ' + month + '. ' + year,
-    'ÍSLENSKUR MÁNUÐUR: ' + monthDesc,
-    'FRUMEFNI: ' + (Array.isArray(rune.elements) ? rune.elements.join(' / ') : rune.elements),
-    'KJARNAORÐ: ' + rune.k_is,
-    '',
-    'Skrifaðu í tveimur hlutum — engar fyrirsagnir í úttakinu:',
-    '',
-    'HLUTI 1 — DAGSETNINGIN (3 setningar):',
-    'Hvað ber ' + monthDesc.split(' — ')[0] + ' í íslensku ári? Hvaða gæði hafði þessi tími — hvað var að gerast í landinu þegar ' + name + ' kom til sögunnar? Ekki stjörnuspeki. Andrúmsloft.',
-    '',
-    'HLUTI 2 — RÚNIN (5–6 setningar):',
-    rune.is_n + ' sem jarðvegur lífs ' + name + '. Lögun rúnarinnar og hvað hún ber í sér. Gjöfin — hvað kemur náttúrulega til manneskju sem fæðist undir þessari rúnu. Skugginn — hvar sama orkan verður erfið. Eitt samfellt flæði — ekki listi. Flettu inn nafninu ' + name + ' einu sinni eða tvisvar. Endaðu með einni mjúkri, opinni spurningu.',
-    '',
-    (nameInstr ? nameInstr + '\n' : ''),
-    'Reglur: Rúnars rödd. Ljóðrænt, beint. Útskýrðu ekki — opinberaðu.',
-    'Ekki nota "ferðalag" sem myndlíkingu. Ekki "faðmaðu" eða "styrktu". Engar upphrópunarmerki.',
-    'Svaraðu einungis á íslensku.'
-  ];
-  return parts.join('\n');
-}
+// --- LIFE RUNE PROMPT --- one generic builder + per-language pack (§18.1).
+// Was two near-copy builders (IS/EN). That shape is exactly why the IS side could carry a
+// "Stíllíkan" block breaking a gate the EN side never had — a drift nobody spotted. Add a
+// language = add RP_LIFE.xx, do not write a third builder. Same pattern as RP_SINGLE.
+var RP_LIFE = {
+  is: {
+    header:'Þú ert Rúnar, rúnavörður Agndofa.',
+    PERSON:'MANNESKJAN', LIFE:'LÍFSRÚNA', BORN:'FÆDD/UR', MONTH:'ÍSLENSKUR MÁNUÐUR',
+    ELEM:'FRUMEFNI', CORE:'KJARNAORÐ',
+    rname:function(r){ return r.is_n; },
+    rcore:function(r){ return r.k_is; },
+    birth:function(d,m,y){ return d + '. ' + m + '. ' + y; },
+    intro:function(name){ return 'Þetta er lestur lífsrúnar ' + name + ' — ekki lestur dagsins, heldur lestur þess sem ' + name + ' hefur borið í sér frá fæðingu.'; },
+    sections:'Skrifaðu í tveimur hlutum — engar fyrirsagnir í úttakinu:',
+    p1Label:'HLUTI 1 — DAGSETNINGIN (3 setningar):',
+    p1:function(monthName, name){ return 'Hvað ber ' + monthName + ' í íslensku ári? Hvaða gæði hafði þessi tími — hvað var að gerast í landinu þegar ' + name + ' kom til sögunnar? Ekki stjörnuspeki. Andrúmsloft.'; },
+    p2Label:'HLUTI 2 — RÚNIN (5–6 setningar):',
+    p2:function(runeName, name){ return runeName + ' sem jarðvegur lífs ' + name + '. Lögun rúnarinnar og hvað hún ber í sér. Gjöfin — hvað kemur náttúrulega til manneskju sem fæðist undir þessari rúnu. Skugginn — hvar sama orkan verður erfið. Eitt samfellt flæði — ekki listi. Flettu inn nafninu ' + name + ' einu sinni eða tvisvar. Endaðu með einni mjúkri, opinni spurningu.'; },
+    nameInstr:function(name){ return 'Bættu við hluta um nafnið ' + name + ' — merkingu þess á norrænu, goðsagnalega mynd eða persónu sem tengist nafninu.'; },
+    rules:['Reglur: Rúnars rödd. Ljóðrænt, beint. Útskýrðu ekki — opinberaðu.',
+           'Ekki nota "ferðalag" sem myndlíkingu. Ekki "faðmaðu" eða "styrktu". Engar upphrópunarmerki.'],
+    langInstr:'Svaraðu einungis á íslensku.',
+  },
+  en: {
+    header:'You are Runar, rune keeper of Agndofa.',
+    PERSON:'PERSON', LIFE:'LIFE RUNE', BORN:'BORN', MONTH:'ICELANDIC MONTH',
+    ELEM:'ELEMENT', CORE:'CORE ENERGY',
+    rname:function(r){ return r.n; },
+    rcore:function(r){ return r.k; },
+    birth:function(d,m,y){ return d + ' ' + m + ' ' + y; },
+    intro:function(name){ return 'This is the life rune reading of ' + name + ' — not a reading of today, but of what ' + name + ' has carried since birth.'; },
+    sections:'Write in two sections — no headers or labels in the output:',
+    p1Label:'SECTION 1 — THE DATE (3 sentences):',
+    p1:function(monthName, name){ return 'What does ' + monthName + ' carry in the Icelandic year? The quality of that time — what the land was doing when ' + name + ' arrived. Not astrology. Atmosphere.'; },
+    p2Label:'SECTION 2 — THE RUNE (5–6 sentences):',
+    p2:function(runeName, name){ return runeName + ' as the soil of ' + name + 's life. The shape of the rune and what it carries. The gift — what comes naturally to someone born under this rune. The shadow — where the same energy becomes difficult. One continuous flow — not a list. Weave ' + name + 's name in once or twice. End with one quiet, open question.'; },
+    nameInstr:function(name){ return 'Add a section about the name ' + name + ' — its meaning in Old Norse or Norse mythology, a mythological figure or quality that the name carries.'; },
+    // 3rd rule is EN-only on purpose: an Icelandic month name needs glossing for an EN reader.
+    rules:['Rules: Runar voice. Poetic, direct. Do not explain — reveal.',
+           'Do not use journey as a metaphor. Do not use embrace or empower. No exclamation marks.',
+           'If you name the Icelandic month, gloss it in English at first mention — e.g. "Sólmánuður, the month of the midnight sun". Never open the reading with an unglossed Icelandic word.'],
+    langInstr:'Respond in English.',
+  },
+};
 
-// EN prompt for life rune reading
-function buildLifeRunePromptEN(name, rune, day, month, year, isPremium) {
-  var monthDesc = getBirthMonth(month, 'en');
-  var nameInstr = isPremium
-    ? 'Add a section about the name ' + name + ' — its meaning in Old Norse or Norse mythology, a mythological figure or quality that the name carries.'
-    : '';
+function buildLifeRuneBase(name, rune, day, month, year, lang, isPremium) {
+  var L = (lang === 'is') ? 'is' : 'en';
+  var S = RP_LIFE[L];
+  var monthDesc = getBirthMonth(month, L);
+  var nameInstr = isPremium ? S.nameInstr(name) : '';
   var parts = [
-    'You are Runar, rune keeper of Agndofa.',
+    S.header,
     '',
-    'This is the life rune reading of ' + name + ' — not a reading of today, but of what ' + name + ' has carried since birth.',
+    S.intro(name),
     '',
-    'PERSON: ' + name,
-    'LIFE RUNE: ' + rune.n,
-    'BORN: ' + day + ' ' + month + ' ' + year,
-    'ICELANDIC MONTH: ' + monthDesc,
-    'ELEMENT: ' + (Array.isArray(rune.elements) ? rune.elements.join(' / ') : rune.elements),
-    'CORE ENERGY: ' + rune.k,
+    S.PERSON + ': ' + name,
+    S.LIFE + ': ' + S.rname(rune),
+    S.BORN + ': ' + S.birth(day, month, year),
+    S.MONTH + ': ' + monthDesc,
+    S.ELEM + ': ' + (Array.isArray(rune.elements) ? rune.elements.join(' / ') : rune.elements),
+    S.CORE + ': ' + S.rcore(rune),
     '',
-    'Write in two sections — no headers or labels in the output:',
+    S.sections,
     '',
-    'SECTION 1 — THE DATE (3 sentences):',
-    'What does ' + monthDesc.split(' — ')[0] + ' carry in the Icelandic year? The quality of that time — what the land was doing when ' + name + ' arrived. Not astrology. Atmosphere.',
+    S.p1Label,
+    S.p1(monthDesc.split(' — ')[0], name),
     '',
-    'SECTION 2 — THE RUNE (5–6 sentences):',
-    rune.n + ' as the soil of ' + name + 's life. The shape of the rune and what it carries. The gift — what comes naturally to someone born under this rune. The shadow — where the same energy becomes difficult. One continuous flow — not a list. Weave ' + name + 's name in once or twice. End with one quiet, open question.',
+    S.p2Label,
+    S.p2(S.rname(rune), name),
     '',
     (nameInstr ? nameInstr + '\n' : ''),
-    'Rules: Runar voice. Poetic, direct. Do not explain — reveal.',
-    'Do not use journey as a metaphor. Do not use embrace or empower. No exclamation marks.',
-    'If you name the Icelandic month, gloss it in English at first mention — e.g. "Sólmánuður, the month of the midnight sun". Never open the reading with an unglossed Icelandic word.',
-    'Respond in English.'
-  ];
+  ].concat(S.rules).concat([S.langInstr]);
   return parts.join('\n');
 }
 
@@ -744,9 +750,7 @@ function buildLifeRunePromptEN(name, rune, day, month, year, isPremium) {
 // cold reading, because its whole subject is what the seeker has carried since birth.
 // getCorrPrompt is part of it: without it the IS path had only 2 of the 3 layers (§2).
 function buildLifeRunePrompt(name, rune, day, month, year, lang, isPremium, corrections) {
-  var base = (lang === 'is')
-    ? buildLifeRunePromptIS(name, rune, day, month, year, isPremium)
-    : buildLifeRunePromptEN(name, rune, day, month, year, isPremium);
+  var base = buildLifeRuneBase(name, rune, day, month, year, lang, isPremium);
   return [
     base,
     _describeRule(lang),
