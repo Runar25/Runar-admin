@@ -79,9 +79,15 @@ function jwtExpiry(tok) {
 function tokenProblem(tok) {
   const parts = tok.split('.');
   if (parts.length !== 3 || !parts[1])
-    return 'this is not a JWT (a token has three dot-separated parts) — looks like placeholder text got saved instead of the real value';
+    return 'not a token — a JWT has three dot-separated parts; something else got saved here';
+  // A real Supabase access token always carries an expiry. Anything that survives the shape
+  // check but has no decodable payload with `exp` is not a token — it is whatever else
+  // happened to be on the clipboard (a command line, placeholder text, a stray path).
   const exp = jwtExpiry(tok);
-  if (exp && exp.getTime() < Date.now()) return 'expired ' + exp.toISOString();
+  if (!exp)
+    return 'not a token — no readable expiry inside it; check that the value really came from '
+         + 'the shrine console and nothing overwrote the clipboard in between';
+  if (exp.getTime() < Date.now()) return 'expired ' + exp.toISOString();
   return null;
 }
 
@@ -233,9 +239,10 @@ async function main() {
       process.exit(1);
     }
     const exp = jwtExpiry(r.token);
+    const minsLeft = Math.round((exp.getTime() - Date.now()) / 60000);
     console.log('\n  Using : ' + r.source);
     console.log('  length: ' + r.token.length + ' chars  (the value itself is never printed)');
-    console.log('  valid until: ' + (exp ? exp.toISOString() : 'unknown (no exp claim)'));
+    console.log('  valid until: ' + exp.toISOString() + '  (' + minsLeft + ' min left)');
     console.log('');
     process.exit(0);
   }
