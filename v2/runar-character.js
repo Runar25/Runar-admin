@@ -543,7 +543,12 @@ function _seasonalImagery(lang, drawn) {
     var cand = _runeImageCandidates(drawn, bucket);
     if (cand.length) {
       var cIds = cand.map(function (row) { return row[0] + '|' + row[2].slice(0, 24); });
-      var cPick = _seasonBagPick(bucket, 'rune', cIds);
+      // Sáček musí mít klíč per SADA run, ne jeden společný: `_seasonBagPick` filtruje uložený
+      // zbytek podle aktuálních ids, takže sdílený klíč se při každé jiné runě vyprázdnil
+      // a resetoval — ochrana proti opakování pak nedržela vůbec.
+      var runeKey = 'rune_' + cand.map(function (row) { return row[0]; })
+        .filter(function (n, i, a) { return a.indexOf(n) === i; }).sort().join('-');
+      var cPick = _seasonBagPick(bucket, runeKey, cIds);
       var hit = cand[cIds.indexOf(cPick)] || cand[Math.floor(Math.random() * cand.length)];
       runePhrase = hit[2].replace(/\.$/, '');   // věta pokračuje, tečka by ji rozťala
     }
