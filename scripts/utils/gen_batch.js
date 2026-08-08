@@ -76,7 +76,7 @@ const USAGE = [
   '  --lang      en|is                                   (default is)',
   '  --rune      Perth          forced rune (single; first position of a spread)',
   '  --runes     A,B,C          explicit spread runes; else a random distinct sample',
-  '  --life-rune Gebo|none      life rune context        (default none)',
+  '  --life-rune Gebo|self|none life rune context; self = life==drawn per reading (default none)',
   '  --area      "The Unseen"   free-form, goes in verbatim',
   '  --seeking   "Clarity"      MUST be an exact SEEKS label or it silently vanishes',
   '  --intention "Right now"    exact INTENTIONS label (else it degrades to a bare label)',
@@ -215,7 +215,8 @@ async function main() {
   if (args['all-runes'] && spreadName !== 'single')
     die('--all-runes is single-only — it draws exactly one rune per reading.');
 
-  const lifeRune = (args['life-rune'] && args['life-rune'] !== 'none') ? runeByName(args['life-rune']) : null;
+  const lifeMirror = args['life-rune'] === 'self' || args['life-rune'] === 'mirror';
+  const lifeRune = (args['life-rune'] && args['life-rune'] !== 'none' && !lifeMirror) ? runeByName(args['life-rune']) : null;
 
   // Only `seeking` silently vanishes when off-list (_registerContext returns '' —
   // runar-character.js:557-561). `area` is interpolated verbatim; `intention`
@@ -414,8 +415,9 @@ async function main() {
   for (let i = 0; i < jobs.length; i++) {
     setLang(lang); // rn()/rk() read the global — reset it before EVERY build
     const runes = jobs[i].runes;
+    const jobLife = lifeMirror ? runes[0] : lifeRune;  // --life-rune self: life == drawn (self-reference probe)
     const u = {
-      name: name, d: null, m: null, y: null, lifeRune: lifeRune,
+      name: name, d: null, m: null, y: null, lifeRune: jobLife,
       area: area, seeking: seeking, intention: intention, question: args.question || '',
     };
 
@@ -439,7 +441,7 @@ async function main() {
       spread: spreadName,
       rune: runes[0].n,
       runes: runes.map(function (r) { return r.n; }),
-      life_rune: lifeRune ? lifeRune.n : null,
+      life_rune: jobLife ? jobLife.n : null,
       area: area || null, seeking: seeking || null, intention: intention || null,
       question: args.question || null,
       name: name, user_gender: gender, season_bucket: seasonBucket,
