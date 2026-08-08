@@ -11,6 +11,7 @@
 - **Opakování** posílí element (víc a mohutnějších větví jeho rodiny) + posune, která runa drží tvar. Strop hlavních větví = `maxMains` v builderu (čitelnost) — **ne per-element.**
 - **Systém je otevřený:** nová oblast (i pozdější osobní otázky) = jen souřadnice na osách. Žádná přestavba.
 - **Engine = crown-composer, NESAHAT.** Mění se jen data + umístění, po malých krocích na kopii.
+- ⭐ **Kompletní mapa pák (co ovlivňuje strom, jak, proč) → [RUNAR_TREE_MAP.md](RUNAR_TREE_MAP.md)** — stěžejní systémová reference (identita runy · element · vstupy čtení · pozice · růst · kmen · kořeny · twigy · síly). Mechaniku vlastní CODE-tree, význam doplňuje Cowork-tree.
 
 ---
 
