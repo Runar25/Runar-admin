@@ -131,10 +131,14 @@ for (const L of ['en', 'is']) {
 // vola buildery primo, ne pres volajici. Proto staticky.
 const V2 = 'C:/Users/zkuku/Downloads/Runar-admin/v2/';
 const CALL = /\bbuild\w*Prompt\s*\([^;]*\bcorrections\b[^;]*\)/;
+// Deklarace NENI volani. Dispecer `function buildLifeRunePrompt(..., corrections)` ma
+// getCorrPrompt primo v tele — to je jeho ulohou (jedno misto, §18). Bez teto vyjimky
+// hlasila kontrola chybu pokazde, kdyz se telo dispecera zkratilo pod okno 7 radku.
+const DECL = /^\s*(?:async\s+)?function\s+build\w*Prompt\s*\(/;
 for (const f of fs.readdirSync(V2).filter(n => n.endsWith('.js'))) {
   const L = fs.readFileSync(V2 + f, 'utf8').split('\n');
   L.forEach(function (line, i) {
-    if (!CALL.test(line)) return;
+    if (!CALL.test(line) || DECL.test(line)) return;
     const win = L.slice(i + 1, i + 8).join('\n');
     if (!/getCorrPrompt\s*\(/.test(win)) return;
     fail++;
