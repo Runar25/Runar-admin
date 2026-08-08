@@ -2247,3 +2247,15 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 - **Dopad na čtení (změřeno, ne odhad):** v celé DB existují **2 výklady životní runy** (1 IS, 1 EN) — režim nemá provoz. Ten jediný IS vznikl ještě **se** vzory a **nežádnou jejich formulaci nezkopíroval** („Þú stendur" / „stendur á mörkum" / „Rúnirnar sjá" / „orkan sem er" = 0×); jeho 4× „þegar" jsou **všechna spojka „když"**, ne cold-readové „už". Odstranění tedy sundalo **riziko**, ne fungujucí věc. Limit poctivě: n=1 na jazyk → skutečná kontrola je další IS výklad. → [[measure-dont-eyeball]]
 - **Affected doc(s):** RUNAR_EVAL_LOG.md
 - **Reversibility:** easy (revert commitu).
+
+---
+
+## 2026-08-08 — Export reálných čtení k evalu jde MIMO repo (repo je veřejné)
+
+- **Typ:** privacy / nástroj (Cowork si vyžádal feed testerských čtení; owner rozhodl umístění)
+- **Co se změnilo:** nový `scripts/utils/export_readings.js` — jedna dávka = JSONL + `.meta.json` (system prompt, sha, verze 1×). Default cíl **`~/runar-eval/tester-<datum>.jsonl`**, tedy **mimo git**. Skript **odmítne zapsat kamkoli do repa** (i do podadresáře). Pseudonymní user-key (`md5(user_id)` zkrácené, stabilní napříč dávkami), `analytics_opt_out = true` se **neexportuje**, `question` se neexportuje (nikdo si ho nevyžádal — minimalizace).
+- **Proč:** Cowork navrhl `docs/inbox/` s odkazem na „už ověřený mechanismus". **Ten precedens ale neplatí:** `probe-self-life.jsonl` byla **syntetická** data z `gen_batch` (vymyšlená „Anna"), zatímco `readings` je **osobní údaj** (RUNAR_PRIVACY.md). A **repo `Runar25/Runar-admin` je VEŘEJNÉ** (ověřeno přes GitHub API: `private:false`) → commit by znamenal zveřejnit cizí čtení i s `area`/`seeking` na internetu, proti privacy §4 (opt-out), §5 (nikdy osobní čtení mimo EU) a celé pseudonymizační bázi. Owner zvolil variantu „mimo repo"; Cowork si soubor vytáhne přes device_bash, smyčka zůstává stejná.
+- **Odpovědi na Coworkovy otázky (změřeno na schématu, netvrzeno):** `angle_idx`/`angle` se u reálných čtení **nepersistují** — v `readings` takové sloupce nejsou → angle-korelace jde jen přes `gen_batch`. Stabilní user-key **ano** (`readings.user_id`), `is_tester` **ano** (`user_profiles`, join), `is_admin` v DB **není** (plyne z `ADMIN_EMAILS` v configu proti `auth.users.email`), samostatný sloupec `spread` **není** (odvozuje se z `rune_name`, jako to dělá strom).
+- **Ověřeno (§19):** ostrý běh na produkční DB — 271 čtení / 3 uživatelé; ve výstupu **žádný UUID ani e-mail**; `runes[]`, spready i follow-up sedí. Pojistka proti zápisu do repa otestována (relativní cesta i podadresář → odmítnuto, exit 1). Chyba chycená sanity kontrolou: `const RUNES` ve vm kontextu **není** na sandbox objektu → `runes[]` vycházelo prázdné u 271/271; čte se teď zevnitř kontextu a skript při prázdné mapě glyfů rovnou umře. → [[sanity-check-measurements]]
+- **Affected doc(s):** — (nástroj + tento záznam; privacy pravidla vlastní RUNAR_PRIVACY.md a nemění se)
+- **Reversibility:** easy (skript smazat; nic se nepublikovalo).
