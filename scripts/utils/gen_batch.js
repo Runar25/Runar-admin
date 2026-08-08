@@ -9,7 +9,10 @@
 // quality — that needs real readings grouped by readings.prompt_version.
 //
 // Auth: proxy requires a JWT since FAZE 1 security (fd78a91) -> anon/publishable = 401.
-// Pass an ADMIN session token via env RUNAR_EVAL_TOKEN (admin -> generates free, no cap,
+// The ADMIN token is read from env RUNAR_EVAL_TOKEN, or — if that is empty — from the file
+// ~/.runar-eval-token (outside the repo, so it can never be committed and nobody has to paste
+// it into a chat). Refresh it in the shrine console; check it with --check-token.
+// (admin -> generates free, no cap,
 // and journal is skipped because we send no journal -> no readings row). Still spends the
 // project's real Anthropic budget. Throttled to the proxy's 10 req / 60 s limit.
 //
@@ -23,6 +26,7 @@ const fs     = require('fs');
 const path   = require('path');
 const vm     = require('vm');
 const crypto = require('crypto');
+const os     = require('os');
 
 const REPO = path.resolve(__dirname, '..', '..');
 const V2   = path.join(REPO, 'v2');
@@ -50,9 +54,41 @@ const SPREADS = {
 };
 
 // ─── CLI ───────────────────────────────────────────────
-const FLAGS = ['dry-run', 'list', 'help', 'yes', 'allow-blank', 'all-runes', 'solo'];
+const FLAGS = ['dry-run', 'list', 'help', 'yes', 'allow-blank', 'all-runes', 'solo', 'check-token'];
 
 function die(msg) { console.error('\n  ERROR: ' + msg + '\n'); process.exit(1); }
+
+// ── ADMIN TOKEN ─────────────────────────────────────────────────────────────
+// One resolution path for every caller: env first (CI / one-off), else the file in the
+// user's home dir. The token itself is NEVER printed — only where it came from and when
+// it expires, so a stale token fails with a clear message instead of a bare 401.
+const TOKEN_FILE = path.join(os.homedir(), '.runar-eval-token');
+
+function jwtExpiry(tok) {
+  try {
+    const body = tok.split('.')[1];
+    if (!body) return null;
+    const json = JSON.parse(Buffer.from(body.replace(/-/g, '+').replace(/_/g, '/'), 'base64').toString('utf8'));
+    return typeof json.exp === 'number' ? new Date(json.exp * 1000) : null;
+  } catch (e) { return null; }
+}
+
+function resolveEvalToken() {
+  const fromEnv = (process.env.RUNAR_EVAL_TOKEN || '').trim();
+  if (fromEnv) return { token: fromEnv, source: 'env RUNAR_EVAL_TOKEN' };
+  try {
+    const fromFile = fs.readFileSync(TOKEN_FILE, 'utf8').trim();
+    if (fromFile) return { token: fromFile, source: TOKEN_FILE };
+  } catch (e) { /* no file = fine, handled by the caller */ }
+  return { token: '', source: null };
+}
+
+const TOKEN_HELP =
+  'Set it one of two ways:\n'
+  + '    a) put it in ' + TOKEN_FILE + '  (read automatically, never committed)\n'
+  + '    b) or export RUNAR_EVAL_TOKEN=<admin session JWT> for a single run\n'
+  + '  Get the value in the shrine browser console:\n'
+  + '    (await sb.auth.getSession()).data.session.access_token';
 
 function parseArgs(argv) {
   const out = { fu: [] };
@@ -92,6 +128,7 @@ const USAGE = [
   '  --ts        ISO            gen_ts stamp             (default now)',
   '  --delay     6500           ms between requests',
   '  --dry-run   build prompts, write JSONL, make NO network calls (free)',
+  '  --check-token  say where the admin token comes from and whether it is still valid, then exit',
   '  --allow-blank  let the random sampler draw the Blank rune',
   '  --solo      nobody else is on the proxy IP — go faster (' + SOLO_DELAY_MS + ' ms spacing)',
   '  --yes       required above ' + MAX_JOBS_NO_YES + ' requests',
@@ -160,6 +197,18 @@ function loadAskCap() {
 async function main() {
   const args = parseArgs(process.argv.slice(2));
   if (args.help) { console.log(USAGE); return; }
+
+  if (args['check-token']) {
+    const r = resolveEvalToken();
+    if (!r.token) { console.error('\n  No admin token found.\n  ' + TOKEN_HELP + '\n'); process.exit(1); }
+    const exp = jwtExpiry(r.token);
+    const ok  = !exp || exp.getTime() > Date.now();
+    console.log('\n  source : ' + r.source);
+    console.log('  length : ' + r.token.length + ' chars  (the value itself is never printed)');
+    console.log('  expires: ' + (exp ? exp.toISOString() + (ok ? '  — still valid' : '  — EXPIRED, refresh it') : 'unknown (no exp claim)'));
+    console.log('');
+    process.exit(ok ? 0 : 1);
+  }
 
   const ctx  = makeSandbox();
   const G    = function (expr) { return vm.runInContext(expr, ctx); };
@@ -273,10 +322,14 @@ async function main() {
   const SB_KEY = G('SB_KEY');
   // Admin session JWT — get it in the shrine browser console:
   //   (await sb.auth.getSession()).data.session.access_token
-  const EVAL_TOKEN = process.env.RUNAR_EVAL_TOKEN || '';
+  const resolved   = resolveEvalToken();
+  const EVAL_TOKEN = resolved.token;
+  const tokenExp   = EVAL_TOKEN ? jwtExpiry(EVAL_TOKEN) : null;
   if (!args['dry-run'] && !EVAL_TOKEN)
-    die('Proxy requires auth (fd78a91). Set RUNAR_EVAL_TOKEN=<admin session JWT>.\n'
-      + '  Get it in the shrine console: (await sb.auth.getSession()).data.session.access_token');
+    die('Proxy requires an admin token (fd78a91) — none found.\n  ' + TOKEN_HELP);
+  if (!args['dry-run'] && tokenExp && tokenExp.getTime() < Date.now())
+    die('The admin token expired ' + tokenExp.toISOString() + ' (source: ' + resolved.source + ').\n  '
+      + 'Refresh it, otherwise every request comes back 401.\n  ' + TOKEN_HELP);
   const PROMPT_VERSION = G('RUNAR_PROMPT_VERSION');
   const maxTokens = (spreadName === 'single')
     ? G('RUNAR_MODES').quick_reading.max_tokens
