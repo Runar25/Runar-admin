@@ -55,7 +55,7 @@ kořeny + nitro  →   Healing · Family · Inner Growth    (odkud jdeš)
 Rohy (budoucnost+nitro, minulost+svět) = volné pro vzácnější kombinace.
 
 **Element = kostra, ne Norns zóna:** seskupuje větve (kořeny→kmen→koruna), dává **barvu** a rodinu + spoluurčuje úhel/šířku odchodu. **NEurčuje výšku** — tu řídí intention (osa A). **5 barev-elementů: Fire · Water · Air · Earth · Shadow** — Shadow = studené/skryté runy (Isa/Hagalaz/Perth/Eihwaz/Blank; váže se na cold-steering ve čtení). **Life Rune NENÍ barva-element — je to KMEN = ty.**
-**Runa = tvar/silueta** (n-tá větev elementu = n-tá nejčastější runa toho elementu → §5). **Ætt = charakter růstu** — z tématu ættu: Freya (svět/tělo/radost) → plynulé · Heimdall (osud/skryté/cyklus) → gnarled/uzlovité · Týr (řád/dokončení) → řízené. Ætt NEurčuje výšku.
+**Runa = tvar/silueta** (která runa kterou větev drží → §5). **Ætt = charakter růstu** — z tématu ættu: Freya (svět/tělo/radost) → plynulé · Heimdall (osud/skryté/cyklus) → gnarled/uzlovité · Týr (řád/dokončení) → řízené. Ætt NEurčuje výšku.
 
 ---
 
@@ -75,7 +75,7 @@ Rohy (budoucnost+nitro, minulost+svět) = volné pro vzácnější kombinace.
 ---
 
 ## 5. RŮST + POSÍLENÍ
-- **Opakování posílí ELEMENT, ne konkrétní větev-runu.** Víc čtení téhož elementu → přibude větev jeho rodiny (~1 na každých ~5 čtení, `stableAssign`) a **posune se, která runa drží tvar** (n-tá větev = n-tá nejčastější runa elementu, sticky pořadí + hystereze prahu 2). Geometrický žebřík „2× blíž · 3× cluster · 4× srůst = shared root" je NÁVRH (→ RUNAR_BACKLOG), **v kódu NENÍ.**
+- **Opakování posílí ELEMENT, ne konkrétní větev-runu.** Víc čtení téhož elementu → přibude větev jeho rodiny (~1 na každých ~5 čtení, `stableAssign`) a **přibude runa, která drží tvar**. ⭐ **Pořadí run elementu = podle PRVNÍHO tažení (sticky), NE podle četnosti** (KUKY 2026-08-07, potvrzeno v kódu `runeSeen`): n-tá větev elementu = n-tá **poprvé tažená** runa toho elementu; ostatní tažené runy téhož elementu jedou jako **odbočky (twigy)** na ní. Sticky pořadí = ochrana proti přeskakování tvaru (dřívější „nejčastější runa" se při remíze měnila a silueta blikala). **Tohle je jediné místo, kde to pravidlo bydlí — jinde jen odkaz (§20).** Geometrický žebřík „2× blíž · 3× cluster · 4× srůst = shared root" je NÁVRH (→ RUNAR_BACKLOG), **v kódu NENÍ.**
 - **Portrét = mix + velikost, ne počet.** Soustředěný člověk = pár mohutných rodin větví; pestrý = široký baldachýn.
 - **Strop hlavních větví = `maxMains`** v builderu (čitelnost — „moc = přeplácané"). Přebytek → posílí stávající / hmota kmene. **Strop je PER-ELEMENT** (`ELEM_CAP` v `stableAssign` — hodnoty tam, stín nejnižší); hlavní větev vyroste jen kde je tažená runa, přebytek téže rodiny → **posiluje** stávající větev + hmotu kmene, ne novou hlavní. (F0 2026-08-07, zatím lab crown-composer; port do produkce po schválení.)
 - **1 pramen = 1 runa = větev nahoru + kořen dolů; max 25 = 25 run (KUKY 2026-08-04).** Počet pramenů kmene je svázán se stropem větví (`strandMax = maxMains` v crown composeru před `buildTrunk`). Dřív měl trunk-engine vlastní `strandMax=28` → při vyšším věku vznikaly „random" prameny navíc, co nepatřily žádné runě (reinforce). Vypnuto: **kmen mohutní tloušťkou (girth), ne přibýváním pramenů.** **Kořeny přestavěny (2026-08-05, lab):** každý pramen = větev nahoru + kořen dolů TOUTÉŽ runou (`buildBranch`, **bez `dev`** — `dev:0` zplošťuje tvar), kořen bezešvě vpleten do kmene (spine reversed + kmen = jeden tah), báze hledaná od vrchu. ⚠️ **NIKDY neshlukovat větve** — musí být rozprostřené (pokus o shlukování #1 revertován). Detaily → RUNAR_DECISIONS 2026-08-05 [tree].
@@ -151,8 +151,8 @@ Ostatní (později, decentně): pulzy dominance (element/ætt), bloom fáze, lis
   vůbec něco udělala, a přesně proto obě osy mlčely dva měsíce.
 - ✅ **Runa → tvar (2026-07-19).** Tvarová data (curve/sub/taper/tipc/rhy per runa) byla hotová,
   jen renderer bral tvar podle POŘADÍ větve — takže všichni uživatelé měli stejné siluety.
-  Nově: **n-tá větev elementu = n-tá nejčastější runa toho elementu** (pestrost zůstává, ale
-  něco znamená). Přetvaruje se, když se pořadí změní; při remíze vyhrává dřívější runa.
+  Tehdy: n-tá větev elementu = n-tá **nejčastější** runa (pestrost zůstává, ale něco znamená).
+  ⚠️ **Pořadí bylo POZDĚJI změněno na „první tažená" (sticky) kvůli blikání siluety — platné pravidlo → §5.**
 - ✅ **Inspekce klepnutím (2026-07-19, admin).** Klik na větev řekne runu · element · ætt ·
   svět · počet čtení · kolikátá větev elementu. Aby owner místo „nějaká větev poskočila"
   předal diagnózu. Souřadnice = **poloha na posuvníku**, ne číslo runy.
