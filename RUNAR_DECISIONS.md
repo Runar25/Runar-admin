@@ -2233,3 +2233,16 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 - **Nezměněno vědomě:** IS věta tie-breakeru se nepřepisovala — `E001` (nerozparsovatelná) má **i původní shipnutá verze**, takže tohle není regrese; přepis = vlastní tag + golden → `RUNAR_BACKLOG.md`.
 - **Affected doc(s):** RUNAR_BACKLOG.md (E001 + rozdíl Kříže), RUNAR_EVAL_LOG.md (jede v tagu v1.3)
 - **Reversibility:** easy (revert commitu).
+
+---
+
+## 2026-08-08 — Life-rune prompt: pryč dva stylové vzory, které porušovaly vlastní gate
+
+- **Typ:** chování čtení (prompt) — životní runa, IS
+- **Co se změnilo:** z `buildLifeRunePromptIS` smazán blok „Stíllíkan — læra af tóni, ekki nota beint" se dvěma vzorovými větami. `buildLifeRunePromptEN` žádný takový blok nemá → smazáním se navíc **srovnala asymetrie** mezi jazyky.
+- **Proč (měřeno na reálném promptu, ne odhadem):** týž prompt obsahuje `_noColdRead` (dispečer ho přidává, `:757`) — a hned nad ním dva vzory, které ten zákaz **předvádějí porušený**: „…orkan sem er **þegar** á leið" (energie, která *už* je na cestě) a „**Rúnirnar sjá hvað þú ert að ganga í gegnum**" (runy vidí, čím procházíš = přímé tvrzení o vnitřku tazatele). Navíc byly uvozené jako „uč se z tónu" — **demonstrace je silnější instrukce než zákaz**. Táž třída defektu jako „already/þegar" (v1.2) a „the trunk speaks of itself" (v1.3): vzor v promptu se kopíruje. Ironií komentář o pár řádků výš (`:748`) sám říká, že životní runa je *„čtení nejvíc vystavené cold readingu"*.
+- **Ověřeno (§18.3 + §19.1):** do golden harness přidány **4 nové klíče** (`liferune_*` + `liferune_prem_*`, IS+EN) — životní runa **nebyla vůbec pokrytá**, proto v ní defekt přežil. Golden diff: změněny **jen 2 IS klíče**, ostatních 18 builderů byte-identických. Obsah čtení (HLUTI 1+2), gate i zbytek pravidel zachovány.
+- **Pozor na slepé počítání tokenů:** v promptu zbylo jedno „þegar" — ale je to **spojka „když"** („hvað var að gerast í landinu **þegar** Anna kom til sögunnar"), ne cold-readové „už". Jiný význam téhož slova → není to únik. → [[sanity-check-measurements]]
+- **Otevřené:** IS životní runa teď nemá **žádný** tónový vzor (stejně jako EN). Kdyby ho owner chtěl zpět, musí ho napsat Cowork **tak, aby prošel gates** — CODE copy nevymýšlí. → [[copy-always-in-runar-voice]]
+- **Affected doc(s):** RUNAR_EVAL_LOG.md
+- **Reversibility:** easy (revert commitu).
