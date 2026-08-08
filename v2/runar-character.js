@@ -1039,12 +1039,23 @@ var RP_KRIZ = {
   },
 };
 
+// ─── SPREAD POSITION BLOCK (sdilene 4 spready) ───────────────────
+// Bylo 4x zkopirovane v kazdem spread builderu (§18.1). Klicova slova: prvni 4, zkracene.
+// `inlineLabel` = label a runa na JEDNOM radku — tvar, ktery ma Kriz od unifikace builderu
+// (70cc33c); ostatni tri davaji label na vlastni radek. Rozdil neni nikde zduvodneny, ale
+// drzi se PRESNE, aby tenhle dedup nezmenil zadny prompt (§18.3). Sjednoceni = zvlast, s merenim.
+function _kwBrief(r) {
+  return rk(r).split(',').map(function(s){ return s.trim(); }).filter(Boolean).slice(0, 4).join(', ');
+}
+function _spreadBlock(r, label, inlineLabel) {
+  return inlineLabel ? (label + ': ' + rn(r) + '\n' + _kwBrief(r))
+                     : (label + '\n' + rn(r) + ' — ' + _kwBrief(r));
+}
+
 function buildKrizPromptCross(u, runes, lang, corrections) {
   var S = RP_KRIZ[lang] || RP_KRIZ.en;
   var rCtr = runes[0], rAbo = runes[1], rBel = runes[2], rBeh = runes[3], rAhe = runes[4];
   var life = u.lifeRune;
-  function kb(r){ return rk(r).split(',').map(function(s){ return s.trim(); }).filter(Boolean).slice(0, 4).join(', '); }
-  function block(r, label){ return label + ': ' + rn(r) + '\n' + kb(r); }
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
     life      ? S.lifeRune + ': ' + rn(life) : '',
@@ -1055,7 +1066,7 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
   ].filter(Boolean).join('\n');
   var P = S.positions;
   var runesBlock = [
-    block(rCtr, P[0]), '', block(rAbo, P[1]), '', block(rBel, P[2]), '', block(rBeh, P[3]), '', block(rAhe, P[4]),
+    _spreadBlock(rCtr, P[0], true), '', _spreadBlock(rAbo, P[1], true), '', _spreadBlock(rBel, P[2], true), '', _spreadBlock(rBeh, P[3], true), '', _spreadBlock(rAhe, P[4], true),
   ].join('\n');
   var ctrName = rn(rCtr);
   return [
@@ -1123,8 +1134,6 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
   var S = RP_NORNS[lang] || RP_NORNS.en;
   var rUrd = runes[0], rVerd = runes[1], rSkul = runes[2];
   var life = u.lifeRune;
-  function kb(r){ return rk(r).split(',').map(function(s){ return s.trim(); }).filter(Boolean).slice(0, 4).join(', '); }
-  function block(r, label){ return label + '\n' + rn(r) + ' — ' + kb(r); }
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
     life      ? S.lifeRune + ': ' + rn(life) : '',
@@ -1134,7 +1143,7 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
     u.question ? S.question + ': ' + u.question : '',
   ].filter(Boolean).join('\n');
   var L = S.labels;
-  var runesBlock = [ block(rUrd, L[0]), '', block(rVerd, L[1]), '', block(rSkul, L[2]) ].join('\n');
+  var runesBlock = [ _spreadBlock(rUrd, L[0]), '', _spreadBlock(rVerd, L[1]), '', _spreadBlock(rSkul, L[2]) ].join('\n');
   return [
     ctx, '',
     S.intro, '',
@@ -1194,8 +1203,6 @@ var RP_HORSESHOE = {
 function buildHorseshoePromptSeven(u, runes, lang, corrections) {
   var S = RP_HORSESHOE[lang] || RP_HORSESHOE.en;
   var life = u.lifeRune;
-  function kb(r){ return rk(r).split(',').map(function(s){ return s.trim(); }).filter(Boolean).slice(0, 4).join(', '); }
-  function block(r, label){ return label + '\n' + rn(r) + ' — ' + kb(r); }
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
     life      ? S.lifeRune + ': ' + rn(life) : '',
@@ -1206,8 +1213,8 @@ function buildHorseshoePromptSeven(u, runes, lang, corrections) {
   ].filter(Boolean).join('\n');
   var P = S.positions;
   var runesBlock = [
-    block(runes[0], P[0]), '', block(runes[1], P[1]), '', block(runes[2], P[2]), '', block(runes[3], P[3]), '',
-    block(runes[4], P[4]), '', block(runes[5], P[5]), '', block(runes[6], P[6]),
+    _spreadBlock(runes[0], P[0]), '', _spreadBlock(runes[1], P[1]), '', _spreadBlock(runes[2], P[2]), '', _spreadBlock(runes[3], P[3]), '',
+    _spreadBlock(runes[4], P[4]), '', _spreadBlock(runes[5], P[5]), '', _spreadBlock(runes[6], P[6]),
   ].join('\n');
   return [
     ctx, '',
@@ -1277,8 +1284,6 @@ var RP_YGGDRASIL = {
 function buildYggdrasilPromptNine(u, runes, lang, corrections) {
   var S = RP_YGGDRASIL[lang] || RP_YGGDRASIL.en;
   var life = u.lifeRune;
-  function kb(r){ return rk(r).split(',').map(function(s){ return s.trim(); }).filter(Boolean).slice(0, 4).join(', '); }
-  function block(r, label){ return label + '\n' + rn(r) + ' — ' + kb(r); }
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
     life      ? S.lifeRune + ': ' + rn(life) : '',
@@ -1290,11 +1295,11 @@ function buildYggdrasilPromptNine(u, runes, lang, corrections) {
   var T = S.tiers, P = S.positions;
   var runesBlock = [
     T[0],
-    block(runes[0], P[0]), '', block(runes[1], P[1]), '', block(runes[2], P[2]), '',
+    _spreadBlock(runes[0], P[0]), '', _spreadBlock(runes[1], P[1]), '', _spreadBlock(runes[2], P[2]), '',
     T[1],
-    block(runes[3], P[3]), '', block(runes[4], P[4]), '',
+    _spreadBlock(runes[3], P[3]), '', _spreadBlock(runes[4], P[4]), '',
     T[2],
-    block(runes[5], P[5]), '', block(runes[6], P[6]), '', block(runes[7], P[7]), '', block(runes[8], P[8]),
+    _spreadBlock(runes[5], P[5]), '', _spreadBlock(runes[6], P[6]), '', _spreadBlock(runes[7], P[7]), '', _spreadBlock(runes[8], P[8]),
   ].join('\n');
   return [
     ctx, '',
