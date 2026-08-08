@@ -54,6 +54,7 @@ var samplecorr = [{ from:'Arctic', to:'Norðurljós', lang:'both', context:'test
   grab('single_'+L,      function(){ return buildReadingPrompt(u, drawn, L, []); });
   grab('single_noq_'+L,  function(){ return buildReadingPrompt(u2, drawn, L, []); });
   grab('single_corr_'+L, function(){ return buildReadingPrompt(u, drawn, L, samplecorr); });
+  grab('single_selflife_'+L, function(){ return buildReadingPrompt(u, u.lifeRune, L, []); });
   grab('norns_'+L,       function(){ return buildNornsPrompt(u, pool.slice(0,3), L, []); });
   grab('kriz_'+L,        function(){ return buildKrizPrompt(u, pool.slice(0,5), L, []); });
   grab('horseshoe_'+L,   function(){ return buildHorseshoePrompt(u, pool.slice(0,7), L, []); });

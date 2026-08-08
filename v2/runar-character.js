@@ -880,7 +880,6 @@ var RP_SINGLE = {
     useFormula:true, langInstr:'',
     worldFb:function(pk){ return 'lifandi leiðin'; },
     formula:function(f){ return 'Íslensk rúnaþula (flettu inn náttúrlega einu sinni): "' + f + '"'; },
-    lifeRuneNote:function(rune){ return 'MIKILVÆGT: Dregna rúna og lífsrúna eru EIN og sama rúna — ' + rune + '. Þetta er sjaldgæft. Meðhöndlaðu þetta sem sérstætt augnablik: "Stofninn talar um sig sjálfan."'; },
     angleIntro:'LESTRARHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og upphaf): ',
     length:'Gefðu einn samfelldan lestur — 3 stuttar setningar, 38 til 45 orð alls. Hann verður lesinn upphátt, svo hafðu hverja setningu létta — um 20 til 25 sekúndur. Engar fyrirsagnir, engar hlutaskiptingar.',
     qBranch:function(rune,g,q){ return 'Svaraðu spurningunni: "' + q + '" í gegnum ' + rune + ' — í myndum og táknmáli, ekki ráðgjöf. Nefndu ' + rune + ' einu sinni, fléttað náttúrlega inn. Talaðu um það sem liggur undir spurningunni.'; },
@@ -895,7 +894,6 @@ var RP_SINGLE = {
     useFormula:false, langInstr:'Respond in English.',
     worldFb:function(pk){ return pk; },
     formula:function(f){ return 'Icelandic rune formula (weave naturally once): "' + f + '"'; },
-    lifeRuneNote:function(rune){ return 'IMPORTANT: The drawn rune IS the life rune — ' + rune + '. This is rare. Address it as a significant moment: "The trunk speaks of itself."'; },
     angleIntro:'READING ANGLE (follow this entry point — let it shape the opening and tone): ',
     length:'One flowing reading — 3 short sentences, 38 to 45 words total. It will be read aloud, so keep every sentence lean — about 20 to 25 seconds spoken. No sections, no labels, no line breaks between thoughts.',
     qBranch:function(rune,g,q){ return 'Open with ' + rune + ' answering: "' + q + '" — through image and symbol, not advice. Mention ' + rune + ' by name once, woven naturally. Speak to what lies beneath the question.'; },
@@ -921,9 +919,12 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     + (drawn.world ? ' · ' + S.REALM_drawn + ': ' + rworld(drawn) + ' · ' + S.ELEM + ': ' + relements(drawn) : '');
   var parts = [
     S.PERSON + ': ' + u.name,
-    lifeCtx,
+    // drawn == life: NEopakovat tutéž runu podruhé jako kontext a NEpřidávat hotovou
+    // větu o „významném okamžiku" — model tu citovanou větu opisoval doslova (24/25,
+    // stejná třída úniku jako pojmenovaná zakázaná slova). Čočka už ustupuje sama
+    // (_lensContext), takže se to čte jako normální single. KUKY 2026-08-08 (varianta C).
+    isLifeRune ? '' : lifeCtx,
     drawnCtx,
-    isLifeRune ? S.lifeRuneNote(rn(drawn)) : '',
     u.intention ? _intentionContext(u.intention, lang) : '',
     u.question ? S.Q + ': "' + u.question + '"' : '',
   ].filter(Boolean).join('\n');
@@ -941,7 +942,7 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     u.seeking ? _registerContext(u.seeking, lang) : '',
     hasQ ? S.qBranch(rn(drawn), drawn.g, u.question) : S.noqBranch(rn(drawn), drawn.g, worldRef),
     _endingShape(drawn, lang),
-    (life || u.area || u.seeking) ? _priorityContext(drawn, lang) : '',
+    ((life && !isLifeRune) || u.area || u.seeking) ? _priorityContext(drawn, lang) : '',
     S.closing(u.name) + (S.langInstr ? S.langInstr : '') + getCorrPrompt(lang, corrections),
     _addressContext(lang),
     S.json,

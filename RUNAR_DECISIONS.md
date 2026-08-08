@@ -2209,3 +2209,15 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 - **Proč:** celý Tree-of-Life copy má jednu rodinu obrazů (**kořen/strom · vzpomenout, ne věštit**); teaser byl jediný, co se lámal. **Pravidlo pro budoucí copy:** nikdy „first breath" doslova · nikdy Muninn/interní bytosti · Rúnarův spořivý hlas, jeden obraz. Analýza celého oblouku: `tasks/wi34g1nmq.output`. → [[copy-always-in-runar-voice]]
 - **Affected doc(s):** — (copy shipnuta zvlášť; konkrétní soubor viz tělo záznamu)
 - **Reversibility:** easy.
+
+---
+
+## 2026-08-08 — Vlastní životní runa v single čtení se čte NORMÁLNĚ (pryč „významný okamžik")
+
+- **Typ:** chování čtení (prompt), owner rozhodl variantu C
+- **Co se změnilo:** `buildReadingPromptSingle` — při `drawn == life` (a) se **neposílá druhá kopie téže runy** jako `LIFE RUNE:` kontext (runa už je v `DRAWN RUNE:`), (b) **smazána hotová věta** „The drawn rune IS the life rune — X. This is rare… \"The trunk speaks of itself.\"" / IS „…\"Stofninn talar um sig sjálfan.\"" včetně mrtvé copy `lifeRuneNote` v obou `RP_SINGLE` packech (§22), (c) `_priorityContext` už nespouští **sama** životní runa, když byla tažena (jinak prompt odkazoval na čočku, svět i hledání, které tam nejsou).
+- **Proč:** eval (self-reference probe, 25 run, v1.2 EN): **self-reference 24/25** — model tu citovanou větu opisoval doslova. **Je to stejná třída defektu jako „already/þegar"** (tag v1.2): pojmenovaná/ocitovaná fráze v promptu = vzor ke kopírování. Varianta C navíc sedí na už existující kánon (`_lensContext`, komentář ř. 555): *životní runa nemůže být zároveň čočka i předmět téhož čtení, proto ustupuje, když byla sama tažena* — `lifeRuneNote` šla proti tomu (dělala z runy předmět mluvící o sobě). Zamítnuto D (ponechat významnost přerámovaně) = riskovalo návrat „runy o sobě samé". Owner: „C".
+- **Ověřeno (§18.3 + §19.1):** do `scripts/golden/golden_dump.js` přidán **trvalý fixture `single_selflife_*`** (drawn==life dosud nebyl pokryt). Golden diff: změněny **jen 2 selflife klíče, ostatních 14 builderů byte-identických** (nulová kolaterál). Seed-and-assert: runa už není 2×, citovaná věta pryč, `DRAWN` blok + gates + ending zůstaly; probe bez area/seeking → fantomová čočka pryč.
+- **Zbytek (do dalšího commitu):** když area/seeking JSOU, `_priorityContext` pořád říká „let the life-rune lens recede", ačkoli čočka neexistuje — týká se i všech 4 spreadů (life ∈ tažené runy). Řeší commit se spready (D4).
+- **Affected doc(s):** RUNAR_EVAL_LOG.md (naměřená čísla + tag v1.3)
+- **Reversibility:** easy (revert commitu; `lifeRuneNote` je v gitu).
