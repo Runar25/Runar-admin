@@ -2259,3 +2259,17 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 - **Ověřeno (§19):** ostrý běh na produkční DB — 271 čtení / 3 uživatelé; ve výstupu **žádný UUID ani e-mail**; `runes[]`, spready i follow-up sedí. Pojistka proti zápisu do repa otestována (relativní cesta i podadresář → odmítnuto, exit 1). Chyba chycená sanity kontrolou: `const RUNES` ve vm kontextu **není** na sandbox objektu → `runes[]` vycházelo prázdné u 271/271; čte se teď zevnitř kontextu a skript při prázdné mapě glyfů rovnou umře. → [[sanity-check-measurements]]
 - **Affected doc(s):** — (nástroj + tento záznam; pravidla ochrany osobních údajů se nemění, jen se dodržují)
 - **Reversibility:** easy (skript smazat; nic se nepublikovalo).
+
+---
+
+## 2026-08-08 — Obraznost klíčovaná runou (v1.4): sezónu řeší VÝBĚR, ne další zákaz
+
+- **Typ:** chování čtení (obraznost) — owner rozhodl osu i pravidlo pro spready
+- **Co se změnilo:** vedle `SEASON_POOLS` (sezónní, 133 obrazů) přibyl `RUNE_IMAGES_IS` — **67 Coworkových obrazů klíčovaných RUNOU** (50 přírodních + 17 lidských/domácích, ty plní „víc domén" z v1.2b). Padne-li runa, která má vlastní obraz **vhodný do aktuální části roku**, použije se on; jinak jede sezónní pool jako dosud. Věta kolem obrazu je **doslova ta nasazená** — mění se jen obraz (§18.1, jedna formulace).
+- **Proč tak, a ne jinak (KUKY 2026-08-08):** owner: *„spíš aby převládala sezóna … zákazy nejsou to, kterým směrem bychom měli jít."* Proto sezónnost **nehlídá nové pravidlo v promptu, ale výběr**: obraz smí soutěžit jen tehdy, když sedí do aktuální části roku, takže srpnový obraz se v lednu **vůbec nenabídne** a není o čem modelu psát zákaz. Coworkovy tagy `[bright]/[cold]/[any]` jsou proto čteny jako **sezónní vhodnost** (světlá půlka / tmavá půlka / celý rok), NE jako dnešní osa `bright/cold`, která znamená valenci runy — kdyby se to smíchalo, teplá runa v lednu by vytáhla letní obraz.
+- **Spready:** obraz určuje **náhodně vylosovaná runa z tažených** (owner), ne první pozice — jinak by obraz systémově seděl jen k jednomu slotu výkladu.
+- **Ověřeno (§18.3 + §19.1):** golden — změněno **8 IS builderů**, všech **12 ostatních (celé EN + obě life-rune) byte-identických**. Sezónní pravidlo protlačeno napříč buckety: Fehu v zimě nenabídne srpnové bobule · Hagalaz v létě nemá kandidáta → fallback · Sowilo v lednu → fallback · Hagalaz v zimě a Sowilo v létě kandidáty mají. IS všech 67 obrazů přes `is-grammar-qa`: 4 flagy = doložené false-pos (`móann`, `urðina`, `skíman`, `garnið`).
+- **Jedna oprava obsahu (§19.2):** Ehwaz „Hestarnir tveir fylgja hvor öðrum upp á fjall." byl **E001** (nerozparsovatelný) → „**Hestarnir tveir fylgjast að upp fjallið.**" — parsuje čistě a `fylgjast að` je doložená kolokace, jejíž korpusový příklad (*„þau hafa fylgst að í gegnum mest allt lífið"*) nese přesně ten Ehwaz význam.
+- **Vědomé omezení:** obrazy jsou **jen islandsky** — Cowork EN verze nedodal a CODE si obraznost nevymýšlí (§2 / [[copy-always-in-runar-voice]]). EN čtení proto zůstávají na sezónním poolu; efekt v1.4 se ukáže **jen v IS dávkách**. Pokrytí ~2–3 obrazy na runu (Coworkův vlastní cíl je 5–8) → u často opakované runy se bude opakovat; druhá dávka je vítaná.
+- **Affected doc(s):** RUNAR_EVAL_LOG.md
+- **Reversibility:** easy (revert commitu; sezónní pool zůstal nedotčený).

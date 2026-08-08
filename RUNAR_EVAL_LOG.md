@@ -42,7 +42,7 @@ Samotný obsah bydlí v kódu; deník na něj jen odkazuje:
 - prompty + gramatika + korekce → `v2/runar-character.js`
 - obrazové pooly (SEASON_POOLS) + voice profil (`focused`) → `v2/runar-character.js` (pooly) · `v2/runar-config.js` (VOICE_PROFILES)
 - konce/openery/úhly → `v2/runar-utils.js` (ENDING_*, READING_ANGLES)
-- kohorta na měření → `readings.prompt_version` (tag dnes **v1.3**, config; ⚠️ glyf-fix se nasadil ještě pod v1.0 — tag se tehdy nebumpnul, takže jeho efekt NENÍ v eval oddělený od v1.0; „verze" ve spodních tabulkách = plánovací nálepky, ne vždy skutečný tag)
+- kohorta na měření → `readings.prompt_version` (tag dnes **v1.4**, config; ⚠️ glyf-fix se nasadil ještě pod v1.0 — tag se tehdy nebumpnul, takže jeho efekt NENÍ v eval oddělený od v1.0; „verze" ve spodních tabulkách = plánovací nálepky, ne vždy skutečný tag)
 
 ## Jak zapisovat
 Jeden řádek = jedna páka. **Jedna páka na verzi** — když se sáhne na pět věcí naráz,
@@ -76,6 +76,8 @@ nepozná se, která zabrala (proto se bumpuje `RUNAR_PROMPT_VERSION`, ať nová 
 | **v1.3** (tag) | **DEFEKT: life-rune prompt předváděl cold reading** — z IS builderu smazán blok „Stíllíkan" se dvěma vzory, které porušovaly `_noColdRead` stojící ve **stejném** promptu („orkan sem er **þegar** á leið" · „Rúnirnar **sjá hvað þú ert að ganga í gegnum**"), uvozené jako „uč se z tónu". EN blok neměl → srovnána i asymetrie. Proč → RUNAR_DECISIONS.md 2026-08-08. | probe reálného promptu: gate a jeho protipříklad **v jednom promptu**; životní runa = čtení nejvíc vystavené cold readingu | vzor pryč → model nemá co kopírovat | **golden (nově pokryto 4 klíči, dřív ŽÁDNÉ): změněny jen 2 IS klíče, 18 builderů byte-identických** | opraveno |
 | **v1.3** (tag) | **DEFEKT: fantomová životní runa** — 4 spready jmenovaly životní runu v kontextu i když už byla mezi taženými (position-blok ji jmenoval znovu); `_priorityContext` mluvil o „čočce", která v promptu není. Jede v témž tagu (obojí defekt, opravuje se na nulu). Proč → RUNAR_DECISIONS.md 2026-08-08. | golden fixtures: fantomová čočka ve **3 ze 4** případů — i u uživatele BEZ životní runy | fantom = 0; runa jmenovaná 1× | **golden: 12 klíčů změněno, kontrolní `single_*` s reálnou čočkou byte-identický · seed-and-assert 14/14** | opraveno |
 
+| **v1.4** (tag) | **obraznost klíčovaná runou** — 67 Coworkových obrazů (50 přírodních + 17 lidských) vedle sezónního poolu; runový obraz vyhraje, když sedí do aktuální části roku, jinak fallback. Sezónu hlídá **výběr, ne nový zákaz** (KUKY). U spreadů losuje runa z tažených. **Jen IS** — EN verze obrazů nejsou. Proč → RUNAR_DECISIONS.md 2026-08-08. | eval: 100 % obrazů příroda · týž obraz zdobil nesouvisející runy (pool byl klíčovaný sezónou, ne runou) | obraz sedí významu runy · víc domén (domov/práce/tělo/lidé) · žádný obraz mimo sezónu | **prompt: golden 8 IS builderů změněno, 12 ostatních byte-identických · sezónní pravidlo protlačeno napříč buckety (srpnový obraz v lednu = 0)** · čtení: čeká IS dávku | čeká na měření |
+
 ## Páky — nadcházející (z eval 50 IS + 50 EN, 2026-08-02; ověřeno proti kódu)
 
 | verze | co změním | proč (nález) | očekávaný efekt | naměřeno | verdikt |
@@ -85,7 +87,7 @@ nepozná se, která zabrala (proto se bumpuje `RUNAR_PROMPT_VERSION`, ať nová 
 | ~~v1.2(c)~~ | „na konci VŽDY otázka" → podmíněné + ENDING pool rebalance | konec „Hvað?" 68 % | ~1/3 | — | ✅ **HOTOVO = tag v1.1** (nahoře v retrospektivě) |
 | ~~v1.2(a)~~ | vzorové příklady různé tvary | 2 stejné příklady | příklady různé tvary | — | ✅ **HOTOVO** (tag v1.2, retrospektiva): 4 různé tvary EN+IS, Coworkův obsah, IS ověřeno |
 | v1.2(b) | obrazy = víc domén (ne jen příroda) | 100 % obrazů příroda | domény pestré (domov/práce/tělo/lidé) | — | → přesunuto do **v1.3**: 17 lidských obrazů (season-neutral) plní domény přímo v `SEASON_POOLS` (silná páka); profilový text = slabá páka |
-| v1.3 | **imagery cesta 3 (hybrid)**: SEASON_POOLS dostane per-runa značku „hodí se k této runě" | tentýž obraz zdobí nesouvisející runy (season-keyed, ne rune-keyed) | obraz sedí k významu runy · sezónnost zachována | — | čeká |
+| ~~v1.3~~ | imagery cesta 3 (hybrid): SEASON_POOLS + značka per runa | týž obraz zdobil nesouvisející runy | obraz sedí runě · sezónnost zachována | — | ✅ **HOTOVO = tag v1.4** (retrospektiva výš; sezóna řešena výběrem, IS-only)
 
 > Pořadí: defekty (v1.1) hned. Pak jedna páka za verzi (v1.2 focused, v1.3 imagery) — ať je
 > každý posun měřitelný. Cesta 3 (v1.3) je i obsah: Coworkových 50+17 ověřených obrazů = semínko.

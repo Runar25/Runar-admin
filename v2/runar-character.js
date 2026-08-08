@@ -435,11 +435,119 @@ function _seasonBagPick(bucket, kind, ids) {
   return pick;
 }
 
+// ─── RUNE-KEYED IMAGERY (v1.3) ───────────────────────────────────
+// Coworkových 67 obrazů, klíčovaných RUNOU — sezónní pool výš zdobil runu, ke které
+// nepatřil. SEZÓNA ale pořád VEDE: obraz smí soutěžit jen tehdy, když sedí do aktuální
+// části roku, takže srpnový obraz se v lednu nikdy nenabídne. Řeší to VÝBĚR, ne další
+// zákaz v promptu (KUKY 2026-08-08: „zákazy nejsou to, kterým směrem bychom měli jít").
+// Nesedí-li žádný runový obraz, jede sezónní pool jako dosud.
+// ⚠️ Zatím JEN islandsky — EN verze Cowork nedodal a CODE si obraznost nevymýšlí.
+var RUNE_IMG_SEASONS = {
+  any:    ['deepwinter', 'spring', 'earlysummer', 'highsummer', 'autumn', 'darkening'],
+  bright: ['spring', 'earlysummer', 'highsummer', 'autumn'],
+  cold:   ['darkening', 'deepwinter'],
+};
+// [runa, sezónní vhodnost, obraz] — IS ověřeno is-grammar-qa (4 flagy = doložené false-pos).
+var RUNE_IMAGES_IS = [
+  ['Fehu','any','Féð rennur í kvíarnar undir kvöld, hægt og fyrirhafnarlaust.'],
+  ['Fehu','bright','Berjalyngið þyngist af bláberjum þegar ágúst kemur.'],
+  ['Fehu','any','Brauðið kemur heitt út úr ofninum, nóg handa öllum við borðið.'],
+  ['Uruz','any','Urðin stendur af sér hvert vorhret án þess að bifast.'],
+  ['Uruz','any','Hraunið man eldinn enn, þótt mosinn hafi lagst yfir.'],
+  ['Thurisaz','bright','Melgresið sker í lófann þegar þú grípur það of fast.'],
+  ['Thurisaz','any','Sprungan í hrauninu bíður — þú kemst ekki yfir nema stökkva.'],
+  ['Ansuz','bright','Andvarinn ber lóukvakið yfir móann til þín.'],
+  ['Ansuz','any','Hrafninn sest á staurinn og bíður þess að þú hlustir.'],
+  ['Ansuz','any','Rödd í símanum segir það sem þú hefur beðið eftir að heyra.'],
+  ['Raidho','bright','Kindagatan liðast eftir hlíðinni af sjálfu sér.'],
+  ['Raidho','cold','Skafrenningurinn finnur alltaf sömu leiðina milli þúfnanna.'],
+  ['Kenaz','any','Hverinn sýður jafnt og þétt úti í mónum.'],
+  ['Kenaz','any','Glæðurnar lifa undir öskunni fram á morgun.'],
+  ['Kenaz','any','Hendurnar muna handtökin þótt hugurinn hafi gleymt þeim.'],
+  ['Gebo','any','Sjórinn gefur og tekur á fjörunni í sömu andránni.'],
+  ['Gebo','any','Fjaran skilar einu og hirðir annað með hverri báru.'],
+  ['Gebo','any','Dyrnar standa opnar og kaffi bíður á borðinu handa tveimur.'],
+  ['Wunjo','bright','Sólin nær loksins inn í dalinn og allt verður kyrrt.'],
+  ['Wunjo','any','Þú finnur skjól og vindurinn hættir að suða í eyrunum.'],
+  ['Wunjo','any','Þú kemur inn úr kuldanum og einhver hefur kynt ofninn.'],
+  ['Hagalaz','cold','Élið skellur á úr heiðskíru og er farið jafn skjótt.'],
+  ['Hagalaz','cold','Haglið lemur þakið og bráðnar á augabragði.'],
+  ['Nauthiz','cold','Vorhretið lætur lambið leita fast að ylnum.'],
+  ['Nauthiz','any','Rótin brýtur sér leið gegnum grjótið niður að vatninu.'],
+  ['Nauthiz','any','Þú prjónar áfram þótt garnið sé við það að klárast.'],
+  ['Isa','cold','Lognkafaldið fellur beint niður og hylur allt hljóðlaust.'],
+  ['Isa','cold','Tjörnin er lögð hjarni og bíður án þess að biðja um neitt.'],
+  ['Isa','any','Kaffibollinn kólnar á borðinu meðan þú bíður.'],
+  ['Jera','bright','Túnið bíður eftir að þorna áður en það er slegið.'],
+  ['Jera','any','Sólarhringurinn lengist hægt fram á vorið.'],
+  ['Jera','any','Deigið þarf sinn tíma; þú getur ekki flýtt fyrir því.'],
+  ['Eihwaz','any','Reyniviðurinn stendur einn við bæinn og bognar aldrei alveg.'],
+  ['Eihwaz','any','Rótin heldur í urðina þegar allt annað skríður niður.'],
+  ['Perth','any','Áin veltir steinvölunni þar til hún stöðvast — þú sérð ekki hvar.'],
+  ['Perth','any','Eitthvað liggur á botni lónsins og bíður eftir að vera dregið upp.'],
+  ['Perth','any','Bréf liggur óopnað á borðinu og þú veist ekki enn hvað í því stendur.'],
+  ['Algiz','bright','Melgresið bindur sandinn svo hann fjúki ekki burt.'],
+  ['Algiz','any','Varðan vísar leiðina í þoku þótt enginn standi hjá.'],
+  ['Algiz','any','Einhver bíður uppi með ljós í glugganum þar til þú kemur heim.'],
+  ['Sowilo','bright','Miðnætursólin sest aldrei alveg um Jónsmessuna.'],
+  ['Sowilo','bright','Sólin brýtur loks í gegn og glampar á blautu grjóti.'],
+  ['Tiwaz','any','Leiðarsteinninn hallast aldrei, hvað sem á dynur.'],
+  ['Tiwaz','cold','Pólstjarnan stendur kyrr meðan allt annað snýst.'],
+  ['Tiwaz','any','Þú stendur við orð þín þótt það kosti þig svefninn.'],
+  ['Berkana','bright','Birkið laufgast fyrst allra, þótt jörðin sé enn köld.'],
+  ['Berkana','bright','Lömbin stíga fyrstu sporin úti í maí.'],
+  ['Berkana','any','Fyrsta skref barnsins yfir gólfið er óstöðugt en ákveðið.'],
+  ['Ehwaz','any','Hesturinn finnur vaðið yfir jökulána þótt þú sjáir það ekki.'],
+  ['Ehwaz','bright','Hestarnir tveir fylgjast að upp fjallið.'],
+  ['Ehwaz','any','Sá sem gengur með þér heldur sama takti án þess að segja orð.'],
+  ['Mannaz','any','Spegilmyndin í lygnu lóninu bærist við minnsta blæ.'],
+  ['Mannaz','any','Sjórinn les sporin þín í sandinum og afmáir þau.'],
+  ['Mannaz','any','Þú þekkir rithönd þína þótt árin hafi breytt henni.'],
+  ['Laguz','any','Undiraldan finnst í fótunum áður en hún sést.'],
+  ['Laguz','any','Jökuláin rennur grá og þung, full af því sem hún ber að ofan.'],
+  ['Laguz','any','Þú veist svarið í maganum áður en þú getur útskýrt það.'],
+  ['Ingwaz','cold','Fræið liggur í frosinni jörð og bíður síns tíma.'],
+  ['Ingwaz','any','Laukurinn býr sig neðanjarðar löngu áður en hann sést.'],
+  ['Othila','any','Gamli bærinn stendur í tóftum en heldur enn hita í minningunni.'],
+  ['Othila','any','Torfveggurinn sem forfeðurnir hlóðu sígur nú hægt aftur í jörðina.'],
+  ['Othila','any','Lyklarnir að gamla húsinu liggja enn í lófa þínum, þótt þú búir þar ekki lengur.'],
+  ['Dagaz','any','Ljósaskiptin koma án þess að þú takir eftir hvenær nóttin varð að degi.'],
+  ['Dagaz','cold','Fyrsta skíman snýr aftur eftir svartasta skammdegið.'],
+  ['Dagaz','any','Þú vaknar og veist strax að eitthvað hefur breyst um nóttina.'],
+  ['Blank','any','Niðaþokan hylur fjörðinn og þú veist ekki hvað bíður handan hennar.'],
+  ['Blank','any','Allt er kyrrt á undan því sem gerist — enn er allt mögulegt.']
+];
+
+// Obrazy pro runy, které padly, a které se hodí do TÉTO části roku.
+function _runeImageCandidates(drawn, bucket) {
+  var list = (Array.isArray(drawn) ? drawn : [drawn]).filter(Boolean);
+  if (!list.length) return [];
+  var names = list.map(function (r) { return r.n; });
+  return RUNE_IMAGES_IS.filter(function (row) {
+    if (names.indexOf(row[0]) === -1) return false;
+    var seasons = RUNE_IMG_SEASONS[row[1]] || RUNE_IMG_SEASONS.any;
+    return seasons.indexOf(bucket) !== -1;
+  });
+}
+
 function _seasonalImagery(lang, drawn) {
   var m = new Date().getMonth() + 1;
   var bucket = _seasonBucket(m);
   var pool = SEASON_POOLS[bucket];
   if (!pool) return '';
+  // v1.3: nejdřív zkus obraz, který patří přímo k tažené runě. U spreadu je run víc —
+  // kandidáti se sesypou ze VŠECH tažených a jeden se vylosuje (ne vždy první pozice,
+  // jinak by obraz systémově seděl jen k jednomu slotu). KUKY 2026-08-08.
+  var runePhrase = '';
+  if (lang === 'is') {
+    var cand = _runeImageCandidates(drawn, bucket);
+    if (cand.length) {
+      var cIds = cand.map(function (row) { return row[0] + '|' + row[2].slice(0, 24); });
+      var cPick = _seasonBagPick(bucket, 'rune', cIds);
+      var hit = cand[cIds.indexOf(cPick)] || cand[Math.floor(Math.random() * cand.length)];
+      runePhrase = hit[2].replace(/\.$/, '');   // věta pokračuje, tečka by ji rozťala
+    }
+  }
   var kind = (Array.isArray(drawn) ? drawn.some(_isColdRune) : _isColdRune(drawn)) ? 'cold' : 'bright';
   var images = pool[kind];
   if (!images || !images.length) { kind = 'bright'; images = pool.bright; }
@@ -447,7 +555,9 @@ function _seasonalImagery(lang, drawn) {
   var pickId = _seasonBagPick(bucket, kind, ids);
   var img = images[0];
   for (var i = 0; i < images.length; i++) { if (images[i].id === pickId) { img = images[i]; break; } }
-  var phrase = (lang === 'is') ? img.is : img.en;
+  // Runový obraz vyhrává nad sezónním, ale VĚTA kolem je pořád ta samá, nasazená formulace —
+  // jedna formulace, ne dvě (§18.1). Sezónnost hlídá výběr výš, ne další věta v promptu.
+  var phrase = runePhrase || ((lang === 'is') ? img.is : img.en);
   if (lang === 'is')
     return 'ÁRSTÍÐARMYND (ef hún kemur): ef náttúrumynd birtist í lestrinum, láttu hana koma frá þessari íslensku árstíð — ' + phrase + '. Aldrei úr annarri árstíð (enginn snjór að sumri); köld rúna verður kuldinn sem á heima núna, ekki vetur.';
   return 'SEASONAL IMAGE (if one arises): if a nature image appears in the reading, let it come from this Icelandic season — ' + phrase + '. Never from another season (no snow in summer); a cold rune becomes the cold that belongs to now, not winter.';
