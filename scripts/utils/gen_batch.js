@@ -54,7 +54,7 @@ const SPREADS = {
 };
 
 // ─── CLI ───────────────────────────────────────────────
-const FLAGS = ['dry-run', 'list', 'help', 'yes', 'allow-blank', 'all-runes', 'solo', 'check-token'];
+const FLAGS = ['dry-run', 'list', 'help', 'yes', 'allow-blank', 'all-runes', 'solo', 'check-token', 'append'];
 
 function die(msg) { console.error('\n  ERROR: ' + msg + '\n'); process.exit(1); }
 
@@ -161,6 +161,7 @@ const USAGE = [
   '  --delay     6500           ms between requests',
   '  --dry-run   build prompts, write JSONL, make NO network calls (free)',
   '  --check-token  say where the admin token comes from and whether it is still valid, then exit',
+  '  --append    add to an existing output file instead of starting it fresh (default: fresh)',
   '  --allow-blank  let the random sampler draw the Blank rune',
   '  --solo      nobody else is on the proxy IP — go faster (' + SOLO_DELAY_MS + ' ms spacing)',
   '  --yes       required above ' + MAX_JOBS_NO_YES + ' requests',
@@ -412,8 +413,19 @@ async function main() {
     } catch (e) { /* marker is best-effort */ }
   }
 
+  // Rows stream out with appendFileSync (a crash keeps what already came back). That means
+  // the file must be TRUNCATED here, or a re-run silently mixes into the previous batch while
+  // .meta.json — written fresh every run — claims only the last one. A measured batch that
+  // quietly contains two runs is worse than no batch. --append opts back in deliberately.
+  if (!args['append']) {
+    for (const f of [outPath, txtPath, askTxtPath]) {
+      try { if (fs.existsSync(f)) fs.writeFileSync(f, '', 'utf8'); } catch (e) { /* best-effort */ }
+    }
+  }
+
   fs.writeFileSync(outPath + '.meta.json', JSON.stringify({
     source: 'synthetic', gen_ts: genTs, argv: process.argv.slice(2),
+    append_mode: !!args['append'],
     prompt_version: PROMPT_VERSION, lang: lang, spread: spreadName,
     max_tokens: maxTokens, spread_cost: spreadCost, season_bucket: seasonBucket,
     system_sha256: sysSha, system_prompt: sysPrompt, active_char: null,
