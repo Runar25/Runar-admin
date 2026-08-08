@@ -2221,3 +2221,15 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 - **Zbytek (do dalšího commitu):** když area/seeking JSOU, `_priorityContext` pořád říká „let the life-rune lens recede", ačkoli čočka neexistuje — týká se i všech 4 spreadů (life ∈ tažené runy). Řeší commit se spready (D4).
 - **Affected doc(s):** RUNAR_EVAL_LOG.md (naměřená čísla + tag v1.3)
 - **Reversibility:** easy (revert commitu; `lifeRuneNote` je v gitu).
+
+---
+
+## 2026-08-08 — Životní runa se v čtení jmenuje JEDNOU a prompt nemluví o čočce, která tam není
+
+- **Typ:** chování čtení (prompt) — 4 spready + single
+- **Co se změnilo:** (a) **D4:** všechny 4 spready psaly `LífsRúna: X` do kontextu i tehdy, když ta runa byla mezi taženými — a tam ji position-blok jmenoval znovu. Teď se kontextový řádek pošle jen tehdy, když životní runa **skutečně dělá čočku** (nebyla tažena). (b) **Fantomová čočka:** `_priorityContext` říkal „nech životní-runovou čočku ustoupit" i v promptech, kde žádná čočka není. Klauzule je teď podmíněná (`lensOn`). (c) Pravidlo „byla životní runa tažena?" má **jedno místo** — `_lifeWasDrawn`, sdílí ho `_lensContext` i buildery (§18.1), aby si nikdy neodporovaly.
+- **Proč:** táž třída defektu jako self-reference (v1.3): prompt upozorňuje model zpět na životní runu, i když má ustoupit. **Změřeno na golden fixtures: fantom byl ve 3 ze 4 případů** — včetně `single_noq`, tedy uživatele, který **životní runu vůbec nemá** (nezadal datum narození), a přesto se modelu říkalo, ať nechá „čočku" ustoupit. Handoff (CODE-reader) hlásil jen Kříž a jen D4; audit ukázal, že D4 je ve **všech 4** spreadech a fantom sahá i mimo ně.
+- **Ověřeno (§18.3 + §19.1):** golden diff = změněno 12 klíčů (4 spready ×2 jazyky + `single_noq` + `single_selflife`); **kontrolní případ `single_*`, kde čočka legitimně existuje, zůstal byte-identický**. Seed-and-assert 14/14: fantom pryč ve všech třech bezčočkových případech, runa dál v position-bloku, tie-breaker nezmizel, u reálné čočky klauzule ZŮSTALA.
+- **Nezměněno vědomě:** IS věta tie-breakeru se nepřepisovala — `E001` (nerozparsovatelná) má **i původní shipnutá verze**, takže tohle není regrese; přepis = vlastní tag + golden → `RUNAR_BACKLOG.md`.
+- **Affected doc(s):** RUNAR_BACKLOG.md (E001 + rozdíl Kříže), RUNAR_EVAL_LOG.md (jede v tagu v1.3)
+- **Reversibility:** easy (revert commitu).

@@ -553,11 +553,18 @@ function _intentionContext(intention, lang) {
 //   life rune = quiet LENS (subtext) . area = DOMAIN (must land) . seeking = REGISTER.
 // drawn = one rune (single) or an array of runes (spread). The life rune can never be both
 // the lens and a subject of the same reading, so it steps aside when it was itself drawn.
+// Byla životní runa sama tažena? Pak nemůže být čočkou (je předmětem). JEDNO místo pro to
+// pravidlo (§18.1) — čte ho `_lensContext` i buildery, aby si dva nikdy neodporovaly.
+function _lifeWasDrawn(life, drawn) {
+  if (!life) return false;
+  return (Array.isArray(drawn) ? drawn : [drawn]).filter(Boolean)
+    .some(function (r) { return r && r.n === life.n; });
+}
 function _lensContext(life, drawn, lang) {
   if (!life) return '';
   var list = (Array.isArray(drawn) ? drawn : [drawn]).filter(Boolean);
   if (!list.length) return '';
-  if (list.some(function (r) { return r.n === life.n; })) return '';
+  if (_lifeWasDrawn(life, list)) return '';
   var many = list.length > 1;
   if (lang === 'is') {
     var subjIs = many ? 'rúnurnar sem dregnar voru' : rn(list[0]);
@@ -573,16 +580,24 @@ function _lensContext(life, drawn, lang) {
 
 // Tie-breaker when life rune + area + seeking do not gather into one image. Was duplicated
 // inside RP_SINGLE only (§18) — now ONE helper serving single + all spreads.
-function _priorityContext(drawn, lang) {
+// `lensOn` = životní runa je čočkou TOHOTO čtení. Když není (nebyla zadána, nebo byla sama
+// tažena), klauzule o ustupující čočce se vynechá — jinak prompt mluví o čočce, která v něm
+// není. Fantomový odkaz je táž třída defektu jako self-reference (v1.3): upozorní model zpět
+// na životní runu. Měřeno golden fixtures: fantom byl ve 3 ze 4 případů.
+function _priorityContext(lensOn, drawn, lang) {
   var list = (Array.isArray(drawn) ? drawn : [drawn]).filter(Boolean);
   if (!list.length) return '';
   var many = list.length > 1;
   if (lang === 'is') {
     var subjIs = many ? 'rúnunum sem dregnar voru' : rn(list[0]);
-    return 'Ef þetta rennur ekki saman í eina náttúrlega mynd: Haltu ' + subjIs + ' fremst, virtu leitina og sviðið, og láttu lífsrúnu-linsuna hopa — hún má hverfa alveg fremur en að vera þvinguð. Aldrei hlaða þessu upp sem aðskildum staðhæfingum.';
+    return lensOn
+      ? 'Ef þetta rennur ekki saman í eina náttúrlega mynd: Haltu ' + subjIs + ' fremst, virtu leitina og sviðið, og láttu lífsrúnu-linsuna hopa — hún má hverfa alveg fremur en að vera þvinguð. Aldrei hlaða þessu upp sem aðskildum staðhæfingum.'
+      : 'Ef þetta rennur ekki saman í eina náttúrlega mynd: Haltu ' + subjIs + ' fremst og virtu leitina og sviðið. Aldrei hlaða þessu upp sem aðskildum staðhæfingum.';
   }
   var subjEn = many ? 'the runes that were drawn' : rn(list[0]);
-  return 'If these do not gather into one natural image: keep ' + subjEn + ' in front, honour the seeking and the area, and let the life-rune lens recede — it may vanish entirely rather than be forced. Never stack them as separate statements.';
+  return lensOn
+    ? 'If these do not gather into one natural image: keep ' + subjEn + ' in front, honour the seeking and the area, and let the life-rune lens recede — it may vanish entirely rather than be forced. Never stack them as separate statements.'
+    : 'If these do not gather into one natural image: keep ' + subjEn + ' in front and honour the seeking and the area. Never stack them as separate statements.';
 }
 function _domainContext(area, lang) {
   if (!area) return '';
@@ -906,7 +921,8 @@ var RP_SINGLE = {
 function buildReadingPromptSingle(u, drawn, lang, corrections) {
   var S = RP_SINGLE[lang] || RP_SINGLE.en;
   var life = u.lifeRune;
-  var isLifeRune = !!(life && drawn.n === life.n);
+  var isLifeRune = _lifeWasDrawn(life, drawn);
+  var lensOn = !!life && !isLifeRune;
   var drawnKws = rk(drawn).split(',').map(function(s){ return s.trim(); }).filter(Boolean);
   var pickedKws = drawnKws.sort(function(){ return 0.5 - Math.random(); }).slice(0, Math.min(3, drawnKws.length)).join(', ');
   var worldRef = rworld(drawn) || S.worldFb(pickedKws);
@@ -942,7 +958,7 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     u.seeking ? _registerContext(u.seeking, lang) : '',
     hasQ ? S.qBranch(rn(drawn), drawn.g, u.question) : S.noqBranch(rn(drawn), drawn.g, worldRef),
     _endingShape(drawn, lang),
-    ((life && !isLifeRune) || u.area || u.seeking) ? _priorityContext(drawn, lang) : '',
+    (lensOn || u.area || u.seeking) ? _priorityContext(lensOn, drawn, lang) : '',
     S.closing(u.name) + (S.langInstr ? S.langInstr : '') + getCorrPrompt(lang, corrections),
     _addressContext(lang),
     S.json,
@@ -1056,9 +1072,10 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
   var S = RP_KRIZ[lang] || RP_KRIZ.en;
   var rCtr = runes[0], rAbo = runes[1], rBel = runes[2], rBeh = runes[3], rAhe = runes[4];
   var life = u.lifeRune;
+  var lensOn = !!life && !_lifeWasDrawn(life, runes);
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
-    life      ? S.lifeRune + ': ' + rn(life) : '',
+    lensOn    ? S.lifeRune + ': ' + rn(life) : '',
     u.area    ? S.area + ': ' + u.area : '',
     u.seeking ? S.seeking + ': ' + (Array.isArray(u.seeking) ? u.seeking.join(S.seekJoin) : u.seeking) : '',
     u.intention ? _intentionContext(u.intention, lang) : '',
@@ -1080,7 +1097,7 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
     u.area ? _domainContext(u.area, lang) : '',
     u.seeking ? _registerContext(u.seeking, lang) : '',
     _endingShape(runes, lang),
-    (u.lifeRune || u.area || u.seeking) ? _priorityContext(runes, lang) : '',
+    (lensOn || u.area || u.seeking) ? _priorityContext(lensOn, runes, lang) : '',
   ].concat(S.instructions(ctrName)).concat([
     S.closing(u.name) + (S.langInstr ? ' ' + S.langInstr : '') + getCorrPrompt(lang, corrections),
     _addressContext(lang),
@@ -1134,9 +1151,10 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
   var S = RP_NORNS[lang] || RP_NORNS.en;
   var rUrd = runes[0], rVerd = runes[1], rSkul = runes[2];
   var life = u.lifeRune;
+  var lensOn = !!life && !_lifeWasDrawn(life, runes);
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
-    life      ? S.lifeRune + ': ' + rn(life) : '',
+    lensOn    ? S.lifeRune + ': ' + rn(life) : '',
     u.area    ? S.area + ': ' + u.area : '',
     u.seeking ? S.seeking + ': ' + (Array.isArray(u.seeking) ? u.seeking.join(S.seekJoin) : u.seeking) : '',
     u.intention ? _intentionContext(u.intention, lang) : '',
@@ -1155,7 +1173,7 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
     u.area ? _domainContext(u.area, lang) : '',
     u.seeking ? _registerContext(u.seeking, lang) : '',
     _endingShape(runes, lang),
-    (u.lifeRune || u.area || u.seeking) ? _priorityContext(runes, lang) : '',
+    (lensOn || u.area || u.seeking) ? _priorityContext(lensOn, runes, lang) : '',
   ].concat(S.beats).concat([
     S.bigInstruction(u.name),
     S.json,
@@ -1203,9 +1221,10 @@ var RP_HORSESHOE = {
 function buildHorseshoePromptSeven(u, runes, lang, corrections) {
   var S = RP_HORSESHOE[lang] || RP_HORSESHOE.en;
   var life = u.lifeRune;
+  var lensOn = !!life && !_lifeWasDrawn(life, runes);
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
-    life      ? S.lifeRune + ': ' + rn(life) : '',
+    lensOn    ? S.lifeRune + ': ' + rn(life) : '',
     u.area    ? S.area + ': ' + u.area : '',
     u.seeking ? S.seeking + ': ' + (Array.isArray(u.seeking) ? u.seeking.join(S.seekJoin) : u.seeking) : '',
     u.intention ? _intentionContext(u.intention, lang) : '',
@@ -1227,7 +1246,7 @@ function buildHorseshoePromptSeven(u, runes, lang, corrections) {
     u.area ? _domainContext(u.area, lang) : '',
     u.seeking ? _registerContext(u.seeking, lang) : '',
     _endingShape(runes, lang),
-    (u.lifeRune || u.area || u.seeking) ? _priorityContext(runes, lang) : '',
+    (lensOn || u.area || u.seeking) ? _priorityContext(lensOn, runes, lang) : '',
   ].concat(S.beats).concat([
     S.closing(u.name),
     _addressContext(lang),
@@ -1284,9 +1303,10 @@ var RP_YGGDRASIL = {
 function buildYggdrasilPromptNine(u, runes, lang, corrections) {
   var S = RP_YGGDRASIL[lang] || RP_YGGDRASIL.en;
   var life = u.lifeRune;
+  var lensOn = !!life && !_lifeWasDrawn(life, runes);
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
-    life      ? S.lifeRune + ': ' + rn(life) : '',
+    lensOn    ? S.lifeRune + ': ' + rn(life) : '',
     u.area    ? S.area + ': ' + u.area : '',
     u.seeking ? S.seeking + ': ' + (Array.isArray(u.seeking) ? u.seeking.join(S.seekJoin) : u.seeking) : '',
     u.intention ? _intentionContext(u.intention, lang) : '',
@@ -1312,7 +1332,7 @@ function buildYggdrasilPromptNine(u, runes, lang, corrections) {
     u.area ? _domainContext(u.area, lang) : '',
     u.seeking ? _registerContext(u.seeking, lang) : '',
     _endingShape(runes, lang),
-    (u.lifeRune || u.area || u.seeking) ? _priorityContext(runes, lang) : '',
+    (lensOn || u.area || u.seeking) ? _priorityContext(lensOn, runes, lang) : '',
   ].concat(S.beats).concat([
     S.closing(u.name),
     _addressContext(lang),
