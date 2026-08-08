@@ -73,14 +73,40 @@ function jwtExpiry(tok) {
   } catch (e) { return null; }
 }
 
+// Returns a human-readable reason the token cannot be used, or null when it looks usable.
+// Shape first: a pasted placeholder ("PASTE_TOKEN") must fail HERE with a clear sentence,
+// not later as a bare 401 from the proxy.
+function tokenProblem(tok) {
+  const parts = tok.split('.');
+  if (parts.length !== 3 || !parts[1])
+    return 'this is not a JWT (a token has three dot-separated parts) — looks like placeholder text got saved instead of the real value';
+  const exp = jwtExpiry(tok);
+  if (exp && exp.getTime() < Date.now()) return 'expired ' + exp.toISOString();
+  return null;
+}
+
+// Env first, then the file — but a token that CANNOT be used never shadows one that can.
+// (A stale env var silently beating a freshly saved file cost a debugging round once.)
 function resolveEvalToken() {
+  const candidates = [];
   const fromEnv = (process.env.RUNAR_EVAL_TOKEN || '').trim();
-  if (fromEnv) return { token: fromEnv, source: 'env RUNAR_EVAL_TOKEN' };
+  if (fromEnv) candidates.push({ token: fromEnv, source: 'env RUNAR_EVAL_TOKEN' });
   try {
     const fromFile = fs.readFileSync(TOKEN_FILE, 'utf8').trim();
-    if (fromFile) return { token: fromFile, source: TOKEN_FILE };
+    if (fromFile) candidates.push({ token: fromFile, source: TOKEN_FILE });
   } catch (e) { /* no file = fine, handled by the caller */ }
-  return { token: '', source: null };
+  candidates.forEach(function (c) { c.problem = tokenProblem(c.token); });
+  const usable = candidates.filter(function (c) { return !c.problem; })[0];
+  if (usable) return { token: usable.token, source: usable.source, candidates: candidates };
+  return { token: '', source: '', candidates: candidates };
+}
+
+// One-line-per-candidate report, e.g. "  env RUNAR_EVAL_TOKEN — expired 2026-08-08T13:20:29.000Z"
+function tokenReport(candidates) {
+  if (!candidates || !candidates.length) return '  (nothing found — no env var, no file)';
+  return candidates.map(function (c) {
+    return '  ' + c.source + ' — ' + (c.problem || 'usable');
+  }).join('\n');
 }
 
 const TOKEN_HELP =
@@ -200,14 +226,18 @@ async function main() {
 
   if (args['check-token']) {
     const r = resolveEvalToken();
-    if (!r.token) { console.error('\n  No admin token found.\n  ' + TOKEN_HELP + '\n'); process.exit(1); }
+    console.log('\n  Places checked (in this order):');
+    console.log(tokenReport(r.candidates));
+    if (!r.token) {
+      console.error('\n  No usable token.\n  ' + TOKEN_HELP + '\n');
+      process.exit(1);
+    }
     const exp = jwtExpiry(r.token);
-    const ok  = !exp || exp.getTime() > Date.now();
-    console.log('\n  source : ' + r.source);
-    console.log('  length : ' + r.token.length + ' chars  (the value itself is never printed)');
-    console.log('  expires: ' + (exp ? exp.toISOString() + (ok ? '  — still valid' : '  — EXPIRED, refresh it') : 'unknown (no exp claim)'));
+    console.log('\n  Using : ' + r.source);
+    console.log('  length: ' + r.token.length + ' chars  (the value itself is never printed)');
+    console.log('  valid until: ' + (exp ? exp.toISOString() : 'unknown (no exp claim)'));
     console.log('');
-    process.exit(ok ? 0 : 1);
+    process.exit(0);
   }
 
   const ctx  = makeSandbox();
@@ -324,12 +354,9 @@ async function main() {
   //   (await sb.auth.getSession()).data.session.access_token
   const resolved   = resolveEvalToken();
   const EVAL_TOKEN = resolved.token;
-  const tokenExp   = EVAL_TOKEN ? jwtExpiry(EVAL_TOKEN) : null;
   if (!args['dry-run'] && !EVAL_TOKEN)
-    die('Proxy requires an admin token (fd78a91) — none found.\n  ' + TOKEN_HELP);
-  if (!args['dry-run'] && tokenExp && tokenExp.getTime() < Date.now())
-    die('The admin token expired ' + tokenExp.toISOString() + ' (source: ' + resolved.source + ').\n  '
-      + 'Refresh it, otherwise every request comes back 401.\n  ' + TOKEN_HELP);
+    die('No usable admin token (the proxy requires one since fd78a91).\n\n'
+      + tokenReport(resolved.candidates) + '\n\n  ' + TOKEN_HELP);
   const PROMPT_VERSION = G('RUNAR_PROMPT_VERSION');
   const maxTokens = (spreadName === 'single')
     ? G('RUNAR_MODES').quick_reading.max_tokens
