@@ -1006,7 +1006,7 @@ var RP_SINGLE = {
   is: {
     PERSON:'MANNESKJAN', LIFE:'LÍFSRÚNA', DRAWN:'DREGNA RÚNA', focus:'áhersla',
     REALM_life:'Heimur', REALM_drawn:'Heimur', ELEM:'Frumefni',
-    AREA:'SVIÐ', SEEK:'LEITAÐ', Q:'SPURNING',
+    AREA:'SVIÐ', SEEK:'LEITAÐ',
     useFormula:true, langInstr:'',
     worldFb:function(pk){ return 'lifandi leiðin'; },
     formula:function(f){ return 'Íslensk rúnaþula (flettu inn náttúrlega einu sinni): "' + f + '"'; },
@@ -1020,7 +1020,7 @@ var RP_SINGLE = {
   en: {
     PERSON:'PERSON', LIFE:'LIFE RUNE', DRAWN:'DRAWN RUNE', focus:'focus on',
     REALM_life:'Realm', REALM_drawn:'World', ELEM:'Elements',
-    AREA:'AREA', SEEK:'SEEKING', Q:'QUESTION',
+    AREA:'AREA', SEEK:'SEEKING',
     useFormula:false, langInstr:'Respond in English.',
     worldFb:function(pk){ return pk; },
     formula:function(f){ return 'Icelandic rune formula (weave naturally once): "' + f + '"'; },
@@ -1057,7 +1057,6 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     isLifeRune ? '' : lifeCtx,
     drawnCtx,
     u.intention ? _intentionContext(u.intention, lang) : '',
-    u.question ? S.Q + ': "' + u.question + '"' : '',
   ].filter(Boolean).join('\n');
   var formula = (S.useFormula && drawn.formula_is) ? S.formula(drawn.formula_is) : '';
   return [
