@@ -1015,7 +1015,11 @@ var RP_SINGLE = {
     PERSON:'MANNESKJAN', LIFE:'LÍFSRÚNA', DRAWN:'DREGNA RÚNA', focus:'áhersla',
     REALM_life:'Heimur', REALM_drawn:'Heimur', ELEM:'Frumefni',
     AREA:'SVIÐ', SEEK:'LEITAÐ',
-    useFormula:true, langInstr:'',
+    // Rúnaþula VYPNUTA 2026-08-09 (KUKY): byla to hotová DEFINICE runy tři řádky nad
+    // zákazem definic (_describeRule) — a citovaná věta se navíc opisovala doslova
+    // (2/2 v ostrých IS čteních). EN ji nikdy nedostávalo. Formule zůstávají v
+    // runar-runes.js jako lore; jen se neinjektují. Zapnout = vrátit na true.
+    useFormula:false, langInstr:'',
     worldFb:function(pk){ return 'lifandi leiðin'; },
     formula:function(f){ return 'Íslensk rúnaþula (flettu inn náttúrlega einu sinni): "' + f + '"'; },
     angleIntro:'LESTRARHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og upphaf): ',
