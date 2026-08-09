@@ -7,7 +7,7 @@ roztroušené po git logu a cizích sandboxech. (KUKY 2026-08-02.)
 
 ## Kontrolní mapa hlasu — co lze měnit, co ne, nad čím uvažovat (§20: jen ukazatele)
 **🗺 Vizuální mapa (snapshot):** https://claude.ai/code/artifact/e32dbd2b-5277-414a-a187-8277efe99f69 — celý oblouk vrstev (system prompt · reading stack · korekce → opus-4-8 → JSON), „kde ladit nuanci" a „co je mrtvé". Pravda = kód (character.js/config/proxy); po změnách přepublikovat na stejné URL. Detail → memory `prompt-map-artifact`.
-⚠️ **Nález k ověření v DB:** reader načítá charakter z `runar_character` (active=true, app.js:1380) i když je editor mrtvý → starý řádek by přebil file `DEF_CHAR`. Ověřit `select id,active from public.runar_character where active=true;`.
+✅ **Ověřeno 2026-08-07:** `runar_character` má **0 aktivních řádků** → file `DEF_CHAR` je živý hlas. Mrtvý loader (`app.js:1380`) zbývá smazat → `RUNAR_BACKLOG.md`.
 
 ⭐ **Rozhodující fakt:** model POSLECHNE **user** prompt, **system** prompt z velké části IGNORUJE.
 → Reálné páky jsou v USER promptu. Úpravy system promptu (identita, zákazy, voice profil) mají
@@ -32,7 +32,7 @@ SLABÝ účinek — proto „přepiš voice profil" většinou nehne jehlou; sá
 - Data run + význam pozic spreadů = 🔒/📜 (runar-runes.js / RUNAR_DESIGN.md)
 - Struktura pipeline + JSON kontrakt = 🏛 architektura (CLAUDE.md „Reading systém — stav")
 
-**❓ NAD ČÍM UVAŽOVAT:** tabulka „nadcházející" níž (v1.2/v1.3) · zda voice profil vůbec držet
+**❓ NAD ČÍM UVAŽOVAT:** tabulka „nadcházející" níž (12 položek) · zda voice profil vůbec držet
 v system promptu (model ho ignoruje) · dead/lab zapojit-nebo-zabít (`buildSysPromptV2`, `VARIABILITY POOLS`).
 
 > Jak se čtení skládá (pořadí toku pipeline) → CLAUDE.md „Reading systém — stav". Proč každé změny → RUNAR_DECISIONS.md.
@@ -78,19 +78,26 @@ nepozná se, která zabrala (proto se bumpuje `RUNAR_PROMPT_VERSION`, ať nová 
 
 | **v1.4** (tag) | **obraznost klíčovaná runou** — 67 Coworkových obrazů (50 přírodních + 17 lidských) vedle sezónního poolu; runový obraz vyhraje, když sedí do aktuální části roku, jinak fallback. Sezónu hlídá **výběr, ne nový zákaz** (KUKY). U spreadů losuje runa z tažených. **Jen IS** — EN verze obrazů nejsou. Proč → RUNAR_DECISIONS.md 2026-08-08. | eval: 100 % obrazů příroda · týž obraz zdobil nesouvisející runy (pool byl klíčovaný sezónou, ne runou) | obraz sedí významu runy · víc domén (domov/práce/tělo/lidé) · žádný obraz mimo sezónu | **prompt: golden 8 IS builderů změněno, 12 ostatních byte-identických · sezónní pravidlo protlačeno napříč buckety (srpnový obraz v lednu = 0)** · čtení: čeká IS dávku | čeká na měření |
 
-## Páky — nadcházející (z eval 50 IS + 50 EN, 2026-08-02; ověřeno proti kódu)
+## Páky — nadcházející (stav 2026-08-08; hotové jsou v retrospektivě výš, §20 je neopisuje)
 
-| verze | co změním | proč (nález) | očekávaný efekt | naměřeno | verdikt |
-|---|---|---|---|---|---|
-| v1.1 | **DEFEKT: glyf (ᚠ) ven z textu čtení** — vyříznut z 16 míst / 7 produkčních builderů (single·4 spready·life-rune IS+EN), oba jazyky. `:495` lab a `:940` mrtvý param nechány (glyf se do textu nedostane). | model kopíroval glyf z promptu do prózy — 3/50 EN | glyf v próze = 0 | **prompt: 0 glyfů ve všech 7 builderech ×2 jazyky (sandbox probe)** · čtení: sledovat příští dávkou (model může glyf znát z tréninku i bez vzoru v promptu) | opraveno (zdroj vzoru pryč) |
-| v1.1 | **DEFEKT: tvrdé IS tvary** → `runar_corrections` (in-prompt). Cowork dodal + ověřeno is-vazba: `hendin→höndin` · `háan skörð→hátt skarð` (skarð=hk) · `hræðir við→hreyfir við` (hreyfa við+þgf). `fær→fer` = riziko (fær jinde platné) → tight context. Kalky (`í einu→í senn`, `berhögg` neúplný) = checklist, NE slepá náhrada. `skiljir` NEopravovat (platný vth). | model-slip ve skloňování | dané tvary zmizí | — | ✅ **vloženo do DB** (CLI, 17 řádků celkem): `hendin`, `háan skörð`. `hræða→hreyfa` už bylo (nepřidáno 2×). `fær`/kalky NEvloženo (riziko/checklist). |
-| ~~v1.2(c)~~ | „na konci VŽDY otázka" → podmíněné + ENDING pool rebalance | konec „Hvað?" 68 % | ~1/3 | — | ✅ **HOTOVO = tag v1.1** (nahoře v retrospektivě) |
-| ~~v1.2(a)~~ | vzorové příklady různé tvary | 2 stejné příklady | příklady různé tvary | — | ✅ **HOTOVO** (tag v1.2, retrospektiva): 4 různé tvary EN+IS, Coworkův obsah, IS ověřeno |
-| v1.2(b) | obrazy = víc domén (ne jen příroda) | 100 % obrazů příroda | domény pestré (domov/práce/tělo/lidé) | — | → přesunuto do **v1.3**: 17 lidských obrazů (season-neutral) plní domény přímo v `SEASON_POOLS` (silná páka); profilový text = slabá páka |
-| ~~v1.3~~ | imagery cesta 3 (hybrid): SEASON_POOLS + značka per runa | týž obraz zdobil nesouvisející runy | obraz sedí runě · sezónnost zachována | — | ✅ **HOTOVO = tag v1.4** (retrospektiva výš; sezóna řešena výběrem, IS-only)
+| # | co změnit | proč (změřeno) | čeká na |
+|---|---|---|---|
+| 1 | **obrazy pro runy, kde je díra** — Raidho má JEDINÝ obraz celý rok (= vždy tatáž věta, přesně „bergmál"), Isa/Ingwaz/Thurisaz/Berkana jediný aspoň v jednom období, **Sowilo** (2 období) a **Hagalaz** (4) nemají žádný → fallback | audit 2026-08-08, protlačeno všemi 6 obdobími | **Cowork** — obraznost CODE nevymýšlí |
+| 2 | **počítadlo obrazů → „jeden pohyb, ne seznam"** — `DEF_CHAR.grammar` říká „EXACTLY ONE… count the images… delete the rest", ale záměr ve voice profilu zní „crowded says nothing". Počítadlo zakazuje i **dobrý** případ (dva obrazy, kde druhý rozvíjí první — KUKY to na reálném čtení schválil) | audit + rozbor čtení Raidho/Gebo | rozhodnutí ownera → vlastní tag + eval |
+| 3 | **IS rúnaþula = hotová DEFINICE tři řádky nad zákazem definic** (`RP_SINGLE.is.useFormula:true`, EN má false). Navíc citovaná fixní věta = třída, u které změřeno 15/25 doslovného opisu | audit 2026-08-08 | owner/Cowork (lore) |
+| 4 | **T3 zbytek: úhel č. 8 × pravidlo čočky** — `READING_ANGLES[7]` „životní runa mluví první" × `_lensContext` „nikdy ji nejmenuj". Padne v 1 z 8 čtení | kritika 2026-08-06 + audit | — (jde udělat hned) |
+| 5 | **dva pokyny si nárokují první větu** — úhel („otevři obrazem") × `qBranch`/`noqBranch` („Open with X"). V IS doslovná srážka: obojí `Byrjaðu á…` | audit 2026-08-08 | EN jde hned; IS přeformulování = Cowork |
+| 6 | **T1 dedup** — „studená runa v létě" 2× (voice profil + `_seasonalImagery`) · **otázka tazatele doslova 2×** (`QUESTION:` + `qBranch`) | kritika 2026-08-06, ověřeno na sestaveném promptu | — (jde udělat hned) |
+| 7 | **vzorová věta učí zakázané** — jeden ze 4 příkladů ve voice profilu je označen „tvær kyrrar myndir / two still images", zatímco pravidlo žádá přesně jeden obraz | audit 2026-08-08 | Cowork (je to jeho copy) |
+| 8 | **délka přetéká** — medián single čtení **47–78 slov** proti zadaným 38–45, ve všech verzích | 271 reálných čtení | — (souvisí s #2: obraz zabírá rozpočet) |
+| 9 | **output linter** — `journey`/`embrace`/`empower` nemají kontrolu na VÝSTUPU (`check-is` čte zdroj) | kritika §19 díra | — |
+| 10 | **T4 škrty** — vzhled Rúnara · PURPOSE „posbírej kontext" (kontext už je vložený) | kritika 2026-08-06 | — |
+| 11 | **v1.1 zbytek: kalky** — `eitt strá í einu → í senn` · `standa í berhögg → í berhöggi við` = checklist-pravidlo, NE slepá korekce. `fær→fer` vědomě NEvloženo (fær je jinde platné) | Cowork eval | zapsat do `IS_NATIVE_CHECKLIST.md` |
+| 12 | **EN nemá runové obrazy** — v1.4 je IS-only, takže EN dávky efekt neukážou | v1.4 | Cowork (EN verze obrazů) |
 
-> Pořadí: defekty (v1.1) hned. Pak jedna páka za verzi (v1.2 focused, v1.3 imagery) — ať je
-> každý posun měřitelný. Cesta 3 (v1.3) je i obsah: Coworkových 50+17 ověřených obrazů = semínko.
+> **Pravidlo pořadí:** jedna páka = jeden tag = jedno měření. Nejdřív to, co nemá riziko (#4, #6),
+> pak to, co čeká na obsah (#1, #7, #12), a #2/#3 až s rozhodnutím ownera — mění hlas.
+
 
 ## Překombinovanost promptu — kritika 2026-08-06 (plán oprav, k EVALU)
 ⚠️ **Runar FUNGUJE — opravit, ne rozbít.** Pravidlo stejné jako výš: **1 páka/verze, bump `PROMPT_VERSION`, eval PŘED/PO, ship jen bez regrese** (§18.4/§24). Dokázáno = co se DUPLIKUJE; efekt škrtu na kvalitu = **hypotéza**, ne jistota. Detail kritiky: task `wd54cabfp` (ephemeral) · vizuální mapa: memory `prompt-map-artifact`.
