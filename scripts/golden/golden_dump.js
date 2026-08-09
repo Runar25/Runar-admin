@@ -51,6 +51,7 @@ function grab(key, fn){ try { _OUT[key] = fn(); } catch(e){ _OUT[key] = 'ERROR: 
 var samplecorr = [{ from:'Arctic', to:'Norðurljós', lang:'both', context:'test' }];
 ['is','en'].forEach(function(L){
   lang = L;
+  grab('system_'+L,      function(){ return buildSysPrompt(null, L); });
   grab('single_'+L,      function(){ return buildReadingPrompt(u, drawn, L, []); });
   grab('single_noq_'+L,  function(){ return buildReadingPrompt(u2, drawn, L, []); });
   grab('single_corr_'+L, function(){ return buildReadingPrompt(u, drawn, L, samplecorr); });
