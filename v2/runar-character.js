@@ -507,7 +507,23 @@ var RUNE_IMAGES_IS = [
   ['Dagaz','cold','Fyrsta skíman snýr aftur eftir svartasta skammdegið.'],
   ['Dagaz','any','Þú vaknar og veist strax að eitthvað hefur breyst um nóttina.'],
   ['Blank','any','Niðaþokan hylur fjörðinn og þú veist ekki hvað bíður handan hennar.'],
-  ['Blank','any','Allt er kyrrt á undan því sem gerist — enn er allt mögulegt.']
+  ['Blank','any','Allt er kyrrt á undan því sem gerist — enn er allt mögulegt.'],
+  // ── 2. dávka (Cowork 2026-08-09): hole-fillery pro 7 run, které měly v některém
+  //    období jedinou volbu nebo žádnou. Cíl: >=2 volby v KAŽDÉM období.
+  ['Hagalaz','bright','Skyndileg hviða leggur fífuna flata áður en þú heyrir hana koma.'],
+  ['Hagalaz','any','Áin bólgnar á einni nóttu og tekur með sér það sem stóð of nálægt bakkanum.'],
+  ['Sowilo','cold','Lága vetrarsólin leikur snöggvast á hvítri fönninni og hverfur aftur.'],
+  ['Sowilo','cold','Fyrsti sólargeisli ársins snertir fjallstindinn eftir langa skammdegið.'],
+  ['Raidho','any','Vörðurnar standa hver við aðra yfir alla heiðina, hver sést frá þeirri síðustu.'],
+  ['Raidho','any','Vegurinn liðast með ánni og hverfur fyrir næstu beygju.'],
+  ['Isa','any','Lognið liggur á firðinum og ekkert bærist, ekki einu sinni fuglinn á steininum.'],
+  ['Isa','any','Klukkan á veggnum hefur stöðvast og enginn hefur dregið hana upp.'],
+  ['Ingwaz','bright','Grasið grænkar yfir sáðreitnum löngu áður en nokkuð sést á yfirborðinu.'],
+  ['Ingwaz','bright','Eggið liggur heilt í hreiðrinu, hlýtt, og ekkert í því sést enn.'],
+  ['Thurisaz','cold','Hliðið er frosið fast og gefur sig ekki fyrr en það þiðnar.'],
+  ['Thurisaz','cold','Þyrnóttur runninn stendur ber og svartur í hríðinni, en broddarnir bíða enn.'],
+  ['Berkana','cold','Ærin ber inni í húsi um miðjan vetur og lambið finnur hlýjuna í myrkrinu.'],
+  ['Berkana','cold','Kertaljósið heldur lífi í stofunni meðan skammdegið liggur á öllu.'],
 ];
 
 // Obrazy pro runy, které padly, a které se hodí do TÉTO části roku.
