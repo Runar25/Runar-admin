@@ -145,6 +145,9 @@ const USAGE = [
   '  --rune      Perth          forced rune (single; first position of a spread)',
   '  --runes     A,B,C          explicit spread runes; else a random distinct sample',
   '  --life-rune Gebo|self|none life rune context; self = life==drawn per reading (default none)',
+  '  --angle     0..6         force ONE reading angle (single only) instead of the random draw.',
+  '              Without it an angle gets ~n/7 readings, which cannot resolve a change to',
+  '              one angle. --angle list  prints the pool for the chosen --lang and exits.',
   '  --area      "The Unseen"   free-form, goes in verbatim',
   '  --seeking   "Clarity"      MUST be an exact SEEKS label or it silently vanishes',
   '  --intention "Right now"    exact INTENTIONS label (else it degrades to a bare label)',
@@ -297,6 +300,28 @@ async function main() {
   if (forcedRunes && forcedRunes.length !== spec.count)
     die('--runes has ' + forcedRunes.length + ' runes but ' + spreadName + ' needs exactly ' + spec.count +
         '. Too few throws inside the builder; too many is silently truncated.');
+  // ── --angle: vynuceny uhel (single only) ──
+  var forcedAngle = null;
+  if (args.angle !== undefined) {
+    var _pool = G(lang === 'is' ? 'READING_ANGLES_IS' : 'READING_ANGLES');
+    if (String(args.angle) === 'list') {
+      console.log('\n  Uhly pro --lang ' + lang + ':');
+      _pool.forEach(function (a, i) { console.log('   ' + i + '  ' + a); });
+      console.log('');
+      process.exit(0);
+    }
+    if (spreadName !== 'single')
+      die('--angle is single-only: _randomAngle has exactly one call site, in the single builder.');
+    var _ai = Number(args.angle);
+    if (!Number.isInteger(_ai) || _ai < 0 || _ai >= _pool.length)
+      die('--angle must be 0..' + (_pool.length - 1) + ' for --lang ' + lang + ' (--angle list to see them).');
+    forcedAngle = _ai;
+    // Prebij losovani v sandboxu. Zapis do JSONL se nemeni, takze detectAngle()
+    // nize overi nezavisle, ze v promptu opravdu sedi TEN uhel.
+    vm.runInContext('_randomAngle = function (l) { return (l === "is" ? READING_ANGLES_IS : READING_ANGLES)['
+      + _ai + ']; };', ctx);
+  }
+
   if (spreadName === 'single' && !forcedRune && !forcedRunes && !args['all-runes'])
     die('--rune is required for a single reading (controlled coverage is the point; there is no random draw here).');
   if (args['all-runes'] && spreadName !== 'single')
@@ -525,6 +550,9 @@ async function main() {
       : call(spec.builder, [u, runes, lang, []]);
 
     const angle = detectAngle(prompt);
+    if (forcedAngle !== null && angle.angle_idx !== forcedAngle)
+      die('--angle ' + forcedAngle + ' se do promptu nedostal (nalezeno: ' + angle.angle_idx +
+          '). Davka by tise merila jiny uhel — nic se negeneruje.');
     const row = {
       source: 'synthetic',
       seq: i + 1,

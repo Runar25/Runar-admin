@@ -107,6 +107,49 @@ zákazy **1 nález** („journey") ve 271 · EN „already" **47 %** (podle verz
 > **Otevřené, co z baseline plyne:** EN otevírá definicí ve 28 % (IS neměřitelné stávajícím regexem)
 > · konec otázkou drží nad cílem (40–48 % vs ~33 %) · délka v EN pořád přetéká (medián 46).
 
+### Úhly [0]+[1] přepsané — 2026-08-09 (v1.5): **změna JE nasazená, dopad NENÍ prokázaný**
+
+Úhly [0] „shadow" a [1] „gift" se ptaly na **vlastnost runy** → model odpovídal definicí.
+Přepsány na **projev v životě leitanda** (Cowork obsah; CODE ověřil EN a opravil IS vazbu).
+Dvě probe dávky, obě stejným zadáním jako jejich baseline (`--all-runes --n 1 --life-rune self --name you|þú`):
+
+| | EN baseline v1.3 | EN nová | IS baseline v1.4 | IS nová |
+|---|---|---|---|---|
+| n | 25 | 23 | 25 | 25 |
+| otevřeno definicí runy | 7/25 = 28 % | 4/23 = **17 %** | 0/25 | **0/25** |
+| papouškování obrazu (celá fráze) | 0 % | 0 % | 3/25 = 12 % | 7/25 = **28 %** |
+| konec otázkou | 48 % | 43 % | 40 % | 40 % |
+| délka (medián) | 46 | 47 | 40 | 41 |
+| zákazy na výstupu | — | 0 | — | 0 |
+
+⚠️ **Žádný z těch rozdílů není odlišitelný od šumu.** Fisher exact, oboustranně:
+
+| co | čísla | p |
+|---|---|---|
+| EN definice celkem | 7/25 → 4/23 | **0,50** |
+| EN definice jen na přepsaných úhlech [0]+[1] | 5/11 → 1/5 | **0,59** |
+| IS papouškování obrazu | 3/25 → 7/25 | **0,29** |
+
+Takže: „28 % → 17 %" **není zlepšení, je to nevím** — a stejně tak IS papouškování **není regrese**.
+Důvod je strukturální, ne smůla: úhel se losuje ze sedmi, takže n=25 dá **~3 čtení na úhel**.
+Změnu jednoho úhlu tím změřit nelze. Coworkův handoff to předpověděl („potvrdí až vynucený úhel").
+
+**Řešeno v nástroji:** `gen_batch.js --angle 0..6` úhel vynutí (`--angle list` vypíše pool pro daný
+jazyk); tvrdě selže, když se vynucený úhel do promptu nedostane, aby dávka tiše neměřila jiný.
+Skutečné měření = **n≥25 na jeden úhel**, staré znění proti novému.
+
+**Co z dat plyne bez ohledu na n** (rozdělení podle `angle_idx`, který si `gen_batch` zapisuje):
+definice se nerozdělují rovnoměrně, drží se na úhlech, které se ptají **na runu**. V baseline to byly
+[0] 2/3 a [1] 3/8; v nové dávce **[5] „what is stirring — name the movement this rune makes visible"
+2/2** (a v IS týž úhel 2/2 na papouškování obrazu). n=2 nic nedokazuje, ale **formulace má přesně tu
+vadu, kterou Cowork právě odstranil z [0] a [1]** — mluví o runě, ne o životě. Kandidát na stejné
+ošetření → `RUNAR_BACKLOG.md`.
+
+**Tag verzí je u těchhle dvou dávek posunutý:** `docs/inbox/probe-en-angles-v15.jsonl` a
+`probe-is-angles-v15.jsonl` nesou `prompt_version: v1.4`, ale obsahují už přepsané úhly.
+`RUNAR_PROMPT_VERSION` se bumpnul na **v1.5 až po jejich vygenerování** (moje chyba — úhly jsou
+změna promptu). Názvy souborů říkají pravdu, tag ne.
+
 ## Páky — retrospektiva (co už se s hlasem dělalo; detail = `git log` [reading]/[tune])
 
 | verze | co se změnilo | proč | naměřeno | verdikt |
