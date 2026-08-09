@@ -198,8 +198,8 @@ function tp(key, vars) {
 // s pravidlem cocky (_lensContext: "never name or explain it") a u ctenaru bez zivotni
 // runy odkazoval na neco, co v promptu neni. Kdo ho vraci, vraci i ten rozpor.
 const READING_ANGLES = [
-  'Lead with the shadow of this rune — what it quietly demands, not what it offers.',
-  'Lead with the gift — what this rune offers, and what it asks in return.',
+  'Lead with the weight — where it presses on their life right now.',
+  'Lead with what is arriving — how it lands, and what it will quietly ask back.',
   'Lead with timing — what specific moment in their life does this rune mark.',
   'Lead with the body — where does this rune live as a physical sensation right now.',
   'Lead with the land — open with a single Icelandic image that mirrors this situation exactly.',
@@ -209,8 +209,8 @@ const READING_ANGLES = [
 
 // ─── Reading angles IS ─────────────────────────────────────────
 const READING_ANGLES_IS = [
-  'Byrjaðu á skugga þessarar rúnar — hvað hún krefst hljóðlægt, ekki hvað hún gefur.',
-  'Byrjaðu á gjöfinni — hvað þessi rúna gefur og hvað hún biður um í staðinn.',
+  'Byrjaðu á þunganum — sýndu hvar hann hvílir á lífi leitandans.',
+  'Byrjaðu á því sem er að berast — hvernig það kemur og hvers það biður hljóðlega í staðinn.',
   'Byrjaðu á tímasetningunni — hvaða sérstaka augnablik í lífi þeirra merkir þessi rúna.',
   'Byrjaðu á líkamanum — hvar býr þessi rúna sem líkamleg tilfinning núna.',
   'Byrjaðu á landinu — opnaðu með einni íslenskri mynd sem speglar þessa stöðu nákvæmlega.',

@@ -52,6 +52,9 @@ var samplecorr = [{ from:'Arctic', to:'Norðurljós', lang:'both', context:'test
 ['is','en'].forEach(function(L){
   lang = L;
   grab('system_'+L,      function(){ return buildSysPrompt(null, L); });
+  // CELY pool uhlu, ne jen ten, ktery vybere pripnuta Math.random (=index 3).
+  // Bez tohoto klice projde zmena uhlu [0]/[1] jako "0 zmen" (§19.2 tiche zelene).
+  grab('angles_'+L,      function(){ return (L==='is'?READING_ANGLES_IS:READING_ANGLES).join('\\n'); });
   grab('single_'+L,      function(){ return buildReadingPrompt(u, drawn, L, []); });
   grab('single_noq_'+L,  function(){ return buildReadingPrompt(u2, drawn, L, []); });
   grab('single_corr_'+L, function(){ return buildReadingPrompt(u, drawn, L, samplecorr); });

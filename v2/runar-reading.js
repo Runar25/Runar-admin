@@ -487,19 +487,38 @@ function _askPlaceholder() {
   var i = _askPhIdx < 0 ? 0 : _askPhIdx;
   return phs[i % phs.length] || '';
 }
+// Teaser radka nese jmeno tieru + jazyk, takze se musi prekreslit i pri prepnuti
+// jazyka (§13 full-path) — vola ji `_showAsk` i `updateUIText` (runar-app.js).
+// Jmeno tieru VZDY z configu, nikdy natvrdo (§8/§15); jazykova varianta je domaci
+// inline ternar (vzor runar-app.js:789/798, sdileny helper neexistuje).
+function _refreshAskTeaser() {
+  var tEl = document.getElementById('ask-teaser');
+  if (!tEl || tEl.style.display === 'none') return;
+  var _pt = (lang === 'is' ? TIERS.premium.label_is : TIERS.premium.label);
+  tEl.textContent = tp('ask_teaser', { tier: _pt });
+}
+
 function _showAsk() {
   var el = document.getElementById('ask-runar');
   if (!el) return;
   // Who gets the follow-up = TIERS.<tier>.ask (§8), not a tier name spelled out here.
   var canAsk = currentUser && (((TIERS[userTier] || {}).ask === true) || isAdmin(currentUser.email));
-  if (!canAsk) { el.style.display = 'none'; return; }
-  _askUsed = false;
+  // Kdo NEMA opravneni, ale JE prihlaseny, dostane teaser: featura je videt cela,
+  // jen se s ni neda hnout (KUKY 2026-08-09). Neprihlaseny nevidi nic — jeho dalsi
+  // krok je registrace, ne Premium.
+  var teaser = !canAsk && !!currentUser;
+  if (!canAsk && !teaser) { el.style.display = 'none'; return; }
+  _askUsed = teaser;   // teaser nesmi projit pres askRunar() ani pri zavolani z konzole
+  var tEl = document.getElementById('ask-teaser');
+  if (tEl) { tEl.style.display = teaser ? '' : 'none'; if (!teaser) tEl.textContent = ''; }
+  _refreshAskTeaser();
   _askPhIdx++;  // rotate the placeholder each time the ask opens
-  var inp = document.getElementById('ask-input'); if (inp) { inp.value = ''; inp.placeholder = _askPlaceholder(); }
+  var inp = document.getElementById('ask-input');
+  if (inp) { inp.value = ''; inp.placeholder = _askPlaceholder(); inp.disabled = teaser; }
   var wrap = document.getElementById('ask-input-wrap'); if (wrap) wrap.style.display = '';
   var qEl2 = document.getElementById('ask-question'); if (qEl2) { qEl2.textContent = ''; qEl2.style.display = 'none'; }
   var ans = document.getElementById('ask-answer'); if (ans) { ans.textContent = ''; ans.style.display = 'none'; }
-  var btn = document.getElementById('ask-btn'); if (btn) { btn.disabled = false; btn.textContent = t('ask_btn'); }
+  var btn = document.getElementById('ask-btn'); if (btn) { btn.disabled = teaser; btn.textContent = t('ask_btn'); }
   setSt('ask-status', '');
   el.style.display = 'block';
 }
@@ -515,6 +534,9 @@ function _trimToSentence(t) {
 
 async function askRunar() {
   if (_askUsed) return;
+  // Druha pojistka: disabled input je vzhled, ne brana. Skutecnou branu ma proxy
+  // (mode:'ask' + tier != premium -> 403); tohle jen setri zbytecny roundtrip.
+  if (!(currentUser && (((TIERS[userTier] || {}).ask === true) || isAdmin(currentUser.email)))) return;
   var inp = document.getElementById('ask-input');
   var q = inp ? inp.value.trim() : '';
   if (!q) return;

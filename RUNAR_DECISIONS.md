@@ -2327,3 +2327,34 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 - **Zbývá (mimo tuto opravu):** `mode:'resave'` s `kind:'ask'` dovolí zapsat text do `follow_up` **vlastního** čtení bez volání Claude. Není to přístup k featuře (nic se negeneruje) ani cizí data, proto se neřeší tady — ale je to jediná další cesta, jak se v žurnálu objeví „ask".
 - **Affected doc(s):** `RUNAR_BACKLOG.md`
 - **Reversibility:** easy — gate je jeden `if`; revert vrátí předchozí (děravý) stav.
+
+---
+
+## 2026-08-09 — Ask Rúnar: teaser pro ty, kdo na něj nedosáhnou (vidět ano, použít ne)
+
+- **Typ:** feature + oprava mého špatného čtení předchozího rozhodnutí
+- **Scope:** tune
+- **Rozhodnutí ownera:** *„ASK RÚNAR má být teaser pro ty, co ho nemůžou použít!"* Spolu s 08-06 (*„měl by vidět tuhle featuru, ale neměl by mít přístup"*) a s dnešním *„rune seeker by vůbec neměl mít přístup"* to dává **jedno konzistentní zadání: vidět ano, použít ne.** Zápis z dnešního rána, který uzavřel teaser jako ZRUŠENÝ, byl **moje chyba** — owner rušil *přístup*, ne *viditelnost*. Opraveno v `RUNAR_BACKLOG.md`.
+- **Co se změnilo:** přihlášený bez `TIERS[tier].ask` vidí blok Ask celý — štítek, pole i tlačítko — ale inertní (`disabled`), plus jedna řádka `ask_teaser`, která jmenuje tier **z configu** (§8/§15). Nový `_refreshAskTeaser()` v `v2/runar-reading.js`; `updateUIText()` (`v2/runar-app.js`) ho volá, protože řádka nese tier **i jazyk** a musí přežít přepnutí jazyka (§13/§14 — stavová logika zůstala v reading.js).
+- **Co se vědomě NEudělalo:** (a) **žádné CTA tlačítko** — v readeru dnes neexistuje cíl, kam by upgrade přihlášeného vedl (`upgrade-gate-btn` nemá handler), takže by vedlo nikam; dodržen domácí tvar „zamčená featura = věta, ne tlačítko" (`gathering_upgrade`). (b) **visitor teaser nedostane** — jeho další krok je registrace, ne Premium; dvě různá CTA na jedné obrazovce si překážejí.
+- **Vizuál se nevymýšlel:** ztlumení dělá už existující `.ask-btn:disabled` (opacity 0.35, not-allowed); přibyl jen protějšek `.ask-input:disabled` a `.ask-teaser` v registru `.ask-lbl`. → [[match-existing-visual-first]]
+- **IS copy vymyšlena, ne přeložena (§2), a ověřena nástrojem:** GreynirCorrect 0 flagů. Původní znění stálo na vazbě `eiga ósagt`, kterou **nešlo doložit** → zahozena ve prospěch doložené `eiga eftir <þf>` (*„eiga eftir tvo kafla"*, Íslensk nútímamálsorðabók). Doložené místo chytrého.
+- **Ověřeno v prohlížeči, ne odvozeno** (5 stavů: visitor / rune_seeker EN+IS / standard / premium): blok skrytý jen visitorovi, teaser jen neoprávněným, premium beze změny. Obcházka klienta (`disabled` zrušen, `_askUsed` vynulován) → **0 volání proxy** u rune_seekera i standardu, **1 u premia** (kontrolní případ — bez něj by test nedokazoval nic). Dva falešné poplachy cestou: `opacity 0.35` u premia byl artefakt (bez kompozice snímků nedoběhne `transition`), a první běh testu neprokázal nic, protože `askRunar` padal dřív na prázdném textu čtení. → [[sanity-check-measurements]]
+- **Affected doc(s):** `RUNAR_BACKLOG.md`
+- **Reversibility:** easy — `git revert`; server-side brána je nezávislá a zůstává i po revertu UI.
+
+---
+
+## 2026-08-09 — Úhly čtení [0] a [1] míří na PROJEV, ne na vlastnost runy (+ golden přestal být slepý)
+
+- **Typ:** změna promptu (Cowork obsah) + oprava měřicího harnessu
+- **Scope:** tune
+- **Co se změnilo:** `READING_ANGLES` / `_IS` [0] a [1] (`v2/runar-utils.js`). Původní znění se ptalo na **vlastnost runy** („what it offers / demands") → model odpovídal definicí. Nové míří na **projev v životě leitanda**, stejně jako úhly, které definice nevyrábějí (land / body / timing). Obsah = Cowork handoff proti `9b54cf8` (ověřeno jako předek HEAD; na `runar-utils.js` od té doby nikdo nesáhl).
+- **Dvě odchylky od doslovného znění handoffu, obě ověřené nástrojem:**
+  - **EN[0]** — vypuštěno „already". Úhel by přímo zadával cold-read pohyb, proti kterému stojí `_noColdRead`, a nasazoval modelu přesně to slovo, které měříme (baseline EN 32 %). „already … right now" je navíc redundantní.
+  - **IS[0]** — `liggur á` → `hvílir á`. `is-vazba.py` ukázal, že `liggja á` je obsazené idiomem naléhavosti: `<mér> liggur á` = „spěchám", `<henni> liggur **lífið á**` = „jde jí o život" — a Coworkova věta zněla *„hvar hann liggur … á lífi leitandans"*, tedy přesně do toho idiomu. `hvíla á` je doložené pro abstraktní tíhu spočívající na něčem (*„það hvílir bölvun á þessum stað"*). **BÍN + GreynirCorrect tohle chytit nemohou** — dávají tvar a gramatiku, ne vazbu; proto je `is-vazba.py` vrstva nad nimi (§2). → [[is-vazba-check]]
+  - IS[1] beze změny; `biðja` + eignarfall potvrzeno, takže Coworkovo `hvers það biður` sedí.
+- **Golden harness byl na tuhle změnu SLEPÝ** a je to opraveno: `Math.random` je v `scripts/golden/golden_dump.js` připnutá na 0.5, takže se vždy vybral úhel [3] — změna [0]/[1] by prošla jako „0 změn" (§19.2 tiché zelené). Přibyl klíč `angles_<lang>`, který dumpuje **celý pool**. Ověřeno přímým čtením poolu uvnitř vm kontextu (7 úhlů v obou jazycích, 0 duplicit, 0 zbytků „already"/„þegar"/„liggur á").
+- **NEZMĚŘENO:** dopad na výstup (baseline: EN otevřeno definicí 28 %, IS 0 %) — vyžaduje probe dávku, tedy platný eval token. Metoda i baseline → `RUNAR_EVAL_LOG.md`.
+- **Affected doc(s):** `RUNAR_EVAL_LOG.md`
+- **Reversibility:** easy — čtyři řetězce v jednom poli; `git revert`.

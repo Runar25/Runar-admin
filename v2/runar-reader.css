@@ -531,6 +531,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .ask-btn{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:1.5px;padding:9px 18px;background:transparent;border:1px solid var(--gold);color:var(--gold);cursor:pointer;white-space:nowrap;transition:all 0.25s;flex-shrink:0;}
 .ask-btn:hover:not(:disabled){background:var(--gold);color:#000;}
 .ask-btn:disabled{opacity:0.35;cursor:not-allowed;}
+/* Teaser pro tier bez Ask: blok je vidět celý, jen se s ním nedá hnout. Ztlumení
+   dělá `.ask-input:disabled` + `.ask-btn:disabled` (existující konvence), tahle
+   řádka jen dopoví proč. Registr kopíruje .ask-lbl (drobné, muted, na střed),
+   kurzíva ji odliší od štítku nad polem. Žádné CTA — v readeru dnes není kam. */
+.ask-input:disabled{color:var(--dim);border-bottom-color:var(--border);cursor:not-allowed;}
+.ask-teaser{font-size:0.86rem;font-style:italic;color:var(--muted);text-align:center;margin-top:14px;}
 .ask-question{font-style:italic;color:var(--muted);margin:2px 0 15px;padding-left:13px;border-left:2px solid rgba(255,191,0,0.28);line-height:1.6;}
 .ask-answer{margin-top:16px;font-style:italic;}
 /* Tap-a-glyph popup: rune name + meaning (esp. for spreads with no names) */

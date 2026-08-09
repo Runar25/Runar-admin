@@ -762,6 +762,7 @@ function updateUIText() {
   setText('ask-lbl', t('ask_lbl'));
   var _askInp = document.getElementById('ask-input'); if (_askInp && typeof _askPlaceholder === 'function') _askInp.placeholder = _askPlaceholder();
   var _askBtn = document.getElementById('ask-btn'); if (_askBtn && !_askBtn.disabled) _askBtn.textContent = t('ask_btn');
+  if (typeof _refreshAskTeaser === 'function') _refreshAskTeaser();
   const vBtn = document.getElementById('btn-generate-voice');
   if (vBtn && !vBtn.disabled) vBtn.textContent = t('voice_btn');
   // Re-render auth UI + side panel vždy — zajistí správné texty i pro odhlášeného uživatele při změně jazyka
