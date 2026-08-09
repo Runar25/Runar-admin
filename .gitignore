@@ -18,11 +18,16 @@ eval_out/
 # Scratch/backup — untracked pracovní plocha, JEDNOZNAČNĚ se necommitují.
 # 2026-07-19: `git add -A v2` jich sebral 112 do cizí lane. Gitignore je zastaví
 # u zdroje (git add -A je přeskočí). Zálohu proti sweepu jistí i pre-commit hook.
-# POZOR: lab dirs (v2/tree-lab-*, v2/sigil-lab) tu NEJSOU — mají trackovaný zdroj
-# (runar-branch.js, runar-trunk.js), který CODE-tree edituje. Ty kryje jen hook
-# (blokuje nový ADD, pustí modifikaci trackovaného).
+# POZOR: v2/tree-lab-* tu NENÍ — má trackovaný zdroj (runar-branch.js, runar-trunk.js),
+# který CODE-tree edituje. Ten kryje jen hook (blokuje nový ADD, pustí modifikaci trackovaného).
 v2/tree-snapshots/
 _backup/
+
+# 2026-08-09: v2/sigil-lab už trackovaný zdroj NEMÁ (na rozdíl od tree-lab-*). Celá sigil
+# lane — builder, lab i doc — se přesunula MIMO repo do C:\Users\zkuku\runar-sigil\, protože
+# Runar25/Runar-admin je VEŘEJNÉ a owner rozhodl "interní, je to jen pracovní verze".
+# Ignoruje se proto natvrdo, ať ji `git add -A` nemůže vrátit zpátky.
+v2/sigil-lab/
 
 # Cowork snapshot kopie kanonu — zdroj driftu, necommitovat (audit 2026-08-02)
 _cowork_snap/
