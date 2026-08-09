@@ -22,7 +22,10 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 #  · RUNAR_DECISIONS.md = append-only log, MUSÍ citovat i to, co dřív platilo
 #  · snapshots/ = záznam ke svému datu, tehdy to byla pravda
 #  · docs/archive/ = odloženo schválně
-SKIP_DIRS  = ('docs/archive', 'docs/inbox', 'memory/snapshots', 'node_modules', '.git')
+#  · _cowork_snap/ = gitignored snapshot repa pro Cowork; přepíše se při dalším snapu,
+#    takže „oprava" v něm nemá kde přežít — a nikdo se jím neřídí
+SKIP_DIRS  = ('docs/archive', 'docs/inbox', 'memory/snapshots', '_cowork_snap',
+              'node_modules', '.git')
 SKIP_FILES = ('RUNAR_DECISIONS.md', 'check-docs.py')
 
 # (regex, proč je to špatně, slova která výskyt OMLUVÍ na témž řádku)
@@ -47,9 +50,10 @@ RULES = [
     (r'1/3/5/7/9',
      'starý kreditní model (1 runa = 1 kredit). Dnes per typ čtení = SPREAD_COSTS',
      ('NEPLATÍ', 'starý', 'Dřívější', 'nepoužívá')),
-    (r'applyISCorrections',
-     'post-processor je VYPNUTÝ od 2026-07-10 — nesmí být popsaný jako živá vrstva',
-     ('VYPNUT', 'vypnut', 'disabled', 'ŽÁDNÁ', 'není')),
+    (r'applyISCorrections|CORRECTIONS_POSTPROCESS',
+     'post-processor ODSTRANĚN 2026-08-09 (vypnutý od 10. 7.) — v kódu už neexistuje',
+     ('VYPNUT', 'vypnut', 'disabled', 'ŽÁDNÁ', 'není', 'odstraněn', 'ODSTRANĚN',
+      'neexistuje', 'NEEXISTUJE', 'removed')),
     (r'_moodContext',
      'v kódu neexistuje (grep = 0). Živý je _intentionContext',
      ('neexistuje', 'smazán', 'mrtv')),

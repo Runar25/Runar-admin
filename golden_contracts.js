@@ -1,9 +1,9 @@
 // golden_contracts.js — SEED-AND-ASSERT contract for the corrections boundary.
 // The rule: assert the OUTCOME on the real path, never the code shape. This seeds a RAW
 // DB-shaped correction row (exactly what runar_corrections returns) through the REAL
-// production functions — normalizeCorrections() (utils) -> getCorrPrompt() +
-// applyISCorrections() (character) — and asserts the replacement SURVIVES end-to-end and
-// no literal "undefined" is ever injected. Catches the class that ran dead for weeks:
+// production functions — normalizeCorrections() (utils) -> getCorrPrompt() (character)
+// — and asserts the replacement SURVIVES end-to-end into the prompt and that no literal
+// "undefined" is ever injected. Catches the class that ran dead for weeks:
 // loadCorrections stored original_phrase/replacement_phrase but consumers read
 // from_word/to_word -> every correction skipped + 'Never say "undefined"' in every IS prompt.
 //   node golden_contracts.js   (exit 0 = pass, 1 = fail). Called by smoke.py.
@@ -51,11 +51,8 @@ var block = getCorrPrompt('is', norm);
 ok(block.indexOf('Norðurljósin') !== -1, 'getCorrPrompt did not include the replacement');
 ok(block.toLowerCase().indexOf('undefined') === -1, 'getCorrPrompt injected literal "undefined" (poisoned prompt)');
 
-// 3) Post-processor is OFF (CORRECTIONS_POSTPROCESS=false): it must be a NO-OP, not a
-//    context-blind substring replace. Assert it leaves the text untouched.
-var sample = 'Yfir hrauninu var Arctic ljósið kalt.';
-var out = applyISCorrections(sample, 'is', norm);
-ok(out === sample, 'applyISCorrections should be a no-op while CORRECTIONS_POSTPROCESS is off');
+// 3) Žádný post-processor NEEXISTUJE — korekce jdou VÝHRADNĚ promptem (CLAUDE.md §2).
+//    Slepý substring replace odstraněn 2026-08-09: neuměl pád ani rod.
 `;
 
 vm.createContext(sandbox);

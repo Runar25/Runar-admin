@@ -4,7 +4,7 @@
 // Depends on globals: lang, currentUser, userTier, _journalCache,
 //   corrections, activeChar, readerUser, sb
 // Depends on functions: t(), callProxy(), buildSysPrompt(), getCorrPrompt(),
-//   applyISCorrections(), stream(), setSt(), loadJournal(), updateAuthUI()
+//   stream(), setSt(), loadJournal(), updateAuthUI()
 // ═══════════════════════════════════════════════════════
 
 // ─── THE GATHERING ───────────────────────────────────────
@@ -299,7 +299,7 @@ async function generateWhispersReading() {
     if (data.error) throw new Error(data.error);
     const rawText = data.content?.[0]?.text || data.text || '';
     if (!rawText) throw new Error('Empty response');
-    const text = applyISCorrections(rawText, lang, corrections);
+    const text = rawText;
 
     _whispersText = text;
     _whispersMode = 'output';

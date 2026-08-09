@@ -202,9 +202,9 @@ var prompt = buildXxxPromptIS(...);
 var corrBlock = getCorrPrompt(lang, corrections);
 if (corrBlock) prompt = prompt + '\n' + corrBlock;
 
-// ⚠️ ŽÁDNÁ 3. vrstva: applyISCorrections je VYPNUTÝ od 2026-07-10
-// (CORRECTIONS_POSTPROCESS=false). Byl kontextově slepý — neuměl pád ani rod.
+// ⚠️ ŽÁDNÁ další vrstva: post-processor na výstup NEEXISTUJE (odstraněn 2026-08-09).
 // Korekce se aplikují v promptu (výše), kde je model umí ohnout podle kontextu.
+// Pravidlo a proč → CLAUDE.md §2.
 ```
 
 Pravidla:

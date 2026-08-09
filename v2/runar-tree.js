@@ -5,7 +5,7 @@
 //   activeChar, corrections, sb, RUNAR_MODES, RUNES,
 //   DELAY_ERROR_RESET, DURATION_SAVED
 // Depends on functions: t(), callProxy(), buildSysPrompt(),
-//   buildLifeRunePrompt(), getCorrPrompt(), applyISCorrections(),
+//   buildLifeRunePrompt(), getCorrPrompt(),
 //   fetchUserProfile(), showAppTab()
 // ═══════════════════════════════════════════════════════
 
@@ -622,7 +622,7 @@ async function generateLifeRuneReading() {
     return;
   }
 
-  var text = applyISCorrections(res.text || '', lang, corrections);
+  var text = res.text || '';
   _lifeRuneText = text;
   // Zivotni runa prave vznikla -> Norny se maji objevit hned, bez reloadu.
   if (typeof _syncNornsGate === 'function') _syncNornsGate();

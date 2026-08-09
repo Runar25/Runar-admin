@@ -7,7 +7,7 @@
 //   RUNAR_MODES, READING_ANGLES, FREE_TRIAL_LIMIT, FREE_REGISTERED_LIMIT,
 //   DELAY_TRIAL_END, DELAY_SCROLL, DELAY_ERROR_RESET
 // Depends on functions: t(), callProxy(), buildSysPrompt(),
-//   getCorrPrompt(), applyISCorrections(), stream(), checkStaticAudio(),
+//   getCorrPrompt(), stream(), checkStaticAudio(),
 //   shouldUseCredit(), canUseVoice(), syncFreeBalance(),
 //   loadJournal(), updateAuthUI(), setSt(), showToast(), incTrialCount(),
 //   getTrialCount(), elVoiceId(), elModel(),
@@ -142,7 +142,7 @@ async function _generateReading() {
 
   // Unified reading — single block, no split
   var _seg = _parseSegments(res.text);
-  const reading = applyISCorrections(_seg.reading.trim(), lang, corrections);
+  const reading = _seg.reading.trim();
   _lastDeeper = _seg.deeper; // Fáze A: deeper jen v paměti (zatím se neukládá/nezobrazuje)
   _lastSegs = _seg.segs;
   readerTexts[lang] = { short: reading, deep: '' };
@@ -549,7 +549,6 @@ async function askRunar() {
     return;
   }
   var answer = _parseSegments(res.text || '').reading || (res.text || '').trim(); // defensive: unwrap if model returns JSON
-  answer = applyISCorrections(answer, lang, corrections);
   answer = _trimToSentence(answer);  // FU pojistka: nikdy useknuty fragment
   if (_askJournal && res && !res.error && !res.ask_saved) { _pendAdd('pendingAsks', { id: _askEntryId, reading_id: _lastReadingId, question: q, answer: answer }); _flushPending(); }
   _askUsed = true;
@@ -808,7 +807,7 @@ async function _generateSpreadReading(o) {
   }
 
   var _seg = _parseSegments(res.text || '');
-  var text = applyISCorrections(_seg.reading, lang, corrections);
+  var text = _seg.reading;
   _lastDeeper = _seg.deeper; // Fáze A: deeper jen v paměti
   _lastSegs = _seg.segs;
   readerTexts[lang] = { short: text, deep: '' };

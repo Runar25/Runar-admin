@@ -2300,3 +2300,30 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 - **Pozn. k ověřitelnosti:** tohle by bez dnešního doplnění `system_*` do golden harnessu prošlo jako „0 změn" — harness dumpoval jen reading buildery.
 - **Affected doc(s):** RUNAR_DESIGN.md (vzhled dostal domov), RUNAR_EVAL_LOG.md
 - **Reversibility:** easy — `git revert` vrátí prompt i doc naráz.
+
+---
+
+## 2026-08-09 — `applyISCorrections` ODSTRANĚN: vypnutá funkce, kterou kód pořád volal na 5 místech
+
+- **Typ:** úklid mrtvého kódu (bez změny chování)
+- **Scope:** tune
+- **Co se změnilo:** smazána funkce `applyISCorrections` (`v2/runar-character.js`), flag `CORRECTIONS_POSTPROCESS` (`v2/runar-config.js`) a **5 živých volání** — `v2/runar-gathering.js`, `v2/runar-reading.js` (3×, jedno z nich byla odpověď Ask Rúnar), `v2/runar-tree.js`. Volání nahrazeno přímým přiřazením.
+- **Proč:** funkce byla vypnutá od 2026-07-10 (vracela vstup beze změny), ale volala se dál. Kód se tím dal číst za pravdu: `text = applyISCorrections(text, lang, corrections)` říká „tady se aplikují korekce" — a neaplikovaly se. Owner si toho všiml na Ask odpovědi a řekl „oprav to". Pravidlo „žádná 4. vrstva" tím nezaniká, jen se přestěhovalo tam, kam patří: **CLAUDE.md §2 je jeho jediný domov** (§20 — dosud žilo jako pravidlo + mrtvá funkce + flag + test, čtyři místa o jedné věci).
+- **Ověřeno:** golden dump 22 klíčů **PŘED/PO = prázdný diff** (mrtvý kód → prompt se nezměnil, proto se NEbumpuje `RUNAR_PROMPT_VERSION`) · `node --check` na 6 souborech · smoke **24/24**. Kontrakt ⑥ (`golden_contracts.js`) dál testuje **živou** cestu (DB řádek → `normalizeCorrections` → `getCorrPrompt` → replacement přežil do promptu, žádné „undefined"); zmizela jen assertion, že vypnutý post-processor je no-op.
+- **Vedlejší nález (opraveno tady):** `check-docs.py` lintoval i `_cowork_snap/` — gitignored snapshot repa, který se přepíše při dalším snapu, takže „oprava" v něm nemá kde přežít. Přidán do `SKIP_DIRS`. Ověřeno protipříkladem (podstrčený mrtvý pojem linter dál chytí — nezhasl tím, že mu ubyla plocha).
+- **Affected doc(s):** `CLAUDE.md` (§2 + seznam souborů + §19.1), `RUNAR_DESIGN.md`, `RUNAR_SEGMENTATION_SPEC.md`, `memory/working-style.md`
+- **Reversibility:** easy — jeden `git revert`; chování se nemění, takže revert je bez rizika.
+
+---
+
+## 2026-08-09 — Ask Rúnar = POUZE Premium, a server to teď hlídá (dosud jen klient)
+
+- **Typ:** rozhodnutí (ruší návrh z 08-06) + bezpečnostní oprava
+- **Scope:** tune
+- **Rozhodnutí ownera:** *„rune seeker by vůbec neměl mít přístup k ASK Rúnar. To má jen Premium."* Ruší návrh z 2026-08-06 (Ask jako **teaser** pro rune_seeker + standard: vidět, ale nemít). Teaser se nestaví — položka v `RUNAR_BACKLOG.md` uzavřena jako ZRUŠENO.
+- **Co se našlo při ověřování:** `TIERS.*.ask` bylo nastavené správně (jen `premium: true`), ale **gate byl pouze na klientovi** (`canAsk`, `v2/runar-reading.js`). `supabase/functions/claude-proxy/index.ts` se na tier u `mode:'ask'` **neptal vůbec**. Dopad: (a) **standard** dostal follow-up **zdarma** — `legitAsk` ho dělá cap-exempt a odečtová větev pro `rune_seeker` na něj nesedí, takže neproběhla žádná kontrola ani odpočet; (b) **rune_seeker** ho dostal za kredit nebo za své jedno čtení zdarma — tier, který se k featuře nesmí dostat vůbec. Skrytý input není brána.
+- **Co se změnilo:** do claude-proxy přidán entitlement gate `mode === "ask" && userTier !== "premium"` → **403**, umístěný **před** monthly cap i před odečtovou větev, tedy před jakýkoli náklad na Claude. Hláška je neutrální („The runes are quiet…"), stejná posture jako ostatní brány — neprozrazuje tier. Admin projde, protože `isAdmin` výš nastaví `userTier='premium'`.
+- **Ověřeno / NEOVĚŘENO:** gate je čtený v kódu a umístěný před náklad; **běh proti nasazené funkci ověřený NENÍ** — edge funkci Code nedeployuje. → **Owner musí nasadit claude-proxy**, jinak platí dál jen klientský gate.
+- **Zbývá (mimo tuto opravu):** `mode:'resave'` s `kind:'ask'` dovolí zapsat text do `follow_up` **vlastního** čtení bez volání Claude. Není to přístup k featuře (nic se negeneruje) ani cizí data, proto se neřeší tady — ale je to jediná další cesta, jak se v žurnálu objeví „ask".
+- **Affected doc(s):** `RUNAR_BACKLOG.md`
+- **Reversibility:** easy — gate je jeden `if`; revert vrátí předchozí (děravý) stav.

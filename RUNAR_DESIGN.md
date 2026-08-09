@@ -659,7 +659,7 @@ Každé místo kde Claude generuje IS text musí mít tři vrstvy:
 2. User prompt psaný přímo v islandštině — nikdy "Respond in Icelandic" na konci EN promptu
 3. Corrections blok **do promptu** (`getCorrPrompt`) — model je ohne podle kontextu (pád, rod)
 
-⚠️ `applyISCorrections` (slepý substring post-processor) je **VYPNUTÝ** od 2026-07-10.
+⚠️ Slepý substring post-processor na výstup **neexistuje** (odstraněn 2026-08-09) — pravidlo → CLAUDE.md §2.
 
 Corrections blok z getCorrPrompt() musí být vždy připojen k IS promptu.
 

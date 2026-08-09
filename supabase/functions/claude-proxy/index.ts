@@ -475,6 +475,18 @@ serve(async (req: Request) => {
     // Deduction is applied after a verified-successful reading (credit safety).
     let deductPlan: DeductPlan = { kind: "none" };
 
+    // ── Ask Rúnar = PREMIUM ONLY ─────────────────────────────────────────────
+    // MIRROR of TIERS.<tier>.ask (runar-config.js). The client hides the ask box for
+    // everyone else, but a hidden box is not a gate — nothing here asked about tier.
+    // What that let through: `standard` got follow-ups entirely FREE (legitAsk below
+    // makes them cap-exempt, and the rune_seeker deduction branch does not apply to
+    // them, so no cap, no credit, no check); `rune_seeker` got them by spending a
+    // credit or their one free reading — a tier that must not reach the feature at all.
+    // (isAdmin already resolves to userTier 'premium' above, so admins pass.)
+    if (mode === "ask" && userTier !== "premium") {
+      return json({ error: "unavailable", message: "The runes are quiet. Try again shortly." }, 403);
+    }
+
     // ── Paid tiers: monthly cast cap (the subscription they bought) ──
     // A follow-up question is NOT a cast: it hangs off a reading that was already counted
     // (one per reading — _askUsed), and it costs a subscriber nothing today. Counting it

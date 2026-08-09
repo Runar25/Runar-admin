@@ -19,7 +19,7 @@ runar-config.js       — TIERS, RUNAR_MODES, TIER_LIMITS, SPREAD_COSTS, SPREAD_
 runar-runes.js        — 25 Elder Futhark + calcLifeRune()
 runar-translations.js — UI_TEXT {en, is} + t()  ← Edit tool OK
 runar-character.js    — DEF_CHAR_EN/IS, buildSysPrompt(), RP_* packs + buildReadingPrompt()
-                         + spread dispatchers, buildLifeRunePromptIS/EN(), getCorrPrompt(), applyISCorrections() [VYPNUTÝ]
+                         + spread dispatchers, buildLifeRunePrompt(), getCorrPrompt()
 runar-utils.js        — t(), tp(), vn(), vl(), setText/setSt/showToast, stream, isAdmin() (seznam ADMIN_EMAILS v runar-config.js)
 runar-journal.js      — loadJournal(), renderJournal(), filterJournal()
 runar-tree.js         — updateTreeTab(), generateLifeRuneReading(), loadLifeRuneFromDB()
@@ -73,9 +73,12 @@ var sys    = buildSysPrompt(activeChar, lang);        // 1. IS system prompt
 var prompt = buildReadingPrompt(u, drawn, lang, ...); // 2. prompt přímo v IS (RP_* pack)
 if (getCorrPrompt(lang, corrections)) prompt += ...;  // 3. corrections blok DO promptu
 ```
-⚠️ **Žádná 4. vrstva.** `applyISCorrections` (slepý substring post-processor) je **VYPNUTÝ**
-od 2026-07-10 — `CORRECTIONS_POSTPROCESS=false`, funkce hned vrací vstup. Byl kontextově slepý
-(neuměl pád ani rod). Kdo ho sem vrátí jako živou vrstvu, popisuje kód, který neběží.
+⚠️ **Žádná 4. vrstva — a tohle je její JEDINÝ domov.** Slepý substring post-processor
+(`applyISCorrections` + flag `CORRECTIONS_POSTPROCESS`) byl vypnutý od 2026-07-10 a **odstraněn
+2026-08-09**: neuměl pád ani rod, takže „opravil" i tvar, který byl správně. Vypnutá funkce se
+ale pořád volala na 5 místech — kód četl, jako by se korekce aplikovaly (`text = applyIS…(text)`),
+a přitom neaplikovaly. **Post-processor na IS text už nikdy nezaváděj**; korekce patří do promptu
+(vrstva 3), kde je model ohne podle kontextu.
 
 ### §3 — Sdílené moduly = automatický sync
 runar-character.js a runar-utils.js načítají reader i shrine. NIKDY neduplikovat do shrine.
@@ -169,7 +172,7 @@ Kořen měsíce oprav = duplikace + rozsypané řetězce („všechno všude a n
 
 ### §19 — Ověřuj VÝSLEDEK, ne tvar kódu (anti-tichá-chyba)
 Měsíc tichých chyb (korekce běžely mrtvé, check-is skenoval špatnou plochu, `láta séð` prošlo) měl JEDEN kořen: každá kontrola ověřovala **tvar kódu** (parsuje? string existuje ve zdroji? builder dává stejné byty?), ale nic neprotlačilo známý vstup **reálnou cestou** a neověřilo **výsledek**. Rozsypání (§18) chyby jen schovalo.
-1. **Seed-and-assert na hranici.** Kde data přechází hranici (DB→kód, zdroj→prompt, stav→reset), měj JEDEN drobný fixture co protlačí známý vstup skrz produkční funkce a ověří výsledek (očekávané JE přítomno / špatné NENÍ). Vzor = `golden_contracts.js` (smoke.py kontrola ⑥): seed raw DB řádku → `normalizeCorrections`→`getCorrPrompt`+`applyISCorrections` → replacement přežil, žádné „undefined". Fixture musí sám cvičit pravou hranici (ne test-double se špatnými klíči).  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
+1. **Seed-and-assert na hranici.** Kde data přechází hranici (DB→kód, zdroj→prompt, stav→reset), měj JEDEN drobný fixture co protlačí známý vstup skrz produkční funkce a ověří výsledek (očekávané JE přítomno / špatné NENÍ). Vzor = `golden_contracts.js` (smoke.py kontrola ⑥): seed raw DB řádku → `normalizeCorrections`→`getCorrPrompt` → replacement přežil až do promptu, žádné „undefined". Fixture musí sám cvičit pravou hranici (ne test-double se špatnými klíči).  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
 2. **Žádné tiché zelené.** Co nástroj **prokazatelně neposoudí** (subtilní IS gramatika — kauzativa, vazby) NESMÍ projít zeleně. Filtrovaný signál = **viditelný žlutý, ne zahozený** (is-grammar-qa: `E001` = „nerozparsováno" ≠ „v pořádku"). ⚠️ **Fronta „NATIVE EYE / Sigrún" ZRUŠENA (KUKY 2026-07-18).** Nesrozumitelný výstup se **přepíše, dokud mu nástroj nerozumí** (přesně tak byl vyřešen E001 2026-07-17 — přepsáním na plné věty), ne odloží na někoho jiného. IS děláme rovnou hotovou a ověřenou → [[is-done-together-not-for-sigrun]]. ⚠️ Ruší **odkládání nedodělané IS** na Sigrún — NE **sbírání native oprav z živého testování do pravidel** (opačný směr, viz `IS_NATIVE_CHECKLIST.md`).
 3. **Kontrola běží na TÉ PLOŠE, kde bug žije.** Dynamický model-output ≠ zdrojový string; DOM stav ≠ builder output. Kontrola na proxy ploše se nepočítá jako pokrytí.
 

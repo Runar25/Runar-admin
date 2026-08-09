@@ -939,8 +939,11 @@ ${base.format}${base.grammar ? '\n\n' + base.grammar : ''}`;
 }
 
 // ─── IS CORRECTION HELPERS ────────────────────────────────
-// getCorrPrompt + applyISCorrections live here (runar-character.js)
-// because they are IS language/character post-processing, not app logic.
+// getCorrPrompt lives here (runar-character.js) because corrections are IS
+// language/character material, not app logic. Korekce jdou VÝHRADNĚ promptem;
+// post-processor `applyISCorrections` odstraněn 2026-08-09 (vypnutý od 10. 7.,
+// ale pořád volaný na 5 místech — kód tvrdil, že se korekce aplikují).
+// Pravidlo „žádná 4. vrstva" bydlí v CLAUDE.md §2.
 // Called by: runar-reading.js, runar-gathering.js, runar-tree.js, runar-app.js
 function getCorrPrompt(lang, corrections) {
   if (!corrections || !corrections.length) return '';
@@ -952,25 +955,6 @@ function getCorrPrompt(lang, corrections) {
   }
   const lines = rel.map(c => `- Never say "${c.from_word}" — say "${c.to_word}" instead${c.context ? ' ('+c.context+')' : ''}`).join('\n');
   return `\nWord corrections (follow strictly):\n${lines}`;
-}
-
-// Post-processor: aplikuje IS korekce na Claude output (garantovano, deterministicke)
-// Vola se po kazdem Claude volani kde lang === 'is'
-function applyISCorrections(text, lang, corrections) {
-  if (typeof CORRECTIONS_POSTPROCESS !== 'undefined' && !CORRECTIONS_POSTPROCESS) return text;
-  if (lang !== 'is' || !corrections || !corrections.length || !text) return text;
-  // Word-boundary aware (Icelandic letters) so a short key like "lífsrúna" does not
-  // corrupt "lífsrúnin"/"lífsrúnalestur". No lookbehind (Safari-safe): capture the
-  // preceding non-letter (or start) and re-insert it.
-  var L = 'A-Za-zÁÐÉÍÓÚÝÞÆÖáðéíóúýþæö';
-  corrections.filter(function(c) { return !c.lang || c.lang === 'is' || c.lang === 'both'; }).forEach(function(c) {
-    if (!c.from_word || !c.to_word) return;
-    var esc = c.from_word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    var to = c.to_word.replace(/\$/g, '$$$$');
-    var re = new RegExp('(^|[^' + L + '])' + esc + '(?![' + L + '])', 'g');
-    text = text.replace(re, '$1' + to);
-  });
-  return text;
 }
 
 // ─── SEGMENT PARSER (model JSON output -> flowing text) ──

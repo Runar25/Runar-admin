@@ -20,12 +20,11 @@ const RESET_TREE  = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/reset
 // ─── FEATURE FLAGS ──────────────────────────────────────
 // Word corrections (runar_corrections) go into the reading PROMPT as guidance
 // (getCorrPrompt) so the model applies them IN CONTEXT — right case/tense/gender — instead
-// of a blind substring replace. The deterministic post-processor (applyISCorrections) stays
-// OFF: it is context-blind and can be wrong in another inflection. Keep the prompt block
+// of a blind substring replace. There is no post-processor: the deterministic one was
+// context-blind (no case, no gender) and was removed 2026-08-09. Keep the prompt block
 // short — distill recurring patterns into grammar rules (character.js), keep only genuine
 // one-offs as word-corrections; the long tail goes to is-grammar-qa + native, not the prompt.
 const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading prompt (in-context)
-const CORRECTIONS_POSTPROCESS  = false;  // blind substring replace after generation — keep OFF
 
 // Reading-prompt version tag — stored on every reading so eval batches group by version
 // (separates a real improvement from variance). BUMP whenever the reading prompt changes
@@ -132,7 +131,7 @@ const TIERS = {
     voice_static:     true,       // pre-generované audio v Collection
     journal:          5,          // last N readings
     ceremonial:       false,
-    ask:              false,
+    ask:              false,      // Ask NIKDY — ani jako placená drobnost (KUKY 2026-08-09)
     languages:        ['en', 'is'],
   },
   standard: {
@@ -144,7 +143,7 @@ const TIERS = {
     voice_static:     true,
     journal:          null,
     ceremonial:       false,
-    ask:              false,      // ← premium-only today; flip to true to give Walker the follow-up
+    ask:              false,      // Ask = premium only (KUKY 2026-08-09). Hlídá i server.
     languages:        ['en', 'is'],
   },
   premium: {
