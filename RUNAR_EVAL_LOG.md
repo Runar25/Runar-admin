@@ -91,7 +91,7 @@ nepozná se, která zabrala (proto se bumpuje `RUNAR_PROMPT_VERSION`, ať nová 
 | 7 | **vzorová věta učí zakázané** — jeden ze 4 příkladů ve voice profilu je označen „tvær kyrrar myndir / two still images", zatímco pravidlo žádá přesně jeden obraz | audit 2026-08-08 | Cowork (je to jeho copy) |
 | 8 | **délka přetéká** — medián single čtení **47–78 slov** proti zadaným 38–45, ve všech verzích | 271 reálných čtení | — (souvisí s #2: obraz zabírá rozpočet) |
 | 9 | **output linter** — `journey`/`embrace`/`empower` nemají kontrolu na VÝSTUPU (`check-is` čte zdroj) | kritika §19 díra | — |
-| 10 | **T4 škrty** — vzhled Rúnara · PURPOSE „posbírej kontext" (kontext už je vložený) | kritika 2026-08-06 | — |
+| ~~10~~ | ~~T4 škrty~~ | | ✅ **HOTOVO 2026-08-09** — vzhled přesunut do RUNAR_DESIGN.md, „posbírej kontext" ven (system prompt −86 EN / −77 IS slov)
 | 11 | **v1.1 zbytek: kalky** — `eitt strá í einu → í senn` · `standa í berhögg → í berhöggi við` = checklist-pravidlo, NE slepá korekce. `fær→fer` vědomě NEvloženo (fær je jinde platné) | Cowork eval | zapsat do `IS_NATIVE_CHECKLIST.md` |
 | 12 | **EN nemá runové obrazy** — v1.4 je IS-only, takže EN dávky efekt neukážou | v1.4 | Cowork (EN verze obrazů) |
 

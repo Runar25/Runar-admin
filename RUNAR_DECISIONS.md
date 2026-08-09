@@ -2288,3 +2288,15 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 - **Bez bumpu tagu:** jde o odstranění duplicity a rozporu, ne o novou páku; jede ve v1.4. Kdyby se ukázala regrese, `git revert` vrátí kterýkoli krok samostatně.
 - **Affected doc(s):** RUNAR_EVAL_LOG.md
 - **Reversibility:** easy — tři nezávislé commity, každý revertovatelný sám.
+
+---
+
+## 2026-08-09 — T4: vzhled Rúnara přestěhován do DESIGN, „posbírej kontext" ven z promptu
+
+- **Typ:** systémový prompt — úklid pozůstatků z doby vzniku appky (KUKY: *„tyhle všechny věci jsou pozůstatky vzniku téhle appky, proto děláme úklid"*)
+- **T4a — vzhled Rúnara PŘESUNUT, ne smazán.** Z `DEF_CHAR.identity` (EN i IS) odešel odstavec o zapletených vlasech, rouchu a obsidiánovém přívěsku. Byl to **popis postavy, kterou nikdo nikdy neuvidí** — výstup je text a hlas, model Rúnara nekreslí; jelo to do promptu každého čtení nadarmo. Vzhled je ale 📜 **kánon**, takže dostal domov v `RUNAR_DESIGN.md` → „Kdo je Rúnar / Jak vypadá", i s poznámkou proč se přestěhoval. Zůstává první odstavec identity — **kdo Rúnar je**.
+- **T4b — PURPOSE „napřed posbírá kontext" VEN.** Věta *„Before giving a reading, he naturally gathers context: the person's name, date of birth, area of life…"* popisovala **konverzačního** Rúnara, který se doptává. Kontext ale sebral formulář a je **vložený v promptu** (`PERSON`, `LIFE RUNE`, `AREA`, `SEEKING`) — instrukce tedy zadávala hotovou věc a **sváděla model ptát se tazatele**, což jednorázové čtení dělat nesmí. Pozůstatek dřívějšího návrhu, kdy měl být Rúnar chat. Zůstává první věta — **k čemu tu je**.
+- **Ověřeno (§18.3):** golden — změněny **jen `system_is`/`system_en`**, všechny reading buildery byte-identické. **EN 756 → 670 slov (−86), IS 883 → 806 (−77).** Kdo Rúnar je, k čemu tu je i celý blok zákazů (`never`) zůstaly. Bez bumpu tagu (úklid, ne páka); poctivě: system prompt je slabá páka → **čekej nulovou změnu kvality**, cena je přehlednost.
+- **Pozn. k ověřitelnosti:** tohle by bez dnešního doplnění `system_*` do golden harnessu prošlo jako „0 změn" — harness dumpoval jen reading buildery.
+- **Affected doc(s):** RUNAR_DESIGN.md (vzhled dostal domov), RUNAR_EVAL_LOG.md
+- **Reversibility:** easy — `git revert` vrátí prompt i doc naráz.
