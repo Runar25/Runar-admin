@@ -55,6 +55,58 @@ nepozná se, která zabrala (proto se bumpuje `RUNAR_PROMPT_VERSION`, ať nová 
 
 ---
 
+## Baseline — naměřený stav výstupu (s čím příště srovnávat)
+
+**Čísla se dají srovnat jen tehdy, když se měří TOUTÉŽ metodou.** Do 2026-08-09 se počítala
+ad-hoc skripty, které nikde nezůstaly. Metoda proto bydlí v repu, ne tady:
+
+```
+node scripts/utils/measure_readings.js <dávka.jsonl>   # tvar · délka · papouškování · definice
+node scripts/utils/lint_readings.js    <dávka.jsonl>     # zákazy na VÝSTUPU (tahá si je z promptu)
+python -X utf8 is-grammar-qa.py <čtení.txt>              # IS gramatika (E001 = nerozparsováno ≠ OK)
+```
+
+⚠️ **Srovnávej jen srovnatelné.** Probe dávka = jeden druh čtení + jedna verze. Export z produkce
+míchá spready se single a šest verzí → `scripts/utils/measure_readings.js` na to sám upozorní. Délku a tvar konce
+mezi nimi neporovnávej.
+
+### IS — islandská probe dávka (2026-08-09, tag v1.4, n=25, `docs/inbox/probe-is-v14.jsonl`)
+
+| co | naměřeno | pozn. |
+|---|---|---|
+| papouškování obrazu — celá fráze doslova | **12 %** | EN pro srovnání 0 %; poměrně 34 % vs 31 % fráze → skoro totéž |
+| přepsáno vlastními slovy | **76 %** | EN 84 % |
+| různých vložených obrazů | **25/25** | žádné opakování (po +14 obrazech; Raidho měl dřív jedinou volbu) |
+| délka | **medián 40 slov** (32–53) | zadáno 38–45 → poprvé v rozsahu |
+| konec otázkou | **40 %** | cíl ~33 % |
+| otevřeno definicí runy | **0/25** | ⚠️ regex chytá „X er rún…"; jiná IS definice by unikla |
+| rúnaþula ve výstupu | **0/25** | před vypnutím 2/2 |
+| zákazy na výstupu | **0 nálezů** | `lint_readings.js` |
+| IS gramatika: nerozparsovatelných (E001) | **12 %** | před gramatickým blokem 71 % |
+| IS gramatika: čtení s flagem | **36 %** | před blokem 88 % |
+| skutečné chyby | **2 / 25** | `hlénu`→`hléinu` · překlep `uppréttt`; zbylých 7 flagů false-pos |
+
+### EN — probe dávky (`docs/inbox/probe-self-life*.jsonl`)
+
+| co | v1.2 (n=25) | v1.3 (n=25) |
+|---|---|---|
+| „trunk speaks of itself" v próze | **60 %** | **0 %** ← opravený defekt |
+| papouškování obrazu — celá fráze | 0 % | 0 % |
+| přepsáno vlastními slovy | 68 % | 84 % |
+| **otevřeno definicí runy** | 0 % | **28 %** ⚠️ `_describeRule` to zakazuje — neřešeno |
+| „already" | 20 % | 32 % |
+| konec otázkou | 20 % | 48 % |
+| délka | medián 48 (41–57) | medián 46 (42–54) |
+
+### Produkce — reálná čtení (2026-08-08, n=271, export mimo repo)
+
+Smíšená dávka (5 druhů čtení, 6 verzí, oba jazyky) → **jen jako hrubý obraz**, ne k porovnání s probe:
+zákazy **1 nález** („journey") ve 271 · EN „already" **47 %** (podle verze: v0.x 52–67 % → v1.0 26 %)
+· definicí otevřeno 4 % · 23 sezónních obrazů posloužilo **víc runám** (jeden až 11) — to řeší v1.4, ale jen v IS.
+
+> **Otevřené, co z baseline plyne:** EN otevírá definicí ve 28 % (IS neměřitelné stávajícím regexem)
+> · konec otázkou drží nad cílem (40–48 % vs ~33 %) · délka v EN pořád přetéká (medián 46).
+
 ## Páky — retrospektiva (co už se s hlasem dělalo; detail = `git log` [reading]/[tune])
 
 | verze | co se změnilo | proč | naměřeno | verdikt |
