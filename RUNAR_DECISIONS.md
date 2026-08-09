@@ -2273,3 +2273,18 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 - **Vědomé omezení:** obrazy jsou **jen islandsky** — Cowork EN verze nedodal a CODE si obraznost nevymýšlí (§2 / [[copy-always-in-runar-voice]]). EN čtení proto zůstávají na sezónním poolu; efekt v1.4 se ukáže **jen v IS dávkách**. Pokrytí ~2–3 obrazy na runu (Coworkův vlastní cíl je 5–8) → u často opakované runy se bude opakovat; druhá dávka je vítaná.
 - **Affected doc(s):** RUNAR_EVAL_LOG.md
 - **Reversibility:** easy (revert commitu; sezónní pool zůstal nedotčený).
+---
+
+## 2026-08-09 — Úklid promptu: dvě duplicity a jeden rozpor ven (T1 + T3 z kritiky)
+
+- **Typ:** chování čtení (prompt) — úklid, ne nová funkce
+- **Proč teď:** KUKY 2026-08-09: *„nerad bych rozbíjel něco co funguje, ale chci se zaměřit na ty chyby které jsou viditelné, duplicity a čistotu… každou změnu musí být možné zvrátit."* Kritika z 2026-08-06 tyhle body označila jako **první v pořadí** (nejbezpečnější signál) a tři dny ležely.
+- **Tři samostatné commity, aby šel každý vrátit zvlášť** (`git revert <hash>`):
+  1. **T1a — „studená runa v létě" bylo na dvou místech.** Docházelo modelu v jednom čtení dvakrát: ve `VOICE_PROFILES.focused` (system prompt = slabá páka) a v `_seasonalImagery` (reading prompt = silná). Zůstala ta silná. Změřeno na sestaveném promptu: **2 → 1 výskyt**, EN i IS.
+  2. **T1b — otázka tazatele stála v promptu doslova dvakrát.** Kontextová hlavička `QUESTION: "…"` a hned pod ní `qBranch` („Open with X answering: …"). `qBranch` ji nese sám → hlavička byla vždy nadbytečná; s ní odešlo i mrtvé pole `Q` z obou `RP_SINGLE` packů. **Jen single** — spready `qBranch` nemají (ověřeno).
+  3. **T3 — úhel č. 8 „životní runa mluví první" vyřazen.** Byl vadný ve **dvou** režimech: když čočka je, přímo si odporují (*„mluv jí první"* × `_lensContext`: *„never name or explain it"*); když uživatel životní runu nemá, odkazoval na runu, která v promptu vůbec nestojí (fantom — táž třída jako fantomová čočka, opravená 2026-08-08). Pool 8 → 7 úhlů, oba jazyky. Důvod je zapsaný přímo u poolu, ať ho nikdo nevrátí bez kontextu.
+- **Ověřeno (§18.3):** golden u každého kroku zvlášť. T1b: 6 single klíčů, **spready byte-identické**, otázka u spreadů zůstává. T3: 8 single klíčů (úhel jede jen u single), **spready + system prompt + life-rune identické**. Smoke 24/24 u všech tří.
+- **Vedlejší nález — harness měl slepou skvrnu:** golden dumpoval jen reading buildery, takže změna voice profilu (system prompt) prošla jako „0 změn", přestože mění **každý** prompt. Doplněno `system_is`/`system_en` (22 klíčů). Bez toho by T1a nešlo poctivě ověřit.
+- **Bez bumpu tagu:** jde o odstranění duplicity a rozporu, ne o novou páku; jede ve v1.4. Kdyby se ukázala regrese, `git revert` vrátí kterýkoli krok samostatně.
+- **Affected doc(s):** RUNAR_EVAL_LOG.md
+- **Reversibility:** easy — tři nezávislé commity, každý revertovatelný sám.

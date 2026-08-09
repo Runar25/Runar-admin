@@ -194,6 +194,9 @@ function tp(key, vars) {
 
 
 // ─── Reading angles EN ─────────────────────────────────────────
+// Pozn.: uhel "zivotni runa mluvi prvni" byl odsud VYRAZEN 2026-08-09 — odporoval si
+// s pravidlem cocky (_lensContext: "never name or explain it") a u ctenaru bez zivotni
+// runy odkazoval na neco, co v promptu neni. Kdo ho vraci, vraci i ten rozpor.
 const READING_ANGLES = [
   'Lead with the shadow of this rune — what it quietly demands, not what it offers.',
   'Lead with the gift — what this rune offers, and what it asks in return.',
@@ -202,7 +205,6 @@ const READING_ANGLES = [
   'Lead with the land — open with a single Icelandic image that mirrors this situation exactly.',
   'Lead with what is stirring — name the movement this rune makes visible.',
   'Lead with the threshold — what is the seeker standing between right now.',
-  'Let the life rune speak first — the drawn rune answers it.',
 ];
 
 // ─── Reading angles IS ─────────────────────────────────────────
@@ -214,7 +216,6 @@ const READING_ANGLES_IS = [
   'Byrjaðu á landinu — opnaðu með einni íslenskri mynd sem speglar þessa stöðu nákvæmlega.',
   'Byrjaðu á því sem hrærist — nefndu hreyfinguna sem þessi rúna gerir sýnilega.',
   'Byrjaðu á þröskuldinum — á milli hvers stendur leitandinn núna.',
-  'Láttu lífsrúnina tala fyrst — dregna rúnin svarar henni.',
 ];
 
 // ─── _randomAngle(lang) ─────────────────────────────────────────
