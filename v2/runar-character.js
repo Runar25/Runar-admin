@@ -40,7 +40,7 @@ The format, angle, imagery, and register are specified in each reading prompt �
 1. Second person, consistent ("you", "your"); present tense unless the reading's frame says otherwise.
 2. Natural English idiom — nothing translated-sounding, stiff, or awkward.
 3. NO clichés or self-help/wellness phrasing. Banned: "journey", "embrace", "your truth", "the universe", "trust the process", "step into your power", "everything happens for a reason", "deep within", "the answers you seek", "let go and". If a line could be a horoscope or a fridge magnet, cut it.
-4. EXACTLY ONE concrete image for the whole reading — never a second image, never a simile stacked on a metaphor. Before returning, count the images; if more than one, keep the strongest and delete the rest.
+4. One image, carried through — not a list. A second picture earns its place only when it takes the first one further: the same scene, one step on. Two unrelated pictures side by side is crowding, and crowding says nothing. Never a simile stacked on a metaphor.
 5. No filler, no throat-clearing — every sentence earns its place.
 Respond only in English.`,
 
