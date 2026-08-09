@@ -107,10 +107,15 @@ function buildTrunk(spec, T) {
   var thickK = (1 - minSize) / Math.log(3);
   function ageThick(ad){ if(ad<=0) return 0; return minSize + thickK*Math.log(1 + ad/(mature*0.5)); }
   function ageLen(ad){ if(ad<=0) return 0; var f=clamp(ad/mature,0,1); return 0.5 + 0.5*(1-Math.pow(1-f,1.7)); }
-  var strandN = Math.min((T.strandMax||28), 3 + Math.max(0, Math.floor(treeAge/every)));  /* cap = perf/visual safety pri testovani */
+  /* T.strandMin (nepovinne): spodni hranice poctu pramenu. Bez nej se pocet pramenu
+     odvozuje jen z veku, takze prameny navic (graduanti) by se nikdy nevytvorily. */
+  var strandN = Math.min((T.strandMax||28), Math.max(T.strandMin||0, 3 + Math.max(0, Math.floor(treeAge/every))));  /* cap = perf/visual safety pri testovani */
   var baseW = T.thickness * arch.widthMul;          /* per-strand width at full age */
   var laneStep = baseW * T.bundleSpread;            /* < baseW => overlap => one body */
-  var maxLane = 1; for (var li=0; li<strandN; li++) maxLane=Math.max(maxLane,Math.abs(LANE[li%LANE.length]));
+  /* T.laneOrder (nepovinne): explicitni draha kazdeho pramene ve svazku. Sirka svazku se
+     musi pocitat ze SKUTECNE pouzitych drah, jinak by 27 pramenu roztahlo kmen podle LANE. */
+  function laneAt(i){ return (T.laneOrder && T.laneOrder[i]!=null) ? T.laneOrder[i] : LANE[i%LANE.length]; }
+  var maxLane = 1; for (var li=0; li<strandN; li++) maxLane=Math.max(maxLane,Math.abs(laneAt(li)));
 
   function center(h){ return cx + leanAmt*Math.sin(Math.PI*h)*w*0.16
                           + wobAmt*Math.sin(h*wobFreq*6.283+wobPhase)*Math.sin(Math.PI*h)*w*0.05; }
@@ -122,6 +127,7 @@ function buildTrunk(spec, T) {
   for (var s=0; s<strandN; s++) {
     var rnd = mulberry32((dobSeed ^ hashStr(R.k) ^ (s*0x9e37)) >>> 0);
     var lane = LANE[s % LANE.length] + (s>=LANE.length ? (rnd()-0.5) : 0);
+    if (T.laneOrder && T.laneOrder[s]!=null) lane = T.laneOrder[s];   /* rnd() se spotrebuje i tak -> vychozi cesta se nehne */
     var laneX = lane * laneStep;
     var depthT = clamp(Math.abs(lane)/5, 0, 1);
     var strandDepth = lerp(0.65, -0.45, depthT);
@@ -129,6 +135,7 @@ function buildTrunk(spec, T) {
 
     /* this strand's individual age. Thickness grows forever, length saturates. */
     var bornDay = (s<3) ? 0 : (s-2)*every;
+    if (T.bornOrder && T.bornOrder[s]!=null) bornDay = T.bornOrder[s];   /* graduant sdili narozeni rodice, jinak by mel zaporny vek */
     var age = treeAge - bornDay;
     if (age <= 0) continue;
     var afc = clamp(age/mature, 0, 1);

@@ -2358,3 +2358,16 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 - **NEZMĚŘENO:** dopad na výstup (baseline: EN otevřeno definicí 28 %, IS 0 %) — vyžaduje probe dávku, tedy platný eval token. Metoda i baseline → `RUNAR_EVAL_LOG.md`.
 - **Affected doc(s):** `RUNAR_EVAL_LOG.md`
 - **Reversibility:** easy — čtyři řetězce v jednom poli; `git revert`.
+---
+
+## 2026-08-09 — [tree] Graduant může být pramen (verze B, přepínač) — ruší 2026-08-07
+
+- **Typ:** intent + implementation (lab)
+- **Co se změnilo:** 7. 8. jsme rozhodli, že *„zrcadlový podkořen se NETVOŘÍ — graduace je událost nad zemí"*. KUKY 9. 8.: 2./3. dominantní větev má být **robustnější, ideálně vlastní pramen až do kořene**. Postaveno jako **verze B za přepínačem `gradStrand` (výchozí 0 = dnešní stav)**, aby šlo obojí porovnat okem.
+- **Proč:** graduant je runa jako každá jiná — dát jí pramen + kořen model **zpřesní** směrem k zákonu „1 pramen = 1 runa", ne rozvolní. KUKY: *„potřebuju to vidět"* → přepínač, ne výměna.
+- **Zvolena varianta B (zůstává na rodiči), ne A (odejde z kmene):** A by z graduanta udělala 10./11. hlavní větev a zabila hierarchii „dominanta a její pobočka" (F2). B ji drží.
+- **Affected doc(s):** RUNAR_TREE.md §5
+- **Reality note:** `build_crown_composer.py` — `graduatesFor()` (jeden zdroj pravdy pro výběr graduantů) + `buildRootFor()` (jeden zdroj pravdy pro kořen, sdílí ho hlavní větev i graduant) + předpočet pramenů před `buildTrunk`. `runar-trunk.js` — tři **nepovinné** knoflíky `laneOrder` / `bornOrder` / `strandMin`; bez nich bit po bitu shodný výstup (5 733 bodů, 8 sad parametrů, rozdíl 0,000000 px). Ověřeno také: kořen po refaktoru do funkce bod po bodu stejný; spojka končí **přesně** v místě odlepení (0,0000 px); žádná runa nemá dva prameny; 19 ≤ 25. V prohlížeči na živém logu (2 290 čtení): prameny 9 → 19, kořeny 109 → 123, 0 chyb ve všech polohách posuvníků.
+- **Dva nálezy modelu, které to odhalilo:** (1) táž runa graduuje na obou větvích téhož elementu → bez ošetření 27 pramenů u 25 run; (2) věk pramene se odvozuje z pořadí, takže pramen přidaný na konec má záporný věk a **vůbec nevznikne**.
+- **Zálohováno:** `v2/tree-snapshots/crown-F10-pre-gradstrand-2026-08-09/` (builder je untracked — git by ho nevrátil).
+- **Reversibility:** easy (přepínač na 0 = přesně dnešní stav; snapshot pro úplný návrat)
