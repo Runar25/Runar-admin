@@ -524,14 +524,15 @@ async function main() {
     return picked;
   }
 
-  function detectAngle(prompt) {
-    // Single only — _randomAngle has exactly one call site (runar-character.js:862).
-    if (spreadName !== 'single') return { angle: null, angle_idx: -1 };
+  // Detekce losu bydlí v runar-utils (`_promptDraws`) a je JEDNA — tentýž kód čte losy
+  // i v produkci, kde se ukládají do `readings.prompt_draws`. Dva detektory by se časem
+  // rozešly a probe dávka by měřila něco jiného než produkce (§20).
+  function detectDraws(prompt) {
+    if (spreadName !== 'single') return { angle: null, angle_idx: -1, draws: null };
+    const d = G('_promptDraws')(prompt, lang);
     const pool = G(lang === 'is' ? 'READING_ANGLES_IS' : 'READING_ANGLES');
-    const hits = pool.filter(function (a) { return prompt.indexOf(a) !== -1; });
-    return hits.length === 1
-      ? { angle: hits[0], angle_idx: pool.indexOf(hits[0]) }
-      : { angle: null, angle_idx: -1 };
+    const idx = (d && typeof d.angle === 'number') ? d.angle : -1;
+    return { angle: idx >= 0 ? pool[idx] : null, angle_idx: idx, draws: d };
   }
 
   // ── the run ──
@@ -549,7 +550,7 @@ async function main() {
       ? call(spec.builder, [u, runes[0], lang, []])
       : call(spec.builder, [u, runes, lang, []]);
 
-    const angle = detectAngle(prompt);
+    const angle = detectDraws(prompt);
     if (forcedAngle !== null && angle.angle_idx !== forcedAngle)
       die('--angle ' + forcedAngle + ' se do promptu nedostal (nalezeno: ' + angle.angle_idx +
           '). Davka by tise merila jiny uhel — nic se negeneruje.');
@@ -572,7 +573,7 @@ async function main() {
       area: area || null, seeking: seeking || null, intention: intention || null,
       question: args.question || null,
       name: name, user_gender: gender, season_bucket: seasonBucket,
-      angle: angle.angle, angle_idx: angle.angle_idx,
+      angle: angle.angle, angle_idx: angle.angle_idx, draws: angle.draws,
       max_tokens: maxTokens, spread_cost: spreadCost,
       // Builders are non-deterministic (random angle, name placement, ending shape,
       // keyword shuffle, seasonal bag) — the exact prompt cannot be reconstructed later.

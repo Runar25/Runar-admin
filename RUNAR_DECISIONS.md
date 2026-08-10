@@ -2371,3 +2371,19 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 - **Dva nálezy modelu, které to odhalilo:** (1) táž runa graduuje na obou větvích téhož elementu → bez ošetření 27 pramenů u 25 run; (2) věk pramene se odvozuje z pořadí, takže pramen přidaný na konec má záporný věk a **vůbec nevznikne**.
 - **Zálohováno:** `v2/tree-snapshots/crown-F10-pre-gradstrand-2026-08-09/` (builder je untracked — git by ho nevrátil).
 - **Reversibility:** easy (přepínač na 0 = přesně dnešní stav; snapshot pro úplný návrat)
+
+---
+
+## 2026-08-09 — Čtení si nově pamatuje, co si vylosovalo (`readings.prompt_draws`)
+
+- **Typ:** nové perzistované pole + SQL migrace (owner pouští)
+- **Scope:** tune
+- **Rozhodnutí ownera:** *„teď už budeme měřit jen na základě reálných čtení testerů."* Správný směr, ale narážel na tvrdé omezení: `readings` **nepersistovala ani jeden z pěti losů promptu**, takže u reálného čtení nešlo říct, kterým úhlem přišlo ani který obraz dostalo. Měřit z produkce by tím pádem odpovídalo na „jak čtení vypadají", ne na „která páka za to může". A zpětně to dodělat nejde — proto teď, ne až se ukáže, že to chybí.
+- **Co se změnilo:** nový detektor `_promptDraws(prompt, lang)` v `v2/runar-utils.js` čte losy **zpětně z hotového promptu** (úhel · obraz · tvar konce · umístění jména). Klient je přikládá k journalu (`v2/runar-reading.js`, single i spread), proxy je ukládá do `readings.prompt_draws jsonb`, exportér je vydává jako `draws` a `measure_readings --balance` z nich staví rozložení.
+- **Proč zpětné čtení a ne zápis z builderů:** builderů se to nedotkne, takže **výstup modelu je bit po bitu stejný** — golden dump PŘED/PO = prázdný diff. Jakákoli varianta se sáhnutím do builderů by musela projít §18.3 a nesla by riziko změny čtení kvůli měření.
+- **Jeden detektor, ne dva (§20):** `gen_batch.js` měl vlastní `detectAngle`; nahrazen sdíleným `_promptDraws`. Dva detektory by se rozešly a probe dávka by měřila něco jiného než produkce.
+- **Ověřeno proti nezávislé pravdě, ne odhadem:** detektor souhlasí s úhlem, který si `gen_batch` zapsal sám, na **50/50** promptech (EN i IS); obraz a konec nalezeny ve všech 50. Umístění jména: 60 promptů se skutečným jménem → všechny 4 varianty detekovány, „jméno vynecháno" ve 32/60 = 53 % (návrh říká ~55 %). Na `null`, `''`, čísle a objektu detektor **nevyhodí výjimku** — visí na cestě generování čtení, takže tam pád nesmí být. Čtecí cesta ověřena na obou tvarech dávky (produkční s `draws` bez promptu · probe s promptem) včetně řádků bez `draws`, které se hlásí jako nezapočítané, ne jako nula.
+- **⚠️ POŘADÍ NASAZENÍ (jinak se čtení přestanou ukládat):** 1. owner pustí `sql/2026-08-09_readings_prompt_draws.sql` · 2. teprve pak `supabase functions deploy claude-proxy`. Klient smí `draws` posílat i dřív — proxy neznámé pole v journalu ignoruje. Do doby deploye se losy neukládají.
+- **Rámec měření (KUKY tentýž den):** *„nejde nám o to zbavit se například `already` úplně. To byla chyba a nedorozumění. Chceme mít čtení vyvážená. Nejdeme hardcore zákaz na 0."* Losy jsou páky na **rozložení**, ne zákazy; `--balance` je proto vypisuje jako rozdělení a sám hlásí, když na možnost připadá méně než 5 pozorování.
+- **Affected doc(s):** `RUNAR_EVAL_LOG.md`
+- **Reversibility:** easy pro kód (`git revert`; prompt se nemění). Sloupec je aditivní a nullable — když se nechá, nikomu nevadí; zahozením se ztratí jen záznam losů.

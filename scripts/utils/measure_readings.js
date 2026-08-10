@@ -53,6 +53,22 @@ function longestVerbatim(a, b) {
   return best;
 }
 const pct = (n, d) => d ? Math.round(n / d * 100) + ' %' : '—';
+
+// Pool úhlů ze ZDROJE, ne opsaný sem (§20). Produkční řádek nese jen index, takže bez
+// tohohle by výpis byl „0 ·" a index by se musel dohledávat ručně. Nejde-li to načíst,
+// zůstane index — nikdy se nehádá text.
+function anglePool(lang) {
+  try {
+    const vm = require('vm');
+    const src = fs.readFileSync(path.join(__dirname, '..', '..', 'v2', 'runar-utils.js'), 'utf8');
+    const ctx = { console };
+    ctx.window = ctx; ctx.globalThis = ctx;
+    vm.createContext(ctx);
+    vm.runInContext(src + ';__P={en:READING_ANGLES,is:READING_ANGLES_IS};', ctx, { filename: 'u.js' });
+    const p = ctx.__P[lang === 'is' ? 'is' : 'en'];
+    return Array.isArray(p) && p.length ? p : null;
+  } catch (e) { return null; }
+}
 const med = a => { const s = [...a].sort((x, y) => x - y); return s[Math.floor(s.length / 2)]; };
 
 for (const f of files) {
@@ -154,22 +170,36 @@ function balance(rows) {
   console.log('\n   ── rozložení losovaných pák (vyváženost, ne prohřešky) ──');
 
   // 1) ÚHEL — jen když dávka nese prompt (gen_batch). Produkce ho nepersistuje.
-  const withAngle = rows.filter(r => typeof r.angle_idx === 'number' && r.angle_idx >= 0);
+  // Dva zdroje téhož: probe dávka nese `angle_idx` (gen_batch), produkční export nese
+  // `draws` (readings.prompt_draws, od 2026-08-09). Čtení starší než ta migrace `draws`
+  // nemají — a to se řekne, místo mlčky vytištěné nuly (§19.2).
+  const angleOf = r => (r.draws && typeof r.draws.angle === 'number') ? r.draws.angle
+                     : (typeof r.angle_idx === 'number' && r.angle_idx >= 0) ? r.angle_idx : null;
+  const withAngle = rows.filter(r => angleOf(r) !== null);
   if (withAngle.length) {
+    // jazyk se bere z RADKU (funkce nevidi do smycky nad soubory)
+    const ls = [...new Set(withAngle.map(r => r.lang).filter(Boolean))];
+    const pool = anglePool(ls.length === 1 ? ls[0] : 'en');
     const m = new Map();
     for (const r of withAngle) {
-      const key = r.angle_idx + ' · ' + String(r.angle || '').slice(0, 46);
-      m.set(key, (m.get(key) || 0) + 1);
+      const i = angleOf(r);
+      const txt = r.angle || (pool && pool[i]) || '';
+      m.set(i + ' · ' + String(txt).slice(0, 46), (m.get(i + ' · ' + String(txt).slice(0, 46)) || 0) + 1);
     }
+    if (!pool && !withAngle.some(r => r.angle))
+      console.log('     (pool úhlů se nepodařilo načíst — jen indexy)');
     dist('úhel čtení', [...m.entries()].sort());
+    if (withAngle.length < rows.length)
+      console.log('     ⚠ ' + (rows.length - withAngle.length) + ' z ' + rows.length +
+        ' čtení úhel nenese (starší než 2026-08-09) — do rozložení se nepočítají.');
   } else {
     console.log('   úhel čtení: NELZE ZJISTIT z téhle dávky.');
-    console.log('     `readings` úhel neukládá, takže u čtení z produkce (export_readings)');
-    console.log('     chybí. Korelace úhlu jde dnes jen přes gen_batch (nese prompt).');
+    console.log('     Buď je celá starší než záznam losů (2026-08-09), nebo nenese ani');
+    console.log('     `draws` (produkční export), ani `prompt` (probe z gen_batch).');
   }
 
   // 2) SEZÓNNÍ OBRAZ — táž podmínka.
-  const imgs = rows.map(r => injectedImage(r.prompt)).filter(Boolean);
+  const imgs = rows.map(r => (r.draws && r.draws.image) || injectedImage(r.prompt)).filter(Boolean);
   if (imgs.length) {
     // Bez rámce „očekávaná četnost": pool má desítky položek a dávka jich uvidí hrstku,
     // takže rovnoměrnost tu nic neznamená. Co znamená: kolik RŮZNÝCH a co se OPAKOVALO.
@@ -184,7 +214,19 @@ function balance(rows) {
       for (const [img, n] of rep2) console.log('       ' + n + '× ' + img.slice(0, 62));
     }
   } else {
-    console.log('   sezónní obraz: NELZE ZJISTIT — dávka nenese `prompt` (viz úhel výš).');
+    console.log('   sezónní obraz: NELZE ZJISTIT — dávka nenese ani `draws`, ani `prompt`.');
+  }
+
+  // Umístění jména z `draws` (produkce). Z textu to jde jen tam, kde dávka jméno nese.
+  const withName = rows.filter(r => r.draws && typeof r.draws.name === 'number');
+  if (withName.length) {
+    const LBL = ['brzy', 'uprostřed', 'na konci', 'jméno vynecháno'];
+    const m = new Map();
+    for (const r of withName) {
+      const l = LBL[r.draws.name] || ('varianta ' + r.draws.name);
+      m.set(l, (m.get(l) || 0) + 1);
+    }
+    dist('umístění jména (z draws)', [...m.entries()].sort(), '(návrh: vynecháno ~55 %)');
   }
 
   // 3) TVAR KONCE — tenhle JDE z textu, prompt netřeba.
@@ -203,8 +245,8 @@ function balance(rows) {
     }
     dist('umístění jména', [['vůbec ne', none], ['začátek', early], ['střed', mid], ['konec', late]],
       '(z textu)');
-  } else {
-    console.log('   umístění jména: NELZE ZJISTIT — dávka jméno nenese' +
-      ' (produkční export ho vypouští, oslovení bývá „you"/„þú").');
+  } else if (!withName.length) {
+    console.log('   umístění jména: NELZE ZJISTIT — dávka nenese ani `draws`, ani jméno' +
+      ' (produkční export jméno vypouští, oslovení bývá „you"/„þú").');
   }
 }

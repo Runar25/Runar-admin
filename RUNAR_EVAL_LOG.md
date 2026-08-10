@@ -150,6 +150,37 @@ ošetření → `RUNAR_BACKLOG.md`.
 `RUNAR_PROMPT_VERSION` se bumpnul na **v1.5 až po jejich vygenerování** (moje chyba — úhly jsou
 změna promptu). Názvy souborů říkají pravdu, tag ne.
 
+### Od 2026-08-09 se měří na REÁLNÝCH čteních testerů — a proto si čtení pamatuje svůj los
+
+KUKY: *„teď už budeme měřit jen na základě reálných čtení testerů."* K tomu bylo potřeba
+zavřít jednu díru: `readings` nepersistovala **ani jeden z pěti losů promptu**, takže
+z produkčního čtení nešlo zjistit, kterým úhlem přišlo ani který obraz dostalo. Od téhle
+verze nese každé čtení `prompt_draws` — úhel · obraz · tvar konce · umístění jména.
+(Migrace `sql/2026-08-09_readings_prompt_draws.sql`; starší čtení mají `null` a tak to zůstane.)
+
+**Rámec, který ruší předchozí způsob čtení čísel.** KUKY tentýž den: *„nejde nám o to zbavit
+se například `already` úplně. To byla chyba a nedorozumění. Chceme mít čtení vyvážená.
+Nejdeme hardcore zákaz na 0."* Losy jsou páky na **rozložení**, ne zákazy. Metriky se proto
+nehlásí jako počty prohřešků — hlásí se jako rozdělení. Extrém je vada na **obou** koncích;
+0 % je stejně podezřelé jako 90 %. Jediné, co je opravdu vada, je **otevření definicí runy**
+(zakazuje ho `_describeRule`).
+
+Postup na jednu dávku:
+
+```
+node scripts/utils/export_readings.js --testers-only --since <datum>   # ven z repa
+node scripts/utils/measure_readings.js --balance <dávka.jsonl>         # rozložení pák
+node scripts/utils/lint_readings.js <dávka.jsonl>                      # zákazy na výstupu
+python -X utf8 is-grammar-qa.py <dávka.readings.txt>                   # IS gramatika
+```
+
+⚠️ **Co dávka neunese, to `--balance` řekne nahlas** místo mlčky vytištěné nuly: čtení bez
+`draws` se hlásí jako nezapočítaná, a když na jednu možnost připadá **méně než 5 pozorování**,
+nástroj sám napíše, že o (ne)rovnováze nevypovídá. Úhel dostane ~1/7 dávky — takže na otázku
+„udělala změna JEDNOHO úhlu něco?" produkční dávka neodpoví ani s losy; na to je
+`gen_batch.js --angle N` (n≥25 na úhel). Produkční data odpovídají na *jak čtení čtou*,
+vynucená probe na *co udělala konkrétní páka*.
+
 ## Páky — retrospektiva (co už se s hlasem dělalo; detail = `git log` [reading]/[tune])
 
 | verze | co se změnilo | proč | naměřeno | verdikt |

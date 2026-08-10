@@ -14,8 +14,9 @@
 //
 // Pole: viz Cowork handoff 2026-08-08 (user · is_tester · is_admin · rune · runes[] ·
 // spread · life_rune · prompt_version · lang · area · seeking · intention · mode ·
-// reading_text · ask_q · ask_a · ts).  `angle_idx` NEEXISTUJE — u reálných čtení se
-// nepersistuje (ověřeno na schématu), korelace úhlu jde jen přes gen_batch.
+// reading_text · ask_q · ask_a · ts · draws).
+// `draws` = co si prompt vylosoval (úhel/obraz/konec/jméno). Od 2026-08-09; starší
+// čtení ho mají null, protože se do té doby nepersistoval vůbec.
 //
 //   node scripts/utils/export_readings.js
 //   node scripts/utils/export_readings.js --testers-only --since 2026-08-01
@@ -106,6 +107,7 @@ select json_build_object(
   'seeking',        r.seeking,
   'intention',      r.intention,
   'mode',           r.reading_mode,
+  'draws',          r.prompt_draws,
   'follow_up',      r.follow_up,
   'ts',             r.drawn_at
 )::text as j
@@ -184,6 +186,9 @@ function toRow(raw, glyphSet) {
     seeking: raw.seeking ?? null,
     intention: raw.intention ?? null,
     mode: raw.mode ?? null,
+    // Losy promptu (úhel/obraz/konec/jméno). U čtení z doby před 2026-08-09 chybí —
+    // zůstane null, NIKDY se nedosazuje 0 (mlčky vytištěná nula by lhala).
+    draws: raw.draws ?? null,
     reading_text: raw.deep_text || raw.short_text || '',
     ask_q: first ? (first.q ?? null) : null,
     ask_a: first ? (first.a ?? null) : null,

@@ -106,7 +106,10 @@ async function _generateReading() {
     kind: 'single', id: _uuid(), rune_name: drawn.n, rune_glyph: drawn.g, lang: lang,
     area: u.area || null, aol: u.area || null, seeking: u.seeking || null, intention: u.intention || null,
     question: u.question || null, life_rune: (u.lifeRune && u.lifeRune.n) || null,
-    prompt_version: RUNAR_PROMPT_VERSION, address: userGender, reading_mode: _readingMode
+    prompt_version: RUNAR_PROMPT_VERSION, address: userGender, reading_mode: _readingMode,
+    // Co si prompt vylosoval (úhel · obraz · tvar konce · umístění jména). Bez toho
+    // nejde u reálného čtení říct, která páka za výsledek může — viz _promptDraws.
+    draws: _promptDraws(prompt, lang)
   } : null;
   _lastReadingId = null;
   const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens, shouldUseCredit(), SPREAD_COSTS.single.credits, _journal);
@@ -791,7 +794,7 @@ async function _generateSpreadReading(o) {
     area: 'spread', aol: u.area || null, seeking: u.seeking || null, intention: u.intention || null,
     question: u.question || null, life_rune: (u.lifeRune && u.lifeRune.n) || null,
     rune_display: _runeDisplay, prompt_version: RUNAR_PROMPT_VERSION, address: userGender,
-    reading_mode: _readingMode
+    reading_mode: _readingMode, draws: _promptDraws(prompt, lang)
   } : null;
   _lastReadingId = null;
   // Zakladaci Norny: zdarma a BEZ HLASU (hlas = 95 % ceny cteni, proto se nekona).

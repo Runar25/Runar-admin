@@ -254,6 +254,54 @@ function _namePlacement(name, lang) {
   return placed[Math.floor(Math.random() * placed.length)].split('{name}').join(name);
 }
 
+// ─── _promptDraws(prompt, lang) ──────────────────────────────────
+// Co si prompt pro TOHLE čtení vylosoval — čte se ZPĚTNĚ z hotového promptu.
+// Buildery se tím nemění, takže výstup modelu zůstává bit po bitu stejný.
+//
+// Proč existuje: `readings` do 2026-08-09 los nepersistovala, takže u reálného
+// čtení nešlo říct, kterým úhlem přišlo ani který obraz dostalo. Měřit se má na
+// reálných čteních (KUKY 2026-08-09) — a to bez tohohle záznamu nejde.
+//
+// ⚠️ NESMÍ vyhodit výjimku ani nic zdržet: visí na cestě generování čtení.
+// Nezjištěná položka prostě chybí — nikdy se nedosazuje 0 ani '' (§19.2: mlčky
+// vytištěná nula je horší než přiznané „nevím").
+function _promptDraws(prompt, lang) {
+  try {
+    var p = String(prompt || '');
+    if (!p) return null;
+    var isIs = lang === 'is';
+    var out = { v: 1 };
+
+    var angles = isIs ? READING_ANGLES_IS : READING_ANGLES;
+    for (var i = 0; i < angles.length; i++)
+      if (p.indexOf(angles[i]) !== -1) { out.angle = i; break; }
+
+    // Obraz sedí mezi „— " a pevnou závěrečnou větou o sezóně. Kotvit na tu větu je
+    // spolehlivější než „do první tečky" — islandské obrazy tečky obsahovat můžou.
+    var head = isIs ? 'árstíð — ' : 'season — ';
+    var tail = isIs ? '. Aldrei úr annarri árstíð' : '. Never from another season';
+    var a = p.indexOf(head), b = a < 0 ? -1 : p.indexOf(tail, a);
+    if (a >= 0 && b > a) out.image = p.slice(a + head.length, b).trim();
+
+    var heavy = isIs ? ENDING_HEAVY_IS : ENDING_HEAVY;
+    var open  = isIs ? ENDING_OPEN_IS  : ENDING_OPEN;
+    for (var j = 0; j < heavy.length; j++)
+      if (p.indexOf(heavy[j]) !== -1) { out.ending = 'heavy' + j; break; }
+    if (out.ending === undefined)
+      for (var k = 0; k < open.length; k++)
+        if (p.indexOf(open[k]) !== -1) { out.ending = 'open' + k; break; }
+
+    // Jméno: {name} je už dosazené, takže se hledá část ZA ním — ta je u všech
+    // čtyř variant jednoznačná. Poslední = „jméno nepoužívej" (viz _namePlacement).
+    var npool = isIs ? NAME_PLACEMENTS_IS : NAME_PLACEMENTS;
+    for (var n = 0; n < npool.length; n++) {
+      var after = npool[n].split('{name}')[1];
+      if (after && p.indexOf(after) !== -1) { out.name = n; break; }
+    }
+    return out;
+  } catch (e) { return null; }
+}
+
 // ─── ENDING SHAPE (anti-slot) ────────────────────────────────────
 // How a reading closes varies per reading AND follows the rune's valence (HEAVY_RUNES):
 // a heavy rune must not be softened into comfort; the rest may rest instead of asking.
