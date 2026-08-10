@@ -8,6 +8,14 @@
 //   node scripts/utils/measure_readings.js docs/inbox/probe-is-v14.jsonl
 //   node scripts/utils/measure_readings.js ~/runar-eval/tester-<datum>.jsonl
 //   node scripts/utils/measure_readings.js a.jsonl b.jsonl        (porovná dávky)
+//   node scripts/utils/measure_readings.js --balance davka.jsonl   (rozložení losovaných pák)
+//
+// --balance = VYVÁŽENOST, ne prohřešky. KUKY 2026-08-09: „nejde nám o to zbavit se
+// například `already` úplně — chceme mít čtení vyvážená, nejdeme hardcore zákaz na 0."
+// Prompt si u každého single čtení losuje čtyři věci (úhel · sezónní obraz · umístění
+// jména · tvar konce). Otázka není „kolikrát padlo zakázané slovo", ale „chodí čtení
+// všemi dveřmi, nebo pořád jedněmi?". Co dávka NEUMÍ prozradit, to se vypíše nahlas —
+// mlčky vytištěná nula by lhala (§19.2).
 //
 // Vstup = JSONL z `gen_batch.js` (nese i `prompt` → měří se i papouškování)
 // nebo z `export_readings.js` (bez promptu → papouškování se přeskočí).
@@ -18,7 +26,9 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 
-const files = process.argv.slice(2).map(f => f.replace(/^~/, os.homedir()));
+const argv = process.argv.slice(2);
+const BALANCE = argv.includes('--balance');
+const files = argv.filter(a => a !== '--balance').map(f => f.replace(/^~/, os.homedir()));
 if (!files.length) {
   console.error('\n  Použití: node scripts/utils/measure_readings.js <soubor.jsonl> […]\n');
   process.exit(1);
@@ -107,10 +117,94 @@ for (const f of files) {
   const thula = rows.filter(r => /\b\w+ er rún \w+/i.test(r.reading_text)).length;
   console.log('   tvar rúnaþuly ve výstupu: ' + thula + '/' + rows.length);
 
-  // 5 — „already"/„þegar" (cold-read únik, řešeno v v1.2)
+  if (BALANCE) balance(rows);
+
+  // 5 — „already"/„þegar" — SLEDUJE SE, NEHONÍ K NULE (KUKY 2026-08-09).
+  //     Je to ukazatel vyváženosti, ne počet prohřešků: čtení, které přijde dveřmi
+  //     „weight", ho klidně použít má. Vada by byl až extrém na obou koncích.
   const en = rows.filter(r => r.lang !== 'is'), is = rows.filter(r => r.lang === 'is');
   if (en.length) console.log('   EN „already": ' + pct(en.filter(r => /\balready\b/i.test(r.reading_text)).length, en.length));
   if (is.length) console.log('   IS „þegar" (často spojka „když" — ne nutně únik): ' +
     pct(is.filter(r => /\bþegar\b/i.test(r.reading_text)).length, is.length));
 }
 console.log('\n  (zákazy na výstupu měří `lint_readings.js`, IS gramatiku `is-grammar-qa.py`)\n');
+
+// ── ROZLOŽENÍ LOSOVANÝCH PÁK ────────────────────────────────────────────────
+// Rovnoměrnost se neposuzuje okem: u N pozorování a K možností je očekávaná četnost
+// N/K a i dokonale férový los se od ní běžně liší. Vypisuje se proto i to, kolik
+// pozorování na jednu možnost vůbec připadá — pod ~5 nemá smysl mluvit o nerovnováze.
+function dist(label, pairs, note) {
+  const total = pairs.reduce((a, p) => a + p[1], 0);
+  if (!total) { console.log('   ' + label + ': —'); return; }
+  const k = pairs.length;
+  console.log('   ' + label + '  (n=' + total + ', možností ' + k +
+    ', na jednu očekáváno ' + (total / k).toFixed(1) + ')' + (note ? '  ' + note : ''));
+  const w = Math.max(...pairs.map(p => String(p[0]).length));
+  for (const [name, n] of pairs) {
+    const pctv = total ? n / total * 100 : 0;
+    const bar = '█'.repeat(Math.round(pctv / 4));
+    console.log('     ' + String(name).padEnd(w) + '  ' + String(n).padStart(3) +
+      '  ' + pctv.toFixed(0).padStart(3) + ' %  ' + bar);
+  }
+  if (total / k < 5)
+    console.log('     ⚠ méně než 5 pozorování na možnost — o (ne)rovnováze tahle dávka nevypovídá.');
+}
+
+function balance(rows) {
+  console.log('\n   ── rozložení losovaných pák (vyváženost, ne prohřešky) ──');
+
+  // 1) ÚHEL — jen když dávka nese prompt (gen_batch). Produkce ho nepersistuje.
+  const withAngle = rows.filter(r => typeof r.angle_idx === 'number' && r.angle_idx >= 0);
+  if (withAngle.length) {
+    const m = new Map();
+    for (const r of withAngle) {
+      const key = r.angle_idx + ' · ' + String(r.angle || '').slice(0, 46);
+      m.set(key, (m.get(key) || 0) + 1);
+    }
+    dist('úhel čtení', [...m.entries()].sort());
+  } else {
+    console.log('   úhel čtení: NELZE ZJISTIT z téhle dávky.');
+    console.log('     `readings` úhel neukládá, takže u čtení z produkce (export_readings)');
+    console.log('     chybí. Korelace úhlu jde dnes jen přes gen_batch (nese prompt).');
+  }
+
+  // 2) SEZÓNNÍ OBRAZ — táž podmínka.
+  const imgs = rows.map(r => injectedImage(r.prompt)).filter(Boolean);
+  if (imgs.length) {
+    // Bez rámce „očekávaná četnost": pool má desítky položek a dávka jich uvidí hrstku,
+    // takže rovnoměrnost tu nic neznamená. Co znamená: kolik RŮZNÝCH a co se OPAKOVALO.
+    const m = new Map();
+    for (const i of imgs) m.set(i, (m.get(i) || 0) + 1);
+    const rep2 = [...m.entries()].filter(p => p[1] > 1).sort((a, b) => b[1] - a[1]);
+    console.log('   sezónní obraz  (n=' + imgs.length + ')');
+    console.log('     různých obrazů: ' + m.size + ' na ' + imgs.length + ' čtení' +
+      (m.size === imgs.length ? '   (žádný se neopakoval)' : ''));
+    if (rep2.length) {
+      console.log('     opakované:');
+      for (const [img, n] of rep2) console.log('       ' + n + '× ' + img.slice(0, 62));
+    }
+  } else {
+    console.log('   sezónní obraz: NELZE ZJISTIT — dávka nenese `prompt` (viz úhel výš).');
+  }
+
+  // 3) TVAR KONCE — tenhle JDE z textu, prompt netřeba.
+  const q = rows.filter(r => /\?\s*$/.test(r.reading_text.trim())).length;
+  dist('tvar konce', [['otázkou', q], ['tvrzením', rows.length - q]], '(z textu, prompt netřeba)');
+
+  // 4) JMÉNO — jen když dávka jméno nese (produkční export ho kvůli minimalizaci nemá).
+  const named = rows.filter(r => r.name && r.name !== 'you' && r.name !== 'þú');
+  if (named.length) {
+    let none = 0, early = 0, mid = 0, late = 0;
+    for (const r of named) {
+      const t = r.reading_text, i = t.indexOf(r.name);
+      if (i < 0) { none++; continue; }
+      const rel = i / t.length;
+      if (rel < 0.33) early++; else if (rel < 0.66) mid++; else late++;
+    }
+    dist('umístění jména', [['vůbec ne', none], ['začátek', early], ['střed', mid], ['konec', late]],
+      '(z textu)');
+  } else {
+    console.log('   umístění jména: NELZE ZJISTIT — dávka jméno nenese' +
+      ' (produkční export ho vypouští, oslovení bývá „you"/„þú").');
+  }
+}
