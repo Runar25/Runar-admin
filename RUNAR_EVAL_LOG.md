@@ -156,7 +156,7 @@ KUKY: *„teď už budeme měřit jen na základě reálných čtení testerů."
 zavřít jednu díru: `readings` nepersistovala **ani jeden z pěti losů promptu**, takže
 z produkčního čtení nešlo zjistit, kterým úhlem přišlo ani který obraz dostalo. Od téhle
 verze nese každé čtení `prompt_draws` — úhel · obraz · tvar konce · umístění jména.
-(Migrace `sql/2026-08-09_readings_prompt_draws.sql`; starší čtení mají `null` a tak to zůstane.)
+(Migrace `sql/2026-08-10_readings_prompt_draws.sql`; starší čtení mají `null` a tak to zůstane.)
 
 **Rámec, který ruší předchozí způsob čtení čísel.** KUKY tentýž den: *„nejde nám o to zbavit
 se například `already` úplně. To byla chyba a nedorozumění. Chceme mít čtení vyvážená.

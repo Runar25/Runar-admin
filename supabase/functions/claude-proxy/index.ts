@@ -382,7 +382,7 @@ async function persistJournal(
         // Co si prompt pro tohle čtení vylosoval (úhel/obraz/konec/jméno). Klient to
         // čte zpětně z hotového promptu (_promptDraws). Bez toho nejde u reálného
         // čtení říct, která páka za výsledek může.
-        // ⚠️ Vyžaduje sloupec `prompt_draws jsonb` — sql/2026-08-09_readings_prompt_draws.sql.
+        // ⚠️ Vyžaduje sloupec `prompt_draws jsonb` — sql/2026-08-10_readings_prompt_draws.sql.
         //    Nasadit AŽ po té migraci: bez sloupce by insert selhal a čtení by se přestala ukládat.
         prompt_draws:   journal.draws ?? null,
         credits_used:   creditsUsed,

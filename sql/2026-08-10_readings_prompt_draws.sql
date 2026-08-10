@@ -1,8 +1,8 @@
--- 2026-08-09 — readings.prompt_draws
+-- 2026-08-10 — readings.prompt_draws
 --
 -- PROČ: prompt si u každého čtení losuje úhel, obraz, tvar konce a umístění jména.
 -- Do dneška se nezapisoval ani jeden, takže u reálného čtení nešlo říct, kterým
--- úhlem přišlo ani který obraz dostalo. KUKY 2026-08-09: „teď už budeme měřit jen
+-- úhlem přišlo ani který obraz dostalo. KUKY 2026-08-10: „teď už budeme měřit jen
 -- na základě reálných čtení testerů" — bez tohohle sloupce to nejde.
 --
 -- CO TO JE: jeden jsonb, např.
@@ -26,4 +26,4 @@ alter table public.readings
   add column if not exists prompt_draws jsonb;
 
 comment on column public.readings.prompt_draws is
-  'Co si prompt pro toto čtení vylosoval (angle/image/ending/name). Zapisuje server. Null = čtení z doby před 2026-08-09.';
+  'Co si prompt pro toto čtení vylosoval (angle/image/ending/name). Zapisuje server. Null = čtení z doby před 2026-08-10.';

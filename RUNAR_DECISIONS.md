@@ -2374,7 +2374,7 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 
 ---
 
-## 2026-08-09 — Čtení si nově pamatuje, co si vylosovalo (`readings.prompt_draws`)
+## 2026-08-10 — Čtení si nově pamatuje, co si vylosovalo (`readings.prompt_draws`)
 
 - **Typ:** nové perzistované pole + SQL migrace (owner pouští)
 - **Scope:** tune
@@ -2383,7 +2383,7 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 - **Proč zpětné čtení a ne zápis z builderů:** builderů se to nedotkne, takže **výstup modelu je bit po bitu stejný** — golden dump PŘED/PO = prázdný diff. Jakákoli varianta se sáhnutím do builderů by musela projít §18.3 a nesla by riziko změny čtení kvůli měření.
 - **Jeden detektor, ne dva (§20):** `gen_batch.js` měl vlastní `detectAngle`; nahrazen sdíleným `_promptDraws`. Dva detektory by se rozešly a probe dávka by měřila něco jiného než produkce.
 - **Ověřeno proti nezávislé pravdě, ne odhadem:** detektor souhlasí s úhlem, který si `gen_batch` zapsal sám, na **50/50** promptech (EN i IS); obraz a konec nalezeny ve všech 50. Umístění jména: 60 promptů se skutečným jménem → všechny 4 varianty detekovány, „jméno vynecháno" ve 32/60 = 53 % (návrh říká ~55 %). Na `null`, `''`, čísle a objektu detektor **nevyhodí výjimku** — visí na cestě generování čtení, takže tam pád nesmí být. Čtecí cesta ověřena na obou tvarech dávky (produkční s `draws` bez promptu · probe s promptem) včetně řádků bez `draws`, které se hlásí jako nezapočítané, ne jako nula.
-- **⚠️ POŘADÍ NASAZENÍ (jinak se čtení přestanou ukládat):** 1. owner pustí `sql/2026-08-09_readings_prompt_draws.sql` · 2. teprve pak `supabase functions deploy claude-proxy`. Klient smí `draws` posílat i dřív — proxy neznámé pole v journalu ignoruje. Do doby deploye se losy neukládají.
+- **⚠️ POŘADÍ NASAZENÍ (jinak se čtení přestanou ukládat):** 1. owner pustí `sql/2026-08-10_readings_prompt_draws.sql` · 2. teprve pak `supabase functions deploy claude-proxy`. Klient smí `draws` posílat i dřív — proxy neznámé pole v journalu ignoruje. Do doby deploye se losy neukládají.
 - **Rámec měření (KUKY tentýž den):** *„nejde nám o to zbavit se například `already` úplně. To byla chyba a nedorozumění. Chceme mít čtení vyvážená. Nejdeme hardcore zákaz na 0."* Losy jsou páky na **rozložení**, ne zákazy; `--balance` je proto vypisuje jako rozdělení a sám hlásí, když na možnost připadá méně než 5 pozorování.
 - **Affected doc(s):** `RUNAR_EVAL_LOG.md`
 - **Reversibility:** easy pro kód (`git revert`; prompt se nemění). Sloupec je aditivní a nullable — když se nechá, nikomu nevadí; zahozením se ztratí jen záznam losů.

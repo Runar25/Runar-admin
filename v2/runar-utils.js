@@ -291,6 +291,19 @@ function _promptDraws(prompt, lang) {
       for (var k = 0; k < open.length; k++)
         if (p.indexOf(open[k]) !== -1) { out.ending = 'open' + k; break; }
 
+    // Klíčová slova: z pěti až šesti se losují tři (pickedKws) — fasety runy položené
+    // modelu před oči. Řádka vypadá takto:
+    //   DRAWN RUNE: Fehu — focus on: wealth, material prosperity, cattle · World: …
+    // Bere se, co stojí mezi značkou a prvním „ · ".
+    var kwMark = isIs ? 'áhersla: ' : 'focus on: ';
+    var ki = p.indexOf(kwMark);
+    if (ki >= 0) {
+      var rest = p.slice(ki + kwMark.length);
+      var cut = rest.indexOf(' · ');
+      var kws = (cut > 0 ? rest.slice(0, cut) : rest.slice(0, 120)).trim();
+      if (kws) out.kws = kws;
+    }
+
     // Jméno: {name} je už dosazené, takže se hledá část ZA ním — ta je u všech
     // čtyř variant jednoznačná. Poslední = „jméno nepoužívej" (viz _namePlacement).
     var npool = isIs ? NAME_PLACEMENTS_IS : NAME_PLACEMENTS;
