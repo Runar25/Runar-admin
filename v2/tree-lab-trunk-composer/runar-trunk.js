@@ -112,8 +112,9 @@ function buildTrunk(spec, T) {
   var strandN = Math.min((T.strandMax||28), Math.max(T.strandMin||0, 3 + Math.max(0, Math.floor(treeAge/every))));  /* cap = perf/visual safety pri testovani */
   var baseW = T.thickness * arch.widthMul;          /* per-strand width at full age */
   var laneStep = baseW * T.bundleSpread;            /* < baseW => overlap => one body */
-  /* T.laneOrder (nepovinne): explicitni draha kazdeho pramene ve svazku. Sirka svazku se
-     musi pocitat ze SKUTECNE pouzitych drah, jinak by 27 pramenu roztahlo kmen podle LANE. */
+  /* T.laneOrder (nepovinne): explicitni draha kazdeho pramene ve svazku.
+     POZN.: `maxLane` se dal v enginu NIKDE nepouziva (mrtvy kod uz pred touhle zmenou),
+     takze sirku svazku neridi ani LANE, ani laneOrder -- rozhoduje jen `laneStep`. */
   function laneAt(i){ return (T.laneOrder && T.laneOrder[i]!=null) ? T.laneOrder[i] : LANE[i%LANE.length]; }
   var maxLane = 1; for (var li=0; li<strandN; li++) maxLane=Math.max(maxLane,Math.abs(laneAt(li)));
 
