@@ -51,7 +51,7 @@ for (let i = 2; i < process.argv.length; i++) {
 if (args.help) {
   console.log([
     '', '  export_readings.js — reálná čtení z DB do JSONL pro eval', '',
-    '  --out <cesta>     kam zapsat (default ~/runar-eval/tester-<dnes>.jsonl)',
+    '  --out <cesta>     kam zapsat (default ~/runar-eval/readings.jsonl, vzdy se prepisuje)',
     '  --since <YYYY-MM-DD>  jen čtení od tohoto data',
     '  --testers-only    jen účty s is_tester = true',
     '  --dry-run         jen spočítej, nic nezapisuj', '',
@@ -60,11 +60,8 @@ if (args.help) {
 }
 
 // ── kam se smí zapsat ───────────────────────────────────────────────────────
-function stamp(d) {
-  return d.getFullYear() + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0');
-}
 const DEFAULT_DIR = path.join(os.homedir(), 'runar-eval');
-const outPath = path.resolve(args.out || path.join(DEFAULT_DIR, 'tester-' + stamp(new Date()) + '.jsonl'));
+const outPath = path.resolve(args.out || path.join(DEFAULT_DIR, 'readings.jsonl'));
 
 // Tohle je bezpečnostní pojistka, ne styl: repo je veřejné, takže osobní čtení do něj
 // nesmí ani omylem (ani do gitignorovaného podadresáře — jeden `git add -f` a je to venku).

@@ -2387,3 +2387,16 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 - **Rámec měření (KUKY tentýž den):** *„nejde nám o to zbavit se například `already` úplně. To byla chyba a nedorozumění. Chceme mít čtení vyvážená. Nejdeme hardcore zákaz na 0."* Losy jsou páky na **rozložení**, ne zákazy; `--balance` je proto vypisuje jako rozdělení a sám hlásí, když na možnost připadá méně než 5 pozorování.
 - **Affected doc(s):** `RUNAR_EVAL_LOG.md`
 - **Reversibility:** easy pro kód (`git revert`; prompt se nemění). Sloupec je aditivní a nullable — když se nechá, nikomu nevadí; zahozením se ztratí jen záznam losů.
+
+---
+
+## 2026-08-10 — Eval export: vždy vše, jeden přepisovaný soubor
+
+- **Typ:** implementation (tooling konvence)
+- **Scope:** tune
+- **Co se změnilo:** `export_readings.js` default = VŽDY všechna čtení (kromě `analytics_opt_out`) do JEDNOHO fixního souboru `~/runar-eval/readings.jsonl` (+ `.meta.json`), který se při každém běhu PŘEPÍŠE. Zrušen datovaný `tester-<datum>.jsonl` i nepoužitý `stamp()`.
+- **Proč:** KUKY 2026-08-10 — Cowork ať čte JEDNU stabilní cestu s aktuálním plným datasetem, ne aby honil datované soubory. Historie se neztrácí: každý řádek nese `ts` + `prompt_version`, kohorty se filtrují uvnitř souboru.
+- **Affected doc(s):** `scripts/utils/export_readings.js`, tento záznam.
+- **Reality note:** Mimo repo (PII, RUNAR_PRIVACY.md); Cowork čte přes device_bash. Spouštět z rootu repa (`node scripts/utils/export_readings.js`) — supabase CLI hledá `supabase/.temp` v cwd. Staré `~/runar-eval/tester-*.jsonl` jsou redundantní (obsah je v `readings.jsonl`), lze smazat.
+- **Reversibility:** easy (vrátit datovaný default).
+
