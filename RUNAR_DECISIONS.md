@@ -2400,3 +2400,20 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 - **Reality note:** Mimo repo (PII, RUNAR_PRIVACY.md); Cowork čte přes device_bash. Spouštět z rootu repa (`node scripts/utils/export_readings.js`) — supabase CLI hledá `supabase/.temp` v cwd. Staré `~/runar-eval/tester-*.jsonl` jsou redundantní (obsah je v `readings.jsonl`), lze smazat.
 - **Reversibility:** easy (vrátit datovaný default).
 
+---
+
+## 2026-08-10 — EN obrazy klíčované runou (v1.6): rune-keyed výběr běžel jen v islandštině
+
+- **Typ:** oprava vady + obsah od Coworku (81 EN obrazů)
+- **Scope:** tune
+- **Co se našlo:** živé EN čtení Raidho — runy cesty — dostalo obraz *„sun on the green turf roof of an old farmhouse"*. Owner: *„mluví o cestě a skočí na střechu."* Nešlo o smůlu při losování: rune-keyed blok v `_seasonalImagery` byl uzavřený v `if (lang === 'is')`, takže **celá anglická větev** padala na `SEASON_POOLS`, které znají jen sezónu, ne runu. Od zavedení obrazů klíčovaných runou (v1.4) tedy EN nikdy ani jeden nedostalo.
+- **Co se změnilo:** řádek pole se rozšířil na `[runa, tag, IS, EN]` a pole se přejmenovalo `RUNE_IMAGES_IS` → **`RUNE_IMAGES`**. Rune-keyed výběr platí pro oba jazyky; mění se jen **zdrojový sloupec**, výběr kandidátů (`_runeImageCandidates`), sezónní filtr i sáček proti opakování zůstávají beze změny. `RUNAR_PROMPT_VERSION` → **v1.6**.
+- **Proč jeden zdroj a ne `RUNE_IMAGES_EN` vedle (§18):** dvě paralelní pole by se musela ručně držet ve stejném pořadí. Přesně z toho tvaru vznikl měsíc oprav u IS/EN builderů. Jeden řádek nese obě řeči, takže se nemají jak rozejít.
+- **Ověřeno:**
+  - **Opsání tabulky proti živému poolu: 81/81 trojic `runa|tag|IS` bajt po bajtu.** Coworkův handoff nesl IS sloupec vedle EN právě proto — je to kontrolní součet mého přepisu, ne dekorace. Kdyby seděla jen délka, o věrnosti EN sloupce by to neříkalo nic.
+  - **Golden (§18.3): 8 změněných klíčů, všechny EN, IS 0.** Změna je jediná řádka — ta s obrazem. Přesně zamýšlený rozsah.
+  - **Pokrytí 150/150** (25 run × 6 sezón): každá runa má kandidáta v každé sezóně, takže se na starý slepý `SEASON_POOLS` nespadne vůbec. Vada je zavřená celá, ne z části.
+  - EN sanity dle handoffu: každý obraz končí tečkou, žádné islandské písmeno (= nic nepřeloženého), 0 duplicit, apostrofy přežily (§1).
+- **NEZMĚŘENO:** jak to čtou lidé. Rune-fit EN scén je editorský soud Coworku, převzatý z už odsouhlasených IS scén — ukáže se až na živých čteních.
+- **Affected doc(s):** mapa promptu (artifact, překreslena na v1.6 týmž tahem)
+- **Reversibility:** easy — `git revert`; pole i logika jsou jedna změna.

@@ -439,91 +439,92 @@ var RUNE_IMG_SEASONS = {
   bright: ['spring', 'earlysummer', 'highsummer', 'autumn'],
   cold:   ['darkening', 'deepwinter'],
 };
-// [runa, sezónní vhodnost, obraz] — IS ověřeno is-grammar-qa (4 flagy = doložené false-pos).
-var RUNE_IMAGES_IS = [
-  ['Fehu','any','Féð rennur í kvíarnar undir kvöld, hægt og fyrirhafnarlaust.'],
-  ['Fehu','bright','Berjalyngið þyngist af bláberjum þegar ágúst kemur.'],
-  ['Fehu','any','Brauðið kemur heitt út úr ofninum, nóg handa öllum við borðið.'],
-  ['Uruz','any','Urðin stendur af sér hvert vorhret án þess að bifast.'],
-  ['Uruz','any','Hraunið man eldinn enn, þótt mosinn hafi lagst yfir.'],
-  ['Thurisaz','bright','Melgresið sker í lófann þegar þú grípur það of fast.'],
-  ['Thurisaz','any','Sprungan í hrauninu bíður — þú kemst ekki yfir nema stökkva.'],
-  ['Ansuz','bright','Andvarinn ber lóukvakið yfir móann til þín.'],
-  ['Ansuz','any','Hrafninn sest á staurinn og bíður þess að þú hlustir.'],
-  ['Ansuz','any','Rödd í símanum segir það sem þú hefur beðið eftir að heyra.'],
-  ['Raidho','bright','Kindagatan liðast eftir hlíðinni af sjálfu sér.'],
-  ['Raidho','cold','Skafrenningurinn finnur alltaf sömu leiðina milli þúfnanna.'],
-  ['Kenaz','any','Hverinn sýður jafnt og þétt úti í mónum.'],
-  ['Kenaz','any','Glæðurnar lifa undir öskunni fram á morgun.'],
-  ['Kenaz','any','Hendurnar muna handtökin þótt hugurinn hafi gleymt þeim.'],
-  ['Gebo','any','Sjórinn gefur og tekur á fjörunni í sömu andránni.'],
-  ['Gebo','any','Fjaran skilar einu og hirðir annað með hverri báru.'],
-  ['Gebo','any','Dyrnar standa opnar og kaffi bíður á borðinu handa tveimur.'],
-  ['Wunjo','bright','Sólin nær loksins inn í dalinn og allt verður kyrrt.'],
-  ['Wunjo','any','Þú finnur skjól og vindurinn hættir að suða í eyrunum.'],
-  ['Wunjo','any','Þú kemur inn úr kuldanum og einhver hefur kynt ofninn.'],
-  ['Hagalaz','cold','Élið skellur á úr heiðskíru og er farið jafn skjótt.'],
-  ['Hagalaz','cold','Haglið lemur þakið og bráðnar á augabragði.'],
-  ['Nauthiz','cold','Vorhretið lætur lambið leita fast að ylnum.'],
-  ['Nauthiz','any','Rótin brýtur sér leið gegnum grjótið niður að vatninu.'],
-  ['Nauthiz','any','Þú prjónar áfram þótt garnið sé við það að klárast.'],
-  ['Isa','cold','Lognkafaldið fellur beint niður og hylur allt hljóðlaust.'],
-  ['Isa','cold','Tjörnin er lögð hjarni og bíður án þess að biðja um neitt.'],
-  ['Isa','any','Kaffibollinn kólnar á borðinu meðan þú bíður.'],
-  ['Jera','bright','Túnið bíður eftir að þorna áður en það er slegið.'],
-  ['Jera','any','Sólarhringurinn lengist hægt fram á vorið.'],
-  ['Jera','any','Deigið þarf sinn tíma; þú getur ekki flýtt fyrir því.'],
-  ['Eihwaz','any','Reyniviðurinn stendur einn við bæinn og bognar aldrei alveg.'],
-  ['Eihwaz','any','Rótin heldur í urðina þegar allt annað skríður niður.'],
-  ['Perth','any','Áin veltir steinvölunni þar til hún stöðvast — þú sérð ekki hvar.'],
-  ['Perth','any','Eitthvað liggur á botni lónsins og bíður eftir að vera dregið upp.'],
-  ['Perth','any','Bréf liggur óopnað á borðinu og þú veist ekki enn hvað í því stendur.'],
-  ['Algiz','bright','Melgresið bindur sandinn svo hann fjúki ekki burt.'],
-  ['Algiz','any','Varðan vísar leiðina í þoku þótt enginn standi hjá.'],
-  ['Algiz','any','Einhver bíður uppi með ljós í glugganum þar til þú kemur heim.'],
-  ['Sowilo','bright','Miðnætursólin sest aldrei alveg um Jónsmessuna.'],
-  ['Sowilo','bright','Sólin brýtur loks í gegn og glampar á blautu grjóti.'],
-  ['Tiwaz','any','Leiðarsteinninn hallast aldrei, hvað sem á dynur.'],
-  ['Tiwaz','cold','Pólstjarnan stendur kyrr meðan allt annað snýst.'],
-  ['Tiwaz','any','Þú stendur við orð þín þótt það kosti þig svefninn.'],
-  ['Berkana','bright','Birkið laufgast fyrst allra, þótt jörðin sé enn köld.'],
-  ['Berkana','bright','Lömbin stíga fyrstu sporin úti í maí.'],
-  ['Berkana','any','Fyrsta skref barnsins yfir gólfið er óstöðugt en ákveðið.'],
-  ['Ehwaz','any','Hesturinn finnur vaðið yfir jökulána þótt þú sjáir það ekki.'],
-  ['Ehwaz','bright','Hestarnir tveir fylgjast að upp fjallið.'],
-  ['Ehwaz','any','Sá sem gengur með þér heldur sama takti án þess að segja orð.'],
-  ['Mannaz','any','Spegilmyndin í lygnu lóninu bærist við minnsta blæ.'],
-  ['Mannaz','any','Sjórinn les sporin þín í sandinum og afmáir þau.'],
-  ['Mannaz','any','Þú þekkir rithönd þína þótt árin hafi breytt henni.'],
-  ['Laguz','any','Undiraldan finnst í fótunum áður en hún sést.'],
-  ['Laguz','any','Jökuláin rennur grá og þung, full af því sem hún ber að ofan.'],
-  ['Laguz','any','Þú veist svarið í maganum áður en þú getur útskýrt það.'],
-  ['Ingwaz','cold','Fræið liggur í frosinni jörð og bíður síns tíma.'],
-  ['Ingwaz','any','Laukurinn býr sig neðanjarðar löngu áður en hann sést.'],
-  ['Othila','any','Gamli bærinn stendur í tóftum en heldur enn hita í minningunni.'],
-  ['Othila','any','Torfveggurinn sem forfeðurnir hlóðu sígur nú hægt aftur í jörðina.'],
-  ['Othila','any','Lyklarnir að gamla húsinu liggja enn í lófa þínum, þótt þú búir þar ekki lengur.'],
-  ['Dagaz','any','Ljósaskiptin koma án þess að þú takir eftir hvenær nóttin varð að degi.'],
-  ['Dagaz','cold','Fyrsta skíman snýr aftur eftir svartasta skammdegið.'],
-  ['Dagaz','any','Þú vaknar og veist strax að eitthvað hefur breyst um nóttina.'],
-  ['Blank','any','Niðaþokan hylur fjörðinn og þú veist ekki hvað bíður handan hennar.'],
-  ['Blank','any','Allt er kyrrt á undan því sem gerist — enn er allt mögulegt.'],
-  // ── 2. dávka (Cowork 2026-08-09): hole-fillery pro 7 run, které měly v některém
-  //    období jedinou volbu nebo žádnou. Cíl: >=2 volby v KAŽDÉM období.
-  ['Hagalaz','bright','Skyndileg hviða leggur fífuna flata áður en þú heyrir hana koma.'],
-  ['Hagalaz','any','Áin bólgnar á einni nóttu og tekur með sér það sem stóð of nálægt bakkanum.'],
-  ['Sowilo','cold','Lága vetrarsólin leikur snöggvast á hvítri fönninni og hverfur aftur.'],
-  ['Sowilo','cold','Fyrsti sólargeisli ársins snertir fjallstindinn eftir langa skammdegið.'],
-  ['Raidho','any','Vörðurnar standa hver við aðra yfir alla heiðina, hver sést frá þeirri síðustu.'],
-  ['Raidho','any','Vegurinn liðast með ánni og hverfur fyrir næstu beygju.'],
-  ['Isa','any','Lognið liggur á firðinum og ekkert bærist, ekki einu sinni fuglinn á steininum.'],
-  ['Isa','any','Klukkan á veggnum hefur stöðvast og enginn hefur dregið hana upp.'],
-  ['Ingwaz','bright','Grasið grænkar yfir sáðreitnum löngu áður en nokkuð sést á yfirborðinu.'],
-  ['Ingwaz','bright','Eggið liggur heilt í hreiðrinu, hlýtt, og ekkert í því sést enn.'],
-  ['Thurisaz','cold','Hliðið er frosið fast og gefur sig ekki fyrr en það þiðnar.'],
-  ['Thurisaz','cold','Þyrnóttur runninn stendur ber og svartur í hríðinni, en broddarnir bíða enn.'],
-  ['Berkana','cold','Ærin ber inni í húsi um miðjan vetur og lambið finnur hlýjuna í myrkrinu.'],
-  ['Berkana','cold','Kertaljósið heldur lífi í stofunni meðan skammdegið liggur á öllu.'],
+// [runa, sezónní vhodnost, IS obraz, EN obraz] — JEDEN zdroj pro oba jazyky (§18):
+// dvě paralelní pole by se musela držet ve stejném pořadí a přesně tak se rozešly
+// IS/EN buildery. IS ověřeno is-grammar-qa; EN je parita 1:1 (táž scéna, přirozená
+// angličtina — ne kalk), Cowork 2026-08-10.
+var RUNE_IMAGES = [
+  ['Fehu','any','Féð rennur í kvíarnar undir kvöld, hægt og fyrirhafnarlaust.','The sheep drift into the fold toward evening, slow and without effort.'],
+  ['Fehu','bright','Berjalyngið þyngist af bláberjum þegar ágúst kemur.','The berry-heath grows heavy with bilberries when August comes.'],
+  ['Fehu','any','Brauðið kemur heitt út úr ofninum, nóg handa öllum við borðið.','The bread comes hot from the oven, enough for everyone at the table.'],
+  ['Uruz','any','Urðin stendur af sér hvert vorhret án þess að bifast.','The scree withstands every spring storm without shifting.'],
+  ['Uruz','any','Hraunið man eldinn enn, þótt mosinn hafi lagst yfir.','The lava still remembers the fire, though the moss has settled over it.'],
+  ['Thurisaz','bright','Melgresið sker í lófann þegar þú grípur það of fast.','The lyme grass cuts your palm when you grip it too hard.'],
+  ['Thurisaz','any','Sprungan í hrauninu bíður — þú kemst ekki yfir nema stökkva.','The crack in the lava waits — you cannot cross it without a jump.'],
+  ['Ansuz','bright','Andvarinn ber lóukvakið yfir móann til þín.','The breeze carries the plover\'s call across the moor to you.'],
+  ['Ansuz','any','Hrafninn sest á staurinn og bíður þess að þú hlustir.','The raven settles on the fencepost and waits for you to listen.'],
+  ['Ansuz','any','Rödd í símanum segir það sem þú hefur beðið eftir að heyra.','A voice on the phone says the thing you have been waiting to hear.'],
+  ['Raidho','bright','Kindagatan liðast eftir hlíðinni af sjálfu sér.','The sheep-track winds along the hillside of its own accord.'],
+  ['Raidho','cold','Skafrenningurinn finnur alltaf sömu leiðina milli þúfnanna.','The drifting snow always finds the same way between the tussocks.'],
+  ['Kenaz','any','Hverinn sýður jafnt og þétt úti í mónum.','The hot spring simmers steady and even out on the moor.'],
+  ['Kenaz','any','Glæðurnar lifa undir öskunni fram á morgun.','The embers stay alive under the ash until morning.'],
+  ['Kenaz','any','Hendurnar muna handtökin þótt hugurinn hafi gleymt þeim.','The hands remember the work though the mind has forgotten it.'],
+  ['Gebo','any','Sjórinn gefur og tekur á fjörunni í sömu andránni.','The sea gives and takes on the shore in the same breath.'],
+  ['Gebo','any','Fjaran skilar einu og hirðir annað með hverri báru.','The shore returns one thing and keeps another with every wave.'],
+  ['Gebo','any','Dyrnar standa opnar og kaffi bíður á borðinu handa tveimur.','The door stands open and coffee waits on the table for two.'],
+  ['Wunjo','bright','Sólin nær loksins inn í dalinn og allt verður kyrrt.','The sun finally reaches into the valley and everything goes still.'],
+  ['Wunjo','any','Þú finnur skjól og vindurinn hættir að suða í eyrunum.','You find shelter and the wind stops roaring in your ears.'],
+  ['Wunjo','any','Þú kemur inn úr kuldanum og einhver hefur kynt ofninn.','You come in out of the cold and someone has lit the stove.'],
+  ['Hagalaz','cold','Élið skellur á úr heiðskíru og er farið jafn skjótt.','The squall strikes out of a clear sky and is gone just as fast.'],
+  ['Hagalaz','cold','Haglið lemur þakið og bráðnar á augabragði.','The hail hammers the roof and melts in an instant.'],
+  ['Nauthiz','cold','Vorhretið lætur lambið leita fast að ylnum.','The spring cold-snap makes the lamb press close for warmth.'],
+  ['Nauthiz','any','Rótin brýtur sér leið gegnum grjótið niður að vatninu.','The root forces its way through the stones down to the water.'],
+  ['Nauthiz','any','Þú prjónar áfram þótt garnið sé við það að klárast.','You keep knitting though the yarn is almost out.'],
+  ['Isa','cold','Lognkafaldið fellur beint niður og hylur allt hljóðlaust.','The windless snowfall comes straight down and covers everything without a sound.'],
+  ['Isa','cold','Tjörnin er lögð hjarni og bíður án þess að biðja um neitt.','The pond has iced over and waits without asking for anything.'],
+  ['Isa','any','Kaffibollinn kólnar á borðinu meðan þú bíður.','The cup of coffee goes cold on the table while you wait.'],
+  ['Jera','bright','Túnið bíður eftir að þorna áður en það er slegið.','The hayfield waits to dry before it is cut.'],
+  ['Jera','any','Sólarhringurinn lengist hægt fram á vorið.','The day lengthens slowly toward spring.'],
+  ['Jera','any','Deigið þarf sinn tíma; þú getur ekki flýtt fyrir því.','The dough needs its time; you cannot hurry it.'],
+  ['Eihwaz','any','Reyniviðurinn stendur einn við bæinn og bognar aldrei alveg.','The rowan stands alone by the farmhouse and never bends all the way.'],
+  ['Eihwaz','any','Rótin heldur í urðina þegar allt annað skríður niður.','The root holds the scree together when everything else slides down.'],
+  ['Perth','any','Áin veltir steinvölunni þar til hún stöðvast — þú sérð ekki hvar.','The river rolls the pebble until it stops — you cannot see where.'],
+  ['Perth','any','Eitthvað liggur á botni lónsins og bíður eftir að vera dregið upp.','Something lies on the bottom of the lagoon, waiting to be drawn up.'],
+  ['Perth','any','Bréf liggur óopnað á borðinu og þú veist ekki enn hvað í því stendur.','A letter lies unopened on the table and you do not yet know what it says.'],
+  ['Algiz','bright','Melgresið bindur sandinn svo hann fjúki ekki burt.','The lyme grass binds the sand so it cannot blow away.'],
+  ['Algiz','any','Varðan vísar leiðina í þoku þótt enginn standi hjá.','The cairn shows the way in the fog though no one stands by it.'],
+  ['Algiz','any','Einhver bíður uppi með ljós í glugganum þar til þú kemur heim.','Someone stays up with a light in the window until you come home.'],
+  ['Sowilo','bright','Miðnætursólin sest aldrei alveg um Jónsmessuna.','The midnight sun never quite sets around Midsummer.'],
+  ['Sowilo','bright','Sólin brýtur loks í gegn og glampar á blautu grjóti.','The sun finally breaks through and glints on the wet stones.'],
+  ['Tiwaz','any','Leiðarsteinninn hallast aldrei, hvað sem á dynur.','The guide-stone never tilts, whatever comes down on it.'],
+  ['Tiwaz','cold','Pólstjarnan stendur kyrr meðan allt annað snýst.','The pole star stands still while everything else turns.'],
+  ['Tiwaz','any','Þú stendur við orð þín þótt það kosti þig svefninn.','You stand by your word though it costs you your sleep.'],
+  ['Berkana','bright','Birkið laufgast fyrst allra, þótt jörðin sé enn köld.','The birch leafs out before all the rest, though the ground is still cold.'],
+  ['Berkana','bright','Lömbin stíga fyrstu sporin úti í maí.','The lambs take their first steps outside in May.'],
+  ['Berkana','any','Fyrsta skref barnsins yfir gólfið er óstöðugt en ákveðið.','The child\'s first step across the floor is unsteady but sure.'],
+  ['Ehwaz','any','Hesturinn finnur vaðið yfir jökulána þótt þú sjáir það ekki.','The horse finds the ford across the glacial river though you cannot see it.'],
+  ['Ehwaz','bright','Hestarnir tveir fylgjast að upp fjallið.','The two horses keep pace with each other up the mountain.'],
+  ['Ehwaz','any','Sá sem gengur með þér heldur sama takti án þess að segja orð.','The one who walks with you keeps the same pace without a word.'],
+  ['Mannaz','any','Spegilmyndin í lygnu lóninu bærist við minnsta blæ.','The reflection in the still lagoon trembles at the least breath of wind.'],
+  ['Mannaz','any','Sjórinn les sporin þín í sandinum og afmáir þau.','The sea reads your footprints in the sand and erases them.'],
+  ['Mannaz','any','Þú þekkir rithönd þína þótt árin hafi breytt henni.','You know your own handwriting though the years have changed it.'],
+  ['Laguz','any','Undiraldan finnst í fótunum áður en hún sést.','The groundswell is felt in your feet before it is seen.'],
+  ['Laguz','any','Jökuláin rennur grá og þung, full af því sem hún ber að ofan.','The glacial river runs grey and heavy, full of what it carries down from above.'],
+  ['Laguz','any','Þú veist svarið í maganum áður en þú getur útskýrt það.','You know the answer in your gut before you can explain it.'],
+  ['Ingwaz','cold','Fræið liggur í frosinni jörð og bíður síns tíma.','The seed lies in the frozen ground and waits for its time.'],
+  ['Ingwaz','any','Laukurinn býr sig neðanjarðar löngu áður en hann sést.','The bulb readies itself underground long before it shows.'],
+  ['Othila','any','Gamli bærinn stendur í tóftum en heldur enn hita í minningunni.','The old farmstead stands in ruins but still holds warmth in memory.'],
+  ['Othila','any','Torfveggurinn sem forfeðurnir hlóðu sígur nú hægt aftur í jörðina.','The turf wall the forefathers built now sinks slowly back into the earth.'],
+  ['Othila','any','Lyklarnir að gamla húsinu liggja enn í lófa þínum, þótt þú búir þar ekki lengur.','The keys to the old house still lie in your palm, though you live there no longer.'],
+  ['Dagaz','any','Ljósaskiptin koma án þess að þú takir eftir hvenær nóttin varð að degi.','The turn of the light comes without your noticing when night became day.'],
+  ['Dagaz','cold','Fyrsta skíman snýr aftur eftir svartasta skammdegið.','The first glimmer returns after the blackest midwinter dark.'],
+  ['Dagaz','any','Þú vaknar og veist strax að eitthvað hefur breyst um nóttina.','You wake and know at once that something has changed in the night.'],
+  ['Blank','any','Niðaþokan hylur fjörðinn og þú veist ekki hvað bíður handan hennar.','The thick fog hides the fjord and you do not know what waits beyond it.'],
+  ['Blank','any','Allt er kyrrt á undan því sem gerist — enn er allt mögulegt.','Everything is still before what is to come — everything is still possible.'],
+  ['Hagalaz','bright','Skyndileg hviða leggur fífuna flata áður en þú heyrir hana koma.','A sudden gust lays the cotton-grass flat before you hear it coming.'],
+  ['Hagalaz','any','Áin bólgnar á einni nóttu og tekur með sér það sem stóð of nálægt bakkanum.','The river swells overnight and takes with it whatever stood too near the bank.'],
+  ['Sowilo','cold','Lága vetrarsólin leikur snöggvast á hvítri fönninni og hverfur aftur.','The low winter sun plays for a moment on the white snowdrift and is gone again.'],
+  ['Sowilo','cold','Fyrsti sólargeisli ársins snertir fjallstindinn eftir langa skammdegið.','The year\'s first ray of sun touches the mountain peak after the long midwinter dark.'],
+  ['Raidho','any','Vörðurnar standa hver við aðra yfir alla heiðina, hver sést frá þeirri síðustu.','The cairns stand each within sight of the next across the whole heath, each seen from the one before.'],
+  ['Raidho','any','Vegurinn liðast með ánni og hverfur fyrir næstu beygju.','The road winds along the river and disappears around the next bend.'],
+  ['Isa','any','Lognið liggur á firðinum og ekkert bærist, ekki einu sinni fuglinn á steininum.','The calm lies over the fjord and nothing stirs, not even the bird on the rock.'],
+  ['Isa','any','Klukkan á veggnum hefur stöðvast og enginn hefur dregið hana upp.','The clock on the wall has stopped and no one has wound it.'],
+  ['Ingwaz','bright','Grasið grænkar yfir sáðreitnum löngu áður en nokkuð sést á yfirborðinu.','The grass greens over the seed-bed long before anything shows on the surface.'],
+  ['Ingwaz','bright','Eggið liggur heilt í hreiðrinu, hlýtt, og ekkert í því sést enn.','The egg lies whole in the nest, warm, and nothing of it shows yet.'],
+  ['Thurisaz','cold','Hliðið er frosið fast og gefur sig ekki fyrr en það þiðnar.','The gate is frozen shut and will not give until it thaws.'],
+  ['Thurisaz','cold','Þyrnóttur runninn stendur ber og svartur í hríðinni, en broddarnir bíða enn.','The thorn-bush stands bare and black in the blizzard, but the spines are still waiting.'],
+  ['Berkana','cold','Ærin ber inni í húsi um miðjan vetur og lambið finnur hlýjuna í myrkrinu.','The ewe gives birth indoors in midwinter and the lamb finds the warmth in the dark.'],
+  ['Berkana','cold','Kertaljósið heldur lífi í stofunni meðan skammdegið liggur á öllu.','The candle keeps the room alive while the midwinter dark lies over everything.'],
 ];
 
 // Obrazy pro runy, které padly, a které se hodí do TÉTO části roku.
@@ -531,7 +532,7 @@ function _runeImageCandidates(drawn, bucket) {
   var list = (Array.isArray(drawn) ? drawn : [drawn]).filter(Boolean);
   if (!list.length) return [];
   var names = list.map(function (r) { return r.n; });
-  return RUNE_IMAGES_IS.filter(function (row) {
+  return RUNE_IMAGES.filter(function (row) {
     if (names.indexOf(row[0]) === -1) return false;
     var seasons = RUNE_IMG_SEASONS[row[1]] || RUNE_IMG_SEASONS.any;
     return seasons.indexOf(bucket) !== -1;
@@ -546,8 +547,11 @@ function _seasonalImagery(lang, drawn) {
   // v1.3: nejdřív zkus obraz, který patří přímo k tažené runě. U spreadu je run víc —
   // kandidáti se sesypou ze VŠECH tažených a jeden se vylosuje (ne vždy první pozice,
   // jinak by obraz systémově seděl jen k jednomu slotu). KUKY 2026-08-08.
+  // Rune-keyed obraz platí pro OBA jazyky. Do 2026-08-10 tu stálo `if (lang === 'is')`,
+  // takže EN padalo na SEASON_POOLS, které runu neznají — runa cesty dostala střechu.
+  // Mění se jen ZDROJ textu (sloupec), výběr kandidátů ani sáček ne.
   var runePhrase = '';
-  if (lang === 'is') {
+  {
     var cand = _runeImageCandidates(drawn, bucket);
     if (cand.length) {
       var cIds = cand.map(function (row) { return row[0] + '|' + row[2].slice(0, 24); });
@@ -558,7 +562,9 @@ function _seasonalImagery(lang, drawn) {
         .filter(function (n, i, a) { return a.indexOf(n) === i; }).sort().join('-');
       var cPick = _seasonBagPick(bucket, runeKey, cIds);
       var hit = cand[cIds.indexOf(cPick)] || cand[Math.floor(Math.random() * cand.length)];
-      runePhrase = hit[2].replace(/\.$/, '');   // věta pokračuje, tečka by ji rozťala
+      // id sáčku zůstává odvozené z IS sloupce (výš), takže týž obraz má tutéž
+      // identitu v obou jazycích — ochrana proti opakování se jazykem nerozpadá.
+      runePhrase = (lang === 'is' ? hit[2] : hit[3]).replace(/\.$/, '');   // věta pokračuje, tečka by ji rozťala
     }
   }
   var kind = (Array.isArray(drawn) ? drawn.some(_isColdRune) : _isColdRune(drawn)) ? 'cold' : 'bright';
