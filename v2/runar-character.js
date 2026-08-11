@@ -1005,13 +1005,13 @@ var RP_SINGLE = {
     PERSON:'MANNESKJAN', LIFE:'LÍFSRÚNA', DRAWN:'DREGNA RÚNA', focus:'áhersla',
     REALM_life:'Heimur', REALM_drawn:'Heimur', ELEM:'Frumefni',
     AREA:'SVIÐ', SEEK:'LEITAÐ',
-    // Rúnaþula VYPNUTA 2026-08-09 (KUKY): byla to hotová DEFINICE runy tři řádky nad
-    // zákazem definic (_describeRule) — a citovaná věta se navíc opisovala doslova
-    // (2/2 v ostrých IS čteních). EN ji nikdy nedostávalo. Formule zůstávají v
-    // runar-runes.js jako lore; jen se neinjektují. Zapnout = vrátit na true.
-    useFormula:false, langInstr:'',
+    // Rúnaþula se do promptu NEVKLÁDÁ a mechanika je pryč (2026-08-10). Vkládala hotovou
+    // větu z `formula_is` — tedy DEFINICI runy tři řádky nad zákazem definic
+    // (_describeRule) — a model ji opisoval doslova, 2/2 v ostrých IS čteních.
+    // Formule zůstávají v runar-runes.js jako lore (čte je i runar-yggdrasil.html),
+    // jen sem nevedou. Cesta zpět je `git revert`, ne vypnutá větev čekající v kódu.
+    langInstr:'',
     worldFb:function(pk){ return 'lifandi leiðin'; },
-    formula:function(f){ return 'Íslensk rúnaþula (flettu inn náttúrlega einu sinni): "' + f + '"'; },
     angleIntro:'LESTRARHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og upphaf): ',
     length:'Gefðu einn samfelldan lestur — 3 stuttar setningar, 38 til 45 orð alls. Hann verður lesinn upphátt, svo hafðu hverja setningu létta — um 20 til 25 sekúndur. Engar fyrirsagnir, engar hlutaskiptingar.',
     qBranch:function(rune,g,q){ return 'Svaraðu spurningunni: "' + q + '" í gegnum ' + rune + ' — í myndum og táknmáli, ekki ráðgjöf. Nefndu ' + rune + ' einu sinni, fléttað náttúrlega inn. Talaðu um það sem liggur undir spurningunni.'; },
@@ -1023,9 +1023,8 @@ var RP_SINGLE = {
     PERSON:'PERSON', LIFE:'LIFE RUNE', DRAWN:'DRAWN RUNE', focus:'focus on',
     REALM_life:'Realm', REALM_drawn:'World', ELEM:'Elements',
     AREA:'AREA', SEEK:'SEEKING',
-    useFormula:false, langInstr:'Respond in English.',
+    langInstr:'Respond in English.',
     worldFb:function(pk){ return pk; },
-    formula:function(f){ return 'Icelandic rune formula (weave naturally once): "' + f + '"'; },
     angleIntro:'READING ANGLE (follow this entry point — let it shape the opening and tone): ',
     length:'One flowing reading — 3 short sentences, 38 to 45 words total. It will be read aloud, so keep every sentence lean — about 20 to 25 seconds spoken. No sections, no labels, no line breaks between thoughts.',
     qBranch:function(rune,g,q){ return 'Open with ' + rune + ' answering: "' + q + '" — through image and symbol, not advice. Mention ' + rune + ' by name once, woven naturally. Speak to what lies beneath the question.'; },
@@ -1060,10 +1059,8 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     drawnCtx,
     u.intention ? _intentionContext(u.intention, lang) : '',
   ].filter(Boolean).join('\n');
-  var formula = (S.useFormula && drawn.formula_is) ? S.formula(drawn.formula_is) : '';
   return [
     parts,
-    formula,
     S.angleIntro + _randomAngle(lang),
     _seasonalImagery(lang, drawn),
     _describeRule(lang),

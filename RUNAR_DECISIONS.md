@@ -2417,3 +2417,46 @@ Pětidílný Cowork handoff, vše do EXISTUJÍCÍCH domovů (§20, žádný druh
 - **NEZMĚŘENO:** jak to čtou lidé. Rune-fit EN scén je editorský soud Coworku, převzatý z už odsouhlasených IS scén — ukáže se až na živých čteních.
 - **Affected doc(s):** mapa promptu (artifact, překreslena na v1.6 týmž tahem)
 - **Reversibility:** easy — `git revert`; pole i logika jsou jedna změna.
+
+---
+
+## 2026-08-10 — Rúnaþula: mechanika pryč, ne jen vypnutá. A revize dvou spících pák
+
+- **Typ:** úklid mrtvé větve + dopsání chybějícího záznamu
+- **Scope:** tune
+- **Zadání ownera:** *„udělej úklid. Zapiš proč vypnuté. Co mají vůbec za úkol dělat?"*
+
+**Co ta větev dělala.** Do islandského promptu vkládala hotovou větu z `formula_is`
+(`runar-runes.js`) — např. *„Raidho er rún leiðarinnar, hreyfingar og innri takts."* Měla to
+být opora islandského tónu: doložená rúnaþula, kterou si Rúnar jednou vplete do čtení.
+Anglický pack měl obal té věty taky, ale **data jsou jen islandská**, takže EN větev nemohla
+vystřelit nikdy — byl to mrtvý obal od začátku.
+
+- **Proč byla vypnutá (2026-08-09, měřeno):** byla to hotová **DEFINICE runy tři řádky nad
+  zákazem definic** (`_describeRule`: „řekni co runa DĚLÁ, nikdy co ZNAMENÁ"), a model ji
+  **opisoval doslova — 2/2 v ostrých IS čteních**. Tatáž třída jako „trunk speaks of itself"
+  (15/25): citovaná věta se přenáší, ať v ní stojí cokoli.
+- **Proč se teď maže, a nenechává vypnutá:** byla ponechána jako cesta zpět („`useFormula`
+  na true"). Přesně tenhle tvar tento týden dojel `CORRECTIONS_POSTPROCESS` — měsíc vypnutý
+  flag, jehož funkce se pořád volala na pěti místech, takže kód tvrdil něco, co nedělal.
+  **Cesta zpět je `git revert`, ne vypnutá větev čekající v kódu.**
+- **Co zůstává:** `formula_is` u všech 25 run zůstává jako lore. Není to jen archiv — čte ho
+  `runar-yggdrasil.html`.
+- **Chybějící záznam doplněn:** rozhodnutí z 08-09 mělo jen commit message, žádný datovaný
+  zápis (§16). Proto je odůvodnění celé tady.
+- **Ověřeno:** golden PŘED/PO = **prázdný diff** (větev nikdy nevystřelila, takže odstranění
+  nemůže hnout výstupem) · 0 zbytků `useFormula`/`S.formula` v kódu · data 25/25 nedotčena.
+
+**Revize druhé páky — a oprava mého tvrzení.** Navrhl jsem k úklidu i
+`ENABLE_DYNAMIC_CONTEXT` (vrstvy A/B/C: paměť stromu, stav sezení, škála hlasu). **Byl to
+špatný návrh.** Ten flag zetlelý není: má u sebe komentář, který říká co dělá, proč je vypnutý
+(audit našel ~8 protichůdných tónových direktiv na placené čtení) i co ho vrátí, a
+`RUNAR_BACKLOG.md` nese tytéž podmínky. Nechává se beze změny — a znovu se to sem **neopisuje**
+(§20), domov je ten komentář a backlog.
+
+**Rozdíl, který z toho plyne a stojí za pravidlo:** vypnutá páka je v pořádku, dokud u sebe
+nese *co dělá · proč je vypnutá · co ji vrátí*. Chybí-li třetí bod, není to čekající páka, ale
+odložené rozhodnutí — a to patří dodělat, ne skladovat. Rúnaþula třetí bod neměla.
+
+- **Affected doc(s):** `RUNAR_BACKLOG.md`
+- **Reversibility:** easy — `git revert`; výstup se nemění, takže revert je bez rizika.
