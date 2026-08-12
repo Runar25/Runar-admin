@@ -2460,3 +2460,20 @@ odložené rozhodnutí — a to patří dodělat, ne skladovat. Rúnaþula třet
 
 - **Affected doc(s):** `RUNAR_BACKLOG.md`
 - **Reversibility:** easy — `git revert`; výstup se nemění, takže revert je bez rizika.
+
+---
+
+## 2026-08-10 — `--without`: postavit čtení bez jednotlivých částí promptu (žebřík k holému promptu)
+
+- **Typ:** nástroj (probe, mimo produkci)
+- **Scope:** tune
+- **Zadání ownera:** *„začínali jsme úplně s holým promptem a začali přidávat. Chtěl bych vidět, jestli některé věci nejsou zbytečné … postupně vypínat, až se dostat na raw prompt, a pak začít systematicky přidávat."*
+- **Co vzniklo:** `gen_batch.js --without a,b,c` (a `--without all` · `--without list`) — 14 přepínačů pro části promptu: obraz · zákaz definic · cold-read · čočka · oblast · registr · záměr · konec · tie-breaker · ÁVARP · jméno · hlasový profil · úhel · délka. K tomu `scripts/utils/compare_readings.js A.jsonl B.jsonl`, které dvě dávky spáruje podle runy a vypíše čtení za sebou.
+- **Proč mimo produkci:** přepínač jen přebije helper **v sandboxu** `gen_batch` (týž postup jako `--angle`). Produkční buildery se nemění — `git status v2/` po celé práci prázdný. Kdyby to byly flagy v `runar-character.js`, přibylo by 14 větví, které se musí udržovat a které podle historie tohohle repa zůstanou vypnuté a zetlí (dnes ráno kvůli tomu odešla rúnaþula).
+- **Tvrdý důkaz místo důvěry:** u prvního čtení se postaví i **referenční** prompt s původními funkcemi a porovná se. Nezkrátilo-li vypnutí prompt, dávka se **nespustí**. Bez toho by přejmenovaný helper znamenal tiché „vypnuto" a celá dávka by pod hlavičkou „bez X" měřila plný prompt.
+- **Kontrola sama musela být opravena dvakrát, a obojí je poučení:** (a) referenční prompt se stavěl **po** tom vypnutém, takže se mezi nimi znovu vylosoval úhel i obraz — rozdíl délky nebyl slot, ale šum; `--without domain` bez `--area` tak ukázal −1 znak a **prošel**, ačkoli ten slot v promptu vůbec nebyl. Obě stavby proto dostaly připnutou náhodu **i sáček obrazů**. (b) `voice` sedí v **systémovém** promptu, ne ve čtecím — porovnávalo se špatné plátno, takže by prošel vždycky. → [[sanity-check-measurements]]
+- **Chování, které je záměr:** slot, který v daném čtení není (`domain` bez `--area`, `lens` bez `--life-rune`), kontrolu **neprojde** a řekne, který vstup chybí. „Vypnul jsem něco, co tam nebylo" je tiše falešný experiment.
+- **Ověřeno na všech 14 přepínačích** (lifecycle, ne jen dobrý případ): každý zvlášť prokazatelně zkrátil svou plochu · `--without all` 3161 → 852 znaků čtecího promptu (zbývá kontext run, otevírací větev, závěr a JSON kontrakt) · systémový 5061 → 3390 · pět přepínačů závislých na vstupu správně zastaví, když vstup chybí. → [[guard-test-the-lifecycle]]
+- **Metodická poznámka (proč přidávat, ne odebírat):** páky se překrývají — definice runy dnes potlačuje `_describeRule`, vypnutá rúnaþula i přepsané úhly. Vypínání po jedné z plného promptu proto každou ukáže jako „nic to nezměnilo" a svede k závěru, že jsou zbytečné všechny. Přidávání na holý základ tuhle past nemá.
+- **Affected doc(s):** `RUNAR_EVAL_LOG.md`
+- **Reversibility:** easy — dva soubory v `scripts/utils/`, produkce se nedotkly.

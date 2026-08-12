@@ -181,6 +181,30 @@ nástroj sám napíše, že o (ne)rovnováze nevypovídá. Úhel dostane ~1/7 d�
 `gen_batch.js --angle N` (n≥25 na úhel). Produkční data odpovídají na *jak čtení čtou*,
 vynucená probe na *co udělala konkrétní páka*.
 
+### Žebřík k holému promptu — jak zjistit, jestli je část promptu k něčemu
+
+Owner 2026-08-10: *„začínali jsme úplně s holým promptem a začali přidávat … chtěl bych vidět,
+jestli některé věci nejsou zbytečné."* Nástroj na to je `--without`:
+
+```
+node scripts/utils/gen_batch.js --without list                       # co jde vypnout
+node scripts/utils/gen_batch.js --lang is --all-runes --n 1 --out A.jsonl
+node scripts/utils/gen_batch.js --lang is --all-runes --n 1 --without image --out B.jsonl
+node scripts/utils/compare_readings.js A.jsonl B.jsonl               # čtení vedle sebe
+```
+
+⚠️ **Přidávej, neodebírej.** Páky se překrývají: definice runy dnes drží zpátky `_describeRule`,
+vypnutá rúnaþula i přepsané úhly [0]/[1] **současně**. Vypneš-li je po jedné z plného promptu,
+každá vyjde jako „nic to nezměnilo" — a po vypnutí všech se definice vrátí. Cesta, která tuhle
+past nemá: `--without all` → holý základ → přidávat po jedné a poslouchat, co která přinese.
+
+⚠️ **Tady se nepočítají procenta.** Jeden čtenář a hrstka čtení: nejsilnější tvar je **totéž
+zadání dvakrát** — stejná runa, jednou s pákou a jednou bez — a přečíst je za sebou. Na to je
+`scripts/utils/compare_readings.js`. Statistika má smysl až u desítek čtení na rameno.
+
+Nástroj nesahá na produkci (přepíná se helper v sandboxu) a **nespustí dávku**, když vypnutí
+prompt prokazatelně nezkrátilo — tichá „vypnuto" dávka by měřila plný prompt pod cizí hlavičkou.
+
 ## Páky — retrospektiva (co už se s hlasem dělalo; detail = `git log` [reading]/[tune])
 
 | verze | co se změnilo | proč | naměřeno | verdikt |

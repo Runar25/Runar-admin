@@ -145,6 +145,9 @@ const USAGE = [
   '  --rune      Perth          forced rune (single; first position of a spread)',
   '  --runes     A,B,C          explicit spread runes; else a random distinct sample',
   '  --life-rune Gebo|self|none life rune context; self = life==drawn per reading (default none)',
+  '  --without   a,b,c        build the reading WITHOUT these parts of the prompt — for hearing',
+  '              how it sounds stripped back. `--without list` prints what can go.',
+  '              Touches nothing in production: the helper is overridden in the sandbox.',
   '  --angle     0..6         force ONE reading angle (single only) instead of the random draw.',
   '              Without it an angle gets ~n/7 readings, which cannot resolve a change to',
   '              one angle. --angle list  prints the pool for the chosen --lang and exits.',
@@ -300,6 +303,74 @@ async function main() {
   if (forcedRunes && forcedRunes.length !== spec.count)
     die('--runes has ' + forcedRunes.length + ' runes but ' + spreadName + ' needs exactly ' + spec.count +
         '. Too few throws inside the builder; too many is silently truncated.');
+  // ── --without: postavit cteni BEZ vybranych casti promptu ──
+  // Slot, ktery je samostatna funkce, se prebije na '' a `filter(Boolean)` ho zahodi.
+  // Uhel a delka se slepuji z packu, takze u nich padne cela radka.
+  const WITHOUT = {
+    image:     { fn: '_seasonalImagery',  co: 'islandský obraz (SEASON_POOLS + RUNE_IMAGES)' },
+    describe:  { fn: '_describeRule',     co: 'zákaz definic („řekni co runa DĚLÁ")' },
+    coldread:  { fn: '_noColdRead',       co: 'pravidlo proti cold readingu' },
+    lens:      { fn: '_lensContext',      need: '--life-rune', co: 'životní runa jako čočka' },
+    domain:    { fn: '_domainContext',    need: '--area', co: 'oblast života' },
+    register:  { fn: '_registerContext',  need: '--seeking', co: 'postoj podle „hledám"' },
+    intention: { fn: '_intentionContext', need: '--intention', co: 'čas podle Noren (verðandi/skuld/urð)' },
+    ending:    { fn: '_endingShape',      co: 'tvar konce (otázka / tvrzení)' },
+    priority:  { fn: '_priorityContext',  need: '--area / --seeking / --life-rune', co: 'tie-breaker při kolizi faktorů' },
+    address:   { fn: '_addressContext',   co: 'ÁVARP — rod oslovení (jen IS)' },
+    name:      { fn: '_namePlacement',    need: '--name (jiné než you/þú)', co: 'umístění jména' },
+    voice:     { fn: '_getVoiceProfile',  sys: true, co: 'hlasový profil v systémovém promptu' },
+    angle:     { line: 'angleIntro',      co: 'úhel čtení — dveře, kterými čtení vejde' },
+    length:    { line: 'length',          co: 'instrukce o délce (3 věty, 38–45 slov)' },
+  };
+  let without = [];
+  if (args.without !== undefined) {
+    const raw = String(args.without).trim();
+    if (raw === 'list') {
+      console.log('\n  Co jde vypnout (--without a,b,c · --without all):');
+      for (const k of Object.keys(WITHOUT))
+        console.log('   ' + k.padEnd(10) + WITHOUT[k].co);
+      console.log('');
+      process.exit(0);
+    }
+    without = raw === 'all' ? Object.keys(WITHOUT) : raw.split(',').map(x => x.trim()).filter(Boolean);
+    const nezname = without.filter(k => !WITHOUT[k]);
+    if (nezname.length)
+      die('--without: neznám ' + nezname.join(', ') + '  (--without list vypíše, co jde)');
+  }
+  // Puvodni funkce se schovaji UVNITR sandboxu (ne v Node), aby se daly vratit a
+  // postavit REFERENCNI prompt — dukaz, ze vypnuti opravdu neco ubralo.
+  vm.runInContext('var __origFns = {};', ctx);
+  for (const k of without) {
+    const w = WITHOUT[k];
+    if (!w.fn) continue;
+    if (vm.runInContext('typeof ' + w.fn, ctx) !== 'function')
+      die('--without ' + k + ': ' + w.fn + ' v sandboxu není funkce — přejmenovala se? Nic se negeneruje.');
+    vm.runInContext('__origFns[' + JSON.stringify(k) + '] = ' + w.fn + ';', ctx);
+  }
+  const applyWithout = () => {
+    for (const k of without)
+      if (WITHOUT[k].fn) vm.runInContext(WITHOUT[k].fn + ' = function () { return ""; };', ctx);
+  };
+  const restoreWithout = () => {
+    for (const k of without)
+      if (WITHOUT[k].fn) vm.runInContext(WITHOUT[k].fn + ' = __origFns[' + JSON.stringify(k) + '];', ctx);
+  };
+  // Radkove vypnuti: smaz radku, ktera zacina textem z packu.
+  const stripLines = (p) => {
+    let out = p;
+    for (const k of without) {
+      const w = WITHOUT[k];
+      if (!w.line) continue;
+      const pack = vm.runInContext('RP_SINGLE', ctx);
+      const marker = (pack[lang] || pack.en)[w.line];
+      if (!marker) continue;
+      const head = String(marker).slice(0, 30);
+      const kept = out.split('\n').filter(l => l.indexOf(head) !== 0);
+      out = kept.join('\n');
+    }
+    return out;
+  };
+
   // ── --angle: vynuceny uhel (single only) ──
   var forcedAngle = null;
   if (args.angle !== undefined) {
@@ -403,6 +474,10 @@ async function main() {
   // loaded from the runar_character table. We pass null (= DEF_CHAR_EN/IS). If a row is
   // ever set active in the DB, production diverges from this batch — noted in the meta file.
   setLang(lang);
+  // Přepnout PŘED buildSysPrompt: systémový prompt se staví jednou pro celou dávku,
+  // takže `--without voice` by po něm už neměl kam zabrat.
+  applyWithout();
+  if (without.length) console.log('  --without: ' + without.join(', '));
   const sysPrompt = call('buildSysPrompt', [null, lang]);
   const sysSha = crypto.createHash('sha256').update(sysPrompt).digest('hex').slice(0, 12);
 
@@ -546,9 +621,65 @@ async function main() {
       area: area, seeking: seeking, intention: intention, question: args.question || '',
     };
 
-    const prompt = (spreadName === 'single')
+    const build = () => (spreadName === 'single')
       ? call(spec.builder, [u, runes[0], lang, []])
       : call(spec.builder, [u, runes, lang, []]);
+    const prompt = stripLines(build());
+
+    // DŮKAZ, že vypnutí opravdu ubralo. Jednou za dávku, u prvního čtení: postav týž
+    // prompt s PŮVODNÍMI funkcemi a porovnej. Kdyby se helper přejmenoval, override by
+    // tiše nic neudělal a celá dávka by měřila plný prompt pod hlavičkou „bez X".
+    if (i === 0 && without.length) {
+      // Obě porovnávané stavby musí mít PŘIPNUTOU náhodu. Bez toho se mezi nimi znovu
+      // vylosuje úhel i obraz a rozdíl délky není ten vypnutý slot, ale šum:
+      // `--without domain` bez `--area` takhle ukázal −1 znak a prošel, ačkoli ten slot
+      // v promptu vůbec nebyl. Tyhle dvě stavby jsou jen na důkaz, nikam se neposílají.
+      // Aby rozdíl BYL ten vypnutý slot a ne šum, musí být obě stavby srovnatelné:
+      // připnutá náhoda i sáček obrazů (ten si jinak mezi stavbami vytáhne jiný obraz
+      // a délka kolísá o pár znaků i tam, kde se nic neodebralo). Obě stavby jsou jen
+      // na důkaz, nikam se neposílají.
+      vm.runInContext('__savedRandom = Math.random; Math.random = function () { return 0.5; };' +
+                      '__savedBag = _seasonBagPick; _seasonBagPick = function (b, k, ids) { return ids && ids[0]; };', ctx);
+      const sysOnly = without.filter(k => WITHOUT[k].sys);
+      const promptOnly = without.filter(k => !WITHOUT[k].sys);
+      // Referenční stavba se NESMÍ prohnat stripLines — u řádkových přepínačů
+      // (angle, length) by vyšla shodně s vypnutou a kontrola by hlásila
+      // „nezkrátilo" i u fungujícího vypnutí.
+      const mer = (refFn, cutFn) => {
+        restoreWithout();
+        const ref = refFn();
+        applyWithout();
+        const cut = cutFn();
+        return { ref, cut, ubylo: ref.length - cut.length,
+                 radky: ref.split('\n').length - cut.split('\n').length };
+      };
+      const zprava = [];
+      if (promptOnly.length) {
+        const r = mer(() => build(), () => stripLines(build()));
+        if (r.ubylo <= 0) {
+          const chybi = promptOnly.filter(k => WITHOUT[k].need)
+            .map(k => k + ' potřebuje ' + WITHOUT[k].need);
+          vm.runInContext('Math.random = __savedRandom; _seasonBagPick = __savedBag;', ctx);
+          die('--without ' + promptOnly.join(',') + ' čtecí prompt NEZKRÁTILO (' + r.ref.length +
+              ' -> ' + r.cut.length + ' znaků).\n' +
+              (chybi.length ? '  Ten slot v tomhle čtení nejspíš vůbec není: ' + chybi.join(' · ') + '\n' : '') +
+              '  Nic se negeneruje — tichá „vypnuto" dávka je horší než žádná.');
+        }
+        zprava.push('čtecí ' + r.ref.length + ' → ' + r.cut.length + ' (−' + r.ubylo + ' znaků, −' + r.radky + ' řádek)');
+      }
+      if (sysOnly.length) {
+        const r = mer(() => call('buildSysPrompt', [null, lang]),
+                      () => call('buildSysPrompt', [null, lang]));
+        if (r.ubylo <= 0) {
+          vm.runInContext('Math.random = __savedRandom; _seasonBagPick = __savedBag;', ctx);
+          die('--without ' + sysOnly.join(',') + ' systémový prompt NEZKRÁTILO (' + r.ref.length +
+              ' -> ' + r.cut.length + ' znaků). Helper se nejspíš přejmenoval. Nic se negeneruje.');
+        }
+        zprava.push('systémový ' + r.ref.length + ' → ' + r.cut.length + ' (−' + r.ubylo + ' znaků)');
+      }
+      vm.runInContext('Math.random = __savedRandom; _seasonBagPick = __savedBag;', ctx);
+      console.log('  ověřeno (připnutá náhoda i sáček): ' + zprava.join(' · '));
+    }
 
     const angle = detectDraws(prompt);
     if (forcedAngle !== null && angle.angle_idx !== forcedAngle)
@@ -574,6 +705,7 @@ async function main() {
       question: args.question || null,
       name: name, user_gender: gender, season_bucket: seasonBucket,
       angle: angle.angle, angle_idx: angle.angle_idx, draws: angle.draws,
+      without: without.length ? without.slice() : null,
       max_tokens: maxTokens, spread_cost: spreadCost,
       // Builders are non-deterministic (random angle, name placement, ending shape,
       // keyword shuffle, seasonal bag) — the exact prompt cannot be reconstructed later.
