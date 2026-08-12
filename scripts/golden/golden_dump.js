@@ -46,6 +46,10 @@ u.lifeRune = _R('Fehu');
 var u2 = { name:'Bjorn', area:'health', seeking:'strength', question:'' };
 u2.intention = ''; u2.lifeRune = null;
 var drawn = _R('Raidho');
+// u3 = uživatel, jehož životní runa NENÍ mezi taženými -> čočka je ZAPNUTÁ.
+// Bez něj žádný spread fixture čočku necvičí (u má Fehu, které je v poolu).
+var u3 = { name:'Anna', area:'work and direction', seeking:'clarity', question:'What should I focus on?', d:15, m:6, y:1990 };
+u3.intention = u.intention; u3.lifeRune = _R('Isa');
 var pool = ['Fehu','Uruz','Thurisaz','Ansuz','Raidho','Kenaz','Gebo','Wunjo','Hagalaz'].map(_R);
 function grab(key, fn){ try { _OUT[key] = fn(); } catch(e){ _OUT[key] = 'ERROR: ' + (e && e.message) + '\\n' + (e && e.stack); } }
 var samplecorr = [{ from:'Arctic', to:'Norðurljós', lang:'both', context:'test' }];
@@ -60,6 +64,11 @@ var samplecorr = [{ from:'Arctic', to:'Norðurljós', lang:'both', context:'test
   grab('single_corr_'+L, function(){ return buildReadingPrompt(u, drawn, L, samplecorr); });
   grab('single_selflife_'+L, function(){ return buildReadingPrompt(u, u.lifeRune, L, []); });
   grab('norns_'+L,       function(){ return buildNornsPrompt(u, pool.slice(0,3), L, []); });
+  // Varianta se ZAPNUTOU čočkou — životní runa mimo taženou sadu.
+  grab('norns_lens_'+L,     function(){ return buildNornsPrompt(u3, pool.slice(0,3), L, []); });
+  grab('kriz_lens_'+L,      function(){ return buildKrizPrompt(u3, pool.slice(0,5), L, []); });
+  grab('horseshoe_lens_'+L, function(){ return buildHorseshoePrompt(u3, pool.slice(0,7), L, []); });
+  grab('yggdrasil_lens_'+L, function(){ return buildYggdrasilPrompt(u3, pool, L, []); });
   grab('kriz_'+L,        function(){ return buildKrizPrompt(u, pool.slice(0,5), L, []); });
   grab('horseshoe_'+L,   function(){ return buildHorseshoePrompt(u, pool.slice(0,7), L, []); });
   grab('yggdrasil_'+L,   function(){ return buildYggdrasilPrompt(u, pool, L, []); });

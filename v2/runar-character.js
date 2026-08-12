@@ -679,7 +679,13 @@ function _intentionContext(intention, lang) {
 
 // --- READING CONTRACT HELPERS (single source; shared by reading builders) ---
 // Turn passive context into active shaping directives (contract 2026-07-09):
-//   life rune = quiet LENS (subtext) . area = DOMAIN (must land) . seeking = REGISTER.
+//   life rune = ZÁVĚREČNÁ čočka . area = DOMAIN (must land) . seeking = REGISTER.
+// Životní runa se od 2026-08-12 smí projevit JEN v posledním tahu čtení a vstupuje do
+// promptu na JEDINÉM místě — tady, těsně před závěrečnou instrukcí. Dřív stála nahoře
+// v kontextu i s klíčovými slovy a měla direktivu "utvářej, JAK čteš" — model to četl
+// jako profil uživatele a barvil tělo: 3 ze 4 čtení `mine` s life=Gebo nesla v těle jazyk
+// dávání/braní bez ohledu na taženou runu (kontrola `someone`/bez životní runy: 0 ze 3).
+// Poloha JE ta páka; co stojí nahoře, čte model jako rámec celého čtení.
 // drawn = one rune (single) or an array of runes (spread). The life rune can never be both
 // the lens and a subject of the same reading, so it steps aside when it was itself drawn.
 // Byla životní runa sama tažena? Pak nemůže být čočkou (je předmětem). JEDNO místo pro to
@@ -697,14 +703,10 @@ function _lensContext(life, drawn, lang) {
   var many = list.length > 1;
   if (lang === 'is') {
     var subjIs = many ? 'rúnurnar sem dregnar voru' : rn(list[0]);
-    var tailIs = many ? 'Dragðu aðeins skýra tengingu við þær fram ef hún kemur af sjálfu sér.'
-                      : 'Dragðu aðeins skýra tengingu milli rúninna tveggja fram ef hún kemur af sjálfu sér.';
-    return 'LÍFSRÚNIN ' + rn(life) + ' er linsan, ekki viðfangsefnið — láttu hana móta HVERNIG þú lest ' + subjIs + '. Nefndu hana aldrei og útskýrðu hana ekki; láttu hana lita lesturinn neðan frá. ' + tailIs;
+    return 'LOKALINSA — lífsrúnin ' + rn(life) + ': Láttu hana móta AÐEINS síðustu setninguna eða spurninguna, ekkert á undan henni. Meginmálið fjallar um ' + subjIs + '. Nefndu lífsrúnuna aldrei. Ef hún kemur ekki af sjálfu sér í lokin, slepptu henni.';
   }
   var subjEn = many ? 'the runes that were drawn' : rn(list[0]);
-  var tailEn = many ? 'Draw an explicit link to them only if one arises naturally.'
-                    : 'Draw an explicit link between the two runes only if one arises naturally.';
-  return 'The life rune ' + rn(life) + ' is the lens, not the subject — let it shape HOW you read ' + subjEn + '. Never name or explain it; let it colour from underneath. ' + tailEn;
+  return 'CLOSING LENS — the life rune ' + rn(life) + ': let it shape ONLY the last sentence or question, nothing before it. The body of the reading is about ' + subjEn + '. Never name the life rune. If it does not come to the ending naturally, leave it out.';
 }
 
 // Tie-breaker when life rune + area + seeking do not gather into one image. Was duplicated
@@ -1043,10 +1045,6 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
   var pickedKws = drawnKws.sort(function(){ return 0.5 - Math.random(); }).slice(0, Math.min(3, drawnKws.length)).join(', ');
   var worldRef = rworld(drawn) || S.worldFb(pickedKws);
   var hasQ = !!(u.question && u.question.trim());
-  var lifeCtx = life
-    ? S.LIFE + ': ' + rn(life) + ' — ' + rk(life)
-      + (life.world ? ' · ' + S.REALM_life + ': ' + rworld(life) + ' · ' + S.ELEM + ': ' + relements(life) : '')
-    : '';
   var drawnCtx = S.DRAWN + ': ' + rn(drawn) + ' — ' + S.focus + ': ' + pickedKws
     + (drawn.world ? ' · ' + S.REALM_drawn + ': ' + rworld(drawn) + ' · ' + S.ELEM + ': ' + relements(drawn) : '');
   var parts = [
@@ -1055,7 +1053,6 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     // větu o „významném okamžiku" — model tu citovanou větu opisoval doslova (24/25,
     // stejná třída úniku jako pojmenovaná zakázaná slova). Čočka už ustupuje sama
     // (_lensContext), takže se to čte jako normální single. KUKY 2026-08-08 (varianta C).
-    isLifeRune ? '' : lifeCtx,
     drawnCtx,
     u.intention ? _intentionContext(u.intention, lang) : '',
   ].filter(Boolean).join('\n');
@@ -1066,12 +1063,12 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     _describeRule(lang),
     _noColdRead(lang),
     S.length,
-    _lensContext(life, drawn, lang),
     u.area ? _domainContext(u.area, lang) : '',
     u.seeking ? _registerContext(u.seeking, lang) : '',
     hasQ ? S.qBranch(rn(drawn), drawn.g, u.question) : S.noqBranch(rn(drawn), drawn.g, worldRef),
     _endingShape(drawn, lang),
     (lensOn || u.area || u.seeking) ? _priorityContext(lensOn, drawn, lang) : '',
+    _lensContext(life, drawn, lang),
     S.closing(u.name) + (S.langInstr ? S.langInstr : '') + getCorrPrompt(lang, corrections),
     _addressContext(lang),
     S.json,
@@ -1188,7 +1185,6 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
   var lensOn = !!life && !_lifeWasDrawn(life, runes);
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
-    lensOn    ? S.lifeRune + ': ' + rn(life) : '',
     u.area    ? S.area + ': ' + u.area : '',
     u.seeking ? S.seeking + ': ' + (Array.isArray(u.seeking) ? u.seeking.join(S.seekJoin) : u.seeking) : '',
     u.intention ? _intentionContext(u.intention, lang) : '',
@@ -1206,12 +1202,12 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
     _seasonalImagery(lang, runes),
     _describeRule(lang),
     _noColdRead(lang),
-    _lensContext(u.lifeRune, runes, lang),
     u.area ? _domainContext(u.area, lang) : '',
     u.seeking ? _registerContext(u.seeking, lang) : '',
     _endingShape(runes, lang),
     (lensOn || u.area || u.seeking) ? _priorityContext(lensOn, runes, lang) : '',
   ].concat(S.instructions(ctrName)).concat([
+    _lensContext(u.lifeRune, runes, lang),
     S.closing(u.name) + (S.langInstr ? ' ' + S.langInstr : '') + getCorrPrompt(lang, corrections),
     _addressContext(lang),
     S.json,
@@ -1267,7 +1263,6 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
   var lensOn = !!life && !_lifeWasDrawn(life, runes);
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
-    lensOn    ? S.lifeRune + ': ' + rn(life) : '',
     u.area    ? S.area + ': ' + u.area : '',
     u.seeking ? S.seeking + ': ' + (Array.isArray(u.seeking) ? u.seeking.join(S.seekJoin) : u.seeking) : '',
     u.intention ? _intentionContext(u.intention, lang) : '',
@@ -1282,12 +1277,12 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
     _seasonalImagery(lang, runes),
     _describeRule(lang),
     _noColdRead(lang),
-    _lensContext(u.lifeRune, runes, lang),
     u.area ? _domainContext(u.area, lang) : '',
     u.seeking ? _registerContext(u.seeking, lang) : '',
     _endingShape(runes, lang),
     (lensOn || u.area || u.seeking) ? _priorityContext(lensOn, runes, lang) : '',
   ].concat(S.beats).concat([
+    _lensContext(u.lifeRune, runes, lang),
     S.bigInstruction(u.name),
     S.json,
     (S.langInstr ? S.langInstr : ''),
@@ -1337,7 +1332,6 @@ function buildHorseshoePromptSeven(u, runes, lang, corrections) {
   var lensOn = !!life && !_lifeWasDrawn(life, runes);
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
-    lensOn    ? S.lifeRune + ': ' + rn(life) : '',
     u.area    ? S.area + ': ' + u.area : '',
     u.seeking ? S.seeking + ': ' + (Array.isArray(u.seeking) ? u.seeking.join(S.seekJoin) : u.seeking) : '',
     u.intention ? _intentionContext(u.intention, lang) : '',
@@ -1355,12 +1349,12 @@ function buildHorseshoePromptSeven(u, runes, lang, corrections) {
     _seasonalImagery(lang, runes),
     _describeRule(lang),
     _noColdRead(lang),
-    _lensContext(u.lifeRune, runes, lang),
     u.area ? _domainContext(u.area, lang) : '',
     u.seeking ? _registerContext(u.seeking, lang) : '',
     _endingShape(runes, lang),
     (lensOn || u.area || u.seeking) ? _priorityContext(lensOn, runes, lang) : '',
   ].concat(S.beats).concat([
+    _lensContext(u.lifeRune, runes, lang),
     S.closing(u.name),
     _addressContext(lang),
     S.json,
@@ -1419,7 +1413,6 @@ function buildYggdrasilPromptNine(u, runes, lang, corrections) {
   var lensOn = !!life && !_lifeWasDrawn(life, runes);
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
-    lensOn    ? S.lifeRune + ': ' + rn(life) : '',
     u.area    ? S.area + ': ' + u.area : '',
     u.seeking ? S.seeking + ': ' + (Array.isArray(u.seeking) ? u.seeking.join(S.seekJoin) : u.seeking) : '',
     u.intention ? _intentionContext(u.intention, lang) : '',
@@ -1441,12 +1434,12 @@ function buildYggdrasilPromptNine(u, runes, lang, corrections) {
     _seasonalImagery(lang, runes),
     _describeRule(lang),
     _noColdRead(lang),
-    _lensContext(u.lifeRune, runes, lang),
     u.area ? _domainContext(u.area, lang) : '',
     u.seeking ? _registerContext(u.seeking, lang) : '',
     _endingShape(runes, lang),
     (lensOn || u.area || u.seeking) ? _priorityContext(lensOn, runes, lang) : '',
   ].concat(S.beats).concat([
+    _lensContext(u.lifeRune, runes, lang),
     S.closing(u.name),
     _addressContext(lang),
     S.json,

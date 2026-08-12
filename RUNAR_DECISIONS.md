@@ -2477,3 +2477,28 @@ odložené rozhodnutí — a to patří dodělat, ne skladovat. Rúnaþula třet
 - **Metodická poznámka (proč přidávat, ne odebírat):** páky se překrývají — definice runy dnes potlačuje `_describeRule`, vypnutá rúnaþula i přepsané úhly. Vypínání po jedné z plného promptu proto každou ukáže jako „nic to nezměnilo" a svede k závěru, že jsou zbytečné všechny. Přidávání na holý základ tuhle past nemá.
 - **Affected doc(s):** `RUNAR_EVAL_LOG.md`
 - **Reversibility:** easy — dva soubory v `scripts/utils/`, produkce se nedotkly.
+
+---
+
+## 2026-08-12 — Životní runa = čočka JEN do závěru (v1.7). Polohou, ne dalším zákazem
+
+- **Typ:** změna promptu (rozhodnutí owner + měřený důkaz Cowork; mechanika CODE)
+- **Scope:** tune
+- **Rozhodnutí ownera:** životní runa se smí projevit **jen v závěru** čtení (poslední věta / otázka). Nesmí barvit tělo. Dál se **nejmenuje**.
+- **Důkaz (Cowork, v1.6 EN dávka):** ze 4 čtení `mine` s `life=Gebo` nesla **3 v těle** jazyk dávání/braní bez ohledu na taženou runu. Kontrola: 3 čtení `someone` / bez životní runy → **0×**. Není to náhoda textu — sedí to na životní runu.
+- **Ověřeno, že důkaz platí i proti dnešku:** handoff byl psán proti `3bc3715`, HEAD je dál. Golden `3bc3715` vs HEAD = **bajt po bajtu shodný** (mezitím padl jen mrtvý kód rúnaþuly), takže se mezitím nic nezměnilo.
+
+**Proč to prosakovalo (mechanika, ne náhoda).** Životní runa vstupovala **nahoře** v kontextovém bloku — u single dokonce i s klíčovými slovy, realmem a živly — a k tomu měla direktivu *„let it shape HOW you read X"*. Model to četl jako **profil uživatele** a barvil jím celé čtení. Tělo pak přestalo být o tažené runě, tedy o tom, co si člověk vytáhl.
+
+**Mechanika opravy (volba CODE):** životní runa vstupuje do promptu už **jen na jednom místě** — `_lensContext` — a to **těsně před závěrečnou instrukcí**. Horní řádka zmizela ze **všech pěti** builderů. **Poloha JE ta páka:** co stojí nahoře, čte model jako rámec celého čtení. Zároveň zmizela **klíčová slova** životní runy (single je posílal, spready jen jméno) — právě ten seznam byl palivo. Vedlejší zisk: pět builderů má teď tentýž tvar (§18) místo dvou.
+
+- **Nepřidal se žádný nový zákaz.** Stejná linie jako u sezónnosti („řeší to VÝBĚR, ne další zákaz") — prompt je přeplněný a další „nedělej" by ho jen protáhl.
+- **`_priorityContext` záměrně beze změny:** jeho klauzule o ustupující čočce zůstává platná a měnit dvě věci naráz by rozmazalo měření (Cowork chce před/po na jedné páce). Kandidát na příště, kdyby se závěr začal přeplňovat.
+- **IS znění vymyšleno, ne přeloženo (§2), a ověřeno nástrojem:** `móta` + þolfall · `sleppa` + þágufall · `fjalla um` + þolfall — vše doložené v Íslensk nútímamálsorðabók. GreynirCorrect 0 flagů (jediný `Z002` „po dvojtečce velké písmeno" vyřešen velkým `Láttu`, ne výjimkou).
+
+**Golden odhalil slepý bod, který tu byl celou dobu.** První běh ohlásil jen **4 změněné klíče, všechny single** — přestože změna sáhla na pět builderů. Důvod: **žádný spread fixture čočku necvičil**, protože fixture má životní runu `Fehu`, která je zároveň v tažené sadě → `_lifeWasDrawn` → čočka vypnutá. Doplněn uživatel `u3` (životní runa mimo sadu) a čtyři fixtures `*_lens_*`. Po doplnění: **12 změněných klíčů z 32**, všechny nesou čočku, ostatní nedotčené. Bez toho by se spready ověřily jen okem (§19.2).
+
+- **Smoke ⑧ correctly selhal** — hlídá, že kontrakt čočky dorazí do všech builderů, a znal staré znění. Naučen novému (kotví na `CLOSING LENS` / `LOKALINSA`); případ „životní runa byla sama tažena → čočka ustupuje" dál prochází.
+- **NEZMĚŘENO:** jestli to prosakování opravdu ustalo. To měří Cowork na nové dávce (baseline v1.6: 3/4 bleed). ⚠️ Jejich vlastní výhrada platí: dosavadní důkaz stojí skoro jen na `Gebo`. Probe s vynucenými **různými** životními runami umí `gen_batch --life-rune <runa>`; tažená ≠ životní je nutná podmínka, jinak čočka ustoupí a neměří se nic.
+- **Affected doc(s):** mapa promptu (artifact, překreslena na v1.7 týmž tahem)
+- **Reversibility:** easy — `git revert`; jedna funkce a pět jednořádkových přesunů.

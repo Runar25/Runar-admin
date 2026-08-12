@@ -61,7 +61,10 @@ vm.runInContext(code, sandbox, { filename: 'contract.js' });
 const O = sandbox._OUT;
 
 const PARTS = {
-  lens:     ['is the lens, not the subject', 'er linsan, ekki viðfangsefnið'],
+  // Znění se změnilo 2026-08-12: čočka se smí projevit jen v ZÁVĚRU, ne v těle
+  // (měřeno: 3 ze 4 čtení nesla životní runu v těle). Kontrola hlídá tentýž kontrakt,
+  // jen na novém znění — proto kotví na LOKALINSA / CLOSING LENS.
+  lens:     ['CLOSING LENS — the life rune', 'LOKALINSA — lífsrúnin'],
   domain:   ['This reading is about:', 'Þessi lestur snýst um:'],
   register: ['This is a leaning, not an order', 'Þetta er tilhneiging, ekki pöntun'],
   priority: ['do not gather into one natural image', 'rennur ekki saman í eina náttúrlega mynd'],
