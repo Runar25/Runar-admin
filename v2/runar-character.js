@@ -890,6 +890,76 @@ function buildLifeRunePrompt(name, rune, day, month, year, lang, isPremium, corr
   ].filter(Boolean).join('\n\n');
 }
 
+// ─── DVERGAR ────────────────────────────────────────────────
+// Rúnar je zná jako příbuzné a starší — ale mluví o nich, JEN když se ho někdo zeptá
+// (KUKY 2026-08-12). Do čtení se to nikdy nedostane: `_dvergarContext` se volá výhradně
+// z `buildAskPrompt` a bez shody vrací ''.
+//
+// ⚠️ Vlastnictví (§20): LORE — kánon, zdroje, umístění v Agndofě — bydlí v `RUNAR_DESIGN.md`
+// („Dvergar — katalog"). Tady je jen JEDNA věta na postavu: to, co smí Rúnar říct.
+// Přidáváš postavu? Napřed do DESIGN, sem až výtah.
+//
+// `a` = na co to reaguje v otázce (malými písmeny, stačí podřetězec — pokryje i pády).
+var DVERGAR = [
+  { a: ['dverg', 'dwarf', 'dwarve'],
+    is: 'Dvergar eru steinsmiðir og elstu handverksmenn og þeir búa í berginu.',
+    en: 'The dvergar are stone-smiths and the oldest craftsmen, and they live in the rock.' },
+  { a: ['dvalin'],
+    is: 'Dvalin er einn hinna fyrstu og hann er bundinn rúnum. Hann sefur í steini undir mosanum og vaknar hægt.',
+    en: 'Dvalin is one of the first and he is bound to the runes. He sleeps in stone under the moss and wakes slowly.' },
+  { a: ['mótsogn', 'motsogn'],
+    is: 'Mótsognir er fyrstur og mestur dverga og hann býr í dýpsta berginu undir miðri eyjunni.',
+    en: 'Mótsognir is the first and greatest of the dvergar, and he lives in the deepest rock beneath the middle of the island.' },
+  { a: ['durin'],
+    is: 'Durinn kom næstur á eftir Mótsogni og hann býr í fornu stuðlabergi.',
+    en: 'Durinn came next after Mótsognir, and he lives in ancient columnar basalt.' },
+  { a: ['norðri', 'nordri', 'suðri', 'sudri', 'austri', 'vestri'],
+    is: 'Norðri, Suðri, Austri og Vestri halda himninum í fjórum áttum og hver þeirra situr við sinn enda eyjunnar.',
+    en: 'Norðri, Suðri, Austri and Vestri hold up the sky at the four quarters, and each sits at his own end of the island.' },
+  { a: ['brokk', 'eitri', 'sindri'],
+    is: 'Brokkr og Eitri eru bræður og smiðir og þeir vinna í hita jarðdjúpsins þar sem steinninn man eldinn.',
+    en: 'Brokkr and Eitri are brothers and smiths, and they work in the heat of the deep where the stone remembers fire.' },
+  { a: ['ivald'],
+    is: 'Synir Ivalda eru smiðir og þeir vinna í smiðju undir virkri jörð.',
+    en: 'The sons of Ivaldi are smiths, and they work at a forge beneath living ground.' },
+  { a: ['fjalar', 'galar'],
+    is: 'Fjalar og Galar eru myrkir bræður og þeir búa í helli við sjóinn.',
+    en: 'Fjalar and Galar are dark brothers, and they live in a cave by the sea.' },
+  { a: ['alvíss', 'alviss'],
+    is: 'Alvíss þekkti nöfn allra hluta en sólin gerði hann að steini á heiðinni fyrir austan.',
+    en: 'Alvíss knew the names of all things, but the sun turned him to stone on the moor to the east.' },
+  { a: ['andvari'],
+    is: 'Andvari gætti gulls í vatni og hann býr undir fossinum.',
+    en: 'Andvari guarded gold in the water, and he lives beneath the waterfall.' },
+  { a: ['móberg', 'moberg'],
+    is: 'Móberg er ungur dvergur og hann mótar mjúkan stein í ungum hraunum.',
+    en: 'Móberg is a young dwarf, and he shapes soft stone in the young lava fields.' },
+  { a: ['lyngri'],
+    is: 'Lyngri er minnstur og hann hirðir rætur lyngsins í sprungum hraunsins.',
+    en: 'Lyngri is the smallest, and he tends the roots of the heather in the cracks of the lava.' },
+];
+
+// Vrací blok JEN když otázka někoho z nich jmenuje. Konkrétní jméno vyhrává nad
+// obecným „dvergar" — kdo se ptá na Dvalina, nemá dostat obecnou odpověď o rodu.
+function _dvergarContext(question, lang) {
+  var q = String(question || '').toLowerCase();
+  if (!q) return '';
+  var hit = null;
+  for (var i = 1; i < DVERGAR.length && !hit; i++)
+    for (var j = 0; j < DVERGAR[i].a.length; j++)
+      if (q.indexOf(DVERGAR[i].a[j]) !== -1) { hit = DVERGAR[i]; break; }
+  if (!hit) {
+    for (var k = 0; k < DVERGAR[0].a.length; k++)
+      if (q.indexOf(DVERGAR[0].a[k]) !== -1) { hit = DVERGAR[0]; break; }
+  }
+  if (!hit) return '';
+  if (lang === 'is')
+    return 'DVERGAR: leitandinn spyr um þá og þú þekkir þá. ' + hit.is
+      + ' Svaraðu í ÖRFÁUM orðum, rólega, og snúðu svo aftur að lestrinum. Ekki telja upp, ekki útskýra.';
+  return 'DVERGAR: the seeker asks about them and you know them. ' + hit.en
+    + ' Answer in A FEW WORDS, quietly, then return to the reading. Do not list, do not explain.';
+}
+
 // ─── VOICE PROFILE HELPER ──────────────────────────────
 // Picks the right voice profile text for the given lang.
 // Falls back to ACTIVE_VOICE_PROFILE from runar-config.js.
@@ -1111,6 +1181,10 @@ function buildAskPrompt(reading, question, runes, lang, corrections) {
     S.intro(reading, runes),
     S.q(question),
     S.rules,
+    // Jediné místo, kde se dvergar dostanou do promptu — a jen když se na ně otázka ptá.
+    // Stojí ZA `S.rules`, protože ta říká „nesouvisející otázky neodpovídej"; tohle je
+    // vymezená výjimka a musí ji přebít, ne naopak.
+    _dvergarContext(question, lang),
     _describeRule(lang),
     _noColdRead(lang),
     getCorrPrompt(lang, corrections),

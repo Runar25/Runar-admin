@@ -2502,3 +2502,21 @@ odložené rozhodnutí — a to patří dodělat, ne skladovat. Rúnaþula třet
 - **NEZMĚŘENO:** jestli to prosakování opravdu ustalo. To měří Cowork na nové dávce (baseline v1.6: 3/4 bleed). ⚠️ Jejich vlastní výhrada platí: dosavadní důkaz stojí skoro jen na `Gebo`. Probe s vynucenými **různými** životními runami umí `gen_batch --life-rune <runa>`; tažená ≠ životní je nutná podmínka, jinak čočka ustoupí a neměří se nic.
 - **Affected doc(s):** mapa promptu (artifact, překreslena na v1.7 týmž tahem)
 - **Reversibility:** easy — `git revert`; jedna funkce a pět jednořádkových přesunů.
+
+---
+
+## 2026-08-12 — Dvergar: Rúnar o nich ví, ale mluví JEN na Ask Rúnar
+
+- **Typ:** nová schopnost (úzká) + hranice vlastnictví
+- **Scope:** tune
+- **Rozhodnutí ownera:** *„Jen na Ask Rúnar — když se člověk zeptá, ví; jinak mlčí."* Odpověď **pár slov**. Každá postava má svůj text, kdo je zač a kde bydlí.
+- **V jaké to bylo fázi:** lore **hotové od 2026-07-30** v `RUNAR_DESIGN.md` (katalog, 12 postav, kánon + umístění v Agndofě). Do promptu z toho nevedla **ani řádka** — v `v2/*.js` nebyl `dvergar` ani jednou. Chybělo tedy zapojení, ne obsah.
+- **Co vzniklo:** `DVERGAR` v `v2/runar-character.js` (jedna věta na postavu, IS + EN) a `_dvergarContext(question, lang)`, volaný **výhradně** z `buildAskPrompt`. Bez shody v otázce vrací prázdno.
+- **Proč NE do čtecího promptu:** katalog je víc textu než celý dnešní reading prompt, a ten se poslední dva dny naopak zkracoval. Design to sám říká: *„Znát ≠ odříkávat."* Blok navíc stojí **za** `S.rules` — ta zakazuje odpovídat na nesouvisející otázky, a tohle je vymezená výjimka, která ji musí přebít, ne naopak.
+- **§20 hranice:** `RUNAR_DESIGN.md` vlastní **lore** (kánon, zdroje, umístění); kód vlastní **tu jednu větu, kterou Rúnar smí říct**. Do DESIGN doplněn ukazatel, aby další postava šla nejdřív tam a teprve pak do kódu.
+- **Ověřeno:** golden **prázdný diff** (do čtení to nevede) · ask prompt bez dotazu na dvergar **bajt po bajtu stejný**, s dotazem +251 znaků · blok sedí na indexu 3, hned za pravidly · 10 stavů: běžná otázka → nic · obecné „dvergar/dwarves" → rod · konkrétní jméno → ta postava · **obojí v jedné otázce → konkrétní vyhrává** · IS i EN · prázdná a `null` otázka → nic.
+- **IS ověřena nástrojem, ne odhadem:** první znění (fragmenty se středníkem) dalo **9/12 nerozparsovatelných (E001)**. Přepsáno na celé věty → 3/12. Protipříklad s běžnými jmény (Jón, Pétur, Ólafur) dal **0/3**, čímž je doloženo, že zbylé E001 působí **neznámá vlastní jména**, ne gramatika — táž třída jako runová jména, která nástroj už potlačuje. → [[sanity-check-measurements]]
+- **`RUNAR_PROMPT_VERSION` se NEbumpuje:** čtecí prompt se nezměnil (golden to dokládá). Změna se týká jen follow-upu.
+- **Zbývá:** druhá půlka katalogu („další známí dvergové" — Regin, Fáfnir, Otr, Litr, Völundr…) zatím výtah v kódu nemá; ti jsou v DESIGN jako výzkumná příloha. Doplnit, až budou potřeba.
+- **Affected doc(s):** `RUNAR_DESIGN.md`
+- **Reversibility:** easy — jedna tabulka, jedna funkce, jeden řádek v ask builderu.

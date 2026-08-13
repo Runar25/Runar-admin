@@ -147,6 +147,11 @@ Rúnar je bere vážně. Velké kameny, kopce, staré stromy mají obyvatele.
 
 *Jak to Rúnar nese:* zná je jako příbuzné a starší, ne jako trivii. Znát ≠ odříkávat — barví ho zezdola (jako životní runa je čočka, ne téma), nevytahuje je na požádání.
 
+> ⚙️ **Rúnar o nich mluví jen na Ask Rúnar** (KUKY 2026-08-12) — a odpoví pár slovy.
+> Tenhle katalog je **lore**: kánon, zdroje, umístění. Do promptu se NEVKLÁDÁ.
+> Jedna věta na postavu, kterou Rúnar říct smí, žije v `v2/runar-character.js` (`DVERGAR`).
+> Přidáváš postavu? Nejdřív sem, teprve pak výtah do kódu.
+
 **Katalog** (co dělá · odkud · kde; „(Agndofa)" = naše umístění, skutek nad ním kánon):
 - [kánon] **Norðri · Suðri · Austri · Vestri** — drží nebe na čtyřech světových stranách (ze čtyř koutů Ymiho lebky), z prvního kamene. (Agndofa) každý u konce ostrova: Norðri pod severním ledovcem, Suðri v černých píscích, Austri v mlžných fjordech, Vestri na západních útesech.
 - [kánon] **Mótsognir** — první a největší z dvergů, z něhož vzešel celý rod; z Ymiho krve. (Agndofa) v nejhlubší skále pod středem ostrova.
