@@ -2553,3 +2553,20 @@ odložené rozhodnutí — a to patří dodělat, ne skladovat. Rúnaþula třet
 - **Poznámka k metodě:** tohle je **první oprava, kterou našel nástroj místo člověka**. Předchozí (věta o obrazu) se našla tak, že testerka narazila na 3 % kombinací a napsala „nerozumím". `lint_prompts.js` staví všech 2100 a stojí to nula.
 - **Affected doc(s):** mapa promptu (artifact)
 - **Reversibility:** easy — jeden řetězec ve dvou packech.
+
+---
+
+## 2026-08-13 — Islandský prompt je celý islandský (v2.0). Obě pravidla lintu na nule
+
+- **Typ:** obsah od Coworku zadrátován + úklid duplicit
+- **Scope:** tune
+- **Co se změnilo:** (1) `rworld()` dostal **islandskou větev** — pět popisů světa; do dneška měl jen anglické, takže každý islandský prompt nesl anglickou frázi. (2) `DEF_CHAR_IS.grammar` **pravidlo 5 zkráceno** na ukazatel `Kynið er tilgreint í ÁVARP; fylgdu því.` — detail shody zůstává v `ÁVARP`, kde je konkrétní rod. (3) **Úhel [5]** přepsán: `name the movement this rune makes visible` → `how it wakes in their life, long before it has a name` (a IS obdoba). Ptal se NA RUNU, tedy táž vada, kterou Cowork odstranil z [0] a [1].
+- **⚠️ Jedna změna proti Coworkovu znění, a je to přesně to, na co si vyžádali nástroj:** Jotunheim měl `streitist gegn formi`. **`streitast gegn` se doložit nepodařilo** — Íslensk nútímamálsorðabók zná `streitast við að` a `streitast á móti`, korpus dává *„hann streitist á móti"* a *„þau streittust á móti storminum"*. `gegn` tam není. Nasazeno `streitist á móti forminu` (doložená vazba, určitý tvar jako v korpusu). `liggja + undir` (Hel) a `fylgja` + þágufall (pravidlo 5) **potvrzeny**.
+- **E001 u descriptorů se NEopravuje a je to správně:** Cowork argumentuje, že jde o **fráze**, ne mluvené věty — táž třída jako `k_is` klíčová slova, kde je fragment žádoucí tvar. Plná věta `X er Y` by navíc vrátila přesně ten opis, kvůli kterému 9. 8. odešla rúnaþula (model ji kopíroval 2/2). Argument přijat; flagy jsou Z002 + fragmentové E001, žádná reálná chyba.
+- **Ověřeno — a poprvé jsou obě pravidla lintu na nule:**
+  - `lint_prompts.js --lang`: **50 → 25 → 0** řádek s angličtinou v islandském promptu.
+  - `lint_prompts.js --dup`: **3 → 1 → 0** duplicitních instrukcí.
+  - golden 7 z 32 klíčů (IS čtení + pool úhlů + `system_is`), IS hlavička teď nese `Heimur: líðandi stund`.
+- **Drženo záměrně:** úhel [4] (`Lead with the land`) má znění připravené, ale owner chce **nejdřív změřit v1.8**. Kdyby se šlo obráceně, opraví se 3 % a nechá běžet zbytek.
+- **Affected doc(s):** mapa promptu (artifact)
+- **Reversibility:** easy — tři řetězcové změny, `git revert`.

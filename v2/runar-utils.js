@@ -203,7 +203,7 @@ const READING_ANGLES = [
   'Lead with timing — what specific moment in their life does this rune mark.',
   'Lead with the body — where does this rune live as a physical sensation right now.',
   'Lead with the land — open with a single Icelandic image that mirrors this situation exactly.',
-  'Lead with what is stirring — name the movement this rune makes visible.',
+  'Lead with what is stirring — how it wakes in their life, long before it has a name.',
   'Lead with the threshold — what is the seeker standing between right now.',
 ];
 
@@ -214,7 +214,7 @@ const READING_ANGLES_IS = [
   'Byrjaðu á tímasetningunni — hvaða sérstaka augnablik í lífi þeirra merkir þessi rúna.',
   'Byrjaðu á líkamanum — hvar býr þessi rúna sem líkamleg tilfinning núna.',
   'Byrjaðu á landinu — opnaðu með einni íslenskri mynd sem speglar þessa stöðu nákvæmlega.',
-  'Byrjaðu á því sem hrærist — nefndu hreyfinguna sem þessi rúna gerir sýnilega.',
+  'Byrjaðu á því sem hrærist — hvernig það vaknar í lífi leitandans, löngu áður en það fær nafn.',
   'Byrjaðu á þröskuldinum — á milli hvers stendur leitandinn núna.',
 ];
 
@@ -418,15 +418,30 @@ function rnSplit(r) {
 }
 
 // ─── rworld() ─────────────────────────────────────────
+// Popis světa — obě řeči. Do 2026-08-13 tu byly JEN anglické, takže každý islandský
+// prompt nesl anglickou frázi (nalezl `scripts/utils/lint_prompts.js --lang`, 25 řádek).
+// Jsou to FRÁZE, ne věty „X er Y" — plná věta by vrátila přesně ten opis, kvůli kterému
+// odešla rúnaþula. E001 u fragmentu je proto inherentní, ne vada (táž třída jako `k_is`).
+// IS obsah Cowork; `liggja + undir` a `á móti` + þágufall doloženo v is-vazba.
 function rworld(r) {
   const labels = {
-    Hel:      'the roots, what lies beneath',
-    Midgard:  'the living moment, what is active now',
-    Asgard:   'the higher pattern, what reaches toward wider sky',
-    Vanaheim: 'the quiet work of nature, what grows slowly',
-    Jotunheim:'the untamed, what resists form',
+    en: {
+      Hel:      'the roots, what lies beneath',
+      Midgard:  'the living moment, what is active now',
+      Asgard:   'the higher pattern, what reaches toward wider sky',
+      Vanaheim: 'the quiet work of nature, what grows slowly',
+      Jotunheim:'the untamed, what resists form',
+    },
+    is: {
+      Hel:      'ræturnar, það sem liggur undir',
+      Midgard:  'líðandi stund, það sem er virkt núna',
+      Asgard:   'æðra mynstur, það sem teygir sig til víðari himins',
+      Vanaheim: 'hljóðlát vinna náttúrunnar, það sem vex hægt',
+      Jotunheim:'hið ótamda, það sem streitist á móti forminu',
+    },
   };
-  return r.world ? (labels[r.world] || '') : '';
+  const set = labels[lang === 'is' ? 'is' : 'en'];
+  return r.world ? (set[r.world] || '') : '';
 }
 
 // ─── relements() ─────────────────────────────────────────
