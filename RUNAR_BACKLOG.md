@@ -206,3 +206,43 @@ Není to překlad: `valdefla` **není heslo** v Íslensk nútímamálsorðabók 
 doslovné obejmutí, ne wellness klišé. **Které islandské klišé Rúnar neříká, je obsahové
 rozhodnutí** (Cowork / owner), ne věc CODE — proto nedoplněno, viz `RUNAR_DECISIONS.md`
 2026-08-14 (invarianty). Dokud to nikdo nerozhodne, islandský Rúnar má o jeden zákaz míň.
+
+## RESTY 2026-08-14 — nálady + měření hlasu (session CODE-tune)
+
+### 1. Nálady, krok 2/2 — ZBÝVÁ (krok 1/2 hotový, commit `e3a3c40`)
+Hotovo: invarianty vytaženy z vyměnitelného bloku do základu (`THE IMAGE`/`MYNDIN`, tempo,
+zákaz rady, anti-ozvěna), `focused` očištěn. Zbývá:
+- `lyrical` — očistit podle Coworkova draftu; **rejstřík z `personality` sem přestěhovat**
+  („poetic, quietly playful, ancient fireside guide" — vytaženo ze základu, aby neodporovalo `direct`).
+- `direct` — nová nálada; EN draft od Coworku, **třetí ukázková věta je vadná** (viz handoff).
+- IS znění pro `lyrical` i `direct` — píše CODE (`is-vazba` + GreynirCorrect, **E001 = přepsat**).
+- Zapojení: produkce dnes volá `buildSysPrompt(activeChar, lang)` **bez třetího argumentu**,
+  takže `profileKey` je vždy `undefined` → `ACTIVE_VOICE_PROFILE`. Tudy vede rozdávání nálad
+  (sáčkem jako sezóny, ne `Math.random`), plus zápis do `prompt_draws`.
+- `--voice <klíč>` do `scripts/utils/gen_batch.js`, ať jde nálada testovat bez zásahu do produkce.
+- **Naostro až po měření** (rozhodnutí ownera).
+
+### 2. `--sameness` do `scripts/utils/measure_readings.js` — ZBÝVÁ
+Hotová specifikace včetně akceptačního testu je v transkriptu workflow
+`…/subagents/workflows/wf_8c468fb1-c85/journal.jsonl` (poslední záznam).
+Metrika **OZVĚNA slovníku**, ověřená: `full` 6,2 % vs `dice` 11,7 %, permutační test p = 0,003;
+negativní kontrola p = 0,80. Tvrdé podmínky: `lang` na každém řádku (chybí-li → **spadnout**,
+bez `lang` skočí EN dávka z 9,6 % na 24,0 %), jedna dávka = jeden jazyk, n ≥ 20, stejné runy,
+jen jackknife (bootstrap u párové metriky lže). Slouží jako **hlídač regrese**, ne měřítko úspěchu.
+
+### 3. ⚠️ OWNER: chceme vůbec změřit, jestli nálady zaberou?
+Metrika slovníku **nevidí rytmus ani stavbu vět** — dokázáno nulovou transformací (zamíchání
+slov uvnitř čtení změní číslo o **0,0000**). A na slovníku je produkce už dnes skoro tak pestrá,
+jak z dat jde (nejrůznější poskládaná směs 7,9 %, produkce 6,2 %). Statičnost, kterou owner
+popisuje, je tedy nejspíš **v tempu a stavbě**, ne ve slovech. Obě metriky, které tuhle dimenzi
+měří, zabil útok „půlka proti půlce" — potřebovaly by **~100 čtení na dávku** (strukturní),
+resp. ~720 (frázová). Volba ownera: pustit nálady a věřit oku × zaplatit jednu velkou dávku.
+
+### 4. Doslovné opisování obrazu: 32 % proti baseline 12 % — ZBÝVÁ
+Hypotéza „vrátit IS promptu hmotu" **vyvrácena** (`RUNAR_DECISIONS.md` 2026-08-14, p = 0,75).
+Příčina je jazyk, ne délka. Další test, neproveden: **nedávat do IS hotovou větu**, ale obraz
+jako pár rozpojených slov, ze kterých se věta složit musí. Mění zdroj, ne délku.
+
+### 5. Dva bug reporty `HTTP 503` — čekají na rozhodnutí ownera
+Zůstaly otevřené z triage reportů Rúnara; bez odpovědi ownera se nedá rozhodnout, jestli je to
+výpadek modelu (a tedy nic k opravě) nebo chybějící retry.

@@ -257,6 +257,23 @@ Vracíš-li opuštěnou věc, **napřed dohledej, proč odešla**, a vrať ji ta
 Návrat bez kroků 1–3 je recidiva, ne rozhodnutí. Mrtvý kód nechávaný „pro historii" je právě proto
 komentovaný důvodem odchodu — čti ten komentář dřív, než ho oživíš. Souvisí: [[decisions-are-directions-not-locks]].
 
+### §27 — Nástroj se obhájí dřív než výsledek (platí pro VŠECHNY session, Code i Cowork)
+Než uvěříš číslu, **zaútoč na to, čím jsi ho naměřil**. Metrika, která prošla jen tím testem,
+kvůli kterému vznikla, není ověřená — je vybraná. Tři útoky, v tomhle pořadí:
+
+1. **Půlka proti půlce** — rozděl JEDNU dávku na dvě a spočítej metriku zvlášť. Liší-li se
+   půlky víc než dávky, které srovnáváš, je rozdíl šum.
+2. **Co JEŠTĚ odlišuje referenční dvojici** — zlatý standard může ukazovat obráceně, když se
+   ty dvě strany liší ještě něčím jiným než tím, co měříš.
+3. **Nulová transformace** — pusť změnu, která hýbe jen jednou dimenzí. Nepohne-li se číslo,
+   je slepota **dokázaná** a patří do dokumentace jako fakt, ne jako tušení.
+
+**Doloženo 2026-08-14** (metrika „stejnosti" čtení): útok 1 zabil **2 ze 3** metrik · útok 2
+odhalil, že **6 ze 7** samozřejmých signálů ukazovalo obráceně (měřily papouškování, ne
+stejnost) · útok 3 dokázal, že přeživší metrika nevidí rytmus (zamíchání slov uvnitř čtení
+změní číslo o **0,0000**). Detail → [[attack-the-metric-not-just-the-result]].
+**Párové metriky:** nikdy bootstrap s opakováním (duplikát = shoda 1,0), jen jackknife.
+
 ---
 
 ## Tier systém
