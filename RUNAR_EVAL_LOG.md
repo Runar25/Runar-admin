@@ -283,3 +283,25 @@ počítal do fráze i pokyn za obrazem — délka 19 slov místo 10 a výsledek 
 **POŘADÍ (nejbezpečnější signál první, 1 páka/verze):** ✅ **T2** `_noColdRead` reframe = tag v1.2 · ✅ **ending wording** (T3 část) = tag v1.1. **Zbývá:** T1 dedup (neutrální/lepší) → output linter → T3 zbytek (angle#8 „life rune first" gate) → T4 škrty (vzhled Rúnara · purpose „gather context").
 
 **NESAHAT:** NEmergovat `_describeRule` + `_noColdRead` (každá platí za JINOU eval-chybu) · JSON kontrakt · IS 7-bod gramatika · length (audio budget) · variabilita (angle/name/ending pooly). `DEF_CHAR.never` + data run = 📜 kánon / 🔒 fakt → reframe = **datované DECISIONS, ne tichý tune.**
+
+
+### 2026-08-14 — papouškování obrazu v IS: co příčina JE a co NENÍ
+
+Řada měření (vždy 25 IS run, `scripts/utils/measure_readings.js`, řádek „papouškování obrazu"):
+
+| stav promptu | celá fráze doslova | nejdelší úsek |
+|---|---|---|
+| v1.4 dlouhá vkládací věta | 12 % | 34 % |
+| v2.0 `notaðu þessa` („použij tenhle") | 56 % | 73 % |
+| v2.0 + rámec zdroje | 44 % | 59 % |
+| v2.1 + kontext za obrazem | 32 % | 52 % |
+| v2.1 **zkrácený o 509 znaků** | 24 % | — |
+
+**Co JE příčina:** sloveso kolem vkládaného textu. `notaðu þessa` = rozkaz → 12 % → 56 %, **p = 0,002**.
+
+**Co NENÍ příčina:** délka promptu. Zkrácení o 17 % dalo 32 % → 24 %, **p = 0,75** (a opačným směrem,
+než hypotéza čekala). EN má skoro stejně dlouhý čtecí prompt (321 vs 307 slov) a **kratší** systémový
+(681 vs 781), přesto opisuje 9 % proti islandským 32 %. Hypotéza „vrátit IS hmotu" tím padá.
+
+**Pracovní vysvětlení:** slabší islandština modelu → podaná hotová věta se použije místo vlastní.
+Směr dalšího testu je proto **rozbít hotovost** vkládaného obrazu (fragmenty místo věty), ne délka.

@@ -2597,3 +2597,26 @@ Angličtina se nehnula, islandština 3,5×. Nejde tedy o samotnou stavbu věty. 
 - **Zbývá:** dostat 32 % zpět k baseline. Hypotéza k testu: vrátit islandskému promptu část hmoty, o kterou přišel — ne konkrétní zrušenou větu, ale jeho celkovou délku. Netestováno.
 - **Affected doc(s):** `RUNAR_EVAL_LOG.md`
 - **Reversibility:** easy.
+
+---
+
+## 2026-08-14 — Hmota islandského promptu NENÍ příčina doslovného opisování (vyvráceno měřením)
+
+- **Typ:** measurement (uzavírá otevřenou hypotézu z předchozího záznamu téhož dne)
+- **Scope:** reading / IS
+- **Rozhodnutí:** hypotézu „vrátit IS promptu hmotu, o kterou přišel" **zavrhnout**. Nepřisypávat slova.
+- **Test byl obrácený, a proto levný:** je-li viník délka, další **zkrácení musí opisování zvednout**.
+  Zkrátil jsem čtecí prompt o 509 znaků (−17 %, `--without describe,coldread`, připnutá náhoda i sáček).
+  Doslovné opsání celé fráze **32 % → 24 %** (25 IS run, táž metoda `scripts/utils/measure_readings.js`).
+  **Fisher exact p = 0,75** — nehnulo se. Šlo to navíc opačným směrem, než hypotéza čekala.
+- **Druhý, silnější důkaz proti:** EN a IS mají dnes skoro stejně dlouhý čtecí prompt (321 vs **307** slov)
+  a **islandský systémový je delší** (781 vs 681) — přesto EN opisuje 9 % a IS 32 % (p = 0,07).
+  Víc hmoty, víc opisování. Délka to nevysvětluje.
+- **Co z toho plyne:** příčina je **jazyk, ne množství textu**. Model má islandštinu slabší; dostane-li
+  hotovou, správně postavenou islandskou větu, sáhne po ní místo aby psal vlastní. Anglicky si troufne.
+- **Další test (neproveden):** nedávat do IS **hotovou větu**, ale obraz jako pár rozpojených slov,
+  ze kterých se věta složit musí. Mění to zdroj, ne délku.
+- **Poctivá hranice nálezu:** `n = 25`. Vyloučeno, že 17% řez s tím měřitelně hne. NEtvrdí se,
+  že délka je bez vlivu úplně.
+- **Affected doc(s):** `RUNAR_EVAL_LOG.md`
+- **Reversibility:** n/a (měření, žádná změna kódu).

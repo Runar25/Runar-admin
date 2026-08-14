@@ -29,3 +29,16 @@ ať v ní stojí cokoli (měřeno 2/2). Tady navíc: i pouhá výzva „použij"
    nechytí — ověřují tvar promptu, ne chování modelu ([[measure-dont-eyeball]]).
 3. Zkrácení promptu je zisk, ale **není zadarmo**: kratší věta má míň místa na rámování
    a snadno sklouzne k rozkazu. Vada se dá vyměnit za jinou.
+
+**Co to NENÍ: délka promptu (vyvráceno 2026-08-14).** Nabízelo se, že islandský prompt
+opisuje, protože zhubl. Test byl obrácený a levný: je-li viník délka, **další zkrácení musí
+opisování zvednout**. Zkrátil jsem IS čtecí prompt o 509 znaků (−17 %) → 32 % **→ 24 %**,
+Fisher **p = 0,75**, navíc opačným směrem. A EN má skoro stejně dlouhý čtecí prompt
+(321 vs 307 slov) i **kratší** systémový (681 vs 781), přesto opisuje 9 % proti 32 %.
+
+**Ponaučení obecně:** než začneš přisypávat, zkus pákou hnout **na opačnou stranu**. Když
+predikce hypotézy nevyjde ani obráceně, hypotéza padla za cenu jedné dávky. To je nejlevnější
+způsob, jak zabít vlastní domněnku — a funguje i tam, kde přidat obsah by stálo hodiny psaní.
+
+**Pracovní vysvětlení místo délky:** slabší jazyk modelu → podanou hotovou větu použije místo
+vlastní. Směr opravy je proto **rozbít hotovost** vkládaného textu (fragmenty místo věty).
