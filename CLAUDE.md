@@ -228,6 +228,35 @@ Než něco prohlásíš za nález/pravdu, **změř / protlač produkční cestou
 ani „vypadá to" se nepočítá. Kód: seed-and-assert na výsledek (§19). Obsah/data (Cowork): claim o
 datech/screenshotu opři o měření, ne o dojem; nejde-li změřit, řekni „nevím". Detail → [[measure-dont-eyeball]].
 
+### §25 — Vlastní domněnku zabij obrácenou pákou (platí pro VŠECHNY session, Code i Cowork)
+Než začneš **přidávat** obsah, aby se hypotéza potvrdila, **hni pákou na opačnou stranu** a zkontroluj,
+jestli platí obrácená předpověď. Je to o řád levnější a zabíjí to i domněnky, které znějí rozumně.
+
+- Hypotéza „X je málo, přidej X" → **uber X ještě víc**. Musí to zhoršit. Když se nic nestane, hypotéza padla.
+- Nevyšla-li predikce ani obráceně, **nález je „není to X"** — a ten se zapisuje stejně pečlivě jako potvrzení
+  (§16), jinak ho příští session zkusí podruhé.
+- Vždy uveď **hranici nálezu**: co přesně bylo vyloučeno (velikost řezu, `n`), a co se netvrdí.
+
+**Doloženo 2026-08-14:** hypotéza „IS prompt opisuje, protože zhubl". Přisypat islandský obsah = hodiny psaní
+a ověřování. Místo toho zkrácení o dalších 509 znaků: 32 % → 24 %, **p = 0,75**, navíc opačným směrem.
+Hypotéza padla za tři minuty a jednu dávku. Detail → `RUNAR_DECISIONS.md` 2026-08-14, [[falsify-by-reversing-the-lever]].
+
+---
+
+### §26 — Opustit něco ≠ zavřít to navždy; návrat je povolený, ale JEN očištěný (platí pro VŠECHNY session)
+Když se od něčeho odejde, má to v tu chvíli **důvod**. Ten důvod nezaniká — ale ani nezakazuje návrat.
+KUKY 2026-08-14: *„pokud od něčeho odejdeme má to v tu chvíli důvod, ale neznamená to že se k tomu
+nemůže v obměněné formě vrátit."*
+
+Vracíš-li opuštěnou věc, **napřed dohledej, proč odešla**, a vrať ji tak, aby ta příčina byla odstraněná:
+1. Najdi datovaný záznam odchodu (`RUNAR_DECISIONS.md`, komentář u mrtvého kódu).
+2. Pojmenuj **konkrétní vadu**, kvůli které odešla.
+3. Vrať **očištěnou** verzi, kde ta vada prokazatelně není — ne kopii původního stavu.
+4. Zapiš nové datované rozhodnutí, které se na to staré odvolává.
+
+Návrat bez kroků 1–3 je recidiva, ne rozhodnutí. Mrtvý kód nechávaný „pro historii" je právě proto
+komentovaný důvodem odchodu — čti ten komentář dřív, než ho oživíš. Souvisí: [[decisions-are-directions-not-locks]].
+
 ---
 
 ## Tier systém

@@ -36,9 +36,7 @@ opisování zvednout**. Zkrátil jsem IS čtecí prompt o 509 znaků (−17 %) �
 Fisher **p = 0,75**, navíc opačným směrem. A EN má skoro stejně dlouhý čtecí prompt
 (321 vs 307 slov) i **kratší** systémový (681 vs 781), přesto opisuje 9 % proti 32 %.
 
-**Ponaučení obecně:** než začneš přisypávat, zkus pákou hnout **na opačnou stranu**. Když
-predikce hypotézy nevyjde ani obráceně, hypotéza padla za cenu jedné dávky. To je nejlevnější
-způsob, jak zabít vlastní domněnku — a funguje i tam, kde přidat obsah by stálo hodiny psaní.
+Metoda, kterou to padlo, má vlastní záznam → [[falsify-by-reversing-the-lever]].
 
 **Pracovní vysvětlení místo délky:** slabší jazyk modelu → podanou hotovou větu použije místo
 vlastní. Směr opravy je proto **rozbít hotovost** vkládaného textu (fragmenty místo věty).
