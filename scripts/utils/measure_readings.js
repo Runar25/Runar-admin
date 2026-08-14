@@ -36,8 +36,15 @@ if (!files.length) {
 
 // ── pomocné ────────────────────────────────────────────────────────────────
 function injectedImage(prompt) {
-  const line = String(prompt || '').split('\n').find(l => /ÁRSTÍÐARMYND|SEASONAL IMAGE/.test(l));
+  // Návěstí se změnilo 2026-08-13 (`ÁRSTÍÐARMYND`/`SEASONAL IMAGE` → `MYND`/`IMAGE`);
+  // starší dávky nesou původní tvar, proto se hledají obě.
+  const line = String(prompt || '').split('\n')
+    .find(l => /^(MYND|IMAGE) — /.test(l) || /ÁRSTÍÐARMYND|SEASONAL IMAGE/.test(l));
   if (!line) return null;
+  if (/^(MYND|IMAGE) — /.test(line)) {
+    const c = line.lastIndexOf(': ');
+    return c > 0 ? line.slice(c + 2).replace(/\.\s*$/, '').trim() : null;
+  }
   const m = line.match(/—\s*([^.]{10,160})\./);
   return m ? m[1].trim() : null;
 }

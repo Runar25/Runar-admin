@@ -276,12 +276,15 @@ function _promptDraws(prompt, lang) {
     for (var i = 0; i < angles.length; i++)
       if (p.indexOf(angles[i]) !== -1) { out.angle = i; break; }
 
-    // Obraz sedí mezi „— " a pevnou závěrečnou větou o sezóně. Kotvit na tu větu je
-    // spolehlivější než „do první tečky" — islandské obrazy tečky obsahovat můžou.
-    var head = isIs ? 'árstíð — ' : 'season — ';
-    var tail = isIs ? '. Aldrei úr annarri árstíð' : '. Never from another season';
-    var a = p.indexOf(head), b = a < 0 ? -1 : p.indexOf(tail, a);
-    if (a >= 0 && b > a) out.image = p.slice(a + head.length, b).trim();
+    // Obraz je od 2026-08-13 POSLEDNÍ věc na své řádce, za poslední dvojtečkou.
+    // (Dřív se kotvilo na závěrečnou větu o sezóně — ta zmizela; ověřeno, že žádný
+    // z 81 obrazů „: " neobsahuje, takže poslední dvojtečka je jednoznačná.)
+    var mark = isIs ? 'MYND — ' : 'IMAGE — ';
+    var line = p.split('\n').filter(function (l) { return l.indexOf(mark) === 0; })[0];
+    if (line) {
+      var c = line.lastIndexOf(': ');
+      if (c > 0) out.image = line.slice(c + 2).replace(/\.\s*$/, '').trim();
+    }
 
     var heavy = isIs ? ENDING_HEAVY_IS : ENDING_HEAVY;
     var open  = isIs ? ENDING_OPEN_IS  : ENDING_OPEN;

@@ -574,12 +574,16 @@ function _seasonalImagery(lang, drawn) {
   var pickId = _seasonBagPick(bucket, kind, ids);
   var img = images[0];
   for (var i = 0; i < images.length; i++) { if (images[i].id === pickId) { img = images[i]; break; } }
-  // Runový obraz vyhrává nad sezónním, ale VĚTA kolem je pořád ta samá, nasazená formulace —
-  // jedna formulace, ne dvě (§18.1). Sezónnost hlídá výběr výš, ne další věta v promptu.
+  // Runový obraz vyhrává nad sezónním, ale VĚTA kolem je pořád ta samá (§18.1).
+  // Věta NEŘÍKÁ, že obraz je přírodní: 17 z 81 obrazů jsou lidské scény (chléb z pece,
+  // káva na stole, klíče od starého domu) a starší znění je všechny prohlásilo za
+  // „nature image ... from this Icelandic season" — nesouvislé u pětiny čtení.
+  // Sezónnost hlídá VÝBĚR výš (pokrytí 150/150), ne věta; proto tu žádná poučka o
+  // sněhu v létě není. „Jeden obraz" říká DEF_CHAR pravidlo 4 — neopakovat (§20).
   var phrase = runePhrase || ((lang === 'is') ? img.is : img.en);
   if (lang === 'is')
-    return 'ÁRSTÍÐARMYND (ef hún kemur): ef náttúrumynd birtist í lestrinum, láttu hana koma frá þessari íslensku árstíð — ' + phrase + '. Aldrei úr annarri árstíð (enginn snjór að sumri); köld rúna verður kuldinn sem á heima núna, ekki vetur.';
-  return 'SEASONAL IMAGE (if one arises): if a nature image appears in the reading, let it come from this Icelandic season — ' + phrase + '. Never from another season (no snow in summer); a cold rune becomes the cold that belongs to now, not winter.';
+    return 'MYND — ef mynd birtist í lestrinum, notaðu þessa: ' + phrase + '.';
+  return 'IMAGE — if a picture arises in this reading, use this one: ' + phrase + '.';
 }
 
 // DESCRIBE, DO NOT EXPLAIN (eval v0.4 Priority 1, 9/9): every gate-fail sat in an explaining

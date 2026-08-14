@@ -2520,3 +2520,21 @@ odložené rozhodnutí — a to patří dodělat, ne skladovat. Rúnaþula třet
 - **Zbývá:** druhá půlka katalogu („další známí dvergové" — Regin, Fáfnir, Otr, Litr, Völundr…) zatím výtah v kódu nemá; ti jsou v DESIGN jako výzkumná příloha. Doplnit, až budou potřeba.
 - **Affected doc(s):** `RUNAR_DESIGN.md`
 - **Reversibility:** easy — jedna tabulka, jedna funkce, jeden řádek v ask builderu.
+
+---
+
+## 2026-08-13 — Věta, která vkládá obraz, mu přestala říkat „přírodní" (v1.8)
+
+- **Typ:** oprava promptu (nález z reálného čtení)
+- **Scope:** tune
+- **Jak se to našlo:** Sigrún dostala Mannaz a napsala *„I don't understand this."* Text zněl *„the old letter you **carved** as a child … reaching for a wider line"* — smíšená metafora, rukopis se píše, neryje. **Poprvé se nemuselo hádat:** `prompt_draws` u toho čtení říká `angle: 4`, `image: "You know your own handwriting though the years have changed it"`. Cowork úhel odvodil správně; databáze to potvrdila.
+- **Co model udělal a proč:** dostal dvě instrukce, které nešly splnit obě — úhel 4 *„Lead with the land"* a jediný povolený obraz, kterým byl **rukopis**. Převedl tedy rukopis na něco, co se dá vyrýt. Neblouznil, poslechl.
+- **⚠️ Příčina je ale širší než ten úhel.** **17 z 81 obrazů (21 %) nejsou krajiny** — chléb z pece, káva stydnoucí na stole, klíče od starého domu, první krok dítěte. A vkládací věta **všechny** prohlásila za přírodní: *„if a **nature image** appears in the reading, let it come from this Icelandic **season** — You know your own handwriting…"*. 52 slov, sedm zmínek o sezóně, a uprostřed rukopis. **Nesouvislé samo o sobě, u pětiny všech čtení, bez ohledu na úhel.** Kolize s úhlem 4 je ~3 % čtení; tahle vada 21 %.
+- **A kód to už tři dny říkal sám:** komentář o pár řádek výš tvrdil *„Sezónnost hlídá VÝBĚR výš, ne další věta v promptu"* — a ta věta přednášela dál. Výběr je klíčovaný runou i sezónou, pokrytí 150/150; poučky o sněhu v létě hlídaly něco, co je vyřešené jinde.
+- **Co se změnilo:** `IMAGE — if a picture arises in this reading, use this one: …` / `MYND — ef mynd birtist í lestrinum, notaðu þessa: …`. **Žádný nový zákaz** — „jeden obraz" říká `DEF_CHAR` pravidlo 4 a opakovat to tady by byl přesně ten §20 duplikát, který tohle způsobil.
+- **§13 full-path:** na starou větu kotvily **dva** další nástroje — `_promptDraws` (záznam losů) a `injectedImage` v `measure_readings.js`. Obojí překotveno; měření navíc umí i **starý tvar**, aby dávky z doby před 08-13 zůstaly čitelné.
+- **Ověřeno:** golden 24 z 32 klíčů, mění se **jediná řádka** · prompt **−29 slov** na čtení · detektor obrazu **8/8** po přeznačení (EN i IS, čtyři runy) · IS 0 flagů a 0 E001 (varianta s dvojtečkou v návěstí dávala E001, s em-dash prochází) · žádný z 81 obrazů neobsahuje `": "`, takže poslední dvojtečka je jednoznačná kotva.
+- **NEZMĚŘENO / riziko:** zmizela věta „nikdy z jiné sezóny". Obraz, který si model vymyslí **navíc**, teď není sezónně hlídaný — mělo by to krýt pravidlo „jeden obraz", ale ověří to až dávka.
+- **Zbývá (pořadí podle ownera):** 2. změřit · 3. teprve pak úhel 4. Kdyby se šlo obráceně, opraví se 3 % a nechá běžet 21 %.
+- **Affected doc(s):** mapa promptu (artifact, překreslena na v1.8 týmž tahem)
+- **Reversibility:** easy — jedna věta a dvě kotvy.
