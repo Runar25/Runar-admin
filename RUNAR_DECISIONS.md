@@ -2620,3 +2620,43 @@ Angličtina se nehnula, islandština 3,5×. Nejde tedy o samotnou stavbu věty. 
   že délka je bez vlivu úplně.
 - **Affected doc(s):** `RUNAR_EVAL_LOG.md`
 - **Reversibility:** n/a (měření, žádná změna kódu).
+
+---
+
+## 2026-08-14 — Invarianty vytaženy z vyměnitelného bloku hlasu (příprava nálad, krok 1/2)
+
+- **Typ:** architecture (prompt) + implementation
+- **Scope:** reading / system prompt (EN + IS)
+- **Rozhodnutí:** cokoli, co má o Rúnarovi platit **vždy**, nesmí bydlet v profilu hlasu.
+  Profil je od nynějška **čistý tón** a nic víc.
+- **Proč teď:** owner schválil víc nálad (`CLAUDE.md` §26 — návrat k opuštěnému jen očištěný).
+  Nálada = **výměna celého bloku** `HOW YOU SPEAK`. Cokoli v tom bloku tedy s výměnou zmizí.
+- ⭐ **Nález, který změnil plán (a bez kterého by vznikla tichá regrese v hlavním jazyce):**
+  `DEF_CHAR_EN.grammar` a `DEF_CHAR_IS.grammar` **nejsou tentýž blok**. EN je „LANGUAGE & STYLE"
+  a jeho bod 4 nesl „jeden obraz"; IS je „ÍSLENSK MÁLFRÆÐI", čistá mluvnice, a o obrazu
+  **nemluví vůbec**. V islandštině tedy pravidlo „ein mynd" žilo **výhradně v profilu**.
+  Cowork navrhl ten odstavec z profilu smazat (v EN správně, je to duplikát) — v IS by to
+  pravidlo odstranilo z promptu úplně. Změřeno před zásahem: EN 2×, IS 1×.
+- **Co se přestěhovalo do základu:** obraz (jeden, nesený, smyslový, vázaný na „kde ten člověk
+  stojí teď", nikdy nereálné počasí) → nový blok `THE IMAGE` / `MYNDIN` v `grammar` obou jazyků ·
+  tempo („nikdy uspěchaný, nikdy přehnaně dramatický") → `personality` · zákaz **rady** a
+  **anti-ozvěna** → `never`.
+- **`personality` musela ustoupit, jinak nálady nemohou fungovat:** držela konkrétní rejstřík
+  („poetic, quietly playful, ancient fireside guide"). Tím a) duplikovala `lyrical`
+  a b) přímo **odporovala** připravované `direct` („žádná ozdoba"). Rejstříkové kusy se
+  **nemažou, stěhují** — patří do `lyrical`, kde jsou pravda. V základu zůstal klid, trpělivost,
+  soucit bez sentimentu a „nepředvádí mystiku, prostě v ní bydlí".
+- **Opraveno mimochodem (§22, tytéž věty):** `hugsaður` („myšlený") **není heslo** v Íslensk
+  nútímamálsorðabók → `íhugull` · `egósdrifinn` (kalk) → `sjálfhverfur` ·
+  „tilfinningalegur til yfirgangs" → `væminn`.
+- **Ověřeno:** golden 32 klíčů → změněny **jen** `system_is` a `system_en` (čtecí buildery
+  byte-identické) · „jeden obraz" po zásahu **1× v obou jazycích** · `lint_prompts --lang`
+  i `--dup` přes 2100 kombinací čisté · IS věty přes `is-grammar-qa` (9 vět, 0 flagů,
+  **žádné E001**) a `is-vazba` (`eiga rétt á sér` doložená kolokace, `skynrænn`/`væminn`/
+  `íhugull` hesla). Délka systémového promptu EN 681 → 653, IS 781 → 770 slov.
+- **NEuděláno vědomě:** `DEF_CHAR_IS.never` má 7 zákazů, EN 8 — islandštině chybí řádek
+  o `embrace`/`empower`. `valdefla` **není heslo** v Íslensk nútímamálsorðabók a `faðma` je
+  doslovné obejmutí, ne wellness klišé → které islandské klišé Rúnar neříká, je **obsahové
+  rozhodnutí, ne překlad** (§23). Zapsáno do `RUNAR_BACKLOG.md`, nevymýšlím.
+- **Affected doc(s):** `RUNAR_BACKLOG.md`
+- **Reversibility:** easy — `git revert` jednoho commitu, čtecí buildery se nedotkly.

@@ -199,3 +199,10 @@
 - [x] **Mapa promptu: zrušit citace čísel řádků** — HOTOVO 2026-08-09. Při překreslení na v1.5 změřeno, že mimo bylo **14 z 14** citací, některé o 100+ řádků (`buildSysPrompt` mapa:775 / kód:631). Všechny nahrazeny jmény symbolů (`character.js · buildSysPrompt`) — ta se neposouvají a dají se grepnout.
 - [~] **IS tvary, které dozrají samy (KUKY 2026-08-09: „netlačit na sílu") — `hlénu`→`hléinu`** — nalezeno v IS dávce 2026-08-09 (`Hvað í þér heldur enn fast í hlénu?`). Slovník uvádí vlastní kolokaci `í hléinu` (hlé = hk), takže `hlénu` je skutečná chyba, ne false-pos. Nevkládat teď: obojí se potvrdí (nebo vyvrátí) samo, až na tvar narazíme v dalším čtení. Sbírat, ne honit.
 - [~] **IS: `kvíslir` → pravděpodobně `kvíslar`** (tentýž režim — potvrdit, až se objeví znovu) (`jökuláin greinist í kvíslir yfir sandinn`, reálné čtení). `kvísl` je kvk (ověřeno), ale **množné číslo žádný náš nástroj nepotvrdí** — slovník má jen hesla, GreynirCorrect u IS dělá falešné poplachy. Nevymýšlet; potvrdit u Coworku/rodilého mluvčího, pak teprve korekce.
+
+### IS/EN parita zákazů: `DEF_CHAR_IS.never` má o řádek míň (2026-08-14)
+`DEF_CHAR_EN.never` zakazuje `embrace` a `empower`, islandská verze ten řádek nemá (7 vs 8).
+Není to překlad: `valdefla` **není heslo** v Íslensk nútímamálsorðabók a `faðma` znamená
+doslovné obejmutí, ne wellness klišé. **Které islandské klišé Rúnar neříká, je obsahové
+rozhodnutí** (Cowork / owner), ne věc CODE — proto nedoplněno, viz `RUNAR_DECISIONS.md`
+2026-08-14 (invarianty). Dokud to nikdo nerozhodne, islandský Rúnar má o jeden zákaz míň.
