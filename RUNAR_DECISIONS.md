@@ -2660,3 +2660,36 @@ Angličtina se nehnula, islandština 3,5×. Nejde tedy o samotnou stavbu věty. 
   rozhodnutí, ne překlad** (§23). Zapsáno do `RUNAR_BACKLOG.md`, nevymýšlím.
 - **Affected doc(s):** `RUNAR_BACKLOG.md`
 - **Reversibility:** easy — `git revert` jednoho commitu, čtecí buildery se nedotkly.
+
+---
+
+## 2026-08-14 — Kánon „zrcadlo, ne orákulum" dostal PROČ (projekce/Barnum) + kotvení vzorců
+
+- **Typ:** intent (owner směr, Cowork obsah) — 📜 vytvořený kánon
+- **Scope:** design / tree / prompt
+- **Rozhodnutí:** doplněn epistemický základ za „reflektuje, nepředpovídá". Přesnost čtení vzniká
+  **projekcí posluchače** (Barnum/Forer, subjektivní validace, konfirmační zkreslení). To není
+  slabina, ale základ poctivého pozicování; **zrcadlo vs orákulum** je jediná nesmlouvavá čára —
+  a je nesmlouvavá *právě proto*, že je efekt reálný.
+- **Gathering:** vzorce kotví na **VSTUPU** uživatele (area/intention v okně), ne na náhodných
+  runách. Runy jsou šum; vstupy nejsou. OKNO, ne řetěz.
+- **Co z toho CODE odvodil navíc (dopad na prompt, ne jen na doky):**
+  1. Každá páka nese buď **materiál tazatele** (kotví projekci), nebo **materiál kostky**
+     (rozbíjí zvyk). Obojí legitimní; zakázané je podat materiál kostky **jako vědění o tazateli**.
+  2. Tím se mění status doslovného opisování vloženého obrazu: **není to stylistická vada, je to
+     překlopení zrcadla v orákulum** — tazatel promítá do věty ze sáčku, kde nic není jeho.
+     Podporuje to už zapsaný další test (rozbít hotovost vkládané věty, ne její délku).
+  3. Úhly, které míří na život tazatele (`READING_ANGLES` [0], [1], [5], přepsané 2026-08-13),
+     jsou pod kánonem správný směr **pro všechny** úhly; úhel mířící na abstraktní význam runy
+     vyrábí Barnum bez kotvy.
+  4. Nálady jsou materiál kostky **o doručení**, ne o obsahu → kánonu neodporují.
+  5. ⚠️ **„Působí to čtení přesně?" není použitelná metrika** — Barnum zaručí vysoké skóre bez
+     ohledu na kvalitu. Čtení se nesmí A/B-testovat na pocitu přesnosti.
+- **Prompt se NEMĚNÍ (§21, doporučení proti Coworkovu volitelnému zostření):** direktiva tam už je
+  **třikrát** — `never`: „never predicts fate or claims absolute truths" + „never makes fear-based
+  predictions", `philosophy`: „The runes do not decide your path… they help you remember it."
+  Čtvrtá věta o témže je přesně to ředění, které jsme dnes měřili a odstraňovali („jeden obraz"
+  se říkal 4×). Kdyby se ukázalo, že model přesto předpovídá, opravuje se to **měřením a jednou
+  větou navíc**, ne preventivně.
+- **Affected doc(s):** `RUNAR_DESIGN.md`, `RUNAR_TREE.md`
+- **Reversibility:** easy (jen doky, prompt nedotčen).

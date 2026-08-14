@@ -97,6 +97,13 @@ Nová oblast, nový typ čtení, **pozdější osobní otázky na Rúnara** = do
 ---
 
 ## 7. VRSTVA VÝZNAMU — The Gathering (vrstva NAD JOURNALEM, ne v enginu stromu)
+⭐ **Vzorce kotvi na VSTUPU uživatele, ne na výstupu run** — jinak systematizuješ apofenii.
+Runy jsou náhodné („Isa 3×" = šum). Vstupy náhodné **nejsou**: „táž area+intention N× v okně"
+je reálný signál o pozornosti uživatele. Zrcadlíš jeho **doloženou pozornost** (pravda o něm),
+ne domluvu náhody. **OKNO, ne řetěz** (tři za sebou je nejslabší doklad — může to být jedno
+sezení). Tím Gathering zůstane zrcadlo, ne věštecký automat. Prahy a okna = spec v
+`RUNAR_BACKLOG.md`; **proč** = `RUNAR_DESIGN.md`, „Proč zrcadlo, ne věštba".
+
 **Zásada:** Rúnar = **zrcadlo tvé pozornosti, ne předpověď událostí.** Reflektuje, nepředpovídá (rule → working-style). Proto **skuld = záměr / k čemu se táhneš**, NE věštba budoucnosti.
 
 ⭐ **KDE Gathering bydlí (KUKY 2026-07-30).** Každé čtení se ukládá do **journalu** — a journal je *databáze stromu*: drží každé čtení, každou runu, area, intention, spread. **Přesah přes víc čtení** (opakující se runy, kombinace, „síly" mezi runami / ætt / elementy) je tedy informace **v journalu**, ne v geometrii stromu. **Strom je jen vizuální forma týchž dat.** → Gathering = analytická vrstva **nad journalem** (`detectPatterns()` čte uložená čtení), NE něco zapečeného do tree enginu. Proto taky „živé síly mezi runami" nehýbou větvemi (§0 model) — jsou to vztahy **v datech**, které umí Rúnar pojmenovat.
