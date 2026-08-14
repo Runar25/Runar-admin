@@ -2538,3 +2538,18 @@ odložené rozhodnutí — a to patří dodělat, ne skladovat. Rúnaþula třet
 - **Zbývá (pořadí podle ownera):** 2. změřit · 3. teprve pak úhel 4. Kdyby se šlo obráceně, opraví se 3 % a nechá běžet 21 %.
 - **Affected doc(s):** mapa promptu (artifact, překreslena na v1.8 týmž tahem)
 - **Reversibility:** easy — jedna věta a dvě kotvy.
+
+---
+
+## 2026-08-13 — Popis světa se v promptu neopakuje (v1.9). První oprava nalezená nástrojem
+
+- **Typ:** oprava promptu (nález `lint_prompts.js`)
+- **Scope:** tune
+- **Co se našlo:** popis světa (`rworld`) stál v promptu **dvakrát** — v hlavičce `DRAWN RUNE: … · World: the living moment, what is active now` a znovu v otevírací větvi `Open with X — let its quality (…) arrive through image`. Zdvojovalo se **jen u čtení bez otázky**: `qBranch` svět nenese, `noqBranch` ano.
+- **Co se změnilo:** zůstává **hlavička** — tam ta data patří. Větev je instrukce a funguje i bez zopakovaného popisu. Parametr `world` se packu dál předává (nemění se signatura), ale s komentářem PROČ ho větev nevypisuje — jinak to za měsíc někdo „uklidí" a zdvojení se vrátí.
+- **Ověřeno:** golden **2 změněné klíče, oba `single_noq_*`** — přesně čtení bez otázky, jak předpovězeno. Linter: duplicitní instrukce **3 → 1**, řádky s angličtinou v islandském promptu **50 → 25**.
+- **Vedlejší zisk:** až Cowork dodá islandské popisy světů (`rworld` má dnes jen anglické, viz nález níž), překládat se bude **jedno místo místo dvou**.
+- **Zbývá z těch tří nálezů:** (a) `rworld()` bez islandské větve — 25 řádek angličtiny v IS promptu, blokuje obsah od Coworku; (b) islandský pokyn o rodu dvakrát (`DEF_CHAR_IS.grammar` 5 + `ÁVARP`) — čeká na znění.
+- **Poznámka k metodě:** tohle je **první oprava, kterou našel nástroj místo člověka**. Předchozí (věta o obrazu) se našla tak, že testerka narazila na 3 % kombinací a napsala „nerozumím". `lint_prompts.js` staví všech 2100 a stojí to nula.
+- **Affected doc(s):** mapa promptu (artifact)
+- **Reversibility:** easy — jeden řetězec ve dvou packech.

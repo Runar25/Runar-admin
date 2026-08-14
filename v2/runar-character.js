@@ -1091,7 +1091,7 @@ var RP_SINGLE = {
     angleIntro:'LESTRARHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og upphaf): ',
     length:'Gefðu einn samfelldan lestur — 3 stuttar setningar, 38 til 45 orð alls. Hann verður lesinn upphátt, svo hafðu hverja setningu létta — um 20 til 25 sekúndur. Engar fyrirsagnir, engar hlutaskiptingar.',
     qBranch:function(rune,g,q){ return 'Svaraðu spurningunni: "' + q + '" í gegnum ' + rune + ' — í myndum og táknmáli, ekki ráðgjöf. Nefndu ' + rune + ' einu sinni, fléttað náttúrlega inn. Talaðu um það sem liggur undir spurningunni.'; },
-    noqBranch:function(rune,g,world){ return 'Byrjaðu á ' + rune + ' — láttu táknræn gæði þess (' + world + ') koma fram í myndum, ekki útskýringu. Nefndu ' + rune + ' einu sinni, fléttað náttúrlega inn. Ein skýr innsýn nægir — ekki troða öllu inn.'; },
+    noqBranch:function(rune,g,world){ return 'Byrjaðu á ' + rune + ' — láttu táknræn gæði þess koma fram í myndum, ekki útskýringu. Nefndu ' + rune + ' einu sinni, fléttað náttúrlega inn. Ein skýr innsýn nægir — ekki troða öllu inn.'; },
     closing:function(name){ return 'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. ' + _namePlacement(name, 'is') + ' Haltu þig innan orðafjöldans — stuttar setningar, ekkert uppfyllingarefni.'; },
     json:'Skilaðu EINGÖNGU þessu JSON fylki, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(lesturinn nákvæmlega eins og fyrirmælin að ofan segja, einn samfelldur texti)"}]',
   },
@@ -1104,7 +1104,7 @@ var RP_SINGLE = {
     angleIntro:'READING ANGLE (follow this entry point — let it shape the opening and tone): ',
     length:'One flowing reading — 3 short sentences, 38 to 45 words total. It will be read aloud, so keep every sentence lean — about 20 to 25 seconds spoken. No sections, no labels, no line breaks between thoughts.',
     qBranch:function(rune,g,q){ return 'Open with ' + rune + ' answering: "' + q + '" — through image and symbol, not advice. Mention ' + rune + ' by name once, woven naturally. Speak to what lies beneath the question.'; },
-    noqBranch:function(rune,g,world){ return 'Open with ' + rune + ' — let its quality (' + world + ') arrive through image, not explanation. Mention ' + rune + ' by name once, woven naturally. One clear insight is enough — do not pack everything in.'; },
+    noqBranch:function(rune,g,world){ return 'Open with ' + rune + ' — let its quality arrive through image, not explanation. Mention ' + rune + ' by name once, woven naturally. One clear insight is enough — do not pack everything in.'; },
     closing:function(name){ return 'One paragraph. No breaks. No labels. ' + _namePlacement(name, 'en') + ' Stay within the word count — short sentences, no filler. '; },
     json:'Output format — return ONLY this JSON array, nothing before or after: [{"rune": "(the rune name)", "text": "(the reading exactly as instructed above, one flowing paragraph)"}]',
   },
@@ -1139,6 +1139,9 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     S.length,
     u.area ? _domainContext(u.area, lang) : '',
     u.seeking ? _registerContext(u.seeking, lang) : '',
+    // `worldRef` se otevírací větvi pořád předává, ale ta ho už NEVYPISUJE: popis světa
+    // stojí v hlavičce `DRAWN RUNE` a do 2026-08-13 se opakoval i tady (nález
+    // `lint_prompts.js --dup`). Parametr zůstal, aby se neměnila signatura packu.
     hasQ ? S.qBranch(rn(drawn), drawn.g, u.question) : S.noqBranch(rn(drawn), drawn.g, worldRef),
     _endingShape(drawn, lang),
     (lensOn || u.area || u.seeking) ? _priorityContext(lensOn, drawn, lang) : '',
