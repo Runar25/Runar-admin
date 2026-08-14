@@ -25,7 +25,7 @@ const path = require('path');
 
 const DIR = path.join(__dirname, '..', '..', 'v2');
 const argv = process.argv.slice(2);
-const only = argv.includes('--budget') ? 'budget' : argv.includes('--dup') ? 'dup' : argv.includes('--lang') ? 'lang' : null;
+const only = argv.includes('--budget') ? 'budget' : argv.includes('--dup') ? 'dup' : argv.includes('--lang') ? 'lang' : argv.includes('--map') ? 'map' : null;
 
 // ── sandbox: tytéž produkční buildery, žádná kopie ────────────────────────
 function sandbox() {
@@ -187,8 +187,57 @@ function langLeak() {
                 ']  ' + line.slice(0, 62));
 }
 
+
+// ── --map: vygenerovat rozpis do mapy promptu ────────────────────────────
+// Mapa je z vetsi casti psana rukou (vyklad, mrtve veci, proc). Ale rozpis slotu
+// se z kodu ODVODIT DA — a prave ta cast se rozchazela: za dva dny ctyri rucni
+// prekresleni a jednou uplny rozchod (14/14 citaci radku mimo).
+// Tenhle prepis sahne JEN mezi znacky, zbytek souboru necha byt.
+function mapSection(file) {
+  const ver = G('typeof RUNAR_PROMPT_VERSION !== "undefined" ? RUNAR_PROMPT_VERSION : "?"');
+  const rows = [];
+  for (const lg of LANGS) {
+    const sys = G('buildSysPrompt')(null, lg);
+    const one = all.find((x) => x.lang === lg && x.angle === 0);
+    rows.push({ lg, sys: wc(sys), read: wc(one.prompt),
+      lines: one.prompt.split('\n').filter((l) => l.trim())
+        .map((l) => ({ w: wc(l), t: l })).sort((a, b) => b.w - a.w) });
+  }
+  const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  let h = '';
+  h += '<p class="sub">Generovano z kodu prikazem <code>node scripts/utils/lint_prompts.js --map</code>';
+  h += ' — rucne se to needituje. Stav: <b>' + esc(ver) + '</b>, ' + all.length + ' postavenych kombinaci';
+  h += ' (' + RUNES.length + ' run x ' + G('READING_ANGLES').length + ' uhlu x ' + BUCKETS.length;
+  h += ' sezon x ' + LANGS.length + ' jazyky).</p>';
+  for (const r of rows) {
+    h += '<p class="prose"><b>' + r.lg.toUpperCase() + '</b> — systemovy <b>' + r.sys + '</b> slov';
+    h += ' &middot; ctecí <b>' + r.read + '</b> &middot; celkem ' + (r.sys + r.read);
+    h += '. Systemovy je <b>' + Math.round(r.sys / (r.sys + r.read) * 100) + ' %</b> vseho.</p>';
+    h += '<div class="scroll"><table><thead><tr><th>slot ve ctecim promptu</th>';
+    h += '<th class="num">slov</th><th class="num">%</th></tr></thead><tbody>';
+    for (const x of r.lines.slice(0, 10))
+      h += '<tr><td>' + esc(x.t.slice(0, 96)) + '</td><td class="num">' + x.w +
+           '</td><td class="num">' + Math.round(x.w / r.read * 100) + '</td></tr>';
+    h += '</tbody></table></div>';
+  }
+  const A = '<!-- AUTO-ROZPIS:start -->', B = '<!-- AUTO-ROZPIS:end -->';
+  let src;
+  try { src = fs.readFileSync(file, 'utf8'); }
+  catch (e) { console.log('\n  soubor mapy nenalezen: ' + file + '\n'); return; }
+  const i = src.indexOf(A), j = src.indexOf(B);
+  if (i === -1 || j === -1 || j < i) {
+    console.log('\n  V mape chybi znacky ' + A + ' ... ' + B + ' — nevim, kam psat.');
+    console.log('  Fragment k rucnimu vlozeni:\n');
+    console.log(h);
+    return;
+  }
+  fs.writeFileSync(file, src.slice(0, i + A.length) + '\n' + h + '\n' + src.slice(j), 'utf8');
+  console.log('\n  rozpis zapsan do ' + file);
+}
+
 if (!only || only === 'budget') budget();
 if (!only || only === 'dup') dup();
 if (!only || only === 'lang') langLeak();
+if (only === 'map') mapSection(argv[argv.indexOf('--map') + 1] || '');
 
 console.log('\n  (kontrola PROMPTU. Vystup meri measure_readings.js, dokumentaci check-docs.py.)\n');

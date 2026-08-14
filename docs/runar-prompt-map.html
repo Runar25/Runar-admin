@@ -1,0 +1,382 @@
+<title>How Rúnar Speaks — the reading-prompt map</title>
+<style>
+  :root{
+    --ground:#0e1424; --panel:#151c30; --panel2:#1b2338; --raise:#212b45;
+    --ink:#eae6da; --soft:#a6a99c; --faint:#727892;
+    --gold:#d8ad4d; --gold-dim:#9a8347;
+    --line:#28324c; --line-soft:#1e2740;
+    --live:#79b487; --live-bg:#16271d; --live-line:#2f5138;
+    --dead:#c57e6a; --dead-bg:#291c18; --dead-line:#4a2f27;
+    --knob:#7fa7d4; --knob-bg:#16233c; --knob-line:#2c4162;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+    --serif:"Iowan Old Style","Palatino Linotype",Georgia,serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --ground:#f4f0e6; --panel:#fbf8f0; --panel2:#f6f1e4; --raise:#efe8d6;
+      --ink:#211f1a; --soft:#5d5a4f; --faint:#8a8578;
+      --gold:#a07d1e; --gold-dim:#b8974a;
+      --line:#ddd4bf; --line-soft:#e7dfcc;
+      --live:#3f7a4e; --live-bg:#e6efe3; --live-line:#bcd6bf;
+      --dead:#a8543c; --dead-bg:#f3e3dc; --dead-line:#e0c3b6;
+      --knob:#3c6597; --knob-bg:#e5edf6; --knob-line:#c2d3e8;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0e1424; --panel:#151c30; --panel2:#1b2338; --raise:#212b45;
+    --ink:#eae6da; --soft:#a6a99c; --faint:#727892; --gold:#d8ad4d; --gold-dim:#9a8347;
+    --line:#28324c; --line-soft:#1e2740;
+    --live:#79b487; --live-bg:#16271d; --live-line:#2f5138;
+    --dead:#c57e6a; --dead-bg:#291c18; --dead-line:#4a2f27;
+    --knob:#7fa7d4; --knob-bg:#16233c; --knob-line:#2c4162;
+  }
+  :root[data-theme="light"]{
+    --ground:#f4f0e6; --panel:#fbf8f0; --panel2:#f6f1e4; --raise:#efe8d6;
+    --ink:#211f1a; --soft:#5d5a4f; --faint:#8a8578; --gold:#a07d1e; --gold-dim:#b8974a;
+    --line:#ddd4bf; --line-soft:#e7dfcc;
+    --live:#3f7a4e; --live-bg:#e6efe3; --live-line:#bcd6bf;
+    --dead:#a8543c; --dead-bg:#f3e3dc; --dead-line:#e0c3b6;
+    --knob:#3c6597; --knob-bg:#e5edf6; --knob-line:#c2d3e8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);
+    line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:920px;margin:0 auto;padding:0 22px 120px}
+  a{color:var(--gold)}
+  code,.mono{font-family:var(--mono);font-size:0.86em}
+  h1,h2,h3{font-family:var(--serif);font-weight:600;text-wrap:balance;line-height:1.2}
+
+  /* header */
+  header{padding:56px 0 30px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:0.22em;text-transform:uppercase;
+    color:var(--gold-dim);margin:0 0 14px}
+  h1{font-size:clamp(30px,5vw,46px);margin:0 0 12px;letter-spacing:-0.01em}
+  h1 .rune{color:var(--gold)}
+  .lede{color:var(--soft);font-size:1.05rem;max-width:64ch;margin:0}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+  .chip{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11.5px;
+    letter-spacing:0.05em;text-transform:uppercase;padding:5px 10px;border-radius:999px;border:1px solid}
+  .chip .dot{width:8px;height:8px;border-radius:50%}
+  .chip.live{color:var(--live);border-color:var(--live-line);background:var(--live-bg)}
+  .chip.live .dot{background:var(--live)}
+  .chip.dead{color:var(--dead);border-color:var(--dead-line);background:var(--dead-bg)}
+  .chip.dead .dot{background:var(--dead)}
+  .chip.knob{color:var(--knob);border-color:var(--knob-line);background:var(--knob-bg)}
+  .chip.knob .dot{background:var(--knob)}
+
+  /* nav */
+  nav.toc{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--ground) 90%,transparent);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line-soft);
+    display:flex;gap:4px;flex-wrap:wrap;padding:11px 0;margin-bottom:8px}
+  nav.toc a{font-family:var(--mono);font-size:12px;letter-spacing:0.04em;color:var(--soft);
+    text-decoration:none;padding:5px 10px;border-radius:7px}
+  nav.toc a:hover{color:var(--ink);background:var(--panel2)}
+
+  section{padding:44px 0 8px;border-bottom:1px solid var(--line-soft)}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin:0 0 6px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--gold-dim);letter-spacing:0.1em}
+  h2{font-size:clamp(22px,3.2vw,30px);margin:0}
+  .sub{color:var(--soft);margin:2px 0 24px;max-width:66ch}
+
+  /* pipeline */
+  .pipe{display:flex;flex-direction:column;gap:14px;margin:8px 0 6px}
+  .pipe-row{display:flex;align-items:stretch;gap:12px;flex-wrap:wrap}
+  .node{flex:1 1 200px;min-width:180px;background:var(--panel);border:1px solid var(--line);
+    border-radius:12px;padding:15px 16px}
+  .node .k{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--faint);margin:0 0 7px}
+  .node .v{font-size:0.94rem;color:var(--ink)}
+  .node .v b{color:var(--gold);font-weight:600}
+  .node small{display:block;color:var(--soft);font-size:0.8rem;margin-top:5px;line-height:1.45}
+  .node.model{border-color:var(--gold-dim);background:linear-gradient(180deg,var(--panel),var(--panel2))}
+  .arrow{align-self:center;color:var(--gold-dim);font-size:20px;font-family:var(--mono);padding:0 2px}
+  .plus{align-self:center;color:var(--faint);font-size:18px;font-weight:700}
+
+  /* cards / lists */
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .card h3{font-size:1.05rem;margin:0 0 8px;color:var(--ink)}
+  .note{border-left:3px solid var(--gold-dim);background:var(--panel2);border-radius:0 10px 10px 0;
+    padding:13px 16px;margin:16px 0;font-size:0.93rem;color:var(--soft)}
+  .note b{color:var(--gold)}
+  .note.warn{border-left-color:var(--dead)}
+  .note.warn b{color:var(--dead)}
+  p{margin:0 0 14px}
+  .prose{max-width:68ch}
+
+  /* the ordered stack */
+  ol.stack{list-style:none;counter-reset:s;margin:6px 0;padding:0;display:flex;flex-direction:column;gap:2px}
+  ol.stack li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;gap:12px;
+    padding:9px 12px;border-radius:8px;align-items:start}
+  ol.stack li:nth-child(odd){background:var(--panel)}
+  ol.stack li::before{content:counter(s);font-family:var(--mono);font-size:12px;color:var(--gold-dim);
+    padding-top:2px;text-align:right}
+  ol.stack .t{font-size:0.92rem}
+  ol.stack .t b{color:var(--ink)}
+  ol.stack .cite{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:2px;display:block}
+  ol.stack li.cond{opacity:0.82}
+  ol.stack li.cond .t b::after{content:" · conditional";font-family:var(--mono);font-size:10px;
+    color:var(--faint);font-weight:400;letter-spacing:0.03em}
+
+  /* tables */
+  .scroll{overflow-x:auto;margin:16px 0;border:1px solid var(--line);border-radius:12px}
+  table{border-collapse:collapse;width:100%;font-size:0.9rem;min-width:520px}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+  thead th{font-family:var(--mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+    color:var(--faint);background:var(--panel2);font-weight:600}
+  tbody tr:last-child td{border-bottom:none}
+  td.num{font-variant-numeric:tabular-nums;font-family:var(--mono);color:var(--gold);text-align:right;white-space:nowrap}
+  td b{color:var(--ink)}
+  .cite2{font-family:var(--mono);font-size:11px;color:var(--faint)}
+
+  /* quote of real prompt text */
+  blockquote.rt{margin:12px 0;padding:14px 16px;background:var(--panel2);border:1px solid var(--line);
+    border-radius:10px;font-family:var(--serif);font-size:0.96rem;color:var(--ink);line-height:1.55}
+  blockquote.rt .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;
+    color:var(--gold-dim);display:block;margin-bottom:7px}
+  blockquote.rt.is{border-left:3px solid var(--knob)}
+  blockquote.rt.en{border-left:3px solid var(--gold-dim)}
+
+  .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:0.05em;text-transform:uppercase;
+    padding:2px 7px;border-radius:5px;border:1px solid;white-space:nowrap}
+  .tag.live{color:var(--live);border-color:var(--live-line);background:var(--live-bg)}
+  .tag.dead{color:var(--dead);border-color:var(--dead-line);background:var(--dead-bg)}
+  .tag.knob{color:var(--knob);border-color:var(--knob-line);background:var(--knob-bg)}
+  .tag.canon{color:var(--gold);border-color:var(--gold-dim);background:transparent}
+
+  ul.plain{margin:8px 0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+  ul.plain li{padding-left:22px;position:relative;color:var(--soft);font-size:0.93rem}
+  ul.plain li::before{content:"◆";position:absolute;left:0;top:0;color:var(--gold-dim);font-size:0.7em}
+  ul.plain li b{color:var(--ink)}
+  ul.plain.dead li::before{content:"×";color:var(--dead);font-size:1em;top:-1px}
+
+  .foot{color:var(--faint);font-size:0.82rem;margin-top:34px;font-family:var(--mono);line-height:1.7}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px}
+</style>
+
+<div class="wrap">
+<header>
+  <p class="eyebrow">Rúnar · reading-prompt reference · mapped, not changed</p>
+  <h1>How <span class="rune">Rúnar</span> speaks</h1>
+  <p class="lede">Every reading is built from three stacked layers of text, handed to <b>claude-opus-4-8</b>, and returned as one flowing paragraph. This maps each layer, quotes the real text, and marks what you can tune, what is canon, and what only looks alive.</p>
+  <div class="note"><b>This map tracks production.</b> Redrawn <b>2026-08-14</b> against <code>RUNAR_PROMPT_VERSION = v2.0</code>. Newest first: the Icelandic prompt is <b>finally all Icelandic</b> — <code>rworld()</code> carried English-only world descriptions, so every IS reading shipped an English phrase; both linter rules now report zero. The Icelandic gender instruction was given <b>twice</b> (system rule 5 and ÁVARP) and rule 5 is now just a pointer. Angle [5] was rewritten: it asked about the <em>rune</em> ("the movement this rune makes visible"), the same defect already removed from [0] and [1].  Newest first: the world description no longer appears <b>twice</b>. It stood in the <code>DRAWN RUNE</code> header and again in the opening branch, so a reading without a question carried it two times; the branch now says "let its quality arrive through image" without restating it. Found by <code>scripts/utils/lint_prompts.js</code>, a new check that builds <b>all 2100 combinations</b> of the prompt (rune × angle × season × language) and runs rules over them — the golden harness covers 32 fixtures, about 1.5% of that surface. It also found that <code>rworld()</code> carries <b>English only</b>, so every Icelandic prompt contains an English phrase; that one is waiting on Icelandic wording.  Newest first: the line that injects the image no longer calls it a <b>nature</b> image and no longer lectures about seasons — it is now one clause, <code>IMAGE — if a picture arises in this reading, use this one: …</code>. The old wording announced every picture as "a nature image from this Icelandic season", but <b>17 of the 81 are human scenes</b> (bread from the oven, coffee going cold, the keys to the old house), so a fifth of all readings carried a sentence that contradicted its own contents. It surfaced when a tester met angle 4 ("lead with the land") holding the handwriting image and the model welded the two into "the old letter you <em>carved</em> as a child"; she wrote "I don't understand this". Season is enforced by the <em>picker</em> (coverage 150/150), so the rules about snow in summer were guarding something already handled. −29 words from every reading. Newest first: the <b>life rune is now a closing lens</b> — it may shape the last sentence or question and nothing before it. Until v1.7 it sat at the <em>top</em> of the prompt with its keywords, under an instruction to shape <em>how</em> the whole reading is read, and it bled into the body: measured, 3 of 4 <code>mine</code> readings carried the life rune's language regardless of the drawn rune (control, readings with no life rune: 0 of 3). It now enters the prompt in exactly one place, immediately before the closing, and carries only its name — the keyword list was the fuel. Since the last redraw (v1.3): imagery is <b>keyed to the rune</b>, not just the season — 81 entries over all 25 runes, 2–5 each, tagged with the seasons they fit (v1.4), and since v1.6 <b>in English too</b>. Until then the rune-keyed pick ran only for Icelandic, so an English reading fell back to a season-only image: the rune of the road drew a turf roof. Coverage is now complete — every rune has a candidate in all six seasons, in both languages (150/150), so nothing falls back · the Icelandic <b>rúnaþula formula is off</b> in single readings, the model was copying it verbatim · the <code>QUESTION:</code> header is gone from the context block · the <b>angle pool is 7, not 8</b> — "let the life rune speak first" contradicted the lens rule and pointed at something absent for seekers with no life rune · angles <b>[0] and [1] were rewritten</b> to point at what shows up in the seeker's life instead of at a property of the rune (v1.5) · <b>applyISCorrections was deleted outright</b>, not just left disabled · Ask Rúnar is <b>premium-only, enforced on the server</b>, and shows as an inert teaser to everyone else.</div>
+  <div class="legend">
+    <span class="chip live"><span class="dot"></span>reaches Claude</span>
+    <span class="chip knob"><span class="dot"></span>tunable lever</span>
+    <span class="chip dead"><span class="dot"></span>dead / not wired</span>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Sections">
+  <a href="#flow">Pipeline</a>
+  <a href="#l1">1 · Base voice</a>
+  <a href="#l2">2 · Reading stack</a>
+  <a href="#l3">3 · Factors</a>
+  <a href="#l4">4 · Corrections · spreads · model</a>
+  <a href="#dice">What it rolls</a>
+  <a href="#rozpis">What it costs</a>
+  <a href="#knobs">Where to tune</a>
+  <a href="#dead">Don't chase</a>
+</nav>
+
+<section id="flow">
+  <div class="sec-head"><span class="sec-num">▸</span><h2>The pipeline at a glance</h2></div>
+  <p class="sub">Two strings are built on the client, sent to the edge proxy, and answered by Opus. Nothing between them is random except the small reading knobs (angle, name, ending, season image).</p>
+  <div class="pipe">
+    <div class="pipe-row">
+      <div class="node"><p class="k">Inputs (per reading)</p><div class="v">drawn rune · life rune · area · seeking · intention · name · gender · season</div><small>Only filled fields reach the prompt. Life rune only on your <em>own</em> reading.</small></div>
+    </div>
+    <div class="pipe-row">
+      <div class="node"><p class="k">System prompt</p><div class="v"><b>buildSysPrompt</b> — character + voice profile</div><small>Who speaks, tone, the bans, the IS grammar checklist.</small></div>
+      <span class="plus">+</span>
+      <div class="node"><p class="k">Reading prompt</p><div class="v"><b>build&lt;Mode&gt;Prompt</b> — factors + corrections + output contract</div><small>The ordered directive stack, ending in the word-corrections block.</small></div>
+    </div>
+    <div class="pipe-row" style="justify-content:center">
+      <span class="arrow">↓</span>
+    </div>
+    <div class="pipe-row">
+      <div class="node model"><p class="k">The model that writes it</p><div class="v"><b>claude-opus-4-8</b></div><small>Fallback 4-7 → sonnet-5 only on an overload (429/5xx). Normal case: always Opus 4.8. <span class="mono">index.ts</span></small></div>
+      <span class="arrow">→</span>
+      <div class="node"><p class="k">Returns</p><div class="v"><code>[{ "rune", "text" }]</code></div><small>JSON array → joined back to one flowing paragraph, no labels.</small></div>
+    </div>
+  </div>
+  <p class="note">Fixed skeleton, tunable fillings. The <b>order</b> of the stack, the JSON contract, and the persona header are canon; the character text, the voice profile, the per-mode length lines, and the small pools are yours to turn.</p>
+</section>
+
+<section id="l1">
+  <div class="sec-head"><span class="sec-num">01</span><h2>The base voice — system prompt</h2></div>
+  <p class="sub"><code>buildSysPrompt(activeChar, lang)</code> · <span class="mono">character.js</span>. Sent on every reading, before any per-reading content. Sets who speaks, the tone, the hard bans, and the IS grammar rules. Carries <em>no</em> rune, area, moon or season — those arrive in Layer 2.</p>
+
+  <div class="card">
+    <h3>Assembled in this fixed order</h3>
+    <ol class="stack">
+      <li><span class="t"><b>"You are Rúnar, the rune keeper of Agndofa."</b><span class="cite">hardcoded header · buildSysPrompt</span></span></li>
+      <li><span class="t"><b>Identity &amp; appearance</b> — dwarf-like guide, between man, myth and nature spirit<span class="cite">DEF_CHAR.identity</span></span></li>
+      <li><span class="t"><b>Personality</b> — patience of old stone, warmth of a hearth; inhabits mysticism, never performs it<span class="cite">DEF_CHAR.personality</span></span></li>
+      <li><span class="t"><b>Purpose</b> — gather context, make it personal, never generic<span class="cite">DEF_CHAR.purpose</span></span></li>
+      <li><span class="t"><b>How you speak</b> — the live <em>voice profile</em> (spliced from config)<span class="cite">VOICE_PROFILES.focused · config.js</span></span></li>
+      <li><span class="t"><b>What you never do</b> — the ban list<span class="cite">DEF_CHAR.never</span></span></li>
+      <li><span class="t"><b>Core philosophy</b> — "the runes do not decide your path… they help you remember it"<span class="cite">DEF_CHAR.philosophy</span></span></li>
+      <li><span class="t"><b>Response format</b> + (IS) the <b>grammar checklist</b><span class="cite">DEF_CHAR.format + DEF_CHAR.grammar</span></span></li>
+    </ol>
+  </div>
+
+  <blockquote class="rt en"><span class="lbl">never · DEF_CHAR_EN character.js</span>never predicts fate or claims absolute truths · never makes fear-based predictions · never uses generic wellness clichés or modern slang · never judges, moralizes or lectures · does not guarantee outcomes · does not use the word "journey" as a metaphor · does not say "embrace" or "empower" · does not use exclamation marks.</blockquote>
+
+  <blockquote class="rt en"><span class="lbl">the banned phrase list · DEF_CHAR_EN.grammar character.js</span>"journey", "embrace", "your truth", "the universe", "trust the process", "step into your power", "everything happens for a reason", "deep within", "the answers you seek", "let go and" · and: EXACTLY ONE concrete image for the whole reading — count them, keep the strongest, delete the rest.</blockquote>
+
+  <blockquote class="rt is"><span class="lbl">IS grammar checklist (load-bearing) · DEF_CHAR_IS.grammar character.js</span>7 points: 2nd person singular (þú) verbs · adjective agreement in gender/number/case — decide the noun's gender FIRST · no anglicisms or direct translations · the addressee's gender comes from ÁVARP in the reading prompt; if none, use hvorugkyn (hán) · use ONLY known Icelandic words, invent none · answer only in Icelandic.</blockquote>
+
+  <div class="note"><b>✅ Checked — the file <code>DEF_CHAR</code> is what ships.</b> The owner ran <code>select id, active from public.runar_character where active=true</code> on 2026-08-07: <b>no rows</b>, so the quoted character text below is genuinely what Claude receives. Keep the check in mind whenever this map is redrawn — here is why it matters.<br><br><b>The mechanism.</b> The reader loads the character from the Supabase table <code>runar_character</code> (active row) on every session — <span class="mono">app.js</span> — and <b>if an active row exists it replaces the file DEF_CHAR entirely</b> (the quoted text above is then <em>not</em> what Claude receives, and the IS/EN character switch is bypassed; only the voice profile still varies by language). The character <b>editor</b> (the shrine's Rúnar lab) is retired — but the loader was not, so a leftover <code>active=true</code> row from the old lab would silently ship as the voice while everyone edits the file DEF_CHAR in vain. <b>Check the <code>runar_character</code> table, not the shrine:</b> no active row → the file DEF_CHAR is live and this map is exact; an active row → that row is the real voice, and the dead loader should be removed.</div>
+</section>
+
+<section id="l2">
+  <div class="sec-head"><span class="sec-num">02</span><h2>The reading stack — one single reading, in order</h2></div>
+  <p class="sub"><code>buildReadingPromptSingle(u, drawn, lang, corrections)</code> · <span class="mono">character.js</span>. A two-pass string: a raw <em>context header</em>, then a stack of <em>directives</em>. Empty factors are silently dropped. This is the exact order the model reads.</p>
+  <ol class="stack">
+    <li><span class="t"><b>PERSON: {name}</b><span class="cite">RP_SINGLE.PERSON</span></span></li>
+    <li class="cond"><span class="t"><b>LIFE RUNE: {name} — {keywords} · Realm · Elements</b><span class="cite">lifeCtx · _lifeWasDrawn — own reading, and only when the life rune is <b>not</b> the drawn one</span></span></li>
+    <li><span class="t"><b>DRAWN RUNE: {name} — focus on {3 shuffled keywords} · World · Elements</b><span class="cite">drawnCtx</span></span></li>
+    <li class="cond"><span class="t"><b>READING PURPOSE: {intention} + Norns time-framing</b><span class="cite">_intentionContext</span></span></li>
+    <li><span class="t"><b>READING ANGLE</b> — 1 of <b>7</b>. The angle is the <em>door the reading comes in through</em>: it decides where the text starts and colours the tone, nothing else. Its own header says so — "follow this entry point — let it shape the opening and tone".<span class="cite">utils.js · READING_ANGLES / _randomAngle</span></span></li>
+    <li><span class="t"><b>SEASONAL IMAGE (if one arises)</b> — 1 no-repeat image of the current Icelandic season<span class="cite">_seasonalImagery · _runeImageCandidates</span></span></li>
+    <li><span class="t"><b>DESCRIBE, DO NOT EXPLAIN</b> — say what the rune does, never what it means<span class="cite">_describeRule</span></span></li>
+    <li><span class="t"><b>NO COLD READING</b> — the recognition is the seeker’s: offer the image, never assert what is true or known inside them<span class="cite">_noColdRead</span></span></li>
+    <li><span class="t"><b>LENGTH</b> — "3 short sentences, 38 to 45 words total"<span class="cite">RP_SINGLE.length</span></span></li>
+    <li class="cond"><span class="t"><b>CLOSING LENS — the life rune</b> shapes ONLY the last sentence or question; the body belongs to the drawn rune. Never named. If it does not reach the ending naturally, it is left out. <b>Sits immediately before the closing instruction</b> — position is the lever.<span class="cite">_lensContext</span></span></li>
+    <li class="cond"><span class="t"><b>DOMAIN</b> — "this reading is about: {area}", through image, never as a topic<span class="cite">_domainContext</span></span></li>
+    <li class="cond"><span class="t"><b>REGISTER</b> — the stance for {seeking} (confirm / challenge / mirror…)<span class="cite">_registerContext</span></span></li>
+    <li><span class="t"><b>OPENING BRANCH</b> — question-driven vs rune-driven opening<span class="cite">RP_SINGLE.qBranch / noqBranch</span></span></li>
+    <li><span class="t"><b>ENDING SHAPE</b> — heavy rune: stand or ask hard (1 of 2); otherwise <b>1 of 3 is a question</b>, the rest rest<span class="cite">_endingShape utils.js</span></span></li>
+    <li class="cond"><span class="t"><b>PRIORITY tie-breaker</b> — drawn rune in front; the "let the lens recede" clause appears <b>only when a lens exists</b><span class="cite">_priorityContext(lensOn, …)</span></span></li>
+    <li><span class="t"><b>CLOSING</b> — one paragraph, no breaks; {name-placement, ~55% omit} + langInstr<span class="cite">RP_SINGLE.closing · _namePlacement</span></span></li>
+    <li class="cond"><span class="t"><b>ÁVARP</b> — IS address gender (kk / kvk / hk)<span class="cite">_addressContext · IS only</span></span></li>
+    <li><span class="t"><b>JSON output contract</b> — return ONLY <code>[{"rune","text"}]</code><span class="cite">RP_SINGLE.json</span></span></li>
+  </ol>
+  <p class="note">Five small dice per reading — the <b>3 shuffled keywords</b>, the <b>angle</b> (1 of 7), the <b>image</b> (no-repeat bag, keyed to the rune), the <b>ending pool</b> pick and the <b>name placement</b> (~55% drop the name entirely). Everything else is deterministic from the inputs. What each die decides, and why none of it reaches the database → <a href="#dice">what it rolls</a>.</p>
+</section>
+
+<section id="l3">
+  <div class="sec-head"><span class="sec-num">03</span><h2>The factors — what personalizes each reading</h2></div>
+  <p class="sub">Each input has a role and a visibility, and a single helper that injects it. Same spine across single and all four spreads (§18 — one source, one path).</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Input</th><th>Role</th><th>What it produces</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td><b>Drawn rune</b></td><td>the subject</td><td>Named up front + 3 random keywords + world + element.</td><td class="cite2">drawnCtx</td></tr>
+        <tr><td><b>Life rune</b></td><td>the <b>closing</b> lens</td><td>Shapes the <em>last</em> sentence or question only — never the body, never named, left out if it does not arrive naturally. <b>Was it itself drawn? Then it is the subject, not the lens — the whole lens layer steps aside</b> (<code>_lifeWasDrawn</code> :558, one rule, shared).</td><td class="cite2">_lensContext</td></tr>
+        <tr><td><b>Area of life</b></td><td>domain</td><td>"This reading is about: {area}" — must land there through image, never stated.</td><td class="cite2">_domainContext</td></tr>
+        <tr><td><b>Seeking</b></td><td>register</td><td>Stance: Confirmation → neither confirm nor refute; Challenge → name the friction; Reflection → open a mirror.</td><td class="cite2">_registerContext</td></tr>
+        <tr><td><b>Intention</b></td><td>Norns time</td><td>verðandi = present · skuld = what may come (not prophecy) · urð = the pattern behind what passed.</td><td class="cite2">_intentionContext</td></tr>
+        <tr><td><b>Name</b></td><td>address</td><td>Woven once, or dropped ~55% of the time (a pool decides).</td><td class="cite2">_namePlacement</td></tr>
+        <tr><td><b>Gender (IS)</b></td><td>agreement</td><td>ÁVARP line forcing kk / kvk / hk on every adjective + pronoun about "þú".</td><td class="cite2">_addressContext</td></tr>
+        <tr><td><b>Season + rune</b></td><td>palette</td><td>One Icelandic image per reading, <b>keyed to the drawn rune</b>: 81 entries across all 25 runes (2–5 each), each tagged with the seasons it belongs to and carrying <b>both languages on the same row</b> — one source, so the two cannot drift apart. A no-repeat bag per rune-set stops the same picture coming twice, and its identity is language-independent. Season is a <em>selection</em>, not a prohibition — no rule was added, the picker just stopped offering the wrong ones. <code>SEASON_POOLS</code> survives only as the fallback for a rune with no candidate; today there is none.</td><td class="cite2">RUNE_IMAGES · RUNE_IMG_SEASONS · SEASON_POOLS · _seasonalImagery</td></tr>
+        <tr><td><b>Spread position</b></td><td>structure</td><td>Per-slot Norns axis (Crown/Trunk/Roots · past/present/future) baked into each spread builder.</td><td class="cite2">SPREAD_CONFIG.norns_axis</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <blockquote class="rt en"><span class="lbl">the lens directive · character.js</span>CLOSING LENS — the life rune {X}: let it shape ONLY the last sentence or question, nothing before it. The body of the reading is about {the drawn rune}. Never name the life rune. If it does not come to the ending naturally, leave it out.</blockquote>
+  <p class="note"><b>Priority when factors collide</b> <span class="mono">_priorityContext :587</span>: keep the drawn rune in front, honour seeking and area, and — <em>when the life rune is actually serving as the lens</em> — let it recede, "it may vanish entirely rather than be forced." Never stack factors as separate statements. Length never changes. <b>Since 2026-08-08 the lens clause is conditional</b>: it used to be sent even to seekers with no life rune at all, naming a lens the prompt never introduced.</p>
+  <p class="prose"><span class="tag dead">dead</span> &nbsp;<b>mood</b> is gone — removed as "redundant, no feedback" (<span class="mono">runar-branch.js</span>); no <code>MOODS</code>, no field on the user object, no builder reads it. The design-doc contract table still lists it — that line is stale.</p>
+</section>
+
+<section id="l4">
+  <div class="sec-head"><span class="sec-num">04</span><h2>Corrections · spreads · the model</h2></div>
+  <p class="sub">The last tail of every prompt, how each spread differs, and what actually answers.</p>
+
+  <div class="card">
+    <h3>Word corrections — one live path, one dead one</h3>
+    <p class="prose"><span class="tag live">live</span> &nbsp;<b>getCorrPrompt</b> appends a directive block <em>into</em> the prompt (<span class="mono">character.js</span>), fed from the Supabase <code>runar_corrections</code> table (edited in the shrine). This is the only correction mechanism that reaches Claude. <span class="tag knob">knob</span> flag <code>CORRECTIONS_IN_PROMPT = true</code>.</p>
+    <blockquote class="rt en"><span class="lbl">the correction block · character.js</span>Word corrections (follow strictly): — Never say "{from}" — say "{to}" instead {context}</blockquote>
+    <p class="prose"><span class="tag dead">gone</span> &nbsp;<b>applyISCorrections</b> — the "4th layer" substring post-processor — was <b>deleted on 2026-08-09</b>, together with its <code>CORRECTIONS_POSTPROCESS</code> flag. It had been disabled since 2026-07-10, but was <em>still called on the returned text at five places</em>, so the code read as though corrections were being applied when they were not. It was context-blind (no case, no gender), which is why corrections live in the prompt instead. <b>There is no fourth layer, and none should be added</b> — the rule now has exactly one home, <code>CLAUDE.md §2</code>.</p>
+  </div>
+
+  <h3 style="margin:26px 0 6px;font-size:1.05rem">Per mode — length target &amp; token ceiling</h3>
+  <p class="sub" style="margin-top:2px">Length is a <em>prompt sentence</em> (soft, per language); <code>max_tokens</code> is the hard ceiling (clamped ≤ 2500 in the proxy).</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Mode</th><th>Length line in the prompt</th><th class="num">max_tokens</th><th>Voice</th></tr></thead>
+      <tbody>
+        <tr><td><b>Single</b> (quick)</td><td>3 short sentences · 38–45 words</td><td class="num">700</td><td>yes</td></tr>
+        <tr><td><b>Norns</b> (founding)</td><td>5–6 sentences across three beats</td><td class="num">900</td><td>yes*</td></tr>
+        <tr><td><b>Compass</b> (kríž, 5)</td><td>6–7 sentences</td><td class="num">1100</td><td>yes</td></tr>
+        <tr><td><b>Horseshoe</b> (7)</td><td>11–12 sentences</td><td class="num">1300</td><td>yes</td></tr>
+        <tr><td><b>Yggdrasil</b> (9)</td><td>14–15 sentences · Crown/Trunk/Roots tiers</td><td class="num">1800</td><td>yes</td></tr>
+        <tr><td><b>Life rune</b> std / premium</td><td>3 parts · gift, shadow, one open question</td><td class="num">1200 / 2000</td><td><b>no</b> — text only, by design</td></tr>
+        <tr><td><b>Ask</b> (follow-up)</td><td>≤ 40 words · shorter than the reading</td><td class="num">140</td><td>no — <b>premium only</b>, gated in the proxy, not just the client; everyone else sees an inert teaser</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="sub" style="font-size:0.82rem">*Founding Norns is free + told in text alone. Ceilings: <code>RUNAR_MODES.*.max_tokens</code> (config) · <code>SPREAD_CONFIG.*.tokens</code> for spreads · Ask cap hardcoded <span class="mono">reading.js</span>.</p>
+
+  <div class="note"><b>The model chain</b> <span class="mono">index.ts</span> — <code>["claude-opus-4-8", "claude-opus-4-7", "claude-sonnet-5"]</code>. Fallbacks fire only on an overload class (429 / 5xx), not a timeout or a 4xx. In normal operation <b>every reading is written by claude-opus-4-8</b>. The system string is sent as a cacheable block; <code>dynamicContext</code> (the A/B/C tree/session/voice layers) is <span class="tag dead">off</span> — <code>ENABLE_DYNAMIC_CONTEXT = false</code>.</div>
+</section>
+
+<section id="dice">
+  <div class="sec-head"><span class="sec-num">⚄</span><h2>What each reading rolls — and what gets written down</h2></div>
+  <p class="sub">Five things are drawn fresh for every single reading. They are <b>distribution levers, not rules</b>: none of them forbids anything. The point is that two readings of the same rune do not come out the same — so what matters is the <em>spread</em>, never driving any one number to zero.</p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Rolled per reading</th><th>Out of</th><th>What it decides</th><th>Written to <code>readings</code>?</th></tr></thead>
+      <tbody>
+        <tr><td><b>Reading angle</b></td><td>7</td><td>The door the reading comes in through — where the text starts and its tone.</td><td><b>no</b></td></tr>
+        <tr><td><b>Icelandic image</b></td><td>81 entries, 2–5 per rune, filtered by season, both languages on the row</td><td>The one concrete picture the reading is allowed. No-repeat bag per rune-set, identity independent of language.</td><td><b>yes</b> — the sentence itself</td></tr>
+        <tr><td><b>3 keywords</b></td><td>the drawn rune's list, shuffled</td><td>Which facets of the rune are put in front of the model.</td><td><b>no</b></td></tr>
+        <tr><td><b>Ending shape</b></td><td>heavy pool (2) or open pool (3)</td><td>Whether the reading closes on a question or rests on a statement.</td><td><b>no</b> — but readable from the text</td></tr>
+        <tr><td><b>Name placement</b></td><td>pool + ~55% "drop it"</td><td>Where the seeker's name lands, or whether it appears at all.</td><td><b>no</b> — partly readable from the text</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="note warn"><b>None of the five is persisted.</b> A row in <code>readings</code> carries the deterministic inputs — rune, life rune, area, seeking, intention, question, language, spread, <code>prompt_version</code>, address, mode — and the text. It carries <b>no record of which angle or which image was drawn</b>. So for readings that came out of production (tester batches via <code>export_readings.js</code>) you can measure what the text <em>looks like</em>, but you cannot say which door it came through. Probe batches from <code>gen_batch.js</code> carry the whole prompt, so there the angle and image are recoverable — that is why it also accepts <code>--angle</code> to force one.</p>
+
+  <p class="prose">Two consequences worth keeping straight. <b>First:</b> an angle gets roughly one seventh of a batch, so 25 readings give about three per angle — far too few to tell whether a change to one angle did anything. Forcing the angle is the only way to measure one. <b>Second:</b> because the draws are not stored, correlating a production reading back to its angle needs the draws to be recorded on the row first. Until then, tester batches answer "how do the readings read", not "which lever caused this".</p>
+</section>
+
+<section id="rozpis">
+  <div class="sec-head"><span class="sec-num">&Sigma;</span><h2>What the prompt costs, slot by slot</h2></div>
+  <p class="sub">This section writes itself. Everything above and below is written by hand — the reading of the thing, why a lever exists, what is dead. This part is <em>derivable</em>, and it was the part that drifted: four hand redraws in two days, and once a complete divergence (14 of 14 cited line numbers wrong). Now it comes from the same code that builds the prompt.</p>
+  <!-- AUTO-ROZPIS:start -->
+<p class="sub">Generovano z kodu prikazem <code>node scripts/utils/lint_prompts.js --map</code> — rucne se to needituje. Stav: <b>v2.0</b>, 2100 postavenych kombinaci (25 run x 7 uhlu x 6 sezon x 2 jazyky).</p><p class="prose"><b>EN</b> — systemovy <b>681</b> slov &middot; ctecí <b>314</b> &middot; celkem 995. Systemovy je <b>68 %</b> vseho.</p><div class="scroll"><table><thead><tr><th>slot ve ctecim promptu</th><th class="num">slov</th><th class="num">%</th></tr></thead><tbody><tr><td>NO COLD READING: let the seeker be the one to recognise themselves in the image, or not. Never t</td><td class="num">56</td><td class="num">18</td></tr><tr><td>One flowing reading — 3 short sentences, 38 to 45 words total. It will be read aloud, so keep ev</td><td class="num">38</td><td class="num">12</td></tr><tr><td>DESCRIBE, DO NOT EXPLAIN: say what the rune does in the world; never what it means. No mechanism</td><td class="num">36</td><td class="num">11</td></tr><tr><td>One paragraph. No breaks. No labels. This time do not use the name Anna at all — let the reading</td><td class="num">36</td><td class="num">11</td></tr><tr><td>Open with Fehu — let its quality arrive through image, not explanation. Mention Fehu by name onc</td><td class="num">30</td><td class="num">10</td></tr><tr><td>READING ANGLE (follow this entry point — let it shape the opening and tone): Lead with the weigh</td><td class="num">27</td><td class="num">9</td></tr><tr><td>Output format — return ONLY this JSON array, nothing before or after: [{"rune": "(the rune name)</td><td class="num">26</td><td class="num">8</td></tr><tr><td>IMAGE — if a picture arises in this reading, use this one: The bread comes hot from the oven, en</td><td class="num">25</td><td class="num">8</td></tr><tr><td>DRAWN RUNE: Fehu — focus on: wealth, cattle, material prosperity · World: the living moment, wha</td><td class="num">23</td><td class="num">7</td></tr><tr><td>End on a plain, steady line — name where the seeker stands, not a question.</td><td class="num">15</td><td class="num">5</td></tr></tbody></table></div><p class="prose"><b>IS</b> — systemovy <b>781</b> slov &middot; ctecí <b>299</b> &middot; celkem 1080. Systemovy je <b>72 %</b> vseho.</p><div class="scroll"><table><thead><tr><th>slot ve ctecim promptu</th><th class="num">slov</th><th class="num">%</th></tr></thead><tbody><tr><td>ENGIN KÖLD LESNING: Láttu leitandann sjálfan kannast við sig í myndinni, eða ekki. Segðu honum a</td><td class="num">53</td><td class="num">18</td></tr><tr><td>Gefðu einn samfelldan lestur — 3 stuttar setningar, 38 til 45 orð alls. Hann verður lesinn upphá</td><td class="num">32</td><td class="num">11</td></tr><tr><td>Byrjaðu á Fehu (Eignir) — láttu táknræn gæði þess koma fram í myndum, ekki útskýringu. Nefndu Fe</td><td class="num">32</td><td class="num">11</td></tr><tr><td>LÝSTU, EKKI ÚTSKÝRÐU: Segðu hvað rúnin gerir í heiminum; aldrei hvað hún þýðir. Engin vélræn ský</td><td class="num">31</td><td class="num">10</td></tr><tr><td>Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. Í þetta sinn skaltu ekki nota nafn Anna — </td><td class="num">29</td><td class="num">10</td></tr><tr><td>Skilaðu EINGÖNGU þessu JSON fylki, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": </td><td class="num">25</td><td class="num">8</td></tr><tr><td>DREGNA RÚNA: Fehu (Eignir) — áhersla: efnisleg velsæld, auður, hreyfanleg orka · Heimur: líðandi</td><td class="num">24</td><td class="num">8</td></tr><tr><td>LESTRARHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og upphaf): Byrjaðu á þunganum </td><td class="num">22</td><td class="num">7</td></tr><tr><td>ÁVARP: ávarpaðu viðmælandann í HVORUGKYNI (hán, kynhlutlaust) — öll lýsingarorð og fornöfn um "þ</td><td class="num">20</td><td class="num">7</td></tr><tr><td>MYND — ef mynd birtist í lestrinum, notaðu þessa: Féð rennur í kvíarnar undir kvöld, hægt og fyr</td><td class="num">18</td><td class="num">6</td></tr></tbody></table></div>
+<!-- AUTO-ROZPIS:end -->
+</section>
+
+<section id="knobs">
+  <div class="sec-head"><span class="sec-num">◈</span><h2>Where to tune a nuance</h2></div>
+  <p class="sub">Want to change how Rúnar sounds? Each lever lives in exactly one place (§18/§20). IS is primary — edit <code>DEF_CHAR_IS</code> and the IS pack, verify with <code>is-vazba.py</code> + <code>is-grammar-qa.py</code>.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>To change…</th><th>Turn this</th><th>Where</th></tr></thead>
+      <tbody>
+        <tr><td>The whole tone at once</td><td><code>ACTIVE_VOICE_PROFILE</code> ('focused' → other)</td><td class="cite2">config.js</td></tr>
+        <tr><td>Imagery discipline / "one image" rule / avoid-list</td><td><code>VOICE_PROFILES.focused</code> (en + is)</td><td class="cite2">config.js</td></tr>
+        <tr><td>Persona, bans, IS grammar rules</td><td>the 7 <code>DEF_CHAR_IS</code> / <code>DEF_CHAR_EN</code> fields</td><td class="cite2">DEF_CHAR_IS / DEF_CHAR_EN</td></tr>
+        <tr><td>Reading length + opening/closing phrasing</td><td>the <code>RP_*</code> pack (length, qBranch, closing…)</td><td class="cite2">character.js+</td></tr>
+        <tr><td>The 7 opening angles</td><td><code>READING_ANGLES</code> / <code>_IS</code> — an angle phrased <em>about the rune</em> aims at a definition; phrased <em>about the seeker's life</em> it aims at a scene</td><td class="cite2">utils.js</td></tr>
+        <tr><td>Seasonal images</td><td><code>SEASON_POOLS</code></td><td class="cite2">character.js</td></tr>
+        <tr><td>How often the name is dropped (~55%)</td><td><code>_namePlacement</code> threshold + pools</td><td class="cite2">utils.js</td></tr>
+        <tr><td>Ending shape + which runes are "heavy"</td><td>ENDING pools + <code>HEAVY_RUNES</code></td><td class="cite2">utils.js · config.js</td></tr>
+        <tr><td>Stance per seeking / time per intention</td><td><code>_registerContext</code> / <code>_intentionContext</code></td><td class="cite2">_registerContext / _intentionContext</td></tr>
+        <tr><td>A specific wrong word Rúnar keeps using</td><td>a <code>runar_corrections</code> row (in the shrine)</td><td class="cite2">DB → getCorrPrompt</td></tr>
+        <tr><td>A reading's max length (hard cap)</td><td><code>RUNAR_MODES.*.max_tokens</code> / <code>SPREAD_CONFIG.*.tokens</code></td><td class="cite2">config.js</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note warn"><b>Handle as canon, not a knob:</b> the stack <b>order</b>, the JSON output contract, the per-position Norns axes, the life-rune-is-a-lens rule, and the rune data (aett / world / element / keywords in <code>runar-runes.js</code>, shared with the tree). Reordering the AREAS/SEEKS option lists silently mis-maps tree branches (guarded by smoke ⑬) — change additively only.</p>
+</section>
+
+<section id="dead" style="border-bottom:none">
+  <div class="sec-head"><span class="sec-num">×</span><h2>Don't chase these — alive-looking, but not wired</h2></div>
+  <p class="sub">If you go hunting a nuance and land in one of these, it never reaches a real reading.</p>
+  <ul class="plain dead">
+    <li><b>buildSysPromptV2 + DEF_CHAR_V2_EN</b> — the rich "context line / moon phase / seasonal register / hidden world / Norse world layers" system prompt. Lab-only (shrine V2 tab + compare_*.js). Production uses <code>buildSysPrompt</code>. <span class="cite2">character.js · buildSysPromptV2 · DEF_CHAR_V2_EN</span> · <em>Season still reaches production — but via the per-reading image in Layer 2, not this.</em></li>
+    <li><b>READING_ASPECTS / IMAGERY_SOURCES / READING_REGISTERS / RUNE_PLACEMENTS</b> — labelled dead code; only caller was the removed V2 lab preview. <span class="cite2">utils.js</span></li>
+    <li><b>dynamicContext A/B/C</b> (tree / session / voice) in the proxy — gated off, always empty string; turned off 2026-07-04 for stacking conflicting tone directives. <span class="cite2">index.ts</span></li>
+    <li><b>mood</b> — removed factor; no constant, no field, no reader. <span class="cite2">runar-branch.js</span></li>
+    <li><b>deeper_meaning</b> — generated by Claude and parsed, but not stored or shown for single readings. <span class="cite2">reading.js</span></li>
+    <li><b>claude-sonnet-5 leg</b> — safety net; only runs on an Opus overload, not normally. <span class="cite2">index.ts</span></li>
+  </ul>
+  <p class="foot">Read-only map · nothing changed · built from a 4-agent read of runar-character.js, runar-config.js, runar-runes.js, claude-proxy/index.ts.<br>The dead <code>runar_character</code> loader (<span class="mono">app.js</span>) is still wired even though the character editor is retired — harmless while the table has no active row, worth removing.</p>
+</section>
+</div>
