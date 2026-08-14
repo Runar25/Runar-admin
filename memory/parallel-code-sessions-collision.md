@@ -5,6 +5,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: 19d97179-39e7-4098-bebb-c437e7df8e6e
+  modified: 2026-08-09T22:43:13.656Z
 ---
 
 Repo běží s VÍCE Code session naráz ve **sdíleném pracovním stromě a sdíleném git indexu** (ne jen víc
@@ -39,6 +40,7 @@ souboru dvěma session neřeší nic než worktree.
   během session (gen_batch.js se z untracked stal tracked, protože ho druhá session mezitím commitla).
 - **Necommitnuté změny ve sdíleném tracked souboru = živé riziko sebrání** — commitni je úzce brzy.
 - **Necommitnutý rozhodovací záznam v `RUNAR_DECISIONS.md` BLOKUJE PUSHE VŠECH session** (2026-08-07). Smoke ⑮ (`verify_decisions_followthrough.js`) blamuje i necommitnuté entry → jejich `Affected doc(s)` nesedí v žádném commitu → pre-push padá KAŽDÉMU, ne jen tobě. Proto: (a) rozhodovací záznam commitni+pushni **HNED** (pathspec, týž turn), nenech ho viset; (b) **tree rozhodnutí piš radši do `RUNAR_TREE.md` (vlastní doc), ne do sdíleného DECISIONS** — vlastní doc jinou session neblokuje; (c) `git reset` commitu, co sáhl do DECISIONS, nechá entry **OSIŘET** v pracovním stromě = znovu blokuje — buď ho hned dotáhni čistě, nebo zkoordinuj; (d) na řádku `Affected doc(s)` u „—" NEuváděj název souboru (`.js/.md/.py/.json` → ⑮ ho vyzobne a spadne i na správném „žádný doc" záznamu). Detaily patří do těla záznamu.
+- **Rozdělení commitu (`git reset` + přepis souboru) může cizí necommitnutou práci ZTRATIT, ne jen přepsat** (2026-08-09). Sebral jsem do `[tree]` commitu dva cizí `[sigil]` záznamy v DECISIONS. Rozdělil jsem to správně (commitnout jen svoje, cizí vrátit do stromu), ale po commitu byl soubor **čistý** — cizí blok zmizel ze stromu i z historie. Zachránila to jen kopie ve scratchpadu. **Než rozdělíš cokoli sdíleného: `cp <soubor> <scratchpad>` PRVNÍ**, a po commitu `git diff -- <soubor>` ověř, že cizí část je zpátky jako změna. „Vrátil jsem to" bez ověření = tvrzení, ne fakt.
 - **Přepis TÉHOŽ souboru dvěma session odstraní JEN fyzické oddělení (`git worktree`)** — guard ani
   konvence to z principu neřeší. Owner worktree zatím odložil; do té doby je to pojmenovaná mez, ne díra.
 - Historii nepřepisuj kvůli minulému případu — zapiš a jeď dál.

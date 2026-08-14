@@ -22,3 +22,8 @@ moc čistý výsledek je nejčastěji chyba měření, ne realita.
 3. **Žádná fragile logika v shellu.** Regex/měření piš do `.js`/`.py` souboru, ne do
    `node -e "…"` přes bash — escapování se tiše rozbije. Souvisí [[read-the-check-before-push]], [[bash-no-cd-prefix]].
 4. **Když tě někdo opraví číslem, PŘEMĚŘ načisto** dřív, než se hádáš nebo trváš na svém.
+
+**Druhý způsob, jak měření mlčí: metrika už JE na podlaze.** 2026-08-14 jsem navrhl
+screening ablation v islandštině — jenže „otevřeno definicí" i „þegar" tam byly v baseline
+**0 %**. Ty dvě metriky nemohly ukázat nic, ať páka dělá cokoli. Screenuj tam, kde má metrika
+PROSTOR (tytéž metriky měly v EN 28 % a 32 %). Nulový výsledek z podlahy není nález.

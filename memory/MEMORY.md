@@ -82,6 +82,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [guard-test-the-lifecycle.md](guard-test-the-lifecycle.md) — novou kontrolu testuj proti VŠEM stavům toho, co hlídá, ne jen dobrý/špatný případ
 - [read-the-check-before-push.md](read-the-check-before-push.md) — pipe do grepu zahodí exit kód; přečti verdikt, teprve pak push
 - [parallel-code-sessions-collision.md](parallel-code-sessions-collision.md) — víc Code session ve sdíleném stromě; pathspec commit, patch do scratchpadu, status před sáhnutím
+- [prompt-directive-makes-model-copy.md](prompt-directive-makes-model-copy.md) — "pouzij tenhle text" v promptu = model ho opise doslova; ramuj jako zdroj (12 % -> 56 %, p=0,002)
 - [measure-dont-eyeball.md](measure-dont-eyeball.md) — dojem z obrázku není nález; změř to, nebo řekni „nevím"
 - [sanity-check-measurements.md](sanity-check-measurements.md) — extrémní/čisté číslo (0/N, 100 %) = red flag; ověř měření protipříkladem, ne fragile bash-inline; přeměř, když tě opraví
 - [write-for-owner-not-process.md](write-for-owner-not-process.md) — ownerovi piš důležité/výsledek, ne proces „co jsi řekl / co budu hledat"
