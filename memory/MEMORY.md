@@ -84,6 +84,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [parallel-code-sessions-collision.md](parallel-code-sessions-collision.md) — víc Code session ve sdíleném stromě; pathspec commit, patch do scratchpadu, status před sáhnutím
 - [prompt-directive-makes-model-copy.md](prompt-directive-makes-model-copy.md) — "pouzij tenhle text" v promptu = model ho opise doslova; ramuj jako zdroj (12 % -> 56 %, p=0,002)
 - [falsify-by-reversing-the-lever.md](falsify-by-reversing-the-lever.md) — hypotezu "pridej X" testuj tak, ze X jeste UBERES; obracena predpoved musi platit (CLAUDE.md §25)
+- [break-your-own-work-before-reporting.md](break-your-own-work-before-reporting.md) — po hotovem kusu na nej ZAUTOC SAM a teprve pak hlas; necekej na vyzvu ownera
 - [attack-the-metric-not-just-the-result.md](attack-the-metric-not-just-the-result.md) — utoc na NASTROJ driv nez na vysledek: pulka vs pulka, co jeste odlisuje referenci, nulova transformace (CLAUDE.md §27)
 - [measure-dont-eyeball.md](measure-dont-eyeball.md) — dojem z obrázku není nález; změř to, nebo řekni „nevím"
 - [sanity-check-measurements.md](sanity-check-measurements.md) — extrémní/čisté číslo (0/N, 100 %) = red flag; ověř měření protipříkladem, ne fragile bash-inline; přeměř, když tě opraví
