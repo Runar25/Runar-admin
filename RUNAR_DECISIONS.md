@@ -2570,3 +2570,30 @@ odložené rozhodnutí — a to patří dodělat, ne skladovat. Rúnaþula třet
 - **Drženo záměrně:** úhel [4] (`Lead with the land`) má znění připravené, ale owner chce **nejdřív změřit v1.8**. Kdyby se šlo obráceně, opraví se 3 % a nechá běžet zbytek.
 - **Affected doc(s):** mapa promptu (artifact)
 - **Reversibility:** easy — tři řetězcové změny, `git revert`.
+
+---
+
+## 2026-08-14 — Doslovné opisování obrazu: příčina nalezena, částečně opraveno (v2.1)
+
+- **Typ:** regrese + oprava + poučení
+- **Scope:** tune
+- **Jak se to našlo:** ablation Stage 0+1 (8 ramen × 10, IS). Nehledali jsme tohle — hledali jsme efekt jednotlivých pák. Vyskočilo to, protože jsem místo vlastního čítače sáhl po **zavedené metrice** (`measure_readings.js`).
+
+**Regrese, kterou jsem způsobil.** Zkrácení vkládací věty (v1.8) skončilo u `notaðu þessa` = „POUŽIJ tenhle". Doslovné opsání celého obrazu: **12 % → 56 %**, nejdelší úsek 34 % → 73 % fráze, Fisher **p = 0,002**.
+
+**Rozhodující test — příčina je islandsky specifická.** Táž krátká věta ve dvou jazycích:
+
+| jazyk | dlouhá věta | krátká věta |
+|---|---|---|
+| EN | 0 % | **9 %** (v šumu) |
+| IS | 12 % | **44 %** |
+
+Angličtina se nehnula, islandština 3,5×. Nejde tedy o samotnou stavbu věty. Nejpravděpodobnější mechanismus: **islandský prompt jsme zkrátili mnohem víc než anglický** (rúnaþula, čočka, svět, pravidlo 5 — z ~484 na ~306 slov), takže jediná hotová islandská věta v něm má nesrovnatelně větší váhu; a model se v islandštině opře o předložený text ochotněji.
+
+**Oprava (v2.1):** obraz dostal zpět **kontext za sebou** a rámec „odkud to je" místo „tady to máš" — `MYND — héðan kemur myndin í þessum lestri: ⟨X⟩. Láttu hana verða að þinni eigin sýn í textanum.` Bez zákazu: pojmenovat zakázanou věc ji přivolává (viz `_noColdRead`).
+
+- **Výsledek, poctivě:** **44 % → 32 %**, nejdelší úsek 73 % → 52 %. Ale `p = 0,56` — samotné to zlepšení není odlišitelné od šumu, a proti baseline 12 % je 32 % pořád výš (p = 0,17). **Směr sedí, hotové to není.**
+- **⚠️ Málem jsem ohlásil 0 %.** První měření po opravě dalo 0 % doslovného opsání a 92 % přepsáno. Byla to **vada mého extraktoru**: věta má nově ocas za obrazem, takže se do „fráze" počítal i on — délka vyšla **19 slov místo 10** a „celá fráze doslova" se stala nesplnitelnou. Chytil to sanity check na příliš čisté číslo, ne náhoda. Extraktor teď kotví na **oba** konce, v `_promptDraws` i v `measure_readings.js`. → [[sanity-check-measurements]]
+- **Zbývá:** dostat 32 % zpět k baseline. Hypotéza k testu: vrátit islandskému promptu část hmoty, o kterou přišel — ne konkrétní zrušenou větu, ale jeho celkovou délku. Netestováno.
+- **Affected doc(s):** `RUNAR_EVAL_LOG.md`
+- **Reversibility:** easy.

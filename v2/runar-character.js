@@ -582,8 +582,8 @@ function _seasonalImagery(lang, drawn) {
   // sněhu v létě není. „Jeden obraz" říká DEF_CHAR pravidlo 4 — neopakovat (§20).
   var phrase = runePhrase || ((lang === 'is') ? img.is : img.en);
   if (lang === 'is')
-    return 'MYND — ef mynd birtist í lestrinum, láttu hana koma héðan: ' + phrase + '.';
-  return 'IMAGE — if a picture arises in this reading, let it come from this: ' + phrase + '.';
+    return 'MYND — héðan kemur myndin í þessum lestri: ' + phrase + '. Láttu hana verða að þinni eigin sýn í textanum.';
+  return 'IMAGE — the picture in this reading comes from here: ' + phrase + '. Let it become your own seeing in the text.';
 }
 
 // DESCRIBE, DO NOT EXPLAIN (eval v0.4 Priority 1, 9/9): every gate-fail sat in an explaining

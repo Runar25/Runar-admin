@@ -279,11 +279,16 @@ function _promptDraws(prompt, lang) {
     // Obraz je od 2026-08-13 POSLEDNÍ věc na své řádce, za poslední dvojtečkou.
     // (Dřív se kotvilo na závěrečnou větu o sezóně — ta zmizela; ověřeno, že žádný
     // z 81 obrazů „: " neobsahuje, takže poslední dvojtečka je jednoznačná.)
+    // Obraz stojí MEZI dvojtečkou a ocasem věty. Kotvit jen na dvojtečku nestačí:
+    // od 2026-08-14 je za obrazem ještě pokyn, a ten by se do obrazu započítal
+    // (fráze pak vyšla 19 slov místo 10 a měření hlásilo falešnou nulu).
     var mark = isIs ? 'MYND — ' : 'IMAGE — ';
+    var tail = isIs ? ' Láttu hana verða' : ' Let it become';
     var line = p.split('\n').filter(function (l) { return l.indexOf(mark) === 0; })[0];
     if (line) {
-      var c = line.lastIndexOf(': ');
-      if (c > 0) out.image = line.slice(c + 2).replace(/\.\s*$/, '').trim();
+      var c = line.indexOf(': ');
+      var e = line.indexOf(tail, c);
+      if (c > 0) out.image = line.slice(c + 2, e > c ? e : undefined).replace(/\.\s*$/, '').trim();
     }
 
     var heavy = isIs ? ENDING_HEAVY_IS : ENDING_HEAVY;

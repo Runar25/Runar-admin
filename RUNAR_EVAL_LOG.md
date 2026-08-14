@@ -205,6 +205,22 @@ zadání dvakrát** — stejná runa, jednou s pákou a jednou bez — a přeč�
 Nástroj nesahá na produkci (přepíná se helper v sandboxu) a **nespustí dávku**, když vypnutí
 prompt prokazatelně nezkrátilo — tichá „vypnuto" dávka by měřila plný prompt pod cizí hlavičkou.
 
+### Doslovné opisování obrazu — IS (2026-08-14)
+
+| stav | doslova celá fráze | nejdelší úsek |
+|---|---|---|
+| v1.4 dlouhá věta | 12 % | 34 % |
+| v2.0 krátká věta (`notaðu þessa`) | 56 % | 73 % |
+| v2.0 + rámec zdroje | 44 % | 59 % |
+| **v2.1 + kontext za obrazem** | **32 %** | **52 %** |
+
+⚠️ **Jazykový řez je klíč:** táž krátká věta dala v EN **0 % → 9 %** (v šumu), v IS **12 % → 44 %**.
+Zkracování promptu nezasáhlo oba jazyky stejně — islandský prompt přišel o víc (~484 → ~306 slov),
+takže jediná hotová věta v něm váží víc. **Metriku doslovnosti měř v IS**, tam má prostor; v EN je u dna.
+
+⚠️ **Extraktor obrazu kotví na OBA konce** (`': '` … začátek ocasu). Když kotvil jen na dvojtečku,
+počítal do fráze i pokyn za obrazem — délka 19 slov místo 10 a výsledek falešná **0 %**.
+
 ## Páky — retrospektiva (co už se s hlasem dělalo; detail = `git log` [reading]/[tune])
 
 | verze | co se změnilo | proč | naměřeno | verdikt |

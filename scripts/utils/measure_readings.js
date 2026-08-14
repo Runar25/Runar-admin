@@ -42,8 +42,12 @@ function injectedImage(prompt) {
     .find(l => /^(MYND|IMAGE) — /.test(l) || /ÁRSTÍÐARMYND|SEASONAL IMAGE/.test(l));
   if (!line) return null;
   if (/^(MYND|IMAGE) — /.test(line)) {
-    const c = line.lastIndexOf(': ');
-    return c > 0 ? line.slice(c + 2).replace(/\.\s*$/, '').trim() : null;
+    // Obraz je MEZI dvojtečkou a ocasem. Bez horní kotvy se ocas počítal do fráze,
+    // délka vyšla 19 slov místo 10 a „celá fráze doslova" hlásila falešnou nulu.
+    const c = line.indexOf(': ');
+    const t = line.search(/ (Láttu hana verða|Let it become)/);
+    if (c < 0) return null;
+    return line.slice(c + 2, t > c ? t : undefined).replace(/\.\s*$/, '').trim();
   }
   const m = line.match(/—\s*([^.]{10,160})\./);
   return m ? m[1].trim() : null;
