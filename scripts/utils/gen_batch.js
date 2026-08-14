@@ -146,6 +146,7 @@ const USAGE = [
   '  --runes     A,B,C          explicit spread runes; else a random distinct sample',
   '  --life-rune Gebo|self|none life rune context; self = life==drawn per reading (default none)',
   '  --without   a,b,c        build the reading WITHOUT these parts of the prompt — for hearing',
+  '              Groups: dice (all per-reading rolls) · rules (the standing rules) · all.',
   '              how it sounds stripped back. `--without list` prints what can go.',
   '              Touches nothing in production: the helper is overridden in the sandbox.',
   '  --angle     0..6         force ONE reading angle (single only) instead of the random draw.',
@@ -306,33 +307,42 @@ async function main() {
   // ── --without: postavit cteni BEZ vybranych casti promptu ──
   // Slot, ktery je samostatna funkce, se prebije na '' a `filter(Boolean)` ho zahodi.
   // Uhel a delka se slepuji z packu, takze u nich padne cela radka.
+  // `kind` rozlišuje LOS (co se u každého čtení hází) od PRAVIDLA (co platí vždycky).
+  // Bez toho je „vypni všechno" nejednoznačné: základna bez losů je holý Rúnarův hlas,
+  // základna bez pravidel je Rúnar bez mantinelů — jiný pokus, jiný závěr.
   const WITHOUT = {
-    image:     { fn: '_seasonalImagery',  co: 'islandský obraz (SEASON_POOLS + RUNE_IMAGES)' },
-    describe:  { fn: '_describeRule',     co: 'zákaz definic („řekni co runa DĚLÁ")' },
-    coldread:  { fn: '_noColdRead',       co: 'pravidlo proti cold readingu' },
-    lens:      { fn: '_lensContext',      need: '--life-rune', co: 'životní runa jako čočka' },
-    domain:    { fn: '_domainContext',    need: '--area', co: 'oblast života' },
-    register:  { fn: '_registerContext',  need: '--seeking', co: 'postoj podle „hledám"' },
-    intention: { fn: '_intentionContext', need: '--intention', co: 'čas podle Noren (verðandi/skuld/urð)' },
-    ending:    { fn: '_endingShape',      co: 'tvar konce (otázka / tvrzení)' },
-    priority:  { fn: '_priorityContext',  need: '--area / --seeking / --life-rune', co: 'tie-breaker při kolizi faktorů' },
-    address:   { fn: '_addressContext',   co: 'ÁVARP — rod oslovení (jen IS)' },
-    name:      { fn: '_namePlacement',    need: '--name (jiné než you/þú)', co: 'umístění jména' },
-    voice:     { fn: '_getVoiceProfile',  sys: true, co: 'hlasový profil v systémovém promptu' },
-    angle:     { line: 'angleIntro',      co: 'úhel čtení — dveře, kterými čtení vejde' },
-    length:    { line: 'length',          co: 'instrukce o délce (3 věty, 38–45 slov)' },
+    angle:     { line: 'angleIntro',      kind: 'kostka',  co: 'úhel čtení — dveře, kterými čtení vejde' },
+    image:     { fn: '_seasonalImagery',  kind: 'kostka',  co: 'islandský obraz (RUNE_IMAGES + SEASON_POOLS)' },
+    keywords:  { fn: 'rk',                  kind: 'kostka',  co: '3 klíčová slova vylosovaná z 5–6 (přebíjí se rk(), viz níž)' },
+    ending:    { fn: '_endingShape',      kind: 'kostka',  co: 'tvar konce (otázka / tvrzení)' },
+    name:      { fn: '_namePlacement',    kind: 'kostka',  need: '--name (jiné než you/þú)', co: 'umístění jména' },
+    describe:  { fn: '_describeRule',     kind: 'pravidlo', co: 'zákaz definic („řekni co runa DĚLÁ")' },
+    coldread:  { fn: '_noColdRead',       kind: 'pravidlo', co: 'pravidlo proti cold readingu' },
+    length:    { line: 'length',          kind: 'pravidlo', co: 'instrukce o délce (3 věty, 38–45 slov)' },
+    lens:      { fn: '_lensContext',      kind: 'pravidlo', need: '--life-rune', co: 'životní runa jako čočka' },
+    domain:    { fn: '_domainContext',    kind: 'pravidlo', need: '--area', co: 'oblast života' },
+    register:  { fn: '_registerContext',  kind: 'pravidlo', need: '--seeking', co: 'postoj podle „hledám"' },
+    intention: { fn: '_intentionContext', kind: 'pravidlo', need: '--intention', co: 'čas podle Noren' },
+    priority:  { fn: '_priorityContext',  kind: 'pravidlo', need: '--area / --seeking / --life-rune', co: 'tie-breaker při kolizi' },
+    address:   { fn: '_addressContext',   kind: 'pravidlo', co: 'ÁVARP — rod oslovení (jen IS)' },
+    voice:     { fn: '_getVoiceProfile',  kind: 'pravidlo', sys: true, co: 'hlasový profil v systémovém promptu' },
   };
   let without = [];
   if (args.without !== undefined) {
     const raw = String(args.without).trim();
     if (raw === 'list') {
-      console.log('\n  Co jde vypnout (--without a,b,c · --without all):');
+      console.log('\n  Co jde vypnout (--without a,b,c · nebo skupina: dice / rules / all):');
       for (const k of Object.keys(WITHOUT))
-        console.log('   ' + k.padEnd(10) + WITHOUT[k].co);
+        console.log('   ' + k.padEnd(10) + (WITHOUT[k].kind === 'kostka' ? 'KOSTKA   ' : 'pravidlo ') + WITHOUT[k].co);
       console.log('');
       process.exit(0);
     }
-    without = raw === 'all' ? Object.keys(WITHOUT) : raw.split(',').map(x => x.trim()).filter(Boolean);
+    // Skupiny: `dice` = Stage 0 podle Coworkova návrhu (holý hlas, pravidla drží),
+    // `rules` = opak, `all` = obojí. Jednotlivé páky jdou dál po jménech.
+    const grp = { all: Object.keys(WITHOUT),
+                  dice: Object.keys(WITHOUT).filter(k => WITHOUT[k].kind === 'kostka'),
+                  rules: Object.keys(WITHOUT).filter(k => WITHOUT[k].kind === 'pravidlo') };
+    without = grp[raw] || raw.split(',').map(x => x.trim()).filter(Boolean);
     const nezname = without.filter(k => !WITHOUT[k]);
     if (nezname.length)
       die('--without: neznám ' + nezname.join(', ') + '  (--without list vypíše, co jde)');
