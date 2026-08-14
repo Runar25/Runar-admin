@@ -25,7 +25,7 @@ const path = require('path');
 
 const DIR = path.join(__dirname, '..', '..', 'v2');
 const argv = process.argv.slice(2);
-const only = argv.includes('--budget') ? 'budget' : argv.includes('--dup') ? 'dup' : null;
+const only = argv.includes('--budget') ? 'budget' : argv.includes('--dup') ? 'dup' : argv.includes('--lang') ? 'lang' : null;
 
 // ── sandbox: tytéž produkční buildery, žádná kopie ────────────────────────
 function sandbox() {
@@ -156,7 +156,39 @@ function dup() {
   if (!found) console.log('   nic - zadna instrukce se neopakuje ve dvou slotech');
 }
 
+
+// ── PRAVIDLO: anglictina v ISLANDSKEM promptu ────────────────────────────
+// §2: IS je primarni, ne obal nad anglictinou. Prvni beh (2026-08-13) nasel, ze
+// `rworld()` ma jen anglicke popisky — "the living moment, what is active now" —
+// a ta fraze jde do KAZDEHO islandskeho promptu, navic dvakrat. Tohle je proto
+// pravidlo, ne jednorazovy nalez: kdyz nekdo pristi anglicky retezec zapomene
+// prelozit, spadne to tady.
+function langLeak() {
+  console.log('\n  -- pravidlo: anglictina v islandskem promptu --');
+  // Slova, ktera v islandstine neexistuji. Zamerne kratky seznam: radsi malo
+  // jistych nez hodne spornych (kazdy falesny poplach ubira na duvere).
+  const EN = new Set(['the','what','of','to','with','from','this','that','for',
+                      'your','you','are','its','is','be','was','were','which',
+                      'when','where','how','not','but','have','has']);
+  const seen = new Map();
+  for (const x of all.filter((y) => y.lang === 'is'))
+    for (const line of x.prompt.split('\n')) {
+      const hits = [...new Set(words(line).filter((w) => EN.has(w)))];
+      if (hits.length < 2) continue;
+      // JSON kontrakt nese anglicke klice zamerne - to neni preklep, to je format.
+      if (/^(Skila\u00f0u|Output format)/.test(line.trim())) continue;
+      const key = line.trim().slice(0, 90);
+      if (!seen.has(key)) seen.set(key, { hits, runy: new Set() });
+      seen.get(key).runy.add(x.rune);
+    }
+  if (!seen.size) { console.log('   nic - islandsky prompt je cely islandsky'); return; }
+  for (const [line, v] of seen)
+    console.log('   ' + v.runy.size + '/' + RUNES.length + ' run  [' + v.hits.join(' ') +
+                ']  ' + line.slice(0, 62));
+}
+
 if (!only || only === 'budget') budget();
 if (!only || only === 'dup') dup();
+if (!only || only === 'lang') langLeak();
 
 console.log('\n  (kontrola PROMPTU. Vystup meri measure_readings.js, dokumentaci check-docs.py.)\n');
