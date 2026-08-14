@@ -246,3 +246,17 @@ jako pár rozpojených slov, ze kterých se věta složit musí. Mění zdroj, n
 ### 5. Dva bug reporty `HTTP 503` — čekají na rozhodnutí ownera
 Zůstaly otevřené z triage reportů Rúnara; bez odpovědi ownera se nedá rozhodnout, jestli je to
 výpadek modelu (a tedy nic k opravě) nebo chybějící retry.
+
+### ⭐ Nálady — specifikaci PŘEPSALY důkazy (2026-08-14, nahrazuje dřívější zadání)
+Platí místo původního „3–4 nálady odlišené tempem". Detail a zdroje → `RUNAR_EVAL_LOG.md`
+2026-08-14, rozhodnutí → `RUNAR_DECISIONS.md` téhož dne.
+- **Rozdělení:** prostřední default ~60 % · prostá ~20 % (**povinný default pro EN a krátká
+  čtení**) · poetická ~20 % jako volba.
+- **Šest pravidel napříč náladami:** bez vnořených vsuvek · obrazy známé, ne originální ·
+  v EN „X je jako Y" · jedna nosná metafora brzy ve čtení · nevázat na věk · nikdy Flesch/SMOG.
+- **`direct` NENÍ „kratší věty"** — změřeno, že IS čtení má 13,6 slova na větu, tam už místo
+  není. Je to **méně úkolů na jedno čtení**.
+- **Kontrola k dodělání:** projít `SEASON_POOLS` a označit, které obrazy jsou konvenční
+  a které novelní (novelní stojí 40 % / 10 % srozumitelnosti proti ~90 % u konvenčních).
+- **Test porozumění (návrh k realizaci):** distraktorový recall — 3 otázky, správná odpověď
+  z jeho čtení, dva distraktory z **jiného tahu run téže délky a registru**.

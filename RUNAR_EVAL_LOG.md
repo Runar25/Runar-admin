@@ -305,3 +305,57 @@ než hypotéza čekala). EN má skoro stejně dlouhý čtecí prompt (321 vs 307
 
 **Pracovní vysvětlení:** slabší islandština modelu → podaná hotová věta se použije místo vlastní.
 Směr dalšího testu je proto **rozbít hotovost** vkládaného obrazu (fragmenty místo věty), ne délka.
+
+
+### 2026-08-14 — co o srozumitelnosti říká literatura (a co NEŘÍKÁ)
+
+Rešerše se čtyřmi nezávislými pohledy + adversariální audit každého nálezu.
+**Hlavní výsledek je nulový nález:** o preferenci „prostě vs. poeticky" u věštby
+**neexistuje ani jeden zdroj s čísly**. Ownerova hypotéza není vyvrácená — je **neměřená**.
+
+**Co je doloženo tvrdě:**
+
+| nález | čísla | zdroj |
+|---|---|---|
+| Snížit „úroveň čtení" textu nedělá s porozuměním **nic** | RCT n = 2 235; 8./10./12./14. třída → 9,0 / 9,1 / 8,9 / 9,1; p = 0,06; ani u nízkogramotných | PMC12119439 |
+| Cena za porozumění je ve **stavbě věty**, ne ve slovníku | vnořené vsuvky brzdí vybavení víc než odborné termíny; N = 184 | Cognition |
+| Readability formule **nepředpovídají** porozumění | 487 účastníků, 716 textů; SMOG koreluje 0,334 jen s *vnímanou* obtížností | — |
+| Prostý jazyk **neubere na vážnosti** | právníci n = 105 + 102; porozumění β = 0,354, p < 0,001; vymahatelnost beze změny p = 0,717 | — |
+| „Konkrétnější zní pravdivěji" **v replikaci padlo** | předregistrováno, N = 466, dz = 0,08 a 0,11, síla > 95 % (originál n = 46, dz = 0,48) | — |
+
+**Metafora — odpověď existuje a je podmíněná, ne jednosměrná:**
+- Přesvědčivost metafory celkově **r = 0,07**; ale **r = 0,42**, když je metafora **jedna**,
+  nerozvedená, se **známým** cílem a **brzy** v textu (Sopory & Dillard 2002).
+- Gramotnost **moderuje** (Krieger 2017, JNCI, n = 500, p = 0,03): u nízkogramotných byla
+  metafora **lepší** než prostý jazyk (p = 0,04).
+- **Platí se za NEZNÁMOU obraznost, ne za obraznost.** n = 48: doslovné i **konvenční**
+  metafory ~90 % „dává smysl"; novelní 40 % a 10 %.
+- ⚠️ **Nerodilý mluvčí nerozumí a neví o tom:** vysvětlil 50,6 % metafor z přednášek, potíž
+  si uvědomil ve **4,2 %** případů. U věštby se ten tichý výpadek schová za Barnum a vypadá
+  jako úspěch.
+- Pro nerodilé je „X je **jako** Y" levnější než „X **je** Y" (eye-tracking, N = 63, β = 0,74).
+- **Věk není prediktor** (n = 76 + 91): starší byli u nových literárních metafor **lepší**.
+  Prediktor je slovní zásoba.
+
+**Zesílí zjednodušení Barnum? Ne — ale ani ho neoslabí:**
+- Vágní formulace se čtou **rychleji** než přesné (N = 315, χ² = 17,60, p < 0,001) — vágnost
+  je fluentní, zjednodušením neubereš to, co projekci živí.
+- Rým zvedl vnímanou přesnost 6,38 vs. 5,15 (p < 0,01) při **nulovém** rozdílu ve
+  srozumitelnosti (N = 60). Poetika projekci zvedá taky.
+- ⭐ **Skutečný ovladač Barnumu je zdánlivá personalizace, ne registr.** Snyder 1974, N = 63:
+  **identický** horoskop dostal 3,24 / 3,76 / 4,38 podle toho, jestli byl podán jako obecný,
+  z roku+měsíce, nebo z roku+měsíce+dne narození (F = 7,56, p < 0,0002).
+- Forerův generický popis: **4,3 z 5** (N = 39, nikdo pod 2). To je laťka, kterou přeskočí
+  cokoli → **„působilo to přesně?" je jako metrika mrtvé.**
+
+**Co se doložit NEDÁ:** poptávka (žádný survey, žádná A/B data provozovatelů) · cokoli
+o islandštině a skandinávském publiku (Island není ani v PIAAC) · přenos na věštbu (všechny
+studie měří text, kde *je* co pochopit — souhlas, smlouva, daňový formulář) · délka
+(fluency studie pracují s jednotlivými větami, ne s textem délky čtení).
+Jediná recenzovaná práce přímo k AI věštbě (CHI 2026, n = 12 **praktikujících vykladačů**)
+o jazyce **neříká nic**.
+
+**Naše vlastní čísla k tomu (změřeno na 4 dávkách):** islandská čtení mají 41 slov, 3 věty,
+**13,6–13,8 slova na větu**; anglická 49 slov a 16,3. Rúnar tedy dlouhé věty **nemá** —
+na zkracování vět není kam jít. Čtení je krátké a **husté**: tři věty nesou runu, úhel,
+obraz, čočku životní runy a tvar zakončení.

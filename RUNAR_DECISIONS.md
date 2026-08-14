@@ -2693,3 +2693,45 @@ Angličtina se nehnula, islandština 3,5×. Nejde tedy o samotnou stavbu věty. 
   větou navíc**, ne preventivně.
 - **Affected doc(s):** `RUNAR_DESIGN.md`, `RUNAR_TREE.md`
 - **Reversibility:** easy (jen doky, prompt nedotčen).
+
+---
+
+## 2026-08-14 — Nálady: specifikaci mění důkazy, ne dojem (rešerše + audit)
+
+- **Typ:** measurement (rešerše) → mění zadání nálad z 2026-08-14 (Coworkův handoff)
+- **Scope:** reading / voice
+- **Výchozí otázka ownera:** *„o co se snažíme je aby to čtení uživatel pochopil… víc lidí
+  bude chtít jednoduchost než metafory… ale chce to zjistit přesně."*
+- **Rozhodnutí:**
+  1. **Cíl = porozumění, ne pocit přesnosti.** Forer 4,3/5 — na pocit přesnosti se neptáme nikdy.
+  2. **Páka NENÍ „snížit úroveň textu"** (RCT n = 2 235, p = 0,06, nula). Páka je **stavba věty**
+     (vnořené vsuvky) a **známost obrazu**, ne délka slov.
+  3. **Nikdy neoptimalizovat na Flesch/SMOG** — formule korelují jen s *vnímanou* obtížností.
+  4. **Rozdělení nálad:** prostřední **default ~60 %** · prostá a přímá **~20 %, a povinný
+     default pro anglickou verzi a krátká čtení** (nerodilý čtenář: 50,6 % / 4,2 %) ·
+     poetická **~20 %, jako volba, ne default**.
+  5. **Šest pravidel napříč všemi náladami:** žádné vnořené vsuvky · obrazy **známé**, ne
+     originální · v EN „X je **jako** Y" místo „X **je** Y" · **jedna** nosná metafora **brzy**
+     ve čtení (jen za těchhle podmínek r = 0,42 místo 0,07) · nálada se **nesmí** vázat na věk ·
+     žádná optimalizace na readability formule.
+  6. **Měření porozumění = distraktorový recall**, kde distraktory pocházejí z **jiného tahu run
+     téže délky a téhož registru**. Klíč: distraktory musí být stejně barnumovsky přijatelné,
+     takže projekce mezi nimi nedokáže vybrat — rozhodne jedině to, co si člověk pamatuje.
+     Doplňkově volné vybavení skórované na propozice. **Do měření nesmí:** hvězdičky, „líbilo
+     se ti to", dokončení čtení, čas na stránce.
+- **Co to znamená pro naše čísla:** změřili jsme, že IS čtení má 13,6 slova na větu — tedy
+  **věty už krátké jsou** a `direct` nemá být hlavně „kratší věty". Má být **méně úkolů na
+  jedno čtení** (tři věty dnes nesou runu, úhel, obraz, čočku a zakončení).
+- ⚠️ **Nález, který je proti kánonu nepříjemný:** ovladač Barnumu je **zdánlivá personalizace**
+  (Snyder 1974: identický horoskop 3,24 → 4,38 jen podle deklarovaného odvození z data
+  narození). Rúnarova životní runa, jméno a area/intention jsou personalizace **skutečná**
+  (uživatel je sám zadal), ne předstíraná — čára tedy drží, ale je tenčí, než vypadala:
+  **kotvit v tom, co člověk opravdu dal, ano; naznačovat, že z toho něco vyplývá, ne.**
+- **Proces — sebekritika:** jeden ze sběračů postavil tři nálezy na fóru `forum.thetarot.guru`
+  a označil je za „ověřeno přímým načtením". Audit je **vyřadil celé**: fórum patří webu, který
+  výklady prodává, jeho nejaktivnějším účtem je vlastní promo bot (321 příspěvků, reklama
+  1,1 s po založení vlákna), všechny citované účty vznikly týž den, a jeden uváděný poměr
+  („5 kritiků proti 1 obhájci") byl při načtení vlákna **věcně nepravdivý** (21 příspěvků,
+  0 obhájců). Ponaučení → `memory/loading-a-page-proves-existence-not-authenticity.md`.
+- **Affected doc(s):** `RUNAR_EVAL_LOG.md`, `RUNAR_BACKLOG.md`
+- **Reversibility:** n/a (rešerše + zadání; kód nedotčen).
