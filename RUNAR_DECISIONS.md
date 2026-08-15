@@ -2772,27 +2772,28 @@ Angličtina se nehnula, islandština 3,5×. Nejde tedy o samotnou stavbu věty. 
 
 ---
 
-## 2026-08-15 — Norns: z „osy osudu" na „osu stávání" (řeší rozpor s vlastním zákazem)
+## 2026-08-15 — Norns: z „osy osudu“ na „osu stávání“ (řeší rozpor s vlastním zákazem)
 
 - **Typ:** intent (owner potvrdil 2026-08-15) · obsah Cowork · ověření a zapojení CODE
 - **Scope:** reading / norns — 📜 vytvořený kánon
-- **Problém, který to řeší** (nalezeno §20 sweepem 2026-08-15):  mluvil o
-  *„what must come, the debt of fate"* a *„skuldin við örlögin"*, zatímco 
-  říká *„never predicts fate"*. Rozpor byl ve **12 z 12** norns promptů.
+- **Problém, který to řeší** (nalezeno §20 sweepem 2026-08-15): `RP_NORNS` mluvil o
+  *„what must come, the debt of fate“* a *„skuldin við örlögin“*, zatímco `DEF_CHAR.never`
+  říká *„never predicts fate“*. Rozpor byl ve **12 z 12** norns promptů.
 - **Rozhodnutí:** Norny = tři časy **tvého vlákna** (co tě utvořilo → kde stojíš → kam se
-  kloníš), ne dekret osudu. Přeladěna **jen Skuld** a rámec osy.
-  / beze změny — „minulost je pevná" a „přítomnost je živá" jsou poctivé věty,
-  nic nepředpovídají.
-- **Nové znění Skuld:**  / ; beat dostal navíc explicitní *„Þú getur breytt stefnunni"* / *„you can
-  walk differently"* — trajektorie, kterou lze změnit.
-- **Ověřeno:** GreynirCorrect 0 flagů, žádné E001;  67 477,  8 878,
-   2 283 (Risamálheild 2000–2021). Golden: změnily se **jen** 4 klíče
-  (, , , ), staré znění nikde nezbylo.
-- **Reality note:**  skuld větev byla reframnutá už dřív („gæti orðið, ekki
-  sem spádóm"); tohle dohání  na tentýž směr (§20 — dvě kopie téhož faktu se rozešly).
-- ⚠️ **Zůstává nedořešené a hlásím to (§22):** Yggdrasil má tutéž starou formulaci —
-   tiers:  a
-  . Nebylo v handoffu, je to obsah, takže jsem nesáhl.
-  Po téhle změně se Norns a Yggdrasil o Skuld rozcházejí.
-- **Affected doc(s):** 
-- **Reversibility:** easy ().
+  kloníš), ne dekret osudu. Přeladěna **jen Skuld** a rámec osy. `Urðr` a `Verðandi` beze
+  změny — „minulost je pevná“ a „přítomnost je živá“ jsou poctivé věty, nic nepředpovídají.
+- **Nové znění Skuld:** `hvert þráðurinn stefnir núna, ekki spá` / `where the thread is
+  heading now, not foretold`. Beat dostal navíc explicitní *„Þú getur breytt stefnunni“* /
+  *„you can walk differently“* — trajektorie, kterou lze změnit.
+- **Ověřeno:** GreynirCorrect 0 flagů, žádné E001; `stefnir` 67 477, `þráðurinn` 8 878,
+  `spámaður` 2 283 (Risamálheild 2000–2021). Golden: změnily se **jen** 4 klíče
+  (`norns_is`, `norns_lens_is`, `norns_en`, `norns_lens_en`), staré znění nikde nezbylo.
+- **Reality note:** `_intentionContext` skuld větev byla reframnutá už dřív („gæti orðið,
+  ekki sem spádóm“); tohle dohání `RP_NORNS` na tentýž směr (§20 — dvě kopie téhož faktu
+  se rozešly a opravila se jen jedna).
+- ⚠️ **Zůstává nedořešené a hlásím to (§22):** Yggdrasil nese tutéž starou formulaci —
+  v `v2/runar-character.js` tiers `SKULD (króna — það sem verður að vera)` a
+  `SKULD (Crown — what must come)`. Nebylo to v handoffu a je to obsah, takže jsem nesáhl.
+  Po téhle změně se Norns a Yggdrasil o Skuld **rozcházejí**.
+- **Affected doc(s):** `RUNAR_DESIGN.md`
+- **Reversibility:** easy (`git revert` tohoto commitu).
