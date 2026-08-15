@@ -25,10 +25,15 @@ function bansFrom(ch) {
 // Pole runy, ktera se DOSTANOU do promptu: rn() vraci is_n/n, rk() vraci k_is/k.
 const FIELDS = { en: ['n', 'k'], is: ['is_n', 'k_is', 'formula_is'] };
 
-// Znama vyjimka, ceka na rozhodnuti OWNERA (uzivateli viditelny nazev runy).
-// `is_n: 'Raidho (Ferðalag)'` nese zakazane slovo, ale menit zobrazovane jmeno runy
-// neni tune — je to obsah. Navrh: 'Raidho (Leið)', slovo uz stoji ve vlastni
-// formuli ("rún leiðarinnar"), korpus 2000-2021: 1 002 773 vyskytu.
+// VYRESENA vyjimka (2026-08-15, owner), ne otevrena otazka.
+// Zakaz zni doslova: `Rúnar does not use the word "journey" as a METAPHOR FOR PERSONAL
+// GROWTH` / `sem myndlíkingu fyrir persónulegan vöxt` — a v grammar#3 stoji v seznamu
+// wellness klise vedle "your truth", "trust the process", "step into your power".
+// Miri tedy na klise, ne na doslovnou cestu. `is_n: 'Raidho (Ferðalag)'` je NAZEV runy
+// pojmenovane po ceste = doslovny vyznam. Neni to poruseni a nemeni se.
+// Doklad, ze to v provozu netece: 271 realnych cteni -> "journey" nalezeno 1x.
+// (Klicova slova se presto zmenila na `the road` / `leið` — tam je to POKYN, co psat,
+//  ne nazev, a vyznam zustal. Viz commit a129d2f.)
 const PENDING = [['is', 'Raidho', 'is_n', 'ferðalag']];
 
 let fail = 0, pending = 0;
@@ -40,7 +45,7 @@ for (const lang of ['en', 'is']) {
       for (const b of bans) {
         if (!v.includes(b)) continue;
         if (PENDING.some((p) => p[0] === lang && p[1] === r.n && p[2] === f && p[3] === b)) {
-          console.log('  ~ ČEKÁ NA OWNERA [' + lang + '] ' + r.n + '.' + f + ' obsahuje zakázané "' + b + '"');
+          console.log('  ~ VYŘEŠENO (doslovný název, ne klišé) [' + lang + '] ' + r.n + '.' + f + ' obsahuje zakázané "' + b + '"');
           pending++; continue;
         }
         console.log('  ✗ [' + lang + '] ' + r.n + '.' + f + ' obsahuje zakázané "' + b + '": ' + r[f]);
@@ -60,5 +65,5 @@ console.log(caught
 if (!caught || !bansEn.length) fail++;
 
 console.log(fail ? '\nFAIL: ' + fail + ' zaseto' : '\nOK — žádné zakázané slovo si do promptu nesázíme' +
-  (pending ? ' (' + pending + ' čeká na ownera)' : ''));
+  (pending ? ' (' + pending + ' vyřešená výjimka)' : ''));
 process.exit(fail ? 1 : 0);
