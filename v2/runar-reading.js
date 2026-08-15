@@ -325,7 +325,7 @@ function _updateSpreadSlots(cfg) {
     el.innerHTML = rune ? runeSvg(rune, { frame: true, cls: 'slot-stone' }) : _SLOT_GLYPHS[i];
     el.classList.toggle('filled', !!rune);
     if (rune) {
-      el.title = rune.n + ' — ' + t('slot_remove_hint');
+      el.title = rn(rune) + ' — ' + t('slot_remove_hint');
       el.style.cursor = 'pointer';
       el.onclick = (function(idx) {
         return function() {
@@ -788,7 +788,7 @@ async function _generateSpreadReading(o) {
   var prompt = o.buildPrompt(u, o.runes, lang, corrections);
 
   // Journal meta for the SERVER-SIDE save (proxy persists atomically with the deduction).
-  var _runeDisplay = o.runes.map(function (r) { return ((r.g || '') + ' ' + (r.n || '').toUpperCase()).trim(); }).join(' · ');
+  var _runeDisplay = o.runes.map(function (r) { return ((r.g || '') + ' ' + (rn(r) || '').toUpperCase()).trim(); }).join(' · ');
   var _journalS = (currentUser && (_readingMode === 'mine' || isTester)) ? {
     kind: 'spread', id: _uuid(), rune_name: o.kind, rune_glyph: '✦', lang: lang,
     area: 'spread', aol: u.area || null, seeking: u.seeking || null, intention: u.intention || null,

@@ -1500,7 +1500,7 @@ function buildHorseshoePrompt(u, runes, lang, corrections) { return buildHorsesh
 var RP_YGGDRASIL = {
   is: {
     seeker:'Leiðandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leiðin', seekJoin:' og ', question:'Spurning', langInstr:'',
-    tiers:['── SKULD (króna — það sem verður að vera) ──','── VERÐANDI (stofn — það sem er að gerast) ──','── URÐUR (rætur — það sem var og er fast) ──'],
+    tiers:['── SKULD (króna — hvert þráðurinn stefnir) ──','── VERÐANDI (stofn — það sem er að gerast) ──','── URÐUR (rætur — það sem var og er fast) ──'],
     positions:['RÚNIN 1 — Ásgarðr (hæsta sjálf, hvað þú ert að verða):','RÚNIN 2 — Vanaheimr (samhljómur, hvað er í jafnvægi):','RÚNIN 3 — Álfheimr (sköpunarkraftur, hvað er að kvikna):','RÚNIN 4 — Miðgarðr (daglegar raunir, hér og nú):','RÚNIN 5 — Jötunheimr (hindrun, hvað þrýstir gegn þér):','RÚNIN 6 — Svartálfaheimr (dulin list, hvað er unnið í myrkri):','RÚNIN 7 — Níðavellir (djúp uppspretta, hvað heldur þér uppi án þess að þú vitir):','RÚNIN 8 — Niflheimr (uppruni, hvað er enn óleyst í þér):','RÚNIN 9 — Hel (lokið, hvað er að fullnægja sér):'],
     intro:'Leiðandinn dregur níu rúnir — Yggdrasil, níu heimar. Einu sinni á ári.',
     beats:[
@@ -1517,7 +1517,7 @@ var RP_YGGDRASIL = {
   },
   en: {
     seeker:'Seeker', lifeRune:'Life rune', area:'Area', seeking:'Seeking', seekJoin:' & ', question:'Question', langInstr:'Respond in English.',
-    tiers:['── SKULD (Crown — what must come) ──','── VERDANDI (Trunk — what is happening) ──','── URD (Roots — what was woven) ──'],
+    tiers:['── SKULD (Crown — where the thread is heading) ──','── VERDANDI (Trunk — what is happening) ──','── URD (Roots — what was woven) ──'],
     positions:['RUNE 1 — Asgard (highest self, what you are becoming):','RUNE 2 — Vanaheim (harmony, what is in balance):','RUNE 3 — Alfheim (creativity, what is kindling):','RUNE 4 — Midgard (daily reality, here and now):','RUNE 5 — Jotunheim (challenge, what presses against you):','RUNE 6 — Svartalfheim (hidden craft, what is worked in the dark):','RUNE 7 — Nidavellir (deep source, what sustains you without your knowing):','RUNE 8 — Niflheim (origin, what is still unresolved within you):','RUNE 9 — Hel (completion, what is fulfilling itself):'],
     intro:'The seeker draws nine runes — the Yggdrasil, nine worlds. Once a year.',
     beats:[
