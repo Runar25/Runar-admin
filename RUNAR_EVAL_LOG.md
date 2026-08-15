@@ -366,20 +366,29 @@ obraz, čočku životní runy a tvar zakončení.
 Owner: *„to already musí být něco, co ho pořád tlačí k tomu, aby ho říkal… chtěl bych najít příčinu!"*
 Měřeno na **226 anglických čteních z produkce** (ne na probe dávce).
 
-**Kolik toho vlastně je.** 66 z 226 čtení (**29 %**) obsahuje „already", dohromady **80 výskytů**.
-Z toho je ale jen **12 skutečná vada** — nárok na vnitřní stav („you already know / already feel").
-Zbylých **68 je běžné časové užití** („already becoming real", „already here", „already visible"),
-které žádné pravidlo neporušuje. **Slovo samo tedy problém není.**
+⚠️ **OPRAVA (tentýž den, nález nástroje `find_seeds.js`).** První verze tohoto záznamu tvrdila
+„66 z 226 = 29 %". To číslo bylo naměřené jen na `short_text` — **`deep_text` jsem nikdy neotevřel**,
+a čtení má obě pole. Správně: `short_text` 66 · `deep_text` 53 · **aspoň v jednom 111 z 227 = 49 %**.
+Podhodnoceno o 20 procentních bodů. Směr nálezu ani závěr se nemění, velikost ano.
+⭐ Tohle je důvod, proč metoda patří do nástroje a ne do hlavy: první, co automat udělal, bylo, že
+chytil ruční měření, kvůli kterému vznikl. (→ `CLAUDE.md` §24: plocha měření je součást měření.)
+
+**Kolik toho vlastně je.** **111 z 227 čtení (49 %)** obsahuje „already". Z toho nese
+**19 nárok na vnitřní stav** („already know / feel / sense / remember / carry"), z nich 13 explicitně
+s „you". Zbylých ~92 je **běžné časové užití** („already becoming real", „already here"), které žádné
+pravidlo neporušuje. **Slovo samo tedy problém není** — vada je NÁROK.
 
 **Zesilovač, který se dal odstranit — jediný doložený.**
 
 | seeking | čtení | s „already" | |
 |---|---|---|---|
-| **Confirmation** | 24 | **13 = 54 %** | text té volby slovo doslova nesl |
-| všechna ostatní | 202 | 53 = 26 % | |
-| kontrola: Clarity | 26 | 4 = 15 % | slovo v textu nemá |
+| **Confirmation** | 24 | **19 = 79 %** | text té volby slovo doslova nesl |
+| všechna ostatní | 203 | 92 = 45 % | |
+| druhá nejvyšší: Insight into Challenge | 14 | 8 = 57 % | |
+| kontrola: Clarity | 26 | 10 = 38 % | slovo v textu nemá → **pod** základem |
 
-**Fisher exact p = 0,0078** · kontrola Clarity p = 0,11 (nic). Text zněl
+**Fisher exact p = 0,0021**, replikuje v obou nezávislých půlkách dávky · kontrola Clarity je
+**pod** základem, tedy nic. Text zněl
 `has already decided` / `hefur **þegar** ákveðið sig` — a `þegar` je **přesně to slovo**,
 které eval kdysi našel ve 4 z 5 islandských čtení. Opraveno na `has made up their mind` /
 `hefur tekið ákvörðun` (1818 výskytů, GreynirCorrect 0 flagů); význam beze změny.
@@ -400,3 +409,62 @@ u Urðar („what is already fixed") a v kořenech Yggdrasilu („already been w
 věty **o minulosti**, kde je to správná angličtina. Honit slovo tam, kde sedí, je táž chyba
 jako ho zasévat. **Vada je NÁROK na vnitřní stav, ne token** — a ten se hlídá na výstupu
 (→ `RUNAR_BACKLOG.md`, detektor `isColdRead`).
+
+
+### 2026-08-15 — `find_seeds.js`: hledání zárodků automaticky
+
+KUKY: *„je jasné, že všechno má někde svůj zárodek. a my ho zaseli textem."*
+
+Ruční nález „already" trval hodinu a šel po mechanické cestě: vzít čtení, uhodnout páku, Fisher,
+kontrola. Mechanická cesta patří do nástroje. `scripts/utils/find_seeds.js` dělá pro **každou**
+páku (`area`, `seeking`, `intention`, `rune_name`) tohle:
+
+1. Zjistí **diffem postavených promptů**, která slova ta páka do promptu přidává. Ruční tabulka
+   „páka → slova" by se rozešla při první úpravě promptu; diff čte tentýž builder jako produkce (§19.3).
+2. Změří, jestli se ta slova ve čteních s tou pákou objevují častěji (Fisher, BH-FDR).
+3. Roztřídí: **ZASETO** (slovo je v textu páky a prosakuje) · **TICHO** (v textu je, neprosakuje) ·
+   **DRIFT** (prosakuje, ale my jsme ho tam nedali → otázka pro člověka, ne nález).
+
+**Nástroj se obhajuje sám (§27).** Každý nález má sloupec **REPLIKUJE**: dávka se dělí na dvě půlky
+deterministicky podle `id` (ne `Math.random`, jinak nejde zopakovat) a nález musí ukázat týmž směrem
+v obou. V ostrých bězích to opakovaně zabíjí nálezy, které by jinak prošly prahem — `healing`
+(33 % vs 1 %, q = 1,3e-2) i `hidden` u Perth (38 % vs 3 %, q = 6,8e-4). Bez toho sloupce
+by obojí vypadalo jako nález.
+Nástroj navíc vypisuje **SLEPOTU** (medián nejmenšího zachytitelného výskytu — teď 25 %) a **PŘESKOČENO**;
+tichá nula by lhala (§19.2). Prompt se losuje, takže diff běží 6× a bere průnik — jinak by losování
+vyrábělo falešné zárodky.
+
+**Ověření, že to k něčemu je** (`--v2 <adresář>` pustí sken proti starší verzi promptu): proti stavu
+před dnešní opravou nástroj **sám, bez nápovědy, našel „already" u `seeking=Confirmation`** —
+14/17 = 82 % proti 59/147 = 40 %, p = 1,3e-3, replikuje. Tedy nález, který ručně stál hodinu.
+Proti dnešnímu stavu už tam není. (Sken jede jen na **single** čteních; 63 spreadů staví jiné
+buildery, takže na ně single prompt neplatí — proto nižší `n` než u ručního měření.)
+
+Vedle toho našel zárodky, o kterých se nevědělo:
+- **`stillness` u runy Isa — 70 % proti 5 %** (p = 6,6e-7). Klíčová slova runy (`Isa.k = ice,
+  stillness, waiting, pause, clarity through cold`) se do čtení opisují. Vysvětluje to část
+  „stejnosti" čtení téže runy. **Otázka na ownera, ne rozhodnutí:** klíčová slova mají runu
+  navádět, ne dodávat slovník. Totéž `road` u Raidho (80 % vs 3 %), `root` u Eihwaz (67 % vs 9 %).
+- `love` u `area=Love & Relationships` (47 % vs 1 %) a `confirmation` u `seeking=Confirmation`
+  (35 % vs 1 %) — páka propisuje své vlastní jméno do čtení.
+- Jména run (`perth`, `hagalaz`, `wunjo` … 100 %) jsou ZASETO **záměrně** — prompt je nést má.
+  Proto nástroj nahoře píše, že ZASETO ≠ vada.
+
+**Co při dnešním `n` neuvidí:** slabší zárodek než ~25 % ve skupině. To není „čisto", to je „málo dat" —
+s testery se práh posune sám.
+
+
+**Tři chyby, které nástroj měl a které ho hned na začátku usvědčily** (patří sem, protože příště
+se dají čekat znovu):
+1. **`const` se mezi `vm.runInContext` nesdílí.** Prostředí se načítalo po souborech, takže
+   `runar-character.js` viděl `SEEKS` jako `undefined` — a jeho vlastní obrana
+   `typeof SEEKS === 'undefined' → return ''` z toho udělala **tiché prázdno**. Nástroj hlásil
+   „páka nepřidává do promptu nic" u úplně všech pák a vypadalo to jako výsledek.
+   ⚠️ Obrana proti chybějící závislosti umí z rozbitého prostředí udělat čistý nulový výstup.
+2. **`rune_name` se v diffu nikdy neměnila** (runa se nepředává v `u`), takže jména run spadla
+   do DRIFTU, jako by si je model vymyslel.
+3. **Průnik místo sjednocení.** Pravidlo „slovo musí být ve VŠECH bězích" narazilo na to, že
+   prompt losuje i klíčová slova runy — Isa nese „stillness" jen v půlce běhů. Průnik tedy
+   zahazoval právě ty nejzajímavější nálezy.
+
+Všechny tři odhalilo to, že nástroj vypisuje **PŘESKOČENO** a **SLEPOTU** místo tiché nuly (§19.2).

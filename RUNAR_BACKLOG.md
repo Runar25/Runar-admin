@@ -376,3 +376,32 @@ v `scripts/utils/measure_readings.js` na `reading_text`. Vyjde z toho procento �
 tazateli tvrdí, co v sobě zná — měřitelné napříč verzemi promptu jako papouškování obrazu.
 Pozor při měření: `_noColdRead` zakazuje tvrdit, co ČTENÁŘ zná; věta o runě nebo o krajině
 tím není dotčená, takže detektor musí zůstat vázaný na „you".
+
+### `rk()` / `rn()` čtou GLOBÁLNÍ `lang`, ne parametr (2026-08-15)
+`v2/runar-utils.js:411` a `:414`: `function rk(r){ return lang === 'is' ? r.k_is : r.k; }`.
+Buildery přitom `lang` berou jako **parametr** (`buildReadingPrompt(u, drawn, lang, corrections)`).
+V produkci to vychází, protože `runar-reading.js:99` předává tutéž globální proměnnou — ale je to
+tichá past: kdokoli zavolá builder s jiným jazykem, než je globál, dostane **smíchané jazyky**
+(anglická klíčová slova run v islandském čtení) a nic to nenahlásí. Narazil na to `find_seeds.js`
+(spadlo `ReferenceError: lang is not defined`, protože v sandboxu globál nebyl).
+**Co udělat:** dát `rk`/`rn` druhý parametr `lang` s fallbackem na globál a projít volající (§13).
+**Pozor:** je to sdílené `runar-utils.js` — čte i shrine (§3).
+
+### `spread_data` se nikdy nevyplní — u 63 spreadů nevíme, co padlo (2026-08-15)
+`readings.spread_data` je u **všech** spreadů `null` (ověřeno dotazem; spready se poznají podle
+`area='spread'`, ne podle toho sloupce). U 63 anglických spreadů tedy nevíme, které runy padly
+na které pozice — a zpětně to nedoplníme. Owner 2026-08-15: *„i teď nepoužitelná data můžou mít
+cenu zlata za pár měsíců."* Tohle je přesně ten případ.
+**Co udělat:** zapsat pozice+runy do `spread_data` v `claude-proxy` (stejným způsobem jako
+`prompt_draws`); pozor na pořadí — sloupec existuje, takže migrace netřeba.
+**Proč to blokuje měření:** `find_seeds.js` musí spready ze skenu vyřadit; bez `spread_data`
+nejde říct, která pozice ve spreadu který zárodek nese.
+
+### Klíčová slova run se opisují do čtení — otázka na ownera (2026-08-15)
+`find_seeds.js` naměřil: `stillness` u Isa **70 % vs 5 %** (p = 6,6e-7), `road` u Raidho 80 % vs 3 %,
+`root` u Eihwaz 67 % vs 9 %. Slova pocházejí z `RUNES[].k` (`Isa.k = 'ice, stillness, waiting,
+pause, clarity through cold'`), které prompt runě dodává. Vysvětluje to část „stejnosti" čtení
+téže runy — každé sáhne po stejném slově.
+**Rozhodnutí je ownerovo (obsah):** mají klíčová slova runu **navádět**, nebo jí dodávat slovník?
+Kdyby navádět, dá se to testovat obrácenou pákou (§25): klíčová slova u jedné runy nahradit
+obrazem bez použitelných substantiv a změřit, jestli stejnost klesne.
