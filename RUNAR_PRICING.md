@@ -34,19 +34,40 @@ Standard subscription is the product.
 
 **Measured 2026-06-14** (script `scripts/utils/measure_reading_costs.js`, 3–4 real samples/type via prod proxy).
 Supersedes the old "430 char" base — readings were re-tuned 2026-06-12/14 (single shortened, Norns→~770, Kríž→~1030).
-Claude model: Sonnet 4-5 ($3/$15 per 1M in/out). Stored in claude-proxy/index.ts — not in frontend.
+Claude model: **Opus 4.8** ($5/$25 per 1M in/out) — zdroj pravdy je `MODELS` v
+`claude-proxy/index.ts`, tady se to NEOPISUJE (§20); tenhle řádek je jen datovaný záznam ke dni.
+⚠️ **Přeměřeno 2026-08-15** — do té doby tu stálo „Sonnet 4-5 ($3/$15)", což byl model, který
+už neběžel, takže celý sloupec „Claude" i break-even byly počítané na cizí ceně.
 Prompt caching: ✅ deployed (2026-06-09). System prompt (~960 tok EN / ~1.045 IS) cached, ephemeral 5min TTL.
 ElevenLabs: Multilingual v2/v3 (IS) $0.10/1k chars / Flash (EN) $0.05/1k chars. EL chars = reading text length.
 
 | Reading | EL chars | ~out tok | Claude | EL IS | EL EN | Total IS | Total EN | Credits (RS) |
 |---------|----------|----------|--------|-------|-------|----------|----------|--------------|
-| Single | 358 | 90 | $0.002 | $0.036 | $0.018 | **$0.038** | **$0.020** | **1** |
+| Single | **272** | 90 | $0.003 | $0.027 | $0.014 | **$0.030** | **$0.017** | **1** |
 | Norns (3) | 773 | 145 | $0.004 | $0.077 | $0.039 | **$0.081** | **$0.043** | **2** |
 | Kríž (5) | 1.028 | 185 | $0.005 | $0.103 | $0.051 | **$0.108** | **$0.056** | **3** |
 | Horseshoe (7) | 1.367 | 342 | $0.006 | $0.137 | $0.068 | **$0.143** | **$0.074** | **4** |
 | Yggdrasil (9) | 1.661 | 415 | $0.008 | $0.166 | $0.083 | **$0.174** | **$0.091** | **5** |
 | Life Rune | 0 (text, no voice) | 293–363 | $0.006 | — | — | **$0.006** | **$0.006** | **0** |
 | Founding ritual (= Norns) | 773 | 145 | $0.004 | $0.077 | $0.039 | **$0.081** | **$0.043** | **2** |
+
+**⚠️ Co je v téhle tabulce změřené a co dopočítané (2026-08-15).**
+- **Single, EL znaky = ZMĚŘENO z produkce.** 155 čtení v dnešním jednolitém formátu
+  (`short_text` neprázdný, `deep_text` prázdný, bez `spread_data`): **medián 276 EN / 268 IS**,
+  n = 122 / 33. Průměr je vyšší (386 / 318), ale táhne ho pár odlehlých čtení až 1812 znaků —
+  medián je poctivější střed. Do tabulky jde **272**.
+  Předchozí hodnota 358 byla z 2026-06-14, tedy před dalším zkracováním čtení.
+- **Sloupec „Claude" = PŘEPOČÍTÁN faktorem 5/3, ne odhadnut.** Opus 4.8 stojí 5/3 ceny
+  Sonnetu 4-5 v obou směrech ($5/$3 = $25/$15 = 1,667) a sazby za cache jsou násobky základní
+  ceny, takže se celý sloupec škáluje touž konstantou bez ohledu na poměr vstup/výstup.
+- **Spready: EL znaky NEZMĚŘENY.** V DB jsou spready **tři**. Jejich řádky drží hodnoty
+  z 2026-06-14 a platí o nich jen ta oprava modelu (×5/3 ve sloupci Claude). Až spready
+  poběží ve větším počtu, přeměřit toutéž cestou (SQL nad `readings`, medián `length(short_text)`).
+
+**Nález, který jde proti očekávání:** přechod na 1,67× dražší model čtení **nezdražil**.
+Cena Single klesla z **$0,038 → $0,030** (IS) a **$0,020 → $0,017** (EN), protože v celkové ceně
+dominuje ElevenLabs (~90 %) a čtení se mezitím zkrátila o ~24 %. Úspora na délce převážila
+příplatek za model. **Marže na kredit se tím nezhoršila, zlepšila.**
 
 **Credit scale derived from cost ratio vs single:** Norns 2.1× → 2 · Kríž 2.8× → 3 · Horseshoe 3.8× → 4 · Yggdrasil 4.6× → 5.
 Credits round up from raw cost ratio → margin per credit is uniform (~98 %) across all reading types.

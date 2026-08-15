@@ -360,3 +360,9 @@ Detail nálezu, který tu chybí, se dá dohledat v `RUNAR_DECISIONS.md` téhož
 ### Co ten sweep NENAJDE
 Rozpory, které nejsou textové — dvě instrukce, které si neodporují slovy, ale výsledkem.
 A cokoli v datech mimo repo. To zachytí jen měření na výstupu modelu.
+
+## Nálezy z workflow — k triáži
+Ukládá se sem automaticky. Surový materiál žije v `docs/findings/`, tady je jen ukazatel (§20).
+<!-- AUTO-NALEZY -->
+- [2026-08-15 — test pojistky](docs/findings/2026-08-15-wf_a188371f-db1.md) · běh `wf_a188371f-db1` · 9 agentů — **k triáži**
+- [2026-08-15 — §20 sweep — duplikáty, drifty, mrtvý kód](docs/findings/2026-08-15-wf_62679055-021.md) · běh `wf_62679055-021` · 11 agentů — **k triáži**
