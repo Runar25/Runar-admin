@@ -1343,41 +1343,42 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
 function buildKrizPrompt(u, runes, lang, corrections) { return buildKrizPromptCross(u, runes, lang, corrections); }
 
 // ─── NORNS PROMPT BUILDERS ──────────────────────────────────────
-// Norns = 3-rune spread on the fate axis
+// Norns = 3-rune spread on the axis of becoming (the seeker's own thread)
 // runes[0] = Urðr  (urd)      — what was woven, immutable
 // runes[1] = Verðandi (verdandi) — what is being woven now
-// runes[2] = Skuld  (skuld)   — what must come, inevitable possibility
+// runes[2] = Skuld  (skuld)   — where the thread is heading now (trajectory, not decree)
 //
 // Tree of Life: norns_axis HARDCODED by position (not from area/seeking)
 //   runes[0] → urd | runes[1] → verdandi | runes[2] → skuld
 // Bloom duration: 24h (branch reaches toward kmen).
-// Fate axis — not a timeline. Each Norna has a distinct voice and weight.
+// Axis of becoming — what shaped you -> where you stand -> where you lean;
+// reflects the thread, never decrees it. Each Norna has a distinct voice and weight.
 
 var RP_NORNS = {
   is: {
     seeker:'Leiðandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leiðin', seekJoin:' og ', question:'Spurning', langInstr:'',
-    labels:['URÐUR (urd — það sem var ofið, ekki hægt að taka til baka):','VERÐANDI (verdandi — það sem er að verða til, lifandi þráðurinn):','SKULD (skuld — það sem verður að koma, skuldin við örlögin):'],
+    labels:['URÐUR (urd — það sem var ofið, ekki hægt að taka til baka):','VERÐANDI (verdandi — það sem er að verða til, lifandi þráðurinn):','SKULD (skuld — hvert þráðurinn stefnir núna, ekki spá):'],
     intro:'Leiðandinn dregur þrjár rúnir — Nornirnar tala.',
     beats:[
       'Þetta eru ekki þrír aðskildir lestrar — þetta er ein saga sem Nornirnar segja saman.',
       'Urður talar af þyngd þess sem er þegar fast — röddin hennar er hlutlæg, óafturkallanleg.',
       'Verðandi talar í nútíð — lifandi, að verða til, ekki lokið.',
-      'Skuld talar ekki um framtíðina eins og spámann — heldur um hvað verður að verða ef þráðurinn heldur áfram.',
+      'Skuld talar ekki eins og spámaður — heldur um hvert þú stefnir núna, ef þú heldur áfram eins og nú. Þú getur breytt stefnunni.',
     ],
-    bigInstruction:function(name){ return 'Gefðu hverri af þremur rúnunum sinn eigin takt, í röð — Urður (það sem var), Verðandi (það sem er að verða), Skuld (það sem verður að koma). Taktarnir þrír renna saman í EINN samfelldan straum, ekki þrjá aðskilda lestra. Nefndu ekki rúnirnar né Nornirnar; leiðandinn sér þær þegar. ' + _namePlacement(name, 'is') + ' 5 til 6 setningar alls yfir taktana þrjá.'; },
+    bigInstruction:function(name){ return 'Gefðu hverri af þremur rúnunum sinn eigin takt, í röð — Urður (það sem var), Verðandi (það sem er að verða), Skuld (hvert þú stefnir). Taktarnir þrír renna saman í EINN samfelldan straum, ekki þrjá aðskilda lestra. Nefndu ekki rúnirnar né Nornirnar; leiðandinn sér þær þegar. ' + _namePlacement(name, 'is') + ' 5 til 6 setningar alls yfir taktana þrjá.'; },
     json:'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í röð (Urður, Verðandi, Skuld), engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)"}]. Þrír text-reitir tengdir með bili verða að lesast sem ein samfelld heild.',
   },
   en: {
     seeker:'Seeker', lifeRune:'Life rune', area:'Area', seeking:'Seeking', seekJoin:' & ', question:'Question', langInstr:'Respond in English.',
-    labels:['URÐUR (urd — what was woven, cannot be undone):','VERÐANDI (verdandi — what is being woven, alive now):','SKULD (skuld — what must come, the debt of fate):'],
+    labels:['URÐUR (urd — what was woven, cannot be undone):','VERÐANDI (verdandi — what is being woven, alive now):','SKULD (skuld — where the thread is heading now, not foretold):'],
     intro:'The seeker draws three runes — the Norns speak.',
     beats:[
       'This is not three separate readings — it is one story told by three voices.',
       'Urður speaks with the weight of what is already fixed — her voice is declarative, immovable.',
       'Verðandi speaks in the present — living, becoming, not yet complete.',
-      'Skuld does not predict — she speaks of what must come if this thread continues.',
+      'Skuld does not predict — she speaks of where you are heading if you keep walking as you are now, and you can walk differently.',
     ],
-    bigInstruction:function(name){ return 'Give each of the three runes its own beat, in order — Urður (what was), Verðandi (what is becoming), Skuld (what must come). The three beats connect into ONE flowing passage, not three separate readings. Do not name the runes or the Norns; the seeker already sees them. ' + _namePlacement(name, 'en') + ' 5-6 sentences total across the three beats.'; },
+    bigInstruction:function(name){ return 'Give each of the three runes its own beat, in order — Urður (what was), Verðandi (what is becoming), Skuld (where you are heading). The three beats connect into ONE flowing passage, not three separate readings. Do not name the runes or the Norns; the seeker already sees them. ' + _namePlacement(name, 'en') + ' 5-6 sentences total across the three beats.'; },
     json:'Output format — return ONLY this JSON array, one object per rune in order (Urður, Verðandi, Skuld), nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)"}]. The three text fields joined with a space must read as one seamless passage.',
   },
 };

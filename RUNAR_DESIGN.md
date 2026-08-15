@@ -346,11 +346,11 @@ Strom: malý uzel na větvi.
 ```
 [Urður] — [Verðandi] — [Skuld]
 ```
-Urður = co bylo utkáno. Nelze odestát. Kořen ze kterého vychází vše.
+Urður = co tě utvořilo. Nelze odestát. Kořen ze kterého vychází vše.
 Verðandi = co se právě tká. Přítomný okamžik jako živá nit.
-Skuld = co musí být. Dluh osudu. Ne předpověď — nevyhnutelná možnost.
+Skuld = kam se kloníš teď. Směr tvého vlákna, ne dekret osudu. Ne předpověď — trajektorie, kterou můžeš změnit.
 
-Tři Norny = tři kořeny Yggdrasilu. Zakládací rituál stromu — jedním čtením jsou zasazeny všechny tři kořeny najednou. Fate axis, ne časová osa. Každá Norna mluví jiným hlasem a jinou vahou.
+Tři Norny = tři kořeny Yggdrasilu. Zakládací rituál stromu — jedním čtením jsou zasazeny všechny tři kořeny najednou. Osa tvého stávání (co tě utvořilo → kde stojíš → kam se kloníš), ne osud. Každá Norna mluví jiným hlasem a jinou vahou.
 
 Strom: větev → kmen. Zakládací rituál.
 
