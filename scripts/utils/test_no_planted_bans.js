@@ -62,16 +62,34 @@ for (const lang of ['en', 'is']) {
 // Doloreno 2026-08-15 z DB: cteni Mannaz dostalo obraz "You know your own handwriting…"
 // a skoncilo na "the hand that writes it is one you already know". Model to nevymyslel,
 // zdedil to. SEASON_POOLS jsou ciste (krajiny, ne tvrzeni o ctenari).
-const COLD = /\b(you know|you already|you feel|you carry|you remember|you have always|something in you|what you know)\b/i;
+// Puvodni vzor hledal "you know" jako SOUSEDNI dvojici a proto minul
+// "You wake AND know at once…" (Dagaz) — sloveso od "you" odtrzene. Nasel to az Cowork.
+// Novy vzor: "you" + az 3 slova + sloveso VNITRNIHO STAVU.
+//
+// A jedna vec navic, ktera se ukazala az pri testu: zapor NENI studene cteni.
+// "you do not know what waits beyond" (Blank) a "you do not yet know what it says" (Perth)
+// tvrdi NEVEDOMOST, ne vedomost — pravidlo zakazuje rikat, co ctenar v sobe ZNA.
+// Bez teto vyjimky hlasil hlidac 5 misto 3.
+const COLD_VERB = /\byou\b((?:\s+\w+){0,3})\s+(know|knows|feel|feels|remember|remembers|sense|senses)\b/i;
+const COLD_PHRASE = /\b(something in you|what you know|you have always)\b/i;
+const NEGATED = /\b(do not|don't|cannot|can't|never|no longer)\b/i;
+function isColdRead(txt) {
+  if (COLD_PHRASE.test(txt)) return true;
+  const m = COLD_VERB.exec(txt);
+  // m[1] = slova mezi "you" a slovesem; zapor sedi prave tam ("you DO NOT know")
+  return !!m && !NEGATED.test(m[1]);
+}
 const IMGS = (typeof s.RUNE_IMAGES !== 'undefined') ? s.RUNE_IMAGES : null;
 // Znama, ceka na preformulovani (zneni obrazu = obsah, ne tune).
-const COLD_PENDING = ['Mannaz', 'Laguz'];
+// Prazdny zamerne: vsechny tri naroky prepsany 2026-08-15 (Cowork).
+// Od ted kazdy novy studeny obraz test SHODI — neni co tolerovat.
+const COLD_PENDING = [];
 if (!IMGS) { console.log('  ✗ RUNE_IMAGES nenalezeny — kontrola studeneho cteni NEBEZELA'); fail++; }
 else {
   let cold = 0;
   for (const r of IMGS) {
     const txt = [r[2], r[3]].filter(Boolean).join(' ');
-    if (!COLD.test(txt)) continue;
+    if (!isColdRead(txt)) continue;
     if (COLD_PENDING.indexOf(r[0]) !== -1) {
       console.log('  ~ ČEKÁ NA PŘEFORMULOVÁNÍ [' + r[0] + '] obraz tvrdí, co čtenář zná: ' + String(r[3] || r[2]).slice(0, 66));
       cold++; continue;
