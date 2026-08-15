@@ -55,6 +55,33 @@ for (const lang of ['en', 'is']) {
   }
 }
 
+// ─── 2) STUDENE CTENI ZASETE VE VLOZENEM OBRAZU ────────────────────────────
+// Tataz rodina jako zakazana slova vyse, jen SEMANTICKA: prompt si sam poda obraz,
+// ktery ctenari TVRDI, co v sobe zna nebo citi — a _noColdRead to o par radku dal
+// zakazuje ("Never tell them what is true, stirring, or known inside them").
+// Doloreno 2026-08-15 z DB: cteni Mannaz dostalo obraz "You know your own handwriting…"
+// a skoncilo na "the hand that writes it is one you already know". Model to nevymyslel,
+// zdedil to. SEASON_POOLS jsou ciste (krajiny, ne tvrzeni o ctenari).
+const COLD = /\b(you know|you already|you feel|you carry|you remember|you have always|something in you|what you know)\b/i;
+const IMGS = (typeof s.RUNE_IMAGES !== 'undefined') ? s.RUNE_IMAGES : null;
+// Znama, ceka na preformulovani (zneni obrazu = obsah, ne tune).
+const COLD_PENDING = ['Mannaz', 'Laguz'];
+if (!IMGS) { console.log('  ✗ RUNE_IMAGES nenalezeny — kontrola studeneho cteni NEBEZELA'); fail++; }
+else {
+  let cold = 0;
+  for (const r of IMGS) {
+    const txt = [r[2], r[3]].filter(Boolean).join(' ');
+    if (!COLD.test(txt)) continue;
+    if (COLD_PENDING.indexOf(r[0]) !== -1) {
+      console.log('  ~ ČEKÁ NA PŘEFORMULOVÁNÍ [' + r[0] + '] obraz tvrdí, co čtenář zná: ' + String(r[3] || r[2]).slice(0, 66));
+      cold++; continue;
+    }
+    console.log('  ✗ NOVÝ studený obraz [' + r[0] + ']: ' + String(r[3] || r[2]).slice(0, 70));
+    fail++;
+  }
+  if (!cold && !fail) console.log('  studené čtení ve vkládaných obrazech: žádné');
+}
+
 // KONTROLA TESTU: chytil by to vubec? Podstrcime runu se zakazanym slovem.
 const bansEn = bansFrom(s.__EN);
 const probe = bansEn.find((b) => b === 'journey') || bansEn[0];
