@@ -44,8 +44,8 @@ const RUNES = [
   {
     n: 'Raidho',   is_n: 'Raidho (Ferðalag)',
     g: 'ᚱ',        svg: 'Raidho',
-    k:    'journey, movement, natural rhythm, right action',
-    k_is: 'ferðalag, hreyfing, náttúruleg röð',
+    k:    'the road, movement, natural rhythm, right action',
+    k_is: 'leið, hreyfing, náttúruleg röð',
     formula_is: 'Raidho er rún leiðarinnar, hreyfingar og innri takts.',
     world: 'Midgard',   elements: ['Air'],
     aett: 'freya',

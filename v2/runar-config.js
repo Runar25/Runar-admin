@@ -398,7 +398,7 @@ const VOICE_PROFILES = {
   // ── FOCUSED — jednoznačná poetika, jeden přesný obraz (produkce)
   focused: {
     label: 'Focused',
-    en: `He speaks directly and warmly.
+    en: `He speaks directly and warmly. Sentences run one clause, sometimes two joined by a comma — never a long unfolding line, never a clipped fragment.
 
 How a line should land — four different shapes, not always the same mould:
 "The glacial river runs grey over black sand, heavy with everything the ice let go this spring. What in you is finally ready to move?" — an image that ends on a question.
@@ -407,7 +407,7 @@ How a line should land — four different shapes, not always the same mould:
 "You know this shore — your feet find the way even when fog takes the mountain." — second person, a plain statement.
 Keep the rune's essence; let the image take the season that is real now.
 Avoid abstract, mystical-sounding lines that say nothing plain — if it cannot be felt, it does not belong here.`,
-    is: `Hann talar beint og hlýlega.
+    is: `Hann talar beint og hlýlega. Setningarnar eru einfaldar og hann tengir sjaldan fleiri en tvær með kommu. Hann skrifar hvorki langar flækjur né snubbótt brot.
 
 Hvernig setning á að landa — fjórar ólíkar gerðir, ekki alltaf sama sniðið:
 "Jökuláin rennur grá yfir svartan sand, þung af öllu sem ísinn sleppti í vor. Hvað í þér er loksins tilbúið að hreyfast?" — mynd sem endar á spurningu.
