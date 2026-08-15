@@ -273,3 +273,90 @@ tři srovnávací skripty (`compare_horseshoe.js`, `compare_shrine_reader.js`,
 `compare_spreads_neutral.js`), takže „mrtvý" je jen vůči produkci, ne vůči repu.
 Mrtvý řetěz je navíc delší, než tu původně stálo: `_getLunarPhase`, `_getIcelandicSeason`,
 `_getTimeOfDay`, `getContextLine`, `buildLifeRuneContext` visí na témž kořeni.
+
+## §20 SWEEP 2026-08-15 — 34 nálezů, stav
+
+Pět nezávislých úhlů + adversariální audit každého nálezu. Každý nález má `soubor:řádek`
+a byl doložen spuštěným příkazem. **Zdroj:** workflow `wf_62679055-021`.
+Detail nálezu, který tu chybí, se dá dohledat v `RUNAR_DECISIONS.md` téhož dne.
+
+### ✅ Hotovo (ať to nikdo nedělá podruhé)
+- `applyISCorrections` volaná v shrine **za** zaplaceným callProxy → `ab08a2b`
+- Visitor gate 1 → 5 run · `help.html` „Unlimited readings" + `Rúnaleitandi` → `b6fdf9e`
+- Yggdrasil Skuld dorovnána na Norns · IS reader ukazoval anglická jména run → `3236272`
+- Norns „osa osudu" → „osa stávání" (rozpor s vlastním zákazem) → `907a435`
+- Úhel vs. větev: dva nároky na první větu → `d3ff24a`
+- `journey`/`ferðalag` v datech runy Raidho + hlídač → `a129d2f`, `829c8b1`
+- Můj vlastní špatný komentář „buildSysPromptV2 nikdo nevolá" (volají ho 3 skripty) → `ab08a2b`
+
+### 🔴 Zbývá — mění výstup modelu
+1. **Anglické názvy živlů jdou do 25/25 islandských promptů.** V promptu stojí
+   `Frumefni: Air`. Zdroj `runar-runes.js` `elements`. Potřebuje IS překlad živlů
+   (obsah → Cowork), zapojení CODE.
+2. **Šest byte-identických kopií JSON kontraktu** — `runar-character.js:1286/1447/1528` (EN)
+   a `1269/1434/1511` (IS), md5 shodné. `:1137/1150` a `:1364/1377` jsou **záměrně jiné**,
+   ty nechat. Nejlevnější oprava s největším dosahem: **nulová změna promptu**, nepotřebuje
+   eval ani golden. Platí jen dokud jsou shodné.
+3. **Pravidlo „obraz bere sezónu, která je teď skutečná" ve DVOU souborech** a obě kopie jdou
+   do každého system promptu: `runar-character.js:998/:994` (`_spine`) × `runar-config.js:408/:417`
+   (`VOICE_PROFILES.focused`). Grep uvnitř `character.js` tu druhou kopii **nenajde**.
+   Latentní: `VOICE_PROFILES.lyrical` zdvojuje anti-ozvěnu i pravidlo o úhlu a vrací
+   „frozen ground", které `_spine` zakazuje → přepnutí profilu = okamžitý rozpor.
+4. **Táž instrukce 2× v každém spread promptu** — „ne proroctví" (`_intentionContext` × beats),
+   „ne vysvětlování" (`_describeRule` × `RP_SINGLE.noqBranch`, týká se 2100 z 3192 promptů).
+5. **`area` a `seeking` 2× v každém spread promptu**, a u `seeking` s rozporem: prompt vypíše
+   „Seeking: Clarity" a o dva řádky níž zakáže „do not name it back".
+
+### 🟠 Zbývá — kopie už rozešlá, čte se jako pravda
+6. **Yggdrasil „jednou ročně / Dec 14–28 / Premium"** — šestá a sedmá kopie:
+   `runar-character.js:1491` (komentář) + `RUNAR_DESIGN.md:407,:466` + `help.html` („Seasonal
+   readings at solstices and equinoxes"). Proti `CLAUDE.md`, `RUNAR_DECISIONS.md` a
+   `runar-config.js:353-357`, kde stojí „kdo sem vrátí datumovou bránu, dělá to popáté".
+7. **`RUNAR_PRICING.md:37` tvrdí model Sonnet 4-5**, proxy jede Opus 4.8
+   (`claude-proxy/index.ts:654`). Sloupec „Claude" v tabulce `:43-49` je pak počítaný na ceně
+   jiného modelu → **break-even je špatně**. [O] přeměřit nebo označit datem + modelem.
+8. **Pozice spreadů opsané v `RUNAR_DESIGN.md`** se rozešly s produkcí: `:394,:404`
+   **Múspellsheim** — v kódu 0 výskytů (produkce má `Svartalfheim`) · `:371` hodnota ze zálohy
+   z 6. 6. · `:386` „IS pozice: navrhnout" — jsou v produkci.
+9. **Yggdrasil IS `Miðgarðr = daglegar raunir`** proti třem ostatním kopiím („Daglegur
+   veruleiki"). `is-vazba`: `raunir` = strasti, ne realita. Rozešel se i `Ásgarðr`.
+10. **Kříž, pozice 3 — IS si odporuje sám v sobě**: hlavička „urd" (co bylo utkáno) ×
+    instrukce „hvað liggur í undirmeðvitund" (co je teď pod povrchem). Kánon
+    (`RUNAR_DESIGN.md:365`) říká „skryté / kořen / podvědomí" → odchýlený je IS štítek.
+11. **`SPREAD_CONFIG.positions` + `norns_axis`** — 48 řetězců pod hlavičkou „single source of
+    truth", které **nikdo nečte** (živé pozice jsou `RP_*` packy). **NEMAZAT** —
+    `RUNAR_BACKLOG.md` to pole teprve plánuje začít číst. Teď: sundat nálepku pravdy + guard,
+    který pack a config porovnává.
+12. **`RUNAR_DESIGN.md` popisuje nepostavenou tree mechaniku jako živou** (`:543-624`
+    vážené hlasování intention›area›seeking) — v `runar-tree-prod.js` je area = strana,
+    výška = jen intention, `seeking` má 0 výskytů. Rozešla se i strana.
+13. **`detectPatterns()` neexistuje**, `runar-config.js:184` ho jmenuje jako čtenáře.
+    `PATTERN_WINDOW` a `TRANSFORMATION_PAIRS` mají 0 čtenářů. Strukturu NEMAZAT, přepsat komentář.
+14. **`loadLifeRuneFromDB` (`runar-tree.js:656`) mrtvá**, komentář jmenuje neexistujícího
+    volajícího, tělo je rozešlý duplikát živého kódu (`.single()` vs `.maybeSingle()`).
+15. **GDPR: `RUNAR_PRIVACY.md:34-37` (EN)** se rozešel s tím, co uživatel odklikne. IS pár sedí
+    znak po znaku → zastaralý je doc. **[O]** EN slibuje `the EU`, IS `innan EES` — uživatel
+    souhlasí podle jazyka s jiným územím. 🔒
+16. **`RUNAR_PRIVACY.md:91` posílá IS text do fronty, kterou owner zrušil** („→ Sigrún").
+17. **Retirovaný název „Rune Keeper" v 8 místech** produkčního kódu (config má
+    `premium.label = 'Rune Wanderer'`). Legitimní výjimka: `reader.html:6` `<title>` a `:144`
+    `alt=` — Rúnar sám Keeper je.
+18. **Drobné rozešlé texty v readeru** — `reader.html:463` „once … one free reading" ×
+    `TIER_LIMITS` · `:281` „SPECIFIC QUESTION" × `translations.js:83` „THE SITUATION" ·
+    `shrine.html:397` `✎` × `translations.js:130` `✒`.
+19. **`shrine.html:315` sdílený klíč `voice_btn` na sémanticky jiném tlačítku** (reader =
+    PŘEHRÁT, shrine = GENEROVAT). Správný je natvrdo psaný HTML text, chybný je klíč.
+20. **Doky s čísly, která se rozešla** — `README.md` (8 polí × 7, špatná signatura
+    `buildSysPrompt`, `voice_dynamic` neexistuje) · „25 Elder Futhark" = 24 + Blank ·
+    `RUNAR_DESIGN.md:470` „50/75 run/měsíc" — jednotka je reading-unit · `runar-config.js:292`
+    komentář „cost = number of runes" je nepravdivý (Yggdrasil 9 run = 5 kreditů).
+21. **`CLAUDE.md:333` + `RUNAR_TREE_MAP.md:3` „crown-composer 1:1"** — produkce je ~25 dní
+    a osm symbolů pozadu.
+22. **`journal_teaser`: pět kopií, dva zapisovači do téhož elementu**, název tieru natvrdo
+    v HTML (`reader.html:708`).
+23. **Motto „The runes do not predict your fate" na 6 místech**, `#hero-quote` obchází
+    `translations.js`. Zatím shodné.
+
+### Co ten sweep NENAJDE
+Rozpory, které nejsou textové — dvě instrukce, které si neodporují slovy, ale výsledkem.
+A cokoli v datech mimo repo. To zachytí jen měření na výstupu modelu.
