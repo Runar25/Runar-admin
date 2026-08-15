@@ -281,8 +281,8 @@ a byl doložen spuštěným příkazem. **Zdroj:** workflow `wf_62679055-021`.
 Detail nálezu, který tu chybí, se dá dohledat v `RUNAR_DECISIONS.md` téhož dne.
 
 ### ✅ Hotovo (ať to nikdo nedělá podruhé)
-- `applyISCorrections` volaná v shrine **za** zaplaceným callProxy → `ab08a2b`
-- Visitor gate 1 → 5 run · `help.html` „Unlimited readings" + `Rúnaleitandi` → `b6fdf9e`
+- `applyISCorrections` volaná v shrine **za** zaplaceným callProxy → `ab08a2b`  <!-- check-docs:ok 2026-08-15 nález JE o zbytku po odstraněném post-processoru -->
+- Visitor gate 1 → 5 run · `v2/runar-help.html` „Unlimited readings" + `Rúnaleitandi` → `b6fdf9e`
 - Yggdrasil Skuld dorovnána na Norns · IS reader ukazoval anglická jména run → `3236272`
 - Norns „osa osudu" → „osa stávání" (rozpor s vlastním zákazem) → `907a435`
 - Úhel vs. větev: dva nároky na první větu → `d3ff24a`
@@ -299,7 +299,7 @@ Detail nálezu, který tu chybí, se dá dohledat v `RUNAR_DECISIONS.md` téhož
    eval ani golden. Platí jen dokud jsou shodné.
 3. **Pravidlo „obraz bere sezónu, která je teď skutečná" ve DVOU souborech** a obě kopie jdou
    do každého system promptu: `runar-character.js:998/:994` (`_spine`) × `runar-config.js:408/:417`
-   (`VOICE_PROFILES.focused`). Grep uvnitř `character.js` tu druhou kopii **nenajde**.
+   (`VOICE_PROFILES.focused`). Grep uvnitř `v2/runar-character.js` tu druhou kopii **nenajde**.
    Latentní: `VOICE_PROFILES.lyrical` zdvojuje anti-ozvěnu i pravidlo o úhlu a vrací
    „frozen ground", které `_spine` zakazuje → přepnutí profilu = okamžitý rozpor.
 4. **Táž instrukce 2× v každém spread promptu** — „ne proroctví" (`_intentionContext` × beats),
@@ -308,8 +308,8 @@ Detail nálezu, který tu chybí, se dá dohledat v `RUNAR_DECISIONS.md` téhož
    „Seeking: Clarity" a o dva řádky níž zakáže „do not name it back".
 
 ### 🟠 Zbývá — kopie už rozešlá, čte se jako pravda
-6. **Yggdrasil „jednou ročně / Dec 14–28 / Premium"** — šestá a sedmá kopie:
-   `runar-character.js:1491` (komentář) + `RUNAR_DESIGN.md:407,:466` + `help.html` („Seasonal
+6. **Yggdrasil „jednou ročně / Dec 14–28 / Premium"** — šestá a sedmá kopie:  <!-- check-docs:ok 2026-08-15 nález JE o tom, že tahle mrtvá podmínka v kódu pořád je -->
+   `runar-character.js:1491` (komentář) + `RUNAR_DESIGN.md:407,:466` + `v2/runar-help.html` („Seasonal
    readings at solstices and equinoxes"). Proti `CLAUDE.md`, `RUNAR_DECISIONS.md` a
    `runar-config.js:353-357`, kde stojí „kdo sem vrátí datumovou bránu, dělá to popáté".
 7. **`RUNAR_PRICING.md:37` tvrdí model Sonnet 4-5**, proxy jede Opus 4.8
@@ -338,7 +338,7 @@ Detail nálezu, který tu chybí, se dá dohledat v `RUNAR_DECISIONS.md` téhož
     znak po znaku → zastaralý je doc. **[O]** EN slibuje `the EU`, IS `innan EES` — uživatel
     souhlasí podle jazyka s jiným územím. 🔒
 16. **`RUNAR_PRIVACY.md:91` posílá IS text do fronty, kterou owner zrušil** („→ Sigrún").
-17. **Retirovaný název „Rune Keeper" v 8 místech** produkčního kódu (config má
+17. **Retirovaný název „Rune Keeper" v 8 místech** produkčního kódu (config má  <!-- doc-values:ok 2026-08-15 nález JE o tom mrtvém jméně; pojmenovat ho musí -->  <!-- check-docs:ok 2026-08-15 tentýž nález, druhá kontrola -->
     `premium.label = 'Rune Wanderer'`). Legitimní výjimka: `reader.html:6` `<title>` a `:144`
     `alt=` — Rúnar sám Keeper je.
 18. **Drobné rozešlé texty v readeru** — `reader.html:463` „once … one free reading" ×
@@ -355,7 +355,7 @@ Detail nálezu, který tu chybí, se dá dohledat v `RUNAR_DECISIONS.md` téhož
 22. **`journal_teaser`: pět kopií, dva zapisovači do téhož elementu**, název tieru natvrdo
     v HTML (`reader.html:708`).
 23. **Motto „The runes do not predict your fate" na 6 místech**, `#hero-quote` obchází
-    `translations.js`. Zatím shodné.
+    `v2/runar-translations.js`. Zatím shodné.
 
 ### Co ten sweep NENAJDE
 Rozpory, které nejsou textové — dvě instrukce, které si neodporují slovy, ale výsledkem.

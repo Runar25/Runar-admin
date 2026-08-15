@@ -24,7 +24,9 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 #  · docs/archive/ = odloženo schválně
 #  · _cowork_snap/ = gitignored snapshot repa pro Cowork; přepíše se při dalším snapu,
 #    takže „oprava" v něm nemá kde přežít — a nikdo se jím neřídí
-SKIP_DIRS  = ('docs/archive', 'docs/inbox', 'memory/snapshots', '_cowork_snap',
+# docs/findings = doslovny zaznam nalezu (generuje findings_to_backlog.js): nalez
+# o mrtvem pojmu ten pojem musi pojmenovat, jinak se neda napsat.
+SKIP_DIRS  = ('docs/archive', 'docs/inbox', 'docs/findings', 'memory/snapshots', '_cowork_snap',
               'node_modules', '.git')
 SKIP_FILES = ('RUNAR_DECISIONS.md', 'check-docs.py')
 

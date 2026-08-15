@@ -2868,3 +2868,24 @@ Angličtina se nehnula, islandština 3,5×. Nejde tedy o samotnou stavbu věty. 
   a na **výstupu**, ne ve zdroji (§19.3). Detektor `isColdRead` existuje a je odladěný.
 - **Affected doc(s):** `RUNAR_EVAL_LOG.md`
 - **Reversibility:** easy.
+
+---
+
+## 2026-08-15 — `docs/findings/` se nekontroluje na správnost (je to doslovný záznam)
+
+- **Typ:** architektonické (jedna vrstva pravdy navíc) · vyvoláno tím, že push byl zablokovaný
+- **Co se stalo:** `findings_to_backlog.js` vyrábí `docs/findings/<datum>-<runId>.md` — doslovný
+  záznam toho, co nález našel. Nález o mrtvém pojmu ten pojem **musí pojmenovat**, jinak se nedá
+  napsat. Kontroly ⑭ (`check-docs.py`), ⑯ (`verify_doc_links.js`) a ⑰ (`verify_doc_values.js`)
+  ho ale četly jako živý doc a padaly na „Rune Keeper", „applyISCorrections", zkrácených cestách.
+  **Generátor tak vyráběl soubory, které samy blokovaly push** — 13 commitů viselo lokálně.
+- **Rozhodnutí:** `docs/findings/` se přidává mezi vyloučené složky ve všech třech kontrolách,
+  vedle `docs/archive/` a `docs/inbox/`. Táž zásada: **záznam cituje, neopravuje.**
+- ⭐ **Není to umlčení.** Ověřeno nasazenou sondou: mrtvý pojem v živém docu (`RUNAR_DESIGN.md`)
+  se pořád chytá, tentýž pojem v `docs/findings/` se ignoruje. Kontrola nezeslábla, jen ví,
+  na co se dívá (§19.3 — kontrola běží tam, kde bug žije).
+- **Co se NEuvolnilo:** čtyři zkrácené cesty v `RUNAR_BACKLOG.md` (`character.js` místo
+  `v2/runar-character.js`) se **opravily**, protože tam měla kontrola pravdu. Tři záměrné zmínky
+  mrtvých pojmů dostaly značku s důvodem a datem (`verify_escape_marks.js` holé značky odmítá).
+- **Affected doc(s):** `RUNAR_BACKLOG.md`
+- **Reversibility:** easy.

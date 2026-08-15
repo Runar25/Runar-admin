@@ -35,6 +35,9 @@ const tracked = execSync('git ls-files', { cwd: R, encoding: 'utf8', maxBuffer: 
   .trim().split('\n').filter(Boolean);
 const docs = tracked.filter(p =>
   p.endsWith('.md') &&
+  // docs/findings/ = doslovny zaznam nalezu: cituje i to, co je spatne (zastarale
+  // jmeno tieru, zkracena cesta). Kontrolovat ho na spravnost obraci jeho smysl.
+  !p.startsWith('docs/findings/') &&
   !p.startsWith('docs/archive/') &&
   !p.startsWith('docs/inbox/') &&
   !p.startsWith('memory/snapshots/') &&
