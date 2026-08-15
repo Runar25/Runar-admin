@@ -338,6 +338,7 @@ function composeReading(raw: string): string {
 // is free (it was never charged, since the deduction is a DB write that failed with the insert).
 async function persistJournal(
   journal: any, userId: string, text: string, creditsUsed: boolean,
+  usage: Record<string, unknown> | null = null,
 ): Promise<{ readingId: string | null; askSaved: boolean }> {
   let readingId: string | null = null;
   let askSaved = false;
@@ -385,6 +386,11 @@ async function persistJournal(
         // ⚠️ Vyžaduje sloupec `prompt_draws jsonb` — sql/2026-08-10_readings_prompt_draws.sql.
         //    Nasadit AŽ po té migraci: bez sloupce by insert selhal a čtení by se přestala ukládat.
         prompt_draws:   journal.draws ?? null,
+        // Co cteni STALO + ktery model z retezce odpovedel. Claude to vraci u kazde
+        // odpovedi a do 2026-08-15 se to zahazovalo. Bez toho nejde rict ani cenu,
+        // ani jestli se trefujeme do cache, ani ze jsme spadli na zalozni model.
+        // Vyzaduje sloupec `usage jsonb` — sql/2026-08-15_readings_usage.sql (spusteno).
+        usage:          usage,
         credits_used:   creditsUsed,
       };
       if (journal.id) row.id = journal.id; // client-generated id = idempotency key
@@ -709,7 +715,9 @@ serve(async (req: Request) => {
     let readingId: string | null = null;
     let askSaved = false;
     if (journal && userId) {
-      const r = await persistJournal(journal, userId, text, deductPlan.kind === "paid");
+      const u = data?.usage ?? null;
+      const r = await persistJournal(journal, userId, text, deductPlan.kind === "paid",
+        u ? { ...u, model: data?.model ?? null } : null);
       readingId = r.readingId;
       askSaved  = r.askSaved;
     }
