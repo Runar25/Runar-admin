@@ -260,3 +260,11 @@ Platí místo původního „3–4 nálady odlišené tempem". Detail a zdroje �
   a které novelní (novelní stojí 40 % / 10 % srozumitelnosti proti ~90 % u konvenčních).
 - **Test porozumění (návrh k realizaci):** distraktorový recall — 3 otázky, správná odpověď
   z jeho čtení, dva distraktory z **jiného tahu run téže délky a registru**.
+
+### Mrtvý řetěz V2 charakteru k odstranění (nalezeno 2026-08-15)
+`DEF_CHAR_V2_EN` (v2/runar-character.js) je **druhá úplná kopie popisu Rúnara** a už se rozešla —
+drží rejstřík, který z produkce odešel v `8e14f74`. Jediný čtenář je `buildSysPromptV2`, který
+**nikdo nevolá**; produkce jede `buildSysPrompt`. Lab záložka, kvůli které vznikl, byla odstraněna
+v `c6eb89c` (2026-07-10). Zatím jen označeno komentářem, aby to příští session nečetla jako pravdu.
+K odstranění: `DEF_CHAR_V2_EN` + `buildSysPromptV2` + `getContextLine`/`v2Voice`, pokud nemají
+jiného konzumenta. Před smazáním ověřit grepem přes v2/*.html (shrine).

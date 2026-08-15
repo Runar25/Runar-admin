@@ -2735,3 +2735,37 @@ Angličtina se nehnula, islandština 3,5×. Nejde tedy o samotnou stavbu věty. 
   0 obhájců). Ponaučení → `memory/loading-a-page-proves-existence-not-authenticity.md`.
 - **Affected doc(s):** `RUNAR_EVAL_LOG.md`, `RUNAR_BACKLOG.md`
 - **Reversibility:** n/a (rešerše + zadání; kód nedotčen).
+
+---
+
+## 2026-08-15 — Rúnarova identita a účel přeladěny z ezoterického rejstříku na věcný (EN i IS)
+
+- **Typ:** intent (owner potvrdil 2026-08-15) · obsah Cowork · ověření a zapojení CODE
+- **Scope:** prompt / design — 📜 vytvořený kánon
+- **Co se změnilo:** `DEF_CHAR` identity + purpose v **obou** jazycích a jeden obraz navíc
+  v `personality`. Esence je jedna, slova se skládají nativně (§2), takže EN není překlad IS.
+  IS identity byla přeladěna už v `1c67c0a`; tenhle záznam dorovnává zbytek, aby si prompt
+  neodporoval sám se sebou (identity věcná × purpose `dulspekiheim` = rozpor uvnitř jednoho promptu).
+- **Proč:** islandská rešerše 2026-08-15 — slovník Árnastofnun zná u `rún` jen dva významy
+  (rúnastafur, galdrastafur) a jedinou vazbu `rista rúnir`; runoložka Þórgunnur Snædal:
+  runy byly `frá upphafi fyrst og fremst notaðar sem venjulegt letur`. Rejstřík `dulspekingur`
+  nepoužívá ani mainstream, ani Ásatrúarfélagið, ani muzeum; islandské „esoterické" weby jsou
+  **překlady z angličtiny** (dulheimar.is hostuje PDF © Theosophical University Press 1985).
+  **Hranice nálezu:** říká, jak Islanďané mluví — netvrdí, že Rúnar musí. To rozhodl owner.
+- ⭐ **Kotva rejstříku zůstává v obou jazycích a je to DEFINICE, ne ozdoba:**
+  `He does not perform mysticism. He simply inhabits it.` / `Hann sýnir ekki dulspeki.
+  Hann býr einfaldlega í henni.` Rúnar v tajemství **bydlí**, ale nepředvádí ho.
+- **Měřeno (Risamálheild 2000–2021), ne odhadnuto:**
+  - `rúnalestur` → `ráða í rúnir`: hotový řetězec je vzácnější (27 vs 9), **ale** vazba
+    `ráða í` má **7 407** výskytů (`ráða drauma` 343, `ráða gátuna` 106). Frekvence hotového
+    řetězce je u slovesné vazby špatné měřidlo (§27) — CODE tím vyvrátil vlastní výhradu.
+  - `arinn` škrtnut: `arins` **47** výskytů a slovník nezná jediné ustálené spojení, proti
+    `þolinmæði` **28 065**. Navíc to porušovalo vlastní pravidlo `THE IMAGE` v páteři
+    (jeden obraz, nikdy dva vedle sebe) a podmínku, za které metafora vůbec funguje
+    (r = 0,42 jen když je jedna, nerozvedená, se známým cílem, brzy v textu).
+  - Ověřeno: GreynirCorrect 0 flagů, žádné E001; `kynnast` váže þágufall → `heimi` sedí.
+- **§20:** princip „zrcadlo, ne orákulum" má **jeden domov** — `RUNAR_DESIGN.md`. Sekce
+  z 2026-08-14 byla **sloučena**, ne zdvojena: *proč* (projekce → zrcadlo) a *jak zní*
+  (*inhabits, not performs*) jsou dvě strany téhož principu v jedné sekci.
+- **Affected doc(s):** `RUNAR_DESIGN.md`
+- **Reversibility:** easy (`git revert` tohoto commitu; IS identity zvlášť v `1c67c0a`).
