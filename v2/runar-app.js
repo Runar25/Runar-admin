@@ -864,7 +864,10 @@ async function loadCollection() {
     if (collAudioMap[row.rune_name]?.[row.lang]) collAudioMap[row.rune_name][row.lang].push(row);
   });
 
-  // ── Visitor gate: only Fehu is unlocked ──
+  // ── Visitor gate: five runes unlocked ──
+  // Banner i help.html slibovaly pět už dřív; brána pouštěla jednu. Owner 2026-08-15:
+  // správně je PĚT. Jediné místo, kde brána žije (ověřeno grepem, §13 full-path).
+  const VISITOR_RUNES = ['Fehu', 'Isa', 'Tiwaz', 'Sowilo', 'Ansuz'];
   const isVisitor = !currentUser || userTier === 'free_trial';
   const notice = document.getElementById('visitor-coll-notice');
   if (notice) {
@@ -884,7 +887,7 @@ async function loadCollection() {
     const isRows = collAudioMap[r.n]?.is || [];
     const hasEn  = enRows.length > 0;
     const hasIs  = isRows.length > 0;
-    const locked  = isVisitor && r.n !== 'Fehu';
+    const locked  = isVisitor && VISITOR_RUNES.indexOf(r.n) === -1;
 
     const cell = document.createElement('button');
     cell.className = 'coll-cell' + (hasEn && hasIs ? ' has-audio' : hasEn || hasIs ? ' partial-audio' : '') + (locked ? ' locked' : '');
