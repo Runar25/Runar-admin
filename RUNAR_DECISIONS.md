@@ -2797,3 +2797,51 @@ Angličtina se nehnula, islandština 3,5×. Nejde tedy o samotnou stavbu věty. 
   Po téhle změně se Norns a Yggdrasil o Skuld **rozcházejí**.
 - **Affected doc(s):** `RUNAR_DESIGN.md`
 - **Reversibility:** easy (`git revert` tohoto commitu).
+
+---
+
+## 2026-08-15 — Sběr dat před vizualizací; Slack a shrine až podle provozu
+
+- **Typ:** intent (owner potvrdil 2026-08-15: *„souhlasím s tím, co navrhuješ"*)
+- **Scope:** provoz / měření
+- **Rozhodnutí — pořadí, ne seznam:**
+  1. **Úplnost dat má přednost před vizualizací.** Graf se dá postavit kterýkoli den
+     zpětně; chybějící data se nedoplní nikdy. Proto `usage` (tokeny, cache, skutečný
+     model) a `prompt_draws` u každého čtení, hned.
+  2. **Slack až s testery** — a jen na *sledování*, ne na prohlížení. Jeho síla je, že
+     přijde sám. Při 2,8 čtení/den by hlásil šum.
+  3. **Záložka ve shrine až tehdy, když se začneme ptát „proč"** — u tří uživatelů není
+     jasné, co chceme vidět, a postavené by se to za měsíc přestavělo. Grafy ve
+     `stats.js --html` jsou proto inline SVG: dají se vzít do shrine 1:1.
+- **Rozlišení, na kterém to stojí:** *sledovat* (roste to, kdy je špička) a *analyzovat*
+  (proč je tohle čtení špatné, která páka za to může) jsou dvě různé úlohy. Grafy
+  odpovídají jen na první; na „proč" odpovídají dotazy a `prompt_draws`.
+- **Postaveno:** `scripts/utils/stats.js` (terminál · `--json` · `--html`) ·
+  `sql/2026-08-15_readings_usage.sql` · zápis `usage` v `claude-proxy`.
+- **Affected doc(s):** `RUNAR_BACKLOG.md`
+- **Reversibility:** easy.
+
+---
+
+## 2026-08-15 — Kontrola na ZDROJI nestačí: model otočil zápor v tvrzení
+
+- **Typ:** measurement (nález z reálného čtení)
+- **Scope:** reading / měření
+- **Co se stalo:** hlídač `test_no_planted_bans.js` schválně **nehlásí zápory** — obraz
+  „…you **do not** know what waits beyond it" tvrdí *nevědomost*, ne vědomost, a pravidlo
+  `_noColdRead` zakazuje říkat, co člověk v sobě **zná**. To rozlišení je správné.
+- **Jenže model ten zápor OTOČIL.** Čtení Blank (2026-08-15 22:14, EN) dostalo přesně ten
+  obraz a napsalo: *„**You know** this stillness, the waiting before the shape appears."*
+  Z popření vědomosti vzniklo tvrzení o vědomosti.
+- **Co z toho plyne:** kontrola vkládaných obrazů je **nutná, ale nestačí**. Studené čtení
+  umí vzniknout ve výstupu bez ohledu na vstup — a tam se dnes nikdo nedívá.
+  Je to přesně `CLAUDE.md` §19.3: *kontrola běží na té ploše, kde bug žije.*
+  Zdrojová kontrola hlídá pool; vada žije v textu čtení.
+- **Zbývá:** přidat detekci studeného čtení do `scripts/utils/measure_readings.js`, tedy
+  na **výstup**. Detektor už existuje a je odladěný (`test_no_planted_bans.js`: „you“ +
+  až 3 slova + sloveso vnitřního stavu, se zápornou výjimkou) — stačí ho pustit na
+  `reading_text` místo na pool. Zapsáno v `RUNAR_BACKLOG.md`.
+- **Vedlejší, potvrzené:** proxy se zápisem `usage` **nebyla v době toho čtení nasazená**
+  (`usage` je `null`), takže cena a cache u něj chybí. `prompt_draws` funguje.
+- **Affected doc(s):** `RUNAR_BACKLOG.md`
+- **Reversibility:** n/a (nález).

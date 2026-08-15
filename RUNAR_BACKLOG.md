@@ -366,3 +366,13 @@ Ukládá se sem automaticky. Surový materiál žije v `docs/findings/`, tady je
 <!-- AUTO-NALEZY -->
 - [2026-08-15 — test pojistky](docs/findings/2026-08-15-wf_a188371f-db1.md) · běh `wf_a188371f-db1` · 9 agentů — **k triáži**
 - [2026-08-15 — §20 sweep — duplikáty, drifty, mrtvý kód](docs/findings/2026-08-15-wf_62679055-021.md) · běh `wf_62679055-021` · 11 agentů — **k triáži**
+
+### Studené čtení hlídat na VÝSTUPU, ne jen ve zdroji (2026-08-15)
+Doloženo reálným čtením: vložený obraz zněl „you **do not** know what waits beyond it"
+(zápor, hlídač ho správně pouští) a model napsal „**You know** this stillness". Otočil ho.
+Zdrojová kontrola (`test_no_planted_bans.js`) proto **nestačí** — §19.3, vada žije ve výstupu.
+**Co udělat:** vzít odladěný detektor z `test_no_planted_bans.js` (`isColdRead`) a pustit ho
+v `scripts/utils/measure_readings.js` na `reading_text`. Vyjde z toho procento čtení, která
+tazateli tvrdí, co v sobě zná — měřitelné napříč verzemi promptu jako papouškování obrazu.
+Pozor při měření: `_noColdRead` zakazuje tvrdit, co ČTENÁŘ zná; věta o runě nebo o krajině
+tím není dotčená, takže detektor musí zůstat vázaný na „you".
