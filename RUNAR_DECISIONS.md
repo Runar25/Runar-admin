@@ -2845,3 +2845,26 @@ Angličtina se nehnula, islandština 3,5×. Nejde tedy o samotnou stavbu věty. 
   (`usage` je `null`), takže cena a cache u něj chybí. `prompt_draws` funguje.
 - **Affected doc(s):** `RUNAR_BACKLOG.md`
 - **Reversibility:** n/a (nález).
+
+---
+
+## 2026-08-15 — „already": vada je NÁROK, ne slovo; jeden zesilovač odstraněn
+
+- **Typ:** measurement (owner si vyžádal příčinu) · 226 reálných anglických čtení
+- **Scope:** reading / hlas
+- **Rozhodnutí:**
+  1. **Slovo „already" se nezakazuje.** Ze 80 výskytů je 12 vada a 68 běžná angličtina.
+     Owner 2026-08-15: *„already by nemělo být zakázané, jen by se nemělo nadužívat."*
+  2. **Odstraněn jediný doložený zesilovač:** text volby `seeking=Confirmation` nesl slovo
+     doslova (`has already decided` / `hefur **þegar** ákveðið sig`) a zvedal výskyt na
+     **54 % proti 26 %**, Fisher **p = 0,0078**. Kontrola `Clarity` p = 0,11 → nic.
+  3. **Zbylé výskyty zůstávají** — `_intentionContext`, Urður, kořeny Yggdrasilu mluví
+     o minulosti, kde je to správná angličtina.
+- ⭐ **Hlubší příčina se odstranit nedá, protože je to postava.** `philosophy`
+  („they help you **remember** it") a `_noColdRead` („let the seeker **recognise**
+  themselves") stojí v každém promptu a obě předpokládají předchozí znalost.
+  Základ ~26 % z toho plyne a zmizel by jen s Rúnarem.
+- **Co z toho plyne pro měření:** hlídat se má **nárok na vnitřní stav**, ne token —
+  a na **výstupu**, ne ve zdroji (§19.3). Detektor `isColdRead` existuje a je odladěný.
+- **Affected doc(s):** `RUNAR_EVAL_LOG.md`
+- **Reversibility:** easy.

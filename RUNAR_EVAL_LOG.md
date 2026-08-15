@@ -359,3 +359,44 @@ o jazyce **neříká nic**.
 **13,6–13,8 slova na větu**; anglická 49 slov a 16,3. Rúnar tedy dlouhé věty **nemá** —
 na zkracování vět není kam jít. Čtení je krátké a **husté**: tři věty nesou runu, úhel,
 obraz, čočku životní runy a tvar zakončení.
+
+
+### 2026-08-15 — „already" / „þegar": příčina nalezena, a je to sám Rúnar
+
+Owner: *„to already musí být něco, co ho pořád tlačí k tomu, aby ho říkal… chtěl bych najít příčinu!"*
+Měřeno na **226 anglických čteních z produkce** (ne na probe dávce).
+
+**Kolik toho vlastně je.** 66 z 226 čtení (**29 %**) obsahuje „already", dohromady **80 výskytů**.
+Z toho je ale jen **12 skutečná vada** — nárok na vnitřní stav („you already know / already feel").
+Zbylých **68 je běžné časové užití** („already becoming real", „already here", „already visible"),
+které žádné pravidlo neporušuje. **Slovo samo tedy problém není.**
+
+**Zesilovač, který se dal odstranit — jediný doložený.**
+
+| seeking | čtení | s „already" | |
+|---|---|---|---|
+| **Confirmation** | 24 | **13 = 54 %** | text té volby slovo doslova nesl |
+| všechna ostatní | 202 | 53 = 26 % | |
+| kontrola: Clarity | 26 | 4 = 15 % | slovo v textu nemá |
+
+**Fisher exact p = 0,0078** · kontrola Clarity p = 0,11 (nic). Text zněl
+`has already decided` / `hefur **þegar** ákveðið sig` — a `þegar` je **přesně to slovo**,
+které eval kdysi našel ve 4 z 5 islandských čtení. Opraveno na `has made up their mind` /
+`hefur tekið ákvörðun` (1818 výskytů, GreynirCorrect 0 flagů); význam beze změny.
+
+⭐ **Hlubší příčina, kterou odstranit NELZE, protože je to postava.** Základ 26 % zůstane.
+V **každém** promptu stojí:
+- `philosophy`: *„The runes do not decide your path… they help you **remember** it."*
+- `_noColdRead`: *„let the seeker be the one to **recognise** themselves in the image"*
+
+**Remember** i **recognise** předpokládají, že to tazatel už zná. To je Rúnarova teze —
+odpověď v tobě byla dřív, než ses podíval — a „already" je pro tu myšlenku nejúspornější
+anglické slovo. Není to tik, je to premisa prosakující na povrch. A je v tom ironie:
+`_noColdRead`, které má bránit tomu říkat tazateli, co zná, je samo formulované přes
+**rozpoznání**, tedy přes to, že to zná.
+
+**Co se z toho nemá dělat.** Slovo zbývá i v `_intentionContext` („what has already passed"),
+u Urðar („what is already fixed") a v kořenech Yggdrasilu („already been woven") — tam jsou
+věty **o minulosti**, kde je to správná angličtina. Honit slovo tam, kde sedí, je táž chyba
+jako ho zasévat. **Vada je NÁROK na vnitřní stav, ne token** — a ten se hlídá na výstupu
+(→ `RUNAR_BACKLOG.md`, detektor `isColdRead`).
