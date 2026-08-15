@@ -97,7 +97,11 @@ const DEF_CHAR = DEF_CHAR_EN;
 // Experimental character with lunar + Icelandic seasonal awareness.
 //
 // ⚠️ MRTVÝ KÓD (ověřeno 2026-08-15). NENÍ to popis Rúnara — ten žije v DEF_CHAR_EN/IS.
-// Jediný čtenář je buildSysPromptV2, a ten NIKDO nevolá; produkce jede buildSysPrompt.
+// Čte to jen buildSysPromptV2, který NENÍ v produkci (produkce jede buildSysPrompt) —
+// ale POZOR, mrtvý není: volají ho tři srovnávací skripty ve scripts/utils/
+// (compare_horseshoe.js:16, compare_shrine_reader.js:16, compare_spreads_neutral.js:15).
+// Před smazáním grepni scripts/** , ne jen v2/*.html. (Původní znění tvrdilo „nikdo nevolá";
+// bylo to špatně — grep byl užší než skutečnost. Opraveno 2026-08-15.)
 // Shrine V2 lab záložka, kvůli které to vzniklo, byla odstraněna v c6eb89c
 // (2026-07-10, „-971 lines, drift surface").
 // Je to DRUHÁ ÚPLNÁ KOPIE toho, kdo Rúnar je, a UŽ SE ROZEŠLA — drží znění před

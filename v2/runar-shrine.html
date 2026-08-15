@@ -899,9 +899,10 @@ async function invokeRunar() {
     document.getElementById('btn-invoke').disabled = false;
     return;
   }
-  // Sklad text PRESNE jako produkce (reader, runar-reading.js): JSON segmenty -> plynouci
-  // text, pak (aktualne no-op) IS post-processor. Shrine driv ukazoval/ukladal syrove JSON.
-  teachText = applyISCorrections(_parseSegments(res.text).reading.trim(), lang, corrections);
+  // Sklad text PRESNE jako produkce (reader, runar-reading.js): JSON segmenty -> plynouci text.
+  // Shrine driv ukazoval/ukladal syrove JSON. Korekce jdou VYHRADNE promptem (CLAUDE.md §2),
+  // zadny post-processor uz neexistuje — applyISCorrections smazana 2026-08-09.
+  teachText = _parseSegments(res.text).reading.trim();
   await stream('teach-txt', teachText);
 
   // Show editable textarea with generated text
@@ -1192,7 +1193,7 @@ async function loadCorrections() {
   let items = [];
   try { const { data } = await sb.from('runar_corrections').select('*').order('created_at', { ascending: false }).limit(50); items = data || []; }
   catch (e) { items = JSON.parse(localStorage.getItem('runar_corr') || '[]'); }
-  // Normalize to shared correction format for getCorrPrompt() + applyISCorrections()
+  // Normalize to shared correction format for getCorrPrompt()
   corrections = normalizeCorrections(items);
   const list = document.getElementById('corr-list');
   if (!items.length) { list.innerHTML = '<div class="empty">' + t('no_corr') + '</div>'; return; }
