@@ -409,3 +409,19 @@ uvnitř jedné runy čtení, kde klíčové slovo **padlo** (prompt losuje 3 z 5
 proti těm, kde nepadlo. **Blokuje jen objem:** k 2026-08-16 má log losu 11 čtení, práh je 30.
 Owner 2026-08-16 navrhl přidat klíčovým slovům **ekvivalenty**; má to smysl teprve tehdy, když
 test ukáže, že se z toho košíku tahá.
+
+### Kam trvale s generovanými dávkami — rozhodnutí ownera (2026-08-16)
+KUKY: *„ukládáš ta generovaná data tak, abychom je mohli dále použít?"* — k 2026-08-16 **ne**.
+`eval_out/` je gitignorované (`.gitignore:16`) a `gen_batch.js` posílá `journal: null`, takže
+generovaná čtení **nevytvářejí řádky v `readings`**. ~230 čtení z 2026-08-16 (a všechny starší
+dávky) žijí jen jako lokální soubory na jednom disku.
+**Provizorně vyřešeno:** `scripts/utils/archive_batches.js` dělá kompaktní výtah do
+`eval_out/archive/` + `manifest.json` (~21 % velikosti; `prompt` se zahazuje, je
+rekonstruovatelný z gitu podle `prompt_sha` a `draws` — §20). `--list` vypíše, co v archivu je.
+**Zbývá rozhodnout, kde to má bydlet natrvalo — dvě cesty, obě mají háček:**
+- **PUBLIC repo** (`docs/eval-batches/`): zadarmo, verzované, Cowork na to vidí přes `git show`.
+  ⚠️ Zveřejní to stovky Rúnarových čtení. Prompty už veřejné jsou, takže nejde o únik — jde
+  o to, jestli chceme mít výstup produktu veřejně čitelný.
+- **Supabase tabulka** (`eval_readings`): soukromé, dotazovatelné SQL, roste bez bobtnání repa.
+  ⚠️ Cowork na ni nevidí (čte jen repo), takže by se pro něj stejně musely vzorky vyvážet.
+**Do rozhodnutí data aspoň nemizí.** Archiv je pořád gitignorovaný.
