@@ -980,3 +980,57 @@ to umí; 25+25 čtení rozhodne.
 ⚠️ **Co se tím netvrdí:** mezi Ask a čtením se liší víc věcí než úhel — odpověď reaguje na
 napsanou otázku, má vlastní `RP_ASK` pack a vzniká až po čtení. „Nemá úhel" je jedna z několika
 možných příčin, byť už třetí nezávislá linie na tytéž úhly 3 a 5.
+
+
+### 2026-08-16 — Holý Rúnar proti plnému promptu: vrstvy si své místo zaslouží
+
+Owner: *„mělo by smysl udělat pár čtení jen s Raw promptem Rúnara a podívat se, jak mluví?"*
+Ano, a šlo to hned — `gen_batch --without all` dává **567 znaků** proti plným **1685**.
+25 čtení na rameno, každá runa jednou.
+
+| | HOLÝ (567 zn.) | PLNÝ (1685 zn.) |
+|---|---|---|
+| délka výstupu | **92 slov** | 45 slov |
+| nárok na vnitřní stav | 36 % | 24 % |
+| konec otázkou | **0 %** | 28 % |
+| různých slov na 100 | 50 % | **63 %** |
+| jméno runy v textu | 100 % | 100 % |
+
+⭐ **Plný prompt zkrátí čtení na polovinu, vyrobí rozmanitost konců — a je LEXIKÁLNĚ PESTŘEJŠÍ,
+ne chudší** (63 % vs 50 % různých slov). To je proti intuici: víc pravidel = pestřejší text.
+Holý Rúnar píše dlouze a opakuje se.
+
+⚠️ **Co se prokázalo a co ne:** konec otázkou 0/25 vs 7/25, Fisher **p = 0,0096** — prokázáno.
+Nárok na vnitřní stav 9/25 vs 6/25, **p = 0,538 — nerozhodnuto**, směr sedí, síla ne.
+
+⚠️ **Chyba v návrhu dávky, kterou přiznávám:** `--n 1` přes 25 run = jedno čtení na runu, takže
+**dvojice pro měření stejnosti neexistují**. `--arms` to správně nahlásil jako „0 dvojic" místo
+aby vyrobil číslo. Stejnost holého vs plného tedy **změřená není**; na to je potřeba ≥2 čtení na runu.
+
+**Ukázka téže runy (Isa):**
+- holý: *„Beneath the frost line the roots have stopped moving… You feel it as a weight in the
+  ground you stand on, **something in you** t…"* — 92 slov, a doslova zakázaná fráze.
+- plný: *„You feel it in the chest first… The clock on the wall has stopped and no one has wound
+  it, and Isa keeps the hands where they are. What are you refusing to name?"* — 45 slov.
+
+**Závěr pro ownerův cíl „najít nejlepší blend":** vrstvy jako celek **nejsou problém** — bez nich
+je to horší ve všech měřených směrech. Problém jsou **dva konkrétní úhly** (3 a 5), ne vrstvení.
+
+### 2026-08-16 — Co přesně `area` vkládá do promptu (owner se ptal)
+
+Owner: *„co obsahuje area? jaká slova vstupují do promptu? pokud se nám nelíbí výstup, tak je
+problém na vstupu."* Změřeno diffem postavených promptů (8 běhů, průnik — prompt se losuje).
+**`area` přidá právě DVĚ věty:**
+
+1. `_domainContext` — jedna z osmi (od 2026-08-16), např.
+   *„The reading is for Career & Creativity — let the rune's meaning land on something the seeker
+   makes or contributes, not on a workplace as a setting."*
+2. `_priorityContext` — *„If these do not gather into one natural image: **keep <runa> in front**
+   and honour the seeking and the area. Never stack them as separate statements."*
+
+⭐ **Ta druhá věta je strop váhy oblasti.** Je to tie-breaker a říká: **když se runa a oblast
+neshodnou, runa má přednost.** Oblast je explicitně druhá.
+
+**A je to v souladu s ownerovým vlastním kánonem** („runa je základ, oblast je otázka, kterou musí
+runa vzít v potaz" — `RUNAR_DESIGN.md`). Nejde tedy o chybu ve formulaci: kdo chce oblast výš,
+mění **kánon**, ne slovíčka. Naměřených **+2,7 b.** specifičnosti je právě tenhle strop.
