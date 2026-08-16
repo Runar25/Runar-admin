@@ -106,9 +106,16 @@ function sentenceAt(txt, i) {
 // ─── islandsky ekvivalent ───
 // `veist`/`manst` = jen 2. os. j. c., staci samy. `finnur`/`skynjar`/`þekkir` jsou i 3. osoba,
 // proto u nich musi byt `þú` v okoli — jinak by veta o rune vysla jako narok na tazatele.
-const IS_SOLO   = /\b(veist|manst|veistu|manstu)\b/i;
-const IS_AMBIG  = /\bþú\b(?:\s+\w+){0,3}\s+(finnur|skynjar|þekkir|kannast)\b/i;
-const IS_PHRASE = /\b(eitthvað í þér|innra með þér|það sem þú veist)\b/i;
+// ⚠️ ZADNE `\b` ANI `\w` NA ISLANDSTINU. JS je ma na [A-Za-z0-9_], takze mezi mezerou
+// a "þ" hranice slova NENI: /\bþekkir\b/ na "Þú þekkir þessa fjöru" vrati FALSE.
+// Prvni verze mela kvuli tomu MRTVOU dvojznacnou vetev — nesedla nikdy a islandska
+// cisla byla podhodnocena. Hranice se proto delaji lookaroundem nad islandskou abecedou.
+const IS_L  = 'a-záðéíóúýþæöA-ZÁÐÉÍÓÚÝÞÆÖ';
+const isb   = (w) => '(?<![' + IS_L + '])(?:' + w + ')(?![' + IS_L + '])';
+const IS_SOLO   = new RegExp(isb('veist|manst|veistu|manstu'), 'i');
+const IS_AMBIG  = new RegExp(isb('þú') + '(?:\\s+[' + IS_L + ']+){0,3}\\s+' +
+                             isb('finnur|skynjar|þekkir|kannast'), 'i');
+const IS_PHRASE = new RegExp(isb('eitthvað í þér|innra með þér|það sem þú veist'), 'i');
 const IS_NEG    = /\b(ekki|aldrei|hvorki|ekkert)\b/i;
 function isColdReadIS(txt) {
   const check = (m) => {
@@ -187,6 +194,11 @@ function rulesAudit(rows) {
     ['Veist þú hvað þetta þýðir?', false, 'IS: otazka se NEPOCITA'],
     ['Ísinn heldur og morgunninn er kyrr.', false, 'IS: bezny text'],
     ['Hann finnur kuldann í fjörunni.', false, 'IS: 3. osoba NENI narok na tazatele'],
+    // ⚠️ TYHLE TRI CHYBELY A PRAVE ONY BY BYLY CHYTILY MRTVOU VETEV (2026-08-16).
+    // Kazda cvici DVOJZNACNOU vetev POZITIVNE — tedy tu, ktera kvuli `\b` nesedala.
+    ['Þú finnur kuldann í fjörunni.', true, 'IS: 2. osoba U DVOJZNACNEHO slovesa'],
+    ['Þú þekkir þessa fjöru vel.', true, 'IS: þekkir po þú (zacina na þ — past s \\b)'],
+    ['Þú skynjar það sem bíður.', true, 'IS: skynjar po þú'],
     ['Eitthvað í þér bíður.', true, 'IS: fraze "eitthvað í þér"'],
   ];
   console.log('  ── kontrola detektoru');
