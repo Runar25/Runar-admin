@@ -829,3 +829,75 @@ nejsou tři důkazy; je to jeden nedostatek dat, spočítaný třikrát.
 **Co z toho plyne pro rozhodnutí ownera:** nová `_domainContext` **není měřením obhájená**. Není
 ani horší (specifičnost n.s., pestrost mírně lepší) a je bližší kánonu „runa je základ, oblast je
 otázka". Ponechat ji je proto **rozhodnutí o obsahu, ne výsledek měření** — a to patří ownerovi.
+
+
+### 2026-08-16 — Kritické zhodnocení celého korpusu: dvě pravidla promptu si odporují
+
+Owner: *„udělali jsme za pár dní hodně čtení a bylo by dobré si to celé zhodnotit, podívat se na to
+kriticky. trochu to rozbít."* Korpus: **302 produkčních čtení** (228 EN + 74 IS, 3 lidé, od 17. 5.)
++ ~380 generovaných z dnešního dne. Nástroj: `measure_readings.js --rules` (nový; zákazy se čtou
+Z PROMPTU, ne z ruční listiny).
+
+#### ⭐ HLAVNÍ NÁLEZ — dva pokyny v promptu se navzájem vylučují
+
+| | doslovné znění |
+|---|---|
+| **zákaz** `_noColdRead` | „never tell the seeker what is true, **stirring**, or known inside them… their **inner life** is not yours to narrate" |
+| **úhel 3** | „Lead with **the body** — where does this rune live as a **physical sensation** right now" |
+| **úhel 5** | „Lead with what is **stirring** — how it wakes in their life…" |
+
+Úhel 5 používá **přesně to slovo**, které zákaz jmenuje. Úhel 3 objednává tvrzení o tom, co má
+tazatel v těle. **A je to vidět na výstupu:**
+
+| úhel | n | nárok na vnitřní stav |
+|---|---|---|
+| 0 · 1 · 2 · 4 · 6 | 169 | **3–4 %** |
+| **5** (co se probouzí) | 26 | **12 %** |
+| **3** (tělo) | 35 | **17 %** |
+
+úhly 3+5 proti zbytku: **15 % vs 3 %**, Fisher **p = 0,0025** (samotný úhel 3: p = 0,0098).
+
+Každé čtení dostane jeden ze sedmi úhlů. **Dva z nich systematicky přikazují to, co prompt jinde
+zakazuje** — model nedělá chybu, poslouchá. Rozhodnutí je ownerovo a **není to jen přeformulování**:
+„veď tělem" je dobré řemeslo (konkrétnost), zákaz existuje proti neověřitelným tvrzením. Buď se
+zúží zákaz, nebo se přepíší dva úhly. → `RUNAR_BACKLOG.md`.
+
+#### Co se NEpotvrdilo — a bylo to skoro publikované
+
+**„87 % čtení končí otázkou proti cíli 33 %"** — vypadalo to jako velká vada. Je to **historie**:
+109 nejstarších čtení (bez `prompt_version`, tedy polovina anglického vzorku) končí otázkou v 99 %
+a táhne průměr. Na dnešním promptu se **tvar konce losuje a model ten los poslouchá dokonale**:
+
+| los | n | končí otázkou |
+|---|---|---|
+| heavy0 · open1 · open2 | 195 | **0 %** |
+| heavy1 · open0 | 116 | **100 %** |
+
+Los žádá otázku ve **37 %** — a přesně tolik jich otázkou končí. ⭐ **Tohle je nejlepší zpráva
+z celého zhodnocení:** explicitní strukturní los model poslechne beze zbytku. Táž páka, která
+u úhlu vyrábí stejnost, tady vyrábí kázeň.
+
+#### Trojí oprava vlastního měření (od nejnaivnějšího k ověřenému)
+
+„Nárok na vnitřní stav" v anglických čteních: **41 % → 32 % → 18 %.**
+1. **41 %** — surové číslo přes celý korpus.
+2. **32 %** — po rozdělení podle **éry promptu**; starý prompt 24 %, dnešní 18 %.
+3. **18 %** — po **ručním pohledu na 11 zásahů**: 4 skutečné vady, 2 otázky („What did you carry?"
+   se ptá, netvrdí), 3× fyzické `carry` („what you carry forward" je batoh, ne vědomost).
+   Přesnost detektoru byla ~40 %. `carry` vyhozeno, otázky vyloučeny, tři nové sondy do self-testu.
+
+⚠️ **Naivní číslo bylo víc než dvojnásobek ověřeného.** Ani jedna z těch oprav nepřišla z nového
+měření — obě z pohledu na to, co nástroj vlastně chytil.
+
+#### Co se měřit NEDÁ, a je to vidět
+
+- **Islandský detektor studeného čtení NEEXISTUJE.** Regex je anglický, IS se proto vypisuje jako
+  **NELZE**, ne jako nula. U 74 islandských čtení tedy o téhle vadě nevíme nic.
+- ⚠️ **IS je primární jazyk (§2) a poslední islandské čtení je z 9. srpna.** Všech ~380 dnešních
+  generovaných bylo anglicky. Celý dnešek — zárodky, úhly, oblasti, A/B — stojí na EN.
+
+#### Drobnější, ověřené
+- **vykřičník: 0 z 302.** Zákaz drží beze zbytku, v obou jazycích.
+- **„journey": 1 z 228.** Dřívější problém je prakticky vyřešený.
+- **délka single na dnešním promptu: medián 49 slov** proti zadaným 38–45. Mírné přetažení;
+  medián 81 z prvního výpisu byl smíchaný se spready (Yggdrasil 273 slov).

@@ -503,3 +503,25 @@ ne příznak experimentu. Bez něj se známky sesypou do jedné hromady a A/B se
 
 **Otevřené a je to rozhodnutí ownera + Coworku (obsah/UX, ne kód):** na co přesně se ptát.
 Jedna otázka unese jeden druh odpovědi a víc otázek lidi nevyplní.
+
+### Úhly 3 a 5 přikazují to, co `_noColdRead` zakazuje — rozhodnutí ownera (2026-08-16)
+Doslovně: zákaz zní *„never tell the seeker what is true, **stirring**, or known inside them"*,
+úhel 5 zní *„Lead with what is **stirring**"* a úhel 3 *„Lead with the body — … physical sensation"*.
+Úhel 5 používá to samé slovo. Změřeno na 230 generovaných čteních: úhly 3+5 nesou nárok na vnitřní
+stav v **15 %**, ostatních pět úhlů ve **3 %** (Fisher p = 0,0025). Model nechybuje — poslouchá.
+**Není to jen přeformulování.** „Veď tělem" je dobré řemeslo: nejkonkrétnější věta ve čtení bývá
+tělesná. Zákaz existuje proti neověřitelným tvrzením o nitru. **Buď se zúží zákaz** (např. tělesný
+vjem povolit jako obraz, ne jako tvrzení o tazateli), **nebo se přepíší dva úhly** — obojí je obsah,
+tedy owner + Cowork. Aparát na ověření změny stojí (`measure_readings.js --rules`, dělení po úhlech).
+
+### Islandský detektor studeného čtení neexistuje (2026-08-16)
+`measure_readings.js --rules` u IS vypisuje **NELZE**, ne nulu — regex je anglický. U 74 islandských
+produkčních čtení tedy o téhle vadě nevíme **nic**, a IS je přitom primární jazyk (§2).
+**Co udělat:** islandský ekvivalent `COLD_VERB`/`COLD_PHRASE` (vita, finna, muna, skynja + „þú"),
+ověřit vazby korpusem a nasadit tři sondy jako u EN. Pozor: „þú veist" může být i řečnická otázka.
+
+### IS se týden neměří a dnešek stojí celý na angličtině (2026-08-16)
+Poslední islandské produkční čtení: **9. 8.** Všech ~380 dnešních generovaných čtení bylo **anglicky**
+— zárodky, úhly, oblasti, A/B test `_domainContext`. §2 přitom říká, že IS je primární a EN vedlejší.
+**Co udělat:** než se přijme jakákoli dnešní změna promptu jako hotová, prohnat ji islandskou dávkou.
+`gen_batch --lang is` funguje; chybí jen to udělat.

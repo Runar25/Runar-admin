@@ -28,10 +28,135 @@ const path = require('path');
 
 const argv = process.argv.slice(2);
 const BALANCE = argv.includes('--balance');
-const files = argv.filter(a => a !== '--balance').map(f => f.replace(/^~/, os.homedir()));
+const RULES   = argv.includes('--rules');
+const files = argv.filter(a => a !== '--balance' && a !== '--rules')
+  .map(f => f.replace(/^~/, os.homedir()));
 if (!files.length) {
   console.error('\n  Použití: node scripts/utils/measure_readings.js <soubor.jsonl> […]\n');
   process.exit(1);
+}
+
+
+// ═══════════════════════════════════════════════════════
+// --rules · dodrzuje Runar na VYSTUPU to, co mu prompt zakazuje?
+//
+// Zdrojove hlidace (test_no_planted_bans) overuji, ze si zakazane slovo nesazime do promptu.
+// To je nutne, ale nestaci: model umi zakaz porusit sam. 2026-08-16 doloseno — vlozeny obraz
+// rikal "you DO NOT know", cteni napsalo "You KNOW this stillness". Kontrola musi bezet
+// na plose, kde vada zije (§19.3).
+//
+// Zakazy se ctou Z PROMPTU, ne z rucni listiny.
+// ═══════════════════════════════════════════════════════
+function loadPromptEnv() {
+  const vm = require('vm');
+  const V2 = path.resolve(__dirname, '../../v2') + '/';
+  const S = { console };
+  S.window = S; S.globalThis = S; S.lang = 'en';
+  S.localStorage = { getItem: () => null, setItem: () => {}, removeItem: () => {} };
+  S.document = { getElementById: () => null };
+  vm.createContext(S);
+  vm.runInContext(
+    ['runar-config.js', 'runar-runes.js', 'runar-translations.js', 'runar-utils.js', 'runar-character.js']
+      .map(f => fs.readFileSync(V2 + f, 'utf8')).join('\n;\n') +
+    '\n;globalThis.__EN = DEF_CHAR_EN; globalThis.__IS = DEF_CHAR_IS; globalThis.__RUNES = RUNES;', S);
+  return S;
+}
+// ⚠️ NE vsechna slova v uvozovkach jsou zakazy. `grammar` nese i PREDPISY v uvozovkach
+// ("piš v druhé osobě: \"you\", \"your\"") a prvni verze je brala taky — vysledek hlasil,
+// ze 99 % cteni porusuje zakaz slova "you". Nesmysl na prvni pohled, a proto se chytil;
+// kdyby to bylo 12 %, prosel by jako nalez. Extrahuje se proto uzce:
+//   `never`  = samé zákazy, brat vse v uvozovkach
+//   `grammar` = jen veta ZA navestim "Banned:" / "Bannað að segja"
+function bannedFrom(ch) {
+  const out = new Set();
+  const add = (w) => { const c = String(w).replace(/[„“”"']/g, '').trim().toLowerCase();
+    if (c.length > 2) out.add(c); };
+  (String(ch.never || '').match(/[„"]([^"“”]+)[”“"]/g) || []).forEach(add);
+  const g = String(ch.grammar || '');
+  const m = /(?:Banned:|Bannað að segja)([^.]*)/.exec(g);
+  if (m) (m[1].match(/"([^"]+)"/g) || []).forEach(add);
+  return [...out];
+}
+// Studene cteni: tvrzeni o tom, co ma clovek UVNITR. Zapor se nepocita — "you do not know"
+// nevedomost TVRDI, ne pripisuje. Odladeno v test_no_planted_bans.js, tady na vystupu.
+// ⚠️ `carry` VYHOZENO. Rucni pohled na 11 zasahu ukazal, ze tri jsou fyzicke ("what you
+// carry forward, you carry for others too") — carry neni epistemicke sloveso, nese se batoh
+// i vina. S nim mel detektor presnost ~40 %: z namerenych 32 % by skutecnych bylo ~13 %.
+const COLD_VERB   = /\byou\b((?:\s+\w+){0,3})\s+(know|knows|feel|feels|remember|remembers|sense|senses)\b/i;
+const COLD_PHRASE = /\b(something in you|what you know|you have always|deep in you)\b/i;
+const NEGATED     = /\b(do not|don't|cannot|can't|never|no longer|did not|didn't)\b/i;
+// Veta zakoncena otaznikem se NEPOCITA: "What did you carry?" se PTA, netvrdi.
+// `_noColdRead` zakazuje RIKAT tazateli, co v sobe zna — otazka mu to nerika.
+function sentenceAt(txt, i) {
+  const start = Math.max(txt.lastIndexOf('.', i), txt.lastIndexOf('?', i), txt.lastIndexOf('!', i)) + 1;
+  const m = /[.?!]/.exec(txt.slice(i));
+  return txt.slice(start, m ? i + m.index + 1 : txt.length).trim();
+}
+function isColdRead(txt) {
+  const mp = COLD_PHRASE.exec(txt);
+  if (mp && !sentenceAt(txt, mp.index).endsWith('?')) return true;
+  const m = COLD_VERB.exec(txt);
+  if (!m || NEGATED.test(m[1])) return false;
+  return !sentenceAt(txt, m.index).endsWith('?');
+}
+
+function rulesAudit(rows) {
+  const S = loadPromptEnv();
+  const BAN = { en: bannedFrom(S.__EN), is: bannedFrom(S.__IS) };
+  const langs = [...new Set(rows.map(r => r.lang).filter(Boolean))].sort();
+  console.log('\n═══ DODRŽUJE VÝSTUP TO, CO PROMPT ZAKAZUJE? ═══');
+  console.log('  Zákazy čtené Z PROMPTU: EN ' + BAN.en.length + ' · IS ' + BAN.is.length +
+    ' výrazů (ruční listina by se rozešla při první úpravě promptu).\n');
+
+  for (const L of langs) {
+    const rs = rows.filter(r => r.lang === L && r.reading_text);
+    if (!rs.length) continue;
+    const hits = {};
+    let bang = 0, cold = 0;
+    for (const r of rs) {
+      const t = r.reading_text;
+      if (/!/.test(t)) bang++;
+      for (const b of BAN[L] || []) {
+        if (new RegExp('\\b' + b.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i').test(t))
+          (hits[b] = hits[b] || []).push(1);
+      }
+      if (L === 'en' && isColdRead(t)) cold++;
+    }
+    const top = Object.keys(hits).sort((a, b) => hits[b].length - hits[a].length);
+    console.log('  ── ' + L.toUpperCase() + ' · ' + rs.length + ' čtení');
+    console.log('     vykřičník            ' + bang + '  (' + (bang / rs.length * 100).toFixed(0) + ' %)');
+    if (L === 'en') console.log('     nárok na vnitřní stav ' + cold + '  (' + (cold / rs.length * 100).toFixed(0) + ' %)');
+    else console.log('     nárok na vnitřní stav  NELZE — detektor je anglický, islandský neexistuje.');
+    if (!top.length) console.log('     zakázaný výraz       žádný');
+    for (const b of top) {
+      const rate = hits[b].length / rs.length;
+      console.log('     „' + b + '"' + ' '.repeat(Math.max(1, 20 - b.length)) +
+        hits[b].length + '  (' + (rate * 100).toFixed(0) + ' %)' +
+        // ⚠️ Zakaz, ktery porusuje pulka cteni, je skoro jiste SPATNE VYTAZENY (predpis
+        // misto zakazu), ne masove poruseni. Radeji hlasit podezreni na nastroj nez
+        // vydat vlastni chybu za nalez.
+        (rate > 0.5 ? '   ⚠️ přes polovinu — spíš špatně vytažený zákaz než nález' : ''));
+    }
+    console.log('');
+  }
+  // ⚠️ Kontrola, ktera nikdy nic nenajde, projde stejne tise jako spravna.
+  const probes = [
+    ['You already know what this means.', true, 'narok na vnitrni stav'],
+    ['You do not know what waits beyond it.', false, 'zapor NENI narok'],
+    ['The ice holds and the morning is quiet.', false, 'bezny text'],
+    ['Something in you is waiting.', true, 'fraze "something in you"'],
+    ['What did you carry that was never yours?', false, 'otazka se NEPOCITA — pta se, netvrdi'],
+    ['What you carry forward, you carry for others too.', false, 'carry je fyzicke, ne epistemicke'],
+    ['You know this stillness, the waiting before the shape appears.', true, 'realny nalez 2026-08-15'],
+  ];
+  let bad = 0;
+  console.log('  ── kontrola detektoru');
+  for (const [txt, want, label] of probes) {
+    const got = isColdRead(txt);
+    if (got !== want) { console.log('     ✘ ' + label + ' -> ' + got + ', čekáno ' + want); bad++; }
+  }
+  console.log(bad ? '     ✘ detektor SELHAL v ' + bad + ' bodech' : '     ✔ detektor pozná nárok i zápor i běžný text');
+  console.log('');
 }
 
 // ── pomocné ────────────────────────────────────────────────────────────────
@@ -260,4 +385,11 @@ function balance(rows) {
     console.log('   umístění jména: NELZE ZJISTIT — dávka nenese ani `draws`, ani jméno' +
       ' (produkční export jméno vypouští, oslovení bývá „you"/„þú").');
   }
+}
+
+if (RULES) {
+  const rows = files.flatMap(f => fs.readFileSync(f, 'utf8').split('\n')
+    .filter(l => l.trim()).map(l => { try { return JSON.parse(l); } catch (e) { return null; } })
+    .filter(Boolean));
+  rulesAudit(rows);
 }
