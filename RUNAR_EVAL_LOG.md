@@ -746,3 +746,40 @@ třetinu odhadu, protože jsem počítal se zápisem do cache místo se čtením
 **Co z toho pro provoz:** dokud jsou čtení rozeseta po dni, cache je malá daň, ne úspora. Až
 budou **rituály s notifikacemi** (owner 2026-08-16), čtení se shluknou a cache se začne vyplácet
 sama. Sledovat podíl `cache_read > 0` v čase — teď už to jde, `usage` se ukládá u každého čtení.
+
+
+### 2026-08-16 — PŘEDEM DOMLUVENÝ TEST nového `_domainContext` (data zatím neexistují)
+
+Owner: *„tohle je samozřejmě potřeba otestovat… uvidíme, až jak se projeví."*
+
+⭐ **Zapsáno DŘÍV, než data vzniknou** — jinak si u čehokoli, co vyjde, dokážeme vymyslet, že to
+je úspěch. Až Cowork dodá přepsaný `_domainContext`, měří se přesně tohle a nic jiného.
+
+**Uspořádání:** dvě ramena, stará vs nová verze `_domainContext`, obojí s úhlem zapnutým.
+2 runy (Isa, Raidho) × 2 oblasti (Láska, Kariéra) × 8 čtení = **32 na rameno**, celkem 64.
+`intention` konstantní. Nástroj: `find_seeds.js --arms`.
+
+**Kolik je potřeba — změřeno, ne odhadnuto.** Mez citlivosti klesá lineárně s počtem čtení:
+
+| čtení na rameno | mez u specifičnosti |
+|---|---|
+| 8 | 9,4 b. |
+| 16 | 5,0 b. |
+| **32** | **~2,6 b.** *(extrapolace, ne měření)* |
+
+**Podmínka úspěchu — obojí musí platit:**
+1. **specifičnost ≥ +3,0 b.** a p < 0,05 — tedy aspoň tolik, kolik dělá úhel (+3,3 b.
+   v záměrném testu). Owner rozhodl, že oblast má mít velkou váhu; úhel je hidden náhodný los,
+   takže „aspoň jako úhel" je nejmírnější laťka, která tomu rozhodnutí odpovídá.
+2. **pestrost se nesmí zhoršit o víc než mez** (~2,6 b.). Kdyby nová formulace udělala všechna
+   čtení na kariéru stejná, specifičnost stoupne — a čtení budou horší. Jednostranné kritérium
+   by tenhle způsob „úspěchu" odměnilo.
+
+**Past, která je už ošetřená:** kdyby nový text fungoval tak, že do čtení zasadí slova oblasti,
+specifičnost by vyskočila triviálně. Metrika **slova páky ze srovnání vyhazuje**, takže tenhle
+druh vítězství nespočítá. (Ozvěna slova se měří zvlášť základním skenem `find_seeds.js`.)
+
+**Cena:** 64 čtení ≈ **0,40 $** (dávka, cache sedá — viz zápis o cache týž den).
+
+⚠️ **Co se tím NEotestuje:** `intention` a „this reading is for". Drží se konstantní schválně.
+Až se ukáže, jestli kouše `area`, projdou stejným aparátem.
