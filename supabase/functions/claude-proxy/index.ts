@@ -426,6 +426,20 @@ serve(async (req: Request) => {
     } = body;
     if (!prompt && mode !== "resave") return json({ error: "Missing prompt" }, 400);
 
+    // Strop delky promptu. Merene maximum LEGITIMNIHO provozu (2026-08-16): user prompt
+    // 3942 znaku (yggdrasil IS, vse vyplnene) + az ~1800 korekcni blok = ~5750;
+    // system prompt 4906. 8000 na kazdy = ~40 % rezerva.
+    // Bez toho neni delka promptu omezena NIKDE — klient ani server ji nekontroloval
+    // a otazka o 20 000 znacich dala prompt 21 747 znaku.
+    // ODMITNOUT, ne oriznout: oriznuti by useklo instrukci o JSON kontraktu a uzivatel
+    // by zaplatil kredit za nesmysl. Proto je kontrola PRED odectem.
+    const MAX_PROMPT_CHARS = 8000;
+    if (String(prompt ?? "").length > MAX_PROMPT_CHARS ||
+        String(system ?? "").length > MAX_PROMPT_CHARS) {
+      return json({ error: "too_long",
+        message: "That is more than the runes can hold at once. Try a shorter question." }, 400);
+    }
+
     // Clamp max_tokens (client-supplied, passed straight to Claude). Largest legit reading is
     // life_rune_premium at 2000; 2500 is headroom. Stops a crafted request ordering an
     // oversized, expensive generation.

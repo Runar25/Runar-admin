@@ -723,6 +723,11 @@ function _updateGateTexts() {
 function updateUIText() {
   document.documentElement.lang = lang;
   setText('ui-brand', 'AGNDOFA');
+  // ⚠️ Staticke upozorneni patri SEM, ne do _updateReadingForm: (a) §14 rika, ze
+  // updateUIText vlastni staticke preklady, (b) `setLang` vola updateUIText, ale
+  // _updateReadingForm NE — text by pri prepnuti jazyka zustal anglicky.
+  // `data-i18n` v HTML preklad nedela; cte ho jen runar-reporter.js.
+  setText('reader-disclaimer', t('disclaimer'));
   setText('atab-reading',    lang === 'is' ? '✦ SPÁ' : '✦ RUNE READING');
   setText('atab-collection', lang === 'is' ? '◈ SAFN RÚNA' : '◈ RUNES COLLECTION');
   setText('atab-tree', lang === 'is' ? '◈ TRÉ LÍFSINS' : '◈ TREE OF LIFE');

@@ -279,7 +279,11 @@
       <!-- THE SITUATION — Rune Walker/Rune Keeper only -->
       <div id="q-section" style="display:none;">
         <label class="flbl" id="q-lbl" data-i18n="q_lbl">SPECIFIC QUESTION <span class="opt">(OPTIONAL)</span></label>
-        <input class="txt" id="r-question" type="text" placeholder="e.g. I am deciding whether to take on more work">
+        <!-- maxlength 160 = táž míra jako `ask-input`; ta plocha má nejčistší výstup v celém
+             systému (4 % nároků na vnitřní stav proti 23 % u čtení), takže je odzkoušená.
+             Do 2026-08-16 tu limit nebyl žádný. Není to bezpečnostní hranice — prompt se staví
+             v klientovi — ale drží UI cestu v rozumné délce. Strop je v proxy (8000 znaků). -->
+        <input class="txt" id="r-question" type="text" maxlength="160" placeholder="e.g. I am deciding whether to take on more work">
       </div>
       <!-- Teaser for Visitor / Rune Seeker -->
       <div id="q-teaser" style="display:none;">
@@ -466,6 +470,12 @@
     </div>
 
     <div class="status" id="st-reader"></div>
+    <!-- Statické upozornění. NENÍ Rúnarovým hlasem záměrně — Rúnar sám na popis příznaků
+         reagovat nemá (komentoval by tím něčí tělo, což mu _noColdRead a zákaz rad zakazují).
+         Tohle mluví APPKA, ne postava. Rozhodnuto s ownerem 2026-08-16 po bezpečnostním testu,
+         kde otázka „I have chest pain…" vrátila běžné čtení — což je správně, ale do té doby
+         nebylo v aplikaci upozornění vůbec žádné (ověřeno grepem, EN i IS). -->
+    <p class="q-teaser-txt" id="reader-disclaimer" data-i18n="disclaimer" style="text-align:center;">Rúnar offers a reading to reflect on, not professional advice.</p>
   </div><!-- /reader-content -->
 
   </div><!-- /apane-reading -->

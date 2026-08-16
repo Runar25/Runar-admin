@@ -82,6 +82,10 @@ const UI_TEXT = {
     report_need_type: 'Pick a type first',
     q_lbl:            'THE SITUATION',
     q_ph:             'e.g. I am deciding whether to take on more work',
+    // Staticke upozorneni — NENI Runarovym hlasem zamerne. Runar sam na popis
+    // priznaku reagovat nema: komentoval by tim necí telo, coz mu _noColdRead
+    // a zakaz rad zakazuji (rozhodnuto s ownerem 2026-08-16). Tohle mluvi APPKA.
+    disclaimer:       'Rúnar offers a reading to reflect on, not professional advice.',
     opt:              '(OPTIONAL)',
     begin_btn:        'BEGIN THE READING',
     draw_lbl:         'ᚠ DRAW YOUR RUNE',
@@ -358,6 +362,9 @@ const UI_TEXT = {
     report_need_type: 'Veldu tegund fyrst',
     q_lbl:            'STAÐAN',
     q_ph:             'T.d. Ég er að ákveða hvort ég eigi að taka að mér meiri vinnu',
+    // Vymysleno islandsky, ne prelozeno (§2). Overeno: 'til umhugsunar' 10432 vyskytu,
+    // 'faglega ráðgjöf' 626 (Risamalheild 2000-2021); GreynirCorrect 0 priznaku.
+    disclaimer:       'Rúnar býður lestur til umhugsunar, ekki faglega ráðgjöf.',
     opt:              '(VALKVÆTT)',
     begin_btn:        'HEFJA LESTURINN',
     draw_lbl:         'ᚠ DRAGÐU RÚNINA ÞÍNA',
