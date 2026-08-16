@@ -79,6 +79,38 @@ function isColdRead(txt) {
   // m[1] = slova mezi "you" a slovesem; zapor sedi prave tam ("you DO NOT know")
   return !!m && !NEGATED.test(m[1]);
 }
+// ⚠️ ISLANDSKA VETEV. Do 2026-08-16 tenhle hlidac umel jen `\byou\b`, jenze
+// RUNE_IMAGES ma islandstinu v r[2] a anglictinu v r[3] — vsech 81 islandskych obrazu
+// tedy neprosle NIKDY zadnou kontrolou. Hlidac koukal na pulku toho, co hlidal.
+// `\b` na islandstinu NELZE: JS ji ma na [A-Za-z0-9_], takze mezi mezerou a "þ" hranice
+// slova NENI a /\bþekkir\b/ nesedne nikdy. Proto lookaround nad islandskou abecedou —
+// a to i u ZAPORU, protoze /\bekki\b/ se trefi dovnitr slova "þekki" a skutecny nalez
+// by umlcelo. (Tataz chyba byla tyz den na trech mistech v measure_readings.js.)
+const IS_L = 'a-záðéíóúýþæöA-ZÁÐÉÍÓÚÝÞÆÖ';
+const isb = (w) => '(?<![' + IS_L + '])(?:' + w + ')(?![' + IS_L + '])';
+// ⚠️ `finnur` jen ve spojeni — samo o sobe znamena i NAJIT ("Þú finnur skjól" = obraz
+// Wunjo, ne narok na nitro). Viz tataz oprava v measure_readings.js.
+const IS_COLD = new RegExp(isb('þú') + '(?:\\s+[' + IS_L + ']+){0,3}\\s+' +
+                           '(?:' + isb('veist|manst|skynjar|þekkir|kannast') +
+                           '|' + isb('finnur') + '\\s+(?:að|hvernig|til|fyrir)' + ')', 'i');
+const IS_SOLO = new RegExp(isb('veist|manst|veistu|manstu'), 'i');
+const IS_NEG  = new RegExp(isb('ekki|aldrei|hvorki|ekkert|hvergi'), 'i');
+// ⚠️ ZAPOR SE HLEDA VE VETE, NE V CELEM TEXTU. Prvni verze testovala IS_NEG pres cely
+// predany retezec — u jedne vety to vypada stejne, ale u profilu (pet vyskytu "ekki")
+// to CELOU kontrolu vyplo a hlasilo "ciste". Nalezeno vlastnim utokem 2026-08-16.
+function _vetaKolem(txt, i) {
+  const a = Math.max(txt.lastIndexOf('.', i), txt.lastIndexOf('\n', i));
+  let b = txt.indexOf('.', i); if (b === -1) b = txt.length;
+  return txt.slice(a + 1, b + 1);
+}
+function isColdReadIS(txt) {
+  for (const re of [IS_COLD, IS_SOLO]) {
+    const m = re.exec(txt);
+    if (m && !IS_NEG.test(_vetaKolem(txt, m.index))) return true;
+  }
+  return false;
+}
+
 const IMGS = (typeof s.RUNE_IMAGES !== 'undefined') ? s.RUNE_IMAGES : null;
 // Znama, ceka na preformulovani (zneni obrazu = obsah, ne tune).
 // Prazdny zamerne: vsechny tri naroky prepsany 2026-08-15 (Cowork).
@@ -88,8 +120,9 @@ if (!IMGS) { console.log('  ✗ RUNE_IMAGES nenalezeny — kontrola studeneho ct
 else {
   let cold = 0;
   for (const r of IMGS) {
-    const txt = [r[2], r[3]].filter(Boolean).join(' ');
-    if (!isColdRead(txt)) continue;
+    // r[2] = IS, r[3] = EN — kazdy svym detektorem. Slit je do jednoho retezce
+    // a pustit na nej anglicky vzor bylo prave to, cim islandstina propadla.
+    if (!isColdRead(String(r[3] || '')) && !isColdReadIS(String(r[2] || ''))) continue;
     if (COLD_PENDING.indexOf(r[0]) !== -1) {
       console.log('  ~ ČEKÁ NA PŘEFORMULOVÁNÍ [' + r[0] + '] obraz tvrdí, co čtenář zná: ' + String(r[3] || r[2]).slice(0, 66));
       cold++; continue;
@@ -100,6 +133,39 @@ else {
   if (!cold && !fail) console.log('  studené čtení ve vkládaných obrazech: žádné');
 }
 
+// ─── 3) VOICE_PROFILES ─────────────────────────────────────────────────────
+// Proc pribylo (2026-08-16): produkcni profil `focused` mel ve svem CTVRTEM vzoru
+// vetu "You know this shore — your feet find the way…" / "Þú þekkir þessa fjöru…".
+// To je presne to, co `_noColdRead` o par radku dal zakazuje — a model vzor napodobi
+// spolehliveji nez zakaz, protoze vzor je konkretni a zakaz abstraktni.
+// Hlidac se do te chvile dival jen na RUNES a RUNE_IMAGES, tedy na vsechno KROME
+// mista, kde hlas doopravdy bydli.
+// ⚠️ `const` v modulu se NENAPOJI na objekt kontextu — `s.VOICE_PROFILES` je undefined
+// i kdyz je promenna v sandboxu ziva. Musi se cist pres runInContext (tataz past, kvuli
+// ktere driv tise mizel SEEKS a stavely se prazdne prompty).
+let VP = null;
+try { VP = vm.runInContext('VOICE_PROFILES', s); } catch (e) { VP = null; }
+if (!VP) { console.log('  ✗ VOICE_PROFILES nenalezeny — kontrola profilu NEBEZELA'); fail++; }
+else {
+  let vpBad = 0;
+  for (const key of Object.keys(VP)) {
+    for (const lang of ['en', 'is']) {
+      const txt = String(VP[key][lang] || '');
+      if (!txt) continue;
+      if (lang === 'is' ? isColdReadIS(txt) : isColdRead(txt)) {
+        console.log('  ✗ STUDENÉ ČTENÍ ve vzorech profilu [' + key + ' ' + lang + ']');
+        fail++; vpBad++;
+      }
+      for (const b of bansFrom(lang === 'is' ? s.__IS : s.__EN)) {
+        if (!txt.toLowerCase().includes(b)) continue;
+        console.log('  ✗ ZAKÁZANÉ "' + b + '" ve vzorech profilu [' + key + ' ' + lang + ']');
+        fail++; vpBad++;
+      }
+    }
+  }
+  if (!vpBad) console.log('  hlasové profily (' + Object.keys(VP).length + '): čisté v obou jazycích');
+}
+
 // KONTROLA TESTU: chytil by to vubec? Podstrcime runu se zakazanym slovem.
 const bansEn = bansFrom(s.__EN);
 const probe = bansEn.find((b) => b === 'journey') || bansEn[0];
@@ -108,6 +174,26 @@ console.log(caught
   ? '  kontrola testu: zakázané slovo v datech test rozpozná (sonda "' + probe + '")'
   : '  ✗ KONTROLA TESTU SELHALA — seznam zákazů se z promptu nenačetl');
 if (!caught || !bansEn.length) fail++;
+
+// Sondy na SAMOTNE DETEKTORY. Bez nich muze byt cela vetev mrtva a test hlasi OK —
+// presne to se stalo islandske vetvi v measure_readings.js (2026-08-16).
+const SONDY = [
+  [isColdRead,   'You know this shore already.',                 true,  'EN nárok'],
+  [isColdRead,   'You do not know what waits beyond.',           false, 'EN zápor'],
+  [isColdRead,   'The river runs grey over black sand.',         false, 'EN běžný text'],
+  [isColdReadIS, 'Þú þekkir þessa fjöru vel.',                   true,  'IS nárok (þ — past s \\b)'],
+  [isColdReadIS, 'Þú veist hvað bíður.',                         true,  'IS nárok'],
+  [isColdReadIS, 'Þú finnur skjól og vindurinn hættir.',          false, 'IS: finnur = NAJDE'],
+  [isColdReadIS, 'Þú finnur að eitthvað er breytt.',              true,  'IS: finnur að = cítí'],
+  [isColdReadIS, 'Þú veist ekki hvað bíður.',                    false, 'IS zápor'],
+  [isColdReadIS, 'Jökuláin rennur grá yfir svartan sand.',       false, 'IS běžný text'],
+];
+let sondaBad = 0;
+for (const [fn, txt, want, label] of SONDY) {
+  if (fn(txt) !== want) { console.log('  ✗ SONDA SELHALA (' + label + '): ' + txt); sondaBad++; }
+}
+if (sondaBad) fail += sondaBad;
+else console.log('  kontrola detektorů: EN i IS poznají nárok, zápor i běžný text');
 
 console.log(fail ? '\nFAIL: ' + fail + ' zaseto' : '\nOK — žádné zakázané slovo si do promptu nesázíme' +
   (pending ? ' (' + pending + ' vyřešená výjimka)' : ''));

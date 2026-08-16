@@ -113,8 +113,14 @@ function sentenceAt(txt, i) {
 const IS_L  = 'a-záðéíóúýþæöA-ZÁÐÉÍÓÚÝÞÆÖ';
 const isb   = (w) => '(?<![' + IS_L + '])(?:' + w + ')(?![' + IS_L + '])';
 const IS_SOLO   = new RegExp(isb('veist|manst|veistu|manstu'), 'i');
+// ⚠️ HOLE `finnur` TU NESMI BYT. `finna` znamena i NAJIT: "Þú finnur skjól" = najdes
+// ukryt, tedy dej v obraze, ne tvrzeni o nitru. Doklad: obraz Wunjo, ktery detektor
+// hlasil jako studene cteni, ackoli jen popisuje, co clovek udela.
+// `finnur` se pocita jen ve spojeni, kde uz nalezeni znamenat nemuze (finnur að/hvernig/
+// til/fyrir). Ostatni slovesa jsou jednoznacne vnitrni. (Tataz oprava jako EN `carry`.)
 const IS_AMBIG  = new RegExp(isb('þú') + '(?:\\s+[' + IS_L + ']+){0,3}\\s+' +
-                             isb('finnur|skynjar|þekkir|kannast'), 'i');
+                             '(?:' + isb('skynjar|þekkir|kannast') +
+                             '|' + isb('finnur') + '\\s+(?:að|hvernig|til|fyrir)' + ')', 'i');
 const IS_PHRASE = new RegExp(isb('eitthvað í þér|innra með þér|það sem þú veist'), 'i');
 // ⚠️ ANI TADY `\b` NE — a tady je to zakernejsi nez u nalezu: falesny ZAPOR skutecny
 // nalez UMLCI. /\bekki\b/ sedne uvnitr "þekki" (pred "e" stoji "þ", ktere JS za pismeno
@@ -200,7 +206,8 @@ function rulesAudit(rows) {
     ['Hann finnur kuldann í fjörunni.', false, 'IS: 3. osoba NENI narok na tazatele'],
     // ⚠️ TYHLE TRI CHYBELY A PRAVE ONY BY BYLY CHYTILY MRTVOU VETEV (2026-08-16).
     // Kazda cvici DVOJZNACNOU vetev POZITIVNE — tedy tu, ktera kvuli `\b` nesedala.
-    ['Þú finnur kuldann í fjörunni.', true, 'IS: 2. osoba U DVOJZNACNEHO slovesa'],
+    ['Þú finnur að eitthvað er breytt.', true, 'IS: "finnur að" = citis, ne najdes'],
+    ['Þú finnur skjól og vindurinn hættir.', false, 'IS: "finnur skjól" = NAJDES (obraz Wunjo)'],
     ['Þú þekkir þessa fjöru vel.', true, 'IS: þekkir po þú (zacina na þ — past s \\b)'],
     ['Þú skynjar það sem bíður.', true, 'IS: skynjar po þú'],
     // ⚠️ SONDA NA FALESNY ZAPOR (2026-08-16). "þekki" obsahuje retezec "ekki";
