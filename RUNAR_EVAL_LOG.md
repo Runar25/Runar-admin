@@ -1350,11 +1350,21 @@ zatím doloženo NENÍ.** Počet vět je v obou registrech 3,0.
 hlídá „you know / you feel", ne přisouzení motivu. Rodina nároků na nitro je širší, než co
 měřím.
 
-**Dvě skutečné vady islandského výstupu, obě v rameni `direct`** (n=3, na příčinu to
-nestačí — `focused` bylo v této dávce bez vady):
-- `„Hvað ertu þegar búið að sá…"` → má být `búinn`/`búin` podle rodu tazatele.
-  Korpus: `ertu búin að` **12 824** · `ertu búinn að` **5 420** · `ertu búið að` **7**.
+**Jedna skutečná vada islandského výstupu** (rameno `direct`, n=3):
 - `„óupp dregið"` → není slovo. Korpus 0; `óuppdregið` 6, `ekki dregið upp` 49.
+  → vloženo do `runar_corrections`.
+
+⚠️ **DRUHÝ „nález" BYL MŮJ OMYL — a stihl jsem ho zapsat do produkční DB, než jsem ho
+odhalil.** `„Hvað ertu þegar **búið** að sá…"` jsem prohlásil za chybu shody na základě
+korpusu (`ertu búið að` 7 proti `ertu búin að` 12 824). Jenže dávka běžela s
+`user_gender: "hk"` a `_addressContext` modelu **výslovně přikazuje** hvorugkyn včetně
+tvaru `tilbúið`. Je to tedy přesně ten tvar, který si projekt pro oslovení **hán** zvolil.
+Korekce by genderově neutrální oslovení **rozbila** všem takovým uživatelům; řádek smazán.
+
+⭐ **Poučení: nízká četnost v Risamálheild neznamená chybu, když jde o úzus, který je
+mladší než korpus.** Risamálheild končí 2021, hán se rozšířilo později. U tvarů spojených
+s oslovením se korpus **nesmí** brát jako verdikt — napřed se ověří, co si projekt zvolil
+(`_addressContext`, `user_profiles.address_gender`).
 
 **Doplněno:** `gen_batch` zapisuje `voice` do každého řádku. Do teď byla jedinou stopou
 `system_sha256` a registr se z něj dal dopočítat jen znovupostavením všech promptů —

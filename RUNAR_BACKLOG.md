@@ -676,8 +676,9 @@ Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je 
   `„Under the pause is the reason you sat down."` (direct/en, Isa) projde. Hlídá se
   „you know / you feel", ne „the reason you…". Rozšířit vzor, ale nejdřív změřit přesnost
   — u `finnur` a `carry` se ukázalo, že široký vzor vyrábí falešné nálezy.
-- **Dvě IS vady výstupu k zanesení do `runar_corrections`** (owner, přes shrine):
-  `ertu búið að` → `ertu búinn/búin að` · `óupp dregið` → není slovo (`ekki dregið upp`).
-  Zdroj: dávka `eval_out/voice-cmp.jsonl`, rameno `direct`.
+- ~~Dvě IS vady do `runar_corrections`~~ → **hotovo, ale jen jedna byla vada.**
+  `óupp dregið` → `ekki dregið upp` vloženo. `ertu búið að` byl **můj omyl** (je to
+  správný hvorugkyn pro oslovení `hán`, viz `_addressContext`) — řádek smazán.
+  Detail → `RUNAR_EVAL_LOG.md` 2026-08-16.
 - **Rozhodnout o `lyrical`.** Třetí registr, nepoužívaný, 3× E001 (rozkazovací způsob —
   není to vada, viz limit `is-grammar-qa`). Jde do porovnání s testery, nebo ven?
