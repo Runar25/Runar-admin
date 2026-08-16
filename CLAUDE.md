@@ -274,6 +274,24 @@ stejnost) · útok 3 dokázal, že přeživší metrika nevidí rytmus (zamích�
 změní číslo o **0,0000**). Detail → [[attack-the-metric-not-just-the-result]].
 **Párové metriky:** nikdy bootstrap s opakováním (duplikát = shoda 1,0), jen jackknife.
 
+### §28 — Každá změna nese svůj DŮVOD tam, kde bydlí (platí pro VŠECHNY session)
+KUKY 2026-08-16: *„každá změna musí být označena proč se to dělo."* **Diff ukazuje CO se změnilo;
+proč se to stalo, nezachytí nic než ten, kdo to psal** — a ten za týden nebude k dispozici.
+
+Důvod se píše **k té změně**, ne do zvláštního seznamu (§20 — seznam by se rozešel):
+- **kód** → komentář na místě zásahu; u obrany navíc **doklad**, čím se to projevilo
+- **doc / mapa promptu** → řádka v changelogu daného docu, ne jen nový text
+- **rozhodnutí o chování** → datovaný záznam (§16); commit message nese totéž jednou větou
+- **výjimka z kontroly** → důvod + datum přímo ve značce
+
+⚠️ **Důvod NENÍ převyprávěný diff.** „Přepsán úhel [5]" není důvod; „úhel se ptal na RUNU, ne
+na obraz — táž vada už odstraněná z [0] a [1]" je. Nezní-li to jako věta, kterou by někdo řekl
+při obhajobě zásahu, není to důvod.
+
+**Není to nový nápad, jen zobecnění.** `verify_escape_marks.js` tohle vynucuje od 2026-07-19
+pro escape značky: *„Holá značka musí nést DŮVOD a DATUM."* Tam se to zavedlo proto, že 35 holých
+značek umlčelo červenou a nikdo nepoznal, která je legitimní. Beze změny principu, jen širší plocha.
+
 ---
 
 ## Tier systém
