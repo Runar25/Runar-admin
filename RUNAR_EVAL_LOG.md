@@ -593,3 +593,38 @@ ale u úhlů — nebo úhly přeformulovat tak, aby ukazovaly a nediktovaly slov
 **Nezměřeno a je to otázka na člověka:** jestli je 33 % „feel" u tělesného úhlu vada, nebo
 poslušnost. Metrika stejnost změří, kvalitu hlasu ne. → slepé srovnání pro Cowork,
 `docs/inbox/2026-08-16-kw-blind.md` (klíč drží CODE mimo repo).
+
+
+### 2026-08-16 — Specifičnost vůči vstupu: měřena, a je slabší než úhel
+
+Cowork (handoff „srovnání AI postav") položil dvě otázky. Jedna z nich, **Q2 „měří se vliv
+vstupu?"**, byla zodpovězena „NEMĚŘÍ SE". **Půl na půl:**
+
+- **Měří se** — `find_seeds.js` skenuje `area`, `seeking` i `intention` jako páky (`:557`)
+  a našel `love` u `area=Love & Relationships` (47 % vs 1 %, p = 3,8e-7). To je vliv vstupu.
+- **Neměřilo se** to, co je v tom nároku podstatné: jestli je čtení té oblasti vlastní **věcně**,
+  nebo jen **ozvěnou jejího slova**. To je přesně Barnum otázka a měřená nebyla. Teď je
+  (`find_seeds.js --specificity [--by area|seeking|intention]`).
+
+**Metoda.** Dvojice čtení TÉŽE runy, rozdělené na stejnou vs různou oblast. **Slova samotné páky
+se ze srovnání vyhodí** — jinak by se měřilo papouškování, které už změřené je. Permutace míchá
+oblasti UVNITŘ runy (dvojice nejsou nezávislé, běžný test by lhal), 20 000 opakování.
+
+| dvojice téže runy | n | překryv |
+|---|---|---|
+| **stejná oblast** | 22 | **8,1 %** |
+| různá oblast | 121 | 7,0 % |
+
+rozdíl **+1,1 b.**, permutační **p = 0,285**.
+
+⭐ **Co z toho NEPLYNE:** „specifičnost neexistuje". Plyne tohle, a je to silnější než holé
+„nevyšlo p": **táž metrika při srovnatelném n (23 dvojic) ÚHEL chytila** — +5,8 b., p = 0,0094.
+Efekt téhle velikosti by tedy nepřehlédla. **Vyloučen je efekt velký jako úhel, ne malý efekt.**
+
+**Co z toho plyne pro Rúnara:** oblast, kterou uživatel zvolí, dnes tvaruje čtení **měřitelně méně
+než náhodně vylosovaný úhel**. Uživatel úhel nevidí a nevybírá ho; oblast vybírá a čeká od ní
+účinek. To je nesoulad mezi tím, co je vidět, a tím, co působí — a je to otázka na ownera, ne
+závěr měření: **má `area` tvarovat čtení víc?** Aparát na ověření změny už stojí.
+
+⚠️ **Hranice nálezu:** 80 anglických produkčních čtení s vyplněnou oblastí, 22 dvojic se stejnou
+oblastí. Netvrdí se nic o islandštině ani o spreadech.

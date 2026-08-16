@@ -515,6 +515,57 @@ if (has('--angles')) {
   process.exit(0);
 }
 
+// ─── --specificity: je čtení vlastní SVÉMU vstupu, nebo jen ozvěna jeho slova? ──
+// Tohle je jádro protibarnumského nároku: „čtení pro Lásku není totéž co pro Kariéru".
+// `find_seeds.js` (základní sken) měří jen LEXIKÁLNÍ průsak — že se slovo „love" objeví.
+// Tady se slova samotné páky ze srovnání VYHODÍ, takže zbylý překryv je věcná specifičnost,
+// ne papouškování. Porovnávají se dvojice čtení TÉŽE runy: stejná oblast vs různá.
+// Permutace míchá oblasti UVNITŘ runy — dvojice nejsou nezávislé, běžný test by lhal.
+if (has('--specificity')) {
+  const LEV = val('--by', 'area');
+  const rows = q("select rune_name, coalesce(" + (LEV === 'seeking' ? 'seeking' : LEV === 'intention' ? 'intention' : 'area') +
+    ",'') as lev, coalesce(short_text,'') || ' ' || coalesce(deep_text,'') as txt " +
+    "from public.readings where lang = '" + LANG.replace(/[^a-z]/gi, '') + "' " +
+    "and coalesce(area,'') <> 'spread' and coalesce(short_text,'') <> '';")
+    .filter(r => r.lev && r.lev.trim());
+  const levW = new Set(rows.flatMap(r => words(r.lev)));
+  const cset = t => { const o = new Set(); for (const w of words(t)) if (w.length > 3 && !STOP.has(w) && !levW.has(w)) o.add(w); return o; };
+  const by = {}; for (const r of rows) (by[r.rune_name] = by[r.rune_name] || []).push({ s: cset(r.txt), a: r.lev });
+  const groups = Object.values(by).filter(g => g.length > 1);
+  const stat = gs => {
+    const s = [], d = [];
+    for (const g of gs) for (let i = 0; i < g.length; i++) for (let j = i + 1; j < g.length; j++)
+      (g[i].a === g[j].a ? s : d).push(jaccard(g[i].s, g[j].s));
+    const m = x => x.length ? x.reduce((p, q) => p + q, 0) / x.length : 0;
+    return { d: m(s) - m(d), ns: s.length, nd: d.length, ms: m(s), md: m(d) };
+  };
+  const obs = stat(groups);
+  let seed = 99, ge = 0; const N = 20000;
+  const rnd = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
+  for (let p = 0; p < N; p++) {
+    const gs = groups.map(g => {
+      const a = g.map(x => x.a);
+      for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+      return g.map((x, k) => ({ s: x.s, a: a[k] }));
+    });
+    if (stat(gs).d >= obs.d) ge++;
+  }
+  const p = (ge + 1) / (N + 1);
+  console.log('\n═══ SPECIFIČNOST: je čtení vlastní svému vstupu (' + LEV + ')? ═══');
+  console.log('  Slova samotné páky jsou ze srovnání VYHOZENÁ — jinak by se měřilo papouškování,');
+  console.log('  a to už změřené je. Zbylý překryv = věcná specifičnost.\n');
+  console.log('  táž runa, STEJNÝ ' + LEV + '   n=' + obs.ns + '  překryv ' + (obs.ms * 100).toFixed(1) + ' %');
+  console.log('  táž runa, RŮZNÝ ' + LEV + '    n=' + obs.nd + '  překryv ' + (obs.md * 100).toFixed(1) + ' %');
+  console.log('  rozdíl ' + (obs.d > 0 ? '+' : '') + (obs.d * 100).toFixed(1) + ' b.   permutační p = ' + p.toFixed(4));
+  // ⚠️ „Nevyslo p" neni „neni tam nic" — pokud metrika pri tomhle n nic nevidi. Uhel se pri
+  // n=23 chytit DAL (+5,8 b., p=0,0094), takze mez citlivosti je zname a da se rict, CO je vylouceno.
+  console.log('\n  ⚠️ Co z toho NEPLYNE: „specifičnost neexistuje". Plyne tohle — táž metrika při');
+  console.log('     srovnatelném n (23 dvojic) ÚHEL chytila: +5,8 b., p = 0,0094. Efekt téhle');
+  console.log('     velikosti by tedy nepřehlédla. Vyloučen je efekt velký jako úhel, ne malý efekt.');
+  console.log('');
+  process.exit(0);
+}
+
 if (has('--variety')) {
   const files = ARGS.filter(a => /\.jsonl$/i.test(a));
   if (files.length !== 2) { console.error('pouziti: --variety a.jsonl b.jsonl'); process.exit(1); }
