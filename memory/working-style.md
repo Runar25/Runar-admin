@@ -295,11 +295,27 @@ Kód v shrine.html pozná V2 lab: `console.warn('saveReading (V2 lab):')`, `// V
 
 ## Pre-compact protokol
 Než uživatel spustí /compact, Claude musí:
-1. Uložit nové funkce do snapshots/: `C:\Users\zkuku\AppData\Roaming\Claude\memory\snapshots\YYYY-MM-DD-nazev.md`
-2. Aktualizovat MEMORY.md — přidat odkaz na nový snapshot + nové soubory
-3. Aktualizovat CLAUDE.md — jen pravidla a stav, ne historii
-4. Aktualizovat dotčené doky dle rozcestníku (tree → RUNAR_TREE.md/RUNAR_BACKLOG.md; ne archivované suroviny)
-5. Říct: "Vše uloženo, /compact je bezpečný."
+1. Uložit **rozdělanou práci** do `memory/snapshots/YYYY-MM-DD-nazev.md` — a **jen to, co nemá
+   vlastníka jinde**: čím jsme se zrovna zabývali a co je další krok. Rozhodnutí patří do
+   `RUNAR_DECISIONS.md`, otevřené úkoly do `RUNAR_BACKLOG.md`, měření do `RUNAR_EVAL_LOG.md`.
+   Snapshot, který je opisuje, je „shrnutí všeho" (CLAUDE.md §20) a nemá vzniknout.
+2. Aktualizovat MEMORY.md — přidat odkaz na nový snapshot
+3. Aktualizovat dotčené doky dle rozcestníku (tree → RUNAR_TREE.md; ne archivované suroviny)
+4. ⭐ **DÁT OWNEROVI HOTOVOU `/compact` ŘÁDKU K VLOŽENÍ** — vypsanou, ke zkopírování:
+   `/compact Zachovej: <konkrétní věci této session>`
+
+**Proč je krok 4 ten nejdůležitější (2026-08-16, po dni ztraceném vysvětlováním rozhodnutých věcí):**
+kroky 1–3 plní soubory, které pomůžou jen tehdy, když je někdo přečte. **Summarizer běží tak jako
+tak a jako jediný rozhoduje, co z konverzace přežije** — a `/compact` s instrukcí je jediné místo,
+kde se mu dá říct co. Automatický compact tuhle instrukci nemá, takže vybírá sám a vybírá špatně:
+ten dnešní zahodil specifikaci nálad, kánon „postoj ano, radu ne" i rozhodnutí o `VOICE_PROFILES`,
+a session je pak owner ovi navrhla znovu jako nové nápady.
+
+⚠️ Řádku píše Claude, **spouští ji owner** — `/compact` se zadává z konzole. „Vše uloženo,
+/compact je bezpečný" bez té řádky je prázdná věta; nic neuloží a summarizeru nic neřekne.
+
+⚠️ **Snapshot NENÍ handoff a nikdy z něj neber aktuální stav** (MEMORY.md). Nese, co bylo
+rozdělané **k tomu dni**. Aktuální stav vlastní produkce, `git log` a doky dle rozcestníku.
 
 ## Post-compact / Session Start protokol
 **Vlastník = `MEMORY.md`** (sekce Session Start Protocol). Sem se nekopíruje — dvě kopie pořadí
