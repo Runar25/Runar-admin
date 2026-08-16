@@ -746,8 +746,49 @@ function _priorityContext(lensOn, drawn, lang) {
     ? 'If these do not gather into one natural image: keep ' + subjEn + ' in front, honour the seeking and the area, and let the life-rune lens recede — it may vanish entirely rather than be forced. Never stack them as separate statements.'
     : 'If these do not gather into one natural image: keep ' + subjEn + ' in front and honour the seeking and the area. Never stack them as separate statements.';
 }
+// Osm vlastnich vet, jedna na oblast — NE jedna veta s dosazenym `{area}`.
+// Duvod (mereno 2026-08-16): jedna veta se substituci oblast do cteni neprosadila; projevila
+// se jen ozvenou sveho slova. Tri nezavisla mereni kolem nuly -> RUNAR_EVAL_LOG.md.
+// Puvodni zneni si navic protirecilo: zadalo "let it land clearly in that part of life"
+// a hned "never as a stated topic" — oblast se mela projevit a zaroven nesmela byt videt.
+// Kazda veta ted rika, CEHO se ma runa v te oblasti dotknout, ve tvaru "poloz na X, ne na Y".
+// Zaporna strana brani sklouznuti do sousedni oblasti (Rodina vs Laska) nebo do rizika, ktere
+// ta oblast nese (Uzdraveni: zadna diagnoza — to je bezpecnostni, ne stylisticke).
+// Tvar kopiruje `_registerContext` niz (mapa na hodnotu, ne substituce) — §18, jedna cesta.
+// ⚠️ Mapa je indexovana PORADIM v AREAS. Preskladani nebo pridani oblasti by tise poslalo
+// kazde cteni spatnou vetu; hlida to `scripts/utils/test_lever_maps.js`.
+// Kanon (KUKY 2026-08-16, RUNAR_DESIGN.md): runa je zaklad, oblast je otazka, kterou musi
+// runa vzit v potaz.
 function _domainContext(area, lang) {
   if (!area) return '';
+  var mapEn = [
+    "The reading is for Love & Relationships — let the rune's meaning show up in what moves between the seeker and another person, not in the seeker alone.",
+    "The reading is for Purpose & Path — let the rune's meaning press on where the seeker is already headed, not on where they should go.",
+    "The reading is for Career & Creativity — let the rune's meaning land on something the seeker makes or contributes, not on a workplace as a setting.",
+    "The reading is for Healing & Wellbeing — let the rune's meaning land on what the seeker's body or days have room for right now, not on a diagnosis or a verdict on their condition.",
+    "The reading is for The Unseen — let the rune's meaning stay with what the seeker senses but cannot yet name, not with anything that could be listed or explained.",
+    "The reading is for Family & Home — let the rune's meaning land on what the seeker carries from the people or place they return to, not on one new person.",
+    "The reading is for Inner Growth — let the rune's meaning measure how the seeker is changing against who they were, not against anyone else.",
+    "The reading is for Crossroads & Decisions — let the rune's meaning press on what the seeker already knows but has not said aloud, not on predicting which way they will go."
+  ];
+  var mapIs = [
+    'Þessi lestur er fyrir Ást & Sambönd — láttu merkingu rúnarinnar birtast í því sem gerist á milli leitandans og annarrar manneskju, ekki í leitandanum einum.',
+    'Þessi lestur er fyrir Tilgang & Leið — láttu merkingu rúnarinnar þrýsta á stefnuna sem leitandinn er þegar á, ekki á hvert hann ætti að stefna.',
+    'Þessi lestur er fyrir Starf & Sköpun — láttu merkingu rúnarinnar lenda á einhverju sem leitandinn skapar eða leggur til, ekki á vinnustaðnum sem umgjörð.',
+    'Þessi lestur er fyrir Heilun & Líðan — láttu merkingu rúnarinnar lenda á því sem líkami eða dagar leitandans hafa rými fyrir núna, ekki á greiningu eða dómi um ástand hans.',
+    'Þessi lestur er fyrir Hið dulda — láttu merkingu rúnarinnar halda sig við það sem leitandinn skynjar en getur ekki enn nefnt, ekki við neitt sem mætti telja upp eða útskýra.',
+    'Þessi lestur er fyrir Fjölskyldu & Heimili — láttu merkingu rúnarinnar lenda á því sem leitandinn ber með sér frá fólkinu eða staðnum sem hann snýr aftur til, ekki á einni nýrri manneskju.',
+    'Þessi lestur er fyrir Innri Vöxt — láttu merkingu rúnarinnar mæla hvernig leitandinn er að breytast miðað við hann sjálfan áður, ekki miðað við neinn annan.',
+    'Þessi lestur er fyrir Vegamót & Ákvarðanir — láttu merkingu rúnarinnar þrýsta á það sem leitandinn veit þegar en hefur ekki sagt upphátt, ekki á að spá fyrir um hvora leiðina hann fer.'
+  ];
+  var idx = -1;
+  if (typeof AREAS !== 'undefined') {
+    idx = (AREAS.en || []).indexOf(area);
+    if (idx === -1) idx = (AREAS.is || []).indexOf(area);
+  }
+  if (idx >= 0 && idx < mapEn.length) return lang === 'is' ? mapIs[idx] : mapEn[idx];
+  // ⚠️ ZACHYTNA SIT pro oblast, ktera v AREAS neni (volny text z gen_batch, 'spread' z DB,
+  // budouci oblast pridana jinde). Bez ni by neznama oblast prisla o instrukci UPLNE — tise.
   if (lang === 'is')
     return 'Þessi lestur snýst um: ' + area + ' — láttu hann lenda skýrt á því sviði lífsins, gegnum mynd, aldrei sem yfirlýst umfjöllunarefni.';
   return 'This reading is about: ' + area + ' — let it land clearly in that part of life, through image, never as a stated topic.';

@@ -65,7 +65,12 @@ const PARTS = {
   // (měřeno: 3 ze 4 čtení nesla životní runu v těle). Kontrola hlídá tentýž kontrakt,
   // jen na novém znění — proto kotví na LOKALINSA / CLOSING LENS.
   lens:     ['CLOSING LENS — the life rune', 'LOKALINSA — lífsrúnin'],
-  domain:   ['This reading is about:', 'Þessi lestur snýst um:'],
+  // Dve platna zneni od 2026-08-16: `_domainContext` ma osm VLASTNICH vet na oblast
+  // ("The reading is for X — ...") a obecnou ZACHYTNOU SIT pro oblast, ktera v AREAS
+  // neni ("This reading is about: X — ..."). Obe nesou tyz kontrakt, proto obe kotvy.
+  // `times()` niz hlida, ze v jednom promptu je prave JEDNA — ne obe naraz.
+  domain:   ['This reading is about:', 'Þessi lestur snýst um:',
+             'The reading is for', 'Þessi lestur er fyrir'],
   register: ['This is a leaning, not an order', 'Þetta er tilhneiging, ekki pöntun'],
   priority: ['do not gather into one natural image', 'rennur ekki saman í eina náttúrlega mynd'],
   coldread: ['NO COLD READING', 'ENGIN KÖLD LESNING'],
