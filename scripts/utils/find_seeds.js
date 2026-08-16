@@ -212,6 +212,139 @@ function leverVocab(lever, value) {
   return [...withL].filter(w => !without.has(w));
 }
 
+// ═══════════════════════════════════════════════════════
+// --kws · PŘÍČINNÝ test UVNITŘ jedné runy
+//
+// ⚠️ ZASETO u `rune_name` NEDOKAZUJE, že to slovo způsobil náš text. „stillness" u Isy
+// (70 % vs 5 %) je v promptu — ale Isa JE ledová a model to ví i bez nás. Runa způsobuje
+// obojí najednou: náš seznam i model. Korelace s pákou tady příčinu neurčí.
+//
+// ⭐ Jenže prompt losuje 3 klíčová slova z 5–6 a od 2026-08-10 zapisuje do `prompt_draws.kws`,
+// KTERÁ padla. To je randomizovaný pokus, který si appka dělá sama — jen ho nikdo nečetl.
+// Uvnitř JEDNÉ runy porovnáme čtení, kde slovo PADLO, proti těm, kde NEPADLO. Runa je
+// v obou skupinách táž, takže „model to ví" se vyruší a zbyde vliv NAŠEHO textu.
+//
+// Odpovídá tím na ownerovu otázku (2026-08-15: „co kdybychom dal těm slovům pár ekvivalentů?")
+// DŘÍV, než se ekvivalenty napíšou: nemá smysl rozšiřovat košík, ze kterého se netahá.
+//
+//   node scripts/utils/find_seeds.js --kws           ostrý běh z DB
+//   node scripts/utils/find_seeds.js --selftest      ověří, že ta analýza vůbec něco pozná
+// ═══════════════════════════════════════════════════════
+const KWS_MIN_ROWS = 30;
+
+// Sonda pro klíčové slovo. Delší slovo se zkracuje na 4 znaky, aby chytilo ohyby
+// („waiting" → „wait" chytí i „waits"). Krátké slovo MUSÍ sedět celé: sonda „ice"
+// jako předpona by v islandské appce chytala „Iceland" v každém druhém čtení.
+function probeOf(kw) {
+  const ws = words(kw).filter(w => w.length >= 3 && !STOP.has(w));
+  if (!ws.length) return null;
+  const w = ws[0];
+  return { probe: w.length >= 5 ? w.slice(0, 4) : w, whole: w.length < 4 };
+}
+function hitsProbe(txt, pr) {
+  return new RegExp('\\b' + pr.probe + (pr.whole ? '\\b' : ''), 'i').test(txt);
+}
+
+function runKws(rows, label) {
+  const kwField = LANG === 'is' ? 'k_is' : 'k';
+  let a = 0, b = 0, c = 0, d = 0;
+  const per = {}, unmatched = {};
+  for (const r of rows) {
+    const rune = S.__RUNES.find(x => x.n === r.rune_name || x.is_n === r.rune_name);
+    // ⚠️ Nespárovaný řádek se NESMÍ tiše přeskočit. Tichý `continue` je přesně to,
+    // co dělá z rozbitého párování čistý nulový výsledek (§19.2).
+    if (!rune || !rune[kwField]) { unmatched[r.rune_name] = (unmatched[r.rune_name] || 0) + 1; continue; }
+    const all = rune[kwField].split(',').map(s => s.trim()).filter(Boolean);
+    const drawn = String(r.kws || '').split(',').map(s => s.trim()).filter(Boolean);
+    for (const kw of all) {
+      const pr = probeOf(kw);
+      if (!pr) continue;
+      const wasDrawn = drawn.indexOf(kw) !== -1;
+      const appears = hitsProbe(r.txt, pr);
+      const k = r.rune_name + ' · ' + kw;
+      per[k] = per[k] || { dr: 0, drHit: 0, nd: 0, ndHit: 0 };
+      if (wasDrawn) { per[k].dr++; if (appears) { per[k].drHit++; a++; } else b++; }
+      else { per[k].nd++; if (appears) { per[k].ndHit++; c++; } else d++; }
+    }
+  }
+  const p = fisher(a, b, c, d);
+  const rDr = a + b ? a / (a + b) : 0, rNd = c + d ? c / (c + d) : 0;
+  console.log('\n═══ PŘÍČINNÝ TEST klíčových slov · ' + label + ' ═══');
+  console.log('  čtení s logem losu: ' + rows.length + '   dvojic (čtení × slovo): ' + (a + b + c + d));
+  console.log('  slovo PADLO do promptu   → objevilo se v ' + a + '/' + (a + b) + ' = ' + (rDr * 100).toFixed(0) + ' %');
+  console.log('  slovo NEPADLO            → objevilo se v ' + c + '/' + (c + d) + ' = ' + (rNd * 100).toFixed(0) + ' %');
+  console.log('  Fisher p = ' + p.toExponential(2));
+  const un = Object.keys(unmatched);
+  if (un.length) console.log('  ⚠️ NESPÁROVÁNO s RUNES (nepočítá se jako nula): ' +
+    un.map(k => k + '×' + unmatched[k]).join(', '));
+  const top = Object.keys(per).filter(k => per[k].drHit || per[k].ndHit)
+    .sort((x, y) => per[y].drHit - per[x].drHit).slice(0, 6);
+  if (top.length) {
+    console.log('  slova, která se vůbec objevila:');
+    for (const k of top) console.log('    ' + k + '  padlo ' + per[k].drHit + '/' + per[k].dr +
+      ' · nepadlo ' + per[k].ndHit + '/' + per[k].nd);
+  }
+  if (rows.length < KWS_MIN_ROWS) {
+    console.log('\n  ⚠️ NEDOSTATEK DAT (' + rows.length + ' < ' + KWS_MIN_ROWS + ' čtení s logem losu).');
+    console.log('     Tohle NENÍ výsledek. `prompt_draws.kws` se píše až od 2026-08-10.');
+  } else if (p < 0.05 && rDr > rNd) {
+    console.log('\n  → NÁŠ SEZNAM to způsobuje. Rozšířit ho o ekvivalenty dává smysl.');
+  } else {
+    console.log('\n  → Náš seznam to NEZPŮSOBUJE (model to slovo řekne i bez nás).');
+    console.log('     Přidávat ekvivalenty by nepomohlo — stejnost sedí jinde než v seznamu.');
+  }
+  return { a, b, c, d, p };
+}
+
+// ROZKOPAT VLASTNÍ PRÁCI: analýza, která nikdy nic nenajde, projde stejně tiše jako správná.
+// Tři případy, ne jen ten dobrý — musí najít efekt, NESMÍ ho najít v nulových datech,
+// a sonda musí umět ohyb i past („ice" NESMÍ chytit „Iceland").
+if (has('--selftest')) {
+  let bad = 0;
+  const chk = (ok, msg) => { console.log('  ' + (ok ? '✔' : '✘ SELHALO') + '  ' + msg); if (!ok) bad++; };
+
+  console.log('\n─── sonda ───');
+  const pIce = probeOf('ice'), pWait = probeOf('waiting'), pStill = probeOf('stillness');
+  chk(hitsProbe('the ice holds', pIce), '"ice" chytí "ice"');
+  chk(!hitsProbe('a farm in Iceland', pIce), '"ice" NEchytí "Iceland" (past: krátká sonda jako předpona)');
+  chk(hitsProbe('he waits by the door', pWait), '"waiting" chytí ohyb "waits"');
+  chk(!hitsProbe('the water rose', pWait), '"waiting" NEchytí "water"');
+  chk(hitsProbe('a stillness settled', pStill), '"stillness" chytí sebe');
+
+  // Isa.k = 'ice, stillness, waiting, pause, clarity through cold'
+  const mk = (kws, txt) => ({ rune_name: 'Isa', kws, txt });
+  console.log('\n─── data s FALEŠNÝM efektem (slovo se objeví, jen když padne) ───');
+  const eff = [];
+  for (let i = 0; i < 12; i++) {
+    eff.push(mk('ice, stillness, waiting', 'the ice and a stillness and he waits here'));
+    eff.push(mk('pause, clarity through cold, ice', 'a pause in the clear cold ice of morning'));
+  }
+  const rE = runKws(eff, 'SELFTEST efekt');
+  chk(rE.p < 0.05 && rE.a / (rE.a + rE.b) > rE.c / (rE.c + rE.d), 'efekt se NAJDE (p<0,05, správný směr)');
+
+  console.log('\n─── NULOVÁ data (text se o los vůbec neopírá) ───');
+  const nul = [];
+  for (let i = 0; i < 12; i++) {
+    nul.push(mk('ice, stillness, waiting', 'the ice and a stillness and he waits, a pause, clear cold'));
+    nul.push(mk('pause, clarity through cold, ice', 'the ice and a stillness and he waits, a pause, clear cold'));
+  }
+  const rN = runKws(nul, 'SELFTEST nula');
+  chk(!(rN.p < 0.05), 'v nulových datech se NIC nenajde');
+
+  console.log(bad ? '\n✘ SELFTEST SELHAL — ' + bad + ' bod(ů)\n' : '\n✔ SELFTEST OK — analýza pozná efekt i jeho nepřítomnost\n');
+  process.exit(bad ? 1 : 0);
+}
+
+if (has('--kws')) {
+  const rws = q("select rune_name, prompt_draws->>'kws' as kws, " +
+    "coalesce(short_text,'') || ' ' || coalesce(deep_text,'') as txt " +
+    "from public.readings where lang = '" + LANG.replace(/[^a-z]/gi, '') + "' " +
+    "and prompt_draws ? 'kws' and coalesce(area,'') <> 'spread';");
+  runKws(rws, 'produkce · lang=' + LANG);
+  console.log('');
+  process.exit(0);
+}
+
 // ─── běh ─────────────────────────────────────────────────
 const LEVERS = ['area', 'seeking', 'intention', 'rune_name'];
 // ⚠️ JEN SINGLE. Spready (`spread_data is not null`) staví jine buildery (norns/kriz/
@@ -344,8 +477,16 @@ console.log('ZASETO — slovo je v textu páky A ve čteních s ní je častěj�
 console.log('         ⚠️ ZASETO ≠ vada. Jméno runy se ve čtení objevit MÁ. Nástroj říká „tohle');
 console.log('         prosakuje z promptu"; jestli to tam patří, rozhoduje člověk.\n');
 if (!planted.length) console.log('  (žádné — prompt do výstupu neprosakuje měřitelně)');
+let warnedRune = false;
 for (const t of planted) {
   console.log('  ' + (t.repl ? '✔' : '⚠') + ' "' + t.word + '"  ' + t.lever + '=' + t.value);
+  // ⚠️ U runy korelace NEURCI pricinu: runa zpusobuje nas seznam I model najednou.
+  // "road" u Raidho se objevilo i ve cteni, kde to slovo NEPADLO (--kws).
+  if (t.lever === 'rune_name' && !warnedRune) {
+    warnedRune = true;
+    console.log('      ⚠️ u runy tohle NEDOKAZUJE, že to způsobil náš text — runa způsobuje');
+    console.log('         náš seznam i model najednou. Příčinu rozhodne `--kws`.');
+  }
   console.log('      s pákou ' + t.hitIn + '/' + t.nIn + ' = ' + pct(t.rIn) +
               '   bez ní ' + t.hitOut + '/' + t.nOut + ' = ' + pct(t.rOut) +
               '   p=' + t.p.toExponential(1) + ' q=' + t.q.toExponential(1) +

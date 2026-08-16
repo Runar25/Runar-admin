@@ -441,10 +441,13 @@ Proti dnešnímu stavu už tam není. (Sken jede jen na **single** čteních; 63
 buildery, takže na ně single prompt neplatí — proto nižší `n` než u ručního měření.)
 
 Vedle toho našel zárodky, o kterých se nevědělo:
-- **`stillness` u runy Isa — 70 % proti 5 %** (p = 6,6e-7). Klíčová slova runy (`Isa.k = ice,
-  stillness, waiting, pause, clarity through cold`) se do čtení opisují. Vysvětluje to část
-  „stejnosti" čtení téže runy. **Otázka na ownera, ne rozhodnutí:** klíčová slova mají runu
-  navádět, ne dodávat slovník. Totéž `road` u Raidho (80 % vs 3 %), `root` u Eihwaz (67 % vs 9 %).
+- **`stillness` u runy Isa — 70 % proti 5 %** (p = 6,6e-7), `road` u Raidho (80 % vs 3 %),
+  `root` u Eihwaz (67 % vs 9 %). Slova jsou v `RUNES[].k`, které prompt runě dodává.
+
+  ⚠️ **OPRAVA (2026-08-16): u runy ta korelace PŘÍČINU NEURČÍ**, a první verze tohohle řádku
+  to tvrdila. Runa způsobuje obě věci najednou — náš seznam **i** model. Isa **je** ledová
+  a model to ví bez nás; „stillness" by tam mohlo být, i kdyby v seznamu nebylo. Třída ZASETO
+  u `rune_name` je proto **podezření, ne důkaz**. Nástroj to od 2026-08-16 sám hlásí u výpisu.
 - `love` u `area=Love & Relationships` (47 % vs 1 %) a `confirmation` u `seeking=Confirmation`
   (35 % vs 1 %) — páka propisuje své vlastní jméno do čtení.
 - Jména run (`perth`, `hagalaz`, `wunjo` … 100 %) jsou ZASETO **záměrně** — prompt je nést má.
@@ -468,3 +471,35 @@ se dají čekat znovu):
    zahazoval právě ty nejzajímavější nálezy.
 
 Všechny tři odhalilo to, že nástroj vypisuje **PŘESKOČENO** a **SLEPOTU** místo tiché nuly (§19.2).
+
+
+### 2026-08-16 — Příčina u klíčových slov: pokus si appka dělá sama, jen ho nikdo nečetl
+
+Owner: *„každá runa má svoje hlavní slova… co kdybychom dal těm slovům ještě pár ekvivalentů?"*
+
+**Nejdřív se musí vědět, jestli se z toho košíku vůbec tahá.** Rozšiřovat seznam, který na výstup
+nemá vliv, je práce bez účinku — a `find_seeds.js` na to sám odpovědět neumí (viz oprava výš).
+
+⭐ **Jenže randomizovaný pokus už běží.** Prompt losuje **3 klíčová slova z 5–6** a od 2026-08-10
+zapisuje do `prompt_draws.kws`, **která padla**. Stačí uvnitř JEDNÉ runy porovnat čtení, kde slovo
+padlo, proti těm, kde nepadlo: runa je v obou skupinách táž, takže „model to ví" se vyruší a zbyde
+vliv **našeho textu**. Žádné nové generování, žádná změna promptu.
+
+Implementováno jako `node scripts/utils/find_seeds.js --kws`.
+
+**Stav k 2026-08-16: rozhodnout NELZE — 11 čtení s logem losu.** Vypisuje se to nahlas jako
+„tohle NENÍ výsledek", ne jako nula. Předběžně (bez váhy): slovo se objevilo v 1/32 případů, kdy
+padlo, a ve 4/22, kdy nepadlo — tedy **opačným směrem**, p = 0,15. Detail ukazuje `road` u Raidho,
+`sun` u Sowila a `light` u Dagaz **ve čteních, kde ta slova nepadla**. Tři z pěti zásahů jsou ve
+sloupci „nepadlo". Je to slabý, ale konzistentní náznak, že signaturní slovo runy vyrábí **model**,
+ne náš seznam. Prahu 30 čtení se dosáhne provozem; pak to rozhodne samo.
+
+**Sonda na klíčové slovo** hledá 4znakovou předponu (`waiting` → `wait` chytí i `waits`), ale
+slovo kratší než 4 znaky musí sedět celé: sonda `ice` jako předpona by v islandské appce chytala
+**Iceland** v každém druhém čtení. Tahle past je jedním z pěti bodů `--selftest`.
+
+**`--selftest` (rozkopat vlastní práci).** Analýza, která nikdy nic nenajde, projde stejně tiše
+jako správná. Test proto ověřuje tři věci, ne jednu: (1) sonda chytí ohyb a nechytí past,
+(2) v datech s **nasazeným** efektem se efekt najde, (3) v **nulových** datech se nenajde nic.
+Doplněno hlášení **NESPÁROVÁNO s RUNES** — tichý `continue` u nespárované runy by z rozbitého
+párování udělal čistý nulový výsledek (§19.2), přesně jako `typeof SEEKS === 'undefined'` o den dřív.

@@ -403,5 +403,9 @@ nejde říct, která pozice ve spreadu který zárodek nese.
 pause, clarity through cold'`), které prompt runě dodává. Vysvětluje to část „stejnosti" čtení
 téže runy — každé sáhne po stejném slově.
 **Rozhodnutí je ownerovo (obsah):** mají klíčová slova runu **navádět**, nebo jí dodávat slovník?
-Kdyby navádět, dá se to testovat obrácenou pákou (§25): klíčová slova u jedné runy nahradit
-obrazem bez použitelných substantiv a změřit, jestli stejnost klesne.
+⚠️ **Ale nejdřív se musí prokázat příčina** — korelace u runy ji neurčí (runa způsobuje náš seznam
+i model najednou). Test je **hotový a nepotřebuje nové generování**: `find_seeds.js --kws` porovná
+uvnitř jedné runy čtení, kde klíčové slovo **padlo** (prompt losuje 3 z 5–6, `prompt_draws.kws`),
+proti těm, kde nepadlo. **Blokuje jen objem:** k 2026-08-16 má log losu 11 čtení, práh je 30.
+Owner 2026-08-16 navrhl přidat klíčovým slovům **ekvivalenty**; má to smysl teprve tehdy, když
+test ukáže, že se z toho košíku tahá.
