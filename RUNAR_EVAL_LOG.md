@@ -1078,3 +1078,31 @@ To je tvrzení o tazatelově nitru — a **detektor ho nechytí**, protože je p
 epistemických slovesech (`know`/`feel`/`sense`/`remember`). Vazby typu **„what holds you",
 „what keeps you", „what carries you"** tvrdí totéž bez nich.
 ⚠️ Naměřených 18–24 % je tedy **spodní odhad**, ne horní. → `RUNAR_BACKLOG.md`.
+
+
+### 2026-08-16 — `intention` čtení netvaruje. Když jedna volba, tak `area`.
+
+Owner: *„uživatel bude mít možnost si vybrat jen jednu pro čtení… area nebo intention?"*
+Změřeno **stejným návrhem, stejným `n` a stejnou metrikou** jako oblast, aby to šlo porovnat:
+2 runy (Isa, Raidho) × 2 hodnoty × 8 čtení = 32, slova samotné páky ze srovnání vyhozená,
+permutace míchá hodnoty uvnitř runy.
+
+| páka | stejná hodnota | různá | rozdíl | p |
+|---|---|---|---|---|
+| **area** | 14,1 % (n=112) | 11,4 % (n=128) | **+2,7 b.** | **0,0136** |
+| **intention** | 11,5 % (n=112) | 11,3 % (n=128) | **+0,2 b.** | 0,37 |
+
+⭐ **Není to nedostatek dat.** Táž metrika při týchž 112 dvojicích u oblasti efekt **našla**
+(p = 0,0136). U záměru nenašla nic. A testovaly se dvě **nejvzdálenější** hodnoty — „Right now"
+proti „Understanding the past", tedy přítomnost proti minulosti. **To byl pro `intention`
+nejlepší možný případ a stejně nic.**
+
+**Sedí to s tím, kolik která páka vydá do promptu:** oblast přidává dvě věty (`_domainContext`
++ tie-breaker), záměr **jednu** — `READING PURPOSE: Right now — about what is happening now;
+speak in the present`. Jeden štítek s krátkou glosou čtení netvaruje.
+
+**Odpověď na ownerovu otázku: když jedna volba, tak `area`.**
+
+⚠️ **Hranice:** EN, 2 runy, 2 ze 3 hodnot, `area` držena prázdná. Netvrdí se, že `intention`
+nedělá **nic** — tvrdí se, že nedělá nic **velikosti, kterou tahle metrika při 112 dvojicích
+u oblasti chytila**.
