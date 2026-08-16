@@ -1123,3 +1123,52 @@ speak in the present`. Jeden štítek s krátkou glosou čtení netvaruje.
 ⚠️ **Hranice:** EN, 2 runy, 2 ze 3 hodnot, `area` držena prázdná. Netvrdí se, že `intention`
 nedělá **nic** — tvrdí se, že nedělá nic **velikosti, kterou tahle metrika při 112 dvojicích
 u oblasti chytila**.
+
+
+### 2026-08-16 — Přepis úhlů: vada u 3+5 zmizela, stejnost ZMĚŘENÁ NENÍ
+
+Dvě ramena po 50 čteních (25 run × 2), staré úhly přes `--v2`, nové z HEAD.
+
+**① Vada, kvůli které se to dělalo — zmizela.** Nárok na vnitřní stav:
+
+| | úhly 3+5 | ostatní úhly | Fisher |
+|---|---|---|---|
+| **staré úhly** | **3/16 = 19 %** | 0/34 = 0 % | **p = 0,029** |
+| **nové úhly** | 1/19 = **5 %** | 0/31 = 0 % | p = 0,38 |
+
+Staré rameno **reprodukovalo dřívější nález nezávisle** (19 % vs 0 %, dříve 15 % vs 3 %) —
+to je replikace na čerstvých datech, ne totéž měření dvakrát. U nových úhlů rozdíl proti
+ostatním **zmizel** (p = 0,38).
+⚠️ Přímý test starých 3+5 proti novým 3+5 dá **p = 0,31** — směr sedí, síla ne. Tvrdit se dá:
+**„u starých byla vada prokazatelná, u nových prokazatelná není."** Ne „nové jsou lepší".
+
+**② Stejnost — NEZMĚŘENO, moje chyba v návrhu dávky.** Vyšly jen **4 dvojice se stejným
+úhlem** na rameno: při 2 čteních na runu a 7 úhlech je šance na shodu 1/7. Dřívější nález měl
+23 dvojic, záměrný test 93. Z 7,2 % → 7,1 % **nejde číst nic**.
+⭐ Táž chyba jako u `--n 1` dřív týž den: **návrh dávky se musí počítat z počtu DVOJIC, které
+z něj vypadnou, ne z počtu čtení.** Na měření stejnosti je potřeba **vynucený úhel**
+(`--angle N --all-runes --n 3` = 75 čtení na rameno, ~75 dvojic).
+
+### 2026-08-16 — SPREADY poprvé změřeny (norns, 20 čtení)
+
+Owner: *„je také potřeba zkusit nějaké spready! ne jen single!"* Měl pravdu — dnes jsem je
+z **každého** měření vyfiltroval (`area='spread'`), přitom je to 63 z 302 produkčních čtení.
+
+| | norns (20) | single (dnešní prompt) |
+|---|---|---|
+| nárok na vnitřní stav | **2/20 = 10 %** | ~18 % |
+| medián slov | 116 (97–144) | 49 |
+| konec otázkou | 45 % | ~37 % (dle losu) |
+| vykřičník | 0 | 0 |
+
+⭐ **A spready ÚHEL NEPOUŽÍVAJÍ VŮBEC** (ověřeno: `READING ANGLE` je jen v single). Takže:
+
+| plocha | úhel | nárok na vnitřní stav |
+|---|---|---|
+| Ask Rúnar | ne | **4 %** |
+| spread (norns) | ne | **10 %** |
+| single | **ano** | **18 %** |
+
+**Tři plochy, a obě bez úhlu jsou čistší.** ⚠️ Není to důkaz — plochy se liší i jinak (spread
+má 3 runy a jinou délku, Ask reaguje na napsanou otázku). Ale je to **čtvrtá nezávislá linie**
+mířící na tutéž věc, a tentokrát z plochy, kterou jsem celý den nechával stranou.
