@@ -116,7 +116,11 @@ const IS_SOLO   = new RegExp(isb('veist|manst|veistu|manstu'), 'i');
 const IS_AMBIG  = new RegExp(isb('þú') + '(?:\\s+[' + IS_L + ']+){0,3}\\s+' +
                              isb('finnur|skynjar|þekkir|kannast'), 'i');
 const IS_PHRASE = new RegExp(isb('eitthvað í þér|innra með þér|það sem þú veist'), 'i');
-const IS_NEG    = /\b(ekki|aldrei|hvorki|ekkert)\b/i;
+// ⚠️ ANI TADY `\b` NE — a tady je to zakernejsi nez u nalezu: falesny ZAPOR skutecny
+// nalez UMLCI. /\bekki\b/ sedne uvnitr "þekki" (pred "e" stoji "þ", ktere JS za pismeno
+// nepovazuje, takze tam hranici VIDI), takze "Ég þekki þessa leið og þú veist hvað
+// bíður." projde jako zaporna veta. Stejny lookaround jako u nalezu.
+const IS_NEG    = new RegExp(isb('ekki|aldrei|hvorki|ekkert|hvergi'), 'i');
 function isColdReadIS(txt) {
   const check = (m) => {
     if (!m) return false;
@@ -199,6 +203,10 @@ function rulesAudit(rows) {
     ['Þú finnur kuldann í fjörunni.', true, 'IS: 2. osoba U DVOJZNACNEHO slovesa'],
     ['Þú þekkir þessa fjöru vel.', true, 'IS: þekkir po þú (zacina na þ — past s \\b)'],
     ['Þú skynjar það sem bíður.', true, 'IS: skynjar po þú'],
+    // ⚠️ SONDA NA FALESNY ZAPOR (2026-08-16). "þekki" obsahuje retezec "ekki";
+    // dokud se zapor hledal pres `\b`, tahle veta se tise zahodila jako zaporna.
+    ['Ég þekki þessa leið og þú veist hvað bíður.', true, 'IS: "þekki" NENI zapor "ekki"'],
+    ['Þú veist ekki hvað bíður.', false, 'IS: skutecny zapor se nepocita'],
     ['Eitthvað í þér bíður.', true, 'IS: fraze "eitthvað í þér"'],
   ];
   console.log('  ── kontrola detektoru');
