@@ -669,3 +669,47 @@ co Cowork skutečně četl (`docs/inbox/2026-08-16-kw-blind.md`), a sedí.
 ⭐ **Poučení, které platí dál:** deterministické losování (pevný seed, žádný `Math.random`) není
 jen pro opakovatelnost měření — je to **záloha**. Kdyby se pořadí losovalo náhodně, byl by ten
 slepý test smazáním klíče nenávratně znehodnocený a 25 posudků k zahození.
+
+
+### 2026-08-16 — Vypnout úhel oblasti nepomůže: tři ramena po 16 čteních
+
+Owner 2026-08-16: *„area, intention, this reading is for mají mít velkou váhu. možná by stálo za to
+použít úhel jen když není nic vybrané? můžeme zkusit úhel úplně vypnout a dát tomu runa, area,
+intention. a změřit, co to udělá."*
+
+Tři ramena, každé **16 čtení**, 2 runy (Isa, Raidho) × 2 oblasti co nejdál od sebe (Láska vs
+Kariéra) × 4 čtení. `intention` drženo **konstantní** („Right now") — kdyby se měnilo spolu
+s `area`, nešlo by rozlišit, co za rozdíl může.
+
+| rameno | pestrost (nižší = pestřejší) | specifičnost oblasti |
+|---|---|---|
+| **1** úhel ZAP + oblast *(dnešek)* | 11,4 % | **−0,8 b.** |
+| **2** úhel VYP + oblast *(návrh)* | 12,3 % | **+0,5 b.** |
+| **3** úhel ZAP + nic vybráno | 12,6 % | nelze (oblast není) |
+
+rameno 1 vs 2: pestrost **−0,9 b.** (p = 0,59) · specifičnost **−1,3 b.** (p = 0,65)
+⚠️ **Mez citlivosti:** pestrost **3,2 b.**, specifičnost **5,0 b.** Menší rozdíl tenhle běh nevidí,
+takže „nic se nestalo" znamená **„nic velkého"**, ne „nic".
+
+**Závěr: vypnutí úhlu je změna beze změny.** Pestrost neklesla měřitelně (úhel tedy neztratíme),
+ale **oblast do uvolněného místa nenastoupila** — specifičnost zůstala u nuly v obou ramenech.
+Rameno 3 navíc ukazuje, že bez ničeho vybraného se čtení nesesypou (12,6 %, srovnatelné).
+
+⭐ **Tři nezávislá měření teď říkají totéž:** produkce +1,1 b. (p = 0,285), rameno s úhlem −0,8 b.,
+rameno bez úhlu +0,5 b. **Oblast čtení netvaruje, ať je úhel zapnutý, nebo ne.**
+
+**Proč — a je to vidět v jedné větě.** `_domainContext` (`runar-character.js:749`) vkládá:
+
+> „This reading is about: {area} — let it land clearly in that part of life, through image,
+> **never as a stated topic**."
+
+Zároveň žádáme, aby oblast čtení tvarovala, **a zakazujeme jí být vidět**. Úhel proti tomu je
+**strukturní pokyn** („čím začni, co veď jako první") a ten slovník prokazatelně přetváří
+(RUNAR_EVAL_LOG 2026-08-16, „feel" 33 % vs 3 %).
+
+**Co z toho plyne pro ownerův záměr:** má-li mít oblast velkou váhu, **páka není vypnout úhel** —
+je to přepsat `_domainContext` tak, aby dělal něco strukturního jako úhel, ne aby prosil o dojem
+a hned si ho zakázal. To je zásah do obsahu, tedy rozhodnutí ownera + práce Coworku.
+
+⚠️ **Hranice:** 2 runy, 2 oblasti, EN, `intention` netestováno (drženo konstantní). Netvrdí se nic
+o `intention` ani o „this reading is for" — jen o `area` jako jejich zástupci.

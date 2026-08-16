@@ -366,7 +366,8 @@ function loadJsonl(file) {
     let o; try { o = JSON.parse(l); } catch (e) { bad.push(i + 1); return null; }
     if (!o.reading_text) { bad.push(i + 1); return null; }   // spadle cteni != nula
     return { rune_name: o.rune, kws: (o.draws || {}).kws || '', txt: o.reading_text,
-             angle: (typeof o.angle_idx === 'number') ? o.angle_idx : -1 };
+             angle: (typeof o.angle_idx === 'number') ? o.angle_idx : -1,
+             area: o.area || '', seeking: o.seeking || '', intention: o.intention || '' };
   }).filter(Boolean);
   if (bad.length) console.log('  ⚠️ ' + path.basename(file) + ': ' + bad.length +
     ' řádků bez čtení nebo nerozparsovaných — vynecháno, ne započteno jako nula.');
@@ -515,6 +516,91 @@ if (has('--angles')) {
   process.exit(0);
 }
 
+// ─── --arms: srovnání RAMEN pokusu na dvou číslech naráz ─────
+// Owner 2026-08-16: „použít úhel jen když není nic vybrané? můžeme zkusit úhel úplně vypnout
+// a dát tomu runa, area, intention… a změřit, co to udělá."
+//
+// Každé rameno se měří DVĚMA čísly, protože změna může jedno zlepšit a druhé zhoršit:
+//   PESTROST     průměrný překryv mezi čteními TÉŽE runy — nižší = pestřejší
+//   SPECIFIČNOST rozdíl (stejná oblast − různá oblast); slova oblasti vyhozená,
+//                takže se neměří papouškování. Vyšší = oblast čtení opravdu tvaruje.
+//
+// ⚠️ Dvojice NEJSOU nezávislé (jedno čtení je v mnoha dvojicích), takže běžný test lže.
+// Permutace míchá PŘÍSLUŠNOST K RAMENI uvnitř téže runy — struktura dvojic zůstává.
+function armStats(rows, levName) {
+  const by = {};
+  for (const r of rows) (by[r.rune_name] = by[r.rune_name] || []).push(r);
+  const all = [], same = [], diff = [];
+  const levW = new Set(rows.flatMap(r => words(r[levName] || '')));
+  const cs = t => { const o = new Set(); for (const w of words(t)) if (w.length > 3 && !STOP.has(w) && !levW.has(w)) o.add(w); return o; };
+  for (const k of Object.keys(by)) {
+    const g = by[k].map(r => ({ s: cs(r.txt), a: r[levName] || '' }));
+    for (let i = 0; i < g.length; i++) for (let j = i + 1; j < g.length; j++) {
+      const v = jaccard(g[i].s, g[j].s);
+      all.push(v);
+      if (g[i].a && g[j].a) (g[i].a === g[j].a ? same : diff).push(v);
+    }
+  }
+  const m = x => x.length ? x.reduce((p, q) => p + q, 0) / x.length : 0;
+  return { variety: m(all), nAll: all.length, spec: m(same) - m(diff), nSame: same.length, nDiff: diff.length,
+           ms: m(same), md: m(diff) };
+}
+if (has('--arms')) {
+  const files = ARGS.filter(a => /\.jsonl$/i.test(a));
+  if (files.length < 2) { console.error('pouziti: --arms a.jsonl b.jsonl [c.jsonl] [--by area]'); process.exit(1); }
+  const LEV = val('--by', 'area');
+  const arms = files.map(f => ({ name: path.basename(f, '.jsonl'), rows: loadJsonl(f) }));
+  console.log('\n═══ SROVNÁNÍ RAMEN (' + LEV + ') ═══');
+  console.log('  PESTROST: nižší překryv = pestřejší · SPECIFIČNOST: vyšší = ' + LEV + ' čtení víc tvaruje\n');
+  for (const a of arms) {
+    a.st = armStats(a.rows, LEV);
+    const spec = a.st.nSame
+      ? 'specifičnost ' + (a.st.spec > 0 ? '+' : '') + (a.st.spec * 100).toFixed(1) + ' b.'
+      : 'specifičnost: NELZE (' + LEV + ' nevyplněn — nepočítá se jako nula)';
+    console.log('  ' + a.name.padEnd(12) + String(a.rows.length).padStart(3) + ' čtení · pestrost ' +
+      (a.st.variety * 100).toFixed(1) + ' % (' + a.st.nAll + ' dvojic) · ' + spec);
+    if (a.st.nSame) console.log('    '.repeat(4) + 'stejný ' + LEV + ' ' + (a.st.ms * 100).toFixed(1) +
+      ' % (n=' + a.st.nSame + ')  ·  různý ' + (a.st.md * 100).toFixed(1) + ' % (n=' + a.st.nDiff + ')');
+  }
+  // Permutace mezi PRVNIMI DVEMA rameny: michani prislusnosti k rameni UVNITR runy.
+  const [A, B] = arms;
+  const pool = {};
+  for (const r of A.rows) (pool[r.rune_name] = pool[r.rune_name] || []).push({ r, arm: 0 });
+  for (const r of B.rows) (pool[r.rune_name] = pool[r.rune_name] || []).push({ r, arm: 1 });
+  const obsV = A.st.variety - B.st.variety, obsS = A.st.spec - B.st.spec;
+  let seed = 4242, geV = 0, geS = 0; const N = 5000;
+  const nullV = [], nullS = [];   // rozdelení rozdílu POD NULOVOU hypotézou -> mez citlivosti
+  const rnd = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
+  for (let p = 0; p < N; p++) {
+    const a0 = [], a1 = [];
+    for (const k of Object.keys(pool)) {
+      const g = pool[k].slice();
+      for (let i = g.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [g[i], g[j]] = [g[j], g[i]]; }
+      const nA = pool[k].filter(x => x.arm === 0).length;
+      g.forEach((x, i) => (i < nA ? a0 : a1).push(x.r));
+    }
+    const sA = armStats(a0, LEV), sB = armStats(a1, LEV);
+    const dV = sA.variety - sB.variety, dS = sA.spec - sB.spec;
+    nullV.push(Math.abs(dV)); nullS.push(Math.abs(dS));
+    if (Math.abs(dV) >= Math.abs(obsV)) geV++;
+    if (Math.abs(dS) >= Math.abs(obsS)) geS++;
+  }
+  // ⚠️ „Nic se nestalo" je necitelne, dokud se nevi, CO by metrika pri tomhle n videla.
+  // 95. percentil nuloveho rozdeleni = nejmensi rozdil, ktery by prosel na p<0,05.
+  const pct95 = a => a.slice().sort((x, y) => x - y)[Math.floor(a.length * 0.95)];
+  console.log('\n  ' + A.name + ' vs ' + B.name + ' (permutace ' + N + '×, příslušnost k rameni míchaná UVNITŘ runy):');
+  console.log('    pestrost     rozdíl ' + (obsV > 0 ? '+' : '') + (obsV * 100).toFixed(1) + ' b.   p = ' + ((geV + 1) / (N + 1)).toFixed(4));
+  if (A.st.nSame && B.st.nSame)
+    console.log('    specifičnost rozdíl ' + (obsS > 0 ? '+' : '') + (obsS * 100).toFixed(1) + ' b.   p = ' + ((geS + 1) / (N + 1)).toFixed(4));
+  console.log('\n  SLEPOTA při tomhle n — nejmenší rozdíl, který by ještě prošel na p<0,05:');
+  console.log('    pestrost ' + (pct95(nullV) * 100).toFixed(1) + ' b.' +
+    (A.st.nSame && B.st.nSame ? '   ·   specifičnost ' + (pct95(nullS) * 100).toFixed(1) + ' b.' : ''));
+  console.log('    Menší rozdíl tenhle běh NEVIDÍ. „Nic se nestalo" tedy znamená „nic velkého",');
+  console.log('    ne „nic". Vyloučeno je jen to, co je nad touhle mezí.');
+  console.log('');
+  process.exit(0);
+}
+
 // ─── --specificity: je čtení vlastní SVÉMU vstupu, nebo jen ozvěna jeho slova? ──
 // Tohle je jádro protibarnumského nároku: „čtení pro Lásku není totéž co pro Kariéru".
 // `find_seeds.js` (základní sken) měří jen LEXIKÁLNÍ průsak — že se slovo „love" objeví.
@@ -523,11 +609,16 @@ if (has('--angles')) {
 // Permutace míchá oblasti UVNITŘ runy — dvojice nejsou nezávislé, běžný test by lhal.
 if (has('--specificity')) {
   const LEV = val('--by', 'area');
-  const rows = q("select rune_name, coalesce(" + (LEV === 'seeking' ? 'seeking' : LEV === 'intention' ? 'intention' : 'area') +
-    ",'') as lev, coalesce(short_text,'') || ' ' || coalesce(deep_text,'') as txt " +
-    "from public.readings where lang = '" + LANG.replace(/[^a-z]/gi, '') + "' " +
-    "and coalesce(area,'') <> 'spread' and coalesce(short_text,'') <> '';")
-    .filter(r => r.lev && r.lev.trim());
+  const src = val('--file', null);
+  // Z davky (rameno pokusu) NEBO z produkce. Tyz vypocet na obojim, aby slo srovnavat.
+  const rows = (src
+    ? loadJsonl(src).map(r => ({ rune_name: r.rune_name, lev: r[LEV] || '', txt: r.txt }))
+    : q("select rune_name, coalesce(" + (LEV === 'seeking' ? 'seeking' : LEV === 'intention' ? 'intention' : 'area') +
+        ",'') as lev, coalesce(short_text,'') || ' ' || coalesce(deep_text,'') as txt " +
+        "from public.readings where lang = '" + LANG.replace(/[^a-z]/gi, '') + "' " +
+        "and coalesce(area,'') <> 'spread' and coalesce(short_text,'') <> '';")
+  ).filter(r => r.lev && String(r.lev).trim() && r.txt);
+  if (!rows.length) { console.error('zadna cteni s vyplnenym `' + LEV + '`'); process.exit(1); }
   const levW = new Set(rows.flatMap(r => words(r.lev)));
   const cset = t => { const o = new Set(); for (const w of words(t)) if (w.length > 3 && !STOP.has(w) && !levW.has(w)) o.add(w); return o; };
   const by = {}; for (const r of rows) (by[r.rune_name] = by[r.rune_name] || []).push({ s: cset(r.txt), a: r.lev });
