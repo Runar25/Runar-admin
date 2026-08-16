@@ -527,8 +527,14 @@ Poslední islandské produkční čtení: **9. 8.** Všech ~380 dnešních gener
 `gen_batch --lang is` funguje; chybí jen to udělat.
 
 ### ⭐ Z reportu nevede ŽÁDNÁ cesta do promptu — 53 otevřených hlášení (2026-08-16)
-Owner ukázal, že `bug_reports` existuje a testeři ho používají. **Má 53 záznamů a ani jeden není
-vyřešený** (`status` otevřený u všech, nejstarší z 17. 7.). Uvnitř leží **rodilá zpětná vazba na
+Owner ukázal, že `bug_reports` existuje a testeři ho používají. ⚠️ **OPRAVA (2026-08-16, moje chyba):** napsal jsem „53 záznamů a ani jeden není vyřešený".
+**Nebyla to pravda.** Filtroval jsem `status is distinct from 'resolved'` — jenže `resolved`
+v téhle tabulce **neexistuje**; platné stavy jsou `new` / `triaged` / `fixed`
+(`list-reports/index.ts:45`), takže filtr byl pravdivý pro všechny a započítal i **18 opravených**.
+Skutečnost: **new 21 · triaged 14 · fixed 18.** Owner je zavíral a já mu tvrdil opak.
+⭐ **Poučení zabudované do kontroly: nehádat sentinel.** `verify_open_reports.js` teď stav
+**tahá** a neznámou hodnotu vypíše nahlas, místo aby ji tiše zařadil. Hádaná hodnota vypadá
+jako funkční filtr, dokud se na ni nepodíváš. Uvnitř leží **rodilá zpětná vazba na
 islandštinu**, kterou nikdo nepřetavil v pravidlo:
 - *„Hrafn sem ríður vindinum. **Þetta er léleg íslenska, við segjum þetta ekki svona á íslensku.**"*
   (2026-08-02) — ověřeno korpusem: **0 výskytů**, kalk z EN „riding the wind". **Fráze zůstala

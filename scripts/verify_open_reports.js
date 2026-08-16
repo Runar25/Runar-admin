@@ -37,10 +37,14 @@ let rows;
 try {
   const tmp = path.join(os.tmpdir(), 'runar_reports_' + process.pid + '.sql');
   fs.writeFileSync(tmp,
-    "select id, type, locale, coalesce(flagged_text,'') as flagged, " +
+    // ⚠️ NEHADAT SENTINEL. Prvni verze filtrovala `status is distinct from 'resolved'`
+    // — jenze `resolved` v teto tabulce NEEXISTUJE. Platne stavy jsou new/triaged/fixed
+    // (list-reports/index.ts:45), takze filtr byl pravdivy pro vsechny a hlasil jako
+    // otevrenych i 18 OPRAVENYCH. Ted se stav TAHNE a vyhodnocuje az tady.
+    "select id, type, locale, coalesce(status,'(null)') as status, " +
+    "coalesce(flagged_text,'') as flagged, " +
     "coalesce(left(message,120),'') as msg, created_at::date as den " +
-    "from public.bug_reports where status is distinct from 'resolved' " +
-    "and coalesce(flagged_text,'') <> '' order by created_at;", 'utf8');
+    "from public.bug_reports where coalesce(flagged_text,'') <> '' order by created_at;", 'utf8');
   const out = execSync('supabase db query --linked -f "' + tmp + '"',
     { cwd: R, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024, stdio: ['ignore', 'pipe', 'ignore'] });
   rows = JSON.parse(out.slice(out.indexOf('{'))).rows || [];
@@ -51,6 +55,13 @@ try {
   console.log('  To NENÍ „čisto"; kontrola neproběhla.');
   process.exit(0);
 }
+
+// Stavy, ktere tabulka zna (list-reports/index.ts:45). `fixed` = zavreno, zbytek otevreno.
+// Neznamy stav se NEZARADI potichu — vypise se, jinak by tise propadl jako "otevreny".
+const ZNAME = { 'new': 'otevřený', 'triaged': 'zatříděný', 'fixed': 'opravený' };
+const CLOSED = 'fixed';
+const neznamy = [...new Set(rows.map(r => r.status).filter(st => !(st in ZNAME)))];
+rows = rows.filter(r => r.status !== CLOSED);
 
 const src = fs.readdirSync(V2).filter(f => /\.(js|html)$/.test(f))
   .map(f => ({ f, txt: fs.readFileSync(path.join(V2, f), 'utf8') }));
@@ -71,10 +82,15 @@ for (const r of rows) {
 
 const byType = {};
 for (const r of rows) byType[r.type] = (byType[r.type] || 0) + 1;
+const byStatus = {};
+for (const r of rows) byStatus[r.status] = (byStatus[r.status] || 0) + 1;
+if (neznamy.length) console.log('  ⚠️ NEZNÁMÝ STAV v bug_reports: ' + neznamy.join(', ') +
+  ' — počítá se jako otevřený, ale ověř to (známé: ' + Object.keys(ZNAME).join('/') + ')');
 const age = (d) => Math.max(0, Math.round((Date.now() - Date.parse(d)) / 86400000));
 
-console.log('otevřené reporty s označeným textem: ' + rows.length +
-  '  (' + Object.keys(byType).map(k => k + ' ' + byType[k]).join(' · ') + ')');
+console.log('NEOPRAVENÉ reporty s označeným textem: ' + rows.length +
+  '  (' + Object.keys(byStatus).map(k => (ZNAME[k] || k) + ' ' + byStatus[k]).join(' · ') + ')' +
+  '  ·  ' + Object.keys(byType).map(k => k + ' ' + byType[k]).join(' · '));
 
 if (!live.length) {
   console.log('  žádná nahlášená fráze se ve zdroji `v2/` nenachází — reporty jsou o výstupu, ne o zdroji');
