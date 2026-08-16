@@ -166,6 +166,49 @@ else {
   if (!vpBad) console.log('  hlasové profily (' + Object.keys(VP).length + '): čisté v obou jazycích');
 }
 
+// ─── 4) SPECIFIKACE NALAD ───────────────────────────────────────────────────
+// Zdroj: RUNAR_BACKLOG.md „Nalady - specifikaci PREPSALY dukazy" (~r. 251-263),
+// rozhodnuti RUNAR_DECISIONS.md 2026-08-14. Sest pravidel plati NAPRIC vsemi naladami.
+// Tady se overuji ta, ktera jsou vlastnosti TEXTU; ostatni se hlasi jako neoverena.
+const SPEC_DOC = 'RUNAR_BACKLOG.md „Nálady — specifikaci PŘEPSALY důkazy"';
+// Specifikace musi EXISTOVAT. Kdyby ji nekdo smazal nebo prejmenoval, tahle kontrola
+// by tise hlidala pravidla, ktera uz nikdo nevlastni — a to je horsi nez zadna kontrola.
+const specTxt = (() => {
+  try { return fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/RUNAR_BACKLOG.md', 'utf8'); }
+  catch (e) { return ''; }
+})();
+if (specTxt.indexOf('specifikaci PŘEPSALY důkazy') === -1) {
+  console.log('  ✗ SPECIFIKACE NÁLAD NENALEZENA v RUNAR_BACKLOG.md — kontrola profilů NEBĚŽELA');
+  fail++;
+} else if (VP) {
+  // (1) bez vnorenych vsuvek — veta prerusena dvakrat (dve pomlcky nebo zavorka ve vsuvce)
+  const VSUVKA = /—[^—.!?]*—|\([^)]*[—,][^)]*\)/;
+  // (5) nevazat na vek
+  const VEK = /\b(young|younger|old(er)? (people|readers|seekers)|elderly|teenage|ungur|aldrað)\b/i;
+  // (3) EN: prirovnani „X je JAKO Y", ne „X JE Y" — hlida se jen ve VZORECH profilu,
+  //     kde metafora typu „Isa is the wait itself" rika ctenari, cim ta runa JE.
+  const JE_ROVNA_SE = /\b(Fehu|Isa|Perth|the rune)\s+is\s+(the|a|an)\s/i;
+  let spBad = 0;
+  for (const key of Object.keys(VP)) {
+    for (const lang of ['en', 'is']) {
+      const txt = String(VP[key][lang] || ''); if (!txt) continue;
+      for (const [re, co] of [[VSUVKA, 'vnořená vsuvka'], [VEK, 'vázáno na věk'],
+                              ...(lang === 'en' ? [[JE_ROVNA_SE, 'metafora „X JE Y" místo „X je JAKO Y"']] : [])]) {
+        const m = re.exec(txt);
+        if (!m) continue;
+        console.log('  ✗ SPEC NÁLAD [' + key + ' ' + lang + '] ' + co + ': …' +
+                    txt.slice(Math.max(0, m.index - 30), m.index + 50).replace(/\n/g, ' ') + '…');
+        console.log('     pravidlo vlastní ' + SPEC_DOC);
+        fail++; spBad++;
+      }
+    }
+  }
+  if (!spBad) console.log('  spec nálad — strojově ověřitelná část: ' + Object.keys(VP).length + ' profilů čistých');
+  // ⚠️ Tohle se NESMI zamlcet. „OK" jinak znamena neco jineho, nez co se overilo.
+  console.log('  ⚠️ NEOVĚŘENO strojově (patří člověku): obrazy známé vs novelní ·');
+  console.log('     jedna nosná metafora brzy ve čtení · `direct` = MÉNĚ ÚKOLŮ, ne kratší věty');
+}
+
 // KONTROLA TESTU: chytil by to vubec? Podstrcime runu se zakazanym slovem.
 const bansEn = bansFrom(s.__EN);
 const probe = bansEn.find((b) => b === 'journey') || bansEn[0];
