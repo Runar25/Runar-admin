@@ -279,6 +279,10 @@
       <!-- THE SITUATION — Rune Walker/Rune Keeper only -->
       <div id="q-section" style="display:none;">
         <label class="flbl" id="q-lbl" data-i18n="q_lbl">SPECIFIC QUESTION <span class="opt">(OPTIONAL)</span></label>
+        <!-- Text plní setText('q-hint') v _updateAreaSeekLabels(); `data-i18n` překlad NEDĚLÁ
+             (čte ho jen runar-reporter.js). Měřeno 2026-08-16: volný text ukotví čtení
+             +8,8 b., kdežto výběr z nabídky +2,7 b. — proto se vyplatí navést, jak psát. -->
+        <p class="note" id="q-hint">Tell Rúnar where you stand now — not what is to come.</p>
         <!-- maxlength 160 = táž míra jako `ask-input`; ta plocha má nejčistší výstup v celém
              systému (4 % nároků na vnitřní stav proti 23 % u čtení), takže je odzkoušená.
              Do 2026-08-16 tu limit nebyl žádný. Není to bezpečnostní hranice — prompt se staví

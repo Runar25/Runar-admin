@@ -657,6 +657,10 @@ function _updateAreaSeekLabels() {
   if (ilbl) ilbl.innerHTML = t('intention_lbl') + _optSpan + _lockHint;
   const qlbl = document.getElementById('q-lbl');
   if (qlbl) qlbl.innerHTML = t('q_lbl') + ' <span class="opt">'+t('opt')+'</span>';
+  // Napoveda k otazce. Patri SEM (a ne do updateUIText primo), protoze je soucasti
+  // sekce otazky — a `_updateAreaSeekLabels` updateUIText vola (:746), takze se to
+  // pri prepnuti jazyka prekresli.
+  setText('q-hint', t('q_hint'));
   setPH('r-question', t('q_ph'));
 }
 

@@ -81,6 +81,9 @@ const UI_TEXT = {
     report_sent:      'Sent',
     report_need_type: 'Pick a type first',
     q_lbl:            'THE SITUATION',
+    // Navadi ke „kde stojim", ne k „co se stane" — to je hranice mezi otazkou,
+    // na kterou Runar umi odpovedet, a otazkou, kterou musi odmitnout (G2b no-fate).
+    q_hint:           'Tell Rúnar where you stand now — not what is to come.',
     q_ph:             'e.g. I am deciding whether to take on more work',
     // Staticke upozorneni — NENI Runarovym hlasem zamerne. Runar sam na popis
     // priznaku reagovat nema: komentoval by tim necí telo, coz mu _noColdRead
@@ -361,6 +364,9 @@ const UI_TEXT = {
     report_sent:      'Sent',
     report_need_type: 'Veldu tegund fyrst',
     q_lbl:            'STAÐAN',
+    // Overeno: „hvar þú stendur" 302 vyskytu, „hvað verður" 13915 (Risamalheild);
+    // GreynirCorrect 0 flagu. Vymysleno islandsky, ne prelozeno (§2).
+    q_hint:           'Segðu Rúnari hvar þú stendur núna, ekki hvað verður.',
     q_ph:             'T.d. Ég er að ákveða hvort ég eigi að taka að mér meiri vinnu',
     // Vymysleno islandsky, ne prelozeno (§2). Overeno: 'til umhugsunar' 10432 vyskytu,
     // 'faglega ráðgjöf' 626 (Risamalheild 2000-2021); GreynirCorrect 0 priznaku.
