@@ -549,3 +549,47 @@ aby 19× marně zaklepal a zapsal prázdné řádky. Guard otestován naostro fa
 `exp` a neplatným podpisem — a při té příležitosti chycena vlastní chyba: `break` hned po detekci
 přeskočil zápis posledního řádku, takže hláška „hotové řádky už v JSONL jsou" lhala. Láme se
 až pod zápisem.
+
+
+### 2026-08-16 — Stejnost dělá ÚHEL, ne klíčová slova (potvrzeno záměrným testem)
+
+Doplnění téhož dne. Post-hoc nález z ranní dávky (16,2 % vs 10,4 %, permutační p = 0,0094)
+se **potvrdil záměrným testem**: dávka s vynuceným úhlem 3 (`gen_batch --angle 3`, 81 použitelných
+čtení, 93 dvojic se stejným úhlem, 25 run) proti různoúhlým dvojicím z mixu —
+
+| | překryv slovníku |
+|---|---|
+| **stejný úhel** | **13,8 %** |
+| různý úhel | 10,5 % |
+
+stejnější u **20 z 25 run**, znaménkový test **p = 0,004** (párováno po runách, takže rozdíly
+mezi runami se vyruší).
+
+⭐ **Dvě nezávislé linie se shodují a jedna z nich nemá jak být zkreslená dávkou:** ranní nález
+je UVNITŘ jedné dávky (stejný proces, stejný sezónní sáček), takže „efekt dávky" ho vysvětlit nemůže.
+
+**Mechanismus — a je to táž nemoc jako „already", jen mnohem větší.** Úhel zní
+*„Lead with the body — where does this rune live as a physical sensation right now."*
+a čtení se sesypou do jeho slovníku:
+
+| slovo | vynucený úhel 3 (n=81) | mix (n=100) |
+|---|---|---|
+| feel | **33 %** | 3 % |
+| chest | **30 %** | 5 % |
+| shoulders | 12 % | 1 % |
+| tightness | 11 % | 1 % |
+| legs | 15 % | 3 % |
+
+Úhel nedává jen **začátek** — předává **celé sémantické pole**, a model si z něj vezme slovník
+celého čtení. Sedm úhlů = sedm slovníkových kotců; čtení, která sdílejí úhel, sdílejí kotec.
+
+⚠️ **Nepsat z toho, že úhly jsou vada.** Úhly jsou to, co vyrábí rozdíly MEZI čteními — bez nich
+by si byla podobná všechna. Vada je jen v tom, že úhel svůj slovník **pojmenovává**
+(„physical sensation" → „feel", „chest"), přesně jako `_noColdRead` pojmenovávalo „rozpoznání"
+a `seeking=Confirmation` neslo „already". **Ownerova myšlenka s ekvivalenty byla správná
+v instinktu a špatná v místě:** rozšiřovat je nemá smysl u klíčových slov run (ta neměří nic),
+ale u úhlů — nebo úhly přeformulovat tak, aby ukazovaly a nediktovaly slovník.
+
+**Nezměřeno a je to otázka na člověka:** jestli je 33 % „feel" u tělesného úhlu vada, nebo
+poslušnost. Metrika stejnost změří, kvalitu hlasu ne. → slepé srovnání pro Cowork,
+`docs/inbox/2026-08-16-kw-blind.md` (klíč drží CODE mimo repo).
