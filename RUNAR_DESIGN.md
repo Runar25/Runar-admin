@@ -223,7 +223,7 @@ Jména znamenají „hltaví"; u Óðinova stolu patří všechno maso jim.
 | Life Rune | Muninn | střeží nejhlouběji |
 | Trunk revelation | Muninn | konečně promluví |
 | Notifikace / drip | Huginn | impuls vrátit se |
-| Yggdrasil spread | vrchol cesty | jednou ročně, setkání s kořeny |
+| Yggdrasil spread | setkání s kořeny | kdykoliv; slunovrat = větší síla, ne podmínka |
 
 ---
 
@@ -440,7 +440,8 @@ Strom: větev s centrálním uzlem a čtyřmi výhonky. Standard+.
 6  co dělat
 7  pravděpodobný směr
 ```
-IS pozice: navrhnout před implementací.
+IS pozice: hotové v produkci — zdroj pravdy `RP_HORSESHOE.is.positions` (`v2/runar-character.js`),
+doc je NEOPISUJE (§20).
 Strom: větvená větev se sedmi body → sezónní rituál kmene. Standard+.
 
 ### Yggdrasil (9 run) — všichni přihlášení, KDYKOLIV
@@ -461,7 +462,8 @@ Niflheimr   — stín, tma, co je skryté nebo potlačené
 Múspellsheim — oheň, transformace, co spaluje a čistí
 Hel         — kořeny, předci, co neseš z minulosti
 ```
-Nejde do větve — jde do kořenů stromu. Jednou ročně, zimní slunovrat.
+Nejde do větve — jde do kořenů stromu. **Bez brány na datum** — zimní slunovrat dává větší
+sílu ve stromě, není podmínkou přístupu (rozhodnuto 2026-07-18, viz ř. 526 a `CLAUDE.md`).
 Strom: devítibodový uzel v kořenech — nejsilnější bod celého stromu.
 
 ### The Gathering (3–5 run)
