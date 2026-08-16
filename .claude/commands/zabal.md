@@ -24,5 +24,5 @@ Pak skonči. Žádné shrnutí session, žádné návrhy, co dál.
 **Proč to existuje:** `autoCompactEnabled` je na defaultu a automatický compact přijde bez
 ohlášení — instruovat ho nejde (ověřeno v dokumentaci). Účinek má jen ruční `/compact` spuštěný
 dřív, a ten potřebuje řádku po ruce. Snapshot je druhá polovina drátu: `SessionStart` hook
-(`~/.claude/runar-context.py`) ho po compactu vypíše sám, takže i když se automatický spustí
-první, rozdělaná práce se neztratí. <!-- doc-links:ok 2026-08-16 hook je uživatelský soubor mimo repo -->
+(`~/.claude/runar-context.py`) ho po compactu vypíše sám, takže i když se automatický spustí <!-- doc-links:ok 2026-08-16 hook je uzivatelsky soubor mimo repo, do gitu nepatri -->
+první, rozdělaná práce se neztratí. 

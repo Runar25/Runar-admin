@@ -320,9 +320,9 @@ ověřeno v dokumentaci, žádné nastavení summarizeru instrukce nepředá. Ú
 spuštěný ručně DŘÍV, než se spustí ten automatický, a to jde jen tehdy, když je řádka po ruce.
 
 ⚠️ **Proto na ni nespoléhat jako na jedinou pojistku.** Jediné, co funguje bez ohledu na to, kdo
-compact spustil, je `SessionStart` hook (`~/.claude/runar-context.py`) — spouští se i se
+compact spustil, je `SessionStart` hook (`~/.claude/runar-context.py`) — spouští se i se <!-- doc-links:ok 2026-08-16 hook je uzivatelsky soubor mimo repo, do gitu nepatri -->
 `source: "compact"` a vypisuje poslední rozhodnutí, mapu „sáhneš na tohle → přečti tenhle doc",
-archiv čtení a pravidla, co se nejčastěji zapomínají. <!-- doc-links:ok 2026-08-16 hook je uživatelský soubor mimo repo, do gitu nepatří -->
+archiv čtení a pravidla, co se nejčastěji zapomínají.
 
 ⚠️ **Snapshot NENÍ handoff a nikdy z něj neber aktuální stav** (MEMORY.md). Nese, co bylo
 rozdělané **k tomu dni**. Aktuální stav vlastní produkce, `git log` a doky dle rozcestníku.
