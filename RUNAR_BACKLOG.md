@@ -485,3 +485,21 @@ takže když se zapisuje a nikdy nečte, platí se přirážka za nic. U těchto
 (čtení jsou nejspíš daleko od sebe a 5minutová TTL mezitím vypršela). ⚠️ Ale kdyby `cache_read`
 zůstal nulový i u čtení, která jdou rychle po sobě, je to zbytečně **zhruba polovina ceny čtení**.
 **Co udělat:** až bude `usage` u ~20 čtení, spočítat podíl `cache_read > 0` — dotaz na jeden řádek.
+
+### Známkování čtení testery — a co s tím pak jde dělat (2026-08-16)
+KUKY: *„jestli bychom pro testery neměli udělat i kolonku, kde by hodnotili to čtení. známkování…
+stanovili bychom, jaké výstupy by nám od nich nejvíc pomohly slyšet."* A dál: *„tohle všechno máme
+připravené. až budeme mít hodně testerů, tak jim budeme vypínat a zapínat oblasti s tím, že budeme
+chtít vidět, jestli se to projeví na jejich známkování."*
+
+⭐ **To druhé je důležitější než to první.** Známka sama o sobě je jen číslo; teprve **A/B
+s vypnutou a zapnutou oblastí** z ní dělá měření. A aparát na tu stranu už stojí: `--arms`
+srovná ramena, `find_seeds.js` najde, co z promptu prosakuje. Chybí **jen ta známka** — tedy
+výstupní veličina, kterou dnes neumíme změřit vůbec.
+
+**Proč to není jen „přidat hvězdičky":** aby šla známka spárovat s ramenem, musí se u čtení
+uložit, **co bylo zapnuté** — dnes se ukládá `area`/`seeking`/`intention` a `prompt_draws`, ale
+ne příznak experimentu. Bez něj se známky sesypou do jedné hromady a A/B se z nich nedá vytáhnout.
+
+**Otevřené a je to rozhodnutí ownera + Coworku (obsah/UX, ne kód):** na co přesně se ptát.
+Jedna otázka unese jeden druh odpovědi a víc otázek lidi nevyplní.

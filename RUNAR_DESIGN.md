@@ -83,6 +83,17 @@ je přesně hodnocení *generického* textu jako osobního. Čtení se proto nes
 pocitu přesnosti; měřit jde jen to, co projekcí neprochází (papouškování, stejnost slovníku,
 porušení pravidel, stavba). Viz `CLAUDE.md` §24 a §27.
 
+### Runa je základ, oblast je otázka (KUKY 2026-08-16)
+⭐ **„Čtení runy má být runa jako základ, a oblast je otázka, kterou musí runa vzít v potaz,
+jelikož to byla ta otázka."** Není to tedy „čtení o lásce s runou jako ozdobou" ani „čtení
+o runě, kde se láska mimochodem zmíní". Runa mluví — a mluví **k té otázce, která byla položena**.
+
+Dnešní stav tomu neodpovídá a je to změřené: oblast se ve čtení projeví hlavně **ozvěnou svého
+slova** (owner o čtení na kariéru: *„slovo work tam je… určitým způsobem se to zviditelní"*),
+ale věcně čtení netvaruje — tři nezávislá měření kolem nuly (→ `RUNAR_EVAL_LOG.md` 2026-08-16).
+Pravděpodobný důvod je v `_domainContext`: jediná věta, která oblast **zároveň žádá a zakazuje**
+(„let it land clearly in that part of life… never as a stated topic").
+
 ### Hlas a styl
 Klidný, hluboký, nepospíchající. Nikdy teatrální, nikdy sladký.
 Jako starý strom — pevně zakořeněný, ale větve se hýbají ve větru.

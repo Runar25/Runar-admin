@@ -570,7 +570,7 @@ async function main() {
       const raw = await res.text();
       let data = null;
       try { data = JSON.parse(raw); } catch (e) { /* platform failures return an HTML gateway page */ }
-      return { status: res.status, data: data, raw: raw };
+      return { status: res.status, data: data, raw: raw, usage: (data && data.usage) || null };
     } catch (e) {
       return { status: 0, data: null, raw: '', netError: String((e && e.message) || e) };
     } finally { clearTimeout(timer); }
@@ -585,7 +585,7 @@ async function main() {
       const r  = await post(prompt, tokens, cost, mode);
       const ms = Date.now() - t0;
       if (r.status === 200 && r.data && typeof r.data.text === 'string')
-        return { text: r.data.text, status: 200, ms: ms, error: null };
+        return { text: r.data.text, status: 200, ms: ms, error: null, usage: r.usage || null };
       const err = r.netError ||
                   (r.data && (r.data.error + (r.data.message ? ': ' + r.data.message : ''))) ||
                   ('http ' + r.status + ' ' + r.raw.slice(0, 120));
@@ -737,6 +737,7 @@ async function main() {
 
     const res = await generate(prompt, maxTokens, spreadCost, '');
     row.http_status = res.status; row.duration_ms = res.ms; row.error = res.error;
+    row.usage = res.usage || null;   // tokeny + cache; null = stara proxy nebo chyba
 
     // Token vyprsel UPROSTRED davky: session JWT plati 60 minut, dlouha davka to prekroci.
     // Bez tohohle guardu bezi zbytek davky do 401, ceka svuj throttle slot a zapisuje prazdne

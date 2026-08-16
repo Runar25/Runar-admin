@@ -734,6 +734,9 @@ serve(async (req: Request) => {
 
     return json({
       text,
+      // Pocty tokenu + skutecny model. Bez toho davka nevi, co stala, a nejde rict,
+      // jestli sedá cache (`cache_read_input_tokens` > 0). Zadny obsah, jen cisla.
+      ...(data?.usage ? { usage: { ...data.usage, model: data?.model ?? null } } : {}),
       ...(readingId ? { reading_id: readingId } : {}),
       ...(mode === "ask" ? { ask_saved: askSaved } : {}),
       ...(sessionState ? { session_state: sessionState } : {}),

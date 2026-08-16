@@ -713,3 +713,36 @@ a hned si ho zakázal. To je zásah do obsahu, tedy rozhodnutí ownera + práce 
 
 ⚠️ **Hranice:** 2 runy, 2 oblasti, EN, `intention` netestováno (drženo konstantní). Netvrdí se nic
 o `intention` ani o „this reading is for" — jen o `area` jako jejich zástupci.
+
+
+### 2026-08-16 — Cache: v dávce šetří dvě třetiny, u osamoceného čtení stojí navíc
+
+Owner: *„nevyplatilo by se hlavně teď, když používáš token, to cachovat? … proto jsem chtěl
+kontrolovat, až bude appka v provozu, a vidět, kdy má cenu to nasazovat. třeba se nám tam ukáže
+nějaký peak."*
+
+**Cache byla zapnutá celou dobu** (`claude-proxy/index.ts:649`, `cache_control: ephemeral` na
+systémovém promptu). Otázka nikdy nebyla „zapnout?", ale **„sedá?"** — a na to nikdo neviděl,
+protože proxy `usage` psala jen do řádku v `readings` a nevracela ho. Opraveno; `gen_batch` ho
+teď zapisuje do JSONL.
+
+**Změřeno na 5 čteních jdoucích rychle po sobě:** `cache_read = 1386` u **všech pěti**,
+`cache_write = 0`. Cache sedá bez výjimky.
+
+| režim | vstup | cache | výstup | cena za čtení |
+|---|---|---|---|---|
+| **dávka** (cache sedla) | 607 | **čte 1386** | ~92 | **~0,6 centu** |
+| **osamocené** čtení (produkce) | 886 | **píše 1373** | ~160 | ~1,7 centu |
+| osamocené, kdyby cache nebyla | 2259 dohromady | — | ~160 | ~1,5 centu |
+
+⭐ **Cache není zadarmo, když nesedá.** Zápis stojí **1,25×** základní sazbu, čtení **0,1×**.
+U osamoceného čtení se tedy zaplatí přirážka a nikdo ji nevyužije — **~11 % navíc**. V dávce
+naopak ušetří **zhruba dvě třetiny**. Rozhoduje jediné: přijde další čtení **do 5 minut**?
+
+**Oprava dřívějšího odhadu:** 2026-08-16 jsem psal „~1,7 centu na čtení, ~0,85 $ za dávku 50".
+To platí jen pro **osamocená** čtení. Dávka stojí **~0,6 centu na čtení, tedy ~0,30 $ za 50** —
+třetinu odhadu, protože jsem počítal se zápisem do cache místo se čtením z ní.
+
+**Co z toho pro provoz:** dokud jsou čtení rozeseta po dni, cache je malá daň, ne úspora. Až
+budou **rituály s notifikacemi** (owner 2026-08-16), čtení se shluknou a cache se začne vyplácet
+sama. Sledovat podíl `cache_read > 0` v čase — teď už to jde, `usage` se ukládá u každého čtení.
