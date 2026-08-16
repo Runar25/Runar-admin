@@ -1247,3 +1247,70 @@ forma nepředpovídá.** Rozdíl je strukturní, ne stylistický.
 
 **Otevřená otázka pro ownera (obsah):** má Rúnar horizont z otázky **brát**? Kánon to nezakazuje —
 zakazuje předpovídat, ne mluvit o rozpětí. Dnes ho bere 1 z 8. → `RUNAR_BACKLOG.md`.
+
+### 2026-08-16 — Tři měřidla lhala. Islandská čísla přeměřena, hlas `direct` přidán
+
+**Nález, který otevřel zbytek:** produkční profil `VOICE_PROFILES.focused` měl ve svém
+**čtvrtém vzoru studené čtení** — `"You know this shore…"` / `"Þú þekkir þessa fjöru…"` —
+tedy přesně to, co `_noColdRead` o pár řádků dál zakazuje. Vzor se napodobuje spolehlivěji
+než zákaz: zákaz je abstraktní, vzor konkrétní. Opraveno v obou jazycích; tvar (druhá osoba,
+holá staahaefing) zůstal, změnilo se jen to, o čem věta tvrdí — místo čtenářova nitra jeho
+**místo v obraze**, což úhel [6] výslovně dovoluje.
+
+**Tři chyby v měřidlech, všechny stejného druhu (JS `` na islandštině):**
+
+| kde | co dělalo | směr chyby |
+|---|---|---|
+| `measure_readings.js` IS_AMBIG | `þú` nesedne nikdy → **mrtvá větev** | podhodnocení |
+| `measure_readings.js` IS_NEG | `ekki` sedne uvnitř `þekki` → falešný zápor | podhodnocení |
+| `test_no_planted_bans.js` | detektor byl EN-only, IS sloupec `r[2]` **nekontroloval nikdo** | slepota |
+
+JS má `` definovanou na `[A-Za-z0-9_]`; `þ ð á í ó ú ý æ ö` do té třídy nepatří, takže mezi
+mezerou a `þ` hranice slova **není**. Napravené lookaroundem nad islandskou abecedou.
+
+**Čtvrtá, opačná chyba:** `finnur` v seznamu nároků. `finna` znamená i **najít** —
+`Þú finnur skjól` (obraz Wunjo) je děj, ne tvrzení o nitru. Nadhodnocovalo.
+
+⭐ **Výsledná islandská čísla po všech opravách** (dřívější hodnoty z dneška neplatí):
+
+| | před | mezitím | **platné** |
+|---|---|---|---|
+| produkce, 74 čtení | 15 % | 23 % | **18 %** |
+| čerstvá dávka, 50 čtení | 2 % | 10 % | **2 %** |
+
+**`is-vazba.py --freq` vracelo 0 místo skutečné četnosti.** ngram API bere nejvýš **10 termů**
+a vše nad to tiše zahodí; nástroj to tiskl jako „NEDOLOŽENO (0)". To není chybějící doklad, to je
+**falešný důkaz proti** — `svignar undan` hlásilo 0, ve skutečnosti **94**, a ta fráze je
+v produkčním profilu. Málem se kvůli tomu přepisovala správná islandština. Navíc odpověď chodí
+v jiném pořadí, než se posílá, takže poziční fallback uměl frázi připsat **cizí číslo**.
+Vedlejší nález: `case_sens=0` nefunguje — `"Allan veturinn"` 37 vs `"allan veturinn"` 2524.
+
+**Hranice `is-grammar-qa` na promptech (doloženo, ne dohad):** E001 v profilech dělá
+**rozkazovací způsob** (`Forðastu…`) a **bezslovesný výčet** (`Stuttar setningar, hlutstæð
+nafnorð…`), obojí správný tvar instrukce. Nedotčený produkční `lyrical` má 3× E001. Nástroj je
+stavěný na generovaná čtení (§19.3 — kontrola má běžet tam, kde bug žije), na instrukční text
+se jeho E001 nedá číst jako vada. Jednu skutečnou vadu ale našel a ta je opravena.
+
+**Nový registr `direct`** (`VOICE_PROFILES.direct`, EN+IS) — KUKY: *„porad bych chtel aby to bylo
+vic prime a mene abstraktni. pouzij obraz."*
+⚠️ **Přímost je v JAZYCE, ne v postoji.** Profil vlastní jen to, jak věta zní; postoj drží
+`philosophy` (nepodat závěr), `_spine` (neříct krok) a `_noColdRead` (netvrdit nitro) a ten se
+nemění. `direct` proto **není** „řekne se, co to znamená" — je to hversdagsmál: krátké věty,
+hmatatelná podstatná jména, nic na rozluštění. Islandština vymyšlena, ne přeložena; vazby
+ověřeny korpusem (`leiðir skiljast` 180 · `er sitt hvað` 123 · `þegar fjarar út` 20 ·
+`allan veturinn` 2524 · `rýkur upp úr` 136).
+⚠️ **Netvrdí se, že je lepší.** Který registr sedne, má ukázat srovnání s testery —
+`gen_batch --voice <klíč>`.
+
+**Vedlejší oprava v `focused` IS:** `„Gufan rís"` má v korpusu **nula** dokladů (kalk z EN
+„steam rises") → `„Það rýkur upp úr hvernum"` (136 / 21).
+
+**Co jsem naopak VRÁTIL:** přepsal jsem ve `focused` větu `Forðastu óhlutbundnar…` kvůli E001 —
+jenže E001 tam dělá rozkazovací způsob, obě verze ho mají, takže změna neopravila nic a měnila
+produkční islandštinu bez doloženého zisku. Vráceno do původního znění.
+
+**Hlídač `test_no_planted_bans.js` rozšířen** o VOICE_PROFILES (obě řeči) a islandskou větev.
+Rozkopán šesti podstrčenými vadami — a jedna dírou prošla: zápor se testoval přes **celý text**,
+takže jediné `ekki` kdekoli v profilu vyplo celou islandskou kontrolu a hlásilo „čisté".
+Opraveno na vyhodnocení **po větách**; všech šest útoků teď sedí včetně kontroly, že zápor
+se za nález počítat nesmí.

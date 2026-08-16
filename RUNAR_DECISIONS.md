@@ -2948,3 +2948,51 @@ celý den. **Viditelnost sama nestačí; je to slabší nástroj, než jsem tvrd
 - **Affected doc(s):** `RUNAR_DESIGN.md` (evidence base), `RUNAR_EVAL_LOG.md` (kde se to láme),
   `RUNAR_BACKLOG.md` (sondy P1–P5 + copy fix)
 - **Reversibility:** n/a (výzkum a zápis), copy fix easy.
+
+---
+
+## 2026-08-16 — Registr `direct` přidán; produkční profil modeloval to, co prompt zakazuje
+
+- **Typ:** hlas + kontrola · **Scope:** `VOICE_PROFILES`, hlídače · **Zdroj:** KUKY („dodělej direct")
+- **Co se změnilo:**
+  1. **`focused` (produkční) měl ve svém čtvrtém vzoru studené čtení** v obou jazycích
+     (`"You know this shore…"` / `"Þú þekkir þessa fjöru…"`). `_noColdRead` to o pár řádků
+     dál zakazuje. Opraveno; tvar vzoru (druhá osoba, holá staahaefing) zachován, věta nově
+     tvrdí čtenářovo **místo v obraze**, ne jeho nitro.
+  2. **Nový registr `direct`** (EN+IS). ⚠️ **Přímost je v jazyce, ne v postoji** — zákaz podat
+     závěr, říct krok a tvrdit nitro drží dál `philosophy` / `_spine` / `_noColdRead`.
+  3. `gen_batch --voice <klíč>` — bez toho se registry nedaly porovnat. Neznámý klíč **spadne**:
+     `_getVoiceProfile` na něj vrací `''` a celá sekce HOW YOU SPEAK by z promptu zmizela
+     (ověřeno: prompt o 938 znaků kratší) — překlep by byl k nerozeznání od „ten registr nic nedělá".
+  4. `test_no_planted_bans.js` skenuje **VOICE_PROFILES** a má **islandskou větev**.
+- ⭐ **Poučení, které platí šířeji: vzor v promptu přebije zákaz v promptu.** Zákaz je abstraktní,
+  vzor konkrétní a model napodobuje. Zakázané chování proto nesmí být v příkladech — a musí to
+  hlídat stroj, protože pozornost to nechytila (profil to modeloval, aniž si toho kdokoli všiml).
+- ⚠️ **Netvrdí se, že `direct` je lepší.** `ACTIVE_VOICE_PROFILE` zůstává `focused`. Který registr
+  sedne, má ukázat srovnání s testery.
+- **Affected doc(s):** `RUNAR_EVAL_LOG.md` (měření + opravená čísla), `RUNAR_BACKLOG.md`
+  (parkovaný úkol registrů uzavřen)
+- **Reversibility:** easy (git; profil se přepíná jedním klíčem).
+
+---
+
+## 2026-08-16 — Tři měřidla lhala stejnou chybou; islandská čísla z dneška přeměřena
+
+- **Typ:** oprava nástrojů · **Scope:** `measure_readings.js`, `test_no_planted_bans.js`, `is-vazba.py`
+- **Co se změnilo:** JS `` je definovaná na `[A-Za-z0-9_]`, takže mezi mezerou a `þ` **hranice
+  slova není**. Na třech místech to dělalo tichou chybu: mrtvá větev v detektoru, falešný zápor
+  (`ekki` sedne uvnitř `þekki`) a EN-only hlídač, který islandský sloupec nekontroloval vůbec.
+  Čtvrtá, opačná chyba: `finnur` = i **najít**, nadhodnocovalo.
+  **Platná islandská čísla: produkce 18 %, čerstvá dávka 2 %** (dřívější hodnoty z dneška neplatí).
+- ⭐ **`is-vazba.py --freq` vracelo 0 místo skutečné četnosti** — ngram API bere nejvýš 10 termů
+  a zbytek tiše zahodí. To není chybějící doklad, ale **falešný důkaz proti**: `svignar undan`
+  hlásilo 0, ve skutečnosti 94 — a je v produkčním promptu. Nástroj teď dávkuje, páruje jménem
+  (odpověď chodí v jiném pořadí!) a nezodpovězenou frázi hlásí, nikdy netiskne 0.
+- ⭐ **Pravidlo, které z toho plyne:** sonda musí cvičit **každou větev pozitivně**. Selftest
+  procházel, protože žádná z šesti sond neprošla rozbitou větví kladně — testoval jen ty větve,
+  kterým jsem věřil. Souvisí: [[guard-test-the-lifecycle]], [[sanity-check-measurements]].
+- ⚠️ **Hranice `is-grammar-qa`:** na instrukčním textu dělá E001 rozkazovací způsob a bezslovesný
+  výčet (nedotčený `lyrical` má 3×). Nástroj je stavěný na generovaná čtení; na promptu se jeho
+  E001 nedá číst jako vada (§19.3).
+- **Affected doc(s):** `RUNAR_EVAL_LOG.md`
+- **Reversibility:** easy (git).
