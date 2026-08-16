@@ -301,18 +301,28 @@ Než uživatel spustí /compact, Claude musí:
    Snapshot, který je opisuje, je „shrnutí všeho" (CLAUDE.md §20) a nemá vzniknout.
 2. Aktualizovat MEMORY.md — přidat odkaz na nový snapshot
 3. Aktualizovat dotčené doky dle rozcestníku (tree → RUNAR_TREE.md; ne archivované suroviny)
-4. ⭐ **DÁT OWNEROVI HOTOVOU `/compact` ŘÁDKU K VLOŽENÍ** — vypsanou, ke zkopírování:
-   `/compact Zachovej: <konkrétní věci této session>`
+## `/compact` řádka — Claude ji drží ŽIVOU, owner ji nehledá
 
-**Proč je krok 4 ten nejdůležitější (2026-08-16, po dni ztraceném vysvětlováním rozhodnutých věcí):**
-kroky 1–3 plní soubory, které pomůžou jen tehdy, když je někdo přečte. **Summarizer běží tak jako
-tak a jako jediný rozhoduje, co z konverzace přežije** — a `/compact` s instrukcí je jediné místo,
-kde se mu dá říct co. Automatický compact tuhle instrukci nemá, takže vybírá sám a vybírá špatně:
-ten dnešní zahodil specifikaci nálad, kánon „postoj ano, radu ne" i rozhodnutí o `VOICE_PROFILES`,
-a session je pak owner ovi navrhla znovu jako nové nápady.
+⭐ **Pravidlo (KUKY 2026-08-16: „a kde to mám pořád hledat?"):** kdykoli v session přibude něco,
+co by ji nemělo přežít jen v hlavě, **Claude na konci odpovědi vypíše aktuální `/compact` řádku.**
+Owner ji nikdy nehledá ani o ni nežádá — je pár řádků nad ním, ke zkopírování.
 
-⚠️ Řádku píše Claude, **spouští ji owner** — `/compact` se zadává z konzole. „Vše uloženo,
-/compact je bezpečný" bez té řádky je prázdná věta; nic neuloží a summarizeru nic neřekne.
+```
+/compact Zachovej: <na čem děláme> · <co jsme zjistili> · <další krok> · <co mi NESMÍŠ navrhnout znovu>
+```
+
+Poslední část je nejdůležitější: 2026-08-16 compact zahodil specifikaci nálad, kánon „postoj ano,
+radu ne" i rozhodnutí o `VOICE_PROFILES` — a session je pak ownerovi předložila jako nové nápady.
+
+⚠️ **Nemůže to být krok „před compactem", protože žádné před není.** `autoCompactEnabled` je
+na defaultu (= zapnuto) a automatický compact přijde bez ohlášení. **Instruovat ho nejde** —
+ověřeno v dokumentaci, žádné nastavení summarizeru instrukce nepředá. Účinek má jen `/compact`
+spuštěný ručně DŘÍV, než se spustí ten automatický, a to jde jen tehdy, když je řádka po ruce.
+
+⚠️ **Proto na ni nespoléhat jako na jedinou pojistku.** Jediné, co funguje bez ohledu na to, kdo
+compact spustil, je `SessionStart` hook (`~/.claude/runar-context.py`) — spouští se i se
+`source: "compact"` a vypisuje poslední rozhodnutí, mapu „sáhneš na tohle → přečti tenhle doc",
+archiv čtení a pravidla, co se nejčastěji zapomínají. <!-- doc-links:ok 2026-08-16 hook je uživatelský soubor mimo repo, do gitu nepatří -->
 
 ⚠️ **Snapshot NENÍ handoff a nikdy z něj neber aktuální stav** (MEMORY.md). Nese, co bylo
 rozdělané **k tomu dni**. Aktuální stav vlastní produkce, `git log` a doky dle rozcestníku.
