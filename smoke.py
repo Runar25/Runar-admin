@@ -419,6 +419,19 @@ first = output.split('\n')[0] if output else 'pre-launch check ran'
 rest = '\n'.join(output.split('\n')[1:])
 check(first, True, rest)
 
+# ── 26. Nahlášená fráze pořád ve zdroji ─────────────────────
+# KUKY 2026-08-16: „report se zpracuje, jen když na to upozorním. jde to udělat jinak?"
+# Jde: `bug_reports.flagged_text` se porovná se zdrojem `v2/`. Shoda = nahlášená vada,
+# která tam pořád je. Doloženo: „ríður vindinum" nahlášeno rodilým mluvčím 2026-08-02
+# a v promptu zůstalo 14 dní, protože z reportu nevedla cesta zpátky do kódu.
+# Nehlásí chybu — otevřený report je legitimní stav; padající smoke by se vypnul.
+print('\n' + chr(0x3256) + ' NAHLÁŠENÉ FRÁZE (verify_open_reports.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_open_reports.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+output = (r.stdout + r.stderr).strip()
+first = output.split('\n')[0] if output else 'open-reports check ran'
+check(first, True, '\n'.join(output.split('\n')[1:]))
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
