@@ -508,7 +508,8 @@ Jedna otázka unese jeden druh odpovědi a víc otázek lidi nevyplní.
 Doslovně: zákaz zní *„never tell the seeker what is true, **stirring**, or known inside them"*,
 úhel 5 zní *„Lead with what is **stirring**"* a úhel 3 *„Lead with the body — … physical sensation"*.
 Úhel 5 používá to samé slovo. Změřeno na 230 generovaných čteních: úhly 3+5 nesou nárok na vnitřní
-stav v **15 %**, ostatních pět úhlů ve **3 %** (Fisher p = 0,0025). Model nechybuje — poslouchá.
+stav **pětkrát častěji** než ostatních pět úhlů — čísla a test → `RUNAR_EVAL_LOG.md` 2026-08-16
+(§20: měření bydlí tam, sem patří jen otevřená otázka). Model nechybuje — poslouchá.
 **Není to jen přeformulování.** „Veď tělem" je dobré řemeslo: nejkonkrétnější věta ve čtení bývá
 tělesná. Zákaz existuje proti neověřitelným tvrzením o nitru. **Buď se zúží zákaz** (např. tělesný
 vjem povolit jako obraz, ne jako tvrzení o tazateli), **nebo se přepíší dva úhly** — obojí je obsah,

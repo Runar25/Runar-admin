@@ -2889,3 +2889,43 @@ Angličtina se nehnula, islandština 3,5×. Nejde tedy o samotnou stavbu věty. 
   mrtvých pojmů dostaly značku s důvodem a datem (`verify_escape_marks.js` holé značky odmítá).
 - **Affected doc(s):** `RUNAR_BACKLOG.md`
 - **Reversibility:** easy.
+
+---
+
+## 2026-08-16 — Co se dnes změnilo v CHOVÁNÍ (a dva deploye, které git nevidí)
+
+- **Typ:** architektonické + reading · **Scope:** prompt, proxy, reader UI
+- ⚠️ **Proč jeden souhrnný záznam a ne sedm:** §16 output B se dnes neplnil vůbec — sedm commitů
+  změnilo chování a tenhle doc nedostal ani řádek. Smoke na to **upozorňovalo** (nebloková
+  připomínka `smoke.py:453`) a já ji přešel pokaždé. Dopisuje se zpětně; příště hned.
+
+**① Prompt — co Rúnar dostává**
+- `_domainContext`: z jedné věty se substitucí na **osm vlastních vět**, jednu na oblast.
+  Důvod: jedna věta oblast do čtení neprosadila. Tvar kopíruje `_registerContext` (§18).
+  Ponechána **záchytná síť** pro oblast mimo `AREAS` — bez ní by neznámá oblast tiše přišla
+  o instrukci. Hlídá `scripts/utils/test_lever_maps.js` (mapa je indexovaná pořadím).
+- **Sedm úhlů přepsáno**: úhel už nenese doménu, nese **vstup do obrazu**. Staré úhly
+  pojmenovávaly oblast a model si z nich bral slovník celého čtení. Čísla → `RUNAR_EVAL_LOG.md`.
+- Rúnarova věta („they help you remember it") **z promptu pryč do `RUNAR_DESIGN.md`**;
+  prompt nese chování (`YOUR STANCE`). `_noColdRead` v1.3 — pryč s „recognise".
+- `hs_ravenmoor` IS opraveno (kalk z EN, 0 výskytů v korpuse) + zapsáno do `check-is.py` (§9).
+
+**② Proxy — DVA DEPLOYE, tohle git nevidí**
+- **`usage` se vrací klientovi.** Bez toho dávka nevěděla, co stála, a nešlo říct, jestli sedá
+  cache. Nasazeno.
+- **Strop délky promptu 8 000 znaků** na `prompt` i `system`, **odmítne (400), neořízne** —
+  oříznutí by useklo instrukci o JSON kontraktu a uživatel by zaplatil kredit za nesmysl.
+  Kontrola je **před** odečtem. Nasazeno a ověřeno proti živé proxy.
+
+**③ Reader UI**
+- Statické **upozornění** („not professional advice" / „ekki faglega ráðgjöf") — mluví appka,
+  ne Rúnar. Do dneška v aplikaci nebylo žádné.
+- Otázka: **`maxlength=160`** (do teď žádný limit) + **navedení** nad polem
+  („kde stojíš, ne co přijde").
+
+**④ Nové kontroly ve smoke:** ㉕ pre-launch položky · ㉖ nahlášená fráze pořád ve zdroji.
+Obě **nebloková** — a dnešek ukázal, že to má cenu: nebloková připomínka §16 se ignorovala
+celý den. **Viditelnost sama nestačí; je to slabší nástroj, než jsem tvrdil.**
+
+- **Affected doc(s):** `RUNAR_EVAL_LOG.md` (čísla), `RUNAR_BACKLOG.md` (otevřené), `RUNAR_DESIGN.md` (kánon)
+- **Reversibility:** prompt easy (git) · deploye easy (redeploy) · UI easy.
