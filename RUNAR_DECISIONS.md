@@ -3013,10 +3013,11 @@ celý den. **Viditelnost sama nestačí; je to slabší nástroj, než jsem tvrd
 - **Stav dnes:** `archive_batches.js` drží **629 generovaných** čtení ve 22 dávkách a
   odděleně **301 živých**. Původ je značený trojmo (pole `source` · prefix `gen-`/`prod-`
   · manifest). Archiv je **gitignorovaný** (`eval_out/archive`) — žije na jednom disku.
-- ⚠️ **Výhrada, kterou si owner má vzít v potaz, až to bude řešit:** řádky z `gen_batch`
-  nesou pole `prompt` s **celým sestaveným promptem**. Commitnout je do veřejného repa
-  neodhalí nic, co už zdroj neodhaluje (prompt se staví na klientu — viz backlog
-  „PŘED SPUŠTĚNÍM: prompt je veřejný"), ale udělá to **triviálně čitelným**. Ta dvě
-  rozhodnutí se proto mají řešit **naráz**, ne odděleně.
+- ⚠️ **OPRAVA VLASTNÍ VÝHRADY (v tomtéž záznamu, ať ji nikdo nepřebere):** napsal jsem, že
+  archiv nese celý sestavený prompt a je proto svázaný s položkou „prompt je veřejný".
+  **Není to pravda a bylo to zapsané dřív než já:** `archive_batches.js` `prompt`
+  **zahazuje** — je rekonstruovatelný z gitu podle `prompt_sha` a `draws` (§20, backlog
+  „Kam trvale s generovanými dávkami"). Ta dvě rozhodnutí spolu tedy **nesouvisejí**;
+  archiv obsahuje jen výstupy a jejich losy.
 - **Affected doc(s):** `RUNAR_BACKLOG.md` (položka před spuštěním)
 - **Reversibility:** easy (dokud se nic necommitne, není co vracet).
