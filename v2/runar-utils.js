@@ -194,28 +194,40 @@ function tp(key, vars) {
 
 
 // ─── Reading angles EN ─────────────────────────────────────────
+// ⭐ PREPSANO 2026-08-16: uhel uz nenese DOMENU, nese VSTUP DO OBRAZU.
+// Stare uhly pojmenovavaly oblast ("the body", "what is stirring") a model si z nich
+// bral SLOVNIK celeho cteni — u "the body" vyskocilo feel na 33 % proti 3 % jinde.
+// Sedm domen = sedm slovnikovych kotcu, a dvojice cteni teze runy se stejnym uhlem
+// mely prekryv 13,8 % proti 10,5 % s ruznym (p = 0,004).
+// Ted je to sedm STRUKTURNICH cocek na TYZ obraz (celek->jedno · detail · pohyb ·
+// pevny bod · pod povrchem · hrana · dovnitr). Cocka nema synonymicke pole, takze
+// neni co opisovat. Vsech sedm miri na OBRAZ, ne na hledajiciho — tim padaji i uhly,
+// ktere prikazovaly nárok na nitro (stare 3 a 5, 15 % proti 3 %).
+// Uhel [2] ma vestaveny unik na kyrrd, aby sedl i runam zastaveni (Isa, Blank):
+// kanon KUKY 2026-08-16 — uhel musi pasovat KAZDE rune, jinak se nesmi pouzit.
+// Detail a cisla -> RUNAR_EVAL_LOG.md 2026-08-16.
 // Pozn.: uhel "zivotni runa mluvi prvni" byl odsud VYRAZEN 2026-08-09 — odporoval si
 // s pravidlem cocky (_lensContext: "never name or explain it") a u ctenaru bez zivotni
 // runy odkazoval na neco, co v promptu neni. Kdo ho vraci, vraci i ten rozpor.
 const READING_ANGLES = [
-  'Lead with the weight — where it presses on their life right now.',
-  'Lead with what is arriving — how it lands, and what it will quietly ask back.',
-  'Lead with timing — what specific moment in their life does this rune mark.',
-  'Lead with the body — where does this rune live as a physical sensation right now.',
-  'Lead with the land — open with a single Icelandic image that mirrors this situation exactly.',
-  'Lead with what is stirring — how it wakes in their life, long before it has a name.',
-  'Lead with the threshold — what is the seeker standing between right now.',
+  'Open with the whole scene at once, then let everything fall away but one.',
+  'Open on the smallest detail in the scene, the part someone would walk past.',
+  'Open with the motion already underway in the scene. If nothing moves, open with the stillness itself.',
+  'Open with what stays fixed while everything else gives way.',
+  'Open with what the scene hides beneath its surface, not yet in view.',
+  'Open at the edge of the scene, where one thing turns into another.',
+  'Open by setting the seeker inside the scene, at the spot where it is happening.',
 ];
 
 // ─── Reading angles IS ─────────────────────────────────────────
 const READING_ANGLES_IS = [
-  'Byrjaðu á þunganum — sýndu hvar hann hvílir á lífi leitandans.',
-  'Byrjaðu á því sem er að berast — hvernig það kemur og hvers það biður hljóðlega í staðinn.',
-  'Byrjaðu á tímasetningunni — hvaða sérstaka augnablik í lífi þeirra merkir þessi rúna.',
-  'Byrjaðu á líkamanum — hvar býr þessi rúna sem líkamleg tilfinning núna.',
-  'Byrjaðu á landinu — opnaðu með einni íslenskri mynd sem speglar þessa stöðu nákvæmlega.',
-  'Byrjaðu á því sem hrærist — hvernig það vaknar í lífi leitandans, löngu áður en það fær nafn.',
-  'Byrjaðu á þröskuldinum — á milli hvers stendur leitandinn núna.',
+  'Byrjaðu á allri myndinni í einu, láttu svo allt hverfa nema eitt.',
+  'Byrjaðu á minnsta hlutnum í myndinni, þeim sem flestir gengju fram hjá.',
+  'Byrjaðu á hreyfingunni sem er þegar hafin í myndinni. Ef ekkert hreyfist, byrjaðu þá á kyrrðinni sjálfri.',
+  'Byrjaðu á því eina sem stendur fast meðan allt annað lætur undan.',
+  'Byrjaðu á því sem myndin felur undir yfirborðinu, óséð enn.',
+  'Byrjaðu á jaðri myndarinnar, þar sem eitt verður að öðru.',
+  'Byrjaðu á því að setja leitandann inn í myndina, á staðinn þar sem hún gerist.',
 ];
 
 // ─── _randomAngle(lang) ─────────────────────────────────────────
