@@ -425,3 +425,43 @@ rekonstruovatelný z gitu podle `prompt_sha` a `draws` — §20). `--list` vypí
 - **Supabase tabulka** (`eval_readings`): soukromé, dotazovatelné SQL, roste bez bobtnání repa.
   ⚠️ Cowork na ni nevidí (čte jen repo), takže by se pro něj stejně musely vzorky vyvážet.
 **Do rozhodnutí data aspoň nemizí.** Archiv je pořád gitignorovaný.
+
+### PŘED SPUŠTĚNÍM: prompt je veřejný a repem to nespravíš (2026-08-16)
+KUKY: *„public repo. jako že se k nim může kdokoliv z venku dostat? i k promptu? nemělo by to
+být ošetřené, až půjde appka ven?"*
+
+**Ověřeno, ne odhadnuto.** `curl` bez jakéhokoli přihlášení stáhne
+`raw.githubusercontent.com/Runar25/Runar-admin/main/v2/runar-character.js` → **HTTP 200,
+115 535 znaků**. Uvnitř je celý hlas: `YOUR STANCE`, `NO COLD READING`, `RUNE_IMAGES`,
+voice profil. Úhly jsou v `v2/runar-utils.js`, taky veřejné.
+
+⭐ **Zprivátnění repa by NEZMĚNILO NIC.** Prompt se staví **v prohlížeči** a posílá se do proxy
+jako hotový text (`claude-proxy/index.ts:420` ho bere z body, `:668` ho posílá Claudovi). Kdokoli
+otevře appku a zmáčkne F12, má ho — bez ohledu na to, jestli je repo public.
+
+**Jediná skutečná oprava:** přesunout stavbu promptu do edge funkce a posílat z klienta jen
+parametry (runa, area, seeking, intention, otázka, jazyk, spread). Je to zásah přes celou cestu
+(§13) a rozhodnutí ownera: **je Rúnarův hlas to, co chceme chránit?** U tohohle produktu je copy
+podstatná část hodnoty, takže odpověď nejspíš ano — ale stojí to přestavbu.
+
+**Co naopak v pořádku JE** (ověřeno, ať se neopravuje, co není rozbité):
+- Klíče k Anthropicu a ElevenLabs v klientovi **nejsou** — jsou v edge funkci.
+- `SB_KEY` v `runar-config.js:8` je **anon** klíč (`"role":"anon"` v payloadu). Ten je veřejný
+  záměrně; co ochrání data, je RLS, ne jeho utajení.
+- **Admin se vynucuje na serveru** z ověřeného JWT (`claude-proxy/index.ts:447`), klientský
+  `isAdmin()` je jen UI. Podvržení e-mailu v klientovi nikam nevede.
+- `max_tokens` od klienta je serverově **zastropovaný na 2500** (`:432`).
+
+### Přihlášený uživatel může proxy poslat LIBOVOLNÝ prompt (2026-08-16)
+Plyne z předchozího: proxy bere `prompt` jako text od klienta a jen ho zastropuje na 2500 tokenů.
+Přihlášený člověk si tedy může za cenu jednoho kreditu nechat vygenerovat cokoli — je to
+**metrované, ale neřízené obsahem**. Riziko není účet (kredity to omezují), ale to, že náš klíč
+generuje text, který s Rúnarem nemá nic společného.
+**Zmizí to samo**, když se prompt přesune na server (výš). Do té doby aspoň vědět, že to tak je.
+
+### `ADMIN_EMAILS` žije na DVOU místech — a je to ten bezpečnostní druh duplikátu (2026-08-16)
+`v2/runar-config.js:171` a `supabase/functions/claude-proxy/index.ts:441` mají každý svůj seznam.
+Rozejdou se při první změně a **rozejdou se tiše**: klient někoho pustí do admin UI, server ho
+odmítne (nebo naopak). §20 s bezpečnostním dopadem.
+**Co udělat:** server je jediný zdroj pravdy (on jediný rozhoduje); klient si má o roli říct,
+ne ji odvozovat z natvrdo psaného seznamu.
