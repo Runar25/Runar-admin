@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: 12b7cce8-c1bb-4d60-afe0-c53fe2a58d0b
-  modified: 2026-08-16T20:15:34.854Z
+  modified: 2026-08-16T20:26:27.938Z
 ---
 
 Než sáhneš na `VOICE_PROFILES`, `DEF_CHAR`, buildery v `runar-character.js` nebo na cokoli,
@@ -30,6 +30,8 @@ rozhodnutého: *„jak tě mám donutit si nastudovat projekt Rúnar???"* Konkr�
 **How to apply:** protokol na to existuje (`MEMORY.md`, Session Start Protocol, bod 5
 „Doc podle úkolu") — jen ho po compactu nikdo nepřipomene. Proto to hlásí i SessionStart
 hook (`~/.claude/runar-context.py`, mapa typ úkolu → povinný doc).
+<!-- doc-links:ok 2026-08-16 hook je uživatelský soubor mimo repo (platí pro všechny session), do gitu nepatří -->
+
 
 ⚠️ **A žádná ukázková věta bez ověření.** Copy se píše hlasem Rúnara a **v EN nebo IS**,
 nikdy jako česká improvizace do chatu — appka češtinu nemá. Kandidáta prožeň
