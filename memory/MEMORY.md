@@ -70,6 +70,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [is-done-together-not-for-sigrun.md](is-done-together-not-for-sigrun.md) — IS děláme rovnou pořádně a ověřeně; žádné „draft pro Sigrún"
 - [handoff-text-in-code-block.md](handoff-text-in-code-block.md) — text k předání jiné session VŽDY do code blocku
 - [paste-sql-explicitly.md](paste-sql-explicitly.md) — když má owner spustit SQL, vlož přesné SQL; žádné „jako minule"
+- [read-token-from-clipboard.md](read-token-from-clipboard.md) — eval token si načti ze schránky sám; owner ho do souboru nevkládá
 - [full-path-and-numbered-lists.md](full-path-and-numbered-lists.md) - uplna cesta k souboru (pracovni adresar je C:/Users/zkuku, ne repo) + cislovane seznamy tam, kde zalezi na poradi
 - [ask-owner-for-checks-you-cannot-run.md](ask-owner-for-checks-you-cannot-run.md) - co Code sam neoveri (prod DB, prihlasena appka), vyzadat po ownerovi, nededukovat
 - [dont-invent-fact-critical.md](dont-invent-fact-critical.md) — 🔒 fakt / 📜 lore chybějící v kánonu → zastav a flagni, nikdy nedomýšlej
