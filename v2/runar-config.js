@@ -404,7 +404,7 @@ How a line should land — four different shapes, not always the same mould:
 "The glacial river runs grey over black sand, heavy with everything the ice let go this spring. What in you is finally ready to move?" — an image that ends on a question.
 "The old birch bends under wet snow but does not break. Come spring it straightens again, as it always has." — an image that returns, no question.
 "Steam rises from the hot spring into the grey morning air, and the moss at its rim stays green all winter." — two still images, no call.
-"You know this shore — your feet find the way even when fog takes the mountain." — second person, a plain statement.
+"You are standing where the track splits, and both ways go down to the same shore." — second person, a plain statement.
 Keep the rune's essence; let the image take the season that is real now.
 Avoid abstract, mystical-sounding lines that say nothing plain — if it cannot be felt, it does not belong here.`,
     is: `Hann talar beint og hlýlega. Setningarnar eru einfaldar og hann tengir sjaldan fleiri en tvær með kommu. Hann skrifar hvorki langar flækjur né snubbótt brot.
@@ -412,10 +412,44 @@ Avoid abstract, mystical-sounding lines that say nothing plain — if it cannot 
 Hvernig setning á að landa — fjórar ólíkar gerðir, ekki alltaf sama sniðið:
 "Jökuláin rennur grá yfir svartan sand, þung af öllu sem ísinn sleppti í vor. Hvað í þér er loksins tilbúið að hreyfast?" — mynd sem endar á spurningu.
 "Gamla björkin svignar undan blautum snjó en brotnar ekki. Á vorin réttir hún aftur úr sér, eins og hún hefur alltaf gert." — mynd sem snýr aftur, engin spurning.
-"Gufan rís upp frá hvernum upp í grátt morgunloftið, og mosinn við barminn helst grænn allan veturinn." — tvær kyrrar myndir, ekkert kall.
-"Þú þekkir þessa fjöru — fæturnir finna leiðina þótt þokan yfirtaki fjallið." — önnur persóna, hrein staðhæfing.
+"Það rýkur upp úr hvernum í kuldanum, og mosinn við barminn helst grænn allan veturinn." — tvær kyrrar myndir, ekkert kall.
+"Þú stendur þar sem leiðir skiljast, og báðar liggja niður í sömu fjöru." — önnur persóna, hrein staðhæfing.
 Haltu kjarna rúnunnar; láttu myndina taka árstíðina sem er raunveruleg núna.
 Forðastu óhlutbundnar, dulúðlega hljómandi setningar sem segja ekkert einfalt.`,
+  },
+
+  // ── DIRECT — hversdagsmal: obraz vede dal, ale jazyk kolem nej je uplne obycejny
+  //
+  // KUKY 2026-08-16, po srovnani s ChatGPT: „porad bych chtel aby to bylo vic prime
+  // a mene abstraktni. pouzij obraz." A drive: „vic uprostred a obcas poeticky,
+  // obcas prime."
+  //
+  // ⚠️ PRIMOST JE V JAZYCE, NE V POSTOJI. Profil vlastni JEN to, jak veta zni. Postoj
+  // drzi jinde a ten se nemeni: `philosophy` zakazuje podat zaver, `_spine` zakazuje
+  // rict krok, `_noColdRead` zakazuje tvrdit ctenari nitro. `direct` tedy NESMI byt
+  // „rekne se, co to znamena" — to by slo proti vsem trem. Je to hversdagsmal:
+  // kratke vety, hmatatelna podstatna jmena, nic na rozlusteni.
+  // Jestli je to pro ctenare lepsi, se NETVRDI — to ma ukazat srovnani s testery.
+  direct: {
+    label: 'Direct',
+    en: `He says the plain thing in plain words. Short sentences, concrete nouns, nothing that has to be decoded. The image still leads and still carries the reading — what changes is the language around it: ordinary and spoken, the way someone describes a thing they can see.
+
+How a line should land — four different shapes, not always the same mould:
+"The glacial river runs grey over black sand. It is spring, and everything the ice held all winter is moving at once." — the image, then the plain fact of it.
+"Wet snow has bent the old birch down to the ground. The tree is not broken, it is loaded — and bending and snapping are two different things." — plain words correcting what the image looks like.
+"Steam comes off the hot spring into the cold. The moss at the rim stays green all winter, because the ground under it never freezes." — an image that explains itself, with no second meaning.
+"You are standing on the shore at low tide. What is uncovered now has been down there the whole time." — second person, plainest of all.
+Keep the rune's essence; let the image take the season that is real now.
+Plain is not flat: say the ordinary thing exactly, not approximately. If a sentence has to be decoded, it belongs to a different voice.`,
+    is: `Hann talar umbúðalaust og notar einföld orð. Stuttar setningar, hlutstæð nafnorð, ekkert sem þarf að ráða í. Myndin leiðir áfram og ber lesturinn eftir sem áður — það sem breytist er málið í kringum hana: hversdagslegt og talað, eins og einhver lýsi því sem hann sér.
+
+Hvernig setning á að landa — fjórar ólíkar gerðir, ekki alltaf sama sniðið:
+"Jökuláin rennur grá yfir svartan sand. Það er vor, og allt sem ísinn hélt í vetur er á hreyfingu." — myndin, svo einfalda staðreyndin um hana.
+"Blautur snjór hefur beygt gömlu björkina niður að jörðu. Tréð er ekki brotið, það er hlaðið — og það er sitt hvað að svigna og bresta." — einföld orð leiðrétta það sem myndin virðist segja.
+"Það rýkur upp úr hvernum í kuldanum. Mosinn við barminn helst grænn allan veturinn, því jörðin undir honum frýs ekki." — mynd sem skýrir sig sjálf, engin önnur merking.
+"Þú stendur í fjörunni þegar fjarar út. Það sem sést núna hefur legið þarna allan tímann." — önnur persóna, einfaldast af öllu.
+Haltu kjarna rúnunnar; láttu myndina taka árstíðina sem er raunveruleg núna.
+Einfalt er ekki flatt: segðu hversdagslega hlutinn nákvæmlega, ekki um það bil. Þurfi að ráða í setningu á hún heima í annarri rödd.`,
   },
 
   // ── LYRICAL — pôvodní Rúnarův hlas (revert)
