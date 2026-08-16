@@ -449,7 +449,7 @@ Strom: větvená větev se sedmi body → sezónní rituál kmene. Standard+.
               [Ásgarðr]
       [Álfheimr]   [Vanaheimr]
 [Jötunheimr] [Miðgarðr] [Niðavellir]
-      [Niflheimr]  [Múspellsheim]
+      [Niflheimr]  [Svartalfheimr]
               [Hel]
 
 Ásgarðr     — božské, nejvyšší aspirace, co přesahuje
@@ -459,12 +459,15 @@ Jötunheimr  — chaos, výzvy, protisíly
 Miðgarðr    — přítomná realita, kde jsi nyní
 Niðavellir  — řemeslo, práce, co buduješ
 Niflheimr   — stín, tma, co je skryté nebo potlačené
-Múspellsheim — oheň, transformace, co spaluje a čistí
+Svartalfheimr — skryté řemeslo, co se kuje ve tmě
 Hel         — kořeny, předci, co neseš z minulosti
 ```
-Nejde do větve — jde do kořenů stromu. **Bez brány na datum** — zimní slunovrat dává větší
-sílu ve stromě, není podmínkou přístupu (rozhodnuto 2026-07-18, viz ř. 526 a `CLAUDE.md`).
+Nejde do větve — jde do kořenů stromu. **Kdykoliv, žádná brána na datum.**
 Strom: devítibodový uzel v kořenech — nejsilnější bod celého stromu.
+
+⚠️ **Slunovrat sem nepatří.** Zimní slunovrat je informace o **stromě**, ne o přístupu ke
+spreadu: čtení udělané o slunovratu má ve stromě **větší váhu** (KUKY 2026-08-16). Kdo sem
+vrátí datum jako podmínku, opakuje chybu, kterou owner opravoval pětkrát → `CLAUDE.md`.
 
 ### The Gathering (3–5 run)
 **Nová role (2026-06-07): tree pattern detection — již není viditelné v journalu.**
