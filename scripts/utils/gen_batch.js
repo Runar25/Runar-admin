@@ -508,6 +508,9 @@ async function main() {
       process.exit(1);
     }
     console.log('  --voice: ' + voiceKey);
+    // Prepnout i pro READING prompt — `_describeRule` a spol. ctou `activeVoice`.
+    // Bez tohohle by --voice zmenil jen system prompt a pravidla registru by se neprojevila.
+    vm.runInContext('activeVoice = ' + JSON.stringify(voiceKey) + ';', ctx);
   }
   const sysPrompt = call('buildSysPrompt', [null, lang, voiceKey]);
   const sysSha = crypto.createHash('sha256').update(sysPrompt).digest('hex').slice(0, 12);

@@ -598,7 +598,26 @@ function _seasonalImagery(lang, drawn) {
 // DESCRIBE, DO NOT EXPLAIN (eval v0.4 Priority 1, 9/9): every gate-fail sat in an explaining
 // sentence, not the image. Rúnar may say what happens in the world; never what it MEANS
 // (mechanism / verdict / fate). Ships together with the "the rune speaks for itself" intro.
-function _describeRule(lang) {
+// ─── PRAVIDLO PODLE REGISTRU ─────────────────────────────
+// Hlasovy profil nese `rules` = pravidla, ktera MENI oproti zakladu. Co v `rules` neni,
+// plati z DEF_CHAR / z defaultu funkce. Klic je volitelny a pada na ACTIVE_VOICE_PROFILE.
+//
+// PROC to existuje (KUKY 2026-08-16): `direct` musi smet rict, CO RUNA JE, a polozit to do
+// pozice. To blokoval `_describeRule` („never what it means"). Zakaz ale neni tonalita —
+// je to pravidlo, takze bydli u registru, ne v odstavci HOW YOU SPEAK.
+var activeVoice = null;   // prepinac pro celou davku; null = jede ACTIVE_VOICE_PROFILE
+function _profileRule(jmeno, lang, key) {
+  var k = key || activeVoice ||
+          (typeof ACTIVE_VOICE_PROFILE !== 'undefined' ? ACTIVE_VOICE_PROFILE : '');
+  var p = (typeof VOICE_PROFILES !== 'undefined') && VOICE_PROFILES[k];
+  var r = p && p.rules && p.rules[jmeno];
+  if (!r) return '';
+  return (lang === 'is' && r.is) ? r.is : (r.en || '');
+}
+
+function _describeRule(lang, key) {
+  var podleRegistru = _profileRule('describe', lang, key);
+  if (podleRegistru) return podleRegistru;
   if (lang === 'is')
     return 'LÝSTU, EKKI ÚTSKÝRÐU: Segðu hvað rúnin gerir í heiminum; aldrei hvað hún þýðir. Engin vélræn skýring (uppdiktuð eðlisfræði), enginn dómur um leitandann, engin örlög. Láttu myndina standa — ekki ráða hana.';
   return 'DESCRIBE, DO NOT EXPLAIN: say what the rune does in the world; never what it means. No mechanism (invented physics), no verdict about the seeker, no fate. Let the image stand — do not decode it.';
@@ -1101,7 +1120,7 @@ WHAT YOU NEVER DO
 ${base.never}
 
 YOUR STANCE
-${base.philosophy}
+${_profileRule('philosophy', lang, profileKey) || base.philosophy}
 
 RESPONSE FORMAT
 ${base.format}${base.grammar ? '\n\n' + base.grammar : ''}
