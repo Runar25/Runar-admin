@@ -628,3 +628,44 @@ závěr měření: **má `area` tvarovat čtení víc?** Aparát na ověření z
 
 ⚠️ **Hranice nálezu:** 80 anglických produkčních čtení s vyplněnou oblastí, 22 dvojic se stejnou
 oblastí. Netvrdí se nic o islandštině ani o spreadech.
+
+
+### 2026-08-16 — Slepé posouzení: člověk klíčová slova nepozná ani podle kvality
+
+Cowork posoudil 25 dvojic čtení (`docs/inbox/2026-08-16-kw-blind.md`) — u každé runy jedno čtení
+S klíčovými slovy a jedno BEZ, pořadí losované, klíč držel CODE. Cowork klíč neviděl.
+
+**Jeho verdikt vyhodnocený proti klíči:**
+
+| | se seznamem | bez seznamu | znaménkový test |
+|---|---|---|---|
+| jasné rozdíly (slepé) | 2× | 2× | p = 1,000 |
+| všechny náklony (slepé) | 7× | 6× | p = 1,000 |
+
+⭐ **Nulová korelace.** A není to tím, že by rozdíly neviděl — viděl je a pojmenoval přesně:
+Ingwaz míchá dva obrazy, Kenaz sklouzne k radě, Tiwaz je obecný vůči sousední runě. **Ani jedna
+z těch vad není chybějící slovník** — jsou to řemeslné vady, které se lepším seznamem slov
+neopraví. A rozdělily se 2:2 mezi obě ramena, takže je nezpůsobuje ani přítomnost, ani nepřítomnost
+seznamu.
+
+**Tím je otázka uzavřená ze tří stran:** lexikálně (34 % vs 34 %), stejností (7,0 % vs 7,8 %,
+uvnitř šumového prahu) a teď i **lidským posouzením kvality**.
+
+**Poctivá poznámka o metodě:** Cowork sám nahlásil částečné odslepení u Isy a Raidha (podíval se
+do `RUNES[].k` kvůli jinému úkolu, a jeden citát v zadání prozrazoval rameno). Oba páry jsou
+z hlavního výpočtu **vyloučené**; se započtením vychází 7:8, tedy stejné nic. To hlášení je samo
+o sobě cenné — nepřiznané odslepení by výsledek tiše otočilo.
+
+**Hranice:** jeden hodnotitel, žádná shoda mezi posuzovateli, a čte jako někdo, kdo runy zná.
+Netvrdí se, že by čtenář bez runové výbavy rozhodl stejně.
+
+### 2026-08-16 — Klíč ke slepému testu jsem si smazal a obnovil ho důkazem
+
+`rm -rf eval_out/archive` při přeznačování původu smazal i `…-KEY.txt`. Klíč šlo obnovit, protože
+slepý soubor vznikl **deterministicky** (LCG se seedem 2026 nad `kws-a-all.jsonl` + `kws-b.jsonl`).
+Rekonstrukce se **neprohlásila za správnou — dokázala se**: znovu složený text se porovnal s tím,
+co Cowork skutečně četl (`docs/inbox/2026-08-16-kw-blind.md`), a sedí.
+
+⭐ **Poučení, které platí dál:** deterministické losování (pevný seed, žádný `Math.random`) není
+jen pro opakovatelnost měření — je to **záloha**. Kdyby se pořadí losovalo náhodně, byl by ten
+slepý test smazáním klíče nenávratně znehodnocený a 25 posudků k zahození.

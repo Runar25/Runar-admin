@@ -406,6 +406,19 @@ first = output.split('\n')[0] if output else 'internal-tags check ran'
 check(first if passed else 'interní tag [kánon]/[Agndofa] v user-facing ploše', passed,
       '' if passed else output)
 
+# ── 25. Otevřené věci před spuštěním ────────────────────────
+# Nález, který se NEZAPSAL, žádná kontrola nechytí (verify_decisions_followthrough
+# hlídá jen zapsaná rozhodnutí). Jakmile ale zapsaný je, může ho tohle držet na očích.
+# Nehlásí chybu záměrně: ve vývoji jsou tyhle věci legitimně otevřené a padající
+# smoke by se první den vypnul.
+print('\n' + chr(0x3255) + ' PŘED SPUŠTĚNÍM (verify_prelaunch_open.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_prelaunch_open.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+output = (r.stdout + r.stderr).strip()
+first = output.split('\n')[0] if output else 'pre-launch check ran'
+rest = '\n'.join(output.split('\n')[1:])
+check(first, True, rest)
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
