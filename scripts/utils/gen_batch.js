@@ -29,7 +29,14 @@ const crypto = require('crypto');
 const os     = require('os');
 
 const REPO = path.resolve(__dirname, '..', '..');
-const V2   = path.join(REPO, 'v2');
+// --v2 <dir> generuje proti JINE verzi promptu (napr. `git show <hash>:v2/... > tmp/`).
+// Bez toho nejde vyrobit "stare rameno" A/B testu: kod uz je prepsany a stara verze
+// existuje jen v gitu. Cte se primo z argv, protoze V2 je potreba driv nez parseArgs.
+// Zapisuje se do .meta.json, aby u davky bylo videt, PROTI CEMU byla generovana.
+const _v2i = process.argv.indexOf('--v2');
+const V2   = (_v2i !== -1 && process.argv[_v2i + 1])
+  ? path.resolve(process.argv[_v2i + 1])
+  : path.join(REPO, 'v2');
 
 // Same file set as scripts/verify_contract_wiring.js. runar-translations.js is
 // deliberately excluded: it redeclares t()/UI_TEXT, and character.js never calls t().
@@ -534,6 +541,7 @@ async function main() {
   }
 
   fs.writeFileSync(outPath + '.meta.json', JSON.stringify({
+    v2_dir: V2,
     source: 'synthetic', gen_ts: genTs, argv: process.argv.slice(2),
     append_mode: !!args['append'],
     prompt_version: PROMPT_VERSION, lang: lang, spread: spreadName,

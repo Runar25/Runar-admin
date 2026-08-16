@@ -783,3 +783,49 @@ druh vítězství nespočítá. (Ozvěna slova se měří zvlášť základním 
 
 ⚠️ **Co se tím NEotestuje:** `intention` a „this reading is for". Drží se konstantní schválně.
 Až se ukáže, jestli kouše `area`, projdou stejným aparátem.
+
+
+### 2026-08-16 — VÝSLEDEK předem domluveného testu: nová verze starou neporazila
+
+Test běžel přesně podle podmínek zapsaných **dřív, než data vznikla** (viz zápis výš týž den).
+Dvě ramena po **32 čteních**, stará vs nová `_domainContext`, 2 runy × 2 oblasti × 8, úhel zapnutý,
+`intention` konstantní. Obě ramena 32/32, dokonale vyvážená, 0 duplikátních textů.
+
+| | stará (jedna věta) | nová (osm vět) | rozdíl ramen |
+|---|---|---|---|
+| **specifičnost** | **+2,7 b.** (p = 0,0136) | **+3,1 b.** (p = 0,0042) | −0,4 b. · **p = 0,70** |
+| **pestrost** | 12,7 % | **11,1 %** | +1,6 b. lepší · p = 0,096 |
+
+mez citlivosti: pestrost 1,9 b. · specifičnost 2,0 b.
+
+**Podmínka 1 — nejednoznačně zapsaná, a nesmí se dočíst v můj prospěch.** Text zněl
+„specifičnost ≥ +3,0 b. a p < 0,05". Dvě čtení, obě legitimní:
+- *„nové rameno dosáhne +3,0 b."* → **SPLNĚNO** (+3,1 b., p = 0,0042).
+- *„nové je lepší než staré"* → **NESPLNĚNO** (−0,4 b., p = 0,70).
+
+⭐ **Rozhodující je ale to, co obě čtení přebíjí: staré rameno dosáhlo +2,7 b. samo.** Ať se
+podmínka čte jakkoli, **efekt nevyrobila nová formulace.** Nová verze není prokazatelně lepší.
+
+**Podmínka 2 — SPLNĚNA.** Pestrost se nezhoršila; naopak se o 1,6 b. zlepšila (p = 0,096, tedy
+těsně pod hladinou, ale správným směrem). Obava, že osm konkrétních vět udělá čtení uvnitř oblasti
+stejná, se nepotvrdila.
+
+---
+
+⚠️ **OPRAVA MÉHO DŘÍVĚJŠÍHO ZÁVĚRU — a je podstatná.** Téhož dne jsem třikrát napsal
+*„oblast čtení netvaruje, ať je úhel zapnutý, nebo ne"* a opřel to o tři měření kolem nuly
+(produkce +1,1 b. p = 0,285 · rameno s úhlem −0,8 b. · bez úhlu +0,5 b.).
+
+**Bylo to málo dat, ne skutečnost.** Ta měření měla 22–24 dvojic se stejnou oblastí a mez
+citlivosti **5,0 b.**; dnešní běh má **112 dvojic** a mez **2,0 b.** Efekt velikosti ~2,7 b. byl
+pod prahem všech tří dřívějších měření. **Oblast čtení tvarovala celou dobu — jen jsem na to
+neviděl.**
+
+⭐ **Poučení, které si píšu proti sobě:** u každého toho měření jsem správně vypsal „nic velkého,
+ne nic" — a pak to v shrnutí ownerovi převyprávěl jako „netvaruje". **Mez citlivosti nestačí
+vytisknout; musí přežít i cestu do věty, kterou člověk skutečně čte.** Tři měření pod prahem
+nejsou tři důkazy; je to jeden nedostatek dat, spočítaný třikrát.
+
+**Co z toho plyne pro rozhodnutí ownera:** nová `_domainContext` **není měřením obhájená**. Není
+ani horší (specifičnost n.s., pestrost mírně lepší) a je bližší kánonu „runa je základ, oblast je
+otázka". Ponechat ji je proto **rozhodnutí o obsahu, ne výsledek měření** — a to patří ownerovi.
