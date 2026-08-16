@@ -1172,3 +1172,42 @@ z **každého** měření vyfiltroval (`area='spread'`), přitom je to 63 z 302 
 **Tři plochy, a obě bez úhlu jsou čistší.** ⚠️ Není to důkaz — plochy se liší i jinak (spread
 má 3 runy a jinou délku, Ask reaguje na napsanou otázku). Ale je to **čtvrtá nezávislá linie**
 mířící na tutéž věc, a tentokrát z plochy, kterou jsem celý den nechával stranou.
+
+
+### 2026-08-16 — Skuld: věštba 0 %, ale změnitelnost jen v polovině
+
+Owner: *„přečti si ale, jak má Rúnar o Norns mluvit!"* — a měl pravdu, že jsem měřil spready,
+aniž bych si kánon přečetl.
+
+**Kánon → prompt sedí doslova.** `RUNAR_DESIGN.md`: Skuld = *„směr tvého vlákna, ne dekret osudu
+— trajektorie, kterou můžeš změnit."* Prompt: *„Skuld does not predict — she speaks of where you
+are heading **if you keep walking as you are now, and you can walk differently**."*
+
+**Výstup (20 norns čtení, Skuldin úsek vytažen z JSON pole):**
+
+| | |
+|---|---|
+| tvar věštby (*will be · awaits you · fate · destiny*) | **0/20 = 0 %** |
+| úsek nese **změnitelnost** (podmínka · volba · otázka) | **10/20 = 50 %** |
+
+⭐ **Brána proti osudu drží beze zbytku. Druhá půlka definice ale ne.** Kánon neříká jen
+„nepředpovídat" — říká **„trajektorie, kterou MŮŽEŠ ZMĚNIT"**, a ta změnitelnost je součástí
+definice, ne ozdoba. Polovina úseků tvrdí směr jako hotovou věc: *„You are heading toward what
+feeds you from below"* — bez podmínky, bez volby.
+
+**Není to porušení zákazu, je to nenaplněná půlka pokynu.** Zákaz („nepředpovídej") se vynucuje
+sám, protože je negativní a měřitelný; kladná část („můžeš jít jinak") se ztrácí. Táž asymetrie
+jako u `_domainContext`: negativní strana věty funguje, kladná ne.
+
+### 2026-08-16 — Kde se poctivost láme: kotva nedrží (Cowork, výzkum)
+
+Kánon říká **„materiál tazatele kotví projekci"**. Měření téhož dne říká, že `area` čtení
+tvaruje o **+2,7 b.** a `intention` o **+0,2 b.** (čísla → zápisy výš, §20). Tedy:
+
+⭐ **Kotva prakticky nedrží → Rúnar dělá spíš STATICKÉ čtení než dynamické.** A statické čtení
+je podle Hymanova rozlišení přesně to, co je Barnum.
+
+**Z toho plyne přeuspořádání priorit:** nejvyšší páka na poctivost **není víc zákazů**, ale aby
+`area`/`seeking`/otázka reálně tvarovaly výstup. Spojuje se to s papouškováním klíčových slov
+a se slovníkovými kotci úhlů — **je to táž vada z různých stran: statický materiál kostky
+přebíjí dynamický materiál tazatele.**

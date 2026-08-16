@@ -2929,3 +2929,22 @@ celý den. **Viditelnost sama nestačí; je to slabší nástroj, než jsem tvrd
 
 - **Affected doc(s):** `RUNAR_EVAL_LOG.md` (čísla), `RUNAR_BACKLOG.md` (otevřené), `RUNAR_DESIGN.md` (kánon)
 - **Reversibility:** prompt easy (git) · deploye easy (redeploy) · UI easy.
+
+---
+
+## 2026-08-16 — Výzkum „Rúnar jako AI postava": kánon potvrzen, páka přesunuta
+
+- **Typ:** measurement + kánon · **Scope:** hlas, poctivost · **Zdroj:** Cowork (výzkum), CODE (ověření)
+- **Co se změnilo:** Kánon zrcadla se **nemění, potvrzuje se** a dostává mechanismus (Hymanovo
+  „čtení tvoří klient"; statické vs dynamické čtení) → `RUNAR_DESIGN.md`. **Jedno rozšíření:**
+  zákaz se posouvá z *„netvrdím"* na *„ani nenaznačuju, že vím víc"* (portentózní tón).
+- ⭐ **Přesun páky:** nejvyšší páka na poctivost **není víc zákazů**, ale aby vstup tazatele
+  reálně tvaroval výstup. Měření téhož dne ukazuje, že kotva prakticky nedrží → čtení je spíš
+  statické, a statické = Barnum.
+- ⚠️ **CAVEAT, který se nesmí ztratit:** Forerova data (4,26/5 za **generický** popis) říkají,
+  že lidem se generická rezonance **líbí**. Co-Star svou ostrost po odporu **změkčil**.
+  **Poctivé austerní zrcadlo může být horší PRODUKT, i když je to lepší princip.** U testerů
+  se proto musí měřit i **spokojenost a návratnost**, ne jen poctivost. Nerozhodovat od stolu.
+- **Affected doc(s):** `RUNAR_DESIGN.md` (evidence base), `RUNAR_EVAL_LOG.md` (kde se to láme),
+  `RUNAR_BACKLOG.md` (sondy P1–P5 + copy fix)
+- **Reversibility:** n/a (výzkum a zápis), copy fix easy.

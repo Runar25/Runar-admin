@@ -105,6 +105,26 @@ ale věcně čtení netvaruje — tři nezávislá měření kolem nuly (→ `RU
 Pravděpodobný důvod je v `_domainContext`: jediná věta, která oblast **zároveň žádá a zakazuje**
 („let it land clearly in that part of life… never as a stated topic").
 
+### Cold reading: pojmenovaný anti-vzor (Cowork, výzkum 2026-08-16)
+Kánon zrcadla už tady je. Tohle mu dává **jméno a mechanismus** — a jedno rozšíření.
+
+- **Hymanovo „zlaté pravidlo": čtení tvoří klient.** Je to mechanismus za naším „materiál
+  tazatele kotví projekci". Rozlišuje **statické** čtení (stejné všem = Barnum) a **dynamické**
+  (užívá vstup klienta). ⭐ **Poctivý únik z Barnumu vede JEN přes dynamické.**
+- **AI dělá cold reading jako výchozí stav** — lichotí, říká, co chceš slyšet, budí dojem, že ví
+  víc, než říká. **Rúnar tedy není neutrální nástroj s pravidly navrch; je vědomý boj proti
+  vlastnímu defaultu.** To je důvod, proč zákazů ubývat nebude.
+- ⚠️ **Mezera v zákazu, kterou tenhle výzkum našel:** ban chytá **vyslovený nárok** („víš X"),
+  ale ne **portentózní tón** — náznak skryté znalosti. Čára kánonu se rozšiřuje z *„netvrdím"*
+  na *„ani nenaznačuju, že vím víc"*.
+- **Disclaimer neinokuluje.** Lidem řeknete „je to trik" a věří dál. Poctivost proto musí být
+  **strukturální** (co Rúnar ne/dělá), ne nálepka. (Statické upozornění v appce je právní
+  minimum, ne řešení.)
+- **Napříč tradicemi táž forma.** I-ťing je ne-predikční z vlastní normy a význam klade do
+  **obrazu a postoje**, nikdy do nitra tazatele. Rúnar je přísnější: postoj ano, **radu ne**.
+- ⭐ **Zákaz nároku není jen poctivost, je to ÚČINNOST.** Nárok projekci **zabíjí** — přeurčené
+  čtení nenechá tazateli co dělat. Tarot to říká jako „zrcadlo duše, ne předpověď".
+
 ### Hlas a styl
 Klidný, hluboký, nepospíchající. Nikdy teatrální, nikdy sladký.
 Jako starý strom — pevně zakořeněný, ale větve se hýbají ve větru.

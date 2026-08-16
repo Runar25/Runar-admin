@@ -632,3 +632,24 @@ dostane obraz vřesoviště a zaplatí za něj kredit.
 násilí) reagovat jinak? Vzor už v systému je — věštbu odmítá **v roli** („That count is not mine
 to give"), takže to jde udělat, aniž by přestal být Rúnarem. Netýká se jen `question`; totéž může
 přijít v `name` nebo přes Ask Rúnar.
+
+### Sondy z výzkumu „Rúnar jako AI postava" (Cowork 2026-08-16)
+Čísla → `RUNAR_EVAL_LOG.md` 2026-08-16, sem patří jen co otestovat.
+- **P1 Dynamika vstupu.** Hýbe se čtení, když se změní `area`/`seeking`/otázka? `area` a
+  `intention` změřené; **`seeking` a otázka ne.** Aparát stojí (`--specificity --by seeking`).
+- **P2 Portentózní tón.** Zákaz chytá vyslovený nárok, ne **náznak** skryté znalosti. Sken
+  výstupů na „to, co čeká uvnitř / co jsi ještě nepojmenoval". Souvisí s tím, že detektor míjí
+  vazby bez epistemického slovesa („what holds you") — **táž mezera, dvě jména.**
+- **P3 Prostor vs nárok.** Mají čtení bez nároku víc Ask follow-upů? Data na to **už jsou**
+  (69 dvojic), nepotřebuje generování.
+- **P4 Archetypální postoj** jako poctivý střed mezi holým obrazem a zakázanou radou. OPATRNĚ —
+  hraničí s radou, kterou kánon zakazuje.
+- **P5 Pozitivní QC checklist** z `base.philosophy` — dnes měříme jen zákazy. Souvisí s nálezem
+  u Skuld: kladná půlka pokynu se nevynucuje sama.
+
+### Copy naznačuje skrytou znalost — „what waits inside" (2026-08-16)
+`v2/runar-help.html:146,291` (EN) a `:343` (IS): *„Five runes open to you — enough to sense
+**what waits inside**"* / *„nóg til að finna **hvað bíður inni**"*. **Ověřeno, ta copy tam je.**
+Je to mírná forma portentózního tónu (naznačuje, že uvnitř něco JE a runy to odhalí) — přesně
+to, co kánon nově zakazuje. Cowork nabídl přepis na popis toho, co runy **jsou/dělají**;
+čeká na kývnutí ownera, IS pak ověřím.
