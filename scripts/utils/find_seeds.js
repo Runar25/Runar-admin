@@ -336,11 +336,27 @@ if (has('--selftest')) {
 }
 
 if (has('--kws')) {
-  const rws = q("select rune_name, prompt_draws->>'kws' as kws, " +
-    "coalesce(short_text,'') || ' ' || coalesce(deep_text,'') as txt " +
-    "from public.readings where lang = '" + LANG.replace(/[^a-z]/gi, '') + "' " +
-    "and prompt_draws ? 'kws' and coalesce(area,'') <> 'spread';");
-  runKws(rws, 'produkce · lang=' + LANG);
+  const file = val('--file', null);
+  let rws, label;
+  if (file) {
+    // Davka z gen_batch.js. Zapisuje `draws` v temze tvaru jako produkcni `prompt_draws`
+    // (gen_batch.js:717), takze se to da merit hned a necekat na provoz.
+    const bad = [];
+    rws = fs.readFileSync(file, 'utf8').split('\n').filter(l => l.trim()).map((l, i) => {
+      let o; try { o = JSON.parse(l); } catch (e) { bad.push(i + 1); return null; }
+      if (!o.reading_text) { bad.push(i + 1); return null; }   // spadle cteni != nula
+      return { rune_name: o.rune, kws: (o.draws || {}).kws || '', txt: o.reading_text };
+    }).filter(Boolean);
+    if (bad.length) console.log('  ⚠️ ' + bad.length + ' řádků bez čtení nebo nerozparsovaných — vynecháno, ne započteno jako nula.');
+    label = 'dávka ' + path.basename(file);
+  } else {
+    rws = q("select rune_name, prompt_draws->>'kws' as kws, " +
+      "coalesce(short_text,'') || ' ' || coalesce(deep_text,'') as txt " +
+      "from public.readings where lang = '" + LANG.replace(/[^a-z]/gi, '') + "' " +
+      "and prompt_draws ? 'kws' and coalesce(area,'') <> 'spread';");
+    label = 'produkce · lang=' + LANG;
+  }
+  runKws(rws, label);
   console.log('');
   process.exit(0);
 }
