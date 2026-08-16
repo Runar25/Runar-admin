@@ -942,3 +942,41 @@ délku (1679 vs ~1700 znaků). ⭐ **Třetí nezávislá linie mířící na úh
 4 %, plocha s úhlem 23 %, a uvnitř té s úhlem nesou úhly 3+5 pětinásobek ostatních.
 ⚠️ **Není to důkaz:** odpověď Ask Rúnara reaguje na otázku uživatele, což ji samo o sobě ukotvuje.
 Rozdílů je víc než jeden.
+
+
+### 2026-08-16 — Ask Rúnar párově proti VLASTNÍMU čtení (69 dvojic)
+
+Owner: *„ASK Rúnar. ven čtení runy a k tomu ASK Rúnar a analyzuj."* Skupinové srovnání (4 % vs 23 %)
+je slabé — liší se runy, lidé, doba. **Párově** je to táž runa, týž člověk, táž chvíle:
+
+| | dvojic |
+|---|---|
+| obojí čisté | 55 |
+| **čtení má nárok, odpověď ne** | **12** |
+| odpověď má nárok, čtení ne | 2 |
+| obojí má nárok | 0 |
+
+McNemar (párový, 14 nesouhlasných): **p = 0,0129**. Když se liší, je to **6:1 ve prospěch odpovědi**.
+
+**Protihypotéza, která to mohla shodit: „odpověď je čistší, protože je odtažitější."** Vyvrácena:
+
+| | překryv slovníku |
+|---|---|
+| odpověď vs **své** čtení | **13,6 %** |
+| odpověď vs **cizí** čtení téže runy | 4,8 % |
+
++8,8 b., permutační **p = 0,0002** (prohazování odpovědí uvnitř runy). Odpověď je o svém čtení,
+skoro trojnásobně proti náhodné dvojici. **Není odtažitá — je čistší i konkrétnější zároveň.**
+
+⭐ **Srovnání, které z toho plyne pro ownerův cíl „area má mít velkou váhu":**
+ukotvení **volným textem uživatele** dělá **+8,8 b.**, kdežto `area` jako výběr z nabídky
+**+2,7 b.** (viz A/B `_domainContext` týž den). Kategorie ukotví text zhruba **třikrát slaběji
+než věta, kterou člověk napsal sám.**
+
+⚠️ **Nerozhodnuto, a je to levné doměřit:** čtení s vyplněnou otázkou má v produkci nárok na
+vnitřní stav v 11 % proti 26 % bez ní — ale **n = 9**, Fisher p = 0,45. `gen_batch --question`
+to umí; 25+25 čtení rozhodne.
+
+⚠️ **Co se tím netvrdí:** mezi Ask a čtením se liší víc věcí než úhel — odpověď reaguje na
+napsanou otázku, má vlastní `RP_ASK` pack a vzniká až po čtení. „Nemá úhel" je jedna z několika
+možných příčin, byť už třetí nezávislá linie na tytéž úhly 3 a 5.
