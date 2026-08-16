@@ -27,3 +27,16 @@ Platí pro **jakýkoli** text, který tvrdí, jak kód funguje — handoff, krit
 **⭐ Poprvé vystřelilo SPRÁVNĚ (2026-07-19, handoff od CODE-readera, ne Coworka — platí i mezi CODE session).** CODE-reader předal souběhový problém s tvrzením „commit-msg hook neexistuje". Ověřil jsem to (pravda) místo abych na tom slepě stavěl. **A tady je ten nový kus:** ověření není jen „je to tvrzení pravda", ale **kontrola SOUSEDNÍCH faktů, které handoff NEŘEKL** — protože tam bydlí slepé body. Handoff mlčel o tom, že dva `tree-lab-*` dirs mají trackovaný zdroj. Kdybych ověřil jen jeho tvrzení, nasadil bych guard, který falešně blokuje CODE-tree. Chytila to až kontrola tracked/untracked, kterou žádný handoff nezmínil. **Pravdivý handoff tě může navést do pasti tím, co vynechá.** Ověřuj plochu kolem tvrzení, ne jen tvrzení.
 
 **How to apply:** before touching anything a handoff asks for, run the cheap check that would falsify it — `grep` for the caller (is this code even live?), read the function it names, `ls`/`diff` the path it claims. Then check the ADJACENT facts the handoff did not state (tracked vs untracked, callers, who else touches it). State the finding with the evidence and, when the premise is false, say so instead of implementing it. A handoff should carry `psáno proti commitu <hash>`; if it does not, compare its assumptions against HEAD myself. Related: [[proceed-dont-ask]], [[match-existing-visual-first]], [[ask-owner-for-checks-you-cannot-run]].
+
+**⭐ Platí i pro tvrzení o VLASTNÍM přístupu (2026-08-16).** Cowork napsal „tohle bych měl ověřit
+`is-vazba`/`is-grammar-qa`, ale nemám k nim přístup" jako předpoklad zděděný z dřívějška
+v konverzaci — pro ten konkrétní obsah to nezkusil. **„Nemám přístup k X" je tvrzení stejné váhy
+jako tvrzení o kódu**, jen nespustí stejné podezření, protože zní jako fakt o mně, ne o projektu.
+Je levné ho vyvrátit, tak ho vyvrať — v téhle session, těsně před použitím, ne vzpomínkou.
+Bylo-li něco blokované dřív, je to důvod zkusit to **znovu**, ne důvod kontrolu vynechat.
+
+⚠️ **Nezapisovat sem, CO zrovna nefunguje.** To je stav, ne pravidlo (§20.4), a zastará dřív, než
+ho někdo přečte — a přečte ho jako „ověřování se dá vynechat". Doloženo týž den: `is-vazba.py`
+i `is-grammar-qa.py` z prostředí CODE **fungují** (obojí toho dne prohnalo osm islandských vět
+a jednu vadnou vazbu chytilo). Kdo ověřit nemůže, **řekne to a označí text jako neověřený** —
+ověření pak doplní ten, kdo na nástroje dosáhne. Nikdy „nešlo to, tak jsem to poslal tak."
