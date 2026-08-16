@@ -1314,3 +1314,48 @@ Rozkopán šesti podstrčenými vadami — a jedna dírou prošla: zápor se tes
 takže jediné `ekki` kdekoli v profilu vyplo celou islandskou kontrolu a hlásilo „čisté".
 Opraveno na vyhodnocení **po větách**; všech šest útoků teď sedí včetně kontroly, že zápor
 se za nález počítat nesmí.
+
+### 2026-08-16 — `direct` poprvé pustěn (12 čtení). Registr je SLABŠÍ páka než vložený obraz
+
+Dávka: 3 runy × `focused`/`direct` × IS/EN, `gen_batch --voice`. Provenience přes
+`system_sha256` (registr se do řádku nezapisoval — **doplněno**, viz níže).
+
+⚠️ **NÁLEZ, KTERÝ RUŠÍ ČÁST OČEKÁVÁNÍ: to srovnání je zmatené vloženým obrazem.**
+Ze šesti dvojic dostaly **čtyři různý obraz** z `RUNE_IMAGES` — a právě tam bylo čtení
+„jiné". Tam, kde obě strany dostaly **týž** obraz (Perth), překryv slov vyskočil:
+
+| dvojice | obraz | překryv slov |
+|---|---|---|
+| Fehu/is · Isa/is · Fehu/en · Isa/en | jiný | 2–9 % |
+| **Perth/is** | **STEJNÝ** | **54 %** |
+| **Perth/en** | **STEJNÝ** | **17 %** |
+
+Většina viditelného rozdílu mezi registry je tedy **loterie obrazu, ne hlas**. Jediná
+dvojice se stejným obrazem ukazuje, že registr posunul málo (IS 54 % společných slov).
+**Nelze tvrdit, že `direct` mění čtení** — ani že nemění; tenhle řez to nerozliší.
+
+⭐ **Jak to změřit pořádně:** neporovnávat registry přes celou dávku, ale **párovat podle
+vloženého obrazu** — obraz se dá z uloženého `prompt` vytáhnout zpětně, takže stačí větší
+dávka (~30/rameno) a porovnají se jen dvojice, které dostaly tentýž obraz. Nový přepínač
+není potřeba.
+
+**Čeho se `direct` NEDOBRAL:** kratších vět. EN **75 zn/větu proti 74** u `focused` —
+prakticky totéž. IS 65 proti 75, ale n=3 na rameno, tedy šum. **Tvrzení „krátké věty"
+zatím doloženo NENÍ.** Počet vět je v obou registrech 3,0.
+
+**Studené čtení:** detektor nenašel 0 z 12.
+
+⚠️ **Ale jednu větu detektor neumí a je v `direct`:**
+`„Under the pause is the reason you sat down."` — přisuzuje tazateli **důvod**. Detektor
+hlídá „you know / you feel", ne přisouzení motivu. Rodina nároků na nitro je širší, než co
+měřím.
+
+**Dvě skutečné vady islandského výstupu, obě v rameni `direct`** (n=3, na příčinu to
+nestačí — `focused` bylo v této dávce bez vady):
+- `„Hvað ertu þegar búið að sá…"` → má být `búinn`/`búin` podle rodu tazatele.
+  Korpus: `ertu búin að` **12 824** · `ertu búinn að` **5 420** · `ertu búið að` **7**.
+- `„óupp dregið"` → není slovo. Korpus 0; `óuppdregið` 6, `ekki dregið upp` 49.
+
+**Doplněno:** `gen_batch` zapisuje `voice` do každého řádku. Do teď byla jedinou stopou
+`system_sha256` a registr se z něj dal dopočítat jen znovupostavením všech promptů —
+provenience, která se ztratí při první změně profilu.

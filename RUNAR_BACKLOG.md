@@ -665,3 +665,19 @@ i kánon zároveň. Čísla → `RUNAR_EVAL_LOG.md` 2026-08-16.
 Kdyby ano, je to jedna věta do `qBranch` — a měří se stejným testem (podíl čtení, která rámec vezmou).
 ⚠️ Souvisí se Skuld: tam se taky ztrácí **kladná** půlka pokynu („můžeš jít jinak", 10/20).
 Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je vzor, ne dvě náhody.
+
+## 2026-08-16 — otevřené po zavedení registru `direct`
+
+- **Změřit registry párováním podle vloženého obrazu.** První řez (12 čtení) je zmatený:
+  4 ze 6 dvojic dostaly jiný obraz z `RUNE_IMAGES` a rozdíl mezi registry se od té loterie
+  nedá oddělit. Potřeba ~30 čtení na rameno a porovnat jen dvojice se **stejným** obrazem
+  (obraz jde vytáhnout ze uloženého `prompt`). Detail → `RUNAR_EVAL_LOG.md` 2026-08-16.
+- **Detektor studeného čtení neumí přisouzení DŮVODU/ZÁMĚRU.** Doloženo:
+  `„Under the pause is the reason you sat down."` (direct/en, Isa) projde. Hlídá se
+  „you know / you feel", ne „the reason you…". Rozšířit vzor, ale nejdřív změřit přesnost
+  — u `finnur` a `carry` se ukázalo, že široký vzor vyrábí falešné nálezy.
+- **Dvě IS vady výstupu k zanesení do `runar_corrections`** (owner, přes shrine):
+  `ertu búið að` → `ertu búinn/búin að` · `óupp dregið` → není slovo (`ekki dregið upp`).
+  Zdroj: dávka `eval_out/voice-cmp.jsonl`, rameno `direct`.
+- **Rozhodnout o `lyrical`.** Třetí registr, nepoužívaný, 3× E001 (rozkazovací způsob —
+  není to vada, viz limit `is-grammar-qa`). Jde do porovnání s testery, nebo ven?

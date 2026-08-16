@@ -739,6 +739,10 @@ async function main() {
       name: name, user_gender: gender, season_bucket: seasonBucket,
       angle: angle.angle, angle_idx: angle.angle_idx, draws: angle.draws,
       without: without.length ? without.slice() : null,
+      // Ktery registr davku vyrobil. Bez toho je jedina stopa `system_sha256` a registr
+      // se z nej da dopocitat jen znovupostavenim vsech promptu — provenience, ktera se
+      // ztrati pri prvni zmene profilu. `null` = jelo se na ACTIVE_VOICE_PROFILE.
+      voice: voiceKey,
       max_tokens: maxTokens, spread_cost: spreadCost,
       // Builders are non-deterministic (random angle, name placement, ending shape,
       // keyword shuffle, seasonal bag) — the exact prompt cannot be reconstructed later.
