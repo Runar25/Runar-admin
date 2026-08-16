@@ -682,3 +682,11 @@ Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je 
   Detail → `RUNAR_EVAL_LOG.md` 2026-08-16.
 - **Rozhodnout o `lyrical`.** Třetí registr, nepoužívaný, 3× E001 (rozkazovací způsob —
   není to vada, viz limit `is-grammar-qa`). Jde do porovnání s testery, nebo ven?
+
+### PŘED SPUŠTĚNÍM: kam patří archiv generovaných čtení (2026-08-16)
+KUKY: *„teď je repo v pohodě, jelikož není produkce. Až bude appka v produkci, tak se to
+musí vyřešit."* Zatím tedy nic neřešit — ale **do spuštění to musí mít domov**, jinak se
+629 generovaných čtení ztratí s diskem. Řeší se **spolu** s položkou „prompt je veřejný":
+řádky z `gen_batch` nesou celý sestavený prompt, takže obojí je táž otázka.
+Živá čtení sem NEPATŘÍ — ta zůstávají mimo repo natrvalo (rozhodnutí 2026-08-08, privacy).
+Stav a obsah archivu: `node scripts/utils/archive_batches.js --list`.

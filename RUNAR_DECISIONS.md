@@ -2996,3 +2996,27 @@ celý den. **Viditelnost sama nestačí; je to slabší nástroj, než jsem tvrd
   E001 nedá číst jako vada (§19.3).
 - **Affected doc(s):** `RUNAR_EVAL_LOG.md`
 - **Reversibility:** easy (git).
+
+---
+
+## 2026-08-16 — Archiv generovaných čtení: repo teď stačí, před spuštěním se to musí vyřešit
+
+- **Typ:** data / timing · **Scope:** eval data · **Zdroj:** KUKY přímo v chatu
+- **Rozhodnutí (KUKY):** *„teď je repo v pohodě, jelikož není produkce. Až bude appka
+  v produkci, tak se to musí vyřešit."* Generovaná čtení (syntetická, jméno „Anna",
+  `source: generated`) tedy zatím **nepotřebují jiný domov**; otázka umístění se otevře
+  **před spuštěním**, ne dřív.
+- ⚠️ **Nemění rozhodnutí 2026-08-08.** To se týká **živých** čtení a je to **privacy, ne
+  časování**: `readings` jsou osobní údaj, repo je veřejné, a proto zůstávají v
+  `~/runar-eval/` **bez ohledu na to, jestli je produkce**. `export_readings.js` odmítá
+  zapsat kamkoli do repa a to se nemění.
+- **Stav dnes:** `archive_batches.js` drží **629 generovaných** čtení ve 22 dávkách a
+  odděleně **301 živých**. Původ je značený trojmo (pole `source` · prefix `gen-`/`prod-`
+  · manifest). Archiv je **gitignorovaný** (`eval_out/archive`) — žije na jednom disku.
+- ⚠️ **Výhrada, kterou si owner má vzít v potaz, až to bude řešit:** řádky z `gen_batch`
+  nesou pole `prompt` s **celým sestaveným promptem**. Commitnout je do veřejného repa
+  neodhalí nic, co už zdroj neodhaluje (prompt se staví na klientu — viz backlog
+  „PŘED SPUŠTĚNÍM: prompt je veřejný"), ale udělá to **triviálně čitelným**. Ta dvě
+  rozhodnutí se proto mají řešit **naráz**, ne odděleně.
+- **Affected doc(s):** `RUNAR_BACKLOG.md` (položka před spuštěním)
+- **Reversibility:** easy (dokud se nic necommitne, není co vracet).
