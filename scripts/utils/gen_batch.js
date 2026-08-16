@@ -149,6 +149,7 @@ const USAGE = [
   '',
   '  --spread    single|norns|kriz|horseshoe|yggdrasil   (default single)',
   '  --lang      en|is                                   (default is)',
+  '  --voice     klíč z VOICE_PROFILES                   (default = ACTIVE_VOICE_PROFILE)',
   '  --rune      Perth          forced rune (single; first position of a spread)',
   '  --runes     A,B,C          explicit spread runes; else a random distinct sample',
   '  --life-rune Gebo|self|none life rune context; self = life==drawn per reading (default none)',
@@ -495,7 +496,20 @@ async function main() {
   // takže `--without voice` by po něm už neměl kam zabrat.
   applyWithout();
   if (without.length) console.log('  --without: ' + without.join(', '));
-  const sysPrompt = call('buildSysPrompt', [null, lang]);
+  // ⚠️ NEZNAMY KLIC MUSI SPADNOUT TADY. `_getVoiceProfile` na neznamy klic vrati ''
+  // (runar-character.js) — cela sekce HOW YOU SPEAK by z promptu ZMIZELA a davka by
+  // se vygenerovala bez hlasu, aniz by cokoli reklo slovo. Preklep v `--voice` je pak
+  // k nerozeznani od vysledku „ten registr nic nedela".
+  const voiceKey = args.voice || null;
+  if (voiceKey) {
+    const known = Object.keys(G('VOICE_PROFILES') || {});
+    if (known.indexOf(voiceKey) === -1) {
+      console.error('  --voice: neznámý profil "' + voiceKey + '" (známé: ' + known.join(', ') + ')');
+      process.exit(1);
+    }
+    console.log('  --voice: ' + voiceKey);
+  }
+  const sysPrompt = call('buildSysPrompt', [null, lang, voiceKey]);
   const sysSha = crypto.createHash('sha256').update(sysPrompt).digest('hex').slice(0, 12);
 
   let seasonBucket = null;
