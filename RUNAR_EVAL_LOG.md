@@ -1034,3 +1034,47 @@ neshodnou, runa má přednost.** Oblast je explicitně druhá.
 **A je to v souladu s ownerovým vlastním kánonem** („runa je základ, oblast je otázka, kterou musí
 runa vzít v potaz" — `RUNAR_DESIGN.md`). Nejde tedy o chybu ve formulaci: kdo chce oblast výš,
 mění **kánon**, ne slovíčka. Naměřených **+2,7 b.** specifičnosti je právě tenhle strop.
+
+
+### 2026-08-16 — Síla tří pák změřená na tom, CO vkládají do promptu
+
+Owner: *„jak je to u intention a reading is for?"* Změřeno diffem postavených promptů
+(10 běhů, průnik — prompt se losuje, jednotlivý build se liší vždycky).
+
+| páka | co přidá do promptu | naměřená síla |
+|---|---|---|
+| **otázka** | **přepíše celou úvodní větev**: *„Let Fehu answer: „…" — through image and symbol, not advice"* | ukotvení **+8,8 b.** (přes Ask, nepřímo) |
+| **area** | **dvě věty**: `_domainContext` + tie-breaker `_priorityContext` | **+2,7 b.** |
+| **intention** | **jednu větu**: `READING PURPOSE: Right now — about what is happening now; speak in the present` | neměřeno |
+| **„this reading is for"** | **NIC** | **nulová — do promptu se nedostane vůbec** |
+
+⭐ **Ze tří pák, které mají mít podle ownera velkou váhu, jedna do promptu nevstupuje.**
+`_readingMode` ('mine' / 'someone') řídí **jen ukládání do journalu** (`runar-reading.js:105,161,221`);
+`runar-character.js` o něm neví. Ověřeno průnikem přes 10 běhů, čtyři možná jména pole — všechna NIC.
+
+**Pořadí síly odpovídá tomu, kolik prompt vydá:** otázka přepíše hlavní pokyn, oblast přidá dvě
+věty, záměr jednu, „for whom" nic. To je použitelné vodítko: **kdo chce páku silnější, musí jí dát
+víc místa v promptu, ne lepší slova ve stejné jedné větě.**
+
+### 2026-08-16 — OPRAVA: tie-breaker nedemotuje oblast, ustupuje ČOČKA
+
+Napsal jsem ownerovi, že věta *„keep <runa> in front and honour the seeking and the area"* dělá
+z oblasti „explicitně druhou". **Přečetl jsem to silněji, než to je.** Původní znění i důvod jsou
+zapsané (`RUNAR_DECISIONS.md:284`, 2026-07-09): *„runa vepředu, drž rejstřík+doménu, **čočka
+ustoupí**, nikdy nenutit."* Explicitně ustupuje **životní runa**, oblast je v části „honour".
+
+⭐ **Owner se ptal, jestli je u té změny zapsané proč. Je, a na třech místech** — `:284` (vznik
+contractu v1 a důvod: pasivní štítky model pod délkovým stropem zahazoval), `:490` (tie-breaker
+přestal být duplikovaný a rozšířil se na spready, §18), `:2218` + commit `0192c1a` (2026-08-08 —
+fantomová čočka: pravidlo říkalo „nech čočku ustoupit" i tam, kde žádná není; **změřeno na golden
+fixtures, fantom ve 3 ze 4 případů**, včetně uživatele bez životní runy). Disciplína držela.
+
+### 2026-08-16 — Mezera v detektoru studeného čtení, nalezená na reálném čtení
+
+Produkční čtení z 16. 8. 14:45 (Eihwaz, v2.1, s vyplněnou otázkou):
+*„**What holds you**, Kuky, is what Eihwaz keeps below the ground…"*
+
+To je tvrzení o tazatelově nitru — a **detektor ho nechytí**, protože je postavený na
+epistemických slovesech (`know`/`feel`/`sense`/`remember`). Vazby typu **„what holds you",
+„what keeps you", „what carries you"** tvrdí totéž bez nich.
+⚠️ Naměřených 18–24 % je tedy **spodní odhad**, ne horní. → `RUNAR_BACKLOG.md`.

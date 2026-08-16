@@ -547,3 +547,20 @@ přesně to, co si žádnou metrikou nekoupíme — a leží to bez užitku.
 z nich zapisuje. Minimum: typy `rephrase`/`replace` = 11 kusů, projít je a každý skončit buď
 v `check-is.py` (zdrojová vada), v `runar_corrections` (vada výstupu), nebo se `status` zavře
 s důvodem. Bez toho bude testerů deset a hlášení sto padesát.
+
+### „This reading is for" nemá na čtení žádný vliv (2026-08-16)
+Owner řadí `area` · `intention` · **„this reading is for"** mezi páky, které mají mít velkou váhu.
+Změřeno diffem promptu (10 běhů, průnik, čtyři možná jména pole): **`_readingMode` do promptu
+nevstupuje vůbec.** Řídí jen ukládání do journalu (`runar-reading.js:105,161,221`);
+`runar-character.js` o něm neví.
+**Rozhodnutí ownera:** má čtení „pro někoho jiného" znít jinak? Když ano, je to nová věta do
+promptu (§13 full-path: single + 4 spready × 2 jazyky). Když ne, je to jen ukládací přepínač
+a nemá se o něm mluvit jako o páce.
+
+### Detektor studeného čtení míjí vazby bez epistemického slovesa (2026-08-16)
+Nalezeno na reálném čtení (16. 8., Eihwaz, v2.1): *„**What holds you**, Kuky, is what Eihwaz keeps
+below the ground…"* — tvrzení o nitru tazatele, které detektor nechytí, protože hledá
+`know|feel|sense|remember`. Táž rodina: „what keeps you", „what carries you", „what waits in you".
+**Důsledek: naměřených 18–24 % je SPODNÍ odhad.** Rozšířit `COLD_VERB` o vazbu
+`what <sloveso> you` a doplnit sondy; pozor na kolizi s otázkami (ty se nepočítají) a na `carry`,
+které už jednou muselo ven jako fyzické.
