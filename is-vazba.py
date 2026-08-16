@@ -82,29 +82,64 @@ def lookup(word):
             print('  (heslo bez strukturovane vazby — jen tvary/odkazy)')
 
 
-def ngram(phrases):
+# ⚠️ API BERE NEJVYS 10 TERMU NA DOTAZ a vse nad to TISE ZAHODI (overeno 2026-08-16:
+# posli 12 -> vrati 10, posli 15 -> vrati 10; zadna chyba, zadne varovani).
+# Puvodni verze poslala vsechny fraze naraz a nezodpovezene tiskla jako "NEDOLOZENO (0)".
+# To NENI chybejici doklad, to je FALESNY DUKAZ PROTI — malem kvuli nemu byla prepsana
+# islandstina, ktera je v produkci spravne ("svignar undan" hlasilo 0, ve skutecnosti 94).
+MAX_TERMS = 10
+
+
+def _ngram_chunk(phrases):
+    """Vrati {fraze: soucet} JEN pro fraze, na ktere API skutecne odpovedelo."""
     terms = ','.join(urllib.parse.quote(p, safe='') for p in phrases)
     url = ('%s?terms=%s&case_sens=0&freq=abs&corpus=allt&word_form=ordmynd'
            % (NGRAM_API, terms))
     data = get_json(url)
+    if not isinstance(data, dict):
+        return None
+    out = {}
+    for p in phrases:
+        # ⚠️ PAROVAT VYHRADNE JMENEM. Odpoved chodi v JINEM PORADI, nez se posila
+        # (overeno: poslano [A,B,C] -> vraceno [C,A,B]), takze puvodni pozicni fallback
+        # `data[keys[i]]` umel frazi pripsat CIZI cislo. Nezodpovezena fraze musi zustat
+        # nezodpovezena — nikdy 0, nikdy soucet nekoho jineho.
+        series = data.get(p)
+        if isinstance(series, list):
+            out[p] = sum((row.get('y') or 0) for row in series if isinstance(row, dict))
+    return out
+
+
+def ngram(phrases):
     print('\n=== KORPUS n-gram (Risamalheild, soucet 2000-2021) ===')
-    # odpoved je dict {termstr: [{x:rok,y:pocet}, ...]} nebo {"term":[...]}
-    if isinstance(data, dict):
-        # zkus namapovat kazdou zadanou frazi na serii; jinak sum vseho
-        keys = list(data.keys())
-        for i, p in enumerate(phrases):
-            series = None
-            if p in data:
-                series = data[p]
-            elif i < len(keys) and isinstance(data[keys[i]], list):
-                series = data[keys[i]]
-            total = 0
-            if isinstance(series, list):
-                total = sum((row.get('y') or 0) for row in series if isinstance(row, dict))
-            verdict = '  <-- NEDOLOZENO (0)' if total == 0 else ''
-            print('  "%s": %d%s' % (p, total, verdict))
-    else:
-        print('  (neocekavany tvar odpovedi: %r)' % type(data))
+    # ⚠️ `case_sens=0` v URL NEDELA, co slibuje: "Allan veturinn" = 37, "allan veturinn"
+    # = 2524. Fraze psana s velkym pismenem (tj. tak, jak se prirozene pise na zacatku
+    # vety) proto vypada jako slabe dolozena. Hlasi se to nahlas.
+    velka = [p for p in phrases if p != p.lower()]
+    if velka:
+        print('  ⚠️ VELKE PISMENO menu vysledek (case_sens=0 nefunguje): ' +
+              ', '.join('"%s"' % p for p in velka))
+        print('     dotaz se posila i v malych pismenech; ber vyssi cislo.')
+        phrases = phrases + [p.lower() for p in velka if p.lower() not in phrases]
+
+    got, chyba = {}, False
+    for i in range(0, len(phrases), MAX_TERMS):
+        res = _ngram_chunk(phrases[i:i + MAX_TERMS])
+        if res is None:
+            chyba = True
+        else:
+            got.update(res)
+
+    for p in phrases:
+        if p not in got:
+            # NIKDY netisknout 0 za neodpovezenou frazi — to je presne ta ticha chyba.
+            print('  "%s": NEODPOVEZENO — API neposlalo serii, zopakuj SAMOSTATNE' % p)
+            continue
+        total = got[p]
+        verdict = '  <-- NEDOLOZENO (0)' if total == 0 else ''
+        print('  "%s": %d%s' % (p, total, verdict))
+    if chyba:
+        print('  ⚠️ nejmene jedna davka se nevratila jako dict — vysledek NENI uplny')
 
 
 def main():
