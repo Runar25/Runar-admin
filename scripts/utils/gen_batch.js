@@ -622,6 +622,7 @@ async function main() {
 
   // ── the run ──
   let ok = 0, failed = 0;
+  let authFails = 0, stopAuth = false;   // po sobe jdouci 401/403 -> token vyprsel behem davky
   for (let i = 0; i < jobs.length; i++) {
     setLang(lang); // rn()/rk() read the global — reset it before EVERY build
     const runes = jobs[i].runes;
@@ -737,6 +738,18 @@ async function main() {
     const res = await generate(prompt, maxTokens, spreadCost, '');
     row.http_status = res.status; row.duration_ms = res.ms; row.error = res.error;
 
+    // Token vyprsel UPROSTRED davky: session JWT plati 60 minut, dlouha davka to prekroci.
+    // Bez tohohle guardu bezi zbytek davky do 401, ceka svuj throttle slot a zapisuje prazdne
+    // radky — vysledek pak vypada jako "nekterym cteni nevysel text" misto jedne odstranitelne
+    // priciny. Nova hodnota: `node scripts/utils/gen_batch.js --check-token`.
+    if (res.status === 401 || res.status === 403) {
+      authFails++;
+      // ⚠️ NELAMAT TADY. Radek se zapisuje az na konci iterace, takze `break` na tomhle
+      // miste by ten posledni radek zahodil — a hlaska pritom slibuje, ze hotove radky
+      // v JSONL jsou. Prepina se priznak a lame se pod zapisem.
+      if (authFails >= 3) stopAuth = true;
+    } else if (res.status) { authFails = 0; }
+
     if (res.text !== null) {
       const parsed = parseSegments(res.text);
       // parseSegments falls back to the raw string when the JSON envelope is missing
@@ -775,6 +788,13 @@ async function main() {
     }
 
     fs.appendFileSync(outPath, JSON.stringify(row) + '\n', 'utf8');
+
+    if (stopAuth) {
+      console.error('\n  STOP po ' + (i + 1) + '/' + jobs.length +
+        ' — 3x 401/403 za sebou: token vyprsel behem davky (session JWT plati 60 minut).');
+      console.error('  Obnov ho (`--check-token`) a pust zbytek znovu; hotove radky uz v JSONL jsou.');
+      break;
+    }
   }
 
   console.log('\n  done — ' + ok + ' ok, ' + failed + ' failed');

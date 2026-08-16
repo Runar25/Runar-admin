@@ -245,6 +245,15 @@ function hitsProbe(txt, pr) {
   return new RegExp('\\b' + pr.probe + (pr.whole ? '\\b' : ''), 'i').test(txt);
 }
 
+// Kolikrat vic dat by pri STEJNYCH pomerech doslo pod p<0,05. Odpoved "potrebujeme
+// zhruba 3x tolik" je akcni; holé "nevyslo to" neni.
+function needFactor(a, b, c, d) {
+  for (const m of [2, 3, 4, 6, 8, 12, 20]) {
+    if (fisher(Math.round(a * m), Math.round(b * m), Math.round(c * m), Math.round(d * m)) < 0.05) return m;
+  }
+  return 0;
+}
+
 function runKws(rows, label) {
   const kwField = LANG === 'is' ? 'k_is' : 'k';
   let a = 0, b = 0, c = 0, d = 0;
@@ -289,9 +298,23 @@ function runKws(rows, label) {
     console.log('     Tohle NENÍ výsledek. `prompt_draws.kws` se píše až od 2026-08-10.');
   } else if (p < 0.05 && rDr > rNd) {
     console.log('\n  → NÁŠ SEZNAM to způsobuje. Rozšířit ho o ekvivalenty dává smysl.');
+  } else if (rDr > rNd) {
+    // ⚠️ „Nevyšlo p" NENI „neni tam nic". Smer sedi, jen na to nemame dost dat —
+    // a tvrdit v tomhle stave „nezpusobuje" je presne ta ticha zelena, kterou §19.2 zakazuje.
+    console.log('\n  → NEROZHODNUTO. Směr sedí (' + (rDr * 100).toFixed(0) + ' % vs ' +
+      (rNd * 100).toFixed(0) + ' %), ale p = ' + p.toFixed(3) + ' na hladinu nestačí.');
+    const m = needFactor(a, b, c, d);
+    console.log('     Při stejných poměrech by to rozhodlo zhruba ' +
+      (m ? m + '× víc dat (~' + Math.ceil(rows.length * m) + ' čtení)' : 'víc dat, než má smysl sbírat') + '.');
+    // ⚠️ DOLOZENO 2026-08-16: tenhle odhad se spletl. Rekl "2x vic dat (~100 cteni)";
+    // po zdvojnaseni na 100 slo p z 0,099 na 0,179, protoze efekt sam klesl z 11/5 na 10/6.
+    // Hranicni prvni odhad je skoro vzdy nafouknuty sumem — extrapolace z nej lze.
+    console.log('     ⚠️ Ber ten odhad jako STROP, ne plán: hraniční první měření bývá');
+    console.log('        nafouknuté šumem, takže po dosypání dat p často vyjde HŮŘ, ne líp.');
+    console.log('     NETVRDÍ SE, že seznam nic nedělá — tvrdí se, že to zatím nevíme.');
   } else {
-    console.log('\n  → Náš seznam to NEZPŮSOBUJE (model to slovo řekne i bez nás).');
-    console.log('     Přidávat ekvivalenty by nepomohlo — stejnost sedí jinde než v seznamu.');
+    console.log('\n  → Směr je opačný nebo plochý: nic nenasvědčuje tomu, že by seznam');
+    console.log('     to slovo do čtení tlačil. (Pořád to není důkaz nepřítomnosti.)');
   }
   return { a, b, c, d, p };
 }
@@ -335,19 +358,188 @@ if (has('--selftest')) {
   process.exit(bad ? 1 : 0);
 }
 
+// Davka z gen_batch.js. Zapisuje `draws` v temze tvaru jako produkcni `prompt_draws`
+// (gen_batch.js:717), takze se to da merit hned a necekat na provoz.
+function loadJsonl(file) {
+  const bad = [];
+  const rws = fs.readFileSync(file, 'utf8').split('\n').filter(l => l.trim()).map((l, i) => {
+    let o; try { o = JSON.parse(l); } catch (e) { bad.push(i + 1); return null; }
+    if (!o.reading_text) { bad.push(i + 1); return null; }   // spadle cteni != nula
+    return { rune_name: o.rune, kws: (o.draws || {}).kws || '', txt: o.reading_text,
+             angle: (typeof o.angle_idx === 'number') ? o.angle_idx : -1 };
+  }).filter(Boolean);
+  if (bad.length) console.log('  ⚠️ ' + path.basename(file) + ': ' + bad.length +
+    ' řádků bez čtení nebo nerozparsovaných — vynecháno, ne započteno jako nula.');
+  return rws;
+}
+
+// ─── --kwrate: trefi model runu i BEZ naseho seznamu? ─────
+// Doplnek k --kws. Ten meri, jestli konkretni slovo zavisi na tom, jestli padlo.
+// Tohle meri hrubeji a primo: kolik procent cteni obsahuje ASPON JEDNO klicove slovo sve runy.
+// Porovnanim normalni davky proti davce `--without keywords` se ukaze, jestli seznam vubec
+// neco nese — kdyz cislo nespadne, model runu trefuje sam a ekvivalenty nemaji co zlepsit (§25).
+function kwRate(rows, label) {
+  const kwField = LANG === 'is' ? 'k_is' : 'k';
+  let hit = 0, tot = 0; const unmatched = {}; const words_ = new Set();
+  for (const r of rows) {
+    const rune = S.__RUNES.find(x => x.n === r.rune_name || x.is_n === r.rune_name);
+    if (!rune || !rune[kwField]) { unmatched[r.rune_name] = (unmatched[r.rune_name] || 0) + 1; continue; }
+    tot++;
+    let any = false;
+    for (const kw of rune[kwField].split(',').map(s => s.trim()).filter(Boolean)) {
+      const pr = probeOf(kw);
+      if (pr && hitsProbe(r.txt, pr)) { any = true; words_.add(r.rune_name + '·' + kw); }
+    }
+    if (any) hit++;
+  }
+  const un = Object.keys(unmatched);
+  if (un.length) console.log('  ⚠️ ' + label + ' NESPÁROVÁNO: ' + un.map(k => k + '×' + unmatched[k]).join(', '));
+  console.log('  ' + label.padEnd(22) + hit + '/' + tot + ' = ' + (tot ? (hit / tot * 100).toFixed(0) : 0) +
+    ' % čtení obsahuje aspoň jedno klíčové slovo své runy   (různých slov: ' + words_.size + ')');
+  return { hit, tot };
+}
+
+if (has('--kwrate')) {
+  const files = ARGS.filter(a => /\.jsonl$/i.test(a));
+  if (files.length < 1) { console.error('pouziti: --kwrate a.jsonl [b.jsonl]'); process.exit(1); }
+  console.log('\n═══ TREFÍ MODEL RUNU I BEZ NAŠEHO SEZNAMU? ═══');
+  const res = files.map(f => kwRate(loadJsonl(f), path.basename(f)));
+  if (res.length === 2) {
+    const [A, B] = res;
+    const p = fisher(A.hit, A.tot - A.hit, B.hit, B.tot - B.hit);
+    console.log('\n  Fisher p = ' + p.toExponential(2));
+    if (p < 0.05) console.log('  → seznam NĚCO nese: bez něj to měřitelně spadlo.');
+    else console.log('  → rozdíl NEPROKÁZÁN: model runu trefuje i bez našeho seznamu.\n' +
+                     '    Přidávat ekvivalenty do košíku, ze kterého se netahá, nemá účinek.');
+    // ⚠️ Tahle metrika je zaujata JEDNIM smerem a musi to byt videt (§27).
+    console.log('\n  ⚠️ Výhrada: sonda hledá NAŠE slovo. Když model bez seznamu řekne „quiet"');
+    console.log('     místo „stillness", spočítá se to jako minutí — rameno bez seznamu tedy');
+    console.log('     vyjde níž, i kdyby runu trefilo stejně dobře. Metrika umí NADHODNOTIT');
+    console.log('     vliv seznamu, nikdy ho podhodnotit. Rozhoduje proto `--kws`, ne tohle:');
+    console.log('     tam je los náhodný uvnitř TÉHOŽ promptu, takže žádná taková asymetrie není.');
+  }
+  console.log('');
+  process.exit(0);
+}
+
+// ─── --variety: jsou čtení TÉŽE runy stejná? ─────────────
+// Klíčová slova jsou jen prostředek; ownerův cíl je, aby čtení téže runy nebyla stejná.
+// Měří se překryv slovníku mezi čteními JEDNÉ runy (Jaccard), a runy se pak PÁRUJÍ mezi
+// rameny — každá runa je sama sobě kontrolou, takže rozdíl mezi runami se vyruší.
+//
+// ⚠️ Bez páru s NULOVÝM srovnáním je to číslo bezcenné: neví se, kolik dělá samo losování.
+// Proto se vždy počítá i rameno A proti SOBĚ (první polovina vs druhá). Tam musí vyjít nula.
+// Žádný bootstrap s opakováním — duplikát dá shodu 1,0 a metriku nafoukne.
+function jaccard(a, b) {
+  let inter = 0;
+  for (const w of a) if (b.has(w)) inter++;
+  const uni = a.size + b.size - inter;
+  return uni ? inter / uni : 0;
+}
+function overlapByRune(rows, take, skip) {
+  const by = {};
+  for (const r of rows) (by[r.rune_name] = by[r.rune_name] || []).push(r);
+  const out = {};
+  for (const k of Object.keys(by)) {
+    const sel = by[k].slice(skip || 0, (skip || 0) + take);
+    if (sel.length < 2) continue;
+    const sets = sel.map(r => contentSet(r.txt));
+    let s = 0, n = 0;
+    for (let i = 0; i < sets.length; i++) for (let j = i + 1; j < sets.length; j++) { s += jaccard(sets[i], sets[j]); n++; }
+    if (n) out[k] = s / n;
+  }
+  return out;
+}
+function lnC(n, k) { let r = 0; for (let i = 0; i < k; i++) r += Math.log(n - i) - Math.log(i + 1); return r; }
+function signP(k, n) {                       // oboustranny znamenkovy test, p=0,5
+  if (!n) return 1;
+  const lo = Math.min(k, n - k);
+  let t = 0; for (let i = 0; i <= lo; i++) t += Math.exp(lnC(n, i) - n * Math.LN2);
+  return Math.min(1, 2 * t);
+}
+function cmpVariety(oA, oB, la, lb) {
+  const runes = Object.keys(oA).filter(k => k in oB);
+  let win = 0; const d = [];
+  for (const k of runes) { d.push(oA[k] - oB[k]); if (oA[k] > oB[k]) win++; }
+  d.sort((x, y) => x - y);
+  const med = runes.length ? d[Math.floor(d.length / 2)] : 0;
+  const mA = runes.reduce((s, k) => s + oA[k], 0) / (runes.length || 1);
+  const mB = runes.reduce((s, k) => s + oB[k], 0) / (runes.length || 1);
+  console.log('  ' + la + ' překryv ' + (mA * 100).toFixed(1) + ' %  vs  ' + lb + ' ' + (mB * 100).toFixed(1) + ' %' +
+    '   (' + runes.length + ' run párováno)');
+  console.log('    medián rozdílu ' + (med * 100).toFixed(1) + ' b.  ·  ' + la + ' stejnější u ' + win + '/' + runes.length +
+    ' run  ·  znaménkový test p = ' + signP(win, runes.length).toFixed(3));
+  return { p: signP(win, runes.length), med };
+}
+
+// ─── --angles: dělá stejnost ÚHEL, ne klíčová slova? ─────
+// Prompt losuje 1 ze 7 úhlů („čím čtení začne"). Na dávce se ukázalo, že dvojice čtení téže
+// runy se STEJNÝM úhlem si jsou podobnější než s různým — a byl to nález POST HOC, z pohledu
+// do dat. Proto tenhle režim: dávka s VYNUCENÝM úhlem (`gen_batch --angle N`) vyrobí dost
+// dvojic se stejným úhlem na to, aby se to dalo otestovat záměrně, ne náhodou.
+//
+//   node scripts/utils/gen_batch.js --all-runes --n 2 --angle 3 --out eval_out/ang3.jsonl
+//   node scripts/utils/find_seeds.js --angles eval_out/kws-a-all.jsonl eval_out/ang3.jsonl
+//
+// Páruje se PO RUNÁCH: každá runa je sama sobě kontrolou, takže rozdíly mezi runami se vyruší.
+if (has('--angles')) {
+  const files = ARGS.filter(a => /\.jsonl$/i.test(a));
+  if (files.length !== 2) { console.error('pouziti: --angles <mixed.jsonl> <forced.jsonl>'); process.exit(1); }
+  const mixed = loadJsonl(files[0]), forced = loadJsonl(files[1]);
+  const angs = new Set(forced.map(r => r.angle));
+  console.log('\n═══ DĚLÁ STEJNOST ÚHEL? ═══');
+  if (angs.size !== 1) console.log('  ⚠️ vynucená dávka má ' + angs.size + ' různých úhlů (' +
+    [...angs].join(',') + ') — není to čistý test.');
+  const grp = rows => { const b = {}; for (const r of rows) (b[r.rune_name] = b[r.rune_name] || []).push(r); return b; };
+  const gm = grp(mixed), gf = grp(forced);
+  const same = {}, diff = {};
+  for (const k of Object.keys(gf)) {                       // vynuceny uhel = same-angle dvojice
+    const s = gf[k].map(r => contentSet(r.txt)); let t = 0, n = 0;
+    for (let i = 0; i < s.length; i++) for (let j = i + 1; j < s.length; j++) { t += jaccard(s[i], s[j]); n++; }
+    if (n) same[k] = t / n;
+  }
+  for (const k of Object.keys(gm)) {                       // z mixu jen dvojice s RUZNYM uhlem
+    const g = gm[k]; let t = 0, n = 0;
+    for (let i = 0; i < g.length; i++) for (let j = i + 1; j < g.length; j++) {
+      if (g[i].angle === g[j].angle || g[i].angle < 0) continue;
+      t += jaccard(contentSet(g[i].txt), contentSet(g[j].txt)); n++;
+    }
+    if (n) diff[k] = t / n;
+  }
+  console.log('  stejný úhel = z vynucené dávky · různý úhel = jen různoúhlé dvojice z mixu\n');
+  const r = cmpVariety(same, diff, 'stejný úhel', 'různý úhel');
+  console.log('\n  ' + (r.p < 0.05
+    ? '→ ÚHEL stejnost DĚLÁ. Je to větší páka než klíčová slova (ta nedělaly nic).'
+    : '→ NEPROKÁZÁNO na těchhle datech. Nález z první dávky se záměrným testem nepotvrdil.'));
+  console.log('');
+  process.exit(0);
+}
+
+if (has('--variety')) {
+  const files = ARGS.filter(a => /\.jsonl$/i.test(a));
+  if (files.length !== 2) { console.error('pouziti: --variety a.jsonl b.jsonl'); process.exit(1); }
+  const K = parseInt(val('--take', '2'), 10);
+  const A = loadJsonl(files[0]), B = loadJsonl(files[1]);
+  console.log('\n═══ STEJNOST ČTENÍ TÉŽE RUNY (překryv slovníku) ═══');
+  console.log('  nižší překryv = pestřejší čtení. ' + K + ' čtení na runu.\n');
+  cmpVariety(overlapByRune(A, K, 0), overlapByRune(B, K, 0), path.basename(files[0]), path.basename(files[1]));
+  const nullA = overlapByRune(A, K, K);
+  if (Object.keys(nullA).length) {
+    console.log('\n  NULOVÉ SROVNÁNÍ (totéž rameno proti sobě — tady MUSÍ vyjít nula):');
+    cmpVariety(overlapByRune(A, K, 0), nullA, 'A 1. půle', 'A 2. půle');
+  } else {
+    console.log('\n  ⚠️ NULOVÉ SROVNÁNÍ NELZE — rameno A nemá ' + (2 * K) + ' čtení na runu.');
+    console.log('     Bez něj se neví, kolik z rozdílu dělá samo losování. Neber číslo výš jako výsledek.');
+  }
+  console.log('');
+  process.exit(0);
+}
+
 if (has('--kws')) {
   const file = val('--file', null);
   let rws, label;
   if (file) {
-    // Davka z gen_batch.js. Zapisuje `draws` v temze tvaru jako produkcni `prompt_draws`
-    // (gen_batch.js:717), takze se to da merit hned a necekat na provoz.
-    const bad = [];
-    rws = fs.readFileSync(file, 'utf8').split('\n').filter(l => l.trim()).map((l, i) => {
-      let o; try { o = JSON.parse(l); } catch (e) { bad.push(i + 1); return null; }
-      if (!o.reading_text) { bad.push(i + 1); return null; }   // spadle cteni != nula
-      return { rune_name: o.rune, kws: (o.draws || {}).kws || '', txt: o.reading_text };
-    }).filter(Boolean);
-    if (bad.length) console.log('  ⚠️ ' + bad.length + ' řádků bez čtení nebo nerozparsovaných — vynecháno, ne započteno jako nula.');
+    rws = loadJsonl(file);
     label = 'dávka ' + path.basename(file);
   } else {
     rws = q("select rune_name, prompt_draws->>'kws' as kws, " +

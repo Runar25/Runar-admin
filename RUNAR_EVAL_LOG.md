@@ -503,3 +503,49 @@ jako správná. Test proto ověřuje tři věci, ne jednu: (1) sonda chytí ohyb
 (2) v datech s **nasazeným** efektem se efekt najde, (3) v **nulových** datech se nenajde nic.
 Doplněno hlášení **NESPÁROVÁNO s RUNES** — tichý `continue` u nespárované runy by z rozbitého
 párování udělal čistý nulový výsledek (§19.2), přesně jako `typeof SEEKS === 'undefined'` o den dřív.
+
+
+### 2026-08-16 — Klíčová slova run stejnost NEDĚLAJÍ (200 vygenerovaných čtení)
+
+Owner: *„každá runa má svoje hlavní slova… co kdybychom dal těm slovům ještě pár ekvivalentů?"*
+
+Odpověď: **nepomohlo by to.** Ověřeno třemi nezávislými způsoby, ne jedním.
+
+**1. Ablace — odebrat CELÝ seznam** (`gen_batch --without keywords`, 50 vs 100 čtení):
+
+| | s klíčovými slovy | bez nich | p |
+|---|---|---|---|
+| čtení obsahuje aspoň jedno klíčové slovo své runy | 34/100 = **34 %** | 17/50 = **34 %** | 1,00 |
+| překryv slovníku mezi čteními téže runy | 7,0 % | 7,8 % | 1,00 |
+
+Shoda na procento. A metrika je přitom **zaujatá ve prospěch seznamu** — hledá NAŠE slovo,
+takže parafráze („quiet" místo „stillness") se počítá jako minutí. Umí vliv seznamu nadhodnotit,
+nikdy podhodnotit. Nenašla nic ani tak.
+
+⭐ **Nulové srovnání to uzavřelo.** Rameno A proti SOBĚ (1. půle vs 2. půle) dalo 7,0 % vs 7,9 %,
+tedy rozdíl **0,9 b.** — zatímco rozdíl mezi rameny byl **0,8 b.** Šumový práh metriky je větší
+než měřený efekt (§27, útok 1).
+
+**2. Vnitřní randomizace — které slovo padlo** (`--kws`, prompt losuje 3 z 5–6):
+slovo, které **padlo**, se objevilo v **10 %** čtení; slovo, které **nepadlo**, v **6 %**;
+p = 0,179. **Nerozhodnuto, ale malé.** Při 50 čteních to bylo 11 % vs 5 %, p = 0,099.
+
+⚠️ **Odhad „2× víc dat to rozhodne" se spletl** — po zdvojnásobení na 100 čtení šlo p z 0,099
+na **0,179**, protože sám efekt klesl. Hraniční první měření bývá nafouknuté šumem; extrapolace
+z něj lže. Nástroj to teď píše u odhadu jako varování.
+
+**3. Co se ukázalo místo toho — ÚHEL, zatím NEPOTVRZENO.** Prompt losuje 1 ze 7 úhlů (čím čtení
+začne). Dvojice čtení téže runy se **stejným** úhlem: překryv **16,2 %**; s **různým**: **10,4 %**.
+Permutační p = **0,0094** (5000 permutací, úhly míchané UVNITŘ runy, aby struktura dvojic zůstala).
+To je řádově větší páka než klíčová slova.
+
+⚠️ Byl to nález **post hoc**, z pohledu do dat. Záměrná replikace (dávka s vynuceným úhlem)
+**nedoběhla**: token vypršel uprostřed, zbylo 31/50 čtení a jen 6 spárovaných run → 7,4 % vs 11,6 %,
+p = 0,219. To **není vyvrácení, je to chybějící test**. Dokončit dávkou `--angle N`.
+
+**Provozní nález:** Supabase session JWT platí **přesně 60 minut** (dekódováno `iat`/`exp`).
+`gen_batch.js` teď po **3 po sobě jdoucích 401/403** dávku ukončí s jasnou hláškou místo toho,
+aby 19× marně zaklepal a zapsal prázdné řádky. Guard otestován naostro falešným JWT s platným
+`exp` a neplatným podpisem — a při té příležitosti chycena vlastní chyba: `break` hned po detekci
+přeskočil zápis posledního řádku, takže hláška „hotové řádky už v JSONL jsou" lhala. Láme se
+až pod zápisem.
