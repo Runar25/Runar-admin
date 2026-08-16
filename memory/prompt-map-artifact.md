@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 12b7cce8-c1bb-4d60-afe0-c53fe2a58d0b
-  modified: 2026-08-08T16:06:24.297Z
+  modified: 2026-08-16T20:47:06.305Z
 ---
 
 Vizuální mapa **„jak a z čeho Rúnar mluví"** — 3 vrstvy (systémový prompt/charakter · reading stack · korekce → `claude-opus-4-8` → JSON → jeden odstavec), + tabulka „kde ladit nuanci" + seznam „co je mrtvé/nehoň to".
@@ -14,6 +14,13 @@ Vizuální mapa **„jak a z čeho Rúnar mluví"** — 3 vrstvy (systémový pr
 (privátní, jen owner; galerie `claude.ai/code/artifacts`.)
 
 ⚠️ **Je to SNAPSHOT.** Pravda = KÓD: `v2/runar-character.js` (buildSysPrompt · RP_* · buildReadingPrompt · helpery) · `runar-config.js` (VOICE_PROFILES.focused · RUNAR_MODES) · `supabase/functions/claude-proxy/index.ts` (MODELS). NEdělat z toho repo doc (§20 — duplikoval by kód a zastarával).
+
+⭐ **SEKCE „co prompt stojí" SE NEEDITUJE RUČNĚ — generuje se z kódu:**
+`node scripts/utils/lint_prompts.js --map <cesta-k-html>` přepíše obsah mezi značkami
+`<!-- AUTO-ROZPIS:start -->` a `:end` (postaví 2100 kombinací a spočítá slova na slot).
+Bez cesty k souboru jen vypíše „soubor mapy nenalezen". Vzniklo proto, že právě tahle část
+driftovala nejvíc — čtyři ruční překreslení za dva dny a jednou 14 ze 14 chybných čísel řádků.
+**Spusť to jako první**; razítko `v2.x` se tím aktualizuje samo.
 
 ⭐ **PRAVIDLO (KUKY 2026-08-08): měníš-li prompt / hlas → překresli mapu ve STEJNÉM tahu.** Jinak se
 rozejde a příští session z ní čte nepravdu. Mapa má nahoře **razítko** (datum + `RUNAR_PROMPT_VERSION`)
