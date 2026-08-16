@@ -83,6 +83,17 @@ je přesně hodnocení *generického* textu jako osobního. Čtení se proto nes
 pocitu přesnosti; měřit jde jen to, co projekcí neprochází (papouškování, stejnost slovníku,
 porušení pravidel, stavba). Viz `CLAUDE.md` §24 a §27.
 
+### Úhel musí sednout KAŽDÉ runě (KUKY 2026-08-16)
+⭐ **„Úhel musí být univerzální a pasovat na každou runu. Pokud nepasuje, nemůže být ani použit
+a musí se najít jiný."** Úhel je jeden ze sedmi způsobů, jak čtení otevřít, a losuje se **nezávisle
+na tažené runě** — takže každá dvojice úhel×runa musí být použitelná. Úhel, který sedne jen některým
+runám, vyrábí u ostatních nucené čtení.
+
+To je **přísnější kritérium než „hezky napsaný úhel"** a je z něj vidět, proč jsou úhly 3 a 5 vadné
+i jinak než porušením zákazu: „veď tělem" a „veď tím, co se probouzí" předpokládají runu, která
+v těle nebo v probouzení něco dělá. U Isy (led, zastavení) nebo Nauthiz (nedostatek) to drhne.
+Změřené vady → `RUNAR_EVAL_LOG.md` 2026-08-16.
+
 ### Runa je základ, oblast je otázka (KUKY 2026-08-16)
 ⭐ **„Čtení runy má být runa jako základ, a oblast je otázka, kterou musí runa vzít v potaz,
 jelikož to byla ta otázka."** Není to tedy „čtení o lásce s runou jako ozdobou" ani „čtení

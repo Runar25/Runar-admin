@@ -996,9 +996,24 @@ Ano, a šlo to hned — `gen_batch --without all` dává **567 znaků** proti pl
 | různých slov na 100 | 50 % | **63 %** |
 | jméno runy v textu | 100 % | 100 % |
 
-⭐ **Plný prompt zkrátí čtení na polovinu, vyrobí rozmanitost konců — a je LEXIKÁLNĚ PESTŘEJŠÍ,
-ne chudší** (63 % vs 50 % různých slov). To je proti intuici: víc pravidel = pestřejší text.
-Holý Rúnar píše dlouze a opakuje se.
+⛔ **CELÉ TOHLE SROVNÁNÍ JE NEPLATNÉ — kruhové. Owner 2026-08-16:** *„nemůže být dvakrát tak
+dlouhý, když má limit na to, jak může být dlouhý! raw Rúnar jsi zkoušel úplně něco jiného.
+bez limitu."* **Má pravdu.** `--without all` = `Object.keys(WITHOUT)`, tedy **včetně `length`,
+`ending` i `coldread`**. Takže:
+- „píše dvakrát tak dlouze" = odstranil jsem **pravidlo o délce**
+- „končí otázkou 0 %" = odstranil jsem **los tvaru konce**
+- „cold-readuje víc" = odstranil jsem **zákaz cold readingu**
+- „je lexikálně chudší" = delší text má mechanicky nižší podíl různých slov
+
+**Změřil jsem, že pravidlo, které jsem odstranil, není dodržováno.** Žádný z těch čtyř řádků
+nic neříká o tom, jestli vrstvy pomáhají — každý měří vlastní odstraněné pravidlo.
+
+⭐ **Jak to udělat správně:** ablovat **po jedné vrstvě**, ne `all`; a měřit jen ty dimenze,
+jejichž pravidlo v daném rameni **zůstalo**. Skupina `--without dice` (jen losované věci,
+pravidla zůstanou) je k tomu použitelný začátek. Původní znění zápisu níže nechávám jako
+doklad, jak snadno kruhové srovnání vypadá jako nález.
+
+~~Plný prompt zkrátí čtení na polovinu, vyrobí rozmanitost konců — a je lexikálně pestřejší.~~
 
 ⚠️ **Co se prokázalo a co ne:** konec otázkou 0/25 vs 7/25, Fisher **p = 0,0096** — prokázáno.
 Nárok na vnitřní stav 9/25 vs 6/25, **p = 0,538 — nerozhodnuto**, směr sedí, síla ne.
@@ -1013,8 +1028,10 @@ aby vyrobil číslo. Stejnost holého vs plného tedy **změřená není**; na t
 - plný: *„You feel it in the chest first… The clock on the wall has stopped and no one has wound
   it, and Isa keeps the hands where they are. What are you refusing to name?"* — 45 slov.
 
-**Závěr pro ownerův cíl „najít nejlepší blend":** vrstvy jako celek **nejsou problém** — bez nich
-je to horší ve všech měřených směrech. Problém jsou **dva konkrétní úhly** (3 a 5), ne vrstvení.
+⛔ **Závěr „vrstvy nejsou problém" NEPLATÍ** — stál na kruhovém srovnání výš. O vrstvách jako
+celku dnes **nevíme nic**. Co platí dál, protože stojí na jiných měřeních: **úhly 3 a 5 přikazují
+to, co `_noColdRead` zakazuje** (15 % vs 3 %, p = 0,0025) a **úhel vyrábí stejnost**
+(13,8 % vs 10,5 %, p = 0,004).
 
 ### 2026-08-16 — Co přesně `area` vkládá do promptu (owner se ptal)
 
