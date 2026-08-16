@@ -653,3 +653,15 @@ přijít v `name` nebo přes Ask Rúnar.
 Je to mírná forma portentózního tónu (naznačuje, že uvnitř něco JE a runy to odhalí) — přesně
 to, co kánon nově zakazuje. Cowork nabídl přepis na popis toho, co runy **jsou/dělají**;
 čeká na kývnutí ownera, IS pak ověřím.
+
+### Rúnar zahazuje časový rámec otázky (2026-08-16)
+Typická otázka zní *„jak se bude vyvíjet moje práce v následujících 3 měsících?"* — mířená do
+budoucnosti. Rúnar **nepředpoví** (0/8, brána drží) a **nevysvětluje runu** (0/8), ale **7 z 8
+čtení horizont vůbec nezmíní**. Uživatel se ptal na období a dostal přítomnost.
+⭐ Model to přitom umí: *„Raidho walks these three months at a pace that is not yours to hurry."*
+Horizont jako **úsek, který se jde**, ne jako budoucnost, která se doručí — odpověď na otázku
+i kánon zároveň. Čísla → `RUNAR_EVAL_LOG.md` 2026-08-16.
+**Rozhodnutí ownera (obsah):** má se to vynutit? Kánon zakazuje předpovídat, ne mluvit o rozpětí.
+Kdyby ano, je to jedna věta do `qBranch` — a měří se stejným testem (podíl čtení, která rámec vezmou).
+⚠️ Souvisí se Skuld: tam se taky ztrácí **kladná** půlka pokynu („můžeš jít jinak", 10/20).
+Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je vzor, ne dvě náhody.

@@ -1211,3 +1211,39 @@ je podle Hymanova rozlišení přesně to, co je Barnum.
 `area`/`seeking`/otázka reálně tvarovaly výstup. Spojuje se to s papouškováním klíčových slov
 a se slovníkovými kotci úhlů — **je to táž vada z různých stran: statický materiál kostky
 přebíjí dynamický materiál tazatele.**
+
+
+### 2026-08-16 — Typická otázka je o BUDOUCNOSTI. Rúnar ji nepředpoví — a ztratí jí čas.
+
+Owner položil Rúnarovi tutéž otázku, jakou dal ChatGPT: *„Jak se bude vyvíjet moje práce
+v následujících 3 měsících?"* ⭐ **To je ta otázka, kterou lidé skutečně pokládají** — a kánon
+předpověď zakazuje. Změřeno na **8 čteních** (2 produkční + 6 generovaných, EN i CZ vstup):
+
+| | |
+|---|---|
+| **předpověď** (*will be · awaits · going to*) | **0/8** |
+| **vysvětluje runu** (*means · represents · stands for*) | **0/8** |
+| nese podmínku nebo volbu | 3/8 |
+| **převzal časový rámec z otázky** | **1/8** |
+
+**Co drží beze zbytku:** brána proti věštbě a describe-don't-explain. Na otázku mířící přímo do
+budoucnosti Rúnar **ani jednou** neodpověděl předpovědí. Produkční Norns na to odpověděl přesně
+podle kánonu: *„**Keep gripping the way you gripped before** and the edge finds your palm again."*
+— trajektorie s podmínkou, ne dekret.
+
+⚠️ **Co nedrží: rámec otázky.** Rúnar si vezme **téma** („práce") a **zahodí čas** („tři měsíce").
+Sedm z osmi čtení horizont vůbec nezmíní. Uživatel se zeptal na období a dostal přítomnost.
+
+⭐ **A model přitom ukázal, že to umí** — jediné čtení, které rámec vzalo, to udělalo bez porušení
+čehokoli: *„**Raidho walks these three months** at a pace that is not yours to hurry."* Horizont
+jako **úsek, který se jde**, ne jako budoucnost, která se doručí. To je odpověď na otázku
+i dodržení kánonu naráz. Neděje se to spolehlivě, ale je to v jeho možnostech.
+
+**Srovnání s ChatGPT na tutéž otázku** (owner dodal výstup): tři oddělené odstavce, každý
+**vysvětluje význam runy** („Fehu souvisí s hodnotou, zdroji, majetkem"), hedguje („může
+naznačovat" 5×) a končí **disclaimerem**, že to není jistá předpověď. Rúnar nic z toho nedělá —
+jeden obraz nesený třemi beaty, žádná definice, a **žádný disclaimer není potřeba, protože ta
+forma nepředpovídá.** Rozdíl je strukturní, ne stylistický.
+
+**Otevřená otázka pro ownera (obsah):** má Rúnar horizont z otázky **brát**? Kánon to nezakazuje —
+zakazuje předpovídat, ne mluvit o rozpětí. Dnes ho bere 1 z 8. → `RUNAR_BACKLOG.md`.
