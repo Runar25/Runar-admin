@@ -317,7 +317,7 @@ var SEASON_POOLS = {
       { id: 'hs_lupine',   en: 'lupine spread purple across the hillsides',             is: 'lúpína breidd fjólublá yfir hlíðarnar' },
       { id: 'hs_puffins',  en: 'puffins crowding the sea cliffs',                       is: 'lundi þéttur á bjargbrúnum' },
       { id: 'hs_hay',      en: 'hay drying in the long light',                          is: 'hey að þorna í langa ljósinu' },
-      { id: 'hs_ravenmoor', en: 'a raven riding the wind high over the fells', is: 'hrafn sem ríður vindinum hátt yfir fjöllin' },
+      { id: 'hs_ravenmoor', en: 'a raven riding the wind high over the fells', is: 'hrafn sem svífur hátt yfir fjöllin' },
       { id: 'hs_basalt', en: 'basalt columns standing in even ranks', is: 'stuðlaberg sem stendur í jöfnum röðum' },
       { id: 'hs_whales',   en: 'whales surfacing in a calm fjord',                      is: 'hvalir sem koma upp í kyrrum firði' },
       { id: 'hs_highland', en: 'the highland open at last and crossable',               is: 'hálendið loks opið og fært' },

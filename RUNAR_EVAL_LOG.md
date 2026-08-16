@@ -901,3 +901,44 @@ měření — obě z pohledu na to, co nástroj vlastně chytil.
 - **„journey": 1 z 228.** Dřívější problém je prakticky vyřešený.
 - **délka single na dnešním promptu: medián 49 slov** proti zadaným 38–45. Mírné přetažení;
   medián 81 z prvního výpisu byl smíchaný se spready (Yggdrasil 273 slov).
+
+
+### 2026-08-16 — Islandská dávka na dnešním promptu: 50 čtení
+
+První islandská čtení od 9. 8. a první, která prošla `--rules` s **islandským** detektorem.
+
+| | nárok na vnitřní stav |
+|---|---|
+| IS produkce, starý prompt (70) | 16 % |
+| **IS čerstvá dávka, dnešní prompt (50)** | **1/50 = 2 %** |
+| EN produkce, dnešní prompt (34) | 18 % |
+
+⚠️ **Úhly 3 a 5 nejsou v téhle dávce otestované** — losování dalo úhel 3 jen 2× a úhel 5 9×.
+Konflikt „úhel objednává, co zákaz zakazuje" tedy v islandštině **ověřený není**, jen v angličtině.
+
+**Gramatika (`is-grammar-qa` na 50 čtení):** 16 s příznakem, ale **`W001` jsou slabé návrhy a
+u tří ověřeno, že se plete nástroj**, ne text („móann" = mokřina je správně, navrhuje „mann").
+Skutečné jsou **`S004`, tedy 5 z 50 = 10 %** zkomolených slov:
+`kropar`→kopar · `Daggin`→**Döggin** (rosa) · `vetrarþungann` · `moldarbeðnum` · `gráið`.
+Osm čtení nerozparsováno (E001) — neposouzeno, nepočítá se jako čisto.
+
+⭐ **Deset procent islandských čtení má zkomolené slovo, a je to primární jazyk.** Žádná
+z dnešních anglických metrik tohle nenajde; chytí to jen `is-grammar-qa` na výstupu.
+
+### 2026-08-16 — Ask Rúnar mluví čistěji než čtení a nemá úhel
+
+Owner navrhl využít Ask Rúnar jako kanál zpětné vazby. Při ověřování se ukázalo něco jiného:
+**69 odpovědí Ask Rúnara leželo v DB nezměřených.**
+
+| | nárok na vnitřní stav | medián slov |
+|---|---|---|
+| **Ask Rúnar EN** (54) | **4 %** | 43 |
+| **Ask Rúnar IS** (15) | **0 %** | 44 |
+| čtení EN | 23 % | 49 |
+| čtení IS | 15 % | — |
+
+Ask prompt **nemá úhel** (ověřeno: žádné „Lead with"), přitom má `NO COLD READING` i srovnatelnou
+délku (1679 vs ~1700 znaků). ⭐ **Třetí nezávislá linie mířící na úhly 3 a 5** — plocha bez úhlu
+4 %, plocha s úhlem 23 %, a uvnitř té s úhlem nesou úhly 3+5 pětinásobek ostatních.
+⚠️ **Není to důkaz:** odpověď Ask Rúnara reaguje na otázku uživatele, což ji samo o sobě ukotvuje.
+Rozdílů je víc než jeden.

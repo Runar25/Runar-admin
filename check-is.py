@@ -17,6 +17,12 @@ FILES = sorted(p for p in glob.glob(os.path.join(BASE, '*.js')) + glob.glob(os.p
 
 # (bad_pattern, correct_form, note)
 BAD_PATTERNS = [
+
+    # Kalk z anglickeho "riding the wind" — 0 vyskytu v Risamalheild (svífur hátt = 20).
+    # Nahlasil RODILY MLUVCI 2026-08-02 pres bug_reports: "Þetta er léleg íslenska, við
+    # segjum þetta ekki svona á íslensku." V promptu to pak zustalo dva tydny, protoze
+    # z reportu nevedla zadna cesta do pravidel. Tenhle radek je ta cesta.
+    ('ríður vindinum',  'svífur hátt',  'kalk z EN "riding the wind"; rodily mluvci 2026-08-02'),
     # SOURCE-authorable typos/phrases = this checker's real job. Model-output errors
     # (prose the model invents) belong to is-grammar-qa + runar_corrections, NOT here;
     # the model-output entries below are kept only as living documentation for now.

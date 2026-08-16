@@ -525,3 +525,25 @@ Poslední islandské produkční čtení: **9. 8.** Všech ~380 dnešních gener
 — zárodky, úhly, oblasti, A/B test `_domainContext`. §2 přitom říká, že IS je primární a EN vedlejší.
 **Co udělat:** než se přijme jakákoli dnešní změna promptu jako hotová, prohnat ji islandskou dávkou.
 `gen_batch --lang is` funguje; chybí jen to udělat.
+
+### ⭐ Z reportu nevede ŽÁDNÁ cesta do promptu — 53 otevřených hlášení (2026-08-16)
+Owner ukázal, že `bug_reports` existuje a testeři ho používají. **Má 53 záznamů a ani jeden není
+vyřešený** (`status` otevřený u všech, nejstarší z 17. 7.). Uvnitř leží **rodilá zpětná vazba na
+islandštinu**, kterou nikdo nepřetavil v pravidlo:
+- *„Hrafn sem ríður vindinum. **Þetta er léleg íslenska, við segjum þetta ekki svona á íslensku.**"*
+  (2026-08-02) — ověřeno korpusem: **0 výskytů**, kalk z EN „riding the wind". **Fráze zůstala
+  v promptu dva týdny** (`hs_ravenmoor`) a celou dobu se vkládala do islandských čtení.
+  Opraveno 2026-08-16 na `svífur hátt yfir fjöllin` (20 výskytů) + přidáno do `check-is.py` (§9).
+- *„Í miðju þínu situr **kyrran**"* — označeno **dvakrát** jako divné. Ve zdroji ta podoba není;
+  model si podstatné jméno vyrobil sám z přídavného `kyrra`. Patří do `runar_corrections`, ne do zdroje.
+- *„Það vantar orð"* → návrh `fyrsta sólarglætan` · *„fetið fyrir fetið"* → návrh `Fet fyrir fet`.
+- EN: *„This reading was difficult for the person to understand as she could not picture it."*
+
+**Jádro problému není ten jeden obraz.** Je to, že **report se uloží a tím to končí**: není v
+`check-is.py` BAD_PATTERNS, není v `runar_corrections`, nikdo ho nezavře. Rodilý mluvčí nám dal
+přesně to, co si žádnou metrikou nekoupíme — a leží to bez užitku.
+
+**Co udělat (rozhodnutí ownera, je to proces, ne kód):** kdo a kdy reporty prochází, a kam se
+z nich zapisuje. Minimum: typy `rephrase`/`replace` = 11 kusů, projít je a každý skončit buď
+v `check-is.py` (zdrojová vada), v `runar_corrections` (vada výstupu), nebo se `status` zavře
+s důvodem. Bez toho bude testerů deset a hlášení sto padesát.
