@@ -465,3 +465,23 @@ Rozejdou se při první změně a **rozejdou se tiše**: klient někoho pustí d
 odmítne (nebo naopak). §20 s bezpečnostním dopadem.
 **Co udělat:** server je jediný zdroj pravdy (on jediný rozhoduje); klient si má o roli říct,
 ne ji odvozovat z natvrdo psaného seznamu.
+
+### Dávky neznají svou cenu — proxy `usage` vrací jen do journalu (2026-08-16)
+KUKY: *„nechci spálit všechny tokeny."* Jenže **kolik dávka stojí, dnes změřit nejde**:
+`claude-proxy` píše `usage` do řádku v `readings`, ale **nevrací ho v odpovědi** (`index.ts:735`),
+a `gen_batch.js` posílá `journal: null`, takže žádný řádek nevzniká. Cena 231 generovaných čtení
+z 2026-08-16 je proto neznámá a zpětně se nedopočítá.
+**Oprava je jednořádková:** přidat `usage: data?.usage ?? null` do návratového `json({...})`
+v proxy a zapsat ho v `gen_batch.js` do JSONL (pole už archivátor propouští). Pak má každá dávka
+svou cenu a „nechci pálit tokeny" se dá řídit číslem, ne odhadem. **Vyžaduje deploy edge funkce.**
+**Odhad do té doby** (ze dvou produkčních čtení, která `usage` mají): vstup 886–984 · výstup
+101–218 · cache write 1373 tokenů → při sazbách Opus 4.8 ≈ **1,7 centu na čtení**, tedy ~0,85 $
+za dávku 50 čtení. Odhad, ne měření — proto ta oprava.
+
+### Cache se možná platí a nečte — sledovat, až bude víc dat (2026-08-16)
+Obě produkční čtení s `usage` mají `cache_creation_input_tokens = 1373` a
+`cache_read_input_tokens = 0`. Zápis do cache stojí **1,25× základní sazbu**, čtení jen 0,1× —
+takže když se zapisuje a nikdy nečte, platí se přirážka za nic. U těchto dvou to **nic nedokazuje**
+(čtení jsou nejspíš daleko od sebe a 5minutová TTL mezitím vypršela). ⚠️ Ale kdyby `cache_read`
+zůstal nulový i u čtení, která jdou rychle po sobě, je to zbytečně **zhruba polovina ceny čtení**.
+**Co udělat:** až bude `usage` u ~20 čtení, spočítat podíl `cache_read > 0` — dotaz na jeden řádek.
