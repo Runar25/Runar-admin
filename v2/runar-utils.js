@@ -210,13 +210,13 @@ function tp(key, vars) {
 // s pravidlem cocky (_lensContext: "never name or explain it") a u ctenaru bez zivotni
 // runy odkazoval na neco, co v promptu neni. Kdo ho vraci, vraci i ten rozpor.
 const READING_ANGLES = [
-  'Open with the whole scene at once, then let everything fall away but one.',
-  'Open on the smallest detail in the scene, the part someone would walk past.',
-  'Open with the motion already underway in the scene. If nothing moves, open with the stillness itself.',
-  'Open with what stays fixed while everything else gives way.',
-  'Open with what the scene hides beneath its surface, not yet in view.',
-  'Open at the edge of the scene, where one thing turns into another.',
-  'Open by setting the seeker inside the scene, at the spot where it is happening.',
+  'Open with the whole image at once, then let everything fall away but one.',
+  'Open on the smallest detail in the image, the part someone would walk past.',
+  'Open with the motion already underway in the image. If nothing moves, open with the stillness itself.',
+  'Open with the one thing in the image that stays fixed while the rest gives way.',
+  'Open with what the image hides beneath its surface, not yet in view.',
+  'Open at the edge of the image, where one thing turns into another.',
+  'Open by setting the seeker inside the image, at the spot where it is happening.',
 ];
 
 // ─── Reading angles IS ─────────────────────────────────────────
@@ -224,7 +224,7 @@ const READING_ANGLES_IS = [
   'Byrjaðu á allri myndinni í einu, láttu svo allt hverfa nema eitt.',
   'Byrjaðu á minnsta hlutnum í myndinni, þeim sem flestir gengju fram hjá.',
   'Byrjaðu á hreyfingunni sem er þegar hafin í myndinni. Ef ekkert hreyfist, byrjaðu þá á kyrrðinni sjálfri.',
-  'Byrjaðu á því eina sem stendur fast meðan allt annað lætur undan.',
+  'Byrjaðu á því eina í myndinni sem stendur fast meðan allt annað lætur undan.',
   'Byrjaðu á því sem myndin felur undir yfirborðinu, óséð enn.',
   'Byrjaðu á jaðri myndarinnar, þar sem eitt verður að öðru.',
   'Byrjaðu á því að setja leitandann inn í myndina, á staðinn þar sem hún gerist.',
