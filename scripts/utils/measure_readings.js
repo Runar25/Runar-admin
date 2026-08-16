@@ -67,11 +67,22 @@ function loadPromptEnv() {
 // kdyby to bylo 12 %, prosel by jako nalez. Extrahuje se proto uzce:
 //   `never`  = samé zákazy, brat vse v uvozovkach
 //   `grammar` = jen veta ZA navestim "Banned:" / "Bannað að segja"
+const QUALIFIED = new Set();   // zakazy, ktere plati jen v urcitem uziti
 function bannedFrom(ch) {
   const out = new Set();
   const add = (w) => { const c = String(w).replace(/[„“”"']/g, '').trim().toLowerCase();
     if (c.length > 2) out.add(c); };
-  (String(ch.never || '').match(/[„"]([^"“”]+)[”“"]/g) || []).forEach(add);
+  // ⚠️ Zakaz muze mit PODMINKU: `does not use the word "journey" AS A METAPHOR FOR
+  // PERSONAL GROWTH` neni zakaz slova, je to zakaz jednoho uziti. Radek se proto uchova
+  // a podmineny zakaz se ve vypisu OZNACI — cislo se nesmi vzit bez pohledu na uryvek.
+  String(ch.never || '').split('\n').forEach(line => {
+    (line.match(/[„"]([^"“”]+)[”“"]/g) || []).forEach(q => {
+      add(q);
+      const c = String(q).replace(/[„“”"']/g, '').trim().toLowerCase();
+      const after = line.slice(line.lastIndexOf(q) + q.length).trim();
+      if (after && !/^[.;,]?$/.test(after) && !/^(or|eða)\b/.test(after)) QUALIFIED.add(c);
+    });
+  });
   const g = String(ch.grammar || '');
   const m = /(?:Banned:|Bannað að segja)([^.]*)/.exec(g);
   if (m) (m[1].match(/"([^"]+)"/g) || []).forEach(add);
@@ -92,6 +103,22 @@ function sentenceAt(txt, i) {
   const m = /[.?!]/.exec(txt.slice(i));
   return txt.slice(start, m ? i + m.index + 1 : txt.length).trim();
 }
+// ─── islandsky ekvivalent ───
+// `veist`/`manst` = jen 2. os. j. c., staci samy. `finnur`/`skynjar`/`þekkir` jsou i 3. osoba,
+// proto u nich musi byt `þú` v okoli — jinak by veta o rune vysla jako narok na tazatele.
+const IS_SOLO   = /\b(veist|manst|veistu|manstu)\b/i;
+const IS_AMBIG  = /\bþú\b(?:\s+\w+){0,3}\s+(finnur|skynjar|þekkir|kannast)\b/i;
+const IS_PHRASE = /\b(eitthvað í þér|innra með þér|það sem þú veist)\b/i;
+const IS_NEG    = /\b(ekki|aldrei|hvorki|ekkert)\b/i;
+function isColdReadIS(txt) {
+  const check = (m) => {
+    if (!m) return false;
+    const sent = sentenceAt(txt, m.index);
+    return !sent.endsWith('?') && !IS_NEG.test(sent);
+  };
+  return check(IS_PHRASE.exec(txt)) || check(IS_SOLO.exec(txt)) || check(IS_AMBIG.exec(txt));
+}
+
 function isColdRead(txt) {
   const mp = COLD_PHRASE.exec(txt);
   if (mp && !sentenceAt(txt, mp.index).endsWith('?')) return true;
@@ -117,16 +144,17 @@ function rulesAudit(rows) {
       const t = r.reading_text;
       if (/!/.test(t)) bang++;
       for (const b of BAN[L] || []) {
-        if (new RegExp('\\b' + b.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i').test(t))
-          (hits[b] = hits[b] || []).push(1);
+        const re = new RegExp('\\b' + b.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i');
+        const m = re.exec(t);
+        // Ulozi se URYVEK, ne jednicka. Cislo bez dukazu dnes uz dvakrat lhalo.
+        if (m) (hits[b] = hits[b] || []).push(t.slice(Math.max(0, m.index - 60), m.index + 60).replace(/\s+/g, ' ').trim());
       }
-      if (L === 'en' && isColdRead(t)) cold++;
+      if (L === 'is' ? isColdReadIS(t) : isColdRead(t)) cold++;
     }
     const top = Object.keys(hits).sort((a, b) => hits[b].length - hits[a].length);
     console.log('  ── ' + L.toUpperCase() + ' · ' + rs.length + ' čtení');
     console.log('     vykřičník            ' + bang + '  (' + (bang / rs.length * 100).toFixed(0) + ' %)');
-    if (L === 'en') console.log('     nárok na vnitřní stav ' + cold + '  (' + (cold / rs.length * 100).toFixed(0) + ' %)');
-    else console.log('     nárok na vnitřní stav  NELZE — detektor je anglický, islandský neexistuje.');
+    console.log('     nárok na vnitřní stav ' + cold + '  (' + (cold / rs.length * 100).toFixed(0) + ' %)');
     if (!top.length) console.log('     zakázaný výraz       žádný');
     for (const b of top) {
       const rate = hits[b].length / rs.length;
@@ -135,7 +163,10 @@ function rulesAudit(rows) {
         // ⚠️ Zakaz, ktery porusuje pulka cteni, je skoro jiste SPATNE VYTAZENY (predpis
         // misto zakazu), ne masove poruseni. Radeji hlasit podezreni na nastroj nez
         // vydat vlastni chybu za nalez.
+        (QUALIFIED.has(b) ? '   ⚠️ PODMÍNĚNÝ zákaz — posuď z úryvku, ne z počtu' : '') +
         (rate > 0.5 ? '   ⚠️ přes polovinu — spíš špatně vytažený zákaz než nález' : ''));
+      // Uryvky: bez nich je to jen cislo, a cislo dnes uz dvakrat lhalo (§24).
+      hits[b].slice(0, 2).forEach(f => console.log('        …' + f + '…'));
     }
     console.log('');
   }
@@ -150,7 +181,19 @@ function rulesAudit(rows) {
     ['You know this stillness, the waiting before the shape appears.', true, 'realny nalez 2026-08-15'],
   ];
   let bad = 0;
+  const probesIS = [
+    ['Þú veist hvað þetta þýðir.', true, 'IS: narok "þú veist"'],
+    ['Þú veist ekki hvað bíður handan við.', false, 'IS: zapor se NEPOCITA'],
+    ['Veist þú hvað þetta þýðir?', false, 'IS: otazka se NEPOCITA'],
+    ['Ísinn heldur og morgunninn er kyrr.', false, 'IS: bezny text'],
+    ['Hann finnur kuldann í fjörunni.', false, 'IS: 3. osoba NENI narok na tazatele'],
+    ['Eitthvað í þér bíður.', true, 'IS: fraze "eitthvað í þér"'],
+  ];
   console.log('  ── kontrola detektoru');
+  for (const [txt, want, label] of probesIS) {
+    const got = isColdReadIS(txt);
+    if (got !== want) { console.log('     ✘ ' + label + ' -> ' + got + ', čekáno ' + want); bad++; }
+  }
   for (const [txt, want, label] of probes) {
     const got = isColdRead(txt);
     if (got !== want) { console.log('     ✘ ' + label + ' -> ' + got + ', čekáno ' + want); bad++; }
