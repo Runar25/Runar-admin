@@ -88,6 +88,39 @@ Note: IS = Icelandic voice (Multilingual v2/v3). EN = international/tourist voic
 Voice model follows app language — user switches language in app settings → readings use that language's model. ✅ implemented.
 Worst-case cost per reading-unit is the **single** (358 chars/unit); all spreads cost fewer chars per unit (Yggdrasil 332/unit).
 
+### Volba modelu čtení — měření per model (2026-08-17)
+
+Owner 2026-08-17: **sonnet-5 zrušit jako fallback** (nepředvídatelný thinking, viz níž). Kandidáti
+dál: opus-4-8 (produkce), opus-4-7, opus-5, sonnet-4-5. Výčet modelů vlastní `MODELS`
+v `claude-proxy/index.ts` — tady se NEOPISUJE (§20). ⏳ Odstranění z chainu = kód (CODE-tune) +
+deploy: `index.ts:674`, plus zmínky `docs/runar-prompt-map.html`, `sql/2026-08-15_readings_usage.sql`.
+
+Změřeno simulátorem (single „Fehu", **májový/úsporný prompt**, n=2, dnešní ceník: opus $5/$25 ·
+sonnet-5 $2/$10 zaváděcí do 31.8. · sonnet-4-5 $3/$15). **Čísla jsou NECACHOVANÁ** (čerstvý request).
+V produkci se systémový prompt cachuje (0,1× vstup) → reálný náklad modelu **táhne VÝSTUP** (necachuje
+se), proto je klíčový sloupec „out tok".
+
+| model | EN out | IS out | EN necach. | IS necach. |
+|---|---|---|---|---|
+| sonnet-4-5 | ~70 | ~138 | $0,0040 | $0,0067 |
+| sonnet-5 | ~146 | ~355 ⚠️kolísá | $0,0043 | $0,0074 |
+| opus-4-7 | ~106 | ~163 | $0,0097 | $0,0136 |
+| opus-4-8 | ~120 | ~225 | $0,0100 | $0,0152 |
+| opus-5 | ~199 | ~300 | $0,0120 | $0,0170 |
+
+**Nálezy:**
+- **Náklad ≠ jen model, ale i SLOŽITOST promptu.** sonnet-5 na dnešním složitém `direct` promptu
+  spálil out ≈ **560** (thinking); na úsporném májovém jen ~146 — táž runa. Thinking spouští prompt.
+- **sonnet-5 kolísá nepředvídatelně** — IS májový dal mezi dvěma běhy out **216 vs 495**. → důvod DROPu.
+- **opus-5 má thinking defaultně zapnutý** → nejvyšší výstup z opusů (a mírně kolísá).
+- **sonnet-4-5 = nejlevnější a nejstabilnější** v obou jazycích.
+- **IS dražší než EN** (vstup ~1900 vs ~1400 tok, výstup ~2×).
+- ⚠️ **V CELKOVÉ ceně čtení model ~nerozhoduje** — ElevenLabs = ~90 % (tabulka výš). Rozdíly mezi
+  modely jsou haléře/čtení; důvod dropu sonnet-5 je **nepředvídatelnost, ne úspora**.
+
+Referenční — **dnešní `direct` prompt** (EN, ne májový): sonnet-4-5 in 1361 / out 91 (~$0,0054 necach.) ·
+opus-4-8 in 1889 / out 96 · sonnet-5 in 1889 / out **560** (thinking blow-up, ~$0,0094 zaváděcí).
+
 ---
 
 ## Tier Structure
