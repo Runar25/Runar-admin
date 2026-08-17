@@ -324,7 +324,7 @@ Co databáze sama neřekne, a proto bydlí tady:
 
 **Unified format**: 1 plynoucí blok, žádné `|||`. `layer1-lbl` = glyf + jméno runy.
 `_readingMode` = `'mine'` (ukládá — journal píše SERVER-SIDE claude-proxy, atomicky s odečtem kreditu; klient jen loadJournal) | `'someone'` (neukládá).
-`u.area/seeking/mood/intention/question` → `parts[]` → Claude. Norns axis: `_intentionContext(intention,lang)` v runar-character.js.
+`u.area/seeking/intention/question` → `parts[]` → Claude. Norns axis: `_intentionContext(intention,lang)` v runar-character.js.
 
 **Délky čtení**: zdroj pravdy = buildery v `runar-character.js` (RP_* packy + `closing()` věty). Docs čísla NEopakují — když měníš délku, uprav builder + přepočítej pricing (RUNAR_PRICING.md). Délka = znaky = EL náklad. Jméno ne vždy na začátek; životní runa jen kontext.
 
@@ -415,7 +415,7 @@ SÁM — bez ownera.
   (odkazy + neverzované soubory). Obojí vzniklo z chyby, kterou žádné pravidlo nechytilo.
 
 **Hranice:**
-- **Sdílená sémantická vrstva (runa → růst).** Kanonická data run (`runar-runes.js`: aett/world/element/keywords) + config (AETTY, SPREAD_CONFIG.norns_axis, MOODS/INTENTIONS) čtou OBĚ session. TREE růstové/tvarové mapování drž ve VLASTNÍM souboru (`runar-branch.js`). Když MUSÍŠ sáhnout do runar-runes.js/config kvůli růstu: **jen ADITIVNĚ** (přidej pole, neměň existující reading-pole), `[tree]` malý commit, push HNED + řádek do MEMORY.md (MAIN to musí vidět — sdílená data mění i výklad). Změna existujícího aett/element/world runy ovlivní i čtení → napřed flagni.
+- **Sdílená sémantická vrstva (runa → růst).** Kanonická data run (`runar-runes.js`: aett/world/element/keywords) + config (AETTY, SPREAD_CONFIG.norns_axis, INTENTIONS) čtou OBĚ session. TREE růstové/tvarové mapování drž ve VLASTNÍM souboru (`runar-branch.js`). Když MUSÍŠ sáhnout do runar-runes.js/config kvůli růstu: **jen ADITIVNĚ** (přidej pole, neměň existující reading-pole), `[tree]` malý commit, push HNED + řádek do MEMORY.md (MAIN to musí vidět — sdílená data mění i výklad). Změna existujícího aett/element/world runy ovlivní i čtení → napřed flagni.
 - **Čistě MAIN (TREE needituje):** reading prompty (character.js reading buildery), pricing, translations UI, reader UI/CSS, auth. Life-rune logika (runar-tree.js generateLifeRuneReading, buildLifeRunePrompt) = MAIN.
 - `§1` (JS přes Python skript, NE Edit — kazí apostrofy) + `§13` (full-path) platí i pro TREE, když sahá do sdíleného JS.
 - CLAUDE.md: každá session edituje JEN svou sekci. Tree sekce = krátký ukazatel (detail v RUNAR_TREE.md). MAIN ho nepřepisuje.
