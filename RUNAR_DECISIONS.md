@@ -3288,3 +3288,41 @@ týdnů zastaralý. Kdybych se zeptal „kdo tu funkci volá a kam ten výstup t
 je to týž krok „zjisti vazby", který na promptu dělám a na okolí jsem ho vynechal.
 
 Affected doc(s): memory/working-style.md (sekce přepsána) — v témže commitu.
+
+## 2026-08-17 — Blok THE IMAGE / MYNDIN: islandština má o pravidlo míň a nikdo o tom nevěděl
+
+Audit bloku po vazbách. Blok bydlí v `_spine()`, takže na něj nedosáhne ani uložená postava,
+ani nálada — to je v pořádku a je to jeho účel.
+
+**Duplikát to není.** `node scripts/utils/lint_prompts.js` staví 2100 promptů a hlásí
+„žádná instrukce se neopakuje ve dvou slotech". Konkrétní obraz vkládá `_seasonalImagery`
+do UŽIVATELSKÉHO promptu, páteř říká jen JAK s ním zacházet. Dvě různé práce, žádná kopie.
+
+**Nález 1 — parita.** Anglická verze má 7 vět, islandská 9, a sedí 1:1 až na jednu:
+`Never a simile stacked on a metaphor.` **v islandštině není.** V `RUNAR_DECISIONS.md`,
+`RUNAR_DESIGN.md` ani `RUNAR_BACKLOG.md` o tom NENÍ ZÁZNAM — takže to není rozhodnutí, ale výpadek.
+
+**Nález 2 — to pravidlo hlídá jev, který skoro neexistuje.** Zákaz zní „přirovnání NAVRŠENÉ
+na metaforu". Dvě přirovnání v téže větě má **1 z 800** anglických čtení v archivu.
+
+**Nález 3 — zato islandská čtení jedou na `eins og` masivně:**
+```
+jazyk   čtení   s přirovnáním     přirovnání/1000 slov   pravidlo v promptu
+EN        800    48  (6,0 %)             0,91                  ANO
+IS        130    43  (33,1 %)            4,90                  NE
+```
+Přežilo půlku proti půlce (EN 0,62 · 1,06 · IS 4,08 · 5,29 — rozdíl mezi jazyky je větší
+než uvnitř nich).
+⚠️ **Ale čisté to není a nesmí se tak prodávat:** `eins og` je běžný islandský idiom i mimo
+přirovnání, takže část toho rozdílu je jazyk, ne pravidlo. A hlavně — měřil jsem PŘIROVNÁNÍ,
+kdežto pravidlo zakazuje přirovnání navršené na metaforu. **Nástroj neměří to pravidlo.**
+
+**Nález 4 — druhá polovina bloku se neměří vůbec.** „Obraz nikdy nenese počasí, které teď není
+skutečné" ani „jeden obraz na čtení" nemá žádnou kontrolu na výstupu; `measure_readings.js` jen
+vypisuje, který sezónní obraz byl vložen (`:415`).
+
+**Rozhodnutí: větu do islandštiny NEDOPLŇUJI naslepo.** Doklad pro její užitečnost chybí (1/800)
+a překlopit ji do IS je práce s hlasem, ne parita čísel — to patří ownerovi a Coworkovi.
+Data pro to rozhodnutí teď existují a jsou výš. Zapsáno do `RUNAR_BACKLOG.md`.
+
+Affected doc(s): RUNAR_BACKLOG.md — v témže commitu.
