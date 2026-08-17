@@ -19,7 +19,23 @@ všechny tři dnes bydlí v `_spine()`, ne v `DEF_CHAR`.
 **vazby** — proč tam je, kdo ji čte, co se rozbije bez ní — a **vypsat data dřív, než
 napíšu vzor**. Ne „asi tam bude X". Plný tvar → `memory/working-style.md`.
 
-## Čeká na ownera
+## Čeká na ownera — už jen JEDNA věc
+
+⚠️ **Ostatní se zavřely měřením, ne rozhodnutím.** Když se objeví „čeká na ownera", první krok
+je zkusit to zjistit: `supabase db query --linked` funguje, CLI je nalinkované (`CLAUDE.md`, DB).
+2026-08-17 jsem napsal „ze svého stroje to nezjistím" a nikdy to nezkusil — tři z pěti položek
+pak spadly za deset minut.
+
+- **Úhel u spreadů** — `angleIntro` má JEN `RP_SINGLE`, šest cest ne. Změřit to nejde: archiv má
+  923 single, ale 23 norns a 0 islandských; šum uvnitř single (0,0002 vs 0,0029) je větší než
+  rozdíl mezi rameny. **Odemkne to norns dávka ≥50 v obou řečech** — spustit ji umím, potřebuju
+  od ownera token (zkopírovat do schránky, načtu si ho sám).
+
+## Zavřeno 2026-08-17 (detail → RUNAR_DECISIONS.md)
+- kotva zůstává v `_spine` (12 kombinací, přežila všechny) · `runar_character` je prázdná
+  a `grammar` v ní není sloupec → zámek zbytečný · islandská přirovnání se nedoplňují (owner)
+
+## Dřív čekalo na ownera
 
 - **Kotva v páteři** — commit `254fa8a`, vrácení `git revert 254fa8a`. Owner ji chtěl
   vidět v obou řečech, než řekne, kde zůstane.
