@@ -28,7 +28,8 @@ Pravidla na tohle už existují (`CLAUDE.md` §21 kritika · §24 ověř · §26
 **Doloženo (`mood`, 2026-08-16).** Slepě: *„`mood` je v CLAUDE.md, v kódu není, smaž to."*
 Tímhle postupem: pole odstraněno 2026-06-14, **záznam existuje a je úplný**, dokonce s
 `Affected doc(s): CLAUDE.md` — selhala až ta oprava. Kontrola na to existuje (`check-docs.py`),
-jen do ní `MOODS` nikdo nepřidal. Výsledek není smazané slovo, ale **zavřená cesta, kudy to přišlo**.
+jen do ní ten **odstraněný** pojem nikdo nepřidal. Výsledek není smazané slovo, ale **zavřená
+cesta, kudy to přišlo**.
 Krok 4 přitom zabil moji vlastní myšlenku postavit mapu vazeb: mapa ukazuje strukturu, kterou
 zjistím grepem, a neukazuje *proč* — což je jediné, co mi po compactu chybí.
 
