@@ -459,6 +459,19 @@ output = (r.stdout + r.stderr).strip()
 first = output.split('\n')[0] if output else 'duplicates check ran'
 check(first, passed, '\n'.join(output.split('\n')[1:]))
 
+# ── 29. Invarianty páteře přežijí vlastní postavu ───────────
+# `test_spine.js` existoval od 2026-08-14 a testuje celý životní cyklus pole vlastní postavy
+# (chybí / prázdné / vyplněné). Běžel ale JEN ručně — tedy podle toho, jestli si na něj někdo
+# vzpomene. 2026-08-17 se ukázalo, oč jde: shrine si nastavoval `{...DEF_CHAR}` a islandský
+# prompt tím přišel o gramatiku. Tenhle test to sám nechytil, protože nikdo nespustil.
+print('\n' + chr(0x3259) + ' PÁTEŘ vs VLASTNÍ POSTAVA (test_spine.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'utils', 'test_spine.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+last = [l for l in output.split('\n') if l.strip()]
+check(last[-1].strip() if last else 'spine test ran', passed, '' if passed else output)
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
