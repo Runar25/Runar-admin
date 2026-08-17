@@ -30,6 +30,10 @@ napíšu vzor**. Ne „asi tam bude X". Plný tvar → `memory/working-style.md`
 
 - Snapshot přestal viset na mojí paměti — hlídá ho **Stop-hook** (`~/.claude/tree-guard.sh`,
   druhá kontrola vedle tree). Pravidlo → `working-style.md`, sekce „Compact".
+- **Slot na rozdělanou práci byl jeden pro tři session** — hook bral „nejnovější snapshot"
+  abecedně, takže tahle lane by po compactu dostávala cizí kontext a svoji práci už nikdy.
+  Opraveno; vypisují se všechny dnešní. Detail → `RUNAR_DECISIONS.md` 2026-08-17.
+- Přibyly dvě blokující kontroly: **㉗** datum záznamu · **㉘** druhá kopie tvrzení.
 
 ## Past, na kterou jsem dnes šlápl 19×
 
