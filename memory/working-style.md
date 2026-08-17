@@ -18,6 +18,12 @@ Pravidla na tohle už existují (`CLAUDE.md` §21 kritika · §24 ověř · §26
 §27 zaútoč na nástroj). **Chybělo jen pořadí** — v jakém sledu je pustit, když něco vezmeš do ruky.
 
 1. **Co to je a PROČ to tam je** — ne co to říká. Kdo to čte, co se rozbije, když to zmizí.
+   ⭐ **Než napíšeš JAKÝKOLI vzor (regex, filtr, detektor), VYPIŠ SI DATA, na která má sednout.**
+   Ne „asi tam bude *one flowing*" — vytisknout ty řádky a psát vzor podle nich. 2026-08-16 jsem
+   takhle **třikrát** ohlásil falešný nález: islandský detektor (`\b` neplatí na `þ`), obrazy
+   s výkladem (vzor ušitý k jedinému testu), tvar výstupu (vzor minul `Lesturinn fer í einum
+   flæði`, protože jsem si znění domyslel). Pokaždé to vypadalo správně a bylo to prázdné.
+   §24 („měř, nehádej") to zakazuje už dávno — chyběl postup, ne pravidlo.
 2. **Existuje už řešení nebo záznam?** Dohledej (`grep RUNAR_DECISIONS.md`, `tools.js`,
    `archive_batches.js --list`). **Nenavrhuj, dokud jsi nehledal.**
    ⭐ **A do CÍLOVÉHO souboru grepni ten pojem, který do něj chceš vnést.** §20 říká „zeptej se,
