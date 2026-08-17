@@ -20,6 +20,10 @@ Pravidla na tohle už existují (`CLAUDE.md` §21 kritika · §24 ověř · §26
 1. **Co to je a PROČ to tam je** — ne co to říká. Kdo to čte, co se rozbije, když to zmizí.
 2. **Existuje už řešení nebo záznam?** Dohledej (`grep RUNAR_DECISIONS.md`, `tools.js`,
    `archive_batches.js --list`). **Nenavrhuj, dokud jsi nehledal.**
+   ⭐ **A do CÍLOVÉHO souboru grepni ten pojem, který do něj chceš vnést.** §20 říká „zeptej se,
+   kde už to bydlí" — to je verze na pozornost a 2026-08-16 selhala: psal jsem `/compact` sekci
+   do souboru, kde o `/compact` řádka už byla. Jeden grep to chytí. Měníš řádku → přečti okolní
+   sekci; přidáváš sekci → celý soubor; grep vždycky, stojí to nic.
 3. **Záznam existuje a stav mu neodpovídá?** Rozliš: selhal **zápis**, nebo **následná oprava**?
    Jsou to různé vady s různou opravou.
 4. **Než navrhneš nástroj:** řeší MŮJ problém, nebo jiný, který se mi líp staví?
