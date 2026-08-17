@@ -4,40 +4,33 @@
 
 ## Uprostřed čeho jsme byli
 
-**Owner spustil audit celého repa** — drift a duplikáty. Prošel `CLAUDE.md`, pět nálezů,
-jeden (`mood`) dořešený celý. **Chce pokračovat od PRVNÍ instrukce promptu**, ne lovit
-jednotlivosti. Systémový prompt = 13 bloků, 3 906 znaků, začíná `You are Rúnar, the rune
-keeper of Agndofa.` (výpis: `buildSysPrompt(null,'en')`). Reading prompt = 18 vrstev.
+**Audit systémového promptu BLOK PO BLOKU** — owner: „od první instrukce, ne lovit
+jednotlivosti uvnitř". 13 bloků, 669 slov. Výpis: `buildSysPrompt(null,'en')`.
 
-**Registr `direct`** hotový a zapojený, `ACTIVE_VOICE_PROFILE` zůstává `focused`.
+Hotovo: [1]–[5] identita (datovaný záznam 15. 8., nesahat) · [8] `journey` opraven ·
+[4] kotva přesunuta do páteře · [7] změřen (23 % promptu, hypotéza o opisování PADLA).
+**Další na řadě je [9] YOUR STANCE** — je v něm věta „What it means is theirs to decide",
+kterou jsem tam vložil 16. 8. ráno a owner ji označil za chybu: je to pravidlo PRO NÁS
+při stavbě, ne pokyn modelu. **Ještě tam je.**
+Pak [10] RESPONSE FORMAT, [11] LANGUAGE & STYLE, [12] THE IMAGE, [13] TWO THINGS.
 
-## Jak owner chce, abych pracoval — a je to zapsané
+## Čeká na ownera
 
-`working-style.md` → „Pořadí, ve kterém se sahá na cizí věc" (5 kroků). Vzniklo z toho,
-jak se řešil `mood`, a owner to označil za způsob, jakým to má vypadat vždy.
-**Slepé čtení je nejhorší chyba dne**: „je v docu, není v kódu, smaž to" místo
-„proč tam je · kdo to čte · selhal zápis, nebo následná oprava".
-
-## Zbývající nálezy v CLAUDE.md (ověřené, neopravené)
-
-1. `:331` popisuje obraznost jako `SEASON_POOLS` — primární je `RUNE_IMAGES` (81 řádků
-   klíčovaných runou) od rozhodnutí 2026-08-08; pooly jsou jen záloha, dnes nepoužitá.
-2. Čtyři produkční soubory nejsou v seznamu ani load orderu: `runar-reporter.js`,
-   `runar-rune-popup.js`, `runar-readings-admin.js`, `runar-reports-admin.js`.
-3. `:18` popisuje config šesti položkami, v souboru jich je 27 (chybí i `VOICE_PROFILES`).
-4. `CLAUDE.md` porušuje vlastní §20: `:91` opisuje CSS hodnoty z `runar-reader.css:10-11`,
-   `:11` project ref z `runar-config.js:7`.
-
-## Dvě věci k rozhodnutí ownerem
-
-- `working-style.md:41` velí aktualizovat CLAUDE.md po každé implementaci; `:57` velí držet
-  ho pod 200 řádky a mazat, co nezpůsobí chybu. **Táhnou proti sobě.** CLAUDE.md má 436 —
-  dvojnásobek cíle, což vysvětluje, proč v něm `mood` přežil devět týdnů.
-- Sentenční rozpočet pro `direct`: v 5,9 věty (norns) se „jedna věc na větu" u tří run nedá.
+- **Kotva v páteři** — commit `254fa8a`, vrácení `git revert 254fa8a`. Text se nezměnil,
+  jen místo. Owner řekl, že rozhodne, až uvidí výsledek; výsledek viděl.
+- **Cowork handoff „Variantové balíčky"** — owner ho jde probrat s Coworkem. Moje kritika:
+  princip (balíček místo kostky) je správný, ale staví A/B nad kusy, které nemají jeden
+  zdroj — „nejmenuj runy" je **osm ručně psaných vět** (4 spready × 2 řeči, `runar-character.js`
+  1331·1348·1429·1442·1497·1510·1574·1591). Nejdřív z osmi kopií udělat jednu cestu přes
+  `_profileRule`, teprve pak nad ní variantu. A `VOICE_PROFILES.direct.rules` UŽ JE ten
+  mechanismus, co navrhuje — chybí mu jen dosah.
+- **Výběr registru pro JEDNO čtení dnes NEJDE** — `activeVoice` je globální pro dávku
+  (`runar-character.js:604`), produkce volá `buildSysPrompt(activeChar, lang)` bez klíče.
+  Spec přitom chce `direct` u ~20 % čtení a povinně u EN a krátkých.
 
 ## Past, na kterou jsem dnes třikrát šlápl
 
 **Patch přes bash heredoc požírá escapování.** Jednou zapsal do regexu v `check-docs.py`
 DOSLOVNÝ backspace (0x08) místo `\b` — hlídač pak nesedl nikdy a ve výpisu vypadal správně,
-protože terminál backspace skryje. **Patche psát do souboru (`scripts/_patch_tune.py`),
-ne přes heredoc**, a hotový hlídač vždy rozbít podstrčením vady.
+protože terminál backspace skryje. **Patche psát do souboru (`scripts/_patch_tune.py`)**,
+a hotový hlídač vždy rozbít podstrčením vady.

@@ -1369,3 +1369,42 @@ s oslovením se korpus **nesmí** brát jako verdikt — napřed se ověří, co
 **Doplněno:** `gen_batch` zapisuje `voice` do každého řádku. Do teď byla jedinou stopou
 `system_sha256` a registr se z něj dal dopočítat jen znovupostavením všech promptů —
 provenience, která se ztratí při první změně profilu.
+
+### 2026-08-16 — Blok [7] stojí 23 % promptu. Že se opisuje, se PROKÁZAT NEPODAŘILO
+
+Audit systémového promptu blok po bloku. **13 bloků, 669 slov EN.** Cena podle bloků:
+
+| blok | slov | % |
+|---|---|---|
+| **[7] čtyři ukázkové věty v `VOICE_PROFILES.focused`** | **156** | **23 %** |
+| [12] THE IMAGE | 104 | 16 % |
+| [11] LANGUAGE & STYLE | 95 | 14 % |
+| [8] WHAT YOU NEVER DO | 63 | 9 % |
+| [13] TWO THINGS THAT NEVER CHANGE | 57 | 9 % |
+| [1]–[5] identita | 101 | 14 % |
+
+**Hypotéza:** ty čtyři věty se opisují do čtení — projekt má doložený mechanismus, že citát
+v instrukcích zvedl doslovný opis z 12 % na 56 % (p = 0,002).
+
+**Dvakrát změřeno, dvakrát nástroj selhal (§27):**
+1. *Slova, která obrazové pooly neznají* → `move` 18 %. Jenže `move`/`rises`/`both` je běžná
+   angličtina, ne otisk těch vět. Metrika neměřila, co měla.
+2. *Trigramy z ukázek mimo pooly* (68 trigramů) proti kontrolnímu rameni `gen-bare`
+   (profil **vypnutý**, `without=…voice`):
+
+| rameno | n | čtení se stopou |
+|---|---|---|
+| s profilem | 548 | 40 (7,3 %) |
+| **bez profilu** | 25 | **5 (20,0 %)** |
+
+**Rameno bez profilu má shod víc** — kdyby se ukázky opisovaly, muselo by to být obráceně.
+Nejčastější shody (`what in you`, `you are standing`, `into the grey`) jsou obyčejná angličtina;
+model bez obrazu a úhlu po ní sáhne sám. **Trigramový set byl zamořený generickou frází**, stejně
+jako předtím ten slovní.
+
+⭐ **Závěr (§25 — negativní nález se zapisuje stejně pečlivě): cena bloku [7] je změřená,
+přínos ne.** Netvrdí se, že se ukázky neopisují — tvrdí se, že to **dvěma nástroji nešlo ukázat**,
+a kontrolní rameno má n=25, takže ani těch 20 % není silný údaj.
+
+**Co by to rozhodlo:** obrácená páka — vyměnit ty čtyři věty za jiné (jiné obrazy, týž tvar)
+a změřit, jestli čtení půjdou za nimi. Nepůjdou-li, je 23 % promptu nejlevnější místo, kde ubrat.

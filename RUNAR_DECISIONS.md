@@ -3021,3 +3021,89 @@ celý den. **Viditelnost sama nestačí; je to slabší nástroj, než jsem tvrd
   archiv obsahuje jen výstupy a jejich losy.
 - **Affected doc(s):** `RUNAR_BACKLOG.md` (položka před spuštěním)
 - **Reversibility:** easy (dokud se nic necommitne, není co vracet).
+
+---
+
+## 2026-08-16 — Prompt: `journey` byl zakázaný dvakrát a pokaždé jinak · kotva rejstříku do páteře
+
+- **Typ:** chování čtení (prompt) · **Scope:** `DEF_CHAR`, `_spine` · **Zdroj:** audit promptu blok po bloku
+- **Jak to vzniklo:** owner chtěl projít systémový prompt **od první instrukce**, ne lovit
+  jednotlivosti uvnitř. Systémový prompt = **13 bloků, 669 slov**. Tyhle dva nálezy jsou z bloků
+  [8]/[11] a [4].
+
+**1. `journey` — rozpor uvnitř jednoho promptu, ne duplikát.**
+```
+[8]  never    does not use the word "journey" AS A METAPHOR FOR PERSONAL GROWTH   (kvalifikovaný)
+[11] grammar  NO clichés… Banned: "journey", "embrace", …                          (plošný)
+```
+Model dostával obojí naráz. Owner na to narazil už dřív (*„ale journey není zakázané slovo!"*) —
+měl pravdu podle [8] a neměl podle [11]. `test_no_planted_bans.js` má vyřešenou výjimku
+(Raidho `is_n: Ferðalag`), která se opírá **výhradně** o kvalifikované znění a o plošném zákazu neví.
+⭐ **A jazyky si už neodpovídaly:** IS gramatika `ferðalag` v seznamu **nikdy neměla**. Odstraněním
+z EN se srovnaly — IS je primární, EN se rovná jemu (§2). `embrace` ponechán: oba bloky ho zakazují
+plošně, takže si neodporují.
+
+**2. Kotva rejstříku `He does not perform mysticism. He simply inhabits it.` / `Hann sýnir ekki
+dulspeki. Hann býr einfaldlega í henni.` přesunuta z `DEF_CHAR.personality` do `_spine`.**
+`RUNAR_DESIGN.md` ji označuje za **definici, ne ozdobu** — je to jediné místo v celém promptu, které
+definuje hlas **kladně**; zbylých 668 slov jsou zákazy. Seděla ale v poli, které jeden řádek
+v tabulce `runar_character` přepíše celé. **Změřeno** podstrčením vlastní postavy jen s `personality`:
+```
+před:  kotva ZMIZELA  ·  páteř přežila  ·  never přežily
+po:    kotva PŘEŽILA (1×, obě řeči)
+```
+Byla to **jediná věc označená za invariant, na kterou se dalo dosáhnout zvenčí**. Kritérium není
+naše nové — rozhodnutí 2026-08-14 zřídilo `_spine` právě jako slot pro to, „co má platit vždy".
+Umístěna PŘED obraz: rejstřík řídí, jak se čte všechno pod ním.
+⚠️ **Owner o umístění ještě nerozhodl** — text se nezměnil, vrácení je `git revert 254fa8a`.
+
+- **Affected doc(s):** `RUNAR_EVAL_LOG.md` (měření bloku [7])
+- **Reversibility:** easy (obojí jeden revert; `DEF_CHAR_V2_EN` má vlastní kopii kotvy, nedotčená —
+  backlog ho eviduje k odstranění jako celý mrtvý řetěz).
+
+---
+
+## 2026-08-16 — Pravidla a doky: dva rozcestníky, dvě délková pravidla, a pořadí, které chybělo
+
+- **Typ:** architecture (doky) · **Scope:** `CLAUDE.md`, `memory/working-style.md`, `check-docs.py`
+- **Zdroj:** KUKY — *„drift a duplikáty jsou nejhorší"* + *„je potřeba zjistit vazby, ne slepě číst"*
+
+**Co se našlo a opravilo v `CLAUDE.md`:**
+1. **`mood`** — pole odstraněné 2026-06-14. Záznam **existoval a byl úplný**, včetně
+   `Affected doc(s): CLAUDE.md`. Selhala až ta oprava a slovo tam stálo **devět týdnů**.
+   Není to díra v pravidlech: `CLAUDE.md:204` ten mechanismus popisuje doslova. `check-docs.py`
+   dostal pravidlo, aby se to nemohlo vrátit — `_moodContext` v seznamu **už byl**, přežily
+   přesně ty dva tvary, které v něm nebyly.
+2. **Obraznost** — doc popisoval jen sezónní pool. Ověření vazby ukázalo víc než původní nález:
+   `SEASON_POOLS` **není jen záloha**, `_seasonalImagery` na něm stojí — `if (!pool) return ''`
+   znamená, že v sezóně bez poolu nedostane čtení obraz **ani když runa svého kandidáta má**.
+3. **Čtyři produkční soubory** nebyly v seznamu ani v load orderu; load order navíc chyběl oba
+   tree-lab composery a `runar-tree-prod.js`. Ověřeno proti skutečnému pořadí `<script>`.
+4. **`CLAUDE.md` porušoval vlastní §20** — opisoval hex hodnoty z CSS a project ref z configu.
+
+**Dva duplikáty nalezené při hledání, co má bydlet jinde:**
+- ⭐ **DVA ROZCESTNÍKY.** `memory/MEMORY.md:35` se jmenuje „kde co bydlí **(jediné místo)**"
+  a `CLAUDE.md` měl vlastní „Kde hledat co". Už se rozešly: MEMORY.md mezitím dostal sloupec
+  „druh pravdy" (🔒 📜 🔄 🏛), který v CLAUDE.md nikdy nebyl. Sloučeno na odkaz.
+- **Pravidlo o délce doku bylo dvakrát** a s různými čísly: `CLAUDE.md` „~200, 250 OK",
+  `working-style.md` „cíl pod 200". Vlastníkem je `CLAUDE.md`.
+
+⭐ **`CLAUDE.md` VYŇAT z limitu 200 řádků (KUKY 2026-08-16, po změření):** samotná pravidla
+§1–§28 jsou **248 řádků** a jsou důvod, proč ten soubor existuje — pod 200 se nedostane, aniž by
+přišel o to, co vlastní. Platí pro něj jen přísnější test, který stál vedle: *způsobí jeho chybění
+chybu? Pokud ne → smazat.*
+
+⭐ **Pořadí, ve kterém se sahá na cizí věc** → `memory/working-style.md`. **Ne nové pravidlo** —
+§21/§24/§26/§27 už existují; chybělo, v jakém sledu je pustit. Vzniklo z toho, jak se řešil `mood`,
+a owner to označil za způsob, jakým to má vypadat vždy. Krok 2 má mechanický tvar (**grepni cílový
+soubor na pojem, který do něj neseš**), protože „zeptej se, kde už to bydlí" je verze na pozornost
+a týž den selhala.
+
+⭐ **Compact: snapshot drží Claude průběžně, owner nedělá nic.** Ověřeno v dokumentaci, že
+**automatický compact nejde instruovat** — žádné nastavení summarizeru instrukci nepředá,
+`autoCompactEnabled` je na defaultu. Ruční `/compact Zachovej: …` účinek má, ale owner na něj
+nemusí mít čas. Proto: snapshot se aktualizuje průběžně a `SessionStart` hook ho po compactu vypíše
+sám; `/zabal` je jen ruční vyžádání.
+
+- **Affected doc(s):** `CLAUDE.md`, `memory/working-style.md`, `memory/MEMORY.md`
+- **Reversibility:** easy (git).
