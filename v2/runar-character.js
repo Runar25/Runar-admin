@@ -969,6 +969,11 @@ function buildLifeRunePrompt(name, rune, day, month, year, lang, isPremium, corr
   var base = buildLifeRuneBase(name, rune, day, month, year, lang, isPremium);
   return [
     base,
+    // ÁVARP: bez nej ukazuje bod 5 islandske gramatiky (system prompt) do prazdna — a bod 1
+    // zaroven prikazuje 2. osobu, u ktere islandstina rozlisuje rod pridavneho jmena.
+    // Do 2026-08-17 to byla JEDINA IS cesta bez nej (zmereno na slozenem promptu vsech sedmi),
+    // takze si model rod ctenare volil sam. EN vraci '' a filter(Boolean) to zahodi.
+    _addressContext(lang),
     _describeRule(lang),
     _noColdRead(lang),
     getCorrPrompt(lang, corrections),

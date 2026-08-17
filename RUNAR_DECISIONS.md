@@ -3192,3 +3192,31 @@ něco zapíše. Zjistil jsem to až na ownerovu otázku „tohle je vyřešené?
 **Teď:** vybere se NEJNOVĚJŠÍ DEN, který ve složce je, a vypíšou se všechny snapshoty z něj.
 Není-li ten den dnešek, řekne se to u každého i v hlavičce („v poslední pracovní den", ne „DNES").
 Ověřeno v šesti stavech, včetně toho dřív neověřeného: dvě session, ani jedna z dneška.
+
+## 2026-08-17 — Životní runa byla jediná islandská cesta bez ÁVARP; model si rod čtenáře volil sám
+
+Audit bloku **ÍSLENSK MÁLFRÆÐI** (system prompt) po vazbách, ne po znění. Bod 5 říká
+*„Kynið er tilgreint í ÁVARP; fylgdu því"* — tak kde je to ÁVARP a dostane ho každá cesta?
+
+**Nedostala.** Změřeno na SLOŽENÉM promptu (produkční plocha, ne tvar kódu), všech sedm IS cest:
+single · norns · kříž · horseshoe · yggdrasil · ask → ÁVARP ano; **životní runa → NE**.
+Přitom `runar-tree.js:613` tentýž system prompt pro životní runu posílá, takže bod 5 tam ukazoval
+do prázdna — a bod 1 téhož bloku zároveň přikazuje 2. osobu (`þú`), u které islandština rozlišuje
+rod u každého přídavného jména. Model tedy rod zvolit MUSEL a neměl podle čeho.
+
+**Opraveno:** `_addressContext(lang)` do `buildLifeRunePrompt`. Výchozí je `hk` (hán) —
+projektem zvolený neutrální tvar. Ověřeno: tři různé varianty ÁVARP (kk/kvk/hk) skutečně
+projdou, EN životní runa **1803 → 1803 znaků, beze změny** (`_addressContext('en')` vrací `''`
+a `filter(Boolean)` to zahodí).
+
+⚠️ **Co se NEtvrdí:** že se to v produkci projevovalo. V `eval_out/archive` není ANI JEDNO
+čtení životní runy (923 single, 23 norns, 3 spread), takže reálný výstup jsem nezměřil — nález
+stojí na složeném promptu. Kdo bude mít přístup k produkčním čtením životní runy, ať se podívá
+na rod přídavných jmen u oslovení před 2026-08-17.
+
+⚠️ **A past v měření:** první tři pokusy hlásily „ÁVARP chybí VŠUDE" — měl jsem špatné signatury
+(`buildAskPrompt` má `lang` až pátý argument, `buildReadingPromptSingle` bere JEDNU runu, ne pole)
+a `const RUNES` z `runar-runes.js` v vm kontextu nevystoupí na globální objekt. Falešný nález
+třikrát po sobě, dokud jsem si nevypsal signatury ze zdroje. Golden test EN pak hlásil změnu
+i u `single` — ta cesta je ale **záměrně náhodná** (losuje klíčová slova), což jsem si ověřil
+dvěma běhy z téhož zdroje. Nález na náhodné ploše se nesmí připsat vlastní změně.
