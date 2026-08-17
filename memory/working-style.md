@@ -11,7 +11,7 @@
 ### Kontext window = nejdůležitější zdroj
 - Po 2 selháních na stejném problému → /clear a začít znovu s lepším promptem
 - Akumulace neúspěšných pokusů kontaminuje kontext — Claude se stále vrací ke špatné cestě
-- /compact s instrukcí: `/compact Zachovej informace o X`
+- `/compact` a co po nem prezije → sekce „Compact" niz v tomhle souboru
 
 ### ⭐ Pořadí, ve kterém se sahá na cizí věc (KUKY 2026-08-16)
 Pravidla na tohle už existují (`CLAUDE.md` §21 kritika · §24 ověř · §26 dohledej proč to odešlo ·
@@ -314,33 +314,33 @@ Shrine obsahuje vlastní reader UI (`#reader-setup`, `#reader-rune-card`, `#read
 Kód v shrine.html pozná V2 lab: `console.warn('saveReading (V2 lab):')`, `// V2 lab: dynamic TTS only` atd.
 
 ## Pre-compact protokol
-Než uživatel spustí /compact, Claude musí:
+**Průběžně, ne až „před compactem" — ten přijde bez ohlášení.** Claude musí:
 1. Uložit **rozdělanou práci** do `memory/snapshots/YYYY-MM-DD-nazev.md` — a **jen to, co nemá
    vlastníka jinde**: čím jsme se zrovna zabývali a co je další krok. Rozhodnutí patří do
    `RUNAR_DECISIONS.md`, otevřené úkoly do `RUNAR_BACKLOG.md`, měření do `RUNAR_EVAL_LOG.md`.
    Snapshot, který je opisuje, je „shrnutí všeho" (CLAUDE.md §20) a nemá vzniknout.
 2. Aktualizovat MEMORY.md — přidat odkaz na nový snapshot
 3. Aktualizovat dotčené doky dle rozcestníku (tree → RUNAR_TREE.md; ne archivované suroviny)
-## `/compact` řádka — Claude ji drží ŽIVOU, owner ji nehledá
+4. Teprve pak říct, že je hotovo
 
-⭐ **Pravidlo (KUKY 2026-08-16: „a kde to mám pořád hledat?"):** kdykoli v session přibude něco,
-co by ji nemělo přežít jen v hlavě, **Claude na konci odpovědi vypíše aktuální `/compact` řádku.**
-Owner ji nikdy nehledá ani o ni nežádá — je pár řádků nad ním, ke zkopírování.
+## Compact — snapshot drží Claude, owner nedělá nic
 
-```
-/compact Zachovej: <na čem děláme> · <co jsme zjistili> · <další krok> · <co mi NESMÍŠ navrhnout znovu>
-```
+⭐ **Pravidlo (KUKY 2026-08-16):** *„jelikož děláš compact sám, tak já to nemusím vůbec stihnout.
+Proto je mi příjemnější, abys to dělal ty, když je správný čas."*
 
-Poslední část je nejdůležitější: 2026-08-16 compact zahodil specifikaci nálad, kánon „postoj ano,
-radu ne" i rozhodnutí o `VOICE_PROFILES` — a session je pak ownerovi předložila jako nové nápady.
+**Claude drží `memory/snapshots/` čerstvý průběžně** — kdykoli přibude něco, co by nemělo přežít
+jen v hlavě (nález, rozhodnutí, změna směru), přepíše dnešní snapshot. Ne na vyžádání, ne před
+compactem, **průběžně**. Hook ho po compactu vypíše sám.
 
-⚠️ **Nemůže to být krok „před compactem", protože žádné před není.** `autoCompactEnabled` je
-na defaultu (= zapnuto) a automatický compact přijde bez ohlášení. **Instruovat ho nejde** —
-ověřeno v dokumentaci, žádné nastavení summarizeru instrukce nepředá. Účinek má jen `/compact`
-spuštěný ručně DŘÍV, než se spustí ten automatický, a to jde jen tehdy, když je řádka po ruce.
+⚠️ **NEVYPISOVAT ownerovi `/compact` řádku k zkopírování.** Musel by ji zachytit, uložit a
+vzpomenout si — a automatický compact přijde bez ohlášení, takže na to nemusí být čas. Řádka
+se vypisuje **jen na `/zabal`**, když si o ni owner řekne.
 
-⚠️ **Proto na ni nespoléhat jako na jedinou pojistku.** Jediné, co funguje bez ohledu na to, kdo
-compact spustil, je `SessionStart` hook (`~/.claude/runar-context.py`) — spouští se i se <!-- doc-links:ok 2026-08-16 hook je uzivatelsky soubor mimo repo, do gitu nepatri -->
+⚠️ **Automatický compact instruovat NELZE** — ověřeno v dokumentaci: `autoCompactEnabled` je
+na defaultu (= zapnuto), žádné nastavení summarizeru instrukce nepředá. Ruční `/compact
+Zachovej: …` účinek má, ale jen když se stihne dřív. **Proto na něm nestavět.**
+
+⚠️ **Jediné, co funguje bez ohledu na to, kdo compact spustil**, je `SessionStart` hook (`~/.claude/runar-context.py`) — spouští se i se <!-- doc-links:ok 2026-08-16 hook je uzivatelsky soubor mimo repo, do gitu nepatri -->
 `source: "compact"` a vypisuje poslední rozhodnutí, mapu „sáhneš na tohle → přečti tenhle doc",
 archiv čtení a pravidla, co se nejčastěji zapomínají.
 
@@ -417,7 +417,8 @@ Nová verze říká JEDNOHO vlastníka. Ostatní místa nanejvýš odkazují.
 
 ### Trigger: kdy zapsat
 
-Zapsat PŘED /compact — ne po. Kontext v chatu zmizí. Soubory jsou jediná paměť.
+Zapsat PRŮBĚŽNĚ. Compact přijde sám a bez ohlášení, takže „před ním" je okamžik,
+který nikdo netrefí. Kontext v chatu zmizí; soubory jsou jediná paměť.
 
 ---
 
