@@ -8,9 +8,7 @@
 jednotlivosti uvnitř". 13 bloků. Výpis: `buildSysPrompt(null,'en')`.
 
 ⚠️ **Bloky číslovat NE — každý si je počítá jinak** (commity mluví o „bloku [9] YOUR STANCE",
-v dělení podle `
-
-` je to `[7]`). Držet se JMEN.
+v dělení podle prázdného řádku je to `[7]`). Držet se JMEN.
 
 Hotovo: identita · HOW YOU SPEAK · WHAT YOU NEVER DO · YOUR STANCE · RESPONSE FORMAT ·
 **LANGUAGE & STYLE / ÍSLENSK MÁLFRÆÐI** (17. 8.).
