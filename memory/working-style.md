@@ -13,6 +13,25 @@
 - Akumulace neúspěšných pokusů kontaminuje kontext — Claude se stále vrací ke špatné cestě
 - /compact s instrukcí: `/compact Zachovej informace o X`
 
+### ⭐ Pořadí, ve kterém se sahá na cizí věc (KUKY 2026-08-16)
+Pravidla na tohle už existují (`CLAUDE.md` §21 kritika · §24 ověř · §26 dohledej proč to odešlo ·
+§27 zaútoč na nástroj). **Chybělo jen pořadí** — v jakém sledu je pustit, když něco vezmeš do ruky.
+
+1. **Co to je a PROČ to tam je** — ne co to říká. Kdo to čte, co se rozbije, když to zmizí.
+2. **Existuje už řešení nebo záznam?** Dohledej (`grep RUNAR_DECISIONS.md`, `tools.js`,
+   `archive_batches.js --list`). **Nenavrhuj, dokud jsi nehledal.**
+3. **Záznam existuje a stav mu neodpovídá?** Rozliš: selhal **zápis**, nebo **následná oprava**?
+   Jsou to různé vady s různou opravou.
+4. **Než navrhneš nástroj:** řeší MŮJ problém, nebo jiný, který se mi líp staví?
+5. **Teprve pak sáhni** — a hotový kus rozbij, než ho ohlásíš.
+
+**Doloženo (`mood`, 2026-08-16).** Slepě: *„`mood` je v CLAUDE.md, v kódu není, smaž to."*
+Tímhle postupem: pole odstraněno 2026-06-14, **záznam existuje a je úplný**, dokonce s
+`Affected doc(s): CLAUDE.md` — selhala až ta oprava. Kontrola na to existuje (`check-docs.py`),
+jen do ní `MOODS` nikdo nepřidal. Výsledek není smazané slovo, ale **zavřená cesta, kudy to přišlo**.
+Krok 4 přitom zabil moji vlastní myšlenku postavit mapu vazeb: mapa ukazuje strukturu, kterou
+zjistím grepem, a neukazuje *proč* — což je jediné, co mi po compactu chybí.
+
 ### Explore → Plan → Implement — nikdy přeskočit
 1. Ty popíšeš záměr (nemusí být technicky přesně)
 2. Claude ukáže co to znamená v praxi — kde to sáhne, co ovlivní, co je nejdřív
