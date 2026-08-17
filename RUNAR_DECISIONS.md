@@ -3182,3 +3182,13 @@ doků se po compactu vlévá tak jako tak, takže by to byl proces pro uspokojen
 verzovaný. Zapsáno do `RUNAR_BACKLOG.md`.
 
 Affected doc(s): RUNAR_BACKLOG.md (5 změřených duplikátů k existující položce B) — v témže commitu.
+
+## 2026-08-17 — Oprava slotu byla jen na půl dne (doplněk k záznamu výš)
+
+Ta oprava brala **dnešní** snapshoty a když žádný nebyl, spadla zpátky na `f[-1]` = abecedně
+poslední soubor. Tím se kolize tří session vracela, jen o den později — každé ráno, než někdo
+něco zapíše. Zjistil jsem to až na ownerovu otázku „tohle je vyřešené?", ne sám.
+
+**Teď:** vybere se NEJNOVĚJŠÍ DEN, který ve složce je, a vypíšou se všechny snapshoty z něj.
+Není-li ten den dnešek, řekne se to u každého i v hlavičce („v poslední pracovní den", ne „DNES").
+Ověřeno v šesti stavech, včetně toho dřív neověřeného: dvě session, ani jedna z dneška.
