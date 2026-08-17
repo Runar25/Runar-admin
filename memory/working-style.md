@@ -58,10 +58,11 @@ Caveat: transientní toasty co vyblednou = false-positive; rune názvy/gender js
 - Vždy uvést co se NEMÁ změnit (scope boundary)
 - Příklad: "uprav line 45 v runar-app.js — POUZE tuto část, nic jiného" > "oprav bug"
 
-### CLAUDE.md — pravidlo délky
-Každá řádka musí projít testem: *"Způsobí jeho chybění chybu?"* Pokud ne → smazat.
-Příliš dlouhý CLAUDE.md → Claude ignoruje důležitá pravidla.
-Cíl: pod 200 řádků. Historia "Hotovo" do snapshotů, ne do CLAUDE.md.
+### Délka doků
+**Vlastník = `CLAUDE.md`, sekce „Doc-owner pravidla".** Sem se nekopíruje.
+Do 2026-08-16 tu stála druhá verze („cíl pod 200 řádků") a rozešla se s tou v CLAUDE.md
+(„~200, 250 OK") — dvě čísla pro totéž pravidlo ve dvou souborech.
+Co platí pořád a co CLAUDE.md nemá: **historie „Hotovo" patří do snapshotů, ne do doků.**
 
 ---
 

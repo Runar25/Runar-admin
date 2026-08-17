@@ -8,14 +8,16 @@
 AI-powered průvodce runami pro Agndofa (Island). Poetický hlas, nordická filozofie.
 Produkce: runar25.github.io/Runar-admin/v2/
 Lokální: C:\Users\zkuku\Downloads\Runar-admin\v2\
-Stack: HTML + CSS + vanilla JS · Supabase (pmitxjvkeovijreepror, eu-west-1) · Claude API + ElevenLabs · IS primární + EN
+Stack: HTML + CSS + vanilla JS · Supabase (projekt v `runar-config.js` SB_URL) · Claude API + ElevenLabs · IS primární + EN
 
 ---
 
 ## Soubory a jejich zodpovědnost
 
 ```
-runar-config.js       — TIERS, RUNAR_MODES, TIER_LIMITS, SPREAD_COSTS, SPREAD_CONFIG, VOCAB
+runar-config.js       — TIERS, RUNAR_MODES, TIER_LIMITS, SPREAD_COSTS, SPREAD_CONFIG, VOCAB,
+                        VOICE_PROFILES + ACTIVE_VOICE_PROFILE (hlas), ADMIN_EMAILS, HEAVY_RUNES
+                        (úplný výčet má soubor sám — 27 konstant; doc ho neopisuje, §20)
 runar-runes.js        — 25 Elder Futhark + calcLifeRune()
 runar-translations.js — UI_TEXT {en, is} + t()  ← Edit tool OK
 runar-character.js    — DEF_CHAR_EN/IS, buildSysPrompt(), RP_* packs + buildReadingPrompt()
@@ -27,6 +29,10 @@ runar-gathering.js    — The Gathering (NAHRADIT — stará logika, čeká na t
 runar-auth.js         — updateAuthUI(), PWA, sign-in, redeem
 runar-reading.js      — startReading(), _generateReading(), generateVoice()
 runar-app.js          — state, DB init, fetchUserProfile(), showAppTab()
+runar-reporter.js     — in-app hlášení od testerů (bug_reports) · jen reader
+runar-rune-popup.js   — ťuknutí na glyf runy ve čtení → popup se jménem a významem · jen reader
+runar-readings-admin.js — shrine: prohlížeč čtení (edge fn list-readings)
+runar-reports-admin.js  — shrine: prohlížeč hlášení (edge fn list-reports)
 runar-reader.html     — produkční app  ← Edit tool OK
 runar-reader.css      — styly          ← Edit tool OK
 runar-shrine.html     — admin app      ← Edit tool OK pro HTML
@@ -40,8 +46,11 @@ dočasné dokumenty a POC/experiment HTML → `docs/archive/` · patch skript �
 ```
 runar-config.js → runar-runes.js → runar-translations.js → runar-character.js
 → runar-utils.js → runar-svgs.js
-→ [reader]: runar-journal.js → runar-tree.js → runar-gathering.js
+→ [reader]: runar-journal.js
+            → tree-lab-trunk-composer/runar-trunk.js → tree-lab-branch-composer/runar-branch.js
+            → runar-tree-prod.js → runar-tree.js → runar-gathering.js
             → runar-auth.js → runar-reading.js → runar-app.js
+            → runar-reporter.js → runar-rune-popup.js
 ```
 
 ---
@@ -88,7 +97,8 @@ Auto-bump: git pre-commit hook (hooks/pre-commit.py). Po fresh clone: `python -X
 Ruční bump pokud je sw.js already staged před commitem.
 
 ### §5 — UI invarianty
-var(--gold) = #FFBF00 · var(--dim) = #3a4a60 NIKDY pro text · reader-content se NIKDY neskrývá
+`--dim` NIKDY pro text · reader-content se NIKDY neskrývá
+(hodnoty tokenů bydlí v `runar-reader.css`, doc je neopisuje — §20)
 Runa ᚱ: vždy zlatá, NIKDY s ozdobami (◌ ᚱ ◌ zakázáno)
 **Runové glyfy = JEDEN zdroj kresby (RUNE_SVGS), rámování dle ROLE** — přes helper `runeSvg(rune,{frame})` (runar-utils.js, §3). Pravidlo (KUKY 2026-07-14): **`frame:true` = KÁMEN pro runy, které TAHÁŠ/DRŽÍŠ** (draw grid, kolekce, kolekce detail, reading strip single+spread, spread sloty, journal karty); **`frame:false` = HOLÁ linka (#D6A85C) pro životní runu (esence, ne tažený kámen: badge + tree teaser/cta/exists/loading) + textové popisky (rune-info)**. NIKDY font glyf jako primární (nekonzistentní napříč zařízeními). Blank = orámované prázdno (kámen = prázdný kámen · holá = zlatý obrys), NIKDY `○`. Holá runa = jen hlavní tah (keep-mapa `RUNE_BARE_KEEP`, ozdůbky pryč). Tap popup kopíruje `g.innerHTML` (SVG), ne textContent. ᚱ brand = ZVLÁŠŤ (font, chrome v HTML, neřeší se přes runeSvg).
 
@@ -328,7 +338,13 @@ Co databáze sama neřekne, a proto bydlí tady:
 
 **Délky čtení**: zdroj pravdy = buildery v `runar-character.js` (RP_* packy + `closing()` věty). Docs čísla NEopakují — když měníš délku, uprav builder + přepočítej pricing (RUNAR_PRICING.md). Délka = znaky = EL náklad. Jméno ne vždy na začátek; životní runa jen kontext.
 
-**Sezónní obraznost**: `_seasonalImagery(lang, drawn)` injektuje per-čtení 1 obraz islandské sezóny (`SEASON_POOLS` bright/cold, localStorage no-repeat sáček; studené runy → cold set). KLÍČ: per-čtení user-prompt injekce model POSLECHNE, system prompt IGNORUJE → `buildSysPromptV2` REDUNDANTNÍ (jen lab). Reader = `buildSysPrompt`.
+**Obraznost**: `_seasonalImagery(lang, drawn)` vloží do čtení JEDEN obraz. Primární zdroj je
+`RUNE_IMAGES` — obrazy **klíčované runou**, obojí jazyk na témž řádku (od 2026-08-10 i pro EN).
+`SEASON_POOLS` dělá dvojí: dodává sezónní bucket a je fallback pro runu bez kandidáta.
+⚠️ **Není to jen záloha — stojí na něm celá funkce**: `if (!pool) return ''`, takže v sezóně
+bez poolu nedostane čtení obraz ANI když runa svého kandidáta má. Sáček proti opakování má klíč
+per SADA run; u spreadu se losuje ze všech tažených, ne z první pozice.
+KLÍČ: per-čtení user-prompt injekce model POSLECHNE, system prompt IGNORUJE → `buildSysPromptV2` REDUNDANTNÍ (jen lab). Reader = `buildSysPrompt`.
 
 ### Spread systém
 Kredity = **per typ čtení**, NE počet run. Počty run i ceny = `SPREAD_COSTS` / `SPREAD_CONFIG`
@@ -363,21 +379,20 @@ Nová korekce → přidat do BAD_PATTERNS v check-is.py + do DB přes shrine.
 ---
 
 ## Kde hledat co
-Tiers/limity/vocab/spreads → `runar-config.js` · Prompty IS/EN + corrections → `runar-character.js`
-UI texty → `runar-translations.js` · User state → `runar-app.js` · Tree logika → `runar-tree.js`
-
-Architektonická rozhodnutí (proč, one-way) → `RUNAR_DECISIONS.md`
-Designová rozhodnutí (co a proč) → `RUNAR_DESIGN.md`
-Tree of Life — duše, zóny, signály, Gathering, mapa tree doků → `RUNAR_TREE.md` (KANONICKÝ)
-  · materiál/vzhled → `RUNAR_TREE_RENDER.md` · pozastavené tree úkoly → `RUNAR_BACKLOG.md`
-  (starší tree suroviny konsolidovány 2026-07-30 do `docs/archive/tree/`)
-Business model + ceny + EL kalkulace → `RUNAR_PRICING.md`
-Pákové změny hlasu (prompt · pooly · pravidla) + jejich MĚŘENÍ → `RUNAR_EVAL_LOG.md` (jedno místo, §20; každý zásah do hlasu tam)
+**Vlastník = `memory/MEMORY.md`, sekce „Rozcestník".** Sem se nekopíruje.
+Do 2026-08-16 tu stál druhý rozcestník — a rozešel se: MEMORY.md mezitím dostal sloupec
+„druh pravdy" (🔒 externě ukotveno · 📜 kánon · 🔄 rozhodnuto · 🏛 architektonické), který tady
+nikdy nebyl. Dvě mapy téhož = přesně to, co §20 zakazuje.
 
 **Doc-owner pravidla (2026-07-05):**
 - **Čísla = jen v configu / builderech** (SPREAD_COSTS, TIERS, character.js). Docs je NEopakují — odkazují na zdroj (délky→character.js, ceny/kredity→config).
 - **1 téma = 1 vlastník doc.** Žádné nové samostatné docs — když téma patří jinam, jinde jen odkaz.
-- **Délka docu ~200 řádků** (250 OK, když to fakt pomáhá). Nad = rozdělit nebo přesunout detail do doménového doc/snapshotu.
+- **Délka doku ~200 řádků** (250 OK, když to fakt pomáhá). Nad = rozdělit nebo přesunout detail.
+  ⚠️ **`CLAUDE.md` je z toho limitu VYŇATÝ** (KUKY 2026-08-16, po měření): samotná pravidla
+  §1–§28 jsou **248 řádků** a jsou důvod, proč ten soubor existuje — pod 200 se nedostane, aniž
+  by přišel o to, co vlastní. Platí pro něj jen ten přísnější test o řádek výš: *způsobí jeho
+  chybění chybu?* Pokud ne → smazat. Vlastníkem tohohle pravidla je tenhle doc; `working-style.md`
+  na něj odkazuje a neopisuje ho.
 
 ---
 
