@@ -13,13 +13,13 @@
 - Akumulace neúspěšných pokusů kontaminuje kontext — Claude se stále vrací ke špatné cestě
 - `/compact` a co po nem prezije → sekce „Compact" niz v tomhle souboru
 
-### ⭐ Pořadí, ve kterém se sahá na cizí věc (KUKY 2026-08-16)
+### ⭐ Pořadí, ve kterém se sahá na cizí věc (KUKY 2026-08-17)
 Pravidla na tohle už existují (`CLAUDE.md` §21 kritika · §24 ověř · §26 dohledej proč to odešlo ·
 §27 zaútoč na nástroj). **Chybělo jen pořadí** — v jakém sledu je pustit, když něco vezmeš do ruky.
 
 1. **Co to je a PROČ to tam je** — ne co to říká. Kdo to čte, co se rozbije, když to zmizí.
    ⭐ **Než napíšeš JAKÝKOLI vzor (regex, filtr, detektor), VYPIŠ SI DATA, na která má sednout.**
-   Ne „asi tam bude *one flowing*" — vytisknout ty řádky a psát vzor podle nich. 2026-08-16 jsem
+   Ne „asi tam bude *one flowing*" — vytisknout ty řádky a psát vzor podle nich. 2026-08-17 jsem
    takhle **třikrát** ohlásil falešný nález: islandský detektor (`\b` neplatí na `þ`), obrazy
    s výkladem (vzor ušitý k jedinému testu), tvar výstupu (vzor minul `Lesturinn fer í einum
    flæði`, protože jsem si znění domyslel). Pokaždé to vypadalo správně a bylo to prázdné.
@@ -27,7 +27,7 @@ Pravidla na tohle už existují (`CLAUDE.md` §21 kritika · §24 ověř · §26
 2. **Existuje už řešení nebo záznam?** Dohledej (`grep RUNAR_DECISIONS.md`, `tools.js`,
    `archive_batches.js --list`). **Nenavrhuj, dokud jsi nehledal.**
    ⭐ **A do CÍLOVÉHO souboru grepni ten pojem, který do něj chceš vnést.** §20 říká „zeptej se,
-   kde už to bydlí" — to je verze na pozornost a 2026-08-16 selhala: psal jsem `/compact` sekci
+   kde už to bydlí" — to je verze na pozornost a 2026-08-17 selhala: psal jsem `/compact` sekci
    do souboru, kde o `/compact` řádka už byla. Jeden grep to chytí. Měníš řádku → přečti okolní
    sekci; přidáváš sekci → celý soubor; grep vždycky, stojí to nic.
 3. **Záznam existuje a stav mu neodpovídá?** Rozliš: selhal **zápis**, nebo **následná oprava**?
@@ -35,7 +35,7 @@ Pravidla na tohle už existují (`CLAUDE.md` §21 kritika · §24 ověř · §26
 4. **Než navrhneš nástroj:** řeší MŮJ problém, nebo jiný, který se mi líp staví?
 5. **Teprve pak sáhni** — a hotový kus rozbij, než ho ohlásíš.
 
-**Doloženo (`mood`, 2026-08-16).** Slepě: *„`mood` je v CLAUDE.md, v kódu není, smaž to."*
+**Doloženo (`mood`, 2026-08-17).** Slepě: *„`mood` je v CLAUDE.md, v kódu není, smaž to."*
 Tímhle postupem: pole odstraněno 2026-06-14, **záznam existuje a je úplný**, dokonce s
 `Affected doc(s): CLAUDE.md` — selhala až ta oprava. Kontrola na to existuje (`check-docs.py`),
 jen do ní ten **odstraněný** pojem nikdo nepřidal. Výsledek není smazané slovo, ale **zavřená
@@ -66,7 +66,7 @@ Caveat: transientní toasty co vyblednou = false-positive; rune názvy/gender js
 
 ### Délka doků
 **Vlastník = `CLAUDE.md`, sekce „Doc-owner pravidla".** Sem se nekopíruje.
-Do 2026-08-16 tu stála druhá verze („cíl pod 200 řádků") a rozešla se s tou v CLAUDE.md
+Do 2026-08-17 tu stála druhá verze („cíl pod 200 řádků") a rozešla se s tou v CLAUDE.md
 („~200, 250 OK") — dvě čísla pro totéž pravidlo ve dvou souborech.
 Co platí pořád a co CLAUDE.md nemá: **historie „Hotovo" patří do snapshotů, ne do doků.**
 
@@ -336,14 +336,14 @@ Kód v shrine.html pozná V2 lab: `console.warn('saveReading (V2 lab):')`, `// V
 
 ## Compact — snapshot drží Claude, owner nedělá nic
 
-⭐ **Pravidlo (KUKY 2026-08-16):** *„jelikož děláš compact sám, tak já to nemusím vůbec stihnout.
+⭐ **Pravidlo (KUKY 2026-08-17):** *„jelikož děláš compact sám, tak já to nemusím vůbec stihnout.
 Proto je mi příjemnější, abys to dělal ty, když je správný čas."*
 
 **Claude drží `memory/snapshots/` čerstvý průběžně** — kdykoli přibude něco, co by nemělo přežít
 jen v hlavě (nález, rozhodnutí, změna směru), přepíše dnešní snapshot. Ne na vyžádání, ne před
 compactem, **průběžně**. Hook ho po compactu vypíše sám.
 
-⭐ **A od 2026-08-16 to nevisí na jeho paměti:** Stop-hook zablokuje konec tahu, když session
+⭐ **A od 2026-08-17 to nevisí na jeho paměti:** Stop-hook zablokuje konec tahu, když session
 commitla a na `memory/snapshots/` nesáhla. Blokne jednou za session — podruhé projde.
 
 ⚠️ **NEVYPISOVAT ownerovi `/compact` řádku k zkopírování.** Musel by ji zachytit, uložit a
@@ -354,7 +354,7 @@ se vypisuje **jen na `/zabal`**, když si o ni owner řekne.
 na defaultu (= zapnuto), žádné nastavení summarizeru instrukce nepředá. Ruční `/compact
 Zachovej: …` účinek má, ale jen když se stihne dřív. **Proto na něm nestavět.**
 
-⚠️ **Jediné, co funguje bez ohledu na to, kdo compact spustil**, je `SessionStart` hook (`~/.claude/runar-context.py`) — spouští se i se <!-- doc-links:ok 2026-08-16 hook je uzivatelsky soubor mimo repo, do gitu nepatri -->
+⚠️ **Jediné, co funguje bez ohledu na to, kdo compact spustil**, je `SessionStart` hook (`~/.claude/runar-context.py`) — spouští se i se <!-- doc-links:ok 2026-08-17 hook je uzivatelsky soubor mimo repo, do gitu nepatri -->
 `source: "compact"` a vypisuje poslední rozhodnutí, mapu „sáhneš na tohle → přečti tenhle doc",
 archiv čtení a pravidla, co se nejčastěji zapomínají.
 

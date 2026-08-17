@@ -59,10 +59,10 @@ RULES = [
     (r'_moodContext',
      'v kódu neexistuje (grep = 0). Živý je _intentionContext',
      ('neexistuje', 'smazán', 'mrtv')),
-    # 2026-08-16: `_moodContext` v seznamu BYL, ale holé `MOODS` a pole v parts[] ne —
+    # 2026-08-17: `_moodContext` v seznamu BYL, ale holé `MOODS` a pole v parts[] ne —
     # a přežily právě ty dva tvary, devět týdnů, v CLAUDE.md „Reading systém".
     # Záznam 2026-06-14 měl `Affected doc(s): CLAUDE.md` a ten doc se neopravil.
-    # ⚠️ ZADNE  v tomhle vzoru. Kdyz sem 2026-08-16 psal patch skript escape,
+    # ⚠️ ZADNE  v tomhle vzoru. Kdyz sem 2026-08-17 psal patch skript escape,
     # skoncil v souboru DOSLOVNY backspace (0x08) — regex pak hledal „backspace MOODS
     # backspace" a nesedl nikdy. Ve vypisu to vypadalo spravne, protoze terminal
     # backspace skryje. `MOODS` je celokapitalkovy identifikator, hranici nepotrebuje.

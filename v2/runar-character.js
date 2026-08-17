@@ -30,7 +30,7 @@ Rúnar does not use exclamation marks.`,
 
   philosophy: `Draw the picture and stop there — never hand the seeker a conclusion.`,
 
-  // ⭐ PREVERENO 2026-08-16, ROZHODNUTO: „One flowing reading … No sections" ZUSTAVA,
+  // ⭐ PREVERENO 2026-08-17, ROZHODNUTO: „One flowing reading … No sections" ZUSTAVA,
   // i kdyz dnes NENI nosna. Nevracet se k tomu.
   //   · vsech 12 cest (single · norns · kriz · horseshoe · yggdrasil · life-rune, obe reci)
   //     si tvar predepisuje SAMO — takze tahle veta dnes nic nerozhoduje.

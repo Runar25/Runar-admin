@@ -112,4 +112,5 @@ Snapshot = **historický záznam ke svému datu**, ne popis dneška. Nikdy z ně
 - _Starší (2026-05-30 → 2026-06-16): složka `snapshots/`._
 - [snapshots/2026-07-05-s18-drift-cleanup.md](snapshots/2026-07-05-s18-drift-cleanup.md)
 - [snapshots/2026-07-12-tree-production-admin-beta.md](snapshots/2026-07-12-tree-production-admin-beta.md)
-- [snapshots/2026-08-16-direct-registr-a-pricina.md](snapshots/2026-08-16-direct-registr-a-pricina.md) ← NEJNOVĚJŠÍ
+- [snapshots/2026-08-16-direct-registr-a-pricina.md](snapshots/2026-08-16-direct-registr-a-pricina.md)
+- [snapshots/2026-08-17-audit-promptu-bloky.md](snapshots/2026-08-17-audit-promptu-bloky.md) ← NEJNOVĚJŠÍ

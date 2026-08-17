@@ -3024,7 +3024,7 @@ celý den. **Viditelnost sama nestačí; je to slabší nástroj, než jsem tvrd
 
 ---
 
-## 2026-08-16 — Prompt: `journey` byl zakázaný dvakrát a pokaždé jinak · kotva rejstříku do páteře
+## 2026-08-17 — Prompt: `journey` byl zakázaný dvakrát a pokaždé jinak · kotva rejstříku do páteře
 
 - **Typ:** chování čtení (prompt) · **Scope:** `DEF_CHAR`, `_spine` · **Zdroj:** audit promptu blok po bloku
 - **Jak to vzniklo:** owner chtěl projít systémový prompt **od první instrukce**, ne lovit
@@ -3063,7 +3063,7 @@ Umístěna PŘED obraz: rejstřík řídí, jak se čte všechno pod ním.
 
 ---
 
-## 2026-08-16 — Pravidla a doky: dva rozcestníky, dvě délková pravidla, a pořadí, které chybělo
+## 2026-08-17 — Pravidla a doky: dva rozcestníky, dvě délková pravidla, a pořadí, které chybělo
 
 - **Typ:** architecture (doky) · **Scope:** `CLAUDE.md`, `memory/working-style.md`, `check-docs.py`
 - **Zdroj:** KUKY — *„drift a duplikáty jsou nejhorší"* + *„je potřeba zjistit vazby, ne slepě číst"*
@@ -3088,7 +3088,7 @@ Umístěna PŘED obraz: rejstřík řídí, jak se čte všechno pod ním.
 - **Pravidlo o délce doku bylo dvakrát** a s různými čísly: `CLAUDE.md` „~200, 250 OK",
   `working-style.md` „cíl pod 200". Vlastníkem je `CLAUDE.md`.
 
-⭐ **`CLAUDE.md` VYŇAT z limitu 200 řádků (KUKY 2026-08-16, po změření):** samotná pravidla
+⭐ **`CLAUDE.md` VYŇAT z limitu 200 řádků (KUKY 2026-08-17, po změření):** samotná pravidla
 §1–§28 jsou **248 řádků** a jsou důvod, proč ten soubor existuje — pod 200 se nedostane, aniž by
 přišel o to, co vlastní. Platí pro něj jen přísnější test, který stál vedle: *způsobí jeho chybění
 chybu? Pokud ne → smazat.*

@@ -1370,7 +1370,7 @@ s oslovením se korpus **nesmí** brát jako verdikt — napřed se ověří, co
 `system_sha256` a registr se z něj dal dopočítat jen znovupostavením všech promptů —
 provenience, která se ztratí při první změně profilu.
 
-### 2026-08-16 — Blok [7] stojí 23 % promptu. Že se opisuje, se PROKÁZAT NEPODAŘILO
+### 2026-08-17 — Blok [7] stojí 23 % promptu. Že se opisuje, se PROKÁZAT NEPODAŘILO
 
 Audit systémového promptu blok po bloku. **13 bloků, 669 slov EN.** Cena podle bloků:
 

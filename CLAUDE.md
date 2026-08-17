@@ -380,7 +380,7 @@ Nová korekce → přidat do BAD_PATTERNS v check-is.py + do DB přes shrine.
 
 ## Kde hledat co
 **Vlastník = `memory/MEMORY.md`, sekce „Rozcestník".** Sem se nekopíruje.
-Do 2026-08-16 tu stál druhý rozcestník — a rozešel se: MEMORY.md mezitím dostal sloupec
+Do 2026-08-17 tu stál druhý rozcestník — a rozešel se: MEMORY.md mezitím dostal sloupec
 „druh pravdy" (🔒 externě ukotveno · 📜 kánon · 🔄 rozhodnuto · 🏛 architektonické), který tady
 nikdy nebyl. Dvě mapy téhož = přesně to, co §20 zakazuje.
 
@@ -388,7 +388,7 @@ nikdy nebyl. Dvě mapy téhož = přesně to, co §20 zakazuje.
 - **Čísla = jen v configu / builderech** (SPREAD_COSTS, TIERS, character.js). Docs je NEopakují — odkazují na zdroj (délky→character.js, ceny/kredity→config).
 - **1 téma = 1 vlastník doc.** Žádné nové samostatné docs — když téma patří jinam, jinde jen odkaz.
 - **Délka doku ~200 řádků** (250 OK, když to fakt pomáhá). Nad = rozdělit nebo přesunout detail.
-  ⚠️ **`CLAUDE.md` je z toho limitu VYŇATÝ** (KUKY 2026-08-16, po měření): samotná pravidla
+  ⚠️ **`CLAUDE.md` je z toho limitu VYŇATÝ** (KUKY 2026-08-17, po měření): samotná pravidla
   §1–§28 jsou **248 řádků** a jsou důvod, proč ten soubor existuje — pod 200 se nedostane, aniž
   by přišel o to, co vlastní. Platí pro něj jen ten přísnější test o řádek výš: *způsobí jeho
   chybění chybu?* Pokud ne → smazat. Vlastníkem tohohle pravidla je tenhle doc; `working-style.md`
