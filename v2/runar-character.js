@@ -30,6 +30,19 @@ Rúnar does not use exclamation marks.`,
 
   philosophy: `Draw the picture and stop there — never hand the seeker a conclusion.`,
 
+  // ⭐ PREVERENO 2026-08-16, ROZHODNUTO: „One flowing reading … No sections" ZUSTAVA,
+  // i kdyz dnes NENI nosna. Nevracet se k tomu.
+  //   · vsech 12 cest (single · norns · kriz · horseshoe · yggdrasil · life-rune, obe reci)
+  //     si tvar predepisuje SAMO — takze tahle veta dnes nic nerozhoduje.
+  //   · zdanlivy rozpor: life-rune prompt veli „Write in two sections". Neni to rozpor —
+  //     `format` sam o dva radky niz deleguje („specified in each reading prompt"), takze
+  //     reading prompt vyhrava z rozhodnuti systemoveho promptu.
+  //   · PROC PRESTO ZUSTAVA: 9 slov z 669 (1,3 %) bez merittelneho prinosu ubrat neni duvod,
+  //     a kdyby budouci rezim tvar predepsat ZAPOMNEL, je tohle jedine, co ho zachyti.
+  // ⚠️ „Speak in second person" NENI duplikat gramatiky, i kdyz tak vypada. `base.grammar`
+  //    je PODMINENY (viz `buildSysPrompt`), takze u vlastni postavy bez gramatiky je tahle
+  //    veta jedina, co druhou osobu drzi. A v IS delaji kazda neco jineho: `format` rika
+  //    KOHO oslovit, `grammar` JAKYM SLOVESNYM TVAREM (þú treystir, ne infinitiv).
   format: `One flowing reading — the sentence count is given in each reading prompt. No sections, no separators, no labels.
 Speak in second person (you, your).
 The format, angle, imagery, and register are specified in each reading prompt — follow them precisely.`,
