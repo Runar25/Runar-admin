@@ -3374,3 +3374,13 @@ Data pro rozhodnutí chybí — archiv má 923 single, ale jen 23 norns a 3 spre
 Zapsáno do `RUNAR_BACKLOG.md`.
 
 Affected doc(s): RUNAR_BACKLOG.md — v témže commitu.
+---
+
+## 2026-08-17 — sonnet-5 zrušen jako poslední fallback modelu čtení
+
+- **Typ:** implementation (odebrání, ne náhrada)
+- **Co se změnilo:** Řetězec modelů v `claude-proxy` byl `["claude-opus-4-8", "claude-opus-4-7", "claude-sonnet-5"]` → teď `["claude-opus-4-8", "claude-opus-4-7"]`. Chain zůstává čistě Opus: primár 4-8, na overload-class (429/5xx, ne timeout ani 4xx) fallback 4-7. Owner NEchtěl náhradu, jen odebrat poslední záchranu.
+- **Proč:** sonnet-5 měl nepředvídatelný thinking náklad. IS májový prompt kolísal mezi dvěma běhy **216 ↔ 495** out tokenů — táž runa; dnešní složitý `direct` prompt spálil **~560** out thinkingem. Důvod dropu = **nepředvídatelnost, ne úspora** (rozdíl v ceně jsou haléře na čtení). Změřeno per model — viz RUNAR_PRICING.md „Volba modelu čtení — měření per model (2026-08-17)", tam bydlí čísla i kandidáti (sem se neopisují, §20).
+- **Affected doc(s):** proxy `MODELS` (`supabase/functions/claude-proxy/index.ts`, důvod nesen komentářem na místě zásahu — §28) · `docs/runar-prompt-map.html` (mapa chainu, 3 místa: hero-node, „The model chain" note, dead-code `<li>` odstraněn) · `sql/2026-08-15_readings_usage.sql` (komentář s výčtem MODELS) · `scripts/utils/gen_batch.js` (komentář o chainu). RUNAR_PRICING.md rozhodnutí už popisuje (owner, dřív téhož dne) — nekopíruje se.
+- **Reality note:** Deploy `supabase functions deploy claude-proxy` dělá **owner** — do té doby je změna jen v kódu a produkce jede pořád starý 3-model chain (změna je pro git viditelná, pro produkci ne). Historický nález `docs/findings/2026-08-15-wf_62679055-021.md` cituje starý stav kódu (tehdejší `index.ts:654`) a ZŮSTÁVÁ nezměněn — je to dobově datovaný snímek, ne živá mapa.
+- **Reverzibilita:** easy (přidat model zpět do `MODELS` + redeploy). Ale návrat jen **očištěný** dle §26: sonnet-5 se smí vrátit, teprve až bude thinking náklad předvídatelný nebo omezený (thinking off / capped), ne jako kopie dnešního stavu.

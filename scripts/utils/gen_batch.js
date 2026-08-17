@@ -728,7 +728,7 @@ async function main() {
       gen_ts: genTs,
       prompt_version: PROMPT_VERSION,
       // The proxy never reports which model answered — the fallback chain
-      // (opus-4-8 -> opus-4-7 -> sonnet-5) is invisible to the caller
+      // (opus-4-8 -> opus-4-7) is invisible to the caller
       // (index.ts:662-670 returns text only). Requested != confirmed.
       model_requested: 'claude-opus-4-8',
       model_actual: null,

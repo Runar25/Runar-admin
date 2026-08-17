@@ -671,7 +671,9 @@ serve(async (req: Request) => {
     // exhausted) fall back to Opus 4.7 — near-identical quality, separate capacity — so a
     // peak-load overload returns a reading instead of a 503. A 4xx (genuine bad request)
     // does NOT fall through to the next model.
-    const MODELS = ["claude-opus-4-8", "claude-opus-4-7", "claude-sonnet-5"];
+    // sonnet-5 dropped as last-resort 2026-08-17: unpredictable thinking-token cost,
+    // owner wanted it gone not replaced (see RUNAR_PRICING.md "Volba modelu čtení").
+    const MODELS = ["claude-opus-4-8", "claude-opus-4-7"];
     let result: { ok: true; data: any } | { ok: false; status: number; error: string } =
       { ok: false, status: 503, error: "no attempt" };
     for (const model of MODELS) {
