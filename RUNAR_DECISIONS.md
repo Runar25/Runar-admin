@@ -3105,5 +3105,7 @@ a týž den selhala.
 nemusí mít čas. Proto: snapshot se aktualizuje průběžně a `SessionStart` hook ho po compactu vypíše
 sám; `/zabal` je jen ruční vyžádání.
 
-- **Affected doc(s):** `CLAUDE.md`, `memory/working-style.md`, `memory/MEMORY.md`
+- **Affected doc(s):** `CLAUDE.md`, `memory/working-style.md`
+  (⚠️ původně tu stál i `memory/MEMORY.md` — chybně. Jeho rozcestník se NEMĚNIL, jen se stal
+  jediným; opravu potřeboval CLAUDE.md, ne on. Chytil to smoke ⑮ a zablokoval push.)
 - **Reversibility:** easy (git).
