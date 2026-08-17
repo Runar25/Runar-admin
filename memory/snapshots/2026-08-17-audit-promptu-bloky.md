@@ -7,9 +7,15 @@
 **Audit systémového promptu BLOK PO BLOKU** — owner: „od první instrukce, ne lovit
 jednotlivosti uvnitř". 13 bloků. Výpis: `buildSysPrompt(null,'en')`.
 
-Hotovo **[1]–[10]**. Zbývá:
-**[11] LANGUAGE & STYLE (95 slov) · [12] THE VOICE + THE IMAGE (104) · [13] TWO THINGS
-THAT NEVER CHANGE (57).** Další krok = **[11]**.
+⚠️ **Bloky číslovat NE — každý si je počítá jinak** (commity mluví o „bloku [9] YOUR STANCE",
+v dělení podle `
+
+` je to `[7]`). Držet se JMEN.
+
+Hotovo: identita · HOW YOU SPEAK · WHAT YOU NEVER DO · YOUR STANCE · RESPONSE FORMAT ·
+**LANGUAGE & STYLE / ÍSLENSK MÁLFRÆÐI** (17. 8.).
+Zbývá: **THE VOICE (11 slov) · THE IMAGE (104) · TWO THINGS THAT NEVER CHANGE (57)** —
+všechny tři dnes bydlí v `_spine()`, ne v `DEF_CHAR`.
 
 ⭐ **Postup, který owner schválil jako „takhle máš pracovat":** u každé položky nejdřív
 **vazby** — proč tam je, kdo ji čte, co se rozbije bez ní — a **vypsat data dřív, než

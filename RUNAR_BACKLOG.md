@@ -212,6 +212,16 @@ doslovné obejmutí, ne wellness klišé. **Které islandské klišé Rúnar ne�
 rozhodnutí** (Cowork / owner), ne věc CODE — proto nedoplněno, viz `RUNAR_DECISIONS.md`
 2026-08-14 (invarianty). Dokud to nikdo nerozhodne, islandský Rúnar má o jeden zákaz míň.
 
+**Doplněno 2026-08-17 — není to o jeden řádek, je to o devět.** Výše popsaná mezera je v bloku
+`never`. Druhá, větší, je v bloku **LANGUAGE & STYLE / ÍSLENSK MÁLFRÆÐI**: anglická verze tam
+vyjmenovává **devět konkrétních frází** („your truth", „the universe", „trust the process" …),
+islandská **žádnou** — má jen obecné „klisju velferðarfræði". Změřeno tím, co zákazy z promptu
+vytahuje: `node scripts/utils/lint_readings.js <davka>` hlásí **EN 11 · IS 2**.
+Rozhodnout to jde dvěma cestami a obě potřebují někoho jiného než CODE:
+(a) islandský seznam od rodilého mluvčího — **vymýšlet ho nesmím** (§23), nebo
+(b) obrácená páka (§25): pustit EN dávku BEZ toho seznamu. Nepřibudou-li klišé, je zbytečný
+i v angličtině a mezera zaniká sama. To je levnější a nikoho to nečeká.
+
 ## RESTY 2026-08-14 — nálady + měření hlasu (session CODE-tune)
 
 ### 1. Nálady, krok 2/2 — ZBÝVÁ (krok 1/2 hotový, commit `e3a3c40`)
