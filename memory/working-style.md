@@ -339,11 +339,12 @@ Kód v shrine.html pozná V2 lab: `console.warn('saveReading (V2 lab):')`, `// V
 ⭐ **Pravidlo (KUKY 2026-08-16):** *„jelikož děláš compact sám, tak já to nemusím vůbec stihnout.
 Proto je mi příjemnější, abys to dělal ty, když je správný čas."*
 
-**Claude drží `memory/snapshots/` čerstvý průběžně** — a od 2026-08-16 to **nevisí na jeho paměti**:
-Stop-hook zablokuje konec tahu, když session commitla a na snapshot nesáhla (jednou za session).
 **Claude drží `memory/snapshots/` čerstvý průběžně** — kdykoli přibude něco, co by nemělo přežít
 jen v hlavě (nález, rozhodnutí, změna směru), přepíše dnešní snapshot. Ne na vyžádání, ne před
 compactem, **průběžně**. Hook ho po compactu vypíše sám.
+
+⭐ **A od 2026-08-16 to nevisí na jeho paměti:** Stop-hook zablokuje konec tahu, když session
+commitla a na `memory/snapshots/` nesáhla. Blokne jednou za session — podruhé projde.
 
 ⚠️ **NEVYPISOVAT ownerovi `/compact` řádku k zkopírování.** Musel by ji zachytit, uložit a
 vzpomenout si — a automatický compact přijde bez ohlášení, takže na to nemusí být čas. Řádka
