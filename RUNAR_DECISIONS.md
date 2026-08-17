@@ -3220,3 +3220,38 @@ a `const RUNES` z `runar-runes.js` v vm kontextu nevystoupí na globální objek
 třikrát po sobě, dokud jsem si nevypsal signatury ze zdroje. Golden test EN pak hlásil změnu
 i u `single` — ta cesta je ale **záměrně náhodná** (losuje klíčová slova), což jsem si ověřil
 dvěma běhy z téhož zdroje. Nález na náhodné ploše se nesmí připsat vlastní změně.
+
+## 2026-08-17 — Shrine skládal pro islandštinu ANGLICKÝ prompt, včetně „Respond only in English"
+
+Audit bloku **THE VOICE / RÖDDIN**. Kotva se dnes přestěhovala do `_spine()` právě proto, aby na
+ni nedosáhla vlastní postava. Otázka, která z toho plyne: **kdo tou vlastní postavou vlastně je?**
+
+`runar-shrine.html` → `loadChar()` → když v `runar_character` není aktivní řádek:
+`activeChar = { ...DEF_CHAR }`. A `DEF_CHAR` je **alias na `DEF_CHAR_EN`**
+(`runar-character.js:102`). Rozprostřený objekt má VŠECHNY klíče, a `buildSysPrompt` nechá
+u vlastní postavy vyhrát každý její klíč nad jazykovým výchozím — to je její účel. Islandský
+prompt se tím přepsal celý na anglický.
+
+**Změřeno na složeném promptu, `lang='is'`:**
+```
+reader  (activeChar = null)           4855 znaků · ÍSLENSK MÁLFRÆÐI ano · „Respond only in English" ne
+shrine  (activeChar = {...DEF_CHAR})  3780 znaků · ÍSLENSK MÁLFRÆÐI NE  · „Respond only in English" ANO
+```
+Přežila jen `_spine()` (RÖDDIN), protože bere `lang` přímo — přesně to, kvůli čemu páteř vznikla.
+
+**Produkce tím netrpěla** (`runar-app.js:1394` dělá `activeChar = data || null`, nikdy
+`{...DEF_CHAR}`). Vada byla v shrine — což je LAB, kde se nové věci ve čtení testují PŘED
+nasazením. Každý islandský test v labu tedy běžel na špatném promptu.
+**Opraveno:** shrine srovnán s produkcí, `activeChar = null`. Po opravě 4855 znaků, blok
+gramatiky zpátky.
+
+### Dvě věci, které tím NEJSOU vyřešené
+1. **Aktivní řádek v `runar_character` může totéž udělat produkci.** Uloží-li tam někdo postavu
+   s anglickými poli, islandský prompt se přepíše stejně. Stav té tabulky ze svého stroje
+   NEZJISTÍM — patří ownerovi.
+2. **Má vlastní postava vůbec smět přepsat `grammar`?** Argument, že ne: gramatický blok není
+   rys povahy, je to 🔒 externě ukotvená islandština, a §2 říká, že IS musí být vždy perfektní.
+   Byl by to týž krok jako `_spine()` — jenže o rozsahu, který mění produkční chování,
+   nerozhoduje CODE sám. **Čeká na ownera**, zapsáno i v `RUNAR_BACKLOG.md`.
+
+Affected doc(s): RUNAR_BACKLOG.md — v témže commitu.

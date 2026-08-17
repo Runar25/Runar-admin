@@ -89,6 +89,7 @@
 # C = provozní/SRE vrstva — OWNER chce před realizací každý bod podrobně vysvětlit.
 
 ### B — rozpory / duplikáty k rozhodnutí
+- [ ] **Smí uložená postava přepsat islandský gramatický blok? (2026-08-17, čeká na ownera)** Vlastní postava z `runar_character` přebíjí jazykový výchozí pole po poli — včetně `grammar`. Uložená anglická postava tak z islandského promptu udělá anglický (změřeno na shrine: 3780 vs 4855 znaků, blok gramatiky pryč, místo něj „Respond only in English"). Argument pro zámek: gramatika není rys povahy, ale 🔒 externě ukotvená islandština (§2). Souvisí: **owner ať zkontroluje, jestli v `runar_character` je aktivní řádek a co v něm je** — ze stroje CODE to nezjistí.
 - [ ] **§N kolize:** working-style.md používá §11–§15 s JINÝMI pravidly než CLAUDE.md → citace „řiď se §13" je nejednoznačná. Fix: sekce WS přejmenovat (namespace §N vlastní JEN CLAUDE.md).
 - [ ] **Tree-mechanika DESIGN.md ↔ TREE.md si odporuje** (DESIGN má „vážené hlasování" + pauza-bonus jako živé, TREE = zrušeno). Cowork lane: z DESIGN smazat mechaniku, odkázat na TREE §3–§5.
   - Konkrétní řádky (root-analýza 2026-08-02): **DESIGN:348** „Yggdrasil jednou ročně/slunovrat" = mrtvé (je **kdykoliv** — 5× opravováno) · **:276** „Norns→větev→kmen" vs „Norns=3 kořeny" jinde · **:9** header ukazuje na archivované tree-of-life/patterns · **:470** „směr větve dolů→kořeny" superseded Norns osou (§4) · **:484/508** vážené hlasování (kód má jen intention, BACKLOG výše).
