@@ -3384,3 +3384,51 @@ Affected doc(s): RUNAR_BACKLOG.md — v témže commitu.
 - **Affected doc(s):** proxy `MODELS` (`supabase/functions/claude-proxy/index.ts`, důvod nesen komentářem na místě zásahu — §28) · `docs/runar-prompt-map.html` (mapa chainu, 3 místa: hero-node, „The model chain" note, dead-code `<li>` odstraněn) · `sql/2026-08-15_readings_usage.sql` (komentář s výčtem MODELS) · `scripts/utils/gen_batch.js` (komentář o chainu). RUNAR_PRICING.md rozhodnutí už popisuje (owner, dřív téhož dne) — nekopíruje se.
 - **Reality note:** Deploy `supabase functions deploy claude-proxy` dělá **owner** — do té doby je změna jen v kódu a produkce jede pořád starý 3-model chain (změna je pro git viditelná, pro produkci ne). Historický nález `docs/findings/2026-08-15-wf_62679055-021.md` cituje starý stav kódu (tehdejší `index.ts:654`) a ZŮSTÁVÁ nezměněn — je to dobově datovaný snímek, ne živá mapa.
 - **Reverzibilita:** easy (přidat model zpět do `MODELS` + redeploy). Ale návrat jen **očištěný** dle §26: sonnet-5 se smí vrátit, teprve až bude thinking náklad předvídatelný nebo omezený (thinking off / capped), ne jako kopie dnešního stavu.
+
+
+## 2026-08-17 — Pět otevřených věcí protestováno; dvě uzavřeny, dvě zúženy, jedna se změřit nedá
+
+**KUKY:** *„rozeber je, otestuj. Jak se používají."*
+
+### 1. Islandská přirovnání — UZAVŘENO, owner schválil
+Zákaz `simile stacked on a metaphor` se do islandštiny **nedoplňuje**. Hlídá jev s výskytem
+1/800 v EN a s naměřeným rozdílem nemá nic společného (data → záznam výš, 2026-08-17).
+
+### 2. Kotva v páteři — UZAVŘENO daty, zbývá jen tvůj vkus
+Otestováno **12 kombinací**: 3 registry (`focused` · `direct` · `lyrical`) × výchozí i cizí
+postava v DB × obě řeči. Kotva, obraz i „dvě věci" **přežily VŠECHNY**, včetně nejhorší
+(anglický řádek v DB + registr `direct`, kde prompt spadne na 3369 znaků).
+Páteř tedy dělá přesně to, kvůli čemu vznikla. Kde má věta stát, je rozhodnutí o hlase —
+technicky je jedno místo prokazatelně bezpečné a druhé prokazatelně ne.
+
+### 3. Řádek v `runar_character` — ZÚŽENO na jeden tvar
+Protlačeno osmi tvary řádku, které tam reálně můžou stát, obě řeči:
+```
+tvar řádku                             lang=is        co se stane
+žádný / prázdný {}                     4855 zn.       nic, platí jazykový výchozí
+jen `personality`                      4712 zn.       přepíše se JEN personality — bezpečné
+DB řádek s id/active/created_at        4696 zn.       cizí sloupce nevadí
+`grammar` = prázdný řetězec            4855 zn.       NEMAŽE — merge prázdné hodnoty přeskakuje
+celý ANGLICKÝ znak                     3780 zn.       ⚠️ IS gramatika PRYČ + „Respond only in English"
+`grammar` přepsán anglicky             3781 zn.       ⚠️ totéž
+```
+**Nebezpečný je jen řádek, který v `grammar` nese skutečný text.** Částečné řádky jsou bezpečné,
+protože merge přeskakuje `null`/`undefined`/prázdný řetězec (`runar-character.js:1105`).
+⚠️ **A je to symetrické:** islandský řádek stejně tak rozbije ANGLICKÝ prompt (EN + IS znak =
+4945 znaků s islandskou gramatikou). Uložená postava je jazykově slepá.
+**Pro ownera zbývá jediná otázka:** je v té tabulce aktivní řádek a má vyplněný `grammar`?
+
+### 4. Zámek gramatiky — návrh se zúžil na jedno pole
+Data výš říkají, co zamykat: **ne celou postavu, jen `grammar`.** Legitimní použití (vlastní
+povaha, vlastní identita) se tím nedotkne a „vymazat gramatiku prázdnou hodnotou" už dnes nejde.
+Pořád je to změna produkčního chování → čeká na ownera.
+
+### 5. Úhel u spreadů — ZMĚŘIT SE TO NEDÁ, a je to výsledek
+Hypotéza: spready nemají úhel, takže by měly víc splývat. Změřeno průměrnou párovou shodou
+na trigramech: norns **0,0025** vs single **0,0009** (2,79×) — jenže **půlka proti půlce uvnitř
+single dá 0,0002 vs 0,0029, tedy 14× rozptyl**. Rozdíl mezi rameny je menší než šum uvnitř
+jednoho. **Měřidlo ty dva stavy nerozliší** a číslo 2,79× by bylo prodané, ne naměřené.
+Důvod je v datech, ne v metrice: archiv má 923 single, ale jen **23 norns a 0 islandských**.
+Rozhodnout to jde až po vygenerování norns dávky (≥50, obě řeči).
+
+Affected doc(s): RUNAR_BACKLOG.md — v témže commitu.
