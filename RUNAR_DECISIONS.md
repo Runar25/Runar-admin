@@ -3326,3 +3326,51 @@ a překlopit ji do IS je práce s hlasem, ne parita čísel — to patří owner
 Data pro to rozhodnutí teď existují a jsou výš. Zapsáno do `RUNAR_BACKLOG.md`.
 
 Affected doc(s): RUNAR_BACKLOG.md — v témže commitu.
+
+## 2026-08-17 — Přirovnání v IS: není to berlička ani naše obrazy; a blok TWO THINGS stojí na mechanismu, který má JEN single
+
+**Owner:** *„Nevím jaké přirovnání! Co to udělá? Potřebuje to? Je to opodstatněné, nebo je to
+třeba tím, že si model na IS nevěří?"*
+
+### Odkud to je (tři vysvětlení, dvě vyloučena měřením)
+1. **Naše obrazy to nenesou.** `RUNE_IMAGES` + `SEASON_POOLS`: 214 obrazů v každém jazyce,
+   **0 přirovnání** v EN i IS. Model si je přidává sám.
+2. **Berlička to není.** Kdyby model sahal po přirovnání tam, kde má míň co říct, byla by hustší
+   v kratších čteních. Na 1000 slov: IS kratší půlka **5,13** · delší **4,82** (EN 0,75 · 0,98).
+   Plocho — hypotéza „nevěří si" v téhle podobě padá.
+3. **Zbývá ustálený návyk modelu v islandštině.**
+
+### Co to udělá — a kde jsem se spletl
+Přirovnání se v obou jazycích věší na něco jiného:
+```
+jazyk   přirovnává RUNU   přirovnává to, co je řečeno o čtenáři
+EN         45 %                    24 %
+IS         10 %                    57 %
+```
+⚠️ **Nejdřív jsem to napsal jako cold reading. To je špatně** a zjistil jsem to až projektovým
+měřidlem: `measure_readings.js --rules` hlásí na IS dávce **nárok na vnitřní stav 1/50 (2 %)**.
+Rúnar mluví ve 2. osobě povinně (gramatika, bod 1), takže věta o čtenáři je očekávaná, ne vada.
+Zůstává rozdíl v tom, **k čemu je obraz připnutý** — v angličtině jedná runa, v islandštině se
+obrazem dokresluje situace čtenáře. **Jestli to Rúnara ředí, je rozhodnutí o hlase**, ne o čísle.
+
+### Doporučení
+Zákaz `simile stacked on a metaphor` do islandštiny **nedoplňovat** — hlídá jev s výskytem
+1/800 v EN a s tímhle rozdílem nemá společného nic.
+
+## Blok TWO THINGS THAT NEVER CHANGE — druhá věta popisuje mechanismus, který má jen jedna cesta ze sedmi
+
+Blok říká: *„každé čtení přichází z jiného úhlu"*. Ten úhel je skutečná věc v promptu
+(`angleIntro`, `READING_ANGLES`) — ale **vkládá se jen do `single`**:
+```
+RP_SINGLE ANO  ·  RP_LIFE · RP_ASK · RP_KRIZ · RP_NORNS · RP_HORSESHOE · RP_YGGDRASIL  NE
+```
+Ověřeno i na složeném promptu, všech sedm cest: úhel má jen `single`.
+V `RUNAR_DECISIONS.md` je o úhlech spousta práce (2026-08-13 přepis sedmi úhlů, měření
+stejnosti 2026-08-16) — **všechno o single**, a nikde záznam, že u spreadů být nemá.
+
+Neopravuji sám: přidat úhel na pět rozložení mění chování pěti produkčních cest a je to
+rozhodnutí o produktu (spready mají svou strukturu z pozic, možná úhel nepotřebují).
+Data pro rozhodnutí chybí — archiv má 923 single, ale jen 23 norns a 3 spread.
+Zapsáno do `RUNAR_BACKLOG.md`.
+
+Affected doc(s): RUNAR_BACKLOG.md — v témže commitu.
