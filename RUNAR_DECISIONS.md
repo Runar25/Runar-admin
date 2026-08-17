@@ -3109,3 +3109,26 @@ sám; `/zabal` je jen ruční vyžádání.
   (⚠️ původně tu stál i `memory/MEMORY.md` — chybně. Jeho rozcestník se NEMĚNIL, jen se stal
   jediným; opravu potřeboval CLAUDE.md, ne on. Chytil to smoke ⑮ a zablokoval push.)
 - **Reversibility:** easy (git).
+
+## 2026-08-17 — `/compact` řádka k zkopírování zrušena: neměla konzumenta
+
+**KUKY:** *„tohle mi dáváš k čemu?"* (o `/compact Zachovej: …` řádce, kterou vypsal `/zabal`).
+
+**Vada nebyla v tom, že jsem porušil pravidlo — pravidlo si tu výjimku samo drželo.**
+`working-style.md` říkalo „NEVYPISOVAT ownerovi `/compact` řádku" a hned dodávalo „vypisuje se
+jen na `/zabal`". Jenže **důvod toho zákazu platí na `/zabal` stejně**: owner by ji musel držet
+v hlavě do okamžiku, který nikdo netrefí (automatický compact přijde bez ohlášení a instruovat
+ho nejde). Výjimka nestála na ničem.
+
+**Druhý důvod, §20:** všechno, co ta řádka nesla (na čem děláme · co jsme zjistili · další krok ·
+co znovu nenavrhovat), je **už v commitnutém snapshotu**, a `SessionStart` hook ho po compactu
+vypíše sám. Byla to druhá kopie téhož faktu doručovaná kanálem, který nefunguje.
+
+**Změněno:** `.claude/commands/zabal.md` — krok 4 (vypiš řádku) → „řekni, že je zabaleno, stačí
+holé `/compact`"; přepsán i důvod existence příkazu a `description` ve frontmatteru.
+`memory/working-style.md` sekce „Compact" — výjimka pryč, zákaz platí bez výjimky.
+
+**Co se tím NEruší:** `/zabal` sám. Jeho jediná práce — dostat rozdělanou práci do snapshotu
+dřív, než compact přijde — zůstává a je to ta polovina drátu, která funguje.
+
+Affected doc(s): memory/working-style.md · .claude/commands/zabal.md (obojí v témže commitu)

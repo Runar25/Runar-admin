@@ -346,9 +346,12 @@ compactem, **průběžně**. Hook ho po compactu vypíše sám.
 ⭐ **A od 2026-08-17 to nevisí na jeho paměti:** Stop-hook zablokuje konec tahu, když session
 commitla a na `memory/snapshots/` nesáhla. Blokne jednou za session — podruhé projde.
 
-⚠️ **NEVYPISOVAT ownerovi `/compact` řádku k zkopírování.** Musel by ji zachytit, uložit a
-vzpomenout si — a automatický compact přijde bez ohlášení, takže na to nemusí být čas. Řádka
-se vypisuje **jen na `/zabal`**, když si o ni owner řekne.
+⚠️ **NEVYPISOVAT ownerovi `/compact Zachovej: …` řádku k zkopírování — ANI na `/zabal`.**
+Do 2026-08-17 tu stála výjimka „na `/zabal` se vypisuje". Byla to vada: důvod zákazu (owner by
+ji musel držet v hlavě do okamžiku, který nikdo netrefí) platí na `/zabal` úplně stejně.
+KUKY 2026-08-17 na ni řekl: *„tohle mi dáváš k čemu?"* — **nemá konzumenta.** Co by nesla, už
+leží v **commitnutém snapshotu** a hook to po compactu vypíše sám; řádka je jen druhá kopie
+téhož přes kanál, který nefunguje (§20). Owner píše **holé `/compact`**, nic víc.
 
 ⚠️ **Automatický compact instruovat NELZE** — ověřeno v dokumentaci: `autoCompactEnabled` je
 na defaultu (= zapnuto), žádné nastavení summarizeru instrukce nepředá. Ruční `/compact
