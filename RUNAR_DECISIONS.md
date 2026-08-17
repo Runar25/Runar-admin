@@ -3255,3 +3255,36 @@ gramatiky zpátky.
    nerozhoduje CODE sám. **Čeká na ownera**, zapsáno i v `RUNAR_BACKLOG.md`.
 
 Affected doc(s): RUNAR_BACKLOG.md — v témže commitu.
+
+## 2026-08-17 — OPRAVA vlastního závěru: nebyl to mrtvý lab, byla to produkční data
+
+Záznam o hodinu výš tvrdí, že vada v shrine zasáhla „LAB, kde se čtení testují před nasazením".
+**To je špatně a je to horší, než jsem napsal.** KUKY na to ukázal: *„ten už je mrtvý. Buď zapiš,
+nebo odstranit… nevím, zjisti to!"*
+
+**Zjištěno:**
+1. **V2 lab je opravdu mrtvý — smazaný 2026-07-10** (`c6eb89c`, −971 řádků). Doky ho ale
+   popisovaly dodnes: `working-style.md` posílal čtenáře testovat do `#reader-setup`,
+   `#reader-rune-card`, `#reader-output` — tři ID, která v souboru **nejsou ani jednou**.
+   Pět týdnů stará mapa do smazaného kódu. Opraveno.
+2. **Shrine mrtvý NENÍ.** Šest tabů: `codes` · `correct` · `progress` · `readings` · `reports`
+   · `teach`. Odstranit ho tedy nelze; odstranit se musela ta věta v docích.
+3. **A `teach` píše do produkce.** `invokeRunar()` staví prompt přes `buildSysPrompt(activeChar,
+   lang)` a výsledek jde do `runar_static_audio`, odkud ho servíruje produkční reader i journal
+   (`runar-app.js:861`, `:1167`, `runar-journal.js:230`).
+
+**Takže dopad opravené vady:** islandská statická čtení run vygenerovaná v shrine dostala
+ANGLICKOU postavu, větu „Respond only in English" a **žádný** blok islandské gramatiky.
+Okno: `buildSysPrompt(activeChar, lang)` je v shrine od **2026-05-31** (`815e817`), fallback
+`{...DEF_CHAR}` od **2026-05-15** — tedy až do dnešní opravy. Podmínka: neexistoval aktivní
+řádek v `runar_character` (jinak vyhrál ten, se svými poli).
+
+**Pro ownera:** stojí za to projít IS řádky v `runar_static_audio` s `ready=true` z toho okna.
+Druhá session dnes audituje právě `runar_static_audio` („první statická čtení run, květen 2026 —
+starý hlas") — patří jí to k tomu.
+
+**Poučení do postupu:** označil jsem plochu za „lab" podle DOKU, ne podle kódu. Doc byl pět
+týdnů zastaralý. Kdybych se zeptal „kdo tu funkci volá a kam ten výstup teče", vyšlo by to hned —
+je to týž krok „zjisti vazby", který na promptu dělám a na okolí jsem ho vynechal.
+
+Affected doc(s): memory/working-style.md (sekce přepsána) — v témže commitu.

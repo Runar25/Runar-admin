@@ -315,14 +315,18 @@ Když uživatel přinese soubor zvenku (@soubor nebo obsah vložen do chatu):
 NIKDY nepředpokládat že obsah dokumentu je zachycen jen proto, že jsme o něm mluvili.
 Kontext v chatu zmizí při /compact — důležité musí být v souborech.
 
-## V2 lab = runar-shrine.html
-Shrine plní dvojí roli:
-1. Admin panel (corrections, gift codes, session state)
-2. **Testovací lab** pro nové reading funkce (V2 lab)
+## runar-shrine.html = admin, NE lab
+⚠️ **„V2 lab" NEEXISTUJE od 2026-07-10** (commit `c6eb89c`, −971 řádků). Do 2026-08-17 tu stál
+popis jeho reader UI (`#reader-setup`, `#reader-rune-card`, `#reader-output`) a věta „nové změny
+čtení se testují nejdřív v shrine". Ta tři ID v souboru **nejsou ani jednou** — pět týdnů to
+posílalo čtenáře testovat do smazaného kódu.
 
-Shrine obsahuje vlastní reader UI (`#reader-setup`, `#reader-rune-card`, `#reader-output`) — kompletní implementace čtení oddělená od produkce. Nové vizuální změny čtení se testují NEJDŘÍV v shrine (V2 lab), pak přenesou do runar-reader.html.
+Shrine má šest tabů: `codes` · `correct` · `progress` · `readings` · `reports` · **`teach`**.
 
-Kód v shrine.html pozná V2 lab: `console.warn('saveReading (V2 lab):')`, `// V2 lab: dynamic TTS only` atd.
+⭐ **`teach` NENÍ testovací plocha — píše do produkce.** `invokeRunar()` vygeneruje statické čtení
+runy a uloží ho do `runar_static_audio`; produkční reader i journal je pak servírují uživatelům
+(`runar-app.js:861`, `:1167`, `runar-journal.js:230`). Změna promptu se tedy v shrine neozkouší,
+ale **rovnou projeví** — a jen pro ty runy, které tam někdo znovu vygeneruje.
 
 ## Pre-compact protokol
 **Průběžně, ne až „před compactem" — ten přijde bez ohlášení.** Claude musí:
