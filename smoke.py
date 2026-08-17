@@ -432,6 +432,33 @@ output = (r.stdout + r.stderr).strip()
 first = output.split('\n')[0] if output else 'open-reports check ran'
 check(first, True, '\n'.join(output.split('\n')[1:]))
 
+# ── 27. Datovaný záznam z dneška musí nést dnešek ───────────
+# KUKY 2026-08-17: „celý den jsem trávil tím, že jsem tě to zase učil."  Jedna z příčin je
+# měřitelná: 19 záznamů zapsaných 17. 8. neslo datum 16. 8. — opsal jsem ho z kontextu
+# vlitého po compactu místo abych ho zjistil. Rozhodčí pravidlo „vyhrává NOVĚJŠÍ datovaný
+# záznam" tím tiše obrací. BLOKUJE (na rozdíl od ㉕/㉖): připomínka na tohle dnes selhala
+# devatenáctkrát, blok je jediné, co v tomhle projektu prokazatelně mění chování.
+print('\n' + chr(0x3257) + ' DATUM ZÁZNAMŮ (verify_fresh_dates.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_fresh_dates.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+first = output.split('\n')[0] if output else 'fresh-dates check ran'
+check(first, passed, '' if passed else '\n'.join(output.split('\n')[1:]))
+
+# ── 28. Tvrzení, které v kánonu už stojí ────────────────────
+# „Drift a duplikáty jsou nejhorší" (KUKY, opakovaně) — a §20 to zakazuje od 2026-07-18.
+# Přesto jsem 2026-08-17 vložil tvrzení „Claude drží snapshots/ čerstvý" do working-style.md
+# PODRUHÉ, přímo do pravidla o tom. Blokuje jen NOVÉ opakování; starší vypisuje jako ℹ,
+# aby se nezametla (§19.2), ale smoke neshazuje — jinak by se kontrola první den vypnula.
+print('\n' + chr(0x3258) + ' DRUHÁ KOPIE TVRZENÍ (verify_new_duplicates.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_new_duplicates.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+first = output.split('\n')[0] if output else 'duplicates check ran'
+check(first, passed, '\n'.join(output.split('\n')[1:]))
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

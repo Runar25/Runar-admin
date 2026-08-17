@@ -95,7 +95,11 @@
 - [ ] **Mapa vlastnictví existuje 3–4×** (MEMORY rozcestník · CLAUDE „Kde hledat co" · working-style tabulka) — §20. Určit JEDNOHO vlastníka (rozcestník v MEMORY), ostatní na odkaz.
 - [ ] **Config hodnoty opsané do docí** (jména tierů: DESIGN, BACKLOG · 50/75: DESIGN, PRICING ~8× · Yggdrasil timing 4+ míst) — §20. Nahradit odkazem na config / DECISIONS.
 - [ ] **Další §20 duplikáty:** IS pravidla verbatim v DESIGN · element/Shadow v TREE+DESIGN · kreditní hodnoty 2× v PRICING. Nechat u vlastníka + odkaz.
+  - **Změřeno 2026-08-17** (`node scripts/verify_new_duplicates.js` — od té doby smoke ㉘). Pět tvrzení stojí v kánonu dvakrát; kontrola je vypisuje jako ℹ a neblokuje, aby se nezametla, ale samy nezmizí:
+    `při sporu vyhrává PRODUKCE` CLAUDE.md+working-style · `skuld = záměr` TREE+working-style · `první dva, kdo práh překročil` BACKLOG+TREE · `druhá úplná kopie popisu Rúnara` BACKLOG+memory · `IS (ověřené…)` 2× uvnitř PRIVACY.
+    U každého platí totéž: nechat u vlastníka dle rozcestníku, na druhém místě odkaz.
 - [ ] **working-style učí zakládat nové docy** vs CLAUDE §20 „žádné nové docs" — dnes jen umlčeno escape-markem. Sladit.
+- [ ] **Celý mechanismus načtení po compactu žije MIMO git** (2026-08-17): `~/.claude/runar-context.py` (co se vlije do kontextu), `tree-guard.sh` (SessionStart + Stop blok), `compact-backup.py` (záloha přepisu). Jediná pojistka jsou ruční `.bak*` kopie vedle nich. Zálohy se ztratí s diskem a žádná session nepozná, že se soubor změnil pod rukama. Rozhodnout: verzovat v repu (je PUBLIC — obsahují jen cesty a naše pravidla, žádné klíče; ověřit před přesunem) + odkaz odsud, nebo vědomě nechat mimo a přijmout riziko.
 - [ ] **RUNAR_SEGMENTATION_SPEC.md** popisuje zrušenou featuru (deeper_meaning), není v indexu → archiv nebo index s poznámkou.
 - [ ] **Session Start Protocol** nařizuje číst celý RUNAR_DECISIONS.md (~2086 ř.) — nereálné. Změnit na „grepni dle tématu" + živý index posledních N rozhodnutí nahoře.
 

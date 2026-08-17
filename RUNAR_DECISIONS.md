@@ -3132,3 +3132,53 @@ holé `/compact`"; přepsán i důvod existence příkazu a `description` ve fro
 dřív, než compact přijde — zůstává a je to ta polovina drátu, která funguje.
 
 Affected doc(s): memory/working-style.md · .claude/commands/zabal.md (obojí v témže commitu)
+
+## 2026-08-17 — Po compactu nechyběl text, ale správný text: slot na rozdělanou práci byl jeden pro tři session
+
+**KUKY:** *„problém byl v tom, že jsi po posledním compactu byl retardovaný… celý den jsem trávil
+tím, že jsem tě to zase učil. To mě nebaví. Už to máme všechno dávno zapsané!"*
+
+**Měl pravdu i v tom „dávno zapsané" — a právě proto nešlo o chybějící text.** Do kontextu se po
+compactu vlévalo 8,5 kB pravidel a všechno, co jsem ten den porušil, v nich stálo. Přidat další
+text je tedy varianta s DOLOŽENÝM neúspěchem. Změnu chování ten den způsobily dvě věci a obě
+odmítly pustit dál: Stop-hook (zablokoval konec tahu) a smoke (spadl). Připomínka ani jednou.
+
+### Nález 1 — jeden slot pro tři session (tichá ztráta, ne nepozornost)
+`runar-context.py` bral „nejnovější snapshot" jako `sorted(...)[-1]`, tedy **abecedně**. Jakmile
+mají dvě session snapshot z téhož dne, rozhoduje první písmeno ZA datem:
+`2026-08-17-audit-promptu-bloky.md` (CODE-tune) vs `2026-08-17-first-static-readings…` (druhá).
+`f` > `a`, takže tune session by po compactu dostávala CIZÍ kontext a svoji práci už NIKDY —
+ať ji zapisuje jakkoli často. Slot nešlo „vyhrát" pilností.
+**Opraveno:** vypisují se VŠECHNY dnešní snapshoty (max 3), každý se svým souborem, plus věta,
+že mezi nimi má session najít svůj. Není-li dnešní žádný, řekne se, že jde o historii.
+Rozbito v pěti stavech (3 dnešní · 1 dnešní · žádný dnešní · prázdná složka · strop 3).
+
+### Nález 2 — datum si beru z vlitého kontextu, ne z `date`
+Ten kontext nese VČEREJŠÍ snapshot; jeho hlavičku jsem vzal za dnešek → 19 záznamů s datem
+o den zpět. Rozhodčí pravidlo „vyhrává novější datovaný záznam" se tím tiše obrací.
+**Opraveno dvakrát:** hook říká `DNES JE …` jako první větu (příčina) a smoke ㉗
+(`verify_fresh_dates.js`) BLOKUJE nový záznam s cizím datem i záznam vložený mimo append-only
+pořadí (následek). Rozbito v 8 stavech — stav D odhalil, že bez `-uall` git zamlčí soubory
+v neverzované složce.
+
+### Nález 3 — na duplikáty nebyla kontrola žádná
+Přitom je to podle ownera nejhorší třída vad a §20 ji zakazuje od 2026-07-18. Nová ㉘
+(`verify_new_duplicates.js`) blokuje NOVÉ opakování tvrzení; starší vypisuje jako ℹ (§19.2),
+aby se nezametla, ale smoke neshazuje — jinak by se první den vypnula.
+⚠️ **Jednotka je TUČNÝ ÚSEK a je změřená, ne odhadnutá.** První verze porovnávala řádky a na
+skutečné vadě NESEDLA (doky jsou ručně zalamované, tytéž dvě tvrzení stály na řádkách lišících
+se po pomlčce). Změřeno na stavu, kde vada prokazatelně byla (`dd0a245`): tučný úsek ji chytí,
+věta ne (0 nálezů), 8-gram ano, ale mezi 93 dalšími.
+⚠️ A regex `\*\*([^*]{20,})\*\*` páruje hvězdičky napřeskáčku — před dlouhým úsekem stačí
+krátký a spáruje se závěr prvního se začátkem druhého. Kontrola na tom mlčela, měření lhalo
+(„1905 úseků, 2 opakování"); správným párováním je opakování **5**. Odhalily to až stavy D+E
+rozbíjecího testu.
+
+**Co se tím NEtvrdí:** že jsem po compactu použitelný. Kontroly hlídají tři konkrétní třídy vad,
+ne „dodržuj pravidla". Read-gate (nutit se přečíst doky) jsem NEstavěl schválně — obsah těch
+doků se po compactu vlévá tak jako tak, takže by to byl proces pro uspokojení (§ function-not-ceremony).
+
+⚠️ **Hooky žijí mimo git** (`~/.claude/*.py`, `*.sh`) — celý mechanismus načtení tedy není
+verzovaný. Zapsáno do `RUNAR_BACKLOG.md`.
+
+Affected doc(s): RUNAR_BACKLOG.md (5 změřených duplikátů k existující položce B) — v témže commitu.
