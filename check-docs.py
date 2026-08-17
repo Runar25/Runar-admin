@@ -26,8 +26,13 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 #    takže „oprava" v něm nemá kde přežít — a nikdo se jím neřídí
 # docs/findings = doslovny zaznam nalezu (generuje findings_to_backlog.js): nalez
 # o mrtvem pojmu ten pojem musi pojmenovat, jinak se neda napsat.
+# .claude/worktrees = PRACOVNI KOPIE REPA jine session (git worktree, gitignorovano).
+# 2026-08-17 tam jedna session mela worktree a kontrola v nem cetla `docs/archive/` jako ZIVE
+# doky -> 112 nalezu a ZABLOKOVANY push VSEM. Vyjimky nize se porovnavaji od korene repa,
+# takze 'docs/archive' se na '.claude/worktrees/<jmeno>/docs/archive' netrefi. Cizi kopie
+# se nekontroluje vubec: opravovat se ma original, ne necí odbocka.
 SKIP_DIRS  = ('docs/archive', 'docs/inbox', 'docs/findings', 'memory/snapshots', '_cowork_snap',
-              'node_modules', '.git')
+              'node_modules', '.git', '.claude/worktrees')
 SKIP_FILES = ('RUNAR_DECISIONS.md', 'check-docs.py')
 
 # (regex, proč je to špatně, slova která výskyt OMLUVÍ na témž řádku)
