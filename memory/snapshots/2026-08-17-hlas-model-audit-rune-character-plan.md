@@ -52,10 +52,11 @@ dělá CODE-tune, ty jsi code-reader" — čtu/testuju/mapuju, produkční kód 
 ## NÁLEZY
 
 ### Modely
-- **sonnet-5 DROP** — nepředvídatelný thinking (IS out kolísal 216 vs 495; na složitém `direct` promptu
-  out ~560). Owner: zrušit jako fallback. **Úkol task_3bd64914 spuštěn v jiné session** (odstranit
-  `"claude-sonnet-5"` z `MODELS` v `claude-proxy/index.ts:674` → zůstane opus-4-8 → opus-4-7; + deploy;
-  + úklid `docs/runar-prompt-map.html`, `sql/2026-08-15_readings_usage.sql`; + DECISIONS zápis).
+- **sonnet-5 DROP — HOTOVO** (task_3bd64914, jiná session): `"claude-sonnet-5"` odstraněn z `MODELS`
+  v `claude-proxy/index.ts:674` (zůstává opus-4-8 → opus-4-7), **deploy v59**. Viz snapshot
+  `2026-08-17-sonnet5-drop-deployed.md`. Důvod: nepředvídatelný thinking (IS out kolísal 216 vs 495; na
+  složitém `direct` promptu out ~560). ⚠️ ten snapshot hlásí „main checkout pozadu za origin/main" —
+  **před commitem `git status`/`fetch`** (parallel-code-sessions-collision).
 - Kandidáti dál: **opus-4-8** (produkce), **opus-4-7**, **opus-5**, **sonnet-4-5**.
 - opus-5 má thinking defaultně zapnutý → nejvyšší výstup z opusů, mírně kolísá. opus-4-7 nejlevnější opus.
 
