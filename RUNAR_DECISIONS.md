@@ -3611,3 +3611,47 @@ nehledal znovu — a jako doklad, že „vadný kód" a „vadná data" nejsou t
 ⚠️ **Co to naopak znamená pro budoucnost:** jakmile někdo v shrine statické čtení znovu
 vygeneruje, dostane už opravený prompt. Kdyby se v tabulce objevil islandský řádek s datem
 mezi 31. 5. a 17. 8., ten by podezřelý byl — žádný takový ale není.
+
+## 2026-08-18 — Hook neduplikuje nic. Horší zjištění: `CLAUDE.md` se nám vůbec nenačítalo při startu
+
+Otázka z backlogu: nese SessionStart hook něco, co `CLAUDE.md` po compactu vloží samo?
+Docs slibují *„after `/compact`, Claude re-reads it from disk and re-injects it."*
+
+**Změřeno** (6-gramy obsahových slov, `scratchpad/prekryv.py`, se složenou diakritikou):
+```
+hook ↔ CLAUDE.md          0,3 %        šumová podlaha 0,0–0,2 %
+hook ↔ MEMORY.md          0,1 %        šum
+hook ↔ working-style.md   3,1 %        10× nad šumem
+```
+Doslovný překryv s `CLAUDE.md` je **na úrovni šumu** — ty tři shody jsou jedna citovaná věta
+z §21. Jediný skutečný překryv je s `working-style.md`, a ten je **topic soubor, který se při
+startu nenačítá** (docs: *„Topic files … are not loaded at startup"*). Hook tedy neduplikuje
+nic, co už v kontextu je — je jediný kanál, kterým se to tam dostane.
+
+⚠️ **První měření vyšlo 0 % úplně všude, i u šumové podlahy.** To je čisté číslo, tedy podle
+vlastního pravidla red flag — a bylo. Hook píšu **bez diakritiky** („PRUBEZNE"), doky s ní,
+takže metrika neměřila duplikaci, ale pravopis. Po složení diakritiky čísla výš.
+
+### Podstatnější nález, který z toho vypadl
+**Náš `CLAUDE.md` je v PODadresáři cwd.** Session běží z `C:\Users\zkuku`, pravidla leží
+v `Downloads\Runar-admin\CLAUDE.md`. Docs: *„Claude also discovers CLAUDE.md files in
+subdirectories … Instead of loading them at launch, they are included when Claude reads files
+in those subdirectories"* a *„Nested CLAUDE.md files in subdirectories … are not re-injected
+automatically."* Ověřeno, že nad cwd žádný `CLAUDE.md` není (ani `~/.claude/CLAUDE.md`).
+
+**Takže §1–§28 se do session dostala až ve chvíli, kdy jsem sáhl na soubor v repu** — ne na
+začátku a ne po compactu. To, co jsem celý den považoval za pojistku navíc (hook), bylo
+ve skutečnosti jediné, co pravidla doručovalo včas.
+
+**Řešeno dokumentovaným mechanismem:** `C:\Users\zkuku\CLAUDE.md` = **jedna řádka importu**
+`@Downloads/Runar-admin/CLAUDE.md`. Docs: *„Imported files are expanded and loaded into context
+at launch."* Repo soubor se tím chová jako project-root — načte se hned a po compactu znovu.
+Žádná kopie nevzniká (§17/§20), jen ukazatel; zrušení = smazat ten jeden soubor.
+
+⚠️ **Neověřeno v běhu:** efekt se projeví až při startu příští session a potvrdit ho umí jen
+owner (`/context` → sekce Memory files). Netvrdím, že to funguje — tvrdím, že to odpovídá
+dokumentovanému mechanismu a že cesta v importu existuje.
+⚠️ **Vedlejší účinek:** platí pro KAŽDOU session spuštěnou z `C:\Users\zkuku`, i kdyby
+nešlo o Rúnara.
+
+Affected doc(s): RUNAR_BACKLOG.md (položka uzavřena) — v témže commitu.
