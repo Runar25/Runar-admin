@@ -3701,3 +3701,56 @@ předáno tree lane přes `RUNAR_BACKLOG.md`. Řádka o krmení stromu regexem p
 naopak **pitfall pro moji lane** a zůstává.
 
 Affected doc(s): CLAUDE.md · RUNAR_BACKLOG.md — v témže commitu.
+
+---
+
+## 2026-08-18 — Runová obraznost: pole+rozprostírač místo poolu · forma L1 · TVAR věty · Isa relaxace
+
+- **Typ:** intent (explorace → směr; implementace = CODE-tune, zatím NE)
+- **Co se změnilo (SMĚR, ne kód):**
+  1. Nahradit fixní `RUNE_IMAGES` pool **dvouúrovňovým polem** (domény → fragmenty) + **rozprostíračem** nad doménami. Řeší „moc stejná" i „past poolu" (runa MUSÍ použít vylosovaný obraz).
+  2. Cíl hlasu = **forma L1** (obraz + jeden esenční řádek + umístění).
+  3. Nová páka **TVAR věty** — stejný význam, jiná forma pokaždé.
+  4. **Isa/led relaxace:** led je přirozenost Isa (i hraničních run), smí celý rok; sezónně se nehlídá „led v srpnu" jako obraz, jen tvrzení „teď ti venku mrzne". Ruší dřívější úzkoprsé sezónní zamykání ledu.
+- **Proč:** změřeno — volné pole se slévá na jediný obraz (Isa 6/6 čaj, Berkana IS 6/6 těsto); rozprostírač to opravil při zachování kvality; forma L1 = „direct", co owner hledal. Čísla → `RUNAR_EVAL_LOG.md` 2026-08-18.
+- **Affected doc(s):** RUNAR_DESIGN.md („Jak Rúnar skládá čtení") — v témže commitu.
+- **Reality note:** spec + páky v RUNAR_DESIGN.md; surové korpusy v `~/runar-eval/` (field-vs-pool, test2-spreader, form-lever, L1-*). Cowork dodá pole pro 25 run + sezónní tagy domén; CODE-tune implementuje.
+- **Reversibility:** soft (páky v promptu; v produkci se ještě nic nezměnilo).
+
+## 2026-08-18 — Zadání se prověřuje taky: čtyři nálezy na dokumentu, který jsem zařadil bez mrknutí
+
+KUKY: *„klidně to zkritizuj, stejně to máš dělat! Jakékoliv zadání, které dostaneš, máš prověřit."*
+Zařadil jsem `memory/cowork-handoff-quality-bar.md` a k tomu dal dvě měkké poznámky. Bylo tam
+čtyři věci a **ta nejtvrdší byla na řádce, kterou jsem sám napsal.**
+
+**1. Řádka do indexu porušovala pravidlo, které ten dokument sám cituje.** Znělo
+*„potvrzený na dvou po sobě oceněných handoffech 2026-08-18"* — jenže frontmatter téhož
+souboru říká: *„provenience/pochvala k tomuhle patří do snapshotu k 2026-08-18, ne sem."*
+Napsal jsem provenienci do indexu doslova pod větou, která ji zakazuje. **Opraveno** —
+řádka teď nese, co ten doc JE, ne kým byl pochválen.
+
+**2. Frontmatter neměl tvar, který má zbylých ~30 souborů v `memory/`.** Ostatní mají
+`name` / `description` / `metadata`; tenhle měl vlastní pole (`téma`, `destination`, `příklady`)
+**a jednu řádku bez klíče**, kterou by YAML nepřipojil. Chybějící `description` není kosmetika —
+podle něj se rozhoduje relevance při vybavování, takže soubor byl v té složce cizí.
+**Přepsáno na domácí tvar; tělo dokumentu se nezměnilo ani o slovo** (ověřeno) a původní pole
+jsou zachovaná v HTML komentáři, který se do kontextu nedostává, takže nestojí ani token.
+
+**3. Oba „příklady", na které se doc odvolává, v repu NEEXISTUJÍ.** `2026-08-18-HANDOFF_
+rune-imagery-environment…` ani `…HANDOFF2_rune-imagery-two-level-field…` — ověřeno `find`.
+Kontrola ⑯ to nechytila, protože to nejsou markdownové odkazy, jen holá jména souborů;
+to je mezera v naší kontrole, ne v tom dokumentu. Fakt je teď u nich napsaný.
+
+### Co jsem NEopravil, protože je to obsah Coworku (jejich lane)
+**4. Bod 12 je duplikát.** *„Shrnutí + změněno: nic"* říká `CLAUDE.md:435` doslova:
+*„Handoff má sekci `ZMĚNĚNO:` (co jsem změnil), i prázdnou."* Jedna informace, dvě místa (§20).
+**5. Doc nedodržuje vlastní bod 2.** Ten říká, že tvrzení o vzorci potřebuje **≥20–25** vzorků
+a že i cizí čísla s malým `n` se mají říct nahlas. Sám je přitom postavený na **dvou**
+handoffech. Není to vada obsahu — je to přesně ta věta, kterou by si podle sebe měl napsat.
+Obojí → `RUNAR_BACKLOG.md` jako otázka na Cowork, ne jako moje oprava.
+
+⚠️ **Poučení pro mě:** dostal jsem hotové zadání i s textem řádky a udělal jsem ho doslova.
+Frontmatter i ta proveniencí porušená řádka byly vidět na první přečtení souboru — jen jsem
+se nedíval, protože „zadání je jasné". Jasné zadání není ověřené zadání.
+
+Affected doc(s): memory/MEMORY.md · memory/cowork-handoff-quality-bar.md · RUNAR_BACKLOG.md — v témže commitu.

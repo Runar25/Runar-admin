@@ -1,11 +1,25 @@
 ---
-téma: standard pro psaní Cowork→CODE/owner handoffů (obsah/research/eval, ne kód)
-destination: memory/
-příklady (odkud vzniklo, NE šablony ke kopírování): 2026-08-18-HANDOFF_rune-imagery-environment_COWORK_to_CODE-owner.md,
-2026-08-18-HANDOFF2_rune-imagery-two-level-field_COWORK_to_CODE-owner.md
-pozn.: provenience/pochvala k tomuhle patří do snapshotu k 2026-08-18, ne sem —
-working-style.md: "Historie 'Hotovo' patří do snapshotů, ne do doků."
+name: cowork-handoff-quality-bar
+description: "Standard pro Cowork content/research/eval handoffy — 12 navyku: zaver napred, zive overeni misto pameti, znacka puvodu na kazdem tvrzeni, priznane mezery, kalibracni sada u sirokych ukolu."
+metadata:
+  node_type: memory
+  type: feedback
 ---
+
+<!-- Puvodni frontmatter od Coworku (2026-08-18). Prepsan na tvar, ktery ma vsech ~30
+     ostatnich souboru v memory/ (`name` / `description` / `metadata`) — puvodni mel vlastni
+     pole a jednu radku bez klice, kterou by YAML nepripojil, a hlavne nemel `description`,
+     podle ktereho se rozhoduje relevance pri vybavovani. Obsah dokumentu se nezmenil.
+
+     tema: standard pro psani Cowork->CODE/owner handoffu (obsah/research/eval, ne kod)
+     priklady (odkud vzniklo, NE sablony ke kopirovani):
+       2026-08-18-HANDOFF_rune-imagery-environment_COWORK_to_CODE-owner.md
+       2026-08-18-HANDOFF2_rune-imagery-two-level-field_COWORK_to_CODE-owner.md
+     ⚠️ ANI JEDEN z tech dvou souboru v repu NENI (overeno 2026-08-18). Ukazatel na neexistujici
+     soubor posle ctenare hledat nahradu — proto tady v komentari, ne v zivem textu.
+     pozn. Coworku: provenience/pochvala patri do snapshotu k 2026-08-18, ne sem
+     (working-style.md: „Historie 'Hotovo' patri do snapshotu, ne do doku."). -->
+
 
 # Standard pro Cowork handoffy
 
