@@ -3829,3 +3829,28 @@ proto volnější; do repa píše výhradně přes svého CODE.
 nepřepisuju. A dokud CODE-read a CODE-tree identitu nepřijmou, kontrola jen hlásí.
 
 Affected doc(s): CLAUDE.md — v témže commitu.
+
+## 2026-08-18 — CODE-tree identitu přijal (2/3); přechod na blokující otestován DŘÍV, než nastane
+
+Handoffy doručeny, CODE-tree se podepsal: `git log --format=%an` má **2 lane ze 3**
+(CODE-tune 1, CODE-tree 2). Chybí CODE-read.
+
+**Proto se to testovalo teď.** Kontrola ㉛ se při 3/3 **sama** přepne na blokující — a ten
+stav ještě nikdy neběžel. Kdyby byl vadný, zablokuje při dalším commitu **tři session naráz**
+a nikdo nebude vědět proč. Rozbito v šesti stavech na syntetické historii:
+```
+0/3 nikdo                       → fáze 1, neblokuje    ✓
+1/3 jedna lane + generické      → fáze 1, neblokuje    ✓
+2/3 dnešní stav                 → fáze 1, neblokuje    ✓
+3/3 bez generického             → prochází             ✓
+3/3 + generické POZDĚJI         → BLOKUJE              ✓
+3/3 + generické UPROSTŘED       → BLOKUJE              ✓
+```
+Šesté rameno je to podstatné: kontrola nesmí koukat jen na poslední commit, jinak by jí
+generický podpis uprostřed dávky proklouzl.
+
+⚠️ **Test sám měl vadu, kterou by nikdo nečekal:** `shutil.rmtree` na Windows neprojde přes
+read-only soubory v `.git`, takže druhý stav spadl na „složka už existuje". Kdybych ho pustil
+jen jednou, vypadalo by to jako chyba kontroly. Uklízeč teď shazuje read-only příznak.
+
+Zůstává: **CODE-read**. Do jeho podpisu je ㉛ jen informativní.
