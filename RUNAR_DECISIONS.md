@@ -3499,3 +3499,39 @@ která si vždy vypíše vlastní šumovou podlahu, protože přesně na ní 17.
 Čísla, ramena a obě chyby v nástroji → `RUNAR_EVAL_LOG.md` 2026-08-18. Tady se neopisují (§20).
 
 Affected doc(s): RUNAR_BACKLOG.md (položka uzavřena) · RUNAR_EVAL_LOG.md — v témže commitu.
+
+## 2026-08-18 — Z auditu promptu vznikla kontrola: dojde každá páka na každou cestu? (smoke ㉚)
+
+**Závěr auditu byl, že prompt neměl problém ve ZNĚNÍ, ale v ZAPOJENÍ.** Všechny čtyři nalezené
+vady byly téhož druhu — `ÁVARP` mělo 6 ze 7 islandských cest, úhel má 1 ze 7, shrine přebil
+celý jazyk, `journey` byl zakázaný dvakrát jinak. Každou z nich našel člověk čtením.
+KUKY: *„ok udelej!"*
+
+**`scripts/verify_prompt_levers.js`** postaví prompt každé ze 7 cest v obou řečech a u každé
+per-čtení páky změří, jestli vůbec přispěla. Funkční páka se obalí špionem (přispěla = vrátila
+neprázdné), řádková se hledá markerem z packu TÉ cesty — stejně jako `gen_batch --without`.
+**Seznam pák se neopisuje** — čte se z `WITHOUT` v `gen_batch.js`, který je jeho jediným
+domovem (§18); kdyby tam páka přibyla, kontrola ji uvidí sama.
+
+**Neříká „všude musí být všechno".** Drží MAPU výjimek, každou s důvodem a datem (§28),
+a hlásí ZMĚNU proti ní: páka přestala docházet tam, kam docházela, nebo se objevila tam,
+kde být nemá. Přesně tak zmizelo ÁVARP a nikdo si toho nevšiml.
+
+**Dvě věci hlásilo měřidlo nejdřív špatně** a jsou proto napsané v hlavičce kontroly:
+`voice` má `sys: true` (bydlí v systémovém promptu, ne v uživatelském) → hlásil se „NE"
+u všech sedmi cest; a marker řádkové páky se bral vždy z `RP_SINGLE`, takže u ostatních
+packů minul. Obojí opraveno dřív, než se z toho stal „nález".
+
+**Rozbito (§ guard-test-the-lifecycle):**
+- ÁVARP odebráno ze `buildLifeRunePrompt` → `is · liferune · address nedochází` ✓
+- výjimka prohlášena na páku, která prokazatelně dochází → `NAOPAK dochází` ✓ (obě řeči)
+- po vrácení obojí zeleně ✓
+⚠️ **Třetí pokus (přidat `angleIntro` do `RP_NORNS`) NEBYL platný test** a nehlásím ho jako
+úspěch: přidat klíč do packu ještě neznamená, že ho builder použije, takže se nic „neobjevilo".
+Opačný směr je proto ověřený jen na logice mapy, ne na skutečném zapojení.
+
+**Co kontrola rovnou našla:** `_lensContext` (životní runa jako čočka) dochází na `single`
+a `norns`, ale **ne na kříž, horseshoe ani yggdrasil**. Jestli je to záměr, nikde napsané není
+→ zapsáno do `RUNAR_BACKLOG.md`, v mapě vedeno jako výjimka s poznámkou „NEROZHODNUTO".
+
+Affected doc(s): RUNAR_BACKLOG.md — v témže commitu.

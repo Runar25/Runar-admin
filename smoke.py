@@ -472,6 +472,19 @@ output = (r.stdout + r.stderr).strip()
 last = [l for l in output.split('\n') if l.strip()]
 check(last[-1].strip() if last else 'spine test ran', passed, '' if passed else output)
 
+# ── 30. Dojde každá per-čtení páka na každou cestu? ─────────
+# Audit promptu 2026-08-17/18 našel čtyři vady a ANI JEDNA nebyla ve znění — všechny byly
+# v zapojení: ÁVARP mělo 6 ze 7 islandských cest (u životní runy si model rod čtenáře volil
+# sám), úhel má 1 ze 7, shrine přebil celý jazyk. Všechno našel člověk čtením.
+# Kontrola drží MAPU (co kam dochází + proč ne, s datem) a hlásí ZMĚNU proti ní.
+print('\n' + chr(0x325A) + ' PÁKY PROMPTU vs CESTY (verify_prompt_levers.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_prompt_levers.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+check(radky[-1].strip() if radky else 'lever check ran', passed, '' if passed else output)
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
