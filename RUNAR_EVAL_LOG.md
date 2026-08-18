@@ -1487,3 +1487,14 @@ i temné) a v IS.
 **⑤ TVAR věty se opakuje kvůli JEDNOMU příkladu v promptu.** Esenční řádek pořád „X is the Y" — protože
 L1 instrukce dala jeden vzor (→ „direktiva = doslovný opis", 2026-08-15). Oprava = „střídej tvar" = nová
 třetí páka (TVAR věty).
+
+**⑥ TVAR věty — oprava POTVRZENA (A/B, Fehu+Isa, EN+IS).** Instrukce „střídej tvar" (místo jednoho
+vzoru) srazila šablonu „<Runa> is/er…" z **5–6/6 na 0/6** ve všech čtyřech buňkách, a přitom drží týž
+význam („Hand to hand, that is Fehu" · „That waiting is Isa"). ⚠️ vary arm si občas oblíbí NOVÝ tvar
+(cleft), co jsem dal jako vzor → není nekonečné, ale monotonie zlomená. Korpus: `form-variation-{en,is}.txt`.
+
+**⑦ NÁZVOSLOVÍ VÝZNAMU = ČTVRTÁ osa (banka faset, Cowork handoff #3).** Tvar mění syntax, ne slovník
+(Fehu ve vary arm pořád „wealth/moving"). Vynucená rotace 6–8 faset/runu **rozšíří SLOVNÍK**: objevily se
+increase/lambs, provision, reciprocita, preservation, surface/váha — mimo věčné „wealth/waiting". Kánon
+drží (žádná rada/verdikt/posun významu). Hranice: fasety BLÍZKO jádra echují jádro; širší přijde z faset
+do jiné části významu. Korpus: `naming-bank-en.txt`. IS: tvoří se nativně (§2), ne překládá z EN faset.
