@@ -350,8 +350,12 @@ KLÍČ: per-čtení user-prompt injekce model POSLECHNE, system prompt IGNORUJE 
 Kredity = **per typ čtení**, NE počet run. Počty run i ceny = `SPREAD_COSTS` / `SPREAD_CONFIG`
 (config = zdroj pravdy, **tady se neopisují**). Předplatné počítá tytéž jednotky. Founding = Norns.
 
-Stav (tohle v configu není, proto bydlí tady): Single · Norns · Kříž · Horseshoe · Yggdrasil
-= ✅ produkce. **The Gathering = ❌ redesign**, čeká na `tree_state` DB.
+Které spready existují, vlastní `SPREAD_COSTS` / `SPREAD_CONFIG` — **tady se to neopisuje**.
+Jediná výjimka je The Gathering: v configu není a nahrazuje se (proč → výpis souborů výš
+u `runar-gathering.js`, blocker → `RUNAR_BACKLOG.md`).
+<!-- 2026-08-18: tady stál výčet pěti spreadů + „= ✅ produkce", tedy STAV, který §20.4 zakazuje
+     a který navíc říkal totéž co řádka o `runar-gathering.js` o 326 řádek výš. Duplikát uvnitř
+     jednoho souboru; pět spreadů je v configu, takže se dá odkázat místo opisovat. -->
 
 **Gating:** blokuje se jen **Visitor** (nepřihlášený) — ten má Single 1×. Každý přihlášený dosáhne
 na všechno; Rune Seeker platí kredity, předplatitelé to berou z měsíčních jednotek.

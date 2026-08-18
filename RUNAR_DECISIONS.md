@@ -3655,3 +3655,49 @@ dokumentovanému mechanismu a že cesta v importu existuje.
 nešlo o Rúnara.
 
 Affected doc(s): RUNAR_BACKLOG.md (položka uzavřena) — v témže commitu.
+
+## 2026-08-18 — `CLAUDE.md`: pravidla zůstávají, výpis souborů taky, stav jde pryč
+
+KUKY: *„co ten CLAUDE.md? Necháme jak je nebo upravit? Kritika! Zpomaluje nás větší soubor?"*
+
+**Změřeno oficiálním `count_tokens`, ne odhadem:** `CLAUDE.md` = **17 704 tokenů**
+(33 973 znaků, 456 řádků); §1–§28 = 10 130 (57 %), zbytek 7 579 (43 %).
+**1,92 znaku na token** — čeština stojí zhruba dvakrát tolik co angličtina.
+
+**Nezpomaluje.** 17,7 k v milionovém okně je 1,8 % a cachuje se. Docs argumentují
+**dodržováním**, ne rychlostí — jenže adherenci u sebe měřit neumíme, takže „zkrátit a bude
+to lepší" by byla víra, ne měření (§24). **Proto se pravidla neřežou.**
+
+### Co se NEudělalo, ačkoli jsem to sám navrhl
+**Výpis souborů (43 ř.) zůstává.** Navrhl jsem ho zúžit podle `/doctor` logiky („architektura
+je odvoditelná") — pak jsem ho ověřil: **všech 24 zmíněných souborů existuje a ze 18 produkčních
+`v2/*.js` nechybí ani jeden.** Řezat správnou a úplnou mapu kvůli heuristice je přesně ten řez
+na víru, který jsem o odstavec výš odmítl. Vlastní návrh tedy padá na vlastním měření.
+
+### Co se udělalo
+Sekce „Spread systém" nesla řádku *„Stav … Single · Norns · Kříž · Horseshoe · Yggdrasil
+= ✅ produkce. The Gathering = ❌ redesign"*. Dvě vady najednou:
+1. **STAV**, který §20.4 zakazuje v docích držet;
+2. **duplikát uvnitř téhož souboru** — o `runar-gathering.js` a jeho čekání na `tree_state`
+   stojí totéž o 326 řádek výš ve výpisu souborů.
+Pět spreadů je v `SPREAD_COSTS`/`SPREAD_CONFIG`, takže se dá odkázat místo opisovat.
+Nahrazeno odkazem + komentářem, proč tam ten text nestojí.
+
+⚠️ **A teď to nepříjemné číslo: úprava kontext ZVĚTŠILA.** Změřeno na tom, co se opravdu načítá
+(HTML komentáře se před vložením strippují, takže syrový soubor měří něco jiného):
+```
+syrový soubor    17 704 → 17 885   (+181)
+BEZ komentářů    17 527 → 17 565   (+38)   ← tohle jde do kontextu
+```
+Odkaz je delší než ta stavová řádka, kterou nahradil. **Úspora nikdy nebyla důvod** — důvodem
+byl duplikát a §20.4. Ale kdybych to prodal jako „vyčištění kvůli tokenům", byla by to lež
+o 38 tokenů opačným směrem. Zároveň to zabíjí celý rámec „řezat kvůli velikosti": komentáře
+v tom souboru zabírají 320 tokenů a **stojí nula**, protože se do kontextu nedostanou.
+
+### Co NEbylo moje
+Sekce „Tree of Life — stav" má tutéž vadu ve čtyřech řádcích, a `RUNAR_TREE.md:222` ten fakt
+už vlastní. **CODE-tune ji ale nepřepisuje** („každá session edituje JEN svou sekci") →
+předáno tree lane přes `RUNAR_BACKLOG.md`. Řádka o krmení stromu regexem přes text čtení je
+naopak **pitfall pro moji lane** a zůstává.
+
+Affected doc(s): CLAUDE.md · RUNAR_BACKLOG.md — v témže commitu.
