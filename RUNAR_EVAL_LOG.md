@@ -1498,3 +1498,12 @@ význam („Hand to hand, that is Fehu" · „That waiting is Isa"). ⚠️ vary
 increase/lambs, provision, reciprocita, preservation, surface/váha — mimo věčné „wealth/waiting". Kánon
 drží (žádná rada/verdikt/posun významu). Hranice: fasety BLÍZKO jádra echují jádro; širší přijde z faset
 do jiné části významu. Korpus: `naming-bank-en.txt`. IS: tvoří se nativně (§2), ne překládá z EN faset.
+
+**⑧ Cross-run kolize PROŠLA generováním; kolize OBRAZU je ODDĚLENÁ, pojmenovaná osa (25-run banka).**
+Tři Coworkovy rizikové páry (Isa/Ingwaz „stillness", Uruz/Thurisaz „raw force", Algiz/Thurisaz „guard")
+se čtou jako RŮZNÉ runy — rozlišení faset drží i ve výstupu (Isa=pauza vs Ingwaz=latence pod povrchem ·
+Uruz=vitalita dovnitř vs Thurisaz=úder ven · Algiz=útočiště vs Thurisaz=zraňující trn). ⚠️ ALE self-gen
+OBRAZ koliduje napříč runami NEZÁVISLE na fasetě: „kynoucí těsto" padlo u Ingwaz I Uruz (a bylo Berkanino)
+→ Uruz#1 slabé. Banka řeší SLOVA významu; obraz na runu drží POLE (kurátorské domény per runa) → pole
+potřebuje cross-run rozlišení OBRAZŮ stejně jako banka faset. Test běžel BEZ pole (self-gen), proto to
+vylezlo. Korpus: `crossrun-collision-en.txt`.
