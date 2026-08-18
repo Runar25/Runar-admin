@@ -3535,3 +3535,46 @@ a `norns`, ale **ne na kříž, horseshoe ani yggdrasil**. Jestli je to záměr,
 → zapsáno do `RUNAR_BACKLOG.md`, v mapě vedeno jako výjimka s poznámkou „NEROZHODNUTO".
 
 Affected doc(s): RUNAR_BACKLOG.md — v témže commitu.
+
+## 2026-08-18 — Cowork fact-check „Token & Model Discipline": ověřeno, a dvě věci z docs, které měníme sami
+
+Handoff od Coworku (doc-lane), **psáno proti `66f829b` = můj HEAD** — handoff je aktuální.
+Draft sám říká, že se NEMÁ implementovat (čeká na ratifikaci ownerem), takže se nefiluje.
+Ověřeno bylo jen to, co je ověřitelné, a to podle toho, kdo na co vidí (CLAUDE.md „kdo co VIDÍ").
+
+**Tvrzení o NAŠEM kódu — ověřil CODE, obě sedí:**
+`CLAUDE.md:373` je dnes text o stromu; pravidlo „Cowork NIKDY nediagnostikuje kód" je
+na `:406`. Citace v draftu je tedy zastaralá. Doplněk k jejich doporučení: **žádný živý doc
+v repu čísla řádků necituje** — jediné výskyty jsou v `docs/findings/`, což je doslovný záznam.
+
+**Tvrzení o oficiálních docs — ověřeno primárním zdrojem, taky sedí.** *„Size: target under
+200 lines per CLAUDE.md file"* je doslovný citát, je to **cíl**, a *„CLAUDE.md files are loaded
+in full regardless of length"*; tvrdý limit 200 řádků / 25 KB má **jen `MEMORY.md`**.
+Cowork tohle ve své předchozí verzi měl obráceně a sám to opravil — ověřoval jsem právě proto.
+
+### Dvě věci z týchž docs, které Cowork nezmínil a nás se týkají přímo
+1. **HTML komentáře v `CLAUDE.md` se do kontextu VŮBEC nedostanou** — *„Block-level HTML
+   comments … are stripped before the content is injected."* Našich 5 escape značek
+   (`check-docs:ok` uvnitř HTML komentáře) tedy nestojí ani token. Argument „značky nafukují prompt" padá.
+2. **Kořenový `CLAUDE.md` přežívá compact sám** — *„after `/compact`, Claude re-reads it from
+   disk and re-injects it."* To mění pohled na celý dnešní post-compact drát: hook nemusí nést
+   nic, co už je v `CLAUDE.md`, a pokud to nese, je to duplicita přes dva kanály (§20).
+   **Neověřeno, jestli se skutečně překrývají** — zapsáno do `RUNAR_BACKLOG.md`, netvrdím to.
+
+### Opraveno hned (v repu, mimo draft)
+Výjimka pro `CLAUDE.md` se opírala o **přesný počet řádků 248**. Změřeno dnes: **245** — ujelo
+to za jediný den. Číslo nahrazeno tvrzením „§1–§28 přesahují 200 řádků", které zůstane pravdivé,
+a k němu důvod, aby ho tam někdo nevrátil. **Je to zároveň doklad pro Coworkovo doporučení
+přestat citovat čísla:** neplatí to jen pro čísla řádků v citacích, ale pro každé číslo,
+které se mění s každou úpravou.
+
+### Změřeno pro rozhodnutí, které teprve přijde
+`CLAUDE.md` = **452 řádků**, z toho pravidla §1–§28 = **245** (mají datovanou výjimku) a
+**207 všechno ostatní**. Největší nepravidlové bloky: „N paralelních session" 54 · „Soubory
+a jejich zodpovědnost" 43 · „Reading systém — stav" 31.
+Oficiální `/doctor` logika říká odříznout **odvoditelné** (layouty, závislosti, architektura)
+a nechat pitfalls/rationale/konvence. Podle toho je jediný velký odvoditelný blok **výpis
+souborů (43 ř.)** — lanes a stav odvodit nejdou. **Nic z toho neměním**; je to podklad, aby
+se owner nerozhodoval podle dojmu.
+
+Affected doc(s): CLAUDE.md (číslo → tvrzení) · RUNAR_BACKLOG.md — v témže commitu.
