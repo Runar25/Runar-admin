@@ -3754,3 +3754,37 @@ Frontmatter i ta proveniencí porušená řádka byly vidět na první přečten
 se nedíval, protože „zadání je jasné". Jasné zadání není ověřené zadání.
 
 Affected doc(s): memory/MEMORY.md · memory/cowork-handoff-quality-bar.md · RUNAR_BACKLOG.md — v témže commitu.
+
+## 2026-08-18 — Tři CODE session, ne dvě. A dvě z nich commitovaly pod týmž prefixem
+
+KUKY: *„CODE-reader pracuje na nové direct reading… myslím, že v CLAUDE.md bylo napsáno,
+že jsou 2 CODE session. Není to pravda, jsou 3."* Měl pravdu — a špatné číslo bylo to menší
+z toho, co za tím leželo.
+
+**Ověřeno v `git log`:** commity `1eaced0` („spec jak Rúnar skládá čtení") a `eaa96c0`
+(„4. osa pestrosti") **nejsou od CODE-tune a nesou `[tune]`**. `CLAUDE.md` přitom o dva
+odstavce výš tvrdí: *„Git je všechny podepisuje Runar Admin, takže jediné, co v historii
+rozliší autora, je commit prefix."* **Ta věta přestala platit a nikdo si toho nevšiml** —
+`git log` tím přestal být akčním logem, na kterém stojí celá koordinace tří session.
+
+**Opraveno v `CLAUDE.md`:**
+- `2× Code` → `3× Code`
+- nový lane **CODE-reader → prefix `[read]`**: čte, testuje, mapuje, **produkční kód nesahá**
+  (KUKY 2026-08-17: *„codování dělá CODE-tune, ty jsi code-reader"*); nálezy do
+  `RUNAR_EVAL_LOG.md` / `RUNAR_DESIGN.md`, změny v kódu **předává** CODE-tune.
+
+**Proč `[read]`, a ne `[reader]` — je to změřené, ne vkus.** `[reading]` je v historii
+**46× jako téma** (`git log | grep -oE "^\[[a-z]+\]" | sort | uniq -c`). `[reader]` by se
+od něj v běžném výpisu nedalo odlišit pohledem, což je přesně ta vlastnost, kvůli které
+prefix existuje. Zároveň se `[reading]` **přestává používat jako téma** — historie si ho
+nechává, nové commity ne. Jedno slovo, jeden význam.
+
+⚠️ **Co tím NENÍ vyřešeno:** ta dvojznačnost je v historii i nadále — u commitů pod `[tune]`
+z 17.–18. 8. nejde zpětně poznat, která session je psala, leda podle dotčených souborů
+(CODE-reader sahá jen na `RUNAR_DESIGN.md` a `RUNAR_EVAL_LOG.md`). Nepřepisuju historii.
+
+⚠️ **Otázka, kterou nerozhoduju:** CODE-reader píše do `RUNAR_DESIGN.md`, což podle lanes
+patří **Coworku** („design, docs, eval-OBSAH"). Buď je to výjimka, kterou owner zavedl
+vědomě, nebo druhá kolize lanes. Zapsáno do `RUNAR_BACKLOG.md`.
+
+Affected doc(s): CLAUDE.md · RUNAR_BACKLOG.md — v témže commitu.

@@ -405,7 +405,7 @@ nikdy nebyl. Dvě mapy téhož = přesně to, co §20 zakazuje.
 ---
 
 ## N paralelních session — kdo o čem mluví
-Repo zpracovává VÍC session naráz (2× Code + N× Cowork). **Git je všechny podepisuje „Runar Admin"**, takže
+Repo zpracovává VÍC session naráz (**3× Code** + N× Cowork). **Git je všechny podepisuje „Runar Admin"**, takže
 jediné, co v historii rozliší autora, je **commit prefix**. Bez něj nikdo nepozná, kdo co udělal.
 
 ### ⭐ Vedoucí pravidlo: dělíme se podle toho, kdo co VIDÍ (2026-07-17, KUKY)
@@ -424,7 +424,14 @@ musí rozsuzovat, čímž mu den sežere koordinace.
 SÁM — bez ownera.
 
 **Lanes (kdo co vlastní):**
-- **CODE-tune** → prefix `[tune]` (+ `[reading]`/`[fix]`/`[pricing]` jako téma): reading systém, prompty (buildery v runar-character.js), config (TIERS/SPREAD_COSTS/SPREAD_CONFIG/VOCAB), pricing, translations, reader UI/CSS, reporter, auth, app, journal, eval-IMPLEMENTACE, copy. = vše KROMĚ tree vizuálu.
+- **CODE-tune** → prefix `[tune]` (+ `[fix]`/`[pricing]` jako téma; `[reading]` se jako téma
+  UŽ NEPOUŽÍVÁ — plete se s lane `[read]` níž, viz důvod tam): reading systém, prompty (buildery v runar-character.js), config (TIERS/SPREAD_COSTS/SPREAD_CONFIG/VOCAB), pricing, translations, reader UI/CSS, reporter, auth, app, journal, eval-IMPLEMENTACE, copy. = vše KROMĚ tree vizuálu.
+- **CODE-reader** → prefix `[read]`: **čte, testuje, mapuje — produkční kód NESAHÁ**
+  (KUKY 2026-08-17: *„codování dělá CODE-tune, ty jsi code-reader"*). Jak má Rúnar znít,
+  hlas × model, pestrost čtení; nálezy píše do `RUNAR_EVAL_LOG.md` a `RUNAR_DESIGN.md`,
+  změny v kódu **předává CODE-tune**, nedělá je.
+  ⚠️ **`[read]`, ne `[reader]`** — `[reading]` je v historii 46× jako téma a `[reader]`
+  by se od něj v `git log` nedalo odlišit pohledem (změřeno 2026-08-18).
 - **CODE-tree** → prefix `[tree]`: vizuální engine — runar-tree-prod.js (generovaný `build_tree_production.py`), tree-lab composery (runar-branch.js, runar-trunk.js), build_*composer.py, tree-lab-*/, tree-snapshots/, `RUNAR_TREE_*` docs, `tree_state` DB. Doménový doc = RUNAR_TREE.md.
 - **Cowork** → prefix `[cowork]`: design, docs, eval-OBSAH, copy audit, handoffy. Repo **READ-ONLY přes `git show HEAD:`** (ne `git status`, ten zapisuje do indexu); do repa píše VÝHRADNĚ přes CODE. Další Cowork session = táž lane, táž pravidla.
 
