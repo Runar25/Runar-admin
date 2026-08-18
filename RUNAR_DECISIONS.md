@@ -3472,3 +3472,30 @@ nechytil dnešní vadu v shrine. **Zapojen jako kontrola ㉙.**
   vygenerovaná dávka. Tu spustit umím; potřebuju k tomu token.
 
 Affected doc(s): RUNAR_BACKLOG.md — v témže commitu.
+
+## 2026-08-18 — Úhel u spreadů se nedoplňuje: obavu, na které to stálo, měření nepotvrdilo
+
+Poslední otevřená položka z auditu promptu. 17. 8. se rozhodnout nedala (23 norns v archivu,
+0 islandských). Owner dal přístup na Claude API, takže data vznikla: **300 čtení, 6 ramen,
+týž den, týž model, týž generátor.**
+
+**Obava zněla:** `angleIntro` má jen `RP_SINGLE`, takže spready nemají čím lámat opakování.
+**Obrácená páka (§25):** vypnout úhel u single — jediná proměnná. Kdyby úhel proti stejnosti
+pracoval, MUSÍ to bez něj být horší. **Není.** V islandštině stejnost dokonce klesla; všechny
+rozdíly jsou menší než rozptyl mezi půlkami téhož ramene.
+
+**Rozhodnutí: úhel se do spreadů NEPŘIDÁVÁ** — argument „bez úhlu splývají" neobstál.
+Kdyby se přidával někdy později, musí to být z jiného důvodu (řemeslná volba vstupu do obrazu),
+ne z tohohle.
+
+⚠️ **Nepřebíjí to nález z 2026-08-16 („úhel vyrábí stejnost", p = 0,004).** Ten měřil dvojice
+se STEJNÝM úhlem; moje metrika sdružuje všechny dvojice a na tu otázku nevidí. Platí obojí:
+*mezi čteními s týmž úhlem* stejnost roste, a *odebrání úhlu* měřitelně nezhoršilo nic.
+
+**Přibyly dva nástroje** (obojí v `scripts/utils/`): `gen_direct.js` — generuje dávku přímo
+přes Claude API, když je proxy token po expiraci; `measure_sameness.js` — párová stejnost,
+která si vždy vypíše vlastní šumovou podlahu, protože přesně na ní 17. 8. tohle měření padlo.
+
+Čísla, ramena a obě chyby v nástroji → `RUNAR_EVAL_LOG.md` 2026-08-18. Tady se neopisují (§20).
+
+Affected doc(s): RUNAR_BACKLOG.md (položka uzavřena) · RUNAR_EVAL_LOG.md — v témže commitu.

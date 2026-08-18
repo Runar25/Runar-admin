@@ -1408,3 +1408,55 @@ a kontrolní rameno má n=25, takže ani těch 20 % není silný údaj.
 
 **Co by to rozhodlo:** obrácená páka — vyměnit ty čtyři věty za jiné (jiné obrazy, týž tvar)
 a změřit, jestli čtení půjdou za nimi. Nepůjdou-li, je 23 % promptu nejlevnější místo, kde ubrat.
+
+---
+
+### 2026-08-18 — Úhel u spreadů: obrácená páka NEUKÁZALA nic. 300 čtení, 6 ramen
+
+**Otázka (owner, 2026-08-17):** `angleIntro` má JEN `RP_SINGLE`, šest cest ho nedostane.
+Splývají tedy spready víc? 17. 8. to změřit nešlo — archiv měl 23 norns a 0 islandských,
+a šum uvnitř single (0,0002 vs 0,0029) byl větší než rozdíl mezi rameny.
+
+**Čím se to dělalo.** Admin JWT do proxy vypršel, owner dal místo něj API klíč →
+`scripts/utils/gen_direct.js` (nový): staví prompty TÝMIŽ buildery jako produkce, posílá
+je přímo na `api.anthropic.com`, model `claude-opus-4-8` (= první v produkčním `MODELS`),
+system jako pole s cache — stejný tvar jako `claude-proxy`. **Všech 300 čtení vzniklo týž den,
+týmž generátorem, na týž model** — bez toho by se ramena lišila ještě modelem a dnem (§27, útok 2).
+
+**Ramena (50 čtení každé):** norns IS · norns EN · single IS · single EN · single IS bez úhlu
+· single EN bez úhlu. Vypnutí úhlu je TÁŽ páka jako v `gen_batch.js --without angle`
+(marker = prvních 30 znaků `RP_SINGLE[lang].angleIntro`, zahodí se řádka, která jím začíná) —
+druhý způsob by se rozešel (§18).
+
+**Metrika:** průměrná párová Jaccardova shoda na trigramech obsahových slov,
+`scripts/utils/measure_sameness.js`. Délkově srovnáno na prvních 31 slovech (nejkratší medián),
+protože delší text má víc trigramů.
+
+**① Spready vs single** (délkově srovnáno)
+```
+norns IS   0,0005      single IS   0,0003
+norns EN   0,0007      single EN   0,0008
+```
+**② Obrácená páka — single S úhlem vs BEZ úhlu** (jediná proměnná)
+```
+IS   s úhlem 0,0010   ·   bez úhlu 0,0008      šum uvnitř ramene: 0,0015 | 0,0002
+EN   s úhlem 0,0008   ·   bez úhlu 0,0011      šum uvnitř ramene: 0,0013 | 0,0007
+```
+**Závěr: žádný měřitelný rozdíl.** Odebrání úhlu stejnost NEZVÝŠILO — v islandštině dokonce
+klesla. Všechny rozdíly jsou menší než rozptyl mezi půlkami TÉHOŽ ramene (až 7×).
+
+⚠️ **Co se tím NETVRDÍ, a je to důležité.** Kánon má z 2026-08-16 opačně mířící nález —
+**„úhel vyrábí stejnost" (13,8 % vs 10,5 %, p = 0,004)** — a ten měřil **dvojice se STEJNÝM
+úhlem**. Moje metrika sdružuje všechny dvojice bez ohledu na úhel, takže **na tuhle otázku
+nevidí** a nepřebíjí ji. Můj výsledek zní jen: *„že by spready bez úhlu splývaly víc, se
+neprokázalo."* Ne „úhel nedělá nic".
+
+**Nástroj se obhájil (§27):** útok 1 (půlka proti půlce) je v tabulce výš a je to důvod závěru
+„nic". Útok 3 (zamíchání slov uvnitř čtení) shodil metriku o 82–100 %, takže na pořadí slov
+prokazatelně závisí — na rozdíl od metriky, která 2026-08-14 padla na 0,0000.
+
+**Dvě chyby v nástroji, obě nalezené vlastními pilotními běhy:**
+1. `Object.keys(AREAS)` vrátilo `['en','is','norns']` — AREAS je mapa PODLE JAZYKA. Do promptu
+   šlo `area: "norns"` místo „Ást & Sambönd". Pilot ze čtyř čtení to ukázal hned.
+2. `--dry-run` psal do TÉHOŽ souboru jako ostrá dávka a přepsal 50 hotových čtení dvěma
+   prázdnými. Suchý běh má teď vlastní jméno (`-dryrun`).
