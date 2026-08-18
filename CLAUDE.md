@@ -366,15 +366,17 @@ opravě téhož — detail `RUNAR_DECISIONS.md`. Kdo sem napíše „Dec 14–28
 ---
 
 ## Tree of Life — stav
-✅ Produkce (logika): calcLifeRune(), generování + uložení Life Rune, Tree tab UI, IS 3-vrstvý systém.
-✅ **Vizuální engine JE v produkci** (2026-07-10, admin-only beta): `runar-tree-prod.js` (generovaný
-`build_tree_production.py`, crown-composer 1:1) roste z REÁLNÝCH čtení — `readings` → `readingsToTreeLog()`
-→ `RunarTreeProd.render()`. Signály z labu dojely: intention→výška (`intZone`), area→strana (`areaSide`),
-ætt→charakter růstu (`aettStr`). Gating na `isAdmin()` v `renderLivingTree()`.
-❌ `tree_state` / `tree_readings` DB (= Muninn, paměť stromu) — na tom visí The Gathering + `detectPatterns()`.
-⚠️ Strom se krmí **regexem přes text čtení** (glyfy 0x16A0–0x16FF z `rune_glyph + short_text`) — změna
-formátu skládaného textu = tichá ztráta větví. Hlídá smoke ⑬ (`verify_tree_signals.js`).
-**Kanonický vstupní bod = RUNAR_TREE.md** (duše + zóny + stavba + mapa doků). `RUNAR_TREE_LAB.md` = HISTORIE (docs/archive/tree/).
+Stav vlastní `RUNAR_TREE.md` (duše · zóny · stavba · co je a co není postavené) a `git log`.
+**Tady se neopisuje** — §20.4. Do 2026-08-18 tu stály čtyři řádky stavu, které týž fakt držely
+potřetí (vedle `RUNAR_TREE.md:222` a `RUNAR_BACKLOG.md`) a mezitím zastaraly: psalo se
+„admin-only beta / gating na `isAdmin()`", zatímco `renderLivingTree()` pouští i testery
+(`isAdmin(...) || isTester`). Nalezl CODE-tune; opravila si to CODE-tree ve své sekci.
+
+⚠️ **Past pro lane `[tune]`:** strom se krmí regexem přes text čtení (glyfy 0x16A0–0x16FF
+z `rune_glyph + short_text`). Změníš formát skládaného textu → CODE-tree tiše přijde o větve.
+Hlídá smoke ⑬ (`verify_tree_signals.js`), ale tahle věta je důvod, proč o tom vůbec víš.
+
+Kanonický vstupní bod = `RUNAR_TREE.md`. `RUNAR_TREE_LAB.md` = historie (docs/archive/tree/).
 
 ## Word Corrections
 Živá data: `python show_corrections.py`
