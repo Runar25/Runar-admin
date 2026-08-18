@@ -1460,3 +1460,30 @@ prokazatelně závisí — na rozdíl od metriky, která 2026-08-14 padla na 0,0
    šlo `area: "norns"` místo „Ást & Sambönd". Pilot ze čtyř čtení to ukázal hned.
 2. `--dry-run` psal do TÉHOŽ souboru jako ostrá dávka a přepsal 50 hotových čtení dvěma
    prázdnými. Suchý běh má teď vlastní jméno (`-dryrun`).
+
+## 2026-08-18 — Pole vs pool, rozprostírač, forma L1 (opus-4-8, EN+IS)
+
+Oblouk od „moc stejná" k „takhle to má znít". Surové korpusy: `~/runar-eval/` (field-vs-pool-{en,is},
+field-is-native, test2-spreader-{en,is}, form-lever-en, L1-breadth-{en,is}, L1-combo-{en,is}).
+Metrika = **max-shluk** (kolik z N čtení spadlo na jeden obraz; nižší = pestřejší). n=6–8/rameno =
+SMĚR, ne finální tvrzení (pod prahem 20). Směr/rozhodnutí → `RUNAR_DECISIONS.md` 2026-08-18.
+
+**① Pool vs volné pole (5 run × EN+IS).** Volné pole se SLÉVÁ na nejzřejmější obraz: Isa EN 6/6 čaj,
+Berkana IS 6/6 těsto, Fehu IS 4/6 mléko. Kurátorský pool + úhly drží rovnoměrně (max-shluk 2–3).
+→ svoboda ≠ pestrost; rozprostírač je to, co stejnosti brání, ne volnost.
+
+**② IS-nativní pole (Isa+Berkana).** Slévání DRŽÍ i s polem daným rovnou islandsky (Isa ~6/6, Berkana
+6/6) → není to artefakt jazyka menu, je to vnitřní gravitace modelu. Falzifikace ownerovy hypotézy (§25).
+
+**③ Rozprostírač (vynucená rotace domén).** Slévání ZMIZELO v obou jazycích; každá vynucená doména dala
+dobré on-characteristic čtení (i „spekulativní" domény od Coworku). Dvě vady: vynucená mimosezónní doména
+(„led") prorazí sezónní hlídání (owner ji ale relaxoval → DESIGN); abstraktní doména umí prosáknout cizí
+obraz (Blank „ticho" → Berkanino těsto, vzácné, konkrétní domény ne).
+
+**④ Forma (L0/L1/L2).** Kolik esenčního řádku = laditelná páka. L0 báseň (runa nechycena) · **L1 obraz+
+řádek+umístění = cíl** · L2 vysvětluje vlastní metaforu + roste délka. L1 drží napříč 8 runami (pozitivní
+i temné) a v IS.
+
+**⑤ TVAR věty se opakuje kvůli JEDNOMU příkladu v promptu.** Esenční řádek pořád „X is the Y" — protože
+L1 instrukce dala jeden vzor (→ „direktiva = doslovný opis", 2026-08-15). Oprava = „střídej tvar" = nová
+třetí páka (TVAR věty).
