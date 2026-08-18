@@ -3578,3 +3578,36 @@ souborů (43 ř.)** — lanes a stav odvodit nejdou. **Nic z toho neměním**; j
 se owner nerozhodoval podle dojmu.
 
 Affected doc(s): CLAUDE.md (číslo → tvrzení) · RUNAR_BACKLOG.md — v témže commitu.
+
+## 2026-08-18 — Statická čtení run vadou NEPROŠLA: žádný řádek nevznikl uvnitř okna
+
+Poslední věc, kterou owner nechal na mně: islandská statická čtení v `runar_static_audio`
+měla vzniknout mezi 2026-05-31 a 2026-08-17 s anglickou postavou a větou „Respond only in
+English" (shrine si nastavoval `{...DEF_CHAR}`). Kód opraven 17. 8., ale data měla zůstat.
+
+**Změřeno v produkční DB (`supabase db query --linked`) — a vyšlo to jinak, než se čekalo.**
+
+```
+lang   řádků   created_at        updated_at     max version
+en       28    15.–16. 5.        16. 5.              2
+is       25    16.–21. 5.        21. 5.              2
+```
+
+**Celá tabulka je z 15.–21. KVĚTNA. Okno vady se otevřelo až 31. 5.** — `buildSysPrompt(activeChar,
+lang)` je v shrine od `815e817` (2026-05-31). Mezi tím a dneškem tam **nikdo nic nevygeneroval**,
+takže vadným promptem neprošel ani jeden řádek. `updated_at` to potvrzuje podruhé: poslední
+zápis 21. 5., nic se nepřepisovalo. `max(version) = 2` potvrzuje potřetí — žádná pozdější
+regenerace.
+
+**A čtvrtý, nezávislý důkaz — obsah, ne datum:** všech 25 islandských řádků obsahuje islandské
+znaky (`þðæö`) a **ani jeden** neobsahuje `" the "` nebo `" you "`; u anglických je to přesně
+obráceně. Kdyby některé čtení vzniklo pod anglickou postavou s „Respond only in English",
+tohle by to ukázalo.
+
+**Závěr: není co opravovat.** Vada v kódu byla skutečná a je zalepená; data se jí vyhnula
+tím, že se statická čtení od května negenerovala. Zapisuje se to proto, aby to příště nikdo
+nehledal znovu — a jako doklad, že „vadný kód" a „vadná data" nejsou totéž.
+
+⚠️ **Co to naopak znamená pro budoucnost:** jakmile někdo v shrine statické čtení znovu
+vygeneruje, dostane už opravený prompt. Kdyby se v tabulce objevil islandský řádek s datem
+mezi 31. 5. a 17. 8., ten by podezřelý byl — žádný takový ale není.

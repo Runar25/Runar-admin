@@ -29,9 +29,9 @@ to nezjistím", zkusit to.
 
 ## Zůstává na ownerovi (nepatří to sem jako úkol, ale nikdo jiný to neudělá)
 
-- **Islandská statická čtení run v `runar_static_audio`** vzniklá mezi 2026-05-31 a 2026-08-17
-  dostala anglickou postavu a větu „Respond only in English" — shrine si nastavoval
-  `{...DEF_CHAR}`. Opraveno, ale hotová data v tabulce zůstala. Detail → `RUNAR_DECISIONS.md` 17. 8.
+- ~~Islandská statická čtení v `runar_static_audio`~~ — **ZAVŘENO 2026-08-18: vadou
+  neprošla.** Celá tabulka je z 15.–21. 5., okno vady se otevřelo 31. 5.; navíc ani jeden
+  islandský řádek neobsahuje anglická slova. Detail → `RUNAR_DECISIONS.md` 18. 8.
 - **Cowork handoff „Variantové balíčky"** — owner ho probíral s Coworkem, výsledek neznám.
 
 ## Past, na kterou jsem dnes šlápl potřetí
