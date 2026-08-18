@@ -203,6 +203,24 @@ výstup VÝHRADNĚ přes CODE. Detail → CLAUDE.md §17 + sekce „N paralelní
 
 ---
 
+## Ownerovi se neposílají příkazy ke spuštění (KUKY 2026-08-18)
+
+*„Proč mi posíláš příkazový řádek? Nechápu, co to je!"* — o `node scripts/utils/gen_direct.js
+--without lens`.
+
+**Owner není obsluha nástrojů.** Skripty pouští CODE; owner rozhoduje a čte výsledky. Řádka
+k zkopírování po něm chce, aby si ji přečetl, pochopil, uložil a v pravou chvíli si na ni
+vzpomněl — to je práce navíc za nic.
+
+Místo příkazu napiš **co ten pokus zjistí a co z něj vyjde**; když to má smysl, prostě to pusť.
+Příkaz do odpovědi patří jen tehdy, když ho owner **výslovně chce** (např. SQL, které smí
+spustit jen on — pak přesné a celé, → [[paste-sql-explicitly]]).
+
+**Táž chyba, dvakrát za den:** `/compact Zachovej: …` (zrušeno ráno, sekce „Compact" níž)
+a večer tenhle příkaz na generování dávky. První byla výjimka v pravidle, druhá byl reflex.
+
+---
+
 ## Co NIKDY nedělat
 - HTML mockupy (žerou tokeny, nevypadají jako originál)
 - Přidávat "vylepšení" která nebyla zadána
