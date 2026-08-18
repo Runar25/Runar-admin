@@ -405,8 +405,19 @@ nikdy nebyl. Dvě mapy téhož = přesně to, co §20 zakazuje.
 ---
 
 ## N paralelních session — kdo o čem mluví
-Repo zpracovává VÍC session naráz (**3× Code** + N× Cowork). **Git je všechny podepisuje „Runar Admin"**, takže
-jediné, co v historii rozliší autora, je **commit prefix**. Bez něj nikdo nepozná, kdo co udělal.
+Repo zpracovává VÍC session naráz: **3× CODE** (tune · read · tree), a ke každé **Cowork symbiont**,
+se kterým se radí (Cowork-tune · Cowork-read · Cowork-tree). Cowork je **read-only**, proto volnější —
+do repa píše výhradně přes svého CODE.
+
+⭐ **KAŽDÁ SESSION COMMITUJE POD SVÝM JMÉNEM** (KUKY 2026-08-18: *„jak tohle hlídat?"*):
+```
+git -c user.name='CODE-tune' commit -F <msg> -- <cesty>
+```
+Per-commit, **ne `git config`** — strom je sdílený a session by si config přepisovaly.
+E-mail zůstává, takže atribuce na GitHubu se nemění. Hlídá to **smoke ㉛**.
+⚠️ **Do 2026-08-18 tu stálo, že autora rozliší prefix.** Přestalo to platit ve chvíli, kdy
+přibyla třetí CODE session a začala commitovat pod `[tune]` — a nevšiml si toho nikdo,
+protože to nic nehlídalo. Prefix zůstává jako čitelnost, ale **není to už jediná pojistka**.
 
 ### ⭐ Vedoucí pravidlo: dělíme se podle toho, kdo co VIDÍ (2026-07-17, KUKY)
 - **Cowork mluví o DATECH** — čtení, evaly, screenshoty, copy, design, obsah. To vidí celé a správně.
@@ -433,7 +444,8 @@ SÁM — bez ownera.
   ⚠️ **`[read]`, ne `[reader]`** — `[reading]` je v historii 46× jako téma a `[reader]`
   by se od něj v `git log` nedalo odlišit pohledem (změřeno 2026-08-18).
 - **CODE-tree** → prefix `[tree]`: vizuální engine — runar-tree-prod.js (generovaný `build_tree_production.py`), tree-lab composery (runar-branch.js, runar-trunk.js), build_*composer.py, tree-lab-*/, tree-snapshots/, `RUNAR_TREE_*` docs, `tree_state` DB. Doménový doc = RUNAR_TREE.md.
-- **Cowork** → prefix `[cowork]`: design, docs, eval-OBSAH, copy audit, handoffy. Repo **READ-ONLY přes `git show HEAD:`** (ne `git status`, ten zapisuje do indexu); do repa píše VÝHRADNĚ přes CODE. Další Cowork session = táž lane, táž pravidla.
+- **Cowork-tune · Cowork-read · Cowork-tree** → prefix `[cowork]`: design, docs, eval-OBSAH,
+  copy audit, handoffy. Každý je **symbiont své CODE session** — ta se s ním radí o obsahu. Repo **READ-ONLY přes `git show HEAD:`** (ne `git status`, ten zapisuje do indexu); do repa píše VÝHRADNĚ přes CODE. Další Cowork session = táž lane, táž pravidla.
 
 **Mechanika (co ZBYLO — zbytek obstará git):**
 - **Commit prefix = LANE. `git log` s prefixy JE akční log.** Samostatnou řádku do `RUNAR_DECISIONS.md` piš
@@ -453,7 +465,8 @@ SÁM — bez ownera.
 **Komunikace (session spolu nemluví → přes git + soubory):**
 - `git pull` PŘED prací · `git push` IHNED po commitu · malé commity.
 - **Commit ÚZCE: `git commit -F <msg> -- <cesty>`** (pathspec NA COMMITU, ne jen na `git add`). Holý `git commit` / `git add -A` bere CELÝ index — vč. cizí STALE staged změny jiné session. **2026-08-02: holý commit sebral cizí staged `sw.js` → downgrade v249→v248** (klienti by servírovali staré čtení). Pre-commit má teď guard proti sw.js downgrade, ale disciplína je levnější. Detail → memory `parallel-code-sessions-collision`.
-- Commit prefix = LANE (`[tune]` · `[tree]` · `[cowork]`, volitelně + téma) → čitelná historie + jasné vlastnictví. Git podpis je u všech stejný, prefix je jediný rozlišovač.
+- Commit prefix = LANE (`[tune]` · `[read]` · `[tree]` · `[cowork]`, volitelně + téma) → čitelná
+  historie. Autora ale nese **jméno v podpisu**, ne prefix — viz úvod sekce.
 - Musíš sáhnout do cizí domény? Drž změnu minimální + zapiš „co a proč" do svého doc (RUNAR_TREE.md / snapshot) + push hned.
 - sw.js: git hook auto-bumpuje; když oba commitnou JS, vyšší číslo vyhrává (jen cache-buster, ne konflikt obsahu).
 - Git konflikt? Neforcuj — pull, vyřeš ručně JEN svou doménu.

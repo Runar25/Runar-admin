@@ -485,6 +485,22 @@ output = (r.stdout + r.stderr).strip()
 radky = [l for l in output.split('\n') if l.strip()]
 check(radky[-1].strip() if radky else 'lever check ran', passed, '' if passed else output)
 
+# ── 31. Pozná git log, která session commit napsala? ────────
+# 2026-08-18: CLAUDE.md tvrdilo „jediné, co rozliší autora, je commit prefix". Pak přibyla
+# třetí CODE session, začala commitovat pod [tune] jako CODE-tune, a ta věta tiše přestala
+# platit — nevšiml si toho nikdo, protože to nic nehlídalo. Owner: „jak tohle hlídat?"
+# Kořen nebyl prefix, ale společný podpis; kontrola proto sleduje JMÉNO autora.
+# SAMOAKTIVAČNÍ: dokud se všechny tři lane nepodepíšou, jen hlásí (blokovat je za pravidlo,
+# o kterém nevědí, by bylo nefér); jakmile se podepíšou všechny, přepne se sama na blokující.
+print('\n' + chr(0x325B) + ' IDENTITA SESSION V COMMITU (verify_commit_identity.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_commit_identity.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = next((l for l in radky if not l.startswith('  ')), radky[-1] if radky else 'identity check ran')
+check(prvni.strip(), passed, '\n'.join(l for l in radky if l != prvni))
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

@@ -3788,3 +3788,44 @@ patří **Coworku** („design, docs, eval-OBSAH"). Buď je to výjimka, kterou 
 vědomě, nebo druhá kolize lanes. Zapsáno do `RUNAR_BACKLOG.md`.
 
 Affected doc(s): CLAUDE.md · RUNAR_BACKLOG.md — v témže commitu.
+
+## 2026-08-18 — „Jak tohle hlídat?" — kořen nebyl prefix, ale společný podpis (smoke ㉛)
+
+KUKY po zjištění, že dvě session commitují pod `[tune]`: *„to mi připomíná, proč jsme měli
+takové problémy s tím, že si nic nepamatuješ… teď rozumíš. Jak tohle hlídat?"*
+
+**Ta věta v `CLAUDE.md` nebyla mechanismus, byl to slib.** Stálo tam *„jediné, co v historii
+rozliší autora, je commit prefix"* — a přestalo to platit ve chvíli, kdy přibyla třetí CODE
+session. Nikoho to neupozornilo, protože prefix si session píše sama a nic ho neověřuje.
+**Táž třída vady jako paměť po compactu:** pravidlo, které drží jen tím, že si na něj někdo
+vzpomene, není pojistka — je to odložená chyba.
+
+**Kořen je o patro níž:** `git log -15 --format=%an` → **15/15 „Runar Admin"**. Git sám autory
+nerozlišuje, takže prefix nesl celou tíhu a při kolizi informace prostě zmizela.
+
+**Oprava — každá session commituje pod svým jménem:**
+```
+git -c user.name='CODE-tune' commit -F <msg> -- <cesty>
+```
+Per-commit, **ne `git config`** — strom je sdílený a session by si config přepisovaly.
+E-mail zůstává, takže atribuce na GitHubu se nemění.
+
+**Hlídá to smoke ㉛ (`verify_commit_identity.js`) a je SAMOAKTIVAČNÍ:**
+- fáze 1 (dnes): vypíše rozdělení autorů, **neblokuje** — blokovat cizí session za pravidlo,
+  o kterém neví, by bylo nefér;
+- fáze 2: jakmile se v historii objeví **všechny tři** identity, mechanismus žije a generické
+  jméno u novějšího commitu je regrese → **blokuje**.
+Nikdo si nemusí pamatovat, že se to má přepnout — což je přesně to, co se u téhle třídy vad
+vždycky zapomene.
+
+⚠️ **Dvě kopie té vyvrácené věty.** Stála v `CLAUDE.md` dvakrát (úvod sekce + „Komunikace"),
+takže §20 platil i tady: opravit jednu by nestačilo. Obě přepsány.
+
+**Doplněna struktura (KUKY 2026-08-18):** 3× CODE (tune · read · tree), ke každé **Cowork
+symbiont**, se kterým se radí (Cowork-tune · Cowork-read · Cowork-tree). Cowork je read-only,
+proto volnější; do repa píše výhradně přes svého CODE.
+
+⚠️ **Co to NEřeší:** commity ze 17.–18. 8. pod `[tune]` zůstávají nerozlišitelné — historii
+nepřepisuju. A dokud CODE-read a CODE-tree identitu nepřijmou, kontrola jen hlásí.
+
+Affected doc(s): CLAUDE.md — v témže commitu.
