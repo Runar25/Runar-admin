@@ -99,6 +99,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [copy-always-in-runar-voice.md](copy-always-in-runar-voice.md) — veškerá copy VŽDY hlasem Rúnara (přečti charakter), nikdy slepé generické vymýšlení; spíš stručně
 - [read-design-before-voice-work.md](read-design-before-voice-work.md) — než sáhneš na hlas/prompt: RUNAR_DESIGN.md „Kdo je Rúnar" + specifikace nálad; jinak přepisuješ rozhodnuté
 - [prompt-map-artifact.md](prompt-map-artifact.md) — vizuální reference mapa Rúnarova promptu (artifact URL); snapshot, pravda = kód
+- [cowork-handoff-quality-bar.md](cowork-handoff-quality-bar.md) — standard pro Cowork content/research/eval handoffy (12 konkrétních návyků), potvrzený na dvou po sobě oceněných handoffech 2026-08-18
 - [runar-project.md](runar-project.md) — vyprázdněno 2026-07-18, jen rozcestník
 - [is-grammar-adjective-gender.md](is-grammar-adjective-gender.md) — nejdřív rod podstatného, pak skloňuj přídavné
 - [is-vazba-check.md](is-vazba-check.md) — islandskou vazbu (rekce/pád/kolokace/idiom) ověř `is-vazba.py` (nútímamálsorðabók API + korpus), vrstva nad BÍN, nehádej
