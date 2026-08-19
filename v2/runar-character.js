@@ -467,7 +467,6 @@ var RUNE_IMAGES = [
   ['Fehu','any','Brauðið kemur heitt út úr ofninum, nóg handa öllum við borðið.','The bread comes hot from the oven, enough for everyone at the table.'],
   ['Uruz','any','Urðin stendur af sér hvert vorhret án þess að bifast.','The scree withstands every spring storm without shifting.'],
   ['Uruz','any','Hraunið man eldinn enn, þótt mosinn hafi lagst yfir.','The lava still remembers the fire, though the moss has settled over it.'],
-  ['Thurisaz','bright','Melgresið sker í lófann þegar þú grípur það of fast.','The lyme grass cuts your palm when you grip it too hard.'],
   ['Thurisaz','any','Sprungan í hrauninu bíður — þú kemst ekki yfir nema stökkva.','The crack in the lava waits — you cannot cross it without a jump.'],
   ['Ansuz','bright','Andvarinn ber lóukvakið yfir móann til þín.','The breeze carries the plover\'s call across the moor to you.'],
   ['Ansuz','any','Hrafninn sest á staurinn og bíður þess að þú hlustir.','The raven settles on the fencepost and waits for you to listen.'],
