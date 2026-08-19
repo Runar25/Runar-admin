@@ -119,4 +119,5 @@ Snapshot = **historický záznam ke svému datu**, ne popis dneška. Nikdy z ně
 - [snapshots/2026-08-17-sonnet5-drop-deployed.md](snapshots/2026-08-17-sonnet5-drop-deployed.md) — sonnet-5 pryč z proxy MODELS + deploy v59; pozor: main checkout pozadu za origin/main
 - [snapshots/2026-08-17-hlas-model-audit-rune-character-plan.md](snapshots/2026-08-17-hlas-model-audit-rune-character-plan.md) — hlas × model (náklady, drop sonnet-5), keep/drop/invest mapa promptu, plán „charakteristika runy místo vloženého obrazu" + test délky
 - [snapshots/2026-08-18-audit-promptu-dokoncen.md](snapshots/2026-08-18-audit-promptu-dokoncen.md) — audit systémového promptu DOKONČEN (13 bloků + 5 zbylých položek); nové nástroje gen_direct.js a measure_sameness.js ← NEJNOVĚJŠÍ
-- [snapshots/2026-08-18-tree-kura-a-silueta.md](snapshots/2026-08-18-tree-kura-a-silueta.md) — CODE-tree: kůra (4 pokusy), WebGL režim, těžiště se přesunulo na siluetu („palma") ← NEJNOVĚJŠÍ
+- [snapshots/2026-08-18-tree-kura-a-silueta.md](snapshots/2026-08-18-tree-kura-a-silueta.md) — CODE-tree: kůra (4 pokusy), WebGL režim, těžiště se přesunulo na siluetu („palma")
+- [snapshots/2026-08-19-rune-imagery-voice-engine.md](snapshots/2026-08-19-rune-imagery-voice-engine.md) — engine runové obraznosti+hlasu (6 os pestrosti), CODE-read×Cowork; dávka 3/3 + 3 opravy (hvalreki/need-fire/landvættir) visí ← NEJNOVĚJŠÍ
