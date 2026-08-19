@@ -1507,3 +1507,24 @@ OBRAZ koliduje napříč runami NEZÁVISLE na fasetě: „kynoucí těsto" padlo
 → Uruz#1 slabé. Banka řeší SLOVA významu; obraz na runu drží POLE (kurátorské domény per runa) → pole
 potřebuje cross-run rozlišení OBRAZŮ stejně jako banka faset. Test běžel BEZ pole (self-gen), proto to
 vylezlo. Korpus: `crossrun-collision-en.txt`.
+
+## 2026-08-19 — Kánon-check nových symbolů: landvættir/Algiz a hvalreki/Nauthiz protékají i s mantinely
+
+Owner: „zkontroluj nové návrhy, jestli neruší pravidla o tom, jaký je Rúnar." Měřeno s AKTIVNÍMI
+mantinely v promptu (no cold reading / no advice / no prediction), 4 čtení na vazbu, opus-4-8.
+Korpus: `~/runar-eval/canon-check-en.txt`. Jiná osa než symbol-audit (ten ověřuje reálný profil
+podmětu; tohle ověřuje, jak podmět generuje vůči kánonu „Kdo je Rúnar").
+
+Většina nových symbolů (ledovec→Isa, need-fire→Nauthiz, labuť→Jera, kría→Algiz, podměty dávek 1–2)
+kánon drží. DVĚ vazby protékají navzdory mantinelům:
+- **landvættir→Algiz: 2/4 sklouzlo do studeného čtení** — „you stand within the ring it holds" /
+  „the water reaches only so far" = strážce chrání tazatele = tvrzení o jeho stavu (`_noColdRead`:
+  svět se kolem tazatele neuspořádává). Nejvyšší kánon-riziko z nových návrhů.
+- **hvalreki→Nauthiz: věštba udržena, rada protekla 2/4** — velryba už na břehu (žádné „přijde"),
+  ale „warned not to wait on the same gift twice" = pokyn tazateli. Bezpečné: výstraha jako
+  přísloví stojící VEDLE (obraz), ne příkaz.
+
+⭐ Poučení: u symbolu, jehož SAMA POVAHA míří na kánonovou čáru (Algiz=ochrana→„jsi chráněn" ·
+hvalreki=přísloví→„jsi varován"), obecné zákazy NESTAČÍ — protekly ~2/4. Potřebují framing-guardrail
+nesený s fragmentem + cílený kánon-eval při implementaci. Bezpečný vzor pro Algiz = lokalizovat stráž
+V tazateli (kría „something in you"), ne ve světě.
