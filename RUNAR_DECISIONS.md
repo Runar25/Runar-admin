@@ -3854,3 +3854,38 @@ read-only soubory v `.git`, takže druhý stav spadl na „složka už existuje"
 jen jednou, vypadalo by to jako chyba kontroly. Uklízeč teď shazuje read-only příznak.
 
 Zůstává: **CODE-read**. Do jeho podpisu je ㉛ jen informativní.
+
+## 2026-08-19 — ㉛ zablokovala všechny tři session. Moje chyba byla v TESTU, ne v nápadu
+
+CODE-read hlásí hned po aktivaci: jeho první podepsaný commit (`1548c16`) přepnul ㉛ na
+blokující a ta pak odmítla push **komukoli** — v okně 80 commitů leží **předkonvenční
+generické commity**, které už jsou na originu a nikdo je neopraví bez přepsání historie.
+Ověřeno reprodukcí na mém stromě: `exit=1`, mezi viníky i **můj vlastní** `0a14026`.
+
+**Hlášení sedělo do detailu** — včetně seznamu šesti commitů i návrhu opravy. Beru ho celé.
+
+### Co jsem udělal špatně, a není to ten nápad
+Rozbil jsem to den předtím v **šesti stavech** a napsal, že přechod je otestovaný. Jenže
+všech šest běželo na **syntetické historii, kde předkonvenční commity nebyly**. Stav
+„aktivace nad EXISTUJÍCÍ historií" — jediný, který reálně nastane — mezi nimi nebyl.
+**Test potvrdil, co jsem čekal, ne co se stane.** To je přesně ta vada, kterou §27 popisuje
+u metrik, jen posunutá o patro výš: nástroj (test) prošel jen tím případem, kvůli kterému vznikl.
+
+### Oprava
+Soudí se jen commity, které vznikly **po zavedení konvence**. Předěl se **nepíše natvrdo** —
+je to nejstarší commit nesoucí identitu lane (dnes `0d2abbc`); hash by zastaral při každém
+rebase, tohle se spočítá samo. Vše před předělem je předkonvenční z definice.
+
+Rozbito v **osmi** stavech, dva nové jsou právě ty chybějící:
+```
+G) předkonvenční generické PŘED předělem      → PROCHÁZÍ   (to, co blokovalo)
+H) předkonvenční + generický i PO předělu     → BLOKUJE    (kontrola pořád funguje)
+```
+Bez H by z opravy byla tapeta: nestačí přestat blokovat, musí to dál chytat to, kvůli čemu
+kontrola vznikla.
+
+⚠️ **Poučení, které je širší než tenhle případ:** nová kontrola se musí rozbít **nad
+skutečnou historií**, ne jen nad tou, kterou si k testu vyrobím. Syntetická data ukážou,
+že logika dělá, co jsem napsal — ne že to sedne na svět, do kterého ji pouštím.
+
+Zásluha za nález i za návrh opravy: **CODE-read**. Nepoužil `--no-verify`, počkal.

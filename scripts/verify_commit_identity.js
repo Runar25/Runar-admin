@@ -18,6 +18,10 @@
 //                    a generické jméno u novějšího commitu je regrese → BLOKUJE
 // Nikdo si nemusí pamatovat, že se to má přepnout.
 //
+// ⚠️ Soudi se JEN commity po zavedeni konvence (predel = nejstarsi podepsany commit).
+//    Bez toho kontrola 2026-08-19 zablokovala push vsem trem session za predkonvencni
+//    commity, ktere uz jsou na originu a nejdou opravit. Nahlasil CODE-read.
+//
 //   node scripts/verify_commit_identity.js
 'use strict';
 const { execSync } = require('child_process');
@@ -69,7 +73,22 @@ if (prijali.length < LANES.length) {
 }
 
 // fáze 2: mechanismus žije → generické jméno je regrese
-const spatne = commity.filter((c) => c.an === GENERIC);
+//
+// ⚠️ SOUDÍ SE JEN TO, CO VZNIKLO PO ZAVEDENÍ KONVENCE. Bez toho kontrola 2026-08-19
+// zablokovala push všem třem session za předkonvenční commity, které už leží na originu
+// a nikdo je neopraví bez přepsání historie (nahlásil CODE-read hned po aktivaci).
+// Předěl se NEPÍŠE NATVRDO: je to nejstarší commit nesoucí identitu lane. Hash by zastaral
+// při každém rebase, tohle se spočítá samo.
+const historie = (git('log --format=%H%x09%an') || '').trim().split('\n').filter(Boolean)
+  .map((l) => { const [h, an] = l.split('\t'); return { h, an }; });
+const podepsane = historie.filter((c) => LANES.indexOf(c.an) !== -1);
+const predel = podepsane.length ? podepsane[podepsane.length - 1].h : null;   // nejstarší podepsaný
+const poPredelu = new Set(
+  predel ? (git('log --format=%H ' + predel + '..HEAD') || '').trim().split('\n').filter(Boolean) : []
+);
+if (predel) poPredelu.add(predel);   // předěl sám je první podepsaný, tedy taky „po konvenci"
+
+const spatne = commity.filter((c) => c.an === GENERIC && poPredelu.has(c.h));
 if (spatne.length) {
   console.log('commit bez identity session — `git log` nepozná autora');
   for (const c of spatne.slice(0, 5)) {
