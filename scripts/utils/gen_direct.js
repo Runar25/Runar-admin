@@ -62,6 +62,22 @@ if (ARM === 'most4')
   vm.runInContext('RP_SINGLE.en.length = ' + JSON.stringify(KANDIDAT_DELKA.en)
     + '; RP_SINGLE.is.length = ' + JSON.stringify(KANDIDAT_DELKA.is) + ';', S);
 
+// most3b — tyz kandidat, ale bez SRAZKY v samotnem zadani cteni. `noqBranch` dnes
+// zacina vetou „through image, not explanation" / „í myndum, ekki útskýringu", coz je
+// presny opak toho, co pravidlo zada. Ta veta se tu MAZE (zbytek radky zustava), aby
+// prompt rikal jednu vec. Izoluje se tim prave ona: most3 vs most3b se lisi jen ji.
+if (ARM === 'most3b') {
+  vm.runInContext('VOICE_PROFILES.focused.rules = ' + JSON.stringify({ describe: KANDIDAT_DESCRIBE }) + ';', S);
+  vm.runInContext([
+    'RP_SINGLE.en.noqBranch = function (rune, g, world) {',
+    '  return "Mention " + rune + " by name once, woven naturally. One clear insight is enough — do not pack everything in.";',
+    '};',
+    'RP_SINGLE.is.noqBranch = function (rune, g, world) {',
+    '  return "Nefndu " + rune + " einu sinni og fléttaðu nafnið náttúrlega inn í textann. Ein skýr innsýn nægir — ekki troða öllu inn.";',
+    '};',
+  ].join(''), S);
+}
+
 const RUNES  = vm.runInContext('RUNES', S);
 // AREAS/SEEKS/INTENTIONS jsou mapy PODLE JAZYKA ({en:[...], is:[...], norns:[...]}),
 // takze `Object.keys` by dalo jazyky, ne volby. Overeno na pilotu: do promptu slo area="norns".
@@ -111,6 +127,11 @@ if (!STAVITEL[SPREAD]) { console.error('  neznamy spread: ' + SPREAD); process.e
   const jeTam = zk.indexOf(znacka) !== -1;
   if (ARM === 'dnes' && jeTam) { console.error('  RAMENO dnes, ale kandidat V PROMPTU JE'); process.exit(1); }
   if (ARM !== 'dnes' && !jeTam) { console.error('  RAMENO ' + ARM + ': kandidat se do promptu NEVLOZIL'); process.exit(1); }
+  // §19 — u most3b se musi PROKAZAT i to druhe: srazkova veta z promptu zmizela.
+  const SRAZKA = { en: 'through image, not explanation', is: 'í myndum, ekki útskýringu' }[LANG];
+  const maSrazku = zk.indexOf(SRAZKA) !== -1;
+  if (ARM === 'most3b' && maSrazku) { console.error('  RAMENO most3b: srazkova veta v promptu PORAD JE'); process.exit(1); }
+  if (ARM !== 'most3b' && !maSrazku) { console.error('  POZOR: srazkova veta v promptu chybi i mimo most3b — zmenil ji nekdo?'); process.exit(1); }
   if (ARM === 'most4' && zk.indexOf(KANDIDAT_DELKA[LANG].slice(0, 40)) === -1) {
     console.error('  RAMENO most4: nova delka se do promptu NEVLOZILA'); process.exit(1); }
   // proud se reseeduje na zacatku KAZDEHO cteni (preseed), takze tahle kontrola nic nerozhodi
