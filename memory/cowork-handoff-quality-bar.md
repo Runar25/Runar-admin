@@ -59,9 +59,17 @@ něco v tom, co čtenář udělá dál? Ne → pryč.
 6. **Mezery v nástrojích se přiznají.** Když nejde něco ověřit (síť, přístup), napsat přesně
    co ne — netvářit se, že to nebylo potřeba.
 
-7. **IS znění = CODE, ne Cowork** (`is-done-together-not-for-sigrun.md`, KUKY 2026-08-14).
-   Cowork dává obsah (co se má říct), ne islandskou formulaci — CODE ověří vlastní znění
-   v jednom kole s nástroji po ruce; poslat návrh Coworku jen přidá kolo navíc.
+7. **Islandský OBSAH = Cowork. IS znění INSTRUKCÍ v promptu = CODE**
+   (`is-done-together-not-for-sigrun.md`, KUKY 2026-08-14). Cowork píše islandsky obrazy,
+   fragmenty, fasety, lore a scény — **nativně z významu (§2), ne překladem z EN**; přesně tak
+   vznikly `RUNE_IMAGES` i islandské popisy světů v `rworld()` (viz `RUNAR_DECISIONS.md`:
+   „obrazy jsou jen islandsky — Cowork EN verze nedodal" · „až Cowork dodá islandské popisy
+   světů"). Co Coworku NEPATŘÍ, je formulace islandské **věty v promptu** (direktivy, pravidla)
+   — tu si CODE napíše a ověří sám (`is-vazba`, GreynirCorrect, BÍN); poslat mu ji = kolo navíc.
+   Ověření nástroji dělá CODE na všechno, co přijde.
+   ⚠️ Do 2026-08-20 tu stálo holé „IS znění = CODE, ne Cowork" bez toho rozlišení. CODE-read podle
+   toho napsal handoff, který Coworku **zakázal islandskou větev banky faset** — tedy jeho vlastní
+   práci. Opravil owner: *„IS znění dřív Cowork dělal."*
 
 ## Rozsah a úsudek
 
