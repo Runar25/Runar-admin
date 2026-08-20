@@ -18,6 +18,9 @@ const DRY    = process.argv.includes('--dry-run');
 
 const ARM    = arg('arm', 'dnes');            // dnes | most3 | most4
 const TAG    = arg('tag', 'describe-most-2026-08-20');
+const RUNA   = arg('rune', '');               // pevna tazena runa
+const MATRIX = arg('matrix', '');             // area | life | (prazdne = nahodny kontext)
+const DELKA  = arg('delka', '');              // pevna3 | pevna4 | rozsah | los
 
 // ── KANDIDAT: pravidlo „pojmenuj runu a uvaz k ni obraz" ────────────────────
 // PROC: obraz je pro neznaleho necitelny, kdyz ho text jen postavi vedle jmena runy.
@@ -36,13 +39,32 @@ const KANDIDAT_DESCRIBE = {
 // Ctvrta veta = misto pro to pojmenovani. Rozpocet NENI technicky strop, ale cas nahlas
 // (~20-25 s), proto se meni cely — „limit a smis ho prekrocit" model cte jako povoleni
 // k rozpinani a nedodrzi ani jedno.
+// Tri-vetny rozpocet = presne to, co ma produkce dnes; drzi se tu proto, aby `los` mel
+// z ceho losovat, aniz by se produkcni retezec cetl zpetne (a rozesel se s nim).
+const DELKA3 = {
+  en: 'One flowing reading — 3 short sentences, 38 to 45 words total. It will be read aloud, so keep every sentence lean — about 20 to 25 seconds spoken. No sections, no labels, no line breaks between thoughts.',
+  is: 'Gefðu einn samfelldan lestur — 3 stuttar setningar, 38 til 45 orð alls. Hann verður lesinn upphátt, svo hafðu hverja setningu létta — um 20 til 25 sekúndur. Engar fyrirsagnir, engar hlutaskiptingar.',
+};
+// Ownerovo zneni jako JEDNA veta — model si vybere sam.
+const DELKA_ROZSAH = {
+  en: 'One flowing reading — 3 or 4 short sentences, 35 to 60 words total. It will be read aloud, so keep every sentence lean. No sections, no labels, no line breaks between thoughts.',
+  is: 'Gefðu einn samfelldan lestur — 3 eða 4 stuttar setningar, 35 til 60 orð alls. Hann verður lesinn upphátt, svo hafðu hverja setningu létta. Engar fyrirsagnir, engar hlutaskiptingar.',
+};
 const KANDIDAT_DELKA = {
   en: 'One flowing reading — 4 short sentences, 50 to 58 words total. It will be read aloud, so keep every sentence lean — about 28 to 33 seconds spoken. No sections, no labels, no line breaks between thoughts.',
   is: 'Gefðu einn samfelldan lestur — 4 stuttar setningar, 50 til 58 orð alls. Hann verður lesinn upphátt, svo hafðu hverja setningu létta — um 28 til 33 sekúndur. Engar fyrirsagnir, engar hlutaskiptingar.',
 };
 
-const KEY = process.env.ANTHROPIC_API_KEY;
-if (!KEY && !DRY) { console.error('  chybi ANTHROPIC_API_KEY v env'); process.exit(1); }
+// Klic: env ma prednost, jinak soubor MIMO repo. Repo je verejne, takze v nem klic
+// nesmi lezet ani gitignorovany — jedno `git add -f` a je venku. Zaroven se o nej
+// nema porad zadat owner (KUKY 2026-08-20), proto stabilni cesta v ~/.claude/.
+const KEY_SOUBOR = require('path').join(require('os').homedir(), '.claude', 'runar-api-key.txt');
+const KEY = process.env.ANTHROPIC_API_KEY
+  || (fs.existsSync(KEY_SOUBOR) ? fs.readFileSync(KEY_SOUBOR, 'utf8').trim() : '');
+if (!KEY && !DRY) {
+  console.error('  chybi klic: ani ANTHROPIC_API_KEY v env, ani ' + KEY_SOUBOR);
+  process.exit(1);
+}
 
 const D = 'C:/Users/zkuku/Downloads/Runar-admin/v2/';
 const S = { console: { log() {}, warn() {}, error() {} } };
@@ -101,7 +123,10 @@ const rnd = () => vm.runInContext('Math.random()', S);
 // Reseed PODLE INDEXU cteni: cteni c. 3 dostane v kazdem rameni tytez paky.
 const preseed = (i) => vm.runInContext('__seed = ' + (SEED0 + i * 7919) + ';', S);
 const nahodne = (a) => a[Math.floor(rnd() * a.length)];
+const RUNA_OBJ = RUNA ? RUNES.filter((r) => r.n.toLowerCase() === RUNA.toLowerCase())[0] : null;
+if (RUNA && !RUNA_OBJ) { console.error('  neznama runa: ' + RUNA); process.exit(1); }
 function vzorek() {
+  if (RUNA_OBJ) { const a = [RUNA_OBJ]; for (let i = 1; i < pocet; i++) a.push(RUNES[i]); return a; }
   const kopie = RUNES.slice();
   const tazene = [];
   for (let i = 0; i < pocet; i++) tazene.push(kopie.splice(Math.floor(rnd() * kopie.length), 1)[0]);
@@ -154,14 +179,30 @@ function odeberUhel(p) {
   return zbylo.join(String.fromCharCode(10));
 }
 
+let radekDelka = null;
 async function jedno(i) {
   preseed(i);   // od tohohle bodu je cteni c. i bit po bitu stejne ve vsech ramenech
   const runy = vzorek();
-  const u = { name: LANG === 'is' ? 'Anna' : 'Anna', area: nahodne(AREAS), seeking: nahodne(SEEKS),
-              intention: nahodne(INTENT), question: '', lifeRune: null };
+  // MATRIX = drz vsechno ostatni pevne a menit jen jednu vec, jinak se rozdil mezi
+  // oblastmi neda odlisit od rozdilu mezi nahodnym zamerem a nahodnym hledanim.
+  const u = MATRIX
+    ? { name: 'Anna', area: MATRIX === 'area' ? AREAS[i % AREAS.length] : '',
+        seeking: SEEKS[1] || SEEKS[0], intention: INTENT[0], question: '',
+        lifeRune: MATRIX === 'life' ? RUNES[18] : null }
+    : { name: 'Anna', area: nahodne(AREAS), seeking: nahodne(SEEKS),
+        intention: nahodne(INTENT), question: '', lifeRune: null };
+  // Delka se vybira PRED stavbou promptu — builder si `S.length` cte az v ni.
+  if (DELKA) {
+    const zvoleno = DELKA === 'pevna3' ? DELKA3
+      : DELKA === 'pevna4' ? KANDIDAT_DELKA
+      : DELKA === 'rozsah' ? DELKA_ROZSAH
+      : (rnd() < 0.5 ? DELKA3 : KANDIDAT_DELKA);
+    vm.runInContext('RP_SINGLE.' + LANG + '.length = ' + JSON.stringify(zvoleno[LANG]) + ';', S);
+    radekDelka = zvoleno === DELKA3 ? '3' : zvoleno === KANDIDAT_DELKA ? '4' : 'rozsah';
+  }
   let prompt = STAVITEL[SPREAD](u, runy, LANG);
   if (BEZ_UHLU) prompt = odeberUhel(prompt);
-  const radek = { source: 'gen_direct', synthetic: true, runes: runy.map((r) => r.n), spread: SPREAD,
+  const radek = { source: 'gen_direct', synthetic: true, delka: radekDelka, matrix: MATRIX || null, runes: runy.map((r) => r.n), spread: SPREAD,
                   lang: LANG, area: u.area, seeking: u.seeking, intention: u.intention,
                   model: 'claude-opus-4-8', batch: TAG + '-' + ARM, arm: ARM,
                   without: BEZ_UHLU ? 'angle' : null,
@@ -194,7 +235,8 @@ async function jedno(i) {
 
 (async () => {
   const OUT = path.join('C:/Users/zkuku/Downloads/Runar-admin/eval_out/archive',
-    'gen-' + SPREAD + '-' + LANG + '-' + ARM + (BEZ_UHLU ? '-bezuhlu' : '') + (DRY ? '-dryrun' : '') + '-' + TAG + '.jsonl');
+    'gen-' + SPREAD + '-' + LANG + '-' + ARM + (MATRIX ? '-' + MATRIX : '')
+    + (DELKA ? '-' + DELKA : '') + (BEZ_UHLU ? '-bezuhlu' : '') + (DRY ? '-dryrun' : '') + '-' + TAG + '.jsonl');
   console.log('  ' + SPREAD + ' · ' + LANG + ' · rameno ' + ARM + ' · n=' + N + ' · ' + pocet + ' run · max_tokens ' + tokeny
     + (DRY ? '  (DRY-RUN, nic se nevola)' : ''));
   const hotovo = [];
