@@ -1617,3 +1617,48 @@ nese už samotné sloveso.
 **Hranice nálezu:** n = 3 na fasetu, jeden jazyk, obraz pinnut. Signál, ne vzorec s tvrdým číslem;
 u Wunjo ale 3/3 a u obou konzistentní tvar. Neověřovalo se, jestli jsou IS fasety významově 1:1
 s EN — to je obsahový soud, ne měření.
+
+⚠️ **Confound, který platí na všechny tyhle IS kánon-evaly:** prompt se staví JEDNOU a volá se
+n×, takže **úhel i tvar konce jsou uvnitř dávky totožné**. „3/3" tedy znamená „3/3 při jednom
+tvaru konce", ne „napříč pestrostí promptu". U rady je to podstatné — rada se skoro vždy vejde
+do otázky na konci.
+
+## 2026-08-20 — Hagal IS ověřen · opravy „ne-zasloužených" faset DRŽÍ · vlastní přeformulování SELHALO
+
+Coworkova IS větev Hagal's aettu (49 faset) + dvě utažené fasety z Freyr's. Táž metoda jako výš.
+Korpus: `~/runar-eval/is-canon-hagal.{jsonl,txt}` a `is-canon-fixes.{jsonl,txt}`.
+
+**① Gramatika 51 řádků (49 Hagal + 2 opravy): 0 flagů.** Čistší než Freyr (tam 3). Čtyři E001 —
+táž mez nástroje jako minule (tranzitivní sloveso bez předmětu, bezslovesný fragment); korpus
+všechny doloží: `sem skilar` 9877 · `sem varðveitir` 269 · `sem afhjúpar` 218 · `hið ósýnilega` 187.
+
+**② ⭐ Opravy vzorce „X, ekki unnin/áunnin" DRŽÍ 3/3 — vzorec byl tedy skutečně příčinou.**
+Ansuz `viska sem berst að utan` (dřív „viska sem er gefin, ekki unnin"): výtka *„þegar þú hættir
+**loksins** að tala"* se nevrátila ani jednou. Wunjo `nægjusemi sem birtist af sjálfu sér` (dřív
+„…ekki áunnin"): *„Hvað í þér"* ani *„nú þegar"* se nevrátily ani jednou. To je zpětné potvrzení
+nálezu z předchozího záznamu — ne nový, ale první, kde oprava prošla vlastní zkouškou.
+
+**③ Kánon-eval 5 hraničních IS faset: 4 čisté, 1 selhala — ta MOJE.**
+
+| faseta | verdikt |
+|---|---|
+| Nauthiz `núningurinn sem kennir` | ✅ 3/3 — „kennir" nikdy neučilo tazatele; skončilo obecnou pravdou o světě |
+| Isa `stöðvunin sem afhjúpar` | ✅ 3/3 — odhaluje se SCÉNA, ne nitro tazatele (Coworkovo proaktivní flagnutí bylo prozíravé, ale drží) |
+| Algiz `skjól sem biður ekki um þakkir` | ✅ 3/3 — *„spyr þig einskis"*, *„án þess að telja sporin þín heim"*. Nikdy „jsi chráněn"; stráž zůstala lampou |
+| Sowilo `hlýja sem nær jafnvel til þess sem er hulið` | ✅ 3/3 — „skryté" zůstalo fyzické (kameny ve stínu, spáry), nikdy „tvoje skryté" |
+| Nauthiz `skortur þar sem velja verður` (CODE-read) | ⚠️ **3/3 rada** |
+
+⚠️ **Vlastní přeformulování selhalo — a to je ten nález.** Původní `skortur sem neyðir til að velja`
+mělo jazykovou vadu: `neyða` váže þolfall a v korpusu skoro vždy nese předmět (`neyðir mann til` 71 ·
+`neyðir okkur til` 99 · `neyða til` 88), ale holé `neyðir til` jen **9**. Doplnit „þig" nešlo — mířilo
+by to na tazatele. Přeformuloval jsem na neosobní modál `skortur þar sem velja verður` (obě půlky
+doložené: `þar sem velja` 91 · `velja verður` 32, gramatika 0 flagů, žádné E001).
+**Nepomohlo.** Model si předmět doplnil sám (*„þráður sem **neyðir þig** til að velja"*) a všechna
+tři čtení skončila radou: *„**Hvað ætlar þú að hætta að prjóna**…"* · *„**Hverju ertu tilbúið að
+sleppa**…"* ×2.
+
+⭐ **Poučení: vada nebyla v jazyce, ale v pojmu.** Odebrat předmět z fasety neodebere předmět
+ze čtení. „Nedostatek nutí volit" táhne k „tak se něčeho vzdej" bez ohledu na to, jak je věta
+postavená. Dvě po sobě jdoucí přeformulování (EN „reveals priorities" → „forces the choosing",
+IS „neyðir til að velja" → „þar sem velja verður") unikla **týmž směrem** — třetí přepis to
+nejspíš nespraví. Kandidát na vyřazení, ne na další znění; rozhoduje owner.
