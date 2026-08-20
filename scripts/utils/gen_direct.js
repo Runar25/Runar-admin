@@ -21,6 +21,7 @@ const TAG    = arg('tag', 'describe-most-2026-08-20');
 const RUNA   = arg('rune', '');               // pevna tazena runa
 const MATRIX = arg('matrix', '');             // area | life | (prazdne = nahodny kontext)
 const DELKA  = arg('delka', '');              // pevna3 | pevna4 | rozsah | los
+const ZAKONC = arg('zakonceni', '');          // kandidat = zakonceni, ktera netvrdi o ctenari
 
 // ── KANDIDAT: pravidlo „pojmenuj runu a uvaz k ni obraz" ────────────────────
 // PROC: obraz je pro neznaleho necitelny, kdyz ho text jen postavi vedle jmena runy.
@@ -88,6 +89,18 @@ if (ARM === 'most4')
 // zacina vetou „through image, not explanation" / „í myndum, ekki útskýringu", coz je
 // presny opak toho, co pravidlo zada. Ta veta se tu MAZE (zbytek radky zustava), aby
 // prompt rikal jednu vec. Izoluje se tim prave ona: most3 vs most3b se lisi jen ji.
+// Zakonceni, ktera drzi carou podmetu (KUKY 2026-08-20). Meni se DVE ze tri; treti
+// („quiet line that rests") nic netvrdi a zustava, aby slo pripadnou regresi pripsat
+// tomu, co se opravdu zmenilo.
+if (ZAKONC === 'kandidat') {
+  vm.runInContext([
+    'ENDING_OPEN[0] = "End with one open question the seeker could honestly answer \'neither\' to — it must not assume what is true in them.";',
+    'ENDING_OPEN[1] = "End on a plain, steady line — name where the seeker stands in the image, not what is true inside them; not a question.";',
+    'ENDING_OPEN_IS[0] = "Endaðu á einni opinni spurningu sem leitandinn gæti með sanni svarað neitandi — hún má ekki gefa sér hvað er satt innra með honum.";',
+    'ENDING_OPEN_IS[1] = "Endaðu á staðfastri línu — nefndu hvar leitandinn stendur í myndinni, ekki hvað er satt innra með honum; ekki spurningu.";',
+  ].join(''), S);
+}
+
 if (ARM === 'most3b') {
   vm.runInContext('VOICE_PROFILES.focused.rules = ' + JSON.stringify({ describe: KANDIDAT_DESCRIBE }) + ';', S);
   vm.runInContext([
@@ -156,6 +169,11 @@ if (!STAVITEL[SPREAD]) { console.error('  neznamy spread: ' + SPREAD); process.e
   const SRAZKA = { en: 'through image, not explanation', is: 'í myndum, ekki útskýringu' }[LANG];
   const maSrazku = zk.indexOf(SRAZKA) !== -1;
   if (ARM === 'most3b' && maSrazku) { console.error('  RAMENO most3b: srazkova veta v promptu PORAD JE'); process.exit(1); }
+  if (ZAKONC === 'kandidat') {
+    const stara = vm.runInContext('ENDING_OPEN[0] + "|" + ENDING_OPEN[1] + "|" + ENDING_OPEN_IS[0] + "|" + ENDING_OPEN_IS[1]', S);
+    if (stara.indexOf('turns the seeker inward') !== -1 || stara.indexOf('snýr leitandanum inn') !== -1) {
+      console.error('  ZAKONCENI: kandidat se nevlozil, v poolu je porad stare zneni'); process.exit(1); }
+  }
   if (ARM !== 'most3b' && !maSrazku) { console.error('  POZOR: srazkova veta v promptu chybi i mimo most3b — zmenil ji nekdo?'); process.exit(1); }
   if (ARM === 'most4' && zk.indexOf(KANDIDAT_DELKA[LANG].slice(0, 40)) === -1) {
     console.error('  RAMENO most4: nova delka se do promptu NEVLOZILA'); process.exit(1); }
@@ -235,7 +253,7 @@ async function jedno(i) {
 
 (async () => {
   const OUT = path.join('C:/Users/zkuku/Downloads/Runar-admin/eval_out/archive',
-    'gen-' + SPREAD + '-' + LANG + '-' + ARM + (MATRIX ? '-' + MATRIX : '')
+    'gen-' + SPREAD + '-' + LANG + '-' + ARM + (ZAKONC ? '-zak' + ZAKONC : '') + (MATRIX ? '-' + MATRIX : '')
     + (DELKA ? '-' + DELKA : '') + (BEZ_UHLU ? '-bezuhlu' : '') + (DRY ? '-dryrun' : '') + '-' + TAG + '.jsonl');
   console.log('  ' + SPREAD + ' · ' + LANG + ' · rameno ' + ARM + ' · n=' + N + ' · ' + pocet + ' run · max_tokens ' + tokeny
     + (DRY ? '  (DRY-RUN, nic se nevola)' : ''));
