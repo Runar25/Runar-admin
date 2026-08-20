@@ -363,7 +363,7 @@ Detail nálezu, který tu chybí, se dá dohledat v `RUNAR_DECISIONS.md` téhož
     znak po znaku → zastaralý je doc. **[O]** EN slibuje `the EU`, IS `innan EES` — uživatel
     souhlasí podle jazyka s jiným územím. 🔒
 16. **`RUNAR_PRIVACY.md:91` posílá IS text do fronty, kterou owner zrušil** („→ Sigrún").
-17. **Retirovaný název „Rune Keeper" v 8 místech** produkčního kódu (config má  <!-- doc-values:ok 2026-08-15 nález JE o tom mrtvém jméně; pojmenovat ho musí -->  <!-- check-docs:ok 2026-08-15 tentýž nález, druhá kontrola -->
+17. ~~**Retirovaný název „Rune Keeper" v 8 místech**~~ **HOTOVO 2026-08-20** (8 komentářů → „Rune Wanderer"; obě výjimky ověřeny, že zůstaly). Původně: produkčního kódu (config má  <!-- doc-values:ok 2026-08-15 nález JE o tom mrtvém jméně; pojmenovat ho musí -->  <!-- check-docs:ok 2026-08-15 tentýž nález, druhá kontrola -->
     `premium.label = 'Rune Wanderer'`). Legitimní výjimka: `reader.html:6` `<title>` a `:144`
     `alt=` — Rúnar sám Keeper je.
 18. **Drobné rozešlé texty v readeru** — `reader.html:463` „once … one free reading" ×

@@ -108,7 +108,7 @@ function updateBanners() {
     banner.style.display = 'none';
     gate.style.display   = 'none';
 
-    // ── Rune Walker / Rune Keeper — unlimited ──
+    // ── Rune Walker / Rune Wanderer — unlimited ──
     if (userTier === 'standard' || userTier === 'premium') {
       freeBanner.style.display    = 'none';
       creditsBanner.style.display = 'none';
@@ -222,7 +222,7 @@ function updateAuthUI() {
 }
 
 // ── SPECIFIC QUESTION GATE ────────────────────────────────
-// Visible only for Rune Walker / Rune Keeper. Visitor + Rune Seeker see a teaser.
+// Visible only for Rune Walker / Rune Wanderer. Visitor + Rune Seeker see a teaser.
 function updateQuestionGate() {
   const qSection = document.getElementById('q-section');
   const qTeaser  = document.getElementById('q-teaser');

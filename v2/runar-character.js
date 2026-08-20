@@ -658,7 +658,7 @@ function getContextLine(lang) {
 
 
 // Returns a context block about the user's life rune for the system prompt.
-// Used when user is Rune Walker/Rune Keeper and has a known DOB.
+// Used when user is Rune Walker/Rune Wanderer and has a known DOB.
 // rune = RUNES object from runar-runes.js (has .n, .g, .k, .elements, .world)
 function buildLifeRuneContext(rune) {
   if (!rune) return '';
@@ -859,7 +859,7 @@ function _addressContext(lang) {
 
 // ─── LIFE RUNE PROMPT BUILDER ─────────────────────────────────────────────
 // Builds the prompt for the deep life rune reading.
-// Called when Rune Walker/Rune Keeper user requests their life rune reading.
+// Called when Rune Walker/Rune Wanderer user requests their life rune reading.
 // IS prompt written directly in Icelandic for better language quality.
 
 // Birth-month lore (§18: one source; name + 1-12 keys shared, prose per language).

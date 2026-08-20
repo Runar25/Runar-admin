@@ -210,7 +210,7 @@ function _showTrialEnd() {
 function startReading() {
   if (!currentUser && getTrialCount() >= FREE_TRIAL_LIMIT) { _showTrialEnd(); return; }
   // Only block rune_seeker who has used their free reading AND has no credits left.
-  // Rune Walker / Rune Keeper / Admin are never blocked here.
+  // Rune Walker / Rune Wanderer / Admin are never blocked here.
   if (currentUser && userTier === 'rune_seeker'
       && userFreeBalance <= 0
       && userCredits <= 0) {
