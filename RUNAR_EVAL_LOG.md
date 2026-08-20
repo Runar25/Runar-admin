@@ -1528,3 +1528,38 @@ kánon drží. DVĚ vazby protékají navzdory mantinelům:
 hvalreki=přísloví→„jsi varován"), obecné zákazy NESTAČÍ — protekly ~2/4. Potřebují framing-guardrail
 nesený s fragmentem + cílený kánon-eval při implementaci. Bezpečný vzor pro Algiz = lokalizovat stráž
 V tazateli (kría „something in you"), ne ve světě.
+
+---
+
+### 2026-08-20 — Univerzálnost úhlu ZMĚŘENA: 25/25 run má obraz ve všech 6 sezónách
+
+**Ownerova pochybnost** (2026-08-20): *„to je ten problém úhlů, který je upřímně asi těžko
+řešitelný, pokud jde na všechny runy."* Cowork handoff na to odpovídá **argumentem**: úhly byly
+2026-08-16 přestavěny z „domény" na „vstup do OBRAZU" a každá runa obraz má, takže referent je
+univerzální. Argument sedí logicky — ale nikdo ho neměřil.
+
+**Změřeno teď** (`_runeImageCandidates` + `SEASON_POOLS`, produkční funkce, ne čtení kódu):
+```
+sezóna         sezónní pool      run s VLASTNÍM obrazem
+autumn          22 obrazů              25/25
+darkening       22                     25/25
+deepwinter      20                     25/25
+earlysummer     20                     25/25
+highsummer      29                     25/25
+spring          20                     25/25
+```
+**Každá runa má vlastní obraz v každé sezóně**, a každá sezóna má navíc pool jako zálohu.
+Úhel mluvící o „the image" tedy má vždycky na co ukázat — pochybnost o univerzálnosti
+**nesedí** a je to teď měřené, ne odvozené.
+
+⚠️ **Proč se měřil i pool, když každá runa má vlastní obraz:** `_seasonalImagery` má
+`if (!pool) return ''` — v sezóně BEZ poolu nedostane čtení obraz ANI když runa svého kandidáta
+má. Sezóna bez poolu by tedy úhel poslala do prázdna bez ohledu na runy. Žádná taková není.
+
+**Co se tím NEtvrdí:** že jsou nové úhly lepší. To by neslo ani měření z 2026-08-16 —
+tam je závěr *„u starých byla vada prokazatelná, u nových prokazatelná není"* (p = 0,38
+vs p = 0,029; přímé srovnání p = 0,31). Tohle měření říká jen, že **referent existuje všude**,
+což je nutná podmínka, ne důkaz kvality.
+
+**Zůstává neměřeno:** stejnost NOVÝCH úhlů (dvojice se stejným úhlem). Vlastní `RUNAR_EVAL_LOG.md`
+2026-08-16 to má jako otevřené a jmenuje i nástroj; potřebuje ~75 párů na rameno.
