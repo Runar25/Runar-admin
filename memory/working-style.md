@@ -368,6 +368,11 @@ compactem, **průběžně**. Hook ho po compactu vypíše sám.
 ⭐ **A od 2026-08-17 to nevisí na jeho paměti:** Stop-hook zablokuje konec tahu, když session
 commitla a na `memory/snapshots/` nesáhla. Blokne jednou za session — podruhé projde.
 
+⭐ **A od 2026-08-20 hlídá Stop-hook i neverzovaný soubor v `memory/`** — ten, který
+vznikl v TÉHLE session. Auto-paměť je zapisuje sama (junction do repa), takže session o tom
+často neví; smoke ⑪ je pak najde až u toho, kdo zrovna pushuje něco jiného. Teď se to řekne
+tomu, komu soubor vznikl. Blokne jednou za session.
+
 ⚠️ **NEVYPISOVAT ownerovi `/compact Zachovej: …` řádku k zkopírování — ANI na `/zabal`.**
 Do 2026-08-17 tu stála výjimka „na `/zabal` se vypisuje". Byla to vada: důvod zákazu (owner by
 ji musel držet v hlavě do okamžiku, který nikdo netrefí) platí na `/zabal` úplně stejně.

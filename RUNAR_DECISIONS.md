@@ -3889,3 +3889,35 @@ skutečnou historií**, ne jen nad tou, kterou si k testu vyrobím. Syntetická 
 že logika dělá, co jsem napsal — ne že to sedne na svět, do kterého ji pouštím.
 
 Zásluha za nález i za návrh opravy: **CODE-read**. Nepoužil `--no-verify`, počkal.
+
+## 2026-08-20 — Neverzovaný soubor v `memory/` teď hlásí tomu, komu vznikl (Stop-hook, 3. kontrola)
+
+KUKY: *„dá se s tím něco dělat?"* — po druhém případu v týdnu, kdy smoke ⑪ našla v `memory/`
+soubor, který je v indexu, ale ne v gitu (19. 8. snapshot druhé session, 20. 8.
+`work-efficiently-ask-if-simpler.md`).
+
+**Kontrola ⑪ funguje. Chytá ale špatného člověka.** Spadne tomu, kdo zrovna pushuje něco jiného —
+ten soubor nepsal, často ani neví, co v něm je, a autor je mezitím u jiné práce nebo po compactu.
+⚠️ **Disciplínou se to nespraví:** auto-paměť ty soubory zapisuje SAMA (junction do repa), takže
+session o tom často vůbec neví. Není co si pamatovat — je to posun v čase, ne v pozornosti.
+
+**Oprava: Stop-hook, třetí kontrola téhož tvaru jako ty dvě předchozí.** Na konci tahu se ptá,
+jestli v `memory/` neleží neverzovaný soubor, který vznikl **v téhle session**. Rozlišit „čí to je"
+nejde (junction, společná složka), takže se použil týž vzorec jako u snapshotu — soubor **novější
+než značka startu session**. Bystander se tím netrefí.
+
+Rozbito v pěti stavech:
+```
+A) nic neverzovaného                      → prošel
+B) neverzovaný, ale STARŠÍ než session     → prošel   ← cizí soubor NESMÍ blokovat
+C) neverzovaný a NOVĚJŠÍ (můj)             → BLOK
+D) týž stav podruhé                        → prošel   (blokne jednou za session)
+E) po úklidu                               → prošel
+```
+Stav B je ten, kvůli kterému to má smysl: bez něj by nová kontrola dělala přesně to, co ⑪ —
+jen dřív a stejně cizímu člověku.
+
+**Co se tím NEruší:** smoke ⑪ zůstává. Hook chytá autora včas, ⑪ je poslední síto před pushem
+(a chytne i to, co vzniklo mimo session — třeba ručně).
+
+Affected doc(s): memory/working-style.md (sekce „Compact") — v témže commitu.
