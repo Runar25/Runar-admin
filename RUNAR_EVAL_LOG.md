@@ -1563,3 +1563,57 @@ což je nutná podmínka, ne důkaz kvality.
 
 **Zůstává neměřeno:** stejnost NOVÝCH úhlů (dvojice se stejným úhlem). Vlastní `RUNAR_EVAL_LOG.md`
 2026-08-16 to má jako otevřené a jmenuje i nástroj; potřebuje ~75 párů na rameno.
+
+## 2026-08-20 — IS větev banky ověřena nástroji · „ne-zasloužené" fasety unikají do soudu
+
+Coworkova islandská větev banky názvosloví (Freyr's ætt, 51 aktivních faset). Cowork hlásil,
+že mu `is-vazba`/`is-grammar-qa` spadly na 403 — **u CODE-read běží**, ověřeno živě, ne převzato.
+Korpus = Risamálheild (součet 2000–2021), rekce = Íslensk nútímamálsorðabók.
+
+**① Rekce: 10/10 potvrzeno.** `stjórna` þgf · `krefjast` ef · `fylgja` þgf · `kenna` (þgf +) þf ·
+`þurfa` þf/ef · `sýna` (þgf +) þf · `beisla` þf · `neita` þgf · `særa` þf · `verja` þf. Coworkův
+ruční rozbor na téhle vrstvě drží celý.
+
+**② Kolokace: 9/10 doloženo, 1 NEDOLOŽENA.** `til taks` 9142 · `fara varlega` 16351 ·
+`á hreyfingu` 6201 · `í báðar áttir` 5750 · `annars staðar frá` 3749 · `verður til við` 1309 ·
+`biður ekki um` 695 · `eftir erfiðleika` 221 · `án áreynslu` 115.
+⚠️ **`verður að merkingu` = 0.** Nula ověřena protipříklady, aby nešlo o vadné měření
+(`verður að veruleika` 2339 · `verður að engu` 313 · samotné `að merkingu` 321) — vazba
+`verða að` + þgf. je v pořádku, nedoložená je právě tahle dvojice slov. Doložené náhrady:
+`verður að máli` 65 · `öðlast merkingu` 50 · `verður að orði` 40 · `fær merkingu` 21.
+Owner zvolil **`öðlast merkingu`** (významově nejblíž EN „shaped into meaning").
+
+**③ Gramatika, všech 51 faset: 5 signálů, všech 5 uzavřeno jako falešný poplach** — s dokladem,
+ne odložením (§19.2). `hjarðarinnar` → nástroj navrhoval `jarðarinnar`, ale hjörð je doložená 224× ·
+`Rausn` → navrhoval `Raun`, rausn je v BÍN a 1024× v korpusu · `Taktur, ekki flýtir` → „čárka
+zbytečná", jde o kontrastní fragment · **E001 ×2** (`Þyrnirinn sem særir` · `sem ver`) → parser
+neumí holý fragment s tranzitivním slovesem bez předmětu; korpus obojí doloží (`sem særir` 474 ·
+`sem ver` 1776). Táž mez nástroje, jaká je u instrukčního textu zapsaná 2026-08-16.
+
+**④ ⭐ KÁNON-EVAL 4 zděděných hraničních faset v IS — a nález, který je nad rámec téhle dávky.**
+Produkční cesta (`buildReadingPrompt`, `lang='is'`, tedy islandské `_describeRule` + `_noColdRead`
+aktivní), obraz pinnut z `RUNE_IMAGES` (aby únik šel za fasetou, ne za obrazem), n = 3 na fasetu,
+opus-4-8. Korpus: `~/runar-eval/is-canon-freyr.{jsonl,txt}`.
+
+| faseta | verdikt |
+|---|---|
+| Gebo `gagnkvæm skuld sem tengir` | ✅ 3/3 — „skuld" se ani jednou nezvrhla v „dlužíš" |
+| Thurisaz `brúnin sem kennir varkárni` | ✅ 3/3 — „kennir" nikdy nesklouzlo k radě |
+| Ansuz `viska sem er gefin, ekki unnin` | ⚠️ 2/3 rada + soud |
+| Wunjo `nægjusemi sem er komin, ekki áunnin` | ⚠️ 3/3 tvrzení o nitru |
+
+Ansuz neunikl tam, kde se čekalo (žádné „svět ti dává moudrost"), ale do **výtky**:
+*„Hvað heyrir þú þegar þú hættir **loksins** að tala?"* — „konečně" nese soud *mluvíš moc*.
+Wunjo míří dovnitř ve všech třech: *„**Hvað í þér** er **nú þegar** mett…"* — a to `nú þegar`
+je přesně ten `already`/`þegar` vzorec, kvůli kterému vznikla v1.2 `_noColdRead`.
+
+⭐ **Vzorec: „X, ekki unnin / ekki áunnin".** Obě unikající fasety mají TÝŽ tvar — vymezují se
+proti **zásluze tazatele**, a tím ho vtáhnou do věty: model začne mluvit o tom, co si (ne)zasloužil
+a co má přestat dělat. Gebo a Thurisaz ten tvar nemají a obě drží. Je to zrcadlový protějšek
+vzorce „výsledek, co přijde/se vrátí" (Cowork, 2026-08-19): tam slib budoucí odměny, tady **soud
+o minulé zásluze**. Směr opravy: popsat, čím ta věc JE, ne čím není vůči snaze tazatele — zápor
+nese už samotné sloveso.
+
+**Hranice nálezu:** n = 3 na fasetu, jeden jazyk, obraz pinnut. Signál, ne vzorec s tvrdým číslem;
+u Wunjo ale 3/3 a u obou konzistentní tvar. Neověřovalo se, jestli jsou IS fasety významově 1:1
+s EN — to je obsahový soud, ne měření.
