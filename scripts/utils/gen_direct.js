@@ -22,6 +22,8 @@ const RUNA   = arg('rune', '');               // pevna tazena runa
 const MATRIX = arg('matrix', '');             // area | life | (prazdne = nahodny kontext)
 const DELKA  = arg('delka', '');              // pevna3 | pevna4 | rozsah | los
 const ZAKONC = arg('zakonceni', '');          // kandidat = zakonceni, ktera netvrdi o ctenari
+const DOMENY = arg('domeny', '');             // kandidat = oblasti premirene pod caru podmetu
+const BEZ_OBL = process.argv.includes('--bez-oblasti');   // vypni JEN oblast, zbytek nech nahodny
 
 // ── KANDIDAT: pravidlo „pojmenuj runu a uvaz k ni obraz" ────────────────────
 // PROC: obraz je pro neznaleho necitelny, kdyz ho text jen postavi vedle jmena runy.
@@ -89,6 +91,33 @@ if (ARM === 'most4')
 // zacina vetou „through image, not explanation" / „í myndum, ekki útskýringu", coz je
 // presny opak toho, co pravidlo zada. Ta veta se tu MAZE (zbytek radky zustava), aby
 // prompt rikal jednu vec. Izoluje se tim prave ona: most3 vs most3b se lisi jen ji.
+// Ctyri oblasti, ktere dnes zadaji tvrzeni o ctenari. Klic = presny retezec z AREAS,
+// protoze `_domainContext` vybira podle nej; zbyle ctyri propadnou na puvodni funkci.
+const KAND_DOMENY = {
+  en: {
+    'Love & Relationships': "The reading is for Love & Relationships — let the rune's meaning land where two people meet; describe the meeting, never the other person's mind or intent.",
+    'The Unseen': "The reading is for The Unseen — let the rune's meaning stay with what has not yet taken shape, not with anything that could be listed or explained.",
+    'Inner Growth': "The reading is for Inner Growth — let the rune's meaning land on what change looks like, not on how the seeker has changed.",
+    'Crossroads & Decisions': "The reading is for Crossroads & Decisions — let the rune's meaning press on what the two ways look like from where the seeker stands, not on which one they will take.",
+  },
+  is: {
+    'Ást & Sambönd': 'Þessi lestur er fyrir Ást & Sambönd — láttu merkingu rúnarinnar lenda þar sem tvær manneskjur mætast; lýstu fundinum sjálfum, aldrei hug eða ætlun hinnar.',
+    'Hið dulda': 'Þessi lestur er fyrir Hið dulda — láttu merkingu rúnarinnar halda sig við það sem hefur ekki enn mótast, ekki við neitt sem mætti telja upp eða útskýra.',
+    'Innri Vöxtur': 'Þessi lestur er fyrir Innri Vöxt — láttu merkingu rúnarinnar lenda á því hvernig breyting lítur út, ekki á því hvernig leitandinn hefur breyst.',
+    'Vegamót & Ákvarðanir': 'Þessi lestur er fyrir Vegamót & Ákvarðanir — láttu merkingu rúnarinnar þrýsta á hvernig leiðirnar tvær líta út þaðan sem leitandinn stendur, ekki á hvora hann velur.',
+  },
+};
+if (DOMENY === 'kandidat') {
+  vm.runInContext('var KAND_DOMENY = ' + JSON.stringify(KAND_DOMENY) + ';', S);
+  vm.runInContext([
+    'var _domOrig = _domainContext;',
+    '_domainContext = function (area, lang) {',
+    '  var m = KAND_DOMENY[lang] || {};',
+    '  return m[area] || _domOrig(area, lang);',
+    '};',
+  ].join(''), S);
+}
+
 // Zakonceni, ktera drzi carou podmetu (KUKY 2026-08-20). Meni se DVE ze tri; treti
 // („quiet line that rests") nic netvrdi a zustava, aby slo pripadnou regresi pripsat
 // tomu, co se opravdu zmenilo.
@@ -169,6 +198,11 @@ if (!STAVITEL[SPREAD]) { console.error('  neznamy spread: ' + SPREAD); process.e
   const SRAZKA = { en: 'through image, not explanation', is: 'í myndum, ekki útskýringu' }[LANG];
   const maSrazku = zk.indexOf(SRAZKA) !== -1;
   if (ARM === 'most3b' && maSrazku) { console.error('  RAMENO most3b: srazkova veta v promptu PORAD JE'); process.exit(1); }
+  if (DOMENY === 'kandidat' && MATRIX === 'area') {
+    const zk2 = STAVITEL[SPREAD]({ name: 'Anna', area: AREAS[7], seeking: SEEKS[1], intention: INTENT[0], question: '', lifeRune: null }, vzorek(), LANG);
+    if (zk2.indexOf('already knows but has not said aloud') !== -1 || zk2.indexOf('veit þegar en hefur ekki sagt') !== -1) {
+      console.error('  DOMENY: kandidat se nevlozil, v promptu je porad stare zneni'); process.exit(1); }
+  }
   if (ZAKONC === 'kandidat') {
     const stara = vm.runInContext('ENDING_OPEN[0] + "|" + ENDING_OPEN[1] + "|" + ENDING_OPEN_IS[0] + "|" + ENDING_OPEN_IS[1]', S);
     if (stara.indexOf('turns the seeker inward') !== -1 || stara.indexOf('snýr leitandanum inn') !== -1) {
@@ -201,13 +235,17 @@ let radekDelka = null;
 async function jedno(i) {
   preseed(i);   // od tohohle bodu je cteni c. i bit po bitu stejne ve vsech ramenech
   const runy = vzorek();
+  // Oblast se losuje VZDY, i kdyz ji `--bez-oblasti` zahodi — jinak by se posunulo poradi
+  // tahu v proudu a rameno by dostalo jine hledani i zamer nez to, proti kteremu se meri.
+  const _losOblast = MATRIX ? null : nahodne(AREAS);
+  const _oblast = BEZ_OBL ? '' : _losOblast;
   // MATRIX = drz vsechno ostatni pevne a menit jen jednu vec, jinak se rozdil mezi
   // oblastmi neda odlisit od rozdilu mezi nahodnym zamerem a nahodnym hledanim.
   const u = MATRIX
     ? { name: 'Anna', area: MATRIX === 'area' ? AREAS[i % AREAS.length] : '',
         seeking: SEEKS[1] || SEEKS[0], intention: INTENT[0], question: '',
         lifeRune: MATRIX === 'life' ? RUNES[18] : null }
-    : { name: 'Anna', area: nahodne(AREAS), seeking: nahodne(SEEKS),
+    : { name: 'Anna', area: _oblast, seeking: nahodne(SEEKS),
         intention: nahodne(INTENT), question: '', lifeRune: null };
   // Delka se vybira PRED stavbou promptu — builder si `S.length` cte az v ni.
   if (DELKA) {
@@ -253,7 +291,7 @@ async function jedno(i) {
 
 (async () => {
   const OUT = path.join('C:/Users/zkuku/Downloads/Runar-admin/eval_out/archive',
-    'gen-' + SPREAD + '-' + LANG + '-' + ARM + (ZAKONC ? '-zak' + ZAKONC : '') + (MATRIX ? '-' + MATRIX : '')
+    'gen-' + SPREAD + '-' + LANG + '-' + ARM + (ZAKONC ? '-zak' + ZAKONC : '') + (DOMENY ? '-dom' + DOMENY : '') + (BEZ_OBL ? '-bezoblasti' : '') + (MATRIX ? '-' + MATRIX : '')
     + (DELKA ? '-' + DELKA : '') + (BEZ_UHLU ? '-bezuhlu' : '') + (DRY ? '-dryrun' : '') + '-' + TAG + '.jsonl');
   console.log('  ' + SPREAD + ' · ' + LANG + ' · rameno ' + ARM + ' · n=' + N + ' · ' + pocet + ' run · max_tokens ' + tokeny
     + (DRY ? '  (DRY-RUN, nic se nevola)' : ''));
