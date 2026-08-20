@@ -13,6 +13,15 @@ Vizuální mapa **„jak a z čeho Rúnar mluví"** — 3 vrstvy (systémový pr
 **URL:** https://claude.ai/code/artifact/e32dbd2b-5277-414a-a187-8277efe99f69
 (privátní, jen owner; galerie `claude.ai/code/artifacts`.)
 
+⭐ **DRUHÁ MAPA — návrhová vrstva, NEPLÉST** (2026-08-20, KUKY: *„nechci aby se zamotali s těma
+co jsou jen v návrhu"*). „Engine pestrosti" = 4 páky, které NEJSOU v produkci (POLE+rozprostírač ·
+FORMA L0/L1/L2 · TVAR věty · NÁZVOSLOVÍ). Zdroj `docs/runar-engine-map.html`.
+**URL:** https://claude.ai/code/artifact/5c527b2d-15f0-4f00-a6c7-a593c4b6118a
+Dělba: produkční mapa = jak Rúnar mluví DNES · engine mapa = co ještě neběží. Každý blok engine
+mapy nese značku `NEPOSTAVENO` a podmiňovací způsob; **při nasazení páky se ten blok MAŽE**, popisovat
+ji pak bude produkční mapa. Tenhle soubor vlastní OBĚ URL i pravidlo překreslení — druhý memory
+soubor nevzniká (§20).
+
 ⚠️ **Je to SNAPSHOT.** Pravda = KÓD: `v2/runar-character.js` (buildSysPrompt · RP_* · buildReadingPrompt · helpery) · `runar-config.js` (VOICE_PROFILES.focused · RUNAR_MODES) · `supabase/functions/claude-proxy/index.ts` (MODELS). NEdělat z toho repo doc (§20 — duplikoval by kód a zastarával).
 
 ⭐ **SEKCE „co prompt stojí" SE NEEDITUJE RUČNĚ — generuje se z kódu:**
@@ -24,9 +33,13 @@ driftovala nejvíc — čtyři ruční překreslení za dva dny a jednou 14 ze 1
 
 ⭐ **PRAVIDLO (KUKY 2026-08-08): měníš-li prompt / hlas → překresli mapu ve STEJNÉM tahu.** Jinak se
 rozejde a příští session z ní čte nepravdu. Mapa má nahoře **razítko** (datum + `RUNAR_PROMPT_VERSION`)
-a krátký changelog „co se změnilo" — obojí aktualizovat. Překreslení: HTML zdroj mapy **není v repu** —
-leží ve scratchpadu session (soubor `runar-prompt-map`); uprav ho a publikuj **na tutéž URL** (`Artifact`
-s `url:`). Nemáš-li ho po ruce, stáhni si aktuální HTML z URL a edituj to. Z jiné session než
+a krátký changelog „co se změnilo" — obojí aktualizovat. Překreslení: HTML zdroj mapy **JE v repu**
+(`docs/runar-prompt-map.html`, git-tracked); uprav ho a publikuj **na tutéž URL** (`Artifact`
+s `url:`). ⚠️ Do 2026-08-20 tu stálo „není v repu, leží ve scratchpadu session" — prokazatelně
+nepravda (`git ls-files` ho vrací, 45 427 B) a návod tím vyráběl scratchpad-sirotky. Ověřeno CODE-read.
+⚠️ **Repo kopie a publikovaný artifact se rozešly:** repo HTML nese razítko `v2.0`, `runar-config.js`
+i publikovaná mapa `v2.1`. Než se do mapy zapíše cokoli dalšího, patří to srovnat — jinak se píše
+do kopie, která už není ta publikovaná. Z jiné session než
 té, co ji vydala, se URL MUSÍ předat explicitně, jinak vznikne nová. Před publikací WebFetch aktuální
 verzi (guard hlídá, že nepřepíšeš cizí změnu) + zkontroluj párování tagů.
 

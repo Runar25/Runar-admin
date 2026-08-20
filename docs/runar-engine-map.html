@@ -1,0 +1,167 @@
+<title>Engine pestrosti</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#eef1f2; --card:#f8fafa; --sunk:#e3e8ea; --ink:#16201f; --soft:#4a5a58; --faint:#7d8c8a;
+  --rule:#c8d2d2; --rule2:#aab8b7;
+  --draft:#0d6a72; --draft-bg:#dcecec; --draft-line:#8fbfc0;
+  --miss:#9a4a20; --miss-bg:#f5e4da; --miss-line:#dcb49a;
+  --ok:#2f6b45;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0d1413; --card:#141d1c; --sunk:#1b2625; --ink:#e6eceb; --soft:#a8b8b6; --faint:#71827f;
+  --rule:#26332f; --rule2:#33443f;
+  --draft:#5fd3d8; --draft-bg:#0f2a2c; --draft-line:#265c5e;
+  --miss:#e09a72; --miss-bg:#2a1a12; --miss-line:#553426;
+  --ok:#79c48f;
+}}
+:root[data-theme="dark"]{
+  --bg:#0d1413; --card:#141d1c; --sunk:#1b2625; --ink:#e6eceb; --soft:#a8b8b6; --faint:#71827f;
+  --rule:#26332f; --rule2:#33443f;
+  --draft:#5fd3d8; --draft-bg:#0f2a2c; --draft-line:#265c5e;
+  --miss:#e09a72; --miss-bg:#2a1a12; --miss-line:#553426;
+  --ok:#79c48f;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px 90px}
+code,.m{font-family:var(--mono);font-size:.85em}
+h1,h2,h3{font-family:var(--mono);font-weight:600;text-wrap:balance;line-height:1.2;margin:0}
+
+header{padding:48px 0 26px;border-bottom:2px dashed var(--rule2)}
+.kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--draft);margin:0 0 12px}
+h1{font-size:clamp(28px,5vw,42px);letter-spacing:-.01em;margin-bottom:12px}
+.lede{color:var(--soft);max-width:62ch;margin:0}
+.notprod{margin-top:20px;border:1px dashed var(--miss-line);background:var(--miss-bg);border-radius:8px;padding:13px 16px;font-size:.92rem;color:var(--ink)}
+.notprod b{color:var(--miss)}
+
+section{padding:34px 0 4px;border-bottom:1px solid var(--rule)}
+h2{font-size:1.28rem;margin-bottom:4px}
+.sub{color:var(--faint);font-size:.86rem;margin:2px 0 18px;font-family:var(--mono)}
+
+/* beaty */
+.beats{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.beat{flex:1 1 200px;background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:13px 15px}
+.beat .n{font-family:var(--mono);font-size:11px;color:var(--draft);letter-spacing:.1em;margin-bottom:5px}
+.beat b{display:block;font-size:.97rem;margin-bottom:3px}
+.beat span{color:var(--soft);font-size:.85rem}
+
+/* paka */
+.paka{background:var(--card);border:1px dashed var(--draft-line);border-left:4px solid var(--draft);border-radius:8px;padding:16px 18px;margin:14px 0}
+.tok{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;color:var(--draft);background:var(--draft-bg);border:1px solid var(--draft-line);border-radius:4px;padding:2px 7px;white-space:nowrap}
+.paka h3{font-size:1.06rem;display:inline;margin-left:9px}
+.paka .role{color:var(--faint);font-size:.85rem;font-family:var(--mono);margin-top:7px}
+.row{display:grid;grid-template-columns:112px 1fr;gap:12px;padding:8px 0;border-top:1px solid var(--rule);align-items:start}
+.row:first-of-type{border-top:none}
+.row .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);padding-top:3px}
+.row .v{font-size:.92rem}
+.row .v em{font-style:normal;color:var(--draft);font-family:var(--mono);font-size:.9em}
+.num{font-variant-numeric:tabular-nums;font-family:var(--mono);color:var(--ink);font-weight:500}
+.vada{color:var(--miss);font-size:.87rem}
+
+/* nedodelane */
+ul.gaps{list-style:none;margin:6px 0;padding:0;display:flex;flex-direction:column;gap:9px}
+ul.gaps li{background:var(--sunk);border-left:3px solid var(--miss);border-radius:0 7px 7px 0;padding:11px 14px;font-size:.91rem}
+ul.gaps li b{color:var(--miss);font-family:var(--mono);font-size:.87em;letter-spacing:.04em}
+ul.gaps li .why{display:block;color:var(--soft);font-size:.87rem;margin-top:3px}
+
+footer{margin-top:30px;color:var(--faint);font-size:.8rem;font-family:var(--mono);line-height:1.75}
+a{color:var(--draft)}
+:focus-visible{outline:2px solid var(--draft);outline-offset:2px}
+@media (max-width:560px){.row{grid-template-columns:1fr;gap:2px}.paka h3{display:block;margin:8px 0 0}}
+</style>
+
+<div class="wrap">
+<header>
+  <p class="kicker">návrhová vrstva · nic z toho neběží</p>
+  <h1>Engine pestrosti</h1>
+  <p class="lede">Čtyři páky, kterými by se dala řídit pestrost čtení — každá zvlášť laditelná.
+  Ověřený směr z měření 2026-08-18, <b>ne popis toho, jak Rúnar mluví dnes</b>.</p>
+  <div class="notprod">
+    <b>TOHLE NENÍ PRODUKCE.</b> Ani jedna páka není v promptu. Jak Rúnar mluví <b>dnes</b>,
+    vlastní kód (<code>v2/runar-character.js</code>) a produkční mapa promptu — jiný dokument.
+    Tady stojí výhradně to, co ještě neběží. Každý řádek proto začíná značkou <code>NEPOSTAVENO</code>
+    a je psaný podmiňovacím způsobem.
+  </div>
+</header>
+
+<section>
+  <h2>Tvar čtení — tři beaty</h2>
+  <p class="sub">forma, do které páky vstupují</p>
+  <div class="beats">
+    <div class="beat"><div class="n">BEAT 1</div><b>OBRAZ</b><span>jedna konkrétní smyslová scéna — něco, co se cítí, ne vykládá</span></div>
+    <div class="beat"><div class="n">BEAT 2</div><b>ESENČNÍ ŘÁDEK</b><span>co runa DĚLÁ skrz ten obraz; ne definice, ne verdikt o tazateli</span></div>
+    <div class="beat"><div class="n">BEAT 3</div><b>UMÍSTĚNÍ</b><span>kde ve scéně tazatel stojí (konec smí být i otevřená otázka)</span></div>
+  </div>
+</section>
+
+<section>
+  <h2>Čtyři páky</h2>
+  <p class="sub">metrika měření = max-shluk · n = 6–8 na rameno = SMĚR, ne finální tvrzení (pod prahem 20)</p>
+
+  <div class="paka">
+    <span class="tok">NEPOSTAVENO</span><h3>POLE + rozprostírač</h3>
+    <div class="role">který obraz</div>
+    <div class="row"><div class="k">co by dělala</div><div class="v">Runa by měla <b>pole</b>: domény → fragmenty. <b>Rozprostírač</b> by vynutil rotaci domén, aby se čtení neslévala na jediný obraz. ⚠️ fragment ≠ věta.</div></div>
+    <div class="row"><div class="k">kam by dopadla</div><div class="v">nahradila by slot <em>SEASONAL IMAGE</em> (injektor <em>_seasonalImagery</em>, zdroj <em>RUNE_IMAGES</em>)</div></div>
+    <div class="row"><div class="k">důkaz</div><div class="v"><b>①</b> volné pole se <b>slévá</b>: Isa EN <span class="num">6/6</span> čaj · Berkana IS <span class="num">6/6</span> těsto · Fehu IS <span class="num">4/6</span> mléko. Kurátorský pool drží max-shluk <span class="num">2–3</span> → svoboda ≠ pestrost.<br><b>②</b> slévání drží i v IS-nativním poli (Isa ~6/6, Berkana 6/6) → není to artefakt jazyka menu, je to gravitace modelu (falzifikace §25).<br><b>③</b> rozprostírač slévání <b>odstranil</b> v obou jazycích.</div></div>
+    <div class="row"><div class="k">známé vady</div><div class="v vada">vynucená mimosezónní doména prorazí sezónní hlídání (owner relaxoval) · abstraktní doména umí prosáknout cizí obraz (Blank „ticho" → Berkanino těsto)</div></div>
+    <div class="row"><div class="k">vlastník</div><div class="v">obsah pole = Cowork banka · zapojení = CODE-tune</div></div>
+  </div>
+
+  <div class="paka">
+    <span class="tok">NEPOSTAVENO</span><h3>FORMA — L0 / L1 / L2</h3>
+    <div class="role">kolik esenčního řádku</div>
+    <div class="row"><div class="k">co by dělala</div><div class="v"><b>L0</b> = čistý obraz bez „proč" → čte se jako báseň, tazatel runu nechytí · <b>L1 = obraz + jeden esenční řádek + umístění → CÍL</b> · <b>L2</b> = delší vysvětlení → sklouzne k encyklopedii, Rúnar komentuje vlastní metaforu, roste délka.</div></div>
+    <div class="row"><div class="k">kam by dopadla</div><div class="v">tvaruje celé čtení; naráží na slot <em>DESCRIBE, DO NOT EXPLAIN</em> (<em>_describeRule</em>) a na otevírací větev</div></div>
+    <div class="row"><div class="k">důkaz</div><div class="v"><b>④</b> L1 drží napříč <span class="num">8</span> runami (pozitivní i temné) a v IS.</div></div>
+    <div class="row"><div class="k">otevřené</div><div class="v vada">jak se L1 vynutí v promptu, není rozhodnuto — „direct" rejstřík ≈ L1/L2</div></div>
+    <div class="row"><div class="k">vlastník</div><div class="v">prompt / CODE-tune</div></div>
+  </div>
+
+  <div class="paka">
+    <span class="tok">NEPOSTAVENO</span><h3>TVAR věty</h3>
+    <div class="role">jak je věta postavená</div>
+    <div class="row"><div class="k">co by dělala</div><div class="v">Týž význam, pokaždé jiná stavba. Zadává se <b>„střídej tvar"</b>, nikdy jeden vzor — jeden příklad v promptu model opíše.</div></div>
+    <div class="row"><div class="k">kam by dopadla</div><div class="v">instrukce u esenčního řádku (beat 2)</div></div>
+    <div class="row"><div class="k">důkaz</div><div class="v"><b>⑤</b> esenční řádek se opakoval („&lt;Runa&gt; is the Y") právě kvůli jednomu vzoru v promptu.<br><b>⑥</b> A/B potvrzeno (Fehu+Isa, EN+IS): šablona spadla z <span class="num">5–6/6 na 0/6</span> ve všech čtyřech buňkách, význam zůstal.</div></div>
+    <div class="row"><div class="k">známé vady</div><div class="v vada">rameno „střídej" si občas oblíbí NOVÝ tvar (cleft) — není nekonečné, ale monotonie zlomená</div></div>
+    <div class="row"><div class="k">vlastník</div><div class="v">prompt / CODE-tune</div></div>
+  </div>
+
+  <div class="paka">
+    <span class="tok">NEPOSTAVENO</span><h3>NÁZVOSLOVÍ významu</h3>
+    <div class="role">jakými slovy se pojmenuje, CO runa je</div>
+    <div class="row"><div class="k">co by dělala</div><div class="v">Tvar mění syntax — tohle mění <b>slovník</b>. Banka faset na runu, vynucená rotace. Fasety jsou fasety <b>téhož</b> významu, ne posun.</div></div>
+    <div class="row"><div class="k">kam by dopadla</div><div class="v">krmila by esenční řádek (beat 2); nerozhodnuto, zda nahrazuje, nebo doplňuje zamíchaná klíčová slova ve slotu <em>DRAWN RUNE — focus</em></div></div>
+    <div class="row"><div class="k">důkaz</div><div class="v"><b>⑦</b> rotace faset <b>rozšířila slovník</b> — objevily se increase/lambs, provision, reciprocita, preservation, surface/váha, mimo věčné „wealth/waiting". Kánon držel (žádná rada, verdikt ani posun významu).<br><b>⑧</b> cross-run rozlišení <b>faset</b> drží i ve výstupu: Isa = pauza vs Ingwaz = latence pod povrchem · Uruz = vitalita dovnitř vs Thurisaz = úder ven · Algiz = útočiště vs Thurisaz = zraňující trn.</div></div>
+    <div class="row"><div class="k">hranice</div><div class="v vada">fasety blízko jádra jádro jen echují; šířka přichází z faset mířících do jiné části významu</div></div>
+    <div class="row"><div class="k">vlastník</div><div class="v">obsah banky = Cowork · IS větev se <b>vytváří nativně z významu (§2)</b>, nepřekládá z EN faset</div></div>
+  </div>
+</section>
+
+<section>
+  <h2>Co je nedodělané nebo sporné</h2>
+  <p class="sub">stav ověřen v repu 2026-08-20 · rozhoduje owner, nedomýšlí se</p>
+  <ul class="gaps">
+    <li><b>NÁZVOSLOVÍ NEMÁ DATOVANÉ ROZHODNUTÍ</b><span class="why">Záznam z 2026-08-18 jmenuje tři páky (pole+rozprostírač, forma L1, TVAR věty) a Isa relaxaci. Čtvrtá páka v něm chybí, přestože existuje commit „4. osa pestrosti" — §16 output B nesplněn.</span></li>
+    <li><b>POČET FASET SI ODPORUJE NA TŘECH MÍSTECH</b><span class="why">spec „6–10 na runu" · měření „6–8" · Coworkova banka 161 faset na 25 run ≈ 6,4. Žádné z těch čísel neplatí jako pravidlo, dokud se nerozhodne.</span></li>
+    <li><b>KOLIZE OBRAZŮ NAPŘÍČ RUNAMI NEMÁ ŘEŠENÍ</b><span class="why">⑧: fasety se rozliší, ale OBRAZ koliduje nezávisle na nich — „kynoucí těsto" padlo u Ingwaz i Uruz, a přitom je Berkanino. Pole potřebuje cross-run rozlišení obrazů stejně jako banka faset. Test běžel bez pole, proto to vylezlo.</span></li>
+    <li><b>IS VĚTEV BANKY NENÍ DOLOŽENÁ</b><span class="why">A islandština je primární jazyk (§2). Vytváří se nativně z významu, takže ji nelze odvodit z EN faset — musí vzniknout a projít ověřením (<code>is-vazba</code>, <code>is-grammar-qa</code>).</span></li>
+    <li><b>DVĚ SÍTA NA OBRAZ ŽIJÍ JEN VE SNAPSHOTU</b><span class="why">Nejsou to páky pestrosti, jsou to kontroly obsahu — pojmenování „osy 5–6" bylo matoucí, opraveno 2026-08-20.<br>
+    <b>A — umístění, ne symbol.</b> Ochranný či výstražný obraz smí zůstat obrazem ve světě; nesmí postavit tazatele dovnitř ochrany jako fakt („stojíš uvnitř kruhu, který drží"), ani se obrátit v ponaučení pro něj. Bezpečné: nechat ho u té věci stát, nebo stráž lokalizovat v něm („něco v tobě"). ⚠️ Dřívější znění tvrdilo, že rizikové symboly potřebují vlastní zákaz — přegeneralizováno ze dvou případů, z nichž jeden (hvalreki) padá už na sítu B a druhý (landvættir) jde přeformulovat. Doklad: Algizova faseta „shelter that doesn't ask to be thanked" držela 2/2 i na nejtěžším obrazu.<br>
+    <b>B — stáří a nechutnost.</b> Autentické ≠ současné: subsistenční severské obrazy vyjdou středověké nebo gore (velryba s noži, oheň třením, kýly lodí). Nadčasové a moderní-domácí drží čistě.<br>
+    Snapshot je historie ke svému dni; stav se z něj brát nesmí. Buď to owner ratifikuje sem, nebo to padá.</span></li>
+  </ul>
+</section>
+
+<footer>
+  Návrhová vrstva. Nic z toho neběží v produkci — jak Rúnar mluví dnes, vlastní kód a produkční mapa promptu.<br>
+  Spec páky vlastní <code>RUNAR_DESIGN.md</code> · čísla <code>RUNAR_EVAL_LOG.md</code> 2026-08-18 (①–⑧) · směr <code>RUNAR_DECISIONS.md</code> 2026-08-18.<br>
+  Až se páka nasadí, její blok tady <b>zmizí</b> — popisovat ji pak bude produkční mapa, ne tenhle dokument.
+</footer>
+</div>

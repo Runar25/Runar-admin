@@ -3921,3 +3921,40 @@ jen dřív a stejně cizímu člověku.
 (a chytne i to, co vzniklo mimo session — třeba ručně).
 
 Affected doc(s): memory/working-style.md (sekce „Compact") — v témže commitu.
+
+## 2026-08-20 — Obraz má dvě síta · návrhová vrstva dostala vlastní mapu
+
+**Rozhodnuto (KUKY):**
+1. **Ratifikována dvě síta na obraz** do `RUNAR_DESIGN.md` (sekce „Obraz — dvě síta").
+   **A** = vada je v UMÍSTĚNÍ, ne v symbolu: obraz nesmí postavit tazatele dovnitř ochrany jako
+   fakt, ani se obrátit v ponaučení. **B** = autentické ≠ současné: subsistenční severské obrazy
+   vyjdou středověké nebo gore.
+2. **Návrhová vrstva se odděluje od produkční mapy promptu** — dostala vlastní mapu
+   (`docs/runar-engine-map.html`). Produkční mapa popisuje, jak Rúnar mluví DNES; engine mapa
+   to, co ještě neběží. Každý blok engine mapy nese značku `NEPOSTAVENO`; při nasazení páky se
+   ten blok maže, popisovat ji pak bude produkční mapa. Obě URL vlastní
+   `memory/prompt-map-artifact.md`, druhý memory soubor nevzniká (§20).
+
+**Proč síto A takhle a ne jako seznam rizikových symbolů:** dřívější znění (snapshot 2026-08-19)
+tvrdilo, že symbol, jehož povaha míří na kánonovou čáru, potřebuje vlastní zákaz. Přegeneralizováno
+ze dvou případů — a ani jeden ho neunese: **hvalreki** padá už na sítu B (mrtvá velryba = gore),
+**landvættir** jde přeformulovat. Doklad, že přeformulování stačí: Algizova faseta „shelter that
+doesn't ask to be thanked" držela i na nejtěžším obrazu. Černá listina by zbytečně zabíjela
+použitelné symboly. Měření → `RUNAR_EVAL_LOG.md` 2026-08-19.
+
+**Proč vlastní mapa a ne sekce v produkční** (KUKY: *„nechci aby se zamotali s těma co jsou jen
+v návrhu"*): produkční mapa je jediný artefakt, jehož jediná odpověď zní „takhle to běží". Doc,
+který odpovídá na dvě otázky, nevlastní čistě ani jednu.
+
+**Vedlejší opravy v témž tahu:** `RUNAR_DESIGN.md` — 4 páky dostaly na řádek značku `NEPOSTAVENO`
+a podmiňovací způsob (grep na „rozprostír" vracel 7 z 8 řádků, které se četly jako hotová věc) ·
+opraven překlep „Runa má PODLE" → „POLE", jediná věta definující první páku · vyhozeno sporné číslo
+„6–10 faset" (spec 6–10 vs měření 6–8 vs banka ≈ 6,4 — nedá se tvrdit, rozhodne owner).
+`memory/prompt-map-artifact.md` — opravena nepravda „HTML zdroj mapy není v repu" (je,
+`docs/runar-prompt-map.html`, git-tracked) a zaznamenán rozchod razítek v2.0 (repo) vs v2.1 (kód
+i publikovaná mapa).
+
+⚠️ **Rámec:** tohle NENÍ příprava produkce. Engine pestrosti je zkouška — generují se čtení a owner
+posuzuje. Do produkce půjde, až owner řekne (KUKY 2026-08-20).
+
+Affected doc(s): RUNAR_DESIGN.md · memory/prompt-map-artifact.md · memory/MEMORY.md — v témže commitu.
