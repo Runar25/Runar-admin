@@ -93,6 +93,30 @@ if (ARM === 'most4')
 // prompt rikal jednu vec. Izoluje se tim prave ona: most3 vs most3b se lisi jen ji.
 // Ctyri oblasti, ktere dnes zadaji tvrzeni o ctenari. Klic = presny retezec z AREAS,
 // protoze `_domainContext` vybira podle nej; zbyle ctyri propadnou na puvodni funkci.
+// Oblast jako ZDROJ OBRAZU, ne jako cil tvrzeni (KUKY 2026-08-21). Vsech osm — mereni
+// ukazalo, ze anglicky model vyrabi tvrzeni i u oblasti, ktere zadne nezadaly.
+const OBRAZ_DOMENY = {
+  en: {
+    "Love & Relationships": 'The reading is for Love & Relationships — take the image from where two come together: a shared table, two sets of tracks, a boat rowed by two. The seeker may stand in the image; do not tell them what is true between them and anyone.',
+    "Purpose & Path": 'The reading is for Purpose & Path — take the image from ways and going: a track over a pass, a river finding its bed, a bearing held in fog. The seeker may stand in the image; do not tell them where they are headed.',
+    "Career & Creativity": 'The reading is for Career & Creativity — take the image from making: tools, a workbench, wool becoming yarn, a wall raised stone by stone. The seeker may stand in the image; do not tell them what they have made or achieved.',
+    "Healing & Wellbeing": 'The reading is for Healing & Wellbeing — take the image from mending and rest: bone knitting, ground thawing, warmth coming back into a room. The seeker may stand in the image; no diagnosis, no verdict on their condition.',
+    "The Unseen": 'The reading is for The Unseen — take the image from what is there but not shown: fog on a fjord, a sound with no source, roots under turf. The seeker may stand in the image; do not tell them what they sense.',
+    "Family & Home": 'The reading is for Family & Home — take the image from a lived-in place: a doorway, a hearth, a path worn between houses. The seeker may stand in the image; do not tell them what they carry from their people.',
+    "Inner Growth": 'The reading is for Inner Growth — take the image from slow change in a thing: a birch thickening, a stone worn round, ice giving way. The seeker may stand in the image; do not tell them how they have changed.',
+    "Crossroads & Decisions": 'The reading is for Crossroads & Decisions — take the image from where a way divides: two tracks, a fork in a river, a gate standing open beside a closed one. The seeker may stand in the image; do not tell them what they know or which way they will take.',
+  },
+  is: {
+    "Ást & Sambönd": 'Þessi lestur er fyrir Ást & Sambönd — sæktu myndina þangað sem tveir mætast: sameiginlegt borð, tvenn spor í snjó, bátur sem tveir róa. Leitandinn má standa í myndinni; segðu honum ekki hvað er satt milli hans og annarra.',
+    "Tilgangur & Leið": 'Þessi lestur er fyrir Tilgang & Leið — sæktu myndina í leiðir og ferð: götu yfir heiði, á sem finnur sér farveg, stefnu haldið í þoku. Leitandinn má standa í myndinni; segðu honum ekki hvert hann stefnir.',
+    "Starf & Sköpun": 'Þessi lestur er fyrir Starf & Sköpun — sæktu myndina í smíð og handverk: verkfæri, vinnuborð, ull sem verður að bandi, vegg hlaðinn stein fyrir stein. Leitandinn má standa í myndinni; segðu honum ekki hvað hann hefur gert eða hverju hann hefur áorkað.',
+    "Heilun & Líðan": 'Þessi lestur er fyrir Heilun & Líðan — sæktu myndina í gróanda og hvíld: bein sem grær, jörð sem þiðnar, hlýju sem kemur aftur í hús. Leitandinn má standa í myndinni; engin sjúkdómsgreining, enginn dómur um líðan hans.',
+    "Hið dulda": 'Þessi lestur er fyrir Hið dulda — sæktu myndina í það sem er til staðar en sést ekki: þoku á firði, hljóð án upptaka, rætur undir sverði. Leitandinn má standa í myndinni; segðu honum ekki hvað hann skynjar.',
+    "Fjölskylda & Heimili": 'Þessi lestur er fyrir Fjölskyldu & Heimili — sæktu myndina í byggðan stað: dyr, eldstæði, götu troðna milli húsa. Leitandinn má standa í myndinni; segðu honum ekki hvað hann ber með sér frá sínu fólki.',
+    "Innri Vöxtur": 'Þessi lestur er fyrir Innri Vöxt — sæktu myndina í hæga breytingu á hlut: björk sem gildnar, stein sem slípast, ís sem lætur undan. Leitandinn má standa í myndinni; segðu honum ekki hvernig hann hefur breyst.',
+    "Vegamót & Ákvarðanir": 'Þessi lestur er fyrir Vegamót & Ákvarðanir — sæktu myndina þangað sem leið skiptist: tvær götur, kvísl í á, hlið sem stendur opið við hliðina á lokuðu. Leitandinn má standa í myndinni; segðu honum ekki hvað hann veit eða hvora leiðina hann velur.',
+  },
+};
 const KAND_DOMENY = {
   en: {
     'Love & Relationships': "The reading is for Love & Relationships — let the rune's meaning land where two people meet; describe the meeting, never the other person's mind or intent.",
@@ -107,8 +131,8 @@ const KAND_DOMENY = {
     'Vegamót & Ákvarðanir': 'Þessi lestur er fyrir Vegamót & Ákvarðanir — láttu merkingu rúnarinnar þrýsta á hvernig leiðirnar tvær líta út þaðan sem leitandinn stendur, ekki á hvora hann velur.',
   },
 };
-if (DOMENY === 'kandidat') {
-  vm.runInContext('var KAND_DOMENY = ' + JSON.stringify(KAND_DOMENY) + ';', S);
+if (DOMENY === 'kandidat' || DOMENY === 'obraz') {
+  vm.runInContext('var KAND_DOMENY = ' + JSON.stringify(DOMENY === 'obraz' ? OBRAZ_DOMENY : KAND_DOMENY) + ';', S);
   vm.runInContext([
     'var _domOrig = _domainContext;',
     '_domainContext = function (area, lang) {',
@@ -198,7 +222,7 @@ if (!STAVITEL[SPREAD]) { console.error('  neznamy spread: ' + SPREAD); process.e
   const SRAZKA = { en: 'through image, not explanation', is: 'í myndum, ekki útskýringu' }[LANG];
   const maSrazku = zk.indexOf(SRAZKA) !== -1;
   if (ARM === 'most3b' && maSrazku) { console.error('  RAMENO most3b: srazkova veta v promptu PORAD JE'); process.exit(1); }
-  if (DOMENY === 'kandidat' && MATRIX === 'area') {
+  if ((DOMENY === 'kandidat' || DOMENY === 'obraz') && MATRIX === 'area') {
     const zk2 = STAVITEL[SPREAD]({ name: 'Anna', area: AREAS[7], seeking: SEEKS[1], intention: INTENT[0], question: '', lifeRune: null }, vzorek(), LANG);
     if (zk2.indexOf('already knows but has not said aloud') !== -1 || zk2.indexOf('veit þegar en hefur ekki sagt') !== -1) {
       console.error('  DOMENY: kandidat se nevlozil, v promptu je porad stare zneni'); process.exit(1); }
