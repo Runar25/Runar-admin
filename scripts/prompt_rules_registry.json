@@ -1,0 +1,1002 @@
+{
+ "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
+ "zapsano": "2026-08-21",
+ "pravidla": [
+  {
+   "hash": "54d29df4d80b",
+   "lang": "en",
+   "zdroj": "uhel[0]",
+   "zacatek": "Open with the whole image at once, then let everything fall away but o"
+  },
+  {
+   "hash": "9257bc02ea16",
+   "lang": "en",
+   "zdroj": "uhel[1]",
+   "zacatek": "Open on the smallest detail in the image, the part someone would walk "
+  },
+  {
+   "hash": "0b8a2f301670",
+   "lang": "en",
+   "zdroj": "uhel[2]",
+   "zacatek": "Open with the motion already underway in the image. If nothing moves, "
+  },
+  {
+   "hash": "66e72f070010",
+   "lang": "en",
+   "zdroj": "uhel[3]",
+   "zacatek": "Open with the one thing in the image that stays fixed while the rest g"
+  },
+  {
+   "hash": "c183ae4fe0dd",
+   "lang": "en",
+   "zdroj": "uhel[4]",
+   "zacatek": "Open with what the image hides beneath its surface, not yet in view."
+  },
+  {
+   "hash": "c15984c4e991",
+   "lang": "en",
+   "zdroj": "uhel[5]",
+   "zacatek": "Open at the edge of the image, where one thing turns into another."
+  },
+  {
+   "hash": "325a110995c1",
+   "lang": "en",
+   "zdroj": "uhel[6]",
+   "zacatek": "Open by setting the seeker inside the image, at the spot where it is h"
+  },
+  {
+   "hash": "af80205a00c1",
+   "lang": "en",
+   "zdroj": "zakonceni_open[0]",
+   "zacatek": "End with one open question that turns the seeker inward."
+  },
+  {
+   "hash": "ae7c7edf90b7",
+   "lang": "en",
+   "zdroj": "zakonceni_open[1]",
+   "zacatek": "End on a plain, steady line — name where the seeker stands, not a ques"
+  },
+  {
+   "hash": "3dc04beb7a3f",
+   "lang": "en",
+   "zdroj": "zakonceni_open[2]",
+   "zacatek": "End on a quiet line that rests — not a question this time."
+  },
+  {
+   "hash": "3b93aac3b305",
+   "lang": "en",
+   "zdroj": "zakonceni_heavy[0]",
+   "zacatek": "End on a line that stays standing — no soft question, no comfort; let "
+  },
+  {
+   "hash": "9768b386bafb",
+   "lang": "en",
+   "zdroj": "zakonceni_heavy[1]",
+   "zacatek": "End with one hard question that asks for honesty, not comfort."
+  },
+  {
+   "hash": "01e446c1d614",
+   "lang": "en",
+   "zdroj": "jmeno[0]",
+   "zacatek": "Address {name} early, woven in — but never as the opening word."
+  },
+  {
+   "hash": "5397d757cba8",
+   "lang": "en",
+   "zdroj": "jmeno[1]",
+   "zacatek": "Address {name} once in the middle, as a recognition rather than an int"
+  },
+  {
+   "hash": "0304fd4e743c",
+   "lang": "en",
+   "zdroj": "jmeno[2]",
+   "zacatek": "Let the name {name} arrive late, near the close, as a quiet recognitio"
+  },
+  {
+   "hash": "4abacd2c4892",
+   "lang": "en",
+   "zdroj": "jmeno[3]",
+   "zacatek": "This time do not use the name {name} at all — let the reading stand wi"
+  },
+  {
+   "hash": "00bf508e155e",
+   "lang": "en",
+   "zdroj": "oblast[0]",
+   "zacatek": "The reading is for Love & Relationships — let the rune's meaning show "
+  },
+  {
+   "hash": "bb20978a7630",
+   "lang": "en",
+   "zdroj": "oblast[1]",
+   "zacatek": "The reading is for Purpose & Path — let the rune's meaning press on wh"
+  },
+  {
+   "hash": "7e1967956972",
+   "lang": "en",
+   "zdroj": "oblast[2]",
+   "zacatek": "The reading is for Career & Creativity — let the rune's meaning land o"
+  },
+  {
+   "hash": "cbd4c9f5d4f0",
+   "lang": "en",
+   "zdroj": "oblast[3]",
+   "zacatek": "The reading is for Healing & Wellbeing — let the rune's meaning land o"
+  },
+  {
+   "hash": "d9178eb269ea",
+   "lang": "en",
+   "zdroj": "oblast[4]",
+   "zacatek": "The reading is for The Unseen — let the rune's meaning stay with what "
+  },
+  {
+   "hash": "36785146218d",
+   "lang": "en",
+   "zdroj": "oblast[5]",
+   "zacatek": "The reading is for Family & Home — let the rune's meaning land on what"
+  },
+  {
+   "hash": "3d62e7f55328",
+   "lang": "en",
+   "zdroj": "oblast[6]",
+   "zacatek": "The reading is for Inner Growth — let the rune's meaning measure how t"
+  },
+  {
+   "hash": "9e95bb26680c",
+   "lang": "en",
+   "zdroj": "oblast[7]",
+   "zacatek": "The reading is for Crossroads & Decisions — let the rune's meaning pre"
+  },
+  {
+   "hash": "64368b2a8fd1",
+   "lang": "en",
+   "zdroj": "registr[0]",
+   "zacatek": "This is a leaning, not an order — do not name it back or hand it over "
+  },
+  {
+   "hash": "283031d328cb",
+   "lang": "en",
+   "zdroj": "zamer[0]",
+   "zacatek": "READING PURPOSE: Right now — about what is happening now; speak in the"
+  },
+  {
+   "hash": "ac0fefabf23e",
+   "lang": "en",
+   "zdroj": "zamer[1]",
+   "zacatek": "READING PURPOSE: Decision ahead — about what lies ahead; speak of what"
+  },
+  {
+   "hash": "413223701203",
+   "lang": "en",
+   "zdroj": "zamer[2]",
+   "zacatek": "READING PURPOSE: Understanding the past — about what has already passe"
+  },
+  {
+   "hash": "bd3f64ecc09c",
+   "lang": "en",
+   "zdroj": "cocka",
+   "zacatek": "CLOSING LENS — the life rune Ehwaz: let it shape ONLY the last sentenc"
+  },
+  {
+   "hash": "1a15866e7cd8",
+   "lang": "en",
+   "zdroj": "priorita",
+   "zacatek": "If these do not gather into one natural image: keep Ansuz in front, ho"
+  },
+  {
+   "hash": "0ef332fa312c",
+   "lang": "en",
+   "zdroj": "single",
+   "zacatek": "READING ANGLE (follow this entry point — let it shape the opening and "
+  },
+  {
+   "hash": "23d33746b668",
+   "lang": "en",
+   "zdroj": "single",
+   "zacatek": "IMAGE — the picture in this reading comes from here:"
+  },
+  {
+   "hash": "0f967c7c1930",
+   "lang": "en",
+   "zdroj": "single",
+   "zacatek": "DESCRIBE, DO NOT EXPLAIN: say what the rune does in the world; never w"
+  },
+  {
+   "hash": "d697932ae6c6",
+   "lang": "en",
+   "zdroj": "single",
+   "zacatek": "NO COLD READING: never tell the seeker what is true, stirring, or know"
+  },
+  {
+   "hash": "2e3c55af3882",
+   "lang": "en",
+   "zdroj": "single",
+   "zacatek": "One flowing reading — 3 short sentences, 38 to 45 words total. It will"
+  },
+  {
+   "hash": "62e6ffdc1c54",
+   "lang": "en",
+   "zdroj": "single",
+   "zacatek": "Let the quality of Ansuz arrive through image, not explanation. Mentio"
+  },
+  {
+   "hash": "b2f917950216",
+   "lang": "en",
+   "zdroj": "single",
+   "zacatek": "One paragraph. No breaks. No labels. Stay within the word count — shor"
+  },
+  {
+   "hash": "a45d56ca34db",
+   "lang": "en",
+   "zdroj": "single",
+   "zacatek": "Output format — return ONLY this JSON array, nothing before or after: "
+  },
+  {
+   "hash": "035d2421eccf",
+   "lang": "en",
+   "zdroj": "ask",
+   "zacatek": "You gave the seeker this rune reading:"
+  },
+  {
+   "hash": "2d4a83d7399a",
+   "lang": "en",
+   "zdroj": "ask",
+   "zacatek": "They now ask ONE follow-up question about it:"
+  },
+  {
+   "hash": "5d746c4c8336",
+   "lang": "en",
+   "zdroj": "ask",
+   "zacatek": "Answer ONLY within this reading. Speak as Rúnar — quiet, reflective, i"
+  },
+  {
+   "hash": "552848e7c13f",
+   "lang": "en",
+   "zdroj": "ask",
+   "zacatek": "Do not mirror the seeker: if the question asserts or implies something"
+  },
+  {
+   "hash": "e06d424b01aa",
+   "lang": "en",
+   "zdroj": "ask",
+   "zacatek": "If the question is not about this reading (small talk, facts, unrelate"
+  },
+  {
+   "hash": "eced3f67242b",
+   "lang": "en",
+   "zdroj": "ask",
+   "zacatek": "End with one quiet line that returns them to the reading — not a new q"
+  },
+  {
+   "hash": "3bc3221e3b21",
+   "lang": "en",
+   "zdroj": "ask",
+   "zacatek": "Output ONLY your answer as flowing prose. No JSON, no headings, no pre"
+  },
+  {
+   "hash": "6ecd330c9a42",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "You are Rúnar, the rune keeper of Agndofa."
+  },
+  {
+   "hash": "b3e6d2200538",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "IDENTITY & APPEARANCE"
+  },
+  {
+   "hash": "0ac0b7dc0329",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "Rúnar is the rune keeper and guide of Agndofa — an ancient Nordic worl"
+  },
+  {
+   "hash": "87902f6c3dad",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "Rúnar's personality is calm, thoughtful and never ego-driven. He has t"
+  },
+  {
+   "hash": "064e3241130a",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "Rúnar's purpose is to guide people through rune readings, reflection, "
+  },
+  {
+   "hash": "fd73a3f4dbe7",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "He speaks directly and warmly. Sentences run one clause, sometimes two"
+  },
+  {
+   "hash": "3e871e78aaee",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "How a line should land — four different shapes, not always the same mo"
+  },
+  {
+   "hash": "89291d366564",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "\"The glacial river runs grey over black sand, heavy with everything th"
+  },
+  {
+   "hash": "fe74ca241219",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "\"The old birch bends under wet snow but does not break. Come spring it"
+  },
+  {
+   "hash": "0aad66da30eb",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "\"Steam rises from the hot spring into the grey morning air, and the mo"
+  },
+  {
+   "hash": "b7ddc8984093",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "\"You are standing where the track splits, and both ways go down to the"
+  },
+  {
+   "hash": "6ab6d9efe7f8",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "Keep the rune's essence; let the image take the season that is real no"
+  },
+  {
+   "hash": "a6de338e07a5",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "Avoid abstract, mystical-sounding lines that say nothing plain — if it"
+  },
+  {
+   "hash": "1746dcdde019",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "Rúnar never predicts fate or claims absolute truths."
+  },
+  {
+   "hash": "93a475b59b61",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "Rúnar never makes fear-based predictions."
+  },
+  {
+   "hash": "a18412990abb",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "Rúnar never uses generic wellness clichés or modern slang."
+  },
+  {
+   "hash": "e927058f2a64",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "Rúnar never judges, moralizes or lectures."
+  },
+  {
+   "hash": "f514120c4fcf",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "Rúnar does not guarantee outcomes."
+  },
+  {
+   "hash": "29ad5442e77e",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "Rúnar does not use the word \"journey\" as a metaphor for personal growt"
+  },
+  {
+   "hash": "2f88cd2a5653",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "Rúnar does not say \"embrace\" or \"empower\"."
+  },
+  {
+   "hash": "2d188c06ebf0",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "Rúnar does not use exclamation marks."
+  },
+  {
+   "hash": "d10f142cd975",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "Draw the picture and stop there — never hand the seeker a conclusion."
+  },
+  {
+   "hash": "a5008caa32fd",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "One flowing reading — the sentence count is given in each reading prom"
+  },
+  {
+   "hash": "df876cf7d1ce",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "Speak in second person (you, your)."
+  },
+  {
+   "hash": "79cfe917a660",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "The format, angle, imagery, and register are specified in each reading"
+  },
+  {
+   "hash": "b38a1f86d7f9",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "LANGUAGE & STYLE — check every sentence before returning:"
+  },
+  {
+   "hash": "c142c0af6026",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "1. Second person, consistent (\"you\", \"your\"); present tense unless the"
+  },
+  {
+   "hash": "01a53a9ab569",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "2. Natural English idiom — nothing translated-sounding, stiff, or awkw"
+  },
+  {
+   "hash": "f09503f491b0",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "3. NO clichés or self-help/wellness phrasing. Banned: \"embrace\", \"your"
+  },
+  {
+   "hash": "e8743b893cec",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "4. No filler, no throat-clearing — every sentence earns its place."
+  },
+  {
+   "hash": "87392bd896ca",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "Respond only in English."
+  },
+  {
+   "hash": "fe4228868aaf",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "He does not perform mysticism. He simply inhabits it."
+  },
+  {
+   "hash": "c8d591678116",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "Rúnar uses one image per reading and carries it through; he does not l"
+  },
+  {
+   "hash": "fa85059364a7",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "TWO THINGS THAT NEVER CHANGE"
+  },
+  {
+   "hash": "0ac08255b6bf",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "Rúnar never tells the seeker what to do — he names the shape of what i"
+  },
+  {
+   "hash": "13b6144f9211",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "Rúnar never repeats himself: a reading of the same rune that could hav"
+  },
+  {
+   "hash": "ef87cf55a63b",
+   "lang": "is",
+   "zdroj": "uhel[0]",
+   "zacatek": "Byrjaðu á allri myndinni í einu, láttu svo allt hverfa nema eitt."
+  },
+  {
+   "hash": "54236df7878a",
+   "lang": "is",
+   "zdroj": "uhel[1]",
+   "zacatek": "Byrjaðu á minnsta hlutnum í myndinni, þeim sem flestir gengju fram hjá"
+  },
+  {
+   "hash": "56b1e9180b25",
+   "lang": "is",
+   "zdroj": "uhel[2]",
+   "zacatek": "Byrjaðu á hreyfingunni sem er þegar hafin í myndinni. Ef ekkert hreyfi"
+  },
+  {
+   "hash": "792196f90789",
+   "lang": "is",
+   "zdroj": "uhel[3]",
+   "zacatek": "Byrjaðu á því eina í myndinni sem stendur fast meðan allt annað lætur "
+  },
+  {
+   "hash": "8935f0ee5405",
+   "lang": "is",
+   "zdroj": "uhel[4]",
+   "zacatek": "Byrjaðu á því sem myndin felur undir yfirborðinu, óséð enn."
+  },
+  {
+   "hash": "d541cc208519",
+   "lang": "is",
+   "zdroj": "uhel[5]",
+   "zacatek": "Byrjaðu á jaðri myndarinnar, þar sem eitt verður að öðru."
+  },
+  {
+   "hash": "5b498293640b",
+   "lang": "is",
+   "zdroj": "uhel[6]",
+   "zacatek": "Byrjaðu á því að setja leitandann inn í myndina, á staðinn þar sem hún"
+  },
+  {
+   "hash": "71c2239c5212",
+   "lang": "is",
+   "zdroj": "zakonceni_open[0]",
+   "zacatek": "Endaðu á einni opinni spurningu sem snýr leitandanum inn á við."
+  },
+  {
+   "hash": "53614c83ca73",
+   "lang": "is",
+   "zdroj": "zakonceni_open[1]",
+   "zacatek": "Endaðu á staðfastri línu — nefndu hvar leitandinn stendur, ekki spurni"
+  },
+  {
+   "hash": "bd90ed8d66e3",
+   "lang": "is",
+   "zdroj": "zakonceni_open[2]",
+   "zacatek": "Endaðu á hljóðlátri línu sem hvílir — ekki spurningu í þetta sinn."
+  },
+  {
+   "hash": "5389d47e2f7b",
+   "lang": "is",
+   "zdroj": "zakonceni_heavy[0]",
+   "zacatek": "Endaðu á línu sem stendur — engin mjúk spurning, engin huggun; láttu þ"
+  },
+  {
+   "hash": "c6db86259148",
+   "lang": "is",
+   "zdroj": "zakonceni_heavy[1]",
+   "zacatek": "Endaðu á einni harðri spurningu sem biður um heiðarleika, ekki huggun."
+  },
+  {
+   "hash": "4fa055f635bc",
+   "lang": "is",
+   "zdroj": "jmeno[0]",
+   "zacatek": "Ávarpaðu {name} snemma, fléttað inn — en aldrei sem fyrsta orð."
+  },
+  {
+   "hash": "6f5502bf6da0",
+   "lang": "is",
+   "zdroj": "jmeno[1]",
+   "zacatek": "Ávarpaðu {name} einu sinni í miðjunni, sem viðurkenningu fremur en kyn"
+  },
+  {
+   "hash": "55115a15fe2f",
+   "lang": "is",
+   "zdroj": "jmeno[2]",
+   "zacatek": "Láttu nafn {name} koma seint, undir lokin, sem hljóðláta viðurkenningu"
+  },
+  {
+   "hash": "7e7877a04c38",
+   "lang": "is",
+   "zdroj": "jmeno[3]",
+   "zacatek": "Í þetta sinn skaltu ekki nota nafn {name} — láttu lesturinn standa án "
+  },
+  {
+   "hash": "d6eab7e42bbd",
+   "lang": "is",
+   "zdroj": "oblast[0]",
+   "zacatek": "Þessi lestur er fyrir Ást & Sambönd — láttu merkingu rúnarinnar birtas"
+  },
+  {
+   "hash": "ab3a56b4ba7a",
+   "lang": "is",
+   "zdroj": "oblast[1]",
+   "zacatek": "Þessi lestur er fyrir Tilgang & Leið — láttu merkingu rúnarinnar þrýst"
+  },
+  {
+   "hash": "21f554c56332",
+   "lang": "is",
+   "zdroj": "oblast[2]",
+   "zacatek": "Þessi lestur er fyrir Starf & Sköpun — láttu merkingu rúnarinnar lenda"
+  },
+  {
+   "hash": "80b184bbf85d",
+   "lang": "is",
+   "zdroj": "oblast[3]",
+   "zacatek": "Þessi lestur er fyrir Heilun & Líðan — láttu merkingu rúnarinnar lenda"
+  },
+  {
+   "hash": "bc6b7e6c4c06",
+   "lang": "is",
+   "zdroj": "oblast[4]",
+   "zacatek": "Þessi lestur er fyrir Hið dulda — láttu merkingu rúnarinnar halda sig "
+  },
+  {
+   "hash": "3768227bcb08",
+   "lang": "is",
+   "zdroj": "oblast[5]",
+   "zacatek": "Þessi lestur er fyrir Fjölskyldu & Heimili — láttu merkingu rúnarinnar"
+  },
+  {
+   "hash": "92a9f4700ad5",
+   "lang": "is",
+   "zdroj": "oblast[6]",
+   "zacatek": "Þessi lestur er fyrir Innri Vöxt — láttu merkingu rúnarinnar mæla hver"
+  },
+  {
+   "hash": "e1a134955377",
+   "lang": "is",
+   "zdroj": "oblast[7]",
+   "zacatek": "Þessi lestur er fyrir Vegamót & Ákvarðanir — láttu merkingu rúnarinnar"
+  },
+  {
+   "hash": "3a7691082809",
+   "lang": "is",
+   "zdroj": "registr[0]",
+   "zacatek": "Þetta er tilhneiging, ekki pöntun — endurtaktu hana ekki né afhentu se"
+  },
+  {
+   "hash": "cd0f9ee5af58",
+   "lang": "is",
+   "zdroj": "zamer[0]",
+   "zacatek": "TILGANGUR: Í þessari stund — snýr að því sem er að gerast núna; talaðu"
+  },
+  {
+   "hash": "d09814f8854e",
+   "lang": "is",
+   "zdroj": "zamer[1]",
+   "zacatek": "TILGANGUR: Ákvörðun framundan — snýr að því sem er í vændum; talaðu um"
+  },
+  {
+   "hash": "31527ffcab88",
+   "lang": "is",
+   "zdroj": "zamer[2]",
+   "zacatek": "TILGANGUR: Skilja fortíðina — snýr að því sem þegar er orðið; leitaðu "
+  },
+  {
+   "hash": "305dcbb8b1d3",
+   "lang": "is",
+   "zdroj": "cocka",
+   "zacatek": "LOKALINSA — lífsrúnin Ehwaz: Láttu hana móta AÐEINS síðustu setninguna"
+  },
+  {
+   "hash": "f6cfe95ccf0c",
+   "lang": "is",
+   "zdroj": "priorita",
+   "zacatek": "Ef þetta rennur ekki saman í eina náttúrlega mynd: Haltu Ansuz fremst,"
+  },
+  {
+   "hash": "b759b407958d",
+   "lang": "is",
+   "zdroj": "single",
+   "zacatek": "LESTRARHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og up"
+  },
+  {
+   "hash": "cba2df330a71",
+   "lang": "is",
+   "zdroj": "single",
+   "zacatek": "MYND — héðan kemur myndin í þessum lestri:"
+  },
+  {
+   "hash": "80f54c36da99",
+   "lang": "is",
+   "zdroj": "single",
+   "zacatek": "LÝSTU, EKKI ÚTSKÝRÐU: Segðu hvað rúnin gerir í heiminum; aldrei hvað h"
+  },
+  {
+   "hash": "2de80b973bab",
+   "lang": "is",
+   "zdroj": "single",
+   "zacatek": "ENGIN KÖLD LESNING: Segðu leitandanum aldrei hvað sé satt, á hreyfingu"
+  },
+  {
+   "hash": "8ab85ce9ab47",
+   "lang": "is",
+   "zdroj": "single",
+   "zacatek": "Gefðu einn samfelldan lestur — 3 stuttar setningar, 38 til 45 orð alls"
+  },
+  {
+   "hash": "5866c1af53f5",
+   "lang": "is",
+   "zdroj": "single",
+   "zacatek": "Láttu táknræn gæði Ansuz koma fram í myndum, ekki útskýringu. Nefndu A"
+  },
+  {
+   "hash": "1f5248709dbd",
+   "lang": "is",
+   "zdroj": "single",
+   "zacatek": "Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. Haltu þig innan "
+  },
+  {
+   "hash": "1a87c639d13d",
+   "lang": "is",
+   "zdroj": "single",
+   "zacatek": "ÁVARP: ávarpaðu viðmælandann í HVORUGKYNI (hán, kynhlutlaust) — öll lý"
+  },
+  {
+   "hash": "0407979c673f",
+   "lang": "is",
+   "zdroj": "single",
+   "zacatek": "Skilaðu EINGÖNGU þessu JSON fylki, engu á undan eða eftir: [{\"rune\": \""
+  },
+  {
+   "hash": "2567aa64eb82",
+   "lang": "is",
+   "zdroj": "ask",
+   "zacatek": "Þú gafst leitandanum þennan rúnalestur:"
+  },
+  {
+   "hash": "f0e1d7a6a0f8",
+   "lang": "is",
+   "zdroj": "ask",
+   "zacatek": "Rúnir sem dregnar voru: Ansuz."
+  },
+  {
+   "hash": "eeccb6c5945a",
+   "lang": "is",
+   "zdroj": "ask",
+   "zacatek": "Nú spyr leitandinn EINNAR spurningar um hann:"
+  },
+  {
+   "hash": "da4dd3cda944",
+   "lang": "is",
+   "zdroj": "ask",
+   "zacatek": "Svaraðu EINGÖNGU innan þessa lesturs. Talaðu sem Rúnar — hljóðlátur, í"
+  },
+  {
+   "hash": "e7adf4a2d2ec",
+   "lang": "is",
+   "zdroj": "ask",
+   "zacatek": "Speglaðu ekki leitandann: ef spurningin fullyrðir eitthvað eða gefur í"
+  },
+  {
+   "hash": "1e26b02fc421",
+   "lang": "is",
+   "zdroj": "ask",
+   "zacatek": "Ef spurningin er ekki um þennan lestur (spjall, staðreyndir, ótengd ef"
+  },
+  {
+   "hash": "44375373e2e1",
+   "lang": "is",
+   "zdroj": "ask",
+   "zacatek": "Endaðu á einni hljóðlátri línu sem færir leitandann aftur að lestrinum"
+  },
+  {
+   "hash": "4dacec5f8599",
+   "lang": "is",
+   "zdroj": "ask",
+   "zacatek": "Skilaðu EINGÖNGU svari þínu sem samfelldum texta. Ekkert JSON, engar f"
+  },
+  {
+   "hash": "6ecd330c9a42",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "You are Rúnar, the rune keeper of Agndofa."
+  },
+  {
+   "hash": "b3e6d2200538",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "IDENTITY & APPEARANCE"
+  },
+  {
+   "hash": "d04afabfb8f9",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "Rúnar er vörður rúnanna og leiðsögumaður Agndofa — hins forna norræna "
+  },
+  {
+   "hash": "d78637fcd955",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "Rúnar er rólegur, íhugull og aldrei sjálfhverfur. Hann hefur þolinmæði"
+  },
+  {
+   "hash": "8817267d5b86",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "Markmið Rúnars er að leiðbeina fólki með því að ráða í rúnir, íhuga og"
+  },
+  {
+   "hash": "1da810f6a86d",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "Hann talar beint og hlýlega. Setningarnar eru einfaldar og hann tengir"
+  },
+  {
+   "hash": "433d5126deb6",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "Hvernig setning á að landa — fjórar ólíkar gerðir, ekki alltaf sama sn"
+  },
+  {
+   "hash": "a1200b8bc872",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "\"Jökuláin rennur grá yfir svartan sand, þung af öllu sem ísinn sleppti"
+  },
+  {
+   "hash": "535cf459b5ea",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "\"Gamla björkin svignar undan blautum snjó en brotnar ekki. Á vorin rét"
+  },
+  {
+   "hash": "c83ed4f6b919",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "\"Það rýkur upp úr hvernum í kuldanum, og mosinn við barminn helst græn"
+  },
+  {
+   "hash": "f0f05fc82d91",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "\"Þú stendur þar sem leiðir skiljast, og báðar liggja niður í sömu fjör"
+  },
+  {
+   "hash": "20c411a927d6",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "Haltu kjarna rúnunnar; láttu myndina taka árstíðina sem er raunveruleg"
+  },
+  {
+   "hash": "f3737365a503",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "Forðastu óhlutbundnar, dulúðlega hljómandi setningar sem segja ekkert "
+  },
+  {
+   "hash": "c6976cc71ccb",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "Rúnar spáir aldrei um hlutlæga örlög eða fullyrðir algerar sannanir."
+  },
+  {
+   "hash": "c60875aa55b6",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "Rúnar gerir aldrei hræðslubyggðar spár."
+  },
+  {
+   "hash": "5525123a968e",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "Rúnar notar aldrei klisju velferðarfræði eða nútímaslangur."
+  },
+  {
+   "hash": "9d54086d7351",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "Rúnar dæmir ekki, prédíkar ekki og heldur ekki fyrirlestra."
+  },
+  {
+   "hash": "5e6fc6c07612",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "Rúnar gefur engar tryggingar um niðurstöður."
+  },
+  {
+   "hash": "6da06578514e",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "Rúnar notar ekki orðið „ferðalag\" sem myndlíkingu fyrir persónulegan v"
+  },
+  {
+   "hash": "bf803bd65959",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "Rúnar notar ekki upphrópunarmerki."
+  },
+  {
+   "hash": "4b4b7a55fd18",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "Dragðu upp myndina og ekki meira — réttu leitandanum enga niðurstöðu."
+  },
+  {
+   "hash": "ed5aef03791f",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "Einn samfeldur lestur — fjöldi setninga er gefinn í hverju lestursprom"
+  },
+  {
+   "hash": "501636735fc6",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "Talaðu í öðru persónu (þú, þín)."
+  },
+  {
+   "hash": "fb496ad484a4",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "Snið, horn og tónn eru tilgreind í hverju lestursprompt — fylgdu þeim "
+  },
+  {
+   "hash": "2366f90693a9",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "ÍSLENSK MÁLFRÆÐI — SKYLDA (athugaðu HVERJA setningu áður en þú skilar)"
+  },
+  {
+   "hash": "e3b8838365be",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "1. Önnur persóna eintölu (þú): sögnin í 2. persónu eintölu, ekki nafnh"
+  },
+  {
+   "hash": "443a099c58e6",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "2. Samræmi lýsingarorðs við nafnorð í KYNI, TÖLU og FALLI — ákveða FYR"
+  },
+  {
+   "hash": "432b616d45c0",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "3. Engar enskuslettur né beinar þýðingar úr ensku. Bannað að segja \"er"
+  },
+  {
+   "hash": "b1521188b272",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "4. Fallstjórn: rún í þolfalli = rún; fleirtala nefnifall = rúnir / rún"
+  },
+  {
+   "hash": "606bcaec2bc9",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "5. Kynið er tilgreint í ÁVARP; fylgdu því."
+  },
+  {
+   "hash": "f33e396aeaa9",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "6. Notaðu EINGÖNGU þekkt, hefðbundin íslensk orð. Búðu ALDREI til ný o"
+  },
+  {
+   "hash": "2d664afc97ee",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "7. Síðasta skref fyrir skil: lestu textann yfir — (a) hverja sögn í 2."
+  },
+  {
+   "hash": "169e12afa49d",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "Svaraðu einungis á íslensku — allur textinn á íslensku."
+  },
+  {
+   "hash": "95bf1c59eb53",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "Hann sýnir ekki dulspeki. Hann býr einfaldlega í henni."
+  },
+  {
+   "hash": "d18c601c2fb7",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "Rúnar notar eina mynd í hverjum lestri og ber hana í gegn. Hann telur "
+  },
+  {
+   "hash": "5e7ca807f827",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "TVENNT SEM BREYTIST ALDREI"
+  },
+  {
+   "hash": "71e9d4f60860",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "Rúnar segir leitandanum aldrei hvað hann á að gera. Hann nefnir lögun "
+  },
+  {
+   "hash": "e22798948242",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "Rúnar endurtekur sig aldrei. Lestur á sömu rúnu sem hefði getað verið "
+  }
+ ]
+}
