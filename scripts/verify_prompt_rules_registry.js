@@ -73,9 +73,12 @@ function pravidla() {
     S.buildSysPrompt(null, L).split(String.fromCharCode(10)).forEach(r => pridej(L, 'system', r));
   }
   // Dedup: prvni vyskyt vyhrava, proto jsou pooly nahore.
+  // ⚠️ Klicuje se na CELY text, ne na zacatek. Pri klici z prvnich 60 znaku se ztracelo
+  // 8 pravidel z 32 — pet variant registru a osm oblasti sdili stejnou uvodni vetu, takze
+  // se do registru dostala jen prvni z nich a zmena zbylych by nezcervenala.
   const videl = new Set();
   return ven.filter(x => {
-    const k = x.lang + '|' + x.text.slice(0, 60);
+    const k = x.lang + '|' + x.text;
     if (videl.has(k)) return false;
     videl.add(k); return true;
   });
