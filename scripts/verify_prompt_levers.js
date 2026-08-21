@@ -143,6 +143,12 @@ function zmer(lang) {
 
 // ── MAPA VÝJIMEK — co dnes NEdochází a PROČ (§28: důvod + datum) ─────────
 const VYJIMKY = {
+  length: {
+    cesty: ['norns', 'kriz', 'horseshoe', 'yggdrasil', 'ask', 'liferune'],
+    proc: 'Rozpočet délky je od 2026-08-21 losovaná páka (3 nebo 4 věty) a byl MĚŘEN jen '
+        + 'na single. Životní runa i follow-up mají vlastní instrukci o délce ve svém '
+        + 'builderu — dvě délky proti sobě by si odporovaly. → RUNAR_EVAL_LOG.md 2026-08-21.',
+  },
   angle: {
     cesty: ['norns', 'kriz', 'horseshoe', 'yggdrasil', 'ask', 'liferune'],
     proc: 'Rozhodnuto 2026-08-18 po měření na 300 čteních: vypnutí úhlu u single stejnost '
@@ -162,7 +168,6 @@ const VYJIMKY = {
   register: { cesty: ['ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },
   intention: { cesty: ['ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },
   priority: { cesty: ['ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },
-  length: { cesty: [], proc: '' },
 };
 const zvlast = (klic, cesta) => !!(VYJIMKY[klic] && VYJIMKY[klic].cesty.indexOf(cesta) !== -1);
 

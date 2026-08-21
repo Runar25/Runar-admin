@@ -366,6 +366,25 @@ const ENDING_OPEN_IS = [
   'Endaðu á staðfastri línu — nefndu hvar leitandinn stendur í myndinni, ekki hvað er satt innra með honum; ekki spurningu.',
   'Endaðu á hljóðlátri línu sem hvílir — ekki spurningu í þetta sinn.',
 ];
+// ─── Rozpocet delky (single) ──────────────────────────────────
+// Dve delky, losuje se per cteni. Neni to jen o poctu slov: pri jinem rozpoctu musi model
+// stavet vetu jinak, takze tataz runa zni podruhe jinak — pestrost skoro zadarmo.
+// Mereno 2026-08-20: tri-vetny rozpocet dal 3 vety ve 4 ze 4 (45-52 slov), ctyr-vetny
+// 4 vety v 7 z 8 (56-66 slov). Zadny prekryv — paka drzi ostre.
+// Cas nahlas je duvod, proc jsou rozpocty prave dva a ne rozsah: 20-25 s proti 28-33 s.
+const LENGTH_BUDGETS = [
+  'One flowing reading — 3 short sentences, 38 to 45 words total. It will be read aloud, so keep every sentence lean — about 20 to 25 seconds spoken. No sections, no labels, no line breaks between thoughts.',
+  'One flowing reading — 4 short sentences, 50 to 58 words total. It will be read aloud, so keep every sentence lean — about 28 to 33 seconds spoken. No sections, no labels, no line breaks between thoughts.',
+];
+const LENGTH_BUDGETS_IS = [
+  'Gefðu einn samfelldan lestur — 3 stuttar setningar, 38 til 45 orð alls. Hann verður lesinn upphátt, svo hafðu hverja setningu létta — um 20 til 25 sekúndur. Engar fyrirsagnir, engar hlutaskiptingar.',
+  'Gefðu einn samfelldan lestur — 4 stuttar setningar, 50 til 58 orð alls. Hann verður lesinn upphátt, svo hafðu hverja setningu létta — um 28 til 33 sekúndur. Engar fyrirsagnir, engar hlutaskiptingar.',
+];
+function _lengthBudget(lang) {
+  var pool = lang === "is" ? LENGTH_BUDGETS_IS : LENGTH_BUDGETS;
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
 function _endingShape(drawn, lang) {
   function _isHeavy(r) { return !!(r && r.n && typeof HEAVY_RUNES !== 'undefined' && HEAVY_RUNES.names.indexOf(r.n) !== -1); }
   var heavy = Array.isArray(drawn) ? drawn.some(_isHeavy) : _isHeavy(drawn);

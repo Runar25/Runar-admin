@@ -326,7 +326,7 @@ async function main() {
     name:      { fn: '_namePlacement',    kind: 'kostka',  need: '--name (jiné než you/þú)', co: 'umístění jména' },
     describe:  { fn: '_describeRule',     kind: 'pravidlo', co: 'zákaz definic („řekni co runa DĚLÁ")' },
     coldread:  { fn: '_noColdRead',       kind: 'pravidlo', co: 'pravidlo proti cold readingu' },
-    length:    { line: 'length',          kind: 'pravidlo', co: 'instrukce o délce (3 věty, 38–45 slov)' },
+    length:    { fn: '_lengthBudget',     kind: 'kostka',  co: 'rozpočet délky — losuje 3 nebo 4 věty' },
     lens:      { fn: '_lensContext',      kind: 'pravidlo', need: '--life-rune', co: 'životní runa jako čočka' },
     domain:    { fn: '_domainContext',    kind: 'pravidlo', need: '--area', co: 'oblast života' },
     register:  { fn: '_registerContext',  kind: 'pravidlo', need: '--seeking', co: 'postoj podle „hledám"' },

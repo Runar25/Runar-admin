@@ -1218,7 +1218,6 @@ var RP_SINGLE = {
     langInstr:'',
     worldFb:function(pk){ return 'lifandi leiðin'; },
     angleIntro:'LESTRARHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og upphaf): ',
-    length:'Gefðu einn samfelldan lestur — 3 stuttar setningar, 38 til 45 orð alls. Hann verður lesinn upphátt, svo hafðu hverja setningu létta — um 20 til 25 sekúndur. Engar fyrirsagnir, engar hlutaskiptingar.',
     qBranch:function(rune,g,q){ return 'Láttu ' + rune + ' svara spurningunni: "' + q + '" — í myndum og táknmáli, ekki ráðgjöf. Nefndu ' + rune + ' einu sinni og fléttaðu nafnið náttúrlega inn í textann. Talaðu um það sem liggur undir spurningunni.'; },
     // Prvni veta („koma fram í myndum, ekki útskýringu") ODSTRANENA 2026-08-21: zadavala
     // opak toho, co zada `_describeRule` v produkcnim profilu. IS 4/20 -> 8/20.
@@ -1233,7 +1232,6 @@ var RP_SINGLE = {
     langInstr:'Respond in English.',
     worldFb:function(pk){ return pk; },
     angleIntro:'READING ANGLE (follow this entry point — let it shape the opening and tone): ',
-    length:'One flowing reading — 3 short sentences, 38 to 45 words total. It will be read aloud, so keep every sentence lean — about 20 to 25 seconds spoken. No sections, no labels, no line breaks between thoughts.',
     qBranch:function(rune,g,q){ return 'Let ' + rune + ' answer: "' + q + '" — through image and symbol, not advice. Mention ' + rune + ' by name once, woven naturally. Speak to what lies beneath the question.'; },
     // Prvni veta („through image, not explanation") ODSTRANENA 2026-08-21 — tyz duvod
     // jako u islandske vetve; anglicky model ji sice prebijel, ale rozpor v zadani
@@ -1270,7 +1268,7 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     _seasonalImagery(lang, drawn),
     _describeRule(lang),
     _noColdRead(lang),
-    S.length,
+    _lengthBudget(lang),   // 2026-08-21: delka je losovana paka, ne pevna radka packu
     u.area ? _domainContext(u.area, lang) : '',
     u.seeking ? _registerContext(u.seeking, lang) : '',
     // `worldRef` se otevírací větvi pořád předává, ale ta ho už NEVYPISUJE: popis světa

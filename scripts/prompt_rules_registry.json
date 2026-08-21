@@ -99,6 +99,18 @@
    "zacatek": "This time do not use the name {name} at all — let the reading stand wi"
   },
   {
+   "hash": "2e3c55af3882",
+   "lang": "en",
+   "zdroj": "delka[0]",
+   "zacatek": "One flowing reading — 3 short sentences, 38 to 45 words total. It will"
+  },
+  {
+   "hash": "576c4e104d40",
+   "lang": "en",
+   "zdroj": "delka[1]",
+   "zacatek": "One flowing reading — 4 short sentences, 50 to 58 words total. It will"
+  },
+  {
    "hash": "c1e80becc7d2",
    "lang": "en",
    "zdroj": "oblast[0]",
@@ -205,12 +217,6 @@
    "lang": "en",
    "zdroj": "single",
    "zacatek": "NO COLD READING: never tell the seeker what is true, stirring, or know"
-  },
-  {
-   "hash": "2e3c55af3882",
-   "lang": "en",
-   "zdroj": "single",
-   "zacatek": "One flowing reading — 3 short sentences, 38 to 45 words total. It will"
   },
   {
    "hash": "9e4641e99215",
@@ -585,6 +591,18 @@
    "zacatek": "Í þetta sinn skaltu ekki nota nafn {name} — láttu lesturinn standa án "
   },
   {
+   "hash": "8ab85ce9ab47",
+   "lang": "is",
+   "zdroj": "delka[0]",
+   "zacatek": "Gefðu einn samfelldan lestur — 3 stuttar setningar, 38 til 45 orð alls"
+  },
+  {
+   "hash": "f8d2e9d14416",
+   "lang": "is",
+   "zdroj": "delka[1]",
+   "zacatek": "Gefðu einn samfelldan lestur — 4 stuttar setningar, 50 til 58 orð alls"
+  },
+  {
    "hash": "842d3c81acf6",
    "lang": "is",
    "zdroj": "oblast[0]",
@@ -691,12 +709,6 @@
    "lang": "is",
    "zdroj": "single",
    "zacatek": "ENGIN KÖLD LESNING: Segðu leitandanum aldrei hvað sé satt, á hreyfingu"
-  },
-  {
-   "hash": "8ab85ce9ab47",
-   "lang": "is",
-   "zdroj": "single",
-   "zacatek": "Gefðu einn samfelldan lestur — 3 stuttar setningar, 38 til 45 orð alls"
   },
   {
    "hash": "c7bfc0da3e96",

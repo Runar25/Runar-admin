@@ -59,6 +59,7 @@ function pravidla() {
     (L === 'is' ? glob('ENDING_OPEN_IS') : glob('ENDING_OPEN') || []).forEach((a, i) => pridej(L, 'zakonceni_open[' + i + ']', a));
     (L === 'is' ? glob('ENDING_HEAVY_IS') : glob('ENDING_HEAVY') || []).forEach((a, i) => pridej(L, 'zakonceni_heavy[' + i + ']', a));
     (L === 'is' ? glob('NAME_PLACEMENTS_IS') : glob('NAME_PLACEMENTS') || []).forEach((a, i) => pridej(L, 'jmeno[' + i + ']', a));
+    (L === 'is' ? glob('LENGTH_BUDGETS_IS') : glob('LENGTH_BUDGETS') || []).forEach((a, i) => pridej(L, 'delka[' + i + ']', a));
     zJaz('AREAS', L).forEach((a, i) => pridej(L, 'oblast[' + i + ']', S._domainContext(a, L)));
     zJaz('SEEKS', L).forEach((a, i) => pridej(L, 'registr[' + i + ']', S._registerContext(a, L)));
     zJaz('INTENTIONS', L).forEach((a, i) => pridej(L, 'zamer[' + i + ']', S._intentionContext(a, L)));
