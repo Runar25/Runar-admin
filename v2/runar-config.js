@@ -29,7 +29,14 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 // Reading-prompt version tag — stored on every reading so eval batches group by version
 // (separates a real improvement from variance). BUMP whenever the reading prompt changes
 // (character.js reading builders / injected context / grammar rules).
-const RUNAR_PROMPT_VERSION = 'v2.1';
+// v3.0 MYND (2026-08-21): runa se rekne obycejnymi slovy a obraz je jeji instanci.
+// Co do te verze patri: pravidlo pojmenovani ve `focused` · oblast jako ZDROJ OBRAZU (ne cil
+// tvrzeni) · zakonceni a jeden uhel pod carou podmetu · losovana delka.
+// Detail RUNAR_DECISIONS 2026-08-21, mereni RUNAR_EVAL_LOG 2026-08-21.
+// ⚠️ Menis prompt? Bumpni tohle. Hlida to ㉜ — bez bumpu odmitne zapsat registr pravidel,
+// protoze bez tagu se nova cteni v DB nerozeznaji od starych (stalo se 21. 8., pet migraci
+// slo do produkce pod nezmenenou verzi).
+const RUNAR_PROMPT_VERSION = 'v3.0-mynd';
 
 // ─── ELEVENLABS ─────────────────────────────────────────
 const EL_VOICE_ID_EN = '2UI8v2ibbwQTijaYAte1'; // English — Rúnar EN

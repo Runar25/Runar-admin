@@ -37,6 +37,34 @@ v system promptu (model ho ignoruje) · dead/lab zapojit-nebo-zabít (`buildSysP
 
 > Jak se čtení skládá (pořadí toku pipeline) → CLAUDE.md „Reading systém — stav". Proč každé změny → RUNAR_DECISIONS.md.
 
+## Rejstřík pák — co je o které páce změřeno (čti PŘED tím, než o ní něco tvrdíš)
+
+**Proč existuje:** 2026-08-21 jsem dvakrát tvrdil věc, kterou dřívější měření v tomhle logu
+vyvracelo — log je chronologický a přes 1500 řádků, takže „co víme o úhlu" v něm nebylo
+nikde pohromadě. Rejstřík je nit. Datum = kde v logu hledat detail.
+
+| páka | co je změřeno |
+|---|---|
+| **angle** | 18.8. vypnutí = **změna beze změny** (pestrost, n≈300, mez citlivosti 3,2 b.) · plochy bez úhlu čistší (Ask 4 % · spread 10 % · single 18 %) · 21.8. tvrzení „úhel je kotva k obrazu" **NEDOLOŽENO** (n=8, jeden běh) |
+| **describe** | 20.8. zavedeno do `focused`: pojmenování 0/8→6/8 EN (p=0,0035), 0/20→8/20 IS (p=0,0016) · 21.8. ablace: bez něj EN 4/8→**0/8** — jediné, co pojmenování drží |
+| **coldread** | 20.8. ablace: bez něj studené čtení EN 0→3/8, IS beze změny · 21.8. žebřík: **v minimu nekupuje nic** (0/8 před i po), vydělává až když jsou přidané bloky, které ke tvrzení svádějí |
+| **length** | 21.8. ablace: vypnutí → pojmenování EN 4→**8/8**, IS 0→**6/8**, ale délka 2× (58→97, 40→92 slov) · 21.8. losovaná 3/4 věty zavedena · IS volnější rozpočet: pojmenování 7/8, ale soulad padá na 4/8 (houpačka, n=8) |
+| **domain** | 21.8. jako **zdroj obrazu** ANO (studené čtení EN 10→2,3/16, IS 11→2,7/16) · vlastní obrázky v ní **NE** — otvírají druhý svět (1,25→1,00 světa po odebrání, soulad EN 5→7/8) |
+| **lens** | 21.8. žebřík: krok  byl **nejhorší stupeň** v EN (chlad 0→3, pojmenování 8→4, soulad 7→5) — měřeno ve dvojici, samostatně ne · ㉚ hlásí nezapojenost u velkých spreadů od 18.8., neuzavřeno |
+| **priority** | 21.8. měřeno jen ve dvojici s  (viz řádek výš); samostatný účinek **neznámý** · ablace: bez něj délka 58→48 slov, jinak ±1 |
+| **intention** | 21.8. ablace: bez něj pojmenování EN 4→7/8 — malý blok (78 zn.), který stojí v cestě |
+| **register** | 21.8. bez měřitelného účinku (ablace ±1; v žebříku IS pojmenování 5→2 při přidání) · 60 % textu je sdílená preambule napříč pěti variantami |
+| **ending** | 21.8. `heavy[1]` „asks for honesty" = **8/8 studených čtení**, nejhorší jednotlivá páka z dvaceti — přepsáno · `open[0]`/`open[1]` přepsány pod čáru podmětu |
+| **image** | 21.8. ablace: bez něj IS soulad 7→5/8 · 25/25 run má vlastní obraz ve všech 6 sezónách (2026-08-20) |
+| **keywords** | 21.8. **nedořešeno**: model sáhne po nejznámějším klíči (Jera → „harvest") i když vylosovaný obraz nese jiný (těsto → „right timing"). Klauzule, která to měla spojit, pojmenování naopak srazila (IS 7/8→2/8) |
+| **name** | 21.8. bez měřitelného účinku (ablace ±1) |
+| **voice** (systémový prompt) | 21.8. ablace: vypnutí **nezhoršilo ani jedno** ze tří měřítek, pojmenování EN 4→7/8 — ⚠️ ale **hlas se neměří**, a ten tenhle blok vlastní. 57 % plochy promptu |
+| **address** | jen IS, neměřeno |
+
+⚠️ **Prázdná buňka není „neškodné".** Znamená to, že o té páce nevíme nic — ne že nic nedělá.
+
+---
+
 ## Co sem NEpatří (§20 — neopisovat)
 Samotný obsah bydlí v kódu; deník na něj jen odkazuje:
 - prompty + gramatika + korekce → `v2/runar-character.js`

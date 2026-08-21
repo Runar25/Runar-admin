@@ -84,17 +84,35 @@ function pravidla() {
   });
 }
 
+// Verze promptu — cte se z configu, neopisuje se (§20).
+const VERZE = String(glob('RUNAR_PROMPT_VERSION') || '');
+
 const otisk = (t) => crypto.createHash('sha1').update(t, 'utf8').digest('hex').slice(0, 12);
 const ted = pravidla().map(x => ({ ...x, hash: otisk(x.text) }));
 
 if (ZAPIS) {
+  // ZAVORA: zmenena pravidla + nezmenena verze = cteni v DB se nerozeznaji od vcerejsich.
+  // Presne tohle se stalo 2026-08-21 (pet migraci pod v2.1), proto to tady stoji.
+  if (fs.existsSync(REGISTR)) {
+    const stary = JSON.parse(fs.readFileSync(REGISTR, 'utf8'));
+    const znameStare = new Set((stary.pravidla || []).map((x) => x.hash));
+    const zmenene = ted.filter((x) => !znameStare.has(x.hash));
+    if (zmenene.length && stary.prompt_version === VERZE) {
+      console.log('  ODMITNUTO: ' + zmenene.length + ' pravidel se zmenilo, ale RUNAR_PROMPT_VERSION je porad '
+        + VERZE + '.');
+      console.log('       Cteni vygenerovana po tehle zmene by se v DB nerozeznala od tech pred ni.');
+      console.log('       Bumpni `RUNAR_PROMPT_VERSION` v v2/runar-config.js a spust --zapis znovu.');
+      process.exit(1);
+    }
+  }
   const dnes = new Date().toISOString().slice(0, 10);
   fs.writeFileSync(REGISTR, JSON.stringify({
     poznamka: 'Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.',
     zapsano: dnes,
+    prompt_version: VERZE,
     pravidla: ted.map(x => ({ hash: x.hash, lang: x.lang, zdroj: x.zdroj, zacatek: x.text.slice(0, 70) })),
   }, null, 1));
-  console.log('  zapsano ' + ted.length + ' pravidel do ' + path.relative(REPO, REGISTR));
+  console.log('  zapsano ' + ted.length + ' pravidel do ' + path.relative(REPO, REGISTR) + '  (verze ' + VERZE + ')');
   process.exit(0);
 }
 
@@ -108,7 +126,8 @@ const nove = ted.filter(x => !zname.has(x.hash));
 const zmizele = (reg.pravidla || []).filter(x => !ted.some(y => y.hash === x.hash));
 
 if (!nove.length) {
-  console.log('  OK    ' + ted.length + ' instrukcnich radek promptu, vsechny zaregistrovane (registr z ' + reg.zapsano + ')');
+  console.log('  OK    ' + ted.length + ' instrukcnich radek promptu, vsechny zaregistrovane'
+    + '  (verze ' + VERZE + ', registr z ' + reg.zapsano + ')');
   if (zmizele.length) console.log('       ℹ  ' + zmizele.length + ' radek z registru uz v promptu neni (smazane nevadi, jen registr zestarl)');
   process.exit(0);
 }

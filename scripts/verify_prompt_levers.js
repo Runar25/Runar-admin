@@ -200,6 +200,25 @@ for (const lang of ['en', 'is']) {
 console.log('\n  ano = páka přispěla · NE = nedochází · (ne) = zapsaná výjimka · · = neplatí pro jazyk · - = funkce neexistuje');
 
 if (JEN_MAPA) process.exit(0);
+// REJSTRIK PAK — kazda paka musi mit radek v RUNAR_EVAL_LOG, aby slo pred tvrzenim o pace
+// precist, co uz je o ni zmereno. Rejstrik se jinak rozejde tise: pribude paka, nikdo ji
+// tam nezapise, a priste o ni zase nekdo tvrdi neco z hlavy (stalo se 2026-08-21, dvakrat).
+(function rejstrik() {
+  const LOG = path.join(ROOT, "RUNAR_EVAL_LOG.md");
+  if (!fs.existsSync(LOG)) { nalezy.push("RUNAR_EVAL_LOG.md nenalezen — rejstrik pak nelze overit"); return; }
+  const cely = fs.readFileSync(LOG, "utf8");
+  // Jen sekce rejstriku, ne cely log: `| **intention**` je v logu 3x i mimo nej, takze
+  // hledani po celem souboru by paku bez radku pustilo zelene.
+  const zacatek = cely.indexOf("## Rejstřík pák");
+  if (zacatek < 0) { nalezy.push("rejstrik pak: sekce `## Rejstřík pák` v RUNAR_EVAL_LOG chybi"); return; }
+  const dalsi = cely.indexOf(String.fromCharCode(10) + "## ", zacatek + 3);
+  const text = dalsi > 0 ? cely.slice(zacatek, dalsi) : cely.slice(zacatek);
+  const seznam = paky() || [];
+  const chybi = seznam.filter(function (p) { return text.indexOf("| **" + p.klic + "**") === -1; })
+                      .map(function (p) { return p.klic; });
+  if (chybi.length) nalezy.push("rejstrik pak: bez radku v RUNAR_EVAL_LOG — " + chybi.join(", "));
+})();
+
 if (nalezy.length) {
   console.log('\npáka nedochází tam, kam podle mapy má (nebo naopak)');
   for (const n of nalezy) console.log('  • ' + n);
