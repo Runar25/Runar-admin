@@ -1214,7 +1214,9 @@ var RP_SINGLE = {
     angleIntro:'LESTRARHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og upphaf): ',
     length:'Gefðu einn samfelldan lestur — 3 stuttar setningar, 38 til 45 orð alls. Hann verður lesinn upphátt, svo hafðu hverja setningu létta — um 20 til 25 sekúndur. Engar fyrirsagnir, engar hlutaskiptingar.',
     qBranch:function(rune,g,q){ return 'Láttu ' + rune + ' svara spurningunni: "' + q + '" — í myndum og táknmáli, ekki ráðgjöf. Nefndu ' + rune + ' einu sinni og fléttaðu nafnið náttúrlega inn í textann. Talaðu um það sem liggur undir spurningunni.'; },
-    noqBranch:function(rune,g,world){ return 'Láttu táknræn gæði ' + rune + ' koma fram í myndum, ekki útskýringu. Nefndu ' + rune + ' einu sinni og fléttaðu nafnið náttúrlega inn í textann. Ein skýr innsýn nægir — ekki troða öllu inn.'; },
+    // Prvni veta („koma fram í myndum, ekki útskýringu") ODSTRANENA 2026-08-21: zadavala
+    // opak toho, co zada `_describeRule` v produkcnim profilu. IS 4/20 -> 8/20.
+    noqBranch:function(rune,g,world){ return 'Nefndu ' + rune + ' einu sinni og fléttaðu nafnið náttúrlega inn í textann. Ein skýr innsýn nægir — ekki troða öllu inn.'; },
     closing:function(name){ return 'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. ' + _namePlacement(name, 'is') + ' Haltu þig innan orðafjöldans — stuttar setningar, ekkert uppfyllingarefni.'; },
     json:'Skilaðu EINGÖNGU þessu JSON fylki, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(lesturinn nákvæmlega eins og fyrirmælin að ofan segja, einn samfelldur texti)"}]',
   },
@@ -1227,7 +1229,10 @@ var RP_SINGLE = {
     angleIntro:'READING ANGLE (follow this entry point — let it shape the opening and tone): ',
     length:'One flowing reading — 3 short sentences, 38 to 45 words total. It will be read aloud, so keep every sentence lean — about 20 to 25 seconds spoken. No sections, no labels, no line breaks between thoughts.',
     qBranch:function(rune,g,q){ return 'Let ' + rune + ' answer: "' + q + '" — through image and symbol, not advice. Mention ' + rune + ' by name once, woven naturally. Speak to what lies beneath the question.'; },
-    noqBranch:function(rune,g,world){ return 'Let the quality of ' + rune + ' arrive through image, not explanation. Mention ' + rune + ' by name once, woven naturally. One clear insight is enough — do not pack everything in.'; },
+    // Prvni veta („through image, not explanation") ODSTRANENA 2026-08-21 — tyz duvod
+    // jako u islandske vetve; anglicky model ji sice prebijel, ale rozpor v zadani
+    // neni neco, co se nechava stat proto, ze jeden model si poradi.
+    noqBranch:function(rune,g,world){ return 'Mention ' + rune + ' by name once, woven naturally. One clear insight is enough — do not pack everything in.'; },
     closing:function(name){ return 'One paragraph. No breaks. No labels. ' + _namePlacement(name, 'en') + ' Stay within the word count — short sentences, no filler. '; },
     json:'Output format — return ONLY this JSON array, nothing before or after: [{"rune": "(the rune name)", "text": "(the reading exactly as instructed above, one flowing paragraph)"}]',
   },
