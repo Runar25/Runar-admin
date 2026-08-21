@@ -27,10 +27,10 @@
    "zacatek": "Open with the one thing in the image that stays fixed while the rest g"
   },
   {
-   "hash": "c183ae4fe0dd",
+   "hash": "5c45959d9508",
    "lang": "en",
    "zdroj": "uhel[4]",
-   "zacatek": "Open with what the image hides beneath its surface, not yet in view."
+   "zacatek": "Open with the part of the image that is out of sight — under it, behin"
   },
   {
    "hash": "c15984c4e991",
@@ -45,16 +45,16 @@
    "zacatek": "Open by setting the seeker inside the image, at the spot where it is h"
   },
   {
-   "hash": "af80205a00c1",
+   "hash": "c377db7416e5",
    "lang": "en",
    "zdroj": "zakonceni_open[0]",
-   "zacatek": "End with one open question that turns the seeker inward."
+   "zacatek": "End with one open question the seeker could honestly answer \"neither\" "
   },
   {
-   "hash": "ae7c7edf90b7",
+   "hash": "58f77728c13d",
    "lang": "en",
    "zdroj": "zakonceni_open[1]",
-   "zacatek": "End on a plain, steady line — name where the seeker stands, not a ques"
+   "zacatek": "End on a plain, steady line — name where the seeker stands in the imag"
   },
   {
    "hash": "3dc04beb7a3f",
@@ -69,10 +69,10 @@
    "zacatek": "End on a line that stays standing — no soft question, no comfort; let "
   },
   {
-   "hash": "9768b386bafb",
+   "hash": "82c5ec57ad30",
    "lang": "en",
    "zdroj": "zakonceni_heavy[1]",
-   "zacatek": "End with one hard question that asks for honesty, not comfort."
+   "zacatek": "End with one hard question that stays with the image and asks for noth"
   },
   {
    "hash": "01e446c1d614",
@@ -531,16 +531,16 @@
    "zacatek": "Byrjaðu á því að setja leitandann inn í myndina, á staðinn þar sem hún"
   },
   {
-   "hash": "71c2239c5212",
+   "hash": "162a1cf6f735",
    "lang": "is",
    "zdroj": "zakonceni_open[0]",
-   "zacatek": "Endaðu á einni opinni spurningu sem snýr leitandanum inn á við."
+   "zacatek": "Endaðu á einni opinni spurningu sem leitandinn gæti með sanni svarað n"
   },
   {
-   "hash": "53614c83ca73",
+   "hash": "3781c79d0ca6",
    "lang": "is",
    "zdroj": "zakonceni_open[1]",
-   "zacatek": "Endaðu á staðfastri línu — nefndu hvar leitandinn stendur, ekki spurni"
+   "zacatek": "Endaðu á staðfastri línu — nefndu hvar leitandinn stendur í myndinni, "
   },
   {
    "hash": "bd90ed8d66e3",
@@ -555,10 +555,10 @@
    "zacatek": "Endaðu á línu sem stendur — engin mjúk spurning, engin huggun; láttu þ"
   },
   {
-   "hash": "c6db86259148",
+   "hash": "014b30bb45ab",
    "lang": "is",
    "zdroj": "zakonceni_heavy[1]",
-   "zacatek": "Endaðu á einni harðri spurningu sem biður um heiðarleika, ekki huggun."
+   "zacatek": "Endaðu á einni harðri spurningu sem heldur sig við myndina og krefst e"
   },
   {
    "hash": "4fa055f635bc",

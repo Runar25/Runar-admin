@@ -214,7 +214,10 @@ const READING_ANGLES = [
   'Open on the smallest detail in the image, the part someone would walk past.',
   'Open with the motion already underway in the image. If nothing moves, open with the stillness itself.',
   'Open with the one thing in the image that stays fixed while the rest gives way.',
-  'Open with what the image hides beneath its surface, not yet in view.',
+  // 2026-08-21: 7/8 studenych cteni proti prumeru poolu 5,1. „Hides beneath its surface"
+  // model cetl jako pozvanku mluvit o skrytem V CLOVEKU. Skryte ted zustava v obraze.
+  // Islandsky protejsek se nemeni — viz hlavicka patche.
+  'Open with the part of the image that is out of sight — under it, behind it, or not yet arrived.',
   'Open at the edge of the image, where one thing turns into another.',
   'Open by setting the seeker inside the image, at the spot where it is happening.',
 ];
@@ -340,20 +343,27 @@ function _promptDraws(prompt, lang) {
 // a heavy rune must not be softened into comfort; the rest may rest instead of asking.
 const ENDING_HEAVY = [
   'End on a line that stays standing — no soft question, no comfort; let it stand.',
-  'End with one hard question that asks for honesty, not comfort.',
+  // 2026-08-21: nejhorsi jednotliva paka z dvaceti — 8/8 studenych cteni (prumer poolu 7,0).
+  // „Asks for honesty" je pozvanka rict ctenari, co v sobe skryva. Tvrdost zustava,
+  // ale drzi se obrazu a nezada priznani.
+  'End with one hard question that stays with the image and asks for nothing to be admitted — no comfort, no softening.',
 ];
 const ENDING_OPEN = [
-  'End with one open question that turns the seeker inward.',
-  'End on a plain, steady line — name where the seeker stands, not a question.',
+  // 2026-08-21: „turns the seeker inward" vyrabelo predpoklad zabaleny do otazky —
+  // ctenar na ni nemohl odpovedet, aniz by tvrzeni prijal.
+  'End with one open question the seeker could honestly answer "neither" to — it must not assume what is true in them.',
+  // 2026-08-21: puvodne „name where the seeker stands" — doslova pokyn tvrdit o ctenari,
+  // osm radek od zakazu `_noColdRead`. Ted se pojmenovava jeho misto V OBRAZE.
+  'End on a plain, steady line — name where the seeker stands in the image, not what is true inside them; not a question.',
   'End on a quiet line that rests — not a question this time.',
 ];
 const ENDING_HEAVY_IS = [
   'Endaðu á línu sem stendur — engin mjúk spurning, engin huggun; láttu það standa.',
-  'Endaðu á einni harðri spurningu sem biður um heiðarleika, ekki huggun.',
+  'Endaðu á einni harðri spurningu sem heldur sig við myndina og krefst engrar játningar — engin huggun, ekkert mildað.',
 ];
 const ENDING_OPEN_IS = [
-  'Endaðu á einni opinni spurningu sem snýr leitandanum inn á við.',
-  'Endaðu á staðfastri línu — nefndu hvar leitandinn stendur, ekki spurningu.',
+  'Endaðu á einni opinni spurningu sem leitandinn gæti með sanni svarað neitandi — hún má ekki gefa sér hvað er satt innra með honum.',
+  'Endaðu á staðfastri línu — nefndu hvar leitandinn stendur í myndinni, ekki hvað er satt innra með honum; ekki spurningu.',
   'Endaðu á hljóðlátri línu sem hvílir — ekki spurningu í þetta sinn.',
 ];
 function _endingShape(drawn, lang) {
