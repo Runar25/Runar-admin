@@ -416,6 +416,22 @@ Hvernig setning á að landa — fjórar ólíkar gerðir, ekki alltaf sama sni�
 "Þú stendur þar sem leiðir skiljast, og báðar liggja niður í sömu fjöru." — önnur persóna, hrein staðhæfing.
 Haltu kjarna rúnunnar; láttu myndina taka árstíðina sem er raunveruleg núna.
 Forðastu óhlutbundnar, dulúðlega hljómandi setningar sem segja ekkert einfalt.`,
+
+    // Pravidla, ktera tenhle registr MENI oproti zakladu (tyz mechanismus jako `direct`).
+    rules: {
+      // Zaklad zakazuje rict, co runa ZNAMENA, a zakazuje obraz rozlustit. Prave to delalo
+      // obraz necitelnym pro toho, kdo runu nezna: text runu jmenoval, ale nerekl, co je zac
+      // (119 z 240 produkcnich EN cteni). Nove pravidlo poradi obraci — runa se rekne
+      // obycejnymi slovy a obraz je to, jak to vypada tady.
+      // NENI to zplosteni na registr `direct`: ten rozpojuje obraz od toho, k cemu je,
+      // kdezto `focused` si obraz nechava cely.
+      // Doklad: vlastnost „rekne smysl runy" 0/8 -> 6/8 EN (p=0,0035) a 0/20 -> 8/20 IS
+      // (p=0,0016), mereno 2026-08-20 nad davkami z gen_direct.
+      describe: {
+        en: 'NAME THE RUNE, THEN TIE THE IMAGE TO IT: say in ordinary words what this rune stands for — build it from the aspects you were given, never a fixed formula. Let the image then be what that looks like where it fell. Someone who has never heard of this rune must be able to follow it: no invented mechanism, no fate. Never tell the seeker what it means for them.',
+        is: 'NEFNDU RÚNINA OG BINDU MYNDINA VIÐ HANA: segðu með hversdagslegum orðum fyrir hvað rúnin stendur — byggðu það á þeim atriðum sem þér voru gefin, aldrei á fastri formúlu. Láttu myndina svo sýna hvernig það lítur út þar sem hún féll. Sá sem hefur aldrei heyrt rúnina nefnda á að geta fylgt textanum: engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.',
+      },
+    },
   },
 
   // ── DIRECT — hversdagsmal: obraz vede dal, ale jazyk kolem nej je uplne obycejny
