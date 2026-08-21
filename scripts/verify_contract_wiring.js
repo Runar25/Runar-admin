@@ -100,11 +100,24 @@ for (const L of ['en', 'is']) {
   else console.log('OK    norns_lifein_' + L + '  lens correctly steps aside');
 }
 
+// Zneni pravidla `describe` VLASTNI `_describeRule` (a prepisuje ho aktivni hlasovy profil).
+// Kontrola si ho proto bere odtud, misto aby drzela vlastni kopii — 2026-08-21 prave takova
+// kopie zcervenala na zmenu, ktera byla v poradku. Bere se prvnich 40 znaku, at staci
+// i pri jinem zalomeni.
+const DESCRIBE_MARK = {
+  en: String(sandbox._describeRule('en')).slice(0, 40),
+  is: String(sandbox._describeRule('is')).slice(0, 40),
+};
+if (!DESCRIBE_MARK.en || !DESCRIBE_MARK.is) {
+  console.log('FAIL  pravidlo `describe` je prazdne — marker by prosel na cokoli');
+  process.exit(1);
+}
+
 // ── Life rune: a full reading, so it carries the body's gates ────────────────
 for (const L of ['en', 'is']) {
   const txt = O['liferune_' + L] || '';
   const need = {
-    describe: ['DESCRIBE, DO NOT EXPLAIN', 'LÝSTU, EKKI ÚTSKÝRÐU'],
+    describe: [DESCRIBE_MARK[L]],
     coldread: ['NO COLD READING', 'ENGIN KÖLD LESNING'],
   };
   const missing = Object.keys(need).filter(k => !need[k].some(x => txt.includes(x)));
@@ -119,13 +132,14 @@ for (const L of ['en', 'is']) {
 
 // ── Ask Rúnar: the follow-up gates (v1.0) ────────────────────────────────────
 const ASK = {
-  describe:  ['DESCRIBE, DO NOT EXPLAIN', 'LÝSTU, EKKI ÚTSKÝRÐU'],
+  describe:  null,   // per-jazyk: dosazuje se z DESCRIBE_MARK nize
   coldread:  ['NO COLD READING', 'ENGIN KÖLD LESNING'],
   antimirror:['Do not mirror the seeker', 'Speglaðu ekki leitandann'],
 };
 for (const L of ['en', 'is']) {
   const txt = O['ask_' + L] || '';
-  const missing = Object.keys(ASK).filter(k => !ASK[k].some(x => txt.includes(x)));
+  const askL = Object.assign({}, ASK, { describe: [DESCRIBE_MARK[L]] });
+  const missing = Object.keys(askL).filter(k => !askL[k].some(x => txt.includes(x)));
   if (missing.length) { fail++; console.log('FAIL  ask_' + L + '  missing: ' + missing.join(', ')); }
   else console.log('OK    ask_' + L + '  describe+coldread+antimirror');
   // the instruction itself must not model the move it forbids
