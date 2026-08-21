@@ -83,6 +83,32 @@ nepozná se, která zabrala (proto se bumpuje `RUNAR_PROMPT_VERSION`, ať nová 
 
 ---
 
+## 2026-08-21 — MYND definována ownerem · dvě vlastní tvrzení stažena · meze soudců přeměřeny
+
+**MYND (potvrzeno ownerem, jeho slovy):** *„jeden svět, ve kterém runa a obraz splývají."*
+Sedí doslova na blok [11] charakteristiky („one image per reading… two unrelated pictures side
+by side say nothing"). Pojmenování runy k MYND **patří** — owner výslovně žádal „zachovat obraz,
+ale i vysvětlit runu" — ale splývá s obrazem, nestojí vedle něj.
+
+**Stažená tvrzení (ověřeno na výzvu ownera):**
+1. *„Čtyři chválená čtení se liší od zbytku dávky"* — p = 0,18 na obou měřítkách (n=4 vs 12).
+   Rozdíl je směr, ne nález. Navíc provenience: „je to co jsem hledal" padlo na dávku z 20. 8.
+   (ramena most3/most4 z artifactu), první čtyři z domobraz dávky 21. 8. owner takto výslovně
+   nechválil — dva okamžiky chvály jsem slil do jednoho.
+2. *„Owner nechtěl definici runy (smysl jen 1/4)"* — DVAKRÁT špatně: owner definici výslovně
+   žádal, a soudce „řekne smysl" je na MYND-textech nespolehlivý (viz níž).
+
+**Meze soudců — přeměřeno, horší než dřív tvrzené ±1:**
+- Soudce **smysl** na větách, kde pojmenování splývá s obrazem („Berkana is early growth, the
+  new thing pushing up"), kolísá 0/3–3/3 na TÉMŽE textu. Trestá přesně tu fúzi, kterou MYND
+  chce — čím lepší splynutí, tím spíš řekne „jen obraz". **Pro MYND nepoužitelný.**
+- Soudce **soulad** dává na témže souboru 15/16 (znění s příklady+SKIP) vs 9–11/16 (bez nich).
+  Drift mezi zněními ±4, uvnitř znění ±2. Používat jen znění S PŘÍKLADY a n≥16.
+- **Měřicí pár MYND: počet světů (nejstabilnější) + soulad s příklady.** Smysl pro MYND-styl
+  vyřadit, dokud nemá znění, které fúzi nepovažuje za „jen obraz".
+
+---
+
 ## 2026-08-21 — migrace do produkce: naměřeno PO zásahu (baseline k příštímu srovnání)
 
 Produkce po pěti změnách (n=16 na jazyk, dva běhy soudce): studené čtení **EN 9–10/16 → 3–4/16**,
