@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-08-21",
- "prompt_version": "v3.0-mynd",
+ "prompt_version": "v3.1-mynd",
  "pravidla": [
   {
    "hash": "54d29df4d80b",
@@ -112,52 +112,52 @@
    "zacatek": "One flowing reading — 4 short sentences, 50 to 58 words total. It will"
   },
   {
-   "hash": "c1e80becc7d2",
+   "hash": "823877aeee46",
    "lang": "en",
    "zdroj": "oblast[0]",
-   "zacatek": "The reading is for Love & Relationships — take the image from where tw"
+   "zacatek": "The reading is for Love & Relationships — let the image you were given"
   },
   {
-   "hash": "a9b330662133",
+   "hash": "ec0be18eb7d5",
    "lang": "en",
    "zdroj": "oblast[1]",
-   "zacatek": "The reading is for Purpose & Path — take the image from ways and going"
+   "zacatek": "The reading is for Purpose & Path — let the image you were given land "
   },
   {
-   "hash": "06f834d5f90d",
+   "hash": "cc39f746630c",
    "lang": "en",
    "zdroj": "oblast[2]",
-   "zacatek": "The reading is for Career & Creativity — take the image from making: t"
+   "zacatek": "The reading is for Career & Creativity — let the image you were given "
   },
   {
-   "hash": "c9de0c4defbb",
+   "hash": "530334d3dc32",
    "lang": "en",
    "zdroj": "oblast[3]",
-   "zacatek": "The reading is for Healing & Wellbeing — take the image from mending a"
+   "zacatek": "The reading is for Healing & Wellbeing — let the image you were given "
   },
   {
-   "hash": "4f76e305ba5d",
+   "hash": "d4abfe900b21",
    "lang": "en",
    "zdroj": "oblast[4]",
-   "zacatek": "The reading is for The Unseen — take the image from what is there but "
+   "zacatek": "The reading is for The Unseen — let the image you were given land on w"
   },
   {
-   "hash": "b3825308cbba",
+   "hash": "eeb0af438637",
    "lang": "en",
    "zdroj": "oblast[5]",
-   "zacatek": "The reading is for Family & Home — take the image from a lived-in plac"
+   "zacatek": "The reading is for Family & Home — let the image you were given land o"
   },
   {
-   "hash": "0c28fdbd5021",
+   "hash": "a49ed3297c28",
    "lang": "en",
    "zdroj": "oblast[6]",
-   "zacatek": "The reading is for Inner Growth — take the image from slow change in a"
+   "zacatek": "The reading is for Inner Growth — let the image you were given land on"
   },
   {
-   "hash": "8fe6f823db8b",
+   "hash": "0a62a03f0619",
    "lang": "en",
    "zdroj": "oblast[7]",
-   "zacatek": "The reading is for Crossroads & Decisions — take the image from where "
+   "zacatek": "The reading is for Crossroads & Decisions — let the image you were giv"
   },
   {
    "hash": "64368b2a8fd1",
@@ -628,52 +628,52 @@
    "zacatek": "Gefðu einn samfelldan lestur — 4 stuttar setningar, 50 til 58 orð alls"
   },
   {
-   "hash": "842d3c81acf6",
+   "hash": "4cfab7b4a12e",
    "lang": "is",
    "zdroj": "oblast[0]",
-   "zacatek": "Þessi lestur er fyrir Ást & Sambönd — sæktu myndina þangað sem tveir m"
+   "zacatek": "Þessi lestur er fyrir Ást & Sambönd — láttu myndina sem þú fékkst lend"
   },
   {
-   "hash": "2c9351adb1d2",
+   "hash": "e1648ad0e889",
    "lang": "is",
    "zdroj": "oblast[1]",
-   "zacatek": "Þessi lestur er fyrir Tilgang & Leið — sæktu myndina í leiðir og ferð:"
+   "zacatek": "Þessi lestur er fyrir Tilgang & Leið — láttu myndina sem þú fékkst len"
   },
   {
-   "hash": "5e9c53e7762a",
+   "hash": "bd360e7917e8",
    "lang": "is",
    "zdroj": "oblast[2]",
-   "zacatek": "Þessi lestur er fyrir Starf & Sköpun — sæktu myndina í smíð og handver"
+   "zacatek": "Þessi lestur er fyrir Starf & Sköpun — láttu myndina sem þú fékkst len"
   },
   {
-   "hash": "11149b341e0f",
+   "hash": "58ba5056f03e",
    "lang": "is",
    "zdroj": "oblast[3]",
-   "zacatek": "Þessi lestur er fyrir Heilun & Líðan — sæktu myndina í gróanda og hvíl"
+   "zacatek": "Þessi lestur er fyrir Heilun & Líðan — láttu myndina sem þú fékkst len"
   },
   {
-   "hash": "5440b7ecb78d",
+   "hash": "c240c23d23eb",
    "lang": "is",
    "zdroj": "oblast[4]",
-   "zacatek": "Þessi lestur er fyrir Hið dulda — sæktu myndina í það sem er til staða"
+   "zacatek": "Þessi lestur er fyrir Hið dulda — láttu myndina sem þú fékkst lenda á "
   },
   {
-   "hash": "feaba30e9c6b",
+   "hash": "3516b522f958",
    "lang": "is",
    "zdroj": "oblast[5]",
-   "zacatek": "Þessi lestur er fyrir Fjölskyldu & Heimili — sæktu myndina í byggðan s"
+   "zacatek": "Þessi lestur er fyrir Fjölskyldu & Heimili — láttu myndina sem þú fékk"
   },
   {
-   "hash": "ce5c0caeebae",
+   "hash": "b697d598f388",
    "lang": "is",
    "zdroj": "oblast[6]",
-   "zacatek": "Þessi lestur er fyrir Innri Vöxt — sæktu myndina í hæga breytingu á hl"
+   "zacatek": "Þessi lestur er fyrir Innri Vöxt — láttu myndina sem þú fékkst lenda á"
   },
   {
-   "hash": "951bf92c07f0",
+   "hash": "f0ebb245c01b",
    "lang": "is",
    "zdroj": "oblast[7]",
-   "zacatek": "Þessi lestur er fyrir Vegamót & Ákvarðanir — sæktu myndina þangað sem "
+   "zacatek": "Þessi lestur er fyrir Vegamót & Ákvarðanir — láttu myndina sem þú fékk"
   },
   {
    "hash": "3a7691082809",

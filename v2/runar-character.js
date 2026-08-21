@@ -786,6 +786,12 @@ function _priorityContext(lensOn, drawn, lang) {
 // kazde cteni spatnou vetu; hlida to `scripts/utils/test_lever_maps.js`.
 // Kanon (KUKY 2026-08-16, RUNAR_DESIGN.md): runa je zaklad, oblast je otazka, kterou musi
 // runa vzit v potaz.
+// 2026-08-21 (druha oprava tehoz dne): oblast rika KAM ma cteni dopadnout, ne CO v nem
+// ma byt videt. Prvni verze sem dala konkretni priklady obrazu — opravilo to studene
+// cteni, ale otevrelo druhy svet vedle vlozeneho obrazu (prompt dodaval az tri svety
+// naraz a hned pod tim zadal, at se sejdou v jeden). Po odebrani prikladu: jeden svet
+// v 16 z 16 cteni, soulad EN 5->7/8 a IS 4->6/8, pojmenovani IS 1->4/8, studene cteni
+// beze zmeny. Mereni RUNAR_EVAL_LOG 2026-08-21.
 // 2026-08-21: oblast urcuje ZDROJ OBRAZU, ne cil tvrzeni. Do te doby radky zadaly
 // „nech vyznam runy pristat na tom, co ten clovek dela/vi" a model to plnil tak, ze si
 // o jeho zivote vymyslel fakta. Prepis ZNENI srazil studene cteni jen islandsky; teprve
@@ -795,24 +801,24 @@ function _priorityContext(lensOn, drawn, lang) {
 function _domainContext(area, lang) {
   if (!area) return '';
   var mapEn = [
-    "The reading is for Love & Relationships — take the image from where two come together: a shared table, two sets of tracks, a boat rowed by two. The seeker may stand in the image; do not tell them what is true between them and anyone.",
-    "The reading is for Purpose & Path — take the image from ways and going: a track over a pass, a river finding its bed, a bearing held in fog. The seeker may stand in the image; do not tell them where they are headed.",
-    "The reading is for Career & Creativity — take the image from making: tools, a workbench, wool becoming yarn, a wall raised stone by stone. The seeker may stand in the image; do not tell them what they have made or achieved.",
-    "The reading is for Healing & Wellbeing — take the image from mending and rest: bone knitting, ground thawing, warmth coming back into a room. The seeker may stand in the image; no diagnosis, no verdict on their condition.",
-    "The reading is for The Unseen — take the image from what is there but not shown: fog on a fjord, a sound with no source, roots under turf. The seeker may stand in the image; do not tell them what they sense.",
-    "The reading is for Family & Home — take the image from a lived-in place: a doorway, a hearth, a path worn between houses. The seeker may stand in the image; do not tell them what they carry from their people.",
-    "The reading is for Inner Growth — take the image from slow change in a thing: a birch thickening, a stone worn round, ice giving way. The seeker may stand in the image; do not tell them how they have changed.",
-    "The reading is for Crossroads & Decisions — take the image from where a way divides: two tracks, a fork in a river, a gate standing open beside a closed one. The seeker may stand in the image; do not tell them what they know or which way they will take."
+    "The reading is for Love & Relationships — let the image you were given land where two people meet. Do not tell them what is true between them and anyone.",
+    "The reading is for Purpose & Path — let the image you were given land on going and direction. Do not tell them where they are headed.",
+    "The reading is for Career & Creativity — let the image you were given land on making and work. Do not tell them what they have made or achieved.",
+    "The reading is for Healing & Wellbeing — let the image you were given land on mending and rest. No diagnosis, no verdict on their condition.",
+    "The reading is for The Unseen — let the image you were given land on what is present but not shown. Do not tell them what they sense.",
+    "The reading is for Family & Home — let the image you were given land on a lived-in place and the people in it. Do not tell them what they carry from their people.",
+    "The reading is for Inner Growth — let the image you were given land on slow change. Do not tell them how they have changed.",
+    "The reading is for Crossroads & Decisions — let the image you were given land where a way divides. Do not tell them what they know or which way they will take."
   ];
   var mapIs = [
-    'Þessi lestur er fyrir Ást & Sambönd — sæktu myndina þangað sem tveir mætast: sameiginlegt borð, tvenn spor í snjó, bátur sem tveir róa. Leitandinn má standa í myndinni; segðu honum ekki hvað er satt milli hans og annarra.',
-    'Þessi lestur er fyrir Tilgang & Leið — sæktu myndina í leiðir og ferð: götu yfir heiði, á sem finnur sér farveg, stefnu haldið í þoku. Leitandinn má standa í myndinni; segðu honum ekki hvert hann stefnir.',
-    'Þessi lestur er fyrir Starf & Sköpun — sæktu myndina í smíð og handverk: verkfæri, vinnuborð, ull sem verður að bandi, vegg hlaðinn stein fyrir stein. Leitandinn má standa í myndinni; segðu honum ekki hvað hann hefur gert eða hverju hann hefur áorkað.',
-    'Þessi lestur er fyrir Heilun & Líðan — sæktu myndina í gróanda og hvíld: bein sem grær, jörð sem þiðnar, hlýju sem kemur aftur í hús. Leitandinn má standa í myndinni; engin sjúkdómsgreining, enginn dómur um líðan hans.',
-    'Þessi lestur er fyrir Hið dulda — sæktu myndina í það sem er til staðar en sést ekki: þoku á firði, hljóð án upptaka, rætur undir sverði. Leitandinn má standa í myndinni; segðu honum ekki hvað hann skynjar.',
-    'Þessi lestur er fyrir Fjölskyldu & Heimili — sæktu myndina í byggðan stað: dyr, eldstæði, götu troðna milli húsa. Leitandinn má standa í myndinni; segðu honum ekki hvað hann ber með sér frá sínu fólki.',
-    'Þessi lestur er fyrir Innri Vöxt — sæktu myndina í hæga breytingu á hlut: björk sem gildnar, stein sem slípast, ís sem lætur undan. Leitandinn má standa í myndinni; segðu honum ekki hvernig hann hefur breyst.',
-    'Þessi lestur er fyrir Vegamót & Ákvarðanir — sæktu myndina þangað sem leið skiptist: tvær götur, kvísl í á, hlið sem stendur opið við hliðina á lokuðu. Leitandinn má standa í myndinni; segðu honum ekki hvað hann veit eða hvora leiðina hann velur.'
+    'Þessi lestur er fyrir Ást & Sambönd — láttu myndina sem þú fékkst lenda þar sem tvær manneskjur mætast. Segðu honum ekki hvað er satt milli hans og annarra.',
+    'Þessi lestur er fyrir Tilgang & Leið — láttu myndina sem þú fékkst lenda á ferð og stefnu. Segðu honum ekki hvert hann stefnir.',
+    'Þessi lestur er fyrir Starf & Sköpun — láttu myndina sem þú fékkst lenda á smíð og vinnu. Segðu honum ekki hvað hann hefur gert eða hverju hann hefur áorkað.',
+    'Þessi lestur er fyrir Heilun & Líðan — láttu myndina sem þú fékkst lenda á gróanda og hvíld. Engin sjúkdómsgreining, enginn dómur um líðan hans.',
+    'Þessi lestur er fyrir Hið dulda — láttu myndina sem þú fékkst lenda á því sem er til staðar en sést ekki. Segðu honum ekki hvað hann skynjar.',
+    'Þessi lestur er fyrir Fjölskyldu & Heimili — láttu myndina sem þú fékkst lenda á byggðum stað og fólkinu í honum. Segðu honum ekki hvað hann ber með sér frá sínu fólki.',
+    'Þessi lestur er fyrir Innri Vöxt — láttu myndina sem þú fékkst lenda á hægri breytingu. Segðu honum ekki hvernig hann hefur breyst.',
+    'Þessi lestur er fyrir Vegamót & Ákvarðanir — láttu myndina sem þú fékkst lenda þar sem leið skiptist. Segðu honum ekki hvað hann veit eða hvora leiðina hann velur.'
   ];
   var idx = -1;
   if (typeof AREAS !== 'undefined') {
