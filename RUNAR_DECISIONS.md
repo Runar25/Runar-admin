@@ -3958,3 +3958,37 @@ i publikovaná mapa).
 posuzuje. Do produkce půjde, až owner řekne (KUKY 2026-08-20).
 
 Affected doc(s): RUNAR_DESIGN.md · memory/prompt-map-artifact.md · memory/MEMORY.md — v témže commitu.
+
+---
+
+## 2026-08-21 — Runa se pojmenuje, oblast dava obraz, delka se losuje (migrace 1–5/5)
+
+- **Typ:** hlas + prompt · **Scope:** `VOICE_PROFILES.focused`, `RP_SINGLE`, `_domainContext`,
+  `ENDING_*`, `READING_ANGLES`, novy pool `LENGTH_BUDGETS` · **Zdroj:** KUKY („je to co jsem hledal")
+- **Co se zmenilo (kazda zmena ma svuj duvod u sebe v kodu):**
+  1. `focused` dostal pravidlo **„pojmenuj runu a uvaz k ni obraz"**. Duvod: obraz je pro toho,
+     kdo runu nezna, necitelny — 119 z 240 produkcnich EN cteni runu jmenem zminilo a nikde
+     nereklo, co je zac. Kvetnova staticka cteni to umela (14 z 28 EN).
+  2. Z `noqBranch` pryc veta **„obrazem, ne vysvetlenim"** — zadavala opak toho, co zada
+     pravidlo z bodu 1. EN model ji prebijel, IS poslouchal.
+  3. Dve zakonceni a jeden anglicky uhel prepsany pod **caru podmetu** (podmetem vety smi byt
+     runa, svet nebo obraz, nikdy vedomi ctenare).
+  4. **Oblast zivota urcuje ZDROJ OBRAZU, ne cil tvrzeni.** Prepis znen srazil studene cteni jen
+     islandsky; teprve zmena toho, CO se po modelu chce, srazila obe reci.
+  5. **Delka je losovana paka** (3 nebo 4 vety), jen u single.
+- **Namereno na produkci po migraci** (n=16 na jazyk, dva behy soudce):
+  studene cteni EN **9–10/16 → 3–4/16**, IS **11/16 → 1–4/16** · „rekne smysl runy" EN **0/8 → 9/16** ·
+  oblast jde ze cteni poznat stejne dobre jako pred zasahem (EN 7/16, IS 11/16; nahoda 2/16) ·
+  delka kolisa 3 vety ×6 / 4 vety ×10 v obou recich.
+- ⚠️ **Co se NEZLEPSILO:** islandske „rekne smysl runy" zustava na **2/16**. Pravidlo tam dochazi
+  (overeno ⑧), ale model ho plni radove min nez anglicky. Neni to zpusobene migraci — bylo to tak
+  uz u kandidata. Otevrene.
+- ⚠️ **Co se netvrdi:** islandsky uhel [3] vysel v pruchodu jako vykyv, ale v anglictine je naopak
+  nejcistsi a mechanismus k tomu neumim rict — pri n=8 se nesahalo.
+- **Cestou opraveny dve vady v nastrojich:** ⑧ mela zneni pravidla `describe` opsane natvrdo
+  (§20) a cervenala na zmenu, ktera byla v poradku; ve `VYJIMKY` v ㉚ byly dva klice `length`,
+  pozdejsi prebijel drivejsi. Generator `gen_direct.js` prisel o ramena kandidatu — ty texty
+  se PRESUNULY do produkce, takze v nem uz byly druhou kopii.
+- **Affected doc(s):** `RUNAR_EVAL_LOG.md` (zaznam mereni + baseline k pristimu srovnani)
+  — v temze commitu.
+- **Reversibility:** easy (git; kazda z peti zmen ma vlastni commit).

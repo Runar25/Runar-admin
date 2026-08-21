@@ -55,6 +55,23 @@ nepozná se, která zabrala (proto se bumpuje `RUNAR_PROMPT_VERSION`, ať nová 
 
 ---
 
+## 2026-08-21 — migrace do produkce: naměřeno PO zásahu (baseline k příštímu srovnání)
+
+Produkce po pěti změnách (n=16 na jazyk, dva běhy soudce): studené čtení **EN 9–10/16 → 3–4/16**,
+**IS 11/16 → 1–4/16** · „řekne smysl runy" **EN 0/8 → 9/16** · oblast jde ze čtení poznat stejně
+dobře jako předtím (EN 7/16, IS 11/16; náhoda 2/16) · délka kolísá 3 věty ×6 / 4 věty ×10.
+
+⚠️ **Islandské „řekne smysl runy" zůstává 2/16.** Pravidlo tam dochází (ověřeno ⑧), ale model ho
+plní řádově méně než anglický. Nevzniklo migrací — bylo to tak už u kandidáta. Otevřené.
+
+⚠️ **Číslo, které málem prošlo jako regrese:** první měření dalo EN 3/16 a vypadalo to na propad.
+Byl to můj soudce — v přegenerované verzi mu vypadlo „Rune drawn: X" z user promptu. Se správným
+zněním 9/16. Texty samy naming nesly, jen se ho soudce neptal na tom, co má.
+
+Rozhodnutí a co přesně se změnilo → `RUNAR_DECISIONS.md` 2026-08-21.
+
+---
+
 ## 2026-08-21 — přisouzení studeného čtení jednotlivým pákám (data: `docs/eval/2026-08-21-attribution/`)
 
 **Metoda:** každé páce vlastní dávka se zamčeným zbytkem zadání (20 pák × 2 jazyky × n=8),
