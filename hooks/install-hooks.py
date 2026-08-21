@@ -9,7 +9,8 @@ import os, sys, stat, shutil
 REPO      = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 HOOKS_DIR = os.path.join(REPO, '.git', 'hooks')
 # pre-commit = rychlé (IS lint + SW bump) · pre-push = smoke brána (~14 s)
-HOOKS = ['pre-commit', 'pre-push']
+# post-commit = srovná index u sw.js, aby po pathspec commitu nezůstala mina
+HOOKS = ['pre-commit', 'pre-push', 'post-commit']
 
 if not os.path.isdir(HOOKS_DIR):
     print('ERROR: .git/hooks/ nenalezeno — jsi v kořeni repozitáře?')
@@ -39,5 +40,6 @@ for name in HOOKS:
         print(f'[install] Symlink: {DEST} → {SRC}')
 
 print('[install] Hooky nainstalovány ✅')
-print('[install] pre-commit: IS lint + SW bump · pre-push: smoke musí projít')
+print('[install] pre-commit: IS lint + SW bump · pre-push: smoke musí projít'
+      ' · post-commit: srovná index u sw.js')
 print('[install] Obejít vědomě: git push --no-verify')
