@@ -55,6 +55,26 @@ nepozná se, která zabrala (proto se bumpuje `RUNAR_PROMPT_VERSION`, ať nová 
 
 ---
 
+## 2026-08-21 — přisouzení studeného čtení jednotlivým pákám (data: `docs/eval/2026-08-21-attribution/`)
+
+**Metoda:** každé páce vlastní dávka se zamčeným zbytkem zadání (20 pák × 2 jazyky × n=8),
+soudce nad hotovým čtením. Textový průchod po dvojicích pravidel byl zkoušen jako první a
+**neprošel kalibrací** — minul jeden ze dvou rozporů doložených měřením, ověřovatel v přísném
+znění nepotvrdil nic a v mírném hlásil i nevinné dvojice. Prompt je na tuhle otázku špatná
+plocha: každá řádka zní sama o sobě rozumně.
+
+**Co z toho plyne:** studené čtení **není rovnoměrné** — kdyby šlo jen o povahu modelu, seděly
+by všechny páky kolem průměru. Nesedí: v angličtině `zakonceni_heavy` „one hard question that
+asks for honesty" 8/8 a oblast Inner Growth 8/8 proti Career & Creativity 2/8. **Pořadí pák se
+ale mezi jazyky nepřenáší** — úhel „the one thing that stays fixed" je v EN nejčistší (3/8)
+a v IS nejhorší (5/8). Opravit jednu řeč tedy neopraví druhou.
+
+**Meze:** n=8 na páku (rozdíl 1–2 je šum, čte se odchylka od průměru poolu) · soudce kolísá
+o ±1 z 16 · mezijazyčné srovnání není čisté (EN čtení jsou o 6 slov delší). Celý výčet mezí
+i způsob vzniku → `README.md` v tom adresáři.
+
+---
+
 ## Baseline — naměřený stav výstupu (s čím příště srovnávat)
 
 **Čísla se dají srovnat jen tehdy, když se měří TOUTÉŽ metodou.** Do 2026-08-09 se počítala
