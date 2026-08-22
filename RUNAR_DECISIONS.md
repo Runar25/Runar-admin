@@ -4223,3 +4223,90 @@ větné stavbě — gramaticko-podmětový test ji nechytil. Data docs/eval/2026
 Pozn.: neprokázané PROPSÁNÍ hodnoty „co hledám" (v4.2) tímhle vyřešené není — tohle řešilo
 bezpečnost Confirmation větve; podobnost pěti hodnot zůstává otevřená (BACKLOG).
 Affected doc(s): RUNAR_BACKLOG.md (položka blind-side [x]).
+
+## 2026-08-22 — „Čtyři páky pestrosti" KONČÍ · POLE + rozprostírač ZAMÍTNUTO (KUKY)
+
+**Ruší směr z `RUNAR_DECISIONS.md` 2026-08-18** („pole+rozprostírač místo poolu · forma L1 ·
+TVAR věty"). KUKY: *„s pole končíme, máme novou produkční verzi… už to skončilo, nikdo na tom
+nedělá."* Tenhle záznam existuje jen proto, aby to nikdo neoživil naslepo (§26) — CO se místo
+toho nasadilo, popisuje osm záznamů CODE-tune z téhož dne a hlavička `RUNE_IMAGES`; sem se to
+NEOPISUJE (§20).
+
+**Co se stalo s každou pákou:**
+- **POLE + rozprostírač → ZAMÍTNUTO.** Ne proto, že by neuměl, co slíbil (slévání opravdu
+  odstranil, → `RUNAR_EVAL_LOG.md` 2026-08-18 ①②③), ale protože **řešil špatný problém**: owner
+  chtěl milované obrazy ZACHOVAT, ne je rozsypat na fragmenty a domény. Překryv se ukázal jako
+  užší potíž a řeší ho motiv-guard (7. sloupec MOTIV, týž motiv ne dvakrát po sobě, smoke ㉟).
+  ⚠️ Kdo by to chtěl vrátit, musí napřed vyřešit tohle, ne slévání.
+- **FORMA (esenční řádek) → NASAZENA** v řadě v4.0-mynd. Tři beaty zůstávají v `RUNAR_DESIGN.md`
+  jako popis produkce, ne jako explorace.
+- **NÁZVOSLOVÍ (banka faset) → OBEJITO.** Aspekt nese sám obraz (obraz se vybírá první, klíče se
+  vážou na jeho stránku — 5./6. sloupec). Banka faset se nestaví.
+- **TVAR věty → NEPOSTAVENO** a nikdo si ho nevyžádal. Důkaz, že by fungoval, existuje
+  (šablona 5–6/6 → 0/6), leží v EVAL_LOG a nikam se neztrácí.
+
+**Co z té explorace zůstává použitelné** (a proto se nearchivuje): dva vzorce kánonového rizika,
+oba ověřené generováním — „výsledek, co přijde/se vrátí" a „X, ekki unnin/áunnin" (soud o zásluze);
+plus dvě síta na obraz v `RUNAR_DESIGN.md`. → `RUNAR_EVAL_LOG.md` 2026-08-19 a 2026-08-20.
+
+**Uklizeno v témž commitu:** sekce čtyř pák v `RUNAR_DESIGN.md` nahrazena osmiřádkovým ukazatelem ·
+návrhová mapa přesunuta do `docs/archive/runar-engine-map.html` (artifact zůstává jako historický
+snímek k 20. 8., nepřekresluje se) · ukazatel v `memory/prompt-map-artifact.md` označen jako
+archivovaný, aby živá zůstala jediná mapa — produkční.
+
+**Nedokončená obsahová práce, která tímhle padá:** IS větev banky názvosloví (Freyr 51 + Hagal 49
+faset, ověřeno nástroji) a Coworkova rozdělaná dávka Týr + Blank. Ověřovací METODA (rekce přes
+`is-vazba`, kolokace přes korpus, gramatika přes `is-grammar-qa`, kánon-eval přes produkční prompt)
+je popsaná v `RUNAR_EVAL_LOG.md` 2026-08-20 a použitelná na jakýkoli islandský obsah — to je
+z téhle větve nejtrvanlivější zisk.
+
+Affected doc(s): RUNAR_DESIGN.md · memory/prompt-map-artifact.md · docs/archive/ — v témže commitu.
+
+
+## 2026-08-22 — Banka: kajka za druhé „první kroky" jehně; Blank z 2 na 3 obrazy, abstrakce ven (CODE-tune)
+**Rozhodnutí (KUKY):** „souhlas s návrhem" (po jeho dotazu „první jarní a květnová zní
+stejně?" — potvrzeno: táž chvíle, jen jiná kulisa). Květnová jehňata zůstávají; „first lamb
+finds its legs" → **kajka s káčátky** (EN 3/3, IS 2/3, umhyggja/nurturing 3/3 — Berkana tím
+má druhý pečující obraz). **Blank:** jediný abstraktní řádek banky („everything is still
+possible" — bez scény; model si do prázdna 2× domyslel vodu, shrine ř. 317+323; voda v
+runes.js není) → „nýfallinn snjór" (cold, óskrifaður möguleiki) + přidán třetí obraz
+„handfærið v tmavé vodě" (any, hið óþekkta) — vodní tah modelu dostává konkrétní domov.
+Vše slepě ověřeno před nasazením (EN 3/3 ×3, IS ≥2/3 ×3, aspekty soudcem). Motiv „lamb"
+klesá na 2 řádky (≥2, smoke ㉟ drží). Data v docs/eval/2026-08-22-obrazy-blind/ + chat.
+Affected doc(s): RUNAR_BACKLOG.md (Blank položka [x]).
+
+
+## 2026-08-22 — CRITICAL metering opraven + credit_ledger navržen (CODE-tune)
+**Rozhodnutí (KUKY):** „tvoje doporučení" → pořadí ① peníze ② spready ③ tester tier.
+**Metering:** `spread_cost` od klienta šel do stropů i odečtu bez sanitizace — NaN prošel
+(`Math.max(1,NaN)=NaN`, `used+NaN>limit`=false, smyčka `i<NaN` neběží) → crafted request
+obešel měsíční strop i odečet kreditu (audit 2026-08-03 CRITICAL). Oprava: celé číslo,
+podlaha 1, strop 9, JEDNO místo. Kontrola ⑨ nově sanitizaci adversariálně SPOUŠTÍ
+(9 vstupů vč. NaN/'abc'/Infinity → vždy 1..9) — falzifikováno proti staré proxy (červená).
+Plná server-side cena (cena z typu čtení, ne od klienta) čeká na typ spreadu v requestu
+— §13 změna klienta, zapsáno v BACKLOGu.
+**Ledger:** `sql/2026-08-22_credit_ledger.sql` (tabulka + RLS: klient jen čte své řádky,
+píše jen service_role) + zápis v proxy po úspěšném čtení (fail-open — bez tabulky se jen
+loguje, čtení neshodí). ČEKÁ: owner spustí SQL, pak deploy proxy. Deploy až PO commitu
+(neviditelná změna je horší než žádná) — commit frontuje za cizím zámkem (viz níže).
+**Malé verdikty (KUKY):** Sigil NENÍ součást Rúnara (v `v2/` žádný kód není — jen zmínky
+v docích, položka zavřena) · shrine audit JE důležitý, zůstává (potřebuje rozsah) ·
+aol/intention na prod DB změřeno linked CLI: **324 čtení · 63 aol (19 %) · 35 intention
+(11 %)** — pro tree lane (staré větve budou řídké).
+Affected doc(s): RUNAR_BACKLOG.md (sigil [x] won't-do · aol/intention [x] čísla · ledger/full-path položky).
+
+
+## 2026-08-22 — Ledger UŽ EXISTOVAL (od 19. 7.); mytologické obrazy NE; oprava vlastního omylu (CODE-tune)
+**Nález:** ownerův běh mého SQL narazil na existující `credit_ledger` — tabulka žije od
+2026-07-19 (`sql/2026-07-19_credit_ledger.sql`): trigger na `user_profiles` zapisuje KAŽDÝ
+pohyb zůstatku (i ruční v dashboardu), append-only, INSERT nemá nikdo. Moje včerejší
+BACKLOG položka „ledger neexistuje" byla zastaralá a můj nový SQL + přímý insert z proxy
+byly duplikát (nezagrepoval jsem `sql/` — §20 přestupek, chytila ho produkce).
+**Oprava:** duplikátní SQL smazán; insert z proxy VEN (nahrazen komentářem proč se nesmí
+vrátit); dopsána skutečně chybějící **fáze 2 = atribuce** dle hlavičky původní migrace:
+`sql/2026-08-22_ledger_faze2_attribution.sql` (use_credit/bump_month_units s p_reason+p_ref,
+DROP+CREATE kvůli PostgREST overloadu; free_balance nově RPC `use_free_balance` s týmž CAS)
++ proxy posílá reason ('reading'/'ask') a ref (klientské id čtení). ⚠️ Pořadí: SQL → deploy.
+**Rozhodnutí (KUKY):** mytologické obrazy (Óðinn/Nornir) **NE** — položka zavřena; admin
+gate stromu neřešit (zůstává, jak je).
+Affected doc(s): RUNAR_BACKLOG.md (ledger narovnán, mytologické obrazy [x]).

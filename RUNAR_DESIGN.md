@@ -170,11 +170,7 @@ Thurisazu „melgresið sker í lófann" byl 2026-08-19 vyřazen, protože ho mo
 ⚠️ Hrana smí být LATENTNÍ („trny ještě čekají"), ne vykonaná na tazateli — a u trnu vždy vede cesta
 skrz (trn něco chrání, skok JE ta cesta), nikdy slepá ulička.
 
-### Jak Rúnar skládá čtení — tři beaty + čtyři páky (EXPLORACE 2026-08-18)
-
-⚠️ **Ověřený SMĚR, ne stav produkce.** Produkce dnes pořád jede na `RUNE_IMAGES` poolu; tohle je,
-kam míříme — validováno měřením (→ `RUNAR_EVAL_LOG.md` 2026-08-18), rozhodnuto (→ `RUNAR_DECISIONS.md`
-2026-08-18), implementace = CODE-tune, není hotová.
+### Jak Rúnar skládá čtení — tři beaty
 
 **Čtení = tři beaty:**
 1. **OBRAZ** — jedna konkrétní smyslová scéna z běžného života (něco, co se cítí, ne vykládá).
@@ -187,22 +183,16 @@ počasí jako fakt o tazateli. ⚠️ led-jako-Isa je její *přirozenost*, ne p
 hraniční runy); hlídá se jen tvrzení typu „teď ti venku mrzne".
 **MĚNÍ SE (pokaždé jinak — to JE pestrost):** který obraz · úhel · TVAR věty · **a NÁZVOSLOVÍ (jakými slovy se pojmenuje význam)**.
 
-**Čtyři nezávislé páky** (každá se ladí zvlášť):
-- **NEPOSTAVENO · FORMA — kolik esenčního řádku.** L0 = čistý obraz bez „proč" (báseň, tazatel runu nechytí) ·
-  **L1 = obraz + jeden esenční řádek (CÍL)** · L2 = delší vysvětlení (sklouzne k encyklopedii, Rúnar
-  komentuje vlastní metaforu, roste délka). „direct" rejstřík ≈ L1/L2 (KUKY 2026-08-18).
-- **NEPOSTAVENO · POLE + ROZPROSTÍRAČ — který obraz.** Runa by měla POLE (domény → fragmenty);
-  rozprostírač by losoval doménu na čtení (proti slévání na jediný obraz). Nahradilo by fixní
-  `RUNE_IMAGES`. ⚠️ fragment ≠ věta.
-- **NEPOSTAVENO · TVAR VĚTY — pokaždé jinak napsáno (KUKY 2026-08-18: „mluví ke mně jinak, ale říká to stejné").**
-  Stejný význam, jiná forma: *„Fehu is the bread that…"* · *„The warmth is Fehu"* · *„Fehu asks only
-  that it keep moving"*. Platí i mimo esenční řádek, kdekoli pomůže pestrosti. ⚠️ jeden příklad
-  v promptu = model ho opíše (viz `Hlas a styl` výš) → zadává se „střídej tvar", ne jeden vzor.
-- **NEPOSTAVENO · NÁZVOSLOVÍ VÝZNAMU — jakými SLOVY se pojmenuje, CO runa je (KUKY 2026-08-18).** Tvar mění
-  syntax, tohle by měnilo SLOVNÍK: banka faset na runu (Fehu: abundance · increase · provision · reciprocita ·
-  worth-in-motion…), vynucená rotace faset by rozšířila slovník, ne jen větu. Fasety = fasety TÉHOŽ významu,
-  ne posun; blízko jádra echují jádro, širší přijde z faset do jiné části významu. Obsah = Cowork banka.
-  ⚠️ **IS se VYTVÁŘÍ nativně z významu (§2), NEpřekládá z EN faset** — EN faseta je jen sémantický odkaz.
+> **„Čtyři páky pestrosti" (explorace 2026-08-18) SKONČILY 2026-08-22.** Nikdo na nich nedělá.
+> Produkce vyřešila tytéž problémy jinak a jednodušeji — kdo na to sáhne, ať čte NEJDŘÍV
+> `RUNAR_DECISIONS.md` 2026-08-22 (osm záznamů CODE-tune, řady v4.0–v4.5-mynd) a hlavičku
+> `RUNE_IMAGES` v `v2/runar-character.js`. Ve zkratce, ať to nikdo neoživí naslepo (§26):
+> **FORMA** je v produkci jako esenční řádek · **POLE + rozprostírač** je ZAMÍTNUTO — owner chtěl
+> milované obrazy zachovat, ne rozsypat do domén, a překryv řeší motiv-guard · **NÁZVOSLOVÍ**
+> obešel aspekt nesený obrazem (obraz se vybírá první, klíče se vážou na jeho stránku), banka faset
+> se nestaví · **TVAR věty** zůstal nepostavený a nikdo si ho nevyžádal.
+> Měření té explorace (a dva vzorce kánonového rizika, které z ní zbyly použitelné) → `RUNAR_EVAL_LOG.md`
+> 2026-08-18 až 2026-08-20. Návrhová mapa → `docs/archive/runar-engine-map.html`.
 
 ---
 

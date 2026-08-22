@@ -13,14 +13,13 @@ Vizuální mapa **„jak a z čeho Rúnar mluví"** — 3 vrstvy (systémový pr
 **URL:** https://claude.ai/code/artifact/e32dbd2b-5277-414a-a187-8277efe99f69
 (privátní, jen owner; galerie `claude.ai/code/artifacts`.)
 
-⭐ **DRUHÁ MAPA — návrhová vrstva, NEPLÉST** (2026-08-20, KUKY: *„nechci aby se zamotali s těma
-co jsou jen v návrhu"*). „Engine pestrosti" = 4 páky, které NEJSOU v produkci (POLE+rozprostírač ·
-FORMA L0/L1/L2 · TVAR věty · NÁZVOSLOVÍ). Zdroj `docs/runar-engine-map.html`.
-**URL:** https://claude.ai/code/artifact/5c527b2d-15f0-4f00-a6c7-a593c4b6118a
-Dělba: produkční mapa = jak Rúnar mluví DNES · engine mapa = co ještě neběží. Každý blok engine
-mapy nese značku `NEPOSTAVENO` a podmiňovací způsob; **při nasazení páky se ten blok MAŽE**, popisovat
-ji pak bude produkční mapa. Tenhle soubor vlastní OBĚ URL i pravidlo překreslení — druhý memory
-soubor nevzniká (§20).
+⛔ **ARCHIVOVÁNO 2026-08-22 — „Engine pestrosti" (návrhová mapa 4 pák) SKONČIL.** Vznikl
+2026-08-20, aby se návrh nepletl s produkcí; o dva dny později produkce tytéž problémy vyřešila
+jinak (řada v4.0–v4.5-mynd) a owner tu exploraci ukončil: *„s pole končíme, nikdo na tom nedělá."*
+Zdroj přesunut do `docs/archive/runar-engine-map.html`; artifact
+https://claude.ai/code/artifact/5c527b2d-15f0-4f00-a6c7-a593c4b6118a zůstává jako **historický
+snímek k 20. 8.**, NEpřekresluje se a nečte se jako stav. Proč která páka padla → `RUNAR_DECISIONS.md`
+2026-08-22. **Živá je jen jedna mapa — ta produkční nahoře.**
 
 ⚠️ **Je to SNAPSHOT.** Pravda = KÓD: `v2/runar-character.js` (buildSysPrompt · RP_* · buildReadingPrompt · helpery) · `runar-config.js` (VOICE_PROFILES.focused · RUNAR_MODES) · `supabase/functions/claude-proxy/index.ts` (MODELS). NEdělat z toho repo doc (§20 — duplikoval by kód a zastarával).
 
