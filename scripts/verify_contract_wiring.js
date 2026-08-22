@@ -83,14 +83,22 @@ const times = (txt, k) => PARTS[k].reduce(function (n, p) {
   return n + (p ? txt.split(p).length - 1 : 0);
 }, 0);
 const BUILDERS = ['single', 'norns', 'kriz', 'horseshoe', 'yggdrasil'];
+// v4.0 (2026-08-22): single = KOSTRA — oblast/registr/priorita/cocka docasne vypnute
+// (owner: "napred budeme ladit samotne cteni"). Kdyby se do single vratily jinou cestou,
+// je to presne ta ticha regrese, kterou ma tahle kontrola chytit -> u single FORBIDDEN.
+// Spready nesou plny kontrakt dal.
+const REQUIRED  = b => b === 'single' ? ['coldread'] : Object.keys(PARTS);
+const FORBIDDEN = b => b === 'single' ? ['lens', 'domain', 'register', 'priority'] : [];
 let fail = 0;
 
 for (const L of ['en', 'is']) {
   for (const b of BUILDERS) {
     const txt = O[b + '_' + L] || '';
-    const missing = Object.keys(PARTS).filter(k => !has(txt, k));
+    const missing = REQUIRED(b).filter(k => !has(txt, k));
     if (missing.length) { fail++; console.log('FAIL  ' + b + '_' + L + '  missing: ' + missing.join(', ')); }
-    else console.log('OK    ' + b + '_' + L + '  lens+domain+register+priority+coldread');
+    const navic = FORBIDDEN(b).filter(k => has(txt, k));
+    if (navic.length) { fail++; console.log('FAIL  ' + b + '_' + L + '  kostra prolomena — ledova brana v promptu: ' + navic.join(', ')); }
+    if (!missing.length && !navic.length) console.log('OK    ' + b + '_' + L + (b === 'single' ? '  kostra: coldread + ledove brany NEJSOU' : '  lens+domain+register+priority+coldread'));
     const dup = Object.keys(PARTS).filter(k => times(txt, k) > 1);
     if (dup.length) { fail++; console.log('FAIL  ' + b + '_' + L + '  gate dvakrat v promptu: ' + dup.join(', ')); }
   }

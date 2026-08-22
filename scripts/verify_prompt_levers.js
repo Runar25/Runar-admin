@@ -155,19 +155,20 @@ const VYJIMKY = {
         + 'nezvýšilo, takže „spready bez úhlu splývají" neobstálo. → RUNAR_EVAL_LOG.md 2026-08-18.',
   },
   lens: {
-    cesty: ['kriz', 'horseshoe', 'yggdrasil', 'ask', 'liferune'],
+    cesty: ['single', 'kriz', 'horseshoe', 'yggdrasil', 'ask', 'liferune'],
     proc: 'Životní runa JE ta čočka (nemá se zrcadlit sama); `ask` navazuje na hotové čtení. '
         + 'U velkých spreadů zapojená není — ZJIŠTĚNO 2026-08-18 touhle kontrolou, '
-        + 'NEROZHODNUTO. Otevřeno v RUNAR_BACKLOG.md.',
+        + 'NEROZHODNUTO. Otevřeno v RUNAR_BACKLOG.md.'
+        + ' Single: v4.0 kostra 2026-08-22 — owner: "napred budeme ladit samotne cteni"; vraci se po jednom, zmerene.',
   },
   name: { cesty: ['ask', 'liferune'], proc: '`ask` je odpověď k hotovému čtení; životní runa má jméno ve svém základu (`buildLifeRuneBase`). Ověřeno 2026-08-18.' },
   image: { cesty: ['ask', 'liferune'], proc: '`ask` navazuje na čtení, kde obraz už zazněl; životní runa staví obraz ve vlastním základu. Ověřeno 2026-08-18.' },
   keywords: { cesty: ['ask', 'liferune'], proc: 'Táž příčina jako u `image` — obě cesty mají vlastní základ. Ověřeno 2026-08-18.' },
   ending: { cesty: ['ask', 'liferune'], proc: 'Táž příčina jako u `image`. Ověřeno 2026-08-18.' },
-  domain: { cesty: ['ask', 'liferune'], proc: '`ask` ani životní runa nedostávají oblast života na vstupu. Ověřeno 2026-08-18.' },
-  register: { cesty: ['ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },
-  intention: { cesty: ['ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },
-  priority: { cesty: ['ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },
+  domain: { cesty: ['single', 'ask', 'liferune'], proc: '`ask` ani životní runa nedostávají oblast života na vstupu. Ověřeno 2026-08-18. Single: v4.0 kostra 2026-08-22 — owner: "napred budeme ladit samotne cteni"; vraci se po jednom, zmerene.' },
+  register: { cesty: ['single', 'ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },
+  intention: { cesty: ['single', 'ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },
+  priority: { cesty: ['single', 'ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },
 };
 const zvlast = (klic, cesta) => !!(VYJIMKY[klic] && VYJIMKY[klic].cesty.indexOf(cesta) !== -1);
 

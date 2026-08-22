@@ -4085,3 +4085,21 @@ Affected doc(s): RUNAR_DESIGN.md · memory/prompt-map-artifact.md · memory/MEMO
 - **Ztráta dat přiznána:** původní C2 dávka (32 čtení) přepsána sdíleným jménem souboru —
   3. výskyt téže třídy chyby (sdílený slot). Oprava: per-běh soubory; C2 přegenerováno.
 - **Reversibility:** easy.
+
+
+## 2026-08-22 — v4.0-mynd NASAZENO: kostra je produkční single (CODE-tune)
+**Rozhodnutí (KUKY):** kostra = základ + úhel + tvar zakončení + umístění jména + zákaz
+studeného čtení („14. vrátit"). Esenční řádek C3 nahrazuje describe ve VOICE_PROFILES
+(vlastní znění config). Oblast / co hledám / záměr / čočka+priorita **dočasně VEN ze single**
+(„napřed budeme ladit samotné čtení") — vracejí se po jednom, změřené; spready nedotčené.
+UI vstupy zůstávají (DB je ukládá), v single textu dočasně nepůsobí.
+**S tím nasazeno:** EN vazba klíč←obraz (RUNE_IMAGES 6. sloupec `aspekt_en` z mapy aspektů;
+IS ji má od v3.2) · DEF_CHAR: „Does NOT explain — reveals" sjednoceno s esenčním řádkem
+(4. a poslední známý rozpor pravidel; znění navrženo 22. 8., owner se k němu výslovně
+nevyjádřil — jde změnit jednou větou) · zákaz „The cattle" zrušen (verdikt KUKY: „teď už
+může být, kontrola je vynucena jinak" — vynucení převzal esenční řádek; vlastní jména run zůstávají).
+**Kontroly:** ⑧ single = kostra (coldread POVINNÝ, ledové brány FORBIDDEN — návrat jinou
+cestou je červená) · ㉚ single přidán do výjimek ledových pák s důvodem+datem · ㉜ registry
+přepsán pod v4.0-mynd. Golden před/po: jen zamýšlené řádky. Smoke 34/34.
+**Čeká:** výměna 9 vadných obrazů banky za 11 schválených návrhů (IS znění + aspekty) — track A.
+Affected doc(s): žádný — délky/pravidla vlastní config+buildery (§20).

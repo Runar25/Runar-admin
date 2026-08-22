@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-08-22",
- "prompt_version": "v3.2-mynd",
+ "prompt_version": "v4.0-mynd",
  "pravidla": [
   {
    "hash": "54d29df4d80b",
@@ -232,10 +232,10 @@
    "zacatek": "IMAGE — the picture in this reading comes from here:"
   },
   {
-   "hash": "c933a7d5bc44",
+   "hash": "42a8319e6a90",
    "lang": "en",
    "zdroj": "single",
-   "zacatek": "NAME THE RUNE, THEN TIE THE IMAGE TO IT: say in ordinary words what th"
+   "zacatek": "THE ESSENCE LINE: after the picture, one short line that says what the"
   },
   {
    "hash": "d697932ae6c6",
@@ -748,10 +748,10 @@
    "zacatek": "MYND — héðan kemur myndin í þessum lestri:"
   },
   {
-   "hash": "2cd5df7e7465",
+   "hash": "0ccde49571da",
    "lang": "is",
    "zdroj": "single",
-   "zacatek": "NEFNDU RÚNINA OG BINDU MYNDINA VIÐ HANA: segðu með hversdagslegum orðu"
+   "zacatek": "KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem segir hvað rúni"
   },
   {
    "hash": "2de80b973bab",

@@ -36,7 +36,10 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 // ⚠️ Menis prompt? Bumpni tohle. Hlida to ㉜ — bez bumpu odmitne zapsat registr pravidel,
 // protoze bez tagu se nova cteni v DB nerozeznaji od starych (stalo se 21. 8., pet migraci
 // slo do produkce pod nezmenenou verzi).
-const RUNAR_PROMPT_VERSION = 'v3.2-mynd';
+// v4.0 MYND (2026-08-22): kostra dle verdiktu ownera — zaklad + uhel + zakonceni + jmeno
+// + zakaz studeneho cteni. Esencni radek misto describe; vazba klic<-obraz v OBOU recich;
+// oblast/co hledam/zamer/cocka+priorita docasne VEN ze single (vraci se po jednom, zmerene).
+const RUNAR_PROMPT_VERSION = 'v4.0-mynd';
 
 // ─── ELEVENLABS ─────────────────────────────────────────
 const EL_VOICE_ID_EN = '2UI8v2ibbwQTijaYAte1'; // English — Rúnar EN
@@ -426,7 +429,10 @@ Forðastu óhlutbundnar, dulúðlega hljómandi setningar sem segja ekkert einfa
 
     // Pravidla, ktera tenhle registr MENI oproti zakladu (tyz mechanismus jako `direct`).
     rules: {
-      // Zaklad zakazuje rict, co runa ZNAMENA, a zakazuje obraz rozlustit. Prave to delalo
+      // v4.0 (2026-08-22): ESENCNI RADEK dle RUNAR_DESIGN „tri beaty" (L1) — C3 zvitezilo
+      // okem ownera i cisly (svet 1,00 obe reci, docs/eval/2026-08-22-kostra). Ucebnicovy
+      // symbol nikdy jako stitek; metafora+glosa; slova vyznamu pokazde jina.
+      // Historie: v3.1 „NAME THE RUNE" — zaklad predtim zakazoval rict, co runa ZNAMENA:
       // obraz necitelnym pro toho, kdo runu nezna: text runu jmenoval, ale nerekl, co je zac
       // (119 z 240 produkcnich EN cteni). Nove pravidlo poradi obraci — runa se rekne
       // obycejnymi slovy a obraz je to, jak to vypada tady.
@@ -435,8 +441,8 @@ Forðastu óhlutbundnar, dulúðlega hljómandi setningar sem segja ekkert einfa
       // Doklad: vlastnost „rekne smysl runy" 0/8 -> 6/8 EN (p=0,0035) a 0/20 -> 8/20 IS
       // (p=0,0016), mereno 2026-08-20 nad davkami z gen_direct.
       describe: {
-        en: 'NAME THE RUNE, THEN TIE THE IMAGE TO IT: say in ordinary words what this rune stands for — build it from the aspects you were given, never a fixed formula. Let the image then be what that looks like where it fell. Someone who has never heard of this rune must be able to follow it: no invented mechanism, no fate. Never tell the seeker what it means for them.',
-        is: 'NEFNDU RÚNINA OG BINDU MYNDINA VIÐ HANA: segðu með hversdagslegum orðum fyrir hvað rúnin stendur — byggðu það á þeim atriðum sem þér voru gefin, aldrei á fastri formúlu. Láttu myndina svo sýna hvernig það lítur út þar sem hún féll. Sá sem hefur aldrei heyrt rúnina nefnda á að geta fylgt textanum: engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.',
+        en: 'THE ESSENCE LINE: after the picture, one short line that says what the rune DOES through this image — its sense in plain words a stranger to runes can grasp. Never its textbook symbol or a dictionary phrase as the label — "Fehu is that warmth passed from hand to hand", not "Fehu is wealth". The familiar word may live inside the doing ("exchange between the sea and the shore"). Choose different words for the essence each time — never a fixed formula. No invented mechanism, no fate. Never tell the seeker what it means for them.',
+        is: 'KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem segir hvað rúnin GERIR í gegnum þessa mynd — merking hennar með hversdagslegum orðum sem ókunnugur skilur. Aldrei þekktasta tákn hennar eða orðabókarorð sem merkimiði. Kunnuglega orðið má lifa inni í myndinni. Veldu ólík orð um merkinguna í hvert sinn — aldrei föst formúla. Engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.',
       },
     },
   },
