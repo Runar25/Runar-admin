@@ -53,6 +53,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 | Strom života — duše, zóny, signály, Gathering | `RUNAR_TREE.md` | 📜 |
 | Otevřené úkoly, blockery, priority | `RUNAR_BACKLOG.md` | stav |
 | GDPR, privacy, tester consent | `RUNAR_PRIVACY.md` | 🔒 |
+| Prófsteinn — test čtení při stížnosti (soudci svět·soulad·chlad + kam poslat zbytek) | `scripts/profsteinn.js` (hlavička = celý postup) | 🔄 |
 | Aktuální SW verze / commit / co je nasazené | `v2/sw.js` a `git log` — **nikdy ne v docu** | stav |
 
 ---
