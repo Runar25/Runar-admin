@@ -19,6 +19,9 @@ const TAG    = arg('tag', 'davka');
 const RUNA   = arg('rune', '');               // pevna tazena runa
 const MATRIX = arg('matrix', '');             // area | life | zadny (jinak nahodny kontext)
 const BEZ_OBL = process.argv.includes('--bez-oblasti');   // vypni JEN oblast, zbytek nech nahodny
+// v4.4 (2026-08-22): mereni cocky potrebuje zivotni runu i v nahodnem modu (dosud null
+// -> cocka nikdy nevystrelila). 'random' losuje z tehoz seedovaneho proudu jako zbytek.
+const LIFERUNE = arg('liferune', '');    // '' | 'random' | jmeno runy
 
 // Klic: env ma prednost, jinak soubor MIMO repo. Repo je verejne, takze v nem klic nesmi
 // lezet ani gitignorovany — jedno `git add -f` a je venku. Zaroven se o nej nema porad
@@ -116,11 +119,14 @@ async function jedno(i) {
         seeking: SEEKS[1] || SEEKS[0], intention: INTENT[0], question: '',
         lifeRune: MATRIX === 'life' ? RUNES[18] : null }
     : { name: 'Anna', area: _oblast, seeking: nahodne(SEEKS),
-        intention: nahodne(INTENT), question: '', lifeRune: null };
+        intention: nahodne(INTENT), question: '',
+        lifeRune: LIFERUNE === 'random' ? nahodne(RUNES)
+          : (LIFERUNE ? RUNES.filter((r) => r.n.toLowerCase() === LIFERUNE.toLowerCase())[0] || null : null) };
   let prompt = STAVITEL[SPREAD](u, runy, LANG);
   if (BEZ_UHLU) prompt = odeberUhel(prompt);
   const radek = { source: 'gen_direct', synthetic: true, matrix: MATRIX || null, runes: runy.map((r) => r.n), spread: SPREAD,
                   lang: LANG, area: u.area, seeking: u.seeking, intention: u.intention,
+                  life: u.lifeRune ? u.lifeRune.n : null,
                   model: 'claude-opus-4-8', batch: TAG,
                   without: BEZ_UHLU ? 'angle' : null,
                   generated_at: new Date().toISOString() };

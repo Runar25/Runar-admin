@@ -42,7 +42,8 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 // v4.1 (2026-08-22): navrat oblasti do single (krok 1/3 navratu pak, mereno).
 // v4.2 (2026-08-22): navrat registru 'co hledam' do single (krok 2/3, mereno).
 // v4.3 (2026-08-22): navrat zameru do single (krok 3/3, mereno).
-const RUNAR_PROMPT_VERSION = 'v4.3-mynd';
+// v4.4 (2026-08-22): navrat cocky (zivotni runy) do single (krok 4, mereno).
+const RUNAR_PROMPT_VERSION = 'v4.4-mynd';
 
 // ─── ELEVENLABS ─────────────────────────────────────────
 const EL_VOICE_ID_EN = '2UI8v2ibbwQTijaYAte1'; // English — Rúnar EN

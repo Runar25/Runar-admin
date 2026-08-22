@@ -1328,8 +1328,10 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     // `lint_prompts.js --dup`). Parametr zůstal, aby se neměnila signatura packu.
     hasQ ? S.qBranch(rn(drawn), drawn.g, u.question) : S.noqBranch(rn(drawn), drawn.g, worldRef),
     _endingShape(drawn, lang),
-    // v4.0 (2026-08-22): priorita a cocka docasne VEN ze single (tyz duvod vyse).
-    // `lensOn` se tu uz necte; promenna zustava kvuli signature a spreadum.
+    // v4.4 (2026-08-22): COCKA SE VRACI — owner: "v single je life rune jako cocka,
+    // neni hotovo dokud neni cocka". Priorita zustava VEN (vrati se, az mereni ukaze
+    // konflikt oblast x obraz; soulad zatim drzi; `lensOn` se tu proto porad necte).
+    _lensContext(life, drawn, lang),
     S.closing(u.name) + (S.langInstr ? S.langInstr : '') + getCorrPrompt(lang, corrections),
     _addressContext(lang),
     S.json,

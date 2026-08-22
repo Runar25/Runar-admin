@@ -155,11 +155,11 @@ const VYJIMKY = {
         + 'nezvýšilo, takže „spready bez úhlu splývají" neobstálo. → RUNAR_EVAL_LOG.md 2026-08-18.',
   },
   lens: {
-    cesty: ['single', 'kriz', 'horseshoe', 'yggdrasil', 'ask', 'liferune'],
+    cesty: ['kriz', 'horseshoe', 'yggdrasil', 'ask', 'liferune'],
     proc: 'Životní runa JE ta čočka (nemá se zrcadlit sama); `ask` navazuje na hotové čtení. '
         + 'U velkých spreadů zapojená není — ZJIŠTĚNO 2026-08-18 touhle kontrolou, '
         + 'NEROZHODNUTO. Otevřeno v RUNAR_BACKLOG.md.'
-        + ' Single: v4.0 kostra 2026-08-22 — owner: "napred budeme ladit samotne cteni"; vraci se po jednom, zmerene.',
+        + ' (Single: cocka vracena v4.4, 22. 8.)',
   },
   name: { cesty: ['ask', 'liferune'], proc: '`ask` je odpověď k hotovému čtení; životní runa má jméno ve svém základu (`buildLifeRuneBase`). Ověřeno 2026-08-18.' },
   image: { cesty: ['ask', 'liferune'], proc: '`ask` navazuje na čtení, kde obraz už zazněl; životní runa staví obraz ve vlastním základu. Ověřeno 2026-08-18.' },

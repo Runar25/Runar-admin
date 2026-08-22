@@ -89,8 +89,9 @@ const BUILDERS = ['single', 'norns', 'kriz', 'horseshoe', 'yggdrasil'];
 // Spready nesou plny kontrakt dal.
 // v4.1 (2026-08-22): oblast se do single vratila (krok 1/3) -> domain zpet mezi povinne.
 // v4.2 (2026-08-22): registr se vratil (krok 2/3) -> zpet mezi povinne.
-const REQUIRED  = b => b === 'single' ? ['coldread', 'domain', 'register'] : Object.keys(PARTS);
-const FORBIDDEN = b => b === 'single' ? ['lens', 'priority'] : [];
+// v4.4 (2026-08-22): cocka se vratila (krok 4) -> lens zpet mezi povinne u single.
+const REQUIRED  = b => b === 'single' ? ['coldread', 'domain', 'register', 'lens'] : Object.keys(PARTS);
+const FORBIDDEN = b => b === 'single' ? ['priority'] : [];
 let fail = 0;
 
 for (const L of ['en', 'is']) {

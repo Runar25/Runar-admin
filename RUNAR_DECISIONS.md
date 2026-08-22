@@ -4193,3 +4193,18 @@ aspekt nýtt upphaf/new beginnings 3/3) — přidává se, nic nenahrazuje.
 laguna zatím zůstává (motiv-guard drží odrazy od sebe). IS svět watch-item → živí testeři
 (owner: „islandsky neumím, musí to udělat testeři").
 Affected doc(s): žádný.
+
+
+## 2026-08-22 — v4.4-mynd: ČOČKA (životní runa) zpět v single (krok 4) (CODE-tune)
+**Rozhodnutí (KUKY):** „v single je life rune jako čočka — není hotovo, dokud není čočka."
+Vrací supersedovaný bod kostry „čočka až na konec" — ten konec je teď. Priorita zůstává VEN.
+**Měření (n=16/jazyk, náhodná životní runa — gen_direct dostal aditivní `--liferune`):**
+funkce = slepá identifikace životní runy ze závěru: **IS 9/16 proti kontrole 3/16 — funguje
+jasně**; EN 8/16, ale pseudo-kontrola (falešná runa na dávce bez čočky) vyšla 6/16 → EN
+neprůkazné proti přísné kontrole (metrika tam možná vidí tematickou blízkost, §27 poznámka).
+Mantinely: **EN svět 1,38** (pásmo bylo 1,06–1,13) — mechanismus: závěr občas maluje pro
+životní runu NOVÝ obraz místo náklonu; IS svět 1,00, ale soulad 9/16 (nejnižší). Okem:
+většina závěrů naklání správně (Berkana+Uruz: „the ground holds firm under your feet").
+Verdikt = oko ownera; případná oprava = přepis znění čočky (náklon, ne nový obraz), měřeně.
+Kontroly ⑧ (lens REQUIRED u single) · ㉚ · ㉜ v4.4-mynd. Data navrat-pak/cocka-*.jsonl.
+Affected doc(s): žádný.
