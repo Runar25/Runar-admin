@@ -4208,3 +4208,18 @@ většina závěrů naklání správně (Berkana+Uruz: „the ground holds firm 
 Verdikt = oko ownera; případná oprava = přepis znění čočky (náklon, ne nový obraz), měřeně.
 Kontroly ⑧ (lens REQUIRED u single) · ㉚ · ㉜ v4.4-mynd. Data navrat-pak/cocka-*.jsonl.
 Affected doc(s): žádný.
+
+
+## 2026-08-22 — v4.5-mynd: „co hledám" DODĚLÁNO — Confirmation bez „blind side" (CODE-tune)
+**Rozhodnutí (KUKY):** „co hledám dodeláme!" → proveden test z BACKLOG:115 (handoff Cowork
+#26): tři náhrady blind-side věty, atribuce se zamčeným zbytkem, n=8/rameno/jazyk, oba jazyky.
+**Výsledek:** orig „and its blind side" = unaware (tvrzení o nevědomosti leitanda) **6/16**,
+chlad 7/16 · **B „what the image leaves standing just out of frame" = unaware 0/16**, chlad
+5/16 · A „path not yet in view" 1/16 · C „still in shadow" 3/16. Nasazen B — vedle čísel i
+tvarem: drží Confirmation u OBRAZU (týž vzor jako opravená doména 21. 8.), tedy MYND.
+IS: „og því sem myndin lætur standa rétt utan rammans" (rammi/láta+inf ověřeno is-vazba).
+Diagnóza handoffu potvrzena: vada byla v idiomu („blind" ≈ vždy o povědomí osoby), ne ve
+větné stavbě — gramaticko-podmětový test ji nechytil. Data docs/eval/2026-08-22-registr-ab/.
+Pozn.: neprokázané PROPSÁNÍ hodnoty „co hledám" (v4.2) tímhle vyřešené není — tohle řešilo
+bezpečnost Confirmation větve; podobnost pěti hodnot zůstává otevřená (BACKLOG).
+Affected doc(s): RUNAR_BACKLOG.md (položka blind-side [x]).

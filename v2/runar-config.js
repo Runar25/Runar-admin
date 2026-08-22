@@ -43,7 +43,8 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 // v4.2 (2026-08-22): navrat registru 'co hledam' do single (krok 2/3, mereno).
 // v4.3 (2026-08-22): navrat zameru do single (krok 3/3, mereno).
 // v4.4 (2026-08-22): navrat cocky (zivotni runy) do single (krok 4, mereno).
-const RUNAR_PROMPT_VERSION = 'v4.4-mynd';
+// v4.5 (2026-08-22): Confirmation bez 'blind side' — vitez B z A/B/C (unaware 6/16 -> 0/16).
+const RUNAR_PROMPT_VERSION = 'v4.5-mynd';
 
 // ─── ELEVENLABS ─────────────────────────────────────────
 const EL_VOICE_ID_EN = '2UI8v2ibbwQTijaYAte1'; // English — Rúnar EN

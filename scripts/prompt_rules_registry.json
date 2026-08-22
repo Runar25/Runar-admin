@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-08-22",
- "prompt_version": "v4.4-mynd",
+ "prompt_version": "v4.5-mynd",
  "pravidla": [
   {
    "hash": "54d29df4d80b",
@@ -172,7 +172,7 @@
    "zacatek": "This is a leaning, not an order — do not name it back or hand it over "
   },
   {
-   "hash": "d83c981587b1",
+   "hash": "784e95537694",
    "lang": "en",
    "zdroj": "registr[2]",
    "zacatek": "This is a leaning, not an order — do not name it back or hand it over "
@@ -688,7 +688,7 @@
    "zacatek": "Þetta er tilhneiging, ekki pöntun — endurtaktu hana ekki né afhentu se"
   },
   {
-   "hash": "01924d1e6a88",
+   "hash": "e575dcb3318b",
    "lang": "is",
    "zdroj": "registr[2]",
    "zacatek": "Þetta er tilhneiging, ekki pöntun — endurtaktu hana ekki né afhentu se"

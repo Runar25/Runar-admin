@@ -871,14 +871,14 @@ function _registerContext(seeking, lang) {
   var mapIs = [
     'Leitandinn biður um almenna leiðsögn — láttu rúnina leiða hvert sem hún vill; þvingaðu ekki fram tilgang.',
     'Leitandinn biður um skýrleika — dragðu eitt skýrt fram, ekki eitt svar; skerptu það sem máli skiptir, en ákvörðunin er leitandans.',
-    'Leitandinn leitar staðfestingar eða hefur tekið ákvörðun — hvorki staðfestu né hrektu; lýstu jarðveginum undir ákvörðuninni og blindu hliðinni.',
+    'Leitandinn leitar staðfestingar eða hefur tekið ákvörðun — hvorki staðfestu né hrektu; lýstu jarðveginum undir ákvörðuninni og því sem myndin lætur standa rétt utan rammans.',
     'Leitandinn biður um innsýn í áskorun — nefndu núninginn heiðarlega, án þess að mýkja hann í huggun.',
     'Leitandinn biður um hugleiðingu — opnaðu spegil, ekki svar; snúðu viðmælandanum inn á við.',
   ];
   var mapEn = [
     'The seeker asks for general guidance — let the rune lead where it will; do not force a purpose.',
     'The seeker asks for clarity — bring one thing into focus, not one answer; sharpen what matters and leave the deciding to them.',
-    'The seeker looks for confirmation, or has made up their mind — neither confirm nor refute; describe the ground beneath the decision and its blind side.',
+    'The seeker looks for confirmation, or has made up their mind — neither confirm nor refute; describe the ground beneath the decision and what the image leaves standing just out of frame.',
     'The seeker asks for insight into challenge — name the friction honestly, without softening it into comfort.',
     'The seeker asks for reflection — open a mirror, not an answer; turn them inward.',
   ];
