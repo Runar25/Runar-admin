@@ -1300,9 +1300,12 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     _describeRule(lang),
     _noColdRead(lang),
     _lengthBudget(lang),   // 2026-08-21: delka je losovana paka, ne pevna radka packu
-    // v4.0 (2026-08-22): oblast a "co hledam" docasne VEN ze single (tyz duvod vyse).
-    // Zebrik 21.8.: krok +oblast nejhorsi na svetech (1,50); UI vstupy zustavaji, jen
-    // v single textu docasne nepusobi.
+    // v4.1 (2026-08-22): OBLAST SE VRACI — prvni z odlozenych pak (owner: "at se
+    // propisou do cteni"), nad kostrou a uz s PREPSANYM znenim _domainContext (cil
+    // obrazu, ne vlastni obrazky; puvodni zneni bylo na zebriku 21.8. nejhorsi krok,
+    // svety 1,50). Mereni navratu -> docs/eval/2026-08-22-navrat-pak/.
+    u.area ? _domainContext(u.area, lang) : '',
+    // "Co hledam" (registr) zatim VEN — vraci se dalsim krokem, zmerene.
     // `worldRef` se otevírací větvi pořád předává, ale ta ho už NEVYPISUJE: popis světa
     // stojí v hlavičce `DRAWN RUNE` a do 2026-08-13 se opakoval i tady (nález
     // `lint_prompts.js --dup`). Parametr zůstal, aby se neměnila signatura packu.

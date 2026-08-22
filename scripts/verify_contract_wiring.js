@@ -87,8 +87,9 @@ const BUILDERS = ['single', 'norns', 'kriz', 'horseshoe', 'yggdrasil'];
 // (owner: "napred budeme ladit samotne cteni"). Kdyby se do single vratily jinou cestou,
 // je to presne ta ticha regrese, kterou ma tahle kontrola chytit -> u single FORBIDDEN.
 // Spready nesou plny kontrakt dal.
-const REQUIRED  = b => b === 'single' ? ['coldread'] : Object.keys(PARTS);
-const FORBIDDEN = b => b === 'single' ? ['lens', 'domain', 'register', 'priority'] : [];
+// v4.1 (2026-08-22): oblast se do single vratila (krok 1/3) -> domain zpet mezi povinne.
+const REQUIRED  = b => b === 'single' ? ['coldread', 'domain'] : Object.keys(PARTS);
+const FORBIDDEN = b => b === 'single' ? ['lens', 'register', 'priority'] : [];
 let fail = 0;
 
 for (const L of ['en', 'is']) {

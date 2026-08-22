@@ -4122,3 +4122,29 @@ zda starší z dvojice přeznít v tracku B.
 **Post-migrační měření v4.0 (produkce, n=16/jazyk):** EN svět 1,06 · soulad 12/16 · chlad 3/16 ·
 IS 1,06 · 11/16 · 4/16 — v šumu proti C3 kostře (data docs/eval/2026-08-22-v40-prod/).
 Affected doc(s): žádný — banka žije v runar-character.js (§20).
+
+
+## 2026-08-22 — PRÓFSTEINN: pojmenovaný test čtení pro éru živých testerů (CODE-tune)
+**Rozhodnutí (KUKY):** postup „stížnost → měření → oprava", kterým se ladil MYND, se zapisuje
+a dostává jméno: **Prófsteinn** (is. prubířský kámen — 🔒 ověřeno v nútímamálsorðabók:
+„málið er prófsteinn á íslenskt réttarfar"). Vlastník mechaniky = `scripts/profsteinn.js`
+(hlavička nese celý postup vč. větví: vadný obraz → slepý test · IS vazba → is-vazba/korekce
+· páka → rejstřík+golden+㉜ · rozhodnutí → sem). Soudci svět/soulad/chlad žijí JEN tam (§18).
+**Kalibrace (§27):** na známé dávce v4.0-IS reprodukuje 1,06 · 11/16 · 3/16 (originál 4/16 —
+rozdíl jeden hlas soudce). Čísla = mantinel; rozhoduje oko ownera nad celým čtením.
+Affected doc(s): memory/MEMORY.md (řádek rozcestníku).
+
+## 2026-08-22 — v4.1-mynd: OBLAST se vrací do single (krok 1/3 návratu pák) (CODE-tune)
+**Rozhodnutí (KUKY):** „pojďme na UI: pole oblast/co hledám/záměr — ať se propíšou do čtení."
+Návrat po jednom, změřeně (metoda z kostry). Oblast první — přepsané znění `_domainContext`
+(cíl obrazu; původní bylo na žebříku 21. 8. nejhorší krok, světy 1,50).
+**Měření (n=16/jazyk, matrix přes 8 oblastí, data docs/eval/2026-08-22-navrat-pak/):**
+funkce: slepá identifikace oblasti ze čtení **9/16 EN · 7/16 IS** (šance 2/16; kontrola
+obrácenou pákou na v4.0 dávce = 3/16 obě řeči — metrika poctivá, §25/§27). Mantinely:
+svět 1,06 EN · 1,13 IS (žebříkový skok se nekonal) · soulad 14/16 obě (lepší než v4.0).
+⚠️ **Chlad stoupl: EN 3→5, IS 4→6 z 16.** Mechanismus nalezen: v oblastech Vztahy/Domov/
+Léčení model vtahuje do scény VYMYŠLENÉHO druhého člověka („someone waits for the sound of
+your step"). Jednotlivě v šumu, směr shodný v obou řečích. Verdikt = oko ownera; případná
+oprava = A/B test přepisu znění oblasti (ne přisypání klauzule — prompt se lepší ubíráním).
+Kontroly: ⑧ domain u single z FORBIDDEN zpět do REQUIRED · ㉚ výjimka zrušena · ㉜ v4.1-mynd.
+Affected doc(s): žádný (znění vlastní kód).

@@ -39,7 +39,8 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 // v4.0 MYND (2026-08-22): kostra dle verdiktu ownera — zaklad + uhel + zakonceni + jmeno
 // + zakaz studeneho cteni. Esencni radek misto describe; vazba klic<-obraz v OBOU recich;
 // oblast/co hledam/zamer/cocka+priorita docasne VEN ze single (vraci se po jednom, zmerene).
-const RUNAR_PROMPT_VERSION = 'v4.0-mynd';
+// v4.1 (2026-08-22): navrat oblasti do single (krok 1/3 navratu pak, mereno).
+const RUNAR_PROMPT_VERSION = 'v4.1-mynd';
 
 // ─── ELEVENLABS ─────────────────────────────────────────
 const EL_VOICE_ID_EN = '2UI8v2ibbwQTijaYAte1'; // English — Rúnar EN
