@@ -1,0 +1,1202 @@
+[
+ {
+  "ri": 0,
+  "rune": "Fehu",
+  "aspekty": "wealth, cattle, material prosperity, mobile energy",
+  "obraz": "The berry-heath grows heavy with bilberries when August comes.",
+  "spravne": 5,
+  "hlasy": [
+   5,
+   5,
+   5
+  ],
+  "zvoleno": 5,
+  "trefil": true,
+  "zvolil_runu": "Fehu"
+ },
+ {
+  "ri": 1,
+  "rune": "Uruz",
+  "aspekty": "raw power, strength, transformation, primal force",
+  "obraz": "The scree withstands every spring storm without shifting.",
+  "spravne": 2,
+  "hlasy": [
+   2,
+   2,
+   2
+  ],
+  "zvoleno": 2,
+  "trefil": true,
+  "zvolil_runu": "Uruz"
+ },
+ {
+  "ri": 0,
+  "rune": "Fehu",
+  "aspekty": "wealth, cattle, material prosperity, mobile energy",
+  "obraz": "The sheep drift into the fold toward evening, slow and without effort.",
+  "spravne": 1,
+  "hlasy": [
+   1,
+   1,
+   1
+  ],
+  "zvoleno": 1,
+  "trefil": true,
+  "zvolil_runu": "Fehu"
+ },
+ {
+  "ri": 0,
+  "rune": "Fehu",
+  "aspekty": "wealth, cattle, material prosperity, mobile energy",
+  "obraz": "The bread comes hot from the oven, enough for everyone at the table.",
+  "spravne": 3,
+  "hlasy": [
+   3,
+   3,
+   3
+  ],
+  "zvoleno": 3,
+  "trefil": true,
+  "zvolil_runu": "Fehu"
+ },
+ {
+  "ri": 2,
+  "rune": "Thurisaz",
+  "aspekty": "gateway, threshold, caution, thorn, protection",
+  "obraz": "The thorn-bush stands bare and black in the blizzard, but the spines are still waiting.",
+  "spravne": 4,
+  "hlasy": [
+   4,
+   4,
+   4
+  ],
+  "zvoleno": 4,
+  "trefil": true,
+  "zvolil_runu": "Thurisaz"
+ },
+ {
+  "ri": 2,
+  "rune": "Thurisaz",
+  "aspekty": "gateway, threshold, caution, thorn, protection",
+  "obraz": "The crack in the lava waits — you cannot cross it without a jump.",
+  "spravne": 3,
+  "hlasy": [
+   3,
+   3,
+   3
+  ],
+  "zvoleno": 3,
+  "trefil": true,
+  "zvolil_runu": "Thurisaz"
+ },
+ {
+  "ri": 1,
+  "rune": "Uruz",
+  "aspekty": "raw power, strength, transformation, primal force",
+  "obraz": "The lava still remembers the fire, though the moss has settled over it.",
+  "spravne": 5,
+  "hlasy": [
+   5,
+   5,
+   5
+  ],
+  "zvoleno": 5,
+  "trefil": true,
+  "zvolil_runu": "Uruz"
+ },
+ {
+  "ri": 2,
+  "rune": "Thurisaz",
+  "aspekty": "gateway, threshold, caution, thorn, protection",
+  "obraz": "The gate is frozen shut and will not give until it thaws.",
+  "spravne": 2,
+  "hlasy": [
+   -1,
+   -1,
+   2
+  ],
+  "zvoleno": -1,
+  "trefil": false,
+  "zvolil_runu": "?"
+ },
+ {
+  "ri": 3,
+  "rune": "Ansuz",
+  "aspekty": "messages, wisdom, divine guidance, voice, breath",
+  "obraz": "The raven settles on the fencepost and waits for you to listen.",
+  "spravne": 2,
+  "hlasy": [
+   2,
+   2,
+   2
+  ],
+  "zvoleno": 2,
+  "trefil": true,
+  "zvolil_runu": "Ansuz"
+ },
+ {
+  "ri": 3,
+  "rune": "Ansuz",
+  "aspekty": "messages, wisdom, divine guidance, voice, breath",
+  "obraz": "The breeze carries the plover's call across the moor to you.",
+  "spravne": 1,
+  "hlasy": [
+   1,
+   1,
+   1
+  ],
+  "zvoleno": 1,
+  "trefil": true,
+  "zvolil_runu": "Ansuz"
+ },
+ {
+  "ri": 4,
+  "rune": "Raidho",
+  "aspekty": "the road, movement, natural rhythm, right action",
+  "obraz": "The drifting snow always finds the same way between the tussocks.",
+  "spravne": 3,
+  "hlasy": [
+   3,
+   3,
+   3
+  ],
+  "zvoleno": 3,
+  "trefil": true,
+  "zvolil_runu": "Raidho"
+ },
+ {
+  "ri": 3,
+  "rune": "Ansuz",
+  "aspekty": "messages, wisdom, divine guidance, voice, breath",
+  "obraz": "A voice on the phone says the thing you have been waiting to hear.",
+  "spravne": 5,
+  "hlasy": [
+   5,
+   5,
+   5
+  ],
+  "zvoleno": 5,
+  "trefil": true,
+  "zvolil_runu": "Ansuz"
+ },
+ {
+  "ri": 4,
+  "rune": "Raidho",
+  "aspekty": "the road, movement, natural rhythm, right action",
+  "obraz": "The road winds along the river and disappears around the next bend.",
+  "spravne": 2,
+  "hlasy": [
+   2,
+   2,
+   2
+  ],
+  "zvoleno": 2,
+  "trefil": true,
+  "zvolil_runu": "Raidho"
+ },
+ {
+  "ri": 4,
+  "rune": "Raidho",
+  "aspekty": "the road, movement, natural rhythm, right action",
+  "obraz": "The sheep-track winds along the hillside of its own accord.",
+  "spravne": 1,
+  "hlasy": [
+   1,
+   1,
+   1
+  ],
+  "zvoleno": 1,
+  "trefil": true,
+  "zvolil_runu": "Raidho"
+ },
+ {
+  "ri": 5,
+  "rune": "Kenaz",
+  "aspekty": "torch, inner light, creativity, knowledge, fire",
+  "obraz": "The hot spring simmers steady and even out on the moor.",
+  "spravne": 2,
+  "hlasy": [
+   2,
+   2,
+   2
+  ],
+  "zvoleno": 2,
+  "trefil": true,
+  "zvolil_runu": "Kenaz"
+ },
+ {
+  "ri": 4,
+  "rune": "Raidho",
+  "aspekty": "the road, movement, natural rhythm, right action",
+  "obraz": "The cairns stand each within sight of the next across the whole heath, each seen from the one before.",
+  "spravne": 1,
+  "hlasy": [
+   1,
+   1,
+   1
+  ],
+  "zvoleno": 1,
+  "trefil": true,
+  "zvolil_runu": "Raidho"
+ },
+ {
+  "ri": 6,
+  "rune": "Gebo",
+  "aspekty": "gift, companionship, giving and receiving, balance",
+  "obraz": "The sea gives and takes on the shore in the same breath.",
+  "spravne": 1,
+  "hlasy": [
+   1,
+   1,
+   1
+  ],
+  "zvoleno": 1,
+  "trefil": true,
+  "zvolil_runu": "Gebo"
+ },
+ {
+  "ri": 6,
+  "rune": "Gebo",
+  "aspekty": "gift, companionship, giving and receiving, balance",
+  "obraz": "The shore returns one thing and keeps another with every wave.",
+  "spravne": 3,
+  "hlasy": [
+   3,
+   3,
+   3
+  ],
+  "zvoleno": 3,
+  "trefil": true,
+  "zvolil_runu": "Gebo"
+ },
+ {
+  "ri": 5,
+  "rune": "Kenaz",
+  "aspekty": "torch, inner light, creativity, knowledge, fire",
+  "obraz": "The embers stay alive under the ash until morning.",
+  "spravne": 5,
+  "hlasy": [
+   5,
+   5,
+   5
+  ],
+  "zvoleno": 5,
+  "trefil": true,
+  "zvolil_runu": "Kenaz"
+ },
+ {
+  "ri": 5,
+  "rune": "Kenaz",
+  "aspekty": "torch, inner light, creativity, knowledge, fire",
+  "obraz": "The hands remember the work though the mind has forgotten it.",
+  "spravne": 3,
+  "hlasy": [
+   0,
+   -1,
+   0
+  ],
+  "zvoleno": 0,
+  "trefil": false,
+  "zvolil_runu": "ZADNA"
+ },
+ {
+  "ri": 6,
+  "rune": "Gebo",
+  "aspekty": "gift, companionship, giving and receiving, balance",
+  "obraz": "The door stands open and coffee waits on the table for two.",
+  "spravne": 5,
+  "hlasy": [
+   5,
+   5,
+   5
+  ],
+  "zvoleno": 5,
+  "trefil": true,
+  "zvolil_runu": "Gebo"
+ },
+ {
+  "ri": 7,
+  "rune": "Wunjo",
+  "aspekty": "joy, happiness, harmony, belonging, wish fulfilled",
+  "obraz": "You come in out of the cold and someone has lit the stove.",
+  "spravne": 5,
+  "hlasy": [
+   5,
+   5,
+   5
+  ],
+  "zvoleno": 5,
+  "trefil": true,
+  "zvolil_runu": "Wunjo"
+ },
+ {
+  "ri": 7,
+  "rune": "Wunjo",
+  "aspekty": "joy, happiness, harmony, belonging, wish fulfilled",
+  "obraz": "The sun finally reaches into the valley and everything goes still.",
+  "spravne": 1,
+  "hlasy": [
+   1,
+   1,
+   1
+  ],
+  "zvoleno": 1,
+  "trefil": true,
+  "zvolil_runu": "Wunjo"
+ },
+ {
+  "ri": 7,
+  "rune": "Wunjo",
+  "aspekty": "joy, happiness, harmony, belonging, wish fulfilled",
+  "obraz": "You find shelter and the wind stops roaring in your ears.",
+  "spravne": 1,
+  "hlasy": [
+   5,
+   5,
+   5
+  ],
+  "zvoleno": 5,
+  "trefil": false,
+  "zvolil_runu": "Thurisaz"
+ },
+ {
+  "ri": 8,
+  "rune": "Hagalaz",
+  "aspekty": "hail, disruption, transformation, clearing, nature force",
+  "obraz": "The squall strikes out of a clear sky and is gone just as fast.",
+  "spravne": 3,
+  "hlasy": [
+   3,
+   3,
+   3
+  ],
+  "zvoleno": 3,
+  "trefil": true,
+  "zvolil_runu": "Hagalaz"
+ },
+ {
+  "ri": 8,
+  "rune": "Hagalaz",
+  "aspekty": "hail, disruption, transformation, clearing, nature force",
+  "obraz": "A sudden gust lays the cotton-grass flat before you hear it coming.",
+  "spravne": 4,
+  "hlasy": [
+   3,
+   3,
+   3
+  ],
+  "zvoleno": 3,
+  "trefil": false,
+  "zvolil_runu": "Perth"
+ },
+ {
+  "ri": 8,
+  "rune": "Hagalaz",
+  "aspekty": "hail, disruption, transformation, clearing, nature force",
+  "obraz": "The hail hammers the roof and melts in an instant.",
+  "spravne": 4,
+  "hlasy": [
+   4,
+   4,
+   4
+  ],
+  "zvoleno": 4,
+  "trefil": true,
+  "zvolil_runu": "Hagalaz"
+ },
+ {
+  "ri": 8,
+  "rune": "Hagalaz",
+  "aspekty": "hail, disruption, transformation, clearing, nature force",
+  "obraz": "The river swells overnight and takes with it whatever stood too near the bank.",
+  "spravne": 2,
+  "hlasy": [
+   2,
+   2,
+   2
+  ],
+  "zvoleno": 2,
+  "trefil": true,
+  "zvolil_runu": "Hagalaz"
+ },
+ {
+  "ri": 9,
+  "rune": "Nauthiz",
+  "aspekty": "necessity, need, constraint, growth through challenge",
+  "obraz": "You keep knitting though the yarn is almost out.",
+  "spravne": 1,
+  "hlasy": [
+   1,
+   1,
+   1
+  ],
+  "zvoleno": 1,
+  "trefil": true,
+  "zvolil_runu": "Nauthiz"
+ },
+ {
+  "ri": 9,
+  "rune": "Nauthiz",
+  "aspekty": "necessity, need, constraint, growth through challenge",
+  "obraz": "The spring cold-snap makes the lamb press close for warmth.",
+  "spravne": 2,
+  "hlasy": [
+   2,
+   2,
+   2
+  ],
+  "zvoleno": 2,
+  "trefil": true,
+  "zvolil_runu": "Nauthiz"
+ },
+ {
+  "ri": 9,
+  "rune": "Nauthiz",
+  "aspekty": "necessity, need, constraint, growth through challenge",
+  "obraz": "The root forces its way through the stones down to the water.",
+  "spravne": 4,
+  "hlasy": [
+   4,
+   4,
+   4
+  ],
+  "zvoleno": 4,
+  "trefil": true,
+  "zvolil_runu": "Nauthiz"
+ },
+ {
+  "ri": 10,
+  "rune": "Isa",
+  "aspekty": "ice, stillness, waiting, pause, clarity through cold",
+  "obraz": "The windless snowfall comes straight down and covers everything without a sound.",
+  "spravne": 3,
+  "hlasy": [
+   3,
+   3,
+   3
+  ],
+  "zvoleno": 3,
+  "trefil": true,
+  "zvolil_runu": "Isa"
+ },
+ {
+  "ri": 10,
+  "rune": "Isa",
+  "aspekty": "ice, stillness, waiting, pause, clarity through cold",
+  "obraz": "The cup of coffee goes cold on the table while you wait.",
+  "spravne": 2,
+  "hlasy": [
+   2,
+   2,
+   2
+  ],
+  "zvoleno": 2,
+  "trefil": true,
+  "zvolil_runu": "Isa"
+ },
+ {
+  "ri": 10,
+  "rune": "Isa",
+  "aspekty": "ice, stillness, waiting, pause, clarity through cold",
+  "obraz": "The pond has iced over and waits without asking for anything.",
+  "spravne": 1,
+  "hlasy": [
+   1,
+   1,
+   1
+  ],
+  "zvoleno": 1,
+  "trefil": true,
+  "zvolil_runu": "Isa"
+ },
+ {
+  "ri": 10,
+  "rune": "Isa",
+  "aspekty": "ice, stillness, waiting, pause, clarity through cold",
+  "obraz": "The clock on the wall has stopped and no one has wound it.",
+  "spravne": 3,
+  "hlasy": [
+   3,
+   3,
+   3
+  ],
+  "zvoleno": 3,
+  "trefil": true,
+  "zvolil_runu": "Isa"
+ },
+ {
+  "ri": 10,
+  "rune": "Isa",
+  "aspekty": "ice, stillness, waiting, pause, clarity through cold",
+  "obraz": "The calm lies over the fjord and nothing stirs, not even the bird on the rock.",
+  "spravne": 3,
+  "hlasy": [
+   3,
+   3,
+   3
+  ],
+  "zvoleno": 3,
+  "trefil": true,
+  "zvolil_runu": "Isa"
+ },
+ {
+  "ri": 12,
+  "rune": "Eihwaz",
+  "aspekty": "yew tree, resilience, endurance, death and rebirth",
+  "obraz": "The rowan stands alone by the farmhouse and never bends all the way.",
+  "spravne": 2,
+  "hlasy": [
+   2,
+   2,
+   2
+  ],
+  "zvoleno": 2,
+  "trefil": true,
+  "zvolil_runu": "Eihwaz"
+ },
+ {
+  "ri": 11,
+  "rune": "Jera",
+  "aspekty": "harvest, cycle, patience, right timing, reward",
+  "obraz": "The hayfield waits to dry before it is cut.",
+  "spravne": 2,
+  "hlasy": [
+   2,
+   2,
+   2
+  ],
+  "zvoleno": 2,
+  "trefil": true,
+  "zvolil_runu": "Jera"
+ },
+ {
+  "ri": 11,
+  "rune": "Jera",
+  "aspekty": "harvest, cycle, patience, right timing, reward",
+  "obraz": "The dough needs its time; you cannot hurry it.",
+  "spravne": 1,
+  "hlasy": [
+   1,
+   1,
+   1
+  ],
+  "zvoleno": 1,
+  "trefil": true,
+  "zvolil_runu": "Jera"
+ },
+ {
+  "ri": 11,
+  "rune": "Jera",
+  "aspekty": "harvest, cycle, patience, right timing, reward",
+  "obraz": "The day lengthens slowly toward spring.",
+  "spravne": 1,
+  "hlasy": [
+   1,
+   1,
+   1
+  ],
+  "zvoleno": 1,
+  "trefil": true,
+  "zvolil_runu": "Jera"
+ },
+ {
+  "ri": 13,
+  "rune": "Perth",
+  "aspekty": "chance, hidden things, fate in the making, luck, the unseen",
+  "obraz": "Something lies on the bottom of the lagoon, waiting to be drawn up.",
+  "spravne": 4,
+  "hlasy": [
+   4,
+   4,
+   4
+  ],
+  "zvoleno": 4,
+  "trefil": true,
+  "zvolil_runu": "Perth"
+ },
+ {
+  "ri": 12,
+  "rune": "Eihwaz",
+  "aspekty": "yew tree, resilience, endurance, death and rebirth",
+  "obraz": "The root holds the scree together when everything else slides down.",
+  "spravne": 4,
+  "hlasy": [
+   4,
+   4,
+   4
+  ],
+  "zvoleno": 4,
+  "trefil": true,
+  "zvolil_runu": "Eihwaz"
+ },
+ {
+  "ri": 13,
+  "rune": "Perth",
+  "aspekty": "chance, hidden things, fate in the making, luck, the unseen",
+  "obraz": "The river rolls the pebble until it stops — you cannot see where.",
+  "spravne": 2,
+  "hlasy": [
+   2,
+   2,
+   2
+  ],
+  "zvoleno": 2,
+  "trefil": true,
+  "zvolil_runu": "Perth"
+ },
+ {
+  "ri": 13,
+  "rune": "Perth",
+  "aspekty": "chance, hidden things, fate in the making, luck, the unseen",
+  "obraz": "A letter lies unopened on the table and you do not yet know what it says.",
+  "spravne": 4,
+  "hlasy": [
+   4,
+   4,
+   4
+  ],
+  "zvoleno": 4,
+  "trefil": true,
+  "zvolil_runu": "Perth"
+ },
+ {
+  "ri": 14,
+  "rune": "Algiz",
+  "aspekty": "protection, higher powers, shelter, connection to divine",
+  "obraz": "The lyme grass binds the sand so it cannot blow away.",
+  "spravne": 1,
+  "hlasy": [
+   1,
+   3,
+   3
+  ],
+  "zvoleno": 3,
+  "trefil": false,
+  "zvolil_runu": "Nauthiz"
+ },
+ {
+  "ri": 14,
+  "rune": "Algiz",
+  "aspekty": "protection, higher powers, shelter, connection to divine",
+  "obraz": "Someone stays up with a light in the window until you come home.",
+  "spravne": 1,
+  "hlasy": [
+   1,
+   1,
+   1
+  ],
+  "zvoleno": 1,
+  "trefil": true,
+  "zvolil_runu": "Algiz"
+ },
+ {
+  "ri": 14,
+  "rune": "Algiz",
+  "aspekty": "protection, higher powers, shelter, connection to divine",
+  "obraz": "The cairn shows the way in the fog though no one stands by it.",
+  "spravne": 1,
+  "hlasy": [
+   4,
+   4,
+   4
+  ],
+  "zvoleno": 4,
+  "trefil": false,
+  "zvolil_runu": "Raidho"
+ },
+ {
+  "ri": 15,
+  "rune": "Sowilo",
+  "aspekty": "sun, victory, life force, clarity, will, solar energy",
+  "obraz": "The low winter sun plays for a moment on the white snowdrift and is gone again.",
+  "spravne": 4,
+  "hlasy": [
+   5,
+   5,
+   5
+  ],
+  "zvoleno": 5,
+  "trefil": false,
+  "zvolil_runu": "Isa"
+ },
+ {
+  "ri": 15,
+  "rune": "Sowilo",
+  "aspekty": "sun, victory, life force, clarity, will, solar energy",
+  "obraz": "The sun finally breaks through and glints on the wet stones.",
+  "spravne": 5,
+  "hlasy": [
+   5,
+   5,
+   5
+  ],
+  "zvoleno": 5,
+  "trefil": true,
+  "zvolil_runu": "Sowilo"
+ },
+ {
+  "ri": 16,
+  "rune": "Tiwaz",
+  "aspekty": "justice, sacrifice, truth, courage, the warrior spirit",
+  "obraz": "The guide-stone never tilts, whatever comes down on it.",
+  "spravne": 3,
+  "hlasy": [
+   3,
+   3,
+   3
+  ],
+  "zvoleno": 3,
+  "trefil": true,
+  "zvolil_runu": "Tiwaz"
+ },
+ {
+  "ri": 15,
+  "rune": "Sowilo",
+  "aspekty": "sun, victory, life force, clarity, will, solar energy",
+  "obraz": "The year's first ray of sun touches the mountain peak after the long midwinter dark.",
+  "spravne": 2,
+  "hlasy": [
+   2,
+   2,
+   2
+  ],
+  "zvoleno": 2,
+  "trefil": true,
+  "zvolil_runu": "Sowilo"
+ },
+ {
+  "ri": 15,
+  "rune": "Sowilo",
+  "aspekty": "sun, victory, life force, clarity, will, solar energy",
+  "obraz": "The midnight sun never quite sets around Midsummer.",
+  "spravne": 3,
+  "hlasy": [
+   3,
+   3,
+   3
+  ],
+  "zvoleno": 3,
+  "trefil": true,
+  "zvolil_runu": "Sowilo"
+ },
+ {
+  "ri": 17,
+  "rune": "Berkana",
+  "aspekty": "birch, growth, new beginnings, nurturing, birth",
+  "obraz": "The ewe gives birth indoors in midwinter and the lamb finds the warmth in the dark.",
+  "spravne": 3,
+  "hlasy": [
+   3,
+   3,
+   3
+  ],
+  "zvoleno": 3,
+  "trefil": true,
+  "zvolil_runu": "Berkana"
+ },
+ {
+  "ri": 16,
+  "rune": "Tiwaz",
+  "aspekty": "justice, sacrifice, truth, courage, the warrior spirit",
+  "obraz": "The pole star stands still while everything else turns.",
+  "spravne": 5,
+  "hlasy": [
+   5,
+   5,
+   5
+  ],
+  "zvoleno": 5,
+  "trefil": true,
+  "zvolil_runu": "Tiwaz"
+ },
+ {
+  "ri": 16,
+  "rune": "Tiwaz",
+  "aspekty": "justice, sacrifice, truth, courage, the warrior spirit",
+  "obraz": "You stand by your word though it costs you your sleep.",
+  "spravne": 3,
+  "hlasy": [
+   3,
+   3,
+   3
+  ],
+  "zvoleno": 3,
+  "trefil": true,
+  "zvolil_runu": "Tiwaz"
+ },
+ {
+  "ri": 17,
+  "rune": "Berkana",
+  "aspekty": "birch, growth, new beginnings, nurturing, birth",
+  "obraz": "The child's first step across the floor is unsteady but sure.",
+  "spravne": 4,
+  "hlasy": [
+   4,
+   4,
+   4
+  ],
+  "zvoleno": 4,
+  "trefil": true,
+  "zvolil_runu": "Berkana"
+ },
+ {
+  "ri": 17,
+  "rune": "Berkana",
+  "aspekty": "birch, growth, new beginnings, nurturing, birth",
+  "obraz": "The candle keeps the room alive while the midwinter dark lies over everything.",
+  "spravne": 1,
+  "hlasy": [
+   4,
+   4,
+   4
+  ],
+  "zvoleno": 4,
+  "trefil": false,
+  "zvolil_runu": "Eihwaz"
+ },
+ {
+  "ri": 18,
+  "rune": "Ehwaz",
+  "aspekty": "horse, movement, trust, partnership, progress",
+  "obraz": "The horse finds the ford across the glacial river though you cannot see it.",
+  "spravne": 2,
+  "hlasy": [
+   2,
+   2,
+   2
+  ],
+  "zvoleno": 2,
+  "trefil": true,
+  "zvolil_runu": "Ehwaz"
+ },
+ {
+  "ri": 17,
+  "rune": "Berkana",
+  "aspekty": "birch, growth, new beginnings, nurturing, birth",
+  "obraz": "The lambs take their first steps outside in May.",
+  "spravne": 2,
+  "hlasy": [
+   2,
+   2,
+   2
+  ],
+  "zvoleno": 2,
+  "trefil": true,
+  "zvolil_runu": "Berkana"
+ },
+ {
+  "ri": 17,
+  "rune": "Berkana",
+  "aspekty": "birch, growth, new beginnings, nurturing, birth",
+  "obraz": "The birch leafs out before all the rest, though the ground is still cold.",
+  "spravne": 2,
+  "hlasy": [
+   2,
+   2,
+   2
+  ],
+  "zvoleno": 2,
+  "trefil": true,
+  "zvolil_runu": "Berkana"
+ },
+ {
+  "ri": 19,
+  "rune": "Mannaz",
+  "aspekty": "the self, self-awareness, humanity, memory, mind",
+  "obraz": "The sea reads your footprints in the sand and erases them.",
+  "spravne": 2,
+  "hlasy": [
+   4,
+   1,
+   4
+  ],
+  "zvoleno": 4,
+  "trefil": false,
+  "zvolil_runu": "Raidho"
+ },
+ {
+  "ri": 18,
+  "rune": "Ehwaz",
+  "aspekty": "horse, movement, trust, partnership, progress",
+  "obraz": "The one who walks with you keeps the same pace without a word.",
+  "spravne": 1,
+  "hlasy": [
+   1,
+   1,
+   1
+  ],
+  "zvoleno": 1,
+  "trefil": true,
+  "zvolil_runu": "Ehwaz"
+ },
+ {
+  "ri": 19,
+  "rune": "Mannaz",
+  "aspekty": "the self, self-awareness, humanity, memory, mind",
+  "obraz": "The reflection in the still lagoon trembles at the least breath of wind.",
+  "spravne": 5,
+  "hlasy": [
+   5,
+   5,
+   5
+  ],
+  "zvoleno": 5,
+  "trefil": true,
+  "zvolil_runu": "Mannaz"
+ },
+ {
+  "ri": 18,
+  "rune": "Ehwaz",
+  "aspekty": "horse, movement, trust, partnership, progress",
+  "obraz": "The two horses keep pace with each other up the mountain.",
+  "spravne": 5,
+  "hlasy": [
+   5,
+   5,
+   5
+  ],
+  "zvoleno": 5,
+  "trefil": true,
+  "zvolil_runu": "Ehwaz"
+ },
+ {
+  "ri": 20,
+  "rune": "Laguz",
+  "aspekty": "water, flow, intuition, the unconscious, emotion",
+  "obraz": "The groundswell is felt in your feet before it is seen.",
+  "spravne": 5,
+  "hlasy": [
+   5,
+   5,
+   5
+  ],
+  "zvoleno": 5,
+  "trefil": true,
+  "zvolil_runu": "Laguz"
+ },
+ {
+  "ri": 19,
+  "rune": "Mannaz",
+  "aspekty": "the self, self-awareness, humanity, memory, mind",
+  "obraz": "Handwriting the years have loosened, the same hand beneath it.",
+  "spravne": 1,
+  "hlasy": [
+   0,
+   1,
+   1
+  ],
+  "zvoleno": 1,
+  "trefil": true,
+  "zvolil_runu": "Mannaz"
+ },
+ {
+  "ri": 20,
+  "rune": "Laguz",
+  "aspekty": "water, flow, intuition, the unconscious, emotion",
+  "obraz": "The glacial river runs grey and heavy, full of what it carries down from above.",
+  "spravne": 2,
+  "hlasy": [
+   2,
+   2,
+   2
+  ],
+  "zvoleno": 2,
+  "trefil": true,
+  "zvolil_runu": "Laguz"
+ },
+ {
+  "ri": 20,
+  "rune": "Laguz",
+  "aspekty": "water, flow, intuition, the unconscious, emotion",
+  "obraz": "Water finds its own way down the slope, and no one shows it the path.",
+  "spravne": 1,
+  "hlasy": [
+   1,
+   1,
+   1
+  ],
+  "zvoleno": 1,
+  "trefil": true,
+  "zvolil_runu": "Laguz"
+ },
+ {
+  "ri": 21,
+  "rune": "Ingwaz",
+  "aspekty": "fertility, inner development, potential, seed, new life",
+  "obraz": "The seed lies in the frozen ground and waits for its time.",
+  "spravne": 1,
+  "hlasy": [
+   1,
+   1,
+   1
+  ],
+  "zvoleno": 1,
+  "trefil": true,
+  "zvolil_runu": "Ingwaz"
+ },
+ {
+  "ri": 21,
+  "rune": "Ingwaz",
+  "aspekty": "fertility, inner development, potential, seed, new life",
+  "obraz": "The bulb readies itself underground long before it shows.",
+  "spravne": 2,
+  "hlasy": [
+   2,
+   2,
+   2
+  ],
+  "zvoleno": 2,
+  "trefil": true,
+  "zvolil_runu": "Ingwaz"
+ },
+ {
+  "ri": 21,
+  "rune": "Ingwaz",
+  "aspekty": "fertility, inner development, potential, seed, new life",
+  "obraz": "The grass greens over the seed-bed long before anything shows on the surface.",
+  "spravne": 2,
+  "hlasy": [
+   2,
+   2,
+   2
+  ],
+  "zvoleno": 2,
+  "trefil": true,
+  "zvolil_runu": "Ingwaz"
+ },
+ {
+  "ri": 21,
+  "rune": "Ingwaz",
+  "aspekty": "fertility, inner development, potential, seed, new life",
+  "obraz": "The egg lies whole in the nest, warm, and nothing of it shows yet.",
+  "spravne": 4,
+  "hlasy": [
+   4,
+   4,
+   4
+  ],
+  "zvoleno": 4,
+  "trefil": true,
+  "zvolil_runu": "Ingwaz"
+ },
+ {
+  "ri": 22,
+  "rune": "Othila",
+  "aspekty": "inheritance, letting go, heritage, home, ancestral wisdom",
+  "obraz": "The turf wall the forefathers built now sinks slowly back into the earth.",
+  "spravne": 2,
+  "hlasy": [
+   2,
+   2,
+   2
+  ],
+  "zvoleno": 2,
+  "trefil": true,
+  "zvolil_runu": "Othila"
+ },
+ {
+  "ri": 22,
+  "rune": "Othila",
+  "aspekty": "inheritance, letting go, heritage, home, ancestral wisdom",
+  "obraz": "The old farmstead stands in ruins but still holds warmth in memory.",
+  "spravne": 2,
+  "hlasy": [
+   2,
+   2,
+   2
+  ],
+  "zvoleno": 2,
+  "trefil": true,
+  "zvolil_runu": "Othila"
+ },
+ {
+  "ri": 23,
+  "rune": "Dagaz",
+  "aspekty": "turning point, dawn, breakthrough, light, transformation",
+  "obraz": "The turn of the light comes without your noticing when night became day.",
+  "spravne": 4,
+  "hlasy": [
+   4,
+   4,
+   4
+  ],
+  "zvoleno": 4,
+  "trefil": true,
+  "zvolil_runu": "Dagaz"
+ },
+ {
+  "ri": 22,
+  "rune": "Othila",
+  "aspekty": "inheritance, letting go, heritage, home, ancestral wisdom",
+  "obraz": "The keys to the old house still lie in your palm, though you live there no longer.",
+  "spravne": 2,
+  "hlasy": [
+   2,
+   2,
+   2
+  ],
+  "zvoleno": 2,
+  "trefil": true,
+  "zvolil_runu": "Othila"
+ },
+ {
+  "ri": 24,
+  "rune": "Blank",
+  "aspekty": "the unknown, unwritten potential, destiny, the void, Odin",
+  "obraz": "Everything is still before what is to come — everything is still possible.",
+  "spravne": 1,
+  "hlasy": [
+   1,
+   1,
+   1
+  ],
+  "zvoleno": 1,
+  "trefil": true,
+  "zvolil_runu": "Blank"
+ },
+ {
+  "ri": 23,
+  "rune": "Dagaz",
+  "aspekty": "turning point, dawn, breakthrough, light, transformation",
+  "obraz": "You wake, and the light in the room has already changed.",
+  "spravne": 4,
+  "hlasy": [
+   4,
+   4,
+   4
+  ],
+  "zvoleno": 4,
+  "trefil": true,
+  "zvolil_runu": "Dagaz"
+ },
+ {
+  "ri": 24,
+  "rune": "Blank",
+  "aspekty": "the unknown, unwritten potential, destiny, the void, Odin",
+  "obraz": "The thick fog hides the fjord and you do not know what waits beyond it.",
+  "spravne": 3,
+  "hlasy": [
+   3,
+   3,
+   3
+  ],
+  "zvoleno": 3,
+  "trefil": true,
+  "zvolil_runu": "Blank"
+ },
+ {
+  "ri": 23,
+  "rune": "Dagaz",
+  "aspekty": "turning point, dawn, breakthrough, light, transformation",
+  "obraz": "The first glimmer returns after the blackest midwinter dark.",
+  "spravne": 3,
+  "hlasy": [
+   3,
+   3,
+   3
+  ],
+  "zvoleno": 3,
+  "trefil": true,
+  "zvolil_runu": "Dagaz"
+ }
+]
