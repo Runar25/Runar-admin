@@ -4040,3 +4040,28 @@ Affected doc(s): RUNAR_DESIGN.md · memory/prompt-map-artifact.md · memory/MEMO
     nesou jméno obrazem („Berkana is the birch"). Klauzule formy se měří v kostře.
 - **Affected doc(s):** žádný další — měření kostry poběží pod `docs/eval/2026-08-22-kostra/`.
 - **Reversibility:** n/a (rozhodnutí o směru).
+
+---
+
+## 2026-08-22 — Jméno runy NIKDY učebnicovým symbolem; nese ho obraz (verdikt ownera nad kostrou)
+
+- **Typ:** hlas · **Scope:** pravidlo pojmenování (`describe`) · **Zdroj:** KUKY nad stránkou
+  „Kostra Rúnarova čtení" (80 čtení, `docs/eval/2026-08-22-kostra/`)
+- **Pravidlo (slovy ownera):** „Gebo is that exchange" i „Berkana is the birch" je STEJNÁ vada
+  jako „Fehu is wealth that moves" — přesný, velmi známý symbol runy se jako štítek nesmí.
+  „Berkana is the birch je prostě nuda — za tím slovem se skrývá podstata, kterou nechce ukázat."
+  Jméno runy nese obraz nebo metafora: **„Fehu is that warmth held in the stone"** ano.
+  Známé slovo smí sloužit UVNITŘ obrazu („exchange between the sea and the shore"), ne jako štítek.
+- **Poznámka pod čarou (preference, ne příkaz):** většinou napřed obraz, pak co v obraze je runa.
+- **Jméno čtenáře:** nedělat pro něj zvláštní ramena — není podmínka, střídá místa, tak je to
+  nastavené a stačí to.
+- **Verdikty nad kostrou (EN, 7 run):** A (náhodné klíče) většinou špatně — nesourodá slova,
+  dva světy · B smíšené · **C nejlepší** (Fehu/Thurisaz/Gebo/Eihwaz dobré), ale Hagalaz C
+  nesourodý. → C2 = C s pravidlem výše, měří se.
+- **Nálezy z verdiktů:** Eihwaz „berries" = model ROZMĚLNIL zadaný obraz (jeřáb → utržené
+  bobule) — drift od obrazu, ne vada banky; „let it become your own seeing" zve k driftu,
+  zatím bez pravidla, jen pozorováno. Algiz A potvrdil vadný obraz mohyly okem (track A).
+  Soudce soulad je slepý na metaforické jméno (Fehu C „warmth held in the stone" označil
+  nesoulad) — pro C2 platí jen zábradlí svět+chlad, soulad se bere s rezervou.
+- **Affected doc(s):** žádný — pravidlo jde do produkce až s vítěznou kostrou (v4.0).
+- **Reversibility:** n/a (rozhodnutí o hlasu).
