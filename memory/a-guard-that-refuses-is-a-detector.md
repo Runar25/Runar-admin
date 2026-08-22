@@ -13,8 +13,8 @@ výskyt (`if count != 1: FAIL, nic nezapsáno`). Bralo se to jako pojistka proti
 špatného místa. **Je to ale hlavně detektor.**
 
 **Doloženo 2026-08-15.** Měnil jsem jednu větu v `DEF_CHAR_EN.personality`. Guard odmítl:
-`count=2`. Ta věta byla v souboru dvakrát — podruhé v `DEF_CHAR_V2_EN`, což je **druhá úplná
-kopie popisu Rúnara**, už rozešlá s produkcí (držela rejstřík, který odešel o dva commity dřív),
+`count=2`. Ta věta byla v souboru dvakrát — podruhé v `DEF_CHAR_V2_EN` (co to je a proč je to
+problém → RUNAR_BACKLOG.md, položka DEF_CHAR_V2_EN; už rozešlá s produkcí),
 a komentář nad ní tvrdil *„Used ONLY in the Shrine V2 lab tab"* — jenže ta záložka byla
 odstraněná měsíc předtím. Bez guardu bych přepsal jeden výskyt, druhý nechal a **rozdíl by se
 prohloubil**. Nenašel to úsudek, našlo to odmítnutí zapsat.

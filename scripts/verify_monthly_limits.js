@@ -38,6 +38,22 @@ for (const tier of ['standard', 'premium']) {
   if (c !== p)    { fail++; console.log('FAIL  ' + tier + ': config=' + c + ' but proxy enforces ' + p); continue; }
   console.log('OK    ' + tier + ': ' + c + ' readings/month (config == proxy)');
 }
+// ── spread_cost sanitizace (2026-08-22, audit CRITICAL): radek musi v proxy BYT
+// a musi PREZIT adversarialni vstupy — spousti se tu doslova (kopie z proxy source
+// za behu, ne vlastni opis — vlastni kopie by se rozesla, §18/§19).
+const sm = proxy.match(/const spreadCost = (Math\.min\(9, Math\.max\(1, Math\.round\(Number\(spread_cost\)\) \|\| 1\)\));/);
+if (!sm) { fail++; console.log('FAIL  spread_cost sanitizace v proxy chybi (NaN projde do uctovani)'); }
+else {
+  for (const zly of [NaN, 'abc', -5, Infinity, 2.5, undefined, null, 1e9, '4']) {
+    const spread_cost = zly;
+    const vysledek = eval(sm[1]);
+    if (!Number.isInteger(vysledek) || vysledek < 1 || vysledek > 9) {
+      fail++; console.log('FAIL  sanitizace pustila ' + String(zly) + ' -> ' + vysledek); break;
+    }
+  }
+  if (!fail) console.log('OK    spread_cost sanitizace drzi (9 adversarialnich vstupu -> cele cislo 1..9)');
+}
+
 console.log(fail === 0 ? '\nMonthly caps agree — config is enforced by the proxy.'
                        : '\n' + fail + ' MISMATCH — the cap the user pays for is not the cap enforced.');
 process.exit(fail ? 1 : 0);

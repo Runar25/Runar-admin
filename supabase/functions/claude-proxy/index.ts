@@ -445,6 +445,14 @@ serve(async (req: Request) => {
     // oversized, expensive generation.
     const cappedMaxTokens = Math.min(Math.max(1, Number(max_tokens) || 600), 2500);
 
+    // spread_cost prichazi od KLIENTA a jde primo do stropu i odectu. NaN je tu zbran:
+    // Math.max(1, NaN) = NaN, `used + NaN > limit` = false a odecitaci smycka `i < NaN`
+    // nikdy nebezi -> crafted request projde KOLEM mesicniho stropu i odectu (audit
+    // 2026-08-03 CRITICAL, opraveno 2026-08-22). Server cenu podle typu zatim odvodit
+    // neumi (typ spreadu v requestu neni — navazny krok v BACKLOGu), proto: cele cislo,
+    // podlaha 1, strop 9 (vic run nez Yggdrasil zadne cteni nema).
+    const spreadCost = Math.min(9, Math.max(1, Math.round(Number(spread_cost)) || 1));
+
     // ── Auth & tier check ──
     const authHeader = req.headers.get("Authorization");
     let userId: string | null = null;
@@ -574,7 +582,7 @@ serve(async (req: Request) => {
         console.error("monthly cap read failed (allowing reading):", mErr.message);
       } else {
         const used = prof?.month_key === mKey ? (prof?.month_units ?? 0) : 0;
-        const cost = Math.max(1, spread_cost);
+        const cost = spreadCost;   // sanitizovano vys — NaN/zaporne/Infinity neprojde
         if (used + cost > limit) {
           return json({
             error:   "monthly_limit",
@@ -588,7 +596,7 @@ serve(async (req: Request) => {
     if (userTier === "rune_seeker" && !isRitual) {
       if (use_credit) {
         // ── Paid credit reading — spread_cost = runes = credits ──
-        const cost = Math.max(1, spread_cost);
+        const cost = spreadCost;   // sanitizovano vys — NaN/zaporne/Infinity neprojde
         if (creditsBalance < cost) {
           return json({ error: "no_credits", message: "Not enough credits. Redeem a reading gift card or upgrade." }, 402);
         }
@@ -736,6 +744,20 @@ serve(async (req: Request) => {
         u ? { ...u, model: data?.model ?? null } : null);
       readingId = r.readingId;
       askSaved  = r.askSaved;
+    }
+
+    // ── Ledger: kazdy odecet zanecha radek (BACKLOG: bez evidence nejde odpovedet
+    // ani "strhl se mi kredit?" u vlastniho uctu). Pise VYHRADNE server; klient ma
+    // jen SELECT vlastnich radku (sql/2026-08-22_credit_ledger.sql). Vypadek zapisu
+    // (napr. tabulka jeste nezalozena) nesmi shodit cteni, ktere uz probehlo.
+    if (userId && deductPlan.kind !== "none") {
+      const delta = deductPlan.kind === "free" ? -1 : -deductPlan.cost;
+      const { error: lErr } = await sb().from("credit_ledger").insert({
+        user_id: userId, kind: deductPlan.kind, delta, reading_id: readingId,
+        detail: deductPlan.kind === "paid" ? { remaining: creditsRemaining ?? null }
+          : deductPlan.kind === "monthly" ? { month_key: deductPlan.mKey } : null,
+      });
+      if (lErr) console.error("ledger write failed (reading unaffected):", lErr.message);
     }
 
     // Zalozeni se znaci AZ PO uspesnem cteni, a CAS (`is null`): dva soubezne
