@@ -4014,3 +4014,29 @@ Affected doc(s): RUNAR_DESIGN.md · memory/prompt-map-artifact.md · memory/MEMO
   (Algiz oba!) — náhrady jsou obsahová práce (track A). Pokrytí stránek (B) čeká za A.
 - **Affected doc(s):** `RUNAR_EVAL_LOG.md` (rejstřík pák: keywords + image) — v témže commitu.
 - **Reversibility:** easy (git; 5. sloupec je aditivní, EN nedotčeno).
+
+---
+
+## 2026-08-22 — Kostra čtení rozhodnuta ownerem; IS se řídí EN verdikty; čočka/oblast/záměr k ledu
+
+- **Typ:** hlas + směr · **Scope:** skladba single promptu · **Zdroj:** KUKY nad stránkou
+  „Rekonstrukce MYND" (336 čtení, `docs/eval/2026-08-22-mynd-rekonstrukce/`)
+- **Verdikty ownera:**
+  1. **Kostra = základ + úhel + tvar zakončení + umístění jména.** Hodnotit po izolovaných
+     blocích nejde — „čtení musí mít kostru, která ho tvoří". Úhel je potřeba („bez něj to
+     vypadá všechno stejně").
+  2. **Čočka životní runy, oblast života, co hledám i záměr jdou k ledu**, dokud není
+     vyladěné čtení samo. Pak se budou vracet.
+  3. **IS neposoudí — usuzuje se podle EN** a islandština přebírá EN verdikty.
+  4. **Jeden svět; druhý jen když pasuje do obrazu** — potvrzeno, že to charakteristika
+     (blok THE IMAGE) už říká; vada byla v tom, že prompt podával dva zdroje světů.
+- **Nálezy vystopované k příčinám (owner se ptal „proč"):**
+  · 3 světy u Fehu = klíče runy (cattle → stádo) vedle vynuceného obrazu (chléb). V EN vazba
+    klíč↔obraz nasazena nebyla, protože průměry ukázaly „žádný efekt" — **ownerovo oko našlo
+    případ, který průměr rozpustil.** Vazba pro EN se měří v kostře.
+  · Algiz „shelter … no hand tends it" = klíč (shelter) + obraz mohyly, který slepý test
+    usvědčil, že nese cestu (Raidho), ne ochranu — vada obrazu (track A), ne bloku.
+  · „Fehu is wealth that moves" = pojmenování jako slovníková věta VEDLE obrazu; chválené kusy
+    nesou jméno obrazem („Berkana is the birch"). Klauzule formy se měří v kostře.
+- **Affected doc(s):** žádný další — měření kostry poběží pod `docs/eval/2026-08-22-kostra/`.
+- **Reversibility:** n/a (rozhodnutí o směru).
