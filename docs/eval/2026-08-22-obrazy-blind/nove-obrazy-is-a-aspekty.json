@@ -1,0 +1,200 @@
+[
+ {
+  "rune": "Wunjo",
+  "en": "The lamps are lit early and the house fills with voices before the food is ready.",
+  "is": "Það er kveikt á lömpunum snemma og húsið fyllist af röddum áður en maturinn er tilbúinn.",
+  "blind_is": "2/3",
+  "aspekt_en": "belonging",
+  "aspekt_is": "tilheyra",
+  "_hlasy_en": [
+   "belonging",
+   "belonging",
+   "belonging"
+  ],
+  "_hlasy_is": [
+   "tilheyra",
+   "tilheyra",
+   "tilheyra"
+  ]
+ },
+ {
+  "rune": "Wunjo",
+  "en": "One voice starts the song and the room finds it line by line.",
+  "is": "Ein rödd byrjar sönginn og stofan tekur undir, línu fyrir línu.",
+  "blind_is": "3/3",
+  "aspekt_en": "belonging",
+  "aspekt_is": "tilheyra",
+  "_hlasy_en": [
+   "belonging",
+   "belonging",
+   "belonging"
+  ],
+  "_hlasy_is": [
+   "tilheyra",
+   "tilheyra",
+   "tilheyra"
+  ]
+ },
+ {
+  "rune": "Hagalaz",
+  "en": "Hail rakes the hayfield in June and is gone before the sky clears.",
+  "is": "Haglél lemur túnið í júní og er farið áður en birtir til.",
+  "blind_is": "3/3",
+  "aspekt_en": "hail",
+  "aspekt_is": "hagl",
+  "_hlasy_en": [
+   "hail",
+   "hail",
+   "hail"
+  ],
+  "_hlasy_is": [
+   "hagl",
+   "hagl",
+   "hagl"
+  ]
+ },
+ {
+  "rune": "Algiz",
+  "en": "The turf wall takes the wind so the doorway stays calm.",
+  "is": "Vindurinn lemur torfvegginn og í dyragættinni er logn.",
+  "blind_is": "0/3",
+  "aspekt_en": "shelter",
+  "aspekt_is": "skjól",
+  "_hlasy_en": [
+   "shelter",
+   "shelter",
+   "shelter"
+  ],
+  "_hlasy_is": [
+   "skjól",
+   "skjól",
+   "skjól"
+  ]
+ },
+ {
+  "rune": "Algiz",
+  "en": "The sheepdog lies where it can see the whole flock.",
+  "is": "Fjárhundurinn liggur þar sem hann sér alla hjörðina.",
+  "blind_is": "3/3",
+  "aspekt_en": "protection",
+  "aspekt_is": "vernd",
+  "_hlasy_en": [
+   "protection",
+   "protection",
+   "protection"
+  ],
+  "_hlasy_is": [
+   "vernd",
+   "vernd",
+   "vernd"
+  ]
+ },
+ {
+  "rune": "Sowilo",
+  "en": "The midnight sun keeps the hayfield bright long after bedtime.",
+  "is": "Miðnætursólin heldur túninu björtu langt fram yfir háttatíma.",
+  "blind_is": "3/3",
+  "aspekt_en": "sun",
+  "aspekt_is": "sól",
+  "_hlasy_en": [
+   "sun",
+   "sun",
+   "sun"
+  ],
+  "_hlasy_is": [
+   "sól",
+   "sól",
+   "sól"
+  ]
+ },
+ {
+  "rune": "Berkana",
+  "en": "The first lamb of spring finds its legs in the cold grass.",
+  "is": "Fyrsta vorlambið staulast á fætur í köldu grasinu.",
+  "blind_is": "3/3",
+  "aspekt_en": "birth",
+  "aspekt_is": "fæðing",
+  "_hlasy_en": [
+   "birth",
+   "birth",
+   "birth"
+  ],
+  "_hlasy_is": [
+   "fæðing",
+   "fæðing",
+   "fæðing"
+  ]
+ },
+ {
+  "rune": "Mannaz",
+  "en": "The face in the still water of the rain-barrel is yours, older than you remember it.",
+  "is": "Andlitið í kyrru regnvatninu í tunnunni er þitt, eldra en þig minnir.",
+  "blind_is": "3/3",
+  "aspekt_en": "self-awareness",
+  "aspekt_is": "sjálfsþekking",
+  "_hlasy_en": [
+   "self-awareness",
+   "self-awareness",
+   "self-awareness"
+  ],
+  "_hlasy_is": [
+   "sjálfsþekking",
+   "sjálfsþekking",
+   "sjálfsþekking"
+  ]
+ },
+ {
+  "rune": "Kenaz",
+  "en": "The forge glows in the dark shed and the iron takes its shape.",
+  "is": "Aflinn glóir í dimmri smiðjunni og hamarinn mótar járnið.",
+  "blind_is": "3/3",
+  "aspekt_en": "fire",
+  "aspekt_is": "kyndill",
+  "_hlasy_en": [
+   "fire",
+   "fire",
+   "fire"
+  ],
+  "_hlasy_is": [
+   "sköpunargleði",
+   "kyndill",
+   "kyndill"
+  ]
+ },
+ {
+  "rune": "Kenaz",
+  "en": "A single lamp over the bench and the shavings curl away from the blade.",
+  "is": "Það logar á einum lampa yfir hefilbekknum og spænirnir liðast undan egginni.",
+  "blind_is": "3/3",
+  "aspekt_en": "creativity",
+  "aspekt_is": "sköpunargleði",
+  "_hlasy_en": [
+   "creativity",
+   "creativity",
+   "torch"
+  ],
+  "_hlasy_is": [
+   "sköpunargleði",
+   "sköpunargleði",
+   "sköpunargleði"
+  ]
+ },
+ {
+  "rune": "Thurisaz",
+  "en": "The thorn hedge lets nothing through without cost.",
+  "is": "Þyrnigerðið hleypir engu í gegn án þess að taka eitthvað í staðinn.",
+  "blind_is": "3/3",
+  "aspekt_en": "protection",
+  "aspekt_is": "þyrnir",
+  "_hlasy_en": [
+   "protection",
+   "protection",
+   "protection"
+  ],
+  "_hlasy_is": [
+   "þyrnir",
+   "þyrnir",
+   "þyrnir"
+  ]
+ }
+]

@@ -4103,3 +4103,22 @@ cestou je červená) · ㉚ single přidán do výjimek ledových pák s důvode
 přepsán pod v4.0-mynd. Golden před/po: jen zamýšlené řádky. Smoke 34/34.
 **Čeká:** výměna 9 vadných obrazů banky za 11 schválených návrhů (IS znění + aspekty) — track A.
 Affected doc(s): žádný — délky/pravidla vlastní config+buildery (§20).
+
+
+## 2026-08-22 — Track A NASAZEN: 9 vadných obrazů banky vyměněno za 11 schválených (CODE-tune)
+**Rozhodnutí (KUKY):** „návrhy jsou dobré" — všech 11 náhrad (Wunjo 2 · Hagalaz · Algiz 2 ·
+Sowilo · Berkana · Mannaz 1 · Kenaz 2 · Thurisaz). Mannaz „handwriting" smazán BEZ náhrady
+(návrh „scythes" padl ve slepém testu 0/3) → Mannaz dočasně 2 obrazy, doplní track B.
+**Ověření:** EN slepý test 3/3 (22. 8.) · IS znění myšlena islandsky, vazby `is-vazba.py`
+(taka undir sönginn, staulast á fætur, lemja, birta til, minna+acc, móta, logar á lampa…),
+IS slepý test ≥2/3 — Algiz A („vindurinn lemur torfvegginn") padl 0/3, protože podmětem byl
+NÁPOR, ne ochrana; po přestavbě („torfveggurinn stendur á milli þín og vindsins") 3/3.
+Aspekty všech 11 změřeny soudcem (3 hlasy) — žádný ručně; doměřen i prázdný Isa
+lognkafald → kyrrstaða 3/3 (poslední díra mapy). Data → docs/eval/2026-08-22-obrazy-blind/.
+**Vědomé překryvy (flag, nerozhodnuto):** Sowilo má teď 2× půlnoční slunce a Berkana 2× jehně
+(nový vedle staršího „lambs take their first steps in May"); Mannaz 2× odraz v klidné vodě.
+Sáček proti opakování drží v rámci uživatele, ale banka dubluje motiv — owner rozhodne,
+zda starší z dvojice přeznít v tracku B.
+**Post-migrační měření v4.0 (produkce, n=16/jazyk):** EN svět 1,06 · soulad 12/16 · chlad 3/16 ·
+IS 1,06 · 11/16 · 4/16 — v šumu proti C3 kostře (data docs/eval/2026-08-22-v40-prod/).
+Affected doc(s): žádný — banka žije v runar-character.js (§20).
