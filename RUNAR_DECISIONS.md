@@ -4176,3 +4176,20 @@ dávce; kdyby držel, kandidát na příčinu je kumulace cílů, ne jednotlivé
 (vrátí se, až měření ukáže konflikt oblast×obraz — zatím soulad drží) a čočka (rozhodnuto
 u kostry: až nakonec). Data docs/eval/2026-08-22-navrat-pak/zamer-*.jsonl · ㉜ v4.3-mynd.
 Affected doc(s): žádný.
+
+
+## 2026-08-22 — Testování se jmenuje prostě „testování"; milované obrazy ZŮSTÁVAJÍ, překryv řeší motiv-guard (CODE-tune)
+**Rozhodnutí (KUKY):** jméno Prófsteinn pro proces testování NE — „interně si to nech, ale
+bude to Testovat": navenek/v řeči je to prostě testování; `scripts/profsteinn.js` zůstává jen
+interní jméno skriptu. Dále: „lambs take their first steps in May" i „midnight sun never
+quite sets" se NEMAŽOU („moc pěkné… ženám se to bude líbit") — překryv motivů se řeší
+VE VÝBĚRU, ne mazáním z banky.
+**Nasazeno:** 7. sloupec řádku banky = MOTIV (jehně 3×, půlnoční slunce 2×, odraz 2×);
+guard v `_seasonalImagery` nepustí týž pojmenovaný motiv dvakrát po sobě (per sada run,
+localStorage vedle sáčku). Hlídá **smoke ㉟** (`verify_image_motifs.js`) — falzifikováno:
+proti kódu bez guardu červená. Rabarbora přidána (IS slepý test 3/3, „teygja sig" ověřeno,
+aspekt nýtt upphaf/new beginnings 3/3) — přidává se, nic nenahrazuje.
+**Otevřené:** Mannaz réttir + iniciály v zábradlí (ověřené 3/3) čekají na verdikt ownera;
+laguna zatím zůstává (motiv-guard drží odrazy od sebe). IS svět watch-item → živí testeři
+(owner: „islandsky neumím, musí to udělat testeři").
+Affected doc(s): žádný.

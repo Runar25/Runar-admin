@@ -464,6 +464,9 @@ var RUNE_IMG_SEASONS = {
 // angličtina — ne kalk), Cowork 2026-08-10.
 // 5.+6. sloupec (2026-08-22): STRANKA runy, kterou obraz nese — 5. islandsky (proti k_is),
 // 6. anglicky (proti k). v4.0 ji ctou OBE reci: EN mel tutez vadu (stado z klicu vedle
+// 7. sloupec (volitelny, 2026-08-22): MOTIV — owner chce drzet vic obrazu tehoz motivu
+// (jehnata, pulnocni slunce, odraz) misto mazani; guard v _seasonalImagery zajisti, ze
+// tyz pojmenovany motiv neprijde dvakrat po sobe. Hlida smoke ㉟ (verify_image_motifs).
 // chleba z obrazu, nasel owner okem — prumery ji nevidely) — soudce 3 hlasy
 // nad cistym IS textem proti k_is (docs/eval/2026-08-22-aspekty/). Cte ji jen islandska
 // vetev single builderu; prazdny retezec = bez vetsiny hlasu, spadne na nahodne klice.
@@ -508,19 +511,19 @@ var RUNE_IMAGES = [
   ['Algiz','any','Torfveggurinn stendur á milli þín og vindsins og í dyragættinni er logn.','The turf wall takes the wind so the doorway stays calm.','skjól','shelter'],
   ['Algiz','any','Fjárhundurinn liggur þar sem hann sér alla hjörðina.','The sheepdog lies where it can see the whole flock.','vernd','protection'],
   ['Algiz','any','Einhver bíður uppi með ljós í glugganum þar til þú kemur heim.','Someone stays up with a light in the window until you come home.','skjól','protection'],
-  ['Sowilo','bright','Miðnætursólin sest aldrei alveg um Jónsmessuna.','The midnight sun never quite sets around Midsummer.','sól','sun'],
+  ['Sowilo','bright','Miðnætursólin sest aldrei alveg um Jónsmessuna.','The midnight sun never quite sets around Midsummer.','sól','sun','midnight-sun'],
   ['Sowilo','bright','Sólin brýtur loks í gegn og glampar á blautu grjóti.','The sun finally breaks through and glints on the wet stones.','skýrleiki','clarity'],
   ['Tiwaz','any','Leiðarsteinninn hallast aldrei, hvað sem á dynur.','The guide-stone never tilts, whatever comes down on it.','sannleikur','justice'],
   ['Tiwaz','cold','Pólstjarnan stendur kyrr meðan allt annað snýst.','The pole star stands still while everything else turns.','sannleikur','truth'],
   ['Tiwaz','any','Þú stendur við orð þín þótt það kosti þig svefninn.','You stand by your word though it costs you your sleep.','fórnfýsi','sacrifice'],
   ['Berkana','bright','Birkið laufgast fyrst allra, þótt jörðin sé enn köld.','The birch leafs out before all the rest, though the ground is still cold.','nýtt upphaf','new beginnings'],
-  ['Berkana','bright','Lömbin stíga fyrstu sporin úti í maí.','The lambs take their first steps outside in May.','nýtt upphaf','new beginnings'],
+  ['Berkana','bright','Lömbin stíga fyrstu sporin úti í maí.','The lambs take their first steps outside in May.','nýtt upphaf','new beginnings','lamb'],
   ['Berkana','any','Fyrsta skref barnsins yfir gólfið er óstöðugt en ákveðið.','The child\'s first step across the floor is unsteady but sure.','nýtt upphaf','new beginnings'],
   ['Ehwaz','any','Hesturinn finnur vaðið yfir jökulána þótt þú sjáir það ekki.','The horse finds the ford across the glacial river though you cannot see it.','traust milli tveggja','trust'],
   ['Ehwaz','bright','Hestarnir tveir fylgjast að upp fjallið.','The two horses keep pace with each other up the mountain.','traust milli tveggja','partnership'],
   ['Ehwaz','any','Sá sem gengur með þér heldur sama takti án þess að segja orð.','The one who walks with you keeps the same pace without a word.','traust milli tveggja','partnership'],
-  ['Mannaz','any','Spegilmyndin í lygnu lóninu bærist við minnsta blæ.','The reflection in the still lagoon trembles at the least breath of wind.','sjálfsþekking','self-awareness'],
-  ['Mannaz','any','Andlitið í kyrru regnvatninu í tunnunni er þitt, eldra en þig minnir.','The face in the still water of the rain-barrel is yours, older than you remember it.','sjálfsþekking','self-awareness'],
+  ['Mannaz','any','Spegilmyndin í lygnu lóninu bærist við minnsta blæ.','The reflection in the still lagoon trembles at the least breath of wind.','sjálfsþekking','self-awareness','reflection'],
+  ['Mannaz','any','Andlitið í kyrru regnvatninu í tunnunni er þitt, eldra en þig minnir.','The face in the still water of the rain-barrel is yours, older than you remember it.','sjálfsþekking','self-awareness','reflection'],
   ['Laguz','any','Undiraldan finnst í fótunum áður en hún sést.','The groundswell is felt in your feet before it is seen.','innsæi','intuition'],
   ['Laguz','any','Jökuláin rennur grá og þung, full af því sem hún ber að ofan.','The glacial river runs grey and heavy, full of what it carries down from above.','flæði','the unconscious'],
   ['Laguz','any','Vatnið finnur sér leið niður hlíðina, enginn vísar því.','Water finds its own way down the slope, and no one shows it the path.','flæði','intuition'],
@@ -536,7 +539,7 @@ var RUNE_IMAGES = [
   ['Blank','any','Allt er kyrrt á undan því sem gerist — enn er allt mögulegt.','Everything is still before what is to come — everything is still possible.','óskrifaður möguleiki','unwritten potential'],
   ['Hagalaz','bright','Haglél lemur túnið í júní og er farið áður en birtir til.','Hail rakes the hayfield in June and is gone before the sky clears.','hagl','hail'],
   ['Hagalaz','any','Áin bólgnar á einni nóttu og tekur með sér það sem stóð of nálægt bakkanum.','The river swells overnight and takes with it whatever stood too near the bank.','náttúruöfl','disruption'],
-  ['Sowilo','bright','Miðnætursólin heldur túninu björtu langt fram yfir háttatíma.','The midnight sun keeps the hayfield bright long after bedtime.','sól','sun'],
+  ['Sowilo','bright','Miðnætursólin heldur túninu björtu langt fram yfir háttatíma.','The midnight sun keeps the hayfield bright long after bedtime.','sól','sun','midnight-sun'],
   ['Sowilo','cold','Fyrsti sólargeisli ársins snertir fjallstindinn eftir langa skammdegið.','The year\'s first ray of sun touches the mountain peak after the long midwinter dark.','sól','sun'],
   ['Raidho','any','Vörðurnar standa hver við aðra yfir alla heiðina, hver sést frá þeirri síðustu.','The cairns stand each within sight of the next across the whole heath, each seen from the one before.','leið','the road'],
   ['Raidho','any','Vegurinn liðast með ánni og hverfur fyrir næstu beygju.','The road winds along the river and disappears around the next bend.','leið','movement'],
@@ -546,8 +549,9 @@ var RUNE_IMAGES = [
   ['Ingwaz','bright','Eggið liggur heilt í hreiðrinu, hlýtt, og ekkert í því sést enn.','The egg lies whole in the nest, warm, and nothing of it shows yet.','möguleiki','potential'],
   ['Thurisaz','any','Þyrnigerðið hleypir engu í gegn án þess að taka eitthvað í staðinn.','The thorn hedge lets nothing through without cost.','þyrnir','protection'],
   ['Thurisaz','cold','Þyrnóttur runninn stendur ber og svartur í hríðinni, en broddarnir bíða enn.','The thorn-bush stands bare and black in the blizzard, but the spines are still waiting.','þyrnir','caution'],
-  ['Berkana','cold','Ærin ber inni í húsi um miðjan vetur og lambið finnur hlýjuna í myrkrinu.','The ewe gives birth indoors in midwinter and the lamb finds the warmth in the dark.','umhyggja','nurturing'],
-  ['Berkana','bright','Fyrsta vorlambið staulast á fætur í köldu grasinu.','The first lamb of spring finds its legs in the cold grass.','fæðing','birth'],
+  ['Berkana','cold','Ærin ber inni í húsi um miðjan vetur og lambið finnur hlýjuna í myrkrinu.','The ewe gives birth indoors in midwinter and the lamb finds the warmth in the dark.','umhyggja','nurturing','lamb'],
+  ['Berkana','bright','Fyrsta vorlambið staulast á fætur í köldu grasinu.','The first lamb of spring finds its legs in the cold grass.','fæðing','birth','lamb'],
+  ['Berkana','bright','Rabarbarinn teygir sig upp úr kaldri moldinni við suðurvegginn, fyrstur allra á vorin.','The rhubarb noses up through the cold soil by the south wall.','nýtt upphaf','new beginnings'],
 ];
 
 // Obrazy pro runy, které padly, a které se hodí do TÉTO části roku.
@@ -585,14 +589,24 @@ function _seasonalImagery(lang, drawn) {
   {
     var cand = _runeImageCandidates(drawn, bucket);
     if (cand.length) {
-      var cIds = cand.map(function (row) { return row[0] + '|' + row[2].slice(0, 24); });
       // Sáček musí mít klíč per SADA run, ne jeden společný: `_seasonBagPick` filtruje uložený
       // zbytek podle aktuálních ids, takže sdílený klíč se při každé jiné runě vyprázdnil
       // a resetoval — ochrana proti opakování pak nedržela vůbec.
       var runeKey = 'rune_' + cand.map(function (row) { return row[0]; })
         .filter(function (n, i, a) { return a.indexOf(n) === i; }).sort().join('-');
+      // Motiv-guard (2026-08-22): owner chce ZACHOVAT vic obrazu tehoz motivu (jehnata,
+      // pulnocni slunce, odraz), ale dva stejne pojmenovane motivy (7. sloupec) nesmi
+      // prijit hned po sobe. Resi VYBER, ne banka ani prompt (KUKY 2026-08-08: zakazy ne).
+      var lastMotif = '';
+      try { if (typeof localStorage !== 'undefined') lastMotif = localStorage.getItem('seasonmotif_' + runeKey) || ''; } catch (e) {}
+      if (lastMotif) {
+        var jineM = cand.filter(function (row) { return (row[6] || '') !== lastMotif; });
+        if (jineM.length) cand = jineM;   // bez alternativy guard poust dal (lepsi motiv nez nic)
+      }
+      var cIds = cand.map(function (row) { return row[0] + '|' + row[2].slice(0, 24); });
       var cPick = _seasonBagPick(bucket, runeKey, cIds);
       var hit = cand[cIds.indexOf(cPick)] || cand[Math.floor(Math.random() * cand.length)];
+      try { if (typeof localStorage !== 'undefined') localStorage.setItem('seasonmotif_' + runeKey, hit[6] || ''); } catch (e) {}
       // id sáčku zůstává odvozené z IS sloupce (výš), takže týž obraz má tutéž
       // identitu v obou jazycích — ochrana proti opakování se jazykem nerozpadá.
       runePhrase = (lang === 'is' ? hit[2] : hit[3]).replace(/\.$/, '');   // věta pokračuje, tečka by ji rozťala
