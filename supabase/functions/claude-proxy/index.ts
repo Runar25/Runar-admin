@@ -274,11 +274,13 @@ type DeductPlan =
 
 // Apply the deduction AFTER Claude returned real text. Returns the remaining
 // credit balance for a paid reading (undefined otherwise).
-async function applyDeduction(plan: DeductPlan, userId: string | null): Promise<number | undefined> {
+// `ref` = klientske id cteni (journal.id, existuje uz PRED odectem) — jde do ledgeru
+// jako p_ref, at ma kazdy odecet sve cteni. `reason` odlisi reading/ask.
+async function applyDeduction(plan: DeductPlan, userId: string | null, reason: string, ref: string | null): Promise<number | undefined> {
   if (plan.kind === "paid" && userId) {
     let remaining = 0;
     for (let i = 0; i < plan.cost; i++) {
-      const { data } = await sb().rpc("use_credit", { p_user_id: userId });
+      const { data } = await sb().rpc("use_credit", { p_user_id: userId, p_reason: reason, p_ref: ref });
       if (data === -1) break; // ran out mid-deduct (rare race) — reading already delivered
       remaining = data as number;
     }
@@ -291,18 +293,17 @@ async function applyDeduction(plan: DeductPlan, userId: string | null): Promise<
     // lose a count whenever two readings are in flight, and that window is the whole
     // Claude call. use_credit and the free_balance CAS guard the same race.
     const { error } = await sb().rpc("bump_month_units", {
-      p_user_id: userId, p_cost: plan.cost, p_key: plan.mKey,
+      p_user_id: userId, p_cost: plan.cost, p_key: plan.mKey, p_reason: reason, p_ref: ref,
     });
     if (error) console.error("monthly counter bump failed:", error.message);
     return undefined;
   }
   if (plan.kind === "free" && userId) {
-    // optimistic: if a concurrent request already spent the free balance, this is a no-op
-    await sb()
-      .from("user_profiles")
-      .update({ free_balance: plan.freeBalance - 1 })
-      .eq("id", userId)
-      .eq("free_balance", plan.freeBalance);
+    // Tyz CAS jako drive, ale pres RPC — primy UPDATE z PostgREST neumi nastavit
+    // duvod pro ledger trigger (set_config zije jen v transakci RPC). Soubeh = no-op.
+    await sb().rpc("use_free_balance", {
+      p_user_id: userId, p_expected: plan.freeBalance, p_reason: reason, p_ref: ref,
+    });
   }
   return undefined;
 }
@@ -725,7 +726,8 @@ serve(async (req: Request) => {
     }
 
     // ── Reading succeeded — NOW deduct the credit/balance ──
-    const creditsRemaining = await applyDeduction(deductPlan, userId);
+    const creditsRemaining = await applyDeduction(deductPlan, userId,
+      mode === "ask" ? "ask" : "reading", journal?.id ?? null);
 
     // ── Persist to the journal SERVER-SIDE, atomic with the deduction ──
     // A charged reading is ALWAYS journaled — even if the app is backgrounded/killed
@@ -746,19 +748,12 @@ serve(async (req: Request) => {
       askSaved  = r.askSaved;
     }
 
-    // ── Ledger: kazdy odecet zanecha radek (BACKLOG: bez evidence nejde odpovedet
-    // ani "strhl se mi kredit?" u vlastniho uctu). Pise VYHRADNE server; klient ma
-    // jen SELECT vlastnich radku (sql/2026-08-22_credit_ledger.sql). Vypadek zapisu
-    // (napr. tabulka jeste nezalozena) nesmi shodit cteni, ktere uz probehlo.
-    if (userId && deductPlan.kind !== "none") {
-      const delta = deductPlan.kind === "free" ? -1 : -deductPlan.cost;
-      const { error: lErr } = await sb().from("credit_ledger").insert({
-        user_id: userId, kind: deductPlan.kind, delta, reading_id: readingId,
-        detail: deductPlan.kind === "paid" ? { remaining: creditsRemaining ?? null }
-          : deductPlan.kind === "monthly" ? { month_key: deductPlan.mKey } : null,
-      });
-      if (lErr) console.error("ledger write failed (reading unaffected):", lErr.message);
-    }
+    // Evidence pohybu (credit_ledger) tu ZAMERNE neni: zapisuje ji DB trigger na
+    // user_profiles (sql/2026-07-19_credit_ledger.sql) — chyti i rucni zasah, ktery
+    // by kod nikdy nevidel. Proxy dodava jen DUVOD: p_reason/p_ref v odecitacich RPC
+    // (faze 2, sql/2026-08-22_ledger_faze2_attribution.sql). Primy insert odsud byl
+    // 2026-08-22 na par hodin — duploval by trigger a INSERT stejne nema ani
+    // service_role. Nevracet.
 
     // Zalozeni se znaci AZ PO uspesnem cteni, a CAS (`is null`): dva soubezne
     // pozadavky tak zalozi strom jednou. Kdyby se znacilo pred volanim Claude,
