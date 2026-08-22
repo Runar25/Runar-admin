@@ -1305,7 +1305,9 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     // obrazu, ne vlastni obrazky; puvodni zneni bylo na zebriku 21.8. nejhorsi krok,
     // svety 1,50). Mereni navratu -> docs/eval/2026-08-22-navrat-pak/.
     u.area ? _domainContext(u.area, lang) : '',
-    // "Co hledam" (registr) zatim VEN — vraci se dalsim krokem, zmerene.
+    // v4.2 (2026-08-22): "co hledam" se vraci (krok 2/3), zmerene — viz
+    // docs/eval/2026-08-22-navrat-pak/. Zamer + priorita/cocka zatim VEN.
+    u.seeking ? _registerContext(u.seeking, lang) : '',
     // `worldRef` se otevírací větvi pořád předává, ale ta ho už NEVYPISUJE: popis světa
     // stojí v hlavičce `DRAWN RUNE` a do 2026-08-13 se opakoval i tady (nález
     // `lint_prompts.js --dup`). Parametr zůstal, aby se neměnila signatura packu.

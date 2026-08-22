@@ -4148,3 +4148,16 @@ your step"). Jednotlivě v šumu, směr shodný v obou řečích. Verdikt = oko 
 oprava = A/B test přepisu znění oblasti (ne přisypání klauzule — prompt se lepší ubíráním).
 Kontroly: ⑧ domain u single z FORBIDDEN zpět do REQUIRED · ㉚ výjimka zrušena · ㉜ v4.1-mynd.
 Affected doc(s): žádný (znění vlastní kód).
+
+
+## 2026-08-22 — v4.2-mynd: „CO HLEDÁM" (registr) zpět v single (krok 2/3) — propsání NEPROKÁZÁNO (CODE-tune)
+**Nasazeno** (owner: pole se mají propsat), ale poctivý nález: slepá identifikace hodnoty
+ze čtení **EN 5/16 (kontrola 2/16) · IS 3/16 (kontrola 4/16 — čistá šance)**, n=16/jazyk.
+Mantinely drží (svět 1,13 obě · soulad 11 a 10/16 · chlad 4 a 3/16 — pásmo šumu).
+**Hranice nálezu (§25):** lineup měří OBSAHOVÉ propsání; půl páky je tónová („leaning, not
+an order" — konstantní, identifikace ji nevidí). Netvrdí se, že páka nedělá nic — tvrdí se,
+že volba hodnoty „co hledám" text měřitelně nemění (zvlášť IS). Pět hodnot je možná moc
+podobných (Guidance/Clarity/Confirmation/Challenge/Reflection). Návazný krok, až přijde na
+řadu: přepis registru (3 návrhy čekají v RUNAR_BACKLOG — blind-side handoff) + přeměřit.
+Data docs/eval/2026-08-22-navrat-pak/seek-*.jsonl · kontroly ⑧/㉚/㉜ posunuty · v4.2-mynd.
+Affected doc(s): žádný.

@@ -166,7 +166,7 @@ const VYJIMKY = {
   keywords: { cesty: ['ask', 'liferune'], proc: 'Táž příčina jako u `image` — obě cesty mají vlastní základ. Ověřeno 2026-08-18.' },
   ending: { cesty: ['ask', 'liferune'], proc: 'Táž příčina jako u `image`. Ověřeno 2026-08-18.' },
   domain: { cesty: ['ask', 'liferune'], proc: '`ask` ani životní runa nedostávají oblast života na vstupu. Ověřeno 2026-08-18. (Single: oblast vrácena v4.1, 22. 8.)' },
-  register: { cesty: ['single', 'ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },
+  register: { cesty: ['ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },
   intention: { cesty: ['single', 'ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },
   priority: { cesty: ['single', 'ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },
 };
