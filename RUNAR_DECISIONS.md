@@ -3992,3 +3992,25 @@ Affected doc(s): RUNAR_DESIGN.md · memory/prompt-map-artifact.md · memory/MEMO
 - **Affected doc(s):** `RUNAR_EVAL_LOG.md` (zaznam mereni + baseline k pristimu srovnani)
   — v temze commitu.
 - **Reversibility:** easy (git; kazda z peti zmen ma vlastni commit).
+
+---
+
+## 2026-08-22 — Islandské klíče single čtení se vážou na stránku vylosovaného obrazu (v3.2-mynd)
+
+- **Typ:** hlas + prompt · **Scope:** `RUNE_IMAGES` (5. sloupec), `_seasonalImagery` (stash),
+  `buildReadingPromptSingle` (IS větev klíčů) · **Zdroj:** KUKY („obrazy asi úplně nesedí runám — prověř")
+- **Vada:** obraz a klíče se losovaly nezávisle; když se minuly, model pojmenoval runu stránkou
+  z jiného světa (Jera: obraz nese „patience", klíče nabídly „harvest" → harvest vedle těsta,
+  našel owner živě 21. 8.). Strukturální příčina: obrazy 12 z 25 run nesou jen 1–2 stránky z pěti.
+- **Oprava:** každý řádek `RUNE_IMAGES` nese islandskou stránku, kterou obraz vyjadřuje (soudce
+  3 hlasy nad čistým IS textem proti `k_is`; 79/80 s většinou, 1 bez ní → fallback na náhodné
+  klíče). Islandský single dostane místo tří náhodných klíčů TU stránku. **EN se neváže** —
+  změřený efekt tam žádný (šum) a náhodné klíče drží pestrost; řeči se ladí zvlášť (KUKY 21. 8.).
+- **Měřeno** (dva nezávislé vzorky, stejný vynucený obraz v obou ramenech, liší se jen zdroj klíčů):
+  IS soulad obraz–pojmenování **24/32 → 30/32 (p = 0,041)** · jeden svět 24/32 → 28/32 (směr).
+  Ověřeno e2e: 30 staveb IS single → klíč == stránka obrazu 30×, EN dál 3 náhodné klíče.
+  Golden: 4 z 32 builderů (jen IS single), každý přesně jednou řádkou.
+- **Co zůstává otevřené:** blind test 22. 8. našel 9 obrazů, které vyjadřují jinou runu než svou
+  (Algiz oba!) — náhrady jsou obsahová práce (track A). Pokrytí stránek (B) čeká za A.
+- **Affected doc(s):** `RUNAR_EVAL_LOG.md` (rejstřík pák: keywords + image) — v témže commitu.
+- **Reversibility:** easy (git; 5. sloupec je aditivní, EN nedotčeno).

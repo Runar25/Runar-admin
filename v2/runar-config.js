@@ -36,7 +36,7 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 // ⚠️ Menis prompt? Bumpni tohle. Hlida to ㉜ — bez bumpu odmitne zapsat registr pravidel,
 // protoze bez tagu se nova cteni v DB nerozeznaji od starych (stalo se 21. 8., pet migraci
 // slo do produkce pod nezmenenou verzi).
-const RUNAR_PROMPT_VERSION = 'v3.1-mynd';
+const RUNAR_PROMPT_VERSION = 'v3.2-mynd';
 
 // ─── ELEVENLABS ─────────────────────────────────────────
 const EL_VOICE_ID_EN = '2UI8v2ibbwQTijaYAte1'; // English — Rúnar EN
