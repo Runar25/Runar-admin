@@ -220,7 +220,15 @@ Ostatní (později, decentně): pulzy dominance (element/ætt), bloom fáze, lis
   **NIKDY nepřepočítává z logu.** To je přímý lék na „obraz se mění bez nového čtení" výše — dnes
   se strom skládá při každém otevření tabu z `readings` (regexem), a proto se přeskládá. `tree_state`
   drží souhrn (roots, element_scores, dominant_element, trunk_themes, pattern_cache).
-  ⚠️ **Tabulky `tree_readings` / `tree_state` zatím NEEXISTUJÍ** — je to cíl, ne stav.
+  ⚠️ **`tree_readings` NEEXISTUJE** — to je cíl, ne stav. **`tree_state` ale ANO a je zapojená**
+  (ověřeno v živé DB 2026-08-22, CODE-read): 11 sloupců — `recurring_pattern`, `emotional_arc`,
+  `personal_symbols`, `forbidden_next`, `session_count`, `voice_scale`, `voice_settled`… Čte ji
+  `claude-proxy` při každém čtení, zapisuje edge funkce `tree-update`. Sloupce ale NEodpovídají
+  tomu, co je popsáno o řádek výš (žádné `roots`/`element_scores`/`trunk_themes`) — je to jiné
+  schéma než tenhle plán počítal.
+  ⚠️ Do 2026-08-22 tu stálo, že NEEXISTUJÍ **obě**. Coworkův Vegvísir handoff podle toho postavil
+  svůj hlavní blocker („tree_state neexistuje, blokuje i The Gathering") — doc se citoval jako
+  fakt o DB, na kterou Cowork nevidí. Proto ta oprava.
 - **Zbývá ze signálů §4:** váha z počtu vyplněných polí · seeking jako třetí hlas výškové osy (§3A).
   (**Bonus za pauzu ZRUŠEN** 2026-07-19 · **Blank duch-větev ZRUŠENA** 2026-07-21 — obojí retired.)
 - **Zbývá (velký směr = owner volba):** **produkce** (DB `tree_readings`/`tree_state` + „spočti jednou, ulož" výše) · nebo **ladit** stávající umístění. Stav labu vlastní `git log` + snapshoty, ne doc (§20.4).
