@@ -536,7 +536,8 @@ var RUNE_IMAGES = [
   ['Dagaz','cold','Fyrsta skíman snýr aftur eftir svartasta skammdegið.','The first glimmer returns after the blackest midwinter dark.','dögun','dawn'],
   ['Dagaz','any','Þú vaknar og birtan í herberginu hefur þegar breyst.','You wake, and the light in the room has already changed.','umbreyting','turning point'],
   ['Blank','any','Niðaþokan hylur fjörðinn og þú veist ekki hvað bíður handan hennar.','The thick fog hides the fjord and you do not know what waits beyond it.','hið óþekkta','the unknown'],
-  ['Blank','any','Allt er kyrrt á undan því sem gerist — enn er allt mögulegt.','Everything is still before what is to come — everything is still possible.','óskrifaður möguleiki','unwritten potential'],
+  ['Blank','cold','Nýfallinn snjór liggur yfir slóðinni og engin spor eru komin í hann.','New snow lies over the track and no one has stepped in it yet.','óskrifaður möguleiki','unwritten potential'],
+  ['Blank','any','Handfærið liggur í dökku vatninu og ekkert hefur enn snert það.','The line runs down into dark water and nothing has touched it yet.','hið óþekkta','unwritten potential'],
   ['Hagalaz','bright','Haglél lemur túnið í júní og er farið áður en birtir til.','Hail rakes the hayfield in June and is gone before the sky clears.','hagl','hail'],
   ['Hagalaz','any','Áin bólgnar á einni nóttu og tekur með sér það sem stóð of nálægt bakkanum.','The river swells overnight and takes with it whatever stood too near the bank.','náttúruöfl','disruption'],
   ['Sowilo','bright','Miðnætursólin heldur túninu björtu langt fram yfir háttatíma.','The midnight sun keeps the hayfield bright long after bedtime.','sól','sun','midnight-sun'],
@@ -550,7 +551,7 @@ var RUNE_IMAGES = [
   ['Thurisaz','any','Þyrnigerðið hleypir engu í gegn án þess að taka eitthvað í staðinn.','The thorn hedge lets nothing through without cost.','þyrnir','protection'],
   ['Thurisaz','cold','Þyrnóttur runninn stendur ber og svartur í hríðinni, en broddarnir bíða enn.','The thorn-bush stands bare and black in the blizzard, but the spines are still waiting.','þyrnir','caution'],
   ['Berkana','cold','Ærin ber inni í húsi um miðjan vetur og lambið finnur hlýjuna í myrkrinu.','The ewe gives birth indoors in midwinter and the lamb finds the warmth in the dark.','umhyggja','nurturing','lamb'],
-  ['Berkana','bright','Fyrsta vorlambið staulast á fætur í köldu grasinu.','The first lamb of spring finds its legs in the cold grass.','fæðing','birth','lamb'],
+  ['Berkana','bright','Æðarkollan leiðir ungana sína niður að vatninu fyrsta morguninn.','The eider leads her ducklings down to the water on their first morning.','umhyggja','nurturing'],
   ['Berkana','bright','Rabarbarinn teygir sig upp úr kaldri moldinni við suðurvegginn, fyrstur allra á vorin.','The rhubarb noses up through the cold soil by the south wall.','nýtt upphaf','new beginnings'],
 ];
 
