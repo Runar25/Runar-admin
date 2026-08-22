@@ -4065,3 +4065,23 @@ Affected doc(s): RUNAR_DESIGN.md · memory/prompt-map-artifact.md · memory/MEMO
   nesoulad) — pro C2 platí jen zábradlí svět+chlad, soulad se bere s rezervou.
 - **Affected doc(s):** žádný — pravidlo jde do produkce až s vítěznou kostrou (v4.0).
 - **Reversibility:** n/a (rozhodnutí o hlasu).
+
+---
+
+## 2026-08-22 — C3 (esenční řádek) vítězí; „The cattle" zákaz se ruší; náhrady obrazů navrženy
+
+- **Typ:** hlas · **Zdroj:** KUKY nad stránkou „C2, nebo C3?"
+- **Verdikty ownera:**
+  1. **C3 jednoznačně** — esenční řádek dle DESIGN „tři beaty" jde do v4.0 jako pravidlo
+     pojmenování (nahradí describe z v3.1). Vzor metafora+glosa potvrzen.
+  2. **Zákaz „nikdy runa jako její význam (The cattle)" se ruší** — vynucení převzal esenční
+     řádek (symbol smí žít uvnitř obrazu, nikdy jako štítek). Zůstává: jména run jsou vlastní
+     jména (Isa je Isa).
+  3. **Hagalaz C3 (sky/roof/sill/root) = vada obrazu**, ne pravidla — obraz poryvu je mezi
+     9 usvědčenými; řeší track A.
+- **Track A:** 12 náhradních obrazů navrženo, každý protažen slepým testem (obraz + pětice
+  sad významů): 11 prošlo 3/3, 1 padl (Mannaz kosy 0/3, zahozen). Čekají na výběr ownera;
+  IS znění se napíší až pro schválené (is-vazba). Seznam v konverzaci 2026-08-22.
+- **Ztráta dat přiznána:** původní C2 dávka (32 čtení) přepsána sdíleným jménem souboru —
+  3. výskyt téže třídy chyby (sdílený slot). Oprava: per-běh soubory; C2 přegenerováno.
+- **Reversibility:** easy.
