@@ -167,7 +167,7 @@ const VYJIMKY = {
   ending: { cesty: ['ask', 'liferune'], proc: 'Táž příčina jako u `image`. Ověřeno 2026-08-18.' },
   domain: { cesty: ['ask', 'liferune'], proc: '`ask` ani životní runa nedostávají oblast života na vstupu. Ověřeno 2026-08-18. (Single: oblast vrácena v4.1, 22. 8.)' },
   register: { cesty: ['ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },
-  intention: { cesty: ['single', 'ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },
+  intention: { cesty: ['ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },
   priority: { cesty: ['single', 'ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },
 };
 const zvlast = (klic, cesta) => !!(VYJIMKY[klic] && VYJIMKY[klic].cesty.indexOf(cesta) !== -1);

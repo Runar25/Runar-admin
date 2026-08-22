@@ -4161,3 +4161,18 @@ podobných (Guidance/Clarity/Confirmation/Challenge/Reflection). Návazný krok,
 řadu: přepis registru (3 návrhy čekají v RUNAR_BACKLOG — blind-side handoff) + přeměřit.
 Data docs/eval/2026-08-22-navrat-pak/seek-*.jsonl · kontroly ⑧/㉚/㉜ posunuty · v4.2-mynd.
 Affected doc(s): žádný.
+
+
+## 2026-08-22 — v4.3-mynd: ZÁMĚR zpět v single (krok 3/3) — návrat pák DOKONČEN (CODE-tune)
+**Nasazeno.** Funkce: slepá identifikace osy záměru ze čtení **EN 6/16 · IS 6/16** (šance
+5,3/16; kontroly na v4.0: 3/16 EN · 2/16 IS; dohromady 12/32 vs 5/32, p≈0,08) — slabý, ale
+souhlasný signál v obou řečích; **okem je čas vyprávění zřetelný** (Berkana + „porozumět
+minulosti": „Was there a green you noticed then, or one you only see now looking back?").
+Mantinely: EN svět 1,13 · soulad 14/16 · chlad 5/16 — IS svět **1,25** · 12/16 · 2/16.
+⚠️ **Watch-item:** IS svět stoupá s každou vrácenou pákou (1,06 → 1,13 → 1,13 → 1,25;
+jednotlivě šum, směr konzistentní — každá páka je další tah na obraz). Hlídat na příští
+dávce; kdyby držel, kandidát na příčinu je kumulace cílů, ne jednotlivé znění.
+**Stav po návratu:** single = kostra + oblast + „co hledám" + záměr. VEN zůstávají: priorita
+(vrátí se, až měření ukáže konflikt oblast×obraz — zatím soulad drží) a čočka (rozhodnuto
+u kostry: až nakonec). Data docs/eval/2026-08-22-navrat-pak/zamer-*.jsonl · ㉜ v4.3-mynd.
+Affected doc(s): žádný.

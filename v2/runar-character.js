@@ -1290,8 +1290,9 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     // stejná třída úniku jako pojmenovaná zakázaná slova). Čočka už ustupuje sama
     // (_lensContext), takže se to čte jako normální single. KUKY 2026-08-08 (varianta C).
     drawnCtx,
-    // v4.0 (2026-08-22): zamer docasne VEN ze single — owner: "napred budeme ladit
-    // samotne cteni"; vraci se po jednom, zmerene. Spready nedotcene.
+    // v4.3 (2026-08-22): zamer se vraci (krok 3/3 navratu pak, mereno — viz
+    // docs/eval/2026-08-22-navrat-pak/). Priorita + cocka zustavaji VEN.
+    u.intention ? _intentionContext(u.intention, lang) : '',
   ].filter(Boolean).join('\n');
   return [
     parts,
