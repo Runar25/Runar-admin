@@ -71,7 +71,10 @@ function vstup(S, lang) {
   return {
     runy: R.slice(0, 9),
     u: { name: 'Anna', area: pole('AREAS')[0], seeking: pole('SEEKS')[0],
-         intention: pole('INTENTIONS')[0], question: '', lifeRune: R[3] },
+         // 2026-08-23: R[3] byla MEZI tazenymi (slice 0-9) -> cocka u 5+ run spravne
+         // ustoupila a spion hlasil 'nedochazi' — kontrola merila vlastni fixture
+         // (§19.3), na cemz stala falesna vyjimka i BACKLOG polozka. Runa MIMO devitku:
+         intention: pole('INTENTIONS')[0], question: '', lifeRune: R[10] },
   };
 }
 
@@ -155,11 +158,10 @@ const VYJIMKY = {
         + 'nezvýšilo, takže „spready bez úhlu splývají" neobstálo. → RUNAR_EVAL_LOG.md 2026-08-18.',
   },
   lens: {
-    cesty: ['kriz', 'horseshoe', 'yggdrasil', 'ask', 'liferune'],
+    cesty: ['ask', 'liferune'],
     proc: 'Životní runa JE ta čočka (nemá se zrcadlit sama); `ask` navazuje na hotové čtení. '
-        + 'U velkých spreadů zapojená není — ZJIŠTĚNO 2026-08-18 touhle kontrolou, '
-        + 'NEROZHODNUTO. Otevřeno v RUNAR_BACKLOG.md.'
-        + ' (Single: cocka vracena v4.4, 22. 8.)',
+        + 'Zápis „u velkých spreadů nedochází" (2026-08-18) byl artefakt fixture (lifeRune mezi '
+        + 'taženými — čočka správně ustoupila); opraveno 2026-08-23, čočka dochází všude.',
   },
   name: { cesty: ['ask', 'liferune'], proc: '`ask` je odpověď k hotovému čtení; životní runa má jméno ve svém základu (`buildLifeRuneBase`). Ověřeno 2026-08-18.' },
   image: { cesty: ['ask', 'liferune'], proc: '`ask` navazuje na čtení, kde obraz už zazněl; životní runa staví obraz ve vlastním základu. Ověřeno 2026-08-18.' },

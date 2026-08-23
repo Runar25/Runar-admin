@@ -4482,3 +4482,19 @@ Tvar je sdílený se single (`_endingShape`) — táž hranice platí všude; si
 Golden 0 změn (loterie fixtures otázku netrefila) — nové znění ověřeno seed-and-assert
 produkční cestou (EN single ✓ IS norns ✓). Data docs/eval/2026-08-23-spready-v49/otazka-ab.jsonl.
 Affected doc(s): žádný.
+
+
+## 2026-08-23 — Tři verdikty ownera + čočka na velkých spreadech byla artefakt kontroly (CODE-tune)
+**Rozhodnutí (KUKY):** ① čočka na velké spready: „dáme ji tam a budu to testovat na reálných
+čteních, tady to řešit nebudeme" · ② zdvořilost v Ask: „kdo poděkuje, dostane odpověď; kdo dá
+otázku, Rúnar odpoví — jednoduché" (žádná změna meteringu, stav v4.8 platí) · ③ lidská ramena
+slepého testu se nedělají (jede jen model-rameno).
+**Nález k ①:** čočka na velké spready UŽ CHODÍ — `_lensContext` je ve všech 4 spread
+builderech bez brány. Zápis „nedochází" (18. 8., smoke ㉚) byl artefakt fixture: lifeRune=R[3]
+ležela MEZI taženými (slice 0–9) u 5+ runových spreadů → čočka správně ustoupila → špión
+hlásil „nedochází" — kontrola měřila vlastní fixture (§19.3), a na tom stála výjimka i BACKLOG
+položka. Fixture opravena (runa mimo devítku), výjimky lens zúženy na ask/liferune, ㉚ zelená
+= živý důkaz průchodu. Nic se nenasazovalo — jen se srovnala kontrola se skutečností.
+**Yggdrasil test v2 (zadání Cowork):** běží přes subagenty v session (pravidlo f30662f) —
+čistší karty + Test B s derivovanými štítky; výsledek rozhodne nechat/přerozdělit vrstvy.
+Affected doc(s): RUNAR_BACKLOG.md (čočka položka [x] — artefakt).
