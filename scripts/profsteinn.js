@@ -21,6 +21,8 @@
 //                               skript: obraz + 5 sad významů, 3 hlasy, šance 20 %)
 //   · islandská vazba/slovo   → python -X utf8 is-vazba.py <slovo> · check-is.py · korekce
 //                               do DB přes shrine + BAD_PATTERNS
+//   · návrat OPRAVENÉ fráze   → python -X utf8 scripts/verify_no_recur.py (BAD_PATTERNS
+//                               + fixed reporty proti uloženým čtením a dávkám; síť)
 //   · změna páky promptu      → rejstřík pák v RUNAR_EVAL_LOG.md (přečti PŘED zásahem),
 //                               golden před/po, bump RUNAR_PROMPT_VERSION (vynucuje ㉜)
 //   · rozhodnutí o chování    → datovaný záznam RUNAR_DECISIONS.md (§16)
