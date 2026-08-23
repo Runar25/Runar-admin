@@ -4675,3 +4675,13 @@ důsledky: **T3 (aspekt-kongruentní výběr) PARKOVÁN** — ztratil konzumenta
 per-runa obrazech); odparkovat jen s novým konzumentem (např. vegvísir ramena). Beats
 „každá runa musí nechat stopu" ve spreadech zůstávají beze změny.
 Affected doc(s): RUNAR_BACKLOG.md (T1/T2 zavřeny, T3 parkován) — tento commit.
+
+## 2026-08-23 — Vegvísir pilíř přepsán: historie POVINNÁ a MALÁ; dva kanály ratifikovány (KUKY „ok")
+Pilíř „Historie je dostupná, ne povinná" NAHRAZEN (§26: vada pojmenovaná — nepovinná =
+nepoužitá, v1 0/6, vrah úniková klauzule dle tally; očištěný návrat = povinná jedna
+extrahovaná fráze, vztah svobodný). Protiváha-flag ZAVŘEN (protiváha = povinnost). Dva
+kanály (kotálivá fráze + semínko ramene 1 při ohlédnutí) ratifikovány po TEST 31 (slepě
+6/6 detekce+účinek). Otevřené: šev vlepení (2/3) — směr = návrat skrz materiál vlastní
+scény, kandidát volba obrazu posledního ramene dle semínka (T3 má konzumenta, zatím parkuje).
+Affected doc(s): RUNAR_DESIGN.md (pilíř, tento commit) · RUNAR_BACKLOG.md (T3 poznámka,
+tento commit).

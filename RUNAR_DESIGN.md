@@ -681,14 +681,20 @@ na `tree_state` — propojení se rozhodne zvlášť a nestaví se předem.
   znamená zastavení"*, ale *„to, co předtím mlčelo, teď vydává zvuk"*.
   🔒 Tvar, který tohle drží, je **změřený**: druhá vrstva funguje, když ji nese TÝŽ obraz, a selhává,
   když přijde pojmenovaná nebo jako přirovnání (→ `RUNAR_EVAL_LOG.md` 2026-08-23).
-- **Historie je dostupná, ne povinná.** Nové rameno smí navázat, odporovat, otočit směr, připomenout,
-  rozšířit, **nebo historii nechat být**. Povinné threading = po osmi ramenech mechanika.
-  ✅ Vzor už v produkci existuje: `_lensContext` končí *„If it does not come to the ending naturally,
-  leave it out."*
-  ⚠️ **Ale „nepovinné" samo nestačí — potřebuje protiváhu.** Model sáhne po historii tam, kde je to
-  SNADNÉ (runy si jsou podobné), a vynechá ji tam, kde by byla zajímavá (runy si odporují) — tedy
-  přesně obráceně. Doloženo: v testu osy se světelná vrstva **ohnula ve skrytou**, aby seděla runě.
-  Jak tu protiváhu udělat = OTEVŘENÉ.
+- ⭐ **Historie se nese POVINNĚ, ale MALÁ: jedna extrahovaná materiálová fráze z předchozího
+  ramene** (extrahuje model). Tvarové zákazy: nikdy jméno runy, nikdy přirovnání; smí být
+  proměněná, popřená, nebo přítomná jako nepřítomnost — vztah je svobodný, přítomnost ne.
+  ⚠️ **Nahrazuje „Historie je dostupná, ne povinná" (ratifikováno KUKY 2026-08-23):** nepovinná
+  historie se změřila jako NEPOUŽITÁ (v1 0/6; de-blind tally potvrdil, že vrah byla úniková
+  klauzule, ne objem — `docs/eval/2026-08-23-recept/tally.md`). Vzor `_lensContext` „leave it
+  out" u historie NEPLATÍ — u čočky funguje, tady ne (změřeno). **Protiváha-flag ZAVŘEN:**
+  protiváha = povinnost; malá fráze navíc drží těžký směr (disparátní runy) a brání kronice
+  (celý text: obraz-výčet 3/20).
+  **Dva kanály:** kotálivá fráze (N↔N-1, vyhasíná — správně) + trvalé semínko ramene 1,
+  vynořené JEN při ohlédnutí. Mechanismus potvrzen slepě 6/6 (TEST 31, `RUNAR_EVAL_LOG.md`
+  2026-08-23). Otevřená vada: **šev** — návrat musí přijít skrz materiál vlastní scény
+  (2/3 vlepený); kandidát řešení = volba obrazu posledního ramene se zřetelem na semínko
+  (nový konzument pro zaparkovaný T3).
 - **Designová kontrola (NE instrukce do promptu):** každé rameno dělá jeden ze tří pohybů —
   **naváže · změní · otevře**. Osm navázání = nudná kontinuita; osm převracení = chaos. Slouží nám
   k posouzení oblouku. ⚠️ Do promptu to nepatří: jeden vzor v promptu = model ho opíše.
