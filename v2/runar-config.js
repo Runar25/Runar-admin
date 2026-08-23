@@ -44,7 +44,8 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 // v4.3 (2026-08-22): navrat zameru do single (krok 3/3, mereno).
 // v4.4 (2026-08-22): navrat cocky (zivotni runy) do single (krok 4, mereno).
 // v4.5 (2026-08-22): Confirmation bez 'blind side' — vitez B z A/B/C (unaware 6/16 -> 0/16).
-const RUNAR_PROMPT_VERSION = 'v4.5-mynd';
+// v4.6 (2026-08-23): elementy v IS promptu islandsky (Frumefni: loft, ne Air).
+const RUNAR_PROMPT_VERSION = 'v4.6-mynd';
 
 // ─── ELEVENLABS ─────────────────────────────────────────
 const EL_VOICE_ID_EN = '2UI8v2ibbwQTijaYAte1'; // English — Rúnar EN

@@ -4310,3 +4310,17 @@ DROP+CREATE kvůli PostgREST overloadu; free_balance nově RPC `use_free_balance
 **Rozhodnutí (KUKY):** mytologické obrazy (Óðinn/Nornir) **NE** — položka zavřena; admin
 gate stromu neřešit (zůstává, jak je).
 Affected doc(s): RUNAR_BACKLOG.md (ledger narovnán, mytologické obrazy [x]).
+
+
+## 2026-08-23 — Prompt drobnosti: elementy islandsky; tři položky už neplatily; „already" = vzorec, ne slovo (CODE-tune)
+**Ověřeno §24 před zásahem:** rworld IS popisky, duplicitní svět i zdvojený pokyn o rodu
+byly UŽ opravené (backlog nesl zastaralé nálezy z 13. 8.) — odškrtnuty s důkazem.
+**Opraveno (v4.6-mynd):** `relements()` — islandský prompt nesl anglické názvy elementů
+(„Frumefni: Air" → „loft"; eldur/jörð/loft/vatn/skuggi). Data v runes.js zůstávají EN
+(sdílená vrstva s TREE) — překládá se jen popisek, stejný vzor jako rworld. Golden: mění
+se jen ta jedna hodnota ve 4 IS builderech.
+**„already/þegar" (backlog 2026-08-10) uzavřeno přepsáním zadání:** změřeno na 128 čteních
+v4.x — IS „þegar" je spojka (nevinné), EN „already" ve scéně v pořádku; vada je vzorec
+„already known/deciding (beneath you)" = skryté vědění, který už jmenují podtypy soudce
+chladu. Samostatná páka se nestaví; hlídá testování.
+Affected doc(s): RUNAR_BACKLOG.md (4 položky).

@@ -491,7 +491,14 @@ function rworld(r) {
 }
 
 // ─── relements() ─────────────────────────────────────────
-function relements(r) { return r.elements ? r.elements.join(', ') : ''; }
+// v4.6 (2026-08-23): islandsky prompt nesl anglicke nazvy elementu (Frumefni: Air) —
+// tyz druh vady jako rworld pred opravou (lint_prompts 13.8.). Data v runes.js
+// zustavaji EN (sdilena vrstva s TREE); preklada se jen popisek, jako u rworld.
+function relements(r) {
+  const isMap = { Fire: 'eldur', Earth: 'jörð', Air: 'loft', Water: 'vatn', Shadow: 'skuggi' };
+  if (!r.elements) return '';
+  return r.elements.map(function (e) { return lang === 'is' ? (isMap[e] || e) : e; }).join(', ');
+}
 
 // ─── setText() ─────────────────────────────────────────
 function setText(id, v)   { const el = document.getElementById(id); if (el && v !== undefined) el.textContent = v; }
