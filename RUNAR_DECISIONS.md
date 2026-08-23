@@ -4649,3 +4649,20 @@ Měření: oblouk (scripts/oblouk.py) na příští dávce owner čtení; hlída
 závěrů (táž čočka každé čtení).
 Affected doc(s): RUNAR_DESIGN.md (záměry konců) · RUNAR_EVAL_LOG.md (watch) ·
 RUNAR_BACKLOG.md (komentář builderů opraven; ㉜ díra zapsána) — tento commit.
+
+## 2026-08-23 — v4.14: dosednutí pro VŠECHNY spready (Norns + Kříž + Horseshoe) (KUKY „udelej")
+Doklad: Norns 20:36 losl `ending: heavy1` → konec „What would you owe the road…" — otázka
++ koncept mimo obraz („owe"); táž třída vady jako u Yggdrasilu (a ranní Norns 10:38 bez
+návratu). GPT analýza potvrdila diagnózu; jeho čtyřvrstvý model (runy=obraz, otázka=účel,
+area/seeking/for=filtry, closing=setkání obrazu s otázkou) je popis běžícího enginu —
+jediný nový návrh (celoplošná čočka) OWNER ZAMÍTL: „cocku nechame jak je" (závěrečná čočka
+zůstává; celoplošná verze byla lab-mrtvá cesta — system prompt model ignoruje).
+**Nasazeno:** `landing` jako DATA do RP_NORNS/RP_KRIZ/RP_HORSESHOE (EN+IS, §18: přidat
+spread = přidat pack) — sdílená formule z v4.13, liší se strukturální část: Norns = pohyb
+ofié→čistí se→míří + „konec se dotkne začátku" (GPT kompas) · Kříž = síly viděné pohromadě
+kolem středu · Horseshoe = kam se kloní CELÝ oblouk, ne poslední runa (guard proti opisu
+pozice 7). S.landing nahrazuje otázkový los ve třech builderech; **single los DRŽÍ**
+(v4.11 změřená, krátký oblouk otázku unese). Žádné vzorové věty do promptu (změřené
+kopírování 12→56 %). Seed-and-assert 19/19 · smoke 36/36.
+Affected doc(s): RUNAR_DESIGN.md (štítek Norns recognition + dosednutí všude) ·
+RUNAR_EVAL_LOG.md (watch rozšířen) — tento commit.

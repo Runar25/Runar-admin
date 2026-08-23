@@ -1417,6 +1417,7 @@ var RP_KRIZ = {
     seeker:'Leiðandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leiðin', seekJoin:' og ', question:'Spurning',
     positions:['RÚNIN 1 (Miðja / Kjarni — verdandi):','RÚNIN 2 (Ofan / Þrá — skuld):','RÚNIN 3 (Undir / Rót — urd):','RÚNIN 4 (Að baki / Fortíð — urd):','RÚNIN 5 (Framar / Stefna — skuld):'],
     intro:'Leiðandinn dregur fimm rúnir — Áttavitinn.',
+    landing:'NIÐURLAGIÐ — síðasta setningin svarar einu: hvað er orðið sýnilegt nú þegar kraftarnir fimm sjást saman, safnaðir um miðjuna. Segðu það með orðum myndarinnar. Engin spurning í lokin, enginn boðskapur, ekkert „þetta þýðir", engin huggun.',
     langInstr:'',
     instructions:function(ctrName){ return [
       'Lesturinn fer í einum flæði — ekki fimm aðskildir lestrar.',
@@ -1434,6 +1435,7 @@ var RP_KRIZ = {
     seeker:'Seeker', lifeRune:'Life rune', area:'Area', seeking:'Seeking', seekJoin:' & ', question:'Question',
     positions:['RUNE 1 (Centre / Core — present):','RUNE 2 (Above / Aspiration — future):','RUNE 3 (Below / Root — hidden):','RUNE 4 (Behind / Past — past):','RUNE 5 (Ahead / Direction — future):'],
     intro:'The seeker draws five runes — the Compass.',
+    landing:'THE LANDING — the last sentence answers one thing: what has become visible now that the five forces are seen together, gathered around the centre. Say it in the words of the image. Not a question, no moral, no "this means", no comfort added.',
     langInstr:'Respond in English.',
     instructions:function(ctrName){ return [
       'Read all five as one flowing passage — not five separate readings.',
@@ -1494,7 +1496,8 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
     _noColdRead(lang),
     u.area ? _domainContext(u.area, lang) : '',
     u.seeking ? _registerContext(u.seeking, lang) : '',
-    _endingShape(runes, lang),
+    // v4.14 (2026-08-23, KUKY): dosednutí — S.landing nahrazuje otázkový los (viz yggdrasil v4.13).
+    S.landing,
     (lensOn || u.area || u.seeking) ? _priorityContext(lensOn, runes, lang) : '',
   ].concat(S.instructions(ctrName)).concat([
     _lensContext(u.lifeRune, runes, lang),
@@ -1523,6 +1526,7 @@ var RP_NORNS = {
     seeker:'Leiðandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leiðin', seekJoin:' og ', question:'Spurning', langInstr:'',
     labels:['URÐUR (urd — það sem var ofið, ekki hægt að taka til baka):','VERÐANDI (verdandi — það sem er að verða til, lifandi þráðurinn):','SKULD (skuld — hvert þráðurinn stefnir núna, ekki spá):'],
     intro:'Leiðandinn dregur þrjár rúnir — Nornirnar tala.',
+    landing:'NIÐURLAGIÐ — síðasta setningin svarar einu: hvað er orðið sýnilegt í hreyfingunni — frá því sem var ofið, gegnum það sem er að skýrast, þangað sem það stefnir nú. Láttu endinn snerta upphafið. Segðu það með orðum myndarinnar. Engin spurning í lokin, enginn boðskapur, ekkert „þetta þýðir", engin huggun.',
     beats:[
       'Þetta eru ekki þrír aðskildir lestrar — þetta er ein saga sem Nornirnar segja saman.',
       'Urður talar af þyngd þess sem er þegar fast — í fortíð myndarinnar sjálfrar, aldrei sem atburðir, fólk eða sár sem fundin eru upp í lífi leitandans.',
@@ -1536,6 +1540,7 @@ var RP_NORNS = {
     seeker:'Seeker', lifeRune:'Life rune', area:'Area', seeking:'Seeking', seekJoin:' & ', question:'Question', langInstr:'Respond in English.',
     labels:['URÐUR (urd — what was woven, cannot be undone):','VERÐANDI (verdandi — what is being woven, alive now):','SKULD (skuld — where the thread is heading now, not foretold):'],
     intro:'The seeker draws three runes — the Norns speak.',
+    landing:'THE LANDING — the last sentence answers one thing: what has become visible through the movement — from what was woven, through what is clearing, to where it now heads. Let the ending touch the beginning. Say it in the words of the image. Not a question, no moral, no "this means", no comfort added.',
     beats:[
       'This is not three separate readings — it is one story told by three voices.',
       // v4.10 (2026-08-23): deklarativni hlas nad minulosti CTENARE zval k vymysleni udalosti
@@ -1575,7 +1580,8 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
     _noColdRead(lang),
     u.area ? _domainContext(u.area, lang) : '',
     u.seeking ? _registerContext(u.seeking, lang) : '',
-    _endingShape(runes, lang),
+    // v4.14 (2026-08-23, KUKY): dosednutí — S.landing nahrazuje otázkový los (viz yggdrasil v4.13).
+    S.landing,
     (lensOn || u.area || u.seeking) ? _priorityContext(lensOn, runes, lang) : '',
   ].concat(S.beats).concat([
     _lensContext(u.lifeRune, runes, lang),
@@ -1598,6 +1604,7 @@ var RP_HORSESHOE = {
     seeker:'Leiðandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leiðin', seekJoin:' og ', question:'Spurning', langInstr:'',
     positions:['RÚNIN 1 — Fortíð (hvað hefur mótað, í fortíð myndarinnar sjálfrar):','RÚNIN 2 — Nútíð (hvað er að ríkja):','RÚNIN 3 — Dulið / Nánasta framtíð (hvað er að koma upp):','RÚNIN 4 — Hindranir (hvað þyngir eða hindrar):','RÚNIN 5 — Ytri kraftar (hvað kemur að utan):','RÚNIN 6 — Innri staða (hvað er inni í þér):','RÚNIN 7 — Niðurstaða (hvert er þetta að fara):'],
     intro:'Leiðandinn dregur sjö rúnir — Skeifan.',
+    landing:'NIÐURLAGIÐ — síðasta setningin svarar einu: hvað er orðið sýnilegt um hvert öll hreyfingin stefnir — allur boginn, ekki síðasta rúnin ein. Segðu það með orðum myndarinnar. Engin spurning í lokin, enginn boðskapur, ekkert „þetta þýðir", engin huggun.',
     beats:[
       'Lestu allar sjö sem eitt samfellt stef — ekki sjö aðskildir lestrar.',
       'Rúnin 7 (Niðurstaða) er ekki spá — sjáðu hana sem stefnu ef þráðurinn heldur áfram.',
@@ -1611,6 +1618,7 @@ var RP_HORSESHOE = {
     seeker:'Seeker', lifeRune:'Life rune', area:'Area', seeking:'Seeking', seekJoin:' & ', question:'Question', langInstr:'Respond in English.',
     positions:['RUNE 1 — Past (what has shaped this, spoken in the image’s own past):','RUNE 2 — Present (what is active now):','RUNE 3 — Hidden / Near future (what is emerging):','RUNE 4 — Challenges (what weighs or blocks):','RUNE 5 — Outside forces (what acts from beyond):','RUNE 6 — Inner state (what lives inside):','RUNE 7 — Outcome (where this is heading):'],
     intro:'The seeker draws seven runes — the Horseshoe.',
+    landing:'THE LANDING — the last sentence answers one thing: what has become visible about where the whole movement is tending — the whole arc, not the last rune alone. Say it in the words of the image. Not a question, no moral, no "this means", no comfort added.',
     beats:[
       'Read all seven as one continuous passage — not seven separate readings.',
       'Rune 7 (Outcome) is not prophecy — it is where this energy leads if nothing changes.',
@@ -1650,7 +1658,8 @@ function buildHorseshoePromptSeven(u, runes, lang, corrections) {
     _noColdRead(lang),
     u.area ? _domainContext(u.area, lang) : '',
     u.seeking ? _registerContext(u.seeking, lang) : '',
-    _endingShape(runes, lang),
+    // v4.14 (2026-08-23, KUKY): dosednutí — S.landing nahrazuje otázkový los (viz yggdrasil v4.13).
+    S.landing,
     (lensOn || u.area || u.seeking) ? _priorityContext(lensOn, runes, lang) : '',
   ].concat(S.beats).concat([
     _lensContext(u.lifeRune, runes, lang),
