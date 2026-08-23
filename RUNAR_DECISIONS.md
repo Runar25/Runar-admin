@@ -4542,3 +4542,18 @@ je snadná, a vynechá ji tam, kde by byla zajímavá (doloženo ohnutím vrstvy
 testerů.
 
 Affected doc(s): RUNAR_DESIGN.md („Vegvísir (8 ramen, seriálový)") — v témže commitu.
+
+
+## 2026-08-23 — Yggdrasil: rozhodnuto V5 — vrstvy zůstávají, předefinují se NEČASOVĚ (KUKY)
+**Rozhodnutí (KUKY):** „takže V5" (z katalogu variant, handoff CODE-tune; Cowork nezávisle
+náklon k V5). Vrstvy koruna/kmen/kořeny zůstávají, ale přestávají tvrdit čas: **koruna = co
+se UKAZUJE · kmen = co NESE · kořeny = co ŽIVÍ.** Časová osa se ukázala jako nespolehlivá
+napříč oběma koly testu (Niflheimr nezrcadlí ani s čistšími kartami; Test A/B napětí u Hel —
+výhrady Cowork #44 vzaty: soudce se mezi koly měnil, „B: přítomné" může měřit gramatiku
+popisu) — V5 ji přestává tvrdit, místo aby na ní stavěla.
+**Co následuje (role beze změny):** Cowork píše devět významů světů k novým osám (čtyřbodové
+síto + tvrdá data testu jako constraints; jména Skuld/Verðandi/Urður buď ustoupí, nebo je
+ohne a OBHÁJÍ sítem — nové lore tvrzení) → owner schválí → CODE-tune promítne do
+RP_YGGDRASIL (EN+IS: `tiers` hlavičky + `beats` časový jazyk + `positions`) jedním měřeným
+krokem s golden. Zadání předáno handoffem (chat 23. 8.).
+Affected doc(s): RUNAR_BACKLOG.md (Yggdrasil položka → V5, čeká na Cowork návrh).
