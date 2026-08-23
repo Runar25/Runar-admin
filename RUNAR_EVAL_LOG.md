@@ -830,3 +830,24 @@ v2 fráze držela i na Isa↔Ehwaz. **T2 (18/20, A-claims 14/14):** kolaps recep
 (1× simile — builder, ne recept); recept dá každé runě obraz a udrží scénu. → rozhodnutí
 ownera: per-runa obrazy vs. jeden úsporný obraz. Slepý protokol funguje: všechny chyby
 soudce padly do zóny, kterou sám předem označil za nerozhodnutelnou.
+
+## 2026-08-23 — TEST 31 · Rámový návrat (dva kanály): mechanismus POTVRZEN 6/6, šev vlepení 2/3
+Návrh Cowork ① (kotálivá fráze N↔N-1 + trvalé semínko ramene 1 vynořené jen při ohlédnutí).
+3 řetězy × 4 ramena (S1 kontinuita Fehu→Isa→Ehwaz→Dagaz · S2 disparátní Nauthiz→Wunjo→Kenaz→
+Othila · S3 střední Perth→Tiwaz→Ingwaz→Algiz), ramena 1–3 sdílená, 4. rameno A=+semínko /
+B=bez. 9 slepých soudců (subagenti, 3 optiky). Korpus `~/runar-eval/ramovy-navrat.{jsonl,txt}`.
+- **Detekce 3/3 A:** semínko se vrací PROMĚNĚNÉ (brána→„only the worn threshold remains,
+  crossed" · kořen→„gone deep and quiet, no green shoot left" · laguna→„gone clear and
+  quiet"), vady 0/6 kandidátů (žádné jméno dřívější runy, simile, rekapitulace). Funguje
+  I NA DISPARÁTNÍ sadě, kde kotálivý řetěz v T1 nevlákal.
+- **Účinek 3/3 A:** pocit „jedna cesta — ohlížíš se a vidíš začátek jinak" jen se semínkem;
+  B konzistentně „mohlo by patřit jiné pouti".
+- **⚠️ Šev 2/3 — návrat je VLEPENÝ:** S1 „mechanická spona", S3 „cizí rekvizita přes and";
+  organicky seděl jen S2 — semínko (kořen) mělo ve finální scéně (statek/země) přirozené
+  místo. Dvergova lekce potřetí: materiál musí nést TÁŽ scéna. Směr opravy: (a) instrukce
+  „návrat přijde skrz materiál vlastní scény", (b) volba obrazu posledního ramene se
+  zřetelem na semínko — **nový konzument pro zaparkovaný T3** (aspekt-kongruence).
+- 2× hraniční „obrazové shrnutí" (S1, S3): formální zákaz uzavření držel (0 verdiktů,
+  0 moralek u všech 6 kandidátů), ale gesto bilance se objevuje — hlídat.
+Hranice: n=3 řetězy × 1 běh, EN; nesená instrukce = rekonstrukce v2 spec (TEST 30 prompt
+v korpusu uložen nebyl, ne byte-shoda); extrakce frází kolísavá („carried now").
