@@ -4575,3 +4575,14 @@ trpasličí světy).
 mytologická opora per svět zapsána Coworkem (4 přímé citáty · 3 střední · 2 interpretační).
 Golden: jen 4 yggdrasil buildery. Smoke 35/35. Ukázkové čtení pro oko ownera následuje.
 Affected doc(s): RUNAR_BACKLOG.md (V5 položka → nasazeno, zbývá oko ownera).
+
+
+## 2026-08-23 — Dodatek k v4.12: záměna trpasličích světů je inherentní, ne vada obrazu (CODE-tune)
+Doostřený Svartálfaheimr („hands working unseen…") padá slepému soudci na Niðavellir i po
+opravě (ověřeno subagentem) — kdo zná mytologii, čte „ruce, které tvoří" jako kovárnu
+slavných předmětů. Rozlišení řemeslo × nalezený zdroj je konvence appky (#38), slepě
+neoddělitelná; v produkci nevadí (pozice nese jméno světa vedle významu). Doostření zůstává
+(vrací doloženou skrytost), slepý bod se dál nehoní — křivil by obraz kvůli testu. Rezidualní
+stav slepé rozlišitelnosti devítky: 8/9 EN · 7/9 IS s JEDNOU pojmenovanou inherentní záměnou.
+Ukázkové čtení V5 (9 run, jeden svět statku, čočka jen v závěru) → oko ownera (chat).
+Affected doc(s): žádný.
