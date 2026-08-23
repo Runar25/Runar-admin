@@ -794,3 +794,6 @@ po každé změně promptu sahající na závěry/obrazy + při větší dávce 
   „already"-rodinu: „light in you that has already come up… you simply had not yet turned to look".
 - Norns 10:38 (práh/trn → semeno → světlo v údolí) — **BEZ NÁVRATU** (progrese k novému
   obrazu + závěr otázkou).
+**Watch (v4.13, 2026-08-23):** dosednutí Yggdrasilu nasazeno — na příští dávce owner čtení
+změřit obloukem: (a) závěr dosedá (viditelnost, ne otázka), (b) nezačal kázat („this means"
+rodina), (c) stejnost závěrů u téhož uživatele (táž life-rune čočka každé čtení).

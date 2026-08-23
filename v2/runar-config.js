@@ -51,7 +51,7 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 // v4.10 (2026-08-23): minulost spreadu mluvi v materialu obrazu (chlad krok 1, A/B mereno).
 // v4.11 (2026-08-23): tvar otevrene otazky — otazka obrazu / prosta volba, zadne tvrzeni po pulkach.
 // v4.12 (2026-08-23): Yggdrasil V5 — vrstvy necasove (ukazuje/nese/zivi), 9 novych vyznamu, Norny z hlavicek ustoupily.
-const RUNAR_PROMPT_VERSION = 'v4.12-mynd';
+const RUNAR_PROMPT_VERSION = 'v4.13-mynd';
 
 // ─── ELEVENLABS ─────────────────────────────────────────
 const EL_VOICE_ID_EN = '2UI8v2ibbwQTijaYAte1'; // English — Rúnar EN

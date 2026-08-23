@@ -4631,3 +4631,21 @@ Návrh CODE-tune předložen (dosednutí řečí obrazu, ne výklad), čeká na 
 Affected doc(s): RUNAR_EVAL_LOG.md (protokol, tento commit) · RUNAR_BACKLOG.md („prázdné
 řádky" uzavřeny jako ne-bug — chyba měření deep_text vs short_text; stop v UI na server
 nedosáhne, charged ⇔ journaled platí; commit předtím).
+
+## 2026-08-23 — v4.13: DOSEDNUTÍ Yggdrasilu (landing místo otázkového losu) (KUKY „udelej")
+Owner (po vlastních čteních + GPT PDF „API pro čtení run"): výsledkem Yggdrasilu má být
+„9 run → jeden živý obraz → proměna → pochopení, co obraz znamená pro otázku" — a závěr byl
+dosud jen další obraz/otázka. **Nasazeno:** RP_YGGDRASIL dostal `landing` (EN+IS) — poslední
+věta říká, **co se stalo viditelným, když se celý obraz vidí naráz** (kompas převzat z GPT
+PDF doslova), položené k tomu, co tazatel přinesl; zákazy: žádná otázka, morálka, „this
+means", huggun. V builderu `S.landing` **NAHRAZUJE** `_endingShape` (dvě protichůdné
+instrukce konce = jedna jede mrtvá, vzor v4.9); single/Norns/kříž/horseshoe otázkový los
+drží (seed-and-assert 11/11). **Life rune se NepřidávALA** — `_lensContext` už je closing
+lens („tvaruje jen poslední větu, nejmenuje se") a na dosednutí sedí sama; ownerův nápad
+byl potvrzením postaveného. **Tabulka čtyř konců (Realization/Integration/Direction/
+Revelation) = designový záměr, ne slovník promptu** — pocity mají nést STRUKTURY spreadů;
+diferencovat instrukce až kdyby oblouk ukázal, že se pocity nedělí (→ RUNAR_DESIGN.md).
+Měření: oblouk (scripts/oblouk.py) na příští dávce owner čtení; hlídat kázání a stejnost
+závěrů (táž čočka každé čtení).
+Affected doc(s): RUNAR_DESIGN.md (záměry konců) · RUNAR_EVAL_LOG.md (watch) ·
+RUNAR_BACKLOG.md (komentář builderů opraven; ㉜ díra zapsána) — tento commit.

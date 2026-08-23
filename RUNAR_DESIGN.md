@@ -536,6 +536,20 @@ SPREAD            STROM                      RITUÁL
 9 run (Yggdrasil) uzel kořenů — nejsilnější  kdykoliv (slunovrat = větší síla)
 ```
 
+### Co má uživatel cítit na konci (designový záměr, 2026-08-23)
+| Spread | Konec | Pocit |
+|---|---|---|
+| Norns | realization | „Vidím vývoj." |
+| Kříž | integration | „Rozumím situaci." |
+| Horseshoe | direction | „Vidím, kam se to pohybuje." |
+| Yggdrasil | revelation | „Teď vidím celý obraz." |
+
+Je to **záměr, ne slovník promptu** — štítky se do instrukcí NEpíšou (model by je performoval
+didakticky). Pocity mají nést **struktury** spreadů, které se už liší; sdílená instrukce konce
+je jedna. Yggdrasil má od v4.13 dosednutí (`RP_YGGDRASIL.landing` — „co se stalo viditelným,
+když se celý obraz vidí naráz"). Zda se čtyři pocity skutečně dělí, měří oblouk
+(`scripts/oblouk.py`); diferencovat instrukce až kdyby neměřily. → RUNAR_DECISIONS.md 2026-08-23.
+
 ### Single (1 runa)
 Jedna runa, žádné pozice. Přímé čtení energie daného momentu.
 Strom: malý uzel na větvi.

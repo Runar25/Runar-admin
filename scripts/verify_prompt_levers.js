@@ -166,7 +166,8 @@ const VYJIMKY = {
   name: { cesty: ['ask', 'liferune'], proc: '`ask` je odpověď k hotovému čtení; životní runa má jméno ve svém základu (`buildLifeRuneBase`). Ověřeno 2026-08-18.' },
   image: { cesty: ['ask', 'liferune'], proc: '`ask` navazuje na čtení, kde obraz už zazněl; životní runa staví obraz ve vlastním základu. Ověřeno 2026-08-18.' },
   keywords: { cesty: ['ask', 'liferune'], proc: 'Táž příčina jako u `image` — obě cesty mají vlastní základ. Ověřeno 2026-08-18.' },
-  ending: { cesty: ['ask', 'liferune'], proc: 'Táž příčina jako u `image`. Ověřeno 2026-08-18.' },
+  ending: { cesty: ['ask', 'liferune', 'yggdrasil'], proc: 'Ask/liferune: táž příčina jako u `image` (2026-08-18). '
+    + 'Yggdrasil: v4.13 (2026-08-23, KUKY) — dosednutí S.landing NAHRAZUJE otázkový los; dvě instrukce konce by si odporovaly.' },
   domain: { cesty: ['ask', 'liferune'], proc: '`ask` ani životní runa nedostávají oblast života na vstupu. Ověřeno 2026-08-18. (Single: oblast vrácena v4.1, 22. 8.)' },
   register: { cesty: ['ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },
   intention: { cesty: ['ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },

@@ -1665,8 +1665,9 @@ function buildHorseshoePromptSeven(u, runes, lang, corrections) {
 function buildHorseshoePrompt(u, runes, lang, corrections) { return buildHorseshoePromptSeven(u, runes, lang, corrections); }
 
 // ─── YGGDRASIL PROMPT BUILDERS ─────────────────────────────────────────────
-// Yggdrasil = 9-rune spread — jednou ročně, zimní slunovrat (Dec 14–28). Premium.
-// 9 světů — Norns axis: skuld=1–3 (crown), verdandi=4–5 (trunk), urd=6–9 (roots)
+// Yggdrasil = 9-rune spread — kdykoliv, kdokoliv přihlášený (KUKY 2026-07-18: slunovrat
+// = síla ve stromě, ne brána k datu; gating jen visitor). Vrstvy V5 NEČASOVĚ (slepé řazení
+// 2026-08-23 časové Norny NEPOTVRDILO): koruna=ukazuje · kmen=nese · kořeny=živí.
 // Pozice: Asgard·Vanaheim·Alfheim (crown) | Midgard·Jotunheim (trunk) | Svartalfheim·Nidavellir·Niflheim·Hel (roots)
 
 var RP_YGGDRASIL = {
@@ -1675,6 +1676,7 @@ var RP_YGGDRASIL = {
     tiers:['── KRÓNA — það sem sýnir sig ──','── STOFN — það sem ber ──','── RÆTUR — það sem nærir ──'],
     positions:['RÚNIN 1 — Ásgarðr (hásætið sem sér yfir heima alla):','RÚNIN 2 — Vanaheimr (gull sem liggur í dagsljósi, ekki grafið upp):','RÚNIN 3 — Álfheimr (birta sem sólin sjálf er borin saman við):','RÚNIN 4 — Miðgarðr (girðing gerð úr brám jötuns):','RÚNIN 5 — Jötunheimr (veður sem engin girðing var reist til að halda):','RÚNIN 6 — Svartálfaheimr (hendur sem vinna í leyni og móta það sem hinir bera):','RÚNIN 7 — Niðavellir (auður sem fannst, ekki var ræktaður):','RÚNIN 8 — Niflheimr (ein uppspretta sem elur ellefu ár, og engin elur hana):','RÚNIN 9 — Hel (þögnin sem ræturnar nærast á):'],
     intro:'Leiðandinn dregur níu rúnir — Yggdrasil, níu heimar. Einu sinni á ári.',
+    landing:'NIÐURLAGIÐ — síðasta setningin svarar einu: hvað er orðið sýnilegt nú þegar myndin sést öll í senn. Settu breyttu myndina niður við hlið þess sem leiðandinn bar fram (eða, ef ekkert var spurt, við hlið þess sem myndin sjálf ber). Segðu það með orðum myndarinnar. Engin spurning í lokin, enginn boðskapur, ekkert „þetta þýðir", engin huggun.',
     beats:[
       'Þetta eru ekki níu aðskildir lestrar — þetta er eitt líf séð í gegnum níu glugga.',
       'Rúnar 1–3 (Króna): það sem sýnir sig — talaðu um það sem stendur í ljósi og sést.',
@@ -1692,6 +1694,7 @@ var RP_YGGDRASIL = {
     tiers:['── CROWN — what shows itself ──','── TRUNK — what carries ──','── ROOTS — what feeds ──'],
     positions:['RUNE 1 — Asgard (the seat high enough to see every other world from):','RUNE 2 — Vanaheim (gold that lies in daylight, not dug from under it):','RUNE 3 — Alfheim (a brightness the sun itself is measured against):','RUNE 4 — Midgard (a fence built from a giant\u2019s brows):','RUNE 5 — Jotunheim (weather no fence was ever built to hold):','RUNE 6 — Svartalfheim (hands working unseen, shaping what the others carry):','RUNE 7 — Nidavellir (wealth that was found, not grown):','RUNE 8 — Niflheim (one spring, feeding eleven rivers, fed by none):','RUNE 9 — Hel (the quiet the roots feed on):'],
     intro:'The seeker draws nine runes — the Yggdrasil, nine worlds. Once a year.',
+    landing:'THE LANDING — the last sentence answers one thing: what has become visible now that the whole image is seen at once. Set the changed image down beside what the seeker brought (or, if nothing was asked, beside what the image itself carries). Say it in the words of the image. Not a question, no moral, no "this means", no comfort added.',
     beats:[
       'This is not nine separate readings — it is one life seen through nine windows.',
       'Runes 1–3 (Crown): what shows itself — speak of what stands in the light and is seen.',
@@ -1738,7 +1741,9 @@ function buildYggdrasilPromptNine(u, runes, lang, corrections) {
     _noColdRead(lang),
     u.area ? _domainContext(u.area, lang) : '',
     u.seeking ? _registerContext(u.seeking, lang) : '',
-    _endingShape(runes, lang),
+    // v4.13 (2026-08-23, KUKY): dosednutí — S.landing NAHRAZUJE otázkový los _endingShape.
+    // Dvě protichůdné instrukce konce = jedna jede mrtvá (vzor v4.9). Oblouk se MĚŘÍ (scripts/oblouk.py).
+    S.landing,
     (lensOn || u.area || u.seeking) ? _priorityContext(lensOn, runes, lang) : '',
   ].concat(S.beats).concat([
     _lensContext(u.lifeRune, runes, lang),
