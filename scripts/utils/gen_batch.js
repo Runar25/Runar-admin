@@ -325,6 +325,7 @@ async function main() {
     ending:    { fn: '_endingShape',      kind: 'kostka',  co: 'tvar konce (otázka / tvrzení)' },
     name:      { fn: '_namePlacement',    kind: 'kostka',  need: '--name (jiné než you/þú)', co: 'umístění jména' },
     describe:  { fn: '_describeRule',     kind: 'pravidlo', co: 'zákaz definic („řekni co runa DĚLÁ")' },
+    thread:    { fn: '_spreadThread',     kind: 'pravidlo', co: 'vztahová vazba sousedních pozic spreadu (v4.9)' },
     coldread:  { fn: '_noColdRead',       kind: 'pravidlo', co: 'pravidlo proti cold readingu' },
     length:    { fn: '_lengthBudget',     kind: 'kostka',  co: 'rozpočet délky — losuje 3 nebo 4 věty' },
     lens:      { fn: '_lensContext',      kind: 'pravidlo', need: '--life-rune', co: 'životní runa jako čočka' },

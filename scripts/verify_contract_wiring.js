@@ -124,6 +124,16 @@ if (!DESCRIBE_MARK.en || !DESCRIBE_MARK.is) {
   process.exit(1);
 }
 
+// ── Spready NESMI nest esencni radek (v4.9, 2026-08-23): rikal 'pojmenuj runu' proti
+// zamernemu 'nejmenuj' spreadu. Navrat jinou cestou = presne ta ticha regrese.
+for (const L of ['en', 'is']) {
+  for (const b of ['norns', 'kriz', 'horseshoe', 'yggdrasil']) {
+    const txt = O[b + '_' + L] || '';
+    if (txt.includes(DESCRIBE_MARK[L])) { fail++; console.log('FAIL  ' + b + '_' + L + '  esencni radek se vratil do spreadu (v4.9 skrt)'); }
+  }
+}
+console.log('OK    spready bez esencniho radku (nejmenuj drzi, v4.9)');
+
 // ── Life rune: a full reading, so it carries the body's gates ────────────────
 for (const L of ['en', 'is']) {
   const txt = O['liferune_' + L] || '';

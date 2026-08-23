@@ -168,6 +168,8 @@ const VYJIMKY = {
   domain: { cesty: ['ask', 'liferune'], proc: '`ask` ani životní runa nedostávají oblast života na vstupu. Ověřeno 2026-08-18. (Single: oblast vrácena v4.1, 22. 8.)' },
   register: { cesty: ['ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },
   intention: { cesty: ['ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },
+  describe: { cesty: ['norns', 'kriz', 'horseshoe', 'yggdrasil'], proc: 'v4.9 (2026-08-23): esencni radek VEN ze spreadu — rikal pojmenuj proti zamernemu nejmenuj (KUKY: zatim nejmenuj). Jmena nese UI pozic.' },
+  thread: { cesty: ['single', 'ask', 'liferune'], proc: 'Vztahova vazba pozic je z podstaty jen pro spready (v4.9, 2026-08-23).' },
   priority: { cesty: ['single', 'ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },
 };
 const zvlast = (klic, cesta) => !!(VYJIMKY[klic] && VYJIMKY[klic].cesty.indexOf(cesta) !== -1);

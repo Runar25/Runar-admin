@@ -47,7 +47,8 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 // v4.6 (2026-08-23): elementy v IS promptu islandsky (Frumefni: loft, ne Air).
 // v4.7 (2026-08-23): kriz sjednocen na spolecny tvar pozic (spready krok 1).
 // v4.8 (2026-08-23): Ask Runar prijima podekovani/rozlouceni (v obraze, bez predikce).
-const RUNAR_PROMPT_VERSION = 'v4.8-mynd';
+// v4.9 (2026-08-23): spready — nejmenuj dotazeno (esencni radek ven), vztahova vazba pozic.
+const RUNAR_PROMPT_VERSION = 'v4.9-mynd';
 
 // ─── ELEVENLABS ─────────────────────────────────────────
 const EL_VOICE_ID_EN = '2UI8v2ibbwQTijaYAte1'; // English — Rúnar EN

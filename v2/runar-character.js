@@ -654,6 +654,16 @@ function _profileRule(jmeno, lang, key) {
   return (lang === 'is' && r.is) ? r.is : (r.en || '');
 }
 
+// v4.9 (2026-08-23): vztahova vazba sousednich pozic spreadu (handoff Cowork #31 —
+// mechanismus, ne GPT styl): jeden proud se dosud spolehal na 'one flow' a nahodu.
+// Zadna vzorova veta ani sloveso — obsah prechodu zustava na modelu.
+// IS overeno: vefur [n m] (tkalcovsky smysl dolozen), upptalning [n f], skilja vid.
+function _spreadThread(lang) {
+  return lang === 'is'
+    ? 'Hver rúna heldur áfram þar sem sú á undan skildi við — einn samfelldur vefur, aldrei upptalning.'
+    : 'Each rune takes up what the one before it left off — one continuous weave, never a list.';
+}
+
 function _describeRule(lang, key) {
   var podleRegistru = _profileRule('describe', lang, key);
   if (podleRegistru) return podleRegistru;
@@ -1473,7 +1483,10 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
     S.intro, '',
     runesBlock, '',
     _seasonalImagery(lang, runes),
-    _describeRule(lang),
+    // v4.9 (2026-08-23): esencni radek VEN ze spreadu — rikal "pojmenuj runu" proti
+    // zamernemu "nejmenuj" tehoz promptu (dve protichudne instrukce; mereno vitezilo
+    // nejmenuj a radek jel mrtvy). Jmena nese UI pozic. Misto nej vztahova vazba:
+    _spreadThread(lang),
     _noColdRead(lang),
     u.area ? _domainContext(u.area, lang) : '',
     u.seeking ? _registerContext(u.seeking, lang) : '',
@@ -1549,7 +1562,10 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
     S.intro, '',
     runesBlock, '',
     _seasonalImagery(lang, runes),
-    _describeRule(lang),
+    // v4.9 (2026-08-23): esencni radek VEN ze spreadu — rikal "pojmenuj runu" proti
+    // zamernemu "nejmenuj" tehoz promptu (dve protichudne instrukce; mereno vitezilo
+    // nejmenuj a radek jel mrtvy). Jmena nese UI pozic. Misto nej vztahova vazba:
+    _spreadThread(lang),
     _noColdRead(lang),
     u.area ? _domainContext(u.area, lang) : '',
     u.seeking ? _registerContext(u.seeking, lang) : '',
@@ -1577,7 +1593,7 @@ var RP_HORSESHOE = {
     positions:['RÚNIN 1 — Fortíð (hvað hefur mótað):','RÚNIN 2 — Nútíð (hvað er að ríkja):','RÚNIN 3 — Dulið / Nánasta framtíð (hvað er að koma upp):','RÚNIN 4 — Hindranir (hvað þyngir eða hindrar):','RÚNIN 5 — Ytri kraftar (hvað kemur að utan):','RÚNIN 6 — Innri staða (hvað er inni í þér):','RÚNIN 7 — Niðurstaða (hvert er þetta að fara):'],
     intro:'Leiðandinn dregur sjö rúnir — Skeifan.',
     beats:[
-      'Lestu allar sjö sem einn samfelldann stef — ekki sjö aðskildar lagnir.',
+      'Lestu allar sjö sem eitt samfellt stef — ekki sjö aðskildir lestrar.',
       'Rúnin 7 (Niðurstaða) er ekki spá — sjáðu hana sem stefnu ef þráðurinn heldur áfram.',
       'Nefndu ekki staðsetningarnar í úttakinu. Bærðu þær í röddinn.',
       'Sérhver rúna verður að setja mark sitt — láttu allar sjö móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
@@ -1621,7 +1637,10 @@ function buildHorseshoePromptSeven(u, runes, lang, corrections) {
     S.intro, '',
     runesBlock, '',
     _seasonalImagery(lang, runes),
-    _describeRule(lang),
+    // v4.9 (2026-08-23): esencni radek VEN ze spreadu — rikal "pojmenuj runu" proti
+    // zamernemu "nejmenuj" tehoz promptu (dve protichudne instrukce; mereno vitezilo
+    // nejmenuj a radek jel mrtvy). Jmena nese UI pozic. Misto nej vztahova vazba:
+    _spreadThread(lang),
     _noColdRead(lang),
     u.area ? _domainContext(u.area, lang) : '',
     u.seeking ? _registerContext(u.seeking, lang) : '',
@@ -1706,7 +1725,10 @@ function buildYggdrasilPromptNine(u, runes, lang, corrections) {
     S.intro, '',
     runesBlock, '',
     _seasonalImagery(lang, runes),
-    _describeRule(lang),
+    // v4.9 (2026-08-23): esencni radek VEN ze spreadu — rikal "pojmenuj runu" proti
+    // zamernemu "nejmenuj" tehoz promptu (dve protichudne instrukce; mereno vitezilo
+    // nejmenuj a radek jel mrtvy). Jmena nese UI pozic. Misto nej vztahova vazba:
+    _spreadThread(lang),
     _noColdRead(lang),
     u.area ? _domainContext(u.area, lang) : '',
     u.seeking ? _registerContext(u.seeking, lang) : '',

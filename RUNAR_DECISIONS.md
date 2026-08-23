@@ -4359,3 +4359,23 @@ jen bez ÁVARP — produkce ho dodává.
 **Otevřené (owner):** zdvořilost stále stojí jedinou volnou follow-up otázku čtení —
 jestli nemá, je to produktová změna meteringu (server pozná díky až po zavolání).
 Affected doc(s): žádný.
+
+
+## 2026-08-23 — v4.9-mynd: spready „nejmenuj" dotaženo — esenční řádek ven, vztahová vazba pozic (CODE-tune)
+**Rozhodnutí (KUKY):** „zatím dáme nejmenuj, uvidíme… případně změním na jmenuj."
+**Nasazeno:** esenční řádek VEN ze 4 spread builderů (říkal „pojmenuj runu" proti záměrnému
+„nejmenuj" téhož promptu — dvě protichůdné instrukce; měřeně vítězilo nejmenuj, řádek jel
+mrtvý; jména nese UI pozic) · místo něj `_spreadThread` — vztahová vazba sousedních pozic
+(mechanismus z handoffu Cowork #31, žádný GPT styl): „Each rune takes up what the one before
+it left off — one continuous weave, never a list." · horseshoe IS opravy: „einn samfelldann
+stef"→„eitt samfellt stef" (stef = střední rod) a „aðskildar lagnir" (= potrubí!)→„aðskildir
+lestrar". Kontroly: ⑧ návrat esence do spreadů = červená · ㉚ describe/thread výjimky ·
+rejstřík pák +thread · ㉜ v4.9-mynd.
+**Měření (n=8/dávka, proti baseline z rána):** norns svět 1,63→**1,13** EN · 1,75→**1,13** IS
+(zřetelné zlepšení, vazba drží jeden proud) · kříž 1,25→1,38 EN (šum) · 1,50→**1,88 IS —
+watch-item** (n=8, může být šum; přeměřit při práci na chladu). Chlad beze změny (3–4/8) —
+na ten vazba nemířila, je to příští krok. Ukázka vazby: Gebo→Ingwaz→Othila jako dar v domě
+→ semínko odnesené s sebou → klíče k zámku, který už patří jinému.
+Data docs/eval/2026-08-23-spready-v49/. Další: chlad spreadů (zakončení) · čočka na velké
+spready (čeká na verdikt ownera).
+Affected doc(s): RUNAR_EVAL_LOG.md (rejstřík: +thread — v témže commitu).
