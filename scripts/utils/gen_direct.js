@@ -55,8 +55,11 @@ const SEEKS  = zJazyka('SEEKS');
 const INTENT = zJazyka('INTENTIONS');
 const MODES  = vm.runInContext('RUNAR_MODES', S) || {};
 const CFG    = vm.runInContext('SPREAD_CONFIG', S) || {};
-const pocet  = (CFG[SPREAD] && CFG[SPREAD].rune_count) || 3;
-const tokeny = (CFG[SPREAD] && CFG[SPREAD].tokens) || (MODES.quick_reading && MODES.quick_reading.max_tokens) || 900;
+// Builder se jmenuje 'kriz', config klic je 'cross' — bez mapy se bral default 3
+// a petirunovy kriz padal na runes[3]=undefined (nalezeno 2026-08-23 pri baseline).
+const CFG_KEY = SPREAD === 'kriz' ? 'cross' : SPREAD;
+const pocet  = (CFG[CFG_KEY] && CFG[CFG_KEY].rune_count) || 3;
+const tokeny = (CFG[CFG_KEY] && CFG[CFG_KEY].tokens) || (MODES.quick_reading && MODES.quick_reading.max_tokens) || 900;
 
 // Stejne runy, stejny kontext I STEJNE PAKY ve vsech ramenech — jinak se neporovnavaji
 // dve pravidla, ale dve ruzna zadani. Uhel, obraz i vyber klicu losuji PRODUKCNI buildery
