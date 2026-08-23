@@ -822,3 +822,26 @@ bez toho není slepé skórování slepé).
   ⚠️ **KRITICKY: B nesmí zabít kontrast.** Měřit ZVLÁŠŤ „koherentní potkání" (chceme nahoru) a
   „bland souhlas / zmizelý střet" (nechceme). Jinak si koupíme koherenci za cenu toho, co dělá
   čtení zajímavým.
+
+
+- [ ] **POTENCIÁLNÍ motivický překryv: Yggdrasil Svartálfaheimr × Vegvísir Kenaz→Brokkr a Eitri**
+  (Cowork 2026-08-23, ověřil a doplnil CODE-read). **Nezměřeno — a měřit to teď NELZE**, protože to
+  není vada jednoho promptu, ale **průnik dvou typů čtení**: čtenář by musel potáhnout Yggdrasil
+  s pozicí Svartálfaheimr *i* Vegvísir s Kenazem na rameni, kde platí dverg-vrstva. Jedna dávka to
+  nezachytí; Yggdrasil je navíc řídký. Proto **záznam, ne test**.
+  - Yggdrasil, RUNA 6 — Svartálfaheimr: *„the hands that shaped what the others carry"*
+    ⚠️ Ten konkrétní text **v repu není** (žije v Coworkově handoffu #44); v kódu je
+    `Svartalfheim — Hidden craft` / `Svartálfaheimr — Dulin list`.
+  - Vegvísir, dverg pod runou: `RUNAR_DESIGN.md:368` — Kenaz → Brokkr a Eitri, *„výheň v hloubce —
+    co dostane tvar jedině úderem"* ✅ ověřeno, existuje.
+  - **Není to duplicita ani náhoda:** obě místa čerpají po právu z téhož zdroje (trpasličí kovářská
+    tradice, katalog v `RUNAR_DESIGN.md`), každé ve svém patře.
+  - ⭐ **Nález CODE-tune z TÉHOŽ dne ten předpoklad POSILUJE** (`RUNAR_DECISIONS.md` 2026-08-23,
+    dodatek k v4.12): slepý soudce **neodliší Svartálfaheimr od Niðavellir** — čte „ruce, které tvoří"
+    jako kovárnu bez ohledu na doostření. Když se dva trpasličí SVĚTY nesoucí týž motiv slepě
+    neoddělí, je pravděpodobnost, že se v reálném čtení slije svět s **materiálem runy z jiného
+    spreadu**, spíš vyšší než nižší. Cowork o tomhle měření nevěděl.
+  - **Co udělat, AŽ se to projeví** (aby to nebyla jen poznámka): měnit **stranu Yggdrasilu**, ne
+    Vegvísiru. Dvojice Kenaz → Brokkr a Eitri je **ověřená generováním** (drží 3/3, *„Some things take
+    their shape only by being struck against"* — bez jména, bez druhého obrazu); obraz Svartálfaheimru
+    je novější a jeho slepá nerozlišitelnost je už teď známá a vědomě nehoněná.
