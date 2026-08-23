@@ -4519,3 +4519,26 @@ Hranice: model-rameno = session model (JINÝ soudce než kolo 1 na opus-4-8), n=
 Pozn.: commit 33a546f nesl omylem prázdný vysledek.json (skript padl na parsování) — plný
 soubor + tento záznam v následném commitu.
 Affected doc(s): žádný.
+
+
+## 2026-08-23 — Vegvísir: jádro upřesněno („jedno čtení, které vzniká vztahem k prošlému")
+
+**Posun proti ratifikaci z téhož dne** (podnět GPT, posoudil CODE-read, rozhodl owner):
+Vegvísir není „dlouhé čtení skládané v čase" — je to **jedno čtení, které se neodhalí najednou**;
+vzniká tím, že nové obrazy vstupují do vztahu s prošlými. Tím se odpovídá na otázku, kterou dřívější
+definice neuměla: **proč to není 8× Single.**
+
+**Přijato:** historie = materiál pro nový obraz, ne seznam run (Rúnar není kronikář) · historie
+dostupná, ne povinná · tři pohyby (naváže/změní/otevře) jako NAŠE kontrola, ne instrukce do promptu ·
+první rameno je prostě první obraz · osmé neuzavírá, je to místo k ohlédnutí.
+
+**Odmítnuto (a je to oprava CODE-read):** „význam ramen podle pořadí" (1 = bez kontextu, 4 = pokušení
+uzavřít…). Jako obsah ramen by to udělalo klasický narativní spread. Zůstává jen jako **designová
+pozornost**, kde je guardrail nejvíc v ohrožení.
+
+**Otevřené, pojmenované:** „nepovinná historie" potřebuje protiváhu — model sáhne po ozvěně tam, kde
+je snadná, a vynechá ji tam, kde by byla zajímavá (doloženo ohnutím vrstvy v testu osy). ·
+**Časová mezera je jediná část, kterou nejde ověřit ničím, co umíme** — zůstává hypotézou do živých
+testerů.
+
+Affected doc(s): RUNAR_DESIGN.md („Vegvísir (8 ramen, seriálový)") — v témže commitu.

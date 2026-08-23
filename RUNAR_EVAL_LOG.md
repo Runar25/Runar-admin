@@ -620,3 +620,111 @@ ze čtení. „Nedostatek nutí volit" táhne k „tak se něčeho vzdej" bez oh
 postavená. Dvě po sobě jdoucí přeformulování (EN „reveals priorities" → „forces the choosing",
 IS „neyðir til að velja" → „þar sem velja verður") unikla **týmž směrem** — třetí přepis to
 nejspíš nespraví. Kandidát na vyřazení, ne na další znění; rozhoduje owner.
+
+
+## 2026-08-23 — Vegvísir: dverg pod runou jako DRUHÁ VĚTA funguje · pod zátěží sáhne po přirovnání
+
+Produkční prompt (`buildReadingPrompt`, EN), obraz **pinnut** z `RUNE_IMAGES` → rozdíl jde za dvergem,
+ne za obrazem. Kontrola = týž prompt bez dverga. Dvergovo zadání = materiál, nikdy jméno.
+**n = 2 na buňku — signál, ne vzorec.** Korpusy: `~/runar-eval/vegvisir-sever.jsonl` · `vegvisir-rameno.jsonl`.
+
+**① SEVER (životní runa = tažená → `_lensContext` vypadne sám). FUNGUJE.**
+0/6 vyslovilo jméno dverga · 5/6 nepřidalo druhý obraz · a dverg přidal runě **druhé patro**:
+Isa sama = *zastaveno*; Isa + Dvalin = *„Beneath it the dark keeps moving where no one sees… never
+truly gone."* Nejlepší řádek dávky (Ansuz + Alvíss): *„This one has held a great many names in its
+throat, more than the daylight lets it keep."* — celý Alvíss, nesený havranem z obrazu, bez jména.
+Jediná vada: Kenaz [2] přinesl **nový předmět** („poker") — tam je hranice.
+
+**② RAMENO MIMO SEVER (dverg + závěrečná čočka naráz). Nespadlo, ale dře.**
+3/6 obojí drží čistě (Kenaz×2, Ansuz [1] — tam si dokonce pomohly: Alvíss + Berkana se potkaly
+na „pojmenovat"). **1/6 dverg úplně zmizel** · **1/6 porušilo kánon**: přišel jako **přirovnání
+nalepené na obraz** — *„patient as the stone dozing under the bank"*, tedy simile na metafoře
+(zakázáno) **a** druhý obrázek vedle rybníka.
+
+⭐ **Nález:** selhání není v tom, že by se dverg a čočka na konci pobily. Je v tom, že **při třech
+zdrojích** (obraz + dverg + čočka) model jeden zdroj buď zahodí, nebo ho **přišije jako srovnání**.
+Oprava je adresná a testovatelná: dvergovi se musí zakázat přijít jako přirovnání — má být vlastností
+toho, co v obraze už je. → pravidlo zapsáno v `RUNAR_DESIGN.md`, „Dverg pod runou".
+
+⚠️ **Hranice:** obě ramena vyšla nad produkční limit (3 věty / 38–45 slov) — to dělá pinnutí obrazu,
+je to stejné v kontrole i u dverga, tedy ne vada dverga. Netestovala se varianta „dverg jen jako
+vodítko pro autora obrazů" — ta se generováním ověřit nedá, pozná se až na hotové bance.
+
+
+## 2026-08-23 — Osa skryté ↔ odhalené: světelný pól se NESTAVÍ · a predikce padla JINAK, než se čekala
+
+Obrácená páka (§25) na tvrzení „Sowilo/Dagaz nemají POD, takže druhou vrstvu nepotřebují".
+Produkční prompt (EN), obraz pinnut, **pozitivní kontrola Isa** (dverga MÁ) prochází týmiž rameny —
+bez ní by nešlo odlišit „špatná runa pro tuhle vrstvu" od „špatná instrukce" (§27).
+Tři ramena: **A** bez vrstvy · **B** skrytá (dvergovská) · **C** světelná (ljósálfar).
+n = 2 na buňku. Korpus: `~/runar-eval/osa-test.{jsonl,txt}`.
+
+**① Kontrola Isa drží.** Rameno B přidalo druhé patro přesně jako dřív: *„under it the water still
+moves where no eye can follow"* · *„Under that stillness the water keeps its slow dark motion,
+unhurried, never truly stopped."* Instrukce tedy funguje — co selže jinde, není její vina.
+
+**② ⭐ SVĚTELNÝ PÓL (rameno C) NEPŘIDAL NIC. Nikde.** U Sowilo i Dagaz jen **zopakoval, co runa už
+řekla**: čtení říká „světlo ukazuje věc jasně" a pak *„Nothing on these stones holds a shadow now"* ·
+*„keeps nothing back and casts no shadow behind it"*. U Isy se stalo něco zajímavějšího: **světelná
+vrstva se ohnula ve skrytou** — *„the water beneath shows plainer than any summer light"*. Runa si
+vynutila svoje „pod".
+→ **Rozhodnuto tímhle měřením: světelný protějšek dverga se NESTAVÍ.** Symetrie byla estetický tah,
+ne potřeba. (Ruší otázku Cowork-read 2026-08-23, „co je na světelném pólu materiál".)
+
+**③ ⚠️ PREDIKCE PADLA — ale odhalila horší vadu, než se čekala.** Čekalo se, že skrytá vrstva na
+světelné runě vyjde **vynuceně**. Nevyšla. Čte se dobře, místy pěkně — jenže:
+- **Sowilo B:** *„Deeper in the rock, the dark seams **the light has not yet reached** hold their own
+  colour."* Hezká věta, ale čtení je najednou o tom, kam světlo NEDOSÁHLO. To není Sowilo, to je
+  Perth/Isa. **Runa se tiše posunula.**
+- **Dagaz B:** *„When did **the change in you** finish, before you thought to look?"* — skrytý materiál
+  se převedl na **nitro tazatele**, tedy přesně ten doložený únik.
+
+⭐ **Nález: nebezpečí není ošklivost, je to TICHÝ POSUN VÝZNAMU.** To je horší než vynucená věta —
+vynucenou větu čtenář pozná, posunutou runu ne. Kontrola kvality textu tuhle vadu nechytí; chytí ji
+jen srovnání s tím, co ta runa je.
+
+**Co z toho platí pro `RUNAR_DESIGN.md` („Dverg pod runou"):** pravidlo „runy bez dverga se
+nedoplňují" zůstává, ale **důvod se mění**. Ne „znělo by to nuceně" → ale **„čtení by přestalo být
+o té runě"**. Zapsáno tam.
+
+⚠️ **Hranice:** n = 2 na buňku, jeden jazyk, obraz pinnut. Rameno A u Sowilo/Dagaz bylo čisté a úplné
+(podpora pro „nepotřebují to"), ale Sowilo A [2] skončilo mírným ujištěním *„the way ahead is easy to
+see now"* — nesouvisí s testem, stojí za sledování jinde.
+
+
+## 2026-08-23 — Vegvísir 1→2→3: řetěz se od tří single NEODLIŠIL. „Nepovinná historie" = ignorovaná historie
+
+Test podle GPT/ownera („neřeš osm ramen, udělej 1→2→3 a zastav se"). Produkční prompt (EN), obrazy
+pinnuté, runy zvolené ZÁMĚRNĚ vzdálené (Fehu → Isa → Ehwaz), aby vztah musel být skutečná práce.
+**A** = řetěz (rameno 2 dostalo TEXT ramene 1; rameno 3 texty 1+2, s pravidlem „historie je materiál,
+ne zápis; nesmíš rekapitulovat ani jmenovat předchozí runy; smíš ji nechat být") · **B** = tři
+nezávislá single, tytéž runy a obrazy. 2 běhy. Korpus: `~/runar-eval/retez-test.{jsonl,txt}`.
+
+**⭐ VÝSLEDEK: vztah nevznikl ANI JEDNOU (0 ze 6 ramen).** Řetězová čtení jsou od kontrolních
+prakticky k nerozeznání — Ehwaz v řetězu končí *„Do you hold the reins tight, or let the horse choose
+its footing?"*, kontrolní *„Do you hold the reins, or let the feet that already know the ford go
+first?"*. Nejsilnější náznak ozvěny za celý test je slovo „holding" u Isy, což je náhoda, ne vztah.
+
+**Příčina — a byla předpovězena.** Instrukce zněla „smíš navázat, odporovat, otočit… **nebo to nechat
+být, když nic nepřijde přirozeně**". Nejlevnější cesta je nechat to být, a model ji vzal 6/6.
+Potvrzuje to varování zapsané do `RUNAR_DESIGN.md` téhož dne: **„nepovinné" samo nestačí, potřebuje
+protiváhu.** Tady se to ukázalo v nejostřejší formě — nepovinná historie se nepoužije vůbec, ne jen
+selektivně.
+
+**Co to znamená pro Vegvísir:** dokud vztah mezi rameny nevzniká, **je to osmkrát Single s čekáním**.
+Jádro definice („jedno čtení, které vzniká vztahem k prošlému") zatím NENÍ splněno žádným mechanismem,
+který máme. Stavět osm ramen nad tímhle by znamenalo postavit dva měsíce čekání na něco, co nefunguje.
+
+⚠️ **Vada vlastního nástroje (§27), hlásím ji, ne zakrývám:** detektor odkazů flagoval *všech* šest
+řetězových čtení — jenže regex obsahoval i jména testovaných run (`fehu|isa|ehwaz`) a čtení svoji
+VLASTNÍ runu jmenovat MUSÍ (žádá to prompt). Šlo tedy o falešné poplachy; posuzoval jsem ručně.
+Detektor je pro tenhle účel nepoužitelný, dokud nebude vylučovat aktuální runu.
+
+**Další krok (návrh, neproveden):** nedávat celý text předchozího ramene, ale **jednu konkrétní věc
+z něj** — tak, jak funguje dverg: ne odkaz, ale materiál nesený týmž obrazem. Menší vstup se hůř
+ignoruje než celý odstavec. Alternativa: přiřadit rameni JEDEN z pohybů (naváže/změní/otevře) místo
+nabídky všech — ⚠️ ale to je instrukce do promptu, kterou GPT i naše měření TVARU věty varují dávat
+jako jediný vzor.
+
+⚠️ **Hranice:** 2 běhy × 3 ramena, jeden jazyk, obrazy pinnuté, jedna sada run. Signál je ale
+konzistentní (0/6) a levný na zopakování.

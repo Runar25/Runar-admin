@@ -654,6 +654,51 @@ na `tree_state` — propojení se rozhodne zvlášť a nestaví se předem.
 - **Dverg pod runou** = test-gated, viz „Dverg pod runou" výš. **Osa skryté ↔ odhalené = PARKOVÁNA**
   jako strukturální tvrzení; měření, které k ní proběhlo, platí a je v `RUNAR_EVAL_LOG.md` 2026-08-23.
 
+**Jádro — proč to není 8× Single** (upřesněno 2026-08-23):
+> **Vegvísir je JEDNO čtení, které se neodhalí najednou. Vzniká tím, že nové obrazy vstupují do
+> vztahu s těmi, kterými člověk už prošel.** Nejde o osm run, jde o to, co udělá druhá s první
+> a osmá s celou cestou.
+📜 **Každá nová runa nepřidává další význam — přidává další pohled na to, co už bylo viděno.**
+
+**Jak se nakládá s historií:**
+- ⭐ **Historie NENÍ seznam minulých run. Je to materiál, ze kterého vzniká nový obraz.**
+  **Rúnar není kronikář.** Začne-li rameno „Před devíti nocemi jsi dostal Gebo, poté Isa…", vznikl
+  **log, ne cesta**. Ozvěna nesmí být callback se jmény run: ne *„předchozí runa byla Isa, která
+  znamená zastavení"*, ale *„to, co předtím mlčelo, teď vydává zvuk"*.
+  🔒 Tvar, který tohle drží, je **změřený**: druhá vrstva funguje, když ji nese TÝŽ obraz, a selhává,
+  když přijde pojmenovaná nebo jako přirovnání (→ `RUNAR_EVAL_LOG.md` 2026-08-23).
+- **Historie je dostupná, ne povinná.** Nové rameno smí navázat, odporovat, otočit směr, připomenout,
+  rozšířit, **nebo historii nechat být**. Povinné threading = po osmi ramenech mechanika.
+  ✅ Vzor už v produkci existuje: `_lensContext` končí *„If it does not come to the ending naturally,
+  leave it out."*
+  ⚠️ **Ale „nepovinné" samo nestačí — potřebuje protiváhu.** Model sáhne po historii tam, kde je to
+  SNADNÉ (runy si jsou podobné), a vynechá ji tam, kde by byla zajímavá (runy si odporují) — tedy
+  přesně obráceně. Doloženo: v testu osy se světelná vrstva **ohnula ve skrytou**, aby seděla runě.
+  Jak tu protiváhu udělat = OTEVŘENÉ.
+- **Designová kontrola (NE instrukce do promptu):** každé rameno dělá jeden ze tří pohybů —
+  **naváže · změní · otevře**. Osm navázání = nudná kontinuita; osm převracení = chaos. Slouží nám
+  k posouzení oblouku. ⚠️ Do promptu to nepatří: jeden vzor v promptu = model ho opíše.
+
+**První a osmé rameno:**
+- **První je prostě první obraz. Tečka.** Nepředznamenává osm dalších, nevysvětluje cestu, neříká
+  „tohle je začátek". Má být dost silné, aby si ho člověk zapamatoval — proto se k němu dá o sedm
+  ramen později vrátit.
+- **Osmé neuzavírá, je to místo, odkud se člověk ohlédne.** `1 → 8` není *začátek → konec*, ale
+  **první obraz → obraz, ze kterého ho teď vidíš jinak**. (Závěr by byl zakázaný verdikt.)
+
+⚠️ **Ramena NEMAJÍ obsah podle pozice.** Že se s rostoucí řadou mění, co je vidět (první nemá
+kontext · uprostřed je největší pokušení uzavřít · ke konci je zajímavější, co nepřišlo), je
+**designová pozornost pro nás — kde je guardrail nejvíc v ohrožení. NE význam ramene.** Zapsat to
+jako význam by z Vegvísiru udělalo klasický narativní spread, což je přesně to, čemu se vyhýbáme.
+
+⚠️ **Test autonomie:** kdyby se životní runa zítra z Rúnara odstranila, **Vegvísir nesmí ztratit nic
+podstatného**. Ztratí-li, visí pořád na starém konceptu.
+
+⚠️ **Jediná část, kterou NEJDE ověřit ničím, co umíme:** ta časová mezera. Devět nocí života mezi
+rameny se nedá nasimulovat — všechno ostatní (obraz, ozvěna, pohyb, pořadí) ověřit umíme, tohle ne.
+Rituální práh je inspirace; produktový princip je „mezi obrazy musí být skutečný čas" — a ten zůstává
+**hypotézou**, dokud to neuvidí živí lidé.
+
 ### UI — domluveno ✅
 Přepínač pod "DRAW YOUR RUNE":
 `[ SINGLE RUNE ]  [ NORNS ]  [ KŘÍŽ ]  [ HORSESHOE ]  [ YGGDRASIL ]`
