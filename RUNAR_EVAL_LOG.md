@@ -775,3 +775,22 @@ RUNE_IMAGES (kritéria RUNAR_DESIGN, hlídá ㊱):
 - **bezpečné výběrem** (obě vrstvy): Gebo, Isa, Perth, Dagaz, Ansuz. (T2-038 = chyba VÝBĚRU, ne obsahu.)
 - ⚠️ n=1 na konkrétní dvojici run v evalu → per-pár mapa se NEměří, jen typ (D×E).
 Zamýšlené použití registru = výběr-kongruence (SMĚR — nestaví se do rozhodnutí o Vegvísiru).
+
+## 2026-08-23 — OBLOUK: designová kontrola závěru (protokol + baseline)
+KUKY (po arc-analýze reálných čtení): oblouk „závěr vrací PROMĚNĚNÝ otevírací obraz" se
+**MĚŘÍ, do promptu se neinstruuje** — 5fázová scénická struktura z handoffu CODE-read se
+NESTAVÍ (rozhodnutí + zdůvodnění → RUNAR_DECISIONS.md 2026-08-23).
+**Protokol:** `python -X utf8 scripts/oblouk.py [--days N]` vyřízne z prod čtení (deep_text
+⇒ spready/Yggdrasil; žádné API) dvojice otevření/závěr; verdikt dává session/owner pohledem:
+**PLNÝ OBLOUK** (návrat + proměna) · **NÁVRAT BEZ PROMĚNY** · **BEZ NÁVRATU**. Kadence:
+po každé změně promptu sahající na závěry/obrazy + při větší dávce reálných čtení.
+**Baseline 2026-08-23 (v4.12-mynd, n=5 dlouhých čtení ownera, EN): 3/5 oblouk spontánně.**
+- Yggdrasil 18:10 (trn na rozcestí) — **učebnicový plný**: „standing where the two ways part,
+  and the grass on both sides bears the same marks" (tráva proměněná kroupami).
+- Yggdrasil 18:08 (lampa/ponk) — plný, proměna mírná („the piece takes the mark you gave it").
+- Yggdrasil 18:18 (probuzení) — plný v jedné scéně (světlo putuje), závěr otázkou obrazu
+  (v4.11 tvar) — návrat ano, DOSEDNUTÍ k otázce chybí (→ otázka závěrové věty, DECISIONS).
+- Yggdrasil 15:53 (světlo nad hřebenem) — **NÁVRAT BEZ PROMĚNY** (restatement) + nese
+  „already"-rodinu: „light in you that has already come up… you simply had not yet turned to look".
+- Norns 10:38 (práh/trn → semeno → světlo v údolí) — **BEZ NÁVRATU** (progrese k novému
+  obrazu + závěr otázkou).

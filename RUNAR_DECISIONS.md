@@ -4616,3 +4616,18 @@ Wunjo-E obraz potřebuje radost/setkání, ne klid po větru.
 **Zapsáno (EVAL_LOG):** registrová riziková mapa (proxy predikce, T2-038). Výběr-kongruence
 = SMĚR, nestaví se do rozhodnutí o Vegvísiru.
 Affected doc(s): RUNAR_DESIGN.md (kritéria) · RUNAR_EVAL_LOG.md (mapa) — v tomto commitu.
+
+## 2026-08-23 — Oblouk = designová KONTROLA, ne prompt-instrukce (KUKY)
+5fázová scénická struktura (handoff CODE-read, návrh GPT) se **NESTAVÍ**: baseline na
+reálných čteních ownera dala 3/5 plného oblouku SPONTÁNNĚ (v4.12, bez jediné instrukce) —
+instrukce by z větší části přikazovala, co se už děje, a nesla riziko druhého POŘADÍ přes
+prostorové vrstvy Yggdrasilu. Oblouk se od teď MĚŘÍ: `scripts/oblouk.py`, protokol +
+baseline → RUNAR_EVAL_LOG.md 2026-08-23. Jednořádková spona zůstává v záloze — nasadí se,
+jen když větší baseline ukáže častý návrat-bez-proměny (zatím 1/5).
+**OTEVŘENO (owner, tentýž den): závěrová VĚTA dlouhých čtení.** KUKY: výsledkem Yggdrasilu
+má být „9 run → jeden živý obraz → jeho proměna → pochopení toho, co obraz znamená pro
+otázku" — a poslední věta je dnes taky jen obraz runy (č. 18:18: otázka-obraz bez dosednutí).
+Návrh CODE-tune předložen (dosednutí řečí obrazu, ne výklad), čeká na rozhodnutí ownera.
+Affected doc(s): RUNAR_EVAL_LOG.md (protokol, tento commit) · RUNAR_BACKLOG.md („prázdné
+řádky" uzavřeny jako ne-bug — chyba měření deep_text vs short_text; stop v UI na server
+nedosáhne, charged ⇔ journaled platí; commit předtím).
