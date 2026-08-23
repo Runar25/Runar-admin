@@ -311,6 +311,8 @@ Rúnar je bere vážně. Velké kameny, kopce, staré stromy mají obyvatele.
 - [Agndofa] **Móberg** — mladý dverg tufu (móberg = islandská hornina z ohně a vody); tvaruje měkký kámen, co pamatuje sopku. V mladých lávových polích.
 - [Agndofa] **Lyngri** — nejmenší; pečuje o kořeny lyngu ve spárách hraunů, nosí zprávy mezi kamenem a povrchem.
 
+- [kánon] **Brísingar — Alfrigg · Berlingr · Grér · Dvalinn** — čtyři, kteří ukovali Freyin náhrdelník Brísingamen; cenou byla noc s každým z nich (Sörla þáttr). (Agndofa) v žíle zlata pod ledovcovou řekou. ⚠️ Dvalinn je **týž** dverg jako výš — jeden dverg ve dvou mýtech, ne dva stejnojmenní.
+
 **Další známí dvergové** (jedním řádkem):
 - [kánon] **Dáinn** — podílel se na kanci Hildisvíni; jméno „mrtvý"; sdílí ho jeden ze čtyř jelenů Yggdrasilu.
 - [kánon] **Regin** — kovář, pěstoun Sigurða, ukoval meč Gram; bratr Fáfniho.
@@ -318,12 +320,59 @@ Rúnar je bere vážně. Velké kameny, kopce, staré stromy mají obyvatele.
 - [kánon] **Hreiðmar** — otec Fáfniho, Regina a Otra; mág. (Rod na hraně dverg/mág.)
 - [kánon] **Otr** — Hreiðmarův syn, měnil se ve vydru; Loki ho zabil, tím spustil kletbu zlata.
 - [kánon] **Litr** — dverg, kterého Thór kopl na Baldrovu hranici.
+- [kánon] **Nabbi** — s Dáinnem ukoval Freyova kance Hildisvíni (Hyndluljóð).
+- [kánon] **Þjóðreyrir** — zaříkává „fyrir Dellings durum", u prahu úsvitu (Hávamál 160); jediný dverg spjatý se DNEM, ne s kamenem.
 - [kánon] **Gandálfr** — jen jméno z Dvergatalu (gandr + álfr); slavné přes Tolkiena, v mýtu bez příběhu.
 - [kánon-ish] **Völundr** (Wayland) — mistr-kovář pomsty; obvykle řazen k álfům, ne čistý dverg — pro úplnost.
 
 **Roll-call z Dvergatalu** (jen jména): ~60+ dvergů je ve Völuspá jen jména bez příběhu (Þorinn, Fíli, Kíli, Óinn, Glóinn, Bifur, Bófur, Bömbur, Nóri, Náinn, Eikinskjaldi/Oakenshield…). Obsah nevymýšlet; až některý dostane roli, rozepíše se.
 
-*Zdroje (kánon): Grímnismál 33 · World History Encyclopedia · vikingr.org · The Warrior Lodge · Wikipedia (čtyři jeleni).*
+*Zdroje (kánon): Grímnismál 33 · World History Encyclopedia · vikingr.org · The Warrior Lodge · Wikipedia (čtyři jeleni) · Sörla þáttr (Brísingar) · Hyndluljóð (Nabbi) · Hávamál 160 (Þjóðreyrir) · Gould „Dwarf-Names" PMLA 1929 · „Little Glory…" ScanCan 2026 · Ármann Jakobsson „Beware of the Elf!" Folklore 126/2 (2015) · Guide to Iceland / Visit Austurland (dvergasteinn, álfasteinn) · Prose Edda — typy álfů.*
+
+#### Dvergasteinn — kámen, ve kterém dverg bydlí
+
+🔒 **Reálná islandská místa, ne naše výmysl.** „Kameny dvergů" jsou skutečná jména skutečných skal:
+**Álftafjörður** (Západní fjordy) — skála se prý sama přeplavila přes fjord, když se stěhoval kostel,
+protože dvergové odmítli zůstat · **Seyðisfjörður** (východ) · **Dverghamrar** (čedičové sloupy, jih).
+Chrání se stejně jako kameny elfí.
+
+*Proč je tohle z celé vrstvy nejcennější:* dělá to „dverg pod runou" **doslovným**. Dverg nebydlí
+v příběhu — bydlí v kameni. Materiálová vrstva runy je pak ten kámen a to, co v něm spí.
+
+⚠️ **Právní hranice:** folklor a geografie jsou volné. **Nekopírovat provedení Arctic Henge**
+(72 dvergů jako kalendář, Haukur Halldórsson) — to je autorský nápad, ne mýtus.
+⚠️ **Jednozdrojové, nekříženo:** „léčivé kameny v Bolungavíku" a teze „Island neměl doly, tak dvergy
+přesunul do kamenů". Zajímavé, ale zatím stojí na jednom zdroji.
+
+#### Proč „dwarf-like" a ne skřítek
+
+🔒 Dvergar **původně nebyli nutně malí** (Gould, PMLA 1929 · „Little Glory…", ScanCan 2026) — malost
+je pozdější vrstva, hlavně po Tolkienovi. V mýtu mají kosmickou funkci: čtyři drží nebe.
+→ Rúnar je **prastarý řemeslník kamene**, ne komická postavička. Termín, který to nese:
+🔒 **dverga-smíði** = „práce dvergů", tedy mistrovské až magické řemeslo.
+
+### Álfar a huldufólk
+
+🔒 **Dva druhy álfů** (Snorriho Edda): **ljósálfar** — světlí, „krásnější než slunce", z Álfheimu,
+spjatí s Freyem · **dökkálfar / svartálfar** — temní, podzemní. ⚠️ U temných text sám ukazuje, že jde
+vlastně o **dvergy** (Dvalinn je označen obojím) — tmavá polovina álfů a naši dvergové jsou tedy
+nejspíš táž vrstva, ne dvě.
+🔒 **Pojmenovaných álfů je prakticky jeden:** Völundr, mistr-kovář, jehož příběh je zrada a pomsta.
+Víc jich kánon nedá.
+
+🔒 **Huldufólk = skrytý lid.** Jsou **velcí jako lidé** (ne malí, bez křídel) a žijí paralelní život
+v kamenech, kopcích a lávě — mají farmy, kostely, dobytek. **álfasteinn** = elfí kámen (Grásteinn
+chráněný od 1983) · **skyggn / sjáandi** = ten, kdo je vidí. Silnice se kvůli nim odklánějí; přes
+polovinu Islanďanů jejich existenci nepopře.
+
+⚠️ **Kánonický caveat** (Ármann Jakobsson, Folklore 2015): víra v álfy **není nepřerušená**, mění se
+dobou. Nikdy nepsat „odedávna stejná víra". Pro nás: álfar a huldufólk jsou **vrstvy**, ne jedno dogma.
+
+⭐ **Kde se to hodí:** ljósálfar jsou **sluneční pól** proti kamenným dvergům — a to je přesně tam, kde
+dvergové docházejí (Sowilo, Dagaz nemají koho). Huldufólk **není obsazení postav**, je to atmosféra:
+paralelní svět vedle našeho.
+📜 Víc pojmenovaných postav = **naše invence** na prázdných jménech z Dvergatalu; značit 📜 — kánon
+jich víc nedá (ověřeno dvakrát).
 
 ### Příběh stromu
 
