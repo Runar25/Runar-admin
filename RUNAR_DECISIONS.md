@@ -4557,3 +4557,21 @@ ohne a OBHÁJÍ sítem — nové lore tvrzení) → owner schválí → CODE-tun
 RP_YGGDRASIL (EN+IS: `tiers` hlavičky + `beats` časový jazyk + `positions`) jedním měřeným
 krokem s golden. Zadání předáno handoffem (chat 23. 8.).
 Affected doc(s): RUNAR_BACKLOG.md (Yggdrasil položka → V5, čeká na Cowork návrh).
+
+
+## 2026-08-23 — v4.12-mynd: Yggdrasil V5 NASAZEN — devět nových významů, vrstvy nečasově, Norny ustoupily (CODE-tune)
+**Rozhodnutí (KUKY):** „jo — koruna/kmen/kořeny" (jména Skuld/Verðandi/Urður z hlaviček vrstev
+USTUPUJÍ — návrh Cowork #45, ohnutí by neprošlo sítem; Norny zůstávají u tří kořenů, rituálu
+a Vegvísiru). Ownerův dodatek: Yggdrasil patří ke stromu života a jeho enginu — osy
+ukazuje/nese/živí s ním ladí.
+**Nasazeno (RP_YGGDRASIL EN+IS):** tiers → KORUNA (sýnir sig) · STOFN (ber) · RÆTUR (nærir) ·
+positions → devět obrazů Cowork #45 s ověřením: IS slovníkem (mj. „úr brám jötuns" — Snorriho
+doložené slovo místo brún; Niflheimr „…og engin elur hana" místo elipsy; „í leyni" doloženo) ·
+beats → časový jazyk („threads being cut", „already woven") přepsán na osy · zákaz jmenování
+Noren os → zákaz jmenování vrstev. Svartálfaheimr doostřen o SKRYTOST („hands working unseen"
+/ „hendur sem vinna í leyni") — jediná systémová záměna slepého testu (s Niðavellirem, oba
+trpasličí světy).
+**Ověření před nasazením:** slepá rozlišitelnost subagenty EN 8/9 · IS 7/9 (šance 1/9);
+mytologická opora per svět zapsána Coworkem (4 přímé citáty · 3 střední · 2 interpretační).
+Golden: jen 4 yggdrasil buildery. Smoke 35/35. Ukázkové čtení pro oko ownera následuje.
+Affected doc(s): RUNAR_BACKLOG.md (V5 položka → nasazeno, zbývá oko ownera).
