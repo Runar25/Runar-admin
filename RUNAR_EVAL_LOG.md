@@ -728,3 +728,38 @@ jako jediný vzor.
 
 ⚠️ **Hranice:** 2 běhy × 3 ramena, jeden jazyk, obrazy pinnuté, jedna sada run. Signál je ale
 konzistentní (0/6) a levný na zopakování.
+
+
+## 2026-08-23 — Vegvísir řetěz v2: nést JEDNU VĚC místo textu — mechanismus ZABRAL (4/4 proti 0/6)
+
+Oprava po nálezu z téhož dne (celý text + „smíš to nechat být" = 0/6). Změny tři: **(a)** nese se
+jedna krátká fráze, ne odstavec · **(b)** extrahuje ji MODEL (samostatné volání, ne já ručně) ·
+**(c)** ŽÁDNÁ úniková klauzule. Zbytek stejný: produkční prompt, tytéž runy a obrazy (Fehu → Isa →
+Ehwaz), 2 běhy + kontrola bez nesení. Korpus: `~/runar-eval/nesene-test.{jsonl,txt}`.
+
+**⭐ Nesená věc se objevila ve VŠECH navazujících ramenech (4/4).** Proti 0/6 u verze s celým textem.
+Rozdíl nedělá objem informace — dělá ho **tvar**: odstavec je látka k ignorování, jedna konkrétní
+fráze je látka k použití. Táž mechanika jako u dverga (materiál nesený týmž obrazem, ne odkaz).
+
+**⭐ Nejlepší tvar, jaký z toho vyšel — nesené se objevilo jako NEPŘÍTOMNOST:**
+nese *„Steam rising from hot bread"* → Isa: *„still water held under **a skin that no longer steams**
+into the morning air."* Žádné přirovnání, žádný chleba, žádný odkaz — předchozí materiál je přítomen
+jako **to, co už tam není**. To je skutečný vztah mezi čteními, a přitom to není ani rekapitulace,
+ani citace. **Nesené funguje nejlíp, když je POPŘENÉ nebo PROMĚNĚNÉ, ne zopakované.**
+
+**⚠️ Selhání se přesunulo, nezmizelo: 1 ze 4 přišlo jako PŘIROVNÁNÍ.**
+*„the pond… giving off **no more warmth than the crust of a cold loaf**"* — komparace, kterou zakazuje
+jak instrukce, tak kánon („never a simile stacked on a metaphor"), a navíc vtáhne chleba do scény
+u rybníka jako druhý obraz. **Je to táž vada jako u dverga** („patient as the stone dozing under the
+bank"). Riziko už tedy není ignorování, ale **komparace** — a na tu existuje adresný zákaz.
+
+**⚠️ Nesené se ROZPADÁ s odstupem.** Ve třetím rameni už materiál z prvního nebyl v obou bězích;
+zbylo jen to z druhého (a i to slabě: *„runs cold over **black** gravel"*). Přes osm ramen by první
+rameno zmizelo dávno před koncem — což **koliduje s návrhem, že osmé rameno je místo, odkud se
+člověk ohlédne na první**. Nevyřešeno; je to teď hlavní otevřená otázka mechaniky.
+
+**Vedlejší:** extrakce modelem je použitelná — vracela věcné materiálové fráze („Warm bread steam
+rising", „Ice over moving water"), tedy automatizace téhle vrstvy je reálná, ne ruční.
+
+⚠️ **Hranice:** 2 běhy × 3 ramena + 1 kontrolní sada, jeden jazyk, obrazy pinnuté, jedna sada run.
+Signál je silný (4/4 proti 0/6), ale malý.
