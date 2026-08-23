@@ -4463,3 +4463,22 @@ mám zaplacené." Souzení (mantinely, lineupy, korelace) od teď V SESSION; sle
 nemůže); API klíč jen na generování produkčních čtení s malým n. Detail + srovnatelnost
 čísel → memory/working-style.md (vlastník pravidla).
 Affected doc(s): memory/working-style.md.
+
+
+## 2026-08-23 — v4.11-mynd: chlad krok 2 — tvar otevřené otázky bez pašování po půlkách (CODE-tune)
+**Druhá páka z hranice ownera** (vnitřní touhy / předpoklad v otázce). Diagnóza v session
+(zdarma, 48 čtení): z 12 otázkových závěrů 3 jasné vady + 2 hraniční, vzorec = tvrzení
+vnitřního stavu ve DRUHÉ PŮLCE volby („…or because you are not yet ready to feel…"). Původní
+tvar („could honestly answer neither… must not assume") model obcházel: přilepil „or neither
+yet" a tvrzení nechal („what stirs in you…").
+**Přepis (jmenuje pozitivní tvary, zakazuje po půlkách):** „End with one open question asked
+of the image, or offering a plain choice — no half of the question may claim what is true,
+missing, or not yet ready in the seeker." + IS ekvivalent.
+**A/B (Norny, tvar otázky vynucen, n=16/rameno, EN+IS):** jasné vady 1→1 · hraniční **7→3** ·
+rozložení překlopeno k otázkám obrazu („does the scree hold because it is fixed, or because
+each stone knows the ones beside it?") a prostým volbám. ⚠️ **Soudce = session (CODE-tune),
+první měření v režimu „testy v session" (f30662f) — čísla NEsrovnatelná s opus-4-8 soudci.**
+Tvar je sdílený se single (`_endingShape`) — táž hranice platí všude; single chlad = watch.
+Golden 0 změn (loterie fixtures otázku netrefila) — nové znění ověřeno seed-and-assert
+produkční cestou (EN single ✓ IS norns ✓). Data docs/eval/2026-08-23-spready-v49/otazka-ab.jsonl.
+Affected doc(s): žádný.

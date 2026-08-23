@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-08-23",
- "prompt_version": "v4.10-mynd",
+ "prompt_version": "v4.11-mynd",
  "pravidla": [
   {
    "hash": "54d29df4d80b",
@@ -46,10 +46,10 @@
    "zacatek": "Open by setting the seeker inside the image, at the spot where it is h"
   },
   {
-   "hash": "c377db7416e5",
+   "hash": "03fb384bd478",
    "lang": "en",
    "zdroj": "zakonceni_open[0]",
-   "zacatek": "End with one open question the seeker could honestly answer \"neither\" "
+   "zacatek": "End with one open question asked of the image, or offering a plain cho"
   },
   {
    "hash": "58f77728c13d",
@@ -568,10 +568,10 @@
    "zacatek": "Byrjaðu á því að setja leitandann inn í myndina, á staðinn þar sem hún"
   },
   {
-   "hash": "162a1cf6f735",
+   "hash": "52fa36a257cc",
    "lang": "is",
    "zdroj": "zakonceni_open[0]",
-   "zacatek": "Endaðu á einni opinni spurningu sem leitandinn gæti með sanni svarað n"
+   "zacatek": "Endaðu á einni opinni spurningu sem beinist að myndinni, eða býður ein"
   },
   {
    "hash": "3781c79d0ca6",

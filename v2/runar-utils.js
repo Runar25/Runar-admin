@@ -351,7 +351,10 @@ const ENDING_HEAVY = [
 const ENDING_OPEN = [
   // 2026-08-21: „turns the seeker inward" vyrabelo predpoklad zabaleny do otazky —
   // ctenar na ni nemohl odpovedet, aniz by tvrzeni prijal.
-  'End with one open question the seeker could honestly answer "neither" to — it must not assume what is true in them.',
+  // v4.11 (2026-08-23): "could answer neither" model obchazel pripojenim "or neither
+  // yet" k zachovanemu tvrzeni ("what stirs in you"). Prepis jmenuje pozitivni tvary
+  // a zakazuje tvrzeni po pulkach volby (A/B: hranicni 7->3 z 16).
+  'End with one open question asked of the image, or offering a plain choice — no half of the question may claim what is true, missing, or not yet ready in the seeker.',
   // 2026-08-21: puvodne „name where the seeker stands" — doslova pokyn tvrdit o ctenari,
   // osm radek od zakazu `_noColdRead`. Ted se pojmenovava jeho misto V OBRAZE.
   'End on a plain, steady line — name where the seeker stands in the image, not what is true inside them; not a question.',
@@ -362,7 +365,7 @@ const ENDING_HEAVY_IS = [
   'Endaðu á einni harðri spurningu sem heldur sig við myndina og krefst engrar játningar — engin huggun, ekkert mildað.',
 ];
 const ENDING_OPEN_IS = [
-  'Endaðu á einni opinni spurningu sem leitandinn gæti með sanni svarað neitandi — hún má ekki gefa sér hvað er satt innra með honum.',
+  'Endaðu á einni opinni spurningu sem beinist að myndinni, eða býður einfalt val — enginn helmingur spurningarinnar má fullyrða hvað er satt, hvað vantar eða hvað leitandinn er ekki tilbúinn til.',
   'Endaðu á staðfastri línu — nefndu hvar leitandinn stendur í myndinni, ekki hvað er satt innra með honum; ekki spurningu.',
   'Endaðu á hljóðlátri línu sem hvílir — ekki spurningu í þetta sinn.',
 ];
