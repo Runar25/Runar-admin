@@ -803,30 +803,14 @@ rukou, takže o skutečném znění zatím nevíme nic.
 Generování = CODE · hodnocení = Cowork · **zaslepení = CODE** (promíchat pořadí, sundat štítky ramen;
 bez toho není slepé skórování slepé).
 
-- [ ] **TEST 1 · Vegvísir 1→2→3 — ⚠️ ZADÁNÍ MUSÍ BÝT v2, JINAK ZOPAKUJE ZNÁMÝ ZÁPOR.**
-  Hypotéza: tři obrazy, co se potkávají, dají emergentní scénu; tři nezávislá single ne.
-  ⚠️ **Verze v1 (celý text předchozího ramene + „smíš to nechat být") už proběhla 2026-08-23 a dala
-  0/6** — model to nechal být pokaždé. Verze v2 (nese se **jedna extrahovaná materiálová fráze**,
-  extrahuje ji model, **žádná úniková klauzule**) dala **4/4**. → `RUNAR_EVAL_LOG.md` 2026-08-23.
-  **Pouštět jen v2**, jinak je to ~120 volání na potvrzení něčeho, co víme.
-  Skórovat slepě: (1) pozná soudce A od B? (2) vzniká v A vztah, co v B není? (3) vztahuje se rameno 2
-  **obrazem** (dobře), nebo **jménem/rekapitulací** (špatně)?
-  ⚠️ Přidat čtvrté kritérium z v2 nálezu: **přišlo nesené jako PŘIROVNÁNÍ?** (v2 mělo 1/4 —
-  „no more warmth than the crust of a cold loaf" = simile + druhý obraz, zakázané kánonem).
-  n ≥ 20 trojic na rameno (≈ 120 volání).
-
-- [ ] **TEST 2 · Norns: současnost vs recept.**
-  ✅ **Popis ramene A ověřen v kódu** (CODE-read): `_seasonalImagery` se volá **jednou na celý spread**
-  a builder říká doslova *„Each rune takes up what the one before it left off — one continuous weave,
-  never a list."* Cowork to popsal správně.
-  Rameno B = každá ze 3 run nese SVŮJ obraz z `RUNE_IMAGES`; prompt žádá emergentní **scénu** z jejich
-  potkání, ne řetěz taktů.
-  Skórovat slepě: (1) jedna situace, nebo tři věci za sebou? (2) co si člověk zapamatuje?
-  (3) ⚠️ **nerozpadne se B v SEZNAM obrazů?** — pravidlo „jeden obraz, nevyjmenovávat" existuje
-  z důvodu a tohle je hlavní riziko B. + claim-rate a porušení pravidel.
-  n ≥ 20 trojic na rameno. (Norns = nejkratší spread s pozicemi → nejlevnější.)
-
-- [ ] **TEST 3 · Aspekt-kongruentní výběr obrazů** — pustit až po 1–2, je nejexploratívnější.
+- [x] **TEST 1 — HOTOVO** (2026-08-23, de-blind → `docs/eval/2026-08-23-recept/tally.md`):
+  řetěz slepě identifikován 19/20; vztah obrazem ~15/20; jménem 0/20; simile 0/20. Buňkový
+  nález: v1 nulu způsobila ÚNIKOVÁ KLAUZULE, ne objem (celý text + povinné MEETS vláká);
+  malá fráze (v2) zůstává pro těžký směr — disparátní trojice nevlákaly ani povinně.
+- [x] **TEST 2 — HOTOVO A ROZHODNUTO** (2026-08-23): kolaps receptu do výčtu 0/20; současný
+  builder ~14/20 spolkne 1–2 runy. **KUKY: „nechame jeden obraz"** — recept se nepřijímá,
+  spolknutí run = přijatá cena. → RUNAR_DECISIONS.md 2026-08-23.
+- [ ] ⏸ **TEST 3 — PARKOVÁN** (2026-08-23: recept per-runa obrazů zamítnut → test ztratil konzumenta; odparkovat jen s novým konzumentem, např. vegvísir ramena). Původně: aspekt-kongruentní výběr obrazů.
   ✅ **Předpoklad ověřen (CODE-read):** aspektový sloupec je **naplněný úplně** — 82 řádků
   `RUNE_IMAGES`, **0 chybí IS, 0 chybí EN**, 49 různých EN aspektů (cattle · wealth · threshold ·
   natural rhythm · inner light…). Chybí jen pravidlo „které aspekty spolu jdou" = malý designový krok

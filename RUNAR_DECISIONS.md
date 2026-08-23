@@ -4666,3 +4666,12 @@ pozice 7). S.landing nahrazuje otázkový los ve třech builderech; **single los
 kopírování 12→56 %). Seed-and-assert 19/19 · smoke 36/36.
 Affected doc(s): RUNAR_DESIGN.md (štítek Norns recognition + dosednutí všude) ·
 RUNAR_EVAL_LOG.md (watch rozšířen) — tento commit.
+
+## 2026-08-23 — T2 rozhodnuto: JEDEN obraz zůstává; recept per-runa obrazů se NEPŘIJÍMÁ (KUKY)
+„nechame jeden obraz." Owner rozhodl s plnými čísly na stole (tally: recept nekolabuje do
+výčtu 0/20 a dá každé runě obraz; současný builder ~14/20 spolkne 1–2 runy do dominantního
+obrazu) — spolknutí run je přijatá cena za soudržnost jednoho silného obrazu. Full-path
+důsledky: **T3 (aspekt-kongruentní výběr) PARKOVÁN** — ztratil konzumenta (stavěl na
+per-runa obrazech); odparkovat jen s novým konzumentem (např. vegvísir ramena). Beats
+„každá runa musí nechat stopu" ve spreadech zůstávají beze změny.
+Affected doc(s): RUNAR_BACKLOG.md (T1/T2 zavřeny, T3 parkován) — tento commit.
