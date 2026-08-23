@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
- "zapsano": "2026-08-22",
- "prompt_version": "v4.5-mynd",
+ "zapsano": "2026-08-23",
+ "prompt_version": "v4.8-mynd",
  "pravidla": [
   {
    "hash": "54d29df4d80b",
@@ -284,6 +284,12 @@
    "lang": "en",
    "zdroj": "ask",
    "zacatek": "Do not mirror the seeker: if the question asserts or implies something"
+  },
+  {
+   "hash": "0ba07e635035",
+   "lang": "en",
+   "zdroj": "ask",
+   "zacatek": "If the seeker is thanking you or taking their leave rather than asking"
   },
   {
    "hash": "e06d424b01aa",
@@ -814,10 +820,16 @@
    "zacatek": "Speglaðu ekki leitandann: ef spurningin fullyrðir eitthvað eða gefur í"
   },
   {
-   "hash": "1e26b02fc421",
+   "hash": "3126fef26f6d",
    "lang": "is",
    "zdroj": "ask",
-   "zacatek": "Ef spurningin er ekki um þennan lestur (spjall, staðreyndir, ótengd ef"
+   "zacatek": "Ef leitandinn þakkar eða kveður í stað þess að spyrja, svaraðu með ein"
+  },
+  {
+   "hash": "579cefec8934",
+   "lang": "is",
+   "zdroj": "ask",
+   "zacatek": "Ef spurningin snýst ekki um þennan lestur (spjall, staðreyndir, ótengd"
   },
   {
    "hash": "44375373e2e1",

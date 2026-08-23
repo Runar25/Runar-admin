@@ -4343,3 +4343,19 @@ single (pozice = runa řečená skrz svůj rys světa), nebo zůstat bezejmenný
 Dnešní stav je nerozhodnutý hybrid. Otevřené vedle toho: čočka nedochází na velké spready
 (㉚ nález, NEROZHODNUTO) · yggdrasil.html rituál má vlastní prompty (návrhové rozhodnutí).
 Affected doc(s): RUNAR_BACKLOG.md (kříž [x] — už v commitu 81cdfc0).
+
+
+## 2026-08-23 — v4.8-mynd: Ask Rúnar přijímá poděkování a rozloučení (CODE-tune)
+**Rozhodnutí (KUKY + Cowork verdikt shody s charakterem):** poděkování bez otázky dnes
+padalo do „small talk" větve → model po díkách přednášel dál (změřeno: 2/4). Jedna
+podmínková řádka v `RP_ASK.rules` (EN+IS), žádná detekce záměru v kódu — s Cowork
+podmínkou: rozloučení zůstává v obraze a přítomnosti, ŽÁDNÉ slovo o budoucnosti
+(farewell nesmí být predikce v přestrojení).
+**Měření:** EN vlídné rozloučení 3/4 (dřív ~0 řízeně) · predikce 0/4 · normální otázky
+dál odpovídá 3/3 (obrácená páka — nová větev je neuzurpuje). IS: výstupy okem správné
+(„Vertu blessað, Kuky. Daggardropinn hvílir enn á stráinu…" — jméno, obraz v klidu);
+anglický soudce nad IS textem podhodnocuje (1/4), rozhodly vzorky. Rod v testu kolísal
+jen bez ÁVARP — produkce ho dodává.
+**Otevřené (owner):** zdvořilost stále stojí jedinou volnou follow-up otázku čtení —
+jestli nemá, je to produktová změna meteringu (server pozná díky až po zavolání).
+Affected doc(s): žádný.
