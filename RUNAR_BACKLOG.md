@@ -845,3 +845,29 @@ bez toho není slepé skórování slepé).
     Vegvísiru. Dvojice Kenaz → Brokkr a Eitri je **ověřená generováním** (drží 3/3, *„Some things take
     their shape only by being struck against"* — bez jména, bez druhého obrazu); obraz Svartálfaheimru
     je novější a jeho slepá nerozlišitelnost je už teď známá a vědomě nehoněná.
+
+
+- [ ] **Yggdrasil: 5fázová scénická struktura** — GPT návrh 2026-08-23 via Cowork #46, zapsal CODE-read.
+  **Opening Image** (jedna hlavní scéna z celého rozložení) → **Deepening** (další obrazy se do ní
+  přirozeně přidávají) → **Tension / skrytý pohyb** (něco se v obraze začne měnit nebo odhalovat) →
+  **Transformation** (obraz se pohne směrem, který udělaly runy) → **Closing Image** = *proměněná
+  verze úvodního obrazu*, NE „výsledek = X".
+  Nezávislé na V5; jiná logika než Vegvísirova trojice pohybů (naváže/změní/otevře — ta je designová
+  kontrola, ne instrukce do promptu).
+  - ⚠️ **Coworkovo „nejdřív V5, pak tohle" je už splněné** (ověřil CODE-read): **V5 je NASAZENÁ**
+    (`v4.12-mynd`, commit `863a0ec`) a **změřená** (slepě EN 8/9 · IS 7/9, s jednou pojmenovanou
+    inherentní záměnou). Tohle tedy může být **hned další samostatný měřený krok** — ne fronta za V5.
+    Pravidlo, které z toho platí dál: **netestovat dvě proměnné najednou.**
+  - ⭐ **Bezpečnější tady než u Vegvísiru, a je pro to důvod:** Yggdrasil je **jedno volání s devíti
+    runami**, takže všechny obrazy jsou v promptu naráz. „Poslední obraz = proměněný první" tu tedy
+    NEnaráží na rozpad neseného materiálu, který jsme naměřili u seriálového řetězu (u Vegvísiru
+    materiál z prvního ramene ve třetím už nebyl → `RUNAR_EVAL_LOG.md` 2026-08-23). **Rozpad je
+    problém seriálový, ne jednovoláním** — proto tenhle nápad sedí na Yggdrasil líp než na Vegvísir.
+  - ⚠️ **Hlavní riziko, které handoff nepojmenoval: DVĚ STRUKTURY NARÁZ.** Devět pozic už nese
+    významy světů; pětifázový oblouk je **druhá** struktura přes tutéž plochu. Dnes jsme třikrát
+    naměřili, že při třech zdrojích naráz (obraz + dverg + čočka) model **jeden zdroj zahodí, nebo
+    ho přišije jako přirovnání**. Tohle je táž třída přetížení. → měřit zvlášť, jestli fáze nesežerou
+    významy pozic.
+  - **Podklad:** živý vzorek (Gebo, #46) prý tenhle oblouk už částečně dělá sám (hřeben → pole →
+    bříza → podzemí → pramen → tma → zpět ke světlu). **n = 1, pozorování, ne důkaz** — a ten text
+    v repu není.
