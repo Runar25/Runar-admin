@@ -799,3 +799,23 @@ drží otázkový los) — na příští dávce owner čtení změřit obloukem:
 (viditelnost, ne otázka), (b) nezačal kázat („this means" rodina), (c) stejnost závěrů
 u téhož uživatele (táž life-rune čočka každé čtení + jedna pevná instrukce místo losu),
 (d) horseshoe: závěr neopisuje pozici 7.
+
+### Oblouk po v4.14 — první dávka (2026-08-23 večer, n=3 owner, EN)
+Mechanika doráží: všechna tři čtení v4.14-mynd, `prompt_draws` už nenese `ending` (před
+v4.14 losl Norns `heavy1`). Verdikty (session soudce dle protokolu výš):
+- **Norns 21:14** (Sowilo·Dagaz·Wunjo) — **PLNÝ OBLOUK**: otevírá stínem/chladem v údolí,
+  zavírá „The valley the shadow left is the same valley the light now fills, and the sun
+  reaches you the same on either path down." Dosednutí ANO (tvrzení, ne otázka), konec se
+  dotkl začátku.
+- **Kříž 21:16** (Thurisaz·Wunjo·Eihwaz·Berkana·Othila) — **PLNÝ**: „What comes clear now,
+  Kuky, is that the threshold and the open field are one and the same step…" — práh ze
+  středu se potkal s polem; doslova formule viditelnosti, síly pohromadě.
+- **Horseshoe 21:18** (Dagaz…Mannaz) — **PLNÝ**: „The hay comes in under the standing sun,
+  and every pair of hands that raked it stands together in the same unfading light." Závěr
+  sebral CELÝ oblouk (seno musí dovnitř + slunce + spolu), NEopsal pozici 7.
+**3/3 dosednutí · 0 kázání („this means" rodina) · 0 cizích konceptů (žádné „owe").**
+⚠️ **WATCH — tvar „…are the same":** všechny tři závěry stojí na konstrukci sjednocení
+(same valley · one and the same step · same unfading light). n=3 nerozhodne náhodu od
+rodící se formule; confound: dávka losovala příbuzné světlé obrazy a sdílené runy
+(Sowilo/Dagaz 2×, Wunjo 2×). Rozhodne další dávka — kdyby držela, dát landing formuli
+pestrost tvaru realizace (ne jen „dvě věci jsou jedno").
