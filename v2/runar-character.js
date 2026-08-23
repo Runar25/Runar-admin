@@ -1399,7 +1399,7 @@ function buildReadingPrompt(u, drawn, lang, corrections) { return buildReadingPr
 var RP_KRIZ = {
   is: {
     seeker:'Leiðandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leiðin', seekJoin:' og ', question:'Spurning',
-    positions:['RÚNIN 1 (Miðja / Kjarni — verdandi)','RÚNIN 2 (Ofan / Þrá — skuld)','RÚNIN 3 (Undir / Rót — urd)','RÚNIN 4 (Að baki / Fortíð — urd)','RÚNIN 5 (Framar / Stefna — skuld)'],
+    positions:['RÚNIN 1 (Miðja / Kjarni — verdandi):','RÚNIN 2 (Ofan / Þrá — skuld):','RÚNIN 3 (Undir / Rót — urd):','RÚNIN 4 (Að baki / Fortíð — urd):','RÚNIN 5 (Framar / Stefna — skuld):'],
     intro:'Leiðandinn dregur fimm rúnir — Áttavitinn.',
     langInstr:'',
     instructions:function(ctrName){ return [
@@ -1416,7 +1416,7 @@ var RP_KRIZ = {
   },
   en: {
     seeker:'Seeker', lifeRune:'Life rune', area:'Area', seeking:'Seeking', seekJoin:' & ', question:'Question',
-    positions:['RUNE 1 (Centre / Core — present)','RUNE 2 (Above / Aspiration — future)','RUNE 3 (Below / Root — hidden)','RUNE 4 (Behind / Past — past)','RUNE 5 (Ahead / Direction — future)'],
+    positions:['RUNE 1 (Centre / Core — present):','RUNE 2 (Above / Aspiration — future):','RUNE 3 (Below / Root — hidden):','RUNE 4 (Behind / Past — past):','RUNE 5 (Ahead / Direction — future):'],
     intro:'The seeker draws five runes — the Compass.',
     langInstr:'Respond in English.',
     instructions:function(ctrName){ return [
@@ -1441,9 +1441,10 @@ var RP_KRIZ = {
 function _kwBrief(r) {
   return rk(r).split(',').map(function(s){ return s.trim(); }).filter(Boolean).slice(0, 4).join(', ');
 }
-function _spreadBlock(r, label, inlineLabel) {
-  return inlineLabel ? (label + ': ' + rn(r) + '\n' + _kwBrief(r))
-                     : (label + '\n' + rn(r) + ' — ' + _kwBrief(r));
+function _spreadBlock(r, label) {
+  // v4.7 (2026-08-23): inline vetev odstranena — kriz byl posledni, kdo ji volal
+  // (sjednoceni formatu pozic, BACKLOG:226). Jeden tvar pro vsechny 4 spready.
+  return label + '\n' + rn(r) + ' — ' + _kwBrief(r);
 }
 
 function buildKrizPromptCross(u, runes, lang, corrections) {
@@ -1460,7 +1461,9 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
   ].filter(Boolean).join('\n');
   var P = S.positions;
   var runesBlock = [
-    _spreadBlock(rCtr, P[0], true), '', _spreadBlock(rAbo, P[1], true), '', _spreadBlock(rBel, P[2], true), '', _spreadBlock(rBeh, P[3], true), '', _spreadBlock(rAhe, P[4], true),
+    // v4.7 (2026-08-23): kriz sjednocen na tvar ostatnich tri spreadu (LABEL:\nRuna — klice).
+    // Byl jedinym s inline tvarem (BACKLOG:226); dedup z drivejska na tohle cekal.
+    _spreadBlock(rCtr, P[0]), '', _spreadBlock(rAbo, P[1]), '', _spreadBlock(rBel, P[2]), '', _spreadBlock(rBeh, P[3]), '', _spreadBlock(rAhe, P[4]),
   ].join('\n');
   var ctrName = rn(rCtr);
   return [
