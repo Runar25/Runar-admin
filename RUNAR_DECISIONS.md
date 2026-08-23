@@ -4415,3 +4415,19 @@ runa, tím to začíná"). Nanejvýš nit nebo callback, nikdy verdikt „tohle 
 proběhlo, platí → `RUNAR_EVAL_LOG.md` 2026-08-23.
 
 Affected doc(s): RUNAR_DESIGN.md (sekce „Vegvísir (8 ramen, seriálový)") — v témže commitu.
+
+
+## 2026-08-23 — Hypotéza „kontrastní páry run → chlad" PADLA, směr je opačný (CODE-tune)
+**Hypotéza (Cowork #37 §2, z GPT taxonomie vztahů):** thread říká „navaž" — u přirozeně
+kontrastních párů (Isa×Ansuz) by model sahal po vágním jazyce a vágnost = chlad.
+**Měření (48 čtení: v4.9 norns+kříž EN/IS + urdur-ab; pár = soudce CONTINUATION/CONTRAST
+nad k/k_is, 3 hlasy; chlad = spread-kalibrovaný soudce):** s ≥1 kontrastním párem chlad
+**5/20 (25 %)** · bez kontrastu **12/28 (43 %)** — směr OPAČNÝ (p≈0,23, neprůkazné, ale
+hypotézu nepodporuje nic). **Nález: „není to kontrast"** — taxonomie 6 vztahů jako lék na
+chlad se nestaví; kdo by ji zvažoval, začíná tady, ne u nasazení. Hranice: n=48, jen
+sousedské páry, binární soudce vztahu.
+**Yggdrasil (návaznost na #37 §1):** otázka „appka vs. doc" stažena — Cowork nabízí napsat
+devět významů OD NULY (síto: vrstva Skuld/Verðandi/Urður + historická poctivost + Rúnarův
+tón); až owner potvrdí a dodá, CODE-tune je promítne do RP_YGGDRASIL (EN+IS) jedním měřeným
+krokem. Vegvísir vlákno NENÍ pro CODE-tune (owner 23. 8.).
+Affected doc(s): RUNAR_BACKLOG.md (Yggdrasil položka přerámována).
