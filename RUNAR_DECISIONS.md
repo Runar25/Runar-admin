@@ -4498,3 +4498,24 @@ položka. Fixture opravena (runa mimo devítku), výjimky lens zúženy na ask/l
 **Yggdrasil test v2 (zadání Cowork):** běží přes subagenty v session (pravidlo f30662f) —
 čistší karty + Test B s derivovanými štítky; výsledek rozhodne nechat/přerozdělit vrstvy.
 Affected doc(s): RUNAR_BACKLOG.md (čočka položka [x] — artefakt).
+
+
+## 2026-08-23 — Yggdrasil test v2: dnešní vrstvy NEPOTVRZENY ani čistšími kartami (CODE-tune)
+**Protokol (zadání Cowork, subagenti v session — 15 agentů, žádné API):** karty v2 bez
+dokonavých/hodnotících slov · 8 řazení + 4 obrácené kontroly · Test B (volná otázka bez času)
++ slepý štítkovač. Data docs/eval/2026-08-23-yggdrasil-test-v2/vysledek.json.
+**Stabilní signál (oba směry i Test B):** Hel = utkané (9,0/8,75) · Ásgarðr a Álfheimr =
+utkaná strana (7,5/6,75 · 6,9/5,5) · **Vanaheimr = vznikající** (2,1/1,75 — čistší karta
+otočila kolo 1) · Jötunheimr = vznikající · Niðavellir = střed-utkané (Test B: utkané 2× —
+slavné předměty jsou HOTOVÉ). **Nestabilní:** Niflheimr ambivalentní v obou kolech i s
+rozdělenou kartou (1,9 × 8,25) → na časovou osu nesedí; má-li zůstat, chce NEčasové
+(stromové) zdůvodnění, napsané. Miðgarðr v2 kolísá (4,9 × 2,25).
+**Verdikt dle branky ze zadání: PŘEROZDĚLENÍ** — Ásgarðr+Álfheimr (Skuld) sedí obráceně,
+Svartálfaheimr (Urður) obráceně, Niflheimr mimo osu; sedí Hel, Niðavellir, Vanaheimr (nově),
+Miðgarðr(-ish). Datově vyplývající kandidát (VSTUP pro rozhodnutí, lore = owner/Cowork):
+Skuld {Vanaheimr, Jötunheimr, Svartálfaheimr} · Verðandi {Miðgarðr, Álfheimr} · Urður
+{Ásgarðr, Niðavellir, Hel + Niflheimr se stromovým zdůvodněním}. Kudy dál = owner (#40).
+Hranice: model-rameno = session model (JINÝ soudce než kolo 1 na opus-4-8), n=8+4+2.
+Pozn.: commit 33a546f nesl omylem prázdný vysledek.json (skript padl na parsování) — plný
+soubor + tento záznam v následném commitu.
+Affected doc(s): žádný.

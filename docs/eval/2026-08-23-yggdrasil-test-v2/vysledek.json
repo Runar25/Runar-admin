@@ -1,0 +1,38 @@
+{
+ "protokol": "Karty v2 (Cowork zadani, bez dokonavych/hodnoticich slov) · 8 razeni vznikajici->utkane + 4 obracene kontroly (prevraceno na touz osu) · Test B: volna otazka bez casu (2 bezci) + slepy stitkovac. 15 subagentu v session (rezim f30662f), zadne API. Model-rameno = session model (JINY soudce nez kolo 1 na opus-4-8).",
+ "testA_prumerne_poradi_1_je_nejvic_vznikajici": [
+  {"svet": "Niflheimr", "n": 8, "prum": 1.875},
+  {"svet": "Vanaheimr", "n": 8, "prum": 2.125},
+  {"svet": "Jötunheimr", "n": 8, "prum": 3.25},
+  {"svet": "Svartálfaheimr", "n": 8, "prum": 4.25},
+  {"svet": "Miðgarðr", "n": 8, "prum": 4.875},
+  {"svet": "Niðavellir", "n": 8, "prum": 5.25},
+  {"svet": "Álfheimr", "n": 8, "prum": 6.875},
+  {"svet": "Ásgarðr", "n": 8, "prum": 7.5},
+  {"svet": "Hel", "n": 8, "prum": 9.0}
+ ],
+ "kontrola_obraceny_smer_prevedeno_na_touz_osu": [
+  {"svet": "Ásgarðr", "n": 4, "prum": 6.75},
+  {"svet": "Vanaheimr", "n": 4, "prum": 1.75},
+  {"svet": "Álfheimr", "n": 4, "prum": 5.5},
+  {"svet": "Miðgarðr", "n": 4, "prum": 2.25},
+  {"svet": "Jötunheimr", "n": 4, "prum": 2.5},
+  {"svet": "Svartálfaheimr", "n": 4, "prum": 3.5},
+  {"svet": "Niðavellir", "n": 4, "prum": 5.75},
+  {"svet": "Niflheimr", "n": 4, "prum": 8.25},
+  {"svet": "Hel", "n": 4, "prum": 8.75}
+ ],
+ "testB_stitky_derivovane_slepym_stitkovacem": {
+  "Ásgarðr": ["utkane", "pritomne"],
+  "Vanaheimr": ["utkane", "vznikajici"],
+  "Álfheimr": ["pritomne", "pritomne"],
+  "Miðgarðr": ["utkane", "pritomne"],
+  "Jötunheimr": ["pritomne", "vznikajici"],
+  "Svartálfaheimr": ["pritomne", "pritomne"],
+  "Niðavellir": ["utkane", "utkane"],
+  "Niflheimr": ["utkane", "vznikajici"],
+  "Hel": ["pritomne", "pritomne"]
+ },
+ "zaver": "Dnesni vrstvy 1-3/4-5/6-9 NEPOTVRZENY: Asgardr+Alfheimr (Skuld) sedi obracene (utkana strana), Svartalfaheimr (Urdur) obracene (vznikajici), Niflheimr mimo casovou osu (ambivalentni v obou smerech i s rozdelenou kartou). Sedi: Hel, Nidavellir(-ish), Vanaheimr (nove — cistsi karta otocila kolo 1), Midgardr(-ish, v2 kolisa). Prerozdeleni = rozhodnuti ownera; datovy kandidat mapovani v RUNAR_DECISIONS.md 2026-08-23.",
+ "plny_vystup_workflow": "wf_76d26c4b-60e (journal: .claude/projects/C--Users-zkuku/12b7cce8-c1bb-4d60-afe0-c53fe2a58d0b/subagents/workflows/)"
+}
