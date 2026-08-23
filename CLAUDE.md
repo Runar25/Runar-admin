@@ -452,7 +452,7 @@ SÁM — bez ownera.
 **Mechanika (co ZBYLO — zbytek obstará git):**
 - **Commit prefix = LANE. `git log` s prefixy JE akční log.** Samostatnou řádku do `RUNAR_DECISIONS.md` piš
   jen pro to, co git NEVIDÍ: deploy, SQL puštěné ownerem, rozhodnutí. (Logovat každý commit dvakrát = práce navíc.)
-- Nejde commitnout (lock/přístup) → NESAHAT, jen ohlásit. Neviditelná změna je horší než žádná.
+- Nejde commitnout — ŽIVÝ zámek (běží git proces / mladší 10 min) → čekat, nesahat. **SIROTEK** (starší, bez procesů) → `python -X utf8 scripts/git_zamek.py <lane>` — smaže ho s auditem do `.git/runar-zamky.log` (čte smoke ㉞). KUKY 2026-08-23: „musí se vynucovat odemčení" (2 sirotčí zámky za den blokovaly všechny). Kdo zámek VYTVOŘIL, git nezapisuje — session, které git spadl, se pozná sama (příští commit jí selže) a MUSÍ se ohlásit. Jiný důvod (přístup) → NESAHAT, jen ohlásit; neviditelná změna je horší než žádná.
 - Handoff má sekci `ZMĚNĚNO:` (co jsem změnil), i prázdnou.
 - ⭐ **Pravidlo, které musí hlídat člověk, dřív nebo později spadne na ownera → kde to jde, udělej
   z pravidla KONTROLU ve smoke.** Vzory: ⑩ zapisovatelná plocha (klient vs granty), ⑪ memory index

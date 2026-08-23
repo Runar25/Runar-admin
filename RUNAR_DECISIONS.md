@@ -4431,3 +4431,26 @@ devět významů OD NULY (síto: vrstva Skuld/Verðandi/Urður + historická poc
 tón); až owner potvrdí a dodá, CODE-tune je promítne do RP_YGGDRASIL (EN+IS) jedním měřeným
 krokem. Vegvísir vlákno NENÍ pro CODE-tune (owner 23. 8.).
 Affected doc(s): RUNAR_BACKLOG.md (Yggdrasil položka přerámována).
+
+
+## 2026-08-23 — Sirotčí zámky: vynucený úklid s auditem (KUKY) + slepé řazení světů Yggdrasilu (CODE-tune)
+**Rozhodnutí (KUKY):** „jak to, že se nevynucuje odemčení zámku… musí dodělat práci nebo
+říct, kdo to udělal." Fakta: `.git/index.lock` autora NENESE (git to nezapisuje) — zpětně
+zjistit „kdo" nejde. Vynuceno, co jde: `scripts/git_zamek.py` — ŽIVÝ zámek (proces běží /
+<10 min) nechá být; SIROTKA smaže a zapíše audit do `.git/runar-zamky.log` (kdy · stáří ·
+kdo uklidil · poslední reflog = vodítko, kdo byl aktivní). Audit čte smoke ㉞. Pravidlo
+v CLAUDE.md (sekce N paralelních session) přepsáno; session, které git spadl, se pozná
+sama — příští commit jí selže a MUSÍ se ohlásit. Ověřeno na všech třech stavech
+(bez zámku / čerstvý / sirotek). Kontext: 2 sirotci za jediný den (60+80 min) blokovali všechny.
+**Slepé řazení světů (test GPT §11 v Cowork #39 zpřesnění; model-rameno, opus-4-8, Cowork
+neutralní popisy doslova, 16+8 běhů, míchané pořadí):** vznikající→utkané:
+Niflheimr 1,3 · Jötunheimr 1,7 · Niðavellir 3,3 · Svartálfaheimr 4,1 · Miðgarðr 5,2 ·
+Vanaheimr 5,7 · Ásgarðr 7,0 · Álfheimr 8,3 · Hel 8,5. Kontrola obráceným směrem (8 běhů):
+zrcadlí se Hel/Jötunheimr/božské říše/Svartálfaheimr/Miðgarðr; **Niflheimr a Niðavellir NE**
+(„prvotní" čte model oběma směry — koncept vznikající↔utkané na ně nesedí jednoznačně).
+**Nález:** dnešní vrstvy 1-3/4-5/6-9 slepý test NEPOTVRDIL — stabilní část signálu je
+INVERZNÍ (Skuld trojice = utkaná strana, Jötunheimr = vznikající; jen Hel a Miðgarðr sedí).
+Hranice: model-rameno (co model „ví"), jedna formulace otázky na směr, lidská ramena
+(laici/znalci) neběžela — ta jsou na ownerovi. Další krok dle Cowork #39: „přerozdělit, ne
+přeformulovat" = rozhodnutí ownera, obsah pak Cowork, nasazení CODE-tune.
+Affected doc(s): CLAUDE.md (pravidlo zámku, v tomto commitu).

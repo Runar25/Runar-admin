@@ -41,9 +41,17 @@ try {
   if (fs.existsSync(lock)) {
     const min = Math.round((Date.now() - fs.statSync(lock).mtimeMs) / 60000);
     radky.push('⚠  .git/index.lock existuje (' + min + ' min). Jina session nejspis commituje.');
-    radky.push('       NESAHAT a NEMAZAT sam — jen ohlasit ownerovi (CLAUDE.md: nejde commitnout -> nesahat).');
+    radky.push('       ZIVY -> cekat; SIROTEK (>10 min, bez procesu) -> python -X utf8 scripts/git_zamek.py <lane> (KUKY 2026-08-23).');
   }
 } catch (e) { /* lock neni podstatny pro verdikt */ }
+
+// 2026-08-23: audit janitora sirotcich zamku (scripts/git_zamek.py, KUKY: vynutit
+// odemceni) — uklizeny sirotek ma byt videt tady, ne zapadnout v .git/.
+try {
+  const zl = fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/.git/runar-zamky.log', 'utf8')
+    .trim().split('\n').slice(-2);
+  for (const r of zl) console.log('       i  zamek-audit: ' + r.slice(0, 150));
+} catch (e) { /* zadny audit = zadny sirotek */ }
 
 if (!fail) {
   console.log('  OK    sdileny strom: zadna z minu (sw.js v indexu, cizi lock) nehrozi');
