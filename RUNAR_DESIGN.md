@@ -1000,3 +1000,14 @@ Implementováno ve všech 3 generováních ✅:
 
 Každý nový prompt musí žít v mytologickém světě.
 Rúnar není asistent. Je průvodce na cestě Rune Seekera.
+
+## Image pool — register obrazů (D/E/P)
+*(kritéria vlastní Cowork — handoff 2026-08-23; CODE jen ukládá; hodnoty hlídá smoke ㊱,
+sloupec 7 v `RUNE_IMAGES`)*
+- **D = DOMÁCÍ/INTIMNÍ:** uvnitř, lidské ruce, krb, malé (káva, chléb, lampa, ponk, klíče, hodiny, telefon, pletení).
+- **E = ŽIVELNÉ/VELKÉ:** syrová příroda, počasí, obloha, velké (ledovec, kroupy, láva, hver, fjord, půlnoční slunce).
+- **P = PASTORÁLNÍ/STŘED:** obdělaná půda, zvíře, rostlina, člověk jdoucí krajinou — přemosťuje (ovce, jeřáb, kořen, varða, kindagata, torfveggur).
+- **Test:** „nepatřičné vedle ledovce?" = D · „nepatřičné vedle šálku na stole?" = E · „sedí vedle obojího?" = P.
+- **Hraniční (rozhodnuto):** venkovní lidské stavby (torfveggur, varða, leiðarsteinn) = P (D je jen vnitřek) · nebeské (polárka, norðurljós, miðnætursól) = E · geotermál/láva = E · osvětlená krajina (slunce do údolí) = P · ⚠️ abstraktní obraz (chování, ne scéna — Tiwaz „stojíš za slovem") = D nejblíž, flagovat zvlášť.
+- Zamýšlené použití = výběr-kongruence při skládání spreadů (D×E kolize → volit kongruentní variantu; SMĚR, nestaví se do rozhodnutí o Vegvísiru).
+

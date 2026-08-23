@@ -763,3 +763,15 @@ rising", „Ice over moving water"), tedy automatizace téhle vrstvy je reálná
 
 ⚠️ **Hranice:** 2 běhy × 3 ramena + 1 kontrolní sada, jeden jazyk, obrazy pinnuté, jedna sada run.
 Signál je silný (4/4 proti 0/6), ale malý.
+
+
+## 2026-08-23 — Registrová riziková mapa obrazů (PROXY predikce, ne měření; Cowork handoff)
+Validováno na T2-038 (evalu receptu); frekvence per-kombo TBD. Register D/E/P = sloupec 7
+RUNE_IMAGES (kritéria RUNAR_DESIGN, hlídá ㊱):
+- **domácí-zaseknuté** (zdroj kolizí): KENAZ byl 3/3 D — po přidání hveru (23.8., slepě EN+IS
+  prošel) má E alternativu · WUNJO 3/4 D — navržená E alternativa (fjord po větru) PADLA
+  slepě v obou řečích (čte se jako Isa-kyrrð), čeká na nový návrh Cowork.
+- **živelně-zaseknuté:** Uruz, Hagalaz, Sowilo, Laguz.
+- **bezpečné výběrem** (obě vrstvy): Gebo, Isa, Perth, Dagaz, Ansuz. (T2-038 = chyba VÝBĚRU, ne obsahu.)
+- ⚠️ n=1 na konkrétní dvojici run v evalu → per-pár mapa se NEměří, jen typ (D×E).
+Zamýšlené použití registru = výběr-kongruence (SMĚR — nestaví se do rozhodnutí o Vegvísiru).

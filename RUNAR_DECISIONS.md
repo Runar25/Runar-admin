@@ -4599,3 +4599,20 @@ nezávislá single}. Zaslepení: docs/eval/2026-08-23-recept/{t1,t2}-blind.jsonl
 ramena zamíchaná, **klíč mimo repo** (scratchpad CODE-tune; commitne se až PO skórování,
 jinak by slepota Coworku padla). Skórovací kritéria = doslova zadání KUKY (v BACKLOGu).
 Affected doc(s): RUNAR_BACKLOG.md (už v 21d26e1).
+
+
+## 2026-08-23 — Image pool: register D/E/P jako 7. sloupec + Kenaz hver; Wunjo fjord padl slepě (CODE-tune)
+**Postaveno (handoff Cowork):** register = POVINNÝ 7. sloupec RUNE_IMAGES (motiv → 8.);
+kritéria D/E/P uložena do RUNAR_DESIGN (vlastní Cowork); smoke **㊱** `verify_image_register`
+červená na prázdné/neplatné — pravidlo „kdo sáhne na pool, přeindexuje" vynucuje stroj.
+Štítky celého poolu zatím PROVIZORNÍ (CODE-tune mechanicky dle kritérií vč. hraničních
+pravidel; D 20 · E 30 · P 33) — Cowork přeštítkuje svým souborem (§4 handoffu) a provizor
+přepíše. Motiv-guard + ㉟ přesunuty na index 7/8.
+**Nové obrazy:** Kenaz hver PŘIDÁN (živelná alternativa k 3/3 domácímu Kenazi; vazby
+rjúka upp úr / halda+dat+heitri ověřeny; slepě subagenty EN ✓ IS ✓; aspekty MĚŘENÉ:
+fire / innra ljós). **Wunjo fjord NEPŘIDÁN — padl slepě v obou řečích** (bezvětří + hladký
+fjord čte slepý soudce jako Isa-kyrrð, ne radost) → vrací se Coworkovi s diagnózou:
+Wunjo-E obraz potřebuje radost/setkání, ne klid po větru.
+**Zapsáno (EVAL_LOG):** registrová riziková mapa (proxy predikce, T2-038). Výběr-kongruence
+= SMĚR, nestaví se do rozhodnutí o Vegvísiru.
+Affected doc(s): RUNAR_DESIGN.md (kritéria) · RUNAR_EVAL_LOG.md (mapa) — v tomto commitu.

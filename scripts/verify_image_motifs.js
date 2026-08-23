@@ -27,14 +27,15 @@ let fail = 0;
 
 // 1) struktura: 6 nebo 7 sloupců; 7. (motiv) je neprázdný string
 for (const row of IMGS) {
-  if (row.length < 6 || row.length > 7 || (row.length === 7 && !(typeof row[6] === 'string' && row[6]))) {
+  // 2026-08-23: register (povinny) na indexu 6, motiv (volitelny) na 7 — viz ㊱.
+  if (row.length < 7 || row.length > 8 || (row.length === 8 && !(typeof row[7] === 'string' && row[7]))) {
     fail++; console.log('FAIL  vadny radek (' + row[0] + '): ' + row.length + ' sloupcu / prazdny motiv');
   }
 }
 
 // 2) pojmenovaný motiv musí být na >=2 řádcích — na jednom je mrtvá váha (guard nemá co střídat)
 const poc = {};
-for (const row of IMGS) if (row[6]) poc[row[6]] = (poc[row[6]] || 0) + 1;
+for (const row of IMGS) if (row[7]) poc[row[7]] = (poc[row[7]] || 0) + 1;
 for (const m of Object.keys(poc)) {
   if (poc[m] < 2) { fail++; console.log('FAIL  motiv "' + m + '" jen na 1 radku — nema co stridat'); }
 }
@@ -42,14 +43,14 @@ for (const m of Object.keys(poc)) {
 // 3) produkční cestou: nasimuluj "minule padl motiv X" a ověř, že týž motiv nepřijde
 //    znovu, dokud má runa v aktuálním bucketu jiného kandidáta.
 const bucket = vm.runInContext('_seasonBucket(new Date().getMonth() + 1)', S);
-const motivRuny = [...new Set(IMGS.filter(r => r[6]).map(r => r[0]))];
+const motivRuny = [...new Set(IMGS.filter(r => r[7]).map(r => r[0]))];
 let overeno = 0;
 for (const jm of motivRuny) {
   const drawn = RUNES.find(r => r.n === jm);
   const cand = vm.runInContext('_runeImageCandidates', S)([drawn], bucket);
-  const motivy = [...new Set(cand.filter(r => r[6]).map(r => r[6]))];
+  const motivy = [...new Set(cand.filter(r => r[7]).map(r => r[7]))];
   for (const m of motivy) {
-    if (!cand.some(r => (r[6] || '') !== m)) continue;   // bez alternativy guard pouští dál (správně)
+    if (!cand.some(r => (r[7] || '') !== m)) continue;   // bez alternativy guard pouští dál (správně)
     for (let i = 0; i < 6; i++) {
       for (const k of Object.keys(uloz)) delete uloz[k];
       uloz['seasonmotif_rune_' + jm] = m;
