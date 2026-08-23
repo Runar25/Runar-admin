@@ -4324,3 +4324,22 @@ v4.x — IS „þegar" je spojka (nevinné), EN „already" ve scéně v pořád
 „already known/deciding (beneath you)" = skryté vědění, který už jmenují podtypy soudce
 chladu. Samostatná páka se nestaví; hlídá testování.
 Affected doc(s): RUNAR_BACKLOG.md (4 položky).
+
+
+## 2026-08-23 — SPREADY: baseline změřena, kříž sjednocen, jádrová otázka pojmenovaná (CODE-tune)
+**Krok 1 (v4.7-mynd):** kříž sjednocen na společný tvar pozic (`LABEL:
+Runa — klíče`) —
+byl jediný s inline tvarem; dedup `_spreadBlock` na to čekal („sjednocení = zvlášť,
+s měřením"). Golden: jen 4 kříž buildery. Cestou: gen_direct mapa kriz→cross (5runový
+kříž padal na 3 runách — builder vs config klíč).
+**Baseline (n=8/spread/jazyk, po v4.7, data docs/eval/2026-08-23-spready-baseline/):**
+norns svět prům. 1,63 EN · 1,75 IS — kříž 1,25 EN (7/8 jeden svět!) · 1,50 IS.
+Spready splývají do jednoho světa PŘEKVAPIVĚ dobře (kříž: 5 run = 5 rysů jedné suťové
+stráně). ALE: **runy se ve spreadech NEJMENUJÍ vůbec** (esenční řádek je v promptu sdílený,
+výstup ho ignoruje — u 3–9 run neví, jak ho uplatnit) a **chlad je výrazně nad single:
+3–5/8 (≈40–60 %)** — otázky s předpokladem, single-tuning zakončení na spready nedosáhl.
+**Jádrová otázka pro ownera (MYND pro spready):** mají spready jmenovat runy s esencí jako
+single (pozice = runa řečená skrz svůj rys světa), nebo zůstat bezejmenným jedním proudem?
+Dnešní stav je nerozhodnutý hybrid. Otevřené vedle toho: čočka nedochází na velké spready
+(㉚ nález, NEROZHODNUTO) · yggdrasil.html rituál má vlastní prompty (návrhové rozhodnutí).
+Affected doc(s): RUNAR_BACKLOG.md (kříž [x] — už v commitu 81cdfc0).
