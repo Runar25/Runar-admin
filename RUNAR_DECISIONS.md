@@ -4396,3 +4396,22 @@ Směr shodný v obou řečích, p samostatně neprůkazné (n=8) — nasazeno na
 kříž „Að baki/Behind" EN+IS · horseshoe „Past" gloss EN+IS. Yggdrasil časovou pozici nemá.
 Zbývá z hranice: vnitřní touhy + předpoklad v otázce (druhá páka, měřit zvlášť).
 Affected doc(s): žádný.
+
+
+## 2026-08-23 — Vegvísir: účel a čas RATIFIKOVÁNY (KUKY)
+
+**Rozhodnuto:** Vegvísir **předkládá obraz, ne odpověď** — význam si uživatel najde v sobě
+(kotva Hávamál 138: Ódin získal runy „sám sobě, dovnitř"). Interval mezi rameny = **počkej devět
+nocí**: podlaha, ne rozvrh · noci, ne dny · ne-7, aby to nevycházelo pořád na týž den. Tematicky
+patří do světa Yggdrasilu; **tvrdá vazba na `tree_state` se zatím NEstaví**.
+
+**Přerozhodnuto proti 2026-08-22:** životní runa **není** startovní kotva (dřív „sever = životní
+runa, tím to začíná"). Nanejvýš nit nebo callback, nikdy verdikt „tohle jsi".
+
+⚠️ **Hranice kotvy, ať se to nepřepíše na mýtus:** doložených je **devět nocí Ódinova visení**.
+Že se po devíti nocích „získá rameno", je **naše konstrukce**, ne dobový zvyk.
+
+**Osa skryté ↔ odhalené parkována**; dverg pod runou zůstává test-gated. Měření, které k obojímu
+proběhlo, platí → `RUNAR_EVAL_LOG.md` 2026-08-23.
+
+Affected doc(s): RUNAR_DESIGN.md (sekce „Vegvísir (8 ramen, seriálový)") — v témže commitu.

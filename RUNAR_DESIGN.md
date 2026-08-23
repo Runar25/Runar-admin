@@ -615,6 +615,45 @@ Stará funkce (týdenní rituál, whispers-section, journal karta) odstraněna:
 runar-gathering.js zachován beze změny — čeká na reimplementaci jako tree pattern detector.
 Nová logika potřebuje tree_state DB (neexistuje). Implementace: čeká na V3.
 
+### Vegvísir (8 ramen, seriálový) — ÚČEL A ČAS (owner ratifikoval 2026-08-23)
+
+⚠️ **Není postavený.** Tohle je ratifikovaný ZÁMĚR, ne stav produkce — v `SPREAD_CONFIG` nic není.
+
+**Co Vegvísir JE.** 📜 Nedává odpověď, věštbu ani verdikt. **Předkládá OBRAZ** = místo, kam se
+podívat; význam si uživatel najde **sám v sobě**. Naše jediná práce je ten obraz: dost konkrétní,
+aby bylo do čeho promítat, dost otevřený, aby nediktoval.
+🔒 **Kotva — Hávamál 138 (Rúnatal):** Ódin získal runy *„gefinn Óðni, sjálfr sjálfum mér"* — sám
+sobě, dovnitř; vystoupily z jeho vlastní hloubky, když se do ní díval. Význam je v uživateli, my
+ukazujeme jen kam.
+📜 Vegvísir = **nesený wayfinder**: ochrana před ztrátou CESTY, ne dodání cíle. Ukazuje, **kudy jsi
+šel**, ne kam jít. Amulet, který si sám kuješ, JE ta kresba osmi ramen — „amulet" a „kresba" je týž
+předmět, ne dvě věci.
+
+**Čas — „počkej DEVĚT NOCÍ".** 📜 Další rameno nejde vytáhnout dřív. Je to **podlaha, ne rozvrh**:
+kdy pak, je na uživateli, celkový čas otevřený (žádných „8 týdnů").
+🔒 Devět nocí visel Ódin na Yggdrasilu, než získal runy (Hávamál 138).
+⚠️ **Rozliš přesně:** doložených je **těch devět nocí**; že se po nich „získá rameno", je **naše
+konstrukce** (📜), ne mýtus. Nepsat to jako prastarý zvyk.
+📜 Jednotka jsou **NOCI**, ne dny (severské počítání). A **není to 7** — proto to nevychází pořád
+na stejný den a nevznikne mechanické „každé pondělí". Devítka navíc nese ten význam; jakékoli ne-7
+by driftovalo stejně.
+
+**Svět.** 🔒/📜 Ódin visel na **Yggdrasilu** — devět nocí, strom i runy jsou z téhož mýtu, takže
+Vegvísir patří do světa Stromu, který už stavíme. ⚠️ Zatím **tematická** kotva, **ne** tvrdá vazba
+na `tree_state` — propojení se rozhodne zvlášť a nestaví se předem.
+
+**Potvrzené posuny** (owner, 2026-08-23):
+- Příběh = **sled tahů a vztahy MEZI runami**; hloubka je mezi nimi, ne uvnitř jedné. **Pozice
+  nemají vlastní sémantiku** — rameno pojmenuje runa, která na něj padne.
+- **Guardrail:** výklad se nesmí **uzavřít**. Smí obraz, otázka, spojení, připomenutí, kontrast;
+  nesmí „a proto to pro tebe znamená X". Smysl je lokální v každém kroku, ne „až na konci".
+  *(Není to nové pravidlo — je to `Kdo je Rúnar` aplikované na seriál.)*
+- ⚠️ **Životní runa NENÍ startovní kotva** (přerozhodnuto 2026-08-23). Nanejvýš nit nebo callback,
+  **nikdy verdikt ani souhrn „tohle jsi"**. ⚠️ Ruší dřívější „sever = životní runa, tím to začíná"
+  (KUKY 2026-08-22) — kdo staví na severu jako na životní runě, staví na zrušeném.
+- **Dverg pod runou** = test-gated, viz „Dverg pod runou" výš. **Osa skryté ↔ odhalené = PARKOVÁNA**
+  jako strukturální tvrzení; měření, které k ní proběhlo, platí a je v `RUNAR_EVAL_LOG.md` 2026-08-23.
+
 ### UI — domluveno ✅
 Přepínač pod "DRAW YOUR RUNE":
 `[ SINGLE RUNE ]  [ NORNS ]  [ KŘÍŽ ]  [ HORSESHOE ]  [ YGGDRASIL ]`
