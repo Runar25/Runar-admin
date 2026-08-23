@@ -4454,3 +4454,12 @@ Hranice: model-rameno (co model „ví"), jedna formulace otázky na směr, lids
 (laici/znalci) neběžela — ta jsou na ownerovi. Další krok dle Cowork #39: „přerozdělit, ne
 přeformulovat" = rozhodnutí ownera, obsah pak Cowork, nasazení CODE-tune.
 Affected doc(s): CLAUDE.md (pravidlo zámku, v tomto commitu).
+
+
+## 2026-08-23 — Testy v session, API jen na generování (KUKY)
+**Rozhodnutí (KUKY):** „používáš moc API, stojí mě to dost peněz — testy dělej tady, to už
+mám zaplacené." Souzení (mantinely, lineupy, korelace) od teď V SESSION; slepé protokoly přes
+čerstvé subagenty (nemají kontext → skutečná slepost, session vlastní texty slepě soudit
+nemůže); API klíč jen na generování produkčních čtení s malým n. Detail + srovnatelnost
+čísel → memory/working-style.md (vlastník pravidla).
+Affected doc(s): memory/working-style.md.

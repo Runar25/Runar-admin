@@ -501,3 +501,14 @@ JEDEN pas, jehož úkol je tu shodu **zbořit proti VNĚJŠÍMU měřítku**, ne
 
 Triáž: co agenti vyřeší sami, vyřeší; k ownerovi jde **jen otázka záměru**, ne rešerše. „Nenašel jsem
 nic, co by to zbořilo" je taky informace — zapíše se, nezamlčí. Chybějící fakt/lore → [[dont-invent-fact-critical]].
+
+## Náklady testování (KUKY 2026-08-23: „používáš moc API… testy dělej tady, to už mám zaplacené")
+- **Souzení/eval = V SESSION** (Claude Code, předplacené): mantinelové soudce (svět/soulad/chlad),
+  lineup/řazení, korelace — dělá session sama, nebo **čerstvý subagent** tam, kde je potřeba
+  SLEPOST (subagent nemá kontext session → nezná odpověď; session, která text sama psala, ho
+  slepě soudit nemůže).
+- **API klíč JEN na generování produkčních čtení** (testuje se produkční model, to nejde jinak)
+  — a s malým n; před dávkou zvaž, jestli otázku nezodpoví menší řez.
+- ⚠️ Změna soudce = čísla nejsou přímo srovnatelná se staršími baselines (opus-4-8, 3 hlasy) —
+  při prvním použití session-soudce to poznamenat u měření (rejstřík/DECISIONS).
+
