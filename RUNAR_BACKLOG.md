@@ -772,13 +772,14 @@ Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je 
   to tvrdil `RUNAR_TREE.md:223` — **doc opraven 2026-08-22**. ⚠️ Schéma `tree_state` ale NEodpovídá
   tomu, co plán v `RUNAR_TREE.md` předpokládá (žádné `roots`/`element_scores`/`trunk_themes`).
 - ✅ **Áttaviti = COMPASS = spread `kriz`** (5 run; `runar-reading.js` „Áttavitann", tlačítko COMPASS).
-  Kolize jména i vizuálu s Vegvísirem je reálná, pokud by se S/J/V/Z promítlo do grafiky.
+  ~~Kolize jména i vizuálu s Vegvísirem~~ **UZAVŘENO — KUKY 2026-08-23: „vegvísir není kolize s compasem."**
 - ⚠️ **„Malá verze" (kořen/stín/cesta, 3 pozice) nikdy nebyla v configu** — základ, na kterém
   osmiramenná verze staví, je stejně nepostavený jako ona.
-- ⚠️ **Data stínových run neexistují** — ani v repu, ani v zrcadle, ani v `docs/inbox/`. A nesou
-  **4 z 8 ramen**. Bez nich nejde půlka návrhu posoudit.
-- ⚠️ **Kolize pojmu „stín":** `buildLifeRunePrompt` používá *shadow* = obtížná strana TÉŽE runy;
-  Vegvísir stín = jiná, pojmenovaná runa. V 8ramenné verzi 4× za oblouk.
+- ~~Data stínových run neexistují~~ **ZASTARALÉ (2026-08-23):** stínové runy patřily k PŮVODNÍMU
+  8ramennému návrhu Cowork (2026-08-15/22); ratifikovaný design 2026-08-23 (RUNAR_DESIGN) je NEMÁ
+  a KUKY 2026-08-23: „to je ovšem něco jiného, než co jsme dělali naposledy." Neřešit, dokud by je
+  někdo vědomě nevrátil (§26).
+- ~~Kolize pojmu „stín"~~ **ZASTARALÉ (2026-08-23):** vázalo se na stínové runy starého návrhu (viz výš).
 - ✅ **`_lensContext` NENÍ potřeba rozšiřovat** (odpověď na jedinou technickou otázku návrhu):
   pod zvoleným Modelem A stačí předat **buď** životní runu, **nebo** stín — je to prostý skládač
   řetězce `(life, drawn, lang)`, ne dvouruní logika.
