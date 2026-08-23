@@ -4586,3 +4586,16 @@ neoddělitelná; v produkci nevadí (pozice nese jméno světa vedle významu). 
 stav slepé rozlišitelnosti devítky: 8/9 EN · 7/9 IS s JEDNOU pojmenovanou inherentní záměnou.
 Ukázkové čtení V5 (9 run, jeden svět statku, čočka jen v závěru) → oko ownera (chat).
 Affected doc(s): žádný.
+
+
+## 2026-08-23 — Testy „recept: obrazy se potkávají" — generace hotová, zaslepeno pro Cowork (CODE-tune)
+**Zadání (KUKY):** tři testy receptu (T1 Vegvísir řetěz 1→2→3 · T2 Norns současnost vs
+per-runa obrazy→scéna · T3 aspekt-kongruentní výběr). Role: generace CODE, slepé hodnocení
+Cowork. Zapsáno v RUNAR_BACKLOG (vč. T3 = až po T1–T2 + design krok).
+**Vygenerováno (EN — testuje se mechanismus; IS až když recept vyhraje):** T2 = 20 trojic ×
+{A dnešní builder · B per-runa obrazy + „emergentní scéna z potkání"} · T1 = 20 trojic ×
+{A řetěz (2 se vztáhne k obrazu 1 bez rekapitulace, 3 mění vztah; a1≡b1 sdíleno) · B tři
+nezávislá single}. Zaslepení: docs/eval/2026-08-23-recept/{t1,t2}-blind.jsonl — opakní id,
+ramena zamíchaná, **klíč mimo repo** (scratchpad CODE-tune; commitne se až PO skórování,
+jinak by slepota Coworku padla). Skórovací kritéria = doslova zadání KUKY (v BACKLOGu).
+Affected doc(s): RUNAR_BACKLOG.md (už v 21d26e1).
