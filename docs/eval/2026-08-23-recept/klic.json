@@ -1,0 +1,402 @@
+[
+ {
+  "id": "T2-001",
+  "rameno": "B-recept",
+  "trojice": 4
+ },
+ {
+  "id": "T2-002",
+  "rameno": "B-recept",
+  "trojice": 13
+ },
+ {
+  "id": "T2-003",
+  "rameno": "B-recept",
+  "trojice": 1
+ },
+ {
+  "id": "T2-004",
+  "rameno": "A-soucasnost",
+  "trojice": 14
+ },
+ {
+  "id": "T2-005",
+  "rameno": "B-recept",
+  "trojice": 16
+ },
+ {
+  "id": "T2-006",
+  "rameno": "A-soucasnost",
+  "trojice": 1
+ },
+ {
+  "id": "T2-007",
+  "rameno": "A-soucasnost",
+  "trojice": 9
+ },
+ {
+  "id": "T2-008",
+  "rameno": "B-recept",
+  "trojice": 12
+ },
+ {
+  "id": "T2-009",
+  "rameno": "A-soucasnost",
+  "trojice": 0
+ },
+ {
+  "id": "T2-010",
+  "rameno": "A-soucasnost",
+  "trojice": 7
+ },
+ {
+  "id": "T2-011",
+  "rameno": "B-recept",
+  "trojice": 10
+ },
+ {
+  "id": "T2-012",
+  "rameno": "A-soucasnost",
+  "trojice": 12
+ },
+ {
+  "id": "T2-013",
+  "rameno": "A-soucasnost",
+  "trojice": 10
+ },
+ {
+  "id": "T2-014",
+  "rameno": "B-recept",
+  "trojice": 17
+ },
+ {
+  "id": "T2-015",
+  "rameno": "A-soucasnost",
+  "trojice": 17
+ },
+ {
+  "id": "T2-016",
+  "rameno": "A-soucasnost",
+  "trojice": 11
+ },
+ {
+  "id": "T2-017",
+  "rameno": "A-soucasnost",
+  "trojice": 8
+ },
+ {
+  "id": "T2-018",
+  "rameno": "B-recept",
+  "trojice": 5
+ },
+ {
+  "id": "T2-019",
+  "rameno": "A-soucasnost",
+  "trojice": 18
+ },
+ {
+  "id": "T2-020",
+  "rameno": "B-recept",
+  "trojice": 2
+ },
+ {
+  "id": "T2-021",
+  "rameno": "A-soucasnost",
+  "trojice": 3
+ },
+ {
+  "id": "T2-022",
+  "rameno": "A-soucasnost",
+  "trojice": 13
+ },
+ {
+  "id": "T2-023",
+  "rameno": "B-recept",
+  "trojice": 15
+ },
+ {
+  "id": "T2-024",
+  "rameno": "B-recept",
+  "trojice": 19
+ },
+ {
+  "id": "T2-025",
+  "rameno": "A-soucasnost",
+  "trojice": 2
+ },
+ {
+  "id": "T2-026",
+  "rameno": "A-soucasnost",
+  "trojice": 16
+ },
+ {
+  "id": "T2-027",
+  "rameno": "A-soucasnost",
+  "trojice": 5
+ },
+ {
+  "id": "T2-028",
+  "rameno": "A-soucasnost",
+  "trojice": 19
+ },
+ {
+  "id": "T2-029",
+  "rameno": "B-recept",
+  "trojice": 0
+ },
+ {
+  "id": "T2-030",
+  "rameno": "B-recept",
+  "trojice": 9
+ },
+ {
+  "id": "T2-031",
+  "rameno": "B-recept",
+  "trojice": 6
+ },
+ {
+  "id": "T2-032",
+  "rameno": "B-recept",
+  "trojice": 18
+ },
+ {
+  "id": "T2-033",
+  "rameno": "B-recept",
+  "trojice": 7
+ },
+ {
+  "id": "T2-034",
+  "rameno": "B-recept",
+  "trojice": 3
+ },
+ {
+  "id": "T2-035",
+  "rameno": "A-soucasnost",
+  "trojice": 15
+ },
+ {
+  "id": "T2-036",
+  "rameno": "A-soucasnost",
+  "trojice": 4
+ },
+ {
+  "id": "T2-037",
+  "rameno": "B-recept",
+  "trojice": 14
+ },
+ {
+  "id": "T2-038",
+  "rameno": "B-recept",
+  "trojice": 11
+ },
+ {
+  "id": "T2-039",
+  "rameno": "B-recept",
+  "trojice": 8
+ },
+ {
+  "id": "T2-040",
+  "rameno": "A-soucasnost",
+  "trojice": 6
+ },
+ {
+  "id": "T1-001",
+  "rameno": "A-retez",
+  "trojice": 1
+ },
+ {
+  "id": "T1-002",
+  "rameno": "B-nezavisle",
+  "trojice": 19
+ },
+ {
+  "id": "T1-003",
+  "rameno": "A-retez",
+  "trojice": 0
+ },
+ {
+  "id": "T1-004",
+  "rameno": "A-retez",
+  "trojice": 7
+ },
+ {
+  "id": "T1-005",
+  "rameno": "A-retez",
+  "trojice": 10
+ },
+ {
+  "id": "T1-006",
+  "rameno": "A-retez",
+  "trojice": 12
+ },
+ {
+  "id": "T1-007",
+  "rameno": "B-nezavisle",
+  "trojice": 13
+ },
+ {
+  "id": "T1-008",
+  "rameno": "A-retez",
+  "trojice": 18
+ },
+ {
+  "id": "T1-009",
+  "rameno": "B-nezavisle",
+  "trojice": 18
+ },
+ {
+  "id": "T1-010",
+  "rameno": "B-nezavisle",
+  "trojice": 17
+ },
+ {
+  "id": "T1-011",
+  "rameno": "B-nezavisle",
+  "trojice": 6
+ },
+ {
+  "id": "T1-012",
+  "rameno": "B-nezavisle",
+  "trojice": 11
+ },
+ {
+  "id": "T1-013",
+  "rameno": "B-nezavisle",
+  "trojice": 4
+ },
+ {
+  "id": "T1-014",
+  "rameno": "A-retez",
+  "trojice": 13
+ },
+ {
+  "id": "T1-015",
+  "rameno": "A-retez",
+  "trojice": 4
+ },
+ {
+  "id": "T1-016",
+  "rameno": "B-nezavisle",
+  "trojice": 2
+ },
+ {
+  "id": "T1-017",
+  "rameno": "B-nezavisle",
+  "trojice": 10
+ },
+ {
+  "id": "T1-018",
+  "rameno": "A-retez",
+  "trojice": 17
+ },
+ {
+  "id": "T1-019",
+  "rameno": "B-nezavisle",
+  "trojice": 12
+ },
+ {
+  "id": "T1-020",
+  "rameno": "A-retez",
+  "trojice": 16
+ },
+ {
+  "id": "T1-021",
+  "rameno": "B-nezavisle",
+  "trojice": 3
+ },
+ {
+  "id": "T1-022",
+  "rameno": "B-nezavisle",
+  "trojice": 5
+ },
+ {
+  "id": "T1-023",
+  "rameno": "A-retez",
+  "trojice": 3
+ },
+ {
+  "id": "T1-024",
+  "rameno": "B-nezavisle",
+  "trojice": 0
+ },
+ {
+  "id": "T1-025",
+  "rameno": "A-retez",
+  "trojice": 15
+ },
+ {
+  "id": "T1-026",
+  "rameno": "B-nezavisle",
+  "trojice": 9
+ },
+ {
+  "id": "T1-027",
+  "rameno": "A-retez",
+  "trojice": 6
+ },
+ {
+  "id": "T1-028",
+  "rameno": "A-retez",
+  "trojice": 8
+ },
+ {
+  "id": "T1-029",
+  "rameno": "B-nezavisle",
+  "trojice": 14
+ },
+ {
+  "id": "T1-030",
+  "rameno": "B-nezavisle",
+  "trojice": 7
+ },
+ {
+  "id": "T1-031",
+  "rameno": "A-retez",
+  "trojice": 2
+ },
+ {
+  "id": "T1-032",
+  "rameno": "B-nezavisle",
+  "trojice": 16
+ },
+ {
+  "id": "T1-033",
+  "rameno": "A-retez",
+  "trojice": 11
+ },
+ {
+  "id": "T1-034",
+  "rameno": "A-retez",
+  "trojice": 5
+ },
+ {
+  "id": "T1-035",
+  "rameno": "A-retez",
+  "trojice": 14
+ },
+ {
+  "id": "T1-036",
+  "rameno": "A-retez",
+  "trojice": 9
+ },
+ {
+  "id": "T1-037",
+  "rameno": "A-retez",
+  "trojice": 19
+ },
+ {
+  "id": "T1-038",
+  "rameno": "B-nezavisle",
+  "trojice": 8
+ },
+ {
+  "id": "T1-039",
+  "rameno": "B-nezavisle",
+  "trojice": 1
+ },
+ {
+  "id": "T1-040",
+  "rameno": "B-nezavisle",
+  "trojice": 15
+ }
+]

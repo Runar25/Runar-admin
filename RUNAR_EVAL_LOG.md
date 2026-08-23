@@ -819,3 +819,14 @@ v4.14 losl Norns `heavy1`). Verdikty (session soudce dle protokolu výš):
 rodící se formule; confound: dávka losovala příbuzné světlé obrazy a sdílené runy
 (Sowilo/Dagaz 2×, Wunjo 2×). Rozhodne další dávka — kdyby držela, dát landing formuli
 pestrost tvaru realizace (ne jen „dvě věci jsou jedno").
+
+## 2026-08-23 — Recept T1/T2: de-blind tally (Cowork slepě 37/40; úniková klauzule byla vrah, ne objem)
+Plná čísla + protokol → `docs/eval/2026-08-23-recept/tally.md` (klíč commitnut po skórování).
+**T1 (19/20):** celý text + POVINNÉ „MEETS" vláká ~15/20 → **v1 nulu (0/6) způsobila úniková
+klauzule, ne objem textu.** Tvar (jedna fráze, v2) zůstává relevantní pro těžký směr: povinný
+celý text nevlákal právě na disparátních trojicích (3/20) a nese obraz-výčet 3/20, zatímco
+v2 fráze držela i na Isa↔Ehwaz. **T2 (18/20, A-claims 14/14):** kolaps receptu do výčtu 0/20
+(riziko vyvráceno); současný Norns builder ~14/20 spolkne 1–2 runy do dominantního obrazu
+(1× simile — builder, ne recept); recept dá každé runě obraz a udrží scénu. → rozhodnutí
+ownera: per-runa obrazy vs. jeden úsporný obraz. Slepý protokol funguje: všechny chyby
+soudce padly do zóny, kterou sám předem označil za nerozhodnutelnou.
