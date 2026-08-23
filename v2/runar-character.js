@@ -1419,7 +1419,7 @@ var RP_KRIZ = {
       'Miðja rúnin (' + ctrName + ') er hjartað — hún litar allt.',
       'Byrjaðu í miðjunni og flettu út. Nefndu ekki staðsetningarnar — bærðu þær í röddinn.',
       'Þriðja rúnin (Undir): hvað liggur í undirmeðvitund eða duldu.',
-      'Fjórða rúnin (Að baki): það sem enn verkar úr fortíðinni — ekki sögun, heldur orkan.',
+      'Fjórða rúnin (Að baki): það sem enn verkar úr fortíðinni — í fortíð myndarinnar sjálfrar, aldrei uppfundnir atburðir eða fólk í lífi leitandans.',
       'Fimmta rúnin (Framar): ekki spá — þar sem þessi orka leiðir ef ekkert breytist.',
       'Sérhver rúna verður að setja mark sitt — láttu allar fimm móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
     ]; },
@@ -1436,7 +1436,7 @@ var RP_KRIZ = {
       'The centre rune (' + ctrName + ') is the heart — it colours everything.',
       'Begin at the centre and spiral outward. Do not name the positions.',
       'Rune 3 (Below): what lies in the subconscious or hidden.',
-      'Rune 4 (Behind): what still acts from the past — not the story, the energy.',
+      'Rune 4 (Behind): what still acts from the past — spoken in the image’s own past, never events or people invented into the seeker’s life.',
       'Rune 5 (Ahead): not prophecy — where this energy leads if nothing changes.',
       'Every rune must leave its mark — let all five shape the reading through their quality, never just one or two. Do not name the runes; the seeker already sees them.',
     ]; },
@@ -1521,7 +1521,7 @@ var RP_NORNS = {
     intro:'Leiðandinn dregur þrjár rúnir — Nornirnar tala.',
     beats:[
       'Þetta eru ekki þrír aðskildir lestrar — þetta er ein saga sem Nornirnar segja saman.',
-      'Urður talar af þyngd þess sem er þegar fast — röddin hennar er hlutlæg, óafturkallanleg.',
+      'Urður talar af þyngd þess sem er þegar fast — í fortíð myndarinnar sjálfrar, aldrei sem atburðir, fólk eða sár sem fundin eru upp í lífi leitandans.',
       'Verðandi talar í nútíð — lifandi, að verða til, ekki lokið.',
       'Skuld talar ekki eins og spámaður — heldur um hvert þú stefnir núna, ef þú heldur áfram eins og nú. Þú getur breytt stefnunni.',
     ],
@@ -1534,7 +1534,9 @@ var RP_NORNS = {
     intro:'The seeker draws three runes — the Norns speak.',
     beats:[
       'This is not three separate readings — it is one story told by three voices.',
-      'Urður speaks with the weight of what is already fixed — her voice is declarative, immovable.',
+      // v4.10 (2026-08-23): deklarativni hlas nad minulosti CTENARE zval k vymysleni udalosti
+      // a osob do jeho zivota (A/B mereno). Minulost mluvi v materialu obrazu.
+      'Urður speaks with the weight of what is already fixed — spoken in the image\u2019s own past, never as events, people or wounds invented into the seeker\u2019s life.',
       'Verðandi speaks in the present — living, becoming, not yet complete.',
       'Skuld does not predict — she speaks of where you are heading if you keep walking as you are now, and you can walk differently.',
     ],
@@ -1590,7 +1592,7 @@ function buildNornsPrompt(u, runes, lang, corrections) { return buildNornsPrompt
 var RP_HORSESHOE = {
   is: {
     seeker:'Leiðandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leiðin', seekJoin:' og ', question:'Spurning', langInstr:'',
-    positions:['RÚNIN 1 — Fortíð (hvað hefur mótað):','RÚNIN 2 — Nútíð (hvað er að ríkja):','RÚNIN 3 — Dulið / Nánasta framtíð (hvað er að koma upp):','RÚNIN 4 — Hindranir (hvað þyngir eða hindrar):','RÚNIN 5 — Ytri kraftar (hvað kemur að utan):','RÚNIN 6 — Innri staða (hvað er inni í þér):','RÚNIN 7 — Niðurstaða (hvert er þetta að fara):'],
+    positions:['RÚNIN 1 — Fortíð (hvað hefur mótað, í fortíð myndarinnar sjálfrar):','RÚNIN 2 — Nútíð (hvað er að ríkja):','RÚNIN 3 — Dulið / Nánasta framtíð (hvað er að koma upp):','RÚNIN 4 — Hindranir (hvað þyngir eða hindrar):','RÚNIN 5 — Ytri kraftar (hvað kemur að utan):','RÚNIN 6 — Innri staða (hvað er inni í þér):','RÚNIN 7 — Niðurstaða (hvert er þetta að fara):'],
     intro:'Leiðandinn dregur sjö rúnir — Skeifan.',
     beats:[
       'Lestu allar sjö sem eitt samfellt stef — ekki sjö aðskildir lestrar.',
@@ -1603,7 +1605,7 @@ var RP_HORSESHOE = {
   },
   en: {
     seeker:'Seeker', lifeRune:'Life rune', area:'Area', seeking:'Seeking', seekJoin:' & ', question:'Question', langInstr:'Respond in English.',
-    positions:['RUNE 1 — Past (what has shaped this):','RUNE 2 — Present (what is active now):','RUNE 3 — Hidden / Near future (what is emerging):','RUNE 4 — Challenges (what weighs or blocks):','RUNE 5 — Outside forces (what acts from beyond):','RUNE 6 — Inner state (what lives inside):','RUNE 7 — Outcome (where this is heading):'],
+    positions:['RUNE 1 — Past (what has shaped this, spoken in the image’s own past):','RUNE 2 — Present (what is active now):','RUNE 3 — Hidden / Near future (what is emerging):','RUNE 4 — Challenges (what weighs or blocks):','RUNE 5 — Outside forces (what acts from beyond):','RUNE 6 — Inner state (what lives inside):','RUNE 7 — Outcome (where this is heading):'],
     intro:'The seeker draws seven runes — the Horseshoe.',
     beats:[
       'Read all seven as one continuous passage — not seven separate readings.',

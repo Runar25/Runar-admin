@@ -4379,3 +4379,20 @@ na ten vazba nemířila, je to příští krok. Ukázka vazby: Gebo→Ingwaz→O
 Data docs/eval/2026-08-23-spready-v49/. Další: chlad spreadů (zakončení) · čočka na velké
 spready (čeká na verdikt ownera).
 Affected doc(s): RUNAR_EVAL_LOG.md (rejstřík: +thread — v témže commitu).
+
+
+## 2026-08-23 — v4.10-mynd: chlad spreadů krok 1 — minulost mluví v materiálu obrazu (CODE-tune)
+**Rozhodnutí (KUKY):** „chlad udělej" + potvrzená hranice: obrazová minulost ANO (práh, trn
+na rukávu) · vymyšlené události/osoby/touhy NE („byl hlas, který pojmenoval tvou bolest").
+**Diagnóza (§27 napřed na nástroj):** single-kalibrovaný soudce chladu flagoval FORMU Noren
+(časová osa skrz obraz = jejich podstata); po překalibraci na spready zbylo 2–4/8 skutečných
+vad. Tahoun: deklarativní Urður hlas nad ČTENÁŘOVOU minulostí zval k vymýšlení událostí a
+osob do jeho života.
+**A/B (Norny, n=8/rameno/jazyk, spread-kalibrovaný soudce; data spready-v49/urdur-ab.jsonl —
+orig texty téhle dávky padly na síťové chybě, čísla zachována, referencí je i v49 baseline):**
+orig chlad EN 4/8 · IS 4/8 → **kotva EN 3/8 · IS 1/8**; svět 1,25/1,38 → 1,13/1,25 (drží+).
+Směr shodný v obou řečích, p samostatně neprůkazné (n=8) — nasazeno na sílu mechanismu.
+**Nasazeno (bez příkladů ve znění — pojmenovaný příklad model opisuje):** Urður beat EN+IS ·
+kříž „Að baki/Behind" EN+IS · horseshoe „Past" gloss EN+IS. Yggdrasil časovou pozici nemá.
+Zbývá z hranice: vnitřní touhy + předpoklad v otázce (druhá páka, měřit zvlášť).
+Affected doc(s): žádný.
