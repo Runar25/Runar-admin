@@ -776,3 +776,45 @@ kde jsme naměřili úniky **i s aktivními mantinely** (landvættir 2/4 → „
 `RUNAR_EVAL_LOG.md` 2026-08-19). Doklad rovnou z návrhu: Cowork sám při psaní mockupu ujel
 **dvakrát** (přes „already" a přes „risk" framing) — a ty mockupy nejsou model output, jsou psané
 rukou, takže o skutečném znění zatím nevíme nic.
+
+
+---
+
+## Testy „recept: obrazy se potkávají" — K OTESTOVÁNÍ (Cowork 2026-08-23, ověřil CODE-read)
+
+Generování = CODE · hodnocení = Cowork · **zaslepení = CODE** (promíchat pořadí, sundat štítky ramen;
+bez toho není slepé skórování slepé).
+
+- [ ] **TEST 1 · Vegvísir 1→2→3 — ⚠️ ZADÁNÍ MUSÍ BÝT v2, JINAK ZOPAKUJE ZNÁMÝ ZÁPOR.**
+  Hypotéza: tři obrazy, co se potkávají, dají emergentní scénu; tři nezávislá single ne.
+  ⚠️ **Verze v1 (celý text předchozího ramene + „smíš to nechat být") už proběhla 2026-08-23 a dala
+  0/6** — model to nechal být pokaždé. Verze v2 (nese se **jedna extrahovaná materiálová fráze**,
+  extrahuje ji model, **žádná úniková klauzule**) dala **4/4**. → `RUNAR_EVAL_LOG.md` 2026-08-23.
+  **Pouštět jen v2**, jinak je to ~120 volání na potvrzení něčeho, co víme.
+  Skórovat slepě: (1) pozná soudce A od B? (2) vzniká v A vztah, co v B není? (3) vztahuje se rameno 2
+  **obrazem** (dobře), nebo **jménem/rekapitulací** (špatně)?
+  ⚠️ Přidat čtvrté kritérium z v2 nálezu: **přišlo nesené jako PŘIROVNÁNÍ?** (v2 mělo 1/4 —
+  „no more warmth than the crust of a cold loaf" = simile + druhý obraz, zakázané kánonem).
+  n ≥ 20 trojic na rameno (≈ 120 volání).
+
+- [ ] **TEST 2 · Norns: současnost vs recept.**
+  ✅ **Popis ramene A ověřen v kódu** (CODE-read): `_seasonalImagery` se volá **jednou na celý spread**
+  a builder říká doslova *„Each rune takes up what the one before it left off — one continuous weave,
+  never a list."* Cowork to popsal správně.
+  Rameno B = každá ze 3 run nese SVŮJ obraz z `RUNE_IMAGES`; prompt žádá emergentní **scénu** z jejich
+  potkání, ne řetěz taktů.
+  Skórovat slepě: (1) jedna situace, nebo tři věci za sebou? (2) co si člověk zapamatuje?
+  (3) ⚠️ **nerozpadne se B v SEZNAM obrazů?** — pravidlo „jeden obraz, nevyjmenovávat" existuje
+  z důvodu a tohle je hlavní riziko B. + claim-rate a porušení pravidel.
+  n ≥ 20 trojic na rameno. (Norns = nejkratší spread s pozicemi → nejlevnější.)
+
+- [ ] **TEST 3 · Aspekt-kongruentní výběr obrazů** — pustit až po 1–2, je nejexploratívnější.
+  ✅ **Předpoklad ověřen (CODE-read):** aspektový sloupec je **naplněný úplně** — 82 řádků
+  `RUNE_IMAGES`, **0 chybí IS, 0 chybí EN**, 49 různých EN aspektů (cattle · wealth · threshold ·
+  natural rhythm · inner light…). Chybí jen pravidlo „které aspekty spolu jdou" = malý designový krok
+  napřed. *(Pro pořádek: 7. sloupec MOTIV naplněný NENÍ — 76 z 82 prázdných; pro tenhle test se nepoužívá.)*
+  A = náhodný obraz na runu (dnešní výběr) · B = aspekt-aware výběr.
+  Skórovat slepě a párově: „patří tyhle dva obrazy do jedné scény?"
+  ⚠️ **KRITICKY: B nesmí zabít kontrast.** Měřit ZVLÁŠŤ „koherentní potkání" (chceme nahoru) a
+  „bland souhlas / zmizelý střet" (nechceme). Jinak si koupíme koherenci za cenu toho, co dělá
+  čtení zajímavým.
