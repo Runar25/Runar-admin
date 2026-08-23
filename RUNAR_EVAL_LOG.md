@@ -851,3 +851,24 @@ B=bez. 9 slepých soudců (subagenti, 3 optiky). Korpus `~/runar-eval/ramovy-nav
   0 moralek u všech 6 kandidátů), ale gesto bilance se objevuje — hlídat.
 Hranice: n=3 řetězy × 1 běh, EN; nesená instrukce = rekonstrukce v2 spec (TEST 30 prompt
 v korpusu uložen nebyl, ne byte-shoda); extrakce frází kolísavá („carried now").
+
+## 2026-08-23 — TEST 32+33 · Šev: instrukce ho NEřeší (trade-off), DOMOV VE SCÉNĚ ano (S2 3/3); úzké hrdlo = selektor
+**TEST 32 (D = „návrat skrz materiál vlastní scény" pouhou instrukcí):** čistý trade-off —
+detekce C 3/3 · účinek C 3/3 · organičnost D 3/3. Rozpuštěný návrat soudci přestávají číst
+jako návrat („sotva čitelné", „jiný předmět"); explicitní zůstává vlepený. Znění instrukce
+bolest posouvá, neodstraňuje. Vedlejší nález: organičnost je RELATIVNÍ — S2-C v TEST 31
+(vs nic) „přirozený", v TEST 32 (vs D) „vložený odkaz". Korpus: `~/runar-eval/sev-blind.json`. <!-- doc-links:ok 2026-08-23 korpus bydli mimo repo v ~/runar-eval (konvence CODE-read), checker home neresi -->
+**TEST 33 (E = volba obrazu posledního ramene dle semínka — model vybírá z kandidátů runy —
++ explicitní návrat):**
+- **S2 (drnová zeď pro kořen): E vítězí 3/3, všechny optiky, „čistý":** „Where the wall
+  lowers, a root long buried by earlier keepers pushes up green into the open air" —
+  čitelné, proměněné, patří scéně („scéna by bez něj byla neúplná"). **Šev se zavřel.**
+- S1: pool domov nenabídl (model vybral týž obraz) → fakticky resample, trade-off trvá.
+- S3: model vybral ŠPATNĚ (světlo v okně pro lagunu — žádný materiálový most) → E prohrál
+  3/3, návrat sklouzl do negace („holding what it always held"); ironie: náhodná C scéna
+  (pes drží pole v pohledu) most měla — osa vidění ↔ dno konečně vidět.
+**Závěr:** šev zavírá DOMOV VE SCÉNĚ, ne znění instrukce. Úzké hrdlo = SELEKTOR obrazu:
+(a) fallback, když domov v poolu není, (b) hlubší kritérium než povrchní afinita — kandidát
+= MĚŘENÉ aspekty RUNE_IMAGES [4]/[5] (+ registr D/E/P). To je přesně zaparkovaný T3.
+Hranice: n=1 na buňku a sadu; S2-vítězství může nést i štěstí poolu (drnová zeď existovala).
+Korpus: `~/runar-eval/ramovy-navrat.jsonl` (arm4A/D/E + obrazE) · `~/runar-eval/sev2-blind.json`. <!-- doc-links:ok 2026-08-23 korpus bydli mimo repo v ~/runar-eval (konvence CODE-read), checker home neresi -->

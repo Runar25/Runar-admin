@@ -811,7 +811,11 @@ bez toho není slepé skórování slepé).
 - [x] **TEST 2 — HOTOVO A ROZHODNUTO** (2026-08-23): kolaps receptu do výčtu 0/20; současný
   builder ~14/20 spolkne 1–2 runy. **KUKY: „nechame jeden obraz"** — recept se nepřijímá,
   spolknutí run = přijatá cena. → RUNAR_DECISIONS.md 2026-08-23.
-- [ ] ⏸ **TEST 3 — PARKOVÁN, ale KONZUMENT SE NAŠEL** (2026-08-23 večer: TEST 31 ukázal šev rámového návratu — 2/3 vlepené, protože finální scéna nemá pro semínko místo; aspekt-kongruentní volba obrazu POSLEDNÍHO ramene dle semínka je kandidát řešení). Odparkovat, až owner pustí práci na švu. Původně: aspekt-kongruentní výběr obrazů.
+- [ ] **T3 → SELEKTOR DOMOVA (šev): mechanismus POTVRZEN, stavba čeká na ownera** (2026-08-23:
+  TEST 33 — volba obrazu posledního ramene dle semínka zavřela šev v S2 na 3/3; naivní selektor
+  ale 2/3 selhal: žádný kandidát v poolu / povrchní afinita „světlo pro lagunu"). Stavět =
+  (a) afinita přes MĚŘENÉ aspekty RUNE_IMAGES [4]/[5] (+ registr D/E/P), (b) fallback, když
+  domov neexistuje (bez něj trade-off z TEST 32). → RUNAR_EVAL_LOG.md 2026-08-23.
   ✅ **Předpoklad ověřen (CODE-read):** aspektový sloupec je **naplněný úplně** — 82 řádků
   `RUNE_IMAGES`, **0 chybí IS, 0 chybí EN**, 49 různých EN aspektů (cattle · wealth · threshold ·
   natural rhythm · inner light…). Chybí jen pravidlo „které aspekty spolu jdou" = malý designový krok

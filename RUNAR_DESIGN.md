@@ -692,9 +692,11 @@ na `tree_state` — propojení se rozhodne zvlášť a nestaví se předem.
   (celý text: obraz-výčet 3/20).
   **Dva kanály:** kotálivá fráze (N↔N-1, vyhasíná — správně) + trvalé semínko ramene 1,
   vynořené JEN při ohlédnutí. Mechanismus potvrzen slepě 6/6 (TEST 31, `RUNAR_EVAL_LOG.md`
-  2026-08-23). Otevřená vada: **šev** — návrat musí přijít skrz materiál vlastní scény
-  (2/3 vlepený); kandidát řešení = volba obrazu posledního ramene se zřetelem na semínko
-  (nový konzument pro zaparkovaný T3).
+  2026-08-23). Šev (změřeno TEST 32+33,
+  `RUNAR_EVAL_LOG.md` 2026-08-23): instrukce sama ho NEřeší (trade-off čitelnost×organika);
+  zavírá ho **domov ve scéně** — volba obrazu posledního ramene dle semínka (S2 sweep 3/3).
+  Zbývá SELEKTOR (fallback bez domova + afinita přes měřené aspekty = odparkovaný T3) —
+  rozhodnutí owner.
 - **Designová kontrola (NE instrukce do promptu):** každé rameno dělá jeden ze tří pohybů —
   **naváže · změní · otevře**. Osm navázání = nudná kontinuita; osm převracení = chaos. Slouží nám
   k posouzení oblouku. ⚠️ Do promptu to nepatří: jeden vzor v promptu = model ho opíše.
