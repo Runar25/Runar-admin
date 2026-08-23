@@ -344,6 +344,54 @@ v příběhu — bydlí v kameni. Materiálová vrstva runy je pak ten kámen a 
 ⚠️ **Jednozdrojové, nekříženo:** „léčivé kameny v Bolungavíku" a teze „Island neměl doly, tak dvergy
 přesunul do kamenů". Zajímavé, ale zatím stojí na jednom zdroji.
 
+#### Dverg pod runou — jak se to používá
+
+📜 **Rozhodnuto (KUKY 2026-08-22/23).** Dverg nesedí na rameni Vegvísiru ani na světové straně —
+sedí **POD RUNOU** a cestuje s ní. Kamkoli ta runa padne, nese ho s sebou; rameno Vegvísiru pak
+zdědí povahu runy, která ho pojmenovala. **Žádná nová mechanika.**
+
+⭐ **Dverg je MATERIÁL, ne postava.** Dává runě druhé patro téhož: Isa sama = zastaveno ·
+Isa s Dvalinem = *zastaveno nahoře, dole to žije*. Není to víc obsahu, je to hloubka — a to je
+důvod, proč smí čtení Vegvísiru znít jinak než běžné single.
+
+**Dvě tvrdá pravidla, obojí z měření** (→ `RUNAR_EVAL_LOG.md` 2026-08-23):
+1. **Nikdy jménem.** Jakmile je z dverga bytost se skutkem, pojmenuje se sám.
+2. **Nesmí přijít jako přirovnání.** Dává-li věta smysl po „patient as…", je špatně — dverg má být
+   **vlastnost toho, co v obraze UŽ je**, ne druhý obrázek vedle. Přesně tak to jednou uniklo:
+   *„patient as the stone dozing under the bank"* — simile nalepené na obraz, což kánon zakazuje.
+
+**Ověřené dvojice** 🧩 *(naše konstrukce; kánon říká jen, KDO ten dverg je — ne pod kterou runou sedí)*:
+
+| runa | dverg | materiál — zadání pro OBRAZ, ne text, který Rúnar řekne |
+|---|---|---|
+| Isa | Dvalin | kámen, co dřímá pod mechem — probouzí se pomalu a nikdy nebyl pryč |
+| Kenaz | Brokkr a Eitri | výheň v hloubce — co dostane tvar jedině úderem |
+| Ansuz | Alvíss | ten, kdo znal jméno každé věci a chytilo ho svítání — vědění, co nepřežije, když se říká moc dlouho |
+
+⭐ **Osa: SKRYTÉ ↔ ODHALENÉ** (📜 naše konstrukce na 🔒 kotvě). Není to osa materiálu („kámen vs
+světlo") — ta se rozbije na Laguz (voda) a Ehwaz (pohyb). Je to osa **hloubky**: dverg je to, co leží
+**POD** runou, její druhé patro. **Sowilo a Dagaz žádné „pod" nemají — ONY JSOU to vynoření**, úsvit,
+čiré odhalení.
+→ **Mechanický důsledek, ne estetika:** druhá věta JE ta skrytá vrstva, takže **světelné runy ji
+nepotřebují**. Není to díra v mapě, je to jejich vlastnost.
+🔒 **Kotva:** slunce proměnilo Alvísse v kámen. Na světelném konci tedy dverg **nemůže být** — ne že
+by nezbyl, ale nepřežil by tam.
+⚠️ **Přesná hranice kotvy:** je to doloženo **u Alvísse**, ne jako obecný zákon o všech dvergech.
+A náš vlastní katalog má protipříklad: **Þjóðreyrir** zaříkává *u prahu úsvitu* a nekamení.
+Nerozbíjí to osu — **dává jí střed**: je to pant, kde se skryté překlápí v odhalené. Runy „mezi"
+(Wunjo, Jera) patří sem, ne k jednomu z pólů.
+⚠️ **Runy bez dverga se nedoplňují na sílu** — ani vymýšlením protějšku. Kamenný pól je bohatý
+(🔒 skutečné dvergasteinar, pojmenovaní dvergové); světelný je **hubený** — ljósálfar nemají jediné
+jméno ani konkrétní obraz. **Stavět „světlý elf nad světelnou runou" jen kvůli symetrii by znamenalo
+vymyslet celý pól, aby seděl tvar.** ⭐ **Ověřeno obrácenou pákou 2026-08-23 → světelný pól se NESTAVÍ:** světelná vrstva nepřidala nic
+(u Sowilo/Dagaz jen zopakovala, co runa už řekla; u Isy se ohnula ve skrytou). A pozor na důvod, proč
+se runám bez dverga druhá vrstva nedává: **ne že by zněla nuceně — ona zní dobře.** Posune ale tiše
+význam: Sowilo se skrytou vrstvou začne být o tom, kam světlo NEdosáhlo, což je Perth, ne Sowilo.
+Vadu nechytí kontrola kvality textu, jen srovnání s tím, co ta runa je. → `RUNAR_EVAL_LOG.md` 2026-08-23.
+⚠️ **Gebo z Brísingamenu:** brát **předmět, ne cenu**. Náhrdelník je *zlato spletené ze čtyř pramenů,
+co drží jen dohromady* — to je pouto. „Co za něj dáš, se ukáže potom" je transakce a Gebo tím sklouzne
+do dluhu, což je doložený únik (→ EVAL_LOG 2026-08-19/20).
+
 #### Proč „dwarf-like" a ne skřítek
 
 🔒 Dvergar **původně nebyli nutně malí** (Gould, PMLA 1929 · „Little Glory…", ScanCan 2026) — malost
@@ -544,17 +592,10 @@ Strom: větvená větev se sedmi body → sezónní rituál kmene. Standard+.
 [Jötunheimr] [Miðgarðr] [Niðavellir]
       [Niflheimr]  [Svartalfheimr]
               [Hel]
-
-Ásgarðr     — božské, nejvyšší aspirace, co přesahuje
-Álfheimr    — světlé, vědomé, co vidíš jasně
-Vanaheimr   — příroda, plodnost, intuice
-Jötunheimr  — chaos, výzvy, protisíly
-Miðgarðr    — přítomná realita, kde jsi nyní
-Niðavellir  — řemeslo, práce, co buduješ
-Niflheimr   — stín, tma, co je skryté nebo potlačené
-Svartalfheimr — skryté řemeslo, co se kuje ve tmě
-Hel         — kořeny, předci, co neseš z minulosti
 ```
+**Významy pozic vlastní `RP_YGGDRASIL` v `v2/runar-character.js` — doc je NEOPISUJE** (§20;
+táž poznámka jako u Horseshoe níž). Do 2026-08-23 tu stál opis a rozešel se v 5 z 9 světů
+(nalezl Cowork handoff #35) — který směr je kánon, řeší RUNAR_BACKLOG.md, verdikt owner.
 Nejde do větve — jde do kořenů stromu. **Kdykoliv, žádná brána na datum.**
 Strom: devítibodový uzel v kořenech — nejsilnější bod celého stromu.
 

@@ -121,6 +121,8 @@
   snjór…/New snow lies over the track…" (óskrifaður möguleiki) + přidat třetí „Handfærið…/
   The line runs down into dark water…" (hið óþekkta — dává vodnímu tahu modelu řádný domov).
   Čeká na verdikt ownera; pak zapsat do DECISIONS s výměnou jehněte (viz chat 22. 8. večer).
+- [ ] **Yggdrasil: významy 5 z 9 světů se rozešly mezi DESIGN docem a živým kódem — VERDIKT OWNER (lore, §23)** (Cowork handoff #35 + ověření 2026-08-23): doc měl Hel=kořeny/předci/minulost, kód má Hel=completion/fulfilling itself · Vanaheimr příroda/intuice × harmony/balance · Álfheimr vědomé/jasné × creativity/kindling · Níðavellir řemeslo × deep source (řemeslo kód dává Svartálfaheimru) · Niflheimr potlačené × origin/unresolved. Opis z docu odstraněn (§20, poznámka doplněna) — původní znění v git historii RUNAR_DESIGN.md. Owner určí kánon; pak případná oprava RP_YGGDRASIL packů (EN+IS) jedním měřeným krokem.
+- [ ] **Horseshoe: echo 1↔7 (začátek↔konec) — HYPOTÉZA k testu** (GPT vzorek + nezávisle Cowork #34, zúženo handoffem #35 na krajní body): druhá úroveň vztahu nad `_spreadThread` — co se změnilo mezi první a poslední pozicí. Testovat A/B na horseshoe (svět/chlad + oko ownera), NE rovnou nasadit.
 - [ ] **Vymyšlený druhý člověk ve čtení („someone waits for the sound of your step")** (nález
   v4.1, analýza Cowork 2026-08-22, owner předal): oblast Vztahy/Domov/Léčení svádí model
   k vytvoření KONKRÉTNÍ OSOBY jednající v reálném čase — spadá do druhé půlky `_noColdRead`
