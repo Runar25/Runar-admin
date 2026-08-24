@@ -811,6 +811,11 @@ bez toho není slepé skórování slepé).
 - [x] **TEST 2 — HOTOVO A ROZHODNUTO** (2026-08-23): kolaps receptu do výčtu 0/20; současný
   builder ~14/20 spolkne 1–2 runy. **KUKY: „nechame jeden obraz"** — recept se nepřijímá,
   spolknutí run = přijatá cena. → RUNAR_DECISIONS.md 2026-08-23.
+- [ ] **Páka „tření smí zůstat" pro spread thread** (2026-08-24): `_spreadThread` je laděný
+  na navazování („takes up what the one before left off") — T2 změřil cenu (~14/20 spolknutých
+  run; owner cenu přijal, jeden obraz drží). Jednořádková páka „runy smí stát i proti sobě;
+  nech obrazu tření" = levný test — ⚠️ pouštět AŽ PO oblouk-watchi na v4.14 dávce (dvě páky
+  naráz nejde rozplést, §27). → RUNAR_DESIGN „Vztahy mezi taženými runami".
 - [ ] **T3 → SELEKTOR DOMOVA (šev): mechanismus POTVRZEN, stavba čeká na ownera** (2026-08-23:
   TEST 33 — volba obrazu posledního ramene dle semínka zavřela šev v S2 na 3/3; naivní selektor
   ale 2/3 selhal: žádný kandidát v poolu / povrchní afinita „světlo pro lagunu"). Stavět =

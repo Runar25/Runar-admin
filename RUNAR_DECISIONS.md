@@ -4705,3 +4705,14 @@ nejdisparátnější páry z T1) · proměna místa vs monotónnost · JEDEN sro
 páka §25 (bez místa se nit musí rozpadnout = kontrola). **Edge k pozdějšímu rozhodnutí:**
 rameno vytáhne vlastní životní runu (runa navštíví své místo) — jizva v1.3, nerozhodnuto.
 Affected doc(s): RUNAR_DESIGN.md (Vegvísir — rámce, tento commit).
+
+## 2026-08-24 — Vztahy mezi runami: charakter, ne známka; slovník souzení, ne prompt (KUKY „souhlas!")
+Syntéza owner + GPT + měření, ratifikováno: **(1)** vztah run = charakter setkání v obraze,
+nikdy morální hodnocení cesty (zrcadlo, ne orákulum); **(2)** kategorie vztahů (8 čoček vč.
+mlčení) = slovník SOUZENÍ — do promptu nikdy (doklad: úniková klauzule 0/6 vs. „najde vždy");
+rozšiřují trojici naváže·změní·otevře; **(3)** žádná statická mapa vztahů 25×25 — vztah žije
+v tažených obrazech (T2-038); **(4)** Vegvísir významová vrstva: funkce z Huldu + moderní
+významy ↔ postavená mechanika, §23 hranice artefaktu; **(5)** páka „tření" pro spread thread
+→ backlog, až po v4.14 oblouk-watchi.
+Affected doc(s): RUNAR_DESIGN.md (sekce Vztahy · Vegvísir významová vrstva · design-kontrola
+odkaz) · RUNAR_BACKLOG.md (páka tření) — tento commit.

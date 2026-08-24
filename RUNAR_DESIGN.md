@@ -550,6 +550,20 @@ formule „co se stalo viditelným…", liší se jen strukturální část (poh
 středu · celý oblouk · celý obraz naráz); single drží otázkový los (v4.11). Zda se čtyři
 pocity skutečně dělí, měří oblouk (`scripts/oblouk.py`). → RUNAR_DECISIONS.md 2026-08-23.
 
+### Vztahy mezi taženými runami (KUKY 2026-08-24, syntéza owner+GPT+měření)
+- **Vztah = charakter setkání v obraze** — soulad · tření · mlčení jsou NÁLEZY čtení,
+  **nikdy morální známka cesty**. „Harmonické runy = správná cesta, trnité = špatná" dělá
+  ze zrcadla orákulum — zakázáno. Tření je hodnota („dar podaný přes zamrzlou hladinu"),
+  ne vada k uhlazení.
+- **Kategorie vztahů = slovník SOUZENÍ, nikdy prompt-nabídka.** Pozorovací čočky: naváže ·
+  stojí proti · promění · zesílí · ozvěna · tření · vznikne třetí (emergence) · **mlčení**
+  (non-relation — poctivý nález). ⚠️ Do promptu NIKDY: nabídka „smíš nechat být" = změřeno
+  0/6 (model ji vezme vždy), povinné „najdi vztah" = model vztah vyrobí vždy (hladce a
+  prázdně). Prompt nese povinnou malou VAZBU (fráze/místo/thread); charakter vztahu je
+  emergentní a soudí se těmito čočkami. Rozšiřuje trojici „naváže·změní·otevře" (Vegvísir).
+- **Žádná statická mapa vztahů 25×25** — vztah žije v konkrétních tažených obrazech, ne
+  v páru run (per-pár se neměří, n=1 na dvojici; T2-038 = chyba výběru, ne obsahu).
+
 ### Single (1 runa)
 Jedna runa, žádné pozice. Přímé čtení energie daného momentu.
 Strom: malý uzel na větvi.
@@ -675,6 +689,14 @@ tu je VIDITELNÁ a NEUSTUPUJE (per-feature výjimka z „ustoupí"; viditelná �
 je v obraze jako MÍSTO, nikdy význam/verdikt). Spojka „střed-jako-místo" = v testu, ne
 rozhodnuto → RUNAR_DECISIONS.md 2026-08-24.
 
+**Významová vrstva (KUKY 2026-08-24, §23 hranice funkce vs. artefakt):** Rúnar nese FUNKCI
+znaku — vedení · vytrvalost · návrat · neztratit cestu · orientace v neznámu (roste z Huldova
+zápisu a z toho, co znak lidem DNES znamená) — **nikdy tvrzení o artefaktu** („ověřený vikinský
+navigační přístroj" apod.). Moderní významy mapují na postavenou mechaniku: směr v těžkém
+období = wayfinder · věrnost sobě = střed jako místo (nikdy „tohle jsi") · šťastný návrat =
+rámový návrat 8→1 · odolnost v nejistotě = 9 nocí · vnitřní kompas = Hávamál („sám sobě,
+dovnitř"). Copy z toho vzniká hlasem Rúnara přes Cowork.
+
 **Jádro — proč to není 8× Single** (upřesněno 2026-08-23):
 > **Vegvísir je JEDNO čtení, které se neodhalí najednou. Vzniká tím, že nové obrazy vstupují do
 > vztahu s těmi, kterými člověk už prošel.** Nejde o osm run, jde o to, co udělá druhá s první
@@ -704,8 +726,9 @@ rozhodnuto → RUNAR_DECISIONS.md 2026-08-24.
   zavírá ho **domov ve scéně** — volba obrazu posledního ramene dle semínka (S2 sweep 3/3).
   Zbývá SELEKTOR (fallback bez domova + afinita přes měřené aspekty = odparkovaný T3) —
   rozhodnutí owner.
-- **Designová kontrola (NE instrukce do promptu):** každé rameno dělá jeden ze tří pohybů —
-  **naváže · změní · otevře**. Osm navázání = nudná kontinuita; osm převracení = chaos. Slouží nám
+- **Designová kontrola (NE instrukce do promptu):** každé rameno dělá jeden z pohybů
+  slovníku vztahů (→ „Vztahy mezi taženými runami", sekce Spreads; trojici naváže·změní·otevře
+  slovník rozšířil 2026-08-24). Osm navázání = nudná kontinuita; osm převracení = chaos. Slouží
   k posouzení oblouku. ⚠️ Do promptu to nepatří: jeden vzor v promptu = model ho opíše.
 
 **První a osmé rameno:**
