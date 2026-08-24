@@ -4685,3 +4685,23 @@ kanály (kotálivá fráze + semínko ramene 1 při ohlédnutí) ratifikovány p
 scény, kandidát volba obrazu posledního ramene dle semínka (T3 má konzumenta, zatím parkuje).
 Affected doc(s): RUNAR_DESIGN.md (pilíř, tento commit) · RUNAR_BACKLOG.md (T3 poznámka,
 tento commit).
+
+## 2026-08-24 — Vegvísir: tvrdé rámce (KUKY) + spojka „střed-jako-místo" jde do testu
+**Rozhodnuto (owner, přes Cowork handoff, potvrzeno v chatu):**
+- Vegvísir **NENÍ spread** a nikdy nebude v `SPREAD_CONFIG` — vlastní režim/feature;
+  nestaví se ani neměří jako spread.
+- Struktura: **životní runa = pomyslný STŘED (netahne se)**; uživatel postupně táhne
+  **8 run (ramen)**; další runu nejdřív po uplynutí **9 nocí od předchozí** — devět nocí
+  je PODLAHA, ne rozvrh (ratifikace 2026-08-23); celková délka otevřená. ⚠️ Nepsat
+  „~72 nocí" — vzbuzuje dojem pevné délky (KUKY 2026-08-24).
+- **Čočka ve Vegvísiru VIDITELNÁ v každém rameni a NEUSTUPUJE** — per-feature výjimka
+  z `_lensContext` „ustoupí" (platí dál pro single; role životní runy se napříč features
+  NEsjednocuje). Viditelná ≠ jmenovaná: střed je v obraze jako MÍSTO („kde stojíš"),
+  nikdy jako význam/verdikt (self-ref sonda 24/25, EVAL_LOG v1.2/v1.3).
+- Střed = místo, ramena = kudy se cesta otevírá.
+**K TESTU (ne rozhodnuto):** spojka = střed-jako-místo — runy se nespojují navzájem, obě
+s místem; „nekresli runu — kresli místo reagující na runu". Osy: any-to-any nit (laťka =
+nejdisparátnější páry z T1) · proměna místa vs monotónnost · JEDEN srostlý obraz · obrácená
+páka §25 (bez místa se nit musí rozpadnout = kontrola). **Edge k pozdějšímu rozhodnutí:**
+rameno vytáhne vlastní životní runu (runa navštíví své místo) — jizva v1.3, nerozhodnuto.
+Affected doc(s): RUNAR_DESIGN.md (Vegvísir — rámce, tento commit).
