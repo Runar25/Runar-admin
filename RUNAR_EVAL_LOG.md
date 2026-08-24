@@ -913,3 +913,30 @@ týchž 6 párů jako TEST 34; slepě 8 soudců (6 N + **2 kalibrační** staré
   bude chtít stavovou paletu širší než dnešních 6 stavů (hodiny·počasí·sezóny·úhel·vzdálenost).
 Hranice: n=6+2, 1 soudce/pár, EN, 2 místa. Korpus `~/runar-eval/stav-test.jsonl` +
 `~/runar-eval/stav-blind.json`. <!-- doc-links:ok 2026-08-24 korpus mimo repo (~/runar-eval), checker home neresi -->
+
+## 2026-08-24 — TEST 36 · rev. 3 kontroly: sham-return PŘEŽIL (3/3), emergence otázka PADLA (3/3 mix), hijack-gate NEPROŠLA (6/8 místo vede)
+Tři kontroly z Cowork rev. 3 (owner „pojď na to"). Korpusy `~/runar-eval/emergence-sham-verdikty.json` <!-- doc-links:ok 2026-08-24 korpus mimo repo (~/runar-eval), checker home neresi -->
++ `~/runar-eval/hijack-verdikty.json`. <!-- doc-links:ok 2026-08-24 korpus mimo repo (~/runar-eval), checker home neresi -->
+**(a) SHAM-RETURN — pravý návrat vyhrál 3/3 na OBOU osách** (materiál i pocit). Model vyrobil
+ohlédnutí bez znalosti začátku („poetická retrospektiva") a soudci ho s P v ruce odhalili
+pokaždé — účinek-optika NENÍ Barnum-děravá, závěry TEST 31/33 stojí posíleny.
+**(b) EMERGENCE — nástroj padl vlastní kontrolou (§27): 6/6 real silná, ale i 3/3 SMÍCHANÝCH
+párů (T1+T2 z různých pochodů a míst) silná** s přesvědčivým zdůvodněním. Otázka „vzniká něco
+třetího?" je v této podobě neměřitelná — soudce třetí věc zkonstruuje z čehokoli atmosféricky
+příbuzného (a obě místa jsou zemitá → mix nebyl dost cizí). Hranice: NEtvrdíme, že emergence
+neexistuje — tvrdíme, že tenhle nástroj ji neodliší od konstrukce soudce. Silnější kontrola
+by chtěla mix z opravdu cizích světů + protizkoušku „napiš tu větu z T2" jako samostatný krok.
+**(c) ⭐ HIJACK-GATE krok 1 — NEPROŠLA: 6/8 čtení vede MÍSTO (téma dědictví/předků), runa je
+„nálepka".** Soudce doslova: „kdyby se jméno Wunjo vyměnilo za Othalu, čtení by sedělo ještě
+líp." Odolaly jen Nauthiz (tráva láme drny — vlastní téma našlo materiál) a Eihwaz („what
+holds YOU"). ⚠️ Skript (slovníková rodina, Ø 1,12 tokenu) hijack NEVIDĚL — únik není
+slovníkový, je TEMATICKÝ; kontrola musí běžet na ploše, kde bug žije (§19.3), tj. soudcem.
+**Příčina:** místo bylo postavené z OBRAZOVÉ VĚTY životní runy („turf wall the forefathers
+built") — nese její VÝZNAMOVÝ DĚJ, ne jen materiál, a ten se lije do každého ramene.
+Vedlejší dopad: část „nitě" z TEST 34/35 je zřejmě kontinuita TÉMATU místa, ne jen světa —
+po odvýznamování přeměřit. **Další páka: ODVÝZNAMOVANÉ místo** — identita jen z materiálu
+(„stará drnová zeď", bez předků), význam smí zůstat v zemi, ne v rámovací větě. Měřeno jen
+na Othile (Laguz „groundswell felt underfoot" je podezřelý stejně — je to Laguz-děj).
+**Stav brány (owner reorder):** hijack = ANO (špatně) → střed v dnešní podobě NEPROŠEL;
+pozitivní půlka (osobní soudržnost, human judgment) zatím neměřena. Architektura se nestaví,
+iteruje se reprezentace místa.
