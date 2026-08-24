@@ -11,3 +11,16 @@ Do not turn a look at a screenshot, a rendered image, or a tool's formatted outp
 **Why:** twice in one day I did exactly this. (1) I read a `\` in Grep's formatted output and announced a syntax error in production code — it was a rendering artifact; the file was fine. (2) Kuky sent three screenshots of the tree; I declared that two of them at the same slider position showed different silhouettes and used it as evidence of a rendering bug. They were at different crops and zoom levels, so the comparison was worthless, and the actual difference he cared about was between two *different* positions. Both times the tone was confident and the surface was unreliable — and this was during a session where I was repeatedly telling him "measure, don't eyeball". An impression dressed as a finding costs him more than silence, because he has to spend his own time disproving it.
 
 **How to apply:** when the evidence is an image or a formatted view, run the measurement instead — canvas pixel mass, an image fingerprint over the same canvas, or a reproduction with known inputs. When measurement is not available, write "nedokážu z tohohle rozhodnout" and say what would settle it. Watch especially for comparisons across images that were captured separately — different crop, zoom, or device scale makes silhouette comparison meaningless. And when a real diagnosis exists alongside the guess, keep them apart: after this mistake the oscillation diagnosis still held, because it came from a reproduction, not from the screenshots. Related: [[verify-agent-claims-about-code]], [[guard-test-the-lifecycle]], [[read-the-check-before-push]].
+
+**PRÓZA TAKY (doplněno 2026-08-24).** Tahle paměť byla celá o obrázcích a formátovaném výstupu
+— a přesně proto nechytila, když jsem totéž udělal s TEXTEM. Při rozboru produkčního Norns jsem
+dvakrát tvrdil něco o konkrétní větě (*„Isa se nesmí prochladit“*, pak *„věty 1–4 jsou
+v pořádku, vada je v páté“*), aniž bych si ty věty vypsal. Obojí bylo špatně a obojí musel
+opravit owner: **KUKY 2026-08-24: „nečteš pořádně!!! tohle už se nemá stát!“**
+
+**Odstavec není měřidlo.** Souvislý text svádí mluvit o „druhé půlce“ nebo „té čtvrté větě“
+zpaměti — a čísla vět si člověk domyslí. **Tvrzení „věta N dělá X“ se píše proti číslovanému
+výpisu, ne proti dojmu z odstavce:** `node scripts/vety.js <soubor.json|txt>`. Platí i pro
+„první polovina“, „závěr“, „poslední třetina“ — než to tvrdíš, ať je to vidět rozsekané.
+Ta kontrola vznikla přesně z téhle chyby (důvod je v hlavičce skriptu).
+

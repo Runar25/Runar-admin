@@ -994,14 +994,26 @@ the table from you.` Dvojí porušení kánonu: **imperativ** (kánon: nikdy nep
 místo aby zůstal místem, kam se dívat). Zbylých 5 v4.14 závěrů imperativ NEMÁ.
 **Netvrdí se, že je to systémové** — n=6 na v4.14, výskyt 1.
 
-**② Vada je izolovaná v páté větě. Věty 1–4 jsou v pořádku.**
-Původně jsem psal, že „Isa se nesmí prochladit" — **to bylo špatně, opravil owner.** Isa je
-vyrenderovaná celá a nikdo ji nepřeruší (`the steam long gone, a thin skin forming on the
-surface` · `Nothing in the room moves, and the waiting has a weight to it that the clock does
-not measure`). Věta 4 není odvolání Isy, je to **Eihwaz** (dům, co tohle ticho už přečkal).
-Jeden obraz drží od prvního slova k poslednímu, osa Norn je čitelná bez pojmenování, Eihwaz
-dosedl jako vlastnost místnosti (zdi), ne jako vložený tis. **Proto je nález cenný: chyba
-nesedí v generování čtení, sedí v tom novém dosednutí.**
+**② Zlom je přesně na třetí runě — čtení drží, dokud POPISUJE, a láme se, jakmile začne těšit.**
+(Rozděleno `scripts/vety.js`, 5 vět — ne od oka; důvod výše v hlavičce toho skriptu.)
+• [1] Othila = **materiál** (stůl prostřený rukama před ním, židle drží tvar) ✅
+• [2]+[3] Isa = **materiál**, vyrenderovaná celá a nikdo ji nepřeruší (`the steam long gone,
+  a thin skin forming on the surface` · `the waiting has a weight to it that the clock does
+  not measure`) ✅ — **KUKY 2026-08-24 ukázal, že tohle JE Isa**; můj původní bod „Isa se nesmí
+  prochladit“ byl špatně a je tím vyřízený.
+• [4] Eihwaz = **přestaň být materiál a stane se tvrzením o člověku** ❌ — tři vady v jedné větě:
+  `**yet**` (čtení se otáčí proti vlastnímu obrazu hned, jak Isa dodělá) · `a house that has
+  **weathered this quiet before**` (přiřkne mu minulost — a to při **seeking=null, intention=null,
+  žádná otázka**, čili z ničeho) · `**will fill again**` (slib o budoucnosti = orákulum, ne zrcadlo).
+• [5] dosednutí = imperativ + dodaný význam ❌ (výše ①)
+
+**Není to tedy „vada jen v dosednutí“.** Láme se už třetí runa, a dosednutí v tom jen pokračuje.
+Rozdíl proti [1]–[3] je **jméno toho, co se popisuje**: dokud věta popisuje MÍSTNOST, drží
+kánon; jakmile začne popisovat JEHO (co už přečkal, co ho čeká, co má dělat), padá.
+
+⚠️ **Vlastní chyba, aby se neopakovala:** tvrdil jsem „věty 1–4 jsou v pořádku, vada je v páté“
+— a týž den předtím o téže větě [4] něco jiného. Obě tvrzení byla o rozdělení vět a obě jsem
+učinil **zpaměti, bez výpisu**. KUKY: *„tohle už se nemá stát“*. Kontrola = `scripts/vety.js`.
 
 **③ Životní runa jako závěrečná čočka = jednotvárný konec (systémové).**
 Ve **~7 ze 13** čtení s life=Gebo nese POSLEDNÍ věta explicitní dávání/výměnu: „pour for
