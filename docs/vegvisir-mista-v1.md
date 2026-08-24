@@ -1,7 +1,10 @@
-# Vegvísir — data míst v1 (24 míst, jedno na životní runu)
+# Vegvísir — data míst v2 (24 míst, jedno na životní runu)
 
 **Od:** Cowork-read (handoff přes ownera, 2026-08-24; psáno proti 9b652fb) · **uložil CODE-tune** (Cowork do repa nepíše).
-**STATUS: NEOVĚŘENO PRO STAVBU.** Formát odsouhlasen ownerem: identita + efni + stavy + ≠.
+**STATUS: v2 (2026-08-24 večer)** — Cowork zapracoval TEST 37 mandát: Gebo·Wunjo·Thurisaz
+přepsány na MATERIÁL, story-klauzule pryč i u Fehu/Nauthiz; formátové kolize opraveny
+(Hagalaz·Sowilo·Ehwaz·Dagaz = místa, děj ve stavech); fuglakvak · vætla · torfþak dle
+jazykového screenu. Zbytkové flagy → RUNAR_EVAL_LOG 2026-08-24 (v2 screen). Formát odsouhlasen ownerem: identita + efni + stavy + ≠.
 IS nativně; tvary + slovní druh BÍN-ověřeny Coworkem; **vazba/idiom víceslovných frází = ověřuje CODE**
 (výsledky → RUNAR_EVAL_LOG.md 2026-08-24, jazykový screen). Blank vynechán (není nikdy životní runa).
 ⚠️ Psáno PŘED nálezem TEST 36 (hijack: místo nesmí nést VÝZNAMOVÝ DĚJ runy) — hijack-screen
@@ -12,7 +15,7 @@ Kritéria (změřená): identita = „kde stojíš", ne proces · ≥4 uchopitel
 ---
 
 1. **Fehu — túnfótur við réttina** (kraj domácího pole u ohrady)
-- identita: þar sem ræktað tún endar við réttina og féð kemur heim að kvöldi.
+- identita: þar sem ræktað tún endar og réttin tekur við.
 - efni: grjótgarður · hlið · taða · ullarreyfi · þúfur · troðnar traðir
 - stavy: dögun/kvöld · sumargróður↔haustuppskera · regn↔þurrt · féð úti á heiði↔heima í rétt · tómt tún↔fullt · frost↔hlýindi
 - ≠ ne divoká skála; ne prázdná pustina — je to obhospodařené, návratné.
@@ -24,13 +27,13 @@ Kritéria (změřená): identita = „kde stojíš", ne proces · ≥4 uchopitel
 - ≠ ne obdělané; ne úzká rokle — je to široká, hrubá, stará síla.
 
 3. **Thurisaz — gjáin í hrauninu** (trhlina v lávě)
-- identita: brún sem verður ekki gengin, aðeins stokkin — stíga yfir eða snúa við.
+- identita: svört gjá í hrauninu, of breið til að stíga yfir.
 - efni: svart hraun · mosi sem stöðvast við brúnina · sprungan sjálf · stakur burkni í glufunni · lausir steinar á brúninni · dýpt sem sér ekki til botns
 - stavy: dagur/rökkur · þoka fyllir gjána↔tær · þurrt↔hált · vindur ýtir↔logn · snjór brúar↔auð brún · sól nær ekki niður
 - ≠ ne průchozí s námahou (to je Nauthiz); ne stojatá voda — je to nepřekročitelná hrana.
 
 4. **Ansuz — opin heiði þar sem hljóð berst langt** (otevřená pláň, kde zvuk nese daleko)
-- identita: þar sem víðáttan tekur við og rödd eða fuglstjórn berst yfir langan veg.
+- identita: þar sem víðáttan tekur við og rödd eða fuglakvak berst yfir langan veg.
 - efni: víðáttan · lyng · varða · mýrarpollur · melur · fjarlæg fjöll
 - stavy: logn↔vindur · þoka↔heiðríkt · fuglasöngur↔þögn · dagur/kvöld · sumar/haust · sól↔regn
 - ≠ ne uzavřený prostor; ne les — je to otevřeno, nese to hlas.
@@ -47,27 +50,27 @@ Kritéria (změřená): identita = „kde stojíš", ne proces · ≥4 uchopitel
 - stavy: ljós↔myrkur · glóð↔kulnað · dagur↔nótt · kalt↔heitt við aflinn · verk byrjað↔næstum búið · einn↔með lærlingi
 - ≠ ne otevřená krajina; ne prosvětlená celá místnost — svítí jen na to, kde jsou ruce.
 
-7. **Gebo — þröskuldurinn með borð lagt fyrir tvo** (práh se stolem prostřeným pro dva)
-- identita: þar sem staðið er í opnum dyrum, annar bolli fylltur, hinn stóllinn auður.
-- efni: opnar dyr · annar bolli · auður stóll · borð · ketill · hlað fyrir utan
+7. **Gebo — þröskuldurinn milli húss og hlaðs** (práh mezi domem a dvorem)
+- identita: mörkin í dyrunum þar sem hlýja hússins mætir kulda hlaðsins.
+- efni: slitinn þröskuldssteinn · dyrastafur · hurð · skór og stakkar við dyr · hlað fyrir utan · hlýja og reykur innan
 - stavy: bið↔koma · morgunn/kvöld · kalt↔hlýtt inni · dyr opnar↔hálfopnar · einn↔tveir · ljós í glugga↔myrkur úti
 - ≠ ne o samotě; ne zavřené dveře; ne plná místnost (to je Wunjo) — je to čekání a výměna.
 
-8. **Wunjo — baðstofan full af fólki** (obytná jizba plná lidí)
-- identita: þar sem margir eru þegar saman komnir og hlýjan af þeim fyllir rýmið.
-- efni: eldur á arni · raddir · langborð · matarilmur · kertaljós · þröngur bekkur
-- stavy: fullt↔að fyllast · kvöld/nótt · hlýtt inni↔kalt úti · kliður↔lækkandi · ljós↔rökkur · vetur úti↔vor
+8. **Wunjo — baðstofan með eldi á arni** (obytná jizba s ohněm na krbu)
+- identita: innsta upphitaða rými hússins, með timburþili og eldi sem heldur hita.
+- efni: eldur á arni · timburþil · langborð · bekkir · kertaljós · reykjarlykt
+- stavy: fullt af fólki↔tómt · kvöld/nótt · hlýtt inni↔kalt úti · kliður↔lækkandi · ljós↔rökkur · vetur úti↔vor
 - ≠ ne prázdné; ne čekání na jednoho (to je Gebo) — je to už-plné, mnozí.
 
 9. **Hagalaz — hlaðið í hagléli** (dvůr v krupobití)
-- identita: þar sem hagl lemur það sem stóð, og skjól er aðeins undir vegg.
+- identita: hlað við vegg — opið pláss þar sem eina skjólið er þétt upp við vegginn.
 - efni: hagl · flatt gras · skjól undir vegg · rennandi vatn · bráðnandi ís · jörð sem tekur við
 - stavy: él↔eftir él · dökkur himinn↔heiðríkt á eftir · sumar↔vetur · hávaði↔þögn eftir · bratt↔hlé · blautt↔þiðnandi
 - ≠ ne trvalý stav; ne tichý déšť — je to krátká prudkost, co přejde.
 
 10. **Nauthiz — þröng geil milli kletta** (úzká soutěska mezi skalami)
-- identita: þar sem verður að mjaka sér áfram og hver skref kostar, en fram undan er smuga.
-- efni: þröngir klettaveggir · grýttur botn · hrísla sem klemmist · vætl úr bergi · skorður fyrir fót · þröng smuga fram undan
+- identita: þröng geil milli hárra klettaveggja, þar sem bergið þrengir að á báða vegu.
+- efni: þröngir klettaveggir · grýttur botn · hrísla sem klemmist · vætla úr bergi · skorður fyrir fót · þröng smuga fram undan
 - stavy: dagur/rökkur · þurrt↔hált · kalt↔frost · kyrrt↔gnauð vinds · autt↔snjór · þröngt↔örlítið rýmra
 - ≠ ne nepřekročitelná hrana (to je Thurisaz); ne otevřeno — je to průchozí, ale za cenu.
 
@@ -102,7 +105,7 @@ Kritéria (změřená): identita = „kde stojíš", ne proces · ≥4 uchopitel
 - ≠ ne dole uprostřed; ne uzavřeno — je to vysoký rozhled, který drží vše v dohledu.
 
 16. **Sowilo — hlíð þar sem sól brýtur gegnum og lýsir blauta steina** (svah, kde slunce prorazí a osvítí mokré kameny)
-- identita: augnablikið þar sem grámi rofnar og birtan safnast á einn blautan stein.
+- identita: hlíð þakin blautum steinum — jörð sem bíður þess að birtan falli á hana.
 - efni: blautir steinar sem glitra · sólargeisli · döggvott gras · skuggar sem hopa · fjallshlíð · ljós á vatni
 - stavy: skýjað↔sól brýtur · morgunn/hádegi · döggvott↔þornar · grátt↔bjart · skúr↔heiðríkt · vetrarsól lág↔sumarsól há
 - ≠ ne slunce, co nikdy nezapadá; ne uzavřeno — je to náhlé projasnění, jeden světlý bod.
@@ -120,7 +123,7 @@ Kritéria (změřená): identita = „kde stojíš", ne proces · ≥4 uchopitel
 - ≠ ne pustina; ne staré/vadnoucí; ne skryté pod zemí (Ingwaz) — je to útlé, viditelně nové.
 
 19. **Ehwaz — hlið við hlið á einstigi** (bok po boku na úzké stezce)
-- identita: þar sem tveir fara samstiga upp einstigi, hvorugur á undan, hvorugur eftir.
+- identita: áfangi á einstigi, þar sem tveir standa hlið við hlið áður en lengra er haldið.
 - efni: tveir hestar · einn taktur · taumur · bratt einstigi · sameiginleg leið · áfangi til hvíldar
 - stavy: hvíld↔á ferð · morgunn/kvöld · samstiga↔annar á undan · sól↔skuggi · þurrt↔blautt · sumar↔vetur
 - ≠ ne o samotě (Raidho); ne pevné místo — je to partnerství v pohybu, dva jako jeden.
@@ -145,12 +148,12 @@ Kritéria (změřená): identita = „kde stojíš", ne proces · ≥4 uchopitel
 
 23. **Othila — fornar tóftir með arinsteinum** (staré základy s krbovými kameny)
 - identita: þar sem torfveggir sökkva í gras en arinsteinarnir halda enn lögun hvers elds sem þar brann.
-- efni: torfveggir · arinsteinar · grjót sem grasið tekur · sokkið grasþak · gömul gata · það sem stendur eftir
+- efni: torfveggir · arinsteinar · grjót sem grasið tekur · sokkið torfþak · gömul gata · það sem stendur eftir
 - stavy: sumargrænt↔vetur · morgunn/kvöld · sól↔skuggi · þurrt↔vott · gróið↔bert · kyrrt↔vindur um tóftir
 - ≠ ne nové/postavené; ne obydlené — je to staré, co se vrací do země, a přece drží tvar.
 
-24. **Dagaz — herbergið í fyrstu skímu** (pokoj v prvním svítání)
-- identita: þar sem gráminn lyftist af veggjunum og gyllt brún kemur, án þess að nokkuð hreyfist.
+24. **Dagaz — herbergið við gluggann** (pokoj u okna)
+- identita: herbergi við glugga, þar sem það sem sést ræðst af birtunni sem fellur inn.
 - efni: veggir í breyttri birtu · grámi sem lyftist · gyllt brún · gluggi · gólf sem ljós fellur á · það sem var myrkur
 - stavy: myrkur→grámi→gull · augnablik↔liðið · kyrrt · kaldur↔hlýnar · vetur (seint ljós)↔sumar (snemma) · sofandi↔vaknandi
 - ≠ ne plný den; ne noc; ne sluneční projasnění venku (Sowilo) — je to veřej mezi tmou a dnem.
