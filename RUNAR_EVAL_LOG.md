@@ -978,3 +978,41 @@ malá páka (ozvěna T3), zatím neřešit.
 Pozitivní půlka brány (osobní soudržnost) = human judgment, čeká na ownera.
 Hranice: n=4/místo, 1 soudce/čtení, EN, 2 místa; safety classifier u soudců neběžel
 (výstupy prohlédnuty, normální verdikty).
+
+---
+
+## 2026-08-24 — Dosednutí (v4.13/v4.14): vada je v POSLEDNÍ větě, ne ve čtení
+
+**Vzorek:** produkční DB, všechna spread čtení od 2026-08-23 (n=14: 6× v4.14, 2× v4.13, 6× v4.12).
+Rozbor do hloubky = nejnovější Norns (2026-08-24 22:44 EN, v4.14-mynd, Othila·Isa·Eihwaz,
+životní runa Gebo, bez otázky/seeking/intention, vložený obraz „cup of coffee goes cold").
+
+**① Rozkaz v závěru — JEDEN výskyt, ne systém.**
+`Keep sitting as you sit now, and the next warm cup is the one you pour for someone across
+the table from you.` Dvojí porušení kánonu: **imperativ** (kánon: nikdy nepojmenuj krok — to,
+že velí nedělat nic, ho nevyjímá) + **dodaný význam** (zrcadlo, ne orákulum; výklad se zavře
+místo aby zůstal místem, kam se dívat). Zbylých 5 v4.14 závěrů imperativ NEMÁ.
+**Netvrdí se, že je to systémové** — n=6 na v4.14, výskyt 1.
+
+**② Vada je izolovaná v páté větě. Věty 1–4 jsou v pořádku.**
+Původně jsem psal, že „Isa se nesmí prochladit" — **to bylo špatně, opravil owner.** Isa je
+vyrenderovaná celá a nikdo ji nepřeruší (`the steam long gone, a thin skin forming on the
+surface` · `Nothing in the room moves, and the waiting has a weight to it that the clock does
+not measure`). Věta 4 není odvolání Isy, je to **Eihwaz** (dům, co tohle ticho už přečkal).
+Jeden obraz drží od prvního slova k poslednímu, osa Norn je čitelná bez pojmenování, Eihwaz
+dosedl jako vlastnost místnosti (zdi), ne jako vložený tis. **Proto je nález cenný: chyba
+nesedí v generování čtení, sedí v tom novém dosednutí.**
+
+**③ Životní runa jako závěrečná čočka = jednotvárný konec (systémové).**
+Ve **~7 ze 13** čtení s life=Gebo nese POSLEDNÍ věta explicitní dávání/výměnu: „pour for
+someone" · „the giving of it" · „given freely" · „what would you owe" · „a gift you are not
+ready to give back" · „whose morning was it made for" · „it is given". Čočka funguje podle
+návrhu — jenže poslední věta je ta, co zůstane, a uživateli zní pořád stejně.
+**Hranice:** posouzení 13 vět mým okem (věty jsou v handoffu vypsané, ať je owner vidí), ne
+nástrojem; jeden uživatel, jedna životní runa. Netvrdí se nic o jiných životních runách.
+
+**④ Hypotéza (NEOVĚŘENO): dosednutí se modelu čte jako „uklidni".**
+v4.12 končila otázkami (`whose morning was it made for?`) — otázka nekonejší, drží otevřeno.
+v4.13 dosednutí ten otázkový los **nahradilo**. Zabít obrácenou pákou (§25): ne přidávat
+chlad, ale **ubrat dosednutí ještě víc** a nechat čtení skončit uprostřed obrazu. Nepohne-li
+se konejšení, hypotéza padla a příčina je jinde.
