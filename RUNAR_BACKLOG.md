@@ -811,12 +811,19 @@ bez toho není slepé skórování slepé).
 - [x] **TEST 2 — HOTOVO A ROZHODNUTO** (2026-08-23): kolaps receptu do výčtu 0/20; současný
   builder ~14/20 spolkne 1–2 runy. **KUKY: „nechame jeden obraz"** — recept se nepřijímá,
   spolknutí run = přijatá cena. → RUNAR_DECISIONS.md 2026-08-23.
-- [ ] **T-emergence: re-judge existujícího spojka korpusu** (2026-08-24, z Cowork handoffu
-  relační model): naše soudy měřily NIT a ODLIŠNOST, ne emergenci („vzniká něco, co není
-  v žádné runě samostatně?"). Jediná skutečně nezměřená osa z GPT kritéria. Levné: žádná
-  generace, jen ~6 slepých soudců nad `~/runar-eval/spojka-test.jsonl` M-páry. Pořadí dle
-  handoffu drží: emergence → teprve pak T-geometrie (protilehlá ramena) → návrat 8→1;
-  T-čas až živí testeři (ratifikováno).
+- [ ] **T-emergence (zpřísněný scoring, rev. 3) + sham-return kontrola** (2026-08-24):
+  (a) re-judge spojka M-párů na emergenci („vzniká něco, co není v žádné runě samostatně?");
+  (b) NOVÁ buňka sham-return: model vyrobí „ohlédnutí" BEZ znalosti skutečného začátku —
+  přebarvení se počítá jen, když ho sham nedokáže napodobit (poetická retrospektiva ≠ vztah).
+  Pozn.: materiálová detekce (TEST 31) je proti shamu částečně imunní (kotví na semínku),
+  účinek-optika NE — tam sham hrozí.
+- [ ] **T-střed: hijack-gate** (2026-08-24, owner reorder — PRVNÍ otázka středu): leje se
+  slovník životní runy do všech ramen? KROK 1 zdarma: změřit na EXISTUJÍCÍM korpusu
+  (`~/runar-eval/spojka-test.jsonl` — Othila místo nese dědictví/předky inherentně; kolik
+  z toho je materiál zdi vs. VÝZNAM Othily?) — jde i skriptem (slovníková rodina), ne jen
+  soudci. KROK 2: dedikovaný test Gebo(Life)→Isa→X vs bez životní runy; + měkká půlka
+  osobní soudržnosti (human judgment). Střed projde jen: soudržnost ANO ∧ hijack NE.
+  MILNÍK (owner): 1→2→3 emergence → hijack-gate → 1↔5 → 8→1 → teprve pak architektura.
 - [ ] **Páka „tření smí zůstat" pro spread thread** (2026-08-24): `_spreadThread` je laděný
   na navazování („takes up what the one before left off") — T2 změřil cenu (~14/20 spolknutých
   run; owner cenu přijal, jeden obraz drží). Jednořádková páka „runy smí stát i proti sobě;

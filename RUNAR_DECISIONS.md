@@ -4716,3 +4716,16 @@ významy ↔ postavená mechanika, §23 hranice artefaktu; **(5)** páka „tře
 → backlog, až po v4.14 oblouk-watchi.
 Affected doc(s): RUNAR_DESIGN.md (sekce Vztahy · Vegvísir významová vrstva · design-kontrola
 odkaz) · RUNAR_BACKLOG.md (páka tření) — tento commit.
+
+## 2026-08-24 — Vegvísir: owner REORDER — první otázka středu je FUNKCE, viditelnost PARKOVÁNA
+Mění (ne ruší) tvrdé rámce z téhož dne: preference „čočka viditelná, neustupuje" se PARKUJE
+jako DRUHÁ otázka — není zahozena. PRVNÍ otázka (gate před stavbou): **dokáže životní runa
+fungovat jako střed, aniž převezme výklad?** Dvě půlky, měřit zvlášť: (a) pozitivní (měkká,
+human judgment) — dá střed výrazně lepší osobní soudržnost?; (b) negativní (TVRDÁ) =
+**hijack-check**: leje se slovník životní runy do VŠECH ramen? Střed funguje jen když (a) ANO
+a (b) NE. Ukotveno: self-ref 24/25 (životní runa s interpretační silou obarví čtení).
+Zpřísněn i emergence scoring (Cowork rev. 3): přebarvení prvního obrazu se počítá jen, když
+by NEŠLO napsat stejně přesvědčivě bez znalosti předchozích — nová kontrolní buňka
+„sham-return" (model návrat vyrobí BEZ znalosti začátku; poetická retrospektiva ≠ vztah).
+MILNÍK: 1→2→3 emergence → hijack-gate středu → 1↔5 → 8→1 → teprve pak 8 ramen/architektura.
+Affected doc(s): RUNAR_DESIGN.md (rámce — parking poznámka) · RUNAR_BACKLOG.md (testy) — tento commit.

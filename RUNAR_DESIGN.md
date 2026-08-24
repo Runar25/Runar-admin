@@ -684,9 +684,10 @@ na `tree_state` — propojení se rozhodne zvlášť a nestaví se předem.
 
 **Tvrdé rámce (KUKY 2026-08-24):** Vegvísir **NENÍ spread** — nikdy v `SPREAD_CONFIG`, vlastní
 režim. Struktura: životní runa = pomyslný STŘED (netahne se) · 8 tažených run (ramen) · další
-runa nejdřív po 9 nocích od předchozí (podlaha — viz „Čas" výš), celková délka otevřená. Čočka
-tu je VIDITELNÁ a NEUSTUPUJE (per-feature výjimka z „ustoupí"; viditelná ≠ jmenovaná — střed
-je v obraze jako MÍSTO, nikdy význam/verdikt). Spojka „střed-jako-místo" = v testu, ne
+runa nejdřív po 9 nocích od předchozí (podlaha — viz „Čas" výš), celková délka otevřená. Čočka:
+preference „VIDITELNÁ, neustupuje" (viditelná ≠ jmenovaná — místo, nikdy význam) je od
+2026-08-24 večer PARKOVÁNA jako druhá otázka; první je FUNKCE středu — hijack-gate
+(→ RUNAR_DECISIONS.md 2026-08-24 reorder). Spojka „střed-jako-místo" = v testu, ne
 rozhodnuto → RUNAR_DECISIONS.md 2026-08-24.
 
 **Významová vrstva (KUKY 2026-08-24, §23 hranice funkce vs. artefakt):** Rúnar nese FUNKCI
