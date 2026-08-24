@@ -895,3 +895,21 @@ korpus `~/runar-eval/spojka-test.jsonl` + `~/runar-eval/spojka-verdikty.json`. <
 STAVEM (hodina/počasí/sezóna/úhel), ne jako opakovanou větu — a přeměřit odlišnost.
 Hranice: n=6 párů, 1 soudce/pár, EN, 2 místa, páry (ne 8ramenná série); u 3 soudců
 neběžel safety classifier (výstupy ručně prohlédnuty, normální verdikty).
+
+## 2026-08-24 — TEST 35 · Stav místa: splývání 3/6 → 1/6 (kalibrace ±1), nit drží 6/6; nové kritérium = BOHATOST místa
+N = místo jako IDENTITA + losovaný STAV (hodina/počasí/sezóna; žádná sdílená verbatim věta),
+týchž 6 párů jako TEST 34; slepě 8 soudců (6 N + **2 kalibrační** staré splývavé M-páry).
+- **Nit 6/6 silná · jeden obraz 12/12 · odlišnost 5/6 zřetelné** (TEST 34 M: 3/6 splývalo).
+- **Kalibrace:** KAL-B (staré 5-M) splývá dál ✓ · KAL-A (staré 2-M) soudce překlopil na
+  „zřetelné (těsně)" → soudcovský šum ±1 na hraničních párech; zlepšení 3/6→1/6 číst s touto
+  výhradou. Kvalitativní posun je ale jasný: verdikty už nehlásí recyklovanou větu („klíčová
+  věta téměř doslova" zmizelo), jen sdílenou kulisu.
+- ⭐ **Zbytkové splývání je vlastnost CHUDÉHO místa, ne mechaniky:** Laguz „břeh-dmutí" má
+  jediné smyslové zařízení (vlna pod chodidly — vrátila se ve 2 párech, 1× splynutí);
+  Othila drnová zeď **4/4 zřetelné** (kameny · drny · kořeny · závětří · spára · oheň u zdi
+  — každý stav sáhl po jiném materiálu). **Nové designové kritérium pro budoucí data míst:
+  místo musí nést VÍCE uchopitelných materiálů** (obsah míst = Cowork).
+- Soudcova věta u KAL-A platí obecně: „třetí čtení v téže kulise už by splývalo" — 8 ramen
+  bude chtít stavovou paletu širší než dnešních 6 stavů (hodiny·počasí·sezóny·úhel·vzdálenost).
+Hranice: n=6+2, 1 soudce/pár, EN, 2 místa. Korpus `~/runar-eval/stav-test.jsonl` +
+`~/runar-eval/stav-blind.json`. <!-- doc-links:ok 2026-08-24 korpus mimo repo (~/runar-eval), checker home neresi -->
