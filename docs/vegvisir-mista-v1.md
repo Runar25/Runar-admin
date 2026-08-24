@@ -1,10 +1,12 @@
-# Vegvísir — data míst v2 (24 míst, jedno na životní runu)
+# Vegvísir — data míst v3 (24 míst, jedno na životní runu)
 
 **Od:** Cowork-read (handoff přes ownera, 2026-08-24; psáno proti 9b652fb) · **uložil CODE-tune** (Cowork do repa nepíše).
-**STATUS: v2 (2026-08-24 večer)** — Cowork zapracoval TEST 37 mandát: Gebo·Wunjo·Thurisaz
+**STATUS: v3 (2026-08-24 pozdě večer)** — Cowork zapracoval TEST 37 mandát: Gebo·Wunjo·Thurisaz
 přepsány na MATERIÁL, story-klauzule pryč i u Fehu/Nauthiz; formátové kolize opraveny
 (Hagalaz·Sowilo·Ehwaz·Dagaz = místa, děj ve stavech); fuglakvak · vætla · torfþak dle
-jazykového screenu. Zbytkové flagy → RUNAR_EVAL_LOG 2026-08-24 (v2 screen). Formát odsouhlasen ownerem: identita + efni + stavy + ≠.
+jazykového screenu. v3: 6 flagů v2-screenu vyřešeno (Gebo story-stavy → materiál · Wunjo/Ehwaz
+≠ srovnány · Sowilo bez procesní klauzule); **Othila story-klauzule VĚDOMĚ ponechána — hlídat
+v hijack měřeních** (gradient 2/8); þröskuldssteinn+timburþil potvrzeny mlčky (v3 je drží). Formát odsouhlasen ownerem: identita + efni + stavy + ≠.
 IS nativně; tvary + slovní druh BÍN-ověřeny Coworkem; **vazba/idiom víceslovných frází = ověřuje CODE**
 (výsledky → RUNAR_EVAL_LOG.md 2026-08-24, jazykový screen). Blank vynechán (není nikdy životní runa).
 ⚠️ Psáno PŘED nálezem TEST 36 (hijack: místo nesmí nést VÝZNAMOVÝ DĚJ runy) — hijack-screen
@@ -53,14 +55,14 @@ Kritéria (změřená): identita = „kde stojíš", ne proces · ≥4 uchopitel
 7. **Gebo — þröskuldurinn milli húss og hlaðs** (práh mezi domem a dvorem)
 - identita: mörkin í dyrunum þar sem hlýja hússins mætir kulda hlaðsins.
 - efni: slitinn þröskuldssteinn · dyrastafur · hurð · skór og stakkar við dyr · hlað fyrir utan · hlýja og reykur innan
-- stavy: bið↔koma · morgunn/kvöld · kalt↔hlýtt inni · dyr opnar↔hálfopnar · einn↔tveir · ljós í glugga↔myrkur úti
-- ≠ ne o samotě; ne zavřené dveře; ne plná místnost (to je Wunjo) — je to čekání a výměna.
+- stavy: dragsúgur↔kyrrt · morgunn/kvöld · kalt↔hlýtt inni · dyr opnar↔hálfopnar · þröskuldur votur↔þurr · ljós í glugga↔myrkur úti
+- ≠ ne zavřené dveře; ne plná místnost (to je Wunjo) — je to práh, kde vnitřek potkává venek.
 
 8. **Wunjo — baðstofan með eldi á arni** (obytná jizba s ohněm na krbu)
 - identita: innsta upphitaða rými hússins, með timburþili og eldi sem heldur hita.
 - efni: eldur á arni · timburþil · langborð · bekkir · kertaljós · reykjarlykt
 - stavy: fullt af fólki↔tómt · kvöld/nótt · hlýtt inni↔kalt úti · kliður↔lækkandi · ljós↔rökkur · vetur úti↔vor
-- ≠ ne prázdné; ne čekání na jednoho (to je Gebo) — je to už-plné, mnozí.
+- ≠ ne čekání na jednoho (to je Gebo) — plná i prázdná vyhřátá jizba je legitimní stav místa.
 
 9. **Hagalaz — hlaðið í hagléli** (dvůr v krupobití)
 - identita: hlað við vegg — opið pláss þar sem eina skjólið er þétt upp við vegginn.
@@ -105,7 +107,7 @@ Kritéria (změřená): identita = „kde stojíš", ne proces · ≥4 uchopitel
 - ≠ ne dole uprostřed; ne uzavřeno — je to vysoký rozhled, který drží vše v dohledu.
 
 16. **Sowilo — hlíð þar sem sól brýtur gegnum og lýsir blauta steina** (svah, kde slunce prorazí a osvítí mokré kameny)
-- identita: hlíð þakin blautum steinum — jörð sem bíður þess að birtan falli á hana.
+- identita: hlíð þakin blautum steinum.
 - efni: blautir steinar sem glitra · sólargeisli · döggvott gras · skuggar sem hopa · fjallshlíð · ljós á vatni
 - stavy: skýjað↔sól brýtur · morgunn/hádegi · döggvott↔þornar · grátt↔bjart · skúr↔heiðríkt · vetrarsól lág↔sumarsól há
 - ≠ ne slunce, co nikdy nezapadá; ne uzavřeno — je to náhlé projasnění, jeden světlý bod.
@@ -126,7 +128,7 @@ Kritéria (změřená): identita = „kde stojíš", ne proces · ≥4 uchopitel
 - identita: áfangi á einstigi, þar sem tveir standa hlið við hlið áður en lengra er haldið.
 - efni: tveir hestar · einn taktur · taumur · bratt einstigi · sameiginleg leið · áfangi til hvíldar
 - stavy: hvíld↔á ferð · morgunn/kvöld · samstiga↔annar á undan · sól↔skuggi · þurrt↔blautt · sumar↔vetur
-- ≠ ne o samotě (Raidho); ne pevné místo — je to partnerství v pohybu, dva jako jeden.
+- ≠ ne cesta sama (Raidho); ne rozcestí — je to úsek, kde jdou dva zároveň.
 
 20. **Mannaz — lygnt lón með speglun** (klidná laguna se zrcadlením)
 - identita: þar sem sléttur flötur gefur til baka mynd þess sem yfir honum stendur.
