@@ -958,3 +958,23 @@ Laguz · Kenaz-dílna; významové TABLEAU (naaranžovaný příběh runy jako s
 šálek + prázdná židle) · Wunjo (plná jizba) · Thurisaz (nepřekročitelná hrana s volbou).
 → NEŽÁDAT přepisy plošně (§24): rozhodne měření — **hijack-test Uruz (čistá) vs Gebo
 (tableau) s návštěvními runami** = další krok, navazuje na TEST 36 páku „odvýznamované místo".
+
+## 2026-08-24 — TEST 37 · Hijack Uruz-materiál vs Gebo-tableau: PÁKA POTVRZENA (runa 3/4 vs 0/4)
+Titíž 4 návštěvníci (Isa·Ansuz·Raidho·Berkana), mechanika TEST 35 (identita+stav), místa
+z dat v1. 8 slepých soudců. Korpus `~/runar-eval/hijack2-test.jsonl` + `~/runar-eval/hijack2-verdikty.json`. <!-- doc-links:ok 2026-08-24 korpus mimo repo (~/runar-eval), checker home neresi -->
+- **Uruz (materiálová identita): runa vede 3/4** (Isa·Ansuz·Berkana čistě — místo je jeviště),
+  1/4 místo (Raidho — viz níž).
+- **Gebo (významové tableau): runa vede 0/4** — místo 3/4 + 1 vyvážené. Soudci: Berkana
+  „ZTOTOŽNĚNA s místem… žádný obraz zrodu"; Raidho „nálepka vysvětlující, PROČ židle čeká".
+  Naaranžovaný příběh runy (šálek + prázdná židle) pohltí každého návštěvníka.
+**Gradient hijacku změřen: tableau 0/4 runa · příběhová identita (TEST 36 Othila) 2/8 ·
+materiál 3/4.** → Negativní půlka brány je PRŮCHODNÁ materiálovou identitou; přepis tableau
+míst (Gebo·Wunjo·Thurisaz + příběhové klauzule jinde) je teď MĚŘENĚ oprávněný, ne dojem.
+**Zbytkové riziko (Uruz-Raidho):** dominantní STAV místa umí přebít runu s protichůdným
+tématem — Raidho (cesta) dostala los „zmrzlá suť" a ztuhla („road through stones that no
+longer move"). Stavová paleta místa musí nabízet i stavy s pohybem/změnou (Uruz je má:
+vítr, zvířata, tání — los je nevytáhl); volba stavu se zřetelem na návštěvníka = budoucí
+malá páka (ozvěna T3), zatím neřešit.
+Pozitivní půlka brány (osobní soudržnost) = human judgment, čeká na ownera.
+Hranice: n=4/místo, 1 soudce/čtení, EN, 2 místa; safety classifier u soudců neběžel
+(výstupy prohlédnuty, normální verdikty).

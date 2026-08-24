@@ -814,13 +814,13 @@ bez toho není slepé skórování slepé).
 - [x] **T-emergence + sham-return — PROVEDENO** (TEST 36, 2026-08-24): sham-return 3/3 pro
   pravý návrat (účinek-optika obstála); emergence otázka padla vlastní kontrolou (3/3 mix
   „silná") → NEMĚŘITELNÁ v této podobě; příští pokus chce mix z opravdu cizích světů.
-- [ ] **T-střed: hijack-gate — KROK 1 NEPROŠEL (6/8 místo vede), páka = ODVÝZNAMOVANÉ místo**
-  (TEST 36, 2026-08-24): místo z obrazové věty životní runy nese její VÝZNAMOVÝ DĚJ a přebírá
-  výklad (runa = „nálepka"); skript to neviděl, soudci ano (§19.3). DALŠÍ KROK: identita místa
-  jen z MATERIÁLU („stará drnová zeď" bez předků) → přegenerovat, přeměřit hijack + nit
-  (část nitě mohla být téma místa!). Pak krok 2 (Gebo(Life) dedikovaně) + měkká půlka
-  soudržnosti (owner). Střed projde jen: soudržnost ANO ∧ hijack NE.
-  MILNÍK (owner): 1→2→3 → hijack-gate → 1↔5 → 8→1 → architektura.
+- [ ] **T-střed: hijack-gate — negativní půlka PRŮCHODNÁ materiálovou identitou** (TEST 36+37,
+  2026-08-24): gradient změřen — tableau 0/4 runa · příběhová identita 2/8 · materiál 3/4.
+  → COWORK: přepsat tableau místa (Gebo·Wunjo·Thurisaz) + příběhové klauzule na materiálovou
+  identitu (měřeně oprávněno). Zbytkové riziko: dominantní stav umí přebít protichůdnou runu
+  (Uruz-Raidho, zmrzlá suť) → stavová paleta musí nabízet i pohyb/změnu; volba stavu dle
+  návštěvníka = budoucí páka (ozvěna T3). ZBÝVÁ: pozitivní půlka (osobní soudržnost — owner)
+  + přeměřit NIT na materiálovém místě (část nitě mohla být téma). MILNÍK drží.
 - [ ] **Páka „tření smí zůstat" pro spread thread** (2026-08-24): `_spreadThread` je laděný
   na navazování („takes up what the one before left off") — T2 změřil cenu (~14/20 spolknutých
   run; owner cenu přijal, jeden obraz drží). Jednořádková páka „runy smí stát i proti sobě;
