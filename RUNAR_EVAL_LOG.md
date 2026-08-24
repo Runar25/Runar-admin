@@ -1016,3 +1016,18 @@ v4.12 končila otázkami (`whose morning was it made for?`) — otázka nekonej�
 v4.13 dosednutí ten otázkový los **nahradilo**. Zabít obrácenou pákou (§25): ne přidávat
 chlad, ale **ubrat dosednutí ještě víc** a nechat čtení skončit uprostřed obrazu. Nepohne-li
 se konejšení, hypotéza padla a příčina je jinde.
+
+## 2026-08-24 — Nit-recheck na materiálovém místě + screen dat v2
+**Nit po odvýznamování DRŽÍ: 2/2 silná na Uruz-materiálu** — a zdůvodnění jsou MATERIÁLOVÁ
+(„under the moss on these fallen stones" — ticho→řeč, povrch→pod mech), ne tematická jako
+u hijacknuté Othily. Kontroly: 1/2 slabá ✓, 1/2 silná (havran-naslouchání→kořeny-držení —
+tematická komplementarita existuje i bez místa; týž jev jako 1/6 v TEST 34). Hranice: n=2+2.
+**Screen dat v2** (`docs/vegvisir-mista-v1.md`, přepisy tableau ✓): zbytkové flagy pro Cowork:
+(a) Wunjo ≠ „ne prázdné" odporuje novému stavu „fullt af fólki↔tómt" · (b) Ehwaz ≠ „ne pevné
+místo" zastaralé (identita už JE místo-áfangi) · (c) Gebo stav „bið↔koma" je story-stav
+(čekání = Gebo děj) · (d) Sowilo „jörð sem bíður þess að birtan falli" = zbytková procesní
+klauzule · (e) Othila story-klauzule zůstala (gradient 2/8 — rozhodnout, zda změkčit) ·
+(f) potvrdit složeniny þröskuldssteinn · timburþil (slovník nezná; timburþil historicky přesné).
+**Stav brány:** negativní půlka ✓ (materiál, TEST 37) · nit ✓ (2/2 materiálově kotvená) ·
+zbývá pozitivní půlka = OKO OWNERA na pár čteních z materiálních míst. Pak milník 1→2→3
+kompletní → návrh promptu skutečného ramene.
