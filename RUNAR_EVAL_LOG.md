@@ -940,3 +940,21 @@ na Othile (Laguz „groundswell felt underfoot" je podezřelý stejně — je to
 **Stav brány (owner reorder):** hijack = ANO (špatně) → střed v dnešní podobě NEPROŠEL;
 pozitivní půlka (osobní soudržnost, human judgment) zatím neměřena. Architektura se nestaví,
 iteruje se reprezentace místa.
+
+## 2026-08-24 — Data míst v1: uloženo + jazykový screen + hijack-riziková mapa
+Uloženo `docs/vegvisir-mista-v1.md` (24 míst od Cowork; formát identita+efni+stavy+≠; ≠ řádek
+je dobrá zbraň proti slévání). **Jazyk (is-vazba/slovník):** ⚠️ **„fuglstjórn" (identita
+Ansuz) vypadá jako chyba** — fugl+stjórn = „ptačí řízení"; zřejmě míněno fuglsrödd/fuglakvak
+→ vrátit Coworkovi. Tvary: „vætl úr bergi" → lemma **vætla** (f.) · spegilslétt = tvar od
+spegilsléttur (ok). Slovník nezná řadu složenin (varðhóll · leiðarvarða · sáðbeð · þíðubrún ·
+ullarreyfi · bergvatnslind · grasþak · matarilmur) — složeniny jsou produktivní a většina
+působí přirozeně; Cowork ať potvrdí méně obvyklé (leiðarvarða vs. vörður/leiðarsteinn).
+V pořádku: geil, taða, orf, sáta, hrísla, smuga, tröð, nýgræðingur, rekaviður, einstigi, túnfótur.
+**Kolize s VLASTNÍMI kritérii formátu (před stavbou přeformulovat):** Sowilo = „augnablikið"
+(OKAMŽIK, ne místo) · Ehwaz = „tveir fara samstiga" (vztah v pohybu, ne místo — vlastní ≠ to
+přiznává) · Hagalaz = událost krupobití (proces, co přejde) · Dagaz hraniční (denní okamžik).
+**Hijack-riziková mapa (session judgment, NE měření):** nejčistší materiálová identita = Uruz ·
+Laguz · Kenaz-dílna; významové TABLEAU (naaranžovaný příběh runy jako scéna) = Gebo (plný
+šálek + prázdná židle) · Wunjo (plná jizba) · Thurisaz (nepřekročitelná hrana s volbou).
+→ NEŽÁDAT přepisy plošně (§24): rozhodne měření — **hijack-test Uruz (čistá) vs Gebo
+(tableau) s návštěvními runami** = další krok, navazuje na TEST 36 páku „odvýznamované místo".
