@@ -987,12 +987,23 @@ Hranice: n=4/místo, 1 soudce/čtení, EN, 2 místa; safety classifier u soudců
 Rozbor do hloubky = nejnovější Norns (2026-08-24 22:44 EN, v4.14-mynd, Othila·Isa·Eihwaz,
 životní runa Gebo, bez otázky/seeking/intention, vložený obraz „cup of coffee goes cold").
 
-**① Rozkaz v závěru — JEDEN výskyt, ne systém.**
-`Keep sitting as you sit now, and the next warm cup is the one you pour for someone across
-the table from you.` Dvojí porušení kánonu: **imperativ** (kánon: nikdy nepojmenuj krok — to,
-že velí nedělat nic, ho nevyjímá) + **dodaný význam** (zrcadlo, ne orákulum; výklad se zavře
-místo aby zůstal místem, kam se dívat). Zbylých 5 v4.14 závěrů imperativ NEMÁ.
-**Netvrdí se, že je to systémové** — n=6 na v4.14, výskyt 1.
+**① Imperativní šablona „pokračuj, jak jsi — a dojdeš" = 3 ze 4 NORNS EN.**
+Tři čtení, tentýž tvar s vyměněnými podstatnými jmény:
+• `**Keep sitting as you sit now**, and the next warm cup is the one you pour for someone…`
+• `**Keep walking as you are**, and the track you take carries you down to where the grass is warm…`
+• `**Follow the row as it stands** and you reach the edge with your own eyes clear on…`
+Vzorec = [rozkaz pokračovat, jak jsi] + `and` + [co ti to přinese]. Tři porušení kánonu naráz:
+**pojmenovaný krok** (že velí nic neměnit, ho nevyjímá) · **slib** (orákulum, ne zrcadlo) ·
+**zavřený výklad** (dodá význam místo místa, kam se dívat).
+
+⚠️ **Oprava vlastního měření z téhož dne.** Nejdřív jsem zapsal „imperativ 1× ze 6, není to
+systém". Bylo to špatně: **skenoval jsem jen POSLEDNÍ větu**, a ve dvou ze tří případů sedí
+rozkaz v **předposlední**. Kontrola běžela na užší ploše, než na jaké jev žije (§19.3).
+Přeměřeno na posledních DVOU větách všech v4.14 čtení.
+
+**Kde se to koncentruje:** 3/4 NORNS EN · 0/2 ostatní spready EN (Horseshoe, Kříž) · 0/1 IS.
+**Hranice: n=6 celkem, z toho 4 Norns EN.** Netvrdí se, že je to výhradně Norns ani že EN/IS
+rozdíl je reálný — na to jsou čísla příliš malá. Tvrdí se jen, že šablona existuje a opakuje se.
 
 **② Zlom je přesně na třetí runě — čtení drží, dokud POPISUJE, a láme se, jakmile začne těšit.**
 (Rozděleno `scripts/vety.js`, 5 vět — ne od oka; důvod výše v hlavičce toho skriptu.)
