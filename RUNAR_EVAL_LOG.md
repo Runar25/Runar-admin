@@ -872,3 +872,26 @@ bolest posouvá, neodstraňuje. Vedlejší nález: organičnost je RELATIVNÍ �
 = MĚŘENÉ aspekty RUNE_IMAGES [4]/[5] (+ registr D/E/P). To je přesně zaparkovaný T3.
 Hranice: n=1 na buňku a sadu; S2-vítězství může nést i štěstí poolu (drnová zeď existovala).
 Korpus: `~/runar-eval/ramovy-navrat.jsonl` (arm4A/D/E + obrazE) · `~/runar-eval/sev2-blind.json`. <!-- doc-links:ok 2026-08-23 korpus bydli mimo repo v ~/runar-eval (konvence CODE-read), checker home neresi -->
+
+## 2026-08-24 — TEST 34 · Spojka „střed-jako-místo": SPOJUJE (6/6 vs 1/6), cena = monotónnost 3/6, jeden obraz drží 12/12
+Handoff Cowork (spojitost mezi runami) + osy CODE-tune. 6 nejdisparátnějších párů z T1
+(tam párové vlákání selhalo) × 2 buňky: **M** = obrazová věta nahrazena MÍSTEM středu
+(obraz životní runy: Othila drnová zeď · Laguz dmutí) + direktiva „kresli místo odpovídající
+runě" · **S** = produkční single beze změny (obrácená páka §25). 12 slepých soudců (1/pár),
+korpus `~/runar-eval/spojka-test.jsonl` + `~/runar-eval/spojka-verdikty.json`. <!-- doc-links:ok 2026-08-24 korpus mimo repo (~/runar-eval), checker home neresi -->
+- **NIT: M 6/6 silná · S 1/6 silná, 5/6 slabá.** Obrácená páka drží — bez místa nit padá
+  na „most si musí věštec postavit sám". Spojka spojuje i páry, kde párová podobnost
+  strukturálně selhává (Nauthiz↔Wunjo, Ansuz↔Eihwaz…). ⚠️ Poctivě: 1 S-pár trefil silnou
+  nit náhodou (kořen hledá cestu → „už jsi uvnitř" — narativní komplementarita existuje
+  i bez spojky, jen nespolehlivě.)
+- **ODLIŠNOST: M 3/6 splývají · S 6/6 zřetelné.** Cena spojky je přesně predikovaná
+  monotónnost — s identifikovanou MECHANICKOU příčinou: místo-věta je v promptu VERBATIM
+  pro obě čtení → model ji recykluje (5-M: „feel the ground move before your eyes catch
+  it" téměř doslova; 2-M „dvě čtení jedné scény"). Táž třída jako
+  [[prompt-directive-makes-model-copy]] — potřetí.
+- **JEDEN OBRAZ: 12/12 ano** — obava z rozpadu na kulisu+obrázek (MYND kolize) se v této
+  dávce NEPOTVRDILA; 1× krátké simile (4-M „dav za rohem", slouží scéně).
+**Další páka (neprovedeno, čeká na ownera):** místo zadávat jako IDENTITU s losovaným
+STAVEM (hodina/počasí/sezóna/úhel), ne jako opakovanou větu — a přeměřit odlišnost.
+Hranice: n=6 párů, 1 soudce/pár, EN, 2 místa, páry (ne 8ramenná série); u 3 soudců
+neběžel safety classifier (výstupy ručně prohlédnuty, normální verdikty).
