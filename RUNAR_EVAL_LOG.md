@@ -1204,3 +1204,31 @@ nesmí přenést TÝŽ předmět jinam) a přegenerována cesta, kterou owner č
   netvrdila bez měření). Soudcův přenositelný test: *„vyjmi větu s runou — když čtení nic
   neztratí, vede moment."* Potvrzuje kritérium poolu: mizející tvor si rameno vezme.
 Korpusy `~/runar-eval/setkani-fix-test.jsonl`. <!-- doc-links:ok 2026-08-25 korpus mimo repo (~/runar-eval), checker home neresi -->
+
+## 2026-08-25 — TESTy 44–45 · Carry blok: ČTYŘI VERZE, ŽÁDNÁ ČISTÁ — a kontrola ukázala, že vada NENÍ ve znění
+Iterace po ownerově nálezu (carry teleport). Osy: fyzická možnost · síla nitě · přirozenost.
+| verze | teleport | nit | přirozenost |
+|---|---|---|---|
+| v1 původní | ✗ nemožný přenos | ✓ silná | **✗ mechanická** |
+| v2 „zákaz předmětu" | ✓ | ✗ slabá | — |
+| v3 „+ vyžádané setkání" | ✗ (nesl dno brodu) | ✓ **nejsilnější** (jedna nit přes 4 ramena) | ✗ mechanická |
+| v4 „+ zákaz ohlašování" | ✓ | ✗ slabší | ✗ mechanická |
+**⭐ KONTROLA NÁSTROJE (§27) — a je to hlavní nález:** metrika přirozenosti dostala (a) původní
+verzi v1 a (b) čtveřici BEZ jakéhokoli carry (slepenec z cizích čtení).
+- **v1 = mechanická** → moje opravy mechaničnost NEZPŮSOBILY, byla tam od začátku.
+- **bez carry = PŘIROZENÉ** → metrika umí říct „přirozené", není rozbitá. A soudce v té
+  čtveřici našel NEINSTRUOVANOU tonální nit (ruka/držení: „hands feel the end" → „quiet
+  hold" → „keeping time" → „tongs in your grip") — *„motiv, který čtenář pozná sám, když
+  nikdo nic nepodstrčí"*.
+**ZMĚŘENÝ TRADE-OFF, ne vada ke spravení:** **instruovaný carry → pouť, ale mechanická ·
+žádný carry → přirozené, ale NENÍ to pouť** (táž čtveřice je opakovaně souzena jako „série,
+šla by číst v pořadí 4-2-1-3"). Nehledá se lepší formulace, hledá se MÍRA.
+**Mechanismus mechaničnosti pojmenován (soudci 2×, nezávisle):** ne carry sám, ale
+**opakování TÉŽE syntaktické konstrukce ve stejném slotu** („the X you carried" 3× · „vec
+z minula + vztažná věta + here now" 2×). U v1 doslova: *„Kdyby se ta věta v R4 nezopakovala
+v téže konstrukci, prošlo by to jako přirozené."* → **v5 (neprovedeno): carry vyžádat, ale
+zakázat tvar — vrací se pokaždé v JINÉ gramatické roli** (jednou jako podklad, jednou jako
+překážka, jednou jako zvuk; návrh vzešel od soudce).
+**Metodická hranice:** párový soudce plausibility NESKÓRUJE, ŘADÍ — v3 byla „čistá" proti v1
+a „nemožná" proti v4 (týž text). Absolutní verdikt chce skórování po jedné čtveřici.
+Korpusy: `~/runar-eval/setkani-{fix,v3,v4}-test.jsonl`. <!-- doc-links:ok 2026-08-25 korpus mimo repo (~/runar-eval), checker home neresi -->
