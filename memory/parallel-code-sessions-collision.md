@@ -45,3 +45,19 @@ souboru dvěma session neřeší nic než worktree.
   konvence to z principu neřeší. Owner worktree zatím odložil; do té doby je to pojmenovaná mez, ne díra.
 - Historii nepřepisuj kvůli minulému případu — zapiš a jeď dál.
 - Handoff/tvrzení druhé session o kódu je žádost, ne fakt — ověř proti HEAD ([[verify-agent-claims-about-code]]).
+
+**PATHSPEC NECHRÁNÍ SDÍLENÝ SOUBOR (2026-08-24).** Pravidlo „commituj úzce přes
+`git commit -F msg -- <cesty>`" chrání před sebráním **cizího souboru** — nechrání před
+sebráním **cizí změny v TOMTÉŽ souboru**. Pathspec omezuje soubory, ne hunky: kdo commitne
+`RUNAR_BACKLOG.md` první, vezme s sebou i rozepsané úpravy druhé session ve stejném souboru.
+
+Doloženo: můj zápis zátěžové matice do `RUNAR_BACKLOG.md` skončil v commitu `2f5353a`
+(CODE-tune, message o „TEST 38 stav cesty"). Obsah se neztratil — ztratil se **důvod** (§28):
+`git log` u té změny tvrdí něco úplně jiného, než co v ní je. A `git log` je podle CLAUDE.md
+akční log, takže lže na tom místě, kde se mu má věřit.
+
+**Jak to nedělat:** okno vzniklo tím, že jsem soubor napsal, pustil `smoke.py` (dlouhé)
+a commitnul až po něm. **Commituj HNED po editaci sdíleného docu; smoke až potom** — pre-push
+ho stejně spustí znovu. U `RUNAR_BACKLOG.md` / `RUNAR_DESIGN.md` to platí dvojnásob, do nich
+dnes píšou obě CODE session naráz.
+
