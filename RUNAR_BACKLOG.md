@@ -130,6 +130,11 @@
   **T1 · Vegvísir 1→2→3:** hypotéza — tři obrazy, co se potkávají v čase, dají EMERGENTNÍ scénu; tři nezávislá single ne. Rameno A: pro tutéž trojici run se čtení 2 vztáhne k obrazu 1 (bez rekapitulace, bez jména), 3 změní vztah 1–2. Rameno B: tři nezávislá single týchž run. Slepé skórování: pozná soudce A od B? · vzniká v A vztah, co v B není? · rekapituluje 2 jménem (špatně) vs obrazem (dobře)? A≈B → není to Vegvísir. n≥20 trojic/rameno.
   **T2 · Norns současnost vs recept:** A = dnešní builder (1 obraz + řetěz taktů) · B = každá runa SVŮJ obraz z RUNE_IMAGES, prompt žádá emergentní SCÉNU z potkání (ne takty, ne seznam). Slepě: jedna situace vs tři věci za sebou? · co si člověk zapamatuje? · ⚠️ hlavní riziko B: rozpad v SEZNAM obrazů („one image, don't list" existuje z důvodu) + claim-rate. n≥20/rameno. Nejlevnější (nejkratší spread s pozicemi).
   **T3 · Aspekt-kongruentní výběr:** výběr obrazů přes aspekt (5./6. sloupec — NAPLNĚN, ověřeno proti HEAD) tak, aby aspekty spolu mohly být; vs náhodný výběr. Slepě párově: „patří ty dva obrazy do jedné scény?" ⚠️ měřit ZVLÁŠŤ koherentní potkání (nahoru) vs bland souhlas/zmizelý střet (nechceme). Potřebuje napřed malý design krok „které aspekty spolu jdou" → pustit až PO T1–T2.
+- [ ] **Zátěžová matice promptu — od kolika současných vlivů se rozpadne JEDEN obraz** (metoda GPT via Cowork 2026-08-24; k otestování, negenerovat bez rozhodnutí ownera).
+  Stejná sada run+sezón, vrstvy se přidávají PO JEDNÉ: `runa + obraz → +oblast → +co-hledá → +záměr → +otázka → +čočka`. U každého kroku se hodnotí čtyři věci, ne jen soulad: **(a)** drží jeden svět/MYND · **(b)** objevil se checklistový odstavec · **(c)** roste studené čtení · **(d)** nechala přidaná vrstva přirozenou, nebo mechanickou stopu.
+  Cílová otázka NENÍ „je prompt dlouhý", ale **„od kolika současných vlivů se jeden obraz začne rozpadat"**.
+  ⚠️ **Podmínka převzatá od Coworku:** otevřít, až měření ukáže checklistový efekt. **Zdrojový záznam (#50) v repu NENÍ** — CODE-read ho 2026-08-24 hledal a nenašel, takže podmínka je tu vedena jako hlášená, neověřená u zdroje. Kdo to bude pouštět, ať si ji potvrdí u ownera.
+  ⚠️ **Kritika CODE-read (2026-08-24), ať se to nestaví dvakrát:** (a) a (c) UŽ MĚŘÍ existující soudci v `scripts/profsteinn.js` (`svět` · `chlad`) — nestavět nové, použít je. Nové jsou jen **(b)** checklistový odstavec a **(d)** mechanická stopa; jen pro ně se píše znění soudce. **(d) je subjektivní** — podle §19.2 nesmí projít tiše zeleně: buď oko ownera, nebo slepý soudce s vypsaným zněním, nikdy auto-verdikt. Náklad: 6 kroků × n na krok, takže n stanovit PŘED dávkou.
 - [x] **Blank: jen 2 obrazy a jeden je abstraktní → model si maluje sám (voda)** — HOTOVO 2026-08-22: owner schválil, abstraktní řádek → nýfallinn snjór, přidán handfæri (Blank 3 obrazy); zároveň kajka za druhé „první kroky" jehně. Původně: (nález
   Cowork handoff 27 + ověření CODE-tune 2026-08-22): řádek „Everything is still before what
   is to come" je jediný řádek banky BEZ scény; model do prázdna 2× nezávisle domyslel tichou
@@ -309,6 +314,16 @@ jak z dat jde (nejrůznější poskládaná směs 7,9 %, produkce 6,2 %). Stati�
 popisuje, je tedy nejspíš **v tempu a stavbě**, ne ve slovech. Obě metriky, které tuhle dimenzi
 měří, zabil útok „půlka proti půlce" — potřebovaly by **~100 čtení na dávku** (strukturní),
 resp. ~720 (frázová). Volba ownera: pustit nálady a věřit oku × zaplatit jednu velkou dávku.
+
+
+⚠️ **A horší než slepota: měřidlo ukazuje špatným směrem** (postřeh GPT via Cowork 2026-08-24;
+ověřeno CODE-read proti Rejstříku pák, `RUNAR_EVAL_LOG.md:62`). Blok `voice` zabírá **57 %
+plochy promptu** a jediný změřený účinek jeho vypnutí je, že se jedno ze tří měřítek
+**ZLEPŠILO** (pojmenování EN 4→7/8). Kdokoli tedy bude optimalizovat na soudce z
+`scripts/profsteinn.js` (`svět` · `soulad` · `chlad`), má **stálou pobídku ten blok zmenšit
+nebo smazat** — a žádný ze tří soudců by tu ztrátu nenahlásil. Není to návrh hlas měnit;
+je to důvod, proč se „nezhoršilo ani jedno měřítko" u TOHOHLE bloku nesmí číst jako „je zbytný".
+K rozhodnutí ownera patří k bodu 3 výš (táž otázka, tytéž peníze), ne zvlášť.
 
 ### 4. Doslovné opisování obrazu: 32 % proti baseline 12 % — ZBÝVÁ
 Hypotéza „vrátit IS promptu hmotu" **vyvrácena** (`RUNAR_DECISIONS.md` 2026-08-14, p = 0,75).
@@ -811,9 +826,11 @@ bez toho není slepé skórování slepé).
 - [x] **TEST 2 — HOTOVO A ROZHODNUTO** (2026-08-23): kolaps receptu do výčtu 0/20; současný
   builder ~14/20 spolkne 1–2 runy. **KUKY: „nechame jeden obraz"** — recept se nepřijímá,
   spolknutí run = přijatá cena. → RUNAR_DECISIONS.md 2026-08-23.
-- [x] **T-emergence + sham-return — PROVEDENO** (TEST 36, 2026-08-24): sham-return 3/3 pro
-  pravý návrat (účinek-optika obstála); emergence otázka padla vlastní kontrolou (3/3 mix
-  „silná") → NEMĚŘITELNÁ v této podobě; příští pokus chce mix z opravdu cizích světů.
+- [x] **T-emergence + sham-return — PROVEDENO a nástroj NALEZEN** (TEST 36+38): sham-return
+  3/3 pro pravý návrat; otevřená emergence otázka padla (3/3 mix), ale NUCENÁ VOLBA s kotvou
+  „vrací se konkrétní věc a mění funkci?" přežila cizí kontroly 2/2 (TEST 38) = funkční
+  emergence-nástroj pro další měření. Stav-cesty (GPT) jako náhrada mechaniky NEPOTVRZEN —
+  architektura drží (místo + fráze + semínko).
 - [ ] **T-střed: hijack-gate — negativní půlka PRŮCHODNÁ materiálovou identitou** (TEST 36+37,
   2026-08-24): gradient změřen — tableau 0/4 runa · příběhová identita 2/8 · materiál 3/4.
   → COWORK: přepsat tableau místa (Gebo·Wunjo·Thurisaz) + příběhové klauzule na materiálovou

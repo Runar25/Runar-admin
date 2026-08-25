@@ -1054,3 +1054,26 @@ klauzule · (e) Othila story-klauzule zůstala (gradient 2/8 — rozhodnout, zda
 **Stav brány:** negativní půlka ✓ (materiál, TEST 37) · nit ✓ (2/2 materiálově kotvená) ·
 zbývá pozitivní půlka = OKO OWNERA na pár čteních z materiálních míst. Pak milník 1→2→3
 kompletní → návrh promptu skutečného ramene.
+
+## 2026-08-25 — TEST 38 · Stav cesty (GPT model): jako NÁHRADA NEPOTVRZEN; dnešní mechanika vyšla nejsilněji; nástroj nucené volby FUNGUJE
+2 řetězy (Isa→Ansuz→Raidho na Uruz suti · Perth→Tiwaz→Wunjo v Kenaz dílně), sdílené rameno 1,
+tři buňky: **S\*** zděděný stav místa (extrakce z předchozího čtení) · **A** dnešní mechanika
+(nesená fráze + losovaný stav) · **B** jen sdílené místo. 8 slepých soudců, NUCENÁ VOLBA
+(která trojice mění význam KONKRÉTNÍ věci tak, že to v druhé vzniknout nemohlo) + cizí
+kontroly. Korpusy `~/runar-eval/stav-cesty.jsonl` + `~/runar-eval/stav-cesty-verdikty.json`. <!-- doc-links:ok 2026-08-25 korpus mimo repo (~/runar-eval), checker home neresi -->
+- **Kontroly 2/2:** B > ALIEN v obou řetězech — nástroj nucené volby s kotvou na vracející se
+  věc PŘEŽIL cizí kontrolu (na rozdíl od otevřené emergence otázky z TEST 36). Máme funkční
+  emergence-nástroj: „vrací se konkrétní věc a mění FUNKCI?"
+- **A > B 2/2** (oba řetězy): nesená fráze dělá skutečnou proměnu věci ([]balvan němý→mluví
+  stínem · tma: pozvání→sklad odloženého→vetřelec), sdílené místo samo ji dává jen náhodou.
+- **S\* vs B 1:1 · S\* vs A 1:1** — stav cesty se od dnešní mechaniky NEODDĚLIL a proti holému
+  místu vyhrál jen půlku. A predikovaná patologie se ukázala PŘÍMO: extrakce stavu na Uruz
+  ZAMKLA mlhu (zděděný stav = mlha ve všech třech ramenech → soudce: „Y mlhu nikdy neruší"
+  = statické); v Kenaz naopak držené dřevo/zrno proměnu neslo. Zděděný stav umí obojí —
+  proměnu i zámek — a tím je jako mechanismus nespolehlivý.
+**Závěr:** GPT princip („pozdější mění, co dřívější VĚC znamená") platí a MĚŘÍ SE — ale
+implementuje ho už dnešní nesená fráze (povinná proměna jedné věci); dědění celého stavu
+místa nepřidává změřený zisk a přidává riziko zámku scény. **Architektura zůstává: místo
+(identita+losovaný stav) + nesená fráze + semínko návratu.** Hranice: n=2 řetězy, 1 soudce
+na párování; 1 soudce (uruz S*vB) počítal výměnu kulis jako proměnu — doktrinální šum
+nástroje, menšinový (1/8).
