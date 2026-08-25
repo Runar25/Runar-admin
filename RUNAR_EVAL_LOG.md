@@ -1256,3 +1256,28 @@ vyšly „mechanické" a jediné „přirozené" bylo čtení BEZ carry.
 **⭐ PRAVIDLO DO METODIKY (platí na všechna budoucí měření):** *párové soudce používat na
 otázku „která z těch dvou", absolutní na „jaké to je" — a výsledky si nikdy neplést.*
 Párové srovnání nesmí být zdrojem tvrzení o vlastnosti textu.
+
+## 2026-08-25 — TEST 47 · Carry blok VYŘEŠEN: vítěz je v2 — čistá na všech třech osách
+Dopočítáno chybějící políčko (v2 nikdy nebyla souzena na přirozenost). 2 soudci, absolutně,
+jedna čtveřice, různé úrovně effortu — **oba „PŘIROZENÉ"**.
+| verze | nit | fyzicky nemožné | přirozenost |
+|---|---|---|---|
+| v1 původní | silná | **ANO** | mechanické |
+| **⭐ v2 „zákaz přeneseného předmětu"** | **silná** | **ne** | **přirozené 2/2** |
+| v3 „+ vyžádané setkání" | silná | ne | mechanické |
+| v4 „+ zákaz ohlášení" | silná | ne | mechanické |
+| kontrola bez carry | slabá | ne | přirozené |
+**⭐ Poučení, které stálo čtyři kola:** vítězná oprava byla ta, která jen ODEBRALA vadu.
+Obě moje „vylepšení" (v3 vyžádat setkání, v4 zakázat ohlašování) přidala POŽADAVEK — a každý
+přidaný požadavek se v textu projevil jako formule ve stejném syntaktickém slotu. **Oprava
+promptu = odebrat vadu, ne přidat pravidlo.**
+**Znění v2 (kanonické):** nesená věc musí být v rameni přítomná — proměněná, obroušená,
+zapracovaná do nové půdy, nebo jako to, co už tu není — ale **NIKDY jako týž předmět
+přenesený sem; tahle půda má věci vlastní. Když sem nemohla doputovat, nedoputovala.**
+Bez doslovného opakování, bez přirovnání, bez jména runy.
+**Watch (oba soudci nezávisle):** (a) definiční věta runy sedí ve všech ramenech ve stejném
+slotu („X is that…") — formule UVNITŘ ramene, zatím únosná, ale při osmi ramenech může začít
+být slyšet; (b) „No more close walls here" = jediné místo, kde text dělá účetnictví, drží
+jen proto, že je řečené obrazem; (c) spoj 1→2 je fakticky prázdný — nit začíná až druhým
+ramenem (týž nález jako u „první stopy", TEST 41).
+Korpus `~/runar-eval/absolutni-skore.json` + `~/runar-eval/setkani-fix-test.jsonl`. <!-- doc-links:ok 2026-08-25 korpus mimo repo (~/runar-eval), checker home neresi -->
