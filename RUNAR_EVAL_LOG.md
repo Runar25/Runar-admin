@@ -1126,3 +1126,27 @@ změny po ramenech) + sham kontrola. Korpusy `~/runar-eval/cesty-test.jsonl` +
   jsou měkký magnet výběru materiálem; hlídat na větším n (stejnost tras napříč uživateli).
 Hranice: n=3 cesty, 1 soudce/cestu, EN, zásobník provizorní (CODE); extrakce frází potřebuje
 guard proti jednoslovným/členovým výstupům („The") — opravit v harness před dalším během.
+
+## 2026-08-25 — TEST 41 · SETKÁNÍ vs materiál: zapamatovatelnost 2/2 setkání · hijack 3/4 · pouť smíšená
+Nápad ownera („zastaví se a sleduje ptáky, velrybu, zastihne ho krupobití"): vstupní slot smí
+nést UDÁLOST/tvora/počasí, ne jen statický materiál místa. Trasy i runy **pinnuté na TEST 40**
+(cesta-A, cesta-B) — jediná proměnná je obsah slotu. Setkání = provizorní data (skutečná =
+Cowork), jen islandsky doložitelné (můra, ovce, havran, polární liška, koliha).
+8 slepých soudců. Korpus `~/runar-eval/setkani-test.jsonl` + `~/runar-eval/setkani-verdikty.json`. <!-- doc-links:ok 2026-08-25 korpus mimo repo (~/runar-eval), checker home neresi -->
+- **⭐ ZAPAMATOVATELNOST: setkání 2/2** (obě trasy, párově proti témuž materiálovému běhu) —
+  přesně to, oč ownerovi šlo („osmkrát stejný obraz jinak popsaný" mizí).
+- **HIJACK 3/4 runa vede** — setkání NENÍ automaticky tableau (na rozdíl od Gebo scény 0/4).
+  Ale **1/4 padlo: polární liška** — soudce: „runa dostane jedinou abstraktní větu… nálepka
+  položená vedle obrazu; čtení JE o lišce, co se napila a zmizela." **Vzorec:** setkání, které
+  má vlastní silnou symboliku A JEŠTĚ ODEJDE (mizející tvor), přebere runu; setkání jako
+  ZDROJ JEVU (havran = ozvěna, koliha = neviděný zvuk, ovce = kulisa přeskládaného brodu)
+  runu nese. Kandidát na kritérium dat: **setkání smí být to, ČÍM se runa ukáže, ne příběh sám.**
+- **POUŤ: B pouť · A „mezi"** — a příčina u A je jasně pojmenovaná: rameno 1 (můra u lampy)
+  nemá do zbytku žádný šev, „cesta začíná až druhým ramenem". Kandidát: první rameno musí
+  vyjít Z DOMOVA tak, aby z něj šlo co nést (můra je uzavřený obraz sama pro sebe).
+- **Párově pouť 1:1** (materiál u trasy A, setkání u trasy B) — na kauzalitu pořadí jsou
+  zatím vyrovnané; setkání vyhrálo tam, kde nese zapamatovatelnost.
+**Směr (ne rozhodnutí):** vstupní slot rozšířit na setkání, s daty stavěnými podle kritéria
+„zdroj jevu, ne vlastní příběh"; první rameno hlídat na návaznost.
+Hranice: 2 trasy, 1 soudce/otázku, EN, provizorní setkání; carry-guard nasazen (padal by
+prázdný extrakt, jako v TEST 40 cesta-B).
