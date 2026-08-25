@@ -1077,3 +1077,26 @@ místa nepřidává změřený zisk a přidává riziko zámku scény. **Archite
 (identita+losovaný stav) + nesená fráze + semínko návratu.** Hranice: n=2 řetězy, 1 soudce
 na párování; 1 soudce (uruz S*vB) počítal výměnu kulis jako proměnu — doktrinální šum
 nástroje, menšinový (1/8).
+
+## 2026-08-25 — TEST 39 · Pohyblivá pouť vs statický domov: POHYB VYHRÁL 4/4 — a nit NEZTRATIL, ZESÍLIL
+Owner (2026-08-25): „komu se bude líbit, že pro jedno čtení o 8 ramenech bude mít v každém
+rameni stejný obraz jinak popsaný?" → test. 4 ramena (Fehu→Ansuz→Isa→Berkana), sdílené
+rameno 1 (domov = Kenaz dílna), dvě buňky: **P** = krajina se posouvá (dílna → dvůr → stezka
+u mohyly → soutěska) · **S** = všechna 4 ramena v dílně (dnešní mechanika). Obě buňky mají
+nesenou frázi, vstupní věc i stav. 6 slepých soudců, nucená volba, obě polohy flipu + cizí
+kontroly. Korpusy `~/runar-eval/pout-test.jsonl` + `~/runar-eval/pout-verdikty.json`. <!-- doc-links:ok 2026-08-25 korpus mimo repo (~/runar-eval), checker home neresi -->
+- **Cesta: P 2/2** (v obou flipech). Soudce: „Y má soudržnost místa, X má trajektorii."
+- **⭐ Nit: P 2/2 — pohyb nit NEROZBIL, ZESÍLIL ji.** To je proti očekávání (sdílené místo
+  bylo domovem nitě). Mechanismus je čitelný z verdiktů: když se místo mění, model MUSÍ
+  nesený materiál zapracovat do nové půdy, takže ho pojmenuje a promění („the wet you tracked
+  in from the door is here again, older now, born from the rock itself" — vlhko z prahu →
+  prach na botách → pramen ze skály, tři stavy, tři ramena). Ve statické dílně se materiál
+  proměňovat nemusí, protože pořád leží na témž ponku — soudci to popsali jako „sdílené
+  rekvizity / dohořívání téže scény", nikoli návrat věci v proměněné roli.
+- **Kontroly 2/2:** P > ALIEN i S > ALIEN; ALIEN navíc označen jako rozpadlý. Rozpad na
+  nesouvisejících scén: u P i S **žádný** — pohyb soudržnost nerozbil.
+**Závěr:** ownerova námitka „prostředí ≠ cesta" POTVRZENA měřením a navíc bez ceny — pohyb
+nestojí nit, platí ji. Architektura: **domov (životní runa) + POSOUVAJÍCÍ SE krajina +
+vstupní věc + losovaný stav + nesená fráze + runa + semínko návratu.**
+Hranice: 1 řetěz, 1 soudce/párování, EN, **pevné pořadí krajin** (zafixované schválně —
+testoval se pohyb, ne pořadí; riziko poziční sémantiky přes krajinu zůstává NEZMĚŘENÉ).
