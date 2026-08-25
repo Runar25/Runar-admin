@@ -1159,3 +1159,27 @@ v soutěsce — kameny z brodu nemohou být na jiném místě. Instrukce dovoluj
 new ground", ale nezakazuje fyzický přesun předmětu → carry se smí vracet jen jako STOPA,
 PAMĚŤ nebo PROMĚNA v novém materiálu. ⚠️ Pozor: tahle vada mohla část „nitě" v TESTech 39–41
 nafouknout (doslovný přenos se čte jako silná návaznost) — po opravě přeměřit.
+
+## 2026-08-25 — TEST 42 · Skóre poolu momentů: NÁSTROJ MUSEL BÝT ROZDĚLEN NA DVA; Coworkovy predikce potvrzeny 4/5
+Cowork dodal pool momentů (ÚKOL 1) a k němu VLASTNÍ seznam 5 predikovaných propadů (§27 útok
+na vlastní data). Vzorek 10 (5 predikovaných + 5 kontrolních), každý s NÁVŠTĚVNÍ runou.
+Korpusy `~/runar-eval/momenty-test.jsonl` · `~/runar-eval/momenty-verdikty.json` · `~/runar-eval/momenty-izolace.json`. <!-- doc-links:ok 2026-08-25 korpus mimo repo (~/runar-eval), checker home neresi -->
+**⚠️ NÁSTROJ NEJDŘÍV NEOBSTÁL — a to je hlavní metodický nález.** Soudce nad HOTOVÝM ČTENÍM
+označil za „runový hijack" i 3/5 kontrol, mj. „branka vrže ve večerním větru" s odůvodněním,
+že brána-práh už znamená Perth — jenže ten rám postavilo ČTENÍ, ne moment. Míchaly se dvě
+různé otázky. Rozděleno na dva nástroje:
+- **A (moment SÁM, bez čtení): „je ten okamžik předurčený?"** → měří POOL.
+- **B (hotové čtení): „dělá jméno runy ještě nějakou práci?"** → měří ČTENÍ, ne data. Také
+  užitečné, ale na pool se použít nesmí.
+**Nástrojem A: Coworkovy predikce POTVRZENY 4/5 předurčené** (Berkana pupen · Ingwaz zeleň ·
+Eihwaz ohyb koruny · Tiwaz kámen ve větru; Dagaz „první světlo" = částečně). **Kontroly
+1/5 předurčené** — takže rozlišuje. ⭐ **NOVÝ NÁLEZ, který Cowork nepredikoval: Hagalaz
+„hagl safnast í skjóli við vegginn"** — soudce: „ochrana zadržuje a hromadí právě to, před
+čím měla ochránit" = hotový aforismus, ne okamžik. Base rate nepredikovaných ≈ 20 %.
+⚠️ **Hranice nástroje A: ŽÁDNÝ moment nedostal „otevřený" (0/10)** — horní pásmo škály je
+prázdné, takže nástroj rozliší předurčený vs. částečně, ale ne dobrý vs. výborný; nevíme,
+jestli je to vlastnost poolu, nebo přísnost škály. Cíl pro data = „částečně", ne „otevřený".
+**Vedlejší, měřeno nástrojem B:** nosnost pro carry **10/10** · viditelnost místa **8/10**
+(propadly „pokoj u okna" a „zelený břeh" — obě místa s tenkou identitou; potvrzuje kritérium
+bohatosti z TEST 35) — oprava bloku („místo musí zůstat vidět") tedy funguje, ale nezachrání
+chudé místo. Hranice: 1 soudce na otázku, EN překlad IS momentů.
