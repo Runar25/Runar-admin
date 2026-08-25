@@ -1150,3 +1150,12 @@ Cowork), jen islandsky doložitelné (můra, ovce, havran, polární liška, kol
 „zdroj jevu, ne vlastní příběh"; první rameno hlídat na návaznost.
 Hranice: 2 trasy, 1 soudce/otázku, EN, provizorní setkání; carry-guard nasazen (padal by
 prázdný extrakt, jako v TEST 40 cesta-B).
+**Dodatek TEST 41 — dvě vady nalezené OWNEREM při čtení (harness, ne data):**
+(a) **setkání vytlačí místo:** „The soft tap of the moth against the warm glass" — lampa
+nepojmenována, dílna zmizela; když je ve vstupním slotu událost, model otevře událostí a
+místo neustaví. Blok THE PLACE to nevynucuje → doplnit požadavek, že místo musí být vidět.
+(b) **carry se TELEPORTOVAL:** „The stones that were held under high water lie dry here now"
+v soutěsce — kameny z brodu nemohou být na jiném místě. Instrukce dovoluje „worked into this
+new ground", ale nezakazuje fyzický přesun předmětu → carry se smí vracet jen jako STOPA,
+PAMĚŤ nebo PROMĚNA v novém materiálu. ⚠️ Pozor: tahle vada mohla část „nitě" v TESTech 39–41
+nafouknout (doslovný přenos se čte jako silná návaznost) — po opravě přeměřit.
