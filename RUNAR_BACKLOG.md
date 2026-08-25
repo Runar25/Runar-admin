@@ -843,6 +843,11 @@ bez toho není slepé skórování slepé).
   klíčováno životní runou (= domovy); pokud by místo bylo „místo tažené runy", splyne místo
   s runou a zmizí návštěvnická tenze (TEST 37 logika) → krajinný zásobník = NOVÁ data (Cowork);
   (c) edge: životní runa v sáčku?
+- [ ] **„Jsi jinde než na začátku?" — otevřená otázka pro DELŠÍ běhy** (GPT 2026-08-25,
+  ⚠️ VĚDOMĚ MIMO rubriku, aby se vývoj nevynucoval): po posledním rameni se slepě zeptat
+  *„máš pocit, že jsi jinde než na začátku, a proč?"* — odpověď smí být fyzicky · vnitřně ·
+  vztahově · významově · vůbec ne. Pozorování, ne kritérium; zajímavé je ROZDĚLENÍ odpovědí
+  napříč poutěmi, ne jednotlivý verdikt.
 - [ ] **CARRY = paměť, nebo povinnost? (test, NE adopce)** — GPT 2026-08-25 navrhuje „Rúnar si
   pamatuje a dovolí tomu vstoupit, POKUD to přirozeně patří". ⚠️ **Proti tomu stojí tvrdé
   měření:** volitelný carry („smíš to nechat být") vzal model 6/6 a vztah nevznikl NIKDY

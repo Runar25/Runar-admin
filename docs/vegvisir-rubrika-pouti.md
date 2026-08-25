@@ -4,6 +4,9 @@
 osy dle návrhu GPT, zpřísněné o to, co se dosud změřilo (TESTy 31–46).
 **Vlastní:** tento soubor (jak se soudí pouť). Výsledky měření → `RUNAR_EVAL_LOG.md`.
 
+**Changelog:** 2026-08-25 vznik · 2026-08-25 osa 4 přejmenována „Paměť" → **„Nit / kontinuita"**
+(GPT: paměť je mechanismus, nit je to, co čtenář zažívá; otázka i měřítka beze změny).
+
 ---
 
 ## ⭐ Pravidlo nad rubrikou
@@ -28,7 +31,7 @@ o vlastnosti textu nesmí nikdy pocházet z párového srovnání.**
 | 2 | **Místo přítomné** | Pozná čtenář, **z čeho je** to místo uděláno? | ano/ne (ne = místo z nálady, ne z věcí) |
 | 3a | **Runa vs. moment** | Vede kvalita runy, nebo sama událost? | runa · moment · vyvážené |
 | 3b | **Typ hijacku** | Když vede moment: říká už sám význam runy (runový), nebo je jen příliš velký obraz (obrazový)? | žádný · runový · obrazový |
-| 4 | **Paměť** | Vrací se konkrétní věc z dřívějšího ramene a **mění funkci**? | silná · slabá (jen sdílené rekvizity) · žádná |
+| 4 | **Nit / kontinuita** | Vrací se konkrétní věc z dřívějšího ramene a **mění funkci**? | silná · slabá (jen sdílené rekvizity) · žádná |
 | 5 | **Fyzická možnost** | Je někde věc, která tam být nemůže (patří k dřívějšímu místu a nemohla se přemístit)? | ano/ne + citace. *Stopa, vzpomínka a věc téže látky, kterou nové místo má samo, NENÍ chyba.* |
 | 6 | **Přirozenost** | Nese se to samo, nebo je to inventura? | přirozené · mechanické — *mechanické = opakovaná konstrukce ve stejném slotu, runa vyložená přes položku z minula* |
 | 7 | **Zastavení ≠ výpadek** | Když se rameno zastaví: zastavila se **cesta**, nebo model nevěděl, co s nesenou věcí? | zastavení · výpadek — *(owner 2026-08-25: Isa-zastavení je legitimní rameno)* |
@@ -46,6 +49,14 @@ o vlastnosti textu nesmí nikdy pocházet z párového srovnání.**
 3. **Predikované propady** — kdo dodává data, přiloží seznam kusů, o kterých si myslí, že
    propadnou. Když je test neoznačí, je rozbitý test. (Coworkova praxe od 2026-08-25;
    potvrzeno 4/5.)
+
+## Co do rubriky ZÁMĚRNĚ NEPATŘÍ
+
+**Osa „je tam vývoj?"** — přidat ji by znamenalo vývoj VYNUCOVAT, a to je přesně dramaturgie,
+které se Vegvísir vyhýbá (owner: Isa-zastavení je legitimní rameno). Až bude na delších bězích
+co pozorovat, ptát se místo toho slepě a otevřeně: *„Když dočteš poslední rameno, máš pocit,
+že jsi jinde než na začátku — a proč?"* Odpověď smí být fyzicky · vnitřně · vztahově ·
+významově · vůbec ne. To je pozorování, ne kritérium. → `RUNAR_BACKLOG.md`.
 
 ## Co rubrika NEMĚŘÍ (a ať se to netvrdí)
 
