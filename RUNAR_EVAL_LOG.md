@@ -1100,3 +1100,29 @@ nestojí nit, platí ji. Architektura: **domov (životní runa) + POSOUVAJÍCÍ 
 vstupní věc + losovaný stav + nesená fráze + runa + semínko návratu.**
 Hranice: 1 řetěz, 1 soudce/párování, EN, **pevné pořadí krajin** (zafixované schválně —
 testoval se pohyb, ne pořadí; riziko poziční sémantiky přes krajinu zůstává NEZMĚŘENÉ).
+
+## 2026-08-25 — TEST 40 · Tři cesty z jednoho domova: POUŤ VZNIKÁ (2/3 pouť, 1/3 mezi, sham=série)
+Experiment owner+GPT: krajina se vybírá z PŘIPRAVENÉHO zásobníku (provizorní, 9 uzlů vč.
+pobřeží — schválně) MATERIÁLEM nesené věci (výběrová výzva runu NEZNÁ → nezávislost
+konstrukcí); runy nezávislé, bez opakování, bez domovské runy; rameno = znění TEST 39 beze
+změny (jedna páka, §27). 3 cesty × 4 ramena z Kenaz dílny. 4 slepí soudci (pouť/série/mezi,
+změny po ramenech) + sham kontrola. Korpusy `~/runar-eval/cesty-test.jsonl` +
+`~/runar-eval/cesty-verdikty.json`. <!-- doc-links:ok 2026-08-25 korpus mimo repo (~/runar-eval), checker home neresi -->
+- **cesta-A (dílna→brod→soutěska→potok): POUŤ.** Soudce: „pořadí nelze zaměnit… hrana musí
+  být ohoblovaná dřív, než ji voda omílá" — hoblovaná hrana z dílny fyzicky nesená k brodu,
+  přechod dokončen nevratně („the flat stones you crossed lie under the current now").
+- **cesta-B (dílna→soutěska→brod→rozcestí): POUŤ** — a mění se i ČLOVĚK (pozorovatel → volí
+  pod tlakem → přijat a volí z bezpečí). ⭐ Nejslabší kloub 1→2 = PŘESNĚ místo, kde extrakce
+  selhala (vrátila jen „The" → přenos fakticky prázdný) — soudce slepě našel chybějící carry,
+  aniž věděl, že chybí. Nosnost nesené fráze potvrzena z opačné strany.
+- **cesta-C (dílna→hájek→potok→brod): MEZI.** Dvě vady: (a) rameno 2 nesenou věc („rough
+  wood") NEzpracovalo — povinný carry model jednou ignoroval (1/9 přenosů); (b) rameno 3
+  (Isa) = „nothing here is going anywhere" — zastavení bez změny, soudce trestá („pouť by
+  potřebovala změnu v každém kroku"). → OTÁZKA PRO DESIGN: smí být rameno ZASTAVENÍM
+  (Isa-pauza jako legitimní krok pouti), nebo je bez-změny vada? Rozhodne owner.
+- **sham = SÉRIE** ✓ („dala by se číst v pořadí 4-2-1-3 beze ztráty — definiční test série").
+  Soudcův řadicí test („šlo by číst v jiném pořadí beze ztráty?") = přenositelné kritérium.
+- **Divergence: 3 různé trasy, žádná neskončila u moře** (n=3) — ale brod 3/3 = vodní uzly
+  jsou měkký magnet výběru materiálem; hlídat na větším n (stejnost tras napříč uživateli).
+Hranice: n=3 cesty, 1 soudce/cestu, EN, zásobník provizorní (CODE); extrakce frází potřebuje
+guard proti jednoslovným/členovým výstupům („The") — opravit v harness před dalším během.
