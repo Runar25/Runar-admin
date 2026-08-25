@@ -1281,3 +1281,28 @@ být slyšet; (b) „No more close walls here" = jediné místo, kde text dělá
 jen proto, že je řečené obrazem; (c) spoj 1→2 je fakticky prázdný — nit začíná až druhým
 ramenem (týž nález jako u „první stopy", TEST 41).
 Korpus `~/runar-eval/absolutni-skore.json` + `~/runar-eval/setkani-fix-test.jsonl`. <!-- doc-links:ok 2026-08-25 korpus mimo repo (~/runar-eval), checker home neresi -->
+
+## 2026-08-25 — TEST 48 · Revidovaný pool momentů: 0/12 předurčených, a horní pásmo se otevřelo
+Cowork přepracoval pool podle měření (TEST 42) a poslal ho k přeskórování. Screenováno
+12 NOVÝCH/změněných momentů nástrojem A (moment sám, bez čtení) + **pozitivní kontrola**
+(Berkana „brum springur út", o níž víme, že je předurčená — kdyby ji screen neoznačil, ujel
+nástroj, ne pool). Korpus `~/runar-eval/momenty-v2-screen.json`. <!-- doc-links:ok 2026-08-25 korpus mimo repo (~/runar-eval), checker home neresi -->
+- **Nové momenty: 0 předurčených** (10 částečně · **2 otevřené**). Předchozí base rate byl
+  ~20 % předurčených — po revizi nula ve vzorku.
+- **Pozitivní kontrola vyšla „předurčený" ✓** — nástroj nedriftoval.
+- ⭐ **Horní pásmo škály se otevřelo:** dosud nedostal „otevřený" žádný moment (0/10), teď
+  **2/12** — Hagalaz „hagl hvítnar á svörtum sandi og bráðnar í dökka bletti" a Isa „snjór
+  hefur fokið í skafla á ísnum". Soudce u Hagalazu: *„unese nejmíň tři odlišná čtení…
+  zároveň to není vágní: má místo, materiál, barvu i čas."* → **limit zapsaný u nástroje
+  („rozliší předurčený od částečně, ne dobrý od výborného") NEPLATÍ** — byl vlastností
+  tehdejších dat. Opraveno v `docs/vegvisir-rubrika-pouti.md`.
+- **Vzorec dobrého momentu (z obou „otevřených"):** proměna látky bez děje s vyústěním —
+  bílé mizí do tmavé skvrny · vítr už odešel a zbyl jen jeho otisk. Žádný směr, žádné
+  hodnocení, a přesto ostrý obraz.
+**Zpět Coworkovi (2 věci):** (a) **Berkana „brum springur út" v poolu ZŮSTALA** — potvrzeně
+předurčená, přepsat nebo vědomě nechat s důvodem; (b) sekce PREDIKOVANÉ PROPADY na konci
+handoffu je **zastaralá** — jmenuje momenty, které v revidovaném poolu už nejsou (Dagaz
+první světlo, Ingwaz zeleň, Eihwaz ohyb koruny, Tiwaz vítr).
+**Jazyk (CODE, role vazby/idiomu):** rykkorn · ljósrák · gluggapóstur · skafl · klasi · þúfa
+· löður · grugg · rás · skora — slovník zná všechna. „hefilspænir" heslo nemá (průhledná
+složenina hefill+spænir, v poolu byla už dřív).

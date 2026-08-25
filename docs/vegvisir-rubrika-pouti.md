@@ -64,5 +64,7 @@ významově · vůbec ne. To je pozorování, ne kritérium. → `RUNAR_BACKLOG.
   i slepence dostaly „silná"). Měřitelná je jen **nucenou volbou s kotvou na vracející se věc**.
 - **Vliv času** (devět nocí) — designová hypotéza, neověřitelná ničím, co umíme, do živých
   testerů.
-- **Horní pásmo momentů** — u předurčenosti nedostal žádný moment „otevřený" (0/10);
-  rubrika odliší předurčený od částečně, ne dobrý od výborného.
+- ~~Horní pásmo momentů~~ **NEPLATÍ od 2026-08-25:** v prvním vzorku nedostal „otevřený"
+  žádný moment (0/10), ale revidovaný pool ho dostal **2/12** (Hagalaz kroupy na černém
+  písku · Isa navátý sníh na ledu) — škála se používá celá, limit byl vlastností tehdejších
+  dat, ne nástroje.
