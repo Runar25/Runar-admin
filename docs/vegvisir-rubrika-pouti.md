@@ -42,7 +42,7 @@ o vlastnosti textu nesmí nikdy pocházet z párového srovnání.**
 ## Povinné kontroly u každé dávky (§27)
 
 1. **Sham / slepenec** — čtveřice slepená z nesouvisejících čtení musí vyjít jako **série**
-   (osa 1) a **slabá paměť** (osa 4). Když ne, nástroj je rozbitý, ne data.
+   (osa 1) a **slabou nit** (osa 4). Když ne, nástroj je rozbitý, ne data.
 2. **Umí metrika říct i to dobré?** — alespoň jedna kontrolní čtveřice, u které čekáme
    opačný verdikt. Doloženo: metrika přirozenosti byla ověřena tím, že čtveřici **bez**
    carry označila za přirozenou (TEST 45).
