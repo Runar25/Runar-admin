@@ -843,6 +843,13 @@ bez toho není slepé skórování slepé).
   klíčováno životní runou (= domovy); pokud by místo bylo „místo tažené runy", splyne místo
   s runou a zmizí návštěvnická tenze (TEST 37 logika) → krajinný zásobník = NOVÁ data (Cowork);
   (c) edge: životní runa v sáčku?
+- [ ] **CARRY = paměť, nebo povinnost? (test, NE adopce)** — GPT 2026-08-25 navrhuje „Rúnar si
+  pamatuje a dovolí tomu vstoupit, POKUD to přirozeně patří". ⚠️ **Proti tomu stojí tvrdé
+  měření:** volitelný carry („smíš to nechat být") vzal model 6/6 a vztah nevznikl NIKDY
+  (v1 řetěz 0/6). Nepřijímat bez testu. Co je nové oproti tehdejšku: dnes je tu místo, moment
+  a pohyblivá krajina, které mohou nit nést strukturálně — proto je to legitimní HYPOTÉZA,
+  ne opakování chyby. Test: volitelná formulace vs. v2 (povinná), absolutní rubrika
+  (`docs/vegvisir-rubrika-pouti.md`), osy paměť + přirozenost + jedna cesta.
 - [ ] **KRAJINNÝ GRAF — data pro Cowork** (2026-08-25): ~20–25 uzlů (dílna·dvůr·práh·cesta·
   brod·les·rozcestí·údolí·hřeben·fjord·pobřeží·přístav…), každý s 2–4 sousedy + materiálem
   (efni) a stavovou paletou, jako u domovů. NENÍ to osm pozic. Otevřené: (a) směruje runa

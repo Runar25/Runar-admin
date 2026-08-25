@@ -1,0 +1,57 @@
+# Vegvísir — absolutní rubrika pouti (standard souzení)
+
+**Vznik:** owner 2026-08-25 („párový soudce neskóruje, on řadí — udělej co je potřeba") ·
+osy dle návrhu GPT, zpřísněné o to, co se dosud změřilo (TESTy 31–46).
+**Vlastní:** tento soubor (jak se soudí pouť). Výsledky měření → `RUNAR_EVAL_LOG.md`.
+
+---
+
+## ⭐ Pravidlo nad rubrikou
+
+> **Párové soudce používat na otázku „která z těch dvou". Absolutní na „jaké to je".
+> Výsledky si nikdy neplést.**
+
+Doloženo TESTem 46: párové soudy tvrdily, že v2 a v4 mají slabou nit — absolutně mají obě
+nit **silnou**. Párový soudce vybere vítěze a poraženého si zracionalizuje. **Tvrzení
+o vlastnosti textu nesmí nikdy pocházet z párového srovnání.**
+
+**Jak se absolutně soudí:** jeden soudce = **jedna pouť** = **jedna osa**. Žádné srovnání,
+žádný druhý text v promptu, pevná měřítka v zadání (ne „ohodnoť 1–10").
+
+---
+
+## Osy (8)
+
+| # | Osa | Otázka soudci | Měřítka |
+|---|---|---|---|
+| 1 | **Jedna cesta** | Šlo by ramena přečíst v jiném pořadí beze ztráty? | pouť · mezi · série — *série = šlo by prohodit* (změřený test, TEST 40) |
+| 2 | **Místo přítomné** | Pozná čtenář, **z čeho je** to místo uděláno? | ano/ne (ne = místo z nálady, ne z věcí) |
+| 3a | **Runa vs. moment** | Vede kvalita runy, nebo sama událost? | runa · moment · vyvážené |
+| 3b | **Typ hijacku** | Když vede moment: říká už sám význam runy (runový), nebo je jen příliš velký obraz (obrazový)? | žádný · runový · obrazový |
+| 4 | **Paměť** | Vrací se konkrétní věc z dřívějšího ramene a **mění funkci**? | silná · slabá (jen sdílené rekvizity) · žádná |
+| 5 | **Fyzická možnost** | Je někde věc, která tam být nemůže (patří k dřívějšímu místu a nemohla se přemístit)? | ano/ne + citace. *Stopa, vzpomínka a věc téže látky, kterou nové místo má samo, NENÍ chyba.* |
+| 6 | **Přirozenost** | Nese se to samo, nebo je to inventura? | přirozené · mechanické — *mechanické = opakovaná konstrukce ve stejném slotu, runa vyložená přes položku z minula* |
+| 7 | **Zastavení ≠ výpadek** | Když se rameno zastaví: zastavila se **cesta**, nebo model nevěděl, co s nesenou věcí? | zastavení · výpadek — *(owner 2026-08-25: Isa-zastavení je legitimní rameno)* |
+| 8 | **Stojí za to číst dál** | Chtěl by čtenář vědět, co bude v dalším rameni? | ano/ne — **spodní hranice kvality** |
+
+---
+
+## Povinné kontroly u každé dávky (§27)
+
+1. **Sham / slepenec** — čtveřice slepená z nesouvisejících čtení musí vyjít jako **série**
+   (osa 1) a **slabá paměť** (osa 4). Když ne, nástroj je rozbitý, ne data.
+2. **Umí metrika říct i to dobré?** — alespoň jedna kontrolní čtveřice, u které čekáme
+   opačný verdikt. Doloženo: metrika přirozenosti byla ověřena tím, že čtveřici **bez**
+   carry označila za přirozenou (TEST 45).
+3. **Predikované propady** — kdo dodává data, přiloží seznam kusů, o kterých si myslí, že
+   propadnou. Když je test neoznačí, je rozbitý test. (Coworkova praxe od 2026-08-25;
+   potvrzeno 4/5.)
+
+## Co rubrika NEMĚŘÍ (a ať se to netvrdí)
+
+- **Emergenci** („vzniká něco třetího") — otevřená otázka padla vlastní kontrolou (TEST 36:
+  i slepence dostaly „silná"). Měřitelná je jen **nucenou volbou s kotvou na vracející se věc**.
+- **Vliv času** (devět nocí) — designová hypotéza, neověřitelná ničím, co umíme, do živých
+  testerů.
+- **Horní pásmo momentů** — u předurčenosti nedostal žádný moment „otevřený" (0/10);
+  rubrika odliší předurčený od částečně, ne dobrý od výborného.
