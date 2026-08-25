@@ -1183,3 +1183,24 @@ jestli je to vlastnost poolu, nebo přísnost škály. Cíl pro data = „část
 (propadly „pokoj u okna" a „zelený břeh" — obě místa s tenkou identitou; potvrzuje kritérium
 bohatosti z TEST 35) — oprava bloku („místo musí zůstat vidět") tedy funguje, ale nezachrání
 chudé místo. Hranice: 1 soudce na otázku, EN překlad IS momentů.
+
+## 2026-08-25 — TEST 43 · Oprava carry: teleport PRYČ, ale NIT ZESLÁBLA (oprava byla příliš tvrdá)
+Owner našel dvě vady (TEST 41 dodatek); opraveny oba bloky (místo musí zůstat vidět · carry
+nesmí přenést TÝŽ předmět jinam) a přegenerována cesta, kterou owner četl. Slepě 3 soudci.
+- **Teleport PRYČ ✓** — soudce označil za fyzicky nemožnou jen starou verzi („kameny, které
+  byly pod vysokou vodou, tu leží suché" v soutěsce); nová čistá. Místo vidět ✓ (lampa
+  konečně pojmenovaná).
+- **⚠️ ALE NIT ZESLÁBLA: soudce vybral STAROU verzi** — nová „sdílí kulisu, ale nese ji beze
+  změny funkce, což je kulisa, ne nit". **Tím se potvrzuje varování z dodatku TEST 41: část
+  „nitě" v TESTech 39–41 stála na fyzicky nemožném přenosu.** Čísla nitě z těch testů jsou
+  proto nadhodnocená — korekce do záznamu, ne přepis závěrů (pohyb > statika platí dál, ale
+  s menším odstupem, než čísla říkala).
+- **Diagnóza je přesná a ukazuje třetí verzi:** stará verze byla silná tím, že věc MĚNILA
+  FUNKCI napříč rameny (opora pod vodou → stěna vracející hlas → sevření, které se otevře);
+  vadné na ní bylo jen tvrzení, že jsou to TYTÉŽ kameny. Můj zákaz vzal obojí. → v3: zakázat
+  týž PŘEDMĚT, ale VYŽÁDAT si odpověď — „toto místo má něco svého, co nesenou věc potká;
+  pojmenuj obojí". Zpětný odkaz zůstane, fyzická nemožnost ne.
+- **Liška hijackuje DÁL** (moje domněnka „oprava ji možná spravila" byla mylná — proto se
+  netvrdila bez měření). Soudcův přenositelný test: *„vyjmi větu s runou — když čtení nic
+  neztratí, vede moment."* Potvrzuje kritérium poolu: mizející tvor si rameno vezme.
+Korpusy `~/runar-eval/setkani-fix-test.jsonl`. <!-- doc-links:ok 2026-08-25 korpus mimo repo (~/runar-eval), checker home neresi -->
