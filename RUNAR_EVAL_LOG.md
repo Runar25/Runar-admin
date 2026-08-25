@@ -1232,3 +1232,27 @@ překážka, jednou jako zvuk; návrh vzešel od soudce).
 **Metodická hranice:** párový soudce plausibility NESKÓRUJE, ŘADÍ — v3 byla „čistá" proti v1
 a „nemožná" proti v4 (týž text). Absolutní verdikt chce skórování po jedné čtveřici.
 Korpusy: `~/runar-eval/setkani-{fix,v3,v4}-test.jsonl`. <!-- doc-links:ok 2026-08-25 korpus mimo repo (~/runar-eval), checker home neresi -->
+
+## 2026-08-25 — TEST 46 · ABSOLUTNÍ SKÓROVÁNÍ (owner: „udělej co je potřeba") — a PŘEPISUJE ZÁVĚRY TESTŮ 43–45
+Owner našel metodickou vadu: párový soudce NESKÓRUJE, ŘADÍ (tatáž v3 „čistá" proti v1,
+„nemožná" proti v4). Postaveno absolutní skórování: 10 soudců, **každý vidí JEDNU čtveřici**,
+s pevnými měřítky, bez srovnání. Korpus `~/runar-eval/absolutni-skore.json`. <!-- doc-links:ok 2026-08-25 korpus mimo repo (~/runar-eval), checker home neresi -->
+| verze | nit (absolutně) | fyzicky nemožné |
+|---|---|---|
+| v1 původní | silná | **ANO** (kameny brodu v rokli) |
+| v2 zákaz předmětu | **silná** | ne |
+| v3 vyžádané setkání | silná | ne |
+| v4 zákaz ohlášení | silná | ne |
+| kontrola BEZ carry | **slabá** | ne |
+**⚠️ KOREKCE ZÁZNAMU (§22):** párové soudy tvrdily, že u v2 a v4 „nit zeslábla" — **absolutně
+mají obě nit SILNOU.** Párový soudce vybere vítěze a poraženého pak zracionalizuje jako
+„sdílené kulisy"; týž text absolutně čte jako silnou nit. Věty o zeslábnutí nitě v zápisech
+TESTů 43–45 tedy NEPLATÍ jako fakt o textu, jen jako výsledek srovnání.
+**Co platí po korekci:** (a) carry dělá skutečnou práci — jediná čtveřice se slabou nití je
+ta BEZ carry; (b) fyzickou vadu měla jen v1, všechny tři opravy ji odstranily; (c) **v2 je
+nejjednodušší verze, která je čistá i silná** — a nikdy nebyla měřena na přirozenost;
+(d) zbývající otevřená osa je přirozenost, kde všechny MĚŘENÉ instruované verze (v1, v3, v4)
+vyšly „mechanické" a jediné „přirozené" bylo čtení BEZ carry.
+**⭐ PRAVIDLO DO METODIKY (platí na všechna budoucí měření):** *párové soudce používat na
+otázku „která z těch dvou", absolutní na „jaké to je" — a výsledky si nikdy neplést.*
+Párové srovnání nesmí být zdrojem tvrzení o vlastnosti textu.
