@@ -4768,3 +4768,23 @@ DOMOV** (odkud se vychází, kam se lze vrátit), ramena = kroky cesty, krajina 
 (dřevo → hobliny → prach → větev). Pozice NEMAJÍ pevné významy; vývoj určují runy.
 Doklad, že to jde: nesená fráze držela 4/4 i BEZ sdíleného místa (v2 test 2026-08-23).
 Affected doc(s): RUNAR_BACKLOG.md (test pohybu) — tento commit.
+
+## 2026-08-25 — Vegvísir: životní runa MIMO sáček (v1) · krajinný GRAF jako hypotéza
+**Rozhodnuto (v1):** **životní runa NENÍ v losovacím sáčku.** Důvod není symbolický, ale
+experimentální: kdyby se vytáhla jako rameno, dostaneme self-reference problém (jizva v1.3,
+24/25) a rozmaže se hranice **domov ≠ cesta**. Sáček = zbývajících 24 (ověřeno v kódu:
+`RUNES` má 25 vč. Blank; **Blank je legitimní návštěvník** — má 3 obrazy — a domov mít
+nemusí, domovy jsou jen životní runy). Tažená runa se dál neopakuje (nevratnost, 2026-08-25).
+**Uchováno jako alternativa (NE současné rozhodnutí):** životní runa v sáčku jako
+experimentální varianta „návrat domova skrze tutéž runu".
+**HYPOTÉZA — krajinný GRAF:** krajina se ani nefixuje (= poziční sémantika zadními vrátky),
+ani nelosuje náhodně (= turistický itinerář). Nové místo vzniká **ze sousedství toho
+současného** (dílna → dveře/dvůr/práh · dvůr → cesta/brána · cesta → les/brod/rozcestí ·
+brod → řeka/údolí/druhý břeh). Data = graf ~20–25 uzlů s 2–4 východy, NE osm pozic.
+⚠️ **Výhrady CODE-tune k podhypotéze „runa ovlivní, kudy se cesta otevře":** směrování runou
+smí jít přes **materiálovou sousednost**, NIKDY přes tematickou shodu — runa, která si
+otevře místo shodné se sebou, dostane scénu, kde nemá co dělat (TEST 37: shoda místa a runy
+= 0/4 pro runu). ⚠️ **Rameno 8:** rozhodnout, zda návrat domů je DOSLOVNÝ (graf musí umět
+dojít zpět) nebo MATERIÁLOVÝ (semínko — a to je jediná varianta, kterou máme změřenou,
+TESTy 31/33/36). Doslovný návrat = tvrdá podmínka na tvar grafu.
+Affected doc(s): RUNAR_BACKLOG.md (graf jako úkol pro Cowork + otevřené otázky) — tento commit.

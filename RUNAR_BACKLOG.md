@@ -843,6 +843,12 @@ bez toho není slepé skórování slepé).
   klíčováno životní runou (= domovy); pokud by místo bylo „místo tažené runy", splyne místo
   s runou a zmizí návštěvnická tenze (TEST 37 logika) → krajinný zásobník = NOVÁ data (Cowork);
   (c) edge: životní runa v sáčku?
+- [ ] **KRAJINNÝ GRAF — data pro Cowork** (2026-08-25): ~20–25 uzlů (dílna·dvůr·práh·cesta·
+  brod·les·rozcestí·údolí·hřeben·fjord·pobřeží·přístav…), každý s 2–4 sousedy + materiálem
+  (efni) a stavovou paletou, jako u domovů. NENÍ to osm pozic. Otevřené: (a) směruje runa
+  větev? — jen materiálovou sousedností, nikdy tematickou shodou (TEST 37); (b) musí graf
+  umět dojít zpět domů (doslovný návrat), nebo stačí materiálový návrat semínkem (jediná
+  změřená varianta)?; (c) kolik uzlů unese 8 ramen bez opakování.
 - [ ] **NÁVRH PROMPTU RAMENE (draft, ne produkce)** — z architektury v1 vč. losovaného
   vstupního materiálu (owner 2026-08-25: ramena se nesmí otevírat stejně). Zbytková rizika
   hlídat: dominantní stav vs protichůdná runa (Uruz-Raidho) · stavová paleta > 6.
