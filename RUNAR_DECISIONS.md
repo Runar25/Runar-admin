@@ -4751,3 +4751,20 @@ knížečka" — runy ji nemají, Rúnar JE ta knížečka; zůstává v každé
 Stav-cesty (GPT) jako architektura ZABIT po TEST 38 (zámek scény) — sám GPT souhlasí.
 Další krok: návrh promptu skutečného ramene (draft, NE produkce — Vegvísir není spread).
 Affected doc(s): RUNAR_BACKLOG.md (brána uzavřena, další krok) — tento commit.
+
+## 2026-08-25 — Vegvísir: PREMIUM-only + pouť se POHYBUJE (hypotéza k testu) + runa je nevratná
+**Rozhodnuto (KUKY):** Vegvísir = **feature pro Premium** (řeší dřívější flag: ASK Rúnar je
+Premium-only, takže třetí vrstva „dovysvětlení" bude dostupná — příběh runy → obraz → ASK).
+**Rozhodnuto (KUKY):** **runa je NEVRATNÁ** — tažená runa vypadává z losování, tatáž runa se
+v pouti neopakuje. Návrat k dřívějšímu se děje PAMĚTÍ cesty (materiál/vztah), nikdy druhým
+tažením. ⚠️ Soulad se změřeným: semínko návratu i nesená fráze pracují s materiálem, ne se
+jménem runy — konflikt žádný. **Otevřený edge:** je životní runa v losovacím sáčku? (Když
+ano, runa může navštívit vlastní domov — jizva v1.3/self-ref 24/25.) K rozhodnutí před stavbou.
+**HYPOTÉZA K TESTU (ne architektura):** dosavadní mechanika je změřená UVNITŘ jednoho světa,
+ale **prostředí ≠ cesta** (KUKY: „komu se bude líbit, že pro jedno čtení o 8 ramenech bude
+mít v každém rameni stejný obraz jinak popsaný?"). Nová práce: **životní runa = nevyslovený
+DOMOV** (odkud se vychází, kam se lze vrátit), ramena = kroky cesty, krajina se posouvá
+(dílna → dvůr → stezka → soutěska…), nit drží NESENÝ MATERIÁL, který se smí proměňovat
+(dřevo → hobliny → prach → větev). Pozice NEMAJÍ pevné významy; vývoj určují runy.
+Doklad, že to jde: nesená fráze držela 4/4 i BEZ sdíleného místa (v2 test 2026-08-23).
+Affected doc(s): RUNAR_BACKLOG.md (test pohybu) — tento commit.

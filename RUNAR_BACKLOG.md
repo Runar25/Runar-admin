@@ -834,6 +834,15 @@ bez toho není slepé skórování slepé).
 - [x] **T-střed: BRÁNA PRŮCHOZÍ CELÁ** (2026-08-25): negativní půlka materiálem (TEST 37),
   nit materiálově kotvená (2/2), pozitivní půlka owner („hezká čtení… můžeš dál").
   → RUNAR_DECISIONS.md 2026-08-25 (architektura ramene v1, 6+1 prvků).
+- [ ] **TEST POHYBLIVÉ POUTI** (2026-08-25, KUKY handoff): 4 ramena pohyblivá (domov→dvůr→
+  stezka→soutěska) vs 4 ramena statická (dnešní mechanika); nucená volba: drží nit? je vidět
+  pohyb? proměňuje se materiál? nerozpadlo se to na 4 singly? ⚠️ CODE-tune výhrady k vyřešení:
+  (a) **pevné pořadí krajin = poziční sémantika zadními vrátky** (když je rameno 4 vždy
+  soutěska, je to „R4 = zkouška", což handoff sám zakazuje) → krajina se musí losovat/vést
+  runami, ne být pevná dramaturgie; (b) **odkud se bere další místo** — dnešních 24 míst je
+  klíčováno životní runou (= domovy); pokud by místo bylo „místo tažené runy", splyne místo
+  s runou a zmizí návštěvnická tenze (TEST 37 logika) → krajinný zásobník = NOVÁ data (Cowork);
+  (c) edge: životní runa v sáčku?
 - [ ] **NÁVRH PROMPTU RAMENE (draft, ne produkce)** — z architektury v1 vč. losovaného
   vstupního materiálu (owner 2026-08-25: ramena se nesmí otevírat stejně). Zbytková rizika
   hlídat: dominantní stav vs protichůdná runa (Uruz-Raidho) · stavová paleta > 6.
