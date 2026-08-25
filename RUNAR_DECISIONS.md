@@ -4729,3 +4729,25 @@ by NEŠLO napsat stejně přesvědčivě bez znalosti předchozích — nová ko
 „sham-return" (model návrat vyrobí BEZ znalosti začátku; poetická retrospektiva ≠ vztah).
 MILNÍK: 1→2→3 emergence → hijack-gate středu → 1↔5 → 8→1 → teprve pak 8 ramen/architektura.
 Affected doc(s): RUNAR_DESIGN.md (rámce — parking poznámka) · RUNAR_BACKLOG.md (testy) — tento commit.
+
+## 2026-08-25 — Vegvísir: BRÁNA PRŮCHOZÍ + architektura ramene v1 ratifikována (KUKY „hezká čtení… můžeš dál")
+**Pozitivní půlka brány splněna:** owner četl obě měřeně nejsilnější trojice (Kenaz dílna
+Perth→Tiwaz→Wunjo · Uruz suť Isa→Ansuz→Raidho) — „jinak hezká čtení!"; GPT nezávisle
+„soudržnost ano". Negativní půlka (hijack) prošla materiálovou identitou (TEST 37).
+**Architektura ramene v1 — šest prvků, každý s vlastní rolí, žádný není „význam":**
+1. **místo** (identita světa; materiálová, data `docs/vegvisir-mista-v1.md` v3) — TESTy 34/37
+2. **losovaný stav** (proti monotónnosti) — TEST 35
+3. **nesená fráze** (co si cesta pamatuje; povinná, proměněná) — v2 4/4, T1, TEST 38
+4. **nová runa** (co s nesenou věcí udělá; relační jádro: „mění vztah člověka k tomu, co
+   dřívější rameno otevřelo") — TEST 38 + slepý soudce našel řetěz sám
+5. **čas** (9 nocí podlaha) — ⚠️ JEDINÝ NEZMĚŘENÝ prvek: designová hypotéza, ověří až živí
+   testeři (GPT tvrzení „každý prvek má měření" je tu nepřesné — nezačít citovat jako fakt)
+6. **semínko návratu** (8→1, ohlédnutí proměněné) — TESTy 31/33/36
+**+ prvek 7 z owner poznámky (2026-08-25): LOSOVANÝ VSTUPNÍ MATERIÁL** — každé rameno
+vstoupí do místa JINOU věcí z jeho efni; ramena se nesmí otevírat stejným textem/obrazem
+(vada nalezena ownerem: identita vstupovala do všech ramen stejně → stejná otevření).
+**Styl potvrzen (KUKY):** definiční věta runy („Tiwaz is the choosing…") = „Rúnarova
+knížečka" — runy ji nemají, Rúnar JE ta knížečka; zůstává v každém rameni.
+Stav-cesty (GPT) jako architektura ZABIT po TEST 38 (zámek scény) — sám GPT souhlasí.
+Další krok: návrh promptu skutečného ramene (draft, NE produkce — Vegvísir není spread).
+Affected doc(s): RUNAR_BACKLOG.md (brána uzavřena, další krok) — tento commit.
