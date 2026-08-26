@@ -5,7 +5,15 @@ osy dle návrhu GPT, zpřísněné o to, co se dosud změřilo (TESTy 31–46).
 **Vlastní:** tento soubor (jak se soudí pouť). Výsledky měření → `RUNAR_EVAL_LOG.md`.
 
 **Changelog:** 2026-08-25 vznik · 2026-08-25 osa 4 přejmenována „Paměť" → **„Nit / kontinuita"**
-(GPT: paměť je mechanismus, nit je to, co čtenář zažívá; otázka i měřítka beze změny).
+(GPT: paměť je mechanismus, nit je to, co čtenář zažívá; otázka i měřítka beze změny) ·
+2026-08-26 osy 1 a 4 ZOSTŘENY (vyžádané citace — na 8 ramenech nerozlišily, TEST 49) +
+přidána **osa 9 Zastavující otázka** (owner: nese kvalitu ta otázka, ne popis).
+
+**⚠️ TŘI VRSTVY KVALITY** (owner + GPT 2026-08-26): **obraz** (vidím to místo) · **runa**
+(definiční věta = „Rúnarova knížečka", kterou runy nemají) · **otázka/napětí** (čtenář je
+uvnitř obrazu a dokončí význam sám). Třetí vrstva je ta, kvůli které chce člověk čekat
+dalších devět nocí — a NESMÍ se vynucovat instrukcí („na konci vytvoř lákavou otázku"
+= dramaturgie zadními vrátky). Měří se osou 9, nepíše se do promptu.
 
 ---
 
@@ -23,19 +31,20 @@ o vlastnosti textu nesmí nikdy pocházet z párového srovnání.**
 
 ---
 
-## Osy (8)
+## Osy (9)
 
 | # | Osa | Otázka soudci | Měřítka |
 |---|---|---|---|
-| 1 | **Jedna cesta** | Šlo by ramena přečíst v jiném pořadí beze ztráty? | pouť · mezi · série — *série = šlo by prohodit* (změřený test, TEST 40) |
+| 1 | **Jedna cesta** | **Vyjmenuj dvojice sousedních ramen, které NELZE prohodit, a u každé cituj větu, která to drží.** Kolik jich je? | počet + citace. ⚠️ Otázka „šlo by prohodit?" bez vyžádaných citací na 8 ramenech NEROZLIŠILA (slepenec dostal „mezi", TEST 49) — atmosféru lze najít vždy, citovatelnou jednosměrnou vazbu ne. |
 | 2 | **Místo přítomné** | Pozná čtenář, **z čeho je** to místo uděláno? | ano/ne (ne = místo z nálady, ne z věcí) |
 | 3a | **Runa vs. moment** | Vede kvalita runy, nebo sama událost? | runa · moment · vyvážené |
 | 3b | **Typ hijacku** | Když vede moment: říká už sám význam runy (runový), nebo je jen příliš velký obraz (obrazový)? | žádný · runový · obrazový |
-| 4 | **Nit / kontinuita** | Vrací se konkrétní věc z dřívějšího ramene a **mění funkci**? | silná · slabá (jen sdílené rekvizity) · žádná |
+| 4 | **Nit / kontinuita** | Vrací se konkrétní věc a **mění funkci**? **Pojmenuj ji a ke KAŽDÉMU stavu dej citaci.** | silná (≥3 citovatelné stavy) · slabá · žádná. ⚠️ Bez vyžádaných citací dostal slepenec „silná" (TEST 49). |
 | 5 | **Fyzická možnost** | Je někde věc, která tam být nemůže (patří k dřívějšímu místu a nemohla se přemístit)? | ano/ne + citace. *Stopa, vzpomínka a věc téže látky, kterou nové místo má samo, NENÍ chyba.* |
 | 6 | **Přirozenost** | Nese se to samo, nebo je to inventura? | přirozené · mechanické — *mechanické = opakovaná konstrukce ve stejném slotu, runa vyložená přes položku z minula* |
 | 7 | **Zastavení ≠ výpadek** | Když se rameno zastaví: zastavila se **cesta**, nebo model nevěděl, co s nesenou věcí? | zastavení · výpadek — *(owner 2026-08-25: Isa-zastavení je legitimní rameno)* |
 | 8 | **Stojí za to číst dál** | Chtěl by čtenář vědět, co bude v dalším rameni? | ano/ne — **spodní hranice kvality** |
+| 9 | **Zastavující otázka** | V kolika ramenech vznikla otázka nebo napětí, nad kterým se čtenář zastaví — **konkrétní situace, dvě skutečné možnosti, žádná označená jako správná**? | počet 0–N + citace. *(KUKY 2026-08-26: „Do you kneel at the quiet rim, or walk on toward the roar?" — reálná otázka, člověk nad ní musí přemýšlet. Tohle nese kvalitu, ne poetický popis.)* |
 
 ---
 

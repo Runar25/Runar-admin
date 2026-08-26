@@ -1362,3 +1362,21 @@ kontrolu dělat vždy na TÉŽE délce a osy 1/4 přeformulovat tak, aby nešly 
   v datech momentů, ale i ve dvojici runa × krajina.
 - **Osa 8: „ano, ale těsně — nulové sázky."** Spodní hranice kvality je zatím splněná
   strukturou, ne obsahem; nejcennější poznámka pro produkt.
+**Dodatek TEST 49 — nálezy ownera (2026-08-26):**
+(a) ⭐ **Rameno 4 má vadu OBRAZU, ne jen vzdálenosti.** Soudce viděl fyzickou nemožnost
+(déšť z jeskyně devět nocí daleko); owner viděl přesněji: *„déšť naráží do střechy —
+nevidím tu jeskyni"*. Sloveso „ran off the roof" postaví čtenáři před oči DŮM; jeskyně má
+strop, ze kterého kape dovnitř, ne střechu, ze které stéká. Ze skalní STĚNY by týž přenos
+fungoval. → **Nová třída vady: nesená věc dostane sloveso/objekt z jiného světa, než je
+místo.** Fyzická kontrola (osa 5) ji chytí jen náhodou.
+(b) ⭐ **Kvalitu nese OTÁZKA, ne popis** (owner o rameni 5): *„Do you kneel at the quiet rim,
+or walk on toward the roar? — celkem reálná a člověk nad ní musí přemýšlet."* Vzorec:
+konkrétní situace · dvě skutečné možnosti · žádná označená jako správná · reálný důsledek ·
+smí být i metaforická. Táž kvalita jako dřívější „Which piece do you set down in the dark
+to keep the one under your hands whole?" (Tiwaz). → **přidána osa 9 do rubriky**; do promptu
+se NEPÍŠE (dramaturgie zadními vrátky).
+(c) Owner koriguje mou pochvalu: *„pouť je OK, ale rozhodně není krásná… text musí být
+lepší."* Konstrukce pouti obstála, ÚROVEŇ TEXTU ne — nezaměňovat.
+(d) **Osy 1 a 4 zostřeny vyžádanými citacemi** — selhání kontroly nebylo délkou (slepenec
+BYL osmiramenný), ale tím, že šly splnit atmosférou. Nové znění žádá jmenovité dvojice
+ramen, které nelze prohodit, + citaci ke každému stavu nesené věci.
