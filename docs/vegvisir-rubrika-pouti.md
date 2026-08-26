@@ -39,7 +39,7 @@ o vlastnosti textu nesmí nikdy pocházet z párového srovnání.**
 | 2 | **Místo přítomné** | Pozná čtenář, **z čeho je** to místo uděláno? | ano/ne (ne = místo z nálady, ne z věcí) |
 | 3a | **Runa vs. moment** | Vede kvalita runy, nebo sama událost? | runa · moment · vyvážené |
 | 3b | **Typ hijacku** | Když vede moment: říká už sám význam runy (runový), nebo je jen příliš velký obraz (obrazový)? | žádný · runový · obrazový |
-| 4 | **Nit / kontinuita** | Vrací se konkrétní věc a **mění funkci**? **Pojmenuj ji a ke KAŽDÉMU stavu dej citaci.** | silná (≥3 citovatelné stavy) · slabá · žádná. ⚠️ Bez vyžádaných citací dostal slepenec „silná" (TEST 49). |
+| 4 | **Nit / kontinuita** | Vrací se konkrétní věc a **mění funkci**? Pojmenuj ji, ke KAŽDÉMU stavu dej citaci — a **pozdější citace musí obsahovat ZPĚTNÝ ODKAZ** (určitý člen/deixe: „the moss now gone", „the water that ran thin behind you"). | silná (≥3 stavy se zpětným odkazem) · slabá · žádná. ⚠️ Samotné citace nestačily: slepenec dostal „silná" i podruhé (TEST 50) — nesouvisející čtení sdílejí obecný slovník a soudce z něj poskládá řetěz. Zpětný odkaz je to, co spravilo osu 1 (sham 0 vs pouť 2). |
 | 5 | **Fyzická možnost** | Je někde věc, která tam být nemůže (patří k dřívějšímu místu a nemohla se přemístit)? | ano/ne + citace. *Stopa, vzpomínka a věc téže látky, kterou nové místo má samo, NENÍ chyba.* |
 | 6 | **Přirozenost** | Nese se to samo, nebo je to inventura? | přirozené · mechanické — *mechanické = opakovaná konstrukce ve stejném slotu, runa vyložená přes položku z minula* |
 | 7 | **Zastavení ≠ výpadek** | Když se rameno zastaví: zastavila se **cesta**, nebo model nevěděl, co s nesenou věcí? | zastavení · výpadek — *(owner 2026-08-25: Isa-zastavení je legitimní rameno)* |

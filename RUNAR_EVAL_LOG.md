@@ -1380,3 +1380,42 @@ lepší."* Konstrukce pouti obstála, ÚROVEŇ TEXTU ne — nezaměňovat.
 (d) **Osy 1 a 4 zostřeny vyžádanými citacemi** — selhání kontroly nebylo délkou (slepenec
 BYL osmiramenný), ale tím, že šly splnit atmosférou. Nové znění žádá jmenovité dvojice
 ramen, které nelze prohodit, + citaci ke každému stavu nesené věci.
+
+## 2026-08-26 — TEST 50 · DRUHÁ POUŤ (8 ramen, jiný domov i runy): slabina je SYSTEMATICKÁ, ne náhoda
+Táž architektura, žádná nová pravidla (návrh GPT: zjistit, jestli byla pouť 1 slabá náhodou).
+Domov Laguz (fjara u ústí) · runy Thurisaz→Berkana→Raidho→Othila→Eihwaz→Gebo→Hagalaz→Tiwaz ·
+trasa: fjara → lávová pláň → jeskyně → rokle → stráň → údolí → drnová stavení → oblázkový val.
+Souzeno **zostřenou rubrikou** (osy 1 a 4 s vyžádanými citacemi, nová osa 9).
+Korpusy `~/runar-eval/pout8b.jsonl` + `~/runar-eval/pout8b-rubrika.json`. <!-- doc-links:ok 2026-08-26 korpus mimo repo (~/runar-eval), checker home neresi -->
+| osa | pouť 1 | pouť 2 |
+|---|---|---|
+| 1 jedna cesta | „pouť" (kontrola SELHALA) | **2 citovatelné dvojice** · sham **0** |
+| 2 místo přítomné | 8/8 | 8/8 |
+| 3 runa vede | 5/8 | **6/8** (hijacky: 3 a 4 obrazové, 7 runový) |
+| 4 nit | silná (kontrola selhala) | silná — ⚠️ **kontrola SELHALA ZNOVU** |
+| 5 fyzicky nemožné | ANO | **ne** |
+| 6 přirozenost | mechanické | **mechanické** |
+| 7 zastavení | rameno 4 = výpadek | rameno 4 = výpadek |
+| 8 stojí za to číst dál | ano (těsně) | **NE** |
+| 9 zastavující otázka | (neměřeno) | **3** (R4, R5, R7) |
+**⭐ OSA 1 OPRAVENA, OSA 4 NE.** Vyžádané citace jednosměrných vazeb fungují: slepenec dostal
+**0** dvojic, skutečná pouť 2. Osa 4 ale i s citacemi dala slepenci „silná" — nesouvisející
+čtení sdílejí obecný slovník (mech · kámen · držení) a soudce z nich poskládá „řetěz" náhodou.
+**Oprava do rubriky:** u osy 4 vyžadovat, aby pozdější citace obsahovala ZPĚTNÝ ODKAZ (určitý
+člen/deixe: „the moss now gone", „the water that ran thin behind you") — sdílený slovník bez
+odkazu se nepočítá. Totéž, co osu 1 spravilo.
+**⭐ HLAVNÍ NÁLEZ — mechaničnost je systematická, ne náhodná.** Obě pouti „mechanické" se
+STEJNOU diagnózou: (a) definiční věta runy 8× v identické konstrukci („X is …") — nikdy jiná
+cesta k runě; (b) carry jako inventura („položka se zavede, odškrtne, doznají se, že už tam
+není"). Soudce pouti 2: „To není paměť pouti, to je předávání předmětů."
+**⚠️ Výpadek v rameni 4 v OBOU poutích** (n=2, může být náhoda — ale sledovat, jestli je
+pozice 4 slabé místo: dost daleko, aby se prvotní materiál vyčerpal, a dost brzo, aby ještě
+nebyl návrat).
+**Osa 8 = tvrdý produktový nález:** pouť 1 „ano, těsně", pouť 2 **„ne"**. Spodní hranice
+kvality NENÍ spolehlivě splněná. Soudce pouti 2 pojmenoval i to, co drží: konkrétní krajina ·
+dva citovatelné stehy mezi rameny · závěr Tiwaz („grain holding true after the water took
+everything softer away" = jediný obraz, který zní jako výsledek cesty).
+**Osa 9 funguje** — našla 3 otázky a nejčistší je přesně ownerem popsaná forma: „Does the
+water bend around the stone, or does it wait for the stone to give?" (konkrétní situace ·
+dvě skutečné možnosti · žádná označená jako správná). Osa 9 je použitelná jako měřítko
+kvality, aniž se cokoli píše do promptu.
