@@ -1306,3 +1306,20 @@ první světlo, Ingwaz zeleň, Eihwaz ohyb koruny, Tiwaz vítr).
 **Jazyk (CODE, role vazby/idiomu):** rykkorn · ljósrák · gluggapóstur · skafl · klasi · þúfa
 · löður · grugg · rás · skora — slovník zná všechna. „hefilspænir" heslo nemá (průhledná
 složenina hefill+spænir, v poolu byla už dřív).
+
+## 2026-08-26 — Data pouti KOMPLETNÍ: momenty (24 míst) + krajiny (22) uloženy do repa
+Cowork dodal obě sady; **uloženo CODE-tune** (Cowork do repa nepíše):
+`docs/vegvisir-momenty-24-mist.md` · `docs/vegvisir-krajiny-22.md`.
+Berkana „brum springur út" PŘEPSÁNA na „regndropar hanga á neðstu greinunum eftir skúr"
+(Cowork přijal nález izolace a sám opravil i to, že jeho původní „nechat" stálo na
+supersedovaném soudci přes hotové čtení — správná aplikace §27).
+**Jazykový screen krajin (role CODE):** slovník zná troðningur · mosaþemba · rjóður · sylla ·
+fuglager · landfesti · apalhraun · helluhraun · dropasteinn · snjóskafl · melalda · leirhver ·
+brennisteinn · jökulurð · kvísl · sandbleyta. **Heslo nemají** (všechno průhledné produktivní
+složeniny, doporučeno ponechat): mýrarsund · vegslóð · lækjarsytra · klettanibba · netahrúga ·
+vindrák · fífuhnoðri · bráðvatn. ⚠️ K potvrzení Coworkem, jestli některá nezní knižně.
+**Stav mechaniky:** všech sedm prvků ramene má data i změřený blok — domov · krajina (22) ·
+moment (24 míst) · carry v2 · vstupní věc · stav · semínko návratu. Jediný neměřený prvek
+zůstává ČAS (9 nocí, hypotéza do živých testerů).
+**Připraveno k dlouhému běhu** (6–8 ramen, rubrika `docs/vegvisir-rubrika-pouti.md`) —
+čeká na rozhodnutí ownera o rozsahu (+ zda rovnou worst-case sekvence run).
