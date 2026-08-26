@@ -870,6 +870,10 @@ bez toho není slepé skórování slepé).
   **Seed:** začíná se 2–3 owner-potvrzenými příklady (kurátorské kritérium splněno); produkční
   single/spread rozšíření kurátoruje OWNER („tohle je přesně Rúnar"), ne soudci — CODE jen
   vytáhne kandidáty. Korpus bydlí v `memory/co-dela-cteni-silnym.md`, výsledek → DECISIONS (§20).
+  **STAV 2026-08-26:** 18 čtení vygenerováno, metrika kopírování hotová a ověřená (0 překryvů,
+  nulová kontrola drží). Slepé soudy KVALITY a strukturní reprodukce STOPNUTY ownerem (tokeny) —
+  soubory a mapa v ~/runar-eval/p1-*.json, skript workflows/scripts/p1-soudy-wf_822d72b8-1f8.js.
+  Bez nich se o výsledku nesmí tvrdit nic.
   **Rozhodnutí:** kvalita↑ v B i C ∧ copy≈A ∧ bez konvergence → teprve pak architektura.
   Kvalita↑ jen v B (same-rune) = model si bere věty, ne způsob → NEÚSPĚCH.
 - [ ] **ÚKOL 3 pro Cowork: MOMENTY pro 22 krajin** (2026-08-26, owner: „je v přírodě tolik

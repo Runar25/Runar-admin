@@ -1443,3 +1443,29 @@ v tůni, velryba jen ve fjordu). Kritéria stejná: moment je to, ČÍM se runa 
 tvor spíš zůstává, než aby odešel jako pointa; místo musí zůstat vidět.
 Korpus `~/runar-eval/pout8c.jsonl`; texty všech tří poutí → `docs/vegvisir-pouti-texty.md`
 (uloženy 2026-08-26 na ownerův dotaz „kde je text pouti?" — dosud bylo v repu jen měření).
+
+## 2026-08-26 — TEST P1 · Pozitivní učení (few-shot korpus) — BĚH ROZDĚLANÝ, soudy stopnuty ownerem
+Handoff Cowork-read PROKLEPNUT proti repu (jejich tvrzení ověřena): `DEF_CHAR` ř. 31
+„Draw the picture and stop there — never hand the seeker a conclusion" ✓ · ořez promptu hotový
+(DECISIONS 154→178) ✓ · 2.os. few-shot v promptu už je ✓ · self-reference 24/25 (DECISIONS 2219) ✓.
+**Design:** A = produkční prompt · B = +korpus s příkladem TÉŽE runy · C = +korpus BEZ ní
+(počet příkladů konstantní = 2). Runy Tiwaz + Eihwaz × 3 seedy = **18 čtení**, produkční single
+cesta (EN, noq). Rámování drženo FIXNÍ jako zdroj, ne direktiva. Korpus = 3 owner-potvrzené
+příklady (Tiwaz definiční věta · Wunjo otázka · Eihwaz otázka).
+⚠️ **Nic z toho se NEDOTKLO produkčního promptu** — korpus žil jen v testovacím generátoru.
+**HOTOVO a ověřeno — metrika doslovného kopírování:**
+- Napříč všemi 18 čteními **0 čtyřgramových překryvů** s korpusem. Jediný společný trojgram je
+  „Tiwaz is the" — a **má ho i buňka A, která korpus nikdy neviděla** → nulová kontrola říká
+  produkční konstrukce, ne převzetí.
+- Metrika zaútočena protipříkladem (§27): doslovná kopie věty dá **6** čtyřgramů, parafráze **1**,
+  reálná čtení **0**. Není to slepá nula.
+- Seed-and-assert: ověřeno, že blok korpusu skutečně dorazil do system promptu buňky B/C a v A není.
+- Konvergence uvnitř buňky (párový 4-gram mezi 3 seedy): Tiwaz A 2,3 · B 0,0 · C 5,0 ·
+  Eihwaz A 1,0 · B 0,3 · C 0,7. **n=3 na buňku — nic z toho zatím neznamená nic.**
+**ROZDĚLANÉ (stop ownera, tokeny):** dvě slepé dávky soudců — kvalita 19 (18 čtení + známé dobré
+jako pozitivní kontrola) a reprodukce 13 (12 čtení B/C + **nastražená syntetická kopie**, kterou
+soudce MUSÍ chytit, jinak je slepý). Zamíchané soubory a mapa: `~/runar-eval/p1-blind-kvalita.json` <!-- doc-links:ok 2026-08-26 korpus mimo repo (~/runar-eval), checker home neresi -->
+· `p1-blind-repro.json` · `p1-mapa.json` · korpus čtení `p1-corpus.jsonl`. <!-- doc-links:ok 2026-08-26 korpusy mimo repo (~/runar-eval) a session-scoped workflow skript, checker je nevidi -->
+Workflow skript k obnovení: `workflows/scripts/p1-soudy-wf_822d72b8-1f8.js`. <!-- doc-links:ok 2026-08-26 skript zije v session adresari, ne v repu -->
+**Nezměřeno tedy zůstává to podstatné:** jestli korpus zvedl KVALITU. Bez toho se o P1 nesmí
+tvrdit nic — ani úspěch, ani neúspěch.
