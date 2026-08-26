@@ -855,6 +855,11 @@ bez toho není slepé skórování slepé).
   a pohyblivá krajina, které mohou nit nést strukturálně — proto je to legitimní HYPOTÉZA,
   ne opakování chyby. Test: volitelná formulace vs. v2 (povinná), absolutní rubrika
   (`docs/vegvisir-rubrika-pouti.md`), osy paměť + přirozenost + jedna cesta.
+- [ ] **ÚKOL 3 pro Cowork: MOMENTY pro 22 krajin** (2026-08-26, owner: „je v přírodě tolik
+  živého" — pouti mají nerostné vstupy, protože momenty existují jen pro 24 domovů). Formát
+  a kritéria jako u domovů; **živé tam, kde místo život má** (ovce/koně na móa a v dalu,
+  havran nad hraunem, koliha a jespák na mýri, kajka a lundi na bjargu, silungur v hylu,
+  velryba jen ve fjordu). ⚠️ Tvor zůstává, nemizí jako pointa; místo musí zůstat vidět.
 - [ ] **KRAJINNÝ GRAF — data pro Cowork** (2026-08-25): ~20–25 uzlů (dílna·dvůr·práh·cesta·
   brod·les·rozcestí·údolí·hřeben·fjord·pobřeží·přístav…), každý s 2–4 sousedy + materiálem
   (efni) a stavovou paletou, jako u domovů. NENÍ to osm pozic. Otevřené: (a) směruje runa

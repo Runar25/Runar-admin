@@ -85,3 +85,42 @@ trasa: domov → lávová pláň → jeskyně → rokle → stráň → údolí 
 
 > Where the sea gave up this driftwood, the grain runs straight though the bark is long gone, worn pale on the dark bank of rolled stones. Tiwaz is that grain holding true after the water took everything softer away. What in you, Anna, stays straight when the surface is stripped off?
 
+---
+
+## POUŤ 3 (po opravě výběru vstupní věci)
+
+domov: kraj pole u ohrady (Fehu) · runy Kenaz→Ehwaz→Isa→Fehu→Perth→Algiz→Jera→Ansuz  
+trasa: domov (túnfótur) → stráň → údolí → drnová stavení → březové mlází → bažina → hverasvæði → lávová pláň
+
+**1 · Kenaz** — *domov (túnfótur)* · vstup: the sheep drift home towards the fold in the dusk
+
+> The sheep drift home toward the fold in the dusk, Anna, the tended grass ending where the stone pen begins. One ewe lingers at the edge, still grazing while the rest press in. Kenaz is the small warmth that keeps you moving when the light goes. Do you turn in with the flock, or stay in the last grey a while?
+
+**2 · Ehwaz** — *stráň* · vstup: a trickle of water down the slope
+
+> The trickle holds its line down the steep grass while the wind bends everything around it. Ehwaz is two things moving as one, the way the water and the slope carry each other down. You stand on the grey pitch, grass and stone by turns, where the old pen's walls have long since gone to ground.
+
+**3 · Isa** — *údolí* · vstup: fences across the grass
+
+> Beyond the fog, where the fences cross the valley grass, one gate hangs open and you cannot yet see it. The steep climb is behind you now, and here the ground lies flat and still under the grey. This is Isa, the holding that keeps a thing whole until its hour comes. What waits on the far side of a fence you cannot see through?
+
+**4 · Fehu** — *drnová stavení* · vstup: the turf houses themselves
+
+> The turf houses press into the slope, walls of stacked sod and grass grown over the roofs, one window lit against the evening. Fehu is the warmth held in a house that took many hands to raise. You stand at the edge of the cluster, where the fenced fields end and the smoke begins.
+
+**5 · Perth** — *březové mlází* · vstup: a small clearing in the scrub
+
+> The clearing opens where the crooked birch thins, floored with turf that once held a roof of stacked sod and now holds only first yellow. Perth is the quiet ground still working long after the walls above it fell. What settled into that soil when no one was watching it, Anna?
+
+**6 · Algiz** — *bažina* · vstup: sedge
+
+> The sedge stands stiff at the pool's edge, its blades reaching up out of the frozen mire while the water below holds the pale sky. Algiz is that reaching, Anna, the way a plant keeps its head above the standing wet. Does the sedge lean toward the pool it grows from, or toward the open air?
+
+**7 · Jera** — *hverasvæði* · vstup: birds keeping off the hot ground
+
+> Anna, the small birds skirt the hot ground here, waiting on the cooler stones while vapour lifts and the mud pits keep their slow simmer. Where the mire once lay stiff, this earth works itself warm in its own time. Jera is that quiet turning underfoot, and the ground gives when it is ready.
+
+**8 · Ansuz** — *lávová pláň* · vstup: the lava hummocks
+
+> You stand on the lava hummocks, black rock heaved into rounded backs, moss packed into every hollow between them. The sun is hard on the stone, and the cold you carried from the lower field has burned off your shoulders here. Ansuz is the way sound crosses open air, carrying further than the one who spoke it. You stand on the high broken ground, Anna, where the wide sky comes down to meet the rock.
+

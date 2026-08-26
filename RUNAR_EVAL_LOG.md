@@ -1419,3 +1419,27 @@ everything softer away" = jediný obraz, který zní jako výsledek cesty).
 water bend around the stone, or does it wait for the stone to give?" (konkrétní situace ·
 dvě skutečné možnosti · žádná označená jako správná). Osa 9 je použitelná jako měřítko
 kvality, aniž se cokoli píše do promptu.
+
+## 2026-08-26 — TEST 51 · Owner: „3× mech, 2× kámen, nic živého" — příčina NALEZENA a částečně opravena
+Owner po přečtení pouti 2: *„líbilo by se mi, kdyby si vybíral i něco jiného než 3× mech, 2× kámen.
+Pořád se drží krajiny nehmotných předmětů, a přitom je v přírodě tolik živého."*
+**Tři příčiny, jedna moje:**
+1. ⚠️ **MOJE CHYBA:** do generátoru jsem z Coworkových **6 efni** propsal jen **3** a vybíral je
+   pevným indexem `k % 3` — proto měly pouti 1 i 2 na týchž krajinách TÝŽ vstup („the cracks in
+   the lava" a „daylight at the mouth" v obou). Opraveno: plná sada + losovaný výběr.
+2. **Datová díra:** živé věci bydlí v poolu MOMENTŮ, a ten existuje jen pro 24 **domovů**.
+   Krajiny (22) mají jen efni — a ta jsou skoro celá nerostná. Ramena 2–8 tedy nemají odkud
+   vzít nic živého. (Díra pojmenovaná už u TESTu 49, neuzavřená.)
+3. **Carry táhne tutéž látku dál** (mech → mech → mech). Zčásti žádoucí (je to nit), ale nesmí
+   být jediným zdrojem.
+**Změřený efekt opravy (pouť 3, domov Fehu-túnfótur, runy Kenaz→Ehwaz→Isa→Fehu→Perth→Algiz→
+Jera→Ansuz):** vstupy se přestaly opakovat mezi poutěmi ✓, ale **živé se objevilo jen 1×**
+(„birds keeping off the hot ground") + ovce v domovském momentu. Důvod je počitatelný:
+do testu jsem přidal **jeden živý prvek na krajinu z šesti**, takže při losování vyjde živé
+zhruba **1× za pouť** — přesně to se stalo. **Mechanika je opravená, poměr v datech ne.**
+→ **ÚKOL 3 pro Cowork:** momenty pro 22 KRAJIN (jako pro domovy) — a v nich živé tam, kde
+místo život má (ovce, koně, havran, koliha, jespák, kajka, lundi na bjargu, silungur/bleikja
+v tůni, velryba jen ve fjordu). Kritéria stejná: moment je to, ČÍM se runa ukáže, ne příběh;
+tvor spíš zůstává, než aby odešel jako pointa; místo musí zůstat vidět.
+Korpus `~/runar-eval/pout8c.jsonl`; texty všech tří poutí → `docs/vegvisir-pouti-texty.md`
+(uloženy 2026-08-26 na ownerův dotaz „kde je text pouti?" — dosud bylo v repu jen měření).
