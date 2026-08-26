@@ -855,25 +855,23 @@ bez toho není slepé skórování slepé).
   a pohyblivá krajina, které mohou nit nést strukturálně — proto je to legitimní HYPOTÉZA,
   ne opakování chyby. Test: volitelná formulace vs. v2 (povinná), absolutní rubrika
   (`docs/vegvisir-rubrika-pouti.md`), osy paměť + přirozenost + jedna cesta.
-- [ ] **POZITIVNÍ UČENÍ („teach Rúnar what good looks like") — hypotéza s MĚŘENÝM PROTI-PRIOREM**
-  (Cowork handoff 2026-08-26). Jádro souhlasí s naším nálezem *„oprava odebírá vadu, nepřidává
-  pravidlo"* ([[oprava-promptu-odebira-vadu]]). ⚠️ **ALE navržený mechanismus — dobré příklady
-  do promptu — má v tomhle projektu změřený opačný výsledek: pojmenovaný příklad v promptu model
-  OPÍŠE (12 % → 56 % doslovných kopií, p=0,002, [[prompt-directive-makes-model-copy]]).** To je
-  přesně jejich otevřená otázka č. 5 („jak zabránit kopírování metafor") — nesmí se odbýt
-  předpokladem, je to ta věc, která se má měřit první.
-  **Co je nové oproti tehdejšku (proč je to legitimní hypotéza, ne recidiva):** tehdy šlo
-  o direktivu „použij tenhle text"; few-shot rámovaný jako „takhle vypadá dobrý Rúnar, materiál
-  nepřebírej" je jiný tvar a NEBYL měřen.
-  **Návrh testu (levný, rozhodne to):** A = produkční prompt · B = +blok „Examples of Good
-  Seeing" · C = +příklady +negativní pravidla. Měřit ZÁROVEŇ dvě věci: (1) kvalitu absolutní
-  rubrikou (`docs/vegvisir-rubrika-pouti.md`) a (2) **míru přebírání** — kolik obrazů/vazeb
-  z příkladů se objeví ve výstupu (n-gram překryv + slepý soudce „poznáš, ze kterého příkladu
-  tohle vyrostlo?"). Bez osy (2) je test bezcenný: kvalita může stoupnout právě tím kopírováním.
-  **Odpovědi na jejich otázky, které máme z dat:** (3) ANO samostatný blok mimo mechaniku —
-  mechanika je testovatelná a tvrdá, řemeslo ne; (5) viz výš; (7) měřit rubrikou + copy-rate,
-  jinak nerozliší zlepšení od imitace; (6) kandidát na příklad smí být jen výstup, který prošel
-  absolutním souzením, ne ten, co se nám líbí.
+- [ ] **POZITIVNÍ UČENÍ — TEST P1 (design po proklepnutí Coworkem, 2026-08-26)** — hypotéza:
+  kurátorovaný few-shot korpus zvedne kvalitu, ANIŽ zvedne kopírování. Handoff ověřen proti
+  repu (CODE-tune): DEF_CHAR ř. 31 „Draw the picture and stop" ✓ · ořez promptu hotový
+  (DECISIONS 154→178) ✓ · 2.os. few-shot v promptu ✓ · self-reference 24/25 (DECISIONS 2219) ✓.
+  **Design:** buňky A = současný prompt · B = +korpus s příkladem TÉŽE runy · C = +korpus bez ní
+  (počet příkladů konstantní). Osy: KVALITA (absolutně: obraz z věcí · definiční věta · otázka
+  s volbou · přirozenost) · REPRODUKCE (4-gram překryv s korpusem + konvergence uvnitř buňky
+  + slepý soudce „vyrostlo to z příkladu?").
+  ⭐ **Buňka A = nulová kontrola metriky kopírování zdarma** (A příklady neviděla — vysoký
+  „překryv" u A znamená, že metrika měří téma, ne kopírování; §27).
+  **Rámování příkladů = skrytá páka, drží se FIXNÍ** (rámovat jako zdroj, ne direktivu —
+  [[prompt-directive-makes-model-copy]]: samo rámování hýbe 12 %→56 %).
+  **Seed:** začíná se 2–3 owner-potvrzenými příklady (kurátorské kritérium splněno); produkční
+  single/spread rozšíření kurátoruje OWNER („tohle je přesně Rúnar"), ne soudci — CODE jen
+  vytáhne kandidáty. Korpus bydlí v `memory/co-dela-cteni-silnym.md`, výsledek → DECISIONS (§20).
+  **Rozhodnutí:** kvalita↑ v B i C ∧ copy≈A ∧ bez konvergence → teprve pak architektura.
+  Kvalita↑ jen v B (same-rune) = model si bere věty, ne způsob → NEÚSPĚCH.
 - [ ] **ÚKOL 3 pro Cowork: MOMENTY pro 22 krajin** (2026-08-26, owner: „je v přírodě tolik
   živého" — pouti mají nerostné vstupy, protože momenty existují jen pro 24 domovů). Formát
   a kritéria jako u domovů; **živé tam, kde místo život má** (ovce/koně na móa a v dalu,
