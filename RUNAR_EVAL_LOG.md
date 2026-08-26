@@ -1323,3 +1323,42 @@ moment (24 míst) · carry v2 · vstupní věc · stav · semínko návratu. Jed
 zůstává ČAS (9 nocí, hypotéza do živých testerů).
 **Připraveno k dlouhému běhu** (6–8 ramen, rubrika `docs/vegvisir-rubrika-pouti.md`) —
 čeká na rozhodnutí ownera o rozsahu (+ zda rovnou worst-case sekvence run).
+
+## 2026-08-26 — TEST 49 · PRVNÍ PLNÁ POUŤ (8 ramen) — a ⚠️ NÁSTROJ NA TÉHLE DÉLCE NEOBSTÁL
+Kompletní mechanika, žádná dramaturgie: domov Uruz (suť) · 8 run bez opakování · krajina
+vybíraná materiálem z 22-zásobníku bez opakování · carry v2 · **rameno 8 ZÁMĚRNĚ bez bloku
+návratu** (owner+GPT: R8 se nezamyká). Trasa: suť → lávová pláň → jeskyně → bažina →
+hverasvæði → čelo ledovce → náplavy → štěrková pláň. Korpus `~/runar-eval/pout8.jsonl`
++ `~/runar-eval/pout8-rubrika.json`. <!-- doc-links:ok 2026-08-26 korpus mimo repo (~/runar-eval), checker home neresi -->
+| osa | verdikt |
+|---|---|
+| 1 Jedna cesta | pouť ⚠️ (kontrola selhala — viz níž) |
+| 2 Místo přítomné | **8/8** |
+| 3 Runa vede | **5/8** (hijacky: 6 Nauthiz runový · 7 Dagaz runový · 5 Wunjo obrazový) |
+| 4 Nit | silná ⚠️ (kontrola selhala) |
+| 5 Fyzická možnost | **NEMOŽNÉ** — rameno 4: „the rain that ran off the roof behind you" |
+| 6 Přirozenost | **mechanické** |
+| 7 Zastavení | rameno 2 (Isa) = **legitimní zastavení** · rameno 4 = **výpadek** |
+| 8 Stojí za to číst dál | ano — „ale těsně, a ne kvůli hloubce: nulové sázky" |
+**⚠️ KONTROLY SELHALY (povinné dle rubriky):** slepenec z 8 nesouvisejících čtení dostal
+na ose 1 **„mezi"** (měl „série") a na ose 4 **„silná"** (měl „slabá").
+→ **Osy 1 a 4 na osmi ramenech NEPLATÍ** — verdikt „pouť / silná nit" pro skutečnou pouť se
+nesmí citovat. Pravděpodobná příčina: čím víc textu, tím snáz soudce najde pojivo; nástroj
+kalibrovaný na 4 ramena při 8 ztrácí rozlišovací schopnost. **Oprava před dalším během:**
+kontrolu dělat vždy na TÉŽE délce a osy 1/4 přeformulovat tak, aby nešly splnit atmosférou
+(u osy 1 vyžádat jmenovitě dvojice ramen, které NELZE prohodit, a počítat je).
+**Co platí (osy bez selhané kontroly):**
+- ⭐ **Carry v2 se na osmi ramenech STAL FORMULÍ.** Soudce: „táž konstrukce ve VŠECH SEDMI
+  přechodech — slot ‚položka z minula, přetavená/popřená'", nejnápadněji rameno 6
+  („No sulphur stains this ground" — zmínka jen proto, aby se odškrtla). **Vítězství v2
+  ze čtyř ramen NEŠKÁLUJE na osm.**
+- **Rameno 4 = dvojitá vada:** fyzicky nemožný déšť z jeskyně „za zády" (devět nocí chůze
+  daleko) + doslovně zopakovaná závěrečná formule z ramene 2 („going nowhere"). Soudce to
+  klasifikoval jako **výpadek**, ne zastavení — a odlišil od ramene 2, kde je zastavení
+  legitimní (Isa: „krok se nehýbe, ale nese to"). Osa 7 tedy funguje.
+- **3/8 hijacků** — Nauthiz a Dagaz runové (ledovcové drcení JE „tlak, co dal hranu"; Dagaz
+  = úsvit a scéna je doslova první světlo), Wunjo obrazový (vroucí sirné jámy přetlačí runu).
+  ⚠️ Dagaz-hijack vznikl přes VSTUPNÍ VĚC z krajiny, ne z poolu momentů — riziko není jen
+  v datech momentů, ale i ve dvojici runa × krajina.
+- **Osa 8: „ano, ale těsně — nulové sázky."** Spodní hranice kvality je zatím splněná
+  strukturou, ne obsahem; nejcennější poznámka pro produkt.
