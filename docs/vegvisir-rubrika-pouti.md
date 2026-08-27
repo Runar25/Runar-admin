@@ -55,7 +55,11 @@ o vlastnosti textu nesmí nikdy pocházet z párového srovnání.**
 2. **Umí metrika říct i to dobré?** — alespoň jedna kontrolní čtveřice, u které čekáme
    opačný verdikt. Doloženo: metrika přirozenosti byla ověřena tím, že čtveřici **bez**
    carry označila za přirozenou (TEST 45).
-3. **Predikované propady** — kdo dodává data, přiloží seznam kusů, o kterých si myslí, že
+3. **Nulová kontrola u každé osy, která hledá PŘEBÍRÁNÍ** — vzorek, který zdroj nikdy neviděl,
+   souzený touž otázkou. Doloženo TESTem P1 (2026-08-27): slepý soudce označil 4/6 čtení
+   z buňky, která příklady NEVIDĚLA, za imitaci — z toho jedno dokonce za „doslovné". Bez
+   nulové kontroly je „imitace" nerozlišitelná od toho, že dvě čtení téže runy mluví o tomtéž.
+4. **Predikované propady** — kdo dodává data, přiloží seznam kusů, o kterých si myslí, že
    propadnou. Když je test neoznačí, je rozbitý test. (Coworkova praxe od 2026-08-25;
    potvrzeno 4/5.)
 

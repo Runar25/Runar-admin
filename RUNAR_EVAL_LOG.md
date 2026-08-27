@@ -1469,3 +1469,36 @@ soudce MUSÍ chytit, jinak je slepý). Zamíchané soubory a mapa: `~/runar-eval
 Workflow skript k obnovení: `workflows/scripts/p1-soudy-wf_822d72b8-1f8.js`. <!-- doc-links:ok 2026-08-26 skript zije v session adresari, ne v repu -->
 **Nezměřeno tedy zůstává to podstatné:** jestli korpus zvedl KVALITU. Bez toho se o P1 nesmí
 tvrdit nic — ani úspěch, ani neúspěch.
+
+## 2026-08-27 — TEST P1 DOKONČEN · Pozitivní učení: **kvalita se nezvedla, a metrika imitace je NEPLATNÁ**
+Doběhly obě slepé dávky + dodatečná nulová kontrola. **Obě pozitivní kontroly držely:**
+známé dobré čtení (driftwood Tiwaz) dostalo plný počet ✓ · nastražená syntetická kopie byla
+chycena jako „doslovné" i s citací ✓ → soudci nejsou slepí a data se smějí číst.
+**KVALITA (n=6 na buňku, absolutně, zamíchané):**
+| buňka | obraz z věcí | definiční věta | otázka s volbou | přirozenost |
+|---|---|---|---|---|
+| A (bez korpusu) | 6/6 | 6/6 | **1/6** | 6/6 |
+| B (příklad TÉŽE runy) | 6/6 | 5/6 | **1/6** | 6/6 |
+| C (jen cizí příklady) | 6/6 | 6/6 | **1/6** | 6/6 |
+→ **Žádný efekt.** Buňky jsou k nerozeznání. Nejzajímavější je otázka s volbou: korpus ji
+ukazoval jako vzor DVAKRÁT ze tří příkladů a zůstala **1/6 i tam**. Ukázka chování se
+nepřenesla; přitom pozitivní kontrola tu osu splnila, takže soudci ji umí najít, když tam je.
+**DOSLOVNÉ KOPÍROVÁNÍ:** 0 čtyřgramových překryvů ve všech 18 čteních (metrika ověřená
+protipříkladem, nulová kontrola = buňka A). Prior self-reference 24/25 se **nepotvrdil** —
+pravděpodobně proto, že rámování bylo zdroj, ne direktiva. Ale viz níž: netvrdí se víc, než
+bylo změřeno.
+**⭐ METRIKA STRUKTURNÍ IMITACE NEOBSTÁLA (§27) — hlavní nález testu.**
+Slepý soudce označil B 4/6 a C 3/6 jako „strukturní". Vypadalo to jako past, kterou jsme čekali.
+**Nulová kontrola to zabila:** táž otázka, tytéž příklady, ale čtení z buňky **A, která korpus
+NIKDY neviděla** → **3× strukturní, 1× DOSLOVNÉ, 2× čisté.** Čtení, které příklady nemohlo
+vidět, dostalo verdikt „doslovné" (`Eihwaz-A-1`, soudce citoval „finds its line" → „holds its
+own line"). **Soudce tedy měří sdílený hlas a společné téma, ne přebírání** — číslo 7/12 z B/C
+neznamená nic a nesmí se citovat.
+→ **Do rubriky:** osa imitace VŽDY s nulovou kontrolou (buňka, která příklady neviděla).
+Bez ní je „strukturní imitace" nerozlišitelná od toho, že dvě čtení téže runy mluví o tomtéž.
+**VERDIKT P1:** hypotéza **nepotvrzena na kvalitě** (plochý výsledek na všech čtyřech osách,
+n=6/buňku) a **neměřitelná na imitaci** dosavadním nástrojem. Produkčního promptu se nic
+nedotklo. Korpusy: `~/runar-eval/p1-corpus.jsonl` · `p1-soudy.json` · `p1-null-repro.json`. <!-- doc-links:ok 2026-08-27 korpusy mimo repo (~/runar-eval), checker home neresi -->
+**Co by teprve mělo smysl zkusit** (ne teď): korpus ze **skutečných produkčních** single/spread
+čtení kurátovaných ownerem (dosavadní seed byl 3 příklady z Vegvísiru), větší n, a osa imitace
+přepsaná tak, aby prošla nulovou kontrolou.
