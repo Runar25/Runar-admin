@@ -1518,3 +1518,31 @@ riziko je, že „proč je to dobré" je zase jen **instrukční próza**, a př
 ([[oprava-promptu-odebira-vadu]]). Testovatelné je to jen tehdy, když pozorování zůstane
 **popisem toho příkladu**, ne pravidlem („je konkrétní, obě možnosti jsou reálné" ANO ·
 „piš takové otázky" NE) — a když se rozdíl měří proti buňce s příkladem BEZ pozorování.
+
+## 2026-08-27 — TEST P2 (počítáno, ne hádáno) · Odkud se bere otázka se dvěma možnostmi
+⚠️ **Napřed faktická oprava:** „Does the water bend around the stone…" **NENÍ výstup buňky A** —
+je to rameno 5 druhé pouti a zároveň jeden ze tří příkladů, které jsem vložil do korpusu P1.
+Jediná otázka, která v A prošla, je `Tiwaz-A-2` („Which of your own lines holds straight when
+no one is watching it?") a soudce u ní sám poznamenal, že je to **otevřený dotaz, ne dvojí
+volba**. Pitvat „jednu dobrou proti pěti špatným" by tedy stálo na n=1, a navíc na hraničním kusu.
+**Místo toho spočítáno na VŠEM, co máme** (42 čtení: 18 single P1 + 24 ramen tří poutí):
+- **12/42 čtení má vůbec otázku (29 %)** · single **3/18** · pouti **9/24**.
+- **Tvar dvou možností („…, or …?") má 4/12 — a VŠECHNY ČTYŘI jsou z poutí, ani jedna ze single.**
+**Mechanismus (hypotéza s dokladem, ne teorie):** dvojí volba vzniká tam, kde **scéna sama
+obsahuje dvě věci v napětí** — a v poutích ji tam dodává blok místa se vstupní věcí:
+| kde | co ve scéně stálo proti sobě | otázka |
+|---|---|---|
+| pouť1-5 Wunjo | jedna jáma drží klid, ostatní vřou | Do you kneel at the quiet rim, or walk on toward the roar? |
+| pouť2-5 Eihwaz | voda × kámen | Does the water bend around the stone, or does it wait for the stone to give? |
+| pouť3-1 Kenaz | stádo se tlačí dovnitř × jedna ovce se zdržela | Do you turn in with the flock, or stay in the last grey a while? |
+| pouť3-6 Algiz | ostřice mezi tůní a otevřeným vzduchem | Does the sedge lean toward the pool it grows from, or toward the open air? |
+Single čtení dostávají JEDEN sezónní obraz — jeden kámen, jeden jeřáb — **a nemají na čem
+rozdvojit**, takže sahají po otevřeném „What…?". To vysvětluje 1/6 v P1 líp než cokoli o few-shotu.
+⭐ **Důsledek pro směr:** otázka se nemá vynucovat direktivou („pokládej otázky se dvěma
+možnostmi") — má se dodat **scéna, která volbu obsahuje**. To je oprava STRUKTURY, ne přidané
+pravidlo ([[oprava-promptu-odebira-vadu]]).
+**Falzifikace (§25, neprovedeno):** obrácená páka — vzít rameno pouti, které dvojici mělo,
+a **ubrat** druhý prvek scény; dvojí volba musí zmizet. A naopak: dát single čtení scénu se
+dvěma prvky bez jakékoli zmínky o otázce; když se fork neobjeví, hypotéza padá.
+**Hranice nálezu:** počítá se TVAR („…, or …?"), ne kvalita otázky — ta se pořád měří slepě
+(osa 9). Nesledovalo se, jestli dvojice ve scéně vznikla z krajiny, z momentu, nebo z runy.
