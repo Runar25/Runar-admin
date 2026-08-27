@@ -1502,3 +1502,19 @@ nedotklo. Korpusy: `~/runar-eval/p1-corpus.jsonl` · `p1-soudy.json` · `p1-null
 **Co by teprve mělo smysl zkusit** (ne teď): korpus ze **skutečných produkčních** single/spread
 čtení kurátovaných ownerem (dosavadní seed byl 3 příklady z Vegvísiru), větší n, a osa imitace
 přepsaná tak, aby prošla nulovou kontrolou.
+**Dodatek k P1 — vada NÁVRHU testu (CODE-tune, sebekritika 2026-08-27):** tři ze čtyř os kvality
+byly v **A stropu** (obraz 6/6, definiční věta 6/6, přirozenost 6/6) ještě než korpus vstoupil.
+Na těch osách se **nemohlo ukázat zlepšení, ani kdyby nastalo** — nebyl kam. Reálně tedy P1
+měřil JEDINOU osu s prostorem: otázku s volbou. **„A=B=C na čtyřech osách" je tedy slabší
+tvrzení, než vypadá**: je to „žádný efekt na jedné ose při n=6", ne „žádný efekt na kvalitě".
+Příští běh musí mít osy s hlavou (stupnice, ne ano/ne) nebo těžší vzorek.
+⭐ **Nejcennější číslo z P1 je ale baseline, ne srovnání:** **otázka s volbou vychází 1/6 i bez
+korpusu** — tedy současná produkce dává formu, kterou owner označil za nositele kvality
+(„konkrétní situace · dvě skutečné možnosti · žádná označená jako správná"), zhruba v šestině
+single čtení. To je měřitelný cíl sám o sobě, nezávislý na hypotéze pozitivního učení.
+**K návrhu P2 (GPT: každý příklad + pozorování, PROČ ho owner vybral) — kritika před stavbou:**
+riziko je, že „proč je to dobré" je zase jen **instrukční próza**, a přesně tu odstranil ořez
+(DECISIONS 154→178); přidaný požadavek se navíc měřeně projevuje jako formule
+([[oprava-promptu-odebira-vadu]]). Testovatelné je to jen tehdy, když pozorování zůstane
+**popisem toho příkladu**, ne pravidlem („je konkrétní, obě možnosti jsou reálné" ANO ·
+„piš takové otázky" NE) — a když se rozdíl měří proti buňce s příkladem BEZ pozorování.
