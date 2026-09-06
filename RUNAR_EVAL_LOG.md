@@ -1753,3 +1753,37 @@ prostou větou. ⚠️ (b) je riskantnější: přidává další příklad ke k
 jednodušší formu." → **Vada není jen „končí obrazem", ale „vysvětluje obraz TÝMŽ obrazem".**
 Pro člověka, který obraz nepochopil, je menší metafora k ničemu. Tohle osa „končí obrazem"
 nezachytí — je potřeba osa „vysvětlil to bez té metafory, nebo jen zmenšil?".
+
+## 2026-09-06 — TEST ASK2 · Žádná varianta nepomohla — a vada je jinde, než jsme mířili
+Tři cely na týchž 10 produkčních párech: **P** = replika produkce (moje podmínka, strop 140 =
+skutečný `askCap`) · **G** = znění dle GPT („nenahrazuj obraz jiným obrazem" + pojmenuj dvě
+možnosti) · **GL** = G + odebraná `DEF_CHAR.philosophy` („Draw the picture and stop there")
++ strop 300. Nová osa (owner): **„vysvětlil, nebo jen zmenšil metaforu?"**
+Korpusy `~/runar-eval/ask2-test.jsonl` · `ask2-soud.json`. <!-- doc-links:ok 2026-09-06 korpusy mimo repo (~/runar-eval), checker home neresi -->
+| cela | končí obrazem | překlad | **jiná/menší METAFORA** | rada |
+|---|---|---|---|---|
+| P | 7/10 | 3/10 | **7/10** | 0/10 |
+| G | 6/10 | 3/10 | **7/10** | 0/10 |
+| GL | 6/10 | 2/10 | **8/10** | 1/10 |
+⭐ **Nevyhrála žádná. Rozdíly jsou v šumu.** Ani přeformulování, ani odebrání `philosophy`,
+ani vyšší strop s vadou nehnuly. **Ownerova osa ukazuje, že vada je plošná: 7–8/10 ve VŠECH
+celách** — odpověď vysvětluje obraz dalším nebo menším obrazem bez ohledu na to, co stojí
+v `RP_ASK`. **Páka tedy v pravidlech Ask NENÍ.**
+⚠️ **MOJE CHYBA v návrhu GL:** zvedl jsem `max_tokens` na 300, ale v promptu zůstalo
+**„Keep it SHORT — no more than about 40 words"**. Délková páka se tedy VŮBEC nepustila;
+GL netestovala délku, jen odebrání `philosophy`. Ownerův argument (Ask je jen text, nikdy
+hlas, smí být delší) zůstává **neotestovaný**.
+⚠️ **A osa „končí obrazem" je při n=4 nepoužitelná:** táž konfigurace (moje podmínka, strop 140)
+dala v harnessu **1/4** a v živém provozu **4/4**. Dokud se to nezvětší nebo nezopakuje, žádné
+tvrzení o téhle ose neplatí — a to zpětně oslabuje i čísla z TESTu ASK1.
+**Co zbývá jako kandidát na páku** (seřazeno podle mé důvěry):
+1. **Systémový prompt, ne Ask pravidla** — `THE IMAGE` („one image per reading and carries it
+   through") + **tři ukázkové věty, které všechny končí obrazem**. Máme změřené, že pojmenovaný
+   příklad se opisuje ([[prompt-directive-makes-model-copy]]); tady jsou tři a všechny učí totéž.
+2. **Skutečné uvolnění délky** — vyměnit „about 40 words" za vyšší číslo. Nezkoušeno.
+3. **⭐ Ownerův návrh: pustit do Ask promptu kontext čtení** (Area of Life · intention · „this
+   reading is for"). Dnes tam **neputuje vůbec** — `buildAskPrompt(reading, question, runes,
+   lang, corrections)` kontext nemá. Bez něj nemá Rúnar do ČEHO překládat: „semínko proti železu"
+   dostane smysl, teprve když ví, že čtení je *pro pochopení minulosti* nebo *pro rozhodnutí*.
+   KUKY 2026-09-06: *„to je taky uživatelova otázka, na kterou by chtěl znát odpověď, a pokud ji
+   nenajde v obraze, měl by ji dostat v ASK."*
