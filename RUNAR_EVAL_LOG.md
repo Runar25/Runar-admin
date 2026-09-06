@@ -1608,3 +1608,25 @@ když spadne kontrola, zahazuje se dávka, ne kontrola). Coworkova predikce zůs
 nízkém effortu kolísá přes hranici částečně/předurčený. Korpus `~/runar-eval/ukol3-screen.json`. <!-- doc-links:ok 2026-09-06 korpus mimo repo (~/runar-eval), checker home neresi -->
 **Jazyk (CODE):** slovník zná halarófa · vindhviða · fífa · þúfa · dragsúgur · skorpa; heslo
 nemají lækjarsytra · hitatitringur · völur · flóðfar (produktivní nebo méně běžná, k potvrzení).
+
+## 2026-09-06 — ÚKOL 3 screen podruhé (medián ze 3) · ⭐ KOTVA NENÍ STABILNÍ — a přesto nález
+Zopakováno s mediánem ze tří soudců a o větu přísnějším zadáním („když tě napadne jedno čtení
+okamžitě a ostatní si musíš vymýšlet, je to předurčený").
+**Pozitivní kontrola spadla ZNOVU, a jednohlasně:** Berkana „brum springur út" → **3× „částečně"**.
+Není to tedy kolísání jednoho soudce; **nástroj se posunul jako celek** (dvě dřívější měření
+říkala „předurčený", teď 3/3 „částečně"). Příčina neznámá a nezjistitelná zpětně.
+→ **Poučení: JEDNA kotva nestačí.** Kontrola, která sama může přeskočit, nerozliší posun
+nástroje od posunu dat. Napříště **množina 2–3 známých kotev** (jedna zaručeně předurčená,
+jedna zaručeně otevřená) — když se pohnou obě stejným směrem, je to nástroj; když jedna, je to ona.
+**⭐ ALE nález z toho PLYNE, a to asymetricky:** nástroj je teď prokazatelně **mírnější** —
+a přesto dva momenty označil za **předurčené**. Co projde i mírným sítem, je zatížené doopravdy:
+- **19 Melur „fótspor hverfa jafnóðum í vindinum"** (2/3 předurčený) — soudce: *„hotové poselství
+  o pomíjivosti; alternativy nejsou jiná čtení, jen emocionální zabarvení téže věty."*
+- **20 Hverasvæði „jörðin er heit undir þunnri skorpu"** (2/3 předurčený) — vestavěný spád
+  k „nedůvěřuj pevnosti, pod povrchem je žár".
+→ **Coworkova predikce „0 předurčených" je vyvrácena** v tom směru, kde měření platí.
+Opačný směr (že zbylých 10 předurčených NENÍ) tvrdit nelze — na to je nástroj moc měkký.
+**Nejlepší kusy vzorku** (medián „otevřený", model pro další psaní): **22 Jökulrönd „brestur
+heyrist djúpt í jöklinum"** — *„zvuk oznamuje, že se něco děje, a neříká co"* — a **21 Mýri
+„fótur sekkur og vatn vellur upp í sporið"**.
+Korpus `~/runar-eval/ukol3-screen-median.json`. <!-- doc-links:ok 2026-09-06 korpus mimo repo (~/runar-eval), checker home neresi -->

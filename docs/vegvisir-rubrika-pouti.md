@@ -59,7 +59,13 @@ o vlastnosti textu nesmí nikdy pocházet z párového srovnání.**
    souzený touž otázkou. Doloženo TESTem P1 (2026-08-27): slepý soudce označil 4/6 čtení
    z buňky, která příklady NEVIDĚLA, za imitaci — z toho jedno dokonce za „doslovné". Bez
    nulové kontroly je „imitace" nerozlišitelná od toho, že dvě čtení téže runy mluví o tomtéž.
-4. **Predikované propady** — kdo dodává data, přiloží seznam kusů, o kterých si myslí, že
+4. **Kotev musí být VÍC NEŽ JEDNA** — aspoň dvě známé (jedna zaručeně předurčená, jedna
+   zaručeně otevřená). Doloženo 2026-09-06: jediná kotva (Berkana „brum springur út") přeskočila
+   z „předurčený" na 3× „částečně" a nešlo rozlišit posun nástroje od posunu dat. Když se pohnou
+   obě kotvy stejným směrem, je to nástroj; když jen jedna, je to ta položka.
+   ⚠️ Když je nástroj prokazatelně MĚKČÍ, platí jen asymetrický závěr: co projde i tak, je
+   zatížené doopravdy; „ostatní jsou v pořádku" se tvrdit NESMÍ.
+5. **Predikované propady** — kdo dodává data, přiloží seznam kusů, o kterých si myslí, že
    propadnou. Když je test neoznačí, je rozbitý test. (Coworkova praxe od 2026-08-25;
    potvrzeno 4/5.)
 
