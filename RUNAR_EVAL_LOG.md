@@ -1936,3 +1936,38 @@ like any other"* · *„when the work you do changes hands and rooms"*.
 Navíc mizí **islandská krajina**, na které stojí Rúnarova identita — desk, lamp, door nejsou
 Agndofa. Rozdíl je v tom, že runa se neměné, kdežto otázka ano; B tedy monotónnost přesouvá
 tam, kde se aspoň mění s uživatelem. **Rozhodnutí patří ownerovi, neratifikováno.**
+
+## 2026-09-06 — TEST STŘED · čtyři cely na týchž runách a týchž seedech (A/B/C/D)
+**A** dnešek (obraz runy = scéna) · **B** obraz pryč, scéna z otázky · **C** STŘEDNÍ: obraz runy
+jako MATERIÁL, scénu staví otázka · **D** otázka hlavní, runa vstupuje jen jako svůj VÝZNAM.
+4 runy × 4 cely, týž seed. Korpus `~/runar-eval/stred.jsonl` + `otazka-prvni.jsonl`. <!-- doc-links:ok 2026-09-06 korpusy mimo repo (~/runar-eval), checker home neresi -->
+| cela | slov/větu | průměr slov | kancelářské slovo | islandská krajina |
+|---|---|---|---|---|
+| A | 15,9 | 55 | 1/4 | plná |
+| B | 16,1 | 56 | **4/4** | slabá |
+| **C** | **17,0** | **59** | **1/4** | **plná** |
+| D | 17,1 | 59 | 2/4 | slabší |
+⭐ **OPONENTURA PROTI MNĚ SAMOTNÉMU — „zeštíhlení odebráním vstupu" NEFUNGUJE.** Navrhl jsem to
+před hodinou; měření to vyvrací: po odebrání obrazu délka věty **STOUPLA** (15,9 → 17,0/17,1)
+a počet slov taky (55 → 59). **Rozpočet slov je v promptu pevný, takže odebraný vstup se
+nevypustí — model tu díru vyplní něčím jiným a sáhne si až k hornímu okraji rozpočtu.**
+→ Chceme-li tenčí čtení, musí se hýbat ROZPOČTEM (`LENGTH_BUDGETS`), ne vstupy. Odebírání
+vstupů mění, ČÍM je čtení naplněné, ne KOLIK toho nese.
+⭐ **C (materiál) drží obojí — krajinu i otázku.** Laguz-C: *„a single thread of water at the edge
+of the field… Laguz is how that trickle knows the low ground before the eye does, and **finds the
+door no one built**. The work you are after runs downhill already."* Islandská látka zůstala,
+scéna je o práci. **Ale C je zároveň NEJDELŠÍ a nejhustší (59 slov, 17,0/větu)** — nese materiál
+I otázku, takže je nejvíc přeplácané. Owner chce tenčí; C je tlustší. To se musí vyřešit
+rozpočtem, ne cellou.
+⭐ **OPONENTURA K „runa vstoupí jen jako význam, bez obrazu" (D): u části run to NEJDE.**
+Laguz-D si vodu přinesl stejně (*„the faint tug at the surface… the quiet pull under the still
+water"*) — protože Laguz **znamená vodu**. Totéž hrozí u Isa, Kenaz, Hagalaz, Berkana. Naproti
+tomu Tiwaz-D neměl ani jedno krajinné slovo. → **D rozděluje futhark na runy, které svůj obraz
+odložit umí, a na ty, jejichž význam JE fyzická věc.** Jednotné pravidlo pro všech 25 run tedy
+tímhle směrem nevznikne; buď to bude per-runa, nebo se D nedá použít.
+⭐ **OPONENTURA K ALTERNACI POŘADÍ** (owner: „co je první může být poslední"): páka na pestrost
+to nejspíš je (má precedent v `LENGTH_BUDGETS`, měřeno). ⚠️ Ale máme i měřený protipříklad —
+když se v Ask odebrala vynucená závěrečná věta, **stoupla RADA** 1/4 → 2/4. Struktura něco
+DRŽELA. Alternace se proto nesmí testovat otázkou „je to pestřejší?", ale **„co to staré pořadí
+drželo, a drží to i po přehození?"** — jinak se ztráta objeví jinde a nikdo ji nespojí s touhle
+změnou.
