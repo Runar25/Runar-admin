@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
- "zapsano": "2026-08-23",
- "prompt_version": "v4.12-mynd",
+ "zapsano": "2026-09-06",
+ "prompt_version": "v4.14-mynd",
  "pravidla": [
   {
    "hash": "54d29df4d80b",
@@ -298,10 +298,10 @@
    "zacatek": "If the question is not about this reading (small talk, facts, unrelate"
   },
   {
-   "hash": "eced3f67242b",
+   "hash": "3e25cb500b25",
    "lang": "en",
    "zdroj": "ask",
-   "zacatek": "End with one quiet line that returns them to the reading — not a new q"
+   "zacatek": "If the seeker says they do not understand, or asks for it plainly, or "
   },
   {
    "hash": "3bc3221e3b21",
@@ -832,10 +832,10 @@
    "zacatek": "Ef spurningin snýst ekki um þennan lestur (spjall, staðreyndir, ótengd"
   },
   {
-   "hash": "44375373e2e1",
+   "hash": "a44f27b4ed4f",
    "lang": "is",
    "zdroj": "ask",
-   "zacatek": "Endaðu á einni hljóðlátri línu sem færir leitandann aftur að lestrinum"
+   "zacatek": "Ef leitandinn segist ekki skilja, biður um það á mannamáli, eða biður "
   },
   {
    "hash": "4dacec5f8599",

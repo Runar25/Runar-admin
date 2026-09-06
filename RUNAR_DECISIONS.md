@@ -4801,4 +4801,10 @@ Affected doc(s): RUNAR_BACKLOG.md (graf jako úkol pro Cowork + otevřené otáz
 - **Kolaterál (přiznaný):** u běžných otázek klesl obrazový závěr 5/6 → 3/6 — podmínka není
   tak úzká, jak byla zamýšlená. Ponecháno; revert = jeden commit.
 - **Affected doc(s):** RUNAR_EVAL_LOG.md (měření). Prompt sám vlastní `runar-character.js`.
+- **Napětí s existujícím pravidlem (prověřeno při registraci ㉜):** první řádka `RP_ASK.rules`
+  říká „Speak as Rúnar — quiet, reflective, **in image and symbol**" a nová podmínka proti ní
+  jde. Ponecháno vědomě: podmínka je ÚZKÁ výjimka, stojí až za obecnou řádkou a měření A/B/C
+  proběhlo přesně v téhle konfiguraci (obě řádky přítomné) — takže konflikt je změřený,
+  ne přehlédnutý. `_noColdRead` ani `_describeRule` v rozporu nejsou (podmínka popisuje,
+  nepředepisuje). Délkový limit 40 slov se nemění.
 - **Reversibility:** easy (git revert jednoho commitu)
