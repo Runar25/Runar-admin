@@ -1818,3 +1818,35 @@ NENÍ v textu Ask pravidel. Zbývá system prompt (`THE IMAGE` + **tři ukázky,
 obrazem**) — jediné neotestované místo, a zároveň to, o kterém máme změřeno, že se ukázky opisují.
 **Metodická hranice fixture:** 10 párů a binární osy nerozliší rozdíl menší než ~3. Další kolo
 buď na větším vzorku, nebo s jinou pákou — opakovat drobné úpravy znění je při tomhle n zbytečné.
+
+## 2026-09-06 — Délka single FINANČNĚ + Ask žebřík 60/90/120 (KUKY)
+### A) Kolik stojí „vždy 4 věty / ~50 slov" u single
+⚠️ **Napřed nález, který mění zadání: délka single dnes NENÍ pevná.** Prompt losuje mezi dvěma
+zněními v `runar-utils.js:379-380` — „3 short sentences, 38 to 45 words" a **„4 short sentences,
+50 to 58 words"**. Rozložení na 60 losech: **35 : 25**, tedy **42 % čtení už dnes tu delší
+variantu dostane.** „Přejít na 4 věty" tedy neznamená prodloužit, ale **přestat losovat**.
+**Změřeno (n=6 na variantu, tytéž runy, týž seed, jen vyměněná délková věta):**
+| varianta | medián znaků |
+|---|---|
+| krátká (3 věty) | **253** |
+| dlouhá (4 věty) | **314** |
+| dnešní mix (58/42) | **278** — sedí na produkční medián 272 v `RUNAR_PRICING.md` |
+**Cena za jedno čtení** (sazby z `RUNAR_PRICING.md`: EL $0,10/1k IS · $0,05/1k EN · Opus 4.8):
+| | znaků | Claude | celkem IS | celkem EN |
+|---|---|---|---|---|
+| dnes (mix) | 278 | $0,0030 | **$0,0308** | **$0,0169** |
+| vždy 4 věty | 314 | $0,0036 | **$0,0350** | **$0,0193** |
+→ **+$0,0041 (IS) / +$0,0023 (EN) na čtení, tj. +13–14 %.** Na měsíčním stropu předplatného
+(nejhorší případ, vše single): **50 jednotek +$0,21 IS / +$0,12 EN · 75 jednotek +$0,31 / +$0,17.**
+**Zdražení nese z 90 % ElevenLabs, ne Claude** — Claude roste o $0,0006.
+### B) Ask v 60 / 90 / 120 slovech (režim „rozbal obraz")
+Ask **nemá hlas** (KUKY), takže jeho délka stojí **jen Claude output** — 120 slov ≈ 160 tok
+≈ **$0,004** za odpověď. Proti ceně čtení je to zanedbatelné; délka Ask není finanční otázka.
+Změřeno na třech párech: 60 → 54–71 slov · 90 → 78–99 · 120 → 105–122 (model cíl drží).
+**Co se s délkou mění (pozorování na textech, neměřeno soudci):** při 60 zbude na rozbalení
+jedna věta na díl a odpověď končí rychle; při 90 se objeví **úvodní věta typu „Let me lay it
+open three ways"** a tři díly dostanou vlastní odstavec; při 120 přibude i **rám runy** („Mannaz
+is what you meet there") a závěr, který volbu výslovně vrací člověku („That's the barrel's
+business, and yours"). ⚠️ U Isa-120 se ale objevilo **opakování** („not the ended one" · „stopped,
+not broken" · „quiet, not empty" — tentýž protiklad třikrát), stejný typ nadbytku jako u single
+na 120. Zdá se, že strop užitečné délky je kolem 90–100 slov, ale to je zatím DOJEM, ne měření.
