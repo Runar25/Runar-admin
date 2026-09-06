@@ -1575,3 +1575,36 @@ materiál, který sám o sobě může jít dvěma směry (pára, stéblo, voda),
 (kámen, zeď) — to je test P4, a je zase jen o VÝBĚRU materiálu, ne o instrukci.
 **Vedlejší pozorování:** vložení bloku místa do single čtení otázky nezvedlo (4/24 = 17 %,
 tedy pod celkovým průměrem 29 %). Blok místa sám o sobě není páka na otázku.
+
+## 2026-09-06 — TEST P4 · Pohyblivý vs statický materiál: směr sedí, ale NENÍ průkazný
+Následník P3. Táž čtyři místa i runy, single čtení, prompt opět bez zmínky o otázce či volbě.
+POHYB = materiál, který sám může jít dvěma směry (pára · pramínek vody · poslední světlo
+odcházející z pole · suchopýr ve větru) vs STATIK = materiál, který jen je (sirná krusta ·
+holý kámen v trávě · kamenná zeď ohrady · trsy nad vodou). 4 × 2 × 3 = 24 čtení.
+Korpus `~/runar-eval/fork-p4.jsonl`. <!-- doc-links:ok 2026-09-06 korpus mimo repo (~/runar-eval), checker home neresi -->
+| řez | otázka | **fork** |
+|---|---|---|
+| STATIK | 5/12 | **2/12** |
+| POHYB | 5/12 | **5/12** |
+**Jednostranný Fisher p = 0,19.** Směr sedí na hypotézu z P3 (pohyblivý materiál dává fork
+častěji), ale při n=12 na buňku to **není průkazné** — netvrdí se víc než „nevyvráceno".
+⚠️ Nesmí se z toho dělat páka, dokud to neprojde na větším n.
+**Pozorování (post-hoc, tedy slabé):** i oba forky ze STATIKu mají za podmět něco pohyblivého,
+ne ten statický materiál — „Do you feel where the ground carries you, or where it thins?" a
+„Does the warmth stay in that one stone, or spread to the next?" (teplo dodal stav soumraku,
+ne kámen). Sedí to na hypotézu, ale je to čtení po výsledku.
+**Otázka jako taková se nezměnila vůbec** (5/12 v obou řezech) — pohyblivost hýbe nanejvýš tím,
+JAKÁ otázka vznikne, ne jestli vůbec vznikne.
+
+## 2026-09-06 — ÚKOL 3 (momenty 22 krajin) uložen · SCREEN ZAHOZEN, spadla pozitivní kontrola
+Cowork dodal momenty pro 22 krajin → `docs/vegvisir-momenty-22-krajin.md` (Cowork do repa
+nepíše). Cowork predikoval 0 předurčených.
+Screen vzorku (12 momentů, z toho 8 vybráno jako rizikové) vyšel 2 otevřené / 10 částečně /
+0 předurčených — **ALE POZITIVNÍ KONTROLA SPADLA:** Berkana „brum springur út", kterou dva
+předchozí screeny shodně označily za předurčenou, dostala tentokrát „částečně".
+→ **Nástroj byl tenhle běh mírnější, dávka se tedy NEINTERPRETUJE** (vlastní pravidlo rubriky:
+když spadne kontrola, zahazuje se dávka, ne kontrola). Coworkova predikce zůstává neověřená.
+**K opakování:** víc soudců na položku (medián ze 3) nebo vyšší effort — jednorázový soudce na
+nízkém effortu kolísá přes hranici částečně/předurčený. Korpus `~/runar-eval/ukol3-screen.json`. <!-- doc-links:ok 2026-09-06 korpus mimo repo (~/runar-eval), checker home neresi -->
+**Jazyk (CODE):** slovník zná halarófa · vindhviða · fífa · þúfa · dragsúgur · skorpa; heslo
+nemají lækjarsytra · hitatitringur · völur · flóðfar (produktivní nebo méně běžná, k potvrzení).
