@@ -1726,3 +1726,30 @@ v produkci funguje.
 **Nález o radě:** `n2-NORNS` (uhlíky) — *„Reach too soon and the ash stings first"* prošlo
 imperativním testem (→ „nesahej tam brzo"), soudce nezávisle potvrdil totéž. Test na imperativ
 zavedený dnes tedy v ostrém provozu **chytá**, což je jeho první nezávislé potvrzení.
+**Dodatek — prompt-cesta OVĚŘENA, moje hypotéza o vadném měření PADLA, a příčina je jinde
+(2026-09-06):** seed-and-assert na produkční cestě (`buildSysPrompt(activeChar=null)` +
+`buildAskPrompt`, přesně jak volá `runar-reading.js:554-555`):
+- ✅ moje podmínka JE v odeslaném promptu · ✅ stará vynucená věta JE pryč · model tentýž
+  (proxy `MODELS = ["claude-opus-4-8", …]` = to, co jsem měřil v harnessu).
+→ **Produkce posílá týž prompt i model jako harness. Rozdíl 1/4 vs 4/4 tedy NENÍ vadné měření.**
+⭐ **Skutečná příčina je v SYSTEM promptu, který má harness i produkce stejný — a přebíjí
+mou úzkou podmínku:**
+1. `DEF_CHAR.philosophy`: **„Draw the picture and stop there — never hand the seeker
+   a conclusion."** To je přímý příkaz SKONČIT obrazem.
+2. Blok `THE IMAGE`: „Rúnar uses one image per reading and **carries it through**."
+3. ⚠️ Nejsilnější: v system promptu stojí **tři ukázkové věty a všechny tři končí obrazem**
+   („an image that ends on a question" · „an image that returns, no question" · „two still
+   images, no call"). To je přesně mechanismus, který máme změřený:
+   **pojmenovaný příklad v promptu se opisuje** (12 % → 56 %, [[prompt-directive-makes-model-copy]]).
+**Důsledek pro opravu:** úzká podmínka v `RP_ASK` bojuje proti trojici ukázek + dvěma
+invariantům v system promptu a prohrává. Zbývající rozdíl 1/4 vs 4/4 je nejspíš zbytkový
+šum n=4 na obou stranách (harness měl navíc `max_tokens` 400 vs produkční cap 140).
+**Co z toho plyne (neprovedeno, čeká na rozhodnutí ownera):** Ask potřebuje **vlastní
+výjimku na úrovni SYSTEM promptu**, ne jen v `RP_ASK` — buď (a) pro `mode:'ask'` neposílat
+`philosophy` „Draw the picture and stop there", nebo (b) doplnit do ukázek JEDNU, která končí
+prostou větou. ⚠️ (b) je riskantnější: přidává další příklad ke kopírování.
+**Ownerův vlastní nález na týchž textech je ostřejší než soudcův** (2026-09-06): „a seed is not
+… jsou stále metafory. Co se skrývá pod seed?" a u Isy: „stále popisuje stejný obraz, ale nedává
+jednodušší formu." → **Vada není jen „končí obrazem", ale „vysvětluje obraz TÝMŽ obrazem".**
+Pro člověka, který obraz nepochopil, je menší metafora k ničemu. Tohle osa „končí obrazem"
+nezachytí — je potřeba osa „vysvětlil to bez té metafory, nebo jen zmenšil?".
