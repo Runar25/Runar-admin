@@ -1995,3 +1995,38 @@ $0,0314 → **$0,0448 na čtení (+43 %)**. Na 50 jednotkách +$0,67 IS / +$0,33
 **To je skutečná cena za to, že se otázka dostane do každého čtení** — rozhodnutí ownera,
 neratifikováno. Levnější varianta: 5 vět jen tam, kde uživatel otázku NAPSAL (dnes ji ignoruje
 polovina právě těch čtení), a nechat 3–4 věty tam, kde žádná otázka není.
+
+## 2026-09-06 — Statická čtení z kolekce: KOLIK MĚLA SLOV a jak blízko jsme se vrátili
+Načteno z `runar_static_audio` (53 řádků, 28 EN + 25 IS s textem) — čtení z května, ke kterým
+jsme se chtěli vrátit.
+| | čtení | slov (medián) | vět | znaků (medián) |
+|---|---|---|---|---|
+| **statická (květen)** | 28 EN / 25 IS | **51 EN · 59 IS** (39–70 / 37–85) | **3** | **277 EN · 320 IS** |
+| dnešní produkce (mix rozpočtů) | — | ~47 | 3–4 | **272** |
+| 5 vět (dnes testováno) | — | 79 | 5 | **412** |
+⭐ **V DÉLCE jsme se vrátili přesně: 277 vs 272 znaků.** Rozdíl je ve TVARU — statická mají
+**3 věty po ~17 slovech**, dnešek 3–4 věty po ~16. Kratší věty, víc jich.
+⚠️ **A pět vět by nás odvedlo daleko ZA ně** — 412 znaků je o **49 % víc** než ta statická.
+Kdo je bere jako cíl, ten pět vět plošně nechce; ta „levnější varianta" (5 vět jen tam, kde
+uživatel napsal otázku) drží průměr blízko 277.
+⚠️ **Nepříjemný nález o vzorech samotných:** statická čtení by dnešním testem na radu
+NEPROŠLA. *„**You are being asked to endure**, not because the path is cruel"* (Eihwaz) ·
+*„**You are being asked to trust** what moves beneath the surface"* (Laguz) — obojí se
+smazáním slov převede na imperativ. Také otevírají *„You have drawn Eihwaz…"*, což dnešní
+prompt nedělá. **Vracet se k nim jako k celku by znamenalo vrátit i radu** — brát se z nich
+má hutnost a klid, ne stavba vět.
+
+## 2026-09-06 — „This reading is for" (intention): projeví se jen ČASEM, ne obrazem
+Owner: *„je to minulost, současnost a budoucnost, to znamená jen mluvit v jiném čase."*
+Ověřeno: táž runa, **týž seed**, táž otázka, **bez area** (owner: buď area, NEBO intention).
+Korpus `~/runar-eval/intention.jsonl`. <!-- doc-links:ok 2026-09-06 korpus mimo repo (~/runar-eval), checker home neresi -->
+**Ownerova domněnka je přesná — obraz se nemění vůbec, mění se jen čas, ke kterému mluví:**
+| intention | Eihwaz (jeřáb ve větru) | Perth (oblázek v řece) |
+|---|---|---|
+| Right now | *„The wind names one direction **now**, then another."* | *„It travels through shadow **now**… Where it stops is **not yet** the bed."* |
+| Decision ahead | *„Which pull do you feel more, the branches turning or the roots holding fast?"* | *„a thing **not yet set down**. Where it stops is **still** under the water."* |
+| Understanding the past | *„**What already tested you** left the wood harder where it strained. **Which storms taught** the trunk…"* | *„**What has already carried you here was moving long before** you named the wish."* |
+→ **Intention je nejlevnější a nejčistší z faktorů:** nemění obraz, nesoupeří o slova, jen
+posune sloveso. Délka beze změny (55–65 slov ve všech šesti). Ownerovo *„buď area, nebo
+intention, nikdy oboje"* tím dostává oporu — intention si na rozdíl od area nebere prostor
+z obrazu, takže o slova soupeří jen area.
