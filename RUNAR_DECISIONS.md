@@ -4788,3 +4788,17 @@ otevře místo shodné se sebou, dostane scénu, kde nemá co dělat (TEST 37: s
 dojít zpět) nebo MATERIÁLOVÝ (semínko — a to je jediná varianta, kterou máme změřenou,
 TESTy 31/33/36). Doslovný návrat = tvrdá podmínka na tvar grafu.
 Affected doc(s): RUNAR_BACKLOG.md (graf jako úkol pro Cowork + otevřené otázky) — tento commit.
+
+## 2026-09-06 — Ask: vynucený obrazový závěr odebrán, přidána podmínka pro žádost o jasnost
+- **Co se změnilo:** `RP_ASK.rules` (EN i IS) — věta „End with one quiet line that returns them
+  to the reading" **odebrána**; místo ní jediná podmínka: když uživatel řekne, že nerozumí, žádá
+  to na rovinu, nebo žádá „ne v obrazech", odpoví Rúnar prostými slovy a obraz nesmí stát místo
+  vysvětlení ani být poslední věc, kterou zanechá.
+- **Proč:** na 10 produkčních Ask párech skončily **všechny 4** výměny s výslovnou žádostí
+  o jasnost obrazem — u Thurisaz po uživatelově „Ekki í myndum", tedy proti výslovnému pokynu.
+  Zdroj vady byl ten vynucený závěr. Změřeno A/B/C na týchž párech: končí obrazem 4/4 → 1/4,
+  překlad 0/4 → 3/4, rada beze změny 1/4. Detail → `RUNAR_EVAL_LOG.md` 2026-09-06.
+- **Kolaterál (přiznaný):** u běžných otázek klesl obrazový závěr 5/6 → 3/6 — podmínka není
+  tak úzká, jak byla zamýšlená. Ponecháno; revert = jeden commit.
+- **Affected doc(s):** RUNAR_EVAL_LOG.md (měření). Prompt sám vlastní `runar-character.js`.
+- **Reversibility:** easy (git revert jednoho commitu)

@@ -1657,3 +1657,25 @@ měřitelná není (Coworkova výhrada platí) — ale **výslovná žádost o j
 zbytek nechat otevřený; obecné pravidlo pro celý Ask z tohohle vzorku nevyvozovat.
 **Hranice nálezu:** n=10 čtení / 4 relevantní výměny, jeden owner-tester, převážně EN.
 Netvrdí se nic o tom, jestli má obraz v Ask být povinný tam, kde uživatel jasnost NEŽÁDÁ.
+
+## 2026-09-06 — TEST ASK1 · Úzká oprava Ask ZMĚŘENA na 10 produkčních párech a NASAZENA
+Fixture = 10 skutečných produkčních párů (čtení + otázka z `follow_up`), tři varianty promptu:
+**A** = současný · **B** = ODEBRÁNA vynucená závěrečná věta („End with one quiet line that returns
+them to the reading") · **C** = B + jediná podmínka pro výslovnou žádost o prostý jazyk.
+Souzeno slepě, 30 odpovědí, tři osy. Korpusy `~/runar-eval/ask-test.jsonl` · `ask-soud.json`. <!-- doc-links:ok 2026-09-06 korpusy mimo repo (~/runar-eval), checker home neresi -->
+⭐ **A reprodukovalo produkční vadu přesně** (4/4 končí obrazem, 0/4 překládá) — harness je platný.
+| varianta | ŽÁDOST O JASNOST (n=4) | BĚŽNÉ OTÁZKY (n=6, kontrola) |
+|---|---|---|
+| A současný | končí obrazem **4/4** · překlad **0/4** · rada 1/4 | obrazem 5/6 · překlad 1/6 · rada 1/6 |
+| B odebrání | obrazem 1/4 · překlad 2/4 · **rada 2/4** | obrazem 5/6 · překlad 0/6 · rada 1/6 |
+| **C = nasazeno** | obrazem **1/4** · překlad **3/4** · rada **1/4** | obrazem 3/6 · překlad 2/6 · rada 1/6 |
+**Nasazeno C** (`scripts/_patch_tune.py`, EN i IS). Thurisaz — týž pár, kde uživatel napsal
+„Ekki í myndum": A končí „Þyrnigerðið stendur enn kyrrt", C končí „Það sem þú vilt fá kostar
+þig eitthvað fyrst, og þyrnarnir eru það verð" — vysvětlení, ne obraz.
+⚠️ **PŘIZNANÝ KOLATERÁL — oprava NENÍ tak úzká, jak zněla:** u běžných otázek klesl obrazový
+závěr **5/6 → 3/6**. Podmínka měla spouštět jen na žádost o jasnost, ale mění chování i jinde.
+Kdyby to vadilo, je to jeden revert.
+⭐ **Vedlejší nález (proti očekávání):** samotné odebrání závěrečné věty (B) **zvedlo RADU**
+1/4 → 2/4. Vynucený obrazový závěr tedy fungoval i jako **brzda proti radě** — když zmizel bez
+náhrady, model sklouzl k „nenes to sám". Teprve podmínka v C radu vrátila zpět na 1/4.
+Odebrání vady bez náhrady tedy může odkrýt jinou vadu, kterou ta první držela.
