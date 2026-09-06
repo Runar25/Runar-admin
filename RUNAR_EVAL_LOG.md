@@ -1971,3 +1971,27 @@ když se v Ask odebrala vynucená závěrečná věta, **stoupla RADA** 1/4 → 
 DRŽELA. Alternace se proto nesmí testovat otázkou „je to pestřejší?", ale **„co to staré pořadí
 drželo, a drží to i po přehození?"** — jinak se ztráta objeví jinde a nikdo ji nespojí s touhle
 změnou.
+
+## 2026-09-06 — ⭐ TEST 5 VĚT · Místo navíc pustí otázku dovnitř — 5/10 → 0/10 ignorovaných
+Ownerova hypotéza: *„zkusit mu dát 5 vět a třeba 70 slov… jako kdyby měla Area 1 větu a 10 slov
+navíc."* Baseline = cela Q z TESTu PROPIS (tytéž runy, **týž seed**, táž otázka, **bez štítků**),
+takže se generovala jen nová cela. Korpus `~/runar-eval/petvet.jsonl`. <!-- doc-links:ok 2026-09-06 korpus mimo repo (~/runar-eval), checker home neresi -->
+| rozpočet | čtení BEZ zmínky o práci | průměr zmínek | slov/větu | průměr slov |
+|---|---|---|---|---|
+| dnešek (3–4 věty, 38–58 slov) | **5/10** | 0,6 | 15,7 | 56 |
+| **5 vět, 65–75 slov** | **0/10** | **1,4** | **15,9** | 79 |
+⭐ **Jedna věta navíc pustila otázku dovnitř v KAŽDÉM čtení.** A hustota se přitom nezhoršila —
+15,7 → 15,9 slova na větu. **To je opak toho, co dělalo odebírání vstupů** (tam věty ztloustly
+na 17,0 a otázka se nezlepšila): **místo navíc otázku vpustí, odebrání vstupu ne.**
+⭐ **Překonalo to i štítky:** area+intention zvedly otázku z 5/10 na 8/10, pět vět na **10/10**
+— a to bez štítků. Rozpočet je tedy silnější páka než kontext.
+**Obraz runy přitom nezmizel** — jeřáb, tavná voda, lampa v okně jsou dál tam, jen se vedle nich
+vešla práce: Tiwaz Q *„A new door means naming what you will not set down"* (2 slova o práci)
+→ W *„A new post may call, and much in it will look right, yet the question underneath is what
+you will hold to once the work is yours."*
+⚠️ **Model cíl PŘESTŘELIL: 79 slov místo 65–75** (rozsah 66–90). Skutečně dodaná délka je ~79.
+⚠️ **CENA (EL = 90 %):** 412 znaků proti dnešním 278 → **EL IS $0,0278 → $0,0412**, celkem IS
+$0,0314 → **$0,0448 na čtení (+43 %)**. Na 50 jednotkách +$0,67 IS / +$0,33 EN měsíčně.
+**To je skutečná cena za to, že se otázka dostane do každého čtení** — rozhodnutí ownera,
+neratifikováno. Levnější varianta: 5 vět jen tam, kde uživatel otázku NAPSAL (dnes ji ignoruje
+polovina právě těch čtení), a nechat 3–4 věty tam, kde žádná otázka není.
