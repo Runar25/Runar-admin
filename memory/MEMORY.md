@@ -92,6 +92,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [a-guard-that-refuses-is-a-detector.md](a-guard-that-refuses-is-a-detector.md) — kontrola "prepis jen kdyz je vyskyt PRAVE JEDEN" je detektor duplikatu, ne jen pojistka
 - [break-your-own-work-before-reporting.md](break-your-own-work-before-reporting.md) — po hotovem kusu na nej ZAUTOC SAM a teprve pak hlas; necekej na vyzvu ownera
 - [attack-the-metric-not-just-the-result.md](attack-the-metric-not-just-the-result.md) — utoc na NASTROJ driv nez na vysledek: pulka vs pulka, co jeste odlisuje referenci, nulova transformace (CLAUDE.md §27)
+- [test-the-lever-that-binds.md](test-the-lever-that-binds.md) — ověř, že měníš tu vazbu, která výsledek opravdu drží (strop tokenů ≠ délková páka)
 - [measure-dont-eyeball.md](measure-dont-eyeball.md) — dojem z obrázku není nález; změř to, nebo řekni „nevím"
 - [sanity-check-measurements.md](sanity-check-measurements.md) — extrémní/čisté číslo (0/N, 100 %) = red flag; ověř měření protipříkladem, ne fragile bash-inline; přeměř, když tě opraví
 - [co-dela-cteni-silnym.md](co-dela-cteni-silnym.md) — ownerem POTVRZENO: definiční věta runy („Rúnarova knížečka") + otázka se dvěma skutečnými možnostmi
