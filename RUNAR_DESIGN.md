@@ -125,6 +125,37 @@ Kánon zrcadla už tady je. Tohle mu dává **jméno a mechanismus** — a jedno
 - ⭐ **Zákaz nároku není jen poctivost, je to ÚČINNOST.** Nárok projekci **zabíjí** — přeurčené
   čtení nenechá tazateli co dělat. Tarot to říká jako „zrcadlo duše, ne předpověď".
 
+### Citace a motta pro UI (schválená zásoba)
+
+**Vlastní tenhle soubor.** Jinde se NEOPISUJÍ (§20) — kdo je potřebuje pro web, appku nebo
+prostředí, bere je odsud. Vznikly v diskuzi owner × GPT × Cowork 2026-09-05/06; owner je
+označil za použitelné, **ne za nasazené** — nasazení je samostatné rozhodnutí.
+
+⚠️ **Střídat, nedávat pod sebe** (KUKY 2026-09-06: „můžeme je i střídat"). Většina z nich má
+TÉŽ figuru — *popření + „ve skutečnosti dělá tohle"*. Dvě takové na jedné obrazovce zní jako
+šablona; je to táž vada, která se u čtení měří jako „mechanické".
+
+**V produkci už běží** (`tree_closing_quote` v `runar-translations.js`):
+> „The runes do not predict your fate. They remind you of the path you already walk."
+
+**Zásoba k použití:**
+| citace | zdroj | kam se hodí |
+|---|---|---|
+| „The rune does not tell you what to do. It shows you what to see." | GPT 2026-09-05 | hero blok — nejblíž té produkční, proto NE na tutéž obrazovku |
+| „Rúnar does not walk the path for you. He helps you see where you stand." | GPT 2026-09-05 | stránka *o Rúnarovi* — mluví o něm, ne o runě |
+| „Guide, not oracle. Direction, not destination." | GPT 2026-09-05 | krátké motto pod jméno / do patičky |
+| „Rúnar drží světlo, ukazuje, kam se může člověk podívat, ale nevidí za něj." | **KUKY** | jediná s obrazem (světlo), ne jen tvrzení; EN chce péči, ne doslovný překlad |
+| „Runa je prostředek, který ti může pomoct najít odpověď v sobě." | **KUKY** 2026-09-05 | vysvětlující text „co je Rúnar", ne citát |
+
+❌ **Vyřazeno:** „Mirror, not judge" — zrcadlo nic nepřidává, jen odráží, kdežto runa podle
+téže hierarchie *otevírá úhel pohledu*. Poeticky sedí, doslovně kulhá (Cowork 2026-09-05).
+
+### Hierarchie — kdo v čtení co dělá (přijatý nástroj, ne motto)
+Uživatel položí otázku → **runa otevře úhel pohledu** → **Rúnar dá té runě hlas** → **význam
+najde člověk sám**. Odpověď patří tomu, kdo se ptal. KUKY 2026-09-05 to potvrdil jako
+**kontrolu**, kterou se dá projít konkrétní Ask odpověď krok po kroku a ověřit, že proběhly
+všechny čtyři — ne jako hezkou větu.
+
 ### Hlas a styl
 Klidný, hluboký, nepospíchající. Nikdy teatrální, nikdy sladký.
 Jako starý strom — pevně zakořeněný, ale větve se hýbají ve větru.

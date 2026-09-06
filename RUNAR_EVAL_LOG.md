@@ -1679,3 +1679,23 @@ Kdyby to vadilo, je to jeden revert.
 1/4 → 2/4. Vynucený obrazový závěr tedy fungoval i jako **brzda proti radě** — když zmizel bez
 náhrady, model sklouzl k „nenes to sám". Teprve podmínka v C radu vrátila zpět na 1/4.
 Odebrání vady bez náhrady tedy může odkrýt jinou vadu, kterou ta první držela.
+**Dodatek k TESTu ASK1 — KDE PŘESNĚ je hrana rady** (owner 2026-09-06: „jak je ta rada kritická?
+na jaké hraně se pohybuje?"). Rozebráno všech 7 odpovědí, které soudce označil za radu:
+- **Skutečná rada — vždycky se dá zkrátit na rozkaz.** „Fehu is plenty that only **stays sweet
+  when it is shared out**" → *rozděl to* · „once the **tending is shared out again**" → *rozdělte
+  péči* · „**look, and see** who is standing there now" → přímý imperativ · „Some of what happened
+  is **yours still to say aloud**" → *řekni to*.
+- ⭐ **Pracovní test (jednoduchý, použitelný):** *dá se ta věta smazáním slov převést na rozkaz?*
+  Ano → je to rada. Nejnebezpečnější je **trpný rod, který imperativ schová**: „stays sweet when
+  it is shared out" nemá podmět, a přesto říká „sdílej". Právě tahle forma projde nejsnáz.
+- **Naopak radou NENÍ:** „The wall between you and someone is losing its edges" — pojmenování
+  stavu, imperativ z toho nevyrobíš.
+⚠️ **Vada mé vlastní soudcovské osy:** soudce označil za radu i `Mannaz-C` — *„whether this is
+a moment to hold still, or a moment to say aloud the thing you have been keeping quiet"*. To je
+ale **otázka se dvěma skutečnými možnostmi, žádná označená jako správná** — přesně forma, kterou
+owner označil za nositele kvality. **Osa zaměňuje „jmenuje čin" za „doporučuje čin".** Čísla rady
+v TESTu ASK1 jsou tedy mírně NADHODNOCENÁ; příště osu rozdělit na *doporučuje jeden čin* (rada)
+vs *nabízí volbu mezi dvěma* (není rada).
+**Sedí to na ownerovo zadání:** „Rúnar balancuje na hraně, ale má to říct tak, aby člověka
+upozornil, že má hledat odpověď sám v sobě" = mechanismus z DODATKU 4 handoffu — **popiš stav
+nebo nerovnováhu, a otázku obrať dovnitř** („kde to cítíš", ne „co s tím udělej").

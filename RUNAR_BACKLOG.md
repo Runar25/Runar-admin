@@ -876,6 +876,14 @@ bez toho není slepé skórování slepé).
   Bez nich se o výsledku nesmí tvrdit nic.
   **Rozhodnutí:** kvalita↑ v B i C ∧ copy≈A ∧ bez konvergence → teprve pak architektura.
   Kvalita↑ jen v B (same-rune) = model si bere věty, ne způsob → NEÚSPĚCH.
+- [ ] **DUPLIKÁT (§20 + §10): věta „The runes do not predict your fate" je v kódu 4×** —
+  `v2/runar-translations.js:236` (`tree_closing_quote`, správný vlastník) · `v2/runar-app.js:747`
+  (natvrdo jako fallback) · `v2/runar-reader.html:159` a `:587` (natvrdo 2×). Změna znění by se
+  musela dělat na čtyřech místech a tři z nich grep na klíč nenajde. Oprava: HTML i app brát
+  z `t('tree_closing_quote')`. Nalezeno 2026-09-06 při zakládání zásoby citací.
+- [ ] **Citace pro UI — kde bydlí:** `RUNAR_DESIGN.md`, sekce „Citace a motta pro UI".
+  Použít až při úpravě vzhledu a prostředí (KUKY 2026-09-06). ⚠️ Střídat, nedávat pod sebe —
+  většina má tutéž figuru (popření + „ve skutečnosti dělá tohle").
 - [ ] **ÚKOL 3 pro Cowork: MOMENTY pro 22 krajin** (2026-08-26, owner: „je v přírodě tolik
   živého" — pouti mají nerostné vstupy, protože momenty existují jen pro 24 domovů). Formát
   a kritéria jako u domovů; **živé tam, kde místo život má** (ovce/koně na móa a v dalu,
