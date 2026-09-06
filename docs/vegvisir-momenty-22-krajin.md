@@ -16,7 +16,7 @@ platí jen asymetrický závěr — nástroj byl **mírnější** a přesto ozna
 heit undir þunnri skorpu"** → k přepsání. Coworkova predikce „0 předurčených" tím **vyvrácena**;
 o zbylých se netvrdí nic. Nejlepší kusy vzorku (medián „otevřený"): **22 Jökulrönd „brestur
 heyrist djúpt í jöklinum"** a **21 Mýri „fótur sekkur og vatn vellur upp í sporið"**.
-Detail → .
+Detail → `RUNAR_EVAL_LOG.md`.
 
 **Jazyk (CODE):** slovník zná halarófa · vindhviða · fífa · þúfa · dragsúgur · skorpa.
 Heslo nemají (produktivní složeniny / méně běžná slova, doporučeno ponechat, ať potvrdí Cowork):
