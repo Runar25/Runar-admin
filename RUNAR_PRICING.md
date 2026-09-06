@@ -56,6 +56,13 @@ ElevenLabs: Multilingual v2/v3 (IS) $0.10/1k chars / Flash (EN) $0.05/1k chars. 
   (`short_text` neprázdný, `deep_text` prázdný, bez `spread_data`): **medián 276 EN / 268 IS**,
   n = 122 / 33. Průměr je vyšší (386 / 318), ale táhne ho pár odlehlých čtení až 1812 znaků —
   medián je poctivější střed. Do tabulky jde **272**.
+  ⚠️ **272 je SMĚS dvou délkových rozpočtů, ne jedna délka** (zjištěno 2026-09-06): single
+  losuje mezi „3 věty / 38–45 slov" a „4 věty / 50–58 slov" (`runar-utils.js` `LENGTH_BUDGETS`,
+  páka na pestrost, měřeno 2026-08-20). Změřeno per varianta (n=6, týž seed): **krátká 253 ·
+  dlouhá 314 znaků**; mix 58/42 = 278, sedí na 272. **Cena „vždy 4 věty"** (= zrušit los):
+  EL IS $0,0278 → $0,0314, EN $0,0139 → $0,0157, tj. **+13 %**; na 50 jednotkách +$0,18 IS.
+  Detail a tabulka → `RUNAR_EVAL_LOG.md` 2026-09-06. Kdo mění délku, hýbe OBĚMA rozpočty,
+  jinak zruší pestrost — důvod losu je v komentáři u `LENGTH_BUDGETS`.
   Předchozí hodnota 358 byla z 2026-06-14, tedy před dalším zkracováním čtení.
 - **Sloupec „Claude" = PŘEPOČÍTÁN faktorem 5/3, ne odhadnut.** Opus 4.8 stojí 5/3 ceny
   Sonnetu 4-5 v obou směrech ($5/$3 = $25/$15 = 1,667) a sazby za cache jsou násobky základní

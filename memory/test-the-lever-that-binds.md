@@ -17,6 +17,10 @@ poslechl prompt, ne strop. Celá cela proběhla naprázdno a musel jsem ji opako
 hýbat** (grep na číslo, na slovo „words", „sentences", „short"). Když tam je, měň JI. Strop
 tokenů je pojistka proti useknutí, ne délková páka.
 
-**Táž třída chyby jinde:** kontrola běžící na proxy ploše (CLAUDE.md §19.3), nebo měření
-prompt-cesty, kterou produkce nepoužívá. Vždycky se ptej: **co ten výsledek reálně drží?**
-Souvisí: [[measure-dont-eyeball]] · [[sanity-check-measurements]].
+**Kde tohle UŽ bydlí, a tohle je jen důsledek:** `CLAUDE.md` **§19.3** — *„kontrola běží na TÉ
+PLOŠE, kde bug žije"* — je totéž pravidlo pro KONTROLY; tohle je jeho tvar pro PÁKY. A
+[[sanity-check-measurements]] říká totéž z druhé strany (metrika ve stropu nemůže ukázat nic,
+ať páka dělá cokoli). Neduplikuje se, jen se sem dopisuje ten třetí případ: páka, která
+se vůbec nedotkla vazby. Souvisí: [[measure-dont-eyeball]].
+⚠️ Vzniklo 2026-09-06 BEZ předchozí kontroly, co existuje — owner: *„když něco vytváříš,
+napřed zkontroluj, jestli to tam už není, a pak kde to má TAKY být."* Napraveno dodatečně.
