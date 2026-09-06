@@ -1546,3 +1546,32 @@ a **ubrat** druhý prvek scény; dvojí volba musí zmizet. A naopak: dát singl
 dvěma prvky bez jakékoli zmínky o otázce; když se fork neobjeví, hypotéza padá.
 **Hranice nálezu:** počítá se TVAR („…, or …?"), ne kvalita otázky — ta se pořád měří slepě
 (osa 9). Nesledovalo se, jestli dvojice ve scéně vznikla z krajiny, z momentu, nebo z runy.
+
+## 2026-09-06 — TEST P3 · Falzifikace „dvě věci v napětí" — ⭐ HYPOTÉZA PADLA (a ukázala lepší)
+Obrácená páka (§25) na hypotézu z TESTu P2. Tytéž čtyři scény, které fork vyrobily v poutích,
+pustil jsem je jako **single čtení** (bez pouti, bez carry, bez semínka) ve dvou verzích:
+**JEDEN** materiál vs **DVA** materiály v téže scéně. Prompt nezmínil otázku, volbu ani „or" —
+ověřeno grepem, jinak by se testovala direktiva, ne scéna. 4 scény × 2 řezy × 3 seedy = 24 čtení.
+Korpus `~/runar-eval/fork-test.jsonl`. <!-- doc-links:ok 2026-09-06 korpus mimo repo (~/runar-eval), checker home neresi -->
+| řez | otázka | **fork (dvě možnosti)** |
+|---|---|---|
+| JEDEN materiál | 2/12 | **2/12** |
+| DVA materiály | 2/12 | **1/12** |
+**Jednostranný Fisher p = 0,89 — a rozdíl jde OPAČNÝM směrem.** Hypotéza „fork vzniká, když
+scéna obsahuje dvě věci v napětí" je **vyvrácena**: dva materiály fork nevyrobily (1/12), jeden
+materiál ho vyrobil dvakrát. Přidávání druhého materiálu do scény tedy NENÍ páka na otázku.
+⭐ **Co ta data ukazují místo toho** (hypotéza, NEOVĚŘENO): fork vzniká z **jedné věci, která
+může jít dvěma způsoby**, ne ze dvou věcí vedle sebe. Oba forky z řezu JEDEN:
+- „Does the steam hold together in the wind, Anna, **or does it scatter and rise**?" (jedna pára, dvě chování)
+- „Does the blade lean into the water, **or hold its own line above it**?" (jedno stéblo, dva směry)
+**Přečteno zpětně sedí i na původní čtyři z poutí** — a moje čtení TESTu P2 bylo chybné:
+viděl jsem „dva prvky", protože se oba objevily ve VĚTĚ, ale generativní zdroj je vždycky
+**jeden podmět se dvěma možnými pohyby** (voda se ohne / počká · ovce jde dovnitř / zůstane
+venku · ostřice se nakloní k tůni / ke vzduchu · jáma vře / drží klid). Zápis P2 tím NEPLATÍ
+v části „dvě věci v napětí"; počty otázek v něm platí dál.
+**Hranice nálezu:** vyloučeno je „dva materiály ve scéně" jako příčina (n=24, p=0,89). NEtvrdí
+se, že scéna na otázku nemá vliv — jen že tahle páka to není. Neměřeno: jestli fork zvedne
+materiál, který sám o sobě může jít dvěma směry (pára, stéblo, voda), zatímco statický ne
+(kámen, zeď) — to je test P4, a je zase jen o VÝBĚRU materiálu, ne o instrukci.
+**Vedlejší pozorování:** vložení bloku místa do single čtení otázky nezvedlo (4/24 = 17 %,
+tedy pod celkovým průměrem 29 %). Blok místa sám o sobě není páka na otázku.
