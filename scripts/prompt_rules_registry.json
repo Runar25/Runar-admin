@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-06",
- "prompt_version": "v4.14-mynd",
+ "prompt_version": "v4.15-ask90",
  "pravidla": [
   {
    "hash": "54d29df4d80b",
@@ -274,7 +274,7 @@
    "zacatek": "They now ask ONE follow-up question about it:"
   },
   {
-   "hash": "5d746c4c8336",
+   "hash": "a715269cd03a",
    "lang": "en",
    "zdroj": "ask",
    "zacatek": "Answer ONLY within this reading. Speak as Rúnar — quiet, reflective, i"
@@ -808,7 +808,7 @@
    "zacatek": "Nú spyr leitandinn EINNAR spurningar um hann:"
   },
   {
-   "hash": "da4dd3cda944",
+   "hash": "0bcbf1c76289",
    "lang": "is",
    "zdroj": "ask",
    "zacatek": "Svaraðu EINGÖNGU innan þessa lesturs. Talaðu sem Rúnar — hljóðlátur, í"

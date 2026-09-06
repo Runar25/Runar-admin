@@ -566,7 +566,9 @@ async function askRunar() {
   // stejne nedotkne (prompt ho drzi na ~40 slov). Fix B (_trimToSentence) zaridi, ze se
   // nikdy nezobrazi useknuty fragment — IS FU u horni hranice delky prijde o posledni
   // vetu, coz je pri zamerne kratke odpovedi v poradku. Delku primarne drzi PROMPT.
-  var askCap = 140;
+  // 2026-09-06: 140 -> 320. Prompt povoluje ~90 slov (zmereno jako optimum, TEST DILY),
+  // a 140 tokenu by IS odpoved useklo uprostred — IS je ~1,5-2x hustsi na tokeny.
+  var askCap = 320;
   var res = await callProxy(sys, prompt, askCap, shouldUseCredit(), SPREAD_COSTS.single.credits, _askJournal, 'ask'); // FU: lang-aware cap
   if (res.error) {
     if (btn) { btn.disabled = false; btn.textContent = t('ask_btn'); }

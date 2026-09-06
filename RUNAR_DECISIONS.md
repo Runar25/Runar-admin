@@ -4808,3 +4808,22 @@ Affected doc(s): RUNAR_BACKLOG.md (graf jako úkol pro Cowork + otevřené otáz
   ne přehlédnutý. `_noColdRead` ani `_describeRule` v rozporu nejsou (podmínka popisuje,
   nepředepisuje). Délkový limit 40 slov se nemění.
 - **Reversibility:** easy (git revert jednoho commitu)
+
+## 2026-09-06 — Ask Rúnar: délka odpovědi 40 → 90 slov (nasazeno)
+- **Co se změnilo:** `RP_ASK.rules` (EN i IS) — „no more than about 40 words" → **„about 90
+  words. This answer is read, never spoken aloud, so it may take the room an explanation
+  needs."** Server `askCap` 140 → 320 tokenů (140 by IS odpověď na 90 slov useklo — IS je
+  ~1,5–2× hustší na tokeny). `RUNAR_PROMPT_VERSION` v4.14-mynd → **v4.15-ask90**, aby se
+  čtení před/po dala v DB odlišit.
+- **Proč:** změřeno na 8 runách × 3 délkách (TEST DÍLY): dekódovaných dílů obrazu
+  60 → **3,00** · 90 → **3,12** · 120 → **2,88** (délka počet dílů NEZVYŠUJE), opakování téže
+  myšlenky 60 → 5/8 · 90 → **4/8** · 120 → **8/8**. **90 vyhrává na obou osách zároveň.**
+  Owner k témuž došel nezávisle z osobního pohledu. Původních ~40 slov bylo odvozeno od hlasu
+  („read aloud"), jenže **Ask nemá hlas** (KUKY) — ten důvod pro Ask nikdy neplatil.
+- **Cena:** Ask nejde přes ElevenLabs, takže +50 slov ≈ **+$0,003 Claude output** na odpověď.
+  Cena čtení se nemění. `RUNAR_PRICING.md` se tím nemění (Ask v tabulce nákladů není).
+- ⚠️ **Co NENÍ nasazeno:** experimentální pravidlo „rozbal obraz do možných významů"
+  (režim U1 z TESTu ASK3). Odpovědi, které owner viděl a chválil, vznikly **délkou I tímto
+  pravidlem dohromady** — samotná délka je půlka. Zůstává jako otevřený návrh.
+- **Affected doc(s):** RUNAR_EVAL_LOG.md (měření, 2026-09-06). Prompt vlastní `runar-character.js`.
+- **Reversibility:** easy (jeden revert; `askCap` a verze jdou s ním)
