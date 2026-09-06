@@ -2030,3 +2030,37 @@ Korpus `~/runar-eval/intention.jsonl`. <!-- doc-links:ok 2026-09-06 korpus mimo 
 posune sloveso. Délka beze změny (55–65 slov ve všech šesti). Ownerovo *„buď area, nebo
 intention, nikdy oboje"* tím dostává oporu — intention si na rozdíl od area nebere prostor
 z obrazu, takže o slova soupeří jen area.
+
+## 2026-09-06 — TEST ABLACE (GPT tabulka INPUT→TRACE→OUTPUT) · ⚠️ TAKHLE SE TO ZMĚŘIT NEDÁ
+Owner: *„ta jeho tabulka měření vstupů, dávalo by to smysl?"* — **jako otázka ano, jako měření
+ne**, a tady je důkaz. Metodická oprava GPT návrhu: „síla ve výstupu" se nedá měřit tím, že se
+něco ve výsledku objeví (to nerozliší, jestli to způsobil vstup, nebo by to model napsal stejně)
+— jedině **ablací**: totéž čtení BEZ toho vstupu, týž seed, a co se změnilo.
+Provedeno: 4 runy × (baseline + 6 ablací) = 28 čtení + **8 čtení nulové kontroly**.
+Korpus `~/runar-eval/ablace.jsonl` · `ablace-null.jsonl`. <!-- doc-links:ok 2026-09-06 korpusy mimo repo (~/runar-eval), checker home neresi -->
+| ablace | slov v promptu | shoda s BASE (4-gram) | verdikt |
+|---|---|---|---|
+| −image | 12 | 0,003 | v šumu |
+| −keywords | 7 | 0,014 | v šumu |
+| −seeking | 50 | 0,024 | v šumu |
+| −world | 12 | 0,032 | v šumu |
+| −area | 31 | 0,039 | v šumu |
+| −angle | 32 | 0,049 | v šumu |
+| **⭐ ŠUMOVÁ PODLAHA — TÝŽ prompt 2×** | — | **0,041** | — |
+⭐ **Všechny ablace leží NA nebo POD šumovou podlahou.** Týž prompt pustený dvakrát dá texty,
+které si jsou podobné stejně málo (0,041) jako text s odebraným vstupem (0,003–0,049). **Model
+píše pokaždé od začátku, takže podobnostní metrika nerozliší „vstup odebrán" od „stejný prompt
+podruhé".** GPT tabulku tímhle způsobem vyplnit nelze — vyrobila by čísla, která nic neznamenají.
+**Co měřit JDE — stopa, ne podobnost.** Jestli se OBSAH vstupu objeví ve výsledku:
+| cela | téma otázky (práce) ve výsledku |
+|---|---|
+| BASE | **4/4** |
+| −area | **1/4** ← největší propad |
+| −keywords | 2/4 |
+| −world · −angle · −seeking · −image | 3/4 |
+→ **Nejsilnější stopa na téma otázky má AREA**, ne obraz. Bez ní se práce vytratila ze tří ze
+čtyř čtení. ⚠️ **n=4, tedy signál k prověření, ne nález** — ale je to jediná osa, kterou tenhle
+návrh vyplnit umí, a sedí na dřívější měření (bez štítků 5/10 ignorovaných, se štítky 2/10).
+**Zapsat pro příště:** kdo bude chtít GPT tabulku doplnit, musí (a) měřit stopu obsahu, ne
+podobnost textů, (b) mít n aspoň 10 na buňku, (c) VŽDY přiložit šumovou podlahu — bez ní
+by dnešní běh vypadal jako šest silných nálezů, a přitom nemá ani jeden.
