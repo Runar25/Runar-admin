@@ -2064,3 +2064,47 @@ návrh vyplnit umí, a sedí na dřívější měření (bez štítků 5/10 igno
 **Zapsat pro příště:** kdo bude chtít GPT tabulku doplnit, musí (a) měřit stopu obsahu, ne
 podobnost textů, (b) mít n aspoň 10 na buňku, (c) VŽDY přiložit šumovou podlahu — bez ní
 by dnešní běh vypadal jako šest silných nálezů, a přitom nemá ani jeden.
+
+## 2026-09-06 — Proč SEEKING nechává tak malou stopu (owner: „nechápu, jak to")
+Vytištěn skutečný text `_registerContext` pro všech pět voleb. **Odpověď je v něm samotném:**
+> *„**This is a leaning, not an order — do not name it back or hand it over as a thing; let it
+> colour the tone only.** The seeker asks for clarity — bring one thing into focus…"*
+⭐ **Prvních 27 slov z padesáti model instruuje, aby seeking NEBYL vidět.** A ta věta je
+u všech pěti voleb **doslova stejná** — mění se jen druhá půlka. Takže seeking:
+- stojí **50 slov promptu** (nejvíc ze všech faktorů — víc než area 31 i angle 32),
+- z toho **54 % je meta-pokyn „nedávej to najevo"**, který se opakuje pětkrát v pěti variantách,
+- a **jeho vlastní obsah je „obarvi tón"** — tedy něco, co v textu ze své podstaty nemá zanechat
+  stopu. Malá stopa NENÍ vada měření; je to přesně to, co si ta instrukce vyžádala.
+→ **Není to nefunkční faktor, je to DRAHÝ faktor.** Padesát slov za obarvení tónu, zatímco
+area za 31 slov drží téma otázky v textu (bez ní 1/4 místo 4/4). Ownerovo *„buď seeking, NEBO
+area"* tím dostává oporu: **při stejné ceně dělá area víc.**
+⚠️ Neměřeno: jestli ten tón opravdu obarví (osy „register" se nikdy neměřily). Netvrdí se,
+že seeking nedělá nic — tvrdí se, že za 50 slov nedělá nic VIDITELNÉHO.
+
+## 2026-09-06 — „Hutnost a klid" statických čtení — z čeho jsou udělané
+Owner: *„hutnost a klid — rozeber, jak to myslíš."* Změřeno na 28 statických (EN) proti
+24 dnešním, vše z už existujících textů, nula volání.
+| | statická (květen) | dnešní |
+|---|---|---|
+| slov | 51 | 58 |
+| **vět** | **3,0** | **4,0** |
+| slov na větu | **17,0** | 15,9 |
+| **čárek na větu** | **0,67** | **1,00** |
+| **první věta** | **14 slov** | **19 slov** |
+| končí otázkou | 21 % | 33 % |
+| „you are / you have" | **79 %** | 25 % |
+| jméno hledajícího | **0 %** | 42 % |
+⭐ **„Hutnost" = delší věty s MÉNĚ vsuvkami.** Statická mají o slovo delší věty, ale o třetinu
+míň čárek — tedy věty jsou **dlouhé, ale jednoduché**, ne dlouhé a rozvětvené. Dnešní čtení
+mají kratší věty nacpané vedlejšími větami; odtud ten pocit „složitě popsané".
+⭐ **„Klid" = krátký nádech na začátku a méně otázek.** Statická otevírají **14slovnou** větou
+a jen pětina končí otázkou. Dnešek otevírá **19 slovy** a třetina končí otázkou — čtenář je
+hned zavalený a hned tázaný.
+⚠️ **Ale to, čím se toho dosahovalo, brát nesmíme:** *„you are being asked to…"* je v 79 %
+statických a je to přesně ta rada, kterou dnešní pravidla zakazují (dnes 25 %). A jméno v nich
+není vůbec, kdežto dnes 42 % — to je záměrná personalizace, ne vada.
+→ **Co z nich vzít, aniž se vrátí rada — dvě páky, obě měřitelné a obě LEVNÉ:**
+1. **Kratší první věta** (cíl ~14 slov místo 19) — je to nádech, ne expozice.
+2. **Míň vsuvek** (cíl ~0,7 čárky na větu místo 1,0) — jedna myšlenka na větu, dlouhá věta smí
+   být, ale nesmí být rozvětvená.
+Obojí nemění délku čtení, tedy **nestojí ani halíř na ElevenLabs** — narozdíl od pátých vět.
