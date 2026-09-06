@@ -1903,3 +1903,36 @@ seeps under a closed door long before the door is opened"** · *„bojím se, ž
 **„everything you fear sits folded inside, still only paper and ink."** Rozdíl mezi přáním
 a žádostí o rozhodnutí Rúnar rozlišil: první nabídne obraz, druhý postaví **volbu**.
 ⚠️ U otázky na nevěru **Rúnar nepředpověděl** („co se ještě neukázalo") a hranici udržel.
+
+## 2026-09-06 — ⭐ CO SE ZE VSTUPŮ PROBOJUJE DO ČTENÍ + test „otázka jako hlavní"
+Lexikální audit 20 čtení (táž otázka „I would like to find a new job", 10 run × se štítky /
+bez). **Nula volání API** — vše počítáno lokálně z už vygenerovaných textů a znovu sestavených
+promptů. Korpus `~/runar-eval/propis.jsonl`. <!-- doc-links:ok 2026-09-06 korpus mimo repo (~/runar-eval), checker home neresi -->
+| vstup | probojuje se |
+|---|---|
+| jméno runy | **20/20** |
+| **obraz přiřazený runě** (`RUNE_IMAGES`) | **18/20** |
+| téma otázky | ~13/20 |
+| jméno hledajícího | 8/20 |
+⭐ **To, čemu owner říkal „sezóna", je ve skutečnosti OBRAZ PŘIŘAZENÝ RUNĚ — a je to nejsilnější
+vstup ze všech.** Eihwaz dostane vždy jeřáb u statku, Perth vždy řeku s oblázkem. **Obraz je
+vybraný DŘÍV, než se čte otázka** — proto otázka prohrává; nesoupeří s runou, soupeří s hotovým
+obrazem. To vysvětluje i ownerův produkční Eihwaz (téma práce se do obrazu nedostalo vůbec).
+**Štítky (area + intention) jako slabší páka:** bez nich **5/10** čtení nemá o práci ani zmínku,
+s nimi **2/10**. Rozdíl, který jsem předtím přisoudil runám, byl rozdíl ve štítcích.
+**Délka věty: 15,7 (bez štítků) / 16,2 (se štítky) slova.** Na instrukci „short sentences,
+no filler" je to hodně — čtyři věty po šestnácti slovech nesou runu, obraz, sezónu, jméno
+i otázku najednou. Ownerova „přeplácanost" je tím číselně doložená.
+### TEST: obraz runy ODEBRÁN, scéna vyrůstá z otázky (4 runy × 2, 8 volání)
+**A (dnešek)** otevře runinou krajinou a otázku přilepí větou: *„A new field of work is a slope
+like any other"* · *„when the work you do changes hands and rooms"*.
+**B (obraz odebrán)** postaví scénu z uživatelova světa a runa je to, co ta scéna DĚLÁ:
+- Eihwaz: *„Where the old desk ends the door begins, and you stand at that seam… **the yew rooted
+  deep while its crown leans into open air, the same tree holding two places at once**."*
+- Laguz: *„The desk you sit at holds **a single key worn smooth on one edge, from a door you no
+  longer use**… Beneath the wish for new work, the current has already turned."*
+⚠️ **PŘIZNANÁ CENA B — vyměnili jsme jednu monotónnost za druhou.** Ve **4 ze 4** čteních B je
+**stůl (nebo ponk) a dveře**. Místo „stejný obraz na runu" vzniklo „stejný obraz na téma otázky".
+Navíc mizí **islandská krajina**, na které stojí Rúnarova identita — desk, lamp, door nejsou
+Agndofa. Rozdíl je v tom, že runa se neměné, kdežto otázka ano; B tedy monotónnost přesouvá
+tam, kde se aspoň mění s uživatelem. **Rozhodnutí patří ownerovi, neratifikováno.**
