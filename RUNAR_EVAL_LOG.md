@@ -1630,3 +1630,30 @@ Opačný směr (že zbylých 10 předurčených NENÍ) tvrdit nelze — na to je
 heyrist djúpt í jöklinum"** — *„zvuk oznamuje, že se něco děje, a neříká co"* — a **21 Mýri
 „fótur sekkur og vatn vellur upp í sporið"**.
 Korpus `~/runar-eval/ukol3-screen-median.json`. <!-- doc-links:ok 2026-09-06 korpus mimo repo (~/runar-eval), checker home neresi -->
+
+## 2026-09-06 — ⚠️ ASK: když uživatel VÝSLOVNĚ žádá bez obrazu, dostane obraz (produkční data, 4/4)
+Načteno 10 produkčních čtení za 10 dní (`readings` + `follow_up`), všechna `v4.14-mynd`.
+Čtení samotná drží — obraz z věcí, runa vyložená skrz scénu, žádná rada. **Vada je v Ask.**
+**Spočítáno, ne odhadnuto:** ve **4 z 10** Ask výměn uživatel EXPLICITNĚ signalizoval nepochopení
+nebo žádal prostý jazyk — a **ve všech čtyřech dostal zpátky obraz**:
+| runa | co uživatel napsal | čím odpověď KONČÍ |
+|---|---|---|
+| Thurisaz (IS) | *„Getur þú sagt mér þetta á mannamáli. **Ekki í myndum**"* | „Hliðið stendur enn, og þyrnirinn bíður." |
+| Othila | „Can you be more clear" | „The grass keeps growing over the old wall." |
+| Mannaz | „What the fuck do you mean?" | „…just the seeing, and whatever stays unspoken between you and it." |
+| Ehwaz | „Is it ehwaz the horse and the trust?" | „That is what stands at the river's edge with you." |
+⭐ **Thurisaz je kategoricky jiný případ než zbylé tři: uživatel obraz výslovně VYLOUČIL
+(„ekki í myndum") a dostal ho jako poslední větu.** To už není otázka stylu ani míry
+obraznosti — je to **nesplnění výslovného pokynu uživatele**. Tím je spor „obraz v Ask povinný
+/ volitelný" (handoff DODATEK 2/3) v tomhle úzkém výseku **rozhodnutý daty**, ne preferencí.
+**Druhý, dosud nepojmenovaný režim selhání — Ask ZAMĚNÍ obraz místo aby ho vysvětlil.**
+Isa: čtení stojí na zastavených hodinách („The clock on the wall has stopped…"), uživatel se ptá
+„What does it say about my relationship?" a Ask otevře **úplně nový obraz** — „Two hands rest on
+the same table, one open, one still closed." Nevysvětlí hodiny, vymění je. To je jiná vada než
+„zůstal v obraze" a chce jinou opravu (držet TEN obraz, ne vyrobit další).
+**Detekovatelný spouštěč (návrh, neratifikováno):** „přímost otázky" jako obecná kategorie
+měřitelná není (Coworkova výhrada platí) — ale **výslovná žádost o jasnost JE** detekovatelná
+(„ekki í myndum", „be more clear", „what do you mean", „na rovinu"). Řešit napřed ten výsek,
+zbytek nechat otevřený; obecné pravidlo pro celý Ask z tohohle vzorku nevyvozovat.
+**Hranice nálezu:** n=10 čtení / 4 relevantní výměny, jeden owner-tester, převážně EN.
+Netvrdí se nic o tom, jestli má obraz v Ask být povinný tam, kde uživatel jasnost NEŽÁDÁ.
