@@ -1850,3 +1850,19 @@ is what you meet there") a závěr, který volbu výslovně vrací člověku (�
 business, and yours"). ⚠️ U Isa-120 se ale objevilo **opakování** („not the ended one" · „stopped,
 not broken" · „quiet, not empty" — tentýž protiklad třikrát), stejný typ nadbytku jako u single
 na 120. Zdá se, že strop užitečné délky je kolem 90–100 slov, ale to je zatím DOJEM, ne měření.
+**Oprava zápisu výš (KUKY 2026-09-06: „kde je cena ElevenLabs?"):** cena byla spočítaná
+včetně EL, ale ukázaná jen jako součet. Rozepsáno — **EL je 90 % ceny čtení v IS, 81 % v EN**:
+| varianta | znaků | Claude | **ElevenLabs IS** | **ElevenLabs EN** | celkem IS | celkem EN |
+|---|---|---|---|---|---|---|
+| dnes (mix 58/42) | 278 | $0,0030 | **$0,0278** | **$0,0139** | $0,0308 | $0,0169 |
+| vždy 4 věty | 314 | $0,0036 | **$0,0314** | **$0,0157** | $0,0350 | $0,0193 |
+| vždy 5 vět ~75 slov *(dopočteno, NEZMĚŘENO)* | 421 | $0,0042 | $0,0421 | $0,0210 | $0,0463 | $0,0252 |
+Měsíční strop, **jen ElevenLabs**: 50 jednotek IS $1,39 → $1,57 · 75 jednotek IS $2,09 → $2,35.
+⭐ **DŮVOD LOSU MEZI 3 A 4 VĚTAMI — dohledán, nespekulován** (`runar-utils.js:372-376`,
+commit `3905d4e`, měřeno 2026-08-20): *„Není to jen o počtu slov: při jiném rozpočtu musí model
+stavět větu jinak, takže táž runa zní podruhé jinak — **pestrost skoro zadarmo**."* Změřeno:
+tří-větný rozpočet dal 3 věty ve 4 ze 4, čtyř-větný 4 věty v 7 z 8, **žádný překryv**. A dva
+pevné rozpočty místo rozsahu proto, že **čas nahlas** má být 20–25 s vs 28–33 s.
+→ **„Vždy 4 věty" tedy neznamená jen +13 % ceny — znamená ZRUŠIT páku na pestrost.** Ownerova
+paměť („mělo to cosi dočinění s rozmanitostí") byla přesná. Kdo to chce prodloužit, ať **posune
+OBA rozpočty** (např. 4 a 5 vět) místo aby los zrušil; jinak se ztrácí to, kvůli čemu vznikl.
