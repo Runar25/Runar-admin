@@ -36,9 +36,12 @@ a krátký changelog „co se změnilo" — obojí aktualizovat. Překreslení: 
 (`docs/runar-prompt-map.html`, git-tracked); uprav ho a publikuj **na tutéž URL** (`Artifact`
 s `url:`). ⚠️ Do 2026-08-20 tu stálo „není v repu, leží ve scratchpadu session" — prokazatelně
 nepravda (`git ls-files` ho vrací, 45 427 B) a návod tím vyráběl scratchpad-sirotky. Ověřeno CODE-read.
-⚠️ **Repo kopie a publikovaný artifact se rozešly:** repo HTML nese razítko `v2.0`, `runar-config.js`
-i publikovaná mapa `v2.1`. Než se do mapy zapíše cokoli dalšího, patří to srovnat — jinak se píše
-do kopie, která už není ta publikovaná. Z jiné session než
+✅ **Rozkol repo × publikovaná mapa SROVNÁN 2026-09-06.** Repo kopie byla starší (v2.0) než
+publikovaná (v2.1) — nová verze se proto postavila NA STAŽENÉ publikované, ne na repo souboru,
+a tou se repo přepsalo. Obojí je teď totéž, razítko `v4.15-ask90`. **Postup, který to spravil,
+je zároveň ten správný pro příště:** `Artifact action:"read"` → publikovanou verzi si nech uložit
+→ edituj TU → publikuj → zkopíruj do repa. Publikace se odmítne, dokud živou verzi nepřečteš
+celou (nestačí `read`, chce to `Read` celého uloženého souboru). Z jiné session než
 té, co ji vydala, se URL MUSÍ předat explicitně, jinak vznikne nová. Před publikací WebFetch aktuální
 verzi (guard hlídá, že nepřepíšeš cizí změnu) + zkontroluj párování tagů.
 
