@@ -1787,3 +1787,34 @@ tvrzení o téhle ose neplatí — a to zpětně oslabuje i čísla z TESTu ASK1
    dostane smysl, teprve když ví, že čtení je *pro pochopení minulosti* nebo *pro rozhodnutí*.
    KUKY 2026-09-06: *„to je taky uživatelova otázka, na kterou by chtěl znát odpověď, a pokud ji
    nenajde v obraze, měl by ji dostat v ASK."*
+
+## 2026-09-06 — TEST ASK3 · Ask jako samostatný režim: chování se změnilo, vada ne — a fixture došel dech
+Po ownerovi + GPT přerámováno: vada NENÍ „končí obrazem", ale **„obraz zůstane zabalený"**.
+Dvě cely na týchž 10 párech, `DEF_CHAR.philosophy` PONECHÁNA (GL ji odebrala a byla nejhorší):
+**U1** = pravidlo „rozbal obraz do možných významů" + **skutečně uvolněná délka** (v promptu
+40 → 120 slov; v ASK2 jsem zvedl jen `max_tokens` a délková páka se nepustila) ·
+**U2** = U1 + kontext čtení (area of life · intention · seeking · původní situace).
+Průměr odpovědi 110 slov (dosud ~40). Korpusy `~/runar-eval/ask3-*.json`. <!-- doc-links:ok 2026-09-06 korpusy mimo repo (~/runar-eval), checker home neresi -->
+| cela | ROZBALIL | jiná metafora | barnum | rada | ukotveno v otázce |
+|---|---|---|---|---|---|
+| U1 | 4/10 (+4 částečně) | **7/10** | 2/10 | 1/10 | **10/10** |
+| U2 (+kontext) | 4/10 | 6/10 | 2/10 | 2/10 | **7/10** |
+| *dřívější cely* | — | P 7 · G 7 · GL 8 | — | — | — |
+⭐ **Chování se změnilo, vada ne.** Rúnar poprvé otevřeně rozebírá obraz na díly („Fair enough.
+**Let me set the picture down plainly.** … Three parts, three things they might hold"), a na
+4/10 to soudce uznal jako plné rozbalení. **Ale „jiná/menší metafora" zůstala 7/10 — stejně
+jako u P, G i GL.** Ani přerámování, ani délka s tím nehnuly.
+⚠️ **Ownerova hypotéza o kontextu se NEPOTVRDILA — vyšla obráceně:** U2 mělo ukotvení v otázce
+**horší** (10/10 → 7/10). Kontext svedl odpověď ke KATEGORII místo ke skutečné otázce.
+⚠️⚠️ **ALE fixture má vestavěnou nulovou kontrolu, a ta říká, ať tomu nevěříme:** pár
+`Thurisaz-3d0e` nemá aol, intention, seeking ani situaci — pro něj je **kontextový blok prázdný,
+takže U1 a U2 měly IDENTICKÝ prompt.** Přesto dopadly opačně na TŘECH z pěti os (barnum ne/ano,
+rada ne/ano, ukotveno ano/ne). **Rozdíl U1 vs U2 je tedy v šumu generování**, a s ním i celý
+závěr o kontextu. Netvrdí se ani že kontext pomáhá, ani že škodí.
+**Co z toho platí (a je to hlavní):** **žádný ze čtyř pokusů — moje podmínka, znění GPT,
+odebrání filozofie, rozbalovací režim s uvolněnou délkou — nesnížil „vysvětluje obraz obrazem"
+pod 6/10.** Konstantní 6–8/10 napříč pěti různými konfiguracemi je silný signál, že páka
+NENÍ v textu Ask pravidel. Zbývá system prompt (`THE IMAGE` + **tři ukázky, které všechny končí
+obrazem**) — jediné neotestované místo, a zároveň to, o kterém máme změřeno, že se ukázky opisují.
+**Metodická hranice fixture:** 10 párů a binární osy nerozliší rozdíl menší než ~3. Další kolo
+buď na větším vzorku, nebo s jinou pákou — opakovat drobné úpravy znění je při tomhle n zbytečné.
