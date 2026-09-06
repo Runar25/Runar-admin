@@ -1866,3 +1866,40 @@ pevné rozpočty místo rozsahu proto, že **čas nahlas** má být 20–25 s vs
 → **„Vždy 4 věty" tedy neznamená jen +13 % ceny — znamená ZRUŠIT páku na pestrost.** Ownerova
 paměť („mělo to cosi dočinění s rozmanitostí") byla přesná. Kdo to chce prodloužit, ať **posune
 OBA rozpočty** (např. 4 a 5 vět) místo aby los zrušil; jinak se ztrácí to, kvůli čemu vznikl.
+
+## 2026-09-06 — TEST DÍLY · Délka Ask: ⭐ 90 slov je optimum, a moje hypotéza „díly = délka" PADLA
+8 run × 3 délky (60/90/120), režim „rozbal obraz". **Kalibrační kotvy:** soudci nezávisle počítali
+díly ve čtení — Isa vyšla **2** (ne 1, jak jsem tvrdil dřív!), Mannaz 4, Othila 5, Laguz 2.
+Korpusy `~/runar-eval/dily-A.jsonl` · `dily-soud.json`. <!-- doc-links:ok 2026-09-06 korpusy mimo repo (~/runar-eval), checker home neresi -->
+| délka | dekódováno dílů (průměr) | opakování | nový obraz |
+|---|---|---|---|
+| 60 | 3,00 | 5/8 | 0/8 |
+| **90** | **3,12** | **4/8** | 2/8 |
+| 120 | 2,88 | **8/8** | 0/8 |
+⭐ **Počet dekódovaných dílů je na délce NEZÁVISLÝ — 3,0 / 3,1 / 2,9. Delší odpověď nedekóduje
+víc, jen víc opakuje.** Při 120 slovech se opakuje **8 z 8** odpovědí. **90 slov je optimum**
+na obou osách zároveň (nejvíc dekódováno, nejmíň opakování) — shoduje se s ownerovým vlastním
+verdiktem („ASK Rúnar z osobního pohledu vede 90 slov").
+⚠️ **MOJE HYPOTÉZA VYVRÁCENA.** Tvrdil jsem, že „užitečná délka je daná počtem dílů obrazu".
+Není: **Othila má 5 dílů a dekóduje 3. Laguz má 2 a dekóduje 2. Strop je ~3 díly bez ohledu
+na to, kolik jich obraz nabízí.** Model nedekóduje víc, i když má z čeho.
+⭐ **Co PLATÍ místo toho (a je to užitečnější): chudý obraz se opakuje na KAŽDÉ délce.**
+| | chudý obraz (2 díly: Isa, Laguz) | bohatý (3+ dílů, n=6) |
+|---|---|---|
+| opakování @60 | **2/2** | 3/6 |
+| opakování @90 | **2/2** | **2/6** |
+| opakování @120 | **2/2** | 6/6 |
+→ **Dva díly nestačí ani na 60 slov.** Páka tedy není délka Ask, ale **bohatost obrazu
+ve ČTENÍ** — a to je věc single promptu, ne Ask pravidel.
+**Odpověď na ownerovu otázku „proč má Isa jen jeden díl":** nemá. Počet dílů je vlastnost
+**vylosovaného obrazu, ne runy** — Isa dostala minule zastavené hodiny (1 díl), teď blánu
+na vychladlé kávě (2). Laguz dostal svah + vodu (2). ⚠️ Zda některé runy tíhnou k chudším
+obrazům systematicky, **NEZMĚŘENO** — chtělo by to víc obrazů na runu.
+**Kontext (area of life · intention · situace) — 4 skutečné situace ownera, táž runa (Perth),
+týž seed, jediný rozdíl je zadání:** obraz se pokaždé přizpůsobil — *„chtěl bych novou práci"*
+→ pečeť praskla, ale nikdo ji neotevřel · *„mám si hledat?"* → **„the fold still holds shut…
+which is heavier, the reading or the not-reading?"** · *„zjistí to manželka?"* → **„water that
+seeps under a closed door long before the door is opened"** · *„bojím se, že neuspěju"* →
+**„everything you fear sits folded inside, still only paper and ink."** Rozdíl mezi přáním
+a žádostí o rozhodnutí Rúnar rozlišil: první nabídne obraz, druhý postaví **volbu**.
+⚠️ U otázky na nevěru **Rúnar nepředpověděl** („co se ještě neukázalo") a hranici udržel.
