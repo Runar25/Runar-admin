@@ -1699,3 +1699,30 @@ vs *nabízí volbu mezi dvěma* (není rada).
 **Sedí to na ownerovo zadání:** „Rúnar balancuje na hraně, ale má to říct tak, aby člověka
 upozornil, že má hledat odpověď sám v sobě" = mechanismus z DODATKU 4 handoffu — **popiš stav
 nebo nerovnováhu, a otázku obrať dovnitř** („kde to cítíš", ne „co s tím udělej").
+
+## 2026-09-06 — ⚠️ Oprava Ask v ŽIVÉM provozu: překlad se objevil, ale obrazový ZÁVĚR se vrátil 4/4
+První produkční data po nasazení (sw v360, 4 čtení, **všechna se žádostí o jasnost** —
+„give me more simple answer!", „what does the picture suppose to say?", „i dont understand what
+you mean!", „holding costs more than moving would? explain."). Týž slepý soud jako na baseline.
+Korpus `~/runar-eval/ask-nove.json`. <!-- doc-links:ok 2026-09-06 korpus mimo repo (~/runar-eval), checker home neresi -->
+| | končí obrazem | překlad (ano) | rada |
+|---|---|---|---|
+| baseline A (před opravou, n=4) | **4/4** | **0/4** | 1/4 |
+| harness C (test, n=4) | 1/4 | 3/4 | 1/4 |
+| **živý provoz po opravě (n=4)** | **4/4** | **1/4** | 1/4 |
+⭐ **Poloviční úspěch, a to je nález, ne neúspěch.** Překlad se objevil — `n1-Blank` dostal
+„ano" (*„The blank rune holds nothing back on purpose — it simply has no answer to give yet"*),
+další dvě „částečně" s citovatelným výkladem (*„The reading says only this: what you truly carry
+from that place is not the iron in your hand"*). **Obrazový závěr se ale vrátil na 4/4** — tedy
+tam, kde byl před opravou.
+**Rozdíl proti harnessu (1/4 vs 4/4) NENÍ vysvětlený a je to hlavní otevřená věc.** Kandidáti,
+seřazeno podle mé důvěry: (a) **produkce staví prompt jinak než můj harness** — v harnessu jsem
+`buildAskPrompt` volal přímo, produkce může přidávat vrstvy (proxy, voice profil), které závěr
+znovu vynucují; (b) živý vzorek je jen n=4 a všechny 4 jsou žádosti o jasnost, kdežto harness
+měl i kontrolní skupinu; (c) prompt sice odešel, ale klientská cache měla starý soubor
+u části požadavků. **(a) je ověřitelné a musí se ověřit první** — porovnat prompt, který
+skutečně odešel z prohlížeče, s tím, co staví harness. Do té doby se NETVRDÍ, že oprava
+v produkci funguje.
+**Nález o radě:** `n2-NORNS` (uhlíky) — *„Reach too soon and the ash stings first"* prošlo
+imperativním testem (→ „nesahej tam brzo"), soudce nezávisle potvrdil totéž. Test na imperativ
+zavedený dnes tedy v ostrém provozu **chytá**, což je jeho první nezávislé potvrzení.
