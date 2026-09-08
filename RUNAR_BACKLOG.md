@@ -800,25 +800,24 @@ Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je 
   ramen. Celkem: 8 ramen × 9 nocí = min. **72 nocí** · 8 × 2 = **16 Asků na jednu pouť**.
   Porozumění se neodehrává uvnitř textu ramene, ale **mezi rameny**.
 
-  ⚠️ **OPRAVA MÉHO VLASTNÍHO ZÁPISU Z TÉHOŽ DNE.** Napsal jsem sem, že „tahle vrstva už je
-  postavená a nic nového se pro ni stavět nemusí". **Není to pravda.** Ověřil jsem prompt
-  a úložiště, ale ne **DOSAH** (§13 full-path). Co existuje a co ne:
-  - ✅ prompt `buildAskPrompt` + `RP_ASK` (90 slov od v4.15-ask90) · ✅ ukládání otázky i odpovědi
-    do `follow_up` na řádek toho čtení · ✅ proxy cesta `mode:'ask'` · ✅ výjimka z měsíčního
-    stropu pro **první** Ask na čtení
-  - ❌ **Na STARŠÍ čtení se zeptat NEJDE.** `_lastReadingId` (`v2/runar-reading.js:484`) se
-    nastaví jen při generování v téže page-session a reset ho maže; **`v2/runar-journal.js`
-    neobsahuje slovo „ask" ani jednou** — z deníku do Ask nevede vstup. Ask žije výhradně
-    v živém toku hned po vygenerování čtení. **Jenže každý Ask v téhle kadenci je ODLOŽENÝ**
-    (den 3 a den 6), takže dnes není možný **ani jeden z nich**.
-  - ❌ **Druhý Ask na totéž čtení.** Klient: `_askUsed` (`:539` / `:581`) pustí právě jeden.
-    Server: `legitAsk` (`supabase/functions/claude-proxy/index.ts:531`) je výjimka ze stropu
-    jen tehdy, když je `follow_up` prázdné — druhý Ask se tedy počítá do měsíčního stropu.
-
-  ⚠️ **Proč ten jedno-Askový limit existuje (§26 krok 2 — vada, kterou návrat nesmí vrátit):**
-  komentář u `legitAsk` to říká přímo — jinak by `mode:'ask'` na obyčejném čtení **obcházel
-  strop navždy**. Vegvísir tedy nepotřebuje zvednout číslo na 2 globálně, ale **ohraničenou
-  výjimku** vázanou na rameno Vegvísiru a stropovanou na dvě. Globální zvednutí tu díru otevře.
+  ⚠️ **Rámování — KUKY 2026-09-08: „Vegvísir není spread, není to typické čtení; můžeme si pro
+  něj udělat, co chceme."** Existující mechanika Ask (níž) proto NENÍ omezení Vegvísiru. Je to
+  soupis toho, **co se dá znovu použít a co ne**, protože Vegvísir má ratifikovaně **vlastní
+  režim** (RUNAR_DESIGN.md, „Tvrdé rámce"). Nic z toho neblokuje — jen to není hotové.
+  - ✅ **Použitelné rovnou:** prompt `buildAskPrompt` + `RP_ASK` (90 slov od v4.15-ask90) ·
+    ukládání otázky i odpovědi do `follow_up` na řádek toho ramene · proxy cesta `mode:'ask'`.
+  - 🔧 **Musí se dostavět** (dnešní čtecí tok to neumí, protože to nikdy nepotřeboval):
+    dosah na **starší** čtení — `_lastReadingId` (`v2/runar-reading.js:484`) žije jen v té
+    page-session, kde čtení vzniklo, a `v2/runar-journal.js` neobsahuje slovo „ask" ani jednou,
+    takže z deníku do Ask dnes vstup nevede. Vegvísirové Asky jsou ale **odložené** (den 3, den 6),
+    takže tenhle dosah je pro ně první věc k postavení. Plus **druhý Ask** na totéž rameno
+    (klient `_askUsed` `:539`/`:581` pustí jeden).
+  ⚠️ **Jediné SKUTEČNÉ omezení, které přebírá i vlastní režim** (§26 — vada, kterou nová cesta
+  nesmí zavléct): `legitAsk` (`supabase/functions/claude-proxy/index.ts:531`) dává výjimku
+  z měsíčního stropu jen na první Ask, a komentář u něj říká proč — jinak by `mode:'ask'`
+  na obyčejném čtení **obcházel strop navždy**. Vegvísir tedy nechce zvednout číslo na 2
+  globálně, ale **ohraničenou výjimku vázanou na rameno Vegvísiru, stropovanou na dvě.**
+  Tohle platí bez ohledu na to, jak si vlastní režim postavíme — je to peněžní díra, ne konvence.
 
   · **Ratifikováno ownerem 2026-09-08:** `follow_up` se do žádného promptu nevrací, takže tahle
     vrstva pomůže pochopit JEDNO rameno, ale to pochopení se do dalšího ramene nepřenese —
