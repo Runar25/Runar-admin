@@ -777,6 +777,26 @@ Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je 
 
 ## Vegvísir (Cowork návrh 2026-08-15 · konsolidace 2026-08-22 · AKTIVNÍ TÉMA)
 
+- [ ] **Rameno = JEDNO čtení. Mezi rameny má člověk možnost se Rúnara zeptat** (KUKY 2026-09-08).
+  - **Jedno rameno = jedno čtení.** Ne balík, ne čtení plus dovětek — jeden text.
+  - **Každý 3. den** má uživatel možnost položit Rúnarovi **jednu otázku k tomu čtení** — otázku,
+    která mu pomůže mu líp porozumět. Porozumění se tedy neodehrává uvnitř čtení, ale **mezi rameny**.
+  ⭐ **Tahle vrstva UŽ JE POSTAVENÁ — nic nového se pro ni stavět nemusí** (ověřeno v kódu 2026-09-08):
+  Ask je dnes přesně „jedna otázka na jedno čtení" (`RP_ASK` „ONE follow-up question" + `legitAsk`
+  v `claude-proxy:531` dává jeden Ask na čtení mimo měsíční strop). Osm ramen = osm čtení = osm
+  legitimních Asků. Odpověď i otázka se ukládají do `follow_up` **na řádek toho ramene**, takže
+  „co člověk k tomu rameni chtěl pochopit" je persistované a strukturované už teď.
+  · Ask má od 2026-09-08 **90 slov** (v4.15-ask90) a klauzule „vždy kratší než čtení" byla **odstraněna**
+    — důvod pro původních ~40 slov byl hlas, a *Ask hlas nemá* (KUKY). Teprve tím má Ask dost
+    místa, aby unesl roli vysvětlující vrstvy Vegvísiru; se 40 slovy by to nešlo.
+  ⚠️ **Naráží to na tvrdý limit níž:** materiál v `follow_up` sice existuje, ale **nikdo ho nečte
+    zpátky do promptu**. Takže tahle vrstva umí člověku pomoct rozumět JEDNOMU rameni; k tomu, aby
+    se to, co pochopil, promítlo do ramene dalšího, chybí táž cesta jako u neseného materiálu.
+  ⚠️ **NEDOVOZENO, k upřesnění u ownera:** je „každý 3. den" **kadence ramen** (8 ramen × 3 dny
+    = 24 dní), nebo okno pro Ask uvnitř jiné kadence? Ratifikovaný rámec říká „8 ramen × min
+    9 nocí"; 3denní krok s ním nejde sloučit bez rozhodnutí. Nedomýšlím (§23).
+    Ownerova věta zůstala nedokončená („tím budou…") — nedoplňuji ji.
+
 - [ ] ⛔ **TVRDÝ LIMIT: nesený materiál mezi rameny nemá v produkci ŽÁDNOU cestu** (CODE-read 2026-09-08, ověřeno v kódu; KUKY: „tohle může být důležité").
   Jádro Vegvísiru — obraz z ramene N vstupuje do vztahu s tím, co člověk už prošel — vyžaduje, aby se předchozí čtení dostalo do promptu toho následujícího. **Nic v kódu to nedělá.**
   - `follow_up` to dokazuje nejsilněji: i **Ask**, který visí PŘÍMO na svém čtení, se do žádného promptu nevrací — čte se jen kvůli meteringu (`claude-proxy` `legitAsk`, :531) a do shrine prohlížeče.
