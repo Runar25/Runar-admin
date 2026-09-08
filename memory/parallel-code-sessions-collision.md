@@ -61,3 +61,14 @@ a commitnul až po něm. **Commituj HNED po editaci sdíleného docu; smoke až 
 ho stejně spustí znovu. U `RUNAR_BACKLOG.md` / `RUNAR_DESIGN.md` to platí dvojnásob, do nich
 dnes píšou obě CODE session naráz.
 
+**ZASTARALÉ PŘEČTENÍ SDÍLENÉHO SOUBORU (2026-09-08).** Ve stromě, kde commitují tři session,
+**přečtený soubor zastarává během jedné konverzace**. Dvakrát v jednom dni jsem citoval ownerovi
+něco, co už neplatilo: `RP_ASK.rules` „40 slov / vždy kratší než čtení" (mezitím **90 slov**
+a ta klauzule **odstraněná**) a `RUNAR_PROMPT_VERSION` „v4.14-mynd" (mezitím **v4.15-ask90**).
+Obojí změnila CODE-tune mezi mým přečtením a mou větou. Owner: *„tady je stále chyba."*
+
+**Nejde o pravidlo, jde o návyk: než z produkčního souboru CITUJEŠ, přečti ho znovu.**
+Ne „mám ho v kontextu" — kontext je snímek k času přečtení, ne stav repa. Platí zvlášť pro
+`runar-character.js`, `runar-config.js` a proxy, do kterých sahá `[tune]` několikrát denně.
+Levná pojistka před tvrzením o čísle nebo znění: `git pull` + čerstvý `grep` na tu jednu řádku.
+
