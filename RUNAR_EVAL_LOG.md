@@ -2134,3 +2134,24 @@ z profilu statických.
 its footing, root deep in the old ground."* (19 slov) → v2 *„The rowan leans in the wind but its
 crown never goes all the way down."* (15 slov), a závěr *„What you are looking for, Kuky, is
 already standing in the ground beneath your feet."*
+
+## 2026-09-08 — HUTNOST v2 třikrát na týž seed · obraz se opakuje, VÝKLAD ne
+Owner: *„udelej ty cteni znova. chci videt jestli bude jiny vyklad!"* Týž prompt, tytéž čtyři
+runy, **týž seed** (700000 + i·907), tři běhy (A/B/C). Korpusy `hutnost2.jsonl` + `hutnost2bc.jsonl`.
+<!-- doc-links:ok 2026-09-08 korpusy mimo repo (~/runar-eval), checker home neresi -->
+⭐ **Nález: čtení se dělí na dvě vrstvy s úplně jinou stálostí.**
+| | shoda mezi běhy (Jaccard, obsahová slova) |
+|---|---|
+| **první věta** = obraz, který runa přinesla | **0,272** |
+| **poslední věta** = výklad, co to znamená pro tazatele | **0,111** |
+Materiál je stálý (jeřáb ve větru · oblázek v řece · ovce k ohradě · rozcestník na hřebeni —
+to drží `RUNE_IMAGES`), ale **verdikt je pokaždé jiný**. Perth: „kam dopadne, je skryté" ×
+„není tvoje starost to hlídat, jen jít dál" × „už se to pod hladinou tvé otázky hýbe".
+Tiwaz: „práce není místo, ale sever, co si neseš" × **„za jakou práci stojí za to stát rovně?"**
+(běh B jediný obrátil výklad v otázku).
+⚠️ **Hranice nálezu:** n = 4 runy × 3 běhy; **Fehu ukázalo obráceně** (0,127 obraz vs 0,149
+výklad) — poměr 2,5× je průměr, ne zákon. Metrika sama je slabá (§27: podobnostní čísla v tomhle
+rozsahu jsou u šumové podlahy) — **nese to hlavně čtení textů, ne to číslo.**
+→ **Co z toho plyne pro páky:** skladba věty se ladí bezpečně, protože **se nedotýká toho, co se
+stejně mění samo.** Sevřít stavbu vět neznamená sevřít výklad — pestrost sedí jinde, než kde
+se ladí rytmus.
