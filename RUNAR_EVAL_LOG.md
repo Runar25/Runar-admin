@@ -14,9 +14,11 @@ roztroušené po git logu a cizích sandboxech. (KUKY 2026-08-02.)
 SLABÝ účinek — proto „přepiš voice profil" většinou nehne jehlou; sáhni na user-prompt pooly.
 
 **🔄 PÁKY (tady se hlas reálně mění — každou změnu loguj níž):**
-- Obraznost: `SEASON_POOLS` / `_seasonalImagery` (utils/character.js)
+- Obraznost: `RUNE_IMAGES` / `_seasonalImagery` (character.js) — ⚠️ `SEASON_POOLS` je **mrtvá větev**, do čtení nedojde (2026-09-08)
 - Úhel otevření: `READING_ANGLES` / `_randomAngle` (utils, jen single)
-- Tvar konce (dle valence): `ENDING_*` / `_endingShape` (utils)
+- Tvar konce (dle valence): `ENDING_*` / `_endingShape` (utils, **jen single** — spready mají pevnou `S.landing`)
+- Esenční řádek (co runa DĚLÁ skrz obraz): `VOICE_PROFILES.*.rules.essence` (runar-config.js:456) — ⚠️ **jeden tvar v 60/60**, viz rejstřík
+- Sampling modelu: **neřízený** — `temperature`/`top_p`/`top_k` se nenastavuje nikde (proxy ani klient)
 - Jméno (umístění/vynechání): `_namePlacement` (utils)
 - Reading contract (čočka/doména/registr): `_lensContext`/`_domainContext`/`_registerContext`/`_priorityContext` (character.js)
 - Norns čas: `_intentionContext` (character.js)
@@ -60,6 +62,7 @@ nikde pohromadě. Rejstřík je nit. Datum = kde v logu hledat detail.
 | **keywords** | 21.8. model sáhne po nejznámějším klíči (Jera → „harvest") i když obraz nese jiný · 22.8. **VYŘEŠENO PRO IS** (v3.2): klíč = stránka vylosovaného obrazu (mapa 79/80), soulad 24/32→30/32 (p=0,041), dva nezávislé vzorky · **EN se neváže** — efekt žádný, náhoda drží pestrost · klauzule do promptu zamítnuta už 21.8. (srazila pojmenování) |
 | **name** | 21.8. bez měřitelného účinku (ablace ±1) |
 | **voice** (systémový prompt) | 21.8. ablace: vypnutí **nezhoršilo ani jedno** ze tří měřítek, pojmenování EN 4→7/8 — ⚠️ ale **hlas se neměří**, a ten tenhle blok vlastní. 57 % plochy promptu |
+| **essence** | 8.9. **nejméně pestré místo čtení**: tvar „\<Runa\> is …"/„This is \<Runa\>, …" v **60/60** (a 28/28 v produkční ablaci; napříč 399 čteními 64 %) proti **0/53** u statických květnových · odebrání vzoru z promptu srazí jen 100→92 % — **zdroj je zadání**, ne příklad: ablace řádky „Mention \<Runa\> by name once" dá 33 %, ale v 8/12 jméno runy nepadne vůbec |
 | **address** | jen IS, neměřeno |
 
 ⚠️ **Prázdná buňka není „neškodné".** Znamená to, že o té páce nevíme nic — ne že nic nedělá.
@@ -2155,3 +2158,54 @@ rozsahu jsou u šumové podlahy) — **nese to hlavně čtení textů, ne to č�
 → **Co z toho plyne pro páky:** skladba věty se ladí bezpečně, protože **se nedotýká toho, co se
 stejně mění samo.** Sevřít stavbu vět neznamená sevřít výklad — pestrost sedí jinde, než kde
 se ladí rytmus.
+
+## 2026-09-08 — MAPA PESTROSTI · esenční řádek má JEDEN tvar (60/60) · test „role vět"
+Owner: *„co všechno nám dodává pestrost? Hledáme jednoduché věci, místo přidávání obrazů…
+chceme spíš UČIT, ne zákazy a příkazy… i když to znamená dávat los na to, kolik vět a čárek."*
+Korpus `~/runar-eval/role.jsonl` (7 cel × 4 runy × 3 běhy = 84 čtení, týž seed, délkový rozpočet
+PŘIBITÝ na čtyřvětový, aby čtyři role měly kam se vejít). <!-- doc-links:ok 2026-09-08 korpus mimo repo -->
+
+### ⭐ Nález 1 — esenční řádek je nejméně pestré místo celého čtení
+Tvar „**\<Runa\> is …**" / „**This is \<Runa\>, …**": dnešní produkce **28/28**, napříč všemi
+korpusy **255/399 = 64 %**, v tomhle testu **60/60**. Květnová statická čtení (starý hlas):
+**0/53** — 87 % z nich nepoužilo ani jeden z těch tvarů, zbytek měl vlastní šablonu („X speaks of").
+⚠️ **Není to tím vzorem v promptu.** Odebrání jediného příkladu („Fehu is that warmth…") a jeho
+náhrada čtyřmi různými tvary srazila šablonu 100 % → **92 %**, tedy nic. V systémovém promptu
+žádná věta jmenující runu není (ověřeno výpisem).
+→ **ABLACE našla zdroj:** vyříznutí řádky `Mention <Runa> by name once, woven naturally.` srazí
+šablonu na **33 %** — ale v **8 z 12** čtení pak jméno runy nepadne vůbec. Je to tedy **diagnóza,
+ne oprava**: „pojmenuj runu jednou" + „řekni, co dělá" = zadání definice, a definice v angličtině
+vychází jako spona. **Kdo to bude opravovat, musí změnit ZADÁNÍ, ne přidat zákaz.**
+
+### Nález 2 — pevná role na větu měřitelně zdražuje a měřitelně nic nezlepší
+| cela | co dělá | šablona | znaků | vs CTRL | shoda posl. věty |
+|---|---|---|---|---|---|
+| CTRL | dnešní prompt | 100 % | 321 | — | 0,089 |
+| TVAR | odebrán vzor esenčního řádku | 92 % | 335 | +4,4 % | 0,088 |
+| RAM | „jméno dorazí uvnitř děje" | 100 % | 342 | +6,5 % | — |
+| BEZJ | ablace „pojmenuj runu jednou" | **33 %** | 322 | +0,4 % | — |
+| **ROLE** | **čtyři číslované role** | 100 % | **354** | **+10,4 %** | 0,141 |
+| UCIT | táž anatomie, učená, bez čísel | 92 % | 331 | +3,2 % | 0,242 |
+| LOS | los mezi třemi anatomiemi | 100 % | 330 | +2,9 % | 0,103 |
+
+**Cena:** ROLE = **+$3,34 na 1000 islandských čtení** (EL, `RUNAR_PRICING.md`) za nulový doložený zisk.
+⚠️ **Sloupec „shoda poslední věty" cely NEROZLIŠÍ** (§27, útok 1): rozdíl mezi runami je větší než
+mezi celami — Fehu samo dá 0,199 (CTRL) až **0,756** (UCIT), zbylé tři runy v téže cele 0,000–0,145.
+Celé UCIT drží jediná runa. **Netvrdí se tedy, že role pestrost zabíjejí; tvrdí se, že to tímhle
+nástrojem na n = 4 runách změřit nejde.** Co změřit jde, je délka a cena — a ta mluví proti.
+
+### Nález 3 — tři páky, které v kódu jsou a do čtení nedojdou (ověřeno protlačením, ne čtením)
+1. **`SEASON_POOLS` = 133 obrazů, ve čtení 0×.** Spočítáno přes produkční filtr: **0 ze 144**
+   dvojic runa × sezónní bucket je bez runového kandidáta, takže větev `runePhrase || pool` sáhne
+   po poolu nikdy. Padá s tím i **los klíčových slov** (`pickedKws`), který jede na téže podmínce.
+   ⚠️ `CLAUDE.md` tvrdila opak („stojí na něm celá funkce") — **opraveno v témž commitu**.
+2. **Sampling modelu se neřídí.** `temperature` / `top_p` / `top_k` se nenastavuje nikde
+   (proxy ani klient). Je to největší jednotlivý zdroj rozdílu dvou čtení z téhož promptu — a jede
+   na defaultu, který neznáme. Bez seedu proto **nejde golden-verify na text**, jen na prompt.
+3. **Spready nelosují nic.** `_randomAngle` · `_lengthBudget` · `_endingShape` mají každý **jediné
+   volání**, a to v single builderu. **Devítirunový Yggdrasil má míň proměnných než jednorunové single.**
+
+### Co z toho plyne pro ladění před spuštěním
+Nejlevnější pestrost neleží v přidávání obrazů, ale ve **třech dírách výš** — a ta nejlacinější
+je Sowilo: má **jediného** kandidáta v `deepwinter` i `darkening`, takže od září do února dostává
+pořád týž obraz.
