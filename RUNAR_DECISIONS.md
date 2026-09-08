@@ -4827,3 +4827,31 @@ Affected doc(s): RUNAR_BACKLOG.md (graf jako úkol pro Cowork + otevřené otáz
   pravidlem dohromady** — samotná délka je půlka. Zůstává jako otevřený návrh.
 - **Affected doc(s):** RUNAR_EVAL_LOG.md (měření, 2026-09-06). Prompt vlastní `runar-character.js`.
 - **Reversibility:** easy (jeden revert; `askCap` a verze jdou s ním)
+
+
+## 2026-09-08 · Prompt · `seeking` — pryč hlídač i nálepka (v4.15-ask90 → v4.16-seek)
+**Co:** `_registerContext` ztratil 26slovný hlídač („do not name it back… let it colour the tone
+only") **i** nálepku registru („The seeker asks for clarity — "). Zůstala jen věta, která dělá
+práci. Zároveň ze čtyř spreadů zmizela hlavička „Seeking: X". Blok **45 → 12 slov**, EN i IS.
+**Proč:** prompt tu hodnotu sám vyložil na stůl a o osm slov níž zakázal ji vyslovit — hlídač
+hlídal slovo, které tam napsal týž prompt. Odebrala se **vada**, nepřidalo se pravidlo (táž
+operace jako u AREA 2026-08-21). Ve spreadech to bylo dvojnásob: hodnotu pojmenovaly **dvakrát**
+(hlavička + nálepka), single jen jednou — doloženo už 2026-08-15
+(`docs/findings/2026-08-15-wf_62679055-021.md`), nikdo to tehdy neuzavřel.
+**Změřeno** (korpus `~/runar-eval/seeking.jsonl`, 4 runy × 5 registrů × 2 verze, týž seed):
+echo nálepky **0/20 v OBOU** verzích (hlídač tedy nic nedržel) · tvar výstupu beze změny
+(64,0 → 63,5 slova, 341 → 335 znaků — **nula navíc na ElevenLabs**) · stopa obsahu instrukce
+ve čtení naopak o něco **silnější** (+0,18 proti +0,11 slova na čtení).
+⚠️ **Poprvé změřeno, jestli registr vůbec něco dělá** (osa `register` byla dosud prázdná):
+dělá, ale **slabě** — široké echo 20 % proti podlaze 8–11 %. Globální podobnostní metrika ho
+nevidí vůbec (0,239 proti šumové podlaze 0,250), takže „registr nic nedělá" **neplatí**; platí
+„jeho stopa je pod rozlišením té metriky".
+⚠️ **Přiznané riziko, které si vynutil registr pravidel ㉜:** věty [2] a [3] mluví o „**the**
+decision" a „**the** friction" — ten určitý člen měl antecedent v odebrané nálepce. Nově se
+opírá o otázku uživatele. Ve vzorku se to neprojevilo (**0/4 v obou verzích**, tytéž závěry),
+ale **n = 4 není důkaz**: kdyby u registrů Confirmation / Insight into Challenge stouplo studené
+čtení, tohle je první podezřelý.
+**Affected doc(s):** `RUNAR_EVAL_LOG.md` (rejstřík pák, řádek `register`) — opraveno v témž commitu.
+**Ověřeno:** 6 cest (single/norns/yggdrasil × en/is) protlačeno — nálepka i hlídač pryč, instrukce
+přítomna · `check-is.py` OK · smoke **36/36** (⑧ `verify_contract_wiring` má novou kotvu, ㉜ registr
+pravidel přepsán po přezkoumání).

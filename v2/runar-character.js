@@ -884,23 +884,28 @@ function _registerContext(seeking, lang) {
   if (idx === -1) idx = (SEEKS.is || []).indexOf(s);
   if (idx === -1) return '';
   var mapIs = [
-    'Leitandinn biður um almenna leiðsögn — láttu rúnina leiða hvert sem hún vill; þvingaðu ekki fram tilgang.',
-    'Leitandinn biður um skýrleika — dragðu eitt skýrt fram, ekki eitt svar; skerptu það sem máli skiptir, en ákvörðunin er leitandans.',
-    'Leitandinn leitar staðfestingar eða hefur tekið ákvörðun — hvorki staðfestu né hrektu; lýstu jarðveginum undir ákvörðuninni og því sem myndin lætur standa rétt utan rammans.',
-    'Leitandinn biður um innsýn í áskorun — nefndu núninginn heiðarlega, án þess að mýkja hann í huggun.',
-    'Leitandinn biður um hugleiðingu — opnaðu spegil, ekki svar; snúðu viðmælandanum inn á við.',
+    'Láttu rúnina leiða hvert sem hún vill; þvingaðu ekki fram tilgang.',
+    'Dragðu eitt skýrt fram, ekki eitt svar; skerptu það sem máli skiptir, en ákvörðunin er leitandans.',
+    'Hvorki staðfestu né hrektu; lýstu jarðveginum undir ákvörðuninni og því sem myndin lætur standa rétt utan rammans.',
+    'Nefndu núninginn heiðarlega, án þess að mýkja hann í huggun.',
+    'Opnaðu spegil, ekki svar; snúðu viðmælandanum inn á við.',
   ];
   var mapEn = [
-    'The seeker asks for general guidance — let the rune lead where it will; do not force a purpose.',
-    'The seeker asks for clarity — bring one thing into focus, not one answer; sharpen what matters and leave the deciding to them.',
-    'The seeker looks for confirmation, or has made up their mind — neither confirm nor refute; describe the ground beneath the decision and what the image leaves standing just out of frame.',
-    'The seeker asks for insight into challenge — name the friction honestly, without softening it into comfort.',
-    'The seeker asks for reflection — open a mirror, not an answer; turn them inward.',
+    'Let the rune lead where it will; do not force a purpose.',
+    'Bring one thing into focus, not one answer; sharpen what matters and leave the deciding to them.',
+    'Neither confirm nor refute; describe the ground beneath the decision and what the image leaves standing just out of frame.',
+    'Name the friction honestly, without softening it into comfort.',
+    'Open a mirror, not an answer; turn them inward.',
   ];
-  var stance = (lang === 'is')
-    ? 'Þetta er tilhneiging, ekki pöntun — endurtaktu hana ekki né afhentu sem hlut; láttu hana aðeins lita tóninn.'
-    : 'This is a leaning, not an order — do not name it back or hand it over as a thing; let it colour the tone only.';
-  return stance + ' ' + (lang === 'is' ? mapIs : mapEn)[idx];
+  // 2026-09-08: PRYC 26slovny hlidac („nenaznac to zpatky") A nalepka registru
+  // („The seeker asks for clarity — "). Hlidac hlidal slovo, ktere tam napsal TYZ prompt
+  // o osm slov driv; kdyz nalepka odejde, neni co hlidat — vada se odebrala, nepridalo se
+  // pravidlo. Zmereno (korpus seeking.jsonl, 4 runy x 5 registru x 2 verze, tyz seed):
+  // blok 45 -> 12 slov · echo nalepky 0/20 v OBOU verzich (hlidac tedy nic nedrzel) ·
+  // tvar vystupu beze zmeny (64,0 -> 63,5 slova, 341 -> 335 znaku, tedy nula navic na EL) ·
+  // stopa obsahu instrukce ve cteni naopak o neco SILNEJSI (+0,18 proti +0,11 slova/cteni).
+  // Tataz operace jako u AREA 2026-08-21: prestat to pojmenovavat, nechat jen to, co dela praci.
+  return (lang === 'is' ? mapIs : mapEn)[idx];
 }
 
 // Address gender (modern Icelandic): kk (karlkyn) / kvk (kvenkyn) / hk (hvorugkyn, han = default).
@@ -1473,7 +1478,12 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
     u.area    ? S.area + ': ' + u.area : '',
-    u.seeking ? S.seeking + ': ' + (Array.isArray(u.seeking) ? u.seeking.join(S.seekJoin) : u.seeking) : '',
+    // 2026-09-08: hlavicka „Seeking: X" odebrana. Spready hodnotu pojmenovavaly
+    // DVAKRAT (tady + nalepka v _registerContext), single jen jednou — dolozeno
+    // uz 2026-08-15 (docs/findings/2026-08-15-wf_62679055-021.md): „prompt tu vec
+    // sam vylozi na stul a o dva radky niz zakaze ji vyslovit". Po odebrani obou
+    // maji spready TYZ tvar registru jako single — tedy ten, na kterem se merilo.
+    // Popisky S.seeking/seekJoin v packach zustavaji: jsou to data, ne chovani.
     u.intention ? _intentionContext(u.intention, lang) : '',
     u.question ? S.question + ': ' + u.question : '',
   ].filter(Boolean).join('\n');
@@ -1562,7 +1572,12 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
     u.area    ? S.area + ': ' + u.area : '',
-    u.seeking ? S.seeking + ': ' + (Array.isArray(u.seeking) ? u.seeking.join(S.seekJoin) : u.seeking) : '',
+    // 2026-09-08: hlavicka „Seeking: X" odebrana. Spready hodnotu pojmenovavaly
+    // DVAKRAT (tady + nalepka v _registerContext), single jen jednou — dolozeno
+    // uz 2026-08-15 (docs/findings/2026-08-15-wf_62679055-021.md): „prompt tu vec
+    // sam vylozi na stul a o dva radky niz zakaze ji vyslovit". Po odebrani obou
+    // maji spready TYZ tvar registru jako single — tedy ten, na kterem se merilo.
+    // Popisky S.seeking/seekJoin v packach zustavaji: jsou to data, ne chovani.
     u.intention ? _intentionContext(u.intention, lang) : '',
     u.question ? S.question + ': ' + u.question : '',
   ].filter(Boolean).join('\n');
@@ -1637,7 +1652,12 @@ function buildHorseshoePromptSeven(u, runes, lang, corrections) {
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
     u.area    ? S.area + ': ' + u.area : '',
-    u.seeking ? S.seeking + ': ' + (Array.isArray(u.seeking) ? u.seeking.join(S.seekJoin) : u.seeking) : '',
+    // 2026-09-08: hlavicka „Seeking: X" odebrana. Spready hodnotu pojmenovavaly
+    // DVAKRAT (tady + nalepka v _registerContext), single jen jednou — dolozeno
+    // uz 2026-08-15 (docs/findings/2026-08-15-wf_62679055-021.md): „prompt tu vec
+    // sam vylozi na stul a o dva radky niz zakaze ji vyslovit". Po odebrani obou
+    // maji spready TYZ tvar registru jako single — tedy ten, na kterem se merilo.
+    // Popisky S.seeking/seekJoin v packach zustavaji: jsou to data, ne chovani.
     u.intention ? _intentionContext(u.intention, lang) : '',
     u.question ? S.question + ': ' + u.question : '',
   ].filter(Boolean).join('\n');
@@ -1725,7 +1745,12 @@ function buildYggdrasilPromptNine(u, runes, lang, corrections) {
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
     u.area    ? S.area + ': ' + u.area : '',
-    u.seeking ? S.seeking + ': ' + (Array.isArray(u.seeking) ? u.seeking.join(S.seekJoin) : u.seeking) : '',
+    // 2026-09-08: hlavicka „Seeking: X" odebrana. Spready hodnotu pojmenovavaly
+    // DVAKRAT (tady + nalepka v _registerContext), single jen jednou — dolozeno
+    // uz 2026-08-15 (docs/findings/2026-08-15-wf_62679055-021.md): „prompt tu vec
+    // sam vylozi na stul a o dva radky niz zakaze ji vyslovit". Po odebrani obou
+    // maji spready TYZ tvar registru jako single — tedy ten, na kterem se merilo.
+    // Popisky S.seeking/seekJoin v packach zustavaji: jsou to data, ne chovani.
     u.intention ? _intentionContext(u.intention, lang) : '',
     u.question ? S.question + ': ' + u.question : '',
   ].filter(Boolean).join('\n');

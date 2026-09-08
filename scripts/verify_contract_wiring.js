@@ -71,7 +71,15 @@ const PARTS = {
   // `times()` niz hlida, ze v jednom promptu je prave JEDNA — ne obe naraz.
   domain:   ['This reading is about:', 'Þessi lestur snýst um:',
              'The reading is for', 'Þessi lestur er fyrir'],
-  register: ['This is a leaning, not an order', 'Þetta er tilhneiging, ekki pöntun'],
+  // 2026-09-08: registr uz nema spolecnou uvodni vetu — hlidac i nalepka odebrany
+  // (duvod u _registerContext v runar-character.js). Kotvi se proto na pet vet, ktere
+  // ten blok jeste ma; `.some()` staci, ze sedi jedna, a `times()` dal hlida, ze prave jedna.
+  register: ['Let the rune lead where it will', 'Bring one thing into focus',
+             'Neither confirm nor refute', 'Name the friction honestly',
+             'Open a mirror, not an answer',
+             'Láttu rúnina leiða hvert sem hún vill', 'Dragðu eitt skýrt fram',
+             'Hvorki staðfestu né hrektu', 'Nefndu núninginn heiðarlega',
+             'Opnaðu spegil, ekki svar'],
   priority: ['do not gather into one natural image', 'rennur ekki saman í eina náttúrlega mynd'],
   coldread: ['NO COLD READING', 'ENGIN KÖLD LESNING'],
 };

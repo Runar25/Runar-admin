@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
- "zapsano": "2026-09-06",
- "prompt_version": "v4.15-ask90",
+ "zapsano": "2026-09-08",
+ "prompt_version": "v4.16-seek",
  "pravidla": [
   {
    "hash": "54d29df4d80b",
@@ -160,34 +160,34 @@
    "zacatek": "The reading is for Crossroads & Decisions — let the image you were giv"
   },
   {
-   "hash": "64368b2a8fd1",
+   "hash": "38d99bf2c1ae",
    "lang": "en",
    "zdroj": "registr[0]",
-   "zacatek": "This is a leaning, not an order — do not name it back or hand it over "
+   "zacatek": "Let the rune lead where it will; do not force a purpose."
   },
   {
-   "hash": "aeeb66ac4c9f",
+   "hash": "451b2ce11061",
    "lang": "en",
    "zdroj": "registr[1]",
-   "zacatek": "This is a leaning, not an order — do not name it back or hand it over "
+   "zacatek": "Bring one thing into focus, not one answer; sharpen what matters and l"
   },
   {
-   "hash": "784e95537694",
+   "hash": "a1933484766b",
    "lang": "en",
    "zdroj": "registr[2]",
-   "zacatek": "This is a leaning, not an order — do not name it back or hand it over "
+   "zacatek": "Neither confirm nor refute; describe the ground beneath the decision a"
   },
   {
-   "hash": "73b632113884",
+   "hash": "e2bbed20f0d4",
    "lang": "en",
    "zdroj": "registr[3]",
-   "zacatek": "This is a leaning, not an order — do not name it back or hand it over "
+   "zacatek": "Name the friction honestly, without softening it into comfort."
   },
   {
-   "hash": "9c8e95f1248a",
+   "hash": "0abb92699c05",
    "lang": "en",
    "zdroj": "registr[4]",
-   "zacatek": "This is a leaning, not an order — do not name it back or hand it over "
+   "zacatek": "Open a mirror, not an answer; turn them inward."
   },
   {
    "hash": "283031d328cb",
@@ -682,34 +682,34 @@
    "zacatek": "Þessi lestur er fyrir Vegamót & Ákvarðanir — láttu myndina sem þú fékk"
   },
   {
-   "hash": "3a7691082809",
+   "hash": "a9561c454c67",
    "lang": "is",
    "zdroj": "registr[0]",
-   "zacatek": "Þetta er tilhneiging, ekki pöntun — endurtaktu hana ekki né afhentu se"
+   "zacatek": "Láttu rúnina leiða hvert sem hún vill; þvingaðu ekki fram tilgang."
   },
   {
-   "hash": "809d75bd0df9",
+   "hash": "ca50f6419a2b",
    "lang": "is",
    "zdroj": "registr[1]",
-   "zacatek": "Þetta er tilhneiging, ekki pöntun — endurtaktu hana ekki né afhentu se"
+   "zacatek": "Dragðu eitt skýrt fram, ekki eitt svar; skerptu það sem máli skiptir, "
   },
   {
-   "hash": "e575dcb3318b",
+   "hash": "d241259fd492",
    "lang": "is",
    "zdroj": "registr[2]",
-   "zacatek": "Þetta er tilhneiging, ekki pöntun — endurtaktu hana ekki né afhentu se"
+   "zacatek": "Hvorki staðfestu né hrektu; lýstu jarðveginum undir ákvörðuninni og þv"
   },
   {
-   "hash": "36461a0dd531",
+   "hash": "299dd844cdda",
    "lang": "is",
    "zdroj": "registr[3]",
-   "zacatek": "Þetta er tilhneiging, ekki pöntun — endurtaktu hana ekki né afhentu se"
+   "zacatek": "Nefndu núninginn heiðarlega, án þess að mýkja hann í huggun."
   },
   {
-   "hash": "9149fabb0419",
+   "hash": "4b9143060025",
    "lang": "is",
    "zdroj": "registr[4]",
-   "zacatek": "Þetta er tilhneiging, ekki pöntun — endurtaktu hana ekki né afhentu se"
+   "zacatek": "Opnaðu spegil, ekki svar; snúðu viðmælandanum inn á við."
   },
   {
    "hash": "cd0f9ee5af58",
