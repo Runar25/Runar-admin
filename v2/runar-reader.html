@@ -283,8 +283,12 @@
              (čte ho jen runar-reporter.js). Měřeno 2026-08-16: volný text ukotví čtení
              +8,8 b., kdežto výběr z nabídky +2,7 b. — proto se vyplatí navést, jak psát. -->
         <p class="note" id="q-hint">Tell Rúnar where you stand now — not what is to come.</p>
-        <!-- maxlength 160 = táž míra jako `ask-input`; ta plocha má nejčistší výstup v celém
-             systému (4 % nároků na vnitřní stav proti 23 % u čtení), takže je odzkoušená.
+        <!-- maxlength 160 = táž míra jako `ask-input`; ta plocha je ze tří měřených
+             nejčistší (nároky na vnitřní stav), takže je odzkoušená. ⚠️ Do 2026-09-08 tu
+             stálo „4 % proti 23 % u čtení" — to 23 % byl MEZIVÝSLEDEK, který týž den (16. 8.)
+             zneplatnila oprava detektoru („dřívější hodnoty z dneška neplatí"; `finnur` = najde
+             se počítalo jako nárok na nitro). Platná čísla drží rejstřík pák v RUNAR_EVAL_LOG.md,
+             řádek `angle` — a tenhle komentář je záměrně NEOPISUJE (§20).
              Do 2026-08-16 tu limit nebyl žádný. Není to bezpečnostní hranice — prompt se staví
              v klientovi — ale drží UI cestu v rozumné délce. Strop je v proxy (8000 znaků). -->
         <input class="txt" id="r-question" type="text" maxlength="160" placeholder="e.g. I am deciding whether to take on more work">
