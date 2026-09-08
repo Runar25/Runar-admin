@@ -483,24 +483,64 @@ async function readRune() {
 var _askUsed = false;
 var _lastReadingId = null;   // id of the last saved reading — links an Ask Runar follow-up to it
 var _askPhIdx = -1;
-var _askPhTimer = null;
-// Rotace ukazek po ~3 s (KUKY 8.9.). Do te doby se index posouval JEN pri otevreni Ask,
-// takze kdo si otevrel jedno cteni, videl jedinou ukazku ze sedmi.
-// Zastavuje se sama, jakmile by prekazela: pole ma fokus, uzivatel uz pise, nebo je Ask
-// zavreny. Menici se text pod rukama je ruseni, ne napoveda — proto ty tri podminky.
-function _askPhStop() { if (_askPhTimer) { clearInterval(_askPhTimer); _askPhTimer = null; } }
+// ── ROTACE UKAZEK FORMULACE (KUKY 8.9.) ───────────────────────────────────────
+// Cyklus 5 s: 1 s prichod · 3 s stani · 1 s odchod. Prolinani jde pres `::placeholder`
+// (trida `ph-out` v runar-reader.css), NE pres prekryvny prvek — prekryv by se musel
+// trefit do paddingu a fontu pole a pri kazde zmene stylu by se tise rozesel.
+// Kde prohlizec ::placeholder neanimuje, text se jen prostrida; nic se nerozbije.
+// Jeden rotator slouzi obema polim (ask-input i r-question) — dve skoro stejne funkce
+// je presne to, co §18 zakazuje.
+var _phTimers = {};
+function _phStop(id) {
+  var t = _phTimers[id];
+  if (!t) return;
+  clearInterval(t.cyklus); clearTimeout(t.odchod);
+  var el = document.getElementById(id);
+  if (el && el.classList) el.classList.remove('ph-out');
+  delete _phTimers[id];
+}
+// `seznam` je FUNKCE, ne pole: pri prepnuti jazyka se tim vezme nova sada sama,
+// bez restartu zvenci (§14 — dynamicky obsah nepatri do updateUIText).
+function _phRotate(id, seznam, idx0) {
+  _phStop(id);
+  var el0 = document.getElementById(id);
+  if (!el0 || el0.disabled) return;          // teaser / zamcene pole: nerotovat
+  var i = (typeof idx0 === 'number') ? idx0 : 0;
+  var t = { cyklus: null, odchod: null };
+  _phTimers[id] = t;
+  // Zastavi se, jakmile by prekazela: pole zmizelo, ma fokus, nebo se do nej pise.
+  // Menici se text pod rukama je ruseni, ne napoveda.
+  function zivy(el) {
+    return el && !el.disabled && !el.value && el.offsetParent !== null
+      && document.activeElement !== el;
+  }
+  function krok() {
+    var el = document.getElementById(id);
+    if (!zivy(el)) { _phStop(id); return; }
+    var s = seznam() || [];
+    if (!s.length) { _phStop(id); return; }
+    el.placeholder = s[i % s.length];
+    i++;
+    el.classList.remove('ph-out');                       // 1 s prichod
+    t.odchod = setTimeout(function () {                  // 3 s stani, pak 1 s odchod
+      var e2 = document.getElementById(id);
+      if (zivy(e2)) e2.classList.add('ph-out');
+    }, 4000);
+  }
+  // Casovac se zaklada PRED prvnim krokem: kdyby krok() rovnou zjistil, ze pole neni
+  // videt, zavolal by _phStop() nad jeste neexistujicim handlem — a interval zalozeny
+  // az potom by uz nemel kdo uklidit a bezel by donekonecna nad skrytym polem.
+  // Nasel to seed-and-assert s falesnymi hodinami, ne cteni kodu.
+  t.cyklus = setInterval(krok, 5000);
+  krok();
+}
+function _askPhStop() { _phStop('ask-input'); }
 function _askPhStart() {
-  _askPhStop();
-  var inp0 = document.getElementById('ask-input');
-  if (!inp0 || inp0.disabled) return;   // teaser: pole je mrtve, nerotovat
-  _askPhTimer = setInterval(function () {
-    var el = document.getElementById('ask-input');
-    var panel = document.getElementById('ask-runar');
-    if (!el || el.disabled || !panel || panel.style.display === 'none'
-        || el.value || document.activeElement === el) { _askPhStop(); return; }
-    _askPhIdx++;
-    el.placeholder = _askPlaceholder();
-  }, 3000);
+  _askPhIdx++;   // kazde otevreni Ask zacina jinde v sade, at to neni porad tataz prvni
+  _phRotate('ask-input', function () {
+    return (typeof UI_TEXT !== 'undefined' && UI_TEXT[lang] && UI_TEXT[lang].ask_placeholders)
+      || (typeof UI_TEXT !== 'undefined' && UI_TEXT.en && UI_TEXT.en.ask_placeholders) || [];
+  }, _askPhIdx);
 }
 function _askPlaceholder() {
   var phs = (typeof UI_TEXT !== 'undefined' && UI_TEXT[lang] && UI_TEXT[lang].ask_placeholders)

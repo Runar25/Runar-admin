@@ -85,6 +85,15 @@ const UI_TEXT = {
     // na kterou Runar umi odpovedet, a otazkou, kterou musi odmitnout (G2b no-fate).
     q_hint:           'Tell Rúnar where you stand now — not what is to come.',
     q_ph:             'e.g. I am deciding whether to take on more work',
+    // 2026-09-08: ukazky, JAK napsat otazku (handoff #55). Rotuji, viz _phRotate.
+    q_placeholders:   ['I keep putting off a conversation I need to have.',
+                       'Something in my relationship feels unsettled, and I do not know why.',
+                       'I am standing at a fork between staying and leaving.',
+                       'I feel disconnected from something that used to matter to me.',
+                       'I am carrying a decision about my family that I have not made yet.',
+                       'I do not know if I am ready for the change that is coming.',
+                       'I have been avoiding looking closely at where I am right now.',
+                       'I am deciding whether to take on more work.'],
     // Staticke upozorneni — NENI Runarovym hlasem zamerne. Runar sam na popis
     // priznaku reagovat nema: komentoval by tim necí telo, coz mu _noColdRead
     // a zakaz rad zakazuji (rozhodnuto s ownerem 2026-08-16). Tohle mluvi APPKA.
@@ -375,6 +384,14 @@ const UI_TEXT = {
     // GreynirCorrect 0 flagu. Vymysleno islandsky, ne prelozeno (§2).
     q_hint:           'Segðu Rúnari hvar þú stendur núna, ekki hvað verður.',
     q_ph:             'T.d. Ég er að ákveða hvort ég eigi að taka að mér meiri vinnu',
+    q_placeholders:   ['Ég fresta stöðugt samtali sem ég þarf að eiga.',
+                       'Eitthvað í sambandinu er ekki í jafnvægi og ég veit ekki af hverju.',
+                       'Ég stend á krossgötum milli þess að vera og fara.',
+                       'Ég finn ekki lengur tenginguna við það sem skipti mig máli áður.',
+                       'Ég á eftir að taka ákvörðun um fjölskylduna mína.',
+                       'Ég veit ekki hvort ég treysti mér í breytinguna sem er í vændum.',
+                       'Ég hef forðast að horfa almennilega á það hvar ég stend núna.',
+                       'Ég er að ákveða hvort ég eigi að taka að mér meiri vinnu.'],
     // Vymysleno islandsky, ne prelozeno (§2). Overeno: 'til umhugsunar' 10432 vyskytu,
     // 'faglega ráðgjöf' 626 (Risamalheild 2000-2021); GreynirCorrect 0 priznaku.
     disclaimer:       'Rúnar býður lestur til umhugsunar, ekki faglega ráðgjöf.',

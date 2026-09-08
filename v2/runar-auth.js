@@ -232,6 +232,16 @@ function updateQuestionGate() {
   qSection.style.display = canAsk ? 'block' : 'none';
   qTeaser.style.display  = 'none'; // hidden until Premium decision is made
   if (!canAsk && qInput) qInput.value = '';
+  // 2026-09-08: ukazky formulace rotuji jen tam, kde je pole doopravdy videt.
+  // Brana je jedine misto, kde se to pole odemyka — proto se rotace zapina tady,
+  // ne pri startu appky (jinak by bezel casovac nad skrytym polem).
+  if (typeof _phRotate === 'function') {
+    if (canAsk) _phRotate('r-question', function () {
+      return (typeof UI_TEXT !== 'undefined' && UI_TEXT[lang] && UI_TEXT[lang].q_placeholders)
+        || (typeof UI_TEXT !== 'undefined' && UI_TEXT.en && UI_TEXT.en.q_placeholders) || [];
+    });
+    else if (typeof _phStop === 'function') _phStop('r-question');
+  }
 }
 
 function handleAuthBtn() {

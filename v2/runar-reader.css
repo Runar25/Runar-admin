@@ -436,6 +436,13 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .txt{width:100%;background:transparent;border:none;border-bottom:1px solid var(--border2);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.1em;padding:10px 0;}
 .txt:focus{outline:none;border-bottom-color:var(--gold);}
 .txt::placeholder{color:var(--dim);}
+/* 2026-09-08: ukazky formulace se PROLINAJI (KUKY: 1 s prichod, 3 s stani, 1 s odchod).
+   Fade jde pres ::placeholder, ne pres prekryvny prvek — prekryv by se musel trefit do
+   paddingu a fontu pole a pri kazde zmene stylu by se tise rozesel. Kde prohlizec
+   ::placeholder neanimuje, text se jen prostrida; degraduje to do dnesniho chovani.
+   Casovani vlastni _phRotate v runar-reading.js — tady je jen delka prechodu. */
+.txt::placeholder,.ask-input::placeholder{transition:opacity 1s linear;}
+.txt.ph-out::placeholder,.ask-input.ph-out::placeholder{opacity:0;}
 .num{background:#080e18;border:1px solid var(--border);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.05em;padding:10px 12px;width:100%;outline:none;}
 .num:focus{border-color:var(--gold);}
 .num::placeholder{color:var(--dim);}

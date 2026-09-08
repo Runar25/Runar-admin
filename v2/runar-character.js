@@ -545,6 +545,8 @@ var RUNE_IMAGES = [
   ['Hagalaz','any','Áin bólgnar á einni nóttu og tekur með sér það sem stóð of nálægt bakkanum.','The river swells overnight and takes with it whatever stood too near the bank.','náttúruöfl','disruption','E'],
   ['Sowilo','bright','Miðnætursólin heldur túninu björtu langt fram yfir háttatíma.','The midnight sun keeps the hayfield bright long after bedtime.','sól','sun','E','midnight-sun'],
   ['Sowilo','cold','Fyrsti sólargeisli ársins snertir fjallstindinn eftir langa skammdegið.','The year\'s first ray of sun touches the mountain peak after the long midwinter dark.','sól','sun','E'],
+  ['Sowilo','cold','Lág vetrarsól glampar á ísilögðum polli um hádegi.','A low winter sun glints on a frozen puddle at midday.','skýrleiki','clarity','E'],
+  ['Sowilo','cold','Sólin nær loks niður í dalinn og lýsir upp bæinn litla stund.','The sun finally reaches down into the valley and lights up the farm for a little while.','sól','sun','P'],
   ['Raidho','any','Vörðurnar standa hver við aðra yfir alla heiðina, hver sést frá þeirri síðustu.','The cairns stand each within sight of the next across the whole heath, each seen from the one before.','leið','the road','P'],
   ['Raidho','any','Vegurinn liðast með ánni og hverfur fyrir næstu beygju.','The road winds along the river and disappears around the next bend.','leið','movement','P'],
   ['Isa','any','Lognið liggur á firðinum og ekkert bærist, ekki einu sinni fuglinn á steininum.','The calm lies over the fjord and nothing stirs, not even the bird on the rock.','kyrrstaða','stillness','E'],
