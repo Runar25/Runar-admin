@@ -2108,3 +2108,29 @@ není vůbec, kdežto dnes 42 % — to je záměrná personalizace, ne vada.
 2. **Míň vsuvek** (cíl ~0,7 čárky na větu místo 1,0) — jedna myšlenka na větu, dlouhá věta smí
    být, ale nesmí být rozvětvená.
 Obojí nemění délku čtení, tedy **nestojí ani halíř na ElevenLabs** — narozdíl od pátých vět.
+
+## 2026-09-08 — TEST HUTNOST v1 → v2 · páka „krátký nádech" spravena, páka „míň vsuvek" NE
+Dvě páky vytažené ze statických čtení, zkoušené **jen v harnessu, do produkce nesaženo**
+(owner: „zatím jen tady"). Baseline = cela BASE z TESTu ABLACE, tytéž runy, **týž seed**.
+Korpusy `~/runar-eval/hutnost.jsonl` · `hutnost2.jsonl`. <!-- doc-links:ok 2026-09-08 korpusy mimo repo (~/runar-eval), checker home neresi -->
+| | první věta | čárek/větu | slov | cena |
+|---|---|---|---|---|
+| dnešek | 17,5 | 1,17 | 46 | — |
+| **v1** „asi 14 slov" + „nejvýš 1 čárka" | **10,5** ↓přestřelil | 1,00 | 48 | beze změny |
+| **v2** „ne víc než 15" + „one thought, no asides" | **13,0** ✓ | 1,00 | 46 | beze změny |
+| statická (cíl) | 14 | 0,67 | 51 | — |
+⭐ **Páka 1 opravena ownerovou úpravou.** „Asi čtrnáct" model četl jako cíl a mířil doprostřed
+(10,5); **horní mez „ne víc než patnáct" ho posadila na 13,0.** Poučení šířeji: **cílové číslo
+v promptu se čte jako střed rozsahu, mez se čte jako mez.**
+⚠️ **Páka 2 nedojela ani po přeformulování — 1,00 v obou verzích.** Ownerova diagnóza formule
+ale byla správná a projevila se v ROZPTYLU: v1 dala **přesně 3 čárky ve všech čtyřech** čteních
+(počitatelné pravidlo se plní počítáním), v2 dala 3-3-4-3. Tuhost zmizela, číslo ne.
+→ **Hypotéza k prověření (neověřeno):** 0,67 čárky na větu možná NENÍ dosažitelné instrukcí —
+je to vlastnost STARÉHO hlasu statických čtení, a ten měl zároveň radu v 79 %. Honit ten cíl
+může znamenat honit vlastnost, kterou nechceme. **Než se páka 2 zkusí potřetí, měl by někdo
+ukázat, že věta s 1,0 čárky je horší než s 0,67** — dosud to nikdo neměřil, jen se to odvodilo
+z profilu statických.
+**Ukázka (Eihwaz, týž seed):** dnešek *„The rowan by the farmhouse leans in the wind but holds
+its footing, root deep in the old ground."* (19 slov) → v2 *„The rowan leans in the wind but its
+crown never goes all the way down."* (15 slov), a závěr *„What you are looking for, Kuky, is
+already standing in the ground beneath your feet."*
