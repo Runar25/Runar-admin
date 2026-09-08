@@ -777,25 +777,35 @@ Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je 
 
 ## Vegvísir (Cowork návrh 2026-08-15 · konsolidace 2026-08-22 · AKTIVNÍ TÉMA)
 
-- [ ] **Rameno = JEDNO čtení. Mezi rameny má člověk možnost se Rúnara zeptat** (KUKY 2026-09-08).
-  - **Jedno rameno = jedno čtení.** Ne balík, ne čtení plus dovětek — jeden text.
-  - **Každý 3. den** má uživatel možnost položit Rúnarovi **jednu otázku k tomu čtení** — otázku,
-    která mu pomůže mu líp porozumět. Porozumění se tedy neodehrává uvnitř čtení, ale **mezi rameny**.
-  ⭐ **Tahle vrstva UŽ JE POSTAVENÁ — nic nového se pro ni stavět nemusí** (ověřeno v kódu 2026-09-08):
-  Ask je dnes přesně „jedna otázka na jedno čtení" (`RP_ASK` „ONE follow-up question" + `legitAsk`
-  v `claude-proxy:531` dává jeden Ask na čtení mimo měsíční strop). Osm ramen = osm čtení = osm
-  legitimních Asků. Odpověď i otázka se ukládají do `follow_up` **na řádek toho ramene**, takže
-  „co člověk k tomu rameni chtěl pochopit" je persistované a strukturované už teď.
-  · Ask má od 2026-09-08 **90 slov** (v4.15-ask90) a klauzule „vždy kratší než čtení" byla **odstraněna**
-    — důvod pro původních ~40 slov byl hlas, a *Ask hlas nemá* (KUKY). Teprve tím má Ask dost
-    místa, aby unesl roli vysvětlující vrstvy Vegvísiru; se 40 slovy by to nešlo.
-  ⚠️ **Naráží to na tvrdý limit níž:** materiál v `follow_up` sice existuje, ale **nikdo ho nečte
-    zpátky do promptu**. Takže tahle vrstva umí člověku pomoct rozumět JEDNOMU rameni; k tomu, aby
-    se to, co pochopil, promítlo do ramene dalšího, chybí táž cesta jako u neseného materiálu.
-  ⚠️ **NEDOVOZENO, k upřesnění u ownera:** je „každý 3. den" **kadence ramen** (8 ramen × 3 dny
-    = 24 dní), nebo okno pro Ask uvnitř jiné kadence? Ratifikovaný rámec říká „8 ramen × min
-    9 nocí"; 3denní krok s ním nejde sloučit bez rozhodnutí. Nedomýšlím (§23).
-    Ownerova věta zůstala nedokončená („tím budou…") — nedoplňuji ji.
+- [ ] **Rameno = JEDNO čtení. V devíti nocích ramene DVA Asky** (KUKY 2026-09-08).
+  Kadence jednoho ramene: **den 0 čtení → den 3 Ask → den 6 Ask → den 9 nové rameno.**
+  Ramena tedy zůstávají na ratifikovaných **9 nocích**; „každý 3. den" je okno pro Ask, ne kadence
+  ramen. Celkem: 8 ramen × 9 nocí = min. **72 nocí** · 8 × 2 = **16 Asků na jednu pouť**.
+  Porozumění se neodehrává uvnitř textu ramene, ale **mezi rameny**.
+
+  ⚠️ **OPRAVA MÉHO VLASTNÍHO ZÁPISU Z TÉHOŽ DNE.** Napsal jsem sem, že „tahle vrstva už je
+  postavená a nic nového se pro ni stavět nemusí". **Není to pravda.** Ověřil jsem prompt
+  a úložiště, ale ne **DOSAH** (§13 full-path). Co existuje a co ne:
+  - ✅ prompt `buildAskPrompt` + `RP_ASK` (90 slov od v4.15-ask90) · ✅ ukládání otázky i odpovědi
+    do `follow_up` na řádek toho čtení · ✅ proxy cesta `mode:'ask'` · ✅ výjimka z měsíčního
+    stropu pro **první** Ask na čtení
+  - ❌ **Na STARŠÍ čtení se zeptat NEJDE.** `_lastReadingId` (`v2/runar-reading.js:484`) se
+    nastaví jen při generování v téže page-session a reset ho maže; **`v2/runar-journal.js`
+    neobsahuje slovo „ask" ani jednou** — z deníku do Ask nevede vstup. Ask žije výhradně
+    v živém toku hned po vygenerování čtení. **Jenže každý Ask v téhle kadenci je ODLOŽENÝ**
+    (den 3 a den 6), takže dnes není možný **ani jeden z nich**.
+  - ❌ **Druhý Ask na totéž čtení.** Klient: `_askUsed` (`:539` / `:581`) pustí právě jeden.
+    Server: `legitAsk` (`supabase/functions/claude-proxy/index.ts:531`) je výjimka ze stropu
+    jen tehdy, když je `follow_up` prázdné — druhý Ask se tedy počítá do měsíčního stropu.
+
+  ⚠️ **Proč ten jedno-Askový limit existuje (§26 krok 2 — vada, kterou návrat nesmí vrátit):**
+  komentář u `legitAsk` to říká přímo — jinak by `mode:'ask'` na obyčejném čtení **obcházel
+  strop navždy**. Vegvísir tedy nepotřebuje zvednout číslo na 2 globálně, ale **ohraničenou
+  výjimku** vázanou na rameno Vegvísiru a stropovanou na dvě. Globální zvednutí tu díru otevře.
+
+  · **Ratifikováno ownerem 2026-09-08:** `follow_up` se do žádného promptu nevrací, takže tahle
+    vrstva pomůže pochopit JEDNO rameno, ale to pochopení se do dalšího ramene nepřenese —
+    naráží to na týž limit jako nesený materiál (viz níž).
 
 - [ ] ⛔ **TVRDÝ LIMIT: nesený materiál mezi rameny nemá v produkci ŽÁDNOU cestu** (CODE-read 2026-09-08, ověřeno v kódu; KUKY: „tohle může být důležité").
   Jádro Vegvísiru — obraz z ramene N vstupuje do vztahu s tím, co člověk už prošel — vyžaduje, aby se předchozí čtení dostalo do promptu toho následujícího. **Nic v kódu to nedělá.**
