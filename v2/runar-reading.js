@@ -483,6 +483,25 @@ async function readRune() {
 var _askUsed = false;
 var _lastReadingId = null;   // id of the last saved reading — links an Ask Runar follow-up to it
 var _askPhIdx = -1;
+var _askPhTimer = null;
+// Rotace ukazek po ~3 s (KUKY 8.9.). Do te doby se index posouval JEN pri otevreni Ask,
+// takze kdo si otevrel jedno cteni, videl jedinou ukazku ze sedmi.
+// Zastavuje se sama, jakmile by prekazela: pole ma fokus, uzivatel uz pise, nebo je Ask
+// zavreny. Menici se text pod rukama je ruseni, ne napoveda — proto ty tri podminky.
+function _askPhStop() { if (_askPhTimer) { clearInterval(_askPhTimer); _askPhTimer = null; } }
+function _askPhStart() {
+  _askPhStop();
+  var inp0 = document.getElementById('ask-input');
+  if (!inp0 || inp0.disabled) return;   // teaser: pole je mrtve, nerotovat
+  _askPhTimer = setInterval(function () {
+    var el = document.getElementById('ask-input');
+    var panel = document.getElementById('ask-runar');
+    if (!el || el.disabled || !panel || panel.style.display === 'none'
+        || el.value || document.activeElement === el) { _askPhStop(); return; }
+    _askPhIdx++;
+    el.placeholder = _askPlaceholder();
+  }, 3000);
+}
 function _askPlaceholder() {
   var phs = (typeof UI_TEXT !== 'undefined' && UI_TEXT[lang] && UI_TEXT[lang].ask_placeholders)
     || (typeof UI_TEXT !== 'undefined' && UI_TEXT.en && UI_TEXT.en.ask_placeholders)
@@ -518,6 +537,7 @@ function _showAsk() {
   _askPhIdx++;  // rotate the placeholder each time the ask opens
   var inp = document.getElementById('ask-input');
   if (inp) { inp.value = ''; inp.placeholder = _askPlaceholder(); inp.disabled = teaser; }
+  _askPhStart();
   var wrap = document.getElementById('ask-input-wrap'); if (wrap) wrap.style.display = '';
   var qEl2 = document.getElementById('ask-question'); if (qEl2) { qEl2.textContent = ''; qEl2.style.display = 'none'; }
   var ans = document.getElementById('ask-answer'); if (ans) { ans.textContent = ''; ans.style.display = 'none'; }
@@ -579,6 +599,7 @@ async function askRunar() {
   answer = _trimToSentence(answer);  // FU pojistka: nikdy useknuty fragment
   if (_askJournal && res && !res.error && !res.ask_saved) { _pendAdd('pendingAsks', { id: _askEntryId, reading_id: _lastReadingId, question: q, answer: answer }); _flushPending(); }
   _askUsed = true;
+  _askPhStop();   // otazka polozena -> pole mizi, timer nema co delat
   var wrap = document.getElementById('ask-input-wrap'); if (wrap) wrap.style.display = 'none'; // one question -> close
   var qEl = document.getElementById('ask-question'); if (qEl) { qEl.textContent = q; qEl.style.display = 'block'; } // keep the question visible
   var ans = document.getElementById('ask-answer'); if (ans) { ans.textContent = ''; ans.style.display = 'block'; }
