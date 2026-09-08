@@ -777,6 +777,22 @@ Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je 
 
 ## Vegvísir (Cowork návrh 2026-08-15 · konsolidace 2026-08-22 · AKTIVNÍ TÉMA)
 
+- [ ] ⛔ **TVRDÝ LIMIT: nesený materiál mezi rameny nemá v produkci ŽÁDNOU cestu** (CODE-read 2026-09-08, ověřeno v kódu; KUKY: „tohle může být důležité").
+  Jádro Vegvísiru — obraz z ramene N vstupuje do vztahu s tím, co člověk už prošel — vyžaduje, aby se předchozí čtení dostalo do promptu toho následujícího. **Nic v kódu to nedělá.**
+  - `follow_up` to dokazuje nejsilněji: i **Ask**, který visí PŘÍMO na svém čtení, se do žádného promptu nevrací — čte se jen kvůli meteringu (`claude-proxy` `legitAsk`, :531) a do shrine prohlížeče.
+  - Ask je navíc **jedna výměna na čtení** (`RP_ASK` „ONE follow-up question" + cap na jeden ask zdarma), takže víc-tahová mašinerie v appce **neexistuje vůbec**. Vegvísir by byl první.
+  - Jediný existující injekční scaffold je `buildSessionContext` / `buildTreeContext` / `buildVoiceContext` za `ENABLE_DYNAMIC_CONTEXT` (`supabase/functions/claude-proxy/index.ts:47`) — **a je vypnutý.**
+
+  **Proč je vypnutý — §26 krok 2, konkrétní vada** (důvod stojí u kódu, `:41–46`): audit kvality čtení 2026-07-04 zjistil, že ty vrstvy naskládají na placené čtení **~8 protichůdných tónových direktiv** (např. „come as fire" z kalendářní rotace proti zimnímu sezónnímu obrazu; voice-scale „pure metaphor" proti základnímu „one image, direct") a **rozbíjejí tím islandskou soudržnost** — tedy primární jazyk (§2). Podmínka návratu je v kódu napsaná: *„až každou vrstvu řídí skutečné UI a ověří ji IS eval."*
+
+  **Co to znamená:** Vegvísir potřebuje přesně tu cestu, která byla zavřená. Návrat tedy musí být **očištěný** (§26 krok 3), ne oživená kopie. Vada, která se musí prokazatelně nevyskytovat, se jmenuje **hromadění direktiv**.
+
+  ⭐ **Recept, který vyšel 4/4, tu vadu nemá** — a to je hlavní důvod, proč tenhle limit zapisovat teď, ne až se na něj narazí. Nesené = **jedna malá konkrétní POVINNÁ věc bez únikové klauzule** (materiál, textura, teplota, pohyb — ne tón, ne pokyn); v promptu je to **fakt, ne direktiva**, takže na sebe nemůže naskládat protiklad. Měření → `RUNAR_EVAL_LOG.md` (řetěz v2; v1 s nepovinnou historií dal 0/6). Tím je podmínka §26 splněná dřív, než se o návratu vůbec rozhodne.
+  - **Cache tomu nebrání:** per-user obsah patří **za** cachovaný base blok (`systemParts[1]`, `claude-proxy:669`); cache se ruší jen vlepením DO `baseSystem` nebo před něj. Účinek je měřitelný — proxy loguje `cache_read_input_tokens` (:771).
+  - ⚠️ **Zbylá vada receptu, neuzavřená:** 1/4 nesených přišlo jako **přirovnání** (zakázané), a nesený materiál **slábne** k třetímu ramenu — což koliduje s ratifikovaným „osmé rameno se ohlíží na první". Cowork-read k tomu navrhl **dva kanály** (kotálivá ozvěna N↔N−1 slábnout SMÍ; rámový návrat 1→8 potřebuje semínko držené stranou a vpuštěné až v rameni 8) — neotestováno.
+
+  ⚠️ **Teď se nedělá** (KUKY: „zapíšeme až budeme dělat vegvísir"). Tohle je zápis LIMITU, aby se na něj nenarazilo pozdě — ne úkol k realizaci.
+
 - [ ] **Vegvísir jako ČTENÍ.** KUKY 2026-08-22: *„chci udělat vegvísir jako čtení… normálně to
   čtení není, ale chci to tak udělat."* Hledá se způsob, jak to bude fungovat; podklady dodá owner.
   Osmiramenná seriálová verze (jedno rameno týdně, ~2 měsíce) je **zatím jen návrh**, ne rozhodnutí.
