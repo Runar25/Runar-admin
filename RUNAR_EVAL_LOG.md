@@ -18,7 +18,7 @@ SLABÝ účinek — proto „přepiš voice profil" většinou nehne jehlou; sá
 - Úhel otevření: `READING_ANGLES` / `_randomAngle` (utils, jen single)
 - Tvar konce (dle valence): `ENDING_*` / `_endingShape` (utils, **jen single** — spready mají pevnou `S.landing`)
 - Esenční řádek (co runa DĚLÁ skrz obraz): `VOICE_PROFILES.*.rules.essence` (runar-config.js:456) — ⚠️ **jeden tvar v 60/60**, viz rejstřík
-- Sampling modelu: **neřízený** — `temperature`/`top_p`/`top_k` se nenastavuje nikde (proxy ani klient)
+- Sampling modelu: **není páka** — `temperature`/`top_p`/`top_k` na `opus-4-8` vrací HTTP 400 „deprecated for this model" (jediné, co projde, je `temperature: 1`, tedy default). Ověřeno voláním 2026-09-08
 - Jméno (umístění/vynechání): `_namePlacement` (utils)
 - Reading contract (čočka/doména/registr): `_lensContext`/`_domainContext`/`_registerContext`/`_priorityContext` (character.js)
 - Norns čas: `_intentionContext` (character.js)
@@ -2209,3 +2209,49 @@ nástrojem na n = 4 runách změřit nejde.** Co změřit jde, je délka a cena 
 Nejlevnější pestrost neleží v přidávání obrazů, ale ve **třech dírách výš** — a ta nejlacinější
 je Sowilo: má **jediného** kandidáta v `deepwinter` i `darkening`, takže od září do února dostává
 pořád týž obraz.
+
+## 2026-09-08 (2) — sampling NEJDE nastavit · los na esenčním řádku FUNGUJE · spready ověřeny
+Korpus `~/runar-eval/pest2.jsonl` (8 cel × 4 runy × 3 běhy, týž seed, týž přibitý čtyřvětový
+rozpočet jako `role.jsonl`, takže cela CTRL odtud slouží jako společná podlaha).
+<!-- doc-links:ok 2026-09-08 korpus mimo repo -->
+
+### ⭐ Sampling — otázka je zodpovězená a odpověď je „nedá se"
+`temperature` / `top_p` / `top_k` vrací na `claude-opus-4-8` **HTTP 400 „deprecated for this
+model"**. Projde jedině `temperature: 1` — tedy default, tedy žádná změna. **Není to tedy díra
+v našem kódu, kterou by šlo zavřít; ta páka na produkčním modelu neexistuje.** Ráno téhož dne
+jsem to zapsal jako „rozhodnout, jestli to chceme řídit" — opraveno tady i v `RUNAR_BACKLOG.md`.
+→ **Vedlejší zisk: šumová podlaha metriky.** Cela `TEMP10` (`temperature: 1`) je požadavek
+**identický** s `CTRL` — a shoda poslední věty vyšla **0,126 proti 0,089**. Dvě totožné
+konfigurace se tedy liší o **0,037**: rozdíl pod ~0,04 v téhle metrice **není nález**.
+Tím padá i moje ranní opatrnost u cely UCIT (0,242) — ta je nad podlahou, ale drží ji jediná runa.
+
+### ⭐ Esenční řádek — šablonu zlomí ZMĚNA ZADÁNÍ, a pestrost až LOS bez dnešního tvaru
+| cela | „\<Runa\> is …" | „\<Runa\> sloveso …" | jiný tvar | slov |
+|---|---|---|---|---|
+| CTRL (dnešek) | **100 %** | 0 % | 0 % | 60,8 |
+| E-UKAZ — „runa je podmětem DĚJE, ne definice" | **0 %** | **100 %** | 0 % | 60,5 |
+| E-LOS — los ze 4 rámů, jeden z nich dnešní | 42 % | 42 % | 17 % | 59,8 |
+| **E-LOS3 — los ze 3 rámů, žádný dnešní** | **33 %** | **42 %** | **25 %** | **60,8** |
+| E-KONEC — jméno runy až v závěrečné větě | 58 % | — | — | 60,9 |
+| E-NIC — esenční řádek odebrán úplně | 58 % | — | — | 59,5 |
+⚠️ **E-UKAZ není oprava, je to výměna.** Spona zmizela na nulu, ale nastoupil jiný jediný tvar
+(*holds · holds · keeps · counts · gathers · counts*). Kdo se zastaví u téhle cely, vymění
+jednu šablonu za druhou — proto se to počítá do dvou sloupců, ne do jednoho.
+⭐ **Pestrost dá až LOS, a jen když v něm dnešní tvar NENÍ.** Jeden špatný prvek los stáhne
+(E-LOS: 42 % spony). Tři rámy bez spony dají rozložení 33/42/25 a **délku beze změny** (60,8 =
+přesně CTRL) → **nula navíc na ElevenLabs**.
+⚠️ **E-KONEC selhal poučně:** přesun jména do závěrečné věty udělal ze závěru definiční slot —
+shoda poslední věty **0,242**, nejvýš ze všech cel. Definice se nepřesouvá, jen si najde nový domov.
+**E-NIC:** i po úplném odebrání esenčního řádku model runu definuje v 58 % → **ten řádek není
+příčina**; příčina je požadavek „pojmenuj runu a řekni, co dělá".
+
+### Spready — ověřeno postavením skutečného promptu pro všech pět cest
+| složka | SINGLE | NORNS | KŘÍŽ | HORSESHOE | YGGDRASIL |
+|---|---|---|---|---|---|
+| úhel otevření · esenční řádek · losovaná délka | **ano** | — | — | — | — |
+| obraz · AREA · seeking · no-cold-read | ano | ano | ano | ano | ano |
+| počet vět | **los 3/4** | pevně 6 | pevně 7 | pevně 12 | pevně 15 |
+⭐ **Spready už tu „roli věty" mají** — pevnou `landing` na poslední větu (a `thread` mezi
+pozicemi od v4.9). Co nemají, je jakýkoli **los**. Takže otázka „má se předepisovat role věty"
+se dá číst z produkce: **předepsané konce běží ve spreadech, losované v single** — a porovnat
+je jde bez jediného nového volání.
