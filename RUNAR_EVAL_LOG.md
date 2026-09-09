@@ -2519,3 +2519,42 @@ nemůže odlišit dvě runy, které mají týž klíč, když je soudce (i model
 | Raidho × Ehwaz | `movement` |
 → **Je to 📜 kánon (RUNES.k), ne ladění — patří ownerovi/Coworku, CODE to nemění.** Dokud se
 překryv nerozliší, je Algiz neopravitelný obrazem.
+
+## 2026-09-09 (8) — jednoslovný slovník: bezvadný, ale identitu NEKUPUJE. ⚠️ OPRAVUJE MŮJ ZÁVĚR O ALGIZU
+Cowork navrhl zúžit každý klíč `RUNES[].k` na jedno slovo a rozvázat tím pět dvojic, které
+sdílely klíč. Owner: *„zkontroluj, že nic nechybí."* Zkontrolováno strojově i měřením.
+
+### Kontrola slovníku — mechanicky bez chyby
+25 run · **119 klíčů, všechny pokryté** · **nula kolizí** (všech 119 slov unikátních) ·
+všech pět sdílených klíčů rozvázáno (`protection` → ward/aegis · `transformation` →
+temper/thaw/metamorphosis · `movement` → passage/stride).
+
+### ⚠️ Ale na identitu nemá VLIV — A/B na týchž textech, měnila se JEN legenda soudce
+| | dnešní frázové klíče | jednoslovný slovník |
+|---|---|---|
+| cela A (produkce) | 78 % | **78 %** (+0) |
+| cela B / C | 52 % / 50 % | 50 % / 48 % |
+| **jen kolizní runy** (7) | 55 % | **55 %** (+0) |
+| ostatní (18 run) | 62 % | 60 % |
+→ **Nález je „není to tím".** Záměna nevzniká z NÁLEPKY, ale z toho, co čtení POPISUJE:
+text „drží a nehne se" se čte jako Isa, ať Isina nálepka zní `stillness` nebo cokoli jiného.
+Je to táž třída jako pět mrtvých promptových ploch — mění se popis, ne chování.
+
+### ⚠️⚠️ OPRAVUJE ZÁVĚR ZE ZÁZNAMU (7)
+Napsal jsem: *„Algiz nelze opravit obrazem, protože sdílí s Thurisazem klíč `protection`."*
+**Ta příčinnost neplatí.** Šest Algiz kandidátů přesoudeno s rozvázaným slovníkem:
+**3/18 → 2/18.** Nezlepšilo se nic; Algiz dál utíká k Thurisazu, Ise, Berkaně i Othile.
+Sdílený klíč byl **souběh, ne příčina** — a já z korelace udělal mechanismus, aniž jsem ho
+otestoval. Co o Algizu platí dál: **šest kandidátů ve dvou kolech neprošlo**. Proč, nevíme.
+
+### Situační vs fyzický obraz — číslo, ne heslo
+Ze všech 16 kandidátů (3 nejtěžší runy, 2 kola):
+| typ | prošlo 3/3 | jednotlivých hlasů |
+|---|---|---|
+| fyzický | 1/5 | 5/15 = **33 %** |
+| situační | 2/11 | 16/33 = **48 %** |
+⭐ Směr sedí (situační drží líp), ale **je to slabý doklad** — n = 48 hlasů a rozdíl je 15 b.
+⚠️ **A pozor na kalibraci: obojí je HLUBOKO POD stávající knihovnou (78 %).** Psal jsem
+kandidáty pro tři nejtěžší runy, takže to není přímé srovnání — ale **14 z 16 mých obrazů
+identitním testem neprošlo**. Psát obraz, který projde, je těžší, než to vypadá; brána
+(generátor navrhuje, soudce rozhoduje) není formalita, je to jediné, co ty dva ustálo.
