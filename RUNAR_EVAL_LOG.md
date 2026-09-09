@@ -2431,3 +2431,45 @@ auditu: Perth řeka+oblázek je kandidát na náhradu, ne na doplnění.
 ⚠️ **Hranice:** 4 runy · EN · jedna otázka · harness (ne produkce) · soudce je týž model, který
 čtení psal (konstantní napříč celami, srovnání mezi celami tedy platí; absolutní čísla brát
 s rezervou) · n = 12 na celu — ale Perth→Laguz je jednomyslných 9/9, to šum není.
+
+## 2026-09-09 (6) — IDENTITA NA VŠECH 25 RUNÁCH: ⚠️ OPRAVUJE ZÁZNAM (5). Výměna obrazu identitu BOŘÍ
+Owner: *„pusť ten identitní test na všech 25 runách."* Pilot ze záznamu (5) běžel na **4 runách
+a pětivolbě** (náhoda 20 %). Tady: **všech 25 run, volba ze všech 25** (náhoda **4 %**), 2 běhy
+na celu = 150 čtení × 3 hlasy. Korpusy `~/runar-eval/ident25.jsonl` + `ident25-soud.jsonl`.
+<!-- doc-links:ok 2026-09-09 korpusy mimo repo -->
+| cela | pilot (4 runy, 5 voleb) | **plný rejstřík (25 run, 25 voleb)** |
+|---|---|---|
+| **A — dnešek**, kanonický obraz | 75 % | **78 %** (39/50) |
+| **B — kvalita + jiná rodina předmětů** | 100 % | **52 %** (26/50) ↓↓ |
+| **C — jiná stránka + jiná rodina** | 92 % | **50 %** (25/50) ↓↓ |
+⚠️⚠️ **RUŠÍ TO ZÁVĚR ZÁZNAMU (5)** („obraz, svět i rekvizitu jde vyměnit a identita drží").
+Na plném rejstříku je to **obráceně: výměna předmětu identitu runy ničí** — z 78 % na ~51 %.
+Pilot byl **vybraný, ne ověřený** (§27): čtyři vzájemně vzdálené runy a pětivolba bez sousedů.
+Jakmile jsou v nabídce Isa, Nauthiz, Ingwaz či Laguz, vyměněná rekvizita ztratí kotvu.
+→ **„Předloha + losovaná rodina" NENÍ připravená k nasazení.** Řeší opisování obrazu, ale platí
+za to identitou runy — a to je horší vada než opisování.
+⚠️ **Útok na vlastní nástroj (§27):** podezření, že za propad může rodina „voda, loď, břeh"
+(je to sémantické pole Laguz). Neplatí — nástroj 44 %, zvíře 65/53 %, voda 47 %; propad je ve
+všech třech. Vodní rodina ale sama o sobě vyrobila **6 z 11** záměn za Laguz → jako obecná rodina
+je špatně zvolená.
+
+### ⭐ Nález, který nečekal nikdo: 8 z 25 run se plete UŽ DNES
+Cela A = nedotčená produkční konfigurace. Přesto:
+| runa | selhání | čte se jako |
+|---|---|---|
+| **Uruz** | **2/2** | Eihwaz, Eihwaz |
+| **Algiz** | **2/2** | Thurisaz, Isa |
+| **Tiwaz** | **2/2** | Kenaz, Isa |
+| Wunjo · Hagalaz · Jera · Mannaz · Blank | 1/2 | Ansuz · Laguz · Berkana · Laguz · Perth |
+**Tři runy z 25 se dnes v produkci nečtou jako ony samy ani jednou ze dvou.** To není otázka
+pestrosti — to je vada přiřazení a patří na začátek paletového auditu.
+
+### ⭐ Dvě gravitační jámy
+| jáma | přijala | od kolika různých run |
+|---|---|---|
+| **Isa** (stillness, waiting) | 13 čtení | 6 |
+| **Laguz** (water, flow) | 11 čtení | 9 |
+Nejčastější jednotlivá záměna: **Tiwaz → Isa 5×**. „Drží, netočí se, nehne se s ním" je popis,
+který sedí na Isu líp než na Tiwaz — a Tiwaz nemá v obrazech nic o spravedlnosti ani odvaze
+(kryje `justice · truth · sacrifice`, ale čtení z toho vyrobí nehybnost).
+→ **Pro paletu:** runa potřebuje obraz, který ji odliší od SOUSEDA, ne jen obraz, který ji vystihuje.
