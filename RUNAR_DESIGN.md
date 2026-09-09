@@ -214,6 +214,16 @@ počasí jako fakt o tazateli. ⚠️ led-jako-Isa je její *přirozenost*, ne p
 hraniční runy); hlídá se jen tvrzení typu „teď ti venku mrzne".
 **MĚNÍ SE (pokaždé jinak — to JE pestrost):** který obraz · úhel · TVAR věty · **a NÁZVOSLOVÍ (jakými slovy se pojmenuje význam)**.
 
+⭐ **Co pestrost JE — dvě osy, ne jedna (KUKY 2026-09-09).** *„Pestrost nastane pouze tehdy,
+pokud výklad bude odlišný od obrazu, ale zachová si význam popisu runy."*
+1. **Výklad ≠ obraz.** Obraz má **ukazovat**, ne být opakován ve stejném znění. Dnešek to
+   nesplňuje: měřeno 2026-09-09 se vrací **polovina slov obrazu** a místo i hlavní věc
+   ve **100 %** čtení (Eihwaz: „farmhouse" 3/3, „rowan" 3/3).
+2. **Ale význam runy zůstane.** Jinak je pestrost koupená za to, že runa zmizí.
+⚠️ **Splnit jednu osu je snadné a k ničemu** — čtení, které obraz nepřepisuje, ale runu nenese,
+je stejná vada jako dnešek, jen z druhé strany. Měří se **obě**, vždycky spolu.
+Čísla → `RUNAR_EVAL_LOG.md` 2026-09-09 (3); tenhle doc je NEOPISUJE (§20).
+
 > **„Čtyři páky pestrosti" (explorace 2026-08-18) SKONČILY 2026-08-22.** Nikdo na nich nedělá.
 > Produkce vyřešila tytéž problémy jinak a jednodušeji — kdo na to sáhne, ať čte NEJDŘÍV
 > `RUNAR_DECISIONS.md` 2026-08-22 (osm záznamů CODE-tune, řady v4.0–v4.5-mynd) a hlavičku

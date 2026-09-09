@@ -2342,3 +2342,42 @@ zečtyřnásobí. ⚠️ **Konstrukční chyba mého testu, která je zároveň 
 podle BĚHU, takže všechny čtyři runy dostaly v témž běhu touž rodinu. V produkci se musí losovat
 **per runa**, a u spreadů s pojistkou proti opakování — což **už v kódu je**: motiv-guard
 (7. sloupec `RUNE_IMAGES`, týž motiv ne dvakrát po sobě, smoke ㉟). Stačí ho rozšířit na rodiny.
+
+## 2026-09-09 (3) — systémový prompt to taky není · a obraz se NEUKAZUJE, on se OPISUJE
+Owner: *„sáhni na ten systémový prompt a změř to"* + *„kolik slov z obrazu použije? Obraz má jen
+ukazovat, ale nemá být stále opakován ve stejném znění."* Korpus `~/runar-eval/sysprompt.jsonl`.
+<!-- doc-links:ok 2026-09-09 korpus mimo repo -->
+
+### Systémový prompt — PÁTÁ plocha, pátá nula
+Čtyři řezy do systémového promptu (user prompt nedotčený), stopa prostého významu runy:
+| řez | co odešlo | výsledek |
+|---|---|---|
+| dnešek | — | 17 % |
+| `SYS-5` | blok „How a line should land" = **čtyři ukázkové věty**, 835 zn. (22 % promptu) | 25 % |
+| `SYS-7` | `YOUR STANCE: „Draw the picture and stop there — never hand the seeker a conclusion."` | **0 %** |
+| `SYS-11` | blok `THE IMAGE` | 8 % |
+| `SYS-57` | [5] i [7] naraz | 8 % |
+→ **Nic z toho se nehnulo** (n = 12, rozdíly 1–2 čtení = pod šumem). **Uzavřeno: stopu významu
+runy NELZE dostat instrukcí.** Vyzkoušené a mrtvé plochy jsou teď: zákaz v esenčním řádku ·
+aspektové slovo · celý klíčový seznam · čtyři ukázkové věty · zákaz „draw the picture and stop".
+→ **Zbývá jediná cesta a je obsahová:** význam runy je ve čtení jen tehdy, když ho nese její
+OBRAZ (aspektový sloupec) — a ten dnes kryje **43 %** významu. → `RUNAR_BACKLOG.md`.
+
+### ⭐ Obraz se neukazuje, on se OPISUJE
+Kolik z dodaného obrazu se vrátí v textu čtení:
+| cela | opakuje MÍSTO z obrazu | opakuje HLAVNÍ VĚC | převzatých slov obrazu |
+|---|---|---|---|
+| dnešek | **100 %** | 92 % | **50 %** (3,2 z 6,2) |
+| Coworkův rám A | **83 %** | 100 % | 51 % |
+| rám B | 100 % | 100 % | 50 % |
+| rám C | 100 % | 100 % | 57 % |
+| předloha + losovaná rodina | **0 %** | **0 %** | — |
+⭐ **Eihwaz dnes: „farmhouse" ve 3/3 a „rowan" ve 3/3.** Obraz tedy nefunguje jako ukazatel, ale
+jako **předepsaný inventář** — polovina jeho slov se vrátí doslova. Ownerův postřeh, že rám A
+farmhouse občas vynechá, **sedí a je měřitelný** (83 % proti 100 %).
+
+### Kritérium, které z toho vyplynulo (owner 2026-09-09)
+*„Pestrost nastane pouze tehdy, pokud výklad bude odlišný od obrazu, ale zachová si význam popisu
+runy."* → jsou to **DVĚ osy** a měří se každá zvlášť. Dnešek sedí v nejhorším rohu: opisuje obraz
+(100 %) a význam nenese (17 %). **Nic z dnes zkoušeného nesplňuje obě** — předloha+rodina vyhrává
+první osu (0 %) a propadá na druhé (8 %). Vlastník kritéria = `RUNAR_DESIGN.md`.
