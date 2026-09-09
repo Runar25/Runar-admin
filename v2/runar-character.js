@@ -477,7 +477,14 @@ var RUNE_IMAGES = [
   ['Fehu','any','Féð rennur í kvíarnar undir kvöld, hægt og fyrirhafnarlaust.','The sheep drift into the fold toward evening, slow and without effort.','efnisleg velsæld','cattle','P'],
   ['Fehu','bright','Berjalyngið þyngist af bláberjum þegar ágúst kemur.','The berry-heath grows heavy with bilberries when August comes.','efnisleg velsæld','wealth','P'],
   ['Fehu','any','Brauðið kemur heitt út úr ofninum, nóg handa öllum við borðið.','The bread comes hot from the oven, enough for everyone at the table.','efnisleg velsæld','material prosperity','D'],
-  ['Uruz','any','Urðin stendur af sér hvert vorhret án þess að bifast.','The scree withstands every spring storm without shifting.','styrkur','strength','E'],
+  // 2026-09-09: nahrazeno — puvodni obraz („The scree withstands every spring storm
+  // without shifting") popisoval ODOLAVANI, tedy pole Eihwazu, a suti se s Eihwazovym
+  // vlastnim obrazem primo trefoval. Soudce cetl Uruz jako Eihwaz 2/2. Nahrada prosla 3/3.
+  ['Uruz','any','Þú lyftir endanum sem enginn annar komst undir, og hann kemur upp.','You lift the end no one else could get under, and it comes up.','styrkur','strength','D'],
+  // 2026-09-09: novy — Uruz nemel dosazitelny klic `primal force` vubec. Prosel 3/3;
+  // zemetresny kandidat na tyz klic propadl 0/3 (cetl se jako Hagalaz, ktery ma
+  // `nature force` a s Uruzem sdili klic `transformation`).
+  ['Uruz','any','Nautið snýr sér við í stíunni og öll girðingin hreyfist með.','The bull turns in the pen and the whole fence moves with him.','frumkraftur','primal force','P'],
   ['Uruz','any','Hraunið man eldinn enn, þótt mosinn hafi lagst yfir.','The lava still remembers the fire, though the moss has settled over it.','umbreyting','transformation','E'],
   ['Thurisaz','any','Sprungan í hrauninu bíður — þú kemst ekki yfir nema stökkva.','The crack in the lava waits — you cannot cross it without a jump.','þröskuldur','threshold','E'],
   ['Ansuz','bright','Andvarinn ber lóukvakið yfir móann til þín.','The breeze carries the plover\'s call across the moor to you.','skilaboð','messages','P'],
@@ -516,7 +523,14 @@ var RUNE_IMAGES = [
   ['Algiz','any','Einhver bíður uppi með ljós í glugganum þar til þú kemur heim.','Someone stays up with a light in the window until you come home.','skjól','protection','D'],
   ['Sowilo','bright','Miðnætursólin sest aldrei alveg um Jónsmessuna.','The midnight sun never quite sets around Midsummer.','sól','sun','E','midnight-sun'],
   ['Sowilo','bright','Sólin brýtur loks í gegn og glampar á blautu grjóti.','The sun finally breaks through and glints on the wet stones.','skýrleiki','clarity','E'],
-  ['Tiwaz','any','Leiðarsteinninn hallast aldrei, hvað sem á dynur.','The guide-stone never tilts, whatever comes down on it.','sannleikur','justice','P'],
+  // 2026-09-09: nahrazeno — „never tilts" je nehybnost, tedy pole Isy; soudce cetl
+  // Tiwaz jako Isu opakovane (nejcastejsi jednotliva zamena celeho testu, 5x).
+  // Nahrada prosla 3/3 a je SITUACNI: jediny Tiwaz obraz, ktery uz drzel, byl take
+  // situacni („You stand by your word") — predmet Tiwaze nechrani, cin ano.
+  // ⚠️ Timhle radkem se opravuje i NESOULAD SLOUPCU, nalezeny pri te prilezitosti:
+  // puvodni radek mel EN aspekt `justice`, ale IS aspekt `sannleikur` (= truth), tedy
+  // dve ruzne stranky runy v jednom radku. IS je ted `rettlaeti`, coz `justice` odpovida.
+  ['Tiwaz','any','Þú skilar til baka skiptimyntinni sem var talin þér í vil.','You give back the change that was counted wrong in your favour.','réttlæti','justice','D'],
   ['Tiwaz','cold','Pólstjarnan stendur kyrr meðan allt annað snýst.','The pole star stands still while everything else turns.','sannleikur','truth','E'],
   ['Tiwaz','any','Þú stendur við orð þín þótt það kosti þig svefninn.','You stand by your word though it costs you your sleep.','fórnfýsi','sacrifice','D'],
   ['Berkana','bright','Birkið laufgast fyrst allra, þótt jörðin sé enn köld.','The birch leafs out before all the rest, though the ground is still cold.','nýtt upphaf','new beginnings','P'],

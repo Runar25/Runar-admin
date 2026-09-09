@@ -2473,3 +2473,49 @@ Nejčastější jednotlivá záměna: **Tiwaz → Isa 5×**. „Drží, netočí
 který sedí na Isu líp než na Tiwaz — a Tiwaz nemá v obrazech nic o spravedlnosti ani odvaze
 (kryje `justice · truth · sacrifice`, ale čtení z toho vyrobí nehybnost).
 → **Pro paletu:** runa potřebuje obraz, který ji odliší od SOUSEDA, ne jen obraz, který ji vystihuje.
+
+## 2026-09-09 (7) — OPRAVA Uruz a Tiwaz: 0/2 → 4/4. Algiz opravit obrazem NELZE
+Owner: *„oprav ty tři runy — uruz, algiz, tiwaz."* Postup: diagnóza z dat → kandidáti →
+**každý kandidát prošel týmž identitním soudcem** (volba ze všech 25 run, náhoda 4 %, 3 hlasy),
+nasazeno jen to, co prošlo 3/3. Korpusy `~/runar-eval/opravy*.jsonl`, `ident-po*.jsonl`.
+<!-- doc-links:ok 2026-09-09 korpusy mimo repo -->
+
+### Regrese na produkční cestě (cela A = nedotčená konfigurace, 4 běhy)
+| runa | před | **po** | kam utíká zbytek |
+|---|---|---|---|
+| **Uruz** | 0/2 | **4/4** | — |
+| **Tiwaz** | 0/2 | **4/4** | — |
+| **Algiz** | 0/2 | **0/4** | Thurisaz 4× |
+
+### Co se vyměnilo a proč (diagnóza byla v datech, ne v dojmu)
+- **Uruz**: oba obrazy popisovaly *„vydržet a nehnout se"* = pole Eihwazu — a **`scree` je přesně
+  ten předmět, který má Eihwaz ve vlastním obraze** („The root holds the scree together").
+  Řádek na aspektu `strength` vyměněn; přibyl `primal force`, který Uruz **neměl dosažitelný vůbec**.
+- **Tiwaz**: dva ze tří obrazů jsou doslova nehybnost („never tilts", „stands still") = pole Isy;
+  Tiwaz→Isa byla nejčastější jednotlivá záměna celého testu (5×). Vyměněn řádek `justice`.
+  ⚠️ Při té příležitosti nalezen **nesoulad sloupců**: týž řádek měl EN aspekt `justice`, ale
+  IS aspekt `sannleikur` (= truth) — dvě různé stránky runy v jednom řádku. Opraveno.
+
+### ⭐ Vzor, který z devíti zabitých kandidátů vypadl
+Kolo 1 i 2 zabilo **7 z 9 kandidátů**, a každý propadák narazil na **sloveso nebo předmět souseda**:
+zemětřesení → Hagalaz 3/3 · „řekneš to u stolu" → **Ansuz** (voice) · lodě zůstanou v přístavu →
+**Isa** (waiting) · neoraný kámen v poli → **Othila** (heritage) · ovce chránící jehně → **Berkana**
+(nurturing) · led napřed → **Ehwaz** (movement).
+⭐ **Co prošlo 3/3, bylo v obou případech SITUAČNÍ — čin s cenou, bez rekvizity, která patří jiné
+runě.** Sedí to na starší pozorování: jediný Tiwaz obraz, který držel i předtím, byl také situační
+(*„You stand by your word though it costs you your sleep"*). **Fyzický předmět je příliš silný
+identifikační signál** — voda ukazuje na Laguz, nehybnost na Isu, počasí na Hagalaz, ať je scéna
+jakkoli hezká. → **„Obraz" nemusí být fyzická scéna; situační obraz identitu drží líp.**
+
+### ⛔ Algiz: vada NENÍ v obrazech, je v datech run
+Šest kandidátů ve dvou kolech, **žádný neprošel** — Thurisaz a Berkana je berou pořád.
+Důvod je v `RUNES.k`: **`Algiz` a `Thurisaz` sdílejí klíčové slovo `protection`.** Žádný obraz
+nemůže odlišit dvě runy, které mají týž klíč, když je soudce (i model) vidí obě.
+**Takových dvojic je v datech pět** — a předpovídají záměny z velkého testu:
+| dvojice | sdílený klíč |
+|---|---|
+| Thurisaz × **Algiz** | `protection` |
+| **Uruz** × Hagalaz · **Uruz** × Dagaz · Hagalaz × Dagaz | `transformation` |
+| Raidho × Ehwaz | `movement` |
+→ **Je to 📜 kánon (RUNES.k), ne ladění — patří ownerovi/Coworku, CODE to nemění.** Dokud se
+překryv nerozliší, je Algiz neopravitelný obrazem.
