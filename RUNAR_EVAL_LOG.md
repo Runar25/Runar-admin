@@ -2405,3 +2405,29 @@ instrukce", **měřením nesedí** — je to taky promptová instrukce a stopu v
 A Berkana, uváděná jako protipříklad, má šest obrazů, ale scénicky je to šestkrát „nový život"
 (bříza, jehňata, první krok dítěte, ovce rodící v zimě, kachňata, reveň). → **Pokrytí významu
 a pestrost SCÉN jsou dvě různá čísla; měřil jsem dosud jen to první.** Do auditu obrazů patří obě.
+
+## 2026-09-09 (5) — TEST IDENTITY: runa přežije výměnu obrazu. Nebezpečný je obraz KANONICKÝ
+Experiment navržený ownerem/GPT: *„Pozná nezávislý hodnotitel z výsledku, že jde stále o Eihwaz,
+aniž by mu byla předána původní scéna?"* — čtvrtá osa vedle pestrosti scén, pokrytí významu
+a opisování. Metoda = slepý test 22. 8. přenesený z obrazů na ČTENÍ: jméno runy z textu vymazáno,
+soudce vybírá z pětice (Eihwaz·Perth·Fehu·Tiwaz·Laguz + klíče), náhoda 20 %, 3 hlasy na čtení.
+Korpus `~/runar-eval/ident.jsonl` (A = CTRL z `role.jsonl` · B = FACET · C = IDENT-C z `obraz.jsonl`).
+<!-- doc-links:ok 2026-09-09 korpusy mimo repo -->
+| cela | identifikace runy |
+|---|---|
+| **A — dnešek** (kanonický obraz) | **75 %** (9/12) |
+| **B — táž kvalita + vyměněná rodina předmětů** | **100 %** (12/12) |
+| **C — JINÁ stránka runy + jiná rodina** | **92 %** (11/12) |
+⭐ **Odpověď na rozhodující otázku: ANO — obraz, svět i rekvizitu jde vyměnit a identita runy
+drží.** B i C jsou NAD dnešní produkcí, ne pod ní. Práce na obrazech tedy NENÍ blokovaná špatně
+definovaným jádrem; mechanismus „kvalita + rodina" identitu nese (a je to doklad PRO aspekt jako
+jednotku, po kterém se GPT ptalo — přinejmenším na těchto 4 runách).
+⭐ **Jediné selhání je OPAČNÉ, než jsme se báli: dnešní KANONICKÝ obraz Perthu (řeka + oblázek)
+se čte jako Laguz — 3/3 čtení, 9/9 hlasů jednomyslně.** Voda přetáhne identitu k vodní runě.
+S vyměněnou rekvizitou (B) je Perth 3/3 správně. Kanonický obraz tedy není nosič identity, ale
+její RIZIKO — nový případ třídy „obraz ukazuje na jinou runu" (22. 8. našel 7/80 na úrovni
+obrazů; tohle je první doklad na úrovni celých čtení, v produkční konfiguraci). → Do paletového
+auditu: Perth řeka+oblázek je kandidát na náhradu, ne na doplnění.
+⚠️ **Hranice:** 4 runy · EN · jedna otázka · harness (ne produkce) · soudce je týž model, který
+čtení psal (konstantní napříč celami, srovnání mezi celami tedy platí; absolutní čísla brát
+s rezervou) · n = 12 na celu — ale Perth→Laguz je jednomyslných 9/9, to šum není.
