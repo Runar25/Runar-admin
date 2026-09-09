@@ -16,6 +16,12 @@
   ⚠️ **NENÍ to chyba ani nedodělávka — má to zapsaný důvod, a ten platí dál** (§26, hlavička `RUNE_IMAGES` v `v2/runar-character.js`): 5./6. sloupec vznikl 2026-08-22 jako **oprava** — model si bral náhodný klíč, který k obrazu nepatřil („stádo z klíčů vedle chleba z obrazu, našel owner okem"). Vazba klíče na obraz tu vadu odstranila. **Kdo tenhle sloupec zruší, vrátí tu starou vadu.**
   ⭐ **Nezapsala se ale CENA té opravy** — že se tím význam runy zúžil na to, co nesou její obrazy. Proto je oprava **obsahová, ne kódová: dopsat obrazy tak, aby pokryly zbylé stránky každé runy.** Prioritně těch pět run s jedinou.
   ⚠️ Ověřeno, že to NEJDE obejít instrukcí (2026-09-09, čtyři řezy): výměna stránky za jiný klíč **17 %**, celý klíčový seznam místo jedné stránky **0 %**, odebrání zákazu + požadavek **17 %** (výchozí 17 %). → `RUNAR_EVAL_LOG.md` 2026-09-09 (2).
+  ⭐ **Rozsah práce je spočítaný: chybí 65 obrazů** (dnes 85 → úplné pokrytí 150). Seznam se
+  NEOPISUJE (§20) — je dopočitatelný z dat: pro každou runu ty klíče z `RUNES[].k`, které
+  nenese žádný její řádek v 5./6. sloupci `RUNE_IMAGES`. Nejhorší: Ansuz, Jera, Sowilo, Mannaz
+  (chybí po čtyřech stránkách), pak Wunjo, Nauthiz, Isa, Eihwaz, Perth, Berkana (po třech).
+  ⚠️ **Není to jen doplnit počet** — každý nový obraz musí projít slepým testem (22. 8. ukázal,
+  že 7 z 80 obrazů ukazuje na JINOU runu) a dvěma síty z `RUNAR_DESIGN.md`.
 - [ ] **Motiv-guard běží skoro naslepo — 76 z 85 obrazů nemá motiv** (8. sloupec `RUNE_IMAGES`, nalezeno 2026-09-09). Guard má bránit tomu, aby týž pojmenovaný motiv přišel dvakrát po sobě (smoke ㉟), ale bez motivu ho nemá na čem uplatnit — u devíti obrazů z 85 funguje, u zbytku ne. Doplnit motivy. ⚠️ **Váže se to na návrh „předloha + losovaná rodina předmětů"**: bez plných motivů nejde uhlídat, aby dvě tažené runy nedostaly týž typ obrazu (obava ownera 2026-09-09).
 - [ ] **Sedm run má jediný registr D|E|P** (7. sloupec, nalezeno 2026-09-09): Mannaz · Eihwaz · Ehwaz · Laguz · Ingwaz · Uruz · Hagalaz. Registr měl sloužit výběrové kongruenci při skládání spreadů (hlavička `RUNE_IMAGES`); u těch sedmi runy nemá z čeho vybírat, takže ta páka je pro ně mrtvá.
 
