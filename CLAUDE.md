@@ -341,7 +341,7 @@ Co databáze sama neřekne, a proto bydlí tady:
 **Obraznost**: `_seasonalImagery(lang, drawn)` vloží do čtení JEDEN obraz. Primární zdroj je
 `RUNE_IMAGES` — obrazy **klíčované runou**, obojí jazyk na témž řádku (od 2026-08-10 i pro EN).
 ⚠️ **`SEASON_POOLS` se do čtení NEDOSTANE — ověřeno protlačením 2026-09-08.** Do té doby tu
-stálo „stojí na něm celá funkce: `if (!pool) return ''`". Obojí je mrtvé: **0 ze 144** dvojic
+stálo „stojí na něm celá funkce: `if (!pool) return ''`". Obojí je mrtvé: **0 ze 150** dvojic (25 run × 6 sezón — ⚠️ do 2026-09-09 tu stálo 144, protože jsem runu **Blank** tiše vyřadil; má 3 obrazy a do výpočtu patří)
 runa × bucket je bez runového kandidáta (`runePhrase` je tedy vždy neprázdné a `phrase =
 runePhrase || …` po poolu nesáhne), a `_seasonBucket` vrací pool pro všech 12 měsíců, takže
 ani ten guard nezabere. Padá s tím i los klíčových slov (`pickedKws`), který visí na téže

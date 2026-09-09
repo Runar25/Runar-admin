@@ -2195,8 +2195,8 @@ Celé UCIT drží jediná runa. **Netvrdí se tedy, že role pestrost zabíjejí
 nástrojem na n = 4 runách změřit nejde.** Co změřit jde, je délka a cena — a ta mluví proti.
 
 ### Nález 3 — tři páky, které v kódu jsou a do čtení nedojdou (ověřeno protlačením, ne čtením)
-1. **`SEASON_POOLS` = 133 obrazů, ve čtení 0×.** Spočítáno přes produkční filtr: **0 ze 144**
-   dvojic runa × sezónní bucket je bez runového kandidáta, takže větev `runePhrase || pool` sáhne
+1. **`SEASON_POOLS` = 133 obrazů, ve čtení 0×.** Spočítáno přes produkční filtr: **0 ze 150**
+   dvojic runa × sezónní bucket (25 run × 6 — oprava 2026-09-09, dřív tu stálo 144: runa **Blank** byla tiše vyřazená) je bez runového kandidáta, takže větev `runePhrase || pool` sáhne
    po poolu nikdy. Padá s tím i **los klíčových slov** (`pickedKws`), který jede na téže podmínce.
    ⚠️ `CLAUDE.md` tvrdila opak („stojí na něm celá funkce") — **opraveno v témž commitu**.
 2. **Sampling modelu se neřídí.** `temperature` / `top_p` / `top_k` se nenastavuje nikde
@@ -2283,7 +2283,7 @@ wealth that walks back when the work is honest*"). Nestačí to chtít; musí od
 
 ### ⭐ Nález 2 — víc VOLNOSTI dá MÍŇ pestrosti, ne víc
 Owner: *„obrazy jsou statické a hodně nás limitují… nevím, jak by to vypadalo, kdybychom mu dali
-víc volnosti."* Nejdřív rozsah: **82 obrazů na 24 run = 3,4 na runu**; na jedno čtení vybírá model
+víc volnosti."* Nejdřív rozsah: **85 obrazů na 25 run = 3,4 na runu** (oprava 2026-09-09 — dřív „82 na 24", Blank vyřazen omylem); na jedno čtení vybírá model
 z **2–5 kandidátů (medián 3)**. **Eihwaz má celkem DVA obrazy**, jeden z nich je ten jeřáb.
 | režim | shoda 1. věty mezi třemi běhy (nižší = pestřejší) |
 |---|---|
