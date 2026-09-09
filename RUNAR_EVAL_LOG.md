@@ -2304,3 +2304,41 @@ projít týmž slepým testem.
 ⚠️ **§26 — NENÍ to návrat zamítnutého „POLE + rozprostírač"** (2026-08-22). Ten milované obrazy
 rozsypal do domén a fragmentů; owner je chtěl ZACHOVAT. Tady obraz zůstává celý a nedotčený jako
 **vzor**; mění se jen věc, která v něm stojí.
+
+## 2026-09-09 (2) — obraz PŘIDĚLUJE význam (doloženo), ale metaforu tím nevysvětlíme
+Owner: *„zákaz je v pořádku… mě přijde, že to může být problém obrazu, jelikož z něj si Rúnar bere
+to, jak nakonec popíše runu. Nebo to vidíš jinak?"* Cíl stanoven na **~50 %**, ne na 93 % statických.
+
+### ⭐ Mechanismus POTVRZEN v kódu — a je horší, než vypadal
+Řádek `RUNE_IMAGES` nese v 5./6. sloupci **stránku runy**, a ta jde do promptu jako
+`DRAWN RUNE: <runa> — focus on: <stránka>`. Obraz tedy neurčuje jen scénu, ale **který kus
+významu se vůbec smí pojmenovat**. Kolik stránek je dosažitelných:
+| | |
+|---|---|
+| runy s **jedinou** dosažitelnou stránkou | **5 z 24** — Eihwaz (`resilience`), Mannaz (`self-awareness`), Ansuz (`messages`), Nauthiz, Jera |
+| medián dosažitelných stránek na runu | **2**, přitom runy mají 4–6 klíčů |
+⭐ **Eihwaz nemůže být nikdy popsán jinak než jako `resilience`** — oba jeho obrazy nesou touž
+stránku. To je přesně ta runa, na které si owner stěžoval.
+
+### ⚠️ ALE metaforu to nevysvětluje — ČTYŘI zásahy, číslo se nehnulo
+Stopa prostého významu runy ve čtení (4 runy × 3 běhy, týž seed):
+| zásah | výsledek |
+|---|---|
+| dnešek | **17 %** |
+| `VYZNAM` — zákaz „not Fehu is wealth" ODEBRÁN + „prostý název MUSÍ dorazit" | **17 %** |
+| `ASPEKT` — vyměněna stránka za jiný, konkrétnější klíč TÉŽE runy | **17 %** |
+| `KLICE` — místo jedné stránky dán CELÝ klíčový seznam runy | **0 %** ↓ |
+→ **Nález je „není to tím".** Obraz vysvětluje, proč je popis **úzký** (Eihwaz = pořád resilience),
+ale ne proč je **metaforický**. Jsou to dvě různé vady a owner pojmenoval obě naráz.
+⚠️ **Poctivě: nevím, co to drží.** Zbývá jediná neodzkoušená plocha — poetický rejstřík
+systémového promptu (a ten se nikdy neměřil na HLAS, jen na tři jiné osy, → 2026-08-21).
+Cíl 50 % tedy zatím **nemá páku**; kdo na to sáhne, ať nezkouší znovu tyhle čtyři.
+
+### Kolize mezi runami (ownerova obava u „předloha + losovaná rodina")
+Shoda první věty mezi **různými** runami: dnešek **0,014** · předloha **0,063** ·
+**předloha + losovaná rodina 0,029** · volnost 0,012.
+→ Riziko je **reálné, ale malé** — losovaná rodina ho proti dnešku zdvojnásobí, holá předloha
+zečtyřnásobí. ⚠️ **Konstrukční chyba mého testu, která je zároveň návod:** rodina se losovala
+podle BĚHU, takže všechny čtyři runy dostaly v témž běhu touž rodinu. V produkci se musí losovat
+**per runa**, a u spreadů s pojistkou proti opakování — což **už v kódu je**: motiv-guard
+(7. sloupec `RUNE_IMAGES`, týž motiv ne dvakrát po sobě, smoke ㉟). Stačí ho rozšířit na rodiny.
