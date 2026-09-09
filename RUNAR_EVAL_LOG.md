@@ -2381,3 +2381,27 @@ farmhouse občas vynechá, **sedí a je měřitelný** (83 % proti 100 %).
 runy."* → jsou to **DVĚ osy** a měří se každá zvlášť. Dnešek sedí v nejhorším rohu: opisuje obraz
 (100 %) a význam nenese (17 %). **Nic z dnes zkoušeného nesplňuje obě** — předloha+rodina vyhrává
 první osu (0 %) a propadá na druhé (8 %). Vlastník kritéria = `RUNAR_DESIGN.md`.
+
+## 2026-09-09 (4) — kvalita + rodina předmětů: opisování na nulu BEZ ztráty významu
+Owner poslal analýzu (GPT) s architekturou **runa → významová kvalita → obraz** místo
+**runa → obraz**. Otestováno dřív, než se z toho zadá práce (korpus `~/runar-eval/obraz.jsonl`).
+| cela | nese význam runy | opakuje MÍSTO | opakuje VĚC |
+|---|---|---|---|
+| dnešek | 17 % | **100 %** | 92 % |
+| předloha + losovaná rodina | **8 %** ↓ | 0 % | 0 % |
+| **+ významová kvalita** (návrh) | **17 %** | **0 %** | **8 %** |
+⭐ **Nález: ta kvalita vrátí přesně to, co samotná výměna předmětu ztratila.** Výsledek je dnešní
+stopa významu, ale bez opisování obrazu a s 3× pestřejšími scénami. Řeší to tedy **první osu**
+kritéria (`RUNAR_DESIGN.md`) a druhou nezhorší — nezlepší ji ale ani ono (17 % zůstává 17 %).
+⚠️ **Novost je menší, než návrh tvrdí:** ta „významová kvalita" **už v systému je** — je to
+aspektový sloupec (5./6.), který jde do promptu jako `focus on:`. Nová je jen jeho **vazba na
+vyměněný předmět**, ne on sám. Tvrzení, že je to „mnohem silnější mechanismus než promptové
+instrukce", **měřením nesedí** — je to taky promptová instrukce a stopu významu nezvedla.
+
+### ⭐ Nález navíc, který audit aspektů minul (a analýza ho našla první)
+**85 obrazů ≠ 85 nezávislých obrazových možností.** Mannaz má dva obrazy a **oba jsou odraz
+člověka** (motiv `reflection`, aspekt `self-awareness`) — jeden koncept ve dvou rekvizitách.
+**Pět run má všechny obrazy na téže stránce:** Ansuz · Nauthiz · Jera · Eihwaz · Mannaz.
+A Berkana, uváděná jako protipříklad, má šest obrazů, ale scénicky je to šestkrát „nový život"
+(bříza, jehňata, první krok dítěte, ovce rodící v zimě, kachňata, reveň). → **Pokrytí významu
+a pestrost SCÉN jsou dvě různá čísla; měřil jsem dosud jen to první.** Do auditu obrazů patří obě.
