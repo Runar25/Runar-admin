@@ -2255,3 +2255,52 @@ příčina**; příčina je požadavek „pojmenuj runu a řekni, co dělá".
 pozicemi od v4.9). Co nemají, je jakýkoli **los**. Takže otázka „má se předepisovat role věty"
 se dá číst z produkce: **předepsané konce běží ve spreadech, losované v single** — a porovnat
 je jde bez jediného nového volání.
+
+## 2026-09-09 — VOLNOST obrazu je HORŠÍ než pool · a čtení nenese význam runy (17 % proti 93 %)
+Dvě ownerovy výtky z 9. 9., obě změřené. Korpusy `~/runar-eval/cowork-ramy.jsonl` a `obraz.jsonl`
+(tytéž 4 runy, týž seed, týž přibitý čtyřvětový rozpočet jako `role.jsonl`).
+<!-- doc-links:ok 2026-09-09 korpusy mimo repo -->
+
+### ⭐ Nález 1 — čtení NEDONESE, co runa je. A prompt to zakazuje.
+Owner: *„nelíbí se mi, jak popisuje tu runu. Je to až extrémně metaforické. Platí to pro všechny
+varianty [A/B/C]."* Změřeno (nese text některé z klíčových slov runy?):
+| | nese prostý význam runy |
+|---|---|
+| **statická čtení (květen)** — ta, ke kterým se owner chtěl vrátit | **93 %** (28/30) |
+| **dnešní produkce** | **17 %** (2/12) |
+| Coworkovy rámy [A] / [B] / [C] | 25 % / 33 % / 25 % |
+⭐ **Kořen je v promptu, ne v tvaru věty.** `VOICE_PROFILES.*.rules.essence` říká doslova
+*„not 'Fehu is wealth'"* — tedy zakazuje **to slovo**, ne jen holou nálepku. Proto je výsledek
+metafora bez obsahu, a proto se to nezmění výměnou rámu: **A, B i C ten zákaz nechávají stát.**
+⚠️ **Je to v rozporu s ownerem POTVRZENÝM nálezem z 2026-08-26** (`memory/co-dela-cteni-silnym`):
+*„zní výborně, přesně to co bych rád viděl, čistě, člověk si z toho hned něco vezme"* — a tam
+stojí i to, že **vada nebyla definiční věta, ale že ji všech osm ramen dostalo touž konstrukcí.**
+Ladili jsme tedy konstrukci, zatímco chybí obsah. **Uvolnění toho zákazu je rozhodnutí o kánonu
+(📜), ne ladění — patří ownerovi.**
+⚠️ **Můj pokus to opravit instrukcí SELHAL** (cela VYZNAM: „prostý název MUSÍ dorazit ke čtenáři")
+— **17 %, beze změny.** Perth a Eihwaz dál neřeknou nic prostého; posunulo se jen Fehu („*the
+wealth that walks back when the work is honest*"). Nestačí to chtít; musí odejít ten zákaz.
+
+### ⭐ Nález 2 — víc VOLNOSTI dá MÍŇ pestrosti, ne víc
+Owner: *„obrazy jsou statické a hodně nás limitují… nevím, jak by to vypadalo, kdybychom mu dali
+víc volnosti."* Nejdřív rozsah: **82 obrazů na 24 run = 3,4 na runu**; na jedno čtení vybírá model
+z **2–5 kandidátů (medián 3)**. **Eihwaz má celkem DVA obrazy**, jeden z nich je ten jeřáb.
+| režim | shoda 1. věty mezi třemi běhy (nižší = pestřejší) |
+|---|---|
+| dnešek (obraz z poolu) | 0,213 |
+| **VOLNÝ — obraz se nedodá vůbec** | **0,399** ← o polovinu HORŠÍ |
+| PŘEDLOHA — obraz jako tvar, vyměň věc v něm | 0,268 |
+| **PŘEDLOHA + losovaná RODINA předmětů** | **0,065** ← 3× pestřejší než dnešek |
+⭐ **Volnost nevyrábí pestrost, vyrábí OBLÍBENCE.** Bez dodaného obrazu napsal model na Fehu
+třikrát skoro touž větu (*„Under the barn floor the winter hay is nearly gone…"*, shoda 0,897).
+Pestrost tedy nedělá volnost — dělá ji **vstup, který se mění**.
+⚠️ **Poctivě k číslu 0,065:** PŘEDLOHA+ má proměnný vstup **z konstrukce** (rodina se losuje po
+bězích), kdežto dnešek má při témž seedu obraz pevný a mění se jen přeformulování. To číslo tedy
+neříká „lepší metrika", říká **co koupí měnící se vstup proti přeformulování jednoho obrazu**.
+⚠️ **Riziko, které to nese:** vyměněný předmět může odvést význam runy jinam (Eihwaz dostal kosu,
+u níž „*the edge still true*" zní spíš jako Tiwaz). Slepý test 22. 8. už ukázal, že **7 obrazů
+z 80 ukazuje na jinou runu** — tahle páka to riziko zvětšuje, ne zmenšuje. Než se nasadí, musí
+projít týmž slepým testem.
+⚠️ **§26 — NENÍ to návrat zamítnutého „POLE + rozprostírač"** (2026-08-22). Ten milované obrazy
+rozsypal do domén a fragmentů; owner je chtěl ZACHOVAT. Tady obraz zůstává celý a nedotčený jako
+**vzor**; mění se jen věc, která v něm stojí.
