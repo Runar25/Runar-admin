@@ -7,6 +7,18 @@
 
 ## Reading quality (audit 2026-07-04)
 
+- [ ] ⭐ **ČTENÍ JSOU NEÚPLNÁ: obrazy odemykají jen 43 % významu run** (owner 2026-09-09: *„potřebuju dostat ostatní meaning run do obrazu… pokud je Eihwaz yew tree/resilience/endurance/death and rebirth, tak nemůže zůstat jen resilience! Platí pro všechny runy."*). Změřeno napříč všemi 24 runami:
+  | | |
+  |---|---|
+  | průměrné krytí významu runy obrazy | **43 %** |
+  | runy s **jedinou** dosažitelnou stránkou | **5** — Ansuz · Jera · Mannaz (20 %) · Nauthiz · Eihwaz (25 %) |
+  | nejlepší | Fehu a Raidho (75 %) |
+  ⚠️ **NENÍ to chyba ani nedodělávka — má to zapsaný důvod, a ten platí dál** (§26, hlavička `RUNE_IMAGES` v `v2/runar-character.js`): 5./6. sloupec vznikl 2026-08-22 jako **oprava** — model si bral náhodný klíč, který k obrazu nepatřil („stádo z klíčů vedle chleba z obrazu, našel owner okem"). Vazba klíče na obraz tu vadu odstranila. **Kdo tenhle sloupec zruší, vrátí tu starou vadu.**
+  ⭐ **Nezapsala se ale CENA té opravy** — že se tím význam runy zúžil na to, co nesou její obrazy. Proto je oprava **obsahová, ne kódová: dopsat obrazy tak, aby pokryly zbylé stránky každé runy.** Prioritně těch pět run s jedinou.
+  ⚠️ Ověřeno, že to NEJDE obejít instrukcí (2026-09-09, čtyři řezy): výměna stránky za jiný klíč **17 %**, celý klíčový seznam místo jedné stránky **0 %**, odebrání zákazu + požadavek **17 %** (výchozí 17 %). → `RUNAR_EVAL_LOG.md` 2026-09-09 (2).
+- [ ] **Motiv-guard běží skoro naslepo — 76 z 85 obrazů nemá motiv** (8. sloupec `RUNE_IMAGES`, nalezeno 2026-09-09). Guard má bránit tomu, aby týž pojmenovaný motiv přišel dvakrát po sobě (smoke ㉟), ale bez motivu ho nemá na čem uplatnit — u devíti obrazů z 85 funguje, u zbytku ne. Doplnit motivy. ⚠️ **Váže se to na návrh „předloha + losovaná rodina předmětů"**: bez plných motivů nejde uhlídat, aby dvě tažené runy nedostaly týž typ obrazu (obava ownera 2026-09-09).
+- [ ] **Sedm run má jediný registr D|E|P** (7. sloupec, nalezeno 2026-09-09): Mannaz · Eihwaz · Ehwaz · Laguz · Ingwaz · Uruz · Hagalaz. Registr měl sloužit výběrové kongruenci při skládání spreadů (hlavička `RUNE_IMAGES`); u těch sedmi runy nemá z čeho vybírat, takže ta páka je pro ně mrtvá.
+
 - [ ] **CO HLÍDAT AŽ SE BUDE TESTOVAT NAŽIVO** (zapsáno 2026-09-08 na pokyn ownera: *„zapsat, až budeme testovat tak se to ukáže, ať o tom víme"*). Dvě věci, které nemají žádnou automatickou kontrolu a ukážou se jedině na živých čteních:
   1. **Registry `Confirmation` a `Insight into Challenge`** — jejich věty mluví o „**the** decision" a „**the** friction". Ten určitý člen měl antecedent v nálepce, která z promptu odešla 2026-09-08 (v4.16-seek); teď se opírá o otázku uživatele. Ve vzorku se to neprojevilo (**0/4 v obou verzích**), ale n = 4 není důkaz. **Signál vady:** čtení tvrdí o tazateli rozhodnutí nebo potíž, které nikdo nezadal. Detail → `RUNAR_DECISIONS.md` 2026-09-08.
   2. **Zda registr (`seeking`) vůbec někdo pozná.** Změřená stopa je slabá (široké echo 20 % proti podlaze 8–11 %). **Když ji v živých čteních nikdo nerozezná, je to argument pro možnost C níž** — a tenhle řádek existuje proto, aby se to při testování nezapomnělo změřit.
