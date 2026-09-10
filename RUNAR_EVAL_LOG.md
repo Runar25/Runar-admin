@@ -2575,3 +2575,27 @@ nejbližší analogie varuje: cela VOLNY (žádný dodaný obraz) zhroutila pest
 (0,399; Fehu třikrát táž věta). Slovní obrazy proto před jakoukoli kvótou potřebují pilot přes
 identitní bránu + měření pestrosti. Kvóty typu „20/25/15" se nestanovují předem — typ se volí
 podle povahy stránky a runy, bránu rozhoduje soudce.
+
+## 2026-09-10 — ČOČKA životní runy si bere ZÁVĚR v 10/12 čtení
+Owner: *„přijde mi, že čočka zabírá místo pro čtení… nejsem si jistý, jestli se hodí dávat ji
+automaticky."* Změřeno v harnessu (do produkce nesaženo), korpus `~/runar-eval/cocka.jsonl`:
+4 runy × 3 běhy × 2 cely, týž seed, životní runa **Gebo** (žádná z tažených).
+| | s čočkou | bez čočky |
+|---|---|---|
+| **stopa životní runy v ZÁVĚREČNÉ větě** | **10/12** | **0/12** |
+| délka čtení | 66,8 slova | 63,6 (**+5 % s čočkou** = EL náklad) |
+| pestrost závěrů uvnitř runy | 0,103 | 0,119 (rozdíl pod šumem 0,037) |
+| shoda závěrů MEZI runami | 0,035 | 0,010 (obojí u šumové podlahy) |
+⭐ **Čočka není mrtvá — vyhrává svůj slot naprosto.** Čtyři různé tažené runy, a **všech dvanáct
+závěrů je o Gebu**: *„The tree gives its shade freely"* · *„what comes in comes to be shared"* ·
+*„Every place you land holds out its hand, and something is asked back"* · *„What you hand over
+honestly is the hand another will reach for."* Bez čočky závěr zůstane u tažené runy (Eihwaz drží,
+Perth se ještě neusadil, Tiwaz nechce nezasloužené).
+⚠️ **Metodicky:** slovní shoda tohle NEVIDÍ (0,035 vs 0,010, obojí u podlahy), protože se opakuje
+**téma, ne slovník**. Jediná metrika, která vadu chytá, je **stopa významu životní runy** — okem
+zjevné, Jaccardem ne. Zapsat jako precedens: „téma se opakuje, slova ne" = slepé místo párových metrik.
+⚠️ **Struktura:** čočka je **třetí uchazeč o poslední větu** — vedle ní tam stojí los tvarů konce
+(`_endingShape`, 5 variant, „End on a quiet line that rests"). Precedens v4.9 říká, co se stane,
+když se o slot perou dvě instrukce; tady vyhrává čočka.
+→ **Pro uživatele to znamená:** vytáhne deset různých run a dostane deset závěrů o TÉŽE runě,
+kterou si nevytáhl. Závěrečná věta je přitom ta, co zůstává.
