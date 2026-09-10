@@ -535,6 +535,45 @@ function _phRotate(id, seznam, idx0) {
   t.cyklus = setInterval(krok, 5000);
   krok();
 }
+// Rozbalovaci napoveda „na co se muzu zeptat" (KUKY 2026-09-10). Tipy jsou TYTEZ ukazky,
+// ktere uz rotuji v placeholderu (UI_TEXT.ask_placeholders) — jeden zdroj, dve podoby (§18).
+// Osmy je ZIVY: dosadi jmeno zivotni runy a runy ze cteni, kdyz obe zname.
+function _askHints() {
+  var z = (typeof UI_TEXT !== 'undefined' && UI_TEXT[lang] && UI_TEXT[lang].ask_placeholders)
+    || (typeof UI_TEXT !== 'undefined' && UI_TEXT.en && UI_TEXT.en.ask_placeholders) || [];
+  var out = z.slice();
+  var life = readerUser && readerUser.lifeRune, drawn = readerRune;
+  // NAHORU, ne dolu: je to jediny tip, ktery zna TOHLE cteni (jmeno tazene runy i zivotni
+  // runy). Osm tipu je vysoky sloupec — co ma nejvetsi sanci sedet, ma byt videt prvni.
+  if (life && drawn && life.n !== drawn.n && typeof tp === 'function')
+    out.unshift(tp('ask_hint_life', { life: rnSplit(life).name, rune: rnSplit(drawn).name }));
+  return out;
+}
+function toggleAskHints() {
+  var btn = document.getElementById('ask-lbl'), box = document.getElementById('ask-hints');
+  if (!btn || !box) return;
+  var otevrit = box.style.display === 'none';
+  btn.setAttribute('aria-expanded', otevrit ? 'true' : 'false');
+  box.style.display = otevrit ? '' : 'none';
+  if (!otevrit) { box.innerHTML = ''; return; }
+  box.innerHTML = '';
+  _askHints().forEach(function (t) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'ask-hint'; b.textContent = t;
+    // VLOZI, NEODESLE — volny text ukotvi cteni 3x lepe nez vyber z nabidky (2026-08-16),
+    // takze uzivatel musi mit posledni slovo. Kurzor zustava v poli.
+    b.onclick = function () {
+      var inp = document.getElementById('ask-input');
+      if (!inp || inp.disabled) return;
+      _askPhStop();                       // rotace placeholderu uz nema co delat
+      inp.value = t; inp.focus();
+      try { inp.setSelectionRange(t.length, t.length); } catch (e) {}
+      toggleAskHints();
+    };
+    box.appendChild(b);
+  });
+}
+
 function _askPhStop() { _phStop('ask-input'); }
 function _askPhStart() {
   _askPhIdx++;   // kazde otevreni Ask zacina jinde v sade, at to neni porad tataz prvni
@@ -579,6 +618,9 @@ function _showAsk() {
   var inp = document.getElementById('ask-input');
   if (inp) { inp.value = ''; inp.placeholder = _askPlaceholder(); inp.disabled = teaser; }
   _askPhStart();
+  var hb = document.getElementById('ask-hints');
+  if (hb) { hb.innerHTML = ''; hb.style.display = 'none'; }
+  var hl = document.getElementById('ask-lbl'); if (hl) hl.setAttribute('aria-expanded', 'false');
   var wrap = document.getElementById('ask-input-wrap'); if (wrap) wrap.style.display = '';
   var qEl2 = document.getElementById('ask-question'); if (qEl2) { qEl2.textContent = ''; qEl2.style.display = 'none'; }
   var ans = document.getElementById('ask-answer'); if (ans) { ans.textContent = ''; ans.style.display = 'none'; }

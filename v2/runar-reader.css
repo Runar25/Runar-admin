@@ -535,6 +535,17 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .ask-input{flex:1;min-width:0;background:transparent;border:none;border-bottom:1px solid var(--border2);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.1em;padding:10px 0;}
 .ask-input:focus{outline:none;border-bottom-color:var(--gold);}
 .ask-input::placeholder{color:var(--dim);}
+/* 2026-09-10: z popisku Ask je tlacitko (rozbaluje napovedu). Vzhled musi zustat TYZ jako
+   drive, proto se resetuje vse, co <button> pridava sam (ram, pozadi, font, zarovnani). */
+.ask-lbl{background:none;border:0;padding:0;font:inherit;color:inherit;letter-spacing:inherit;
+  text-transform:inherit;cursor:pointer;display:block;width:100%;text-align:center;}
+.ask-lbl::after{content:" +";opacity:.55;}
+.ask-lbl[aria-expanded="true"]::after{content:" −";}
+.ask-hints{display:flex;flex-direction:column;gap:6px;margin:10px 0 14px;}
+.ask-hint{background:none;border:1px solid var(--border);border-radius:3px;
+  padding:9px 13px;color:var(--muted);font-family:'Cormorant Garamond',serif;font-size:1.02em;
+  text-align:left;cursor:pointer;transition:all 0.2s;}
+.ask-hint:hover,.ask-hint:focus{color:var(--white);border-color:var(--border2);outline:none;}
 .ask-btn{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:1.5px;padding:9px 18px;background:transparent;border:1px solid var(--gold);color:var(--gold);cursor:pointer;white-space:nowrap;transition:all 0.25s;flex-shrink:0;}
 .ask-btn:hover:not(:disabled){background:var(--gold);color:#000;}
 .ask-btn:disabled{opacity:0.35;cursor:not-allowed;}

@@ -448,7 +448,9 @@
       <div class="status" id="st-voice"></div>
       <!-- Ask Rúnar — follow-up Q&A (Premium, one question per reading) -->
       <div id="ask-runar" style="display:none;">
-        <div class="ask-lbl" id="ask-lbl">Ask Rúnar about this reading</div>
+        <button class="ask-lbl" id="ask-lbl" type="button" aria-expanded="false"
+                aria-controls="ask-hints" onclick="toggleAskHints()">Ask Rúnar about this reading</button>
+        <div class="ask-hints" id="ask-hints" style="display:none;"></div>
         <div class="ask-input-wrap" id="ask-input-wrap">
           <input type="text" id="ask-input" class="ask-input" maxlength="160" placeholder="Ask Rúnar about this reading…"
                  onkeydown="if(event.key==='Enter')askRunar();">

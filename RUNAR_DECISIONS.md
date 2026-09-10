@@ -4942,3 +4942,20 @@ a distinktní". Motiv ale pojmenovává **opakující se předmět** (štítek p
 `breath`, `hay`), zbytek jsou sedmisloupcové řádky bez motivu.
 **Ověřeno:** smoke 36/36 · check-is OK · krytí přepočítáno z dat.
 **Affected doc(s):** `RUNAR_BACKLOG.md` (dávka odškrtnuta + oprava zápisu o motivech) — v témž commitu.
+
+
+## 2026-09-10 · UI · Ask: rozbalovací nápověda „na co se můžu zeptat" + živý tip na životní runu
+**Co:** Popisek `Ask Rúnar about this reading` se stal tlačítkem — rozbalí seznam ukázek otázek.
+Ukázky jsou **tytéž**, které už rotují v placeholderu (`UI_TEXT.ask_placeholders`) — jeden zdroj,
+dvě podoby (§18). Navrch přibyl **živý tip**, který dosadí skutečnou životní runu a runu ze čtení
+(*„How does my life rune Gebo affect Jera?"*); je **první v seznamu**, protože jako jediný zná
+tohle konkrétní čtení.
+**Proč tak, a ne jinak:** ťuknutí na ukázku ji **vloží do pole a nechá kurzor uvnitř — NEODEŠLE**.
+Volný text ukotví čtení **+8,8 b., výběr z nabídky jen +2,7** (2026-08-16); kdyby se ukázka
+odesílala rovnou, koupili bychom pohodlí za tři čtvrtiny signálu. Uživatel musí mít poslední slovo.
+**Souvislost:** je to zároveň místo, kam se životní runa přesouvá ze závěru čtení — owner sám
+tuhle otázku v produkci napsal (screenshot 2026-09-10) a dostal na ni odpověď, která ve čtení
+nemá místo. Volba `life_rune_in_readings` (rozhodnutí z téhož dne) tím dostává protějšek.
+**Ověřeno:** šablona dosazena v obou jazycích (`rnSplit().name`, aby v IS nebyl slovníkový opis
+v závorce uprostřed otázky) · vzhled zkontrolován v prohlížeči — popisek vypadá jako dřív, jen
+s `+`/`−` · smoke 36/36 · check-is OK.
