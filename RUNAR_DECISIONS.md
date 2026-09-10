@@ -4855,3 +4855,22 @@ ale **n = 4 není důkaz**: kdyby u registrů Confirmation / Insight into Challe
 **Ověřeno:** 6 cest (single/norns/yggdrasil × en/is) protlačeno — nálepka i hlídač pryč, instrukce
 přítomna · `check-is.py` OK · smoke **36/36** (⑧ `verify_contract_wiring` má novou kotvu, ㉜ registr
 pravidel přepsán po přezkoumání).
+
+
+## 2026-09-10 · Priorita · Záměnnost run mezi sebou = BACKLOG, ne honička
+**Co:** Nálezy identitního testu (záměnnost čtení mezi runami, 2026-09-09) se NEŘEŠÍ jako
+priorita. Zůstávají v backlogu — *„ať se o tom ví a nezapomene se na to, dokud to nevyřešíme."*
+**Proč (KUKY 2026-09-10):** *„Nevím, jaký je velký problém, že obraz se čte podobně jako jiná
+runa — ta část, kde je runa popsaná (ISA je tohle a tamto), v obraze ukazuje, jakou má roli…
+ať tu nehoníme něco, co nemůžeme dohnat. Proto je důležité kvalitně vysvětlit, co ta runa
+reprezentuje."* Uživatel jméno runy **vždy vidí** — slepý test ho maskuje, produkce ne.
+**Co z identitního testu ZŮSTÁVÁ v provozu:** brána na nové obrazy (generátor navrhuje, soudce
+rozhoduje) — tam se osvědčil: zabil 14/16 kandidátů a opravy Uruz/Tiwaz (0/2 → 4/4) jsou nasazené
+a zůstávají. **Test přestává být CÍLEM, zůstává NÁSTROJEM.**
+**Zaznamenaná protistrana (CODE, owner ji bere jako „dokud to nevyřešíme", ne jako zamítnutou):**
+čtení je uživatelova „knížečka" (potvrzeno 2026-08-26) — když text u Uruzu popisuje pole Eihwazu,
+učí uživatele cizí význam; a slepá identita je jediná automatická náhrada za otázku, jestli text
+nese význam PRÁVĚ TÉHLE runy.
+**Priorita místo toho:** kvalitní vysvětlení runy ve čtení — položka „metafora vedle metafory"
+(stopa významu 17 % dnes vs 93 % u statických), `RUNAR_BACKLOG.md`.
+**Affected doc(s):** `RUNAR_BACKLOG.md` (přerámování priorit u identitních položek) — v témž commitu.

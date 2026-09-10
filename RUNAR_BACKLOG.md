@@ -7,6 +7,7 @@
 
 ## Reading quality (audit 2026-07-04)
 
+- [ ] ℹ️ **PRIORITA ZÁMĚNNOSTI RUN: backlog, ne honička (KUKY 2026-09-10).** Uživatel jméno runy vždy vidí; klíčové je runu ve čtení **kvalitně vysvětlit** (= položka „metafora vedle metafory"). Identitní test **zůstává BRÁNOU na nové obrazy** (zabil 14/16 kandidátů), přestává být cílem. Platí pro položky záměnnosti níž (5 run 1/2 · Algiz · gravitační jámy). Detail → `RUNAR_DECISIONS.md` 2026-09-10.
 - [x] **~~Tři runy se v produkci nečtou jako ony samy~~ — Uruz a Tiwaz OPRAVENY 2026-09-09** (regrese 0/2 → **4/4** oběma, → `RUNAR_EVAL_LOG.md` 2026-09-09 (7)). Zbývá pět run se selháním 1/2: **Wunjo · Hagalaz · Jera · Mannaz · Blank** — nepřeměřeno po opravě, patří do paletového auditu.
 - [ ] ⛔ **ALGIZ: šest kandidátů ve dvou kolech neprošlo — a NEVÍME PROČ** (2026-09-09). Utíká k Thurisazu, Ise, Berkaně i Othile.
   ⚠️ **OPRAVA vlastního závěru z téhož dne:** napsal jsem, že za to může sdílený klíč `protection` s Thurisazem. **Neplatí** — Coworkův jednoslovný slovník ten překryv rozvázal (`ward` × `aegis`) a Algiz se přesoudil **3/18 → 2/18**, tedy beze změny. Sdílený klíč byl souběh, ne příčina; udělal jsem z korelace mechanismus, aniž jsem ho otestoval. → `RUNAR_EVAL_LOG.md` 2026-09-09 (8).
