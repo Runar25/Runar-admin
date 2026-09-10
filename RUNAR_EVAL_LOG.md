@@ -2558,3 +2558,20 @@ Ze všech 16 kandidátů (3 nejtěžší runy, 2 kola):
 kandidáty pro tři nejtěžší runy, takže to není přímé srovnání — ale **14 z 16 mých obrazů
 identitním testem neprošlo**. Psát obraz, který projde, je těžší, než to vypadá; brána
 (generátor navrhuje, soudce rozhoduje) není formalita, je to jediné, co ty dva ustálo.
+
+## 2026-09-10 — sčítání typů obrazů: nefyzických je 26 % — ale 87 % CHYBĚJÍCÍ práce je abstraktní
+Owner: *„myslím si, že těch nefyzických by mělo být celkem dost… chci, aby to bylo promyšlené."*
+Spočítáno z dat (hrubá klasifikace: situační = člověk jedná nebo je oslovován; celý seznam
+vypsán, takže hraniční případy jsou vidět a přepočitatelné):
+| | |
+|---|---|
+| dnešní knihovna 85 obrazů | **74 % fyzická scéna · 26 % situační (22 obrazů)** |
+| chybějící stránky (po opravě Uruz/Tiwaz) | **67**, z toho jen **9 konkrétních věcí/živlů** (yew, birch, horse, seed, water, ice, thorn, torch, voice) |
+| → povaha chybějící práce | **87 % abstrakce / stavy / činy** (courage, patience, wisdom, memory, trust…) |
+⭐ **Ownerův instinkt „nefyzických by mělo být dost" není vkus — je to povaha mezery.** To, co
+chybí, jsou převážně abstrakce, a ty se (podle zatímních měření) nesou líp činem než rekvizitou.
+⚠️ **Ale čistě SLOVNÍ obraz (bez konkrétní věci i bez děje) nemá zatím ANI JEDNO měření** — a
+nejbližší analogie varuje: cela VOLNY (žádný dodaný obraz) zhroutila pestrost na oblíbence
+(0,399; Fehu třikrát táž věta). Slovní obrazy proto před jakoukoli kvótou potřebují pilot přes
+identitní bránu + měření pestrosti. Kvóty typu „20/25/15" se nestanovují předem — typ se volí
+podle povahy stránky a runy, bránu rozhoduje soudce.

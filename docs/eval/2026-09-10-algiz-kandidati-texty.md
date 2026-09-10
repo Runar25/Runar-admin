@@ -145,3 +145,20 @@ Hlasy: `stará legenda` = frázové klíče `RUNES[].k` · `slovník` = jednoslo
 **Běh 2** · soudce: SPRÁVNĚ (Othila/Othila/Othila)
 
 > The keys stay warm in your palm while the house behind them empties, room by room. This is Othila, the loosening grip that keeps what was worth keeping and lets the walls go. What you carry from that old work is yours now, no matter where the next door stands. Do you keep holding the keys, or set them down to reach for what opens elsewhere?
+
+
+---
+# VERDIKT ČTENÁŘE (Cowork-tune, 2026-09-10) — mechanismus nalezen v textech
+**Nota se neudržela — sklouzla.** Byla v zadání, ale **text jde za obrazem, ne za aspektem**,
+a každý zvolený předmět seděl na cizím pozemku: kámen = nehybnost/dědictví (Isa/Othila) ·
+čekání na počasí = Isa · práh/dveře = doslova Thurisazovo jádro · ovce+jehně = Berkanina
+rodina · „care sent ahead" = Berkana. Potvrzeno i na PRODUKČNÍM obraze (turf-zeď utekla
+k Ise a Thurisazu) → **strukturální, ne jeden špatný obraz.**
+**Kde Algiz držel (recept, testovatelný soudcem):** ochranná přítomnost **aktivně vložená**
+mezi tebe a **pojmenovanou** hrozbu; ochránce je **subjekt v popředí**; „vyšší/neviditelné"
+jede jako vrstva (nevyžádaná, zdroj nevidíš) — ne jako abstraktní gesto; **vyhnout se
+předmětům cizích run** (práh/dveře, ovce/jehně, zeď-co-ztiší, staré-pamatující věci, silnice).
+Zkratka: **Algiz ≠ úkryt, ≠ bariéra. Algiz = někdo/něco se postaví mezi tebe a ránu, a tys
+o to neprosil.**
+Status: hypotéza z ČTENÍ textů (ne z měření) — první dávka kandidátů podle receptu půjde
+přes identitní bránu, až owner určí priority run.
