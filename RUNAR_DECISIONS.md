@@ -4874,3 +4874,15 @@ nese význam PRÁVĚ TÉHLE runy.
 **Priorita místo toho:** kvalitní vysvětlení runy ve čtení — položka „metafora vedle metafory"
 (stopa významu 17 % dnes vs 93 % u statických), `RUNAR_BACKLOG.md`.
 **Affected doc(s):** `RUNAR_BACKLOG.md` (přerámování priorit u identitních položek) — v témž commitu.
+
+
+## 2026-09-10 · Obsah · Jednoslovný slovník 119 PŘIJAT jako autorská pomůcka (ne oprava identity)
+**Co:** Coworkův jednoslovný slovník (25 run × 119 klíčů, `docs/eval/2026-09-10-slovnik-119.md`)
+se přijímá **přesně ve změřeném statusu**: formálně validní (0 kolizí, vše pokryto) · identitu
+čtení neřeší (78 → 78 %, změřeno na týchž textech) · autorský přínos zatím nezměřen.
+**Proč:** owner 2026-09-10 převzal doporučení GPT (*„ANO — přijmout jako autorskou pomůcku…
+v tom statusu, který jste mu dali"*). Sedm „kolizních míst" se od teď čte jako **watch-set pro
+tvorbu textu**, ne jako technické kolize — problém vzniká, až když text jedné runy ZNÍ jako
+sousedova, a to je vlastnost obrazu, ne slovníku.
+**Nenasazuje se do kódu** — `RUNES[].k` zůstává nedotčené; slovník je podklad pro psaní obrazů.
+**Affected doc(s):** `RUNAR_BACKLOG.md` (status u položky slovníku) — v témž commitu.
