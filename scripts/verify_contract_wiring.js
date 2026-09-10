@@ -47,6 +47,11 @@ var drawn = _R('Raidho');
   // life rune AMONG the drawn runes -> the lens must step aside (it cannot be lens and subject)
   var uIn = { name:'Anna', area:u.area, seeking:u.seeking, question:'', lifeRune:_R('Uruz') };
   _OUT['norns_lifein_'+L] = buildNornsPrompt(uIn, pool.slice(0,3), L, []);
+  // 2026-09-10: uzivatel smi cocku VYPNOUT (user_profiles.life_rune_in_readings ->
+  // readerUser.lifeLensOn -> _lifeLens). Fixture proto stavi i vypnuty stav.
+  var uOff = Object.assign({}, u, { lifeLensOn: false });
+  _OUT['single_lensoff_'+L] = buildReadingPrompt(uOff, drawn, L, []);
+  _OUT['norns_lensoff_'+L]  = buildNornsPrompt(uOff, pool.slice(0,3), L, []);
   // Ask Rúnar follow-up — until v1.0 it carried persona + scope only, so a leading question
   // pulled it into cold-read/fate while the body held. It must now carry the body's gates.
   _OUT['ask_'+L] = buildAskPrompt('A short reading about Raidho.', 'So the road is already opening for me?', 'Raidho', L, []);
@@ -117,6 +122,12 @@ for (const L of ['en', 'is']) {
   const t = O['norns_lifein_' + L] || '';
   if (has(t, 'lens')) { fail++; console.log('FAIL  norns_lifein_' + L + '  lens present though the life rune was drawn'); }
   else console.log('OK    norns_lifein_' + L + '  lens correctly steps aside');
+  // ...a stejne tak nesmi byt nikde, kdyz si ji uzivatel vypnul
+  for (const b of ['single', 'norns']) {
+    const off = O[b + '_lensoff_' + L] || '';
+    if (has(off, 'lens')) { fail++; console.log('FAIL  ' + b + '_lensoff_' + L + '  lens present though the user turned it off'); }
+    else console.log('OK    ' + b + '_lensoff_' + L + '  lens off when the user says so');
+  }
 }
 
 // Zneni pravidla `describe` VLASTNI `_describeRule` (a prepisuje ho aktivni hlasovy profil).

@@ -4899,3 +4899,28 @@ mapy mezer.
 **Proč:** 87 % chybějících stránek jsou abstrakce → nefyzické obrazy nejsou vkus, ale povaha
 mezery; zároveň jediná změřená rizika (kolaps bez kotvy · cizí pozemek) dostala pravidla.
 **Affected doc(s):** `RUNAR_DESIGN.md` — v témž commitu.
+
+
+## 2026-09-10 · Chování · Čočka životní runy je VYPÍNATELNÁ (volba uživatele, default zapnuto)
+**Co:** Nová volba `user_profiles.life_rune_in_readings` (default `true` = dnešní chování).
+Vypnutá → životní runa přestane barvit čtení na **všech pěti cestách** (single + 4 spready)
+a zmizí i odkaz na ni v `_priorityContext`. Přepínač v bočním panelu, jen pro přihlášené,
+kteří životní runu mají. **Badge i `life_rune` v journalu berou `u.lifeRune` dál** — vypnutí
+mění text čtení, ne to, co o sobě uživatel vidí.
+**Proč:** změřeno, že čočka si bere **závěrečnou větu v 10/12 čtení** (bez ní 0/12) — čtyři
+různé tažené runy a všech dvanáct závěrů o runě, kterou si uživatel nevytáhl; závěr je přitom
+ta věta, co zůstane. Navíc je to třetí uchazeč o týž slot vedle losu tvarů konce.
+Čísla → `RUNAR_EVAL_LOG.md` 2026-09-10.
+**Proč VOLBA a ne zrušení (KUKY 2026-09-10):** *„ano/ne, tak jsem to myslel… líbí se mi ta 2."*
+A proč nastavení, ne pilulka u čtení: životní runa je vlastnost člověka (počítá se z data
+narození, nemění se), ne vstup k jedné otázce — u pilulek by se člověk rozhodoval pokaždé
+znovu o něčem, co je pořád stejné.
+**Jedno místo rozhodnutí:** `_lifeLens(u)` v `runar-character.js` (§18) — pět builderů ho
+konzumuje. ⚠️ Při té příležitosti sjednoceno, že spready braly `u.lifeRune` **přímo**, kdežto
+`lensOn` už šel přes `life`; dnes to bylo totéž jen shodou okolností a s bránou by se to rozešlo.
+**⚠️ POTŘEBUJE SQL od ownera** — dokud nedoběhne, sloupec chybí a volba se neuloží
+(načtení má fallback na `true`, takže se nic nerozbije).
+**Ověřeno:** 30 kombinací (5 cest × 2 jazyky × 3 stavy: chybějící pole / true / false) ·
+smoke ⑧ nově testuje i VYPNUTÝ stav (dřív uměl jen dnešní) · check-is chytil `Lífsrúnan`
+→ opraveno na `Lífsrúnin` · smoke 36/36.
+**Affected doc(s):** `RUNAR_BACKLOG.md` (položka čočky) — v témž commitu.

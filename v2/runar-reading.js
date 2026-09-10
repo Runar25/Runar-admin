@@ -226,6 +226,7 @@ function startReading() {
   // Life rune from DB (own reading) or null (reading for someone else)
   var lifeRune = (isMine && _lifeRuneNum) ? RUNES[_lifeRuneNum - 1] : null;
   readerUser = { name, d: null, m: null, y: null, lifeRune,
+    lifeLensOn: (typeof lifeRuneInReadings === 'undefined') ? true : !!lifeRuneInReadings,
     area: readerUser.area || '', seeking: readerUser.seeking || '',
     intention: readerUser.intention || '',
     question: document.getElementById('r-question').value.trim() };

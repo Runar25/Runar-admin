@@ -799,6 +799,12 @@ function _lifeWasDrawn(life, drawn) {
   return (Array.isArray(drawn) ? drawn : [drawn]).filter(Boolean)
     .some(function (r) { return r && r.n === life.n; });
 }
+// 2026-09-10: JEDINE misto, kde se rozhoduje, jestli zivotni runa smi barvit CTENI.
+// Badge v UI a `life_rune` v journalu berou `u.lifeRune` dal napřimo — tohle je JEN pro prompt,
+// aby se vypnuta cocka neprojevila tim, ze uzivateli zmizi i jeho vlastni runa z obrazovky.
+// Default = zapnuto: chybejici pole (starsi volajici, shrine, fixture) se chova jako dnes.
+function _lifeLens(u) { return (u && u.lifeLensOn === false) ? null : ((u && u.lifeRune) || null); }
+
 function _lensContext(life, drawn, lang) {
   if (!life) return '';
   var list = (Array.isArray(drawn) ? drawn : [drawn]).filter(Boolean);
@@ -1316,7 +1322,7 @@ var RP_SINGLE = {
 
 function buildReadingPromptSingle(u, drawn, lang, corrections) {
   var S = RP_SINGLE[lang] || RP_SINGLE.en;
-  var life = u.lifeRune;
+  var life = _lifeLens(u);
   var isLifeRune = _lifeWasDrawn(life, drawn);
   var lensOn = !!life && !isLifeRune;
   // 2026-08-22: obraz se vybira PRED klici a islandske klice se vazou na jeho stranku.
@@ -1489,7 +1495,7 @@ function _spreadBlock(r, label) {
 function buildKrizPromptCross(u, runes, lang, corrections) {
   var S = RP_KRIZ[lang] || RP_KRIZ.en;
   var rCtr = runes[0], rAbo = runes[1], rBel = runes[2], rBeh = runes[3], rAhe = runes[4];
-  var life = u.lifeRune;
+  var life = _lifeLens(u);
   var lensOn = !!life && !_lifeWasDrawn(life, runes);
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
@@ -1526,7 +1532,7 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
     S.landing,
     (lensOn || u.area || u.seeking) ? _priorityContext(lensOn, runes, lang) : '',
   ].concat(S.instructions(ctrName)).concat([
-    _lensContext(u.lifeRune, runes, lang),
+    _lensContext(life, runes, lang),
     S.closing(u.name) + (S.langInstr ? ' ' + S.langInstr : '') + getCorrPrompt(lang, corrections),
     _addressContext(lang),
     S.json,
@@ -1583,7 +1589,7 @@ var RP_NORNS = {
 function buildNornsPromptFate(u, runes, lang, corrections) {
   var S = RP_NORNS[lang] || RP_NORNS.en;
   var rUrd = runes[0], rVerd = runes[1], rSkul = runes[2];
-  var life = u.lifeRune;
+  var life = _lifeLens(u);
   var lensOn = !!life && !_lifeWasDrawn(life, runes);
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
@@ -1615,7 +1621,7 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
     S.landing,
     (lensOn || u.area || u.seeking) ? _priorityContext(lensOn, runes, lang) : '',
   ].concat(S.beats).concat([
-    _lensContext(u.lifeRune, runes, lang),
+    _lensContext(life, runes, lang),
     S.bigInstruction(u.name),
     S.json,
     (S.langInstr ? S.langInstr : ''),
@@ -1663,7 +1669,7 @@ var RP_HORSESHOE = {
 
 function buildHorseshoePromptSeven(u, runes, lang, corrections) {
   var S = RP_HORSESHOE[lang] || RP_HORSESHOE.en;
-  var life = u.lifeRune;
+  var life = _lifeLens(u);
   var lensOn = !!life && !_lifeWasDrawn(life, runes);
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
@@ -1698,7 +1704,7 @@ function buildHorseshoePromptSeven(u, runes, lang, corrections) {
     S.landing,
     (lensOn || u.area || u.seeking) ? _priorityContext(lensOn, runes, lang) : '',
   ].concat(S.beats).concat([
-    _lensContext(u.lifeRune, runes, lang),
+    _lensContext(life, runes, lang),
     S.closing(u.name),
     _addressContext(lang),
     S.json,
@@ -1756,7 +1762,7 @@ var RP_YGGDRASIL = {
 
 function buildYggdrasilPromptNine(u, runes, lang, corrections) {
   var S = RP_YGGDRASIL[lang] || RP_YGGDRASIL.en;
-  var life = u.lifeRune;
+  var life = _lifeLens(u);
   var lensOn = !!life && !_lifeWasDrawn(life, runes);
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
@@ -1796,7 +1802,7 @@ function buildYggdrasilPromptNine(u, runes, lang, corrections) {
     S.landing,
     (lensOn || u.area || u.seeking) ? _priorityContext(lensOn, runes, lang) : '',
   ].concat(S.beats).concat([
-    _lensContext(u.lifeRune, runes, lang),
+    _lensContext(life, runes, lang),
     S.closing(u.name),
     _addressContext(lang),
     S.json,

@@ -24,6 +24,9 @@ let greetingShown  = false;     // show topbar greeting only once per session
 let userName       = '';        // display name from user_profiles.name
 let isTester        = false;    // user_profiles.is_tester — tester account (explicit consent)
 let analyticsOptOut = false;    // user_profiles.analytics_opt_out — user excluded readings from quality analysis
+let lifeRuneInReadings = true;  // user_profiles.life_rune_in_readings — smi zivotni runa barvit ZAVER ctení?
+                                // Default true = dnesni chovani. Vypnuto: cteni skonci u tazene runy.
+                                // Duvod + mereni (10/12 zaveru si brala cocka) -> RUNAR_EVAL_LOG.md 2026-09-10.
 let testerConsentAt = null;     // user_profiles.tester_consent_at — when the tester accepted consent
 let profileLoaded   = false;    // fetchUserProfile dobehl (data aplikovana) — Tree tab drzi loading dokud false
 let readerRune     = null;
@@ -108,13 +111,16 @@ async function fetchUserProfile(userId) {
         .then(function (r) { if (r && r.data && r.data.address_gender) { userGender = r.data.address_gender; localStorage.setItem('runar_gender', userGender); _updateGenderPills(); } })
         .catch(function () {});
       // Privacy/tester flags — guarded (never blocks profile load). Drives opt-out toggle + tester consent.
-      sb.from('user_profiles').select('is_tester, analytics_opt_out, tester_consent_at').eq('id', userId).maybeSingle()
+      sb.from('user_profiles').select('is_tester, analytics_opt_out, tester_consent_at, life_rune_in_readings').eq('id', userId).maybeSingle()
         .then(function (r) {
           if (!r || !r.data) return;
           isTester        = !!r.data.is_tester;
           analyticsOptOut = !!r.data.analytics_opt_out;
+          // Sloupec muze chybet, dokud nedobehne migrace -> null/undefined = zapnuto (dnesni stav).
+          lifeRuneInReadings = (r.data.life_rune_in_readings === false) ? false : true;
           testerConsentAt = r.data.tester_consent_at || null;
           if (typeof _syncPrivacyUI === 'function') _syncPrivacyUI();
+          if (typeof _syncLifeLensUI === 'function') _syncLifeLensUI();
           if (typeof _maybeShowTesterConsent === 'function') _maybeShowTesterConsent();
         })
         .catch(function () {});
@@ -454,6 +460,33 @@ function _syncPrivacyUI() {
 
 // Checkbox checked = keep helping (opted in); unchecked = opt out.
 function onOptOutToggle(cb) { setAnalyticsOptOut(!cb.checked); }
+function onLifeLensToggle(cb) { setLifeRuneInReadings(!!cb.checked); }
+
+async function setLifeRuneInReadings(on) {
+  if (!currentUser) return;
+  var prev = lifeRuneInReadings;
+  lifeRuneInReadings = !!on;
+  try {
+    var r = await sb.from('user_profiles').update({ life_rune_in_readings: lifeRuneInReadings }).eq('id', currentUser.id);
+    if (r.error) throw r.error;
+    if (typeof showToast === 'function') showToast(t(lifeRuneInReadings ? 'lifelens_saved_on' : 'lifelens_saved_off'), 'ok');
+  } catch (e) {
+    lifeRuneInReadings = prev;            // revert on failure (vzor setAnalyticsOptOut)
+    _syncLifeLensUI();
+    if (typeof showToast === 'function') showToast(t('lifelens_err'), 'err');
+  }
+}
+
+// Sekce se ukazuje jen prihlasenemu, ktery zivotni runu MA — jinak by prepinac ridil neco,
+// co u nej neexistuje (zivotni runa se pocita z data narozeni).
+function _syncLifeLensUI() {
+  var box = document.getElementById('sp-lifelens-settings');
+  var cb  = document.getElementById('sp-lifelens-toggle');
+  if (!box) return;
+  var ma = !!currentUser && !!(typeof _lifeRuneNum !== 'undefined' && _lifeRuneNum);
+  box.style.display = ma ? '' : 'none';
+  if (cb) cb.checked = !!lifeRuneInReadings;
+}
 
 async function setAnalyticsOptOut(optOut) {
   if (!currentUser) return;
@@ -529,6 +562,9 @@ function updateSidePanel() {
     setText('sp-privacy-lbl', t('sp_privacy_settings_lbl'));
     setText('sp-optout-label', t('optout_label'));
     _syncPrivacyUI();
+    setText('sp-lifelens-lbl', t('sp_lifelens_lbl'));
+    setText('sp-lifelens-label', t('lifelens_label'));
+    _syncLifeLensUI();
   }
   if (sessionEl) sessionEl.style.display = 'block';
   if (dangerEl)  dangerEl.style.display  = 'block';
