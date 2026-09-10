@@ -4924,3 +4924,21 @@ konzumuje. ⚠️ Při té příležitosti sjednoceno, že spready braly `u.life
 smoke ⑧ nově testuje i VYPNUTÝ stav (dřív uměl jen dnešní) · check-is chytil `Lífsrúnan`
 → opraveno na `Lífsrúnin` · smoke 36/36.
 **Affected doc(s):** `RUNAR_BACKLOG.md` (položka čočky) — v témž commitu.
+
+
+## 2026-09-10 · Obsah · DÁVKA 1 nasazena — 22 obrazů, krytí významu 43 % → 56 %
+**Co:** Do `RUNE_IMAGES` přibylo **22 obrazů** (Ansuz 8 · Nauthiz 5 · Jera 6 · Mannaz 3).
+Obsah dodal Cowork (ÚKOL 3, dávka 1: 36 kandidátů), nasazeno jen to, co prošlo **identitním
+soudcem 3/3**. Run s jedinou dosažitelnou stránkou významu: **5 → 1** (zbývá Eihwaz).
+**Proč:** pět run mělo dosažitelnou jedinou stránku svého významu — zbytek toho, co runa
+znamená, se do čtení nemohl dostat vůbec. Čísla → `RUNAR_EVAL_LOG.md` 2026-09-10 (2).
+**Co se NEnasadilo a proč:** 14 kandidátů neprošlo. Celý **Eihwaz (0/6)** — jeho jádro je
+Othilino pole (Othila vzala 10 z propadlých hlasů); **Mannaz-humanity** vzal Gebo 4×.
+**Dvě opravy islandštiny** (Cowork si je ověřit nemohl): `skrapast tómur` → `skrapa botninn`
+(184 doloženo) · `snýr sér flöt upp að` → `snýr sér að` (826).
+⚠️ **Vlastní chyba, opravená v témž tahu:** v zadání pro Cowork jsem napsal „motiv povinný
+a distinktní". Motiv ale pojmenovává **opakující se předmět** (štítek pro dvojici), ne řádek —
+36 unikátních motivů proto muselo pryč. Naplněné zůstaly tři skutečné dvojice (`the-call`,
+`breath`, `hay`), zbytek jsou sedmisloupcové řádky bez motivu.
+**Ověřeno:** smoke 36/36 · check-is OK · krytí přepočítáno z dat.
+**Affected doc(s):** `RUNAR_BACKLOG.md` (dávka odškrtnuta + oprava zápisu o motivech) — v témž commitu.

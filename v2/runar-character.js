@@ -490,6 +490,18 @@ var RUNE_IMAGES = [
   ['Ansuz','bright','Andvarinn ber lóukvakið yfir móann til þín.','The breeze carries the plover\'s call across the moor to you.','skilaboð','messages','P'],
   ['Ansuz','any','Hrafninn sest á staurinn og bíður þess að þú hlustir.','The raven settles on the fencepost and waits for you to listen.','rödd','messages','P'],
   ['Ansuz','any','Rödd í símanum segir það sem þú hefur beðið eftir að heyra.','A voice on the phone says the thing you have been waiting to hear.','rödd','messages','D'],
+  // 2026-09-10 (davka 1, Cowork): Ansuz mel dosazitelnou JEDINOU stranku sveho
+  // vyznamu — nize doplnene stranky se do cteni nemohly dostat vubec. Kazdy z techto
+  // radku prosel identitnim soudcem 3/3; ze stejne davky jich 14 propadlo a nenasazuje se.
+  // Duvod + cisla -> RUNAR_EVAL_LOG.md 2026-09-10 (2).
+  ['Ansuz','any','Í miðri útskýringu vandans upphátt þagnar þú, því að segja hann sýndi þér svarið.','Halfway through explaining the problem aloud, you stop, because saying it showed you the answer.','viska','wisdom','D'],
+  ['Ansuz','any','Ketillinn breytir um tón rétt áður en hann sýður, og þú heyrir það án þess að líta við.','The kettle changes its note just before it boils, and you hear it without looking.','viska','wisdom','D'],
+  ['Ansuz','any','Ókunnugur segir eina einfalda setningu í framhjáhlaupi, og hún svarar því sem þú spurðir ekki upphátt.','A stranger says one plain sentence in passing, and it answers the thing you did not ask aloud.','guðleg leiðsögn','divine guidance','D'],
+  ['Ansuz','any','Klukknahljómur frá kirkju handan fjarðar berst yfir kyrrt loftið og þú snýrð í áttina án þess að ákveða það.','A church bell from across the fjord carries over the still air and you turn toward it without deciding to.','guðleg leiðsögn','divine guidance','E'],
+  ['Ansuz','any','Einhver kallar nafn þitt yfir mannþröngina og öll önnur hljóð hverfa.','Someone calls your name across the crowd and every other sound drops away.','rödd','voice','D','the-call'],
+  ['Ansuz','any','Yfir hlaðið heyrist á tóninum í kallinu hvort það eru válegar fréttir eða bara kvöldmatur.','Across the yard the pitch of the call alone tells whether it is bad news or only supper.','rödd','voice','P','the-call'],
+  ['Ansuz','cold','Hélan sest á rúðuna af andardrætti þess sem sefur og bráðnar í tæran blett við hverja útöndun.','Frost forms on the pane from the sleeper\'s breath and thaws a clear patch with each exhale.','andardráttur','breath','D','breath'],
+  ['Ansuz','any','Þú kemst upp síðasta hjallann og staldrar við, og andardrátturinn kemur til baka hægar en þú bjóst við.','You come up the last of the slope and stop, and your breath comes back slower than you expected.','andardráttur','breath','P','breath'],
   ['Raidho','bright','Kindagatan liðast eftir hlíðinni af sjálfu sér.','The sheep-track winds along the hillside of its own accord.','náttúruleg röð','natural rhythm','P'],
   ['Raidho','cold','Skafrenningurinn finnur alltaf sömu leiðina milli þúfnanna.','The drifting snow always finds the same way between the tussocks.','leið','natural rhythm','E'],
   ['Kenaz','any','Aflinn glóir í dimmri smiðjunni og hamarinn mótar járnið.','The forge glows in the dark shed and the iron takes its shape.','kyndill','fire','D'],
@@ -507,12 +519,31 @@ var RUNE_IMAGES = [
   ['Nauthiz','cold','Vorhretið lætur lambið leita fast að ylnum.','The spring cold-snap makes the lamb press close for warmth.','vöxtur í áskorun','growth through challenge','P'],
   ['Nauthiz','any','Rótin brýtur sér leið gegnum grjótið niður að vatninu.','The root forces its way through the stones down to the water.','vöxtur í áskorun','growth through challenge','P'],
   ['Nauthiz','any','Þú prjónar áfram þótt garnið sé við það að klárast.','You keep knitting though the yarn is almost out.','þrýstingur','growth through challenge','D'],
+  // 2026-09-10 (davka 1, Cowork): Nauthiz mel dosazitelnou JEDINOU stranku sveho
+  // vyznamu — nize doplnene stranky se do cteni nemohly dostat vubec. Kazdy z techto
+  // radku prosel identitnim soudcem 3/3; ze stejne davky jich 14 propadlo a nenasazuje se.
+  // Duvod + cisla -> RUNAR_EVAL_LOG.md 2026-09-10 (2).
+  ['Nauthiz','any','Þú notar peningana sem þú varst að leggja fyrir, því þakið bíður ekki fram á vor.','You use the money you were setting aside, because the roof will not wait for spring.','nauðsyn','necessity','D'],
+  ['Nauthiz','any','Svefninn tekur þig í miðri setningu, því líkaminn lætur ekki þræta við sig lengur.','Sleep takes you mid-sentence, because the body will not be argued with any longer.','nauðsyn','necessity','D'],
+  ['Nauthiz','any','Það skrapar í botninn á mjölkassanum þremur dögum áður en báturinn á að koma.','The flour bin scrapes empty three days before the boat is due.','þörf','need','D'],
+  ['Nauthiz','any','Plantan í glugganum snýr sér að glerinu, að þeirri einu stund birtu sem hún fær.','The plant on the sill turns itself flat to the glass, toward the one hour of light it gets.','þörf','need','D'],
+  ['Nauthiz','any','Reipið hefur þrútnað í bleytunni og hnúturinn gefur sig ekki, hvernig sem þú togar.','The rope has swollen tight in the wet and the knot will not give, however you pull.','þrýstingur','constraint','P'],
   ['Isa','cold','Lognkafaldið fellur beint niður og hylur allt hljóðlaust.','The windless snowfall comes straight down and covers everything without a sound.','kyrrstaða','stillness','E'],
   ['Isa','cold','Tjörnin er lögð hjarni og bíður án þess að biðja um neitt.','The pond has iced over and waits without asking for anything.','að bíða','waiting','E'],
   ['Isa','any','Kaffibollinn kólnar á borðinu meðan þú bíður.','The cup of coffee goes cold on the table while you wait.','að bíða','waiting','D'],
   ['Jera','bright','Túnið bíður eftir að þorna áður en það er slegið.','The hayfield waits to dry before it is cut.','rétt tímasetning','patience','P'],
   ['Jera','any','Sólarhringurinn lengist hægt fram á vorið.','The day lengthens slowly toward spring.','þolinmæði','patience','E'],
   ['Jera','any','Deigið þarf sinn tíma; þú getur ekki flýtt fyrir því.','The dough needs its time; you cannot hurry it.','þolinmæði','patience','D'],
+  // 2026-09-10 (davka 1, Cowork): Jera mel dosazitelnou JEDINOU stranku sveho
+  // vyznamu — nize doplnene stranky se do cteni nemohly dostat vubec. Kazdy z techto
+  // radku prosel identitnim soudcem 3/3; ze stejne davky jich 14 propadlo a nenasazuje se.
+  // Duvod + cisla -> RUNAR_EVAL_LOG.md 2026-09-10 (2).
+  ['Jera','bright','Kartöflurnar koma upp úr moldinni margfalt fleiri en handfyllin sem fór niður.','The potatoes come up out of the soil far more than the handful that went in.','uppskera','harvest','P'],
+  ['Jera','bright','Síðasta heyið er komið inn og hlaðan andar hlýju alla sína lengd.','The last of the hay is in and the barn breathes warm the whole way down its length.','uppskera','harvest','P','hay'],
+  ['Jera','bright','Sami akur sem var svört leðja í vor stendur gullinn og sleginn í lok sumars, eins og í fyrra og eins og hann verður næst.','The same field that was black mud in spring stands gold and cut by summer\'s end, as last year and as it will be next.','hringur','cycle','P'],
+  ['Jera','any','Rjúpan verður hvít fyrir snjóinn og brún aftur fyrir lyngið, eftir klukku eldri en allt tal.','The ptarmigan turns white for the snow and brown again for the heath, on a clock older than counting.','hringur','cycle','E'],
+  ['Jera','bright','Þú snýrð heyinu þennan eina þurra eftirmiðdag sem öll vikan leyfir, og það nægir.','You turn the hay the one dry afternoon the whole week allows, and it is enough.','rétt tímasetning','right timing','P','hay'],
+  ['Jera','any','Þú sest niður í lok vertíðar og í þetta sinn kallar ekkert á þig að standa upp aftur.','You sit down at the end of the season and this time nothing is calling you to get up again.','umbun','reward','D'],
   ['Eihwaz','any','Reyniviðurinn stendur einn við bæinn og bognar aldrei alveg.','The rowan stands alone by the farmhouse and never bends all the way.','seigla','resilience','P'],
   ['Eihwaz','any','Rótin heldur í urðina þegar allt annað skríður niður.','The root holds the scree together when everything else slides down.','seigla','resilience','P'],
   ['Perth','any','Áin veltir steinvölunni þar til hún stöðvast — þú sérð ekki hvar.','The river rolls the pebble until it stops — you cannot see where.','örlög í mótun','fate in the making','E'],
@@ -541,6 +572,13 @@ var RUNE_IMAGES = [
   ['Ehwaz','any','Sá sem gengur með þér heldur sama takti án þess að segja orð.','The one who walks with you keeps the same pace without a word.','traust milli tveggja','partnership','P'],
   ['Mannaz','any','Spegilmyndin í lygnu lóninu bærist við minnsta blæ.','The reflection in the still lagoon trembles at the least breath of wind.','sjálfsþekking','self-awareness','P','reflection'],
   ['Mannaz','any','Andlitið í kyrru regnvatninu í tunnunni er þitt, eldra en þig minnir.','The face in the still water of the rain-barrel is yours, older than you remember it.','sjálfsþekking','self-awareness','P','reflection'],
+  // 2026-09-10 (davka 1, Cowork): Mannaz mel dosazitelnou JEDINOU stranku sveho
+  // vyznamu — nize doplnene stranky se do cteni nemohly dostat vubec. Kazdy z techto
+  // radku prosel identitnim soudcem 3/3; ze stejne davky jich 14 propadlo a nenasazuje se.
+  // Duvod + cisla -> RUNAR_EVAL_LOG.md 2026-09-10 (2).
+  ['Mannaz','any','Í þremur ólíkum herbergjum í dag varstu ólík manneskja í hverju þeirra, og samt var eitt lítið þrjóskt atriði eins alls staðar.','In three different rooms today you were a different person in each, and yet one small stubborn thing was the same in all of them.','sjálfið','the self','D'],
+  ['Mannaz','any','Þú manst símanúmer húss sem þú hefur ekki hringt í í þrjátíu ár, en ekki hvers vegna þú gekkst inn í þetta herbergi.','You remember the number of a house you have not called in thirty years, but not why you walked into this room.','minni','memory','D'],
+  ['Mannaz','any','Sama hugsunin gengur sömu þrjú skref búrsins alla nóttina og er engu nær út um morguninn.','The same thought walks the same three steps of its cage all night and is no nearer out by morning.','hugur','mind','D'],
   ['Laguz','any','Undiraldan finnst í fótunum áður en hún sést.','The groundswell is felt in your feet before it is seen.','innsæi','intuition','E'],
   ['Laguz','any','Jökuláin rennur grá og þung, full af því sem hún ber að ofan.','The glacial river runs grey and heavy, full of what it carries down from above.','flæði','the unconscious','E'],
   ['Laguz','any','Vatnið finnur sér leið niður hlíðina, enginn vísar því.','Water finds its own way down the slope, and no one shows it the path.','flæði','intuition','E'],
