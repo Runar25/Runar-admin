@@ -73,6 +73,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [paste-sql-explicitly.md](paste-sql-explicitly.md) — když má owner spustit SQL, vlož přesné SQL; žádné „jako minule"
 - [read-token-from-clipboard.md](read-token-from-clipboard.md) — eval token si načti ze schránky sám; owner ho do souboru nevkládá
 - [runar-api-key-file.md](runar-api-key-file.md) — Anthropic klíč bydlí v `~/.claude/runar-api-key.txt`, generátor si ho vezme sám; ownera nežádat
+- [cteni-generuj-tady-ne-pres-api.md](cteni-generuj-tady-ne-pres-api.md) — testovací čtení piš SÁM v konverzaci, ne přes API; prompt dál stav produkční cestou a slepé souzení dělej subagentem
 - [full-path-and-numbered-lists.md](full-path-and-numbered-lists.md) - uplna cesta k souboru (pracovni adresar je C:/Users/zkuku, ne repo) + cislovane seznamy tam, kde zalezi na poradi
 - [ask-owner-for-checks-you-cannot-run.md](ask-owner-for-checks-you-cannot-run.md) - co Code sam neoveri (prod DB, prihlasena appka), vyzadat po ownerovi, nededukovat
 - [dont-invent-fact-critical.md](dont-invent-fact-critical.md) — 🔒 fakt / 📜 lore chybějící v kánonu → zastav a flagni, nikdy nedomýšlej
