@@ -1115,12 +1115,14 @@ identity a z povahy chybějící práce (87 % nepokrytých stránek run jsou abs
 2. **SITUAČNÍ OBRAZ** — člověk koná; čin s cenou; žádná rekvizita, která patří jiné runě.
    Nese abstraktní stránky (justice, strength, courage…). Doloženo u nejtěžších run
    (Uruz „You lift the end…", Tiwaz „You give back the change…").
-3. **SLOVNÍ/VÝPOVĚDNÍ OBRAZ** — výpověď o stavu, bez věci i bez děje. ⚠️ **Zatím NULA měření**
-   a nejbližší analogie varuje (bez konkrétní kotvy se model hroutí na oblíbence) —
-   **napřed pilot přes identitní bránu + měření pestrosti, teprve pak se smí používat.**
+3. **SLOVNÍ/VÝPOVĚDNÍ OBRAZ** — výpověď o stavu, bez věci i bez děje. **První pilot prošel
+   branou 3/3** (2026-09-10, Mannaz-`mind`) — „nula měření" už neplatí, ale **jeden kandidát
+   není doklad typu**; před širším použitím pořád platí pilot + měření pestrosti.
 
 **Pravidla:** typ se **páruje s povahou stránky runy** (živel→fyzický · ctnost/čin→situační ·
-stav/přechod→kandidát na slovní), nikdy plošná preference · **žádné kvóty typů předem** — počty
+stav/přechod→kandidát na slovní), nikdy plošná preference — ⭐ **doloženo obráceně dvakrát:**
+u tří abstraktních run vyhrál situační, u pěti run s konkrétní kotvou vyhrál fyzický (86 % vs
+67 %). Kdo si vybere jeden typ plošně, spadne na té druhé skupině · **žádné kvóty typů předem** — počty
 ať vyjdou z mapy mezer a z brány · **každý obraz jakéhokoli typu projde identitní branou**
 (generátor navrhuje, soudce rozhoduje; přebytek kandidátů = normální provoz, ne selhání) ·
 plus dvě síta výš a kontrola „čí je to pozemek" (předmět/sloveso nesmí být jádrem sousední runy).

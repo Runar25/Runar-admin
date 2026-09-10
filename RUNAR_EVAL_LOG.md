@@ -2599,3 +2599,46 @@ zjevné, Jaccardem ne. Zapsat jako precedens: „téma se opakuje, slova ne" = s
 když se o slot perou dvě instrukce; tady vyhrává čočka.
 → **Pro uživatele to znamená:** vytáhne deset různých run a dostane deset závěrů o TÉŽE runě,
 kterou si nevytáhl. Závěrečná věta je přitom ta, co zůstává.
+
+## 2026-09-10 (2) — DÁVKA 1 branou: 22/36 prošlo · Othila je zloděj · a OBRAT u typů obrazu
+Coworkových 36 kandidátů (5 run s jedinou dosažitelnou stránkou) × 3 běhy = 108 čtení,
+identitní soudce (volba ze všech 25 run, náhoda 4 %, 3 hlasy). Korpusy
+`~/runar-eval/davka1-cteni.jsonl` + `davka1-soud.jsonl`. <!-- doc-links:ok 2026-09-10 korpusy mimo repo -->
+| runa | prošlo 3/3 |
+|---|---|
+| **Ansuz** | **8/8** |
+| Jera | 6/8 |
+| Nauthiz | 5/6 |
+| Mannaz | 3/8 |
+| **Eihwaz** | **0/6** |
+| **celkem** | **22/36 (61 %)** |
+⭐ **Pro kalibraci: moje vlastní kandidáti měli 2/16 (12 %).** Coworkovo „on-turf" uvažování
+(zvuková scéna patří Ansuzovi, ne někomu jinému) dalo **8/8** — u Ansuze neselhal ani jeden.
+
+### ⚠️ OBRAT: fyzický obraz drží identitu LÍP než situační
+| typ | prošlo | jednotlivých hlasů |
+|---|---|---|
+| **fyzická scéna** | 10/14 | **86 %** |
+| situační | 11/21 | 67 % |
+| slovní (PILOT) | 1/1 | 100 % |
+⚠️ **Ruší to směr ze záznamu 2026-09-09 (8)** („situační 48 % vs fyzický 33 %"). Ten měl n = 48
+hlasů a **tři abstraktní runy** (Uruz/Tiwaz/Algiz), kde situační byl jediný, co fungoval. Tady
+je n = 105 a runy mají konkrétní kotvy (Jera-sklizeň, Ansuz-zvuk). → **Platí pravidlo, které už
+v `RUNAR_DESIGN.md` je: typ se PÁRUJE s povahou runy, plošná preference je chyba** — a byl to
+Coworkův vlastní protinávrh proti mé formulaci. Data mu daly za pravdu.
+⭐ **Slovní obraz má PRVNÍ měření a prošel 3/3:** *„The same thought walks the same three steps
+of its cage all night and is no nearer out by morning."* Jeden kandidát není doklad typu —
+ale „nula měření" už neplatí.
+
+### ⭐ Zloděj je jeden a jmenuje se Othila
+Napříč všemi propadlými hlasy: **Othila 10× · Gebo 4× · Nauthiz 3×** · Thurisaz 2 · Laguz 2.
+**Cokoli STARÉHO nebo PŘEDÁVANÉHO spadne k Othile** (inheritance · heritage · ancestral wisdom):
+vzala Eihwazu naplavený sloup, andělici i loď-na-trám, Mannazu podpis i vůni na schodech.
+→ **Proto Eihwaz 0/6:** jeho jádro („starý strom, co přežije", „smrt a znovuzrození") **je
+Othilino pole**. Cowork sám flagoval, že tis v islandském světě neroste a renderoval ho jako
+„prastarý přeživší strom" — jenže to je přesně Othila. **Eihwaz nepotřebuje další obrazy stáří;
+potřebuje obrazy, kde je ROZDÍL proti dědictví** (trvá to samo o sobě, ne že se to předává).
+⭐ **Gebo bere Mannazu lidství** (4×) — soucit a ustoupení místa ve frontě je Gebova reciprocita.
+Mannaz-humanity potřebuje lidství, které NENÍ výměna mezi dvěma.
+⚠️ Coworkovy vlastní ⚠ predikce: **Mannaz-memory** propadl (Othila 3/3) — trefa · **Jera-reward**
+napůl (jeden 3/3, druhý 2/3 → Isa) — částečná trefa · **Eihwaz** nepředpověděl nikdo.
