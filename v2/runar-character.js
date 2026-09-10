@@ -1171,6 +1171,34 @@ function _dvergarContext(question, lang) {
     + ' Answer in A FEW WORDS, quietly, then return to the reading. Do not list, do not explain.';
 }
 
+// ZIVOTNI RUNA V ASK (KUKY 2026-09-10: „bude runar znat moji life rune? kdyz se ptam v ASK?")
+// Do dneska ji Runar v Ask NEZNAL — `buildAskPrompt` user objekt nedostaval. Kdo se zeptal
+// „how does my Life Rune affect this reading", dostal odpoved o rune, kterou si model musel
+// domyslet. To je presne ta trida chyby, kterou §23 zakazuje, jen schovana za plynulou vetou.
+//
+// ⚠️ Blok NENI cocka ze cteni a nerídi se prepinacem `life_rune_in_readings`. Ten rozhoduje,
+// jestli zivotni runa smi barvit ZAVER cteni, kam ji nikdo nezval (brala si ho v 10 ze 12
+// cteni — proto ta volba vznikla). Tady se nic nebere: Runar mlci, dokud se leitandi nezepta.
+// Pravidlo je jednou vetou: prepinac ridi, co Runar rekne SAM OD SEBE, nikdy to, nac se smi
+// clovek zeptat. Kdyby ho ridil i tady, vypnuti cocky by zivotni runu smazalo uplne — a to
+// je opak toho, proc volba vznikla (mела ji z zaveru cteni PRESUNOUT do Ask).
+//
+// Runa, ktera byla sama tazena, se sem NEPREDAVA — hlida to volajici (`_lastDrawn`), protoze
+// jen on vidi cele tazeni; sem prijde jmeno, ne seznam. Jinak by prompt mluvil o cocce, ktera
+// je zaroven predmetem — tentyz fantom, ktery je popsany u `_lensContext`.
+function _askLifeContext(life, lang) {
+  if (!life) return '';
+  if (lang === 'is')
+    return 'LÍFSRÚNIN — leitandinn ber sjálfur ' + rn(life) + '; hún var ekki dregin núna og '
+      + 'lesturinn fjallar ekki um hana. Nefndu hana ekki að fyrra bragði. Ef spurningin snýr '
+      + 'að henni máttu svara út frá henni, í einni eða tveimur setningum, og snúa svo aftur '
+      + 'að rúnunum sem dregnar voru.';
+  return 'LIFE RUNE — the seeker carries ' + rn(life) + ' as their own; it was not drawn today '
+    + 'and the reading is not about it. Do not bring it up on your own. If their question '
+    + 'reaches for it, you may answer from it in a sentence or two, then return to the runes '
+    + 'that were drawn.';
+}
+
 // ─── VOICE PROFILE HELPER ──────────────────────────────
 // Picks the right voice profile text for the given lang.
 // Falls back to ACTIVE_VOICE_PROFILE from runar-config.js.
@@ -1450,7 +1478,7 @@ var RP_ASK = {
 };
 
 // reading = the text Rúnar gave · question = seeker's follow-up · runes = comma list of rune names
-function buildAskPrompt(reading, question, runes, lang, corrections) {
+function buildAskPrompt(reading, question, runes, lang, corrections, life) {
   var S = RP_ASK[lang] || RP_ASK.en;
   return [
     S.intro(reading, runes),
@@ -1460,6 +1488,7 @@ function buildAskPrompt(reading, question, runes, lang, corrections) {
     // Stojí ZA `S.rules`, protože ta říká „nesouvisející otázky neodpovídej"; tohle je
     // vymezená výjimka a musí ji přebít, ne naopak.
     _dvergarContext(question, lang),
+    _askLifeContext(life, lang),
     _describeRule(lang),
     _noColdRead(lang),
     getCorrPrompt(lang, corrections),

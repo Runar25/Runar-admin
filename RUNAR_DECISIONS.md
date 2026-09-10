@@ -4959,3 +4959,51 @@ nemá místo. Volba `life_rune_in_readings` (rozhodnutí z téhož dne) tím dos
 **Ověřeno:** šablona dosazena v obou jazycích (`rnSplit().name`, aby v IS nebyl slovníkový opis
 v závorce uprostřed otázky) · vzhled zkontrolován v prohlížeči — popisek vypadá jako dřív, jen
 s `+`/`−` · smoke 36/36 · check-is OK.
+
+
+## 2026-09-10 · UI + PROMPT · Ask: nápověda se STAVÍ ze čtení · Rúnar zná životní runu
+**Nahrazuje část záznamu o rozbalovací nápovědě z téhož dne** (ukázky = konstantní pole).
+
+**Co (nápověda):** `_askHints()` už neopisuje pole `ask_placeholders` — skládá seznam z toho,
+co v tom čtení opravdu je: jméno tažené runy · „co znamenají spolu" jen u spreadu · „jak to
+souvisí s tím, na co jsem se ptal" jen když člověk otázku položil · životní runa jen když ji má
+a nebyla sama tažena. Pole `ask_placeholders` zaniklo, rotující placeholder čerpá z téhož
+seznamu (§18 — jeden zdroj, dvě podoby).
+**Proč:** KUKY: *„text nápovědy pro ASK není dobrý. slepě opisuješ a neřešíš, že to potřebuje
+úpravy."* Dva doložitelné důvody, proč konstanta byla špatně:
+1. **Klik na hotovou větu ukotví čtení +2,7 b., vlastní slova +8,8 b.** (2026-08-16). Nápověda
+   má tedy učit TVAR otázky, ne dodat větu k odkliknutí. Tip s dosazeným jménem runy je už
+   z poloviny otázka toho člověka — tam se ten rozdíl stírá. Proto se sází jména, ne obecnost.
+2. Konstanta nabízela i to, **co pro dané čtení neplatí** — spojení mezi runami u jediné runy,
+   otázku na otázku, kterou nikdo nepoložil. Nic nespadne: uživatel jen dostane otázku, na
+   kterou Rúnar nemá z čeho odpovědět. Nápověda, která lže, učí ptát se hůř.
+**Ze sady 8 od GPT** (owner) se **nepřevzalo dvojí:** „Why does this stand out?" (třetí varianta
+téhož „proč tohle" — tři neukotvená „this" v jednom sloupci jsou zeď, ne učebnice) a „What is
+the connection between these runes?" jako samostatná položka (u jedné runy nedává smysl; splynula
+se spreadovou podobou první otázky). Zbylých šest se převzalo, dvě z nich podmíněně.
+
+**Co (prompt):** `buildAskPrompt(..., life)` + `_askLifeContext()`. Odpověď na
+*„bude Rúnar znát moji life rune, když se ptám v ASK?"* zněla do dneška **NE** — builder user
+objekt nedostával a ve screenshotu to vyšlo jen proto, že owner runu jmenoval v otázce. Kdo by
+napsal „how does my Life Rune affect this reading", dostal by runu, kterou si model **domyslel**
+(§23). Blok stojí **za** `S.rules` (vedle dvergarů): pravidla říkají „odpovídej jen v rámci
+tohohle čtení", tohle je vymezená výjimka a musí je přebít, ne naopak.
+⚠️ **Blok se NEŘÍDÍ přepínačem `life_rune_in_readings`.** Pravidlo jednou větou: **přepínač řídí,
+co Rúnar řekne sám od sebe, nikdy to, nač se smí člověk zeptat.** Kdyby ho řídil i v Ask, vypnutí
+čočky by životní runu smazalo úplně — opak toho, proč volba vznikla (měla ji ze závěru čtení
+PŘESUNOUT sem). Runa, která byla sama tažena, se nepředává (jinak fantom popsaný u `_lensContext`).
+Druhého hlídače proti studenému čtení jsem **nepřidal** — `NO COLD READING` v Ask promptu už je
+a vládne mu; pojmenovat věc a hned ji zakázat je vzor, který zvyšuje, jak moc si jí model všímá.
+
+**Ověřeno:** nová kontrola **㉡ `verify_ask_hints.js`** protlačí `_askHints()` produkční cestou
+(stav v `readerUser` + `_lastDrawn`) v obou jazycích, přes pět stavů čtení, a hlídá i nedosazený
+`{placeholder}`. **Mutační test:** vrácení konstantního seznamu ji spolehlivě zčervená (4 FAIL) —
+a odhalil v ní jednu slepou skvrnu (tvrzení o jménu tažené runy splnil tip na životní runu),
+která je opravená. Smoke ⑧ drží **oba** stavy Ask promptu (s runou / bez ní). Islandština složená
+z doložených kusů: `hvað merkir` 477 · `merkja þessar` 38 · `myndin bendir` + `bendir á` 4/104882
+· `tengist þetta` 1654 + `sem ég spurði` 1642 · `kemur upp núna` 57 · `að fyrra bragði` 4383.
+Tvar *„Á hvað bendir myndin?"* doložen **nebyl** (0) — proto `Hvað er myndin að benda á?`.
+Smoke 37/37 · check-is OK · `RUNAR_PROMPT_VERSION` v4.16-seek → **v4.17-asklife**.
+**Affected doc(s):** `RUNAR_BACKLOG.md` (položka „Ask jako místo vysvětlení životní runy"
+odškrtnuta) — v témž commitu.
+

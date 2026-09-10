@@ -55,6 +55,11 @@ var drawn = _R('Raidho');
   // Ask Rúnar follow-up — until v1.0 it carried persona + scope only, so a leading question
   // pulled it into cold-read/fate while the body held. It must now carry the body's gates.
   _OUT['ask_'+L] = buildAskPrompt('A short reading about Raidho.', 'So the road is already opening for me?', 'Raidho', L, []);
+  // 2026-09-10: Runar dostal zivotni runu i do Ask (do te doby ji tam NEZNAL a odpoved na
+  // „jak me ovlivnuje moje zivotni runa" si musel domyslet). Fixture drzi OBA stavy: s runou
+  // blok je, bez ni (fixture ask_ vys) neni ani naznakem — mrtvy odkaz na neznamou runu je horsi
+  // nez zadny, viz fantom u _lensContext.
+  _OUT['asklife_'+L] = buildAskPrompt('A short reading about Raidho.', 'Does my life rune matter here?', 'Raidho', L, [], _R('Gebo'));
   // Life rune — a PAID reading (3 credits) and the first one in the Tree. It carried none of
   // the gates until 2026-07-19, and it is the reading most exposed to cold reading: its whole
   // subject is what the seeker has carried since birth.
@@ -185,6 +190,18 @@ for (const L of ['en', 'is']) {
   // the instruction itself must not model the move it forbids
   const echo = L === 'is' ? 'rúnirnar sögðu þegar' : 'the runes already said';
   if (txt.includes(echo)) { fail++; console.log('FAIL  ask_' + L + '  still says "' + echo + '"'); }
+
+  // Zivotni runa v Ask — OBA stavy jednim dechem. Kdyby se hlidal jen ten s runou, prosla by
+  // by i verze, ktera o zivotni rune mluvi vzdycky: „leitandinn ber sjalfur null".
+  const zn = L === 'is' ? 'LÍFSRÚNIN — leitandinn ber sjálfur' : 'LIFE RUNE — the seeker carries';
+  const sRunou = O['asklife_' + L] || '';
+  if (!sRunou.includes(zn) || !sRunou.includes('Gebo')) {
+    fail++; console.log('FAIL  asklife_' + L + '  Rúnar zivotni runu v Ask NEZNA (blok nebo jmeno chybi)');
+  } else if (txt.includes(zn)) {
+    fail++; console.log('FAIL  ask_' + L + '  blok zivotni runy je v promptu i bez zivotni runy');
+  } else {
+    console.log('OK    asklife_' + L + '  zivotni runa je v Ask znama, a jen kdyz existuje');
+  }
 }
 
 // ── Volající nesmí přidávat korekce podruhé (§18) ────────────────────────────

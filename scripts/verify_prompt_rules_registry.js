@@ -68,7 +68,7 @@ function pravidla() {
     const u = { name: 'Anna', area: '', seeking: '', intention: '', question: '', lifeRune: RUNES[18] };
     S.buildReadingPrompt(u, RUNES[3], L, null).split(String.fromCharCode(10))
       .forEach(r => { if (!DATA.test(r.trim())) pridej(L, 'single', r); });
-    S.buildAskPrompt('A reading.', 'What do you mean?', RUNES[3].n, L, null).split(String.fromCharCode(10))
+    S.buildAskPrompt('A reading.', 'What do you mean?', RUNES[3].n, L, null, RUNES[18]).split(String.fromCharCode(10))
       .forEach(r => pridej(L, 'ask', r));
     S.buildSysPrompt(null, L).split(String.fromCharCode(10)).forEach(r => pridej(L, 'system', r));
   }

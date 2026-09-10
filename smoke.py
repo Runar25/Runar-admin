@@ -546,6 +546,18 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[0] if radky else 'kontrola registru probehla'
 check(prvni.strip(), passed, '\n'.join(radky[1:]))
 
+# Nápověda v Ask se od 2026-09-10 STAVÍ z toho, co je ve čtení (jedna runa / spread /
+# je-li životní runa / ptal se člověk na něco) — konstantní seznam nabízel i to, co pro
+# dané čtení neplatí. Tvrzení „je kontextová" musí být dokázané, ne napsané (§24).
+print('\n' + chr(0x3261) + ' NÁPOVĚDA V ASK (verify_ask_hints.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_ask_hints.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola napovedy probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

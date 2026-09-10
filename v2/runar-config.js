@@ -51,7 +51,12 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 // v4.10 (2026-08-23): minulost spreadu mluvi v materialu obrazu (chlad krok 1, A/B mereno).
 // v4.11 (2026-08-23): tvar otevrene otazky — otazka obrazu / prosta volba, zadne tvrzeni po pulkach.
 // v4.12 (2026-08-23): Yggdrasil V5 — vrstvy necasove (ukazuje/nese/zivi), 9 novych vyznamu, Norny z hlavicek ustoupily.
-const RUNAR_PROMPT_VERSION = 'v4.16-seek';
+// ⚠️ v4.13–v4.16: radky chybi — verze se bumpla, duvod se sem nedopsal. Nedoplnuji je zpetne
+//    (domyslet si je by byl vymysl, §23); dohledatelne jsou v `git log v2/runar-config.js`.
+// v4.17 (2026-09-10): Ask zna zivotni runu. Do te doby ji `buildAskPrompt` nedostaval, takze
+//    odpoved na „jak me ovlivnuje moje zivotni runa" si model musel domyslet. Prompt ji ted nese
+//    jako tichy fakt — Runar ji nevyslovi sam od sebe, jen kdyz se na ni clovek zepta.
+const RUNAR_PROMPT_VERSION = 'v4.17-asklife';
 
 // ─── ELEVENLABS ─────────────────────────────────────────
 const EL_VOICE_ID_EN = '2UI8v2ibbwQTijaYAte1'; // English — Rúnar EN

@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
- "zapsano": "2026-09-08",
- "prompt_version": "v4.16-seek",
+ "zapsano": "2026-09-10",
+ "prompt_version": "v4.17-asklife",
  "pravidla": [
   {
    "hash": "54d29df4d80b",
@@ -308,6 +308,12 @@
    "lang": "en",
    "zdroj": "ask",
    "zacatek": "Output ONLY your answer as flowing prose. No JSON, no headings, no pre"
+  },
+  {
+   "hash": "521859074c6c",
+   "lang": "en",
+   "zdroj": "ask",
+   "zacatek": "LIFE RUNE — the seeker carries Ehwaz as their own; it was not drawn to"
   },
   {
    "hash": "6ecd330c9a42",
@@ -842,6 +848,12 @@
    "lang": "is",
    "zdroj": "ask",
    "zacatek": "Skilaðu EINGÖNGU svari þínu sem samfelldum texta. Ekkert JSON, engar f"
+  },
+  {
+   "hash": "24c3c3e8ff91",
+   "lang": "is",
+   "zdroj": "ask",
+   "zacatek": "LÍFSRÚNIN — leitandinn ber sjálfur Ehwaz; hún var ekki dregin núna og "
   },
   {
    "hash": "6ecd330c9a42",

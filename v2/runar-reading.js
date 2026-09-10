@@ -23,6 +23,10 @@
 // Fallback: když to není JSON, ber celý text jako jedno čtení (graceful). deeper drží jen v paměti.
 var _lastDeeper = '';
 var _lastSegs = [];  // Fáze B1: per-rune [{rune,text}] segments of the last reading (tap highlight)
+// Runove OBJEKTY posledniho cteni (single i spread). Napoveda i Ask prompt potrebuji vedet,
+// KTERE runy padly — a to `_lastSegs` neumi: jeho jmena psal model do JSON, takze porovnani
+// se zivotni runou by viselo na jeho pravopisu. Plni se tam, kde `_lastSegs` (2026-09-10).
+var _lastDrawn = [];
 // _parseSegments lives in runar-character.js now (shared reader+shrine, §18/§20 —
 // same reason the reading-prompt builders do). character.js loads before this file,
 // so callers below still see it as a global.
@@ -148,6 +152,7 @@ async function _generateReading() {
   const reading = _seg.reading.trim();
   _lastDeeper = _seg.deeper; // Fáze A: deeper jen v paměti (zatím se neukládá/nezobrazuje)
   _lastSegs = _seg.segs;
+  _lastDrawn = [readerRune];
   readerTexts[lang] = { short: reading, deep: '' };
 
   // Count reading — anonymous trial or logged-in free tier
@@ -535,19 +540,30 @@ function _phRotate(id, seznam, idx0) {
   t.cyklus = setInterval(krok, 5000);
   krok();
 }
-// Rozbalovaci napoveda „na co se muzu zeptat" (KUKY 2026-09-10). Tipy jsou TYTEZ ukazky,
-// ktere uz rotuji v placeholderu (UI_TEXT.ask_placeholders) — jeden zdroj, dve podoby (§18).
-// Osmy je ZIVY: dosadi jmeno zivotni runy a runy ze cteni, kdyz obe zname.
+// Napoveda „na co se muzu zeptat" (KUKY 2026-09-10) — a od te doby se STAVI, neopisuje.
+// Duvod je meritelny: klik na hotovou vetu ukotvi cteni +2,7 b., vlastnimi slovy +8,8 b.
+// (2026-08-16). Napoveda ma tedy ucit TVAR otazky; tip, do ktereho je uz dosazene jmeno
+// runy z tohohle cteni, je z poloviny otazka toho cloveka a ten rozdil stira.
+// Druhy duvod: konstantni seznam nabizel i to, co pro dane cteni neplati — spojeni mezi
+// runami u jedne runy, „jak to souvisi s tim, na co jsem se ptal" u cteni bez otazky,
+// zivotni runu tomu, kdo zadnou nema. Napoveda, ktera lze, uci spatne ptani.
+// Tenhle seznam je ZAROVEN sada rotujicich placeholderu (§18) — jedno misto, dve podoby.
 function _askHints() {
-  var z = (typeof UI_TEXT !== 'undefined' && UI_TEXT[lang] && UI_TEXT[lang].ask_placeholders)
-    || (typeof UI_TEXT !== 'undefined' && UI_TEXT.en && UI_TEXT.en.ask_placeholders) || [];
-  var out = z.slice();
-  var life = readerUser && readerUser.lifeRune, drawn = readerRune;
-  // NAHORU, ne dolu: je to jediny tip, ktery zna TOHLE cteni (jmeno tazene runy i zivotni
-  // runy). Osm tipu je vysoky sloupec — co ma nejvetsi sanci sedet, ma byt videt prvni.
-  if (life && drawn && life.n !== drawn.n && typeof tp === 'function')
-    out.unshift(tp('ask_hint_life', { life: rnSplit(life).name, rune: rnSplit(drawn).name }));
-  return out;
+  var out = [], u = readerUser || {}, dr = (_lastDrawn || []).filter(Boolean);
+  var many = dr.length > 1, life = u.lifeRune;
+  var lifeDrawn = !!(life && dr.some(function (r) { return r.n === life.n; }));
+  // ZIVOTNI RUNA PRVNI — jediny tip, ktery zna obe jmena, a otazka, kterou si owner polozil
+  // sam (2026-09-10). Odpada, kdyz byla tazena: pak je predmetem cteni a „jak ovlivnuje
+  // sebe" nedava smysl (tentyz test, ktery v promptu dela `_lifeWasDrawn`).
+  if (life && dr.length && !lifeDrawn)
+    out.push(many ? tp('ask_h_life_all', { life: rnSplit(life).name })
+                  : tp('ask_hint_life', { life: rnSplit(life).name, rune: rnSplit(dr[0]).name }));
+  out.push(!many && dr[0] ? tp('ask_h_rune', { rune: rnSplit(dr[0]).name }) : t('ask_h_runes'));
+  out.push(t('ask_h_image'));                          // obraz nese KAZDE cteni (150/150 dvojic)
+  if (u.question) out.push(t('ask_h_asked'));          // jen kdyz clovek otazku opravdu polozil
+  out.push(t('ask_h_now'));
+  out.push(t('ask_h_unseen'));
+  return out.filter(Boolean);
 }
 function toggleAskHints() {
   var btn = document.getElementById('ask-lbl'), box = document.getElementById('ask-hints');
@@ -577,15 +593,11 @@ function toggleAskHints() {
 function _askPhStop() { _phStop('ask-input'); }
 function _askPhStart() {
   _askPhIdx++;   // kazde otevreni Ask zacina jinde v sade, at to neni porad tataz prvni
-  _phRotate('ask-input', function () {
-    return (typeof UI_TEXT !== 'undefined' && UI_TEXT[lang] && UI_TEXT[lang].ask_placeholders)
-      || (typeof UI_TEXT !== 'undefined' && UI_TEXT.en && UI_TEXT.en.ask_placeholders) || [];
-  }, _askPhIdx);
+  _phRotate('ask-input', _askHints, _askPhIdx);
 }
 function _askPlaceholder() {
-  var phs = (typeof UI_TEXT !== 'undefined' && UI_TEXT[lang] && UI_TEXT[lang].ask_placeholders)
-    || (typeof UI_TEXT !== 'undefined' && UI_TEXT.en && UI_TEXT.en.ask_placeholders)
-    || [t('ask_placeholder')];
+  var phs = _askHints();
+  if (!phs.length) return t('ask_placeholder');
   var i = _askPhIdx < 0 ? 0 : _askPhIdx;
   return phs[i % phs.length] || '';
 }
@@ -655,7 +667,9 @@ async function askRunar() {
   if (btn) { btn.disabled = true; btn.textContent = t('ask_thinking'); }
   setSt('ask-status', '');
   var sys = buildSysPrompt(activeChar, lang);
-  var prompt = buildAskPrompt(reading, q, runes, lang, corrections);
+  var _lf = (readerUser && readerUser.lifeRune) || null;
+  if (_lf && (_lastDrawn || []).some(function (r) { return r && r.n === _lf.n; })) _lf = null;
+  var prompt = buildAskPrompt(reading, q, runes, lang, corrections, _lf);
   // Attach the follow-up whenever the reading was actually stored — _lastReadingId is set
   // only then, so it is the single gate (never re-check the save conditions here: that is how
   // 'someone' readings silently lost their Ask). Identical for mine + someone.
@@ -941,6 +955,7 @@ async function _generateSpreadReading(o) {
   var text = _seg.reading;
   _lastDeeper = _seg.deeper; // Fáze A: deeper jen v paměti
   _lastSegs = _seg.segs;
+  _lastDrawn = (o.runes || []).slice();
   readerTexts[lang] = { short: text, deep: '' };
 
   var lbl = document.getElementById(o.lblId);

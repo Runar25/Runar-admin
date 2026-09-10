@@ -21,3 +21,8 @@ vlastní sloupec.**
 zapsat ty procesní věci, udělám to hned" místo abych to udělal. Owner na to: *„proč jsi je
 neudělal zároveň? jaká jsou tvoje pravidla, co je v memory."* Pravidlo už existovalo —
 [[find-a-gap-close-it-now]] — jen jsem ho nepoužil.
+
+**KUKY 2026-09-10: „neukazuj mi, co za soubory jsi editoval. Co mi to má jako říct?"**
+Výčet souborů, commit hashů a „co jsem kde změnil" je PROCES — ownerovi neříká nic. Report
+říká, co se změnilo V PRODUKTU (co uvidí, co teď funguje jinak) a co potřebuju od něj.
+Hash patří jen do handoffů pro jiné session (protokol „psáno proti commitu"), ne ownerovi.

@@ -1,0 +1,114 @@
+// §19 seed-and-assert: nápověda v Ask musí odpovídat TOMU čtení, které je na obrazovce.
+//
+// 2026-09-10 (KUKY: „text nápovědy pro ASK není dobrý. slepě opisuješ a neřešíš, že to
+// potřebuje úpravy."). První verze `_askHints()` vypsala konstantní pole `ask_placeholders`.
+// Konstanta nabízí i to, co pro dané čtení NEPLATÍ — „spojení mezi runami" u jediné runy,
+// „jak to souvisí s tím, na co jsem se ptal" u čtení bez otázky, životní runu tomu, kdo
+// žádnou nemá. Nic z toho nespadne: uživatel jen dostane otázku, na kterou Rúnar nemá
+// z čeho odpovědět, a naučí se ptát hůř. Kontrola proto běží na VÝSLEDKU (co se vypíše
+// pro daný stav), ne na tvaru kódu.
+//
+// Druhá věc, kterou hlídá: nedosazený `{placeholder}`. Klíč přejmenovaný v translations
+// projde v JS tiše a v UI se objeví holé „{rune}" — přesně ta třída tiché chyby z §19.
+//
+//   node scripts/verify_ask_hints.js
+const fs = require('fs');
+const vm = require('vm');
+const DIR = 'C:/Users/zkuku/Downloads/Runar-admin/v2/';
+
+const sandbox = {
+  Math, JSON, Date, console,
+  setTimeout: () => 0, clearTimeout: () => {}, setInterval: () => 0, clearInterval: () => {},
+  document: { getElementById: () => null, querySelector: () => null, querySelectorAll: () => [] },
+  localStorage: { getItem: () => null, setItem: () => {}, removeItem: () => {} },
+};
+sandbox.window = sandbox; sandbox.self = sandbox; sandbox.globalThis = sandbox;
+
+let code = 'var currentUser=null; var userTier="premium"; var sb=null; var activeChar=null;\n'
+         + 'var corrections=[]; var voiceGenerated={}; var readerTexts={}; var isTester=false;\n';
+for (const f of ['runar-config.js', 'runar-runes.js', 'runar-translations.js',
+                 'runar-character.js', 'runar-utils.js', 'runar-reading.js']) {
+  code += '\n/* ' + f + ' */\n' + fs.readFileSync(DIR + f, 'utf8') + '\n;\n';
+}
+vm.createContext(sandbox);
+try { vm.runInContext(code, sandbox, { filename: 'ask-hints.js' }); }
+catch (e) { console.log('FAIL  nepodařilo se načíst reader: ' + e.message); process.exit(1); }
+
+// `const RUNES` / `const UI_TEXT` NEJSOU vlastnosti globálu (na rozdíl od `var` a deklarací
+// funkcí), takže se k nim přes `sandbox.X` nedostaneme — musí se vyhodnotit v kontextu.
+const glob = (v) => vm.runInContext(v, sandbox);
+const R = (n) => glob('RUNES').find(r => r.n === n);
+let fail = 0;
+const rekni = (ok, popis) => { if (ok) console.log('OK    ' + popis); else { fail++; console.log('FAIL  ' + popis); } };
+
+// Stav se nastavuje PŘESNĚ tam, kam ho zapisuje produkce: `readerUser` (runar-reading.js:228)
+// a `_lastDrawn` (plní se vedle `_lastSegs` po každém čtení). Fixture, který by si _askHints
+// zavolal s vlastními argumenty, by tuhle vazbu neotestoval — a ta je tu ta křehká.
+function hinty(L, drawn, life, otazka) {
+  sandbox.lang = L;
+  sandbox.readerUser = { name: 'Anna', lifeRune: life || null, question: otazka || '' };
+  sandbox.readerRune = drawn.length === 1 ? drawn[0] : null;
+  sandbox._lastDrawn = drawn;
+  return glob('_askHints')();
+}
+
+for (const L of ['en', 'is']) {
+  const jm = (r) => (sandbox.lang = L, glob('rnSplit')(r).name);
+
+  // ── 1) single + životní runa, která tažená NEBYLA ────────────────────────────
+  const a = hinty(L, [R('Jera')], R('Gebo'), '');
+  rekni(a.length >= 4, L + '  single: nápověda má ' + a.length + ' tipů');
+  rekni(a[0] && a[0].includes(jm(R('Gebo'))) && a[0].includes(jm(R('Jera'))),
+        L + '  single: první tip nese OBĚ jména (životní + tažená) — ' + JSON.stringify(a[0] || ''));
+  // ⚠️ `a.slice(1)` schválně: první tip je ten o životní runě a jméno tažené runy nese taky,
+  // takže `a.some(...)` by tuhle podmínku splnil i tehdy, kdyby tip na význam runy úplně
+  // zmizel. Odhalil to mutační test (konstantní seznam prošel zeleně).
+  rekni(a.slice(1).some(x => x.includes(jm(R('Jera')))),
+        L + '  single: vedle tipu na životní runu je i tip na význam tažené runy');
+
+  // ── 2) životní runa BYLA tažena → nesmí se nabídnout ─────────────────────────
+  // „Jak mě ovlivňuje moje životní runa Gebo" u čtení, kde Gebo padla, je otázka sama na
+  // sebe. V promptu tentýž případ ošetřuje `_lifeWasDrawn`; tady musí zmizet i z nabídky.
+  const b = hinty(L, [R('Gebo')], R('Gebo'), '');
+  rekni(!b.some(x => x.includes(jm(R('Gebo'))) && /life|lífsrún/i.test(x)),
+        L + '  životní runa byla tažena → tip na životní runu se nenabízí');
+
+  // ── 3) bez životní runy (Visitor / bez data narození) ────────────────────────
+  const c = hinty(L, [R('Jera')], null, '');
+  rekni(!c.some(x => /life rune|lífsrúnin/i.test(x)),
+        L + '  bez životní runy → žádný tip o životní runě');
+
+  // ── 4) spread → „co znamenají spolu"; single tuhle otázku nemá ───────────────
+  const d = hinty(L, [R('Jera'), R('Ansuz'), R('Mannaz')], R('Gebo'), '');
+  const spolu = glob('UI_TEXT')[L].ask_h_runes;
+  rekni(d.includes(spolu), L + '  spread: nabízí „' + spolu + '"');
+  rekni(!c.includes(spolu), L + '  single: otázku na spojení run NENABÍZÍ (jedna runa)');
+  rekni(!d.some(x => x.includes(jm(R('Ansuz')))),
+        L + '  spread: nedosazuje jednu runu z několika');
+
+  // ── 5) „jak to souvisí s tím, na co jsem se ptal" jen když se ptal ───────────
+  const e = hinty(L, [R('Jera')], R('Gebo'), 'Should I take the job?');
+  const naco = glob('UI_TEXT')[L].ask_h_asked;
+  rekni(e.includes(naco), L + '  s otázkou: nabízí „' + naco + '"');
+  rekni(!a.includes(naco), L + '  bez otázky: tuhle možnost nenabízí');
+
+  // ── 6) žádný nedosazený placeholder a žádný duplikát ────────────────────────
+  const vse = [].concat(a, b, c, d, e);
+  const zbyle = vse.filter(x => /\{[a-z_]+\}/.test(x));
+  rekni(!zbyle.length, L + '  žádný nedosazený {placeholder}' + (zbyle.length ? ' — ' + zbyle[0] : ''));
+  const dup = e.filter((x, i) => e.indexOf(x) !== i);
+  rekni(!dup.length, L + '  žádný tip dvakrát' + (dup.length ? ' — ' + dup[0] : ''));
+  rekni(vse.every(x => typeof x === 'string' && x.trim().length > 8),
+        L + '  každý tip je neprázdná věta');
+}
+
+// ── 7) placeholder v poli čerpá z TÉHOŽ seznamu (§18 — jeden zdroj, dvě podoby) ──
+// Kdyby se rozešly, v poli by problikávaly jiné věty, než jaké nabízí rozbalená nápověda.
+sandbox.lang = 'en';
+sandbox.readerUser = { name: 'Anna', lifeRune: R('Gebo'), question: '' };
+sandbox.readerRune = R('Jera'); sandbox._lastDrawn = [R('Jera')]; sandbox._askPhIdx = 0;
+const ph = glob('_askPlaceholder')();
+rekni(glob('_askHints')().includes(ph), 'placeholder pole je jeden z tipů nápovědy — „' + ph + '"');
+
+console.log(fail ? '\n' + fail + ' selhalo' : '\nOK  nápověda Ask odpovídá stavu čtení');
+process.exit(fail ? 1 : 0);
