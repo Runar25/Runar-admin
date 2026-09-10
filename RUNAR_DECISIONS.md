@@ -4886,3 +4886,16 @@ tvorbu textu**, ne jako technické kolize — problém vzniká, až když text j
 sousedova, a to je vlastnost obrazu, ne slovníku.
 **Nenasazuje se do kódu** — `RUNES[].k` zůstává nedotčené; slovník je podklad pro psaní obrazů.
 **Affected doc(s):** `RUNAR_BACKLOG.md` (status u položky slovníku) — v témž commitu.
+
+
+## 2026-09-10 · Design · Typologie obrazů RATIFIKOVÁNA (fyzický · situační · slovní) + priority run
+**Co:** Owner ratifikoval („ano") typologii obrazové knihovny: tři typy obrazu, párování typu
+s povahou stránky runy, žádné kvóty předem, identitní brána na každý obraz, slovní typ až po
+pilotu. Zapsáno do `RUNAR_DESIGN.md` (sekce „Typ obrazu", u D/E/P — druhá osa: KDE × JAK).
+**Zároveň schváleno pořadí psaní obrazů (ÚKOL 3):** 1) pět run s jedinou dosažitelnou stránkou
+— **Ansuz · Nauthiz · Jera · Eihwaz · Mannaz** (nejchudší vysvětlení runy = ownerova priorita),
+2) **Algiz** podle receptu z `docs/eval/2026-09-10-algiz-kandidati-texty.md`, 3) zbytek podle
+mapy mezer.
+**Proč:** 87 % chybějících stránek jsou abstrakce → nefyzické obrazy nejsou vkus, ale povaha
+mezery; zároveň jediná změřená rizika (kolaps bez kotvy · cizí pozemek) dostala pravidla.
+**Affected doc(s):** `RUNAR_DESIGN.md` — v témž commitu.

@@ -1102,6 +1102,27 @@ sloupec 7 v `RUNE_IMAGES`)*
 - **E = ŽIVELNÉ/VELKÉ:** syrová příroda, počasí, obloha, velké (ledovec, kroupy, láva, hver, fjord, půlnoční slunce).
 - **P = PASTORÁLNÍ/STŘED:** obdělaná půda, zvíře, rostlina, člověk jdoucí krajinou — přemosťuje (ovce, jeřáb, kořen, varða, kindagata, torfveggur).
 - **Test:** „nepatřičné vedle ledovce?" = D · „nepatřičné vedle šálku na stole?" = E · „sedí vedle obojího?" = P.
-- **Hraniční (rozhodnuto):** venkovní lidské stavby (torfveggur, varða, leiðarsteinn) = P (D je jen vnitřek) · nebeské (polárka, norðurljós, miðnætursól) = E · geotermál/láva = E · osvětlená krajina (slunce do údolí) = P · ⚠️ abstraktní obraz (chování, ne scéna — Tiwaz „stojíš za slovem") = D nejblíž, flagovat zvlášť.
+- **Hraniční (rozhodnuto):** venkovní lidské stavby (torfveggur, varða, leiðarsteinn) = P (D je jen vnitřek) · nebeské (polárka, norðurljós, miðnætursól) = E · geotermál/láva = E · osvětlená krajina (slunce do údolí) = P · ⚠️ abstraktní obraz (chování, ne scéna — Tiwaz „stojíš za slovem") = D nejblíž; od 2026-09-10 je to řádný TYP (situační), viz „Typ obrazu" níž.
 - Zamýšlené použití = výběr-kongruence při skládání spreadů (D×E kolize → volit kongruentní variantu; SMĚR, nestaví se do rozhodnutí o Vegvísiru).
+
+### Typ obrazu — fyzický · situační · slovní (KUKY 2026-09-10, ratifikováno)
+Druhá osa vedle D/E/P: **D/E/P říká KDE obraz stojí, typ říká JAK nese význam.** Vzniklo z měření
+identity a z povahy chybějící práce (87 % nepokrytých stránek run jsou abstrakce — čísla vlastní
+`RUNAR_EVAL_LOG.md` 2026-09-09/10, tady se neopisují, §20).
+
+1. **FYZICKÁ SCÉNA** — věc/živel koná. Nese runy, jejichž jádro JE věc (Isa-led, Laguz-voda,
+   Berkana-bříza, Kenaz-oheň…). ⚠️ Věc musí KONAT, ne stát — nehybná věc sklouzává k Ise.
+2. **SITUAČNÍ OBRAZ** — člověk koná; čin s cenou; žádná rekvizita, která patří jiné runě.
+   Nese abstraktní stránky (justice, strength, courage…). Doloženo u nejtěžších run
+   (Uruz „You lift the end…", Tiwaz „You give back the change…").
+3. **SLOVNÍ/VÝPOVĚDNÍ OBRAZ** — výpověď o stavu, bez věci i bez děje. ⚠️ **Zatím NULA měření**
+   a nejbližší analogie varuje (bez konkrétní kotvy se model hroutí na oblíbence) —
+   **napřed pilot přes identitní bránu + měření pestrosti, teprve pak se smí používat.**
+
+**Pravidla:** typ se **páruje s povahou stránky runy** (živel→fyzický · ctnost/čin→situační ·
+stav/přechod→kandidát na slovní), nikdy plošná preference · **žádné kvóty typů předem** — počty
+ať vyjdou z mapy mezer a z brány · **každý obraz jakéhokoli typu projde identitní branou**
+(generátor navrhuje, soudce rozhoduje; přebytek kandidátů = normální provoz, ne selhání) ·
+plus dvě síta výš a kontrola „čí je to pozemek" (předmět/sloveso nesmí být jádrem sousední runy).
+
 
