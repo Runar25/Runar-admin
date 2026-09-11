@@ -14,3 +14,17 @@ Any text Kuky is meant to pass on to another session — instructions for Cowork
 **Number the questions.** When a reply ends with things for Kuky to decide, number them 1. 2. 3. — he answers by number („pokud mi pises dotaz jak pouzivej treba cislovani. dotaz 1. 2. atd at se mi lepe odpovida"). Unnumbered questions buried in prose force him to quote them back.
 
 **How to apply:** wrap the relayed block in ``` fences. Keep my own analysis and reasoning OUTSIDE the block as normal prose — the block holds only what the other session should receive, so he can copy it whole without editing. Same for SQL he has to run (already the habit) and for anything I ask him to paste into another tool. Related: [[paste-sql-explicitly]], [[function-not-ceremony]].
+
+⚠️ **Rozhodující je KOMU to je, ne jestli je to analýza (KUKY 2026-09-11).** Věta výš („moje
+analýza zůstává venku jako próza") mě svedla: napsal jsem handoff do bloku a POD něj pořadí
+práce pro CODE-tune — tedy obsah pro příjemce, položený mimo to, co se příjemci předává.
+Owner: *„proč bych mu něco takového měl říkat? Já mu dávám handoff, a pokud mu chceš něco
+sdělit, tak to dej do něj, jinak to nepiš. Mně to je úplně jedno!"*
+
+**Test před každou větou pod blokem: potřebuje to vědět PŘÍJEMCE?**
+- ano → **patří to dovnitř bloku.** Priority, pořadí práce, varování, „nedělej tohle první" —
+  to všechno je obsah handoffu, ne komentář k němu.
+- ne → smí zůstat venku, ale jen když je to **skutečně pro Kukyho**: rozhodnutí, které má
+  udělat on, nebo přiznaná mez mého vlastního tvrzení.
+- ani jedno → **nepsat vůbec.** Kuky není kurýr mých poznámek o cizí práci.
+
