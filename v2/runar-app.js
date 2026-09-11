@@ -1093,7 +1093,28 @@ function buildGrid() {
 }
 
 // ─── PILLS ───────────────────────────────────────────────
+// ⚠️ Pilulky si ukladaji LOKALIZOVANY POPISEK, ne index (radky nize: readerUser.area = label).
+// Po prepnuti jazyka tak v readerUser zustal popisek ve STARE reci a rozesly se dve veci:
+// pilulka se vykreslila jako NEVYBRANA (label === current uz nesedi), ale hodnota zit neprestala
+// a dosla az do promptu — islandske cteni dostalo radku „Svið: Career & Creativity“ (§2).
+// Remap pres INDEX je idempotentni: co uz je v aktualnim jazyce, projde beze zmeny; co v
+// seznamech vubec neni (volny text z gen_batch, 'spread' z DB), se nechava byt — na to ma
+// _domainContext vlastni zachytnou sit. Nalezeno ctenim pri stavbe Ask napovedy, ne testem.
+function _syncPillLang() {
+  if (typeof readerUser === 'undefined' || !readerUser) return;
+  [['area', typeof AREAS === 'undefined' ? null : AREAS],
+   ['seeking', typeof SEEKS === 'undefined' ? null : SEEKS],
+   ['intention', typeof INTENTIONS === 'undefined' ? null : INTENTIONS]].forEach(function (p) {
+    var klic = p[0], D = p[1], v = readerUser[klic];
+    if (!v || !D) return;
+    var i = (D.en || []).indexOf(v);
+    if (i === -1) i = (D.is || []).indexOf(v);
+    var cil = D[lang] || D.en || [];
+    if (i >= 0 && cil[i]) readerUser[klic] = cil[i];
+  });
+}
 function buildPills() {
+  _syncPillLang();
   const _isVisitor = !currentUser;
   const _isRSnoCredits = currentUser && userTier === 'rune_seeker' && userCredits <= 0;
   const _areaUnlocked = _isRSnoCredits ? 3 : undefined;
