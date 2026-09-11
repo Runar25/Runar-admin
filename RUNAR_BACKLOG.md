@@ -1067,3 +1067,22 @@ bez toho není slepé skórování slepé).
   - **Podklad:** živý vzorek (Gebo, #46) prý tenhle oblouk už částečně dělá sám (hřeben → pole →
     bříza → podzemí → pramen → tma → zpět ke světlu). **n = 1, pozorování, ne důkaz** — a ten text
     v repu není.
+
+---
+
+## Ask nápověda: štítek oblasti vs. přirozená slova (2026-09-11, nízká priorita)
+Tip na oblast dnes dosazuje **štítek z pilulky** — *„Career & Creativity — where does the image
+land?"*. Jeden z ověřovatelů navrhl dosadit místo štítku **přirozené místo**, které už existuje
+v `_domainContext` (*„on making and work"*, *„where two people meet"*, *„on going and direction"*),
+protože štítek je slovník aplikace, ne slova toho člověka — a měřený rozdíl mezi vlastními slovy
+(+8,8 b.) a výběrem z nabídky (+2,7 b., 2026-08-16) mluví pro přirozená slova.
+
+**Proč se to zatím NEUDĚLALO** (ať se to nezkouší poslepu znovu):
+1. Štítek je **přesně to, co člověk naklikal** — vidět ho zpátky je ten signál „Rúnar ví, co jsem
+   zvolil", kvůli kterému tip vznikl. Přirozený opis ten signál oslabuje.
+2. Znamenalo by to **8 nových frází na jazyk** (a v IS ve správném pádu), nebo vytáhnout ty fráze
+   z `_domainContext` — kde jsou zapuštěné v celých větách, takže by vznikla **druhá kopie** (§20).
+3. Nevíme, co je lepší. **Je to měřitelné:** dvě znění téhož tipu, sledovat, jestli lidi kliknutou
+   větu dál přepisují vlastními slovy (to je ten žádoucí stav), nebo ji odešlou tak, jak je.
+
+Rozhodnutí a celý kontext → `RUNAR_DECISIONS.md` 2026-09-11.
