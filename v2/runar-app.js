@@ -772,6 +772,7 @@ function updateUIText() {
   setText('atab-reading',    lang === 'is' ? '✦ SPÁ' : '✦ RUNE READING');
   setText('atab-collection', lang === 'is' ? '◈ SAFN RÚNA' : '◈ RUNES COLLECTION');
   setText('atab-tree', lang === 'is' ? '◈ TRÉ LÍFSINS' : '◈ TREE OF LIFE');
+  setText('atab-liferune', lang === 'is' ? '✧ LÍFSRÚNIN' : '✧ LIFE RUNE');
   setText('hero-eyebrow',   lang === 'is' ? 'RÚNAVÖRÐURINN' : 'THE RUNE KEEPER');
   setText('hero-eyebrow-m', lang === 'is' ? 'RÚNAVÖRÐURINN' : 'THE RUNE KEEPER');
   setText('ui-title',   'Rúnar');
@@ -857,13 +858,23 @@ function showAppTab(tab) {
   document.getElementById('apane-collection').style.display = tab === 'collection' ? 'block' : 'none';
   document.getElementById('apane-journal').style.display    = tab === 'journal'    ? 'block' : 'none';
   document.getElementById('apane-tree').style.display       = tab === 'tree'       ? 'block' : 'none';
+  var _plr = document.getElementById('apane-liferune');
+  if (_plr) _plr.style.display = tab === 'liferune' ? 'block' : 'none';
   document.getElementById('atab-reading').classList.toggle('active',    tab === 'reading');
   document.getElementById('atab-collection').classList.toggle('active', tab === 'collection');
   document.getElementById('atab-journal').classList.toggle('active',    tab === 'journal');
   document.getElementById('atab-tree').classList.toggle('active',       tab === 'tree');
+  var _tlr = document.getElementById('atab-liferune');
+  if (_tlr) _tlr.classList.toggle('active', tab === 'liferune');
   if (tab === 'collection') {
     document.getElementById('reader-hero').classList.add('hidden');
     loadCollection();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else if (tab === 'liferune') {
+    // Stavy zivotni runy ridi dal `updateTreeTab()` — prvky se presunuly v DOM, ale
+    // funkce je hleda pres getElementById, takze ji to nevadi (2026-09-11).
+    document.getElementById('reader-hero').classList.add('hidden');
+    updateTreeTab();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   } else if (tab === 'tree') {
     document.getElementById('reader-hero').classList.add('hidden');
