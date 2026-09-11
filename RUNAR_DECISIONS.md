@@ -5383,3 +5383,52 @@ EN, takže tahle věta nebyla testovaná vůbec) a odmítá v ní anglické slov
 Mutace: „původ vždy anglicky" = 2 FAIL · „nové jméno bez `origin_is`" = 1 FAIL (vyjmenuje která).
 
 **Souvisí:** záznam (9) — tam se rozhodlo, že o severských kořenech rozhoduje seznam.
+
+---
+
+## 2026-09-11 (11) — Perthův aspekt je DĚJ, ne věc. A ta vazba má konečně kontrolu.
+
+**Odkud to přišlo:** owner našel v produkčním čtení *„Perth, **the thing** whose meaning waits
+sealed until you break the fold"*. CODE-read dohledal cestu: aspekt obrazu (`RUNE_IMAGES`
+index 5/4) **není jen selektor obrazu** — jde od v4.0 doslova do promptu jako
+`DRAWN RUNE: Perth — focus on: hidden things`. Znění pak napsal Cowork-tune, owner ho označil
+za hotové.
+
+**Co se změnilo (obsah = Cowork/owner, zadrátování = CODE-tune):**
+- aspekt obou Perthových obrazů: EN `hidden things` → `the hidden coming to light`,
+  IS `hið hulda` → `hið hulda sem kemur í ljós`
+- `RUNES.Perth.k` / `k_is` — táž položka, aby klíč a aspekt neříkaly každý něco jiného
+- obraz s lagunou přepsán z ležení na děj (dřív *„Eitthvað **liggur** á botni lónsins og
+  **bíður**"* + prázdný focus = prázdná věc dvakrát)
+
+**Islandsky NENÍ překlad anglického (§2).** Coworkův IS návrh měl „Vatnið í lóninu **tærist**" —
+`tærast` je **koroze** (slovník: *„járnið á þakinu tærðist með tímanum"*), ne „čeřit se". Proto
+to kolo přes `is-vazba`. Islandská věta stojí na doložených kusech: *„Andartak **glittir í**
+eitthvað **á botni lónsins** áður en **gruggið hylur** það aftur."* — „glittir í" 1280 a
+slovníková vazba `það glittir í <+þf>` · „á botni lónsins" 30 · `hylja` + þf
+(*„snjórinn hylur fjöllin"*) · „gruggið" 151.
+
+**Ověřeno protlačením, ne pohledem:** 400 tahů Perthu produkčním `buildReadingPrompt()` —
+`hidden things` se v promptu neobjevuje ani jednou; nově tam stojí `the hidden coming to light`
+(272/400) a `hið hulda sem kemur í ljós` (267/400), zbytek je třetí Perthův obraz.
+
+**Nová kontrola ㉤ `verify_image_aspect_key.js`** — pravidlo „aspekt musí být položka v `k`"
+dosud hlídala jen paměť, a právě proto se rozešlo. Že je to pravidlo a ne přání, ukázala data:
+**EN 108/108** sedí. Mutace: EN aspekt mimo klíč = FAIL · osmý IS rozchod = FAIL · klíč runy
+ztratí položku pod obrazem = FAIL.
+
+**Dva nálezy z téhož měření:**
+- **`innri ljós` → `innra ljós`** (obraz 508 i klíč Kenazu). `ljós` je střední rod, slabý tvar
+  stupňovaného přídavného je tam **innra** (jako „ytra borð"). Korpus: 48 × 0. Tvar, ne obsah —
+  opraveno rovnou.
+- **7 islandských aspektů je synonymum, ne táž položka** (Uruz, Ansuz 2×, Nauthiz 2×, Jera,
+  Mannaz). Které slovo vyhraje, je **obsahové** rozhodnutí → `RUNAR_BACKLOG.md`; ㉤ to drží
+  stropem, osmý rozchod je červená.
+
+**Zůstává otevřené a NEROZHODNUTO (owner):** islandské **jméno** runy je pořád
+`Perþ (Duldir hlutir)`, takže v témž řádku promptu stojí vedle sebe statická věc i nový děj —
+`DREGNA RÚNA: Perþ (Duldir hlutir) — áhersla: hið hulda sem kemur í ljós`. Anglicky ten spor
+není (`Perth` je holé jméno). Jméno runy je vidět po celé appce, takže to není oprava, kterou
+by měl udělat CODE sám.
+
+**Affected doc(s):** `RUNAR_BACKLOG.md` — v témž commitu.

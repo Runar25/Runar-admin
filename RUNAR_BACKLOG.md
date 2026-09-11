@@ -860,6 +860,12 @@ Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je 
   ⇒ U Perth s dopisem dostane model doslova `DRAWN RUNE: Perth — focus: **hidden things**`. Odtud *„Perth, **the thing** whose meaning waits sealed"* v produkčním čtení.
   **Rozsah: 2 obrazy ze 108** — obojí Perth / `hidden things`. Není to systémová vada, je to **jedno slovo u jedné runy**. ⚠️ Druhý z těch obrazů má prázdno dvakrát: *„**Something** lies on the bottom of the lagoon"* + `focus: hidden things`.
   **Oprava = přeformulovat aspekt na DĚJ, ne na věc** (týž požadavek, jaký má esenční věta: *„Fehu is that warmth passed from hand to hand", ne „Fehu is wealth"*). Znění = owner/Cowork, ne CODE. KUKY 2026-09-11: *„zní to hrozně ve čtení, tahle metafora mi přijde divná, budeme hledat jiný obraz."*
+  ✅ **Znění dorazilo a je zadrátované** (Cowork-tune → owner HOTOVO, 2026-09-11): aspekt je teď DĚJ v obou řečech a obraz s lagunou koná. Co přesně a proč → `RUNAR_DECISIONS.md` 2026-09-11. Aby se to nemohlo rozejít podruhé, hlídá vazbu aspekt↔klíč smoke ㉤.
+
+- [ ] **IS: 7 aspektů obrazu je SYNONYMUM, ne táž položka v `k_is`** (našlo měření 2026-09-11 při Perth opravě — rozhoduje owner/Cowork, které slovo je Rúnarovo).
+  Aspekt i klíč runy končí v TÉŽE řádce promptu (`áhersla: <aspekt> · Heimur: …`), takže model dostane dvě slova pro touž stránku runy. **V angličtině to sedí 108 ze 108** — tak se pool stavěl. Islandsky se rozešlo sedm řádků:
+  Uruz `frumkraftur` × `hráur kraftur` · Ansuz `andardráttur` (2×) × `rödd` · Nauthiz `þörf` (2×) × `nauðsyn` · Jera `umbun` × `uppskera` · Mannaz `hugur` × `sjálfið, mannleg vitund`.
+  ⚠️ **Není to chyba tvaru** (ty dvě, co jimi byly, jsou opravené: `innri ljós` → `innra ljós` v obraze i v klíči) — jsou to synonyma, a vybrat z nich je obsahové rozhodnutí. Do té doby to drží smoke ㉤ se stropem 7: osmý rozchod = červená.
 
 - [ ] **NÁVRH CODE-read: vyčerpávající má být RAMENO, ne čtení** (2026-09-11, k posouzení ownerem).
   Rameno nejsou jeden text, ale **tři** — čtení + dva Asky. Měřeno téhož dne: **delší text = víc obrazů** (63–80 slov → 2 obrazy · 161 → 2 · **204 → 3**, přibyl druhý motiv), a jediný text s **jedním** obrazem byl ten nejkratší (69 slov) — ten ale jako jediný **zavřel výklad**. Čtení, která owner označil za krásná, mají 75–80 slov.

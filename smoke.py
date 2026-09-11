@@ -584,6 +584,18 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola zivotni runy probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# Aspekt obrazu jde do TÉŽE řádky promptu jako klíč runy (`focus:` / `áhersla:`). Když se
+# rozejdou, dostane model dvě verze téže stránky runy — tak vznikl Perthův „focus: hidden
+# things" a z něj „the thing whose meaning waits sealed". Pravidlo dosud hlídala jen paměť.
+print('\n' + chr(0x3264) + ' ASPEKT OBRAZU vs KLÍČ RUNY (verify_image_aspect_key.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_image_aspect_key.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola aspektu probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]))
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
