@@ -1055,7 +1055,11 @@ function buildLifeRuneBase(name, rune, day, month, year, lang, isPremium) {
   var L = (lang === 'is') ? 'is' : 'en';
   var S = RP_LIFE[L];
   var monthDesc = getBirthMonth(month, L);
-  var nameInstr = isPremium ? S.nameInstr(name) : '';
+  // 2026-09-11 ODPOJENO z automatickeho ctení (KUKY). `S.nameInstr` zustava v packu pro
+  // chystanou SAMOSTATNOU volbu „rozbor jmena" — text je hotovy a overeny, jen se nevola.
+  // ⚠️ Neni to zapomenuty kod: az ta volba vznikne, vola se odtud. Duvod odpojeni je, ze
+  // instrukce zada seversky vyznam KAZDEHO jmena, takze u nesevrskeho vynucuje vymysl (§23).
+  var nameInstr = '';
   var parts = [
     S.header,
     '',

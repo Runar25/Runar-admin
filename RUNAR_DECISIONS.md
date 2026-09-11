@@ -5214,3 +5214,43 @@ stavy × dva jazyky (návštěvník bez data · návštěvník s datem · přihl
 ⚠️ *„sláðu hann inn"* doloženo **nebylo** (0) → proto `sláðu inn fæðingardaginn`.
 Smoke **39/39**.
 **Affected doc(s):** žádný — chování vlastní kód a tenhle záznam.
+
+---
+
+## 2026-09-11 (6) — Jméno se do čtení životní runy nedostávalo. A rozbor jména je pryč.
+
+**Jak se to našlo:** owner poslal hotové čtení své životní runy, ve kterém stál odstavec
+*„Your name is the rune itself — Rúnar, keeper of the rún…"*. Jenže **žádný uživatel jménem
+Rúnar neexistuje** — v DB jsou Kuky, Sigrún a Zdeněk (ověřeno dotazem). Rúnar je jméno
+**postavy z hlavičky system promptu**.
+
+**Řetěz dvou vad, druhá jen odhalila první:**
+1. **Jméno se do promptu vůbec nedostávalo.** `readerUser.name` plní **jen `startReading()`**.
+   Kdo otevře záložku životní runy rovnou — a od 2026-09-11 je to vlastní záložka, takže to dělá
+   většina lidí — má ho prázdné, takže do promptu šel fallback `'you'`. Celé čtení pak člověka
+   oslovovalo „ty" místo jménem. §12 přitom říká, že jediný zdroj jména je `displayName()`;
+   tahle cesta ho obcházela.
+2. **Prémiový odstavec o jménu** dostal instrukci *„Add a section about the name **you** — its
+   meaning in Old Norse"*. To je nesmysl, a model sáhl po jediném severském jméně, které
+   v kontextu měl — po **Rúnarovi z hlavičky**.
+
+⭐ **Druhá vada by ale byla vadou i bez té první.** Instrukce žádá severský význam **každého**
+jména; u jména, které v severské tradici nic neznamená (Kuky, Zdeněk, Peter), model **nemá na
+výběr a musí si to vymyslet**. Prompt tedy vynucoval přesně to, co §23 zakazuje. Owner to
+pojmenoval správně: *„pokud jméno není islandské, tak by se na něj neměl vztahovat rozbor."*
+
+**Co je nasazeno:**
+- Jméno se bere z `_lifeRuneName()` → `displayName()` (§12), s fallbackem na `readerUser.name`
+  a teprve pak na „you"/„þú". Vlastní funkce proto, aby to **šlo protlačit kontrolou** —
+  `generateLifeRuneReading()` chodí na síť a z testu se nezavolá.
+- **Rozbor jména je z automatického čtení ODPOJEN.** `S.nameInstr` zůstává v packu — text je
+  hotový a ověřený — a čeká na **samostatnou volbu „rozbor jména"**, kterou owner chce nabízet
+  zvlášť, když člověk jméno zadá. Není to zapomenutý kód; nese datum a důvod odpojení.
+
+**Ověřeno:** ㉣ rozšířena — jméno z profilu se použije · bez jména se padá na „you"/„þú" ·
+**žádná** ze čtyř větví (EN/IS × prémium/základ) už nežádá severský rozbor jména.
+⚠️ Kontrola si při psaní **sama našla, že testovala atrapu**: `displayName()` žije v
+`runar-app.js`, který sandbox nenačítal, takže vada s „you" by jí proklouzla. Teď se načítá
+produkční pořadí souborů. Mutační test (vrácení odstavce) → **2 FAIL**.
+`RUNAR_PROMPT_VERSION` v4.21 → **v4.22-liferunename** · smoke 39/39.
+**Affected doc(s):** `RUNAR_BACKLOG.md` (samostatný rozbor jména + mezera v registru) — v témž commitu.

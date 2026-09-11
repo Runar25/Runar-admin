@@ -1246,3 +1246,24 @@ Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
 - [ ] `user_profiles` má **dvě identické RLS policy** („Users manage own profile" a „own profile").
       Neškodí (permissive se sčítají), ale je to duplikát — jednu smazat.
 - [ ] V Slacku leží sondová zpráva z reporteru (11. 9.) — smazat.
+
+---
+
+## Rozbor jména jako SAMOSTATNÁ volba (2026-09-11, od ownera)
+
+Z automatického čtení životní runy je odpojený (důvod → `RUNAR_DECISIONS.md` 2026-09-11 (6)).
+Owner ho chce nabízet **zvlášť**: *„pokud zadám jméno, může se mi to nabídnout jako další
+možnost."* Text instrukce je hotový a zůstal v packu (`RP_LIFE.*.nameInstr`) — chybí ta volba.
+
+⚠️ **Co se při tom MUSÍ vyřešit, jinak se vrátí táž vada:** instrukce dnes žádá severský význam
+**každého** jména. Pro jméno mimo severskou tradici model nemá na výběr a vymyslí si ho (§23).
+Buď nabídku omezit na jména, u kterých je co vykládat, nebo instrukci přepsat tak, aby směla
+skončit „tohle jméno v severské tradici kořeny nemá" — a ověřit měřením, že to model udělá.
+
+## Registr pravidel promptu nevidí cestu ŽIVOTNÍ RUNY (2026-09-11)
+
+`scripts/verify_prompt_rules_registry.js` skenuje single, spready a Ask — `buildLifeRunePrompt`
+**ani jednou**. Celý jeden prompt tedy nemá „pozornostní" pojistku: dnešní odpojení odstavce
+o jménu mu proklouzlo bez jediné červené. Doplnit cestu do registru a projít nově vzniklé řádky
+(odhadem 10–20) **s rozmyslem, ne hromadně** — registr má vynucovat pozornost, a rychlé
+odklepnutí dávky by ho znehodnotilo.

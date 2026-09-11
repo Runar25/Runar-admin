@@ -41,13 +41,14 @@ const S = {
 };
 S.window = S; S.self = S; S.globalThis = S;
 
-let code = 'var currentUser=null; var userTier="rune_seeker"; var sb=null; var activeChar=null;\n'
-         + 'var corrections=[]; var isTester=false; var profileLoaded=true; var userCredits=0;\n'
-         + 'var userFreeBalance=0; var _lifeRuneText=null; var _foundingText=null;\n'
-         + 'var userTreeFounded=false; var readerUser={}; var _treeLog=[]; var userName=null;\n'
-         + 'var _lifeRuneNum=null;\n';
+// ⚠️ ŽÁDNÝ vlastní prolog s `var currentUser` a spol.: `runar-app.js` i `runar-tree.js`
+// si tytéž názvy deklarují samy (`let` / `var`), a druhá deklarace téhož jména je
+// SyntaxError — celý sandbox by spadl. Načítá se tedy jen to, co produkce načítá,
+// ve stejném pořadí.
+let code = '';
 for (const f of ['runar-config.js', 'runar-runes.js', 'runar-translations.js',
-                 'runar-character.js', 'runar-utils.js', 'runar-svgs.js', 'runar-tree.js']) {
+                 'runar-character.js', 'runar-utils.js', 'runar-svgs.js', 'runar-tree.js',
+                 'runar-app.js']) {
   code += '\n/* ' + f + ' */\n' + fs.readFileSync(DIR + f, 'utf8') + '\n;\n';
 }
 // Živý strom a jméno stromu sem netáhneme — testuje se stav ZÁLOŽKY, ne kresba.
@@ -98,6 +99,41 @@ for (const L of ['en', 'is']) {
   rekni(c.teaser === 'block', L + '  přihlášený Rune Seeker → teaser');
   rekni(c.cta === '', L + '  …a nabídka za kredity je zpátky viditelná');
   rekni(c.vyzva === T.tree_rs_teaser, L + '  …s vlastním textem, ne s tím pro návštěvníka');
+}
+
+// ── JMÉNO: musí dojít do čtení životní runy, a rozbor jména tam být NESMÍ ───
+// 2026-09-11, dvě vady v řadě, obě našel owner na hotovém čtení:
+//  1. `readerUser.name` plní jen `startReading()`. Kdo přišel rovnou na záložku životní runy,
+//     měl ho prázdné → do promptu šel fallback „you" a čtení ho oslovovalo „ty" místo jménem.
+//     §12 přitom říká, že jediný zdroj jména je `displayName()`.
+//  2. Prémiový odstavec žádal „meaning in Old Norse or Norse mythology" pro KAŽDÉ jméno.
+//     Spolu s (1) dostal model instrukci „napiš o jménu YOU" — sáhl po jediném severském
+//     jménu v kontextu, po RÚNAROVI z hlavičky, a vyrobil odstavec o jméně, které uživatel
+//     nemá. V DB žádný Rúnar není. U nesevrského jména (Kuky, Zdeněk) by si musel vymyslet
+//     severský význam tak jako tak — prompt vynucoval to, co §23 zakazuje.
+// Rozbor jména se má vrátit jako SAMOSTATNÁ volba, ne jako součást čtení (rozhodnutí ownera).
+{
+  const stavJm = (jmeno, L) => {
+    vm.runInContext('userName=' + JSON.stringify(jmeno || '')
+      + '; currentUser={id:"u1"}; readerUser={}; lang=' + JSON.stringify(L) + ';', S);
+    return vm.runInContext('_lifeRuneName()', S);
+  };
+  rekni(stavJm('Kuky', 'en') === 'Kuky', 'jméno z profilu se pro životní runu použije');
+  rekni(stavJm('', 'en') === 'you', 'bez jména padá na „you" (a ne na prázdno)');
+  rekni(stavJm('', 'is') === 'þú', 'bez jména padá islandsky na „þú"');
+
+  const R25 = vm.runInContext('RUNES', S);
+  const gebo = R25.find((r) => r.n === 'Gebo');
+  for (const L of ['en', 'is']) {
+    for (const prem of [true, false]) {
+      const p = vm.runInContext('buildLifeRunePrompt', S)('Zdenek', gebo, 24, 12, 1979, L, prem, null);
+      rekni(p.indexOf('Zdenek') !== -1,
+            L + (prem ? '  prémiové' : '  základní') + ' čtení životní runy nese JMÉNO');
+      // Nesmí se vrátit v žádném jazyce ani tieru — jinak by vada ožila jen v jedné větvi.
+      rekni(!/about the name|meaning in Old Norse|um nafnið|á norrænu/i.test(p),
+            L + (prem ? '  prémiové' : '  základní') + ' čtení NEŽÁDÁ severský rozbor jména');
+    }
+  }
 }
 
 // ── STRUKTURA: každý stav životní runy musí LEŽET v panelu životní runy ─────

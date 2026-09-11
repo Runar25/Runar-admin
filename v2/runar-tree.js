@@ -611,6 +611,17 @@ function _rsLifeRuneReading() {
   generateLifeRuneReading();
 }
 
+// §12: jmeno ma JEDINY zdroj — `displayName()`. `readerUser.name` plni jen `startReading()`,
+// takze kdo prijde rovnou na zalozku zivotni runy (a od 2026-09-11 je to vlastni zalozka,
+// takze to dela vetsina lidi), mel tu prazdno — a cteni ho oslovovalo „you" misto jmenem.
+// Vlastni funkce proto, aby to sla protlacit kontrolou; `generateLifeRuneReading` chodi na sit.
+// Doklad a nasledek -> RUNAR_DECISIONS.md 2026-09-11 (6).
+function _lifeRuneName() {
+  var z = (typeof displayName === 'function') ? displayName() : '';
+  if (z) return z;
+  if (readerUser && readerUser.name) return readerUser.name;
+  return lang === 'is' ? 'þú' : 'you';
+}
 async function generateLifeRuneReading() {
   if (!currentUser) return;
   var hasDob = readerUser && readerUser.d && readerUser.m && readerUser.y;
@@ -636,7 +647,7 @@ async function generateLifeRuneReading() {
   if (loadGlyph) loadGlyph.innerHTML = runeSvg(rune, { frame: false, cls: 'rune-svg-fl' });
   if (loadTxt) loadTxt.textContent = t('reading_loading');
 
-  var name = readerUser.name || (lang === 'is' ? 'þú' : 'you');
+  var name = _lifeRuneName();
   var mode = isPremium ? RUNAR_MODES.life_rune_premium : RUNAR_MODES.life_rune_standard;
   // Korekce pridava DISPECER buildLifeRunePrompt (character.js) — tady uz ne (§18).
   var prompt = buildLifeRunePrompt(name, rune, readerUser.d, readerUser.m, readerUser.y, lang, isPremium, corrections);
