@@ -11,6 +11,14 @@ const EL_VOICE_ID    = "2UI8v2ibbwQTijaYAte1"; // same voice for both langs
 const EL_MODEL_EN    = "eleven_multilingual_v2";
 const EL_MODEL_IS    = "eleven_v3";             // auto-detects Icelandic from text
 
+// Mesicni strop hlasu. ZRCADLI v2/runar-config.js VOICE_MONTHLY_LIMIT — Deno sem klientsky
+// config naimportovat neumi, takze je ta kopie nevyhnutelna a hlida ji scripts/verify_monthly_limits.js.
+// Duvod (KUKY 2026-09-11): hlas je ochutnavka, ne neco, co se ma vyuzivat porad. Do dneska ho
+// drzel JEN rate limit 5/minutu — tedy zadny mesicni strop vubec a premium ucet mohl ozvucit
+// vsech 75 ctení.
+const VOICE_MONTHLY_LIMIT = 5;
+function monthKey(d = new Date()): string { return d.toISOString().slice(0, 7); }
+
 const cors = {
   "Access-Control-Allow-Origin":  "*",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
@@ -63,6 +71,19 @@ serve(async (req) => {
     // Text is billed per character — clamp it. Longest legit narration (Yggdrasil) ~1661.
     if (typeof text !== "string" || text.length > 3000) return json({ error: "text too long" }, 400);
 
+    // ── Mesicni strop ──
+    // Ctene PRED volanim ElevenLabs: kdyz je vycerpano, nesmi se nic zaplatit.
+    // Zapocitava se az PO uspesne odpovedi (niz) — kdyz ElevenLabs spadne, clovek
+    // nema prijit o jeden z peti kvuli cizi chybe.
+    const vKey = monthKey();
+    const { data: vprof } = await sb()
+      .from("user_profiles").select("voice_month_key, voice_month_count")
+      .eq("id", userId).maybeSingle();
+    const vUsed = vprof?.voice_month_key === vKey ? (vprof?.voice_month_count ?? 0) : 0;
+    if (vUsed >= VOICE_MONTHLY_LIMIT) {
+      return json({ error: "voice_monthly_limit", used: vUsed, limit: VOICE_MONTHLY_LIMIT }, 429);
+    }
+
     // lang determines model — NEVER trust frontend for voice/model selection
     const resolvedModel = lang === "is" ? EL_MODEL_IS : EL_MODEL_EN;
 
@@ -92,6 +113,12 @@ serve(async (req) => {
       const err = await elRes.text();
       return json({ error: `ElevenLabs ${elRes.status}: ${err}` }, 502);
     }
+
+    // Zapocitat az ted — hlas se opravdu ozval. Server-owned sloupce, klient je psat nesmi.
+    // Zapis se vedome NEHLIDA: kdyby selhal, clovek hlas uz dostal a shodit mu odpoved kvuli
+    // ucetnictvi by bylo horsi nez o jeden nezapocitany hlas prijit.
+    await sb().from("user_profiles")
+      .update({ voice_month_key: vKey, voice_month_count: vUsed + 1 }).eq("id", userId);
 
     // Convert to base64
     const buf   = await elRes.arrayBuffer();

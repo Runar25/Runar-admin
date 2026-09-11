@@ -895,7 +895,11 @@ async function generateVoice() {
       let data = {};
       try { data = await res.json(); } catch (_e) {}
       console.error('voice failed:', res.status, (data && data.error) || '');
-      const msg = res.status === 429
+      // Mesicni strop a minutovy rate limit chodi oba jako 429 — rozlisuje je kod chyby.
+      // Bez toho by clovek, kterému doslo pet hlasu, cetl „pockej chvili" a cekal marne.
+      const msg = (data && data.error === 'voice_monthly_limit')
+        ? tp('err_voice_month', { n: (typeof VOICE_MONTHLY_LIMIT !== 'undefined' ? VOICE_MONTHLY_LIMIT : 5) })
+        : res.status === 429
         ? t('err_rate_limited')
         : (lang === 'is' ? 'Rödd Rúnars hvílir — reyndu aftur eftir andartak.' : 'The voice of Rúnar is resting — please try again in a moment.');
       setSt('st-voice', msg, 'err');

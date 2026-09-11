@@ -54,6 +54,28 @@ else {
   if (!fail) console.log('OK    spread_cost sanitizace drzi (9 adversarialnich vstupu -> cele cislo 1..9)');
 }
 
+// ── strop HLASU (2026-09-11): tataz trida kopie, tentyz duvod ────────────────
+// VOICE_MONTHLY_LIMIT zije v config (zdroj pravdy) a v elevenlabs-proxy (vynucuje).
+// Deno klientsky config naimportovat neumi, takze kopie je nevyhnutelna — a tohle je to,
+// co ji drzi poctivou. Snizis strop v configu, zapomenes na proxy, a tester dal ozvucuje.
+const elProxy = fs.readFileSync(R + 'supabase/functions/elevenlabs-proxy/index.ts', 'utf8');
+const cfgHlas = (cfg.match(/^const VOICE_MONTHLY_LIMIT\s*=\s*(\d+)/m) || [])[1];
+const elHlas  = (elProxy.match(/^const VOICE_MONTHLY_LIMIT\s*=\s*(\d+)/m) || [])[1];
+if (!cfgHlas)      { fail++; console.log('FAIL  VOICE_MONTHLY_LIMIT chybi v runar-config.js'); }
+else if (!elHlas)  { fail++; console.log('FAIL  VOICE_MONTHLY_LIMIT chybi v elevenlabs-proxy'); }
+else if (cfgHlas !== elHlas) {
+  fail++; console.log('FAIL  hlas: config=' + cfgHlas + ' ale proxy vynucuje ' + elHlas);
+} else {
+  console.log('OK    hlas: ' + cfgHlas + ' prehrani/mesic (config == proxy)');
+}
+// A jeste to, co uz kopie neuhlida: strop musi byt v proxy opravdu POUZITY, ne jen deklarovany.
+// Mrtva konstanta by prosla shodou cisel a neomezila nic.
+if (elHlas && !/vUsed\s*>=\s*VOICE_MONTHLY_LIMIT/.test(elProxy)) {
+  fail++; console.log('FAIL  hlas: VOICE_MONTHLY_LIMIT je v proxy deklarovany, ale nic se s nim neporovnava');
+} else if (elHlas) {
+  console.log('OK    hlas: strop se v proxy opravdu porovnava (neni to mrtva konstanta)');
+}
+
 console.log(fail === 0 ? '\nMonthly caps agree — config is enforced by the proxy.'
                        : '\n' + fail + ' MISMATCH — the cap the user pays for is not the cap enforced.');
 process.exit(fail ? 1 : 0);

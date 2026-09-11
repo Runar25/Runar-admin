@@ -58,6 +58,13 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 //    jako tichy fakt — Runar ji nevyslovi sam od sebe, jen kdyz se na ni clovek zepta.
 const RUNAR_PROMPT_VERSION = 'v4.21-askpositions';
 
+// Mesicni strop hlasu. KUKY 2026-09-11: „limit na hlas max 5 na mesic — je to spis
+// ochutnavka nez aby to porad vyuzivali." ElevenLabs se plati po znacich a jedine, co ho
+// dosud drzelo, byl rate limit 5/minutu — tedy zadny mesicni strop vubec.
+// ⚠️ Plati PLOSNE, ne per tier: hlas dnes nikdo neplati zvlast. Az bude, udelej z toho
+// mapu jako `MONTHLY_LIMITS` a rozsir kontrolu ⑨, ktera kopii v proxy hlida.
+const VOICE_MONTHLY_LIMIT = 5;
+
 // ─── ELEVENLABS ─────────────────────────────────────────
 const EL_VOICE_ID_EN = '2UI8v2ibbwQTijaYAte1'; // English — Rúnar EN
 const EL_VOICE_ID_IS = '2UI8v2ibbwQTijaYAte1'; // IS — stejný voice, eleven_v3 auto-detekuje islandštinu z textu

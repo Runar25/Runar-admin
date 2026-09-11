@@ -1174,3 +1174,63 @@ vyplněné pole, ale je to něco, co uživatel vidí a na co se přirozeně zept
 + `positions` toho packu) · nový blok v `_askCastContext` je vyjmenuje · §13: platí pro **všech pět**
 typů čtení, takže test musí projít single (žádné pozice) i všechny čtyři spready.
 ⚠️ Názvy pozic **neopisovat** — číst je z `RP_*` packů, jinak vznikne druhá kopie (§20).
+
+---
+
+# ☑ TO-DO OWNERA — spuštění pro testery (2026-09-11)
+
+Odbavuj průběžně, pořadí je podle toho, co blokuje. Odškrtávej přepsáním `[ ]` na `[x]`.
+Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
+
+## Musí být hotové PŘED prvním cizím přihlášením
+
+- [ ] **Podepsat Supabase DPA** — Organization → Legal/Compliance. První cizí tester = zpracování
+      cizích osobních údajů přes zpracovatele.
+- [ ] **Zásady soukromí živé na webu** — vlastní položku má tenhle doc už výš (sekce o GDPR);
+      sem patří jen tím, že blokuje spuštění. Záměrně se tu NEOPISUJE (§20).
+- [ ] **Vyřešit doručení přihlášení.** Supabase → Authentication → Emails → SMTP. Vestavěný mailer
+      cizím adresám magic link často nedoručí. Buď dozapoj Resend pro agndofa.is, **nebo** testerům
+      v pozvánce rovnou napiš „přihlas se tlačítkem Google" (OAuth funguje hned a na pár lidí stačí).
+- [ ] **Limit v účtu ElevenLabs.** Měsíční strop 5 hlasů/tester přidává CODE do appky, ale **tvrdá
+      pojistka na účtu je jiná vrstva** — když appka selže, účet drží.
+- [ ] **`WEBHOOK_SECRET`** — Edge Functions → Secrets, náhodný řetězec; pak Database → Webhooks
+      u `public.bug_reports` přidat hlavičku `x-webhook-secret: <týž řetězec>`. Dnes je
+      `notify-report` otevřený komukoli, kdo zná URL.
+
+## Migrace a označení testerů
+
+- [ ] **Spustit migraci měsíčního stropu hlasu** — `sql/2026-09-11_voice_monthly_cap.sql`
+      (hotová, přidá dva server-owned sloupce). ⚠️ Dokud neproběhne, edge funkce ty sloupce
+      nenajde a **strop nebude platit** — hlas poteče bez omezení.
+- [ ] **Nasadit `elevenlabs-proxy`** — bez nasazení běží stará verze bez stropu:
+      `supabase functions deploy elevenlabs-proxy --project-ref pmitxjvkeovijreepror --no-verify-jwt`
+- [ ] **Označit testery.** Až pošleš e-maily, CODE dodá SQL, které si UUID dohledá samo a
+      **selže bez zápisu**, když se někdo ještě nepřihlásil. ⚠️ Řádek v `user_profiles` vzniká
+      až prvním loginem — označovat jde až potom.
+- [ ] **Rozhodnout o čtyřech stávajících účtech.** Dnes: všechny mají `is_tester = true`, ale
+      `tier = 'rune_seeker'` — **premium nemá nikdo** (ověřeno 2026-09-11). Když nepojedou taky
+      jako premium, jejich nálezy nepůjdou srovnat s novými.
+
+## Ověřit naživo, než rozešleš odkaz
+
+- [ ] jedno čtení na přihlášeném účtu — dokáže, že `ANTHROPIC_API_KEY` je nastavený
+- [ ] jedno přehrání hlasu — `ELEVENLABS_API_KEY`
+- [ ] jedno hlášení z reporteru → **přišlo do Slacku?** (řádky v DB nedokazují, že webhook běží)
+- [ ] po pushi zkontrolovat verzi: `curl -s https://runar25.github.io/Runar-admin/v2/sw.js | head -1`
+- [ ] aktivní postava je ta, kterou čekáš:
+      `select id, label, active from public.runar_character where active = true;`
+
+## Co testerům napsat dopředu (ať to nehlásí jako chybu)
+
+- [ ] **Tree of Life nemají** — ikona je skrytá, protože strom není hotový. Životní runu mají
+      ve vlastní záložce.
+- [ ] **Hlas je ochutnávka: 5 za měsíc.**
+- [ ] **Režim „pro někoho jiného" testovat smí** — je to záměr, ne chyba.
+- [ ] Až budou mít premium, musí si appku **znovu načíst** — tier i `is_tester` se čtou jen při
+      startu. Že to sedlo, pozná se podle **„(tester)" / „(prófari)"** za jménem tieru v panelu.
+
+## Zjištěno při auditu — nespěchá, ale ať se neztratí
+
+- [ ] `user_profiles` má **dvě identické RLS policy** („Users manage own profile" a „own profile").
+      Neškodí (permissive se sčítají), ale je to duplikát — jednu smazat.
+- [ ] V Slacku leží sondová zpráva z reporteru (11. 9.) — smazat.

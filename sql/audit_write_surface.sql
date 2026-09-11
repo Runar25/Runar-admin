@@ -31,7 +31,8 @@ where n.nspname = 'public'
   and c.relkind = 'r'
   and a.attname in (
     'tier', 'credits_balance', 'free_balance',
-    'month_units', 'month_key', 'drip_week', 'is_tester'
+    'month_units', 'month_key', 'drip_week', 'is_tester',
+    'voice_month_key', 'voice_month_count'
   )
   and has_column_privilege(r.rolname, c.oid, a.attname, p.priv)
 order by 1, 2, 3;
