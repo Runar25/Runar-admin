@@ -1211,12 +1211,12 @@ Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
 
 ## Migrace a označení testerů
 
-- [ ] **Spustit migraci rozboru jména** — `sql/2026-09-11_name_lore.sql` (sloupec + grant).
+- [x] ~~Spustit migraci rozboru jména~~ — SPUSTIL CODE 2026-09-11 — `sql/2026-09-11_name_lore.sql` (sloupec + grant).
       ⚠️ Bez ní tlačítko „Co nese moje jméno?" selže při ukládání.
-- [ ] **Spustit migraci měsíčního stropu hlasu** — `sql/2026-09-11_voice_monthly_cap.sql`
+- [x] ~~Spustit migraci měsíčního stropu hlasu~~ — SPUSTIL CODE 2026-09-11 — `sql/2026-09-11_voice_monthly_cap.sql`
       (hotová, přidá dva server-owned sloupce). ⚠️ Dokud neproběhne, edge funkce ty sloupce
       nenajde a **strop nebude platit** — hlas poteče bez omezení.
-- [ ] **Nasadit `elevenlabs-proxy`** — bez nasazení běží stará verze bez stropu:
+- [x] ~~Nasadit `elevenlabs-proxy`~~ — NASADIL CODE 2026-09-11 — bez nasazení běží stará verze bez stropu:
       `supabase functions deploy elevenlabs-proxy --project-ref pmitxjvkeovijreepror --no-verify-jwt`
 - [ ] **Označit testery.** Až pošleš e-maily, CODE dodá SQL, které si UUID dohledá samo a
       **selže bez zápisu**, když se někdo ještě nepřihlásil. ⚠️ Řádek v `user_profiles` vzniká
