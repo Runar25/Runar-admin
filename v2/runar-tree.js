@@ -307,6 +307,9 @@ function updateTreeTab() {
   var hasDob = readerUser && readerUser.d && readerUser.m && readerUser.y;
   var isStdPlus = currentUser && (userTier === 'standard' || userTier === 'premium' || isAdmin(currentUser.email));
   var rune = hasDob ? calcLifeRune(readerUser.d, readerUser.m, readerUser.y) : null;
+  // Vytazeno sem 2026-09-11: potrebuje ho uz vetev navstevnika niz. `rune` muze byt null
+  // (bez data narozeni), proto ten guard — driv se tenhle radek pocital az za ni.
+  var runeName = rune ? (isIs ? rune.is_n : rune.n) : '';
 
   // Hide all states
   // 'tree-founding-cta' tu 2026-07-19 CHYBELO -> jednou zobrazene uz se neskrylo
@@ -317,12 +320,36 @@ function updateTreeTab() {
   if (_gsec) _gsec.style.display = 'block';
 
   if (!currentUser) {
-    // Not logged in — show no-dob gate
-    var noDob = document.getElementById('tree-no-dob');
-    if (noDob) {
-      noDob.style.display = 'block';
-      var txt = document.getElementById('tree-no-dob-text');
-      if (txt) txt.textContent = t('tree_signin_note');
+    // KUKY 2026-09-11: „ta life rune ma byt pro vsechny." Zivotni runa je ciste vypocet
+    // z data narozeni (`calcLifeRune`) — zadny server, zadny ucet. Navstevnik ji proto
+    // dostane celou: ukaze se mu, KTEROU nese. Za prihlasenim zustava jen CTENI.
+    // ⚠️ Do teto zmeny tu byla SLEPA ULICKA: formular na datum se navstevnikovi zobrazil,
+    // tlacitko rikalo „REVEAL MY LIFE RUNE", a po odeslani se vratila tataz brana —
+    // protoze tahle vetev skoncila drive, nez se stihlo cokoli odhalit.
+    if (!hasDob) {
+      var noDob = document.getElementById('tree-no-dob');
+      if (noDob) {
+        noDob.style.display = 'block';
+        var txt = document.getElementById('tree-no-dob-text');
+        if (txt) txt.textContent = t('tree_visitor_dob');
+      }
+      return;
+    }
+    // Datum je zadane — tentyz teaser jako u Rune Seekera, ale bez nabidky za kredity.
+    var tsV = document.getElementById('tree-rs-teaser');
+    if (tsV) {
+      tsV.style.display = 'block';
+      var lbV = document.getElementById('tree-rune-label');
+      if (lbV) lbV.textContent = t('life_rune_lbl');
+      var nmV = document.getElementById('tree-rune-name-teaser');
+      if (nmV) nmV.textContent = runeName;
+      var glV = document.getElementById('tree-rune-glyph-teaser');
+      if (glV) glV.innerHTML = runeSvg(rune, { frame: false, cls: 'rune-svg-fl' });
+      var ttV = document.getElementById('tree-teaser-text');
+      if (ttV) ttV.textContent = t('tree_visitor_read');
+      // Nabidka „za 3 kredity" nema pro nepřihlášeného smysl — nema ucet ani zustatek.
+      var ctaV = document.getElementById('tree-rs-cta-block');
+      if (ctaV) ctaV.style.display = 'none';
     }
     return;
   }
@@ -346,7 +373,6 @@ function updateTreeTab() {
   }
 
   renderLivingTree(rune);
-  var runeName = isIs ? rune.is_n : rune.n;
 
   // Hotove cteni se ukazuje VSEM tierum. Do 2026-07-19 tenhle test zil az ZA
   // `return` z RS vetve, takze Rune Seeker svou zivotni runu nikdy neuvidel:
@@ -391,6 +417,10 @@ function updateTreeTab() {
     var teaserEl = document.getElementById('tree-rs-teaser');
     if (teaserEl) {
       teaserEl.style.display = 'block';
+      // Vetev navstevnika vys tenhle blok skryva — prihlasenemu ho musime vratit,
+      // jinak by po prihlaseni zustal neviditelny (styl zustava na prvku).
+      var ctaR = document.getElementById('tree-rs-cta-block');
+      if (ctaR) ctaR.style.display = '';
       var nm = document.getElementById('tree-rune-name-teaser');
       var gl = document.getElementById('tree-rune-glyph-teaser');
       if (nm) nm.textContent = runeName;

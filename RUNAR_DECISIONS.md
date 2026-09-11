@@ -5179,3 +5179,38 @@ hlavičky bloku. Islandština z doložených kusů: `stöðurnar` 2156 · `í le
 4125 · `á skjánum` 12659 · `getur snúið að` 29 · `hverri þeirra` 400.
 `RUNAR_PROMPT_VERSION` v4.20 → **v4.21-askpositions** · smoke 38/38.
 **Affected doc(s):** `RUNAR_BACKLOG.md` (položka „HANDOFF57 bod 4" odškrtnuta) — v témž commitu.
+
+---
+
+## 2026-09-11 (5) — Životní runa je PRO VŠECHNY, i bez účtu
+
+**Kdo/proč:** KUKY 2026-09-11: *„ta life rune ma byt pro vsechny v novem okne!"* Upřesňuje
+záznam 2026-09-11 (4b), kde jsem novou záložku zpřístupnil jen přihlášeným.
+
+**Co to znamenalo doopravdy.** Nestačilo odemknout tlačítko — za ním byla **slepá ulička**:
+návštěvníkovi se zobrazil formulář na datum narození s tlačítkem *„REVEAL MY LIFE RUNE →"*,
+ale větev `!currentUser` v `updateTreeTab()` končila dřív, než se stihlo cokoli odhalit. Po
+odeslání se vrátila tatáž brána. Ukázat tu záložku všem bez téhle opravy by znamenalo dát
+cizímu člověku na první obrazovce tlačítko, které nedělá nic.
+
+**Co je nasazeno:** životní runa je **čistý výpočet z data narození** (`calcLifeRune`) — žádný
+server, žádný účet. Návštěvník ji tedy dostane celou: uvidí, **kterou nese**, se jménem i glyfem.
+Za přihlášením zůstává jen **ČTENÍ** té runy. Použil se **existující** stav `tree-rs-teaser`,
+takže nepřibylo žádné nové UI — jen se návštěvníkovi skryje nabídka za kredity (nemá účet ani
+zůstatek) a text vyzve k přihlášení kvůli čtení.
+
+⭐ **Je to zároveň lepší nabídka, než byla.** Dřív návštěvník četl „Sign in to discover your life
+rune" — zamčené dveře. Teď dostane runu a přihlašuje se kvůli tomu, co nese. Dává důvod, ne bránu.
+
+⚠️ **Křehké místo, které si zaslouží pojmenovat:** nabídka za kredity se návštěvníkovi skrývá
+**stylem na prvku**, a ten na prvku zůstane. Přihlášenému se proto musí výslovně **vrátit**,
+jinak by po přihlášení zmizela natrvalo. Obě poloviny hlídá nová kontrola.
+
+**Ověřeno:** ㉣ `verify_liferune_states.js` protlačí `updateTreeTab()` produkční cestou třemi
+stavy × dva jazyky (návštěvník bez data · návštěvník s datem · přihlášený Rune Seeker).
+**Mutační test:** vrácení staré slepé uličky → **14 FAIL**; neobnovení nabídky přihlášenému
+→ **2 FAIL**. Islandština z doložených kusů: `daginn sem þú` 610 · `sem þú fæddist` 207 ·
+`sláðu inn` 432 · `þú berð` 3047 · `skráðu þig til` 16 · `til að lesa` 18195.
+⚠️ *„sláðu hann inn"* doloženo **nebylo** (0) → proto `sláðu inn fæðingardaginn`.
+Smoke **39/39**.
+**Affected doc(s):** žádný — chování vlastní kód a tenhle záznam.

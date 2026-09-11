@@ -71,11 +71,21 @@ function updateTabVisibility() {
   // Journal tab — always visible (Visitor sees gate inside)
   const journalTabBtn = document.getElementById('atab-journal');
   if (journalTabBtn) journalTabBtn.style.display = '';
-  // Tree tab — visible only for logged-in users
+  // Tree tab — ADMINum. Strom neni hotovy a testeri ho mit nemaji (KUKY 2026-09-11);
+  // schovava se ZAMERNE jen ikona, ne cela cesta — testeri jsou znami lide.
   const treeTabBtn = document.getElementById('atab-tree');
-  if (treeTabBtn) treeTabBtn.style.display = currentUser ? '' : 'none';
+  if (treeTabBtn) treeTabBtn.style.display =
+    (currentUser && typeof isAdmin === 'function' && isAdmin(currentUser.email)) ? '' : 'none';
+  // Life rune tab — VSEM, i nepřihlášeným (KUKY 2026-09-11: „ma byt pro vsechny").
+  // Zivotni runa je ciste vypocet z data narozeni, zadny server ani ucet — navstevnik
+  // tedy muze zjistit, KTEROU nese; za prihlasenim zustava jen CTENI. Vzor je journal:
+  // zalozka je videt vzdy a brana je uvnitr.
+  const lifeTabBtn = document.getElementById('atab-liferune');
+  if (lifeTabBtn) lifeTabBtn.style.display = '';
   // If logged out while on journal or tree tab — switch to reading
   if (!currentUser && (activeAppTab === 'journal' || activeAppTab === 'tree')) showAppTab('reading');
+  // Odhlasil se admin, nebo uzivatel prisel o pravo — nesmi zustat stat na skryte zalozce.
+  if (activeAppTab === 'tree' && treeTabBtn && treeTabBtn.style.display === 'none') showAppTab('reading');
 }
 
 // ── updateAuthLabel — auth label + sign-in button ──────────────────────────────
