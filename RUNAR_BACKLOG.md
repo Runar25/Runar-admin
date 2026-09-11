@@ -1205,19 +1205,9 @@ Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
       v pozvánce rovnou napiš „přihlas se tlačítkem Google" (OAuth funguje hned a na pár lidí stačí).
 - [ ] **Limit v účtu ElevenLabs.** Měsíční strop 5 hlasů/tester přidává CODE do appky, ale **tvrdá
       pojistka na účtu je jiná vrstva** — když appka selže, účet drží.
-- [ ] **`WEBHOOK_SECRET`** — Edge Functions → Secrets, náhodný řetězec; pak Database → Webhooks
-      u `public.bug_reports` přidat hlavičku `x-webhook-secret: <týž řetězec>`. Dnes je
-      `notify-report` otevřený komukoli, kdo zná URL.
-
-## Migrace a označení testerů
-
-- [x] ~~Spustit migraci rozboru jména~~ — SPUSTIL CODE 2026-09-11 — `sql/2026-09-11_name_lore.sql` (sloupec + grant).
-      ⚠️ Bez ní tlačítko „Co nese moje jméno?" selže při ukládání.
-- [x] ~~Spustit migraci měsíčního stropu hlasu~~ — SPUSTIL CODE 2026-09-11 — `sql/2026-09-11_voice_monthly_cap.sql`
-      (hotová, přidá dva server-owned sloupce). ⚠️ Dokud neproběhne, edge funkce ty sloupce
-      nenajde a **strop nebude platit** — hlas poteče bez omezení.
-- [x] ~~Nasadit `elevenlabs-proxy`~~ — NASADIL CODE 2026-09-11 — bez nasazení běží stará verze bez stropu:
-      `supabase functions deploy elevenlabs-proxy --project-ref pmitxjvkeovijreepror --no-verify-jwt`
+- [x] ~~**`WEBHOOK_SECRET`**~~ — NASTAVIL CODE 2026-09-11. Hlavicka i secret, v tomhle poradi
+      (obracene by reporter na chvili odmital vlastni webhook). Zbyva jen smazat tu sondovou
+      zpravu ve Slacku — na to Code nema nastroj.
 - [ ] **Označit testery.** Až pošleš e-maily, CODE dodá SQL, které si UUID dohledá samo a
       **selže bez zápisu**, když se někdo ještě nepřihlásil. ⚠️ Řádek v `user_profiles` vzniká
       až prvním loginem — označovat jde až potom.
