@@ -862,6 +862,11 @@ Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je 
   **Oprava = přeformulovat aspekt na DĚJ, ne na věc** (týž požadavek, jaký má esenční věta: *„Fehu is that warmth passed from hand to hand", ne „Fehu is wealth"*). Znění = owner/Cowork, ne CODE. KUKY 2026-09-11: *„zní to hrozně ve čtení, tahle metafora mi přijde divná, budeme hledat jiný obraz."*
   ✅ **Znění dorazilo a je zadrátované** (Cowork-tune → owner HOTOVO, 2026-09-11): aspekt je teď DĚJ v obou řečech a obraz s lagunou koná. Co přesně a proč → `RUNAR_DECISIONS.md` 2026-09-11. Aby se to nemohlo rozejít podruhé, hlídá vazbu aspekt↔klíč smoke ㉤.
 
+- [ ] **OBSAH (owner/Cowork): Perthův DOPISOVÝ obraz zůstal statický — a stížnost byla právě z něj.**
+  Oprava aspektu na děj (2026-09-11) otočila lagunový obraz, **dopisový ne** — a produkční čtení, které owner označil za špatné (*„Perth, the thing whose meaning waits sealed until you break the fold"*), pochází z dopisu. Po opravě zní pořád *„Perth is the keeping of what has not yet been read."*
+  ⭐ **Měření řeklo, kde je páka: v OBRAZE, ne ve slově aspektu** — u dopisu se měnil jen aspekt a čtení se nehnulo (1 ze 6), u laguny se měnil obraz a otočilo se (5 ze 6). Čísla, uspořádání a hranice nálezu → `RUNAR_EVAL_LOG.md` 2026-09-11.
+  ⇒ Přepisovat u dopisu aspekt nemá smysl; chce to **jiný obraz, kde se něco DĚJE** (nebo dopis v ději — otevírání, doručení, vítr ve dveřích). Znění je obsah, CODE ho nepíše.
+
 - [ ] **IS: 7 aspektů obrazu je SYNONYMUM, ne táž položka v `k_is`** (našlo měření 2026-09-11 při Perth opravě — rozhoduje owner/Cowork, které slovo je Rúnarovo).
   Aspekt i klíč runy končí v TÉŽE řádce promptu (`áhersla: <aspekt> · Heimur: …`), takže model dostane dvě slova pro touž stránku runy. **V angličtině to sedí 108 ze 108** — tak se pool stavěl. Islandsky se rozešlo sedm řádků:
   Uruz `frumkraftur` × `hráur kraftur` · Ansuz `andardráttur` (2×) × `rödd` · Nauthiz `þörf` (2×) × `nauðsyn` · Jera `umbun` × `uppskera` · Mannaz `hugur` × `sjálfið, mannleg vitund`.

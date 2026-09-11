@@ -5432,3 +5432,25 @@ není (`Perth` je holé jméno). Jméno runy je vidět po celé appce, takže to
 by měl udělat CODE sám.
 
 **Affected doc(s):** `RUNAR_BACKLOG.md` — v témž commitu.
+
+---
+
+## 2026-09-11 (12) — Pákou obrazu je OBRAZ, ne slovo aspektu (měřeno, predikce padla napůl)
+
+**Predikce z handoffu** k Perthově opravě zněla: *„sealed/empty thing zmizí, protože model už
+nedostane prázdnou věc, ale děj."* Přeměřeno ve dvou ramenech, kde se v jednom měnil aspekt
+**i obraz** a ve druhém **jen aspekt** (jinak znak po znaku týž prompt).
+
+**Výsledek: platí jen tam, kde se změnil OBRAZ.** Kde se měnilo jen slovo aspektu, čtení se
+nehnulo. Čísla, uspořádání a hranice nálezu vlastní `RUNAR_EVAL_LOG.md` 2026-09-11 — sem se
+neopisují (§20).
+
+**Rozhodnutí, které z toho plyne:** čte-li se runa staticky, **sahá se na obraz**. Přepsat
+aspektové slovo je levné a skoro neúčinné — a příští session by to jinak zkusila znovu (§25).
+Aspekt se dál drží v souladu s klíčem runy (smoke ㉤), ale **z jiného důvodu**: aby model
+nedostal v jedné řádce dvě verze téže runy, ne kvůli tomu, jak čtení vyzní.
+
+**Co zůstává otevřené:** Perthův **dopisový** obraz — ten, ze kterého pochází ownerova
+stížnost — se nezlepšil a čeká na obsahové rozhodnutí → `RUNAR_BACKLOG.md`.
+
+**Affected doc(s):** `RUNAR_BACKLOG.md`, `RUNAR_EVAL_LOG.md` — v témž commitu.

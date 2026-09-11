@@ -2643,6 +2643,53 @@ Mannaz-humanity potřebuje lidství, které NENÍ výměna mezi dvěma.
 ⚠️ Coworkovy vlastní ⚠ predikce: **Mannaz-memory** propadl (Othila 3/3) — trefa · **Jera-reward**
 napůl (jeden 3/3, druhý 2/3 → Isa) — částečná trefa · **Eihwaz** nepředpověděl nikdo.
 
+## 2026-09-11 — PERTH po opravě aspektu: ⭐ OBRAZ rozhodl, ASPEKT sám o sobě skoro nic
+
+**Co se měřilo.** Cowork-tune + owner schválili opravu Perthova aspektu z věci na děj
+(`hidden things` → `the hidden coming to light`) a u lagunového obrazu i nové znění. Predikce
+v handoffu zněla: *„Očekávám, že »sealed/empty thing« zmizí, protože model už nedostane
+prázdnou věc, ale děj."* Tohle je ta přeměřená predikce.
+
+**Uspořádání.** Dvě ramena, každé PŘED × PO, 6 + 6 čtení:
+- **LAGUNA** — změnil se aspekt **i obraz** (`Something lies on the bottom…` → `The lagoon water
+  clears for a moment and something below stirs, then closes over again`)
+- **DOPIS** — změnil se **JEN aspekt**; obraz i celý zbytek promptu je znak po znaku identický
+  (ověřeno diffem: jediná odlišná řádka je `focus on:`)
+
+Prompty se stavěly **produkčním `buildReadingPrompt()`**, ne ručně. Úhel, tvar konce i umístění
+jména se losují per čtení — dvojice se proto vybíraly tak, aby se **shodovaly ve všech ostatních
+řádcích** (jinak by se měřily ony, §27 útok 2). Generovalo 24 slepých agentů (každý viděl jen
+system + user prompt, nic o pokusu), soudil **jeden slepý soudce** nad zamíchanými ID.
+
+| rameno | podmínka | DĚJ | VĚC | obojí | „prázdná věc" v definiční větě |
+|---|---|---|---|---|---|
+| LAGUNA | PŘED | 0/6 | 6/6 | – | 6/6 |
+| LAGUNA | **PO** | **5/6** | 0/6 | 1/6 | 3/6 |
+| DOPIS | PŘED | 0/6 | 6/6 | – | 6/6 |
+| DOPIS | **PO** | **1/6** | 5/6 | – | **6/6** |
+
+**Laguna: Fisher jednostranně p ≈ 0,008. Dopis: p = 0,5 — tedy nic.**
+
+⭐ **Nález: pákou je OBRAZ, ne slovo aspektu.** Aspekt do promptu prokazatelně teče (400 tahů
+Perthu produkčním builderem: `hidden things` už tam není ani jednou), ale sám o sobě čtení
+neotočil — u dopisu 1 ze 6. Otočila ho až věta obrazu. Praktický důsledek pro celý pool:
+**čte-li se runa staticky, mění se OBRAZ; přepsat aspektové slovo je levné a skoro neúčinné.**
+
+⚠️ **A to důležité: čtení, na které si owner stěžoval, JE z dopisového obrazu** (*„Perth, the
+thing whose meaning waits sealed until you break the fold"*), a to rameno se nezlepšilo. Po
+opravě zní pořád takhle:
+> *„Perth is that sealed edge, the keeping of something whole until a hand opens it."*
+> *„Perth is the keeping of what has not yet been read. The paper is thin, and nothing in it has moved."*
+⇒ **Dopisový obraz je pořád otevřený** — a je to obsah, tedy owner/Cowork → `RUNAR_BACKLOG.md`.
+
+**Hranice nálezu (co se NETVRDÍ):** n = 6 na buňku, **jen EN**, jeden slepý soudce, jediné
+kritérium (věc × děj + prázdné jméno). Generoval **Opus 5** (subagenti), produkce jede
+`opus-4-8`/`4-7` — směr by měl platit, absolutní čísla nemusí. Netvrdí se nic o kráse čtení
+ani o tom, že by aspekt neměl s klíčem runy souhlasit (to hlídá smoke ㉤ z jiného důvodu —
+aby model nedostal dvě verze téže runy).
+
+---
+
 ## 2026-09-11 — OPRAVA vlastního záznamu: „Eihwaz 0/6" je zavádějící číslo
 Rozpad dávky 1 **po kandidátech, ne po runě** (`~/runar-eval/davka1-soud.jsonl`, 3 běhy à 3 hlasy).
 Brána je 3/3, takže headline „0/6" schoval rozdíl mezi **těsným minutím** a **skutečnou krádeží**:
