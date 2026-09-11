@@ -5107,3 +5107,44 @@ všechny četly tatáž pravidla a došly k téže úvaze. Souběžná úvaha vy
 Souvisí: [[measure-dont-eyeball]] · [[falsify-by-reversing-the-lever]] · `CLAUDE.md` §24.
 **Affected doc(s):** `RUNAR_DESIGN.md` (třetí otázka v sekci „tichý fakt a nabídka") +
 `scripts/verify_ask_hints.js` (komentář u tvrzení o seekingu) — v témž commitu.
+
+---
+
+## 2026-09-11 (3) — SEEKING do Ask: tichý fakt i tip. A princip, který to zastřešuje.
+
+**Ruší** omezení ze záznamů 2026-09-11 (1) a (2): seeking teď dostává **obojí** — Rúnar ho zná
+a nápověda na něj nabízí otázku. Důvodem není jen to, že měření vyvrátilo riziko; owner k tomu
+dal **pravidlo, které platí šířeji**:
+
+> KUKY 2026-09-11: *„v ASK se může člověk zeptat úplně na cokoliv. To znamená, že Rúnar s tím musí
+> umět pracovat, a tím, že zakážeme funkci kterou sami nabízíme, to nezajistíme!"* · *„všechno co
+> člověk může vyplnit jako dotaz by měl Rúnar vědět, že uživatel vyplnil, a být schopný na to
+> odpovědět."*
+
+⭐ **To je obrat v uvažování, ne jen rozhodnutí o jednom poli.** Moje logika byla „riziková věc se
+Rúnarovi nedá do promptu". Jenže **vstupní pole zakázat nejde** — člověk tu pilulku naklikl a v Ask
+se na ni stejně zeptá. Odepřít Rúnarovi tu informaci nebezpečí neodstraní; jen ho nechá odpovídat
+naslepo. **Robustnost se dělá tím, že to umí unést, ne tím, že to nedostane.**
+
+**Co se nasadilo:** `seeking` v `_askCast()` a `_askCastContext` (tichý fakt) · čtyři tipy, po
+jednom na každou konkrétní hodnotu `SEEKS`. Tip **přebírá řádek „co nevidím"** — ten jediný z celého
+seznamu nenese z daného čtení nic, a když člověk řekl, s čím přišel, je jeho vlastní rámec
+konkrétnější. Strop 6 drží. **„General Guidance" tip vědomě nedostává:** neříká nic konkrétního,
+takže by dobrou obecnou otázku vytlačila horší.
+⚠️ **Žádný další hlídač proti zrcadlení se nepřidal.** `RP_ASK.rules` ho má a měřením je doloženo,
+že drží; pojmenovat věc a hned ji zakázat je vzor, který ji modelu jen zvýrazní
+([[prompt-nepojmenuj-co-hned-zakazes]]).
+
+**Princip je zapsaný jako KONTROLA, ne jako paměť** (㉡ `verify_ask_hints.js`, sekce 9): test vezme
+**všechny klíče `readerUser`** po vyplněném formuláři a žádá, aby každý buď dorazil do Ask promptu,
+nebo stál ve výjimkách **s důvodem**. Přibude-li do formuláře pole, kontrola zčervená dřív, než si
+toho někdo nevšimne — a jmenuje ho. Mutační test: odpojení `seeking` → *„CHYBÍ: seeking"*.
+Kontrola navíc odmítla **moje vlastní** odbyté výjimky („Totéž co `d`") a vynutila skutečný důvod.
+Výjimky dnes: `name` (nese text čtení + `_addressContext`) · `d`/`m`/`y` (nejsou vyplněná pole) ·
+`lifeRune` (vlastním parametrem) · `lifeLensOn` (řídí, co Rúnar řekne sám, ne nač se smí ptát).
+
+**Islandská past, kterou to odhalilo:** blok používal `hvorugt` / `öðru hvoru` — to je **duál**,
+platný jen pro PRÁVĚ DVĚ věci. Se seekingem můžou být tři a pak je správně `ekkert þeirra` /
+`einhverju þeirra`. Čeština ani angličtina ten rozdíl nemají, takže by to prošlo bez povšimnutí.
+`RUNAR_PROMPT_VERSION` v4.19 → **v4.20-askseeking** · registr 192 pravidel · smoke 38/38.
+**Affected doc(s):** `RUNAR_DESIGN.md` (třetí otázka v „tichý fakt a nabídka") — v témž commitu.

@@ -77,7 +77,9 @@ function pravidla() {
     // jako mu 2026-09-11 unikal cely blok, dokud se volalo se sesti argumenty.
     const _ot = L === 'is' ? 'A eg ad skipta um starf?' : 'Should I leave the job I have?';
     [{ area: _obl, intention: _zam }, { area: _obl }, { question: _ot },
-     { area: _obl, intention: _zam, question: _ot }].forEach((_c, _i) =>
+     { area: _obl, intention: _zam, question: _ot },
+     { seeking: zJaz('SEEKS', L)[2] },
+     { area: _obl, intention: _zam, seeking: zJaz('SEEKS', L)[2] }].forEach((_c, _i) =>
       S.buildAskPrompt('A reading.', 'What do you mean?', RUNES[3].n, L, null, RUNES[18], _c)
         .split(String.fromCharCode(10))
         .forEach(r => pridej(L, 'ask', r)));

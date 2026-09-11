@@ -1498,14 +1498,23 @@ function _askTrimQ(q) {
   return (i > 40 ? rez.slice(0, i + 1) : rez).trim() + '…';
 }
 function _askCastContext(cast, lang) {
-  var c = cast || {}, area = c.area, intention = c.intention, otazka = _askTrimQ(c.question);
-  if (!area && !intention && !otazka) return '';
+  var c = cast || {}, area = c.area, intention = c.intention, hledani = c.seeking,
+      otazka = _askTrimQ(c.question);
+  if (!area && !intention && !hledani && !otazka) return '';
   var je = lang === 'is';
   var casti = [];
   if (area) casti.push(je ? 'sviðið (' + area + ')' : 'the part of life it is for (' + area + ')');
   if (intention) casti.push(je ? 'stundina sem lesturinn snýr að (' + intention + ')'
                                : 'the moment it is set in (' + intention + ')');
-  var dve = casti.length > 1;
+  if (hledani) casti.push(je ? 'hvað hann var að leita að (' + hledani + ')'
+                             : 'what they came looking for (' + hledani + ')');
+  // ⚠️ Islandske „hvorugt" a „öðru hvoru" jsou DUAL — plati jen pro PRAVE DVE veci.
+  // Se seekingem muzou byt tri, a pak se musi prejit na mnozne cislo („ekkert þeirra").
+  // Cestina ani anglictina tenhle rozdil nemaji, takze by to proslo bez povsimnuti.
+  var pocet = casti.length;
+  // U tri polozek uz "A and B and C" drhne; spravne je "A, B and C" (v IS "A, B og C").
+  var vycet = pocet < 3 ? casti.join(je ? ' og ' : ' and ')
+    : casti.slice(0, -1).join(', ') + (je ? ' og ' : ' and ') + casti[pocet - 1];
   // Puvodni otazka stoji jako VLASTNI veta, ne v zavorce vedle oblasti: je to jedina vec
   // v bloku, kterou clovek napsal svymi slovy — a cteni uz je odpovedi prave na ni.
   var qv = !otazka ? '' : (je
@@ -1519,18 +1528,26 @@ function _askCastContext(cast, lang) {
     return (je ? 'FYRIR HVAÐ LESTURINN VAR DREGINN —' : 'WHAT THIS READING WAS CAST FOR —') + qv;
   if (je)
     return 'FYRIR HVAÐ LESTURINN VAR DREGINN — leitandinn nefndi sjálfur '
-      + casti.join(' og ') + '. Lesturinn hefur þegar lent þar; '
-      + (dve ? 'hvorugt er nýtt umfjöllunarefni — taktu þau ekki upp að fyrra bragði og '
+      + vycet + '. Lesturinn hefur þegar lent þar; '
+      + (pocet === 1
+           ? 'þetta er ekki nýtt umfjöllunarefni — taktu það ekki upp að fyrra bragði og '
+             + 'endurtaktu það ekki. Ef spurningin snýr að því, '
+         : pocet === 2
+           ? 'hvorugt er nýtt umfjöllunarefni — taktu þau ekki upp að fyrra bragði og '
              + 'endurtaktu þau ekki. Ef spurningin snýr að öðru hvoru, '
-             : 'þetta er ekki nýtt umfjöllunarefni — taktu það ekki upp að fyrra bragði og '
-             + 'endurtaktu það ekki. Ef spurningin snýr að því, ')
+           : 'ekkert þeirra er nýtt umfjöllunarefni — taktu þau ekki upp að fyrra bragði og '
+             + 'endurtaktu þau ekki. Ef spurningin snýr að einhverju þeirra, ')
       + 'svaraðu á þeim forsendum, berum orðum, út frá rúnunum sem dregnar voru.' + qv;
-  return 'WHAT THIS READING WAS CAST FOR — the seeker named ' + casti.join(' and ')
+  return 'WHAT THIS READING WAS CAST FOR — the seeker named ' + vycet
     + '. The reading already landed there, so '
-    + (dve ? 'neither is a new subject: do not raise them on your own and do not restate them. '
+    + (pocet === 1
+         ? 'this is not a new subject: do not raise it on your own and do not restate it. '
+           + 'If their question reaches for it, '
+       : pocet === 2
+         ? 'neither is a new subject: do not raise them on your own and do not restate them. '
            + 'If their question reaches for one of them, '
-           : 'this is not a new subject: do not raise it on your own and do not restate it. '
-           + 'If their question reaches for it, ')
+         : 'none of these is a new subject: do not raise them on your own and do not restate '
+           + 'them. If their question reaches for one of them, ')
     + 'answer plainly in its terms, from the runes that were drawn.' + qv;
 }
 

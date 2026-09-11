@@ -184,17 +184,32 @@ for (const L of ['en', 'is']) {
   rekni(prazdny.indexOf('CAST FOR') === -1 && prazdny.indexOf('FYRIR HVAÐ') === -1,
         L + '  nic nevybráno → blok o zadání v promptu vůbec není');
 
-  // SEEKING: rozhodnutí „nedostává tip" musí být VYNUTITELNÉ, ne jen komentář.
-  // ⚠️ Důvod se 2026-09-11 ZMĚNIL a ten původní se nesmí recyklovat. Psal jsem, že znalost
-  // seekingu tlačí Rúnara ke zrcadlení; MĚŘENÍ TO VYVRÁTILO — zrcadlení 0/27 i tam, kde věděl,
-  // že člověk přišel pro potvrzení, a dostal otázku, která si o potvrzení říká
-  // (RUNAR_EVAL_LOG.md 2026-09-11 (2)). Tip tedy chybí kvůli ROZPOČTU seznamu (strop 6, všechny
-  // sloty obsazené, a není měřeno, že by seeking byl lepší než to, co by vytlačil), ne kvůli
-  // riziku. Tvrzení níž proto popisuje STAV, ne zákaz → RUNAR_DECISIONS.md 2026-09-11 (2).
-  const bezH = hinty(L, [R('Jera')], R('Gebo'), '', OBL, ZAM);
-  const sH = hinty(L, [R('Jera')], R('Gebo'), '', OBL, ZAM, glob('SEEKS')[L][2]);
-  rekni(JSON.stringify(bezH) === JSON.stringify(sH),
-        L + '  zvolený seeking NEZMĚNÍ ani jeden tip (rozhodnutí 2026-09-11)');
+  // SEEKING: od 2026-09-11 tip MÁ — a přebírá řádek „co nevidím".
+  // KUKY po měření: „v ASK se může člověk zeptat úplně na cokoliv. To znamená, že Rúnar
+  // s tím musí umět pracovat, a tím, že zakážeme funkci kterou sami nabízíme, to
+  // nezajistíme!" Můj původní důvod pro vynechání (zrcadlení) v měření neobstál — 0/27
+  // ve všech čtyřech podmínkách (RUNAR_EVAL_LOG.md 2026-09-11 (2)).
+  const HL = glob('SEEKS')[L];
+  const ocekHl = ['', T.ask_h_seek_clarity, T.ask_h_seek_confirm,
+                  T.ask_h_seek_challenge, T.ask_h_seek_reflect];
+  const bezH = hinty(L, [R('Jera')], R('Gebo'), '', '', '');
+  for (let i = 1; i < HL.length; i++) {
+    const sH = hinty(L, [R('Jera')], R('Gebo'), '', '', '', HL[i]);
+    rekni(sH.includes(ocekHl[i]), L + '  hledání „' + HL[i] + '" → „' + ocekHl[i] + '"');
+    rekni(!sH.includes(T.ask_h_unseen), L + '  hledání „' + HL[i] + '" → „co nevidím" zmizelo');
+    rekni(sH.length === bezH.length, L + '  hledání „' + HL[i] + '" NEPŘIDALO řádek');
+  }
+  // „Almenn leiðsögn / General Guidance" tip VĚDOMĚ nedostává: neříká nic konkrétního,
+  // takže by dobrou otázku vytlačila horší. Stejný vzor jako u neznámé hodnoty.
+  const obecne = hinty(L, [R('Jera')], R('Gebo'), '', '', '', HL[0]);
+  rekni(obecne.includes(T.ask_h_unseen), L + '  hledání „' + HL[0] + '" → „co nevidím" zůstává');
+  const hlX = hinty(L, [R('Jera')], R('Gebo'), '', '', '', 'naprosto neznama hodnota');
+  rekni(hlX.includes(T.ask_h_unseen) && hlX.length === bezH.length,
+        L + '  neznámé hledání → spadne zpátky na „co nevidím"');
+  // Uložené ve druhém jazyce se musí trefit taky — index, ne shoda řetězce.
+  const hlD = hinty(L, [R('Jera')], R('Gebo'), '', '', '', glob('SEEKS')[L === 'en' ? 'is' : 'en'][2]);
+  rekni(hlD.includes(T.ask_h_seek_confirm),
+        L + '  hledání uložené ve druhém jazyce se přesto trefí do správné věty');
 
   // Neznámý štítek oblasti (v DB řádku stává `area: 'spread'`) nesmí vyrobit tip.
   const sp = hinty(L, [R('Jera')], R('Gebo'), '', 'spread', '');
@@ -212,7 +227,59 @@ for (const L of ['en', 'is']) {
   });
 }
 
-// ── 9) placeholder v poli čerpá z TÉHOŽ seznamu (§18 — jeden zdroj, dvě podoby) ──
+// ── 9) PRINCIP: co člověk vyplní, to Rúnar v Ask MUSÍ znát ──────────────────
+// KUKY 2026-09-11: „všechno co člověk může vyplnit jako dotaz by měl Rúnar vědět, že
+// uživatel vyplnil, a být schopný na to odpovědět. To myslím dává naprostou logiku."
+// Předtím: „v ASK se může člověk zeptat úplně na cokoliv. To znamená, že Rúnar s tím musí
+// umět pracovat, a tím, že zakážeme funkci kterou sami nabízíme, to nezajistíme!"
+//
+// Tohle je ten princip jako KONTROLA, ne jako paměť. Dvakrát se stalo, že pole zůstalo
+// viset (životní runa · původní otázka) a pokaždé to našel až člověk. Test proto bere
+// VŠECHNY klíče `readerUser` po vyplněném formuláři a žádá, aby každý z nich buď dorazil
+// do Ask promptu, nebo stál ve výjimkách S DŮVODEM (§28). Přibude-li do formuláře nové
+// pole, tahle kontrola zčervená dřív, než si toho někdo nevšimne.
+const VYJIMKY = {
+  name: 'Jméno nese text čtení a `_addressContext`; není to téma otázky, ale oslovení.',
+  d: 'Není to vyplněné pole — v `readerUser` je vždy null; datum narození žije jinde a ústí do lifeRune.',
+  m: 'Měsíc narození — stejně jako `d` není vyplněné pole formuláře a do Ask nepatří.',
+  y: 'Rok narození — stejně jako `d` není vyplněné pole formuláře a do Ask nepatří.',
+  lifeRune: 'Dochází do Ask VLASTNÍM parametrem `life`, ne přes `_askCast` — ověřeno v sekci 8.',
+  lifeLensOn: 'Vědomě mimo Ask: přepínač řídí, co Rúnar řekne SÁM OD SEBE ve čtení, nikdy to, '
+    + 'nač se smí člověk zeptat (rozhodnutí 2026-09-10).',
+};
+
+for (const L of ['en', 'is']) {
+  const T = glob('UI_TEXT')[L];
+  const A = glob('AREAS')[L], I = glob('INTENTIONS')[L], SK = glob('SEEKS')[L];
+  const OT = L === 'is' ? 'Á ég að skipta um starf?' : 'Should I leave the job I have?';
+  // Seed přes produkční cestu: tytéž klíče, jaké nastavuje `startReading`.
+  hinty(L, [R('Jera')], R('Gebo'), OT, A[2], I[1], SK[2]);
+  const cast = glob('_askCast')();
+  const prompt = glob('buildAskPrompt')('Cteni.', 'A co ted?', 'Jera', L, null, R('Gebo'), cast);
+
+  // (a) Každý klíč formuláře je buď v `_askCast`, nebo má zapsanou výjimku.
+  const klice = Object.keys(glob('readerUser'));
+  const nezapojene = klice.filter(k => !(k in cast) && !(k in VYJIMKY));
+  rekni(!nezapojene.length,
+        L + '  každé pole formuláře je v Ask, nebo má zapsanou výjimku'
+        + (nezapojene.length ? ' — CHYBÍ: ' + nezapojene.join(', ') : ''));
+
+  // (b) Co `_askCast` sbírá a je vyplněné, musí být v promptu K NALEZENÍ.
+  //     Sbírat hodnotu a zahodit ji cestou je přesně ta tichá chyba, co tu byla dvakrát.
+  Object.keys(cast).forEach((k) => {
+    if (!cast[k]) return;
+    rekni(prompt.indexOf(String(cast[k])) !== -1,
+          L + '  `' + k + '` doputovalo do Ask promptu');
+  });
+
+  // (c) Výjimka bez důvodu je zakázaná (§28) — holý klíč by umlčel červenou.
+  Object.keys(VYJIMKY).forEach((k) => {
+    rekni(typeof VYJIMKY[k] === 'string' && VYJIMKY[k].length > 30,
+          L + '  výjimka `' + k + '` nese důvod');
+  });
+}
+
+// ── 10) placeholder v poli čerpá z TÉHOŽ seznamu (§18 — jeden zdroj, dvě podoby) ──
 // Kdyby se rozešly, v poli by problikávaly jiné věty, než jaké nabízí rozbalená nápověda.
 sandbox.lang = 'en';
 sandbox.readerUser = { name: 'Anna', lifeRune: R('Gebo'), question: '' };

@@ -1107,12 +1107,15 @@ runa mluvila sama od sebe, brala si **závěrečnou větu v 10 ze 12 čtení** (
 2. **Dostane ji prompt doopravdy?** Nabídka bez podkladu = Rúnar si odpověď domyslí a nikdo to
    nepozná. Tohle selhalo dvakrát; od 2026-09-11 to hlídá `verify_ask_hints.js` párováním
    nabídky s promptem.
-3. **Netlačí ho to tam, kam nesmí?** ⚠️ **Tuhle otázku si klaď, ale odpověz na ni MĚŘENÍM.**
+3. **Netlačí ho to tam, kam nesmí?** ⚠️ **Tuhle otázku si klaď, ale odpověz na ni MĚŘENÍM —
+   a pamatuj, že u VSTUPNÍHO POLE stejně nemá druhou odpověď.** Co člověk vyplnil, na to se
+   v Ask zeptá tak jako tak; odepřít to Rúnarovi riziko neodstraní, jen ho nechá odpovídat
+   naslepo (KUKY 2026-09-11 → `RUNAR_DECISIONS.md` 2026-09-11 (3)).
    U pole `seeking` jsem odpověděl úvahou („je to očekávání o odpovědi, tedy pobídka ke
    zrcadlení") — a **měření to vyvrátilo**: zrcadlení 0/27 i tam, kde Rúnar věděl, že člověk
    přišel pro potvrzení (`RUNAR_EVAL_LOG.md` 2026-09-11 (2)). Zákaz zrcadlení v `RP_ASK.rules`
-   drží i tehdy, když se očekávání pojmenuje nahlas. Seeking tedy tip zatím nemá **kvůli
-   rozpočtu seznamu, ne kvůli riziku** → `RUNAR_DECISIONS.md` 2026-09-11 (2).
+   drží i tehdy, když se očekávání pojmenuje nahlas. **Seeking proto od 2026-09-11 má obojí —
+   Rúnar ho zná i tip na něj** → `RUNAR_DECISIONS.md` 2026-09-11 (3).
 
 ⚠️ **Přepínač `life_rune_in_readings` sem nesahá.** Řídí, co Rúnar řekne **sám od sebe** — nikdy
 to, nač se smí člověk zeptat. Vypnutá čočka znamená „nemluv o ní ve čtení", ne „zapomeň ji".

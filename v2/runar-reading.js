@@ -551,6 +551,13 @@ function _phRotate(id, seznam, idx0) {
 // Zamer se do tipu nedosazuje jako POPISEK — kazda ze tri hodnot ma vlastni celou vetu.
 // Duvod je islandsky: nazvy zameru („Akvordun framundan") by se musely sklonovat podle
 // vazby ve vete, a to sablona neumi. Cela veta ten problem odstranuje, ne obchazi.
+// Index hledani v SEEKS. 0 = „Almenn leiðsögn / General Guidance" — vedome BEZ tipu.
+function _seekIdx(v) {
+  if (!v || typeof SEEKS === 'undefined') return -1;
+  var i = (SEEKS.en || []).indexOf(v);
+  if (i === -1) i = (SEEKS.is || []).indexOf(v);
+  return i;
+}
 function _intentIdx(v) {
   if (!v || typeof INTENTIONS === 'undefined') return -1;
   var i = (INTENTIONS.en || []).indexOf(v);
@@ -565,7 +572,7 @@ function _intentIdx(v) {
 // ale puvodni otazka se do promptu nikdy neposilala a nic to nehlidalo.
 function _askCast() {
   var u = readerUser || {};
-  return { area: u.area, intention: u.intention, question: u.question };
+  return { area: u.area, intention: u.intention, seeking: u.seeking, question: u.question };
 }
 function _askHints() {
   var out = [], u = readerUser || {}, dr = (_lastDrawn || []).filter(Boolean);
@@ -591,7 +598,10 @@ function _askHints() {
   var _zi = _intentIdx(u.intention);
   out.push(_zi >= 0 ? t(['ask_h_when_now', 'ask_h_when_ahead', 'ask_h_when_past'][_zi])
                     : t('ask_h_now'));
-  out.push(t('ask_h_unseen'));
+  var _hi = _seekIdx(u.seeking);
+  out.push(_hi > 0 ? t(['', 'ask_h_seek_clarity', 'ask_h_seek_confirm',
+                        'ask_h_seek_challenge', 'ask_h_seek_reflect'][_hi])
+                   : t('ask_h_unseen'));
   return out.filter(Boolean);
 }
 function toggleAskHints() {
