@@ -2642,3 +2642,40 @@ potřebuje obrazy, kde je ROZDÍL proti dědictví** (trvá to samo o sobě, ne 
 Mannaz-humanity potřebuje lidství, které NENÍ výměna mezi dvěma.
 ⚠️ Coworkovy vlastní ⚠ predikce: **Mannaz-memory** propadl (Othila 3/3) — trefa · **Jera-reward**
 napůl (jeden 3/3, druhý 2/3 → Isa) — částečná trefa · **Eihwaz** nepředpověděl nikdo.
+
+## 2026-09-11 — OPRAVA vlastního záznamu: „Eihwaz 0/6" je zavádějící číslo
+Rozpad dávky 1 **po kandidátech, ne po runě** (`~/runar-eval/davka1-soud.jsonl`, 3 běhy à 3 hlasy).
+Brána je 3/3, takže headline „0/6" schoval rozdíl mezi **těsným minutím** a **skutečnou krádeží**:
+| kandidát (Eihwaz) | stránka | běhy správně | kam utekl |
+|---|---|---|---|
+| the-post-that-wont-rot | yew tree | **2/3** | Othila (1 běh) |
+| the-hollow-trees-shoot | yew tree | **2/3** | Berkana (1 běh) |
+| past-the-last-light | endurance | **2/3** | Raidho (1 běh) |
+| the-oars-again | endurance | 0/3 | **Nauthiz 3/3** |
+| the-stalk-and-the-root | death and rebirth | 0/3 | Othila, Ingwaz |
+| the-boat-into-beam | death and rebirth | 0/3 | **Othila 3/3** |
+
+⚠️ **Tím se opravuje záznam 2026-09-10 (2)**, kde stojí *„Proto Eihwaz 0/6: jeho jádro je Othilino
+pole."* To platí **jen pro stránku `death and rebirth`** (9 z 18 hlasů Othila + 3 Ingwaz). Ostatní
+dvě stránky Othila nekrade:
+- **`yew tree` je z 4/6 běhů čitelná správně** — dva kandidáti ztratili po JEDNOM běhu. Tahle
+  stránka nepotřebuje jiný nápad, potřebuje **stabilnější text téhož nápadu**.
+- **`endurance` má vlastního zloděje, a není to Othila: je to Nauthiz** (3/3 u `the-oars-again`).
+  Mechanismus je pojmenovatelný — *„bereš vesla znovu, když je ruce přestaly cítit"* je **nucené
+  pokračování**, a nucení je Nauthiz. Eihwaz-endurance se musí psát jako **vydržení, které nikdo
+  nevynutil** (trvá, protože takové je), ne jako překonávání tlaku.
+- **Mannaz-humanity krade Gebo systematicky:** `the-place-in-the-queue` **3/3 Gebo**, tj. ustoupení
+  místa je čitelné jako DAR, ne jako lidství. `the-strangers-tears` se rozpadl do tří různých run
+  (Gebo, Laguz, Ehwaz) = obraz nemá vlastní pozemek vůbec. → Mannaz-humanity musí být **rozpoznání
+  sebe v druhém BEZ transakce** — nic se nepředává, nikdo nic nedostává.
+
+⭐ **Metodický nález (platí pro každou další dávku):** brána 3/3 je správná jako BRÁNA, ale jako
+REPORT lže. „0/6" a „0/6, z toho 3× těsně 2/3" vedou k úplně jiné práci — první k zahození nápadu,
+druhý k doladění textu. **Každý další soud proto hlásí i sloupec „2/3"**, jinak příští dávka
+přepisuje to, co bylo skoro hotové. (Souvisí: §27 — nástroj se obhájí dřív než výsledek; tady
+nelhala metrika, ale její agregace.)
+
+### Stav pokrytí významu k dnešku (měřeno protlačením `RUNE_IMAGES` × `RUNES[].k`)
+**66 / 119 stránek = 55 %.** Jediná runa s jedinou dosažitelnou stránkou je už **jen Eihwaz** (1/4).
+Zbylých 53 děr je rozprostřených: Sowilo 2/6 · Wunjo 2/5 · Isa 2/5 · Perth 2/5 · Berkana 2/5 ·
+Ehwaz 2/5 · Laguz 2/5 · Ingwaz 2/5 · Othila 2/5 · Dagaz 2/5 · Blank 2/5 · Algiz 2/4 · Mannaz 4/5.
