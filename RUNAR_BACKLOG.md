@@ -1123,3 +1123,43 @@ zařízení. Do té doby to není vada, jen podezření.
 ### 5. `INTENTIONS.is[0]` = „Í þessari stund" (idiomaticky „Á þessari stundu")
 Popisek **je v DB** a journal podle něj filtruje řetězcovou rovností → oprava potřebuje migraci,
 ne přepsání konstanty. Backlog, ne rychlá oprava.
+
+---
+
+## HANDOFF57, body 3 a 4 — ověřeno proti kódu 2026-09-11, čeká rozhodnutí
+
+Body 1 a 2 jsou **hotové** (životní runa · area · intention · původní otázka · seeking).
+Tyhle dva ne — a každý je jiná třída věci.
+
+### Bod 3 — `RUNES[].k` do Ask: NENÍ to totéž co body 1–2, a proto nespadl pod ownerův princip
+Ownerovo pravidlo zní *„všechno, co člověk může **vyplnit** jako dotaz"*. `RUNES[].k` **nikdo
+nevyplňuje** — je to náš kánon. Spadá proto do jiné škatulky a princip ho automaticky neschvaluje.
+
+**Ale mezera je reálná a je to táž třída jako `ask_h_asked`:** nápověda nabízí *„What does {rune}
+mean in this reading?"*, a Rúnar na to odpovídá **z vlastní znalosti Elder Futhark, ne z naší
+definice**. Text čtení význam nese jen nepřímo (obrazem). Přitom `co-dela-cteni-silnym` (ownerem
+POTVRZENO) říká, že definiční věta runy je to, co dělá čtení silným. Takže tip existuje a jeho
+podklad je slabší, než vypadá.
+
+⚠️ **Nepřidávat naslepo — je proti tomu MĚŘENÍ.** Test „KLÍČE" (`RUNAR_EVAL_LOG.md` 2026-09-09):
+plný seznam klíčových slov v promptu **ČTENÍ** srazil stopu významu ze 17 % na **0 %**. Ask je jiná
+úloha (vysvětluje, negeneruje), takže přenos 1:1 by byl odhad, ne fakt — ale ignorovat to nejde.
+
+**Návrh testu, než se to postaví:** tři podmínky — (A) dnešek · (B) `RUNES[].k` celé ·
+(C) jen `formula_is` / jedna definiční věta. Otázka: *„What does {rune} mean in this reading?"*
+Měřit: shoduje se odpověď s naším kánonem, a nerozpadl se přitom hlas do výčtu klíčových slov?
+Hypotéza: **C vyhraje nad B** — celý seznam sveze model k výčtu, jedna věta ne.
+
+### Bod 4 — pozice ve spreadu: mezera POTVRZENA, a je v přímém rozporu s principem
+`askRunar()` předává runy jako **plochý seznam jmen** (`_lastSegs.map(s => s.rune).join(', ')`).
+`_lastSegs` je `[{rune, text}]` — **pozici neobsahuje**. Rúnar tedy u Kříže neví, která runa byla
+v Středu a která Za zády, i když **ty pozice člověk na obrazovce VIDÍ a jsou pojmenované**
+(`RP_KRIZ.positions` a spol.). Zeptá-li se *„co znamená ta runa za mnou?"*, Rúnar to neví.
+
+→ **Tohle spadá pod ownerův princip přímo** („v Ask se může člověk zeptat na cokoli"): není to
+vyplněné pole, ale je to něco, co uživatel vidí a na co se přirozeně zeptá.
+
+**Sketch:** `_askCast()` přibere `spread` (typ) a `pozice` (pole `{pozice, runa}` z `_lastDrawn`
++ `positions` toho packu) · nový blok v `_askCastContext` je vyjmenuje · §13: platí pro **všech pět**
+typů čtení, takže test musí projít single (žádné pozice) i všechny čtyři spready.
+⚠️ Názvy pozic **neopisovat** — číst je z `RP_*` packů, jinak vznikne druhá kopie (§20).
