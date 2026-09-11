@@ -185,7 +185,12 @@ for (const L of ['en', 'is']) {
         L + '  nic nevybráno → blok o zadání v promptu vůbec není');
 
   // SEEKING: rozhodnutí „nedostává tip" musí být VYNUTITELNÉ, ne jen komentář.
-  // Důvod → RUNAR_DECISIONS.md 2026-09-11 (zrcadlení zakazuje RP_ASK.rules).
+  // ⚠️ Důvod se 2026-09-11 ZMĚNIL a ten původní se nesmí recyklovat. Psal jsem, že znalost
+  // seekingu tlačí Rúnara ke zrcadlení; MĚŘENÍ TO VYVRÁTILO — zrcadlení 0/27 i tam, kde věděl,
+  // že člověk přišel pro potvrzení, a dostal otázku, která si o potvrzení říká
+  // (RUNAR_EVAL_LOG.md 2026-09-11 (2)). Tip tedy chybí kvůli ROZPOČTU seznamu (strop 6, všechny
+  // sloty obsazené, a není měřeno, že by seeking byl lepší než to, co by vytlačil), ne kvůli
+  // riziku. Tvrzení níž proto popisuje STAV, ne zákaz → RUNAR_DECISIONS.md 2026-09-11 (2).
   const bezH = hinty(L, [R('Jera')], R('Gebo'), '', OBL, ZAM);
   const sH = hinty(L, [R('Jera')], R('Gebo'), '', OBL, ZAM, glob('SEEKS')[L][2]);
   rekni(JSON.stringify(bezH) === JSON.stringify(sH),

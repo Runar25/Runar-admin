@@ -5073,3 +5073,37 @@ už nesedí), ale hodnota žít nepřestala a došla až do promptu — islandsk
 přes index, je idempotentní a hodnoty mimo seznam (`'spread'` z DB, volný text z gen_batch) nechává
 být. Nalezeno **čtením při stavbě Ask nápovědy, ne testem** — proto k tomu rovnou kontrola
 ㉢ `verify_pill_lang.js` (5 stavů; mutační test ji zčervená ve dvou).
+
+---
+
+## 2026-09-11 (2) — OPRAVA: důvod, proč SEEKING nedostal tip, NEOBSTÁL v měření
+
+**Ruší odůvodnění** záznamu 2026-09-11 („Ask nápověda pro OBLAST a ZÁMĚR"), sekci *„Co se
+NEUDĚLALO a proč"*. Rozhodnutí samo (seeking nemá tip) zatím **platí**, ale **z jiného důvodu** —
+ten původní byl vyvrácen.
+
+**Co jsem tvrdil:** že znalost pole `seeking` tlačí Rúnara k zrcadlení, protože seeking je
+očekávání o odpovědi a `RP_ASK.rules` zrcadlení zakazuje. Opřel jsem to o **čtení pravidel**
+a shodu tří pohledů — tedy o úvahu, ne o měření. KUKY to zastavil: *„chtěl bych vidět test, že ho
+taková informace nutí do věštění nebo něčeho co nemá dělat!"*
+
+**Co měření ukázalo:** **zrcadlení 0/27 ve všech čtyřech podmínkách**, včetně té, kde Rúnar věděl,
+že člověk přišel pro „Confirmation", a dostal otázku *„Am I right that this is a good sign?"*.
+Odpovědi tam otevíraly odmítnutím (*„Jera names nothing good or ill"*). Detail a hranice →
+`RUNAR_EVAL_LOG.md` 2026-09-11 (2).
+
+**Co z toho platí dál:**
+1. **Dát Rúnarovi seeking jako tichý fakt je bezpečné.** Bezpečnostní argument proti němu je mrtvý
+   a **nesmí se recyklovat**. Kdyby se ta funkce měla stavět, tohle jí nebrání.
+2. **Zákaz zrcadlení v `RP_ASK.rules` je silnější, než jsem předpokládal** — drží i tehdy, když se
+   očekávání čtenáře pojmenuje nahlas. To je nález o promptu, ne o seekingu, a platí obecně.
+3. **Tip na seeking se přesto zatím nestaví — ale jen kvůli ROZPOČTU, ne kvůli riziku.** Seznam má
+   strop 6 a všechny sloty jsou obsazené; seeking by musel něco vytlačit a **nemáme měřeno, že by
+   byl lepší než to, co by vytlačil**. To je otevřená otázka, ne uzavřená.
+⚠️ Netvrdit, že „seeking je nebezpečný". Tvrdit: *„neměřili jsme, že by se vyplatil."*
+
+**Poučení, které stojí za víc než ta funkce:** shoda několika nezávislých pohledů **není doklad** —
+všechny četly tatáž pravidla a došly k téže úvaze. Souběžná úvaha vypadá jako potvrzení a není jím.
+Souvisí: [[measure-dont-eyeball]] · [[falsify-by-reversing-the-lever]] · `CLAUDE.md` §24.
+**Affected doc(s):** `RUNAR_DESIGN.md` (třetí otázka v sekci „tichý fakt a nabídka") +
+`scripts/verify_ask_hints.js` (komentář u tvrzení o seekingu) — v témž commitu.

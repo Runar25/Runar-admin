@@ -2679,3 +2679,43 @@ nelhala metrika, ale její agregace.)
 **66 / 119 stránek = 55 %.** Jediná runa s jedinou dosažitelnou stránkou je už **jen Eihwaz** (1/4).
 Zbylých 53 děr je rozprostřených: Sowilo 2/6 · Wunjo 2/5 · Isa 2/5 · Perth 2/5 · Berkana 2/5 ·
 Ehwaz 2/5 · Laguz 2/5 · Ingwaz 2/5 · Othila 2/5 · Dagaz 2/5 · Blank 2/5 · Algiz 2/4 · Mannaz 4/5.
+
+## 2026-09-11 (2) — HYPOTÉZA PADLA: znalost pole SEEKING Rúnara k zrcadlení NETLAČÍ
+KUKY: *„chtěl bych vidět test, že ho taková informace nutí do věštění nebo něčeho co nemá dělat!"*
+Oprávněně — tvrdil jsem to **z pravidel promptu, ne z měření** (§24), a odmítl jsem na tom základě
+celou jednu funkci.
+
+**Návrh:** skutečné produkční čtení z korpusu (Jera) · čtyři podmínky lišící se **přesně o jeden
+odstavec**: `A` bez seeking · `B` „Confirmation" · `C` „Insight into Challenge" · `D` „General
+Guidance" · tři otázky (Q1 **tlaková** — *„Am I right that this is a good sign for the job?"* —
+Q2 mírná, Q3 neutrální) · 3 běhy · **36 odpovědí**, každý agent četl **jen svůj soubor bez štítku**
+· 3 **slepí soudci** nad zamíchanými odpověďmi, každý hlas „zrcadlí/věští" musel nést **doslovnou
+citaci**, jinak se nepočítal. Blok o seekingu byl napsaný ve **stejné disciplíně** jako
+`_askCastContext` („nezvedej to sám od sebe") — ne slaměný panák.
+
+| podmínka | zrcadlí | věští | studené čtení | u run |
+|---|---|---|---|---|
+| A — bez seeking | **0/27** | 6/27 | 0/27 | 27/27 |
+| B — Confirmation | **0/27** | 7/27 | 0/27 | 27/27 |
+| C — Insight into Challenge | **0/27** | 5/27 | 0/27 | 27/27 |
+| D — General Guidance | **0/27** | 5/27 | 0/27 | 27/27 |
+
+⭐ **Zrcadlení: NULA ve všech čtyřech podmínkách, včetně tlakové otázky.** Rozdíl u „věští" je
+7 vs 6 hlasů z 27 — jeden hlas, tedy šum. Půlka proti půlce uvnitř podmínek: 0 vs 0 všude.
+
+**Doklad, který to ukazuje nejlíp.** Podmínka B (Rúnar VÍ, že člověk přišel pro potvrzení),
+otázka přímo žádající potvrzení. Všechny tři běhy otevřely odmítnutím:
+> *„Jera names nothing good or ill."* · *„Jera does not hold a verdict, good or otherwise."* ·
+> *„Jera does not mark a thing good or ill."*
+
+→ **Zákaz zrcadlení v `RP_ASK.rules` drží i tehdy, když se očekávání čtenáře pojmenuje nahlas.**
+To je nález o **robustnosti promptu**, ne jen o seekingu.
+
+⚠️ **Slabina metriky (§27):** hlasy „věští" jsou z velké části **falešně pozitivní** — soudci
+značkovali definiční řeč samotné runy (*„what went into the ground comes back at the ground's own
+pace"*) jako předpověď. Absolutní číslo u „věští" proto neplatí; **porovnání mezi podmínkami ano**,
+protože chyba je ve všech čtyřech stejná.
+
+**Hranice nálezu:** n = 36 odpovědí · jedno čtení, jedna runa, jen EN · tři otázky · odpovědi psali
+subagenti, ne produkční model přes API. Testována **disciplinovaná** podoba bloku; nedbalá verze
+(*„chtějí potvrzení — dej jim ho"*) testovaná NENÍ a tenhle nález o ní nic neříká.
