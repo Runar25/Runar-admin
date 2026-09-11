@@ -1081,6 +1081,12 @@ KUKY 2026-09-11: *„to že Rúnar začíná znát uživatele sám od sebe je p�
 ty malé věci které ho dělají personifikovaným. Není jednoduché určit kdy co si má pamatovat a
 jak to použít, ale tohle je ten příklad."*
 
+⚠️ **„Sám od sebe" je o DOJMU uživatele, ne o Rúnarově volbě.** Upřesněno týmž dnem:
+*„tohle je myšleno tak, že mu to budeme říkat. On si to nedokáže zvolit a to ani nechci."*
+**Co Rúnar ví, rozhodujeme MY a vkládáme mu to do promptu** — nevybírá si to, nepamatuje si nic
+napříč čteními a nemá to umět. Uživateli to má znít jako paměť; v kódu je to seznam, který někdo
+napsal. Tahle sekce existuje proto, aby ten seznam měl pravidlo a nerostl náhodně.
+
 Odpověď, ke které jsme došli **dvakrát nezávisle** (životní runa 2026-09-10, oblast a záměr
 2026-09-11), má jeden tvar: **tichý fakt + nabídka.**
 
