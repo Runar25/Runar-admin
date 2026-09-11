@@ -5007,3 +5007,69 @@ Smoke 37/37 · check-is OK · `RUNAR_PROMPT_VERSION` v4.16-seek → **v4.17-askl
 **Affected doc(s):** `RUNAR_BACKLOG.md` (položka „Ask jako místo vysvětlení životní runy"
 odškrtnuta) — v témž commitu.
 
+---
+
+## 2026-09-11 — Ask nápověda pro OBLAST a ZÁMĚR: náhradou, ne přidáním. SEEKING nedostane nic.
+
+**Kdo/proč:** KUKY 2026-09-11: *„v ASK rúnar jsou otázky a líbí se mi že už jsi vyřešil progresivní
+otázku ohledně life rune. co takhle udělat to stejné pro AREA, Intention? tím myslím pokud se na to
+člověk zeptá tak se mu to objeví jako otázka na kterou může dostat lepší, přímější, obsáhlejší
+odpověď."* Navazuje na 2026-09-10 (živý tip na životní runu) a na směr *„to že Rúnar začíná znát
+uživatele sám od sebe je přesně ten směr… tohle jsou ty malé věci které ho dělají personifikovaným."*
+
+**Co (nápověda):** oblast ani záměr **nepřidávají řádek**. Přebírají ten, který už tam stojí a mluví
+o téže věci: **oblast → řádek o obrazu**, **záměr → řádek o čase** („proč zrovna teď"). Maximum
+zůstává **6**. Důvod je ten, kvůli kterému nápověda vznikla: má **učit tvar otázky**, ne nabídnout
+menu — osm vět pod tlačítkem už není nápověda, ale zeď. Progresivita se tedy neprojevuje délkou
+seznamu, ale tím, že **tytéž řádky jsou čím dál víc o tom člověku**.
+
+**Co (prompt):** `buildAskPrompt(..., cast)` + `_askCastContext(area, intention, lang)`. Bez toho by
+klik na nový tip narazil na Rúnara, který oblast ani záměr nezná — a odpověď by si musel domyslet
+(§23). Blok se **liší od `_askLifeContext`** v tom podstatném: životní runa tažená nebyla a čtení
+o ní není, kdežto oblast a záměr čtení přímo řídily (`_domainContext` / `_intentionContext`) —
+čtení tam **už dopadlo**. Blok proto neříká „nepatří to sem", ale *„už je to řečeno: nezvedej to
+sám a neopakuj to"*.
+⚠️ **Záměrný rozpor s `_domainContext`:** ten čtení přikazuje nechat obraz dopadnout na oblast a
+zároveň ji zakazuje vyslovit (*„never as a stated topic"*). Člověk ten dopad tedy čte, ale nikdy se
+nedozví, kam měl padnout. **Ask je jediné místo, kde se na to smí zeptat nahlas** — a jen na
+vyžádání. Není to drift, je to ten rozdíl, kvůli kterému Ask existuje.
+
+**Co se NEUDĚLALO a proč: SEEKING tip ani znalost NEDOSTANE.** `RP_ASK.rules` zakazuje zrcadlení
+(*„if the question asserts or implies something, neither confirm it nor take it up"*), a seeking
+**je očekávání o odpovědi** („přišel jsem si pro potvrzení / pro jasno"). Každý tip na něm postavený
+nese implikaci přímo v sobě a zval by Rúnara přesně tam, kam mu pravidlo o dva odstavce výš zakazuje
+jít. Ke stejnému závěru došly nezávisle **tři různé pohledy** (minimalistický, personifikační,
+skeptický). **Nezkoušet podruhé.**
+
+**Detail, který stál za nález:** texty jsou **bez přivlastnění** („moje práce" ne). U čtení pro
+někoho jiného popisuje oblast situaci **toho druhého**, ne tazatele — a životní runa se pro ten
+režim nuluje, kdežto oblast a záměr ne. Bez přivlastnění platí obě cesty (§13) bez další podmínky.
+Islandsky navíc **popisek stojí v nominativu před pomlčkou** (`{area} — hvar lendir myndin?`):
+3 z 8 názvů oblastí mají jiný akuzativ (`Tilgang`, `Fjölskyldu`, `Innri Vöxt`), takže šablona
+s předložkou by je komolila. Záměr se z téhož důvodu **nedosazuje vůbec** — každá ze tří hodnot má
+vlastní celou větu.
+
+**Ověřeno:** ㉡ `verify_ask_hints.js` rozšířena o oblast i záměr (nové větve byly do té doby **tichá
+zelená** — kontrola běžela, ale ani jednou je nespustila). Hlídá i to, co je tu křehké: **že seznam
+neroste** (`so.length === bez.length`), návrat na obecné „proč teď" u neznámé hodnoty, a trefu do
+správné věty i u pilulky uložené ve **druhém** jazyce. **Mutační test:** ignorování oblasti → 4 FAIL,
+ignorování záměru → 14 FAIL. ㉜ registr pravidel promptu volal `buildAskPrompt` **se šesti argumenty**,
+takže nový blok vracel prázdno a registru **unikal** — opraveno, skenují se oba tvary (shoda v čísle
+se liší), 184 pravidel. Islandština z doložených kusů: `snýr að þessari` 71 · `að þessari stundu` 54
+· `ákvörðuninni sem` 178 + `sem framundan er` 4973 · `því sem liðið` 1206 · `hvar lendir` 43 ·
+`að fyrra bragði` 4383 · `á þeim forsendum` 12986 · `berum orðum` 3377 · `hefur þegar lent` 15.
+⚠️ *„ákvörðuninni framundan"* doloženo **nebylo** (0) → proto `ákvörðuninni sem framundan er`.
+Smoke **38/38** · check-is OK · `RUNAR_PROMPT_VERSION` v4.17-asklife → **v4.18-askcast**.
+**Affected doc(s):** žádný — chování vlastní kód a tenhle záznam.
+
+---
+
+## 2026-09-11 — Pilulky si ukládaly popisek, ne index (oprava)
+
+Volba oblasti/cesty/záměru se ukládá jako **lokalizovaný popisek**. Po přepnutí jazyka se proto
+rozešly dvě věci a **ani jedna nespadla**: pilulka se vykreslila jako nevybraná (`label === current`
+už nesedí), ale hodnota žít nepřestala a došla až do promptu — islandské čtení dostalo řádku
+*„Svið: Career & Creativity"*, tedy porušení §2 doručené rovnou modelu. `_syncPillLang()` remapuje
+přes index, je idempotentní a hodnoty mimo seznam (`'spread'` z DB, volný text z gen_batch) nechává
+být. Nalezeno **čtením při stavbě Ask nápovědy, ne testem** — proto k tomu rovnou kontrola
+㉢ `verify_pill_lang.js` (5 stavů; mutační test ji zčervená ve dvou).

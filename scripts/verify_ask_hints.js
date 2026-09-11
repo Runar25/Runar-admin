@@ -44,9 +44,10 @@ const rekni = (ok, popis) => { if (ok) console.log('OK    ' + popis); else { fai
 // Stav se nastavuje PŘESNĚ tam, kam ho zapisuje produkce: `readerUser` (runar-reading.js:228)
 // a `_lastDrawn` (plní se vedle `_lastSegs` po každém čtení). Fixture, který by si _askHints
 // zavolal s vlastními argumenty, by tuhle vazbu neotestoval — a ta je tu ta křehká.
-function hinty(L, drawn, life, otazka) {
+function hinty(L, drawn, life, otazka, oblast, zamer) {
   sandbox.lang = L;
-  sandbox.readerUser = { name: 'Anna', lifeRune: life || null, question: otazka || '' };
+  sandbox.readerUser = { name: 'Anna', lifeRune: life || null, question: otazka || '',
+                         area: oblast || '', intention: zamer || '' };
   sandbox.readerRune = drawn.length === 1 ? drawn[0] : null;
   sandbox._lastDrawn = drawn;
   return glob('_askHints')();
@@ -102,7 +103,52 @@ for (const L of ['en', 'is']) {
         L + '  každý tip je neprázdná věta');
 }
 
-// ── 7) placeholder v poli čerpá z TÉHOŽ seznamu (§18 — jeden zdroj, dvě podoby) ──
+// ── 7) OBLAST a ZÁMĚR: přebírají stávající řádek, NEPŘIDAJÍ nový ──────────────
+// Bez těchhle případů by nové větve `_askHints` byly TICHÁ ZELENÁ (§19.2): kontrola by
+// proběhla, ale ani jednou by je nespustila. Hlídá se především to, co je tu křehké — že
+// seznam NEROSTE. Osm vět pod tlačítkem už není nápověda, ale zeď.
+for (const L of ['en', 'is']) {
+  const T = glob('UI_TEXT')[L];
+  const OBL = glob('AREAS')[L][2];            // Career & Creativity / Starf & Sköpun
+  const ZAM = glob('INTENTIONS')[L];
+  const bez = hinty(L, [R('Jera')], R('Gebo'), '');
+
+  // oblast: řádek o obrazu ji pojmenuje, holý řádek o obrazu zmizí
+  const so = hinty(L, [R('Jera')], R('Gebo'), '', OBL, '');
+  rekni(so.some(x => x.includes(OBL)), L + '  oblast zvolena → tip nese její název (' + OBL + ')');
+  rekni(!so.includes(T.ask_h_image), L + '  oblast zvolena → holý tip na obraz už tam není');
+  rekni(bez.includes(T.ask_h_image), L + '  oblast nezvolena → holý tip na obraz zůstává');
+  rekni(so.length === bez.length, L + '  oblast NEPŘIDALA řádek (' + bez.length + ' → ' + so.length + ')');
+
+  // záměr: každá ze tří hodnot má vlastní větu a přebírá časový řádek
+  const ocek = [T.ask_h_when_now, T.ask_h_when_ahead, T.ask_h_when_past];
+  for (let i = 0; i < 3; i++) {
+    const sz = hinty(L, [R('Jera')], R('Gebo'), '', '', ZAM[i]);
+    rekni(sz.includes(ocek[i]), L + '  záměr „' + ZAM[i] + '" → „' + ocek[i] + '"');
+    rekni(!sz.includes(T.ask_h_now), L + '  záměr „' + ZAM[i] + '" → obecné „proč teď" zmizelo');
+    rekni(sz.length === bez.length, L + '  záměr „' + ZAM[i] + '" NEPŘIDAL řádek');
+  }
+  rekni(bez.includes(T.ask_h_now), L + '  záměr nezvolen → obecné „proč teď" zůstává');
+
+  // pilulka vybraná v druhém jazyce musí dát TÙŽ větu — index, ne shoda řetězce
+  const druhy = L === 'en' ? 'is' : 'en';
+  const sc = hinty(L, [R('Jera')], R('Gebo'), '', '', glob('INTENTIONS')[druhy][1]);
+  rekni(sc.includes(T.ask_h_when_ahead),
+        L + '  záměr uložený ve druhém jazyce se přesto trefí do správné věty');
+
+  // neznámá hodnota nesmí shodit ani vyrobit prázdný tip
+  const sx = hinty(L, [R('Jera')], R('Gebo'), '', '', 'naprosto neznamy zamer');
+  rekni(sx.includes(T.ask_h_now) && sx.length === bez.length,
+        L + '  neznámý záměr → spadne zpátky na obecné „proč teď"');
+
+  // strop: i když je vybráno ÚPLNĚ VŠECHNO, seznam musí zůstat do šesti
+  const max = hinty(L, [R('Jera'), R('Ansuz'), R('Mannaz')], R('Gebo'), 'Should I take it?', OBL, ZAM[1]);
+  rekni(max.length <= 6, L + '  všechno vybráno → seznam má ' + max.length + ' tipů (strop 6)');
+  rekni(!max.some(x => /\{[a-z_]+\}/.test(x)), L + '  všechno vybráno → žádný nedosazený {placeholder}');
+  rekni(max.filter((x, i) => max.indexOf(x) !== i).length === 0, L + '  všechno vybráno → žádný tip dvakrát');
+}
+
+// ── 8) placeholder v poli čerpá z TÉHOŽ seznamu (§18 — jeden zdroj, dvě podoby) ──
 // Kdyby se rozešly, v poli by problikávaly jiné věty, než jaké nabízí rozbalená nápověda.
 sandbox.lang = 'en';
 sandbox.readerUser = { name: 'Anna', lifeRune: R('Gebo'), question: '' };

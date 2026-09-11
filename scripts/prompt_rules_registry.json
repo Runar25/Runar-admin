@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
- "zapsano": "2026-09-10",
- "prompt_version": "v4.17-asklife",
+ "zapsano": "2026-09-11",
+ "prompt_version": "v4.18-askcast",
  "pravidla": [
   {
    "hash": "54d29df4d80b",
@@ -314,6 +314,18 @@
    "lang": "en",
    "zdroj": "ask",
    "zacatek": "LIFE RUNE — the seeker carries Ehwaz as their own; it was not drawn to"
+  },
+  {
+   "hash": "fea2301dd465",
+   "lang": "en",
+   "zdroj": "ask",
+   "zacatek": "WHAT THIS READING WAS CAST FOR — the seeker named the part of life it "
+  },
+  {
+   "hash": "5658d3a5b38a",
+   "lang": "en",
+   "zdroj": "ask",
+   "zacatek": "WHAT THIS READING WAS CAST FOR — the seeker named the part of life it "
   },
   {
    "hash": "6ecd330c9a42",
@@ -854,6 +866,18 @@
    "lang": "is",
    "zdroj": "ask",
    "zacatek": "LÍFSRÚNIN — leitandinn ber sjálfur Ehwaz; hún var ekki dregin núna og "
+  },
+  {
+   "hash": "723d0f5d263b",
+   "lang": "is",
+   "zdroj": "ask",
+   "zacatek": "FYRIR HVAÐ LESTURINN VAR DREGINN — leitandinn nefndi sjálfur sviðið (S"
+  },
+  {
+   "hash": "b0353796dc8f",
+   "lang": "is",
+   "zdroj": "ask",
+   "zacatek": "FYRIR HVAÐ LESTURINN VAR DREGINN — leitandinn nefndi sjálfur sviðið (S"
   },
   {
    "hash": "6ecd330c9a42",

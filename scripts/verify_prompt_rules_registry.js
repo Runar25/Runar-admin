@@ -68,8 +68,15 @@ function pravidla() {
     const u = { name: 'Anna', area: '', seeking: '', intention: '', question: '', lifeRune: RUNES[18] };
     S.buildReadingPrompt(u, RUNES[3], L, null).split(String.fromCharCode(10))
       .forEach(r => { if (!DATA.test(r.trim())) pridej(L, 'single', r); });
-    S.buildAskPrompt('A reading.', 'What do you mean?', RUNES[3].n, L, null, RUNES[18]).split(String.fromCharCode(10))
-      .forEach(r => pridej(L, 'ask', r));
+    // Ask prompt se sklada ze dvou tvaru: s obema volbami (oblast + zamer) a jen s jednou.
+    // Vety se lisi shodou v cisle („neither is" vs „this is"), takze registrovat JEDEN tvar
+    // by druhy nechalo neviditelny. 2026-09-11: puvodni volani melo sest argumentu, takze
+    // `_askCastContext` vracel prazdno a cely blok registru unikal — tichá zelená (§19.2).
+    const _obl = zJaz('AREAS', L)[2], _zam = zJaz('INTENTIONS', L)[1];
+    [{ area: _obl, intention: _zam }, { area: _obl }].forEach((_c, _i) =>
+      S.buildAskPrompt('A reading.', 'What do you mean?', RUNES[3].n, L, null, RUNES[18], _c)
+        .split(String.fromCharCode(10))
+        .forEach(r => pridej(L, 'ask', r)));
     S.buildSysPrompt(null, L).split(String.fromCharCode(10)).forEach(r => pridej(L, 'system', r));
   }
   // Dedup: prvni vyskyt vyhrava, proto jsou pooly nahore.

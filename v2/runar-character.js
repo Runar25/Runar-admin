@@ -1477,8 +1477,42 @@ var RP_ASK = {
   },
 };
 
+// ─── CO BYLO CTENI ZADANO ─────────────────────────────────
+// Oblast a zamer si clovek vybral SAM (pilulky) a cteni podle nich vzniklo. V Ask je proto
+// Runar smi znat — jinak na otazku „co to znamena pro moji praci" odpovida z niceho.
+// ⚠️ Na rozdil od `_askLifeContext` tady NEJDE o vec mimo cteni: cteni uz tam dopadlo.
+// Blok tedy nerika „nepatri to sem", ale „uz je to receno — nezvedej to sam a neopakuj to".
+// ⚠️ SEEKING se sem vedome NEPREDAVA: je to ocekavani o odpovedi a RP_ASK.rules zrcadleni
+// zakazuje. Znalost seekingu by Runara tlacila presne tam, kam nesmi.
+// Popisky prichazi uz v aktualnim jazyce (`_syncPillLang` v runar-app.js), takze se tu
+// nedohledavaji podruhe.
+function _askCastContext(area, intention, lang) {
+  if (!area && !intention) return '';
+  var je = lang === 'is';
+  var casti = [];
+  if (area) casti.push(je ? 'sviðið (' + area + ')' : 'the part of life it is for (' + area + ')');
+  if (intention) casti.push(je ? 'stundina sem lesturinn snýr að (' + intention + ')'
+                               : 'the moment it is set in (' + intention + ')');
+  var dve = casti.length > 1;
+  if (je)
+    return 'FYRIR HVAÐ LESTURINN VAR DREGINN — leitandinn nefndi sjálfur '
+      + casti.join(' og ') + '. Lesturinn hefur þegar lent þar; '
+      + (dve ? 'hvorugt er nýtt umfjöllunarefni — taktu þau ekki upp að fyrra bragði og '
+             + 'endurtaktu þau ekki. Ef spurningin snýr að öðru hvoru, '
+             : 'þetta er ekki nýtt umfjöllunarefni — taktu það ekki upp að fyrra bragði og '
+             + 'endurtaktu það ekki. Ef spurningin snýr að því, ')
+      + 'svaraðu á þeim forsendum, berum orðum, út frá rúnunum sem dregnar voru.';
+  return 'WHAT THIS READING WAS CAST FOR — the seeker named ' + casti.join(' and ')
+    + '. The reading already landed there, so '
+    + (dve ? 'neither is a new subject: do not raise them on your own and do not restate them. '
+           + 'If their question reaches for one of them, '
+           : 'this is not a new subject: do not raise it on your own and do not restate it. '
+           + 'If their question reaches for it, ')
+    + 'answer plainly in its terms, from the runes that were drawn.';
+}
+
 // reading = the text Rúnar gave · question = seeker's follow-up · runes = comma list of rune names
-function buildAskPrompt(reading, question, runes, lang, corrections, life) {
+function buildAskPrompt(reading, question, runes, lang, corrections, life, cast) {
   var S = RP_ASK[lang] || RP_ASK.en;
   return [
     S.intro(reading, runes),
@@ -1489,6 +1523,7 @@ function buildAskPrompt(reading, question, runes, lang, corrections, life) {
     // vymezená výjimka a musí ji přebít, ne naopak.
     _dvergarContext(question, lang),
     _askLifeContext(life, lang),
+    _askCastContext(cast && cast.area, cast && cast.intention, lang),
     _describeRule(lang),
     _noColdRead(lang),
     getCorrPrompt(lang, corrections),

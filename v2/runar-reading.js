@@ -548,6 +548,15 @@ function _phRotate(id, seznam, idx0) {
 // runami u jedne runy, „jak to souvisi s tim, na co jsem se ptal" u cteni bez otazky,
 // zivotni runu tomu, kdo zadnou nema. Napoveda, ktera lze, uci spatne ptani.
 // Tenhle seznam je ZAROVEN sada rotujicich placeholderu (§18) — jedno misto, dve podoby.
+// Zamer se do tipu nedosazuje jako POPISEK — kazda ze tri hodnot ma vlastni celou vetu.
+// Duvod je islandsky: nazvy zameru („Akvordun framundan") by se musely sklonovat podle
+// vazby ve vete, a to sablona neumi. Cela veta ten problem odstranuje, ne obchazi.
+function _intentIdx(v) {
+  if (!v || typeof INTENTIONS === 'undefined') return -1;
+  var i = (INTENTIONS.en || []).indexOf(v);
+  if (i === -1) i = (INTENTIONS.is || []).indexOf(v);
+  return i;
+}
 function _askHints() {
   var out = [], u = readerUser || {}, dr = (_lastDrawn || []).filter(Boolean);
   var many = dr.length > 1, life = u.lifeRune;
@@ -559,9 +568,16 @@ function _askHints() {
     out.push(many ? tp('ask_h_life_all', { life: rnSplit(life).name })
                   : tp('ask_hint_life', { life: rnSplit(life).name, rune: rnSplit(dr[0]).name }));
   out.push(!many && dr[0] ? tp('ask_h_rune', { rune: rnSplit(dr[0]).name }) : t('ask_h_runes'));
-  out.push(t('ask_h_image'));                          // obraz nese KAZDE cteni (150/150 dvojic)
+  // Obraz nese KAZDE cteni (150/150 dvojic) — a kdyz si clovek vybral oblast, tentyz radek
+  // ji rovnou pojmenuje. Prompt oblast zna, ale ma zakazane ji vyslovit; tady se na ni
+  // smi zeptat nahlas. Popisek uz je v aktualnim jazyce (_syncPillLang v runar-app.js).
+  out.push(u.area ? tp('ask_h_image_area', { area: u.area }) : t('ask_h_image'));
   if (u.question) out.push(t('ask_h_asked'));          // jen kdyz clovek otazku opravdu polozil
-  out.push(t('ask_h_now'));
+  // CASOVY SLOT: „proc zrovna ted" je nejobecnejsi otazka po case. Kdyz si clovek zamer
+  // zvolil, prebira ten slot presnejsi veta — ne dalsi radek navic.
+  var _zi = _intentIdx(u.intention);
+  out.push(_zi >= 0 ? t(['ask_h_when_now', 'ask_h_when_ahead', 'ask_h_when_past'][_zi])
+                    : t('ask_h_now'));
   out.push(t('ask_h_unseen'));
   return out.filter(Boolean);
 }
@@ -669,7 +685,8 @@ async function askRunar() {
   var sys = buildSysPrompt(activeChar, lang);
   var _lf = (readerUser && readerUser.lifeRune) || null;
   if (_lf && (_lastDrawn || []).some(function (r) { return r && r.n === _lf.n; })) _lf = null;
-  var prompt = buildAskPrompt(reading, q, runes, lang, corrections, _lf);
+  var prompt = buildAskPrompt(reading, q, runes, lang, corrections, _lf,
+    { area: readerUser && readerUser.area, intention: readerUser && readerUser.intention });
   // Attach the follow-up whenever the reading was actually stored — _lastReadingId is set
   // only then, so it is the single gate (never re-check the save conditions here: that is how
   // 'someone' readings silently lost their Ask). Identical for mine + someone.
