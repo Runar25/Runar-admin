@@ -1075,6 +1075,41 @@ Forma: krátká zpráva v Rúnarově hlasu. Jeden obraz. Jedna otázka. Bez vysv
 
 ---
 
+## Co Rúnar o člověku ví — tichý fakt a nabídka
+
+KUKY 2026-09-11: *„to že Rúnar začíná znát uživatele sám od sebe je přesně ten směr… tohle jsou
+ty malé věci které ho dělají personifikovaným. Není jednoduché určit kdy co si má pamatovat a
+jak to použít, ale tohle je ten příklad."*
+
+Odpověď, ke které jsme došli **dvakrát nezávisle** (životní runa 2026-09-10, oblast a záměr
+2026-09-11), má jeden tvar: **tichý fakt + nabídka.**
+
+- **Tichý fakt** — Rúnar tu věc v promptu nese, ale **sám ji nevysloví**. Vzor: `_askLifeContext`,
+  `_askCastContext` (`runar-character.js`).
+- **Nabídka** — nápověda v Ask tu znalost **zviditelní, aniž by ji Rúnar řekl**: v nabízené otázce
+  už stojí skutečné jméno runy nebo zvolená oblast. Člověk tedy vidí, že Rúnar ví — a rozhoduje
+  se, jestli to otevře.
+
+⭐ **Personifikace tím stojí na kliknutí toho člověka, ne na Rúnarově tvrzení.** To je celý rozdíl
+proti studenému čtení: nevnucuje, odpovídá. A je to rozdíl **měřený**, ne estetický — dokud životní
+runa mluvila sama od sebe, brala si **závěrečnou větu v 10 ze 12 čtení** (`RUNAR_EVAL_LOG.md`
+2026-09-10), tedy to jediné, co po čtení zůstane.
+
+**Než se přidá další věc, kterou má Rúnar „vědět", musí projít třemi otázkami:**
+1. **Dal ji tam ten člověk sám?** (napsal, naklikal, má ji v profilu.) Odvozená věc není paměť,
+   je to domněnka — a vydávat domněnku za znalost je přesně studené čtení (§23).
+2. **Dostane ji prompt doopravdy?** Nabídka bez podkladu = Rúnar si odpověď domyslí a nikdo to
+   nepozná. Tohle selhalo dvakrát; od 2026-09-11 to hlídá `verify_ask_hints.js` párováním
+   nabídky s promptem.
+3. **Netlačí ho to tam, kam nesmí?** Pole `seeking` z tohohle důvodu **vědomě nedostalo nic**:
+   je to očekávání o odpovědi, a `RP_ASK.rules` zakazuje zrcadlení. Detail →
+   `RUNAR_DECISIONS.md` 2026-09-11.
+
+⚠️ **Přepínač `life_rune_in_readings` sem nesahá.** Řídí, co Rúnar řekne **sám od sebe** — nikdy
+to, nač se smí člověk zeptat. Vypnutá čočka znamená „nemluv o ní ve čtení", ne „zapomeň ji".
+
+---
+
 ## IS generování — pravidla pro nová volání
 
 Každé místo kde Claude generuje IS text musí mít tři vrstvy:
