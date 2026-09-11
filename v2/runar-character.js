@@ -1486,14 +1486,37 @@ var RP_ASK = {
 // zakazuje. Znalost seekingu by Runara tlacila presne tam, kam nesmi.
 // Popisky prichazi uz v aktualnim jazyce (`_syncPillLang` v runar-app.js), takze se tu
 // nedohledavaji podruhe.
-function _askCastContext(area, intention, lang) {
-  if (!area && !intention) return '';
+// Puvodni otazka je text od uzivatele. Do promptu uz jde v ceste cteni (radka QUESTION),
+// takze tohle neni nova plocha — ale je to DRUHA kopie, a proto se tu na rozdil od cteni
+// KRATI. Delka otazky bez limitu je otevrena pre-launch polozka (RUNAR_BACKLOG); nova
+// kopie ji nesmi zhorsit. Rez jde po posledni cele vete, at to nekonci v pulce slova.
+function _askTrimQ(q) {
+  var t = String(q || '').trim();
+  if (!t || t.length <= 300) return t;
+  var rez = t.slice(0, 300);
+  var i = Math.max(rez.lastIndexOf('.'), rez.lastIndexOf('?'), rez.lastIndexOf('!'));
+  return (i > 40 ? rez.slice(0, i + 1) : rez).trim() + '…';
+}
+function _askCastContext(cast, lang) {
+  var c = cast || {}, area = c.area, intention = c.intention, otazka = _askTrimQ(c.question);
+  if (!area && !intention && !otazka) return '';
   var je = lang === 'is';
   var casti = [];
   if (area) casti.push(je ? 'sviðið (' + area + ')' : 'the part of life it is for (' + area + ')');
   if (intention) casti.push(je ? 'stundina sem lesturinn snýr að (' + intention + ')'
                                : 'the moment it is set in (' + intention + ')');
   var dve = casti.length > 1;
+  // Puvodni otazka stoji jako VLASTNI veta, ne v zavorce vedle oblasti: je to jedina vec
+  // v bloku, kterou clovek napsal svymi slovy — a cteni uz je odpovedi prave na ni.
+  var qv = !otazka ? '' : (je
+    ? ' Þetta spurði hann þegar lesturinn var dreginn: „' + otazka + '“. Lesturinn er '
+      + 'þegar svarið við því — svaraðu því ekki upp á nýtt; ef nýja spurningin '
+      + 'teygir sig aftur þangað, tengdu þetta tvennt í einni eða tveimur setningum.'
+    : ' They asked this when the reading was cast: “' + otazka + '”. The reading is '
+      + 'already the answer to it — do not answer it again from the start; if the new '
+      + 'question reaches back to it, join the two in a sentence or two.');
+  if (!casti.length)
+    return (je ? 'FYRIR HVAÐ LESTURINN VAR DREGINN —' : 'WHAT THIS READING WAS CAST FOR —') + qv;
   if (je)
     return 'FYRIR HVAÐ LESTURINN VAR DREGINN — leitandinn nefndi sjálfur '
       + casti.join(' og ') + '. Lesturinn hefur þegar lent þar; '
@@ -1501,14 +1524,14 @@ function _askCastContext(area, intention, lang) {
              + 'endurtaktu þau ekki. Ef spurningin snýr að öðru hvoru, '
              : 'þetta er ekki nýtt umfjöllunarefni — taktu það ekki upp að fyrra bragði og '
              + 'endurtaktu það ekki. Ef spurningin snýr að því, ')
-      + 'svaraðu á þeim forsendum, berum orðum, út frá rúnunum sem dregnar voru.';
+      + 'svaraðu á þeim forsendum, berum orðum, út frá rúnunum sem dregnar voru.' + qv;
   return 'WHAT THIS READING WAS CAST FOR — the seeker named ' + casti.join(' and ')
     + '. The reading already landed there, so '
     + (dve ? 'neither is a new subject: do not raise them on your own and do not restate them. '
            + 'If their question reaches for one of them, '
            : 'this is not a new subject: do not raise it on your own and do not restate it. '
            + 'If their question reaches for it, ')
-    + 'answer plainly in its terms, from the runes that were drawn.';
+    + 'answer plainly in its terms, from the runes that were drawn.' + qv;
 }
 
 // reading = the text Rúnar gave · question = seeker's follow-up · runes = comma list of rune names
@@ -1523,7 +1546,7 @@ function buildAskPrompt(reading, question, runes, lang, corrections, life, cast)
     // vymezená výjimka a musí ji přebít, ne naopak.
     _dvergarContext(question, lang),
     _askLifeContext(life, lang),
-    _askCastContext(cast && cast.area, cast && cast.intention, lang),
+    _askCastContext(cast, lang),
     _describeRule(lang),
     _noColdRead(lang),
     getCorrPrompt(lang, corrections),

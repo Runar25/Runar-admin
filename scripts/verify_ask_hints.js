@@ -39,15 +39,16 @@ catch (e) { console.log('FAIL  nepodařilo se načíst reader: ' + e.message); p
 const glob = (v) => vm.runInContext(v, sandbox);
 const R = (n) => glob('RUNES').find(r => r.n === n);
 let fail = 0;
+const jmR = (r, L) => (sandbox.lang = L, glob('rnSplit')(r).name);
 const rekni = (ok, popis) => { if (ok) console.log('OK    ' + popis); else { fail++; console.log('FAIL  ' + popis); } };
 
 // Stav se nastavuje PŘESNĚ tam, kam ho zapisuje produkce: `readerUser` (runar-reading.js:228)
 // a `_lastDrawn` (plní se vedle `_lastSegs` po každém čtení). Fixture, který by si _askHints
 // zavolal s vlastními argumenty, by tuhle vazbu neotestoval — a ta je tu ta křehká.
-function hinty(L, drawn, life, otazka, oblast, zamer) {
+function hinty(L, drawn, life, otazka, oblast, zamer, hledani) {
   sandbox.lang = L;
   sandbox.readerUser = { name: 'Anna', lifeRune: life || null, question: otazka || '',
-                         area: oblast || '', intention: zamer || '' };
+                         area: oblast || '', intention: zamer || '', seeking: hledani || '' };
   sandbox.readerRune = drawn.length === 1 ? drawn[0] : null;
   sandbox._lastDrawn = drawn;
   return glob('_askHints')();
@@ -148,7 +149,65 @@ for (const L of ['en', 'is']) {
   rekni(max.filter((x, i) => max.indexOf(x) !== i).length === 0, L + '  všechno vybráno → žádný tip dvakrát');
 }
 
-// ── 8) placeholder v poli čerpá z TÉHOŽ seznamu (§18 — jeden zdroj, dvě podoby) ──
+// ── 8) INVARIANT: co nápověda NABÍZÍ, musí mít v promptu PODKLAD ─────────────
+// Tip je otázka. Když Rúnar nemá z čeho odpovědět, **domyslí si to** (§23) — a uživatel
+// nepozná, že dostal vymyšlenou odpověď na vlastní otázku. Tahle díra žila **dvakrát**:
+//   · životní runa — `buildAskPrompt` ji nedostával (opraveno 2026-09-10)
+//   · původní otázka — `ask_h_asked` nabízel „jak to souvisí s tím, na co jsem se ptal",
+//     ale do promptu šla jen NOVÁ doplňující otázka (nalezeno 2026-09-11)
+// Pokaždé to byla táž chyba a pokaždé ji nenašel test. Proto se od teď páruje NABÍDKA
+// s PROMPTEM postaveným ze **stejného stavu**, přes `_askCast()` — tedy přes tutéž funkci,
+// kterou volá produkční `askRunar()`. Opsaný sběr faktů by nebyl otestovaná hranice (§19.1).
+for (const L of ['en', 'is']) {
+  const T = glob('UI_TEXT')[L];
+  const OBL = glob('AREAS')[L][2], ZAM = glob('INTENTIONS')[L][1];
+  const OTAZKA = L === 'is' ? 'Á ég að skipta um starf?' : 'Should I leave the job I have?';
+  const tipy = hinty(L, [R('Jera')], R('Gebo'), OTAZKA, OBL, ZAM);
+  const cast = glob('_askCast')();
+  const prompt = glob('buildAskPrompt')('Cteni.', 'A co ted?', 'Jera', L, null, R('Gebo'), cast);
+  const ma = (x) => prompt.indexOf(x) !== -1;
+
+  for (const tip of tipy) {
+    if (tip === T.ask_h_asked)
+      rekni(ma(OTAZKA), L + '  tip na původní otázku → otázka JE v promptu');
+    else if (tip.indexOf(OBL) === 0)
+      rekni(ma(OBL), L + '  tip na oblast → oblast JE v promptu');
+    else if ([T.ask_h_when_now, T.ask_h_when_ahead, T.ask_h_when_past].indexOf(tip) !== -1)
+      rekni(ma(ZAM), L + '  tip na záměr → záměr JE v promptu');
+    else if (tip.indexOf(jmR('Gebo', L)) !== -1 && /life rune|lífsrúnin/i.test(tip))
+      rekni(ma(jmR('Gebo', L)), L + '  tip na životní runu → runa JE v promptu');
+  }
+
+  // Obráceně: co člověk NEVYBRAL, nesmí být v promptu — jinak Rúnar mluví o cizim zadání.
+  hinty(L, [R('Jera')], R('Gebo'), '', '', '');
+  const prazdny = glob('buildAskPrompt')('Cteni.', 'A co ted?', 'Jera', L, null, null, glob('_askCast')());
+  rekni(prazdny.indexOf('CAST FOR') === -1 && prazdny.indexOf('FYRIR HVAÐ') === -1,
+        L + '  nic nevybráno → blok o zadání v promptu vůbec není');
+
+  // SEEKING: rozhodnutí „nedostává tip" musí být VYNUTITELNÉ, ne jen komentář.
+  // Důvod → RUNAR_DECISIONS.md 2026-09-11 (zrcadlení zakazuje RP_ASK.rules).
+  const bezH = hinty(L, [R('Jera')], R('Gebo'), '', OBL, ZAM);
+  const sH = hinty(L, [R('Jera')], R('Gebo'), '', OBL, ZAM, glob('SEEKS')[L][2]);
+  rekni(JSON.stringify(bezH) === JSON.stringify(sH),
+        L + '  zvolený seeking NEZMĚNÍ ani jeden tip (rozhodnutí 2026-09-11)');
+
+  // Neznámý štítek oblasti (v DB řádku stává `area: 'spread'`) nesmí vyrobit tip.
+  const sp = hinty(L, [R('Jera')], R('Gebo'), '', 'spread', '');
+  rekni(sp.includes(T.ask_h_image) && !sp.some(x => x.indexOf('spread') === 0),
+        L + '  neznámý štítek oblasti → tip na oblast nevznikne');
+
+  // Štítek smi stát JEN jako nadpis před pomlčkou. `tp()` umí dosazení, ne shodu v čísle
+  // ani pád — 6 z 8 islandských názvů jsou souřadné fráze a tři mají jiný akuzativ
+  // (Tilgang · Fjölskyldu · Innri Vöxt). Kdo to jednou dosadí do věty, rozbije šest z osmi.
+  glob('AREAS')[L].forEach((popisek) => {
+    const h = hinty(L, [R('Jera')], R('Gebo'), '', popisek, '');
+    const s = h.filter(x => x.indexOf(popisek) !== -1);
+    rekni(s.length === 1 && s[0].indexOf(popisek + ' — ') === 0,
+          L + '  „' + popisek + '" stojí jako nadpis před pomlčkou (nominativ)');
+  });
+}
+
+// ── 9) placeholder v poli čerpá z TÉHOŽ seznamu (§18 — jeden zdroj, dvě podoby) ──
 // Kdyby se rozešly, v poli by problikávaly jiné věty, než jaké nabízí rozbalená nápověda.
 sandbox.lang = 'en';
 sandbox.readerUser = { name: 'Anna', lifeRune: R('Gebo'), question: '' };

@@ -557,6 +557,16 @@ function _intentIdx(v) {
   if (i === -1) i = (INTENTIONS.is || []).indexOf(v);
   return i;
 }
+// Co Runar o ZADANI ctenia vi, kdyz clovek pouzije Ask. Ma vlastni funkci ze dvou duvodu:
+// (1) je to jedno misto (§18) — az pribude dalsi pole, pribude tady a nikde jinde;
+// (2) `askRunar()` potrebuje DOM, takze se z kontroly zavolat neda. Bez tehle funkce by
+//     kontrola musela sber faktu OPSAT — a opsana hranice neni otestovana hranice (§19.1).
+// Presne tuhle diru mel `ask_h_asked`: nabizel „jak to souvisi s tim, na co jsem se ptal",
+// ale puvodni otazka se do promptu nikdy neposilala a nic to nehlidalo.
+function _askCast() {
+  var u = readerUser || {};
+  return { area: u.area, intention: u.intention, question: u.question };
+}
 function _askHints() {
   var out = [], u = readerUser || {}, dr = (_lastDrawn || []).filter(Boolean);
   var many = dr.length > 1, life = u.lifeRune;
@@ -571,7 +581,10 @@ function _askHints() {
   // Obraz nese KAZDE cteni (150/150 dvojic) — a kdyz si clovek vybral oblast, tentyz radek
   // ji rovnou pojmenuje. Prompt oblast zna, ale ma zakazane ji vyslovit; tady se na ni
   // smi zeptat nahlas. Popisek uz je v aktualnim jazyce (_syncPillLang v runar-app.js).
-  out.push(u.area ? tp('ask_h_image_area', { area: u.area }) : t('ask_h_image'));
+  var _obl = (u.area && typeof AREAS !== 'undefined'
+    && ((AREAS.en || []).indexOf(u.area) !== -1 || (AREAS.is || []).indexOf(u.area) !== -1))
+    ? u.area : '';
+  out.push(_obl ? tp('ask_h_image_area', { area: _obl }) : t('ask_h_image'));
   if (u.question) out.push(t('ask_h_asked'));          // jen kdyz clovek otazku opravdu polozil
   // CASOVY SLOT: „proc zrovna ted" je nejobecnejsi otazka po case. Kdyz si clovek zamer
   // zvolil, prebira ten slot presnejsi veta — ne dalsi radek navic.
@@ -588,6 +601,11 @@ function toggleAskHints() {
   btn.setAttribute('aria-expanded', otevrit ? 'true' : 'false');
   box.style.display = otevrit ? '' : 'none';
   if (!otevrit) { box.innerHTML = ''; return; }
+  _paintAskHints();
+}
+function _paintAskHints() {
+  var box = document.getElementById('ask-hints');
+  if (!box || box.style.display === 'none') return;
   box.innerHTML = '';
   _askHints().forEach(function (t) {
     var b = document.createElement('button');
@@ -685,8 +703,7 @@ async function askRunar() {
   var sys = buildSysPrompt(activeChar, lang);
   var _lf = (readerUser && readerUser.lifeRune) || null;
   if (_lf && (_lastDrawn || []).some(function (r) { return r && r.n === _lf.n; })) _lf = null;
-  var prompt = buildAskPrompt(reading, q, runes, lang, corrections, _lf,
-    { area: readerUser && readerUser.area, intention: readerUser && readerUser.intention });
+  var prompt = buildAskPrompt(reading, q, runes, lang, corrections, _lf, _askCast());
   // Attach the follow-up whenever the reading was actually stored — _lastReadingId is set
   // only then, so it is the single gate (never re-check the save conditions here: that is how
   // 'someone' readings silently lost their Ask). Identical for mine + someone.

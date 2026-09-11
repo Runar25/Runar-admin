@@ -169,9 +169,14 @@ const VYJIMKY = {
   ending: { cesty: ['ask', 'liferune', 'norns', 'kriz', 'horseshoe', 'yggdrasil'], proc: 'Ask/liferune: táž příčina jako u '
     + '`image` (2026-08-18). Spready: dosednutí S.landing NAHRAZUJE otázkový los (v4.13 yggdrasil, v4.14 zbytek, KUKY '
     + '2026-08-23) — dvě instrukce konce by si odporovaly. Single los drží (v4.11 změřená).' },
-  domain: { cesty: ['ask', 'liferune'], proc: '`ask` ani životní runa nedostávají oblast života na vstupu. Ověřeno 2026-08-18. (Single: oblast vrácena v4.1, 22. 8.)' },
+  domain: { cesty: ['ask', 'liferune'], proc: 'Životní runa oblast života na vstupu nedostává (ověřeno 2026-08-18). '
+    + '⚠️ `ask` ji od **2026-09-11 DOSTÁVÁ** — ale vlastním blokem `_askCastContext`, ne `_domainContext`, '
+    + 'který tu špehuje spion. Texty se liší záměrně: čtení má oblast ZAKÁZANO vyslovit, Ask ji na '
+    + 'vyžádání pojmenovat smí. Do 2026-09-11 tu stálo „ask oblast nedostává" a byla to už nepravda. '
+    + '(Single: oblast vrácena v4.1, 22. 8.)' },
   register: { cesty: ['ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },
-  intention: { cesty: ['ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },
+  intention: { cesty: ['ask', 'liferune'], proc: 'Táž příčina jako u `domain` — včetně toho, že `ask` záměr '
+    + 'od 2026-09-11 dostává přes `_askCastContext`. Ověřeno 2026-08-18, přepsáno 2026-09-11.' },
   describe: { cesty: ['norns', 'kriz', 'horseshoe', 'yggdrasil'], proc: 'v4.9 (2026-08-23): esencni radek VEN ze spreadu — rikal pojmenuj proti zamernemu nejmenuj (KUKY: zatim nejmenuj). Jmena nese UI pozic.' },
   thread: { cesty: ['single', 'ask', 'liferune'], proc: 'Vztahova vazba pozic je z podstaty jen pro spready (v4.9, 2026-08-23).' },
   priority: { cesty: ['single', 'ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },

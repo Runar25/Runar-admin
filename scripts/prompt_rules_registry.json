@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-11",
- "prompt_version": "v4.18-askcast",
+ "prompt_version": "v4.19-askquestion",
  "pravidla": [
   {
    "hash": "54d29df4d80b",
@@ -323,6 +323,18 @@
   },
   {
    "hash": "5658d3a5b38a",
+   "lang": "en",
+   "zdroj": "ask",
+   "zacatek": "WHAT THIS READING WAS CAST FOR — the seeker named the part of life it "
+  },
+  {
+   "hash": "5bc6df9c74c4",
+   "lang": "en",
+   "zdroj": "ask",
+   "zacatek": "WHAT THIS READING WAS CAST FOR — They asked this when the reading was "
+  },
+  {
+   "hash": "a1681cfb7736",
    "lang": "en",
    "zdroj": "ask",
    "zacatek": "WHAT THIS READING WAS CAST FOR — the seeker named the part of life it "
@@ -875,6 +887,18 @@
   },
   {
    "hash": "b0353796dc8f",
+   "lang": "is",
+   "zdroj": "ask",
+   "zacatek": "FYRIR HVAÐ LESTURINN VAR DREGINN — leitandinn nefndi sjálfur sviðið (S"
+  },
+  {
+   "hash": "a5a433c4ab4d",
+   "lang": "is",
+   "zdroj": "ask",
+   "zacatek": "FYRIR HVAÐ LESTURINN VAR DREGINN — Þetta spurði hann þegar lesturinn v"
+  },
+  {
+   "hash": "b533db23c36a",
    "lang": "is",
    "zdroj": "ask",
    "zacatek": "FYRIR HVAÐ LESTURINN VAR DREGINN — leitandinn nefndi sjálfur sviðið (S"

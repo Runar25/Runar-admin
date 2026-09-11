@@ -762,6 +762,7 @@ function _updateGateTexts() {
 // NEVER add user-state-dependent text here — it will overwrite dynamic content on lang switch.
 function updateUIText() {
   document.documentElement.lang = lang;
+  _syncPillLang();   // MUSI predchazet _askPlaceholder() nize — duvod u te funkce
   setText('ui-brand', 'AGNDOFA');
   // ⚠️ Staticke upozorneni patri SEM, ne do _updateReadingForm: (a) §14 rika, ze
   // updateUIText vlastni staticke preklady, (b) `setLang` vola updateUIText, ale
@@ -807,6 +808,7 @@ function updateUIText() {
   setText('ask-lbl', t('ask_lbl'));
   var _askInp = document.getElementById('ask-input'); if (_askInp && typeof _askPlaceholder === 'function') _askInp.placeholder = _askPlaceholder();
   var _askBtn = document.getElementById('ask-btn'); if (_askBtn && !_askBtn.disabled) _askBtn.textContent = t('ask_btn');
+  if (typeof _paintAskHints === 'function') _paintAskHints();   // rozbalena napoveda do nove reci
   if (typeof _refreshAskTeaser === 'function') _refreshAskTeaser();
   const vBtn = document.getElementById('btn-generate-voice');
   if (vBtn && !vBtn.disabled) vBtn.textContent = t('voice_btn');

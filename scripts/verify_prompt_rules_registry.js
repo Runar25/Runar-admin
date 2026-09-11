@@ -73,7 +73,11 @@ function pravidla() {
     // by druhy nechalo neviditelny. 2026-09-11: puvodni volani melo sest argumentu, takze
     // `_askCastContext` vracel prazdno a cely blok registru unikal — tichá zelená (§19.2).
     const _obl = zJaz('AREAS', L)[2], _zam = zJaz('INTENTIONS', L)[1];
-    [{ area: _obl, intention: _zam }, { area: _obl }].forEach((_c, _i) =>
+    // Puvodni otazka je treti tvar bloku — bez ni by jeji vety registru unikly stejne,
+    // jako mu 2026-09-11 unikal cely blok, dokud se volalo se sesti argumenty.
+    const _ot = L === 'is' ? 'A eg ad skipta um starf?' : 'Should I leave the job I have?';
+    [{ area: _obl, intention: _zam }, { area: _obl }, { question: _ot },
+     { area: _obl, intention: _zam, question: _ot }].forEach((_c, _i) =>
       S.buildAskPrompt('A reading.', 'What do you mean?', RUNES[3].n, L, null, RUNES[18], _c)
         .split(String.fromCharCode(10))
         .forEach(r => pridej(L, 'ask', r)));
