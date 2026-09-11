@@ -56,7 +56,7 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 // v4.17 (2026-09-10): Ask zna zivotni runu. Do te doby ji `buildAskPrompt` nedostaval, takze
 //    odpoved na „jak me ovlivnuje moje zivotni runa" si model musel domyslet. Prompt ji ted nese
 //    jako tichy fakt — Runar ji nevyslovi sam od sebe, jen kdyz se na ni clovek zepta.
-const RUNAR_PROMPT_VERSION = 'v4.20-askseeking';
+const RUNAR_PROMPT_VERSION = 'v4.21-askpositions';
 
 // ─── ELEVENLABS ─────────────────────────────────────────
 const EL_VOICE_ID_EN = '2UI8v2ibbwQTijaYAte1'; // English — Rúnar EN

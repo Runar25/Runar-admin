@@ -5148,3 +5148,34 @@ platný jen pro PRÁVĚ DVĚ věci. Se seekingem můžou být tři a pak je spr�
 `einhverju þeirra`. Čeština ani angličtina ten rozdíl nemají, takže by to prošlo bez povšimnutí.
 `RUNAR_PROMPT_VERSION` v4.19 → **v4.20-askseeking** · registr 192 pravidel · smoke 38/38.
 **Affected doc(s):** `RUNAR_DESIGN.md` (třetí otázka v „tichý fakt a nabídka") — v témž commitu.
+
+---
+
+## 2026-09-11 (4) — HANDOFF57 bod 4: Rúnar ví, která runa seděla na které pozici
+
+**Co bylo špatně:** `askRunar()` předával runy jako **plochý seznam jmen**. U Kříže tedy Rúnar
+nevěděl, která byla ve Středu a která Za zády — **přestože ty pozice člověk na obrazovce vidí
+a jsou pojmenované**. Otázka *„co znamená ta runa za mnou?"* neměla v promptu podklad; spadá
+přímo pod pravidlo *„v Ask se může člověk zeptat úplně na cokoliv"* (2026-09-11 (3)).
+
+**Co se nasadilo:** `_askSpreadContext()` vypíše dvojice *pozice → runa* pro všechny čtyři
+spready; single nevypíše nic. **Štítky se NEOPISUJÍ** — čtou se z `RP_*` packů, kde už jsou kvůli
+promptu čtení. ⚠️ Norny je drží pod klíčem `labels`, ostatní tři pod `positions` (není to překlep,
+je to historie). Jména run z **`_lastDrawn`** (kanonická data), ne z `_lastSegs` — ta psal model
+do JSON, takže pořadí i pravopis by visely na jeho výstupu.
+
+⭐ **Nález, který stojí za víc než ta funkce: první verze kontroly byla k ničemu a poznal to až
+mutační test.** Volala `buildAskPrompt` s ručně poskládanými argumenty, takže testovala **builder,
+ne zapojení** — odebrání argumentu z produkčního volání jí **proklouzlo (0 FAIL)**. Opsaná hranice
+není otestovaná hranice (§19.1), a tady se to ukázalo na vlastní kůži, ne v teorii.
+→ Skládání Ask promptu má od teď **jedno místo** (`_askBuild` v `runar-reading.js`) a kontrola
+prochází tudy. Táž mutace teď dává **8 FAIL**. Tohle je vzor pro každou další kontrolu promptu:
+**seed stav → zavolej produkční skládačku → tvrď o výsledku.** Nikdy si prompt nesestavovat sám.
+
+**Registr (㉜):** štítky pozic jsou **DATA, ne instrukce** — registrovat je by znamenalo, že registr
+nese jména run z testovací fixture a zčervená při každé její změně. Filtr `DATA` proto nově platí
+i pro `ask` a zná i EN tvar a Norny (IS `RÚNIN` tam byl už dřív). Registrované zůstaly jen dvě
+hlavičky bloku. Islandština z doložených kusů: `stöðurnar` 2156 · `í lestrinum` 308 · `sér þær`
+4125 · `á skjánum` 12659 · `getur snúið að` 29 · `hverri þeirra` 400.
+`RUNAR_PROMPT_VERSION` v4.20 → **v4.21-askpositions** · smoke 38/38.
+**Affected doc(s):** `RUNAR_BACKLOG.md` (položka „HANDOFF57 bod 4" odškrtnuta) — v témž commitu.

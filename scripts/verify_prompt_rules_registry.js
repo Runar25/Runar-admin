@@ -53,7 +53,12 @@ function pravidla() {
     (jmenaVarianty[lang] || []).forEach((v) => { if (v && t.indexOf(v) !== -1) t = t.replace(v, '').replace(/\s+/g, ' ').trim(); });
     if (t.length > 20) ven.push({ lang, zdroj, text: t });
   };
-  const DATA = /^(PERSON|DRAWN|SEEKER|LIFE|AREA|SEEKING|INTENTION|QUESTION|REALM|ELEMENT|FOCUS|Leiðandi|LífsRúna|Svið|Leiðin|Spurning|RÚNIN|Rúnir|DREGNA|ÁHERSLA)/;
+    // ⚠️ `RUNE `, `URÐUR`, `VERÐANDI`, `SKULD` přibyly 2026-09-11: jsou to ŠTÍTKY POZIC
+  // ze spreadu, které Ask prompt vypisuje vedle jmen tažených run. Je to DATA (pozice +
+  // runa), ne instrukce — registrovat je by znamenalo, že registr nese jména run z testovací
+  // fixture a zčervenal by při každé její změně. IS tvar `RÚNIN` v seznamu už byl;
+  // EN tvar a Norny chyběly, protože do 2026-09-11 žádný blok pozic v Ask promptu nebyl.
+const DATA = /^(PERSON|DRAWN|SEEKER|LIFE|AREA|SEEKING|INTENTION|QUESTION|REALM|ELEMENT|FOCUS|Leiðandi|LífsRúna|Svið|Leiðin|Spurning|RÚNIN|Rúnir|DREGNA|ÁHERSLA|RUNE |URÐUR|VERÐANDI|SKULD)/;
   for (const L of ['en', 'is']) {
     (L === 'is' ? glob('READING_ANGLES_IS') : glob('READING_ANGLES') || []).forEach((a, i) => pridej(L, 'uhel[' + i + ']', a));
     (L === 'is' ? glob('ENDING_OPEN_IS') : glob('ENDING_OPEN') || []).forEach((a, i) => pridej(L, 'zakonceni_open[' + i + ']', a));
@@ -82,7 +87,13 @@ function pravidla() {
      { area: _obl, intention: _zam, seeking: zJaz('SEEKS', L)[2] }].forEach((_c, _i) =>
       S.buildAskPrompt('A reading.', 'What do you mean?', RUNES[3].n, L, null, RUNES[18], _c)
         .split(String.fromCharCode(10))
-        .forEach(r => pridej(L, 'ask', r)));
+        .forEach(r => { if (!DATA.test(r.trim())) pridej(L, 'ask', r); }));
+    // Blok o pozicich ve spreadu ma vlastni hlavicku a do Ask promptu se dostane jen
+    // s osmym argumentem — bez nej by registru unikl (tataz tichá zelená jako 2026-09-11).
+    S.buildAskPrompt('A reading.', 'What do you mean?', RUNES[3].n, L, null, null, null,
+      { mode: 'kriz', runy: ['Fehu', 'Uruz', 'Thurisaz', 'Ansuz', 'Raidho'] })
+      .split(String.fromCharCode(10))
+      .forEach(r => { if (!DATA.test(r.trim())) pridej(L, 'ask', r); });
     S.buildSysPrompt(null, L).split(String.fromCharCode(10)).forEach(r => pridej(L, 'system', r));
   }
   // Dedup: prvni vyskyt vyhrava, proto jsou pooly nahore.

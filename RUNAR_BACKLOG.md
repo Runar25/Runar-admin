@@ -1150,7 +1150,7 @@ plný seznam klíčových slov v promptu **ČTENÍ** srazil stopu významu ze 17
 Měřit: shoduje se odpověď s naším kánonem, a nerozpadl se přitom hlas do výčtu klíčových slov?
 Hypotéza: **C vyhraje nad B** — celý seznam sveze model k výčtu, jedna věta ne.
 
-### Bod 4 — pozice ve spreadu: mezera POTVRZENA, a je v přímém rozporu s principem
+### ~~Bod 4 — pozice ve spreadu~~ ✅ HOTOVO 2026-09-11 (`RUNAR_DECISIONS.md` 2026-09-11 (4))
 `askRunar()` předává runy jako **plochý seznam jmen** (`_lastSegs.map(s => s.rune).join(', ')`).
 `_lastSegs` je `[{rune, text}]` — **pozici neobsahuje**. Rúnar tedy u Kříže neví, která runa byla
 v Středu a která Za zády, i když **ty pozice člověk na obrazovce VIDÍ a jsou pojmenované**

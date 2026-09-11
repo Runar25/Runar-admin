@@ -40,6 +40,22 @@ const glob = (v) => vm.runInContext(v, sandbox);
 const R = (n) => glob('RUNES').find(r => r.n === n);
 let fail = 0;
 const jmR = (r, L) => (sandbox.lang = L, glob('rnSplit')(r).name);
+// ⚠️ Prompt se NESKLÁDÁ voláním `buildAskPrompt` s ručně poskládanými argumenty — to by
+// testovalo BUILDER, ne ZAPOJENÍ. Přesně na tom 2026-09-11 selhal mutační test u pozic ve
+// spreadu: odebrání argumentu z produkčního volání kontrolou proklouzlo. Od té doby má
+// skládání jedno místo (`_askBuild`) a test jde tudy.
+function promptZeStavu(L, opt) {
+  const o = opt || {};
+  sandbox.lang = L;
+  sandbox.readerUser = {
+    name: 'Anna', lifeRune: o.life || null, question: o.otazka || '',
+    area: o.oblast || '', intention: o.zamer || '', seeking: o.hledani || '',
+  };
+  sandbox._lastDrawn = o.drawn || [];
+  sandbox.readerRune = (o.drawn && o.drawn.length === 1) ? o.drawn[0] : null;
+  sandbox._spreadMode = o.mode || 'single';
+  return glob('_askBuild')('Cteni.', 'A co ted?', (o.drawn || []).map(r => r.n).join(', '));
+}
 const rekni = (ok, popis) => { if (ok) console.log('OK    ' + popis); else { fail++; console.log('FAIL  ' + popis); } };
 
 // Stav se nastavuje PŘESNĚ tam, kam ho zapisuje produkce: `readerUser` (runar-reading.js:228)
@@ -163,8 +179,8 @@ for (const L of ['en', 'is']) {
   const OBL = glob('AREAS')[L][2], ZAM = glob('INTENTIONS')[L][1];
   const OTAZKA = L === 'is' ? 'Á ég að skipta um starf?' : 'Should I leave the job I have?';
   const tipy = hinty(L, [R('Jera')], R('Gebo'), OTAZKA, OBL, ZAM);
-  const cast = glob('_askCast')();
-  const prompt = glob('buildAskPrompt')('Cteni.', 'A co ted?', 'Jera', L, null, R('Gebo'), cast);
+  const prompt = promptZeStavu(L, { drawn: [R('Jera')], life: R('Gebo'),
+    otazka: OTAZKA, oblast: OBL, zamer: ZAM });
   const ma = (x) => prompt.indexOf(x) !== -1;
 
   for (const tip of tipy) {
@@ -179,8 +195,7 @@ for (const L of ['en', 'is']) {
   }
 
   // Obráceně: co člověk NEVYBRAL, nesmí být v promptu — jinak Rúnar mluví o cizim zadání.
-  hinty(L, [R('Jera')], R('Gebo'), '', '', '');
-  const prazdny = glob('buildAskPrompt')('Cteni.', 'A co ted?', 'Jera', L, null, null, glob('_askCast')());
+  const prazdny = promptZeStavu(L, { drawn: [R('Jera')] });
   rekni(prazdny.indexOf('CAST FOR') === -1 && prazdny.indexOf('FYRIR HVAÐ') === -1,
         L + '  nic nevybráno → blok o zadání v promptu vůbec není');
 
@@ -253,9 +268,9 @@ for (const L of ['en', 'is']) {
   const A = glob('AREAS')[L], I = glob('INTENTIONS')[L], SK = glob('SEEKS')[L];
   const OT = L === 'is' ? 'Á ég að skipta um starf?' : 'Should I leave the job I have?';
   // Seed přes produkční cestu: tytéž klíče, jaké nastavuje `startReading`.
-  hinty(L, [R('Jera')], R('Gebo'), OT, A[2], I[1], SK[2]);
+  const prompt = promptZeStavu(L, { drawn: [R('Jera')], life: R('Gebo'),
+    otazka: OT, oblast: A[2], zamer: I[1], hledani: SK[2] });
   const cast = glob('_askCast')();
-  const prompt = glob('buildAskPrompt')('Cteni.', 'A co ted?', 'Jera', L, null, R('Gebo'), cast);
 
   // (a) Každý klíč formuláře je buď v `_askCast`, nebo má zapsanou výjimku.
   const klice = Object.keys(glob('readerUser'));
@@ -279,7 +294,51 @@ for (const L of ['en', 'is']) {
   });
 }
 
-// ── 10) placeholder v poli čerpá z TÉHOŽ seznamu (§18 — jeden zdroj, dvě podoby) ──
+// ── 10) POZICE VE SPREADU se musí dostat do Ask promptu ─────────────────────
+// HANDOFF57 bod 4: `askRunar` předával runy jako plochý seznam, takže Rúnar u Kříže nevěděl,
+// která byla ve Středu a která Za zády — přestože ty pozice člověk na obrazovce VIDÍ.
+// §13: platí pro VŠECH PĚT typů čtení, proto se testují všechny, ne jen jeden spread.
+// Štítky se čtou z RP_* packů; test je také čte odtud, takže přejmenování pozice
+// v packu nerozhodí tenhle test — rozhodí ho jen to, když se do promptu NEDOSTANE.
+const SPREADY = [
+  { mode: 'kriz', pack: 'RP_KRIZ', n: 5 },
+  { mode: 'norns', pack: 'RP_NORNS', n: 3 },
+  { mode: 'horseshoe', pack: 'RP_HORSESHOE', n: 7 },
+  { mode: 'yggdrasil', pack: 'RP_YGGDRASIL', n: 9 },
+];
+const RUNY9 = ['Fehu', 'Uruz', 'Thurisaz', 'Ansuz', 'Raidho', 'Kenaz', 'Gebo', 'Wunjo', 'Hagalaz'];
+
+for (const L of ['en', 'is']) {
+  // single nesmí vyrobit blok — prázdná hlavička by byl jen šum
+  const jednaP = promptZeStavu(L, { drawn: [R('Jera')], mode: 'single' });
+  rekni(!/POSITIONS IN THIS READING|STÖÐURNAR Í LESTRINUM/.test(jednaP),
+        L + '  single → blok o pozicích v promptu NENÍ');
+
+  for (const sp of SPREADY) {
+    const runy = RUNY9.slice(0, sp.n);
+    const p = promptZeStavu(L, { drawn: runy.map(R), mode: sp.mode });
+    const S = glob(sp.pack)[L] || glob(sp.pack).en;
+    const stitky = S.positions || S.labels;
+    rekni(!!stitky && stitky.length === sp.n,
+          L + '  ' + sp.mode + ': pack má ' + (stitky ? stitky.length : 0) + ' štítků (čekáno ' + sp.n + ')');
+    // KAŽDÁ pozice i KAŽDÁ runa musí být v promptu — jinak se některá cestou ztratí
+    let chybi = 0;
+    stitky.forEach((st) => { if (p.indexOf(String(st).replace(/\s*:\s*$/, '')) === -1) chybi++; });
+    rekni(!chybi, L + '  ' + sp.mode + ': všech ' + sp.n + ' štítků pozic je v promptu');
+    rekni(runy.every(r => p.indexOf(r) !== -1),
+          L + '  ' + sp.mode + ': všech ' + sp.n + ' jmen run je v promptu');
+    rekni(p.indexOf(':: ') === -1, L + '  ' + sp.mode + ': žádná dvojitá dvojtečka ve výpisu');
+  }
+
+  // obranné větve: neznámý typ a spread bez run nesmí vyrobit prázdnou hlavičku
+  ['naprosto-neznamy', ''].forEach((m, i) => {
+    const p = promptZeStavu(L, { mode: m, drawn: i === 0 ? [R('Jera')] : [] });
+    rekni(!/POSITIONS IN THIS READING|STÖÐURNAR Í LESTRINUM/.test(p),
+          L + '  ' + (i === 0 ? 'neznámý typ čtení' : 'spread bez run') + ' → žádný prázdný blok');
+  });
+}
+
+// ── 11) placeholder v poli čerpá z TÉHOŽ seznamu (§18 — jeden zdroj, dvě podoby) ──
 // Kdyby se rozešly, v poli by problikávaly jiné věty, než jaké nabízí rozbalená nápověda.
 sandbox.lang = 'en';
 sandbox.readerUser = { name: 'Anna', lifeRune: R('Gebo'), question: '' };

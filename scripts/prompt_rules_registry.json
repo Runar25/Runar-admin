@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-11",
- "prompt_version": "v4.20-askseeking",
+ "prompt_version": "v4.21-askpositions",
  "pravidla": [
   {
    "hash": "54d29df4d80b",
@@ -310,12 +310,6 @@
    "zacatek": "Output ONLY your answer as flowing prose. No JSON, no headings, no pre"
   },
   {
-   "hash": "521859074c6c",
-   "lang": "en",
-   "zdroj": "ask",
-   "zacatek": "LIFE RUNE — the seeker carries Ehwaz as their own; it was not drawn to"
-  },
-  {
    "hash": "fea2301dd465",
    "lang": "en",
    "zdroj": "ask",
@@ -350,6 +344,12 @@
    "lang": "en",
    "zdroj": "ask",
    "zacatek": "WHAT THIS READING WAS CAST FOR — the seeker named the part of life it "
+  },
+  {
+   "hash": "0dce88d2e626",
+   "lang": "en",
+   "zdroj": "ask",
+   "zacatek": "POSITIONS IN THIS READING — the seeker sees these named on screen, so "
   },
   {
    "hash": "6ecd330c9a42",
@@ -838,12 +838,6 @@
    "zacatek": "Þú gafst leitandanum þennan rúnalestur:"
   },
   {
-   "hash": "f0e1d7a6a0f8",
-   "lang": "is",
-   "zdroj": "ask",
-   "zacatek": "Rúnir sem dregnar voru: Ansuz."
-  },
-  {
    "hash": "eeccb6c5945a",
    "lang": "is",
    "zdroj": "ask",
@@ -926,6 +920,12 @@
    "lang": "is",
    "zdroj": "ask",
    "zacatek": "FYRIR HVAÐ LESTURINN VAR DREGINN — leitandinn nefndi sjálfur sviðið (S"
+  },
+  {
+   "hash": "1013b8da068f",
+   "lang": "is",
+   "zdroj": "ask",
+   "zacatek": "STÖÐURNAR Í LESTRINUM — leitandinn sér þær nefndar á skjánum, svo spur"
   },
   {
    "hash": "6ecd330c9a42",

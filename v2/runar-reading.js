@@ -570,6 +570,21 @@ function _intentIdx(v) {
 //     kontrola musela sber faktu OPSAT — a opsana hranice neni otestovana hranice (§19.1).
 // Presne tuhle diru mel `ask_h_asked`: nabizel „jak to souvisi s tim, na co jsem se ptal",
 // ale puvodni otazka se do promptu nikdy neposilala a nic to nehlidalo.
+// Pozice ve spreadu — vlastni funkce vedle `_askCast`, a zamerne NE v nem: `_askCast` vlastni
+// to, co clovek VYPLNIL (ownerovo pravidlo 2026-09-11), kdezto pozice jsou struktura ctení.
+// Michat je do jednoho objektu by rozmazalo smysl kontroly, ktera `_askCast` hlida.
+// Jmena z `_lastDrawn` (kanonicka), ne z `_lastSegs` — ta psal model.
+// JEDNO misto, kde se Ask prompt sklada. Kontrola musi projit TUDY, jinak testuje builder
+// a ne zapojeni — a dira ve volani ji neproskoci (stalo se 2026-09-11 u pozic).
+function _askBuild(reading, q, runes) {
+  var _lf = (readerUser && readerUser.lifeRune) || null;
+  if (_lf && (_lastDrawn || []).some(function (r) { return r && r.n === _lf.n; })) _lf = null;
+  return buildAskPrompt(reading, q, runes, lang, corrections, _lf, _askCast(), _askSpread());
+}
+function _askSpread() {
+  return { mode: _spreadMode,
+           runy: (_lastDrawn || []).filter(Boolean).map(function (r) { return rn(r); }) };
+}
 function _askCast() {
   var u = readerUser || {};
   return { area: u.area, intention: u.intention, seeking: u.seeking, question: u.question };
@@ -711,9 +726,7 @@ async function askRunar() {
   if (btn) { btn.disabled = true; btn.textContent = t('ask_thinking'); }
   setSt('ask-status', '');
   var sys = buildSysPrompt(activeChar, lang);
-  var _lf = (readerUser && readerUser.lifeRune) || null;
-  if (_lf && (_lastDrawn || []).some(function (r) { return r && r.n === _lf.n; })) _lf = null;
-  var prompt = buildAskPrompt(reading, q, runes, lang, corrections, _lf, _askCast());
+  var prompt = _askBuild(reading, q, runes);
   // Attach the follow-up whenever the reading was actually stored — _lastReadingId is set
   // only then, so it is the single gate (never re-check the save conditions here: that is how
   // 'someone' readings silently lost their Ask). Identical for mine + someone.

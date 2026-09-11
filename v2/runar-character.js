@@ -1551,8 +1551,46 @@ function _askCastContext(cast, lang) {
     + 'answer plainly in its terms, from the runes that were drawn.' + qv;
 }
 
+// ─── POZICE VE SPREADU ───────────────────────────────────────
+// Stitky pozic uz existuji — kazdy spread je ma ve svem RP_* packu pro prompt ctení.
+// Tady se jen CTOU. Norny je drzi pod `labels`, ostatni tri pod `positions`.
+function _askPositions(mode, lang) {
+  var packy = {
+    kriz:      typeof RP_KRIZ      !== 'undefined' ? RP_KRIZ      : null,
+    norns:     typeof RP_NORNS     !== 'undefined' ? RP_NORNS     : null,
+    horseshoe: typeof RP_HORSESHOE !== 'undefined' ? RP_HORSESHOE : null,
+    yggdrasil: typeof RP_YGGDRASIL !== 'undefined' ? RP_YGGDRASIL : null,
+  };
+  var pack = packy[mode];
+  if (!pack) return null;
+  var S = pack[lang] || pack.en;
+  return (S && (S.positions || S.labels)) || null;
+}
+
+// `spread` = { mode: 'kriz'|..., runy: ['Jera', ...] } v poradi tazeni.
+// Single vraci '' — zadne pozice nema a prazdna hlavicka by byla sum.
+function _askSpreadContext(spread, lang) {
+  var s = spread || {};
+  if (!s.mode || s.mode === 'single') return '';
+  var stitky = _askPositions(s.mode, lang), runy = s.runy || [];
+  if (!stitky || !runy.length) return '';
+  var radky = [];
+  for (var i = 0; i < runy.length && i < stitky.length; i++) {
+    if (!runy[i]) continue;
+    // Stitek konci dvojteckou (je psany jako hlavicka promptu ctení) — useknout,
+    // at nevznikne „Framar / Stefna:: Jera".
+    radky.push(String(stitky[i]).replace(/\s*:\s*$/, '') + ': ' + runy[i]);
+  }
+  if (!radky.length) return '';
+  return (lang === 'is'
+    ? 'STÖÐURNAR Í LESTRINUM — leitandinn sér þær nefndar á skjánum, svo spurningin '
+      + 'getur snúið að hverri þeirra:'
+    : 'POSITIONS IN THIS READING — the seeker sees these named on screen, so a question '
+      + 'may reach for any one of them:') + '\n' + radky.join('\n');
+}
+
 // reading = the text Rúnar gave · question = seeker's follow-up · runes = comma list of rune names
-function buildAskPrompt(reading, question, runes, lang, corrections, life, cast) {
+function buildAskPrompt(reading, question, runes, lang, corrections, life, cast, spread) {
   var S = RP_ASK[lang] || RP_ASK.en;
   return [
     S.intro(reading, runes),
@@ -1562,6 +1600,7 @@ function buildAskPrompt(reading, question, runes, lang, corrections, life, cast)
     // Stojí ZA `S.rules`, protože ta říká „nesouvisející otázky neodpovídej"; tohle je
     // vymezená výjimka a musí ji přebít, ne naopak.
     _dvergarContext(question, lang),
+    _askSpreadContext(spread, lang),
     _askLifeContext(life, lang),
     _askCastContext(cast, lang),
     _describeRule(lang),
