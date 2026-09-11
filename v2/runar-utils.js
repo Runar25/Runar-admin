@@ -516,10 +516,24 @@ function setSt(id, msg, type) {
 }
 
 // ─── showToast() ─────────────────────────────────────────
-function showToast(msg, dur = 3000) {
+// Druhy argument je bud DELKA (cislo), nebo TYP ('ok' / 'err'). Do 2026-09-11 se bral
+// vzdy jako delka — a pet volajicich posila typ, takze jim `setTimeout(fn, 'err')` delalo
+// 0 ms a hlaska zmizela driv, nez ji sel precist.
+// ⚠️ A hlavne: v readeru tenhle toast do 2026-09-11 NEEXISTOVAL vubec — prvek `#toast`
+// v HTML nebyl, takze funkce na prvnim radku tise skoncila. 22 volajicich, nula hlasek:
+// „ulozeno / neulozeno" u prepinacu soukromi, uplatneni karty, brany na spready.
+function showToast(msg, opt) {
   const el = document.getElementById('toast'); if (!el) return;
-  el.textContent = msg; el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), dur);
+  const dur = (typeof opt === 'number') ? opt : 3000;
+  const typ = (typeof opt === 'string') ? opt : '';
+  el.className = 'toast' + (typ ? ' ' + typ : '');
+  el.textContent = msg;
+  // Pretece-li druha hlaska pres prvni, prvni casovac by tu druhou schoval driv.
+  if (el._t) clearTimeout(el._t);
+  // Trida `show` az v dalsim ramci — jinak prohlizec prechod nespusti, kdyz se prvek
+  // ve stejnem ramci zmenil.
+  requestAnimationFrame(function () { el.classList.add('show'); });
+  el._t = setTimeout(function () { el.classList.remove('show'); }, dur);
 }
 
 // ─── stream() ─────────────────────────────────────────

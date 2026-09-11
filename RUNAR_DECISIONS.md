@@ -5288,3 +5288,31 @@ jazycích prompt **dovoluje** poctivé „nemá kořeny" a **zakazuje** vymyslet
 `tree-name-lore` nově i ve strukturálním seznamu té kontroly. Smoke 39/39.
 **Affected doc(s):** `RUNAR_BACKLOG.md` (položka „rozbor jména jako samostatná volba" odškrtnuta,
 to-do ownera doplněno o migraci) — v témž commitu.
+
+---
+
+## 2026-09-11 (8) — Souhlas testerů sliboval EU. Nesliboval pravdu.
+
+**Co bylo špatně:** souhlasový text říkal *„Your data stays in the EU"* / *„Gögnin þín eru geymd
+innan EES"*. Jenže aby čtení vůbec vzniklo, **jde jeho text k Anthropicu a hlas k ElevenLabs —
+obojí do USA**. Souhlas tedy nepokrýval to, co se doopravdy děje. Nalezl audit 2026-09-11.
+
+**Co se udělalo — a to druhé je důležitější než to první:**
+1. Znění nově **jmenuje oba zpracovatele i zemi**, a teprve pak říká, co zůstává v EU. Kratší
+   cestou to nejde: Anthropic ani ElevenLabs do EU přesunout neumíme, takže jediná oprava je
+   říct to nahlas.
+2. **Tři účty, které souhlasily na starém znění, mají `tester_consent_at` vynulovaný.** Opravit
+   text a nechat staré souhlasy platit by znamenalo mít podpis pod dokumentem, který už neplatí.
+   Modal se jim ukáže znovu.
+
+**Při té příležitosti dvě další věci ze stejného rodu:**
+- **`RUNAR_PRIVACY.md` znění OPISOVAL** a ta kopie se rozešla s pravdou úplně stejně. Doc teď
+  ukazuje na `UI_TEXT.*.tcm_body` a znění neopisuje (§20). Dvě kopie = rozpor s odloženou
+  splatností, tady doslova.
+- **Reporter posílal do Slacku obsah i identitu:** `message` (vlastní slova člověka),
+  `flagged_text` (u zdroje „screen" začátek čtení i se jménem), `suggested_replacement`
+  a `tester`. Slack je US služba a souhlas to nepokrýval — porušovalo to **pravidlo 5** v našem
+  vlastním `RUNAR_PRIVACY.md`. Slack má nově jediný úkol: **říct, že něco přišlo**, a dát `id`;
+  obsah si owner přečte v shrine, který běží v EU.
+
+**Affected doc(s):** `RUNAR_PRIVACY.md` — v témž commitu.

@@ -30,17 +30,15 @@ opt-outu (ne opt-in brána). Výslovný souhlas jen u testerů — a ti CHTĚJÍ
 
 ## Tester consent (in-app, při vydání/prvním loginu tester účtu)
 
-**EN:**
-> **You're a Rúnar tester — thank you.** To help us make the readings better, we store the readings
-> you draw and review their text and the details you enter to improve Rúnar's quality. Your data stays
-> in the EU, we never sell it, and you can ask us to delete it at any time. You can stop testing whenever
-> you like. **[ I agree ]**
+⛔ **Znění se sem NEOPISUJE.** Vlastníkem je `UI_TEXT.en.tcm_body` a `UI_TEXT.is.tcm_body`
+v `v2/runar-translations.js` (§20). Do 2026-09-11 tu stála kopie — a **rozešla se s pravdou**:
+tvrdila „Your data stays in the EU" / „Gögnin þín eru geymd innan EES", jenže text čtení jde
+k **Anthropicu** a hlas k **ElevenLabs**, obojí do USA. Souhlas sebraný na to znění tedy
+nepokrýval, co se doopravdy děje.
 
-**IS (ověřené is-grammar-qa / BÍN; právní kontrola):**
-> **Þú ert prófari fyrir Rúnar — takk fyrir.** Til að hjálpa okkur að bæta lestrana geymum við lestrana
-> sem þú dregur og förum yfir texta þeirra og upplýsingarnar sem þú slærð inn, til að bæta gæði Rúnars.
-> Gögnin þín eru geymd innan EES, við seljum þau aldrei, og þú getur beðið um að þeim verði eytt hvenær
-> sem er. Þú getur hætt að prófa hvenær sem þér hentar. **[ Ég samþykki ]**
+**Opraveno 2026-09-11:** znění nově pojmenuje oba zpracovatele i zemi. A protože tři účty
+souhlasily na tom starém, byl jim `tester_consent_at` **vynulován** — modal se jim ukáže znovu
+a souhlasí na pravdivém textu. Detail → `RUNAR_DECISIONS.md` 2026-09-11 (8).
 
 ## Privacy policy — „Your readings" sekce (na agndofa.is)
 

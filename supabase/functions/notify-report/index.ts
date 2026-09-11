@@ -21,14 +21,15 @@ function buildSlackMessage(r: Record<string, any>) {
   const emoji  = TYPE_EMOJI[r.type] ?? "🚩";
   const header = `${emoji} New Rúnar report · *${r.type ?? "other"}*`;
 
+  // ⚠️ 2026-09-11: do Slacku UZ NEJDE OBSAH ANI IDENTITA.
+  // Odchazelo odsud `message` (vlastni slova cloveka), `flagged_text` (u zdroje "screen"
+  // zacatek CTENI, tedy i se jmenem), `suggested_replacement` a `tester` (kdo to poslal).
+  // Slack je US sluzba a souhlas testera tohle nepokryva — porusovalo to pravidlo 5
+  // v RUNAR_PRIVACY.md. Obsah si owner precte v shrine, ktery bezi v EU.
+  // Slack ma jeden ukol: rict, ZE neco prislo, a dat zachytny bod — proto `id`.
   const lines: string[] = [];
-  if (r.message) lines.push(`> ${clip(r.message, 500)}`);
-  if (r.flagged_text) {
-    const arrow = r.suggested_replacement ? ` → *${clip(r.suggested_replacement, 200)}*` : "";
-    lines.push(`*flagged:* “${clip(r.flagged_text, 240)}”${arrow}`);
-  }
   const meta: string[] = [];
-  if (r.tester)         meta.push(`👤 ${clip(r.tester, 40)}`);
+  if (r.id)             meta.push(`id ${clip(r.id, 40)}`);
   if (r.locale)         meta.push(`🌐 ${clip(r.locale, 12)}`);
   if (r.app_version)    meta.push(`⚙︎ ${clip(r.app_version, 16)}`);
   if (r.screen_context) meta.push(`🖥 ${clip(r.screen_context, 40)}`);
