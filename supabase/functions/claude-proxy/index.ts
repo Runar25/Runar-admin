@@ -544,16 +544,19 @@ serve(async (req: Request) => {
     // zapis by DB trigger odmitl, ale Claude by se zavolal (a zaplatil) pokazde.
     const isLifeRune = mode === "life_rune";
     const isFounding = mode === "founding";
+    // Rozbor jmena (2026-09-11): samostatna volba vedle zivotni runy, taky zdarma a taky
+    // jednou za ucet — jinak by byl volny mod dirou na penize.
+    const isNameLore = mode === "name_lore";
     // Dva RITUALNI mody. Oba zdarma, oba textove (hlas = 95 % ceny cteni, a ten se
     // nekona). Zdarma je nedela cislo od klienta, ale tenhle `mode` — proto zustava
     // podlaha Math.max(1, spread_cost) niz: klient si zdarma rict nesmi.
-    const isRitual = isLifeRune || isFounding;
+    const isRitual = isLifeRune || isFounding || isNameLore;
     if (isRitual) {
       if (!userId) {
         return json({ error: "unavailable", message: "The runes are quiet. Try again shortly." }, 401);
       }
       const { data: pr, error: prErr } = await sb()
-        .from("user_profiles").select("life_rune_text, tree_founded_at")
+        .from("user_profiles").select("life_rune_text, tree_founded_at, name_lore_text")
         .eq("id", userId).maybeSingle();
       if (prErr) {
         // Fail OPEN, stejna posture jako mesicni strop: vypadek cteni nesmi zablokovat
@@ -567,6 +570,8 @@ serve(async (req: Request) => {
         // by tenhle mod jinak byl Norny zdarma pro kohokoli, kdo si o nej rekne.
         return json({ error: "unavailable", message: "The runes are quiet. Try again shortly." }, 409);
       } else if (isFounding && pr?.tree_founded_at) {
+        return json({ error: "unavailable", message: "The runes are quiet. Try again shortly." }, 409);
+      } else if (isNameLore && pr?.name_lore_text) {
         return json({ error: "unavailable", message: "The runes are quiet. Try again shortly." }, 409);
       }
     }

@@ -1211,6 +1211,8 @@ Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
 
 ## Migrace a označení testerů
 
+- [ ] **Spustit migraci rozboru jména** — `sql/2026-09-11_name_lore.sql` (sloupec + grant).
+      ⚠️ Bez ní tlačítko „Co nese moje jméno?" selže při ukládání.
 - [ ] **Spustit migraci měsíčního stropu hlasu** — `sql/2026-09-11_voice_monthly_cap.sql`
       (hotová, přidá dva server-owned sloupce). ⚠️ Dokud neproběhne, edge funkce ty sloupce
       nenajde a **strop nebude platit** — hlas poteče bez omezení.
@@ -1249,7 +1251,7 @@ Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
 
 ---
 
-## Rozbor jména jako SAMOSTATNÁ volba (2026-09-11, od ownera)
+## ~~Rozbor jména jako SAMOSTATNÁ volba~~ ✅ HOTOVO 2026-09-11 (`RUNAR_DECISIONS.md` 2026-09-11 (7))
 
 Z automatického čtení životní runy je odpojený (důvod → `RUNAR_DECISIONS.md` 2026-09-11 (6)).
 Owner ho chce nabízet **zvlášť**: *„pokud zadám jméno, může se mi to nabídnout jako další

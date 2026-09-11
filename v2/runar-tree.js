@@ -13,6 +13,7 @@
 
 // Cached life rune reading from DB
 var _lifeRuneText  = null;  // text of generated reading
+var _nameLoreText  = null;  // rozbor jmena — SAMOSTATNA volba vedle zivotni runy (2026-09-11)
 var userTreeFounded = false;   // z DB (tree_founded_at) — server-only sloupec
 var _foundingPending = false;  // uzivatel klikl na zalozeni; ceka se na Norny
 var _foundingText = null;      // text zakladacich Norn (z readings)
@@ -318,6 +319,9 @@ function updateTreeTab() {
   states.forEach(function(id){ var el=document.getElementById(id); if(el) el.style.display='none'; });
   var _gsec = document.getElementById('tree-growth-section');
   if (_gsec) _gsec.style.display = 'block';
+  // PRED vetvenim: `updateTreeTab` ma nekolik `return`u a sekce se ma chovat spravne
+  // ve vsech (navstevnik ji nema videt, prihlaseny se jmenem ano).
+  _renderNameLore();
 
   if (!currentUser) {
     // KUKY 2026-09-11: „ta life rune ma byt pro vsechny." Zivotni runa je ciste vypocet
@@ -616,6 +620,57 @@ function _rsLifeRuneReading() {
 // takze to dela vetsina lidi), mel tu prazdno — a cteni ho oslovovalo „you" misto jmenem.
 // Vlastni funkce proto, aby to sla protlacit kontrolou; `generateLifeRuneReading` chodi na sit.
 // Doklad a nasledek -> RUNAR_DECISIONS.md 2026-09-11 (6).
+// Rozbor jmena: tlacitko, dokud text neni; pak text. Ukazuje se JEN prihlasenemu, ktery
+// jmeno opravdu ma — bez jmena neni co rozebirat a nabizet prazdnou volbu je matouci.
+// KUKY 2026-09-11: „pokud zadam jmeno, muze se mi to nabidnout jako dalsi moznost."
+function _renderNameLore() {
+  var box = document.getElementById('tree-name-lore');
+  if (!box) return;
+  var maJmeno = !!(typeof userName !== 'undefined' && userName);
+  if (!currentUser || !maJmeno) { box.style.display = 'none'; return; }
+  box.style.display = 'block';
+  var lbl = document.getElementById('name-lore-lbl');
+  if (lbl) lbl.textContent = t('name_lore_lbl');
+  var intro = document.getElementById('name-lore-intro');
+  var cta = document.getElementById('name-lore-cta');
+  var txt = document.getElementById('name-lore-text');
+  var btn = document.getElementById('name-lore-btn');
+  if (_nameLoreText) {
+    if (intro) intro.style.display = 'none';
+    if (cta) cta.style.display = 'none';
+    if (txt) { txt.style.display = 'block'; txt.innerHTML = String(_nameLoreText).replace(/\n/g, '<br>'); }
+    return;
+  }
+  if (intro) { intro.style.display = 'block'; intro.textContent = t('name_lore_intro'); }
+  if (cta) cta.style.display = '';
+  if (txt) txt.style.display = 'none';
+  if (btn && !btn.disabled) btn.textContent = t('name_lore_btn');
+}
+
+async function generateNameLore() {
+  if (!currentUser || _nameLoreText) return;
+  var btn = document.getElementById('name-lore-btn');
+  if (btn) { btn.disabled = true; btn.textContent = t('reading_loading'); }
+  var mode = RUNAR_MODES.name_lore;
+  var prompt = buildNameLorePrompt(_lifeRuneName(), lang, corrections);
+  var sys = buildSysPrompt(activeChar, lang);
+  // Zdarma — a rozhoduje o tom PROXY podle `mode`, ne tahle nula (klient si zdarma rict nesmi).
+  var res = await callProxy(sys, prompt, mode.max_tokens, false, 0, null, 'name_lore');
+  if (btn) { btn.disabled = false; btn.textContent = t('name_lore_btn'); }
+  if (res.error || !res.text) { setSt('st-voice', t('reading_error'), 'err'); return; }
+  _nameLoreText = res.text;
+  // Zapis se MUSI overit (tentyz duvod jako u zivotni runy): zahozena chyba by nechala
+  // text, ktery zije jen v teto session a po reloadu je pryc — a znovu vygenerovat uz nejde,
+  // protoze proxy pusti rozbor jmena jen jednou.
+  var r = await sb.from('user_profiles').update({ name_lore_text: _nameLoreText })
+    .eq('id', currentUser.id);
+  if (r && r.error) {
+    console.error('persist name lore failed:', r.error.message);
+    showToast(t('err_save_failed'));
+  }
+  _renderNameLore();
+}
+
 function _lifeRuneName() {
   var z = (typeof displayName === 'function') ? displayName() : '';
   if (z) return z;
@@ -697,7 +752,7 @@ async function generateLifeRuneReading() {
 async function loadLifeRuneFromDB() {
   if (!currentUser) return;
   var res = await sb.from('user_profiles')
-    .select('life_rune_number, life_rune_text, life_rune_lang')
+    .select('life_rune_number, life_rune_text, life_rune_lang, name_lore_text')
     .eq('id', currentUser.id)
     .single();
   if (res.data && res.data.life_rune_text) {
@@ -705,6 +760,9 @@ async function loadLifeRuneFromDB() {
     _lifeRuneLang = res.data.life_rune_lang;
     _lifeRuneNum  = res.data.life_rune_number;
   }
+  // MIMO podmínku výš schválně: rozbor jména je samostatná volba a může existovat i tehdy,
+  // když životní runa ještě vygenerovaná není. Uvnitř by se načetl jen někomu.
+  if (res.data && res.data.name_lore_text) _nameLoreText = res.data.name_lore_text;
 }
 
 function openJournalFromPanel() {

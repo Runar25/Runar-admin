@@ -136,6 +136,46 @@ for (const L of ['en', 'is']) {
   }
 }
 
+// ── ROZBOR JMÉNA: samostatná volba, a smí poctivě skončit „nemá severské kořeny" ──
+// KUKY 2026-09-11: „rozbor jména můžeme udělat zvlášť… pokud zadám jméno, může se mi to
+// nabídnout jako další možnost." + „‚tohle jméno v severské tradici kořeny nemá‘ tohle tam
+// má být taky. jméno není severské, nejde udělat rozbor."
+// ⚠️ Ta druhá věta je jádro: dokud instrukce žádala severský význam KAŽDÉHO jména, model
+// neměl na výběr a musel si ho vymyslet (§23). Test proto hlídá, že ta úniková cesta v promptu
+// JE — v obou jazycích. Bez ní se vada vrátí i v samostatné podobě.
+{
+  const stavNL = (jmeno, prihlasen, text, L) => {
+    Object.keys(prvky).forEach((k) => { prvky[k].style = {}; prvky[k].textContent = ''; prvky[k].innerHTML = ''; });
+    vm.runInContext('userName=' + JSON.stringify(jmeno || '')
+      + '; currentUser=' + (prihlasen ? '{id:"u1",email:"a@b.cz"}' : 'null')
+      + '; _nameLoreText=' + (text ? JSON.stringify(text) : 'null')
+      + '; readerUser={}; lang=' + JSON.stringify(L) + ';', S);
+    vm.runInContext('_renderNameLore()', S);
+    const g = (id) => (prvky[id] || mk(id));
+    return { box: g('tree-name-lore').style.display, cta: g('name-lore-cta').style.display,
+             txt: g('name-lore-text').style.display, obsah: String(g('name-lore-text').innerHTML) };
+  };
+  for (const L of ['en', 'is']) {
+    rekni(stavNL('Kuky', false, null, L).box === 'none', L + '  nepřihlášený → rozbor jména se nenabízí');
+    rekni(stavNL('', true, null, L).box === 'none', L + '  přihlášený BEZ jména → nenabízí se (není co rozebírat)');
+    const a = stavNL('Kuky', true, null, L);
+    rekni(a.box === 'block' && a.cta === '' && a.txt === 'none',
+          L + '  přihlášený se jménem → nabídne se tlačítko');
+    const b = stavNL('Kuky', true, 'Zdenek nemá v severské tradici kořeny.', L);
+    rekni(b.box === 'block' && b.cta === 'none' && b.txt === 'block' && b.obsah.indexOf('kořeny') !== -1,
+          L + '  hotový rozbor → ukáže se text a tlačítko zmizí');
+
+    // Prompt: úniková cesta MUSÍ být. Tohle je ta věta, kvůli které se to celé přepisovalo.
+    const p = vm.runInContext('buildNameLorePrompt', S)('Zdenek', L, null);
+    rekni(p.indexOf('Zdenek') !== -1, L + '  prompt rozboru nese jméno');
+    rekni(L === 'en' ? /say so plainly and stop there/.test(p) : /seg\u00f0u \u00fea\u00f0 hreint \u00fat/.test(p),
+          L + '  prompt DOVOLUJE odpovědět, že jméno severské kořeny nemá');
+    rekni(L === 'en' ? /never build a meaning the name does not have/.test(p)
+                     : /b\u00fa\u00f0u aldrei til/.test(p),
+          L + '  prompt ZAKAZUJE vymyslet význam, který jméno nemá');
+  }
+}
+
 // ── STRUKTURA: každý stav životní runy musí LEŽET v panelu životní runy ─────
 // ⚠️ Tohle je díra, kterou měl test do 2026-09-11 a kvůli které jsem se spolehl na to,
 // že je přesun sekce úplný. Testoval LOGIKU nad vymyšleným DOM, kde panely vůbec
@@ -159,7 +199,10 @@ if (rLife && rTree) {
   // záložka zůstane prázdná právě v tom stavu — a jen v něm, takže si toho nikdo nevšimne.
   const STAVY = ['tree-no-dob', 'tree-rs-teaser', 'tree-reveal-cta', 'tree-loading',
                  'tree-reading-exists', 'tree-reading-text', 'tree-rune-name-exists',
-                 'tree-dob-btn', 'tree-reveal-btn', 'tree-rs-reveal-btn'];
+                 'tree-dob-btn', 'tree-reveal-btn', 'tree-rs-reveal-btn',
+                 // rozbor jména (2026-09-11) — při psaní jsem ho omylem vložil ZA uzavírací
+                 // značku panelu, tedy mimo něj. Proto je tady.
+                 'tree-name-lore', 'name-lore-btn', 'name-lore-text'];
   for (const id of STAVY) {
     const r = HTML.findIndex(l => l.indexOf('id="' + id + '"') !== -1);
     const vLife = r > rLife[0] && r < rLife[1];

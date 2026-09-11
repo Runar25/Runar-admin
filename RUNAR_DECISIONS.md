@@ -5254,3 +5254,37 @@ pojmenoval správně: *„pokud jméno není islandské, tak by se na něj nemě
 produkční pořadí souborů. Mutační test (vrácení odstavce) → **2 FAIL**.
 `RUNAR_PROMPT_VERSION` v4.21 → **v4.22-liferunename** · smoke 39/39.
 **Affected doc(s):** `RUNAR_BACKLOG.md` (samostatný rozbor jména + mezera v registru) — v témž commitu.
+
+---
+
+## 2026-09-11 (7) — Rozbor jména je samostatná volba a smí skončit „severské kořeny nemá"
+
+**Kdo/proč:** KUKY 2026-09-11: *„rozbor jména můžeme udělat zvlášť… pokud zadám jméno, může se
+mi to nabídnout jako další možnost."* a upřesnění, které je jádrem celé změny:
+*„‚tohle jméno v severské tradici kořeny nemá‘ — tohle tam má být taky. Jméno není severské,
+nejde udělat rozbor."* Navazuje na 2026-09-11 (6), kde byl odstavec z automatického čtení odpojen.
+
+⭐ **Podstatná je ta úniková cesta, ne ta featura.** Původní instrukce žádala „význam ve staré
+severštině nebo v severské mytologii" — a tím **model přinutila**: u jména bez severských kořenů
+nemá co říct pravdivého, takže vymyslí. Nový prompt proto říká nahlas, že *„nemá severské kořeny"*
+je **plnohodnotná odpověď, ne selhání**, a zakazuje tři konkrétní úniky: podobnost ve zvuku,
+vymyšlený význam, a změkčení do „možná". Poslední věta drží tón: *„Nafn án norrænna róta er ekki
+minna nafn; það er einfaldlega ekki okkar að lesa."*
+
+**Tvar:** vlastní tlačítko v záložce životní runy, vlastní text, vlastní prompt (`RP_NAME` +
+`buildNameLorePrompt`). **Není součástí** čtení životní runy — to přichází z data narození, jméno
+je jiné vlákno. Nabízí se **jen přihlášenému, který jméno opravdu má**; bez jména není co rozebírat.
+
+**Cena a pojistka:** režim `name_lore` je **zdarma a jednou za účet** — třetí rituální sourozenec
+vedle `life_rune` a `founding`, se stejnou posture a ze stejného důvodu: volný režim **bez** pojistky
+„už existuje" je díra na peníze, protože zápis by sice nic nezkazil, ale Claude by se zavolal
+a zaplatil při každém požadavku. Guard čte nový sloupec `name_lore_text` (server přes service_role),
+text si ukládá klient — stejně jako `life_rune_text`, a proto i stejný grant.
+
+**Ověřeno:** ㉣ rozšířena o strukturu i chování — nepřihlášený nabídku nevidí · přihlášený bez jména
+taky ne · se jménem se nabídne tlačítko · po vygenerování se ukáže text a tlačítko zmizí · a v obou
+jazycích prompt **dovoluje** poctivé „nemá kořeny" a **zakazuje** vymyslet význam.
+⚠️ Sekci jsem při psaní omylem vložil **za** uzavírací značku panelu, tedy mimo něj — proto je
+`tree-name-lore` nově i ve strukturálním seznamu té kontroly. Smoke 39/39.
+**Affected doc(s):** `RUNAR_BACKLOG.md` (položka „rozbor jména jako samostatná volba" odškrtnuta,
+to-do ownera doplněno o migraci) — v témž commitu.

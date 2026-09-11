@@ -1593,6 +1593,51 @@ function _askSpreadContext(spread, lang) {
       + 'may reach for any one of them:') + '\n' + radky.join('\n');
 }
 
+// ─── ROZBOR JMENA ────────────────────────────────────────────────
+// Samostatna volba, ne soucast ctení zivotni runy (KUKY 2026-09-11).
+// ⚠️ Do 2026-09-11 tohle viselo v promptu zivotni runy jako `nameInstr` a znelo „vyznam
+// ve stare severstine nebo v severske mytologii" — u jmena, ktere tam nic neznamena
+// (Kuky, Zdenek, Peter), model nemel na vyber a MUSEL si puvod vymyslet. To je presne to,
+// co §23 zakazuje, jen vynucene promptem.
+// KUKY: „jmeno neni severske, nejde udelat rozbor" — proto je „nema seversky puvod"
+// PLNOHODNOTNY vysledek, ne selhani, a prompt to rika nahlas.
+var RP_NAME = {
+  en: {
+    task: function (name) {
+      return 'THE NAME — the seeker gave the name “' + name + '”.\n'
+        + 'If that name has REAL roots in Old Norse or in Norse myth, say what it carries: '
+        + 'its meaning, or a figure or a quality bound to it. Keep it short — a few sentences.\n'
+        + 'If it does NOT — and many names do not — say so plainly and stop there. That is a '
+        + 'whole answer, not a failure. Never reach for a resemblance in sound, never build a '
+        + 'meaning the name does not have, and never soften it into a maybe. A name without '
+        + 'Norse roots is not a lesser name; it is simply not ours to read.\n'
+        + 'Do not draw runes, do not read the seeker, do not turn this into a reading.';
+    },
+  },
+  is: {
+    task: function (name) {
+      return 'NAFNIÐ — leitandinn gaf nafnið „' + name + '“.\n'
+        + 'Eigi það sér RAUNVERULEGAR rætur í norrænu máli eða goðafræði, segðu hvað það ber: '
+        + 'merkingu þess, eða mynd eða eiginleika sem því fylgir. Hafðu það stutt — fáeinar setningar.\n'
+        + 'Eigi það þær EKKI — og mörg nöfn eiga þær ekki — segðu það hreint út og segðu ekki meira. '
+        + 'Það er fullgilt svar, ekki mistök. Gríptu aldrei til líkinda í hljómi, búðu aldrei til '
+        + 'merkingu sem nafnið á ekki, og mýktu það ekki í „kannski". Nafn án norrænna róta er '
+        + 'ekki minna nafn; það er einfaldlega ekki okkar að lesa.\n'
+        + 'Dragðu engar rúnir, lestu ekki leitandann, gerðu ekki lestur úr þessu.';
+    },
+  },
+};
+
+function buildNameLorePrompt(name, lang, corrections) {
+  var S = RP_NAME[lang] || RP_NAME.en;
+  return [
+    S.task(name),
+    _addressContext(lang),
+    _noColdRead(lang),
+    getCorrPrompt(lang, corrections),
+  ].filter(Boolean).join('\n\n');
+}
+
 // reading = the text Rúnar gave · question = seeker's follow-up · runes = comma list of rune names
 function buildAskPrompt(reading, question, runes, lang, corrections, life, cast, spread) {
   var S = RP_ASK[lang] || RP_ASK.en;

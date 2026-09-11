@@ -33,7 +33,8 @@ grant insert (id) on public.user_profiles to authenticated;
 grant update (
   name, lang, address_gender, analytics_opt_out, tester_consent_at,
   dob_day, dob_month, dob_year,
-  tree_name, life_rune_number, life_rune_text, life_rune_lang
+  tree_name, life_rune_number, life_rune_text, life_rune_lang,
+  name_lore_text
 ) on public.user_profiles to authenticated;
 
 -- Úklid po ověřovacím testu (month_units byl při důkazu přepsán na 42).

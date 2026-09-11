@@ -56,7 +56,7 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 // v4.17 (2026-09-10): Ask zna zivotni runu. Do te doby ji `buildAskPrompt` nedostaval, takze
 //    odpoved na „jak me ovlivnuje moje zivotni runa" si model musel domyslet. Prompt ji ted nese
 //    jako tichy fakt — Runar ji nevyslovi sam od sebe, jen kdyz se na ni clovek zepta.
-const RUNAR_PROMPT_VERSION = 'v4.22-liferunename';
+const RUNAR_PROMPT_VERSION = 'v4.23-namelore';
 
 // Mesicni strop hlasu. KUKY 2026-09-11: „limit na hlas max 5 na mesic — je to spis
 // ochutnavka nez aby to porad vyuzivali." ElevenLabs se plati po znacich a jedine, co ho
@@ -106,6 +106,16 @@ const RUNAR_MODES = {
   life_rune_standard: {
     label:      'Life Rune Reading',
     max_tokens: 1200,
+    voice:      false,
+    layers:     null,
+    active:     true,
+  },
+  // Rozbor jmena — samostatna volba vedle zivotni runy (KUKY 2026-09-11). Kratky text,
+  // bez hlasu. Smi skoncit tim, ze jmeno seversky puvod NEMA — to je plnohodnotny vysledek,
+  // ne selhani, proto staci malo tokenu.
+  name_lore: {
+    label:      'Name Lore',
+    max_tokens: 700,
     voice:      false,
     layers:     null,
     active:     true,
@@ -333,6 +343,8 @@ const SPREAD_COSTS = {
   horseshoe: { free: null, credits: 4  },
   norns:     { free: null, credits: 2  },
   yggdrasil: { free: null, credits: 5  },
+  name_lore: { free: null, credits: 0  },  // ZDARMA — jako zivotni runa: textove, bez hlasu,
+                                           // a jednou za ucet. Vynucuje PROXY podle `mode`.
   life_rune: { free: null, credits: 0  },  // ZDARMA (KUKY 2026-07-19) — textove cteni,
                                            // bez hlasu, ~$0.006. Vynucuje PROXY (mode),
                                            // ne tohle cislo; klient si zdarma rict nesmi.
