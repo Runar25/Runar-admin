@@ -100,5 +100,44 @@ for (const L of ['en', 'is']) {
   rekni(c.vyzva === T.tree_rs_teaser, L + '  …s vlastním textem, ne s tím pro návštěvníka');
 }
 
+// ── STRUKTURA: každý stav životní runy musí LEŽET v panelu životní runy ─────
+// ⚠️ Tohle je díra, kterou měl test do 2026-09-11 a kvůli které jsem se spolehl na to,
+// že je přesun sekce úplný. Testoval LOGIKU nad vymyšleným DOM, kde panely vůbec
+// neexistují — kdyby některý stav zůstal v panelu STROMU, uživatel by na záložce
+// životní runy viděl PRÁZDNO a kontrola by byla zelená. Owner to našel dřív než ona.
+//
+// Čte se skutečné HTML, ne DOM: jde o to, kam prvek patří ve zdroji.
+const HTML = fs.readFileSync(DIR + 'runar-reader.html', 'utf8').split('\n');
+function rozsah(idPanelu, konecZnacka) {
+  const od = HTML.findIndex(l => l.indexOf('id="' + idPanelu + '"') !== -1);
+  const doo = HTML.findIndex((l, i) => i > od && l.indexOf(konecZnacka) !== -1);
+  return (od === -1 || doo === -1) ? null : [od, doo];
+}
+const rLife = rozsah('apane-liferune', '/apane-liferune');
+const rTree = rozsah('apane-tree', '/apane-tree');
+rekni(!!rLife, 'panel `apane-liferune` v HTML existuje');
+rekni(!!rTree, 'panel `apane-tree` v HTML existuje');
+
+if (rLife && rTree) {
+  // Stavy, kterými `updateTreeTab()` přepíná životní runu. Kdyby některý skončil jinde,
+  // záložka zůstane prázdná právě v tom stavu — a jen v něm, takže si toho nikdo nevšimne.
+  const STAVY = ['tree-no-dob', 'tree-rs-teaser', 'tree-reveal-cta', 'tree-loading',
+                 'tree-reading-exists', 'tree-reading-text', 'tree-rune-name-exists',
+                 'tree-dob-btn', 'tree-reveal-btn', 'tree-rs-reveal-btn'];
+  for (const id of STAVY) {
+    const r = HTML.findIndex(l => l.indexOf('id="' + id + '"') !== -1);
+    const vLife = r > rLife[0] && r < rLife[1];
+    const vTree = r > rTree[0] && r < rTree[1];
+    rekni(r !== -1 && vLife && !vTree,
+          '`' + id + '` leží v panelu životní runy'
+          + (r === -1 ? ' — V HTML VŮBEC NENÍ' : (vTree ? ' — ZŮSTAL V PANELU STROMU' : '')));
+  }
+  // A obráceně: co patří stromu, nesmí se do životní runy zatoulat.
+  for (const id of ['tree-living', 'tree-name-section', 'tree-founding-cta', 'tree-tester-bar']) {
+    const r = HTML.findIndex(l => l.indexOf('id="' + id + '"') !== -1);
+    rekni(r !== -1 && r > rTree[0] && r < rTree[1], '`' + id + '` zůstal v panelu stromu');
+  }
+}
+
 if (fail) { console.log('\nFAIL — ' + fail + ' tvrzení o záložce životní runy neplatí.'); process.exit(1); }
 console.log('\nOK — životní runa funguje i bez účtu (návštěvník dostane runu, čtení zůstává za přihlášením).');
