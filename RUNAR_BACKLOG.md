@@ -845,6 +845,26 @@ Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je 
 
   **K otestování (nic z toho není rozhodnuté):** která z variant (a)/(b) dá scénu a ne šev · jestli jedna věta stačí, nebo je potřeba víc · co dělá osm ramen se stále týmž středem (riziko jednotvárnosti — u životní runy jako pouhé závěrečné čočky bylo dávání/výměna v ~7 ze 13 čtení, měřeno 2026-09-11).
 
+- [ ] **GPT rešerše Vegvísiru (2026-09-11) — co z ní bere §23 a co ne.** Zapsáno na pokyn ownera.
+
+  🔒 **Doložitelné:** Vegvísir je islandský **galdrastafur**, ne runa a ne kompas. `vegur` (cesta) + `vísir` (ten, kdo ukazuje). Nejstarší známý doklad = rukopis **Huld, ÍB 383 4to**, sestavil **Geir Vigfússon, Akureyri 1860**. Text říká, že kdo znak nese, **neztratí se v bouři ani špatném počasí, ani když cestu nezná**. NENÍ doložen z vikingského období, na runových kamenech, v Eddách ani v ságách — „Viking compass" je moderní omyl. (Sedí na naši kotvu `RUNAR_DESIGN.md:735`, „roste z Huldova zápisu".)
+
+  ⭐ **Jádro, které z toho plyne — a je silnější, než jak to máme zapsané:** historický význam NENÍ „ukáže ti správný směr", ale **„neztratíš se, i když směr neznáš"**. Vegvísir je tedy symbol **orientace ve chvíli, kdy orientace selhává** — ne znalosti cíle.
+
+  📜 **NENÍ doložené, je to naše konstrukce poučená populárním užíváním** (GPT sám přiznává, že reprezentativní průzkum neexistuje; zdroje = blogy tetovacích studií a turistické weby): čtyři „moderní významy" (najít cestu · neztratit sebe · překonat těžké období · skutečná fyzická cesta). Smí se z toho čerpat, NESMÍ se to psát jako doložený fakt. ⚠️ Detail o Björk (tetování 1982) se do docí NEDÁVÁ — nulová designová váha, zdroj hobby web, a takové faktoidy se pak opakují jako pravda.
+
+  ⭐ **Jediná OPRAVDU nová věc a stojí za to: pozitivní KRITÉRIUM.** *„Každé rameno musí lokalizovat člověka na cestě."* Dosud máme jen zákazy (nezavírej výklad, nepojmenuj krok) — a zákaz se dá splnit prázdnotou. Tohle je test, který se dá pustit na vygenerovaný text: **říká to, kde na cestě člověk stojí?**
+
+  ⚠️ **Tři jeho hlavní závěry už ratifikované MÁME** — a to je hodnota sama o sobě (nezávislé potvrzení zvenčí): „nesděluje kam jít, pomáhá rozpoznat kde stojíš" = `RUNAR_DESIGN.md:697` · „osm ramen ≠ osm etap" = `:783` · tři vrstvy historie/symbolika/naše konstrukce = §23.
+
+  ❌ **Jeho jedinou RADU nepřebírat: „nejdřív pevný Vegvísir semantic core, teprve pak runy."** (a) Ten core už existuje — `RUNAR_DESIGN.md:677–790`; nový doc s definicemi cesty/polohy/směru/návratu je **druhá kopie** (§20) a rozejde se. (b) Dnešní postup šel opačně: největší posun přinesl **produkční nález ownera** (aspekt → `focus:`), ne definice. KUKY: *„hledáme teorie, je to na hovno bez praxe."*
+
+- [ ] **OTEVŘENÉ: čím runa přispívá k cestě, když nemá polohu** (CODE-read našel díru 2026-09-11, owner ji přerámoval — k otestování).
+  Kritérium „rameno lokalizuje člověka na cestě" naráží na to, že **rameno pojmenuje runa, která padne** — a spousta run polohu nemá. Isa ano (stojím), Raidho ano (jdu), Eihwaz ano (drží mě). **Gebo, Berkana, Wunjo ne.**
+  ⚠️ Riziko, kdyby se do polohy tlačily: **tichý posun významu** — změřeno 2026-09-11 na Sowilo, které se skrytou vrstvou přestalo být Sowilo a začalo být Perth.
+  ⭐ **Ownerovo přerámování (2026-09-11):** *„budou mít jinou symboliku — růst, spojení. Když si je takhle ukotvíme, mohlo by nám to pomoct."* Tedy: ne každá runa nese POLOHU; nese jinou **osu cesty**. A sedí to na Huld — ten mluví o **bouři a špatném počasí**, tedy o terénu a viditelnosti, ne o poloze.
+  **K vyrobení:** mapa všech 25 run → která osa cesty. **K otestování:** jde z runy bez polohy udělat rameno, které přesto lokalizuje?
+
 - [ ] **NABÍDKA OTÁZKY PODLE ASPEKTU OBRAZU — a co k tomu dnes máme** (KUKY 2026-09-11: „jsme schopni nabídnout potenciální otázku přímo z generovaného čtení?"). Platí **primárně pro běžný Ask** — `_askHints()` je Ask; Vegvísir to zdědí, nestaví se to zvlášť.
 
   ✅ **Materiál existuje: sloupec ASPEKT v `RUNE_IMAGES` (index 5)** — 108/108 naplněno, **64 různých hodnot, per OBRAZ, ne per runa.** Táž runa dá jiný aspekt podle toho, který obraz padl: Perth *„A letter lies unopened…"* → `hidden things`, Perth *„The river rolls the pebble…"* → `fate in the making`; Isa hodiny → `waiting`, Isa sněžení → `stillness`. To je ta „skrytá metafora" — čím to čtení doopravdy je, a ve čtení to nikdy nezazní.
