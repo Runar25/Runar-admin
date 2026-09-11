@@ -90,6 +90,15 @@ const DATA = /^(PERSON|DRAWN|SEEKER|LIFE|AREA|SEEKING|INTENTION|QUESTION|REALM|E
         .forEach(r => { if (!DATA.test(r.trim())) pridej(L, 'ask', r); }));
     // Blok o pozicich ve spreadu ma vlastni hlavicku a do Ask promptu se dostane jen
     // s osmym argumentem — bez nej by registru unikl (tataz tichá zelená jako 2026-09-11).
+    // ZIVOTNI RUNA a ROZBOR JMENA (2026-09-11): do dneska je registr NESKENOVAL vubec.
+    // Projevilo se to tak, ze odpojeni celeho odstavce o jmenu z promptu zivotni runy
+    // proslo bez jedine cervene — a prave ten odstavec u nesevrskeho jmena vynucoval vymysl.
+    S.buildLifeRunePrompt('Anna', RUNES[3], 24, 12, 1979, L, true, null)
+      .split(String.fromCharCode(10))
+      .forEach(r => { if (!DATA.test(r.trim())) pridej(L, 'liferune', r); });
+    S.buildNameLorePrompt('Anna', L, null)
+      .split(String.fromCharCode(10))
+      .forEach(r => { if (!DATA.test(r.trim())) pridej(L, 'namelore', r); });
     S.buildAskPrompt('A reading.', 'What do you mean?', RUNES[3].n, L, null, null, null,
       { mode: 'kriz', runy: ['Fehu', 'Uruz', 'Thurisaz', 'Ansuz', 'Raidho'] })
       .split(String.fromCharCode(10))
@@ -144,6 +153,42 @@ if (!fs.existsSync(REGISTR)) {
   console.log('  ⚠  registr neexistuje — spust `node scripts/verify_prompt_rules_registry.js --zapis`');
   process.exit(1);
 }
+// ── UPLNOST: kazdy `build*Prompt` je bud SKENOVANY, nebo ma datovanou vyjimku ──
+// ⚠️ 2026-09-11: tahle kontrola vznikla proto, ze registr kryl jen TRI cesty ze sedmi a nikdo
+// o tom nevedel — dira se neohlasila, protoze se neohlasovalo nic. Ticho neni zelena.
+// Od ted: pribude builder a nikdo ho nezapoji → tady zcervena a jmenuje ho.
+const VYJIMKY_BUILDERU = {
+  buildSysPromptV2:         'Lab, do produkce nevede — reader pouziva buildSysPrompt. Overeno 2026-09-11.',
+  buildReadingPromptSingle: 'Implementace za `buildReadingPrompt`, ktery SE skenuje — tataz cesta. 2026-09-11.',
+  buildKrizPromptCross:     'Implementace za `buildKrizPrompt`. 2026-09-11.',
+  buildNornsPromptFate:     'Implementace za `buildNornsPrompt`. 2026-09-11.',
+  buildHorseshoePromptSeven:'Implementace za `buildHorseshoePrompt`. 2026-09-11.',
+  buildYggdrasilPromptNine: 'Implementace za `buildYggdrasilPrompt`. 2026-09-11.',
+  // ⚠️ DLUH, ne rozhodnuti. Ctyri spready registr NEKRYJE, takze zmena jejich instrukci
+  // projde bez povsimnuti. Nezapojeno hned zamerne: je to ~100 novych radek a odklepnout je
+  // hromadne by z registru udelalo razitko. Rozepsano v RUNAR_BACKLOG.md 2026-09-11.
+  buildKrizPrompt:      'DLUH 2026-09-11 — nezapojeno, radky k projiti. Viz RUNAR_BACKLOG.',
+  buildNornsPrompt:     'DLUH 2026-09-11 — nezapojeno, radky k projiti. Viz RUNAR_BACKLOG.',
+  buildHorseshoePrompt: 'DLUH 2026-09-11 — nezapojeno, radky k projiti. Viz RUNAR_BACKLOG.',
+  buildYggdrasilPrompt: 'DLUH 2026-09-11 — nezapojeno, radky k projiti. Viz RUNAR_BACKLOG.',
+};
+{
+  const zdrojCh = fs.readFileSync(D + 'runar-character.js', 'utf8');
+  const tentoSkript = fs.readFileSync(__filename, 'utf8');
+  const buildeři = (zdrojCh.match(/^function (build[A-Za-z]+)\(/gm) || [])
+    .map(m => m.replace(/^function /, '').replace(/\($/, ''))
+    .filter(n => /Prompt/.test(n));
+  let chybi = 0;
+  for (const b of buildeři) {
+    if (tentoSkript.indexOf('S.' + b + '(') !== -1) continue;
+    const v = VYJIMKY_BUILDERU[b];
+    if (!v) { chybi++; console.log('  FAIL  `' + b + '` neni v registru ani ve vyjimkach — cela cesta promptu bez pojistky'); }
+    else if (String(v).length < 25) { chybi++; console.log('  FAIL  vyjimka pro `' + b + '` nenese duvod (§28)'); }
+  }
+  if (chybi) { console.log('\n  ' + chybi + ' builderu bez pojistky i bez duvodu.'); process.exit(1); }
+  console.log('  OK    uplnost: ' + buildeři.length + ' builderu — kazdy skenovany, nebo s datovanou vyjimkou');
+}
+
 const reg = JSON.parse(fs.readFileSync(REGISTR, 'utf8'));
 const zname = new Set((reg.pravidla || []).map(x => x.hash));
 const nove = ted.filter(x => !zname.has(x.hash));

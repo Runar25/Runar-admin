@@ -1252,10 +1252,29 @@ možnost."* Text instrukce je hotový a zůstal v packu (`RP_LIFE.*.nameInstr`) 
 Buď nabídku omezit na jména, u kterých je co vykládat, nebo instrukci přepsat tak, aby směla
 skončit „tohle jméno v severské tradici kořeny nemá" — a ověřit měřením, že to model udělá.
 
-## Registr pravidel promptu nevidí cestu ŽIVOTNÍ RUNY (2026-09-11)
+## ~~Registr nevidí cestu ŽIVOTNÍ RUNY~~ ✅ ZAPOJENO 2026-09-11 — ale zbyly ČTYŘI SPREADY
 
-`scripts/verify_prompt_rules_registry.js` skenuje single, spready a Ask — `buildLifeRunePrompt`
-**ani jednou**. Celý jeden prompt tedy nemá „pozornostní" pojistku: dnešní odpojení odstavce
-o jménu mu proklouzlo bez jediné červené. Doplnit cestu do registru a projít nově vzniklé řádky
-(odhadem 10–20) **s rozmyslem, ne hromadně** — registr má vynucovat pozornost, a rychlé
-odklepnutí dávky by ho znehodnotilo.
+Registr kryl **tři cesty ze sedmi** a nikdo o tom nevěděl: díra se neohlásila, protože se
+neohlašovalo nic. Zapojena životní runa i rozbor jména (226 pravidel) a hlavně přibyla
+**kontrola úplnosti**: každý `build*Prompt` musí být buď skenovaný, nebo mít datovanou výjimku
+s důvodem. Přibude builder a nikdo ho nezapojí → červená, která ho jmenuje.
+
+⚠️ **Zbývá dluh, vědomě:** `buildKrizPrompt` · `buildNornsPrompt` · `buildHorseshoePrompt` ·
+`buildYggdrasilPrompt` registr **nekryje**. Změna jejich instrukcí projde bez povšimnutí.
+Nezapojeno hned proto, že je to ~100 nových řádek a odklepnout je hromadně by z registru udělalo
+razítko — má vynucovat pozornost, ne razítkovat. Dělat po jednom spreadu.
+
+## Dva nálezy, které vypadly z projití promptu ŽIVOTNÍ RUNY (2026-09-11)
+
+Obojí našla ta registrace tím, že mě donutila ty řádky přečíst — což je přesně k čemu registr je.
+
+1. **Prompt životní runy posílá PLNÝ seznam klíčů** (`CORE ENERGY: messages, wisdom, divine
+   guidance, voice, breath`). Test „KLÍČE" (`RUNAR_EVAL_LOG.md` 2026-09-09) přitom naměřil, že
+   plný seznam klíčů v promptu **čtení** srazil stopu významu ze 17 % na **0 %**. Životní runa je
+   jiná úloha, takže přenos není automatický — ale je to tatáž páka na tomtéž místě a **nikdo ji
+   tam nikdy neměřil**. Návrh: A/B se seznamem a bez něj, měřit stopu významu runy.
+2. **Napětí s `_noColdRead`.** Prompt říká *„not a reading of today, but of what Anna has carried
+   since birth"*, a na tomtéž promptu visí zákaz *„never tell the seeker what is true… inside
+   them"*. Životní runa ze své podstaty něco tvrdí, takže to nemusí být vada — ale je to rozpor
+   dvou instrukcí v jednom promptu a **rozhodnout ho má člověk**, ne model při každém čtení.
+

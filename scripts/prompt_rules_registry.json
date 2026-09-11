@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-11",
- "prompt_version": "v4.21-askpositions",
+ "prompt_version": "v4.23-namelore",
  "pravidla": [
   {
    "hash": "54d29df4d80b",
@@ -344,6 +344,102 @@
    "lang": "en",
    "zdroj": "ask",
    "zacatek": "WHAT THIS READING WAS CAST FOR — the seeker named the part of life it "
+  },
+  {
+   "hash": "5fce2488632e",
+   "lang": "en",
+   "zdroj": "liferune",
+   "zacatek": "You are Runar, rune keeper of Agndofa."
+  },
+  {
+   "hash": "c4cf6b02e686",
+   "lang": "en",
+   "zdroj": "liferune",
+   "zacatek": "This is the life rune reading of Anna — not a reading of today, but of"
+  },
+  {
+   "hash": "f619e5c8169b",
+   "lang": "en",
+   "zdroj": "liferune",
+   "zacatek": "ICELANDIC MONTH: Jól — winter solstice, the seed of returning light in"
+  },
+  {
+   "hash": "2df76b58fd34",
+   "lang": "en",
+   "zdroj": "liferune",
+   "zacatek": "CORE ENERGY: messages, wisdom, divine guidance, voice, breath"
+  },
+  {
+   "hash": "e0742d481565",
+   "lang": "en",
+   "zdroj": "liferune",
+   "zacatek": "Write in two sections — no headers or labels in the output:"
+  },
+  {
+   "hash": "b08bf749eda9",
+   "lang": "en",
+   "zdroj": "liferune",
+   "zacatek": "SECTION 1 — THE DATE (3 sentences):"
+  },
+  {
+   "hash": "260ce917abd3",
+   "lang": "en",
+   "zdroj": "liferune",
+   "zacatek": "What does Jól carry in the Icelandic year? The quality of that time — "
+  },
+  {
+   "hash": "cbb08d8f1a5d",
+   "lang": "en",
+   "zdroj": "liferune",
+   "zacatek": "SECTION 2 — THE RUNE (5–6 sentences):"
+  },
+  {
+   "hash": "641d5623b2e7",
+   "lang": "en",
+   "zdroj": "liferune",
+   "zacatek": "Ansuz as the soil of Annas life. The shape of the rune and what it car"
+  },
+  {
+   "hash": "ecea1c5ce8d0",
+   "lang": "en",
+   "zdroj": "liferune",
+   "zacatek": "Rules: Runar voice. Poetic, direct. Do not explain — reveal."
+  },
+  {
+   "hash": "3ce7988db686",
+   "lang": "en",
+   "zdroj": "liferune",
+   "zacatek": "Do not use journey as a metaphor. Do not use embrace or empower. No ex"
+  },
+  {
+   "hash": "7bddc4dfcb95",
+   "lang": "en",
+   "zdroj": "liferune",
+   "zacatek": "If you name the Icelandic month, gloss it in English at first mention "
+  },
+  {
+   "hash": "894c74f3ddd1",
+   "lang": "en",
+   "zdroj": "namelore",
+   "zacatek": "THE NAME — the seeker gave the name “Anna”."
+  },
+  {
+   "hash": "0bc06aa73669",
+   "lang": "en",
+   "zdroj": "namelore",
+   "zacatek": "If that name has REAL roots in Old Norse or in Norse myth, say what it"
+  },
+  {
+   "hash": "4d822ce3feca",
+   "lang": "en",
+   "zdroj": "namelore",
+   "zacatek": "If it does NOT — and many names do not — say so plainly and stop there"
+  },
+  {
+   "hash": "3f81af7f1b80",
+   "lang": "en",
+   "zdroj": "namelore",
+   "zacatek": "Do not draw runes, do not read the seeker, do not turn this into a rea"
   },
   {
    "hash": "0dce88d2e626",
@@ -920,6 +1016,114 @@
    "lang": "is",
    "zdroj": "ask",
    "zacatek": "FYRIR HVAÐ LESTURINN VAR DREGINN — leitandinn nefndi sjálfur sviðið (S"
+  },
+  {
+   "hash": "c6da5874aa1a",
+   "lang": "is",
+   "zdroj": "liferune",
+   "zacatek": "Þú ert Rúnar, rúnavörður Agndofa."
+  },
+  {
+   "hash": "91a7984b8139",
+   "lang": "is",
+   "zdroj": "liferune",
+   "zacatek": "Þetta er lestur lífsrúnar Anna — ekki lestur dagsins, heldur lestur þe"
+  },
+  {
+   "hash": "d37b33f773fc",
+   "lang": "is",
+   "zdroj": "liferune",
+   "zacatek": "LÍFSRÚNA: Ansuz (Boðberi)"
+  },
+  {
+   "hash": "9b0c55769011",
+   "lang": "is",
+   "zdroj": "liferune",
+   "zacatek": "FÆDD/UR: 24. 12. 1979"
+  },
+  {
+   "hash": "cd54aa1daab2",
+   "lang": "is",
+   "zdroj": "liferune",
+   "zacatek": "ÍSLENSKUR MÁNUÐUR: Jól — sólstöður, fræ ljóssins í myrkinu, Jólasveina"
+  },
+  {
+   "hash": "79feda79e353",
+   "lang": "is",
+   "zdroj": "liferune",
+   "zacatek": "KJARNAORÐ: skilaboð, viska, guðleg leiðsögn, rödd"
+  },
+  {
+   "hash": "6af9c54a5145",
+   "lang": "is",
+   "zdroj": "liferune",
+   "zacatek": "Skrifaðu í tveimur hlutum — engar fyrirsagnir í úttakinu:"
+  },
+  {
+   "hash": "af2c609de78a",
+   "lang": "is",
+   "zdroj": "liferune",
+   "zacatek": "HLUTI 1 — DAGSETNINGIN (3 setningar):"
+  },
+  {
+   "hash": "b3b2858033c8",
+   "lang": "is",
+   "zdroj": "liferune",
+   "zacatek": "Hvað ber Jól í íslensku ári? Hvaða gæði hafði þessi tími — hvað var að"
+  },
+  {
+   "hash": "f1e6ec09ff7d",
+   "lang": "is",
+   "zdroj": "liferune",
+   "zacatek": "HLUTI 2 — RÚNIN (5–6 setningar):"
+  },
+  {
+   "hash": "07171fe987ec",
+   "lang": "is",
+   "zdroj": "liferune",
+   "zacatek": "Ansuz (Boðberi) sem jarðvegur lífs Anna. Lögun rúnarinnar og hvað hún "
+  },
+  {
+   "hash": "5dbce23e4744",
+   "lang": "is",
+   "zdroj": "liferune",
+   "zacatek": "Reglur: Rúnars rödd. Ljóðrænt, beint. Útskýrðu ekki — opinberaðu."
+  },
+  {
+   "hash": "ed797875a8ca",
+   "lang": "is",
+   "zdroj": "liferune",
+   "zacatek": "Ekki nota \"ferðalag\" sem myndlíkingu. Ekki \"faðmaðu\" eða \"styrktu\". En"
+  },
+  {
+   "hash": "c34c4316bc6d",
+   "lang": "is",
+   "zdroj": "liferune",
+   "zacatek": "Svaraðu einungis á íslensku."
+  },
+  {
+   "hash": "a8d7476a3b66",
+   "lang": "is",
+   "zdroj": "namelore",
+   "zacatek": "NAFNIÐ — leitandinn gaf nafnið „Anna“."
+  },
+  {
+   "hash": "8458aa534c60",
+   "lang": "is",
+   "zdroj": "namelore",
+   "zacatek": "Eigi það sér RAUNVERULEGAR rætur í norrænu máli eða goðafræði, segðu h"
+  },
+  {
+   "hash": "481d4547f67f",
+   "lang": "is",
+   "zdroj": "namelore",
+   "zacatek": "Eigi það þær EKKI — og mörg nöfn eiga þær ekki — segðu það hreint út o"
+  },
+  {
+   "hash": "dd4ca2978462",
+   "lang": "is",
+   "zdroj": "namelore",
+   "zacatek": "Dragðu engar rúnir, lestu ekki leitandann, gerðu ekki lestur úr þessu."
   },
   {
    "hash": "1013b8da068f",
