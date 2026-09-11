@@ -1217,8 +1217,10 @@ Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
 
 ## Musí být hotové PŘED prvním cizím přihlášením
 
-- [ ] **Podepsat Supabase DPA** — Organization → Legal/Compliance. První cizí tester = zpracování
-      cizích osobních údajů přes zpracovatele.
+- [ ] **Podepsat Supabase DPA** — owner se na to podívá později (2026-09-11).
+      Podmínka až před prvním CIZÍM přihlášením, ne teď: dnešní čtyři účty jsou vlastní,
+      žádný tester zatím neexistuje. V dashboardu na úrovni ORGANIZACE (ne projektu),
+      v sekci s právními dokumenty.
 - [ ] **Zásady soukromí živé na webu** — vlastní položku má tenhle doc už výš (sekce o GDPR);
       sem patří jen tím, že blokuje spuštění. Záměrně se tu NEOPISUJE (§20).
 - [ ] **Vyřešit doručení přihlášení.** Supabase → Authentication → Emails → SMTP. Vestavěný mailer
