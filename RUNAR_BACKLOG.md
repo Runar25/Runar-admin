@@ -845,6 +845,27 @@ Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je 
 
   **K otestování (nic z toho není rozhodnuté):** která z variant (a)/(b) dá scénu a ne šev · jestli jedna věta stačí, nebo je potřeba víc · co dělá osm ramen se stále týmž středem (riziko jednotvárnosti — u životní runy jako pouhé závěrečné čočky bylo dávání/výměna v ~7 ze 13 čtení, měřeno 2026-09-11).
 
+- [ ] **NABÍDKA OTÁZKY PODLE ASPEKTU OBRAZU — a co k tomu dnes máme** (KUKY 2026-09-11: „jsme schopni nabídnout potenciální otázku přímo z generovaného čtení?"). Platí **primárně pro běžný Ask** — `_askHints()` je Ask; Vegvísir to zdědí, nestaví se to zvlášť.
+
+  ✅ **Materiál existuje: sloupec ASPEKT v `RUNE_IMAGES` (index 5)** — 108/108 naplněno, **64 různých hodnot, per OBRAZ, ne per runa.** Táž runa dá jiný aspekt podle toho, který obraz padl: Perth *„A letter lies unopened…"* → `hidden things`, Perth *„The river rolls the pebble…"* → `fate in the making`; Isa hodiny → `waiting`, Isa sněžení → `stillness`. To je ta „skrytá metafora" — čím to čtení doopravdy je, a ve čtení to nikdy nezazní.
+  ❌ **`MOTIV` (index 6) to NENÍ** — je to trojhodnotový registr `D`/`E`/`P`, ne význam.
+
+  ⚠️ **Past, a je zapsaná v kódu tím, kdo `_askHints()` stavěl:** *„klik na hotovou větu ukotví čtení **+2,7 b.**, vlastními slovy **+8,8 b.** (2026-08-16) … tip, do kterého je už dosazené jméno runy z tohohle čtení, je z poloviny otázka toho člověka a ten rozdíl stírá."* Otázka **vygenerovaná ze čtení** je přesně tenhle případ.
+  ⭐ **Rozdíl, který past obchází: VYBRAT tip podle aspektu ≠ NAPLNIT tip ze čtení.** `hidden things` → nabídne se „What is here that has not opened yet?" — z textu ani slovo, jen správný směr. Je to **už zavedený vzor**: `_askHints()` takhle vybírá jeden ze čtyř tipů podle `seeking` (`_seekIdx`). Aspekt už je navíc spočítaný a leží v `_imgAspektEN` (`runar-character.js:673`) — ⚠️ ale je to **modulová proměnná přepisovaná dalším čtením**; jestli je v okamžiku Asku spolehlivá, ať posoudí CODE-tune.
+
+  ⭐ **Druhá cesta, kterou lidé už dělají sami: ťuknout na větu čtení.** V produkčním korpusu **7 ze 43** otázek byla citace vlastního čtení + „What do you mean?" (*„The road was never yours alone to walk. What do you mean?"*). Volba věty je pak **jejich** — ukotvení zůstává. Mechanika na ťukání v textu existuje (`.rseg` segmenty per runa, `runar-rune-popup.js`).
+
+- [x] **NÁLEZ → CODE-tune: aspekt jde PŘÍMO DO PROMPTU jako `focus:`, a u Perth to kazí čtení** (našel KUKY 2026-09-11 z produkčního čtení; ověřeno v kódu).
+  `runar-character.js:1405` → `pickedKws = _imgAspekt || náhodné klíče` → `drawnCtx = 'DRAWN RUNE: ' + runa + ' — focus: ' + pickedKws`. Aspekt tedy **není jen selektor**, je to text promptu — a od **v4.0 pro obě řeči**.
+  ⇒ U Perth s dopisem dostane model doslova `DRAWN RUNE: Perth — focus: **hidden things**`. Odtud *„Perth, **the thing** whose meaning waits sealed"* v produkčním čtení.
+  **Rozsah: 2 obrazy ze 108** — obojí Perth / `hidden things`. Není to systémová vada, je to **jedno slovo u jedné runy**. ⚠️ Druhý z těch obrazů má prázdno dvakrát: *„**Something** lies on the bottom of the lagoon"* + `focus: hidden things`.
+  **Oprava = přeformulovat aspekt na DĚJ, ne na věc** (týž požadavek, jaký má esenční věta: *„Fehu is that warmth passed from hand to hand", ne „Fehu is wealth"*). Znění = owner/Cowork, ne CODE. KUKY 2026-09-11: *„zní to hrozně ve čtení, tahle metafora mi přijde divná, budeme hledat jiný obraz."*
+
+- [ ] **NÁVRH CODE-read: vyčerpávající má být RAMENO, ne čtení** (2026-09-11, k posouzení ownerem).
+  Rameno nejsou jeden text, ale **tři** — čtení + dva Asky. Měřeno téhož dne: **delší text = víc obrazů** (63–80 slov → 2 obrazy · 161 → 2 · **204 → 3**, přibyl druhý motiv), a jediný text s **jedním** obrazem byl ten nejkratší (69 slov) — ten ale jako jediný **zavřel výklad**. Čtení, která owner označil za krásná, mají 75–80 slov.
+  ⇒ Čtení ramene krátké a obrazové; **hloubka v tom, co následuje na doptání**. Obě vrstvy už fungují, nestaví se nic nového.
+  **Souvisí:** životní runa by pak nemusela být čočkou každého ramene, ale vstupovala by **až v Asku, když se na ni člověk zeptá** — řeší to jednotvárnost (Gebo jako závěrečná čočka dělá dávání/výměnu v ~7 ze 13 čtení, přes osm ramen osmkrát táž nota) i ten druhý obraz v textu. ⚠️ Owner si k tomu zároveň hraje s opačnou myšlenkou: aby životní runa přišla přes Ask **automaticky** po vytvoření čtení ramene — pak je otevřené, na co by se člověk ptal dál.
+
 - [ ] **SMĚR: statický střed × dynamická ramena** (GPT přes ownera 2026-09-11 — ZAZNAMENÁNO jako směr, NErozhodnuto; Vegvísir se bude měnit až do produkce, a odkloníme-li se, tenhle záznam zůstává).
   **STATIC:** životní runa + její počáteční obraz + základní kontext. Není to první odpověď Vegvísiru — je to **počáteční orientace mapy**.
   **DYNAMIC:** každé rameno = nová runa + její obraz + **vztah k životní runě** (a případně k tomu, co na mapě už je).
@@ -857,7 +878,7 @@ Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je 
   ⚠️ **Sráží se to s ratifikovaným `RUNAR_DESIGN.md:720`** (*„Životní runa NENÍ startovní kotva, přerozhodnuto 2026-08-23 — nanejvýš nit nebo callback, nikdy verdikt ani souhrn ‚tohle jsi'"*). Rozdíl je ale jemný a stojí za rozlišení: **obraz životní runy** jako orientace mapy tomu neodporuje; **text čtení životní runy** ano — ten je svým tvarem souhrn („This is the ground you were set upon", „To you it comes as easily as breathing"). Kdo tenhle směr povede dál, musí říct, které z těch dvou bere. Rozhodnutí = owner (§21: směr, ne zámek).
 
 - [ ] **Rameno = JEDNO čtení. V devíti nocích ramene DVA Asky** (KUKY 2026-09-08).
-  Kadence jednoho ramene: **den 0 čtení → den 3 Ask → den 6 Ask → den 9 nové rameno.**
+  Kadence jednoho ramene: **den 0 čtení · první Ask NE DŘÍV než po 3 dnech · druhý NE DŘÍV než po 6 · nové rameno po 9.** (Upřesnil KUKY @D@: jsou to **podlahy, ne termíny** — stejně jako devět nocí. Dřívější zápis „den 3 / den 6" četl jako rozvrh, což je přesně to, čemu se design vyhýbá.)
   Ramena tedy zůstávají na ratifikovaných **9 nocích**; „každý 3. den" je okno pro Ask, ne kadence
   ramen. Celkem: 8 ramen × 9 nocí = min. **72 nocí** · 8 × 2 = **16 Asků na jednu pouť**.
   Porozumění se neodehrává uvnitř textu ramene, ale **mezi rameny**.
