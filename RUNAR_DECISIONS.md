@@ -5356,3 +5356,30 @@ větve = 4 FAIL · „nesevrské jde přesto k modelu" = 2 FAIL · zahození pů
 slučování diakritiky = 8 FAIL.
 
 **Affected doc(s):** žádný — chování vlastní kód a tenhle záznam.
+
+---
+
+## 2026-09-11 (10) — Islandská věta o původu jména nesla anglické slovo
+
+**Nalezeno hned po (9), na vlastním výstupu:** *„Rúnar sér enga norræna rót í þessu nafni —
+rætur þess liggja annars staðar **(Latin)**."* Původ měl v seznamu jediný tvar, anglický, a ten
+se dosadil i doprostřed islandské věty. §2 — IS není překlad EN, a už vůbec ne EN se zbytkem
+islandštiny okolo.
+
+**Co se změnilo:**
+1. Každý neseverský záznam nese **`origin_is` na témž řádku** jako `origin` (stejně jako `en`/`is`
+   u významu — jazyková varianta je DATA, ne větev v kódu, §18). 26 z 26.
+2. Věta používá **ustálenou islandskou vazbu**, ne závorku: *„það á rætur að rekja til latínu."*
+   Doloženo v Risamálheild: „rætur að rekja" 7802 · „á rætur að" 3035 · „að rekja til" 18075 ·
+   „rekja til latínu" 15 · „rekja til grísku" 9 · „til hebresku" 7 · „til tékknesku" 11 ·
+   „arameísku" 71 · „germanskra mála" 20 · „slavneskra mála" 13. Tvar je proto **2. pád**.
+   EN se srovnala do téhož tvaru: *„its roots go back to Latin."*
+3. Jména v závorce (**William, Richard, Johannes**) se **nepřekládají** — je to ta cizí podoba,
+   ze které jméno vzniklo; přeložit ji by smazalo právě tu informaci, kvůli které tam je.
+
+**Čím je to jištěné:** ㉣ jede `generateNameLore()` i **v islandštině** (dosud uměla kontrola jen
+EN, takže tahle věta nebyla testovaná vůbec) a odmítá v ní anglické slovo. Druhé tvrzení hlídá
+**data**: kdo přidá neseverské jméno bez `origin_is`, propašuje angličtinu do islandské věty.
+Mutace: „původ vždy anglicky" = 2 FAIL · „nové jméno bez `origin_is`" = 1 FAIL (vyjmenuje která).
+
+**Souvisí:** záznam (9) — tam se rozhodlo, že o severských kořenech rozhoduje seznam.

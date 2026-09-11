@@ -207,6 +207,12 @@ for (const L of ['en', 'is']) {
   // kvůli kterému seznam vznikl.
   rekni(najdi('Thora') === null, 'jméno bez háčků se NESLUČUJE s diakritickou podobou');
 
+  // Kdo přidá neseverské jméno bez `origin_is`, propašuje do islandské věty angličtinu.
+  // Proto se to hlídá na DATECH — jedna věta výš testuje jen to jméno, které tu je dnes.
+  const bezIS = L.filter((z) => !z.norse && z.origin && !z.origin_is).map((z) => z.name);
+  rekni(!bezIS.length, 'každý neseverský původ má i islandský tvar'
+        + (bezIS.length ? ' — CHYBÍ U: ' + bezIS.join(', ') : ''));
+
   // Žádná kolize přezdívky nesmí přecházet přes hranici severské/neseverské — tam by
   // lookup vracel jednou ano a jednou ne podle pořadí v poli.
   const mapa = {};
@@ -270,8 +276,8 @@ if (rLife && rTree) {
 // Proč na tom záleží i v penězích: `name_lore` je u proxy zdarma a jištěné jen tím, že se
 // volá jednou. Volání, které nemělo vzniknout, je zaplacené vymýšlení.
 async function drat() {
-  const zkus = async (jmeno) => {
-    vm.runInContext('_volaniModelu = 0; _nameLoreText = null; lang = "en";'
+  const zkus = async (jmeno, L) => {
+    vm.runInContext('_volaniModelu = 0; _nameLoreText = null; lang = ' + JSON.stringify(L || 'en') + ';'
       + ' currentUser = { id: "u1", email: "a@b.cz" };'
       + ' userName = ' + JSON.stringify(jmeno) + '; readerUser = {};', S);
     await vm.runInContext('generateNameLore()', S);
@@ -292,6 +298,15 @@ async function drat() {
   const severske = await zkus('Sigrún');
   rekni(severske.volani === 1, '„Sigrún" (severské) → model text NAPÍŠE');
   rekni(severske.text === 'TEXT OD MODELU', '…a jeho text se uloží');
+
+  // §2: islandská věta musí být islandská CELÁ. Do 2026-09-11 v ní stálo anglické
+  // „(Latin)", protože původ měl jen jeden tvar. Kontrola jede na VĚTĚ, ne na datech,
+  // protože právě tam to bylo vidět.
+  const isl = await zkus('Magnús', 'is');
+  rekni(isl.volani === 0, 'is  „Magnús" → model se nevolá ani islandsky');
+  rekni(isl.text.indexOf('latínu') !== -1, 'is  …a původ je islandsky („latínu")');
+  rekni(!/\b(Latin|Greek|Hebrew|Aramaic|Germanic|Slavic)\b/.test(isl.text),
+        'is  …a v islandské větě nezůstalo ANGLICKÉ slovo');
 }
 
 drat().then(() => {

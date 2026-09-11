@@ -679,8 +679,11 @@ async function generateNameLore() {
   var _jm = _lifeRuneName();
   var _z = _nameLookup(_jm);
   if (!_z || !_z.norse) {
-    _nameLoreText = (_z && _z.origin)
-      ? tp('name_no_norse_from', { origin: _z.origin })
+    // Puvod ma per-jazyk tvar na tomtez radku seznamu (jako `en`/`is` u vyznamu) —
+    // do 2026-09-11 se do islandske vety dostavalo anglicke „(Latin)" (§2).
+    var _pv = _z && (lang === 'is' ? _z.origin_is : _z.origin);
+    _nameLoreText = _pv
+      ? tp('name_no_norse_from', { origin: _pv })
       : t('name_no_norse');
     if (btn) { btn.disabled = false; btn.textContent = t('name_lore_btn'); }
     var r0 = await sb.from('user_profiles').update({ name_lore_text: _nameLoreText })
