@@ -1628,10 +1628,28 @@ var RP_NAME = {
   },
 };
 
-function buildNameLorePrompt(name, lang, corrections) {
+// `zaznam` = radek z NORSE_NAMES (jen kdyz `norse: true` — u ostatnich se model NEVOLA).
+// Dava modelu KOREN, VYZNAM a MYTUS jako doklad, aby nemusel sahat po vlastni znalosti.
+// ⚠️ Uniková cesta v `S.task` zustava i tak: kdyby byl nas seznam u nejakeho jmena vedle,
+// model porad SMI rict, ze koreny nevidi. Seznam je silnejsi obrana, ne jedina.
+function _nameFacts(z, lang) {
+  if (!z) return '';
+  var je = lang === 'is';
+  var r = [];
+  if (z.root) r.push((je ? 'RÓT: ' : 'ROOT: ') + z.root);
+  var v = je ? z.is : z.en;
+  if (v) r.push((je ? 'MERKING: ' : 'MEANING: ') + v);
+  var m = je ? z.myth_is : z.myth_en;
+  if (m) r.push((je ? 'GOÐAFRÆÐI: ' : 'MYTH: ') + m);
+  if (!r.length) return '';
+  return (je ? 'HEIMILD ÚR SKRÁNNI OKKAR — byggðu á þessu, ekki á eigin minni:\n'
+             : 'EVIDENCE FROM OUR OWN LIST — build on this, not on your own recall:\n') + r.join('\n');
+}
+function buildNameLorePrompt(name, zaznam, lang, corrections) {
   var S = RP_NAME[lang] || RP_NAME.en;
   return [
     S.task(name),
+    _nameFacts(zaznam, lang),
     _addressContext(lang),
     _noColdRead(lang),
     getCorrPrompt(lang, corrections),

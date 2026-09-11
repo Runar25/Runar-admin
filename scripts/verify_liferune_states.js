@@ -31,7 +31,8 @@ const doc = {
   querySelector: () => null, querySelectorAll: () => [],
   addEventListener() {}, createElement: () => mk('x'), body: mk('body'),
 };
-const retez = new Proxy(function () {}, { get: () => retez, apply: () => retez });
+const retez = new Proxy(function () {}, {
+  get: (_c, p) => (p === 'then' || p === 'error' ? undefined : retez), apply: () => retez });
 const S = {
   console: { log() {}, warn() {}, error() {} }, Math, JSON, Date, document: doc,
   setTimeout: () => 0, clearTimeout() {}, setInterval: () => 0, clearInterval() {},
@@ -47,12 +48,16 @@ S.window = S; S.self = S; S.globalThis = S;
 // ve stejném pořadí.
 let code = '';
 for (const f of ['runar-config.js', 'runar-runes.js', 'runar-translations.js',
-                 'runar-character.js', 'runar-utils.js', 'runar-svgs.js', 'runar-tree.js',
+                 'runar-names.js', 'runar-character.js', 'runar-utils.js', 'runar-svgs.js', 'runar-tree.js',
                  'runar-app.js']) {
   code += '\n/* ' + f + ' */\n' + fs.readFileSync(DIR + f, 'utf8') + '\n;\n';
 }
 // Živý strom a jméno stromu sem netáhneme — testuje se stav ZÁLOŽKY, ne kresba.
 code += '\nfunction renderLivingTree(){}; function _renderTreeNameState(){}; function isAdmin(){return false;}\n';
+// Model se v kontrole nevola; misto nej pocitadlo. Deklarace az ZA produkcnim kodem,
+// takze prebije puvodni `async function callProxy` (vsechno je jeden skript).
+code += '\nvar _volaniModelu = 0;\n'
+      + 'async function callProxy(){ _volaniModelu++; return { text: \"TEXT OD MODELU\" }; }\n';
 vm.createContext(S);
 try { vm.runInContext(code, S); }
 catch (e) { console.log('FAIL  nepodařilo se načíst strom: ' + e.message); process.exit(1); }
@@ -165,15 +170,55 @@ for (const L of ['en', 'is']) {
     rekni(b.box === 'block' && b.cta === 'none' && b.txt === 'block' && b.obsah.indexOf('kořeny') !== -1,
           L + '  hotový rozbor → ukáže se text a tlačítko zmizí');
 
-    // Prompt: úniková cesta MUSÍ být. Tohle je ta věta, kvůli které se to celé přepisovalo.
-    const p = vm.runInContext('buildNameLorePrompt', S)('Zdenek', L, null);
-    rekni(p.indexOf('Zdenek') !== -1, L + '  prompt rozboru nese jméno');
+    // Prompt: úniková cesta MUSÍ být i u jména, které náš seznam za severské POVAŽUJE —
+    // seznam je silnější obrana, ne neomylná. Kdyby byl u konkrétního jména vedle,
+    // Rúnar pořád smí říct, že kořeny nevidí.
+    const p = vm.runInContext('buildNameLorePrompt', S)(
+      'Sigrún', vm.runInContext('_nameLookup(\"Sigrún\")', S), L, null);
+    rekni(p.indexOf('Sigrún') !== -1, L + '  prompt rozboru nese jméno');
     rekni(L === 'en' ? /say so plainly and stop there/.test(p) : /seg\u00f0u \u00fea\u00f0 hreint \u00fat/.test(p),
           L + '  prompt DOVOLUJE odpovědět, že jméno severské kořeny nemá');
     rekni(L === 'en' ? /never build a meaning the name does not have/.test(p)
                      : /b\u00fa\u00f0u aldrei til/.test(p),
           L + '  prompt ZAKAZUJE vymyslet význam, který jméno nemá');
   }
+}
+
+// ── SEZNAM JMEN ROZHODUJE, ne model ─────────────────────────────────────────
+// KUKY 2026-09-11. Dokud o „má to severské kořeny?" rozhodoval model, neměl u nesevrského
+// jména na výběr a původ si vymyslel (§23). Seznam mu to rozhodnutí bere: jméno v něm je,
+// nebo není. U `norse:false` i u nenalezeného se model NEVOLÁ VŮBEC.
+// Znění: „Rúnar sees no Norse root" — mluví o jeho VIDĚNÍ, ne o faktu. U jména, které prostě
+// nemáme, by „kořeny nemá" byla lež; „nevidím je" je pravda.
+{
+  const L = vm.runInContext('NORSE_NAMES', S);
+  rekni(Array.isArray(L) && L.length > 50, 'seznam jmen je načtený (' + (L ? L.length : 0) + ' jmen)');
+  const najdi = (j) => vm.runInContext('_nameLookup(' + JSON.stringify(j) + ')', S);
+
+  rekni(najdi('Sigrún') && najdi('Sigrún').norse === true, 'kanonické severské jméno se najde');
+  rekni(najdi('sigrún') && najdi('sigrún').norse === true, '…bez ohledu na velikost písmen');
+  const p = najdi('Gunna');
+  rekni(!!p && p.name === 'Guðrún', 'přezdívka „Gunna" vede na Guðrún');
+  rekni(najdi('Magnús') && najdi('Magnús').norse === false,
+        '„Magnús" je NEseverský — časté na Islandu ≠ severské kořeny');
+  rekni(najdi('Kuky') === null, 'neznámé jméno se nenajde (a nic se nedomýšlí)');
+
+  // ⚠️ Diakritika se NEODSTRANUJE: „Thora" není „Þóra". Slučovat je by bylo to samé domýšlení,
+  // kvůli kterému seznam vznikl.
+  rekni(najdi('Thora') === null, 'jméno bez háčků se NESLUČUJE s diakritickou podobou');
+
+  // Žádná kolize přezdívky nesmí přecházet přes hranici severské/neseverské — tam by
+  // lookup vracel jednou ano a jednou ne podle pořadí v poli.
+  const mapa = {};
+  L.forEach((z) => (z.nick || []).forEach((n) => { (mapa[n.toLowerCase()] = mapa[n.toLowerCase()] || []).push(z); }));
+  const sporne = Object.keys(mapa).filter((n) => new Set(mapa[n].map((z) => z.norse)).size > 1);
+  rekni(!sporne.length, 'žádná přezdívka nevede zároveň na severské i neseverské jméno'
+        + (sporne.length ? ' — SPORNÉ: ' + sporne.join(', ') : ''));
+
+  // Prompt se staví jen pro severské — a dostane PODKLAD, ne domysl.
+  const bp = vm.runInContext('buildNameLorePrompt', S)('Sigrún', najdi('Sigrún'), 'is', null);
+  rekni(/HEIMILD .R SKR.NNI/.test(bp), 'prompt pro severské jméno nese doklad ze seznamu');
+  rekni(bp.indexOf('sigur + rún') !== -1, '…včetně významu z našich dat');
 }
 
 // ── STRUKTURA: každý stav životní runy musí LEŽET v panelu životní runy ─────
@@ -218,5 +263,38 @@ if (rLife && rTree) {
   }
 }
 
-if (fail) { console.log('\nFAIL — ' + fail + ' tvrzení o záložce životní runy neplatí.'); process.exit(1); }
-console.log('\nOK — životní runa funguje i bez účtu (návštěvník dostane runu, čtení zůstává za přihlášením).');
+// ── DRÁT, NE BUILDER: u nesevrského jména se model NESMÍ zavolat ─────────────
+// §19.3 — kontrola musí běžet na TÉ ploše, kde bug žije. Že prompt UMÍ říct „kořeny nevidím",
+// neříká nic o tom, jestli se k té větvi vůbec dojde; přesně tímhle rozdílem mi minule prošla
+// mutace. Tady jede produkční `generateNameLore()` a počítá se VOLÁNÍ MODELU.
+// Proč na tom záleží i v penězích: `name_lore` je u proxy zdarma a jištěné jen tím, že se
+// volá jednou. Volání, které nemělo vzniknout, je zaplacené vymýšlení.
+async function drat() {
+  const zkus = async (jmeno) => {
+    vm.runInContext('_volaniModelu = 0; _nameLoreText = null; lang = "en";'
+      + ' currentUser = { id: "u1", email: "a@b.cz" };'
+      + ' userName = ' + JSON.stringify(jmeno) + '; readerUser = {};', S);
+    await vm.runInContext('generateNameLore()', S);
+    return { volani: vm.runInContext('_volaniModelu', S),
+             text: String(vm.runInContext('_nameLoreText', S) || '') };
+  };
+  const T = vm.runInContext('UI_TEXT', S).en;
+
+  const cizi = await zkus('Magnús');
+  rekni(cizi.volani === 0, '„Magnús" (v seznamu, NEseverské) → model se nevolá vůbec');
+  rekni(cizi.text === T.name_no_norse_from.replace('{origin}', 'Latin'),
+        '…a jde hotová věta i s původem ze seznamu');
+
+  const nezname = await zkus('Kuky');
+  rekni(nezname.volani === 0, '„Kuky" (není v seznamu) → model se nevolá vůbec');
+  rekni(nezname.text === T.name_no_norse, '…a jde věta bez původu (netvrdíme, co nevíme)');
+
+  const severske = await zkus('Sigrún');
+  rekni(severske.volani === 1, '„Sigrún" (severské) → model text NAPÍŠE');
+  rekni(severske.text === 'TEXT OD MODELU', '…a jeho text se uloží');
+}
+
+drat().then(() => {
+  if (fail) { console.log('\nFAIL — ' + fail + ' tvrzení o záložce životní runy neplatí.'); process.exit(1); }
+  console.log('\nOK — životní runa funguje i bez účtu (návštěvník dostane runu, čtení zůstává za přihlášením).');
+}).catch((e) => { console.log('FAIL  drát rozboru jména spadl: ' + e.message); process.exit(1); });

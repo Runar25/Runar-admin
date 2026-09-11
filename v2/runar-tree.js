@@ -647,12 +647,50 @@ function _renderNameLore() {
   if (btn && !btn.disabled) btn.textContent = t('name_lore_btn');
 }
 
+// Vyhledani v seznamu: kanonicke jmeno NEBO prezdivka, bez ohledu na velikost pismen.
+// ⚠️ Diakritika se NEODSTRANUJE: „Þóra" a „Thora" jsou ruzna jmena a slucovat je by byl
+// presne ten druh domysleni, kvuli kteremu seznam vznikl. Kdo napise jmeno bez hacku,
+// dostane „koreny nevidim" — to je pravdive, protoze my to jmeno opravdu nemame.
+function _nameLookup(jmeno) {
+  if (!jmeno || typeof NORSE_NAMES === 'undefined') return null;
+  var q = String(jmeno).trim().toLowerCase();
+  if (!q) return null;
+  for (var i = 0; i < NORSE_NAMES.length; i++) {
+    var z = NORSE_NAMES[i];
+    if (z.name.toLowerCase() === q) return z;
+  }
+  for (var j = 0; j < NORSE_NAMES.length; j++) {
+    var y = NORSE_NAMES[j];
+    for (var k = 0; k < (y.nick || []).length; k++) {
+      if (String(y.nick[k]).toLowerCase() === q) return y;
+    }
+  }
+  return null;
+}
 async function generateNameLore() {
   if (!currentUser || _nameLoreText) return;
   var btn = document.getElementById('name-lore-btn');
   if (btn) { btn.disabled = true; btn.textContent = t('reading_loading'); }
+  // ⭐ SEZNAM ROZHODUJE, ne model. U jmena, ktere v nem neni nebo neni severske, se model
+  // NEVOLA VUBEC — jde hotova veta. Dokud rozhodoval model, nemel u nesevrskeho jmena na
+  // vyber a puvod si vymyslel (§23); tohle mu to rozhodnuti bere z ruky.
+  // KUKY 2026-09-11: „runar doesn't see any nordic connection" — veta mluvi o Runarove
+  // VIDENI, ne o fakt o jmenu. U jmena, ktere proste nemame, by „koreny nema" byla lez.
+  var _jm = _lifeRuneName();
+  var _z = _nameLookup(_jm);
+  if (!_z || !_z.norse) {
+    _nameLoreText = (_z && _z.origin)
+      ? tp('name_no_norse_from', { origin: _z.origin })
+      : t('name_no_norse');
+    if (btn) { btn.disabled = false; btn.textContent = t('name_lore_btn'); }
+    var r0 = await sb.from('user_profiles').update({ name_lore_text: _nameLoreText })
+      .eq('id', currentUser.id);
+    if (r0 && r0.error) { console.error('persist name lore failed:', r0.error.message); showToast(t('err_save_failed'), 'err'); }
+    _renderNameLore();
+    return;
+  }
   var mode = RUNAR_MODES.name_lore;
-  var prompt = buildNameLorePrompt(_lifeRuneName(), lang, corrections);
+  var prompt = buildNameLorePrompt(_jm, _z, lang, corrections);
   var sys = buildSysPrompt(activeChar, lang);
   // Zdarma — a rozhoduje o tom PROXY podle `mode`, ne tahle nula (klient si zdarma rict nesmi).
   var res = await callProxy(sys, prompt, mode.max_tokens, false, 0, null, 'name_lore');

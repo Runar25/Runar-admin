@@ -5316,3 +5316,43 @@ obojí do USA**. Souhlas tedy nepokrýval to, co se doopravdy děje. Nalezl audi
   obsah si owner přečte v shrine, který běží v EU.
 
 **Affected doc(s):** `RUNAR_PRIVACY.md` — v témž commitu.
+
+---
+
+## 2026-09-11 (9) — O severských kořenech jména rozhoduje SEZNAM, ne model
+
+**Co bylo špatně:** rozbor jména stavěl prompt pro každé jméno a otázku „má tohle jméno severské
+kořeny?" nechával modelu. Model tu otázku **nemá z čeho zodpovědět** — a protože prompt zároveň
+žádal rozbor, neměl na výběr a původ si vymyslel (§23). Owner to viděl na vlastním jméně:
+*„proc mam pro sve jmeno tu divnou zpravu?"*
+
+**Rozhodnutí (KUKY 2026-09-11, na jeho návrh):** *„muzeme klidne udelat databazi jmen pokud to
+bude jednodusi i s prezdivkama a bud tam je nebo neni. neni to tak lepsi?"* — ano, je.
+Vzniklo `v2/runar-names.js`: 123 jmen (97 severských, 26 ne) s kořenem, významem EN+IS, mytickou
+zmínkou a přezdívkami. Data dodal Cowork.
+
+**Jak to teď běží:**
+1. `_nameLookup()` najde jméno nebo přezdívku (bez ohledu na velikost písmen).
+2. **Není v seznamu, nebo `norse:false` → model se NEVOLÁ VŮBEC** a jde hotová věta.
+3. Je severské → prompt dostane **doklad ze seznamu** (kořen, význam, mýtus) s pokynem stavět na
+   něm, ne na vlastní paměti.
+
+**Znění té věty — a proč zrovna takhle.** Owner: *„neco jako runar doest see any nordic
+connection."* Věta mluví o **Rúnarově vidění**, ne o faktu o jménu: *„Rúnar sees no Norse root in
+this name"* / *„Rúnar sér enga norræna rót í þessu nafni."* U jména, které v našem seznamu prostě
+není, by *„kořeny nemá"* byla lež — náš seznam není světový rejstřík. *„Nevidím je"* je pravda.
+Kdo v seznamu je s uvedeným původem, dostane i ten (*„its roots lie elsewhere (Latin)"*).
+
+**Diakritika se při hledání NEODSTRANUJE.** „Thora" není „Þóra". Slučovat je by bylo přesně to
+domýšlení, kvůli kterému seznam vznikl.
+
+**Úniková cesta v promptu ZŮSTALA.** Seznam je silnější obrana, ne neomylná — u jména, kde by byl
+vedle, Rúnar pořád smí říct, že kořeny nevidí.
+
+**Čím je to jištěné:** `verify_liferune_states.js` (㉣) protlačí produkční `generateNameLore()`
+a **počítá volání modelu** — ne jen to, co umí builder. Ta hranice je tu i kvůli penězům:
+`name_lore` je u proxy zdarma, jištěné jen tím, že se volá jednou. Ověřeno mutacemi: vyndání
+větve = 4 FAIL · „nesevrské jde přesto k modelu" = 2 FAIL · zahození původu = 1 FAIL ·
+slučování diakritiky = 8 FAIL.
+
+**Affected doc(s):** žádný — chování vlastní kód a tenhle záznam.
