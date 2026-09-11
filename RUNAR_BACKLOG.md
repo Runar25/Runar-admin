@@ -833,6 +833,17 @@ Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je 
 
 ## Vegvísir (Cowork návrh 2026-08-15 · konsolidace 2026-08-22 · AKTIVNÍ TÉMA)
 
+- [ ] **SMĚR: statický střed × dynamická ramena** (GPT přes ownera 2026-09-11 — ZAZNAMENÁNO jako směr, NErozhodnuto; Vegvísir se bude měnit až do produkce, a odkloníme-li se, tenhle záznam zůstává).
+  **STATIC:** životní runa + její počáteční obraz + základní kontext. Není to první odpověď Vegvísiru — je to **počáteční orientace mapy**.
+  **DYNAMIC:** každé rameno = nová runa + její obraz + **vztah k životní runě** (a případně k tomu, co na mapě už je).
+  Rúnar tedy **nevykládá runu ramene izolovaně** — obraz už existuje; jeho úkol je ukázat, co se stane, když se nový obraz položí vedle počátečního. *„Vegvísir neukazuje význam jednotlivých ramen. Ukazuje vztahy, které mezi nimi vznikají."*
+  Prompt dostane jen `LIFE RUNE` · `LIFE RUNE IMAGE` · `ARM RUNE` · `ARM IMAGE` a pokyn **„najdi vztah mezi těmito dvěma obrazy, nevykládej je jednotlivě"** — vzor vztahu se NEpředepisuje (jeden vzor v promptu = model ho opíše).
+  **Ask ve Vegvísiru je pak jiný než běžný Ask:** ne „co znamená Jera", ale „co se děje mezi mojí Gebo a Jera".
+  **Přerámování 9 nocí:** ne „jedna runa za 9 nocí", ale **„9 nocí je doba, po kterou první obraz zůstává s člověkem, než k němu přibude další"** — čas přestává být UX omezení a stává se součástí mechanismu vzniku vztahu.
+  ⚠️ **Nemaximalizovat:** rameno NEMUSÍ komentovat všechny předchozí runy — hledá se relevantní vztah, ne počet použitých prvků (táž lekce jako u palety a jako protiváha u neseného materiálu: malá a povinná, ne objemná).
+  ✅ **Ověřeno v kódu (CODE-read 2026-09-11):** ownerova kotva platí — `_askBuild` (`v2/runar-reading.js:579`) posílá do `buildAskPrompt` **celý vygenerovaný text čtení**, ne jména run. Ask tedy opravdu pracuje s hotovou stavbou a vztahy uvnitř ní. Prompt navíc říká „Answer ONLY within this reading", takže Ask nový obraz tvořit nemusí — má ho.
+  ⚠️ **Sráží se to s ratifikovaným `RUNAR_DESIGN.md:720`** (*„Životní runa NENÍ startovní kotva, přerozhodnuto 2026-08-23 — nanejvýš nit nebo callback, nikdy verdikt ani souhrn ‚tohle jsi'"*). Rozdíl je ale jemný a stojí za rozlišení: **obraz životní runy** jako orientace mapy tomu neodporuje; **text čtení životní runy** ano — ten je svým tvarem souhrn („This is the ground you were set upon", „To you it comes as easily as breathing"). Kdo tenhle směr povede dál, musí říct, které z těch dvou bere. Rozhodnutí = owner (§21: směr, ne zámek).
+
 - [ ] **Rameno = JEDNO čtení. V devíti nocích ramene DVA Asky** (KUKY 2026-09-08).
   Kadence jednoho ramene: **den 0 čtení → den 3 Ask → den 6 Ask → den 9 nové rameno.**
   Ramena tedy zůstávají na ratifikovaných **9 nocích**; „každý 3. den" je okno pro Ask, ne kadence
