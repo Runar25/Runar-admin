@@ -833,6 +833,18 @@ Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je 
 
 ## Vegvísir (Cowork návrh 2026-08-15 · konsolidace 2026-08-22 · AKTIVNÍ TÉMA)
 
+- [ ] **MOŽNOST: obraz životní runy jako střed Vegvísiru — a možná obráceně** (KUKY 2026-09-11: „zapiš to jako možnost, zkusíme a uvidíme"; *„hledáme teorie, je to na hovno bez praxe"*). NErozhodnuto, obě varianty otevřené:
+  - **(a) Střed = obraz životní runy.** Zakládající obraz, do kterého vstupuje runa ramene.
+  - **(b) OTOČENĚ: střed = runa ramene**, do které vstupuje životní runa. Owner 2026-09-11: *„je možné, že to nakonec otočíme."* Rozhodne zkouška, ne úvaha.
+
+  ⭐ **Mechanický argument, proč vůbec fixní obraz** (ověřeno v kódu 2026-09-11): dnes dostane životní runa **nový obraz pokaždé, když se o ní mluví**. Doloženo na ownerově vlastní dvojici — v čtení životní runy je Gebo *„two arms reaching from opposite ends and meeting in the middle"*, v Ask odpovědi *„the loaf shared once it has risen"*. Obojí dobré, ale **není to týž obraz**. Přes osm ramen by tedy bylo osm různých Geb. Teprve jeden pevný obraz dělá střed, který drží celou cestu.
+
+  ⚠️ **Není to mezera v kódu — je to změna záměru** (upřesnil KUKY 2026-09-11: *„prompt ho nedostává proto, že je to čtení life rune; není potřeba mít v promptu čtení life rune. To se změnilo tím, že chci použít obraz."*). Stav dnes: `user_profiles.life_rune_text` (**1466 znaků**, jeden na uživatele, neměnný — DB trigger `trg_life_rune_immutable`, proxy vrací 409 na druhý pokus) se načítá do klienta (`v2/runar-app.js:88` → `_lifeRuneText`) a **zobrazuje**; do žádného promptu nejde. `_askLifeContext` předává jen **jméno** runy plus *„Do not bring it up on your own."* To je pro běžné čtení správně; Vegvísir chce něco jiného.
+
+  ⚠️ **Objem ředí — do promptu patří JEDNA věta, ne celý text.** Doloženo 2026-09-09 (nález KLÍČE): když model dostal plný seznam klíčových slov runy navíc, meaning-trace ve čtení spadlo ze **17 % na 0 %**. Zakládající obraz má tedy jít jako **jedna vytažená materiálová věta** — týž recept, co vyšel 4/4 (řetěz v2) a 6/6 (TEST 31).
+
+  **K otestování (nic z toho není rozhodnuté):** která z variant (a)/(b) dá scénu a ne šev · jestli jedna věta stačí, nebo je potřeba víc · co dělá osm ramen se stále týmž středem (riziko jednotvárnosti — u životní runy jako pouhé závěrečné čočky bylo dávání/výměna v ~7 ze 13 čtení, měřeno 2026-09-11).
+
 - [ ] **SMĚR: statický střed × dynamická ramena** (GPT přes ownera 2026-09-11 — ZAZNAMENÁNO jako směr, NErozhodnuto; Vegvísir se bude měnit až do produkce, a odkloníme-li se, tenhle záznam zůstává).
   **STATIC:** životní runa + její počáteční obraz + základní kontext. Není to první odpověď Vegvísiru — je to **počáteční orientace mapy**.
   **DYNAMIC:** každé rameno = nová runa + její obraz + **vztah k životní runě** (a případně k tomu, co na mapě už je).
