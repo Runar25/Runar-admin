@@ -1086,3 +1086,40 @@ protože štítek je slovník aplikace, ne slova toho člověka — a měřený 
    větu dál přepisují vlastními slovy (to je ten žádoucí stav), nebo ji odešlou tak, jak je.
 
 Rozhodnutí a celý kontext → `RUNAR_DECISIONS.md` 2026-09-11.
+
+---
+
+## Nálezy adversariálního průchodu Ask (2026-09-11) — co zůstalo otevřené
+
+Fanout po nasazení našel osm věcí; čtyři jsem opravil hned (commit `9cb5aa3`), tyhle čtyři
+mají vlastní cenu a nepatří do téhož commitu.
+
+### 1. `scripts/utils/test_lever_maps.js` je TIŠE ČERVENÝ a není ve smoke
+Spuštěno 2026-09-11: **exit 1, 9 problémů**, a `grep test_lever_maps smoke.py` = **0**. Nikdo to
+tedy nevidí. Jeho premisa (*„každá věta svou hodnotu JMENUJE"*) padla commitem z 2026-09-08.
+**Hlídal ale reálnou expozici:** přeskládání `SEEKS` pošle každému čtení cizí registr a **nic
+nespadne**. Rozhodnout: opravit premisu a zařadit do smoke, nebo test retirovat s datovaným
+důvodem. Tiše červený test je horší než žádný — vypadá jako pokrytí.
+
+### 2. Oblast je u spreadů v promptu pojmenovaná DVAKRÁT
+Hlavička `S.area + ': ' + u.area` (`runar-character.js` ×4 spready) **a** věta `_domainContext`.
+Táž dvojitost se u `seeking` odstranila 2026-09-08 a **oblast při tom úklidu zůstala**. Mění to
+výstup čtení → **samostatný commit + golden-verify** (§18.3), ne přílepek.
+
+### 3. Tip na minulost se ptá na minulost, ale plot na životopis v Ask promptu chybí
+`ask_h_when_past` (*„What in this has to do with the past?"*) pobízí k minulosti, zatímco plot
+*„minulost patří OBRAZU, ne životopisu"* (`runar-character.js`, builder čtení) v Ask promptu
+**není ani jednou**. `_noColdRead` hlídá vnitřní život a osud, **ne vymyšlené vnější události**.
+⚠️ **NEPŘIDÁVAT poslepu** — přidané pravidlo se v textu projeví jako formule
+([[oprava-promptu-odebira-vadu]]). **Napřed změřit:** dávka s tím tipem, počítat vymyšlené fakty
+o životě tazatele. Když se přidávat bude, použít **doslovné znění z builderu**, ne nové.
+
+### 4. Tři tipy přetékají jednořádkový práh na 375 px
+Změřeno: `ask_h_life_all` IS **55** / EN **51** · `ask_hint_life` IS **50** · `ask_h_image_area`
+EN **51** (jen u `Crossroads & Decisions`; IS max 42). Práh ~45 IS / ~50 EN je **odhad z jednoho
+měření**, ne ověřený fakt — než se podle něj začne krátit, ověřit v prohlížeči na skutečném
+zařízení. Do té doby to není vada, jen podezření.
+
+### 5. `INTENTIONS.is[0]` = „Í þessari stund" (idiomaticky „Á þessari stundu")
+Popisek **je v DB** a journal podle něj filtruje řetězcovou rovností → oprava potřebuje migraci,
+ne přepsání konstanty. Backlog, ne rychlá oprava.

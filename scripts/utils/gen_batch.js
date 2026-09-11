@@ -800,7 +800,13 @@ async function main() {
         const runeStr = parsed.segs.length
           ? parsed.segs.map(function (s) { return s.rune; }).join(', ')
           : runes.map(function (r) { return call('rn', [r]); }).join(', ');
-        const askPrompt = call('buildAskPrompt', [parsed.reading, q, runeStr, lang, []]);
+        // Zrcadli produkci (runar-reading.js `askRunar`): zivotni runa + zadani cteni.
+        // Do 2026-09-11 se volalo s peti argumenty a davky merily jiny prompt, nez
+        // jaky dostane clovek.
+        let _lf = u.lifeRune || null;
+        if (_lf && runes.some(function (r) { return r && r.n === _lf.n; })) _lf = null;
+        const askPrompt = call('buildAskPrompt', [parsed.reading, q, runeStr, lang, [], _lf,
+          { area: u.area, intention: u.intention, question: u.question }]);
         const a = await generate(askPrompt, ASK_TOKENS, G('SPREAD_COSTS').single.credits, 'ask');
         row.ask.push({
           question: q, answer: a.text, prompt: askPrompt,

@@ -36,3 +36,9 @@ Významový/úzový **rozdíl blízkých synonym** (např. `í senn` „po jedno
 „najednou") — slovník dá glosu, korpus četnost, ale sémantický kontrast rozhodne až **věta v kontextu
 nebo rodilý mluvčí**. Kolokace podle konkrétního objektu (`fara yfir skarð`) nejsou indexované —
 korpus potvrdí jen vzácnost, ne přijatelnost. Nedomýšlet → [[dont-invent-fact-critical]], [[measure-dont-eyeball]].
+
+⚠️ **`--freq` u ČTYŘ a více slov vrací vždy 0 — a je to TICHÁ nula, ne nález.** Endpoint stropuje
+na trigramech. Kontrolní vzorek: `það er ekki hægt` (běžná fráze) → **0**. Doložení delší vazby se
+proto skládá **po trojicích** (`hvað segir þetta` 208 + `segir þetta um` 505), nikdy jedním
+dotazem. *„NEDOLOŽENO (0)"* u čtyřgramu **není důkaz proti** — je to mlčení nástroje.
+Ověřeno 2026-09-11 při stavbě Ask nápovědy; do té doby to musela každá session objevit znovu.
