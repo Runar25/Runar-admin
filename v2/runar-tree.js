@@ -651,6 +651,17 @@ function _renderNameLore() {
 // ⚠️ Diakritika se NEODSTRANUJE: „Þóra" a „Thora" jsou ruzna jmena a slucovat je by byl
 // presne ten druh domysleni, kvuli kteremu seznam vznikl. Kdo napise jmeno bez hacku,
 // dostane „koreny nevidim" — to je pravdive, protoze my to jmeno opravdu nemame.
+// Je to VUBEC islandske jmeno? Rejstrik (Mannanafnaskra) nese jen jmena, zadnou etymologii,
+// takze `norse` z nej NEPLYNE — rozhoduje jedinou vec: znamе ho Island, nebo ne.
+// Set se staví az pri prvni otazce; retezec je v souboru schvalne jako retezec (37 kB proti
+// 47 kB v poli), at se pri nacteni stranky nic neparsuje.
+var _regSet = null;
+function _inRegistry(jmeno) {
+  if (typeof IS_NAME_REGISTRY === 'undefined') return false;
+  if (!_regSet) _regSet = new Set(IS_NAME_REGISTRY.split(' '));
+  var q = String(jmeno || '').trim().toLowerCase();
+  return !!q && _regSet.has(q);
+}
 function _nameLookup(jmeno) {
   if (!jmeno || typeof NORSE_NAMES === 'undefined') return null;
   var q = String(jmeno).trim().toLowerCase();
@@ -682,9 +693,13 @@ async function generateNameLore() {
     // Puvod ma per-jazyk tvar na tomtez radku seznamu (jako `en`/`is` u vyznamu) —
     // do 2026-09-11 se do islandske vety dostavalo anglicke „(Latin)" (§2).
     var _pv = _z && (lang === 'is' ? _z.origin_is : _z.origin);
+    // ⭐ TRETI STAV: jmeno, ktere Island zna, ale my jsme u nej koreny nedohledali.
+    // Do 2026-09-12 dostavalo tuz vetu jako naprosty cizinec, tedy „koreny nevidim" — a to je
+    // u Einara nebo Dagura LEZ (mereno: 289 ze 402 nejbeznejsich islandskych jmen v naem
+    // kuratorovanem seznamu chybi). Rejstrik ty dva pripady rozlisi.
     _nameLoreText = _pv
       ? tp('name_no_norse_from', { origin: _pv })
-      : t('name_no_norse');
+      : (!_z && _inRegistry(_jm) ? t('name_known_untraced') : t('name_no_norse'));
     if (btn) { btn.disabled = false; btn.textContent = t('name_lore_btn'); }
     var r0 = await sb.from('user_profiles').update({ name_lore_text: _nameLoreText })
       .eq('id', currentUser.id);

@@ -48,7 +48,7 @@ S.window = S; S.self = S; S.globalThis = S;
 // ve stejném pořadí.
 let code = '';
 for (const f of ['runar-config.js', 'runar-runes.js', 'runar-translations.js',
-                 'runar-names.js', 'runar-character.js', 'runar-utils.js', 'runar-svgs.js', 'runar-tree.js',
+                 'runar-names.js', 'runar-names-registry.js', 'runar-character.js', 'runar-utils.js', 'runar-svgs.js', 'runar-tree.js',
                  'runar-app.js']) {
   code += '\n/* ' + f + ' */\n' + fs.readFileSync(DIR + f, 'utf8') + '\n;\n';
 }
@@ -207,6 +207,17 @@ for (const L of ['en', 'is']) {
   // kvůli kterému seznam vznikl.
   rekni(najdi('Thora') === null, 'jméno bez háčků se NESLUČUJE s diakritickou podobou');
 
+  // Rejstřík = odpověď na „je to vůbec islandské jméno?". Nenese etymologii, takže se z něj
+  // NIKDY nesmí stát zdroj pro `norse` — tady se hlídá jen to, že je načtený a že dělí správně.
+  {
+    const R = vm.runInContext('typeof IS_NAME_REGISTRY !== "undefined" ? IS_NAME_REGISTRY : null', S);
+    rekni(typeof R === 'string' && R.length > 20000, 'rejstřík schválených jmen je načtený');
+    const set = new Set(String(R || '').split(' '));
+    rekni(set.size > 4000, '…a má tisíce jmen (' + set.size + ')');
+    ['einar', 'dagur', 'bjarni', 'þórður'].forEach((n) => rekni(set.has(n), '…zná „' + n + '"'));
+    rekni(!set.has('kuky') && !set.has('zdeněk'), '…a neislandská jména v něm nejsou');
+  }
+
   // Kdo přidá neseverské jméno bez `origin_is`, propašuje do islandské věty angličtinu.
   // Proto se to hlídá na DATECH — jedna věta výš testuje jen to jméno, které tu je dnes.
   const bezIS = L.filter((z) => !z.norse && z.origin && !z.origin_is).map((z) => z.name);
@@ -294,6 +305,19 @@ async function drat() {
   const nezname = await zkus('Kuky');
   rekni(nezname.volani === 0, '„Kuky" (není v seznamu) → model se nevolá vůbec');
   rekni(nezname.text === T.name_no_norse, '…a jde věta bez původu (netvrdíme, co nevíme)');
+
+  // ⭐ TŘETÍ STAV (2026-09-12): jméno, které Island zná, ale my u něj kořeny nedohledali.
+  // Do té doby dostávalo tutéž větu jako cizí jméno, tedy „kořeny nevidím" — a to je u Einara
+  // LEŽ. Měřeno: 289 ze 402 nejběžnějších islandských jmen v kurátorovaném seznamu chybí, takže
+  // tohle NENÍ okrajový případ, ale nejčastější odpověď, jakou appka na islandské jméno dá.
+  const zRejstriku = await zkus('Einar');
+  rekni(zRejstriku.volani === 0, '„Einar" (v rejstříku, ne v kurátorovaném seznamu) → model se nevolá');
+  rekni(zRejstriku.text === T.name_known_untraced,
+        '…a Rúnar řekne, že jméno ZNÁ a kořeny nedohledal (ne „kořeny nevidím")');
+  rekni(zRejstriku.text !== T.name_no_norse, '…a rozhodně NE tu větu pro cizí jméno');
+  const isRejstrik = await zkus('Dagur', 'is');
+  rekni(isRejstrik.text === vm.runInContext('UI_TEXT', S).is.name_known_untraced,
+        'is  „Dagur" → táž pravdivá věta islandsky');
 
   const severske = await zkus('Sigrún');
   rekni(severske.volani === 1, '„Sigrún" (severské) → model text NAPÍŠE');

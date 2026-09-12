@@ -5558,3 +5558,47 @@ zdroj vůbec původ nese; co z toho vyjde, se zapíše, i kdyby to znamenalo „
 původ ne".
 
 **Affected doc(s):** `RUNAR_BACKLOG.md` — v témž commitu.
+
+---
+
+## 2026-09-12 (4) — Rejstřík Mannanafnaskrá NASAZEN. Ne kvůli úplnosti — kvůli tomu, že appka lhala.
+
+**Co to opravuje (změřeno, ne odhadnuto).** Kurátorovaný `runar-names.js` má 123 jmen. Proti
+nejběžnějším islandským jménům (Coats 2019, `stcoats/Nordic-Name-Data`) v něm **289 ze 402 chybí,
+tedy 72 %** — a každé z nich dostávalo větu *„Rúnar sees no Norse root in this name."* U **Einara,
+Dagura, Bjarniho, Árniho, Gísliho** je to nepravda: kořeny mají, jen jsme je nedohledali my.
+Tohle číslo je celý důvod, proč se to dělalo — „úplnost" sama by byla jen větší soubor.
+
+**Co je nasazené.** `v2/runar-names-registry.js` (generované, 5 141 schválených jmen, 44 kB / 15 kB
+po gzipu) + třetí stav v `generateNameLore()`:
+1. v kurátorovaném seznamu a severské → čtení píše model
+2. v kurátorovaném a neseverské → *„…its roots go back to Latin."*
+3. **NENÍ v kurátorovaném, ALE JE v rejstříku** → *„Rúnar knows this name, but has not traced its
+   roots."* / *„Rúnar þekkir þetta nafn, en hefur ekki rakið rætur þess."* ← nové
+4. nikde → *„Rúnar sees no Norse root in this name."* (beze změny)
+Model se ve stavech 2–4 nevolá vůbec. IS doloženo: „rakið rætur" 22 · „rætur þess" 264 ·
+„þekkir þetta" 2566.
+
+**⚠️ Rejstřík NENESE etymologii — a to je zapsané na třech místech, aby to nikdo nezkusil.**
+Ověřeno na datech: `description` má 308 z 5 859 záznamů a je to 2. pád nebo úřední poznámka
+(*„ef. Abigaelar"*, *„Tekið úr birtingu að beiðni mnn"*). `norse: true/false` se z rejstříku
+odvodit **nedá**; kdo to zkusí, domýšlí si (§23). Původ vzniká výhradně kurací.
+Zamítnutá jména (`status: 'Haf'`, 667) se **neberou** — o zamítnutém jménu nechceme tvrdit, že je
+islandské.
+
+**Čím je to jištěné.** ㉣ jede produkční `generateNameLore()` na všech čtyřech stavech v obou
+řečech a kontroluje i to, že je rejstřík vůbec načtený (bez něj by třetí stav mlčel a kontrola
+byla zelená naprázdno). Mutace: třetí stav pryč = 3 FAIL · rejstřík se nenaparsuje = 3 FAIL.
+
+**Zdroje, které Cowork navrhl, ale neobstály** (ať je příště nikdo neřeší znovu):
+- `apis.is` — **mrtvé**, certifikát vypršel (`SEC_E_CERT_EXPIRED`).
+- `HaJongler/diminutives.db` — jsou to **anglické** zdrobněliny, na islandské přezdívky nepoužitelné.
+- `stcoats/Nordic-Name-Data` — **ne rejstřík**, ale 402 nejběžnějších jmen podle frekvence. Jako
+  rejstřík je to málo; jako **měřítko pokrytí a pořadí kurace je to ale přesně ono** a v té roli se
+  použilo.
+
+**Co zbývá a je to obsah:** 289 jmen k dokurátorování → `docs/eval/2026-09-12-jmena-k-kuraci.md`
+(seznam v pořadí podle frekvence + tvar řádku). Není to blocker; každé přidané jméno je samostatné
+zlepšení.
+
+**Affected doc(s):** žádný — chování vlastní kód, seznam k práci vlastní ten nový doc.
