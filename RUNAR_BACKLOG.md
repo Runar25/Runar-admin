@@ -585,6 +585,10 @@ voice profil. Úhly jsou v `v2/runar-utils.js`, taky veřejné.
 jako hotový text (`claude-proxy/index.ts:420` ho bere z body, `:668` ho posílá Claudovi). Kdokoli
 otevře appku a zmáčkne F12, má ho — bez ohledu na to, jestli je repo public.
 
+⭐ **ROZHODNUTO (KUKY 2026-09-12): přesune se to na server PŘED spuštěním pro veřejnost, NE kvůli
+testerům.** *„až budeme Rúnara spouštět, tak to přesuneme na server.“* Položka proto zůstává otevřená
+a smoke ㉕ ji dál ukazuje — je to vědomě odložená podmínka veřejného spuštění, ne zapomenutá věc.
+
 **Jediná skutečná oprava:** přesunout stavbu promptu do edge funkce a posílat z klienta jen
 parametry (runa, area, seeking, intention, otázka, jazyk, spread). Je to zásah přes celou cestu
 (§13) a rozhodnutí ownera: **je Rúnarův hlas to, co chceme chránit?** U tohohle produktu je copy
@@ -1456,13 +1460,29 @@ Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
       **Pořadí:** owner přidá záznamy u ISNIC → CODE spustí ověření v Resend → CODE založí SMTP klíč
       → owner ho vloží do Supabase (Authentication → Emails → SMTP: `smtp.resend.com`, port 465,
       uživatel `resend`). Klíč vkládá owner, ne CODE — je to tajemství.
-      **Když to nestihneš před testery:** v pozvánce napiš „přihlas se tlačítkem Google" — funguje hned.
-- [ ] **Limit v účtu ElevenLabs.** Důvod ověřen 2026-09-12, není to formalita: `elevenlabs-proxy`
-      chce jen přihlášení a **tier nekontroluje** — hlas je v `TIER_LIMITS` záměrně otevřený všem
-      („aktuálně otevřeno; připraveno pro gating"). Strop 5 hlasů/měsíc (≤ 3 000 znaků) je tedy **na účet**,
-      ale **účtů může přes Google vzniknout libovolně**. Jediný tvrdý strop CELKOVÉ útraty je proto v účtu
-      ElevenLabs. **Co zkontrolovat:** jestli má plán zapnuté placení nad kvótu (usage-based billing /
-      overage). Když ano, vypnout nebo nastavit strop útraty. Když plán prostě skončí na kvótě, je hotovo.
+      **ROZHODNUTO (KUKY 2026-09-12): testeři se přihlašují přes Google**; SMTP se řeší až před spuštěním.
+      ⚠️ **Poskytovatel NENÍ rozhodnutý — Resend nemusí být nejlepší volba** (ověřeno 2026-09-12):
+      Resend je **americká firma** (San Francisco). Region odesílání eu-west-1 to nemění — přibyl by
+      TŘETÍ americký zpracovatel vedle Anthropicu a ElevenLabs, a náš souhlas je jmenuje výslovně.
+      **Brevo** (dříve Sendinblue) je **firma z EU (Paříž)**, servery v EU, DPA ve výchozím stavu, SMTP pro
+      Supabase funguje, zdarma 300 e-mailů denně. Pro Rúnara je to čistší volba. Resend nastavení došlo
+      jen k přidání domény, takže přechod nic nestojí — **jeho DNS záznamy výš proto NEPŘIDÁVAT**, Brevo
+      má vlastní.
+- [ ] **Limit v účtu ElevenLabs — NENÍ blocker pro testery, je to pojistka proti skriptu.**
+      Owner 2026-09-12: *„limit 5 je jen kvůli testerům… kdokoliv si udělá Google účet, tak dostane co?"*
+      **Ověřeno v DB a kódu, co nový účet dostane:** řádek s `tier = 'free'` (DB default) — klient
+      (`runar-config.js` `TIERS.free = TIERS.rune_seeker`) i proxy (`claude-proxy` „free → rune_seeker")
+      ho čtou jako **Rune Seeker** · `free_balance = 1` (**jedno volné čtení**) · `credits_balance = 0` ·
+      žádný trigger na `auth.users`, nic víc se nepřidává.
+      **Hlas:** tlačítko „Hear Rúnar speak" se po čtení zapne **každému** a `elevenlabs-proxy` tier nekontroluje —
+      je to **záměr** (`TIER_LIMITS.rune_seeker.voice_monthly: true`, „hlas pro free čtení"). **Přes UI** tedy
+      nový účet slyší své jedno čtení (≈ jeden hlas na jazyk). **Pět hlasů měsíčně libovolného textu jde jen
+      ručním požadavkem** (F12) — stejná třída jako „prompt se staví v prohlížeči", řeší se týmž přesunem na server.
+      ⇒ Limit v účtu ElevenLabs chrání jen proti tomu, kdo by si naskriptoval hodně účtů. **Co zkontrolovat, až
+      bude čas:** jestli má plán zapnuté placení nad kvótu. Když plán skončí na kvótě, není co dělat.
+      ⚠️ Vedlejší nález: DB default `tier = 'free'` není mezi dokumentovanými hodnotami a drží ho při životě
+      kompatibilní převod na DVOU místech. Všechny 4 skutečné účty mají `rune_seeker`. Nerozbité, jen křehké —
+      default by měl být `rune_seeker`.
 - [x] ~~**`WEBHOOK_SECRET`**~~ — NASTAVIL CODE 2026-09-11. Hlavicka i secret, v tomhle poradi
       (obracene by reporter na chvili odmital vlastni webhook). Zbyva jen smazat tu sondovou
       zpravu ve Slacku — na to Code nema nastroj.
@@ -1495,9 +1515,7 @@ Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
 
 - [ ] `user_profiles` má **dvě identické RLS policy** („Users manage own profile" a „own profile").
       Neškodí (permissive se sčítají), ale je to duplikát — jednu smazat.
-- [ ] V Slacku leží sondová zpráva z reporteru (11. 9.) — smazat. **Kosmetika, NE blocker pro testery**
-      (ověřeno 2026-09-12): obsah i identitu reporter do Slacku od 11. 9. neposílá, zpráva je jen „něco přišlo"
-      v interním kanálu. Code na mazání ve Slacku nástroj nemá.
+- [x] ~~V Slacku leží sondová zpráva z reporteru (11. 9.)~~ — owner ji smazal 2026-09-12.
 
 ---
 
