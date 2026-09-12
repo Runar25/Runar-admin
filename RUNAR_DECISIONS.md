@@ -5454,3 +5454,38 @@ nedostal v jedné řádce dvě verze téže runy, ne kvůli tomu, jak čtení vy
 stížnost — se nezlepšil a čeká na obsahové rozhodnutí → `RUNAR_BACKLOG.md`.
 
 **Affected doc(s):** `RUNAR_BACKLOG.md`, `RUNAR_EVAL_LOG.md` — v témž commitu.
+
+---
+
+## 2026-09-12 (1) — „7 islandských synonym" neexistovalo. Byla to díra u 17 z 25 run.
+
+**Jak se to našlo.** Kontrola ㉤ hlásila 7 islandských aspektů, které nesedí na položku v `k_is`,
+a já to zapsal jako obsahové rozhodnutí („které synonymum vyhraje"). Owner na to řekl *„to
+islandsky nevím"* — a při dohledávání, která strana je vlastně špatně, se ukázalo, že žádná
+volba mezi synonymy neexistuje: **anglický seznam klíčů má položku, kterou islandský nemá.**
+
+**Rozsah (změřeno, ne odhadnuto): 17 z 25 run** má `k_is` kratší než `k`, vždy přesně o jednu
+položku. Vidět to bylo jen u sedmi — u těch, kde tu chybějící položku náhodou používal nějaký
+obraz jako aspekt. U zbylých deseti to nikdo poznat nemohl.
+
+**Co to dělá:** `rk()` vrací podle jazyka `k` nebo `k_is` a bez aspektu obrazu se z toho losují
+klíče do promptu. Islandská čtení tedy měla o jednu stránku runy míň — ne chybu, jen chybějící
+slovo, které nic nehlásí.
+
+**Opraveno teď (5 run):** `frumkraftur` (Uruz), `andardráttur` (Ansuz), `þörf` (Nauthiz),
+`umbun` (Jera), `hugur` (Mannaz). **Nic se nevymýšlelo** — všech pět slov už v projektu žije
+jako aspekt obrazu (psal je Cowork nativně) a všech pět je heslo v Íslensk nútímamálsorðabók.
+Tím spadl islandský dluh v ㉤ **na nulu** a strop je srovnaný na 0.
+
+**Zbývá 12 run**, kde islandské slovo nemáme vůbec (Fehu `cattle`, Thurisaz `protection`,
+Raidho `right action`, Kenaz `fire`, Wunjo `wish fulfilled`, Hagalaz `clearing`, Isa `clarity
+through cold`, Sowilo `solar energy`, Tiwaz `the warrior spirit`, Ehwaz `trust`/`partnership`,
+Laguz `the unconscious`, Blank `the void`). To je **islandský obsah = Cowork** (kánon lanes),
+ověření nástroji pak CODE → handoff.
+
+**Nová pojistka v ㉤:** `k` a `k_is` musí mít stejně položek; strop je součet CHYBĚJÍCÍCH
+POLOŽEK, ne počet run. ⚠️ První verze počítala runy a mutace jí prošla zeleně — přidání šestého
+anglického klíče k runě, která v seznamu dluhu už byla, počet run nezměnilo. Doloženo mutacemi:
+klíč zase zmizí = FAIL · přibude EN klíč bez protějšku = FAIL · IS seznam delší než EN = FAIL.
+
+**Affected doc(s):** žádný — vlastníkem dat je `runar-runes.js`, dluh drží kontrola.

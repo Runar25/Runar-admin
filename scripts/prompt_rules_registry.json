@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
- "zapsano": "2026-09-11",
- "prompt_version": "v4.23-namelore",
+ "zapsano": "2026-09-12",
+ "prompt_version": "v4.24-kjarnaord",
  "pravidla": [
   {
    "hash": "54d29df4d80b",
@@ -1048,10 +1048,10 @@
    "zacatek": "ÍSLENSKUR MÁNUÐUR: Jól — sólstöður, fræ ljóssins í myrkinu, Jólasveina"
   },
   {
-   "hash": "79feda79e353",
+   "hash": "dab4c2e06e28",
    "lang": "is",
    "zdroj": "liferune",
-   "zacatek": "KJARNAORÐ: skilaboð, viska, guðleg leiðsögn, rödd"
+   "zacatek": "KJARNAORÐ: skilaboð, viska, guðleg leiðsögn, rödd, andardráttur"
   },
   {
    "hash": "6af9c54a5145",
@@ -1102,28 +1102,34 @@
    "zacatek": "Svaraðu einungis á íslensku."
   },
   {
-   "hash": "a8d7476a3b66",
+   "hash": "894c74f3ddd1",
    "lang": "is",
    "zdroj": "namelore",
-   "zacatek": "NAFNIÐ — leitandinn gaf nafnið „Anna“."
+   "zacatek": "THE NAME — the seeker gave the name “Anna”."
   },
   {
-   "hash": "8458aa534c60",
+   "hash": "0bc06aa73669",
    "lang": "is",
    "zdroj": "namelore",
-   "zacatek": "Eigi það sér RAUNVERULEGAR rætur í norrænu máli eða goðafræði, segðu h"
+   "zacatek": "If that name has REAL roots in Old Norse or in Norse myth, say what it"
   },
   {
-   "hash": "481d4547f67f",
+   "hash": "4d822ce3feca",
    "lang": "is",
    "zdroj": "namelore",
-   "zacatek": "Eigi það þær EKKI — og mörg nöfn eiga þær ekki — segðu það hreint út o"
+   "zacatek": "If it does NOT — and many names do not — say so plainly and stop there"
   },
   {
-   "hash": "dd4ca2978462",
+   "hash": "3f81af7f1b80",
    "lang": "is",
    "zdroj": "namelore",
-   "zacatek": "Dragðu engar rúnir, lestu ekki leitandann, gerðu ekki lestur úr þessu."
+   "zacatek": "Do not draw runes, do not read the seeker, do not turn this into a rea"
+  },
+  {
+   "hash": "d697932ae6c6",
+   "lang": "is",
+   "zdroj": "namelore",
+   "zacatek": "NO COLD READING: never tell the seeker what is true, stirring, or know"
   },
   {
    "hash": "1013b8da068f",

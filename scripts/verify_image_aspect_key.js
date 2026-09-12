@@ -28,7 +28,9 @@ const IMGS = vm.runInContext('RUNE_IMAGES', S);
 const RUNES = vm.runInContext('RUNES', S);
 
 // Strop islandského dluhu. Zvednout ho smí JEN datované rozhodnutí, ne „ať to projde".
-const IS_DLUH_STROP = 7;
+// 2026-09-12: splaceno na NULU. Nešlo o volbu mezi synonymy — těch 7 řádků mělo aspekt,
+// který v `k_is` CHYBĚL (viz druhý invariant níž). Doplněním klíčů to spadlo na 0.
+const IS_DLUH_STROP = 0;
 
 const polozky = (s) => String(s || '').split(',').map((x) => x.trim().toLowerCase()).filter(Boolean);
 let fail = 0;
@@ -41,6 +43,37 @@ for (const row of IMGS) {
   if (!aEN || !aIS) { chybiEN.push(row[0] + ' — PRÁZDNÝ ASPEKT'); continue; }
   if (!polozky(r.k).includes(aEN.toLowerCase())) chybiEN.push(r.n + ': „' + aEN + '" není v k');
   if (!polozky(r.k_is).includes(aIS.toLowerCase())) chybiIS.push(r.n + ': „' + aIS + '" není v k_is');
+}
+
+// ── DRUHÝ INVARIANT: `k` a `k_is` musí mít STEJNĚ položek ───────────────────
+// Proč: `rk()` vrací podle jazyka `k` nebo `k_is`, a když není aspekt obrazu, losují se z toho
+// klíče do promptu. Kratší islandský seznam = islandská čtení mají o jednu stránku runy míň,
+// a nikdo si toho nevšimne — není to chyba, jen chybějící slovo.
+// Nalezeno 2026-09-12 při pátrání po „7 islandských synonymech": ta synonyma neexistovala,
+// existovala jedna systematická díra u 17 z 25 run.
+// Strop = dluh, který ještě čeká na islandské slovo (handoff Cowork). Nesmí RŮST.
+// ⚠️ Strop počítá CHYBĚJÍCÍ POLOŽKY, ne runy. Mutace 2026-09-12: přidání šestého anglického
+// klíče k Laguzu (které v seznamu dluhu už bylo) prošlo zeleně, protože počet RUN se nezměnil.
+// Součet rozdílů takovou ránu zachytí.
+const PARITA_STROP = 12;
+const parita = [];
+let chybiPolozek = 0;
+for (const r of RUNES) {
+  const a = polozky(r.k).length, b = polozky(r.k_is).length;
+  if (a !== b) { chybiPolozek += Math.abs(a - b); parita.push(r.n + ": EN " + a + " × IS " + b); }
+}
+if (chybiPolozek > PARITA_STROP) {
+  fail++;
+  console.log('FAIL  chybějících položek v islandských seznamech klíčů: ' + chybiPolozek
+              + ' (strop ' + PARITA_STROP + ' — PŘIBYLA nová)');
+  parita.forEach((x) => console.log('        ' + x));
+} else if (chybiPolozek) {
+  console.log('  ⚠  ' + chybiPolozek + ' položek chybí v islandských seznamech klíčů (' + parita.length + ' run)'
+              + ' (známý dluh, strop ' + PARITA_STROP + ' — čeká na islandské slovo):');
+  parita.forEach((x) => console.log('        ' + x));
+  if (chybiPolozek < PARITA_STROP) {
+    console.log('  ℹ  dluh KLESL — sniž `PARITA_STROP` na ' + chybiPolozek + '.');
+  }
 }
 
 if (bezRuny.length) {
@@ -66,5 +99,6 @@ if (chybiIS.length > IS_DLUH_STROP) {
 }
 
 if (fail) { console.log('\nFAIL — aspekt obrazu se rozešel s klíčem runy.'); process.exit(1); }
-console.log('OK    aspekt↔klíč: EN ' + (IMGS.length - chybiEN.length) + '/' + IMGS.length + ' sedí, IS dluh '
-            + chybiIS.length + '/' + IS_DLUH_STROP);
+console.log('OK    aspekt↔klíč: EN ' + (IMGS.length - chybiEN.length) + '/' + IMGS.length
+            + ' sedí, IS aspektů mimo klíč ' + chybiIS.length + '/' + IS_DLUH_STROP
+            + ', chybějících IS klíčů ' + chybiPolozek + '/' + PARITA_STROP);
