@@ -3176,3 +3176,34 @@ a šel cestou, která mě nezajímá, protože jsem věděl, že to takhle dopad
 
 **Výsledek pro Vegvísir: ŽÁDNÝ.** Čísla z téhle dávky se nepoužívají a nikam se nepřenášejí.
 
+
+## 2026-09-12 — Odkud Rúnar v Asku bere význam runy (ownerových 101 Asků přečteno)
+
+**Proč:** owner nečekal, že Rúnar v Asku přinese význam runy, který v promptu není
+(*„Eihwaz is the yew"*). Owner: *„tak si je přečti."*
+
+**Ověřeno v kódu a DB (fakt, ne úsudek):**
+- EN Ask dostane jen **text čtení + holá jména run** (`RP_ASK.intro`, `rn()` v EN = `r.n`).
+- Systémový prompt (`buildSysPrompt`) klíčová slova run nenese; uložená postava v `runar_character`: 0× „yew".
+- **IS Ask** dostane k jménu jednoslovnou glosu z kánonu (`is_n`, např. *Eihwaz (Vörn)*).
+- Pozice spreadu jdou do Asku až od `v4.21-askpositions`; starší Asky je neměly.
+- Obraz čtení losuje kód z `RUNE_IMAGES` (`prompt_draws.image`), ne model.
+
+**Přečteno:** všech 101 Asků z ownerova účtu (2026-07-14 → 2026-09-12, prompty v0.4 → v4.25), celé
+čtení + otázka + odpověď, v session, bez agentů. Čtení testerů nečtena. Texty tu schválně NEJSOU
+(ownerovy otázky a čtení = osobní data, repo jde na GitHub) — leží v `readings.follow_up`.
+
+**Rúnarovy věty o runě, které v textu čtení nestály** (výběr; kontext owner viděl celý):
+Eihwaz *„the yew, the tree whose roots run deeper than the frost ever reaches"* · Ingwaz *„the seed grows
+wherever it finds soil that will hold it"* · Perth *„the dice-cup, bone rattling in the dark before the throw
+lands"* · Fehu *„the good of a thing lives in its passing from one hand to the next"* · Algiz *„protection
+that stays where it is"* · Gebo *„the giving that runs both ways"* · Hagalaz *„the hailstorm that has already
+passed"* · Isa *„the still water that has stopped moving"* · Blank *„the one rune with no mark carved into it"*.
+
+**Dvě odpovědi, které tvrdí něco, co prompt nedal:**
+- Horseshoe 2026-08-11 (před `askpositions`): popsal pozice spreadu (*„the open end where you stand, the arc
+  bending away…"*), které v promptu nebyly.
+- Ansuz 2026-08-20: *„I chose the voice on the wire because that is what this rune does"* — obraz losoval kód.
+
+⚠️ **Hranice:** jen ownerův účet · výběr vět je můj, hodnocení, jestli do čtení zapadají, dělá owner
+z celého kontextu · odpovědi z různých verzí promptu nejsou srovnatelné.

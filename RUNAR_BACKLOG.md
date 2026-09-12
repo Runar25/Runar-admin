@@ -1431,8 +1431,9 @@ plný seznam klíčových slov v promptu **ČTENÍ** srazil stopu významu ze 17
 (C) jen `formula_is` / jedna definiční věta. Otázka: *„What does {rune} mean in this reading?"*
 Měřit: shoduje se odpověď s naším kánonem, a nerozpadl se přitom hlas do výčtu klíčových slov?
 Hypotéza: **C vyhraje nad B** — celý seznam sveze model k výčtu, jedna věta ne.
-📌 **Doklad z aplikace pro (A) dnešek, n=1 — běžné Single čtení (KUKY 2026-09-12):** Eihwaz → *„Eihwaz is the yew…"* — sedí na
-kánon i na obraz čtení. Podmínka je obraz, který nese podstatu runy → `RUNAR_DESIGN.md` „Obraz nese podstatu runy".
+📌 **Doklad z aplikace pro (A) dnešek:** Rúnar v Asku přináší význam runy z vlastní znalosti (Eihwaz → „the yew");
+přečteno 101 ownerových Asků → `RUNAR_EVAL_LOG.md` 2026-09-12 „Odkud Rúnar v Asku bere význam runy".
+Princip → `RUNAR_DESIGN.md` „Obraz nese podstatu runy".
 
 ### ~~Bod 4 — pozice ve spreadu~~ ✅ HOTOVO 2026-09-11 (`RUNAR_DECISIONS.md` 2026-09-11 (4))
 `askRunar()` předává runy jako **plochý seznam jmen** (`_lastSegs.map(s => s.rune).join(', ')`).
