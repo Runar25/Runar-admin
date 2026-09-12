@@ -258,6 +258,35 @@ pokud výklad bude odlišný od obrazu, ale zachová si význam popisu runy."*
 je stejná vada jako dnešek, jen z druhé strany. Měří se **obě**, vždycky spolu.
 Čísla → `RUNAR_EVAL_LOG.md` 2026-09-09 (3); tenhle doc je NEOPISUJE (§20).
 
+### Obraz nese podstatu runy — dobrá otázka v Asku ji dopoví (KUKY 2026-09-12)
+
+📜 **Když obraz vystihuje podstatu runy a člověk dobře položí otázku, dá mu Rúnar parádní odpověď.**
+KUKY 2026-09-12 nad produkčním čtením: *„obraz je vytvořený jako kořen a další otázka na runu Eihwaz
+Rúnara vybídne k tomu, aby ji popsal jako strom yew — a krásně to zapadá do čtení. Teď tomu rozumím."*
+
+Doklad (produkce, Eihwaz):
+- **Čtení** ukáže runu jen obrazem: *„…one deep root grips the slope and holds the whole face together.
+  This is Eihwaz, the quiet anchor…"*
+- **Ask** (nabídnutá otázka *„What does Eihwaz mean in this reading?"*): *„Eihwaz is the yew, the tree whose
+  roots run deeper than the frost ever reaches. In this reading it is the hold underneath the loose ground…"*
+
+⭐ **Proč to funguje — dvě vrstvy si dělí práci:** čtení runu **ukáže** (kořen ve suti), Ask ji
+**pojmenuje** (tis) — a to jméno do obrazu zapadne, protože kořen už tam je. Čtení tedy nemusí říct
+všechno; to, co vynechá, dopoví dobrá otázka.
+
+**Dvě podmínky, obě musí platit:**
+1. **Obraz nese podstatu runy**, ne jen scénu. Kořen, který drží suť = Eihwaz (výdrž). Obraz, který runu
+   nenese, nemá Ask kam zapadnout.
+2. **Otázka se ptá na runu V TOMHLE čtení.** Tady to byla nápověda `ask_h_rune` (`v2/runar-translations.js`,
+   skládá ji `_askHints()`) — tvar otázky, který Rúnara pošle zpátky do obrazu.
+
+🔒 **Co ověřeno v kódu:** obraz je z `RUNE_IMAGES` (řádek Eihwaz, aspekt *resilience* — kořen bere nápor,
+když se suť dá do pohybu). Ask prompt (`RP_ASK.intro`) dostane jen **text čtení a jména run** — slovo *yew*
+v něm není; Rúnar ho vzal z vlastní znalosti futharku a sedí na náš kánon (`RUNES[].k` Eihwazu).
+⚠️ **Hranice:** jedno produkční čtení a ownerův úsudek, ne měření. Otevřená otázka, jestli Rúnar bez
+kánonu v Asku trefí každou runu, stojí v `RUNAR_BACKLOG.md` („Bod 3 — `RUNES[].k` do Ask").
+Souvisí: tři beaty výš · Vegvísir počítá se dvěma Asky na rameno (RÁMEC v `RUNAR_BACKLOG.md`).
+
 > **„Čtyři páky pestrosti" (explorace 2026-08-18) SKONČILY 2026-08-22.** Nikdo na nich nedělá.
 > Produkce vyřešila tytéž problémy jinak a jednodušeji — kdo na to sáhne, ať čte NEJDŘÍV
 > `RUNAR_DECISIONS.md` 2026-08-22 (osm záznamů CODE-tune, řady v4.0–v4.5-mynd) a hlavičku

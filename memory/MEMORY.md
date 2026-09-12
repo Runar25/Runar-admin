@@ -98,7 +98,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [ownerovo-slovo-neni-spec.md](ownerovo-slovo-neni-spec.md) — jeho konverzační přídavné jméno není zadání; převeď na číslo, nebo se zeptej
 - [measure-dont-eyeball.md](measure-dont-eyeball.md) — dojem z obrázku není nález; změř to, nebo řekni „nevím"
 - [sanity-check-measurements.md](sanity-check-measurements.md) — extrémní/čisté číslo (0/N, 100 %) = red flag; ověř měření protipříkladem, ne fragile bash-inline; přeměř, když tě opraví
-- [co-dela-cteni-silnym.md](co-dela-cteni-silnym.md) — ownerem POTVRZENO: definiční věta runy („Rúnarova knížečka") + otázka se dvěma skutečnými možnostmi
+- [co-dela-cteni-silnym.md](co-dela-cteni-silnym.md) — ownerem POTVRZENO: definiční věta runy · otázka se dvěma skutečnými možnostmi · obraz s podstatou runy + dobrá Ask otázka
 - [oprava-promptu-odebira-vadu.md](oprava-promptu-odebira-vadu.md) — vadu v promptu odeber; přidaný požadavek se v textu projeví jako formule
 - [prompt-nepojmenuj-co-hned-zakazes.md](prompt-nepojmenuj-co-hned-zakazes.md) — prompt, který něco pojmenuje a hned to zakáže vyslovit, hlídá slovo, které tam sám napsal; odeber nálepku, ne přidej hlídače
 - [always-show-reading-samples.md](always-show-reading-samples.md) — ownerovi vždy ukázat konkrétní TEXT čtení, ne jen měření a verdikty

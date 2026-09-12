@@ -26,5 +26,9 @@ důsledek · smí být i metaforická.** Nepočítá se řečnická otázka se z
 nesmí vynutit instrukcí** („na konci vytvoř lákavou otázku" = dramaturgie zadními vrátky);
 měří se, nepíše se do promptu.
 
+**3. Obraz nese podstatu runy + dobrá otázka v Asku** (KUKY 2026-09-12, potvrzení): čtení runu ukáže,
+Ask ji pojmenuje a jméno do obrazu zapadne (Eihwaz: kořen ve suti → „the yew"). Detail a podmínky →
+`RUNAR_DESIGN.md` „Obraz nese podstatu runy — dobrá otázka v Asku ji dopoví".
+
 **Vrstvy kvality:** obraz (vidím to místo) → runa (co runa je) → otázka (význam dokončí člověk).
 Souvisí: [[always-show-reading-samples]] · [[copy-always-in-runar-voice]].
