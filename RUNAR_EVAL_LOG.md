@@ -3282,3 +3282,14 @@ nejmenší detail ptáka, takže opakování pera může být z úhlu, ne z obra
 *September / autumn* prompt nenese — z data v prostředí pisatele.
 
 ⚠️ **Hranice:** n=1 na runu, jeden seed pro všechny · pisatelé subagenti, ne produkční model · EN only.
+
+**Proč všude „You stand" (ověřeno v promptech):** stejný seed dal 9 z 10 tentýž konec
+*„End on a plain, steady line — name where the seeker stands in the image…"* (`ENDING_OPEN`,
+`v2/runar-utils.js`); Isa je v `HEAVY_RUNES`, losuje z jiného poolu → skončila otázkou. V produkci se konec
+losuje — opakování „You stand" je z nastavení testu, ne z krátkého obrazu.
+
+**Owner 2026-09-12:** *„některé runy to zvládají hůř, takže se to nedá použít univerzálně. Pořád je potřeba
+mít nějaké obrazy pro každou runu, nebo možná skupiny run. Každopádně zkrácení vytváří větší prostor pro
+kreativitu Rúnara."* · *„Otázka je, jestli to Rúnar řekne tak, jak jsi to napsal — tomu moc nevěřím."*
+⇒ Pisatelé byli subagenti Claude (Opus 5), ne produkční model (u ownerových čtení v `readings.usage`
+stojí `claude-opus-4-8`). **Další krok (owner):** upraví obrazy Isy a zkusí se v produkci.
