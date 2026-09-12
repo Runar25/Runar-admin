@@ -533,7 +533,7 @@ var RUNE_IMAGES = [
   ['Isa','any','Kaffibollinn kólnar á borðinu meðan þú bíður.','The cup of coffee goes cold on the table while you wait.','að bíða','waiting','D'],
   ['Jera','bright','Heyið þornar örlítið meir hverja stund sem sólin helst, og að kvöldi er það tilbúið að snúa.','The hay dries a shade more each hour the sun holds, and by evening it is ready to turn.','þolinmæði','patience','P'],
   ['Jera','any','Sólarhringurinn lengist hægt fram á vorið.','The day lengthens slowly toward spring.','þolinmæði','patience','E'],
-  ['Jera','any','Deigið þarf sinn tíma; þú getur ekki flýtt fyrir því.','The dough needs its time; you cannot hurry it.','þolinmæði','patience','D'],
+  ['Jera','any','Deigið lyftir dúknum örlítið hærra hverja stund, að verki meðan enginn fylgist með.','The dough lifts the cloth a little higher each hour, working while no one watches.','þolinmæði','patience','D'],
   // 2026-09-10 (davka 1, Cowork): Jera mel dosazitelnou JEDINOU stranku sveho
   // vyznamu — nize doplnene stranky se do cteni nemohly dostat vubec. Kazdy z techto
   // radku prosel identitnim soudcem 3/3; ze stejne davky jich 14 propadlo a nenasazuje se.
@@ -551,7 +551,7 @@ var RUNE_IMAGES = [
   ['Perth','any','Í lágri sól koma fótsporin í ljós yfir túnið, andartak, áður en birtan breytist og þau hverfa.','In the low sun a whole trail of footprints comes to light across the field, for a moment, before the light shifts and they are gone.','hið hulda sem kemur í ljós','the hidden coming to light','E'],
   ['Algiz','any','Torfveggurinn stendur á milli þín og vindsins og í dyragættinni er logn.','The turf wall takes the wind so the doorway stays calm.','skjól','shelter','P'],
   ['Algiz','any','Fjárhundurinn liggur þar sem hann sér alla hjörðina.','The sheepdog lies where it can see the whole flock.','vernd','protection','P'],
-  ['Algiz','any','Einhver bíður uppi með ljós í glugganum þar til þú kemur heim.','Someone stays up with a light in the window until you come home.','skjól','protection','D'],
+  ['Algiz','any','Einhver lætur ljósið loga í glugganum og lítur aftur og aftur út á myrkan veginn þar til hurðin opnast loks.','Someone leaves the light burning in the window and glances again and again at the dark road until the door finally opens.','skjól','protection','D'],
   ['Sowilo','bright','Miðnætursólin sest aldrei alveg um Jónsmessuna.','The midnight sun never quite sets around Midsummer.','sól','sun','E','midnight-sun'],
   ['Sowilo','bright','Sólin brýtur loks í gegn og glampar á blautu grjóti.','The sun finally breaks through and glints on the wet stones.','skýrleiki','clarity','E'],
   // 2026-09-09: nahrazeno — „never tilts" je nehybnost, tedy pole Isy; soudce cetl
