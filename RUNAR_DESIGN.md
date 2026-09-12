@@ -261,10 +261,10 @@ je stejná vada jako dnešek, jen z druhé strany. Měří se **obě**, vždycky
 ### Obraz nese podstatu runy — dobrá otázka v Asku ji dopoví (KUKY 2026-09-12)
 
 📜 **Když obraz vystihuje podstatu runy a člověk dobře položí otázku, dá mu Rúnar parádní odpověď.**
-KUKY 2026-09-12 nad produkčním čtením: *„obraz je vytvořený jako kořen a další otázka na runu Eihwaz
+KUKY 2026-09-12 nad svým čtením v aplikaci (běžné Single, ne Vegvísir — ten v produkci není): *„obraz je vytvořený jako kořen a další otázka na runu Eihwaz
 Rúnara vybídne k tomu, aby ji popsal jako strom yew — a krásně to zapadá do čtení. Teď tomu rozumím."*
 
-Doklad (produkce, Eihwaz):
+Doklad (Single čtení Eihwaz, `readings` id `b3dde089…`, 2026-09-11, prompt `v4.21-askpositions`):
 - **Čtení** ukáže runu jen obrazem: *„…one deep root grips the slope and holds the whole face together.
   This is Eihwaz, the quiet anchor…"*
 - **Ask** (nabídnutá otázka *„What does Eihwaz mean in this reading?"*): *„Eihwaz is the yew, the tree whose
@@ -280,12 +280,13 @@ všechno; to, co vynechá, dopoví dobrá otázka.
 2. **Otázka se ptá na runu V TOMHLE čtení.** Tady to byla nápověda `ask_h_rune` (`v2/runar-translations.js`,
    skládá ji `_askHints()`) — tvar otázky, který Rúnara pošle zpátky do obrazu.
 
-🔒 **Co ověřeno v kódu:** obraz je z `RUNE_IMAGES` (řádek Eihwaz, aspekt *resilience* — kořen bere nápor,
-když se suť dá do pohybu). Ask prompt (`RP_ASK.intro`) dostane jen **text čtení a jména run** — slovo *yew*
+🔒 **Co ověřeno v DB a kódu:** obraz dostalo čtení z `RUNE_IMAGES` — v `prompt_draws` stojí *„The root holds
+the scree together when everything else slides down"*, aspekt *resilience* (dnešní znění řádku je už jiné, obraz
+tentýž). Ask prompt (`RP_ASK.intro`) dostane jen **text čtení a jména run** — slovo *yew*
 v něm není; Rúnar ho vzal z vlastní znalosti futharku a sedí na náš kánon (`RUNES[].k` Eihwazu).
 ⚠️ **Hranice:** jedno produkční čtení a ownerův úsudek, ne měření. Otevřená otázka, jestli Rúnar bez
 kánonu v Asku trefí každou runu, stojí v `RUNAR_BACKLOG.md` („Bod 3 — `RUNES[].k` do Ask").
-Souvisí: tři beaty výš · Vegvísir počítá se dvěma Asky na rameno (RÁMEC v `RUNAR_BACKLOG.md`).
+Souvisí: tři beaty výš.
 
 > **„Čtyři páky pestrosti" (explorace 2026-08-18) SKONČILY 2026-08-22.** Nikdo na nich nedělá.
 > Produkce vyřešila tytéž problémy jinak a jednodušeji — kdo na to sáhne, ať čte NEJDŘÍV
