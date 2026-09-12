@@ -33,9 +33,9 @@ grant insert (id) on public.user_profiles to authenticated;
 grant update (
   name, lang, address_gender, analytics_opt_out, tester_consent_at,
   dob_day, dob_month, dob_year,
-  tree_name, life_rune_number, life_rune_text, life_rune_lang,
-  name_lore_text
+  tree_name, life_rune_number, life_rune_text, life_rune_lang
 ) on public.user_profiles to authenticated;
+-- ⚠️ `name_lore_text` tu byl do 2026-09-12 — viz konec souboru, proc uz neni.
 
 -- Úklid po ověřovacím testu (month_units byl při důkazu přepsán na 42).
 update public.user_profiles set month_units = 0, month_key = null
@@ -51,3 +51,14 @@ where id = '0d1c4ce7-68ef-4036-bc46-c4128c9f09bf';
 -- Sloupec zakládá sql/2026-09-10_life_rune_in_readings.sql; grant bydlí TADY, protože
 -- zapisovatelnou plochu vlastní tenhle soubor a hlídá ji smoke ⑩ (jinak tichá 403).
 grant update (life_rune_in_readings) on public.user_profiles to authenticated;
+
+-- 2026-09-12: DVE JMENA. Klient smi menit severske jmeno a volbu osloveni.
+-- Sloupce zaklada sql/2026-09-12_two_names.sql; grant bydli TADY, protoze zapisovatelnou
+-- plochu vlastni tenhle soubor a hlida ji smoke ⑩ (jinak ticha 403).
+grant update (norse_name, address_pref) on public.user_profiles to authenticated;
+
+-- 2026-09-12: `name_lore_text` klient UZ NEPISE. Rozbor jmena uklada claude-proxy pres service_role,
+-- spolu s `name_lore_for` a `name_lore_count` (na ty klient grant nikdy nemel). Duvod: proxy poustela
+-- rozbor jen pri prazdnem `name_lore_text` — a ten si klient smel sam vynulovat, takze kdo umel F12,
+-- mel rozbor zdarma dokola (overeno v zive DB 2026-09-12). Grant odebira
+-- sql/2026-09-12_name_lore_server_only.sql — spustit AZ PO nasazeni klienta, ktery ho nepise.

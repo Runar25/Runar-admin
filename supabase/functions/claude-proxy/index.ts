@@ -551,12 +551,17 @@ serve(async (req: Request) => {
     // nekona). Zdarma je nedela cislo od klienta, ale tenhle `mode` — proto zustava
     // podlaha Math.max(1, spread_cost) niz: klient si zdarma rict nesmi.
     const isRitual = isLifeRune || isFounding || isNameLore;
+    // Rozbor jmena: kolikrat smi model psat. 1. rozbor + JEDNO precteni po zmene severskeho
+    // jmena (KUKY 2026-09-12). ZRCADLI v2/runar-config.js NAME_LORE_LIMIT — Deno klientsky
+    // config neimportuje; shodu hlida smoke (verify_monthly_limits.js).
+    const NAME_LORE_LIMIT = 2;
+    let nameLorePrev: { count: number; name: string } | null = null;
     if (isRitual) {
       if (!userId) {
         return json({ error: "unavailable", message: "The runes are quiet. Try again shortly." }, 401);
       }
       const { data: pr, error: prErr } = await sb()
-        .from("user_profiles").select("life_rune_text, tree_founded_at, name_lore_text")
+        .from("user_profiles").select("life_rune_text, tree_founded_at, name_lore_text, norse_name, name_lore_for, name_lore_count")
         .eq("id", userId).maybeSingle();
       if (prErr) {
         // Fail OPEN, stejna posture jako mesicni strop: vypadek cteni nesmi zablokovat
@@ -571,8 +576,20 @@ serve(async (req: Request) => {
         return json({ error: "unavailable", message: "The runes are quiet. Try again shortly." }, 409);
       } else if (isFounding && pr?.tree_founded_at) {
         return json({ error: "unavailable", message: "The runes are quiet. Try again shortly." }, 409);
-      } else if (isNameLore && pr?.name_lore_text) {
-        return json({ error: "unavailable", message: "The runes are quiet. Try again shortly." }, 409);
+      } else if (isNameLore) {
+        // Rozlisene kody, at klient umi rict PROC (bez nich by clovek cetl „zkus pozdeji" a cekal marne).
+        const nn = String(pr?.norse_name ?? "").trim();
+        const cnt = Number(pr?.name_lore_count ?? 0);
+        if (!nn) {
+          return json({ error: "name_lore_no_name", message: "The runes are quiet. Try again shortly." }, 409);
+        }
+        if (String(pr?.name_lore_for ?? "") === nn) {
+          return json({ error: "name_lore_done", message: "The runes are quiet. Try again shortly." }, 409);
+        }
+        if (cnt >= NAME_LORE_LIMIT) {
+          return json({ error: "name_lore_limit", message: "The runes are quiet. Try again shortly." }, 409);
+        }
+        nameLorePrev = { count: cnt, name: nn };
       }
     }
 
@@ -770,6 +787,18 @@ serve(async (req: Request) => {
       if (fErr) console.error("founding mark failed:", fErr.message);
     }
 
+    // Rozbor jmena se uklada TADY, ne v klientovi — klient uz na `name_lore_text` grant nema.
+    // CAS na `name_lore_count`: dva soubezne pozadavky zapisou jen jeden a ten druhy nic nepripocte.
+    // `nameLorePrev` je null jen pri fail-open prechecku (DB vypadek) — pak se nic neuklada.
+    let nameLoreSaved = false;
+    if (isNameLore && userId && nameLorePrev) {
+      const { data: nRows, error: nErr } = await sb().from("user_profiles")
+        .update({ name_lore_text: text, name_lore_for: nameLorePrev.name, name_lore_count: nameLorePrev.count + 1 })
+        .eq("id", userId).eq("name_lore_count", nameLorePrev.count).select("id");
+      if (nErr) console.error("name lore persist failed:", nErr.message);
+      else nameLoreSaved = Array.isArray(nRows) && nRows.length > 0;
+    }
+
     return json({
       text,
       // Pocty tokenu + skutecny model. Bez toho davka nevi, co stala, a nejde rict,
@@ -777,6 +806,9 @@ serve(async (req: Request) => {
       ...(data?.usage ? { usage: { ...data.usage, model: data?.model ?? null } } : {}),
       ...(readingId ? { reading_id: readingId } : {}),
       ...(mode === "ask" ? { ask_saved: askSaved } : {}),
+      ...(isNameLore && nameLorePrev
+        ? { name_lore_for: nameLorePrev.name, name_lore_count: nameLorePrev.count + 1, name_lore_saved: nameLoreSaved }
+        : {}),
       ...(sessionState ? { session_state: sessionState } : {}),
       ...(deductPlan.kind === "paid"
         ? { credits_remaining: creditsRemaining ?? Math.max(0, creditsBalance - deductPlan.cost) }

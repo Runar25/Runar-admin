@@ -37,6 +37,10 @@ const GRANT_SQL = 'sql/2026-07-16_user_profiles_column_grants.sql';
 const PRIVILEGED = [
   'tier', 'credits_balance', 'free_balance',
   'month_units', 'month_key', 'drip_week', 'is_tester',
+  // 2026-09-12: rozbor jmena je zdarma a strop drzi tyhle tri. Kdyby je smel psat klient,
+  // vynuloval by si je z konzole a mel rozbor dokola — presne tak to do 2026-09-12 fungovalo
+  // s `name_lore_text`. Pise je jen claude-proxy.
+  'name_lore_text', 'name_lore_for', 'name_lore_count',
 ];
 
 // Production client only — tree-snapshots/ are archived copies, not shipped.

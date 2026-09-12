@@ -13,6 +13,8 @@
 
 // Cached life rune reading from DB
 var _lifeRuneText  = null;  // text of generated reading
+var _nameLoreFor   = null;  // pro KTERE severske jmeno rozbor vznikl (pise server)
+var _nameLoreCount = 0;     // kolik rozboru od modelu uz probehlo (pise server, strop NAME_LORE_LIMIT)
 var _nameLoreText  = null;  // rozbor jmena — SAMOSTATNA volba vedle zivotni runy (2026-09-11)
 var userTreeFounded = false;   // z DB (tree_founded_at) — server-only sloupec
 var _foundingPending = false;  // uzivatel klikl na zalozeni; ceka se na Norny
@@ -626,25 +628,56 @@ function _rsLifeRuneReading() {
 function _renderNameLore() {
   var box = document.getElementById('tree-name-lore');
   if (!box) return;
-  var maJmeno = !!(typeof userName !== 'undefined' && userName);
-  if (!currentUser || !maJmeno) { box.style.display = 'none'; return; }
+  if (!currentUser) { box.style.display = 'none'; return; }
   box.style.display = 'block';
+  var jm = (typeof norseName !== 'undefined' && norseName) ? norseName : '';
   var lbl = document.getElementById('name-lore-lbl');
-  if (lbl) lbl.textContent = t('name_lore_lbl');
+  var edit = document.getElementById('name-lore-edit');
   var intro = document.getElementById('name-lore-intro');
   var cta = document.getElementById('name-lore-cta');
   var txt = document.getElementById('name-lore-text');
   var btn = document.getElementById('name-lore-btn');
-  if (_nameLoreText) {
-    if (intro) intro.style.display = 'none';
-    if (cta) cta.style.display = 'none';
-    if (txt) { txt.style.display = 'block'; txt.innerHTML = String(_nameLoreText).replace(/\n/g, '<br>'); }
-    return;
+  function zobraz(uvod, tlacitko, text) {
+    if (intro) { intro.style.display = uvod ? 'block' : 'none'; if (uvod) intro.textContent = uvod; }
+    if (cta) cta.style.display = tlacitko ? '' : 'none';
+    if (btn && tlacitko && !btn.disabled) btn.textContent = tlacitko;
+    if (txt) { txt.style.display = text ? 'block' : 'none'; if (text) txt.innerHTML = String(text).replace(/\n/g, '<br>'); }
   }
-  if (intro) { intro.style.display = 'block'; intro.textContent = t('name_lore_intro'); }
-  if (cta) cta.style.display = '';
-  if (txt) txt.style.display = 'none';
-  if (btn && !btn.disabled) btn.textContent = t('name_lore_btn');
+  // Nadpis nese SAMO JMENO, ne „YOUR NAME". KUKY 2026-09-12: „melo by tam byt uz napsane me
+  // uvedene jmeno Kuky a ne YOUR NAME!" Obecny nadpis zbyva jen tomu, kdo severske jmeno jeste nema.
+  if (lbl) lbl.textContent = jm ? String(jm).toLocaleUpperCase() : t('name_lore_lbl');
+  if (edit) { edit.style.display = jm ? '' : 'none'; edit.textContent = t('tree_name_edit'); }
+
+  // 1) severske jmeno jeste neni → pozvanka, tlacitko otevre okno se jmeny
+  if (!jm) { zobraz(t('name_lore_intro_add'), t('name_lore_add_btn'), ''); return; }
+  // 2) rozbor od modelu uz existuje PRO TOHLE jmeno
+  if (_nameLoreText && _nameLoreFor === jm) { zobraz('', '', _nameLoreText); return; }
+  // 3) neni to severske jmeno z naseho seznamu → hotova veta hned, bez tlacitka a bez modelu.
+  //    Nic se neuklada: je vypoctena z dat, takze by uklada kopie jen zastarala (§20).
+  var veta = _nameLoreFixedSentence(jm);
+  if (veta) { zobraz('', '', veta); return; }
+  // 4) severske, ale strop rozboru vycerpany
+  if (_nameLoreCount >= NAME_LORE_LIMIT) { zobraz('', '', t('name_lore_limit')); return; }
+  // 5) severske a jde precist
+  zobraz(t('name_lore_intro'), t('name_lore_btn'), '');
+}
+
+// Hotova veta pro jmeno, ktere NEMA byt ctene modelem. null = je severske, cte se.
+// Poradi (2026-09-11/12): kuratorovany seznam rozhoduje · nesevrske s puvodem · Island ho zna,
+// ale koreny jsme nedohledali · nezname jmeno.
+function _nameLoreFixedSentence(jm) {
+  var z = _nameLookup(jm);
+  if (z && z.norse) return null;
+  var pv = z && (lang === 'is' ? z.origin_is : z.origin);
+  if (pv) return tp('name_no_norse_from', { origin: pv });
+  if (!z && _inRegistry(jm)) return t('name_known_untraced');
+  return t('name_no_norse');
+}
+
+// Tlacitko v sekci rozboru dela dve veci podle stavu — at v HTML neni druhe tlacitko navic.
+function onNameLoreBtn() {
+  if (typeof norseName === 'undefined' || !norseName) { if (typeof openNamesEdit === 'function') openNamesEdit(); return; }
+  generateNameLore();
 }
 
 // Vyhledani v seznamu: kanonicke jmeno NEBO prezdivka, bez ohledu na velikost pismen.
@@ -679,51 +712,38 @@ function _nameLookup(jmeno) {
   return null;
 }
 async function generateNameLore() {
-  if (!currentUser || _nameLoreText) return;
-  var btn = document.getElementById('name-lore-btn');
-  if (btn) { btn.disabled = true; btn.textContent = t('reading_loading'); }
-  // ⭐ SEZNAM ROZHODUJE, ne model. U jmena, ktere v nem neni nebo neni severske, se model
-  // NEVOLA VUBEC — jde hotova veta. Dokud rozhodoval model, nemel u nesevrskeho jmena na
-  // vyber a puvod si vymyslel (§23); tohle mu to rozhodnuti bere z ruky.
-  // KUKY 2026-09-11: „runar doesn't see any nordic connection" — veta mluvi o Runarove
-  // VIDENI, ne o fakt o jmenu. U jmena, ktere proste nemame, by „koreny nema" byla lez.
-  var _jm = _lifeRuneName();
-  var _z = _nameLookup(_jm);
-  if (!_z || !_z.norse) {
-    // Puvod ma per-jazyk tvar na tomtez radku seznamu (jako `en`/`is` u vyznamu) —
-    // do 2026-09-11 se do islandske vety dostavalo anglicke „(Latin)" (§2).
-    var _pv = _z && (lang === 'is' ? _z.origin_is : _z.origin);
-    // ⭐ TRETI STAV: jmeno, ktere Island zna, ale my jsme u nej koreny nedohledali.
-    // Do 2026-09-12 dostavalo tuz vetu jako naprosty cizinec, tedy „koreny nevidim" — a to je
-    // u Einara nebo Dagura LEZ (mereno: 289 ze 402 nejbeznejsich islandskych jmen v naem
-    // kuratorovanem seznamu chybi). Rejstrik ty dva pripady rozlisi.
-    _nameLoreText = _pv
-      ? tp('name_no_norse_from', { origin: _pv })
-      : (!_z && _inRegistry(_jm) ? t('name_known_untraced') : t('name_no_norse'));
-    if (btn) { btn.disabled = false; btn.textContent = t('name_lore_btn'); }
-    var r0 = await sb.from('user_profiles').update({ name_lore_text: _nameLoreText })
-      .eq('id', currentUser.id);
-    if (r0 && r0.error) { console.error('persist name lore failed:', r0.error.message); showToast(t('err_save_failed'), 'err'); }
+  if (!currentUser) return;
+  // Rozbor bere SEVERSKE jmeno, ne osloveni (2026-09-12). Kdo si nechava rikat „Trpaslik"
+  // a severske jmeno ma Sigrun, dostane rozbor Sigrun.
+  var jm = (typeof norseName !== 'undefined' && norseName) ? norseName : '';
+  if (!jm) { if (typeof openNamesEdit === 'function') openNamesEdit(); return; }
+  // Model se vola JEN pro severske jmeno, ktere jeste rozbor nema a strop neni vycerpany.
+  // Vsechno ostatni vyresi _renderNameLore() sam, bez site.
+  if (_nameLoreFixedSentence(jm) || (_nameLoreText && _nameLoreFor === jm) || _nameLoreCount >= NAME_LORE_LIMIT) {
     _renderNameLore();
     return;
   }
+  var btn = document.getElementById('name-lore-btn');
+  if (btn) { btn.disabled = true; btn.textContent = t('reading_loading'); }
   var mode = RUNAR_MODES.name_lore;
-  var prompt = buildNameLorePrompt(_jm, _z, lang, corrections);
+  var prompt = buildNameLorePrompt(jm, _nameLookup(jm), lang, corrections);
   var sys = buildSysPrompt(activeChar, lang);
-  // Zdarma — a rozhoduje o tom PROXY podle `mode`, ne tahle nula (klient si zdarma rict nesmi).
+  // Zdarma — o tom i o strop rozhoduje PROXY (podle `mode` a sloupcu, na ktere klient nesahne).
   var res = await callProxy(sys, prompt, mode.max_tokens, false, 0, null, 'name_lore');
-  if (btn) { btn.disabled = false; btn.textContent = t('name_lore_btn'); }
-  if (res.error || !res.text) { setSt('st-voice', t('reading_error'), 'err'); return; }
-  _nameLoreText = res.text;
-  // Zapis se MUSI overit (tentyz duvod jako u zivotni runy): zahozena chyba by nechala
-  // text, ktery zije jen v teto session a po reloadu je pryc — a znovu vygenerovat uz nejde,
-  // protoze proxy pusti rozbor jmena jen jednou.
-  var r = await sb.from('user_profiles').update({ name_lore_text: _nameLoreText })
-    .eq('id', currentUser.id);
-  if (r && r.error) {
-    console.error('persist name lore failed:', r.error.message);
-    showToast(t('err_save_failed'));
+  if (btn) btn.disabled = false;
+  if (res && /^name_lore_(limit|done|no_name)$/.test(String(res.error || ''))) {
+    // Server rika, ze tohle cist nebude — klient mel stary stav. Srovnat z DB a ukazat pravdu.
+    await loadLifeRuneFromDB();
+    _renderNameLore();
+    return;
   }
+  if (!res || res.error || !res.text) { setSt('st-voice', t('reading_error'), 'err'); _renderNameLore(); return; }
+  // ⚠️ Klient uz nic NEUKLADA — text, jmeno i pocitadlo zapsal server v tomtez kroku jako cteni.
+  // Do 2026-09-12 si to klient ukladal sam, a proto sel rozbor z konzole generovat dokola.
+  _nameLoreText  = res.text;
+  _nameLoreFor   = res.name_lore_for || jm;
+  _nameLoreCount = (typeof res.name_lore_count === 'number') ? res.name_lore_count : (_nameLoreCount + 1);
+  if (res.name_lore_saved === false) console.warn('name lore: server text vratil, ale ulozit se nepodarilo');
   _renderNameLore();
 }
 
@@ -808,7 +828,7 @@ async function generateLifeRuneReading() {
 async function loadLifeRuneFromDB() {
   if (!currentUser) return;
   var res = await sb.from('user_profiles')
-    .select('life_rune_number, life_rune_text, life_rune_lang, name_lore_text')
+    .select('life_rune_number, life_rune_text, life_rune_lang, name_lore_text, name_lore_for, name_lore_count')
     .eq('id', currentUser.id)
     .single();
   if (res.data && res.data.life_rune_text) {
@@ -818,7 +838,11 @@ async function loadLifeRuneFromDB() {
   }
   // MIMO podmínku výš schválně: rozbor jména je samostatná volba a může existovat i tehdy,
   // když životní runa ještě vygenerovaná není. Uvnitř by se načetl jen někomu.
-  if (res.data && res.data.name_lore_text) _nameLoreText = res.data.name_lore_text;
+  if (res.data) {
+    _nameLoreText  = res.data.name_lore_text || null;
+    _nameLoreFor   = res.data.name_lore_for || null;
+    _nameLoreCount = Number(res.data.name_lore_count || 0);
+  }
 }
 
 function openJournalFromPanel() {

@@ -76,6 +76,22 @@ if (elHlas && !/vUsed\s*>=\s*VOICE_MONTHLY_LIMIT/.test(elProxy)) {
   console.log('OK    hlas: strop se v proxy opravdu porovnava (neni to mrtva konstanta)');
 }
 
+// ── strop ROZBORU JMENA (2026-09-12): tataz trida kopie ──────────────────────
+// NAME_LORE_LIMIT zije v config (klient podle nej schova tlacitko) a v claude-proxy (vynucuje).
+// V proxy je deklarovany uvnitr handleru, proto regex bez `^`. Komentar, ktery konstantu jen
+// jmenuje, nematchne — hleda se `const NAME_LORE_LIMIT =`.
+const cfgJm = (cfg.match(/^const NAME_LORE_LIMIT\s*=\s*(\d+)/m) || [])[1];
+const pxJm  = (proxy.match(/const NAME_LORE_LIMIT\s*=\s*(\d+)/) || [])[1];
+if (!cfgJm)      { fail++; console.log('FAIL  NAME_LORE_LIMIT chybi v runar-config.js'); }
+else if (!pxJm)  { fail++; console.log('FAIL  NAME_LORE_LIMIT chybi v claude-proxy'); }
+else if (cfgJm !== pxJm) {
+  fail++; console.log('FAIL  rozbor jmena: config=' + cfgJm + ' ale proxy vynucuje ' + pxJm);
+} else if (!/cnt\s*>=\s*NAME_LORE_LIMIT/.test(proxy)) {
+  fail++; console.log('FAIL  rozbor jmena: NAME_LORE_LIMIT je v proxy deklarovany, ale nic se s nim neporovnava');
+} else {
+  console.log('OK    rozbor jmena: ' + cfgJm + ' rozbory od modelu (config == proxy, strop se porovnava)');
+}
+
 console.log(fail === 0 ? '\nMonthly caps agree — config is enforced by the proxy.'
                        : '\n' + fail + ' MISMATCH — the cap the user pays for is not the cap enforced.');
 process.exit(fail ? 1 : 0);

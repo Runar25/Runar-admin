@@ -21,7 +21,12 @@ let userFreeBalance = 0;        // free_balance: 1 at registration, no replenish
 let readerUser     = {};
 let userGender     = 'hk';   // kk | kvk | hk (han, default) — how Runar addresses the seeker (IS)
 let greetingShown  = false;     // show topbar greeting only once per session
-let userName       = '';        // display name from user_profiles.name
+let userName       = '';        // JAK RUNAR OSLOVUJE — vypocteno v _resolveUserName(), nikdy nepsat primo
+// Dve jmena (2026-09-12). `userName` zustava jedinym zdrojem osloveni (§12) a cte ho cela appka;
+// tyhle tri drzi, z ceho se sklada. Rozbor jmena bere VZDY `norseName`, ne `userName`.
+let profileName    = '';        // user_profiles.name — jmeno nebo prezdivka, cokoli
+let norseName      = '';        // user_profiles.norse_name — severske jmeno, skutecne i vymyslene
+let addressPref    = 'name';    // user_profiles.address_pref — 'name' | 'norse'
 let isTester        = false;    // user_profiles.is_tester — tester account (explicit consent)
 let analyticsOptOut = false;    // user_profiles.analytics_opt_out — user excluded readings from quality analysis
 let lifeRuneInReadings = true;  // user_profiles.life_rune_in_readings — smi zivotni runa barvit ZAVER ctení?
@@ -63,7 +68,7 @@ async function fetchUserProfile(userId) {
   profileLoaded = false;
   try {
     const { data } = await sb.from('user_profiles')
-      .select('tier, credits_balance, free_balance, name, lang, life_rune_number, life_rune_text, life_rune_lang, dob_day, dob_month, dob_year, tree_name, tree_founded_at, founding_reading_id')
+      .select('tier, credits_balance, free_balance, name, norse_name, address_pref, lang, life_rune_number, life_rune_text, life_rune_lang, dob_day, dob_month, dob_year, tree_name, tree_founded_at, founding_reading_id')
       .eq('id', userId)
       .maybeSingle();
     if (data) {
@@ -103,7 +108,10 @@ async function fetchUserProfile(userId) {
       // the "when were you born?" onboarding and, without this, never redraws. To the user
       // that reads as the app forgetting a life rune it actually has (Sigrún, iPhone, 3×).
       if (activeAppTab === 'tree' && typeof updateTreeTab === 'function') updateTreeTab();
-      userName    = data.name            || '';
+      profileName = data.name            || '';
+      norseName   = data.norse_name      || '';
+      addressPref = data.address_pref === 'norse' ? 'norse' : 'name';
+      _resolveUserName();
       userGender = localStorage.getItem('runar_gender') || 'hk';
       _updateGenderPills();
       // Cross-device gender — best-effort own query (address_gender column may not exist yet; never blocks profile load)
@@ -395,32 +403,83 @@ function showHeroGreeting() {
 }
 
 // ── NAME PROMPT ──────────────────────────────────────────
-function showNamePrompt() {
+// ── DVE JMENA (2026-09-12) ─────────────────────────────────────────────────
+// Jedno misto, ktere rozhoduje osloveni. Kdo ma vyplnene jen jedno jmeno, je osloven tim jednim
+// bez ohledu na volbu — volba dava smysl az mezi dvema.
+function _resolveUserName() {
+  userName = (addressPref === 'norse' && norseName) ? norseName : (profileName || norseName || '');
+}
+
+var _nameEditMode = false;
+var _namePrefDraft = 'name';
+
+// `edit` = otevreno z nastaveni / ze zalozky zivotni runy (predvyplnene, tlacitka ULOZIT a ZRUSIT).
+// Bez `edit` = prvni prihlaseni (prazdne, „pokracovat bez jmena").
+// Texty okna — JEDINE misto. Vola ho showNamePrompt i jazykovy updater; zna rezim uprav,
+// takze prepnuti jazyka uz neprepise „zrusit" na „pokracovat bez jmena". Hodnoty poli nesaha.
+function _nameModalTexts() {
+  setText('name-card-title', t('name_modal_title'));
+  setText('name-card-sub', t('name_modal_sub'));
+  setText('name-norse-lbl', t('name_modal_norse_lbl'));
+  setText('name-norse-hint', t('name_modal_norse_hint'));
+  setText('name-name-lbl', t('name_modal_name_lbl'));
+  setText('name-call-lbl', t('name_modal_call_lbl'));
+  setText('name-call-norse', t('name_modal_call_norse'));
+  setText('name-call-name', t('name_modal_call_name'));
+  setText('name-card-btn', _nameEditMode ? t('save_btn') : t('name_modal_btn'));
+  setText('name-prompt-skip', _nameEditMode ? t('cancel_btn') : t('name_modal_skip'));
+  const nIn = document.getElementById('name-norse-input');
+  const pIn = document.getElementById('name-prompt-input');
+  if (nIn) nIn.placeholder = t('name_modal_norse_ph');
+  if (pIn) pIn.placeholder = t('name_modal_ph');
+}
+
+function showNamePrompt(edit) {
   const ov = document.getElementById('name-overlay');
   if (!ov) return;
-  const is = lang === 'is';
-  const card = ov.querySelector('.name-card-title');
-  const sub  = ov.querySelector('.name-card-sub');
-  const inp  = document.getElementById('name-prompt-input');
-  const skip = document.getElementById('name-prompt-skip');
-  const btn  = ov.querySelector('.name-card-btn');
-  if (card) card.textContent = t('name_modal_title');
-  if (sub)  sub.innerHTML   = t('name_modal_sub');
-  if (skip) skip.textContent = t('name_modal_skip');
-  if (btn)  btn.textContent  = t('name_modal_btn');
-  if (inp)  inp.placeholder  = t('name_modal_ph');
+  _nameEditMode = !!edit;
+  const nIn = document.getElementById('name-norse-input');
+  const pIn = document.getElementById('name-prompt-input');
+  _nameModalTexts();
+  if (nIn) nIn.value = _nameEditMode ? norseName : '';
+  if (pIn) pIn.value = _nameEditMode ? profileName : '';
+  setNamePref(_nameEditMode ? addressPref : 'name');
+  _nameModalSync();
   ov.style.display = 'flex';
-  setTimeout(() => inp && inp.focus(), DELAY_FOCUS);
+  setTimeout(() => nIn && nIn.focus(), DELAY_FOCUS);
+}
+
+function setNamePref(p) {
+  _namePrefDraft = (p === 'norse') ? 'norse' : 'name';
+  const a = document.getElementById('name-call-norse');
+  const b = document.getElementById('name-call-name');
+  if (a) a.classList.toggle('active', _namePrefDraft === 'norse');
+  if (b) b.classList.toggle('active', _namePrefDraft === 'name');
+}
+
+// Volba osloveni se ukaze, az kdyz jsou vyplnena OBE jmena — s jednim neni z ceho vybirat.
+function _nameModalSync() {
+  const n = (document.getElementById('name-norse-input') || {}).value || '';
+  const p = (document.getElementById('name-prompt-input') || {}).value || '';
+  const row = document.getElementById('name-call-row');
+  if (row) row.hidden = !(n.trim() && p.trim());
 }
 
 async function saveName() {
-  const inp = document.getElementById('name-prompt-input');
-  const val = inp ? inp.value.trim() : '';
-  if (!val) { inp && inp.focus(); return; }
-  userName = val;
-  // Save to user_profiles
+  const nIn = document.getElementById('name-norse-input');
+  const pIn = document.getElementById('name-prompt-input');
+  const nVal = nIn ? nIn.value.trim() : '';
+  const pVal = pIn ? pIn.value.trim() : '';
+  if (!nVal && !pVal) { (nIn || pIn) && (nIn || pIn).focus(); return; }
+  const pref = (nVal && pVal) ? _namePrefDraft : (nVal ? 'norse' : 'name');
+  profileName = pVal;
+  norseName   = nVal;
+  addressPref = pref;
+  _resolveUserName();
   try {
-    const _nameRes = await sb.from('user_profiles').update({ name: val }).eq('id', currentUser.id);
+    const _nameRes = await sb.from('user_profiles')
+      .update({ name: pVal || null, norse_name: nVal || null, address_pref: pref })
+      .eq('id', currentUser.id);
     if (_nameRes && _nameRes.error) {
       console.error('persist name failed:', _nameRes.error.message);
       showToast(t('err_save_failed'));
@@ -435,10 +494,19 @@ async function saveName() {
   greetingShown = false;
   showTopbarGreeting();
   if (typeof _updateReadingForm === 'function') _updateReadingForm();
+  if (typeof _renderNameLore === 'function') _renderNameLore();
 }
 
 function skipName() {
   document.getElementById('name-overlay').style.display = 'none';
+}
+
+// Z nastaveni i ze zalozky zivotni runy — obe cesty otviraji TOTEZ okno (§18, zadna druha kopie).
+function openNamesEdit() {
+  if (!currentUser) return;
+  const sp = document.getElementById('side-panel');
+  if (sp && sp.classList.contains('open') && typeof closeSidePanel === 'function') closeSidePanel();
+  showNamePrompt(true);
 }
 
 // ── SIDE PANEL ACCOUNT ───────────────────────────────────
@@ -579,6 +647,7 @@ function updateSidePanel() {
   const journalLink = document.getElementById('sp-journal-link');
   if (journalLink) {
     setText('sp-journal-link', is ? '✦ LESTRAR MÍNIR' : '✦ MY JOURNAL');
+    setText('sp-names-btn', t('sp_names_btn'));
   }
 
   // Gift card visibility (upgrade handled in YOUR PATH)
@@ -836,7 +905,9 @@ function updateUIText() {
   setText('sp-signout-btn', t('sign_out'));
   var _tgq = document.getElementById('tree-growth-quote');
   if (_tgq) _tgq.innerHTML = t('tree_growth_quote');
-  setText('name-prompt-skip', t('name_modal_skip'));
+  // Okno se jmeny: texty nastavuje JEDNO misto, ktere zna rezim uprav (2026-09-12). Driv tu stalo
+  // natvrdo text pokracovat-bez-jmena a v rezimu uprav to prepisovalo zrusit (§14).
+  if (typeof _nameModalTexts === 'function') _nameModalTexts();
   setText('auth-or', t('auth_or'));
   var _stlbl = (lang === 'is' ? TIERS.standard.label_is : TIERS.standard.label);
   setText('q-teaser-txt', tp('q_teaser', { tier: _stlbl }));
@@ -1215,7 +1286,8 @@ async function callProxy(sys, prompt, maxTokens, use_credit = false, credit_cost
       updateAuthUI();
     }
 
-    return { text: data.content?.[0]?.text || data.text || '', reading_id: data.reading_id, saved: data.saved, ask_saved: data.ask_saved };
+    return { text: data.content?.[0]?.text || data.text || '', reading_id: data.reading_id, saved: data.saved, ask_saved: data.ask_saved,
+             name_lore_for: data.name_lore_for, name_lore_count: data.name_lore_count, name_lore_saved: data.name_lore_saved };
   } catch (e) { console.error('callProxy:', e && e.message); return { error: 'network_error' }; }
 }
 

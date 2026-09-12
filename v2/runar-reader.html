@@ -673,11 +673,13 @@
          to je plnohodnotná odpověď, ne selhání. -->
     <div class="tree-name-lore" id="tree-name-lore" style="display:none;">
       <div class="tree-rune-display">
-        <span class="tree-rune-label" id="name-lore-lbl"></span>
+        <!-- Nadpis nese samo jmeno (KUKY 2026-09-12: „ne YOUR NAME"); inline, at se k nemu vejde odkaz -->
+        <span class="tree-rune-label" id="name-lore-lbl" style="display:inline-block;"></span>
+        <button class="tree-name-edit-link" id="name-lore-edit" onclick="openNamesEdit()" style="display:none;">edit</button>
       </div>
       <p class="tree-gate-text" id="name-lore-intro"></p>
       <div class="tree-cta-block" id="name-lore-cta">
-        <button class="vcn-btn btn-gold" id="name-lore-btn" onclick="generateNameLore()"></button>
+        <button class="vcn-btn btn-gold" id="name-lore-btn" onclick="onNameLoreBtn()"></button>
       </div>
       <div class="tree-reading-text" id="name-lore-text" style="display:none;"></div>
     </div>
@@ -809,6 +811,7 @@
   <div id="sp-account" style="display:none;">
     <div class="side-panel-section">
       <button class="sp-item journal" id="sp-journal-link" onclick="openJournalFromPanel()">✦ MY JOURNAL</button>
+      <button class="sp-item" id="sp-names-btn" onclick="openNamesEdit()">✎ MY NAMES</button>
       <button class="sp-item" id="sp-gift" onclick="showAppTab('reading');toggleRedeem();closeSidePanel()">+ READING GIFT CARD</button>
       <a class="sp-item" id="sp-admin-link" href="runar-shrine.html" style="display:none;text-decoration:none;">⚿ KNOWLEDGE SHRINE</a>
     </div>
@@ -873,14 +876,28 @@
 </nav>
 
 <!-- ═══ NAME PROMPT MODAL ═══ -->
+<!-- Dve jmena (2026-09-12): severske jmeno (z nej ROZBOR) + jmeno/prezdivka (cokoli) + volba,
+     kterym z nich Runar OSLOVUJE. Texty plni showNamePrompt() — tady jen nahradni EN. -->
 <div class="name-overlay" id="name-overlay" style="display:none;">
   <div class="name-card">
     <div class="name-card-rune">ᚱ</div>
     <div class="name-card-title" id="name-card-title">BEFORE THE RUNES SPEAK</div>
-    <p class="name-card-sub" id="name-card-sub">The runes speak differently to those whose name they know.<br>How shall I call you?</p>
-    <input class="name-card-input" id="name-prompt-input" type="text"
-      placeholder="Your name or nickname" maxlength="40"
+    <p class="name-card-sub" id="name-card-sub">The runes speak differently to those whose name they know.</p>
+    <label class="name-card-lbl" id="name-norse-lbl" for="name-norse-input">YOUR NORSE NAME</label>
+    <input class="name-card-input name-card-input--pair" id="name-norse-input" type="text"
+      placeholder="e.g. Sigrún, Einar" maxlength="40" oninput="_nameModalSync()">
+    <p class="name-card-hint" id="name-norse-hint">Your own, or one you choose.</p>
+    <label class="name-card-lbl" id="name-name-lbl" for="name-prompt-input">YOUR NAME OR NICKNAME</label>
+    <input class="name-card-input name-card-input--pair" id="name-prompt-input" type="text"
+      placeholder="Your name or nickname" maxlength="40" oninput="_nameModalSync()"
       onkeydown="if(event.key==='Enter')saveName()">
+    <div class="name-card-call" id="name-call-row" hidden>
+      <div class="name-card-lbl" id="name-call-lbl">RÚNAR CALLS YOU BY</div>
+      <div class="lang-toggle">
+        <button class="lang-btn" id="name-call-norse" type="button" onclick="setNamePref('norse')">NORSE NAME</button>
+        <button class="lang-btn active" id="name-call-name" type="button" onclick="setNamePref('name')">NAME</button>
+      </div>
+    </div>
     <button class="name-card-btn" onclick="saveName()" id="name-card-btn">LET THE READING BEGIN</button>
     <div class="name-card-skip" onclick="skipName()" id="name-prompt-skip">Continue without a name</div>
   </div>

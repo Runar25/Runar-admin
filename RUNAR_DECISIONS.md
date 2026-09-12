@@ -5704,3 +5704,49 @@ To je položka „prompt je veřejný" (prompt se staví v prohlížeči) a ta z
 pre-launch položkou** — rozhodnutí ownera, jestli Rúnarův hlas chránit přestavbou na server.
 
 **Affected doc(s):** `RUNAR_BACKLOG.md` — v témž commitu.
+
+---
+
+## 2026-09-12 (8) — DVĚ JMÉNA: severské jméno + jméno/přezdívka + volba oslovení. Rozbor hlídá a ukládá server.
+
+**Zadání (KUKY 2026-09-12):** *„máme teda dvě kolonky pro jména a uživatel si bude moct zaškrtnout,
+které bude používat a jak ho teda bude Rúnar oslovovat"* · *„UŽIVATEL si může vymyslet jméno"* ·
+*„pokud jméno není v databázi, tak asi nebude výklad"* · *„jestli tam napíše TRPASLÍK a bude se chtít
+nechat Rúnarem oslovovat jako trpaslík, tak mu bude Rúnar říkat trpaslík"*. A ke screenshotu záložky
+životní runy: *„nemůžu zapsat moje jméno… mělo by tam být napsané mé jméno Kuky a ne YOUR NAME!"*
+
+**Co je nasazené:**
+- **Okno se jmény** má dvě pole — *severské jméno* (skutečné i vymyšlené) a *jméno nebo přezdívku*
+  (cokoli) — a volbu, kterým z nich Rúnar oslovuje. Volba se ukáže, až když jsou vyplněná obě.
+  Otevírá se při prvním přihlášení, z postranního panelu („✎ MY NAMES") a odkazem v sekci rozboru.
+- **Oslovení** skládá jediná funkce `_resolveUserName()` do `userName`, který čte celá appka (§12 platí
+  dál). Kdo má vyplněné jen jedno jméno, je osloven tím jedním bez ohledu na volbu.
+- **Rozbor bere VŽDY severské jméno**, ne oslovení. Sekce ukazuje **samo jméno** v nadpisu, bez
+  severského jména pozve k jeho zadání. Neseverské / neznámé / jen z rejstříku → hotová věta hned,
+  **bez tlačítka a bez uložení** (je vypočtená z dat, uložená kopie by jen zastarala — §20).
+- **Strop `NAME_LORE_LIMIT = 2`** rozborů od modelu: první + jedno přečtení po změně jména. Hotové věty
+  se do stropu nepočítají. Config i proxy mají stejné číslo, hlídá `verify_monthly_limits.js`.
+
+**⚠️ Díra, kterou to zavírá (a kterou jsem 2026-09-11 sám vyrobil):** proxy pouštěla rozbor jména zdarma,
+jen když byl `name_lore_text` prázdný — sloupec, na který měl klient grant UPDATE (ověřeno v živé DB).
+Kdo uměl F12, vynuloval ho a měl rozbor dokola. Změna jména by to udělala oficiálně. Teď proxy
+rozhoduje podle `norse_name` + `name_lore_for` + `name_lore_count` (poslední dva píše jen server),
+text ukládá sama až po úspěšném čtení a atomicky (CAS na počítadlo), a vrací rozlišené kódy
+(`name_lore_limit` / `_done` / `_no_name`), aby klient uměl říct proč. Klient do DB rozbor **nepíše**.
+
+**Nasazení ve dvou krocích**, protože obráceně by starý klient dostal 403: `sql/2026-09-12_two_names.sql`
+(přidává sloupce a granty, spuštěno a ověřeno v živé DB — hotová věta z účtu Kuky se do stropu
+nepočítá) → proxy + klient → `sql/2026-09-12_name_lore_server_only.sql` (odebírá klientovi zápis).
+
+**Nalezeno v prohlížeči a opraveno:** `updateUIText()` měl natvrdo text „pokračovat bez jména" a při
+přepnutí jazyka přepisoval „zrušit" v režimu úprav (§14). Texty okna teď nastavuje jediná
+`_nameModalTexts()`, která režim zná, a rozepsaný text v poli při přepnutí jazyka nezmizí.
+
+**Čím je to jištěné:** ㉣ přepsaná na nové zadání — všech devět stavů sekce v obou řečech, oslovení
+(Trpaslík / Sigrún / jen jedno jméno), drát `generateNameLore()` včetně toho, že klient do DB nic
+nezapíše, a okno × přepnutí jazyka. Mutace 7/7 zachycené: klient zase zapisuje · rozbor bere oslovení ·
+nadpis zase „YOUR NAME" · strop se nekontroluje · volba ignorovaná · text pro jiné jméno · jazyk
+přepíše „zrušit". ⑩ má `name_lore_text/for/count` mezi privilegovanými sloupci.
+
+**Affected doc(s):** žádný — schéma vlastní DB + `sql/`, zapisovatelnou plochu `sql/2026-07-16_…grants.sql`
+(upraveno v témž commitu).

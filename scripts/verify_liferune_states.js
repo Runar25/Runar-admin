@@ -25,14 +25,28 @@ const mk = (id) => ({
   id, style: {}, textContent: '', innerHTML: '', value: '',
   classList: { add() {}, remove() {}, toggle() {}, contains: () => false },
   setAttribute() {}, getAttribute: () => null,
+  // DOM metody, na ktere sahá updateUIText() (skládá pilulky apod.). Doplneno 2026-09-12 kvuli testu
+  // „okno se jmeny × prepnuti jazyka" — bez nich by test spadl v sandboxu, ne na chybe v appce.
+  appendChild(c) { return c; }, removeChild(c) { return c; }, insertBefore(c) { return c; },
+  replaceChildren() {}, append() {}, remove() {}, querySelector: () => null, querySelectorAll: () => [],
+  children: [], childNodes: [], dataset: {}, addEventListener() {}, removeEventListener() {},
+  closest: () => null, focus() {}, blur() {}, scrollIntoView() {},
+  getBoundingClientRect: () => ({ top: 0, left: 0, width: 0, height: 0 }),
 });
 const doc = {
   getElementById: (id) => (prvky[id] || (prvky[id] = mk(id))),
   querySelector: () => null, querySelectorAll: () => [],
   addEventListener() {}, createElement: () => mk('x'), body: mk('body'),
+  // updateUIText() nastavuje <html lang> — bez tohohle by test okna x jazyka spadl v sandboxu, ne v appce.
+  documentElement: mk('html'),
 };
+// `.update(x)` se zaznamenava do `zapisy`: od 2026-09-12 klient rozbor jmena do DB NEPISE (uklada
+// ho proxy), a jediny zpusob, jak to overit na vysledku, je videt, co klient poslal.
+const zapisy = [];
 const retez = new Proxy(function () {}, {
-  get: (_c, p) => (p === 'then' || p === 'error' ? undefined : retez), apply: () => retez });
+  get: (_c, p) => (p === 'then' || p === 'error' ? undefined
+    : p === 'update' ? (x) => { zapisy.push(x); return retez; } : retez),
+  apply: () => retez });
 const S = {
   console: { log() {}, warn() {}, error() {} }, Math, JSON, Date, document: doc,
   setTimeout: () => 0, clearTimeout() {}, setInterval: () => 0, clearInterval() {},
@@ -54,10 +68,14 @@ for (const f of ['runar-config.js', 'runar-runes.js', 'runar-translations.js',
 }
 // Živý strom a jméno stromu sem netáhneme — testuje se stav ZÁLOŽKY, ne kresba.
 code += '\nfunction renderLivingTree(){}; function _renderTreeNameState(){}; function isAdmin(){return false;}\n';
+// Funkce z runar-auth.js (kontrola ho nenacita), na ktere sahá updateUIText(). Zjisteno vypisem
+// chybejicich jmen 2026-09-12, ne odhadem.
+code += 'function updateAuthUI(){} function _updateInstallBtn(){} function updateQuestionGate(){}\n';
 // Model se v kontrole nevola; misto nej pocitadlo. Deklarace az ZA produkcnim kodem,
 // takze prebije puvodni `async function callProxy` (vsechno je jeden skript).
-code += '\nvar _volaniModelu = 0;\n'
-      + 'async function callProxy(){ _volaniModelu++; return { text: \"TEXT OD MODELU\" }; }\n';
+code += '\nvar _volaniModelu = 0; var _otevrenoJmena = 0;\n'
+      + 'async function callProxy(){ _volaniModelu++; return { text: "TEXT OD MODELU", name_lore_for: norseName, name_lore_count: _nameLoreCount + 1, name_lore_saved: true }; }\n'
+      + 'function openNamesEdit(){ _otevrenoJmena++; }\n';
 vm.createContext(S);
 try { vm.runInContext(code, S); }
 catch (e) { console.log('FAIL  nepodařilo se načíst strom: ' + e.message); process.exit(1); }
@@ -127,6 +145,40 @@ for (const L of ['en', 'is']) {
   rekni(stavJm('', 'en') === 'you', 'bez jména padá na „you" (a ne na prázdno)');
   rekni(stavJm('', 'is') === 'þú', 'bez jména padá islandsky na „þú"');
 
+  // DVE JMENA (2026-09-12): osloveni = volba mezi severskym jmenem a jmenem/prezdivkou.
+  // KUKY: „jestli tam napise TRPASLIK a bude se chtit nechat runarem oslovovat jako trpaslik,
+  // tak mu bude runar rikat trpaslik". Kontroluje se na `_lifeRuneName()` — tudy jde jmeno do cteni.
+  const oslov = (profil, severske, volba) => {
+    vm.runInContext('profileName=' + JSON.stringify(profil) + '; norseName=' + JSON.stringify(severske)
+      + '; addressPref=' + JSON.stringify(volba) + '; _resolveUserName(); currentUser={id:"u1"};'
+      + ' readerUser={}; lang="en";', S);
+    return vm.runInContext('_lifeRuneName()', S);
+  };
+  rekni(oslov('Trpaslík', 'Sigrún', 'name') === 'Trpaslík', 'volba „jméno" → Rúnar říká Trpaslík');
+  rekni(oslov('Trpaslík', 'Sigrún', 'norse') === 'Sigrún', 'volba „severské" → Rúnar říká Sigrún');
+  rekni(oslov('', 'Sigrún', 'name') === 'Sigrún', 'jen severské jméno → osloví jím, i když volba říká „jméno"');
+  rekni(oslov('Kuky', '', 'norse') === 'Kuky', 'jen přezdívka → osloví jí, i když volba říká „severské"');
+
+  // OKNO SE JMENY × PREPNUTI JAZYKA (2026-09-12, nalezeno v prohlizeci): v rezimu uprav stalo dole
+  // „Halda áfram án nafns" (pokracovat bez jmena) misto „Hætta við" (zrusit). updateUIText() mel
+  // natvrdo text pro prvni prihlaseni a pri prepnuti jazyka prepsal to, co okno prave nastavilo (§14).
+  // Protlaci se pravou cestou: otevrit upravu → prepnout jazyk → co stoji na tlacitkach a v polich.
+  {
+    vm.runInContext('profileName="Trpaslík"; norseName="Sigrún"; addressPref="norse"; currentUser={id:"u1"}; lang="en";', S);
+    vm.runInContext('showNamePrompt(true)', S);
+    const g = (id) => (prvky[id] || mk(id));
+    g('name-norse-input').value = 'Sigrún (rozepsáno)';            // clovek neco pise…
+    vm.runInContext('lang="is"; updateUIText();', S);               // …a prepne jazyk
+    const TIS = vm.runInContext('UI_TEXT', S).is;
+    rekni(String(g('name-prompt-skip').textContent) === TIS.cancel_btn,
+          'úprava jmen + přepnutí jazyka → dole zůstane „' + TIS.cancel_btn + '", ne „' + TIS.name_modal_skip + '"');
+    rekni(String(g('name-card-btn').textContent) === TIS.save_btn, '…a hlavní tlačítko zůstane „' + TIS.save_btn + '"');
+    rekni(String(g('name-norse-lbl').textContent) === TIS.name_modal_norse_lbl, '…štítky se přeloží');
+    rekni(g('name-norse-input').value === 'Sigrún (rozepsáno)', '…a rozepsaný text v poli NEZMIZÍ');
+    vm.runInContext('showNamePrompt(false)', S);
+    rekni(String(g('name-prompt-skip').textContent) === TIS.name_modal_skip, 'první přihlášení → dole „' + TIS.name_modal_skip + '"');
+  }
+
   const R25 = vm.runInContext('RUNES', S);
   const gebo = R25.find((r) => r.n === 'Gebo');
   for (const L of ['en', 'is']) {
@@ -149,32 +201,60 @@ for (const L of ['en', 'is']) {
 // neměl na výběr a musel si ho vymyslet (§23). Test proto hlídá, že ta úniková cesta v promptu
 // JE — v obou jazycích. Bez ní se vada vrátí i v samostatné podobě.
 {
-  const stavNL = (jmeno, prihlasen, text, L) => {
+  // Stav sekce rozboru pro danou kombinaci. Rozbor bere SEVERSKE jmeno (norseName), ne osloveni.
+  const stavNL = (o) => {
     Object.keys(prvky).forEach((k) => { prvky[k].style = {}; prvky[k].textContent = ''; prvky[k].innerHTML = ''; });
-    vm.runInContext('userName=' + JSON.stringify(jmeno || '')
-      + '; currentUser=' + (prihlasen ? '{id:"u1",email:"a@b.cz"}' : 'null')
-      + '; _nameLoreText=' + (text ? JSON.stringify(text) : 'null')
-      + '; readerUser={}; lang=' + JSON.stringify(L) + ';', S);
+    vm.runInContext('norseName=' + JSON.stringify(o.severske || '')
+      + '; currentUser=' + (o.prihlasen === false ? 'null' : '{id:"u1",email:"a@b.cz"}')
+      + '; _nameLoreText=' + (o.text ? JSON.stringify(o.text) : 'null')
+      + '; _nameLoreFor=' + (o.pro ? JSON.stringify(o.pro) : 'null')
+      + '; _nameLoreCount=' + (o.pocet || 0)
+      + '; readerUser={}; lang=' + JSON.stringify(o.L) + ';', S);
     vm.runInContext('_renderNameLore()', S);
     const g = (id) => (prvky[id] || mk(id));
     return { box: g('tree-name-lore').style.display, cta: g('name-lore-cta').style.display,
-             txt: g('name-lore-text').style.display, obsah: String(g('name-lore-text').innerHTML) };
+             txt: g('name-lore-text').style.display, obsah: String(g('name-lore-text').innerHTML),
+             lbl: String(g('name-lore-lbl').textContent), edit: g('name-lore-edit').style.display,
+             btn: String(g('name-lore-btn').textContent), intro: String(g('name-lore-intro').textContent) };
   };
   for (const L of ['en', 'is']) {
-    rekni(stavNL('Kuky', false, null, L).box === 'none', L + '  nepřihlášený → rozbor jména se nenabízí');
-    rekni(stavNL('', true, null, L).box === 'none', L + '  přihlášený BEZ jména → nenabízí se (není co rozebírat)');
-    const a = stavNL('Kuky', true, null, L);
-    rekni(a.box === 'block' && a.cta === '' && a.txt === 'none',
-          L + '  přihlášený se jménem → nabídne se tlačítko');
-    const b = stavNL('Kuky', true, 'Zdenek nemá v severské tradici kořeny.', L);
-    rekni(b.box === 'block' && b.cta === 'none' && b.txt === 'block' && b.obsah.indexOf('kořeny') !== -1,
-          L + '  hotový rozbor → ukáže se text a tlačítko zmizí');
+    const T = vm.runInContext('UI_TEXT', S)[L];
+    rekni(stavNL({ severske: 'Sigrún', prihlasen: false, L }).box === 'none', L + '  nepřihlášený → sekce rozboru se nenabízí');
+
+    // Bez severskeho jmena se sekce UKAZE a pozve k jeho zadani. Do 2026-09-12 byla skryta,
+    // a owner na screenshotu: „nemuzu zapsat moje jmeno".
+    const bez = stavNL({ severske: '', L });
+    rekni(bez.box === 'block' && bez.cta === '' && bez.txt === 'none', L + '  BEZ severského jména → sekce je vidět a nabídne zadání');
+    rekni(bez.btn === T.name_lore_add_btn && bez.intro === T.name_lore_intro_add,
+          L + '  …tlačítko zve k zadání jména, ne k rozboru');
+    rekni(bez.edit === 'none', L + '  …a odkaz „upravit" není (není co upravit)');
+
+    // Nadpis nese SAMO jmeno. KUKY 2026-09-12: „melo by tam byt uz napsane me uvedene jmeno Kuky a ne YOUR NAME!"
+    const kuky = stavNL({ severske: 'Kuky', L });
+    rekni(kuky.lbl === 'KUKY', L + '  nadpis ukáže JMÉNO („KUKY"), ne „' + T.name_lore_lbl + '"');
+    rekni(kuky.edit === '', L + '  …a vedle je odkaz na úpravu');
+    rekni(kuky.txt === 'block' && kuky.cta === 'none' && kuky.obsah === T.name_no_norse,
+          L + '  neznámé jméno → hotová věta HNED, bez tlačítka');
+
+    const hotovo = stavNL({ severske: 'Sigrún', text: 'ROZBOR SIGRÚN', pro: 'Sigrún', pocet: 1, L });
+    rekni(hotovo.txt === 'block' && hotovo.cta === 'none' && hotovo.obsah === 'ROZBOR SIGRÚN',
+          L + '  rozbor PRO TOHLE jméno → ukáže se text');
+    const jine = stavNL({ severske: 'Sigrún', text: 'ROZBOR GUÐRÚN', pro: 'Guðrún', pocet: 1, L });
+    rekni(jine.obsah.indexOf('GUÐRÚN') === -1 && jine.cta === '' && jine.btn === T.name_lore_btn,
+          L + '  rozbor pro JINÉ jméno se neukáže → nabídne se rozbor nového (1 z ' + vm.runInContext('NAME_LORE_LIMIT', S) + ')');
+    const strop = stavNL({ severske: 'Sigrún', text: 'ROZBOR GUÐRÚN', pro: 'Guðrún', pocet: vm.runInContext('NAME_LORE_LIMIT', S), L });
+    rekni(strop.cta === 'none' && strop.obsah === T.name_lore_limit, L + '  strop rozborů vyčerpaný → poctivá věta, žádné tlačítko');
+    const magnus = stavNL({ severske: 'Magnús', L });
+    rekni(magnus.cta === 'none' && magnus.obsah === T.name_no_norse_from.replace('{origin}', L === 'is' ? 'latínu' : 'Latin'),
+          L + '  neseverské jméno → věta s původem hned');
+    const einar = stavNL({ severske: 'Einar', L });
+    rekni(einar.cta === 'none' && einar.obsah === T.name_known_untraced, L + '  jméno z rejstříku → „znám, kořeny nedohledal"');
 
     // Prompt: úniková cesta MUSÍ být i u jména, které náš seznam za severské POVAŽUJE —
     // seznam je silnější obrana, ne neomylná. Kdyby byl u konkrétního jména vedle,
     // Rúnar pořád smí říct, že kořeny nevidí.
     const p = vm.runInContext('buildNameLorePrompt', S)(
-      'Sigrún', vm.runInContext('_nameLookup(\"Sigrún\")', S), L, null);
+      'Sigrún', vm.runInContext('_nameLookup("Sigrún")', S), L, null);
     rekni(p.indexOf('Sigrún') !== -1, L + '  prompt rozboru nese jméno');
     rekni(L === 'en' ? /say so plainly and stop there/.test(p) : /seg\u00f0u \u00fea\u00f0 hreint \u00fat/.test(p),
           L + '  prompt DOVOLUJE odpovědět, že jméno severské kořeny nemá');
@@ -287,50 +367,66 @@ if (rLife && rTree) {
 // Proč na tom záleží i v penězích: `name_lore` je u proxy zdarma a jištěné jen tím, že se
 // volá jednou. Volání, které nemělo vzniknout, je zaplacené vymýšlení.
 async function drat() {
-  const zkus = async (jmeno, L) => {
-    vm.runInContext('_volaniModelu = 0; _nameLoreText = null; lang = ' + JSON.stringify(L || 'en') + ';'
-      + ' currentUser = { id: "u1", email: "a@b.cz" };'
-      + ' userName = ' + JSON.stringify(jmeno) + '; readerUser = {};', S);
+  // o = { severske, jmeno, text, pro, pocet, L }. Vraci volani modelu, stav po, obsah sekce a zapisy do DB.
+  const zkus = async (o) => {
+    zapisy.length = 0;
+    Object.keys(prvky).forEach((k) => { prvky[k].style = {}; prvky[k].textContent = ''; prvky[k].innerHTML = ''; });
+    vm.runInContext('_volaniModelu = 0; _otevrenoJmena = 0; lang = ' + JSON.stringify(o.L || 'en') + ';'
+      + ' currentUser = { id: "u1", email: "a@b.cz" }; readerUser = {};'
+      + ' norseName = ' + JSON.stringify(o.severske || '') + '; profileName = ' + JSON.stringify(o.jmeno || '') + ';'
+      + ' _nameLoreText = ' + (o.text ? JSON.stringify(o.text) : 'null') + ';'
+      + ' _nameLoreFor = ' + (o.pro ? JSON.stringify(o.pro) : 'null') + ';'
+      + ' _nameLoreCount = ' + (o.pocet || 0) + ';', S);
     await vm.runInContext('generateNameLore()', S);
-    return { volani: vm.runInContext('_volaniModelu', S),
-             text: String(vm.runInContext('_nameLoreText', S) || '') };
+    return { volani: vm.runInContext('_volaniModelu', S), otevreno: vm.runInContext('_otevrenoJmena', S),
+             text: vm.runInContext('_nameLoreText', S), pro: vm.runInContext('_nameLoreFor', S),
+             pocet: vm.runInContext('_nameLoreCount', S),
+             obsah: String((prvky['name-lore-text'] || {}).innerHTML || ''), zapisy: zapisy.slice() };
   };
   const T = vm.runInContext('UI_TEXT', S).en;
+  const LIMIT = vm.runInContext('NAME_LORE_LIMIT', S);
+  const zapsalRozbor = (r) => r.zapisy.some((z) => z && ('name_lore_text' in z || 'name_lore_for' in z || 'name_lore_count' in z));
 
-  const cizi = await zkus('Magnús');
+  const cizi = await zkus({ severske: 'Magnús', jmeno: 'Maggi' });
   rekni(cizi.volani === 0, '„Magnús" (v seznamu, NEseverské) → model se nevolá vůbec');
-  rekni(cizi.text === T.name_no_norse_from.replace('{origin}', 'Latin'),
-        '…a jde hotová věta i s původem ze seznamu');
+  rekni(cizi.obsah === T.name_no_norse_from.replace('{origin}', 'Latin'), '…a ukáže se hotová věta i s původem ze seznamu');
+  rekni(!zapsalRozbor(cizi), '…a NIC se neukládá (věta je vypočtená, uložená kopie by jen zastarala)');
 
-  const nezname = await zkus('Kuky');
+  const nezname = await zkus({ severske: 'Kuky' });
   rekni(nezname.volani === 0, '„Kuky" (není v seznamu) → model se nevolá vůbec');
-  rekni(nezname.text === T.name_no_norse, '…a jde věta bez původu (netvrdíme, co nevíme)');
+  rekni(nezname.obsah === T.name_no_norse, '…a jde věta bez původu (netvrdíme, co nevíme)');
 
-  // ⭐ TŘETÍ STAV (2026-09-12): jméno, které Island zná, ale my u něj kořeny nedohledali.
-  // Do té doby dostávalo tutéž větu jako cizí jméno, tedy „kořeny nevidím" — a to je u Einara
-  // LEŽ. Měřeno: 289 ze 402 nejběžnějších islandských jmen v kurátorovaném seznamu chybí, takže
-  // tohle NENÍ okrajový případ, ale nejčastější odpověď, jakou appka na islandské jméno dá.
-  const zRejstriku = await zkus('Einar');
+  // ⭐ TŘETÍ STAV: jméno, které Island zná, ale my u něj kořeny nedohledali (289 ze 402 běžných).
+  const zRejstriku = await zkus({ severske: 'Einar' });
   rekni(zRejstriku.volani === 0, '„Einar" (v rejstříku, ne v kurátorovaném seznamu) → model se nevolá');
-  rekni(zRejstriku.text === T.name_known_untraced,
-        '…a Rúnar řekne, že jméno ZNÁ a kořeny nedohledal (ne „kořeny nevidím")');
-  rekni(zRejstriku.text !== T.name_no_norse, '…a rozhodně NE tu větu pro cizí jméno');
-  const isRejstrik = await zkus('Dagur', 'is');
-  rekni(isRejstrik.text === vm.runInContext('UI_TEXT', S).is.name_known_untraced,
-        'is  „Dagur" → táž pravdivá věta islandsky');
+  rekni(zRejstriku.obsah === T.name_known_untraced, '…a Rúnar řekne, že jméno ZNÁ a kořeny nedohledal');
+  const isRejstrik = await zkus({ severske: 'Dagur', L: 'is' });
+  rekni(isRejstrik.obsah === vm.runInContext('UI_TEXT', S).is.name_known_untraced, 'is  „Dagur" → táž pravdivá věta islandsky');
 
-  const severske = await zkus('Sigrún');
-  rekni(severske.volani === 1, '„Sigrún" (severské) → model text NAPÍŠE');
-  rekni(severske.text === 'TEXT OD MODELU', '…a jeho text se uloží');
+  // Rozbor bere SEVERSKE jmeno, i kdyz se clovek nechava oslovovat jinak.
+  const severske = await zkus({ severske: 'Sigrún', jmeno: 'Trpaslík' });
+  rekni(severske.volani === 1, '„Sigrún" (severské; oslovení Trpaslík) → model text NAPÍŠE');
+  rekni(severske.text === 'TEXT OD MODELU' && severske.pro === 'Sigrún' && severske.pocet === 1,
+        '…a klient převezme text, jméno i počet z odpovědi serveru');
+  // ⭐ Jadro diry: do 2026-09-12 si klient rozbor ukladal sam a proxy poustela dalsi, kdyz byl
+  // `name_lore_text` prazdny — sloupec, ktery si klient smel vynulovat. Ted pise jen server.
+  rekni(!zapsalRozbor(severske), '…a KLIENT DO DB ROZBOR NEZAPISUJE (ukládá ho server)');
 
-  // §2: islandská věta musí být islandská CELÁ. Do 2026-09-11 v ní stálo anglické
-  // „(Latin)", protože původ měl jen jeden tvar. Kontrola jede na VĚTĚ, ne na datech,
-  // protože právě tam to bylo vidět.
-  const isl = await zkus('Magnús', 'is');
+  const uzMa = await zkus({ severske: 'Sigrún', text: 'STARÝ ROZBOR', pro: 'Sigrún', pocet: 1 });
+  rekni(uzMa.volani === 0, 'rozbor pro TOHLE jméno už je → model se znovu NEvolá');
+  const strop = await zkus({ severske: 'Sigrún', text: 'ROZBOR GUÐRÚN', pro: 'Guðrún', pocet: LIMIT });
+  rekni(strop.volani === 0 && strop.obsah === T.name_lore_limit, 'strop ' + LIMIT + ' vyčerpaný → model se nevolá, poctivá věta');
+  const zmena = await zkus({ severske: 'Sigrún', text: 'ROZBOR GUÐRÚN', pro: 'Guðrún', pocet: LIMIT - 1 });
+  rekni(zmena.volani === 1, 'po změně jména (strop ještě ne) → nový rozbor JDE');
+
+  const nic = await zkus({ severske: '', jmeno: 'Kuky' });
+  rekni(nic.volani === 0 && nic.otevreno === 1, 'bez severského jména → model se nevolá, otevře se okno se jmény');
+
+  // §2: islandská věta musí být islandská CELÁ.
+  const isl = await zkus({ severske: 'Magnús', L: 'is' });
   rekni(isl.volani === 0, 'is  „Magnús" → model se nevolá ani islandsky');
-  rekni(isl.text.indexOf('latínu') !== -1, 'is  …a původ je islandsky („latínu")');
-  rekni(!/\b(Latin|Greek|Hebrew|Aramaic|Germanic|Slavic)\b/.test(isl.text),
-        'is  …a v islandské větě nezůstalo ANGLICKÉ slovo');
+  rekni(isl.obsah.indexOf('latínu') !== -1, 'is  …a původ je islandsky („latínu")');
+  rekni(!/\b(Latin|Greek|Hebrew|Aramaic|Germanic|Slavic)\b/.test(isl.obsah), 'is  …a v islandské větě nezůstalo ANGLICKÉ slovo');
 }
 
 drat().then(() => {

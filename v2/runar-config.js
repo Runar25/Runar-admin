@@ -65,6 +65,12 @@ const RUNAR_PROMPT_VERSION = 'v4.25-klice';
 // mapu jako `MONTHLY_LIMITS` a rozsir kontrolu ⑨, ktera kopii v proxy hlida.
 const VOICE_MONTHLY_LIMIT = 5;
 
+// Rozbor jmena od modelu: prvni rozbor + JEDNO precteni po zmene severskeho jmena
+// (KUKY 2026-09-12: dve kolonky na jmena). Vynucuje claude-proxy (ma ZRCADLO); tady je,
+// aby klient vedel, kdy uz nabizet tlacitko nema. Shodu hlida verify_monthly_limits.js.
+// Hotove vety (jmeno neni severske / neni v seznamu) model nevolaji a do limitu se NEpocitaji.
+const NAME_LORE_LIMIT = 2;
+
 // ─── ELEVENLABS ─────────────────────────────────────────
 const EL_VOICE_ID_EN = '2UI8v2ibbwQTijaYAte1'; // English — Rúnar EN
 const EL_VOICE_ID_IS = '2UI8v2ibbwQTijaYAte1'; // IS — stejný voice, eleven_v3 auto-detekuje islandštinu z textu

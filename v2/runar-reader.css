@@ -235,6 +235,15 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .name-card-btn:hover{background:rgba(255,191,0,0.08);}
 .name-card-skip{font-size:0.8em;color:var(--dim);cursor:pointer;transition:color 0.2s;}
 .name-card-skip:hover{color:var(--muted);}
+/* Dve jmena (2026-09-12): stitky nad poli, napoveda pod severskym jmenem, volba osloveni. */
+.name-card-lbl{display:block;font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:2.5px;color:var(--gold);opacity:0.8;margin-bottom:4px;text-align:center;}
+.name-card-input.name-card-input--pair{margin-bottom:8px;}
+.name-card-hint{font-size:0.82em;font-style:italic;color:var(--muted);margin:0 0 24px;line-height:1.5;}
+.name-card-call{margin:16px 0 26px;}
+.name-card-call .lang-toggle{justify-content:center;}
+/* Se dvema jmeny je okno vyssi — na nizkem telefonu by se nevešlo a spodni tlacitko by bylo mimo obrazovku. */
+.name-card{max-height:94vh;overflow-y:auto;}
+@media (max-height:700px){.name-card{padding:30px 28px;}.name-card-rune{margin-bottom:10px;}.name-card-sub{margin-bottom:20px;}}
 
 /* ── TOPBAR DROPDOWN ── */
 .auth-user{cursor:pointer;position:relative;}
