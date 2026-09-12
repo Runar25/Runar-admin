@@ -5750,3 +5750,8 @@ přepíše „zrušit". ⑩ má `name_lore_text/for/count` mezi privilegovanými
 
 **Affected doc(s):** žádný — schéma vlastní DB + `sql/`, zapisovatelnou plochu `sql/2026-07-16_…grants.sql`
 (upraveno v témž commitu).
+
+**Nasazení (2026-09-12, git ho nevidí):** `sql/2026-09-12_two_names.sql` spuštěno a ověřeno · `claude-proxy`
+nasazená · klient na produkci ověřen (SW v392, `_resolveUserName` a `NAME_LORE_LIMIT` v živém kódu, konzole
+čistá) · teprve potom `sql/2026-09-12_name_lore_server_only.sql` — živé granty ověřené: klient smí
+`name`, `norse_name`, `address_pref`; na `name_lore_text/for/count` grant nemá.
