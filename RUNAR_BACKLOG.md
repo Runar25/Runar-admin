@@ -948,6 +948,16 @@ vazba dorazí jen k runě s pohybem (Jera ✅ Gebo ✅ · Perth ❌ Isa ❌).
     point too small to make out. Perth is the part of the flight kept from you. Gebo is the flight
     itself: something is being taken from one place to another, and you are watching the middle of the
     handing-over, with both ends out of sight."
+  ✅ **Hodnocení ownera 2026-09-12:** *„ISA i PERTH jsou hezké a funkční — a myslím, že se tím ukazuje
+  směr pro naše obrazy k runám obecně. Zatím nic neměníme, ale je dobré to zaznamenat."*
+  ⭐ **Směr pro obrazy obecně (ZAZNAMENÁNO, nic se nemění):** obraz dodá člověk, runa říká, co se
+  v něm děje, a životní runa je vztah UVNITŘ té scény — ne věta o člověku.
+  ⚠️ **Gebo se ale u Isy nespojilo** — „Gebo stands half-finished: the giving has gone one way…
+  where it was given". KUKY: *„to je právě to, co je Gebo — je to giving, a tak to Rúnar bude říkat,
+  dokud nedostane jiné slovo, skrze které by mohl mluvit."* U Perth to fungovalo, protože Gebo prošlo
+  jako **předávání** (handing-over), ne jako slovo „giving".
+  ⇒ **Otevřená otázka ownera: jak se má životní runa projevovat** → testovat různé formulace vztahu
+  (test 2026-09-12 níž v eval logu).
   ⚠️ **Otevřené:** co když uživatel napíše scénu, která s runou nesedí (Isa × „běžím")? · nese se
   něco z ramene 1 do ramene 2, když scény píše člověk nezávisle? · kolik lidí vůbec scénu napíše,
   když prázdné pole nic nenabízí (proto existují tipy)?
