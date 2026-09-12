@@ -101,6 +101,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [prompt-nepojmenuj-co-hned-zakazes.md](prompt-nepojmenuj-co-hned-zakazes.md) — prompt, který něco pojmenuje a hned to zakáže vyslovit, hlídá slovo, které tam sám napsal; odeber nálepku, ne přidej hlídače
 - [always-show-reading-samples.md](always-show-reading-samples.md) — ownerovi vždy ukázat konkrétní TEXT čtení, ne jen měření a verdikty
 - [write-for-owner-not-process.md](write-for-owner-not-process.md) — ownerovi piš důležité/výsledek, ne proces „co jsi řekl / co budu hledat"
+- [cheapest-deciding-measurement-first.md](cheapest-deciding-measurement-first.md) — napřed nejlevnější měření, které rozhodne, jestli má smysl měřit dál; padne-li hypotéza, zastav zbytek dávky
 - [work-efficiently-ask-if-simpler.md](work-efficiently-ask-if-simpler.md) — než spustíš těžký nástroj, zeptej se, jestli to nejde jednodušeji; dlouhý běh protlačí compactem a zabije úkol
 - [decisions-are-directions-not-locks.md](decisions-are-directions-not-locks.md) — rozhodnutí = směr + varování při rozporu, ne zámek navždy
 - [fix-or-log-duplicates-and-errors.md](fix-or-log-duplicates-and-errors.md) — duplikát/chyba → hned opravit, nebo zapsat do BACKLOGu; netiše přejít

@@ -548,7 +548,7 @@ var RUNE_IMAGES = [
   ['Eihwaz','any','Rótin heldur í urðina þegar allt annað skríður niður.','The root holds the scree together when everything else slides down.','seigla','resilience','P'],
   ['Perth','any','Áin veltir steinvölunni þar til hún stöðvast — þú sérð ekki hvar.','The river rolls the pebble until it stops — you cannot see where.','örlög í mótun','fate in the making','E'],
   ['Perth','any','Andartak glittir í eitthvað á botni lónsins áður en gruggið hylur það aftur.','The lagoon water clears for a moment and something below stirs, then closes over again.','hið hulda sem kemur í ljós','the hidden coming to light','E'],
-  ['Perth','any','Bréf liggur óopnað á borðinu og þú veist ekki enn hvað í því stendur.','A letter lies unopened on the table and you do not yet know what it says.','hið hulda sem kemur í ljós','the hidden coming to light','D'],
+  ['Perth','any','Í lágri sól koma fótsporin í ljós yfir túnið, andartak, áður en birtan breytist og þau hverfa.','In the low sun a whole trail of footprints comes to light across the field, for a moment, before the light shifts and they are gone.','hið hulda sem kemur í ljós','the hidden coming to light','E'],
   ['Algiz','any','Torfveggurinn stendur á milli þín og vindsins og í dyragættinni er logn.','The turf wall takes the wind so the doorway stays calm.','skjól','shelter','P'],
   ['Algiz','any','Fjárhundurinn liggur þar sem hann sér alla hjörðina.','The sheepdog lies where it can see the whole flock.','vernd','protection','P'],
   ['Algiz','any','Einhver bíður uppi með ljós í glugganum þar til þú kemur heim.','Someone stays up with a light in the window until you come home.','skjól','protection','D'],

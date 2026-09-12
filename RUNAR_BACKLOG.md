@@ -915,6 +915,30 @@ Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je 
   **Oprava = přeformulovat aspekt na DĚJ, ne na věc** (týž požadavek, jaký má esenční věta: *„Fehu is that warmth passed from hand to hand", ne „Fehu is wealth"*). Znění = owner/Cowork, ne CODE. KUKY 2026-09-11: *„zní to hrozně ve čtení, tahle metafora mi přijde divná, budeme hledat jiný obraz."*
   ✅ **Znění dorazilo a je zadrátované** (Cowork-tune → owner HOTOVO, 2026-09-11): aspekt je teď DĚJ v obou řečech a obraz s lagunou koná. Co přesně a proč → `RUNAR_DECISIONS.md` 2026-09-11. Aby se to nemohlo rozejít podruhé, hlídá vazbu aspekt↔klíč smoke ㉤.
 
+- [ ] **PODEZŘENÍ (neověřené): islandské JMÉNO runy může v promptu odporovat aspektu.**
+  V islandském promptu stojí jméno runy i aspekt v TÉŽE řádce: `DREGNA RÚNA: Perþ (Duldir hlutir)
+  — áhersla: hið hulda sem kemur í ljós`. Jméno nese starou statickou věc („Duldir hlutir"),
+  aspekt nový děj. Anglicky ten spor není — `Perth` je holé jméno bez glosy.
+  **Proč to tu leží místo opravy:** změřeno 2026-09-11, že samotné SLOVO aspektu čtením skoro
+  nehne (dopisové rameno 1 ze 6), takže u glosy ve jméně to bude tím spíš nulové — a jméno runy
+  je vidět po celé appce. Opravovat neměřenou věc s viditelným dopadem = horší než to nechat.
+  **Kdy to vytáhnout:** kdyby se u NĚKTERÉ runy potvrdilo, že islandské čtení drží starou stránku
+  runy proti novému aspektu. Pak se měří tohle: `is_n` glosa vs aspekt, stejným A/B jako Perth.
+  Týká se všech run — každá má v `is_n` závorku (`Isa (Kyrrstaða)`, `Tiwaz (Hermannsandinn)`…).
+
+- [ ] **SPOR K ROZSOUZENÍ: Cowork tvrdí, že `RUNES[].k` má změny, které ratifikované rozhodnutí ZAKAZUJE.**
+  Cowork-tune v odpovědi 2026-09-12 píše „⚠ RECONCILIACE s dřívějšími ratifikovanými opravami k
+  (owner 2026-09-10)" a vyjmenovává: Laguz +memory/dreams · Thurisaz +disruptive force ·
+  Uruz −transformation · Mannaz −memory · Eihwaz +world-tree/protection · Othila +foundation/belonging.
+  **Ověřeno v repu 2026-09-12: takový záznam neexistuje.** Datované rozhodnutí z toho dne říká
+  pravý opak — `RUNAR_DECISIONS.md` 2026-09-10 („Jednoslovný slovník 119 PŘIJAT jako autorská
+  pomůcka"): *„Nenasazuje se do kódu — `RUNES[].k` zůstává nedotčené; slovník je podklad pro psaní
+  obrazů."*
+  ⇒ **Neprovedeno** (§20: při sporu vyhrává nejnovější datovaný záznam). Buď to owner rozhodl
+  v chatu a nikdo to nezapsal, nebo si to Cowork plete se slovníkem 119. Rozsoudí owner; do té
+  doby se `k` nesahá. ⚠️ Kdyby se ty změny přijaly, musí s nimi přijít i protějšky do `k_is` —
+  hlídá to smoke ㉤ (stejný počet položek, strop 0).
+
 - [ ] **OBSAH (owner/Cowork): Perthův DOPISOVÝ obraz zůstal statický — a stížnost byla právě z něj.**
   Oprava aspektu na děj (2026-09-11) otočila lagunový obraz, **dopisový ne** — a produkční čtení, které owner označil za špatné (*„Perth, the thing whose meaning waits sealed until you break the fold"*), pochází z dopisu. Po opravě zní pořád *„Perth is the keeping of what has not yet been read."*
   ⭐ **Měření řeklo, kde je páka: v OBRAZE, ne ve slově aspektu** — u dopisu se měnil jen aspekt a čtení se nehnulo (1 ze 6), u laguny se měnil obraz a otočilo se (5 ze 6). Čísla, uspořádání a hranice nálezu → `RUNAR_EVAL_LOG.md` 2026-09-11.

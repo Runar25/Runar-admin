@@ -55,7 +55,9 @@ for (const row of IMGS) {
 // ⚠️ Strop počítá CHYBĚJÍCÍ POLOŽKY, ne runy. Mutace 2026-09-12: přidání šestého anglického
 // klíče k Laguzu (které v seznamu dluhu už bylo) prošlo zeleně, protože počet RUN se nezměnil.
 // Součet rozdílů takovou ránu zachytí.
-const PARITA_STROP = 12;
+// 2026-09-12: splaceno na NULU (Coworkova islandska slova + korpusove overeni). Kdo sem
+// strop zvedne, musi k tomu mit datovany duvod.
+const PARITA_STROP = 0;
 const parita = [];
 let chybiPolozek = 0;
 for (const r of RUNES) {

@@ -5489,3 +5489,40 @@ anglického klíče k runě, která v seznamu dluhu už byla, počet run nezměn
 klíč zase zmizí = FAIL · přibude EN klíč bez protějšku = FAIL · IS seznam delší než EN = FAIL.
 
 **Affected doc(s):** žádný — vlastníkem dat je `runar-runes.js`, dluh drží kontrola.
+
+---
+
+## 2026-09-12 (2) — Perthův dopis vyměněn · 12 islandských klíčů doplněno · jeden spor NEPROVEDEN
+
+**Perth.** Dopisový obraz (*„A letter lies unopened on the table"*) nahrazen obrazem od
+Cowork-tune, kandidát A: stopy, které se v nízkém slunci na okamžik ukážou a zase zmizí. Scéna je
+schválně **suchozemská** — oba zbývající Perthy jsou vodní (řeka, laguna). Důvod výměny je
+změřený: dopis byl jediné místo s produkčním dokladem vady (2 ze 2 čtení) a oprava aspektu ho
+nespravila (1 ze 6). Owner: *„Perth potřebuje najít lepší obraz, nevím proč se trápit s
+opravováním dopisu."*
+
+**Islandština obrazu jsem po korpusu na dvou místech změnil**, obraz zůstal týž:
+`heil slóð fótspora` → `fótsporin` (slóð fótspora 0 · röð fótspora 0 · heil slóð 0; „fótsporin"
+338 — a `slóð` samo už stopy znamená) · `birtan færist` → `birtan breytist` (0 × 6). Zbytek
+doložen: „koma í ljós" 28365 · „lágri sól" 5 · „yfir túnið" 181 · „þau hverfa" 416.
+
+**12 chybějících islandských klíčů doplněno** (znění Cowork nativně, ověření nástroji CODE):
+búfé · vernd · rétt breytni · eldur · uppfyllt ósk · hreinsun · skýrleiki í kulda · sólarorka ·
+hermannsandi · samfylgd · dulvitund · tómið. Dvě s přiznanou výhradou:
+- `hermannsandi` — korpus 0, ale je to **naše vlastní kanonické jméno runy** (`is_n: 'Tiwaz
+  (Hermannsandinn)'`); islandština skládá složeniny volně, 0 u průhledné složeniny není důkaz proti.
+- `skýrleiki í kulda` — celá fráze 0, obě části ano (skýrleiki 266 · í kulda 2151), vazba běžná;
+  alternativy byly horší (skýrleiki kuldans 0 · kaldur skýrleiki 0) a samo `skýrleiki` už drží Sowilo.
+
+Cowork opravil moje čtení jedné dvojice: u Ehwazu nechybí `trust`, ale `partnership` — „traust
+milli tveggja" už trust nese. Měl pravdu. **Dluh v ㉤ je tím na nule a strop je srovnaný na 0.**
+
+**⛔ NEPROVEDENO — a proto zapsáno.** Cowork k tomu připojil „rekoncilaci s dříve ratifikovanými
+opravami `k` (owner 2026-09-10)": Laguz +memory/dreams, Thurisaz +disruptive force,
+Uruz −transformation, Mannaz −memory, Eihwaz +world-tree/protection, Othila +foundation/belonging.
+**Takový záznam v repu není** — a datované rozhodnutí z toho dne říká pravý opak: *„Nenasazuje se
+do kódu — `RUNES[].k` zůstává nedotčené; slovník je podklad pro psaní obrazů."* (2026-09-10,
+slovník 119). Při sporu vyhrává novější datovaný záznam (§20), takže `k` zůstalo nedotčené a spor
+leží v `RUNAR_BACKLOG.md`, aby ho owner rozsoudil.
+
+**Affected doc(s):** `RUNAR_BACKLOG.md` — v témž commitu.
