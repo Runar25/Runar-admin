@@ -608,6 +608,18 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola otazky probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# Měsíc narození v životní runě = starý islandský kalendář, ne gregoriánský měsíc. Do 2026-09-12
+# dostal owner (4. 7.) „Heyannir"; správně Sólmánuður. Kontrola projde 1900–2100 proti oknům
+# z pramenů (Almanak HÍ) a protlačí výsledek produkčním builderem až do promptu.
+print('\n' + chr(0x3266) + ' MĚSÍC NAROZENÍ = ISLANDSKÝ KALENDÁŘ (verify_icelandic_calendar.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_icelandic_calendar.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola kalendare probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

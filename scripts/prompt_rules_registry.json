@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-12",
- "prompt_version": "v4.24-kjarnaord",
+ "prompt_version": "v4.25-klice",
  "pravidla": [
   {
    "hash": "54d29df4d80b",
@@ -358,10 +358,10 @@
    "zacatek": "This is the life rune reading of Anna — not a reading of today, but of"
   },
   {
-   "hash": "f619e5c8169b",
+   "hash": "582177cc5663",
    "lang": "en",
    "zdroj": "liferune",
-   "zacatek": "ICELANDIC MONTH: Jól — winter solstice, the seed of returning light in"
+   "zacatek": "ICELANDIC MONTH: Ýlir — winter in full darkness, aurora, the sky speak"
   },
   {
    "hash": "2df76b58fd34",
@@ -382,10 +382,10 @@
    "zacatek": "SECTION 1 — THE DATE (3 sentences):"
   },
   {
-   "hash": "260ce917abd3",
+   "hash": "499c471094b4",
    "lang": "en",
    "zdroj": "liferune",
-   "zacatek": "What does Jól carry in the Icelandic year? The quality of that time — "
+   "zacatek": "What does Ýlir carry in the Icelandic year? The quality of that time —"
   },
   {
    "hash": "cbb08d8f1a5d",
@@ -1042,10 +1042,10 @@
    "zacatek": "FÆDD/UR: 24. 12. 1979"
   },
   {
-   "hash": "cd54aa1daab2",
+   "hash": "0bcf35b0a38d",
    "lang": "is",
    "zdroj": "liferune",
-   "zacatek": "ÍSLENSKUR MÁNUÐUR: Jól — sólstöður, fræ ljóssins í myrkinu, Jólasveina"
+   "zacatek": "ÍSLENSKUR MÁNUÐUR: Ýlir — svartasta skammdegið, norðurljós, himinninn "
   },
   {
    "hash": "dab4c2e06e28",
@@ -1066,10 +1066,10 @@
    "zacatek": "HLUTI 1 — DAGSETNINGIN (3 setningar):"
   },
   {
-   "hash": "b3b2858033c8",
+   "hash": "482f4782ab65",
    "lang": "is",
    "zdroj": "liferune",
-   "zacatek": "Hvað ber Jól í íslensku ári? Hvaða gæði hafði þessi tími — hvað var að"
+   "zacatek": "Tíminn er ýlir. Hvað ber sá tími í íslensku ári? Hvaða gæði hafði hann"
   },
   {
    "hash": "f1e6ec09ff7d",

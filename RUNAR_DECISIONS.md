@@ -5805,3 +5805,38 @@ Gudny v rejstříku, sekce s „Thor" nabídne rozbor. Mutace 6/6 zachycené (M5
 s dnešními daty by pojistka v kódu nikdy neběžela).
 
 **Affected doc(s):** žádný — chování vlastní kód a tenhle záznam.
+
+## 2026-09-12 (11) — Měsíc narození podle STARÉHO ISLANDSKÉHO KALENDÁŘE, ne gregoriánského měsíce
+
+**Proč:** owner (4. 7. 1985) dostal ve čtení životní runy měsíc „Heyannir" a ptá se: *„neyna Thor!
+jak to? life runa. jak se tvoří?"* Tabulka `BIRTH_MONTHS` mapovala gregoriánský měsíc 1:1 na
+islandský (červenec = Heyannir). Staré islandské měsíce ale gregoriánské nekopírují — Heyannir
+začíná nedělí 23.–30. 7., takže 4. 7. je Sólmánuður. A tabulka nesla další čtyři vady: chyběl
+Einmánuður i Tvímánuður, Haustmánuður byl dvakrát (srpen i září), „Gói" místo moderního „Góa"
+a „Jól", které měsícem nikdy nebylo (jólmánuður je starší jméno mörsugur).
+
+**Ověření (🔒):** tři nezávislé rodiny zdrojů — Almanak Háskóla Íslands (almanak.hi.is/rim.html) ·
+Vísindavefur + is.wikipedia · Janson/en.wikipedia — se shodly na dnech v týdnu i oknech všech
+12 měsíců. Jediný spor: Vísindavefur 1132 dává Haustmánuður 20.–26. 9., Almanak a ostatní 21.–27.
+(28.) — bere se Almanak. Windows platí pro dnešní (gregoriánskou) podobu; o juliánské před 1700
+se nic netvrdí.
+
+**Jak se to teď počítá** (`icelandicMonthKey` v runar-character.js): dvě kotvy místo opisu pravidel
+o sumarauki (ta se v pramenech popisují různě) — Sumardagurinn fyrsti = první čtvrtek po 18. 4.
+(začátek hörpu) a zima = 6 × 30 dní, takže Fyrsti vetrardagur = příští léto − 180 dní. První tři
+letní měsíce od léta, poslední tři zpět od zimy; mezera mezi nimi = aukanætur (4, se sumarauki 11
+nocí). Kdo se v aukanætur narodil, dostane je jménem — jsou to skutečné dny kalendáře, ne chyba.
+
+**Menší opravy vezené s tím:** IS věta promptu měla jméno měsíce jako podmět („Hvað ber Heyannir"
+— nesedí číslem u množných jmen); teď „Tíminn er <mánuður>." · próza: „himillinn" není slovo
+(BÍN zná himinninn) · „þol yfir ósigur" kalk z EN (korpus 0) → þrautseigja · „blær milli heimsins"
+→ „þunnt á milli heimanna" (korpus 10/27) · „fyrsta fuglasöngurinn" → fyrsti (söngur kk, BÍN) ·
+`_getIcelandicSeason` (jen lab V2 cesta) měla VLASTNÍ gregoriánskou tabulku s týmiž vadami —
+teď čte tentýž kalendář (§20).
+
+**Čím je to jištěné:** nová smoke ㉦ `verify_icelandic_calendar.js` — 1900–2100 každý začátek
+měsíce ve svůj den v týdnu a v okně pramenů (2613 začátků), délky 30/4/11, hranice 2026, ownerův
+případ, „Jól"/„Gói" zakázané, a protlačení produkčním `buildLifeRunePrompt` v obou řečech.
+
+**Affected doc(s):** žádný — RUNAR_DESIGN.md tabulku měsíců neopisuje (řádek „Květen–červen …" je
+sezónní mapa run, ne kalendář narození).

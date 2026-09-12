@@ -211,19 +211,13 @@ function _getLunarPhase() {
   return 'waning crescent';
 }
 
+// 2026-09-12: jméno měsíce z téhož kalendáře jako měsíc narození. Dřív vlastní gregoriánská
+// tabulka — druhá kopie téže chyby („Gói", „Ýlir/Jól", Haustmánuður od 15. 8.). Běží jen
+// v laboratorní V2 cestě (getContextLine → buildSysPromptV2), produkční čtení ji nevolá.
 function _getIcelandicSeason() {
   const now = new Date();
-  const m = now.getMonth() + 1; // 1–12
-  const d = now.getDate();
-  if (m === 1 && d <= 19) return 'Mörsugur (midwinter, Nýársdagur, Þrettándinn approaches Jan 6)';
-  if (m === 1 || m === 2) return 'Þorri (harshest winter, Þorrablót, endurance over defeat)';
-  if (m === 3 || (m === 4 && d < 23)) return 'Gói (light returning, spring stirring, first birdsong)';
-  if ((m === 4 && d >= 23) || m === 5) return 'Harpa (Sumardagurinn fyrsti, first day of summer, momentum building)';
-  if (m === 6) return 'Sólmánuður (midnight sun, summer solstice, veil thins, huldufólk most active)';
-  if (m === 7 || (m === 8 && d < 15)) return 'Heyannir (long light, hay season, puffins, peak of open sky)';
-  if ((m === 8 && d >= 15) || m === 9) return 'Haustmánuður (harvest, Réttir sheep roundup, return and gratitude)';
-  if (m === 10 || (m === 11 && d < 23)) return 'Gormánuður (darkness returning, first winter day Oct 23, aurora season begins)';
-  return 'Ýlir/Jól (approaching Jól, Jólasveinar arrive Dec 12–24, winter solstice, light from darkness)';
+  const e = BIRTH_MONTHS[icelandicMonthKey(now.getDate(), now.getMonth() + 1, now.getFullYear())];
+  return e ? e.name + ' (' + e.en + ')' : '';
 }
 
 function _getTimeOfDay() {
@@ -987,24 +981,69 @@ function _addressContext(lang) {
 // Called when Rune Walker/Rune Wanderer user requests their life rune reading.
 // IS prompt written directly in Icelandic for better language quality.
 
-// Birth-month lore (§18: one source; name + 1-12 keys shared, prose per language).
+// ─── STARÝ ISLANDSKÝ KALENDÁŘ (misseristal) — měsíc narození ─────────────────
+// 2026-09-12: do dneška se měsíc bral podle GREGORIÁNSKÉHO měsíce (červenec = Heyannir). Owner,
+// narozen 4. 7., dostal ve čtení životní runy „Heyannir"; Heyannir ale začíná nedělí 23.–30. 7.,
+// takže 4. 7. je Sólmánuður. Tabulka navíc neměla Einmánuður ani Tvímánuður, Haustmánuður měla
+// dvakrát, psala „Gói" (moderní tvar je Góa) a „Jól", které měsícem není. Ověřeno třemi
+// nezávislými rodinami zdrojů — RUNAR_DECISIONS.md 2026-09-12 (11).
+// Výpočet stojí na dvou kotvách, ne na pravidle o sumarauki (to se v pramenech popisuje různě):
+//   · Sumardagurinn fyrsti = první čtvrtek po 18. dubnu = 1. den hörpu (Almanak HÍ, Vísindavefur)
+//   · zima má 6 × 30 dní, takže Fyrsti vetrardagur = příští Sumardagurinn fyrsti − 180 dní
+// První půlka léta se počítá od léta, druhá zpět od zimy; co mezi nimi zbyde, jsou aukanætur.
+// Hlídá ㉦ (verify_icelandic_calendar.js): 1900–2100 každý měsíc začíná svým dnem v týdnu
+// a v okně podle pramenů.
+var _IS_ZIMA = ['gormanudur', 'ylir', 'morsugur', 'thorri', 'goa', 'einmanudur'];
+var _IS_LETO = ['harpa', 'skerpla', 'solmanudur'];
+function _summerStartDay(y) {
+  var t = Date.UTC(y, 3, 19) / 864e5;
+  // NaN by ve while hledal ctvrtek NAVZDY (doklad: mutace bez isFinite v key, 2026-09-12,
+  // dva visici node procesy). NaN se vrati a klic nahore skonci na sve pojistce.
+  if (!isFinite(t)) return NaN;
+  while (new Date(t * 864e5).getUTCDay() !== 4) t++;
+  return t;
+}
+function icelandicMonthKey(d, m, y) {
+  var t = Date.UTC(y, m - 1, d) / 864e5;
+  if (!isFinite(t)) return null;
+  var sy = (t >= _summerStartDay(y)) ? y : y - 1;
+  var S = _summerStartDay(sy), W = _summerStartDay(sy + 1) - 180;
+  if (t >= W) return _IS_ZIMA[Math.floor((t - W) / 30)];
+  if (t - S < 90) return _IS_LETO[Math.floor((t - S) / 30)];
+  var doZimy = W - t;
+  if (doZimy <= 30) return 'haustmanudur';
+  if (doZimy <= 60) return 'tvimanudur';
+  if (doZimy <= 90) return 'heyannir';
+  return 'aukanaetur';
+}
+
+// Popis měsíce (§18: jméno + klíč sdílené, próza per jazyk). Próza zůstala u měsíců, kterých se
+// oprava netýká. Nová je jen u Tvímánuður, Haustmánuður, Einmánuður a aukanætur a stojí na tom, co
+// uvádějí prameny: Tvímánuður = „zbývají dva měsíce léta" (Páll Vídalín přes Árnastofnun),
+// kornskurðarmánuður = jeho jméno ve Snorra-Eddě, aukanætur = noci „skotið inn á eftir þriðja
+// sumarmánuðinum" (Almanak HÍ). IS spojení ověřena korpusem (is-vazba --freq), 2026-09-12:
+// Ýlir — „himillinn" není slovo (BÍN zná jen himinninn), „kominn í fullnustu" korpus 0 → svartasta
+// skammdegið (225) · Þorri — „þol yfir ósigur" je kalk z EN, korpus 0 → þrautseigja · Sólmánuður —
+// „blær milli heimsins" nesedí gramaticky (milli chce dvě věci) → þunnt á milli heimanna (10 / 27) ·
+// Góa — „fyrsta fuglasöngurinn": söngur je rodu mužského, slabý tvar je fyrsti (BÍN).
 var BIRTH_MONTHS = {
-  1:  { name: 'Mörsugur',     is: 'miðvetur, þögn og bið, tíminn á milli gamla og nýja',           en: 'deep midwinter, silence and stillness between the old year and the new' },
-  2:  { name: 'Þorri',        is: 'harðasti veturinn, Þorrablót, þol yfir ósigur, eldar í myrkri',  en: 'the harshest month, Þorrablót, endurance over defeat, fires in the dark' },
-  3:  { name: 'Gói',          is: 'ljósið er að koma aftur, fyrsta fuglasöngurinn brýtur þögnina',  en: 'light beginning to return, the first birdsong breaking the silence of February' },
-  4:  { name: 'Harpa',        is: 'Sumardagurinn fyrsti, vorið opnar sig, orka er að safnast',      en: 'Sumardagurinn fyrsti, the first day of summer, spring opening' },
-  5:  { name: 'Skerpla',      is: 'sumar er komið, dagurinn er langur, náttúran er í fullum gangi', en: 'summer arrived, long days, the land in full motion' },
-  6:  { name: 'Sólmánuður',   is: 'miðnætursól, blær milli heimsins, huldufólk á ferð',             en: 'midnight sun, the veil thins, hidden people most active' },
-  7:  { name: 'Heyannir',     is: 'langur dagur, lundar, opinn himinn, uppskera er í gangi',        en: 'the long light, puffins, hay season, open sky' },
-  8:  { name: 'Haustmánuður', is: 'ljósið er að hverfa, uppskera, hlýtt og gult',                   en: 'light beginning to leave, harvest, warm and golden' },
-  9:  { name: 'Haustmánuður', is: 'Réttir, sauðféð kemur heim, hlýtt og þakklátt',               en: 'Réttir, the sheep roundup, return and gratitude, warm and golden' },
-  10: { name: 'Gormánuður',   is: 'myrkur er að koma aftur, fyrsti vetrardagurinn, norðurljós',     en: 'darkness returning, first winter day, aurora season begins' },
-  11: { name: 'Ýlir',         is: 'veturinn er kominn í fullnustu, norðurljós, himillinn talar',    en: 'winter in full darkness, aurora, the sky speaks' },
-  12: { name: 'Jól',          is: 'sólstöður, fræ ljóssins í myrkinu, Jólasveinar',                 en: 'winter solstice, the seed of returning light in the darkest night' }
+  harpa:        { name: 'Harpa',        is: 'Sumardagurinn fyrsti, vorið opnar sig, orka er að safnast',            en: 'Sumardagurinn fyrsti, the first day of summer, spring opening' },
+  skerpla:      { name: 'Skerpla',      is: 'sumar er komið, dagurinn er langur, náttúran er í fullum gangi',       en: 'summer arrived, long days, the land in full motion' },
+  solmanudur:   { name: 'Sólmánuður',   is: 'miðnætursól, þunnt á milli heimanna, huldufólk á ferð',               en: 'midnight sun, the veil thins, hidden people most active' },
+  aukanaetur:   { name: 'Aukanætur',    is: 'nætur sem skotið er inn á eftir þriðja sumarmánuðinum, á miðju sumri', en: 'the extra nights set in after the third summer month, at midsummer' },
+  heyannir:     { name: 'Heyannir',     is: 'langur dagur, lundar, opinn himinn, uppskera er í gangi',              en: 'the long light, puffins, hay season, open sky' },
+  tvimanudur:   { name: 'Tvímánuður',   is: 'tveir mánuðir eftir af sumri, kornskurðarmánuður að fornu',            en: 'two months of summer left, the grain-cutting month of old' },
+  haustmanudur: { name: 'Haustmánuður', is: 'ljósið er að hverfa, haustið gengur í garð',                           en: 'the light beginning to leave, autumn coming in' },
+  gormanudur:   { name: 'Gormánuður',   is: 'myrkur er að koma aftur, fyrsti vetrardagurinn, norðurljós',           en: 'darkness returning, first winter day, aurora season begins' },
+  ylir:         { name: 'Ýlir',         is: 'svartasta skammdegið, norðurljós, himinninn talar',                    en: 'winter in full darkness, aurora, the sky speaks' },
+  morsugur:     { name: 'Mörsugur',     is: 'miðvetur, þögn og bið, tíminn á milli gamla og nýja',                 en: 'deep midwinter, silence and stillness between the old year and the new' },
+  thorri:       { name: 'Þorri',        is: 'harðasti veturinn, Þorrablót, þrautseigja, eldar í myrkri',           en: 'the harshest month, Þorrablót, endurance over defeat, fires in the dark' },
+  goa:          { name: 'Góa',          is: 'ljósið er að koma aftur, fyrsti fuglasöngurinn brýtur þögnina',        en: 'light beginning to return, the first birdsong breaking the silence of February' },
+  einmanudur:   { name: 'Einmánuður',   is: 'síðasti mánuður vetrar, dagurinn orðinn lengri en nóttin',             en: 'the last month of winter, the day now longer than the night' },
 };
 
-function getBirthMonth(m, lang) {
-  var e = BIRTH_MONTHS[m];
+function getBirthMonth(d, m, y, lang) {
+  var e = BIRTH_MONTHS[icelandicMonthKey(d, m, y)];
   if (!e) return (lang === 'is') ? 'óþekktur mánuður' : 'unknown month';
   return e.name + ' — ' + ((lang === 'is') ? e.is : e.en);
 }
@@ -1024,7 +1063,10 @@ var RP_LIFE = {
     intro:function(name){ return 'Þetta er lestur lífsrúnar ' + name + ' — ekki lestur dagsins, heldur lestur þess sem ' + name + ' hefur borið í sér frá fæðingu.'; },
     sections:'Skrifaðu í tveimur hlutum — engar fyrirsagnir í úttakinu:',
     p1Label:'HLUTI 1 — DAGSETNINGIN (3 setningar):',
-    p1:function(monthName, name){ return 'Hvað ber ' + monthName + ' í íslensku ári? Hvaða gæði hafði þessi tími — hvað var að gerast í landinu þegar ' + name + ' kom til sögunnar? Ekki stjörnuspeki. Andrúmsloft.'; },
+    // 2026-09-12: bylo „Hvað ber ' + monthName + ' í íslensku ári?" — jméno měsíce jako podmět, takže
+    // u množného Heyannir / Aukanætur nesedělo sloveso („Hvað ber Heyannir"). Teď stojí v přísudku,
+    // kde se nic neshoduje. Malým písmenem, jak islandština měsíce píše (Vísindavefur, Almanak HÍ).
+    p1:function(monthName, name){ return 'Tíminn er ' + String(monthName).toLowerCase() + '. Hvað ber sá tími í íslensku ári? Hvaða gæði hafði hann — hvað var að gerast í landinu þegar ' + name + ' kom til sögunnar? Ekki stjörnuspeki. Andrúmsloft.'; },
     p2Label:'HLUTI 2 — RÚNIN (5–6 setningar):',
     p2:function(runeName, name){ return runeName + ' sem jarðvegur lífs ' + name + '. Lögun rúnarinnar og hvað hún ber í sér. Gjöfin — hvað kemur náttúrulega til manneskju sem fæðist undir þessari rúnu. Skugginn — hvar sama orkan verður erfið. Eitt samfellt flæði — ekki listi. Flettu inn nafninu ' + name + ' einu sinni eða tvisvar. Endaðu með einni mjúkri, opinni spurningu.'; },
     nameInstr:function(name){ return 'Bættu við hluta um nafnið ' + name + ' — merkingu þess á norrænu, goðsagnalega mynd eða persónu sem tengist nafninu.'; },
@@ -1057,7 +1099,7 @@ var RP_LIFE = {
 function buildLifeRuneBase(name, rune, day, month, year, lang, isPremium) {
   var L = (lang === 'is') ? 'is' : 'en';
   var S = RP_LIFE[L];
-  var monthDesc = getBirthMonth(month, L);
+  var monthDesc = getBirthMonth(day, month, year, L);
   // 2026-09-11 ODPOJENO z automatickeho ctení (KUKY). `S.nameInstr` zustava v packu pro
   // chystanou SAMOSTATNOU volbu „rozbor jmena" — text je hotovy a overeny, jen se nevola.
   // ⚠️ Neni to zapomenuty kod: az ta volba vznikne, vola se odtud. Duvod odpojeni je, ze
