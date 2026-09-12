@@ -244,7 +244,7 @@
 # RUNAR_SEGMENTACE_FaseB_CODE, RUNAR_IS_GRAMMAR_CHECK_CODE.
 
 ### 🔴 Blockery prodeje — OWNER (odloženo, trigger = **6. 9. 2026**, scheduled task `runar-launch-blockers-reminder`)
-- [ ] **Resend SMTP** — magic link z agndofa.is (Resend účet + DNS SPF/DKIM + Supabase Auth). Rozhodnout adresu (runar@agndofa.is?).
+- [ ] **Resend SMTP** — rozpracované od května, zaseklé na DNS. Aktuální stav a kroky → položka „Vyřešit doručení přihlášení" níž (testeři).
 - [x] **Supabase DPA** — ~~podepsat~~ **nic se nepodepisuje**, je součástí Terms of Service (owner ověřil v dashboardu 2026-09-12). Detail → `RUNAR_PRIVACY.md`.
 - [ ] **Publikovat privacy policy na agndofa.is** — OWNER krok mimo repo. (Wiring v appce je HOTOVY: `v2/runar-privacy.html` je vysazena produkcni stranka EN+IS a odkaz z appky vede. Overeno 2026-07-19.) Bez publikace neplati legitimate-interest model.
 - [ ] **Právní/DPO review** (Island/EEA) IS textů + legal-basis modelu. `RUNAR_PRIVACY.md` je pracovní podklad, ne posudek.
@@ -1440,11 +1440,29 @@ Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
       v sekci s právními dokumenty.
 - [ ] **Zásady soukromí živé na webu** — vlastní položku má tenhle doc už výš (sekce o GDPR);
       sem patří jen tím, že blokuje spuštění. Záměrně se tu NEOPISUJE (§20).
-- [ ] **Vyřešit doručení přihlášení.** Supabase → Authentication → Emails → SMTP. Vestavěný mailer
-      cizím adresám magic link často nedoručí. Buď dozapoj Resend pro agndofa.is, **nebo** testerům
-      v pozvánce rovnou napiš „přihlas se tlačítkem Google" (OAuth funguje hned a na pár lidí stačí).
-- [ ] **Limit v účtu ElevenLabs.** Měsíční strop 5 hlasů/tester přidává CODE do appky, ale **tvrdá
-      pojistka na účtu je jiná vrstva** — když appka selže, účet drží.
+- [ ] **Vyřešit doručení přihlášení.** ⚠️ **Je to BLOCKER pro e-mailové přihlášení, ne „často nedoručí".**
+      Ověřeno 2026-09-12 v dokumentaci Supabase: vestavěný mailer *„will refuse to deliver messages to
+      addresses that are not part of the project's team"* a posílá *„2 messages per hour"*. Tester, který
+      zadá e-mail, **magic link vůbec nedostane**. Přes Google (`signInWithOAuth`) to funguje hned.
+      **Kde to stojí (ověřeno v účtu Resend přes MCP):** účet existuje · doména `agndofa.is` přidaná
+      **2026-05-24**, region eu-west-1 · stav **`not_started`** — DNS se nikdy nepřidalo · jeden API klíč
+      „Onboarding" (hodnota se nedá zpětně přečíst, pro SMTP bude potřeba nový).
+      **Ověřeno v DNS:** ani jeden ze tří záznamů neexistuje. Doména jede přes **ISNIC DNS Hosting**
+      (`forwarding00/01.isnic.is`), takže se záznamy přidávají u ISNIC.
+      **Tři záznamy, které Resend chce** (hodnoty z `get-domain`, platí k 2026-09-12):
+        TXT `resend._domainkey` → `p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCropKfPPifB8+Ux31U0L/G80tFmel0qY13xwxnN6DUJaQXVR3STTQCx9dx0duhT/AxNkjnd4Y6V/eUXYNmmTKjPBAqu+5mYADk1UD8J8K0PsilCjl+ysvNH7ZiDet7kBJJ9hBclX36HIibhXxCPEqoC+2XvzcYeTiWXn15yrT+hwIDAQAB`
+        MX  `send` → `feedback-smtp.eu-west-1.amazonses.com` (priorita 10)
+        TXT `send` → `v=spf1 include:amazonses.com ~all`
+      **Pořadí:** owner přidá záznamy u ISNIC → CODE spustí ověření v Resend → CODE založí SMTP klíč
+      → owner ho vloží do Supabase (Authentication → Emails → SMTP: `smtp.resend.com`, port 465,
+      uživatel `resend`). Klíč vkládá owner, ne CODE — je to tajemství.
+      **Když to nestihneš před testery:** v pozvánce napiš „přihlas se tlačítkem Google" — funguje hned.
+- [ ] **Limit v účtu ElevenLabs.** Důvod ověřen 2026-09-12, není to formalita: `elevenlabs-proxy`
+      chce jen přihlášení a **tier nekontroluje** — hlas je v `TIER_LIMITS` záměrně otevřený všem
+      („aktuálně otevřeno; připraveno pro gating"). Strop 5 hlasů/měsíc (≤ 3 000 znaků) je tedy **na účet**,
+      ale **účtů může přes Google vzniknout libovolně**. Jediný tvrdý strop CELKOVÉ útraty je proto v účtu
+      ElevenLabs. **Co zkontrolovat:** jestli má plán zapnuté placení nad kvótu (usage-based billing /
+      overage). Když ano, vypnout nebo nastavit strop útraty. Když plán prostě skončí na kvótě, je hotovo.
 - [x] ~~**`WEBHOOK_SECRET`**~~ — NASTAVIL CODE 2026-09-11. Hlavicka i secret, v tomhle poradi
       (obracene by reporter na chvili odmital vlastni webhook). Zbyva jen smazat tu sondovou
       zpravu ve Slacku — na to Code nema nastroj.
@@ -1477,7 +1495,9 @@ Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
 
 - [ ] `user_profiles` má **dvě identické RLS policy** („Users manage own profile" a „own profile").
       Neškodí (permissive se sčítají), ale je to duplikát — jednu smazat.
-- [ ] V Slacku leží sondová zpráva z reporteru (11. 9.) — smazat.
+- [ ] V Slacku leží sondová zpráva z reporteru (11. 9.) — smazat. **Kosmetika, NE blocker pro testery**
+      (ověřeno 2026-09-12): obsah i identitu reporter do Slacku od 11. 9. neposílá, zpráva je jen „něco přišlo"
+      v interním kanálu. Code na mazání ve Slacku nástroj nemá.
 
 ---
 
