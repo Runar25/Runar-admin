@@ -852,6 +852,9 @@ kolik jich je — „V3" nebyla alternativa k „V4", šly postavit obě naráz.
 - (3a) přímo do textu čtení
 - (3b) **OTÁZKOU, stylem Ask nad hotovým obrazem** — KUKY: *„tam je Rúnar nejčistší
   a odpovídá na otázku"*; doloženo produkčními Ask výměnami
+- (3c) **otázku i SCÉNU píše UŽIVATEL sám** — vlastní cestu pro rameno (KUKY 2026-09-12, viz položka
+  „MOŽNOST: cestu pro rameno píše uživatel" níž). Slučuje (2c) a (3b): obraz dodá člověk, runa
+  vstupuje jeho otázkou.
 
 ⭐ **OWNEROVA SESTAVA — V3 = statický střed × dynamická ramena** (definice opravena 2026-09-12, KUKY):
 - **Statický střed = životní runa jako JEDNA CHŮZE ve VÍCE VARIANTÁCH** (zatím 6), losovaných
@@ -891,6 +894,42 @@ netlačí a nenechá se nést.*
 čtení ramene ≈ 90 slov (KUKY) · sklon zavírat útěchou (4/4 při 90 slovech, při 55 míň) ·
 vazba dorazí jen k runě s pohybem (Jera ✅ Gebo ✅ · Perth ❌ Isa ❌).
 
+
+- [x] **RÁMEC VEGVÍSIRU — potvrzeno ownerem 2026-09-12** (odpovědi na očíslovaný seznam; do té doby žil jen v chatu):
+  1. Vegvísir = **střed + 8 ramen**; není spread, vlastní režim, nic se nedědí. ✅
+  2. **Střed = životní runa**, netáhne se, kterákoli z **24** (Blank ne — ověřeno `calcLifeRune`: modulo 24). ✅
+  3. **Rameno = tažená runa**, jakákoli; pozice nemá vlastní význam (`RUNAR_DESIGN.md:750`, `:817`). ✅
+  4. Může životní runa padnout i jako rameno? → **TESTOVAT** (dosud: V2 nejmlhavější, NE-V3 zavírá, V3 prošla — nerozhodnuto).
+  5. Čas: rameno ne dřív než po 9 nocích; dva Asky ne dřív než po 3 a po 6 dnech. ✅
+  6. **Čtení ramene ≈ 90 slov** („tam, kde je velká ASK"); „vyčerpávající" a víc odstavců ZRUŠENO. ✅
+  7. Bez obrazů z banky — jediný vstup je ukotvení. ✅
+  8. Guardrail „výklad se nezavírá" — owner si nepamatoval, co dělá; vysvětleno: Rúnar nesmí skončit tím, co to pro člověka znamená nebo co má dělat.
+
+- [ ] **MOŽNOST: cestu pro rameno píše UŽIVATEL — do Asku, vlastními slovy** (KUKY 2026-09-12).
+  **Proč, z dat:** (a) cokoli napíšeme, co má Gebo reprezentovat, Rúnar v každém čtení převezme
+  a přepisuje — doloženo V3: Isa vrátila klíčové slovo varianty „pace" 2× („Your pace was never
+  yours to set alone" · „call the pace shared"). ⚠️ Moje měřidlo to minulo — hlídalo jen doslovný
+  běh ≥5 slov, ne vrácené klíčové slovo; druhé měřidlo (klíče v textu) na V3 nepuštěno. (b) vlastní
+  slova člověka ukotví čtení **+8,8 b.**, nabídnutá **+2,7 b.** (2026-08-16, komentář u `_askHints`).
+  ⇒ Když scénu napíše uživatel, Rúnar převezme zase nabídnutá slova — **ale jeho vlastní**. Vada se
+  otočí v přednost.
+  **Tvar (ownerův příklad):** uživatel vytáhne Isu a do Asku napíše *„Stojím na vrcholku hory. Jak je
+  ISA ve spojení s GEBO?"* · další rameno Perth: *„Dívám se do dálky na letícího ptáka. Jak je PERTH
+  ve spojení s GEBO?"* → Rúnar dá výklad tažené runy v té scéně, ve vztahu k životní runě.
+  **Ukázková čtení (CODE 2026-09-12, ~85 slov, NEsouzeno):**
+  - *Isa · vrcholek hory:* „At the top there is nowhere further up, and the climbing stops being
+    something you do. Isa is that halt. The wind has dropped; the snow on the summit fell long ago and
+    has not shifted since. Everything the ascent took out of your legs is up here with you, held in the
+    cold, and Gebo stands half-finished: the giving has gone one way, and the other half lies under the
+    snow, frozen exactly where it was given."
+  - *Perth · pták v dálce:* „The bird is too far off to name. You can follow the line it draws across
+    the sky, but not where that line began or where it will come down, and what it carries is a dark
+    point too small to make out. Perth is the part of the flight kept from you. Gebo is the flight
+    itself: something is being taken from one place to another, and you are watching the middle of the
+    handing-over, with both ends out of sight."
+  ⚠️ **Otevřené:** co když uživatel napíše scénu, která s runou nesedí (Isa × „běžím")? · nese se
+  něco z ramene 1 do ramene 2, když scény píše člověk nezávisle? · kolik lidí vůbec scénu napíše,
+  když prázdné pole nic nenabízí (proto existují tipy)?
 
 - [ ] **MOŽNOST: obraz životní runy jako střed Vegvísiru — a možná obráceně** (KUKY 2026-09-11: „zapiš to jako možnost, zkusíme a uvidíme"; *„hledáme teorie, je to na hovno bez praxe"*). NErozhodnuto, obě varianty otevřené:
   - **(a) Střed = obraz životní runy.** Zakládající obraz, do kterého vstupuje runa ramene.

@@ -3064,3 +3064,30 @@ jeho volba — v NE-V3 ale „crossing" nechtěl a stalo se to, protože ho dikt
 obraz nemá). Jen EN, jedna životní runa. Kolize Gebo×Gebo tentokrát prošla — dva dřívější signály
 proti ní tím nejsou vyvrácené, jen nepotvrzené.
 
+---
+
+## 2026-09-12 — V2 při 90 slovech (R1–R4): zavírá 4/4, a vazba nedorazí ke statické runě
+
+*(Zpětný zápis — běh proběhl téhož dne, výsledek zůstal jen v chatu.)*
+**Co se testovalo:** V2 = obraz vlastní runa ramene, životní runa Gebo vstupuje jako vztah
+(`Gebo — exchange ↔ response`), bez obrazu z banky, **~90 slov** (poprvé po rozhodnutí o délce).
+Ramena Jera · Perth · Isa · Gebo(kolize). Mechanicky + slepý soudce.
+- **Mechanicky:** opsaná fráze 0 · klíče ukotvení 0/3 (u Gebo jen jméno runy) → formát při 90 slovech drží.
+- **Soudce: ZAVÍRÁ 4/4**, pokaždé útěchou nebo pokynem: „nothing you did has been wasted" · „you pass
+  it the way you pass a closed door" · „is not lost… and neither are you" · „That is not a failure of the
+  walking". **Týž reflex jako v4.13/14 dosednutí.** Při 55 slovech (F1–F5) se to nedělo v téhle míře →
+  **délka podezřelá podruhé v jednom dni** (poprvé: delší text = víc obrazů).
+- **Vazba dorazila jen k runám s pohybem:** Jera ✅ · Gebo ✅ · **Perth ❌ · Isa ❌** („symmetry of
+  non-action" — nic nepřechází). ⇒ Později vyřešeno ve V3 (přerušená rovnováha).
+- **Kolize Gebo×Gebo nejmlhavější:** „four indefinites deep, never once names what passes".
+⚠️ Hranice: n=4, psal CODE, jen EN.
+
+## 2026-09-12 — Slepý test obrazů „čte se jako jiná runa" je pro produkci NERELEVANTNÍ
+
+KUKY 2026-09-12: *„to je mi celkem jedno, jelikož je ta runa zmíněná, takže to, že ji soudce přečetl jinak,
+je nerelevantní."* Řádek `image` v Rejstříku uvádí „7 obrazů jednomyslně ukazuje na JINOU runu"
+(Wunjo, Hagalaz, Algiz, Sowilo, Berkana, Mannaz). **Ten test se ptal „která runa je na obraze?" —
+jenže v produkci je jméno runy na obrazovce**, čtenář ho nehádá. ⇒ **Nepoužívat ten seznam jako
+seznam „problémových run".** Problémové jsou jen vady VÝSTUPU: Jera (tah ke klíči „harvest", v EN
+neopraveno) · Perth (prázdný aspekt „hidden things" → „thing") · Eihwaz (1 aspekt na 2 obrazech).
+
