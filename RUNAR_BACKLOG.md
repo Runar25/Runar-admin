@@ -833,6 +833,33 @@ Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je 
 
 ## Vegvísir (Cowork návrh 2026-08-15 · konsolidace 2026-08-22 · AKTIVNÍ TÉMA)
 
+### ⭐ VARIANTY STAVBY — jediný seznam (vznikl 2026-09-12, KUKY: „kolik variant máš zapsaných?")
+
+**Proč tenhle blok existuje:** varianty byly rozsypané po položkách, jejichž nadpis je o něčem
+jiném (příprava testu, shrnutí od GPT, tvrdý limit), a nejnovější nebyla zapsaná vůbec. Nálezy
+se zapisovaly poctivě, **rozhodovací prostor ne**. Kdo přidá novou variantu, přidá ji SEM.
+
+| # | varianta | čím se liší | změřeno | stav |
+|---|---|---|---|---|
+| **V1** | **střed = obraz životní runy**, runa ramene do něj vstupuje | obraz vlastní ŽIVOTNÍ runa | ❌ netestováno | otevřená — tohle si owner představoval |
+| **V2** | **střed = runa ramene**, životní runa vstupuje jako vztah | obraz vlastní RUNA RAMENE | ✅ 2026-09-12 (F1–F5, R1–R4) | otevřená |
+| **V3** | statický střed × dynamická ramena (GPT) | rozvedená V1 + Ask jako vrstva porozumění | ❌ | směr, neratifikováno |
+| **V4** | **bez obrazů z banky — jen ukotvení na osu** | vstup = runa + její osa cesty | ✅ 2026-09-12 | drží; owner ji chce |
+| **V5** | s produkčními obrazy z `RUNE_IMAGES` | vstup = runa + hotový obraz | ✅ produkce | dnešní stav appky |
+| **V6** | **uživatel si poskládá svět z osmi scén** (loď, ostrov, vítr…) | obraz volí ČLOVĚK, runa říká, co se v něm děje | ❌ | nové 2026-09-12 |
+| **V7** | životní runa jen v **Asku**, ne ve čtení ramene | střed se objeví na dotaz, ne sám | ❌ | návrh CODE-read |
+
+**Co na variantě NEZÁVISÍ** (změřeno 2026-09-12, neplést dokola):
+- **formát ukotvení** = jedna vazba (`Gebo — exchange ↔ response`). Ne věta o runě (opíše se,
+  10 slov), ne seznam (nechá si to pojmenovat, 4/5 klíčů), ne holý pokyn (nedodá nic).
+- **délka čtení ramene ≈ 90 slov** (owner 2026-09-12).
+- **guardrail selhává i tak** — 4/4 čtení skončila útěchou („nothing you did has been wasted",
+  „is not lost", „is not a failure"). S obrazy to nesouvisí; s délkou možná ano (při 55 slovech
+  se to dělo míň).
+- **vazba dorazí jen k runě, která má pohyb** — Jera ✅ Gebo ✅ · Perth ❌ Isa ❌ („symmetry of
+  non-action"). Statická runa nemá s čím vyměňovat.
+
+
 - [ ] **MOŽNOST: obraz životní runy jako střed Vegvísiru — a možná obráceně** (KUKY 2026-09-11: „zapiš to jako možnost, zkusíme a uvidíme"; *„hledáme teorie, je to na hovno bez praxe"*). NErozhodnuto, obě varianty otevřené:
   - **(a) Střed = obraz životní runy.** Zakládající obraz, do kterého vstupuje runa ramene.
   - **(b) OTOČENĚ: střed = runa ramene**, do které vstupuje životní runa. Owner 2026-09-11: *„je možné, že to nakonec otočíme."* Rozhodne zkouška, ne úvaha.
