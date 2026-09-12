@@ -949,10 +949,18 @@ Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je 
   Uruz `frumkraftur` × `hráur kraftur` · Ansuz `andardráttur` (2×) × `rödd` · Nauthiz `þörf` (2×) × `nauðsyn` · Jera `umbun` × `uppskera` · Mannaz `hugur` × `sjálfið, mannleg vitund`.
   ⚠️ **Není to chyba tvaru** (ty dvě, co jimi byly, jsou opravené: `innri ljós` → `innra ljós` v obraze i v klíči) — jsou to synonyma, a vybrat z nich je obsahové rozhodnutí. Do té doby to drží smoke ㉤ se stropem 7: osmý rozchod = červená.
 
-- [ ] **NÁVRH CODE-read: vyčerpávající má být RAMENO, ne čtení** (2026-09-11, k posouzení ownerem).
-  Rameno nejsou jeden text, ale **tři** — čtení + dva Asky. Měřeno téhož dne: **delší text = víc obrazů** (63–80 slov → 2 obrazy · 161 → 2 · **204 → 3**, přibyl druhý motiv), a jediný text s **jedním** obrazem byl ten nejkratší (69 slov) — ten ale jako jediný **zavřel výklad**. Čtení, která owner označil za krásná, mají 75–80 slov.
-  ⇒ Čtení ramene krátké a obrazové; **hloubka v tom, co následuje na doptání**. Obě vrstvy už fungují, nestaví se nic nového.
-  **Souvisí:** životní runa by pak nemusela být čočkou každého ramene, ale vstupovala by **až v Asku, když se na ni člověk zeptá** — řeší to jednotvárnost (Gebo jako závěrečná čočka dělá dávání/výměnu v ~7 ze 13 čtení, přes osm ramen osmkrát táž nota) i ten druhý obraz v textu. ⚠️ Owner si k tomu zároveň hraje s opačnou myšlenkou: aby životní runa přišla přes Ask **automaticky** po vytvoření čtení ramene — pak je otevřené, na co by se člověk ptal dál.
+- [x] **ROZHODNUTO 2026-09-12: čtení ramene ≈ 90 slov. „Vyčerpávající" ZRUŠENO jako zadání.**
+  KUKY 2026-09-12: *„asi se pohybujeme tam, kde je velká ASK, protože to sedí — což je 90 slov. Ta
+  omáčka kolem, co tam máš napsanou, asi není potřeba."*
+  ⚠️ **Proč se ruší to slovo:** „vyčerpávající" jsem převzal z konverzace a nosil ho v docích
+  jako spec, přestože neumím říct, co znamená — nedá se podle něj nic změřit ani vyrobit.
+  KUKY: *„vyčerpávající je fráze. Jsi schopný popsat, co znamená? Asi ne — takže se máš spíš
+  zeptat na tvrdá data, čísla."* Padá s tím i „víc odstavců" a můj návrh „vyčerpávající = rameno
+  jako celek": při 90 slovech se ta otázka nepokládá.
+  ✅ Ověřeno 2026-09-12, že 90 slov formát ukotvení nerozbije: čtyři ramena (Jera · Perth · Isa ·
+  Gebo-kolize) na 86–94 slovech, opsaná fráze 0, vysypané klíče 0/3.
+
+
 
 - [ ] **SMĚR: statický střed × dynamická ramena** (GPT přes ownera 2026-09-11 — ZAZNAMENÁNO jako směr, NErozhodnuto; Vegvísir se bude měnit až do produkce, a odkloníme-li se, tenhle záznam zůstává).
   **STATIC:** životní runa + její počáteční obraz + základní kontext. Není to první odpověď Vegvísiru — je to **počáteční orientace mapy**.
