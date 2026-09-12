@@ -2981,3 +2981,41 @@ Kdo tím kritériem bude měřit, musí je oddělit; jinak trestá právě ten t
 ⚠️ **Hranice:** jeden případ, jeden soudce, a rozhodl ho owner okem. Netvrdí se, že soudce chyboval
 jinde — jeho ostatních pět verdiktů (a rozlišení B4 vs B5 na podmětu věty) drží.
 
+---
+
+## 2026-09-12 — V3 (ownerova sestava) poprvé změřena: 3/4 nechává otevřeno tam, kde V2 zavírala 4/4
+
+**Co se testovalo — POPRVÉ správná sestava** (předtím omylem obráceně, viz tabulka variant
+v BACKLOGu): **(1a)+(3b)** — statický střed = ownerovo SKUTEČNÉ čtení životní runy
+(`user_profiles.life_rune_text`, Kuky/Gebo, 1699 zn.), tažená runa do něj vstupuje OTÁZKOU
+stylem Ask („I have drawn Isa. How does it come into this?"). Prompt = produkční
+`buildAskPrompt` (8 argumentů, `life=null` — základ JE čtení životní runy). 4 ramena:
+Isa · Jera · Perth · Gebo (kolize). ~81–85 slov. Texty psal CODE v konverzaci, soudce slepý.
+
+| rameno | drží svět základu | přidává nový stav | cituje | zavírá |
+|---|---|---|---|---|
+| Isa | ✅ | ✅ (mrznutí) | přepisuje | otevřeno |
+| Jera | ✅ | ✅ (pant se otáčí) | ⚠️ **LIFTS 8 slov** | otevřeno |
+| Perth | ✅ | ✅ (zásilka na cestě) | přepisuje | otevřeno |
+| Gebo×Gebo | ✅ | ✅ (zdvojení dlaní) | přepisuje | ⚠️ **ZAVÍRÁ** |
+
+⭐ **Hlavní nález — architektura mění zavírání:** V2 (obraz vlastní rameno) zavírala **4/4**
+útěchou; V3 nechává otevřeno **3/4**. Týž pisatel, týž den, táž délka, táž snaha nezavřít.
+Rozdíl: **konec má kam jít — zpátky do obrazu základu** („for as long as the cold lasts")
+— místo aby si vyráběl dosednutí („nothing you did has been wasted"). Sklon k útěše, na
+který dnes padlo v4.13/14 dosednutí i moje V2 texty, tu mizí stavbou, ne pravidlem.
+
+**Vedlejší nálezy:**
+- **4/4 SAME-WORLD, 4/4 ADDS** — základ dodává materiál, který ve V2 musely suplovat osy;
+  žádné nové kulisy, žádné přežvykování (soudce u každého našel nový stav).
+- ⚠️ **Jera citovala 8 slov v řadě** („the way a banked fire keeps its heat") — nesení vs.
+  citace je tenká čára; mechanické měřidlo a slepý soudce našly TENTÝŽ běh nezávisle.
+- ⚠️ **Kolize životní=ramenní podruhé selhala jinak:** ve V2 nejmlhavější (4 neurčitá slova),
+  ve V3 jediná ZAVÍRÁ („tips toward receiving"). Dva signály proti životní runě jako rameni.
+- 🔧 **Pro CODE-tune:** V3 běží na Ask cestě, ale `RP_ASK.rules` říká *„do not draw new
+  runes"* — a vegvísirová otázka runu přináší. Vegvísir varianta Ask pravidel = ta jedna věta.
+
+⚠️ **Hranice:** n=4, jeden pisatel (CODE), jedna životní runa, jen EN. Kontrast V2×V3 v zavírání
+je ale ze STEJNÉHO pisatele se stejnou snahou — ve V2 jsem se zavření snažil vyhnout a 4/4
+selhal; ve V3 bez zvláštní snahy 3/4 prošlo. Netvrdí se nic o modelu — to řekne až ostrý běh.
+

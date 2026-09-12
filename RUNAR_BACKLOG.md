@@ -855,8 +855,7 @@ kolik jich je — „V3" nebyla alternativa k „V4", šly postavit obě naráz.
 
 ⭐ **OWNEROVA SESTAVA = (1a) + (3b).** Statický střed = hotové čtení životní runy
 (`user_profiles.life_rune_text`); tažená runa do něj vstupuje otázkou jako v Ask.
-= dřívější „SMĚR: statický střed × dynamická ramena". **Tohle se testuje TEĎ** — otázka 2
-je u ní druhotná, základový obraz už existuje.
+= dřívější „SMĚR: statický střed × dynamická ramena". **Změřeno 2026-09-12 (první běh, n=4): 3/4 nechává otevřeno, 4/4 drží svět základu — detail → `RUNAR_EVAL_LOG.md` 2026-09-12.** Otázka 2 je u ní druhotná, základový obraz už existuje.
 
 **Co na volbě NEZÁVISÍ** (změřeno 2026-09-12, netestovat dokola): formát ukotvení = jedna vazba
 (věta o runě se opíše 10 slov · seznam vysype 4/5 klíčů · holý pokyn nedodá nic) · délka
