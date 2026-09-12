@@ -257,6 +257,10 @@ for (const L of ['en', 'is']) {
     const magnus = stavNL({ severske: 'Magnús', L });
     rekni(magnus.cta === 'none' && magnus.obsah === T.name_no_norse_from.replace('{origin}', L === 'is' ? 'latínu' : 'Latin'),
           L + '  neseverské jméno → věta s původem hned');
+    // KUKY 2026-09-12 (screenshot „THÓR · Rúnar knows this name, but has not traced its roots"): „není tam Thor!"
+    const thor = stavNL({ severske: 'Thor', L });
+    rekni(thor.cta === '' && thor.btn === T.name_lore_btn && thor.obsah === '',
+          L + '  „Thor" → nabídne ROZBOR (Þór je v seznamu), ne „znám, kořeny nedohledal"');
     const einar = stavNL({ severske: 'Einar', L });
     rekni(einar.cta === 'none' && einar.obsah === T.name_known_untraced, L + '  jméno z rejstříku → „znám, kořeny nedohledal"');
 
@@ -293,9 +297,30 @@ for (const L of ['en', 'is']) {
         '„Magnús" je NEseverský — časté na Islandu ≠ severské kořeny');
   rekni(najdi('Kuky') === null, 'neznámé jméno se nenajde (a nic se nedomýšlí)');
 
-  // ⚠️ Diakritika se NEODSTRANUJE: „Thora" není „Þóra". Slučovat je by bylo to samé domýšlení,
-  // kvůli kterému seznam vznikl.
-  rekni(najdi('Thora') === null, 'jméno bez háčků se NESLUČUJE s diakritickou podobou');
+  // 2026-09-12: Thor → Þór. Owner zadal „Thor" a dostal „znám, kořeny nedohledal": „není tam Thor! jak to?"
+  // Kanonické jméno se skládá (diakritika, þ/ð); kořen dál dodává seznam. Do té doby tu test hlídal opak.
+  const jm = (j) => { const z = najdi(j); return z ? z.name : null; };
+  rekni(jm('Thor') === 'Þór' && jm('THÓR') === 'Þór' && jm('thór') === 'Þór', '„Thor" / „THÓR" / „thór" vede na Þór');
+  rekni(jm('Thora') === 'Þóra', '„Thora" vede na Þóra');
+  rekni(jm('Sigrun') === 'Sigrún' && jm('Gudrun') === 'Guðrún' && jm('Bjorn') === 'Björn', 'jméno bez háčků vede na islandskou podobu');
+  // Přezdívky se NESKLÁDAJÍ: „Dora" je řecké jméno, ne „Dóra" od Halldóry.
+  rekni(jm('Dóra') === 'Halldóra' && jm('Dora') === null, 'přezdívka jen PŘESNĚ („Dóra" ano, „Dora" ne)');
+  // Přezdívka dvou jmen nesmí vybrat podle pořadí v poli.
+  rekni(jm('Keli') === null && jm('Ragga') === null && jm('Gugga') === null, 'přezdívka dvou jmen (Keli, Ragga, Gugga) nevrací nic');
+  rekni(jm('Steini') === 'Þorsteinn', '…jednoznačná přezdívka dál funguje (Steini → Þorsteinn)');
+  // Skládání odmítá, když by vedlo na dva záznamy — a v datech takový pár být nemá, jinak by jméno tiše zmizelo.
+  {
+    const fold = (s) => vm.runInContext('_nameFold(' + JSON.stringify(s) + ')', S);
+    const kl = {};
+    L.forEach((z) => { (kl[fold(z.name)] = kl[fold(z.name)] || []).push(z.name); });
+    const dvoji = Object.keys(kl).filter((k) => kl[k].length > 1);
+    rekni(!dvoji.length, 'žádná dvě kanonická jména se po složení nekryjí' + (dvoji.length ? ' — KOLIZE: ' + dvoji.map((k) => kl[k].join('/')).join(', ') : ''));
+    // S dnešními daty kolize není, takže pojistka v kódu by bez tohohle nikdy neběžela (mutace
+    // „vezmi první" 2026-09-12 prošla zeleně). Podstrčený druhý záznam se složeným „thor" ji procvičí.
+    vm.runInContext('NORSE_NAMES.push({ name: "Þor", g: "m", norse: true, nick: [] })', S);
+    rekni(jm('Thor') === null && jm('Þór') === 'Þór', 'složený tvar dvou jmen nevrací nic; přesné jméno dál vyhrává');
+    vm.runInContext('NORSE_NAMES.pop()', S);
+  }
 
   // Rejstřík = odpověď na „je to vůbec islandské jméno?". Nenese etymologii, takže se z něj
   // NIKDY nesmí stát zdroj pro `norse` — tady se hlídá jen to, že je načtený a že dělí správně.
@@ -306,6 +331,11 @@ for (const L of ['en', 'is']) {
     rekni(set.size > 4000, '…a má tisíce jmen (' + set.size + ')');
     ['einar', 'dagur', 'bjarni', 'þórður'].forEach((n) => rekni(set.has(n), '…zná „' + n + '"'));
     rekni(!set.has('kuky') && !set.has('zdeněk'), '…a neislandská jména v něm nejsou');
+    // Rejstřík se ptá i složeně: „Gudny" bez háčků je Guðný. Předpoklad testu hlídá, že „gudny"
+    // v rejstříku přímo NENÍ — jinak by test prošel i bez skládání.
+    const reg = (j) => vm.runInContext('_inRegistry(' + JSON.stringify(j) + ')', S);
+    rekni(set.has('guðný') && !set.has('gudny') && reg('Gudny'), 'rejstřík pozná jméno i bez háčků („Gudny" → Guðný)');
+    rekni(!reg('Kuky'), '…a neznámé jméno dál nezná');
   }
 
   // Kdo přidá neseverské jméno bez `origin_is`, propašuje do islandské věty angličtinu.

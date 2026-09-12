@@ -5774,3 +5774,34 @@ dvou jmen — jen `name`, `norse_name`, `address_pref`, `name_lore_*`; úroveň,
 beze změny. Předtím v něm stálo jméno „Zdenek", severské žádné, rozbor nikdy.
 
 **Affected doc(s):** žádný.
+
+## 2026-09-12 (10) — Hledání jména skládá diakritiku a þ/ð: „Thor" najde Þór. Mění 2026-09-11 (9).
+
+**Proč:** owner zadal severské jméno „Thor" a sekce napsala *„Rúnar knows this name, but has not
+traced its roots"*, přestože Þór v našem seznamu je: *„není tam Thor! jak to?"* Hledání bralo jen
+přesnou shodu. „Thor" se na „Þór" nechytilo, spadlo do rejstříku (ten vede Thor i Þór jako dvě
+schválené položky) a skončilo větou „kořeny nedohledal".
+
+**Co se vrací a proč to odešlo (§26):** záznam 2026-09-11 (9) říkal *„Diakritika se NEODSTRAŇUJE.
+‚Thora' není ‚Þóra'."* Tu větu **nerozhodl owner** (ten rozhodl „seznam rozhoduje, ne model"), přidal
+ji CODE s obavou, že slučování je domýšlení původu. Vada úvahy: míchala úřední rejstřík (dvě položky)
+s etymologií (jeden kořen). Tor/Thor je *„Younger form of Þórr"* (nordicnames.de/wiki/Tor).
+
+**Očištěná podoba (co zůstává z původní obavy):**
+1. Kořen dál dodává **seznam**, ne model. Skládání jen najde, který záznam to je.
+2. Skládá se jen **kanonické jméno** a jen když vede na **jediný** záznam. Kolize v datech hlídá test.
+3. **Přezdívky se neskládají.** „Dora" je řecké jméno, ne „Dóra" od Halldóry.
+4. **Přezdívka dvou jmen nevrací nic** (Keli = Þorkell i Ketill, Ragga, Gugga). Do teď vracela první
+   v poli, tedy kořen podle pořadí řádků. Nalezeno cestou, stejná třída chyby (§23).
+5. Rejstřík se ptá i složeně („Gudny" → Guðný), aby jméno bez háčků nepadlo do „neznámé".
+
+**Hranice nálezu:** z 123 jmen se složením mění 78. Spletitelná s jiným, cizím jménem jsou podle
+posouzení dvě: Rán ↔ „Ran", Sól ↔ „Sol". Protože jde o kolonku *severské* jméno, bere se to jako
+záměr. Netvrdí se, že skládání je správné pro jména mimo náš seznam — tam dál rozhoduje jen rejstřík.
+
+**Čím je to jištěné:** ㉣ — Thor/THÓR/thór → Þór, Thora → Þóra, Sigrun/Gudrun/Bjorn, Dóra ano / Dora ne,
+Keli/Ragga/Gugga nic, Steini → Þorsteinn, žádná kolize kanonických jmen, podstrčená kolize nevrací nic,
+Gudny v rejstříku, sekce s „Thor" nabídne rozbor. Mutace 6/6 zachycené (M5 až po podstrčené kolizi —
+s dnešními daty by pojistka v kódu nikdy neběžela).
+
+**Affected doc(s):** žádný — chování vlastní kód a tenhle záznam.

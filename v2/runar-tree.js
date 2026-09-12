@@ -685,35 +685,52 @@ function onNameLoreBtn() {
 }
 
 // Vyhledani v seznamu: kanonicke jmeno NEBO prezdivka, bez ohledu na velikost pismen.
-// ⚠️ Diakritika se NEODSTRANUJE: „Þóra" a „Thora" jsou ruzna jmena a slucovat je by byl
-// presne ten druh domysleni, kvuli kteremu seznam vznikl. Kdo napise jmeno bez hacku,
-// dostane „koreny nevidim" — to je pravdive, protoze my to jmeno opravdu nemame.
+// Diakritika a þ/ð: viz `_nameFold` nize (od 2026-09-12 se u kanonickeho jmena skladaji).
 // Je to VUBEC islandske jmeno? Rejstrik (Mannanafnaskra) nese jen jmena, zadnou etymologii,
 // takze `norse` z nej NEPLYNE — rozhoduje jedinou vec: znamе ho Island, nebo ne.
 // Set se staví az pri prvni otazce; retezec je v souboru schvalne jako retezec (37 kB proti
 // 47 kB v poli), at se pri nacteni stranky nic neparsuje.
-var _regSet = null;
+// Porovnavaci tvar jmena: male pismena, bez diakritiky, þ → th, ð → d, æ → ae.
+// 2026-09-12: Thor → Þór. Do vecera 2026-09-12 tu stalo, ze „Thora" neni „Þóra" a slucovat je
+// je domysleni. Owner zadal severske jmeno „Thor" a dostal „znam, koreny nedohledal", prestoze
+// Þór v seznamu je: „neni tam Thor! jak to?" Ta uvaha michala dve veci: rejstrik vede Thor a Þór
+// jako dve polozky (uredne), ale koren je jeden — Tor/Thor je „Younger form of Þórr"
+// (nordicnames.de/wiki/Tor). Koren dal dodava SEZNAM, ne model; skladani jen najde, ktery zaznam.
+// Hranice: sklada se jen KANONICKE jmeno a jen kdyz vede na JEDINY zaznam. Prezdivky ne —
+// „Dora" (recke jmeno) neni „Dóra" od Halldóry.
+function _nameFold(s) {
+  return String(s || '').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/þ/g, 'th').replace(/ð/g, 'd').replace(/æ/g, 'ae');
+}
+var _regSet = null, _regFold = null;
 function _inRegistry(jmeno) {
   if (typeof IS_NAME_REGISTRY === 'undefined') return false;
-  if (!_regSet) _regSet = new Set(IS_NAME_REGISTRY.split(' '));
+  if (!_regSet) {
+    _regSet = new Set(IS_NAME_REGISTRY.split(' '));
+    _regFold = new Set();
+    _regSet.forEach(function (n) { _regFold.add(_nameFold(n)); });
+  }
   var q = String(jmeno || '').trim().toLowerCase();
-  return !!q && _regSet.has(q);
+  return !!q && (_regSet.has(q) || _regFold.has(_nameFold(q)));
 }
 function _nameLookup(jmeno) {
   if (!jmeno || typeof NORSE_NAMES === 'undefined') return null;
   var q = String(jmeno).trim().toLowerCase();
   if (!q) return null;
+  // Poradi: presne kanonicke jmeno → presna prezdivka → slozene kanonicke jmeno.
+  var f = _nameFold(q), prezd = [], slozene = [];
   for (var i = 0; i < NORSE_NAMES.length; i++) {
     var z = NORSE_NAMES[i];
     if (z.name.toLowerCase() === q) return z;
-  }
-  for (var j = 0; j < NORSE_NAMES.length; j++) {
-    var y = NORSE_NAMES[j];
-    for (var k = 0; k < (y.nick || []).length; k++) {
-      if (String(y.nick[k]).toLowerCase() === q) return y;
+    for (var k = 0; k < (z.nick || []).length; k++) {
+      if (String(z.nick[k]).toLowerCase() === q) { prezd.push(z); break; }
     }
+    if (_nameFold(z.name) === f) slozene.push(z);
   }
-  return null;
+  // Prezdivka dvou jmen (Keli = Þorkell i Ketill, Ragga, Gugga) nevraci NIC. Do 2026-09-12
+  // vracela prvni v poli — tedy koren podle poradi radku, ne podle jmena (§23).
+  if (prezd.length) return prezd.length === 1 ? prezd[0] : null;
+  return slozene.length === 1 ? slozene[0] : null;
 }
 async function generateNameLore() {
   if (!currentUser) return;
