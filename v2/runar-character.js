@@ -485,7 +485,7 @@ var RUNE_IMAGES = [
   // zemetresny kandidat na tyz klic propadl 0/3 (cetl se jako Hagalaz, ktery ma
   // `nature force` a s Uruzem sdili klic `transformation`).
   ['Uruz','any','Nautið snýr sér við í stíunni og öll girðingin hreyfist með.','The bull turns in the pen and the whole fence moves with him.','frumkraftur','primal force','P'],
-  ['Uruz','any','Hraunið man eldinn enn, þótt mosinn hafi lagst yfir.','The lava still remembers the fire, though the moss has settled over it.','umbreyting','transformation','E'],
+  ['Uruz','any','Hraunið man eldinn enn, þótt mosinn hafi lagst yfir.','The lava still remembers the fire, though the moss has settled over it.','frumkraftur','primal force','E'],
   ['Thurisaz','any','Sprungan í hrauninu bíður — þú kemst ekki yfir nema stökkva.','The crack in the lava waits — you cannot cross it without a jump.','þröskuldur','threshold','E'],
   ['Ansuz','bright','Andvarinn ber lóukvakið yfir móann til þín.','The breeze carries the plover\'s call across the moor to you.','skilaboð','messages','P'],
   ['Ansuz','any','Hrafninn sest á staurinn og bíður þess að þú hlustir.','The raven settles on the fencepost and waits for you to listen.','rödd','messages','P'],
@@ -531,7 +531,7 @@ var RUNE_IMAGES = [
   ['Isa','cold','Lognkafaldið fellur beint niður og hylur allt hljóðlaust.','The windless snowfall comes straight down and covers everything without a sound.','kyrrstaða','stillness','E'],
   ['Isa','cold','Tjörnin er lögð hjarni og bíður án þess að biðja um neitt.','The pond has iced over and waits without asking for anything.','að bíða','waiting','E'],
   ['Isa','any','Kaffibollinn kólnar á borðinu meðan þú bíður.','The cup of coffee goes cold on the table while you wait.','að bíða','waiting','D'],
-  ['Jera','bright','Túnið bíður eftir að þorna áður en það er slegið.','The hayfield waits to dry before it is cut.','rétt tímasetning','patience','P'],
+  ['Jera','bright','Heyið þornar örlítið meir hverja stund sem sólin helst, og að kvöldi er það tilbúið að snúa.','The hay dries a shade more each hour the sun holds, and by evening it is ready to turn.','þolinmæði','patience','P'],
   ['Jera','any','Sólarhringurinn lengist hægt fram á vorið.','The day lengthens slowly toward spring.','þolinmæði','patience','E'],
   ['Jera','any','Deigið þarf sinn tíma; þú getur ekki flýtt fyrir því.','The dough needs its time; you cannot hurry it.','þolinmæði','patience','D'],
   // 2026-09-10 (davka 1, Cowork): Jera mel dosazitelnou JEDINOU stranku sveho
@@ -544,8 +544,8 @@ var RUNE_IMAGES = [
   ['Jera','any','Rjúpan verður hvít fyrir snjóinn og brún aftur fyrir lyngið, eftir klukku eldri en allt tal.','The ptarmigan turns white for the snow and brown again for the heath, on a clock older than counting.','hringur','cycle','E'],
   ['Jera','bright','Þú snýrð heyinu þennan eina þurra eftirmiðdag sem öll vikan leyfir, og það nægir.','You turn the hay the one dry afternoon the whole week allows, and it is enough.','rétt tímasetning','right timing','P','hay'],
   ['Jera','any','Þú sest niður í lok vertíðar og í þetta sinn kallar ekkert á þig að standa upp aftur.','You sit down at the end of the season and this time nothing is calling you to get up again.','umbun','reward','D'],
-  ['Eihwaz','any','Reyniviðurinn stendur einn við bæinn og bognar aldrei alveg.','The rowan stands alone by the farmhouse and never bends all the way.','seigla','resilience','P'],
-  ['Eihwaz','any','Rótin heldur í urðina þegar allt annað skríður niður.','The root holds the scree together when everything else slides down.','seigla','resilience','P'],
+  ['Eihwaz','any','Reyniviðurinn við bæinn leggst flatur í hviðunni og réttir sig um leið og hana lægir.','The rowan by the farmhouse bends flat in the gust and rights itself the moment it drops.','seigla','resilience','P'],
+  ['Eihwaz','any','Þegar skriðan fer af stað tekur rótin álagið og jörðin fyrir ofan hana fer hvergi.','When the scree starts to slide the root takes the strain and the ground above it goes nowhere.','seigla','resilience','P'],
   ['Perth','any','Áin veltir steinvölunni þar til hún stöðvast — þú sérð ekki hvar.','The river rolls the pebble until it stops — you cannot see where.','örlög í mótun','fate in the making','E'],
   ['Perth','any','Andartak glittir í eitthvað á botni lónsins áður en gruggið hylur það aftur.','The lagoon water clears for a moment and something below stirs, then closes over again.','hið hulda sem kemur í ljós','the hidden coming to light','E'],
   ['Perth','any','Í lágri sól koma fótsporin í ljós yfir túnið, andartak, áður en birtan breytist og þau hverfa.','In the low sun a whole trail of footprints comes to light across the field, for a moment, before the light shifts and they are gone.','hið hulda sem kemur í ljós','the hidden coming to light','E'],
@@ -568,8 +568,8 @@ var RUNE_IMAGES = [
   ['Berkana','bright','Lömbin stíga fyrstu sporin úti í maí.','The lambs take their first steps outside in May.','nýtt upphaf','new beginnings','P','lamb'],
   ['Berkana','any','Fyrsta skref barnsins yfir gólfið er óstöðugt en ákveðið.','The child\'s first step across the floor is unsteady but sure.','nýtt upphaf','new beginnings','D'],
   ['Ehwaz','any','Hesturinn finnur vaðið yfir jökulána þótt þú sjáir það ekki.','The horse finds the ford across the glacial river though you cannot see it.','traust milli tveggja','trust','P'],
-  ['Ehwaz','bright','Hestarnir tveir fylgjast að upp fjallið.','The two horses keep pace with each other up the mountain.','traust milli tveggja','partnership','P'],
-  ['Ehwaz','any','Sá sem gengur með þér heldur sama takti án þess að segja orð.','The one who walks with you keeps the same pace without a word.','traust milli tveggja','partnership','P'],
+  ['Ehwaz','bright','Þegar annar hesturinn þreytist í brekkunni hægir hinn á sér óbeðinn, og þeir ná brúninni saman.','When one horse tires on the climb the other slows unasked, and they reach the ridge together.','traust milli tveggja','partnership','P'],
+  ['Ehwaz','any','Á einstiginu styttir sá sem gengur með þér skrefið að þínu án orða, og gangan jafnast.','On the narrow path the one who walks with you shortens their stride to yours without a word, and the going evens out.','traust milli tveggja','partnership','P'],
   ['Mannaz','any','Spegilmyndin í lygnu lóninu bærist við minnsta blæ.','The reflection in the still lagoon trembles at the least breath of wind.','sjálfsþekking','self-awareness','P','reflection'],
   ['Mannaz','any','Andlitið í kyrru regnvatninu í tunnunni er þitt, eldra en þig minnir.','The face in the still water of the rain-barrel is yours, older than you remember it.','sjálfsþekking','self-awareness','P','reflection'],
   // 2026-09-10 (davka 1, Cowork): Mannaz mel dosazitelnou JEDINOU stranku sveho
@@ -577,7 +577,7 @@ var RUNE_IMAGES = [
   // radku prosel identitnim soudcem 3/3; ze stejne davky jich 14 propadlo a nenasazuje se.
   // Duvod + cisla -> RUNAR_EVAL_LOG.md 2026-09-10 (2).
   ['Mannaz','any','Í þremur ólíkum herbergjum í dag varstu ólík manneskja í hverju þeirra, og samt var eitt lítið þrjóskt atriði eins alls staðar.','In three different rooms today you were a different person in each, and yet one small stubborn thing was the same in all of them.','sjálfið','the self','D'],
-  ['Mannaz','any','Þú manst símanúmer húss sem þú hefur ekki hringt í í þrjátíu ár, en ekki hvers vegna þú gekkst inn í þetta herbergi.','You remember the number of a house you have not called in thirty years, but not why you walked into this room.','minni','memory','D'],
+  ['Mannaz','any','Þú manst símanúmer húss sem þú hefur ekki hringt í í þrjátíu ár, en ekki hvers vegna þú gekkst inn í þetta herbergi.','You remember the number of a house you have not called in thirty years, but not why you walked into this room.','hugur','mind','D'],
   ['Mannaz','any','Sama hugsunin gengur sömu þrjú skref búrsins alla nóttina og er engu nær út um morguninn.','The same thought walks the same three steps of its cage all night and is no nearer out by morning.','hugur','mind','D'],
   ['Laguz','any','Undiraldan finnst í fótunum áður en hún sést.','The groundswell is felt in your feet before it is seen.','innsæi','intuition','E'],
   ['Laguz','any','Jökuláin rennur grá og þung, full af því sem hún ber að ofan.','The glacial river runs grey and heavy, full of what it carries down from above.','flæði','the unconscious','E'],

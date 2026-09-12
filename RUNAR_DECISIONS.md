@@ -5602,3 +5602,73 @@ byla zelená naprázdno). Mutace: třetí stav pryč = 3 FAIL · rejstřík se n
 zlepšení.
 
 **Affected doc(s):** žádný — chování vlastní kód, seznam k práci vlastní ten nový doc.
+
+---
+
+## 2026-09-12 (5) — Pět ctnostních obrazů přepsáno na ENAKTUJÍCÍ (ctnost koná, nepředepisuje se)
+
+**Proč:** ctnostní aspekt (resilience, partnership, patience…) → čtení zavře výklad v **73 %**
+proti 25 % u ostatních (`RUNAR_EVAL_LOG.md` 2026-09-12, p = 0,011). Owner: „ano". Znění dodal
+Cowork-tune; princip je jeho: *ctnost ať KONÁ ve světě, ne ať se pojmenuje.* Dnešní pětice stála
+na statických slovesech (`stendur` · `heldur` · `fylgjast að` · `heldur sama takti` · `bíður`).
+
+**Aspekt se nemění** — měří se jedna páka po druhé. Obraz teď, pojistka v promptu až po měření.
+
+**Co se změnilo:** Eihwaz/seigla ×2 (jeřáb se ohne a *vrátí*; kořen *vezme nápor*) · Ehwaz/traust
+×2 (jeden *zpomalí* kvůli druhému; druhý *zkrátí krok* k tvému) · Jera/þolinmæði ×1 (seno *schne
+o kousek víc každou hodinu*, místo „čeká, až uschne"). U toho Jera řádku se zároveň srovnal rozpor
+v datech: měl IS aspekt `rétt tímasetning` proti EN `patience`, tedy dvě různé stránky runy v témž
+řádku — teď je to `þolinmæði`/`patience`.
+
+**IS ověřeno korpusem** (leggst flatur 14 · réttir sig 97 · tekur álagið 13 · fer hvergi 378 ·
+hægir á sér 316 · óbeðinn 329 · tilbúið að snúa 17 · brúninni 2812 s `ná`+þgf · einstigi 597 ·
+`lægja` = þolfall i u podmětu, slovník). ⚠️ **Dvě fráze jsou nedoložené a zůstávají**:
+`styttir skrefið` a `gangan jafnast` — nejde o špatnou volbu, **nedoložená je i každá
+alternativa** (stillir/hægir skrefið, styttir skrefin = 0), takže korpus tenhle obraz prostě nemá.
+Obě jsou průhledné a vazba sedí. Kdo to bude měnit, ať má doklad, ne dojem.
+
+**⚠️ Zavíraly ještě TŘI další obrazy, které v této dávce NEJSOU** (z týchž produkčních dat):
+Jera *„The dough needs its time; you cannot hurry it"* · Tiwaz/justice *„The guide-stone never
+tilts, whatever comes down on it"* · Algiz/protection *„Someone stays up with a light in the window
+until you come home"*. Cowork se na ně výslovně ptal — dostane je.
+
+**Affected doc(s):** žádný.
+
+---
+
+## 2026-09-12 (6) — Opravy `RUNES[].k` proti tradici PROVEDENY (owner je dnes ratifikoval)
+
+**Provenience, protože na ní tady záleží.** Seznam změn je od Cowork-tune (relay). Do dneška
+k němu **nebyl datovaný záznam** a stojící rozhodnutí z 2026-09-10 říkalo „`RUNES[].k` zůstává
+nedotčené" — proto se to neprovedlo a leželo to jako spor. Owner 2026-09-12: *„TAKŽE ANO!! CHCI TO
+VYŘEŠIT!!!"* a doplnil, že to Coworku v chatu 10.–11. 9. řekl slovy *„souhlasím s opravami, je
+potřeba to opravit v kódu, všude"*. Tenhle záznam je ta chybějící ratifikace.
+
+**Provedeno:** Uruz −transformation (transformaci vlastní Hagalaz) · Mannaz −memory ·
+Laguz +memory +dreams · Thurisaz +disruptive force · Eihwaz +world-tree +protection ·
+Othila +foundation +belonging. Vždy v obou řečech (smoke ㉤ vynucuje stejný počet položek):
+minni · draumar · ógnandi kraftur · heimstré · vernd · grunnur · tilheyra.
+
+**⚠️ Co Coworkův seznam neřešil a našla to kontrola ㉤:** obě odebrání by **rozbila obraz**, jehož
+aspekt na odebraném klíči visel. Vyřešeno **bez přesunů mezi runami** — obraz zůstal u své runy
+a dostal jiný klíč té téže runy:
+- Uruz *„Hraunið man eldinn enn…"*: `transformation` → **`primal force`** (láva = prvotní síla pod
+  povrchem)
+- Mannaz *„Þú manst símanúmer húss…"*: `memory` → **`mind`** (pamatované číslo proti zapomenutému
+  důvodu je právě to, jak pracuje mysl)
+Kdyby se místo toho přesunul obraz k Laguzu, změnilo by se, **která runa ten obrázek ukazuje** —
+to je větší zásah, než ratifikace pokrývala.
+
+**Dvě islandská slova s přiznanou výhradou:** `ógnandi kraftur` (fráze v korpusu 0, obě slova
+běžná; Coworkův návrh a sedí na povahu Thurisazu) a `heimstré` (4 výskyty — `veraldartré` má 1,
+takže z těch dvou lepší; průhledná složenina heimur+tré).
+
+**Bump verze promptu na `v4.25-klice`** — klíče tečou do promptu (`CORE ENERGY:` / `KJARNAORÐ:`
+u životní runy a jako záložní `focus:`), takže čtení po téhle změně musí být v datech odlišitelná.
+⚠️ Registr ㉜ tuhle změnu **nenahlásil**: staví jednu cestu promptu s jednou runou, takže per-runa
+řádky pokrývá podle toho, která se vylosuje. Není to tichá chyba registru, ale jeho hranice — a je
+to důvod, proč se verze bumpuje ručně podle toho, co se změnilo, ne podle toho, co zčervená.
+
+**⚠️ Sdílená data:** `RUNES[].k` / `k_is` čte i CODE-tree. Aett, element ani world se nezměnily.
+
+**Affected doc(s):** `RUNAR_BACKLOG.md` (spor uzavřen výš) — hotovo v témž dni.
