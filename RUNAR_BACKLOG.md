@@ -833,31 +833,35 @@ Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je 
 
 ## Vegvísir (Cowork návrh 2026-08-15 · konsolidace 2026-08-22 · AKTIVNÍ TÉMA)
 
-### ⭐ VARIANTY STAVBY — jediný seznam (vznikl 2026-09-12, KUKY: „kolik variant máš zapsaných?")
+### ⭐ VARIANTY STAVBY — přepsáno 2026-09-12 (KUKY: „to je to stejné!" — měl pravdu)
 
-**Proč tenhle blok existuje:** varianty byly rozsypané po položkách, jejichž nadpis je o něčem
-jiném (příprava testu, shrnutí od GPT, tvrdý limit), a nejnovější nebyla zapsaná vůbec. Nálezy
-se zapisovaly poctivě, **rozhodovací prostor ne**. Kdo přidá novou variantu, přidá ji SEM.
+⚠️ **Původní tabulka V1–V7 (téhož dne) byla špatně:** předstírala sedm rovnocenných variant,
+ale byly to **odpovědi na TŘI RŮZNÉ OTÁZKY** smíchané do jednoho seznamu. Proto nešlo říct,
+kolik jich je — „V3" nebyla alternativa k „V4", šly postavit obě naráz. Správný tvar:
 
-| # | varianta | čím se liší | změřeno | stav |
-|---|---|---|---|---|
-| **V1** | **střed = obraz životní runy**, runa ramene do něj vstupuje | obraz vlastní ŽIVOTNÍ runa | ❌ netestováno | otevřená — tohle si owner představoval |
-| **V2** | **střed = runa ramene**, životní runa vstupuje jako vztah | obraz vlastní RUNA RAMENE | ✅ 2026-09-12 (F1–F5, R1–R4) | otevřená |
-| **V3** | statický střed × dynamická ramena (GPT) | rozvedená V1 + Ask jako vrstva porozumění | ❌ | směr, neratifikováno |
-| **V4** | **bez obrazů z banky — jen ukotvení na osu** | vstup = runa + její osa cesty | ✅ 2026-09-12 | drží; owner ji chce |
-| **V5** | s produkčními obrazy z `RUNE_IMAGES` | vstup = runa + hotový obraz | ✅ produkce | dnešní stav appky |
-| **V6** | **uživatel si poskládá svět z osmi scén** (loď, ostrov, vítr…) | obraz volí ČLOVĚK, runa říká, co se v něm děje | ❌ | nové 2026-09-12 |
-| **V7** | životní runa jen v **Asku**, ne ve čtení ramene | střed se objeví na dotaz, ne sám | ❌ | návrh CODE-read |
+**OTÁZKA 1 — čí obraz je základ?**
+- (1a) **životní runy** — statický střed, do něj vstupuje tažená runa
+- (1b) runy ramene — životní runa vstupuje jako vztah *(změřeno 2026-09-12: F1–F5, R1–R4 — testováno OMYLEM místo (1a))*
 
-**Co na variantě NEZÁVISÍ** (změřeno 2026-09-12, neplést dokola):
-- **formát ukotvení** = jedna vazba (`Gebo — exchange ↔ response`). Ne věta o runě (opíše se,
-  10 slov), ne seznam (nechá si to pojmenovat, 4/5 klíčů), ne holý pokyn (nedodá nic).
-- **délka čtení ramene ≈ 90 slov** (owner 2026-09-12).
-- **guardrail selhává i tak** — 4/4 čtení skončila útěchou („nothing you did has been wasted",
-  „is not lost", „is not a failure"). S obrazy to nesouvisí; s délkou možná ano (při 55 slovech
-  se to dělo míň).
-- **vazba dorazí jen k runě, která má pohyb** — Jera ✅ Gebo ✅ · Perth ❌ Isa ❌ („symmetry of
-  non-action"). Statická runa nemá s čím vyměňovat.
+**OTÁZKA 2 — odkud se základový obraz bere?**
+- (2a) z banky `RUNE_IMAGES` (dnešní produkce)
+- (2b) žádný dodaný — jen ukotvení na osu *(změřeno 2026-09-12)*
+- (2c) uživatel si poskládá svět z osmi scén *(nápad KUKY 2026-09-12)*
+
+**OTÁZKA 3 — kudy vstupuje tažená runa?**
+- (3a) přímo do textu čtení
+- (3b) **OTÁZKOU, stylem Ask nad hotovým obrazem** — KUKY: *„tam je Rúnar nejčistší
+  a odpovídá na otázku"*; doloženo produkčními Ask výměnami
+
+⭐ **OWNEROVA SESTAVA = (1a) + (3b).** Statický střed = hotové čtení životní runy
+(`user_profiles.life_rune_text`); tažená runa do něj vstupuje otázkou jako v Ask.
+= dřívější „SMĚR: statický střed × dynamická ramena". **Tohle se testuje TEĎ** — otázka 2
+je u ní druhotná, základový obraz už existuje.
+
+**Co na volbě NEZÁVISÍ** (změřeno 2026-09-12, netestovat dokola): formát ukotvení = jedna vazba
+(věta o runě se opíše 10 slov · seznam vysype 4/5 klíčů · holý pokyn nedodá nic) · délka
+čtení ramene ≈ 90 slov (KUKY) · sklon zavírat útěchou (4/4 při 90 slovech, při 55 míň) ·
+vazba dorazí jen k runě s pohybem (Jera ✅ Gebo ✅ · Perth ❌ Isa ❌).
 
 
 - [ ] **MOŽNOST: obraz životní runy jako střed Vegvísiru — a možná obráceně** (KUKY 2026-09-11: „zapiš to jako možnost, zkusíme a uvidíme"; *„hledáme teorie, je to na hovno bez praxe"*). NErozhodnuto, obě varianty otevřené:
