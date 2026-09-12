@@ -56,7 +56,7 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 // v4.17 (2026-09-10): Ask zna zivotni runu. Do te doby ji `buildAskPrompt` nedostaval, takze
 //    odpoved na „jak me ovlivnuje moje zivotni runa" si model musel domyslet. Prompt ji ted nese
 //    jako tichy fakt — Runar ji nevyslovi sam od sebe, jen kdyz se na ni clovek zepta.
-const RUNAR_PROMPT_VERSION = 'v4.24-kjarnaord';
+const RUNAR_PROMPT_VERSION = 'v4.25-klice';
 
 // Mesicni strop hlasu. KUKY 2026-09-11: „limit na hlas max 5 na mesic — je to spis
 // ochutnavka nez aby to porad vyuzivali." ElevenLabs se plati po znacich a jedine, co ho
