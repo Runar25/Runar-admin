@@ -2843,3 +2843,27 @@ konfoundr, který jsem mu nahlásil (A byly delší, 65–73 vs 42–49 slov), a
 vždy **jedna klauzule**, ne objem — *„adding words is not what they lack"*, (c) nález o Wunjo
 šel PROTI mému vlastnímu čtení. Netvrdí se nic o zbylých 22 runách.
 
+---
+
+## 2026-09-12 — Kritérium „zavírá výklad" má díru: tvar bez obsahu není verdikt
+
+**Kde se to ukázalo.** Ve zkoušce ramen Vegvísiru označil slepý soudce větu
+*„This is a length of it, not the end of it"* (Wunjo, rameno s obrazem) jako **CLOSES** — jediná
+ze šesti. Zdůvodnil to správně podle zadání: *„the only ending that states what the moment is
+for the reader."* Já jsem to převzal a ohlásil ownerovi jako vadu.
+
+⚠️ **Owner to vrátil, a má pravdu.** Ta věta **nepředává význam — dává tvar a nechá ho prázdný.**
+Řekne, čím to není (konec), pojmenuje, čím to je (délka), a co ta délka obsahuje, neřekne.
+**Důkaz je ownerova vlastní reakce:** *„co myslím tou délkou, nebo co myslím tím koncem, nebo
+obojí zároveň. To je paráda."* **Zavírající věta tohle nedělá** — verdikt se přijme a je konec.
+Tahle položila dvě otázky.
+
+⭐ **Nález: to kritérium potřebuje TŘETÍ STAV.** Dnešní podoba („říká to, co to pro čtenáře
+znamená?") nerozliší dvě věci, které obě mluví o jeho okamžiku:
+- **VERDIKT** — „a proto to pro tebe znamená X" → bere práci, zavírá
+- **TVAR BEZ OBSAHU** — „tohle je jeho délka, ne jeho konec" → **dává práci, otevírá** = zrcadlo
+Kdo tím kritériem bude měřit, musí je oddělit; jinak trestá právě ten tvar, o který jde.
+
+⚠️ **Hranice:** jeden případ, jeden soudce, a rozhodl ho owner okem. Netvrdí se, že soudce chyboval
+jinde — jeho ostatních pět verdiktů (a rozlišení B4 vs B5 na podmětu věty) drží.
+
