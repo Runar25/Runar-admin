@@ -2652,6 +2652,62 @@ Mannaz-humanity potřebuje lidství, které NENÍ výměna mezi dvěma.
 ⚠️ Coworkovy vlastní ⚠ predikce: **Mannaz-memory** propadl (Othila 3/3) — trefa · **Jera-reward**
 napůl (jeden 3/3, druhý 2/3 → Isa) — částečná trefa · **Eihwaz** nepředpověděl nikdo.
 
+## 2026-09-12 — Které aspekty dělají problém? Proti produkci: ⭐ skoro žádné. Vada je Perthova, ne systémová.
+
+**Otázka ownera:** *„jaké další aspekty můžou dělat problémy, když se to porovná s poslední půlkou
+produkčních čtení?"*
+
+**Plocha.** `prompt_draws.kws` zaznamenává slovo, které v promptu stálo za `focus on:` / `áhersla:`.
+Existuje od 2026-08-10, takže z 379 produkčních čtení ho má **95**; z nich **35** šlo přes mechanismus
+aspektu (jedno slovo z obrazu), 27 přes starou náhodnou trojici klíčů a **33 jsou spready, které
+aspekt nemají vůbec**. Měřilo se na těch 35 (92 EN / 3 IS). Soudilo 35 slepých soudců, jeden na
+čtení, týmž kritériem jako Perthovo měření o den dřív.
+
+**Výsledek — vada, kterou jsme honili, je v produkci vzácná:**
+| co | kolik z 35 |
+|---|---|
+| prázdné jméno v definiční větě (ta vada) | **3** |
+| runa podaná jako VĚC, ne děj | 18 |
+| čtení zavře výklad (řekne, co to pro tebe znamená) | **14** |
+
+⭐ **Dvě ze tří prázdných jmen jsou Perth / `hidden things`** — včetně přesně té věty, na kterou si
+owner stěžoval (*„This is Perth, the thing whose meaning waits sealed until you break the fold"*,
+2026-09-11, dopisový obraz). Třetí je islandské Gebo (*„það sem verður til á milli fólks"*) a to je
+**nejspíš planý poplach** — bezhlavá vztažná vazba je v islandštině běžný způsob, jak tohle říct.
+⇒ Není to systémová vada aspektů. Je to **jedno slovo u jedné runy**, přesně jak to odhadl CODE-read.
+
+**⚠️ Klasifikace aspektů NEPŘEDPOVÍDÁ, jak se čtení zachová.** 64 aspektů poolu ohodnotilo 8 agentů
+(prázdné jméno / abstraktum / konkrétní věc / děj). Proti produkci to neobstálo:
+- `new beginnings` — klasifikováno jako prázdné jméno, riziko 3 → v produkci **0 ze 3** statických čtení
+- `the unconscious` — riziko 3 → **0 ze 2**
+- naopak `waiting` (3/3), `resilience` (2/2), `justice`, `wealth`, `sun`, `protection` statické byly,
+  a žádné z nich prázdné jméno není.
+⇒ **Přepisovat aspekty plošně podle abstraktnosti by byla práce naslepo.** Proto jsem taky nedojel
+adversariální ověřování těch flagů: ověřovalo by metriku, kterou produkce právě vyvrátila (§27).
+
+**Co statické čtení předpovídá líp: sloveso v OBRAZE.**
+| | obraz stojí | obraz koná |
+|---|---|---|
+| čtení podá runu jako VĚC | **11 / 16** | 7 / 19 |
+
+Jednostranně **p = 0,061** — směr sedí a shoduje se s Perthovým pokusem z 2026-09-11 (tam obraz
+otočil 0/6 → 5/6, zatímco samotné slovo aspektu 0/6 → 1/6), ale **průkaznost je těsně mimo**
+a netvrdí se víc.
+
+**Hranice nálezu.** n = 35, z toho 3 islandská. Jeden soudce na čtení, bez druhého hlasu. „Statický
+obraz" je regex na slovesa (`lies/stands/waits/holds/keeps…`) — **flaguje sloveso, ne postoj**: ze
+32 takto označených obrazů v celém poolu jsou některé záměrně a dobře statické („The pole star
+**stands** still while everything else turns"), jeden je čirý planý poplach („The hot spring
+**steams up** … and **keeps** the ground warm"). Seznam těch 32 je tedy **kandidátní**, ne verdikt.
+Netvrdí se nic o kráse čtení; „VĚC" není samo o sobě vada (*„This is Isa, the pause that lets
+a decision settle before you move"* je dobře napsané čtení).
+
+**Co z toho vyplývá pro obsah** (→ handoff Cowork, 2026-09-12): vyměnit Perthův **dopisový** obraz;
+podívat se na tři místa, kde produkce zavřela výklad (`resilience` 2/2, `partnership` 2/2,
+`patience` 2/3); aspekty plošně nepřepisovat.
+
+---
+
 ## 2026-09-11 — PERTH po opravě aspektu: ⭐ OBRAZ rozhodl, ASPEKT sám o sobě skoro nic
 
 **Co se měřilo.** Cowork-tune + owner schválili opravu Perthova aspektu z věci na děj
