@@ -94,7 +94,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [break-your-own-work-before-reporting.md](break-your-own-work-before-reporting.md) — po hotovem kusu na nej ZAUTOC SAM a teprve pak hlas; necekej na vyzvu ownera
 - [attack-the-metric-not-just-the-result.md](attack-the-metric-not-just-the-result.md) — utoc na NASTROJ driv nez na vysledek: pulka vs pulka, co jeste odlisuje referenci, nulova transformace (CLAUDE.md §27)
 - [test-the-lever-that-binds.md](test-the-lever-that-binds.md) — ověř, že měníš tu vazbu, která výsledek opravdu drží (strop tokenů ≠ délková páka)
-- [rekni-kterou-variantu-testujes.md](rekni-kterou-variantu-testujes.md) — před testem jednou větou: kterou variantu testuju a kterou ne; varianta musí stát v docu, ne v chatu
+- [rekni-kterou-variantu-testujes.md](rekni-kterou-variantu-testujes.md) — před testem jednou větou kterou variantu testuju; varianta z docu; test pro Vegvísir z JEHO rámce, ne z produkce
 - [ownerovo-slovo-neni-spec.md](ownerovo-slovo-neni-spec.md) — jeho konverzační přídavné jméno není zadání; převeď na číslo, nebo se zeptej
 - [measure-dont-eyeball.md](measure-dont-eyeball.md) — dojem z obrázku není nález; změř to, nebo řekni „nevím"
 - [sanity-check-measurements.md](sanity-check-measurements.md) — extrémní/čisté číslo (0/N, 100 %) = red flag; ověř měření protipříkladem, ne fragile bash-inline; přeměř, když tě opraví
@@ -103,7 +103,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [prompt-nepojmenuj-co-hned-zakazes.md](prompt-nepojmenuj-co-hned-zakazes.md) — prompt, který něco pojmenuje a hned to zakáže vyslovit, hlídá slovo, které tam sám napsal; odeber nálepku, ne přidej hlídače
 - [always-show-reading-samples.md](always-show-reading-samples.md) — ownerovi vždy ukázat konkrétní TEXT čtení, ne jen měření a verdikty
 - [write-for-owner-not-process.md](write-for-owner-not-process.md) — ownerovi piš důležité/výsledek, ne proces „co jsi řekl / co budu hledat"
-- [cheapest-deciding-measurement-first.md](cheapest-deciding-measurement-first.md) — napřed nejlevnější měření, které rozhodne, jestli má smysl měřit dál; padne-li hypotéza, zastav zbytek dávky
+- [cheapest-deciding-measurement-first.md](cheapest-deciding-measurement-first.md) — napřed nejlevnější měření, které rozhodne; velký počet agentů jen po pilotu 3–5 a se souhlasem ownera
 - [work-efficiently-ask-if-simpler.md](work-efficiently-ask-if-simpler.md) — než spustíš těžký nástroj, zeptej se, jestli to nejde jednodušeji; dlouhý běh protlačí compactem a zabije úkol
 - [decisions-are-directions-not-locks.md](decisions-are-directions-not-locks.md) — rozhodnutí = směr + varování při rozporu, ne zámek navždy
 - [fix-or-log-duplicates-and-errors.md](fix-or-log-duplicates-and-errors.md) — duplikát/chyba → hned opravit, nebo zapsat do BACKLOGu; netiše přejít

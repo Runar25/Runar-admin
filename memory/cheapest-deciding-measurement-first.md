@@ -29,6 +29,14 @@ klasifikovat všech 64 aspektů nemá co objevit. Owner to musel zastavit uprost
 4. **Padne-li hypotéza cestou, ZASTAV zbytek dávky.** Doběhnout ji „ať jsou kompletní čísla" je
    placení za obhajobu metriky, kterou právě vyvrátila produkce ([[attack-the-metric-not-just-the-result]]).
 
+5. **Pilot 3–5 agentů → ukázat → teprve se souhlasem ownera škálovat.**
+
+⛔ **Velký počet agentů = napřed se ZEPTAT ownera** (KUKY 2026-09-12, podruhé týž den): *„příště se
+zeptáš, pokud budeš chtít použít nesmyslný počet agentů! Napřed máš zkusit pár, abys vůbec zjistil,
+že hypotéza sedí. Až pak se dá přidat víc."* Doloženo: 48 pisatelů + soudci (~2M tokenů) na test,
+jehož výsledek byl vidět na prvních pár textech — a který navíc nikdo nechtěl
+([[rekni-kterou-variantu-testujes]], bod 5). ⚠️ Platí i při zapnutém ultracode.
+
 Souvisí: [[work-efficiently-ask-if-simpler]] (ptej se, jestli to nejde jednodušeji — tohle je jeho
 tvrdší verze: *napřed levné, které rozhodne*), [[falsify-by-reversing-the-lever]],
 [[measure-dont-eyeball]], [[sanity-check-measurements]].
