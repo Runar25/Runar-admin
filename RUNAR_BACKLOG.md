@@ -963,6 +963,10 @@ vazba dorazí jen k runě s pohybem (Jera ✅ Gebo ✅ · Perth ❌ Isa ❌).
   a Gebo" → slovník 8 · „obohať" → druhá postava 2/2 · „moje chůze" → tvrzení i zavření 2/2.
   ⭐ **Životní runa může žít V OTÁZCE, ne v odpovědi** (tvaruje otázku, tažená runa tvaruje odpověď).
   ⚠️ Kolize s produkcí: `_askLifeContext` „Do not bring it up on your own". → `RUNAR_EVAL_LOG.md` 2026-09-12.
+  ⛔ **Změřeno 2026-09-12 (48 textů, produkční Ask prompt): dnešní Ask pravidla scénu uživatele ODMÍTAJÍ**
+  (*„The runes drawn hold no bird; that bird is yours."*) a životní runu odsouvají (*„not drawn today"* v 50 %).
+  (3c) potřebuje vlastní Ask pravidla pro rameno; ukázková čtení výš je nedodržela. Delší otázka = víc scény,
+  ale i víc odmítání Gebo. → `RUNAR_EVAL_LOG.md` 2026-09-12 „(3c) produkční otázky".
   ⚠️ **Otevřené:** co když uživatel napíše scénu, která s runou nesedí (Isa × „běžím")? · nese se
   něco z ramene 1 do ramene 2, když scény píše člověk nezávisle? · kolik lidí vůbec scénu napíše,
   když prázdné pole nic nenabízí (proto existují tipy)?

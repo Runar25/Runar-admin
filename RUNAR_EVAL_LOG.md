@@ -3158,3 +3158,60 @@ nesráží v jedné větě: **životní runa tvaruje otázku, tažená runa tvar
 ⚠️ **Hranice:** n=2 na formulaci, texty psal CODE a ownerovu diagnózu znal. Formulace F ale nebyla
 ownerova — přidaná jako obrácená páka (odebrat jména), s očekáváním, že Gebo nedorazí vůbec.
 
+### 2026-09-12 — (3c) produkční otázky: KRÁTKÁ vs DLOUHÁ · Isa/hora · Perth/pták
+
+**Co se testovalo (jedna věta):** produkční Ask prompt s otázkou, do které si uživatel sám napíše scénu
+— NE V3, NE střed Vegvísiru. `buildAskPrompt('', q, runa, 'en', [], Gebo, {}, null)`; jediný zásah do
+produkční cesty: úvodní řádka nahrazena *„The seeker has drawn X. No reading has been written yet — their
+question below describes where they are."* (rameno Vegvísiru nemá předchozí čtení).
+6 záměrů převzatých z reálných Ask otázek v produkci — C *„Enrich the X picture with my life rune"* ·
+P5 *„how my life rune gebo affect this rune?"* · P4 *„explain the rune more simply and how my life rune is
+in relationship with it."* · P3 *„What does X mean in this, with my life rune Gebo?"* · P7 kariéra ·
+P12 *„what does the picture suppose to say? my life rune is gebo."* — × Isa (*„I'm standing on a mountain
+top."*) / Perth (*„I'm looking into the distance at a flying bird."*) × KRÁTKÁ (~20 slov) / DLOUHÁ (~55 slov,
+týž záměr, víc vlastních slov). 24 promptů × 2 slepí pisatelé = **48 textů**, slepí soudci po 8.
+
+⛔ **NÁLEZ: produkční Ask pravidla scénu, kterou napíše uživatel, ODMÍTAJÍ — a životní runu odsouvají.**
+
+| | všech 48 | krátká | dlouhá |
+|---|---|---|---|
+| scéna v odpovědi (jen slova, která stojí v OBOU otázkách) | 46 % | 33 % | 58 % |
+| doslovná ozvěna *„not drawn (today)"* | 50 % | 29 % | 71 % |
+| tradiční obraz runy MÍSTO scény (Perth cup/lots/board · Isa lake/stroke) | 75 % | 79 % | 71 % |
+| Gebo předvedené v obraze (soudce ENACTED) | 15 % | 8 % | 21 % |
+
+Scénu použilo a zároveň neodmítlo **4 ze 48** — všechny Perth. Doslovné formule: *„The runes drawn hold
+no bird; that bird is yours."* · *„Gebo was not drawn today, and it does not work on Isa."* · *„Gebo does not
+reach into Isa"* · *„The mountain sends no message"*.
+
+**Pravděpodobné příčiny — dvě věty promptu (⚠️ NEověřeno ablací):**
+1. `RP_ASK.rules` (`v2/runar-character.js:1463`) *„Do not mirror the seeker: if the question asserts or implies
+   something, neither confirm it nor take it up — say what the runes drawn actually hold…"* → scéna napsaná
+   člověkem se čte jako premisa, kterou nemá převzít.
+2. `_askLifeContext` (`v2/runar-character.js:1200`) *„…it was not drawn today and the reading is not about it"*
+   → Rúnar tu větu říká nahlas a Gebo odsune.
+
+**Ownerova hypotéza „delší otázka pomůže":** scéně ano (33 → 58 %), předvedenému Gebo trochu (8 → 21 %),
+ale **odmítání životní runy roste taky** (ozvěna 29 → 71 %). Čím víc se otázka na Gebo ptá, tím víc ho
+pravidla vytlačí.
+**Podle záměru:** C („obohať obraz") = Gebo předvedené **5/8**, ostatní záměry 0–1/8. I u C DLOUHÉ ale
+všechny 4 texty obsahují „not drawn" — C přežívá PROTI pravidlům, s odmítavou větou navíc.
+
+**§27 útoky na měřidla:**
+- *půlka proti půlce:* scéna krátká 33/33 vs dlouhá 67/50 · ozvěna 25/33 vs 67/75 → rozdíl délky je větší
+  než rozdíl půlek, drží.
+- *co ještě odlišuje dvojici:* dlouhá otázka nese víc scénických slov (valley, climb, sky), která široké
+  měřidlo chytá → přeměřeno jen slovy společnými oběma otázkám: 29 → 67 % se zmenšilo na 33 → 58 %; směr drží.
+- ⚠️ první verze měřidel byla široká (tradiční obraz 88 % chytal i led/mráz, který na hoře patří do scény ·
+  „Gebo = kříž/ruce" 69 % chytalo „crossing") → přísně **75 %** a **31 %**. Zapsáno přísné.
+
+**Důsledek pro Vegvísir:** (3c) s dnešním Ask promptem nejde. Rameno potřebuje vlastní Ask pravidla:
+(a) scéna od člověka není premisa, ale místo, ve kterém se čte · (b) životní runa se neodsouvá.
+⚠️ **Moje ukázková čtení Isa/hora a Perth/pták** (`RUNAR_BACKLOG.md`, Vegvísir, owner: *„hezké a funkční"*)
+**produkční pravidla nedodržela** — psal jsem je bez nich. Ownerovo hodnocení platí pro SMĚR, ne pro dnešní prompt.
+
+⚠️ **Hranice:** n=2 na buňku (záměr × runa × délka) · jen EN · pisatelé subagenti v konverzaci (ne API) ·
+příčiny 1–2 neověřeny. **Nejlevnější rozhodující test:** tatáž dávka bez věty „Do not mirror…" a zvlášť bez
+`_askLifeContext` — nespadne-li odmítání, příčina je jinde.
+Skripty (scratch, neverzováno): `otazky_build.js` · `otazky_vyhodnot.js` · `sceny.js` · `prisne.js` · `utok27.js`.
+
