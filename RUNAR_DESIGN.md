@@ -181,6 +181,22 @@ Rúnarovy věty:
 Přirozené ukotvení v hlase:
 *"Viděl jsem..." / "V zemi kde..." / "V čase kdy..." / "Ti, kdo přišli před námi..."*
 
+### Cesta je fyzická I myšlenková (KUKY 2026-09-12)
+
+📜 **Vegvísirova cesta není nutně chůze po zemi.** Může to být rozhodnutí, nemoc, vztah, práce —
+cokoli, čím se člověk někam dostává. Platí tu totéž co o obrazu: **cesta je jakýkoli pohyb,
+i myšlenkový.**
+
+⭐ **Sedm os to unese, protože to nejsou MÍSTA, ale VZTAHY.** „Co je pod nohama" · „kam dohlédnu" ·
+„co nesu" · „kdo jde se mnou" · „co roste, zatímco jdu" · „cesta ještě není" — všechno se to dá
+říct o přemýšlení stejně jako o chození, protože ani jedno nepředpokládá zem.
+
+⚠️ **A právě proto to tady musí stát.** Když je mapa os popsaná jen fyzickými příklady (kroupy,
+reveň, stopy ve sněhu, mlha nad fjordem), přečte ji příště někdo jako turistiku a postaví
+Vegvísir o pěší chůzi. Ta obecnost se ztratí v prvním obraze s krupobitím, ne v definici.
+**Ukotvení osy nesmí vynucovat doslovný terén** — má pojmenovat vztah, a obraz ať si najde,
+jestli je z hor, nebo z hlavy.
+
 ### Co je OBRAZ — a dva jeho druhy (KUKY 2026-09-12)
 
 📜 **Obraz je jakýkoli POHYB, i myšlenka.** Nemusí to být scéna, na kterou se dá namířit foťák.

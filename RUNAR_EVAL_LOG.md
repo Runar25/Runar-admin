@@ -65,6 +65,15 @@ nikde pohromadě. Rejstřík je nit. Datum = kde v logu hledat detail.
 | **essence** | 8.9. **nejméně pestré místo čtení**: tvar „\<Runa\> is …"/„This is \<Runa\>, …" v **60/60** (a 28/28 v produkční ablaci; napříč 399 čteními 64 %) proti **0/53** u statických květnových · odebrání vzoru z promptu srazí jen 100→92 % — **zdroj je zadání**, ne příklad: ablace řádky „Mention \<Runa\> by name once" dá 33 %, ale v 8/12 jméno runy nepadne vůbec |
 | **address** | jen IS, neměřeno |
 
+⚠️ **ŘÁDEK SE ČTE CELÝ — a poslední klauzule přebíjí první (KUKY 2026-09-12).** Řádky jsou
+chronologické a append-only, takže **nejstarší tvrzení stojí vlevo a to platné vpravo**. Kdo se
+zastaví na začátku, odnese si přesně opak. Doloženo: 2026-09-12 jsem si z řádku `register` vzal starou
+půlku **dvakrát** („ablace ±1, nic to nedělá" · „60 % je sdílená preambule") a ohlásil je jako
+živý stav — přitom týž řádek o pár slov dál říká „odebrána 8.9." a „‚Registr nic nedělá' tedy
+NEPLATÍ". Owner: *„je to špatně zapsané, že se to nedá najít, nebo co?"* Zapsané to bylo správně;
+**vadný je tvar, ne záznam.** Kdo řádek doplňuje, ať **současný stav píše na ZAČÁTEK** a historii
+za něj — u `register` už to tak je.
+
 ⚠️ **Prázdná buňka není „neškodné".** Znamená to, že o té páce nevíme nic — ne že nic nedělá.
 
 ---
