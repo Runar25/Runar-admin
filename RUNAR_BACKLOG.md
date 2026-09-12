@@ -851,19 +851,21 @@ Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je 
   **Ownerova otázka 2026-09-12:** *„ta asi nebude cesta. Mělo by to spíš být něco jako charakter člověka, jeho definice v runě?"*
   **Návrh CODE-read (NEratifikováno):** není to poloha na cestě ✅ (owner má pravdu), ale „definice člověka" je přesně tvar, který zakazuje `RUNAR_DESIGN.md:720` („nikdy verdikt ani souhrn ‚tohle jsi'"). ⭐ Obojí drží: **životní runa není CO jsi, ale JAK JDEŠ** — charakter jako **chůze**, způsob pohybu, který zůstává stejný, ať je terén jakýkoli (Gebo nejde do kopce jinak než dáváním a braním; Isa přečkává; Raidho drží tempo). ⭐ Tím se vysvětluje, proč se do sedmi os nevešla: **osy popisují cestu, životní runa popisuje toho, kdo jde.** Není na mapě — je to ten, kdo ji čte. Pro Ask z toho plyne otázka: ne „co Gebo znamená", ale **„jak se tenhle úsek chodí mou chůzí"**.
 
-  **SADA — 7 run, po jedné na každou osu** (owner chtěl všech 25; sedm je první řez, který prověří všechny osy najednou). ⚠️ **Gebo v sadě NENÍ schválně** — je to ownerova životní runa a `_lifeWasDrawn` by čočku shodil. Obrazy jsou produkční z `RUNE_IMAGES`, vybrané jako nejcestovnější varianta:
-  | osa | runa | obraz |
-  |---|---|---|
-  | ① poloha | **Raidho** | *The cairns stand each within sight of the next across the whole heath, each seen from the one before.* |
-  | ② terén | **Hagalaz** | *Hail rakes the hayfield in June and is gone before the sky clears.* |
-  | ③ viditelnost | **Perth** | *The lagoon water clears for a moment and something below stirs, then closes over again.* |
-  | ④ co nesu | **Fehu** | *The sheep drift into the fold toward evening, slow and without effort.* |
-  | ⑤ kdo jde se mnou | **Ehwaz** | *The one who walks with you keeps the same pace without a word.* |
-  | ⑥ co roste pod cestou | **Berkana** | *The rhubarb noses up through the cold soil by the south wall.* |
-  | ⑦ cesta ještě není | **Blank** | *New snow lies over the track and no one has stepped in it yet.* |
+  **SADA — 7 run, po jedné na každou osu. BEZ OBRAZU, jen ukotvení** (KUKY 2026-09-12: *„ale já to nechci s obrazem, já to chci bez obrazu s ukotvením"*). ⚠️ Do promptu tedy NEJDE nic z `RUNE_IMAGES` — jediný vstup je runa + její osa. Důvod: v dnešní zkoušce byly bezobrazové verze *„o cestě"* a nesly se z ramene na rameno, kdežto nábytkový obraz (káva, klíče) se musí postavit v každém čtení znovu → `RUNAR_DESIGN.md`, „Co je OBRAZ — a dva jeho druhy".
+  ⚠️ **Gebo v sadě NENÍ schválně** — je to ownerova životní runa a `_lifeWasDrawn` by čočku shodil.
 
-  **POSTUP:** ke každé runě (a) čtení ramene, (b) Ask s otázkou **„how does my life rune Gebo affect this rune?"** — znění doslova to nasazené (`ask_hint_life`), ať jde srovnat s produkcí. Čtení píše CODE v konverzaci (memory `cteni-generuj-tady-ne-pres-api`), slepé souzení subagentem.
-  **CO MĚŘIT:** umísťuje rameno člověka na cestě? · drží jeden obraz? · **zavírá, nebo dává tvar bez obsahu** (třetí stav — viz `RUNAR_EVAL_LOG.md` 2026-09-12) · a v Asku: chodí životní runa jako CHŮZE, nebo se z ní stane druhý význam vedle prvního?
+  | osa | runa | ukotvení = JEDINÝ vstup do promptu |
+  |---|---|---|
+  | ① poloha | **Raidho** | jdu, a v jakém tempu |
+  | ② terén | **Hagalaz** | počasí, které cestu přepíše |
+  | ③ viditelnost | **Perth** | něco je zakryté a ještě se neukázalo |
+  | ④ co nesu | **Fehu** | zásoby, které se cestou spotřebovávají |
+  | ⑤ kdo jde se mnou | **Ehwaz** | ten, kdo mě nese, a důvěra v něj |
+  | ⑥ co roste pod cestou | **Berkana** | něco začalo a roste, ať jdu kamkoli |
+  | ⑦ cesta ještě není | **Blank** | nikdo tudy ještě nešel |
+
+  **POSTUP:** ke každé runě (a) čtení ramene z ukotvení, (b) Ask s otázkou **„how does my life rune Gebo affect this rune?"** — znění doslova to nasazené (`ask_hint_life`), ať jde srovnat s produkcí. Čtení píše CODE v konverzaci (memory `cteni-generuj-tady-ne-pres-api`), slepé souzení subagentem.
+  **CO MĚŘIT:** umísťuje rameno člověka na cestě? · **zůstane text na cestě, nebo si přitáhne nábytek** (bez dodaného obrazu mu nic nebrání vymyslet si hrnek — Gebo-C 2026-09-12 si vyrobilo stopy v zemi, což je cestovní; nábytek by byl regres) · zavírá, nebo dává **tvar bez obsahu** (třetí stav → `RUNAR_EVAL_LOG.md` 2026-09-12) · a v Asku to hlavní: **chodí životní runa jako CHŮZE, nebo se z ní stane druhý význam vedle prvního?**
 
 - [ ] **GPT rešerše Vegvísiru (2026-09-11) — co z ní bere §23 a co ne.** Zapsáno na pokyn ownera.
 
