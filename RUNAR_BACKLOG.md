@@ -958,6 +958,11 @@ vazba dorazí jen k runě s pohybem (Jera ✅ Gebo ✅ · Perth ❌ Isa ❌).
   jako **předávání** (handing-over), ne jako slovo „giving".
   ⇒ **Otevřená otázka ownera: jak se má životní runa projevovat** → testovat různé formulace vztahu
   (test 2026-09-12 níž v eval logu).
+  ✅ **Změřeno 2026-09-12 — 7 formulací × Isa, Perth:** čistá u obou je jen **„What passes between me and
+  this place?"** (bez jmen run). Pojmenovat „mou životní runu" → tvrzení o člověku 2/2 · „vztah mezi X
+  a Gebo" → slovník 8 · „obohať" → druhá postava 2/2 · „moje chůze" → tvrzení i zavření 2/2.
+  ⭐ **Životní runa může žít V OTÁZCE, ne v odpovědi** (tvaruje otázku, tažená runa tvaruje odpověď).
+  ⚠️ Kolize s produkcí: `_askLifeContext` „Do not bring it up on your own". → `RUNAR_EVAL_LOG.md` 2026-09-12.
   ⚠️ **Otevřené:** co když uživatel napíše scénu, která s runou nesedí (Isa × „běžím")? · nese se
   něco z ramene 1 do ramene 2, když scény píše člověk nezávisle? · kolik lidí vůbec scénu napíše,
   když prázdné pole nic nenabízí (proto existují tipy)?

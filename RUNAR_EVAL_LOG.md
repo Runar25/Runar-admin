@@ -3091,3 +3091,55 @@ jenže v produkci je jméno runy na obrazovce**, čtenář ho nehádá. ⇒ **Ne
 seznam „problémových run".** Problémové jsou jen vady VÝSTUPU: Jera (tah ke klíči „harvest", v EN
 neopraveno) · Perth (prázdný aspekt „hidden things" → „thing") · Eihwaz (1 aspekt na 2 obrazech).
 
+---
+
+## 2026-09-12 — Jak otázka zve životní runu: čistá je jen ta, která runy NEJMENUJE
+
+**Co se testovalo — jednou větou:** varianta **(3c)** (scénu píše uživatel do Asku); měnila se
+**JEN formulace otázky**, jak do scény vstupuje životní runa Gebo. Scény pevné: Isa = „I'm standing
+on a mountain top", Perth = „I'm looking into the distance at a flying bird". Netestovány obrazy,
+varianty chůze ani délka. Formulace A–E navrhl owner (A = baseline), F a G CODE-read.
+**Metoda:** 7 formulací × 2 runy = 14 textů (~70–85 slov, psal CODE) · mechanicky slovník Gebo
+(give/gift/exchange/trade/balance…) · slepý soudce bez otázek a bez značek formulací.
+
+| formulace otázky | slovník | ISA | PERTH |
+|---|---|---|---|
+| **F** „What passes between me and this place?" (bez jmen) | 1 | předvedené · čisté | předvedené · čisté |
+| E „How does Gebo reach into the X picture?" | 0 | čisté | vysvětlené |
+| A „How is X connected to Gebo?" (baseline) | 2 | předvedené | vysvětlené · +postava |
+| C „Enrich the X picture with my life rune." | 1 | předvedené · +postava | předvedené · +postava |
+| B „What is my life rune's relationship in the X picture?" | 0 | ⚠️ tvrzení | ⚠️ tvrzení · zavírá · +postava |
+| D „What is the relationship between X and Gebo in the picture?" | **8** | vysvětlené · zavírá | vysvětlené |
+| G „What does my own way of going change here?" | 2 | ⚠️ tvrzení · zavírá | ⚠️ tvrzení · zavírá |
+
+⭐ **Nález 1 — jediná formulace čistá u obou run je F, ta, která runy vůbec nejmenuje.**
+Gebo dorazilo předvedené 2/2 („the breath leaving you and the air not moving to meet it" · „What goes
+from you to the bird is attention; what comes back is the shape of its flight"), 0 tvrzení, 0 zavření,
+0 přidaných postav.
+
+⭐ **Nález 2 — každá horší formulace selhává jinak, a čitelně:**
+- **pojmenovat „mou životní runu" (B)** → mluví se O ČLOVĚKU: „your life rune is the part that keeps
+  count" · „your life rune is the reason the bird holds your eye". Slovník 0, tvrzení 2/2 →
+  **nízký slovník NEZNAMENÁ dobrý výsledek.**
+- **„vztah mezi X a Gebo" (D)** → dvě abstrakce vedle sebe → slovník 8, vysvětlování („The relationship
+  is a halt in the middle of an exchange"). = ownerova diagnóza „giving, given" v nejčistší podobě.
+- **„obohať" (C)** → předvede, ale přidá DRUHOU POSTAVU (druhé stopy, druhý pták) 2/2.
+- **„moje chůze" (G)** → tvrzení 2/2 + zavření 2/2. **Tvrdě potvrzuje nález z V3:** chůze řečená
+  o člověku je verdikt („You climb by meeting the slope halfway" · „not how your going usually works").
+
+⭐⭐ **Nález 3 — u F nežije životní runa v odpovědi, ale V OTÁZCE.** „Co prochází mezi mnou a tímhle
+místem" JE Gebo položené jako otázka; odpověď pak dodá scéna. Každá runa má vlastní vrstvu a nic se
+nesráží v jedné větě: **životní runa tvaruje otázku, tažená runa tvaruje odpověď.** Navazuje na
+„NABÍDKA OTÁZKY PODLE ASPEKTU" (BACKLOG) — jen by se tip nevybíral podle obrazu, ale podle životní runy.
+
+⚠️ **Co to zatím neřeší:**
+1. **Produkce by Gebo u F nejspíš nepustila:** `_askLifeContext` říká „Do not bring it up on your own.
+   If their question reaches for it…" — F životní runu nezmiňuje. V testu dorazila, protože psal CODE.
+   Pro ostrý běh musí ta věta jinak.
+2. **Tip je pořád nabídka** (+2,7 b. vs +8,8 b. u vlastních slov) — zmírňuje to, že se tip do pole
+   VLOŽÍ, neodešle, a člověk ho přepíše svou scénou.
+- Pozorování bez závěru: Perth sklouzl do vysvětlování ve 4 ze 7 formulací, Isa v 1 ze 7.
+
+⚠️ **Hranice:** n=2 na formulaci, texty psal CODE a ownerovu diagnózu znal. Formulace F ale nebyla
+ownerova — přidaná jako obrácená páka (odebrat jména), s očekáváním, že Gebo nedorazí vůbec.
+
