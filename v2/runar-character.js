@@ -551,7 +551,10 @@ var RUNE_IMAGES = [
   ['Perth','any','Í lágri sól koma fótsporin í ljós yfir túnið, andartak, áður en birtan breytist og þau hverfa.','In the low sun a whole trail of footprints comes to light across the field, for a moment, before the light shifts and they are gone.','hið hulda sem kemur í ljós','the hidden coming to light','E'],
   ['Algiz','any','Torfveggurinn stendur á milli þín og vindsins og í dyragættinni er logn.','The turf wall takes the wind so the doorway stays calm.','skjól','shelter','P'],
   ['Algiz','any','Fjárhundurinn liggur þar sem hann sér alla hjörðina.','The sheepdog lies where it can see the whole flock.','vernd','protection','P'],
-  ['Algiz','any','Einhver lætur ljósið loga í glugganum og lítur aftur og aftur út á myrkan veginn þar til hurðin opnast loks.','Someone leaves the light burning in the window and glances again and again at the dark road until the door finally opens.','skjól','protection','D'],
+  // 2026-09-12: IS aspekt skjól → vernd. EN tu nese „protection", ktere o radek vys paruje
+  // s „vernd"; „skjól" je „shelter" (radek s torfveggem). Dvojice se rozchazela jen tady.
+  // Navrh Cowork (handoff o jmenech), overeno proti sousednim radkum a klici runy (k_is).
+  ['Algiz','any','Einhver lætur ljósið loga í glugganum og lítur aftur og aftur út á myrkan veginn þar til hurðin opnast loks.','Someone leaves the light burning in the window and glances again and again at the dark road until the door finally opens.','vernd','protection','D'],
   ['Sowilo','bright','Miðnætursólin sest aldrei alveg um Jónsmessuna.','The midnight sun never quite sets around Midsummer.','sól','sun','E','midnight-sun'],
   ['Sowilo','bright','Sólin brýtur loks í gegn og glampar á blautu grjóti.','The sun finally breaks through and glints on the wet stones.','skýrleiki','clarity','E'],
   // 2026-09-09: nahrazeno — „never tilts" je nehybnost, tedy pole Isy; soudce cetl
