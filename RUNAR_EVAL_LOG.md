@@ -97,13 +97,35 @@ Tady je to složené. Žádné nové měření, jen jedna stránka místo pěti 
 1. **Nikdy hotovou větu o runě.** Je to definice a definice se opisují. Platí i pro krásně
    napsanou větu — čím líp sedí, tím spíš se objeví v textu.
 2. **Nikdy seznam.** Tři klíče už míří k `KLICE`. **Jedna věc, ne nabídka.**
-3. **Substance = jedna vazba. Způsob = pokyn hlasu.** Jeden klíč stopu drží (17 %), pokyn se
-   neopisuje (0/20). Nic změřeného neříká, že by ta kombinace selhala.
+3. **Substance musí BÝT PŘÍTOMNÁ, a jako JEDNA VAZBA** (`Gebo — exchange ↔ response`).
+   ⚠️ **Samotný pokyn hlasu nestačí — změřeno 2026-09-12** (5 formátů × Eihwaz, slepý soudce):
+   u formátu „jen pokyn" (*„let the exchange show in what you describe — never name it"*)
+   soudce vazbu vůbec nenašel: *„every act attributed to the lower party is negative — the
+   matching is asserted rather than enacted."* ⭐ **A tím se opravuje čtení řádku `register`:**
+   echo nálepky **0/20 nebyla ctnost, byl to příznak** — neopsalo se to, protože tam nebylo
+   co opsat. Pokyn řídí ZPŮSOB, ale žádný obsah nedodá.
 4. ⚠️ **Jazyk to mění.** Opisování je jev hlavně islandský: táž krátká věta dala v EN 0 % → 9 %
    (v šumu), v IS **12 % → 44 %**. Co v EN projde, v IS nemusí.
 
-⚠️ **Co tu NENÍ změřené a neplést si to:** bod 3 je jediná kombinace, kterou nic nevyvrací —
-**není potvrzená**. Nikdo ji nezkoušel. Kdo ji pustí, ať doplní řádek sem.
+**Změřeno 2026-09-12** — 5 formátů ukotvení životní runy (Gebo) proti jednomu rameni (Eihwaz,
+strukturálně nejužší runa: 2 obrazy, 1 aspekt). Mechanicky = doslovná shoda + kolik klíčů
+dorazilo; kvalitativně = slepý soudce bez znalosti hypotézy:
+
+| formát ukotvení | opsaná fráze | klíče v textu | vazba dorazila | pojmenovaná |
+|---|---|---|---|---|
+| hotová věta o runě | **10 slov** ❌ | 3/6 | ano | ne |
+| seznam tří klíčů | 2 | **4/5** ❌ | ano | **ANO** ❌ |
+| **jedna vazba** | 0 | 0/3 | **ano** ✅ | ne |
+| jen pokyn hlasu | 1 | 0/3 | **NE** ❌ | ne |
+| vazba + pokyn | 1 | 0/5 | **ano** ✅ | ne |
+
+⇒ **Jedna vazba stačí; pokyn navíc nepřidal nic měřitelného** → ber jednodušší.
+Runa ramene zůstala sama sebou ve všech pěti (Eihwaz drží 5/5), takže formát ji nepřebarvuje.
+
+⚠️ **Hranice:** n=1 na formát, jedno rameno, jedna životní runa, texty psal CODE se znalostí
+predikce. Co tu domněnku drží: (a) výsledek u „hotové věty" sedí na **nezávislý produkční
+precedens** (þula 2/2), (b) výsledek u „jen pokynu" šel PROTI očekávání pisatele. Netvrdí se
+nic o jiných runách ani o islandštině.
 
 ## Co sem NEpatří (§20 — neopisovat)
 Samotný obsah bydlí v kódu; deník na něj jen odkazuje:
