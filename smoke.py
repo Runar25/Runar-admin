@@ -596,6 +596,18 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola aspektu probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]))
 
+# Otázka od uživatele je text, ne instrukce. Do 2026-09-12 uvozovka v otázce ukončila úsek
+# v instrukci single čtení a zbytek stál v promptu volně (ověřeno protlačením). Kontrola hlídá
+# všech šest cest, kudy otázka teče, a že normální otázka projde beze změny.
+print('\n' + chr(0x3265) + ' OTÁZKA NEPŘEPÍŠE INSTRUKCI (verify_question_injection.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_question_injection.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola otazky probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

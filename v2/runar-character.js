@@ -1438,7 +1438,7 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     // `worldRef` se otevírací větvi pořád předává, ale ta ho už NEVYPISUJE: popis světa
     // stojí v hlavičce `DRAWN RUNE` a do 2026-08-13 se opakoval i tady (nález
     // `lint_prompts.js --dup`). Parametr zůstal, aby se neměnila signatura packu.
-    hasQ ? S.qBranch(rn(drawn), drawn.g, u.question) : S.noqBranch(rn(drawn), drawn.g, worldRef),
+    hasQ ? S.qBranch(rn(drawn), drawn.g, _questionSafe(u.question)) : S.noqBranch(rn(drawn), drawn.g, worldRef),
     _endingShape(drawn, lang),
     // v4.4 (2026-08-22): COCKA SE VRACI — owner: "v single je life rune jako cocka,
     // neni hotovo dokud neni cocka". Priorita zustava VEN (vrati se, az mereni ukaze
@@ -1501,9 +1501,16 @@ function _askTrimQ(q) {
   var i = Math.max(rez.lastIndexOf('.'), rez.lastIndexOf('?'), rez.lastIndexOf('!'));
   return (i > 40 ? rez.slice(0, i + 1) : rez).trim() + '…';
 }
+// Text otazky od uzivatele je DATA, ne instrukce. Tady se z nej odstrani jen to, cim by
+// instrukci mohl prepsat — zalomeni radku a rovna uvozovka. Duvod a doklad o dire viz
+// scripts/verify_question_injection.js (2026-09-12).
+function _questionSafe(q) {
+  var t = String(q || '').replace(/[\r\n\t\u2028\u2029]+/g, ' ').replace(/"/g, "'").replace(/ {2,}/g, ' ');
+  return _askTrimQ(t);
+}
 function _askCastContext(cast, lang) {
   var c = cast || {}, area = c.area, intention = c.intention, hledani = c.seeking,
-      otazka = _askTrimQ(c.question);
+      otazka = _questionSafe(c.question);
   if (!area && !intention && !hledani && !otazka) return '';
   var je = lang === 'is';
   var casti = [];
@@ -1755,7 +1762,7 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
     // maji spready TYZ tvar registru jako single — tedy ten, na kterem se merilo.
     // Popisky S.seeking/seekJoin v packach zustavaji: jsou to data, ne chovani.
     u.intention ? _intentionContext(u.intention, lang) : '',
-    u.question ? S.question + ': ' + u.question : '',
+    u.question ? S.question + ': ' + _questionSafe(u.question) : '',
   ].filter(Boolean).join('\n');
   var P = S.positions;
   var runesBlock = [
@@ -1849,7 +1856,7 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
     // maji spready TYZ tvar registru jako single — tedy ten, na kterem se merilo.
     // Popisky S.seeking/seekJoin v packach zustavaji: jsou to data, ne chovani.
     u.intention ? _intentionContext(u.intention, lang) : '',
-    u.question ? S.question + ': ' + u.question : '',
+    u.question ? S.question + ': ' + _questionSafe(u.question) : '',
   ].filter(Boolean).join('\n');
   var L = S.labels;
   var runesBlock = [ _spreadBlock(rUrd, L[0]), '', _spreadBlock(rVerd, L[1]), '', _spreadBlock(rSkul, L[2]) ].join('\n');
@@ -1929,7 +1936,7 @@ function buildHorseshoePromptSeven(u, runes, lang, corrections) {
     // maji spready TYZ tvar registru jako single — tedy ten, na kterem se merilo.
     // Popisky S.seeking/seekJoin v packach zustavaji: jsou to data, ne chovani.
     u.intention ? _intentionContext(u.intention, lang) : '',
-    u.question ? S.question + ': ' + u.question : '',
+    u.question ? S.question + ': ' + _questionSafe(u.question) : '',
   ].filter(Boolean).join('\n');
   var P = S.positions;
   var runesBlock = [
@@ -2022,7 +2029,7 @@ function buildYggdrasilPromptNine(u, runes, lang, corrections) {
     // maji spready TYZ tvar registru jako single — tedy ten, na kterem se merilo.
     // Popisky S.seeking/seekJoin v packach zustavaji: jsou to data, ne chovani.
     u.intention ? _intentionContext(u.intention, lang) : '',
-    u.question ? S.question + ': ' + u.question : '',
+    u.question ? S.question + ': ' + _questionSafe(u.question) : '',
   ].filter(Boolean).join('\n');
   var T = S.tiers, P = S.positions;
   var runesBlock = [
