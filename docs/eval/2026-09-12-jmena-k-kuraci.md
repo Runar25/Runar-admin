@@ -35,6 +35,27 @@ U **neseverského** jména navíc `origin` + `origin_is` — druhý ve **2. pád
 vazbou *„það á rætur að rekja til …"* (ověřeno: rætur að rekja 7802 · að rekja til 18075). A `note`,
 když je to případ „časté na Islandu, a přesto neseverské" (vzor: Magnús, Jón).
 
+## Laťka kvality — ownerův příklad (2026-09-12)
+
+Owner ukázal, na jaké úrovni to chce, slovy *„mi může říct klidně to, co teď napsal GPT"*:
+
+> **Magnús** není původně severské jméno: pochází z latinského *magnus* — „veliký". Do Skandinávie
+> a na Island se dostalo přes norského krále Magnuse I., pojmenovaného po Karlu Velikém
+> (*Carolus Magnus*). Má tedy královský a historický náboj, ne runově-mytologickou stavbu.
+>
+> **Einar / Einarr** je staroseverské a rozebrat jde: nejčastěji se vykládá jako *ein* („jeden,
+> osamělý") + *arr* („válečník", případně „bojovník s kopím"). Zhruba: „osamělý bojovník". Není to
+> jméno boha, ale sedí do severského hrdinského světa — člověk, který stojí sám v boji.
+
+**Co z toho plyne pro řádek v datech:** nestačí `root` a jednoslovný význam. Chce to i **cestu**,
+po které jméno k Islandu přišlo (u neseverských) nebo **do jakého světa patří** (u severských) —
+to je přesně ten materiál, ze kterého Rúnar může napsat rozbor, místo aby si ho domyslel.
+U neseverského jména to nese `note`, u severského `myth_en` / `myth_is`.
+
+⚠️ **Einar dnes v seznamu vůbec není** — je v tom seznamu 289 níž. Ten Magnús ano, a jeho řádek má
+`root: "lat. magnus 'mikill'"` + `note`, ale tu cestu přes Magnúse I. neobsahuje. Takže tohle je
+zároveň příklad **doplnění u jména, které už v seznamu je**.
+
 ## Pořadí
 
 Zdroj je frekvenční, takže seznam je řazený od nejběžnějších — ber ho shora. **Není potřeba dodat
