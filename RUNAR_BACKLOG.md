@@ -1476,7 +1476,10 @@ Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
       → owner ho vloží do Supabase (Authentication → Emails → SMTP: `smtp.resend.com`, port 465,
       uživatel `resend`). Klíč vkládá owner, ne CODE — je to tajemství.
       **ROZHODNUTO (KUKY 2026-09-12): testeři se přihlašují přes Google**; SMTP se řeší až před spuštěním.
-      ⚠️ **Poskytovatel NENÍ rozhodnutý — Resend nemusí být nejlepší volba** (ověřeno 2026-09-12):
+      ✅ **ROZHODNUTO (KUKY 2026-09-12): poskytovatel SMTP = Brevo**, ne Resend — *„přejdeme k Frantíkům. Brevo."*
+      Až přijde na řadu: Brevo účet → doména agndofa.is (Brevo dá vlastní DNS záznamy, přidávají se u ISNIC)
+      → SMTP klíč vloží owner do Supabase → CODE zapne `AUTH_EMAIL_ENABLED` v `runar-config.js`.
+      Resend doménu lze pak z účtu Resend odebrat. Důvod volby (ověřeno 2026-09-12):
       Resend je **americká firma** (San Francisco). Region odesílání eu-west-1 to nemění — přibyl by
       TŘETÍ americký zpracovatel vedle Anthropicu a ElevenLabs, a náš souhlas je jmenuje výslovně.
       **Brevo** (dříve Sendinblue) je **firma z EU (Paříž)**, servery v EU, DPA ve výchozím stavu, SMTP pro
