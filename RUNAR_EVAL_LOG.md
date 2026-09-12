@@ -3140,6 +3140,21 @@ nesráží v jedné větě: **životní runa tvaruje otázku, tažená runa tvar
    VLOŽÍ, neodešle, a člověk ho přepíše svou scénou.
 - Pozorování bez závěru: Perth sklouzl do vysvětlování ve 4 ze 7 formulací, Isa v 1 ze 7.
 
+⚠️ **HODNOCENÍ OWNERA 2026-09-12 — přebíjí slepého soudce tam, kde se rozcházejí:**
+- **C („obohať obraz životní runou") = z celé sady NEJLEPŠÍ.** Přidaná postava (druhé stopy, druhý pták)
+  **není problém — owner ji chce**: *„u C je zajímavé zjištění, že tam přidá další osobu či ptáka,
+  dobré vědět, mně se to líbí."* Perth-C: *„Gebo is in the fall between them: one letting go, one
+  turning toward it… — chápu to, Gebo reprezentuje exchange, hezký obraz, předání dvou ptáků."*
+  ⚠️ Ale i v C vadí **jméno runy jako činitel**: *„Perth keeps both too far away…" — Perth má zase
+  něco reprezentovat, ale je použité slovo runy.*
+- **B, D, E, F, G = NEDOBRÉ.** E: *„Gebo reach je špatná formulace — celé to použil, a tím to zabil."*
+- ⚠️ **F, kterou slepý soudce vyhodnotil jako jedinou čistou, owner odmítl.** Soudce měřil
+  „předvedené, bez tvrzení, bez zavření" — to je nutná podmínka, ne dostatečná. Čistota F byla čistota
+  prázdna: Gebo tam téměř není. **Nález 3 („životní runa v otázce") tím NENÍ potvrzen** — stojí na F.
+- ⭐ **Ownerova diagnóza, na které stojí další test:** *„špatně formulujeme otázky — Rúnar ta slova
+  vyloženě použije. Zkusme delší otázku, možná to pomůže."* + *„vytáhni z produkce posledních ~10 otázek
+  v ASK a použij je tak, aby dávaly smysl pro ISA a PERTH."* → test KRÁTKÁ vs DLOUHÁ otázka níž.
+
 ⚠️ **Hranice:** n=2 na formulaci, texty psal CODE a ownerovu diagnózu znal. Formulace F ale nebyla
 ownerova — přidaná jako obrácená páka (odebrat jména), s očekáváním, že Gebo nedorazí vůbec.
 
