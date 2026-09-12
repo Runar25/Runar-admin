@@ -644,9 +644,13 @@ function _renderNameLore() {
     if (txt) { txt.style.display = text ? 'block' : 'none'; if (text) txt.innerHTML = String(text).replace(/\n/g, '<br>'); }
   }
   // Nadpis nese SAMO JMENO, ne „YOUR NAME". KUKY 2026-09-12: „melo by tam byt uz napsane me
-  // uvedene jmeno Kuky a ne YOUR NAME!" Obecny nadpis zbyva jen tomu, kdo severske jmeno jeste nema.
-  if (lbl) lbl.textContent = jm ? String(jm).toLocaleUpperCase() : t('name_lore_lbl');
-  if (edit) { edit.style.display = jm ? '' : 'none'; edit.textContent = t('tree_name_edit'); }
+  // uvedene jmeno Kuky a ne YOUR NAME!" Severske jmeno ma prednost (sekce je o nem); bez nej
+  // ukaze jmeno, kterym Runar oslovuje. Do vecera 2026-09-12 tu bylo jen severske — a owner
+  // s prezdivkou a bez severskeho jmena videl „YOUR NORSE NAME": „nevidim svoje jmeno!!!"
+  // Obecny nadpis zbyva jen tomu, kdo nema jmeno zadne.
+  var nadpis = jm || ((typeof userName !== 'undefined' && userName) ? userName : '');
+  if (lbl) lbl.textContent = nadpis ? String(nadpis).toLocaleUpperCase() : t('name_lore_lbl');
+  if (edit) { edit.style.display = nadpis ? '' : 'none'; edit.textContent = t('tree_name_edit'); }
 
   // 1) severske jmeno jeste neni → pozvanka, tlacitko otevre okno se jmeny
   if (!jm) { zobraz(t('name_lore_intro_add'), t('name_lore_add_btn'), ''); return; }

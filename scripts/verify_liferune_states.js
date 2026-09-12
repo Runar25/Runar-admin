@@ -205,6 +205,7 @@ for (const L of ['en', 'is']) {
   const stavNL = (o) => {
     Object.keys(prvky).forEach((k) => { prvky[k].style = {}; prvky[k].textContent = ''; prvky[k].innerHTML = ''; });
     vm.runInContext('norseName=' + JSON.stringify(o.severske || '')
+      + '; userName=' + JSON.stringify(o.osloveni || '')
       + '; currentUser=' + (o.prihlasen === false ? 'null' : '{id:"u1",email:"a@b.cz"}')
       + '; _nameLoreText=' + (o.text ? JSON.stringify(o.text) : 'null')
       + '; _nameLoreFor=' + (o.pro ? JSON.stringify(o.pro) : 'null')
@@ -228,6 +229,15 @@ for (const L of ['en', 'is']) {
     rekni(bez.btn === T.name_lore_add_btn && bez.intro === T.name_lore_intro_add,
           L + '  …tlačítko zve k zadání jména, ne k rozboru');
     rekni(bez.edit === 'none', L + '  …a odkaz „upravit" není (není co upravit)');
+    rekni(bez.lbl === T.name_lore_lbl, L + '  bez jakéhokoli jména → obecný nadpis');
+
+    // KUKY 2026-09-12 (prezdivka, severske jmeno zadne, na screenshotu „YOUR NORSE NAME"): „nevidim svoje jmeno!!!"
+    const prezdivka = stavNL({ severske: '', osloveni: 'Kuky', L });
+    rekni(prezdivka.lbl === 'KUKY', L + '  jen přezdívka → nadpis ukáže PŘEZDÍVKU („KUKY"), ne „' + T.name_lore_lbl + '"');
+    rekni(prezdivka.btn === T.name_lore_add_btn && prezdivka.cta === '' && prezdivka.edit === '',
+          L + '  …a dál zve k zadání severského jména, s odkazem na úpravu');
+    const obe = stavNL({ severske: 'Sigrún', osloveni: 'Trpaslík', L });
+    rekni(obe.lbl === 'SIGRÚN', L + '  obě jména → nadpis nese SEVERSKÉ (sekce je o něm), ne oslovení');
 
     // Nadpis nese SAMO jmeno. KUKY 2026-09-12: „melo by tam byt uz napsane me uvedene jmeno Kuky a ne YOUR NAME!"
     const kuky = stavNL({ severske: 'Kuky', L });

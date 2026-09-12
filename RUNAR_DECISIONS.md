@@ -5755,3 +5755,22 @@ přepíše „zrušit". ⑩ má `name_lore_text/for/count` mezi privilegovanými
 nasazená · klient na produkci ověřen (SW v392, `_resolveUserName` a `NAME_LORE_LIMIT` v živém kódu, konzole
 čistá) · teprve potom `sql/2026-09-12_name_lore_server_only.sql` — živé granty ověřené: klient smí
 `name`, `norse_name`, `address_pref`; na `name_lore_text/for/count` grant nemá.
+
+## 2026-09-12 (9) — Nadpis sekce rozboru: bez severského jména nese jméno, kterým Rúnar oslovuje
+
+**Proč:** owner testoval na svém účtu (přezdívka ano, severské jméno ne) a v sekci viděl obecné
+„YOUR NORSE NAME": *„nevidím svoje jméno!!!"* Záznam (8) dal nadpisu jen severské jméno, takže
+kdo ho nezadal, svoje jméno tam neviděl — a tvrzení v chatu, že tam uvidí „KUKY", bylo nepřesné.
+
+**Co platí:** severské jméno má v nadpisu přednost (sekce je o něm). Bez něj nadpis nese oslovení
+(`userName`) a pod ním dál stojí pozvánka k zadání severského jména, s odkazem na úpravu. Obecný
+nadpis zbývá jen tomu, kdo nemá jméno žádné.
+
+**Čím je to jištěné:** ㉣ — tři nové kontroly × dvě řeči (žádné jméno · jen přezdívka · obě jména);
+mutace „nadpis jen ze severského jména" zachycena 4 ✗.
+
+**Mimo git (2026-09-12):** účet `zkukula@gmail.com` (rune_seeker) na pokyn ownera vynulován pro test
+dvou jmen — jen `name`, `norse_name`, `address_pref`, `name_lore_*`; úroveň, kredity, datum narození
+beze změny. Předtím v něm stálo jméno „Zdenek", severské žádné, rozbor nikdy.
+
+**Affected doc(s):** žádný.
