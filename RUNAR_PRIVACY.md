@@ -89,7 +89,17 @@ a souhlasí na pravdivém textu. Detail → `RUNAR_DECISIONS.md` 2026-09-11 (8).
 - Texty přes UI_TEXT (§10); **IS = draft → Sigrún**. Zbývá: flag/annotate + obohacení řádku (prompt_version…).
 
 **Owner (mimo kód):**
-- **Supabase DPA** (už v TODO) — podepsat.
+- ✅ **Supabase DPA — nic se nepodepisuje** (ověřil owner v dashboardu 2026-09-12). Supabase ho má
+  **zabudovaný v Terms of Service** a platí pro každou organizaci automaticky, i na free plánu:
+  *„No separate signed DPA is needed.“* (Organization settings → Legal Documents). Evropské přenosové
+  doložky (SCCs) jsou jeho součástí a přijetím podmínek platí jako podepsané (DPA čl. 12.2).
+  Projekt běží v **eu-west-1 (Irsko)** — ověřeno CLI; podle DPA čl. 6.1 se tam data ukládají
+  a primárně zpracovávají.
+  **Co z DPA plyne pro NÁS (čl. 4)** a kde to máme: informovat uživatele → privacy stránka ·
+  souhlas, kde je potřeba → tester consent (text opraven 2026-09-11) · práva uživatele → smazání
+  účtu. Nic nového k dělání nevzniká.
+  ⚠️ Do 2026-09-12 tu stálo „podepsat“, a CODE ownerovi radil „stáhnout PDF k firemním dokumentům“
+  — obojí zbytečné. Ukol, ktery nikdo neoveril, prezil dva mesice ve trech dokumentech.
 - **Publikovat privacy policy** na agndofa.is (sekce výše) + odkaz z appky.
 - **Právní review** IS textů + celého přístupu (Island/EEA).
 

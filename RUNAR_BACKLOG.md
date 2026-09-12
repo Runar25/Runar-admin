@@ -245,7 +245,7 @@
 
 ### 🔴 Blockery prodeje — OWNER (odloženo, trigger = **6. 9. 2026**, scheduled task `runar-launch-blockers-reminder`)
 - [ ] **Resend SMTP** — magic link z agndofa.is (Resend účet + DNS SPF/DKIM + Supabase Auth). Rozhodnout adresu (runar@agndofa.is?).
-- [ ] **Supabase DPA** — podepsat (čeká na e-mail).
+- [x] **Supabase DPA** — ~~podepsat~~ **nic se nepodepisuje**, je součástí Terms of Service (owner ověřil v dashboardu 2026-09-12). Detail → `RUNAR_PRIVACY.md`.
 - [ ] **Publikovat privacy policy na agndofa.is** — OWNER krok mimo repo. (Wiring v appce je HOTOVY: `v2/runar-privacy.html` je vysazena produkcni stranka EN+IS a odkaz z appky vede. Overeno 2026-07-19.) Bez publikace neplati legitimate-interest model.
 - [ ] **Právní/DPO review** (Island/EEA) IS textů + legal-basis modelu. `RUNAR_PRIVACY.md` je pracovní podklad, ne posudek.
       ⚠️ **Na seznam k posouzeni patri i `credit_ledger`:** radky prezivaji smazani uctu. Muj zaver „je to v poradku, protoze klic je znicen" je TECHNICKY ROZBOR (delete-account nuluje `gift_codes.used_by` a kaskadou maze `user_profiles` i `readings`, takze UUID uz nejde spojit s osobou), NE pravni posudek.
@@ -1417,7 +1417,7 @@ Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
 
 ## Musí být hotové PŘED prvním cizím přihlášením
 
-- [ ] **Podepsat Supabase DPA** — owner se na to podívá později (2026-09-11).
+- [x] **~~Podepsat Supabase DPA~~** — duplikát položky výš; vyřešeno 2026-09-12 (není co podepisovat), detail → `RUNAR_PRIVACY.md`.
       Podmínka až před prvním CIZÍM přihlášením, ne teď: dnešní čtyři účty jsou vlastní,
       žádný tester zatím neexistuje. V dashboardu na úrovni ORGANIZACE (ne projektu),
       v sekci s právními dokumenty.
