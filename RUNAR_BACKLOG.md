@@ -853,9 +853,34 @@ kolik jich je — „V3" nebyla alternativa k „V4", šly postavit obě naráz.
 - (3b) **OTÁZKOU, stylem Ask nad hotovým obrazem** — KUKY: *„tam je Rúnar nejčistší
   a odpovídá na otázku"*; doloženo produkčními Ask výměnami
 
-⭐ **OWNEROVA SESTAVA = (1a) + (3b).** Statický střed = hotové čtení životní runy
-(`user_profiles.life_rune_text`); tažená runa do něj vstupuje otázkou jako v Ask.
-= dřívější „SMĚR: statický střed × dynamická ramena". **Změřeno 2026-09-12 (první běh, n=4): 3/4 nechává otevřeno, 4/4 drží svět základu — detail → `RUNAR_EVAL_LOG.md` 2026-09-12.** Otázka 2 je u ní druhotná, základový obraz už existuje.
+⭐ **OWNEROVA SESTAVA — V3 = statický střed × dynamická ramena** (definice opravena 2026-09-12, KUKY):
+- **Statický střed = životní runa jako JEDNA CHŮZE ve VÍCE VARIANTÁCH** (zatím 6), losovaných
+  tak, aby každá kombinace střed × rameno nezněla stejně. Varianty Gebo → níž, „ŽIVOTNÍ RUNA GEBO".
+- ⛔ **Střed NENÍ čtení životní runy** (`user_profiles.life_rune_text`). To je výklad pro
+  UŽIVATELE — ten si ho čte, Rúnar z něj nečerpá. KUKY 2026-09-12: *„proč bych Rúnarovi dával
+  1600 znaků? Vegvísir je wayfinder."* ⚠️ Tuhle chybnou definici jsem sem 2026-09-12 sám zapsal a pak
+  podle ní testoval — výsledek je v `RUNAR_EVAL_LOG.md` vedený jako **NE-V3**.
+- **Rameno = tažená runa, vstupuje OTÁZKOU stylem Ask** — KUKY: *„tam je Rúnar nejčistší
+  a odpovídá na otázku."*
+- ⚠️ **Proč varianty, doloženo omylem:** když střed byl JEDEN pevný text, všechna čtyři ramena
+  skončila v témže obraze („crossing" 4/4). KUKY: *„křížení je v každém čtení, takže je to nuda."*
+
+**ŽIVOTNÍ RUNA GEBO — varianty chůze (dosud JEN v chatu, zapsáno 2026-09-12).**
+Pravidlo (KUKY 2026-09-12): **„šest formulací, jedna chůze"** — varianty se liší slovy, ne tím, co
+říkají; jinak přestane být střed středem. Chůze jednou větou: *stejná váha oběma směry —
+netlačí a nenechá se nést.*
+- **Kolo 1** (odmítnuto — KUKY: „všechno je fyzické"): meets the way halfway… · takes the road
+  at a pace… · goes so that the ground gives back… · walks with both hands free… · never gets
+  further than the road comes out to meet him · goes as one half of something…
+- **Kolo 2 = platné** (bez terénu, prošlo kontrolou „jedna chůze"):
+  1. moves by exchange, and counts nothing as arrived until it has gone both ways ⚠️ *KUKY: „připomíná mi to přesně to, co se mi nelíbí, když takhle Rúnar mluví"*
+  2. never forces and never coasts — whatever carries him, he carries back
+  3. goes at a pace neither side sets alone
+  4. whatever he leans on has to lean back the same amount
+  5. what goes out from him and what comes back are the same weight
+  6. meets it halfway, and halfway is where he stops
+- ⚠️ **Otevřené riziko, změřené 2026-09-12:** hotová věta o runě se opíše (F1: 10 slov v řadě). Varianty
+  jsou věty → **první test na nich musí mechanicky měřit opisování**.
 
 **Co na volbě NEZÁVISÍ** (změřeno 2026-09-12, netestovat dokola): formát ukotvení = jedna vazba
 (věta o runě se opíše 10 slov · seznam vysype 4/5 klíčů · holý pokyn nedodá nic) · délka

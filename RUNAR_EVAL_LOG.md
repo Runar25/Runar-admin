@@ -2983,9 +2983,9 @@ jinde — jeho ostatních pět verdiktů (a rozlišení B4 vs B5 na podmětu vě
 
 ---
 
-## 2026-09-12 — V3 (ownerova sestava) poprvé změřena: 3/4 nechává otevřeno tam, kde V2 zavírala 4/4
+## 2026-09-12 — ⛔ NE-V3 (střed = celé čtení životní runy — chybná definice): 3/4 otevřeno, ale 4/4 „crossing"
 
-**Co se testovalo — POPRVÉ správná sestava** (předtím omylem obráceně, viz tabulka variant
+⛔ **TOHLE NENÍ V3 (KUKY 2026-09-12).** Základem bylo celé čtení životní runy (1699 zn.) — to je výklad pro uživatele, ne materiál pro Rúnara. Skutečná V3 = životní runa jako chůze ve variantách, viz BACKLOG. **Co z běhu platí:** ukázal, PROČ varianty existují — jeden pevný střed dal všem čtyřem ramenům týž obraz („crossing" 4/4). **Co se testovalo (chybně nazváno)** (předtím omylem obráceně, viz tabulka variant
 v BACKLOGu): **(1a)+(3b)** — statický střed = ownerovo SKUTEČNÉ čtení životní runy
 (`user_profiles.life_rune_text`, Kuky/Gebo, 1699 zn.), tažená runa do něj vstupuje OTÁZKOU
 stylem Ask („I have drawn Isa. How does it come into this?"). Prompt = produkční
