@@ -3019,3 +3019,48 @@ který dnes padlo v4.13/14 dosednutí i moje V2 texty, tu mizí stavbou, ne prav
 je ale ze STEJNÉHO pisatele se stejnou snahou — ve V2 jsem se zavření snažil vyhnout a 4/4
 selhal; ve V3 bez zvláštní snahy 3/4 prošlo. Netvrdí se nic o modelu — to řekne až ostrý běh.
 
+---
+
+## 2026-09-12 — V3 SKUTEČNÁ (střed = Gebo jako chůze ve variantách): žádný společný obraz, vazba 4/4, ale 2/4 tvrzení o člověku
+
+**Co se testovalo — jednou větou:** střed = životní runa Gebo jako **chůze**, každé rameno jiná
+varianta (BACKLOG „ŽIVOTNÍ RUNA GEBO", kolo 2, var. 2–5; var. 1 vynechána — owner ji odmítl);
+runa ramene vstupuje **otázkou stylem Ask**. Ramena Isa · Jera · Perth · Gebo(kolize) — **tatáž
+jako v NE-V3**, liší se jen střed. Prompt produkční `buildAskPrompt`. Texty CODE, ~76–83 slov.
+
+**Levná rozhodující měření (mechanicky):**
+- **slovo společné všem 4 ramenům:** NE-V3 = „crossing" · **V3 = žádné** → varianty dělají, proč vznikly
+- **opsaná varianta středu:** nejdelší běh **1–3 slova** (práh 5) → věty chůze se neopsaly
+
+**Slepý soudce:**
+| rameno (varianta) | zavírá | vazba oběma směry | tvrzení o čtenáři | jeden obraz |
+|---|---|---|---|---|
+| Isa (3) | otevřeno | ✅ přerušená | ⚠️ **ano** — „Your pace was never yours to set alone" | ✅ brod |
+| Jera (4) | ⚠️ **zavírá** — „it looked like leaning on nothing" | ✅ | ne | ✅ pole |
+| Perth (5) | otevřeno | ✅ přerušená | ⚠️ **ano** — „Something left your hands" | ✅ váhy |
+| Gebo (2) | otevřeno | ✅ (hraniční) | ne | ✅ poutníci |
+
+⭐ **Nález 1 — statické runy už vazbu nesou.** Ve V2 Isa a Perth selhaly („symmetry of non-action").
+Ve V3 dala chůze statické runě **co přerušit**: „one side has gone still" · „one pan down and the
+other empty". Stejná váha oběma směry se ukáže jako porušená rovnováha. **Řeší to dřívější nález
+„vazba dorazí jen k runě s pohybem".**
+
+⭐ **Nález 2 — V3 má vlastní typickou vadu: chůze napsaná jako „ty" je tvrzení o člověku.**
+Rozdělení je čisté: ramena, která chůzi řekla **„your"** (Isa, Perth) → **2/2 tvrzení**; ramena,
+která ji nesla **skrz obraz** (pole, dva poutníci) → **0/2**. „Your pace was never yours to set
+alone" = varianta 3 převedená do 2. osoby = zákaz „tohle jsi" (`RUNAR_DESIGN.md:720`) prolomený
+přes životní runu. **Návrh k testu: chůzi neříkat O NĚM, ukázat ji NA OBRAZU.**
+
+**Srovnání na týchž čtyřech runách:**
+| | V2 (rameno vlastní obraz) | NE-V3 (celé čtení jako střed) | **V3** |
+|---|---|---|---|
+| slovo společné všem | — | crossing | **žádné** |
+| zavírá | 4/4 | 1/4 | **1/4** |
+| vazba dorazila | 2/4 | neměřeno | **4/4** |
+| tvrzení o čtenáři | neměřeno | neměřeno | **2/4** ⚠️ |
+
+⚠️ **Hranice:** n=4, texty psal CODE a věděl, že se měří stejnost (čtyři různé obrazy jsou zčásti
+jeho volba — v NE-V3 ale „crossing" nechtěl a stalo se to, protože ho diktoval základ; tady základ
+obraz nemá). Jen EN, jedna životní runa. Kolize Gebo×Gebo tentokrát prošla — dva dřívější signály
+proti ní tím nejsou vyvrácené, jen nepotvrzené.
+

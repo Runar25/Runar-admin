@@ -864,6 +864,10 @@ kolik jich je — „V3" nebyla alternativa k „V4", šly postavit obě naráz.
   a odpovídá na otázku."*
 - ⚠️ **Proč varianty, doloženo omylem:** když střed byl JEDEN pevný text, všechna čtyři ramena
   skončila v témže obraze („crossing" 4/4). KUKY: *„křížení je v každém čtení, takže je to nuda."*
+- ✅ **Změřeno 2026-09-12 (n=4):** žádné slovo společné všem ramenům (proti „crossing" 4/4) · varianty
+  se neopsaly · vazba dorazila 4/4 i u statických run · zavírá 1/4 · ⚠️ **tvrzení o čtenáři 2/4 —
+  když se chůze napíše jako „your"**. Další krok: chůzi ukázat na obrazu, ne říct o něm.
+  → `RUNAR_EVAL_LOG.md` 2026-09-12.
 
 **ŽIVOTNÍ RUNA GEBO — varianty chůze (dosud JEN v chatu, zapsáno 2026-09-12).**
 Pravidlo (KUKY 2026-09-12): **„šest formulací, jedna chůze"** — varianty se liší slovy, ne tím, co
