@@ -78,6 +78,33 @@ za něj — u `register` už to tak je.
 
 ---
 
+## Jak má vypadat VSTUP do promptu (čti, než napíšeš nové ukotvení)
+
+**Proč tahle stránka existuje:** odpověď na „jak podat modelu význam, aby ho použil, ale neopsal"
+už **byla naměřená — v pěti řádcích Rejstříku výš, každý na kus.** Nikdo je nesložil, a tak se
+otázka pokládala znovu (KUKY 2026-09-12: *„zaráží mě, že to dávno nevíme, tohle je pro mě základ"*).
+Tady je to složené. Žádné nové měření, jen jedna stránka místo pěti řádků.
+
+| tvar vstupu | co se s ním stane | odkud |
+|---|---|---|
+| **hotová věta O RUNĚ** („X je runa, která…") | **opíše se doslova** — þula ve výstupu 2/2; po odebrání 0/25 | v1.4 |
+| **vložený obraz jako věta** | opíše se **12 % → 28 %** (IS) — a čím líp obraz k runě sedí, tím víc | doslovné opisování, 14.8. |
+| **CELÝ klíčový seznam runy** | stopa prostého významu **17 % → 0 %** ↓ | `KLICE`, sonda „proč metafora" |
+| **JEDEN konkrétnější klíč** téže runy | **17 %** — beze změny, drží | `ASPEKT`, táž sonda |
+| **pokyn hlasu** („name the friction honestly") | echo nálepky **0/20**, ale stopa obsahu ve čtení **silnější** | register, 8.9. |
+
+⭐ **Pravidlo, které z toho plyne:**
+1. **Nikdy hotovou větu o runě.** Je to definice a definice se opisují. Platí i pro krásně
+   napsanou větu — čím líp sedí, tím spíš se objeví v textu.
+2. **Nikdy seznam.** Tři klíče už míří k `KLICE`. **Jedna věc, ne nabídka.**
+3. **Substance = jedna vazba. Způsob = pokyn hlasu.** Jeden klíč stopu drží (17 %), pokyn se
+   neopisuje (0/20). Nic změřeného neříká, že by ta kombinace selhala.
+4. ⚠️ **Jazyk to mění.** Opisování je jev hlavně islandský: táž krátká věta dala v EN 0 % → 9 %
+   (v šumu), v IS **12 % → 44 %**. Co v EN projde, v IS nemusí.
+
+⚠️ **Co tu NENÍ změřené a neplést si to:** bod 3 je jediná kombinace, kterou nic nevyvrací —
+**není potvrzená**. Nikdo ji nezkoušel. Kdo ji pustí, ať doplní řádek sem.
+
 ## Co sem NEpatří (§20 — neopisovat)
 Samotný obsah bydlí v kódu; deník na něj jen odkazuje:
 - prompty + gramatika + korekce → `v2/runar-character.js`
