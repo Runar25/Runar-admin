@@ -2810,3 +2810,36 @@ a (2) rozlišit „pracuje uvnitř toho, co člověk řekl" od „vydává to za
 - Ozvěna slovníku otázky v odpovědi = 28 ze 79, a vada to sama o sobě NENÍ (polovina návratů
   je odmítnutí: *„Isa holds nothing about your body one way or the other"*).
 
+---
+
+## 2026-09-12 — Runa bez polohy UMÍ umístit, když se ukotví na svou osu. A umístění tlačí k verdiktu.
+
+**Otázka:** kritérium „každé rameno musí lokalizovat člověka na cestě" naráží na runy, které
+polohu nemají (Gebo, Berkana, Wunjo). Ukotvení na jinou **osu cesty** (owner 2026-09-12: „budou mít
+jinou symboliku — růst, spojení") to zachrání?
+
+**Vzorek:** 3 runy × 2 ramena (A = ukotveno na osu · B = bez), produkční obrazy z `RUNE_IMAGES`,
+texty psané v konverzaci. Souzeno **slepě subagentem** — neznal hypotézu ani že jsou dvě ramena.
+
+**Výsledek: A 3/3 umístilo · B 0/3.** Ukotvení na osu tedy funguje i u run, které polohu nemají:
+- Gebo → ⑤ kdo jde se mnou: *„Whoever else is walking, their pace is not yours to set"*
+- Berkana → ⑥ co roste pod cestou: *„Wherever you have got to on the road, this has been getting on with itself"*
+- Wunjo → ⑤ úsek, kde patřím: *„This is a length of it, not the end of it"*
+
+⭐ **NEČEKANÝ A DŮLEŽITĚJŠÍ NÁLEZ: umístění tlačí k verdiktu.** Soudce označil **Wunjo-A jako
+jediný ze šesti, který ZAVÍRÁ výklad** — *„the only ending that states what the moment is for
+the reader"*. A byla to zrovna věta, kterou jsem ownerovi hodinu předtím chválil jako
+nejlepší. Měl jsem to obráceně.
+⇒ **Čím explicitněji text umísťuje, tím blíž je verdiktu.** Týž tvar jako „délka × jeden obraz".
+
+⭐ **Cesta ven je doložená v témže vzorku — Gebo-A.** Umístí uprostřed a poslední větou
+znovu otevře: *„the door stays open either way."* Soudce: k zavření se to přiblíží a závěrečná
+klauzule to rozevře. **Řemeslné pravidlo: umísti uprostřed, NESKONČI na umístění** — poslední
+věta patří obrazu. Nejčistší je Berkana-A: umístí přes osu, ale závěr mluví o reveni, ne o člověku.
+
+⚠️ **Hranice.** n=6, jeden pisatel (já), a **znal jsem predikci** — 3/3 vs 0/3 je extrém a část
+toho je moje psaní. Co tu domněnku drží: (a) soudce hypotézu neznal, (b) sám prověřil délkový
+konfoundr, který jsem mu nahlásil (A byly delší, 65–73 vs 42–49 slov), a doložil, že práci dělá
+vždy **jedna klauzule**, ne objem — *„adding words is not what they lack"*, (c) nález o Wunjo
+šel PROTI mému vlastnímu čtení. Netvrdí se nic o zbylých 22 runách.
+

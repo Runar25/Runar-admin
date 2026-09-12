@@ -863,6 +863,17 @@ Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je 
   Kritérium „rameno lokalizuje člověka na cestě" naráží na to, že **rameno pojmenuje runa, která padne** — a spousta run polohu nemá. Isa ano (stojím), Raidho ano (jdu), Eihwaz ano (drží mě). **Gebo, Berkana, Wunjo ne.**
   ⚠️ Riziko, kdyby se do polohy tlačily: **tichý posun významu** — změřeno 2026-09-11 na Sowilo, které se skrytou vrstvou přestalo být Sowilo a začalo být Perth.
   ⭐ **Ownerovo přerámování (2026-09-11):** *„budou mít jinou symboliku — růst, spojení. Když si je takhle ukotvíme, mohlo by nám to pomoct."* Tedy: ne každá runa nese POLOHU; nese jinou **osu cesty**. A sedí to na Huld — ten mluví o **bouři a špatném počasí**, tedy o terénu a viditelnosti, ne o poloze.
+  **NÁVRH MAPY (CODE-read 2026-09-12, owner viděl, NEratifikováno).** Osy nevymyšlené — vyjdou z Huldu (*„neztratí se v BOUŘI ani ŠPATNÉM POČASÍ, ani když CESTU NEZNÁ"* = počasí, terén, poloha) plus co poutník nese a s kým jde:
+  - **① POLOHA** (kde stojím, jak se hýbu): Raidho · Isa · Dagaz · Jera · Othila
+  - **② TERÉN** (co je pod nohama, co stojí v cestě): Hagalaz · Thurisaz · Nauthiz · Laguz · Eihwaz · Uruz
+  - **③ VIDITELNOST** (jak daleko dohlédnu): Sowilo · Kenaz · Perth · Ansuz
+  - **④ CO NESU**: Fehu · Algiz · Tiwaz
+  - **⑤ KDO JDE SE MNOU** (ownerovo „spojení"): Gebo · Ehwaz · Mannaz · Wunjo
+  - **⑥ CO ROSTE POD CESTOU** (ownerovo „růst"): Berkana · Ingwaz
+  - **⑦ CESTA JEŠTĚ NENÍ**: Blank — sám, a je to správně: kanonicky to není runa (prázdný kámen, Ódin, prázdnota). ⚠️ Owner opravil moje původní zařazení do ③: **dva ze tří Blankových obrazů nejsou o viditelnosti** (*„New snow lies over the track and no one has stepped in it yet"* · *„The line runs down into dark water and nothing has touched it yet"*) — nejde o to, že cestu nevidím, ale že žádná není.
+  ⚠️ **Nejistá místa, přiznaná:** **Wunjo** v ⑤ drží přes „belonging", ale „joy/harmony" je spíš *jak se jde* než kde/s kým · **Ehwaz** sedí na ⑤ i na ① · **Jera** je spíš čas než místo · **Tiwaz** je z celé pětadvacítky nejdál od cesty.
+  ✅ **Otestováno 2026-09-12 na třech runách bez polohy: ukotvení na osu funguje** (A 3/3 umístilo, B 0/3) — a odhalilo, že umístění tlačí k verdiktu. Detail → `RUNAR_EVAL_LOG.md` 2026-09-12.
+
   **K vyrobení:** mapa všech 25 run → která osa cesty. **K otestování:** jde z runy bez polohy udělat rameno, které přesto lokalizuje?
 
 - [ ] **NABÍDKA OTÁZKY PODLE ASPEKTU OBRAZU — a co k tomu dnes máme** (KUKY 2026-09-11: „jsme schopni nabídnout potenciální otázku přímo z generovaného čtení?"). Platí **primárně pro běžný Ask** — `_askHints()` je Ask; Vegvísir to zdědí, nestaví se to zvlášť.
