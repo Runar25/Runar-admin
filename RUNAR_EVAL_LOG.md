@@ -3213,5 +3213,5 @@ všechny 4 texty obsahují „not drawn" — C přežívá PROTI pravidlům, s o
 ⚠️ **Hranice:** n=2 na buňku (záměr × runa × délka) · jen EN · pisatelé subagenti v konverzaci (ne API) ·
 příčiny 1–2 neověřeny. **Nejlevnější rozhodující test:** tatáž dávka bez věty „Do not mirror…" a zvlášť bez
 `_askLifeContext` — nespadne-li odmítání, příčina je jinde.
-Skripty (scratch, neverzováno): `otazky_build.js` · `otazky_vyhodnot.js` · `sceny.js` · `prisne.js` · `utok27.js`.
+Stavba promptů, měřidla i útoky běžely ve scratchpadu session — neverzované, k dispozici nejsou; opakovat z popisu výš.
 
