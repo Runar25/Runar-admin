@@ -3207,3 +3207,36 @@ passed"* · Isa *„the still water that has stopped moving"* · Blank *„the o
 
 ⚠️ **Hranice:** jen ownerův účet · výběr vět je můj, hodnocení, jestli do čtení zapadají, dělá owner
 z celého kontextu · odpovědi z různých verzí promptu nejsou srovnatelné.
+
+## 2026-09-12 — Krátký obraz (3–4 slova) v Single: co Rúnar doplní · PILOT, n=1 na případ
+
+**Proč (owner):** v Single se obraz z banky vejde do jedné věty a čtení ho opakuje skoro doslova
+(Ansuz: obraz *„A voice on the phone says the thing you have been waiting to hear"* → čtení *„The phone rings,
+a voice speaks, and the words you waited for land at last in the still room."*; Algiz: lampa v okně → *„one
+window ahead still holds a lamp lit for you"*). U Norns se obraz rozprostře do delšího čtení.
+KUKY: *„potřebuju experiment, kdy obraz bude mít jen 3–4 slova… chci vidět, co Rúnar doplní."*
+
+**Co se testovalo (jedna věta):** produkční Single (`buildSysPrompt` + `buildReadingPromptSingle`, EN,
+životní runa Gebo), JEDINÁ změna: `RUNE_IMAGES` zúžen na jeden řádek s ownerovým krátkým obrazem; aspekt
+zůstal produkční (Algiz *protection*, Jera *patience*). Stejný seed → všechna tři čtení dostala tentýž úhel
+(*„the smallest detail in the image"*), délku (3 věty, 38–45 slov), zakončení (*„plain, steady line"*) a
+jméno vynechané. Psali 3 slepí pisatelé, každý viděl jen svůj prompt. Nesouzeno — hodnotí owner.
+
+| obraz | čtení |
+|---|---|
+| Algiz · *standing on the top* | A tuft of moss grips the sheltered side of the summit cairn, where the September wind goes around it. Algiz is that stone taking the wind so something small can stay green. You stand on the top, beside stones others carried up and left. |
+| Algiz · *flying bird over* | A small shadow slides over the wet stubble, gone before the raven overhead calls. Algiz is that watch kept from higher air, a wing spread over the field. You stand where that shadow crossed, under the one wind you and the raven share. |
+| Jera · *The dough needs its time* | A single bubble breaks the skin of the dough beneath the slipped cloth. Jera is that slow rising no hand can hurry, the warmth doing its share. You stand beside the bowl with your part already given, and the dough answers in its own hour. |
+
+**Co je v čtení a v obrazu NEBYLO (výčet, ne hodnocení):** K1 mech, mohyla, zářijový vítr, kameny vynesené
+jinými · K2 stín, strniště, havran, pole, vítr · K3 bublina, sklouznutá utěrka, mísa, teplo.
+
+**Vedlejší nález — odkud se v Horseshoe vzal jezdec na koni** (owner: *„v obraze není, zajímavý úkaz"*):
+spreadové prompty vypíšou ke každé pozici **jméno runy + první 4 klíčová slova** (`_spreadBlock` → `_kwBrief`,
+`v2/runar-character.js`; platilo 2026-08-11 i dnes). Ehwaz = *horse, movement, trust, partnership*. Obraz
+z banky dostane jen jedna runa spreadu; ostatní si Rúnar staví z klíčových slov. Single klíčová slova
+nedostává — má jen aspekt obrazu (`focus on:`).
+
+⚠️ **Hranice:** n=1 na případ, jeden seed · pisatelé subagenti, ne produkční model přes proxy · systémový
+prompt z `DEF_CHAR_EN`, ne případná uložená postava z DB · *„September"* v K1 prompt nenese (ověřeno
+v souboru promptu) — pisatel ho vzal z data svého prostředí; produkční model datum takhle nemusí mít.
