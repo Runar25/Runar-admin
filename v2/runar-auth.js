@@ -348,7 +348,11 @@ function openAuthModal() {
   document.getElementById('auth-modal-body').style.display = 'block';
   document.getElementById('auth-modal-success').style.display = 'none';
   setSt('st-auth', '');
-  setTimeout(() => document.getElementById('auth-email')?.focus(), DELAY_FOCUS);
+  // Viditelnost e-mailove casti se nastavuje PRI KAZDEM otevreni (jedno misto), ne jednou pri startu.
+  const emailOn = typeof AUTH_EMAIL_ENABLED === 'undefined' || !!AUTH_EMAIL_ENABLED;
+  const emailBlock = document.getElementById('auth-email-block');
+  if (emailBlock) emailBlock.hidden = !emailOn;
+  if (emailOn) setTimeout(() => document.getElementById('auth-email')?.focus(), DELAY_FOCUS);
 }
 function closeAuthModal() {
   document.getElementById('auth-modal').classList.remove('open');

@@ -737,7 +737,10 @@ function _updateGateTexts() {
   else if (activeAppTab === 'journal') updateWhispersUI();
   // Single-source text updates for elements not covered elsewhere
   setText('redeem-btn', lang === 'is' ? 'INNLEYSA' : 'REDEEM');
-  setText('auth-modal-sub', lang === 'is' ? 'Ekkert lykilorð þarf — töfralykill kemur í pósthólfið þitt.' : 'No password needed — a magic link will arrive in your inbox.');
+  // Podnadpis slibuje magic link jen tehdy, kdyz e-mailove prihlaseni opravdu je (AUTH_EMAIL_ENABLED).
+  setText('auth-modal-sub', (typeof AUTH_EMAIL_ENABLED !== 'undefined' && !AUTH_EMAIL_ENABLED)
+    ? t('auth_modal_sub_google')
+    : (lang === 'is' ? 'Ekkert lykilorð þarf — töfralykill kemur í pósthólfið þitt.' : 'No password needed — a magic link will arrive in your inbox.'));
   const _consentEl = document.getElementById('auth-consent-txt');
   if (_consentEl) _consentEl.innerHTML = lang === 'is'
     ? 'Með því að halda áfram samþykkir þú <a href="runar-privacy.html" target="_blank" rel="noopener">persónuverndarstefnu okkar</a>. Við geymum aðeins það sem þarf til að muna lestrana þín. Engin rakning, engar auglýsingar.'

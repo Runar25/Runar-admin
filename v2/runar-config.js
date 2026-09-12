@@ -213,6 +213,12 @@ TIERS.credits = TIERS.rune_seeker;
 // ─── ADMIN ACCESS ───────────────────────────────────────
 // Only these emails can access the Knowledge Shrine and Yggdrasil.
 const ADMIN_EMAILS = ['kukula@agndofa.is', 'info@agndofa.is'];
+
+// ─── E-MAILOVE PRIHLASENI ──────────────────────────────
+// false = v prihlaseni jen Google. Vestaveny mailer Supabase dorucuje JEN clenum tymu projektu
+// (overeno v dokumentaci 2026-09-12), takze cizi clovek by magic link nikdy nedostal.
+// Zapnout az PO nastaveni vlastniho SMTP (rozhodnuto: Brevo, EU) v Supabase → Auth → SMTP.
+const AUTH_EMAIL_ENABLED = false;
 // ─── APP SETTINGS ───────────────────────────────────────
 const APP = {
   default_lang:    'en',
