@@ -3240,3 +3240,45 @@ nedostává — má jen aspekt obrazu (`focus on:`).
 ⚠️ **Hranice:** n=1 na případ, jeden seed · pisatelé subagenti, ne produkční model přes proxy · systémový
 prompt z `DEF_CHAR_EN`, ne případná uložená postava z DB · *„September"* v K1 prompt nenese (ověřeno
 v souboru promptu) — pisatel ho vzal z data svého prostředí; produkční model datum takhle nemusí mít.
+
+**Owner 2026-09-12:** *„krátký obraz v single je asi game changer. Pokud by to takhle fungovalo v produkci,
+tak je to úžasný. Naschvál jsem zkusil dát Algizu jiný obraz, a stejně ho zvládl, jelikož si tam doplnil,
+co potřeboval."*
+**Neověřeno, než se o tom dá rozhodnout (CODE-read):**
+1. **Co runu drží — krátký obraz, nebo aspekt?** Oba cizí obrazy Algizu šly s `focus on: protection`; esenční
+   řádek („that watch kept from higher air") může stát na aspektu, ne na obrazu. Obrácená páka (§25): tytéž
+   dva Algizy BEZ aspektu.
+2. **Doplní Rúnar pokaždé něco jiného?** Stejný krátký obraz s jiným losem — když se vrací tatáž výplň
+   (mohyla, havran, mísa), stejnost se jen přestěhuje z banky do modelu.
+3. **Islandština:** krátký IS obraz netestován; IS je primární.
+
+## 2026-09-12 — „flying bird over" pro 10 náhodných run (Single, krátký obraz)
+
+**Proč (owner):** *„udělej to stejné pro náhodných 10 run — flying bird over. Chci vidět, jak si s tím jiné
+runy poradí."* Navazuje na pilot krátkého obrazu výš.
+
+**Co se testovalo (jedna věta):** tatáž cesta jako pilot — produkční Single EN, životní runa Gebo, jediná
+změna `RUNE_IMAGES` = jeden řádek s obrazem *flying bird over*; aspekt = produkční aspekt náhodného řádku
+té runy. Runy vylosovány z 24 (Algiz vyřazen, už testován). **Stejný seed jako pilot → všech 10 dostalo
+tentýž úhel** (*„Open on the smallest detail in the image"*), délku 3 věty / 38–45 slov a vynechané jméno;
+zakončení se liší jen u Isy (jiný pool). 10 slepých pisatelů, každý jen svůj prompt. Nesouzeno.
+
+| runa · aspekt | čtení |
+|---|---|
+| Jera · patience | One grey feather rests in the cut hay, dropped by a goose passing overhead. Jera is the grass going gold and the goose going south, each at its own pace. You stand beside the feather, where the sky has given the ground something small. |
+| Blank · unwritten potential | A bird's shadow slides over the dark pool, and the water keeps no mark of it. Blank is that still water, leaving room for what has not crossed yet. You stand on the bank where sky and water pass the light between them. |
+| Mannaz · self-awareness | One feather at a passing goose's wingtip lifts out of line, and the bird draws it back. Mannaz is knowing your own wing while the whole flock moves. You stand below, where geese take turns at the front and pass the lift back. |
+| Dagaz · turning point | One loose feather trembles at the goose's wingtip, low over the yellowing marsh. Dagaz is the instant the wings stop pushing and the air takes the weight. You stand below in the wet sedge, and the whistle of its wings comes down to you. |
+| Isa · stillness | The shadow of a goose flying over slides across the still tarn, and the stones beneath do not stir. Isa is that water, holding still while the whole sky moves over it. What passes between bird and water, when neither keeps the other? |
+| Ingwaz · inner development | A single drop falls from the bird's foot as it lifts over the lake. Ingwaz is that long quiet on the water, gathering until it becomes flight. You stand on the shore, where the lake gives up a bird and the sky returns a drop. |
+| Fehu · wealth | A grey feather drifts onto the mown hayfield, dropped by geese passing over toward the south. Fehu is what moves like that, carried far and set down in someone else's field. You stand in that field where it lands, one hand open. |
+| Sowilo · sun | One wing feather flares gold in the low September sun as a plover crosses over the heath. Sowilo is that light settling on anything that rises to meet it. You stand on the ground below, where the plover's shadow crosses your own. |
+| Eihwaz · resilience | A small grey feather lies in the moss, dropped by a raven flying over the birch. Eihwaz is the root holding fast in the dark while the sky moves on. You stand beneath that birch, where the air has given something to the ground. |
+| Raidho · natural rhythm | A single loose feather trembles at the wingtip as the bird passes over the autumn heath. Raidho is that steady beat kept between wing and wind. You stand on the heath below, in the same air the bird leans on and gives back. |
+
+**Výčet opakování (počítáno, ne hodnoceno):** *feather* 7/10 · *goose/geese* 5/10 · *shadow* 3/10 ·
+otevření „One … / A single …" 6/10. ⚠️ Všech 10 mělo tentýž úhel „nejmenší detail v obraze" — pero je
+nejmenší detail ptáka, takže opakování pera může být z úhlu, ne z obrazu. V produkci se úhel losuje.
+*September / autumn* prompt nenese — z data v prostředí pisatele.
+
+⚠️ **Hranice:** n=1 na runu, jeden seed pro všechny · pisatelé subagenti, ne produkční model · EN only.
