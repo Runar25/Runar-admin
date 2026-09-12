@@ -926,7 +926,13 @@ Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je 
   runy proti novému aspektu. Pak se měří tohle: `is_n` glosa vs aspekt, stejným A/B jako Perth.
   Týká se všech run — každá má v `is_n` závorku (`Isa (Kyrrstaða)`, `Tiwaz (Hermannsandinn)`…).
 
-- [ ] **SPOR K ROZSOUZENÍ: Cowork tvrdí, že `RUNES[].k` má změny, které ratifikované rozhodnutí ZAKAZUJE.**
+- [x] **ROZSOUZENO (owner 2026-09-12): `RUNES[].k` se NEMĚNÍ. Cowork si to plete se slovníkem 119.**
+  KUKY: *„nevím. pokud to tak nevidíš, tedy nemůžeš najít, tak to není hotové."* ⇒ platí zapsané
+  rozhodnutí z 2026-09-10 („Nenasazuje se do kódu — `RUNES[].k` zůstává nedotčené"). Kdyby se ty
+  změny někdy dělat měly, musí k nim vzniknout **nový datovaný záznam**, ne odkaz na tenhle spor.
+  Původní znění sporu zůstává níž, aby bylo dohledatelné, proč se to neudělalo.
+
+- [ ] **~~SPOR K ROZSOUZENÍ~~ (vyřešeno výš 2026-09-12): Cowork tvrdí, že `RUNES[].k` má změny, které ratifikované rozhodnutí ZAKAZUJE.**
   Cowork-tune v odpovědi 2026-09-12 píše „⚠ RECONCILIACE s dřívějšími ratifikovanými opravami k
   (owner 2026-09-10)" a vyjmenovává: Laguz +memory/dreams · Thurisaz +disruptive force ·
   Uruz −transformation · Mannaz −memory · Eihwaz +world-tree/protection · Othila +foundation/belonging.

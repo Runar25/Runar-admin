@@ -5526,3 +5526,35 @@ slovník 119). Při sporu vyhrává novější datovaný záznam (§20), takže 
 leží v `RUNAR_BACKLOG.md`, aby ho owner rozsoudil.
 
 **Affected doc(s):** `RUNAR_BACKLOG.md` — v témž commitu.
+
+---
+
+## 2026-09-12 (3) — Owner rozhodl čtyři věci: ctnostní aspekty se opravují OBRAZEM první, `k` se nemění, rejstřík jmen se importuje
+
+**① Tři „zavřená" místa přepíše Cowork na enaktující obrazy** (resilience 2×, partnership, patience).
+Podklad: ctnostní aspekt → čtení zavře výklad v 73 % proti 25 % (`RUNAR_EVAL_LOG.md` 2026-09-12,
+p = 0,011). KUKY: „ano".
+
+**② Pojistka v promptu proti poučování u ctnostních aspektů se postaví, ale AŽ PO těch obrazech.**
+KUKY: *„ano jak říkáš."* Důvod pořadí je měřicí, ne organizační: dvě páky naráz se od sebe
+neodliší. Až obrazy doběhnou, měří se jedna dávka (12 slepých čtení) na rozdíl „zavřel výklad".
+
+**③ `RUNES[].k` se NEMĚNÍ.** Cowork tvrdil, že owner 2026-09-10 ratifikoval změny klíčů
+(Laguz +memory/dreams, Thurisaz +disruptive force, Uruz −transformation, Mannaz −memory,
+Eihwaz +world-tree/protection, Othila +foundation/belonging). V repu takový záznam není a záznam
+z toho dne říká opak. KUKY 2026-09-12: *„nevím. pokud to tak nevidíš, tedy nemůžeš najít, tak to
+není hotové."* ⇒ Nic se neprovedlo, spor uzavřen v `RUNAR_BACKLOG.md`. Kdyby ty změny měly někdy
+přijít, chtějí **nový datovaný záznam** — ne odkaz na tenhle spor.
+⚠️ Zároveň to je druhý případ za den, kdy Cowork tvrdil o kódu/kánonu něco, co v repu není
+(první: „aspekt `duldir hlutir`", zatímco v datech bylo `hið hulda`). Pravidlo „handoff = žádost,
+ne fakt" tedy platí i na jeho tvrzení o **ratifikaci**, ne jen o kódu.
+
+**④ Import oficiálního rejstříku islandských jmen — DĚLÁ SE.** KUKY: *„udělej to."*
+Cíl podle Coworkova plánu: coverage backbone (Mannanafnaskrá, ~3 900 schválených jmen), aby
+v seznamu nechybělo žádné běžné islandské jméno. ⚠️ Otevřená otázka, kterou musí zodpovědět
+zdroj, ne domněnka: rejstřík dává **jména**, ne **etymologii** — a bez etymologie se `norse:
+true/false` nedá nastavit, aniž bychom hádali (§23). Než se cokoli importuje, zjišťuje se, jaký
+zdroj vůbec původ nese; co z toho vyjde, se zapíše, i kdyby to znamenalo „úplnost jmen ano,
+původ ne".
+
+**Affected doc(s):** `RUNAR_BACKLOG.md` — v témž commitu.
