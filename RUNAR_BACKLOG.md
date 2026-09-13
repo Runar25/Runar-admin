@@ -1591,3 +1591,15 @@ Obojí našla ta registrace tím, že mě donutila ty řádky přečíst — co�
    them"*. Životní runa ze své podstaty něco tvrdí, takže to nemusí být vada — ale je to rozpor
    dvou instrukcí v jednom promptu a **rozhodnout ho má člověk**, ne model při každém čtení.
 
+## Meaning-tap: klik na význam runy zvýrazní, kde ve čtení žije (single + spready)
+
+KUKY 2026-09-13 (při přestavbě životní runy): u single jde ťuknout na glyf → popup se jménem
+a klíčovými slovy (`runar-rune-popup.js`, váže se na `.rlbl-glyph`). Chybí druhý krok: **klik na
+jednotlivé klíčové slovo → ve čtení se zvýrazní místo, kde ten význam stojí; klik mimo zvýraznění
+zruší.** Životní runa to dostane jako součást přestavby v3 (její prompt nově vyžaduje kánonová
+slova doslova v textu → zvýraznění = prosté nalezení slova; žádné skryté značky — neprošly by ㉔).
+Pro single a spready to chce VLASTNÍ rozhodnutí: texty čtení jsou obrazové a klíčová slova v nich
+doslova stát nemusí — buď je prompt začne vyžadovat (mění charakter čtení → měřit), nebo se mapuje
+jinak (u spreadů existuje JSON věta↔runa). Owner: „tohle by pak mohlo fungovat i pro single a
+spready, ale to jen zapíšeme do backlogu. nechci dělat všechno naráz."
+
