@@ -44,6 +44,18 @@
   ⚠️ **Není to jen doplnit počet** — každý nový obraz musí projít slepým testem (22. 8. ukázal,
   že 7 z 80 obrazů ukazuje na JINOU runu) a dvěma síty z `RUNAR_DESIGN.md`.
 - [x] **~~Motiv-guard běží skoro naslepo — 79 z 85 obrazů nemá motiv~~ ⚠️ TO BYL MŮJ ŠPATNÝ ZÁPIS** (oprava 2026-09-10). Motiv **nepojmenovává obraz, ale OPAKUJÍCÍ SE PŘEDMĚT** (`midnight-sun`, `lamb`, `reflection`) — je to štítek pro dvojici, ne popisek řádku. Prázdný motiv proto **není dluh**: u obrazu, jehož předmět se u té runy nevrací, nemá guard co střídat. Chybí-li motiv, řádek se píše **sedmisloupcový** (osmisloupcový s prázdným motivem kontrola ㉟ odmítá, a správně). ⚠️ Tuhle chybu jsem zopakoval i v zadání pro Cowork („motiv povinný + distinktní") — proto přišla dávka 1 s 36 unikátními motivy, které musely pryč.
+- [ ] **`RUNE_IMAGES`: IS a EN aspekt v témž řádku ukazují na JINOU stránku runy** (KUKY 2026-09-13: *„zapiš, ať se
+  nikde neztratí"*). Aspekt jde do promptu jako `focus on:` → islandské a anglické čtení téhož obrazu dostanou jiný fokus.
+  **Doloženo:** Isa *„The clock on the wall has stopped…"* — IS `kyrrstaða` (klid) × EN `waiting`. **Precedens:** tatáž vada
+  u Jery opravena (`RUNAR_DECISIONS.md` 2026-09-12 (5): IS `rétt tímasetning` × EN `patience`).
+  **Kandidáti, NEposouzeno:** mechanická kontrola (pozice aspektu v `k_is` proti `k`) označila **22 ze 108** řádků:
+  Fehu ovce · Fehu chléb · Ansuz havran · Ansuz telefon · Raidho vátý sníh · Raidho cesta u řeky · Kenaz kovárna · Kenaz hver ·
+  Hagalaz poryv · Hagalaz rozvodněná řeka · Nauthiz pletení · Ehwaz dva koně · Ehwaz úzká stezka · Laguz ledovcová řeka ·
+  Laguz voda po svahu · Ingwaz semeno · Othila zřícenina · Dagaz probuzení · Blank vlasec · Isa hodiny · Thurisaz živý plot ·
+  Thurisaz trnitý keř. ⚠️ `k` a `k_is` **nejsou paralelní seznamy** (Fehu `k`: wealth, cattle, material prosperity… ×
+  `k_is`: efnisleg velsæld, auður, búfé…), takže pozice lže oběma směry — každý řádek posoudit VÝZNAMEM.
+  Smoke ㉤ hlídá aspekt↔klíč v každé řeči zvlášť, IS↔EN nehlídá. Hodiny Isy zmizí s ownerovými krátkými obrazy
+  (2026-09-13), třída zůstává.
 - [ ] **Sedm run má jediný registr D|E|P** (7. sloupec, nalezeno 2026-09-09): Mannaz · Eihwaz · Ehwaz · Laguz · Ingwaz · Uruz · Hagalaz. Registr měl sloužit výběrové kongruenci při skládání spreadů (hlavička `RUNE_IMAGES`); u těch sedmi runy nemá z čeho vybírat, takže ta páka je pro ně mrtvá.
 
 - [ ] **CO HLÍDAT AŽ SE BUDE TESTOVAT NAŽIVO** (zapsáno 2026-09-08 na pokyn ownera: *„zapsat, až budeme testovat tak se to ukáže, ať o tom víme"*). Dvě věci, které nemají žádnou automatickou kontrolu a ukážou se jedině na živých čteních:
