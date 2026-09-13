@@ -3293,3 +3293,31 @@ mít nějaké obrazy pro každou runu, nebo možná skupiny run. Každopádně z
 kreativitu Rúnara."* · *„Otázka je, jestli to Rúnar řekne tak, jak jsi to napsal — tomu moc nevěřím."*
 ⇒ Pisatelé byli subagenti Claude (Opus 5), ne produkční model (u ownerových čtení v `readings.usage`
 stojí `claude-opus-4-8`). **Další krok (owner):** upraví obrazy Isy a zkusí se v produkci.
+
+## 2026-09-13 — Nové krátké obrazy Isy: 5× Isa + tytéž obrazy u náhodné runy (Raidho)
+
+**Proč (owner):** navrhl pět krátkých obrazů Isy (*neodklizená zasněžená cesta · zamrzlé horské jezero ·
+studený šálek kakaa · windless fjord · nefunkční hodiny*), CODE-read je převedl do EN; owner: *„napřed mi na to
+udělej test… a jednu náhodnou runu taky pro tyhle nové obrazy."* Aspekty owner schválil.
+
+**Co se testovalo (jedna věta):** produkční Single EN, životní runa Gebo, jediná změna `RUNE_IMAGES` = jeden
+řádek s krátkým obrazem. Isa: cesta/kakao → *waiting*, jezero/fjord/hodiny → *stillness*. Náhodná runa (z 22,
+mimo Isa/Algiz/Gebo) = **Raidho**, aspekt z jeho produkčního řádku = *the road*. **Každé čtení vlastní seed**
+(poučení z minula: společný seed dal 9/10 tentýž konec „You stand") — úhel, délka, konec a jméno se losují
+jako v produkci. 10 slepých pisatelů (subagenti Claude, ne produkční model). Nesouzeno.
+
+| # | runa · obraz | los (úhel · délka · konec) | čtení |
+|---|---|---|---|
+| I1 | Isa · the road snowed shut | seeker uvnitř obrazu · 3 věty · tvrdá otázka | You stand at the closed gate where the highland road vanishes under early snow. Isa is the road held still, nothing moving on it and nothing lost beneath it. Who stands at the other end of this road, waiting on the same snow as you? |
+| I2 | Isa · mountain lake frozen still | celý obraz, pak jedna věc · 4 věty · tvrdá otázka | The mountain lake has frozen still overnight, Kuky, holding ridge, cloud and raven in one grey glass. Then the light flattens, the reflections go, and one dark stone remains beneath the ice. Isa is the grip that keeps a thing exactly where it lies. What must the lake be given before it hands the stone back? |
+| I3 | Isa · cocoa gone cold | okraj, kde se věc mění · 3 věty · věta, která stojí | At the rim of your cup, the cocoa is turning to a thin, cold skin. Isa is that stillness closing over the top, keeping everything underneath just as it was. Across the table, a second cup sits untouched, poured at the same time as yours. |
+| I4 | Isa · windless fjord | nejmenší detail · 3 věty · věta, která stojí | A gull feather rests on the fjord, and with no wind it does not drift. Isa is this holding still, the pause that keeps everything where it lies. The mountain and its reflection meet at the waterline, Kuky, each giving the other its shape. |
+| I5 | Isa · a stopped clock | seeker uvnitř obrazu · 3 věty · tvrdá otázka | You stand in the dim hall under a clock stopped at ten past four, the dust on its glass unbroken. Isa is that hour held whole, nothing taken from it and nothing added. Whose hand wound it last, and whose would start it? |
+| N1 | Raidho · the road snowed shut | nejmenší detail · 4 věty · klidná věta | Only the yellow tip of a marker pole shows above the drift, Kuky, where early snow has closed the pass. Beyond it you see another, and another, marking a road no wheel can cross. Raidho is the road remembered, even while nothing travels it. Someone set those poles long ago, for travellers they would never meet. |
+| N2 | Raidho · mountain lake frozen still | celý obraz, pak jedna věc · 3 věty · klidná věta | Ridges and pale sky ring a mountain lake gone still as ice, until only its shore track remains. Raidho is that track, going on where the water has stopped. Kuky, the sky lends the lake its light, and the lake gives it back unbroken. |
+| N3 | Raidho · cocoa gone cold | nejmenší detail · 4 věty · otevřená otázka/volba | A thin skin has formed on the cocoa, creased where the spoon came out. The mug sits by the open window, and the autumn wind has carried its heat into the yard. Raidho is that warmth taking its own road, from the cup into moving air. Do you warm it again, or pour two fresh cups to share? |
+| N4 | Raidho · windless fjord | celý obraz, pak jedna věc · 4 věty · kde seeker stojí | The whole fjord lies windless, Kuky, every mountain and moored hull doubled in grey autumn water. Then it all falls away but one rowing boat, its wake the only moving line. Raidho is the steady stroke that turns still water into a way across. You stand on the jetty, and the rower's wake is just reaching your boots. |
+| N5 | Raidho · a stopped clock | celý obraz, pak jedna věc · 3 věty · kde seeker stojí | A quiet kitchen, September wind at the open window, then only the stopped clock on the wall. Raidho is the wind that keeps moving through, while the hands stay put. You stand between the clock and the window, where the air passes both ways. |
+
+*early snow / autumn / September* prompt nenese — pisatelé to vzali z data svého prostředí.
+⚠️ **Hranice:** n=1 na obraz × runu · pisatelé nejsou produkční model · EN only (IS verze obrazů ještě nejsou).
