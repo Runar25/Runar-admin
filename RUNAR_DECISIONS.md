@@ -5840,3 +5840,28 @@ případ, „Jól"/„Gói" zakázané, a protlačení produkčním `buildLifeRu
 
 **Affected doc(s):** žádný — RUNAR_DESIGN.md tabulku měsíců neopisuje (řádek „Květen–červen …" je
 sezónní mapa run, ne kalendář narození).
+
+## 2026-09-14 (1) — Meaning-tap: glyf životní runy je klikací a klik na význam zvýrazní místo ve čtení
+
+**Proč (KUKY 2026-09-13):** *„runa jde vidět [v single] a chtěl bych, aby šla vidět i v životní
+runě… chtěl bych mít možnost kliknout na meaning s tím, že se označí, kde se ve větě nachází.
+kliknu někam mimo, tak vybrání zmizí."*
+
+**Co platí:** glyf životní runy nese `.rlbl-glyph` (týž popup jako čtení) + nový atribut
+`data-lore="<id textu>"`. S ním popup vykreslí významy jako klikací štítky: klik → zvýraznění
+místa ve čtení (`.kw-hl`), klik kamkoli jinam → zvýraznění zmizí. Bez `data-lore` je popup beze
+změny — single/spready se nemění (vlastní rozhodnutí → `RUNAR_BACKLOG.md`, meaning-tap záznam).
+Jméno i klíče glyfu jdou v jazyce ULOŽENÉHO textu (`_lifeRuneLang`), ne UI — hledá se v něm.
+
+**Hledání významu v textu** (runar-rune-popup.js): celá fráze → fráze s oříznutým koncem →
+plnovýznamová slova (delší napřed, stopslova pryč), vše po **skládání znak za znakem**
+(á→a, ð→d, þ→t… 1:1, délka se nemění → indexy zvýraznění sedí). Bez skládání je klíč „að bíða"
+nenajitelný: rozkaz je „bíddu" (ð→dd) a podstatné jméno „bið" (krátké i) — našel test, ne odhad.
+Význam, který v textu nestojí (čtení z doby před požadavkem na viditelná klíčová slova),
+nezvýrazní nic a nic nerozbije.
+
+**Čím je to jištěné:** ㉣ +11 kontrol (EN fráze · kyrrstaða→kyrrstöðu · að bíða→bíddu · stopslova
+„and"/„through" · nenalezené → null · glyf s data-lore · jazyk klíčů podle textu). Mutace 7/7
+zachycené — M6 (stopslova) až po doplnění testu, který mutační běh vyžádal.
+
+**Affected doc(s):** `RUNAR_BACKLOG.md` — meaning-tap pro single/spready (zapsáno 2026-09-13).

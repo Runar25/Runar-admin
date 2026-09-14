@@ -571,6 +571,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .rune-pop-g{font-size:1.5em;color:var(--gold);display:block;line-height:1;}
 .rune-pop-n{font-family:'Cinzel',serif;font-size:0.82em;letter-spacing:1.5px;color:#e6e9f0;display:block;margin-top:5px;}
 .rune-pop-kw{font-size:0.72em;color:#8bb8d8;font-style:italic;display:block;margin-top:3px;}
+/* Meaning-tap (zivotni runa, 2026-09-14): zakladni .rune-pop ma pointer-events:none — klikaci je jen popup se stitky vyznamu */
+.rune-pop--tap{pointer-events:auto;}
+.rune-pop-kw-item{display:inline-block;margin:2px 3px;padding:1px 8px;border:1px solid rgba(139,184,216,0.35);border-radius:9px;cursor:pointer;transition:border-color .15s,color .15s;}
+.rune-pop-kw-item:hover{border-color:var(--gold);color:var(--gold);}
+.kw-hl{color:var(--gold);border-bottom:1px solid rgba(255,191,0,0.5);text-shadow:0 0 8px rgba(255,191,0,0.3);}
 .layer2{background:#0a0e18;padding:20px;margin-bottom:16px;}
 .layer2-lbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--muted);margin-bottom:10px;}
 .out-txt{font-size:1.05em;line-height:1.9;font-style:italic;color:var(--white);}

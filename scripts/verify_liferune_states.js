@@ -63,7 +63,7 @@ S.window = S; S.self = S; S.globalThis = S;
 let code = '';
 for (const f of ['runar-config.js', 'runar-runes.js', 'runar-translations.js',
                  'runar-names.js', 'runar-names-registry.js', 'runar-character.js', 'runar-utils.js', 'runar-svgs.js', 'runar-tree.js',
-                 'runar-app.js']) {
+                 'runar-app.js', 'runar-rune-popup.js']) {
   code += '\n/* ' + f + ' */\n' + fs.readFileSync(DIR + f, 'utf8') + '\n;\n';
 }
 // Živý strom a jméno stromu sem netáhneme — testuje se stav ZÁLOŽKY, ne kresba.
@@ -467,6 +467,37 @@ async function drat() {
   rekni(isl.volani === 0, 'is  „Magnús" → model se nevolá ani islandsky');
   rekni(isl.obsah.indexOf('latínu') !== -1, 'is  …a původ je islandsky („latínu")');
   rekni(!/\b(Latin|Greek|Hebrew|Aramaic|Germanic|Slavic)\b/.test(isl.obsah), 'is  …a v islandské větě nezůstalo ANGLICKÉ slovo');
+}
+
+// ── MEANING-TAP: klik na vyznam → najde se ve cteni (ciste funkce, bez DOM) ──
+// KUKY 2026-09-13/14. Popup zivotni runy dela z klicovych slov klikaci stitky; hledani musi
+// unest islandske ohybani (kyrrstaða→kyrrstöðu) a u frazi najit plnovyznamove slovo.
+{
+  const K = vm.runInContext('window._runePopKw', S);
+  rekni(!!K && typeof K.findIn === 'function', 'popup vystavuje hledání významů');
+  const najdi = (text, fraze) => K.findIn(text, fraze);
+  rekni((najdi('Giving and receiving are one movement in it.', 'giving and receiving') || {}).stem === 'giving and receiving',
+        'EN fráze se najde celá');
+  rekni(!!najdi('Í kyrrstöðu býr styrkur.', 'kyrrstaða'), 'islandské ohýbání: kyrrstaða najde kyrrstöðu');
+  rekni(!!najdi('allt innra með þér segir: bíddu.', 'að bíða'), 'fráze „að bíða" najde „bíddu" (plnovýznamové slovo)');
+  rekni(!!najdi('kaldur, hreinn skýrleiki', 'skýrleiki í kulda'), 'ze „skýrleiki í kulda" se hledá skýrleiki, ne předložka');
+  rekni(najdi('Two lines crossed, nothing more.', 'companionship') === null,
+        'význam, který v textu nestojí (stará čtení) → null, žádné zvýraznění');
+  // Stopslova: bez nich by se „významem" stala spojka — „and" chytí „sand", „through" cokoli.
+  rekni(najdi('sand and stone stand still', 'giving and receiving') === null,
+        '„and" z fráze se nehledá (chytilo by „sand")');
+  rekni(najdi('the light passes through the door', 'clarity through cold') === null,
+        '„through" z fráze se nehledá (není to význam)');
+
+  // Glyf životní runy nese popup data + cíl zvýraznění — v jazyce ULOŽENÉHO textu, ne UI.
+  vm.runInContext('_lifeRuneText = "Gebo is the gift."; _lifeRuneLang = "en"; lang = "is";', S);
+  Object.keys(prvky).forEach((k) => { prvky[k].style = {}; prvky[k].textContent = ''; prvky[k].innerHTML = ''; });
+  vm.runInContext('_showTreeReading(RUNES.find(r => r.n === "Gebo"), "Gebo", true)', S);
+  const gh = String((prvky['tree-rune-glyph-exists'] || mk('x')).innerHTML);
+  rekni(gh.indexOf('rlbl-glyph') !== -1 && gh.indexOf('data-lore="tree-reading-text"') !== -1,
+        'glyf životní runy je klikací a míří na text čtení');
+  rekni(gh.indexOf('data-kw="gift, companionship') !== -1, 'klíče jdou v jazyce uloženého textu (EN text × IS UI)');
+  vm.runInContext('_lifeRuneText = null; _lifeRuneLang = null; lang = "en";', S);
 }
 
 drat().then(() => {

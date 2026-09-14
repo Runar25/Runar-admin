@@ -500,7 +500,16 @@ function _showTreeReading(rune, runeName, isIs) {
   // Header: 'You carry life rune Gebo ᵏ' — label hidden, name carries full phrase
   if (lbl) lbl.style.display = 'none';
   if (nm) nm.textContent = (isIs ? 'Þú ber lífsrún ' : 'You carry life rune ') + runeName;
-  if (gl) gl.innerHTML = ' ' + runeSvg(rune, { frame: false, cls: 'rune-svg-fl' });
+  // Glyf zivotni runy je klikaci jako ve cteni (KUKY 2026-09-13: „runa jde videt [v single]
+  // a chtel bych aby sla videt i v zivotni rune") — popup + data-lore zapina meaning-tap
+  // (klik na vyznam zvyrazni misto v textu; runar-rune-popup.js). Jmeno i klice jdou v JAZYCE
+  // ULOZENEHO TEXTU (_lifeRuneLang), ne UI — hledaji se v nem.
+  if (gl) {
+    var LL = (_lifeRuneLang === 'is' || (!_lifeRuneLang && isIs)) ? 'is' : 'en';
+    gl.innerHTML = ' <span class="rlbl-glyph" data-rune="' + (LL === 'is' ? rune.is_n : rune.n)
+      + '" data-kw="' + (LL === 'is' ? rune.k_is : rune.k)
+      + '" data-lore="tree-reading-text">' + runeSvg(rune, { frame: false, cls: 'rune-svg-fl' }) + '</span>';
+  }
   var open = document.getElementById('tree-static-open');
   if (open) open.textContent = '';
   var txt = document.getElementById('tree-reading-text');
