@@ -3360,3 +3360,52 @@ scény postavilo samo · nové věci: A kapka, zobák · B žlutý březový lis
 - *„yellow"* (podzim) prompt nenese — z data v prostředí pisatele.
 ⚠️ **Hranice:** **n = 1 na rameno, jeden seed** — rozdíl mezi dvěma texty může být náhoda; „krátký je lepší" z toho
 nejde tvrdit, jen ukázat · pisatelé = subagenti Claude Opus 5, produkce běží na `claude-opus-4-8` · EN only.
+
+## 2026-09-14 — Ask nad Isou B · Mannaz A/B s nefyzickým obrazem · esenční řádek na 27 čteních
+
+### 1. Ask na poslední větu čtení B
+**Co vstoupilo:** produkční `buildAskPrompt` — text čtení B + `Runes drawn: Isa` + otázka *„What passes between leaf and
+water when neither one moves?"* + `RP_ASK.rules` + `_askLifeContext` (Gebo) + **`THE ESSENCE LINE`** (🔒 ověřeno: Ask
+dostává i pravidlo esenčního řádku přes `_describeRule`) + `NO COLD READING`. Nic vyplněného (oblast, hledání), single.
+**Odpověď:** Only what needs no movement passes between them. The leaf lays its small weight on the surface, and the
+water bears it without a ripple. The fjord's cold seeps into the leaf, and its yellow darkens slowly at the edges. Beneath
+them both, the light sinks to the dark stones and rises again unbroken. Isa keeps each thing in its place until the
+light can reach the bottom.
+
+### 2. Mannaz A/B — obraz, který není fyzická scéna (owner: *„aby obraz nebyl fyzický; můžeš zvolit jinou runu"*)
+Výpovědní obraz o mysli (typ 3 v `RUNAR_DESIGN.md` „Typ obrazu"), aspekt `mind`, stejný seed: úhel *„Open with the motion
+already underway in the image"* · 3 věty / 38–45 slov · konec *„name where the seeker stands in the image"* · jméno pozdě ·
+Gebo jen v poslední větě. **Liší se jediný řádek IMAGE (ověřeno diffem, 1 z 12):**
+- A (produkce): *You remember the number of a house you have not called in thirty years, but not why you walked into this room.*
+- B (krátký): *remembered number, forgotten reason*
+
+| | čtení |
+|---|---|
+| A | A house number comes back after thirty years, while the reason you walked into this room slips away. Mannaz is the mind holding on to others longer than to its own errands. You stand in this room, Kuky, holding a number someone once gave you. |
+| B | Your thumb is already tapping out a number known by heart, its reason long forgotten. Mannaz is that keeping between minds, what people carry for each other after the cause is gone. You stand at the last digit, Kuky, the line open between two people. |
+
+### 3. Předá model větu *„its sense in plain words a stranger to runes can grasp"* do čtení? (spočítáno)
+27 esenčních řádků ze všech testovacích čtení 2026-09-12 až 14: tvar **„<Runa> is …" 27/27** · obsahuje prosté slovo
+významu z `RUNES[].k` **5/27** (Isa *stillness*, Isa *pause*, Raidho *the road*, Mannaz *mind* ×2) — z toho 3× je to právě
+slovo aspektu, které prompt podal (`focus on:`). Zbytek řádků říká, co runa DĚLÁ v obraze (*„that stone taking the wind"*,
+*„that slow rising"*), ne co znamená. Sedí na dřívější měření 17 % (`RUNAR_BACKLOG.md` „VÝKLAD JE METAFORA VEDLE METAFORY").
+*„a stranger to runes"* je v angličtině ustálený obrat = člověk, který runy nezná; chůzi neznamená. Akci žádá slovo
+**DOES** (*„what the rune DOES through this image"*) a vzor *„warmth passed from hand to hand"*. ⚠️ Která z těch částí
+výsledek drží, NEověřeno — žádná páka nebyla odebrána.
+
+### 4. Fakta k otázkám ownera
+- **Bez otázky / s oblastí (owner: *„tohle snad Rúnar už dělá, zkontroluj"*) — ANO, ověřeno v `buildReadingPromptSingle`:**
+  bez otázky jde `noqBranch` (*„Mention X by name once… One clear insight is enough"*), s otázkou `qBranch` (*„Let X answer:
+  …through image and symbol, not advice… Speak to what lies beneath the question"*); oblast přidá `_domainContext`
+  (např. *„The reading is for Career & Creativity — let the image you were given land on making and work…"*), hledání
+  `_registerContext`.
+- **Roční období:** produkční prompt čtení **datum ani sezónu nenese** — `getContextLine()` (datum, denní doba, fáze
+  měsíce, islandská sezóna) volá jen laboratorní `buildSysPromptV2`. Sezóna dnes žije jen ve VÝBĚRU obrazu podle měsíce.
+  „Yellow leaf / September" v testech je z data v prostředí pisatelů. Owner: *„chtěli jsme, aby tohle dělal — půjde to?"*
+  Technicky ano (řádek existuje, CODE-tune); hranice kánonu: *„žádné falešné aktuální počasí jako fakt o tazateli"*
+  (`RUNAR_DESIGN.md` „Jak Rúnar skládá čtení — tři beaty").
+- **„World: the roots, what lies beneath" a bříza:** to je `rworld` pro svět Hel (Isa). *below / beneath* se objevilo
+  v A (*„what lies above and below"*), v B (*„dark stones below"*) i v Asku (*„sinks to the dark stones"*). Jestli břízu
+  přinesla slova *the roots*, z jednoho čtení nepoznat — rozhodl by nulový řez (tentýž prompt bez řádku World, víc běhů).
+
+⚠️ **Hranice:** n=1 na každé čtení a Ask · pisatelé subagenti Claude Opus 5, produkce `claude-opus-4-8` · EN only.
