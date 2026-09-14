@@ -500,6 +500,8 @@ async function drat() {
   const gh = String((prvky['tree-rune-glyph-exists'] || mk('x')).innerHTML);
   rekni(gh.indexOf('rlbl-glyph') !== -1 && gh.indexOf('data-lore="tree-reading-text"') !== -1,
         'glyf životní runy je klikací a míří na text čtení');
+  rekni(gh.indexOf('rlbl-stone') !== -1 && gh.indexOf('rune-svg-fl') === -1,
+        'glyf je KÁMEN jako u čtení, ne holá linka (KUKY 2026-09-14, mění §5)');
   rekni(gh.indexOf('data-kw="gift, companionship') !== -1, 'klíče jdou v jazyce uloženého textu (EN text × IS UI)');
   vm.runInContext('_lifeRuneText = null; _lifeRuneLang = null; lang = "en";', S);
 }

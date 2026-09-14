@@ -506,9 +506,10 @@ function _showTreeReading(rune, runeName, isIs) {
   // ULOZENEHO TEXTU (_lifeRuneLang), ne UI — hledaji se v nem.
   if (gl) {
     var LL = (_lifeRuneLang === 'is' || (!_lifeRuneLang && isIs)) ? 'is' : 'en';
+    // KAMEN jako u cteni (KUKY 2026-09-14, meni §5 z 2026-07-14 — datovany zaznam v DECISIONS).
     gl.innerHTML = ' <span class="rlbl-glyph" data-rune="' + (LL === 'is' ? rune.is_n : rune.n)
       + '" data-kw="' + (LL === 'is' ? rune.k_is : rune.k)
-      + '" data-lore="tree-reading-text">' + runeSvg(rune, { frame: false, cls: 'rune-svg-fl' }) + '</span>';
+      + '" data-lore="tree-reading-text">' + runeSvg(rune, { frame: true, cls: 'rlbl-stone' }) + '</span>';
   }
   var open = document.getElementById('tree-static-open');
   if (open) open.textContent = '';
@@ -517,18 +518,6 @@ function _showTreeReading(rune, runeName, isIs) {
   var cleanText = (_lifeRuneText || '').replace(/^#[^\n]*\n+/, '').trim();
   if (txt) txt.innerHTML = cleanText.replace(/\n/g, '<br>');
   setPH('tree-name-inp', t('tree_name_ph'));
-}
-
-function toggleTreeReading() {
-  var body = document.getElementById('tree-reading-body');
-  var arrow = document.getElementById('tree-toggle-arrow');
-  if (!body) return;
-  var open = body.style.display !== 'none';
-  body.style.display = open ? 'none' : 'block';
-  if (arrow) {
-    arrow.textContent = open ? '+' : '−';
-    arrow.classList.toggle('open', !open);
-  }
 }
 
 async function setTreeDOB() {
@@ -847,11 +836,6 @@ async function generateLifeRuneReading() {
 
   var runeName = isIs ? rune.is_n : rune.n;
   _showTreeReading(rune, runeName, isIs);
-  // Auto-expand reading body immediately after generation
-  var _trBody = document.getElementById('tree-reading-body');
-  var _trArrow = document.getElementById('tree-toggle-arrow');
-  if (_trBody) _trBody.style.display = 'block';
-  if (_trArrow) { _trArrow.textContent = '−'; _trArrow.classList.add('open'); }
 }
 
 // Load life rune reading from DB (called after fetchUserProfile)
@@ -921,7 +905,8 @@ async function _loadFoundingReading(id) {
   if (typeof activeAppTab !== 'undefined' && activeAppTab === 'tree') updateTreeTab();
 }
 
-// Kopie chovani toggleTreeReading() — jina data, tentyz tvar.
+// Sbaleci hlavicka zalozeni (founding). Cteni zivotni runy sbaleni NEMA — text je vzdy
+// viditelny (KUKY 2026-09-14); tady zustava, protoze zalozeni je dlouhy rital a owner ho nerusil.
 function toggleFoundingReading() {
   var body = document.getElementById('tree-founding-body');
   var arrow = document.getElementById('tree-founding-arrow');

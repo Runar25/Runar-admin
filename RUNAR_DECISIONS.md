@@ -5886,3 +5886,22 @@ s dokladem — chování cache v nodu protlačit nejde, §19.3). Mutace 2/2 zach
 souborů nedochází; HTML je network-first beze změny.
 
 **Affected doc(s):** žádný.
+
+## 2026-09-14 (3) — Glyf hotového čtení životní runy = KÁMEN jako u čtení; text čtení VŽDY viditelný
+
+**Proč (KUKY 2026-09-14):** *„má tam být stejný svg glyf jako je u single a spreadu… glyfy které
+chci abys použil, jsem ti ukázal i v předešlém screenshotu a jmenoval jsem, že mají být stejné"* +
+*„zruš rozbalování life rune… text runy vždy viditelný."*
+
+**Mění §5 (KUKY 2026-07-14):** to pravidlo dávalo životní runě VŠUDE holou linku („esence, ne
+tažený kámen") — proto kámen v hlavičce nebyl; nebyl to zapomenutý úkol, ale poslušnost staršího
+rozhodnutí. Nové znění: hlavička HOTOVÉHO čtení = `frame:true` + `rlbl-stone` (kámen, popup ho
+kopíruje stejně jako u čtení); holá linka zůstává badge + teaser/cta/loading.
+
+**Sbalování:** `toggleTreeReading()` + šipka odstraněny, `tree-reading-body` už nemá
+`display:none` — čtení je vidět vždy. Sbalení zůstává jen u založení (founding), to owner nerušil.
+
+**Čím je to jištěné:** ㉣ — glyf nese `rlbl-stone` a ne `rune-svg-fl`; mutace „bez data-lore"
+a „klíče podle UI jazyka" dál červené.
+
+**Affected doc(s):** `CLAUDE.md` §5 — v témž commitu.
