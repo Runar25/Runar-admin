@@ -425,7 +425,9 @@ serve(async (req: Request) => {
       spread_cost = 1,     // number of credits/balance to deduct (= number of runes)
       journal     = null,  // reading meta to persist server-side (null = do not save)
     } = body;
-    if (!prompt && mode !== "resave") return json({ error: "Missing prompt" }, 400);
+    // life_rune_reset (2026-09-14) nevola Clauda, prompt nema — stejna vyjimka jako resave.
+    // Nalezeno sondou na zivem endpointu: reset s prazdnym promptem koncil 400 pred auth.
+    if (!prompt && mode !== "resave" && mode !== "life_rune_reset") return json({ error: "Missing prompt" }, 400);
 
     // Strop delky promptu. Merene maximum LEGITIMNIHO provozu (2026-08-16): user prompt
     // 3942 znaku (yggdrasil IS, vse vyplnene) + az ~1800 korekcni blok = ~5750;
@@ -506,6 +508,28 @@ serve(async (req: Request) => {
       return json({ saved: journal.kind === "ask" ? r.askSaved : !!r.readingId });
     }
 
+    // ── ADMIN: reset zivotni runy (KUKY 2026-09-14) ─────────────────────────
+    // Navrat tlacitka odstraneneho 2026-07-19 (§26). Tehdejsi vada: klient mazal sam pod roli
+    // `authenticated` (trigger trg_life_rune_immutable ho blokoval) a tlacitko v DOM nebyla
+    // brana. Ted: admin se overuje TADY z JWT (ne z DOM) a maze service_role. Sloupce zrcadli
+    // sql/admin_reset_life_rune.sql — vc. zalozeni, jinak by zustal strom „zalozeny" bez runy
+    // (§13). Cteni v `readings` se nemazou: reset rusi zalozeni, ne historii. Zadny Claude call.
+    if (mode === "life_rune_reset") {
+      if (!isAdmin) {
+        return json({ error: "unavailable", message: "The runes are quiet. Try again shortly." }, 403);
+      }
+      const { error: rerr } = await sb().from("user_profiles").update({
+        life_rune_number: null, life_rune_text: null, life_rune_lang: null,
+        dob_day: null, dob_month: null, dob_year: null,
+        tree_name: null, tree_founded_at: null, founding_reading_id: null,
+      }).eq("id", userId);
+      if (rerr) {
+        console.error("life_rune_reset failed:", rerr.message);
+        return json({ error: "server_error" }, 500);
+      }
+      return json({ reset: true });
+    }
+
     // ── Eligibility (rune_seeker only) — decide the plan, DO NOT deduct yet ──
     // Deduction is applied after a verified-successful reading (credit safety).
     let deductPlan: DeductPlan = { kind: "none" };
@@ -583,10 +607,13 @@ serve(async (req: Request) => {
         if (!nn) {
           return json({ error: "name_lore_no_name", message: "The runes are quiet. Try again shortly." }, 409);
         }
-        if (String(pr?.name_lore_for ?? "") === nn) {
+        // Admin testuje rozbory nekonecne (KUKY 2026-09-14: „potrebuju mit moznost menit
+        // jmeno nekonecne") — `done` i strop se preskakuji. Rozhoduje JWT (isAdmin vyse),
+        // ne nic od klienta; bezne ucty drzi strop dal.
+        if (String(pr?.name_lore_for ?? "") === nn && !isAdmin) {
           return json({ error: "name_lore_done", message: "The runes are quiet. Try again shortly." }, 409);
         }
-        if (cnt >= NAME_LORE_LIMIT) {
+        if (cnt >= NAME_LORE_LIMIT && !isAdmin) {
           return json({ error: "name_lore_limit", message: "The runes are quiet. Try again shortly." }, 409);
         }
         nameLorePrev = { count: cnt, name: nn };

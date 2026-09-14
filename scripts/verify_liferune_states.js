@@ -239,6 +239,15 @@ for (const L of ['en', 'is']) {
     const obe = stavNL({ severske: 'Sigrún', osloveni: 'Trpaslík', L });
     rekni(obe.lbl === 'SIGRÚN', L + '  obě jména → nadpis nese SEVERSKÉ (sekce je o něm), ne oslovení');
 
+    // ADMIN u hotového rozboru: text zůstává A tlačítko taky (čte znovu; KUKY 2026-09-14).
+    vm.runInContext('isAdmin = function(){ return true; };', S);
+    const adm = stavNL({ severske: 'Sigrún', text: 'HOTOVÝ ROZBOR', pro: 'Sigrún', L });
+    rekni(adm.txt === 'block' && adm.cta === '' && adm.btn === T.name_lore_btn,
+          L + '  admin: u hotového rozboru zůstává text I tlačítko');
+    vm.runInContext('isAdmin = function(){ return false; };', S);
+    const bezny = stavNL({ severske: 'Sigrún', text: 'HOTOVÝ ROZBOR', pro: 'Sigrún', L });
+    rekni(bezny.cta === 'none', L + '  …běžný účet tlačítko u hotového rozboru nemá');
+
     // Nadpis nese SAMO jmeno. KUKY 2026-09-12: „melo by tam byt uz napsane me uvedene jmeno Kuky a ne YOUR NAME!"
     const kuky = stavNL({ severske: 'Kuky', L });
     rekni(kuky.lbl === 'KUKY', L + '  nadpis ukáže JMÉNO („KUKY"), ne „' + T.name_lore_lbl + '"');
@@ -462,6 +471,18 @@ async function drat() {
   const nic = await zkus({ severske: '', jmeno: 'Kuky' });
   rekni(nic.volani === 0 && nic.otevreno === 1, 'bez severského jména → model se nevolá, otevře se okno se jmény');
 
+  // ADMIN: hotový rozbor ani strop ho nezastaví — testuje nekonečně (KUKY 2026-09-14).
+  vm.runInContext('isAdmin = function(){ return true; };', S);
+  const admHotovo = await zkus({ severske: 'Sigrún', text: 'HOTOVO', pro: 'Sigrún' });
+  rekni(admHotovo.volani === 1, 'admin: rozbor JDE znovu i pro jméno, které už text má');
+  const admStrop = await zkus({ severske: 'Sigrún', pocet: 99 });
+  rekni(admStrop.volani === 1, 'admin: strop rozborů ho nezastaví');
+  const admCizi = await zkus({ severske: 'Kuky' });
+  rekni(admCizi.volani === 0, 'admin: neseverské jméno se k modelu NEdostane ani jemu (pevná věta)');
+  vm.runInContext('isAdmin = function(){ return false; };', S);
+  const beznyStrop = await zkus({ severske: 'Sigrún', pocet: 99 });
+  rekni(beznyStrop.volani === 0, 'běžný účet: strop drží dál');
+
   // §2: islandská věta musí být islandská CELÁ.
   const isl = await zkus({ severske: 'Magnús', L: 'is' });
   rekni(isl.volani === 0, 'is  „Magnús" → model se nevolá ani islandsky');
@@ -492,6 +513,20 @@ async function drat() {
   const ex = K.expand('segir: bíddu.', 7, 10);
   rekni(ex[0] === 7 && ex[1] === 12 && 'segir: bíddu.'.slice(ex[0], ex[1]) === 'bíddu',
         'kmen „bíd" se roztáhne na celé slovo „bíddu"');
+  // KUKY 2026-09-14: zvýrazňuje se VĚTA, která význam nese, ne jen slovo.
+  const vt = 'First. The gift lives here. Last.';
+  const sv = K.sentence(vt, 11, 15);
+  rekni(vt.slice(sv[0], sv[1]) === 'The gift lives here.', 'kolem slova se označí celá VĚTA');
+  // …a SLOŽENÍ (kmen → slova → věty) také, ne jen samotná funkce věty — mutace
+  // „věta = jen slovo" 2026-09-14 prošla, dokud tohle nebylo (§19.3).
+  const mk1 = K.markup(vt, 'gift');
+  rekni(mk1.length === 1 && vt.slice(mk1[0].s, mk1[0].e) === 'The gift lives here.'
+        && mk1[0].slova.length === 1 && vt.slice(mk1[0].slova[0][0], mk1[0].slova[0][1]) === 'gift',
+        'markup: věta nese slovo a hranice sedí');
+  const vt2 = 'Gift one. Gift two. Nothing.';
+  rekni(K.markup(vt2, 'gift').length === 2, 'markup: dvě věty se slovem = dvě zvýraznění');
+  const sv2 = K.sentence('No dots at all', 3, 7);
+  rekni(sv2[0] === 0 && sv2[1] === 14, 'věta bez interpunkce = celý úsek');
 
   // Glyf životní runy nese popup data + cíl zvýraznění — v jazyce ULOŽENÉHO textu, ne UI.
   vm.runInContext('_lifeRuneText = "Gebo is the gift."; _lifeRuneLang = "en"; lang = "is";', S);
@@ -503,6 +538,15 @@ async function drat() {
   rekni(gh.indexOf('rlbl-stone') !== -1 && gh.indexOf('rune-svg-fl') === -1,
         'glyf je KÁMEN jako u čtení, ne holá linka (KUKY 2026-09-14, mění §5)');
   rekni(gh.indexOf('data-kw="gift, companionship') !== -1, 'klíče jdou v jazyce uloženého textu (EN text × IS UI)');
+
+  // ADMIN reset tlačítko: adminovi se ukáže, ostatním ne (server má vlastní bránu z JWT).
+  vm.runInContext('isAdmin = function(){ return true; };', S);
+  vm.runInContext('_showTreeReading(RUNES.find(r => r.n === "Gebo"), "Gebo", false)', S);
+  const rbA = prvky['tree-admin-reset'] || mk('x');
+  rekni(rbA.style.display === '' && rbA.textContent.length > 3, 'admin vidí RESET tlačítko životní runy');
+  vm.runInContext('isAdmin = function(){ return false; };', S);
+  vm.runInContext('_showTreeReading(RUNES.find(r => r.n === "Gebo"), "Gebo", false)', S);
+  rekni((prvky['tree-admin-reset'] || mk('x')).style.display === 'none', 'ne-admin RESET tlačítko nevidí');
   vm.runInContext('_lifeRuneText = null; _lifeRuneLang = null; lang = "en";', S);
 }
 

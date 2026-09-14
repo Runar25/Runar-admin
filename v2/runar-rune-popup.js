@@ -66,6 +66,41 @@
     return [od, kon];
   }
 
+  // Hranice VETY kolem nalezeneho slova: od posledniho [.!?…] pred nim (bez uvodnich mezer)
+  // po prvni [.!?…] za nim vcetne. KUKY 2026-09-14: „ma se oznacit to, co reprezentuje ten
+  // vyznam ve vete… veta, souveti nebo cast vety" — uzivatel ma videt, KTERA veta vyznam nese.
+  function _kwSentence(txt, od, kon) {
+    var stopka = /[.!?…]/;
+    var zac = 0;
+    for (var i = od - 1; i >= 0; i--) if (stopka.test(txt[i])) { zac = i + 1; break; }
+    while (zac < od && /\s/.test(txt[zac])) zac++;
+    var end = txt.length;
+    for (var j = kon; j < txt.length; j++) if (stopka.test(txt[j])) { end = j + 1; break; }
+    return [zac, end];
+  }
+
+  // Ciste rozlozeni: pro dany kmen vrati vety [{s,e,slova:[[s,e],…]}] — bez DOM, takze ho
+  // kontrola ㉣ protlaci primo (mutace „veta = jen slovo" 2026-09-14 prosla, kdyz test miril
+  // jen na _kwSentence a ne na tohle slozeni; §19.3).
+  function _kwMarkup(txt, stem) {
+    var low = _fold1(txt.toLowerCase());
+    var slova = [], od = 0, na;
+    while ((na = low.indexOf(stem, od)) !== -1) {
+      var ex = _kwExpand(txt, na, na + stem.length);
+      slova.push(ex);
+      od = ex[1];
+    }
+    var vety = [];
+    slova.forEach(function (w) {
+      var v = _kwSentence(txt, w[0], w[1]);
+      if (vety.length && v[0] <= vety[vety.length - 1].e) {
+        vety[vety.length - 1].e = Math.max(vety[vety.length - 1].e, v[1]);
+      } else vety.push({ s: v[0], e: v[1] });
+    });
+    vety.forEach(function (v) { v.slova = slova.filter(function (w) { return w[0] >= v.s && w[1] <= v.e; }); });
+    return vety;
+  }
+
   function clearKwHl() {
     // Obnovit jen kdyz zvyrazneni v prvku OPRAVDU je — jinak by stary snapshot prepsal text,
     // ktery mezitim prekreslilo neco jineho (prepnuti jazyka, nove cteni).
@@ -81,21 +116,32 @@
     _hl = { el: el, html: el.innerHTML };
     var stem = found.stem;
     // Jen textove uzly prvni urovne — text cteni je „text + <br>", nic hlubsiho tam neni.
+    // Zvyraznuje se VETA (kw-hl-sent), nalezene slovo v ni silneji (kw-hl).
     Array.prototype.slice.call(el.childNodes).forEach(function (n) {
       if (n.nodeType !== 3) return;
       var txt = n.nodeValue, low = _fold1(txt.toLowerCase());
       if (low.indexOf(stem) === -1) return;
-      var frag = document.createDocumentFragment(), od = 0, na;
-      while ((na = low.indexOf(stem, od)) !== -1) {
-        var ex = _kwExpand(txt, na, na + stem.length);
-        frag.appendChild(document.createTextNode(txt.slice(od, ex[0])));
-        var sp = document.createElement('span');
-        sp.className = 'kw-hl';
-        sp.textContent = txt.slice(ex[0], ex[1]);
-        frag.appendChild(sp);
-        od = ex[1];
-      }
-      frag.appendChild(document.createTextNode(txt.slice(od)));
+      var vety = _kwMarkup(txt, stem);
+      if (!vety.length) return;
+      var frag = document.createDocumentFragment(), poz = 0;
+      vety.forEach(function (v) {
+        frag.appendChild(document.createTextNode(txt.slice(poz, v.s)));
+        var sent = document.createElement('span');
+        sent.className = 'kw-hl-sent';
+        var p2 = v.s;
+        v.slova.forEach(function (w) {
+          sent.appendChild(document.createTextNode(txt.slice(p2, w[0])));
+          var sp = document.createElement('span');
+          sp.className = 'kw-hl';
+          sp.textContent = txt.slice(w[0], w[1]);
+          sent.appendChild(sp);
+          p2 = w[1];
+        });
+        sent.appendChild(document.createTextNode(txt.slice(p2, v.e)));
+        frag.appendChild(sent);
+        poz = v.e;
+      });
+      frag.appendChild(document.createTextNode(txt.slice(poz)));
       el.replaceChild(frag, n);
     });
   }
@@ -164,7 +210,7 @@
   });
 
   // Testovaci prusvit (kontrola ㉣): ciste funkce hledani, bez DOM.
-  window._runePopKw = { stems: _kwStems, findIn: _kwFindIn, expand: _kwExpand };
+  window._runePopKw = { stems: _kwStems, findIn: _kwFindIn, expand: _kwExpand, sentence: _kwSentence, markup: _kwMarkup };
 
   window.addEventListener('scroll', hide, true);
 })();

@@ -517,7 +517,32 @@ function _showTreeReading(rune, runeName, isIs) {
   // Strip any leading markdown header (# ...) from stored Claude output
   var cleanText = (_lifeRuneText || '').replace(/^#[^\n]*\n+/, '').trim();
   if (txt) txt.innerHTML = cleanText.replace(/\n/g, '<br>');
+  // ADMIN reset (KUKY 2026-09-14) — jen adminum; stav zavisi na uzivateli, proto tady a ne
+  // v updateUIText() (§14).
+  var rb = document.getElementById('tree-admin-reset');
+  if (rb) {
+    var jeAdminR = !!(currentUser && typeof isAdmin === 'function' && isAdmin(currentUser.email));
+    rb.style.display = jeAdminR ? '' : 'none';
+    if (jeAdminR) rb.textContent = t('tree_admin_reset');
+  }
   setPH('tree-name-inp', t('tree_name_ph'));
+}
+
+// ADMIN: reset zivotni runy (KUKY 2026-09-14). Navrat tlacitka odstraneneho 2026-07-19 —
+// §26: tehdejsi vada byla, ze klient mazal sam jako `authenticated` (trigger ho blokoval)
+// a tlacitko v DOM nebyla brana. Ted rozhoduje SERVER: proxy overi admina z JWT a maze pres
+// service_role, zrcadlem sql/admin_reset_life_rune.sql (vc. zalozeni — §13 full-path).
+async function adminResetLifeRune() {
+  if (!currentUser || typeof isAdmin !== 'function' || !isAdmin(currentUser.email)) return;
+  var res = await callProxy('', '', 1, false, 1, null, 'life_rune_reset');
+  if (!res || res.error || !res.reset) { showToast(t('reading_error')); return; }
+  _lifeRuneText = null; _lifeRuneNum = null; _lifeRuneLang = null;
+  _foundingText = null;
+  if (readerUser) { readerUser.d = null; readerUser.m = null; readerUser.y = null; readerUser.lifeRune = null; }
+  if (currentUser) currentUser.tree_name = '';
+  if (typeof _renderTreeNameState === 'function') _renderTreeNameState();
+  updateTreeTab();
+  showToast(t('tree_admin_reset_done'));
 }
 
 async function setTreeDOB() {
@@ -652,14 +677,16 @@ function _renderNameLore() {
 
   // 1) severske jmeno jeste neni → pozvanka, tlacitko otevre okno se jmeny
   if (!jm) { zobraz(t('name_lore_intro_add'), t('name_lore_add_btn'), ''); return; }
-  // 2) rozbor od modelu uz existuje PRO TOHLE jmeno
-  if (_nameLoreText && _nameLoreFor === jm) { zobraz('', '', _nameLoreText); return; }
+  var jeAdminNL2 = !!(currentUser && typeof isAdmin === 'function' && isAdmin(currentUser.email));
+  // 2) rozbor od modelu uz existuje PRO TOHLE jmeno — admin dostane k textu i tlacitko
+  //    (testuje nekonecne, KUKY 2026-09-14; server strop pro adminy nevynucuje).
+  if (_nameLoreText && _nameLoreFor === jm) { zobraz('', jeAdminNL2 ? t('name_lore_btn') : '', _nameLoreText); return; }
   // 3) neni to severske jmeno z naseho seznamu → hotova veta hned, bez tlacitka a bez modelu.
   //    Nic se neuklada: je vypoctena z dat, takze by uklada kopie jen zastarala (§20).
   var veta = _nameLoreFixedSentence(jm);
   if (veta) { zobraz('', '', veta); return; }
-  // 4) severske, ale strop rozboru vycerpany
-  if (_nameLoreCount >= NAME_LORE_LIMIT) { zobraz('', '', t('name_lore_limit')); return; }
+  // 4) severske, ale strop rozboru vycerpany (admina strop nezastavi)
+  if (!jeAdminNL2 && _nameLoreCount >= NAME_LORE_LIMIT) { zobraz('', '', t('name_lore_limit')); return; }
   // 5) severske a jde precist
   zobraz(t('name_lore_intro'), t('name_lore_btn'), '');
 }
@@ -738,7 +765,8 @@ async function generateNameLore() {
   if (!jm) { if (typeof openNamesEdit === 'function') openNamesEdit(); return; }
   // Model se vola JEN pro severske jmeno, ktere jeste rozbor nema a strop neni vycerpany.
   // Vsechno ostatni vyresi _renderNameLore() sam, bez site.
-  if (_nameLoreFixedSentence(jm) || (_nameLoreText && _nameLoreFor === jm) || _nameLoreCount >= NAME_LORE_LIMIT) {
+  var jeAdminNL = !!(currentUser && typeof isAdmin === 'function' && isAdmin(currentUser.email));
+  if (_nameLoreFixedSentence(jm) || (!jeAdminNL && ((_nameLoreText && _nameLoreFor === jm) || _nameLoreCount >= NAME_LORE_LIMIT))) {
     _renderNameLore();
     return;
   }

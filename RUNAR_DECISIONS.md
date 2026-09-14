@@ -5905,3 +5905,48 @@ kopíruje stejně jako u čtení); holá linka zůstává badge + teaser/cta/loa
 a „klíče podle UI jazyka" dál červené.
 
 **Affected doc(s):** `CLAUDE.md` §5 — v témž commitu.
+
+## 2026-09-14 (4) — Meaning-tap zvýrazňuje VĚTU, která význam nese; slovo v ní silněji
+
+**Proč (KUKY):** *„sice se označí meaning třeba teda gift, ale o to nejde. má se označit to, co
+reprezentuje ten meaning ve větě… ta věta, souvětí nebo část věty je to, co se má uživateli
+ukázat, aby chápal, co ta runa znamená."* Zvýraznění jen slova (záznam (1)) bylo málo.
+
+**Co platí:** klik na význam označí celé věty, kde význam stojí (jemné pozadí `.kw-hl-sent`),
+a nalezené slovo v nich zlatě (`.kw-hl`). Hranice věty = interpunkce [.!?…]; úsek bez ní se
+bere celý. Rozklad je čistá funkce `_kwMarkup` (kmen → slova → věty) — testovatelná bez DOM;
+mutace „věta = jen slovo" prošla, dokud test mířil jen na `_kwSentence`, ne na složení (§19.3).
+
+**Čím je to jištěné:** ㉣ — věta kolem slova · úsek bez interpunkce · markup hranice · dvě věty
+= dvě zvýraznění. Mutace MV1 zachycena po doplnění markup testu.
+
+**Affected doc(s):** žádný.
+
+## 2026-09-14 (5) — ADMIN: reset životní runy z aplikace (návrat přes server) + rozbor jména bez stropu
+
+**Proč (KUKY):** *„udělej mi reset tlačítko pro admin účty životní runy. taky potřebuji mít
+možnost měnit jméno nekonečně!"* — testuje nový prompt a potřebuje iterovat.
+
+**Návrat podle §26:** tlačítko „RESET LIFE RUNE" bylo odstraněno 2026-07-19 (komentáře
+v `sql/2026-07-19_life_rune_immutable.sql` + hlavička `sql/admin_reset_life_rune.sql`).
+Tehdejší vada: klient mazal sám pod rolí `authenticated` — trigger ho blokoval a tlačítko
+v DOM nebyla brána. Očištěný návrat: klient jen volá proxy `mode:'life_rune_reset'`; **admin se
+ověřuje na serveru z JWT** (týž seznam, kterým proxy dává adminům premium) a maže service_role.
+Mazané sloupce zrcadlí `sql/admin_reset_life_rune.sql` (life_rune_*, dob_*, tree_name,
+tree_founded_at, founding_reading_id — §13; čtení v `readings` zůstávají). SQL nástroj dál platí
+pro reset CIZÍCH účtů; tlačítko resetuje jen účet, pod kterým je admin přihlášen.
+
+**Rozbor jména pro adminy bez limitu:** proxy přeskočí `name_lore_done` i strop
+`NAME_LORE_LIMIT` když JWT patří adminovi; běžné účty drží dál (konstanta nezměněna, ㉙/⑨
+hlídají shodu configu). Klient adminovi nechává tlačítko i u hotového rozboru. Pevná věta pro
+neseverská jména platí i adminovi — tam se model nevolá nikdy.
+
+**Nalezeno sondou na živém endpointu:** reset s prázdným promptem končil 400 „Missing prompt"
+před auth — guard dostal výjimku jako `resave` (režim nevolá Clauda). Bez sondy by tlačítko
+spadlo při prvním použití.
+
+**Hranice:** serverovou větev (isAdmin skip, reset) lokální kontroly neprotlačí (Deno);
+ověřeno: bez auth 401, klientská strana ㉣ (admin vidí tlačítko a bypass, běžný účet ne).
+Adminův klik ověří owner — jiný admin JWT neexistuje.
+
+**Affected doc(s):** žádný.
