@@ -5864,4 +5864,4 @@ nezvýrazní nic a nic nerozbije.
 „and"/„through" · nenalezené → null · glyf s data-lore · jazyk klíčů podle textu). Mutace 7/7
 zachycené — M6 (stopslova) až po doplnění testu, který mutační běh vyžádal.
 
-**Affected doc(s):** `RUNAR_BACKLOG.md` — meaning-tap pro single/spready (zapsáno 2026-09-13).
+**Affected doc(s):** žádný — zápis backlogu (single/spready, viz tělo záznamu) proběhl už 2026-09-13 (c692891), před tímto záznamem.
