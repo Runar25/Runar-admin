@@ -17,6 +17,16 @@ const JS_SHELL = [
   '/Runar-admin/v2/runar-translations.js',
   '/Runar-admin/v2/runar-character.js',
   '/Runar-admin/v2/runar-svgs.js',
+  // 2026-09-14: sedm souboru, ktere reader nacita a tady chybely — nebyly v precache, takze je
+  // fetch handler ukladal az za behu PRES HTTP CACHE (stare byty pod novou verzi). Seznam ted
+  // hlida kontrola ㉧ (verify_sw_shell.js) proti <script src> v runar-reader.html.
+  '/Runar-admin/v2/runar-names.js',
+  '/Runar-admin/v2/runar-names-registry.js',
+  '/Runar-admin/v2/runar-tree-prod.js',
+  '/Runar-admin/v2/tree-lab-trunk-composer/runar-trunk.js',
+  '/Runar-admin/v2/tree-lab-branch-composer/runar-branch.js',
+  '/Runar-admin/v2/runar-reporter.js',
+  '/Runar-admin/v2/runar-rune-popup.js',
   '/Runar-admin/v2/manifest.json',
   '/Runar-admin/v2/icons/apple-touch-icon.png',
   '/Runar-admin/v2/icons/web-app-manifest-192x192.png',
@@ -25,7 +35,10 @@ const JS_SHELL = [
 
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(JS_SHELL)).then(() => self.skipWaiting())
+    // {cache:'reload'} obchazi HTTP cache prohlizece. Bez nej si NOVY worker pri instalaci
+    // natahl STARE soubory z HTTP cache (GitHub Pages max-age=600) a ulozil je pod novou verzi
+    // — videno zive 2026-09-14: cache runar-v398 nesla runar-rune-popup.js bez _kwExpand.
+    caches.open(CACHE).then(c => c.addAll(JS_SHELL.map(u => new Request(u, { cache: 'reload' })))).then(() => self.skipWaiting())
   );
 });
 

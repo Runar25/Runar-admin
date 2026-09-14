@@ -620,6 +620,17 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola kalendare probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# SW precache musí nést všechno, co reader načítá, a instalovat s obchvatem HTTP cache.
+# 2026-09-14: cache runar-v398 nesla starý popup (7 souborů mimo precache + addAll přes HTTP cache).
+print('\n' + chr(0x3267) + ' SW PRECACHE ÚPLNÁ A ČERSTVÁ (verify_sw_shell.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_sw_shell.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola precache probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

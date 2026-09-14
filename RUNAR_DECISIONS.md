@@ -5865,3 +5865,24 @@ nezvýrazní nic a nic nerozbije.
 zachycené — M6 (stopslova) až po doplnění testu, který mutační běh vyžádal.
 
 **Affected doc(s):** žádný — zápis backlogu (single/spready, viz tělo záznamu) proběhl už 2026-09-13 (c692891), před tímto záznamem.
+
+## 2026-09-14 (2) — SW instalace obchází HTTP cache a precache nese VŠECHNO, co reader načítá
+
+**Proč:** při živém ověřování meaning-tapu (záznam (1)) měla cache `runar-v398` prokazatelně
+STARÝ `runar-rune-popup.js` (bez `_kwExpand`), přestože server nesl nový. Dvě vady najednou:
+1. `JS_SHELL` nenesl **7 souborů**, které `runar-reader.html` načítá (names, names-registry,
+   reporter, rune-popup, tree-prod, branch, trunk) — kešovaly se až za běhu fetch handlerem.
+2. Instalace (`addAll`) i běhový fetch jdou **přes HTTP cache prohlížeče** (GitHub Pages
+   max-age=600), takže si nový worker uložil staré byty pod novou verzí. Bump verze tím
+   negarantoval čerstvý kód — celý cache-busting stál na náhodě, kdy vypršelo TTL.
+
+**Co platí:** instalace staví Requesty s `{cache:'reload'}` (obchvat HTTP cache) a `JS_SHELL`
+je úplný proti readeru. Nová smoke ㉧ `verify_sw_shell.js`: každý `<script src>`/CSS z HTML je
+v precache · nic dvakrát · každá položka existuje na disku (addAll je vše-nebo-nic — mrtvá
+položka by shodila celou instalaci) · značka `{cache:'reload'}` přítomná (kontrola tvaru
+s dokladem — chování cache v nodu protlačit nejde, §19.3). Mutace 2/2 zachycené.
+
+**Hranice:** běhový fetch handler dál jde přes HTTP cache — po úplné precache na něj u shell
+souborů nedochází; HTML je network-first beze změny.
+
+**Affected doc(s):** žádný.
