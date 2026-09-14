@@ -58,6 +58,14 @@
     return null;
   }
 
+  // Nalezeny kmen roztahni na cele slovo („bíd" → „bíddu") — zvyraznuje se slovo, ne kmen.
+  function _kwExpand(txt, od, kon) {
+    var pis = function (ch) { return !!ch && /[\p{L}]/u.test(ch); };
+    while (od > 0 && pis(txt[od - 1])) od--;
+    while (kon < txt.length && pis(txt[kon])) kon++;
+    return [od, kon];
+  }
+
   function clearKwHl() {
     // Obnovit jen kdyz zvyrazneni v prvku OPRAVDU je — jinak by stary snapshot prepsal text,
     // ktery mezitim prekreslilo neco jineho (prepnuti jazyka, nove cteni).
@@ -79,12 +87,13 @@
       if (low.indexOf(stem) === -1) return;
       var frag = document.createDocumentFragment(), od = 0, na;
       while ((na = low.indexOf(stem, od)) !== -1) {
-        frag.appendChild(document.createTextNode(txt.slice(od, na)));
+        var ex = _kwExpand(txt, na, na + stem.length);
+        frag.appendChild(document.createTextNode(txt.slice(od, ex[0])));
         var sp = document.createElement('span');
         sp.className = 'kw-hl';
-        sp.textContent = txt.slice(na, na + stem.length);
+        sp.textContent = txt.slice(ex[0], ex[1]);
         frag.appendChild(sp);
-        od = na + stem.length;
+        od = ex[1];
       }
       frag.appendChild(document.createTextNode(txt.slice(od)));
       el.replaceChild(frag, n);
@@ -155,7 +164,7 @@
   });
 
   // Testovaci prusvit (kontrola ㉣): ciste funkce hledani, bez DOM.
-  window._runePopKw = { stems: _kwStems, findIn: _kwFindIn };
+  window._runePopKw = { stems: _kwStems, findIn: _kwFindIn, expand: _kwExpand };
 
   window.addEventListener('scroll', hide, true);
 })();

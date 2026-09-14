@@ -488,6 +488,10 @@ async function drat() {
         '„and" z fráze se nehledá (chytilo by „sand")');
   rekni(najdi('the light passes through the door', 'clarity through cold') === null,
         '„through" z fráze se nehledá (není to význam)');
+  // Zvýraznění pokrývá CELÉ slovo, ne jen kmen — na produkci svítilo „bíd" z „bíddu".
+  const ex = K.expand('segir: bíddu.', 7, 10);
+  rekni(ex[0] === 7 && ex[1] === 12 && 'segir: bíddu.'.slice(ex[0], ex[1]) === 'bíddu',
+        'kmen „bíd" se roztáhne na celé slovo „bíddu"');
 
   // Glyf životní runy nese popup data + cíl zvýraznění — v jazyce ULOŽENÉHO textu, ne UI.
   vm.runInContext('_lifeRuneText = "Gebo is the gift."; _lifeRuneLang = "en"; lang = "is";', S);
