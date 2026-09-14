@@ -101,7 +101,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [co-dela-cteni-silnym.md](co-dela-cteni-silnym.md) — ownerem POTVRZENO: definiční věta runy · otázka se dvěma skutečnými možnostmi · obraz s podstatou runy + dobrá Ask otázka
 - [oprava-promptu-odebira-vadu.md](oprava-promptu-odebira-vadu.md) — vadu v promptu odeber; přidaný požadavek se v textu projeví jako formule
 - [prompt-nepojmenuj-co-hned-zakazes.md](prompt-nepojmenuj-co-hned-zakazes.md) — prompt, který něco pojmenuje a hned to zakáže vyslovit, hlídá slovo, které tam sám napsal; odeber nálepku, ne přidej hlídače
-- [always-show-reading-samples.md](always-show-reading-samples.md) — ownerovi vždy ukázat konkrétní TEXT čtení, ne jen měření a verdikty
+- [always-show-reading-samples.md](always-show-reading-samples.md) — ownerovi vždy ukázat konkrétní TEXT čtení a k němu instrukce, které do čtení vstoupily
 - [write-for-owner-not-process.md](write-for-owner-not-process.md) — ownerovi piš důležité/výsledek, ne proces „co jsi řekl / co budu hledat"
 - [cheapest-deciding-measurement-first.md](cheapest-deciding-measurement-first.md) — napřed nejlevnější měření, které rozhodne; velký počet agentů jen po pilotu 3–5 a se souhlasem ownera
 - [work-efficiently-ask-if-simpler.md](work-efficiently-ask-if-simpler.md) — než spustíš těžký nástroj, zeptej se, jestli to nejde jednodušeji; dlouhý běh protlačí compactem a zabije úkol

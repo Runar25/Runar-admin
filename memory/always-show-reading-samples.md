@@ -21,5 +21,12 @@ zůstane sebepotvrzující.
 **Jak to dělat:** text patří do odpovědi v chatu, ne jen do souboru v repu — a hned, ne až
 na vyžádání. Delší dávky navíc ulož do repa jako čitelný doc (`docs/vegvisir-pouti-texty.md`),
 protože v repu dlouho leželo jen měření a owner se musel ptát „kde je text pouti?".
+⭐ **K textu vždy i INSTRUKCE, které do čtení vstoupily** (KUKY 2026-09-14): *„to je právě to, co bych měl vidět,
+co všechno vstoupilo do čtení, pak nebudu mít blbé dotazy a uvidím přesně, co se děje. Takže mi vždy pošli, jaké
+instrukce přišly do tvorby čtení."* Doloženo téhož dne: owner se ptal, proč Rúnar „nacpal ROAD" — odpověď stála
+v promptu (`focus on: the road`), jen ji neviděl. **Jak:** user message celý (nebo aspoň to, co se losovalo: obraz,
+aspekt/focus, úhel, délka, konec, jméno, čočka) + u srovnání přesně ty řádky, které se liší. Systémový prompt
+stačí pojmenovat a říct, že je shodný.
+
 Souvisí: [[write-for-owner-not-process]] · [[measure-dont-eyeball]] (měř, ale výsledek měření
 ownerovi nikdy nepodávej bez toho, co bylo měřeno).
