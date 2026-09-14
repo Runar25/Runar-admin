@@ -3409,3 +3409,41 @@ výsledek drží, NEověřeno — žádná páka nebyla odebrána.
   přinesla slova *the roots*, z jednoho čtení nepoznat — rozhodl by nulový řez (tentýž prompt bez řádku World, víc běhů).
 
 ⚠️ **Hranice:** n=1 na každé čtení a Ask · pisatelé subagenti Claude Opus 5, produkce `claude-opus-4-8` · EN only.
+
+## 2026-09-14 — Esenční řádek bez DOES / bez vzoru / bez obou (PILOT n=1) · Ask „what does it mean for me" · produkční slova
+
+### 1. Pilot ablace (owner: *„udělej verze bez jednoho, bez druhého a poslední bez obou"*)
+Základ = čtení B (Isa, *windless fjord*, `stillness`, seed 20260914; prompt ověřen bajt po bajtu shodný s B). Mění se JEN
+pravidlo `THE ESSENCE LINE` (`VOICE_PROFILES.focused.rules.describe.en`, `v2/runar-config.js`); diff = 1 řádek, systém shodný.
+- **E1 bez DOES:** *„says the rune's sense through this image, in plain words…"* + *„may live inside that line"*
+- **E2 bez vzoru:** pryč *„— "Fehu is that warmth passed from hand to hand", not "Fehu is wealth""* a *„("exchange between the sea and the shore")"*
+- **E3 bez obou**
+
+| | esenční řádek | celé čtení |
+|---|---|---|
+| E0 (produkce) | Isa is water held so still that the dark stones below come into view. | A yellow birch leaf rests on the windless fjord, Kuky, and no ring spreads from where it landed. Isa is water held so still that the dark stones below come into view. What passes between leaf and water when neither one moves? |
+| E1 bez DOES | Isa is that hush, water so still you can see the stones beneath. | A gull's feather lies on the windless fjord, Kuky, and not one ripple leaves it. Isa is that hush, water so still you can see the stones beneath. When nothing moves between feather and water, what still passes from one to the other? |
+| E2 bez vzoru | Isa holds everything exactly where it is, long enough to be seen. | A single feather lies on the windless fjord, Kuky, and not one ring spreads out from it. Isa holds everything exactly where it is, long enough to be seen. When the water takes nothing and gives nothing back, what passes between the two shores? |
+| E3 bez obou | Isa is water gone so still that the bottom shows through. | A strand of kelp hangs unmoving below your feet, Kuky, and the windless fjord holds the mountain upside down. Isa is water gone so still that the bottom shows through. If the water keeps the mountain whole, what is it given in return? |
+
+**Spočítáno:** prosté slovo významu z `RUNES[].k` (ice, stillness, waiting, pause, clarity through cold) **0/4 ve všech
+variantách**; *warmth* 0/4; tvar „Isa is …" 3/4 (E2 ne). ⚠️ **n=1 — nic se z toho nerozhoduje**; pilot jen ukazuje, že
+jedno odebrání samo prosté slovo nepřivolá.
+
+### 2. Ask s dovětkem *„And what does it mean for me?"* (produkční pravidla beze změny, diff 1 řádek)
+> Only weight passes between them, Kuky, and nothing else. The leaf lays its small weight on the water, and the water bears
+> it without closing over. Neither one pulls, so no ring spreads and the silt settles. That is why the dark stones show. Isa
+> is that shared holding, a stillness that lets the depth be seen. What lies on the floor of your own water, the rune does
+> not name. It shows only what calm does, the stirring stops and the bottom grows clear.
+
+Na *„co to znamená pro mě"* Rúnar výslovně odmítne (*„the rune does not name"*). 🔒 V Ask promptu stojí obojí, co to
+zakazuje: `NO COLD READING` (*„never tell the seeker what is true… inside them"*) a esenční pravidlo (*„Never tell the
+seeker what it means for them"*). Owner (teorie): *„čtení jsou pro uživatele, takže jen popisování obrazu vlastně
+nevysvětluje úplně nic víc."*
+
+### 3. Produkční čtení ownera (EN, jen počty, `readings`)
+- **already × úhel** *„Open with the motion already underway"* (index 2, od 2026-08-16): **0/4** · ostatní úhly **9/41**
+  (22 %) · Fisher p = 0,57. V produkci se „already" z tohoto úhlu nepotvrdilo (n=4 malé); objevuje se napříč úhly.
+  (Mannaz B *„already tapping"* 2026-09-14 je jeden případ.)
+- **warmth** před vzorem (do 2026-08-22 19:27, commit `2cc8fb5` v4.0-mynd) **21/211 (10 %)** · po **10/55 (18 %)** ·
+  p = 0,10. ⚠️ Týmž commitem přišel celý esenční řádek i vazba obraz–klíč → na vzorovou větu to svést nejde.
