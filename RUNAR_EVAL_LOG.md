@@ -3321,3 +3321,13 @@ jako v produkci. 10 slepých pisatelů (subagenti Claude, ne produkční model).
 
 *early snow / autumn / September* prompt nenese — pisatelé to vzali z data svého prostředí.
 ⚠️ **Hranice:** n=1 na obraz × runu · pisatelé nejsou produkční model · EN only (IS verze obrazů ještě nejsou).
+
+**Owner 2026-09-14:** *„Rúnar si s tím poradil moc dobře. Některé obrazy, zkratky se pro určité runy nehodí, ale zní
+to lépe než ty dlouhé, co mám v produkci… jednoznačně jde na těchhle testech vidět, že kratší obrazy jsou lepší než
+dlouhé, které Rúnara tlačí do toho, aby v jedné krátké větě napsal všechno z obrazu, kdežto tady 2–3 slova na obraz
+dávají Rúnarovi možnost tvořit."*
+- *„the road snowed shut"* se k Ise nehodí — je dobrá pro Raidho.
+- *„Z toho čtení nepoznám, jaký meaning má vykládaná runa."*
+- N3 *„Raidho is that warmth taking its own road"* — *„nacpal tam ROAD."* 🔒 **Ověřeno v promptu N3:** `DRAWN RUNE:
+  Raidho — focus on: the road` — slovo přišlo z aspektu řádku, ne z obrazu. Táž třída jako Perth „thing"
+  (`RUNAR_BACKLOG.md`, nález 2026-09-11: aspekt jde do promptu jako `focus:`).
