@@ -3331,3 +3331,32 @@ dávají Rúnarovi možnost tvořit."*
 - N3 *„Raidho is that warmth taking its own road"* — *„nacpal tam ROAD."* 🔒 **Ověřeno v promptu N3:** `DRAWN RUNE:
   Raidho — focus on: the road` — slovo přišlo z aspektu řádku, ne z obrazu. Táž třída jako Perth „thing"
   (`RUNAR_BACKLOG.md`, nález 2026-09-11: aspekt jde do promptu jako `focus:`).
+
+## 2026-09-14 — A/B Isa: produkční dlouhý obraz × krátký obraz, jinak identický prompt
+
+**Proč (owner):** *„postav proti sobě jednu runu podle produkčního promptu a tu stejnou podle zkušebního, porovnej je,
+ukaž mi je"* + *„vždy mi pošli, jaké instrukce přišly do tvorby čtení."*
+
+**Co vstoupilo do čtení:** produkční `buildSysPrompt(DEF_CHAR_EN)` (3870 znaků, shodný) + `buildReadingPromptSingle`
+(Isa, EN, Kuky, životní runa Gebo), **stejný seed** → shodně: `focus on: stillness` · úhel *„Open on the smallest detail
+in the image"* · 3 věty / 38–45 slov · konec *„one hard question that stays with the image"* · Gebo jen v poslední větě ·
+jméno brzy, ne na začátku. **Liší se JEDINÝ řádek (ověřeno diffem, 1 z 12):**
+- A (produkce): `IMAGE — … The calm lies over the fjord and nothing stirs, not even the bird on the rock.`
+- B (zkušební): `IMAGE — … windless fjord.`
+
+| | čtení |
+|---|---|
+| A | A drop clings to the bird's beak, Kuky, and nothing on the fjord stirs. Isa is that hold, keeping what lies above and below the water in place. When the drop falls, does the fjord receive anything, or only take back its own? |
+| B | A yellow birch leaf rests on the windless fjord, Kuky, and no ring spreads from where it landed. Isa is water held so still that the dark stones below come into view. What passes between leaf and water when neither one moves? |
+
+**Ověření (spočítáno):** obě 3 věty, A 43 slov, B 42 · A převzalo **5 ze 7** plnovýznamových slov obrazu (fjord,
+nothing, stirs, bird, lies) včetně obratu *„nothing … stirs"*; B použilo obě slova obrazu (windless, fjord) a zbytek
+scény postavilo samo · nové věci: A kapka, zobák · B žlutý březový list, kruh na vodě, tmavé kameny na dně.
+**Kritika (CODE-read):**
+- B esenční řádek *„water held so still that the dark stones below come into view"* sahá na **clarity through cold**
+  (klíč Isy v `RUNES[].k`) — v promptu je jen `stillness`. A zůstalo u `stillness` (*„that hold… in place"*).
+- ⚠️ B si přineslo **břízu** — to je předmět Berkany (`k`: *birch*). Přesně vada z položky backlogu „Kritérium pro nové
+  obrazy" (předmět na cizím pozemku). Volnější obraz = víc místa, kam vklouzne cizí runa.
+- *„yellow"* (podzim) prompt nenese — z data v prostředí pisatele.
+⚠️ **Hranice:** **n = 1 na rameno, jeden seed** — rozdíl mezi dvěma texty může být náhoda; „krátký je lepší" z toho
+nejde tvrdit, jen ukázat · pisatelé = subagenti Claude Opus 5, produkce běží na `claude-opus-4-8` · EN only.
