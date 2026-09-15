@@ -3557,3 +3557,54 @@ Bez věty GPT *„Let the examples show variety of season…"* — pokyn o vzore
 - ❔ *temperature/top_p na claude-opus-4-8 → HTTP 400* — neověřeno; proxy tyhle parametry neposílá (grep).
 - ⛔ Rozšířená matice (P0–P4 × runy × reversal × křížový slovník) **nespuštěna** — owner 2026-09-15: *„není potřeba dělat
   tolik čtení"*. Podmínka ukládání plného textu se u testů CODE-read od 2026-09-12 plní (texty v tomto logu, prompty v `docs/eval/`).
+
+## 2026-09-15 — Raidho: dlouhý × krátký obraz · čtyři věty hlasu (obojí BEZ čočky životní runy)
+
+**Proč (owner):** (1) *„díky délce obrazu se [v krátkém] projeví víc aspekt, úhel, worlds — tohle bych chtěl vidět v testu
+ještě jednou; zkusme to na tom Raidho, které se mi líbí"* · (2) *„budeme čtení dělat bez životní runy jako čočka"* ·
+(3) *„udělej test těch 4 nových vět proti produkci."* Plné prompty + texty → `docs/eval/2026-09-15-kratke-obrazy-esence/prompty-t15/`.
+
+### T1 — tytéž losy jako produkční čtení Raidho (`e2e82087…`), jen obraz jiný, 3 běhy na rameno
+Úhel *„Open by setting the seeker inside the image"* · 4 věty / 50–58 slov · konec *„quiet line that rests"* · jméno Thor
+uprostřed · `focus on: the road` · svět Midgard *„the living moment, what is active now"* · bez čočky. Liší se jen řádek IMAGE:
+L = *The cairns stand each within sight of the next across the whole heath, each seen from the one before* · S = *cairns across the heath*.
+
+| | čtení |
+|---|---|
+| T1-L1 | You stand at a cairn on the open heath, the next grey on the rise ahead. The wind runs hard over the heather, Thor, and no stone is out of sight of another. Raidho is that handing-on, each stone passing you to the one beyond it. Behind you the last cairn stands where you left it. |
+| T1-L2 | You stand by a cairn on the open heath, the wind combing through brown heather. From here, Thor, the next cairn is just in sight across the grey moss. Raidho is one stone handing the road on to the one beyond it. Behind you, the cairn you left still stands in the wind. |
+| T1-L3 | You stand at a cairn on the autumn heath, wind combing the brown heather. From here the next cairn shows grey on the rise, Thor, and one more beyond it. Raidho is a road made of sight, passed from stone to stone. Behind you, the cairn you left stands clear in the wind. |
+| T1-S1 | You stand beside a cairn on the heath, the next one grey on the rise ahead. Bilberry leaves redden around its base, Thor, and someone set these stones in sight of each other. Raidho is a road you can read, one heap of stone at a time. Wind crosses the open heath, and the cairns hold their places. |
+| T1-S2 | You stand beside a cairn on the open heath, wind combing the brown heather flat. Beyond it, Thor, the next one shows grey through the drifting cloud, and another past that. Raidho keeps open ground passable, one stone within sight of the last. The wind moves over them all afternoon and takes none of them down. |
+| T1-S3 | You stand in browning heather on the open heath, and a cairn rises ahead. Beyond it the next one stands against the sky, set by someone who crossed before. Raidho is the way handed on from one stone to the next, Thor. Wind runs through the gaps between the stones, and not one of them moves. |
+
+| spočítáno | L (dlouhý) | S (krátký) |
+|---|---|---|
+| slova obrazu v čtení | 5–6 z 10 | 2 ze 3 (cairns, heath) |
+| aspekt *road* | 2/3 | 1/3 |
+| úhel (začíná „You stand…") | 3/3 | 3/3 |
+| stopa světa (now/moment/present/active/living) | 0/3 | 0/3 |
+| jméno ve 2.–3. větě · konec bez otázky | 3/3 · 3/3 | 3/3 · 3/3 |
+
+**Výsledek:** ownerova hypotéza se **nepotvrdila** — aspekt s krátkým obrazem vyšel méně (1/3 proti 2/3), úhel stejně,
+svět ani jednou. Obě ramena napsala skoro totéž čtení — *wind* 6/6, *heather* 5/6, *grey* 5/6 (nic z toho
+v žádném obrazu není), esenční řádek „od kamene ke kameni" 6/6; scénu dodaly losy (úhel, délka, konec), ne délka obrazu. Věta produkčního čtení *„You cannot see the
+last from here, only the one that follows"* se nevrátila ani jednou. ⚠️ n=3 na rameno.
+
+### T2 — čtyři věty hlasu: dnešní (P) × návrh CODE-read (N), 5 run, user message shodná (ověřeno)
+Obrazy z banky: Fehu chléb z pece · Ansuz jméno přes dav · Kenaz kovárna · Jera seno · Tiwaz vrácené drobné.
+
+| runa | P — dnešní vzory | N — nové vzory |
+|---|---|---|
+| Fehu | At the oven's mouth the dough turns to crust, and heat still breathes from the loaf. It comes to the table broken open, and there is enough for every hand that reaches. Fehu is the fire's heat turning into a share on each plate. Whose hand breaks the first piece, Thor? | At the mouth of the oven the dough turns to crust, and the smell reaches the door. You set the hot loaf on the table, enough bread for everyone sitting there. Fehu is the fire's heat turned into bread for every hand. Thor, does the first slice go to your own plate, or down the table? |
+| Ansuz | Across the crowded square someone is calling your name, and the other voices are already falling away. Ansuz is one voice carrying clean through the din of many. Do you turn toward that voice, or let the crowd close over it again? | Across the crowd at the autumn sheep round-up someone is calling your name, and every other sound drops away. Ansuz is speech finding its listener over the bleating and the talk. Do you turn toward it, or keep hold of the gate? |
+| Kenaz | Sparks lift from the forge in the dark shed, and the iron softens where the coals burn brightest. The smith turns it once and strikes, and the bar begins to bend. Kenaz is that heat which lets hard things take a new shape. The hammer rests on the anvil while the glow slowly fades to red. | The bellows breathe, and the coals in the dark shed brighten from red to yellow. On the anvil the iron bar softens, and each blow draws it longer. Kenaz is heat moving into cold metal until it can be shaped. You stand in the doorway, and the September night stays cool at your back. |
+| Jera | Under the top of the swath, the hay still holds the damp of morning. Thor, it dries a shade more with each hour the sun holds. By evening the whole swath is light and ready to turn. Jera is the sun's slow work across those hours, and it cannot be hurried. | Under the rows the ground still holds the morning's damp, while the sun works the hay from above. It dries a shade more each hour the light holds, Thor, and the field keeps its own time. Jera is the slow work of the hours, which no hand can hurry. By evening the hay is ready to turn. |
+| Tiwaz | The extra coins lie still in your open palm while the queue shuffles forward. You set them back on the counter, and the cashier barely looks up. Tiwaz is the hand that squares the count when nobody is keeping it. What would those few coins have weighed on the walk home, Thor? | The queue shuffles on behind you, but the extra coin lies still in your palm. You slide it back across the counter, and the cashier looks up from the drawer. Tiwaz is the fair count that holds even when nobody would have checked. What does that coin weigh, Thor, now that it is out of your hand? |
+
+**Spočítáno:** slova ze starých vzorů (grey, glacial, birch, steam, moss, track, shore…) **0/5 v P i 0/5 v N** · slova
+z nových vzorů (meltwater, ditch, geese, harbour, gull, bus, snow…) **0/5 i 0/5** · tvrzení o nitru **0/5 i 0/5**
+(jediný zásah *„ready to turn"* u Jery je věta z obrazu o seně, ne o člověku). Páry téže runy mají stejnou stavbu.
+**Výsledek:** výměna čtyř vět se v těchto 10 čteních **neprojevila měřitelně** — žádný prosak slov oběma směry. Sedí na
+`CLAUDE.md` („system prompt model ignoruje, per-čtení injekci poslechne"): vzory žijí v systémovém promptu. Oprava je tedy
+málo riziková, ale i málo účinná. ⚠️ n=5 párů; slabý vliv by se ukázal až na větší dávce nebo v produkci po nasazení.
