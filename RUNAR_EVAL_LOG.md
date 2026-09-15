@@ -3475,3 +3475,44 @@ THE RUNE IS, THEN PLACE IT: name in ordinary words what the rune stands for…"*
 u `VOICE_PROFILES.focused.rules`, měření 2026-08-20).
 **Světy (owner: *„ukaž všechny věty pro všechny světy do run"*):** řádek `World:` dostává jen Single. Běží 3 světy
 z 5 — Midgard 9 run, Hel 8, Asgard 8; Vanaheim a Jotunheim mají text, ale žádnou runu. Znění → `rworld()` v `v2/runar-utils.js`.
+
+## 2026-09-15 — Esenční řádek: vzor od GPT proti produkci (Isa · Raidho · Mannaz, n=1 na rameno)
+
+**Proč (owner):** *„ten esenční řádek je to, co jsem nedávno naháněl — aby Rúnar mluvil méně metaforicky — a přitom je
+tady jasně řečeno, jak má mluvit: Fehu is wealth proti Fehu is that warmth passed from hand to hand."* Přinesl znění od
+GPT (*„neříkám použij přesně takhle, je to jiný pohled"*); testuje se ale přesně to znění.
+**Co se liší (jediný řádek, ověřeno diffem; systém a vše ostatní shodné, stejný seed na runu):**
+- P (produkce): *Never its textbook symbol or a dictionary phrase as the label — "Fehu is that warmth passed from hand to
+  hand", not "Fehu is wealth". The familiar word may live inside the doing ("exchange between the sea and the shore").*
+- G (GPT): *Never use its textbook symbol or a dictionary phrase as the label. Give its familiar meaning a living,
+  plain-language form: "Fehu is wealth that becomes real when it is exchanged, shared, or put to use," not "Fehu is
+  wealth." The familiar word may remain inside the doing, as in "the exchange between the sea and the shore."*
+Obrazy z banky: Isa *The calm lies over the fjord…* (stillness) · Raidho *The sheep-track winds along the hillside of its
+own accord* (natural rhythm) · Mannaz *The reflection in the still lagoon trembles…* (self-awareness). Isa-P = čtení A
+z 2026-09-14 (prompt bajtově shodný).
+
+| | P — produkce | G — vzor GPT |
+|---|---|---|
+| Isa | A drop clings to the bird's beak, Kuky, and nothing on the fjord stirs. **Isa is that hold, keeping what lies above and below the water in place.** When the drop falls, does the fjord receive anything, or only take back its own? | A single feather on the gull's back does not stir, Kuky, and the stones show through the flat fjord. **Isa is stillness that holds everything in its place, long enough to be seen.** What passes between the gull and the rock while neither moves? |
+| Raidho | The sheep-track winds along the hillside through browning heather, curving around each stone. **Raidho is rhythm worn into the ground, a way made by walking rather than planning.** Whose feet gave the hillside this track, and whose feet will it carry next? | The sheep-track winds along the hillside in the autumn wind, bending round each stone. **Raidho is a way kept open by walking it, at the pace the slope allows.** Did the sheep make this track, or did the hill give it to them? |
+| Mannaz | The mountain across the lagoon holds still, while its reflection trembles at the least breath of wind. **Mannaz is a face coming to know itself on moving water.** You stand at the shore, where the water gives back what you bring to it. | The mountain stands fast while its reflection in the lagoon trembles at the least breath of wind. **Mannaz is a person knowing their own shape, whatever the water does with it.** You stand at the edge, and the lagoon gives back what you lend it. |
+
+**Spočítáno (celé klíčové slovo z `RUNES[].k`):** P 0/3 · G 1/3 (Isa *stillness*, a to v tvaru GPT vzoru „<Runa> is
+<klíč> that …"). Raidho-P má *rhythm* (část klíče *natural rhythm*). ⚠️ n=1 — rozdíl 0/3 × 1/3 je šum.
+
+**Owner přinesl zároveň (GPT) — kritika CODE-read, NEtestováno:**
+- **Čtyři věty „jak má věta dosednout"** (`VOICE_PROFILES.focused`): owner má pravdu — *grey* 2×, zima 2× (sníh na bříze,
+  mech „all winter"). ⚠️ První vzor sám porušuje pravidlo konce: *„What in you is finally ready to move?"* tvrdí, co je
+  v člověku „ready" — `ENDING_OPEN` zakazuje otázku, jejíž půlka tvrdí, co je v hledajícím *„not yet ready"*, a `NO COLD
+  READING` totéž. Verze GPT (*„What might move when winter lets go?"*) se ptá světa. Riziko GPT verze: věta *„Let the
+  examples show variety of season, weather…"* je instrukce, kterou model může vztáhnout na čtení; roční období ve vzorech
+  přitom prompt bez data nemá čím potvrdit (handoff CODE-tune, sezóna).
+- **Ask „personal meaning" (GPT):** směr sedí (odpovědět otevřenou otázkou z obrazu). Dvě známé vady: (a) seznam *„Do not
+  say: … something in you is already there …"* pojmenuje zakázané věty → zasadí je (memory
+  `prompt-nepojmenuj-co-hned-zakazes`; `already` už jednou takhle uniklo) · (b) *„Prefer: For you, it may be a question:…"*
+  je hotová věta → stane se formulí každé osobní odpovědi (memory `prompt-directive-makes-model-copy`).
+- **Světy do pěti (GPT):** ⚠️ svět runy není jen text promptu — nese i STRUKTURU: výška větve stromu (`RUNAR_DESIGN.md`
+  Asgard→skuld · Midgard→verðandi · Hel→urð), filtr světů v `runar-yggdrasil.html`, crown composer (lane CODE-tree), popisek
+  runy ve čtečce. Vanaheim/Jotunheim do té struktury nepatří. · *„beneath the surface"* je ustálený obrat pro skryté city =
+  tah ke studenému čtení, a slovo *surface* se bude opakovat (*below/beneath* už 3/3 v testech). · Poznámka GPT k Jotunheimu
+  („formin[u]") plete islandštinu s češtinou: *streitist á móti forminu* je doložená IS vazba (`RUNAR_DECISIONS.md`, is-vazba).
