@@ -14,5 +14,5 @@ buildery (cesty v nich míří do scratchpadu session — slouží k dohledání
 | `prompty-ab2/` | 2026-09-14 „Ask nad Isou B · Mannaz A/B" |
 | `prompty-abl/` | 2026-09-14 „Esenční řádek bez DOES / bez vzoru / bez obou" |
 | `prompty-gpt/` | 2026-09-15 „Esenční řádek: vzor od GPT proti produkci" |
-| `prompty-t15/` (+ `texty.json`) | 2026-09-15 „Raidho: dlouhý × krátký obraz · čtyři věty hlasu" |
+| `prompty-t15/` (texty čtení v `prompty-t15/texty.json`) | 2026-09-15 „Raidho: dlouhý × krátký obraz · čtyři věty hlasu" |
 | `raidho-cairns-prompt.txt` | produkční čtení Raidho 2026-09-15 (readings `e2e82087…`), prompt zrekonstruovaný z `prompt_draws` — 5/5 losů ověřeno, délka odvozena |
