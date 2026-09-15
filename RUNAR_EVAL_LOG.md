@@ -3447,3 +3447,31 @@ nevysvětluje úplně nic víc."*
   (Mannaz B *„already tapping"* 2026-09-14 je jeden případ.)
 - **warmth** před vzorem (do 2026-08-22 19:27, commit `2cc8fb5` v4.0-mynd) **21/211 (10 %)** · po **10/55 (18 %)** ·
   p = 0,10. ⚠️ Týmž commitem přišel celý esenční řádek i vazba obraz–klíč → na vzorovou větu to svést nejde.
+
+**Owner 2026-09-15 k pilotu:** *„E0 zní dobře · E1 je tady dobré · E2 je horší — to znamená, že vzor dělá dobrou práci
+a je nutný · E3 je špatný."* Otázka ownera: *„jen E2 opustila tvar ‚Isa is…' — takže je to ve vzoru?"* ⇒ z n=1 nejde:
+E3 je taky bez vzoru a tvar „Isa is" má. Produkce ownera (EN Single od v4.0): „<Runa> is that/the/this…" **21/33**;
+IS Single od v4.0 owner nemá žádné (IS esenční pravidlo přitom vzor NEMÁ — přirozený pokus, zatím bez dat).
+**Owner k Mannazu:** produkční obraz *„You remember the number of a house you have not called in thirty years, but not why
+you walked into this room"* je *„divný"*.
+**Owner k Asku „what does it mean for me":** navrhl tvar odpovědi *„Může to být pozvání přestat na chvíli čeřit vodu; ne
+proto, že znám tvé dno, ale protože klid někdy dovolí zahlédnout, co je už přítomné."* — odpovídá na otázku bez diagnózy.
+Střety s kánonem, které by test musel ohlídat: *pozvání přestat* = rada (DESIGN „postoj ano, radu ne") · *co je už
+přítomné* = tah „already" (tvrzení, co v člověku už je) · *ne proto, že znám tvé dno* = disclaimer (DESIGN: „disclaimer
+neinokuluje"). Dnes to Ask zakazuje dvakrát (`NO COLD READING` + *„Never tell the seeker what it means for them"*).
+
+## 2026-09-15 — Vzory v promptech: inventura (`scripts/vzory.js`)
+
+**Proč (owner):** *„podíváme se na to, jak jsou napsané vzory. Kolik jich máme? Dej mi jejich znění!"*
+Nástroj staví prompty produkčními buildery (systém, Single, Ask, 4 spready, životní runa, rozbor jména; EN i IS; 80 losů)
+a vytáhne text v uvozovkách + „e.g.". Znění se tu NEOPISUJE (§20) — `node scripts/vzory.js`.
+**Stav 2026-09-15:** 29 citací; skutečné VZORY k napodobení jsou jen tři skupiny — (1) esenční řádek EN (Single + Ask +
+životní runa): *Fehu is that warmth…* / *Fehu is wealth* / *exchange between the sea and the shore*; **IS esenční pravidlo
+žádný vzor nemá** · (2) čtyři věty „jak má věta dosednout" v hlasovém profilu `focused` (EN i IS, systémový prompt) ·
+(3) životní runa EN: *Sólmánuður, the month of the midnight sun*. Zbytek jsou ANTI-vzory (zakázané fráze, IS vazby).
+**Vedlejší nálezy:** (a) týž hlasový profil říká *„let the image take the season that is real now"* — ale prompt čtení
+datum ani sezónu nenese → pokyn, který model nemá čím splnit · (b) v configu leží i profil `direct` s pravidlem *„SAY WHAT
+THE RUNE IS, THEN PLACE IT: name in ordinary words what the rune stands for…"*; produkce jede `focused` (proč → komentář
+u `VOICE_PROFILES.focused.rules`, měření 2026-08-20).
+**Světy (owner: *„ukaž všechny věty pro všechny světy do run"*):** řádek `World:` dostává jen Single. Běží 3 světy
+z 5 — Midgard 9 run, Hel 8, Asgard 8; Vanaheim a Jotunheim mají text, ale žádnou runu. Znění → `rworld()` v `v2/runar-utils.js`.
