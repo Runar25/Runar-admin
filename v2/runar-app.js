@@ -547,6 +547,8 @@ async function setLifeRuneInReadings(on) {
 
 // Sekce se ukazuje jen prihlasenemu, ktery zivotni runu MA — jinak by prepinac ridil neco,
 // co u nej neexistuje (zivotni runa se pocita z data narozeni).
+// Od 2026-09-15 prvek ZIJE V OKNE ZIVOTNI RUNY (KUKY: „presuneme … do life rune okna");
+// ids zustavaji sp-* (vazi na ne tenhle sync, updateUIText i onLifeLensToggle), polohu hlida ㉣.
 function _syncLifeLensUI() {
   var box = document.getElementById('sp-lifelens-settings');
   var cb  = document.getElementById('sp-lifelens-toggle');
@@ -630,7 +632,6 @@ function updateSidePanel() {
     setText('sp-privacy-lbl', t('sp_privacy_settings_lbl'));
     setText('sp-optout-label', t('optout_label'));
     _syncPrivacyUI();
-    setText('sp-lifelens-lbl', t('sp_lifelens_lbl'));
     setText('sp-lifelens-label', t('lifelens_label'));
     _syncLifeLensUI();
   }

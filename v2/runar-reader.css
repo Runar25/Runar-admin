@@ -576,6 +576,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .rune-pop-kw-item{display:inline-block;margin:2px 3px;padding:1px 8px;border:1px solid rgba(139,184,216,0.35);border-radius:9px;cursor:pointer;transition:border-color .15s,color .15s;}
 .rune-pop-kw-item:hover{border-color:var(--gold);color:var(--gold);}
 .kw-hl{color:var(--gold);border-bottom:1px solid rgba(255,191,0,0.5);text-shadow:0 0 8px rgba(255,191,0,0.3);}
+/* 2026-09-15 KUKY: prepinac cocky presunut ze sideboardu do okna zivotni runy */
+.tree-lifelens{margin:22px auto 0;display:flex;justify-content:center;font-size:1.1rem;}
 /* 2026-09-14 KUKY: oznacuje se VETA nesouci vyznam (jemne pozadi), slovo v ni silneji (.kw-hl) */
 .kw-hl-sent{background:rgba(255,191,0,0.09);border-radius:3px;padding:0 2px;}
 .layer2{background:#0a0e18;padding:20px;margin-bottom:16px;}

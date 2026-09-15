@@ -393,7 +393,10 @@ if (rLife && rTree) {
                  'tree-dob-btn', 'tree-reveal-btn', 'tree-rs-reveal-btn',
                  // rozbor jména (2026-09-11) — při psaní jsem ho omylem vložil ZA uzavírací
                  // značku panelu, tedy mimo něj. Proto je tady.
-                 'tree-name-lore', 'name-lore-btn', 'name-lore-text'];
+                 'tree-name-lore', 'name-lore-btn', 'name-lore-text',
+                 // přepínač čočky (2026-09-15) — přestěhován ze sideboardu; kdyby se vrátil tam,
+                 // tahle řádka zčervená.
+                 'sp-lifelens-settings'];
   for (const id of STAVY) {
     const r = HTML.findIndex(l => l.indexOf('id="' + id + '"') !== -1);
     const vLife = r > rLife[0] && r < rLife[1];
@@ -540,6 +543,15 @@ async function drat() {
   rekni(gh.indexOf('data-kw="gift, companionship') !== -1, 'klíče jdou v jazyce uloženého textu (EN text × IS UI)');
 
   // ADMIN reset tlačítko: adminovi se ukáže, ostatním ne (server má vlastní bránu z JWT).
+  // Přepínač čočky: _showTreeReading ho srovná (viditelný + zaškrtnutí podle uloženého stavu).
+  vm.runInContext('lifeRuneInReadings = false; _lifeRuneNum = 7;', S);
+  vm.runInContext('_showTreeReading(RUNES.find(r => r.n === "Gebo"), "Gebo", false)', S);
+  const lensBox = prvky['sp-lifelens-settings'] || mk('x');
+  const lensCb  = prvky['sp-lifelens-toggle'] || mk('x');
+  rekni(lensBox.style.display === '' && lensCb.checked === false,
+        'přepínač čočky se v okně životní runy ukáže a nese uložený stav (vypnuto)');
+  vm.runInContext('lifeRuneInReadings = true;', S);
+
   vm.runInContext('isAdmin = function(){ return true; };', S);
   vm.runInContext('_showTreeReading(RUNES.find(r => r.n === "Gebo"), "Gebo", false)', S);
   const rbA = prvky['tree-admin-reset'] || mk('x');

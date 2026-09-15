@@ -5950,3 +5950,20 @@ ověřeno: bez auth 401, klientská strana ㉣ (admin vidí tlačítko a bypass,
 Adminův klik ověří owner — jiný admin JWT neexistuje.
 
 **Affected doc(s):** žádný.
+
+## 2026-09-15 (1) — Přepínač „Let my life rune colour the ending" bydlí v okně životní runy
+
+**Proč (KUKY):** *„přesuneme ‚Let my life rune colour the ending' z postranního panelu do life
+rune okna."* Nastavení se týká životní runy — patří tam, kde ji člověk čte, ne do účtu.
+
+**Co platí:** prvek žije v `tree-reading-body` (pod závěrečným citátem, nad admin resetem),
+sekční nadpis „MY READINGS" s ním nešel (v okně runy je zbytečný — klíč `sp_lifelens_lbl`
+odstraněn). Ids zůstaly `sp-*`: váží na ně `updateUIText`, `_syncLifeLensUI` i
+`onLifeLensToggle`, a polohu jistí kontrola ㉣, ne jméno. `_showTreeReading` přepínač po
+vykreslení srovná — `_lifeRuneNum` je až tam jistě načtený (flags select uměl doběhnout dřív).
+Gating beze změny: jen přihlášený s životní runou.
+
+**Čím je to jištěné:** ㉣ — `sp-lifelens-settings` leží v panelu životní runy (návrat do
+sideboardu zčervená) · po vykreslení je vidět a nese uložený stav.
+
+**Affected doc(s):** žádný.
