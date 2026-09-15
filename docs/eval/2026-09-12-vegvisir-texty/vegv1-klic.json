@@ -1,0 +1,42 @@
+[
+ {
+  "n": "T1",
+  "id": "Jera-A",
+  "rameno": "A"
+ },
+ {
+  "n": "T2",
+  "id": "Jera-B",
+  "rameno": "B"
+ },
+ {
+  "n": "T3",
+  "id": "Isa-B",
+  "rameno": "B"
+ },
+ {
+  "n": "T4",
+  "id": "Isa-A",
+  "rameno": "A"
+ },
+ {
+  "n": "T5",
+  "id": "Thurisaz-B",
+  "rameno": "B"
+ },
+ {
+  "n": "T6",
+  "id": "Thurisaz-A",
+  "rameno": "A"
+ },
+ {
+  "n": "T7",
+  "id": "Laguz-A",
+  "rameno": "A"
+ },
+ {
+  "n": "T8",
+  "id": "Laguz-B",
+  "rameno": "B"
+ }
+]

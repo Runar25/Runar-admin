@@ -3516,3 +3516,44 @@ z 2026-09-14 (prompt bajtově shodný).
   runy ve čtečce. Vanaheim/Jotunheim do té struktury nepatří. · *„beneath the surface"* je ustálený obrat pro skryté city =
   tah ke studenému čtení, a slovo *surface* se bude opakovat (*below/beneath* už 3/3 v testech). · Poznámka GPT k Jotunheimu
   („formin[u]") plete islandštinu s češtinou: *streitist á móti forminu* je doložená IS vazba (`RUNAR_DECISIONS.md`, is-vazba).
+
+## 2026-09-15 — Jak vzniklo produkční čtení Raidho (mohyly) · oprava čtyř vět hlasu · HANDOFF58
+
+### 1. Produkční čtení Raidho (owner: *„je krásně popsané, tak by mě zajímalo, jak to"*)
+`readings e2e82087…`, 2026-09-15 19:25, `v4.25-klice`, `claude-opus-4-8`, bez oblasti, životní runa Gebo.
+> You stand at the first cairn, and across the heath the next one waits within your sight. Raidho is the road walked one
+> marker at a time, Thor, each stone reached before the far one shows itself. You cannot see the last from here, only the
+> one that follows. That is enough to keep walking.
+
+Prompt zrekonstruován z `prompt_draws` — **5/5 losů shodných s DB** (obraz, aspekt, úhel, konec, jméno); délka se
+neukládá, 4 věty / 55 slov = rozpočet „4 short sentences, 50 to 58" (odvozeno). Celý prompt →
+`docs/eval/2026-09-15-kratke-obrazy-esence/raidho-cairns-prompt.txt`. Co z čeho (výčet, ne hodnocení):
+- úhel *„Open by setting the seeker inside the image"* → *You stand at the first cairn*
+- obraz *„The cairns stand each within sight of the next across the whole heath, each seen from the one before"* → věty 1 a 3
+- aspekt `focus on: the road` + esenční pravidlo → *Raidho is the road walked one marker at a time* — klíčové slovo řečené
+  rovně a rozvedené logikou obrazu (tvar, o který owner stojí)
+- jméno *„Address Thor once in the middle"* → *Thor* ve 2. větě · konec *„End on a quiet line that rests"* → *That is enough
+  to keep walking* · čočka Gebo se neprojevila (pravidlo to dovoluje) · řádek World (Midgard) bez viditelné stopy.
+**Owner:** *„já bych nezakazoval Fehu is wealth — je napsané, jak ho má popsat, nepřijde mi, že je potřeba říkat ‚takhle to
+neříkej'."* · Světy: *„pokud je využívá Tree of Life, necháme, jak je, ale měli bychom to ještě podrobit testování."*
+
+### 2. Čtyři věty „jak má věta dosednout" — návrh opravy (CODE-read, NEnasazeno, EN; IS až po výběru, s korpusem)
+Důvod: *grey* 2×, zima 2×, a první vzor tvrdí nitro (*„What in you is finally ready to move?"*) — tatáž vada, kvůli které
+CODE-tune 2026-08-16 (`a958a15`) přepsal čtvrtý vzor (*„You know this shore…"*): *„vzor se napodobuje spolehlivěji než
+zákaz"*. Každá věta jiné roční období a místo, žádná barva dvakrát, otázka jen na svět; předměty ověřeny grepem — žádný
+není obrazem v `RUNE_IMAGES`:
+1. *„Meltwater finds the old ditch behind the farm and runs it full by noon. Where does it go when the ditch runs out?"* — obraz, který končí otázkou (jaro)
+2. *„The geese leave the home-field in October, and in April they come down on the same field again."* — obraz, který se vrací, bez otázky (podzim)
+3. *„Under the midnight sun the harbour lies flat, and a gull sleeps on the last post of the pier."* — dva klidné obrazy, bez výzvy (léto)
+4. *„You are sitting by the bus window as the town falls behind, and the snow has stopped."* — druhá osoba, prosté konstatování (zima)
+Bez věty GPT *„Let the examples show variety of season…"* — pokyn o vzorech by model vztáhl na čtení.
+
+### 3. HANDOFF58 (Cowork → owner, CODE-tune) — ověřeno proti repu
+- ✅ `RUNAR_BACKLOG.md` ř. 579 („ukládáš generovaná data?" — ne) a ř. 919 („dosud JEN v chatu") sedí.
+- ⚠️ *„samotné vygenerované čtení nikde neexistuje"* — **neplatilo**: plné texty ležely ve scratchpadu CODE-read. Přeneseno
+  2026-09-15 → `docs/eval/2026-09-12-vegvisir-texty/` (formulace A–G 14 · V3 4 · NE-V3 4 · F1–F5 5 · V2/R1–R4 4 · ramena
+  s obrazem 6 · bez obrazu 3 · Perth×Gebo 6 · první ramena 8). Plné prompty testů 09-12 až 15 →
+  `docs/eval/2026-09-15-kratke-obrazy-esence/`.
+- ❔ *temperature/top_p na claude-opus-4-8 → HTTP 400* — neověřeno; proxy tyhle parametry neposílá (grep).
+- ⛔ Rozšířená matice (P0–P4 × runy × reversal × křížový slovník) **nespuštěna** — owner 2026-09-15: *„není potřeba dělat
+  tolik čtení"*. Podmínka ukládání plného textu se u testů CODE-read od 2026-09-12 plní (texty v tomto logu, prompty v `docs/eval/`).

@@ -1,0 +1,12 @@
+PERSON: Thor
+DRAWN RUNE: Raidho — focus on: the road · World: the living moment, what is active now · Elements: Air
+READING ANGLE (follow this entry point — let it shape the opening and tone): Open by setting the seeker inside the image, at the spot where it is happening.
+IMAGE — the picture in this reading comes from here: The cairns stand each within sight of the next across the whole heath, each seen from the one before. Let it become your own seeing in the text.
+THE ESSENCE LINE: after the picture, one short line that says what the rune DOES through this image — its sense in plain words a stranger to runes can grasp. Never its textbook symbol or a dictionary phrase as the label — "Fehu is that warmth passed from hand to hand", not "Fehu is wealth". The familiar word may live inside the doing ("exchange between the sea and the shore"). Choose different words for the essence each time — never a fixed formula. No invented mechanism, no fate. Never tell the seeker what it means for them.
+NO COLD READING: never tell the seeker what is true, stirring, or known inside them — that is an unfalsifiable guess wearing the clothes of knowledge. Describe the image; their inner life is not yours to narrate. The world is not arranging itself around them either: no omen, no preparation, no destiny at work.
+One flowing reading — 4 short sentences, 50 to 58 words total. It will be read aloud, so keep every sentence lean — about 28 to 33 seconds spoken. No sections, no labels, no line breaks between thoughts.
+Mention Raidho by name once, woven naturally. One clear insight is enough — do not pack everything in.
+End on a quiet line that rests — not a question this time.
+CLOSING LENS — the life rune Gebo: let it shape ONLY the last sentence or question, nothing before it. The body of the reading is about Raidho. Never name the life rune. If it does not come to the ending naturally, leave it out.
+One paragraph. No breaks. No labels. Address Thor once in the middle, as a recognition rather than an introduction. Stay within the word count — short sentences, no filler. Respond in English.
+Output format — return ONLY this JSON array, nothing before or after: [{"rune": "(the rune name)", "text": "(the reading exactly as instructed above, one flowing paragraph)"}]

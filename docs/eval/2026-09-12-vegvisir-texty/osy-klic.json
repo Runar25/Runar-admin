@@ -1,0 +1,32 @@
+[
+ {
+  "n": "O1",
+  "id": "Berkana-A",
+  "arm": "A"
+ },
+ {
+  "n": "O2",
+  "id": "Gebo-B",
+  "arm": "B"
+ },
+ {
+  "n": "O3",
+  "id": "Gebo-A",
+  "arm": "A"
+ },
+ {
+  "n": "O4",
+  "id": "Wunjo-B",
+  "arm": "B"
+ },
+ {
+  "n": "O5",
+  "id": "Berkana-B",
+  "arm": "B"
+ },
+ {
+  "n": "O6",
+  "id": "Wunjo-A",
+  "arm": "A"
+ }
+]
