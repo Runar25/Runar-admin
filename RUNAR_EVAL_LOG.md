@@ -3608,3 +3608,32 @@ z nových vzorů (meltwater, ditch, geese, harbour, gull, bus, snow…) **0/5 i 
 **Výsledek:** výměna čtyř vět se v těchto 10 čteních **neprojevila měřitelně** — žádný prosak slov oběma směry. Sedí na
 `CLAUDE.md` („system prompt model ignoruje, per-čtení injekci poslechne"): vzory žijí v systémovém promptu. Oprava je tedy
 málo riziková, ale i málo účinná. ⚠️ n=5 párů; slabý vliv by se ukázal až na větší dávce nebo v produkci po nasazení.
+
+## 2026-09-16 — Odkud se ve čtení berou slova (`scripts/puvod.js`) · ownerovo hodnocení T2
+
+**Proč (owner):** *„kde se v jeho čtení berou výrazy… každé slovo nebo slovní spojení chci vědět, jak se dostalo do čtení"*
+— u T1 (Raidho) *„the next grey on the rise"*, *„handing-on"*, *„keeps open ground passable"*, *„browning heather"*.
+**Nástroj:** `scripts/puvod.js` — u každého plnovýznamového slova najde, ve kterém bloku promptu stojí (oddíly systémového
+promptu, řádky user message), nebo že v promptu není. ⚠️ Dokládá PŘÍTOMNOST v promptu, ne příčinu; příčinu dokáže jen odebrání.
+
+**Nález 1 — velká část slov v promptu vůbec není.** T1-L1: v promptu 15 slov (včetně jména, runy a obecných *stand, open*),
+mimo prompt 8 (*ahead, wind, hard, heather, beyond, behind, last, left*); T1-S2 mimo prompt 17 (*wind, combing, brown, heather, flat, drifting, cloud,
+passable, afternoon…*). To je modelova vlastní obecná znalost a asociace: *heath* (vřesoviště) → *heather* (vřes, 5/6), *wind*
+(6/6), mohyla = kameny → *grey*; *on the rise* = anglický obrat pro stoupající terén.
+**Nález 2 — slova z hlasových vzorů v systémovém promptu:** *grey* 5/6 a *moss* (L2) stojí v promptu JEN ve vzorech hlasu
+(*„runs grey over black sand"*, *„grey morning air"*, *„the moss at its rim"*); *rise/rises* (L1, L3, S1, S3) jen ve vzoru
+*„Steam rises"*; u T2-Fehu-N *sitting* jen v NOVÉM vzoru (*„You are sitting by the bus window"*). U kamene je šedá ale přirozená
+— příčinu rozhodne jen odebrání.
+**Nález 3 — ⭐ vzor esenčního řádku se přepisuje do jiného slova:** *„Fehu is that warmth passed from hand to hand"* →
+*„passed from stone to stone"* (L3) · *„handing the road on"* (L2) · *„that handing-on, each stone passing you"* (L1) ·
+*„handed on from one stone to the next"* (S3) — **4 ze 6** čtení nesou tvar *pass / hand on* ze vzoru. Totéž u Jery-N *„no hand
+can hurry"* a Fehu-N *„for every hand"*. Aspekt *the road* se tak říká jinými slovy (*handing-on*, *keeps open ground passable*),
+protože pravidlo zakazuje slovníkové slovo jako štítek a žádá *„different words for the essence each time"*.
+**Nález 4 — artefakt testu:** *autumn, brown, browning, September* prompt nenese — pisatelé (subagenti) znají datum svého
+prostředí, produkční model ho nemá. **Od teď dostane pisatel v zadání „nevíš, jaké je datum ani roční období".**
+
+**Ownerovo hodnocení T2 (čtyři věty hlasu):** Fehu — *N lepší čtení, oba závěry divné* · Ansuz — *N asi lepší* · Kenaz — *N zní
+lépe, nevím, co má znamenat závěrečná věta* · Jera — *P zní lépe; „which no hand can hurry" mi nedává smysl* · Tiwaz — *obě dobré*.
+⇒ N lepší 3×, P 1×, remíza 1×. ⚠️ Každá runa má jedno čtení na rameno — i tentýž prompt puštěný dvakrát dá jiné čtení, takže
+rozdíl může být náhoda běhu. Konce Fehu (P i N) dal týž los konce (*„open question… or plain choice"*); Kenaz-N konec
+*„You stand in the doorway, and the September night stays cool at your back"* = los *„quiet line that rests"* + datum pisatele.

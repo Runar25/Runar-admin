@@ -28,6 +28,10 @@ Návrh testu proto musí být **menší a cílenější**: míň cel, jasná pre
 jedna ostrá otázka než mřížka „co kdyby". To je spíš zlepšení než ztráta — API svádělo k
 generování dávek, které se pak stejně vyhodnocovaly jen zběžně.
 
+⚠️ **Pisatel-subagent zná DATUM, produkční model ne** (nalezeno 2026-09-14/16): pisatelé sami psali *autumn, browning
+heather, yellow birch leaf, September night* — prompt nic z toho nenese. Owner se na tyhle výrazy opakovaně ptal. **Do zadání
+pisatele vždy: „You do not know today's date or the season."** Jinak test měří artefakt, ne Rúnara.
+
 Souvisí: [[measure-dont-eyeball]] · [[attack-the-metric-not-just-the-result]] ·
 [[work-efficiently-ask-if-simpler]] · [[runar-api-key-file]] (klíč zůstává pro jiné použití,
 ne pro generování čtení).
