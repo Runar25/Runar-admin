@@ -3637,3 +3637,31 @@ lépe, nevím, co má znamenat závěrečná věta* · Jera — *P zní lépe; �
 ⇒ N lepší 3×, P 1×, remíza 1×. ⚠️ Každá runa má jedno čtení na rameno — i tentýž prompt puštěný dvakrát dá jiné čtení, takže
 rozdíl může být náhoda běhu. Konce Fehu (P i N) dal týž los konce (*„open question… or plain choice"*); Kenaz-N konec
 *„You stand in the doorway, and the September night stays cool at your back"* = los *„quiet line that rests"* + datum pisatele.
+
+## 2026-09-16 — Raidho bez vzoru „passed from hand to hand" (3 běhy) · owner: aspekt a konce
+
+**Co se testovalo:** tentýž prompt jako T1-L z 2026-09-15 (losy produkčního čtení Raidho, dlouhý obraz mohyl, bez čočky),
+jediná změna v esenčním pravidle: pryč *„— "Fehu is that warmth passed from hand to hand", not "Fehu is wealth""*;
+druhý vzor (*exchange between the sea and the shore*) zůstal. Pisatel nově dostal *„You do not know today's date or the season."*
+**Predikce:** je-li vzor příčinou tvaru *pass / hand on* (T1-L 3/3), spadne ke 0/3.
+
+| | čtení |
+|---|---|
+| T16-1 | You stand beside a cairn on the open heath, and the next one is in plain sight. Past it, Thor, another rises, each stone seen from the one before. Raidho carries a way across open ground, one sighting passed to the next. The stones rest where hands set them, and the wind runs low between them. |
+| T16-2 | You stand at a cairn on the open heath, and the next one shows small on the skyline. Thor, each stone was placed within sight of the one before. Raidho keeps a way whole by sight, each point found from the last. The cairn behind you still stands clear across the heather. |
+| T16-3 | You stand beside a cairn on the open heath, and far across it the next one rises grey. Behind you, Thor, the last one is still in sight. Raidho keeps the road whole, each stone passing it on to the one ahead. The wind moves over the heath, and the stones stay where they stand. |
+
+**Spočítáno:** *pass / hand on* v esenčním řádku **2/3** (*„one sighting passed to the next"* · *„each stone passing it on"*)
+proti 3/3 se vzorem. ⇒ **Hypotéza padla — není to (jen) vzor.** Tvar „předávání" nese sám obraz (*„each seen from the one
+before"*) spolu s aspektem *the road*. Zapisuje se jako „není to X" (§25). Sezónní slova (*autumn, brown*) 0/3 — pokyn o datu
+zabral; *grey* 1/3 a *heather* 1/3 proti 3/3 u T1-L, ale mezi rameny se změnily DVĚ věci (vzor + datum), takže úbytek šedé
+a vřesu nejde přičíst jedné z nich. ⚠️ n=3.
+
+**Owner 2026-09-16 k aspektu:** *„aspekt road by neměl být zakázaný, jen by neměl být pořád. A u meaning nejde přesně o to
+slovo — spíš to významově popsat tak, aby to stále byla ta runa, ne vyměnit slovo za slovo. Tady ho formuloval dobře: Raidho
+keeps open ground passable."* Stav v T1 (6 čtení): *road* doslova 3/6, jinými slovy 3/6. K modelu chodí jen `focus on: <klíč>`.
+**Owner k cíli:** *„našim úkolem je, aby všechny vstupy v každém čtení do sebe perfektně zapadaly — máme Raidho, které je
+v produkčním znění moc dobré, a snažíme se ho rozbít úpravami tak viditelnými, že je dokážeme popsat."*
+**Owner ke koncům** (Kenaz-N *„You stand in the doorway, and the September night stays cool at your back"*): *„tenhle ending
+nic neznamená, je to jen divné ukončení obrazu, mělo by to něco znamenat pro uživatele. Každá část čtení nás stojí peníze a
+tohle je plýtvání slovy. Endingy asi nejsou dobře formulované, postavené, navržené, vysvětlené."* → `RUNAR_BACKLOG.md`.
