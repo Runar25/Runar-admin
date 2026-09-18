@@ -135,4 +135,5 @@ Snapshot = **historický záznam ke svému datu**, ne popis dneška. Nikdy z ně
 - [snapshots/2026-08-18-tree-kura-a-silueta.md](snapshots/2026-08-18-tree-kura-a-silueta.md) — CODE-tree: kůra (4 pokusy), WebGL režim, těžiště se přesunulo na siluetu („palma")
 - [snapshots/2026-08-19-rune-imagery-voice-engine.md](snapshots/2026-08-19-rune-imagery-voice-engine.md) — engine runové obraznosti+hlasu (6 os pestrosti), CODE-read×Cowork; dávka 3/3 + 3 opravy (hvalreki/need-fire/landvættir) visí
 - [snapshots/2026-08-20-identita-session-a-uhly.md](snapshots/2026-08-20-identita-session-a-uhly.md) — ㉛ identita session OSTRÁ (3/3, generický podpis blokuje push) · Stop-hook hlídá i neverzované `memory/` · úhly ověřené měřením
-- [snapshots/2026-08-26-vegvisir-pouti-a-p1.md](snapshots/2026-08-26-vegvisir-pouti-a-p1.md) — Vegvísir: tři plné pouti (mechaničnost systematická) + rozdělaný TEST P1 pozitivního učení ← NEJNOVĚJŠÍ
+- [snapshots/2026-08-26-vegvisir-pouti-a-p1.md](snapshots/2026-08-26-vegvisir-pouti-a-p1.md) — Vegvísir: tři plné pouti (mechaničnost systematická) + rozdělaný TEST P1 pozitivního učení
+- [snapshots/2026-09-18-kratke-obrazy-a-vstupy-cteni.md](snapshots/2026-09-18-kratke-obrazy-a-vstupy-cteni.md) — CODE-read: rozbíjení povedeného Raidha jednou změnou, krátké obrazy, esenční řádek, konce; co čeká na ownera ← NEJNOVĚJŠÍ
