@@ -3702,3 +3702,27 @@ message (tam model poslouchá — `CLAUDE.md`, sekce Obraznost „KLÍČ"); rozh
 žije v `v2/runar-utils.js` `NAME_PLACEMENTS[1]` (Cowork grepl jen `runar-character.js`); rozpor tam není, důvod je jiný ·
 bod 1 platí i přes to, že jde o otázku: `ENDING_OPEN[0]` (`runar-utils.js`) zakazuje právě otázku, jejíž půlka tvrdí, co
 v člověku „not yet ready" · konce čtení bydlí v `ENDING_OPEN`/`ENDING_HEAVY` (`runar-utils.js`), ne v `closing()`.
+
+## 2026-09-18 — Mapa pokynů: co řídí kterou část čtení (Single EN + Ask)
+
+**Proč (owner):** *„chci si být jistý, že všechno od kdo je Rúnar až po poslední instrukci je od začátku správně, nedochází
+ke konfliktům, všechno je na správném místě — pokud něco ladíme, víme co, a nic jiného nám to neovlivní."*
+**Jak:** 156 očíslovaných vět promptu → dva nezávislí kodéři přiřadili každou k části čtení → shoda 156/156 (aspoň jedna
+část), 153/156 (druh věty). Data → `docs/eval/2026-09-18-konflikty-promptu/mapa-pokynu.txt`.
+
+**Kolik pokynů sahá na jednu část v JEDNOM čtení (Single, bez otázky):**
+| část čtení | pokynů | odkud |
+|---|---|---|
+| otevření | 1 | los úhlu — čisté |
+| obraz | ~19 | systém: 7 pravidel THE IMAGE + 5 vzorových scén + sezóna + postoj · čtení: řádek IMAGE, úhel, NO COLD READING |
+| esenční řádek | ~9 | čtení: esenční pravidlo (6 vět) + „one clear insight" + čočka · systém: „Keep the rune's essence" |
+| konec | ~9 | systém: 4 vzory „How a line should land" + postoj · čtení: los konce + čočka (2 věty) + někdy jméno „near the close" |
+| oslovení | 4–5 | systém: druhá osoba 2× + vzor „You are standing…" · čtení: los jména (+ úhel [6]) |
+| délka a formát | ~19 | systém 9 · čtení 10 („no sections / no labels" 4×, „English" 2×, „short sentences, no filler" 2×) |
+**Nálezy:** (1) **ČTYŘI VZORY „How a line should land" JSOU TVARY KONCE** — konec má tedy DVA mechanismy (vzory v systému +
+los konce ve zprávě), které se kryjí a v bodě 1 si odporují; výměna vzorů v testu T2 nic měřitelně nezměnila. (2) Jeden
+vzor sahá na 2–3 části zároveň (obraz + konec + sezóna / oslovení) — proto ladění jedné části hýbe jinou. (3) Obraz a délka
+mají pravidla rozdělená mezi systém a zprávu ke čtení. (4) Otevření (1 los) a jméno runy jsou čisté.
+**Návrh architektury (CODE-read, NEschváleno):** systém = kdo je Rúnar (identita, povaha, účel, obecný tón, zakázaná slova);
+zpráva ke čtení = vše, co tvaruje konkrétní text, každá část jedním blokem (otevření · obraz · esence · oslovení · konec ·
+délka/formát · kontext člověka · životní runa · zákazy jednou). Přesuny mění výstup → golden-verify + malý test.
