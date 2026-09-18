@@ -3695,4 +3695,10 @@ stejné · (C) úhel `[6]` *„setting the seeker inside the image"* + konec `EN
 the image"* → „You stand…" na začátku i na konci · (D) opakování: zákaz říct člověku význam/závěr/krok/nitro stojí na
 čtyřech místech (`RUNAR_BACKLOG.md` „KONCE ČTENÍ"); *„embrace"* 2×, klišé 2×; *„register"* se slibuje a nikde nepřijde;
 *„never repeats himself"* bez paměti předchozích čtení.
-**Stav:** návrhy řešení u ownera (chat 2026-09-18); do kódu přes CODE-tune až po jeho volbě.
+**Stav:** owner 2026-09-18 schválil **1–7 a A–D** → handoff CODE-tune (chat 2026-09-18). Otevřené: sloučení zákazů
+„význam / závěr / krok / nitro" do jednoho místa (D2) — Cowork-tune navrhl `_spine` (systémový prompt), CODE-read user
+message (tam model poslouchá — `CLAUDE.md`, sekce Obraznost „KLÍČ"); rozhodne owner spolu s konci čtení.
+**Cowork-tune ověření (relay 2026-09-18) — opravy CODE-read:** text *„Address {name} once in the middle"* NENÍ starý —
+žije v `v2/runar-utils.js` `NAME_PLACEMENTS[1]` (Cowork grepl jen `runar-character.js`); rozpor tam není, důvod je jiný ·
+bod 1 platí i přes to, že jde o otázku: `ENDING_OPEN[0]` (`runar-utils.js`) zakazuje právě otázku, jejíž půlka tvrdí, co
+v člověku „not yet ready" · konce čtení bydlí v `ENDING_OPEN`/`ENDING_HEAVY` (`runar-utils.js`), ne v `closing()`.
