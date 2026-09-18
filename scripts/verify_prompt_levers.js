@@ -177,7 +177,8 @@ const VYJIMKY = {
   register: { cesty: ['ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },
   intention: { cesty: ['ask', 'liferune'], proc: 'Táž příčina jako u `domain` — včetně toho, že `ask` záměr '
     + 'od 2026-09-11 dostává přes `_askCastContext`. Ověřeno 2026-08-18, přepsáno 2026-09-11.' },
-  describe: { cesty: ['norns', 'kriz', 'horseshoe', 'yggdrasil'], proc: 'v4.9 (2026-08-23): esencni radek VEN ze spreadu — rikal pojmenuj proti zamernemu nejmenuj (KUKY: zatim nejmenuj). Jmena nese UI pozic.' },
+  describe: { cesty: ['norns', 'kriz', 'horseshoe', 'yggdrasil', 'ask'], proc: 'v4.9 (2026-08-23): esencni radek VEN ze spreadu — rikal pojmenuj proti zamernemu nejmenuj (KUKY: zatim nejmenuj). Jmena nese UI pozic. '
+    + 'ask pridano 2026-09-18 (handoff CODE-read #6): pravidlo se tlouklo s vetvi rozlouceni/odmitnuti a jeho zakaz vyznamu-pro-tebe nechal Runara odmitnout primou otazku what does it mean for me. → RUNAR_DECISIONS.md 2026-09-18.' },
   thread: { cesty: ['single', 'ask', 'liferune'], proc: 'Vztahova vazba pozic je z podstaty jen pro spready (v4.9, 2026-08-23).' },
   priority: { cesty: ['single', 'ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },
 };

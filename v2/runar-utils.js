@@ -388,11 +388,18 @@ function _lengthBudget(lang) {
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
-function _endingShape(drawn, lang) {
+function _endingShape(drawn, lang, angle) {
   function _isHeavy(r) { return !!(r && r.n && typeof HEAVY_RUNES !== 'undefined' && HEAVY_RUNES.names.indexOf(r.n) !== -1); }
   var heavy = Array.isArray(drawn) ? drawn.some(_isHeavy) : _isHeavy(drawn);
   var pool = heavy ? (lang === 'is' ? ENDING_HEAVY_IS : ENDING_HEAVY)
                    : (lang === 'is' ? ENDING_OPEN_IS : ENDING_OPEN);
+  // 2026-09-18 (handoff CODE-read, bod C): uhel [6] „seeker inside the image" se nesmi
+  // vylosovat s koncem open[1] „name where the seeker stands in the image" — zacatek i konec
+  // by delaly TYZ tah (misto cloveka v obraze) dvakrat. Zneni poolu se nemeni, jen los.
+  if (!heavy && angle) {
+    var _uhly = lang === 'is' ? READING_ANGLES_IS : READING_ANGLES;
+    if (angle === _uhly[6]) pool = pool.filter(function (_, i) { return i !== 1; });
+  }
   return pool[Math.floor(Math.random() * pool.length)];
 }
 

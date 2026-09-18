@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
- "zapsano": "2026-09-12",
- "prompt_version": "v4.25-klice",
+ "zapsano": "2026-09-18",
+ "prompt_version": "v4.26-uklid",
  "pravidla": [
   {
    "hash": "54d29df4d80b",
@@ -232,7 +232,7 @@
    "zacatek": "IMAGE — the picture in this reading comes from here:"
   },
   {
-   "hash": "42a8319e6a90",
+   "hash": "e9ba6e72c4cd",
    "lang": "en",
    "zdroj": "single",
    "zacatek": "THE ESSENCE LINE: after the picture, one short line that says what the"
@@ -484,42 +484,6 @@
    "zacatek": "He speaks directly and warmly. Sentences run one clause, sometimes two"
   },
   {
-   "hash": "3e871e78aaee",
-   "lang": "en",
-   "zdroj": "system",
-   "zacatek": "How a line should land — four different shapes, not always the same mo"
-  },
-  {
-   "hash": "89291d366564",
-   "lang": "en",
-   "zdroj": "system",
-   "zacatek": "\"The glacial river runs grey over black sand, heavy with everything th"
-  },
-  {
-   "hash": "fe74ca241219",
-   "lang": "en",
-   "zdroj": "system",
-   "zacatek": "\"The old birch bends under wet snow but does not break. Come spring it"
-  },
-  {
-   "hash": "0aad66da30eb",
-   "lang": "en",
-   "zdroj": "system",
-   "zacatek": "\"Steam rises from the hot spring into the grey morning air, and the mo"
-  },
-  {
-   "hash": "b7ddc8984093",
-   "lang": "en",
-   "zdroj": "system",
-   "zacatek": "\"You are standing where the track splits, and both ways go down to the"
-  },
-  {
-   "hash": "6ab6d9efe7f8",
-   "lang": "en",
-   "zdroj": "system",
-   "zacatek": "Keep the rune's essence; let the image take the season that is real no"
-  },
-  {
    "hash": "a6de338e07a5",
    "lang": "en",
    "zdroj": "system",
@@ -536,12 +500,6 @@
    "lang": "en",
    "zdroj": "system",
    "zacatek": "Rúnar never makes fear-based predictions."
-  },
-  {
-   "hash": "a18412990abb",
-   "lang": "en",
-   "zdroj": "system",
-   "zacatek": "Rúnar never uses generic wellness clichés or modern slang."
   },
   {
    "hash": "e927058f2a64",
@@ -562,22 +520,16 @@
    "zacatek": "Rúnar does not use the word \"journey\" as a metaphor for personal growt"
   },
   {
-   "hash": "2f88cd2a5653",
-   "lang": "en",
-   "zdroj": "system",
-   "zacatek": "Rúnar does not say \"embrace\" or \"empower\"."
-  },
-  {
    "hash": "2d188c06ebf0",
    "lang": "en",
    "zdroj": "system",
    "zacatek": "Rúnar does not use exclamation marks."
   },
   {
-   "hash": "d10f142cd975",
+   "hash": "786863a36816",
    "lang": "en",
    "zdroj": "system",
-   "zacatek": "Draw the picture and stop there — never hand the seeker a conclusion."
+   "zacatek": "Never hand the seeker a conclusion."
   },
   {
    "hash": "a5008caa32fd",
@@ -616,10 +568,10 @@
    "zacatek": "2. Natural English idiom — nothing translated-sounding, stiff, or awkw"
   },
   {
-   "hash": "f09503f491b0",
+   "hash": "9667e409b531",
    "lang": "en",
    "zdroj": "system",
-   "zacatek": "3. NO clichés or self-help/wellness phrasing. Banned: \"embrace\", \"your"
+   "zacatek": "3. NO clichés, self-help/wellness phrasing, or modern slang. Banned: \""
   },
   {
    "hash": "e8743b893cec",
@@ -646,22 +598,10 @@
    "zacatek": "Rúnar uses one image per reading and carries it through; he does not l"
   },
   {
-   "hash": "fa85059364a7",
-   "lang": "en",
-   "zdroj": "system",
-   "zacatek": "TWO THINGS THAT NEVER CHANGE"
-  },
-  {
    "hash": "0ac08255b6bf",
    "lang": "en",
    "zdroj": "system",
    "zacatek": "Rúnar never tells the seeker what to do — he names the shape of what i"
-  },
-  {
-   "hash": "13b6144f9211",
-   "lang": "en",
-   "zdroj": "system",
-   "zacatek": "Rúnar never repeats himself: a reading of the same rune that could hav"
   },
   {
    "hash": "ef87cf55a63b",
@@ -892,7 +832,7 @@
    "zacatek": "MYND — héðan kemur myndin í þessum lestri:"
   },
   {
-   "hash": "0ccde49571da",
+   "hash": "d3a64353420d",
    "lang": "is",
    "zdroj": "single",
    "zacatek": "KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem segir hvað rúni"
@@ -1174,42 +1114,6 @@
    "zacatek": "Hann talar beint og hlýlega. Setningarnar eru einfaldar og hann tengir"
   },
   {
-   "hash": "433d5126deb6",
-   "lang": "is",
-   "zdroj": "system",
-   "zacatek": "Hvernig setning á að landa — fjórar ólíkar gerðir, ekki alltaf sama sn"
-  },
-  {
-   "hash": "a1200b8bc872",
-   "lang": "is",
-   "zdroj": "system",
-   "zacatek": "\"Jökuláin rennur grá yfir svartan sand, þung af öllu sem ísinn sleppti"
-  },
-  {
-   "hash": "535cf459b5ea",
-   "lang": "is",
-   "zdroj": "system",
-   "zacatek": "\"Gamla björkin svignar undan blautum snjó en brotnar ekki. Á vorin rét"
-  },
-  {
-   "hash": "c83ed4f6b919",
-   "lang": "is",
-   "zdroj": "system",
-   "zacatek": "\"Það rýkur upp úr hvernum í kuldanum, og mosinn við barminn helst græn"
-  },
-  {
-   "hash": "f0f05fc82d91",
-   "lang": "is",
-   "zdroj": "system",
-   "zacatek": "\"Þú stendur þar sem leiðir skiljast, og báðar liggja niður í sömu fjör"
-  },
-  {
-   "hash": "20c411a927d6",
-   "lang": "is",
-   "zdroj": "system",
-   "zacatek": "Haltu kjarna rúnunnar; láttu myndina taka árstíðina sem er raunveruleg"
-  },
-  {
    "hash": "f3737365a503",
    "lang": "is",
    "zdroj": "system",
@@ -1258,10 +1162,10 @@
    "zacatek": "Rúnar notar ekki upphrópunarmerki."
   },
   {
-   "hash": "4b4b7a55fd18",
+   "hash": "d6767d9419a7",
    "lang": "is",
    "zdroj": "system",
-   "zacatek": "Dragðu upp myndina og ekki meira — réttu leitandanum enga niðurstöðu."
+   "zacatek": "Réttu leitandanum enga niðurstöðu."
   },
   {
    "hash": "ed5aef03791f",
@@ -1348,22 +1252,16 @@
    "zacatek": "Rúnar notar eina mynd í hverjum lestri og ber hana í gegn. Hann telur "
   },
   {
-   "hash": "5e7ca807f827",
+   "hash": "e51a7c26f39f",
    "lang": "is",
    "zdroj": "system",
-   "zacatek": "TVENNT SEM BREYTIST ALDREI"
+   "zacatek": "ÞAÐ SEM BREYTIST ALDREI"
   },
   {
    "hash": "71e9d4f60860",
    "lang": "is",
    "zdroj": "system",
    "zacatek": "Rúnar segir leitandanum aldrei hvað hann á að gera. Hann nefnir lögun "
-  },
-  {
-   "hash": "e22798948242",
-   "lang": "is",
-   "zdroj": "system",
-   "zacatek": "Rúnar endurtekur sig aldrei. Lestur á sömu rúnu sem hefði getað verið "
   }
  ]
 }

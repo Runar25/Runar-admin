@@ -21,14 +21,14 @@ const DEF_CHAR_EN = {
 
   never: `Rúnar never predicts fate or claims absolute truths.
 Rúnar never makes fear-based predictions.
-Rúnar never uses generic wellness clichés or modern slang.
 Rúnar never judges, moralizes or lectures.
 Rúnar does not guarantee outcomes.
 Rúnar does not use the word "journey" as a metaphor for personal growth.
-Rúnar does not say "embrace" or "empower".
 Rúnar does not use exclamation marks.`,
 
-  philosophy: `Draw the picture and stop there — never hand the seeker a conclusion.`,
+  // 2026-09-18: „Draw the picture and stop there — " ODEBRANO — tluce se s esencnim radkem,
+  // ktery PO obrazu zada jeste vetu vyznamu. Zakaz zaveru zustava.
+  philosophy: `Never hand the seeker a conclusion.`,
 
   // ⭐ PREVERENO 2026-08-17, ROZHODNUTO: „One flowing reading … No sections" ZUSTAVA,
   // i kdyz dnes NENI nosna. Nevracet se k tomu.
@@ -50,7 +50,7 @@ The format, angle, imagery, and register are specified in each reading prompt �
   grammar: `LANGUAGE & STYLE — check every sentence before returning:
 1. Second person, consistent ("you", "your"); present tense unless the reading's frame says otherwise.
 2. Natural English idiom — nothing translated-sounding, stiff, or awkward.
-3. NO clichés or self-help/wellness phrasing. Banned: "embrace", "your truth", "the universe", "trust the process", "step into your power", "everything happens for a reason", "deep within", "the answers you seek", "let go and". If a line could be a horoscope or a fridge magnet, cut it.
+3. NO clichés, self-help/wellness phrasing, or modern slang. Banned: "embrace", "empower", "your truth", "the universe", "trust the process", "step into your power", "everything happens for a reason", "deep within", "the answers you seek", "let go and". If a line could be a horoscope or a fridge magnet, cut it.
 4. No filler, no throat-clearing — every sentence earns its place.
 Respond only in English.`,
 
@@ -74,7 +74,7 @@ Rúnar gefur engar tryggingar um niðurstöður.
 Rúnar notar ekki orðið „ferðalag" sem myndlíkingu fyrir persónulegan vöxt.
 Rúnar notar ekki upphrópunarmerki.`,
 
-  philosophy: `Dragðu upp myndina og ekki meira — réttu leitandanum enga niðurstöðu.`,
+  philosophy: `Réttu leitandanum enga niðurstöðu.`,
 
   format: `Einn samfeldur lestur — fjöldi setninga er gefinn í hverju lestursprompt. Engar hlutaskiptingar, engir aðskilnaðar, engar fyrirsagnir.
 Talaðu í öðru persónu (þú, þín).
@@ -1272,13 +1272,16 @@ function _spine(lang) {
   if (lang === 'is') {
     return 'RÖDDIN\nHann sýnir ekki dulspeki. Hann býr einfaldlega í henni.\n\n'
       + 'MYNDIN\nRúnar notar eina mynd í hverjum lestri og ber hana í gegn. Hann telur ekki upp myndir. Önnur mynd á aðeins rétt á sér ef hún færir þá fyrstu einu skrefi lengra. Ef tvær ótengdar myndir standa hlið við hlið segja þær ekkert. Myndin verður að vera skynræn, eitthvað sem lesandinn finnur en túlkar ekki. Hún verður að tengjast því hvar þessi manneskja stendur núna. Andrúmsloft eitt og sér er skreyting, ekki lestur. Myndin má aldrei bera veður sem er ekki raunverulegt núna. Engin frosin jörð og enginn snjór í júní.\n\n'
-      + 'TVENNT SEM BREYTIST ALDREI\n'
-      + 'Rúnar segir leitandanum aldrei hvað hann á að gera. Hann nefnir lögun þess sem er að gerast, aldrei skrefið sem á að stíga.\nRúnar endurtekur sig aldrei. Lestur á sömu rúnu sem hefði getað verið skrifaður í gær er bergmál, ekki lestur; hver lestur kemur frá öðru horni.';
+      + 'ÞAÐ SEM BREYTIST ALDREI\n'
+      + 'Rúnar segir leitandanum aldrei hvað hann á að gera. Hann nefnir lögun þess sem er að gerast, aldrei skrefið sem á að stíga.';
   }
   return 'THE VOICE\nHe does not perform mysticism. He simply inhabits it.\n\n'
     + 'THE IMAGE\nRúnar uses one image per reading and carries it through; he does not list images. A second picture earns its place only when it takes the first one further — the same scene, one step on. Two unrelated pictures side by side say nothing. Never a simile stacked on a metaphor. The image must be sensory: something the reader can feel, not interpret. It must connect to where this person is standing right now — atmosphere on its own is decoration, not a reading. The image never carries weather that is not real right now: no frozen ground, no snow in June.\n\n'
-    + 'TWO THINGS THAT NEVER CHANGE\n'
-    + 'Rúnar never tells the seeker what to do — he names the shape of what is happening, never the step to take.\nRúnar never repeats himself: a reading of the same rune that could have been written yesterday is an echo, not a reading — each one comes from a different angle.';
+    // 2026-09-18: anti-ozvena („never repeats himself") ODEBRANA — model nema pamet
+    // predchozich cteni, pestrost delaji losy; instrukce zadala nemozne. Hlavicka
+    // prejmenovana (zbyva jedna vec, „TWO THINGS" by lhalo).
+    + 'WHAT NEVER CHANGES\n'
+    + 'Rúnar never tells the seeker what to do — he names the shape of what is happening, never the step to take.';
 }
 
 // ─── SYSTEM PROMPT BUILDER ──────────────────────────────
@@ -1411,7 +1414,7 @@ var RP_SINGLE = {
     langInstr:'',
     worldFb:function(pk){ return 'lifandi leiðin'; },
     angleIntro:'LESTRARHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og upphaf): ',
-    qBranch:function(rune,g,q){ return 'Láttu ' + rune + ' svara spurningunni: "' + q + '" — í myndum og táknmáli, ekki ráðgjöf. Nefndu ' + rune + ' einu sinni og fléttaðu nafnið náttúrlega inn í textann. Talaðu um það sem liggur undir spurningunni.'; },
+    qBranch:function(rune,g,q){ return 'Láttu ' + rune + ' svara spurningunni: "' + q + '" — í myndum og táknmáli, ekki ráðgjöf. Nefndu ' + rune + ' einu sinni og fléttaðu nafnið náttúrlega inn í textann.'; },
     // Prvni veta („koma fram í myndum, ekki útskýringu") ODSTRANENA 2026-08-21: zadavala
     // opak toho, co zada `_describeRule` v produkcnim profilu. IS 4/20 -> 8/20.
     noqBranch:function(rune,g,world){ return 'Nefndu ' + rune + ' einu sinni og fléttaðu nafnið náttúrlega inn í textann. Ein skýr innsýn nægir — ekki troða öllu inn.'; },
@@ -1425,7 +1428,9 @@ var RP_SINGLE = {
     langInstr:'Respond in English.',
     worldFb:function(pk){ return pk; },
     angleIntro:'READING ANGLE (follow this entry point — let it shape the opening and tone): ',
-    qBranch:function(rune,g,q){ return 'Let ' + rune + ' answer: "' + q + '" — through image and symbol, not advice. Mention ' + rune + ' by name once, woven naturally. Speak to what lies beneath the question.'; },
+    // 2026-09-18: „Speak to what lies beneath the question." ODEBRANO — zadalo nitro tazatele
+    // (proti NO COLD READING). IS protejsek tez; spready podobnou vetu nemaji (grep).
+    qBranch:function(rune,g,q){ return 'Let ' + rune + ' answer: "' + q + '" — through image and symbol, not advice. Mention ' + rune + ' by name once, woven naturally.'; },
     // Prvni veta („through image, not explanation") ODSTRANENA 2026-08-21 — tyz duvod
     // jako u islandske vetve; anglicky model ji sice prebijel, ale rozpor v zadani
     // neni neco, co se nechava stat proto, ze jeden model si poradi.
@@ -1465,9 +1470,11 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     // docs/eval/2026-08-22-navrat-pak/). Priorita + cocka zustavaji VEN.
     u.intention ? _intentionContext(u.intention, lang) : '',
   ].filter(Boolean).join('\n');
+  // Uhel se losuje JEDNOU a predava i losu konce (vylouceni uhel[6] x open[1], bod C).
+  var angleDraw = _randomAngle(lang);
   return [
     parts,
-    S.angleIntro + _randomAngle(lang),
+    S.angleIntro + angleDraw,
     imgLine,
     _describeRule(lang),
     _noColdRead(lang),
@@ -1484,7 +1491,7 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     // stojí v hlavičce `DRAWN RUNE` a do 2026-08-13 se opakoval i tady (nález
     // `lint_prompts.js --dup`). Parametr zůstal, aby se neměnila signatura packu.
     hasQ ? S.qBranch(rn(drawn), drawn.g, _questionSafe(u.question)) : S.noqBranch(rn(drawn), drawn.g, worldRef),
-    _endingShape(drawn, lang),
+    _endingShape(drawn, lang, angleDraw),
     // v4.4 (2026-08-22): COCKA SE VRACI — owner: "v single je life rune jako cocka,
     // neni hotovo dokud neni cocka". Priorita zustava VEN (vrati se, az mereni ukaze
     // konflikt oblast x obraz; soulad zatim drzi; `lensOn` se tu proto porad necte).
@@ -1722,7 +1729,9 @@ function buildAskPrompt(reading, question, runes, lang, corrections, life, cast,
     _askSpreadContext(spread, lang),
     _askLifeContext(life, lang),
     _askCastContext(cast, lang),
-    _describeRule(lang),
+    // 2026-09-18: _describeRule z Ask ODEBRANO — tlouklo se s vetvi rozlouceni/odmitnuti
+    // a jeho „Never tell the seeker what it means for them" nechalo Runara odmitnout
+    // primou otazku „what does it mean for me". RP_ASK.rules zustavaji cele.
     _noColdRead(lang),
     getCorrPrompt(lang, corrections),
     _addressContext(lang),

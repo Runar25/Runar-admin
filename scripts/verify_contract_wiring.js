@@ -175,18 +175,21 @@ for (const L of ['en', 'is']) {
   if (dupLR.length) { fail++; console.log('FAIL  liferune_' + L + '  gate dvakrat v promptu: ' + dupLR.join(', ')); }
 }
 
-// ── Ask Rúnar: the follow-up gates (v1.0) ────────────────────────────────────
+// ── Ask Rúnar: the follow-up gates ───────────────────────────────────────────
+// 2026-09-18 (handoff CODE-read #6, owner schvalil): `describe` z Ask ODEBRANO — tlouklo se
+// s vetvi rozlouceni/odmitnuti a „Never tell the seeker what it means for them" nechavalo
+// Runara odmitnout primou otazku „what does it mean for me". Ocekavani se proto OBRACI:
+// navrat esencniho radku do Ask je ta sama ticha regrese jako u spreadu (v4.9).
 const ASK = {
-  describe:  null,   // per-jazyk: dosazuje se z DESCRIBE_MARK nize
   coldread:  ['NO COLD READING', 'ENGIN KÖLD LESNING'],
   antimirror:['Do not mirror the seeker', 'Speglaðu ekki leitandann'],
 };
 for (const L of ['en', 'is']) {
   const txt = O['ask_' + L] || '';
-  const askL = Object.assign({}, ASK, { describe: [DESCRIBE_MARK[L]] });
-  const missing = Object.keys(askL).filter(k => !askL[k].some(x => txt.includes(x)));
+  const missing = Object.keys(ASK).filter(k => !ASK[k].some(x => txt.includes(x)));
   if (missing.length) { fail++; console.log('FAIL  ask_' + L + '  missing: ' + missing.join(', ')); }
-  else console.log('OK    ask_' + L + '  describe+coldread+antimirror');
+  else if (txt.includes(DESCRIBE_MARK[L])) { fail++; console.log('FAIL  ask_' + L + '  esencni radek se vratil do Ask (2026-09-18 skrt)'); }
+  else console.log('OK    ask_' + L + '  coldread+antimirror, bez describe');
   // the instruction itself must not model the move it forbids
   const echo = L === 'is' ? 'rúnirnar sögðu þegar' : 'the runes already said';
   if (txt.includes(echo)) { fail++; console.log('FAIL  ask_' + L + '  still says "' + echo + '"'); }

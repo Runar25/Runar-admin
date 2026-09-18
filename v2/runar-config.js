@@ -56,7 +56,7 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 // v4.17 (2026-09-10): Ask zna zivotni runu. Do te doby ji `buildAskPrompt` nedostaval, takze
 //    odpoved na „jak me ovlivnuje moje zivotni runa" si model musel domyslet. Prompt ji ted nese
 //    jako tichy fakt — Runar ji nevyslovi sam od sebe, jen kdyz se na ni clovek zepta.
-const RUNAR_PROMPT_VERSION = 'v4.25-klice';
+const RUNAR_PROMPT_VERSION = 'v4.26-uklid';
 
 // Mesicni strop hlasu. KUKY 2026-09-11: „limit na hlas max 5 na mesic — je to spis
 // ochutnavka nez aby to porad vyuzivali." ElevenLabs se plati po znacich a jedine, co ho
@@ -454,25 +454,19 @@ const ACTIVE_VOICE_PROFILE = 'focused';
 const VOICE_PROFILES = {
 
   // ── FOCUSED — jednoznačná poetika, jeden přesný obraz (produkce)
+  // 2026-09-18 (handoff CODE-read, owner schvalil): VZORY HLASU ODEBRANY CELE („How a line
+  // should land" + 4 vzorove vety + veta o sezone). Duvod: vzory byly tvary KONCE — druhy
+  // mechanismus konce vedle losu konce (vzor 1 tvrdil nitro „What in you is finally ready",
+  // vzor 2 sliboval vysledek „Come spring it straightens"); veta o sezone zadala neco, co
+  // model nema cim splnit (datum v promptu neni). Test vymeny vzoru (EVAL_LOG 2026-09-15 T2)
+  // nenasel rozdil -> odebrani je male riziko. Detail: DECISIONS 2026-09-18.
   focused: {
     label: 'Focused',
     en: `He speaks directly and warmly. Sentences run one clause, sometimes two joined by a comma — never a long unfolding line, never a clipped fragment.
 
-How a line should land — four different shapes, not always the same mould:
-"The glacial river runs grey over black sand, heavy with everything the ice let go this spring. What in you is finally ready to move?" — an image that ends on a question.
-"The old birch bends under wet snow but does not break. Come spring it straightens again, as it always has." — an image that returns, no question.
-"Steam rises from the hot spring into the grey morning air, and the moss at its rim stays green all winter." — two still images, no call.
-"You are standing where the track splits, and both ways go down to the same shore." — second person, a plain statement.
-Keep the rune's essence; let the image take the season that is real now.
 Avoid abstract, mystical-sounding lines that say nothing plain — if it cannot be felt, it does not belong here.`,
     is: `Hann talar beint og hlýlega. Setningarnar eru einfaldar og hann tengir sjaldan fleiri en tvær með kommu. Hann skrifar hvorki langar flækjur né snubbótt brot.
 
-Hvernig setning á að landa — fjórar ólíkar gerðir, ekki alltaf sama sniðið:
-"Jökuláin rennur grá yfir svartan sand, þung af öllu sem ísinn sleppti í vor. Hvað í þér er loksins tilbúið að hreyfast?" — mynd sem endar á spurningu.
-"Gamla björkin svignar undan blautum snjó en brotnar ekki. Á vorin réttir hún aftur úr sér, eins og hún hefur alltaf gert." — mynd sem snýr aftur, engin spurning.
-"Það rýkur upp úr hvernum í kuldanum, og mosinn við barminn helst grænn allan veturinn." — tvær kyrrar myndir, ekkert kall.
-"Þú stendur þar sem leiðir skiljast, og báðar liggja niður í sömu fjöru." — önnur persóna, hrein staðhæfing.
-Haltu kjarna rúnunnar; láttu myndina taka árstíðina sem er raunveruleg núna.
 Forðastu óhlutbundnar, dulúðlega hljómandi setningar sem segja ekkert einfalt.`,
 
     // Pravidla, ktera tenhle registr MENI oproti zakladu (tyz mechanismus jako `direct`).
@@ -488,9 +482,16 @@ Forðastu óhlutbundnar, dulúðlega hljómandi setningar sem segja ekkert einfa
       // kdezto `focused` si obraz nechava cely.
       // Doklad: vlastnost „rekne smysl runy" 0/8 -> 6/8 EN (p=0,0035) a 0/20 -> 8/20 IS
       // (p=0,0016), mereno 2026-08-20 nad davkami z gen_direct.
+      // 2026-09-18 (handoff CODE-read): vzorova veta „Fehu is that warmth…" ODEBRANA — delala
+      // formuli „<Runa> is…" (se vzorem 32/33 cteni, bez nej 1/5, p=0,0003) a slovo „warmth"
+      // prosakovalo (18/152 produkcnich cteni). Zakaz ucebnicoveho stitku ODEBRAN — prompt sam
+      // podava aspekt (focus on:) a hned ho zakazoval jako stitek; owner: „Fehu is wealth
+      // nezakazovat, jen ne porad" — to kryje „Never a fixed formula". „Choose different words
+      // each time" ODEBRANO (tyz rozkaz jako formule). Zbytek zustava vc. „exchange between the
+      // sea and the shore" a „Never tell the seeker…" (OTEVRENE, rozhodne owner s konci cteni).
       describe: {
-        en: 'THE ESSENCE LINE: after the picture, one short line that says what the rune DOES through this image — its sense in plain words a stranger to runes can grasp. Never its textbook symbol or a dictionary phrase as the label — "Fehu is that warmth passed from hand to hand", not "Fehu is wealth". The familiar word may live inside the doing ("exchange between the sea and the shore"). Choose different words for the essence each time — never a fixed formula. No invented mechanism, no fate. Never tell the seeker what it means for them.',
-        is: 'KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem segir hvað rúnin GERIR í gegnum þessa mynd — merking hennar með hversdagslegum orðum sem ókunnugur skilur. Aldrei þekktasta tákn hennar eða orðabókarorð sem merkimiði. Kunnuglega orðið má lifa inni í myndinni. Veldu ólík orð um merkinguna í hvert sinn — aldrei föst formúla. Engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.',
+        en: 'THE ESSENCE LINE: after the picture, one short line that says what the rune DOES through this image — its sense in plain words a stranger to runes can grasp. The familiar word may live inside the doing ("exchange between the sea and the shore"). Never a fixed formula. No invented mechanism, no fate. Never tell the seeker what it means for them.',
+        is: 'KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem segir hvað rúnin GERIR í gegnum þessa mynd — merking hennar með hversdagslegum orðum sem ókunnugur skilur. Kunnuglega orðið má lifa inni í myndinni. Aldrei föst formúla. Engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.',
       },
     },
   },

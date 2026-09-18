@@ -5967,3 +5967,47 @@ Gating beze změny: jen přihlášený s životní runou.
 sideboardu zčervená) · po vykreslení je vidět a nese uložený stav.
 
 **Affected doc(s):** žádný.
+
+## 2026-09-18 (1) — Úklid promptu, KROK 1: odebrání rozporů (handoff CODE-read, owner schválil)
+
+**Zadání (owner):** *„chci si být jistý, že všechno od kdo je Rúnar až po poslední instrukci je
+správně, bez konfliktů, na správném místě."* Podklad: RUNAR_EVAL_LOG.md 2026-09-18 (rozpory +
+mapa pokynů), docs/eval/2026-09-18-konflikty-promptu/. Tohle je KROK 1 — jen odebrání, žádné
+přesuny; KROK 2 (přesuny do zprávy ke čtení) až po změření tohoto stavu CODE-read.
+
+**Odebráno (EN i IS):**
+1+2. **Vzory hlasu celé** (`VOICE_PROFILES.focused`): „How a line should land" + 4 vzorové věty
+   + „let the image take the season that is real now". Vzory byly druhý mechanismus konce vedle
+   losu konce (vzor 1 tvrdil nitro, vzor 2 sliboval výsledek); věta o sezóně žádala, co model
+   nemá (datum v promptu není). Test výměny vzorů (EVAL_LOG 2026-09-15 T2) nenašel rozdíl.
+3+A+B. **Esenční řádek**: vzorová věta „Fehu is that warmth…" pryč (dělala formuli, „warmth"
+   prosakovalo — 18/152 čtení) · zákaz učebnicového štítku pryč (prompt sám podává aspekt
+   a hned ho zakazoval; owner: „Fehu is wealth nezakazovat, jen ne pořád" — kryje „Never
+   a fixed formula") · „Choose different words each time" pryč. Zůstává „exchange between the
+   sea and the shore" a „Never tell the seeker what it means for them" (OTEVŘENÉ, s konci čtení).
+4. **Postoj**: „Draw the picture and stop there — " pryč (tlouklo se s esenčním řádkem, který
+   PO obrazu žádá větu významu); „Never hand the seeker a conclusion." zůstává.
+5. **Čtení s otázkou**: „Speak to what lies beneath the question." pryč (žádalo nitro, proti
+   NO COLD READING); spready podobnou větu nemají (grep).
+6. **Ask bez esenčního pravidla**: `_describeRule` z buildAskPrompt pryč — tlouklo se s větví
+   rozloučení/odmítnutí a nechalo Rúnara odmítnout „what does it mean for me".
+D1. **Opakování**: klišé + „embrace" drží jen gramatika (bod 3; „empower" a „modern slang" do ní
+   PŘESUNUTY, jinak by zákaz zmizel) · anti-ozvěna z páteře pryč (model nemá paměť předchozích
+   čtení; pestrost dělají losy) — hlavička „TWO THINGS" → „WHAT NEVER CHANGES".
+C. **Úhel[6] × konec open[1]** se už nevylosují spolu (týž tah — místo člověka v obraze — na
+   začátku i konci). Znění poolů beze změny; `_endingShape` dostává tažený úhel.
+
+**Čím je to jištěné:** golden-verify 32→38 builderů (diff = přesně zamýšlené řádky; Ask v otisku
+CHYBĚL — doplněn, změna Ask se ověřila přímou sondou) · nová smoke ㉨ `verify_ending_angle.js`
+(2000 losů/jazyk: zakázaný pár 0×, jiné losy beze změny, heavy nedotčen, `_promptDraws` čte dál)
+· `vzory.js`: zbývá jen „exchange between the sea and the shore", glosa měsíce a zakázané fráze
+(cílový stav handoffu) · registr ㉜ přeregistrován (210 pravidel, v4.26-uklid) · výjimky
+s důvodem: contract wiring (Ask bez describe = obrácené očekávání), levers (describe/ask) ·
+test_spine bez anti-ozvěny (invariant odebrán s páteří) · smoke 44/44 · check-is OK.
+
+**Verze promptu:** v4.25-klice → **v4.26-uklid**.
+
+**Další krok:** push → CODE-read pustí test na ownerově Raidhu (3 čtení + Ask rozloučení + Ask
+„what does it mean for me") a vyhodnotí proti dnešku. KROK 2 (přesuny) až potom.
+
+**Affected doc(s):** žádný — mapa promptu (artifact) překreslena v témž tahu.

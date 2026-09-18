@@ -631,6 +631,17 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola precache probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# Úhel [6] (seeker v obraze) se nesmí vylosovat s koncem open[1] (kde seeker stojí v obraze)
+# — týž tah dvakrát (handoff CODE-read 2026-09-18, bod C). Kontrola losem, ne tvarem kódu.
+print('\n' + chr(0x3268) + ' ÚHEL × KONEC SE NEPOTKAJÍ (verify_ending_angle.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_ending_angle.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola vylouceni probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

@@ -74,7 +74,14 @@ var samplecorr = [{ from:'Arctic', to:'Norðurljós', lang:'both', context:'test
   grab('yggdrasil_'+L,   function(){ return buildYggdrasilPrompt(u, pool, L, []); });
   grab('liferune_'+L,      function(){ return buildLifeRunePrompt('Anna', u.lifeRune, 15, 6, 1990, L, false, []); });
   grab('liferune_prem_'+L, function(){ return buildLifeRunePrompt('Anna', u.lifeRune, 15, 6, 1990, L, true,  []); });
+  // 2026-09-18: Ask v otisku CHYBEL — zmena buildAskPrompt (odebrani _describeRule) prosla
+  // golden diffem jako "0 zmen" a musela se overit rucni sondou (§19.2 tiche zelene).
+  grab('ask_'+L,          function(){ return buildAskPrompt('SAMPLE READING', 'what does it mean for me', 'Raidho', L, [], null, null, null); });
+  grab('ask_life_'+L,     function(){ return buildAskPrompt('SAMPLE READING', 'what does it mean for me', 'Raidho', L, [], u.lifeRune, null, null); });
+  grab('namelore_'+L,     function(){ return buildNameLorePrompt('Sigrún', _nameLookupGolden(), L, []); });
 });
+// Zaznam ze seznamu jmen bez nacitani runar-names.js (jen tvar, ktery _nameFacts cte).
+function _nameLookupGolden(){ return { root: "ON sigr + rún", en: "victory + rune", is: "sigur + rún", myth_en: "", myth_is: "" }; }
 `;
 
 vm.createContext(sandbox);

@@ -9,11 +9,11 @@ const s = { console }; s.window = s; s.globalThis = s; vm.createContext(s);
 
 // Tri invarianty, ktere se 2026-08-14 prestehovaly do zakladu. Kazdy jinym polem,
 // aby test nesledoval jen `grammar`.
+// 2026-09-18: anti-ozvena z patere ODEBRANA (handoff CODE-read D1 — model nema pamet
+// predchozich cteni, instrukce zadala nemozne). Invariant proto uz neni; zbyle dva plati.
 const INV = {
-  en: [['obraz', /Rúnar uses one image per reading/], ['zákaz rady', /never tells the seeker what to do/],
-       ['anti-ozvěna', /never repeats himself/]],
-  is: [['obraz', /Rúnar notar eina mynd í hverjum lestri/], ['zákaz rady', /segir leitandanum aldrei hvað hann á að gera/],
-       ['anti-ozvěna', /endurtekur sig aldrei/]],
+  en: [['obraz', /Rúnar uses one image per reading/], ['zákaz rady', /never tells the seeker what to do/]],
+  is: [['obraz', /Rúnar notar eina mynd í hverjum lestri/], ['zákaz rady', /segir leitandanum aldrei hvað hann á að gera/]],
 };
 
 // Realisticky radek z `runar_character`: ma sva pole, ale `grammar` nikdy nemel.
@@ -44,11 +44,12 @@ for (const lang of ['en', 'is']) {
 // KONTROLA TESTU: umel by vubec tu chybu chytit? Simuluje stav PRED opravou (base = c).
 const before = `You are Rúnar.\n\nPERSONALITY\n${ROW_NO_GRAMMAR.personality}\n\nWHAT YOU NEVER DO\n${ROW_NO_GRAMMAR.never}` +
                (ROW_NO_GRAMMAR.grammar ? '\n\n' + ROW_NO_GRAMMAR.grammar : '');
+// 2026-09-18: pocet invariantu se cte z INV, ne literal — po odebrani anti-ozveny jsou dva.
 const caught = INV.en.filter(([, re]) => !re.test(before)).length;
-console.log(caught === 3
-  ? '  kontrola testu: stav pred opravou by propadl na vsech 3 invariantech — test chybu chytit umi'
-  : '  ✗ KONTROLA TESTU SELHALA: stav pred opravou propadl jen na ' + caught + '/3');
-if (caught !== 3) fail++;
+console.log(caught === INV.en.length
+  ? '  kontrola testu: stav pred opravou by propadl na vsech ' + INV.en.length + ' invariantech — test chybu chytit umi'
+  : '  ✗ KONTROLA TESTU SELHALA: stav pred opravou propadl jen na ' + caught + '/' + INV.en.length);
+if (caught !== INV.en.length) fail++;
 
 console.log(fail ? '\nFAIL: ' + fail + ' problemu' : '\nOK — invarianty prezily vsechny stavy vlastni postavy');
 process.exit(fail ? 1 : 0);
