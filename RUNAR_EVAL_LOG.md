@@ -3857,3 +3857,40 @@ může být model (otevřená otázka ownera, API pro čtení owner zakázal 202
    (`RUNAR_BACKLOG.md` „MOŽNOST: KRÁTKÉ OBRAZY"). Brief nanejvýš dvě položky: místo + JEDNA proměnná.
 7. „Scene brief před prózou" je to, co už děláme (kód skládá, model píše) — návrh přidává kostky, nemění princip.
 Testy, které z toho plynou → `RUNAR_BACKLOG.md` „PO RESETU".
+
+## 2026-09-18 — KROK 2 a rytmus (Raidho) · „You stand" jen z úhlu 6 (produkce)
+
+**Proč:** owner *„2. rytmus udělej, 3. udělej"* (`RUNAR_BACKLOG.md` „PO RESETU") + CODE-tune nasadila KROK 2 (v4.27-presuny:
+blok THE IMAGE ze systému do zprávy ke čtení, systémový RESPONSE FORMAT pryč, věta o počasí odložena). **Ověřeno na
+postaveném promptu:** systém −6 řádků (RESPONSE FORMAT + THE IMAGE), zpráva +2 (THE IMAGE bez věty o počasí), losy = DB.
+Podklady → `docs/eval/2026-09-18-krok2-rytmus/`.
+
+### Test 3 — „where this person is standing right now" → „You stand"? **NE, je to úhel 6.**
+Produkční Single čtení ownera (58 EN, `prompt_draws.angle`): začátek *„You stand"* **6/11 u úhlu 6** (*„Open by setting the
+seeker inside the image"*), **0/47 u všech ostatních úhlů**. Hypotéza padla bez jediného agenta (§25). Owner viděl „You
+stand" všude proto, že všechny testy Raidha běží s losem jeho čtení = úhel 6. ⚠️ Data jsou z doby, kdy ta věta stála
+v systému; KROK 2 ji přesunul do zprávy ke čtení (tam model poslouchá) → hlídat „You stand" mimo úhel 6 v produkci v4.27.
+
+### Test 2 — rytmus (jedna změna na rameno proti K2, 3 čtení)
+| rameno | slova po větách | nejkratší věta |
+|---|---|---|
+| U = KROK 1 (v4.26) | 19-12-14-12 · 19-13-12-12 · 18-16-13-10 | 12 · 12 · 10 |
+| K2 = KROK 2 (v4.27), kontrola | 19-15-8-13 · 17-15-13-8 · 15-12-12-17 | 8 · 8 · 12 |
+| **R** = + *„Let the sentences differ in length — one of them very short."* (zpráva) | 19-18-11-**5** · 15-19-14-**4** · 16-16-**6**-14 | **5 · 4 · 6** |
+| C = hlas bez *„sometimes two joined by a comma"* (systém) | 15-13-13-13 · 17-13-15-9 · 19-13-10-11 | 13 · 9 · 10 |
+| ownerovo „dokonalé" produkční | 17-20-12-**6** | 6 |
+**Nálezy:**
+1. **Páka R funguje 3/3:** velmi krátká věta (4–6 slov) v každém čtení, 2× na konci jako v dokonalém čtení (*„Each one sees
+   the next."* · *„No stone stands alone."* · uprostřed *„Only the next one shows, Thor."*). Kontroly (U+K2) 0/6 pod 8 slov
+   (Fisher p ≈ 0,01). Délka v rozpočtu (52–53 slov). ⚠️ Zda krátké věty zní dobře, rozhodne owner — *„No stone stands alone"*
+   se blíží závěru/aforismu.
+2. **Páka C nedělá nic:** úvodní věta má čárku dál 3/3 (napříč všemi Raidho čteními 22/22), věty zůstaly ploché. Nález „není to
+   hlasové pravidlo" (systémový prompt model slabě poslouchá, `CLAUDE.md` Obraznost „KLÍČ"); čárku nese spíš tvar obrazu.
+3. **Vedlejší signál KROKU 2 — víc atmosféry:** *wind* 8/9 · *grey* 8/9 · *heather* 6/9 (K2+R+C; R ani C atmosféry
+   netýkají) proti T16+U (v4.25–26, pisatel bez data) 2/6 · 2/6 · 1/6 (Fisher jednostranně p ≈ 0,05). KROK 2 změnil dvě věci
+   naráz: pravidla obrazu (*„must be sensory: something the reader can feel"*) přešla tam, kde je model poslouchá, a zmizela
+   brzda *„never carries weather that is not real right now"* — co z toho, test neodliší. Oddělí to jedna změna: vrátit větu
+   o počasí do bloku obrazu (3 čtení). Souvisí s bodem 7 u CODE-tune.
+4. KROK 2 proti KROKU 1 jinak beze změny: *You stand* 3/3 (úhel 6), *Raidho is … road* 3/3.
+
+**Hranice:** jedna runa, jeden los (úhel 6, konec open2) · n = 3 na rameno · pisatel Claude Opus 5, produkce claude-opus-4-8.

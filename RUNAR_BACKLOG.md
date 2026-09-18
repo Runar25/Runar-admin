@@ -41,11 +41,13 @@
      `LENGTH_BUDGETS[1]`, jméno Thor uprostřed, bez čočky). 12 slepých pisatelů (*„You do not know today's date or the
      season."*) + 12 slepých soudců **bez esenční věty**, volba ze všech 25 run (legenda `RUNES[].k`). Stavba a workflow →
      `docs/eval/2026-09-18-jadro-a-misto/skripty/`. Srovnání: tytéž runy s dnešním obrazem (identita 2026-09-09 (6)).
-  2. **Rytmus — jedna změna na Raidhu (3 čtení):** dokonalé čtení má větu o 6 slovech, 12 testovacích žádnou pod 10.
+  2. ✅ HOTOVO 2026-09-18 (`RUNAR_EVAL_LOG.md` „KROK 2 a rytmus": páka ve zprávě 3/3, hlasové pravidlo nic; čeká na ownerův
+     verdikt nad texty). **Rytmus — jedna změna na Raidhu (3 čtení):** dokonalé čtení má větu o 6 slovech, 12 testovacích žádnou pod 10.
      Páka do zprávy ke čtení (ne do systému): věty různé délky, jedna velmi krátká. Obrácená páka (§25): všechny věty
      stejně dlouhé → musí to zhoršit. Druhá páka zvlášť: hlasové pravidlo *„sometimes two joined by a comma"* (13/13
      úvodních vět má právě jednu čárku).
-  3. **„where this person is standing right now" (`_spine`) → „You stand"?** Nejdřív levně: produkční čtení ownera, podíl
+  3. ✅ HOTOVO 2026-09-18 — NE, „You stand" dělá úhel 6 (6/11 proti 0/47); po KROKU 2 hlídat mimo úhel 6 v produkci.
+     **„where this person is standing right now" (`_spine`) → „You stand"?** Nejdřív levně: produkční čtení ownera, podíl
      začátků *You stand* podle úhlu (`prompt_draws.angle`); je-li vysoký i mimo úhel 6, pilot bez té věty (3 čtení).
 - [ ] ⭐ **MOŽNOST: JÁDRO OBRAZU + MÍSTO Z LOSU** (KUKY 2026-09-18: *„heath je jen jedna z mnoha možností… chci
   Rúnarovi dát základ obrazu s tím, že zbytek je možné měnit"*; NErozhodnuto). Obraz se rozdělí na **jádro** (co nese
