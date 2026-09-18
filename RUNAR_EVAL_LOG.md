@@ -3821,3 +3821,39 @@ Slepý soudce identity = volba ze všech 25 run (`RUNES[].k`), 1 hlas na čtení
 **Hranice:** jedna runa (a jedna s nejsilnějším obrazovým signálem) · n = 3 (F) a 1 na místo (D) · 1 hlas soudce · EN
 (IS místa by se musela psát islandsky od začátku, §2) · pisatel i soudce Claude Opus 5. **Návrh → `RUNAR_BACKLOG.md`
 „MOŽNOST: JÁDRO OBRAZU + MÍSTO Z LOSU".**
+
+## 2026-09-18 — Rytmus vět a GPT „open image grammar" (měřeno bez agentů)
+
+**Owner k pilotu „Jádro obrazu + místo":** *„volné nedává smysl. Nemá rytmus. Je to splácané do sebe."* A k větné stavbě:
+*„pořád mi přijde, že má hodně slov v úvodní větě"* (nad *„You stand at a cairn in the black lava, the last one still grey
+behind you. Ahead, across moss and broken rock, the next one rises in plain sight."*).
+
+**Změřeno (slova ve větách, 13 čtení Raidho, tentýž los):**
+| | slova po větách | rozptyl | poslední věta |
+|---|---|---|---|
+| ownerovo produkční (*„dokonalé"*, `claude-opus-4-8`) | 17-20-12-**6** | **14** | **6** |
+| 12 testovacích (T1-L, U, F, D; pisatel Claude Opus 5) | 14–19 / 11–18 / 12–16 / 10–12 | 4–9 | 10–12 |
+⇒ **Délka úvodní věty rozdíl NENÍ** (dokonalé čtení má 17 slov, testovací 14–19). **Rozdíl je krátká věta:** dokonalé čtení
+končí šesti slovy, žádné z 12 testovacích nemá větu kratší než 10 slov. Úvodní věta má ve **13/13** čteních právě jednu
+čárku (*„X, and Y"*) — to je doslova hlasové pravidlo `VOICE_PROFILES.focused` (*„one clause, sometimes two joined by a
+comma"*): „sometimes" se plní pokaždé. F-1 navíc nahromadí místo (*black lava, grey, moss, broken rock, plain sight*) —
+pisatel ho musel vymyslet, tak ho maloval. ⚠️ Dokonalé čtení psal produkční model, testovací jiný — část rozdílu v rytmu
+může být model (otevřená otázka ownera, API pro čtení owner zakázal 2026-09-10).
+
+**GPT handoff „from fixed images to an open image grammar" — posouzení proti kódu v4.26 a měřením:**
+1. Diagnóza (obraz zamyká místo, předmět, vztah, měřítko) sedí — 2026-09-09: místo se opakuje 100 %; dnešní pilot.
+2. **Zastaralé:** čtyři vzory hlasu, *„What in you is finally ready to move?"*, *„never repeats"*, sezóna ve vzorech — KROK 1
+   (v4.26) už odebral. **Platí dál** (`_spine`, THE IMAGE): *„It must connect to where this person is standing right now"*
+   — bez kontextu člověka jde proti NO COLD READING; **v seznamu rozporů 2026-09-18 nebyl** (nový nález GPT) a je
+   kandidát na zdroj *„You stand"* (hypotéza, neověřeno) · *„never carries weather that is not real right now"* bez data
+   v promptu — polovina rozporu 7 zůstala.
+3. **Omyl:** „jméno 55 %" — GPT plete jméno RUNY (vždy povinné, *„Mention Raidho by name once"*) se jménem ČLOVĚKA
+   (los `NAME_PLACEMENTS`, poslední = bez jména). Rozpor to není.
+4. **Silné:** proměnné MOMENT a ÚHEL POHLEDU = druhá osa, kterou pilot ukázal (místo mění slova, ne pohyb čtení).
+5. **Slabé — nosiče** (cairns · stakes · stones · tide lines · light · trail) = výměna PŘEDMĚTU: 2026-09-09 (6) na 25 runách
+   identita 78 % → 51 %. Raidho je výjimka (cestu nese skoro jakýkoli řetěz značek); jinde jen per runa a přes test identity.
+6. **Slabé — brief s pěti položkami** (místo, cesta, značky, okamžik, pohled) do čtyř krátkých vět = přesně „splácané" a
+   ownerův nález *„kratší obrazy jsou lepší než dlouhé, které Rúnara tlačí, aby v jedné větě napsal všechno z obrazu"*
+   (`RUNAR_BACKLOG.md` „MOŽNOST: KRÁTKÉ OBRAZY"). Brief nanejvýš dvě položky: místo + JEDNA proměnná.
+7. „Scene brief před prózou" je to, co už děláme (kód skládá, model píše) — návrh přidává kostky, nemění princip.
+Testy, které z toho plynou → `RUNAR_BACKLOG.md` „PO RESETU".

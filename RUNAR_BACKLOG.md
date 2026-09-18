@@ -33,6 +33,20 @@
   right action*; *travel/journey* tam není, přitom IS jméno už je `Raidho (Ferðalag)` · (c) IS krátké obrazy
   netestovány. Testy → `RUNAR_EVAL_LOG.md` 2026-09-12 („Krátký obraz", „flying bird over") a 2026-09-13
   („Nové krátké obrazy Isy").
+- [ ] ⭐ **PO RESETU — testy čekající na tokeny ownera** (KUKY 2026-09-18: *„zapiš si ten test na 24 agentů, nebudu mít
+  tokeny, spustíme po resetu"*). Kontext → `RUNAR_EVAL_LOG.md` 2026-09-18 „Jádro obrazu + místo" a „Rytmus vět".
+  1. **Identita runa × místo na RIZIKOVÝCH runách (24 agentů, owner SCHVÁLIL):** Isa · Laguz · Tiwaz · Algiz × místa
+     *on the shore* · *across a black lava field* · *in fog*. Jádro = produkční obraz runy bez místa (u obrazu, který
+     místem SÁM je, vzít jiný řádek téže runy). Prompt v4.26, losy pevné jako u Raidha (úhel 6, konec open2,
+     `LENGTH_BUDGETS[1]`, jméno Thor uprostřed, bez čočky). 12 slepých pisatelů (*„You do not know today's date or the
+     season."*) + 12 slepých soudců **bez esenční věty**, volba ze všech 25 run (legenda `RUNES[].k`). Stavba a workflow →
+     `docs/eval/2026-09-18-jadro-a-misto/skripty/`. Srovnání: tytéž runy s dnešním obrazem (identita 2026-09-09 (6)).
+  2. **Rytmus — jedna změna na Raidhu (3 čtení):** dokonalé čtení má větu o 6 slovech, 12 testovacích žádnou pod 10.
+     Páka do zprávy ke čtení (ne do systému): věty různé délky, jedna velmi krátká. Obrácená páka (§25): všechny věty
+     stejně dlouhé → musí to zhoršit. Druhá páka zvlášť: hlasové pravidlo *„sometimes two joined by a comma"* (13/13
+     úvodních vět má právě jednu čárku).
+  3. **„where this person is standing right now" (`_spine`) → „You stand"?** Nejdřív levně: produkční čtení ownera, podíl
+     začátků *You stand* podle úhlu (`prompt_draws.angle`); je-li vysoký i mimo úhel 6, pilot bez té věty (3 čtení).
 - [ ] ⭐ **MOŽNOST: JÁDRO OBRAZU + MÍSTO Z LOSU** (KUKY 2026-09-18: *„heath je jen jedna z mnoha možností… chci
   Rúnarovi dát základ obrazu s tím, že zbytek je možné měnit"*; NErozhodnuto). Obraz se rozdělí na **jádro** (co nese
   runu — věc/děj, bez místa; u mohyl stačilo škrtnout *„across the whole heath"*) a **místo** (krajina/světlo/počasí),

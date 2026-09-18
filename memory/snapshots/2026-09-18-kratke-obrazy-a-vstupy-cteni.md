@@ -30,3 +30,7 @@ kde v promptu stojí) · plné prompty a texty testů v `docs/eval/2026-09-12-ve
 Owner schválil řešení 1–7, A–D **a architekturu „každá část čtení na jednom místě"** → jeden sloučený handoff pro CODE-tune
 (chat 2026-09-18). Otevřené: D2 (kam sloučit zákazy význam/závěr/krok/nitro) spolu s konci čtení; středová věta jen jako
 možnost (backlog). Až CODE-tune pushne: CODE-read pustí test na ownerově Raidhu (3 čtení) a vyhodnotí.
+
+**Doplněno v noci 2026-09-18:** KROK 1 úklidu (v4.26) změřen na Raidhu; pilot „jádro obrazu + místo" (volné místo =
+oblíbenec, owner: *„volné nedává smysl, nemá rytmus"*); GPT „open image grammar" posouzen. **Owner nemá tokeny — další
+testy až po resetu:** `RUNAR_BACKLOG.md` položka „PO RESETU" (test 24 agentů je SCHVÁLENÝ). KROK 2 čeká u CODE-tune.
