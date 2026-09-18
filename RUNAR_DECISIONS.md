@@ -6011,3 +6011,46 @@ test_spine bez anti-ozvěny (invariant odebrán s páteří) · smoke 44/44 · c
 „what does it mean for me") a vyhodnotí proti dnešku. KROK 2 (přesuny) až potom.
 
 **Affected doc(s):** žádný — mapa promptu (artifact) překreslena v témž tahu.
+
+## 2026-09-18 (2) — Úklid promptu, KROK 2: přesuny M1 + M2 (po změření kroku 1 CODE-read)
+
+**Podklad:** CODE-read po kroku 1 („Po úklidu KROK 1", docs/eval/2026-09-18-po-uklidu-raidho/):
+nic nebrání kroku 2; jediná viditelná změna (esence „Raidho is a road…" 3/3) je otázka pro
+ownera, NE blokátor. Na prosbu CODE-read se **esenční řádek nedotýká ani nepřesouvá** — ať
+další měření odliší přesuny od otázky formule.
+
+**M1 — obraz na jedno místo.** Pravidla obrazu (THE IMAGE / MYNDIN) bydlela v systémové páteři
+a řádek IMAGE ve zprávě — dvě místa pro jednu část čtení. Teď: `_imageRules` + `_imageBlock`
+(runar-character.js) skládají pravidla + řádek IMAGE jako JEDEN blok zprávy, v single i všech
+čtyřech spreadech; z páteře sekce obrazu zmizela (zbývá RÖDDIN + ÞAÐ SEM BREYTIST ALDREI).
+Ask blok nemá (navazuje na hotové čtení). Rámování obrazu jako ZDROJE („comes from here… Let it
+become your own seeing") zachováno. **Věta o počasí** („never carries weather that is not real
+right now… no snow in June") **odložena k bodu 7** — model datum nemá, žádala neověřitelné;
+vrátí se s řádkem sezóny v témž bloku.
+
+**M2 — formát a délka na jedno místo.** `DEF_CHAR_*.format` vyprázdněn (pole zůstává kvůli
+vlastní postavě; prázdné se do systému neskládá ani s hlavičkou). Druhou osobu drží grammar
+bod 1. §13 audit VŠECH cest před odebráním — kde formát ve zprávě chyběl, doplněn:
+kříž/horseshoe/yggdrasil closing dostaly „One paragraph. No breaks. No labels." / „Einn texti.
+Engar hlutaskiptingar. Engar fyrirsagnir.", norns „no headings, no labels" / „engar fyrirsagnir,
+engin merki", rozbor jména „Plain flowing prose, no headings." / „Samfelldur texti, engar
+fyrirsagnir.", Gathering (legacy, čeká na náhradu) jednu řádku EN. Single (LENGTH_BUDGETS +
+closing), Ask (rules) a životní runa (sections) formát už měly. Jazyk („Respond only in
+English" / IS pravidlo) ZŮSTÁVÁ v systému — IS packy mají langInstr prázdný.
+
+**Hranice (z odstraněného komentáře u format):** vlastní postava bez vlastního formátu I bez
+gramatiky teď druhou osobu nemá odkud vzít. Produkce vlastní postavu nemá (ověřeno 2026-08-07,
+`runar_character` bez aktivního řádku); kdo ji zavádí, dává jí vlastní hlas — a ten ji nese.
+
+**Čím je to jištěné:** golden diff 28/38 builderů = přesně zamýšlené řádky (Ask beze změny ✓) ·
+wiring: nový blok „obraz-blok ve zprávě single+4 spready, v systému ne, v Ask ne" (návrat =
+tichá regrese) · test_spine: obraz už není systémový invariant (hlídá ho wiring na té ploše,
+kde bydlí — §19.3) · IS rozbor jména protlačen: žádná EN věta · registr 204 pravidel
+(v4.27-presuny) · levers ok · smoke 44/44 · check-is OK.
+
+**Verze promptu:** v4.26-uklid → **v4.27-presuny**.
+
+**Další krok:** push → CODE-read pustí týž test (stejné losy Raidha). Bod 7 (sezóna) až potom;
+otázka esence „Raidho is a road…" 3/3 čeká na ownera (s konci čtení).
+
+**Affected doc(s):** žádný — mapa promptu (artifact) překreslena v témž tahu.

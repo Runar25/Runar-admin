@@ -148,6 +148,26 @@ if (!DESCRIBE_MARK.en || !DESCRIBE_MARK.is) {
   process.exit(1);
 }
 
+// ── M1 (2026-09-18, krok 2): pravidla OBRAZU bydli ve ZPRAVE (blok THE IMAGE/MYNDIN nad
+// radkem IMAGE) a v SYSTEMU uz nejsou — kazda cast cteni na jednom miste. Ask obraz nema.
+// Navrat do systemu NEBO ztrata ve zprave = tataz ticha regrese jako u esencniho radku.
+{
+  const IMG = { en: 'Rúnar uses one image per reading', is: 'Rúnar notar eina mynd í hverjum lestri' };
+  const HDR = { en: 'THE IMAGE', is: 'MYNDIN' };
+  for (const L of ['en', 'is']) {
+    const chybi = ['single', 'norns', 'kriz', 'horseshoe', 'yggdrasil']
+      .filter(b => { const t = O[b + '_' + L] || ''; return !(t.includes(IMG[L]) && t.includes(HDR[L])); });
+    if (chybi.length) { fail++; console.log('FAIL  obraz-blok chybi ve zprave: ' + chybi.map(b => b + '_' + L).join(', ')); }
+    if ((O['system_' + L] || '').includes(IMG[L])) {
+      fail++; console.log('FAIL  system_' + L + '  pravidla obrazu se vratila do systemu (M1 presun)');
+    }
+    if ((O['ask_' + L] || '').includes(IMG[L])) {
+      fail++; console.log('FAIL  ask_' + L + '  Ask obraz-blok nema mit');
+    }
+  }
+  console.log('OK    obraz-blok: ve zprave single+4 spready, v systemu ne, v Ask ne');
+}
+
 // ── Spready NESMI nest esencni radek (v4.9, 2026-08-23): rikal 'pojmenuj runu' proti
 // zamernemu 'nejmenuj' spreadu. Navrat jinou cestou = presne ta ticha regrese.
 for (const L of ['en', 'is']) {

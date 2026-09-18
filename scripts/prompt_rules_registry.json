@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-18",
- "prompt_version": "v4.26-uklid",
+ "prompt_version": "v4.27-presuny",
  "pravidla": [
   {
    "hash": "54d29df4d80b",
@@ -226,6 +226,12 @@
    "zacatek": "READING ANGLE (follow this entry point — let it shape the opening and "
   },
   {
+   "hash": "360e9fd20d61",
+   "lang": "en",
+   "zdroj": "single",
+   "zacatek": "Rúnar uses one image per reading and carries it through; he does not l"
+  },
+  {
    "hash": "23d33746b668",
    "lang": "en",
    "zdroj": "single",
@@ -436,7 +442,7 @@
    "zacatek": "If it does NOT — and many names do not — say so plainly and stop there"
   },
   {
-   "hash": "3f81af7f1b80",
+   "hash": "df5567f63d57",
    "lang": "en",
    "zdroj": "namelore",
    "zacatek": "Do not draw runes, do not read the seeker, do not turn this into a rea"
@@ -532,24 +538,6 @@
    "zacatek": "Never hand the seeker a conclusion."
   },
   {
-   "hash": "a5008caa32fd",
-   "lang": "en",
-   "zdroj": "system",
-   "zacatek": "One flowing reading — the sentence count is given in each reading prom"
-  },
-  {
-   "hash": "df876cf7d1ce",
-   "lang": "en",
-   "zdroj": "system",
-   "zacatek": "Speak in second person (you, your)."
-  },
-  {
-   "hash": "79cfe917a660",
-   "lang": "en",
-   "zdroj": "system",
-   "zacatek": "The format, angle, imagery, and register are specified in each reading"
-  },
-  {
    "hash": "b38a1f86d7f9",
    "lang": "en",
    "zdroj": "system",
@@ -590,12 +578,6 @@
    "lang": "en",
    "zdroj": "system",
    "zacatek": "He does not perform mysticism. He simply inhabits it."
-  },
-  {
-   "hash": "c8d591678116",
-   "lang": "en",
-   "zdroj": "system",
-   "zacatek": "Rúnar uses one image per reading and carries it through; he does not l"
   },
   {
    "hash": "0ac08255b6bf",
@@ -824,6 +806,12 @@
    "lang": "is",
    "zdroj": "single",
    "zacatek": "LESTRARHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og up"
+  },
+  {
+   "hash": "2051f013da5d",
+   "lang": "is",
+   "zdroj": "single",
+   "zacatek": "Rúnar notar eina mynd í hverjum lestri og ber hana í gegn. Hann telur "
   },
   {
    "hash": "cba2df330a71",
@@ -1060,7 +1048,7 @@
    "zacatek": "If it does NOT — and many names do not — say so plainly and stop there"
   },
   {
-   "hash": "3f81af7f1b80",
+   "hash": "df5567f63d57",
    "lang": "is",
    "zdroj": "namelore",
    "zacatek": "Do not draw runes, do not read the seeker, do not turn this into a rea"
@@ -1168,24 +1156,6 @@
    "zacatek": "Réttu leitandanum enga niðurstöðu."
   },
   {
-   "hash": "ed5aef03791f",
-   "lang": "is",
-   "zdroj": "system",
-   "zacatek": "Einn samfeldur lestur — fjöldi setninga er gefinn í hverju lestursprom"
-  },
-  {
-   "hash": "501636735fc6",
-   "lang": "is",
-   "zdroj": "system",
-   "zacatek": "Talaðu í öðru persónu (þú, þín)."
-  },
-  {
-   "hash": "fb496ad484a4",
-   "lang": "is",
-   "zdroj": "system",
-   "zacatek": "Snið, horn og tónn eru tilgreind í hverju lestursprompt — fylgdu þeim "
-  },
-  {
    "hash": "2366f90693a9",
    "lang": "is",
    "zdroj": "system",
@@ -1244,12 +1214,6 @@
    "lang": "is",
    "zdroj": "system",
    "zacatek": "Hann sýnir ekki dulspeki. Hann býr einfaldlega í henni."
-  },
-  {
-   "hash": "d18c601c2fb7",
-   "lang": "is",
-   "zdroj": "system",
-   "zacatek": "Rúnar notar eina mynd í hverjum lestri og ber hana í gegn. Hann telur "
   },
   {
    "hash": "e51a7c26f39f",

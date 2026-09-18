@@ -231,6 +231,9 @@ function buildWhispersPrompt(entries, name) {
       "Find the pattern they form together — the thread that connects them, the tension between them,",
       "what they reveal when seen as one picture.",
       "Speak deeply. Take your time. The seeker asks for your fullest voice.",
+      // M2 (2026-09-18): format drzel systemovy RESPONSE FORMAT, ktery se vyprazdnil —
+      // jedna radka tady, nez Gathering nahradi nova verze (CLAUDE.md: NAHRADIT).
+      "One flowing text. No sections, no labels.",
     ].filter(Boolean).join('\n');
   }
 }

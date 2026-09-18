@@ -43,9 +43,13 @@ Rúnar does not use exclamation marks.`,
   //    je PODMINENY (viz `buildSysPrompt`), takze u vlastni postavy bez gramatiky je tahle
   //    veta jedina, co druhou osobu drzi. A v IS delaji kazda neco jineho: `format` rika
   //    KOHO oslovit, `grammar` JAKYM SLOVESNYM TVAREM (þú treystir, ne infinitiv).
-  format: `One flowing reading — the sentence count is given in each reading prompt. No sections, no separators, no labels.
-Speak in second person (you, your).
-The format, angle, imagery, and register are specified in each reading prompt — follow them precisely.`,
+  // M2 (2026-09-18, krok 2): format VYPRAZDNEN — kazdy builder nese svuj format ve SVE zprave
+  // (single: LENGTH_BUDGETS+closing · spready: closing/bigInstruction+json · Ask: rules ·
+  // zivotni runa: sections · rozbor jmena: task · Gathering: buildWhispersPrompt). Druhou
+  // osobu drzi grammar bod 1. Pole ZUSTAVA kvuli vlastni postave (jeji format se sklada dal);
+  // hranice: vlastni postava bez formatu I gramatiky ted druhou osobu nema odkud vzit —
+  // zapsano v DECISIONS 2026-09-18 (2).
+  format: ``,
 
   grammar: `LANGUAGE & STYLE — check every sentence before returning:
 1. Second person, consistent ("you", "your"); present tense unless the reading's frame says otherwise.
@@ -76,9 +80,7 @@ Rúnar notar ekki upphrópunarmerki.`,
 
   philosophy: `Réttu leitandanum enga niðurstöðu.`,
 
-  format: `Einn samfeldur lestur — fjöldi setninga er gefinn í hverju lestursprompt. Engar hlutaskiptingar, engir aðskilnaðar, engar fyrirsagnir.
-Talaðu í öðru persónu (þú, þín).
-Snið, horn og tónn eru tilgreind í hverju lestursprompt — fylgdu þeim nákvæmlega.`,
+  format: ``,
 
   grammar: `ÍSLENSK MÁLFRÆÐI — SKYLDA (athugaðu HVERJA setningu áður en þú skilar):
 1. Önnur persóna eintölu (þú): sögnin í 2. persónu eintölu, ekki nafnhætti eða 3. persónu. Rétt: þú treystir, þú nærð, þú sérð, þú átt, þú ferð, þú heldur, þú stendur. (Sögn sem endar á -ar í 3. persónu tekur -ir/-ð í 2. persónu eintölu.)
@@ -628,6 +630,22 @@ function _runeImageCandidates(drawn, bucket) {
 // EN a spready ho plni a ignoruji.
 var _imgAspektIS = '';
 var _imgAspektEN = '';
+// M1 (2026-09-18, krok 2 uklidu; owner schvalil architekturu „kazda cast cteni na jednom
+// miste"): pravidla obrazu bydlela v systemove pateri (_spine THE IMAGE) a radek IMAGE ve
+// zprave — dve mista pro jednu cast cteni. Ted jsou pravidla TADY, hned nad radkem IMAGE,
+// jako jeden blok zpravy (per-cteni injekci model posloucha — CLAUDE.md „KLIC").
+// Veta o pocasi („never carries weather that is not real right now") ODLOZENA k bodu 7
+// (sezona): model datum nema, takze zadala neoveritelne; vrati se az s radkem sezony.
+function _imageRules(lang) {
+  if (lang === 'is')
+    return 'MYNDIN\nRúnar notar eina mynd í hverjum lestri og ber hana í gegn. Hann telur ekki upp myndir. Önnur mynd á aðeins rétt á sér ef hún færir þá fyrstu einu skrefi lengra. Ef tvær ótengdar myndir standa hlið við hlið segja þær ekkert. Myndin verður að vera skynræn, eitthvað sem lesandinn finnur en túlkar ekki. Hún verður að tengjast því hvar þessi manneskja stendur núna. Andrúmsloft eitt og sér er skreyting, ekki lestur.';
+  return 'THE IMAGE\nRúnar uses one image per reading and carries it through; he does not list images. A second picture earns its place only when it takes the first one further — the same scene, one step on. Two unrelated pictures side by side say nothing. Never a simile stacked on a metaphor. The image must be sensory: something the reader can feel, not interpret. It must connect to where this person is standing right now — atmosphere on its own is decoration, not a reading.';
+}
+// Pravidla + radek IMAGE jako JEDEN blok zpravy (jedno misto, §18).
+function _imageBlock(lang, imgLine) {
+  return [_imageRules(lang), imgLine].filter(Boolean).join('\n');
+}
+
 function _seasonalImagery(lang, drawn) {
   _imgAspektIS = '';
   _imgAspektEN = '';
@@ -1269,14 +1287,15 @@ function _getVoiceProfile(key, lang) {
 // kam nedosáhne ANI jedno. Nepřidávej sem nic, co je legitimně přepsatelné — tempo a hlas
 // jsou rysy osobnosti a do páteře NEPATŘÍ.
 function _spine(lang) {
+  // M1 (2026-09-18, krok 2): sekce THE IMAGE / MYNDIN PRESTEHOVANA do zpravy ke cteni
+  // (_imageRules, hned nad radkem IMAGE) — obraz je cast CTENI, ne identity. Veta o pocasi
+  // odlozena k bodu 7 (sezona). V pateri zustava jen to, co plati VZDY a vsude.
   if (lang === 'is') {
     return 'RÖDDIN\nHann sýnir ekki dulspeki. Hann býr einfaldlega í henni.\n\n'
-      + 'MYNDIN\nRúnar notar eina mynd í hverjum lestri og ber hana í gegn. Hann telur ekki upp myndir. Önnur mynd á aðeins rétt á sér ef hún færir þá fyrstu einu skrefi lengra. Ef tvær ótengdar myndir standa hlið við hlið segja þær ekkert. Myndin verður að vera skynræn, eitthvað sem lesandinn finnur en túlkar ekki. Hún verður að tengjast því hvar þessi manneskja stendur núna. Andrúmsloft eitt og sér er skreyting, ekki lestur. Myndin má aldrei bera veður sem er ekki raunverulegt núna. Engin frosin jörð og enginn snjór í júní.\n\n'
       + 'ÞAÐ SEM BREYTIST ALDREI\n'
       + 'Rúnar segir leitandanum aldrei hvað hann á að gera. Hann nefnir lögun þess sem er að gerast, aldrei skrefið sem á að stíga.';
   }
   return 'THE VOICE\nHe does not perform mysticism. He simply inhabits it.\n\n'
-    + 'THE IMAGE\nRúnar uses one image per reading and carries it through; he does not list images. A second picture earns its place only when it takes the first one further — the same scene, one step on. Two unrelated pictures side by side say nothing. Never a simile stacked on a metaphor. The image must be sensory: something the reader can feel, not interpret. It must connect to where this person is standing right now — atmosphere on its own is decoration, not a reading. The image never carries weather that is not real right now: no frozen ground, no snow in June.\n\n'
     // 2026-09-18: anti-ozvena („never repeats himself") ODEBRANA — model nema pamet
     // predchozich cteni, pestrost delaji losy; instrukce zadala nemozne. Hlavicka
     // prejmenovana (zbyva jedna vec, „TWO THINGS" by lhalo).
@@ -1339,10 +1358,7 @@ ${base.never}
 YOUR STANCE
 ${_profileRule('philosophy', lang, profileKey) || base.philosophy}
 
-RESPONSE FORMAT
-${base.format}${base.grammar ? '\n\n' + base.grammar : ''}
-
-${_spine(lang)}`;
+${base.format ? 'RESPONSE FORMAT\n' + base.format + '\n\n' : ''}${base.grammar ? base.grammar + '\n\n' : ''}${_spine(lang)}`;
 }
 
 // ─── IS CORRECTION HELPERS ────────────────────────────────
@@ -1475,7 +1491,7 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
   return [
     parts,
     S.angleIntro + angleDraw,
-    imgLine,
+    _imageBlock(lang, imgLine),
     _describeRule(lang),
     _noColdRead(lang),
     _lengthBudget(lang),   // 2026-08-21: delka je losovana paka, ne pevna radka packu
@@ -1670,7 +1686,7 @@ var RP_NAME = {
         + 'whole answer, not a failure. Never reach for a resemblance in sound, never build a '
         + 'meaning the name does not have, and never soften it into a maybe. A name without '
         + 'Norse roots is not a lesser name; it is simply not ours to read.\n'
-        + 'Do not draw runes, do not read the seeker, do not turn this into a reading.';
+        + 'Do not draw runes, do not read the seeker, do not turn this into a reading. Plain flowing prose, no headings.';
     },
   },
   is: {
@@ -1682,7 +1698,7 @@ var RP_NAME = {
         + 'Það er fullgilt svar, ekki mistök. Gríptu aldrei til líkinda í hljómi, búðu aldrei til '
         + 'merkingu sem nafnið á ekki, og mýktu það ekki í „kannski". Nafn án norrænna róta er '
         + 'ekki minna nafn; það er einfaldlega ekki okkar að lesa.\n'
-        + 'Dragðu engar rúnir, lestu ekki leitandann, gerðu ekki lestur úr þessu.';
+        + 'Dragðu engar rúnir, lestu ekki leitandann, gerðu ekki lestur úr þessu. Samfelldur texti, engar fyrirsagnir.';
     },
   },
 };
@@ -1764,7 +1780,7 @@ var RP_KRIZ = {
       'Fimmta rúnin (Framar): ekki spá — þar sem þessi orka leiðir ef ekkert breytist.',
       'Sérhver rúna verður að setja mark sitt — láttu allar fimm móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
     ]; },
-    closing:function(name){ return '' + _namePlacement(name, 'is') + ' Vertu hnitmiðaður — 6 til 7 setningar.'; },
+    closing:function(name){ return 'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. ' + _namePlacement(name, 'is') + ' Vertu hnitmiðaður — 6 til 7 setningar.'; },
     json:'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í þeirri röð sem listuð er að ofan, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)"}]. Text-reitirnir tengdir með bili verða að lesast sem ein samfelld heild.',
   },
   en: {
@@ -1782,7 +1798,7 @@ var RP_KRIZ = {
       'Rune 5 (Ahead): not prophecy — where this energy leads if nothing changes.',
       'Every rune must leave its mark — let all five shape the reading through their quality, never just one or two. Do not name the runes; the seeker already sees them.',
     ]; },
-    closing:function(name){ return '' + _namePlacement(name, 'en') + ' 6-7 sentences, complete and whole.'; },
+    closing:function(name){ return 'One paragraph. No breaks. No labels. ' + _namePlacement(name, 'en') + ' 6-7 sentences, complete and whole.'; },
     json:'Output format — return ONLY this JSON array, one object per rune in the order listed above, nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)"}]. The text fields joined with a space must read as one seamless passage.',
   },
 };
@@ -1829,7 +1845,7 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
     ctx, '',
     S.intro, '',
     runesBlock, '',
-    _seasonalImagery(lang, runes),
+    _imageBlock(lang, _seasonalImagery(lang, runes)),
     // v4.9 (2026-08-23): esencni radek VEN ze spreadu — rikal "pojmenuj runu" proti
     // zamernemu "nejmenuj" tehoz promptu (dve protichudne instrukce; mereno vitezilo
     // nejmenuj a radek jel mrtvy). Jmena nese UI pozic. Misto nej vztahova vazba:
@@ -1874,7 +1890,7 @@ var RP_NORNS = {
       'Verðandi talar í nútíð — lifandi, að verða til, ekki lokið.',
       'Skuld talar ekki eins og spámaður — heldur um hvert þú stefnir núna, ef þú heldur áfram eins og nú. Þú getur breytt stefnunni.',
     ],
-    bigInstruction:function(name){ return 'Gefðu hverri af þremur rúnunum sinn eigin takt, í röð — Urður (það sem var), Verðandi (það sem er að verða), Skuld (hvert þú stefnir). Taktarnir þrír renna saman í EINN samfelldan straum, ekki þrjá aðskilda lestra. Nefndu ekki rúnirnar né Nornirnar; leiðandinn sér þær þegar. ' + _namePlacement(name, 'is') + ' 5 til 6 setningar alls yfir taktana þrjá.'; },
+    bigInstruction:function(name){ return 'Gefðu hverri af þremur rúnunum sinn eigin takt, í röð — Urður (það sem var), Verðandi (það sem er að verða), Skuld (hvert þú stefnir). Taktarnir þrír renna saman í EINN samfelldan straum, ekki þrjá aðskilda lestra — engar fyrirsagnir, engin merki. Nefndu ekki rúnirnar né Nornirnar; leiðandinn sér þær þegar. ' + _namePlacement(name, 'is') + ' 5 til 6 setningar alls yfir taktana þrjá.'; },
     json:'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í röð (Urður, Verðandi, Skuld), engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)"}]. Þrír text-reitir tengdir með bili verða að lesast sem ein samfelld heild.',
   },
   en: {
@@ -1890,7 +1906,7 @@ var RP_NORNS = {
       'Verðandi speaks in the present — living, becoming, not yet complete.',
       'Skuld does not predict — she speaks of where you are heading if you keep walking as you are now, and you can walk differently.',
     ],
-    bigInstruction:function(name){ return 'Give each of the three runes its own beat, in order — Urður (what was), Verðandi (what is becoming), Skuld (where you are heading). The three beats connect into ONE flowing passage, not three separate readings. Do not name the runes or the Norns; the seeker already sees them. ' + _namePlacement(name, 'en') + ' 5-6 sentences total across the three beats.'; },
+    bigInstruction:function(name){ return 'Give each of the three runes its own beat, in order — Urður (what was), Verðandi (what is becoming), Skuld (where you are heading). The three beats connect into ONE flowing passage, not three separate readings — no headings, no labels. Do not name the runes or the Norns; the seeker already sees them. ' + _namePlacement(name, 'en') + ' 5-6 sentences total across the three beats.'; },
     json:'Output format — return ONLY this JSON array, one object per rune in order (Urður, Verðandi, Skuld), nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)"}]. The three text fields joined with a space must read as one seamless passage.',
   },
 };
@@ -1918,7 +1934,7 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
     ctx, '',
     S.intro, '',
     runesBlock, '',
-    _seasonalImagery(lang, runes),
+    _imageBlock(lang, _seasonalImagery(lang, runes)),
     // v4.9 (2026-08-23): esencni radek VEN ze spreadu — rikal "pojmenuj runu" proti
     // zamernemu "nejmenuj" tehoz promptu (dve protichudne instrukce; mereno vitezilo
     // nejmenuj a radek jel mrtvy). Jmena nese UI pozic. Misto nej vztahova vazba:
@@ -1957,7 +1973,7 @@ var RP_HORSESHOE = {
       'Nefndu ekki staðsetningarnar í úttakinu. Bærðu þær í röddinn.',
       'Sérhver rúna verður að setja mark sitt — láttu allar sjö móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
     ],
-    closing:function(name){ return '' + _namePlacement(name, 'is') + ' 11 til 12 setningar.'; },
+    closing:function(name){ return 'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. ' + _namePlacement(name, 'is') + ' 11 til 12 setningar.'; },
     json:'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í þeirri röð sem listuð er að ofan, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)"}]. Text-reitirnir tengdir með bili verða að lesast sem ein samfelld heild.',
   },
   en: {
@@ -1971,7 +1987,7 @@ var RP_HORSESHOE = {
       'Do not name the positions in the output. Carry them in your voice.',
       'Every rune must leave its mark — let all seven shape the reading through their quality, never just one or two. Do not name the runes; the seeker already sees them.',
     ],
-    closing:function(name){ return '' + _namePlacement(name, 'en') + ' 11-12 sentences.'; },
+    closing:function(name){ return 'One paragraph. No breaks. No labels. ' + _namePlacement(name, 'en') + ' 11-12 sentences.'; },
     json:'Output format — return ONLY this JSON array, one object per rune in the order listed above, nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)"}]. The text fields joined with a space must read as one seamless passage.',
   },
 };
@@ -2001,7 +2017,7 @@ function buildHorseshoePromptSeven(u, runes, lang, corrections) {
     ctx, '',
     S.intro, '',
     runesBlock, '',
-    _seasonalImagery(lang, runes),
+    _imageBlock(lang, _seasonalImagery(lang, runes)),
     // v4.9 (2026-08-23): esencni radek VEN ze spreadu — rikal "pojmenuj runu" proti
     // zamernemu "nejmenuj" tehoz promptu (dve protichudne instrukce; mereno vitezilo
     // nejmenuj a radek jel mrtvy). Jmena nese UI pozic. Misto nej vztahova vazba:
@@ -2046,7 +2062,7 @@ var RP_YGGDRASIL = {
       'Nefndu hvorki nöfn heimanna né laganna í úttakinu. Láttu þau lifa í röddinni.',
       'Sérhver rúna verður að setja mark sitt — láttu allar níu móta lesturinn gegnum eðli sitt, aldrei aðeins fáeinar. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
     ],
-    closing:function(name){ return '' + _namePlacement(name, 'is') + ' 14 til 15 setningar.'; },
+    closing:function(name){ return 'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. ' + _namePlacement(name, 'is') + ' 14 til 15 setningar.'; },
     json:'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í þeirri röð sem listuð er að ofan, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)"}]. Text-reitirnir tengdir með bili verða að lesast sem ein samfelld heild.',
   },
   en: {
@@ -2064,7 +2080,7 @@ var RP_YGGDRASIL = {
       'Do not name the worlds or the tiers in the output. Carry them in your voice.',
       'Every rune must leave its mark — let all nine shape the reading through their quality, never just a few. Do not name the runes; the seeker already sees them.',
     ],
-    closing:function(name){ return '' + _namePlacement(name, 'en') + ' 14-15 sentences.'; },
+    closing:function(name){ return 'One paragraph. No breaks. No labels. ' + _namePlacement(name, 'en') + ' 14-15 sentences.'; },
     json:'Output format — return ONLY this JSON array, one object per rune in the order listed above, nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)"}]. The text fields joined with a space must read as one seamless passage.',
   },
 };
@@ -2098,7 +2114,7 @@ function buildYggdrasilPromptNine(u, runes, lang, corrections) {
     ctx, '',
     S.intro, '',
     runesBlock, '',
-    _seasonalImagery(lang, runes),
+    _imageBlock(lang, _seasonalImagery(lang, runes)),
     // v4.9 (2026-08-23): esencni radek VEN ze spreadu — rikal "pojmenuj runu" proti
     // zamernemu "nejmenuj" tehoz promptu (dve protichudne instrukce; mereno vitezilo
     // nejmenuj a radek jel mrtvy). Jmena nese UI pozic. Misto nej vztahova vazba:

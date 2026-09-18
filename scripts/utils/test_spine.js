@@ -9,11 +9,12 @@ const s = { console }; s.window = s; s.globalThis = s; vm.createContext(s);
 
 // Tri invarianty, ktere se 2026-08-14 prestehovaly do zakladu. Kazdy jinym polem,
 // aby test nesledoval jen `grammar`.
-// 2026-09-18: anti-ozvena z patere ODEBRANA (handoff CODE-read D1 — model nema pamet
-// predchozich cteni, instrukce zadala nemozne). Invariant proto uz neni; zbyle dva plati.
+// 2026-09-18: anti-ozvena z patere ODEBRANA (D1 — model nema pamet predchozich cteni) a
+// pravidla OBRAZU se prestehovala do zpravy ke cteni (M1) — systemovym invariantem tedy uz
+// nejsou; ve zprave je hlida verify_contract_wiring (blok THE IMAGE/MYNDIN u radku IMAGE).
 const INV = {
-  en: [['obraz', /Rúnar uses one image per reading/], ['zákaz rady', /never tells the seeker what to do/]],
-  is: [['obraz', /Rúnar notar eina mynd í hverjum lestri/], ['zákaz rady', /segir leitandanum aldrei hvað hann á að gera/]],
+  en: [['zákaz rady', /never tells the seeker what to do/]],
+  is: [['zákaz rady', /segir leitandanum aldrei hvað hann á að gera/]],
 };
 
 // Realisticky radek z `runar_character`: ma sva pole, ale `grammar` nikdy nemel.
