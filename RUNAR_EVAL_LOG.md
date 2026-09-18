@@ -3781,3 +3781,43 @@ Podklady → `docs/eval/2026-09-18-po-uklidu-raidho/`.
 
 **Hranice:** jen EN (IS esenční pravidlo vzor nikdy nemělo) · jedna runa, jeden úhel a jeden konec · pisatelé Claude Opus 5,
 produkce `claude-opus-4-8` (otevřená otázka ownera) · Ask n=1 na verzi.
+
+## 2026-09-18 — Jádro obrazu + místo (PILOT, Raidho): volné místo = oblíbenec 3/3 · losované místo identitu drží
+
+**Proč (owner):** *„když mu dáme obraz, tak použitím heath jsme mu řekli, co má použít. Ale heath je jen jedna z mnoha
+možností — na břehu, v black lava field, v mlze… chci Rúnarovi dát základ obrazu s tím, že zbytek je možné měnit, aby to
+dávalo čtení smysl. Každá runa něco reprezentuje, obraz jen nabízí prostor pro umístění té runy."*
+**Jak:** prompt = záznam „Po úklidu KROK 1" (v4.26, losy ownerova Raidha), jediná změna = řádek IMAGE (hlídá stavěcí
+skript). Jádro = produkční obraz bez místa: *„The cairns stand each within sight of the next, each seen from the one
+before"* (škrtnuto jen *„across the whole heath"*). **F** = + *„Where they stand is not given — find the place yourself"*
+(3 běhy) · **D** = + *„Where: on the shore / across a black lava field / in fog"* (ownerova tři místa, po 1 běhu).
+Slepý soudce identity = volba ze všech 25 run (`RUNES[].k`), 1 hlas na čtení. Podklady → `docs/eval/2026-09-18-jadro-a-misto/`.
+**Predikce předem** (z 2026-08-18 ① a 2026-09-09 „Volnost obrazu je horší než pool"): volné místo se slije na jedno.
+
+| | čtení |
+|---|---|
+| F-1 | You stand at a cairn in the black lava, the last one still grey behind you. Ahead, across moss and broken rock, the next one rises in plain sight. This is Raidho, Thor, a road that holds because each stone is seen from the last. Between the two, the lava lies open under a wide sky. |
+| F-2 | You stand beside a cairn in the black lava field, grey moss between its stones. From here you see the next cairn on the rise, Thor, and the last one stands behind you. Raidho is a road that shows itself one stone at a time. The lava lies still between them, and each stone keeps its place. |
+| F-3 | You stand beside a cairn in the black lava field, and the next one rises on the skyline ahead. Behind you, Thor, the one you came from is still in sight. Raidho is a road carried stone to stone, each found from the one before. Between them the rock lies quiet, and the line holds. |
+| D1 břeh | You stand on the shore beside a cairn, and the next one shows far down the beach. Thor, someone set each one where the last could still be seen. That is Raidho, a road held together by what the eye can reach. Between the two stones lies nothing but shingle and open air. |
+| D2 láva | You stand beside a cairn on the black lava field, and the next one rises from the moss ahead. Behind you, Thor, the one you passed is still in sight. Raidho is a road that holds because each marker can see the next. Between them the lava lies wide, and the way stays plain. |
+| D3 mlha | You stand at a cairn in the fog, and the next one shows grey through the white. Raidho is the road found this way, each stone seen from the one before. Thor, the cairns further on stand in the fog all the same. The near one is clear, and the stones keep their line. |
+
+**Nálezy:**
+1. **Volné místo = oblíbenec: black lava field 3/3.** Predikce potvrzena potřetí (18. 8. volné pole, 9. 9. volný obraz,
+   dnes volné místo). Model vřesoviště nevymění za „mnoho možností", ale za JINÉ jedno. Pestrost dělá vstup, který se mění,
+   ne volnost.
+2. **Losované místo se propíše a scéna se změní** (břeh → *shingle, down the beach* · mlha → *grey through the white*).
+3. **Identita drží — ale tohle je lehký případ.** Soudce poznal Raidho 3/3 s esenční větou (tam ho ovšem prozradí slovo
+   *road* z legendy — §27, test nic neříkal) a **6/6 i BEZ esenční věty** (tři losovaná místa + tři dnešní čtení s vřesovištěm;
+   břeh k Laguz netáhl). Mohyly jsou silný signál cesty. Rizikové runy z 2026-09-09 (6) — Isa, Laguz, Tiwaz, Algiz,
+   sousedé s vodou/nehybností/počasím — tu nebyly.
+4. **Místo mění podstatná jména, ne pohyb čtení.** Nová čtení jdou touž cestou: začátek *„You stand … a cairn"* 6/6 ·
+   esence *„Raidho … a road"* 6/6 · *„behind you"* 4/6 · závěr *„between them lies <místo>"* 5/6 (dnešní U1–U3 1/3).
+   Úhel a konec byly v testu schválně pevné — dynamiku čtení samo místo nepřinese; „z více stran" potřebuje i druhou osu
+   (odkud a kdy se díváš).
+5. Esence: *road* 6/6, tvar *Raidho is* 4/6 + *This/That is Raidho* 2/6 (souvisí se záznamem „Po úklidu KROK 1").
+
+**Hranice:** jedna runa (a jedna s nejsilnějším obrazovým signálem) · n = 3 (F) a 1 na místo (D) · 1 hlas soudce · EN
+(IS místa by se musela psát islandsky od začátku, §2) · pisatel i soudce Claude Opus 5. **Návrh → `RUNAR_BACKLOG.md`
+„MOŽNOST: JÁDRO OBRAZU + MÍSTO Z LOSU".**

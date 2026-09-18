@@ -1,0 +1,10 @@
+{
+ "F-1": "You stand at a cairn in the black lava, the last one still grey behind you. Ahead, across moss and broken rock, the next one rises in plain sight. This is Raidho, Thor, a road that holds because each stone is seen from the last. Between the two, the lava lies open under a wide sky.",
+ "F-2": "You stand beside a cairn in the black lava field, grey moss between its stones. From here you see the next cairn on the rise, Thor, and the last one stands behind you. Raidho is a road that shows itself one stone at a time. The lava lies still between them, and each stone keeps its place.",
+ "F-3": "You stand beside a cairn in the black lava field, and the next one rises on the skyline ahead. Behind you, Thor, the one you came from is still in sight. Raidho is a road carried stone to stone, each found from the one before. Between them the rock lies quiet, and the line holds.",
+ "D1-shore": "You stand on the shore beside a cairn, and the next one shows far down the beach. Thor, someone set each one where the last could still be seen. That is Raidho, a road held together by what the eye can reach. Between the two stones lies nothing but shingle and open air.",
+ "D2-lava": "You stand beside a cairn on the black lava field, and the next one rises from the moss ahead. Behind you, Thor, the one you passed is still in sight. Raidho is a road that holds because each marker can see the next. Between them the lava lies wide, and the way stays plain.",
+ "D3-fog": "You stand at a cairn in the fog, and the next one shows grey through the white. Raidho is the road found this way, each stone seen from the one before. Thor, the cairns further on stand in the fog all the same. The near one is clear, and the stones keep their line.",
+ "_soudce_s_esenci": {"D1-shore": "Raidho (2. Ehwaz)", "D2-lava": "Raidho (2. Ehwaz)", "D3-fog": "Raidho (2. Ehwaz)"},
+ "_soudce_bez_esencni_vety": {"D1-shore": "Raidho (2. Othila)", "D2-lava": "Raidho (2. Ehwaz)", "D3-fog": "Raidho (2. Perth)", "U1-heath": "Raidho (2. Ehwaz)", "U2-heath": "Raidho (2. Ehwaz)", "U3-heath": "Raidho (2. Ehwaz)"}
+}

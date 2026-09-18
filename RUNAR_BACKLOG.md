@@ -33,6 +33,19 @@
   right action*; *travel/journey* tam není, přitom IS jméno už je `Raidho (Ferðalag)` · (c) IS krátké obrazy
   netestovány. Testy → `RUNAR_EVAL_LOG.md` 2026-09-12 („Krátký obraz", „flying bird over") a 2026-09-13
   („Nové krátké obrazy Isy").
+- [ ] ⭐ **MOŽNOST: JÁDRO OBRAZU + MÍSTO Z LOSU** (KUKY 2026-09-18: *„heath je jen jedna z mnoha možností… chci
+  Rúnarovi dát základ obrazu s tím, že zbytek je možné měnit"*; NErozhodnuto). Obraz se rozdělí na **jádro** (co nese
+  runu — věc/děj, bez místa; u mohyl stačilo škrtnout *„across the whole heath"*) a **místo** (krajina/světlo/počasí),
+  které se **losuje** ze seznamu — NE volné: volné místo dalo oblíbence 3/3 (black lava field), potřetí po 2026-08-18
+  a 2026-09-09. Pilot na Raidhu → `RUNAR_EVAL_LOG.md` 2026-09-18 „Jádro obrazu + místo". **Než se to staví:**
+  (a) **identita runa × místo** — slepý test na RIZIKOVÝCH runách (Isa, Laguz, Tiwaz, Algiz; 2026-09-09 (6): voda táhne
+  k Laguz, nehybnost k Ise, počasí k Hagalaz), soudce bez esenční věty; co padne, jde do seznamu „kam tahle runa nesmí" ·
+  (b) některé obrazy místo SAMY JSOU (horký pramen v černé skále) — ty zůstanou celé · (c) místa psát islandsky od
+  začátku (§2) a se sezónou jako `RUNE_IMG_SEASONS` · (d) místo mění podstatná jména, ne pohyb čtení (začátek i esence
+  6/6 stejné, závěr 5/6) — druhá osa „odkud a kdy se díváš" je samostatný test. ⚠️ **§26:** částečný návrat zamítnutého „POLE +
+  rozprostírač" (`RUNAR_DECISIONS.md` 2026-08-22 — rozsypal milované obrazy). Tady jádro milovaného obrazu zůstává celé,
+  vyjímá se jen místo; při nasazení nový datovaný záznam s odkazem na 2026-08-22. Obsah (jádra, místa) = owner/Cowork,
+  kód = CODE-tune, testy = CODE-read.
 - [ ] ⭐ **KONCE ČTENÍ NIC NEŘÍKAJÍ — pool konců přepracovat** (KUKY 2026-09-16 nad *„You stand in the doorway, and the
   September night stays cool at your back"*: *„nic neznamená, mělo by to něco znamenat pro uživatele; každá část čtení nás stojí
   peníze a tohle je plýtvání slovy — endingy asi nejsou dobře formulované, postavené, navržené, vysvětlené"*). Konce losuje
