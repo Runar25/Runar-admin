@@ -25,3 +25,8 @@ kde v promptu stojí) · plné prompty a texty testů v `docs/eval/2026-09-12-ve
 4. Esenční řádek — owner: aspekt nezakazovat, jen ne pořád; popsat významem, ne slovo za slovo.
 
 **U CODE-tune:** handoff „roční období do promptu" (owner poslal 2026-09-15).
+
+**Doplněno večer 2026-09-18:** nalezeny rozpory v promptu (`RUNAR_EVAL_LOG.md` 2026-09-18) a mapa „co řídí kterou část čtení".
+Owner schválil řešení 1–7, A–D **a architekturu „každá část čtení na jednom místě"** → jeden sloučený handoff pro CODE-tune
+(chat 2026-09-18). Otevřené: D2 (kam sloučit zákazy význam/závěr/krok/nitro) spolu s konci čtení; středová věta jen jako
+možnost (backlog). Až CODE-tune pushne: CODE-read pustí test na ownerově Raidhu (3 čtení) a vyhodnotí.
