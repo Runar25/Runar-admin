@@ -3726,3 +3726,58 @@ mají pravidla rozdělená mezi systém a zprávu ke čtení. (4) Otevření (1 
 **Návrh architektury (CODE-read, NEschváleno):** systém = kdo je Rúnar (identita, povaha, účel, obecný tón, zakázaná slova);
 zpráva ke čtení = vše, co tvaruje konkrétní text, každá část jedním blokem (otevření · obraz · esence · oslovení · konec ·
 délka/formát · kontext člověka · životní runa · zákazy jednou). Přesuny mění výstup → golden-verify + malý test.
+
+## 2026-09-18 — Po úklidu KROK 1 (v4.26-uklid): ownerovo Raidho, 3 čtení + Ask rozloučení + Ask „what does it mean for me"
+
+**Proč:** owner schválil řešení rozporů 1–7 a A–D (záznam 2026-09-18 „Rozpory"); CODE-tune nasadil jen odebrání (KROK 1)
+a přesuny (KROK 2) čekají na tohle měření. Test = ownerovo produkční Raidho (`readings e2e82087…`), které se mu líbí.
+**Ověřeno na postaveném promptu** (ne ve zdroji): losy 5/5 shodné s DB (`_promptDraws`); prompt verze v4.25 je bajt po bajtu
+T1-L z 2026-09-15, takže dnešní texty T1-L a T16 jsou srovnatelný základ. Rozdíl v4.25 → v4.26: **systém** −12/+3 řádky
+(čtyři vzory hlasu + věta o sezóně pryč · postoj bez *„Draw the picture and stop there"* · klišé/embrace/empower/slang jen
+v gramatice · *„never repeats himself"* pryč) · **zpráva ke čtení** 1 řádek (esenční řádek bez vzorové věty Fehu, bez zákazu
+učebnicového štítku a bez *„Choose different words"*) · **Ask** −1 řádek (esenční pravidlo pryč). `scripts/vzory.js`: zbývá
+jen *exchange between the sea and the shore*, glosa měsíce a zakázané fráze. Bez čočky životní runy (owner).
+Podklady → `docs/eval/2026-09-18-po-uklidu-raidho/`.
+
+| | čtení po úklidu (v4.26) |
+|---|---|
+| U1 | You stand beside a cairn on the open heath, and the next one rises grey on the skyline ahead. Behind you, Thor, the one you left still stands in plain view. Raidho is the road passed from stone to stone, never seen whole at once. Across the whole heath, no stone is out of sight of another. |
+| U2 | You stand beside a cairn on the open heath, and from here the next one is already in sight. Raidho is a road you can follow because each marker shows the next. Behind you, Thor, the last cairn still stands where you passed it. The stones hold their places, and the heath lies quiet between them. |
+| U3 | You stand beside a cairn on the open heath, and the next one sits small on the rise. From there, Thor, another will come into view, each stone seen only from the one before. Raidho is a road held together by sight, one marker to the next. The whole heath is crossed like this, stone after stone. |
+
+| počet ze 3 | T1-L (v4.25, pisatel znal datum) | T16 (v4.25 bez vzoru Fehu) | po úklidu (v4.26) |
+|---|---|---|---|
+| začíná *You stand* | 3 | 3 | 3 |
+| esence tvaru *Raidho is …* | 3 | **0** | **3** |
+| *road* v esenčním řádku | 2 | 1 | **3** |
+| *pass / hand* v esenčním řádku | 3 | 2 | 1 |
+| poslední věta *Behind you…* | 3 | 1 | **0** |
+| *grey* · *wind* · *heather* | 3 · 3 · 3 | 1 · 2 · 1 | 1 · 0 · 0 |
+| *already* | 0 | 0 | 1 |
+| slov / vět | 53–56 / 4 | 52–56 / 4 | 56–57 / 4 |
+
+**Nálezy (n=3, nic se z nich nerozhoduje samo):**
+1. **Tvar „Raidho is …" se vrátil (3/3) a s ním slovo aspektu v esenci (road 3/3).** T16 měl bez vzorové věty 0/3, ale ještě
+   zákaz štítku a *„Choose different words"*; po úklidu chybí i ty dva (a v systému vzory hlasu). ⇒ formuli nedržel jen
+   vzor Fehu; KTERÁ z těch tří změn ji vrátila, z tohohle testu nejde říct. Fisher 0/3 × 3/3 p = 0,1. Srovnání s ownerovým
+   pokynem 2026-09-16 *„road nemá
+   být zakázaná, jen nemá být pořád"*: tady je pořád. Ownerovo produkční čtení, které se mu líbí, má týž tvar
+   (*„Raidho is the road walked one marker at a time"*).
+2. **Konec „Behind you…" zmizel z poslední věty** (0/3; T1-L 3/3, T16 1/3). Los konce se neměnil (*„End on a quiet line that
+   rests — not a question this time."*); „Behind you" se přesunulo doprostřed (U1, U2). Příčinu z n=3 přiřadit nejde.
+3. Šedá / vítr / vřes: proti T16 (táž instrukce o datu) jen šum; proti T1-L to dělá i datum pisatele.
+
+**Ask nad ownerovým produkčním textem** (*„…That is enough to keep walking."*), n=1 na verzi:
+| otázka | v4.25 (dnes) | v4.26 (po úklidu) |
+|---|---|---|
+| *Thank you, Rúnar.* | Go well, Thor. The first cairn stands quiet on the heath beside you. | Farewell, Thor. The first cairn stands beside you, its stones settled and still. |
+| *What does it mean for me?* | Raidho doesn't show you the end of the road, Thor. It shows you the stretch between two cairns, the one at your side and the one across the heath. That's all it holds here: a road known only as far as the next stone. The far markers stay hidden beyond the rise. What the rune names is the walking itself, the rhythm of reaching one stone and then seeing the next. The heath opens one cairn at a time. | Raidho, for you, Thor, is a road kept short. It shows the cairn beside you and the one across the heath, and nothing past them. The runes say nothing of where the road ends. They hold only the stretch of heather between two stones, near enough to see each tuft. Raidho is a rune of right order, each stone set where the one before it points. Its meaning lies in that small distance, the one already in your sight. |
+4. **Rozloučení:** obě verze stejný tvar (13 slov, jméno + obraz v klidu, žádná esence) — rozpor 6 se na tomhle páru
+   neprojevil a odebrání nic nerozbilo.
+5. **„Co to znamená pro mě":** ani jedna verze neodmítla (2026-09-14 na Ise v4.25 odmítla: *„the rune does not name"*).
+   v4.26 odpověď adresuje (*„for you, Thor"*, *„Its meaning lies in…"*), ale ani jedna neřekne, co to MŮŽE znamenat pro
+   člověka — v Asku dál stojí `NO COLD READING`. To je otevřené D2 spolu s konci čtení (`RUNAR_BACKLOG.md`).
+   *right order* / *rhythm* v Ask promptu nejsou (ověřeno grepem) — model je má z vlastní znalosti Raidho.
+
+**Hranice:** jen EN (IS esenční pravidlo vzor nikdy nemělo) · jedna runa, jeden úhel a jeden konec · pisatelé Claude Opus 5,
+produkce `claude-opus-4-8` (otevřená otázka ownera) · Ask n=1 na verzi.
