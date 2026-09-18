@@ -3665,3 +3665,34 @@ v produkčním znění moc dobré, a snažíme se ho rozbít úpravami tak vidit
 **Owner ke koncům** (Kenaz-N *„You stand in the doorway, and the September night stays cool at your back"*): *„tenhle ending
 nic neznamená, je to jen divné ukončení obrazu, mělo by to něco znamenat pro uživatele. Každá část čtení nás stojí peníze a
 tohle je plýtvání slovy. Endingy asi nejsou dobře formulované, postavené, navržené, vysvětlené."* → `RUNAR_BACKLOG.md`.
+
+## 2026-09-18 — Rozpory v tom, co model dostává (Single EN + pooly + Ask)
+
+**Proč (owner):** *„pojďme napřed najít konflikty a vyřešit je."*
+**Jak:** produkční prompt (systém + dvě varianty user message + všechny losované pooly + Ask) → 3 hledači s různými pohledy
+(pravidlo × pravidlo · vzor × pravidlo · pokyn bez podkladu / opakování) → 1 skeptický ověřovatel (citace doslova? dají
+se obě splnit zároveň? duplikát?). **75 tvrzení → 7 skutečných rozporů** (55 „není rozpor", 13 duplikátů). Vstup a surové
+nálezy → `docs/eval/2026-09-18-konflikty-promptu/`. IS cesta v tomto kole NEbyla.
+
+**Ověřené rozpory:**
+1. Vzor hlasu *„What in you is finally ready to move?"* × `ENDING_OPEN[0]` (*„no half of the question may claim what is…
+   not yet ready in the seeker"*) a `NO COLD READING` — vzor předvádí zakázaný tvar.
+2. Vzor hlasu *„Come spring it straightens again, as it always has."* × *„Rúnar does not guarantee outcomes"* /
+   *„never predicts fate or claims absolute truths"*.
+3. Vzor esenčního řádku *„Fehu is that warmth passed from hand to hand"* × *„never a fixed formula"* (táž řádka). Doloženo
+   daty: tvar „<Runa> is …" se vzorem **32/33**, bez něj **1/5** (Fisher p = 0,0003; ⚠️ skupiny se liší i runami a testy).
+4. `YOUR STANCE` *„Draw the picture and stop there — never hand the seeker a conclusion"* × esenční řádek *„after the picture,
+   one short line that says what the rune DOES"*.
+5. Větev s otázkou *„Speak to what lies beneath the question"* × `NO COLD READING`.
+6. Ask: esenční pravidlo připojené bez podmínky × větev rozloučení / odmítnutí (*„one or two warm words… no lesson"*).
+7. Pokyn bez podkladu: *„let the image take the season that is real now"* + *„never carries weather that is not real right now"*
+   — datum ani sezóna v promptu nejsou (handoff CODE-tune 2026-09-15).
+
+**Doplněno CODE-read (ověřovatel je neposuzoval):** (A) řádek `DRAWN RUNE … focus on: the road` podá slovníkové slovo a
+esenční pravidlo ho hned zakazuje jako štítek (vzor „pojmenuj a zakaž", memory `prompt-nepojmenuj-co-hned-zakazes`) ·
+(B) *„its sense in plain words"* × *„Choose different words for the essence each time"* — prosté slovo významu je pořád
+stejné · (C) úhel `[6]` *„setting the seeker inside the image"* + konec `ENDING_OPEN[1]` *„name where the seeker stands in
+the image"* → „You stand…" na začátku i na konci · (D) opakování: zákaz říct člověku význam/závěr/krok/nitro stojí na
+čtyřech místech (`RUNAR_BACKLOG.md` „KONCE ČTENÍ"); *„embrace"* 2×, klišé 2×; *„register"* se slibuje a nikde nepřijde;
+*„never repeats himself"* bez paměti předchozích čtení.
+**Stav:** návrhy řešení u ownera (chat 2026-09-18); do kódu přes CODE-tune až po jeho volbě.
