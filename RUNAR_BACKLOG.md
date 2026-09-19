@@ -65,8 +65,10 @@
   schválil produkční model přes API → podezřelý #1 **potvrzen**: `ENDING_OPEN[0]` *„…or offering a plain choice"* dělá volbu
   blízké × vzdálené 4/4, bez ní 0/3 (záznam (4)) — ✅ owner 2026-09-19: VYPUSTIT (handoff CODE-tune). Podezřelý #2
   **potvrzen**: `ENDING_OPEN[1]` *„name where the seeker stands in the image"* → poslední věta „You stand…" 6/6, bez něj 0/6
-  (záznam (5)) — čeká na rozhodnutí ownera. Podezřelý #3 (nový): řádek sezóny v4.29 *„let it colour the land and the work"*
-  → obilí v obraze bez pole 6/6 (záznam (5)) — čeká na ownera + CODE-tune. ⛔ Kontrola (1) ve tvaru
+  (záznam (5)) — čeká na rozhodnutí ownera. Podezřelý #3: řádek sezóny v4.29 → obilí v obraze bez pole 6/6
+  (záznam (5)); owner „zuž a otestuj" → zúžení pokynu NEPOMOHLO (5/6), vadí jméno měsíce; holé sdělení se opisuje (5/6);
+  **funguje sezóna jako PODMÍNKA** (obilí 0/6, opis 0/6) — znění EN+IS v záznamu (6), předáno CODE-tune.
+  Podezřelý #2 `ENDING_OPEN[1]` — ✅ owner 2026-09-19 VYPUSTIT (znění EN+IS ověřeno, záznam (6)). ⛔ Kontrola (1) ve tvaru
   „srozumitelnost" NEPROŠLA ověřením (2/6 × 2/6) — kandidát dál: soudce SOULADU („dává otázka smysl pro tuto runu a obraz?"),
   napřed zase ověřit na téže sadě.
 - [ ] ⭐ **MOŽNOST: JÁDRO OBRAZU + MÍSTO Z LOSU** (⭐ KUKY 2026-09-19: *„určité runy potřebují jiné prostředí — skupiny;

@@ -4171,3 +4171,31 @@ zamítnuto (slovník: *dalbotn* = „innsti hluti dals", tj. konec údolí, ne d
 3121 · *undir fjöllunum* 126 · *fyrir ofan bæinn* 873 / *hlíðinni fyrir ofan* 271 · *á engjunum* 84 · *á sér stað* 22 998.
 *„á opinni heiði"* 0 → vypuštěno; IS nerozlišuje „open heath" a „moor below the fells" (obojí *heiði*) → jedno nahrazeno
 *á engjunum* (⚠️ louky se senem = riziko tahu k Jeře; na identitní bránu). Seznam → handoff CODE-tune.
+
+## 2026-09-19 (6) — Řádek sezóny: zúžení NESTAČÍ, vadí jméno měsíce · funguje až sezóna jako PODMÍNKA
+
+**Owner:** *„1. ano vypusť [„name where the seeker stands"] 2. ano zuž a otestuj [řádek sezóny]."*
+Produkční model, v4.29, dva obrazy, do kterých sezóna nepatří: Raidho (cesta u řeky) a Isa (kafe na stole, registr D).
+Losy pevné (úhel 0, délka [1], jméno [1], bez čočky; konec Raidho `ENDING_OPEN[2]`, Isa `ENDING_HEAVY[0]`), 3 čtení na buňku.
+Podklady → `docs/eval/2026-09-19-produkcni-model/sezona/`.
+
+| tvar řádku | obilí / žně v textu | doslovný opis věty o sezóně |
+|---|---|---|
+| **A** dnešek: *„…: two months of summer left, the grain-cutting month of old. Let it colour the land and the work in his images where it fits naturally."* | **5/6** | ano (*„the long afternoon of the cutting month"*) |
+| **B** = A bez pokynu *„Let it colour…"* | **5/6** | ano |
+| **C** = B bez jména měsíce (*„…: two months of summer left."*) | **0/6** | **5/6** (*„Two months of summer remain above the roots where this stillness lives"*) |
+| **D** = sezóna jako PODMÍNKA: *„SEASON — where Rúnar stands it is late summer. The image never carries weather that belongs to another season."* | **0/6** | **0/6** |
+**Nálezy:** (1) **Zúžení pokynu je „není to X"** — obilí nese samo jméno měsíce (*grain-cutting month of old*), ne věta
+*„let it colour the land"*. (2) **Holé sdělení se opisuje doslova** (C 5/6) — táž třída jako vzor v promptu
+(`memory/prompt-directive-makes-model-copy`). (3) **D drží:** sezóna se projeví jen ve světle (*„the light of late summer"*,
+*„the far bank in late summer gold"* — 4/6), obraz zůstane svůj. ⚠️ Zdroj slova pro sezónu: dnešní řádek bere glosu z
+`BIRTH_MONTHS` (lore k měsíci narození) — pro sezónu se hodí spíš prostý štítek z `_seasonBucket`; test použil *late summer*.
+
+**Islandština (ověřeno):** `ÁRSTÍÐIN — þar sem Rúnar stendur er síðsumar. Myndin sýnir aldrei veður sem tilheyrir annarri
+árstíð.` — is-grammar-qa 0 nálezů, 0 E001; korpus: *er síðsumar* 9 · *sýnir aldrei* 78 · *sýnir veður* 5 · *sem tilheyrir*
+5956 · *annarri árstíð* 10. ⚠️ Zamítnuto *„Myndin ber aldrei veður…"*: *bera veður* má 0 dokladů a plete se s idiomem
+*bera veður af e-u*. (Tuhle vazbu měl i dnes odložený brzdový řádek z `_spine`.)
+**Konec `ENDING_OPEN[1]` po vypuštění (owner „ano vypusť"):** EN *„End on a plain, steady line from the image — not what is
+true inside them; not a question."* (testováno, „You stand" 0/6) · IS *„Endaðu á staðfastri línu úr myndinni — ekki hvað er
+satt innra með honum; ekki spurningu."* — grammar 0 E001 (W001 na *Endaðu* = falešný poplach, má ho i dnešní znění);
+korpus *úr myndinni* 5698 · *línu úr* 296.

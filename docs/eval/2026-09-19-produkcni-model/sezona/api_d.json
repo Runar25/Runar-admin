@@ -1,0 +1,32 @@
+{
+ "isa-D-1": {
+  "text": "The cup, the cold table, the light of late summer through the window — and then only the coffee, gone cold while you sat with it. Isa is the stillness that holds a thing in place until it changes on its own. You did not drink it, Kuky, and the waiting became the thing itself. The cup is cold now, and it was you who stayed.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 122
+ },
+ "isa-D-2": {
+  "text": "The table holds a cup, the coffee cooling, the room quiet around you, and slowly all of it falls away but the waiting itself. This is Isa, Kuky, the hour that does not move while you sit in it. The steam is gone, the surface still, the warmth gone down into the roots where things hold. What is cold now stays cold until you rise from the chair.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 132
+ },
+ "isa-D-3": {
+  "text": "The cup sits full at the table, the room still, the light of late summer flat across the wood, and slowly the steam thins to nothing. Everything falls away but the coffee, Kuky, going cold while you sit with it. This is Isa, the pause that holds a thing in place until the warmth leaves it on its own. What you wait on does not wait for you.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 129
+ },
+ "raidho-D-1": {
+  "text": "The road runs beside the river and bends out of sight, the water moving one way, the path another, then only the bend remains. Raidho is the going itself, Kuky, the road taken while you are still on it. You cannot see past the turn from where you stand. The far side is not yours yet, and the walking is enough.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 114
+ },
+ "raidho-D-2": {
+  "text": "The road runs beside the river and bends away, and for a moment you see the water, the reeds, the far bank in late summer gold. Then it narrows to one thing, Kuky, the bend itself, where the road turns and the rest goes out of sight. Raidho is that going forward into what you cannot yet see. The river keeps moving whether you watch the bend or not.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 134
+ },
+ "raidho-D-3": {
+  "text": "The road runs along the river, past the reeds and the late-summer light, then it turns and is gone around the bend. What lies past that turn you cannot see from here, Kuky, and no amount of leaning forward brings it closer. Raidho is that steady walking, the road under your feet you can trust while the far part stays hidden. The bend keeps its own counsel, and the ground before it is enough.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 143
+ }
+}

@@ -1,0 +1,62 @@
+{
+ "isa-A-1": {
+  "text": "The coffee sits before you, the table, the light, the long afternoon of the cutting month, and slowly all of it thins to one thing, the cup going cold while you wait. Isa is that stillness, Kuky, the pause where nothing moves and no warmth stays. The steam is gone and you have not touched it. Some things wait to be drunk, not warmed again.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 134
+ },
+ "isa-A-2": {
+  "text": "The coffee steams, the table sits quiet, the light waits with you, then all of it falls away but the cooling cup. Isa is that stillness, Kuky, the pause where nothing moves and nothing is forced. The grain stands ready in the field, but the cutting comes in its own hour. What has gone cold was warm once, and you sat through the whole of it.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 133
+ },
+ "isa-A-3": {
+  "text": "The cup sits cool now, the coffee gone cold while you kept your eyes on the door. Isa is the still hold underground, the seed that does not stir though the grain above is nearly cut. This is what the waiting does, Kuky — it stops the thing in place, neither forward nor back. The coffee will not warm again by watching it.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 124
+ },
+ "isa-B-1": {
+  "text": "The cup sits on the table, the coffee cold now, the steam long gone, and still you sit. This is Isa, Kuky, the hour that does not move while you wait for it to. Everything else has fallen away but the waiting itself, plain and unbroken. The coffee will not warm again, and the waiting stays where you left it.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 122
+ },
+ "isa-B-2": {
+  "text": "The table, the cold cup, the light shifting across the room while you sit — and then only the coffee remains, forgotten, gone grey. This is Isa, Kuky, the holding still while the warmth quietly leaves the cup. Something waits underneath, in the roots you cannot see, in no hurry to rise. The grain ripens whether or not you watch it.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 133
+ },
+ "isa-B-3": {
+  "text": "The coffee sits cooling on the table, the steam gone, the room still around you. Everything narrows to that one cup and the waiting held inside it, Kuky, the hours settling like frost. This is Isa, the still hold where nothing moves and nothing is asked to move. The grain waits for the cutting, and the cup goes cold in its own time.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 129
+ },
+ "raidho-A-1": {
+  "text": "The road runs beside the river, past the cut grain of late summer, and vanishes around the next bend. Everything falls away but the bend itself, Kuky, the place where the road bends and you cannot yet see. Raidho is the going forward while the far ground stays hidden. You walk the part that is under your feet now.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 118
+ },
+ "raidho-A-2": {
+  "text": "The road follows the river and the whole valley opens at once, the grain gold and near to cutting, then all of it falls away but the bend ahead. Raidho is the going forward when you cannot yet see where the road turns, Kuky. What lies past the curve stays hidden until you walk it, and that is how a road keeps you moving. The next step is the only one lit.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 133
+ },
+ "raidho-A-3": {
+  "text": "The road runs beside the river and turns at the next bend, the fields ready for cutting, the water moving on. Then the fields fall away, and only that bend remains, Kuky, the place where the road goes on without showing you the far side. Raidho is the walking itself, not the seeing ahead. You move, and the next stretch arrives as you reach it.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 129
+ },
+ "raidho-B-1": {
+  "text": "The road runs along the river and vanishes around the next bend, the whole of it laid out until the turn takes it from sight. Raidho is the road you can only walk to the bend, Kuky, no further. What lies past it stays hidden until your feet arrive. The grain waits two months yet, and the road keeps moving under you.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 121
+ },
+ "raidho-B-2": {
+  "text": "The road runs along the river and bends away, the water beside it, the grain standing gold with two months of summer left, and then all of it falls but the bend itself. Raidho is the going that cannot see past the next turn, Kuky, only that the road keeps on. You are already on it, moving. The bend holds what it holds, and the walking is yours.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 126
+ },
+ "raidho-B-3": {
+  "text": "The road runs beside the river and bends away, and past that bend you cannot see, and the grain stands ready for cutting, and the water keeps moving. Let it all fall away, Kuky, until only the road remains under your feet. Raidho is the going itself, not the place it ends. What lies around the bend stays hidden until you round it.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 124
+ }
+}

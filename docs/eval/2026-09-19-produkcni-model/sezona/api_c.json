@@ -1,0 +1,32 @@
+{
+ "isa-C-1": {
+  "text": "The room, the table, the cup, the waiting hand — then all of it falls away but the coffee going cold while you sit there. Isa holds a thing in place until its warmth leaves it, Kuky, and the waiting outlasts the reason you began. Two months of summer remain above the roots where this stillness lives. The cup does not warm again by being watched.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 130
+ },
+ "isa-C-2": {
+  "text": "The cup sits full on the table, the steam gone, the surface still. This is Isa, Kuky, the pause where a thing waits below the surface and does not move. Everything else falls away, and only the cold coffee remains, untouched while the hour passes. Two months of summer are left, and the cup has not been lifted.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 118
+ },
+ "isa-C-3": {
+  "text": "The kitchen holds still around you, the coffee gone cold in its cup while the hour passes unmarked. Then the room falls away and only the cup remains, its warmth given up to the air, Kuky, the steam long since gone. This is Isa, the pause that keeps a thing exactly as it was set down. Two months of summer stand behind you, and the cup does not reheat itself.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 140
+ },
+ "raidho-C-1": {
+  "text": "The road runs beside the river, past the reeds and the sunlit stones, then it bends and the rest is hidden from you. Everything falls away but that bend, Kuky, the place where the seeing stops. Raidho is the road already under your feet, moving whether or not you can see where it turns. Two months of summer remain, and the walking is enough for now.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 130
+ },
+ "raidho-C-2": {
+  "text": "The road runs beside the river and bends away, the water going one way and the path another, and past the bend you cannot see. Then the water thins, Kuky, and only the road remains under your feet. Raidho is the going itself, not the place it ends. Two months of summer hold the light while you walk.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 109
+ },
+ "raidho-C-3": {
+  "text": "The road runs along the river and bends away out of sight, the water beside it, the summer light long over both. Then the water falls quiet, Kuky, and the bend is all that remains. Raidho is the road already carrying you, the ground moving under a foot still mid-step. What waits past the turn stays hidden, and the walking goes on.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 124
+ }
+}
