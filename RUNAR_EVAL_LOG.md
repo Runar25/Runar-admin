@@ -4220,3 +4220,20 @@ odtud *„the grain-cutting month of old"*. Návrh prostých štítků podle sta
 ⚠️ Zamítnuto pro nulový doklad ve spojení s „er": *snemmsumar · síðhaust · síðvetur · vorbyrjun · síðla hausts ·
 snemma vetrar* (samotná slova doložená jsou, spojení ne). Duplikáty (hásumar 2×, vetur 2×) jsou záměr — řádek potřebuje
 správné období, ne jedinečné jméno pro každý měsíc.
+
+## 2026-09-19 (7) — v4.30-jadra nasazeno: ověřeno a protlačeno produkčním modelem
+
+CODE-tune nasadila body 1–3 mého handoffu (commit `1712fb1`). **Ověřeno na postaveném promptu (EN i IS):** `ENDING_OPEN[0]`
+i IS protějšek = dodané znění · věta o možnostech v Asku EN dodaná, IS psaná nativně (`Ef leitandinn spyr hvað þetta gæti
+verið fyrir hann…`; is-grammar-qa 0 E001, jediný flag W001 na *rúninni* → *brúninni* = falešný poplach) · tři jádra Raidha
++ `IMG_PLACES.P` (6 párů) · složení EN *„…: <jádro>. Where: <místo>. Let it become…"*, IS *„…: <kjarni>. Þetta á sér stað
+<staður>. Láttu hana…"* · `prompt_draws` má `place` zvlášť a `image` bez místa (ověřeno: 8 losů, žádný `image` neobsahuje
+`place`) · los místa se točí přes celý seznam (8 losů: 6 různých míst, max 2× totéž).
+
+**6 čtení produkční cestou na produkčním modelu** (`docs/eval/2026-09-19-produkcni-model/v430-nasazeno/`):
+scény se liší (průsmyk · vřesoviště pod horami · údolí mezi statky · luka · okraj domácí louky) · **volba „A nebo B" 0/6**
+(otázky jsou otevřené: *„What does the road know that the bend still keeps from you?"*) · *Raidho is …* 6/6 ·
+**zbylý šum sedí na dva nenasazené body:** „You stand" na konci 1/6 (los `ENDING_OPEN[1]`) a sezóna 4/6 (*„the grain stands
+ready"*, *„in this grain-cutting month"*, *„Two months of summer remain"*). ⚠️ CODE-tune je v handoffu vedla jako „čeká na
+ownera" — owner je rozhodl 2026-09-19 (*„1. ano vypusť 2. ano zuž a otestuj"* + *„late summer"*), znění a doklady jsou
+v záznamech (5) a (6); psáno proti `d457494` a `20247a6`.

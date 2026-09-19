@@ -1,0 +1,32 @@
+{
+ "raidho-1-1": {
+  "text": "The cairns stand where the wind never rests, each in sight of the next along the pass. Raidho is the road walked one marker at a time, where you see far enough to move but never the whole way at once. The mist may lift or fall, yet the stones hold their line through it. You reach the next when you reach it, and the grain waits for no hurried hand.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 126
+ },
+ "raidho-2-1": {
+  "text": "Stand here, Kuky, on the heath below the fells where a sheep-track winds through the grass. No hand cut this path, it found its own way around stone and hollow, and it holds. Raidho is that going with the lay of the land, the pace the ground itself allows. Two months of summer remain, and the track keeps its own quiet rhythm.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 129
+ },
+ "raidho-3-1": {
+  "text": "The road holds its shape, Kuky, while the bend takes the rest from sight down in the valley between the farms. Raidho is the going itself, the movement that keeps on where the eye cannot follow, sure of the ground under it. What does the road know that the bend still keeps from you?",
+  "model": "claude-opus-4-8",
+  "out_tokens": 109
+ },
+ "raidho-4-1": {
+  "text": "Out in the far hay meadows the cairns hold their places while the grass bends and the light shifts around them, each stone in sight of the next. Raidho is that walking from one marked point to the one you can just make out ahead, no more than that. With two months of summer left, which cairn is holding your eye now?",
+  "model": "claude-opus-4-8",
+  "out_tokens": 114
+ },
+ "raidho-5-1": {
+  "text": "The road runs out to the edge of the home-field, then bends and is gone from sight. Raidho is that turning, where the way you know becomes the way you don't yet. The grain stands ready and the summer thins, and still the bend gives up nothing of what lies past it. You walk toward it either way, and the road keeps its own counsel.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 124
+ },
+ "raidho-6-1": {
+  "text": "The next cairn stands beyond the rise, still out of sight from where you rest. Raidho is the walking between one stone and the next, the road held by markers left by others. You cannot see the whole pass, only the stone you can reach before the light thins in this grain-cutting month. You stand at the cairn in hand, the far one waiting past the crest.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 128
+ }
+}
