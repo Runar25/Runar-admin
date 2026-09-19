@@ -3935,3 +3935,62 @@ Slepý soudce: fragment BEZ vět se jménem runy, volba ze všech 25 (`RUNES[].k
 
 **Hranice:** n = 1 na buňku, 1 hlas soudce · 4 runy, 3 místa · EN · pisatel i soudce Claude Opus 5 · začátek čtení je
 kvůli úhlu 6 vždy *„You stand"*.
+
+## 2026-09-19 — Odkud „grey": věta „The image must be sensory" bez brzdy · ownerovo Isa a konec, který vyvolá otázku
+
+**Proč (owner):** *„grey against the stones — co to znamená? … The grey settles over the stone? … turn back through the grey?
+… grey and slow? Prostě nesmysl. Chci identifikovat, proč se to tam objevuje! Co tomu dává tu barvu a čemu tu barvu dává.
+Má to co dělat se sezónou?"*
+
+### 1. „grey" v promptu NENÍ (ověřeno na postavených promptech)
+v4.26 i v4.27: 0×. Byl jen ve v4.25 ve vzorech hlasu (*„runs grey over black sand"*, *„grey morning air"*), které KROK 1
+odebral. Ve zdroji zbývá v `SEASON_POOLS` (do čtení se nedostanou, 2026-09-08), v neaktivním hlasu `lyrical` a v jednom
+obrazu Laguzu (*„The glacial river runs grey"*). **Se sezónou to nesouvisí** — datum ani sezóna v promptu nejsou.
+
+### 2. Produkce: šedou přinese OBSAH obrazu (EN čtení ownera od 2026-08-01, 113 čtení, šedá 17×)
+| obraz obsahuje | šedá ve čtení | k čemu se přilepí |
+|---|---|---|
+| mlhu | **3/5** | mlha se stane PODSTATNÝM JMÉNEM: *„that grey wall"*, *„the few metres of grey"*, *„one grey shape ahead"* |
+| svítání / světlo | **4/8** | *„the grey hour"*, *„grey light"*, *„the first grey of morning"* |
+| vodu (řeka, fjord, moře) | **5/16** | *„the grey river's edge"*, *„the fjord lies flat and grey"*, *„grey water"* |
+| nic z toho | 5/63 | popel, vzduch, nebe |
+**Barva místo předmětu** (ownerovo *„nesmysl"*) vzniká u mlhy: model mlhu jednou pojmenuje a podruhé ji nahradí barvou,
+aby neopakoval slovo — test identity 2026-09-19: všechna tři čtení s mlhou (*„The grey settles over the stone"* · *„you turn
+back through the grey"* · *„Fog drifts past… grey and slow"*); produkce Blank s mlhou: *„Blank is that grey wall"*.
+
+### 3. Proč TEĎ víc: KROK 2 — test obrácenou pákou (Raidho v4.27, jedna změna na rameno, 3 čtení)
+| rameno | grey | wind | heather |
+|---|---|---|---|
+| kontrola K2+R+C (2026-09-18) | 8/9 | 8/9 | 6/9 |
+| **S** = z bloku THE IMAGE pryč *„The image must be sensory: something the reader can feel, not interpret."* | **0/3** | 0/3 | 0/3 |
+| **W** = věta „sensory" zůstává + vrácena věta o počasí (*„never carries weather that is not real right now…"*) | **0/3** | 0/3 | 0/3 |
+S+W 0/6 proti 8/9 (Fisher p ≈ 0,001). ⇒ **Šedou a vítr dělá pokyn „sensory" BEZ brzdy.** Model ho splní nejlevnějším
+smyslovým detailem — barvou a počasím. KROK 2 udělal obojí naráz: pokyn přesunul tam, kde ho model poslouchá, a brzdu
+odložil (bod 7 CODE-tune). ⚠️ W nefunguje proto, že by model znal sezónu (nezná) — větu o počasí čte jako „počasí nepřidávej".
+Texty S a W jsou bez atmosféry úplně (*„the next one rises in plain sight"*) — zda je to lepší, nebo holé, rozhodne owner.
+
+### 4. Ownerovo poslední Isa (produkce `df160bfb`, v4.27) — jak vzniklo
+Rekonstrukce z `prompt_draws` (5/5 losů sedí; délka odvozena ze 3 vět): obraz *„The cup of coffee goes cold on the table
+while you wait"* · aspekt `waiting` · úhel 3 *„Open with the one thing in the image that stays fixed while the rest gives way"*
+· konec `ENDING_HEAVY[1]` *„End with one hard question that stays with the image and asks for nothing to be admitted"* ·
+**čočka životní runy Gebo** *„let it shape ONLY the last sentence or question"*. Závěrečná otázka *„What are you waiting to
+be given before you touch it?"* = los konce (tvrdá otázka v obraze) + **Gebo (dar → „to be given")**. ⚠️ Testy od
+2026-09-15 jedou BEZ čočky (owner) — ta nejlepší část tohohle čtení přitom přišla z ní.
+**Ask** (*„explain. what it could be?"*) šel větví *„If the seeker … asks for it plainly: answer in plain words … in the terms
+of their own question"* a dal: (a) runu prostě (*„Isa is ice — the thing held still"*), (b) **dvě konkrétní možnosti**, na
+co člověk čeká (*svolení zvenčí — „some word or nod … that says now, go ahead"* / *správná chvíle, která má přijít sama*),
+(c) cenu čekání obrazem (*„The cup does not grow warm again by waiting"*), (d) hranici (*„That is all the rune holds"*).
+To je tvar, který owner chtěl 2026-09-14 (*„může to být…"*). ⚠️ *„What you wait for is a sign that it is allowed"* je
+tvrzení o nitru — NO COLD READING ho zakazuje; prošlo, protože se ptal sám člověk (otevřené D2).
+
+### 5. Owner: konec má v člověku vyvolat otázku, Ask ji rozebere
+*„z toho pohledu se mi zdá, že je důležité, aby závěr bylo právě to zakončení, které má v člověku vyvolat otázku, otázky —
+jenom tím, že mám potřebu se zeptat, na co tím myslíš, a Rúnar v ASK to dobře rozebírá."* **Co s tím drhne (§21):**
+(1) **Ask má jen tier premium** (proxy: `mode === "ask" && userTier !== "premium"` → 403), jednou na čtení — Rune Seeker a
+standard se nezeptají; čtení pro ně musí obstát samo. (2) Otázka ze **zvědavosti** ≠ otázka z **nepochopení**: Raidho
+(`de1e3b16`) skončilo *„Do you fix on the cairn under your hand, or the shape rising faint beyond it?"* a owner napsal *„i
+dont understand what you mean"*. (3) Dobrá otázka u Isa přišla z čočky, kterou testy vypínají. → `RUNAR_BACKLOG.md`
+„KONCE ČTENÍ".
+
+**Hranice:** test S/W jen Raidho, jeden los, n = 3 · produkční počty z ownerova účtu (EN, 113 čtení).
+Podklady → `docs/eval/2026-09-19-odkud-grey/`.
