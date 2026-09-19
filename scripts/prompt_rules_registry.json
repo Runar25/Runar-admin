@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
- "zapsano": "2026-09-18",
- "prompt_version": "v4.27-presuny",
+ "zapsano": "2026-09-19",
+ "prompt_version": "v4.28-obraz",
  "pravidla": [
   {
    "hash": "54d29df4d80b",
@@ -226,7 +226,7 @@
    "zacatek": "READING ANGLE (follow this entry point — let it shape the opening and "
   },
   {
-   "hash": "360e9fd20d61",
+   "hash": "7d9378b6a8e4",
    "lang": "en",
    "zdroj": "single",
    "zacatek": "Rúnar uses one image per reading and carries it through; he does not l"
@@ -808,7 +808,7 @@
    "zacatek": "LESTRARHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og up"
   },
   {
-   "hash": "2051f013da5d",
+   "hash": "d70cdb7319b3",
    "lang": "is",
    "zdroj": "single",
    "zacatek": "Rúnar notar eina mynd í hverjum lestri og ber hana í gegn. Hann telur "

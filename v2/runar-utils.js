@@ -306,6 +306,12 @@ function _promptDraws(prompt, lang) {
       if (c > 0) out.image = line.slice(c + 2, e > c ? e : undefined).replace(/\.\s*$/, '').trim();
     }
 
+    // Cocka zivotni runy (2026-09-19, handoff CODE-read): `readings.life_rune` rika jen,
+    // jakou runu clovek MA — ne jestli cocka v TOMHLE cteni bezela (prepinac, runa=tazena,
+    // pro-nekoho). Rekonstrukce ji pak hada; CODE-read se tak spletl u Isa df160bfb.
+    // Kotva = zacatek bloku _lensContext, jednoznacny v obou recich.
+    out.lens = p.indexOf(isIs ? 'LOKALINSA — lífsrúnin' : 'CLOSING LENS — the life rune') !== -1 ? 1 : 0;
+
     var heavy = isIs ? ENDING_HEAVY_IS : ENDING_HEAVY;
     var open  = isIs ? ENDING_OPEN_IS  : ENDING_OPEN;
     for (var j = 0; j < heavy.length; j++)

@@ -6054,3 +6054,29 @@ kde bydlí — §19.3) · IS rozbor jména protlačen: žádná EN věta · regi
 otázka esence „Raidho is a road…" 3/3 čeká na ownera (s konci čtení).
 
 **Affected doc(s):** žádný — mapa promptu (artifact) překreslena v témž tahu.
+
+## 2026-09-19 (1) — Věta „sensory" z bloku obrazu VEN + `prompt_draws` zapisuje čočku
+
+**Handoff CODE-read (owner: „není-li důležitá, odstranit"):**
+
+**1) „The image must be sensory…" / „Myndin verður að vera skynræn…" ODEBRÁNO** z `_imageRules`.
+Duplikát hlasu focused („…if it cannot be felt, it does not belong here" — obojí přišlo týmž
+commitem e3a3c40) a jediný NAMĚŘENÝ účinek byla barva a počasí: Raidho grey/wind 8/9 → bez věty
+0/3; grey 4/12 → 0/12 (RUNAR_EVAL_LOG 2026-09-19 „Odkud grey", docs/eval/2026-09-19-odkud-grey/).
+Osiřelé zájmeno opraveno na podmět: „**The image** must connect to where…" / „**Myndin** verður
+að tengjast því…" (check-is OK). Důsledek pro bod 7: brzda na počasí už není potřeba — barvu
+a počasí sypala tahle věta, ne chybějící zákaz.
+
+**2) `prompt_draws.lens` (1/0)** — jestli v TOMHLE čtení běžela čočka životní runy.
+`readings.life_rune` říká jen, jakou runu člověk MÁ; jestli čočka běžela (přepínač, runa=tažená,
+čtení pro někoho) se z řádku nepoznalo a rekonstrukce hádala — CODE-read se tak spletl
+u Isa df160bfb (owner má čočku vypnutou). Kotva = začátek bloku `_lensContext`, obě řeči.
+
+**Čím je to jištěné:** golden diff = jen ta jedna věta a podmět (24/38 builderů, žádný jiný
+rozdíl) · wiring: „sensory" se nesmí vrátit (všech 5 cest + systém), místo-věta drží podmět,
+`draws.lens` = 1 na norns s čočkou a 0 na single s vypnutou · registr 204 (v4.28-obraz) ·
+smoke 44/44 · check-is OK.
+
+**Verze promptu:** v4.27-presuny → **v4.28-obraz**.
+
+**Affected doc(s):** žádný — mapa promptu (artifact) překreslena v témž tahu.

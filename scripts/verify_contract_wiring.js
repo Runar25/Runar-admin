@@ -168,6 +168,28 @@ if (!DESCRIBE_MARK.en || !DESCRIBE_MARK.is) {
   console.log('OK    obraz-blok: ve zprave single+4 spready, v systemu ne, v Ask ne');
 }
 
+// ── 2026-09-19 (handoff CODE-read): veta „sensory" z bloku obrazu VEN (jediny namereny
+// ucinek = barva/pocasi; duplikat hlasu focused). Osirele zajmeno opraveno na podmet.
+// A prompt_draws musi umet rict, jestli bezela COCKA (lens 1/0) — rekonstrukce ji hadala.
+{
+  for (const L of ['en', 'is']) {
+    const vsude = ['single', 'norns', 'kriz', 'horseshoe', 'yggdrasil', 'system'];
+    const sens = { en: 'must be sensory', is: 'vera skynræn' };
+    const zpet = vsude.filter(b => (O[b + '_' + L] || '').includes(sens[L]));
+    if (zpet.length) { fail++; console.log('FAIL  veta sensory se vratila: ' + zpet.map(b => b + '_' + L).join(', ')); }
+    const podmet = { en: 'The image must connect to where', is: 'Myndin verður að tengjast því' };
+    if (!(O['single_' + L] || '').includes(podmet[L])) {
+      fail++; console.log('FAIL  single_' + L + '  misto-veta ztratila podmet (osirele zajmeno)');
+    }
+    // lens flag na fixturach TOHOTO skriptu: norns_ cocku MA, single_lensoff ji ma vypnutou.
+    const dS   = sandbox._promptDraws(O['norns_' + L] || '', L);
+    const dBez = sandbox._promptDraws(O['single_lensoff_' + L] || '', L);
+    if (!dS || dS.lens !== 1) { fail++; console.log('FAIL  draws.lens: norns_' + L + ' ma byt 1, je ' + (dS && dS.lens)); }
+    if (!dBez || dBez.lens !== 0) { fail++; console.log('FAIL  draws.lens: single_lensoff_' + L + ' ma byt 0, je ' + (dBez && dBez.lens)); }
+  }
+  console.log('OK    obraz bez „sensory" (podmet drzi) · prompt_draws nese lens 1/0');
+}
+
 // ── Spready NESMI nest esencni radek (v4.9, 2026-08-23): rikal 'pojmenuj runu' proti
 // zamernemu 'nejmenuj' spreadu. Navrat jinou cestou = presne ta ticha regrese.
 for (const L of ['en', 'is']) {
