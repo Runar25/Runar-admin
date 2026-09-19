@@ -3894,3 +3894,44 @@ v systému; KROK 2 ji přesunul do zprávy ke čtení (tam model poslouchá) →
 4. KROK 2 proti KROKU 1 jinak beze změny: *You stand* 3/3 (úhel 6), *Raidho is … road* 3/3.
 
 **Hranice:** jedna runa, jeden los (úhel 6, konec open2) · n = 3 na rameno · pisatel Claude Opus 5, produkce claude-opus-4-8.
+
+## 2026-09-19 — Identita runa × místo na rizikových runách (24 agentů): 10/12 · oba pády na břehu · jméno „Thor" kazí soudce
+
+**Proč:** `RUNAR_BACKLOG.md` „PO RESETU" 1 (owner schválil 24 agentů; *„proveď test 24 agentů"*). Otázka z pilotu „Jádro
+obrazu + místo": Raidho s mohylami identitu udržel, ale je to lehký případ — drží ji i rizikové runy z 2026-09-09 (6)?
+**Jak:** produkce v4.27; každý ze 12 promptů se od produkčního promptu té runy liší JEN řádkem IMAGE (hlídá stavěcí
+skript): jádro obrazu bez místa + `Where: on the shore / across a black lava field / in fog`. Jádra: Isa *„Nothing stirs in
+the calm, not even the bird on the rock"* (škrtnuto *„over the fjord"* — obraz místem sám byl) · Laguz *„Water finds its own
+way down, and no one shows it the path"* (škrtnuto *„the slope"*) · Tiwaz *„You give back the change that was counted wrong in
+your favour"* a Algiz *„The turf wall takes the wind so the doorway stays calm"* (beze změny, místo nejmenují). Losy pevné
+(úhel 6, `LENGTH_BUDGETS[1]`, jméno uprostřed, bez čočky; konec Isa/Tiwaz `ENDING_HEAVY[0]`, ostatní `ENDING_OPEN[2]`).
+Slepý soudce: fragment BEZ vět se jménem runy, volba ze všech 25 (`RUNES[].k`), 1 hlas. Podklady + všech 12 textů →
+`docs/eval/2026-09-19-identita-runa-x-misto/`.
+
+| runa | břeh | lávové pole | mlha |
+|---|---|---|---|
+| Isa | ✗ **Laguz** (2. Isa) | ✓ | ✓ |
+| Laguz | ✓ | ✓ | ✓ |
+| Tiwaz | ✓ | ✓ | ✓ |
+| Algiz (jméno osoby zamaskováno) | ✗ **Othila** (2. Thurisaz) | ✓ | ✓ |
+| *Algiz s „Thor" v textu* | *Thurisaz* | *Thurisaz* | *Thurisaz* |
+
+**Nálezy:**
+1. **Identita drží v 10/12. Oba pády jsou na BŘEHU** (břeh 2/4 · láva 4/4 · mlha 4/4). Isa na břehu = voda →
+   Laguz (*„the tide lies flat… the deep water keeps moving"*), přesně podle jámy z 2026-09-09 (6). Algiz na břehu = pisatel
+   přidal dveře se západkou → Othila (domov). ⇒ místo nese vlastní signál run a seznam „kam tahle runa nesmí" je nutný;
+   voda je první kandidát pro Isu.
+2. **Situační obraz drží všude** (Tiwaz 3/3): pisatel si situaci do místa přenesl sám (stánek s rybami na břehu, trh v mlze,
+   *„the way back is long over sharp stone"* na lávě — místo tu přidalo cenu činu). Shoduje se s 2026-09-09 (7):
+   situační obrazy nesou identitu líp než předmět.
+3. **Runa, jejíž jádro JE její živel, místo nevnímá** (Laguz 3/3 — voda si najde cestu na břehu, v lávě i v mlze).
+4. ⚠️ **Vada nástroje (§27): jméno osoby v testu táhne soudce.** S *„Thor"* v textu šel Algiz 3/3 na Thurisaz a soudce to
+   dvakrát výslovně napsal (*„Thor is named"*). Se zamaskovaným jménem 2/3 správně. **Od teď v testu identity maskovat
+   i jméno osoby** (nebo psát s neutrálním jménem). Korpusy 2026-09-09 jméno Thor NEMAJÍ (ověřeno grepem:
+   `ident25`, `ident-po`, `opravy*` 0×) → tamní závěr „Algiz se čte jako Thurisaz" tahle vada nezpochybňuje.
+5. Proti 2026-09-09 (6) (dnešní obrazy, celé čtení bez jména runy): Isa 2/2 · Laguz 2/2 · Tiwaz 4/4 (po opravě) · Algiz
+   0/4. Algiz tu vyšel 2/3 — ALE soudce tu neviděl esenční větu (tam bývá *„protection"*, klíč sdílený s Thurisaz) a obraz
+   je jiný řádek; lepší číslo se na místo svést NEDÁ.
+
+**Hranice:** n = 1 na buňku, 1 hlas soudce · 4 runy, 3 místa · EN · pisatel i soudce Claude Opus 5 · začátek čtení je
+kvůli úhlu 6 vždy *„You stand"*.

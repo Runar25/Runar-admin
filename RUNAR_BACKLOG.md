@@ -35,7 +35,8 @@
   („Nové krátké obrazy Isy").
 - [ ] ⭐ **PO RESETU — testy čekající na tokeny ownera** (KUKY 2026-09-18: *„zapiš si ten test na 24 agentů, nebudu mít
   tokeny, spustíme po resetu"*). Kontext → `RUNAR_EVAL_LOG.md` 2026-09-18 „Jádro obrazu + místo" a „Rytmus vět".
-  1. **Identita runa × místo na RIZIKOVÝCH runách (24 agentů, owner SCHVÁLIL):** Isa · Laguz · Tiwaz · Algiz × místa
+  1. ✅ HOTOVO 2026-09-19 (`RUNAR_EVAL_LOG.md` „Identita runa × místo": 10/12, oba pády na břehu; jméno osoby v testu
+     maskovat). **Identita runa × místo na RIZIKOVÝCH runách (24 agentů, owner SCHVÁLIL):** Isa · Laguz · Tiwaz · Algiz × místa
      *on the shore* · *across a black lava field* · *in fog*. Jádro = produkční obraz runy bez místa (u obrazu, který
      místem SÁM je, vzít jiný řádek téže runy). Prompt v4.26, losy pevné jako u Raidha (úhel 6, konec open2,
      `LENGTH_BUDGETS[1]`, jméno Thor uprostřed, bez čočky). 12 slepých pisatelů (*„You do not know today's date or the
@@ -54,7 +55,7 @@
   runu — věc/děj, bez místa; u mohyl stačilo škrtnout *„across the whole heath"*) a **místo** (krajina/světlo/počasí),
   které se **losuje** ze seznamu — NE volné: volné místo dalo oblíbence 3/3 (black lava field), potřetí po 2026-08-18
   a 2026-09-09. Pilot na Raidhu → `RUNAR_EVAL_LOG.md` 2026-09-18 „Jádro obrazu + místo". **Než se to staví:**
-  (a) **identita runa × místo** — slepý test na RIZIKOVÝCH runách (Isa, Laguz, Tiwaz, Algiz; 2026-09-09 (6): voda táhne
+  (a) **identita runa × místo** — ✅ pilot 2026-09-19: 10/12, pády Isa×břeh→Laguz a Algiz×břeh→Othila — slepý test na RIZIKOVÝCH runách (Isa, Laguz, Tiwaz, Algiz; 2026-09-09 (6): voda táhne
   k Laguz, nehybnost k Ise, počasí k Hagalaz), soudce bez esenční věty; co padne, jde do seznamu „kam tahle runa nesmí" ·
   (b) některé obrazy místo SAMY JSOU (horký pramen v černé skále) — ty zůstanou celé · (c) místa psát islandsky od
   začátku (§2) a se sezónou jako `RUNE_IMG_SEASONS` · (d) místo mění podstatná jména, ne pohyb čtení (začátek i esence

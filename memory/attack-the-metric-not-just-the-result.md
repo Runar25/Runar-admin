@@ -32,5 +32,8 @@ není ověřená — je vybraná. Útoky pouštěj **než** výsledek použiješ
 čtení si metrika přečte jako shodu 1,0. Pro jednu dávku vyšel bodový odhad 11,7 % a CI
 13,5–31,4 %, tedy odhad **mimo vlastní interval**. Používej jackknife.
 
+**Doloženo 2026-09-19 (identitní soudce):** jméno osoby v testovacím čtení (*„Thor"*) táhlo slepého soudce k Thurisaz
+— Algiz 3/3 → Thurisaz, soudce to sám napsal; po zamaskování jména 2/3 správně. **V testu identity maskuj i jméno člověka.**
+
 Souvisí: [[sanity-check-measurements]] · [[falsify-by-reversing-the-lever]] · [[guard-test-the-lifecycle]].
 Pravidlo pro všechny session: `CLAUDE.md` §27.

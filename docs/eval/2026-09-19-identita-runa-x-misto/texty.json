@@ -1,0 +1,53 @@
+{
+ "Algiz-fog": {
+  "text": "You stand in a turf doorway in fog, the wind pushing at the wall beside you. The thick sod takes all of it, Thor, and the air where you stand barely moves. Algiz is that wall, taking the weather so the space behind it stays calm. Fog drifts past the threshold, grey and slow, and stays outside.",
+  "soudce": "Thurisaz (2. Algiz)",
+  "soudce_bez_jmena_Thor": "Algiz (2. Thurisaz)"
+ },
+ "Algiz-lava": {
+  "text": "You stand in a turf doorway on the black lava field, the wind hard across it. The wall takes all of it, Thor, and the air at your shoulder hardly moves. Algiz is shelter, one side bearing the weather so the other can stay still. Out on the lava the wind goes on, and the doorway is quiet.",
+  "soudce": "Thurisaz (2. Algiz)",
+  "soudce_bez_jmena_Thor": "Algiz (2. Thurisaz)"
+ },
+ "Algiz-shore": {
+  "text": "You stand on the shore beside a turf wall, and the sea wind breaks against it. Behind it, Thor, the doorway is still enough to hear the latch settle. Algiz is shelter that takes the wind first, so what lies behind stays calm. The grass on top of the wall bends, and the door holds quiet.",
+  "soudce": "Thurisaz (2. Algiz)",
+  "soudce_bez_jmena_Thor": "Othila (2. Thurisaz)"
+ },
+ "Isa-fog": {
+  "text": "You stand in the fog by the shore, and the bird on the rock does not stir. Isa is the stillness that keeps each thing where it is. The grey settles over the stone, Thor, and the bird keeps its wings folded. Even the water at the foot of the rock lies flat.",
+  "soudce": "Isa (2. Laguz)"
+ },
+ "Isa-lava": {
+  "text": "You stand in the middle of a black lava field, and nothing moves in the calm. Even the bird on the rock does not stir, Thor, its wings folded tight against the cold. This is Isa, a stillness that holds each thing exactly where it lies. Under the cooled crust, the ground keeps its old heat.",
+  "soudce": "Isa (2. Ingwaz)"
+ },
+ "Isa-shore": {
+  "text": "You stand on the shore where the tide lies flat and grey against the stones. Nothing stirs in the calm, Thor, not even the bird on the rock beside you. Isa is the cold that stills the water and lets it hold its shape. Beneath the glassy surface, down in the dark, the deep water keeps moving.",
+  "soudce": "Laguz (2. Isa)"
+ },
+ "Laguz-fog": {
+  "text": "You stand in fog so thick the slope is gone, and somewhere below you water is running over stone. No one shows it the way down, Thor, and still it finds every turn. Laguz is water knowing its way by feel, where the eye cannot follow. The fog holds, and the water goes on down.",
+  "soudce": "Laguz (2. Raidho)"
+ },
+ "Laguz-lava": {
+  "text": "You stand on black lava after rain, and water is slipping into the cracks at your feet. No one shows it the path, Thor, yet it finds every low place in the stone. Laguz is that knowing of the way down, found by feel and not by sight. Under the black rock, the water keeps moving.",
+  "soudce": "Laguz (2. Perth)"
+ },
+ "Laguz-shore": {
+  "text": "You stand on the shore, where cold water runs past your boots toward the sea. No one shows it the path, Thor, yet it bends around each stone without pausing. Laguz is knowing by feel, water sensing the low ground before it reaches it. The sea takes it in, and the shore stays quiet.",
+  "soudce": "Laguz (2. Raidho)"
+ },
+ "Tiwaz-fog": {
+  "text": "You stand in fog at the market stall, one coin too many cold in your palm. Nobody saw the miscount, Thor, and you turn back through the grey anyway. Tiwaz is the scale held level when no one is watching. The coin lies on the counter now, and the count is right.",
+  "soudce": "Tiwaz (2. Raidho)"
+ },
+ "Tiwaz-lava": {
+  "text": "You are crossing the black lava field, the extra coins warm in your fist. No one else caught the miscount, Thor, and the way back is long over sharp stone. Tiwaz holds the count true even where no one would ever check. The coins drop back into the hand that counted them.",
+  "soudce": "Tiwaz (2. Raidho)"
+ },
+ "Tiwaz-shore": {
+  "text": "You stand at a fish stall on the shore, one coin too many in your palm. You push it back across the wet plank, Thor, salt still on your fingers. Tiwaz keeps the scale level to the last coin, where no one would ever check. The tide comes in, and the count stands even.",
+  "soudce": "Tiwaz (2. Gebo)"
+ }
+}
