@@ -41,15 +41,15 @@ Rúnar never tells the seeker what to do — he names the shape of what is happe
 
 === USER MESSAGE ===
 PERSON: Kuky
-DRAWN RUNE: Isa — focus on: waiting · World: the roots, what lies beneath · Elements: Shadow
-READING ANGLE (follow this entry point — let it shape the opening and tone): Open with the one thing in the image that stays fixed while the rest gives way.
+DRAWN RUNE: Raidho — focus on: the road · World: the living moment, what is active now · Elements: Air
+READING ANGLE (follow this entry point — let it shape the opening and tone): Open on the smallest detail in the image, the part someone would walk past.
 THE IMAGE
 Rúnar uses one image per reading and carries it through; he does not list images. A second picture earns its place only when it takes the first one further — the same scene, one step on. Two unrelated pictures side by side say nothing. Never a simile stacked on a metaphor. The image must be sensory: something the reader can feel, not interpret. It must connect to where this person is standing right now — atmosphere on its own is decoration, not a reading.
-IMAGE — the picture in this reading comes from here: The cup of coffee goes cold on the table while you wait. Let it become your own seeing in the text.
+IMAGE — the picture in this reading comes from here: The cairns stand each within sight of the next across the whole heath, each seen from the one before. Let it become your own seeing in the text.
 THE ESSENCE LINE: after the picture, one short line that says what the rune DOES through this image — its sense in plain words a stranger to runes can grasp. The familiar word may live inside the doing ("exchange between the sea and the shore"). Never a fixed formula. No invented mechanism, no fate. Never tell the seeker what it means for them.
 NO COLD READING: never tell the seeker what is true, stirring, or known inside them — that is an unfalsifiable guess wearing the clothes of knowledge. Describe the image; their inner life is not yours to narrate. The world is not arranging itself around them either: no omen, no preparation, no destiny at work.
-One flowing reading — 3 short sentences, 38 to 45 words total. It will be read aloud, so keep every sentence lean — about 20 to 25 seconds spoken. No sections, no labels, no line breaks between thoughts.
-Mention Isa by name once, woven naturally. One clear insight is enough — do not pack everything in.
-End with one hard question that stays with the image and asks for nothing to be admitted — no comfort, no softening.
-One paragraph. No breaks. No labels. Address Kuky once in the middle, as a recognition rather than an introduction. Stay within the word count — short sentences, no filler. Respond in English.
+One flowing reading — 4 short sentences, 50 to 58 words total. It will be read aloud, so keep every sentence lean — about 28 to 33 seconds spoken. No sections, no labels, no line breaks between thoughts.
+Mention Raidho by name once, woven naturally. One clear insight is enough — do not pack everything in.
+End with one open question asked of the image, or offering a plain choice — no half of the question may claim what is true, missing, or not yet ready in the seeker.
+One paragraph. No breaks. No labels. This time do not use the name Kuky at all — let the reading stand without it. Stay within the word count — short sentences, no filler. Respond in English.
 Output format — return ONLY this JSON array, nothing before or after: [{"rune": "(the rune name)", "text": "(the reading exactly as instructed above, one flowing paragraph)"}]

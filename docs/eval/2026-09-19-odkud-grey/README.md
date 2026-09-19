@@ -8,5 +8,8 @@ Tady jsou jen podklady.
 - `W.txt` — K2 + do bloku THE IMAGE vrácená věta o počasí, kterou KROK 2 odložil (1 řádek).
 - `texty.json` — 6 čtení (S, W po třech). Kontrola = K2 + R + C z 2026-09-18.
 - `ISA-df160bfb-rekonstrukce.txt` — plný prompt ownerova produkčního Isa (2026-09-19, v4.27) z `prompt_draws`
-  (úhel 3, obraz kafe, aspekt waiting, konec heavy1, jméno uprostřed, čočka Gebo); délka odvozena (3 věty).
+  (úhel 3, obraz kafe, aspekt waiting, konec heavy1, jméno uprostřed, **BEZ čočky** — owner ji má vypnutou; první verze
+  souboru ji omylem obsahovala, opraveno týž den); délka odvozena (3 věty).
+- `RAIDHO-de1e3b16-rekonstrukce.txt` — plný prompt ownerova Raidha (úhel 1, obraz mohyl, konec open0, bez jména, bez
+  čočky, `LENGTH_BUDGETS[1]` — čtení má 71 slov, rozpočet 50–58).
 - `skripty/` — stavba ramen, rekonstrukce Isa, počty šedé v produkci (čtou export z DB, který v repu NENÍ).

@@ -1,0 +1,50 @@
+{
+ "Algiz-fog": {
+  "text": "You stand in the fog behind an old stone wall, and the wind breaks on its far side. Algiz is that wall, taking the wind so the ground behind it stays still. The fog hides the fields, Thor, but the stones beside you are close and solid. The wind keeps coming, and the wall keeps holding.",
+  "soudce": "Algiz (2. Othila)"
+ },
+ "Algiz-lava": {
+  "text": "You stand in the lee of a stone wall across the black lava field, and the wind hits the far side. On this side, Thor, the air is still and your coat hangs slack. Algiz is the wall taking the wind, so something can stand behind it. Moss grows thickest here, green against the black stone.",
+  "soudce": "Algiz (2. Isa)"
+ },
+ "Algiz-shore": {
+  "text": "You stand in the lee of a stone wall on the shore, and the sea wind breaks on its far side. Algiz is this: shelter raised against the open weather. The wall does not stop the wind, Thor, it only turns it aside. Behind it the grass stands still, and the gulls rest low.",
+  "soudce": "Algiz (2. Thurisaz)"
+ },
+ "Isa-fog": {
+  "text": "You stand at the marsh edge in fog, and a heron a few steps off holds still on one leg. Isa is that stillness, a living thing kept whole by staying where it is. The fog hides shore and sky alike, Thor, and the bird does not turn its head. Water beads on its feathers, and it stays.",
+  "soudce": "Isa (2. Laguz)"
+ },
+ "Isa-lava": {
+  "text": "You stand at the edge of a black lava field, and out on the rock one bird holds perfectly still. Isa gathers motion into a single point and keeps it there. Thor, the wind crosses the lava around it, and the bird gives nothing back. Its stillness is not waiting, it is the whole of what it does.",
+  "soudce": "Isa (2. Eihwaz)"
+ },
+ "Isa-shore": {
+  "text": "You stand on the cold shore, where a heron holds still at the edge of the water. This is Isa, a stillness that holds its place while the water moves around it. Thor, the waves run up over its feet and slide away, and the heron does not shift. It stays exactly where it stands.",
+  "soudce": "Isa (2. Eihwaz)"
+ },
+ "Laguz-fog": {
+  "text": "You stand at the edge of a stream in fog, and you cannot see where it runs. The water keeps moving through it, finding the low ground by feel. Laguz is that knowing, Thor, the way found before it is seen. The stream goes on under the fog, sure of its bed.",
+  "soudce": "Laguz (2. Perth)"
+ },
+ "Laguz-lava": {
+  "text": "You stand on black lava, and water moves beneath you through cracks you cannot see. Here and there it rises into a clear pool, then sinks away. That is Laguz, Thor, a knowing that finds its course by feel rather than by sight. The lava above stays hard and black, and the water keeps its slow way beneath.",
+  "soudce": "Laguz (2. Perth)"
+ },
+ "Laguz-shore": {
+  "text": "You stand on the shore, and the ebbing water slips back through sand and stone. It forces nothing, Thor, it finds the low places one by one. This is Laguz, water finding its way by the shape of the ground. Behind it, the wet sand keeps the thin lines where it passed.",
+  "soudce": "Laguz (2. Raidho)"
+ },
+ "Tiwaz-fog": {
+  "text": "You stand at a stall in the fog, and the change in your palm is one coin too many. Thor, you hold it out toward a hand you can barely see. Tiwaz is fairness kept even where no one would ever notice. The coin leaves your fingers, and the fog closes over it.",
+  "soudce": "Gebo (2. Fehu)"
+ },
+ "Tiwaz-lava": {
+  "text": "You walk across the black lava field with the wrong change in your palm, back toward the one who counted it. Tiwaz is that walk, Thor, a scale set level again because it had tipped. The moss gives under each step and the farm roof is still small ahead. The coins are light, and the field is long.",
+  "soudce": "Raidho (2. Tiwaz)"
+ },
+ "Tiwaz-shore": {
+  "text": "You stand on the shore by the fish stall, one coin too many still damp in your palm. This is Tiwaz, the count set right even where no one would know. Thor, you hold it out, and the seller's cold hand closes around it. Nothing is owed on either side of the stall now.",
+  "soudce": "Gebo (2. Fehu)"
+ }
+}

@@ -3973,9 +3973,10 @@ Texty S a W jsou bez atmosféry úplně (*„the next one rises in plain sight"*
 Rekonstrukce z `prompt_draws` (5/5 losů sedí; délka odvozena ze 3 vět): obraz *„The cup of coffee goes cold on the table
 while you wait"* · aspekt `waiting` · úhel 3 *„Open with the one thing in the image that stays fixed while the rest gives way"*
 · konec `ENDING_HEAVY[1]` *„End with one hard question that stays with the image and asks for nothing to be admitted"* ·
-**čočka životní runy Gebo** *„let it shape ONLY the last sentence or question"*. Závěrečná otázka *„What are you waiting to
-be given before you touch it?"* = los konce (tvrdá otázka v obraze) + **Gebo (dar → „to be given")**. ⚠️ Testy od
-2026-09-15 jedou BEZ čočky (owner) — ta nejlepší část tohohle čtení přitom přišla z ní.
+**BEZ čočky** — ⚠️ OPRAVENO 2026-09-19: původně tu stálo, že otázku tvaroval Gebo; rekonstrukce ale čočku zapnula omylem.
+Owner má `user_profiles.life_rune_in_readings = false` a `_lifeLens()` pak čočku do promptu nedá (sloupec `readings.life_rune`
+nese jen, jakou runu člověk MÁ, ne jestli čočka běžela). Závěrečná otázka *„What are you waiting to be given before you touch
+it?"* = los konce (tvrdá otázka v obraze) + obraz čekání + aspekt `waiting`; Gebo v tom není.
 **Ask** (*„explain. what it could be?"*) šel větví *„If the seeker … asks for it plainly: answer in plain words … in the terms
 of their own question"* a dal: (a) runu prostě (*„Isa is ice — the thing held still"*), (b) **dvě konkrétní možnosti**, na
 co člověk čeká (*svolení zvenčí — „some word or nod … that says now, go ahead"* / *správná chvíle, která má přijít sama*),
@@ -3989,8 +3990,66 @@ jenom tím, že mám potřebu se zeptat, na co tím myslíš, a Rúnar v ASK to 
 (1) **Ask má jen tier premium** (proxy: `mode === "ask" && userTier !== "premium"` → 403), jednou na čtení — Rune Seeker a
 standard se nezeptají; čtení pro ně musí obstát samo. (2) Otázka ze **zvědavosti** ≠ otázka z **nepochopení**: Raidho
 (`de1e3b16`) skončilo *„Do you fix on the cairn under your hand, or the shape rising faint beyond it?"* a owner napsal *„i
-dont understand what you mean"*. (3) Dobrá otázka u Isa přišla z čočky, kterou testy vypínají. → `RUNAR_BACKLOG.md`
+dont understand what you mean"*. (3) ~~Dobrá otázka u Isa přišla z čočky~~ — OPRAVENO: čočka byla vypnutá (viz §4). → `RUNAR_BACKLOG.md`
 „KONCE ČTENÍ".
 
 **Hranice:** test S/W jen Raidho, jeden los, n = 3 · produkční počty z ownerova účtu (EN, 113 čtení).
 Podklady → `docs/eval/2026-09-19-odkud-grey/`.
+
+## 2026-09-19 (2) — Krátká jádra × místo bez „sensory" · kde se volí jiné slovo · Raidho „under your hand" · oprava čočky
+
+**Proč (owner):** *„grey místo předmětu — lepší, aby opakoval slovo. Kde má přikázané, aby volil jiné slovo? · pokud není
+sensory důležité, tak odstranit; pokud má své místo, tak přidat brzdu · u Raidha je problém v obrazu, úhlu, aspektu — nutíme
+ho do použití něčeho, co k sobě neladí; chtěl jsem vědět, co nám to dělá, a najít kontrolu, co by na to ukazovala · čočku
+mám vypnutou, neměla ovlivnit čtení · test krátkých obrazů bez čočky."*
+
+**1. Oprava mé chyby:** čočka u Isa `df160bfb` NEběžela (profil `life_rune_in_readings = false`, kód ji respektuje) — opraveno
+v záznamu výš a v `docs/eval/2026-09-19-odkud-grey/`. Příčina chyby: `prompt_draws` nezaznamená, jestli čočka běžela, a já
+ji do rekonstrukce dal podle sloupce `life_rune`. → handoff CODE-tune: stav čočky do `prompt_draws`.
+
+**2. Kde je přikázané volit jiné slovo:** v promptu v4.27 **nikde** (grep: jediné *„Never a fixed formula"*, a to v esenčním
+řádku o formuli). *„Rúnar never repeats himself"* a *„Choose different words for the essence each time"* odebral KROK 1.
+Záměna mlhy za *„the grey"* přitom běžela i po KROKU 1 — a **zmizela s větou „sensory"** (níž, bod 4).
+
+**3. „sensory" nemá vlastní místo → odebrat.** Přišla 2026-08-14 (`e3a3c40`) z hlasového profilu do bloku THE IMAGE, aby
+přežila výměnu nálady; její úkol (obraz se cítí, nevykládá) ale v témže commitu dostal i hlas: *„Avoid abstract,
+mystical-sounding lines… if it cannot be felt, it does not belong here"* = duplikát (§20). Její jediný naměřený účinek
+dnes je barva a počasí (2026-09-19 „Odkud grey": 8/9 → 0/3). Podle ownerova pravidla ODEBRAT, brzda o počasí pak netřeba.
+
+**4. Test krátkých jader bez čočky** (tytéž 4 runy × 3 místa jako záznam „Identita runa × místo"; základ = v4.27 BEZ věty
+„sensory"; jádro 3–5 slov zkrácené z včerejšího; soudce bez vět se jménem runy a se zamaskovaným jménem osoby):
+| runa · jádro | břeh | láva | mlha | včera (dlouhé jádro) |
+|---|---|---|---|---|
+| Isa · *a bird holding still* | ✓ | ✓ | ✓ | 2/3 (břeh → Laguz) |
+| Laguz · *water finding its way* | ✓ | ✓ | ✓ | 3/3 |
+| Tiwaz · *giving back the wrong change* | ✗ Gebo | ✗ Raidho | ✗ Gebo | 3/3 |
+| Algiz · *a wall taking the wind* | ✓ | ✓ | ✓ | 2/3 (maskováno) |
+**9/12** (včera 10/12). ⚠️ Proti včerejšku se liší DVĚMA věcmi (krátké jádro + bez „sensory").
+- **Tiwaz 0/3 = chyba mého zkrácení:** z *„You give back the change that was counted wrong in your favour"* jsem vyhodil
+  *„in your favour"* — cenu, kterou nese Tiwaz. Nezasloužený bod přešel do esenční věty (soudce ji nevidí): *„the count set
+  right even where no one would know"*; obraz sám = vracení mince = výměna → Gebo. Krátký obraz musí nést tu část, která
+  runu dělá runou (sedí na ownerovu podmínku v `RUNAR_BACKLOG.md` „KRÁTKÉ OBRAZY": obraz stvořený pro tu runu).
+- **Isa na břehu teď drží** (volavka stojí, voda jen kolem) — krátké jádro *„a bird holding still"* nepustilo vodu do popředí.
+- **Šedá 4/12 → 0/12; mlha pojmenovaná „fog" pokaždé** (4 čtení s mlhou: fog 2×, grey 0×; včera Isa a Tiwaz mlhu
+  podruhé nahradily šedou). Vítr 3/12 → 4/12 (3× z Algizova jádra *„taking the wind"*).
+
+**5. Raidho `de1e3b16` — odkud „under your hand"** (rekonstrukce 5/5 losů; prompt `docs/eval/2026-09-19-odkud-grey/`):
+*„See the small heap of stones at your feet… close enough to touch"* ← úhel [1] *„Open on the smallest detail in the image"*
+(+ „sensory") · *„the next one… and no further"*, *„one marker leading the eye to the one after"* ← obraz + esence · *„Do
+you fix on the cairn under your hand, or the shape rising faint beyond it?"* ← konec `ENDING_OPEN[0]` *„…or offering a plain
+choice"*. **Hybrid:** konec žádá VOLBU a model postaví proti sobě dvě věci, které má — blízkou mohylu (z úhlu) a vzdálenou (z
+obrazu). Raidho ale nese NÁVAZNOST (jedna vede k druhé), takže volba „blízká NEBO vzdálená" jde proti runě. Owner tušil ruku;
+ruka je jen nosič, vadu dělá tvar konce × smysl obrazu. Čtení navíc 71 slov proti rozpočtu 50–58.
+**Kontrola, co by na to ukazovala — podle losu konce NEJDE:** z 57 Asků ownera je 17 žádostí o vysvětlení (*don't
+understand · what do you mean · explain*) a každý tvar konce má podobný podíl (heavy0 3/9 · heavy1 2/7 · open0 5/18 ·
+open1 2/8 · open2 5/15). Nepochopení nedělá jeden konec, ale kombinace. ⚠️ Regex bere i *explain*, což bývá prohloubení,
+ne nepochopení. Kandidát kontroly: slepý soudce *„parafrázuj, co ti poslední věta říká"* nad hotovým čtením — neověřeno.
+
+**6. GPT k Asku** (*„You may be waiting for a sign… Or perhaps the pause means something else to you"* / *„Could the waiting
+be connected to a wish for reassurance, permission, or a clearer moment to act?"*): tvar MOŽNOSTI řeší střet s NO COLD
+READING a obraz nechá stát — to je ownerův tvar z 2026-09-14 (*„může to být…"*). Ocas *„Or perhaps… something else to you"*
+je disclaimer (`RUNAR_DESIGN.md`: disclaimer neinokuluje) a oslabí odpověď; druhá varianta je dotazník abstraktních slov
+(*reassurance*) = rejstřík terapeuta/self-helpu, obraz zmizí. Patří k D2 (pravidla Asku), rozhodne owner.
+
+**Hranice:** n = 1 na buňku, 1 hlas soudce · krátká jádra psal CODE-read (jen pro test, obsah vlastní owner/Cowork) · EN.
+Podklady → `docs/eval/2026-09-19-kratka-jadra/`.

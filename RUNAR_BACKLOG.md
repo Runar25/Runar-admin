@@ -50,7 +50,8 @@
   3. ✅ HOTOVO 2026-09-18 — NE, „You stand" dělá úhel 6 (6/11 proti 0/47); po KROKU 2 hlídat mimo úhel 6 v produkci.
      **„where this person is standing right now" (`_spine`) → „You stand"?** Nejdřív levně: produkční čtení ownera, podíl
      začátků *You stand* podle úhlu (`prompt_draws.angle`); je-li vysoký i mimo úhel 6, pilot bez té věty (3 čtení).
-- [ ] ⭐ **ŠEDÁ A VÍTR = pokyn „The image must be sensory" bez brzdy** (změřeno 2026-09-19, `RUNAR_EVAL_LOG.md` „Odkud
+- [ ] ⭐ **ŠEDÁ A VÍTR = pokyn „The image must be sensory" bez brzdy** → ROZHODNUTO 2026-09-19 (ownerovo pravidlo + měření):
+  věta je duplikát hlasu *„if it cannot be felt…"* → ODEBRAT (handoff CODE-tune); s ní zmizela i mlha → *„the grey"*. Původně: (změřeno 2026-09-19, `RUNAR_EVAL_LOG.md` „Odkud
   grey"): po KROKU 2 grey/wind 8/9; bez té věty 0/3, s vrácenou větou o počasí 0/3. Owner rozhodne mezi S (věta pryč) a W
   (brzda zpět — bod 7 CODE-tune), texty obou ramen jsou holé. Zvlášť: **mlha → „the grey" jako podstatné jméno** (model
   nechce opakovat „fog") — týká se obrazů a míst s mlhou; test „jmenuj věc pokaždé jejím jménem" zatím neběžel.
@@ -78,9 +79,9 @@
   it means for them"* · `NO COLD READING` *„never tell the seeker what is true… inside them"*. Nový konec s ně narazí; rozhodnout,
   co z nich platí pro poslední větu.
   ⭐ **Směr ownera 2026-09-19:** *„závěr má být to zakončení, které v člověku vyvolá otázku — a Rúnar ji v ASK rozebere."*
-  Doklad: Isa `df160bfb` (tvrdá otázka v obraze + čočka Gebo → Ask dal dvě konkrétní možnosti). **Než se to zostří:** Ask má
+  Doklad: Isa `df160bfb` (tvrdá otázka v obraze, čočka VYPNUTÁ → Ask dal dvě konkrétní možnosti). **Než se to zostří:** Ask má
   jen premium (jednou na čtení) — pro ostatní tiery musí konec obstát sám · otázka ze zvědavosti ≠ z nepochopení (Raidho
-  `de1e3b16`: *„i dont understand"*) · ta dobrá otázka přišla z čočky, kterou testy vypínají. → `RUNAR_EVAL_LOG.md` 2026-09-19
+  `de1e3b16`: *„i dont understand"* — konec „plain choice" postavil proti sobě dvě věci, které Raidho spojuje). → `RUNAR_EVAL_LOG.md` 2026-09-19
   „Odkud grey" §4–5.
 - [ ] **MOŽNOST: STŘEDOVÁ VĚTA — jedna věta na začátku systémového promptu, kdo Rúnar je a co dělá** (KUKY 2026-09-18:
   *„zapiš středovou jako potenciální možnost"*; NErozhodnuto). Kandidát Cowork-tune: *„Rúnar není ten, kdo ví, kde stojíš —
