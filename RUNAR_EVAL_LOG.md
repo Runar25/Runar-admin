@@ -4080,6 +4080,10 @@ ASKN (+ *„offer one or two concrete possibilities … spoken as something that
 — totéž 3/3, navíc ocas *„Either may be so, or neither"* ×2. Pojistky na konci mají OBĚ ramena (*„I cannot tell you
 which"*, *„only you can name"* / *„Which fits is yours to say"*). Produkce (1/1) tvrdila *„What you wait for is a sign that it
 is allowed"* a pojistku neměla. ⇒ testovací pisatel dnešní pravidla už čte jako „možnosti"; věta navíc u něj nic nepřidá.
+**Produkce (78 Asků ownera):** *may / might / perhaps / maybe* **0/78**, *could* 3/78 (ani jednou jako nabídka možnosti),
+pojistka typu *„only you can… / I cannot tell"* **0/78**; zjevné tvrzení o nitru (hrubý regex) 2/78 (*„You are holding keys
+to a house that is no longer yours"* · Isa výš). ⇒ produkční Ask mluví oznamovacími větami; testovací pisatel dělá možnosti
++ pojistku 6/6. Věta o možnostech by tedy v PRODUKCI změnu udělat mohla — ověřit to jde jen produkčním modelem.
 
 ### 4. ⭐ Nález: testovací pisatel nereprodukuje produkční vady
 Oba podezřelé jsou vady **produkčního** výstupu (`claude-opus-4-8`) a testovací pisatel (subagent Claude Opus 5) je na
