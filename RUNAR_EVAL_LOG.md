@@ -4199,3 +4199,24 @@ Podklady → `docs/eval/2026-09-19-produkcni-model/sezona/`.
 true inside them; not a question."* (testováno, „You stand" 0/6) · IS *„Endaðu á staðfastri línu úr myndinni — ekki hvað er
 satt innra með honum; ekki spurningu."* — grammar 0 E001 (W001 na *Endaðu* = falešný poplach, má ho i dnešní znění);
 korpus *úr myndinni* 5698 · *línu úr* 296.
+
+**Jména období (KUKY 2026-09-19: *„late summer"*).** Dnešní řádek bere glosu z `BIRTH_MONTHS` (lore k měsíci narození) —
+odtud *„the grain-cutting month of old"*. Návrh prostých štítků podle staroislandského kalendáře (13 klíčů
+`icelandicMonthKey`); islandská slova vybrána tak, aby měla **doložené spojení „er + slovo"** v Risamálheild:
+| klíč | EN | IS (*„þar sem Rúnar stendur er …"*) | korpus „er X" |
+|---|---|---|---|
+| harpa | spring | vor | 914 |
+| skerpla | summer | sumar | 1243 |
+| solmanudur | midsummer | miðsumar | 8 |
+| aukanaetur · heyannir | high summer | hásumar | 82 |
+| **tvimanudur** | **late summer** | **síðsumar** | 9 |
+| haustmanudur | autumn | haust | 226 |
+| gormanudur | winter begins | kominn vetur | 148 |
+| ylir | winter | vetur | 667 |
+| morsugur | midwinter | skammdegi | 23 |
+| thorri | deep winter | hávetur | 82 |
+| goa | late winter | vetur | 667 |
+| einmanudur | early spring | komið vor | 247 |
+⚠️ Zamítnuto pro nulový doklad ve spojení s „er": *snemmsumar · síðhaust · síðvetur · vorbyrjun · síðla hausts ·
+snemma vetrar* (samotná slova doložená jsou, spojení ne). Duplikáty (hásumar 2×, vetur 2×) jsou záměr — řádek potřebuje
+správné období, ne jedinečné jméno pro každý měsíc.
