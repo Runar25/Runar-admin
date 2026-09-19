@@ -1,0 +1,17 @@
+{
+ "ASKN2-1": {
+  "text": "Isa is the rune of the held thing, the water gone to ice, waiting. What you wait to be given could be a sign that touching it is allowed, some word or gesture from another that says now, go ahead. It could be certainty, the wish to know it is worth drinking before you lift the cup. Isa does not name which. It only shows the hand held back, and the coffee cooling while the permission you look for stays outside your own reach.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 134
+ },
+ "ASKN2-2": {
+  "text": "Isa is the rune of waiting, Kuky, and what you wait for often wears the face of permission. You hold back until something outside you makes the moving safe — a sign the moment is right, a word from someone else that you may begin.\n\nIt could be the assurance that you won't be wrong to want it. It could be someone naming it first, so the choice is not yours alone to carry. The cup sits there, and no hand but yours will lift it.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 135
+ },
+ "ASKN2-3": {
+  "text": "Isa is waiting itself, Kuky, the pause held past its use. What you wait to be given is a sign that it's alright to move — permission, some proof it's worth it, a certainty that the touching won't be wasted.\n\nIt could be a word from someone that clears you to begin. It could be the sense that the moment is finally right. It could be a guarantee the cup is still warm. The rune only holds that the waiting is there, not what ends it.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 139
+ }
+}

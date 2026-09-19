@@ -4096,3 +4096,47 @@ nepiš přes API"). → `RUNAR_BACKLOG.md` „HON NA HYBRIDY".
 **Rozpor s ownerovou poznámkou „Tiwaz a láva nejde do sebe, ani mlha":** sedí na existující osu `RUNAR_DESIGN.md` „Image pool —
 register D/E/P" a „Typ obrazu": Tiwaz *„giving back the change"* je SITUAČNÍ + D (domácí) — do živelného místa nepatří.
 Podklady → `docs/eval/2026-09-19-podezreli/`.
+
+## 2026-09-19 (4) — Na PRODUKČNÍM modelu: „plain choice" potvrzen · věta o možnostech v Asku · kontrola srozumitelnosti NEFUNGUJE · Raidho jádra × místa
+
+**Proč:** owner 2026-09-19 *„1. ano 2. ano 3. ano, začni s Raidhem"* — (1) API s produkčním modelem pro testy podezřelých
+(testovací pisatel je nereprodukoval, záznam (3)), (2) ověřit kontrolu srozumitelnosti, (3) Raidho. Generátor volá jako
+claude-proxy (`claude-opus-4-8`, max_tokens 700 / Ask 320, system s cache, bez teploty). Podklady → `docs/eval/2026-09-19-produkcni-model/`.
+
+### 1. Raidho `de1e3b16`: podezřelý POTVRZEN — konec „…or offering a plain choice" dělá volbu blízké × vzdálené
+RA (produkční prompt) — volba „A, nebo B" **3/3** (*„Do you fix your eye on the stone underfoot, or on the shape waiting further
+out?"* · *„Do you look for the far cairn now, or the one you can already see?"* · *„Do you look to the cairn just ahead, or
+squint toward the ones the mist still keeps?"*); s produkčním čtením **4/4**. RB (bez té půlvěty) **0/3** (*„Which stone are you
+standing beside now?"* · *„…and which one holds your eye ahead?"* · *„…and what does it show you of the one ahead?"*). Fisher
+4/4 × 0/3 p ≈ 0,03. Hranice: jeden obraz (kontinuita); u obrazu, kde volba DÁVÁ smysl, to vadou být nemusí (Raidho jádra níž,
+*„will you look for the one beyond it, or rest a while first?"*).
+
+### 2. Ask nad Isa `df160bfb` (ownerova otázka *„explain. what it could be?"*), 3 + 3 + 3
+| rameno | tvrzení o tobě („What you wait for is…", „You hold the cup and wait to be told") | možnosti („It could be…") | pojistka na konci |
+|---|---|---|---|
+| ASK0 dnešní pravidla | 3/3 (vč. *„it points at nothing that is coming"* = předpověď) | 1–2/3 (hraniční) | 0/3 |
+| ASKN + *„offer one or two concrete possibilities … spoken as something that may be so, and leave the choice with them"* | 1/3 | 3/3 | **2/3** (*„only you can say"*) |
+| ASKN2 = ASKN bez *„and leave the choice with them"* | 2/3 (věty vedle možností) | 3/3 | **0/3** |
+Pojistku vyráběl konec mé věty (*„leave the choice with them"* → *„only you can say"*) — tatáž třída jako vzor v promptu
+(`memory/prompt-directive-makes-model-copy`). ASKN2 = možnosti bez pojistky; oznamovací věty o člověku úplně nezmizí.
+Klasifikace tvrzení je ruční (texty v podkladech).
+
+### 3. ⛔ Kontrola srozumitelnosti v této podobě NEFUNGUJE (§27 — nástroj napřed)
+Slepý soudce (*„řekni vlastními slovy, co čtení a poslední věta říkají; CLEAR / PARTLY / UNCLEAR pro člověka, který o runách
+nic neví"*) nad 12 produkčními čteními ownera: **pochválená CLEAR 2/6 · matoucí CLEAR 2/6** — nerozliší je. `de1e3b16` dostal
+CLEAR (*„asks whether you focus on what is right in front of you or on the faint next step"*): ownerův zmatek nebyl
+porozumění větě, ale SMYSL otázky pro runu. ⇒ „není to srozumitelnost". Vedlejší signál: nejtěžší místo = závěrečná věta
+tvarovaná čočkou Gebo 4/12 (*„What one hand gives here… still waits in the other"*, *„What ripens slowly ripens for others"*
+…) — tehdy měl owner čočku zapnutou. Sada ručně podle ownerových reakcí (regex „jasné" chytal i zmatek bez značek, např.
+*„road or roof?"*); ⚠️ matoucí čtení jsou v průměru o ~8 slov delší.
+
+### 4. Raidho: krátká jádra × místa pastevecké skupiny (produkce v4.28, ostatní losy jako v produkci), 6 čtení
+Jádra: *a sheep-track winding of its own accord* · *cairns, each in sight of the next* · *a road vanishing round the next bend*;
+místa: okraj domácí louky · horský průsmyk · vřesoviště pod horami · svah nad statkem · dno údolí mezi statky.
+- **Scény se liší** (suť v průsmyku, okraj louky, ruty cesty na svahu); šedá 0/6; počasí 1/6 (*mist*).
+- **„You stand" na KONCI dělá los konce `ENDING_OPEN[1]`** *„name where the seeker stands in the image"* — 3/3 (*„You stand at
+  the turn…"*, *„You stand where the way bends…"*, *„You stand on the valley floor…"*). Na začátku ho dělá úhel 6
+  (záznam „KROK 2 a rytmus"). Dva vstupy, táž věta.
+- Esence **„Raidho is …" 6/6** na produkčním modelu (owner: *„nezakazovat, jen ne pořád"*).
+- Konec „plain choice" u vřesoviště: *„will you look for the one beyond it, or rest a while first?"* — volba, která s runou
+  nejde proti sobě (ne blízká × vzdálená).

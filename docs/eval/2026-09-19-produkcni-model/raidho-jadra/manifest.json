@@ -1,0 +1,116 @@
+[
+ {
+  "id": "track-homefield",
+  "jadro": "a sheep-track winding of its own accord",
+  "misto": "the edge of the home-field",
+  "aspekt": "natural rhythm",
+  "draws": {
+   "v": 1,
+   "angle": 5,
+   "image": "a sheep-track winding of its own accord. Where: the edge of the home-field",
+   "lens": 0,
+   "ending": "open2",
+   "kws": "natural rhythm",
+   "name": 3
+  },
+  "uhel": "Open at the edge of the image, where one thing turns into another.",
+  "konec": "End on a quiet line that rests — not a question this time.",
+  "delka": "3 short sentences, 38 to 45 words total",
+  "jmeno": "This time do not use the name Kuky at all — let the reading stand without it."
+ },
+ {
+  "id": "track-pass",
+  "jadro": "a sheep-track winding of its own accord",
+  "misto": "a mountain pass",
+  "aspekt": "natural rhythm",
+  "draws": {
+   "v": 1,
+   "angle": 5,
+   "image": "a sheep-track winding of its own accord. Where: a mountain pass",
+   "lens": 0,
+   "ending": "open1",
+   "kws": "natural rhythm",
+   "name": 3
+  },
+  "uhel": "Open at the edge of the image, where one thing turns into another.",
+  "konec": "End on a plain, steady line — name where the seeker stands in the image, not what is true inside them; not a question.",
+  "delka": "3 short sentences, 38 to 45 words total",
+  "jmeno": "This time do not use the name Kuky at all — let the reading stand without it."
+ },
+ {
+  "id": "cairns-pass",
+  "jadro": "cairns, each in sight of the next",
+  "misto": "a mountain pass",
+  "aspekt": "the road",
+  "draws": {
+   "v": 1,
+   "angle": 4,
+   "image": "cairns, each in sight of the next. Where: a mountain pass",
+   "lens": 0,
+   "ending": "open2",
+   "kws": "the road",
+   "name": 3
+  },
+  "uhel": "Open with the part of the image that is out of sight — under it, behind it, or not yet arrived.",
+  "konec": "End on a quiet line that rests — not a question this time.",
+  "delka": "3 short sentences, 38 to 45 words total",
+  "jmeno": "This time do not use the name Kuky at all — let the reading stand without it."
+ },
+ {
+  "id": "cairns-moor",
+  "jadro": "cairns, each in sight of the next",
+  "misto": "a moor below the fells",
+  "aspekt": "the road",
+  "draws": {
+   "v": 1,
+   "angle": 6,
+   "image": "cairns, each in sight of the next. Where: a moor below the fells",
+   "lens": 0,
+   "ending": "open0",
+   "kws": "the road",
+   "name": 3
+  },
+  "uhel": "Open by setting the seeker inside the image, at the spot where it is happening.",
+  "konec": "End with one open question asked of the image, or offering a plain choice — no half of the question may claim what is true, missing, or not yet ready in the seeker.",
+  "delka": "3 short sentences, 38 to 45 words total",
+  "jmeno": "This time do not use the name Kuky at all — let the reading stand without it."
+ },
+ {
+  "id": "road-hillside",
+  "jadro": "a road vanishing round the next bend",
+  "misto": "a hillside above the farm",
+  "aspekt": "movement",
+  "draws": {
+   "v": 1,
+   "angle": 0,
+   "image": "a road vanishing round the next bend. Where: a hillside above the farm",
+   "lens": 0,
+   "ending": "open1",
+   "kws": "movement",
+   "name": 1
+  },
+  "uhel": "Open with the whole image at once, then let everything fall away but one.",
+  "konec": "End on a plain, steady line — name where the seeker stands in the image, not what is true inside them; not a question.",
+  "delka": "4 short sentences, 50 to 58 words total",
+  "jmeno": "Address Kuky once in the middle, as a recognition rather than an introduction."
+ },
+ {
+  "id": "road-valley",
+  "jadro": "a road vanishing round the next bend",
+  "misto": "a valley floor between farms",
+  "aspekt": "movement",
+  "draws": {
+   "v": 1,
+   "angle": 4,
+   "image": "a road vanishing round the next bend. Where: a valley floor between farms",
+   "lens": 0,
+   "ending": "open1",
+   "kws": "movement",
+   "name": 2
+  },
+  "uhel": "Open with the part of the image that is out of sight — under it, behind it, or not yet arrived.",
+  "konec": "End on a plain, steady line — name where the seeker stands in the image, not what is true inside them; not a question.",
+  "delka": "3 short sentences, 38 to 45 words total",
+  "jmeno": "Let the name Kuky arrive late, near the close, as a quiet recognition."
+ }
+]

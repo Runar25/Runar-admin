@@ -61,9 +61,11 @@
   NAPŘED ověřit na produkčních čteních ownera (ta, na která se ptal *„nerozumím"*, proti těm, která chválil); rozliší-li je,
   pustit přes produkci všech run; (2) u označených čtení rekonstrukce z `prompt_draws` + původ frází (`scripts/puvod.js`)
   → podezřelý vstup; (3) malý test jedné změny. ⛔ **BLOKUJE krok 3:** testovací pisatel (Claude Opus 5) produkční vady
-  nereprodukuje (Raidho volba 0/3, Ask tvrzení o nitru 0/3 — `RUNAR_EVAL_LOG.md` 2026-09-19 (3)). Rozhodnutí ownera:
-  testovat podezřelé na produkčním modelu (`claude-opus-4-8`, tj. výjimka z pravidla 2026-09-10 „čtení nepiš přes API"),
-  nebo jinak. Kontrola (1) blokovaná NENÍ — soudí hotová produkční čtení.
+  nereprodukuje (Raidho volba 0/3, Ask tvrzení o nitru 0/3 — `RUNAR_EVAL_LOG.md` 2026-09-19 (3)). ✅ Owner 2026-09-19
+  schválil produkční model přes API → podezřelý #1 **potvrzen**: `ENDING_OPEN[0]` *„…or offering a plain choice"* dělá volbu
+  blízké × vzdálené 4/4, bez ní 0/3 (záznam (4)) — rozhodnutí ownera: upravit / zrušit / předělat. ⛔ Kontrola (1) ve tvaru
+  „srozumitelnost" NEPROŠLA ověřením (2/6 × 2/6) — kandidát dál: soudce SOULADU („dává otázka smysl pro tuto runu a obraz?"),
+  napřed zase ověřit na téže sadě.
 - [ ] ⭐ **MOŽNOST: JÁDRO OBRAZU + MÍSTO Z LOSU** (⭐ KUKY 2026-09-19: *„určité runy potřebují jiné prostředí — skupiny;
   prostředí krátkými větami pro skupiny, pro které sedí"*. **Korekce CODE-read:** skupinovat podle JÁDRA, ne podle runy —
   táž runa má obrazy různých druhů (Tiwaz: vrácené drobné = situační/D · polárka = E). Skupiny už v datech jsou: 7. sloupec

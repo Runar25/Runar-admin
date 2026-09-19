@@ -1,0 +1,32 @@
+{
+ "cairns-moor-1": {
+  "text": "You stand on the moor below the fells, one cairn at your back and the next just within sight. Raidho is the walking between them, the road held by stones set where someone could still see the last. When you reach that far stone, will you look for the one beyond it, or rest a while first?",
+  "model": "claude-opus-4-8",
+  "out_tokens": 102
+ },
+ "cairns-pass-1": {
+  "text": "The next cairn stands somewhere past the ridge, out of sight, waiting where the mist has not yet lifted. Raidho is the walking between the stone you can see and the one you cannot, the road held only one marker at a time. You reach the near one before the far one shows itself.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 106
+ },
+ "road-hillside-1": {
+  "text": "From the hillside above the farm you see the whole road at once, the ruts, the rise, the bend where it slips out of sight. Then the near stretches fade, Kuky, and only that turning holds your eye. Raidho is the road still moving under you, the going that does not wait for the view to clear. You stand where the way bends and the rest is not yours to see yet.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 133
+ },
+ "road-valley-1": {
+  "text": "Behind the bend, the road keeps going where you cannot yet see it, holding the farms and the next stretch out of sight. Raidho is the road that moves under your feet whether or not the turn is visible. You stand on the valley floor, Kuky, where the way rounds ahead.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 109
+ },
+ "track-homefield-1": {
+  "text": "At the edge of the home-field, the sheep-track leaves the grass and bends into the slope, one ground turning into another. Raidho is that turning taken at its own pace, the walking that finds the way by walking. No one laid this path, yet it holds its line down the hill.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 105
+ },
+ "track-pass-1": {
+  "text": "Where the grass gives way to scree, the sheep-track bends and keeps its own line up the pass. Raidho is that going that finds its way without a hand to lay the road. You stand at the turn, where the walked ground ends and the track carries on alone.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 99
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "ASK0-1": {
+  "text": "Isa is ice, Kuky — the thing that holds still while the day moves past it. What you wait for is some sign that says now is the right moment, a word from someone else, a certainty that the choice is safe. The rune does not name what that sign is. It only shows the cup sitting there, waiting on a permission that may never arrive from outside. The hand that lifts it is your own, and no one hands you the moment to use it.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 132
+ },
+ "ASK0-2": {
+  "text": "Isa is stillness, Kuky, and stillness waits for a signal outside itself. Some sign it is right to reach — a permission, a certainty, someone else moving first. You hold the cup and wait to be told it is time, rather than deciding the coffee is cold enough to set down or drink as it is. What you wait to be given may be a word from another, or proof, or simply the moment feeling finished. Isa does not name which. It only shows the waiting hand.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 147
+ },
+ "ASK0-3": {
+  "text": "Isa is ice, Kuky — the thing held in place, not moving. The waiting you named is real, but it points at nothing that is coming. There may be no sign, no word, no permission on its way to you. The cup does not grow warmer for being watched, and no one is walking toward it with a fresh pot. What you wait to be given may simply be a thing that arrives only when a hand reaches, or not at all.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 129
+ },
+ "ASKN-1": {
+  "text": "Isa is ice, Kuky — a thing held still while the room moves on. The waiting you named might be a word from someone else, a sign that it is safe to begin, permission you feel is not yours to give yourself. It could be certainty, the sense that the cup is still worth lifting before you reach for it. Isa does not say which. It only shows the cup where you set it, and your hand not yet on it.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 126
+ },
+ "ASKN-2": {
+  "text": "Isa is ice, Kuky — the thing that stays put while time keeps going. So the waiting is real, and the question is plain: what would have to arrive before you'd act.\n\nIt could be someone's permission, a word that tells you it's alright to move. It could be certainty, the sense that you won't be wrong before you begin. Or a sign that the cost has been paid by another hand, not yours.\n\nWhich of these it is, I cannot tell you. That much stays with you.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 147
+ },
+ "ASKN-3": {
+  "text": "The waiting is for a sign that it is safe, or allowed, or the right time — some permission you expect to arrive from outside your own hand. Isa is ice, and ice does not ask. It simply holds until something warm reaches it.\n\nIt could be someone's word that you may go ahead. It could be certainty that you will not be wrong. It could be the feeling that you have earned the reaching. Isa names the holding, Kuky, not what would end it. Which of these it is, only you can say.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 153
+ }
+}

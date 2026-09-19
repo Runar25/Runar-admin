@@ -1,0 +1,32 @@
+{
+ "RA-1": {
+  "text": "See the lichen on the first cairn, grey-green and clinging where a hand once set the stone. Beyond it another cairn waits, and past that one more, each raised within sight of the last across the heath. This is Raidho, the road walked one marker at a time, no farther than the eye can hold. Do you look to the cairn just ahead, or squint toward the ones the mist still keeps?",
+  "model": "claude-opus-4-8",
+  "out_tokens": 142
+ },
+ "RA-2": {
+  "text": "On the first cairn a single stone sits crooked, small enough to walk past. Yet Raidho holds each cairn within sight of the next, so the crooked one still points across the heath. The road is not one long stretch but one marker reached, then the next found from where you stand. Do you fix your eye on the stone underfoot, or on the shape waiting further out?",
+  "model": "claude-opus-4-8",
+  "out_tokens": 132
+ },
+ "RA-3": {
+  "text": "See the near cairn first, the stones stacked plain and grey, easy to pass without a glance. Yet from beside it the next one stands, and from that one another, on across the heath. Raidho is the road walked by sight of the marker just ahead, not the whole distance at once. Do you look for the far cairn now, or the one you can already see?",
+  "model": "claude-opus-4-8",
+  "out_tokens": 126
+ },
+ "RB-1": {
+  "text": "See the moss on the far cairn, the small green patch you would miss from here. That stone was raised because the last one could still be seen from it, and Raidho is that keeping of one marker in sight while you walk to the next. You do not cross the whole heath at once, only from cairn to cairn. Which stone are you standing beside now, and which one holds your eye ahead?",
+  "model": "claude-opus-4-8",
+  "out_tokens": 134
+ },
+ "RB-2": {
+  "text": "See the small heap of stones nearest you, weathered, easy to walk past. It marks nothing but the next cairn, just visible across the heath. Raidho is the road walked one marker at a time, each stone placed so the next can be found. You cannot see the last cairn from here, only the one ahead. Which stone are you standing beside now?",
+  "model": "claude-opus-4-8",
+  "out_tokens": 126
+ },
+ "RB-3": {
+  "text": "See the lichen on the first cairn, grey-green and slow, the mark most walkers pass without a glance. From that stone the next one waits, low on the heath, and from it another beyond. Raidho is this walking on ground you cannot yet see, one marker holding you until the next comes clear. Which cairn are you standing beside now, and what does it show you of the one ahead?",
+  "model": "claude-opus-4-8",
+  "out_tokens": 138
+ }
+}
