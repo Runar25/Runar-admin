@@ -55,7 +55,23 @@
   grey"): po KROKU 2 grey/wind 8/9; bez té věty 0/3, s vrácenou větou o počasí 0/3. Owner rozhodne mezi S (věta pryč) a W
   (brzda zpět — bod 7 CODE-tune), texty obou ramen jsou holé. Zvlášť: **mlha → „the grey" jako podstatné jméno** (model
   nechce opakovat „fog") — týká se obrazů a míst s mlhou; test „jmenuj věc pokaždé jejím jménem" zatím neběžel.
-- [ ] ⭐ **MOŽNOST: JÁDRO OBRAZU + MÍSTO Z LOSU** (KUKY 2026-09-18: *„heath je jen jedna z mnoha možností… chci
+- [ ] ⭐ **HON NA HYBRIDY — kontrola → podezřelý → malý test, runa po runě** (KUKY 2026-09-19: *„máme spoustu inputů, u kterých
+  si nejsme jistí, co dělají; najdeš podezřelého → menší test → upravit, zrušit, předělat? … neřešíme jednu runu, ale všechny,
+  postupně"*). Postup: (1) **kontrola**: slepý soudce *„řekni vlastními slovy, co ti říká poslední věta / celé čtení"* —
+  NAPŘED ověřit na produkčních čteních ownera (ta, na která se ptal *„nerozumím"*, proti těm, která chválil); rozliší-li je,
+  pustit přes produkci všech run; (2) u označených čtení rekonstrukce z `prompt_draws` + původ frází (`scripts/puvod.js`)
+  → podezřelý vstup; (3) malý test jedné změny. ⛔ **BLOKUJE krok 3:** testovací pisatel (Claude Opus 5) produkční vady
+  nereprodukuje (Raidho volba 0/3, Ask tvrzení o nitru 0/3 — `RUNAR_EVAL_LOG.md` 2026-09-19 (3)). Rozhodnutí ownera:
+  testovat podezřelé na produkčním modelu (`claude-opus-4-8`, tj. výjimka z pravidla 2026-09-10 „čtení nepiš přes API"),
+  nebo jinak. Kontrola (1) blokovaná NENÍ — soudí hotová produkční čtení.
+- [ ] ⭐ **MOŽNOST: JÁDRO OBRAZU + MÍSTO Z LOSU** (⭐ KUKY 2026-09-19: *„určité runy potřebují jiné prostředí — skupiny;
+  prostředí krátkými větami pro skupiny, pro které sedí"*. **Korekce CODE-read:** skupinovat podle JÁDRA, ne podle runy —
+  táž runa má obrazy různých druhů (Tiwaz: vrácené drobné = situační/D · polárka = E). Skupiny už v datech jsou: 7. sloupec
+  `RUNE_IMAGES` registr D/E/P + osa „typ obrazu" (`RUNAR_DESIGN.md` „Image pool"). Místo se losuje jen z listu registru
+  jádra (D: pult, trh, kuchyň… · E: břeh, láva, mlha… · P: tún, ovčín, vřesoviště…). „Hodně obrazů" netřeba: ~4 jádra ×
+  ~6 míst ≈ 24 scén na runu místo dnešních ~4. Práce: jádra zkrátit tak, aby nesla to, co dělá runu runou (Tiwaz 0/3,
+  když zmizelo *„in your favour"*), 3 listy míst islandsky od začátku, identitní brána jen na rizikové dvojice.
+  Původně KUKY 2026-09-18: *„heath je jen jedna z mnoha možností… chci
   Rúnarovi dát základ obrazu s tím, že zbytek je možné měnit"*; NErozhodnuto). Obraz se rozdělí na **jádro** (co nese
   runu — věc/děj, bez místa; u mohyl stačilo škrtnout *„across the whole heath"*) a **místo** (krajina/světlo/počasí),
   které se **losuje** ze seznamu — NE volné: volné místo dalo oblíbence 3/3 (black lava field), potřetí po 2026-08-18

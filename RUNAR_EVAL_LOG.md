@@ -4053,3 +4053,42 @@ je disclaimer (`RUNAR_DESIGN.md`: disclaimer neinokuluje) a oslabí odpověď; d
 
 **Hranice:** n = 1 na buňku, 1 hlas soudce · krátká jádra psal CODE-read (jen pro test, obsah vlastní owner/Cowork) · EN.
 Podklady → `docs/eval/2026-09-19-kratka-jadra/`.
+
+## 2026-09-19 (3) — Odkud voda · dva podezřelí (Raidho „plain choice", Ask „možnosti") · ⚠️ testovací pisatel ≠ produkční model
+
+**Proč (owner):** *„Rúnar používá hodně tekoucí vody pro jakoukoli scénu — buď to pisatelé neumí jinak, nebo to odněkud bere.
+Tiwaz dává všude coin, Algiz všude stone wall — něco stejného vstupuje do obrazu. Co to je? … pokud najdeš podezřelého,
+uděláme menší test … co s tím GPT k Asku?"*
+
+### 1. Voda: bere ji z BANKY a z našich vstupů, ne ze vzoru „sea and the shore"
+Hypotéza „vzor *exchange between the sea and the shore* (esenční řádek, od v4.0 v KAŽDÉM promptu) přidává vodu" **padla**
+(§25, bez agentů): model přidal vodu, kterou obraz neměl — produkce PŘED v4.0 **9/38 (24 %)**, OD v4.0 **3/24 (13 %)**,
+testy 09-15 až 09-19 **2/54 (4 %)** (obě Isa + mlha → pisatel posadil ptáka k mokřadu). Banka `RUNE_IMAGES`: vodu/led/sníh
+má **28/108 obrazů (26 %)**, registr **E (živelný) 18/33**, P 9/41, D 1/34; nejvíc Blank 3/3, Isa 3/5, Gebo/Perth/Laguz 2/3.
+V našich testech vodu přinesly naše volby (Isa, Laguz, místo břeh). *Coin* a *stone wall* nese JÁDRO — tak je test postaven
+(jádro = neměnné); předmět se v produkci střídá losem mezi ~4 obrazy runy, ne uvnitř jednoho.
+
+### 2. Podezřelý Raidho: konec „…or offering a plain choice" (rekonstrukce `de1e3b16`, 3 + 3)
+RA (produkční prompt beze změny): konec *„Which cairn can you see from where you stand?"* · *„where does your eye go first?"* ·
+*„Which cairn is in sight from where you are now?"* — **volba „A, nebo B" 0/3**. RB (bez „plain choice"): *„What does the next
+cairn show that this one cannot?"* ×2, *„what does the next one show you?"*. ⇒ **Nerozhodnuto:** produkce z téhož promptu
+volbu udělala (1/1), testovací pisatel ani jednou. Všech 6 otevřelo úhlem *„smallest detail"* = plochý kámen na vrcholu mohyly.
+
+### 3. Podezřelý Ask: věta o MOŽNOSTECH (Isa `df160bfb`, ownerova otázka, 3 + 3)
+ASK0 (dnešní pravidla) — **možnosti 3/3** (*„It could be permission from someone, or certainty…"*), tvrzení o nitru 0/3.
+ASKN (+ *„offer one or two concrete possibilities … spoken as something that may be so, and leave the choice with them"*)
+— totéž 3/3, navíc ocas *„Either may be so, or neither"* ×2. Pojistky na konci mají OBĚ ramena (*„I cannot tell you
+which"*, *„only you can name"* / *„Which fits is yours to say"*). Produkce (1/1) tvrdila *„What you wait for is a sign that it
+is allowed"* a pojistku neměla. ⇒ testovací pisatel dnešní pravidla už čte jako „možnosti"; věta navíc u něj nic nepřidá.
+
+### 4. ⭐ Nález: testovací pisatel nereprodukuje produkční vady
+Oba podezřelé jsou vady **produkčního** výstupu (`claude-opus-4-8`) a testovací pisatel (subagent Claude Opus 5) je na
+TÉMŽ promptu **nevyrobil ani jednou** (volba 0/3, tvrzení o nitru 0/3). Malý test podezřelého tedy s tímhle pisatelem
+nerozhodne, jestli je to on. Souvisí s otevřenou otázkou ownera „na jakém modelu testovat" (pravidlo 2026-09-10 „čtení
+nepiš přes API"). → `RUNAR_BACKLOG.md` „HON NA HYBRIDY".
+⚠️ Hranice: n = 1 produkční čtení na případ proti 3 testovacím — model i náhoda běhu; nález je „nereprodukuje se", ne
+„model je jiný" (to by chtělo produkční model na témž promptu).
+
+**Rozpor s ownerovou poznámkou „Tiwaz a láva nejde do sebe, ani mlha":** sedí na existující osu `RUNAR_DESIGN.md` „Image pool —
+register D/E/P" a „Typ obrazu": Tiwaz *„giving back the change"* je SITUAČNÍ + D (domácí) — do živelného místa nepatří.
+Podklady → `docs/eval/2026-09-19-podezreli/`.
