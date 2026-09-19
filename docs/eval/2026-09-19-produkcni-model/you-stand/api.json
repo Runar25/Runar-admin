@@ -1,0 +1,62 @@
+{
+ "jera-A-1": {
+  "text": "The whole field lies cut and drying, each hour of sun lifting it a shade closer to done. But watch the hay itself, Kuky, how it needs the turning yet is not ready before its time. Jera holds this — the work is set, and now the waiting does its part. You stand at the field's edge, the fork in hand, the evening not quite come.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 127
+ },
+ "jera-A-2": {
+  "text": "The cut hay lies across the field, drying a shade more each hour the sun holds, and by evening it will be ready to turn. Then the whole field falls from your eye, Kuky, and only one row remains. Jera is this slow ripening, the waiting that does its work without your hand. You stand at the field's edge, watching the row that is not yet dry.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 129
+ },
+ "jera-A-3": {
+  "text": "The field lies cut and drying, the hay browning a shade with each hour the sun holds, and by evening it will be ready to turn. Then all of it falls away but the waiting, Kuky, the plain part where nothing can be hurried. Jera is the slow ripening no hand can pull forward, only meet at its hour. You stand at the field's edge, watching the hay dry.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 138
+ },
+ "jera-B-1": {
+  "text": "The field lies cut and drying, the whole crop laid out under a sun that will not be hurried. Watch how one swath turns a shade paler each hour, Kuky, that one alone. Jera is the drying that no hand can rush, only meet when it comes. The hay is ready to turn by evening, and not before.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 117
+ },
+ "jera-B-2": {
+  "text": "The whole field lies before you, cut and drying, the light working the hay a shade drier each hour it holds. Jera is that slow turn from green to gathered, nothing forced, only the sun and the waiting doing their work. This is your ground now, Kuky, the ripening that will not be hurried. By evening it is ready to turn, and not one hour sooner.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 132
+ },
+ "jera-B-3": {
+  "text": "The whole field stands drying in the low sun, one shade paler each hour, and by evening only the turning is left to do. This is Jera, Kuky, the slow work that ripens in its own time and answers to nothing hurried. The hay is not ready because you wish it, but because the sun has held long enough. When the light softens, you turn what has dried.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 127
+ },
+ "raidho-A-1": {
+  "text": "The road bends along the river, the water bright with the grain-cutting month, and where it turns the far ground drops from sight. Raidho is the road that keeps its own pace, Kuky, moving whether you hurry it or not. You cannot see past the bend, only the stretch beneath your feet. You stand on the road, walking, and the turn is still ahead.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 132
+ },
+ "raidho-A-2": {
+  "text": "The road runs beside the river and bends away, the last grain standing, the water carrying on where you cannot yet see. Then the fields fall quiet, Kuky, and only the road remains under your feet. Raidho is the going itself, the step taken before the turn shows what lies past it. You stand at the bend, the way still open in front of you.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 125
+ },
+ "raidho-A-3": {
+  "text": "The road runs along the river and bends out of sight, the water moving, the far grain waiting to be cut, all of it turning together. Then it narrows, Kuky, to the one thing under your feet — this road, still moving. Raidho is the going itself, not the place it reaches. You stand at the bend, with the next stretch not yet in view.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 126
+ },
+ "raidho-B-1": {
+  "text": "The road runs beside the river, holds the fields two months from cutting, then bends away and is gone from sight. Let all of it fall from view but the bend itself, Kuky, that turn where the seeing stops. Raidho is the road still moving under you while the far stretch stays hidden. What lies past the bend is not yours to see from here.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 125
+ },
+ "raidho-B-2": {
+  "text": "The road runs beside the river and vanishes around the next bend, the whole of it in one glance, and then only that bend remains. Raidho is the road itself, Kuky, the going forward while the far part stays hidden. You see the turn but not what lies past it, and that is enough for the walking. The river keeps its pace beside you as the grain waits to be cut.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 132
+ },
+ "raidho-B-3": {
+  "text": "The road follows the river, the fields half-cut, and it slips out of sight around the next bend. Everything here is moving, Kuky, the water, the season, the road under your feet. Raidho asks nothing of the far distance, only that you keep walking the stretch you can see. The bend holds what it holds, and the road goes on to meet it.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 126
+ }
+}

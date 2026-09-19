@@ -63,7 +63,10 @@
   → podezřelý vstup; (3) malý test jedné změny. ⛔ **BLOKUJE krok 3:** testovací pisatel (Claude Opus 5) produkční vady
   nereprodukuje (Raidho volba 0/3, Ask tvrzení o nitru 0/3 — `RUNAR_EVAL_LOG.md` 2026-09-19 (3)). ✅ Owner 2026-09-19
   schválil produkční model přes API → podezřelý #1 **potvrzen**: `ENDING_OPEN[0]` *„…or offering a plain choice"* dělá volbu
-  blízké × vzdálené 4/4, bez ní 0/3 (záznam (4)) — rozhodnutí ownera: upravit / zrušit / předělat. ⛔ Kontrola (1) ve tvaru
+  blízké × vzdálené 4/4, bez ní 0/3 (záznam (4)) — ✅ owner 2026-09-19: VYPUSTIT (handoff CODE-tune). Podezřelý #2
+  **potvrzen**: `ENDING_OPEN[1]` *„name where the seeker stands in the image"* → poslední věta „You stand…" 6/6, bez něj 0/6
+  (záznam (5)) — čeká na rozhodnutí ownera. Podezřelý #3 (nový): řádek sezóny v4.29 *„let it colour the land and the work"*
+  → obilí v obraze bez pole 6/6 (záznam (5)) — čeká na ownera + CODE-tune. ⛔ Kontrola (1) ve tvaru
   „srozumitelnost" NEPROŠLA ověřením (2/6 × 2/6) — kandidát dál: soudce SOULADU („dává otázka smysl pro tuto runu a obraz?"),
   napřed zase ověřit na téže sadě.
 - [ ] ⭐ **MOŽNOST: JÁDRO OBRAZU + MÍSTO Z LOSU** (⭐ KUKY 2026-09-19: *„určité runy potřebují jiné prostředí — skupiny;

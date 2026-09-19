@@ -4140,3 +4140,34 @@ místa: okraj domácí louky · horský průsmyk · vřesoviště pod horami · 
 - Esence **„Raidho is …" 6/6** na produkčním modelu (owner: *„nezakazovat, jen ne pořád"*).
 - Konec „plain choice" u vřesoviště: *„will you look for the one beyond it, or rest a while first?"* — volba, která s runou
   nejde proti sobě (ne blízká × vzdálená).
+
+## 2026-09-19 (5) — „You stand" na konci = `ENDING_OPEN[1]` (potvrzeno) · řádek sezóny sype obilí do obrazu · Raidho islandsky ověřen
+
+**Owner 2026-09-19:** *„1. vypusť [plain choice] 2. ano [věta o možnostech v Asku] 3. ano [Raidho jádra a místa] 4. ano
+otestuj [„You stand"]."* Produkční model, prompt v4.29-sezona. Podklady → `docs/eval/2026-09-19-produkcni-model/you-stand/`.
+
+### 1. „You stand" na KONCI: podezřelý POTVRZEN
+Úhel 0 (ne 6), jinak losy pevné, dva obrazy (Raidho cesta u řeky, Jera seno), 3 + 3 na obraz. A = `ENDING_OPEN[1]` *„End on a
+plain, steady line — name where the seeker stands in the image, not what is true inside them; not a question."* · B = totéž bez
+*„name where the seeker stands in the image"* (*„…steady line from the image — …"*). Poslední věta *„You stand…"*: **A 6/6 ·
+B 0/6** (p ≈ 0,001). B končí např. *„By evening it is ready to turn, and not one hour sooner."* · *„The bend holds what it holds,
+and the road goes on to meet it."* ⇒ „You stand" mají DVA zdroje: úhel 6 na začátku (produkce 6/11 × 0/47, záznam „KROK 2 a
+rytmus") a `ENDING_OPEN[1]` na konci. Rozhodnutí o změně = owner.
+
+### 2. ⚠️ Nový nález: řádek sezóny (v4.29) přidá obilí do KAŽDÉHO obrazu
+Řádek *„SEASON — where Rúnar stands: two months of summer left, the grain-cutting month of old. Let it colour the land and the
+work in his images where it fits naturally."* ⇒ Raidho (obraz = cesta u řeky, žádné pole) má obilí/pole **6/6**: *„the water
+bright with the grain-cutting month"* · *„the far grain waiting to be cut"* · *„holds the fields two months from cutting"*
+(poslední navíc splete „two months of summer left"). Raidho v4.28 bez řádku sezóny (jádra × místa): 0/2. Je to ownerův vzorec
+*„něco stejného vstupuje do obrazu"* — tentokrát z pokynu *„let it colour the land and the work"*. Hranice: jeden obraz, jeden
+měsíc (Jera seno sezónu snese přirozeně).
+
+### 3. Raidho — islandská jádra a místa (ověřeno nástroji)
+Jádra = dnešní islandské řádky Raidha bez místa (ne překlad): *Kindagatan liðast af sjálfu sér.* · *Hver varða sést frá
+þeirri síðustu.* · *Vegurinn hverfur fyrir næstu beygju.* Místo jako celá věta *„Þetta á sér stað …"* — štítek „Staður:"
+dal Z002 (velké písmeno po dvojtečce) a E001 (nerozparsováno); celá věta čistá. `is-grammar-qa`: 9/9 vět bez nálezu, 0 E001.
+Korpus (`is-vazba.py --freq`): *í túnjaðrinum* 78 (á 0) · *í fjallaskarði* 13 (á 0) · *niðri í dalnum* 35 — *í dalbotninum*
+zamítnuto (slovník: *dalbotn* = „innsti hluti dals", tj. konec údolí, ne dno mezi statky) · *milli bæjanna* 846 · *á heiðinni*
+3121 · *undir fjöllunum* 126 · *fyrir ofan bæinn* 873 / *hlíðinni fyrir ofan* 271 · *á engjunum* 84 · *á sér stað* 22 998.
+*„á opinni heiði"* 0 → vypuštěno; IS nerozlišuje „open heath" a „moor below the fells" (obojí *heiði*) → jedno nahrazeno
+*á engjunum* (⚠️ louky se senem = riziko tahu k Jeře; na identitní bránu). Seznam → handoff CODE-tune.
