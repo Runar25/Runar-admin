@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-19",
- "prompt_version": "v4.29-sezona",
+ "prompt_version": "v4.30-jadra",
  "pravidla": [
   {
    "hash": "54d29df4d80b",
@@ -46,10 +46,10 @@
    "zacatek": "Open by setting the seeker inside the image, at the spot where it is h"
   },
   {
-   "hash": "03fb384bd478",
+   "hash": "30abc87f1ae2",
    "lang": "en",
    "zdroj": "zakonceni_open[0]",
-   "zacatek": "End with one open question asked of the image, or offering a plain cho"
+   "zacatek": "End with one open question asked of the image — no part of the questio"
   },
   {
    "hash": "58f77728c13d",
@@ -314,6 +314,12 @@
    "lang": "en",
    "zdroj": "ask",
    "zacatek": "If the seeker says they do not understand, or asks for it plainly, or "
+  },
+  {
+   "hash": "09aabcd5265c",
+   "lang": "en",
+   "zdroj": "ask",
+   "zacatek": "If they ask what it could be for them, offer one or two concrete possi"
   },
   {
    "hash": "3bc3221e3b21",
@@ -634,10 +640,10 @@
    "zacatek": "Byrjaðu á því að setja leitandann inn í myndina, á staðinn þar sem hún"
   },
   {
-   "hash": "52fa36a257cc",
+   "hash": "fc4433540acf",
    "lang": "is",
    "zdroj": "zakonceni_open[0]",
-   "zacatek": "Endaðu á einni opinni spurningu sem beinist að myndinni, eða býður ein"
+   "zacatek": "Endaðu á einni opinni spurningu sem beinist að myndinni — enginn hluti"
   },
   {
    "hash": "3781c79d0ca6",
@@ -908,6 +914,12 @@
    "lang": "is",
    "zdroj": "ask",
    "zacatek": "Ef leitandinn segist ekki skilja, biður um það á mannamáli, eða biður "
+  },
+  {
+   "hash": "d3660cba1359",
+   "lang": "is",
+   "zdroj": "ask",
+   "zacatek": "Ef leitandinn spyr hvað þetta gæti verið fyrir hann, nefndu einn eða t"
   },
   {
    "hash": "4dacec5f8599",

@@ -6114,3 +6114,32 @@ jména měsíce · golden diff = jen přidaný řádek (24/38) · registr 206 (v
 **Verze promptu:** v4.28-obraz → **v4.29-sezona**.
 
 **Affected doc(s):** žádný — mapa promptu (artifact) překreslena v témž tahu.
+
+## 2026-09-19 (3) — Konec bez volby, Ask nabízí možnosti, Raidho jádra + tažená místa
+
+**Handoff CODE-read (psáno proti 513780d), owner: „1. vypusť 2. ano 3. ano."** Tři změny:
+
+1. **ENDING_OPEN[0] ztratilo větev volby** („or offering a plain choice"): otevřená otázka na
+   obraz zůstává, „plain choice" vedla model k binárním koncům. Nové znění (EN+IS, IS ověřeno
+   CODE-read is-grammar-qa) zakazuje tvrzení v KAŽDÉ části otázky, ne „půlce volby".
+2. **Ask nabízí konkrétní možnosti:** za „…must not be the last thing you leave them with."
+   přibyla věta — na „co to pro mě může být" nabídnout jeden až dva konkrétní možné významy
+   z obrazu a runy, každý jako „něco, co může platit". IS psána islandsky od začátku (vazby
+   korpusem: hvorn um sig 120 · gæti átt við 1010 · áþreifanlega 2368 · úr myndinni 5698).
+   ⚠️ Vědomě BEZ „and leave the choice with them" (handoff: dvojí pojmenování volby = formule).
+3. **Raidho: 3 necold obrazy zkráceny na JÁDRA + tažené místo.** Řádek s `row[8]==='jadro'`
+   nese jen jádro obrazu; místo dodá los z `IMG_PLACES[registr]` (zatím jen P — 6 míst, IS+EN
+   týž řádek). Sáček proti opakování týž mechanismus jako u obrazů (klíč `mista|registr`).
+   Formát: EN „…: <jádro>. Where: <místo>." · IS „…: <kjarni>. Þetta á sér stað <staður>."
+   (štítek „Staður:" dal v is-grammar-qa Z002+E001 — proto IS celou větou). Doklad CODE-read:
+   6 čtení produkčním modelem, stejnost scén 0/6 (`docs/eval/2026-09-19-produkcni-model/raidho-jadra/`).
+   `prompt_draws` nese `place` a obraz o něj ZKRACUJE — měření obrazů nezačne počítat místa.
+
+**Čím je to jištěné:** golden diff = jen Ask (4 buildery) + obrazové řádky s místem (7) ·
+㉟ tvar řádku s jádrem · ㉠ jádra: místa registru úplná + round-trip image+place přes
+`_promptDraws` (EN, IS, i stará řádka bez místa) · registr 208 (v4.30-jadra) · smoke 44/44 ·
+check-is OK.
+
+**Verze promptu:** v4.29-sezona → **v4.30-jadra**.
+
+**Affected doc(s):** žádný — mapa promptu (artifact) překreslena v témž tahu.

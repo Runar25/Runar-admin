@@ -304,6 +304,14 @@ function _promptDraws(prompt, lang) {
       var c = line.indexOf(': ');
       var e = line.indexOf(tail, c);
       if (c > 0) out.image = line.slice(c + 2, e > c ? e : undefined).replace(/\.\s*$/, '').trim();
+      // Misto z jadra (2026-09-19): bez zaznamu by ho rekonstrukce hadala — tyz duvod jako
+      // u cocky. Obraz se o segment mista ZKRATI, at mereni obrazu nezacne pocitat mista.
+      var pmark = isIs ? '. Þetta á sér stað ' : '. Where: ';
+      var pi = out.image ? out.image.indexOf(pmark) : -1;
+      if (pi > 0) {
+        out.place = out.image.slice(pi + pmark.length).trim();
+        out.image = out.image.slice(0, pi).trim();
+      }
     }
 
     // Cocka zivotni runy (2026-09-19, handoff CODE-read): `readings.life_rune` rika jen,
@@ -360,7 +368,10 @@ const ENDING_OPEN = [
   // v4.11 (2026-08-23): "could answer neither" model obchazel pripojenim "or neither
   // yet" k zachovanemu tvrzeni ("what stirs in you"). Prepis jmenuje pozitivni tvary
   // a zakazuje tvrzeni po pulkach volby (A/B: hranicni 7->3 z 16).
-  'End with one open question asked of the image, or offering a plain choice — no half of the question may claim what is true, missing, or not yet ready in the seeker.',
+  // 2026-09-19 (handoff CODE-read #1, owner „vypust"): „or offering a plain choice" delalo
+  // u Raidha volbu blizke x vzdalene 4/4 (bez ni 0/3); bez volby nema otazka poloviny ->
+  // „no part" (korpus: „enginn helmingur" 0, „enginn hluti" 103).
+  'End with one open question asked of the image — no part of the question may claim what is true, missing, or not yet ready in the seeker.',
   // 2026-08-21: puvodne „name where the seeker stands" — doslova pokyn tvrdit o ctenari,
   // osm radek od zakazu `_noColdRead`. Ted se pojmenovava jeho misto V OBRAZE.
   'End on a plain, steady line — name where the seeker stands in the image, not what is true inside them; not a question.',
@@ -371,7 +382,7 @@ const ENDING_HEAVY_IS = [
   'Endaðu á einni harðri spurningu sem heldur sig við myndina og krefst engrar játningar — engin huggun, ekkert mildað.',
 ];
 const ENDING_OPEN_IS = [
-  'Endaðu á einni opinni spurningu sem beinist að myndinni, eða býður einfalt val — enginn helmingur spurningarinnar má fullyrða hvað er satt, hvað vantar eða hvað leitandinn er ekki tilbúinn til.',
+  'Endaðu á einni opinni spurningu sem beinist að myndinni — enginn hluti spurningarinnar má fullyrða hvað er satt, hvað vantar eða hvað leitandinn er ekki tilbúinn til.',
   'Endaðu á staðfastri línu — nefndu hvar leitandinn stendur í myndinni, ekki hvað er satt innra með honum; ekki spurningu.',
   'Endaðu á hljóðlátri línu sem hvílir — ekki spurningu í þetta sinn.',
 ];
