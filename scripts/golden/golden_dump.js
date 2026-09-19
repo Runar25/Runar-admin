@@ -53,6 +53,9 @@ u3.intention = u.intention; u3.lifeRune = _R('Isa');
 var pool = ['Fehu','Uruz','Thurisaz','Ansuz','Raidho','Kenaz','Gebo','Wunjo','Hagalaz'].map(_R);
 function grab(key, fn){ try { _OUT[key] = fn(); } catch(e){ _OUT[key] = 'ERROR: ' + (e && e.message) + '\\n' + (e && e.stack); } }
 var samplecorr = [{ from:'Arctic', to:'Norðurljós', lang:'both', context:'test' }];
+// 2026-09-19: sezona v bloku obrazu se meni s mesicem — pin na 15. 9. 2026, jinak by
+// golden otisk pukal na kazde hranici islandskeho mesice.
+_seasonLine = (function (orig) { return function (l) { return orig(l, 15, 9, 2026); }; })(_seasonLine);
 ['is','en'].forEach(function(L){
   lang = L;
   grab('system_'+L,      function(){ return buildSysPrompt(null, L); });

@@ -26,6 +26,9 @@ vm.createContext(S);
 for (const f of ['runar-config.js', 'runar-runes.js', 'runar-utils.js', 'runar-character.js'])
   vm.runInContext(fs.readFileSync(D + f, 'utf8'), S);
 
+// 2026-09-19: pin data pro _seasonLine — radka sezony se meni s islandskym mesicem
+// a bez pinu by registr cervenal na kazde hranici mesice.
+vm.runInContext('_seasonLine = (function(orig){ return function(l){ return orig(l, 15, 9, 2026); }; })(_seasonLine);', S);
 const RUNES = vm.runInContext('RUNES', S);
 const zJaz = (jm, L) => (vm.runInContext('typeof ' + jm + ' !== "undefined" ? ' + jm + ' : {}', S) || {})[L] || [];
 const glob = (jm) => vm.runInContext('typeof ' + jm + ' !== "undefined" ? ' + jm + ' : null', S);

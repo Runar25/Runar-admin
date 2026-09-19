@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-19",
- "prompt_version": "v4.28-obraz",
+ "prompt_version": "v4.29-sezona",
  "pravidla": [
   {
    "hash": "54d29df4d80b",
@@ -236,6 +236,12 @@
    "lang": "en",
    "zdroj": "single",
    "zacatek": "IMAGE — the picture in this reading comes from here:"
+  },
+  {
+   "hash": "e7403f1f98df",
+   "lang": "en",
+   "zdroj": "single",
+   "zacatek": "SEASON — where Rúnar stands: two months of summer left, the grain-cutt"
   },
   {
    "hash": "e9ba6e72c4cd",
@@ -818,6 +824,12 @@
    "lang": "is",
    "zdroj": "single",
    "zacatek": "MYND — héðan kemur myndin í þessum lestri:"
+  },
+  {
+   "hash": "56680de6a942",
+   "lang": "is",
+   "zdroj": "single",
+   "zacatek": "ÁRSTÍÐIN — þar sem Rúnar stendur: tvímánuður — tveir mánuðir eftir af "
   },
   {
    "hash": "d3a64353420d",

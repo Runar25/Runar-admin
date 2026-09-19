@@ -6080,3 +6080,37 @@ smoke 44/44 · check-is OK.
 **Verze promptu:** v4.27-presuny → **v4.28-obraz**.
 
 **Affected doc(s):** žádný — mapa promptu (artifact) překreslena v témž tahu.
+
+## 2026-09-19 (2) — BOD 7: Rúnar zná roční období (řádek sezóny v bloku obrazu)
+
+**Handoff owner 2026-09-15 („Rúnar má znát skutečné roční období"), owner: „pokračujeme bodem 7."**
+
+**Co platí:** `_seasonLine(lang)` — zdroj = islandský kalendář (`icelandicMonthKey` +
+`BIRTH_MONTHS`, §20: žádná nová data) — jde do bloku OBRAZ ve zprávě ke čtení (`_imageBlock`),
+tedy single + 4 spready; systém, Ask a životní runa NE. Sezóna je **islandská** (Rúnar je
+Islanďan, polohu uživatele neznáme; lokální by byla hádání). **EN řádek nenese islandské jméno
+měsíce** (owner: „anglicky musí být měsíc anglicky… míchání mate") — jen anglická hesla; IS nese
+jméno malým písmem + hesla. Vodítko v2: *„let it colour the land and the work in his images"* —
+pilot v1 (2026-09-15) ukázal 1/3 skluz sezóny do scény tazatele; v2 sezónu drží v krajině.
+Brzda na počasí NENÍ potřeba — barvu/počasí sypala věta „sensory", odebraná záznamem (1).
+
+**Pilot v2 (4 slepí pisatelé, produkční prompty):** sezóna 4/4, pokaždé jinak („in the cutting
+month" · „the grain is being cut now" · IS „gegnum slegin tún" · Isa „Summer has two months
+left, and the calm does not count them"), skluz do scény tazatele **0/4**, střet Isa×léto čistý,
+žádné papouškování řádku ani jména měsíce.
+
+**Do `prompt_draws` se sezóna NEZAPISUJE (§20):** odvodí se z `drawn_at` + `prompt_version`
+(≥ v4.29 = řádek běžel). CODE-read ji chtěl zaznamenat — tohle je táž informace bez druhé kopie.
+
+**Hranice:** EN hesla některých měsíců nesou glosovaná islandská JMÉNA DNŮ/SVÁTKŮ („Sumardagurinn
+fyrsti, the first day of summer", „Þorrablót") — táž konvence jako u životní runy (glosovaný
+svátek smí, jméno měsíce ne); wiring hlídá jen jména měsíců. Golden a registr mají datum
+pinnuté na 15. 9. 2026, jinak by červenaly na hranici islandského měsíce.
+
+**Čím je to jištěné:** wiring — sezóna v 5 cestách zprávy, v systému/Ask/životní runě ne, EN bez
+jména měsíce · golden diff = jen přidaný řádek (24/38) · registr 206 (v4.29-sezona) · smoke 44/44
+· IS vazby korpusem (láttu hana 1041 · að lita 9806 · í myndunum 2968 · það á við 8687).
+
+**Verze promptu:** v4.28-obraz → **v4.29-sezona**.
+
+**Affected doc(s):** žádný — mapa promptu (artifact) překreslena v témž tahu.

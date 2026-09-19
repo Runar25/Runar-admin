@@ -168,6 +168,27 @@ if (!DESCRIBE_MARK.en || !DESCRIBE_MARK.is) {
   console.log('OK    obraz-blok: ve zprave single+4 spready, v systemu ne, v Ask ne');
 }
 
+// ── BOD 7 (2026-09-19): radek SEZONY v bloku obrazu — single + 4 spready; v systemu,
+// Ask a zivotni rune NE. EN radek nesmi nest islandske jmeno mesice (michani mate — owner).
+{
+  const SEZ = { en: 'SEASON — where Rúnar stands: ', is: 'ÁRSTÍÐIN — þar sem Rúnar stendur: ' };
+  for (const L of ['en', 'is']) {
+    const cesty = ['single', 'norns', 'kriz', 'horseshoe', 'yggdrasil'];
+    const chybi = cesty.filter(b => !(O[b + '_' + L] || '').includes(SEZ[L]));
+    if (chybi.length) { fail++; console.log('FAIL  sezona chybi: ' + chybi.map(b => b + '_' + L).join(', ')); }
+    for (const b of ['system', 'ask', 'liferune']) {
+      if ((O[b + '_' + L] || '').includes(SEZ[L])) { fail++; console.log('FAIL  sezona nema byt v ' + b + '_' + L); }
+    }
+  }
+  // EN radek: jen anglicka hesla — islandske jmeno mesice (-mánuður, harpa…) do nej nepatri.
+  const enLine = ((O['single_en'] || '').split(String.fromCharCode(10)).find(l => l.indexOf(SEZ.en) === 0)) || '';
+  if (!enLine) { fail++; console.log('FAIL  EN radek sezony nenalezen v single_en'); }
+  else if (/mánuður|harpa|skerpla|þorri|gormán|ýlir|mörsugur|einmán|heyannir|tvímán|aukanætur/i.test(enLine)) {
+    fail++; console.log('FAIL  EN radek sezony nese islandske jmeno mesice: ' + enLine.slice(0, 90));
+  }
+  console.log('OK    sezona: 5 cest zpravy, jinde ne, EN bez islandskeho jmena mesice');
+}
+
 // ── 2026-09-19 (handoff CODE-read): veta „sensory" z bloku obrazu VEN (jediny namereny
 // ucinek = barva/pocasi; duplikat hlasu focused). Osirele zajmeno opraveno na podmet.
 // A prompt_draws musi umet rict, jestli bezela COCKA (lens 1/0) — rekonstrukce ji hadala.
