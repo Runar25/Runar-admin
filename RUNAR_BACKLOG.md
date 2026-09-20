@@ -1710,3 +1710,18 @@ doslova stát nemusí — buď je prompt začne vyžadovat (mění charakter čt
 jinak (u spreadů existuje JSON věta↔runa). Owner: „tohle by pak mohlo fungovat i pro single a
 spready, ale to jen zapíšeme do backlogu. nechci dělat všechno naráz."
 
+
+### Po odebrání řádku sezóny: model smí jmenovat cizí měsíc (2026-09-20, CODE-tune)
+Řádek sezóny (v4.29–v4.32) nesl i brzdu „the image never carries weather that belongs to another
+season". Po jeho odebrání (DECISIONS 2026-09-20 (3)) v promptu **nic nebrání modelu jmenovat
+konkrétní měsíc nebo svátek** („when August comes", „around Midsummer") v jakoukoli část roku.
+Banka obrazů to nepokryje: **72 ze 108** řádků je `any` a projde všemi šesti buckety.
+Není to regrese proti stavu před 2026-09-19, ale je to otevřená díra. Řešení až po měření —
+jestli se to na produkci vůbec děje (dřív než přidávat další pokyn, §25).
+
+### Los délky není v prompt_draws — nezapsaný confounder každého měření (2026-09-20, CODE-tune)
+`_lengthBudget` losuje mezi **3 věty / 38–45 slov** a **4 věty / 50–58 slov** (v2/runar-utils.js),
+ale do `prompt_draws` se nezapisuje. Každé měření na produkci tedy míchá dva vzorky, kde jeden má
+o větu a ~13 slov víc místa na konec — a post-hoc se to nedá odfiltrovat. CODE-read sám naměřil, že
+délka rozhoduje, jestli most nahradí klidnou větu, nebo zbude věta navíc (RUNAR_EVAL_LOG 2026-09-20).
+Oprava je jednořádková: substring proti `LENGTH_BUDGETS`, týž vzor jako `ending` v `_promptDraws`.

@@ -6275,3 +6275,34 @@ smoke 44/44 · check-is OK · is-grammar-qa na NASAZENÝCH zněních (ne na zdro
 **Verze promptu:** v4.32-bez-sezony → **v4.33-most**.
 
 **Affected doc(s):** žádný — mapa promptu (artifact) překreslena v témž tahu.
+
+## 2026-09-20 (5) — Dodatek k (3) a (4): dvě nepřesnosti, které našla prověrka
+
+Prověrka (4 agenti proti kódu, výsledky `docs/eval/2026-09-20-proverka-vstupu/`) napadla dvě
+tvrzení z téhož dne. Obě opravuji hned, než se o ně příště někdo opře (§24).
+
+**1. Filtr sezóny je HRUBÝ — záznam (3) to říkal šířeji, než platí.** Stálo tam „zimní obraz
+v létě nepřijde". Přesně: **72 ze 108** řádků banky je značeno `any` a projde **všemi šesti**
+buckety; filtruje se jen 20 `bright` + 16 `cold`. Tvrzení tedy platí pro obrazy, které sezónu
+skutečně nesou (cold v létě nepadne), ne pro banku jako celek — neutrální obrazy projdou vždy,
+a to je v pořádku, protože žádnou sezónu nenesou. **Co po odebrání řádku skutečně chybí:**
+v promptu už není nic, co brání MODELU jmenovat konkrétní měsíc („when August comes") v jakoukoli
+část roku. Není to regrese (řádek sezóny tam byl jen od 2026-09-19), ale je to otevřená díra →
+`RUNAR_BACKLOG.md`.
+
+**2. Most „dvě možnosti" je NÁVRAT volby do konce — §26 to chce pojmenovat.** Záznam
+2026-09-19 (3) odebral z open[0] větev „**or offering a plain choice**", protože u Raidha vyráběla
+volbu blízké × vzdálené **4/4** (bez ní 0/3). Nový tvar mostu „two things this may be in the
+seeker's life" volbu do konce vrací — ale **očištěnou v tom, co bylo vadné**:
+- stará volba byla **v obraze** (model stavěl binární dvojici z obrazových prvků: blízké × vzdálené),
+- nová nabízí **dvě čtení téhož stavu v životě leitandy**, každé rámované jako „a state that **may
+  be so**" (právě to „may be" je nosné — bez něj tvar možnosti padl 2/2, viz (4)),
+- měřeno CODE-read produkčním modelem: **3/3 čisté**, žádná binární dvojice z obrazu.
+Kdyby se binární volba v obraze vrátila, je to recidiva a tenhle odstavec je místo, kde se to pozná.
+
+**3. Zůstává jako VAROVÁNÍ, ne jako změna:** `ENDING_HEAVY` má po (4) **jedinou** položku, takže
+konec těžkých čtení je pevný slot — a `_endingShape` vznikl 2026-07-17 (DECISIONS:592) právě proto,
+aby konec pevný slot NEBYL. Pro 6 run z 25 to teď znovu platí. Druhý těžký tvar = obsahové
+rozhodnutí ownera; do té doby to tu stojí zapsané.
+
+**Affected doc(s):** RUNAR_BACKLOG.md — doplněno v témž commitu.

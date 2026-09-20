@@ -1,0 +1,605 @@
+{
+  "summary": "Exhaustivní inventura všech proměnných vstupů promptu + ověření handoffu CODE-read bod po bodu + historie mrtvých randomizérů",
+  "agentCount": 4,
+  "logs": [],
+  "result": {
+    "vysledky": [
+      {
+        "key": "inventura",
+        "data": {
+          "vstupy": [
+            {
+              "nazev": "lang (jazyk čtení)",
+              "zdroj": "v2/runar-reading.js:103 buildReadingPrompt(u, drawn, lang, corrections); packy RP_SINGLE[lang] v2/runar-character.js:1491, RP_NORNS[lang] :1959",
+              "druh": "uzivatel",
+              "pocet_variant": "2 (en, is)",
+              "radek_v_promptu": "vybírá VŠECHNY řádky (labely, packy) + poslední řádek 'Respond in English.'",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "typ spreadu (_spreadMode)",
+              "zdroj": "v2/runar-reading.js:1087 (norns) a sousední _generateSpread*; buildery v2/runar-character.js:1530 single · 1898 kriz · 1992 norns · 2073 horseshoe · 2166 yggdrasil",
+              "druh": "uzivatel",
+              "pocet_variant": "6 (single, kriz/compass, norns, horseshoe, yggdrasil, gathering)",
+              "radek_v_promptu": "vybírá celou kostru promptu; single má úhel+délku+los konce, norns je nemá vůbec (má fixní S.landing)",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "jméno člověka (u.name)",
+              "zdroj": "v2/runar-reading.js:229-231 (userName z DB / pole #r-name / fallback 'you'|'þú'); vkládá RP_SINGLE.PERSON :1492/:1516, RP_NORNS.seeker :1961",
+              "druh": "uzivatel",
+              "pocet_variant": "libovolný text + 1 fallback ('you'/'þú', který los jména VYPÍNÁ)",
+              "radek_v_promptu": "PERSON: Anna  /  Seeker: Anna",
+              "v_mape_code_read": true
+            },
+            {
+              "nazev": "umístění jména (los NAME_PLACEMENTS)",
+              "zdroj": "v2/runar-utils.js:246 NAME_PLACEMENTS / :252 _IS / :258 _namePlacement; volá S.closing v2/runar-character.js:1508,1525 a S.bigInstruction :1971,:1987",
+              "druh": "los",
+              "pocet_variant": "4 (brzy · uprostřed · u závěru · vůbec ne) — vážené: 55 % padne na 'vůbec ne', zbylých 45 % se dělí mezi 3",
+              "radek_v_promptu": "Address Anna once in the middle… / This time do not use the name Anna at all…",
+              "v_mape_code_read": true
+            },
+            {
+              "nazev": "tažená runa (readerRune)",
+              "zdroj": "v2/runar-app.js:1153-1166 buildGrid() — uživatel ŤUKNE na runu v mřížce, žádný Math.random; rn() v2/runar-utils.js:489, RUNES v2/runar-runes.js:7",
+              "druh": "uzivatel",
+              "pocet_variant": "25 (Elder Futhark + Blank)",
+              "radek_v_promptu": "DRAWN RUNE: Berkana — …  (+ 'Mention Berkana by name once')",
+              "v_mape_code_read": true
+            },
+            {
+              "nazev": "aspekt runy (focus on:)",
+              "zdroj": "v2/runar-character.js:745-746 (_imgAspektEN/IS ze 5./6. sloupce RUNE_IMAGES) → :1541-1543 v buildReadingPromptSingle",
+              "druh": "z_runy",
+              "pocet_variant": "64 různých EN aspektů celkem, 1–5 na runu (Eihwaz 1, Ansuz a Jera 5) — NENÍ nezávislý los, je připoutaný k losu obrazu",
+              "radek_v_promptu": "… — focus on: new beginnings",
+              "v_mape_code_read": true
+            },
+            {
+              "nazev": "záložní los 3 klíčových slov z rk(runa)",
+              "zdroj": "v2/runar-character.js:1544-1545 (drawnKws.sort(random).slice(0,3))",
+              "druh": "podminene",
+              "pocet_variant": "prakticky MRTVÁ větev — měřeno 0 mezer na 150 dvojicích runa×sezóna, takže runový obraz (a s ním aspekt) existuje vždy a na tuhle větev se nesáhne",
+              "radek_v_promptu": "(místo aspektu by stálo 'focus on: wealth, cattle, mobile energy')",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "svět a elementy runy",
+              "zdroj": "v2/runar-utils.js:506 rworld() · :531 relements(); data v2/runar-runes.js:7 (world, elements)",
+              "druh": "z_runy",
+              "pocet_variant": "9 světů × kombinace 6 elementů",
+              "radek_v_promptu": "· World: the living moment… · Elements: Water",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "klíčová slova ve spreadu (_kwBrief)",
+              "zdroj": "v2/runar-character.js:1889 _kwBrief() · :1892 _spreadBlock() — bere PRVNÍ 4 klíčová slova, NE aspekt",
+              "druh": "z_runy",
+              "pocet_variant": "1 pevná čtveřice na runu — pozor: spread tedy NEDOSTÁVÁ vazbu aspekt↔obraz, kterou má single",
+              "radek_v_promptu": "Berkana — birch, growth, new beginnings, nurturing",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "záměr čtení (u.intention → READING PURPOSE)",
+              "zdroj": "v2/runar-character.js:879 _intentionContext(); INTENTIONS v2/runar-runes.js:330 (+ osa norns)",
+              "druh": "uzivatel",
+              "pocet_variant": "3 (Right now / Decision ahead / Understanding the past) × navázaný popis času (verdandi/skuld/urd)",
+              "radek_v_promptu": "READING PURPOSE: Understanding the past — about what has already passed; look for the pattern behind it",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "úhel čtení (los READING_ANGLES)",
+              "zdroj": "v2/runar-utils.js:212 READING_ANGLES / :226 _IS / :237 _randomAngle(); volá v2/runar-character.js:1561",
+              "druh": "los",
+              "pocet_variant": "7 (jen single; spready úhel NEMAJÍ)",
+              "radek_v_promptu": "READING ANGLE (follow this entry point…): Open by setting the seeker inside the image…",
+              "v_mape_code_read": true
+            },
+            {
+              "nazev": "obraz / jádro obrazu (los RUNE_IMAGES)",
+              "zdroj": "v2/runar-character.js:472 RUNE_IMAGES · :620 _runeImageCandidates() · :706 _seasonalImagery() · :688 _imageBlock()",
+              "druh": "los",
+              "pocet_variant": "108 řádků celkem, 25 run pokryto; 1–11 kandidátů na runu (Eihwaz 2, Ansuz 11) po filtru sezónou; u spreadu se losuje ze VŠECH tažených run",
+              "radek_v_promptu": "IMAGE — the picture in this reading comes from here: The child's first step across the floor…",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "místo obrazu (los IMG_PLACES)",
+              "zdroj": "v2/runar-character.js:695 IMG_PLACES · :758-763 (jen řádky s 9. sloupcem 'jadro')",
+              "druh": "los",
+              "pocet_variant": "6 míst v registru P; spustí se jen u 3 řádků obrazů, všechny Raidho → u ostatních 24 run místo v promptu vůbec není",
+              "radek_v_promptu": "… winding of its own accord. Where: the heath below the fells.",
+              "v_mape_code_read": true
+            },
+            {
+              "nazev": "řádek sezóny (SEASON — …)",
+              "zdroj": "v2/runar-character.js:663 SEASON_LABELS · :678 _seasonLine() · :1095 icelandicMonthKey() (starý islandský kalendář)",
+              "druh": "kalendar",
+              "pocet_variant": "13 klíčů měsíců → 11 různých EN štítků (spring … deep winter)",
+              "radek_v_promptu": "SEASON — where Rúnar stands it is late summer. The image never carries weather…",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "sezónní kbelík (filtr, které obrazy smí soutěžit)",
+              "zdroj": "v2/runar-character.js:412 _seasonBucket() · :452 RUNE_IMG_SEASONS · :620 _runeImageCandidates()",
+              "druh": "kalendar",
+              "pocet_variant": "6 kbelíků (deepwinter/spring/earlysummer/highsummer/autumn/darkening)",
+              "radek_v_promptu": "NEVIDITELNÝ vstup — do promptu nic nepíše, ale rozhoduje, ze kterých obrazů se losuje (a tedy i který aspekt padne)",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "stav sáčku proti opakování (localStorage)",
+              "zdroj": "v2/runar-character.js:427 _seasonBagPick() — klíče 'seasonbag_<bucket>_rune_<sada run>' a 'seasonbag_mista_<registr>'",
+              "druh": "los",
+              "pocet_variant": "stav per ZAŘÍZENÍ: los není uniformní, každý obraz/místo se rozdá jednou před opakováním",
+              "radek_v_promptu": "NEVIDITELNÝ — mění rozdělení losu obrazu a místa; při vyčištěné storage se chová jinak než u vracejícího se uživatele",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "guard motivu (poslední motiv v localStorage)",
+              "zdroj": "v2/runar-character.js:735-741 ('seasonmotif_' + runeKey, 7./8. sloupec RUNE_IMAGES)",
+              "druh": "podminene",
+              "pocet_variant": "vyřadí kandidáty s TÝMŽ pojmenovaným motivem jako naposledy (existuje-li alternativa)",
+              "radek_v_promptu": "NEVIDITELNÝ — zužuje los obrazu podle předchozího čtení na tomtéž zařízení",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "blok pravidel THE IMAGE",
+              "zdroj": "v2/runar-character.js:647 _imageRules()",
+              "druh": "staticke",
+              "pocet_variant": "2 (per jazyk)",
+              "radek_v_promptu": "THE IMAGE / Rúnar uses one image per reading and carries it through…",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "esenční řádek (THE ESSENCE LINE)",
+              "zdroj": "v2/runar-character.js:811 _describeRule() → :792 _profileRule('describe'); znění v v2/runar-config.js:492 (focused) a :528 (direct); přepínač :452 ACTIVE_VOICE_PROFILE",
+              "druh": "podminene",
+              "pocet_variant": "3 hlasové profily (focused=produkce, direct, lyrical) + základní znění DESCRIBE, DO NOT EXPLAIN, když profil pravidlo nemá; shrine si profil přepíná přes localStorage",
+              "radek_v_promptu": "THE ESSENCE LINE: after the picture, one short line that says what the rune DOES…",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "NO COLD READING",
+              "zdroj": "v2/runar-character.js:829 _noColdRead()",
+              "druh": "staticke",
+              "pocet_variant": "2 (per jazyk)",
+              "radek_v_promptu": "NO COLD READING: never tell the seeker what is true, stirring, or known inside them…",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "rozpočet délky (los LENGTH_BUDGETS)",
+              "zdroj": "v2/runar-utils.js:399 LENGTH_BUDGETS / :403 _IS / :407 _lengthBudget(); volá v2/runar-character.js:1568",
+              "druh": "los",
+              "pocet_variant": "2 (3 věty / 38–45 slov · 4 věty / 50–58 slov) — jen single; spready mají pevný počet vět v S.closing/S.bigInstruction",
+              "radek_v_promptu": "One flowing reading — 3 short sentences, 38 to 45 words total…",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "oblast (u.area → _domainContext)",
+              "zdroj": "v2/runar-character.js:992 _domainContext(); AREAS v2/runar-runes.js:242",
+              "druh": "uzivatel",
+              "pocet_variant": "8 vlastních vět + 1 záchytná síť pro oblast mimo AREAS (volný text z gen_batch, 'spread' z DB)",
+              "radek_v_promptu": "The reading is for Inner Growth — let the image you were given land on slow change…",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "co hledám (u.seeking → _registerContext)",
+              "zdroj": "v2/runar-character.js:1027 _registerContext(); SEEKS v2/runar-runes.js:279",
+              "druh": "uzivatel",
+              "pocet_variant": "5 (General Guidance / Clarity / Confirmation / Insight into Challenge / Reflection)",
+              "radek_v_promptu": "Open a mirror, not an answer; turn them inward.",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "otázka (u.question) — přepíná qBranch/noqBranch",
+              "zdroj": "v2/runar-reading.js:237 (#r-question); větve RP_SINGLE.qBranch v2/runar-character.js:1504/:1519 a noqBranch :1506/:1522; _questionSafe :1653",
+              "druh": "uzivatel",
+              "pocet_variant": "2 větve (s otázkou / bez) × libovolný text otázky; ve spreadech navíc samostatná hlavička 'Question: …'",
+              "radek_v_promptu": "bez otázky: 'Mention Berkana by name once, woven naturally. One clear insight is enough…' · s otázkou: 'Let Berkana answer: \"…\" — through image and symbol, not advice.'",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "tvar konce (los ENDING_OPEN / ENDING_HEAVY)",
+              "zdroj": "v2/runar-utils.js:358 ENDING_HEAVY · :365 ENDING_OPEN · :384/:388 _IS · :412 _endingShape(); volá v2/runar-character.js:1581",
+              "druh": "los",
+              "pocet_variant": "3 (open) nebo 2 (heavy) — a jen 2 open, padl-li úhel [6] (vyluka angle[6]×open[1]); jen single, spready mají fixní S.landing",
+              "radek_v_promptu": "End on a quiet line that rests — not a question this time.",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "těžkost runy (HEAVY_RUNES) — přepíná pool konců",
+              "zdroj": "v2/runar-config.js:252 HEAVY_RUNES.names; čte _endingShape v2/runar-utils.js:412-415",
+              "druh": "z_runy",
+              "pocet_variant": "6 run (Hagalaz, Nauthiz, Isa, Thurisaz, Perth, Tiwaz) → heavy pool; ostatních 19 → open pool",
+              "radek_v_promptu": "NEVIDITELNÝ vstup — rozhoduje, ze kterého poolu konec padne",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "závěrečná čočka životní runy (CLOSING LENS)",
+              "zdroj": "v2/runar-character.js:932 _lensContext() · :930 _lifeLens() · :921 _lifeWasDrawn(); životní runa z DOB v2/runar-runes.js:235 calcLifeRune(), načtení v2/runar-reading.js:232",
+              "druh": "podminene",
+              "pocet_variant": "25 run nebo VŮBEC (chybí, když: mode 'someone', vypnutý přepínač, nebo je životní runa právě tou taženou)",
+              "radek_v_promptu": "CLOSING LENS — the life rune Uruz: let it shape ONLY the last sentence or question…",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "přepínač 'životní runa ve čteních' (lifeLensOn)",
+              "zdroj": "v2/runar-app.js:32 a :128 (user_profiles.life_rune_in_readings), :535-540 přepnutí; čte v2/runar-reading.js:234 → _lifeLens v2/runar-character.js:930",
+              "druh": "uzivatel",
+              "pocet_variant": "2 (zapnuto/vypnuto) — celý blok CLOSING LENS zmizí",
+              "radek_v_promptu": "NEVIDITELNÝ přepínač — buď je řádek CLOSING LENS v promptu, nebo není",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "režim čtení (_readingMode 'mine' / 'someone')",
+              "zdroj": "v2/runar-reading.js:227-232 (isMine → userName + _lifeRuneNum; jinak jméno z pole a lifeRune=null)",
+              "druh": "uzivatel",
+              "pocet_variant": "2 — v 'someone' padá čočka i uložené jméno",
+              "radek_v_promptu": "NEVIDITELNÝ — mění PERSON: i přítomnost CLOSING LENS",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "rod oslovení (ÁVARP, jen IS)",
+              "zdroj": "v2/runar-character.js:1059 _addressContext(); userGender v2/runar-app.js:22, :115-119 (user_profiles.address_gender + localStorage)",
+              "druh": "uzivatel",
+              "pocet_variant": "3 (kk / kvk / hk) — v EN promptu řádek není vůbec",
+              "radek_v_promptu": "ÁVARP: ávarpaðu viðmælandann í HVORUGKYNI (hán…)",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "blok slovních korekcí (getCorrPrompt)",
+              "zdroj": "v2/runar-character.js:1442 getCorrPrompt(); data v2/runar-app.js:1245-1262 loadCorrections() (DB tabulka + localStorage 'runar_corrections'), hradlo CORRECTIONS_IN_PROMPT",
+              "druh": "z_runy",
+              "pocet_variant": "0..N řádků podle živých dat v DB (filtr na lang / 'both')",
+              "radek_v_promptu": "Word corrections (follow strictly): - Never say \"X\" — say \"Y\" instead",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "systémový prompt: hlasový profil",
+              "zdroj": "v2/runar-character.js:1380 buildSysPrompt() · :1343 _getVoiceProfile(); v2/runar-config.js:452 ACTIVE_VOICE_PROFILE, :454 VOICE_PROFILES",
+              "druh": "podminene",
+              "pocet_variant": "3 (focused = produkce, direct, lyrical); shrine přepíná přes localStorage 'shrine_voice_profile'",
+              "radek_v_promptu": "HOW YOU SPEAK / He speaks directly and warmly… (+ YOUR STANCE, když profil má 'philosophy')",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "systémový prompt: vlastní postava z DB",
+              "zdroj": "v2/runar-app.js:1539-1542 (tabulka runar_character, active=true) → v2/runar-character.js:1380-1400",
+              "druh": "podminene",
+              "pocet_variant": "0 nebo 1 aktivní řádek; každé pole (identity/personality/purpose/never/philosophy/format/grammar) smí přepsat DEF_CHAR",
+              "radek_v_promptu": "IDENTITY & APPEARANCE / PERSONALITY / PURPOSE / WHAT YOU NEVER DO — obsah může přijít z DB, ne ze zdrojáku",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "spread: vazba mezi runami (_spreadThread)",
+              "zdroj": "v2/runar-character.js:805 _spreadThread(); volá buildNornsPromptFate :2023",
+              "druh": "staticke",
+              "pocet_variant": "2 (per jazyk), jen spready",
+              "radek_v_promptu": "Each rune takes up what the one before it left off — one continuous weave, never a list.",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "spread: dosednutí (S.landing) + takty Norn",
+              "zdroj": "v2/runar-character.js:1965 (is landing) / :1982 (en landing) a :1966-:1971 / :1983-:1988 beats; skládá se :2029-:2034",
+              "druh": "staticke",
+              "pocet_variant": "2 (per jazyk) — NAHRAZUJE losovaný konec, který má single",
+              "radek_v_promptu": "THE LANDING — the last sentence answers one thing… + 4 věty o Urður/Verðandi/Skuld",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "spread: priorita při konfliktu (_priorityContext)",
+              "zdroj": "v2/runar-character.js:952 _priorityContext(); volá se :2035 podmíněně (lensOn || u.area || u.seeking)",
+              "druh": "podminene",
+              "pocet_variant": "2 znění (s čočkou / bez čočky) + vynechání; single tuhle řádku NEMÁ",
+              "radek_v_promptu": "If these do not gather into one natural image: keep the runes that were drawn in front…",
+              "v_mape_code_read": false
+            },
+            {
+              "nazev": "pozice spreadu (labels) + JSON formát",
+              "zdroj": "v2/runar-character.js:1962 RP_NORNS.labels (is) / :1979 (en) · :1972/:1988 json · RP_SINGLE.json :1509/:1526",
+              "druh": "staticke",
+              "pocet_variant": "per spread × jazyk (norns 3 pozice, kriz 5, horseshoe 7, yggdrasil 9)",
+              "radek_v_promptu": "URÐUR (urd — what was woven, cannot be undone): … + 'Output format — return ONLY this JSON array…'",
+              "v_mape_code_read": false
+            }
+          ],
+          "chybi_v_mape": [
+            "obraz / jádro obrazu (los ze 108 řádků RUNE_IMAGES) — POZOR: v tabulce v RUNAR_EVAL_LOG.md:4419 řádek 'jádro obrazu' JE; ownerova sedmička ho vynechává",
+            "řádek sezóny (SEASON — …) — v tabulce EVAL_LOG:4418 jako 'období' JE, v sedmičce chybí",
+            "sezónní kbelík _seasonBucket — neviditelný vstup, který rozhoduje, ZE KTERÝCH obrazů (a tedy aspektů) se vůbec losuje",
+            "stav sáčku proti opakování v localStorage — los obrazu i místa není uniformní a závisí na zařízení a historii čtení",
+            "guard motivu (seasonmotif_ v localStorage) — zužuje los obrazu podle předchozího čtení",
+            "rozpočet DÉLKY (los 2 variant, 3 vs 4 věty) — sám CODE-read v EVAL_LOG:4312 zjistil, že délka mění, kam most dosedne; v mapě vstupů přesto není",
+            "tvar KONCE (los ENDING_OPEN 3 / ENDING_HEAVY 2 + vyluka angle[6]×open[1]) — poslední věta má vlastní los, mapa ji vede jen skrz 'most' a 'you stand'",
+            "těžkost runy (HEAVY_RUNES, 6 run) — přepíná celý pool konců, v mapě žádný řádek",
+            "oblast (u.area → 8 vět _domainContext + záchytná síť)",
+            "co hledám (u.seeking → 5 registrů) — a právě tenhle vstup podle EVAL_LOG:4470 tlačí dovnitř člověka",
+            "otázka uživatele (u.question) — přepíná qBranch/noqBranch, tedy i řádek 'Mention <runa> by name once', o kterém krok 01 skládačky říká, že vyrábí sponu 'This is Raidho'",
+            "záměr čtení (READING PURPOSE, 3 volby × čas urd/verdandi/skuld)",
+            "závěrečná čočka životní runy (25 run) + přepínač life_rune_in_readings + režim mine/someone — tři nezávislé páky na poslední větu",
+            "esenční řádek (THE ESSENCE LINE) a hlasový profil, ze kterého pochází (3 profily; produkce focused)",
+            "vlastní postava z DB (runar_character) — může přepsat identity/personality/purpose/never/philosophy/format/grammar v systémovém promptu",
+            "blok slovních korekcí z DB (getCorrPrompt)",
+            "rod oslovení ÁVARP (3 varianty, jen IS)",
+            "jazyk čtení (2) a typ spreadu (6) — spread rozhoduje, které losy vůbec existují: norns NEMÁ úhel, NEMÁ los délky ani los konce",
+            "svět + elementy runy na řádce DRAWN RUNE, a ve spreadu místo aspektu první 4 klíčová slova (_kwBrief) — spread tedy vazbu aspekt↔obraz nemá vůbec",
+            "statické bloky, které se mění s jazykem/spreadem: THE IMAGE (_imageRules), NO COLD READING, _spreadThread, S.landing, takty Norn, _priorityContext, pozice a JSON formát"
+          ],
+          "shrnuti": "Postavil jsem prompt produkční cestou (gen_direct.js --dry-run, single i norns, EN) a každý řádek dohledal do funkce. Výsledek: produkční single prompt má **38 rozlišitelných proměnných vstupů**, ownerova sedmička pokrývá **5** (místo, úhel, jméno runy, jméno člověka, aspekt). Zbylé dva z té sedmičky do produkčního promptu vůbec nevstupují: **„most\" je zatím jen testovaná varianta konce** (EVAL_LOG 2026-09-20 (3)–(6), v žádném builderu není), a **„you stand\" je EFEKT, ne vstup** — frázi vyráběl ENDING_OPEN[1], ten byl 2026-09-20 přepsán (fráze 6/6 → 0/6), druhý zdroj je úhel [6]. Mapa tedy měří dvě věci, které nejsou páky, a nemá řádek pro devět pák, které skutečně existují.\n\nDvě věci, které je podle mě potřeba říct ownerovi jako první:\n1. **Není zapomenut jen úhel — chybí celý ZADNÍ konec čtení.** Poslední věta má vlastní los (ENDING_OPEN 3 / ENDING_HEAVY 2, s vylukou angle[6]×open[1]), vlastní přepínač podle těžkosti runy (6 run z 25 posílá čtení do jiného poolu) a vlastní čočku životní runy (25 run × přepínač × režim mine/someone). Mapa má pro poslední větu jen „most\" a „you stand\", tedy jednu neexistující a jednu odvozenou položku. Přitom sám CODE-read v EVAL_LOG:4312 změřil, že **los délky** (3 vs 4 věty) rozhoduje, jestli most nahradí klidnou větu, nebo zbude věta navíc, kterou model 2/6 zaplní cold readingem — a los délky v mapě také není.\n2. **Ownerova sedmička je užší než to, co CODE-read skutečně naměřil.** Tabulka v `C:/Users/zkuku/Downloads/Runar-admin/RUNAR_EVAL_LOG.md:4415-4422` má **osm** řádků — kromě těch sedmi ještě „období\" (řádek sezóny) a „jádro obrazu\" — a úhel byl dopsán v záznamu (6). Doporučuju porovnat s tou tabulkou, ne s pamětí.\n\nTři nálezy, které se vejdou do jednoho řádku a mají cenu:\n- **Runa se v produkci NELOSUJE.** `buildGrid()` v `C:/Users/zkuku/Downloads/Runar-admin/v2/runar-app.js:1153-1166` nechá uživatele ťuknout na jednu z 25; v produkčních JS není žádný `RUNES[Math.random…]`.\n- **Aspekt („focus on:\") není nezávislý vstup** — je to 6. sloupec toho řádku RUNE_IMAGES, který vyhrál los obrazu (`v2/runar-character.js:745-746` → `:1541-1543`). Kdo hýbe obrazem, hýbe i aspektem. Záložní los 3 klíčových slov (`:1544`) je prakticky mrtvý: změřil jsem 0 mezer na 150 dvojicích runa×sezóna (108 řádků obrazů, všech 25 run pokryto v každém ze 6 kbelíků).\n- **Místo je téměř vždy mimo hru.** Los `IMG_PLACES` (6 míst) se spustí jen u řádků s 9. sloupcem `'jadro'` — ty jsou **tři a všechny Raidho**. Mapa mu přiřkla „věta 1 — 91 %\", ale platí to pro jednu runu z 25.\n\nA jedna past pro další měření: **norns (a spready obecně) mají jinou sadu pák než single** — žádný úhel, žádný los délky, žádný los konce (fixní `S.landing`), a místo aspektu první 4 klíčová slova (`_kwBrief`, `v2/runar-character.js:1889`). Mapa naměřená na single se na spready přenášet nedá."
+        }
+      },
+      {
+        "key": "handoff",
+        "data": {
+          "body": [
+            {
+              "bod": "B1a — dnešní plné znění ENDING_OPEN a ENDING_HEAVY (EN + IS)",
+              "tvrzeni_handoffu": "MOST K ČLOVĚKU = los ze TŘÍ tvarů konce; navržená EN znění (věta / dvě možnosti / otázka + heavy varianta) mají nahradit dnešní pool.",
+              "verdikt": "sedi",
+              "co_jsem_nasel": "C:/Users/zkuku/Downloads/Runar-admin/v2/runar-utils.js\n\nENDING_HEAVY (:358-363) — 2 položky:\n  [0] 'End on a line that stays standing — no soft question, no comfort; let it stand.'\n  [1] 'End with one hard question that stays with the image and asks for nothing to be admitted — no comfort, no softening.'\n\nENDING_OPEN (:365-383) — 3 položky:\n  [0] 'End with one open question asked of the image — no part of the question may claim what is true, missing, or not yet ready in the seeker.'\n  [1] 'End on a plain, steady line from the image — not what is true inside them; not a question.'\n  [2] 'End on a quiet line that rests — not a question this time.'\n\nENDING_HEAVY_IS (:384-387) — 2 položky · ENDING_OPEN_IS (:388-392) — 3 položky (paritní 1:1 k EN).\n\nPodstatné: dnešní pool je už POSTAVENÝ opačně, než handoff navrhuje. Komentáře u :365-380 dokládají dvě datovaná odebrání téhož tahu: 2026-09-19 vypuštěno „or offering a plain choice\" z open[0] (volba blízké×vzdálené 4/4 → 0/3) a 2026-09-20 vypuštěno „name where the seeker stands in the image\" z open[1] (konec „You stand…\" 6/6 → 0/6). Navržený tvar „dvě možnosti\" (open[1] i heavy) tu VOLBU vrací a navržené „names what this may be in the seekers life\" vrací tvrzení o člověku.",
+              "rizika": [
+                "§26 (návrat opuštěné věci): „plain choice\" bylo odebráno datovaným rozhodnutím 2026-09-19 s měřením. Vrácení ve dvou ze tří tvarů + v heavy = recidiva, dokud se nepojmenuje konkrétní vada, kvůli které to odešlo, a nevrátí se očištěné.",
+                "Kolize s _noColdRead (v2/runar-character.js:829-833): 'never tell the seeker what is true, stirring, or known inside them'. Tři ze čtyř navržených znění říkají 'what this may be in the seekers life / a state that may be so'. Hedge 'may' ten zákaz neruší — je to tvrzení o vnitřním stavu, jen v podmiňovacím tvaru. Dvě protichůdné instrukce = jedna jede mrtvá (doloženo v4.9/v4.13 u esenčního řádku a S.landing).",
+                "Navržený heavy tvar je JEDNA položka; dnes jsou dvě. Pool o jednom prvku = žádný los → konec těžkých čtení se stane pevným slotem, tedy přesně to, proti čemu _endingShape 2026-07-17 vznikl (RUNAR_DECISIONS.md:592).",
+                "§2: IS znění handoff nedodává. Bez něj se to nasadit nedá — IS pool má paritu a musí se VYMYSLET islandsky (ne přeložit), ověřit `check-is.py` + `is-vazba.py`.",
+                "§1: texty obsahují apostrof v 'seeker's life' (v handoffu je bez něj). Patch JS jedině Python skriptem (scripts/_patch_tune.py), ne Edit toolem."
+              ]
+            },
+            {
+              "bod": "B1b — je HEAVY_RUNES opravdu těch 6 run?",
+              "tvrzeni_handoffu": "těžké runy = Hagalaz · Nauthiz · Isa · Thurisaz · Perth · Tiwaz",
+              "verdikt": "sedi",
+              "co_jsem_nasel": "v2/runar-config.js:252-253:\n  const HEAVY_RUNES = {\n    names: ['Hagalaz', 'Nauthiz', 'Isa', 'Thurisaz', 'Perth', 'Tiwaz'],\nPřesně ty 6, v tom pořadí. Čte se v _endingShape (v2/runar-utils.js:413) přes HEAVY_RUNES.names.indexOf(r.n).\nPozor na druhý, nezávislý seznam: _COLD_RUNES (v2/runar-character.js:618) = ['Isa','Hagalaz','Nauthiz','Thurisaz'] — čtyři, řídí volbu cold/bright obrazu, NE konec. Nepleť si je.",
+              "rizika": [
+                "HEAVY_RUNES.names má i druhého konzumenta (thresholds pro strom, config:262-264). Kdyby se seznam v rámci téhle změny hýbal, mění to i tree signály — lane [tree]. Handoff seznam nemění, takže tohle riziko je jen preventivní."
+              ]
+            },
+            {
+              "bod": "B1c — jak funguje _endingShape: z kolika losuje a co dělá výluka úhel[6]×open[1]",
+              "verdikt": "sedi",
+              "co_jsem_nasel": "v2/runar-utils.js:412-428, signatura `_endingShape(drawn, lang, angle)`:\n1. heavy = jakákoli tažená runa v HEAVY_RUNES (array-aware, :414).\n2. pool = heavy ? ENDING_HEAVY(_IS) : ENDING_OPEN(_IS) → los z 2 (heavy) nebo z 3 (open).\n3. Výluka (:423-426): JEN když `!heavy && angle` a `angle === READING_ANGLES[6]`, odfiltruje se index 1 → pool 3→2. Heavy poolu se netýká, cest bez úhlu se netýká.\n4. Los je uniformní `pool[Math.floor(Math.random()*pool.length)]`.\n\nJEDINÉ živé volání: v2/runar-character.js:1581 `_endingShape(drawn, lang, angleDraw)` — single builder; úhel se losuje jednou (:1578 angleDraw) a předává se sem. Spready _endingShape od v4.13/v4.14 NEVOLAJÍ — nahradilo je S.landing (character.js:2203-2205, 1934-1935, 2023-2024, 2106-2107). Potvrzeno strojově: `node scripts/verify_prompt_levers.js` vypisuje páku `ending` jako „ano\" jen u single, u norns/kriz/horseshoe/yggdrasil/ask/liferune „(ne)\" se zapsanou výjimkou (scripts/verify_prompt_levers.js:169-170).\n\n⚠ Přímo v kódu u výluky stojí (:420-422): „2026-09-20: open[1] uz hledace do obrazu NESTAVI (fraze odesla) — premisa vyluky zeslabla. Vyluka zustava, dokud ji owner/CODE-read nezrusi datovanym rozhodnutim.\"",
+              "rizika": [
+                "Výluka je vázaná na INDEX 1, ne na význam. V navrženém pořadí [věta, dvě možnosti, otázka] je index 1 „dvě možnosti\" — s úhlem[6] nemá nic společného. Výluka by tichounce dál běžela a u úhlu[6] srážela pool na 2 ze špatného důvodu → měřitelná změna rozložení losu, kterou nikdo nezamýšlel. Buď se ruší datovaným rozhodnutím, nebo se překotvuje na nové znění — v témže commitu (§28: důvod u změny).",
+                "scripts/verify_ending_angle.js by po přepisu PROŠEL zeleně (testuje jen 'úhel[6] nikdy nedostane open[1]'), ale jeho hlavička (:1-12) by tvrdila nepravdu o významu. Tiché zelené (§19.2) — komentář kontroly se musí přepsat spolu s poolem."
+              ]
+            },
+            {
+              "bod": "B1d — co se rozbije při nahrazení ENDING_OPEN: jmenovitý výčet",
+              "verdikt": "castecne",
+              "co_jsem_nasel": "Kompletní grep (scripts/, smoke.py, golden_contracts.js, check-is.py, v2/) dává 5 míst, ne víc:\n\n1) scripts/verify_prompt_rules_registry.js:67-68 + scripts/prompt_rules_registry.json (EN :51-76, IS :645-670) — smoke ㉜. Registr drží sha1 otisk KAŽDÉ instrukční řádky. Nové znění = nové hashe = ČERVENÁ („NEZAREGISTROVANYCH…\"). PROČ: registr vynucuje, aby si nové řádky někdo přečetl vedle zákazů, kterých se týkají. CO S NÍ: po přezkoumání `node scripts/verify_prompt_rules_registry.js --zapis` — ale ZÁVORA na :131-141 to ODMÍTNE, dokud se nebumpne `RUNAR_PROMPT_VERSION` (v2/runar-config.js:59, dnes 'v4.31-podminka'). Bez bumpu se nová čtení v DB nerozeznají od starých. Smazané řádky jsou naopak jen informativní (:203), nečervenají.\n\n2) scripts/verify_ending_angle.js — smoke ㉨. Mechanicky PROJDE (čte pooly za běhu, ne natvrdo). CO S NÍ: přepsat hlavičku + rozhodnout o výluce (viz B1c).\n\n3) v2/runar-utils.js:283-352 `_promptDraws` — konec se čte ZPĚTNĚ substringem z hotového promptu (:324-329, `out.ending = 'heavy'+j` / `'open'+k`). Živá produkční cesta: v2/runar-reading.js:116 a :978 zapisují `draws` do `readings.prompt_draws` (sql/2026-08-10_readings_prompt_draws.sql). Po přepisu nový prompt rozparsuje správně, ale STARÁ uložená čtení už se substringem nespárují → `ending` u nich zmizí / se přemapuje na jiný index. PROČ: indexy open0/1/2 nesou v DB jiný význam před a po. CO S NÍ: kotví to bump `RUNAR_PROMPT_VERSION` (bod 1) — analýza pak musí filtrovat podle verze, jinak smíchá dvě různé taxonomie konců.\n\n4) scripts/golden/golden_dump.js + scripts/golden/golden_baseline.json — §18.3 golden-verify. NENÍ ve smoke (grep smoke.py: golden se volá jen jako golden_contracts.js, kontrola ⑥, což je korekce, ne pooly). Baseline je STALE: `git log -1 -- scripts/golden/golden_baseline.json` = 2026-07-05, má 14 klíčů proti 30+ z dnešního golden_dump.js a obsahuje mrtvé znění ('Endaðu með einni opinni, hljóðlægri spurningu.' v kriz_is), které v poolech dávno není. CO S NÍ: dělat PŘED/PO dump proti sobě (dvě čerstvá spuštění), ne proti checked-in baseline — ten by ukázal desítky falešných diffů.\n\n5) Rekonstrukční skripty v docs/eval/, které si natvrdo pinují index: docs/eval/2026-09-15-kratke-obrazy-esence/skripty/{raidho_rekonstrukce.js:24, t15_build.js:57}, 2026-09-18-jadro-a-misto/skripty/misto_build.js:40, 2026-09-18-krok2-rytmus/skripty/krok2_build.js:22, 2026-09-18-po-uklidu-raidho/skripty/uklid_build.js:30, 2026-09-19-identita-runa-x-misto/skripty/misto4_build.js:38, 2026-09-19-kratka-jadra/skripty/misto5_build.js:39 — všechny `_endingShape = () => ENDING_OPEN[2]`. Po přeskládání poolu by tytéž skripty postavily JINÝ prompt, než jaký nesla čtení, která reprodukují. CO S NÍ: buď zamrznout znění v samotném skriptu, nebo připsat, k jaké verzi promptu patří.\n\nVERDIKT „částečně\": zadání jmenovalo „golden fixtures\" jako brzdu — ta dnes brzdou není (stale, mimo smoke). Naopak nejmenovalo nejtvrdší brzdu: závoru na RUNAR_PROMPT_VERSION.",
+              "rizika": [
+                "Bez bumpu RUNAR_PROMPT_VERSION se změna nedá zaregistrovat → smoke ㉜ zůstane červený → nelze commitnout (§7).",
+                "Přepis poolu je změna chování → §16 vyžaduje záznam v RUNAR_DECISIONS.md ve stejném turnu, navíc s odvoláním na záznamy 2026-09-19 a 2026-09-20, které týž tah odebíraly.",
+                "check-is.py na tuhle plochu nesahá (grep: žádný zásah) — IS znění poolu tedy žádná automatická kontrola neposoudí. Musí projít `is-grammar-qa` + `is-vazba.py` ručně, jinak je to tiché zelené (§19.2)."
+              ]
+            },
+            {
+              "bod": "B2 — kde se _seasonLine volá a kdo ho dostane",
+              "verdikt": "sedi",
+              "co_jsem_nasel": "v2/runar-character.js:678-686 `_seasonLine(lang, d, m, y)` — jediný volající je :689 uvnitř `_imageBlock(lang, imgLine)` (:688-690):\n  return [_imageRules(lang), imgLine, _seasonLine(lang)].filter(Boolean).join('\\n');\n`_imageBlock` má 5 volajících — single :1565 a čtyři spready :1926 (norns), :2015 (kriz), :2098 (horseshoe), :2195 (yggdrasil). Ask, životní runa a systémový prompt ho nemají (ověřeno `node scripts/verify_contract_wiring.js`, blok BOD 7 → OK).\nZávislosti: SEASON_LABELS (:663-677, 13 klíčů) a `icelandicMonthKey` (:1095). Po odebrání _seasonLine zůstane SEASON_LABELS bez jediného čtenáře (mrtvý kód → §22: buď odebrat, nebo zapsat).\nDruhý zdroj sezóny v kódu je jen `_getIcelandicSeason` (:219-223) — komentář na :217 říká „Běží jen v laboratorní V2 cestě (getContextLine → buildSysPromptV2), produkční čtení ji nevolá.\" Takže po odebrání _seasonLine se do produkčního promptu nedostane o ročním období NIC.",
+              "rizika": [
+                "Odebrání zasáhne single I VŠECHNY 4 spready naráz (§13 full-path) — handoff mluví o bloku obrazu, ale volání je jedno, sdílené."
+              ]
+            },
+            {
+              "bod": "B2 — kontroly, které po odebrání _seasonLine zčervenají",
+              "verdikt": "sedi",
+              "co_jsem_nasel": "Čtyři místa, z toho dvě spadnou rovnou výjimkou:\n\n1) scripts/verify_contract_wiring.js:170-191 (blok „BOD 7\") — smoke ⑧. Tvrdí opak toho, co handoff chce: řádek sezóny MUSÍ být v single + 4 spreadech a NESMÍ být v system/ask/liferune, plus EN řádek nesmí nést islandské jméno měsíce. Po odebrání: 10 FAILů („sezona chybi: single_en, norns_en, …\"). CO S NÍ: blok se nemaže, OBRACÍ — z „musí být v 5 cestách\" na „nikde být nesmí\" (stejný vzor jako blok na :192+ u věty „sensory\"), s datem a důvodem (§28). Jinak se sezóna může tiše vrátit, což je přesně regrese, na kterou blok upozorňuje.\n\n2) scripts/verify_prompt_rules_registry.js:31 — smoke ㉜. `vm.runInContext('_seasonLine = (function(orig){…})(_seasonLine);')` — když funkce zmizí, vyhodnocení argumentu `_seasonLine` hodí ReferenceError a KONTROLA SPADNE (ne FAIL, ale crash). PROČ tam je: bez pinu na 15. 9. 2026 by registr červenal na každé hranici islandského měsíce. CO S NÍ: pin řádku odstranit spolu s funkcí.\n\n3) scripts/prompt_rules_registry.json:244 (en) a :838 (is) — dvě registrovaná pravidla se štítkem „late summer\"/„síðsumar\". Po odebrání jsou to „zmizelé\" řádky, a ty registr hlásí jen informativně (verify_prompt_rules_registry.js:203) → NEČERVENÁ. Ale pozor: registr se stejně přepisuje, jakmile se současně mění B1 (nové hashe), a tehdy platí i závora na RUNAR_PROMPT_VERSION.\n\n4) scripts/golden/golden_dump.js:58 — tentýž pin, tentýž ReferenceError. Není ve smoke, ale je to nástroj golden-verify (§18.3), který se pro tuhle změnu bude potřebovat.\n\nCo se NEDOTKNE (ověřeno spuštěním, vše OK): verify_prompt_levers.js (páka „sezona\" v mapě vůbec není — seznam je angle/image/keywords/ending/name/describe/thread/coldread/length/lens/domain/register/intention/priority/address/voice), verify_icelandic_calendar.js (testuje jen icelandicMonthKey, ne _seasonLine), verify_image_motifs.js, verify_image_register.js, check-is.py.",
+              "rizika": [
+                "Odebrání beze změny verify_contract_wiring.js = červený smoke → nelze commitnout.",
+                "Po odebrání nemá žádná kontrola důvod, proč sezóna v promptu NENÍ. Bez obráceného bloku v ⑧ se vrátí při první příští úpravě bloku obrazu (týž mechanismus jako u esenčního řádku, viz komentář na :152).",
+                "Sezóna se do prompt_draws nikdy nezapisovala (komentář character.js:662: „odvodi se z drawn_at + prompt_version\") — po odebrání se čtení „se sezónou\" a „bez sezóny\" rozliší JEN podle RUNAR_PROMPT_VERSION. Bez bumpu se ta hranice v DB ztratí."
+              ]
+            },
+            {
+              "bod": "B2 — tvrzení handoffu, že obrazy jsou filtrované podle měsíce a obraz z jiné sezóny nemůže přijít",
+              "tvrzeni_handoffu": "obrazy jsou filtrované podle měsíce (RUNE_IMG_SEASONS), obraz z jiné sezóny tedy přijít nemůže",
+              "verdikt": "nesedi",
+              "co_jsem_nasel": "Filtr existuje — v2/runar-character.js:620-629 `_runeImageCandidates`: `RUNE_IMG_SEASONS[row[1]]` (:452-456) musí obsahovat aktuální bucket z `_seasonBucket(new Date().getMonth()+1)` (:412-419, :710-711). Ale je HRUBÝ a tvrzení neplatí. Protlačeno produkčními funkcemi (ne pohledem):\n\n(a) 72 ze 108 řádků RUNE_IMAGES je tagováno 'any' → projdou VŠEMI šesti buckety. Jen 20 'bright' + 16 'cold' se vůbec filtruje. Dvě třetiny banky nejsou sezónní.\n\n(b) 'bright' = spring+earlysummer+highsummer+autumn, tedy 8 z 12 měsíců, a hranice bucketů se s islandským kalendářem SEASON_LABELS rozcházejí. Dva naměřené protipříklady:\n  · m=9: bucket 'autumn', štítek řádku sezóny „late summer\". Sowilo kandidáti obsahují 'The midnight sun never quite sets around Midsummer.' — obraz jmenuje MIDSUMMER, zatímco řádek sezóny říká late summer.\n  · m=3: bucket 'spring', štítek „late winter\" (goa). Fehu kandidáti obsahují 'The berry-heath grows heavy with bilberries when August comes.' — obraz jmenuje SRPEN, zatímco řádek sezóny říká late winter.\n\nTakže: obraz z jiné sezóny přijít MŮŽE, a dokonce si se řádkem sezóny může přímo protiřečit. Mimochodem to je argument PRO odebrání řádku sezóny (mizí jedna strana rozporu), ne proti — ale odůvodnění v handoffu je věcně špatné a nesmí se dostat do commitu jako důvod (§28: důvod musí obstát).",
+              "rizika": [
+                "Kdyby se řádek sezóny odebral S TÍMTO odůvodněním, zapíše se do RUNAR_DECISIONS.md nepravda a příští session se o ni opře.",
+                "Zbývá skutečná mezera: po odebrání řádku sezóny nebude v promptu nic, co brání obrazu jmenovat konkrétní měsíc („when August comes\", „around Midsummer\") v jakoukoli část roku. Kandidát do RUNAR_BACKLOG.md (§22) — buď přeštítkovat těch pár řádků, které měsíc jmenují, nebo měsíc z obrazů vypustit."
+              ]
+            },
+            {
+              "bod": "B3 — IMG_PLACES.P, odebrání „niðri í dalnum milli bæjanna\"",
+              "tvrzeni_handoffu": "vyhodit jedno místo z registru P",
+              "verdikt": "sedi",
+              "co_jsem_nasel": "v2/runar-character.js:695-704 `var IMG_PLACES = { P: [ …6 párů… ] }` — jediný registr, 6 míst, každé [IS, EN]. Cílové místo je na :701: ['niðri í dalnum milli bæjanna', 'down in the valley between the farms'].\n\nPo odebrání zbude 5. Mechanika: v2/runar-character.js:747-753 losuje `_seasonBagPick('mista', hit[6], mIds)`; sáček (:621-638) filtruje uložený zbytek proti aktuálním ids (`remaining.filter(id => ids.indexOf(id) !== -1)`), takže odebrané id ze staré localStorage hodnoty samo vypadne a nic se nerozbije. Fallback `mista[mIds.indexOf(mPick)] || mista[0]` drží.\n\nMísto dostávají jen řádky s jádrem (row[8]==='jadro'), dnes 3 — všechny Raidho, registr P: character.js:505, :605, :606.\n\nscripts/verify_image_register.js (smoke ㊱) PROJDE: kontroluje jen (a) že jádro má neprázdný seznam míst svého registru (:34-36), (b) že každý pár má [0] i [1] (:37-39), (c) round-trip _promptDraws na natvrdo zadaném 'í fjallaskarði' / 'a mountain pass' (:41-55) — jiné místo. Počet 6 nikde neaserovaný. Ověřeno spuštěním: „OK jadra: 3 radku, mista registru uplna\".\nRegistr pravidel se toho netkne: verify_prompt_rules_registry.js:56 kolabuje celý řádek IMAGE na hlavičku před dvojtečkou, takže obsah místa do otisků nevstupuje.\n\nNavíc: tohle už je ownerovo rozhodnutí, ne návrh. RUNAR_EVAL_LOG.md:4271 — „`IMG_PLACES.P` má zatím pořád *down in the valley between the farms* (ownerovo vyřazení 2026-09-20 nenasazeno).\"",
+              "rizika": [
+                "Nejlevnější ze čtyř bodů: 1 řádek, 0 kontrol červená. §1 ale platí — Python patch skript, ne Edit (řádek nese islandské znaky a apostrofy v okolí).",
+                "Dvě uložená eval čtení ten text obsahují (docs/eval/2026-09-19-produkcni-model/v430-nasazeno/api.json:13, docs/eval/2026-09-20-scena-a-vztah/v431-po-nasazeni/api.json:13). Historická data — nesahat, jen vědět, že se po odebrání nebudou dát reprodukovat."
+              ]
+            },
+            {
+              "bod": "B4 — odkud se bere rozpočet délky pro single a jestli se losuje",
+              "tvrzeni_handoffu": "délka: nic neměnit (jinde v handoffu: „los délky mění výsledek\")",
+              "verdikt": "castecne",
+              "co_jsem_nasel": "ANO, losuje se — a citované znění je jen jedna ze dvou možností.\nv2/runar-utils.js:399-402 `LENGTH_BUDGETS`:\n  [0] 'One flowing reading — 3 short sentences, 38 to 45 words total. … about 20 to 25 seconds spoken. …'\n  [1] 'One flowing reading — 4 short sentences, 50 to 58 words total. … about 28 to 33 seconds spoken. …'\nIS dvojče :403-406. `_lengthBudget(lang)` (:407-410) = uniformní `pool[Math.floor(Math.random()*pool.length)]`, tedy 50/50.\nVolá se jednou, v single builderu: v2/runar-character.js:1568 `_lengthBudget(lang),   // 2026-08-21: delka je losovana paka, ne pevna radka packu`. Spready, Ask ani životní runa ji nedostávají — zapsaná výjimka scripts/verify_prompt_levers.js:149-153 („Životní runa i follow-up mají vlastní instrukci o délce ve svém builderu — dvě délky proti sobě by si odporovaly\"). Ověřeno spuštěním: páka `length` = „ano\" jen u single.\nKomentář u poolu (:393-398) nese měření: tří-větný rozpočet dal 3 věty ve 4 ze 4 (45-52 slov), čtyř-větný 4 věty v 7 z 8 (56-66 slov), žádný překryv.\n\n⚠️ DÍRA, kterou handoff nezmiňuje: `_promptDraws` (v2/runar-utils.js:283-352) zapisuje angle, image, place, lens, ending, kws, name — DÉLKU NE. Ověřeno výčtem přiřazení do `out` (:292, :306, :312-313, :321, :326-329, :341, :349). Takže u reálného čtení v `readings.prompt_draws` nejde zpětně říct, který ze dvou rozpočtů padl.\n\nVERDIKT „částečně\": „nic neměnit\" jako pokyn je splnitelný a bezpečný (žádná z ostatních tří změn se délky netkne). Ale premisa, že single má rozpočet „3 short sentences, 38 to 45 words\", platí jen pro polovinu čtení.",
+              "rizika": [
+                "Když se B1 (konec) nebo B2 (sezóna) budou MĚŘIT na dávce čtení, los délky je nezapsaný confounder: polovina vzorku má o 12-13 slov víc a o jednu větu víc místa na konec. Bez záznamu se to nedá ani post-hoc odfiltrovat — jen zvětšit n, nebo si délku v generátoru připnout (scripts/utils/gen_batch.js:330 páku `length` zná a umí ji vypnout).",
+                "Kandidát do RUNAR_BACKLOG.md (§22): dopsat délku do _promptDraws. Je to jednořádkový substring proti LENGTH_BUDGETS, týž vzor jako `ending` na :324-329. Neopravoval jsem — zadání říká nic neměnit."
+              ]
+            }
+          ],
+          "shrnuti": "Ověřeno proti HEAD af8a930, nic nezměněno. Fakta handoffu o dnešním stavu kódu sedí (HEAVY_RUNES = přesně těch 6 run; ENDING_OPEN má 3 položky; _endingShape losuje z 3, resp. 2; IMG_PLACES.P má 6 míst; _seasonLine visí v _imageBlock a dostane ho single + 4 spready). Dvě tvrzení neobstála a jedno je nepřesné.\n\nNESEDÍ (naměřeno, ne odhad): tvrzení, že obrazy jsou filtrované podle měsíce a obraz z jiné sezóny nemůže přijít. 72 ze 108 řádků RUNE_IMAGES je tagováno 'any' a projde všemi šesti buckety; hranice bucketů se rozcházejí se štítky SEASON_LABELS. Protlačeno produkčním _runeImageCandidates: v září (bucket autumn, štítek „late summer\") je mezi Sowilo kandidáty obraz jmenující Midsummer, v březnu (bucket spring, štítek „late winter\") mezi Fehu kandidáty obraz jmenující srpen. Sezónní rozpor tedy reálně nastat může.\n\nNEPŘESNÉ: B4 předpokládá, že single má rozpočet „3 short sentences, 38 to 45 words\". To je LENGTH_BUDGETS[0]; _lengthBudget losuje 50/50 se čtyř-větným rozpočtem (50-58 slov). Navíc se los délky NEZAPISUJE do _promptDraws — u měření kterékoli z ostatních změn je to nezapsaný confounder.\n\nNejtvrdší brzda, kterou zadání nejmenovalo: registr pravidel (smoke ㉜) při přepisu ENDING_OPEN zčervená a --zapis to ODMÍTNE, dokud se nebumpne RUNAR_PROMPT_VERSION (v2/runar-config.js:59). Naopak golden fixtures, které zadání jako brzdu jmenovalo, brzdou dnes nejsou: scripts/golden/golden_baseline.json je z 2026-07-05, má 14 klíčů proti 30+ z dnešního dump skriptu a obsahuje mrtvá znění; ve smoke není.\n\nDvě věci, na které bych upozornil dřív než na implementaci: (1) navržené tvary konce vracejí VOLBU a tvrzení o vnitřním stavu — obojí bylo datovaně odebráno 2026-09-19 a 2026-09-20 s měřením (§26 vyžaduje pojmenovat vadu a vrátit očištěné); a kolidují s _noColdRead. (2) Výluka úhel[6]×open[1] je zakotvená na INDEX, ne na význam — v navrženém pořadí by dál běžela ze špatného důvodu a tiše srážela pool u úhlu[6]. Kód si na to sám upozorňuje na runar-utils.js:420-422.\n\nB3 (odebrání jednoho místa z IMG_PLACES.P) je jediný bod bez brzdy: 1 řádek, žádná kontrola nezčervená, a je to už ownerovo vyřazení z 2026-09-20 (RUNAR_EVAL_LOG.md:4271), jen nenasazené."
+        }
+      },
+      {
+        "key": "historie",
+        "data": {
+          "paky": [
+            {
+              "nazev": "READING_ASPECTS + _randomAspect (v2/runar-utils.js:441–472) — která dimenze runy vede čtení",
+              "obsah": "7 variant, ortogonálních vůči runě: shadow (cena pod darem, co runa tiše žádá) · gift (co už dává, než si toho leitandi všiml) · timing (jaký okamžik / práh v životě runa značí) · challenge (čemu má čelit / co přestat obcházet) · the body (kde runa teď bydlí jako tělesný pocit nebo držené napětí) · relationship (jak tvaruje spojení nebo oddělení od druhých) · the land (elementární, zemská kvalita — krajina nese význam).",
+              "kdy_odesla": "2026-07-10, commit c6eb89c. Vznikla 2026-06-06 v ef31d1c („reading variability pools — aspect, imagery, register (shrine only)\").",
+              "proc_odesla": "⚠️ POZOR NA PŘESNOU PŘÍČINU — není to verdikt o kvalitě poolu. Ověřeno: pool NIKDY nebyl v produkčním readeru. `git log -S \"_randomAspect\" -- v2/runar-reading.js v2/runar-character.js v2/runar-reader.html v2/runar-app.js v2/runar-tree.js` = PRÁZDNÝ výstup. Jediný volající byl shrine `_generateReading()` v záložce „V2 LAB\" (diff c6eb89c, ř. 694 a 699: `const _aspect = ... _randomAspect()` + `\\nLEAD ASPECT: ${_aspect}`). Zemřel HOST, ne páka: c6eb89c smazal V2 LAB jako §18 drift plochu — commit message: „The shrine's reading-preview was a second, drifted copy of the production reader (its own inline reading engine) — it broke and differed from production.\" Datovaný záznam: RUNAR_DECISIONS.md:328 (2026-07-10) a potvrzení RUNAR_DECISIONS.md:3266 (2026-08-17): „V2 lab je opravdu mrtvý — smazaný 2026-07-10 (c6eb89c, −971 řádků).\" Tvrzení mapy promptu (docs/runar-prompt-map.html:388) „labelled dead code; only caller was the removed V2 lab preview\" jsem OVĚŘIL — je PRAVDIVÉ. Jediná nepřesnost: „dead code\" zní jako by z produkce odešel; nikdy v ní nebyl. §23 — PŘIZNANÁ MEZERA: nenašel jsem NIKDE záznam, který by OBSAH nebo KVALITU tohoto poolu posoudil, změřil nebo zamítl. RUNAR_DECISIONS.md:565 a :687 o něm mluví jen jako o mrtvém kódu do „úklidové fronty\". Pool nebyl nikdy měřen.",
+              "existuje_dnes_ekvivalent": "ČÁSTEČNÝ. Živá páka: `_imgAspekt` = 5./6. sloupec `RUNE_IMAGES` (v2/runar-character.js:745–746), který jde do slotu `focus on:` v řádce DRAWN RUNE (`drawnCtx`, character.js:1541–1547: `S.DRAWN + ': ' + rn(drawn) + ' — ' + S.focus + ': ' + pickedKws`). Mění se po čtení, ALE varianty jsou VLASTNÍ významové stránky té runy (např. 'efnisleg velsæld' / 'wealth'), ne ortogonální dimenze. Co se ZTRATILO a nemá dnes ŽÁDNÝ zdroj: shadow/cena, the body, relationship, timing. Druhá vada ekvivalentu: aspekt už není LOSOVÁN NEZÁVISLE — je URČEN vybraným obrazem. Náhodný fallback `drawnKws.sort(...).slice(0,3)` (character.js:1543–1545) je fakticky mrtvý, protože `_imgAspekt` je vždy neprázdné (0 ze 150 dvojic runa×bucket bez kandidáta, změřeno 2026-09-08, CLAUDE.md). Živý `READING_ANGLES` (utils.js:212) NENÍ ekvivalent — všech 7 variant začíná „Open with/on/at ... the image\", tedy komponuje OBRAZ, neurčuje dimenzi runy.",
+              "navrat_by_znamenal": "1) Zapojit do JEDNÉ produkční cesty (buildReadingPrompt* buildery), NIKDY jako druhý builder — přesně to byla vada c6eb89c (§18.1). 2) Vyřešit KOLIZI se `_imgAspekt`: oba by cpaly tentýž slot `focus on:` = §20 duplikát na jednom místě. Buď aspekt řídí výběr obrazu, nebo obraz řídí aspekt — ne obojí. 3) Opravit ř. 441 „gift — what this rune is already giving\": nese cold-read vadu „already\", kterou owner z živého poolu úhlů záměrně odstranil (b99552d, DECISIONS:565 a :687 — a memory/verify-agent-claims-about-code.md:14 zaznamenává, že agent tuhle opravu jednou mířil DO mrtvého poolu, kde by nezměnila nic). 4) ZMĚŘIT — pool nebyl nikdy měřen, takže §24 návrat bez měření je hádání. 5) Nový datovaný záznam odvolávající se na c6eb89c a DECISIONS:565/:687 (§26 krok 4)."
+            },
+            {
+              "nazev": "IMAGERY_SOURCES + _randomImagery (v2/runar-utils.js:452–473) — odkud pochází centrální obraz",
+              "obsah": "8 variant, kategorie ZDROJE obrazu (ne konkrétní obraz): the sea (islandský oceán, hloubka, tah příboje) · volcanic ground (lávová pole, geotermální teplo skrz kámen) · the sky (aurora, půlnoční slunce, zimní tma, bouřkové světlo) · an animal (havran, polární lišky, alka, velryba, kůň — jedno zvíře nese celé čtení) · the season (kvalita islandského okamžiku) · a threshold (břeh, okraj útesu, dveře, nádech před krokem) · sound or silence (vítr po holé skále, praskot ledu, ticho po sněžení) · ancient stone (bazaltové sloupy, ledovcem tvarovaný kámen, stojící kámen).",
+              "kdy_odesla": "2026-07-10, commit c6eb89c (táž příčina i týž jediný volající jako u aspektu; vznik 2026-06-06 v ef31d1c).",
+              "proc_odesla": "Totožný mechanismus: jediný volající byl shrine V2 LAB (`\\nIMAGERY SOURCE: ${_imagery}`, diff c6eb89c ř. 695 a 699), smazaný jako drift plocha. Nikdy nebyl v produkčním readeru (git log -S přes reader soubory = prázdný). §23 — PŘIZNANÁ MEZERA: ani u tohoto poolu jsem nenašel záznam, který by jeho obsah hodnotil; RUNAR_DECISIONS.md:687 ho jen posílá do „úklidové fronty\". ⚠️ SOUVISEJÍCÍ NÁLEZ (§22, hlásím jako díru v dokumentaci, ne jako domněnku): dead-code komentář, který ten pool obklopuje, sám LŽE. v2/runar-utils.js:437–439 tvrdí „Production imagery lives in SEASON_POOLS (runar-character.js), injected per-reading by _seasonalImagery\". To je od měření 2026-09-08 NEPRAVDA: character.js:769 má `var phrase = runePhrase || ((lang === 'is') ? img.is : img.en)` a `runePhrase` je vždy neprázdné (0 ze 150 dvojic runa×bucket bez runového kandidáta — CLAUDE.md), takže text ze SEASON_POOLS se do promptu NEDOSTANE. Produkční obraznost je RUNE_IMAGES. Komentář tedy posílá příští session do slepé větve — tentýž druh vady, jakou §20 zakazuje.",
+              "existuje_dnes_ekvivalent": "PLNÝ, a živá páka je PROKAZATELNĚ SILNĒJŠÍ. `RUNE_IMAGES` (v2/runar-character.js:472) = banka konkrétních, předepsaných obrazů klíčovaných RUNOU, obojí jazyk na témž řádku (§18), losovaná po čtení `_seasonalImagery` (character.js:706) — plus tři věci, které mrtvý pool neměl vůbec: sáček proti opakování s klíčem per SADA run (`_seasonBagPick`), motiv-guard na 8. sloupci (týž pojmenovaný motiv nepřijde dvakrát po sobě, hlídá smoke ㉟) a registr D|E|P v 7. sloupci pro výběrovou kongruenci u spreadů (hlídá smoke ㊱). IS ověřeno is-grammar-qa, EN parita 1:1. Zásadní rozdíl v podstatě: IMAGERY_SOURCES jmenoval jen KATEGORII a obraz nechal VYMYSLET MODEL; RUNE_IMAGES dodává ověřený obraz hotový.",
+              "navrat_by_znamenal": "Tady je návrat v původní podobě RECIDIVA, a to z nové příčiny, ne z té staré: vrátil by modelem vymýšlenou obraznost VEDLE kurátorované banky = dvě věci plnící tentýž slot (§20), a obešel by ověření IS (§2) i oba smoke guardy. Pokud ownerovi chybí kategoriální osa („tentokrát vem obraz od moře\"), patří jako FILTR nad `RUNE_IMAGES` (týž vzor jako existující motiv-guard a bucket), ne jako druhý pool s vlastní cestou do promptu. Souvisí: 7. sloupec už tuhle roli částečně hraje a BACKLOG:166 hlásí, že sedmi runám dává jedinou hodnotu — tam je reálná mezera, ne v mrtvém poolu. A nezávisle na rozhodnutí o poolu: opravit lživý komentář utils.js:437–439 (§22/§28)."
+            },
+            {
+              "nazev": "READING_REGISTERS + _randomRegister (v2/runar-utils.js:464–474) — citová teplota a tón podání",
+              "obsah": "5 variant emoční teploty: fierce and direct (žádné mírnění, k jádru s péčí ale bez polstrování) · soft and still (jako u ohně v hluboké zimě — blízko, neuspěchaně, tiše) · quietly playful (suchý islandský humor pod tíhou, záblesk tepla, nikdy sentiment) · ancient and heavy (tíha starého kamene, pomalu, dlouhá paměť) · tender (jako by ta slova měl slyšet jediný člověk).",
+              "kdy_odesla": "2026-07-10, commit c6eb89c (jediný volající shrine V2 LAB, `\\nREGISTER: ${_register}`, diff ř. 696 a 699; vznik 2026-06-06 ef31d1c).",
+              "proc_odesla": "Táž strukturální příčina: páka visela na duplikátním engine, který byl smazán jako drift plocha; v produkčním readeru nikdy nebyla (git log -S přes reader soubory = prázdný). §23 — TOHLE JE NEJDŮLEŽITĚJŠÍ PŘIZNANÁ MEZERA CELÉHO ÚKOLU: nenašel jsem ŽÁDNÝ záznam, který by rozhodl „registr se po čtení losovat NEMÁ\". Prohledal jsem git log -S \"READING_REGISTERS\", grep RUNAR_DECISIONS.md na registr×los/náhoda/pestrost, docs/archive/, docs/findings/ i BACKLOG. Jediné zmínky (DECISIONS:687) ho řadí do úklidové fronty jako mrtvý kód. Dnešní jediný pevný profil tedy NEVZNIKL jako zamítnutí variability registru — vypadá jako volba pro měřitelnost produkce. Tvrdit víc bych musel domýšlet, a to §23 zakazuje.",
+              "existuje_dnes_ekvivalent": "ČÁSTEČNÝ, a ze čtyř páček NEJTENČÍ — osa citové teploty nemá dnes ekvivalent ŽÁDNÝ. Dva kandidáti, oba na jiné ose: (a) `VOICE_PROFILES` (v2/runar-config.js:450) — varianty EXISTUJÍ (focused, direct, …), ALE `ACTIVE_VOICE_PROFILE = 'focused'` (config.js:452) je KONSTANTA: volba na úrovni nasazení, nikoli po čtení. Žádný los. (b) `_registerContext` (character.js:1026, zapojen v single i všech spreadech: 1576, 1933, 2022, 2105) — 5 hodnot, mění se po čtení, ALE je DETERMINISTICKY řízen vstupem leitanda `seeking` (indexem do SEEKS), ne losem, a leží na ose POSTOJE/co čtení dělá („Let the rune lead where it will\" · „Bring one thing into focus, not one answer\" · „Neither confirm nor refute\" · „Name the friction honestly\" · „Open a mirror, not an answer\"), ne na ose teploty. Nic v dnešní produkci neudělá jedno čtení fierce a druhé tender.",
+              "navrat_by_znamenal": "1) NESMÍ vzniknout TŘETÍ hlasový mechanismus vedle `VOICE_PROFILES` a `_registerContext` — přesně tuhle vadu owner 2026-09-18 odstraňoval, když z `focused` vyhodil vzory hlasu jako „druhý mechanismus konce vedle losu konce\" (komentář config.js u profilu focused, DECISIONS 2026-09-18). Čistá cesta: udělat z teploty LOSOVANOU DIMENZI VNITŘ existující hlasové vrstvy, ne novou řádku promptu. 2) Ověřit, že teplota nekoliduje s postojovými zámky, které se měnit nesmí (`philosophy` zakazuje podat závěr, `_spine` zakazuje říct krok, `_noColdRead` zakazuje tvrdit čtenáři nitro) — „fierce\" se snadno svezne do „řekne, co to znamená\". 3) ZMĚŘIT, a podle §25 obrácenou pákou: netestovat „přidej teplotu\", ale variabilitu ještě UBRAT a ověřit, že se to zhorší. 4) Podle §27 napřed zaútočit na metriku (půlka proti půlce) — u měření stejnosti čtení zabil tento útok 2 ze 3 metrik. 5) Nový datovaný záznam s odkazem na c6eb89c."
+            },
+            {
+              "nazev": "RUNE_PLACEMENTS + _randomPlacement (v2/runar-utils.js:477–483) — kde ve čtení padne JMÉNO RUNY",
+              "obsah": "3 varianty pozice: early (pojmenuj runu v první nebo druhé větě, ať ukotví vše ostatní) · middle (nejdřív 2–3 věty stavěj obraz, runu pojmenuj jako ROZPOZNÁNÍ, ne jako představení) · late (jméno runy zadrž do poslední třetiny — když dorazí, padne jako potvrzení).",
+              "kdy_odesla": "2026-07-10, commit c6eb89c. Vznikla o 11 minut později než ostatní tři, 2026-06-06 v 77854cf („add rune placement pool + opening rule (shrine only)\") — a s ní i OPENING RULE („Never open with the rune name or with '[Rune] is / arrives / brings / speaks'\").",
+              "proc_odesla": "Táž příčina: jediný volající byl shrine V2 LAB (diff c6eb89c ř. 697 a 699: `const _placement = ... _randomPlacement()` + `\\nRUNE NAME PLACEMENT: ${_placement}`), smazaný jako duplikátní drift engine. V produkčním readeru nikdy nebyla. §23 — přiznaná mezera: ani zde není záznam hodnotící obsah poolu. ⚠️ ALE TADY EXISTUJE DOKLAD, KTERÝ §26 PŘÍMO ADRESUJE — a je to jediná ze čtyř páček, u níž se očištěný návrat UŽ JEDNOU STAL: hlavička `add_name_placement.py` (2026-07-14, Cowork patch) říká doslova „Harvested from the (dead) RUNE_PLACEMENTS idea. IS pool BÍN-verified by Cowork.\" Mechanismus byl tedy vzat, ověřen a zapojen — jen na jiné jméno.",
+              "existuje_dnes_ekvivalent": "ČÁSTEČNÝ — mechanismus ANO, předmět NE. Živé: `_namePlacement` + `NAME_PLACEMENTS` / `NAME_PLACEMENTS_IS` (v2/runar-utils.js:244–258), zapojené do closings VŠECH pěti packů v obou jazycích (character.js:1508, 1525, 1861, 1879, 1971, 1987, 2054, 2068, 2143, 2161), se 4 variantami (early / middle / late / vůbec ne — ta čtvrtá je hlavní rozbíječ slotu, jméno je i tak v PERSON: kontextu). Patch navíc odstranil §18 duplikát: tatáž větička o jménu byla copy-paste 5× EN + 5× IS. ALE týká se JMÉNA LEITANDA, ne jména RUNY. Jméno runy má dnes PEVNOU instrukci bez pozicové páky: „Mention \" + rune + \" by name once, woven naturally.\" (character.js:1520 v qBranch, :1524 v noqBranch). OPENING RULE z 77854cf není dnes v character.js ani utils.js NIKDE (ověřeno grepem) — nahrazuje ji implicitně živý `READING_ANGLES`, jehož všech 7 variant začíná „Open with/on/at ... the image\", takže otevření tlačí do obrazu, místo aby jméno runy zakazovalo.",
+              "navrat_by_znamenal": "Z celé čtveřice NEJOBHAJITELNĚJŠÍ návrat, protože precedens existuje a osvědčil se. Podmínky: 1) Jít do JEDNOHO místa, kde už jmenná klauzule bydlí — jako sourozenec `_namePlacement`, týmž vzorem (runtime volání uvnitř `closing:function(...)`, protože character.js se parsuje PŘED utils.js; ta past je popsaná v hlavičce add_name_placement.py). NIKDY jako nová samostatná řádka promptu. 2) Rozhodnout kolizi s pevným „by name once, woven naturally\" (character.js:1520/1524): nová páka to musí POHLTIT, nebo ta instrukce musí odejít — jinak prompt řídí tentýž slot dvakrát (§20) a podle memory/oprava-promptu-odebira-vadu.md se přidaný požadavek projeví ve textu jako formule. 3) Ošetřit interakci s živým poolem úhlů a s už zakódovanou výlukou utils.js:420–427 (úhel[6] × open[1]) — u té je od 2026-09-20 přímo v kódu poznámka, že se její premisa zeslabila a že změna rozložení losu je MĚŘENÁ ZMĚNA CHOVÁNÍ, ne úklid. 4) Nepřebírat OPENING RULE naslepo: byla napsána pro prompt, v němž nebyl dnešní pool úhlů. 5) Nový datovaný záznam s odkazem na c6eb89c a na 77854cf."
+            }
+          ],
+          "shrnuti": "HLAVNÍ ZÁVĚR, který mění rámec otázky: všechny čtyři páky zemřely NAJEDNOU, JEDNOU PŘÍČINOU, a ta příčina NENÍ verdikt o jejich kvalitě. Ověřeno tvrdě: `git log -S` pro každou ze čtyř funkcí přes produkční soubory (runar-reading.js, runar-character.js, runar-reader.html, runar-app.js, runar-tree.js) vrací PRÁZDNO — v produkčním readeru nikdy nebyly. Vznikly 2026-06-06 jako „shrine only\" (ef31d1c aspekt/obraz/registr, 77854cf placement) a jejich jediným volajícím byla shrine záložka „V2 LAB\" (diff c6eb89c, ř. 694–699). Ta byla 2026-07-10 smazána v c6eb89c (−971 ř.) jako §18 drift plocha — commit message: byla to „a second, drifted copy of the production reader (its own inline reading engine)\". Datováno v RUNAR_DECISIONS.md:328 a znovu potvrzeno :3266. Tvrzení mapy promptu (docs/runar-prompt-map.html:388) „only caller was the removed V2 lab preview\" jsem OVĚŘIL a je PRAVDIVÉ; jediná nepřesnost je slovo „dead code\", které zní jako odchod z produkce — ony v ní nikdy nebyly.\n\nCO TO ZNAMENÁ PRO §26: vada, kterou má očištěný návrat odstranit, není v OBSAHU poolů, ale v ZAPOJENÍ — byly napojené jen na duplikátní engine. Tu vadu odstraní zapojení do jedné produkční cesty. §23 PŘIZNÁVÁM OTEVŘENĚ: nenašel jsem NIKDE (git log -S na všechny čtyři názvy, grep RUNAR_DECISIONS.md, docs/archive/, docs/findings/, RUNAR_BACKLOG.md) jediný záznam, který by obsah nebo kvalitu těchto poolů posoudil, změřil nebo zamítl. Nikdy nebyly měřeny. DECISIONS:565 a :687 je zmiňují pouze jako mrtvý kód do „úklidové fronty\". Zvlášť u registru to znamená, že dnešní jediný pevný `ACTIVE_VOICE_PROFILE` NEVZNIKL jako rozhodnutí proti variabilitě registru — víc tvrdit bych musel domýšlet.\n\nPOŘADÍ PODLE SÍLY NÁVRATU: (1) RUNE_PLACEMENTS — nejobhajitelnější, očištěný návrat se u téhož mechanismu UŽ JEDNOU STAL (add_name_placement.py, 2026-07-14: „Harvested from the (dead) RUNE_PLACEMENTS idea\"), jen na jméno leitanda; jméno RUNY zůstává bez pozicové páky („by name once, woven naturally\", character.js:1520/1524). (2) READING_REGISTERS — osa citové teploty nemá dnes ekvivalent ŽÁDNÝ; VOICE_PROFILES je konstanta na úrovni nasazení a `_registerContext` je jiná osa (postoj) řízená vstupem, ne losem. (3) READING_ASPECTS — částečný ekvivalent `_imgAspekt`/`focus on:` varíruje jen VLASTNÍ významové stránky runy; shadow/cena, tělo, vztah, timing nemají dnes zdroj žádný, a aspekt už není losován nezávisle, je určen vybraným obrazem. (4) IMAGERY_SOURCES — jediná, kde by návrat v původní podobě byl RECIDIVA z NOVÉ příčiny: RUNE_IMAGES je plný a silnější ekvivalent (kurátorovaná ověřená banka + sáček + motiv-guard + registr, dva smoke guardy), a vrácení modelem vymýšlené obraznosti vedle ní = §20 duplikát na jednom slotu; kategoriální osa patří jako filtr nad bankou.\n\nDVĚ VĚCI K OPRAVĚ NAVÍC (§22, nalezeno při této práci): (a) Dead-code komentář v2/runar-utils.js:437–439 sám LŽE — tvrdí „Production imagery lives in SEASON_POOLS, injected per-reading by _seasonalImagery\", ale od měření 2026-09-08 je to nepravda: character.js:769 má `phrase = runePhrase || pool-obraz` a `runePhrase` je vždy neprázdné (0 ze 150 dvojic runa×bucket), takže text ze SEASON_POOLS se do promptu nedostane; produkční obraznost je RUNE_IMAGES. Komentář posílá příští session do slepé větve — tentýž druh vady, jaký §20 zakazuje. (b) Ř. 441 mrtvého READING_ASPECTS nese formulaci „gift — what this rune is already giving\", tedy cold-read vadu „already\", kterou owner z živého poolu úhlů záměrně odstranil — a memory/verify-agent-claims-about-code.md:14 zaznamenává, že agent tuhle opravu jednou mířil DO mrtvého poolu, kde by nezměnila nic.\n\nSPOLEČNÁ PODMÍNKA PRO KAŽDÝ NÁVRAT — kombinatorické číslo v commit messages je §24 past: ef31d1c a 77854cf inzerují „7×8×5×3 = 840 kombinací × 25 run = 21 000 strukturálně unikátních čtení\". To počítá kombinace PROMPTU, ne vnímatelně odlišná čtení. Jakýkoli návrat se musí měřit existující metrikou stejnosti (measure_sameness.js) a podle §27 napřed útokem na tu metriku (půlka proti půlce zabila 2 ze 3), a podle §25 obrácenou pákou — variabilitu napřed UBRAT a ověřit, že se to zhorší, což je o řád levnější než přisypávat obsah."
+        }
+      }
+    ],
+    "protipriklad": {
+      "poznamka": "POSTUP: 3 dávky gen_direct --dry-run (single/en, single/is, norns/en, n=3) + dávky n=40 pro měření frekvencí + vlastní matice (5 spreadů × 2 jazyky × 4 hodnoty userGender × otázka ano/ne × jméno Anna/„you\"/prázdné × životní runa žádná/jiná/tažená × lifeLensOn × kontext ano/ne × korekce ano/ne × 25 seedů) = 849 různých řádek promptu. Pak čtení buildParů v v2/runar-character.js, pák v v2/runar-utils.js, VOICE_PROFILES v v2/runar-config.js, call-site v v2/runar-reading.js a serverové cesty supabase/functions/claude-proxy/index.ts.\n\nCO SE POTVRDILO JAKO ÚPLNÉ: všech 8 živých losů (Math.random) je v seznamu — sáček (character.js:437), fallback obrazu (712), míchání klíčů (1516), úhel (utils.js:239), umístění jména vč. 55% mince (267/269), rozpočet délky (401), tvar konce (414). Mrtvé pooly (READING_ASPECTS / IMAGERY_SOURCES / READING_REGISTERS / RUNE_PLACEMENTS, utils.js:440-470) se nevolají — ověřeno grepem, správně v seznamu nejsou. Systémový prompt (buildSysPrompt) se mění JEN podle jazyka, hlasového profilu a vlastní postavy z DB — nic per-uživatel, ověřeno postavením obou jazyků.\n\nSTALE POLOŽKA V SEZNAMU: „řádek sezóny (SEASON — …)\" v produkčním promptu NEEXISTUJE — odstraněn 2026-09-20 (runar-character.js:653, komentář KUKY „zabírá místo, naprosto nedůležitá informace\"). V mé matici 0 výskytů z 849 řádek. Seznam byl tedy psán aspoň částečně z docu, ne z kódu.\n\nMRTVÁ CESTA (nehlásím jako vstup): claude-proxy umí přilepit do systémového promptu blok ze `tree_state` (buildTreeContext / buildSessionContext / buildVoiceContext, index.ts:687-722), ale hlídá to `ENABLE_DYNAMIC_CONTEXT = false` (index.ts:47). Až se zapne, budou to tři nové vstupy, které v seznamu nejsou.\n\nCHYBY NAŠEL PŘI HLEDÁNÍ (§22, hlásím, neopravuji — produkční JS nesahám):\n(a) v2/runar-utils.js:378,381,382,383 — islandské konce mají překlep `þtta` místo `þetta` (4×), jde to do ostrého IS promptu. Nově přidané řádky (dnešní změna „MOST K ČLOVĚKU\").\n(b) Tytéž řádky měly při mém prvním průchodu neescapované apostrofy v `seeker's` v single-quoted stringu → runar-utils.js se vůbec neparsoval (SyntaxError). Při druhém čtení už byly v double quotes, takže to jiná session opravila během mé práce. Je to přesně to, co §1 popisuje.\n(c) v2/runar-character.js:1497 — když `_namePlacement` vrátí '' (jméno = „you\"/„þú\"), zůstane v EN promptu dvojitá mezera: „No labels.  Stay within the word count\".",
+      "seznam_je_uplny": false,
+      "vynechane": [
+        {
+          "nazev": "Tier + stav kreditů + přihlášení (Visitor) — rozhoduje, které pilulky si člověk VŮBEC smí vybrat, tedy které bloky promptu mohou vzniknout",
+          "dukaz": "v2/runar-app.js:1206-1209: `const _isVisitor = !currentUser;` · `const _isRSnoCredits = currentUser && userTier === 'rune_seeker' && userCredits <= 0;` · `const _areaUnlocked = _isRSnoCredits ? 3 : undefined;` · `const _seekUnlocked = _isRSnoCredits ? 1 : undefined;` — a v2/runar-app.js:1215 `el.classList.toggle('pills-locked', _isVisitor)` + v2/runar-reader.css:465 `.pills-locked{opacity:0.35;pointer-events:none;}`. MĚŘENO: prompt Visitora (area='' seeking='' intention='' lifeRune=null) má 13 řádek, plný prompt téhož seedu 17 — chybí celé řádky `READING PURPOSE: …`, `The reading is for … — let the image you were given land …` a `Open a mirror, not an answer; turn them inward.`",
+          "proc_zalezi": "Seznam uvádí oblast, hledání a záměr jako volné vstupy. Nejsou volné: Visitor je nemá ŽÁDNÉ (tři bloky promptu zmizí naráz), a rune_seeker s vyčerpanými kredity, který čte z měsíčního free_balance, dosáhne jen na AREAS[0..2] z osmi a SEEKS[0..0] z pěti — jeho čtení tedy NIKDY nedostane jinou větu registru než `Let the rune lead where it will; do not force a purpose.` a nikdy `_domainContext` pro Healing/The Unseen/Family/Inner Growth/Crossroads. Kdo měří vliv oblasti nebo registru a nerozliší tier, míchá dvě různé populace promptů."
+        },
+        {
+          "nazev": "Životní runa byla sama tažena (`_lifeWasDrawn`) — třetí přepínač čočky, nezávislý na CLOSING LENS i na lifeLensOn",
+          "dukaz": "v2/runar-character.js:893 `_lifeWasDrawn()`, :908 `if (_lifeWasDrawn(life, list)) return '';` (uvnitř `_lensContext`), :1505-1506 `var isLifeRune = _lifeWasDrawn(life, drawn); var lensOn = !!life && !isLifeRune;`, totéž :1874, :1968, :2048, :2141. MĚŘENO (25 běhů, life = tažená runa proti life = jiná runa): blok `CLOSING LENS — the life rune …` je v promptu 0/25 vs 25/25. U norns se navíc PŘEPÍNÁ znění priority: `…keep the runes that were drawn in front and honour the seeking and the area.` proti `…keep the runes that were drawn in front, honour the seeking and the area, and let the life-rune lens recede — it may vanish entirely rather than be forced.` Na ostré dávce single/en n=40 s `--liferune random` vyšel blok 39/40, na norns 35/40 — tj. chybějící kus je právě tahle náhoda.",
+          "proc_zalezi": "Seznam má „závěrečná čočka životní runy (CLOSING LENS)\" (samotný blok) a „přepínač lifeLensOn\" (volba uživatele), ale ne tuhle třetí podmínku. Není to jen odvozenina: seznam sám vede jako vstup `HEAVY_RUNES` („těžkost runy — přepíná pool konců\"), což je přesně týž druh predikátu nad taženou runou. Podle vlastního měřítka seznamu tedy `_lifeWasDrawn` patří do seznamu. A není to vzácné: u Yggdrasilu je pravděpodobnost 9/25 (≈36 % čtení), u norns 3/25, u single 1/25 — kdo rekonstruuje z `readings.life_rune`, u třetiny Yggdrasilů tvrdí čočku, která v promptu nebyla."
+        },
+        {
+          "nazev": "Hlasový profil (ACTIVE_VOICE_PROFILE / globál `activeVoice`) přepisuje i ZPRÁVU, ne jen systémový prompt — mění celý esenční řádek",
+          "dukaz": "v2/runar-character.js:1538 `_describeRule(lang),` (uvnitř buildReadingPromptSingle) → :783 `function _describeRule(lang, key) { var podleRegistru = _profileRule('describe', lang, key); if (podleRegistru) return podleRegistru; …}` → :764-770 `_profileRule` bere klíč z `activeVoice || ACTIVE_VOICE_PROFILE`. Znění bydlí v v2/runar-config.js:492 (`focused.rules.describe`) a :528 (`direct.rules.describe`). MĚŘENO na témž seedu: profil focused → `THE ESSENCE LINE: after the picture, one short line that says what the rune DOES…`; profil direct → `SAY WHAT THE RUNE IS, THEN PLACE IT: name in ordinary words what the rune stands for…`. Týmž mechanismem se mění i `YOUR STANCE` v systémovém promptu (`_profileRule('philosophy')`, character.js:1352 blok).",
+          "proc_zalezi": "Seznam vede hlasový profil výhradně jako „systémový prompt: hlasový profil\" a esenční řádek zvlášť jako pevný blok zprávy. Ve skutečnosti je to JEDEN vstup se třemi výstupy (HOW YOU SPEAK, YOUR STANCE, THE ESSENCE LINE) a přepnutí profilu vymění instrukci, která podle RUNAR_EVAL_LOG rozhodovala o vlastnosti „řekne smysl runy\" (0/8 → 6/8 EN, p=0,0035). Kdo podle seznamu uvěří, že profil sedí jen v systémovém promptu, bude hledat příčinu změny esenčního řádku na špatném místě — a zrovna u systémového promptu platí, že ho model ignoruje (CLAUDE.md „KLÍČ\")."
+        },
+        {
+          "nazev": "Přítomnost/absence jména (`u.name` = 'you' / 'þú' / prázdné) — vypíná celý los umístění jména, nejen jeho hodnotu",
+          "dukaz": "v2/runar-utils.js:258-263 `function _namePlacement(name, lang) { if (!name || name === 'you' || name === 'þú') return ''; …}`; jméno se na tuhle hodnotu nastavuje v v2/runar-reading.js:231 `if (!name) name = lang === 'is' ? 'þú' : 'you';`. MĚŘENO: prompt s name='you' NEMÁ žádnou ze čtyř řádek NAME_PLACEMENTS — závěr zní `One paragraph. No breaks. No labels.  Stay within the word count…`, kdežto s name='Anna' tam stojí např. `Address Anna once in the middle, as a recognition rather than an introduction.` V mé matici jsou v unii řádek i varianty `PERSON: you`, `PERSON: ` (prázdné) a `Seeker: you`.",
+          "proc_zalezi": "Seznam má „jméno člověka (u.name)\" a „umístění jména (los NAME_PLACEMENTS)\" jako dvě hodnoty, ale ne tu podmínku, která ten los úplně ruší. A ruší ho pro celou jednu populaci čtení: Visitor bez zadaného jména a KAŽDÉ čtení v režimu 'someone' bez vyplněného jména. Kdo měří vliv umístění jména (_promptDraws to ukládá jako `name`), dostane u těchto čtení chybějící položku, ne čtvrtou variantu — a bez téhle podmínky v seznamu ji bude čtená zpětně vypadat jako selhání instrumentace."
+        },
+        {
+          "nazev": "Oblast / hledání MIMO kanonický seznam AREAS/SEEKS — jiná záchytná věta u oblasti, u hledání úplné mlčení",
+          "dukaz": "v2/runar-character.js:996-997 (záchytná síť `_domainContext`): `return 'This reading is about: ' + area + ' — let it land clearly in that part of life, through image, never as a stated topic.';` — jiná věta než osm kanonických z mapEn[0..7] (:968-977). A v2/runar-character.js:999-1003 `_registerContext`: `var idx = (SEEKS.en||[]).indexOf(s); if (idx === -1) idx = (SEEKS.is||[]).indexOf(s); if (idx === -1) return '';` — nekanonická hodnota tiše nedá ŽÁDNOU řádku registru. Mapy jsou navíc indexované POŘADÍM (komentář :963: „⚠️ Mapa je indexovaná PORADIM v AREAS\").",
+          "proc_zalezi": "Slabší než předchozí čtyři — přiznaná hranice: z reader UI se tam kanonická hodnota dostat nemá (pilulky ukládají popisek a `_syncPillLang` v runar-app.js:1191-1203 ho remapuje přes index). Cesta do promptu ale existuje pro cokoli, co `u` skládá jinde než z pilulek (shrine, volný text generátorů, řádek z DB) — přesně proto tam ta záchytná síť je. Do seznamu to patří jako vstup, protože to není jiná HODNOTA oblasti, ale jiná VĚTA v promptu a u hledání zmizelý blok; rozdíl mezi „registr nezabral\" a „registr tam nebyl\" se bez toho neposoudí (§19.2)."
+        }
+      ]
+    }
+  },
+  "workflowProgress": [
+    {
+      "type": "workflow_phase",
+      "index": 1,
+      "title": "Prověrka"
+    },
+    {
+      "type": "workflow_phase",
+      "index": 2,
+      "title": "Protipříklad"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 1,
+      "label": "inventura",
+      "phaseIndex": 1,
+      "phaseTitle": "Prověrka",
+      "agentId": "a235882cd6e4eecb1",
+      "model": "claude-opus-5",
+      "state": "done",
+      "startedAt": 1789919958231,
+      "queuedAt": 1789919958193,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "Postavil jsem prompt produkční cestou (gen_direct.js --dry-…",
+      "promptPreview": "ÚKOL: exhaustivní INVENTURA všech proměnných vstupů, které vstupují do produkčního promptu čtení v repu C:/Users/zkuku/Downloads/Runar-admin.\n\nPOSTUP (drž se ho):\n1. Postav si REÁLNÝ prompt produkční cestou, neodhaduj ze zdrojáku:\n   cd C:/Users/zkuku/Downloads/Runar-admin && node scripts/utils/gen_direct.js --spread single --lang en --n 2 --liferune random --tag invA --dry-run\n   totéž pro --spre…",
+      "promptFramed": true,
+      "lastProgressAt": 1789920414123,
+      "tokens": 159382,
+      "toolCalls": 38,
+      "durationMs": 455888,
+      "resultPreview": "{\"vstupy\":[{\"nazev\":\"lang (jazyk čtení)\",\"zdroj\":\"v2/runar-reading.js:103 buildReadingPrompt(u, drawn, lang, corrections); packy RP_SINGLE[lang] v2/runar-character.js:1491, RP_NORNS[lang] :1959\",\"druh\":\"uzivatel\",\"pocet_variant\":\"2 (en, is)\",\"radek_v_promptu\":\"vybírá VŠECHNY řádky (labely, packy) + poslední řádek 'Respond in English.'\",\"v_mape_code_read\":false},{\"nazev\":\"typ spreadu (_spreadMode)\"…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 2,
+      "label": "handoff",
+      "phaseIndex": 1,
+      "phaseTitle": "Prověrka",
+      "agentId": "a31fb3f1822621f26",
+      "model": "claude-opus-5",
+      "state": "done",
+      "startedAt": 1789919958233,
+      "queuedAt": 1789919958193,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "Ověřeno proti HEAD af8a930, nic nezměněno. Fakta handoffu o…",
+      "promptPreview": "ÚKOL: ověř proti KÓDU handoff od CODE-read (repo C:/Users/zkuku/Downloads/Runar-admin, HEAD = af8a930). Nic neměň, jen ověřuj.\n\nBODY K OVĚŘENÍ:\n\nB1) MOST K ČLOVĚKU = los ze TŘÍ tvarů konce. Navržená znění (EN):\n  věta: „End on one line that names what this may be in the seekers life — a state that may be so, offered for them to weigh; it names how things may stand, never what to do about it.\"\n  dv…",
+      "promptFramed": true,
+      "lastProgressAt": 1789920458000,
+      "tokens": 158330,
+      "toolCalls": 43,
+      "durationMs": 499764,
+      "resultPreview": "{\"body\":[{\"bod\":\"B1a — dnešní plné znění ENDING_OPEN a ENDING_HEAVY (EN + IS)\",\"tvrzeni_handoffu\":\"MOST K ČLOVĚKU = los ze TŘÍ tvarů konce; navržená EN znění (věta / dvě možnosti / otázka + heavy varianta) mají nahradit dnešní pool.\",\"verdikt\":\"sedi\",\"co_jsem_nasel\":\"C:/Users/zkuku/Downloads/Runar-admin/v2/runar-utils.js\\n\\nENDING_HEAVY (:358-363) — 2 položky:\\n  [0] 'End on a line that stays stan…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 3,
+      "label": "historie",
+      "phaseIndex": 1,
+      "phaseTitle": "Prověrka",
+      "agentId": "a623d6357b3118c33",
+      "model": "claude-opus-5",
+      "state": "done",
+      "startedAt": 1789919958235,
+      "queuedAt": 1789919958193,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "HLAVNÍ ZÁVĚR, který mění rámec otázky: všechny čtyři páky z…",
+      "promptPreview": "ÚKOL: v repu C:/Users/zkuku/Downloads/Runar-admin jsou v v2/runar-utils.js (kolem ř. 441–483) čtyři POOLY a k nim losovací funkce, které NIKDO NEVOLÁ:\n  READING_ASPECTS + _randomAspect · IMAGERY_SOURCES + _randomImagery · READING_REGISTERS + _randomRegister · RUNE_PLACEMENTS + _randomPlacement\n\nOwner zvažuje, jestli víc věcí ve čtení udělat proměnlivých (dnes se losuje: úhel, obraz, místo u jader,…",
+      "promptFramed": true,
+      "lastProgressAt": 1789920360459,
+      "tokens": 131267,
+      "toolCalls": 29,
+      "durationMs": 402223,
+      "resultPreview": "{\"paky\":[{\"nazev\":\"READING_ASPECTS + _randomAspect (v2/runar-utils.js:441–472) — která dimenze runy vede čtení\",\"obsah\":\"7 variant, ortogonálních vůči runě: shadow (cena pod darem, co runa tiše žádá) · gift (co už dává, než si toho leitandi všiml) · timing (jaký okamžik / práh v životě runa značí) · challenge (čemu má čelit / co přestat obcházet) · the body (kde runa teď bydlí jako tělesný pocit n…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 4,
+      "label": "protipriklad",
+      "phaseIndex": 2,
+      "phaseTitle": "Protipříklad",
+      "agentId": "ae56133cf49afc7c3",
+      "model": "claude-opus-5",
+      "state": "done",
+      "startedAt": 1789920460546,
+      "queuedAt": 1789920460532,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "POSTUP: 3 dávky gen_direct --dry-run (single/en, single/is,…",
+      "promptPreview": "ADVERSARIÁLNÍ KONTROLA ÚPLNOSTI. Jiný agent tvrdí, že tohle je ÚPLNÝ seznam proměnných vstupů do produkčního promptu čtení Rúnara:\n\nlang (jazyk čtení) · typ spreadu (_spreadMode) · jméno člověka (u.name) · umístění jména (los NAME_PLACEMENTS) · tažená runa (readerRune) · aspekt runy (focus on:) · záložní los 3 klíčových slov z rk(runa) · svět a elementy runy · klíčová slova ve spreadu (_kwBrief) ·…",
+      "promptFramed": true,
+      "lastProgressAt": 1789921228138,
+      "tokens": 228367,
+      "toolCalls": 62,
+      "durationMs": 767591,
+      "resultPreview": "{\"poznamka\":\"POSTUP: 3 dávky gen_direct --dry-run (single/en, single/is, norns/en, n=3) + dávky n=40 pro měření frekvencí + vlastní matice (5 spreadů × 2 jazyky × 4 hodnoty userGender × otázka ano/ne × jméno Anna/„you\\\"/prázdné × životní runa žádná/jiná/tažená × lifeLensOn × kontext ano/ne × korekce ano/ne × 25 seedů) = 849 různých řádek promptu. Pak čtení buildParů v v2/runar-character.js, pák v …"
+    }
+  ],
+  "totalTokens": 677346,
+  "totalToolCalls": 172
+}
