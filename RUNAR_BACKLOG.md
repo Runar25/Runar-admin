@@ -73,15 +73,23 @@
 - [ ] **Tvar „VĚTA" drží „may be" hůř než dvě možnosti a otázka** — 2 ze 16 posledních vět vypadly z tvaru
   možnosti, obě u tvaru věta (`ENDING_OPEN[0]`, `ENDING_HEAVY[1]`), doklady v EVAL_LOG 2026-09-20 (11).
   Patří do tvrdých kontrol produkčního kandidáta; při větším vzorku ověřit, jestli to není náhoda.
-- [ ] ⭐ **IS: spready říkají člověku „leiðandi", single „leitandi" — jedno z toho je špatně** (nález CODE-read
-  2026-09-20 při psaní islandského závěru Norns). `RP_ATTAVITI/NORNS/SKEIFAN/YGGDRASIL.is` mají `seeker:'Leiðandi'`
-  a intro *„Leiðandinn dregur…"* (13 výskytů), single a konce používají `leitandi` (22 výskytů) — **v jednom souboru
-  dvě slova pro touž osobu**, a nikde v docs to není jako záměrný termín.
-  🔒 Slovník (`is-vazba.py`): **leiðandi = vedoucí** (*„fyrirtækið er leiðandi í lyfjaframleiðslu"*, a jako kolokace
-  **`leiðandi spurning` = návodná otázka** — přesně to, co Rúnar dělat nemá) · **leitandi = hledající**
-  (*„hann er mjög leitandi í trúmálum"*). Pro člověka, který přišel hledat, sedí `leitandi`.
-  ⚠️ **Netvrdím, že vím, jak to má být** (§23) — IS vlastní CODE-tune a píše se nativně. Jisté je jen to, že si
-  repo protiřečí. Rozhodnout jedním sweepem přes všechny čtyři spready, ne po jednom.
+- [ ] ⭐ **IS CHYBA: spready oslovují člověka jako „toho, kdo VEDE" — 17 míst, sweep** (nález CODE-read
+  2026-09-20 při psaní islandského závěru Norns; owner: *„IS umíš udělat i ty"* — dotaženo do verdiktu, ne dotazu).
+  **Verdikt: `Leiðandi` a `Leiðin` jsou ve čtyřech spreadových packech špatně.** Doklad, ne dojem:
+  🔒 `leita` = hledat (rekce **eignarfall**; `leita að`, `leita til`) → příčestí **`leitandi` = hledající**.
+  🔒 `leiða` = vést (rekce **þolfall**; `leiða til` = vést k) → příčestí **`leiðandi` = vedoucí**; slovníková
+  kolokace **`leiðandi spurning` = návodná otázka**, doslova to, co Rúnar dělat nemá.
+  🔒 `leit` (kvk) = hledání (*„leitin að ferðamanninum"*) × `leið` (kvk) = cesta (*„á leiðinni þangað"*).
+  Anglické packy mají ve všech čtyřech spreadech `seeker:'Seeker'` a `seeking:'Seeking'` — IS tedy říká
+  **„vedoucí" a „cesta"** tam, kde EN říká „hledající" a „hledání". Protlačeno produkční cestou: v promptu
+  Norns stojí `Leiðandi: Kuky` a *„Leiðandinn dregur þrjár rúnir"* — model dostává informaci, že ten člověk vede.
+  Single a konce přitom používají `leitandi` (22 výskytů) správně, takže si soubor protiřečí sám se sebou.
+  **Sweep (17 náhrad v `v2/runar-character.js`, jen IS packy spreadů):** 4× `seeker:'Leiðandi'` → `'Leitandi'` ·
+  4× `seeking:'Leiðin'` → `'Leitin'` · 4× `intro:'Leiðandinn dregur …'` → `'Leitandinn dregur …'` ·
+  5× `leiðandinn` → `leitandinn` (4× *„leiðandinn sér þær þegar"*, 1× *„þess sem leiðandinn bar fram"*).
+  ⚠️ Udělat JEDNÍM tahem přes všechny čtyři spready (Áttaviti · Norns · Skeifan · Yggdrasil) — po jednom by
+  vznikl smíšený stav. Po sweepu: `check-is.py`, golden-verify a protlačit prompt, že tam `leiðand` nezůstal.
+  ⚠️ Pozor na AREAS: `Tilgangur & Leið` je NÁZEV OBLASTI a `Leið` = cesta je tam SPRÁVNĚ — sweep se ho nesmí dotknout.
 - [ ] ⭐ **SPREADY × SINGLE: ROZCHÁZEJÍ SE PÁKY — vyřešit** (KUKY 2026-09-20: *„zapsat. to by se mělo vyřešit."*).
   `_domainContext` i `_registerContext` krmí single **i všechny spready**, ale spready mají navíc rozhodčí větu
   `_priorityContext` (*„honour the seeking and the area"*), kterou single NEMÁ (ověřeno: 4 volání, všechna ve

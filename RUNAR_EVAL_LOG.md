@@ -4652,3 +4652,24 @@ Podklady → `docs/eval/2026-09-20-rejstrik-ven/`.
 ⚠️ **Souběh s produkcí:** během tohohle měření nasadil CODE-tune `34c1bbd` (v4.36) — dosednutí mostu do
 oblasti a tvar podle rejstříku. **Zákaz v `_domainContext` nechal beze změny**, takže produkce je dnes na
 mém rameni **K** (dosednutí 4/6), ne na **V** (6/6). Výjimka v zákazu je tedy stále nenasazená — viz backlog.
+
+## 2026-09-20 (12) — IS: spready oslovují člověka jako „toho, kdo vede" (ověřeno slovníkem, ne odhadem)
+
+**Owner:** *„IS umíš udělat i ty, co to placáš! Máš možnost si to ověřit jako každý!"* — oprávněně. Napsal jsem
+o nálezu *„netvrdím, že vím, jak to má být, IS vlastní CODE-tune"*, což je přesně to odkládání, které §19.2 ruší.
+Doměřeno nástrojem (`is-vazba.py` = Íslensk nútímamálsorðabók + Risamálheild):
+
+| slovo | slovníkový základ | co to znamená |
+|---|---|---|
+| `leita` | rekce **eignarfall**, `leita að` / `leita til` | hledat → příčestí **`leitandi` = hledající** |
+| `leiða` | rekce **þolfall**, `leiða til` = vést k | vést → příčestí **`leiðandi` = vedoucí** |
+| `leit` (kvk) | *„leitin að ferðamanninum bar engan árangur"* | hledání |
+| `leið` (kvk) | *„vera á leiðinni þangað"* | cesta |
+
+Slovníková kolokace **`leiðandi spurning` = návodná otázka** — tedy přesně tvar, který má Rúnar zakázaný.
+**Korpusová četnost nerozhodla** a nepředstírám, že ano: `leitandinn` 5 × `leiðandinn` 4, `leitandans` 7 ×
+`leiðandans` 1 (Risamálheild 2000–2021). Při takhle malých číslech rozhoduje význam, ne četnost.
+**Rozhodl anglický protějšek:** všechny čtyři spready mají `seeker:'Seeker'`, `seeking:'Seeking'`; IS na témž
+řádku `Leiðandi` a `Leiðin`. Protlačeno produkční cestou — prompt Norns začíná `Leiðandi: Kuky` a
+*„Leiðandinn dregur þrjár rúnir"*. Single a konce používají `leitandi` (22 výskytů) správně.
+**Verdikt: chyba, 17 náhrad, sweep** — rozpis v `RUNAR_BACKLOG.md`. Do produkčního kódu jsem nesáhl (lane).
