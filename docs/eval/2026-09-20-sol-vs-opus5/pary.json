@@ -1,0 +1,388 @@
+[
+ {
+  "id": "single-en-0",
+  "spread": "single",
+  "lang": "en",
+  "shodne_tahy": true,
+  "runes": [
+   "Berkana"
+  ],
+  "area": "Inner Growth",
+  "seeking": "Reflection",
+  "intention": "Understanding the past",
+  "life": "Uruz",
+  "vstupy": [
+   "DRAWN RUNE: Berkana — focus on: new beginnings · World: the living moment, what is active now · Elements: Water",
+   "READING PURPOSE: Understanding the past — about what has already passed; look for the pattern behind it",
+   "READING ANGLE (follow this entry point — let it shape the opening and tone): Open by setting the seeker inside the image, at the spot where it is happening.",
+   "IMAGE — the picture in this reading comes from here: The child's first step across the floor is unsteady but sure. Let it become your own seeing in the text.",
+   "SEASON — where Rúnar stands it is late summer. The image never carries weather that belongs to another season."
+  ],
+  "draws": {
+   "v": 1,
+   "angle": 6,
+   "image": "The child's first step across the floor is unsteady but sure",
+   "lens": 1,
+   "ending": "open2",
+   "kws": "new beginnings",
+   "name": 1
+  },
+  "sol": "A child crosses the late-summer floor, each unsteady step carrying a beginning already made. Berkana shows growth becoming visible through small movements, Anna, after quiet forming beneath the surface. What has passed may now rest in the strength it gathered.",
+  "opus5": "You are standing at the far wall, watching a child cross the floor toward you, unsteady and sure at once. Berkana is that crossing — growth that happens in steps too small to count while they are being taken. Look back, Anna, at the floor behind you rather than the ground still to come, and let what carried you there carry you still.",
+  "sol_out": 65,
+  "opus5_out": 119
+ },
+ {
+  "id": "single-en-1",
+  "spread": "single",
+  "lang": "en",
+  "shodne_tahy": true,
+  "runes": [
+   "Blank"
+  ],
+  "area": "Inner Growth",
+  "seeking": "General Guidance",
+  "intention": "Right now",
+  "life": "Ansuz",
+  "vstupy": [
+   "DRAWN RUNE: Blank — focus on: the unknown · World: the roots, what lies beneath · Elements: Water, Shadow",
+   "READING PURPOSE: Right now — about what is happening now; speak in the present",
+   "READING ANGLE (follow this entry point — let it shape the opening and tone): Open with the whole image at once, then let everything fall away but one.",
+   "IMAGE — the picture in this reading comes from here: The thick fog hides the fjord and you do not know what waits beyond it. Let it become your own seeing in the text.",
+   "SEASON — where Rúnar stands it is late summer. The image never carries weather that belongs to another season."
+  ],
+  "draws": {
+   "v": 1,
+   "angle": 0,
+   "image": "The thick fog hides the fjord and you do not know what waits beyond it",
+   "lens": 1,
+   "ending": "open2",
+   "kws": "the unknown",
+   "name": 3
+  },
+  "sol": "Late-summer fog covers the fjord, leaving only dark water at your feet and the hidden roots of the shore below. Blank keeps what lies ahead unknown, while slow change continues beneath sight. A few clear words may be enough for now.",
+  "opus5": "Late summer fog sits thick on the fjord, water and shore and the far bank all one grey, and then even the water goes. Blank holds the view back while the shore keeps changing beneath it. What comes through the fog first will be a sound, not a shape.",
+  "sol_out": 62,
+  "opus5_out": 98
+ },
+ {
+  "id": "single-en-2",
+  "spread": "single",
+  "lang": "en",
+  "shodne_tahy": true,
+  "runes": [
+   "Gebo"
+  ],
+  "area": "Inner Growth",
+  "seeking": "Reflection",
+  "intention": "Decision ahead",
+  "life": "Tiwaz",
+  "vstupy": [
+   "DRAWN RUNE: Gebo — focus on: companionship · World: the living moment, what is active now · Elements: Water",
+   "READING PURPOSE: Decision ahead — about what lies ahead; speak of what may come, not as prophecy",
+   "READING ANGLE (follow this entry point — let it shape the opening and tone): Open with the motion already underway in the image. If nothing moves, open with the stillness itself.",
+   "IMAGE — the picture in this reading comes from here: The door stands open and coffee waits on the table for two. Let it become your own seeing in the text.",
+   "SEASON — where Rúnar stands it is late summer. The image never carries weather that belongs to another season."
+  ],
+  "draws": {
+   "v": 1,
+   "angle": 2,
+   "image": "The door stands open and coffee waits on the table for two",
+   "lens": 1,
+   "ending": "open2",
+   "kws": "companionship",
+   "name": 3
+  },
+  "sol": "The open door stirs in the late-summer air, while coffee waits on the table for two. Gebo makes room for companionship through equal exchange. What may come rests less on choosing alone than on noticing what changes when another voice enters the room. Your decision settles where mutual regard and clear purpose meet.",
+  "opus5": "Late summer air moves through the open door, and two cups sit cooling on the table. Gebo is the exchange between what is offered and what is received, neither one worth much alone. The door stays open a while longer, the coffee keeps its warmth for now. What you carry to that table is yours to weigh, and no one else can hold the measure.",
+  "sol_out": 76,
+  "opus5_out": 123
+ },
+ {
+  "id": "single-is-0",
+  "spread": "single",
+  "lang": "is",
+  "shodne_tahy": true,
+  "runes": [
+   "Berkana"
+  ],
+  "area": "Innri Vöxtur",
+  "seeking": "Hugleiðing",
+  "intention": "Skilja fortíðina",
+  "life": "Uruz",
+  "vstupy": [
+   "DREGNA RÚNA: Berkana (Þroski) — áhersla: nýtt upphaf · Heimur: líðandi stund, það sem er virkt núna · Frumefni: vatn",
+   "TILGANGUR: Skilja fortíðina — snýr að því sem þegar er orðið; leitaðu mynstursins að baki",
+   "LESTRARHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og upphaf): Byrjaðu á því að setja leitandann inn í myndina, á staðinn þar sem hún gerist.",
+   "MYND — héðan kemur myndin í þessum lestri: Fyrsta skref barnsins yfir gólfið er óstöðugt en ákveðið. Láttu hana verða að þinni eigin sýn í textanum.",
+   "ÁRSTÍÐIN — þar sem Rúnar stendur er síðsumar. Myndin sýnir aldrei veður sem tilheyrir annarri árstíð."
+  ],
+  "draws": {
+   "v": 1,
+   "angle": 6,
+   "image": "Fyrsta skref barnsins yfir gólfið er óstöðugt en ákveðið",
+   "lens": 1,
+   "ending": "open2",
+   "kws": "nýtt upphaf",
+   "name": 1
+  },
+  "sol": "Á síðsumarsgólfi stígur barn sitt fyrsta skref, óstöðugt en ákveðið, og finnur jafnvægið aðeins með því að hreyfast. Berkana (Þroski) sýnir, Anna, hvernig nýtt upphaf getur sprottið úr mynstri fortíðarinnar. Hæg breyting safnar styrk meðan þú stendur eitt og lítur inn á við.",
+  "opus5": "Í síðsumarsljósinu fer barn sitt fyrsta skref yfir gólfið, óstöðugt en ákveðið, og engin hönd heldur því lengur. Berkana sýnir upphafið sjálft, Anna, augnablikið þegar eitthvað byrjar áður en það er orðið öruggt. Fæturnir báru þyngdina alla tíð, líka áður en gólfið var þekkt.",
+  "sol_out": 103,
+  "opus5_out": 166
+ },
+ {
+  "id": "single-is-1",
+  "spread": "single",
+  "lang": "is",
+  "shodne_tahy": true,
+  "runes": [
+   "Blank"
+  ],
+  "area": "Innri Vöxtur",
+  "seeking": "Almenn leiðsögn",
+  "intention": "Í þessari stund",
+  "life": "Ansuz",
+  "vstupy": [
+   "DREGNA RÚNA: Auða rúnin (Óðinn) — áhersla: hið óþekkta · Heimur: ræturnar, það sem liggur undir · Frumefni: vatn, skuggi",
+   "TILGANGUR: Í þessari stund — snýr að því sem er að gerast núna; talaðu í nútíð",
+   "LESTRARHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og upphaf): Byrjaðu á allri myndinni í einu, láttu svo allt hverfa nema eitt.",
+   "MYND — héðan kemur myndin í þessum lestri: Niðaþokan hylur fjörðinn og þú veist ekki hvað bíður handan hennar. Láttu hana verða að þinni eigin sýn í textanum.",
+   "ÁRSTÍÐIN — þar sem Rúnar stendur er síðsumar. Myndin sýnir aldrei veður sem tilheyrir annarri árstíð."
+  ],
+  "draws": {
+   "v": 1,
+   "angle": 0,
+   "image": "Niðaþokan hylur fjörðinn og þú veist ekki hvað bíður handan hennar",
+   "lens": 1,
+   "ending": "open2",
+   "kws": "hið óþekkta",
+   "name": 3
+  },
+  "sol": "Síðsumarsþokan liggur yfir öllum firðinum, en síðan hverfur ströndin og aðeins dimmt vatnið næst þér sést. Auða rúnin (Óðinn) heldur hinu óþekkta opnu meðan hæg breyting á sér stað undir yfirborðinu. Úr þokunni berst lágt hljóð, án skýrrar merkingar enn.",
+  "opus5": "Fjörðurinn liggur allur fyrir framan þig í síðsumarsþokunni, fjöllin, báturinn, hinn bakkinn. Svo hverfur allt nema vatnið við fætur þér. Auða rúnin heldur myndinni eftir og skilur þig eitt eftir með það sem er nær en sýnin. Þokan þegir, og hún þegir lengi.",
+  "sol_out": 112,
+  "opus5_out": 165
+ },
+ {
+  "id": "single-is-2",
+  "spread": "single",
+  "lang": "is",
+  "shodne_tahy": true,
+  "runes": [
+   "Gebo"
+  ],
+  "area": "Innri Vöxtur",
+  "seeking": "Hugleiðing",
+  "intention": "Ákvörðun framundan",
+  "life": "Tiwaz",
+  "vstupy": [
+   "DREGNA RÚNA: Gebo (Félagsskapur) — áhersla: félagsskapur · Heimur: líðandi stund, það sem er virkt núna · Frumefni: vatn",
+   "TILGANGUR: Ákvörðun framundan — snýr að því sem er í vændum; talaðu um það sem gæti orðið, ekki sem spádóm",
+   "LESTRARHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og upphaf): Byrjaðu á hreyfingunni sem er þegar hafin í myndinni. Ef ekkert hreyfist, byrjaðu þá á kyrrðinni sjálfri.",
+   "MYND — héðan kemur myndin í þessum lestri: Dyrnar standa opnar og kaffi bíður á borðinu handa tveimur. Láttu hana verða að þinni eigin sýn í textanum.",
+   "ÁRSTÍÐIN — þar sem Rúnar stendur er síðsumar. Myndin sýnir aldrei veður sem tilheyrir annarri árstíð."
+  ],
+  "draws": {
+   "v": 1,
+   "angle": 2,
+   "image": "Dyrnar standa opnar og kaffi bíður á borðinu handa tveimur",
+   "lens": 1,
+   "ending": "open2",
+   "kws": "félagsskapur",
+   "name": 3
+  },
+  "sol": "Opið stendur inn í síðsumarið og kaffið á borðinu bíður handa tveimur. Gebo (Félagsskapur) lætur ákvörðunina birtast sem rými þar sem bæði geta gefið og þegið. Í þeirri mynd gæti hæg breyting orðið sýnileg þegar þú lítur að því sem þú deilir án þess að týna sjálfu þér. Þar hvílir styrkurinn hljóður og stefnan fær að skýrast.",
+  "opus5": "Dyrnar standa opnar og síðsumarloftið streymir inn yfir borðið. Þar bíður kaffi handa tveimur, og annar bollinn er enn ósnertur. Gebo er þetta einfalda: eitthvað rétt fram sem hvorugur á einn. Þú mátt setjast við borðið óákveðið, og halda þínu samt.",
+  "sol_out": 132,
+  "opus5_out": 147
+ },
+ {
+  "id": "norns-en-0",
+  "spread": "norns",
+  "lang": "en",
+  "shodne_tahy": true,
+  "runes": [
+   "Berkana",
+   "Laguz",
+   "Othila"
+  ],
+  "area": "Family & Home",
+  "seeking": "General Guidance",
+  "intention": "Decision ahead",
+  "life": "Uruz",
+  "vstupy": [
+   "Area: Family & Home",
+   "READING PURPOSE: Decision ahead — about what lies ahead; speak of what may come, not as prophecy",
+   "IMAGE — the picture in this reading comes from here: The rhubarb noses up through the cold soil by the south wall. Let it become your own seeing in the text.",
+   "SEASON — where Rúnar stands it is late summer. The image never carries weather that belongs to another season."
+  ],
+  "draws": {
+   "v": 1,
+   "image": "The rhubarb noses up through the cold soil by the south wall",
+   "lens": 1,
+   "name": 3
+  },
+  "sol": "By the south wall, the rhubarb first nosed through cold soil, tended within the bounds of a lived-in home. Its place was already set among familiar hands, rooms, and seasons. Now late-summer water runs along the bed, finding the hollows and showing where the soil still shifts. Around the decision before you, family ties and the needs of the home remain fluid rather than settled. If the present course continues, the question turns toward what belongs within these walls and what has reached the edge of its season. The old root holds firm beneath the soil, while the gathered stalks make the shape of the home ahead visible.",
+  "opus5": "Someone set the rhubarb against the south wall years ago, where the stone holds the warmth longest, and that choice is no longer open to question. The crown sits deep now, older than the hands that planted it. This summer the leaves have come up broad and heavy, drinking what the rain leaves in that corner, and the stalks lean out further than the bed was ever meant to hold. What spreads underground you cannot see from the kitchen window. Left as it is, the root will keep widening until it crowds the wall and the crown begins to hollow at its centre, which is how old plants ask to be divided. A spade through that root is not the end of it — each piece carries the same strength into whatever soil it is given.",
+  "sol_out": 164,
+  "opus5_out": 270
+ },
+ {
+  "id": "norns-en-1",
+  "spread": "norns",
+  "lang": "en",
+  "shodne_tahy": true,
+  "runes": [
+   "Blank",
+   "Laguz",
+   "Raidho"
+  ],
+  "area": "Career & Creativity",
+  "seeking": "General Guidance",
+  "intention": "Decision ahead",
+  "life": "Isa",
+  "vstupy": [
+   "Area: Career & Creativity",
+   "READING PURPOSE: Decision ahead — about what lies ahead; speak of what may come, not as prophecy",
+   "IMAGE — the picture in this reading comes from here: a sheep-track winding of its own accord. Where: the heath below the fells. Let it become your own seeing in the text.",
+   "SEASON — where Rúnar stands it is late summer. The image never carries weather that belongs to another season."
+  ],
+  "draws": {
+   "v": 1,
+   "image": "a sheep-track winding of its own accord",
+   "place": "the heath below the fells",
+   "lens": 1,
+   "name": 3
+  },
+  "sol": "A sheep-track had already crossed the late-summer heath below the fells, though no clear beginning remained in sight. Your work stands where that unwritten stretch left room for more than one direction. Now the track follows the wet ground, bending around hidden water rather than holding a straight line. What you are making takes shape through response and adjustment, while the firm course is still clearing. If you continue in this manner, the bends may settle into a rhythm that carries your work forward without fixing its final place. What was once an open heath now shows a track held still long enough for its direction to become visible.",
+  "opus5": "On the heath below the fells there was no track at all, only ground that had never been crossed, and the line that runs there now was not planned by anyone. It was worn in by hooves following the easiest fall of the land, the way water finds its own way down, and that same wearing-in is happening under your feet as you work. The path ahead of you is not visible far, it shows only the next few lengths before it bends behind the slope. Walked at the pace the ground allows, it carries on across the heath in its own rhythm, and the work takes the shape of the walking. Keep to it as you are, and you go on making what the line makes of itself. Stand still on the track, in this late summer light, and it is still a track — it holds its shape without you until you move again.",
+  "sol_out": 155,
+  "opus5_out": 278
+ },
+ {
+  "id": "norns-en-2",
+  "spread": "norns",
+  "lang": "en",
+  "shodne_tahy": true,
+  "runes": [
+   "Gebo",
+   "Ingwaz",
+   "Othila"
+  ],
+  "area": "The Unseen",
+  "seeking": "Insight into Challenge",
+  "intention": "Understanding the past",
+  "life": "Ehwaz",
+  "vstupy": [
+   "Area: The Unseen",
+   "READING PURPOSE: Understanding the past — about what has already passed; look for the pattern behind it",
+   "IMAGE — the picture in this reading comes from here: The door stands open and coffee waits on the table for two. Let it become your own seeing in the text.",
+   "SEASON — where Rúnar stands it is late summer. The image never carries weather that belongs to another season."
+  ],
+  "draws": {
+   "v": 1,
+   "image": "The door stands open and coffee waits on the table for two",
+   "lens": 1,
+   "name": 0
+  },
+  "sol": "The door stood open, Anna, and coffee waited on the table for two. What was woven there rested on exchange, though the cups may not have been filled in equal measure. Now the second place remains open, holding what has not yet taken visible form. The friction lies between keeping that place ready and admitting that its purpose may be changing. The thread now leads toward what belongs in the house and what has only been kept there through habit. The open door becomes visible not only as an invitation, but as a threshold two people must cross by their own movement.",
+  "opus5": "Someone set out two cups, Anna, and the door was left open behind them — that much is already done, the table laid for a guest and the guest arriving. The coffee is still warm now, and the room holds the quiet of a house where the visit has not yet turned into talk. What sits unsaid between the two cups is the friction here: the giving and the taking have not balanced yet, and neither of you has named the debt. If the cups stay where they are, this table becomes the place you return to, the one you keep swept and ready even when no one comes. What that costs is the other rooms in the house, the ones you stop walking into. A door held open long enough stops being a welcome and becomes a habit — and the walking is yours to do, in or out.",
+  "sol_out": 147,
+  "opus5_out": 278
+ },
+ {
+  "id": "norns-is-0",
+  "spread": "norns",
+  "lang": "is",
+  "shodne_tahy": true,
+  "runes": [
+   "Berkana",
+   "Laguz",
+   "Othila"
+  ],
+  "area": "Fjölskylda & Heimili",
+  "seeking": "Almenn leiðsögn",
+  "intention": "Ákvörðun framundan",
+  "life": "Uruz",
+  "vstupy": [
+   "Svið: Fjölskylda & Heimili",
+   "TILGANGUR: Ákvörðun framundan — snýr að því sem er í vændum; talaðu um það sem gæti orðið, ekki sem spádóm",
+   "MYND — héðan kemur myndin í þessum lestri: Rabarbarinn teygir sig upp úr kaldri moldinni við suðurvegginn, fyrstur allra á vorin. Láttu hana verða að þinni eigin sýn í textanum.",
+   "ÁRSTÍÐIN — þar sem Rúnar stendur er síðsumar. Myndin sýnir aldrei veður sem tilheyrir annarri árstíð."
+  ],
+  "draws": {
+   "v": 1,
+   "image": "Rabarbarinn teygir sig upp úr kaldri moldinni við suðurvegginn, fyrstur allra á vorin",
+   "lens": 1,
+   "name": 3
+  },
+  "sol": "Við suðurvegg heimilisins stendur rabarbarinn stór í síðsumrinu, vaxinn úr köldu moldinni sem tók við fyrstu sprotunum. Umhyggja hefur mótað beðið og vöxturinn verður ekki tekinn aftur. Nú berast safar um stönglana og vatn leitar um moldina, meðan þú sérð betur hvað nærir samlífið og hvað safnast fyrir við ræturnar. Þar er enn verið að móta rýmið milli þarfa fólksins og venja heimilisins. Ef sama stefna helst, gætu eldri stönglar vikið og pláss skapast fyrir það sem á heima nær veggnum. Þá verður sýnilegt hve sterkt rabarbarabeðið vex þegar það sem spratt fyrst fær skýr mörk.",
+  "opus5": "Rabarbarinn við suðurvegginn var gróðursettur af einhverjum sem ekki býr lengur í húsinu. Moldin þar er feit og dökk eftir margra ára lauf sem féllu og rotnuðu á sama bletti. Nú í síðsumarsrigningunni situr vatnið kyrrt í holunni við vegginn og seytlar hægt niður að rótunum. Stilkarnir eru orðnir þykkir og rauðir og blöðin skyggja á allt sem reynir að vaxa undir þeim. Ef enginn sker hann verður hann áfram á sínum stað, jafn breiður og hann var í fyrra, og veggurinn stendur með honum. Rótin sem var sett niður af annarri hendi ber núna meira en hún þarf að bera.",
+  "sol_out": 212,
+  "opus5_out": 328
+ },
+ {
+  "id": "norns-is-1",
+  "spread": "norns",
+  "lang": "is",
+  "shodne_tahy": true,
+  "runes": [
+   "Blank",
+   "Laguz",
+   "Raidho"
+  ],
+  "area": "Starf & Sköpun",
+  "seeking": "Almenn leiðsögn",
+  "intention": "Ákvörðun framundan",
+  "life": "Isa",
+  "vstupy": [
+   "Svið: Starf & Sköpun",
+   "TILGANGUR: Ákvörðun framundan — snýr að því sem er í vændum; talaðu um það sem gæti orðið, ekki sem spádóm",
+   "MYND — héðan kemur myndin í þessum lestri: Kindagatan liðast af sjálfu sér. Þetta á sér stað á heiðinni undir fjöllunum. Láttu hana verða að þinni eigin sýn í textanum.",
+   "ÁRSTÍÐIN — þar sem Rúnar stendur er síðsumar. Myndin sýnir aldrei veður sem tilheyrir annarri árstíð."
+  ],
+  "draws": {
+   "v": 1,
+   "image": "Kindagatan liðast af sjálfu sér",
+   "place": "á heiðinni undir fjöllunum",
+   "lens": 1,
+   "name": 3
+  },
+  "sol": "Á síðsumarsheiðinni liggur kindagata undir fjöllunum, mörkuð af mörgum hófum en án þess að upphaf hennar sjáist. Í starfi og sköpun er hið óskrifaða því ekki eyða sem þarf að fylla, heldur ómótaður hluti smíðarinnar. Nú liðast gatan um rakan svörðinn og verður skýrari þar sem vatnið hefur fundið sér farveg. Þú sérð ef til vill hvaða hugmyndir renna greiðlega inn í verkið og hvar formið er enn að mótast. Fram undan heldur slóðin áfram í eðlilegum sveigjum, svo vinnan gæti tekið á sig röð sem verður til um leið og þú fylgir henni. Það sem hófst sem óskrifað rými verður sýnilegt sem gata sem stöðvast um stund undir fjöllunum.",
+  "opus5": "Enginn lagði þessa götu yfir heiðina. Hún varð til af sporum sem enginn taldi, og sá sem gekk fyrstur vissi ekki að hann væri að gera götu. Nú liðast hún niður með mýrlendinu þar sem vatnið sytrar undan þúfunum, og hún beygir þar sem vatnið ræður, ekki þar sem stysta leiðin lægi. Síðsumarsgrasið er farið að falla að börmum hennar. Haldirðu áfram eins og nú, liggur hún upp á melinn og áfram undir fjallið, skref fyrir skref og ekkert þeirra ákveðið fyrirfram. Gatan sést best þaðan sem staðið er kyrrt.",
+  "sol_out": 235,
+  "opus5_out": 314
+ },
+ {
+  "id": "norns-is-2",
+  "spread": "norns",
+  "lang": "is",
+  "shodne_tahy": true,
+  "runes": [
+   "Gebo",
+   "Ingwaz",
+   "Othila"
+  ],
+  "area": "Hið dulda",
+  "seeking": "Innsýn í áskorun",
+  "intention": "Skilja fortíðina",
+  "life": "Ehwaz",
+  "vstupy": [
+   "Svið: Hið dulda",
+   "TILGANGUR: Skilja fortíðina — snýr að því sem þegar er orðið; leitaðu mynstursins að baki",
+   "MYND — héðan kemur myndin í þessum lestri: Dyrnar standa opnar og kaffi bíður á borðinu handa tveimur. Láttu hana verða að þinni eigin sýn í textanum.",
+   "ÁRSTÍÐIN — þar sem Rúnar stendur er síðsumar. Myndin sýnir aldrei veður sem tilheyrir annarri árstíð."
+  ],
+  "draws": {
+   "v": 1,
+   "image": "Dyrnar standa opnar og kaffi bíður á borðinu handa tveimur",
+   "lens": 1,
+   "name": 0
+  },
+  "sol": "Dyrnar stóðu opnar, Anna, og á borðinu beið kaffi handa tveimur. Þar hafði gjöf verið lögð á móti gjöf og samvera bundið húsið böndum sem ekki verða tekin til baka. Nú stendur annar bollinn enn ósnertur meðan síðsumarið fellur inn um dyrnar. Í því sem ekki hefur verið sagt vex möguleiki hljóðlega, en hann þrýstir líka á jafnvægið sem áður hélt borðinu stöðugu. Ef þú heldur áfram í þessa átt færist athyglin frá því sem var sameiginlegt að því sem tilheyrir hvoru um sig, og arfur hússins skilst frá því sem má láta fara. Það sem varð sýnilegt milli opnu dyranna og bollanna tveggja er hreyfing frá gagnkvæmri gjöf að aðskilnaði þess sem áður sat saman við sama borð.",
+  "opus5": "Borðið var lagt fyrir tvo, Anna, og annar bollinn hefur staðið þar lengur en kaffið í honum hélst heitt. Dyrnar standa opnar út í síðsumarsloftið og ekkert hefur enn gengið inn um þær, en það er ekki tómleiki sem bíður í stofunni heldur pláss sem einhver hafði fyrir að búa til. Í þessari kyrrð gerist eitthvað sem sést ekki frá dyrunum sjálfum. Húsið sjálft er eldra en þú, og margir hafa setið við þetta borð á undan þér með sama sið og sömu þögn. Haldirðu áfram eins og nú, heldurðu að leggja á borð eftir venju sem þú tókst við tilbúna, án þess að hafa spurt hvort hún sé þín. Það sem kaffið beið eftir var aldrei gestur, heldur spor sem gengur héðan út um opnu dyrnar.",
+  "sol_out": 242,
+  "opus5_out": 391
+ }
+]
