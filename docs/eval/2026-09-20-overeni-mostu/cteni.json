@@ -1,0 +1,1023 @@
+[
+ {
+  "test": "A",
+  "id": "A0",
+  "runa": "Laguz",
+  "oblast": "Love & Relationships",
+  "rejstrik": "Clarity",
+  "konec": "End on one line that names what this may be between the seeker and someone — a state that may be so, offered for them to weigh; it names how things may stand, never what to do about it.",
+  "draws": {
+   "v": 1,
+   "angle": 1,
+   "image": "The glacial river runs grey and heavy, full of what it carries down from above",
+   "lens": 0,
+   "ending": "open0",
+   "len": 0,
+   "essence": 0,
+   "kws": "the unconscious",
+   "name": 0
+  },
+  "text": "See the flecks of silt turning near the bank, the grit the grey water keeps lifting and setting down again. Laguz is the river carrying what fell far above, still moving through the low places. What runs between two people, Anna, gathers this way too, out of sight until it settles. Between you and someone this may be a current still clouded, not yet still enough to see the bottom.",
+  "usage": {
+   "input_tokens": 1722,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 134,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "A",
+  "id": "A1",
+  "runa": "Laguz",
+  "oblast": "Purpose & Path",
+  "rejstrik": "Clarity",
+  "konec": "End on one line that names what this may be in where the seeker is going — a state that may be so, offered for them to weigh; it names how things may stand, never what to do about it.",
+  "draws": {
+   "v": 1,
+   "angle": 1,
+   "image": "The glacial river runs grey and heavy, full of what it carries down from above",
+   "lens": 0,
+   "ending": "open0",
+   "len": 0,
+   "essence": 0,
+   "kws": "the unconscious",
+   "name": 0
+  },
+  "text": "See the fleck of silt turning at the river's edge, the grain most eyes slide past. It came loose somewhere far above, and now it moves with the grey water toward a place it did not choose. This is Laguz, Anna, the pull beneath the surface that carries more than you can name. Where the current takes what it holds, your direction may be forming below your own noticing.",
+  "usage": {
+   "input_tokens": 1718,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 133,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "A",
+  "id": "A2",
+  "runa": "Laguz",
+  "oblast": "Career & Creativity",
+  "rejstrik": "Clarity",
+  "konec": "End on one line that names what this may be in what the seeker is making — a state that may be so, offered for them to weigh; it names how things may stand, never what to do about it.",
+  "draws": {
+   "v": 1,
+   "angle": 1,
+   "image": "The glacial river runs grey and heavy, full of what it carries down from above",
+   "lens": 0,
+   "ending": "open0",
+   "len": 0,
+   "essence": 0,
+   "kws": "the unconscious",
+   "name": 0
+  },
+  "text": "See the grit spinning in the shallows, the fine silt most eyes slide past as the grey water hurries by. Laguz works there, in what the current gathers unseen and carries down before you name it. This is the part of the work that moves under the surface, Anna, the thinking that happens before you know you are thinking. What you are making may be fed more by that hidden load than by the visible flow above.",
+  "usage": {
+   "input_tokens": 1720,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 140,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "A",
+  "id": "A3",
+  "runa": "Laguz",
+  "oblast": "Healing & Wellbeing",
+  "rejstrik": "Clarity",
+  "konec": "End on one line that names what this may be in the seeker's mending and rest — a state that may be so, offered for them to weigh; it names how things may stand, never what to do about it.",
+  "draws": {
+   "v": 1,
+   "angle": 1,
+   "image": "The glacial river runs grey and heavy, full of what it carries down from above",
+   "lens": 0,
+   "ending": "open0",
+   "len": 0,
+   "essence": 0,
+   "kws": "the unconscious",
+   "name": 0
+  },
+  "text": "See the fleck of silt turning near the bank, the grain the eye would skim past. Laguz is the river carrying down from the heights what cannot be seen at the source. The grey water holds it all, Anna, and asks nothing of you but to let it settle where the current slows. This may be a resting stillness where what was stirred begins to sink and clear.",
+  "usage": {
+   "input_tokens": 1708,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 129,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "A",
+  "id": "A4",
+  "runa": "Laguz",
+  "oblast": "The Unseen",
+  "rejstrik": "Clarity",
+  "konec": "End on one line that names what this may be in what is present in the seeker's life but not shown — a state that may be so, offered for them to weigh; it names how things may stand, never what to do about it.",
+  "draws": {
+   "v": 1,
+   "angle": 1,
+   "image": "The glacial river runs grey and heavy, full of what it carries down from above",
+   "lens": 0,
+   "ending": "open0",
+   "len": 0,
+   "essence": 0,
+   "kws": "the unconscious",
+   "name": 0
+  },
+  "text": "Look at the fine silt in the grey water, the ground-down stone too small to see moving. Laguz is the water carrying what it took from higher up, out of sight until it settles. You watch the surface, Anna, while the weight travels underneath it. What moves in you now may be something already loosened above, still on its way down.",
+  "usage": {
+   "input_tokens": 1725,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 118,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "A",
+  "id": "A5",
+  "runa": "Laguz",
+  "oblast": "Family & Home",
+  "rejstrik": "Clarity",
+  "konec": "End on one line that names what this may be in the seeker's home and the people in it — a state that may be so, offered for them to weigh; it names how things may stand, never what to do about it.",
+  "draws": {
+   "v": 1,
+   "angle": 1,
+   "image": "The glacial river runs grey and heavy, full of what it carries down from above",
+   "lens": 0,
+   "ending": "open0",
+   "len": 0,
+   "essence": 0,
+   "kws": "the unconscious",
+   "name": 0
+  },
+  "text": "See the fine silt at the river's edge, the grey dust most feet would cross without a glance. Laguz is that carried thing, everything gathered upstream and set down where the water slows. What settles in a home, Anna, is rarely chosen aloud, it collects from the days you all pass through together. This may be a house holding more beneath its quiet than anyone has yet named.",
+  "usage": {
+   "input_tokens": 1708,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 136,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "A",
+  "id": "A6",
+  "runa": "Laguz",
+  "oblast": "Inner Growth",
+  "rejstrik": "Clarity",
+  "konec": "End on one line that names what this may be in a slow change in the seeker — a state that may be so, offered for them to weigh; it names how things may stand, never what to do about it.",
+  "draws": {
+   "v": 1,
+   "angle": 1,
+   "image": "The glacial river runs grey and heavy, full of what it carries down from above",
+   "lens": 0,
+   "ending": "open0",
+   "len": 0,
+   "essence": 0,
+   "kws": "the unconscious",
+   "name": 0
+  },
+  "text": "Notice the fine silt in the water, so small the eye slides past it, yet it colours the whole river grey. Laguz is the water carrying down what came loose far above, ground fine by things you never saw happen. This is the quiet work, Anna, the settling of what moved beneath long before you looked. You may find you are already carrying something further than you knew.",
+  "usage": {
+   "input_tokens": 1718,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 129,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "A",
+  "id": "A7",
+  "runa": "Laguz",
+  "oblast": "Crossroads & Decisions",
+  "rejstrik": "Clarity",
+  "konec": "End on one line that names what this may be where the seeker's way divides — a state that may be so, offered for them to weigh; it names how things may stand, never what to do about it.",
+  "draws": {
+   "v": 1,
+   "angle": 1,
+   "image": "The glacial river runs grey and heavy, full of what it carries down from above",
+   "lens": 0,
+   "ending": "open0",
+   "len": 0,
+   "essence": 0,
+   "kws": "the unconscious",
+   "name": 0
+  },
+  "text": "Notice the fine silt clouding the water, the part your eye skips as the river thunders past. That grey is ground stone, carried down from the ice above, the current thick with what it cannot set down. This is Laguz, Anna, the water moving what lies beneath before you can name it. Where your way divides, this may be a moment too full to read clearly yet.",
+  "usage": {
+   "input_tokens": 1726,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 130,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "B",
+  "id": "B00",
+  "runa": "Berkana",
+  "oblast": "Inner Growth",
+  "rejstrik": "General Guidance",
+  "konec": "End on one question that holds out what this may be in a slow change in the seeker — asked as a possibility they can weigh, never as something you know about them.",
+  "draws": {
+   "v": 1,
+   "angle": 5,
+   "image": "The child's first step across the floor is unsteady but sure",
+   "lens": 0,
+   "ending": "open2",
+   "len": 0,
+   "essence": 0,
+   "kws": "new beginnings",
+   "name": 2
+  },
+  "text": "Watch where the child's raised foot leaves the floor and has not yet found it again, that small span of air between one hold and the next. Berkana lives in that crossing, the moment before weight settles into new ground. Nothing here is finished, and nothing is falling; you are simply mid-step. Could it be that something in you is learning to stand a little further from where it began?",
+  "usage": {
+   "input_tokens": 1685,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 133,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "B",
+  "id": "B01",
+  "runa": "Gebo",
+  "oblast": "Love & Relationships",
+  "rejstrik": "General Guidance",
+  "konec": "End on one line that holds out two things this may be between the seeker and someone, each a state that may be so, left for them to weigh.",
+  "draws": {
+   "v": 1,
+   "angle": 5,
+   "image": "The sea gives and takes on the shore in the same breath",
+   "lens": 0,
+   "ending": "open1",
+   "len": 0,
+   "essence": 1,
+   "kws": "giving and receiving",
+   "name": 2
+  },
+  "text": "Watch the shore where the wave arrives and pulls back, the same water both handing and taking in one breath. Here Gebo moves, giving and receiving folded into a single motion you cannot cut apart. Whatever passes between you and another now carries this doubled tide, one reaching out as the other draws in. It may be an even exchange finding its rhythm, or one hand still waiting for the other to open.",
+  "usage": {
+   "input_tokens": 1680,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 146,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "B",
+  "id": "B02",
+  "runa": "Raidho",
+  "oblast": "Crossroads & Decisions",
+  "rejstrik": "General Guidance",
+  "konec": "End on one line that holds out two things this may be where the seeker's way divides, each a state that may be so, left for them to weigh.",
+  "draws": {
+   "v": 1,
+   "angle": 0,
+   "image": "cairns, each in sight of the next",
+   "place": "the edge of the home-field",
+   "lens": 0,
+   "ending": "open1",
+   "len": 0,
+   "essence": 1,
+   "kws": "the road",
+   "name": 0
+  },
+  "text": "At the edge of the home-field the cairns stand, each in sight of the next, and one by one they fall from view until only the last one holds. Raidho is the walking between them, Anna, the road that joined one marker to the following one. Look back now and the stones line up, each set where the one before could still be seen. Whether that was a way chosen with care, or a way you took because the next stone was simply there, is yours to weigh.",
+  "usage": {
+   "input_tokens": 1684,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 148,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "B",
+  "id": "B10",
+  "runa": "Berkana",
+  "oblast": "Inner Growth",
+  "rejstrik": "Clarity",
+  "konec": "End on one line that names what this may be in a slow change in the seeker — a state that may be so, offered for them to weigh; it names how things may stand, never what to do about it.",
+  "draws": {
+   "v": 1,
+   "angle": 6,
+   "image": "The eider leads her ducklings down to the water on their first morning",
+   "lens": 0,
+   "ending": "open0",
+   "len": 0,
+   "essence": 1,
+   "kws": "nurturing",
+   "name": 2
+  },
+  "text": "You stand at the shoreline while the eider walks her ducklings to the water for the first time. Berkana holds them there, steady, at the edge where land gives way. The small ones follow because she goes ahead, not because she pushes. What quiet tending has grown in you without your naming it, only you can weigh now.",
+  "usage": {
+   "input_tokens": 1694,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 116,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "B",
+  "id": "B11",
+  "runa": "Gebo",
+  "oblast": "Love & Relationships",
+  "rejstrik": "Clarity",
+  "konec": "End on one line that names what this may be between the seeker and someone — a state that may be so, offered for them to weigh; it names how things may stand, never what to do about it.",
+  "draws": {
+   "v": 1,
+   "angle": 6,
+   "image": "The sea gives and takes on the shore in the same breath",
+   "lens": 0,
+   "ending": "open0",
+   "len": 0,
+   "essence": 0,
+   "kws": "giving and receiving",
+   "name": 2
+  },
+  "text": "You stand where the sea reaches the shore, and each wave gives and takes in one breath. This is Gebo, the exchange between water and sand, neither holding what it hands over. Watch how much you pour out and how much comes back before you choose which way to lean. Between you and the other, it may be that the giving flows more from one side than the other.",
+  "usage": {
+   "input_tokens": 1728,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 124,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "B",
+  "id": "B12",
+  "runa": "Raidho",
+  "oblast": "Crossroads & Decisions",
+  "rejstrik": "Clarity",
+  "konec": "End on one line that names what this may be where the seeker's way divides — a state that may be so, offered for them to weigh; it names how things may stand, never what to do about it.",
+  "draws": {
+   "v": 1,
+   "angle": 1,
+   "image": "a road vanishing round the next bend",
+   "place": "a mountain pass",
+   "lens": 0,
+   "ending": "open0",
+   "len": 0,
+   "essence": 1,
+   "kws": "movement",
+   "name": 2
+  },
+  "text": "There, at the very edge of the pass, a single wheel rut cut into the stone, worn by every cart that came before you. Raidho travels that groove now, carrying the weight of each choice that brought you to this bend. The road ahead vanishes where the mountain turns, and you cannot see past the rock. What waits here may be the last long stretch of an old habit, still moving under you as the way begins to divide.",
+  "usage": {
+   "input_tokens": 1707,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 147,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "B",
+  "id": "B20",
+  "runa": "Berkana",
+  "oblast": "Inner Growth",
+  "rejstrik": "Confirmation",
+  "konec": "End on one line that holds out two things this may be in a slow change in the seeker, each a state that may be so, left for them to weigh.",
+  "draws": {
+   "v": 1,
+   "angle": 4,
+   "image": "The rhubarb noses up through the cold soil by the south wall",
+   "lens": 0,
+   "ending": "open1",
+   "len": 0,
+   "essence": 1,
+   "kws": "new beginnings",
+   "name": 2
+  },
+  "text": "Under the cold soil by the south wall, the rhubarb noses up before anyone thinks to look. Berkana works down there in the dark, gathering what it needs before it shows. What stands just out of frame is the leaf you cannot yet see, though the root already knows its shape. This may be patience taking hold in you, or it may be growth that simply has not surfaced.",
+  "usage": {
+   "input_tokens": 1695,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 135,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "B",
+  "id": "B21",
+  "runa": "Gebo",
+  "oblast": "Love & Relationships",
+  "rejstrik": "Confirmation",
+  "konec": "End on one line that holds out two things this may be between the seeker and someone, each a state that may be so, left for them to weigh.",
+  "draws": {
+   "v": 1,
+   "angle": 4,
+   "image": "The sea gives and takes on the shore in the same breath",
+   "lens": 0,
+   "ending": "open1",
+   "len": 0,
+   "essence": 1,
+   "kws": "giving and receiving",
+   "name": 1
+  },
+  "text": "Beneath the wave that reaches your feet is the water already sliding back, unseen in the same breath. Gebo moves in that turning, giving and taking on the shore at once. What arrives has not yet shown whether it comes to stay or only to touch the sand and go. Weigh it, Anna, as either an open hand held toward you or a tide that gives what it means to reclaim.",
+  "usage": {
+   "input_tokens": 1712,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 140,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "B",
+  "id": "B22",
+  "runa": "Raidho",
+  "oblast": "Crossroads & Decisions",
+  "rejstrik": "Confirmation",
+  "konec": "End on one line that holds out two things this may be where the seeker's way divides, each a state that may be so, left for them to weigh.",
+  "draws": {
+   "v": 1,
+   "angle": 1,
+   "image": "a road vanishing round the next bend",
+   "place": "a hillside above the farm",
+   "lens": 0,
+   "ending": "open1",
+   "len": 0,
+   "essence": 0,
+   "kws": "movement",
+   "name": 2
+  },
+  "text": "Look at the wheel-ruts pressed into the mud, the part your eye slides over on the way to the bend. Raidho is the road already travelled, the going that carried you here without asking which turn came next. The way divides at that bend now, and what lies round it stays out of frame, unseen from this hillside. This may be ground you have crossed before, or the first stretch of a road that only looks familiar.",
+  "usage": {
+   "input_tokens": 1720,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 144,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "B",
+  "id": "B30",
+  "runa": "Berkana",
+  "oblast": "Inner Growth",
+  "rejstrik": "Insight into Challenge",
+  "konec": "End on one line that names what this may be in a slow change in the seeker — a state that may be so, said plainly, without comfort or softening.",
+  "draws": {
+   "v": 1,
+   "angle": 2,
+   "image": "The rhubarb noses up through the cold soil by the south wall",
+   "lens": 0,
+   "ending": "heavy0",
+   "len": 0,
+   "essence": 1,
+   "kws": "new beginnings",
+   "name": 0
+  },
+  "text": "The rhubarb pushes its wrinkled nose up through the cold soil by the south wall, before the ground is warm. Berkana opens that first bud into air that has not softened yet. The cold is real, Anna, and the new growth meets it without waiting for better. This may be the part of you that has already started moving, whether or not you were ready.",
+  "usage": {
+   "input_tokens": 1678,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 126,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "B",
+  "id": "B31",
+  "runa": "Gebo",
+  "oblast": "Love & Relationships",
+  "rejstrik": "Insight into Challenge",
+  "konec": "End on one line that names what this may be between the seeker and someone — a state that may be so, said plainly, without comfort or softening.",
+  "draws": {
+   "v": 1,
+   "angle": 2,
+   "image": "The shore returns one thing and keeps another with every wave",
+   "lens": 0,
+   "ending": "heavy0",
+   "len": 0,
+   "essence": 1,
+   "kws": "giving and receiving",
+   "name": 2
+  },
+  "text": "The wave comes in and lays something at your feet, then draws back and takes something else you did not choose to give. Gebo moves in that exchange, offering and pulling in the same breath. What you hand to another and what returns to you may not weigh the same, and that unevenness is real, not a fault to be fixed. Between you and this person there may be a giving that does not come back in kind.",
+  "usage": {
+   "input_tokens": 1690,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 136,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "B",
+  "id": "B32",
+  "runa": "Raidho",
+  "oblast": "Crossroads & Decisions",
+  "rejstrik": "Insight into Challenge",
+  "konec": "End on one line that names what this may be where the seeker's way divides — a state that may be so, said plainly, without comfort or softening.",
+  "draws": {
+   "v": 1,
+   "angle": 4,
+   "image": "a road vanishing round the next bend",
+   "place": "the outlying hay meadows",
+   "lens": 0,
+   "ending": "heavy0",
+   "len": 0,
+   "essence": 0,
+   "kws": "movement",
+   "name": 2
+  },
+  "text": "Beyond the bend the road keeps going, though from here you cannot see where it leads. Raidho is the road already walked, the meadows behind you now falling out of sight. Every step you took closed one way and opened another, and the friction was real, some ground you could not travel twice. This may be a parting still working itself out behind you.",
+  "usage": {
+   "input_tokens": 1711,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 120,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "B",
+  "id": "B40",
+  "runa": "Berkana",
+  "oblast": "Inner Growth",
+  "rejstrik": "Reflection",
+  "konec": "End on one question that holds out what this may be in a slow change in the seeker — asked as a possibility they can weigh, never as something you know about them.",
+  "draws": {
+   "v": 1,
+   "angle": 3,
+   "image": "The birch leafs out before all the rest, though the ground is still cold",
+   "lens": 0,
+   "ending": "open2",
+   "len": 0,
+   "essence": 1,
+   "kws": "new beginnings",
+   "name": 1
+  },
+  "text": "The ground is still cold, yet the birch holds its own timing, leafing out while the other trees stand bare. Berkana opens those first pale leaves into air that has not yet warmed. Something in you moves ahead of its season, unhurried by what waits around it. Might this early stirring, Anna, be a growth you are already living before you have named it?",
+  "usage": {
+   "input_tokens": 1678,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 129,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "B",
+  "id": "B41",
+  "runa": "Gebo",
+  "oblast": "Love & Relationships",
+  "rejstrik": "Reflection",
+  "konec": "End on one question that holds out what this may be between the seeker and someone — asked as a possibility they can weigh, never as something you know about them.",
+  "draws": {
+   "v": 1,
+   "angle": 0,
+   "image": "The shore returns one thing and keeps another with every wave",
+   "lens": 0,
+   "ending": "open2",
+   "len": 0,
+   "essence": 0,
+   "kws": "giving and receiving",
+   "name": 2
+  },
+  "text": "See the shore at once, the water rushing in, the sand held and the sand pulled back, all of it moving together, then let it fall away until only one wave remains. Gebo lives in that single exchange, what the sea offers and what it takes in the same breath. Between two people the giving and the keeping run this close, hard to tell apart. Could what you hold back be its own kind of offering, or the thing that keeps the water from reaching you?",
+  "usage": {
+   "input_tokens": 1702,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 155,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "B",
+  "id": "B42",
+  "runa": "Raidho",
+  "oblast": "Crossroads & Decisions",
+  "rejstrik": "Reflection",
+  "konec": "End on one question that holds out what this may be where the seeker's way divides — asked as a possibility they can weigh, never as something you know about them.",
+  "draws": {
+   "v": 1,
+   "angle": 4,
+   "image": "a sheep-track winding of its own accord",
+   "place": "down along the river between the slopes",
+   "lens": 0,
+   "ending": "open2",
+   "len": 0,
+   "essence": 1,
+   "kws": "natural rhythm",
+   "name": 2
+  },
+  "text": "Before the track came into view, some sheep walked it first, and their weight settled the ground along the river. Raidho carries that older going forward, turning where the slope turned long ago. The path you look back on was not planned, it was worn by one step following the last. Could the way that already divides behind you be showing you how you tend to choose?",
+  "usage": {
+   "input_tokens": 1702,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 120,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "D",
+  "id": "D0",
+  "runa": "Berkana",
+  "oblast": "Love & Relationships",
+  "rejstrik": "Insight into Challenge",
+  "konec": "End on one line that names what this may be between the seeker and someone — a state that may be so, said plainly, without comfort or softening.",
+  "draws": {
+   "v": 1,
+   "angle": 3,
+   "image": "The birch leafs out before all the rest, though the ground is still cold",
+   "lens": 0,
+   "ending": "heavy0",
+   "len": 0,
+   "essence": 1,
+   "kws": "new beginnings",
+   "name": 1
+  },
+  "text": "The ground stays cold and closed, while the birch puts out its first leaves regardless. Berkana opens what the season has not yet warmed. Between you and someone, one reaches while the other holds back in the chill, and that gap is real, not imagined. This may be, Anna, a beginning arriving before the other is ready to meet it.",
+  "usage": {
+   "input_tokens": 1679,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 124,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "D",
+  "id": "D1",
+  "runa": "Gebo",
+  "oblast": "Purpose & Path",
+  "rejstrik": "Insight into Challenge",
+  "konec": "End on one line that names what this may be in where the seeker is going — a state that may be so, said plainly, without comfort or softening.",
+  "draws": {
+   "v": 1,
+   "angle": 4,
+   "image": "The door stands open and coffee waits on the table for two",
+   "lens": 0,
+   "ending": "heavy0",
+   "len": 0,
+   "essence": 1,
+   "kws": "companionship",
+   "name": 2
+  },
+  "text": "Before you reach the table, notice the second chair, empty and turned to face the door. Gebo pours the second cup for someone who has not yet crossed the threshold. To keep walking your own way, you leave that cup to cool, and there is a real cost in that. Where you are going may be a place set for two, and only one of you has arrived.",
+  "usage": {
+   "input_tokens": 1671,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 123,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "D",
+  "id": "D2",
+  "runa": "Laguz",
+  "oblast": "Career & Creativity",
+  "rejstrik": "Insight into Challenge",
+  "konec": "End on one line that names what this may be in what the seeker is making — a state that may be so, said plainly, without comfort or softening.",
+  "draws": {
+   "v": 1,
+   "angle": 2,
+   "image": "The groundswell is felt in your feet before it is seen",
+   "lens": 0,
+   "ending": "heavy0",
+   "len": 0,
+   "essence": 0,
+   "kws": "intuition",
+   "name": 0
+  },
+  "text": "The ground shifts under your feet before your eyes catch the swell rising in the work. Something is moving beneath the surface, Anna, felt through the soles before it is named or shaped. This is Laguz, the water that reads by touch what the eye cannot yet see. What you are making may already be answering to a current you have not fully looked at.",
+  "usage": {
+   "input_tokens": 1694,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 124,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "D",
+  "id": "D3",
+  "runa": "Raidho",
+  "oblast": "Healing & Wellbeing",
+  "rejstrik": "Insight into Challenge",
+  "konec": "End on one line that names what this may be in the seeker's mending and rest — a state that may be so, said plainly, without comfort or softening.",
+  "draws": {
+   "v": 1,
+   "angle": 2,
+   "image": "a road vanishing round the next bend",
+   "place": "the heath below the fells",
+   "lens": 0,
+   "ending": "heavy0",
+   "len": 0,
+   "essence": 1,
+   "kws": "movement",
+   "name": 1
+  },
+  "text": "The road runs on across the heath and vanishes round the next bend below the fells. Raidho carries it forward, out of sight, past where your eyes can follow. You cannot see the ground you have not yet walked, and that unknowing sits heavy while you are still mending. This, Anna, is rest taken mid-motion, before the turn shows what it holds.",
+  "usage": {
+   "input_tokens": 1668,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 131,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "D",
+  "id": "D4",
+  "runa": "Fehu",
+  "oblast": "The Unseen",
+  "rejstrik": "Insight into Challenge",
+  "konec": "End on one line that names what this may be in what is present in the seeker's life but not shown — a state that may be so, said plainly, without comfort or softening.",
+  "draws": {
+   "v": 1,
+   "angle": 6,
+   "image": "The sheep drift into the fold toward evening, slow and without effort",
+   "lens": 0,
+   "ending": "heavy0",
+   "len": 0,
+   "essence": 1,
+   "kws": "cattle",
+   "name": 0
+  },
+  "text": "You stand at the open fold as the sheep drift in toward evening, slow and needing no driving. Fehu counts them through the gate, each one gathered without your hand on it. What you have built, Anna, is coming home to you on its own, unhurried and whole. This may be the quiet arriving of something already earned, still unspoken.",
+  "usage": {
+   "input_tokens": 1684,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 123,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "test": "D",
+  "id": "D5",
+  "runa": "Wunjo",
+  "oblast": "Family & Home",
+  "rejstrik": "Insight into Challenge",
+  "konec": "End on one line that names what this may be in the seeker's home and the people in it — a state that may be so, said plainly, without comfort or softening.",
+  "draws": {
+   "v": 1,
+   "angle": 0,
+   "image": "You come in out of the cold and someone has lit the stove",
+   "lens": 0,
+   "ending": "heavy0",
+   "len": 0,
+   "essence": 0,
+   "kws": "belonging",
+   "name": 2
+  },
+  "text": "You come in out of the cold and see the whole room, the table, the faces, the fire already lit before you asked. Then it all falls away but the stove someone tended in your absence. Wunjo is the warmth a house holds because people share the keeping of it. What lives in your home now is a belonging you did not light alone.",
+  "usage": {
+   "input_tokens": 1672,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 117,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ }
+]
