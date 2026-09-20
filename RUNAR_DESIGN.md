@@ -1282,11 +1282,14 @@ plus dvě síta výš a kontrola „čí je to pozemek" (předmět/sloveso nesm�
    ⚠️ **Přednost při sporu: těžkost runy > rejstřík.** Těžká runa nikdy nedostane útěšný tvar — vezme se těžké znění
    TOHO tvaru, který rejstřík zvolil (otázka bez útěchy, dvě možnosti bez útěchy). Jinak by Reflection změkčila Hagalaz.
    ⚠️ **Rameno Reflection hlídat:** otázkový tvar umí navádět a v Asku dělal doslovové ocásky — vlastní kontrola v testu.
-   Znění (EN hotové, IS se píše nativně až po schválení tvaru) + plán ověření → `RUNAR_BACKLOG.md`.
-
-   nikdy diagnóza ani krok. Tři tvary (věta · dvě možnosti · otázka) + zvláštní znění pro těžké runy (drží „may be",
-   ubírá jen útěchu). **Dvě možnosti = pravidlo pro čočku životní runy** — čočka se projeví jako jedna z možností,
-   nejmenovaná. Pozor: otázkový tvar umí navádět; hlídat při měření.
+   ⚠️ **Dvě možnosti = pravidlo pro čočku životní runy** — čočka se projeví jako jedna z možností, nejmenovaná.
+   **Znění vlastní KÓD, doc ho neopisuje (§20):** `SEEK_SHAPE` · `BRIDGE_AREAS(_IS)` · `ENDING_OPEN/HEAVY(_IS)`
+   v `v2/runar-utils.js`, výjimka v `_domainContext` (`runar-character.js`). Nasazeno v4.36 + v4.37.
+   Oba pooly mají tytéž tři tvary ve stejném pořadí, takže **každý tvar má i těžký protějšek** — těžkost runy
+   volí pool, rejstřík volí tvar.
+   <!-- changelog 2026-09-20: při vkládání mechanismu mi tu zůstal osiřelý odstavec z původního znění bodu 3
+        („tři tvary + zvláštní znění pro těžké runy") — dvakrát totéž a navíc zastaralé, protože v4.34 dodala
+        těžký protějšek každému tvaru. Sloučeno; ukazatel na backlog nahrazen ukazatelem na kód, znění je nasazené. -->
 4. **Délka: 4 věty; strop slov se nemění** (KUKY: „když bude víc, bude víc — proč bys mu číslem říkal, že může ještě
    víc"). Průměr se NEzapisuje do docu — počítá ho `scripts/delky_cteni.js` z exportu DB; los délky se od 2026-09-20
    zapisuje do `prompt_draws.len`.

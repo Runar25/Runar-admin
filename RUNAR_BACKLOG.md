@@ -58,8 +58,9 @@
 - [x] **ZÁKAZ V ŘÁDKU OBLASTI × MOST — VÝJIMKA NASAZENA 2026-09-20 (v4.37-vyjimka, DECISIONS (9));
   zbývá UŽ JEN doměřit chlad na větším vzorku** (výsledek →
   `RUNAR_EVAL_LOG.md` 2026-09-20 (10); data `docs/eval/2026-09-20-zakaz-oblasti/`).
-  **Vyhrála VÝJIMKA**, ne odebrání: `_domainContext` si nechá svůj zákaz a dostane hranici —
-  `… — except in the closing line, and there only as a possibility they may weigh.` (6 oblastí z 8, které kolidují).
+  **Vyhrála VÝJIMKA**, ne odebrání: `_domainContext` si nechá svůj zákaz a dostane hranici pro poslední větu
+  (6 oblastí z 8, které kolidují; Heilun a Fjölskylda zakazují něco jiného než kam most míří). **Znění vlastní kód** —
+  `_domainContext` v `runar-character.js`, doc ho po nasazení neopisuje (§20).
   Dosednutí poslední věty do oblasti **2/6 → 6/6**, chlad beze změny proti rameni bez výjimky, délka beze změny.
   ⚠️ **Odebrání zákazu (co jsem doporučoval) je VYVRÁCENÉ** — chlad 2/6 → 4/6 a dosednutí se nezlepšilo. Nezkoušet znovu.
   **Zbývá, než to půjde do produkčního kandidáta:** doměřit chlad na větším vzorku (víc run, EN + IS, všech pět
@@ -68,10 +69,19 @@
   nebo jiný model, jinak „shoda 3/3" nic neznamená.
 - [x] ~~REJSTŘÍK VEN Z TĚLA SINGLE~~ — **UZAVŘENO 2026-09-20: zůstává.** Owner nad slepými dvojicemi:
   *„s řádkem to vypadá dobře a zní lépe než bez řádku."* Měření (EVAL_LOG 2026-09-20 (11)) ukázalo výměnu,
-  ne ztrátu funkce (z hotového čtení 8/8 obojí), rozhodl sluch. Rozhodnutí → `RUNAR_DECISIONS.md` 2026-09-20 (3).
+  ne ztrátu funkce (z hotového čtení 8/8 obojí), rozhodl sluch. Rozhodnutí → `RUNAR_DECISIONS.md` 2026-09-20 (12).
 - [ ] **Tvar „VĚTA" drží „may be" hůř než dvě možnosti a otázka** — 2 ze 16 posledních vět vypadly z tvaru
   možnosti, obě u tvaru věta (`ENDING_OPEN[0]`, `ENDING_HEAVY[1]`), doklady v EVAL_LOG 2026-09-20 (11).
   Patří do tvrdých kontrol produkčního kandidáta; při větším vzorku ověřit, jestli to není náhoda.
+- [ ] ⭐ **IS: spready říkají člověku „leiðandi", single „leitandi" — jedno z toho je špatně** (nález CODE-read
+  2026-09-20 při psaní islandského závěru Norns). `RP_ATTAVITI/NORNS/SKEIFAN/YGGDRASIL.is` mají `seeker:'Leiðandi'`
+  a intro *„Leiðandinn dregur…"* (13 výskytů), single a konce používají `leitandi` (22 výskytů) — **v jednom souboru
+  dvě slova pro touž osobu**, a nikde v docs to není jako záměrný termín.
+  🔒 Slovník (`is-vazba.py`): **leiðandi = vedoucí** (*„fyrirtækið er leiðandi í lyfjaframleiðslu"*, a jako kolokace
+  **`leiðandi spurning` = návodná otázka** — přesně to, co Rúnar dělat nemá) · **leitandi = hledající**
+  (*„hann er mjög leitandi í trúmálum"*). Pro člověka, který přišel hledat, sedí `leitandi`.
+  ⚠️ **Netvrdím, že vím, jak to má být** (§23) — IS vlastní CODE-tune a píše se nativně. Jisté je jen to, že si
+  repo protiřečí. Rozhodnout jedním sweepem přes všechny čtyři spready, ne po jednom.
 - [ ] ⭐ **SPREADY × SINGLE: ROZCHÁZEJÍ SE PÁKY — vyřešit** (KUKY 2026-09-20: *„zapsat. to by se mělo vyřešit."*).
   `_domainContext` i `_registerContext` krmí single **i všechny spready**, ale spready mají navíc rozhodčí větu
   `_priorityContext` (*„honour the seeking and the area"*), kterou single NEMÁ (ověřeno: 4 volání, všechna ve
@@ -86,8 +96,12 @@
   na CODE-read**, než to půjde do produkčního kandidáta.
 
 - [ ] ⭐ **PRODUKČNÍ KANDIDÁT „nový Single" — plán ověření, než nahradí produkci** (KUKY 2026-09-20: *„pokud bude taková,
-  jakou jsi ji tady vytvořil, tak bude nahrazovat produkci"*). Kandidát = dnešek + most (los 3 tvarů + těžká verze) +
-  jméno mimo esenční větu + jádro/místo u převedených run (+ případně bez řádku sezóny, podle rozhodnutí ownera).
+  jakou jsi ji tady vytvořil, tak bude nahrazovat produkci"*).
+  ⚠️ **PŘERÁMOVÁNO 2026-09-20 podle toho, co se skutečně stalo.** Plán počítal s jedním kandidátem, který se A/B
+  porovná a teprve pak nahradí produkci. Místo toho šly změny do produkce **po kusech** (v4.33 most · v4.34 místo
+  a druhý těžký tvar · v4.35 čtyři věty, jméno, los esenčního rámu · v4.36 cíl a tvar mostu · v4.37 výjimka),
+  každá se svým měřením. Kandidát tedy **už JE produkce** a tenhle úkol se mění na **regresní ověření celého bloku
+  proti stavu před ním** = `75c1ba8` (v4.32-bez-sezony). Nic z toho zatím nikdo neporovnal jako CELEK.
   **Ověření, v tomhle pořadí:**
   1. `golden-verify` + smoke (staví CODE-tune) — změna výstupu jen tam, kde má být.
   2. **A/B na TÝCHŽ losech**: produkce × kandidát, stejné `prompt_draws` (od 2026-09-20 včetně `len`), **různé runy,

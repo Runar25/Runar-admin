@@ -4575,7 +4575,7 @@ o tom, co owner pozná jako dobré, ne o chování modelu.
 a spolehnout se na globální `NO COLD READING` + vlastní limit mostu. **Měření to vyvrátilo.**
 
 **Proč se to měřilo:** most (`ENDING_OPEN`/`HEAVY`) je v produkci a říká *„what this may be in the seeker's life"*;
-rozhodnutí 2026-09-20 (2) mu dává dosednout do oblasti. Jenže 6 z 8 řádků `_domainContext` přesně to zakazuje
+rozhodnutí 2026-09-20 (11) mu dává dosednout do oblasti. Jenže 6 z 8 řádků `_domainContext` přesně to zakazuje
 (*„Do not tell them where they are headed"*). Ramena se liší JEDNOU věcí, tvar konce držen na `ENDING_OPEN[0]`,
 runa Jera, rejstřík Clarity, EN, 6 kolidujících oblastí × 4 ramena = 24 čtení, produkční model.
 

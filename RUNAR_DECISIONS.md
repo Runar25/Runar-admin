@@ -3,6 +3,10 @@
 # NIKDY nemazat záznamy — oprava = nový datovaný záznam.
 # Přidává: Code (po implementaci) + Cowork (po designovém rozhodnutí).
 # Formát: Datum · Typ · Co · Proč · Reality note · Reverzibilita
+# ⚠️ Číslo za datem je JEDNOZNAČNÝ KLÍČ, ne pořadí. Když téhož dne zapisuje víc session (běží 3× CODE),
+#    vezmi si NEJVYŠŠÍ VOLNÉ číslo toho dne — ne „další po mém posledním". 2026-09-20 takhle vznikly
+#    dvě (2) a dvě (3) a odkazy „DECISIONS 2026-09-20 (3)" přestaly být jednoznačné; opraveno přečíslováním
+#    záznamů CODE-read na (10)–(12).
 
 ---
 
@@ -6307,7 +6311,7 @@ rozhodnutí ownera; do té doby to tu stojí zapsané.
 
 **Affected doc(s):** RUNAR_BACKLOG.md — doplněno v témž commitu.
 
-## 2026-09-20 — prompt_draws.len: los délky se zapisuje · jednorázový zásah CODE-read do produkce
+## 2026-09-20 (10) — prompt_draws.len: los délky se zapisuje · jednorázový zásah CODE-read do produkce
 
 - **Decision:** `_promptDraws` (v2/runar-utils.js) nově zapisuje `len` = index do `LENGTH_BUDGETS(_IS)`. Důvod: los
   délky (3 vs 4 věty) byl nezaznamenaný confounder všech měření (nález CODE-tune 2026-09-20; potvrzeno měřením mostu —
@@ -6317,7 +6321,7 @@ rozhodnutí ownera; do té doby to tu stojí zapsané.
 - **Ověřeno:** seed-and-assert oběma jazyky a oběma rozpočty (4/4 `draws.len` sedí) · smoke 44/44.
 - Affected doc(s): RUNAR_DESIGN.md „Stavba Single čtení" (založena táž den).
 
-## 2026-09-20 (2) — Most k člověku: AREA určuje kam dosedne, SEEKING určuje tvar
+## 2026-09-20 (11) — Most k člověku: AREA určuje kam dosedne, SEEKING určuje tvar
 
 - **Decision:** most (poslední věta Single) přestává být slepý los ze tří tvarů. **AREA** mění jedinou frázi —
   kam možnost dosedne; **SEEKING** volí tvar (Clarity = věta · Confirmation = dvě možnosti · Insight into Challenge =
@@ -6409,7 +6413,7 @@ opraví CODE-read, doc vlastní. Zapsáno do `RUNAR_BACKLOG.md`.
 
 ## 2026-09-20 (8) — MOST: oblast určuje CÍL, rejstřík určuje TVAR (v4.36-most-cil)
 
-**Znění od CODE-read (`RUNAR_BACKLOG.md`), rozhodl owner — DECISIONS 2026-09-20 (2). Nasazeno.**
+**Znění od CODE-read (`RUNAR_BACKLOG.md`), rozhodl owner — DECISIONS 2026-09-20 (11). Nasazeno.**
 
 **Co platí:** konec už není čistý los.
 - **TVAR** podle rejstříku (`SEEK_SHAPE`, pořadí = `SEEKS.en`): Clarity → věta · Confirmation →
@@ -6460,7 +6464,7 @@ seeker's way divides").
 **Affected doc(s):** `RUNAR_BACKLOG.md` — položka „MOST: AREA = kam dosedne" je nasazená a podle
 vlastního zadání odsud mizí; vlastní to teď kód.
 
-## 2026-09-20 (3) — Řádek rejstříku ZŮSTÁVÁ v těle single (ownerův soud, ne měření)
+## 2026-09-20 (12) — Řádek rejstříku ZŮSTÁVÁ v těle single (ownerův soud, ne měření)
 
 - **Decision:** `_registerContext` se ze single **neodebírá**. KUKY 2026-09-20 nad slepými dvojicemi:
   *„s řádkem to vypadá dobře. a zní lépe než bez řádku."* Tím se uzavírá otázka *„ven a změřit"*.
