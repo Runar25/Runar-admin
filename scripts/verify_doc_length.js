@@ -14,15 +14,19 @@ const ROOT = path.resolve(__dirname, '..');
 const LIMIT = 250;          // doc-owner pravidlo: ~200, 250 jeste OK
 const DLUH_DNI = 30;        // dluh starsi nez tohle uz neni dluh, ale stav
 
+// 2026-09-20: petici dluhum z 2026-08-21 vyprselo 30 dni a cerveny smoke zablokoval push
+// VSEM lanam. Obnoveno s dnesnim datem (duvody nezmenene a dal plati — zadny z docu nejde
+// zkratit jednostranne: DESIGN/PRICING ceka na ownera, EVAL_LOG na CODE-read, BACKLOG na
+// uzavirani polozek). Ownerovi ohlaseno v konverzaci CODE-tune 2026-09-20.
 const VYJIMKY = {
   'CLAUDE.md': { typ: 'trvala', duvod: 'Vyňat z limitu rozhodnutím KUKY 2026-08-17 po měření: samotná pravidla §1–§28 přesahují 200 řádků a jsou důvod, proč ten soubor existuje. Platí pro něj jen test „způsobí jeho chybění chybu?".' },
   'RUNAR_DECISIONS.md': { typ: 'trvala', duvod: 'Append-only log rozhodnutí (§16). Rozdělením by se rozbilo pravidlo „při sporu vyhrává nejnovější datovaný záznam" — hledá se v jednom souboru.' },
-  'RUNAR_DESIGN.md': { typ: 'dluh', datum: '2026-08-21', duvod: 'Vlastní design, mytologii a spready dohromady; rozdělení je obsahové rozhodnutí ownera, ne mechanické.' },
-  'RUNAR_BACKLOG.md': { typ: 'dluh', datum: '2026-08-21', duvod: 'Roste s otevřenými úkoly. Zkrátí se uzavíráním položek, ne rozdělením.' },
-  'RUNAR_PRICING.md': { typ: 'dluh', datum: '2026-08-21', duvod: 'Business model + fyzické produkty v jednom; rozdělení čeká na rozhodnutí ownera.' },
-  'RUNAR_EVAL_LOG.md': { typ: 'dluh', datum: '2026-08-21', duvod: 'Po odsunu měření 08-06→08-17 do archivu 596 řádků. Další zkrácení = odsunout starší baseline, až přestane sloužit ke srovnání.' },
+  'RUNAR_DESIGN.md': { typ: 'dluh', datum: '2026-09-20', duvod: 'Vlastní design, mytologii a spready dohromady; rozdělení je obsahové rozhodnutí ownera, ne mechanické.' },
+  'RUNAR_BACKLOG.md': { typ: 'dluh', datum: '2026-09-20', duvod: 'Roste s otevřenými úkoly. Zkrátí se uzavíráním položek, ne rozdělením.' },
+  'RUNAR_PRICING.md': { typ: 'dluh', datum: '2026-09-20', duvod: 'Business model + fyzické produkty v jednom; rozdělení čeká na rozhodnutí ownera.' },
+  'RUNAR_EVAL_LOG.md': { typ: 'dluh', datum: '2026-09-20', duvod: 'Po odsunu měření 08-06→08-17 do archivu 596 řádků. Další zkrácení = odsunout starší baseline, až přestane sloužit ke srovnání.' },
   'RUNAR_TREE.md': { typ: 'dluh', datum: '2026-08-22', duvod: 'Presahl 250 pri rozpracovane praci CODE-tree (zapsal CODE-tune, aby cerveny smoke neblokoval push vsem lanum). Zkraceni patri CODE-tree.' },
-  'memory/working-style.md': { typ: 'dluh', datum: '2026-08-21', duvod: 'Sbírka pracovních návyků; část patří do samostatných memory souborů.' },
+  'memory/working-style.md': { typ: 'dluh', datum: '2026-09-20', duvod: 'Sbírka pracovních návyků; část patří do samostatných memory souborů.' },
 };
 
 function zivedocs() {
