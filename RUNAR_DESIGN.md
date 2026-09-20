@@ -1255,6 +1255,35 @@ plus dvě síta výš a kontrola „čí je to pozemek" (předmět/sloveso nesm�
    věta 1 = úhel + místo/scéna · věta 2 = esence (jméno runy; NEJPŘETÍŽENĚJŠÍ — padá tam i jméno člověka a aspekt) ·
    poslední = konec/most; „you stand" na začátku dělá úhel [6], na konci dělal konec (vypuštěno).
 3. **Most k člověku** — jediné místo, kde smí čtení mluvit o životě člověka, vždy jako MOŽNOST („this may be…"),
+   nikdy diagnóza ani krok. **Od 2026-09-20 není most losovaný naslepo — řídí ho to, co člověk zadal:**
+
+   ⭐ **Most: AREA určuje KAM dosedne, SEEKING určuje JAKÝ TVAR vezme** (KUKY 2026-09-20: *„ano, most ať dosedne
+   do AREA a tvar ať určuje SEEKING"*). Není to nová myšlenka — je to první mechanismus ke kánonu **„runa je základ,
+   oblast je otázka, kterou musí runa vzít v potaz"** (KUKY 2026-08-16, výš v tomhle docu), který byl dosud nenaplněný
+   a **změřený jako nenaplněný**: oblast se ve čtení projevovala hlavně ozvěnou svého slova, tři měření kolem nuly.
+   Stejně tak `seeking` už v „Reading contract" (výš) vlastní roli **rejstřík — mód výkladu**; tady dostává místo,
+   kde se ten mód projeví, místo aby ho uprostřed čtení rušilo NO COLD READING (doloženo skládačkou, EVAL_LOG 2026-09-20).
+
+   **Tvar je 1:1 odvozený ze znění, které rejstřík UŽ má v `_registerContext` — nic se nevymýšlí:**
+   | SEEKING | co rejstřík dnes žádá | tvar mostu |
+   |---|---|---|
+   | Clarity | *„bring one thing into focus, not one answer"* | **věta** — jedna věc pojmenovaná |
+   | Confirmation | *„neither confirm nor refute"* | **dvě možnosti** (jediný čestný tvar, když nesmím ani potvrdit, ani vyvrátit) |
+   | Insight into Challenge | *„name the friction honestly, without softening it into comfort"* | **těžká věta** bez útěchy |
+   | Reflection | *„open a mirror, not an answer; turn them inward"* | **otázka** |
+   | General Guidance | *„let the rune lead where it will"* | **los** ze tří tvarů (dnešek) |
+
+   **Kam dosedne:** mění se JEDINÁ fráze v mostu (`in the seeker's life` → fráze oblasti), zbytek znění je společný —
+   jedna cesta kódem, oblast jako data (§18). Oblast v ostatních větách zůstává tím, čím je dnes: **zdrojem obrazu**,
+   ne cílem tvrzení. Tím se nevrací studené čtení, které ta změna v srpnu srazila (EN 10/16 → 2,3/16).
+
+   ⚠️ **Čtyři stavy, protože obě pole jsou NEPOVINNÁ a nezávislá:** nic (los tvaru, most bez oblasti) · jen AREA
+   (los tvaru, dosedne do oblasti) · jen SEEKING (tvar z rejstříku, bez oblasti) · obojí.
+   ⚠️ **Přednost při sporu: těžkost runy > rejstřík.** Těžká runa nikdy nedostane útěšný tvar — vezme se těžké znění
+   TOHO tvaru, který rejstřík zvolil (otázka bez útěchy, dvě možnosti bez útěchy). Jinak by Reflection změkčila Hagalaz.
+   ⚠️ **Rameno Reflection hlídat:** otázkový tvar umí navádět a v Asku dělal doslovové ocásky — vlastní kontrola v testu.
+   Znění (EN hotové, IS se píše nativně až po schválení tvaru) + plán ověření → `RUNAR_BACKLOG.md`.
+
    nikdy diagnóza ani krok. Tři tvary (věta · dvě možnosti · otázka) + zvláštní znění pro těžké runy (drží „may be",
    ubírá jen útěchu). **Dvě možnosti = pravidlo pro čočku životní runy** — čočka se projeví jako jedna z možností,
    nejmenovaná. Pozor: otázkový tvar umí navádět; hlídat při měření.

@@ -6316,3 +6316,19 @@ rozhodnutí ownera; do té doby to tu stojí zapsané.
   „produkční kód nesahá", jednorázová, NE precedens. Patch slot `scripts/_patch_read.py` (gitignored, §1).
 - **Ověřeno:** seed-and-assert oběma jazyky a oběma rozpočty (4/4 `draws.len` sedí) · smoke 44/44.
 - Affected doc(s): RUNAR_DESIGN.md „Stavba Single čtení" (založena táž den).
+
+## 2026-09-20 (2) — Most k člověku: AREA určuje kam dosedne, SEEKING určuje tvar
+
+- **Decision:** most (poslední věta Single) přestává být slepý los ze tří tvarů. **AREA** mění jedinou frázi —
+  kam možnost dosedne; **SEEKING** volí tvar (Clarity = věta · Confirmation = dvě možnosti · Insight into Challenge =
+  těžká věta · Reflection = otázka · General Guidance = los). Odvozeno 1:1 ze znění, které rejstříky už mají
+  v `_registerContext` — nic nového se nevymýšlí. KUKY: *„ano, most ať dosedne do AREA a tvar ať určuje SEEKING."*
+- **Proč:** naplňuje kánon *„runa je základ, oblast je otázka, kterou musí runa vzít v potaz"* (2026-08-16), který
+  byl dosud změřený jako nenaplněný (oblast = ozvěna slova, tři měření kolem nuly). Ubírá jednu náhodnou páku
+  a mění ji v řízený vstup (KUKY: *„most k člověku udělej jako řízený vstup ve tvaru možnosti"*).
+- **Mantinel (§26):** oblast zůstává ve zbytku čtení ZDROJEM OBRAZU, ne cílem tvrzení — jinak se vrací studené
+  čtení, které srpnová změna srazila (EN 10/16 → 2,3/16, IS 11/16 → 2,7/16, EVAL_LOG 2026-08-21). O člověku mluví
+  JEN most, jen jako možnost. Kánon „zrcadlo, ne orákulum" se tím nemění (KUKY: *„to už máme vyřešené, nechci měnit"*).
+- **Přednost:** těžkost runy > rejstřík (těžká runa dostane těžké znění zvoleného tvaru).
+- **Stav:** rozhodnuto, NENASAZENO. Znění EN hotové, IS se píše nativně po schválení tvaru; ověření → RUNAR_BACKLOG.md.
+- Affected doc(s): RUNAR_DESIGN.md „Stavba Single čtení — základ" bod 3 (mechanismus zapsán tamtéž).

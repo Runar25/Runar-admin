@@ -55,33 +55,33 @@
   grey"): po KROKU 2 grey/wind 8/9; bez té věty 0/3, s vrácenou větou o počasí 0/3. Owner rozhodne mezi S (věta pryč) a W
   (brzda zpět — bod 7 CODE-tune), texty obou ramen jsou holé. Zvlášť: **mlha → „the grey" jako podstatné jméno** (model
   nechce opakovat „fog") — týká se obrazů a míst s mlhou; test „jmenuj věc pokaždé jejím jménem" zatím neběžel.
-- [ ] ⭐ **ODPOVÍDÁ ZÁVĚR NA TO, CO ČLOVĚK ZADAL? (AREA / SEEKING × most)** — KUKY 2026-09-20: *„kde by mohla
-  závěrečná věta fungovat… uživatel zadá buď AREA nebo seeking a na to by měli dostat odpověď. možná budeme muset
-  změnit i to, jak se ptáme v AREA a SEEKING."* Stav dneska (CODE-read prověřil v kódu, ne z paměti):
-  • **Obě pole jsou NEPOVINNÁ a NEZÁVISLÁ** (`runar-reader.html` — AREA pills + SEEK pills, oboí *(OPTIONAL)*), takže
-    závěr musí fungovat ve Čtyřech stavech: nic · jen AREA · jen SEEKING · obojí. Není to buď–anebo.
-  • **Nic v formři se neptá otázkou.** AREA = MÍSTO (8 oblastí) · SEEKING = REJSTŘÍK / způsob řeči (5) · INTENTION =
-    časová osa · volné pole má popisek **„THE SITUATION / STAÐAN"** a nápovědu *„where you stand now — not what is
-    to come"*. Odpovědět se tedy dnes nemá na co; to je záměr, ne opomenutí.
-  • **SEEKS zřetelně ZAKAZUJÍ odpověď** (`_registerContext`): Clarity *„not one answer… leave the deciding to them"* ·
-    Confirmation *„neither confirm nor refute"* · Reflection *„open a mirror, not an answer"*. Tři z pěti.
-  • **AREA zakazuje mluvit o člověku** (`_domainContext`): *„Do not tell them where they are headed / what they know /
-    what is true between them"*. To znění vzniklo měřením — oblast jako ZDROJ OBRAZU místo cíle tvrzení srazila studené
-    čtení EN 10/16 → 2,3/16, IS 11/16 → 2,7/16 (`RUNAR_EVAL_LOG.md` 2026-08-21). ⚠️ §26: návrat k „závěr mluví
-    o člověku v té oblasti" smí být jen OČIŠTĚNÝ — most drží tvar **možnosti** a platí jen pro POSLEDNÍ větu;
-    zbytek čtení nechává oblast dál jen jako zdroj obrazu. Jinak si přivoláme zpět studené čtení.
-  **Návrh CODE-read k rozhodnutí ownerem (není změřeno, je to nástřel):** závěr ne„odpovídá", ale **dosedne tam, kam si
-  člověk ukazal**: AREA určuje, KAM most dopadne („co to může být mezi dvěma lidmi / na cestě / při mlčení…"),
-  SEEKING určuje, JAKÝ TVAR most vezme — místo losu ze tří tvarů: Clarity → dvě možnosti · Confirmation → dvě možnosti
-  (jediný čestný tvar, když nesmím potvrdit ani vyvrátit) · Insight into Challenge → těžká věta bez útěchy ·
-  Reflection → otázka · General Guidance → los. Tím se ubere jedna náhodná páka a přibude řízený vstup (KUKY:
-  *„most k člověku udělej jako řízený vstup ve tvaru možnosti"*). Motiv měření: rejstřík dnes tlačí dovnitř uprostřed
-  čtení a NO COLD READING mu to ruší (`RUNAR_EVAL_LOG.md` 2026-09-20, skádačka) — na konci by měl vlastní místo.
-  **Otevřené pro ownera (§23, kánon, ne měření):** má závěr vůbec mluvit o člověku? Dnešní formulář je postavený tak,
-  že Rúnar neodpovídá — zrcadlí. Změna znění otázek v AREA/SEEKING je závislá na téhle odpovědi, ne naopak.
-  **Nejlevnější rozhodující test, až na to dojde:** slepý soudce hádá z HOTOVÉHO čtení zvolenou oblast (1 z 8) a
-  rejstřík (1 z 5), dnešní produkce vs. kandidát; k tomu ownerova slepá dvojice. Když dnes oblast z textu nepoznat,
-  člověk něco zadal a nedostal na to nic — to je měřitelné. „Hezké" měřitelné NENÍ (§24).
+- [ ] ⭐ **MOST: AREA = kam dosedne · SEEKING = tvar — ZNĚNÍ K NASAZENÍ** (rozhodnuto KUKY 2026-09-20,
+  `RUNAR_DECISIONS.md` 2026-09-20 (2); mechanismus a mantinely vlastní `RUNAR_DESIGN.md` „Stavba Single čtení" bod 3 —
+  **tady je jen to, co se má nasadit, po nasazení to vlastní kód a odsud zmizí**).
+  **Tvar podle SEEKING** (`{L}` = fráze oblasti, viz níž; bez AREA zůstává `in the seeker's life`):
+  • Clarity → `End on one line that names what this may be {L} — a state that may be so, offered for them to weigh;
+    it names how things may stand, never what to do about it.`
+  • Confirmation → `End on one line that holds out two things this may be {L}, each a state that may be so,
+    left for them to weigh.`
+  • Insight into Challenge → `End on one line that names what this may be {L} — a state that may be so, said plainly,
+    without comfort or softening.`
+  • Reflection → `End on one question that holds out what this may be {L} — asked as a possibility they can weigh,
+    never as something you know about them.`
+  • General Guidance / nezadáno → los ze tří tvarů (věta · dvě možnosti · otázka).
+  **`{L}` podle AREA** (pořadí = `AREAS.en`; ⚠️ indexovaná mapa jako `_domainContext` — hlídá `test_lever_maps.js`):
+  1 `between the seeker and someone` · 2 `in where the seeker is going` · 3 `in what the seeker is making` ·
+  4 `in the seeker's mending and rest` · 5 `in what is present in the seeker's life but not shown` ·
+  6 `in the seeker's home and the people in it` · 7 `in a slow change in the seeker` · 8 `where the seeker's way divides`
+  **Přednost:** těžká runa (`HEAVY_RUNES`) → těžké znění ZVOLENÉHO tvaru, rejstřík tvar nemění na útěšný.
+  **Do `prompt_draws`:** zapsat zvolený tvar i zdroj (rejstřík vs los) — jinak je to další nezaznamenaný confounder
+  jako délka do 2026-09-20.
+  **Ověřit (CODE-read), než to půjde do produkčního kandidáta:**
+  1. Slepý soudce hádá z hotového čtení oblast (1 z 8) a rejstřík (1 z 5) — dnešek vs. nová verze. Dnešní základ je
+     „ozvěna slova" (3 měření kolem nuly, EVAL_LOG 2026-08-16), takže je co překonat.
+  2. Studené čtení a rada: musí zůstat na nule i s oblastí v poslední větě (to je ten mantinel z §26).
+  3. Rameno **Reflection** zvlášť: otázkový tvar umí navádět a v Asku dělal doslovové ocásky.
+  4. Délka: most se nesmí prodloužit o oblast (měřit slova, ne dojem).
+  IS znění se píše nativně až po schválení tvaru měřením (§2) — ne překladem téhle tabulky.
 - [ ] ⭐ **PRODUKČNÍ KANDIDÁT „nový Single" — plán ověření, než nahradí produkci** (KUKY 2026-09-20: *„pokud bude taková,
   jakou jsi ji tady vytvořil, tak bude nahrazovat produkci"*). Kandidát = dnešek + most (los 3 tvarů + těžká verze) +
   jméno mimo esenční větu + jádro/místo u převedených run (+ případně bez řádku sezóny, podle rozhodnutí ownera).
