@@ -55,6 +55,15 @@
   grey"): po KROKU 2 grey/wind 8/9; bez té věty 0/3, s vrácenou větou o počasí 0/3. Owner rozhodne mezi S (věta pryč) a W
   (brzda zpět — bod 7 CODE-tune), texty obou ramen jsou holé. Zvlášť: **mlha → „the grey" jako podstatné jméno** (model
   nechce opakovat „fog") — týká se obrazů a míst s mlhou; test „jmenuj věc pokaždé jejím jménem" zatím neběžel.
+- [ ] ⭐ **ZÁVĚR SPREADŮ — vlastní návrh, NE kopie mostu ze single** (KUKY 2026-09-20: *„spready se skládají z více run,
+  mají jinou filozofii… nemůžeš brát, že co pasuje na single, automaticky pasuje na spready. Norns, cross, horseshoe,
+  yggdrasil mají svoji vlastní stavbu. Jsem otevřený tomu mít tam závěr, jen aby to nebylo v konfliktu. A je to hromada
+  run — nevím, jak z toho chceš vytáhnout závěr."*). Stav: spready končí `landingem` v obraze a tvrzení o člověku padají
+  UPROSTŘED (beat „friction" — doklad `RUNAR_EVAL_LOG.md` 2026-09-20 (7): Norns tvrdí uprostřed, mlží na konci; ownerova
+  výtka „care alone cannot settle what remains unspoken"). Návrh CODE-read K DOPRACOVÁNÍ S OWNEREM, per spread zvlášť:
+  závěr nevzniká z jedné runy, ale z toho, co spread UŽ řekl — u Norns z beatu Skuld (kam to spěje → „may be" o člověku),
+  u horseshoe z pozice „ahead", u kříže z „ahead" osy skuld; yggdrasil je rituál, tam možná závěr nepatří vůbec.
+  Nejdřív Norns: navrhnout znění, 3 čtení, owner čte. NIC nenasazovat, dokud owner neodsouhlasí tvar pro daný spread.
 - [ ] ⭐ **LIST RUNY — materiál, podle kterého jde poznat, co k runě patří** (KUKY 2026-09-20: *„jak ti mám připravit
   materiál, podle kterého bys dokázal rozpoznat, co je vhodné pro runu? Jaké další vstupy by do ní mohly jít?"*).
   Návrh CODE-read, 6 polí na runu; vyplňuje owner/Cowork, CODE-read podle nich staví testy:

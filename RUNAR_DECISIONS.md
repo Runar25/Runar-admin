@@ -6306,3 +6306,13 @@ aby konec pevný slot NEBYL. Pro 6 run z 25 to teď znovu platí. Druhý těžk�
 rozhodnutí ownera; do té doby to tu stojí zapsané.
 
 **Affected doc(s):** RUNAR_BACKLOG.md — doplněno v témž commitu.
+
+## 2026-09-20 — prompt_draws.len: los délky se zapisuje · jednorázový zásah CODE-read do produkce
+
+- **Decision:** `_promptDraws` (v2/runar-utils.js) nově zapisuje `len` = index do `LENGTH_BUDGETS(_IS)`. Důvod: los
+  délky (3 vs 4 věty) byl nezaznamenaný confounder všech měření (nález CODE-tune 2026-09-20; potvrzeno měřením mostu —
+  věta navíc mění, co dosedne na konec).
+- **Kdo:** CODE-read, na výslovný pokyn ownera (*„délku taky dodělej… tak to asi udělej tady"*) — výjimka z lane
+  „produkční kód nesahá", jednorázová, NE precedens. Patch slot `scripts/_patch_read.py` (gitignored, §1).
+- **Ověřeno:** seed-and-assert oběma jazyky a oběma rozpočty (4/4 `draws.len` sedí) · smoke 44/44.
+- Affected doc(s): RUNAR_DESIGN.md „Stavba Single čtení" (založena táž den).

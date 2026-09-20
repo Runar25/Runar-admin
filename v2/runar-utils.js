@@ -328,6 +328,13 @@ function _promptDraws(prompt, lang) {
       for (var k = 0; k < open.length; k++)
         if (p.indexOf(open[k]) !== -1) { out.ending = 'open' + k; break; }
 
+    // Delka (2026-09-20, KUKY: "delku taky dodelej"): losuje se 3 vs 4 vety, ale v draws
+    // NEBYLA — nezaznamenany confounder mereni (kam dosedne konec/most zavisi na vete
+    // navic; nalez CODE-tune). Index do LENGTH_BUDGETS(_IS); kotva = cely radek losu.
+    var buds = isIs ? LENGTH_BUDGETS_IS : LENGTH_BUDGETS;
+    for (var b = 0; b < buds.length; b++)
+      if (p.indexOf(buds[b]) !== -1) { out.len = b; break; }
+
     // Klíčová slova: z pěti až šesti se losují tři (pickedKws) — fasety runy položené
     // modelu před oči. Řádka vypadá takto:
     //   DRAWN RUNE: Fehu — focus on: wealth, material prosperity, cattle · World: …

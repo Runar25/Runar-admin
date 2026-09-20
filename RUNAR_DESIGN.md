@@ -1239,3 +1239,30 @@ ať vyjdou z mapy mezer a z brány · **každý obraz jakéhokoli typu projde id
 plus dvě síta výš a kontrola „čí je to pozemek" (předmět/sloveso nesmí být jádrem sousední runy).
 
 
+
+---
+
+## Stavba Single čtení — základ (2026-09-20, KUKY + CODE-read; měření vlastní `RUNAR_EVAL_LOG.md` 2026-09-18 až 20)
+
+*Changelog: 2026-09-20 založeno — owner: „vytvořili jsme tu základ něčeho, co jsem chtěl posunout" a ten základ nesmí
+žít jen v konverzaci a v měřicích protokolech. Tady bydlí SMĚR; čísla a doklady v EVAL_LOGu, soupis všech pák u CODE-tune.*
+
+**Čtení = scéna × vztah runy × most k člověku.**
+1. **Runa do čtení vstupuje VZTAHEM (slovesem), ne rekvizitou.** „Něco drží, zatímco zbytek jde dál" je Isa; led si
+   doplní scéna. Doklad: jedna scéna (průsmyk) unesla čtyři runy a nepletly se; bez dodané scény se runa sjede do svého
+   živlu (Isa → led, Laguz → potok). Proto jádro obrazu + místo z losu (v produkci od v4.30 u Raidha).
+2. **Věty mají v praxi role, i když je nikdo nepředepisuje** (předepsat je bylo měřeno a zamítnuto — dražší, nic nedá):
+   věta 1 = úhel + místo/scéna · věta 2 = esence (jméno runy; NEJPŘETÍŽENĚJŠÍ — padá tam i jméno člověka a aspekt) ·
+   poslední = konec/most; „you stand" na začátku dělá úhel [6], na konci dělal konec (vypuštěno).
+3. **Most k člověku** — jediné místo, kde smí čtení mluvit o životě člověka, vždy jako MOŽNOST („this may be…"),
+   nikdy diagnóza ani krok. Tři tvary (věta · dvě možnosti · otázka) + zvláštní znění pro těžké runy (drží „may be",
+   ubírá jen útěchu). **Dvě možnosti = pravidlo pro čočku životní runy** — čočka se projeví jako jedna z možností,
+   nejmenovaná. Pozor: otázkový tvar umí navádět; hlídat při měření.
+4. **Délka: 4 věty; strop slov se nemění** (KUKY: „když bude víc, bude víc — proč bys mu číslem říkal, že může ještě
+   víc"). Průměr se NEzapisuje do docu — počítá ho `scripts/delky_cteni.js` z exportu DB; los délky se od 2026-09-20
+   zapisuje do `prompt_draws.len`.
+5. **Sezóna jen jako podmínka** (štítek + „obraz nenese počasí z jiné doby"), žádné počítání času, žádné jméno starého
+   měsíce (dělalo obilí). Owner zvažuje úplné odebrání — filtr obrazů ale drží jen u 36/108 řádků, které sezónu nesou.
+6. **Co je vědomě NEvyřešené:** závěr spreadů (vlastní stavba per spread, NE kopie mostu ze single — viz backlog) ·
+   tvar esence (spona „<Runa> is" — dělá ji dvojice pokynů „pojmenuj + řekni, co dělá"; řešení = los rámů, znění je
+   obsah ownera) · umístění jména člověka mimo esenční větu · LIST RUNY (6 polí) · volba modelu až po pravidlech.

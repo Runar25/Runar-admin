@@ -4,6 +4,7 @@
 # session nepřepisují rozdělaný skript pod rukama)
 scripts/_patch.py
 scripts/_patch_tune.py
+scripts/_patch_read.py
 
 __pycache__/
 
