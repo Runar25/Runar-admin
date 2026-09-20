@@ -4513,3 +4513,26 @@ already behind you"* = pochopit minulost) · IS ověřeno (gramatika 0 E001; kor
    Single dnes dělá opak: popis uprostřed, možnost na konci. ⇒ Ownerova „mlha na konci" u spreadů má strukturální příčinu:
    konec spreadu je `landing` (zůstaň v obraze), most tam není. Norns IS totéž (*„sést fyrst heilt úr kyrrðinni"*).
 4. Ve spreadech **nepadne ani jedno jméno runy** (0/2) — reader je vidí jen z UI. Pro text bez kontextu je to slepé místo.
+
+## 2026-09-20 (8) — ZÁVĚR NORNS: poslední věta patří Skuld (A funguje, B ne)
+
+**Owner:** *„začít s Norns závěrem"* + mantinel *„spready mají jinou filozofii, nemůžeš brát, že co pasuje na single,
+automaticky pasuje na spready"*. Proto NE most ze single, ale úprava vlastního `RP_NORNS.landing`.
+**Proč tam mlha je — doslova v promptu:** landing dnes říká *„Say it in the words of the image. Not a question, no moral,
+no „this means", no comfort added."* Skuld beat přitom už mluví podmíněně o člověku (*„where you are heading if you keep
+walking as you are now"*). Závěr tedy nemusí být nový hlas — stačí, aby poslední věta patřila Skuld.
+**Jak:** týž prompt jako Norns čtení, které owner viděl (Urður Gebo · Verðandi Ingwaz · Skuld Othila, obraz dveře a káva,
+oblast The Unseen, záměr pochopit minulost, čočka Ehwaz, bez jména), 3 čtení na rameno, produkční model.
+Podklady → `docs/eval/2026-09-20-norns-zaver/`.
+
+| rameno | poslední věta | slov / vět |
+|---|---|---|
+| **K** dnešek | zůstává v obraze: *„Keep tending this table as you are, and the door stays open for the ones who know the way back to it."* | 113–134 / 4–5 |
+| **A** *„…the last sentence belongs to Skuld: it holds out two things this movement may be in the seeker's life… each a state that may be so"* | **3/3 dvě skutečné možnosti o směru, v materiálu obrazu**: *„Where you are heading, this may be a threshold left open for a return, or a table you finally wipe down before walking out into the morning."* · *„From this it may be a house kept ready for company, or a house learning to keep itself."* | 117–137 / 5 |
+| B dnešek + jedna možnost navíc | **3/3 sklouzlo**: tvrzení (*„the warmth you were given was never only theirs to hold"*), cold reading (*„you already know the road out"*), měkká rada (*„depends on who you are willing to travel beside"*) | **150–158** / 5–6 (nejdelší) |
+**Závěr:** doporučuji **A** — respektuje stavbu spreadu (žádný čtvrtý hlas, závěr je poslední věta Skuld), nepřidává délku
+a drží tvar možnosti. B přidává povinnost navíc k hotovému landingu a model ji splní tvrzením. ⚠️ n = 3 na rameno, jeden
+spread, jeden jazyk; IS znění napíšu nativně, až owner tvar schválí. Ostatní spready (kříž, horseshoe, Yggdrasil) mají
+vlastní stavbu — každý vlastní návrh, žádná kopie.
+⚠️ **Chyba nástroje, opraveno:** generátor bral u spreadu jen PRVNÍ beat z JSON pole (měřil jsem Urður místo celého čtení);
+`api_gen.js` teď skládá všechny beaty.

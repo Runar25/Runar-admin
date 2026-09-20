@@ -55,6 +55,22 @@
   grey"): po KROKU 2 grey/wind 8/9; bez té věty 0/3, s vrácenou větou o počasí 0/3. Owner rozhodne mezi S (věta pryč) a W
   (brzda zpět — bod 7 CODE-tune), texty obou ramen jsou holé. Zvlášť: **mlha → „the grey" jako podstatné jméno** (model
   nechce opakovat „fog") — týká se obrazů a míst s mlhou; test „jmenuj věc pokaždé jejím jménem" zatím neběžel.
+- [ ] ⭐ **PRODUKČNÍ KANDIDÁT „nový Single" — plán ověření, než nahradí produkci** (KUKY 2026-09-20: *„pokud bude taková,
+  jakou jsi ji tady vytvořil, tak bude nahrazovat produkci"*). Kandidát = dnešek + most (los 3 tvarů + těžká verze) +
+  jméno mimo esenční větu + jádro/místo u převedených run (+ případně bez řádku sezóny, podle rozhodnutí ownera).
+  **Ověření, v tomhle pořadí:**
+  1. `golden-verify` + smoke (staví CODE-tune) — změna výstupu jen tam, kde má být.
+  2. **A/B na TÝCHŽ losech**: produkce × kandidát, stejné `prompt_draws` (od 2026-09-20 včetně `len`), **různé runy,
+     ne jen Raidho** — 3 runy lehké + 3 rizikové (Isa · Laguz · Tiwaz · Algiz z identitního testu), EN i IS.
+  3. **Tvrdé kontroly** na obou ramenech: identita (slepý soudce, volba z 25, jméno runy i osoby maskované) ·
+     rada / tvrzení o nitru (počet) · délka proti rozpočtu · IS gramatika a korpus · únik vstupů (sezóna, metadata).
+  4. **Ownerův slepý soud**: dvojice A/B se skrytým autorem, rozhoduje on; teprve pak nasazení.
+  **Přijímací kritéria:** ownerova preference ve slepých dvojicích · identita ne horší než produkce · rada a tvrzení 0 ·
+  délka v rozpočtu · žádný nový únik vstupu. Pilot 3+3 runy × 2 jazyky × 2 čtení = 24 čtení; víc až po pilotu.
+  ⚠️ Nepouštět dřív, než jsou hotová pravidla (most, jméno, sezóna) — jinak se měří proti pohyblivému cíli.
+- [ ] **FRONTA po Norns závěru** (owner se ptal, co dřív): **1) `RUNE_PLACEMENTS`** — kam padne jméno runy (dnes věta 2
+  v 89 %); levné, mechanismus ověřený u jména člověka, uvolní přetlak druhé věty · **2) LIST RUNY** (Raidho + Isa jako
+  vzorek; potřebuje ownerův obsah) · **3) tvar esence** (los rámů; taky obsah ownera) · 4) volba modelu až nakonec.
 - [ ] ⭐ **ZÁVĚR SPREADŮ — vlastní návrh, NE kopie mostu ze single** (KUKY 2026-09-20: *„spready se skládají z více run,
   mají jinou filozofii… nemůžeš brát, že co pasuje na single, automaticky pasuje na spready. Norns, cross, horseshoe,
   yggdrasil mají svoji vlastní stavbu. Jsem otevřený tomu mít tam závěr, jen aby to nebylo v konfliktu. A je to hromada

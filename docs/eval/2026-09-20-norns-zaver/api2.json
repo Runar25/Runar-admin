@@ -1,0 +1,47 @@
+{
+ "A-dve-moznosti-1": {
+  "text": "The door was left open, and coffee was set on the table for two, one cup poured and waiting for someone who would come to sit across from you. That waiting is not empty now, something has taken root at the table between the two chairs, still folded in on itself, not yet grown into whatever it will be. The warmth from that shared hour is doing its quiet work, unhurried, in the ground you cannot see. Now the thread turns toward what to keep in that house and what to carry out through the open door, the old cup washed and shelved, the chair pulled back or left where it stands. Where you are heading, that open door is either a room kept warm for return, or a threshold you cross going forward, both hands free.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 265
+ },
+ "A-dve-moznosti-2": {
+  "text": "The door was opened once, and coffee poured into two cups set across from each other — a table laid for company, for something given and something returned in kind. That warmth did not end when the cups cooled; it settled into the wood of the table, a small thing kept, still holding what it was made of. Now it waits without hurry, whole and quiet, the way a seed keeps its shape through winter. The door still stands open, and the second cup is still there, though the room around it is yours to keep or to clear. Where you are heading, this may be a threshold left open for a return, or a table you finally wipe down before walking out into the morning.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 241
+ },
+ "A-dve-moznosti-3": {
+  "text": "The door was left open, and coffee was set on the table for two — a place made ready, a hand held out to be met. That welcome has not gone cold; it sits there still, the second cup waiting, warmth kept in the room even now. What was offered then holds its shape, quietly, like a seed that has not yet broken open. Now the room asks whether the chair across the table will fill or stay empty, whether the door stays open to what may come through it or is drawn shut on what has already passed. From this it may be a house kept ready for company, or a house learning to keep itself.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 227
+ },
+ "B-jedna-moznost-1": {
+  "text": "Once the door stood open and two cups waited on the table, one poured for you and one for another, the giving and the taking held in even measure. That balance did not empty out when the room fell quiet, it settled into the wood and the warmth of the cup still in your hands. What was shared did not leave with the other chair, it stayed and took root where you could not see it working. Now the second cup grows cold and the door stands open still, and if you keep this table set as it was, you carry the old company forward into a room that has already changed around you. What has cleared is this: the warmth you were given was never only theirs to hold, and the open door is not a farewell but a threshold you may yet cross with your own two feet.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 265
+ },
+ "B-jedna-moznost-2": {
+  "text": "The door was left open, and two cups were set upon the table — one poured for you, one poured for another who sat across and gave as freely as they took. That balance was woven and cannot be unwoven, it stands as it was. Now the coffee has gone cold in the second cup, and what was shared has settled into the quiet of the room, gathering into itself the way a seed holds its shape underground. Something is forming there in the stillness that has not yet shown its face. The chair across from you may stay empty from here, and the table becomes yours alone, the open door leading not to who might come but to the house you keep. If you walk on as you are, what was given between two is turning into what you carry forward by yourself — and you already know the road out that door runs both ways.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 281
+ },
+ "B-jedna-moznost-3": {
+  "text": "The door was left open and two cups were set on the table, one poured for you and one for someone who came to sit across from you. That second cup still holds its warmth now, and what was shared over it has not stayed at the table, it has taken root somewhere quieter and has begun to unfold in its own time. You cannot yet see the whole of what grows from it, only that it is growing. Now the coffee has gone cold and the chair opposite is empty, and the room keeps only what that meeting left behind — a way of keeping the door open, a habit of setting out the second cup. Walk on as you are, and what was given at that table becomes the ground you stand on rather than the moment you look back to, and where it carries you next depends on who you are willing to travel beside.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 284
+ },
+ "K-dnesek-1": {
+  "text": "The door was left open and two cups were set on the table, one poured for you and one for another who once sat across from you. That second cup has gone quiet now, yet the warmth of it lingers in the room, and something of what passed between you is still taking root where you cannot yet see it. Now the chair opposite stands empty, and you are learning which part of that shared table is yours to keep and which was only ever borrowed. Walk on as you are, and the door stays open — not for the one who left, but for whoever your own step brings across the threshold.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 217
+ },
+ "K-dnesek-2": {
+  "text": "The door was left open once, and coffee poured for two who sat across from each other and shared what each had to give. That warmth did not leave when the cups went cold, it settled into the wood of the table and waited, quiet as a seed under the floorboards. Something took root in that giving back and forth, and it is still growing where you cannot yet see it. Now the house itself is what remains, the walls that held that first warmth, and you stand deciding what to carry forward and what to leave in the empty chair. Keep tending this table as you are, and the door stays open for the ones who know the way back to it.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 235
+ },
+ "K-dnesek-3": {
+  "text": "A door was left open behind you, and the coffee poured for two was drunk in good measure, given and taken between you and another. What passed at that table did not end when the cups went cold, it settled in the ground beneath the house and has been quietly rooting since. Something is still working its way up from that shared hour, unhurried, not yet grown into its full shape. Now the room that held the two of you is yours to keep or to clear, the chairs still there, the table still set. Walk on as you are, and you carry that open door with you into whatever house comes next — two riders who once shared a table do not fully part, they only take separate roads from the same threshold.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 250
+ }
+}
