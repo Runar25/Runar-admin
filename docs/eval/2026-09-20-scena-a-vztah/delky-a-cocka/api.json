@@ -1,0 +1,22 @@
+{
+ "raidho-3vety-1": {
+  "text": "The cairns hold their ground while the pass shifts around them, mist thinning, the light moving on. Raidho is the walking between them, Kuky, one marker gained before the next is sought. This slow going may be a road shared or a road walked alone, both worth the weighing.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 105
+ },
+ "raidho-4vety-1": {
+  "text": "On the mountain pass the cairns hold their ground while the light shifts across them through late summer. Each stone marker stands in sight of the next, so the road is never all seen at once, only handed forward. This is what Raidho does, Kuky, it keeps you moving between one certainty and the one after. Whether the next cairn is a debt owed back or a gift you carry ahead, that is yours to weigh.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 147
+ },
+ "raidho-4vety-carky-1": {
+  "text": "The cairns hold their place while the pass shifts around them, mist thinning, the light moving down the slope. Each stone marks the next, and Raidho is the walking between them, Kuky, one in sight before you reach it. You do not cross the whole pass at once, only the ground between two markers, then the next. This may be steady work you already trust, or a giving that asks nothing back yet.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 140
+ },
+ "raidho-5vet-1": {
+  "text": "The cairns hold their places on the pass while the mist moves between them. Raidho is the walking from one stone to the next, each raised within sight of the last. You do not see the far end from here, Kuky, and you were never meant to. What steadies you is the near marker, not the summit, and the near marker is enough to keep the road. This may be patience given to you by another hand, or patience you are learning to give yourself.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 146
+ }
+}

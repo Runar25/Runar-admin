@@ -1,0 +1,17 @@
+{
+ "isa-heavy-most-1": {
+  "text": "The coffee sits untouched, the steam long gone, the surface gone flat and still. Isa is that held moment, Kuky, the pause where nothing yet moves and warmth quietly leaves the cup. Waiting does its slow work here, not by acting but by holding you in one place until the wanting settles. This may be a gift you are given or one you are asked to offer another.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 136
+ },
+ "isa-heavy-most-2": {
+  "text": "The coffee sits cooling on the table, the steam long gone while you stay where you are. Isa is this holding still, the wait that lets a thing settle instead of rushing it forward. You have been sitting here a while, Kuky, and the cup has changed without your noticing. What passes between two people in a pause like this may be patience given freely, or a stillness neither has yet named.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 136
+ },
+ "isa-heavy-most-3": {
+  "text": "The coffee sits untouched, its warmth leaving the cup while you stay at the table. Isa holds a thing still until the moment it can move on its own. Waiting is not empty, Kuky, it is the slow settling of what has not yet taken shape. This may be a stillness you have chosen, or one that has been handed to you.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 122
+ }
+}

@@ -4377,3 +4377,35 @@ most (návrh) = *„one line"* · jméno = umístění, ne délka. ⇒ Rozdělen
 **Stavba vět** má jediné pravidlo, a to v hlasu (systémový prompt): *„Sentences run one clause, sometimes two joined by a
 comma — never a long unfolding line, never a clipped fragment."* Měřeno: úvodní věta má právě jednu čárku **22/22**;
 odebrání části *„sometimes two joined by a comma"* nezměnilo nic (2026-09-18) — systémový prompt model poslouchá slabě.
+
+## 2026-09-20 (4) — Táž runa ve 3 / 4 / 5 větách (+ oblast a čočka) · most pro těžké runy opraven · rozpočet slov se NEDODRŽUJE
+
+**Owner:** *„udělej mi 4 čtení, ať můžu porovnat, jaké bude čtení pro stejnou runu, ale různý počet vět: 3, 4, 5, nebo
+4 věty a více čárek. Přidej taky AREA Inner Growth, kde by se mohla jako čočka projevit i Gebo jako life rune."*
+Produkce v4.31, produkční model. Vše stejné (Raidho, jádro *cairns, each in sight of the next* + místo *a mountain pass*,
+úhel [3], jméno uprostřed, oblast **Inner Growth**, **čočka Gebo ZAPNUTÁ**, konec = most ve tvaru „dvě možnosti"),
+mění se jen délkový pokyn. Podklady → `docs/eval/2026-09-20-scena-a-vztah/delky-a-cocka/`.
+
+| rameno | pokyn | skutečnost | slov po větách | čárky |
+|---|---|---|---|---|
+| 3 věty | 38–45 slov | 3 věty / **49 slov** (+9 %) | 17-15-17 | 5 |
+| 4 věty | 50–58 slov | 4 věty / **76 slov** (+31 %) | 18-21-17-20 | 5 |
+| 4 věty + čárky | 50–58, druhá věta v souvětí povolena | 4 věty / **73 slov** (+26 %) | 19-20-18-16 | **8** |
+| 5 vět | 62–70 slov | 5 vět / **85 slov** (+21 %) | 14-17-16-20-18 | 6 |
+**Nález 1 — rozpočet slov se nedodržuje: 7/7 čtení přes strop** (včetně tří islandských… ne, včetně tří Isa níž).
+Počet VĚT model drží přesně, počet SLOV ne. Čím víc povinností (oblast + čočka + most), tím větší přetečení.
+Souvisí: ownerovo produkční Raidho mělo 71 slov proti 50–58 (2026-09-19 (2)).
+**Nález 2 — věta navíc jde do OBRAZU, ne do dalších významů runy.** Ve 4 větách přibyla věta rozvíjející obraz
+(*„Each stone marker stands in sight of the next, so the road is never all seen at once, only handed forward"*),
+v 5 větách navíc mini-esence (*„What steadies you is the near marker, not the summit"*). Žádné rameno nepřineslo
+jinou stránku runy ani oblast jako vlastní větu. ⇒ ownerova úvaha *„další významy patří spíš do Asku"* sedí na data.
+⚠️ **Pevné role po větách byly měřeny 2026-09-08** (cela ROLE): +10,4 % znaků, nulový doložený zisk — „čtvrtá věta =
+oblast" by byla táž konstrukce; nezavádět bez nového důvodu.
+**Nález 3 — čočka Gebo se projeví ve všech čtyřech ramenech, a to právě v mostu:** *„a road shared or a road walked
+alone"* · *„a debt owed back or a gift you carry ahead"* · *„a giving that asks nothing back yet"* · *„patience given to
+you by another hand, or patience you are learning to give yourself"*. Most tedy čočku unese, aniž by ji pojmenoval.
+
+### Most pro TĚŽKÉ runy — opraveno (Isa, 3 čtení)
+Znění *„holds out two things this may be … each a state that may be so — said plainly, without comfort or softening"*:
+tvar možnosti **3/3** (dřívější „bez útěchy" verze ho ztratila 2/2). Např. *„This may be a stillness you have chosen, or
+one that has been handed to you."* Délka 62–72 slov proti rozpočtu 50–58 (opět přes).
