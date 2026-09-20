@@ -244,13 +244,11 @@ function _randomAngle(lang) {
 // Replaces a fixed clause that was copy-pasted 5x per language into the pack closings (§18).
 // {name} is substituted; the 'not at all' variant still has the seeker in the PERSON: context.
 const NAME_PLACEMENTS = [
-  'Address {name} early, woven in — but never as the opening word.',
   'Address {name} once in the middle, as a recognition rather than an introduction.',
   'Let the name {name} arrive late, near the close, as a quiet recognition.',
   'This time do not use the name {name} at all — let the reading stand without it.',
 ];
 const NAME_PLACEMENTS_IS = [
-  'Ávarpaðu {name} snemma, fléttað inn — en aldrei sem fyrsta orð.',
   'Ávarpaðu {name} einu sinni í miðjunni, sem viðurkenningu fremur en kynningu.',
   'Láttu nafn {name} koma seint, undir lokin, sem hljóðláta viðurkenningu.',
   'Í þetta sinn skaltu ekki nota nafn {name} — láttu lesturinn standa án þess.',
@@ -335,6 +333,11 @@ function _promptDraws(prompt, lang) {
     for (var b = 0; b < buds.length; b++)
       if (p.indexOf(buds[b]) !== -1) { out.len = b; break; }
 
+    // Esencni ram (2026-09-20): ktere ze dvou zneni padlo. Tyz vzor jako `ending` a `len`.
+    var rams = isIs ? ESSENCE_FRAMES_IS : ESSENCE_FRAMES;
+    for (var e2 = 0; e2 < rams.length; e2++)
+      if (p.indexOf(rams[e2]) !== -1) { out.essence = e2; break; }
+
     // Klíčová slova: z pěti až šesti se losují tři (pickedKws) — fasety runy položené
     // modelu před oči. Řádka vypadá takto:
     //   DRAWN RUNE: Fehu — focus on: wealth, material prosperity, cattle · World: …
@@ -397,14 +400,32 @@ const ENDING_OPEN_IS = [
 // Mereno 2026-08-20: tri-vetny rozpocet dal 3 vety ve 4 ze 4 (45-52 slov), ctyr-vetny
 // 4 vety v 7 z 8 (56-66 slov). Zadny prekryv — paka drzi ostre.
 // Cas nahlas je duvod, proc jsou rozpocty prave dva a ne rozsah: 20-25 s proti 28-33 s.
+// 2026-09-20 (KUKY: „4 vety"): pool ma JEDNU polozku — trivety rozpocet odesel, protoze
+// los 3/4 delal polovinu cteni o vetu kratsi, nez rika stavba ctyr vet (scena · scena o krok
+// dal · esence · most). Trivete zneni je v gitu (v4.34) a vraci se pridanim radky.
 const LENGTH_BUDGETS = [
-  'One flowing reading — 3 short sentences, 38 to 45 words total. It will be read aloud, so keep every sentence lean — about 20 to 25 seconds spoken. No sections, no labels, no line breaks between thoughts.',
   'One flowing reading — 4 short sentences, 50 to 58 words total. It will be read aloud, so keep every sentence lean — about 28 to 33 seconds spoken. No sections, no labels, no line breaks between thoughts.',
 ];
 const LENGTH_BUDGETS_IS = [
-  'Gefðu einn samfelldan lestur — 3 stuttar setningar, 38 til 45 orð alls. Hann verður lesinn upphátt, svo hafðu hverja setningu létta — um 20 til 25 sekúndur. Engar fyrirsagnir, engar hlutaskiptingar.',
   'Gefðu einn samfelldan lestur — 4 stuttar setningar, 50 til 58 orð alls. Hann verður lesinn upphátt, svo hafðu hverja setningu létta — um 28 til 33 sekúndur. Engar fyrirsagnir, engar hlutaskiptingar.',
 ];
+// ── ESENCNI RAM (2026-09-20) — dve zneni teze instrukce, losuje se per cteni.
+// [0] = dosavadni produkcni zneni (bylo v VOICE_PROFILES.focused.rules.describe, presunuto
+//       sem k ostatnim losovanym pokynum promptu — §18: los patri k losum, ne k profilu hlasu)
+// [1] = „runa kona": runa je PODMET slovesa cinnosti a jmenuje se v teze vete
+const ESSENCE_FRAMES = [
+  'THE ESSENCE LINE: after the picture, one short line that says what the rune DOES through this image — its sense in plain words a stranger to runes can grasp. The familiar word may live inside the doing ("exchange between the sea and the shore"). Never a fixed formula. No invented mechanism, no fate. Never tell the seeker what it means for them.',
+  'THE ESSENCE LINE: after the picture, one short line where the rune — named here, once — is the one doing something in that scene: it moves, holds, opens, carries. Plain words a stranger to runes can grasp. No invented mechanism, no fate. Never tell the seeker what it means for them.',
+];
+const ESSENCE_FRAMES_IS = [
+  'KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem segir hvað rúnin GERIR í gegnum þessa mynd — merking hennar með hversdagslegum orðum sem ókunnugur skilur. Kunnuglega orðið má lifa inni í myndinni. Aldrei föst formúla. Engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.',
+  'KJARNALÍNAN: á eftir myndinni kemur ein stutt lína þar sem rúnin — nefnd þar einu sinni — er sú sem gerir eitthvað í myndinni. Hún hreyfir, heldur, opnar eða ber. Hversdagsleg orð sem ókunnugur skilur. Engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.',
+];
+function _essenceFrame(lang) {
+  var pool = lang === 'is' ? ESSENCE_FRAMES_IS : ESSENCE_FRAMES;
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
 function _lengthBudget(lang) {
   var pool = lang === "is" ? LENGTH_BUDGETS_IS : LENGTH_BUDGETS;
   return pool[Math.floor(Math.random() * pool.length)];

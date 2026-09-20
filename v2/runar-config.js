@@ -56,7 +56,7 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 // v4.17 (2026-09-10): Ask zna zivotni runu. Do te doby ji `buildAskPrompt` nedostaval, takze
 //    odpoved na „jak me ovlivnuje moje zivotni runa" si model musel domyslet. Prompt ji ted nese
 //    jako tichy fakt — Runar ji nevyslovi sam od sebe, jen kdyz se na ni clovek zepta.
-const RUNAR_PROMPT_VERSION = 'v4.34-tezky-druhy';
+const RUNAR_PROMPT_VERSION = 'v4.35-ctyri-vety';
 
 // Mesicni strop hlasu. KUKY 2026-09-11: „limit na hlas max 5 na mesic — je to spis
 // ochutnavka nez aby to porad vyuzivali." ElevenLabs se plati po znacich a jedine, co ho
@@ -489,10 +489,8 @@ Forðastu óhlutbundnar, dulúðlega hljómandi setningar sem segja ekkert einfa
       // nezakazovat, jen ne porad" — to kryje „Never a fixed formula". „Choose different words
       // each time" ODEBRANO (tyz rozkaz jako formule). Zbytek zustava vc. „exchange between the
       // sea and the shore" a „Never tell the seeker…" (OTEVRENE, rozhodne owner s konci cteni).
-      describe: {
-        en: 'THE ESSENCE LINE: after the picture, one short line that says what the rune DOES through this image — its sense in plain words a stranger to runes can grasp. The familiar word may live inside the doing ("exchange between the sea and the shore"). Never a fixed formula. No invented mechanism, no fate. Never tell the seeker what it means for them.',
-        is: 'KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem segir hvað rúnin GERIR í gegnum þessa mynd — merking hennar með hversdagslegum orðum sem ókunnugur skilur. Kunnuglega orðið má lifa inni í myndinni. Aldrei föst formúla. Engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.',
-      },
+      // 2026-09-20: zneni esence odeslo do ESSENCE_FRAMES (runar-utils.js) — od te doby
+      // se losuje ze dvou ramu a produkcni profil uz ho nevlastni (§18: jedno misto).
     },
   },
 

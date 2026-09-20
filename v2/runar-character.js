@@ -782,8 +782,13 @@ function _spreadThread(lang) {
 }
 
 function _describeRule(lang, key) {
+  // Profil s VLASTNIM znenim (direct, lyrical) ho ma dal — los se jich netyka.
+  // Produkcni profil sve zneni od 2026-09-20 nema: presunulo se do ESSENCE_FRAMES, odkud
+  // se losuje (dva ramy). Zakladni „DESCRIBE, DO NOT EXPLAIN" nize tim padem u produkce
+  // nikdy nepadne — zustava jako zachytna sit pro profil bez pravidla.
   var podleRegistru = _profileRule('describe', lang, key);
   if (podleRegistru) return podleRegistru;
+  if (typeof _essenceFrame === 'function') return _essenceFrame(lang);
   if (lang === 'is')
     return 'LÝSTU, EKKI ÚTSKÝRÐU: Segðu hvað rúnin gerir í heiminum; aldrei hvað hún þýðir. Engin vélræn skýring (uppdiktuð eðlisfræði), enginn dómur um leitandann, engin örlög. Láttu myndina standa — ekki ráða hana.';
   return 'DESCRIBE, DO NOT EXPLAIN: say what the rune does in the world; never what it means. No mechanism (invented physics), no verdict about the seeker, no fate. Let the image stand — do not decode it.';

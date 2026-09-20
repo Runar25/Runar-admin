@@ -6360,3 +6360,49 @@ smoke 44/44 · IS ověřena BÍN + korpusem, oba flagy rozhodnuty protipříklad
 **Verze promptu:** v4.33-most → **v4.34-tezky-druhy**.
 
 **Affected doc(s):** žádný.
+
+## 2026-09-20 (7) — Čtyři věty pevně · jméno bez „brzy" · los esenčního rámu (v4.35)
+
+**Tři rozhodnutí ownera z jedné zprávy, nasazená v jednom tahu.**
+
+**1. DÉLKA = pevně 4 věty.** KUKY: *„4 věty."* Do teď se losovalo **50/50 mezi 3 a 4** (změřeno
+4000 losů) — polovina čtení měla o větu míň, než říká stavba v `RUNAR_DESIGN.md`. `LENGTH_BUDGETS`
+zůstává **polem o jedné položce**: los z jedné vrací tu jednu, `prompt_draws.len` dál funguje a
+tříletý rozpočet se vrací přidáním řádky, ne obnovou mechaniky. Owner k pestrosti: *„diverzitu
+čtení budeme řešit tím, co právě tvoříme"* — ne losem délky.
+
+**2. JMÉNO: varianta „brzy" pryč.** Zbývá **střed · závěr · vůbec** (poměr „vůbec" 55 % se nemění).
+Věta 1 nese úhel + místo + jádro obrazu (místo tam dosedá v 91 %) — jméno do ní nemá kam. Střed je
+ve čtyřvěté stavbě legitimní: **esence se přesunula do věty 3, takže jméno ve větě 2 už s ní
+nekoliduje** — to byla ta „ucpaná druhá věta". Owner: *„jméno se i podle mě objevuje víc uprostřed
+než kdekoli jinde"* — nebojujeme s tím, dáváme tomu místo, kde neškodí.
+
+**3. ESENCE se losuje ze DVOU rámů.** KUKY: *„A zní tak, jak je to teď; k tomu přidáme právě
+pojmenování runy. B není dobré — pro začátek uděláme jen dvě verze."*
+- `[0]` = dosavadní produkční znění (přesunuto z `VOICE_PROFILES.focused.rules.describe` do
+  `ESSENCE_FRAMES` v `runar-utils.js` — §18: los patří k losům, ne k profilu hlasu; profil ho už
+  nevlastní, není to druhá kopie)
+- `[1]` = **„runa koná"**: runa je PODMĚT slovesa činnosti a jmenuje se v téže větě
+**Proč vůbec:** dnešní znění říká „one short line that says what the rune DOES" a vedle stojí pokyn
+runu pojmenovat — nejkratší způsob, jak splnit obojí v jedné větě, je spona `<Runa> is X`. Změřena
+**3/3** i na ručně psaných čteních (EVAL_LOG 2026-09-20 (7)). Rám [1] sponu **nezakazuje** (zákaz by
+modelu jen podstrčil slovo, které má hlídat) — mění stavbu věty. Zapisuje se do
+`prompt_draws.essence`, aby to nebyl další nezaznamenaný confounder jako délka.
+
+**IS:** rám [1] psán islandsky od začátku; dvojtečka před „hún" přepsána na tečku + velké písmeno
+(is-grammar-qa ji hlásila). Zbylý flag Z002 na „á" po „KJARNALÍNAN:" **sdílí s dnešním produkčním
+rámem** (1/1) — zavedená konvence promptu, ne nová vada. Korpus: *er sú sem* 2878 · *hún hreyfir*
+224 · *nefnd þar* 403 · *opnar eða* 124.
+
+**⚠️ Vedlejší nález: GOLDEN NEVIDÍ LOSY.** Jeho sandbox má `Math.random = 0.5`, takže z každého
+poolu testuje **jednu** položku — změnu rozpočtu délky ani odebrání „brzy" golden diffem
+neukázal (13/38 builderů se změnilo, ale jen kvůli esenci a místům). Proto se **㉨ rozšířila**
+z „tvary konce" na **všechny per-čtení losy**: každá varianta konce, esence, délky i umístění jména
+musí padnout a `_promptDraws` ji musí poznat zpětně; navíc že bez jména se žádný pokyn o jméně
+nevloží (§12). Ověřeno i proti rozbitému stavu (zakázán druhý esenční rám → 2 FAIL, po odstranění
+zelená).
+
+**Verze promptu:** v4.34-tezky-druhy → **v4.35-ctyri-vety**.
+
+**Affected doc(s):** `RUNAR_DESIGN.md` bod 4 — délka už není „4 věty + strop", ale 4 věty pevně;
+opraví CODE-read, doc vlastní. Zapsáno do `RUNAR_BACKLOG.md`.

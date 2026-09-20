@@ -1777,3 +1777,8 @@ ale do `prompt_draws` se nezapisuje. Každé měření na produkci tedy míchá 
 o větu a ~13 slov víc místa na konec — a post-hoc se to nedá odfiltrovat. CODE-read sám naměřil, že
 délka rozhoduje, jestli most nahradí klidnou větu, nebo zbude věta navíc (RUNAR_EVAL_LOG 2026-09-20).
 Oprava je jednořádková: substring proti `LENGTH_BUDGETS`, týž vzor jako `ending` v `_promptDraws`.
+
+### RUNAR_DESIGN bod 4 (délka) — dořešit znění po v4.35 (2026-09-20, CODE-tune → CODE-read)
+Bod 4 „Stavby Single čtení" říká „Délka: 4 věty; strop slov se nemění" a odkazuje na los délky.
+Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty, 50–58 slov).
+`prompt_draws.len` zůstává a je konstantní 0. Doc vlastní CODE-read; produkce je zdroj pravdy (§20).

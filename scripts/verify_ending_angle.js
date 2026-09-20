@@ -1,19 +1,23 @@
-// ㉨ KAZDY TVAR KONCE SE LOSUJE A POZNA SE ZPETNE
+// ㉨ KAZDY PER-CTENI LOS: VSECHNY VARIANTY JSOU DOSAZITELNE A POZNAJI SE ZPETNE
 //
-// PROC: od 2026-09-20 je konec MOST K CLOVEKU — tri tvary pro lehke runy (veta · dve
-// moznosti · otazka) a jeden pro tezke. Kdyz nekdo pridava nebo meni zneni, musi drzet dvoji:
-// (1) kazdy tvar se DA vylosovat (preklep v poolu nebo filtr navic by jeden tise vypnul),
-// (2) `_promptDraws` ho pozna zpatky ze slozeneho promptu — na tom stoji mereni na produkci.
+// PROC: prompt ma nekolik poolu, ze kterych se pri kazdem cteni losuje (konec · esencni ram ·
+// rozpocet delky · umisteni jmena). Dve veci se u nich rozbiji tise:
+//  (1) nekdo prida filtr nebo preklep a jedna varianta prestane padat — vystup vypada dal
+//      v poradku, jen je chudsi; presne to delala vyluka uhel[6] x open[1], nez padla,
+//  (2) `_promptDraws` prestane variantu poznavat — pak se ztrati ZAPIS losu a kazde dalsi
+//      mereni na produkci ma nezaznamenany confounder (to se stalo losu DELKY: zapisoval se
+//      az od 2026-09-20, takze starsi mereni se o nej uz nikdy ocistit neda).
 //
-// Do teze verze tu stala kontrola VYLUKY uhel[6] x open[1] (2026-09-18): open[1] tehdy znelo
-// „name where the seeker stands in the image" a delalo tyz tah jako uhel [6]. Zneni se
-// zmenilo, duvod zanikl, vyluka je pryc — a s ni i ta cast kontroly. Zbytek se rozsiril.
+// GOLDEN TOHLE NEPOKRYJE: jeho sandbox ma Math.random = 0.5, takze z kazdeho poolu vidi JEDNU
+// polozku. Doloženo 2026-09-20 — zmena rozpoctu delky i odebrani "brzy" z umisteni jmena
+// prosly golden diffem neviditelne. Proto se tady losuje doopravdy.
 //
 // CO SE TU TVRDI (protlaceno losy pres produkcni funkce, ne tvarem kodu — §19):
-//  · kazdy tvar open poolu padne aspon jednou z 2000 losu, v obou recich,
-//  · tezka runa losuje VYHRADNE z heavy poolu (500/500),
-//  · uhel los neomezuje — zadny tvar pri zadnem uhlu nevypadne (drive vyluka, dnes nic),
-//  · `_promptDraws` u kazdeho tvaru vrati spravny index (open0/1/2, heavy0).
+//  · kazdy tvar konce padne pri KAZDEM ze sedmi uhlu (zadny uhel zadny tvar nezakazuje),
+//  · tezka runa losuje vyhradne z heavy poolu,
+//  · kazdy esencni ram a kazdy rozpocet delky padne,
+//  · kazde umisteni jmena padne (vcetne varianty "vubec", ktera je zamerne vetsinova),
+//  · `_promptDraws` vrati u kazde varianty spravny index (ending · essence · len · name).
 //
 //   node scripts/verify_ending_angle.js
 'use strict';
@@ -69,8 +73,41 @@ for (const L of ['en', 'is']) {
     if (!d || d.ending !== 'heavy' + i) { spatne++; console.log('    heavy[' + i + '] -> ' + (d && d.ending)); }
   });
   rekni(spatne === 0, L + '  _promptDraws pozna vsechny tvary (' + (O[L].length + H[L].length) + ' zneni)');
+
+  // (5) ESENCNI RAM + ROZPOCET DELKY: kazda polozka poolu musi padnout a byt zpetne poznana.
+  var dalsi = [
+    { jm: 'esencni ram', fn: vm.runInContext('_essenceFrame', S), pool: vm.runInContext(L === 'is' ? 'ESSENCE_FRAMES_IS' : 'ESSENCE_FRAMES', S), klic: 'essence' },
+    { jm: 'rozpocet delky', fn: vm.runInContext('_lengthBudget', S), pool: vm.runInContext(L === 'is' ? 'LENGTH_BUDGETS_IS' : 'LENGTH_BUDGETS', S), klic: 'len' },
+  ];
+  for (const d of dalsi) {
+    const videno = new Set();
+    for (let i = 0; i < 2000; i++) videno.add(d.fn(L));
+    rekni(videno.size === d.pool.length,
+      L + '  ' + d.jm + ': vsech ' + d.pool.length + ' variant padlo (videno ' + videno.size + ', 2000 losu)');
+    let chyb = 0;
+    d.pool.forEach((tvar, i) => {
+      const dr = draws('X' + String.fromCharCode(10) + tvar + String.fromCharCode(10) + 'Y', L);
+      if (!dr || dr[d.klic] !== i) { chyb++; console.log('    ' + d.jm + '[' + i + '] -> ' + (dr && dr[d.klic])); }
+    });
+    rekni(chyb === 0, L + '  ' + d.jm + ': _promptDraws pozna vsechny (' + d.pool.length + ')');
+  }
+
+  // (6) UMISTENI JMENA: kazda varianta musi padnout. Varianta "vubec" je POSLEDNI v poolu a
+  // zamerne vetsinova (~55 %) — _namePlacement si ji bere podle pozice, takze prehozeni poolu
+  // by ten pomer tise zmenilo; proto se tu kontroluje i ona.
+  {
+    const np = vm.runInContext('_namePlacement', S);
+    const poolN = vm.runInContext(L === 'is' ? 'NAME_PLACEMENTS_IS' : 'NAME_PLACEMENTS', S);
+    const videno = new Set();
+    for (let i = 0; i < 4000; i++) videno.add(np('Anna', L));
+    rekni(videno.size === poolN.length,
+      L + '  umisteni jmena: vsech ' + poolN.length + ' variant padlo (videno ' + videno.size + ')');
+    // bez jmena se NESMI vlozit zadny pokyn (fallback 'you'/'þú' — §12)
+    rekni(np(L === 'is' ? 'þú' : 'you', L) === '' && np('', L) === '',
+      L + '  bez jmena zadny pokyn o jmene (§12 fallback)');
+  }
 }
 
 console.log('');
 if (fail) { console.log('FAIL — ' + fail + ' kontrol tvaru konce neproslo.'); process.exit(1); }
-console.log('OK    kazdy tvar konce se losuje pri kazdem uhlu a _promptDraws ho pozna zpetne.');
+console.log('OK    vsechny per-cteni losy (konec · esence · delka · jmeno): kazda varianta padne a _promptDraws ji pozna.');
