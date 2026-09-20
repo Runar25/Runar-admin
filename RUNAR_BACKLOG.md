@@ -65,12 +65,9 @@
   rejstříků), protože n bylo 6 na rameno a rozdíly v chladu byly v šumu. IS znění výjimky psát nativně (§2).
   **Metodická vada k opravě:** tři soudci se stejným zadáním vrátili týž výstup — příště různě formulované rubriky
   nebo jiný model, jinak „shoda 3/3" nic neznamená.
-- [ ] ⭐ **REJSTŘÍK VEN Z TĚLA SINGLE — ZMĚŘENO, ČEKÁ NA OWNERA** (výsledek → `RUNAR_EVAL_LOG.md` 2026-09-20 (11);
-  data `docs/eval/2026-09-20-rejstrik-ven/`). Řádek `_registerContext` **není mrtvá váha**: z těla čtení je
-  rejstřík poznat 11/16 s ním a 7/16 bez něj (šance 4/16), drží v obou půlkách. **Ale z hotového čtení je
-  rejstřík poznat 8/8 v obou ramenech** — tvar mostu ho unese sám, takže čtenář o nic nepřijde.
-  **Je to výměna: −5 slov a o jeden vstup míň × obarvení prvních tří vět.** Rozhodnutí je ownerovo, ne měřicí.
-  Než se nasadí (ať tak či tak): doměřit na víc runách a v IS; n bylo 8 na rameno.
+- [x] ~~REJSTŘÍK VEN Z TĚLA SINGLE~~ — **UZAVŘENO 2026-09-20: zůstává.** Owner nad slepými dvojicemi:
+  *„s řádkem to vypadá dobře a zní lépe než bez řádku."* Měření (EVAL_LOG 2026-09-20 (11)) ukázalo výměnu,
+  ne ztrátu funkce (z hotového čtení 8/8 obojí), rozhodl sluch. Rozhodnutí → `RUNAR_DECISIONS.md` 2026-09-20 (3).
 - [ ] **Tvar „VĚTA" drží „may be" hůř než dvě možnosti a otázka** — 2 ze 16 posledních vět vypadly z tvaru
   možnosti, obě u tvaru věta (`ENDING_OPEN[0]`, `ENDING_HEAVY[1]`), doklady v EVAL_LOG 2026-09-20 (11).
   Patří do tvrdých kontrol produkčního kandidáta; při větším vzorku ověřit, jestli to není náhoda.

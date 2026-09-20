@@ -6459,3 +6459,17 @@ seeker's way divides").
 
 **Affected doc(s):** `RUNAR_BACKLOG.md` — položka „MOST: AREA = kam dosedne" je nasazená a podle
 vlastního zadání odsud mizí; vlastní to teď kód.
+
+## 2026-09-20 (3) — Řádek rejstříku ZŮSTÁVÁ v těle single (ownerův soud, ne měření)
+
+- **Decision:** `_registerContext` se ze single **neodebírá**. KUKY 2026-09-20 nad slepými dvojicemi:
+  *„s řádkem to vypadá dobře. a zní lépe než bez řádku."* Tím se uzavírá otázka *„ven a změřit"*.
+- **Co k tomu řeklo měření** (`RUNAR_EVAL_LOG.md` 2026-09-20 (11)): funkčně je to **výměna, ne ztráta** —
+  rejstřík je z hotového čtení poznat 8/8 s řádkem i bez něj (tvar mostu ho unese sám), z těla 11/16 vs 7/16
+  (šance 4/16), cena řádku je ~5 slov. Měření tedy nerozhodovalo; rozhodl ownerův sluch, a tak je to správně:
+  **„zní líp" není veličina, kterou umí posoudit soudce** (§24 — co se nedá změřit, se neprohlašuje za změřené).
+- ⚠️ **Nezapisuje se jako „páka je prokázaná".** Prokázané je, že řádek obarví první tři věty; že to zní líp,
+  je ownerův soud nad 16 čteními, EN, dvě runy. Kdyby se rejstřík přepisoval, tohle měření se dělá znovu.
+- **Padá tím i moje domněnka**, že je řádek mrtvá váha (opírala se o měření CODE-tune 2026-08-22
+  *„propsání NEPROKÁZÁNO"* — to měřilo jinou plochu: celé čtení, pět hodnot, bez mostu).
+- Affected doc(s): RUNAR_BACKLOG.md (položka „rejstřík ven" uzavřena).
