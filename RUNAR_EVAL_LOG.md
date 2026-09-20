@@ -4561,6 +4561,49 @@ všechny (b). Nepadly: 2b a 5b srovnaly krok. Co mají navíc proti 1b/3b/4b: uk
 někoho, kdo nepřišel, a všechno, co tudy prošlo. Směna je tedy jen nejspolehlivější cesta ven ze záběru, ne
 podstata. **Opravená formule → `memory/co-dela-cteni-silnym.md` bod 4** (vlastní ji paměť, tady je protokol).
 
-⚠️ **Nedodělané (§27, útok na vlastní nástroj):** obě uznané (b) nesou taky ČAS, tři padlé popisy jsou okamžiky —
-„mimo záběr" a „trvání" tenhle test neoddělil. Rozliší to jedna dvojice: trvání bez nepřítomnosti proti
-nepřítomnosti bez trvání. Do té doby je formule pracovní. n = 5 dvojic, jeden soudce (owner), jen EN.
+⭐ **DOMĚŘENO týž den — soupeř vyloučen.** Obě uznané (b) nesly taky ČAS, takže „mimo záběr" a „trvání" byly do té
+chvíle nerozlišené (§27, útok na vlastní nástroj). Rozhodující dvojice, každá možnost čistě jedním směrem:
+*„One stone holds in the sliding snow, (a) and the drift has been building against its north side all afternoon"*
+(trvání, vše v záběru) × *„(b) and the path it marks is already gone under white"* (chybí něco, bez trvání).
+**Owner: (b).** ⇒ trvání samo větu neudrží; nese ji to, co v obraze NENÍ. Pravidlo vlastní
+`memory/co-dela-cteni-silnym.md` bod 4. Hranice: n = 6 dvojic, jeden soudce, EN, věty psané mnou — je to nález
+o tom, co owner pozná jako dobré, ne o chování modelu.
+
+## 2026-09-20 (10) — ZÁKAZ V ŘÁDKU OBLASTI × MOST: moje doporučení VYVRÁCENO, vyhrála výjimka
+
+**Owner:** *„napřed testy, pak když tak přepsat."* Doporučoval jsem **odebrat** zákaz z `_domainContext`
+a spolehnout se na globální `NO COLD READING` + vlastní limit mostu. **Měření to vyvrátilo.**
+
+**Proč se to měřilo:** most (`ENDING_OPEN`/`HEAVY`) je v produkci a říká *„what this may be in the seeker's life"*;
+rozhodnutí 2026-09-20 (2) mu dává dosednout do oblasti. Jenže 6 z 8 řádků `_domainContext` přesně to zakazuje
+(*„Do not tell them where they are headed"*). Ramena se liší JEDNOU věcí, tvar konce držen na `ENDING_OPEN[0]`,
+runa Jera, rejstřík Clarity, EN, 6 kolidujících oblastí × 4 ramena = 24 čtení, produkční model.
+
+| rameno | chlad (čtení s tvrzením mimo poslední větu) | most = možnost | **poslední věta dosedla do oblasti** | oblast poznána | slov |
+|---|---|---|---|---|---|
+| **B0** dnešek (most obecný, zákaz beze změny) | 2/6 | 6/6 | **2/6** | 6/6 | 70,8 |
+| **K** most do oblasti, zákaz beze změny | 3/6 | 6/6 | **4/6** | 6/6 | 69,8 |
+| **V** most do oblasti, zákaz s VÝJIMKOU pro poslední větu | 3/6 | 6/6 | **6/6** | 6/6 | 70,8 |
+| **P** most do oblasti, zákaz PRYČ | 4/6 | 6/6 | **4/6** | 6/6 | 69,5 |
+
+**Nálezy:**
+1. ⭐ **Zákaz NENÍ pasažér.** Obrácená páka (§25) říkala: odeber ho a chlad se musí vrátit. Vrátil se —
+   2 → 4 ze 6, nejvíc ze všech ramen — a **dosednutí se tím nezlepšilo** (4/6, stejně jako když zákaz zůstane).
+   Mé doporučení tedy padlo: odebrání zaplatí chladem a nic za to nedostane.
+2. ⭐ **Vyhrála výjimka (V): dosednutí 6/6** proti dnešním 2/6, při témže chladu jako K a téže délce.
+   Modelu zjevně nevadí zákaz s pojmenovanou hranicí — vadí mu zákaz, který si protiřečí s pokynem o osm řádků níž.
+3. **Tvar možnosti drží 24/24**, i v rameni bez zákazu. Most se tedy nerozpadá; riziko je jinde než v poslední větě.
+4. **Oblast je poznat ze čtení 6/6 ve VŠECH ramenech** včetně dnešního — rozpoznatelnost oblasti není problém,
+   problém je jen to, jestli k ní promluví poslední věta.
+5. **Délka se nehnula** (69,5–70,8 slova napříč rameny) — dosednutí do oblasti nic neprodlužuje.
+
+⚠️ **Vady měření, které tenhle nález omezují (§27):**
+- **Tři „nezávislí" soudci vrátili znak po znaku TÝŽ výstup** → je to jeden model spuštěný třikrát, ne tři hlasy.
+  Shoda 3/3 se proto NEPOČÍTÁ jako doklad spolehlivosti. Příště: různě formulované rubriky nebo jiný model.
+- **n = 6 na rameno**, jedna runa, jeden jazyk, jeden rejstřík, jeden tvar konce. Rozdíly o 1–2 čtení (chlad)
+  jsou v šumu; **jediný rozdíl větší než šum je dosednutí** (2/6 → 6/6).
+- Čísla chladu jsou malá celá čísla — nečíst 2 vs 3 jako trend.
+
+**Doporučení po měření:** jít cestou **V (výjimka)**, ne odebráním. Před nasazením doměřit chlad na větším vzorku
+(víc run, obě řeči, všech pět rejstříků), protože směr B0 → P ukazuje, že zákaz drží víc, než jsem čekal.
+Podklady → `docs/eval/2026-09-20-zakaz-oblasti/` (24 promptů, čtení, klíč, soudce, skripty).

@@ -48,11 +48,14 @@ straight and true on the bench"*. Táž vada má ownerova starší odmítnutí: 
 nikdo nic neplatí) · *„the valley between farms"* (poloha) · *„two months of summer remain"* (údaj) ·
 *„care alone cannot settle what remains unspoken"* (vztah je, ale ani jedna strana není vidět).
 
-⚠️ **Hranice a živý spor:** n = 5 dvojic + 11 dřívějších vět, jeden člověk, jen EN. A je tu **soupeřící
-vysvětlení**, které tenhle test neoddělil: obě „stopy" nesou taky ČAS (*still rises*, *worn… with meltwater*),
-kdežto tři padlé popisy jsou okamžiky. Může to tedy být „mimo záběr" i „trvání". Rozliší to jediná dvojice:
-druhá půlka s trváním bez nepřítomnosti proti druhé půlce s nepřítomností bez trvání. Dokud neproběhne,
-platí formule jako **pracovní**, ne jako potvrzený znak. Protokol a odpovědi → `RUNAR_EVAL_LOG.md` 2026-09-20 (9).
+⭐ **Soupeřící vysvětlení VYLOUČENO (KUKY 2026-09-20, rozhodující dvojice).** Obě uznané „stopy" nesly taky ČAS,
+takže formule mohla znít „mimo záběr" nebo „trvání". Rozhodla dvojice, kde jde každá možnost jedním směrem:
+*„One stone holds in the sliding snow, **(a)** and the drift has been building against its north side all afternoon"*
+(trvání, všechno v záběru) proti *„**(b)** and the path it marks is already gone under white"* (chybí něco, bez trvání).
+**Owner: (b).** Trvání tedy samo o sobě větu neudrží — rozhoduje, že něco v obraze NENÍ.
+
+⚠️ **Hranice:** n = 6 dvojic, jeden soudce (owner), jen EN, věty psané mnou (ne produkcí). Neplatí to jako pravidlo
+o modelu, jen o tom, co owner pozná jako dobré. Protokol → `RUNAR_EVAL_LOG.md` 2026-09-20 (9).
 
 **Vrstvy kvality:** obraz (vidím to místo) → runa (co runa je) → otázka (význam dokončí člověk).
 Souvisí: [[always-show-reading-samples]] · [[copy-always-in-runar-voice]].

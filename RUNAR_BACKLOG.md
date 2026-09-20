@@ -55,6 +55,30 @@
   grey"): po KROKU 2 grey/wind 8/9; bez té věty 0/3, s vrácenou větou o počasí 0/3. Owner rozhodne mezi S (věta pryč) a W
   (brzda zpět — bod 7 CODE-tune), texty obou ramen jsou holé. Zvlášť: **mlha → „the grey" jako podstatné jméno** (model
   nechce opakovat „fog") — týká se obrazů a míst s mlhou; test „jmenuj věc pokaždé jejím jménem" zatím neběžel.
+- [ ] ⭐ **ZÁKAZ V ŘÁDKU OBLASTI × MOST — ZMĚŘENO, zbývá potvrdit na větším vzorku** (výsledek →
+  `RUNAR_EVAL_LOG.md` 2026-09-20 (10); data `docs/eval/2026-09-20-zakaz-oblasti/`).
+  **Vyhrála VÝJIMKA**, ne odebrání: `_domainContext` si nechá svůj zákaz a dostane hranici —
+  `… — except in the closing line, and there only as a possibility they may weigh.` (6 oblastí z 8, které kolidují).
+  Dosednutí poslední věty do oblasti **2/6 → 6/6**, chlad beze změny proti rameni bez výjimky, délka beze změny.
+  ⚠️ **Odebrání zákazu (co jsem doporučoval) je VYVRÁCENÉ** — chlad 2/6 → 4/6 a dosednutí se nezlepšilo. Nezkoušet znovu.
+  **Zbývá, než to půjde do produkčního kandidáta:** doměřit chlad na větším vzorku (víc run, EN + IS, všech pět
+  rejstříků), protože n bylo 6 na rameno a rozdíly v chladu byly v šumu. IS znění výjimky psát nativně (§2).
+  **Metodická vada k opravě:** tři soudci se stejným zadáním vrátili týž výstup — příště různě formulované rubriky
+  nebo jiný model, jinak „shoda 3/3" nic neznamená.
+- [ ] ⭐ **REJSTŘÍK VEN Z TĚLA SINGLE a změřit** (KUKY 2026-09-20: *„ven a změřit"*). `_registerContext` se v single
+  měřeně nepropisuje: slepá identifikace hodnoty **EN 5/16 při kontrole 2/16 · IS 3/16 při kontrole 4/16** (čistá
+  šance), zapsáno CODE-tune 2026-08-22 jako *„propsání NEPROKÁZÁNO"*; skládačka 2026-09-20 ukázala proč — jediné
+  viditelné (obrat dovnitř) maže `NO COLD READING` (2/2). Rejstřík dostává místo v TVARU MOSTU, kde ho nic neruší
+  (most prošel i s `NO COLD READING`, protože nabízí možnost, ne tvrzení). **Není to odebrání páky — je to ten
+  „přepis registru + přeměřit", který si záznam z 2026-08-22 sám naplánoval jako návazný krok** (§26).
+  Měřit: poznat rejstřík ze čtení (1 z 5, slepě) před × po · pohnulo se něco jiného · délka.
+- [ ] ⭐ **SPREADY × SINGLE: ROZCHÁZEJÍ SE PÁKY — vyřešit** (KUKY 2026-09-20: *„zapsat. to by se mělo vyřešit."*).
+  `_domainContext` i `_registerContext` krmí single **i všechny spready**, ale spready mají navíc rozhodčí větu
+  `_priorityContext` (*„honour the seeking and the area"*), kterou single NEMÁ (ověřeno: 4 volání, všechna ve
+  spreadech). Jakmile se rejstřík vyndá ze single, ukazuje ta rozhodčí věta ve spreadech na páku, která v single
+  už není — a spready si dál žijí po svém. **Není to jen varování u jednoho úkolu; je to trvalý rozpor** a patří
+  k §18/§13: buď se páky srovnají, nebo se rozdíl pojmenuje a zdůvodní na jednom místě, aby ho příští session
+  nepovažovala za chybu. Rozhodnout spolu s vlastní stavbou závěru per spread (položka „ZÁVĚR SPREADŮ").
 - [ ] ⭐ **MOST: AREA = kam dosedne · SEEKING = tvar — ZNĚNÍ K NASAZENÍ** (rozhodnuto KUKY 2026-09-20,
   `RUNAR_DECISIONS.md` 2026-09-20 (2); mechanismus a mantinely vlastní `RUNAR_DESIGN.md` „Stavba Single čtení" bod 3 —
   **tady je jen to, co se má nasadit, po nasazení to vlastní kód a odsud zmizí**).

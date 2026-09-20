@@ -1,0 +1,146 @@
+[
+ {
+  "id": "T02197",
+  "rameno": "K",
+  "oblast": "laska",
+  "slov": 68
+ },
+ {
+  "id": "T08316",
+  "rameno": "V",
+  "oblast": "cesta",
+  "slov": 75
+ },
+ {
+  "id": "T08509",
+  "rameno": "K",
+  "oblast": "rozcesti",
+  "slov": 69
+ },
+ {
+  "id": "T08536",
+  "rameno": "P",
+  "oblast": "rozcesti",
+  "slov": 75
+ },
+ {
+  "id": "T14405",
+  "rameno": "K",
+  "oblast": "prace",
+  "slov": 71
+ },
+ {
+  "id": "T29691",
+  "rameno": "B0",
+  "oblast": "cesta",
+  "slov": 71
+ },
+ {
+  "id": "T30324",
+  "rameno": "P",
+  "oblast": "cesta",
+  "slov": 69
+ },
+ {
+  "id": "T38845",
+  "rameno": "B0",
+  "oblast": "rozcesti",
+  "slov": 70
+ },
+ {
+  "id": "T45001",
+  "rameno": "P",
+  "oblast": "skryte",
+  "slov": 74
+ },
+ {
+  "id": "T47757",
+  "rameno": "K",
+  "oblast": "skryte",
+  "slov": 77
+ },
+ {
+  "id": "T48664",
+  "rameno": "K",
+  "oblast": "cesta",
+  "slov": 69
+ },
+ {
+  "id": "T61692",
+  "rameno": "V",
+  "oblast": "skryte",
+  "slov": 71
+ },
+ {
+  "id": "T61840",
+  "rameno": "V",
+  "oblast": "laska",
+  "slov": 72
+ },
+ {
+  "id": "T62069",
+  "rameno": "B0",
+  "oblast": "skryte",
+  "slov": 73
+ },
+ {
+  "id": "T68563",
+  "rameno": "V",
+  "oblast": "rozcesti",
+  "slov": 80
+ },
+ {
+  "id": "T74048",
+  "rameno": "V",
+  "oblast": "prace",
+  "slov": 61
+ },
+ {
+  "id": "T79163",
+  "rameno": "V",
+  "oblast": "rust",
+  "slov": 66
+ },
+ {
+  "id": "T79331",
+  "rameno": "P",
+  "oblast": "rust",
+  "slov": 62
+ },
+ {
+  "id": "T79471",
+  "rameno": "K",
+  "oblast": "rust",
+  "slov": 65
+ },
+ {
+  "id": "T83215",
+  "rameno": "B0",
+  "oblast": "laska",
+  "slov": 74
+ },
+ {
+  "id": "T83848",
+  "rameno": "P",
+  "oblast": "laska",
+  "slov": 69
+ },
+ {
+  "id": "T95423",
+  "rameno": "B0",
+  "oblast": "prace",
+  "slov": 74
+ },
+ {
+  "id": "T96056",
+  "rameno": "P",
+  "oblast": "prace",
+  "slov": 68
+ },
+ {
+  "id": "T99935",
+  "rameno": "B0",
+  "oblast": "rust",
+  "slov": 63
+ }
+]
