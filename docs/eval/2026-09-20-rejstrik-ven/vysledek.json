@@ -1,0 +1,82 @@
+{
+ "A-challenge-jera-1": {
+  "text": "You are standing in the field as the day stretches longer, the ground still cold but no longer frozen. Jera holds the ground while the light does its slow work, and nothing yet shows above the soil. The pull to see growth now, before the season has turned, is the friction you feel here. This may be the part of your path, Kuky, that asks you to keep going without proof yet in your hands.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 136
+ },
+ "A-challenge-laguz-1": {
+  "text": "See the single grain of silt turning near the bank, so small the eye slides past it. The whole grey river carries it, and Laguz moves it the way it moves everything else, without asking where. You want a clear direction, but you cannot see the bottom you are travelling over. This is what going forward blind may be, Kuky — carried, and not yet steering.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 128
+ },
+ "A-clarity-jera-1": {
+  "text": "There, at the edge of the cut field, a single stalk stands the tools missed, still holding its full head of grain. Jera carries the whole season down into that one stalk, the slow work made ripe. You sit at the end of it, and for once nothing pulls you back to your feet. The rest you have not taken until now may be part of the path itself, not a pause outside it.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 132
+ },
+ "A-clarity-laguz-1": {
+  "text": "The ground moves under your feet before your eyes catch it, a slow swell coming up through the soles. This is Laguz, the water beneath the roots that shifts long before the surface shows it, Kuky. You feel the direction as a pull in the body, not yet a road you could name. What matters now is that your going has already started, whether or not you have chosen where it leads.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 133
+ },
+ "A-confirm-jera-1": {
+  "text": "Look at the stubble left standing after the cut, the short broken stalks most eyes pass over. That field was black mud in spring and gold by summer's end, and Jera is that turning worked slow, Kuky, the same ground carrying each season through. What you are deciding now sits on soil already shaped by seasons before it. This may be a harvest come round at last, or ground rested and waiting for you to sow again.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 147
+ },
+ "A-confirm-laguz-1": {
+  "text": "The slope stays fixed while the water shifts across it, finding a way down that no hand carved. Laguz is that seeking, the way water reads the ground before it moves. Nothing appoints the channel, Kuky, the descent alone reveals where the going was already soft. What lies beneath the choice is not a map but a slope, and the way ahead may be a path you find by moving, or one you were always leaning toward.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 149
+ },
+ "A-reflect-jera-1": {
+  "text": "Watch the cloth at its edge, where flat dough becomes something risen without a single push. Jera holds that quiet turning, working the hours while no one stands over it. This is how some going happens, Kuky, not by force but by staying with a thing long enough for it to change shape. Where in your own path might the waiting itself be the work?",
+  "model": "claude-opus-4-8",
+  "out_tokens": 123
+ },
+ "A-reflect-laguz-1": {
+  "text": "The ground shifts under your feet before your eyes catch it, a slow swell moving up from the roots. Laguz is that reading through the soles, water sensed before it is seen. You feel the pull of a direction, Kuky, though the shape of it stays under the surface. Might the way forward be one you already sense in your feet, before you can name it?",
+  "model": "claude-opus-4-8",
+  "out_tokens": 128
+ },
+ "B-challenge-jera-1": {
+  "text": "You stand in the field where the light comes back slow, each day a little longer than the last, the ground still cold under your boots. Jera turns beneath that soil, holding what was planted through the dark. Nothing here rushes, and nothing here stops. Your path may be one that ripens in its own hour, Kuky, arriving only when the season is full.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 126
+ },
+ "B-challenge-laguz-1": {
+  "text": "See the fine silt suspended in the grey water, the part no eye would stop on. Laguz carries it down from the ice, unseen, mile after mile toward the sea. You do not choose what the current gathers, only how far you travel with it. Where you are going, Kuky, some of what moves you was decided long above where you stand now.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 122
+ },
+ "B-clarity-jera-1": {
+  "text": "There, at the field's edge, the bootprint you left this morning has already filled with settled dust. Jera holds that stillness, the season fully worked and nothing left pulling at your sleeve. You sit, and for once the going does not ask to begin again. This may be a stretch of road where standing still is itself the direction you have reached.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 121
+ },
+ "B-clarity-laguz-1": {
+  "text": "The ground swells beneath your soles before your eyes can name it, a slow pressure rising through the roots. You feel the way shift, Kuky, though the path ahead still looks unchanged. Laguz is the water reading the land below, sensing the pull before the current shows its face. This may be a direction already turning under you, felt long before it is seen.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 128
+ },
+ "B-confirm-jera-1": {
+  "text": "See the stubble at the field's edge, the cut stalks most eyes pass over on the way to the gold. That same ground was black mud in spring, and it will be mud again before it stands full. Jera turns there, Kuky, in the plain work between planting and cutting that no one names. Where you are going may be a season still ripening, or one already asking to be gathered in.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 132
+ },
+ "B-confirm-laguz-1": {
+  "text": "The slope holds while the water moves across it, always downward, never asking the way. This is Laguz, Kuky, the seeing that finds its own path without a map laid out ahead. You need not name the ground below to keep going down it. What waits may be a course already yours to follow, or a stillness where the water gathers before it moves again.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 121
+ },
+ "B-reflect-jera-1": {
+  "text": "Watch the edge of the cloth, where flat becomes risen, where the dough turns into something else without a hand touching it. Jera holds that slow work, lifting a little higher each hour while no one keeps watch. This is the shape of it, Kuky — the going that happens in waiting, not in pushing. Might the direction you want already be rising, needing only the hours you have not yet given it?",
+  "model": "claude-opus-4-8",
+  "out_tokens": 142
+ },
+ "B-reflect-laguz-1": {
+  "text": "The ground shifts under your feet before your eyes catch the motion, a low swell rising through the soles. This is Laguz, the water beneath the roots, moving where you feel it first and name it later. You are already leaning toward something, Kuky, though the direction has not yet surfaced into words. Might the pull you sense underfoot be the truer guide to where you are going?",
+  "model": "claude-opus-4-8",
+  "out_tokens": 136
+ }
+}

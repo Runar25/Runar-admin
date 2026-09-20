@@ -4607,3 +4607,48 @@ runa Jera, rejstřík Clarity, EN, 6 kolidujících oblastí × 4 ramena = 24 č
 **Doporučení po měření:** jít cestou **V (výjimka)**, ne odebráním. Před nasazením doměřit chlad na větším vzorku
 (víc run, obě řeči, všech pět rejstříků), protože směr B0 → P ukazuje, že zákaz drží víc, než jsem čekal.
 Podklady → `docs/eval/2026-09-20-zakaz-oblasti/` (24 promptů, čtení, klíč, soudce, skripty).
+
+## 2026-09-20 (11) — REJSTŘÍK VEN Z TĚLA SINGLE: není to mrtvá váha, je to výměna (owner rozhodne)
+
+**Owner:** *„ven a změřit… pusť ten rejstřík na rameni V."* Čekal jsem, že řádek rejstříku v těle je mrtvý —
+opíral jsem to o měření CODE-tune 2026-08-22 (*„propsání NEPROKÁZÁNO"*, EN 5/16 při kontrole 2/16).
+**Měření to zase neukázalo tak, jak jsem čekal.**
+
+**Jak:** základ = **aktuální produkce** (34c1bbd v4.36 — dosednutí mostu do oblasti a tvar podle rejstříku už
+nasazené) **+ výjimka v zákazu oblasti** (rameno V z měření (10)). Ramena se liší JEDINOU věcí: přítomností
+řádku `_registerContext` v těle. 4 rejstříky (General Guidance vynechán — jeho tvar je z losu, není co poznat)
+× 2 lehké runy (Jera, Laguz) × 2 ramena = 16 čtení, oblast Purpose & Path, EN, produkční model.
+**Dvě plochy souzení**, protože tvar POSLEDNÍ věty rejstřík prozradí sám (otázka = Reflection…):
+`plné čtení` ověří, že rejstřík je vůbec poznat · `tělo bez poslední věty` je jediné místo, kde se může
+projevit ten řádek. Soudci **záměrně různě formulovaní** (po vadě z měření (10)).
+
+| rameno | rejstřík z TĚLA (S1+S2, šance 4/16) | rejstřík z CELÉHO čtení | chlad (vět / čtení) | poslední věta = možnost | slov |
+|---|---|---|---|---|---|
+| **A** řádek v těle | **11/16** | 8/8 | 6 / 6 z 8 | 7/8 | **71,5** |
+| **B** řádek pryč | **7/16** | 8/8 | 5 / 5 z 8 | 7/8 | **66,4** |
+
+**Nálezy:**
+1. ⭐ **Řádek NENÍ mrtvá váha.** Z těla je rejstřík poznat 11/16 s ním a 7/16 bez něj (šance 4/16).
+   Půlka proti půlce (§27): drží v obou runách zvlášť — A 5/8 a 6/8 · B 3/8 a 4/8. Směr se nepřevrátil.
+2. ⭐ **Čtenář o nic nepřijde.** Z HOTOVÉHO čtení je rejstřík poznat **8/8 v OBOU ramenech** — tvar mostu ho
+   unese celý sám. Co se odebráním ztrácí, je obarvení prvních tří vět, tedy plocha, kterou čtenář nemá
+   s čím porovnat. **Je to výměna, ne ztráta funkce** — a rozhodnout ji má owner, ne měření.
+3. **Cena za ten řádek je 5 slov** (71,5 vs 66,4). Jeden vstup navíc = delší čtení, přesně ten mechanismus,
+   na který se owner ptá (*„když něco vstoupí do obrazu, chci vědět, co to je"*).
+4. **Chlad se skoro nehnul** (6 vs 5 vět), takže odebrání nic nerozvazuje.
+5. ⚠️ **Vedlejší nález, důležitý pro produkčního kandidáta: tvar VĚTA drží „may be" hůř než ostatní.**
+   2 ze 16 posledních vět nebyly ve tvaru možnosti — obě u tvaru „věta" (Clarity, Insight into Challenge),
+   ani jedna u „dvou možností" ani u otázky. Doklady: *„Where you are going, Kuky, some of what moves you was
+   decided long above where you stand now."* · *„What matters now is that your going has already started,
+   whether or not you have chosen where it leads."* Obojí je tvrzení, ne možnost.
+6. **Soudci se tentokrát opravdu lišili** — S1 a S2 se shodli 12/16 (v měření (10) byla shoda 24/24, protože
+   měli totéž zadání). Metodická oprava zabrala.
+
+⚠️ **Hranice:** n = 8 na rameno, dvě runy, jedna oblast, jeden jazyk. Rozdíl 11/16 vs 7/16 je 4 čtení
+ze 16 — **naznačuje, nedokazuje**. Rameno B je 7/16 proti šanci 4/16, tedy taky nad náhodou; část toho
+nese nejspíš text psaný „směrem ke svému konci", ne řádek.
+Podklady → `docs/eval/2026-09-20-rejstrik-ven/`.
+
+⚠️ **Souběh s produkcí:** během tohohle měření nasadil CODE-tune `34c1bbd` (v4.36) — dosednutí mostu do
+oblasti a tvar podle rejstříku. **Zákaz v `_domainContext` nechal beze změny**, takže produkce je dnes na
+mém rameni **K** (dosednutí 4/6), ne na **V** (6/6). Výjimka v zákazu je tedy stále nenasazená — viz backlog.

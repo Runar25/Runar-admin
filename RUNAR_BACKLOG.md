@@ -65,13 +65,15 @@
   rejstříků), protože n bylo 6 na rameno a rozdíly v chladu byly v šumu. IS znění výjimky psát nativně (§2).
   **Metodická vada k opravě:** tři soudci se stejným zadáním vrátili týž výstup — příště různě formulované rubriky
   nebo jiný model, jinak „shoda 3/3" nic neznamená.
-- [ ] ⭐ **REJSTŘÍK VEN Z TĚLA SINGLE a změřit** (KUKY 2026-09-20: *„ven a změřit"*). `_registerContext` se v single
-  měřeně nepropisuje: slepá identifikace hodnoty **EN 5/16 při kontrole 2/16 · IS 3/16 při kontrole 4/16** (čistá
-  šance), zapsáno CODE-tune 2026-08-22 jako *„propsání NEPROKÁZÁNO"*; skládačka 2026-09-20 ukázala proč — jediné
-  viditelné (obrat dovnitř) maže `NO COLD READING` (2/2). Rejstřík dostává místo v TVARU MOSTU, kde ho nic neruší
-  (most prošel i s `NO COLD READING`, protože nabízí možnost, ne tvrzení). **Není to odebrání páky — je to ten
-  „přepis registru + přeměřit", který si záznam z 2026-08-22 sám naplánoval jako návazný krok** (§26).
-  Měřit: poznat rejstřík ze čtení (1 z 5, slepě) před × po · pohnulo se něco jiného · délka.
+- [ ] ⭐ **REJSTŘÍK VEN Z TĚLA SINGLE — ZMĚŘENO, ČEKÁ NA OWNERA** (výsledek → `RUNAR_EVAL_LOG.md` 2026-09-20 (11);
+  data `docs/eval/2026-09-20-rejstrik-ven/`). Řádek `_registerContext` **není mrtvá váha**: z těla čtení je
+  rejstřík poznat 11/16 s ním a 7/16 bez něj (šance 4/16), drží v obou půlkách. **Ale z hotového čtení je
+  rejstřík poznat 8/8 v obou ramenech** — tvar mostu ho unese sám, takže čtenář o nic nepřijde.
+  **Je to výměna: −5 slov a o jeden vstup míň × obarvení prvních tří vět.** Rozhodnutí je ownerovo, ne měřicí.
+  Než se nasadí (ať tak či tak): doměřit na víc runách a v IS; n bylo 8 na rameno.
+- [ ] **Tvar „VĚTA" drží „may be" hůř než dvě možnosti a otázka** — 2 ze 16 posledních vět vypadly z tvaru
+  možnosti, obě u tvaru věta (`ENDING_OPEN[0]`, `ENDING_HEAVY[1]`), doklady v EVAL_LOG 2026-09-20 (11).
+  Patří do tvrdých kontrol produkčního kandidáta; při větším vzorku ověřit, jestli to není náhoda.
 - [ ] ⭐ **SPREADY × SINGLE: ROZCHÁZEJÍ SE PÁKY — vyřešit** (KUKY 2026-09-20: *„zapsat. to by se mělo vyřešit."*).
   `_domainContext` i `_registerContext` krmí single **i všechny spready**, ale spready mají navíc rozhodčí větu
   `_priorityContext` (*„honour the seeking and the area"*), kterou single NEMÁ (ověřeno: 4 volání, všechna ve

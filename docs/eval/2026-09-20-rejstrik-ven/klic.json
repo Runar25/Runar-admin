@@ -1,0 +1,114 @@
+[
+ {
+  "id": "R05998",
+  "rameno": "B",
+  "rejstrik": "challenge",
+  "runa": "laguz",
+  "slov": 63
+ },
+ {
+  "id": "R07446",
+  "rameno": "B",
+  "rejstrik": "reflect",
+  "runa": "laguz",
+  "slov": 68
+ },
+ {
+  "id": "R19267",
+  "rameno": "B",
+  "rejstrik": "reflect",
+  "runa": "jera",
+  "slov": 73
+ },
+ {
+  "id": "R20360",
+  "rameno": "B",
+  "rejstrik": "confirm",
+  "runa": "laguz",
+  "slov": 65
+ },
+ {
+  "id": "R26548",
+  "rameno": "B",
+  "rejstrik": "clarity",
+  "runa": "laguz",
+  "slov": 64
+ },
+ {
+  "id": "R28035",
+  "rameno": "A",
+  "rejstrik": "reflect",
+  "runa": "laguz",
+  "slov": 66
+ },
+ {
+  "id": "R40949",
+  "rameno": "A",
+  "rejstrik": "confirm",
+  "runa": "laguz",
+  "slov": 77
+ },
+ {
+  "id": "R44372",
+  "rameno": "A",
+  "rejstrik": "clarity",
+  "runa": "jera",
+  "slov": 74
+ },
+ {
+  "id": "R47137",
+  "rameno": "A",
+  "rejstrik": "clarity",
+  "runa": "laguz",
+  "slov": 72
+ },
+ {
+  "id": "R48706",
+  "rameno": "A",
+  "rejstrik": "confirm",
+  "runa": "jera",
+  "slov": 77
+ },
+ {
+  "id": "R68887",
+  "rameno": "B",
+  "rejstrik": "challenge",
+  "runa": "jera",
+  "slov": 64
+ },
+ {
+  "id": "R69037",
+  "rameno": "B",
+  "rejstrik": "clarity",
+  "runa": "jera",
+  "slov": 62
+ },
+ {
+  "id": "R73371",
+  "rameno": "B",
+  "rejstrik": "confirm",
+  "runa": "jera",
+  "slov": 72
+ },
+ {
+  "id": "R75715",
+  "rameno": "A",
+  "rejstrik": "challenge",
+  "runa": "laguz",
+  "slov": 66
+ },
+ {
+  "id": "R89832",
+  "rameno": "A",
+  "rejstrik": "challenge",
+  "runa": "jera",
+  "slov": 75
+ },
+ {
+  "id": "R94593",
+  "rameno": "A",
+  "rejstrik": "reflect",
+  "runa": "jera",
+  "slov": 65
+ }
+]
