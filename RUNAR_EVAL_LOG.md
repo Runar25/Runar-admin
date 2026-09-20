@@ -4536,3 +4536,31 @@ spread, jeden jazyk; IS znění napíšu nativně, až owner tvar schválí. Ost
 vlastní stavbu — každý vlastní návrh, žádná kopie.
 ⚠️ **Chyba nástroje, opraveno:** generátor bral u spreadu jen PRVNÍ beat z JSON pole (měřil jsem Urður místo celého čtení);
 `api_gen.js` teď skládá všechny beaty.
+
+## 2026-09-20 (9) — Co zní dobře: pět slepých dvojic (owner soudil) · formule opravena testem
+
+**Owner:** *„ono je doopravdy hezké. proto jsem se tě ptal — jestli jsi schopný si z toho udělat formuli na to,
+co zní dobře, a popřípadě proč."* Podnět: den předtím jsem napsal o jedné větě „krásné" a owner se ptal, podle čeho.
+**Vstup do formule:** 5 vět, které owner pochválil vlastními slovy (napříč záznamy 2026-08-26 → 2026-09-20),
+proti 6, které odmítl. **Moje hypotéza:** věta má dvě části a mezi nimi se něco platí („směna").
+
+**Test (§25 obrácená páka + §27 nulová transformace):** pět dvojic, **stejná první půlka**, mění se JEN druhá —
+jednou směna, jednou čistý popis **stejné délky a stejné konkrétnosti**, aby to nebyl efekt délky ani abstrakce.
+Predikce zapsaná PŘED odpovědí: *„vybereš první variantu aspoň ve 4 z 5; když ne, formuli zahodím, ne zalepím."*
+
+| dvojice | druhá půlka (a) | druhá půlka (b) | owner |
+|---|---|---|---|
+| 1 hřeben | and the far side stays quiet in its lee | and the snow along its spine is packed hard and bright | **a** |
+| 2 dva hrnky | and the second one waits for someone who may not come | and the steam still rises off them into the cold room | **a, b** |
+| 3 Tiwaz | to finish one thing well and leave the rest unmade | to set the blade down straight and true on the bench | **a** |
+| 4 mezník | and it holds the way only until the next one shows | and its shadow falls long across the frozen track | **a** |
+| 5 kámen | and everything that passes it goes around | and its top is worn smooth and dark with meltwater | **a, b** |
+
+**Predikce platila (a 5/5), ale mechanismus byl jiný — a to je ten nález.** Kdyby šlo o směnu, musely by padnout
+všechny (b). Nepadly: 2b a 5b srovnaly krok. Co mají navíc proti 1b/3b/4b: ukazují **něco, co v obraze není** —
+někoho, kdo nepřišel, a všechno, co tudy prošlo. Směna je tedy jen nejspolehlivější cesta ven ze záběru, ne
+podstata. **Opravená formule → `memory/co-dela-cteni-silnym.md` bod 4** (vlastní ji paměť, tady je protokol).
+
+⚠️ **Nedodělané (§27, útok na vlastní nástroj):** obě uznané (b) nesou taky ČAS, tři padlé popisy jsou okamžiky —
+„mimo záběr" a „trvání" tenhle test neoddělil. Rozliší to jedna dvojice: trvání bez nepřítomnosti proti
+nepřítomnosti bez trvání. Do té doby je formule pracovní. n = 5 dvojic, jeden soudce (owner), jen EN.
