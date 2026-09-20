@@ -4286,3 +4286,62 @@ legitimně ve scéně (fjord = voda). Platí jen ruční nálezy.
 
 **Nález 3 — vedlejší:** *grey* se objevilo 1/8 (*„The stone ahead is grey against the sky"*) i po odebrání věty „sensory" —
 zbytkový model-prior u kamene; zatím pod prahem, jen hlídat.
+
+## 2026-09-20 (2) — MOST K ČLOVĚKU jako řízený vstup (owner: „udělej ho ve tvaru možnosti") · tvar esence · rejstřík vstupů
+
+**Owner:** *„most k člověku udělej jako řízený vstup ve tvaru možnosti"* · *„this is Raidho, that is Raidho — stejně může být
+the wind is Raidho"* · *„u nás se losuje, kolik bude vět ve čtení; podívej se pořádně, jak se tvoří čtení, zdá se mi, že ti
+něco uniká."* Produkce v4.31, produkční model, tři scény (Raidho jádro+místo · Isa kafe · Algiz torfová zeď), 2 čtení na buňku.
+Podklady → `docs/eval/2026-09-20-scena-a-vztah/most-a-tvar/`.
+
+### 1. Most k člověku — funguje jako TVAR KONCE, ne jako další povinná věta
+| rameno (konec) | most ve čtení | tvar možnosti | rada / krok |
+|---|---|---|---|
+| A = dnešek `ENDING_OPEN[2]` (klidná věta) | 1/6 (obecná) | — | 0/6 |
+| B = *„offers what this may be for the seeker … not a step to take"* | 6/6 | 4/6 | **2/6** (*„You need not see the whole road…"*) |
+| **C = *„names what this may be in the seeker's life — a state that may be so … never what to do about it"*** | **6/6** | **6/6** | **0/6** |
+C zní např.: *„This may be a stretch where the whole way is not yours to see, only the step between one cairn and the
+following."* · *„Something in your life may simply be paused, waiting on a word that has not yet come."*
+**IS znění (ověřeno):** *„Endaðu á einni línu sem nefnir hvað þetta gæti verið í lífi leitandans — ástand sem gæti átt við,
+honum til umhugsunar; hún nefnir hvernig hlutirnir gætu staðið, aldrei hvað skuli gera."* — is-grammar-qa 0 E001 (jediný
+flag W001 na *Endaðu* = falešný poplach); korpus *gæti átt við* 1010 · *til umhugsunar* 10432 · *hvernig hlutirnir* 4776 ·
+*gætu staðið* 1142 · *hvað skuli gera* 615.
+⚠️ `NO COLD READING` zůstal v promptu a most přesto prošel jako možnost — zákaz tvrzení a nabídka možnosti se v praxi
+nesrazily (n = 12).
+
+### 2. ⚠️ Los DÉLKY mění, co most udělá — a to mi v prvním měření uniklo (owner to trefil)
+Délka se losuje (3 nebo 4 věty). **Tři věty:** most NAHRADÍ závěrečnou klidnou větu (čtení = obraz · esence · most).
+**Čtyři věty:** most dosedne jako poslední a zbyde věta navíc — a tu model ve 2/6 zaplní tvrzením o člověku
+(*„You poured it warm for a moment that has not yet come"* · *„the watching does not warm it back"*). ⇒ Delší rozpočet
+kupuje místo, které se plní cold readingem. Rozhodnutí o mostu tedy nejde oddělit od rozhodnutí o délce.
+
+### 3. Tvar esence — moje pravidlo NEPOMOHLO („není to X")
+Zkusil jsem *„The rune's name may stand anywhere in that line except at its start"* (bez paměti, ověřitelné).
+Výsledek: jméno se z začátku uhnulo, ale rám se sjednotil na *„This is <Runa>"* **5/6** (kontrola: mix *„Raidho is…"* a
+*„This is…"*). ⇒ Vada není v POZICI jména, ale ve sponě. Použitelné řešení už je změřené: **los ze tří rámů, žádný z nich
+dnešní** (`RUNAR_EVAL_LOG.md` 2026-09-08: E-LOS3 dalo rozložení 33/42/25 a délku beze změny; jeden špatný prvek v losu
+celý los stáhne — E-LOS 42 % spony).
+
+### 4. Rejstřík vstupů do Single čtení (z kódu v4.31, pořadí = pořadí v promptu)
+| vstup | odkud | losuje se? | co dělá (měřeno) |
+|---|---|---|---|
+| PERSON | jméno člověka | ne | oslovení |
+| DRAWN RUNE: focus on | sloupec obrazu, jinak **náhodné 3 klíče** z `RUNES[].k` | částečně | aspekt se vtlačí do textu (*road* 3/3, 2026-09-18) |
+| · World · Elements | `runar-runes.js` | ne | u produkčního modelu **beze změny** (2026-09-20, n=6); u sol únik do obrazu |
+| READING PURPOSE | záměr člověka (3) | ne | rámuje čas čtení |
+| READING ANGLE | **7 úhlů** | ANO | úhel [6] dělá *„You stand"* na začátku (produkce 6/11 × 0/47) |
+| THE IMAGE (pravidla) | `_imageRules` | ne | věta *„must be sensory"* odebrána 2026-09-19 (dělala šedou a vítr) |
+| IMAGE: jádro/obraz + místo | banka (2–11 na runu, medián 3; 3 jádra) + `IMG_PLACES.P` (6) | ANO | scéna; bez dodaného místa se runa sjede do svého živlu |
+| SEASON | datum → štítek | ne | v4.31 jen světlo; staré znění sypalo obilí 5/6 |
+| THE ESSENCE LINE | `VOICE_PROFILES.focused.rules.describe` | ne | tvar *„<Runa> is…"* 6/6 (viz 3) |
+| NO COLD READING | `_noColdRead` | ne | zakazuje most; přesto prosakoval 5/8 (2026-09-20) |
+| délka | **2 rozpočty** (3 věty / 38–45 slov · 4 věty / 50–58) | ANO | viz 2 — rozhoduje, co se do čtení vejde |
+| oblast / hledání | výběr člověka (8 / 5) | ne | kontext |
+| větev s otázkou / bez ní | má člověk otázku? | ne | |
+| konec | **3 open / 2 heavy** | ANO | open[1] dělá *„You stand"* na konci 6/6; open[0] dělalo volbu (odebráno) |
+| čočka životní runy | přepínač člověka | ne | tvaruje poslední větu, když je zapnutá |
+| jméno v závěru | **4 umístění** | ANO | |
+| formát JSON | pevné | ne | |
+**Losuje se tedy pět věcí:** úhel · obraz (+ místo u jader) · délka · konec · umístění jména; a **aspekt** tam, kde obraz
+nemá svůj sloupec. Zbytek je pevný nebo od člověka. ⚠️ Moje testy losy fixují (správně, kvůli izolaci změny), ale závěr pak
+platí pro TU buňku — u mostu to bylo vidět: tři věty × čtyři věty daly jiný výsledek.

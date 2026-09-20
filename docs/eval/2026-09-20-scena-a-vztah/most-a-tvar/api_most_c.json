@@ -1,0 +1,32 @@
+{
+ "Algiz-most-C-1": {
+  "text": "Where the turf wall meets the wind, the gust breaks and scatters, and behind it the doorway holds its quiet. That edge is Algiz, Kuky — the wall takes the weather so the threshold stays calm. This may be shelter already standing, a thing that keeps the noise off without you tending it.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 118
+ },
+ "Algiz-most-C-2": {
+  "text": "See where the turf wall meets the wind, that edge where a raw gust turns into stillness by the door. This is Algiz, Kuky, the shelter that takes the weather so the space behind it stays calm. There may be something in your life doing that quiet work, holding the wind off a place you have not yet named.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 115
+ },
+ "Isa-most-C-1": {
+  "text": "The coffee sits untouched, its warmth leaving it slowly while you stay put. Isa is that holding still, Kuky, the way a thing pauses at the roots before anything shifts above. This may be a waiting you did not choose, the hours cooling around a hope you have not set down.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 109
+ },
+ "Isa-most-C-2": {
+  "text": "The coffee sits untouched, its warmth slipping into the room while you stay in your chair. This is Isa, Kuky, the cold that settles over a thing left waiting. The cup goes cold not from neglect but from a moment held longer than it can hold its heat. Something in your life may simply be paused, waiting on a word that has not yet come.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 128
+ },
+ "Raidho-most-C-1": {
+  "text": "The cairns hold their places at the field's edge, each one built to be seen from the last, while the grass around them leans and shifts in the late summer air. Raidho is that steadiness, Kuky, the marker that stays put so the road stays readable. This may be a stretch where the way forward is not one leap but the next stone, already within sight.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 124
+ },
+ "Raidho-most-C-2": {
+  "text": "The cairns hold their places at the field's edge, each one built to be seen from the last, while the grass shifts around them in the late warmth. Raidho is the road read stone by stone, Kuky, where you go only as far as the next marker in sight. This may be a stretch where the whole way is not yours to see, only the step between one cairn and the following.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 127
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "Algiz-esence-B-1": {
+  "text": "See where the turf wall meets the wind and turns it aside, so the doorway behind stays still. This is Algiz, Kuky — the shelter that takes the force so something within can hold its own quiet. What guards you need not be walled shut, only turned to the weather.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 103
+ },
+ "Algiz-esence-B-2": {
+  "text": "See where the turf wall meets open air, its curve taking the late summer wind so the doorway behind it stays calm. That is Algiz, Kuky — the shelter that stands between the gust and the threshold, holding one so the other can rest. What is guarded need not be walled in.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 107
+ },
+ "Isa-esence-B-1": {
+  "text": "The coffee sits untouched, the steam long gone, the surface gone still and dark. This is Isa, Kuky, the way a thing holds its place while the warmth quietly leaves it. Some waiting does not move the hands of the clock, it only lets the cup grow cold.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 107
+ },
+ "Isa-esence-B-2": {
+  "text": "The coffee sits untouched, its warmth leaving the cup while you stay at the table. This is Isa, Kuky, the pause that holds still until the thing you wait for arrives or does not. The steam has stopped rising, and the table is quiet.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 98
+ },
+ "Raidho-esence-B-1": {
+  "text": "At the field's edge the cairns hold their places while the grass leans and shifts around them, each stone within sight of the next. This is Raidho, Kuky, the road that shows only as far as the stone ahead. You need not see the last cairn to walk toward the near one.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 103
+ },
+ "Raidho-esence-B-2": {
+  "text": "At the field's edge the cairns hold their places while the grass leans and shifts around them. This is Raidho, Kuky, the road marked stone by stone so each one keeps the next in sight. You go on toward what stands ahead, and the way behind you stays where you left it.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 105
+ }
+}

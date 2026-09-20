@@ -1,0 +1,62 @@
+{
+ "Algiz-most-A-1": {
+  "text": "See where the turf wall meets the wind, how the raw gust becomes a still place just past the stones. This is Algiz, Kuky, the way a made shelter turns weather into calm at the doorway. The wall does not stop the wind, it takes it, and the threshold stays quiet.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 110
+ },
+ "Algiz-most-A-2": {
+  "text": "Where the turf wall meets the wind, the pushing turns to stillness, and the doorway behind it stays calm. This is Algiz, Kuky — a thing that takes the weather so another thing can hold. The wall does not stop the wind, it turns it aside, and the quiet by the door is what remains.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 117
+ },
+ "Algiz-most-B-1": {
+  "text": "Where the turf wall meets the open field, the wind breaks against packed earth and the doorway behind it stays still. This is Algiz, Kuky, the shelter that stands between the gust and the calm. A wall like this may be the thing that lets you keep a door open where you thought you had to shut it.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 114
+ },
+ "Algiz-most-B-2": {
+  "text": "At the edge of the yard the turf wall meets the wind, and where it does the gust becomes stillness on the far side. This is Algiz, Kuky, the built thing that takes the weather so the doorway stays calm. What you have raised against the wind may be doing more than you notice.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 108
+ },
+ "Isa-most-A-1": {
+  "text": "The coffee sits cooling, the steam long gone from its surface. This is Isa, Kuky, the pause that holds a thing in place while you wait for it to move. The cup stays where you left it, and so does the hour.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 88
+ },
+ "Isa-most-A-2": {
+  "text": "The coffee sits untouched, the steam long gone, the surface gone flat and still. Isa is this, Kuky, the pause that holds its shape while the warmth quietly leaves. Some things cool before the waiting ends, and the cup stays where you set it down.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 103
+ },
+ "Isa-most-B-1": {
+  "text": "The coffee sits untouched, its heat leaving the cup while you stay at the table. This is Isa, Kuky, the way a thing holds its shape until whatever you wait for arrives. Sometimes the waiting itself is what has cooled, not the drink.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 102
+ },
+ "Isa-most-B-2": {
+  "text": "The coffee sits cooling, the steam long gone, while you hold at the table for something to arrive. This is Isa, Kuky, the pause where a thing waits below the surface, unmoved and taking its own time. The cold cup may be a sign that the waiting itself has become the thing you are tending, not the answer you thought you wanted.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 125
+ },
+ "Raidho-most-A-1": {
+  "text": "At the edge of the home-field the cairns hold still while the grass bends and the light moves across them. Raidho is the road walked by keeping the next stone in sight, Kuky, one marker reached before the following one shows. You cannot see the whole way, only the near stone standing plain.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 108
+ },
+ "Raidho-most-A-2": {
+  "text": "The cairns hold their line along the home-field's edge, unmoving while the grass leans and shifts around them. Each one stands in sight of the next, Kuky, so the road stays a road even when your feet do not yet know the turn. This is Raidho — the stones keep the way whole when the walking is not. The next marker is already there, waiting in the light.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 130
+ },
+ "Raidho-most-B-1": {
+  "text": "The cairns hold their places at the field's edge while the light shifts across the late grass. This is Raidho, Kuky, the way marked out so each stone stays in sight of the next. You need not see the whole road, only the stone standing nearest you now.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 97
+ },
+ "Raidho-most-B-2": {
+  "text": "The cairns hold their places while the field between them shifts in the late-summer wind. Each stone was set within sight of the last, Kuky, so the road stays readable even when the grass leans and hides the path. Raidho keeps that steadiness, one marker answering the next. This may be a reminder that you need only see as far as the nearest stone to keep moving.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 131
+ }
+}

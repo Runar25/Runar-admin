@@ -1,0 +1,32 @@
+{
+ "Algiz-most-C-4v-1": {
+  "text": "Where the turf wall meets the wind, the gust breaks and scatters, and just past that edge the doorway holds still. This is Algiz, Kuky — the raised barrier that takes the force so the ground behind it stays open. The wall does not stop the wind, it turns it aside. Something in your keeping may be sheltered now, not by absence of pressure, but by what stands between.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 141
+ },
+ "Algiz-most-C-4v-2": {
+  "text": "Where the turf wall meets the wind, the gust breaks and scatters before it reaches the door. That is what Algiz does here, Kuky — it stands between the weather and the calm, taking the force so the threshold stays still. The wall does not stop the wind, it only turns it aside. Something in your keeping may be sheltered now, held quiet by a thing standing at its edge.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 140
+ },
+ "Isa-most-C-4v-1": {
+  "text": "The coffee sits cooling in its cup, the steam long gone, the surface gone still. Isa is that holding, Kuky, the way a thing stops moving and simply stays. You poured it warm for a moment that has not yet come, and the waiting outlasts the heat. This may be a pause that has stretched past its purpose, still held open for something not yet arrived.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 134
+ },
+ "Isa-most-C-4v-2": {
+  "text": "The coffee sits cooling on the table, steam gone, the surface gone still. This is Isa, the pause that holds a thing in place until it is ready to move. You watch it, Kuky, and the watching does not warm it back. What you wait on has settled into its own time, not yours to hurry.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 111
+ },
+ "Raidho-most-C-4v-1": {
+  "text": "At the edge of the home-field the cairns stand, each stone-pile fixed while the light shifts across them in the late-summer air. Raidho is the way marked out ahead, one marker held in sight of the next. You are between them, Kuky, past one cairn and not yet at the one beyond. This may be the middle of a road, where the last waymark still shows and the next has not gone dark.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 141
+ },
+ "Raidho-most-C-4v-2": {
+  "text": "At the edge of the home-field the cairns stand in a line, each one built to be seen from the last. The stones stay put, Kuky, while your feet do the moving between them. This is Raidho, the way marked by what someone set down before you walked it. You may be at a point where the next mark is already in sight, and only the ground between remains.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 122
+ }
+}
