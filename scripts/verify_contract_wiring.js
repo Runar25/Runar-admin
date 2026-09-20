@@ -168,26 +168,28 @@ if (!DESCRIBE_MARK.en || !DESCRIBE_MARK.is) {
   console.log('OK    obraz-blok: ve zprave single+4 spready, v systemu ne, v Ask ne');
 }
 
-// ── BOD 7 (2026-09-19): radek SEZONY v bloku obrazu — single + 4 spready; v systemu,
-// Ask a zivotni rune NE. EN radek nesmi nest islandske jmeno mesice (michani mate — owner).
+// ── SEZONA UZ NENI V PROMPTU (2026-09-20, KUKY): radek se odstranil, protoze tlacil
+// rocni obdobi i do DOMACICH scen (31 % banky) — „late-summer floor" v mistnosti.
+// Kontrola se OBRATILA: driv hlidala, ze sezona v 5 cestach JE; ted hlida, ze nikde NENI.
+// Sezona dal rozhoduje o vyberu obrazu (RUNE_IMG_SEASONS), tam se nesaha.
 {
-  // 2026-09-20: radek sezony = podminka se stitkem („…stands it is <label>."), ne lore hesla.
-  const SEZ = { en: 'SEASON — where Rúnar stands it is ', is: 'ÁRSTÍÐIN — þar sem Rúnar stendur er ' };
-  for (const L of ['en', 'is']) {
-    const cesty = ['single', 'norns', 'kriz', 'horseshoe', 'yggdrasil'];
-    const chybi = cesty.filter(b => !(O[b + '_' + L] || '').includes(SEZ[L]));
-    if (chybi.length) { fail++; console.log('FAIL  sezona chybi: ' + chybi.map(b => b + '_' + L).join(', ')); }
-    for (const b of ['system', 'ask', 'liferune']) {
-      if ((O[b + '_' + L] || '').includes(SEZ[L])) { fail++; console.log('FAIL  sezona nema byt v ' + b + '_' + L); }
-    }
+  const STOPY = ['SEASON — where Rúnar stands', 'ÁRSTÍÐIN — þar sem Rúnar stendur', 'belongs to another season', 'tilheyrir annarri árstíð'];
+  const vsude = ['single', 'norns', 'kriz', 'horseshoe', 'yggdrasil', 'system', 'ask', 'liferune'];
+  let nasel = 0;
+  for (const L of ['en', 'is']) for (const b of vsude) {
+    const t = O[b + '_' + L] || '';
+    for (const s of STOPY) if (t.includes(s)) { fail++; nasel++; console.log('FAIL  sezona se vratila do ' + b + '_' + L + ': ' + s); }
   }
-  // EN radek: jen anglicka hesla — islandske jmeno mesice (-mánuður, harpa…) do nej nepatri.
-  const enLine = ((O['single_en'] || '').split(String.fromCharCode(10)).find(l => l.indexOf(SEZ.en) === 0)) || '';
-  if (!enLine) { fail++; console.log('FAIL  EN radek sezony nenalezen v single_en'); }
-  else if (/mánuður|harpa|skerpla|þorri|gormán|ýlir|mörsugur|einmán|heyannir|tvímán|aukanætur/i.test(enLine)) {
-    fail++; console.log('FAIL  EN radek sezony nese islandske jmeno mesice: ' + enLine.slice(0, 90));
+  // A jeste zdroj: funkce ani stitky uz nesmi v kodu byt (jinak vznikne mrty kod, ktery
+  // priste nekdo zavola — tatáž past jako applyISCorrections, CLAUDE.md §2).
+  const zdroj = fs.readFileSync(DIR + 'runar-character.js', 'utf8');
+  // DEFINICE, ne zminka: komentar u _imageBlock obe jmena vyslovuje schvalne (nese duvod
+  // odchodu, §26/§28) — hlidac na nej cervenal, dokud kotvil na holy vyskyt jmena.
+  const DEFINICE = [/function\s+_seasonLine/, /(var|const|let)\s+SEASON_LABELS/];
+  for (const re of DEFINICE) {
+    if (re.test(zdroj)) { fail++; nasel++; console.log('FAIL  sezona ozila ve zdroji: ' + re.source); }
   }
-  console.log('OK    sezona: 5 cest zpravy, jinde ne, EN bez islandskeho jmena mesice');
+  if (!nasel) console.log('OK    sezona: nikde v 8 cestach x 2 reci, ani ve zdroji (vyber obrazu ji dal pouziva)');
 }
 
 // ── 2026-09-19 (handoff CODE-read): veta „sensory" z bloku obrazu VEN (jediny namereny

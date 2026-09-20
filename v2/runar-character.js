@@ -649,44 +649,17 @@ function _imageRules(lang) {
     return 'MYNDIN\nRúnar notar eina mynd í hverjum lestri og ber hana í gegn. Hann telur ekki upp myndir. Önnur mynd á aðeins rétt á sér ef hún færir þá fyrstu einu skrefi lengra. Ef tvær ótengdar myndir standa hlið við hlið segja þær ekkert. Myndin verður að tengjast því hvar þessi manneskja stendur núna. Andrúmsloft eitt og sér er skreyting, ekki lestur.';
   return 'THE IMAGE\nRúnar uses one image per reading and carries it through; he does not list images. A second picture earns its place only when it takes the first one further — the same scene, one step on. Two unrelated pictures side by side say nothing. Never a simile stacked on a metaphor. The image must connect to where this person is standing right now — atmosphere on its own is decoration, not a reading.';
 }
-// BOD 7 — SEZONA (2026-09-19; handoff owner 2026-09-15 „Runar ma znat skutecne rocni obdobi").
-// 2026-09-20 (handoff CODE-read #4, owner „ano" + stitek „late summer"): sezona je PODMINKA,
-// ne obsah. Puvodni zneni („let it colour the land and the work") sypalo obili do obrazu bez
-// pole 5/6; zuzeni pokynu nepomohlo (5/6); hole sdeleni 0/6 obili, ale 5/6 opis vety; tenhle
-// tvar 0/6 a 0/6 — sezona se projevi jen ve svetle (RUNAR_EVAL_LOG 2026-09-19 (4) a (6)).
-// Stitky NEJSOU z BIRTH_MONTHS — to je lore k mesici narozeni a prave odtud unikalo
-// „grain-cutting month of old". Prosty stitek per klic kalendare; EN bez islandskych jmen.
-// IS overeno CODE-read: is-grammar-qa 0 nalezu, korpus „er síðsumar" 9 · „er kominn vetur" 148
-// · „er komið vor" 247 atd.; NEPOUZIVAT „ber aldrei veður" (0 dokladu + idiom „bera veður af").
-// Datum jde parametrem kvuli testum a golden otisku (pinovatelne); bez nej = dnesek.
-// Sezona se do prompt_draws NEZAPISUJE (§20): odvodi se z drawn_at + prompt_version.
-var SEASON_LABELS = {
-  harpa: ['spring', 'vor'],
-  skerpla: ['summer', 'sumar'],
-  solmanudur: ['midsummer', 'miðsumar'],
-  aukanaetur: ['high summer', 'hásumar'],
-  heyannir: ['high summer', 'hásumar'],
-  tvimanudur: ['late summer', 'síðsumar'],
-  haustmanudur: ['autumn', 'haust'],
-  gormanudur: ['winter begins', 'kominn vetur'],
-  ylir: ['winter', 'vetur'],
-  morsugur: ['midwinter', 'skammdegi'],
-  thorri: ['deep winter', 'hávetur'],
-  goa: ['late winter', 'vetur'],
-  einmanudur: ['early spring', 'komið vor'],
-};
-function _seasonLine(lang, d, m, y) {
-  var now = new Date();
-  var L = SEASON_LABELS[icelandicMonthKey(d || now.getDate(), m || (now.getMonth() + 1), y || now.getFullYear())];
-  if (!L) return '';
-  if (lang === 'is')
-    return 'ÁRSTÍÐIN — þar sem Rúnar stendur er ' + L[1] + '. Myndin sýnir aldrei veður sem tilheyrir annarri árstíð.';
-  return 'SEASON — where Rúnar stands it is ' + L[0] + '. The image never carries weather that belongs to another season.';
-}
-
-// Pravidla + radek IMAGE + sezona jako JEDEN blok zpravy (jedno misto, §18).
+// Pravidla + radek IMAGE jako JEDEN blok zpravy (jedno misto, §18).
+// 2026-09-20: RADEK SEZONY ODSTRANEN (i funkce _seasonLine a SEASON_LABELS — git nese
+// zneni, naposledy v4.31-podminka). KUKY primo nad cteni „A child crosses the LATE-SUMMER
+// floor“: „zabira misto, naprosto nedulezita informace kdyz je dite v mistnosti. sezona je
+// spatne klasifikovana — nema vstoupit do obrazu za kazdou cenu.“ Doklad, proc to slo do
+// obrazu i tam, kam nepatri: 34 ze 108 radku banky (31 %) ma registr D = DOMACI scena.
+// Sezona tim z produktu NEZMIZELA: dal rozhoduje o VYBERU obrazu (_runeImageCandidates
+// filtruje RUNE_IMG_SEASONS proti _seasonBucket), takze zimni obraz v lete neprijde —
+// jen uz neni PRIKAZEM v textu. Nez ji nekdo ozivi: musi vyresit prave ty domaci sceny.
 function _imageBlock(lang, imgLine) {
-  return [_imageRules(lang), imgLine, _seasonLine(lang)].filter(Boolean).join('\n');
+  return [_imageRules(lang), imgLine].filter(Boolean).join('\n');
 }
 
 // Mista pro JADRA obrazu (2026-09-19, handoff CODE-read #3): radek s jadrem (row[8]==='jadro')
@@ -698,7 +671,6 @@ var IMG_PLACES = {
     ['í fjallaskarði', 'a mountain pass'],
     ['á heiðinni undir fjöllunum', 'the heath below the fells'],
     ['í hlíðinni fyrir ofan bæinn', 'a hillside above the farm'],
-    ['niðri í dalnum milli bæjanna', 'down in the valley between the farms'],
     ['á engjunum', 'the outlying hay meadows'],
   ],
 };

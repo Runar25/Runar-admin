@@ -6193,3 +6193,40 @@ doslova. Tento záznam = body 2 a 4:
    proti vstupům, aby ověřil, že soudci měří správně.
 
 **Affected doc(s):** žádný — kritéria žijí tady; evaly na tento záznam odkazují.
+
+## 2026-09-20 (3) — Řádek sezóny ODSTRANĚN z promptu (i funkce a štítky)
+
+**KUKY 2026-09-20, přímo nad čtením „A child crosses the late-summer floor":** *„late-summer
+zabírá místo. Naprosto nedůležitá informace, když je dítě v místnosti. To je stejné jako grain.
+Jen to zabírá místo ve čtení. Sezóna je špatně klasifikovaná — nemá vstoupit do obrazu za každou
+cenu. Musí mít smysl ji tam dát, a to uvnitř místnosti určitě není."*
+
+**Co platí:** `_seasonLine` i `SEASON_LABELS` jsou **smazané** (ne vypnuté — vypnutá funkce, kterou
+kód dál volá, je past `applyISCorrections`, §2). `_imageBlock` nese jen pravidla obrazu + řádek
+IMAGE. Sezóna tím z produktu NEZMIZELA: dál rozhoduje o **výběru** obrazu (`_runeImageCandidates`
+filtruje `RUNE_IMG_SEASONS` proti `_seasonBucket`), takže zimní obraz v létě nepřijde — jen už není
+PŘÍKAZEM v textu.
+
+**Proč se cpala i tam, kam nepatří (měřeno, ne dojem):** **34 ze 108** řádků banky (31 %) má registr
+**D = domácí scéna** (chleba z trouby, hlas v telefonu, konvice). Na ty řádek sezóny tlačil roční
+období do místnosti. Podmínit ho podle registru by znamenalo novou páku pro 31 % případů — proti
+ownerově pravidlu „každé slovo si musí zasloužit své místo" je levnější ho odebrat celý.
+
+**Historie (§26):** řádek žil 2026-09-19 až 2026-09-20 ve dvou podobách — obsah (v4.29-sezona,
+„let it colour the land and the work", sypal obilí do obrazů bez pole 5/6) a podmínka
+(v4.31-podminka, „never carries weather that belongs to another season", obilí 0/6, ale sezóna
+prosákla jako „late-summer floor"). **Kdo ho bude oživovat, musí napřed vyřešit domácí scény.**
+
+**Zároveň:** `IMG_PLACES.P` ztratilo „niðri í dalnum milli bæjanna / down in the valley between the
+farms" (KUKY: „údolí mezi statky nevytváří dobré prostředí"); registr P má teď 5 míst, náhrada čeká
+na ownerovo slovo.
+
+**Čím je to jištěné:** kontrola ⑧ sezóny se **obrátila** — dřív hlídala, že v 5 cestách JE, teď že
+v 8 cestách × 2 řečech NENÍ, a navíc že se `function _seasonLine` / `SEASON_LABELS` nevrátily do
+zdroje (kotva na DEFINICI, ne na zmínku — na holé jméno červenala na vlastním komentáři, který nese
+důvod odchodu) · golden diff = jen řádek sezóny pryč + přelosovaná místa (24/38) · registr 206
+(v4.32-bez-sezony) · smoke 44/44 · piny `_seasonLine` v golden_dump a registry odstraněny.
+
+**Verze promptu:** v4.31-podminka → **v4.32-bez-sezony**.
+
+**Affected doc(s):** žádný — mapa promptu (artifact) překreslena v témž tahu.

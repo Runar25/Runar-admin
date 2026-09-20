@@ -55,7 +55,7 @@ function grab(key, fn){ try { _OUT[key] = fn(); } catch(e){ _OUT[key] = 'ERROR: 
 var samplecorr = [{ from:'Arctic', to:'Norðurljós', lang:'both', context:'test' }];
 // 2026-09-19: sezona v bloku obrazu se meni s mesicem — pin na 15. 9. 2026, jinak by
 // golden otisk pukal na kazde hranici islandskeho mesice.
-_seasonLine = (function (orig) { return function (l) { return orig(l, 15, 9, 2026); }; })(_seasonLine);
+// 2026-09-20: pin _seasonLine odstranen spolu s radkem sezony (uz neni co pinovat).
 ['is','en'].forEach(function(L){
   lang = L;
   grab('system_'+L,      function(){ return buildSysPrompt(null, L); });
