@@ -1,0 +1,609 @@
+{
+ "popis": "Slepe obsahove posouzeni 16 cteni cenove sondy: 4 porovnavaci soudci (1 na skupinu), 2 gramatici s BIN+korpusem, adversarialni obhajoby narcenych frazi. Kody K1-K4 losovane per skupina; klic nize. Hranice: n=1 cteni/model/skupinu, 1 soudce/skupinu — poradi je pozorovani, ne mereni; gramatika overena nastroji.",
+ "klic_kodu": {
+  "S1_en": {
+   "K1": "gpt-5.6-sol",
+   "K2": "claude-opus-4-8",
+   "K3": "gpt-5-2025-08-07",
+   "K4": "claude-opus-5"
+  },
+  "S1_is": {
+   "K1": "claude-opus-5",
+   "K2": "gpt-5-2025-08-07",
+   "K3": "claude-opus-4-8",
+   "K4": "gpt-5.6-sol"
+  },
+  "S2_en": {
+   "K1": "gpt-5-2025-08-07",
+   "K2": "claude-opus-5",
+   "K3": "gpt-5.6-sol",
+   "K4": "claude-opus-4-8"
+  },
+  "S2_is": {
+   "K1": "claude-opus-4-8",
+   "K2": "gpt-5.6-sol",
+   "K3": "claude-opus-5",
+   "K4": "gpt-5-2025-08-07"
+  }
+ },
+ "vysledky": [
+  {
+   "g": "S1_en",
+   "judge": {
+    "ranking": [
+     "K1",
+     "K4",
+     "K2",
+     "K3"
+    ],
+    "per_text": [
+     {
+      "code": "K1",
+      "voice_1to5": 4,
+      "instrukce_dodrzeny": true,
+      "vady": [
+       "Závěr staví podmínkový mechanismus — tichý náznak, že až podmínka nastane, směr se ozve (prompt: \"No invented mechanism\"): \"The wider path stays quiet until your pace and breathing meet.\"",
+       "První věta nese tři klauzule naráz (sys: \"never a long unfolding line\"): \"Behind the crest, the grain fields remain out of sight as you finish the slope and your breath returns more slowly than expected.\"",
+       "Doslovná ozvěna znění úhlu ze zadání: \"remain out of sight\" — frázi \"out of sight\" opisuje beze změny (stejně K3 a K4; jen K2 ji parafrázoval)."
+      ],
+      "nejsilnejsi_veta": "Ansuz gives direction room to be heard between breaths.",
+      "poznamka": "Nejukázněnější text skupiny: 43 slov, 3 věty, úhel (pole za hřebenem ještě nevidět), sezóna (grain fields), esence i klidný konec — vše splněno. Žádné tvrzení o nitru hledačky. Zní o stupeň víc \"vyrobeně\" než K2 — esence a závěr mají aforistický rytmus na hraně ledničkového magnetu, ale drží se v obraze. Použitelné rovnou, bez úprav."
+     },
+     {
+      "code": "K4",
+      "voice_1to5": 4,
+      "instrukce_dodrzeny": true,
+      "vady": [
+       "Závěr je přímý rozkaz — porušuje nejtvrdší řádku sys promptu (\"Rúnar never tells the seeker what to do — he names the shape of what is happening, never the step to take\"): \"Stand a moment and let it settle.\"",
+       "Jediný ze čtyř úplně vynechal sezónu (žací měsíc) — instrukce je měkká (\"where it fits naturally\"), ale krajina zůstala bez ní.",
+       "Drobná nadsázka nad rámec daného obrazu — jeden svah vzduch neztenčí: \"the air up here is thinner than the air you started in\" (v obraze drží, ale je to ozdoba, ne vidění)."
+      ],
+      "nejsilnejsi_veta": "Ansuz is the breath finding its own pace again before you move.",
+      "poznamka": "Nejčistší obraz a nejlepší ekonomie skupiny (43 slov, každá věta lehká, esence konkrétní a nese Purpose & Path přes \"before you move\"). Formálně splňuje i tvar konce (klidná věta, ne otázka) — ale ta věta je imperativ, což je kánonová vada, ne formální. Oprava = přepsat posledních 7 slov; pak by soupeřil o první místo."
+     },
+     {
+      "code": "K2",
+      "voice_1to5": 5,
+      "instrukce_dodrzeny": false,
+      "vady": [
+       "Délka: 58 slov proti limitu 38–45 (\"Stay within the word count\") — o 13 slov přes; celý přebytek je třetí věta: \"The grain waits to be cut, and you are standing where the ground finally levels.\" (věty 1+2 mají samy přesně 43 slov).",
+       "Otevření sklouzne do minulého času proti \"speak in the present\": \"Behind the last rise there was more slope than you could see from below\" (rámec dovoluje ohlédnutí za výstupem, ale je to nejdelší minulá pasáž ze všech čtyř).",
+       "Purpose & Path chce dopad na \"going and direction\" — K2 končí příchodem a rovinou, směr téměř nezazní: \"you are standing where the ground finally levels.\""
+      ],
+      "nejsilnejsi_veta": "Ansuz is that breath returning, the air moving free where the climb had held it tight.",
+      "poznamka": "Hlasem nejlepší text skupiny: nejpřirozenější idiom, jediný parafrázoval úhel místo opisu (\"more slope than you could see from below\"), esenční řádek je vzorový (konkrétní, plain, dělá runu skrz obraz) a konec je učebnicové UMÍSTĚNÍ z tří beatů. Sráží ho jediná, ale tvrdá věc: +29 % přes slovní budget u textu, který se čte nahlas. Krásné čtení, špatně odvedená zakázka."
+     },
+     {
+      "code": "K3",
+      "voice_1to5": 2,
+      "instrukce_dodrzeny": false,
+      "vady": [
+       "Délka: 65 slov proti limitu 38–45 (+44 %) — nejhorší ze skupiny.",
+       "Vypráví hledačce její vlastní jednání a krok (sys: \"never the step to take\"): \"You stand still long enough to hear the higher pattern in the wind, then you move with that plain note held steady.\" — sekvence stůj→pak jdi je předepsaný krok, navíc konec nespočine, ale režíruje.",
+       "Mystická vata + opis materiálu kostky jako vědění: \"hear the higher pattern in the wind\" — \"the higher pattern\" je doslova z World popisu v zadání; nedá se ucítit (sys: \"if it cannot be felt, it does not belong here\"), \"that plain note held steady\" totéž.",
+       "Tvrzení o vnitřním stavu (cold-reading hrana — vypráví, co se v ní děje, jako fakt): \"the air clears your head\".",
+       "Esenční řádek opisuje ilustrační vzorec z promptu (\"exchange between the sea and the shore\" → \"Ansuz works as exchange between breath and direction\"; prompt: \"Never a fixed formula\").",
+       "Otevření odpovídá na znění úhlu jak na testovou otázku: \"What is out of sight is the ridge you just climbed\" — instrukční ozvěna, ne vidění."
+      ],
+      "nejsilnejsi_veta": "What is out of sight is the ridge you just climbed, the slope falling away behind while your breath takes its time to meet you.",
+      "poznamka": "Jediný text, který porušuje víc kánonových čar naráz: délku, abstrakci, krok i nitro. Působí jako plnění checklistu zadání slovo od slova — každou instrukci viditelně odbaví (úhel doslovně, sezóna jmenovitě \"grain-cutting month\", esence podle vzorce, World doslovně), ale nic z toho neprošlo viděním. Přesný opak \"inhabits, not performs\"."
+     }
+    ],
+    "shrnuti": "Skupina se rozpadá podle dvou os: KÁZEŇ NA FORMÁT (slovní budget 38–45 pro hlasové čtení: K1 a K4 přesně 43, K2 +29 %, K3 +44 %) a POSTOJ V ZÁVĚRU (K1 nechá obraz spočinout s mírným podmínkovým mechanismem, K4 přikáže krok, K2 hledačku krásně umístí do scény ale mimo budget, K3 režíruje její pohyb větu po větě). Třetí rozlišovací znak: tři ze čtyř opsaly frázi úhlu \\\"out of sight\\\" doslova; jen K2 ji parafrázoval — což spolu s jeho esenčním řádkem ukazuje nejhlubší porozumění hlasu, jenže bez disciplíny. Rozhodující rozdíl mezi prvním (K1) a posledním (K3): K1 doručí jeden vhled uvnitř všech limitů a nic netvrdí o nitru hledačky; K3 limit prostřelí o 44 % a překročí obě nesmlouvavé čáry kánonu naráz — mystickou abstrakci převzatou doslova ze zadání (\\\"the higher pattern\\\") a vyprávění hledaččina vlastního kroku (\\\"then you move...\\\"). K1 čte zadání jako řemeslo, K3 jako checklist k odškrtání. Prakticky: K1 je nasaditelné beze změn, K4 po přepsání posledních 7 slov, K2 po zkrácení o třetí větu (jenže pak chybí třetí beat), K3 vyžaduje přepis od základu. Hodnoceno naslepo — kdo je autorem kterého textu, nevím a nezjišťoval jsem."
+   }
+  },
+  {
+   "g": "S1_is",
+   "judge": {
+    "ranking": [
+     "K4",
+     "K2",
+     "K1",
+     "K3"
+    ],
+    "per_text": [
+     {
+      "code": "K1",
+      "voice_1to5": 4,
+      "instrukce_dodrzeny": false,
+      "vady": [
+       "Chybí „Boðberi\" — instrukce žádá „Nefndu Ansuz (Boðberi)\"; v textu je jen „Ansuz er þessi bið eftir loftinu\".",
+       "Účel Tilgang & Leið (obraz má dopadnout na „ferð og stefnu\") nedopadá: čtení končí statickým stáním — „Þarna stendur þú … á brúninni\" — žádný pohyb ani směr, jen náznak „orðið er ekki komið en er á leiðinni\".",
+       "Kroucená závěrečná vazba: „með sjálfa þig eina við hlið þér\" — „sama se sebou po boku\" je významově podivné a není to Rúnarova prostota (sys: věta = jedna až dvě klauzule, nic co nejde ucítit).",
+       "Otevření je ~90% opis vloženého obrazu: „Þú kemst upp síðasta hjallann og nemur staðar, og andardrátturinn kemur hægar til baka en þú bjóst við\" — jediná změna je „nemur staðar\" místo „staldrar við\"; „vlastní vidění\" (Láttu hana verða að þinni eigin sýn) je minimální."
+      ],
+      "nejsilnejsi_veta": "Ansuz er þessi bið eftir loftinu, stundin þar sem orðið er ekki komið en er á leiðinni.",
+      "poznamka": "Nejrunovější kjarnalína ze skupiny (Boðberi-rezonance: slovo, které je na cestě) a čistý závěr bez tvrzení o nitru. Ale mine zadaný účel — čtení je o čekání a dechu, ne o cestě a směru — a poslední věta se zamotá. Bez gramatických chyb, které bych uměl doložit."
+     },
+     {
+      "code": "K2",
+      "voice_1to5": 3,
+      "instrukce_dodrzeny": false,
+      "vady": [
+       "Gramatická chyba: „á brún hjallarins\" — slabé maskulinum hjalli má genitiv s členem „hjallans\"; tvar „hjallarins\" neexistuje (porušuje sys pravidlo 6: žádná neznámá ohýbání; §2 IS musí být perfektní).",
+       "Vymyšleně znějící kolokace: „jafnvel vindurinn telur í lengri tíðum\" — „vítr počítá v delších dobách\" není přirozená islandská vazba.",
+       "Závěr tvrdí vnitřní stav: „…í tvímánuði, tilbúin, Sigrún\" — „připravená\" je tvrzení o nitru; instrukce výslovně: „nefndu hvar leitandinn stendur í myndinni, ekki hvað er satt innra með honum\". Zároveň měkce přitlačuje k rozhodnutí (připravená = má jít).",
+       "Hraniční cold reading: „þar sem þú heyrir áttir skýrast\" — tvrdí, co leitandka slyší/vnímá; otázka by směla, tvrzení ne."
+      ],
+      "nejsilnejsi_veta": "Loftið er hlýtt af kornlykt og jafnvel vindurinn telur í lengri tíðum.",
+      "poznamka": "Jediný text, který vložený obraz opravdu přetavil ve vlastní vidění (ruka na kolenou, vůně korn, dech co se vrací) a účel — směr — v něm dopadne. Obsahově druhý nejlepší, ale povrch by neprošel produkcí: jedna neexistující flexe, jedna podivná vazba, jeden zakázaný konec. Vady jsou lokální a opravitelné."
+     },
+     {
+      "code": "K3",
+      "voice_1to5": 4,
+      "instrukce_dodrzeny": false,
+      "vady": [
+       "60 slov — nad limitem 50–58 (jediný text skupiny mimo limit).",
+       "První věta je DOSLOVNÝ opis vloženého obrazu: „Þú kemst upp síðasta hjallann og staldrar við, og andardrátturinn kemur til baka hægar en þú bjóst við.\" — slovo od slova věta z promptu; přesně vada, kterou kánon (RUNAR_DESIGN, materiál kostky) jmenuje jako jedinou zakázanou chybu — vložený obraz podaný, jako by něco odhaloval.",
+       "Chybí „Boðberi\" — jen „Ansuz hvílir í þessu andrými\".",
+       "Kjarnalína bez slovesa činnosti: „Ansuz hvílir…\" — instrukce chce, co runa GERIR skrz obraz; „hvílí\" nedělá nic.",
+       "Drobný únik z nútíð: „lengra en fæturnir vissu\" (minulý čas)."
+      ],
+      "nejsilnejsi_veta": "Kornið bíður óskorið á ökrunum niðri, og þú sérð leiðina liggja lengra en fæturnir vissu.",
+      "poznamka": "Islandsky nejplynulejší povrch ve skupině a směr v něm dopadne krásně — ale stojí na odrecitovaném cizím obrazu a přeteče limit. Dvě tvrdá porušení (doslovný opis = kánonem jmenovaná jediná zakázaná chyba; 60/58 slov) ho posílají na konec navzdory pěknému hlasu."
+     },
+     {
+      "code": "K4",
+      "voice_1to5": 5,
+      "instrukce_dodrzeny": true,
+      "vady": [
+       "První věta má tři klauzule: „…og staldrar við meðan vindur fer um þroskað kornið, en andardrátturinn kemur…\" — sys žádá jednu, max dvě spojené čárkou.",
+       "Otevření drží doslovný trs vloženého obrazu („kemst upp síðasta hjallann og staldrar við\"), byť ho hned rozšíří vlastním viděním (vítr v korni).",
+       "Hraniční hotový soud: „nú skiptir takturinn meira máli en hraðinn\" — hodnocení podané jako fakt; je uvnitř obrazu a je to zadané „dragðu eitt skýrt fram\", ale stojí blízko podané niðurstöðě."
+      ],
+      "nejsilnejsi_veta": "Leiðin heldur áfram, en nú skiptir takturinn meira máli en hraðinn.",
+      "poznamka": "Jediný text, který splní všechno měřitelné (56 slov, 4 věty, Ansuz Boðberi jednou, Sigrún pozdě, žensky, konec = kde stojí, ne co je v ní) A zároveň doveze účel: dech → mezera mezi slovy → směr → rytmus místo rychlosti, s koncem „víðari himinn fram undan\", který přesně cituje svět runy (teygir sig til víðari himins). Žádný cold reading, žádná gramatická vada, kterou bych uměl doložit."
+     }
+    ],
+    "shrnuti": "Všichni čtyři stojí ve stejné scéně (výstup na hjalli, vracející se dech, tvímánuður/korn) a nikdo nesklouzl do horoskopu ani mystické vaty — rejstřík Rúnara drží celá skupina, rozdíly nejsou v látce ani v tónu, ale ve třech věcech: (1) kolik VLASTNÍHO vidění text přidá k vloženému obrazu (K2 nejvíc: ruka na kolenou, vůně korn; K3 nula: doslovný opis), (2) jestli obraz dopadne na zadaný účel ferð/stefna (K4 a K2 ano, K3 zčásti, K1 vůbec — končí čekáním a stáním), (3) čistota konce (K4/K3/K1 jmenují, kde leitandka stojí; K2 jí koncem „tilbúin\" vloží vnitřní stav). Rozhodující rozdíl mezi prvním a posledním: K4 vloženou větu přetaví a dovede k směru s čistým koncem uvnitř limitu; K3 ji opíše slovo od slova — jediná chyba, kterou kánon výslovně zakazuje (obraz z kostky podaný jako vidění) — a k tomu jediný přeteče limit (60/58 slov). Pořadí tedy netvoří hlas (ten je u všech 4–5 kromě K2, kterému islandštinu bortí neexistující tvar „hjallarins\" a vazba „telur í lengri tíðum\"), ale kázeň k instrukcím a nakládání s vloženým obrazem. Technická poznámka mimo hodnocení: všechny čtyři texty byly v sondovém JSON uložené s dvojitým kódováním (UTF-8 čtené jako Latin-1, „ÃÃº\" místo „Þú\") — pro posouzení dekódováno, postihuje všechny stejně; pokud je mojibake už ve výstupech sondy a ne jen v zápisu souboru, je to vada pipeline, ne textů."
+   },
+   "gram": {
+    "per_text": [
+     {
+      "code": "K1",
+      "clean": true,
+      "errors": [
+       {
+        "quote": "með sjálfa þig eina við hlið þér",
+        "why": "Sémanticky redundantní obraz 'sama se sebou jedinou po svém boku' — tvar anglického 'with only yourself by your side'. Gramaticky správně (með+ak., 'eina' kvk. ak. souhlasí), samotné 'við hlið þér' je doložené, ale spojení 'sjálfa þig eina við hlið þér' je neidiomatická konstrukce.",
+        "severity": "styl",
+        "verified_with": "Risamálheild: 'við hlið þér' 713×, 'þér við hlið' 1048× (vazba OK); 'sjálfa þig eina' 0× (spojení nedoloženo)"
+       }
+      ]
+     },
+     {
+      "code": "K2",
+      "clean": false,
+      "errors": [
+       {
+        "quote": "jafnvel vindurinn telur í lengri tíðum",
+        "why": "Nesmyslný kalk — zřejmě anglické 'the wind counts in longer beats/measures'. 'Telja í tíðum' v islandštině neexistuje; 'tíð' neznamená takt (to je 'taktur') a celá věta nedává rodilému mluvčímu smysl.",
+        "severity": "hruba",
+        "verified_with": "Risamálheild: 'vindurinn telur' 0×, 'í lengri tíðum' 0× — obojí nedoloženo (trigram)"
+       },
+       {
+        "quote": "á brún hjallarins",
+        "why": "Neexistující tvar genitivu. 'hjalli' (slabé m., užité v témže textu jako 'hjallann') má gen. s členem 'hjallans'; 'hjallur' má 'hjallsins'. Tvar 'hjallarins' nepatří k žádnému z nich — rozbitá deklinace, rodilý mluvčí se zarazí.",
+        "severity": "hruba",
+        "verified_with": "BÍN API: hjallur EFETgr='hjallsins', hjalli slabé m. → 'hjallans'; Risamálheild: 'hjallans' 7×, 'hjallarins' 0×"
+       },
+       {
+        "quote": "hlýtt af kornlykt",
+        "why": "'kornlykt' je průhledná složenina (vůně obilí), islandská kompozice je produktivní, ale slovo není doloženo ani v BÍN ani v korpusu — nástrojem nejde rozhodnout, zda ji rodilý mluvčí přijme jako přirozenou, nebo jako ad-hoc novotvar.",
+        "severity": "nejiste",
+        "verified_with": "BÍN API: 'kornlykt' bez záznamu; Risamálheild: 'kornlykt' 0× (srovnávací 'heylykt' 11× v korpusu, v BÍN též chybí)"
+       },
+       {
+        "quote": "hvílir hönd á hnjám",
+        "why": "Konstrukce 'hvíla hönd á e-u' existuje, ale jedna ruka na (obou) kolenou a holé plurálové 'hnjám' bez členu působí nepřirozeně; idiomatické by bylo 'með hendur á hnjánum' / 'styður höndum á hnén'.",
+        "severity": "styl",
+        "verified_with": "Risamálheild: 'hvílir hönd' 5× (konstrukce doložena), 'hönd á hnjám' 0×, 'hendur á hnjánum' 0×"
+       },
+       {
+        "quote": "þú heyrir áttir skýrast",
+        "why": "Gramaticky správné (heyra + ak. + inf.), ale holé 'áttir' bez členu je tvrdé — přirozeněji 'áttirnar skýrast'; spojení nedoloženo, čtenář o něj zavadí.",
+        "severity": "styl",
+        "verified_with": "Risamálheild: 'heyrir áttir' 0×"
+       }
+      ]
+     },
+     {
+      "code": "K3",
+      "clean": true,
+      "errors": []
+     },
+     {
+      "code": "K4",
+      "clean": true,
+      "errors": [
+       {
+        "quote": "vindur fer um þroskað kornið",
+        "why": "Silný tvar adjektiva před substantivem se sufigovaným členem — standardní próza žádá slabý tvar 'þroskaða kornið'. Korpus ale ukazuje, že silný vzor je v poetickém rejstříku doložený (paralela 'grænt grasið'), takže to není tvrdá chyba, jen příznakový/básnický obrat.",
+        "severity": "styl",
+        "verified_with": "Risamálheild: 'þroskað kornið' 0×, 'þroskaða kornið' 0× (přímo nerozhodne); kontrolní vzor 'grænt grasið' 41× vs. 'græna grasið' 59× — silný vzor doložen"
+       }
+      ]
+     }
+    ],
+    "poznamka": "Texty S1_is byly v JSON uloženy jako mojibake (UTF-8 čtené jako Latin-1); před posouzením dekódováno latin-1→utf-8 roundtripem, posuzován dekódovaný islandský text. Pozitivně ověřeno mimo nálezy: 'andrými' 1226× (skutečné slovo, ne novotvar), 'óskorið' 70×, 'nemur staðar' 160×, 'staldrar við' 655×, 'tekur við þér' 31×, 'búa til bil' 14×, 'litar þá (gula)' — vazba lita e-ð + rezultativní adj. idiomatická. Shoda rodu s ÁVARP (kvenkyn: 'tilbúin', 'sjálfa þig eina') ve všech textech dodržena. Poznámka ke K1 'rune': mojibake i po dekódování v poli rune ('BoÃ°beri' bylo dvojité) — posuzováno jen pole text dle zadání."
+   },
+   "obhajoby": [
+    {
+     "claim": {
+      "code": "K2",
+      "quote": "jafnvel vindurinn telur í lengri tíðum",
+      "why": "Nesmyslný kalk — zřejmě anglické 'the wind counts in longer beats/measures'. 'Telja í tíðum' v islandštině neexistuje; 'tíð' neznamená takt (to je 'taktur') a celá věta nedává rodilému mluvčímu smysl.",
+      "severity": "hruba",
+      "verified_with": "Risamálheild: 'vindurinn telur' 0×, 'í lengri tíðum' 0× — obojí nedoloženo (trigram)"
+     },
+     "v": {
+      "verdikt": "potvrzeno",
+      "duvod": "Frázi nelze obhájit. Jediná nadějná linie obhajoby — produktivní rámec „telja í + dat. pl. jednotky\" („počítat v tisících/letech\") — v korpusu skutečně existuje, ale nezachrání ji: (1) v doloženém rámci je počítaná veličina objektem nebo podmětem pasiva, nikdy agens „vítr počítá\"; (2) klíčový lexém „tíð\" nemá ve slovníku žádný význam „takt/úder\" — jen čas/období, počasí a gramatický čas — takže zamýšlený obraz „wind counts in longer beats\" se do „tíð\" nevejde; (3) samotná kolokace i všechny její části jsou v korpusu 100% nulové. Pro hudební takt islandština doloženě používá „taktur\" („telja taktinn\", „í töktum\"), přesně jak píše korektor. Jde tedy o anglický kalk s chybně zvoleným lexémem; severity „hrubá\" je oprávněná.",
+      "dukaz": "Risamálheild (2000–2021): „telur í tíðum\" 0 · „í lengri tíðum\" 0 · „lengri tíðum\" 0 · „lengri tíðir\" 0 · „telur í lengri\" 0 · „vindurinn telur\" 0. Rámec existuje jinde: „telja í þúsundum\" 23 · „taldir í þúsundum\" 19 · „talið í þúsundum\" 11 · „telja í árum\" 5 · „talið í sekúndum\" 5; dat. pl. „tíðum\" jako časový úsek: „tíðum saman\" 26, „löngum tíðum\" 5 — ale nikdy s telja a nikdy komparativ. Íslensk nútímamálsorðabók (flid 41808 „tíð\", n f): 3 významy (čas/období · počasí · gramatický čas, SVIÐ málfræði), frazémy jen temporální (liðin tíð, í tæka tíð, með tíð og tíma); heslo „telja\" (flid 41421): rekce þolfall, frázová slovesa jen af/á/eftir/fram/ofan af/upp/með — žádné „telja í\". Správný lexém pro takt doložen: „telja taktinn\" 5 · „í töktum\" 53 („lengri töktum\" 0)."
+     }
+    },
+    {
+     "claim": {
+      "code": "K2",
+      "quote": "á brún hjallarins",
+      "why": "Neexistující tvar genitivu. 'hjalli' (slabé m., užité v témže textu jako 'hjallann') má gen. s členem 'hjallans'; 'hjallur' má 'hjallsins'. Tvar 'hjallarins' nepatří k žádnému z nich — rozbitá deklinace, rodilý mluvčí se zarazí.",
+      "severity": "hruba",
+      "verified_with": "BÍN API: hjallur EFETgr='hjallsins', hjalli slabé m. → 'hjallans'; Risamálheild: 'hjallans' 7×, 'hjallarins' 0×"
+     },
+     "v": {
+      "verdikt": "potvrzeno",
+      "duvod": "Tvar \"hjallarins\" nelze obhájit: nepatří do paradigmatu žádného existujícího lemmatu (hjalli → hjallans, hjallur → hjallsins) a v korpusu Risamálheild má 0 výskytů, zatímco oba správné genitivy doloženy jsou. Text sám užívá \"hjallann\" (slabé hjalli), takže správně mělo být \"á brún hjallans\". Korektor měl pravdu.",
+      "dukaz": "BÍN plné paradigma hjalli (kk, guid 101d1ddbff8459aaff0aab615615c166): EFET hjalla, EFETgr hjallans — \"hjallarins\" v 16 tvarech není. BÍN hjallur (guid 751ac9fc51e2735eb8ed24d692fbc5e6): EFET hjalls, EFETgr hjallsins — žádná -ar varianta genitivu. BÍN /api/ord/hjallarins, /hjallar, /hjöllur, /hjöll → prázdné {\"0\":\"\"}. Risamálheild 2000–2021: \"hjallarins\" 0 · \"hjallans\" 7 · \"hjallsins\" 7 · kontroly rodiny slova: \"hjallann\" 1015, \"hjallar\" 137 (nula tedy není řídkost dat). Kolokace: \"á brún\" 2049, \"fram á brún\" 123; \"brún hjall*\" 0 ve všech třech genitivech (vzácné spojení, rozhoduje tvarová rovina)."
+     }
+    }
+   ]
+  },
+  {
+   "g": "S2_en",
+   "judge": {
+    "ranking": [
+     "K2",
+     "K4",
+     "K3",
+     "K1"
+    ],
+    "per_text": [
+     {
+      "code": "K1",
+      "voice_1to5": 2.5,
+      "instrukce_dodrzeny": false,
+      "vady": [
+       "Doslovný opis vloženého obrazu, a to hned jako otvírák Urður beatu: \"The sun finally breaks through and glints on the wet stones, but before this there is only...\" — verbatim věta ze zadání (kánon: jediná zakázaná chyba), navíc časově obráceně — prosvětlení patří do Skuld, čtení pak od něj couvá do minulosti.",
+       "Počet vět: 3 místo 5–6 — každý beat je jedna comma-spliced megavěta; porušuje i \"one clause, sometimes two\": \"...the water warms, a tender green pushes from the bank, you speak or fall quiet more gently, you make room for small shoots without forcing them tall.\" (5 klauzulí za sebou).",
+       "Cold reading — tvrzení o přítomném chování leitandky jako fakt: \"you speak or fall quiet more gently, you make room for small shoots without forcing them tall\".",
+       "Landing přislibuje výsledek: \"crossing stops being guesswork\" — podmíněno \"Keep walking like this\", ale jistota (\"stops being\") je komfort navíc, který landing zakazuje."
+      ],
+      "nejsilnejsi_veta": "feet careful on the ford where two paths meet and neither moves",
+      "poznamka": "Obraz brodu je vlastně nejsoudržnější ze skupiny (jedna scéna od začátku do konce, láska přes \"two paths meet\"), ale forma ho zabíjí: udýchaný rytmus bez teček není Rúnarův klid a otvírák je čisté copy-paste zadání. V textu je mojibake \"riverâs\" — vypadá jako artefakt pipeline (je i v K2/K4 jako pomlčky), nehodnotím jako autorskou vadu."
+     },
+     {
+      "code": "K2",
+      "voice_1to5": 4.5,
+      "instrukce_dodrzeny": true,
+      "vady": [
+       "Věty místy přes limit \"one clause, sometimes two\": \"What grows there does so because the stone stayed wet, not in spite of it — though the same water that feeds it can also make the footing slick, and two people crossing this ground will not always find the same stone steady.\" (4 klauzule); podobně výčtový závěr \"where the moss holds, where the rock is bare, where the other one stands\".",
+       "\"The stones that held the rain longest are the ones burning brightest now\" — \"burning\" lehce přehřívá sluneční odlesk; drobnost na hraně teatrálnosti."
+      ],
+      "nejsilnejsi_veta": "What grows there does so because the stone stayed wet, not in spite of it",
+      "poznamka": "Jediný text, který zadaný obraz udělal svým vlastním (\"the light comes through and the wet rock glints\" — parafráze, ne opis) a který vědění nechává v terénu: tření lásky řekne přes \"two people crossing this ground will not always find the same stone steady\" a \"where the other one stands\", aniž by tvrdil, co je mezi nimi pravda. Urður čistě v minulosti obrazu (déšť na kamenech, žádná vymyšlená událost), Skuld čistě podmíněně. Landing se dotkne začátku (dlouho mokré kameny → teď se lesknou nejvíc) a je řečený slovy obrazu. 6 vět, správné beaty."
+     },
+     {
+      "code": "K3",
+      "voice_1to5": 3,
+      "instrukce_dodrzeny": false,
+      "vady": [
+       "Cold reading: \"care alone cannot settle what remains unspoken\" — tvrdí, že mezi nimi JE něco nevysloveného; nefalzifikovatelný odhad v šatech vědění, přesně to, co usr prompt zakazuje.",
+       "\"It needs care from both sides\" — nárok na oba podaný jako fakt o vztahu; na hraně rady.",
+       "Opsané lešení promptu: \"Now, with two months of summer left\" — sezónní instrukce (\"two months of summer left\") přepsaná doslova do čtení, místo aby obraz zbarvila.",
+       "Téměř doslovný zadaný obraz v landingu: \"glinting on the wet stones\" (zadání: \"glints on the wet stones\").",
+       "Dikce mimo hlas: \"If the present course continues\" — úřední kondicionál, ne Rúnar; k tomu abstrakce místo scény: \"What was held in stillness has already taken its shape\", \"that cleared space\".",
+       "\"the wet stones remember where the ice lay between two people\" — tažený obraz podaný jako vědění o minulosti mezi dvěma lidmi (mírnější než K4 — \"two people\" je odosobněné, ale směr je stejný)."
+      ],
+      "nejsilnejsi_veta": "the sun breaks through and shows the ground more plainly, including the parts that do not meet",
+      "poznamka": "Strukturálně v pořádku (5 vět, beaty sedí, landing se dotkne začátku), obsahově nejslabší poctivost: nejčistší cold-read skupiny (\"what remains unspoken\") plus dvě místa, kde prosvítá prompt (sezónní věta, glinting). Čte se spíš jako schéma čtení než jako scéna."
+     },
+     {
+      "code": "K4",
+      "voice_1to5": 4,
+      "instrukce_dodrzeny": false,
+      "vady": [
+       "Doslovný opis zadaného obrazu: \"the sun breaks through and glints on the wet stones\" — verbatim v Sowilo beatu (kánon: jediná zakázaná chyba; polehčující je, že tam obraz aspoň časově patří).",
+       "Tvrzení o pravdě mezi nimi: \"For a long while the ground between you two lay frozen\" — proti \"Do not tell them what is true between them and anyone\" i proti Urður pravidlu (minulost obrazu, ne stav vepsaný do života leitandky).",
+       "Totéž podruhé: \"what stands between you has not yet grown roots deep enough to hold in wind\" — soud o stavu vztahu podaný jako fakt (byť nesený obrazem; tření má jmenovat obraz, ne diagnóza \"between you\")."
+      ],
+      "nejsilnejsi_veta": "along the melt a birch is putting out its first leaves, small and green and untested",
+      "poznamka": "Hlasově druhý nejlepší: konkrétní, teplý, dobrý rytmus (\"small and green and untested\", \"a skin of ice\"), 6 vět, správné beaty, landing se dotkne začátku (led → tání) bez moralit. Scéna led → bříza u tání → kameny na slunci drží jako jedno postupující tání. Sráží ho verbatim obraz a dvojí \"between you\" — mapování na pár odevzdá sám, místo aby ho nechal leitandce."
+     }
+    ],
+    "shrnuti": "Skupina se nerozchází v obraznosti — všichni čtyři drží vodu/kámen/světlo a tání jako lásku dvou lidí — ale v tom, KDE sedí vědění a čí je zadaný obraz. K2 jako jediný nechává všechno v terénu (kluzké kameny, ne \\\"vy dva\\\") a zadaný obraz parafrázuje na vlastní vidění; leitandka si mapování udělá sama — přesně zrcadlo z kánonu. K4 má skoro stejně dobrý hlas, ale dvakrát odevzdá diagnózu (\\\"the ground between you two lay frozen\\\", \\\"what stands between you has not yet grown roots\\\") a obraz opíše doslova. K3 je strukturálně korektní, ale obsahově nejméně poctivý: čistý cold-read (\\\"what remains unspoken\\\") a dvě místa, kde do textu prosákl prompt (\\\"with two months of summer left\\\", \\\"glinting on the wet stones\\\"). K1 padá na formě: 3 comma-spliced megavěty místo 5–6 vět, udýchaný rytmus proti Rúnarovu klidu, a zadaný obraz vlepený verbatim jako OTVÍRÁK, od kterého čtení couvá — jediná kánonem zakázaná chyba na nejhorším možném místě. Rozhodující rozdíl mezi prvním a posledním: K2 obraz vstřebal a dodržel tvar; K1 obraz opsal a tvar rozbil. Hranice nálezu: n=1 skupina, jeden scénář (Norns, Love, EN) — pořadí je pozorování, ne trend; mojibake (â, riverâs) v K1/K2/K4 vypadá jako artefakt pipeline, ne autorů."
+   }
+  },
+  {
+   "g": "S2_is",
+   "judge": {
+    "ranking": [
+     "K1",
+     "K3",
+     "K2",
+     "K4"
+    ],
+    "per_text": [
+     {
+      "code": "K1",
+      "voice_1to5": 5,
+      "instrukce_dodrzeny": true,
+      "vady": [
+       "Gramatika (sys pravidlo 2, shoda): „var kyrrt í þeirri klaka\" — klaki je mužský rod, správně „í þeim klaka\"; ukazovací zájmeno je v ženském rodě.",
+       "Hraniční vztahové tvrzení: „vex eitthvað milli tveggja handa sem enn er ungt\" — tvrdí, že mezi dvěma něco roste; je to drženo v obraze rukou, ale pořád je to tvrzení o stavu vztahu, ne obraz sám (usr: „Segðu honum ekki hvað er satt milli hans og annarra\")."
+      ],
+      "nejsilnejsi_veta": "Sá glampi mýkir ekki það sem enn er hrjúft undir, en hann sýnir þér hvar steinninn liggur.",
+      "poznamka": "Jediný text, který drží VŠECHNO naráz: přesně 6 vět (106 slov), jeden obraz nesený od klaku přes tání do světla, tvímánuður přirozeně vpletený („þegar kornið bíður skurðar\"), núning pojmenovaný bez útěchy (glampi nemýkí, co je hrjúft) a konec přesně podle zadání — podmíněný („ef þú heldur áfram sem nú\"), slovy obrazu, dotýká se začátku („úr klakanum... út í ljós sem ekkert felur lengur\"). Věty jednoduché, max dvě klauzule — přesně sys rytmus. Kazí to jen jeden pádový/rodový šum."
+     },
+     {
+      "code": "K3",
+      "voice_1to5": 4,
+      "instrukce_dodrzeny": true,
+      "vady": [
+       "Souvětí proti sys („setningarnar eru einfaldar... tengir sjaldan fleiri en tvær með kommu\"): „Birkið sem óx í skjóli klettanna teygir sig upp í þetta nýja ljós, hálfvaxið og enn óvarið, og það sem þiðnar rennur niður í sprungurnar og finnur sér leið milli tveggja steina sem lágu hvor við annan allan regntímann.\" — 4+ klauzule v jedné větě, a není sama.",
+       "Tvar/pravopis: „glampinn... er svo skarpur að hann sviður í augun\" — sloveso svíða má 3. os. „svíður\", ne „sviður\".",
+       "Délka: 142 slov — rozpočet 6 vět naplněn nejdelšími možnými větami; formálně prošel, duchem limitu už drhne."
+      ],
+      "nejsilnejsi_veta": "...sama ljósið sýnir líka hvar grjótið hefur rifnað og hvar mosinn náði aldrei að gróa yfir.",
+      "poznamka": "Obrazově nejbohatší text skupiny a jediný, kdo núning unese bez mýknutí: totéž světlo, které zraje korn, ukáže i trhliny a mech, který nikdy nezarostl — a konec „hvort tveggja er jafn satt\" to nechá stát vedle sebe bez útěchy. Dva kameny, které „liggja saman\", jsou nejlepší přistání obrazu v Ást & Sambönd z celé čtyřky. Prohrává s K1 jen na disciplíně věty: sys výslovně chce jednoduché věty a tady se vrství."
+     },
+     {
+      "code": "K2",
+      "voice_1to5": 3,
+      "instrukce_dodrzeny": false,
+      "vady": [
+       "COLD READING (usr: „Segðu leitandanum aldrei hvað sé satt, á hreyfingu eða vitað innra með honum\"): „Þú sérð nýtt rými verða til milli tveggja manneskja\" — tvrdí leitandce, co vidí.",
+       "Tvrzení o vztahu + skoro-rada: „en umhyggja þarf enn að vaxa þar sem kuldinn hélt áður fast\" — říká, co je mezi nimi potřeba; Rúnar „nefnir lögun\", tady pojmenovává deficit.",
+       "Abstrakce místo obrazu v závěru: „möguleg nánd tekur við birtunni\" — „možná blízkost\" je pojem, ne obraz; navíc vazba „taka við birtunni\" je sémanticky mlhavá.",
+       "Obraz dvakrát přerušen doslovným komentářem: „þar sem tvær manneskjur gætu mæst\" a „milli tveggja manneskja\" — místo aby obraz PŘISTÁL tam, kde se dva potkávají, text to dvakrát řekne slovníkem zadání."
+      ],
+      "nejsilnejsi_veta": "Ísinn hélt blautu grjótinu föstu og lét lítið rúm eftir þar sem tvær manneskjur gætu mæst.",
+      "poznamka": "Formálně poslušný (6 vět, 103 slov, žádná jména run, Skuld správně podmíněná „Ef þú heldur áfram... gæti sólin brotist í gegn\"), ale nejméně obrazný: opírá se o pojmy (kyrrstaða, umhyggja, nánd) a obraz používá jako kulisu, do které vkládá výklad o dvou lidech. Urður-věta o ledu je výborná; od Berkany dál text vysvětluje místo aby ukazoval."
+     },
+     {
+      "code": "K4",
+      "voice_1to5": 2,
+      "instrukce_dodrzeny": false,
+      "vady": [
+       "Počet vět: 9 místo „5 til 6 setningar alls yfir taktana þrjá\" (3+3+3) a 205 slov — dvojnásobek K1/K2.",
+       "Novotvar (sys pravidlo 6 — nikdy nevymýšlet slova): „liggur ljósnið í þunnri himnu\" — „ljósnið\" není islandské slovo.",
+       "COLD READING, opakovaně: „milli ykkar stendur kuldi sem lætur orð frjósa\", „sérð hreyfingu undir en treystir þér ekki til að...\", „Það er hlé á snertingu\", „Þú hleypir hlýju út og inn\" — tvrzení o nitru (nedůvěra) i o tom, co je mezi nimi pravda.",
+       "Víc nesouvisejících obrazů vedle sebe (usr: druhá mynd jen když posune první o krok): „viðnámið er hrátt eins og hnífur í lófa\" a „eins og rót sem sækir leynilega út í mold\" — nůž ani kořen sluneční obraz neposouvají, stojí vedle něj.",
+       "Konec slibuje výsledek a chybí Skuld-podmínka: „lætur kuldann láta undan, skref fyrir skref, þar til glampinn talar sjálfur\" — „þar til\" = dokud se to nestane; žádné „ef þú heldur áfram\", a „glampinn talar sjálfur\" je přesně ta dulúðleg setning, kterou sys zakazuje.",
+       "Krkolomná syntax: „treystir þér ekki til að láta vatnið láta sjá til sín\" — dvojité „láta\"; dále pochybné „glampar ófjarri\" a „með einföldum, endurteknum snertum\" (běžné slovo je snerting)."
+      ],
+      "nejsilnejsi_veta": "...sami steinninn sem var kaldur heldur nú hita dagsins og skilar honum til baka.",
+      "poznamka": "Řemeslně ambiciózní (obrácení obrazu — slunce v Urður JEŠTĚ neprorazilo a prorazí až ve Skuld — je chytrý tah; hvorugkyn „Þú stendur kyrrt\" drží správně), ale je to přesně to „předvádění mystiky\", které kánon zakazuje: ornament, semicolony, vrstvené příměry, dramatický nůž v dlani. Nejvíc porušení na jeden text: délka, novotvar, cold reading i slíbený výsledek."
+     }
+    ],
+    "shrnuti": "Skupina S2_is se láme na ose disciplína vs. ornament, ne na ose chudé vs. bohaté. K1 a K3 nesou JEDEN obraz (led→tání→slunce na mokrém kameni) celým čtením a núning nechají stát bez útěchy; liší se jen tím, že K1 to udělá v šesti jednoduchých větách po dvou klauzulích (sys rytmus), kdežto K3 týž rozpočet vět naplní souvětími o 4+ klauzulích. K2 je formálně poslušný, ale vyměňuje obraz za pojmy (kyrrstaða, umhyggja, möguleg nánd) a jednou leitandce tvrdí, co vidí. K4 je jediný text, který rozbije tvrdý limit (9 vět, 205 slov), vymyslí slovo (ljósnið), naskládá tři nesouvisející příměry a opakovaně dělá cold reading („treystir þér ekki\\\", „milli ykkar stendur kuldi\\\"). Rozhodující rozdíl mezi prvním a posledním: K1 nechá obraz mluvit a končí podmíněně slovy obrazu („ef þú heldur áfram sem nú — úr klakanum... út í ljós sem ekkert felur lengur\\\"), K4 obraz překřičí ornamentem, tvrdí leitandce, co cítí uvnitř a co je mezi nimi, a konec slíbí výsledek („þar til glampinn talar sjálfur\\\"). Posuzováno naslepo — k autorům (ani k otázce, který je GPT-5) se z tohoto řezu nic říct nedá a identifikaci jsem se záměrně vyhnul; pro trend platí n=1 na autora, tohle je pozorování, ne měření."
+   },
+   "gram": {
+    "per_text": [
+     {
+      "code": "K1",
+      "errors": [
+       {
+        "quote": "var kyrrt í þeirri klaka",
+        "why": "klaki je mužského rodu (kk) — musí být \"í þeim klaka\"; \"þeirri\" je ženský dativ. Rodilý mluvčí se zarazí okamžitě.",
+        "severity": "hruba",
+        "verified_with": "BÍN API ord/klaki → kyn=kk, ÞGFET \"klaka\" (karlkynsnafnorð)"
+       },
+       {
+        "quote": "glampar á blautu grjótinu",
+        "why": "Dvě vady najednou: (a) adjektivum u substantiva s určitým členem musí být slabé — \"blauta grjótinu\", ne silné \"blautu\"; (b) slovníková vazba je \"það glampar á e-ð\" s akuzativem — dativ by obstál jen jako čistý lokál, což tu není jednoznačné. Předloha v promptu měla neurčité \"á blautu grjóti\" (správně); přidáním členu měl tvar přejít na slabý.",
+        "severity": "drobna",
+        "verified_with": "is-vazba.py glampa → \"það glampar á <reiðhjólið>\" (akuzativ); korpus: \"glampar á það\" 9 vs \"glampar á því\" 0; vzor slabé/silné: \"kalda vatninu\" 667 vs \"köldu vatninu\" 69, \"gamla húsinu\" 918 vs \"gömlu húsinu\" 0"
+       },
+       {
+        "quote": "allt sem á milli tveggja stóð",
+        "why": "Eliptické \"milli tveggja\" bez substantiva (mezi dvěma — čeho?) + archaizující slovosled; srozumitelné, ale těžkopádné.",
+        "severity": "styl",
+        "verified_with": "úsudek — nástrojem nerozhodnutelné (elipsa, ne tvar)"
+       }
+      ],
+      "clean": false
+     },
+     {
+      "code": "K2",
+      "errors": [
+       {
+        "quote": "lét lítið rúm eftir",
+        "why": "Kalk z anglického \"left little room\". Islandsky \"skildi eftir lítið rými\" nebo \"gaf lítið svigrúm\"; \"láta e-ð eftir\" bez \"sig\" znamená spíš povolit/přenechat, ne zanechat.",
+        "severity": "drobna",
+        "verified_with": "korpus Risamálheild: \"lét lítið rúm\" 0, \"lítið rúm eftir\" 0, \"skildi lítið eftir\" 46, \"lítið svigrúm\" 1398"
+       },
+       {
+        "quote": "hélt blautu grjótinu föstu",
+        "why": "Atributivní adjektivum u substantiva s určitým členem musí být slabé: \"blauta grjótinu\". Táž vada podruhé v \"Á blautu grjótinu verður sýnilegt\". (Predikativní \"föstu\" je v pořádku.)",
+        "severity": "drobna",
+        "verified_with": "korpus vzor slabé+určité: \"kalda vatninu\" 667 vs \"köldu vatninu\" 69; \"gamla húsinu\" 918 vs \"gömlu húsinu\" 0 (slabý neut. dat. sg. = blauta)"
+       },
+       {
+        "quote": "Það hlé verður ekki tekið til baka",
+        "why": "\"taka til baka\" se říká o slovech/rozhodnutích; o pauze (hlé) je to kalk \"cannot be undone\" — srozumitelné, ale neidiomatické.",
+        "severity": "styl",
+        "verified_with": "korpus \"tekið til baka\" 767 (vazba existuje); kolokace s \"hlé\" nedoložena — úsudek o sémantice"
+       },
+       {
+        "quote": "möguleg nánd tekur við birtunni",
+        "why": "\"taka við e-u\" = přijmout/převzít; \"blízkost přijímá světlo\" je sémanticky podivné (zřejmě zamýšleno \"tekur við\" = nastoupí po kyrrstöðu).",
+        "severity": "styl",
+        "verified_with": "korpus \"tekur við birtunni\" 0; vazba taka við + dat. existuje — vada je sémantická, úsudek"
+       }
+      ],
+      "clean": false
+     },
+     {
+      "code": "K3",
+      "errors": [
+       {
+        "quote": "að hann sviður í augun",
+        "why": "Tvar \"sviður\" neexistuje — svíða má 3. os. j. č. \"svíður\". Vypadlá délka rozbije běžné sloveso, rodilý mluvčí se zarazí.",
+        "severity": "hruba",
+        "verified_with": "BÍN ord/svíða → GM-FH-NT-3P-ET \"svíður\"; \"sviður\" v BÍN není; korpus \"svíður í augun\" 208 vs \"sviður í augun\" 0"
+       },
+       {
+        "quote": "glampinn á blautum steinunum",
+        "why": "Silné adjektivum u substantiva s určitým členem; správně slabý tvar \"á blautu steinunum\".",
+        "severity": "drobna",
+        "verified_with": "korpus vzor: \"kalda vatninu\" 667 vs \"köldu vatninu\" 69, \"gamla húsinu\" 918 vs 0 (slabý dat. pl. = blautu)"
+       }
+      ],
+      "clean": false
+     },
+     {
+      "code": "K4",
+      "errors": [
+       {
+        "quote": "heldur liggur ljósnið í þunnri himnu",
+        "why": "\"ljósnið\" není islandské slovo — vymyšlená složenina (ljós+nið?), kterou žádný zdroj nezná.",
+        "severity": "hruba",
+        "verified_with": "BÍN: nenalezeno; Íslensk nútímamálsorðabók: bez hesla; korpus Risamálheild: 0 výskytů"
+       },
+       {
+        "quote": "endurteknum snertum",
+        "why": "Substantivum \"snerta\" neexistuje — \"snerta\" je jen sloveso; podstatné jméno pro dotyk je \"snerting\", tedy \"endurteknum snertingum\". \"snertum\" čte rodilý mluvčí jako slovesný tvar (my se dotýkáme) a věta se rozpadne.",
+        "severity": "hruba",
+        "verified_with": "BÍN ord/snerta → pouze sagnorð; slovník (is-vazba.py) jen sloveso s rekcí þolfall; korpus: \"endurteknum/mjúkum/léttum snertum\" vše 0, \"snertingum\" 504"
+       },
+       {
+        "quote": "láta vatnið láta sjá til sín",
+        "why": "Idiom je \"láta sjá sig\" (ukázat se); \"láta sjá til sín\" v korpusu neexistuje, a zdvojené \"láta\" (nechat vodu nechat se vidět) dělá větu nesrozumitelnou.",
+        "severity": "hruba",
+        "verified_with": "korpus: \"láta sjá sig\" 4021, \"lét sjá sig\" 617, \"láta sjá til sín\" 0, \"lét sjá til sín\" 0"
+       },
+       {
+        "quote": "glampar ófjarri á blautu grjóti",
+        "why": "\"ófjarri\" je prakticky mrtvé slovo — 2 výskyty za 21 let korpusu, není v BÍN ani ve slovníku; \"glampar ófjarri\" (leskne se nedaleko) navíc drhne i sémanticky.",
+        "severity": "drobna",
+        "verified_with": "korpus \"ófjarri\" 2; BÍN i Íslensk nútímamálsorðabók bez hesla"
+       },
+       {
+        "quote": "Sólin brýtur ekki enn",
+        "why": "\"brjóta\" bez předmětu i bez \"í gegn\" visí ve vzduchu — idiom je \"sólin brýst í gegn\" / \"brýtur í gegn\"; sám text jinde správně píše \"brýtur loks í gegn\".",
+        "severity": "drobna",
+        "verified_with": "úsudek + kontrast s korektní formulací v témž textu; nástroj vazbu bez pokračování nedoloží"
+       },
+       {
+        "quote": "Þegar skýin rifna skýrar en áður",
+        "why": "O protrhávající se oblačnosti se říká \"það rofar til\"; \"skýin rifna\" korpus nezná a \"rifna skýrar\" (roztrhnou se jasněji) je nesmyslné spojení slovesa s příslovcem.",
+        "severity": "drobna",
+        "verified_with": "korpus: \"rofar til\" 803, \"skýin rifna\" 0"
+       },
+       {
+        "quote": "lætur kuldann láta undan",
+        "why": "Zdvojené \"láta\" — vazba \"láta undan\" je správná a doložená, ale konstrukce \"nechá chlad povolit\" je kostrbatá.",
+        "severity": "styl",
+        "verified_with": "korpus \"láta undan\" 4362, \"lætur undan\" 590 — vazba OK, vada je stylistická"
+       },
+       {
+        "quote": "eins og rót sem sækir leynilega út í mold",
+        "why": "\"sækir leynilega út í mold\" — nezvyklá kolokace (kořen \"tajně sahá do hlíny\"), obraz drhne, ale je gramatický.",
+        "severity": "styl",
+        "verified_with": "úsudek — kolokace nedoložitelná n-gramem (řídká poetická fráze)"
+       }
+      ],
+      "clean": false
+     }
+    ],
+    "poznamka": "Texty S2_is byly v JSON uloženy jako mojibake (UTF-8 čtené jako Latin-1); před posouzením jsem je dekódoval (encode latin-1 → decode utf-8) a posuzoval dekódovaný text. Žádný ze čtyř textů není čistý; K4 je výrazně nejhorší (3× hrubá: vymyšlené slovo ljósnið, neexistující substantivum snertum, rozbitý idiom láta sjá til sín). Dva systémové nálezy nad rámec textů: (1) obraz v promptu \\\"glampar á blautu grjóti\\\" je s neurčitým substantivem správně, ale jakmile model přidá určitý člen, musí adjektivum přejít na slabý tvar (blauta grjótinu / blautu steinunum) — tohle spadlo ve 3 ze 4 textů, stálo by za řádek v gramatickém bloku promptu; (2) systémový prompt sám tvrdí \\\"Orðasambandið 'láta sjá til sín' merkir að koma fram\\\" — korpus má 0 výskytů (idiom je \\\"láta sjá sig\\\"), takže K4 chybu pravděpodobně INDUKOVAL prompt; doporučuji opravit v runar-character.js. Kladně ověřeno (ne chyby): tveggja manneskja (gen. pl., 134), ísskán (15), þiðnun (99), fylla með (422), sami + sem (doloženo vedle sami + og), hvor við annan, á tvímánuði. Limity: 4-gramy korpus nevrací, ověřoval jsem max trigramy; řídké poetické kolokace (K4 styl-položky) nástrojem rozhodnout nejdou a nechal jsem je jako styl/úsudek."
+   },
+   "obhajoby": [
+    {
+     "claim": {
+      "code": "K1",
+      "quote": "var kyrrt í þeirri klaka",
+      "why": "klaki je mužského rodu (kk) — musí být \"í þeim klaka\"; \"þeirri\" je ženský dativ. Rodilý mluvčí se zarazí okamžitě.",
+      "severity": "hruba",
+      "verified_with": "BÍN API ord/klaki → kyn=kk, ÞGFET \"klaka\" (karlkynsnafnorð)"
+     },
+     "v": {
+      "verdikt": "potvrzeno",
+      "duvod": "\"klaka\" nemá žádné ženské čtení: BÍN zná pro tvar \"klaka\" jen lemmata klak (hk), klaka (sloveso) a klaki (kk); klaki je mužský rod s dativem sg. \"klaka\" / \"klakanum\". Ukazovací zájmeno musí být þeim (kk dat. sg.), þeirri je kv. Korpus ženskou variantu nedokládá (0 výskytů) a sám text K1 jinde používá mužské \"úr klakanum\". Hypotetické slabé femininum *klaka by navíc mělo dativ \"klöku\", ne \"klaka\" — obhajoba nemožná i teoreticky.",
+      "dukaz": "BÍN api/beygingarmynd/klaka → klak (no hk), klaka (so), klaki (no kk) — žádné kv lemma. BÍN api/ord/klaki → ÞGFET=\"klaka\", ÞGFETgr=\"klakanum\". Íslensk nútímamálsorðabók: klaki [n m], klaka jen [v]. Risamálheild 2000–2021: \"þeim klaka\"=5, \"þeirri klaka\"=0, \"klakanum\"=6157; trigramy \"í þeim klaka\" i \"í þeirri klaka\" 0 (řídkost dat, rozhoduje bigram). Interní důkaz: K1 sekce Sowilo obsahuje \"úr klakanum\" (kk)."
+     }
+    },
+    {
+     "claim": {
+      "code": "K1",
+      "quote": "glampar á blautu grjótinu",
+      "why": "Dvě vady najednou: (a) adjektivum u substantiva s určitým členem musí být slabé — \"blauta grjótinu\", ne silné \"blautu\"; (b) slovníková vazba je \"það glampar á e-ð\" s akuzativem — dativ by obstál jen jako čistý lokál, což tu není jednoznačné. Předloha v promptu měla neurčité \"á blautu grjóti\" (správně); přidáním členu měl tvar přejít na slabý.",
+      "severity": "drobna",
+      "verified_with": "is-vazba.py glampa → \"það glampar á <reiðhjólið>\" (akuzativ); korpus: \"glampar á það\" 9 vs \"glampar á því\" 0; vzor slabé/silné: \"kalda vatninu\" 667 vs \"köldu vatninu\" 69, \"gamla húsinu\" 918 vs \"gömlu húsinu\" 0"
+     },
+     "v": {
+      "verdikt": "vyvraceno",
+      "duvod": "Hlavní výtka (a) „adjektivum s určitým členem musí být slabé\" neplatí jako absolutní pravidlo: u stavového (nerestriktivního) adjektiva v lokální předložkové frázi je v Risamálheild silný tvar normou a slabý je nedoložený — „blautu grjótinu\" je přesně tento vzorec (kameny mokré po dešti = stav, ne identifikace). Korektorova oprava „á blauta grjótinu\" by šla proti úzu (0 dokladů ve všech paralelách). Výtka (b) padá na korektorově vlastní premise: předlohu „glampar á blautu grjóti\" (týž rám, podmět Sólin, týž dativ, jen neurčité) sám označil za správnou — člen mění určitost, ne pád; slovníkové „það glampar á e-ð\" (akuzativ) je neosobní konstrukce, kdežto tady má sloveso podmět a á+dativ je běžný lokál (doloženo „sólin glampar á\" 10×). Hranice: exaktní fráze má 0 výskytů (stejně jako předloha i navržená oprava — grjót je v tomto rámu řídké), obhajoba stojí na produktivním vzorci; pád korpus přímo nerozhodl.",
+      "dukaz": "Risamálheild (n-gram, 2000–2021), silný vs slabý tvar v týchž lokálních frázích: „í blautu grasinu\" 50 vs „í blauta grasinu\" 0 · „á blautu grasinu\" 43 vs „á blauta grasinu\" 0 · „blautu malbikinu\" 14 vs „blauta malbikinu\" 0 · „á hálu malbikinu\" 6 vs „á hála malbikinu\" 0 · „á köldu gólfinu\" 18 vs „á kalda gólfinu\" 0 — celkem 113:0 pro silný tvar u vzorce „mokrý/kluzký povrch + člen\". Koexistence obou tvarů: „í köldu vatninu\" 49 vs „í kalda vatninu\" 60. Konstrukce s podmětem: „sólin glampar á\" 10, „sólin glampaði á\" 9, „það glampar á\" 43, „glampar á\" 211. ÍNO heslo glampa: „það glampar á <reiðhjólið>\" (neosobní, ak.). Exaktní fráze všechny 0: „á blautu grjótinu\" 0, „á blauta grjótinu\" 0, „á blautu grjóti\" 0 (sanity check API: „grjótinu\" samotné 1082). Pádové trigramy glampar/glampaði + á + sjó/haf/vatn/gata/vegur/þak/alda: vše 0 — pád korpusem nerozhodnut."
+     }
+    },
+    {
+     "claim": {
+      "code": "K2",
+      "quote": "lét lítið rúm eftir",
+      "why": "Kalk z anglického \"left little room\". Islandsky \"skildi eftir lítið rými\" nebo \"gaf lítið svigrúm\"; \"láta e-ð eftir\" bez \"sig\" znamená spíš povolit/přenechat, ne zanechat.",
+      "severity": "drobna",
+      "verified_with": "korpus Risamálheild: \"lét lítið rúm\" 0, \"lítið rúm eftir\" 0, \"skildi lítið eftir\" 46, \"lítið svigrúm\" 1398"
+     },
+     "v": {
+      "verdikt": "potvrzeno",
+      "duvod": "Frázi nelze obhájit. „Láta e-ð eftir\" bez „sig\" znamená podle Íslensk nútímamálsorðabók povolit/dopřát (láta allt eftir barninu) nebo s dativním příjemcem přenechat (eftirláta, rekce þgf+þf); význam „zanechat\" vyžaduje obligatorní „eftir sig\". Konstrukce „lét (lítið) rúm eftir\" je v korpusu Risamálheild nedoložená v žádném tvaru, zatímco korektorem navržené vzory (skilja eftir lítið rými/svigrúm, gefa lítið svigrúm) doložené jsou. Jediná obhajitelná část je substantivum „lítið rúm\" = malý prostor (doloženo slovníkem i korpusem) — vada je čistě ve slovesné vazbě, přesně jak korektor uvedl. Kalk z EN „left little room\" potvrzen.",
+      "dukaz": "Korpus Risamálheild (součet 2000–2021), všechny tvary cílové vazby = 0: „lét lítið rúm\" 0 · „lítið rúm eftir\" 0 · „lét rúm eftir\" 0 · „láta/lætur/látið rúm eftir\" 0 · „lét/lætur rými eftir\" 0 · „lét eftir lítið\" 0 · „lét eftir rúm\" 0. Citlivost korpusu ověřena baselines: „lét eftir sig\" 687 · „lítið svigrúm\" 1398 · „lítið rúm\" 160 · „skilur lítið eftir\" 98 · „skilja eftir lítið\" 16 · „gefur lítið svigrúm\" 13 · „skilur eftir lítið\" 8 · „lét þeim eftir\" 7 (dativ = přenechat). Slovník (heslo láta, flid 25936): „láta eftir sig <miklar eignir>\" = zanechat (jen s sig); „láta <allt> eftir <barninu>\" = dopřát; eftirláta (flid 9267) rekce þágufall+þolfall. „Lítið rúm\" jako prostor doloženo příkladem „tónlistin átti lítið rúm í huga hans\"."
+     }
+    },
+    {
+     "claim": {
+      "code": "K2",
+      "quote": "hélt blautu grjótinu föstu",
+      "why": "Atributivní adjektivum u substantiva s určitým členem musí být slabé: \"blauta grjótinu\". Táž vada podruhé v \"Á blautu grjótinu verður sýnilegt\". (Predikativní \"föstu\" je v pořádku.)",
+      "severity": "drobna",
+      "verified_with": "korpus vzor slabé+určité: \"kalda vatninu\" 667 vs \"köldu vatninu\" 69; \"gamla húsinu\" 918 vs \"gömlu húsinu\" 0 (slabý neut. dat. sg. = blauta)"
+     },
+     "v": {
+      "verdikt": "vyvraceno",
+      "duvod": "Korektorovo pravidlo (atributivní adjektivum u substantiva s určitým členem = vždy slabé) neplatí pro adjektiva dočasného stavu. Islandština u stage-level adjektiv (mokrý od počasí, kluzký) s určitým substantivem standardně užívá SILNÝ tvar — korpus to ukazuje kategoricky u nejbližších analogů (blautu grasinu, blautu malbikinu) a kontrola s permanentní vlastností (gamla húsinu 918:0 slabě) dokazuje, že korpus rozdíl obou deklinací věrně drží. Obě flagované pasáže jsou přesně tento typ: kámen je mokrý dočasně (tající led) a \"Á blautu grjótinu\" je strukturně identické s doloženým \"á blautu grasinu\". Navržená oprava \"blauta grjótinu\" by následovala vzorec, který rodilí mluvčí s tímto adjektivem prakticky nepoužívají (3 výskyty slabě vs 250+ silně).",
+      "dukaz": "BÍN: blautur FSB-HK-ÞGFET = blautu (silný), FVB-HK-ÞGFET = blauta (slabý). Risamálheild (2000–2021): přesná dvojice \"blautu/blauta grjótinu\" 0:0 (nedoloženo ani jedním směrem), ale analogy s týmž adjektivem: \"blautu grasinu\" 116 vs \"blauta grasinu\" 3 · \"í blautu grasinu\" 50:0 · \"á blautu grasinu\" 43:0 · \"blautu malbikinu\" 14:0 · \"á blautu malbikinu\" 6:0 · \"blautt malbikið\" (akuz.) 6:0 · \"blautt grasið\" 32:0 · \"hálu malbikinu\" 6:0. Kontrola (permanentní vlastnost → slabě, dle učebnicového pravidla): \"gamla húsinu\" 918 vs \"gömlu húsinu\" 0; \"heita vatninu\" 922 vs \"heitu vatninu\" 157; \"kalda vatninu\" 667 vs \"köldu vatninu\" 69 (lexikalizovaná teplá/studená voda slabě, silný tvar = dočasné čtení). Hranice nálezu: samotné spojení blautur+grjót v korpusu chybí (grjótinu celkem 1082×, malbikinu 1662×); obhajoba stojí na produktivním vzorci téhož adjektiva na nejbližších analozích, kde je silný tvar prakticky výhradní."
+     }
+    },
+    {
+     "claim": {
+      "code": "K3",
+      "quote": "að hann sviður í augun",
+      "why": "Tvar \"sviður\" neexistuje — svíða má 3. os. j. č. \"svíður\". Vypadlá délka rozbije běžné sloveso, rodilý mluvčí se zarazí.",
+      "severity": "hruba",
+      "verified_with": "BÍN ord/svíða → GM-FH-NT-3P-ET \"svíður\"; \"sviður\" v BÍN není; korpus \"svíður í augun\" 208 vs \"sviður í augun\" 0"
+     },
+     "v": {
+      "verdikt": "potvrzeno",
+      "duvod": "Tvar „sviður\" nelze obhájit. (1) BÍN form-lookup (/api/beygingarmynd/sviður) vrací PRÁZDNO — žádné lemma v moderní islandštině tento tvar nemá; kontrolní dotazy potvrzují, že endpoint funguje („sviðum\" → svið×2 + svíða; „svíður\" → svíða). (2) Kompletní BÍN paradigma slovesa svíða (silné, tř. 1: svíða–sveið–sviðum–sviðið) má v prézentu sg. výhradně dlouhé í: svíð / svíður / svíður (GM-FH-NT-1/2/3P-ET), včetně všech neosobních variant (OP-ÞF/ÞGF/það: vždy „svíður\"); krátké -i- mají jen préteritum pl. (sviðum, sviðuð, sviðu), konjunktiv prét. (sviði…) a příčestí (sviðinn, sviðið) — žádné gramatické pravidlo tvar „sviður\" v prézentu nevyprodukuje. (3) Korpus Risamálheild: „sviður í augun\" = 0 výskytů, zatímco „svíður í augun\" = 208; ani unigram „sviður\" (51 vs. 4979 pro „svíður\", ~1 %) není doložený úzus, ale šum neredigovaného webového textu — bigram „sviður í\" má jen 7 výskytů proti 610. Korektor má pravdu i v detailu: 3. os. j. č. je „svíður\" a v kontextu („glampinn … er svo skarpur að hann svíður í augun\") jde přesně o tento tvar.",
+      "dukaz": "BÍN /api/beygingarmynd/sviður → {} (žádné lemma); kontrola: sviðum → [svið, svið, svíða], svíður → [svíða]. BÍN paradigma svíða: GM-FH-NT-2P-ET=„svíður\", GM-FH-NT-3P-ET=„svíður\", OP-ÞF/ÞGF-GM-FH-NT-3P-ET=„svíður\"; „sviður\" v žádném ze 139 tvarů. Íslensk nútímamálsorðabók: heslo „sviður\" neexistuje; u svíða příklady „hana sveið í augun af reyknum\", „ég brenndi mig … og mig svíður enn\". Risamálheild (2000–2021): „svíður í augun\"=208 · „sviður í augun\"=0 · „svíður í\"=610 · „sviður í\"=7 · „svíður\"=4979 · „sviður\"=51."
+     }
+    },
+    {
+     "claim": {
+      "code": "K3",
+      "quote": "glampinn á blautum steinunum",
+      "why": "Silné adjektivum u substantiva s určitým členem; správně slabý tvar \"á blautu steinunum\".",
+      "severity": "drobna",
+      "verified_with": "korpus vzor: \"kalda vatninu\" 667 vs \"köldu vatninu\" 69, \"gamla húsinu\" 918 vs 0 (slabý dat. pl. = blautu)"
+     },
+     "v": {
+      "verdikt": "vyvraceno",
+      "duvod": "Korektorovo pravidlo (určitý člen → vždy slabé adjektivum) je školní default, ne absolutní zákon. Islandština má doloženou konstrukci SILNÉ adjektivum + substantivum s příponovým členem pro dočasný/situační stav známého referentu (stage-level, nerestriktivní čtení) — a korpus Risamálheild ukazuje, že u stavových adjektiv typu blautur/kaldur tato silná forma v předložkových vazbách převažuje, u samotného „blautur\" je prakticky jediná doložená. Kontext K3 tomuto čtení přesně odpovídá: déšť právě skončil, kameny jsou dočasně mokré (nerestriktivně — nejde o „ty mokré kameny\" vs. suché). Slabý tvar „á blautu steinunum\" by nesl restriktivní čtení, které text nezamýšlí. Přesná fráze je v korpusu nedoložená oběma směry (příliš řídká), ale tvar vysvětluje pravidelná, korpusem silně doložená gramatika — fráze je obhájená jako správná islandština.",
+      "dukaz": "Risamálheild (2000–2021, is-vazba.py --freq): přesná fráze 0:0 oběma směry („á blautum steinunum\" 0, „á blautu steinunum\" 0; i neurčité „blautum steinum\" 0, přitom „steinunum\" samotné 970 — fráze je prostě řídká). Konstrukce silné adj + určité subst: „í köldum sjónum\" 148 vs. slabé „í kalda sjónum\" 40; „kaldan sjóinn\" 100 vs. „kalda sjóinn\" 22. Táž morfologie jako sporná fráze (silný dat. pl. + určitý dat. pl.): „þröngum götunum\" 11 vs. slabé „þröngu götunum\" 9, „á þröngum götunum\" 6. Přímo s blautur: „blautu grasinu\" (silný neut. dat. sg.) 116 vs. slabé „blauta grasinu\" 3 („í blautu grasinu\" 50); „blautum sandinum\" 6 vs. slabé „blauta sandinum\" 0; „blautum götunum\" (přesná paralela, silný dat. pl. + člen) 4 vs. slabé „blautu götunum\" 0. Kontrola nástroje: běžné fráze vrací nenulové hodnoty („stórum steinum\" 165, „stórum steini\" 263), nuly tedy nejsou selhání API."
+     }
+    }
+   ]
+  }
+ ]
+}
