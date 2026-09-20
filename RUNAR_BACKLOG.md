@@ -55,6 +55,33 @@
   grey"): po KROKU 2 grey/wind 8/9; bez té věty 0/3, s vrácenou větou o počasí 0/3. Owner rozhodne mezi S (věta pryč) a W
   (brzda zpět — bod 7 CODE-tune), texty obou ramen jsou holé. Zvlášť: **mlha → „the grey" jako podstatné jméno** (model
   nechce opakovat „fog") — týká se obrazů a míst s mlhou; test „jmenuj věc pokaždé jejím jménem" zatím neběžel.
+- [ ] ⭐ **ODPOVÍDÁ ZÁVĚR NA TO, CO ČLOVĚK ZADAL? (AREA / SEEKING × most)** — KUKY 2026-09-20: *„kde by mohla
+  závěrečná věta fungovat… uživatel zadá buď AREA nebo seeking a na to by měli dostat odpověď. možná budeme muset
+  změnit i to, jak se ptáme v AREA a SEEKING."* Stav dneska (CODE-read prověřil v kódu, ne z paměti):
+  • **Obě pole jsou NEPOVINNÁ a NEZÁVISLÁ** (`runar-reader.html` — AREA pills + SEEK pills, oboí *(OPTIONAL)*), takže
+    závěr musí fungovat ve Čtyřech stavech: nic · jen AREA · jen SEEKING · obojí. Není to buď–anebo.
+  • **Nic v formři se neptá otázkou.** AREA = MÍSTO (8 oblastí) · SEEKING = REJSTŘÍK / způsob řeči (5) · INTENTION =
+    časová osa · volné pole má popisek **„THE SITUATION / STAÐAN"** a nápovědu *„where you stand now — not what is
+    to come"*. Odpovědět se tedy dnes nemá na co; to je záměr, ne opomenutí.
+  • **SEEKS zřetelně ZAKAZUJÍ odpověď** (`_registerContext`): Clarity *„not one answer… leave the deciding to them"* ·
+    Confirmation *„neither confirm nor refute"* · Reflection *„open a mirror, not an answer"*. Tři z pěti.
+  • **AREA zakazuje mluvit o člověku** (`_domainContext`): *„Do not tell them where they are headed / what they know /
+    what is true between them"*. To znění vzniklo měřením — oblast jako ZDROJ OBRAZU místo cíle tvrzení srazila studené
+    čtení EN 10/16 → 2,3/16, IS 11/16 → 2,7/16 (`RUNAR_EVAL_LOG.md` 2026-08-21). ⚠️ §26: návrat k „závěr mluví
+    o člověku v té oblasti" smí být jen OČIŠTĚNÝ — most drží tvar **možnosti** a platí jen pro POSLEDNÍ větu;
+    zbytek čtení nechává oblast dál jen jako zdroj obrazu. Jinak si přivoláme zpět studené čtení.
+  **Návrh CODE-read k rozhodnutí ownerem (není změřeno, je to nástřel):** závěr ne„odpovídá", ale **dosedne tam, kam si
+  člověk ukazal**: AREA určuje, KAM most dopadne („co to může být mezi dvěma lidmi / na cestě / při mlčení…"),
+  SEEKING určuje, JAKÝ TVAR most vezme — místo losu ze tří tvarů: Clarity → dvě možnosti · Confirmation → dvě možnosti
+  (jediný čestný tvar, když nesmím potvrdit ani vyvrátit) · Insight into Challenge → těžká věta bez útěchy ·
+  Reflection → otázka · General Guidance → los. Tím se ubere jedna náhodná páka a přibude řízený vstup (KUKY:
+  *„most k člověku udělej jako řízený vstup ve tvaru možnosti"*). Motiv měření: rejstřík dnes tlačí dovnitř uprostřed
+  čtení a NO COLD READING mu to ruší (`RUNAR_EVAL_LOG.md` 2026-09-20, skádačka) — na konci by měl vlastní místo.
+  **Otevřené pro ownera (§23, kánon, ne měření):** má závěr vůbec mluvit o člověku? Dnešní formulář je postavený tak,
+  že Rúnar neodpovídá — zrcadlí. Změna znění otázek v AREA/SEEKING je závislá na téhle odpovědi, ne naopak.
+  **Nejlevnější rozhodující test, až na to dojde:** slepý soudce hádá z HOTOVÉHO čtení zvolenou oblast (1 z 8) a
+  rejstřík (1 z 5), dnešní produkce vs. kandidát; k tomu ownerova slepá dvojice. Když dnes oblast z textu nepoznat,
+  člověk něco zadal a nedostal na to nic — to je měřitelné. „Hezké" měřitelné NENÍ (§24).
 - [ ] ⭐ **PRODUKČNÍ KANDIDÁT „nový Single" — plán ověření, než nahradí produkci** (KUKY 2026-09-20: *„pokud bude taková,
   jakou jsi ji tady vytvořil, tak bude nahrazovat produkci"*). Kandidát = dnešek + most (los 3 tvarů + těžká verze) +
   jméno mimo esenční větu + jádro/místo u převedených run (+ případně bez řádku sezóny, podle rozhodnutí ownera).
