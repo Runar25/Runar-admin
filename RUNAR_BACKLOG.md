@@ -55,7 +55,8 @@
   grey"): po KROKU 2 grey/wind 8/9; bez té věty 0/3, s vrácenou větou o počasí 0/3. Owner rozhodne mezi S (věta pryč) a W
   (brzda zpět — bod 7 CODE-tune), texty obou ramen jsou holé. Zvlášť: **mlha → „the grey" jako podstatné jméno** (model
   nechce opakovat „fog") — týká se obrazů a míst s mlhou; test „jmenuj věc pokaždé jejím jménem" zatím neběžel.
-- [ ] ⭐ **ZÁKAZ V ŘÁDKU OBLASTI × MOST — ZMĚŘENO, zbývá potvrdit na větším vzorku** (výsledek →
+- [x] **ZÁKAZ V ŘÁDKU OBLASTI × MOST — VÝJIMKA NASAZENA 2026-09-20 (v4.37-vyjimka, DECISIONS (9));
+  zbývá UŽ JEN doměřit chlad na větším vzorku** (výsledek →
   `RUNAR_EVAL_LOG.md` 2026-09-20 (10); data `docs/eval/2026-09-20-zakaz-oblasti/`).
   **Vyhrála VÝJIMKA**, ne odebrání: `_domainContext` si nechá svůj zákaz a dostane hranici —
   `… — except in the closing line, and there only as a possibility they may weigh.` (6 oblastí z 8, které kolidují).

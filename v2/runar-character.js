@@ -967,27 +967,34 @@ function _priorityContext(lensOn, drawn, lang) {
 // zmena toho, CO se po modelu chce, srazila obe reci (EN 10/16 -> 2,3/16, IS 11/16 ->
 // 2,7/16) a oblast slo ze cteni poznat stejne dobre nebo lip. Mereni: RUNAR_EVAL_LOG
 // 2026-08-21 + docs/eval/2026-08-21-attribution/.
+// 2026-09-20: sest z osmi zakazu nese VYJIMKU „— except in the closing line, and there only as
+// a possibility they may weigh." Duvod: most (v4.36) dosedá DO OBLASTI, zatimco zakaz o teze
+// oblasti mluvit zakazoval — prompt si odporoval a model most zmekcil (dosednutí 2/6 vs 6/6
+// s vyjimkou; chlad i delka beze zmeny, RUNAR_EVAL_LOG 2026-09-20 (10)). Vyjimka nepousti chlad:
+// most mluvi jen o MOZNOSTI. ⚠️ ODEBRAT zakaz uplne je VYVRACENE (chlad 2/6 -> 4/6) — nezkouset.
+// Bez vyjimky zustavaji Heilun (zakazuje diagnozu, ne oblast) a Fjolskylda (zakazuje, co si
+// leitandi nese od svych lidi) — jejich zakaz s cilem mostu nekolidoval.
 function _domainContext(area, lang) {
   if (!area) return '';
   var mapEn = [
-    "The reading is for Love & Relationships — let the image you were given land where two people meet. Do not tell them what is true between them and anyone.",
-    "The reading is for Purpose & Path — let the image you were given land on going and direction. Do not tell them where they are headed.",
-    "The reading is for Career & Creativity — let the image you were given land on making and work. Do not tell them what they have made or achieved.",
+    "The reading is for Love & Relationships — let the image you were given land where two people meet. Do not tell them what is true between them and anyone — except in the closing line, and there only as a possibility they may weigh.",
+    "The reading is for Purpose & Path — let the image you were given land on going and direction. Do not tell them where they are headed — except in the closing line, and there only as a possibility they may weigh.",
+    "The reading is for Career & Creativity — let the image you were given land on making and work. Do not tell them what they have made or achieved — except in the closing line, and there only as a possibility they may weigh.",
     "The reading is for Healing & Wellbeing — let the image you were given land on mending and rest. No diagnosis, no verdict on their condition.",
-    "The reading is for The Unseen — let the image you were given land on what is present but not shown. Do not tell them what they sense.",
+    "The reading is for The Unseen — let the image you were given land on what is present but not shown. Do not tell them what they sense — except in the closing line, and there only as a possibility they may weigh.",
     "The reading is for Family & Home — let the image you were given land on a lived-in place and the people in it. Do not tell them what they carry from their people.",
-    "The reading is for Inner Growth — let the image you were given land on slow change. Do not tell them how they have changed.",
-    "The reading is for Crossroads & Decisions — let the image you were given land where a way divides. Do not tell them what they know or which way they will take."
+    "The reading is for Inner Growth — let the image you were given land on slow change. Do not tell them how they have changed — except in the closing line, and there only as a possibility they may weigh.",
+    "The reading is for Crossroads & Decisions — let the image you were given land where a way divides. Do not tell them what they know or which way they will take — except in the closing line, and there only as a possibility they may weigh."
   ];
   var mapIs = [
-    'Þessi lestur er fyrir Ást & Sambönd — láttu myndina sem þú fékkst lenda þar sem tvær manneskjur mætast. Segðu honum ekki hvað er satt milli hans og annarra.',
-    'Þessi lestur er fyrir Tilgang & Leið — láttu myndina sem þú fékkst lenda á ferð og stefnu. Segðu honum ekki hvert hann stefnir.',
-    'Þessi lestur er fyrir Starf & Sköpun — láttu myndina sem þú fékkst lenda á smíð og vinnu. Segðu honum ekki hvað hann hefur gert eða hverju hann hefur áorkað.',
+    'Þessi lestur er fyrir Ást & Sambönd — láttu myndina sem þú fékkst lenda þar sem tvær manneskjur mætast. Segðu honum ekki hvað er satt milli hans og annarra — nema í lokalínunni, og þá aðeins sem möguleika honum til umhugsunar.',
+    'Þessi lestur er fyrir Tilgang & Leið — láttu myndina sem þú fékkst lenda á ferð og stefnu. Segðu honum ekki hvert hann stefnir — nema í lokalínunni, og þá aðeins sem möguleika honum til umhugsunar.',
+    'Þessi lestur er fyrir Starf & Sköpun — láttu myndina sem þú fékkst lenda á smíð og vinnu. Segðu honum ekki hvað hann hefur gert eða hverju hann hefur áorkað — nema í lokalínunni, og þá aðeins sem möguleika honum til umhugsunar.',
     'Þessi lestur er fyrir Heilun & Líðan — láttu myndina sem þú fékkst lenda á gróanda og hvíld. Engin sjúkdómsgreining, enginn dómur um líðan hans.',
-    'Þessi lestur er fyrir Hið dulda — láttu myndina sem þú fékkst lenda á því sem er til staðar en sést ekki. Segðu honum ekki hvað hann skynjar.',
+    'Þessi lestur er fyrir Hið dulda — láttu myndina sem þú fékkst lenda á því sem er til staðar en sést ekki. Segðu honum ekki hvað hann skynjar — nema í lokalínunni, og þá aðeins sem möguleika honum til umhugsunar.',
     'Þessi lestur er fyrir Fjölskyldu & Heimili — láttu myndina sem þú fékkst lenda á byggðum stað og fólkinu í honum. Segðu honum ekki hvað hann ber með sér frá sínu fólki.',
-    'Þessi lestur er fyrir Innri Vöxt — láttu myndina sem þú fékkst lenda á hægri breytingu. Segðu honum ekki hvernig hann hefur breyst.',
-    'Þessi lestur er fyrir Vegamót & Ákvarðanir — láttu myndina sem þú fékkst lenda þar sem leið skiptist. Segðu honum ekki hvað hann veit eða hvora leiðina hann velur.'
+    'Þessi lestur er fyrir Innri Vöxt — láttu myndina sem þú fékkst lenda á hægri breytingu. Segðu honum ekki hvernig hann hefur breyst — nema í lokalínunni, og þá aðeins sem möguleika honum til umhugsunar.',
+    'Þessi lestur er fyrir Vegamót & Ákvarðanir — láttu myndina sem þú fékkst lenda þar sem leið skiptist. Segðu honum ekki hvað hann veit eða hvora leiðina hann velur — nema í lokalínunni, og þá aðeins sem möguleika honum til umhugsunar.'
   ];
   var idx = -1;
   if (typeof AREAS !== 'undefined') {

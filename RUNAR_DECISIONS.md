@@ -6473,3 +6473,36 @@ vlastního zadání odsud mizí; vlastní to teď kód.
 - **Padá tím i moje domněnka**, že je řádek mrtvá váha (opírala se o měření CODE-tune 2026-08-22
   *„propsání NEPROKÁZÁNO"* — to měřilo jinou plochu: celé čtení, pět hodnot, bez mostu).
 - Affected doc(s): RUNAR_BACKLOG.md (položka „rejstřík ven" uzavřena).
+
+## 2026-09-20 (9) — Výjimka v zákazu oblasti: dokončení v4.36 (v4.37-vyjimka)
+
+**Vada byla moje.** Ve v4.36 jsem nasadil most, který má dosednout DO OBLASTI — a nechal přitom
+v `_domainContext` zákaz, který o téže oblasti mluvit zakazuje („Do not tell them where they are
+headed" × „name what this may be **in where the seeker is going**"). Prompt si odporoval a model to
+řešil tím, že most změkčil. CODE-read to změřil dřív, než jsem nasadil: **dosednutí 2/6** (dnešní
+stav) vs **6/6** s výjimkou, chlad i délka beze změny (`RUNAR_EVAL_LOG.md` 2026-09-20 (10), data
+`docs/eval/2026-09-20-zakaz-oblasti/`). Produkce tedy od 34c1bbd stála na slabším rameni.
+
+**Co platí:** šest z osmi zákazů nese výjimku *„— except in the closing line, and there only as a
+possibility they may weigh."* / *„— nema í lokalínunni, og þá aðeins sem möguleika honum til
+umhugsunar."*
+
+**Není to povolení chladu:** most sám mluví jen o MOŽNOSTI („may be"), takže výjimka jen odstraňuje
+rozpor, který jsem do promptu vložil. ⚠️ **Odebrat zákaz úplně je VYVRÁCENÉ** — chlad 2/6 → 4/6
+a dosednutí se nezlepšilo (CODE-read to sám doporučoval a sám to vyvrátil). Nezkoušet znovu.
+
+**Bez výjimky zůstávají dvě oblasti:** Heilun (zakazuje **diagnózu**, ne oblast) a Fjölskylda
+(zakazuje, **co si leitandi nese od svých lidí**) — jejich zákaz s cílem mostu nekoliduje.
+
+**IS** psána islandsky od začátku: *nema í* 40072 · *lokalínunni* 18 · *og þá aðeins* 913 ·
+*sem möguleika* 933 · *til umhugsunar* 10432. is-grammar-qa: **0 flagů před i po** (porovnáno
+proti témuž `_domainContext` z `git HEAD` — výjimka gramatiku nezhoršila).
+
+**Co zůstává nedoměřené (a proč to nasazuji i tak):** n bylo 6 na rameno a rozdíly v chladu byly
+v šumu — doměření na větším vzorku (víc run, EN + IS, všech pět rejstříků) zůstává. Nasazuji přesto,
+protože **alternativa není „čistý stav", ale rozpor**: most v produkci je a bez výjimky nedosedá.
+
+**Verze promptu:** v4.36-most-cil → **v4.37-vyjimka**. Registr 206, smoke 44/44.
+
+**Affected doc(s):** `RUNAR_BACKLOG.md` — položka „ZÁKAZ V ŘÁDKU OBLASTI × MOST" je nasazená,
+zůstává v ní jen doměření chladu.
