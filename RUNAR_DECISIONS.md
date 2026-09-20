@@ -6172,3 +6172,24 @@ doslova. Tento záznam = body 2 a 4:
 **Verze promptu:** v4.30-jadra → **v4.31-podminka**.
 
 **Affected doc(s):** žádný — mapa promptu (artifact) překreslena v témž tahu.
+
+## 2026-09-20 (2) — Kalibrace hodnocení čtení (KUKY, při čtení sondy)
+
+**Owner k hodnocení kvality čtení — platí pro všechny evaly (Code i Cowork):**
+
+1. **Hledáme především „věci, které do sebe nezapadají"** — slova/vazby/obrazy, které drhnou
+   nebo nedávají smysl (doklad: „and the cold in it was not something you could hurry" —
+   opus-5, sonda S2 EN). To je hlavní osa, ne formální kázeň.
+2. **Z textu musí něco vystoupit na povrch.** Čtenář vidí jen výsledek, ne vstupy — čistě
+   metaforická mlha („care alone cannot settle what remains unspoken" — owner: „nic mi z toho
+   nevystupuje") je vada i při formální poslušnosti.
+3. **Délka:** dobře napsané čtení > dodržený limit. Jednotlivé čtení smí přes limit o ~5–10 %
+   (5 % v pohodě); na větším vzorku se má **průměr** rovnat limitu. Čárky/souvětí nejsou vada
+   sama o sobě (gpt-5 Norns owner výslovně: „nezní mi špatně, 3 čárky mi nevadí").
+4. **Hodnotitel vždy vidí (a ownerovi ukáže) VSTUPY čtení** — obraz, úhel, otázku, sezónu;
+   bez nich se nedá poznat, co je vidění a co opis. (Doklad: „the ground between you two lay
+   frozen" vypadal jako vadný obraz — obraz byl přitom jen slunce na mokrých kamenech.)
+5. **Soudci nestačí:** hodnotitel udělá u vzorku (1–2 čtení) VLASTNÍ hloubkovou kontrolu
+   proti vstupům, aby ověřil, že soudci měří správně.
+
+**Affected doc(s):** žádný — kritéria žijí tady; evaly na tento záznam odkazují.
