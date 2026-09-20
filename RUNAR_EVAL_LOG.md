@@ -4476,3 +4476,40 @@ vše ostatní konstantní. Každý krok = předchozí prompt + JEDEN řádek. Po
    dal 64–65 slov proti rozpočtu 50–58 a dál se to pohybovalo 57–79 bez trendu. Přetečení drží tahle konfigurace
    (jádro + místo + 4 věty), ne počet vstupů.
 5. Produkce (80 ownerových EN Single) má přitom průměr 53 slov — přetéká tedy hlavně **jádro+místo**, ne běžné obrazy.
+
+## 2026-09-20 (7) — ⚠️ Moje mapa vstupů byla neúplná (oprava) · rozbor pěti čtení od CODE-tune
+
+**Co se stalo:** do „rejstříku vstupů" (záznam 2026-09-20 (2)) jsem zapsal jen vstupy, které jsem zrovna měřil, a vydal
+to za soupis. CODE-tune proti kódu napočítala **38 proměnných vstupů**; moje mapa jich jmenovala 7, z toho „most" tehdy
+v žádném builderu nebyl (byl to návrh) a „you stand" není vstup, ale EFEKT konce `ENDING_OPEN[1]`. **Soupis vstupů tedy
+vlastní CODE-tune**, ne tenhle doc; sem patří jen co která páka MĚŘITELNĚ dělá.
+**Ověřil jsem tři jejich technické body — platí všechny:**
+- `RUNE_IMAGES` po sezónní značce: **any 72 · bright 20 · cold 16** ze 108. Moje věta *„obraz z jiné sezóny přijít
+  nemůže"* byla moc silná: filtr drží jen u 36 obrazů, které sezónu nesou. (Opraveno i v záznamu (5).)
+- `_promptDraws` ukládá `angle · image · place · lens · ending · kws · name` — **délku ne**. Los délky (3 vs 4 věty) je
+  tedy nezaznamenaný confounder všech dosavadních měření; měl jsem si toho všimnout, když mi sám změnil výsledek mostu.
+- Čtyři pooly s losovacími funkcemi **nikdo nevolá**: `READING_ASPECTS` (7) · `IMAGERY_SOURCES` (8) ·
+  `READING_REGISTERS` (5) · `RUNE_PLACEMENTS` (3).
+
+### Rozbor pěti čtení (psala CODE-tune, Opus 5 v konverzaci; podklady `docs/eval/2026-09-20-scena-a-vztah/cteni-code-tune/`)
+| čtení | slov / vět | rozpočet | runa | jméno | most |
+|---|---|---|---|---|---|
+| 1 Berkana EN | 45 / 3 | 38–45 ✓ (na hraně) | věta 2 | věta 2 | poslední ✓ |
+| 2 Gebo EN | 57 / 4 | 50–58 ✓ | věta 2 | — (los „bez jména") | poslední ✓ (otázka + dvě možnosti) |
+| 3 Berkana IS | 45 / 3 | ✓ | věta 2 | věta 2 | poslední ✓ |
+| 4 Norns EN | 116 / 6 | 6 vět ✓ | nikde | — | **není** |
+| 5 Norns IS | 97 / 6 | ✓ | nikde | — | **není** |
+**Co drží:** úhel vlastní větu 1 ve všech singlech · most dosedá do poslední věty 3/3 · čočka se do něj vejde bez
+pojmenování (Uruz *„still gathering its weight"* · Tiwaz *„would cost you something"*) · záměr se projeví (*„a beginning
+already behind you"* = pochopit minulost) · IS ověřeno (gramatika 0 E001; korpus *hinn enda* 388 · *er að baki* 2649 ·
+*safna í sig* 188 · *skref fyrir skref* 2293 — čísla CODE-tune sedí).
+**Co nedrží:**
+1. **Spona `<Runa> is/er …` 3/3** i tady — ownerova výtka *„this is Raidho, that is Raidho"* platí i pro pečlivě psaný
+   text. Potvrzuje, že ji dělá dvojice pokynů (pojmenuj runu + řekni, co dělá), ne vzor.
+2. **Jméno člověka sedí v TÉŽE větě jako esence** (1 a 3) — přetlak věty 2, který jsem měřil na 62 čteních, se objevil
+   i tady. Los „uprostřed" míří do věty, kde už stojí runa.
+3. ⭐ **Spready mají obrácené pořadí než single.** Norns EN tvrdí uprostřed (*„a habit that feeds itself"*, *„The friction
+   is that keeping it costs more than the waiting admits"*) a končí v obraze (*„the width of a step neither has taken"*).
+   Single dnes dělá opak: popis uprostřed, možnost na konci. ⇒ Ownerova „mlha na konci" u spreadů má strukturální příčinu:
+   konec spreadu je `landing` (zůstaň v obraze), most tam není. Norns IS totéž (*„sést fyrst heilt úr kyrrðinni"*).
+4. Ve spreadech **nepadne ani jedno jméno runy** (0/2) — reader je vidí jen z UI. Pro text bez kontextu je to slepé místo.
