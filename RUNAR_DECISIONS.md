@@ -6332,3 +6332,31 @@ rozhodnutí ownera; do té doby to tu stojí zapsané.
 - **Přednost:** těžkost runy > rejstřík (těžká runa dostane těžké znění zvoleného tvaru).
 - **Stav:** rozhodnuto, NENASAZENO. Znění EN hotové, IS se píše nativně po schválení tvaru; ověření → RUNAR_BACKLOG.md.
 - Affected doc(s): RUNAR_DESIGN.md „Stavba Single čtení — základ" bod 3 (mechanismus zapsán tamtéž).
+
+## 2026-09-20 (6) — Místo „řeka mezi svahy" + druhý tvar konce pro těžké runy (v4.34)
+
+**Obojí owner schválil přímo v konverzaci.**
+
+**1. `IMG_PLACES.P` má zpět šesté místo:** `niður með ánni milli hlíðanna` / `down along the river
+between the slopes`. KUKY: *„údolí s řekou — pokud to má být něco mezi, tak třeba řeka mezi dva
+svahy; záleží, pro jakou runu to je."* Registr P dnes nese jádra Raidha (cesta, pohyb) — řeka mezi
+svahy drží pohyb v krajině a nemá to, co ownerovi vadilo na „údolí mezi statky": **dvě usedlosti
+čtou jako lidský spor v pozadí scény**, což je obsah, co tam nikdo nedal.
+Korpus: *niður með ánni* 201 · *með ánni* 896 · *milli hlíðanna* 5. BÍN: `hlíðanna` = **hlíð**
+(kvk, EFFTgr) = svahů — is-grammar-qa nabízelo `hliðanna` (= bran), jiné slovo, ne oprava tvaru.
+Z002 „velké písmeno" je artefakt testu v izolaci: **stávající** produkční místa dávají týž flag 2/2.
+
+**2. `ENDING_HEAVY` má druhý tvar** (EN i IS): *„End on one line that names what this may be in the
+seeker's life — a state that may be so, said plainly; no comfort, nothing softened."*
+Proč vůbec: od v4.33 měl těžký pool **jedinou** položku, takže konec těžkých čtení byl pevný slot —
+přesně to, proti čemu `_endingShape` 2026-07-17 vznikl (DECISIONS:592). Varování z (5) tím padá.
+Proč VĚTA a ne otázka: otázkový tvar **navádí 2/6** (CODE-read) a u těžkých run by navádění bylo
+horší než u lehkých. „may be" zůstává — bez něj tvar možnosti padl 2/2.
+
+**Čím je to jištěné:** ㉨ každý tvar se losuje při každém úhlu a `_promptDraws` pozná všechna znění
+(teď 5) · ㉠ místa registru úplná, rozklad image+place drží · registr 206 (v4.34-tezky-druhy) ·
+smoke 44/44 · IS ověřena BÍN + korpusem, oba flagy rozhodnuty protipříkladem.
+
+**Verze promptu:** v4.33-most → **v4.34-tezky-druhy**.
+
+**Affected doc(s):** žádný.

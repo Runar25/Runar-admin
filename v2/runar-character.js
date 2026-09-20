@@ -672,6 +672,7 @@ var IMG_PLACES = {
     ['á heiðinni undir fjöllunum', 'the heath below the fells'],
     ['í hlíðinni fyrir ofan bæinn', 'a hillside above the farm'],
     ['á engjunum', 'the outlying hay meadows'],
+    ['niður með ánni milli hlíðanna', 'down along the river between the slopes'],
   ],
 };
 

@@ -375,6 +375,7 @@ function _promptDraws(prompt, lang) {
 // tvar smi pribyt, az bude zmereny (owner o tom vi).
 const ENDING_HEAVY = [
   "End on one line that holds out two things this may be in the seeker's life, each a state that may be so — said plainly, without comfort or softening.",
+  "End on one line that names what this may be in the seeker's life — a state that may be so, said plainly; no comfort, nothing softened.",
 ];
 const ENDING_OPEN = [
   "End on one line that names what this may be in the seeker's life — a state that may be so, offered for them to weigh; it names how things may stand, never what to do about it.",
@@ -383,6 +384,7 @@ const ENDING_OPEN = [
 ];
 const ENDING_HEAVY_IS = [
   'Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið í lífi leitandans, hvort um sig ástand sem gæti átt við — sagt umbúðalaust, engin huggun, ekkert mildað.',
+  'Endaðu á einni línu sem nefnir hvað þetta gæti verið í lífi leitandans — ástand sem gæti átt við, sagt umbúðalaust; engin huggun, ekkert mildað.',
 ];
 const ENDING_OPEN_IS = [
   'Endaðu á einni línu sem nefnir hvað þetta gæti verið í lífi leitandans — ástand sem gæti átt við, honum til umhugsunar; hún nefnir hvernig hlutirnir gætu staðið, aldrei hvað skuli gera.',

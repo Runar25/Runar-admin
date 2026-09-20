@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-20",
- "prompt_version": "v4.33-most",
+ "prompt_version": "v4.34-tezky-druhy",
  "pravidla": [
   {
    "hash": "54d29df4d80b",
@@ -68,6 +68,12 @@
    "lang": "en",
    "zdroj": "zakonceni_heavy[0]",
    "zacatek": "End on one line that holds out two things this may be in the seeker's "
+  },
+  {
+   "hash": "c30c90dedd5c",
+   "lang": "en",
+   "zdroj": "zakonceni_heavy[1]",
+   "zacatek": "End on one line that names what this may be in the seeker's life — a s"
   },
   {
    "hash": "01e446c1d614",
@@ -650,6 +656,12 @@
    "lang": "is",
    "zdroj": "zakonceni_heavy[0]",
    "zacatek": "Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið í lífi leit"
+  },
+  {
+   "hash": "a98ec94c4449",
+   "lang": "is",
+   "zdroj": "zakonceni_heavy[1]",
+   "zacatek": "Endaðu á einni línu sem nefnir hvað þetta gæti verið í lífi leitandans"
   },
   {
    "hash": "4fa055f635bc",
