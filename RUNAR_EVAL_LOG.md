@@ -4345,3 +4345,35 @@ celý los stáhne — E-LOS 42 % spony).
 **Losuje se tedy pět věcí:** úhel · obraz (+ místo u jader) · délka · konec · umístění jména; a **aspekt** tam, kde obraz
 nemá svůj sloupec. Zbytek je pevný nebo od člověka. ⚠️ Moje testy losy fixují (správně, kvůli izolaci změny), ale závěr pak
 platí pro TU buňku — u mostu to bylo vidět: tři věty × čtyři věty daly jiný výsledek.
+
+## 2026-09-20 (3) — Tvary mostu (věta · otázka · dvě možnosti) · těžké runy most kazí · co má v kódu jaký limit
+
+**Owner:** *„občas by ten most měl být i otázka? Jak ještě by mohl být tvořen?"* · *„kolik slov si může každá část vzít pro
+svůj text — myslím v kódu, ne kolik nakonec model vytvoří?"* · *„říkáš konec (3 otevřené, 2 těžké), jak se to shoduje
+s mostem?"* Produkce v4.31, produkční model, tytéž tři scény. Podklady → `docs/eval/2026-09-20-scena-a-vztah/most-a-tvar/`.
+
+### 1. Tři tvary mostu — všechny tři jsou použitelné, každý jinak
+| tvar | znění pokynu (konec) | výsledek |
+|---|---|---|
+| **VĚTA** (C) | *„names what this may be in the seeker's life — a state that may be so…"* | možnost 6/6, rada 0/6 |
+| **OTÁZKA** (Q) | *„one question that holds out what this may be … never as something you know about them"* | otázka 6/6, ale **2/6 navádí** (*„What sat ready in you now…"*, *„…keeps you in sight of where you last stood sure?"* — předpokládají, že to tak je) |
+| **DVĚ MOŽNOSTI** (TWO) | *„two things this may be … each a state that may be so"* | 3/3 dvě skutečné možnosti: *„a shelter you have built, or a boundary that keeps you from the open sky"* · *„rest earned, or a stillness that has begun to hold you longer than you chose"* |
+⇒ Most může být malý LOS ze tří tvarů. TWO sedí na ownerem potvrzený nález *„otázka se dvěma skutečnými možnostmi"*
+(`memory/co-dela-cteni-silnym`). U otázky je třeba hlídat návodnost (2/6).
+
+### 2. ⚠️ Těžké runy: dnešní „bez útěchy" tvar most ZABIJE
+`HEAVY_RUNES` (Hagalaz · Nauthiz · Isa · Thurisaz · Perth · Tiwaz — 6 z 25) losují z `ENDING_HEAVY` (*„no soft question,
+no comfort"*), nikdy z `ENDING_OPEN`. Zkusil jsem těžkou verzi mostu (*„offered without comfort and without softening"*):
+most tam je, ale **tvar možnosti zmizel 2/2** — *„Something here has cooled while you waited for it to be otherwise."*
+*„Some stretch of your life has gone cold in the holding."* = tvrzení, ne možnost. ⇒ Kdo most nasadí, musí pro těžké runy
+nechat *„may be"* a ubrat jen útěchu, ne naopak. ⚠️ Moje dřívější měření mostu u Isy (záznam (2)) jelo na `ENDING_OPEN[2]` —
+v produkci by Isa tenhle konec nikdy nedostala; neplatí pro ni.
+
+### 3. Co má v KÓDU jaký limit (odpověď ownerovi: per část ŽÁDNÝ)
+Jediná čísla v celém promptu jsou v losu délky: **3 věty / 38–45 slov** nebo **4 věty / 50–58 slov** (`LENGTH_BUDGETS`),
+plus tempo *„20–25 / 28–33 vteřin mluveného"*. Jednotlivé části mají jen slovní meze:
+obraz = **žádná** (`_imageRules` délku neřeší) · esence = *„one short line"* · konec = *„one line" / „one question"* ·
+most (návrh) = *„one line"* · jméno = umístění, ne délka. ⇒ Rozdělení slov mezi části dnes NIKDO neřídí; model si je dělí sám.
+**Stavba vět** má jediné pravidlo, a to v hlasu (systémový prompt): *„Sentences run one clause, sometimes two joined by a
+comma — never a long unfolding line, never a clipped fragment."* Měřeno: úvodní věta má právě jednu čárku **22/22**;
+odebrání části *„sometimes two joined by a comma"* nezměnilo nic (2026-09-18) — systémový prompt model poslouchá slabě.

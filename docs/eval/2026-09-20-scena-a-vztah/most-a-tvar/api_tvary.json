@@ -1,0 +1,42 @@
+{
+ "Algiz-most-Q-1": {
+  "text": "Where the turf wall meets the wind, the gust bends and breaks along the grass, and just past that edge the doorway stands still. This is Algiz, Kuky — a shelter that takes the weather so what lies behind it can hold. What in your days is doing that quiet work of taking the wind for you?",
+  "model": "claude-opus-4-8",
+  "out_tokens": 116
+ },
+ "Algiz-most-Q-2": {
+  "text": "Where the turf wall meets the wind, its whole length holds the gust so the doorway behind it stays still. This is Algiz, Kuky — a thing set at the edge so what matters can keep its calm. Is there something you have raised to take the weather, so one quiet place can stay open?",
+  "model": "claude-opus-4-8",
+  "out_tokens": 111
+ },
+ "Isa-most-H-1": {
+  "text": "The coffee sits untouched, the steam long gone, the surface gone still and flat. This is Isa, Kuky, the hour that holds itself while you keep watch over a table that has stopped giving warmth. Something here has cooled while you waited for it to be otherwise.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 105
+ },
+ "Isa-most-H-2": {
+  "text": "The coffee sits untouched, its warmth leaving the cup while you stay at the table. This is Isa, Kuky, the hour where nothing moves and the waiting outlasts the thing you waited for. Some stretch of your life has gone cold in the holding.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 102
+ },
+ "Isa-most-Q-1": {
+  "text": "The coffee sits untouched, the steam long gone, the cup gone cold in your hand. This is Isa, Kuky, the pause that holds a thing in place until it is ready to move. Could there be something you are waiting on that has quietly grown cold while you watched the door?",
+  "model": "claude-opus-4-8",
+  "out_tokens": 106
+ },
+ "Isa-most-Q-2": {
+  "text": "The coffee sits untouched, its warmth drawn out into the air while the surface stills. This is Isa, Kuky — the way a thing holds its place while the moment for it slips past. What sat ready in you now, waiting on something that has not yet come?",
+  "model": "claude-opus-4-8",
+  "out_tokens": 99
+ },
+ "Raidho-most-Q-1": {
+  "text": "The cairns hold their place at the field's edge, each in sight of the next, while the grass leans and shifts around them. This is what Raidho does, Kuky — it marks the road already walked so the next stone can be found. Might there be one marker behind you now, steady enough to sight the next by?",
+  "model": "claude-opus-4-8",
+  "out_tokens": 111
+ },
+ "Raidho-most-Q-2": {
+  "text": "The cairns hold still at the field's edge, each one built to be seen from the last, while the grass around them bends in the late-summer wind. Raidho is that unmoving line of stones, Kuky, marking the road when nothing else stays put. What in your days keeps you in sight of where you last stood sure?",
+  "model": "claude-opus-4-8",
+  "out_tokens": 116
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "Algiz-most-TWO-1": {
+  "text": "Where the turf wall meets the wind, the gust breaks and scatters, and the doorway behind it stays still. Algiz is that wall, Kuky, the thing set at the edge so the calm can hold. What stands between you and the weather may be a shelter you have built, or a boundary that keeps you from the open sky.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 121
+ },
+ "Isa-most-TWO-1": {
+  "text": "The coffee sits untouched, its warmth leaving it while you stay at the table. This is Isa, Kuky, the moment held still while everything you meant to do waits with the cooling cup. What looks like nothing is a pause that may be rest earned, or a stillness that has begun to hold you longer than you chose.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 118
+ },
+ "Raidho-most-TWO-1": {
+  "text": "At the field's edge stand the cairns, each one holding its place while the light shifts long across late-summer grass. Raidho is the road walked stone by stone, Kuky, where you only need to see the next one, not the last in the line. This may be the steadiness of knowing your way, or the pull of a road not yet finished.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 119
+ }
+}
