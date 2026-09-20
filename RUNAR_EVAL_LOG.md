@@ -4265,5 +4265,14 @@ what is true, stirring, or known inside them"*). Vztahový obraz k tomu mostu p�
 zakázat důsledně (a čtení zůstane popisem scény), nebo ho **udělat vstupem s daným tvarem** (možnost, ne diagnóza — týž tvar,
 který prošel v Asku 2026-09-19 (4)). Dnešní stav je nejhorší ze tří: zakázáno a přitom v polovině čtení.
 
+**Ověření v4.31 (po nasazení obou ownerových rozhodnutí), 6 čtení produkční cestou produkčním modelem:**
+„You stand" jako POSLEDNÍ věta **0/6** (na začátku z úhlu [6] zůstává, 1/6) · obilí **0/6**, po sezóně zbyla jediná zmínka
+*„In late summer the grass leans where the walking has been"* · binární volba blízká × vzdálená **0/6**. ⇒ obě změny drží
+v živém výstupu. `IMG_PLACES.P` má zatím pořád *down in the valley between the farms* (ownerovo vyřazení 2026-09-20 nenasazeno).
+Podklady → `docs/eval/2026-09-20-scena-a-vztah/v431-po-nasazeni/`.
+⚠️ **Texty z pokusu „jedna scéna, čtyři runy" NEJSOU produkční výstup** (owner se ptal): Algizovi jsem podstrčil vztah
+*„one side taking the weather…"*, vnutil jediné místo (průsmyk), odstranil řádek sezóny a zafixoval losy. V produkci má
+Algiz dál celé obrazy (torfová zeď · ovčácký pes · světlo v okně) a losované místo má zatím JEN Raidho.
+
 **Nález 3 — vedlejší:** *grey* se objevilo 1/8 (*„The stone ahead is grey against the sky"*) i po odebrání věty „sensory" —
 zbytkový model-prior u kamene; zatím pod prahem, jen hlídat.
