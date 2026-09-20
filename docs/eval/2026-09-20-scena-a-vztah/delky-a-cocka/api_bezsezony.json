@@ -1,0 +1,17 @@
+{
+ "raidho-4vety-bezsezony-1": {
+  "text": "The cairn stands still while the mist moves across the pass, changing nothing in the stone. Raidho is the road walked one marker at a time, each cairn built to be seen from the last. You cannot see the whole way, Kuky, only the next pile of stones holding its place in the weather. This may be the slow steadiness of one who keeps giving ground to the walk, or the quiet gift of trusting hands that set those stones before you came.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 156
+ },
+ "raidho-4vety-bezsezony-2": {
+  "text": "The cairns hold their place while the mist moves through the pass and the light shifts along the stones. Raidho is the road walked from one marker to the next, Kuky, each raised in sight of the one before. You do not see the whole way, only the next stone standing clear enough to reach. This may be steady ground given to you, or a hand you have offered another, still to be weighed.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 134
+ },
+ "raidho-4vety-bezsezony-3": {
+  "text": "The cairn holds while the mist moves around it, stone stacked and still on the pass. Raidho is the walking between one marker and the next, Kuky, each raised in sight of the last. You do not see the whole road, only the next pile of stones that someone set for the one who came after. What passes between you and those who built them may be an old debt or a quiet gift given forward.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 133
+ }
+}

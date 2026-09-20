@@ -4409,3 +4409,37 @@ you by another hand, or patience you are learning to give yourself"*. Most tedy 
 Znění *„holds out two things this may be … each a state that may be so — said plainly, without comfort or softening"*:
 tvar možnosti **3/3** (dřívější „bez útěchy" verze ho ztratila 2/2). Např. *„This may be a stillness you have chosen, or
 one that has been handed to you."* Délka 62–72 slov proti rozpočtu 50–58 (opět přes).
+
+## 2026-09-20 (5) — KAM který vstup ve čtení dosedne (62 čtení) · období je zdroj „late summer" · OPRAVA: produkce strop drží
+
+**Owner:** *„už máme dost testovacích čtení — můžeme zjistit, kde se projevují jednotlivé vstupy, kam jdou, do jaké věty,
+a jestli v nějaké větě není příliš velký přetlak."* · *„když něco vstoupí do obrazu, chci vědět, co to je, abych to mohl
+upravit."* · *„strop necháme… budeme počítat počet slov ve čteních; kam to budeme zapisovat?"*
+
+### 1. Mapa: který vstup dosedne do které věty (62 testovacích čtení s known promptem, `scripts/` v podkladech)
+| vstup | kam dosedne |
+|---|---|
+| místo | **věta 1 — 91 %** |
+| období (když je řádek v promptu) | věta 1 — 70 % |
+| jádro obrazu | věta 1 (40 %) · věta 2 (29 %) · poslední (23 %) |
+| **jméno runy** | **věta 2 — 89 %** |
+| **jméno člověka** | **věta 2 — 83 %** |
+| aspekt (`focus on`) | věta 2 (51 %) · poslední (40 %) |
+| most (možnost) | **poslední — 100 %** |
+| poloha člověka (*you stand…*) | poslední (54 %) · věta 3 (31 %) |
+**Přetlak:** 1 vstup nese 37 % vět · 2 vstupy 33 % · **3 vstupy 19 % · 4 vstupy 7 %**. Nejvytíženější je **věta 2**:
+sejde se v ní jméno runy + jméno člověka + aspekt + kus obrazu. ⇒ Ownerova intuice o „ucpané větě" potvrzena, a je
+i vidět proč: los jména `NAME_PLACEMENTS[1]` = *„uprostřed"* míří přesně do věty, kde už stojí esence.
+Ownerova úvaha, že čárka dělá vstupu místo, tím dostává oporu — tlak je tam, kde se schází nejvíc vstupů.
+
+### 2. Období: řádek sezóny JE zdroj *„through late summer"*
+Zmínka o období v textu: **7/33** čtení posledních dávek (část ještě starým zněním „two months of summer").
+Bez řádku sezóny (týž prompt, 3 čtení): **0/3 zmínka o období, 0/3 počasí z jiné doby** (*mist* patří k průsmyku).
+⚠️ Obrazy jsou navíc už filtrované podle měsíce (`RUNE_IMG_SEASONS`), takže obraz sám z jiné sezóny přijít nemůže —
+řádek hlídá jen to, co si model přidá. Rozhodnutí ownera: odebrat, nebo nechat.
+
+### 3. ⚠️ OPRAVA mého tvrzení z (4): produkce strop DRŽÍ
+Ownerových **80 EN Single** čtení: **průměr 53 slov, medián 51**, min 39 max 75 (rozpočty se losují 38–45 / 50–58).
+Přetekla moje TESTOVACÍ čtení (62–85), protože jsem do promptu naložil oblast + čočku + most naráz. ⇒ Strop není
+fikce; fikcí se stává s každou přidanou povinností. **Kam zapisovat průměr (owner se ptal): nikam do docu** —
+číslo vlastní DB. Přidán `scripts/delky_cteni.js`, který ho spočítá z exportu (§20.4: stav vlastní data, ne text).
