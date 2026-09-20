@@ -1,0 +1,42 @@
+{
+ "Algiz-1": {
+  "text": "On the winding pass one ridge takes the wind's full weight, and the far side stays quiet in its lee. That is Algiz, one thing standing so another can hold its ground. What you feel as calm, Kuky, is calm that a nearer edge is carrying for you. The sheltered side rarely sees the shoulder that breaks the weather.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 129
+ },
+ "Algiz-2": {
+  "text": "Where the pass turns against the wind, one ridge takes the weather so the lee side stays still. Algiz is that ridge, Kuky, the one face that holds the cold so the other keeps its warmth. Something near you carries the brunt right now, and the calm you stand in is not chance, it is borrowed. The sheltered ground stays quiet while the stone above it takes the storm.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 142
+ },
+ "Isa-1": {
+  "text": "Where the pass bends, the snow keeps sliding downhill while one stone stays fixed in the turn. Isa is that holding, Kuky, the thing that does not move when everything around it goes on. The stone does not stop the snow, it simply keeps its place through the passing. Not everything is meant to travel at once.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 119
+ },
+ "Isa-2": {
+  "text": "High on the mountain pass, the road bends and the melt runs down the rock, and one shelf of ice holds fast while the water slips past it. This is Isa, Kuky, the thing that stays put as the season leaves it behind. It does not fight the thaw, it simply keeps its own time under the shadow of the ridge. Some part of you waits like that, held while the rest moves on.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 140
+ },
+ "Laguz-1": {
+  "text": "Watch where the rock face ends and the water begins, high on the winding pass. Rain does not choose its path down, it takes the way already worn into the stone. This is Laguz, Kuky, the moving thing that finds the low ground without being told. You feel the pull before you name it, the way water knows the slope. It goes on falling whether you watch or not.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 130
+ },
+ "Laguz-2": {
+  "text": "At the edge where stone gives way to water, a stream picks its path down the mountain pass. This is Laguz, Kuky, the water that finds the low ground without being shown. It does not push through the rock, it moves around what will not yield. You need not name every turn ahead, the way reveals itself as you go.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 115
+ },
+ "Raidho-1": {
+  "text": "One marker rises, and just past it the pass bends and the next one waits. You do not see the whole road, Kuky, only the stone in front of you and the turn it points toward. This is Raidho — the way found one step at a time, where each marker becomes the ground for the next. You are already walking it.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 110
+ },
+ "Raidho-2": {
+  "text": "The pass turns where the last marker ends and the next comes into view, one stone giving way to the next. Here, Kuky, Raidho is the road that shows itself only a marker at a time, never the whole climb at once. You see the next cairn, not the summit, and that is enough to keep walking. The stone ahead is grey against the sky, and the ground under your feet holds.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 136
+ }
+}

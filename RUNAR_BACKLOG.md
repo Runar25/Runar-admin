@@ -55,6 +55,19 @@
   grey"): po KROKU 2 grey/wind 8/9; bez té věty 0/3, s vrácenou větou o počasí 0/3. Owner rozhodne mezi S (věta pryč) a W
   (brzda zpět — bod 7 CODE-tune), texty obou ramen jsou holé. Zvlášť: **mlha → „the grey" jako podstatné jméno** (model
   nechce opakovat „fog") — týká se obrazů a míst s mlhou; test „jmenuj věc pokaždé jejím jménem" zatím neběžel.
+- [ ] ⭐ **LIST RUNY — materiál, podle kterého jde poznat, co k runě patří** (KUKY 2026-09-20: *„jak ti mám připravit
+  materiál, podle kterého bys dokázal rozpoznat, co je vhodné pro runu? Jaké další vstupy by do ní mohly jít?"*).
+  Návrh CODE-read, 6 polí na runu; vyplňuje owner/Cowork, CODE-read podle nich staví testy:
+  1. **VZTAH (2–4)** — co runa KONÁ, slovesně a bez místa (*„něco drží, zatímco zbytek jde dál"*). Doloženo 2026-09-20:
+     runa do sdílené scény dodává vztah, ne rekvizitu; bez dodané scény se runy sjedou do svých živlů.
+  2. **PROTI SOUSEDOVI** — jedna věta, čím se liší od runy, se kterou se plete (Isa × Laguz, Algiz × Thurisaz;
+     dvojice z identitního testu 2026-09-09 (6)).
+  3. **KAM NEPATŘÍ** — místa a rekvizity, které ji táhnou jinam (Isa × tekoucí voda v popředí → Laguz, doloženo 2026-09-19).
+  4. **REGISTR + TYP** — D/E/P a fyzický/situační/slovní (`RUNAR_DESIGN.md` „Image pool"); určuje, z jakého seznamu se losuje místo.
+  5. **MOST K ČLOVĚKU** — co si z toho člověk MŮŽE poznat, jako možnost (*„může to být to, co u tebe drží, zatímco ostatní jde dál"*).
+  6. **KALIBRAČNÍ VĚTA** — 1–2 věty ownerovým uchem „takhle to má znít". ⚠️ **Nejde do promptu** — vzor v promptu se
+     opisuje (32/33, 2026-09-15); slouží jako cíl při vyhodnocení.
+  Rozsah: 25 run. Napřed 2 runy jako vzorek (Raidho hotový z 2026-09-19, Isa), pak se rozhodne o zbytku.
 - [ ] ⭐ **HON NA HYBRIDY — kontrola → podezřelý → malý test, runa po runě** (KUKY 2026-09-19: *„máme spoustu inputů, u kterých
   si nejsme jistí, co dělají; najdeš podezřelého → menší test → upravit, zrušit, předělat? … neřešíme jednu runu, ale všechny,
   postupně"*). Postup: (1) **kontrola**: slepý soudce *„řekni vlastními slovy, co ti říká poslední věta / celé čtení"* —
@@ -68,6 +81,9 @@
   (záznam (5)) — čeká na rozhodnutí ownera. Podezřelý #3: řádek sezóny v4.29 → obilí v obraze bez pole 6/6
   (záznam (5)); owner „zuž a otestuj" → zúžení pokynu NEPOMOHLO (5/6), vadí jméno měsíce; holé sdělení se opisuje (5/6);
   **funguje sezóna jako PODMÍNKA** (obilí 0/6, opis 0/6) — znění EN+IS v záznamu (6), předáno CODE-tune.
+  Podezřelý #4 (nový, 2026-09-20): **most k člověku** (*„what you feel as calm… is carried for you"*) je v 5/8 čtení,
+  přestože ho `NO COLD READING` zakazuje — vztahový obraz k němu zve. Rozhodnutí ownera: zakázat důsledně, nebo udělat
+  z mostu VSTUP s daným tvarem (možnost, ne diagnóza — tvar prošel v Asku 2026-09-19 (4)). Dnešek = zakázáno a přesto v polovině čtení.
   Podezřelý #2 `ENDING_OPEN[1]` — ✅ owner 2026-09-19 VYPUSTIT (znění EN+IS ověřeno, záznam (6)). ⛔ Kontrola (1) ve tvaru
   „srozumitelnost" NEPROŠLA ověřením (2/6 × 2/6) — kandidát dál: soudce SOULADU („dává otázka smysl pro tuto runu a obraz?"),
   napřed zase ověřit na téže sadě.

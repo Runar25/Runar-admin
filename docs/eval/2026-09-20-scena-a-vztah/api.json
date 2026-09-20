@@ -1,0 +1,42 @@
+{
+ "Algiz-1": {
+  "text": "See where the ridge meets the wind, one slope taking the full weather so the far side stays quiet. That is Algiz, the shelter that holds the storm at its own back. Something near you, Kuky, is standing in the weather so a calmer place can exist behind it. Not every stillness is empty of cost. Some of it is being carried.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 125
+ },
+ "Algiz-2": {
+  "text": "See the ridge where the wall meets the wind, one face weathered and streaked, the other side dry and still. Algiz is that turning, Kuky, where one surface takes the storm so the ground behind it holds warm. The rough edge is not damage, it is the price of the calm it keeps. Something stands between the weather and the quiet, and the quiet lasts.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 134
+ },
+ "Isa-1": {
+  "text": "Watch the river ice at its ragged edge, where the frozen sheet meets the black water still running beneath. Isa is the thing that holds while the rest keeps going. Here, Kuky, the current has not stopped, it moves out of sight below the surface. What looks like stillness is only one part of you waiting, held in place while the water finds its way.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 128
+ },
+ "Isa-2": {
+  "text": "At the river's edge the water keeps moving, but one stone sits frozen where the ice took hold. Isa is that holding still while the current carries everything else downstream. You are the stone here, Kuky, kept in one place while the season goes on around you. The rest will move as it moves, and the ice keeps its own hour.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 118
+ },
+ "Laguz-1": {
+  "text": "Watch where the trickle leaves the rock and becomes the stream, one thing slipping into the next. Laguz is water finding its own way down, never forcing, always feeling for the lower ground. You are near such an edge now, Kuky, where the shape you knew softens into something else. The water does not decide the path, it follows the ground it is given.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 127
+ },
+ "Laguz-2": {
+  "text": "Watch where the stream meets the stone and slips around it, no force in the turning, only the finding of a lower way. This is Laguz, water knowing the ground before the eye can read it. You need not name the path ahead of it, Kuky, the descent already leans toward its own low place. The water asks nothing, it simply goes where the earth allows.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 127
+ },
+ "Raidho-1": {
+  "text": "Where the last marker ends, the next has not yet shown itself, and the ground between them is bare. Raidho is the road walked one stone at a time, each one found only once the last is behind you. You do not see the whole way, Kuky, only the marker you have reached. That is enough to stand on for now.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 112
+ },
+ "Raidho-2": {
+  "text": "One marker stands where the last one falls away, and you cannot see the next until this one is behind you. This is Raidho, Kuky, the road that shows itself only a stride at a time. You move by trusting the ground under this step, not the whole path laid out ahead. What comes next is still hidden, and that is enough for now.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 119
+ }
+}

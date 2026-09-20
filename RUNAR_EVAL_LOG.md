@@ -4237,3 +4237,33 @@ scény se liší (průsmyk · vřesoviště pod horami · údolí mezi statky ·
 ready"*, *„in this grain-cutting month"*, *„Two months of summer remain"*). ⚠️ CODE-tune je v handoffu vedla jako „čeká na
 ownera" — owner je rozhodl 2026-09-19 (*„1. ano vypusť 2. ano zuž a otestuj"* + *„late summer"*), znění a doklady jsou
 v záznamech (5) a (6); psáno proti `d457494` a `20247a6`.
+
+## 2026-09-20 — Jedna scéna, čtyři runy: runa dodává VZTAH, ne rekvizitu · a most k člověku prosakuje 5/8
+
+**Ownerova otázka:** *„pokud mám obraz pro všechny runy stejný, například klikatící se průsmyk, a ten půjde na Isu, měla by
+Isa dodat něco, co je jí vlastní — stillness, nebo třeba neprůchodnost? Ptám se."* Plus: *„další vstup, něco, co by patřilo
+na uživatele — máme „you stand…", můžou být další"*; *„výklad má být harmonický, části mají do sebe zapadat"*.
+
+**Jak:** produkce v4.30, jedno místo *a winding mountain pass* pro všechny, tytéž losy (úhel [5], konec `ENDING_OPEN[2]`,
+délka [1], jméno uprostřed), bez čočky, řádek sezóny odstraněn. Runa vstupuje JEN svým vztahem (co ve scéně dělá):
+Raidho *the way found one marker at a time* · Isa *one thing holding still while the rest moves on* · Algiz *one side taking
+the weather so the other stays calm* · Laguz *water finding its own way down*. 2 čtení na runu, produkční model.
+Podklady → `docs/eval/2026-09-20-scena-a-vztah/`.
+
+**Nález 1 — sdílená scéna funguje a runy se nepletou.** Všechna čtení stojí v průsmyku a liší se tím, co v něm KONÁ:
+kámen, který drží, zatímco sníh sjíždí (Isa) · hřeben, který bere vítr, aby závětří zůstalo klidné (Algiz) · voda hledající
+nižší zem (Laguz) · značka, od které je vidět na další (Raidho). ⇒ **Odpověď ownerovi: runa dodává VZTAH (sloveso), ne
+rekvizitu.** Isa nepřináší led — přináší „něco drží, zatímco zbytek jde dál"; led/kámen si doplní scéna.
+⚠️ Kontrolní běh bez místa (`api.json`, řádek neměl 9. sloupec `jadro`): model si scénu vymyslel sám a šel po ŽIVLU runy
+(Isa → led na řece, Laguz → potok). Bez dodané scény se runy zase sjedou do svých živlů.
+
+**Nález 2 — most k člověku prosakuje neřízeně: 5/8.** *„What you feel as calm, Kuky, is calm that a nearer edge is carrying
+for you"* (Algiz) · *„Something near you carries the brunt right now"* (Algiz) · *„Some part of you waits like that, held
+while the rest moves on"* (Isa) · *„You feel the pull before you name it"* (Laguz) · *„You are already walking it"* (Raidho).
+Jsou to přesně věty, které dělají čtení „o člověku" — a přesně ty, které `NO COLD READING` zakazuje (*„never tell the seeker
+what is true, stirring, or known inside them"*). Vztahový obraz k tomu mostu přímo zve. ⇒ Rozhodnutí ownera: buď most
+zakázat důsledně (a čtení zůstane popisem scény), nebo ho **udělat vstupem s daným tvarem** (možnost, ne diagnóza — týž tvar,
+který prošel v Asku 2026-09-19 (4)). Dnešní stav je nejhorší ze tří: zakázáno a přitom v polovině čtení.
+
+**Nález 3 — vedlejší:** *grey* se objevilo 1/8 (*„The stone ahead is grey against the sky"*) i po odebrání věty „sensory" —
+zbytkový model-prior u kamene; zatím pod prahem, jen hlídat.
