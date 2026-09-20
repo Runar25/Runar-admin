@@ -355,40 +355,32 @@ function _promptDraws(prompt, lang) {
 // ─── ENDING SHAPE (anti-slot) ────────────────────────────────────
 // How a reading closes varies per reading AND follows the rune's valence (HEAVY_RUNES):
 // a heavy rune must not be softened into comfort; the rest may rest instead of asking.
+// MOST K CLOVEKU (2026-09-20, handoff CODE-read; owner schvalil). Do v4.32 drzel konec
+// OBRAZ („End on a plain, steady line from the image“) — a ctenar, ktery vstupy nevidi,
+// z nej nevedel nic: KUKY nad „care alone cannot settle what remains unspoken“: „je to hodne
+// metaforicke, me z toho nic moc na povrch nevystupuje, nejsem schopny rict cemu to patri.“
+// Most pojmenuje, co to MUZE byt v jeho zivote — jako STAV k zvazeni, nikdy jako rada.
+// Merene CODE-read produkcnim modelem: veta 6/6 moznost a 0/6 rada · dve moznosti 3/3 ·
+// tezka verze 3/3 · otazka 6/6, ale 2/6 navadi — to je ZNAMA VADA, hlidat pri prvnim mereni.
+// ⚠ Znalost, ktera stala dva pokusy: verze bez „may be“ („…without comfort and without
+// softening“) zabila tvar moznosti 2/2 — „may be so“ v kazdem tvaru MUSI zustat.
+// Tezke runy (HEAVY_RUNES) sem losuji misto OPEN. Jedine zneni = zatim bez losu; druhy
+// tvar smi pribyt, az bude zmereny (owner o tom vi).
 const ENDING_HEAVY = [
-  'End on a line that stays standing — no soft question, no comfort; let it stand.',
-  // 2026-08-21: nejhorsi jednotliva paka z dvaceti — 8/8 studenych cteni (prumer poolu 7,0).
-  // „Asks for honesty" je pozvanka rict ctenari, co v sobe skryva. Tvrdost zustava,
-  // ale drzi se obrazu a nezada priznani.
-  'End with one hard question that stays with the image and asks for nothing to be admitted — no comfort, no softening.',
+  "End on one line that holds out two things this may be in the seeker's life, each a state that may be so — said plainly, without comfort or softening.",
 ];
 const ENDING_OPEN = [
-  // 2026-08-21: „turns the seeker inward" vyrabelo predpoklad zabaleny do otazky —
-  // ctenar na ni nemohl odpovedet, aniz by tvrzeni prijal.
-  // v4.11 (2026-08-23): "could answer neither" model obchazel pripojenim "or neither
-  // yet" k zachovanemu tvrzeni ("what stirs in you"). Prepis jmenuje pozitivni tvary
-  // a zakazuje tvrzeni po pulkach volby (A/B: hranicni 7->3 z 16).
-  // 2026-09-19 (handoff CODE-read #1, owner „vypust"): „or offering a plain choice" delalo
-  // u Raidha volbu blizke x vzdalene 4/4 (bez ni 0/3); bez volby nema otazka poloviny ->
-  // „no part" (korpus: „enginn helmingur" 0, „enginn hluti" 103).
-  'End with one open question asked of the image — no part of the question may claim what is true, missing, or not yet ready in the seeker.',
-  // 2026-08-21: puvodne „name where the seeker stands" — doslova pokyn tvrdit o ctenari,
-  // osm radek od zakazu `_noColdRead`. Ted se pojmenovava jeho misto V OBRAZE.
-  // 2026-09-20 (handoff CODE-read #2, owner „ano"): „name where the seeker stands in the
-  // image" VEN — s tou frazi koncilo cteni „You stand…" 6/6, bez ni 0/6 (dva obrazy,
-  // produkcni model; RUNAR_EVAL_LOG 2026-09-19 (5)). Druhy zdroj „You stand" je uhel [6]
-  // na ZACATKU — ten zustava, owner ho nerusi.
-  'End on a plain, steady line from the image — not what is true inside them; not a question.',
-  'End on a quiet line that rests — not a question this time.',
+  "End on one line that names what this may be in the seeker's life — a state that may be so, offered for them to weigh; it names how things may stand, never what to do about it.",
+  "End on one line that holds out two things this may be in the seeker's life, each a state that may be so, left for them to weigh.",
+  "End on one question that holds out what this may be in the seeker's life — asked as a possibility they can weigh, never as something you know about them.",
 ];
 const ENDING_HEAVY_IS = [
-  'Endaðu á línu sem stendur — engin mjúk spurning, engin huggun; láttu það standa.',
-  'Endaðu á einni harðri spurningu sem heldur sig við myndina og krefst engrar játningar — engin huggun, ekkert mildað.',
+  'Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið í lífi leitandans, hvort um sig ástand sem gæti átt við — sagt umbúðalaust, engin huggun, ekkert mildað.',
 ];
 const ENDING_OPEN_IS = [
-  'Endaðu á einni opinni spurningu sem beinist að myndinni — enginn hluti spurningarinnar má fullyrða hvað er satt, hvað vantar eða hvað leitandinn er ekki tilbúinn til.',
-  'Endaðu á staðfastri línu úr myndinni — ekki hvað er satt innra með honum; ekki spurningu.',
-  'Endaðu á hljóðlátri línu sem hvílir — ekki spurningu í þetta sinn.',
+  'Endaðu á einni línu sem nefnir hvað þetta gæti verið í lífi leitandans — ástand sem gæti átt við, honum til umhugsunar; hún nefnir hvernig hlutirnir gætu staðið, aldrei hvað skuli gera.',
+  'Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið í lífi leitandans, hvort um sig ástand sem gæti átt við, honum til umhugsunar.',
+  'Endaðu á einni spurningu sem spyr hvað þetta gæti verið í lífi leitandans — sem möguleika sem hann getur vegið og metið, aldrei sem eitthvað sem þú veist um hann.',
 ];
 // ─── Rozpocet delky (single) ──────────────────────────────────
 // Dve delky, losuje se per cteni. Neni to jen o poctu slov: pri jinem rozpoctu musi model
@@ -414,16 +406,11 @@ function _endingShape(drawn, lang, angle) {
   var heavy = Array.isArray(drawn) ? drawn.some(_isHeavy) : _isHeavy(drawn);
   var pool = heavy ? (lang === 'is' ? ENDING_HEAVY_IS : ENDING_HEAVY)
                    : (lang === 'is' ? ENDING_OPEN_IS : ENDING_OPEN);
-  // 2026-09-18 (handoff CODE-read, bod C): uhel [6] „seeker inside the image" se nesmi
-  // vylosovat s koncem open[1] „name where the seeker stands in the image" — zacatek i konec
-  // by delaly TYZ tah (misto cloveka v obraze) dvakrat. Zneni poolu se nemeni, jen los.
-  // ⚠ 2026-09-20: open[1] uz hledace do obrazu NESTAVI (fraze odesla, viz komentar u poolu)
-  // — premisa vyluky zeslabla. Vyluka zustava, dokud ji owner/CODE-read nezrusi datovanym
-  // rozhodnutim (zmena rozlozeni losu = merena zmena chovani, ne uklid).
-  if (!heavy && angle) {
-    var _uhly = lang === 'is' ? READING_ANGLES_IS : READING_ANGLES;
-    if (angle === _uhly[6]) pool = pool.filter(function (_, i) { return i !== 1; });
-  }
+  // 2026-09-20: VYLUKA uhel[6] x open[1] ODSTRANENA. Vznikla 2026-09-18, protoze open[1]
+  // znelo „name where the seeker stands in the image“ a delalo tyz tah jako uhel [6] (misto
+  // cloveka v obraze) dvakrat v jednom cteni. Tou frazi to zneni uz nezacina ani nekonci —
+  // open[1] je dnes MOST „dve moznosti v zivote leitandy“, ktery do obrazu nikoho nestavi.
+  // Duvod tedy zanikl; drzet vyluku dal by bez duvodu ubiralo jeden ze tri tvaru konce.
   return pool[Math.floor(Math.random() * pool.length)];
 }
 

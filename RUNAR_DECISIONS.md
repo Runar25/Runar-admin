@@ -6230,3 +6230,48 @@ důvod odchodu) · golden diff = jen řádek sezóny pryč + přelosovaná míst
 **Verze promptu:** v4.31-podminka → **v4.32-bez-sezony**.
 
 **Affected doc(s):** žádný — mapa promptu (artifact) překreslena v témž tahu.
+
+## 2026-09-20 (4) — MOST K ČLOVĚKU jako tvar konce (v4.33-most)
+
+**Handoff CODE-read, owner schválil.** Do v4.32 držel konec OBRAZ („End on a plain, steady line
+from the image"). Čtenář, který vstupy nevidí, z něj nedostal nic — KUKY nad Norns čtením: *„care
+alone cannot settle what remains unspoken — je to hodně metaforické, mě z toho nic moc na povrch
+nevystupuje, ani nejsem schopný říct, čemu to patří."*
+
+**Co platí:** konec **pojmenuje, co to MŮŽE být v životě leitandy** — jako stav k zvážení, nikdy
+jako rada. Tři tvary pro lehké runy (los): **věta** · **dvě možnosti** · **otázka**. Těžké runy
+(`HEAVY_RUNES`) mají vlastní tvar „dvě možnosti, řečeno bez útěchy".
+Měřeno CODE-read produkčním modelem: věta 6/6 možnost a 0/6 rada · dvě možnosti 3/3 · těžká 3/3.
+
+⚠️ **Dvě známé vady, obě zapsané v kódu u poolu:**
+1. **Otázka navádí 2/6** (CODE-read). Nasazena i tak — owner ji schválil a otázkový konec je
+   potvrzená síla čtení; hlídat při prvním měření na produkci.
+2. **Znění bez „may be"** („…without comfort and without softening") **zabilo tvar možnosti 2/2** —
+   „may be so" musí v každém tvaru zůstat.
+
+**ENDING_HEAVY má jediné znění** = zatím bez losu (dřív dvě). Druhý tvar smí přibýt, až bude
+změřený; owner o tom ví.
+
+**IS (§2):** první znění od CODE-read, ostatní tři psala CODE-tune islandsky od začátku a ověřila
+korpusem: nefnir tvennt 35 · hvort um sig 3072 · gæti átt við 1010 · til umhugsunar 10432 · sem
+spyr hvað 41 · vegið og metið 679 · þú veist um 1736 · umbúðalaust 1913 · engin huggun 96 (týž tvar
+jako dosavadní těžký pool). „í lífi leitandans" = 0 jen proto, že **samo „leitandans" má v korpusu
+7 výskytů**; vazba „í lífi" má 52 980. is-grammar-qa: jediný flag W001 na imperativu „Endaðu" —
+týž flag dávají i dnešní produkční věty (3/3), tedy šum nástroje, ověřeno protipříkladem.
+
+**VÝLUKA úhel[6] × open[1] ZRUŠENA** (zavedena 2026-09-18, záznam 2026-09-20 (1) ji nechával stát).
+Důvod zanikl se zněním: open[1] už nezní „name where the seeker stands in the image", je to most
+„dvě možnosti" a do obrazu nikoho nestaví. Držet ji dál by bez důvodu ubíralo jeden ze tří tvarů
+konce při jednom ze sedmi úhlů.
+
+**Kontrola ㉨ přepsána, ne zrušena:** dřív hlídala ten jeden zakázaný pár, teď hlídá, že **každý
+tvar konce se dá vylosovat při každém ze 7 úhlů** (7 × 1200 losů/jazyk), že těžká runa losuje jen
+z heavy poolu (500/500) a že `_promptDraws` pozná všechna 4 znění zpětně. Ověřeno i **proti
+rozbitému stavu** (dočasný filtr zakázal open[2] → kontrola zčervenala, po odstranění zelená).
+
+**Čím je to jištěné:** golden diff = 8/38 builderů, jen řádek konce · registr 204 (v4.33-most) ·
+smoke 44/44 · check-is OK · is-grammar-qa na NASAZENÝCH zněních (ne na zdroji).
+
+**Verze promptu:** v4.32-bez-sezony → **v4.33-most**.
+
+**Affected doc(s):** žádný — mapa promptu (artifact) překreslena v témž tahu.

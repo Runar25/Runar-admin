@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-20",
- "prompt_version": "v4.32-bez-sezony",
+ "prompt_version": "v4.33-most",
  "pravidla": [
   {
    "hash": "54d29df4d80b",
@@ -46,34 +46,28 @@
    "zacatek": "Open by setting the seeker inside the image, at the spot where it is h"
   },
   {
-   "hash": "30abc87f1ae2",
+   "hash": "4954efb85508",
    "lang": "en",
    "zdroj": "zakonceni_open[0]",
-   "zacatek": "End with one open question asked of the image — no part of the questio"
+   "zacatek": "End on one line that names what this may be in the seeker's life — a s"
   },
   {
-   "hash": "73fbf6e160f9",
+   "hash": "2344b9978c07",
    "lang": "en",
    "zdroj": "zakonceni_open[1]",
-   "zacatek": "End on a plain, steady line from the image — not what is true inside t"
+   "zacatek": "End on one line that holds out two things this may be in the seeker's "
   },
   {
-   "hash": "3dc04beb7a3f",
+   "hash": "c6998fa340cc",
    "lang": "en",
    "zdroj": "zakonceni_open[2]",
-   "zacatek": "End on a quiet line that rests — not a question this time."
+   "zacatek": "End on one question that holds out what this may be in the seeker's li"
   },
   {
-   "hash": "3b93aac3b305",
+   "hash": "5a5d87ecfb7e",
    "lang": "en",
    "zdroj": "zakonceni_heavy[0]",
-   "zacatek": "End on a line that stays standing — no soft question, no comfort; let "
-  },
-  {
-   "hash": "82c5ec57ad30",
-   "lang": "en",
-   "zdroj": "zakonceni_heavy[1]",
-   "zacatek": "End with one hard question that stays with the image and asks for noth"
+   "zacatek": "End on one line that holds out two things this may be in the seeker's "
   },
   {
    "hash": "01e446c1d614",
@@ -634,34 +628,28 @@
    "zacatek": "Byrjaðu á því að setja leitandann inn í myndina, á staðinn þar sem hún"
   },
   {
-   "hash": "fc4433540acf",
+   "hash": "727df1b6c8ee",
    "lang": "is",
    "zdroj": "zakonceni_open[0]",
-   "zacatek": "Endaðu á einni opinni spurningu sem beinist að myndinni — enginn hluti"
+   "zacatek": "Endaðu á einni línu sem nefnir hvað þetta gæti verið í lífi leitandans"
   },
   {
-   "hash": "1331743cfdf1",
+   "hash": "215dee5da464",
    "lang": "is",
    "zdroj": "zakonceni_open[1]",
-   "zacatek": "Endaðu á staðfastri línu úr myndinni — ekki hvað er satt innra með hon"
+   "zacatek": "Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið í lífi leit"
   },
   {
-   "hash": "bd90ed8d66e3",
+   "hash": "b7d429b7f2bc",
    "lang": "is",
    "zdroj": "zakonceni_open[2]",
-   "zacatek": "Endaðu á hljóðlátri línu sem hvílir — ekki spurningu í þetta sinn."
+   "zacatek": "Endaðu á einni spurningu sem spyr hvað þetta gæti verið í lífi leitand"
   },
   {
-   "hash": "5389d47e2f7b",
+   "hash": "2b296ec11987",
    "lang": "is",
    "zdroj": "zakonceni_heavy[0]",
-   "zacatek": "Endaðu á línu sem stendur — engin mjúk spurning, engin huggun; láttu þ"
-  },
-  {
-   "hash": "014b30bb45ab",
-   "lang": "is",
-   "zdroj": "zakonceni_heavy[1]",
-   "zacatek": "Endaðu á einni harðri spurningu sem heldur sig við myndina og krefst e"
+   "zacatek": "Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið í lífi leit"
   },
   {
    "hash": "4fa055f635bc",
