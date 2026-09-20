@@ -42,7 +42,7 @@
   "in_tok": 3361,
   "out_tok": 202,
   "extra": null,
-  "text": "[{\"rune\": \"Ansuz (BoÃ°beri)\", \"text\": \"ÃÃº kemst upp sÃ­Ã°asta hjallann og staldrar viÃ°, og andardrÃ¡tturinn kemur til baka hÃ¦gar en Ã¾Ãº bjÃ³st viÃ°. Ansuz hvÃ­lir Ã­ Ã¾essu andrÃ½mi, Ã¾ar sem loftiÃ° tekur viÃ° Ã¾Ã©r og orÃ°in fÃ¡ rÃºm. KorniÃ° bÃ­Ã°ur Ã³skoriÃ° Ã¡ Ã¶krunum niÃ°ri, og Ã¾Ãº sÃ©rÃ° leiÃ°ina liggja lengra en fÃ¦turnir vissu. HÃ©r stendur Ã¾Ãº Ã¡ brÃºninni, SigrÃºn, meÃ° vÃ­Ã°Ã¡ttuna opna fyrir framan Ã¾ig.\"}]"
+  "text": "[{\"rune\": \"Ansuz (Boðberi)\", \"text\": \"Þú kemst upp síðasta hjallann og staldrar við, og andardrátturinn kemur til baka hægar en þú bjóst við. Ansuz hvílir í þessu andrými, þar sem loftið tekur við þér og orðin fá rúm. Kornið bíður óskorið á ökrunum niðri, og þú sérð leiðina liggja lengra en fæturnir vissu. Hér stendur þú á brúninni, Sigrún, með víðáttuna opna fyrir framan þig.\"}]"
  },
  {
   "scenario": "S1",
@@ -51,7 +51,7 @@
   "in_tok": 3361,
   "out_tok": 192,
   "extra": "thinking=disabled",
-  "text": "[{\"rune\": \"Ansuz (BoÃ°beri)\", \"text\": \"ÃÃº kemst upp sÃ­Ã°asta hjallann og nemur staÃ°ar, og andardrÃ¡tturinn kemur hÃ¦gar til baka en Ã¾Ãº bjÃ³st viÃ°. Ansuz er Ã¾essi biÃ° eftir loftinu, stundin Ã¾ar sem orÃ°iÃ° er ekki komiÃ° en er Ã¡ leiÃ°inni. Akrarnir liggja fyrir neÃ°an Ã¾ig og tvÃ­mÃ¡nuÃ°ur litar Ã¾Ã¡ gula. Ãarna stendur Ã¾Ãº, SigrÃºn, Ã¡ brÃºninni meÃ° sjÃ¡lfa Ã¾ig eina viÃ° hliÃ° Ã¾Ã©r.\"}]"
+  "text": "[{\"rune\": \"Ansuz (Boðberi)\", \"text\": \"Þú kemst upp síðasta hjallann og nemur staðar, og andardrátturinn kemur hægar til baka en þú bjóst við. Ansuz er þessi bið eftir loftinu, stundin þar sem orðið er ekki komið en er á leiðinni. Akrarnir liggja fyrir neðan þig og tvímánuður litar þá gula. Þarna stendur þú, Sigrún, á brúninni með sjálfa þig eina við hlið þér.\"}]"
  },
  {
   "scenario": "S1",
@@ -60,7 +60,7 @@
   "in_tok": 2159,
   "out_tok": 125,
   "extra": "effort=none",
-  "text": "[{\"rune\":\"Ansuz (BoÃ°beri)\",\"text\":\"ÃÃº kemst upp sÃ­Ã°asta hjallann og staldrar viÃ° meÃ°an vindur fer um Ã¾roskaÃ° korniÃ°, en andardrÃ¡tturinn kemur hÃ¦gar til baka en Ã¾Ãº bjÃ³st viÃ°. Ansuz, BoÃ°beri, gerir biliÃ° milli orÃ°a skÃ½rara svo stefna Ã¾eirra heyrist. LeiÃ°in heldur Ã¡fram, en nÃº skiptir takturinn meira mÃ¡li en hraÃ°inn. SigrÃºn, Ã¾Ãº stendur Ã¡ hjallanum meÃ° vÃ­Ã°ari himin fram undan.\"}]"
+  "text": "[{\"rune\":\"Ansuz (Boðberi)\",\"text\":\"Þú kemst upp síðasta hjallann og staldrar við meðan vindur fer um þroskað kornið, en andardrátturinn kemur hægar til baka en þú bjóst við. Ansuz, Boðberi, gerir bilið milli orða skýrara svo stefna þeirra heyrist. Leiðin heldur áfram, en nú skiptir takturinn meira máli en hraðinn. Sigrún, þú stendur á hjallanum með víðari himin fram undan.\"}]"
  },
  {
   "scenario": "S1",
@@ -69,7 +69,7 @@
   "in_tok": 2159,
   "out_tok": 129,
   "extra": null,
-  "text": "[{\"rune\":\"Ansuz\",\"text\":\"ÃÃº kemur upp sÃ­Ã°asta hjallann og hvÃ­lir hÃ¶nd Ã¡ hnjÃ¡m, og andardrÃ¡tturinn snÃ½r aftur hÃ¦gar en Ã¾Ãº bjÃ³st viÃ°. LoftiÃ° er hlÃ½tt af kornlykt og jafnvel vindurinn telur Ã­ lengri tÃ­Ã°um. Ansuz, BoÃ°beri, lÃ¦tur orÃ° bÃºa til bil Ã¾ar sem Ã¾Ãº heyrir Ã¡ttir skÃ½rast. ÃÃº stendur Ã¡ brÃºn hjallarins Ã­ tvÃ­mÃ¡nuÃ°i, tilbÃºin, SigrÃºn.\"}]"
+  "text": "[{\"rune\":\"Ansuz\",\"text\":\"Þú kemur upp síðasta hjallann og hvílir hönd á hnjám, og andardrátturinn snýr aftur hægar en þú bjóst við. Loftið er hlýtt af kornlykt og jafnvel vindurinn telur í lengri tíðum. Ansuz, Boðberi, lætur orð búa til bil þar sem þú heyrir áttir skýrast. Þú stendur á brún hjallarins í tvímánuði, tilbúin, Sigrún.\"}]"
  },
  {
   "scenario": "S2",
@@ -78,7 +78,7 @@
   "in_tok": 1918,
   "out_tok": 239,
   "extra": null,
-  "text": "[{\"rune\": \"Isa\", \"text\": \"For a long while the ground between you two lay frozen, the water held still under a skin of ice, going nowhere.\"}, {\"rune\": \"Berkana\", \"text\": \"Now that ice loosens, and along the melt a birch is putting out its first leaves, small and green and untested. There is a rawness in this â new growth bruises easily, and what stands between you has not yet grown roots deep enough to hold in wind.\"}, {\"rune\": \"Sowilo\", \"text\": \"If you keep walking as you walk now, the sun breaks through and glints on the wet stones, and each one shows its true colour in the light. Where the ice once held everything still, the thaw runs clear and the stones between you stand plain to see.\"}]"
+  "text": "[{\"rune\": \"Isa\", \"text\": \"For a long while the ground between you two lay frozen, the water held still under a skin of ice, going nowhere.\"}, {\"rune\": \"Berkana\", \"text\": \"Now that ice loosens, and along the melt a birch is putting out its first leaves, small and green and untested. There is a rawness in this — new growth bruises easily, and what stands between you has not yet grown roots deep enough to hold in wind.\"}, {\"rune\": \"Sowilo\", \"text\": \"If you keep walking as you walk now, the sun breaks through and glints on the wet stones, and each one shows its true colour in the light. Where the ice once held everything still, the thaw runs clear and the stones between you stand plain to see.\"}]"
  },
  {
   "scenario": "S2",
@@ -87,7 +87,7 @@
   "in_tok": 1918,
   "out_tok": 284,
   "extra": "thinking=disabled",
-  "text": "[{\"rune\": \"Isa\", \"text\": \"Rain lay over these stones a long while, and nothing on them moved or dried. Water held in every hollow, and the cold in it was not something you could hurry.\"}, {\"rune\": \"Berkana\", \"text\": \"Now the light comes through and the wet rock glints, and in the cracks where the damp sat longest, green is standing up. What grows there does so because the stone stayed wet, not in spite of it â though the same water that feeds it can also make the footing slick, and two people crossing this ground will not always find the same stone steady.\"}, {\"rune\": \"Sowilo\", \"text\": \"Keep walking as you walk now, and the sun climbs high enough to dry the ledges, and you see the whole slope plain â where the moss holds, where the rock is bare, where the other one stands. The stones that held the rain longest are the ones burning brightest now.\"}]"
+  "text": "[{\"rune\": \"Isa\", \"text\": \"Rain lay over these stones a long while, and nothing on them moved or dried. Water held in every hollow, and the cold in it was not something you could hurry.\"}, {\"rune\": \"Berkana\", \"text\": \"Now the light comes through and the wet rock glints, and in the cracks where the damp sat longest, green is standing up. What grows there does so because the stone stayed wet, not in spite of it — though the same water that feeds it can also make the footing slick, and two people crossing this ground will not always find the same stone steady.\"}, {\"rune\": \"Sowilo\", \"text\": \"Keep walking as you walk now, and the sun climbs high enough to dry the ledges, and you see the whole slope plain — where the moss holds, where the rock is bare, where the other one stands. The stones that held the rain longest are the ones burning brightest now.\"}]"
  },
  {
   "scenario": "S2",
@@ -105,7 +105,7 @@
   "in_tok": 1265,
   "out_tok": 168,
   "extra": null,
-  "text": "[{\"rune\":\"Isa\",\"text\":\"The sun finally breaks through and glints on the wet stones, but before this there is only the slick chill of pause, breath held, feet careful on the ford where two paths meet and neither moves.\"},{\"rune\":\"Berkana\",\"text\":\"Now the light stays a little longer on those stones, the water warms, a tender green pushes from the bank, you speak or fall quiet more gently, you make room for small shoots without forcing them tall.\"},{\"rune\":\"Sowilo\",\"text\":\"Keep walking like this and the wet stones show their shapes plain in the noon light, what is firm and what is loose stands out, and crossing stops being guesswork as the sun lays a clear path over the riverâs skin.\"}]"
+  "text": "[{\"rune\":\"Isa\",\"text\":\"The sun finally breaks through and glints on the wet stones, but before this there is only the slick chill of pause, breath held, feet careful on the ford where two paths meet and neither moves.\"},{\"rune\":\"Berkana\",\"text\":\"Now the light stays a little longer on those stones, the water warms, a tender green pushes from the bank, you speak or fall quiet more gently, you make room for small shoots without forcing them tall.\"},{\"rune\":\"Sowilo\",\"text\":\"Keep walking like this and the wet stones show their shapes plain in the noon light, what is firm and what is loose stands out, and crossing stops being guesswork as the sun lays a clear path over the river’s skin.\"}]"
  },
  {
   "scenario": "S2",
@@ -114,7 +114,7 @@
   "in_tok": 3638,
   "out_tok": 353,
   "extra": null,
-  "text": "[{\"rune\": \"Isa\", \"text\": \"GrjÃ³tiÃ° lÃ¡ lengi undir kÃ¶ldum Ã­s, og allt sem Ã¡ milli tveggja stÃ³Ã° var kyrrt Ã­ Ã¾eirri klaka.\"}, {\"rune\": \"Berkana\", \"text\": \"NÃº tekur aÃ° Ã¾iÃ°na, og vatniÃ° rennur af steininum Ã­ mjÃ³um straumum sem Ã¡Ã°ur voru fastir. Ã Ã¾essum tvÃ­mÃ¡nuÃ°i, Ã¾egar korniÃ° bÃ­Ã°ur skurÃ°ar, vex eitthvaÃ° milli tveggja handa sem enn er ungt og ekki fullÃ¾roskaÃ°.\"}, {\"rune\": \"Sowilo\", \"text\": \"SÃ³lin brÃ½tur loks Ã­ gegn og glampar Ã¡ blautu grjÃ³tinu, svo hver dropi verÃ°ur skÃ½r. SÃ¡ glampi mÃ½kir ekki Ã¾aÃ° sem enn er hrjÃºft undir, en hann sÃ½nir Ã¾Ã©r hvar steinninn liggur. ÃangaÃ° stefnir Ã¾etta ef Ã¾Ãº heldur Ã¡fram sem nÃº â Ãºr klakanum, gegnum Ã¾iÃ°nunina, Ãºt Ã­ ljÃ³s sem ekkert felur lengur.\"}]"
+  "text": "[{\"rune\": \"Isa\", \"text\": \"Grjótið lá lengi undir köldum ís, og allt sem á milli tveggja stóð var kyrrt í þeirri klaka.\"}, {\"rune\": \"Berkana\", \"text\": \"Nú tekur að þiðna, og vatnið rennur af steininum í mjóum straumum sem áður voru fastir. Á þessum tvímánuði, þegar kornið bíður skurðar, vex eitthvað milli tveggja handa sem enn er ungt og ekki fullþroskað.\"}, {\"rune\": \"Sowilo\", \"text\": \"Sólin brýtur loks í gegn og glampar á blautu grjótinu, svo hver dropi verður skýr. Sá glampi mýkir ekki það sem enn er hrjúft undir, en hann sýnir þér hvar steinninn liggur. Þangað stefnir þetta ef þú heldur áfram sem nú — úr klakanum, gegnum þiðnunina, út í ljós sem ekkert felur lengur.\"}]"
  },
  {
   "scenario": "S2",
@@ -123,7 +123,7 @@
   "in_tok": 3638,
   "out_tok": 437,
   "extra": "thinking=disabled",
-  "text": "[{\"rune\": \"Isa\", \"text\": \"RegniÃ° lÃ¡ lengi yfir hrauninu og grjÃ³tiÃ° stÃ³Ã° kalt og hreyfingarlaust undir Ã¾vÃ­, dag eftir dag.\"}, {\"rune\": \"Berkana\", \"text\": \"NÃº brÃ½tur sÃ³lin loks Ã­ gegn og glampinn Ã¡ blautum steinunum er svo skarpur aÃ° hann sviÃ°ur Ã­ augun. BirkiÃ° sem Ã³x Ã­ skjÃ³li klettanna teygir sig upp Ã­ Ã¾etta nÃ½ja ljÃ³s, hÃ¡lfvaxiÃ° og enn Ã³variÃ°, og Ã¾aÃ° sem Ã¾iÃ°nar rennur niÃ°ur Ã­ sprungurnar og finnur sÃ©r leiÃ° milli tveggja steina sem lÃ¡gu hvor viÃ° annan allan regntÃ­mann.\"}, {\"rune\": \"Sowilo\", \"text\": \"TvÃ­mÃ¡nuÃ°ur er kominn og korniÃ° Ã¾arf Ã¾essa sÃ³l til aÃ° nÃ¡ Ã¾roska, en sama ljÃ³siÃ° sÃ½nir lÃ­ka hvar grjÃ³tiÃ° hefur rifnaÃ° og hvar mosinn nÃ¡Ã°i aldrei aÃ° grÃ³a yfir. Haldir Ã¾Ãº Ã¡fram Ã¡ Ã¾essari leiÃ° verÃ°ur grjÃ³tiÃ° Ã¾urrt og heitt undir hendi, og Ã¾Ãº sÃ©rÃ° loks hvernig steinarnir tveir liggja saman. ÃaÃ° sem lÃ¡ undir kÃ¶ldu regni liggur nÃº bert Ã­ sÃ³linni, og hvort tveggja er jafn satt.\"}]"
+  "text": "[{\"rune\": \"Isa\", \"text\": \"Regnið lá lengi yfir hrauninu og grjótið stóð kalt og hreyfingarlaust undir því, dag eftir dag.\"}, {\"rune\": \"Berkana\", \"text\": \"Nú brýtur sólin loks í gegn og glampinn á blautum steinunum er svo skarpur að hann sviður í augun. Birkið sem óx í skjóli klettanna teygir sig upp í þetta nýja ljós, hálfvaxið og enn óvarið, og það sem þiðnar rennur niður í sprungurnar og finnur sér leið milli tveggja steina sem lágu hvor við annan allan regntímann.\"}, {\"rune\": \"Sowilo\", \"text\": \"Tvímánuður er kominn og kornið þarf þessa sól til að ná þroska, en sama ljósið sýnir líka hvar grjótið hefur rifnað og hvar mosinn náði aldrei að gróa yfir. Haldir þú áfram á þessari leið verður grjótið þurrt og heitt undir hendi, og þú sérð loks hvernig steinarnir tveir liggja saman. Það sem lá undir köldu regni liggur nú bert í sólinni, og hvort tveggja er jafn satt.\"}]"
  },
  {
   "scenario": "S2",
@@ -132,7 +132,7 @@
   "in_tok": 2356,
   "out_tok": 231,
   "extra": "effort=none",
-  "text": "[{\"rune\":\"Isa\",\"text\":\"Ãsinn hÃ©lt blautu grjÃ³tinu fÃ¶stu og lÃ©t lÃ­tiÃ° rÃºm eftir Ã¾ar sem tvÃ¦r manneskjur gÃ¦tu mÃ¦st. ÃaÃ° hlÃ© verÃ°ur ekki tekiÃ° til baka, og nÃºningurinn liggur enn Ã­ kyrrÃ°inni.\"},{\"rune\":\"Berkana\",\"text\":\"NÃº, Ã¾egar tveir mÃ¡nuÃ°ir eru eftir af sumri og kornskurÃ°ur nÃ¡lgast, Ã¾iÃ°nar Ã­sinn viÃ° rÃ¦tur bjarkarinnar. ÃÃº sÃ©rÃ° nÃ½tt rÃ½mi verÃ°a til milli tveggja manneskja, en umhyggja Ã¾arf enn aÃ° vaxa Ã¾ar sem kuldinn hÃ©lt Ã¡Ã°ur fast.\"},{\"rune\":\"Sowilo\",\"text\":\"Ef Ã¾Ãº heldur Ã¡fram Ã­ sÃ¶mu Ã¡tt gÃ¦ti sÃ³lin brotist Ã­ gegn og varpaÃ° skÃ½rara ljÃ³si Ã¡ Ã¾aÃ° sem getur lifaÃ° milli ykkar. Ã blautu grjÃ³tinu verÃ°ur sÃ½nilegt hvar kyrrstaÃ°an losnar og mÃ¶guleg nÃ¡nd tekur viÃ° birtunni.\"}]"
+  "text": "[{\"rune\":\"Isa\",\"text\":\"Ísinn hélt blautu grjótinu föstu og lét lítið rúm eftir þar sem tvær manneskjur gætu mæst. Það hlé verður ekki tekið til baka, og núningurinn liggur enn í kyrrðinni.\"},{\"rune\":\"Berkana\",\"text\":\"Nú, þegar tveir mánuðir eru eftir af sumri og kornskurður nálgast, þiðnar ísinn við rætur bjarkarinnar. Þú sérð nýtt rými verða til milli tveggja manneskja, en umhyggja þarf enn að vaxa þar sem kuldinn hélt áður fast.\"},{\"rune\":\"Sowilo\",\"text\":\"Ef þú heldur áfram í sömu átt gæti sólin brotist í gegn og varpað skýrara ljósi á það sem getur lifað milli ykkar. Á blautu grjótinu verður sýnilegt hvar kyrrstaðan losnar og möguleg nánd tekur við birtunni.\"}]"
  },
  {
   "scenario": "S2",
@@ -141,6 +141,6 @@
   "in_tok": 2356,
   "out_tok": 418,
   "extra": "effort=minimal",
-  "text": "[{\"rune\":\"Isa\",\"text\":\"SÃ³lin brÃ½tur ekki enn, heldur liggur ljÃ³sniÃ° Ã­ Ã¾unnri himnu og glampar Ã³fjarri Ã¡ blautu grjÃ³ti; milli ykkar stendur kuldi sem lÃ¦tur orÃ° frjÃ³sa viÃ° brÃºnina. ÃÃº stendur kyrrt eins og Ã­sskÃ¡n yfir lÃ¦k, sÃ©rÃ° hreyfingu undir en treystir Ã¾Ã©r ekki til aÃ° lÃ¡ta vatniÃ° lÃ¡ta sjÃ¡ til sÃ­n. ÃaÃ° er hlÃ© Ã¡ snertingu, og viÃ°nÃ¡miÃ° er hrÃ¡tt eins og hnÃ­fur Ã­ lÃ³fa.\"},{\"rune\":\"Berkana\",\"text\":\"Svo losnar skÃ¡nin Ã­ rÃ¶ndum, dropi eftir dropa, og bjÃ¶rkin andar hlÃ½ju Ã­ skugga bakkans; Ã¾Ãº nÃ¦rÃ° aÃ° halda utan um mjÃºkan sprota Ã¡n Ã¾ess aÃ° brjÃ³ta hann. OrÃ° mÃ½kjast Ã¾egar Ã¾au lenda, og Ã¡ blautu grjÃ³ti dreifist birtan Ã­ fleiri flÃ¶tum en Ã¡Ã°ur. ÃÃº hleypir hlÃ½ju Ãºt og inn, ekki meÃ° stÃ³ru Ã¡taki heldur meÃ° einfÃ¶ldum, endurteknum snertum eins og rÃ³t sem sÃ¦kir leynilega Ãºt Ã­ mold.\"},{\"rune\":\"Sowilo\",\"text\":\"Ãegar skÃ½in rifna skÃ½rar en Ã¡Ã°ur sÃ©rÃ° Ã¾Ãº aÃ° sami steinninn sem var kaldur heldur nÃº hita dagsins og skilar honum til baka; milli ykkar verÃ°ur glampi sem sÃ½nir brÃºnir Ã¡n Ã¾ess aÃ° skera. ÃÃº stendur Ã­ lÃ­fskrafti sem lÃ½sir sprungu og fyllir hana ekki meÃ° Ã­s heldur ljÃ³si. ÃaÃ° sem er orÃ°iÃ° sÃ½nilegt er aÃ° sÃ³lin snertir sama blauta grjÃ³tiÃ° og lÃ¦tur kuldann lÃ¡ta undan, skref fyrir skref, Ã¾ar til glampinn talar sjÃ¡lfur.\"}]"
+  "text": "[{\"rune\":\"Isa\",\"text\":\"Sólin brýtur ekki enn, heldur liggur ljósnið í þunnri himnu og glampar ófjarri á blautu grjóti; milli ykkar stendur kuldi sem lætur orð frjósa við brúnina. Þú stendur kyrrt eins og ísskán yfir læk, sérð hreyfingu undir en treystir þér ekki til að láta vatnið láta sjá til sín. Það er hlé á snertingu, og viðnámið er hrátt eins og hnífur í lófa.\"},{\"rune\":\"Berkana\",\"text\":\"Svo losnar skánin í röndum, dropi eftir dropa, og björkin andar hlýju í skugga bakkans; þú nærð að halda utan um mjúkan sprota án þess að brjóta hann. Orð mýkjast þegar þau lenda, og á blautu grjóti dreifist birtan í fleiri flötum en áður. Þú hleypir hlýju út og inn, ekki með stóru átaki heldur með einföldum, endurteknum snertum eins og rót sem sækir leynilega út í mold.\"},{\"rune\":\"Sowilo\",\"text\":\"Þegar skýin rifna skýrar en áður sérð þú að sami steinninn sem var kaldur heldur nú hita dagsins og skilar honum til baka; milli ykkar verður glampi sem sýnir brúnir án þess að skera. Þú stendur í lífskrafti sem lýsir sprungu og fyllir hana ekki með ís heldur ljósi. Það sem er orðið sýnilegt er að sólin snertir sama blauta grjótið og lætur kuldann láta undan, skref fyrir skref, þar til glampinn talar sjálfur.\"}]"
  }
 ]
