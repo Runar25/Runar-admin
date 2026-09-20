@@ -4443,3 +4443,36 @@ Ownerových **80 EN Single** čtení: **průměr 53 slov, medián 51**, min 39 m
 Přetekla moje TESTOVACÍ čtení (62–85), protože jsem do promptu naložil oblast + čočku + most naráz. ⇒ Strop není
 fikce; fikcí se stává s každou přidanou povinností. **Kam zapisovat průměr (owner se ptal): nikam do docu** —
 číslo vlastní DB. Přidán `scripts/delky_cteni.js`, který ho spočítá z exportu (§20.4: stav vlastní data, ne text).
+
+## 2026-09-20 (6) — SKLÁDAČKA: od holého promptu k produkci, vstup po vstupu (12 kroků × 2 čtení)
+
+**Owner:** *„ořezat čtení na to, co je pro něj esenciální, a přidávat inputy po jednom a zjišťovat, co to s ním dělá"*
++ *„úhel ti v mapě chybí"* + *„pokud most mluví k uživateli, může být jméno na konci?"*.
+Produkce v4.31, produkční model, Raidho (jádro *cairns, each in sight of the next* + místo *a mountain pass*), 4 věty,
+vše ostatní konstantní. Každý krok = předchozí prompt + JEDEN řádek. Podklady → `docs/eval/2026-09-20-scena-a-vztah/skladacka/`.
+
+| krok | co přibylo | co to udělalo (2 čtení na krok) |
+|---|---|---|
+| 00 holý | runa+aspekt · obraz · esence · délka · formát | čtení už stojí: 4 věty, 64–65 slov, runa ve větě 2, *„You are on a mountain pass…"* |
+| 01 | *„Mention Raidho by name once. One clear insight is enough"* | objeví se spona *„This is Raidho"* — potvrzuje nález 2026-09-08, že definici dělá tenhle pokyn |
+| 02 | úhel | **úhel převezme větu 1** (*„The cairn stands unmoved while cloud and scree shift"*); „you" se posune do v2–v3 |
+| 03 | PERSON + oslovení uprostřed | jméno dosedá do **věty 3** (ne 2 — „uprostřed" ze čtyř vět) |
+| 04 | READING PURPOSE (záměr) | do závěru přijde čas: *„What lies beyond it will show itself once you reach it"* |
+| 05 | oblast (Inner Growth) | beze změny tvaru; obraz zůstává |
+| 06 | hledání (Reflection) | **objeví se obrat dovnitř** — *„What stands fixed in you while the rest gives way is the question here"* |
+| 07 | NO COLD READING | ten obrat dovnitř **mizí** (2/2) |
+| 08 | řádek o období | zmínka o období 1/8 čtení v krocích 08–11 |
+| 09 | čočka Gebo | poslední věta se obarví dáváním (2/2): *„The road asks nothing back that you did not first give it"* |
+| 10 | most „dvě možnosti" | most v **poslední větě 2/2**, čočka se do něj vejde jako jedna z možností |
+| 11 | jméno až u závěru | jméno dosedá **do poslední věty 2/2**, vedle mostu: *„Kuky, weigh whether the next cairn is a hand held out to you, or one you must set down yourself…"* |
+
+**Nálezy:**
+1. **Úhel vlastní větu 1** (doplněk do mapy vstupů — v předchozím měření chyběl).
+2. **Hledání (`seeking`) je vstup, který tlačí dovnitř člověka**, a `NO COLD READING` ho hned ruší. Dva pokyny proti sobě
+   — levné místo k úklidu (buď hledání přeformulovat, nebo nechat zákaz rozhodovat).
+3. **Jméno „uprostřed" padá do věty 3**, ne do věty 2, jakmile jsou čtyři věty. Při volbě „u závěru" jde do poslední věty
+   a s mostem se snese (ownerova hypotéza potvrzena mechanicky; jestli to zní líp, rozhodne owner).
+4. **Počet vět se drží 24/24; počet slov ne** — ale ⚠️ **OPRAVA (4) a (5): není to přírůstkem povinností.** Už HOLÝ prompt
+   dal 64–65 slov proti rozpočtu 50–58 a dál se to pohybovalo 57–79 bez trendu. Přetečení drží tahle konfigurace
+   (jádro + místo + 4 věty), ne počet vstupů.
+5. Produkce (80 ownerových EN Single) má přitom průměr 53 slov — přetéká tedy hlavně **jádro+místo**, ne běžné obrazy.

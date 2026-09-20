@@ -1,0 +1,62 @@
+{
+ "00-holy-1": {
+  "text": "You are on a mountain pass, and the way ahead is marked by cairns, each one raised within sight of the next. Raidho keeps the road open, one stone stack leading the eye to the following. You cannot see the whole crossing from where you stand, only the next marker in the mist. What matters is that the near one holds, and it does.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 122
+ },
+ "00-holy-2": {
+  "text": "You stand on the mountain pass, and ahead the cairns run one behind the next, each within sight of the last. Raidho is the road walked one marker at a time, not the whole way seen at once. You do not need to hold the far pass in view, only the stone that stands ahead of you now. From there the next will show itself.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 117
+ },
+ "01-jmenuj-1": {
+  "text": "You stand in the mountain pass, and ahead a cairn waits, stacked stone against the grey sky. You cannot see the whole road, only the next marker set within sight of the one before. This is Raidho, the way that shows itself a stone at a time. You need not know the end to walk toward the stone you can see.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 117
+ },
+ "01-jmenuj-2": {
+  "text": "You stand at a mountain pass, and ahead a cairn rises against the grey. Raidho is the road walked one stone-marker at a time, each cairn placed within sight of the last. You cannot see the whole way down, and you were never meant to. You see the next stone, and that is enough to keep moving.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 115
+ },
+ "02-uhel-1": {
+  "text": "The cairn stands unmoved while cloud and scree shift around it in the pass. Raidho is the road held by these stones, each one placed within sight of the last. You cannot see the whole way, only far enough to reach the next marker and stand there. The path is made by those who walked it before you, one stone at a time.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 116
+ },
+ "02-uhel-2": {
+  "text": "The cairn stands while the fog moves around it, holding its place as the light shifts across the pass. This is Raidho, the marker that keeps you to the road when the way ahead is not yet clear. You cannot see the end from here, but the next stone is in sight. You go by what holds still, not by what you can see whole.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 118
+ },
+ "03-jmeno-1": {
+  "text": "The cairn beside you holds still while the mist moves across the pass. Raidho lives in the next stone, set where you can just make it out, and Kuky, that is the only fixed thing here. You do not see the whole road, you see the marker that follows. The way is walked one cairn at a time, each raised by someone who passed before.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 121
+ },
+ "03-jmeno-2": {
+  "text": "The cairns hold their places while the fog drifts and closes the ground between them. Each stone was set to be seen from the last, and that sightline is what stays fixed while the pass gives way around it. This is Raidho, Kuky, the way marked by those who walked it before you. You cannot see the whole road, only the next stone standing clear ahead.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 128
+ },
+ "04-ucel-1": {
+  "text": "The cairn beneath your hand holds still while the pass shifts and the mist moves around it. Raidho is the road walked one marker at a time, each stone raised in sight of the next. You need not see the whole way, Kuky, only the cairn ahead of where you stand. What lies beyond it will show itself once you reach it.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 122
+ },
+ "04-ucel-2": {
+  "text": "The cairn beside you holds while the pass shifts in mist and loose scree underfoot. Raidho is the stone kept in sight, the next one waiting where this one can still be seen. You do not cross all at once, Kuky, you cross to the marker you can reach. What comes ahead reveals itself one cairn at a time, never the whole road.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 129
+ },
+ "05-oblast-1": {
+  "text": "In the pass the wind moves everything, yet the cairns hold their line, each stone within sight of the next. Raidho is the road walked one marker at a time, not the whole way seen at once. You do not need the far end, Kuky, only the next stone standing clear ahead. What lies further comes into view as you reach the one before it.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 122
+ },
+ "05-oblast-2": {
+  "text": "The cairn beside you holds while the mist moves across the pass. You cannot see the far end, Kuky, only the next stone stacked and waiting. Raidho is the road walked one marker at a time, each in sight of the last. What lies ahead is reached this way, slowly, without ever seeing the whole of it.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 119
+ }
+}
