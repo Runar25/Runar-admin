@@ -22,6 +22,11 @@ const BEZ_OBL = process.argv.includes('--bez-oblasti');   // vypni JEN oblast, z
 // v4.4 (2026-08-22): mereni cocky potrebuje zivotni runu i v nahodnem modu (dosud null
 // -> cocka nikdy nevystrelila). 'random' losuje z tehoz seedovaneho proudu jako zbytek.
 const LIFERUNE = arg('liferune', '');    // '' | 'random' | jmeno runy
+// 2026-09-20 (davka sol vs opus-5, owner): model je parametr — gpt-* jde pres OpenAI.
+// Prompty jsou diky seedovanemu proudu bit po bitu STEJNE pro kazdy model (preseed(i)),
+// takze dve spusteni s ruznym --model = tyz prompt, jiny mozek.
+const MODEL = arg('model', 'claude-opus-4-8');
+const JE_OPENAI = /^gpt/.test(MODEL);
 
 // Klic: env ma prednost, jinak soubor MIMO repo. Repo je verejne, takze v nem klic nesmi
 // lezet ani gitignorovany — jedno `git add -f` a je venku. Zaroven se o nej nema porad
@@ -29,8 +34,15 @@ const LIFERUNE = arg('liferune', '');    // '' | 'random' | jmeno runy
 const KEY_SOUBOR = require('path').join(require('os').homedir(), '.claude', 'runar-api-key.txt');
 const KEY = process.env.ANTHROPIC_API_KEY
   || (fs.existsSync(KEY_SOUBOR) ? fs.readFileSync(KEY_SOUBOR, 'utf8').trim() : '');
-if (!KEY && !DRY) {
+const KEY_SOUBOR_OAI = require('path').join(require('os').homedir(), '.claude', 'runar-openai-key.txt');
+const KEY_OAI = process.env.OPENAI_API_KEY
+  || (fs.existsSync(KEY_SOUBOR_OAI) ? fs.readFileSync(KEY_SOUBOR_OAI, 'utf8').trim() : '');
+if (!DRY && !JE_OPENAI && !KEY) {
   console.error('  chybi klic: ani ANTHROPIC_API_KEY v env, ani ' + KEY_SOUBOR);
+  process.exit(1);
+}
+if (!DRY && JE_OPENAI && !KEY_OAI) {
+  console.error('  chybi klic: ani OPENAI_API_KEY v env, ani ' + KEY_SOUBOR_OAI);
   process.exit(1);
 }
 
@@ -127,41 +139,74 @@ async function jedno(i) {
           : (LIFERUNE ? RUNES.filter((r) => r.n.toLowerCase() === LIFERUNE.toLowerCase())[0] || null : null) };
   let prompt = STAVITEL[SPREAD](u, runy, LANG);
   if (BEZ_UHLU) prompt = odeberUhel(prompt);
+  // Vstupy cteni k UKAZANI ownerovi (KUKY 2026-09-20: „tim ze mi neukazujes jak jsi cteni
+  // vytvoril tak ja nevidim proc to tak je") — doslovne radky promptu + produkcni parser.
+  const vstupniRadky = prompt.split(String.fromCharCode(10)).filter((l) =>
+    /^(DRAWN RUNE|READING ANGLE|IMAGE \u2014|SEASON \u2014|Area:|READING PURPOSE|QUESTION|DREGNAR? R|LESTRARHORNI|MYND \u2014|\u00c1RST\u00cd\u00d0IN|Svi\u00f0:|TILGANGUR|SPUR)/.test(l));
+  const tahy = (typeof S._promptDraws === 'function') ? S._promptDraws(prompt, LANG) : null;
   const radek = { source: 'gen_direct', synthetic: true, matrix: MATRIX || null, runes: runy.map((r) => r.n), spread: SPREAD,
                   lang: LANG, area: u.area, seeking: u.seeking, intention: u.intention,
                   life: u.lifeRune ? u.lifeRune.n : null,
-                  model: 'claude-opus-4-8', batch: TAG,
+                  vstupy: vstupniRadky, draws: tahy,
+                  model: MODEL, batch: TAG,
                   without: BEZ_UHLU ? 'angle' : null,
                   generated_at: new Date().toISOString() };
   // Cely prompt jen v dry-runu: je to jediny zpusob, jak DOKAZAT, ze se ramena lisi
   // pouze pravidlem (diff), ne nahodou v pakach. Soubor je v gitignored eval_out/.
   if (DRY) { radek.reading_text = '(dry-run)'; radek.prompt_znaku = prompt.length; radek.prompt = prompt; return radek; }
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: { 'content-type': 'application/json', 'x-api-key': KEY, 'anthropic-version': '2023-06-01' },
-    body: JSON.stringify({
-      model: 'claude-opus-4-8', max_tokens: tokeny,
+  let res, data, syrovy;
+  if (JE_OPENAI) {
+    // Sonda 2026-09-19: gpt-5.6-sol bere reasoning_effort 'none' (ne 'minimal'), gpt-5 'minimal'.
+    // Zkusi se 'none', na HTTP 400 se spadne na 'minimal' — jinak by reasoning sezral cely limit.
+    for (const eff of ['none', 'minimal']) {
+      res = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', authorization: 'Bearer ' + KEY_OAI },
+        body: JSON.stringify({
+          model: MODEL, max_completion_tokens: tokeny, reasoning_effort: eff,
+          messages: [{ role: 'system', content: sys }, { role: 'user', content: prompt }],
+        }),
+      });
+      if (res.status !== 400) { radek.reasoning_effort = eff; break; }
+    }
+    radek.http_status = res.status;
+    data = await res.json().catch(() => ({}));
+    if (!res.ok) { radek.error = (data.error && data.error.message) || ('HTTP ' + res.status); return radek; }
+    syrovy = ((data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) || '').trim();
+    radek.usage = data.usage && { input_tokens: data.usage.prompt_tokens, output_tokens: data.usage.completion_tokens };
+    if (data.choices && data.choices[0] && data.choices[0].finish_reason === 'length') radek.orezano = true;
+  } else {
+    const telo = {
+      model: MODEL, max_tokens: tokeny,
       // stejny tvar jako proxy: system jako pole, zaklad cachovany
       system: [{ type: 'text', text: sys, cache_control: { type: 'ephemeral' } }],
       messages: [{ role: 'user', content: prompt }],
-    }),
-  });
-  radek.http_status = res.status;
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) { radek.error = (data.error && data.error.message) || ('HTTP ' + res.status); return radek; }
-  const syrovy = (data.content || []).filter((c) => c.type === 'text').map((c) => c.text).join('').trim();
+    };
+    // Sonda 2026-09-19: opus-5 bez vypnuteho thinkingu spali cely max_tokens na thinking
+    // a vrati prazdny text; opus-4-8 param nedostava (produkce ho neposila — merime totez).
+    if (MODEL.indexOf('opus-5') !== -1) telo.thinking = { type: 'disabled' };
+    res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-api-key': KEY, 'anthropic-version': '2023-06-01' },
+      body: JSON.stringify(telo),
+    });
+    radek.http_status = res.status;
+    data = await res.json().catch(() => ({}));
+    if (!res.ok) { radek.error = (data.error && data.error.message) || ('HTTP ' + res.status); return radek; }
+    syrovy = (data.content || []).filter((c) => c.type === 'text').map((c) => c.text).join('').trim();
+    radek.usage = data.usage;
+  }
   // Spready vraci JSON pole [{rune,text}]. Produkce ho prozene `_parseSegments()` a uklada
   // PROZU — archiv vypada tak. Stejny parser tedy i tady, jinak by se meril JSON.
   const rozlozeno = (typeof S._parseSegments === 'function') ? S._parseSegments(syrovy) : null;
   radek.reading_text = (rozlozeno && rozlozeno.reading) ? rozlozeno.reading : syrovy;
   radek.raw_json = (rozlozeno && rozlozeno.reading && rozlozeno.reading !== syrovy) ? true : false;
-  radek.usage = data.usage;
   return radek;
 }
 
 (async () => {
   const OUT = path.join('C:/Users/zkuku/Downloads/Runar-admin/eval_out/archive',
-    'gen-' + SPREAD + '-' + LANG + (MATRIX ? '-' + MATRIX : '') + (BEZ_OBL ? '-bezoblasti' : '')
+    'gen-' + SPREAD + '-' + LANG + '-' + MODEL.replace(/[^a-z0-9.-]/gi, '') + (MATRIX ? '-' + MATRIX : '') + (BEZ_OBL ? '-bezoblasti' : '')
     + (BEZ_UHLU ? '-bezuhlu' : '') + (DRY ? '-dryrun' : '') + '-' + TAG + '.jsonl');
   console.log('  ' + SPREAD + ' · ' + LANG + ' · n=' + N + ' · ' + pocet + ' run · max_tokens ' + tokeny
     + (DRY ? '  (DRY-RUN, nic se nevola)' : ''));
