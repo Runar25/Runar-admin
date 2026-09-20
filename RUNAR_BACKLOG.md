@@ -84,9 +84,13 @@
   **„vedoucí" a „cesta"** tam, kde EN říká „hledající" a „hledání". Protlačeno produkční cestou: v promptu
   Norns stojí `Leiðandi: Kuky` a *„Leiðandinn dregur þrjár rúnir"* — model dostává informaci, že ten člověk vede.
   Single a konce přitom používají `leitandi` (22 výskytů) správně, takže si soubor protiřečí sám se sebou.
-  **Sweep (17 náhrad v `v2/runar-character.js`, jen IS packy spreadů):** 4× `seeker:'Leiðandi'` → `'Leitandi'` ·
+  **Sweep (18 náhrad v `v2/runar-character.js`, jen IS packy spreadů):** 4× `seeker:'Leiðandi'` → `'Leitandi'` ·
   4× `seeking:'Leiðin'` → `'Leitin'` · 4× `intro:'Leiðandinn dregur …'` → `'Leitandinn dregur …'` ·
-  5× `leiðandinn` → `leitandinn` (4× *„leiðandinn sér þær þegar"*, 1× *„þess sem leiðandinn bar fram"*).
+  5× `leiðandinn` → `leitandinn` (4× *„leiðandinn sér þær þegar"*, 1× *„þess sem leiðandinn bar fram"*) ·
+  **1× `leiðandans` → `leitandans` v `RP_NORNS.is.landing`** — ⚠️ tenhle výskyt je NOVÝ a je **moje chyba**:
+  do prvního handoffu na Norns A jsem to slovo dal vědomě, „aby pack zůstal vnitřně konzistentní", ačkoli jsem
+  ho v témže dechu hlásil jako podezřelé. CODE-tune nasadila první verzi (v4.38) dřív, než dorazila oprava.
+  **Poučení do handoffů: nejistý tvar se dotáhne PŘED odesláním, ne vedle něj** (§19.2, §23).
   ⚠️ Udělat JEDNÍM tahem přes všechny čtyři spready (Áttaviti · Norns · Skeifan · Yggdrasil) — po jednom by
   vznikl smíšený stav. Po sweepu: `check-is.py`, golden-verify a protlačit prompt, že tam `leiðand` nezůstal.
   ⚠️ Pozor na AREAS: `Tilgangur & Leið` je NÁZEV OBLASTI a `Leið` = cesta je tam SPRÁVNĚ — sweep se ho nesmí dotknout.
