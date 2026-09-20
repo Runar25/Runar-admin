@@ -79,33 +79,12 @@
   už není — a spready si dál žijí po svém. **Není to jen varování u jednoho úkolu; je to trvalý rozpor** a patří
   k §18/§13: buď se páky srovnají, nebo se rozdíl pojmenuje a zdůvodní na jednom místě, aby ho příští session
   nepovažovala za chybu. Rozhodnout spolu s vlastní stavbou závěru per spread (položka „ZÁVĚR SPREADŮ").
-- [ ] ⭐ **MOST: AREA = kam dosedne · SEEKING = tvar — ZNĚNÍ K NASAZENÍ** (rozhodnuto KUKY 2026-09-20,
-  `RUNAR_DECISIONS.md` 2026-09-20 (2); mechanismus a mantinely vlastní `RUNAR_DESIGN.md` „Stavba Single čtení" bod 3 —
-  **tady je jen to, co se má nasadit, po nasazení to vlastní kód a odsud zmizí**).
-  **Tvar podle SEEKING** (`{L}` = fráze oblasti, viz níž; bez AREA zůstává `in the seeker's life`):
-  • Clarity → `End on one line that names what this may be {L} — a state that may be so, offered for them to weigh;
-    it names how things may stand, never what to do about it.`
-  • Confirmation → `End on one line that holds out two things this may be {L}, each a state that may be so,
-    left for them to weigh.`
-  • Insight into Challenge → `End on one line that names what this may be {L} — a state that may be so, said plainly,
-    without comfort or softening.`
-  • Reflection → `End on one question that holds out what this may be {L} — asked as a possibility they can weigh,
-    never as something you know about them.`
-  • General Guidance / nezadáno → los ze tří tvarů (věta · dvě možnosti · otázka).
-  **`{L}` podle AREA** (pořadí = `AREAS.en`; ⚠️ indexovaná mapa jako `_domainContext` — hlídá `test_lever_maps.js`):
-  1 `between the seeker and someone` · 2 `in where the seeker is going` · 3 `in what the seeker is making` ·
-  4 `in the seeker's mending and rest` · 5 `in what is present in the seeker's life but not shown` ·
-  6 `in the seeker's home and the people in it` · 7 `in a slow change in the seeker` · 8 `where the seeker's way divides`
-  **Přednost:** těžká runa (`HEAVY_RUNES`) → těžké znění ZVOLENÉHO tvaru, rejstřík tvar nemění na útěšný.
-  **Do `prompt_draws`:** zapsat zvolený tvar i zdroj (rejstřík vs los) — jinak je to další nezaznamenaný confounder
-  jako délka do 2026-09-20.
-  **Ověřit (CODE-read), než to půjde do produkčního kandidáta:**
-  1. Slepý soudce hádá z hotového čtení oblast (1 z 8) a rejstřík (1 z 5) — dnešek vs. nová verze. Dnešní základ je
-     „ozvěna slova" (3 měření kolem nuly, EVAL_LOG 2026-08-16), takže je co překonat.
-  2. Studené čtení a rada: musí zůstat na nule i s oblastí v poslední větě (to je ten mantinel z §26).
-  3. Rameno **Reflection** zvlášť: otázkový tvar umí navádět a v Asku dělal doslovové ocásky.
-  4. Délka: most se nesmí prodloužit o oblast (měřit slova, ne dojem).
-  IS znění se píše nativně až po schválení tvaru měřením (§2) — ne překladem téhle tabulky.
+- [x] ~~**MOST: AREA = kam dosedne · SEEKING = tvar**~~ — NASAZENO 2026-09-20 ve v4.36-most-cil
+  (DECISIONS 2026-09-20 (8)). Podle vlastního zadání položky: „po nasazení to vlastní kód a odsud
+  zmizí" — znění žije v `ENDING_OPEN` / `ENDING_HEAVY` / `BRIDGE_AREAS` / `SEEK_SHAPE`
+  (`v2/runar-utils.js`). **Ověření (slepý soudce na oblast a rejstřík, cold reading a rada) zůstává
+  na CODE-read**, než to půjde do produkčního kandidáta.
+
 - [ ] ⭐ **PRODUKČNÍ KANDIDÁT „nový Single" — plán ověření, než nahradí produkci** (KUKY 2026-09-20: *„pokud bude taková,
   jakou jsi ji tady vytvořil, tak bude nahrazovat produkci"*). Kandidát = dnešek + most (los 3 tvarů + těžká verze) +
   jméno mimo esenční větu + jádro/místo u převedených run (+ případně bez řádku sezóny, podle rozhodnutí ownera).

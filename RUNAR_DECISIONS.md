@@ -6406,3 +6406,56 @@ zelená).
 
 **Affected doc(s):** `RUNAR_DESIGN.md` bod 4 — délka už není „4 věty + strop", ale 4 věty pevně;
 opraví CODE-read, doc vlastní. Zapsáno do `RUNAR_BACKLOG.md`.
+
+## 2026-09-20 (8) — MOST: oblast určuje CÍL, rejstřík určuje TVAR (v4.36-most-cil)
+
+**Znění od CODE-read (`RUNAR_BACKLOG.md`), rozhodl owner — DECISIONS 2026-09-20 (2). Nasazeno.**
+
+**Co platí:** konec už není čistý los.
+- **TVAR** podle rejstříku (`SEEK_SHAPE`, pořadí = `SEEKS.en`): Clarity → věta · Confirmation →
+  dvě možnosti · Reflection → otázka · **Insight into Challenge → věta v TĚŽKÉM znění i u lehké
+  runy** (kdo si řekne o vhled do těžkosti, nemá dostat útěchu) · General Guidance a nezadáno → los
+  ze tří tvarů, jak to běželo dosud.
+- **CÍL** podle oblasti (`BRIDGE_AREAS`, pořadí = `AREAS.en`) — `{L}` v každém znění. Bez oblasti
+  zůstává `in the seeker's life` / `í lífi leitandans`.
+- **Těžká runa** (`HEAVY_RUNES`) vynutí těžké znění, ale **tvar rejstříku nemění**.
+
+**Struktura (proč takhle):** oba pooly mají teď **tytéž tři tvary ve stejném pořadí**
+`[věta · dvě možnosti · otázka]`, takže tvar = index a těžkost = jen volba poolu. Bez toho by
+„těžké znění zvoleného tvaru" potřebovalo druhou mapu (§18). **Těžká otázka je nová** — do teď
+chyběla, takže Reflection + těžká runa neměly kam padnout.
+
+**IS** psána islandsky od začátku; fráze stojí na těch, které v produkci už jsou (`_domainContext`),
+takže se nezavádí nová nejistota. Korpus: *og einhvers annars* 77 · *hvert hann stefnir* 130 ·
+*í bata* 1654 · *og hvíld* 1025 · *er til staðar* 18375 · *sést ekki* 7307 · *á heimili* 86002 ·
+*meðal þeirra sem* 23923 · *leiðir skiljast* 180. is-grammar-qa: 12 znění, jediný flag je W001 na
+imperativu „Endaðu" — týž, který dávají i dnešní produkční věty (šum, doloženo protipříkladem).
+
+**ZDROJ volby tvaru se do `prompt_draws` NEZAPISUJE** (§20): `seeking` už leží v DB u čtení, takže
+se dopočítá spojením s `ending`. Z promptu samotného ho přečíst nejde — hlavička „Seeking:" byla
+odebrána 2026-09-08.
+
+**⚠️ GOLDEN TENHLE MECHANISMUS NEVIDÍ — a je to jeho druhá doložená slepota.** Diff v4.35 → v4.36
+je **0/38**. Důvod: jeho fixtures mají `area:'work and direction'`, `seeking:'clarity'` — volné
+texty, ne kanonické hodnoty z `AREAS`/`SEEKS`, takže spadnou do větve „bez oblasti, los tvaru",
+kde je výstup shodou okolností stejný jako dřív. (První slepota: `Math.random = 0.5`, viz záznam
+(7).) Pokrytí proto nese **㉨**, která losuje doopravdy: 8 oblastí = 8 různých cílů, rejstřík dává
+deterministický tvar (300 losů na rejstřík), těžkost se chová podle pravidel, a `_promptDraws`
+pozná tvar i s vloženou frází (24 kombinací na jazyk). Ověřeno i proti rozbitému stavu (Clarity
+přehozena na otázku → 2 FAIL).
+
+**Dvě vady registru ㉜ opraveny v témž tahu:** (a) pooly nesou šablonu s `{L}`, ale prompt má
+vloženou frázi — registr tutéž řádku viděl dvakrát jinak; normalizuje se teď zpět na šablonu
+(šablona se schvaluje, cíl je data). (b) **`ESSENCE_FRAMES` registr vůbec nesbíral** — přibyly
+ve v4.35 a registrovat se tedy dal jen ten rám, který postavený prompt zrovna vylosoval; druhý
+červenal při dalším běhu. Obojí je táž třída vady: **los bez záznamu**.
+
+**Čím je to jištěné:** ㉨ 40 tvrzení (20/jazyk) · registr 206, deterministický ve 4 po sobě
+jdoucích bězích · smoke 44/44 · check-is OK · produkční cesta protlačena (`gen_direct --dry-run`:
+Reflection → otázka, Inner Growth → „in a slow change in the seeker", Crossroads → „where the
+seeker's way divides").
+
+**Verze promptu:** v4.35-ctyri-vety → **v4.36-most-cil**.
+
+**Affected doc(s):** `RUNAR_BACKLOG.md` — položka „MOST: AREA = kam dosedne" je nasazená a podle
+vlastního zadání odsud mizí; vlastní to teď kód.

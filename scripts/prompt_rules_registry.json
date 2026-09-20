@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-20",
- "prompt_version": "v4.35-ctyri-vety",
+ "prompt_version": "v4.36-most-cil",
  "pravidla": [
   {
    "hash": "54d29df4d80b",
@@ -46,34 +46,40 @@
    "zacatek": "Open by setting the seeker inside the image, at the spot where it is h"
   },
   {
-   "hash": "4954efb85508",
+   "hash": "0124bd16b003",
    "lang": "en",
    "zdroj": "zakonceni_open[0]",
-   "zacatek": "End on one line that names what this may be in the seeker's life — a s"
+   "zacatek": "End on one line that names what this may be {L} — a state that may be "
   },
   {
-   "hash": "2344b9978c07",
+   "hash": "337682c93597",
    "lang": "en",
    "zdroj": "zakonceni_open[1]",
-   "zacatek": "End on one line that holds out two things this may be in the seeker's "
+   "zacatek": "End on one line that holds out two things this may be {L}, each a stat"
   },
   {
-   "hash": "c6998fa340cc",
+   "hash": "ff70575f8f2d",
    "lang": "en",
    "zdroj": "zakonceni_open[2]",
-   "zacatek": "End on one question that holds out what this may be in the seeker's li"
+   "zacatek": "End on one question that holds out what this may be {L} — asked as a p"
   },
   {
-   "hash": "5a5d87ecfb7e",
+   "hash": "e2d331c1be69",
    "lang": "en",
    "zdroj": "zakonceni_heavy[0]",
-   "zacatek": "End on one line that holds out two things this may be in the seeker's "
+   "zacatek": "End on one line that names what this may be {L} — a state that may be "
   },
   {
-   "hash": "c30c90dedd5c",
+   "hash": "b1b90868e3c9",
    "lang": "en",
    "zdroj": "zakonceni_heavy[1]",
-   "zacatek": "End on one line that names what this may be in the seeker's life — a s"
+   "zacatek": "End on one line that holds out two things this may be {L}, each a stat"
+  },
+  {
+   "hash": "64b4958972b3",
+   "lang": "en",
+   "zdroj": "zakonceni_heavy[2]",
+   "zacatek": "End on one question that holds out what this may be {L} — asked as a p"
   },
   {
    "hash": "5397d757cba8",
@@ -98,6 +104,18 @@
    "lang": "en",
    "zdroj": "delka[0]",
    "zacatek": "One flowing reading — 4 short sentences, 50 to 58 words total. It will"
+  },
+  {
+   "hash": "e9ba6e72c4cd",
+   "lang": "en",
+   "zdroj": "esence[0]",
+   "zacatek": "THE ESSENCE LINE: after the picture, one short line that says what the"
+  },
+  {
+   "hash": "20507370661e",
+   "lang": "en",
+   "zdroj": "esence[1]",
+   "zacatek": "THE ESSENCE LINE: after the picture, one short line where the rune — n"
   },
   {
    "hash": "823877aeee46",
@@ -224,12 +242,6 @@
    "lang": "en",
    "zdroj": "single",
    "zacatek": "IMAGE — the picture in this reading comes from here:"
-  },
-  {
-   "hash": "20507370661e",
-   "lang": "en",
-   "zdroj": "single",
-   "zacatek": "THE ESSENCE LINE: after the picture, one short line where the rune — n"
   },
   {
    "hash": "d697932ae6c6",
@@ -416,12 +428,6 @@
    "lang": "en",
    "zdroj": "liferune",
    "zacatek": "If you name the Icelandic month, gloss it in English at first mention "
-  },
-  {
-   "hash": "e9ba6e72c4cd",
-   "lang": "en",
-   "zdroj": "liferune",
-   "zacatek": "THE ESSENCE LINE: after the picture, one short line that says what the"
   },
   {
    "hash": "894c74f3ddd1",
@@ -628,34 +634,40 @@
    "zacatek": "Byrjaðu á því að setja leitandann inn í myndina, á staðinn þar sem hún"
   },
   {
-   "hash": "727df1b6c8ee",
+   "hash": "2073d616c0bd",
    "lang": "is",
    "zdroj": "zakonceni_open[0]",
-   "zacatek": "Endaðu á einni línu sem nefnir hvað þetta gæti verið í lífi leitandans"
+   "zacatek": "Endaðu á einni línu sem nefnir hvað þetta gæti verið {L} — ástand sem "
   },
   {
-   "hash": "215dee5da464",
+   "hash": "b71359743f6e",
    "lang": "is",
    "zdroj": "zakonceni_open[1]",
-   "zacatek": "Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið í lífi leit"
+   "zacatek": "Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið {L}, hvort "
   },
   {
-   "hash": "b7d429b7f2bc",
+   "hash": "f53f242e1272",
    "lang": "is",
    "zdroj": "zakonceni_open[2]",
-   "zacatek": "Endaðu á einni spurningu sem spyr hvað þetta gæti verið í lífi leitand"
+   "zacatek": "Endaðu á einni spurningu sem spyr hvað þetta gæti verið {L} — sem mögu"
   },
   {
-   "hash": "2b296ec11987",
+   "hash": "43f000e5e0ad",
    "lang": "is",
    "zdroj": "zakonceni_heavy[0]",
-   "zacatek": "Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið í lífi leit"
+   "zacatek": "Endaðu á einni línu sem nefnir hvað þetta gæti verið {L} — ástand sem "
   },
   {
-   "hash": "a98ec94c4449",
+   "hash": "01d2509b7915",
    "lang": "is",
    "zdroj": "zakonceni_heavy[1]",
-   "zacatek": "Endaðu á einni línu sem nefnir hvað þetta gæti verið í lífi leitandans"
+   "zacatek": "Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið {L}, hvort "
+  },
+  {
+   "hash": "29ee241d54b9",
+   "lang": "is",
+   "zdroj": "zakonceni_heavy[2]",
+   "zacatek": "Endaðu á einni spurningu sem spyr hvað þetta gæti verið {L} — sem mögu"
   },
   {
    "hash": "6f5502bf6da0",
@@ -680,6 +692,18 @@
    "lang": "is",
    "zdroj": "delka[0]",
    "zacatek": "Gefðu einn samfelldan lestur — 4 stuttar setningar, 50 til 58 orð alls"
+  },
+  {
+   "hash": "d3a64353420d",
+   "lang": "is",
+   "zdroj": "esence[0]",
+   "zacatek": "KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem segir hvað rúni"
+  },
+  {
+   "hash": "323cf6569c16",
+   "lang": "is",
+   "zdroj": "esence[1]",
+   "zacatek": "KJARNALÍNAN: á eftir myndinni kemur ein stutt lína þar sem rúnin — nef"
   },
   {
    "hash": "4cfab7b4a12e",
@@ -806,12 +830,6 @@
    "lang": "is",
    "zdroj": "single",
    "zacatek": "MYND — héðan kemur myndin í þessum lestri:"
-  },
-  {
-   "hash": "323cf6569c16",
-   "lang": "is",
-   "zdroj": "single",
-   "zacatek": "KJARNALÍNAN: á eftir myndinni kemur ein stutt lína þar sem rúnin — nef"
   },
   {
    "hash": "2de80b973bab",
@@ -1022,12 +1040,6 @@
    "lang": "is",
    "zdroj": "liferune",
    "zacatek": "Svaraðu einungis á íslensku."
-  },
-  {
-   "hash": "d3a64353420d",
-   "lang": "is",
-   "zdroj": "liferune",
-   "zacatek": "KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem segir hvað rúni"
   },
   {
    "hash": "894c74f3ddd1",

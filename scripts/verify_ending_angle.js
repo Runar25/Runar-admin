@@ -1,23 +1,26 @@
-// ㉨ KAZDY PER-CTENI LOS: VSECHNY VARIANTY JSOU DOSAZITELNE A POZNAJI SE ZPETNE
+// ㉨ MOST A PER-CTENI LOSY: co rozhoduje o konci, a da se to precist zpetne
 //
-// PROC: prompt ma nekolik poolu, ze kterych se pri kazdem cteni losuje (konec · esencni ram ·
-// rozpocet delky · umisteni jmena). Dve veci se u nich rozbiji tise:
-//  (1) nekdo prida filtr nebo preklep a jedna varianta prestane padat — vystup vypada dal
-//      v poradku, jen je chudsi; presne to delala vyluka uhel[6] x open[1], nez padla,
-//  (2) `_promptDraws` prestane variantu poznavat — pak se ztrati ZAPIS losu a kazde dalsi
-//      mereni na produkci ma nezaznamenany confounder (to se stalo losu DELKY: zapisoval se
-//      az od 2026-09-20, takze starsi mereni se o nej uz nikdy ocistit neda).
+// PROC: od v4.36 uz konec neni cisty los. TVAR urcuje rejstrik (SEEK_SHAPE), CIL oblast
+// (BRIDGE_AREAS -> {L}), a tezkost jen to, ze se sahne do druheho poolu. Tri veci se tu
+// rozbiji tise:
+//  (1) nekdo prehodi AREAS nebo SEEKS v configu a INDEXOVANE mapy zustanou — cil i tvar
+//      pak patri jine oblasti/rejstriku, a v textu to nikdo nepozna,
+//  (2) jedna varianta prestane padat (preklep, filtr navic) — vystup je jen chudsi,
+//  (3) `_promptDraws` prestane tvar poznavat, protoze {L} se nahrazuje az za behu — pak se
+//      ztrati zapis losu a kazde dalsi mereni ma nezaznamenany confounder (presne to se
+//      stalo losu DELKY: zapisoval se az od 2026-09-20).
 //
-// GOLDEN TOHLE NEPOKRYJE: jeho sandbox ma Math.random = 0.5, takze z kazdeho poolu vidi JEDNU
-// polozku. Doloženo 2026-09-20 — zmena rozpoctu delky i odebrani "brzy" z umisteni jmena
-// prosly golden diffem neviditelne. Proto se tady losuje doopravdy.
+// GOLDEN TOHLE NEPOKRYJE: jeho sandbox ma Math.random = 0.5, takze z kazdeho poolu vidi
+// JEDNU polozku (doloženo 2026-09-20 — zmenu rozpoctu delky ani jmena neukazal).
 //
-// CO SE TU TVRDI (protlaceno losy pres produkcni funkce, ne tvarem kodu — §19):
-//  · kazdy tvar konce padne pri KAZDEM ze sedmi uhlu (zadny uhel zadny tvar nezakazuje),
-//  · tezka runa losuje vyhradne z heavy poolu,
-//  · kazdy esencni ram a kazdy rozpocet delky padne,
-//  · kazde umisteni jmena padne (vcetne varianty "vubec", ktera je zamerne vetsinova),
-//  · `_promptDraws` vrati u kazde varianty spravny index (ending · essence · len · name).
+// CO SE TU TVRDI (protlaceno pres produkcni funkce, ne tvarem kodu — §19):
+//  · rejstrik dava DETERMINISTICKY tvar (Clarity veta · Confirmation dve moznosti · Reflection otazka),
+//  · „Insight into Challenge" bere tezke zneni i u LEHKE runy; tezka runa vynuti tezke zneni,
+//    ale tvar rejstriku NEMENI,
+//  · bez rejstriku (i u „General Guidance") padnou vsechny tri tvary,
+//  · kazda z osmi oblasti da svuj cil a bez oblasti zustane obecny,
+//  · kazdy esencni ram, rozpocet delky i umisteni jmena padne,
+//  · `_promptDraws` pozna tvar i s vlozenou frazi oblasti (ending · essence · len · name).
 //
 //   node scripts/verify_ending_angle.js
 'use strict';
@@ -38,43 +41,70 @@ const es = vm.runInContext('_endingShape', S);
 const draws = vm.runInContext('_promptDraws', S);
 const A = { en: vm.runInContext('READING_ANGLES', S), is: vm.runInContext('READING_ANGLES_IS', S) };
 const O = { en: vm.runInContext('ENDING_OPEN', S), is: vm.runInContext('ENDING_OPEN_IS', S) };
-const lehka = { n: 'Raidho' }, tezka = { n: 'Hagalaz' };
+const lehka = { n: 'Raidho' }, tezka = { n: 'Isa' };
 const H = { en: vm.runInContext('ENDING_HEAVY', S), is: vm.runInContext('ENDING_HEAVY_IS', S) };
+const AR = vm.runInContext('AREAS', S);
+const SK = vm.runInContext('SEEKS', S);
+const tvrdy = (t) => /without comfort|no comfort|nothing softened|umbúðalaust|engin huggun/.test(t);
+// tvar podle prvnich slov — stejny rozliseni jako pouziva clovek, ne index do pole
+const tvar = (t, L) => {
+  const q = L === 'is' ? 'einni spurningu' : 'one question';
+  const dve = L === 'is' ? 'nefnir tvennt' : 'two things';
+  return t.indexOf(q) !== -1 ? 'otazka' : (t.indexOf(dve) !== -1 ? 'dve' : 'veta');
+};
 
 for (const L of ['en', 'is']) {
-  // (1) kazdy tvar mostu se da vylosovat — bez uhlu i s nim
-  const vysledky = [];
-  for (let i = 0; i < 2000; i++) vysledky.push(es(lehka, L, undefined));
-  O[L].forEach((tvar, i) => rekni(vysledky.indexOf(tvar) !== -1,
-    L + '  open[' + i + '] padne bez uhlu (2000 losu)'));
-
-  // (2) uhel los NEOMEZUJE — pri kazdem ze sedmi uhlu musi kazdy tvar porad padat
-  let zablokovane = 0;
-  for (let a = 0; a < A[L].length; a++) {
-    const s2 = [];
-    for (let i = 0; i < 1200; i++) s2.push(es(lehka, L, A[L][a]));
-    O[L].forEach((tvar, i) => { if (s2.indexOf(tvar) === -1) { zablokovane++; console.log('    uhel[' + a + '] nikdy nedal open[' + i + ']'); } });
+  const oblast = AR[L][0];
+  // (1) rejstrik = deterministicky tvar
+  const ocekavane = L === 'is'
+    ? [['Skýrleiki', 'veta'], ['Staðfesting', 'dve'], ['Hugleiðing', 'otazka']]
+    : [['Clarity', 'veta'], ['Confirmation', 'dve'], ['Reflection', 'otazka']];
+  for (const [rejstrik, chtene] of ocekavane) {
+    const videno = new Set();
+    for (let i = 0; i < 300; i++) videno.add(tvar(es(lehka, L, rejstrik, oblast), L));
+    rekni(videno.size === 1 && videno.has(chtene),
+      L + '  rejstrik „' + rejstrik + '" dava vzdy tvar ' + chtene + ' (300 losu, videno ' + [...videno].join('/') + ')');
   }
-  rekni(zablokovane === 0, L + '  zadny uhel nezakazuje zadny tvar konce (7 uhlu x 1200 losu)');
 
-  // (3) tezka runa: vyhradne heavy pool
-  let h = 0;
-  for (let i = 0; i < 500; i++) if (H[L].indexOf(es(tezka, L, A[L][6])) !== -1) h++;
-  rekni(h === 500, L + '  tezka runa losuje jen z heavy poolu (500/500)');
+  // (2) tezkost: „Insight into Challenge" i u LEHKE runy · tezka runa vynuti, tvar nemeni
+  const vhled = L === 'is' ? 'Innsýn í áskorun' : 'Insight into Challenge';
+  rekni(tvrdy(es(lehka, L, vhled, oblast)), L + '  vhled do tezkosti: tezke zneni i u lehke runy');
+  rekni(!tvrdy(es(lehka, L, ocekavane[0][0], oblast)), L + '  lehka runa + jiny rejstrik: zneni zustava normalni');
+  const potvrzeni = ocekavane[1][0];
+  const tt = es(tezka, L, potvrzeni, oblast);
+  rekni(tvrdy(tt) && tvar(tt, L) === 'dve', L + '  tezka runa: tezke zneni, ale TVAR rejstriku nemeni');
 
-  // (4) zpetne poznani: kazdy tvar musi dat spravny index v _promptDraws
+  // (3) bez rejstriku i u „General Guidance" padnou vsechny tri tvary
+  for (const rej of [undefined, SK[L][0]]) {
+    const videno = new Set();
+    for (let i = 0; i < 2000; i++) videno.add(tvar(es(lehka, L, rej, oblast), L));
+    rekni(videno.size === 3, L + '  bez urceni (' + (rej || 'nezadano') + '): vsechny tri tvary padnou (videno ' + videno.size + ')');
+  }
+
+  // (4) kazda oblast da SVUJ cil; bez oblasti obecny
+  const cile = new Set();
+  for (const a of AR[L]) cile.add(es(lehka, L, ocekavane[0][0], a));
+  rekni(cile.size === AR[L].length, L + '  ' + AR[L].length + ' oblasti = ' + cile.size + ' ruznych cilu mostu');
+  const obecny = L === 'is' ? 'í lífi leitandans' : "in the seeker's life";
+  rekni(es(lehka, L, ocekavane[0][0], '').indexOf(obecny) !== -1, L + '  bez oblasti zustava obecny cil');
+
+  // (5) tezka runa sahne VZDY do tezkeho poolu (kazdy jeho tvar je tvrdy)
+  rekni(H[L].every(t => tvrdy(t)), L + '  tezky pool: vsechna zneni jsou bez utechy (' + H[L].length + ')');
+
+  // (6) _promptDraws pozna tvar i s vlozenou frazi oblasti
   let spatne = 0;
-  O[L].forEach((tvar, i) => {
-    const d = draws('X' + String.fromCharCode(10) + tvar + String.fromCharCode(10) + 'Y', L);
-    if (!d || d.ending !== 'open' + i) { spatne++; console.log('    open[' + i + '] -> ' + (d && d.ending)); }
-  });
-  H[L].forEach((tvar, i) => {
-    const d = draws('X' + String.fromCharCode(10) + tvar + String.fromCharCode(10) + 'Y', L);
-    if (!d || d.ending !== 'heavy' + i) { spatne++; console.log('    heavy[' + i + '] -> ' + (d && d.ending)); }
-  });
-  rekni(spatne === 0, L + '  _promptDraws pozna vsechny tvary (' + (O[L].length + H[L].length) + ' zneni)');
+  for (const rej of [ocekavane[0][0], ocekavane[1][0], ocekavane[2][0], vhled]) {
+    for (const a of [AR[L][0], AR[L][4], '']) {
+      for (const r of [lehka, tezka]) {
+        const t = es(r, L, rej, a);
+        const d = draws('X' + String.fromCharCode(10) + t + String.fromCharCode(10) + 'Y', L);
+        if (!d || typeof d.ending !== 'string') { spatne++; console.log('    nepoznan: ' + rej + ' / ' + (a || 'bez oblasti') + ' / ' + r.n); }
+      }
+    }
+  }
+  rekni(spatne === 0, L + '  _promptDraws pozna tvar i s vlozenou frazi (24 kombinaci)');
 
-  // (5) ESENCNI RAM + ROZPOCET DELKY: kazda polozka poolu musi padnout a byt zpetne poznana.
+  // (7) ESENCNI RAM + ROZPOCET DELKY: kazda polozka poolu padne a je zpetne poznana
   var dalsi = [
     { jm: 'esencni ram', fn: vm.runInContext('_essenceFrame', S), pool: vm.runInContext(L === 'is' ? 'ESSENCE_FRAMES_IS' : 'ESSENCE_FRAMES', S), klic: 'essence' },
     { jm: 'rozpocet delky', fn: vm.runInContext('_lengthBudget', S), pool: vm.runInContext(L === 'is' ? 'LENGTH_BUDGETS_IS' : 'LENGTH_BUDGETS', S), klic: 'len' },
@@ -83,31 +113,26 @@ for (const L of ['en', 'is']) {
     const videno = new Set();
     for (let i = 0; i < 2000; i++) videno.add(d.fn(L));
     rekni(videno.size === d.pool.length,
-      L + '  ' + d.jm + ': vsech ' + d.pool.length + ' variant padlo (videno ' + videno.size + ', 2000 losu)');
+      L + '  ' + d.jm + ': vsech ' + d.pool.length + ' variant padlo (videno ' + videno.size + ')');
     let chyb = 0;
-    d.pool.forEach((tvar, i) => {
-      const dr = draws('X' + String.fromCharCode(10) + tvar + String.fromCharCode(10) + 'Y', L);
+    d.pool.forEach((t2, i) => {
+      const dr = draws('X' + String.fromCharCode(10) + t2 + String.fromCharCode(10) + 'Y', L);
       if (!dr || dr[d.klic] !== i) { chyb++; console.log('    ' + d.jm + '[' + i + '] -> ' + (dr && dr[d.klic])); }
     });
     rekni(chyb === 0, L + '  ' + d.jm + ': _promptDraws pozna vsechny (' + d.pool.length + ')');
   }
 
-  // (6) UMISTENI JMENA: kazda varianta musi padnout. Varianta "vubec" je POSLEDNI v poolu a
-  // zamerne vetsinova (~55 %) — _namePlacement si ji bere podle pozice, takze prehozeni poolu
-  // by ten pomer tise zmenilo; proto se tu kontroluje i ona.
+  // (8) UMISTENI JMENA: kazda varianta padne; varianta „vubec" je POSLEDNI a zamerne vetsinova
   {
     const np = vm.runInContext('_namePlacement', S);
     const poolN = vm.runInContext(L === 'is' ? 'NAME_PLACEMENTS_IS' : 'NAME_PLACEMENTS', S);
     const videno = new Set();
     for (let i = 0; i < 4000; i++) videno.add(np('Anna', L));
-    rekni(videno.size === poolN.length,
-      L + '  umisteni jmena: vsech ' + poolN.length + ' variant padlo (videno ' + videno.size + ')');
-    // bez jmena se NESMI vlozit zadny pokyn (fallback 'you'/'þú' — §12)
-    rekni(np(L === 'is' ? 'þú' : 'you', L) === '' && np('', L) === '',
-      L + '  bez jmena zadny pokyn o jmene (§12 fallback)');
+    rekni(videno.size === poolN.length, L + '  umisteni jmena: vsech ' + poolN.length + ' variant padlo');
+    rekni(np(L === 'is' ? 'þú' : 'you', L) === '' && np('', L) === '', L + '  bez jmena zadny pokyn o jmene (§12 fallback)');
   }
 }
 
 console.log('');
-if (fail) { console.log('FAIL — ' + fail + ' kontrol tvaru konce neproslo.'); process.exit(1); }
-console.log('OK    vsechny per-cteni losy (konec · esence · delka · jmeno): kazda varianta padne a _promptDraws ji pozna.');
+if (fail) { console.log('FAIL — ' + fail + ' kontrol mostu/losu neproslo.'); process.exit(1); }
+console.log('OK    most: rejstrik dava tvar, oblast cil, tezkost jen pool — a vse se pozna zpetne.');

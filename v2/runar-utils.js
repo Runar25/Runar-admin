@@ -318,13 +318,22 @@ function _promptDraws(prompt, lang) {
     // Kotva = zacatek bloku _lensContext, jednoznacny v obou recich.
     out.lens = p.indexOf(isIs ? 'LOKALINSA — lífsrúnin' : 'CLOSING LENS — the life rune') !== -1 ? 1 : 0;
 
-    var heavy = isIs ? ENDING_HEAVY_IS : ENDING_HEAVY;
-    var open  = isIs ? ENDING_OPEN_IS  : ENDING_OPEN;
-    for (var j = 0; j < heavy.length; j++)
-      if (p.indexOf(heavy[j]) !== -1) { out.ending = 'heavy' + j; break; }
-    if (out.ending === undefined)
-      for (var k = 0; k < open.length; k++)
-        if (p.indexOf(open[k]) !== -1) { out.ending = 'open' + k; break; }
+    var heavyP = isIs ? ENDING_HEAVY_IS : ENDING_HEAVY;
+    var openP  = isIs ? ENDING_OPEN_IS  : ENDING_OPEN;
+    var najdi = function (pool, znacka) {
+      for (var j = 0; j < pool.length; j++) {
+        var casti = pool[j].split('{L}');
+        var a = p.indexOf(casti[0]);
+        if (a === -1) continue;
+        if (casti.length < 2 || p.indexOf(casti[1], a + casti[0].length) !== -1) return znacka + j;
+      }
+      return null;
+    };
+    out.ending = najdi(heavyP, 'heavy') || najdi(openP, 'open') || undefined;
+    // ZDROJ volby tvaru (rejstrik vs los) se sem NEZAPISUJE: `seeking` uz lezi v DB u ctení
+    // (claude-proxy uklada journal.seeking), takze se dopocita spojenim s `ending` — druha
+    // kopie by se rozesla (§20). Z promptu sameho ho precist nejde: hlavicka „Seeking:" byla
+    // odebrana 2026-09-08 a rejstrik se projevuje jen vetou z `_registerContext`.
 
     // Delka (2026-09-20, KUKY: "delku taky dodelej"): losuje se 3 vs 4 vety, ale v draws
     // NEBYLA — nezaznamenany confounder mereni (kam dosedne konec/most zavisi na vete
@@ -376,23 +385,34 @@ function _promptDraws(prompt, lang) {
 // softening“) zabila tvar moznosti 2/2 — „may be so“ v kazdem tvaru MUSI zustat.
 // Tezke runy (HEAVY_RUNES) sem losuji misto OPEN. Jedine zneni = zatim bez losu; druhy
 // tvar smi pribyt, az bude zmereny (owner o tom vi).
-const ENDING_HEAVY = [
-  "End on one line that holds out two things this may be in the seeker's life, each a state that may be so — said plainly, without comfort or softening.",
-  "End on one line that names what this may be in the seeker's life — a state that may be so, said plainly; no comfort, nothing softened.",
-];
+// ── MOST K CLOVEKU (2026-09-20, KUKY) ─────────────────────────────────────────
+// Konec pojmenuje, co to MUZE byt v zivote leitandy — jako stav k zvazeni, nikdy rada.
+// TVAR urcuje rejstrik (SEEK_SHAPE), CIL urcuje oblast ({L} = BRIDGE_AREAS). Oba pooly maji
+// tytez TRI tvary ve stejnem poradi, takze tvar = index a tezkost = jen volba poolu:
+//   [0] veta · [1] dve moznosti · [2] otazka
+// „may be" musi zustat v KAZDEM tvaru — zneni bez nej zabilo tvar moznosti 2/2 (DECISIONS
+// 2026-09-20 (4)). Otazkovy tvar navadi 2/6 (CODE-read) — znama vada, hlidat pri mereni.
 const ENDING_OPEN = [
-  "End on one line that names what this may be in the seeker's life — a state that may be so, offered for them to weigh; it names how things may stand, never what to do about it.",
-  "End on one line that holds out two things this may be in the seeker's life, each a state that may be so, left for them to weigh.",
-  "End on one question that holds out what this may be in the seeker's life — asked as a possibility they can weigh, never as something you know about them.",
+  "End on one line that names what this may be {L} \u2014 a state that may be so, offered for them to weigh; it names how things may stand, never what to do about it.",
+  "End on one line that holds out two things this may be {L}, each a state that may be so, left for them to weigh.",
+  "End on one question that holds out what this may be {L} \u2014 asked as a possibility they can weigh, never as something you know about them.",
 ];
-const ENDING_HEAVY_IS = [
-  'Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið í lífi leitandans, hvort um sig ástand sem gæti átt við — sagt umbúðalaust, engin huggun, ekkert mildað.',
-  'Endaðu á einni línu sem nefnir hvað þetta gæti verið í lífi leitandans — ástand sem gæti átt við, sagt umbúðalaust; engin huggun, ekkert mildað.',
+// Tezke zneni TYCHZ tri tvaru: drzi „may be", ubira jen utechu (RUNAR_DESIGN „Stavba Single
+// cteni" bod 3). Bere je tezka runa (HEAVY_RUNES) i rejstrik „Insight into Challenge".
+const ENDING_HEAVY = [
+  "End on one line that names what this may be {L} \u2014 a state that may be so, said plainly, without comfort or softening.",
+  "End on one line that holds out two things this may be {L}, each a state that may be so \u2014 said plainly, without comfort or softening.",
+  "End on one question that holds out what this may be {L} \u2014 asked as a possibility they can weigh, said plainly; no comfort, nothing softened.",
 ];
 const ENDING_OPEN_IS = [
-  'Endaðu á einni línu sem nefnir hvað þetta gæti verið í lífi leitandans — ástand sem gæti átt við, honum til umhugsunar; hún nefnir hvernig hlutirnir gætu staðið, aldrei hvað skuli gera.',
-  'Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið í lífi leitandans, hvort um sig ástand sem gæti átt við, honum til umhugsunar.',
-  'Endaðu á einni spurningu sem spyr hvað þetta gæti verið í lífi leitandans — sem möguleika sem hann getur vegið og metið, aldrei sem eitthvað sem þú veist um hann.',
+  'Endaðu á einni línu sem nefnir hvað þetta gæti verið {L} — ástand sem gæti átt við, honum til umhugsunar; hún nefnir hvernig hlutirnir gætu staðið, aldrei hvað skuli gera.',
+  'Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið {L}, hvort um sig ástand sem gæti átt við, honum til umhugsunar.',
+  'Endaðu á einni spurningu sem spyr hvað þetta gæti verið {L} — sem möguleika sem hann getur vegið og metið, aldrei sem eitthvað sem þú veist um hann.',
+];
+const ENDING_HEAVY_IS = [
+  'Endaðu á einni línu sem nefnir hvað þetta gæti verið {L} — ástand sem gæti átt við, sagt umbúðalaust; engin huggun, ekkert mildað.',
+  'Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið {L}, hvort um sig ástand sem gæti átt við — sagt umbúðalaust, engin huggun, ekkert mildað.',
+  'Endaðu á einni spurningu sem spyr hvað þetta gæti verið {L} — sem möguleika sem hann getur vegið og metið, sagt umbúðalaust; engin huggun, ekkert mildað.',
 ];
 // ─── Rozpocet delky (single) ──────────────────────────────────
 // Dve delky, losuje se per cteni. Neni to jen o poctu slov: pri jinem rozpoctu musi model
@@ -431,18 +451,63 @@ function _lengthBudget(lang) {
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
-function _endingShape(drawn, lang, angle) {
-  function _isHeavy(r) { return !!(r && r.n && typeof HEAVY_RUNES !== 'undefined' && HEAVY_RUNES.names.indexOf(r.n) !== -1); }
-  var heavy = Array.isArray(drawn) ? drawn.some(_isHeavy) : _isHeavy(drawn);
+// Kam most dosedne — poradi = AREAS.en (runar-config.js). Bez oblasti zustava obecny cil.
+const BRIDGE_AREAS = [
+  'between the seeker and someone',
+  'in where the seeker is going',
+  'in what the seeker is making',
+  "in the seeker's mending and rest",
+  "in what is present in the seeker's life but not shown",
+  "in the seeker's home and the people in it",
+  'in a slow change in the seeker',
+  "where the seeker's way divides",
+];
+const BRIDGE_AREAS_IS = [
+  'milli leitandans og einhvers annars',
+  'í því hvert leitandinn stefnir',
+  'í því sem leitandinn er að smíða',
+  'í gróanda leitandans og hvíld',
+  'í því sem er til staðar í lífi leitandans en sést ekki',
+  'á heimili leitandans og meðal fólksins þar',
+  'í hægri breytingu hjá leitandanum',
+  'þar sem leið leitandans skiptist',
+];
+const BRIDGE_DEFAULT = { en: "in the seeker's life", is: 'í lífi leitandans' };
+
+// Tvar podle rejstriku — poradi = SEEKS.en: General · Clarity · Confirmation ·
+// Insight into Challenge · Reflection. `null` = los ze tri tvaru (tak to bezelo do 2026-09-20).
+// `h:true` u „Insight into Challenge" = tezke zneni i u LEHKE runy: kdo si rekne o vhled do
+// tezkosti, nema dostat utechu. Tezka runa pak jen vynuti h, tvar nemeni.
+const SEEK_SHAPE = [null, { i: 0, h: false }, { i: 1, h: false }, { i: 0, h: true }, { i: 2, h: false }];
+
+function _bridgeTarget(area, lang) {
+  var seznam = lang === 'is' ? BRIDGE_AREAS_IS : BRIDGE_AREAS;
+  var vsechny = (typeof AREAS !== 'undefined' && AREAS && AREAS[lang]) ? AREAS[lang] : null;
+  var i = vsechny ? vsechny.indexOf(area) : -1;
+  return (i >= 0 && seznam[i]) ? seznam[i] : BRIDGE_DEFAULT[lang === 'is' ? 'is' : 'en'];
+}
+
+function _endingShape(drawn, lang, seeking, area) {
+  var list = (Array.isArray(drawn) ? drawn : [drawn]).filter(Boolean);
+  var heavy = false;
+  if (typeof HEAVY_RUNES !== 'undefined' && HEAVY_RUNES && HEAVY_RUNES.names)
+    for (var i = 0; i < list.length; i++)
+      if (HEAVY_RUNES.names.indexOf(list[i].n) !== -1) { heavy = true; break; }
+
+  // Tvar: rejstrik rozhoduje, jinak los. „Insight into Challenge" si bere tezke zneni i u
+  // lehke runy; tezka runa naopak vynuti tezke zneni, ale TVAR rejstriku nemeni.
+  var seeks = (typeof SEEKS !== 'undefined' && SEEKS && SEEKS[lang]) ? SEEKS[lang] : null;
+  var si = seeks ? seeks.indexOf(seeking) : -1;
+  var volba = (si >= 0 && SEEK_SHAPE[si]) ? SEEK_SHAPE[si] : null;
+  var pocet = (lang === 'is' ? ENDING_OPEN_IS : ENDING_OPEN).length;
+  var idx = volba ? volba.i : Math.floor(Math.random() * pocet);
+  if (volba && volba.h) heavy = true;
+
   var pool = heavy ? (lang === 'is' ? ENDING_HEAVY_IS : ENDING_HEAVY)
                    : (lang === 'is' ? ENDING_OPEN_IS : ENDING_OPEN);
-  // 2026-09-20: VYLUKA uhel[6] x open[1] ODSTRANENA. Vznikla 2026-09-18, protoze open[1]
-  // znelo „name where the seeker stands in the image“ a delalo tyz tah jako uhel [6] (misto
-  // cloveka v obraze) dvakrat v jednom cteni. Tou frazi to zneni uz nezacina ani nekonci —
-  // open[1] je dnes MOST „dve moznosti v zivote leitandy“, ktery do obrazu nikoho nestavi.
-  // Duvod tedy zanikl; drzet vyluku dal by bez duvodu ubiralo jeden ze tri tvaru konce.
-  return pool[Math.floor(Math.random() * pool.length)];
+  return pool[idx].split('{L}').join(_bridgeTarget(area, lang));
 }
+
 
 // ─── VARIABILITY POOLS (V2) ──────────────────────────────────────
 // DEAD CODE (kept for history, NOT wired). WHY / WHO / WHEN:

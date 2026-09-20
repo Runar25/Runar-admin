@@ -1556,7 +1556,9 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     // stojí v hlavičce `DRAWN RUNE` a do 2026-08-13 se opakoval i tady (nález
     // `lint_prompts.js --dup`). Parametr zůstal, aby se neměnila signatura packu.
     hasQ ? S.qBranch(rn(drawn), drawn.g, _questionSafe(u.question)) : S.noqBranch(rn(drawn), drawn.g, worldRef),
-    _endingShape(drawn, lang, angleDraw),
+    // 2026-09-20: most bere REJSTRIK (tvar) a OBLAST (kam dosedne) misto uhlu — uhel
+    // potreboval jen zrusena vyluka uhel[6] x open[1].
+    _endingShape(drawn, lang, u.seeking, u.area),
     // v4.4 (2026-08-22): COCKA SE VRACI — owner: "v single je life rune jako cocka,
     // neni hotovo dokud neni cocka". Priorita zustava VEN (vrati se, az mereni ukaze
     // konflikt oblast x obraz; soulad zatim drzi; `lensOn` se tu proto porad necte).

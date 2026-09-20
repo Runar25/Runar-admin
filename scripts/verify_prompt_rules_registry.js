@@ -52,7 +52,20 @@ function pravidla() {
     let t = String(text || '').replace(/\s+/g, ' ').trim();
     (hlavicky[lang] || []).forEach((h) => { if (h && t.indexOf(h) === 0) t = h.trim(); });
     (jmenaVarianty[lang] || []).forEach((v) => { if (v && t.indexOf(v) !== -1) t = t.replace(v, '').replace(/\s+/g, ' ').trim(); });
-    if (t.length > 20) ven.push({ lang, zdroj, text: t });
+    if (t.length > 20) ven.push({ lang, zdroj, text: normalizujCil(t, lang) });
+  };
+  // Most nese od v4.36 cil podle oblasti ({L} -> „in a slow change in the seeker" atd.).
+  // Sablona s {L} je to, co se schvaluje a registruje; konkretni cil je DATA, stejne jako
+  // jmeno runy nebo osoby (viz DATA regex nize). Bez teto normalizace by tataz instrukce
+  // mela az devet podob a registr by na kazde nove oblasti cervenal.
+  const normalizujCil = (t, lang) => {
+    const cile = (lang === 'is' ? glob('BRIDGE_AREAS_IS') : glob('BRIDGE_AREAS')) || [];
+    const vychozi = glob('BRIDGE_DEFAULT') || {};
+    const vsechny = cile.concat([vychozi[lang === 'is' ? 'is' : 'en']]).filter(Boolean)
+      .sort((a, b) => b.length - a.length);   // nejdriv nejdelsi, at kratsi cil nerozseka delsi
+    let v = t;
+    for (const c of vsechny) if (v.indexOf(c) !== -1) { v = v.split(c).join('{L}'); break; }
+    return v;
   };
     // ⚠️ `RUNE `, `URÐUR`, `VERÐANDI`, `SKULD` přibyly 2026-09-11: jsou to ŠTÍTKY POZIC
   // ze spreadu, které Ask prompt vypisuje vedle jmen tažených run. Je to DATA (pozice +
@@ -66,6 +79,10 @@ const DATA = /^(PERSON|DRAWN|SEEKER|LIFE|AREA|SEEKING|INTENTION|QUESTION|REALM|E
     (L === 'is' ? glob('ENDING_HEAVY_IS') : glob('ENDING_HEAVY') || []).forEach((a, i) => pridej(L, 'zakonceni_heavy[' + i + ']', a));
     (L === 'is' ? glob('NAME_PLACEMENTS_IS') : glob('NAME_PLACEMENTS') || []).forEach((a, i) => pridej(L, 'jmeno[' + i + ']', a));
     (L === 'is' ? glob('LENGTH_BUDGETS_IS') : glob('LENGTH_BUDGETS') || []).forEach((a, i) => pridej(L, 'delka[' + i + ']', a));
+    // 2026-09-20: ESENCNI RAMY do poolu — pribyly ve v4.35, ale registr je nesbiral, takze se
+    // registroval jen ten ram, ktery postaveny prompt zrovna vylosoval, a druhy cervenal pri
+    // dalsim behu. Tataz trida vady jako u kazdeho losu bez zaznamu.
+    (L === 'is' ? glob('ESSENCE_FRAMES_IS') : glob('ESSENCE_FRAMES') || []).forEach((a, i) => pridej(L, 'esence[' + i + ']', a));
     zJaz('AREAS', L).forEach((a, i) => pridej(L, 'oblast[' + i + ']', S._domainContext(a, L)));
     zJaz('SEEKS', L).forEach((a, i) => pridej(L, 'registr[' + i + ']', S._registerContext(a, L)));
     zJaz('INTENTIONS', L).forEach((a, i) => pridej(L, 'zamer[' + i + ']', S._intentionContext(a, L)));
