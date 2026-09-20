@@ -1261,8 +1261,13 @@ plus dvě síta výš a kontrola „čí je to pozemek" (předmět/sloveso nesm�
 4. **Délka: 4 věty; strop slov se nemění** (KUKY: „když bude víc, bude víc — proč bys mu číslem říkal, že může ještě
    víc"). Průměr se NEzapisuje do docu — počítá ho `scripts/delky_cteni.js` z exportu DB; los délky se od 2026-09-20
    zapisuje do `prompt_draws.len`.
-5. **Sezóna jen jako podmínka** (štítek + „obraz nenese počasí z jiné doby"), žádné počítání času, žádné jméno starého
-   měsíce (dělalo obilí). Owner zvažuje úplné odebrání — filtr obrazů ale drží jen u 36/108 řádků, které sezónu nesou.
+5. **Sezóna v promptu NENÍ** (od v4.32-bez-sezony, KUKY 2026-09-20 nad „A child crosses the late-summer floor":
+   „zabírá místo… v místnosti je to naprosto nedůležitá informace"). Řádek, funkce i štítky smazány — **34 ze 108**
+   obrazů (31 %) je registr D = domácí scéna, kam roční období nemá kam dosednout. Sezóna dál rozhoduje o VÝBĚRU
+   obrazu (filtr drží u 36/108 řádků, které sezónu nesou), jen už není pokynem v textu. Kdo ji oživí, musí napřed
+   vyřešit domácí scény. Detail: DECISIONS 2026-09-20 (3) a (5).
+   <!-- opravila CODE-tune 2026-09-20: bod popisoval stav „podmínka + owner zvažuje odebrání", ale produkce už
+        sezónu odebranou měla (§20 — při sporu vyhrává produkce). Minimální zásah do cizí domény, §13. -->
 6. **Co je vědomě NEvyřešené:** závěr spreadů (vlastní stavba per spread, NE kopie mostu ze single — viz backlog) ·
    tvar esence (spona „<Runa> is" — dělá ji dvojice pokynů „pojmenuj + řekni, co dělá"; řešení = los rámů, znění je
    obsah ownera) · umístění jména člověka mimo esenční větu · LIST RUNY (6 polí) · volba modelu až po pravidlech.
