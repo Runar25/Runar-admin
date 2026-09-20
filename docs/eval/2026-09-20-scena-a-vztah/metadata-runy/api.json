@@ -1,0 +1,62 @@
+{
+ "single-en-0-A-1": {
+  "text": "You are on the floor where a child takes a first step, the leg unsteady yet the aim already sure. This is Berkana, Anna, the small crossing where movement finds its balance mid-stride. Behind you the ground held such steps, and the strength that carried them was yours before you named it.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 109
+ },
+ "single-en-0-A-2": {
+  "text": "You are back on that floor, the child's first step lifting away from the steady hand, unsteady but already sure of the crossing. This is Berkana, Anna, the moment a thing that cannot yet stand alone finds its own ground anyway. The floor held then, and you are still standing on your own legs now.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 114
+ },
+ "single-en-0-B-1": {
+  "text": "You are standing at the edge of the floor, watching the first step cross it, unsteady but sure. This is Berkana, Anna, the small motion that starts before its own strength has gathered. Look back at what already learned to stand in you, and let that quiet strength hold its ground.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 106
+ },
+ "single-en-0-B-2": {
+  "text": "You are down on the floor where the child takes that first step, unsteady but sure, one foot leaving the ground it knew. Berkana is that crossing, Anna, the old footing given up before the new is proven underneath you. Look back and you will see how much weight your legs were already carrying.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 108
+ },
+ "single-en-1-A-1": {
+  "text": "The fog sits thick on the fjord this late summer, the water beneath it, the far shore gone from sight, and slowly all of it falls away but the not-knowing itself. Blank is the fog that keeps the shape of things unspoken. What crosses it now reaches you as a sound before it is ever seen.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 116
+ },
+ "single-en-1-A-2": {
+  "text": "The fog sits thick on the fjord this late summer, the water and the far shore both hidden, and only the pale drift before you remains. Blank is that drift, the not-knowing that neither hurries nor answers. What is changing in you moves under it, unseen, and the fog will speak when it is ready.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 113
+ },
+ "single-en-1-B-1": {
+  "text": "The fog sits thick on the fjord, the far shore gone, the water beneath it unseen, and only the near stones hold their shape. Blank is that fog, the place where seeing stops and waiting begins. Stand where the ground is firm, and let the mist say what it will in its own time.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 109
+ },
+ "single-en-1-B-2": {
+  "text": "The fog sits thick over the fjord this late summer morning, hiding the water, the far shore, whatever waits past it. Then the near stones fade, the sound of your own breath goes, and only the fog remains. Blank is that unseeing, and in it what you cannot yet name is quietly finding its words.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 115
+ },
+ "single-en-2-A-1": {
+  "text": "The door stands open and two cups steam on the table, one poured and one still waiting. Gebo is the exchange between what you offer and what returns to you across that same table. Whether the second chair fills is not yours alone to command, and you can sit steady in that.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 98
+ },
+ "single-en-2-A-2": {
+  "text": "The door stands open and the second cup steams beside your own, waiting for someone to sit down. This is Gebo, the giving that only becomes real when it is met and answered. What comes toward you asks not to be earned, but to be received with a steady hand.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 97
+ },
+ "single-en-2-B-1": {
+  "text": "The door stands open and two cups wait on the table, the coffee still warm for someone not yet arrived. Gebo is the small readiness of a place set for company, the opening that asks nothing back. What you leave open in yourself, you keep open by standing at it plainly.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 103
+ },
+ "single-en-2-B-2": {
+  "text": "The door stands open and two cups wait on the table, one poured for you, one for whoever comes. Gebo is the coffee cooling in the offered cup, given before you know who sits down. What you set out for another slowly reshapes the one who sets it there, and that steady giving asks nothing back.",
+  "model": "claude-opus-4-8",
+  "out_tokens": 111
+ }
+}

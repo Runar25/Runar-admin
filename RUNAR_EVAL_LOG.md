@@ -4274,5 +4274,15 @@ Podklady → `docs/eval/2026-09-20-scena-a-vztah/v431-po-nasazeni/`.
 *„one side taking the weather…"*, vnutil jediné místo (průsmyk), odstranil řádek sezóny a zafixoval losy. V produkci má
 Algiz dál celé obrazy (torfová zeď · ovčácký pes · světlo v okně) a losované místo má zatím JEN Raidho.
 
+**Nález 4 — řádek `World: … · Elements: …` je únik jen u SLABŠÍHO modelu.** CODE-tune našla ručně v dávce sol vs opus-5,
+že sol psal *„beneath the surface"* (Elements: Water) a *„hidden roots of the shore"* (World: the roots), ač v obraze
+hladina ani kořeny nejsou. Pustil jsem **tytéž tři EN single prompty té dávky** (tytéž losy, čočka jako tam) s tím řádkem
+a bez něj na PRODUKČNÍM modelu, 2 čtení na rameno (`docs/eval/2026-09-20-scena-a-vztah/metadata-runy/`): **rozdíl se
+neukázal** — scéna i význam drží v obou ramenech, žádný z textů nepřinesl hladinu/kořeny navíc. ⇒ **Nález „není to X"
+pro produkční model**; u sol je to reálný únik. Důsledek pro rozhodování o modelu: neopravovat prompt kvůli slabině
+modelu, který se nakonec nepoužije. ⚠️ n = 6 čtení, jeden jazyk.
+⚠️ **Můj automatický měřič úniku metadat NEPOUŽITELNÝ** (§27): slova *already / water / ground* chytá i tam, kde jsou
+legitimně ve scéně (fjord = voda). Platí jen ruční nálezy.
+
 **Nález 3 — vedlejší:** *grey* se objevilo 1/8 (*„The stone ahead is grey against the sky"*) i po odebrání věty „sensory" —
 zbytkový model-prior u kamene; zatím pod prahem, jen hlídat.
