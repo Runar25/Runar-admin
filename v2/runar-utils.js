@@ -374,7 +374,11 @@ const ENDING_OPEN = [
   'End with one open question asked of the image — no part of the question may claim what is true, missing, or not yet ready in the seeker.',
   // 2026-08-21: puvodne „name where the seeker stands" — doslova pokyn tvrdit o ctenari,
   // osm radek od zakazu `_noColdRead`. Ted se pojmenovava jeho misto V OBRAZE.
-  'End on a plain, steady line — name where the seeker stands in the image, not what is true inside them; not a question.',
+  // 2026-09-20 (handoff CODE-read #2, owner „ano"): „name where the seeker stands in the
+  // image" VEN — s tou frazi koncilo cteni „You stand…" 6/6, bez ni 0/6 (dva obrazy,
+  // produkcni model; RUNAR_EVAL_LOG 2026-09-19 (5)). Druhy zdroj „You stand" je uhel [6]
+  // na ZACATKU — ten zustava, owner ho nerusi.
+  'End on a plain, steady line from the image — not what is true inside them; not a question.',
   'End on a quiet line that rests — not a question this time.',
 ];
 const ENDING_HEAVY_IS = [
@@ -383,7 +387,7 @@ const ENDING_HEAVY_IS = [
 ];
 const ENDING_OPEN_IS = [
   'Endaðu á einni opinni spurningu sem beinist að myndinni — enginn hluti spurningarinnar má fullyrða hvað er satt, hvað vantar eða hvað leitandinn er ekki tilbúinn til.',
-  'Endaðu á staðfastri línu — nefndu hvar leitandinn stendur í myndinni, ekki hvað er satt innra með honum; ekki spurningu.',
+  'Endaðu á staðfastri línu úr myndinni — ekki hvað er satt innra með honum; ekki spurningu.',
   'Endaðu á hljóðlátri línu sem hvílir — ekki spurningu í þetta sinn.',
 ];
 // ─── Rozpocet delky (single) ──────────────────────────────────
@@ -413,6 +417,9 @@ function _endingShape(drawn, lang, angle) {
   // 2026-09-18 (handoff CODE-read, bod C): uhel [6] „seeker inside the image" se nesmi
   // vylosovat s koncem open[1] „name where the seeker stands in the image" — zacatek i konec
   // by delaly TYZ tah (misto cloveka v obraze) dvakrat. Zneni poolu se nemeni, jen los.
+  // ⚠ 2026-09-20: open[1] uz hledace do obrazu NESTAVI (fraze odesla, viz komentar u poolu)
+  // — premisa vyluky zeslabla. Vyluka zustava, dokud ji owner/CODE-read nezrusi datovanym
+  // rozhodnutim (zmena rozlozeni losu = merena zmena chovani, ne uklid).
   if (!heavy && angle) {
     var _uhly = lang === 'is' ? READING_ANGLES_IS : READING_ANGLES;
     if (angle === _uhly[6]) pool = pool.filter(function (_, i) { return i !== 1; });

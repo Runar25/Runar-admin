@@ -171,7 +171,8 @@ if (!DESCRIBE_MARK.en || !DESCRIBE_MARK.is) {
 // ── BOD 7 (2026-09-19): radek SEZONY v bloku obrazu — single + 4 spready; v systemu,
 // Ask a zivotni rune NE. EN radek nesmi nest islandske jmeno mesice (michani mate — owner).
 {
-  const SEZ = { en: 'SEASON — where Rúnar stands: ', is: 'ÁRSTÍÐIN — þar sem Rúnar stendur: ' };
+  // 2026-09-20: radek sezony = podminka se stitkem („…stands it is <label>."), ne lore hesla.
+  const SEZ = { en: 'SEASON — where Rúnar stands it is ', is: 'ÁRSTÍÐIN — þar sem Rúnar stendur er ' };
   for (const L of ['en', 'is']) {
     const cesty = ['single', 'norns', 'kriz', 'horseshoe', 'yggdrasil'];
     const chybi = cesty.filter(b => !(O[b + '_' + L] || '').includes(SEZ[L]));

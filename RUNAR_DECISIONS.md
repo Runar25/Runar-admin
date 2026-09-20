@@ -6143,3 +6143,32 @@ check-is OK.
 **Verze promptu:** v4.29-sezona → **v4.30-jadra**.
 
 **Affected doc(s):** žádný — mapa promptu (artifact) překreslena v témž tahu.
+
+## 2026-09-20 (1) — Konec „steady" bez umístění hledače, sezóna jako podmínka se štítkem
+
+**Handoff CODE-read (psáno proti d457494 + doplněk proti 20247a6), owner schválil 1–5.**
+Body 1/3/5 už nasazeny záznamem 2026-09-19 (3) — znění handoffu sedí s nasazeným kódem
+doslova. Tento záznam = body 2 a 4:
+
+2. **ENDING_OPEN[1] ztratilo „name where the seeker stands in the image"** (EN i IS): s tou
+   frází končilo čtení „You stand…" 6/6, bez ní 0/6 (RUNAR_EVAL_LOG 2026-09-19 (5)). Úhel [6]
+   na začátku zůstává. ⚠️ **Výluka úhel[6]×open[1] (2026-09-18) tím ztratila premisu** —
+   open[1] už hledače do obrazu nestaví. Výluka ZŮSTÁVÁ (změna rozložení losu = měřená změna
+   chování, ne úklid); zrušit ji smí jen nové datované rozhodnutí. Poznámka u místa výluky.
+3. **Řádek sezóny = PODMÍNKA, ne obsah.** Nové znění: EN „SEASON — where Rúnar stands it is
+   <štítek>. The image never carries weather that belongs to another season." · IS „ÁRSTÍÐIN —
+   þar sem Rúnar stendur er <štítek>. Myndin sýnir aldrei veður sem tilheyrir annarri árstíð."
+   Staré znění („let it colour the land and the work") sypalo obilí do obrazů bez pole 5/6
+   (RUNAR_EVAL_LOG 2026-09-19 (4), (6)). Štítky = nová mapa `SEASON_LABELS` (13 klíčů
+   islandského kalendáře, EN/IS na témž řádku) — **NE z BIRTH_MONTHS** (lore k měsíci narození;
+   právě odtud uniklo „grain-cutting month of old"). IS štítky i věta ověřeny CODE-read
+   (is-grammar-qa 0 nálezů, korpusové počty v handoffu); „ber aldrei veður" zakázáno (0 dokladů
+   + kolize s idiomem „bera veður af e-u").
+
+**Čím je to jištěné:** golden diff = přesně 2 řádky ve 24/38 builderech (sezóna v 5 cestách
+×2 jazyky, open[1] v single fixturách), nic navíc · wiring kotva sezóny přepnuta na nový tvar
+· registr 208 (v4.31-podminka) · smoke 44/44 · check-is OK.
+
+**Verze promptu:** v4.30-jadra → **v4.31-podminka**.
+
+**Affected doc(s):** žádný — mapa promptu (artifact) překreslena v témž tahu.

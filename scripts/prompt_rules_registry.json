@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
- "zapsano": "2026-09-19",
- "prompt_version": "v4.30-jadra",
+ "zapsano": "2026-09-20",
+ "prompt_version": "v4.31-podminka",
  "pravidla": [
   {
    "hash": "54d29df4d80b",
@@ -52,10 +52,10 @@
    "zacatek": "End with one open question asked of the image — no part of the questio"
   },
   {
-   "hash": "58f77728c13d",
+   "hash": "73fbf6e160f9",
    "lang": "en",
    "zdroj": "zakonceni_open[1]",
-   "zacatek": "End on a plain, steady line — name where the seeker stands in the imag"
+   "zacatek": "End on a plain, steady line from the image — not what is true inside t"
   },
   {
    "hash": "3dc04beb7a3f",
@@ -238,10 +238,10 @@
    "zacatek": "IMAGE — the picture in this reading comes from here:"
   },
   {
-   "hash": "e7403f1f98df",
+   "hash": "4fd6f851590d",
    "lang": "en",
    "zdroj": "single",
-   "zacatek": "SEASON — where Rúnar stands: two months of summer left, the grain-cutt"
+   "zacatek": "SEASON — where Rúnar stands it is late summer. The image never carries"
   },
   {
    "hash": "e9ba6e72c4cd",
@@ -646,10 +646,10 @@
    "zacatek": "Endaðu á einni opinni spurningu sem beinist að myndinni — enginn hluti"
   },
   {
-   "hash": "3781c79d0ca6",
+   "hash": "1331743cfdf1",
    "lang": "is",
    "zdroj": "zakonceni_open[1]",
-   "zacatek": "Endaðu á staðfastri línu — nefndu hvar leitandinn stendur í myndinni, "
+   "zacatek": "Endaðu á staðfastri línu úr myndinni — ekki hvað er satt innra með hon"
   },
   {
    "hash": "bd90ed8d66e3",
@@ -832,10 +832,10 @@
    "zacatek": "MYND — héðan kemur myndin í þessum lestri:"
   },
   {
-   "hash": "56680de6a942",
+   "hash": "e9f36ccd93f7",
    "lang": "is",
    "zdroj": "single",
-   "zacatek": "ÁRSTÍÐIN — þar sem Rúnar stendur: tvímánuður — tveir mánuðir eftir af "
+   "zacatek": "ÁRSTÍÐIN — þar sem Rúnar stendur er síðsumar. Myndin sýnir aldrei veðu"
   },
   {
    "hash": "d3a64353420d",

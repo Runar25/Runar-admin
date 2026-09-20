@@ -650,21 +650,38 @@ function _imageRules(lang) {
   return 'THE IMAGE\nRúnar uses one image per reading and carries it through; he does not list images. A second picture earns its place only when it takes the first one further — the same scene, one step on. Two unrelated pictures side by side say nothing. Never a simile stacked on a metaphor. The image must connect to where this person is standing right now — atmosphere on its own is decoration, not a reading.';
 }
 // BOD 7 — SEZONA (2026-09-19; handoff owner 2026-09-15 „Runar ma znat skutecne rocni obdobi").
-// Zdroj = islandsky kalendar (icelandicMonthKey + BIRTH_MONTHS, §20 — nic se neopisuje).
-// EN radek NENESE islandske jmeno mesice (owner: „anglicky musi byt mesic anglicky…
-// v islandstine islandsky" — michani mate) — jen anglicka hesla; IS nese jmeno i hesla.
-// Vodítko „lita landid a verk v obrazech": pilot 2026-09-15 ukazal 1/3 skluz sezony do
-// SCENY tazatele („you sit in the late-summer light") — sezona patri do krajiny obrazu.
-// Papouskovani se nemeri jako riziko: hesla nejsou hotova veta (pilot: 0/3 opisu).
+// 2026-09-20 (handoff CODE-read #4, owner „ano" + stitek „late summer"): sezona je PODMINKA,
+// ne obsah. Puvodni zneni („let it colour the land and the work") sypalo obili do obrazu bez
+// pole 5/6; zuzeni pokynu nepomohlo (5/6); hole sdeleni 0/6 obili, ale 5/6 opis vety; tenhle
+// tvar 0/6 a 0/6 — sezona se projevi jen ve svetle (RUNAR_EVAL_LOG 2026-09-19 (4) a (6)).
+// Stitky NEJSOU z BIRTH_MONTHS — to je lore k mesici narozeni a prave odtud unikalo
+// „grain-cutting month of old". Prosty stitek per klic kalendare; EN bez islandskych jmen.
+// IS overeno CODE-read: is-grammar-qa 0 nalezu, korpus „er síðsumar" 9 · „er kominn vetur" 148
+// · „er komið vor" 247 atd.; NEPOUZIVAT „ber aldrei veður" (0 dokladu + idiom „bera veður af").
 // Datum jde parametrem kvuli testum a golden otisku (pinovatelne); bez nej = dnesek.
 // Sezona se do prompt_draws NEZAPISUJE (§20): odvodi se z drawn_at + prompt_version.
+var SEASON_LABELS = {
+  harpa: ['spring', 'vor'],
+  skerpla: ['summer', 'sumar'],
+  solmanudur: ['midsummer', 'miðsumar'],
+  aukanaetur: ['high summer', 'hásumar'],
+  heyannir: ['high summer', 'hásumar'],
+  tvimanudur: ['late summer', 'síðsumar'],
+  haustmanudur: ['autumn', 'haust'],
+  gormanudur: ['winter begins', 'kominn vetur'],
+  ylir: ['winter', 'vetur'],
+  morsugur: ['midwinter', 'skammdegi'],
+  thorri: ['deep winter', 'hávetur'],
+  goa: ['late winter', 'vetur'],
+  einmanudur: ['early spring', 'komið vor'],
+};
 function _seasonLine(lang, d, m, y) {
   var now = new Date();
-  var e = BIRTH_MONTHS[icelandicMonthKey(d || now.getDate(), m || (now.getMonth() + 1), y || now.getFullYear())];
-  if (!e) return '';
+  var L = SEASON_LABELS[icelandicMonthKey(d || now.getDate(), m || (now.getMonth() + 1), y || now.getFullYear())];
+  if (!L) return '';
   if (lang === 'is')
-    return 'ÁRSTÍÐIN — þar sem Rúnar stendur: ' + e.name.toLowerCase() + ' — ' + e.is + '. Láttu hana lita landið og verkin í myndunum þar sem það á við.';
-  return 'SEASON — where Rúnar stands: ' + e.en + '. Let it colour the land and the work in his images where it fits naturally.';
+    return 'ÁRSTÍÐIN — þar sem Rúnar stendur er ' + L[1] + '. Myndin sýnir aldrei veður sem tilheyrir annarri árstíð.';
+  return 'SEASON — where Rúnar stands it is ' + L[0] + '. The image never carries weather that belongs to another season.';
 }
 
 // Pravidla + radek IMAGE + sezona jako JEDEN blok zpravy (jedno misto, §18).
