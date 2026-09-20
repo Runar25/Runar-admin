@@ -1948,7 +1948,7 @@ var RP_NORNS = {
     seeker:'Leiðandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leiðin', seekJoin:' og ', question:'Spurning', langInstr:'',
     labels:['URÐUR (urd — það sem var ofið, ekki hægt að taka til baka):','VERÐANDI (verdandi — það sem er að verða til, lifandi þráðurinn):','SKULD (skuld — hvert þráðurinn stefnir núna, ekki spá):'],
     intro:'Leiðandinn dregur þrjár rúnir — Nornirnar tala.',
-    landing:'NIÐURLAGIÐ — síðasta setningin svarar einu: hvað er orðið sýnilegt í hreyfingunni — frá því sem var ofið, gegnum það sem er að skýrast, þangað sem það stefnir nú. Láttu endinn snerta upphafið. Segðu það með orðum myndarinnar. Engin spurning í lokin, enginn boðskapur, ekkert „þetta þýðir", engin huggun.',
+    landing:'NIÐURLAGIÐ — síðasta setningin tilheyrir Skuld: hún nefnir tvennt sem þessi hreyfing gæti verið í lífi leiðandans — frá því sem var ofið, gegnum það sem er að skýrast, þangað sem það stefnir nú — hvort um sig ástand sem gæti átt við, honum til umhugsunar. Sagt með orðum myndarinnar, aldrei spádómur, enginn boðskapur, engin huggun.',
     beats:[
       'Þetta eru ekki þrír aðskildir lestrar — þetta er ein saga sem Nornirnar segja saman.',
       'Urður talar af þyngd þess sem er þegar fast — í fortíð myndarinnar sjálfrar, aldrei sem atburðir, fólk eða sár sem fundin eru upp í lífi leitandans.',
@@ -1962,7 +1962,7 @@ var RP_NORNS = {
     seeker:'Seeker', lifeRune:'Life rune', area:'Area', seeking:'Seeking', seekJoin:' & ', question:'Question', langInstr:'Respond in English.',
     labels:['URÐUR (urd — what was woven, cannot be undone):','VERÐANDI (verdandi — what is being woven, alive now):','SKULD (skuld — where the thread is heading now, not foretold):'],
     intro:'The seeker draws three runes — the Norns speak.',
-    landing:'THE LANDING — the last sentence answers one thing: what has become visible through the movement — from what was woven, through what is clearing, to where it now heads. Let the ending touch the beginning. Say it in the words of the image. Not a question, no moral, no "this means", no comfort added.',
+    landing:'THE LANDING — the last sentence belongs to Skuld: it holds out two things this movement may be in the seeker\'s life — from what was woven, through what is clearing, to where it now heads — each a state that may be so, left for them to weigh. Drawn from the image, never a prediction, no moral, no comfort added.',
     beats:[
       'This is not three separate readings — it is one story told by three voices.',
       // v4.10 (2026-08-23): deklarativni hlas nad minulosti CTENARE zval k vymysleni udalosti

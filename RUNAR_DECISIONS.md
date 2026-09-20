@@ -6510,3 +6510,40 @@ protože **alternativa není „čistý stav", ale rozpor**: most v produkci je 
 
 **Affected doc(s):** `RUNAR_BACKLOG.md` — položka „ZÁKAZ V ŘÁDKU OBLASTI × MOST" je nasazená,
 zůstává v ní jen doměření chladu.
+
+## 2026-09-20 (13) — NORNS ZÁVĚR: varianta A (v4.38-norns-zaver)
+
+**Owner: „dáme norns A."** Znění EN i IS od CODE-read, nasazeno beze změny.
+
+**Co platí:** `RP_NORNS.landing` — poslední věta **patří Skuld** a drží dvě věci, čím ten pohyb
+může být v životě leitandy, každá jako stav, který může platit. Není to čtvrtý hlas: Skuld už dnes
+mluví podmíněně o směru, závěr jen dostane tvar.
+
+**Není to kopie mostu ze single** (owner: *„spready mají jinou filozofii"*). Most v single pojmenuje
+stav; Norns závěr pojmenuje **pohyb** — od utkaného, přes vyjasňující se, k tomu, kam to míří.
+
+**Měřeno CODE-read** (9 čtení produkčním modelem, týž prompt, liší se JEN landing):
+A (nasazeno) **3/3 dvě skutečné možnosti o směru**, v materiálu obrazu, bez rady, 117–137 slov ·
+B (dnešek + možnost navíc) 3/3 sklouzlo do tvrzení nebo rady, 150–158 slov · K (dnešek) zůstává
+v obraze a o člověku neřekne nic — to je přesně ta ownerova „mlha na konci".
+
+**Kříž, horseshoe a Yggdrasil se NEMĚNÍ** — každý má vlastní stavbu a vlastní návrh; Yggdrasil je
+rituál a závěr tam možná nepatří vůbec.
+
+**IS** psána islandsky a stojí **jen na materiálu, který je v promptech už ověřený** (`hvort um sig
+ástand sem gæti átt við`, `honum til umhugsunar`, `frá því sem var ofið…`, `enginn boðskapur, engin
+huggun`). Dva flagy is-grammar-qa jsou **zděděné, ne nové**: Z002 na malém písmenu po dvojtečce dává
+i **dnešní** landing (ověřeno protipříkladem z `git HEAD`), a W001 na `ofið` je záměna slov —
+BÍN zná `vefa`/`ofinn`, korpus má *ofið* 940 · *var ofið* 43, a tatáž fráze v dnešním landingu je.
+
+⚠️ **Znění vědomě používá `leiðandans`** — termín toho packu, i když je sám v backlogu jako
+podezřelý (spready říkají *leiðandi*, single *leitandi*). CODE-read do packu nechtěl přidat třetí
+způsob, jak o té osobě mluvit; **až se termín rozhodne, přepsat týmž sweepem**.
+
+**Čím je to jištěné:** landing je v postaveném promptu **právě jednou** v obou jazycích (protlačeno
+`buildNornsPrompt`) · golden diff 4/38 = jen ta jedna řádka ve dvou variantách norns · registr
+(v4.38-norns-zaver) · smoke 44/44 · check-is OK.
+
+**Verze promptu:** v4.37-vyjimka → **v4.38-norns-zaver**.
+
+**Affected doc(s):** žádný — backlogová položka Norns závěru je nasazená.
