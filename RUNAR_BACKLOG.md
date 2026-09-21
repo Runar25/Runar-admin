@@ -73,7 +73,8 @@
 - [ ] **Tvar „VĚTA" drží „may be" hůř než dvě možnosti a otázka** — 2 ze 16 posledních vět vypadly z tvaru
   možnosti, obě u tvaru věta (`ENDING_OPEN[0]`, `ENDING_HEAVY[1]`), doklady v EVAL_LOG 2026-09-20 (11).
   Patří do tvrdých kontrol produkčního kandidáta; při větším vzorku ověřit, jestli to není náhoda.
-- [ ] ⭐ **IS CHYBA: spready oslovují člověka jako „toho, kdo VEDE" — 17 míst, sweep** (nález CODE-read
+- [x] ~~**IS CHYBA: spready oslovují člověka jako „toho, kdo VEDE"**~~ — SWEEP HOTOV 2026-09-21
+  (18 náhrad, v4.39-leitandi, DECISIONS 2026-09-21 (1)). Původní zadání níž: (nález CODE-read
   2026-09-20 při psaní islandského závěru Norns; owner: *„IS umíš udělat i ty"* — dotaženo do verdiktu, ne dotazu).
   **Verdikt: `Leiðandi` a `Leiðin` jsou ve čtyřech spreadových packech špatně.** Doklad, ne dojem:
   🔒 `leita` = hledat (rekce **eignarfall**; `leita að`, `leita til`) → příčestí **`leitandi` = hledající**.
