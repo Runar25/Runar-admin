@@ -506,7 +506,11 @@ var RUNE_IMAGES = [
   ['Raidho','cold','Skafrenningurinn finnur alltaf sömu leiðina milli þúfnanna.','The drifting snow always finds the same way between the tussocks.','leið','natural rhythm','E'],
   ['Kenaz','any','Aflinn glóir í dimmri smiðjunni og hamarinn mótar járnið.','The forge glows in the dark shed and the iron takes its shape.','kyndill','fire','D'],
   ['Kenaz','any','Glæðurnar lifa undir öskunni fram á morgun.','The embers stay alive under the ash until morning.','innra ljós','inner light','D'],
-  ['Kenaz','any','Það logar á einum lampa yfir hefilbekknum og spænirnir liðast undan egginni.','A single lamp over the bench and the shavings curl away from the blade.','sköpunargleði','creativity','D'],
+  // 2026-09-21 (report #7, KUKY: „Blade pak svetlo — ten blade tam nezapada!"): puvodni radek
+  // nesl lampu I hoblinu, model pak stavel scenu z jednoho a esenci z druheho. Rozdeleno;
+  // obe pulky jsou podmnoziny puvodni vety, zadne nove vazby. „Nikdy spolu."
+  ['Kenaz','any','Það logar á einum lampa yfir hefilbekknum.','A single lamp over the bench.','innra ljós','inner light','D'],
+  ['Kenaz','any','Spænirnir liðast undan egginni.','The shavings curl away from the blade.','sköpunargleði','creativity','D'],
   ['Gebo','any','Sjórinn gefur og tekur á fjörunni í sömu andránni.','The sea gives and takes on the shore in the same breath.','gefa og þiggja','giving and receiving','E'],
   ['Gebo','any','Fjaran skilar einu og hirðir annað með hverri báru.','The shore returns one thing and keeps another with every wave.','gefa og þiggja','giving and receiving','E'],
   ['Gebo','any','Dyrnar standa opnar og kaffi bíður á borðinu handa tveimur.','The door stands open and coffee waits on the table for two.','félagsskapur','companionship','D'],
@@ -1799,8 +1803,28 @@ function buildNameLorePrompt(name, zaznam, lang, corrections) {
 // reading = the text Rúnar gave · question = seeker's follow-up · runes = comma list of rune names
 function buildAskPrompt(reading, question, runes, lang, corrections, life, cast, spread) {
   var S = RP_ASK[lang] || RP_ASK.en;
+  // 2026-09-21 (reporty #3/#4, owner „dej ask klicova slova runy"): Ask nesl jen JMENO runy
+  // a model si vyznam domyslel — prirovnani pak nesedela k tomu, co runa v NASEM kanonu je.
+  // Jmena se tu rozvedou na „Jmeno (klicova slova)"; co v RUNES neni (kind spreadu, cizi
+  // text), projde beze zmeny. Zdroj klicu = RUNES.k / .k_is (§20 — zadna druha kopie).
+  // Jmeno prichazi i jako "Gebo (Félagsskapur)" (IS rn(), nebo model opsal prompt) — porovnava
+  // se bez zavorkove casti, jinak IS mine. Klice se vesi pomlckou, ne zavorkou (dvojita zavorka).
+  var runyText = String(runes || '');
+  if (typeof RUNES !== 'undefined') {
+    var _hola = function (x) { return String(x || '').replace(/\s*\(.*$/, '').trim(); };
+    runyText = runyText.split(/[,;]/).map(function (kus) {
+      var n = kus.trim();
+      if (!n) return null;
+      var h = _hola(n), r = null;
+      for (var i = 0; i < RUNES.length; i++)
+        if (RUNES[i].n === h || _hola(RUNES[i].is_n) === h) { r = RUNES[i]; break; }
+      if (!r) return n;
+      var k = (lang === 'is') ? (r.k_is || r.k) : r.k;
+      return n + ' — ' + k;
+    }).filter(Boolean).join('; ');
+  }
   return [
-    S.intro(reading, runes),
+    S.intro(reading, runyText),
     S.q(question),
     S.rules,
     // Jediné místo, kde se dvergar dostanou do promptu — a jen když se na ně otázka ptá.

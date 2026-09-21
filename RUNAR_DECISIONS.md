@@ -6580,3 +6580,11 @@ check-is OK · smoke 44/44.
 **Verze promptu:** v4.38-norns-zaver → **v4.39-leitandi**.
 
 **Affected doc(s):** `RUNAR_BACKLOG.md` — položka „IS CHYBA" je hotová.
+
+## 2026-09-21 (2) — Ask dostává klíčová slova run + Kenaz obraz rozdělen (v4.40)
+**Rozhodl:** KUKY („dej ask klicova slova runy" · „rozdelit obraz, jeden je lampa a druhy je hoblina, nikdy spolu") · **Provedl:** CODE-tune
+**Co:** (a) `buildAskPrompt` rozvádí jména tažených run na „Jméno — klíčová slova" (EN `RUNES.k`, IS `.k_is`); jméno se porovnává bez závorkové části (IS chodí „Gebo (Félagsskapur)"), co v RUNES není (kind spreadu), projde beze změny. (b) Obraz Kenaz „lampa + hoblina" rozdělen na dva jednofokusové řádky — obě půlky jsou podmnožiny původní věty, žádné nové IS vazby; lampa → innra ljós, hoblina → sköpunargleði.
+**Proč:** reporty #3/#4 (2026-09-21): Ask nesl jen jméno runy a model si význam Gebo domýšlel — přirovnání neseděla ke kánonu. Report #7: dvouohniskový obraz — model stavěl scénu z hobliny a esenci z lampy, „ten blade tam nezapadá".
+**Ověřeno:** protlačení produkční cestou (EN/IS/spread/holé IS jméno/neznámý název — 6+9 asertů OK) · golden PŘED(HEAD)/PO: 4× ask_* zamýšlená změna + 5× mechanický posun losu obrazu (banka +1 řádek, žádný nový text) · smoke 44/44.
+**Vedlejší nálezy (§22, opraveno hned):** `golden_dump.js` psal vždy ROOT+OUT (absolutní cesta = ENOENT) a committed baseline byla zastaralá (éra 10 builderů) → default míří na committed baseline, absolutní cesta se respektuje, baseline obnovena. Dluh délky `RUNAR_TREE.md` vypršel (31 dní, blokoval push všem) → obnoven, zkrácení dál patří CODE-tree.
+**Affected doc(s):** žádné (čísla i texty žijí v kódu).

@@ -7,7 +7,9 @@
 const fs = require('fs');
 const vm = require('vm');
 const DIR = 'C:/Users/zkuku/Downloads/Runar-admin/v2/';
-const OUT = process.argv[2] || 'golden_baseline.json';
+const path = require('path');
+// 2026-09-21: default mireny na committed baseline (v rootu vznikal druhy, zastaraly soubor).
+const OUT = process.argv[2] || 'scripts/golden/golden_baseline.json';
 
 // Only the files the builders need (avoid t()/UI_TEXT redeclaration noise).
 const files = ['runar-config.js', 'runar-runes.js', 'runar-utils.js', 'runar-character.js'];
@@ -89,7 +91,8 @@ function _nameLookupGolden(){ return { root: "ON sigr + rún", en: "victory + ru
 
 vm.createContext(sandbox);
 vm.runInContext(code, sandbox, { filename: 'golden.js' });
-fs.writeFileSync('C:/Users/zkuku/Downloads/Runar-admin/' + OUT, JSON.stringify(sandbox._OUT, null, 2), 'utf8');
+// 2026-09-21: absolutni OUT drive dostal prefix repa -> ENOENT; relativni zustava vuci repu.
+fs.writeFileSync(path.isAbsolute(OUT) ? OUT : 'C:/Users/zkuku/Downloads/Runar-admin/' + OUT, JSON.stringify(sandbox._OUT, null, 2), 'utf8');
 
 const keys = Object.keys(sandbox._OUT || {});
 const errs = keys.filter((k) => String(sandbox._OUT[k]).startsWith('ERROR:'));

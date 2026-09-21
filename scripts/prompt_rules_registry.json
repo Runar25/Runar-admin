@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-21",
- "prompt_version": "v4.39-leitandi",
+ "prompt_version": "v4.40-ask-klice",
  "pravidla": [
   {
    "hash": "54d29df4d80b",
@@ -272,6 +272,12 @@
    "lang": "en",
    "zdroj": "ask",
    "zacatek": "You gave the seeker this rune reading:"
+  },
+  {
+   "hash": "88c1890937ab",
+   "lang": "en",
+   "zdroj": "ask",
+   "zacatek": "Runes drawn: Ansuz — messages, wisdom, divine guidance, voice, breath."
   },
   {
    "hash": "2d4a83d7399a",

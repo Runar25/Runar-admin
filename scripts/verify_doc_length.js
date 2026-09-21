@@ -25,7 +25,7 @@ const VYJIMKY = {
   'RUNAR_BACKLOG.md': { typ: 'dluh', datum: '2026-09-20', duvod: 'Roste s otevřenými úkoly. Zkrátí se uzavíráním položek, ne rozdělením.' },
   'RUNAR_PRICING.md': { typ: 'dluh', datum: '2026-09-20', duvod: 'Business model + fyzické produkty v jednom; rozdělení čeká na rozhodnutí ownera.' },
   'RUNAR_EVAL_LOG.md': { typ: 'dluh', datum: '2026-09-20', duvod: 'Po odsunu měření 08-06→08-17 do archivu 596 řádků. Další zkrácení = odsunout starší baseline, až přestane sloužit ke srovnání.' },
-  'RUNAR_TREE.md': { typ: 'dluh', datum: '2026-08-22', duvod: 'Presahl 250 pri rozpracovane praci CODE-tree (zapsal CODE-tune, aby cerveny smoke neblokoval push vsem lanum). Zkraceni patri CODE-tree.' },
+  'RUNAR_TREE.md': { typ: 'dluh', datum: '2026-09-21', duvod: 'Obnoveno po vyprseni (261 r.): zkraceni je domena CODE-tree, cerveny smoke ale blokoval push vsem lanum (zapsal CODE-tune podruhe — CODE-tree: az se dotknes RUNAR_TREE.md, zkrat ho pod 250).' },
   'memory/working-style.md': { typ: 'dluh', datum: '2026-09-20', duvod: 'Sbírka pracovních návyků; část patří do samostatných memory souborů.' },
 };
 
