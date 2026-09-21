@@ -1831,9 +1831,9 @@ function buildReadingPrompt(u, drawn, lang, corrections) { return buildReadingPr
 
 var RP_KRIZ = {
   is: {
-    seeker:'Leiðandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leiðin', seekJoin:' og ', question:'Spurning',
+    seeker:'Leitandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leitin', seekJoin:' og ', question:'Spurning',
     positions:['RÚNIN 1 (Miðja / Kjarni — verdandi):','RÚNIN 2 (Ofan / Þrá — skuld):','RÚNIN 3 (Undir / Rót — urd):','RÚNIN 4 (Að baki / Fortíð — urd):','RÚNIN 5 (Framar / Stefna — skuld):'],
-    intro:'Leiðandinn dregur fimm rúnir — Áttavitinn.',
+    intro:'Leitandinn dregur fimm rúnir — Áttavitinn.',
     landing:'NIÐURLAGIÐ — síðasta setningin svarar einu: hvað er orðið sýnilegt nú þegar kraftarnir fimm sjást saman, safnaðir um miðjuna. Segðu það með orðum myndarinnar. Engin spurning í lokin, enginn boðskapur, ekkert „þetta þýðir", engin huggun.',
     langInstr:'',
     instructions:function(ctrName){ return [
@@ -1843,7 +1843,7 @@ var RP_KRIZ = {
       'Þriðja rúnin (Undir): hvað liggur í undirmeðvitund eða duldu.',
       'Fjórða rúnin (Að baki): það sem enn verkar úr fortíðinni — í fortíð myndarinnar sjálfrar, aldrei uppfundnir atburðir eða fólk í lífi leitandans.',
       'Fimmta rúnin (Framar): ekki spá — þar sem þessi orka leiðir ef ekkert breytist.',
-      'Sérhver rúna verður að setja mark sitt — láttu allar fimm móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
+      'Sérhver rúna verður að setja mark sitt — láttu allar fimm móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leitandinn sér þær þegar.',
     ]; },
     closing:function(name){ return 'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. ' + _namePlacement(name, 'is') + ' Vertu hnitmiðaður — 6 til 7 setningar.'; },
     json:'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í þeirri röð sem listuð er að ofan, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)"}]. Text-reitirnir tengdir með bili verða að lesast sem ein samfelld heild.',
@@ -1945,17 +1945,17 @@ function buildKrizPrompt(u, runes, lang, corrections) { return buildKrizPromptCr
 
 var RP_NORNS = {
   is: {
-    seeker:'Leiðandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leiðin', seekJoin:' og ', question:'Spurning', langInstr:'',
+    seeker:'Leitandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leitin', seekJoin:' og ', question:'Spurning', langInstr:'',
     labels:['URÐUR (urd — það sem var ofið, ekki hægt að taka til baka):','VERÐANDI (verdandi — það sem er að verða til, lifandi þráðurinn):','SKULD (skuld — hvert þráðurinn stefnir núna, ekki spá):'],
-    intro:'Leiðandinn dregur þrjár rúnir — Nornirnar tala.',
-    landing:'NIÐURLAGIÐ — síðasta setningin tilheyrir Skuld: hún nefnir tvennt sem þessi hreyfing gæti verið í lífi leiðandans — frá því sem var ofið, gegnum það sem er að skýrast, þangað sem það stefnir nú — hvort um sig ástand sem gæti átt við, honum til umhugsunar. Sagt með orðum myndarinnar, aldrei spádómur, enginn boðskapur, engin huggun.',
+    intro:'Leitandinn dregur þrjár rúnir — Nornirnar tala.',
+    landing:'NIÐURLAGIÐ — síðasta setningin tilheyrir Skuld: hún nefnir tvennt sem þessi hreyfing gæti verið í lífi leitandans — frá því sem var ofið, gegnum það sem er að skýrast, þangað sem það stefnir nú — hvort um sig ástand sem gæti átt við, honum til umhugsunar. Sagt með orðum myndarinnar, aldrei spádómur, enginn boðskapur, engin huggun.',
     beats:[
       'Þetta eru ekki þrír aðskildir lestrar — þetta er ein saga sem Nornirnar segja saman.',
       'Urður talar af þyngd þess sem er þegar fast — í fortíð myndarinnar sjálfrar, aldrei sem atburðir, fólk eða sár sem fundin eru upp í lífi leitandans.',
       'Verðandi talar í nútíð — lifandi, að verða til, ekki lokið.',
       'Skuld talar ekki eins og spámaður — heldur um hvert þú stefnir núna, ef þú heldur áfram eins og nú. Þú getur breytt stefnunni.',
     ],
-    bigInstruction:function(name){ return 'Gefðu hverri af þremur rúnunum sinn eigin takt, í röð — Urður (það sem var), Verðandi (það sem er að verða), Skuld (hvert þú stefnir). Taktarnir þrír renna saman í EINN samfelldan straum, ekki þrjá aðskilda lestra — engar fyrirsagnir, engin merki. Nefndu ekki rúnirnar né Nornirnar; leiðandinn sér þær þegar. ' + _namePlacement(name, 'is') + ' 5 til 6 setningar alls yfir taktana þrjá.'; },
+    bigInstruction:function(name){ return 'Gefðu hverri af þremur rúnunum sinn eigin takt, í röð — Urður (það sem var), Verðandi (það sem er að verða), Skuld (hvert þú stefnir). Taktarnir þrír renna saman í EINN samfelldan straum, ekki þrjá aðskilda lestra — engar fyrirsagnir, engin merki. Nefndu ekki rúnirnar né Nornirnar; leitandinn sér þær þegar. ' + _namePlacement(name, 'is') + ' 5 til 6 setningar alls yfir taktana þrjá.'; },
     json:'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í röð (Urður, Verðandi, Skuld), engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)"}]. Þrír text-reitir tengdir með bili verða að lesast sem ein samfelld heild.',
   },
   en: {
@@ -2028,15 +2028,15 @@ function buildNornsPrompt(u, runes, lang, corrections) { return buildNornsPrompt
 
 var RP_HORSESHOE = {
   is: {
-    seeker:'Leiðandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leiðin', seekJoin:' og ', question:'Spurning', langInstr:'',
+    seeker:'Leitandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leitin', seekJoin:' og ', question:'Spurning', langInstr:'',
     positions:['RÚNIN 1 — Fortíð (hvað hefur mótað, í fortíð myndarinnar sjálfrar):','RÚNIN 2 — Nútíð (hvað er að ríkja):','RÚNIN 3 — Dulið / Nánasta framtíð (hvað er að koma upp):','RÚNIN 4 — Hindranir (hvað þyngir eða hindrar):','RÚNIN 5 — Ytri kraftar (hvað kemur að utan):','RÚNIN 6 — Innri staða (hvað er inni í þér):','RÚNIN 7 — Niðurstaða (hvert er þetta að fara):'],
-    intro:'Leiðandinn dregur sjö rúnir — Skeifan.',
+    intro:'Leitandinn dregur sjö rúnir — Skeifan.',
     landing:'NIÐURLAGIÐ — síðasta setningin svarar einu: hvað er orðið sýnilegt um hvert öll hreyfingin stefnir — allur boginn, ekki síðasta rúnin ein. Segðu það með orðum myndarinnar. Engin spurning í lokin, enginn boðskapur, ekkert „þetta þýðir", engin huggun.',
     beats:[
       'Lestu allar sjö sem eitt samfellt stef — ekki sjö aðskildir lestrar.',
       'Rúnin 7 (Niðurstaða) er ekki spá — sjáðu hana sem stefnu ef þráðurinn heldur áfram.',
       'Nefndu ekki staðsetningarnar í úttakinu. Bærðu þær í röddinn.',
-      'Sérhver rúna verður að setja mark sitt — láttu allar sjö móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
+      'Sérhver rúna verður að setja mark sitt — láttu allar sjö móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leitandinn sér þær þegar.',
     ],
     closing:function(name){ return 'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. ' + _namePlacement(name, 'is') + ' 11 til 12 setningar.'; },
     json:'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í þeirri röð sem listuð er að ofan, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)"}]. Text-reitirnir tengdir með bili verða að lesast sem ein samfelld heild.',
@@ -2113,11 +2113,11 @@ function buildHorseshoePrompt(u, runes, lang, corrections) { return buildHorsesh
 
 var RP_YGGDRASIL = {
   is: {
-    seeker:'Leiðandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leiðin', seekJoin:' og ', question:'Spurning', langInstr:'',
+    seeker:'Leitandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leitin', seekJoin:' og ', question:'Spurning', langInstr:'',
     tiers:['── KRÓNA — það sem sýnir sig ──','── STOFN — það sem ber ──','── RÆTUR — það sem nærir ──'],
     positions:['RÚNIN 1 — Ásgarðr (hásætið sem sér yfir heima alla):','RÚNIN 2 — Vanaheimr (gull sem liggur í dagsljósi, ekki grafið upp):','RÚNIN 3 — Álfheimr (birta sem sólin sjálf er borin saman við):','RÚNIN 4 — Miðgarðr (girðing gerð úr brám jötuns):','RÚNIN 5 — Jötunheimr (veður sem engin girðing var reist til að halda):','RÚNIN 6 — Svartálfaheimr (hendur sem vinna í leyni og móta það sem hinir bera):','RÚNIN 7 — Niðavellir (auður sem fannst, ekki var ræktaður):','RÚNIN 8 — Niflheimr (ein uppspretta sem elur ellefu ár, og engin elur hana):','RÚNIN 9 — Hel (þögnin sem ræturnar nærast á):'],
-    intro:'Leiðandinn dregur níu rúnir — Yggdrasil, níu heimar. Einu sinni á ári.',
-    landing:'NIÐURLAGIÐ — síðasta setningin svarar einu: hvað er orðið sýnilegt nú þegar myndin sést öll í senn. Settu breyttu myndina niður við hlið þess sem leiðandinn bar fram (eða, ef ekkert var spurt, við hlið þess sem myndin sjálf ber). Segðu það með orðum myndarinnar. Engin spurning í lokin, enginn boðskapur, ekkert „þetta þýðir", engin huggun.',
+    intro:'Leitandinn dregur níu rúnir — Yggdrasil, níu heimar. Einu sinni á ári.',
+    landing:'NIÐURLAGIÐ — síðasta setningin svarar einu: hvað er orðið sýnilegt nú þegar myndin sést öll í senn. Settu breyttu myndina niður við hlið þess sem leitandinn bar fram (eða, ef ekkert var spurt, við hlið þess sem myndin sjálf ber). Segðu það með orðum myndarinnar. Engin spurning í lokin, enginn boðskapur, ekkert „þetta þýðir", engin huggun.',
     beats:[
       'Þetta eru ekki níu aðskildir lestrar — þetta er eitt líf séð í gegnum níu glugga.',
       'Rúnar 1–3 (Króna): það sem sýnir sig — talaðu um það sem stendur í ljósi og sést.',
@@ -2125,7 +2125,7 @@ var RP_YGGDRASIL = {
       'Rúnar 6–9 (Rætur): það sem nærir — talaðu um það sem allt hitt nærist á.',
       'Lestu frá Ásgarðr niður til Hel — eitt flæði, ein rödd.',
       'Nefndu hvorki nöfn heimanna né laganna í úttakinu. Láttu þau lifa í röddinni.',
-      'Sérhver rúna verður að setja mark sitt — láttu allar níu móta lesturinn gegnum eðli sitt, aldrei aðeins fáeinar. Nefndu ekki rúnirnar með nafni; leiðandinn sér þær þegar.',
+      'Sérhver rúna verður að setja mark sitt — láttu allar níu móta lesturinn gegnum eðli sitt, aldrei aðeins fáeinar. Nefndu ekki rúnirnar með nafni; leitandinn sér þær þegar.',
     ],
     closing:function(name){ return 'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. ' + _namePlacement(name, 'is') + ' 14 til 15 setningar.'; },
     json:'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í þeirri röð sem listuð er að ofan, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)"}]. Text-reitirnir tengdir með bili verða að lesast sem ein samfelld heild.',

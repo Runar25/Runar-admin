@@ -6547,3 +6547,36 @@ způsob, jak o té osobě mluvit; **až se termín rozhodne, přepsat týmž swe
 **Verze promptu:** v4.37-vyjimka → **v4.38-norns-zaver**.
 
 **Affected doc(s):** žádný — backlogová položka Norns závěru je nasazená.
+
+## 2026-09-21 (1) — IS sweep: spready přestaly oslovovat člověka jako „toho, kdo vede" (v4.39)
+
+**Nález CODE-read, 18 náhrad v jednom tahu.** Čtyři islandské spreadové packy říkaly `Leiðandi`
+(= vedoucí) a `Leiðin` (= cesta) tam, kde anglické packy mají `Seeker` a `Seeking`.
+
+🔒 `leita` = hledat → příčestí **`leitandi` = hledající** · `leiða` = vést → `leiðandi` = **vedoucí**;
+slovníková kolokace **`leiðandi spurning` = návodná otázka** — doslova to, co Rúnar dělat nemá.
+🔒 `leit` (kvk) = hledání × `leið` (kvk) = cesta. Single a konce přitom `leitandi` používaly správně,
+takže si soubor protiřečil sám se sebou a model dostával v promptu informaci, že ten člověk **vede**.
+
+**Sweep (18):** 14× `leiðand*` (`Leiðandi` 4 · `Leiðandinn` 4 · `leiðandinn` 5 · `leiðandans` 1)
++ 4× `seeking:'Leiðin'` → `'Leitin'`.
+
+⚠️ **Nešlo mazat podřetězec „leið"** — v témž souboru je 7× `leið` (cesta), 2× `leiðsögn`
+(*Almenn leiðsögn* = General Guidance), 2× `leiðir`, 2× `leiðina`, `leiðsögumaður`,
+`leiðréttingar`, `leiðbeina` a 1× malé `leiðin`; **všechno správně**. Sweep proto sáhl jen na
+`leiðand*` (vždy chybné) a na klíč `seeking:'Leiðin'`. Patch si pasti spočítal před i po a
+odmítl by se zapsat, kdyby se kterákoli hnula.
+
+**Jeden z těch 18 byl můj** — `leiðandans` v `RP_NORNS.is.landing`. CODE-read ho do prvního
+handoffu dal vědomě („aby pack zůstal vnitřně konzistentní"), ačkoli ho v témž dechu hlásil jako
+podezřelý, a já jsem v4.38 nasadil dřív, než dorazila oprava. **Poučení platí pro obě strany:
+nejistý tvar se dotáhne PŘED odesláním handoffu, ne vedle něj** (§19.2, §23) — a příjemce nemá
+nasazovat znění, u kterého odesílatel sám píše „hlásím to jako podezřelé".
+
+**Čím je to jištěné:** protlačeno všemi **čtyřmi** spready v islandštině — `leiðand` 0×,
+`leitand` 6/5/4/5× · golden diff 8/38 = jen ta slova · registr 206 (v4.39-leitandi) ·
+check-is OK · smoke 44/44.
+
+**Verze promptu:** v4.38-norns-zaver → **v4.39-leitandi**.
+
+**Affected doc(s):** `RUNAR_BACKLOG.md` — položka „IS CHYBA" je hotová.
