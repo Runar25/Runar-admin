@@ -1842,3 +1842,25 @@ a tiše vypadlo z výsledku workflow. Nejsou to potvrzené vady — jsou to **ne
 - kód (3, nízká/střední): připomínky k `runar-helper.js` a `_askBuild` — zatím nic doloženého.
 Reprodukce: `Workflow({scriptPath: '…/overeni-banky-a-zapojeni-wf_82db76b7-381.js', resumeFromRunId: 'wf_82db76b7-381'})`
 — hotoví agenti se vrátí z cache, doběhnou jen ti, co spadli.
+
+## 2026-09-22 — Statické runy (záložka Kolekce): jen jazyk, který má člověk nastavený
+**Zadal:** KUKY 2026-09-22 · **Lane:** `[tune]` (reader UI) · **Platí pro všechny tiery** (od free po premium).
+*„Každá runa tam má dva jazyky EN a IS, ale vždy bude ukazovat jen mutaci nastavenou, ne obě, jako je teď, a dá se přepínat."*
+
+Co je dnes (`v2/runar-app.js` `loadCollection` / `openCollDetail` / `loadCollAudio`, markup `#apane-collection` v `runar-reader.html`):
+- detail runy vypisuje **obě jména** najednou — `#cd-name-en` = `r.n`, `#cd-name-is` = `r.is_n`;
+- nad Rúnarovým učením je **přepínač EN / IS** (`#cdlang-en`, `#cdlang-is` → `loadCollAudio(l)`);
+- dlaždice mřížky nesou **dvě tečky** EN / IS (`.coll-dot.en` / `.coll-dot.is`) podle dostupnosti nahrávky.
+
+Co má být: jméno, klíčová slova, text i nahrávka **jen v `lang`**; přepínač EN/IS pryč; přepnutí jazyka
+appky (`setLang` → `updateUIText`) musí otevřený detail překreslit — **ne přes `updateUIText`** (§14:
+stavový obsah tam nepatří), ale voláním `openCollDetail(activeCollRune, …, true)` z místa, kde se jazyk mění.
+Tečky na dlaždici: rozhodnout, jestli ukazovat jen tečku aktuálního jazyka, nebo nic (owner).
+
+Při tom opravit (§10, hardcoded texty ve stejných funkcích): `'Engin hljóðupptaka til.' / 'No recording
+available yet.'`, `'Hljóðskrá vantar.' / 'Audio file missing.'` a celý text `#vcn-text` pro návštěvníka
+jsou ternáry `lang === 'is' ? … : …` přímo v logice → patří do `UI_TEXT`.
+
+Souvisí: pod statickou runu má přijít **návod „jak čtení funguje"** (text připravuje CODE-tune 2026-09-22,
+návrh ke schválení ownerem, odkaz na soubor doplní commit, který ho přinese) — obě změny dělat najednou, ať se detail
+runy nepřestavuje dvakrát.

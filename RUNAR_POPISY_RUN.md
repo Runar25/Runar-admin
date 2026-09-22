@@ -23,31 +23,6 @@ runa se nejdřív **ukáže jako obraz nebo gesto** → pak **co dělá / co ned
 → pak **druhá strana** (co runa neslibuje) → a končí **otázkou pro čtenáře**, ne radou.
 Ani jeden popis neříká, co se stane; všechny říkají, na co se dívat.
 
----
-
-## Tiwaz
-
-Tiwaz je runa směru, který něco stojí.
-
-Je to šíp namířený jedním směrem. Ne proto, že by ostatní cesty neexistovaly, ale protože přišel okamžik, kdy už není možné stát všemi směry zároveň.
-
-Tiwaz mluví o odhodlání, odpovědnosti a pravdě, za kterou jsi ochoten něco dát. Je spojován s Týrem — bohem, který vložil svou ruku do tlamy Fenrira, protože bylo potřeba udělat něco, o čem věděl, že to bude mít cenu.
-
-A právě v tom je síla této runy.
-
-Neříká: vyhraj.
-
-Říká spíš: víš, za čím stojíš?
-
-Někdy se Tiwaz objeví ve chvíli, kdy je cesta jasná, ale není snadná. Kdy člověk musí něco odmítnout, něco opustit nebo přijmout důsledek vlastního rozhodnutí.
-
-Je v ní zvláštní druh klidu.
-Ne klid člověka, který ví, jak všechno dopadne.
-Ale klid člověka, který ví, proč pokračuje.
-
-A možná je právě tohle otázka, kterou Tiwaz přináší:
-
-Co je pro tebe natolik důležité, že kvůli tomu stojí za to nést i cenu, kterou to přinese?
 
 ---
 
@@ -212,6 +187,65 @@ Možná tedy nejde o to hledat další světlo.
 Možná už nějaké máš.
 
 Co právě teď vidíš jasněji než předtím — a co s tím uděláš, když už to nejde nevidět?
+
+---
+
+## Gebo
+
+Gebo je dar, který vzniká mezi dvěma stranami.
+
+Jedna ruka něco podává. Druhá přijímá. A v tom okamžiku vzniká něco, co předtím nebylo — vztah, výměna, závazek, spojení.
+
+Gebo ale není jen o tom, co dostaneš.
+
+Dar má smysl právě proto, že něco opouští tvoji ruku.
+
+Možná je to čas. Možná důvěra, pozornost, práce nebo část sebe sama. A stejně tak můžeš něco přijmout, aniž bys hned věděl, co s tím uděláš.
+
+Gebo proto není obchod.
+
+Není v ní účetnictví typu já jsem dal tolik, ty mi dlužíš tolik.
+
+Je v ní vzájemnost.
+
+Dvě síly se setkají a na chvíli mezi nimi vznikne prostor, který patří oběma.
+
+A právě proto má Gebo v sobě i svobodu. Skutečný dar není dar, pokud je vynucený. A vztah není skutečnou výměnou, pokud jedna strana musí neustále platit za to, že může zůstat.
+
+Možná tedy Gebo ukazuje na něco, co mezi tebou a někým nebo něčím právě vzniká.
+
+Něco, co nejde vlastnit.
+
+Co jsi ochoten dát bez jistoty, že se ti to vrátí — a co dokážeš přijmout, aniž bys za to musel okamžitě něco vracet?
+
+---
+
+## Wunjo
+
+Wunjo přichází jako chvíle, kdy něco na okamžik zapadne na své místo.
+
+Ne jako velké vítězství. Spíš jako pocit, že můžeš na chvíli povolit ruce.
+
+Je to radost, soulad a pocit, že někam patříš.
+
+Možná se nic zásadního nezměnilo. Jen se najednou díváš na stejnou věc jinak. Lidé kolem tebe jsou stále stejní, cesta pokračuje, otázky nezmizely — a přesto je v tom něco lehčího.
+
+Wunjo připomíná, že radost nemusí být odměnou za to, že je všechno hotové.
+
+Může existovat uprostřed cesty.
+
+Je v ní také něco společného. Radost, která se může sdílet. Smích u stolu. Pocit, že tě někdo opravdu vidí. Okamžik, kdy nemusíš nic dokazovat.
+
+Ale Wunjo není trvalý stav.
+
+Je to spíš okamžik, který si všimneš právě proto, že přijde po napětí.
+
+Proto možná není otázkou, jak si tuto chvíli udržet.
+
+Spíš:
+
+Kde už je ve tvém životě něco dobrého — a dovolíš si to skutečně prožít?
+
 ---
 
 ## Hagalaz
@@ -241,6 +275,68 @@ Možná proto není nejdůležitější otázka: Jak to zastavím?
 Ale:
 
 Co v mém životě právě padá — a co po tom zůstane, když bouře přejde?
+
+---
+
+## Nauthiz
+
+Nauthiz je pocit, že něco chybí.
+
+Ne jako prázdnota, která nemá význam. Spíš jako tlak, který tě přiměje všimnout si toho, co už nejde přehlížet.
+
+Je to potřeba, omezení, nedostatek a nutnost.
+
+Některé dveře jsou zavřené. Něco nejde urychlit. Něco nemůžeš mít právě teď, i kdybys chtěl.
+
+A právě v tom je Nauthiz zvláštní.
+
+Když máš všechno, nemusíš poznat, co je skutečně důležité. Teprve nedostatek dokáže některé věci zaostřit.
+
+Hlad ukáže hodnotu jídla.
+Samota může ukázat hodnotu blízkosti.
+Omezení může ukázat, co opravdu potřebuješ a co bylo jen přáním.
+
+Nauthiz proto není jen překážka.
+
+Je to tlak, který odděluje potřebu od touhy.
+
+Ale může být také varováním. Když člověk příliš dlouho tlačí proti tomu, co není možné, tlak se začne obracet dovnitř.
+
+Možná tedy není potřeba okamžitě hledat způsob, jak nedostatek odstranit.
+
+Možná je nejdřív potřeba zjistit, co ti vlastně říká.
+
+Co ti teď chybí tak silně, že už nemůžeš předstírat, že to nepotřebuješ?
+
+---
+
+## Isa
+
+Isa je ticho.
+
+Voda ztuhne. Pohyb, který ještě před chvílí pokračoval, se zastaví — a najednou není kam spěchat.
+
+Je to led, zastavení a nehybnost.
+
+Isa nemusí znamenat konec. Spíš okamžik, kdy se něco nemůže pohnout dál, protože ještě nenastal jeho čas.
+
+Člověk má v takové chvíli často potřebu něco udělat. Rozbít led. Zatlačit. Přinutit věci, aby se znovu rozběhly.
+
+Ale Isa právě v tomhle může být zvláštní.
+
+Některé věci se nedají urychlit.
+
+Pod ledem může voda stále existovat. Jen její pohyb není vidět.
+
+Proto Isa někdy přináší nepohodlnou otázku: je potřeba skutečně něco změnit — nebo je potřeba chvíli vydržet a nechat věci být?
+
+Je v ní také soustředění. Když se okolní svět zastaví, zůstane před tebou jedna věc. Jedna linie. Jeden okamžik.
+
+A možná právě proto Isa není prázdná.
+
+Je to ticho, ve kterém se ukáže, co zůstává, když přestaneš tlačit.
+
+Co se ve tvém životě právě nehýbe — a co bys mohl uvidět, kdybys to tentokrát nechal být?
 
 ---
 
@@ -304,73 +400,6 @@ Co se v tobě právě mění, i když to ještě není zvenčí vidět?
 
 ---
 
-## Algiz
-
-Algiz se zvedá vzhůru jako paroží.
-
-Je v ní obraz něčeho, co se otevírá a zároveň chrání. Ne štít, který všechno od sebe odřízne, ale vzpřímenost, která vnímá, co se kolem ní děje.
-
-Algiz je spojována s ochranou, bdělostí, instinktem a hranicí.
-
-Někdy ochrana znamená říct ne.
-Někdy znamená odejít.
-A někdy jen zůstat stát a poslouchat, co ti tělo nebo vnitřní pocit říká dřív, než to dokáže pojmenovat rozum.
-
-Je v ní zvláštní pozornost.
-
-Jako když člověk jde lesem a najednou zvedne hlavu, protože něco zaslechl.
-
-Neví ještě co.
-
-Ale ví, že má dávat pozor.
-
-Algiz proto nemusí říkat, že přichází nebezpečí. Může pouze připomínat, že ne všechno kolem tebe musíš pustit dovnitř.
-
-A zároveň ochrana nemusí znamenat uzavření.
-
-Paroží se rozvětvuje do prostoru.
-
-Je otevřené světu — ale má jasný tvar.
-
-Možná je tedy otázkou Algiz:
-
-Co teď potřebuješ chránit — a před čím naopak nemusíš svou hranici držet?
-
----
-
-## Ehwaz
-Ehwaz je kůň v pohybu.
-
-Není to cesta, kterou někdo táhne za sebou. Je to pohyb, který vzniká z důvěry mezi dvěma silami.
-
-Kůň cítí jezdce. Jezdec cítí koně. Jeden krok odpovídá druhému. Když se jejich rytmus spojí, cesta se najednou stane lehčí.
-
-Proto Ehwaz mluví o pohybu, spolupráci, důvěře a změně.
-
-Něco se může začít posouvat. Ne nutně proto, že jsi konečně našel správnou sílu, kterou to zatlačíš dopředu. Možná proto, že už nemusíš všechno dělat sám.
-
-Ehwaz ale není slepá důvěra.
-
-Kůň tě může nést jen tehdy, když mezi vámi existuje spojení. Když jeden táhne jinam než druhý, pohyb se rozpadá.
-
-A někdy je právě tohle nejdůležitější obraz této runy:
-
-nejde o to, kdo vede. Jde o to, jestli se dokážete pohybovat společně.
-
-Možná se tedy něco ve tvém životě právě dává do pohybu. Ale jeho směr nebude určen pouze tebou.
-
-Bude vznikat mezi tebou a tím, s čím se pohybuješ.
-
-A Ehwaz se může ptát:
-
-Kde se právě snažíš tlačit na pohyb — místo abys nejdřív našel společný rytmus?
-
-<!-- 2026-09-22: starsi, JINE zneni tehoz popisu (zacina „Ehwaz je pohyb, ktery vznika ve dvou")
-     prislo drive pres in-app report a zustava v `bug_reports` 2026-09-22 14:35. Zapsana je tahle,
-     novejsi verze; nejde o uryvek teze vety, ale o dva samostatne texty. Ceka ownerovo potvrzeni. -->
-
----
-
 ## Perth
 
 Perth je nádoba, která něco ukrývá.
@@ -402,6 +431,40 @@ Možná teď není potřeba nádobu rozbíjet, abys zjistil, co je uvnitř.
 Možná stačí chvíli vydržet s tím, že to ještě nevíš.
 
 Co ve svém životě zatím nedokážeš pojmenovat — a co když právě proto ještě není připravené být odhaleno?
+
+---
+
+## Algiz
+
+Algiz se zvedá vzhůru jako paroží.
+
+Je v ní obraz něčeho, co se otevírá a zároveň chrání. Ne štít, který všechno od sebe odřízne, ale vzpřímenost, která vnímá, co se kolem ní děje.
+
+Algiz je spojována s ochranou, bdělostí, instinktem a hranicí.
+
+Někdy ochrana znamená říct ne.
+Někdy znamená odejít.
+A někdy jen zůstat stát a poslouchat, co ti tělo nebo vnitřní pocit říká dřív, než to dokáže pojmenovat rozum.
+
+Je v ní zvláštní pozornost.
+
+Jako když člověk jde lesem a najednou zvedne hlavu, protože něco zaslechl.
+
+Neví ještě co.
+
+Ale ví, že má dávat pozor.
+
+Algiz proto nemusí říkat, že přichází nebezpečí. Může pouze připomínat, že ne všechno kolem tebe musíš pustit dovnitř.
+
+A zároveň ochrana nemusí znamenat uzavření.
+
+Paroží se rozvětvuje do prostoru.
+
+Je otevřené světu — ale má jasný tvar.
+
+Možná je tedy otázkou Algiz:
+
+Co teď potřebuješ chránit — a před čím naopak nemusíš svou hranici držet?
 
 ---
 
@@ -438,6 +501,94 @@ teď to můžeš vidět.
 A otázka, kterou přináší, může být:
 
 Co se před tebou právě rozsvítilo — a co už teď nemůžeš přehlédnout?
+
+---
+
+## Tiwaz
+
+Tiwaz je runa směru, který něco stojí.
+
+Je to šíp namířený jedním směrem. Ne proto, že by ostatní cesty neexistovaly, ale protože přišel okamžik, kdy už není možné stát všemi směry zároveň.
+
+Tiwaz mluví o odhodlání, odpovědnosti a pravdě, za kterou jsi ochoten něco dát. Je spojován s Týrem — bohem, který vložil svou ruku do tlamy Fenrira, protože bylo potřeba udělat něco, o čem věděl, že to bude mít cenu.
+
+A právě v tom je síla této runy.
+
+Neříká: vyhraj.
+
+Říká spíš: víš, za čím stojíš?
+
+Někdy se Tiwaz objeví ve chvíli, kdy je cesta jasná, ale není snadná. Kdy člověk musí něco odmítnout, něco opustit nebo přijmout důsledek vlastního rozhodnutí.
+
+Je v ní zvláštní druh klidu.
+Ne klid člověka, který ví, jak všechno dopadne.
+Ale klid člověka, který ví, proč pokračuje.
+
+A možná je právě tohle otázka, kterou Tiwaz přináší:
+
+Co je pro tebe natolik důležité, že kvůli tomu stojí za to nést i cenu, kterou to přinese?
+
+---
+
+## Berkana
+
+Berkana je život, který se objeví tam, kde byl předtím jen klid.
+
+Je to první zelená větev, která se ukáže po zimě. Něco malého, křehkého, co ještě nepotřebuje být velké, aby bylo skutečné.
+
+Berkana je runa **růstu, zrození, péče a obnovy**.
+
+Některé věci se nedají vynutit. Semeno nevyroste rychleji proto, že na něj budeš tlačit. Potřebuje půdu, vodu, světlo a čas.
+
+Stejně tak něco nového v člověku.
+
+Možná je to nápad.
+Nový vztah.
+Nový způsob života.
+Nebo část tebe, která se po dlouhé době znovu probouzí.
+
+Berkana připomíná, že začátek nemusí být působivý.
+
+**To, co je malé, nemusí být slabé.**
+
+Je v ní ale i otázka péče. To, co právě vyrůstá, potřebuje prostor. Příliš mnoho zásahů může být stejně škodlivých jako žádná péče.
+
+Proto Berkana není jen o tom něco nového začít.
+
+Je o schopnosti **nechat něco růst, aniž bys musel přesně vědět, čím se nakonec stane**.
+
+Možná se tedy ptá:
+
+**Co se v tobě nebo kolem tebe právě rodí — a jaký prostor tomu můžeš dát, aby mohlo růst vlastním tempem?**
+
+---
+
+## Ehwaz
+Ehwaz je kůň v pohybu.
+
+Není to cesta, kterou někdo táhne za sebou. Je to pohyb, který vzniká z důvěry mezi dvěma silami.
+
+Kůň cítí jezdce. Jezdec cítí koně. Jeden krok odpovídá druhému. Když se jejich rytmus spojí, cesta se najednou stane lehčí.
+
+Proto Ehwaz mluví o pohybu, spolupráci, důvěře a změně.
+
+Něco se může začít posouvat. Ne nutně proto, že jsi konečně našel správnou sílu, kterou to zatlačíš dopředu. Možná proto, že už nemusíš všechno dělat sám.
+
+Ehwaz ale není slepá důvěra.
+
+Kůň tě může nést jen tehdy, když mezi vámi existuje spojení. Když jeden táhne jinam než druhý, pohyb se rozpadá.
+
+A někdy je právě tohle nejdůležitější obraz této runy:
+
+nejde o to, kdo vede. Jde o to, jestli se dokážete pohybovat společně.
+
+Možná se tedy něco ve tvém životě právě dává do pohybu. Ale jeho směr nebude určen pouze tebou.
+
+Bude vznikat mezi tebou a tím, s čím se pohybuješ.
+
+A Ehwaz se může ptát:
+
+Kde se právě snažíš tlačit na pohyb — místo abys nejdřív našel společný rytmus?
 
 ---
 
@@ -647,18 +798,12 @@ Co v mém životě ještě nemá jméno — a dokážu to chvíli nechat otevře
 
 ---
 
-## Co ještě chybí (stav k 2026-09-22)
+## Poznámky ke zdroji
 
-**Hotovo (20):** Tiwaz · Fehu · Uruz · Thurisaz · Ansuz · Raidho · Kenaz · Hagalaz · Jera · Eihwaz · Algiz · Ehwaz · Perth · Sowilo · Mannaz · Laguz · Ingwaz · Othila · Dagaz · Prázdná runa (Unknown).
-
-**Chybí konec (5):** Gebo · Wunjo · Nauthiz · Isa · Berkana.
+**Všech 25 popisů je zapsaných** (stav k 2026-09-22), v pořadí futharku podle `RUNES` v `v2/runar-runes.js`.
 
 ⚠️ **Ehwaz existuje ve dvou zněních** — starší přišlo přes in-app report (zůstává v `bug_reports`
 2026-09-22 14:35, začíná „Ehwaz je pohyb, který vzniká ve dvou"), zapsané je novější z konverzace
 („Ehwaz je kůň v pohybu"). Nejsou to dva kusy téhož textu, ale dva samostatné popisy; čeká potvrzení.
 
-⚠️ **Proč chybí:** owner je psal do in-app reportu a pole `message` v `bug_reports` má **limit
-1000 znaků** — všechny delší popisy se uťaly přesně tam. Uťaté začátky **zůstávají v DB**
-(`bug_reports`, 2026-09-22) a tenhle doc je schválně **neopisuje** (§20: fragment na dvou místech
-by se rozešel s celým textem, až dorazí). Othila má navíc v pozdějším reportu dopsaný **konec**,
-ne střed. Limit reporteru opraven → `RUNAR_DECISIONS.md` 2026-09-22.
+Proč 13 popisů dorazilo až z konverzace: reporter uřezával text na 1000 znacích → `RUNAR_DECISIONS.md` 2026-09-22 (5).
