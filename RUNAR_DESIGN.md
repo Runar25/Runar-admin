@@ -124,6 +124,10 @@ Kánon zrcadla už tady je. Tohle mu dává **jméno a mechanismus** — a jedno
   **obrazu a postoje**, nikdy do nitra tazatele. Rúnar je přísnější: postoj ano, **radu ne**.
 - ⭐ **Zákaz nároku není jen poctivost, je to ÚČINNOST.** Nárok projekci **zabíjí** — přeurčené
   čtení nenechá tazateli co dělat. Tarot to říká jako „zrcadlo duše, ne předpověď".
+- ⚠️ **Druhá mezera, nalezená v bance obrazů 2026-09-22:** studené čtení se **nepozná podle
+  slova „ty/þú"**. Rozhoduje, jestli má děj ve větě **vlastníka** — bezvlastnická vnitřní událost
+  („myšlenka chodí celou noc dokola") padne na jediného kandidáta, který zbývá: tazatele.
+  Doklad a oprava → `RUNAR_DECISIONS.md` 2026-09-22 (4).
 
 ### Citace a motta pro UI (schválená zásoba)
 

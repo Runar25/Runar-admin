@@ -1812,3 +1812,33 @@ Oprava je jednořádková: substring proti `LENGTH_BUDGETS`, týž vzor jako `en
 Bod 4 „Stavby Single čtení" říká „Délka: 4 věty; strop slov se nemění" a odkazuje na los délky.
 Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty, 50–58 slov).
 `prompt_draws.len` zůstává a je konstantní 0. Doc vlastní CODE-read; produkce je zdroj pravdy (§20).
+
+## 2026-09-22 — Zbytky auditu banky obrazů (CODE-tune)
+
+**⚠️ Nejdřív: `supabase functions deploy claude-proxy`** — strop Ask promptu (DECISIONS 2026-09-22 (3))
+je v repu, ale neúčinný do deploye. Do té doby Ask u Yggdrasilu/Horseshoe s delším čtením vrací 400.
+
+### 1) Pozemkové nálezy — čekají na OWNERA (obsahové rozhodnutí, ne mechanická oprava)
+Obě ověřeny adversariálně (nevyvráceno), obě „vysoká", ale mění, JAK runa mluví → nejsou v rozsahu
+zadání „studená čtení / dvě ohniska", které owner schválil 2026-09-21.
+- **[27] Wunjo/sátt** „Sólin nær loksins inn í dalinn og allt verður kyrrt." — podmět je `sólin`,
+  což je jádro Sowilo (`runar-runes.js` k_is `sól`); navíc téměř identický vlastní řádek Sowilo
+  [96] „Sólin nær loks niður í dalinn…". Druhá klauze `allt verður kyrrt` leží na `kyrrstaða` (Isa).
+  Návrh náhrady (IS ověřeno korpusem + grammar-qa): „Hlátur berst út um opinn gluggann og enginn
+  flýtir sér inn." / *Laughter carries out through the open window and no one hurries back in.*
+- **[64] Tiwaz/sannleikur** „Pólstjarnan stendur kyrr meðan allt annað snýst." — nosné sloveso
+  `stendur kyrr` = `kyrrstaða` (Isa). Komentář nad [63] i `RUNAR_EVAL_LOG.md` 2026-09-09 (7) už
+  doložily, že nehybnost u Tiwaz vede k záměně za Isu (soudce 5×). Návrh: obraz, kde Tiwaz KONÁ
+  (situační typ, viz RUNAR_DESIGN „Typ obrazu") — k dopracování až owner řekne, že se to má řešit.
+
+### 2) 20 nálezů BEZ VERDIKTU — ověření uťal limit, ne kvalita
+Sweep našel 39 nálezů, 19 prošlo refuterem (4 přežily, všechny vyřešeny), **20 zůstalo neověřených**
+a tiše vypadlo z výsledku workflow. Nejsou to potvrzené vady — jsou to **neposouzené kandidáty**:
+- chlad (4 bez verdiktu): [36] Nauthiz „Þú notar peningana…", [84] Othila „Lyklarnir… í lófa þínum",
+  [11] Ansuz „Í miðri útskýringu…", [37] Nauthiz „Svefninn tekur þig í miðri setningu".
+  Pozn.: všechny mají „þú" ve scéně, což je povolené — proto nízká priorita, ale posoudit.
+- pozemek (12 bez verdiktu): [5], [24], [25], [29], [30], [33], [34], [55], [75], [79], [89], [92].
+- ohniska (1): [38] Nauthiz „Það skrapar í botninn á mjölkassanum…".
+- kód (3, nízká/střední): připomínky k `runar-helper.js` a `_askBuild` — zatím nic doloženého.
+Reprodukce: `Workflow({scriptPath: '…/overeni-banky-a-zapojeni-wf_82db76b7-381.js', resumeFromRunId: 'wf_82db76b7-381'})`
+— hotoví agenti se vrátí z cache, doběhnou jen ti, co spadli.
