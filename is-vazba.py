@@ -136,6 +136,14 @@ def ngram(phrases):
             print('  "%s": NEODPOVEZENO — API neposlalo serii, zopakuj SAMOSTATNE' % p)
             continue
         total = got[p]
+        # ⚠️ 2026-09-22: endpoint stropuje na TRIGRAMECH — 4+ slov vraci vzdy 0, i u beznych
+        # idiomu („tekur á sig mynd" = 0, „á sig mynd" = 2122). Zapsane to bylo jen v pameti
+        # (memory/is-vazba-check.md, od 2026-09-11) a CODE-read na to 2026-09-22 stejne naletel,
+        # protoze nastroj dal tiskl „NEDOLOZENO (0)" — falesny dukaz proti. Ted to rika nastroj sam.
+        if len(p.split()) >= 4:
+            print('  "%s": NELZE POSOUDIT — %d slov, korpus vidi jen 1–3slovne fraze; rozloz na trojice'
+                  % (p, len(p.split())))
+            continue
         verdict = '  <-- NEDOLOZENO (0)' if total == 0 else ''
         print('  "%s": %d%s' % (p, total, verdict))
     if chyba:

@@ -42,3 +42,6 @@ na trigramech. Kontrolní vzorek: `það er ekki hægt` (běžná fráze) → **
 proto skládá **po trojicích** (`hvað segir þetta` 208 + `segir þetta um` 505), nikdy jedním
 dotazem. *„NEDOLOŽENO (0)"* u čtyřgramu **není důkaz proti** — je to mlčení nástroje.
 Ověřeno 2026-09-11 při stavbě Ask nápovědy; do té doby to musela každá session objevit znovu.
+**Od 2026-09-22 to říká nástroj sám** — pro 4+ slov tiskne `NELZE POSOUDIT`, ne „NEDOLOŽENO (0)".
+Důvod změny: tahle poznámka nestačila, CODE-read na tichou nulu 2026-09-22 naletěl znovu (4gram
+„tekur á sig mynd" = 0 vedle trigramu „á sig mynd" = 2122). Pravidlo, které musí hlídat člověk, spadne.
