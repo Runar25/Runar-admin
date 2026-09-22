@@ -139,3 +139,4 @@ Snapshot = **historický záznam ke svému datu**, ne popis dneška. Nikdy z ně
 - [snapshots/2026-08-20-identita-session-a-uhly.md](snapshots/2026-08-20-identita-session-a-uhly.md) — ㉛ identita session OSTRÁ (3/3, generický podpis blokuje push) · Stop-hook hlídá i neverzované `memory/` · úhly ověřené měřením
 - [snapshots/2026-08-26-vegvisir-pouti-a-p1.md](snapshots/2026-08-26-vegvisir-pouti-a-p1.md) — Vegvísir: tři plné pouti (mechaničnost systematická) + rozdělaný TEST P1 pozitivního učení
 - [snapshots/2026-09-18-kratke-obrazy-a-vstupy-cteni.md](snapshots/2026-09-18-kratke-obrazy-a-vstupy-cteni.md) — CODE-read: rozbíjení povedeného Raidha jednou změnou, krátké obrazy, esenční řádek, konce; co čeká na ownera ← NEJNOVĚJŠÍ
+- [snapshots/2026-09-22-tree-panel-palma-zaloha.md](snapshots/2026-09-22-tree-panel-palma-zaloha.md) — CODE-tree: kůra odložena, panel TVAR/VZHLED/ODLOŽENO, palma = počet větví; crown composer zálohován v gitu
