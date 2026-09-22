@@ -339,38 +339,323 @@ Co teď potřebuješ chránit — a před čím naopak nemusíš svou hranici dr
 ---
 
 ## Ehwaz
+Ehwaz je kůň v pohybu.
 
-Ehwaz je pohyb, který vzniká ve dvou.
+Není to cesta, kterou někdo táhne za sebou. Je to pohyb, který vzniká z důvěry mezi dvěma silami.
 
-Je v ní obraz koně a člověka — ne jako někoho, kdo koně ovládá silou, ale jako dvojice, která musí najít společný rytmus.
+Kůň cítí jezdce. Jezdec cítí koně. Jeden krok odpovídá druhému. Když se jejich rytmus spojí, cesta se najednou stane lehčí.
 
-Ehwaz je runa pohybu, důvěry, spolupráce a změny.
+Proto Ehwaz mluví o pohybu, spolupráci, důvěře a změně.
 
-Někdy se člověk snaží posunout věci vlastní silou. Tlačí, táhne, určuje směr. Ale Ehwaz ukazuje jiný druh pohybu.
+Něco se může začít posouvat. Ne nutně proto, že jsi konečně našel správnou sílu, kterou to zatlačíš dopředu. Možná proto, že už nemusíš všechno dělat sám.
 
-Když se dva pohybují společně, každý krok jednoho ovlivňuje krok druhého.
+Ehwaz ale není slepá důvěra.
 
-Je v tom důvěra.
+Kůň tě může nést jen tehdy, když mezi vámi existuje spojení. Když jeden táhne jinam než druhý, pohyb se rozpadá.
 
-Musíš trochu povolit otěže, aby se mohl objevit skutečný pohyb. A zároveň musíš vnímat, kdy druhá strana mění tempo.
+A někdy je právě tohle nejdůležitější obraz této runy:
 
-Ehwaz proto může mluvit o vztahu, partnerství nebo spolupráci. Ale stejně tak může ukazovat na spojení dvou částí vlastního života, které se dosud pohybovaly každá jinam.
+nejde o to, kdo vede. Jde o to, jestli se dokážete pohybovat společně.
 
-Není to runa rychlosti.
+Možná se tedy něco ve tvém životě právě dává do pohybu. Ale jeho směr nebude určen pouze tebou.
 
-Je to runa souhry.
+Bude vznikat mezi tebou a tím, s čím se pohybuješ.
 
-A možná právě proto může být její otázka:
+A Ehwaz se může ptát:
 
-S kým nebo s čím se právě snažíš pohnout — a dokážete najít společný krok?
+Kde se právě snažíš tlačit na pohyb — místo abys nejdřív našel společný rytmus?
+
+<!-- 2026-09-22: starsi, JINE zneni tehoz popisu (zacina „Ehwaz je pohyb, ktery vznika ve dvou")
+     prislo drive pres in-app report a zustava v `bug_reports` 2026-09-22 14:35. Zapsana je tahle,
+     novejsi verze; nejde o uryvek teze vety, ale o dva samostatne texty. Ceka ownerovo potvrzeni. -->
+
+---
+
+## Perth
+
+Perth je nádoba, která něco ukrývá.
+
+Její obsah ještě neznáš. Můžeš se dívat dovnitř, můžeš hádat, co přijde, ale dokud se nádoba neotevře, zůstává část obrazu skrytá.
+
+Perth je runa tajemství, skrytého dění, možnosti a toho, co se teprve odhalí.
+
+Ne všechno v životě má být okamžitě pochopeno.
+
+Některé věci potřebují dozrát v tichu. Některé odpovědi se objeví až ve chvíli, kdy položíš správnou otázku. A někdy se ukáže něco úplně jiného, než jsi čekal.
+
+Právě proto Perth přináší zvláštní druh nejistoty.
+
+Ne tu, která říká nic nevím.
+
+Spíš:
+
+ještě nevím.
+
+A mezi těmito dvěma slovy je velký rozdíl.
+
+To, co je skryté, nemusí být prázdné. Může se tam něco připravovat.
+
+Perth proto nemusí ukazovat na událost, kterou máš předvídat. Může ukazovat na prostor, ve kterém se teprve objeví nový význam.
+
+Možná teď není potřeba nádobu rozbíjet, abys zjistil, co je uvnitř.
+
+Možná stačí chvíli vydržet s tím, že to ještě nevíš.
+
+Co ve svém životě zatím nedokážeš pojmenovat — a co když právě proto ještě není připravené být odhaleno?
+
+---
+
+## Sowilo
+
+Sowilo je slunce, které se objeví po dlouhém putování.
+
+Neříká ti, kam máš jít. Prostě osvítí cestu, takže najednou vidíš, kde stojíš.
+
+Je to runa světla, síly, jasnosti a životní energie.
+
+Slunce nic nevysvětluje. Jen svítí. A díky tomu se věci, které byly předtím ukryté ve tmě, stanou zřetelnějšími.
+
+Sowilo proto může přijít jako okamžik pochopení.
+
+Něco, kolem čeho ses dlouho pohyboval, najednou uvidíš z jiné strany. Ne proto, že se změnila skutečnost — ale protože se změnilo světlo, ve kterém ji vidíš.
+
+Je v ní také síla.
+
+Ale ne síla, která musí něco přemoci.
+
+Spíš síla být tím, čím jsi, bez potřeby se zmenšovat.
+
+Slunce se nemusí přesvědčovat, že má svítit.
+
+A přesto má Sowilo i svou druhou stránku. Příliš ostré světlo může oslnit. Jasnost může být nepříjemná, pokud ukáže něco, co jsme předtím nechtěli vidět.
+
+Proto Sowilo není jen všechno bude dobré.
+
+Je to:
+
+teď to můžeš vidět.
+
+A otázka, kterou přináší, může být:
+
+Co se před tebou právě rozsvítilo — a co už teď nemůžeš přehlédnout?
+
+---
+
+## Mannaz
+
+Mannaz je člověk mezi lidmi.
+
+Ne člověk jako izolovaná bytost, která stojí sama proti světu, ale člověk, jehož obraz vzniká také ve vztahu k ostatním.
+
+Je v ní zrcadlo.
+
+Někdy v něm vidíš sebe. Jindy v něm uvidíš někoho jiného — a teprve díky tomu si všimneš něčeho vlastního.
+
+Mannaz mluví o člověku, vědomí, identitě a lidském společenství.
+
+To, kým jsi, není vždycky něco, co můžeš objevit o samotě. Některé části sebe poznáš až tehdy, když se s někým setkáš. V rozhovoru. V konfliktu. V blízkosti. V rozdílu.
+
+A právě proto Mannaz není jen otázka kdo jsem?
+
+Je to také:
+
+Kdo jsem, když jsem mezi ostatními?
+
+Je v ní i připomínka vlastní nedokonalosti. Člověk není božská bytost, která vidí všechno jasně. Má své slepé místo, své představy o sobě i o světě.
+
+Někdy proto potřebuje druhého člověka, aby uviděl něco, co sám zevnitř vidět nemůže.
+
+Mannaz možná přináší právě takové setkání.
+
+Někdo nebo něco před tebou může fungovat jako zrcadlo.
+
+A otázka této runy může být:
+
+Co o sobě právě vidíš v druhém člověku — a proč tě to možná překvapuje?
+
+---
+
+## Laguz
+
+Laguz je voda.
+
+Nejde rovně. Hledá si cestu mezi kameny, někdy se ztrácí pod zemí a jindy se vrací na povrch. Neptá se, jestli má povolení téct.
+
+Je to runa intuice, emocí, pohybu a hlubokého vnitřního vnímání.
+
+Voda má zvláštní vlastnost: může nést obraz nebe, ale sama žádný obraz nemá. Přijímá tvar nádoby, kterou naplní, a přesto zůstává vodou.
+
+Laguz proto může mluvit o něčem v tobě, co ví dříve, než to dokážeš vysvětlit.
+
+Někdy to přijde jako pocit v těle.
+Jindy jako sen.
+Nebo jako zvláštní vědomí, že něco není tak, jak se na první pohled zdá.
+
+Ale voda může být také hluboká a kalná.
+
+Ne každý pocit je pravda. Ne každá intuice je jasné vedení. Proto Laguz neříká slepě věř svým emocím.
+
+Spíš ukazuje:
+
+Podívej se, co v tobě proudí.
+
+Něco může být dlouho skryté pod hladinou a přesto ovlivňovat směr, kterým jdeš.
+
+A možná právě teď není potřeba všechno pochopit hlavou.
+
+Možná je potřeba chvíli poslouchat hladinu — a všimnout si, co se pod ní pohybuje.
+
+Co v sobě cítíš dřív, než pro to ještě máš slova?
+
+---
+
+## Ingwaz
+
+Ingwaz je semeno ukryté v zemi.
+
+Zvenku se zdá, že se nic neděje. Země je tichá. Povrch se nehýbe. A přesto uvnitř něco dozrává.
+
+Je to runa zrání, vnitřní síly, uzavření cyklu a nového začátku.
+
+Ingwaz nepřináší energii, která chce okamžitě ven. Naopak. Je v ní něco, co potřebuje zůstat chvíli uvnitř, dokud nebude připravené.
+
+Něco může být dokončeno, i když ještě nevíš, co přijde potom.
+
+Jako semeno, které už není tím, čím bylo, ale ještě se nestalo rostlinou.
+
+Proto Ingwaz může přijít po dlouhém období, kdy se věci skládaly uvnitř. Práce, zkušenosti, rozhodnutí, vztahy — všechno se pomalu ukládalo do jednoho místa.
+
+A pak přijde okamžik, kdy už není potřeba nic přidávat.
+
+Je čas nechat to dozrát.
+
+Ingwaz také připomíná, že některé změny nezačínají pohybem.
+
+Začínají uzavřením něčeho starého.
+
+Ne jako ztráta, ale jako dokončení kruhu.
+
+Možná tedy není otázkou, co máš právě teď začít.
+
+Možná je důležitější všimnout si:
+
+Co ve mně už dozrálo natolik, že to nemusím dál držet uvnitř?
+
+---
+
+## Othila
+
+Othila je místo, kam se vracíš.
+
+Dům, půda, kterou znáš, věci, které přešly z rukou před tebou do tvých. Je v ní pocit dědictví, kořenů a toho, co je skutečně tvoje.
+
+Ale Othila není jen majetek.
+
+Je to také všechno, co si člověk nese, aniž si to vždy uvědomuje — způsob, jakým přemýšlí, příběhy, které slyšel, hodnoty, které převzal, i věci, které už možná dávno přerostl.
+
+Proto má Othila dvě tváře.
+
+Jedna říká:
+
+Tady jsou tvoje kořeny.
+
+Druhá se ptá:
+
+Co z nich chceš skutečně nést dál?
+
+Dědictví nemusí být něco, co musíš uchovat beze změny. Některé věci stojí za to chránit. Jiné můžeš položit zpátky na zem a nechat je skončit u tebe.
+
+Othila tak vytváří hranici mezi tím, odkud pocházíš, a tím, co z toho uděláš.
+
+Možná se právě teď vrací něco starého. Vzpomínka, místo, rodinný příběh, dávná hodnota nebo část tebe, kterou jsi kdysi nechal za sebou.
+
+Ne proto, aby tě stáhla zpátky.
+
+Možná proto, abys konečně viděl, co z toho skutečně patří do tvého dalšího života.
+
+A otázka Othily může být:
+
+Co jsi zdědil — a co z toho se rozhodneš skutečně nazývat svým?
+
+---
+
+## Dagaz
+
+Dagaz je okamžik, kdy se noc láme ve světlo.
+
+Ještě před chvílí byla krajina tmavá. A potom se na obzoru objeví první světlý pruh. Nic se nestalo jedním velkým pohybem — a přesto už víš, že den přichází.
+
+Dagaz je runa proměny, průlomu, nového pohledu a přechodu z jednoho stavu do druhého.
+
+Je v ní zvláštní hranice.
+
+Nejsi už tam, kde jsi byl, ale ještě nestojíš úplně na druhé straně.
+
+Proto Dagaz nemusí znamenat, že se všechno najednou změní. Může být mnohem tišší.
+
+Najednou něco pochopíš.
+Najednou uvidíš stejnou věc z opačné strany.
+Najednou zjistíš, že otázka, kterou sis dlouho kladl, už vlastně není stejná otázka.
+
+A právě tím se něco otevře.
+
+Dagaz není světlo, které všechno vyřeší.
+
+Je to změna perspektivy, po které už nejde vidět svět úplně stejně jako předtím.
+
+Možná tedy není potřeba hledat další dveře.
+
+Možná už stojíš v jejich prahu.
+
+A Dagaz se ptá:
+
+Co se v tobě právě změnilo natolik, že se stejný svět před tebou začíná ukazovat jinak?
+
+---
+
+## Prázdná runa — Unknown
+
+Prázdná runa nemá znak.
+
+A právě proto může být zvláštní, když se objeví.
+
+Není na ní žádný obraz, který by ti řekl, kam se dívat. Žádná známá symbolika, o kterou by ses mohl opřít. Jen prázdné místo.
+
+Může působit jako to, co ještě nemá jméno.
+
+Něco se děje, ale ještě nevíš co. Význam se teprve vytváří. A jakmile do prázdného místa vložíš vlastní odpověď příliš rychle, můžeš zakrýt něco, co se teprve snaží ukázat.
+
+Proto bych ji nečetl jako „osud rozhodne“ nebo jako předpověď něčeho neznámého.
+
+Spíš jako pauzu v příběhu.
+
+Stránka je otevřená.
+
+A tentokrát na ní není nic napsáno.
+
+Možná proto, že některé věci nemohou přijít z runy. Musí přijít z tvého života.
+
+Prázdná runa tak může být překvapivě silná:
+
+Nehledej význam tam, kde zatím žádný není.
+
+Ne všechno musí být okamžitě pojmenováno. Některé věci potřebují nejdřív projít časem, zkušeností a vlastním rozhodnutím.
+
+A otázka, kterou může přinést, je:
+
+Co v mém životě ještě nemá jméno — a dokážu to chvíli nechat otevřené?
 
 ---
 
 ## Co ještě chybí (stav k 2026-09-22)
 
-**Hotovo (12):** Tiwaz · Fehu · Uruz · Thurisaz · Ansuz · Raidho · Kenaz · Hagalaz · Jera · Eihwaz · Algiz · Ehwaz.
+**Hotovo (20):** Tiwaz · Fehu · Uruz · Thurisaz · Ansuz · Raidho · Kenaz · Hagalaz · Jera · Eihwaz · Algiz · Ehwaz · Perth · Sowilo · Mannaz · Laguz · Ingwaz · Othila · Dagaz · Prázdná runa (Unknown).
 
-**Chybí konec (13):** Gebo · Wunjo · Nauthiz · Isa · Perth · Sowilo · Berkana · Mannaz · Laguz · Ingwaz · Othila · Dagaz · Prázdná runa (Unknown).
+**Chybí konec (5):** Gebo · Wunjo · Nauthiz · Isa · Berkana.
+
+⚠️ **Ehwaz existuje ve dvou zněních** — starší přišlo přes in-app report (zůstává v `bug_reports`
+2026-09-22 14:35, začíná „Ehwaz je pohyb, který vzniká ve dvou"), zapsané je novější z konverzace
+(„Ehwaz je kůň v pohybu"). Nejsou to dva kusy téhož textu, ale dva samostatné popisy; čeká potvrzení.
 
 ⚠️ **Proč chybí:** owner je psal do in-app reportu a pole `message` v `bug_reports` má **limit
 1000 znaků** — všechny delší popisy se uťaly přesně tam. Uťaté začátky **zůstávají v DB**
