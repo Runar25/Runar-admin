@@ -1,0 +1,305 @@
+{
+ "gramatika": {
+  "verdicts": [
+   {
+    "id": "P7A",
+    "phrase": "eða það gæti verið tveir stilkar sem vaxa hlið við hlið",
+    "upheld": true,
+    "evidence": "Obhajoba selhala. Korpus (Risamálheild, is-vazba.py --freq) ukazuje shodu v množném čísle i u modálu: „gæti verið tveir“ = 0 proti „gætu verið tveir“ = 25; „gæti verið margir“ = 0 proti „gætu verið margir“ = 30; „getur verið tveir“ = 0 proti „geta verið tveir“ = 34. U zájmena v roli podmětu platí totéž: „þetta er tveir“ = 9 proti „þetta eru tveir“ = 444. Ani čtení „það“ jako odkazovacího zájmena (‚to‘ = nový výhonek) nepomůže, protože i sponová věta se zájmenným podmětem se shoduje s přísudkovým jménem v množném čísle. Jediné hraniční číslo je „gæti verið nokkrir“ = 15, ale v trigramu nejde oddělit jiný podmět (např. „hann gæti verið nokkrir dagar…“), takže jako doklad neobstojí. Oprava „það gætu verið tveir stilkar“ platí."
+   },
+   {
+    "id": "P3B",
+    "phrase": "Algiz heldur vöku yfir því sem manni þykir vænt um",
+    "upheld": true,
+    "evidence": "Obhajoba selhala. Slovník (is-vazba.py vaka, podstatné jméno) uvádí jen „halda vöku fyrir <honum>“ (‚nedat spát‘). Rozpad korpusu ukazuje, že holé „halda vöku“ bez přivlastňovacího zájmena stojí prakticky vždy s „fyrir“: „halda vöku fyrir“ = 214, „heldur vöku fyrir“ = 109. Jinak následuje přivlastňovací zájmeno ve významu ‚zůstat ostražitý‘: „halda vöku sinni“ = 605, „halda vöku okkar“ = 352, „heldur vöku sinni“ = 17. S „yfir“ se holé spojení nevyskytuje: „halda/heldur/hélt/héldu vöku yfir“ = 0, „vöku yfir því/honum/henni/þeim“ = 0. Záchranný tvar s přivlastňovacím zájmenem existuje jen okrajově („vöku sinni yfir“ = 18, proti „vöku sinni gagnvart“ = 63), jenže v textu to zájmeno chybí, takže čtenář to pochopí jako ‚nedává spát‘ bez „fyrir“. Idiomatické je „vakir yfir“ (1928, „vakir yfir því“ = 21); oprava platí."
+   },
+   {
+    "id": "P7A",
+    "phrase": "og það rifnar í þeim þótt rótin finni ekkert til",
+    "upheld": true,
+    "evidence": "Obhajoba selhala. Slovník (is-vazba.py rifna) uvádí jen osobní nepřechodné užití: buxurnar rifnuðu, skyrtan rifnaði, blaðið rifnar í tvennt, rifna upp, rifna úr hlátri. Korpus: „það rifnar í“ = 0 a „rifnar í þeim/mér/honum/henni“ = 0. Totéž v minulém čase: „rifnaði í honum/henni/þeim/mér“ = 0. Kde stojí „rifna í“, jde o výsledek, ne o místo: „rifnaði í sundur“ = 62, „rifnaði í tvennt“ = 33, „rifnar í tvennt“ = 10. „Það rifnaði í“ = 8 odpovídá osobnímu „það [věc] rifnaði í sundur/tvennt“. Výklad „það“ = „hagl“ (střední rod) nedává smysl, protože „rifna“ je nepřechodné, a roztrhlo by se tak samo krupobití. Neosobní konstrukce se zvukovým slovesem v korpusu je („það brakar í“ = 116), s „rifna“ doložená není. Oprava na osobní „blöðin rifna“ platí."
+   }
+  ]
+ },
+ "soudci": [
+  {
+   "pairs": [
+    {
+     "pair": "P1 — Single: Gebo · Love & Relationships",
+     "winner": "A",
+     "margin": "jasne",
+     "why": "Rozhoduje poslední věta. A: „an even meeting of hands, or one tide reaching further than the other“ nabízí dvě skutečné a konkrétní možnosti, druhá zůstává v obraze přílivu a žádná není označená za správnou. B: „this may be balance or distance“ jsou dvě abstraktní nálepky, nic z nich není vidět. Obě strany mají v esenční větě ukazovací sponu („Gebo is that exchange“ / „Gebo names that exchange“), v tom jsou si rovné. A má navíc ve 3. větě formuli stopy: „what was given last is already moving“. B mluví o člověku mimo poslední větu („When you meet someone“) a esenci opisuje klíčovými slovy runy („giving and receiving“). Obraz v první větě je u obou dobrý. Délka 62/61 slov je u obou mírně nad limitem, ne výrazně.",
+     "hard_faults": [
+      {
+       "side": "A",
+       "type": "spona_ukazovaci",
+       "quote": "Gebo is that exchange between sea and shore, where nothing stays only on one side."
+      },
+      {
+       "side": "B",
+       "type": "spona_ukazovaci",
+       "quote": "Gebo names that exchange"
+      },
+      {
+       "side": "B",
+       "type": "opis_klicovych_slov",
+       "quote": "where giving and receiving both have a place"
+      },
+      {
+       "side": "B",
+       "type": "abstrakce_misto_veci",
+       "quote": "Between you, this may be balance or distance."
+      },
+      {
+       "side": "B",
+       "type": "jine",
+       "quote": "When you meet someone, the shore cannot hold every wave"
+      }
+     ]
+    },
+    {
+     "pair": "P2 — Single: Laguz · The Unseen",
+     "winner": "B",
+     "margin": "tesne",
+     "why": "Obě čtení jsou čistá a bez tvrdé vady. B má lepší esenční větu: „Laguz carries the water along the hollows that were already there“ vstupuje vztahem a člověk si z ní rovnou něco vezme (cesta vede korytem, které už existuje). U A je „Laguz carries it past the point where the surface gives any clue“ mlhavější. B má formuli i v první větě: „and no one marks the route for it“ je stopa toho, co nepřišlo. Poslední věta B „a path already cut long before you looked, or a slope still loose enough to shift“ nabízí dvě konkrétní a rovnocenné možnosti. Poslední věta A „a quiet source, or a place where water cannot yet pass“ je taky dobrá, proto je rozdíl těsný. A navíc víc oslovuje člověka („You see…“, „You can see…“) a s 64 slovy je delší.",
+     "hard_faults": []
+    },
+    {
+     "pair": "P3 — Single: Algiz · Family & Home",
+     "winner": "B",
+     "margin": "tesne",
+     "why": "B má silnější čtení, ale i dvě tvrdé vady. Věta „what moves beyond the wall is not“ je čistá formule: druhá půlka ukazuje, co v záběru není. Poslední věta „a home held loosely and well, or a watch no one else has offered to keep“ nabízí dvě skutečné, konkrétní možnosti a druhá z nich je směna (jeden hlídá, ostatní z toho žijí). Proti tomu stojí ukazovací spona („Algiz is that wide seeing“) a 71 slov, výrazně nad limitem 58. A má dobrý úvodní obraz, ale esence stojí na klíčovém slově runy jako nálepce („Algiz gives protection a wide view“). Třetí věta A je skrytá rada mimo poslední větu („At home, you can notice…“). Poslední věta A „quiet safety, or watchfulness“ jsou abstraktní pojmy s nejasným „It“ na začátku.",
+     "hard_faults": [
+      {
+       "side": "B",
+       "type": "spona_ukazovaci",
+       "quote": "Algiz is that wide seeing"
+      },
+      {
+       "side": "B",
+       "type": "mimo_rozpocet",
+       "quote": "B (71 slov)"
+      },
+      {
+       "side": "A",
+       "type": "opis_klicovych_slov",
+       "quote": "Algiz gives protection a wide view"
+      },
+      {
+       "side": "A",
+       "type": "rada",
+       "quote": "At home, you can notice who has room to move and who stays close to the door."
+      },
+      {
+       "side": "A",
+       "type": "abstrakce_misto_veci",
+       "quote": "It may be quiet safety, or watchfulness that leaves little room to rest."
+      }
+     ]
+    },
+    {
+     "pair": "P4 — Single: Jera · Career & Creativity",
+     "winner": "A",
+     "margin": "tesne",
+     "why": "A má konkrétnější obraz a lepší esenci. „A faint crease in the cloth where the dough has pushed it up, no wider than a thumb“ je místo, které vidím. „Jera works there, lifting the weight by slow degrees“ uvádí runu vztahem, tedy tím, co dělá. Esence B „Jera holds that slow work in place“ je plochá a vágní. Třetí věta B „you cannot judge the dough by how often you lift the cloth; the hours matter too“ je skrytá rada a končí prázdnou abstrakcí. A ale tvrdí něco o životě člověka mimo poslední větu („Your work sits under its own cover now“) a s 68 slovy je výrazně nad limitem. Poslední věta je u obou v pořádku, dvě rovnocenné možnosti s „may“; u B je kratší a čistší. Těsně vyhrává A díky obrazu a esenci.",
+     "hard_faults": [
+      {
+       "side": "A",
+       "type": "cold_reading",
+       "quote": "Your work sits under its own cover now"
+      },
+      {
+       "side": "A",
+       "type": "mimo_rozpocet",
+       "quote": "A (68 slov)"
+      },
+      {
+       "side": "B",
+       "type": "rada",
+       "quote": "At your worktable, you cannot judge the dough by how often you lift the cloth; the hours matter too."
+      }
+     ]
+    },
+    {
+     "pair": "P5 — Single: Ansuz · Purpose & Path",
+     "winner": "A",
+     "margin": "jasne",
+     "why": "Úvodní obraz (hlas přes dvůr, podle tónu poznáš špatnou zprávu, nebo večeři) je u obou skoro stejný a silný. A uvádí runu definiční větou vztahu: „Ansuz lets you hear a difference before you know the details“. B má ukazovací sponu („That is Ansuz, Kuky“), i když samotná definice za ní je dobrá. B ve 3. větě tvrdí něco o cestě člověka mimo poslední větu („Your direction may be reaching you the same way“). Poslední věta A „a warning worth hearing, or a place at the table“ se vrací k obrazu (bad news / supper) a nabízí dvě konkrétní rovnocenné možnosti. B končí obecněji („a call you already recognize, or one still too far off“). Slabinou A je třetí věta, která esenci jen zopakuje s oslovením.",
+     "hard_faults": [
+      {
+       "side": "B",
+       "type": "spona_ukazovaci",
+       "quote": "That is Ansuz, Kuky — the carrying part of a voice"
+      },
+      {
+       "side": "B",
+       "type": "cold_reading",
+       "quote": "Your direction may be reaching you the same way, tone first, sense later."
+      },
+      {
+       "side": "B",
+       "type": "mimo_rozpocet",
+       "quote": "B (68 slov)"
+      }
+     ]
+    },
+    {
+     "pair": "P6 — Norns: Gebo · Ingwaz · Othila · The Unseen · Understanding the past",
+     "winner": "B",
+     "margin": "tesne",
+     "why": "A má výrazně lepší obraz a formuli. „driftwood, stone, what earlier tides left and never came back for“ je přesná stopa a celé čtení zůstává ve věcech (písek, zrno, linie naplavenin). Selhává ale ve Skuld, kde má stát nabídka dvou možností. „Walking on as you are, the shore ahead is where you keep sorting that line“ je oznamovací předpověď. „some of it is yours… and some of it belongs to the water“ není volba mezi dvěma možnostmi, ale „obojí“, bez tvaru may. B je sušší a místy abstraktní („the question of what belongs there comes into view“, „was not all that had been given“). Skuld ale splňuje: „an old bond still has a place, or that its gift remains after its hold has gone“ jsou dvě skutečné, rovnocenné možnosti s „may“. Podle potvrzeného kritéria poslední věty těsně B, přestože obrazem je A lepší.",
+     "hard_faults": [
+      {
+       "side": "A",
+       "type": "posledni_veta_bez_moznosti",
+       "quote": "some of it is yours to carry inland, and some of it belongs to the water that brought it"
+      },
+      {
+       "side": "A",
+       "type": "predpoved",
+       "quote": "Walking on as you are, the shore ahead is where you keep sorting that line"
+      },
+      {
+       "side": "B",
+       "type": "abstrakce_misto_veci",
+       "quote": "As the shore changes, the question of what belongs there comes into view."
+      },
+      {
+       "side": "B",
+       "type": "abstrakce_misto_veci",
+       "quote": "What remained from that exchange was not all that had been given."
+      }
+     ]
+    },
+    {
+     "pair": "P7 — Norns: Fehu · Hagalaz · Berkana · Love & Relationships · Decision ahead",
+     "winner": "A",
+     "margin": "jasne",
+     "why": "A drží všechny tři beaty v jednom záhonu reveně: zásoba v zemi, kroupy, které odírají listy, a pupeny, které se prodírají ven, „fewer stalks and thicker ones“. Formule se objevuje opakovaně: „you cannot tell which is which while the stones are still coming down“. Poslední věta „a closeness that loses its easy growth and keeps what is rooted, or a bed that has held two crowns too long, and now has room for one to widen“ nabízí dvě skutečné, těžké a rovnocenné možnosti, druhá je nečekaná a konkrétní. B začíná dobře („What was stored there remains, though the stalks themselves are gone“), ale pak přechází do abstraktního zobecnění („a disturbance may expose what has been sustained and what has only been sheltered“). Poslední věta B je pojmová („old care“, „a different kind of closeness“). Slabinou A je délka: 163 slov proti 103. Rozpočet Norns ale soubor číselně neuvádí, proto to jako tvrdou vadu neuvádím.",
+     "hard_faults": [
+      {
+       "side": "B",
+       "type": "abstrakce_misto_veci",
+       "quote": "In a bond between two people, a disturbance may expose what has been sustained and what has only been sheltered."
+      },
+      {
+       "side": "B",
+       "type": "abstrakce_misto_veci",
+       "quote": "or new growth that asks for a different kind of closeness"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "pairs": [
+    {
+     "pair": "P1 — Gebo · Ást & Sambönd",
+     "winner": "A",
+     "margin": "tesne",
+     "why": "A je těsnější a drží se rozpočtu (53 slov). První věta „Sjórinn leggur þara á fjöruna og tekur sandinn undan honum í sömu andrá“ je čistá SMĚNA: moře jedno položí a druhé vezme, a fyzicky to dává smysl. „Hvorki þarinn né sandurinn ræður því hvenær aldan kemur“ zůstává u věcí. Poslední věta nabízí dvě skutečné možnosti a obě stojí v obraze („fjara sem tekur við öllu sem berst“ / „fjara sem gefur meira frá sér en hún fær“). Slabší místo A: „Gebo lýsir þessu tvennu, að gefa og þiggja sem eina hreyfingu“ je meta sloveso a skoro nálepka, ale aspoň se váže na obraz („þessu tvennu“). B má hezkou STOPU „tvö spor við flæðarmálið hverfa ekki alveg eins“ a lépe zasahuje oblast lásky („Milli þín og annarrar manneskju… flóð sem ber ykkur nær, eða fjara sem skilur eftir rúm“). Má ale 65 slov a obraz „gengur upp fjöruna og dregur sig til baka í sömu andrá“ je fyzicky nelogický. Esenční věta „Gebo sýnir hvernig gjöf og viðtaka geta átt sér stað samtímis“ je abstraktní nálepka s úřednickým „átt sér stað“. Třetí věta „Þar sem tvær manneskjur mætast sést ekki alltaf hvort vatnið nær…“ míchá lidi a vodu do obecného výroku.",
+     "hard_faults": [
+      {
+       "side": "B",
+       "type": "opis_klicovych_slov",
+       "quote": "Gebo sýnir hvernig gjöf og viðtaka geta átt sér stað samtímis."
+      }
+     ]
+    },
+    {
+     "pair": "P2 — Laguz · Hið dulda",
+     "winner": "A",
+     "margin": "tesne",
+     "why": "A má souvislý oblouk v konkrétních věcech. Voda zmizí pod hlínou, pak „Laguz ber vatnið áfram þar sem augað nær ekki til“: runa vstupuje vztahem a trefuje oblast Hið dulda. Následuje „rætur í blautri mold, en ekki sést hvort vatnið nær að þeim“, což je STOPA toho, co možná nepřišlo. Poslední věta je paralelní a hmatatelná („rakur jarðvegur kringum ræturnar eða þurr mold undir yfirborðinu“). Rozpočet A přetahuje jen o 1 slovo (59). B je úspornější a „Laguz heldur því í farveginum sem það hefur sjálft grafið“ je silná definiční věta se stopou vyhloubeného koryta. „Undir mosanum liggur miklu meira vatn en sést ofan á“ je dobré. Poslední věta B ale staví abstraktní „áttin sem er þegar valin“ proti konkrétní „lindin“, takže možnosti nejsou rovnocenné obrazy. Drobnost: „hefur runnið… án þess að þú sæir hana“ má neobvyklou souslednost časů (čekal bych „sjáir“).",
+     "hard_faults": [
+      {
+       "side": "B",
+       "type": "abstrakce_misto_veci",
+       "quote": "Þetta gæti verið áttin sem er þegar valin"
+      }
+     ]
+    },
+    {
+     "pair": "P3 — Algiz · Fjölskylda & Heimili",
+     "winner": "B",
+     "margin": "jasne",
+     "why": "B je výrazně živější a přesnější. „Hundurinn liggur uppi í brekkunni og lyftir höfðinu þegar ein kind færist frá. Hann hleypur ekki, hann sér.“ je vidět a má rytmus. Esenční věta „Algiz heldur vöku yfir því sem manni þykir vænt um, án þess að reka það áfram“ čistě říká, co runa DĚLÁ, a „reka“ ji váže na pasení. Poslední věta dává dvě skutečné, neoznačené možnosti v rámci domova („vakan sem enginn biður um, eða fjarlægðin sem leyfir fólkinu að ganga sitt“). „ganga sitt“ je ale možná neidiomatické, běžné je „ganga sinn veg“ nebo „fara sína leið“; ověřit. A má solidní úvodní obraz, ale esenční věta je abstraktní výklad s nálepkou „vernd“. Třetí věta „handan bæjarins sér hundurinn ekki hvað bíður“ je mlhavá. Poslední věta („hjörðin verið kyrr saman eða dreifð“) je konkrétní, ale plošší. A má 60 slov.",
+     "hard_faults": [
+      {
+       "side": "A",
+       "type": "abstrakce_misto_veci",
+       "quote": "Algiz sýnir vernd sem felst í því að hafa yfirsýn án þess að stjórna hverri hreyfingu."
+      }
+     ]
+    },
+    {
+     "pair": "P4 — Jera · Starf & Sköpun",
+     "winner": "A",
+     "margin": "tesne",
+     "why": "B má lepší vstupní obraz („Við fald dúksins sést örlítil bunga sem hækkar meðan enginn horfir á deigið“ je krásná STOPA) i dobrou vztahovou větu „Jera lyftir dúknum smám saman… án þess að nokkur hönd komi nærri“. Má ale 73 slov proti stropu 58, třetí věta je přetížená a „halda lögun sinni“ se opakuje ve třetí i poslední větě. A je pod rozpočtem (45 slov) a úvodní „Dúkurinn er hrukkóttur í horninu, þar sem enginn lítur“ nevysvětlí, proč je ubrus zmačkaný (a „þangað sem“ by bylo přesnější). Pak ale „Undir honum lyftir Jera deiginu hærra meðan bakarinn snýr sér undan“ a „Verkið heldur áfram án þess að nokkur telji mínúturnar“ fungují čistě. Poslední věta A dává dvě skutečné možnosti („smíð sem þarf enn kyrrð, eða smíð sem er þegar tilbúin undir dúknum“). A vyhrává kvůli kázni, ne kvůli bohatší obraznosti.",
+     "hard_faults": [
+      {
+       "side": "B",
+       "type": "mimo_rozpocet",
+       "quote": "Á vinnuborðinu liggur það sem er í smíðum undir dúknum, en enn sést ekki hvort deigið muni halda lögun sinni þegar hann er tekinn af."
+      }
+     ]
+    },
+    {
+     "pair": "P5 — Ansuz · Tilgangur & Leið",
+     "winner": "B",
+     "margin": "jasne",
+     "why": "B otevírá přesnou STOPOU: „orðin sjálf hverfa í vindinn, en tónninn stendur eftir“. Runa vstupuje vztahem („Ansuz býr í þessum tón“) a hned následuje konkrétní „hvort von er á válegum fréttum eða bara kvöldmat“. Poslední věta dává dvě skutečné, paralelní možnosti přesně k oblasti Cesty („kall sem býður þér heim, eða kall sem biður þig að leggja af stað“). Slabina B: třetí věta už mluví o člověku („Kuky, þú stendur á hlaðinu og heyrir…“), přestože o člověku má mluvit jen poslední věta. B má 64 slov. U A je úvodní „Hlaðið stendur fast þótt vindurinn taki í heyið“ nejasný obraz, protože dvůr „stojí pevně“. Esenční věta je obecná poučka, ne věc. Třetí věta A (válegar fréttir eða kvöldmat) je dobrá a poslední věta je v pořádku, ale celkově je A slabší.",
+     "hard_faults": [
+      {
+       "side": "A",
+       "type": "abstrakce_misto_veci",
+       "quote": "Ansuz sýnir að tónninn getur skipt meira máli en orðin sjálf."
+      },
+      {
+       "side": "B",
+       "type": "jine",
+       "quote": "Kuky, þú stendur á hlaðinu og heyrir hvernig kallað er, löngu áður en þú greinir orðin."
+      }
+     ]
+    },
+    {
+     "pair": "P6 — Norns: Gebo · Ingwaz · Othila · Hið dulda · Skilja fortíðina",
+     "winner": "A",
+     "margin": "tesne",
+     "why": "B má silnější Urður: „Sjórinn gaf fjörunni… og tók annað með sér“ a hlavně „Það sem eftir varð ber merki beggja hreyfinga, þótt sjálf skiptin sjáist ekki lengur“ je učebnicová SMĚNA+STOPA. Ingwaz se v B ale skoro neobjeví a „Undir vatninu kemur… í ljós… þegar aldan hverfur“ je logicky zamotané. Hlavně se poslední věta B propadne do abstraktních nálepek (jafnvægi = Gebo, heimili = Othila). A drží obraz celou dobu. Ingwaz je dobře vystižený („liggur eitthvað grafið sem hvorki flæðið né fjaran hefur enn borið upp. Það bíður í myrkrinu“). Othila má konkrétní hranici („línan þar sem sjór mætir landi færist hægt“). Poslední věta A dává dvě skutečné možnosti přesně k záměru porozumět minulosti („ber gamalt upp á yfirborðið, eða… sleppir því út á dýpið“). Slabiny A: „markið eftir þær er jafnt á báða vegu“ je nejasné a násilně roubuje Gebovu symetrii. „geymir það sem sjórinn færði henni og tók aftur“ si trochu protiřečí. „eitthvað“ je vágní.",
+     "hard_faults": [
+      {
+       "side": "B",
+       "type": "abstrakce_misto_veci",
+       "quote": "Fyrir þig gæti það verið gamalt jafnvægi sem heldur enn eða tengsl við heimili sem eru að losna úr fyrri skorðum."
+      }
+     ]
+    },
+    {
+     "pair": "P7 — Norns: Fehu · Hagalaz · Berkana · Ást & Sambönd · Ákvörðun framundan",
+     "winner": "A",
+     "margin": "tesne",
+     "why": "A má nejsilnější obraznost celé várky. Fehu je hmatatelná zásoba („rót sem safnaði sætu og sterkju allan veturinn í kaldri mold“). Hagalaz nese SMĚNU i STOPU: „það rifnar í þeim þótt rótin finni ekkert til“, „blöðin standa götótt eftir, og moldin drekkur í sig það sem bráðnar“. Berkana přichází s idiomatickou podmínkou „Haldirðu áfram eins og nú sendir rótin upp ný blöð… hægar en þau fyrstu og þykkari“. Poslední věta dává dvě skutečné možnosti k oblasti vztahů. Proti A mluví délka (119 slov, zatímco ostatní Norns kolem 91–97; Norns rozpočet ve slovech zadaný není), shodová chyba v poslední větě a předpoklad mužského rodu („þú sjálfur“). B je v rozpočtu (91) a jeho poslední věta je čistá a konkrétní („tvö blöð sem vaxa saman við vegginn, eða eitt sem teygir sig upp án skjóls frá hinu“). Čtvrtá věta B ale opouští obraz do výkladu s nálepkou Hagalaz („truflunin“). „nýr vöxtur“ je nálepka Berkany. Hmotné vstupy jsou chudší a „moldin haldið hita“ proti „kaldri moldinni“ si protiřečí.",
+     "hard_faults": [
+      {
+       "side": "A",
+       "type": "jine",
+       "quote": "eða það gæti verið tveir stilkar sem vaxa hlið við hlið upp úr sömu rót"
+      },
+      {
+       "side": "A",
+       "type": "jine",
+       "quote": "Það gæti verið þú sjálfur að vaxa aftur"
+      },
+      {
+       "side": "B",
+       "type": "abstrakce_misto_veci",
+       "quote": "Við suðurvegginn mætast tveir og truflunin getur gert orð þeirra skýrari, þótt ekki sé enn víst hvað vex á milli þeirra."
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

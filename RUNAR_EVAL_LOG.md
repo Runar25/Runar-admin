@@ -4737,3 +4737,50 @@ Claude (Opus 5.5)** → možná sebe-preference; nejvíc ohrožené je IS 1. mí
 latence, nastavení, úniky, gramatika s dokladem, cold reading s citací. **Spready neměřeny** (delší výstup →
 rozdíly v ceně se zvětší, pořadí cen se nezmění). Volba modelu patří podle fronty AŽ po hotových pravidlech.
 Podklady → `docs/eval/2026-09-22-modely/` (prompty, všech 42 odpovědí s usage, metriky, klíč, slepé soubory, soudy, skripty).
+
+## 2026-09-22 (2) — Opus 5 × gpt-6-sol: iterace promptu na jednom čtení, pak 5 run + 2× Norns
+
+**Owner:** *„udělej víc run pro Opus 5 a GPT-6 sol, 5 run a 2× Norns… můžeš to opravit jen pro potřeby testu?…
+napřed to udělej na jednom a zkoušej, dokud to nebude dobré. Až pak větší várka. Nechci, abys bezhlavě spálil tokeny."*
+Prompt v testu posílá CODE-read sám (produkční buildery, pak jmenované úpravy JEN pro test; produkce se nemění).
+
+**Iterace — vždy JEDNO čtení, jedna změna** (celkem 9 volání, ~$0,08; `iterace.jsonl`):
+| krok | změna | sol IS | Opus 5 IS |
+|---|---|---|---|
+| 1 | glosa z hlavičky runy pryč | glosa pryč; konec dál abstraktní (*„kyrrstaða sem heldur eða breyting sem bíður"*) | — |
+| 2 | most: *„ástand sem gæti átt við"* → *„sagt með orðum myndarinnar"* | konec věcný | **rozbito**: konec celý v obraze, bez *gæti* i bez člověka → **zahozeno** |
+| 3 | most: *„ástand"* ZŮSTÁVÁ + *„sagt með orðum myndarinnar"* (tvar Norns landingu A) | věcný a o člověku: *„kannski stendurðu á traustum steini eða í lausum jarðvegi"* | *gæti* 1/3 = stejně jako produkce (1/3) → **nepoškozeno** |
+Poučení z kroku 2: slovo **„ástand" (stav) nebylo jen vada — drželo most u člověka.** Proto krok 3 přidává, neubírá.
+⚠️ Opus 5 vynechává v IS *gæti* i v produkci (Raidho 2/3, tvar *„annað er…, hitt…"*); na pěti jiných runách 5/5 v pořádku.
+
+**Glosa má DVA vstupy do IS promptu** (nález při várce): hlavičku `DREGNA RÚNA: Gebo (Félagsskapur)` a pokyn
+*„Nefndu Gebo (Félagsskapur) einu sinni og fléttaðu nafnið…"*. Oprava jen hlavičky: sol glosa **2/5**; obou: **0/5**
+(bez opravy 3/3). Model tedy jen poslouchal pokyn. Norns má glosu v řádcích run (`Gebo (Félagsskapur) —`), pilot 1 čtení: pryč.
+
+**Várka** (stejný prompt oběma; EN produkční, IS single = glosa pryč všude + most krok 3, IS Norns = glosa pryč;
+runy NE-těžké, protože most je ověřený jen na lehkém tvaru; rejstřík vždy Confirmation):
+| | Opus 5 | gpt-6-sol |
+|---|---|---|
+| $/čtení single EN · IS | 0,0126 · 0,0125 | 0,0030 · 0,0033 (studená cache, ~4× levnější) |
+| $/čtení Norns EN · IS | 0,0176 · 0,0185 | 0,0040 · 0,0044 |
+| latence single IS · Norns IS | 6,8 s · 12,8 s | 3,4 s · 4,4 s |
+| single v rozpočtu 50–58 slov EN · IS | 0/5 (62–71) · 3/5 | 0/5 (59–64) · 0/5 (59–73) |
+| **slepé dvojice** (soudce na jazyk, A/B prohozené) | **EN 5 · IS 6** | EN 2 · IS 1 |
+| **IS chyby s dokladem po obhajobě** | **3** | **0** |
+Opus 5 IS chyby: *„það gæti verið tveir stilkar"* (shoda: `gætu`; korpus 0 × 25) · *„heldur vöku yfir"* (idiom je
+`vakir yfir`, 1928×; `halda vöku` jde s `fyrir`/`sinni`) · *„það rifnar í þeim"* (neosobní `rifna í` nedoloženo, 0×).
+Z 11:3 pro Opus je **9 dvojic „těsně"**; jasně: Opus EN P1, P7, IS P3, P5 · sol EN P5 (Ansuz).
+**Konce solu po kroku 3 jsou věcné 5/5** (produkční běh: pojmy 3/3), ale občas jen zopakují obraz
+(*„hjörðin kyrr saman eða dreifð um tún"*), kdežto Opus přes obraz dojde k člověku
+(*„vakan sem enginn biður um, eða fjarlægðin sem leyfir fólkinu að ganga sitt"*). Soudci sol vytýkali abstrakci
+dál v těle čtení a v Norns závěru; Norns závěr sol plní klíčovými slovy run (*jafnvægi*, *heimili*).
+
+**Souhrn obou měření dne (IS, 10 textů na model):** Opus 5 **5 tvrdých chyb** (2× `sá`/`sú` + 3 výše), gpt-6-sol **0**.
+**Výměna, kterou musí rozhodnout owner:** Opus 5 píše lepší čtení (soudci 11:3), gpt-6-sol čistší islandštinu,
+~4–10× levněji a 2–3× rychleji. Předchozí srovnání opus-5 × gpt-5.6-sol (2026-09-20) bylo 10:2 — gpt-6-sol
+ve stylu výrazně nepostoupil, stojí ale polovinu co 5.6-sol.
+⚠️ **Hranice:** 1 čtení na runu, 5 run, 2 Norns, jeden rejstřík; soudci jsou Claude (možná sebe-preference pro Opus
+v párovém srovnání — gramatika ukázala opačným směrem, tedy proti Claude, takže u ní bias nehrozí). Délky: oba
+modely přes rozpočet v EN, přestože produkce (80 ownerových EN single) má průměr 53 slov — proč tady přetékají,
+neměřeno; nečíst jako vlastnost modelu.
+Podklady → `docs/eval/2026-09-22-modely/varka/` (prompty, všechna čtení, iterace, dvojice, soudy, skripty).

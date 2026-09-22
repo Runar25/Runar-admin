@@ -77,8 +77,16 @@
   IS prompt má `DREGNA RÚNA: Raidho (Ferðalag) — …`, EN jen `DRAWN RUNE: Raidho — …`. Výsledek na 42 čteních:
   glosa *„Raidho (Ferðalag)"* v textu **jen v IS** — Opus 5.5 3/3, gpt-6-sol 3/3, gpt-5.6-sol 2/3; v EN ji nenapsal
   **žádný** model. Opus 4.8 a 5 ji zatím neopisují, takže dnešní produkce to nevidí — ale **při jakékoli změně modelu
-  to vyleze okamžitě**. Levná oprava na naší straně: hlavička v IS bez závorky (název runy, glosa jinde nebo vůbec),
-  pak ověřit, že se nic jiného nehnulo. Doklad: `RUNAR_EVAL_LOG.md` 2026-09-22 (1), `docs/eval/2026-09-22-modely/`.
+  to vyleze okamžitě**. ⚠️ **Vstupy jsou DVA** (doměřeno 2026-09-22 (2)): hlavička runy A pokyn *„Nefndu Gebo
+  (Félagsskapur) einu sinni og fléttaðu nafnið…"* — ten modelu glosu přímo předepisuje. Oprava jen hlavičky: sol 2/5;
+  obou: 0/5; Norns má glosu v řádcích run (`Gebo (Félagsskapur) —`). **Oprava patří ke zdroji** — IS jméno runy,
+  které se do promptů vkládá (dnes nese závorku), ne k jednotlivým řádkům. Doklad: `RUNAR_EVAL_LOG.md` 2026-09-22 (1) a (2).
+- [ ] **KANDIDÁT: most IS „ástand … sagt með orðum myndarinnar"** (CODE-read 2026-09-22, NEROZHODNUTO — owner).
+  Ve tvaru „dvě možnosti" přidat k *„hvort um sig ástand sem gæti átt við"* frázi *„sagt með orðum myndarinnar"*
+  (tvar ověřeného Norns landingu A). gpt-6-sol: konce z pojmů (*vani / kostur*) na věcné 5/5; Opus 5: *gæti* beze
+  změny proti produkci. ⚠️ Varianta, která „ástand" ODEBRALA, Opus rozbila (konec celý v obraze) — nezkoušet.
+  Ověřeno jen na tvaru „dvě možnosti" a lehkých runách; věta, otázka a těžké znění netestované.
+  Relevantní hlavně, kdyby se přešlo na levnější model. Doklad: `RUNAR_EVAL_LOG.md` 2026-09-22 (2).
 - [x] ~~**IS CHYBA: spready oslovují člověka jako „toho, kdo VEDE"**~~ — SWEEP HOTOV 2026-09-21
   (18 náhrad, v4.39-leitandi, DECISIONS 2026-09-21 (1)). Původní zadání níž: (nález CODE-read
   2026-09-20 při psaní islandského závěru Norns; owner: *„IS umíš udělat i ty"* — dotaženo do verdiktu, ne dotazu).

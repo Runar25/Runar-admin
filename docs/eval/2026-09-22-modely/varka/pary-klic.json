@@ -1,0 +1,72 @@
+{
+ "en-P1": {
+  "id": "single-gebo-en",
+  "A": "claude-opus-5",
+  "B": "gpt-6-sol"
+ },
+ "en-P2": {
+  "id": "single-laguz-en",
+  "A": "gpt-6-sol",
+  "B": "claude-opus-5"
+ },
+ "en-P3": {
+  "id": "single-algiz-en",
+  "A": "gpt-6-sol",
+  "B": "claude-opus-5"
+ },
+ "en-P4": {
+  "id": "single-jera-en",
+  "A": "claude-opus-5",
+  "B": "gpt-6-sol"
+ },
+ "en-P5": {
+  "id": "single-ansuz-en",
+  "A": "gpt-6-sol",
+  "B": "claude-opus-5"
+ },
+ "en-P6": {
+  "id": "norns1-en",
+  "A": "claude-opus-5",
+  "B": "gpt-6-sol"
+ },
+ "en-P7": {
+  "id": "norns2-en",
+  "A": "claude-opus-5",
+  "B": "gpt-6-sol"
+ },
+ "is-P1": {
+  "id": "single-gebo-is-g2",
+  "A": "claude-opus-5",
+  "B": "gpt-6-sol"
+ },
+ "is-P2": {
+  "id": "single-laguz-is-g2",
+  "A": "gpt-6-sol",
+  "B": "claude-opus-5"
+ },
+ "is-P3": {
+  "id": "single-algiz-is-g2",
+  "A": "gpt-6-sol",
+  "B": "claude-opus-5"
+ },
+ "is-P4": {
+  "id": "single-jera-is-g2",
+  "A": "claude-opus-5",
+  "B": "gpt-6-sol"
+ },
+ "is-P5": {
+  "id": "single-ansuz-is-g2",
+  "A": "gpt-6-sol",
+  "B": "claude-opus-5"
+ },
+ "is-P6": {
+  "id": "norns1-is",
+  "A": "claude-opus-5",
+  "B": "gpt-6-sol"
+ },
+ "is-P7": {
+  "id": "norns2-is",
+  "A": "claude-opus-5",
+  "B": "gpt-6-sol"
+ }
+}
