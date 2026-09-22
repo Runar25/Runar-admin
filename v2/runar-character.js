@@ -515,7 +515,10 @@ var RUNE_IMAGES = [
   ['Kenaz','any','Spænirnir liðast undan egginni.','The shavings curl away from the blade.','sköpunargleði','creativity','D'],
   ['Gebo','any','Sjórinn gefur og tekur á fjörunni í sömu andránni.','The sea gives and takes on the shore in the same breath.','gefa og þiggja','giving and receiving','E'],
   ['Gebo','any','Fjaran skilar einu og hirðir annað með hverri báru.','The shore returns one thing and keeps another with every wave.','gefa og þiggja','giving and receiving','E'],
-  ['Gebo','any','Dyrnar standa opnar og kaffi bíður á borðinu handa tveimur.','The door stands open and coffee waits on the table for two.','félagsskapur','companionship','D'],
+  // 2026-09-22 (druha vlna): dve ohniska jako u Kenaz lampa/hoblina — dva podmety spojene 'og'
+  // bez interakce; model stavel scenu ze dveri a esenci z kavy (eval 2026-08-21, readings 238).
+  ['Gebo','any','Dyrnar standa opnar og enginn þarf að banka.','The door stands open and no one needs to knock.','félagsskapur','companionship','D'],
+  ['Gebo','any','Kaffi bíður á borðinu handa tveimur.','Coffee waits on the table for two.','félagsskapur','companionship','D'],
   ['Wunjo','bright','Sólin nær loksins inn í dalinn og allt verður kyrrt.','The sun finally reaches into the valley and everything goes still.','sátt','harmony','P'],
   // 2026-09-22 (dve ohniska, jako lampa/hoblina): lampy + hlasy — zustavaji hlasy, lampy pryc.
   ['Wunjo','any','Húsið fyllist af röddum áður en maturinn er tilbúinn.','The house fills with voices before the food is ready.','tilheyra','belonging','D'],
@@ -594,7 +597,9 @@ var RUNE_IMAGES = [
   // 2026-09-22 (audit studenych cteni; KUKY report #12 + "zadna 30 let si pamatujes"): tvrdilo
   // o tazatelove pameti. Nahrada nese tyz aspekt (pamet/mysl) bez tvrzeni o cloveku.
   ['Mannaz','any','Í skúffunni liggur lykill og enginn man lengur að hverju hann gengur.','A key lies in the drawer, and no one remembers what it opens.','hugur','mind','D'],
-  ['Mannaz','any','Sama hugsunin gengur sömu þrjú skref búrsins alla nóttina og er engu nær út um morguninn.','The same thought walks the same three steps of its cage all night and is no nearer out by morning.','hugur','mind','D'],
+  // 2026-09-22 (druha vlna): studene cteni bez 'þú' — myslenka bez vlastnika ve scene padne na
+  // ctenare (ruminace + nespavost). Tyz aspekt na vnejsim jevu, 'enginn' jako u [75].
+  ['Mannaz','any','Lagið situr eftir í höfðinu þótt enginn syngi það lengur.','The tune stays in the head though no one is singing it any more.','hugur','mind','D'],
   ['Laguz','any','Undiraldan finnst í fótunum áður en hún sést.','The groundswell is felt in your feet before it is seen.','innsæi','intuition','E'],
   ['Laguz','any','Jökuláin rennur grá og þung, full af því sem hún ber að ofan.','The glacial river runs grey and heavy, full of what it carries down from above.','flæði','the unconscious','E'],
   ['Laguz','any','Vatnið finnur sér leið niður hlíðina, enginn vísar því.','Water finds its own way down the slope, and no one shows it the path.','flæði','intuition','E'],

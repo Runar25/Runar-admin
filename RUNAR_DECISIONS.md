@@ -6602,3 +6602,19 @@ check-is OK · smoke 44/44.
 **Proč:** #2 „tlačítko help… bublina — věci které nejdou na první pohled vidět"; #5/#6 „říct mu, že čtení je obraz, zrcadlo… nejlépe před tím než runar vytvoří čtení". Hesla = návod k projekci, ne obsah čtení — kánon zrcadla (RUNAR_DESIGN „Kdo je Rúnar").
 **Ověřeno:** IS nativně (korpus vazby, is-grammar-qa 0 flagů) · živě v prohlížeči (localhost server): EN i IS bublina, aria, Ask řádek jen při viditelném Ask, heslo maluje pod label · sw.js precache doplněn (㉧) · smoke 44/44.
 **Affected doc(s):** CLAUDE.md (výpis souborů + load order — runar-helper.js) — opraveno v tomtéž commitu.
+
+## 2026-09-22 (3) — Strop promptu odmítal legitimní Ask u velkých spreadů (⚠️ čeká deploy)
+**Našel:** adversariální sweep (workflow) · **Ověřil měřením:** CODE-tune · **Provedl:** CODE-tune
+**Co:** `supabase/functions/claude-proxy/index.ts` — strop délky user promptu rozlišen: `mode === 'ask'` → 12000, čtení dál 8000; systémový prompt vyčleněn do `MAX_SYSTEM_CHARS = 8000`.
+**Proč:** Ask posílá do promptu CELÉ hotové čtení + kontext spreadu + zadání + korekce. Změřeno 2026-09-22: Yggdrasil/IS při čtení 1812 znaků (= naměřené maximum produkce, DB) dá user prompt 8302 znaků → server vrátil 400 „too_long" s hláškou „zkus kratší otázku", za kterou otázka nemohla. Strop 8000 vznikl 2026-08-16, kdy Ask ještě nenesl kontext spreadu ani klíčová slova run; prompt vyrostl, strop ne. Vada je starší než klíčová slova (v4.40 práh jen posunula z ~1955 na ~1510 znaků čtení).
+**Odvození 12000 z dat:** yggdrasil `max_tokens` 1800 × nejvyšší naměřený poměr znaky/output_token 2,88 (`readings.usage`, n=107) ≈ 5200 znaků čtení → Ask ≈ 11,9k. Původní útok (otázka 20k → prompt 21747) zůstává odmítnut.
+**Ověřeno:** 10 hraničních případů protlačeno SKUTEČNÝM guardem vytaženým ze zdroje (8302 ask projde · 12001 ask odmítnut · 21747 odmítnut · 8001 čtení odmítnuto · system 8001 odmítnut i při ask).
+⚠️ **Účinné až po `supabase functions deploy claude-proxy` — deploy dělá owner.** Do té doby Ask u Yggdrasilu/Horseshoe s delším čtením padá na 400.
+**Affected doc(s):** žádné.
+
+## 2026-09-22 (4) — Banka, druhá vlna: studené čtení bez „þú" + další dvě ohniska (v4.42)
+**Našel:** adversariální sweep + refuteři (nevyvráceno) · **Provedl:** CODE-tune
+**Co:** [77] Mannaz/hugur „Sama hugsunin gengur sömu þrjú skref búrsins alla nóttina" → „Lagið situr eftir í höfðinu þótt enginn syngi það lengur." · [26] Gebo „Dyrnar standa opnar **og** kaffi bíður á borðinu handa tveimur" rozděleno na dva řádky (dveře / káva).
+**Proč:** (a) První vlna (záznam (1)) filtrovala explicitní 2. osobu — všech 5 odstraněných mělo þitt/varstu/þú manst. Bezvlastnická VNITŘNÍ událost proklouzla: myšlenka nemá ve scéně jiného vlastníka než čtenáře, takže se doručí jako tvrzení o jeho ruminaci a nespavosti. **Poučení: filtr studeného čtení nesmí mířit jen na „þú"** — rozhoduje, jestli má děj ve větě vlastníka („enginn" stačí, viz [75] klíč v šuplíku). (b) Dveře+káva = strukturně totéž co původní Kenaz lampa+hoblina (dva podměty, souřadné „og", žádná interakce); doklad rozdělení modelem: `docs/eval/2026-08-21-attribution/readings.jsonl:238` staví scénu ze dveří a esenci z kávy.
+**Ověřeno:** IS nativně (korpus + is-grammar-qa 0 flagů) · protlačení: staré pryč, nové dosažitelné (101–125/500 losů), dveře a káva nikdy spolu (0/500) · golden 8 klíčů = jen posun losu (banka 109→110) · smoke 44/44.
+**Affected doc(s):** žádné (banka žije v kódu).

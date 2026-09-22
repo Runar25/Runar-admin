@@ -436,9 +436,18 @@ serve(async (req: Request) => {
     // a otazka o 20 000 znacich dala prompt 21 747 znaku.
     // ODMITNOUT, ne oriznout: oriznuti by useklo instrukci o JSON kontraktu a uzivatel
     // by zaplatil kredit za nesmysl. Proto je kontrola PRED odectem.
-    const MAX_PROMPT_CHARS = 8000;
+    // 2026-09-22: follow-up (mode 'ask') ma VLASTNI strop. Duvod: Ask posila cele hotove
+    // cteni zpet do promptu, plus kontext spreadu a klicova slova tazenych run — u Yggdrasilu
+    // (9 run, IS) to pri ctenim 1812 zn. (zmerene maximum produkce) delalo 8302 zn., takze
+    // server odmital LEGITIMNI dotaz hlaskou "zkus kratsi otazku", za kterou otazka nemohla.
+    // 12000 odvozeno z dat: yggdrasil max_tokens 1800 x nejvyssi ZMERENY pomer znaky/token
+    // 2,88 (readings.usage, n=107) = ~5200 zn. cteni -> Ask ~11,9k. Puvodni utok (otazka 20k
+    // -> prompt 21747 zn.) je i tak odmitnut. Cteni zustava na 8000 — tam otazku pise clovek
+    // a prave tudy ten utok vedl. System prompt 8000 beze zmeny (merene maximum 4906).
+    const MAX_PROMPT_CHARS = mode === "ask" ? 12000 : 8000;
+    const MAX_SYSTEM_CHARS = 8000;
     if (String(prompt ?? "").length > MAX_PROMPT_CHARS ||
-        String(system ?? "").length > MAX_PROMPT_CHARS) {
+        String(system ?? "").length > MAX_SYSTEM_CHARS) {
       return json({ error: "too_long",
         message: "That is more than the runes can hold at once. Try a shorter question." }, 400);
     }

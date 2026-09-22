@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-22",
- "prompt_version": "v4.41-cista-banka",
+ "prompt_version": "v4.42-banka-2",
  "pravidla": [
   {
    "hash": "54d29df4d80b",
