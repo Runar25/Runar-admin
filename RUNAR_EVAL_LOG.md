@@ -4784,3 +4784,26 @@ v párovém srovnání — gramatika ukázala opačným směrem, tedy proti Clau
 modely přes rozpočet v EN, přestože produkce (80 ownerových EN single) má průměr 53 slov — proč tady přetékají,
 neměřeno; nečíst jako vlastnost modelu.
 Podklady → `docs/eval/2026-09-22-modely/varka/` (prompty, všechna čtení, iterace, dvojice, soudy, skripty).
+
+## 2026-09-22 (3) — Norns závěr u gpt-6-sol: iterace po jednom čtení — pomohlo odebrat seznamy klíčových slov
+
+**Owner:** *„zkus ten Norns závěr u solu, zase na jednom čtení."* Symptom z várky (2026-09-22 (2)): sol plní závěr
+Skuld klíčovými slovy run z řádků promptu (*„gamalt **jafnvægi** … tengsl við **heimili**"* — Gebo, Othila) a pojmy.
+Základ `norns1-is` (Gebo · Ingwaz · Othila, Hið dulda, Skilja fortíðina, glosa už pryč). 6 volání, ~$0,06.
+
+| krok | změna (jen pro test) | sol | Opus 5 |
+|---|---|---|---|
+| 0 | produkce (várka) | klíčová slova v závěru 1/2 Norns | — |
+| 1 | „sagt með orðum myndarinnar" přesunout ze samostatné věty přímo k „ástand" (jako single) | 1. čtení čisté, **2. čtení „gamall *arfur*"** → 1/2, **nic neprokázáno** | nepoškozen; *„gamalt sem…"* bez *eitthvað* zní divně, ocásek *„hvort tveggja kemur í ljós"* skoro předpověď |
+| 2 | + **seznamy klíčových slov u run pryč** (`Othila — arfur, að sleppa, hefðir, heimili` → `Othila`) | **0/2**: *„gamalt mark sem verður skýrara við hverja öldu, eða staður sem tekur við því sem sjórinn skilar"* | runy nese sám: *„standa frammi fyrir **arfi** sem þú hefur ekki enn ákveðið hvort þú vilt bera"* (Othila z vlastní znalosti) |
+
+**Nález:** sol bere slova, která leží v promptu hned vedle. Norns dává ke každé runě ČTYŘI klíčová slova, single
+jen jedno (`focus on`). Bez seznamů runy vstupují **vztahem** (moře dává a bere = Gebo, skryté vychází = Ingwaz) —
+přesně ownerův kánon „runa vztahem, ne rekvizitou" (RUNAR_DESIGN „Stavba Single čtení" bod 1).
+⚠️ **Riziko obrácené páky:** identita runy může u solu slábnout — Othila byla bez seznamu slabší než s ním
+(*heimili*, *arfur* ji nesly). Opus ji drží z vlastní znalosti. **Před jakýmkoli nasazením slepý identitní test**
+(soudce z textu hádá runy), ne dojem.
+⚠️ **Slepota mého detektoru (§27):** hledá tvar ze seznamu, islandština skloňuje — *arfi* (3. p.) neviděl, *arfur*
+(1. p.) ano. Solův výsledek to nemění (jeho výskyt byl v 1. pádě), ale čísla „0 klíčových slov" jsou dolní mez.
+**Hranice:** n = 2 (sol), 1 (Opus), jeden Norns, IS. EN Norns závěry solu jsou taky pojmové (*„an old bond still has
+a place, or that its gift remains"*) — neladěno. Podklady → `docs/eval/2026-09-22-modely/varka/norns-iterace.jsonl`.

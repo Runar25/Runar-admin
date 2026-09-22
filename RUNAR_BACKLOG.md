@@ -81,6 +81,11 @@
   (Félagsskapur) einu sinni og fléttaðu nafnið…"* — ten modelu glosu přímo předepisuje. Oprava jen hlavičky: sol 2/5;
   obou: 0/5; Norns má glosu v řádcích run (`Gebo (Félagsskapur) —`). **Oprava patří ke zdroji** — IS jméno runy,
   které se do promptů vkládá (dnes nese závorku), ne k jednotlivým řádkům. Doklad: `RUNAR_EVAL_LOG.md` 2026-09-22 (1) a (2).
+- [ ] **KANDIDÁT: NORNS: SEZNAMY KLÍČOVÝCH SLOV u run pryč** (CODE-read 2026-09-22 (3), NEROZHODNUTO — owner).
+  Norns dává ke každé runě řádek se čtyřmi klíčovými slovy; gpt-6-sol je opisuje do závěru Skuld (1/2 v produkci).
+  Bez seznamů 0/2 a runy vstupují vztahem; Opus 5 runy drží z vlastní znalosti. **Blokuje: slepý identitní test**
+  (poznat runy z textu s a bez seznamu, oba modely) — riziko, že u solu identita runy zeslábne (Othila slabší).
+  Přesun „sagt með orðum myndarinnar" k „ástand" sám nic neprokázal (1/2 před i po). EN neladěno.
 - [ ] **KANDIDÁT: most IS „ástand … sagt með orðum myndarinnar"** (CODE-read 2026-09-22, NEROZHODNUTO — owner).
   Ve tvaru „dvě možnosti" přidat k *„hvort um sig ástand sem gæti átt við"* frázi *„sagt með orðum myndarinnar"*
   (tvar ověřeného Norns landingu A). gpt-6-sol: konce z pojmů (*vani / kostur*) na věcné 5/5; Opus 5: *gæti* beze
