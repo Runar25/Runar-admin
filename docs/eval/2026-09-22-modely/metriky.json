@@ -1,0 +1,610 @@
+[
+ {
+  "m": "claude-opus-4-8",
+  "lang": "en",
+  "n": 3,
+  "konfig": "bez thinking param",
+  "vraceny": "claude-opus-4-8",
+  "stop": "end_turn",
+  "tokIn": 1701,
+  "tokOut": 145.66666666666666,
+  "reas": 0,
+  "cacheHit": false,
+  "usdStud": 0.01213,
+  "usdTepla": 0.012155,
+  "ms": 5284,
+  "msMin": 3948,
+  "msMax": 7714,
+  "json": 3,
+  "slov": [
+   68,
+   80,
+   71
+  ],
+  "vet": [
+   4,
+   4,
+   4
+  ],
+  "runa": 3,
+  "kuky": 3,
+  "moznost": 3,
+  "nebo": 1,
+  "bad": 0,
+  "texty": [
+   "The river holds its course while the sheep-track wanders the slope beside it, veering wherever the ground gives way. Raidho is that steady pull underneath the wandering, the rhythm that keeps moving whether the path is straight or not. Where the track splits along the bank, both ways still run downstream. This may be a fork worth pausing at, Kuky, or simply the same current finding two mouths.",
+   "The river holds its line while the sheep-track wanders down the slope beside it, bending where the ground allows. Raidho is that steady pull of water finding its own pace through the turns. The track splits ahead, one branch climbing the bank, one staying low near the current. What stays fixed is the river; the walking is yours to choose, Kuky, and this may be where your way divides between following the water and cutting your own line above it.",
+   "The river holds its line while the sheep-track wanders beside it, dipping and rising as the ground allows. Raidho is that steady moving with the land, not against it. Where the track splits near the slope, the water keeps its course below, unbothered by which fork the walker chooses. It may be, Kuky, that one path follows the rhythm already carrying you, and the other asks you to set your own."
+  ]
+ },
+ {
+  "m": "claude-opus-4-8",
+  "lang": "is",
+  "n": 3,
+  "konfig": "bez thinking param",
+  "vraceny": "claude-opus-4-8",
+  "stop": "end_turn",
+  "tokIn": 3257,
+  "tokOut": 177.66666666666666,
+  "reas": 0,
+  "cacheHit": true,
+  "usdStud": 0.02296875,
+  "usdTepla": 0.012681000000000001,
+  "ms": 6747.666666666667,
+  "msMin": 6521,
+  "msMax": 6884,
+  "json": 3,
+  "slov": [
+   53,
+   56,
+   48
+  ],
+  "vet": [
+   4,
+   4,
+   4
+  ],
+  "runa": 3,
+  "kuky": 3,
+  "moznost": 3,
+  "nebo": 3,
+  "bad": 0,
+  "texty": [
+   "Kindagatan liggur föst í grasinu meðan hlíðarnar hallast sitt á hvað. Hún liðast af sjálfu sér niður með ánni, engin hönd lögð á hana. Raidho fer eftir þeirri slóð sem margir fætur hafa þegar gengið. Þú stendur þar sem hún klofnar, Kuky, og þetta gæti verið gatan sem þú þekkir eða hlíðin ótroðna.",
+   "Kindagatan liggur föst í grasinu meðan áin færist til og hlíðarnar breytast. Hún liðast af sjálfu sér, tekur ekki styttri leið heldur þá sem landið leyfir. Þarna finnur Raidho takt sinn, þú gengur með ánni en ekki gegn henni. Þetta gæti verið gatan sem þú þræðir tilbúinn, eða sú sem þú stendur við og bíður, Kuky.",
+   "Kindagatan ein liggur föst meðan hlíðarnar breytast með hverju skrefi. Hún liðast af sjálfu sér niður með ánni, eins og Raidho fylgir sinni eigin röð. Þú sérð hvar slóðin klofnar við steininn, önnur leið upp, hin niður að vatninu. Hvora sem er, Kuky, gæti verið kyrrð eða áframhald."
+  ]
+ },
+ {
+  "m": "claude-opus-5",
+  "lang": "en",
+  "n": 3,
+  "konfig": "thinking:disabled",
+  "vraceny": "claude-opus-5",
+  "stop": "end_turn",
+  "tokIn": 1701,
+  "tokOut": 124.66666666666667,
+  "reas": 0,
+  "cacheHit": true,
+  "usdStud": 0.01270625,
+  "usdTepla": 0.0079755,
+  "ms": 4291,
+  "msMin": 4001,
+  "msMax": 4551,
+  "json": 3,
+  "slov": [
+   66,
+   59,
+   59
+  ],
+  "vet": [
+   4,
+   4,
+   4
+  ],
+  "runa": 3,
+  "kuky": 3,
+  "moznost": 2,
+  "nebo": 3,
+  "bad": 0,
+  "texty": [
+   "The river holds its line while the sheep-track above it wanders, splits, and finds the water again further down. Raidho is the going that keeps its own pace, whatever the ground does. Neither path was measured out; both were walked into being by whoever went first. Kuky, one way may be the longer walk to the same bank, or it may be a different river altogether.",
+   "The river holds its line while the sheep-track above it wanders, crossing, doubling, giving way to the slope. Raidho is the going that keeps its own pace, whatever the ground does. Ahead the path forks and the far side stays out of sight. Kuky, either the pace is yours already, or it is still being set by the slope.",
+   "The river holds its line while the sheep-track above it wanders, splits, and finds the water again. Raidho is the going that keeps its direction without keeping to one path. Where the slope steepens, two tracks leave the same ground and neither is marked. You may be choosing the way, Kuky, or choosing the pace you take it at."
+  ]
+ },
+ {
+  "m": "claude-opus-5",
+  "lang": "is",
+  "n": 3,
+  "konfig": "thinking:disabled",
+  "vraceny": "claude-opus-5",
+  "stop": "end_turn",
+  "tokIn": 3257,
+  "tokOut": 166,
+  "reas": 0,
+  "cacheHit": true,
+  "usdStud": 0.02284375,
+  "usdTepla": 0.012306,
+  "ms": 6776.333333333333,
+  "msMin": 6602,
+  "msMax": 7012,
+  "json": 3,
+  "slov": [
+   54,
+   54,
+   46
+  ],
+  "vet": [
+   4,
+   4,
+   4
+  ],
+  "runa": 3,
+  "kuky": 3,
+  "moznost": 1,
+  "nebo": 1,
+  "bad": 0,
+  "texty": [
+   "Áin liggur föst í botni dalsins meðan kindagatan sveigir og gefur eftir í hlíðinni. Raidho er slóðin sem margir fætur tróðu, ekki sá sem einhver mældi. Þarna ofar skiptist gatan í tvennt og hvorugur endinn sést héðan. Kuky, annað er að ganga þá leið sem liggur, hitt að bíða þar til vatnið sést aftur.",
+   "Áin heldur farvegi sínum meðan gatan liðast eftir hlíðinni. Raidho er slóðin sem fætur hafa markað, ekki sá sem einhver mældi. Þarna framar hverfur hún bak við ás, og annar stígur liggur niður að vatninu. Kuky, annað er að ganga þá leið sem þegar er troðin, hitt að staldra við þar sem hún greinist.",
+   "Áin heldur sínu striki meðan kindagatan liðast undan hverri þúfu. Raidho er sú gata, hún leitar leiðarinnar sem fæturnir þola. Þar sem hlíðin þrengist klofnar slóðin, og hvorug greinin sést alla leið. Kuky, þetta gæti verið gata sem tveir hafa troðið, eða gata sem einn fer."
+  ]
+ },
+ {
+  "m": "claude-opus-5-5",
+  "lang": "en",
+  "n": 3,
+  "konfig": "thinking:adaptive effort:low",
+  "vraceny": "claude-opus-5-5",
+  "stop": "max_tokens,end_turn",
+  "tokIn": 1703,
+  "tokOut": 612.6666666666666,
+  "reas": 0,
+  "cacheHit": true,
+  "usdStud": 0.0177682,
+  "usdTepla": 0.0151482,
+  "ms": 7936.333333333333,
+  "msMin": 7264,
+  "msMax": 9197,
+  "json": 2,
+  "slov": [
+   0,
+   57,
+   58
+  ],
+  "vet": [
+   0,
+   4,
+   4
+  ],
+  "runa": 2,
+  "kuky": 2,
+  "moznost": 2,
+  "nebo": 2,
+  "bad": 0,
+  "texty": [
+   "",
+   "The river holds its course between the slopes, and the sheep-track bends beside it. Raidho is movement keeping its own rhythm, a way found by walking it. Where the track forks, both paths still follow the river. Kuky, this may be a fork where your pace is already sure, or one where you are still finding it.",
+   "Down between the slopes the river holds its course, while the sheep-track beside it bends wherever the ground allows. Raidho is that movement, a way worn by steady steps rather than planned. Where the track splits, neither branch leaves the river. Kuky, this fork may ask for a choice, or it may be the track finding its footing."
+  ]
+ },
+ {
+  "m": "claude-opus-5-5",
+  "lang": "is",
+  "n": 3,
+  "konfig": "thinking:adaptive effort:low",
+  "vraceny": "claude-opus-5-5",
+  "stop": "max_tokens",
+  "tokIn": 3259,
+  "tokOut": 700,
+  "reas": 0,
+  "cacheHit": true,
+  "usdStud": 0.0202454,
+  "usdTepla": 0.0202454,
+  "ms": 8984.666666666666,
+  "msMin": 8711,
+  "msMax": 9182,
+  "json": 0,
+  "slov": [
+   0,
+   0,
+   0
+  ],
+  "vet": [
+   0,
+   0,
+   0
+  ],
+  "runa": 0,
+  "kuky": 0,
+  "moznost": 0,
+  "nebo": 0,
+  "bad": 0,
+  "texty": [
+   "",
+   "",
+   ""
+  ]
+ },
+ {
+  "m": "claude-opus-5-5@2000",
+  "lang": "en",
+  "n": 3,
+  "konfig": "thinking:adaptive effort:low",
+  "vraceny": "claude-opus-5-5",
+  "stop": "end_turn",
+  "tokIn": 1703,
+  "tokOut": 584,
+  "reas": 0,
+  "cacheHit": true,
+  "usdStud": 0.015628200000000002,
+  "usdTepla": 0.0153582,
+  "ms": 7032,
+  "msMin": 6399,
+  "msMax": 7387,
+  "json": 3,
+  "slov": [
+   58,
+   58,
+   59
+  ],
+  "vet": [
+   4,
+   4,
+   4
+  ],
+  "runa": 3,
+  "kuky": 3,
+  "moznost": 3,
+  "nebo": 3,
+  "bad": 0,
+  "texty": [
+   "Down between the slopes, the river holds its course while the sheep-track bends where the ground allows. Raidho is this, movement keeping time with the land. Where the track splits near the water, both branches still follow the river. Kuky, this may be where you are already walking in step, or where you are still finding your pace.",
+   "The river keeps its bed, while the sheep-track above it bends along the slope. Raidho is movement that finds its own pace, following the ground instead of forcing a line. Where the track splits, both paths still run beside the same water. Kuky, this may be a choice between two ways, or one way walked at two speeds.",
+   "The river keeps its course, and the sheep-track winds beside it of its own accord. Raidho is that rhythm, a way that follows the ground as it is. Where the track splits, both branches still keep the river close. Kuky, this may be a fork where either way runs true, or one where your feet already know the ground."
+  ]
+ },
+ {
+  "m": "claude-opus-5-5@2000",
+  "lang": "is",
+  "n": 3,
+  "konfig": "thinking:adaptive effort:low",
+  "vraceny": "claude-opus-5-5",
+  "stop": "end_turn",
+  "tokIn": 3259,
+  "tokOut": 1522.3333333333333,
+  "reas": 0,
+  "cacheHit": true,
+  "usdStud": 0.0290854,
+  "usdTepla": 0.0404954,
+  "ms": 15964.666666666666,
+  "msMin": 12028,
+  "msMax": 18355,
+  "json": 1,
+  "slov": [
+   58,
+   52,
+   57
+  ],
+  "vet": [
+   4,
+   4,
+   4
+  ],
+  "runa": 3,
+  "kuky": 3,
+  "moznost": 3,
+  "nebo": 3,
+  "bad": 0,
+  "texty": [
+   "Einn steinn stendur kyrr við ána þar sem kindagatan liðast niður milli hlíðanna. Gatan beygir hjá honum án þess að nokkur hafi ákveðið það og skiptist svo í tvennt. Raidho (Ferðalag) er röðin sem myndast þegar fótur fylgir landinu frekar en áætlun. Kannski stendur þú kyrr við steininn, Kuky, eða kannski ertu þegar lagður af stað aðra götuna.",
+   "Grjótið hrynur úr hlíðunum en kindagatan heldur sér niður með ánni. Enginn lagði hana, hún varð til þar sem landið leyfði fótum að fara. Þar sem gatan klofnar við vaðið fylgir Raidho (Ferðalag) landinu en ekki viljanum. Kannski ertu kominn hálfa leið eftir annarri götunni, Kuky, eða stendur kyrr meðan landið skýrist.",
+   "Meðan áin grefur og hlíðarnar skríða heldur kindagatan sér á sinni línu. Hún liðast niður með ánni því hver kind fetar í spor þeirrar á undan. Raidho (Ferðalag) er þessi röð, vegur sem verður til við það að ganga hann. Þar sem gatan skiptist, Kuky, gæti þetta verið traust á troðinni slóð eða forvitni um ótroðna brekku."
+  ]
+ },
+ {
+  "m": "gpt-5.6-sol",
+  "lang": "en",
+  "n": 3,
+  "konfig": "reasoning_effort:none",
+  "vraceny": "gpt-5.6-sol",
+  "stop": "stop",
+  "tokIn": 1092,
+  "tokOut": 82.33333333333333,
+  "reas": 0,
+  "cacheHit": true,
+  "usdStud": 0.006048,
+  "usdTepla": 0.0020775999999999998,
+  "ms": 3356.6666666666665,
+  "msMin": 2271,
+  "msMax": 4709,
+  "json": 3,
+  "slov": [
+   59,
+   56,
+   56
+  ],
+  "vet": [
+   4,
+   4,
+   4
+  ],
+  "runa": 3,
+  "kuky": 3,
+  "moznost": 3,
+  "nebo": 3,
+  "bad": 0,
+  "texty": [
+   "The river keeps its course while the sheep-track gives way to each bend between the slopes. Raidho brings movement into accord with the ground as it changes. At the fork, Kuky, the air carries sound from both directions, though neither path reveals its full length. This may be a rhythm still forming, or one already asking to be followed.",
+   "The river stays fixed while the slopes soften and the sheep-track winds of its own accord beside the water. Raidho keeps movement close to the ground, where each turn answers the living moment. At the fork, Kuky, the air carries both ways without naming either. This may be a rhythm still holding, or one already changing.",
+   "Only the river holds its course as the sheep-track winds between slopes and thins where the ground divides. Raidho shows movement finding its natural rhythm through the living moment. Air passes over both branches, while neither reveals its full length. Here, Kuky, the divide may hold a pace already forming, or a pause not yet complete."
+  ]
+ },
+ {
+  "m": "gpt-5.6-sol",
+  "lang": "is",
+  "n": 3,
+  "konfig": "reasoning_effort:none",
+  "vraceny": "gpt-5.6-sol",
+  "stop": "stop",
+  "tokIn": 2083,
+  "tokOut": 122,
+  "reas": 0,
+  "cacheHit": true,
+  "usdStud": 0.010812,
+  "usdTepla": 0.003264,
+  "ms": 5678,
+  "msMin": 4666,
+  "msMax": 7432,
+  "json": 3,
+  "slov": [
+   54,
+   51,
+   54
+  ],
+  "vet": [
+   4,
+   4,
+   4
+  ],
+  "runa": 3,
+  "kuky": 3,
+  "moznost": 3,
+  "nebo": 3,
+  "bad": 0,
+  "texty": [
+   "Steinn stendur fastur þar sem kindagatan liðast niður með ánni milli hlíðanna, þótt bakkinn gefi eftir. Raidho (Ferðalag) sýnir hvernig leið mótast af landslaginu áður en hún skiptist. Við vegamótin sést aðeins jarðvegurinn undir fótum þér, en beygjurnar liggja handan sjónmáls. Fyrir þér, Kuky, gæti þetta verið ró sem heldur eða óvissa sem kallar.",
+   "Steinninn við árbakkann stendur fastur meðan hlíðarnar láta undan veðri og vatni. Frá honum liðast kindagatan niður með ánni og skiptist þar sem grasið hylur eldri slóð. Raidho, Ferðalag, sýnir hvernig kunnugleg röð ber hreyfingu að vegamótum. Þar, Kuky, gæti þetta verið þolinmæði sem heldur stefnu eða vani sem þrengir valið.",
+   "Steinn stendur fastur þar sem kindagatan liðast niður með ánni milli hlíðanna, þótt bakkinn láti undan. Raidho (Ferðalag) sýnir hvernig leið verður til með náttúrulegri röð frekar en einu stökki. Við steininn skiptist gatan, en loftið ber ekkert svar til þín, Kuky. Þar gæti verið þörf fyrir áframhald eða vilji til að nema staðar."
+  ]
+ },
+ {
+  "m": "gpt-6-astra",
+  "lang": "en",
+  "n": 3,
+  "konfig": "reasoning_effort:low",
+  "vraceny": "gpt-6-astra",
+  "stop": "stop",
+  "tokIn": 1092,
+  "tokOut": 276,
+  "reas": 189.33333333333334,
+  "cacheHit": true,
+  "usdStud": 0.02257,
+  "usdTepla": 0.015994,
+  "ms": 8948.666666666666,
+  "msMin": 7146,
+  "msMax": 12500,
+  "json": 3,
+  "slov": [
+   56,
+   54,
+   56
+  ],
+  "vet": [
+   4,
+   4,
+   4
+  ],
+  "runa": 3,
+  "kuky": 3,
+  "moznost": 3,
+  "nebo": 0,
+  "bad": 0,
+  "texty": [
+   "Before you, the winding sheep-track stays firm as wind bends the grass beside the river. With Raidho, you see a rhythm shaped by the ground. You reach a fork between the slopes, where neither bend reveals its full length. Kuky, you may be choosing between a pace you can sustain and one you cannot yet judge.",
+   "Beside you, the sheep-track holds its worn line while wind bends the grass along the river between the slopes. Through Raidho, you see a pace shaped by the ground. At the fork, you cannot see beyond either bend. Here, Kuky, your choice may be between a steady pace and a pace not yet familiar.",
+   "At your feet, a stone stays fixed while the sheep-track bends down between the slopes toward the river. Raidho draws your attention to a pace shaped by the ground. Where your track divides, wind moves through both openings. Kuky, your choice may be between a steady pace on familiar ground and uncertain footing beyond the bend."
+  ]
+ },
+ {
+  "m": "gpt-6-astra",
+  "lang": "is",
+  "n": 3,
+  "konfig": "reasoning_effort:low",
+  "vraceny": "gpt-6-astra",
+  "stop": "stop",
+  "tokIn": 2083,
+  "tokOut": 328.6666666666667,
+  "reas": 206.33333333333334,
+  "cacheHit": true,
+  "usdStud": 0.03793,
+  "usdTepla": 0.01821,
+  "ms": 10952,
+  "msMin": 9983,
+  "msMax": 11661,
+  "json": 3,
+  "slov": [
+   55,
+   54,
+   55
+  ],
+  "vet": [
+   4,
+   4,
+   4
+  ],
+  "runa": 3,
+  "kuky": 3,
+  "moznost": 3,
+  "nebo": 3,
+  "bad": 0,
+  "texty": [
+   "Steinninn stendur fastur þar sem kindagatan skiptist niður með ánni milli hlíðanna og moldin lætur undan fæti. Raidho sýnir hvernig leið mótast af því sem heldur og því sem gefur eftir. Báðar greinarnar liggja um mjúkan jarðveg en beygjurnar dylja framhaldið. Hér gæti verið hik við óvissu, Kuky, eða svigrúm til að láta ákvörðun bíða.",
+   "Steinninn stendur fastur þar sem kindagatan skiptist niður með ánni milli hlíðanna og grasið bognar í vindinum. Raidho sýnir hvernig leið mótast af landinu. Við steininn er jörðin troðin beggja vegna en beygjurnar fela það sem lengra er. Þar sem leiðin skiptist hjá þér, Kuky, gæti verið svigrúm til vals eða óvissa um framhaldið.",
+   "Steinninn við vegamótin stendur fastur meðan kindagatan sveigir undan honum niður með ánni milli hlíðanna. Raidho sýnir hvernig leið mótast af landinu sem hún liggur um. Þar sem gatan greinist er jarðvegurinn misfastur og hvorug leiðin sést öll héðan. Þetta gæti verið bið eftir skýrari sýn eða svigrúm til að velja án fullrar vissu, Kuky."
+  ]
+ },
+ {
+  "m": "gpt-6-sol",
+  "lang": "en",
+  "n": 3,
+  "konfig": "reasoning_effort:none",
+  "vraceny": "gpt-6-sol",
+  "stop": "stop",
+  "tokIn": 1092,
+  "tokOut": 84.33333333333333,
+  "reas": 0,
+  "cacheHit": true,
+  "usdStud": 0.003024,
+  "usdTepla": 0.0010688,
+  "ms": 2947.6666666666665,
+  "msMin": 2055,
+  "msMax": 4541,
+  "json": 3,
+  "slov": [
+   59,
+   60,
+   58
+  ],
+  "vet": [
+   4,
+   4,
+   4
+  ],
+  "runa": 3,
+  "kuky": 3,
+  "moznost": 3,
+  "nebo": 2,
+  "bad": 0,
+  "texty": [
+   "The river holds its course between the slopes, while the sheep-track winds beside it and splits where the bank falls away. Raidho gives movement a rhythm without fixing its direction. Air moves along both branches, and neither keeps the river in sight for long. Kuky, this may be a pause before a turn, or a turn already taking shape.",
+   "The river stays in its bed while a sheep-track winds between the slopes. Raidho gives movement a rhythm shaped by the ground beneath your feet. Where the track divides, the air moves freely across both branches, and neither hides what lies beyond the bend. Kuky, you may be weighing a pace that feels settled against one still finding its course.",
+   "The river holds its course while the sheep-track bends between the slopes, finding room where the ground allows it. Raidho follows the pace a way takes as it forms. At the fork, air moves across both paths, and neither shows its full length. Kuky, your pause may hold a need for steadier ground, or a readiness to move."
+  ]
+ },
+ {
+  "m": "gpt-6-sol",
+  "lang": "is",
+  "n": 3,
+  "konfig": "reasoning_effort:none",
+  "vraceny": "gpt-6-sol",
+  "stop": "stop",
+  "tokIn": 2083,
+  "tokOut": 123.66666666666667,
+  "reas": 0,
+  "cacheHit": true,
+  "usdStud": 0.005366,
+  "usdTepla": 0.001677,
+  "ms": 3640,
+  "msMin": 2771,
+  "msMax": 5183,
+  "json": 3,
+  "slov": [
+   57,
+   60,
+   64
+  ],
+  "vet": [
+   4,
+   4,
+   4
+  ],
+  "runa": 3,
+  "kuky": 3,
+  "moznost": 3,
+  "nebo": 3,
+  "bad": 0,
+  "texty": [
+   "Stór steinn stendur fastur þar sem kindagatan liðast niður með ánni milli hlíðanna og greinist í tvær áttir. Raidho (Ferðalag) sýnir hér hvernig leið verður til þar sem fætur hafa þegar farið. Önnur slóðin er greinileg við steininn, en hin hverfur bak við hlíðina. Þar sem leiðin skiptist, Kuky, gæti þetta verið þekktur vani eða ókunnur kostur.",
+   "Áin heldur farvegi sínum milli hlíðanna þótt kindagatan niður með henni liðist af sjálfu sér og kvíslast við lágan bakka. Þar sýnir Raidho (Ferðalag) að leið getur skipt um stefnu án þess að röð sporanna raskist. Handan bakkans sést ekki hvort kindagatan heldur áfram eða hverfur í grasið. Við þessi vegamót, Kuky, gæti þetta verið gamall vani eða nýr kostur.",
+   "Stór steinn stendur fastur við ána milli hlíðanna, en kindagatan liðast fram hjá honum og greinist þar sem árbakkinn breikkar. Raidho (Ferðalag) sýnir hér hvernig leið getur mótast af landi sem er þegar undir fótum. Handan við steininn sést ekki enn hvort báðar slóðirnar haldast greiðar. Við þessi vegamót, Kuky, gæti þetta verið bið sem er að ljúka eða val sem er enn opið."
+  ]
+ },
+ {
+  "m": "gpt-6-luna",
+  "lang": "en",
+  "n": 3,
+  "konfig": "reasoning_effort:none",
+  "vraceny": "gpt-6-luna",
+  "stop": "stop",
+  "tokIn": 1092,
+  "tokOut": 94.33333333333333,
+  "reas": 0,
+  "cacheHit": true,
+  "usdStud": 0.0001547,
+  "usdTepla": 0.00005919,
+  "ms": 2599.3333333333335,
+  "msMin": 1944,
+  "msMax": 3867,
+  "json": 3,
+  "slov": [
+   66,
+   74,
+   66
+  ],
+  "vet": [
+   4,
+   4,
+   4
+  ],
+  "runa": 3,
+  "kuky": 3,
+  "moznost": 3,
+  "nebo": 0,
+  "bad": 0,
+  "texty": [
+   "The sheep-track holds its winding line down by the river, while the slopes give way around it and the water keeps moving. Raidho gives this path a rhythm shaped by the ground, not a straight answer at the divide. Kuky, the track leaves the far bank out of view, where the current turns beyond sight. This may be a divide between keeping pace and changing course.",
+   "Along the river between the slopes, one bend in the sheep-track stays fixed while the banks give way around it. The track winds by its own accord, marking a course through ground that does not hold still. Raidho gives movement a natural rhythm, shaped by the way forward and the ground it crosses. For you, Kuky, this may be where your way divides between a pace that feels steady and one that feels urgent.",
+   "The sheep-track stays fixed as it winds of its own accord down along the river between the slopes, while the banks give way to the current. Raidho traces a natural rhythm through the ground where a way divides. Kuky, the path’s course is visible, but what lies beyond its bend remains out of view. This may be a divide between keeping pace and pausing to listen."
+  ]
+ },
+ {
+  "m": "gpt-6-luna",
+  "lang": "is",
+  "n": 3,
+  "konfig": "reasoning_effort:none",
+  "vraceny": "gpt-6-luna",
+  "stop": "stop",
+  "tokIn": 2083,
+  "tokOut": 124.66666666666667,
+  "reas": 0,
+  "cacheHit": true,
+  "usdStud": 0.0002663,
+  "usdTepla": 0.0000856,
+  "ms": 3064.6666666666665,
+  "msMin": 2238,
+  "msMax": 4540,
+  "json": 3,
+  "slov": [
+   58,
+   61,
+   60
+  ],
+  "vet": [
+   4,
+   4,
+   4
+  ],
+  "runa": 3,
+  "kuky": 3,
+  "moznost": 3,
+  "nebo": 2,
+  "bad": 0,
+  "texty": [
+   "Kindagatan stendur föst í sinni stefnu meðan vatnið niðar niður með ánni milli hlíðanna. Hún liðast áfram, án þess að víkja frá farinu. Raidho, rún náttúrulegrar röðunar, birtist þar sem leið skiptist og loftið ber hreyfinguna áfram. Það sem stendur rétt utan rammans gæti verið biðin sem heldur aftur af þér eða svigrúmið til að halda áfram, Kuky.",
+   "Kindagatan stendur föst í lögun sinni, þótt hún liðaðist niður með ánni milli hlíðanna. Þar sem leiðin skiptist heldur Raidho, Ferðalag, henni áfram í eðlilegum takti; loftið ber hljóðið frá einum bakka til hins. Við vegamótin er beygjan sýnileg, en það sem bíður handan hennar helst utan rammans, Kuky. Þar gæti skipt máli hvort þú mætir ákvörðuninni með ró eða óvissu.",
+   "Kindagatan liðast niður með ánni milli hlíðanna, en farvegurinn stendur fastur meðan grasið og vatnið láta undan. Raidho, eða Ferðalag, heldur hér athyglinni við náttúrulega röð þess sem færist áfram. Þar sem leiðir skiljast sést beygjan, en það sem tekur við handan hennar er enn utan sjónmáls. Kuky, við vegamótin gæti annar kosturinn verið bið en hinn að halda áfram."
+  ]
+ }
+]

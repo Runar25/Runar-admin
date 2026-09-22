@@ -1,0 +1,20 @@
+{
+ "en": {
+  "A": "gpt-5.6-sol",
+  "B": "gpt-6-luna",
+  "C": "claude-opus-4-8",
+  "D": "gpt-6-sol",
+  "E": "claude-opus-5",
+  "F": "gpt-6-astra",
+  "G": "claude-opus-5-5@2000"
+ },
+ "is": {
+  "A": "gpt-6-sol",
+  "B": "claude-opus-5-5@2000",
+  "C": "gpt-6-luna",
+  "D": "claude-opus-4-8",
+  "E": "gpt-6-astra",
+  "F": "claude-opus-5",
+  "G": "gpt-5.6-sol"
+ }
+}

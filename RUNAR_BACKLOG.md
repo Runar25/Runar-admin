@@ -73,6 +73,12 @@
 - [ ] **Tvar „VĚTA" drží „may be" hůř než dvě možnosti a otázka** — 2 ze 16 posledních vět vypadly z tvaru
   možnosti, obě u tvaru věta (`ENDING_OPEN[0]`, `ENDING_HEAVY[1]`), doklady v EVAL_LOG 2026-09-20 (11).
   Patří do tvrdých kontrol produkčního kandidáta; při větším vzorku ověřit, jestli to není náhoda.
+- [ ] **GLOSA V ISLANDSKÉ HLAVIČCE RUNY se propisuje do čtení** (nález CODE-read 2026-09-22, srovnání modelů).
+  IS prompt má `DREGNA RÚNA: Raidho (Ferðalag) — …`, EN jen `DRAWN RUNE: Raidho — …`. Výsledek na 42 čteních:
+  glosa *„Raidho (Ferðalag)"* v textu **jen v IS** — Opus 5.5 3/3, gpt-6-sol 3/3, gpt-5.6-sol 2/3; v EN ji nenapsal
+  **žádný** model. Opus 4.8 a 5 ji zatím neopisují, takže dnešní produkce to nevidí — ale **při jakékoli změně modelu
+  to vyleze okamžitě**. Levná oprava na naší straně: hlavička v IS bez závorky (název runy, glosa jinde nebo vůbec),
+  pak ověřit, že se nic jiného nehnulo. Doklad: `RUNAR_EVAL_LOG.md` 2026-09-22 (1), `docs/eval/2026-09-22-modely/`.
 - [x] ~~**IS CHYBA: spready oslovují člověka jako „toho, kdo VEDE"**~~ — SWEEP HOTOV 2026-09-21
   (18 náhrad, v4.39-leitandi, DECISIONS 2026-09-21 (1)). Původní zadání níž: (nález CODE-read
   2026-09-20 při psaní islandského závěru Norns; owner: *„IS umíš udělat i ty"* — dotaženo do verdiktu, ne dotazu).

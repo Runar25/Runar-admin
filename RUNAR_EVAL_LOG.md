@@ -4673,3 +4673,67 @@ Slovníková kolokace **`leiðandi spurning` = návodná otázka** — tedy pře
 řádku `Leiðandi` a `Leiðin`. Protlačeno produkční cestou — prompt Norns začíná `Leiðandi: Kuky` a
 *„Leiðandinn dregur þrjár rúnir"*. Single a konce používají `leitandi` (22 výskytů) správně.
 **Verdikt: chyba, 17 náhrad, sweep** — rozpis v `RUNAR_BACKLOG.md`. Do produkčního kódu jsem nesáhl (lane).
+
+## 2026-09-22 (1) — Sedm modelů, jedno čtení: cena, rychlost, poslušnost, IS gramatika, slepé pořadí
+
+**Owner:** *„vyšel Opus 5.5… udělej jedno stejné čtení pro všechny. Měříme tokeny, kolik nás to stojí, atd., vše,
+co potřebujeme pro čtení Rúnara."* Navazuje na cenovou sondu 2026-09-19 a dávku sol × opus-5 2026-09-20.
+**Jak:** JEDEN prompt na jazyk postavený produkčními buildery (HEAD `aff37f1`), uložený na disk, všem modelům
+**identické bajty** (silnější záruka než minule, kdy se seedoval každý běh). Single · Raidho · obraz ovčí stezky ·
+„dolů podél řeky mezi svahy" · Crossroads & Decisions · Confirmation → most „dvě možnosti". EN i IS, 3× po sobě
+(1. volání = studená cache, 2.–3. = teplá). Opus 4.8 = dnešní produkce jako reference. ID modelů z `/v1/models`,
+ceny z oficiálních ceníků 2026-09-22 (platform.claude.com, developers.openai.com).
+
+| model | nastavení | $/čtení EN | $/čtení IS | IS $/1000 | IS latence | únik zadání | IS chyby (po obhajobě) |
+|---|---|---|---|---|---|---|---|
+| claude-opus-4-8 (produkce) | bez thinking | 0,0122 | 0,0127 | 12,68 | 6,7 s | 0 | 1 |
+| claude-opus-5 | thinking disabled | 0,0080 | 0,0123 | 12,31 | 6,8 s | 0 | 2 (táž chyba 2×) |
+| claude-opus-5-5 | adaptive + effort low, **max 2000** | 0,0154 | **0,0405** | 40,50 | **16 s** | glosa 3/3 | 0 |
+| gpt-5.6-sol | reasoning none | 0,0021 | 0,0033 | 3,26 | 5,7 s | 4× | 1 |
+| gpt-6-astra | reasoning **low** (nižší nejde) | 0,0160 | 0,0182 | 18,21 | 11 s | 2× | 0 |
+| gpt-6-sol | reasoning none | **0,0011** | **0,0017** | **1,68** | 3,6 s | glosa 3/3 | 0 |
+| gpt-6-luna | reasoning none | 0,00006 | 0,00009 | 0,09 | 3,1 s | 7× | 0 |
+
+**Tvrdé nálezy (nezávisí na vkusu):**
+1. ⭐ **Opus 5.5 nejde vypnout přemýšlení** — API: *„thinking.type.disabled is not supported for this model"*,
+   nejnižší je `adaptive` + `effort: low`. I tak přemýšlí 500–700 tokenů: **na produkčním `max_tokens: 700`
+   vrátil v IS text 0 ze 3, v EN 2 ze 3.** S limitem 2000 čte, ale IS stojí 3,2× dnešek a trvá 16 s.
+2. **gpt-6-astra nebere `reasoning_effort` none ani minimal** (jen low/medium/high/xhigh) → pomalá a dražší než dnešek.
+   Na výchozím nastavení (první, vadný běh volače) spálila 460–630 reasoning tokenů a IS 2× useknula.
+3. **Tokeny mezi firmami nejsou srovnatelné** — Claude tokenizér dává na týž prompt ~56 % víc tokenů (EN 1701 × 1092,
+   IS 3257 × 2083). Srovnává se cena za čtení.
+4. **Únik zadání do textu** (spočteno regexem na všech 42 čteních): Opus 4.8 a Opus 5 **nula** v obou jazycích.
+   Glosa *„Raidho (Ferðalag)"* jen v IS — Opus 5.5 3/3, gpt-6-sol 3/3, gpt-5.6-sol 2/3. ⚠️ **Příčina je u nás:**
+   islandská hlavička `DREGNA RÚNA: Raidho (Ferðalag)` glosu nabízí, anglická `DRAWN RUNE: Raidho` ne — a v EN ji
+   nenapsal žádný model. gpt-6-luna opisuje navíc metadata (*„náttúruleg röð"*), frázi rejstříku (*„rétt utan
+   rammans"*) i úhlu.
+5. **IS gramatika** (hledač s dokladem `is-vazba.py`, pak obhájce, který se ji snažil vyvrátit — obhajoba selhala
+   u všech čtyř): Opus 4.8 *„Hvora sem er… gæti verið"* (podmět, má být `Hvor`) · Opus 5 *„slóðin…, ekki **sá** sem
+   einhver mældi"* 2/3 (`slóð` je ženská → `sú`; korpus „sú slóð sem" 5 × „sá" 0) · gpt-5.6-sol *„handan sjónmáls"*
+   (korpus 0×; běžné „utan sjónmáls" 36×). Opus 5.5, gpt-6-sol, astra, luna: nic nenalezeno.
+6. **Délka** (rozpočet 4 věty / 50–58 slov): v rozpočtu Opus 5.5, gpt-5.6-sol, astra, gpt-6-sol · přes: Opus 4.8 EN
+   68–80, Opus 5 EN 59–66, luna EN 66–74. ⚠️ Tahle konfigurace (jádro + místo) přetéká i v produkci
+   (EVAL_LOG 2026-09-20 (6)), takže EN čísla Claude modelů jsou nadsazená proti běžnému čtení.
+7. Formát: produkční `_parseSegments` rozloží **42/42** (Opus 5.5 IS 2× obalil do ```json — produkce to zvládne).
+
+**Slepé pořadí** (4 soudci: 2 na jazyk, záměrně různě formulovaní; kódy A–G, každý jazyk jinak zamíchaný;
+kritéria = ownerem potvrzené znaky + formule z 2026-09-20 (9)). Součet pořadí (nižší = lepší):
+Opus 5.5 **9** (EN 4/3 · IS 1/1) · Opus 5 **10** (EN 1/2 · IS 3/4) · gpt-6-sol **10** (EN 2/1 · IS 4/3) ·
+gpt-5.6-sol 17 · Opus 4.8 17 (EN 6/7 · IS 2/2) · luna 24 · astra 25.
+Nejlepší věty, na kterých se soudci shodli: Opus 5 EN *„Neither path was measured out; both were walked into being
+by whoever went first."* (oba EN soudci) · Opus 5 IS *„Kuky, þetta gæti verið gata sem tveir hafa troðið, eða gata
+sem einn fer."* (oba IS soudci) · Opus 5.5 IS *„Enginn lagði hana, hún varð til þar sem landið leyfði fótum að fara."*
+— všechny tři splňují formuli (druhá půlka ukazuje, co v obraze není: ty, kdo šli před tebou).
+Vady podle soudců s citací: astra **cold reading 12×** (celé čtení ve 2. osobě — *„you see…", „You reach a fork"*) ·
+gpt-5.6-sol a luna abstrakce místo věcí (11×, 9×) · Opus 4.8 rada (*„worth pausing at"*) a tvrzení *„the walking is
+yours to choose"* · Opus 5 IS 2/3 poslední věta bez `gæti` (*„annað er að ganga…, hitt að bíða"*).
+⚠️ **Spona — soudci slili dva druhy, které kánon rozlišuje:** ukazovací *„Raidho is this / that rhythm"*,
+*„Raidho er sú gata"* (owner odmítl) × definiční *„Raidho is the going that keeps its own pace, whatever the ground
+does"* (tvar ownerem pochváleného „Tiwaz is the choosing…"). Opus 5 EN má definiční, Opus 5.5 a 4.8 spíš ukazovací.
+GPT modely sponu nepíšou vůbec.
+
+**Hranice (§27):** n = 3 čtení na model a jazyk, JEDEN scénář — pořadí je pozorování, ne měření. **Soudci jsou
+Claude (Opus 5.5)** → možná sebe-preference; nejvíc ohrožené je IS 1. místo Opus 5.5. Na vkusu nezávisí: cena,
+latence, nastavení, úniky, gramatika s dokladem, cold reading s citací. **Spready neměřeny** (delší výstup →
+rozdíly v ceně se zvětší, pořadí cen se nezmění). Volba modelu patří podle fronty AŽ po hotových pravidlech.
+Podklady → `docs/eval/2026-09-22-modely/` (prompty, všech 42 odpovědí s usage, metriky, klíč, slepé soubory, soudy, skripty).

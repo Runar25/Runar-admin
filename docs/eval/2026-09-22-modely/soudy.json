@@ -1,0 +1,840 @@
+{
+ "gramatika": [
+  {
+   "verdicts": [
+    {
+     "id": "D3",
+     "phrase": "Hvora sem er, Kuky, gæti verið kyrrð eða áframhald.",
+     "upheld": true,
+     "evidence": "I could not defend it. Context (line 41 of slepe-is.txt): 'önnur leið upp, hin niður að vatninu. Hvora sem er ... gæti verið kyrrð eða áframhald.' The antecedent is 'leið' (feminine), and 'hvora sem er' is the subject of 'gæti verið'. In free-choice 'hvor ... sem er' the case comes from the word's role in the main clause. The dictionary example in is-vazba.py hvor, 'ég get notað hvorn pennann sem er', is accusative only because it is the object of 'notað'. 'vera' takes neither an object nor an accusative subject, and 'kyrrð eða áframhald' is a nominative predicate. I tried three defenses. (1) An accusative of path, as in 'fara hvora leiðina': that needs a verb of motion, and this sentence has none. (2) An elided verb, as in 'hvora sem [þú velur]': the text does not contain it, and 'sem er' fixes the construction as free choice. (3) The set phrase 'hvort sem er' ('anyway'): that is neuter and fixed, and 'hvora sem er' is not an idiom. The corpus (Risamálheild) shows both cases in use, each by role: 'hvor leiðin' 565 vs 'hvora leiðina' 450, and 'hvora leiðina sem' 80 vs 'hvor leiðin sem' 77. Nothing supports the accusative as a subject. Overall, 'hvor sem er' 90 vs 'hvora sem er' 12, and 'hvor sem' 343 vs 'hvora sem' 19. The finding stands, and the correction 'Hvor sem er' is right."
+    }
+   ]
+  },
+  {
+   "verdicts": [
+    {
+     "id": "F1",
+     "phrase": "Raidho er slóðin sem margir fætur tróðu, ekki sá sem einhver mældi.",
+     "upheld": true,
+     "evidence": "Obhajoba selhala. is-vazba.py slóð vrací jediné heslo „[n f]“ a mužskou variantu nemá. V kontextu F1 (slepe-is.txt ř. 51) není mužské podstatné jméno, ke kterému by se „sá“ mohlo vázat: áin, kindagatan a hlíðinni jsou všechna ženského rodu. Paralelní stavba „slóðin sem…, ekki sá sem…“ staví jasně proti sobě dvě stezky. Korpus: „sú slóð sem“ 5×, „sá slóð sem“ 0×. Oprava na „ekki sú sem einhver mældi“ platí."
+    },
+    {
+     "id": "F2",
+     "phrase": "Raidho er slóðin sem fætur hafa markað, ekki sá sem einhver mældi.",
+     "upheld": true,
+     "evidence": "Obhajoba selhala. Zkoumal jsem jediný možný mužský odkaz. V předchozí větě stojí „farvegi“ (farvegur, rod mužský), ale „sá sem einhver mældi“ v kontrastu se „slóðin“ by pak znamenalo „ne koryto, které někdo vyměřil“. Takové čtení nedává smysl: jde o protiklad vyšlapané a vyměřené stezky. „annar stígur“ (m.) stojí až za tou větou. slóð = [n f] (is-vazba.py), korpus „sú slóð sem“ 5× proti „sá slóð sem“ 0×. Správně je „sú“."
+    },
+    {
+     "id": "G1",
+     "phrase": "en beygjurnar liggja handan sjónmáls",
+     "upheld": true,
+     "evidence": "Obhajoba selhala. Doklad pro tuto kolokaci jsem nenašel v žádném tvaru. Risamálheild: „handan sjónmáls“ 0×, „handan sjónmálsins“ 0×, „handan við sjónmálið“ 0×, „handan sjónar“ 0×. Ustálené tvary jsou „í sjónmáli“ 5382×, „ekki í sjónmáli“ 754×, „úr sjónmáli“ 133×, „utan sjónmáls“ 36× a „handan sjóndeildarhringsins“ 39×. Heslo sjónmál v nútímamálsorðabók strukturovanou vazbu s „handan“ nemá. Mluvnicky je věta v pořádku (handan + gen.), takže jde o nedoloženou kolokaci, ne o tvarovou chybu. Nulový výskyt jsem ale ničím nevyvrátil. Stejný model v C3 píše „enn utan sjónmáls“, což podporuje navrženou opravu."
+    }
+   ]
+  }
+ ],
+ "soudci": [
+  {
+   "ranking": [
+    {
+     "code": "E",
+     "rank": 1,
+     "why": "Jediný autor, který splňuje formuli ze slepého testu. V E1 věta „both were walked into being by whoever went first“ je STOPA, tedy něco, co v záběru není. Má nejkonkrétnější konce: E1 „longer walk to the same bank… different river altogether“ a E3 cesta proti tempu. Esence nese, co runa dělá („keeps its own pace, whatever the ground does“). Vady: esence je ve všech třech čteních sponou „Raidho is the going…“. Je definiční, ne ukazovací „that is Raidho“, ale pořád je to spona. E1 a E2 ji mají doslova stejně. E1 má 66 slov. E2 končí bez tvaru možnosti."
+    },
+    {
+     "code": "D",
+     "rank": 2,
+     "why": "Nejčistší sada: žádná spona, esence slovesem. D1 „gives movement a rhythm without fixing its direction“ je nejlepší esence bez vady v celé sadě. Konce jsou ve tvaru may (D1 chiasmus pause/turn), rozpočet 58–60 slov. Ale všechna tři čtení zůstávají uvnitř záběru, takže kritérium 4 padá. „Air moves along both branches“ je ve všech třech mechanicky vložený element Air. D2 „beneath your feet“ staví člověka do obrazu mimo poslední větu. D3 „readiness to move“ je pojem místo věci."
+    },
+    {
+     "code": "A",
+     "rank": 3,
+     "why": "Runa vstupuje slovesem a čtení se vejdou do rozpočtu (56–59 slov). A1 má dobrou esenci („brings movement into accord with the ground as it changes“). A1 „the air carries sound from both directions“ je jediný náznak stopy mimo záběr. Všechny tři konce jsou ale abstraktní (rhythm/pace/pause, žádná věc). A3 opisuje pojmy ze zadání („natural rhythm through the living moment“) a A2 také („answers the living moment“). Vzduch je vložený mechanicky jako u D."
+    },
+    {
+     "code": "G",
+     "rank": 4,
+     "why": "V rozpočtu (58–59 slov). G2 „one way walked at two speeds“ je jeden z nejlepších konců sady: dvě skutečné možnosti, žádná není označená jako správná. G3 „your feet already know the ground“ je konkrétní. Ve všech třech je ale doslova ta spona, kterou owner odmítl: G1 „Raidho is this“, G3 „Raidho is that rhythm“, G2 „Raidho is movement…“. Obrazy (větve „still follow the river“) zůstávají celé uvnitř záběru."
+    },
+    {
+     "code": "B",
+     "rank": 5,
+     "why": "Bez spony a bez cold readingu, ale všechna tři čtení jsou výrazně přes rozpočet (66/74/66). Doslova opisuje zadání: B3 „winds of its own accord down along the river between the slopes“, B2 „by its own accord“ je navíc vadné spojení. Úhel „stays fixed“ se v B2 a B3 lepí nelogicky na stezku, která se vine. Esence papouškuje „natural rhythm“. B1 a B3 mají skoro totožný konec („a divide between keeping pace and…“)."
+    },
+    {
+     "code": "C",
+     "rank": 6,
+     "why": "Má nejživější jednotlivé obrazy: C1 „the same current finding two mouths“, C2 „one branch climbing the bank, one staying low near the current“. Ve všech třech je ale spona („Raidho is that steady pull…“) a všechna tři jsou hrubě přes rozpočet (68/80/71). C2 „the walking is yours to choose“ je pevné tvrzení o člověku, ne možnost. C1 „worth pausing at“ je skrytá rada. Konec C3 nejsou dvě možnosti, ale jedno složené tvrzení („the rhythm already carrying you“)."
+    },
+    {
+     "code": "F",
+     "rank": 7,
+     "why": "Celé čtení vede ve druhé osobě: „you see“, „You reach a fork“, „your track divides“, „you cannot see beyond“. To jsou tvrzení o člověku mimo poslední větu ve všech třech čteních, tedy věštec místo zrcadla. Esence „With/Through Raidho, you see…“ neříká, co runa dělá, ale co vidí člověk. Jediný svěží nápad je kámen jako pevný bod v F3."
+    }
+   ],
+   "violations": [
+    {
+     "reading": "C1",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho is that steady pull underneath the wandering"
+    },
+    {
+     "reading": "C2",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho is that steady pull of water finding its own pace through the turns."
+    },
+    {
+     "reading": "C3",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho is that steady moving with the land, not against it."
+    },
+    {
+     "reading": "E1",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho is the going that keeps its own pace, whatever the ground does."
+    },
+    {
+     "reading": "E2",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho is the going that keeps its own pace, whatever the ground does."
+    },
+    {
+     "reading": "E3",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho is the going that keeps its direction without keeping to one path."
+    },
+    {
+     "reading": "G1",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho is this, movement keeping time with the land."
+    },
+    {
+     "reading": "G2",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho is movement that finds its own pace, following the ground instead of forcing a line."
+    },
+    {
+     "reading": "G3",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho is that rhythm, a way that follows the ground as it is."
+    },
+    {
+     "reading": "F1",
+     "type": "cold_reading",
+     "quote": "With Raidho, you see a rhythm shaped by the ground."
+    },
+    {
+     "reading": "F1",
+     "type": "cold_reading",
+     "quote": "You reach a fork between the slopes, where neither bend reveals its full length."
+    },
+    {
+     "reading": "F2",
+     "type": "cold_reading",
+     "quote": "Through Raidho, you see a pace shaped by the ground."
+    },
+    {
+     "reading": "F2",
+     "type": "cold_reading",
+     "quote": "At the fork, you cannot see beyond either bend."
+    },
+    {
+     "reading": "F3",
+     "type": "cold_reading",
+     "quote": "Raidho draws your attention to a pace shaped by the ground."
+    },
+    {
+     "reading": "F3",
+     "type": "cold_reading",
+     "quote": "Where your track divides, wind moves through both openings."
+    },
+    {
+     "reading": "C1",
+     "type": "rada",
+     "quote": "This may be a fork worth pausing at"
+    },
+    {
+     "reading": "C2",
+     "type": "jine",
+     "quote": "the walking is yours to choose"
+    },
+    {
+     "reading": "E2",
+     "type": "jine",
+     "quote": "Kuky, either the pace is yours already, or it is still being set by the slope."
+    },
+    {
+     "reading": "D2",
+     "type": "jine",
+     "quote": "shaped by the ground beneath your feet"
+    },
+    {
+     "reading": "A1",
+     "type": "abstrakce_misto_veci",
+     "quote": "This may be a rhythm still forming, or one already asking to be followed."
+    },
+    {
+     "reading": "A2",
+     "type": "abstrakce_misto_veci",
+     "quote": "where each turn answers the living moment"
+    },
+    {
+     "reading": "A2",
+     "type": "abstrakce_misto_veci",
+     "quote": "This may be a rhythm still holding, or one already changing."
+    },
+    {
+     "reading": "A3",
+     "type": "abstrakce_misto_veci",
+     "quote": "Raidho shows movement finding its natural rhythm through the living moment."
+    },
+    {
+     "reading": "A3",
+     "type": "abstrakce_misto_veci",
+     "quote": "the divide may hold a pace already forming, or a pause not yet complete"
+    },
+    {
+     "reading": "B2",
+     "type": "abstrakce_misto_veci",
+     "quote": "Raidho gives movement a natural rhythm, shaped by the way forward and the ground it crosses."
+    },
+    {
+     "reading": "B3",
+     "type": "abstrakce_misto_veci",
+     "quote": "Raidho traces a natural rhythm through the ground where a way divides."
+    },
+    {
+     "reading": "D3",
+     "type": "abstrakce_misto_veci",
+     "quote": "or a readiness to move"
+    },
+    {
+     "reading": "B3",
+     "type": "jine",
+     "quote": "The sheep-track stays fixed as it winds of its own accord down along the river between the slopes"
+    },
+    {
+     "reading": "B2",
+     "type": "jine",
+     "quote": "The track winds by its own accord"
+    },
+    {
+     "reading": "B1",
+     "type": "mimo_rozpocet",
+     "quote": "The sheep-track holds its winding line down by the river, while the slopes give way around it and the water keeps moving."
+    },
+    {
+     "reading": "B2",
+     "type": "mimo_rozpocet",
+     "quote": "For you, Kuky, this may be where your way divides between a pace that feels steady and one that feels urgent."
+    },
+    {
+     "reading": "B3",
+     "type": "mimo_rozpocet",
+     "quote": "The sheep-track stays fixed as it winds of its own accord down along the river between the slopes, while the banks give way to the current."
+    },
+    {
+     "reading": "C1",
+     "type": "mimo_rozpocet",
+     "quote": "Raidho is that steady pull underneath the wandering, the rhythm that keeps moving whether the path is straight or not."
+    },
+    {
+     "reading": "C2",
+     "type": "mimo_rozpocet",
+     "quote": "What stays fixed is the river; the walking is yours to choose, Kuky, and this may be where your way divides between following the water and cutting your own line above it."
+    },
+    {
+     "reading": "C3",
+     "type": "mimo_rozpocet",
+     "quote": "Where the track splits near the slope, the water keeps its course below, unbothered by which fork the walker chooses."
+    },
+    {
+     "reading": "E1",
+     "type": "mimo_rozpocet",
+     "quote": "Neither path was measured out; both were walked into being by whoever went first."
+    }
+   ],
+   "best_lines": [
+    {
+     "reading": "E1",
+     "quote": "Neither path was measured out; both were walked into being by whoever went first.",
+     "why": "Je to jediná čistá STOPA v celé sadě. Ukazuje, co v obraze není (ti, kdo šli dřív), přes konkrétní věc. Runa tu dělá, co dělá, bez spony a bez pojmů."
+    },
+    {
+     "reading": "G2",
+     "quote": "Kuky, this may be a choice between two ways, or one way walked at two speeds.",
+     "why": "Dvě skutečné, rovnocenné možnosti ve tvaru may. Druhá obrací rozcestí v tempo, takže se v ní vrací Raidho (rytmus), aniž by to bylo řečeno. Člověk je jen tady."
+    },
+    {
+     "reading": "D1",
+     "quote": "Raidho gives movement a rhythm without fixing its direction.",
+     "why": "Nejlepší esenční věta bez vady. Sloveso, žádná spona, cizinec k runám hned rozumí, co runa dělá, a pro rozcestí je přesná: rytmus ano, směr ne."
+    }
+   ]
+  },
+  {
+   "ranking": [
+    {
+     "code": "D",
+     "rank": 1,
+     "why": "Jediný autor bez jasné tvrdé vady. Runa vstupuje slovesem ve všech třech čteních (D1 „gives movement a rhythm without fixing its direction“, D3 „follows the pace“), délka je v rozpočtu (58–60 slov), Kuky přichází až v poslední větě a D1 končí dvěma skutečnými, rovnocennými možnostmi. Slabiny: kritérium 4 nesplní ani jedno čtení, protože všechno zůstává v záběru. Opakuje se výplň „air moves… neither shows its full length“ (D1, D3). D2 vtahuje člověka do obrazu už ve druhé větě („beneath your feet“)."
+    },
+    {
+     "code": "E",
+     "rank": 2,
+     "why": "Obsahově nejsilnější. E1 jako jediné v celé sadě jasně splní formuli STOPY: cesty prošlapal ten, „kdo šel první“, tedy ukazuje něco, co v záběru není. Esenční věty jsou nejčistší („the going that keeps its own pace, whatever the ground does“) a závěry E1 a E3 dávají dvě skutečné a konkrétní možnosti. Dolů ho táhne spona „Raidho is…“ ve všech třech čteních, E1 má 66 slov a E2 končí tvrzeným „either…or“ místo možnosti."
+    },
+    {
+     "code": "G",
+     "rank": 3,
+     "why": "Drží rozpočet (58–59 slov) a závěry jsou dobré. G2 má nejlepší poslední větu sady („two ways, or one way walked at two speeds“). Všechna tři čtení ale uvádějí runu sponou a G1 („Raidho is this“) je doslova odmítnutý vzor. Obraz „both branches still follow the river“ se opakuje ve všech třech a zůstává uvnitř záběru, takže kritérium 4 nesplní."
+    },
+    {
+     "code": "A",
+     "rank": 4,
+     "why": "Runa vstupuje slovesem, rozpočet drží (56–59 slov) a otevírá pevným bodem (řeka), jak zadání chce. Esence se ale rozpouští do abstrakce převzaté ze zadání („the living moment“ v A2 i A3) a závěry jsou pojmové („a rhythm still holding, or one already changing“). Vrací se formule „neither reveals its full length“ (A1, A3). Kuky přichází už ve třetí větě (A1, A2). Náznak něčeho mimo záběr má jen A1 („sound from both directions“)."
+    },
+    {
+     "code": "B",
+     "rank": 5,
+     "why": "Všechna tři čtení jsou výrazně nad rozpočtem: B1 má 66, B2 74 a B3 66 slov. Hodně papouškují zadání: B3 opisuje „winds of its own accord down along the river between the slopes“ i „natural rhythm… where a way divides“. B3 si protiřečí („stays fixed as it winds“) a B2 má esenční větu až jako třetí. Runa sice vstupuje slovesem a závěry jsou použitelné („keeping pace and pausing to listen“), ale nic neukazuje za hranu obrazu."
+    },
+    {
+     "code": "F",
+     "rank": 6,
+     "why": "Rozpočet drží (54–56 slov) a obraz má konkrétní věci (tráva ohnutá větrem, kámen). O člověku ale mluví v celém textu, ne jen v poslední větě: „Before you / Beside you / At your feet“, „you see a rhythm“, „You reach a fork“, „you cannot see beyond either bend“, „draws your attention“. Říká mu tedy, co vidí a kde stojí, a to je přesně to, co vědět nemůže. Všechna tři čtení mají stejnou kostru a esence přes „you see“ neříká, co runa dělá."
+    },
+    {
+     "code": "C",
+     "rank": 7,
+     "why": "Má nejživější jednotlivé obrazy („the same current finding two mouths“, „cutting your own line above it“, „unbothered by which fork the walker chooses“), ale nejvíc tvrdých vad. Všechna tři čtení jsou hluboko nad rozpočtem (68, 80 a 71 slov) a všechna mají sponu „Raidho is that…“. C1 a C2 do závěru vkládají radu či postrčení („worth pausing at“, „the walking is yours to choose“). V C1 navíc „simply“ jednu možnost zlehčuje, takže nejsou rovnocenné."
+    }
+   ],
+   "violations": [
+    {
+     "reading": "C1",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho is that steady pull underneath the wandering"
+    },
+    {
+     "reading": "C2",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho is that steady pull of water finding its own pace through the turns"
+    },
+    {
+     "reading": "C3",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho is that steady moving with the land, not against it."
+    },
+    {
+     "reading": "E1",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho is the going that keeps its own pace, whatever the ground does."
+    },
+    {
+     "reading": "E2",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho is the going that keeps its own pace, whatever the ground does."
+    },
+    {
+     "reading": "E3",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho is the going that keeps its direction without keeping to one path."
+    },
+    {
+     "reading": "G1",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho is this, movement keeping time with the land."
+    },
+    {
+     "reading": "G2",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho is movement that finds its own pace, following the ground instead of forcing a line."
+    },
+    {
+     "reading": "G3",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho is that rhythm, a way that follows the ground as it is."
+    },
+    {
+     "reading": "B1",
+     "type": "mimo_rozpocet",
+     "quote": "The sheep-track holds its winding line down by the river, while the slopes give way around it and the water keeps moving."
+    },
+    {
+     "reading": "B2",
+     "type": "mimo_rozpocet",
+     "quote": "For you, Kuky, this may be where your way divides between a pace that feels steady and one that feels urgent."
+    },
+    {
+     "reading": "B3",
+     "type": "mimo_rozpocet",
+     "quote": "The sheep-track stays fixed as it winds of its own accord down along the river between the slopes, while the banks give way to the current."
+    },
+    {
+     "reading": "C1",
+     "type": "mimo_rozpocet",
+     "quote": "Raidho is that steady pull underneath the wandering, the rhythm that keeps moving whether the path is straight or not."
+    },
+    {
+     "reading": "C2",
+     "type": "mimo_rozpocet",
+     "quote": "What stays fixed is the river; the walking is yours to choose, Kuky, and this may be where your way divides between following the water and cutting your own line above it."
+    },
+    {
+     "reading": "C3",
+     "type": "mimo_rozpocet",
+     "quote": "Where the track splits near the slope, the water keeps its course below, unbothered by which fork the walker chooses."
+    },
+    {
+     "reading": "E1",
+     "type": "mimo_rozpocet",
+     "quote": "The river holds its line while the sheep-track above it wanders, splits, and finds the water again further down."
+    },
+    {
+     "reading": "F1",
+     "type": "cold_reading",
+     "quote": "With Raidho, you see a rhythm shaped by the ground."
+    },
+    {
+     "reading": "F1",
+     "type": "cold_reading",
+     "quote": "You reach a fork between the slopes, where neither bend reveals its full length."
+    },
+    {
+     "reading": "F2",
+     "type": "cold_reading",
+     "quote": "Through Raidho, you see a pace shaped by the ground."
+    },
+    {
+     "reading": "F2",
+     "type": "cold_reading",
+     "quote": "At the fork, you cannot see beyond either bend."
+    },
+    {
+     "reading": "F3",
+     "type": "cold_reading",
+     "quote": "Raidho draws your attention to a pace shaped by the ground."
+    },
+    {
+     "reading": "F3",
+     "type": "cold_reading",
+     "quote": "Where your track divides, wind moves through both openings."
+    },
+    {
+     "reading": "C1",
+     "type": "rada",
+     "quote": "This may be a fork worth pausing at"
+    },
+    {
+     "reading": "C2",
+     "type": "rada",
+     "quote": "the walking is yours to choose"
+    },
+    {
+     "reading": "A2",
+     "type": "abstrakce_misto_veci",
+     "quote": "where each turn answers the living moment"
+    },
+    {
+     "reading": "A3",
+     "type": "abstrakce_misto_veci",
+     "quote": "Raidho shows movement finding its natural rhythm through the living moment."
+    },
+    {
+     "reading": "E2",
+     "type": "jine",
+     "quote": "Kuky, either the pace is yours already, or it is still being set by the slope."
+    },
+    {
+     "reading": "D2",
+     "type": "jine",
+     "quote": "Raidho gives movement a rhythm shaped by the ground beneath your feet."
+    }
+   ],
+   "best_lines": [
+    {
+     "reading": "E1",
+     "quote": "Neither path was measured out; both were walked into being by whoever went first.",
+     "why": "Jediná čistá STOPA v celé sadě (kritérium 4). Ukazuje, co v záběru není, totiž ty, kdo tu šli dřív, a konkrétní věcí vysvětluje Raidho jako cestu vzniklou chůzí, ne vyměřenou."
+    },
+    {
+     "reading": "G2",
+     "quote": "Kuky, this may be a choice between two ways, or one way walked at two speeds.",
+     "why": "Nejlepší poslední věta. Nabízí dvě skutečné a rovnocenné možnosti ve tvaru „may“, obě konkrétní, a druhá obrátí otázku rozcestí na otázku tempa. Tím míří přímo do „natural rhythm“, aniž by člověku cokoli tvrdila."
+    },
+    {
+     "reading": "D1",
+     "quote": "Raidho gives movement a rhythm without fixing its direction.",
+     "why": "Nejčistší esenční věta vedená slovesem. Runa vstupuje vztahem, ne sponou, a cizí člověk si z ní hned odnese, co runa dělá: rytmus ano, osud ne. Ukotvená v obrazu stezky, která se větví."
+    }
+   ]
+  },
+  {
+   "ranking": [
+    {
+     "rank": 1,
+     "code": "B",
+     "why": "B má nejsilnější stopy v celé sadě. B2 „Enginn lagði hana, hún varð til þar sem landið leyfði fótum að fara“, B3 „hver kind fetar í spor þeirrar á undan“, B1 „án þess að nokkur hafi ákveðið það“. B2 je bez vady: runa vstupuje slovesem („fylgir Raidho (Ferðalag) landinu en ekki viljanum“) a konec nabízí dvě skutečné, konkrétní pozice, z nichž žádná není označená jako správná („kominn hálfa leið … eða stendur kyrr meðan landið skýrist“). Konce všech tří čtení jsou věci nebo pozice, ne pojmy. Mínus: spona v B1 a B3 („Raidho er röðin / þessi röð“). Konce stojí na „kannski“ místo „gæti“, forma možnosti ale drží. Všechna tři čtení jsou v rozpočtu (52–58)."
+    },
+    {
+     "rank": 2,
+     "code": "D",
+     "why": "D1 je nejčistší jednotlivé čtení sady. Runa vstupuje slovesem („Raidho fer eftir þeirri slóð sem margir fætur hafa þegar gengið“), má stopu („engin hönd lögð á hana“) a konkrétní konec se dvěma skutečnými možnostmi („gatan sem þú þekkir eða hlíðin ótroðna“). D2 má dobrou směnu („tekur ekki styttri leið heldur þá sem landið leyfir“), ale mimo poslední větu tvrdí o člověku „þú gengur með ánni en ekki gegn henni“. D3 je slabé: esence je tautologie („fylgir sinni eigin röð“), „Þú sérð“ stojí mimo poslední větu, konec „Hvora sem er … kyrrð eða áframhald“ je logicky zmatený (každá z cest může být obojí) a čtení má jen 48 slov."
+    },
+    {
+     "rank": 3,
+     "code": "F",
+     "why": "Obrazově a řemeslně nejlepší: F3 „liðast undan hverri þúfu“, „leitar leiðarinnar sem fæturnir þola“ (směna), F1 „margir fætur tróðu, ekki sá sem einhver mældi“ (stopa), F1 „bíða þar til vatnið sést aftur“ a nejlepší konec sady v F3. Ve všech třech čteních je ale přesně ta spona, kterou owner odmítl („Raidho er slóðin“ ×2, „Raidho er sú gata“). F1 a F2 mají rodovou chybu: „ekki sá“ se vztahuje k ženskému „slóðin“, správně „sú“. Konce F1 a F2 jsou oznamovací „annað er … hitt …“, bez tvaru možnosti (gæti), takže se blíží nabídce jednání. F3 má jen 46 slov. Kdyby spona nebyla, vyhrálo by F."
+    },
+    {
+     "rank": 4,
+     "code": "A",
+     "why": "Čisté čtení bez spony a bez cold readingu. A1 má stopu („þar sem fætur hafa þegar farið“) a A2 konkrétní nejistotu („hverfur í grasið“). Je ale šablonovité: „Raidho (Ferðalag) sýnir hér hvernig“ se opakuje 3× (proti „Aldrei föst formúla“) a runa vstupuje výkladovým slovesem „sýnir“, ne vztahem v obraze. Konec „vani / kostur“ se opakuje v A1 a A2 téměř doslova a „vani“ je proti „kostur“ mírně zatížené. A3 má 64 slov, A2 60. A2 porušuje mód po „þótt“: vedle konjunktivu „liðist“ stojí indikativ „kvíslast“ (má být „kvíslist“). A3 nemá stopu ani směnu."
+    },
+    {
+     "rank": 5,
+     "code": "G",
+     "why": "G2 má jednu z nejlepších stop sady („skiptist þar sem grasið hylur eldri slóð“). Jeho esence je ale pojem („kunnugleg röð ber hreyfingu“) a konec je zatížený: „þolinmæði sem heldur stefnu“ je kladné, „vani sem þrengir valið“ záporné. G3 mimo poslední větu tvrdí, že k člověku nepřichází odpověď („loftið ber ekkert svar til þín, Kuky“). G1 vtahuje člověka do obrazu mimo konec („undir fótum þér“). G1 a G3 mají téměř totožný otvírák a všechna tři čtení formuli „sýnir hvernig“. Konce jsou abstraktní stavy (ró/óvissa, þörf/vilji)."
+    },
+    {
+     "rank": 6,
+     "code": "E",
+     "why": "Bez tvrdé vady, ale tři čtení jsou jedno a totéž. Otvírák „Steinninn stendur fastur þar sem kindagatan skiptist niður með ánni milli hlíðanna og …“ je 2× doslova a „Raidho sýnir hvernig leið mótast af …“ 3× (přímo proti „Aldrei föst formúla“). E2 a E3 mají tenkou esenci („mótast af landinu“). Konce jsou pojmy místo věcí (svigrúm, óvissa, hik, skýrari sýn). E1 nenabízí dvě skutečné možnosti, obě znamenají čekání. E2 má jednu možnost kladnou a jednu zápornou. Světlá místa: E1 „því sem heldur og því sem gefur eftir“ a stopa E2 „jörðin troðin beggja vegna“."
+    },
+    {
+     "rank": 7,
+     "code": "C",
+     "why": "Nejslabší. Do textu prosakuje řeč promptu „utan rammans“ (C1, C2). Esenci ve všech třech čteních tvoří abstrakce a kalk z EN („rún náttúrulegrar röðunar“, „í eðlilegum takti“, „heldur athyglinni við náttúrulega röð“) a „loftið ber hreyfinguna / hljóðið“ nemá v obraze žádnou funkci. Nikde není stopa ani směna. Konce jsou označené: C1 staví zápornou „biðin sem heldur aftur af þér“ proti kladnému svigrúm a C2 hodnotí a navádí („Þar gæti skipt máli hvort þú mætir … með ró eða óvissu“). C2 má chybný čas a mód „þótt hún liðaðist“ (má být „liðist“), C1 zvukově drhne („niðar niður“). C2 má 61 slov, C3 60."
+    }
+   ],
+   "violations": [
+    {
+     "reading": "B1",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho (Ferðalag) er röðin sem myndast þegar fótur fylgir landinu frekar en áætlun."
+    },
+    {
+     "reading": "B3",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho (Ferðalag) er þessi röð, vegur sem verður til við það að ganga hann."
+    },
+    {
+     "reading": "F1",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho er slóðin sem margir fætur tróðu, ekki sá sem einhver mældi."
+    },
+    {
+     "reading": "F2",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho er slóðin sem fætur hafa markað, ekki sá sem einhver mældi."
+    },
+    {
+     "reading": "F3",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho er sú gata, hún leitar leiðarinnar sem fæturnir þola."
+    },
+    {
+     "reading": "D2",
+     "type": "cold_reading",
+     "quote": "Þarna finnur Raidho takt sinn, þú gengur með ánni en ekki gegn henni."
+    },
+    {
+     "reading": "G3",
+     "type": "cold_reading",
+     "quote": "Við steininn skiptist gatan, en loftið ber ekkert svar til þín, Kuky."
+    },
+    {
+     "reading": "C2",
+     "type": "rada",
+     "quote": "Þar gæti skipt máli hvort þú mætir ákvörðuninni með ró eða óvissu."
+    },
+    {
+     "reading": "C1",
+     "type": "abstrakce_misto_veci",
+     "quote": "Raidho, rún náttúrulegrar röðunar, birtist þar sem leið skiptist og loftið ber hreyfinguna áfram."
+    },
+    {
+     "reading": "C2",
+     "type": "abstrakce_misto_veci",
+     "quote": "Þar sem leiðin skiptist heldur Raidho, Ferðalag, henni áfram í eðlilegum takti; loftið ber hljóðið frá einum bakka til hins."
+    },
+    {
+     "reading": "C3",
+     "type": "abstrakce_misto_veci",
+     "quote": "Raidho, eða Ferðalag, heldur hér athyglinni við náttúrulega röð þess sem færist áfram."
+    },
+    {
+     "reading": "G2",
+     "type": "abstrakce_misto_veci",
+     "quote": "Raidho, Ferðalag, sýnir hvernig kunnugleg röð ber hreyfingu að vegamótum."
+    },
+    {
+     "reading": "A3",
+     "type": "mimo_rozpocet",
+     "quote": "Stór steinn stendur fastur við ána milli hlíðanna, en kindagatan liðast fram hjá honum og greinist þar sem árbakkinn breikkar. Raidho (Ferðalag) sýnir hér hvernig leið getur mótast af landi sem er þegar undir fótum. Handan við steininn sést ekki enn hvort báðar slóðirnar haldast greiðar. Við þessi vegamót, Kuky, gæti þetta verið bið sem er að ljúka eða val sem er enn opið."
+    },
+    {
+     "reading": "F3",
+     "type": "mimo_rozpocet",
+     "quote": "Áin heldur sínu striki meðan kindagatan liðast undan hverri þúfu. Raidho er sú gata, hún leitar leiðarinnar sem fæturnir þola. Þar sem hlíðin þrengist klofnar slóðin, og hvorug greinin sést alla leið. Kuky, þetta gæti verið gata sem tveir hafa troðið, eða gata sem einn fer."
+    },
+    {
+     "reading": "C1",
+     "type": "jine",
+     "quote": "Það sem stendur rétt utan rammans"
+    },
+    {
+     "reading": "C2",
+     "type": "jine",
+     "quote": "það sem bíður handan hennar helst utan rammans, Kuky"
+    },
+    {
+     "reading": "C2",
+     "type": "jine",
+     "quote": "þótt hún liðaðist niður með ánni milli hlíðanna"
+    },
+    {
+     "reading": "F1",
+     "type": "jine",
+     "quote": "ekki sá sem einhver mældi"
+    },
+    {
+     "reading": "F2",
+     "type": "jine",
+     "quote": "ekki sá sem einhver mældi"
+    },
+    {
+     "reading": "A2",
+     "type": "jine",
+     "quote": "þótt kindagatan niður með henni liðist af sjálfu sér og kvíslast við lágan bakka"
+    },
+    {
+     "reading": "D3",
+     "type": "jine",
+     "quote": "Hvora sem er, Kuky, gæti verið kyrrð eða áframhald."
+    },
+    {
+     "reading": "D3",
+     "type": "jine",
+     "quote": "Þú sérð hvar slóðin klofnar við steininn"
+    },
+    {
+     "reading": "G1",
+     "type": "jine",
+     "quote": "Við vegamótin sést aðeins jarðvegurinn undir fótum þér"
+    }
+   ],
+   "best_lines": [
+    {
+     "reading": "B2",
+     "quote": "Enginn lagði hana, hún varð til þar sem landið leyfði fótum að fara.",
+     "why": "Čistá STOPA: druhá půlka ukazuje, co v záběru není (kudy šly nohy dřív, než tu byla cesta). „Leggja“ nese dvojí smysl (položit cestu i rozhodnout o ní) a esenci Raidha, rytmu, který si nikdo nenadiktoval, říká věcí, ne pojmem."
+    },
+    {
+     "reading": "D1",
+     "quote": "Raidho fer eftir þeirri slóð sem margir fætur hafa þegar gengið.",
+     "why": "Runa vstupuje VZTAHEM, slovesem („fer eftir“), ne sponou. Věta je zároveň esence (co runa dělá skrze obraz) i stopa (mnoho nohou, které tu už prošly a v záběru nejsou). Plní kritéria 1, 2 a 4 v jedné krátké větě."
+    },
+    {
+     "reading": "F3",
+     "quote": "Kuky, þetta gæti verið gata sem tveir hafa troðið, eða gata sem einn fer.",
+     "why": "Nejlepší konec sady: dvě skutečné, rovnocenné možnosti ve tvaru „gæti“, bez hodnocení. Jsou to konkrétní věci, ne stavy, a „sem tveir hafa troðið“ nese stopu toho, co se stalo mimo obraz. O člověku mluví jen tady."
+    }
+   ]
+  },
+  {
+   "ranking": [
+    {
+     "code": "B",
+     "rank": 1,
+     "why": "Všechna tři čtení nesou formuli STOPA, tedy něco, co v záběru není: B2 „Enginn lagði hana“, B1 „án þess að nokkur hafi ákveðið það“, B3 „hver kind fetar í spor þeirrar á undan“. Konce jsou konkrétní stavy v možnostním tvaru a žádný není označený jako správný (B2 „kominn hálfa leið ... eða stendur kyrr meðan landið skýrist“, B3 „traust á troðinni slóð eða forvitni um ótroðna brekku“). Obraz je živý díky slovesům („áin grefur og hlíðarnar skríða“). Hlavní srážka: B1 a B3 uvádějí runu sponou „Raidho (Ferðalag) er…“, kterou owner výslovně odmítl. B2 (52 slov) ukazuje, že autor umí runu uvést slovesem („fylgir Raidho landinu en ekki viljanum“), a je to jedno z nejčistších čtení celé sady."
+    },
+    {
+     "code": "D",
+     "rank": 2,
+     "why": "D1 je nejčistší čtení sady. Runa vstupuje slovesem („Raidho fer eftir þeirri slóð sem margir fætur hafa þegar gengið“), stopa je vidět v „engin hönd lögð á hana“ a konec nabízí dvě skutečné, konkrétní a nevážené možnosti („gatan sem þú þekkir eða hlíðin ótroðna“). Zbytek autora ale padá. D2 obsahuje cold reading mimo poslední větu („þú gengur með ánni en ekki gegn henni“), který zní zároveň jako rada. D3 má 48 slov, oslovuje člověka mimo konec („Þú sérð…“) a konec se rozpadá: tvar „Hvora sem er … gæti verið“ je pádově chybný, možnosti nejsou přiřazené k cestám a esence „fylgir sinni eigin röð“ je tautologie."
+    },
+    {
+     "code": "A",
+     "rank": 3,
+     "why": "Nemá ani sponu, ani cold reading, drží rozpočet a esence je srozumitelná (A1 „leið verður til þar sem fætur hafa þegar farið“ je stopa, A2 „án þess að röð sporanna raskist“). Všechna tři čtení jsou ale táž šablona (Stór steinn stendur fastur… / Raidho (Ferðalag) sýnir hér hvernig… / Kuky, gæti þetta verið X eða Y). „sýnir hvernig“ je výklad, ne vztah věci. Konce jsou spíš nálepky než stavy („þekktur vani eða ókunnur kostur“, „gamall vani eða nýr kostur“, kde starý zvyk proti nové možnosti mírně naklání). A3 má 64 slov, A2 má 60 slov. Závorka „(Ferðalag)“ se při čtení nahlas nedá přečíst."
+    },
+    {
+     "code": "F",
+     "rank": 4,
+     "why": "Nejkonkrétnější obrazy v sadě: F3 „kindagatan liðast undan hverri þúfu“, F1 „bíða þar til vatnið sést aftur“ a F3 má nejlepší konec celé sady („gata sem tveir hafa troðið, eða gata sem einn fer“). Systematicky ale porušuje kritérium 1. Všechna tři čtení uvádějí runu sponou a F3 „Raidho er sú gata“ je přesně ten odmítnutý tvar ukazování na věc. F1 a F2 nekončí možností, ale rozpisem („annað er að ganga …, hitt að …“), takže chybí gæti i kannski. V F1 a F2 je rodová chyba „slóðin ... ekki sá sem einhver mældi“ (slóð je ženského rodu, má být sú). F3 má jen 46 slov."
+    },
+    {
+     "code": "G",
+     "rank": 5,
+     "why": "G2 obsahuje jednu z nejlepších stop sady („skiptist þar sem grasið hylur eldri slóð“) a G3 má konkrétní kontrast („frekar en einu stökki“). Esence jsou ale abstraktní (G2 „kunnugleg röð ber hreyfingu að vegamótum“, G1 „mótast af landslaginu“). Konce stojí na abstraktních pojmech a jednu stranu naklánějí (ró proti óvissa, þolinmæði proti „vani sem þrengir valið“). Úvod je stejná šablona jako u A („Steinn stendur fastur … þótt bakkinn gefi eftir/láti undan“). Člověka staví do scény mimo poslední větu („undir fótum þér“, „ekkert svar til þín“)."
+    },
+    {
+     "code": "E",
+     "rank": 6,
+     "why": "Nemá sponu ani cold reading, ale tři čtení jsou skoro doslova táž šablona („Steinninn stendur fastur þar sem kindagatan skiptist…“ / „Raidho sýnir hvernig leið mótast af…“). Esence je tenká („mótast af landinu“) a vlastně nic neříká. Konce nejsou dvě skutečné možnosti, obě strany jsou táž nejistota nebo odklad (E1 „hik við óvissu … eða svigrúm til að láta ákvörðun bíða“, E3 „bið eftir skýrari sýn eða svigrúm til að velja án fullrar vissu“) a jsou to abstrakce místo věcí. Jediná skutečná stopa je E2 „jörðin troðin beggja vegna“."
+    },
+    {
+     "code": "C",
+     "rank": 7,
+     "why": "Obraz je převrácený: pevná je sama stezka, která se podle zadání má vinout („Kindagatan stendur föst“ v C1 a C2). Do textu prosakuje metaslovník zadání („utan rammans“ v C1 a C2) a jsou tam kalky z EN štítku („rún náttúrulegrar röðunar“, „í eðlilegum takti“). Esence C3 je čistá abstrakce („heldur hér athyglinni við náttúrulega röð“). C2 má 61 slov, chybné časování „þótt hún liðaðist“ a místo dvou možností končí postrčením („skipt máli hvort þú mætir ákvörðuninni með ró eða óvissu“). C3 má 60 slov. Posluchač si odnese mlhu, ne místo."
+    }
+   ],
+   "violations": [
+    {
+     "reading": "B1",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho (Ferðalag) er röðin sem myndast þegar fótur fylgir landinu frekar en áætlun."
+    },
+    {
+     "reading": "B3",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho (Ferðalag) er þessi röð, vegur sem verður til við það að ganga hann."
+    },
+    {
+     "reading": "F1",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho er slóðin sem margir fætur tróðu, ekki sá sem einhver mældi."
+    },
+    {
+     "reading": "F2",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho er slóðin sem fætur hafa markað, ekki sá sem einhver mældi."
+    },
+    {
+     "reading": "F3",
+     "type": "spona_this_is_raidho",
+     "quote": "Raidho er sú gata, hún leitar leiðarinnar sem fæturnir þola."
+    },
+    {
+     "reading": "D2",
+     "type": "cold_reading",
+     "quote": "Þarna finnur Raidho takt sinn, þú gengur með ánni en ekki gegn henni."
+    },
+    {
+     "reading": "D3",
+     "type": "jine",
+     "quote": "Þú sérð hvar slóðin klofnar við steininn, önnur leið upp, hin niður að vatninu."
+    },
+    {
+     "reading": "D3",
+     "type": "jine",
+     "quote": "Hvora sem er, Kuky, gæti verið kyrrð eða áframhald."
+    },
+    {
+     "reading": "G1",
+     "type": "jine",
+     "quote": "Við vegamótin sést aðeins jarðvegurinn undir fótum þér"
+    },
+    {
+     "reading": "G3",
+     "type": "jine",
+     "quote": "en loftið ber ekkert svar til þín, Kuky"
+    },
+    {
+     "reading": "C2",
+     "type": "rada",
+     "quote": "Þar gæti skipt máli hvort þú mætir ákvörðuninni með ró eða óvissu."
+    },
+    {
+     "reading": "C2",
+     "type": "jine",
+     "quote": "þótt hún liðaðist niður með ánni milli hlíðanna"
+    },
+    {
+     "reading": "F1",
+     "type": "jine",
+     "quote": "Kuky, annað er að ganga þá leið sem liggur, hitt að bíða þar til vatnið sést aftur."
+    },
+    {
+     "reading": "F2",
+     "type": "jine",
+     "quote": "Kuky, annað er að ganga þá leið sem þegar er troðin, hitt að staldra við þar sem hún greinist."
+    },
+    {
+     "reading": "C1",
+     "type": "abstrakce_misto_veci",
+     "quote": "Það sem stendur rétt utan rammans"
+    },
+    {
+     "reading": "C1",
+     "type": "abstrakce_misto_veci",
+     "quote": "Raidho, rún náttúrulegrar röðunar, birtist þar sem leið skiptist og loftið ber hreyfinguna áfram."
+    },
+    {
+     "reading": "C2",
+     "type": "abstrakce_misto_veci",
+     "quote": "en það sem bíður handan hennar helst utan rammans"
+    },
+    {
+     "reading": "C3",
+     "type": "abstrakce_misto_veci",
+     "quote": "Raidho, eða Ferðalag, heldur hér athyglinni við náttúrulega röð þess sem færist áfram."
+    },
+    {
+     "reading": "E1",
+     "type": "abstrakce_misto_veci",
+     "quote": "Hér gæti verið hik við óvissu, Kuky, eða svigrúm til að láta ákvörðun bíða."
+    },
+    {
+     "reading": "E2",
+     "type": "abstrakce_misto_veci",
+     "quote": "gæti verið svigrúm til vals eða óvissa um framhaldið"
+    },
+    {
+     "reading": "E3",
+     "type": "abstrakce_misto_veci",
+     "quote": "Þetta gæti verið bið eftir skýrari sýn eða svigrúm til að velja án fullrar vissu, Kuky."
+    },
+    {
+     "reading": "G1",
+     "type": "abstrakce_misto_veci",
+     "quote": "gæti þetta verið ró sem heldur eða óvissa sem kallar"
+    },
+    {
+     "reading": "G2",
+     "type": "abstrakce_misto_veci",
+     "quote": "Raidho, Ferðalag, sýnir hvernig kunnugleg röð ber hreyfingu að vegamótum."
+    },
+    {
+     "reading": "G2",
+     "type": "abstrakce_misto_veci",
+     "quote": "gæti þetta verið þolinmæði sem heldur stefnu eða vani sem þrengir valið"
+    },
+    {
+     "reading": "A3",
+     "type": "mimo_rozpocet",
+     "quote": "Stór steinn stendur fastur við ána milli hlíðanna, en kindagatan liðast fram hjá honum og greinist þar sem árbakkinn breikkar."
+    },
+    {
+     "reading": "C2",
+     "type": "mimo_rozpocet",
+     "quote": "Þar sem leiðin skiptist heldur Raidho, Ferðalag, henni áfram í eðlilegum takti; loftið ber hljóðið frá einum bakka til hins."
+    },
+    {
+     "reading": "F3",
+     "type": "mimo_rozpocet",
+     "quote": "Kuky, þetta gæti verið gata sem tveir hafa troðið, eða gata sem einn fer."
+    }
+   ],
+   "best_lines": [
+    {
+     "reading": "F3",
+     "quote": "Kuky, þetta gæti verið gata sem tveir hafa troðið, eða gata sem einn fer.",
+     "why": "Nejlepší konec celé sady. Nabízí dvě skutečné možnosti, žádnou neoznačuje za správnou a je v možnostním tvaru (gæti). Obě možnosti jsou věci, ne pojmy: prošlapaná stezka a stezka pro jednoho. Nese STOPU, tedy to, kdo tudy šel, což v záběru není, a o člověku mluví jen tady."
+    },
+    {
+     "reading": "B3",
+     "quote": "Hún liðast niður með ánni því hver kind fetar í spor þeirrar á undan.",
+     "why": "Esence Raidho řečená obrazem bez jediného abstraktního slova. Druhá půlka věty ukazuje, co v záběru není (STOPA: ovce, která šla předtím). Cizí posluchač hned pochopí, jak rytmus vzniká."
+    },
+    {
+     "reading": "B2",
+     "quote": "Enginn lagði hana, hún varð til þar sem landið leyfði fótum að fara.",
+     "why": "Nepřítomnost jako stopa („Enginn lagði hana“) a vztah slovesem (landið leyfði). Řekne, co runa dělá, aniž by ji jmenovala nebo na ni ukázala sponou. Z věty si člověk hned něco vezme."
+    }
+   ]
+  }
+ ]
+}
