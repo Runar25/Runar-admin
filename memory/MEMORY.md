@@ -50,6 +50,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 | Proč je něco tak, jak to je (datovaná rozhodnutí) | `RUNAR_DECISIONS.md` | log |
 | Business model, kredity, break-even, fyzické produkty | `RUNAR_PRICING.md` | 🔄 · fyz. produkt 🔒 |
 | Design, mytologie, význam částí | `RUNAR_DESIGN.md` | 📜 |
+| Popisy run pro člověka (jak se runa chová, jaké obrazy tvoří, jakou otázku klade) → podklad návodu | `RUNAR_POPISY_RUN.md` | 📜 |
 | Strom života — duše, zóny, signály, Gathering | `RUNAR_TREE.md` | 📜 |
 | Otevřené úkoly, blockery, priority | `RUNAR_BACKLOG.md` | stav |
 | GDPR, privacy, tester consent | `RUNAR_PRIVACY.md` | 🔒 |

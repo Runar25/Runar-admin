@@ -26,6 +26,7 @@ const VYJIMKY = {
   'RUNAR_PRICING.md': { typ: 'dluh', datum: '2026-09-20', duvod: 'Business model + fyzické produkty v jednom; rozdělení čeká na rozhodnutí ownera.' },
   'RUNAR_EVAL_LOG.md': { typ: 'dluh', datum: '2026-09-20', duvod: 'Po odsunu měření 08-06→08-17 do archivu 596 řádků. Další zkrácení = odsunout starší baseline, až přestane sloužit ke srovnání.' },
   'RUNAR_TREE.md': { typ: 'dluh', datum: '2026-09-21', duvod: 'Obnoveno po vyprseni (261 r.): zkraceni je domena CODE-tree, cerveny smoke ale blokoval push vsem lanum (zapsal CODE-tune podruhe — CODE-tree: az se dotknes RUNAR_TREE.md, zkrat ho pod 250).' },
+  'RUNAR_POPISY_RUN.md': { typ: 'trvala', duvod: 'Sbirka 25+ samostatnych ownerovych popisu run (jeden na runu). Roste s poctem run, ne s driftem; rozdelenim by jedno misto (§20) zdedilo 25 mist. Delka neni znak toho, ze se doc rozjel.' },
   'memory/working-style.md': { typ: 'dluh', datum: '2026-09-20', duvod: 'Sbírka pracovních návyků; část patří do samostatných memory souborů.' },
 };
 
