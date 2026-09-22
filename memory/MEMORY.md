@@ -93,6 +93,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [a-guard-that-refuses-is-a-detector.md](a-guard-that-refuses-is-a-detector.md) — kontrola "prepis jen kdyz je vyskyt PRAVE JEDEN" je detektor duplikatu, ne jen pojistka
 - [break-your-own-work-before-reporting.md](break-your-own-work-before-reporting.md) — po hotovem kusu na nej ZAUTOC SAM a teprve pak hlas; necekej na vyzvu ownera
 - [attack-the-metric-not-just-the-result.md](attack-the-metric-not-just-the-result.md) — utoc na NASTROJ driv nez na vysledek: pulka vs pulka, co jeste odlisuje referenci, nulova transformace (CLAUDE.md §27)
+- [selhany-verifier-neni-vyvraceny-nalez.md](selhany-verifier-neni-vyvraceny-nalez.md) — ve workflow: agent, který spadl, není vyvrácený nález; spočítej a ohlas neověřené
 - [test-the-lever-that-binds.md](test-the-lever-that-binds.md) — ověř, že měníš tu vazbu, která výsledek opravdu drží (strop tokenů ≠ délková páka)
 - [rekni-kterou-variantu-testujes.md](rekni-kterou-variantu-testujes.md) — před testem jednou větou kterou variantu testuju; varianta z docu; test pro Vegvísir z JEHO rámce, ne z produkce
 - [ownerovo-slovo-neni-spec.md](ownerovo-slovo-neni-spec.md) — jeho konverzační přídavné jméno není zadání; převeď na číslo, nebo se zeptej
