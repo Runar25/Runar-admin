@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-22",
- "prompt_version": "v4.42-banka-2",
+ "prompt_version": "v4.43-prazdna-perth-mannaz",
  "pravidla": [
   {
    "hash": "54d29df4d80b",
@@ -116,6 +116,12 @@
    "lang": "en",
    "zdroj": "esence[1]",
    "zacatek": "THE ESSENCE LINE: after the picture, one short line where the rune — n"
+  },
+  {
+   "hash": "4c34a3659a60",
+   "lang": "en",
+   "zdroj": "esence[blank]",
+   "zacatek": "THE ESSENCE LINE: after the picture, one short line that names the Bla"
   },
   {
    "hash": "c6241fac4e51",
@@ -710,6 +716,12 @@
    "lang": "is",
    "zdroj": "esence[1]",
    "zacatek": "KJARNALÍNAN: á eftir myndinni kemur ein stutt lína þar sem rúnin — nef"
+  },
+  {
+   "hash": "b686e3510b54",
+   "lang": "is",
+   "zdroj": "esence[blank]",
+   "zacatek": "KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem nefnir auðu rún"
   },
   {
    "hash": "de924ff40193",

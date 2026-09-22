@@ -559,6 +559,10 @@ var RUNE_IMAGES = [
   ['Perth','any','Áin veltir steinvölunni þar til hún stöðvast — þú sérð ekki hvar.','The river rolls the pebble until it stops — you cannot see where.','örlög í mótun','fate in the making','E'],
   ['Perth','any','Andartak glittir í eitthvað á botni lónsins áður en gruggið hylur það aftur.','The lagoon water clears for a moment and something below stirs, then closes over again.','hið hulda sem kemur í ljós','the hidden coming to light','E'],
   ['Perth','any','Í lágri sól koma fótsporin í ljós yfir túnið, andartak, áður en birtan breytist og þau hverfa.','In the low sun a whole trail of footprints comes to light across the field, for a moment, before the light shifts and they are gone.','hið hulda sem kemur í ljós','the hidden coming to light','E'],
+  // 2026-09-22 (KUKY „udelej", popis Perth: „ne *nic nevim*, ale *jeste nevim*… mozna ted neni
+  // potreba nadobu rozbijet"): obraz, ktery nese JESTE — obsah skryty, ale uz se neco dela.
+  // Ostatni tri obrazy Perth nesou „nevis" (kaminek zmizi, hladina se zavre, stopy zmizi).
+  ['Perth','any','Lokið er enn á pottinum, en ilmurinn segir að eitthvað sé að verða til.','The lid is still on the pot, but the smell says something is taking shape.','hið hulda','the unseen','D'],
   ['Algiz','any','Torfveggurinn stendur á milli þín og vindsins og í dyragættinni er logn.','The turf wall takes the wind so the doorway stays calm.','skjól','shelter','P'],
   ['Algiz','any','Fjárhundurinn liggur þar sem hann sér alla hjörðina.','The sheepdog lies where it can see the whole flock.','vernd','protection','P'],
   // 2026-09-12: IS aspekt skjól → vernd. EN tu nese „protection", ktere o radek vys paruje
@@ -600,6 +604,10 @@ var RUNE_IMAGES = [
   // 2026-09-22 (druha vlna): studene cteni bez 'þú' — myslenka bez vlastnika ve scene padne na
   // ctenare (ruminace + nespavost). Tyz aspekt na vnejsim jevu, 'enginn' jako u [75].
   ['Mannaz','any','Lagið situr eftir í höfðinu þótt enginn syngi það lengur.','The tune stays in the head though no one is singing it any more.','hugur','mind','D'],
+  // 2026-09-22 (KUKY „obraz o zrcadle by byl zajimavy" + popis Mannaz „je v ni zrcadlo… nekdy
+  // potrebuje druheho cloveka, aby uvidel, co sam zevnitr videt nemuze"): zrcadlo V CLOVEKU.
+  // Motiv 'reflection' jako [72]/[73] — anti-opakovani nepusti dve zrcadla po sobe.
+  ['Mannaz','any','Andlit þitt speglast í augum hins, lítið og skýrt.','In the eyes of the other your face is mirrored, small and clear.','mannleg vitund','humanity','D','reflection'],
   ['Laguz','any','Undiraldan finnst í fótunum áður en hún sést.','The groundswell is felt in your feet before it is seen.','innsæi','intuition','E'],
   ['Laguz','any','Jökuláin rennur grá og þung, full af því sem hún ber að ofan.','The glacial river runs grey and heavy, full of what it carries down from above.','flæði','the unconscious','E'],
   ['Laguz','any','Vatnið finnur sér leið niður hlíðina, enginn vísar því.','Water finds its own way down the slope, and no one shows it the path.','flæði','intuition','E'],
@@ -799,14 +807,15 @@ function _spreadThread(lang) {
     : 'Each rune takes up what the one before it left off — one continuous weave, never a list.';
 }
 
-function _describeRule(lang, key) {
+// `rune` (2026-09-22): tazena runa, at Prazdna runa dostane svuj ram — viz ESSENCE_BLANK v utils.
+function _describeRule(lang, key, rune) {
   // Profil s VLASTNIM znenim (direct, lyrical) ho ma dal — los se jich netyka.
   // Produkcni profil sve zneni od 2026-09-20 nema: presunulo se do ESSENCE_FRAMES, odkud
   // se losuje (dva ramy). Zakladni „DESCRIBE, DO NOT EXPLAIN" nize tim padem u produkce
   // nikdy nepadne — zustava jako zachytna sit pro profil bez pravidla.
   var podleRegistru = _profileRule('describe', lang, key);
   if (podleRegistru) return podleRegistru;
-  if (typeof _essenceFrame === 'function') return _essenceFrame(lang);
+  if (typeof _essenceFrame === 'function') return _essenceFrame(lang, rune);
   if (lang === 'is')
     return 'LÝSTU, EKKI ÚTSKÝRÐU: Segðu hvað rúnin gerir í heiminum; aldrei hvað hún þýðir. Engin vélræn skýring (uppdiktuð eðlisfræði), enginn dómur um leitandann, engin örlög. Láttu myndina standa — ekki ráða hana.';
   return 'DESCRIBE, DO NOT EXPLAIN: say what the rune does in the world; never what it means. No mechanism (invented physics), no verdict about the seeker, no fate. Let the image stand — do not decode it.';
@@ -1566,7 +1575,7 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     parts,
     S.angleIntro + angleDraw,
     _imageBlock(lang, imgLine),
-    _describeRule(lang),
+    _describeRule(lang, undefined, drawn),   // 2026-09-22: runa kvuli Prazdne rune (ESSENCE_BLANK)
     _noColdRead(lang),
     _lengthBudget(lang),   // 2026-08-21: delka je losovana paka, ne pevna radka packu
     // v4.1 (2026-08-22): OBLAST SE VRACI — prvni z odlozenych pak (owner: "at se

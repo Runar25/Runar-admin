@@ -346,6 +346,9 @@ function _promptDraws(prompt, lang) {
     var rams = isIs ? ESSENCE_FRAMES_IS : ESSENCE_FRAMES;
     for (var e2 = 0; e2 < rams.length; e2++)
       if (p.indexOf(rams[e2]) !== -1) { out.essence = e2; break; }
+    // Prazdna runa ma ram odvozeny z runy, ne z losu (2026-09-22) — zapis ho, jinak by u Blank
+    // chybel vstup a mereni by ho nevidelo (tataz trida vady jako `len` do 2026-09-20).
+    if (out.essence === undefined && p.indexOf(isIs ? ESSENCE_BLANK_IS : ESSENCE_BLANK) !== -1) out.essence = 'blank';
 
     // Klíčová slova: z pěti až šesti se losují tři (pickedKws) — fasety runy položené
     // modelu před oči. Řádka vypadá takto:
@@ -441,7 +444,17 @@ const ESSENCE_FRAMES_IS = [
   'KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem segir hvað rúnin GERIR í gegnum þessa mynd — merking hennar með hversdagslegum orðum sem ókunnugur skilur. Kunnuglega orðið má lifa inni í myndinni. Aldrei föst formúla. Engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.',
   'KJARNALÍNAN: á eftir myndinni kemur ein stutt lína þar sem rúnin — nefnd þar einu sinni — er sú sem gerir eitthvað í myndinni. Hún hreyfir, heldur, opnar eða ber. Hversdagsleg orð sem ókunnugur skilur. Engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.',
 ];
-function _essenceFrame(lang) {
+// PRAZDNA RUNA (2026-09-22, KUKY „udelej" + popis runy v RUNAR_POPISY_RUN.md): oba ramy vyse
+// rikaji, co runa DELA — [1] dokonce „runa je ta, ktera v te scene neco dela". U Blank to vyrabi
+// presne to, co popis zakazuje: „Nehledej vyznam tam, kde zatim zadny neni." Doklad: cteni
+// 2026-09-22 15:13 „Blank holds the line still there". Neni to los — ram plyne z runy, takze
+// se nelosuje a v `_promptDraws` se zapise jako essence = 'blank'.
+// Jen SINGLE: spready esencni radek nemaji od v4.9 a jmena run v textu nerikaji, takze tam
+// ten rozpor nevznika (§13 — cesta zvazena, ne zapomenuta).
+const ESSENCE_BLANK = 'THE ESSENCE LINE: after the picture, one short line that names the Blank once — the stone that bears no mark. It has no meaning in itself; the line leaves that empty place open instead of filling it. Plain words a stranger to runes can grasp. No invented mechanism, no fate. Never tell the seeker what it means for them.';
+const ESSENCE_BLANK_IS = 'KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem nefnir auðu rúnina einu sinni — steininn sem ekkert merki ber. Hún hefur enga merkingu í sjálfu sér; línan lætur auða rýmið standa opið í stað þess að fylla það. Hversdagsleg orð sem ókunnugur skilur. Engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.';
+function _essenceFrame(lang, rune) {
+  if (rune && rune.n === 'Blank') return lang === 'is' ? ESSENCE_BLANK_IS : ESSENCE_BLANK;
   var pool = lang === 'is' ? ESSENCE_FRAMES_IS : ESSENCE_FRAMES;
   return pool[Math.floor(Math.random() * pool.length)];
 }

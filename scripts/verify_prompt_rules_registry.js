@@ -83,6 +83,8 @@ const DATA = /^(PERSON|DRAWN|SEEKER|LIFE|AREA|SEEKING|INTENTION|QUESTION|REALM|E
     // registroval jen ten ram, ktery postaveny prompt zrovna vylosoval, a druhy cervenal pri
     // dalsim behu. Tataz trida vady jako u kazdeho losu bez zaznamu.
     (L === 'is' ? glob('ESSENCE_FRAMES_IS') : glob('ESSENCE_FRAMES') || []).forEach((a, i) => pridej(L, 'esence[' + i + ']', a));
+    // 2026-09-22: ram Prazdne runy — neni v losu (plyne z runy), fixture ho nikdy nepostavi.
+    pridej(L, 'esence[blank]', L === 'is' ? glob('ESSENCE_BLANK_IS') : glob('ESSENCE_BLANK'));
     zJaz('AREAS', L).forEach((a, i) => pridej(L, 'oblast[' + i + ']', S._domainContext(a, L)));
     zJaz('SEEKS', L).forEach((a, i) => pridej(L, 'registr[' + i + ']', S._registerContext(a, L)));
     zJaz('INTENTIONS', L).forEach((a, i) => pridej(L, 'zamer[' + i + ']', S._intentionContext(a, L)));
