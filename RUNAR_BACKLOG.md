@@ -1868,5 +1868,5 @@ available yet.'`, `'Hljóðskrá vantar.' / 'Audio file missing.'` a celý text 
 jsou ternáry `lang === 'is' ? … : …` přímo v logice → patří do `UI_TEXT`.
 
 Souvisí: pod statickou runu má přijít **návod „jak čtení funguje"** (text připravuje CODE-tune 2026-09-22,
-návrh ke schválení ownerem, odkaz na soubor doplní commit, který ho přinese) — obě změny dělat najednou, ať se detail
+návrh ke schválení ownerem v `docs/archive/2026-09-22-navrhy-obrazy-a-navod.md`, sekce D) — obě změny dělat najednou, ať se detail
 runy nepřestavuje dvakrát.
