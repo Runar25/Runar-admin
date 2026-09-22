@@ -282,8 +282,9 @@ const UI_TEXT = {
     // Helper ? (runar-helper.js) — report #2, KUKY 2026-09-21: zviditelnit glyf-tap a Ask ("veci ktere nejdou na prvni pohled videt").
     helper_btn:         'Help with the reading',
     helper_title:       'GOOD TO KNOW',
-    helper_glyph:       'Tap a rune glyph in the reading — it tells its name and meaning.',
-    helper_ask:         'Ask Rúnar about the reading — how the image touches your question, or where your life rune points.',
+    helper_glyph:       'Tap the rune — it tells its name and meaning.',
+    helper_ask:         'Tap here — suggested questions open.',
+    helper_ask2:        'Ask how the image touches your question.',
     // ── Dynamic banner strings — used via tp(), vars: {casts}, {casts_month}, {units}, {card}, {n}, {rune}, {bal}, {UNITS}
     // Rule §10: ALL user-visible strings here. tp() in logic files. Adding a language = add block here only.
     rs_banner_counter:  '{casts} remaining',
@@ -623,8 +624,9 @@ const UI_TEXT = {
     motto_paths:        'Rúnar segir þér ekki hvað þú átt að gera. Hann bendir á möguleika.',
     helper_btn:         'Hjálp við lesturinn',
     helper_title:       'GOTT AÐ VITA',
-    helper_glyph:       'Snertu rúnina í lestrinum — hún segir nafn sitt og merkingu.',
-    helper_ask:         'Spurðu Rúnar um lesturinn — hvernig myndin snertir spurningu þína, eða hvert lífsrúnin þín bendir.',
+    helper_glyph:       'Snertu rúnina — hún segir nafn sitt og merkingu.',
+    helper_ask:         'Smelltu hér, þá opnast tillögur að spurningum.',
+    helper_ask2:        'Spurðu hvernig myndin snertir spurningu þína.',
     // ── Dynamic banner strings — notaðar með tp(), breytur: {casts}, {casts_month}, {units}, {card}, {n}, {rune}, {bal}, {UNITS}
     rs_banner_counter:  '{casts} eftir',
     rs_banner_desc:     'Þú gengur sem <strong>Leitandi</strong> \u2014 {casts_month} til að byrja, allar tuttugu og fimm rúnirnar opnar, Rúnar hlustandi.<br><br>Þegar hún er gengin og steinarnir eiga enn eftir að segja, opnar {card} dyrnar. Eitt kort. Jafn margar spár og þú berð. Enginn gildistími, engin áskrift.',

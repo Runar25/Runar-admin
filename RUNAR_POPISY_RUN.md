@@ -212,3 +212,168 @@ Možná tedy nejde o to hledat další světlo.
 Možná už nějaké máš.
 
 Co právě teď vidíš jasněji než předtím — a co s tím uděláš, když už to nejde nevidět?
+---
+
+## Hagalaz
+
+Hagalaz přichází z nebe.
+
+Ledové zrno dopadne na krajinu a během několika okamžiků změní něco, co ještě před chvílí vypadalo pevně.
+
+Je to narušení, které nepřišlo na zavolání.
+
+Něco se stane. Plán se rozpadne. Něco, na co ses spoléhal, přestane fungovat. A první pocit může být jen: proč právě teď?
+
+Hagalaz ale není trest.
+
+Je to síla, kterou člověk nemůže řídit.
+
+Právě proto v ní může být něco důležitého. Když bouře odejde, krajina není stejná. Některé věci jsou pryč. Některé se ukázaly. A některé možná přežily právě proto, že měly skutečně pevné kořeny.
+
+Hagalaz tedy neříká, že všechno musí být zničeno.
+
+Spíš ukazuje na okamžik, kdy už není možné pokračovat přesně tak jako předtím.
+
+Někdy je její obraz tvrdý. Ale pod ledem může být něco, co čekalo na změnu už dávno.
+
+Možná proto není nejdůležitější otázka: Jak to zastavím?
+
+Ale:
+
+Co v mém životě právě padá — a co po tom zůstane, když bouře přejde?
+
+---
+
+## Jera
+
+Jera je čas, který pracuje.
+
+Semeno je v zemi. Dlouho se nic neděje — alespoň ne tak, aby to bylo vidět. Potom přijde chvíle, kdy se objeví první výhonek.
+
+Jera je cyklus, úroda a výsledek toho, co bylo zaseto.
+
+Není to runa okamžité odměny. Připomíná, že některé věci mají vlastní čas. Co jsi zasel, potřebuje růst. Co jsi dlouho budoval, potřebuje dozrát.
+
+A úroda nemusí být jen dobrá nebo špatná.
+
+Jera ukazuje důsledek.
+
+To, o co ses staral, může přinést ovoce. To, co jsi zanedbal, se může také ukázat. Ne jako trest, ale jako součást stejného zákona: čas nakonec odhalí, co skutečně rostlo.
+
+Je v ní něco uklidňujícího.
+
+Nemusíš každý den vykopávat semeno ze země, abys zjistil, jestli roste.
+
+Některé věci potřebují právě to, co jim člověk nejhůř umí dát — čas a prostor.
+
+A možná se Jera ptá:
+
+Co ve svém životě právě sklízíš — a co jsi pro tuto úrodu zasel dávno předtím, než jsi věděl, jak bude vypadat?
+
+---
+
+## Eihwaz
+
+Eihwaz stojí mezi dvěma světy.
+
+Její obraz je tis — strom, který roste pomalu, ale dokáže přežít velmi dlouho. Jeho dřevo je pevné a kořeny mohou jít hluboko. Není to strom, který spěchá.
+
+Eihwaz proto mluví o vytrvalosti, odolnosti a přechodu.
+
+Je v ní chvíle, kdy starý způsob už nestačí, ale nový ještě nemá svůj tvar. Člověk stojí uprostřed změny a nemůže se vrátit úplně zpět — zároveň ale ještě nevidí, kam přesně směřuje.
+
+To může působit jako nejistota.
+
+Eihwaz v tom ale vidí jiný obraz.
+
+Kořen nemusí vědět, jak bude vypadat větev.
+
+Stačí, že drží.
+
+Některé změny se nedějí jedním rozhodnutím. Probíhají pomalu, uvnitř, zatímco navenek se zdá, že se nic neděje.
+
+Eihwaz také připomíná, že překážka nemusí být něco, co máš odstranit. Někdy je to osa, kolem které se musíš naučit projít.
+
+Nejde tedy o sílu prorazit.
+
+Spíš o sílu zůstat stát během proměny.
+
+A otázka Eihwaz může být:
+
+Co se v tobě právě mění, i když to ještě není zvenčí vidět?
+
+---
+
+## Algiz
+
+Algiz se zvedá vzhůru jako paroží.
+
+Je v ní obraz něčeho, co se otevírá a zároveň chrání. Ne štít, který všechno od sebe odřízne, ale vzpřímenost, která vnímá, co se kolem ní děje.
+
+Algiz je spojována s ochranou, bdělostí, instinktem a hranicí.
+
+Někdy ochrana znamená říct ne.
+Někdy znamená odejít.
+A někdy jen zůstat stát a poslouchat, co ti tělo nebo vnitřní pocit říká dřív, než to dokáže pojmenovat rozum.
+
+Je v ní zvláštní pozornost.
+
+Jako když člověk jde lesem a najednou zvedne hlavu, protože něco zaslechl.
+
+Neví ještě co.
+
+Ale ví, že má dávat pozor.
+
+Algiz proto nemusí říkat, že přichází nebezpečí. Může pouze připomínat, že ne všechno kolem tebe musíš pustit dovnitř.
+
+A zároveň ochrana nemusí znamenat uzavření.
+
+Paroží se rozvětvuje do prostoru.
+
+Je otevřené světu — ale má jasný tvar.
+
+Možná je tedy otázkou Algiz:
+
+Co teď potřebuješ chránit — a před čím naopak nemusíš svou hranici držet?
+
+---
+
+## Ehwaz
+
+Ehwaz je pohyb, který vzniká ve dvou.
+
+Je v ní obraz koně a člověka — ne jako někoho, kdo koně ovládá silou, ale jako dvojice, která musí najít společný rytmus.
+
+Ehwaz je runa pohybu, důvěry, spolupráce a změny.
+
+Někdy se člověk snaží posunout věci vlastní silou. Tlačí, táhne, určuje směr. Ale Ehwaz ukazuje jiný druh pohybu.
+
+Když se dva pohybují společně, každý krok jednoho ovlivňuje krok druhého.
+
+Je v tom důvěra.
+
+Musíš trochu povolit otěže, aby se mohl objevit skutečný pohyb. A zároveň musíš vnímat, kdy druhá strana mění tempo.
+
+Ehwaz proto může mluvit o vztahu, partnerství nebo spolupráci. Ale stejně tak může ukazovat na spojení dvou částí vlastního života, které se dosud pohybovaly každá jinam.
+
+Není to runa rychlosti.
+
+Je to runa souhry.
+
+A možná právě proto může být její otázka:
+
+S kým nebo s čím se právě snažíš pohnout — a dokážete najít společný krok?
+
+---
+
+## Co ještě chybí (stav k 2026-09-22)
+
+**Hotovo (12):** Tiwaz · Fehu · Uruz · Thurisaz · Ansuz · Raidho · Kenaz · Hagalaz · Jera · Eihwaz · Algiz · Ehwaz.
+
+**Chybí konec (13):** Gebo · Wunjo · Nauthiz · Isa · Perth · Sowilo · Berkana · Mannaz · Laguz · Ingwaz · Othila · Dagaz · Prázdná runa (Unknown).
+
+⚠️ **Proč chybí:** owner je psal do in-app reportu a pole `message` v `bug_reports` má **limit
+1000 znaků** — všechny delší popisy se uťaly přesně tam. Uťaté začátky **zůstávají v DB**
+(`bug_reports`, 2026-09-22) a tenhle doc je schválně **neopisuje** (§20: fragment na dvou místech
+by se rozešel s celým textem, až dorazí). Othila má navíc v pozdějším reportu dopsaný **konec**,
+ne střed. Limit reporteru opraven → `RUNAR_DECISIONS.md` 2026-09-22.

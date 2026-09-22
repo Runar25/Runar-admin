@@ -6618,3 +6618,18 @@ check-is OK · smoke 44/44.
 **Proč:** (a) První vlna (záznam (1)) filtrovala explicitní 2. osobu — všech 5 odstraněných mělo þitt/varstu/þú manst. Bezvlastnická VNITŘNÍ událost proklouzla: myšlenka nemá ve scéně jiného vlastníka než čtenáře, takže se doručí jako tvrzení o jeho ruminaci a nespavosti. **Poučení: filtr studeného čtení nesmí mířit jen na „þú"** — rozhoduje, jestli má děj ve větě vlastníka („enginn" stačí, viz [75] klíč v šuplíku). (b) Dveře+káva = strukturně totéž co původní Kenaz lampa+hoblina (dva podměty, souřadné „og", žádná interakce); doklad rozdělení modelem: `docs/eval/2026-08-21-attribution/readings.jsonl:238` staví scénu ze dveří a esenci z kávy.
 **Ověřeno:** IS nativně (korpus + is-grammar-qa 0 flagů) · protlačení: staré pryč, nové dosažitelné (101–125/500 losů), dveře a káva nikdy spolu (0/500) · golden 8 klíčů = jen posun losu (banka 109→110) · smoke 44/44.
 **Affected doc(s):** žádné (banka žije v kódu).
+
+## 2026-09-22 (5) — Reporter uřezával text na 1000 znacích (přišlo se o 13 popisů run)
+**Našel:** CODE-tune při zpracování dnešních reportů · **Rozhodl:** KUKY implicitně (psal tam popisy run)
+**Co:** `v2/runar-reporter.js` — `maxlength` u `br-msg` a `br-repl` a obě `slice(0, 1000)` zvednuty na **5000**.
+**Proč:** 2026-09-22 psal owner do in-app reportu popisy run (~1000–1300 znaků). **13 z 25 se uťalo přesně na 1000** — včetně závěrečné otázky, která je v těch textech pointa. DB limit nemá (`bug_reports.message` je `text`), strop byl čistě klientský. 5000 = týž řád jako `cap.text` (flagged_text) o pár řádků výš, takže reporter je konzistentní sám se sebou.
+**Ověřeno:** obě `maxlength` i obě `slice` změněny (grep), `node --check`, smoke 44/44.
+**Affected doc(s):** žádné.
+
+## 2026-09-22 (6) — Helper: bubliny kotvené k prvkům, ne jedno okno u tlačítka
+**Rozhodl:** KUKY (report #17, po testu prvního helperu) · **Provedl:** CODE-tune
+**Co:** `v2/runar-helper.js` přepsán. Místo jedné bubliny u „?" se otevřou **bubliny přímo nad prvky, o kterých mluví** — nad glyfem runy a nad Ask; každá se šipkou na střed svého cíle. Bublina se ukáže jen pro cíl, který je **opravdu na obrazovce**; není-li ani jeden (typicky před čtením), objeví se jedna u tlačítka s heslem zrcadla, aby „?" neotevřelo prázdno. Pozice se přepočítá při scrollu i změně okna; klik kamkoli jinam zavírá.
+**Text u Ask** říká nově to, co owner chtěl: *„Smelltu hér, þá opnast tillögur að spurningum."* / *„Tap here — suggested questions open."* + druhý, tišší řádek s tím, na co se ptát.
+**Proč:** KUKY: *„to vyskakovací okno bych chtěl mít přímo nad Ask a nad glyfem. Ne v tom okně helperu. Tak aby uživatel viděl, ke to je."* Nápověda, která popisuje prvek, ale neukazuje na něj, nechává uživatele hádat, čeho se týká.
+**Ověřeno živě** (localhost, EN i IS): 2 bubliny, odchylka od středu cíle **0 px**, mezera 10 px, nepřekrývají se, šipka je prázdný `content` (ne uvozovka), klik jinam zavírá, IS texty ověřeny korpusem + `is-grammar-qa` (souvětí, které nástroj nerozparsoval, bylo přepsáno na kratší větu — §19.2, ne obejito).
+**Affected doc(s):** žádné (CLAUDE.md už `runar-helper.js` uvádí).

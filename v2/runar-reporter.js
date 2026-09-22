@@ -107,10 +107,10 @@
           '<div class="br-lbl" id="br-type-lbl"></div>' +
           '<div class="br-types" id="br-types"></div>' +
           '<div class="br-lbl" id="br-msg-lbl"></div>' +
-          '<textarea id="br-msg" maxlength="1000"></textarea>' +
+          '<textarea id="br-msg" maxlength="5000"></textarea>' +
           '<div id="br-repl-wrap" class="br-hide">' +
             '<div class="br-lbl" id="br-repl-lbl"></div>' +
-            '<input id="br-repl" type="text" maxlength="1000">' +
+            '<input id="br-repl" type="text" maxlength="5000">' +
           '</div>' +
           '<div class="br-row">' +
             '<button class="br-send" id="br-send"></button>' +
@@ -194,8 +194,11 @@
       client_uuid: uuid(),
       tester: (localStorage.getItem(TESTER_KEY) || '').slice(0, 40),
       type: curType,
-      message: (document.getElementById('br-msg').value || '').slice(0, 1000),
-      suggested_replacement: curType === 'replace' ? (document.getElementById('br-repl').value || '').slice(0, 1000) : null,
+      // 2026-09-22: 1000 -> 5000. Owner psal do reportu popisy run (~1000-1300 zn.) a 13 z 25
+      // se urizlo presne na 1000 vcetne zaverecne otazky. DB limit nema (sloupec text),
+      // strop byl jen tady; 5000 = tyz rad jako cap.text vyse.
+      message: (document.getElementById('br-msg').value || '').slice(0, 5000),
+      suggested_replacement: curType === 'replace' ? (document.getElementById('br-repl').value || '').slice(0, 5000) : null,
       flagged_text: cap.text || null,
       flagged_source: cap.source,
       i18n_key: cap.key || null,
