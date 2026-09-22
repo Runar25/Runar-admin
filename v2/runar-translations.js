@@ -274,6 +274,16 @@ const UI_TEXT = {
     tree_reveal_intro:  'Before the runes speak of today \u2014 shall R\u00fanar reveal the rune you carry since birth?',
     reading_loading:    'THE STONES SPEAK IN SILENCE\u2026',
     reading_error:      'Error generating rune reading.',
+    // Hesla zrcadla — jedno se losuje pod loading label pri startu cteni (reporty #5/#6, KUKY 2026-09-21:
+    // "rict mu, ze cteni je obraz, zrcadlo… nejlepe pred tim nez runar vytvori cteni").
+    motto_image:        'Rúnar speaks in images — the rune lives inside the image.',
+    motto_mirror:       'The image is a mirror. What you seek, you find in it yourself.',
+    motto_paths:        'Rúnar does not tell you what to do. He points to what is possible.',
+    // Helper ? (runar-helper.js) — report #2, KUKY 2026-09-21: zviditelnit glyf-tap a Ask ("veci ktere nejdou na prvni pohled videt").
+    helper_btn:         'Help with the reading',
+    helper_title:       'GOOD TO KNOW',
+    helper_glyph:       'Tap a rune glyph in the reading — it tells its name and meaning.',
+    helper_ask:         'Ask Rúnar about the reading — how the image touches your question, or where your life rune points.',
     // ── Dynamic banner strings — used via tp(), vars: {casts}, {casts_month}, {units}, {card}, {n}, {rune}, {bal}, {UNITS}
     // Rule §10: ALL user-visible strings here. tp() in logic files. Adding a language = add block here only.
     rs_banner_counter:  '{casts} remaining',
@@ -607,6 +617,14 @@ const UI_TEXT = {
     tree_reveal_intro:  '\u00c1\u00f0ur en r\u00fanarnar tala um daginn \u2014 vill R\u00fanar opinbera r\u00fanina sem þ\u00fa hefur bori\u00f0 fr\u00e1 fæ\u00f0ingu?',
     reading_loading:    'STEINARNIR TALA \u00cd \u00dE\u00d6GNINNI\u2026',
     reading_error:      'Villa vi\u00f0 sp\u00e1.',
+    // Hesla zrcadla + helper — viz en blok (IS psano nativne, korpus + is-grammar-qa 2026-09-22).
+    motto_image:        'Rúnar talar í myndum — rúnin býr í myndinni.',
+    motto_mirror:       'Myndin er spegill. Það sem þú leitar að, finnur þú í honum sjálfur.',
+    motto_paths:        'Rúnar segir þér ekki hvað þú átt að gera. Hann bendir á möguleika.',
+    helper_btn:         'Hjálp við lesturinn',
+    helper_title:       'GOTT AÐ VITA',
+    helper_glyph:       'Snertu rúnina í lestrinum — hún segir nafn sitt og merkingu.',
+    helper_ask:         'Spurðu Rúnar um lesturinn — hvernig myndin snertir spurningu þína, eða hvert lífsrúnin þín bendir.',
     // ── Dynamic banner strings — notaðar með tp(), breytur: {casts}, {casts_month}, {units}, {card}, {n}, {rune}, {bal}, {UNITS}
     rs_banner_counter:  '{casts} eftir',
     rs_banner_desc:     'Þú gengur sem <strong>Leitandi</strong> \u2014 {casts_month} til að byrja, allar tuttugu og fimm rúnirnar opnar, Rúnar hlustandi.<br><br>Þegar hún er gengin og steinarnir eiga enn eftir að segja, opnar {card} dyrnar. Eitt kort. Jafn margar spár og þú berð. Enginn gildistími, engin áskrift.',

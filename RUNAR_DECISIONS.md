@@ -6595,3 +6595,10 @@ check-is OK · smoke 44/44.
 **Proč:** report #12 (owner) + audit; mechanismus pojmenovaný v RUNAR_DESIGN „Cold reading: anti-vzor" — materiál kostky se nesmí podat jako vědění o tazateli.
 **Ověřeno:** IS nativně (korpus vazby + is-grammar-qa 0 flagů, „rúnina" BÍN ÞFETgr) · protlačení: staré formulace 0× ve zdroji, nové dosažitelné `_seasonalImagery` (49–167/500 losů) · golden: 3 klíče, čistá náhrada slotu · registry --zapis · smoke 44/44. Pozemek hlídán: řeka (Laguz) do Mannaz nesměla.
 **Affected doc(s):** žádné (banka žije v kódu).
+
+## 2026-09-22 (2) — Helper „?" + hesla zrcadla před čtením
+**Rozhodl:** KUKY (reporty #2/#5/#6 2026-09-21 + „ano, nasad vsechno") · **Provedl:** CODE-tune
+**Co:** (a) Nový `v2/runar-helper.js` (vzor reporteru — soběstačná IIFE, jen reader): plovoucí „?" vlevo dole → bublina „GOTT AÐ VITA / GOOD TO KNOW" s heslem zrcadla + řádkem o glyf-tapu (zviditelňuje runar-rune-popup.js) + řádkem o Ask (jen když je Ask na obrazovce — visitor/rune_seeker ho nevidí, §13). Obsah se staví při každém otevření přes t() → přepínání jazyka bez háčku v updateUIText (§14). (b) Pod loading label „STEINARNIR TALA Í ÞÖGNINNI…" se při každém startu čtení losuje jedno ze tří hesel zrcadla (`motto_image` · `motto_mirror` · `motto_paths` v UI_TEXT, §10; maluje `_paintLoadingMotto()` v runar-reading.js).
+**Proč:** #2 „tlačítko help… bublina — věci které nejdou na první pohled vidět"; #5/#6 „říct mu, že čtení je obraz, zrcadlo… nejlépe před tím než runar vytvoří čtení". Hesla = návod k projekci, ne obsah čtení — kánon zrcadla (RUNAR_DESIGN „Kdo je Rúnar").
+**Ověřeno:** IS nativně (korpus vazby, is-grammar-qa 0 flagů) · živě v prohlížeči (localhost server): EN i IS bublina, aria, Ask řádek jen při viditelném Ask, heslo maluje pod label · sw.js precache doplněn (㉧) · smoke 44/44.
+**Affected doc(s):** CLAUDE.md (výpis souborů + load order — runar-helper.js) — opraveno v tomtéž commitu.

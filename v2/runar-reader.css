@@ -723,6 +723,8 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .whispers-loading-inner{text-align:center;padding:22px 0 10px;}
 .whispers-loading-star{font-size:1.6em;color:var(--gold);display:block;margin-bottom:10px;animation:runar-breathe 2.4s ease-in-out infinite;}
 .whispers-loading-label{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2.5px;color:var(--gold);animation:runar-breathe 2.4s ease-in-out infinite;animation-delay:0.3s;}
+/* Heslo zrcadla pod loading labelem — klidné (bez dechu), --muted je pro text povolené (§5 zakazuje jen --dim) */
+.reading-loading-motto{font-style:italic;font-size:0.72em;line-height:1.55;color:var(--muted);max-width:340px;margin:12px auto 0;}
 .whispers-counter{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--teal);margin-bottom:14px;}
 .whispers-btn{width:100%;padding:12px;background:rgba(255,191,0,0.08);border:1px solid rgba(255,191,0,0.35);color:var(--gold);font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2.5px;cursor:pointer;transition:all 0.2s;margin-bottom:6px;}
 .whispers-btn:hover:not(:disabled){background:rgba(255,191,0,0.14);border-color:rgba(255,191,0,0.6);}

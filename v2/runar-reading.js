@@ -88,6 +88,9 @@ async function _generateReading() {
   const _rdLoadEl = document.getElementById('reading-loading');
   const _rdLoadTxt = document.getElementById('reading-loading-txt');
   if (_rdLoadTxt) _rdLoadTxt.textContent = t('reading_loading');
+  // Heslo zrcadla pod labelem — losuje se pri KAZDEM startu cteni (reporty #5/#6 2026-09-21:
+  // "rict mu, ze cteni je obraz, zrcadlo… nejlepe pred tim nez runar vytvori cteni").
+  _paintLoadingMotto();
   if (_rdLoadEl) _rdLoadEl.style.display = 'block';
   var _aqS = document.getElementById('ask-runar'); if (_aqS) _aqS.style.display = 'none';
   var _pL1 = document.getElementById('layer1-lbl');
@@ -619,6 +622,13 @@ function _askHints() {
                    : t('ask_h_unseen'));
   return out.filter(Boolean);
 }
+// Jedno ze tri hesel zrcadla do #reading-loading-motto (prazdne = prvek chybi, nic nespadne).
+function _paintLoadingMotto() {
+  var el = document.getElementById('reading-loading-motto');
+  if (!el) return;
+  var kl = ['motto_image', 'motto_mirror', 'motto_paths'];
+  el.textContent = t(kl[Math.floor(Math.random() * kl.length)]);
+}
 function toggleAskHints() {
   var btn = document.getElementById('ask-lbl'), box = document.getElementById('ask-hints');
   if (!btn || !box) return;
@@ -957,6 +967,7 @@ async function _generateSpreadReading(o) {
   var rdLoad = document.getElementById('reading-loading');
   var rdLoadTxt = document.getElementById('reading-loading-txt');
   if (rdLoadTxt) rdLoadTxt.textContent = t('reading_loading');
+  _paintLoadingMotto(); // tyz duvod jako u prvniho mista (reporty #5/#6)
   if (rdLoad) rdLoad.style.display = 'block';
   var _aqP = document.getElementById('ask-runar'); if (_aqP) _aqP.style.display = 'none';
   var pL1 = document.getElementById('layer1-lbl');
