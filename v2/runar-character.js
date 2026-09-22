@@ -485,14 +485,16 @@ var RUNE_IMAGES = [
   ['Thurisaz','any','Sprungan í hrauninu bíður — þú kemst ekki yfir nema stökkva.','The crack in the lava waits — you cannot cross it without a jump.','þröskuldur','threshold','E'],
   ['Ansuz','bright','Andvarinn ber lóukvakið yfir móann til þín.','The breeze carries the plover\'s call across the moor to you.','skilaboð','messages','P'],
   ['Ansuz','any','Hrafninn sest á staurinn og bíður þess að þú hlustir.','The raven settles on the fencepost and waits for you to listen.','rödd','messages','P'],
-  ['Ansuz','any','Rödd í símanum segir það sem þú hefur beðið eftir að heyra.','A voice on the phone says the thing you have been waiting to hear.','rödd','messages','D'],
+  // 2026-09-22 (audit studenych cteni): "to, na co cekas" tvrdilo nevyresene cekani tazatele.
+  ['Ansuz','any','Bréfið kemur loks með bátnum og liggur óopnað á borðinu.','The letter comes with the boat at last and lies unopened on the table.','rödd','messages','D'],
   // 2026-09-10 (davka 1, Cowork): Ansuz mel dosazitelnou JEDINOU stranku sveho
   // vyznamu — nize doplnene stranky se do cteni nemohly dostat vubec. Kazdy z techto
   // radku prosel identitnim soudcem 3/3; ze stejne davky jich 14 propadlo a nenasazuje se.
   // Duvod + cisla -> RUNAR_EVAL_LOG.md 2026-09-10 (2).
   ['Ansuz','any','Í miðri útskýringu vandans upphátt þagnar þú, því að segja hann sýndi þér svarið.','Halfway through explaining the problem aloud, you stop, because saying it showed you the answer.','viska','wisdom','D'],
   ['Ansuz','any','Ketillinn breytir um tón rétt áður en hann sýður, og þú heyrir það án þess að líta við.','The kettle changes its note just before it boils, and you hear it without looking.','viska','wisdom','D'],
-  ['Ansuz','any','Ókunnugur segir eina einfalda setningu í framhjáhlaupi, og hún svarar því sem þú spurðir ekki upphátt.','A stranger says one plain sentence in passing, and it answers the thing you did not ask aloud.','guðleg leiðsögn','divine guidance','D'],
+  // 2026-09-22 (audit studenych cteni): "co jsi nevyslovil nahlas" tvrdilo soukromou otazku tazatele.
+  ['Ansuz','any','Fuglarnir fljúga heim undan veðrinu sem enn sést ekki.','The birds make for home ahead of weather that cannot yet be seen.','guðleg leiðsögn','divine guidance','P'],
   ['Ansuz','any','Klukknahljómur frá kirkju handan fjarðar berst yfir kyrrt loftið og þú snýrð í áttina án þess að ákveða það.','A church bell from across the fjord carries over the still air and you turn toward it without deciding to.','guðleg leiðsögn','divine guidance','E'],
   ['Ansuz','any','Einhver kallar nafn þitt yfir mannþröngina og öll önnur hljóð hverfa.','Someone calls your name across the crowd and every other sound drops away.','rödd','voice','D','the-call'],
   ['Ansuz','any','Yfir hlaðið heyrist á tóninum í kallinu hvort það eru válegar fréttir eða bara kvöldmatur.','Across the yard the pitch of the call alone tells whether it is bad news or only supper.','rödd','voice','P','the-call'],
@@ -515,7 +517,8 @@ var RUNE_IMAGES = [
   ['Gebo','any','Fjaran skilar einu og hirðir annað með hverri báru.','The shore returns one thing and keeps another with every wave.','gefa og þiggja','giving and receiving','E'],
   ['Gebo','any','Dyrnar standa opnar og kaffi bíður á borðinu handa tveimur.','The door stands open and coffee waits on the table for two.','félagsskapur','companionship','D'],
   ['Wunjo','bright','Sólin nær loksins inn í dalinn og allt verður kyrrt.','The sun finally reaches into the valley and everything goes still.','sátt','harmony','P'],
-  ['Wunjo','any','Það er kveikt á lömpunum snemma og húsið fyllist af röddum áður en maturinn er tilbúinn.','The lamps are lit early and the house fills with voices before the food is ready.','tilheyra','belonging','D'],
+  // 2026-09-22 (dve ohniska, jako lampa/hoblina): lampy + hlasy — zustavaji hlasy, lampy pryc.
+  ['Wunjo','any','Húsið fyllist af röddum áður en maturinn er tilbúinn.','The house fills with voices before the food is ready.','tilheyra','belonging','D'],
   ['Wunjo','any','Ein rödd byrjar sönginn og stofan tekur undir, línu fyrir línu.','One voice starts the song and the room finds it line by line.','tilheyra','belonging','D'],
   ['Wunjo','any','Þú kemur inn úr kuldanum og einhver hefur kynt ofninn.','You come in out of the cold and someone has lit the stove.','tilheyra','belonging','D'],
   ['Hagalaz','cold','Élið skellur á úr heiðskíru og er farið jafn skjótt.','The squall strikes out of a clear sky and is gone just as fast.','náttúruöfl','disruption','E'],
@@ -558,7 +561,8 @@ var RUNE_IMAGES = [
   // 2026-09-12: IS aspekt skjól → vernd. EN tu nese „protection", ktere o radek vys paruje
   // s „vernd"; „skjól" je „shelter" (radek s torfveggem). Dvojice se rozchazela jen tady.
   // Navrh Cowork (handoff o jmenech), overeno proti sousednim radkum a klici runy (k_is).
-  ['Algiz','any','Einhver lætur ljósið loga í glugganum og lítur aftur og aftur út á myrkan veginn þar til hurðin opnast loks.','Someone leaves the light burning in the window and glances again and again at the dark road until the door finally opens.','vernd','protection','D'],
+  // 2026-09-22 (dve ohniska): svetlo + cesta + dvere — zustava svetlo v okne jako cin ochrany.
+  ['Algiz','any','Ljósið logar í glugganum þar til sá síðasti er kominn heim.','The light is kept burning in the window until the last one is home.','vernd','protection','D'],
   ['Sowilo','bright','Miðnætursólin sest aldrei alveg um Jónsmessuna.','The midnight sun never quite sets around Midsummer.','sól','sun','E','midnight-sun'],
   ['Sowilo','bright','Sólin brýtur loks í gegn og glampar á blautu grjóti.','The sun finally breaks through and glints on the wet stones.','skýrleiki','clarity','E'],
   // 2026-09-09: nahrazeno — „never tilts" je nehybnost, tedy pole Isy; soudce cetl
@@ -578,13 +582,18 @@ var RUNE_IMAGES = [
   ['Ehwaz','bright','Þegar annar hesturinn þreytist í brekkunni hægir hinn á sér óbeðinn, og þeir ná brúninni saman.','When one horse tires on the climb the other slows unasked, and they reach the ridge together.','traust milli tveggja','partnership','P'],
   ['Ehwaz','any','Á einstiginu styttir sá sem gengur með þér skrefið að þínu án orða, og gangan jafnast.','On the narrow path the one who walks with you shortens their stride to yours without a word, and the going evens out.','traust milli tveggja','partnership','P'],
   ['Mannaz','any','Spegilmyndin í lygnu lóninu bærist við minnsta blæ.','The reflection in the still lagoon trembles at the least breath of wind.','sjálfsþekking','self-awareness','P','reflection'],
-  ['Mannaz','any','Andlitið í kyrru regnvatninu í tunnunni er þitt, eldra en þig minnir.','The face in the still water of the rain-barrel is yours, older than you remember it.','sjálfsþekking','self-awareness','P','reflection'],
+  // 2026-09-22 (audit studenych cteni): "starsi, nez si pamatujes" tvrdilo o tazatelove pameti.
+  ['Mannaz','any','Andlitið í regntunnunni hreyfist ekki fyrr en þú hreyfir þig.','The face in the rain-barrel does not move until you do.','sjálfsþekking','self-awareness','P','reflection'],
   // 2026-09-10 (davka 1, Cowork): Mannaz mel dosazitelnou JEDINOU stranku sveho
   // vyznamu — nize doplnene stranky se do cteni nemohly dostat vubec. Kazdy z techto
   // radku prosel identitnim soudcem 3/3; ze stejne davky jich 14 propadlo a nenasazuje se.
   // Duvod + cisla -> RUNAR_EVAL_LOG.md 2026-09-10 (2).
-  ['Mannaz','any','Í þremur ólíkum herbergjum í dag varstu ólík manneskja í hverju þeirra, og samt var eitt lítið þrjóskt atriði eins alls staðar.','In three different rooms today you were a different person in each, and yet one small stubborn thing was the same in all of them.','sjálfið','the self','D'],
-  ['Mannaz','any','Þú manst símanúmer húss sem þú hefur ekki hringt í í þrjátíu ár, en ekki hvers vegna þú gekkst inn í þetta herbergi.','You remember the number of a house you have not called in thirty years, but not why you walked into this room.','hugur','mind','D'],
+  // 2026-09-22 (audit studenych cteni): cisty Forer — tvrdil, kym tazatel DNES byl. Reka nesmi
+  // (pozemek Laguz), zrcadlo uz maji [72]/[73] — zustava clovek a smich, ktery se pozna vsude.
+  ['Mannaz','any','Sama manneskjan hlær öðruvísi í eldhúsinu en á túninu, en hláturinn þekkist alls staðar.','The same person laughs one way in the kitchen and another out on the field, and still the laugh is known anywhere.','sjálfið','the self','D'],
+  // 2026-09-22 (audit studenych cteni; KUKY report #12 + "zadna 30 let si pamatujes"): tvrdilo
+  // o tazatelove pameti. Nahrada nese tyz aspekt (pamet/mysl) bez tvrzeni o cloveku.
+  ['Mannaz','any','Í skúffunni liggur lykill og enginn man lengur að hverju hann gengur.','A key lies in the drawer, and no one remembers what it opens.','hugur','mind','D'],
   ['Mannaz','any','Sama hugsunin gengur sömu þrjú skref búrsins alla nóttina og er engu nær út um morguninn.','The same thought walks the same three steps of its cage all night and is no nearer out by morning.','hugur','mind','D'],
   ['Laguz','any','Undiraldan finnst í fótunum áður en hún sést.','The groundswell is felt in your feet before it is seen.','innsæi','intuition','E'],
   ['Laguz','any','Jökuláin rennur grá og þung, full af því sem hún ber að ofan.','The glacial river runs grey and heavy, full of what it carries down from above.','flæði','the unconscious','E'],

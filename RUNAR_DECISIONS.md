@@ -6588,3 +6588,10 @@ check-is OK · smoke 44/44.
 **Ověřeno:** protlačení produkční cestou (EN/IS/spread/holé IS jméno/neznámý název — 6+9 asertů OK) · golden PŘED(HEAD)/PO: 4× ask_* zamýšlená změna + 5× mechanický posun losu obrazu (banka +1 řádek, žádný nový text) · smoke 44/44.
 **Vedlejší nálezy (§22, opraveno hned):** `golden_dump.js` psal vždy ROOT+OUT (absolutní cesta = ENOENT) a committed baseline byla zastaralá (éra 10 builderů) → default míří na committed baseline, absolutní cesta se respektuje, baseline obnovena. Dluh délky `RUNAR_TREE.md` vypršel (31 dní, blokoval push všem) → obnoven, zkrácení dál patří CODE-tree.
 **Affected doc(s):** žádné (čísla i texty žijí v kódu).
+
+## 2026-09-22 (1) — Banka obrazů: 5 studených čtení ven, 2 dvouohniskové zkráceny (v4.41)
+**Rozhodl:** KUKY („zkontroluj obrazy na studena cteni, zadna 30 let si pamatujes atd." · „ano, nasad vsechno") · **Provedl:** CODE-tune
+**Co:** Audit všech 109 řádků `RUNE_IMAGES` proti kánonu zrcadla (obraz nesmí TVRDIT nic o tazatelově soukromí — paměť, nevyřčená otázka, kdo dnes byl; „ty ve scéně" zůstává). Nahrazeno 5: Mannaz-mind (třicet let → klíč v šuplíku), Mannaz-self (tři místnosti/Forer → smích, který se pozná všude), Mannaz-self-awareness (starší než si pamatuješ → tvář se nepohne, dokud se nepohneš ty), Ansuz-guidance (nevyslovená otázka → ptáci před neviděným počasím), Ansuz-messages (na co čekáš → dopis s lodí). Zkráceny 2 dvouohniskové (pokračování lampa/hoblina): Wunjo-belonging (lampy pryč, zůstávají hlasy), Algiz-protection (zůstává světlo v okně). Kenaz výheň+železo NECHÁN (jedna příčina a účinek, ne dvě ohniska); dlouhé jednofokusové (#49, #57, #71) nechány.
+**Proč:** report #12 (owner) + audit; mechanismus pojmenovaný v RUNAR_DESIGN „Cold reading: anti-vzor" — materiál kostky se nesmí podat jako vědění o tazateli.
+**Ověřeno:** IS nativně (korpus vazby + is-grammar-qa 0 flagů, „rúnina" BÍN ÞFETgr) · protlačení: staré formulace 0× ve zdroji, nové dosažitelné `_seasonalImagery` (49–167/500 losů) · golden: 3 klíče, čistá náhrada slotu · registry --zapis · smoke 44/44. Pozemek hlídán: řeka (Laguz) do Mannaz nesměla.
+**Affected doc(s):** žádné (banka žije v kódu).
