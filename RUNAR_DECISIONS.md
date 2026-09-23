@@ -6677,3 +6677,8 @@ check-is OK · smoke 44/44.
 **Pozn.:** jména tierů v uvítání zůstávají jako slova, ne `{placeholder}` — islandština je skloňuje (*„gerðu þig að Leitanda"*), dosazený nominativ by byl chyba.
 **Ověřeno živě** (EN i IS, návštěvník): 0 teček, 0 přepínačů, jméno a výklad podle jazyka, návod v jazyce appky.
 **Affected doc(s):** `RUNAR_BACKLOG.md` (položka uzavřena) — v tomtéž commitu.
+
+## 2026-09-23 (5) — Oprava data: záznam „2026-09-24 (1)" výš patří k 2026-09-23
+Záznam o Kolekci (jen jazyk appky) nese omylem datum **2026-09-24**; vznikl **2026-09-23** (datum
+jsem vzal z hlavy, ne z `date`). Nepřepisuje se na místě — log je append-only a smoke ㉗ to hlídá.
+Obsah záznamu platí beze změny. — CODE-tune

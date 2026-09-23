@@ -1007,7 +1007,7 @@ async function loadCollection() {
   if (notice) {
     notice.style.display = isVisitor ? 'block' : 'none';
     if (isVisitor) {
-      // 2026-09-24: text do UI_TEXT (§10). Jmena tieru v nem zustavaji jako slova, ne {placeholder}:
+      // 2026-09-23: text do UI_TEXT (§10). Jmena tieru v nem zustavaji jako slova, ne {placeholder}:
       // islandstina je sklonuje („gerðu þig að Leitanda" — dativ), dosazeny nominativ by byl chyba.
       document.getElementById('vcn-text').innerHTML = t('vcn_text');
       document.getElementById('vcn-btn').textContent = t('become_rs_btn');
@@ -1019,7 +1019,7 @@ async function loadCollection() {
     const locked  = isVisitor && VISITOR_RUNES.indexOf(r.n) === -1;
 
     const cell = document.createElement('button');
-    // 2026-09-24: bez trid has-audio/partial-audio — barvily jen tecky EN/IS, ktere odesly.
+    // 2026-09-23: bez trid has-audio/partial-audio — barvily jen tecky EN/IS, ktere odesly.
     cell.className = 'coll-cell' + (locked ? ' locked' : '');
     if (activeCollRune?.n === r.n) cell.classList.add('active');
 
@@ -1029,7 +1029,7 @@ async function loadCollection() {
     cell.innerHTML = `
       ${svgHtml}
       <span class="coll-name">${_cp.name}</span>${_cp.tr ? `<span class="coll-tr">(${_cp.tr})</span>` : ''}`;
-    // 2026-09-24 (KUKY): tecky „ma nahravku EN / IS" pryc — clovek vidi jen svuj jazyk.
+    // 2026-09-23 (KUKY): tecky „ma nahravku EN / IS" pryc — clovek vidi jen svuj jazyk.
 
     cell.dataset.rune = r.n;
     if (!locked) cell.onclick = () => openCollDetail(r, cell);
@@ -1050,7 +1050,7 @@ function openCollDetail(r, cell, skipScroll) {
 
   // Fill static info
   document.getElementById('cd-glyph').innerHTML      = runeSvg(r, { frame: true, cls: 'cd-stone' });
-  // 2026-09-24 (KUKY): jen jazyk appky. #cd-name-en nese jmeno, #cd-name-is islandsky vyklad
+  // 2026-09-23 (KUKY): jen jazyk appky. #cd-name-en nese jmeno, #cd-name-is islandsky vyklad
   // jmena (jen v IS, v EN prazdny) — ID zustala, aby se nemenilo nic, co na ne sahá.
   const _np = rnSplit(r);
   document.getElementById('cd-name-en').textContent  = _np.name;
@@ -1106,7 +1106,7 @@ function closeCollDetail() {
 function loadCollAudio(l) {
   if (!activeCollRune) return;
 
-  // 2026-09-24: prepinac EN/IS z Kolekce odesel (KUKY) — uceni jde vzdy v jazyce appky.
+  // 2026-09-23: prepinac EN/IS z Kolekce odesel (KUKY) — uceni jde vzdy v jazyce appky.
 
   const rows = collAudioMap[activeCollRune.n]?.[l] || [];
   const textEl   = document.getElementById('cd-audio-text');
@@ -1117,7 +1117,7 @@ function loadCollAudio(l) {
 
   if (rows.length === 0) {
     textEl.textContent  = '';
-    playerEl.innerHTML  = `<div class="coll-no-audio">${t('coll_no_audio')}</div>`;   // §10, 2026-09-24
+    playerEl.innerHTML  = `<div class="coll-no-audio">${t('coll_no_audio')}</div>`;   // §10, 2026-09-23
     return;
   }
 
@@ -1125,7 +1125,7 @@ function loadCollAudio(l) {
   const pick = rows[Math.floor(Math.random() * rows.length)];
   textEl.textContent = pick.text || '';
   if (!pick.audio_url) {
-    playerEl.innerHTML = `<div class="coll-no-audio">${t('coll_audio_missing')}</div>`;   // §10, 2026-09-24
+    playerEl.innerHTML = `<div class="coll-no-audio">${t('coll_audio_missing')}</div>`;   // §10, 2026-09-23
   } else {
     playerEl.innerHTML = _makeCapPlayer('coll', pick.audio_url, false);
     _capWire('coll');

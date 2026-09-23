@@ -1864,4 +1864,4 @@ Reprodukce: `Workflow({scriptPath: '…/overeni-banky-a-zapojeni-wf_82db76b7-381
 — hotoví agenti se vrátí z cache, doběhnou jen ti, co spadli.
 
 ## 2026-09-22 — Statické runy (záložka Kolekce): jen jazyk, který má člověk nastavený
-✅ **Uzavřeno** → `RUNAR_DECISIONS.md` 2026-09-24 (1).
+✅ **Uzavřeno** → `RUNAR_DECISIONS.md` záznam „2026-09-24 (1)" (skutečně 2026-09-23, viz oprava pod ním).

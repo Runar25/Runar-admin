@@ -286,7 +286,7 @@ const UI_TEXT = {
     helper_ask:         'Tap here — suggested questions open.',
     helper_ask2:        'Ask how the image touches your question.',
     // Navod pod statickou runou (Kolekce), KUKY 2026-09-23. Radky = odstavce, poradi = hierarchie z RUNAR_DESIGN.
-    // Kolekce (2026-09-24, z runar-app.js kvuli §10)
+    // Kolekce (2026-09-23, z runar-app.js kvuli §10)
     coll_no_audio:      'No recording available yet.',
     coll_audio_missing: 'Audio file missing.',
     vcn_text:           'You walk here as a <strong>Visitor</strong>. Five runes await you — draw one, and listen to the ancient stones.<br><br>Should you want all twenty-five, and a reading that speaks to you alone, become a <strong>Rune Seeker</strong>. Free to join.',
