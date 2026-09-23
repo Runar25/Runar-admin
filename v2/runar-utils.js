@@ -210,7 +210,12 @@ function tp(key, vars) {
 // s pravidlem cocky (_lensContext: "never name or explain it") a u ctenaru bez zivotni
 // runy odkazoval na neco, co v promptu neni. Kdo ho vraci, vraci i ten rozpor.
 const READING_ANGLES = [
-  'Open with the whole image at once, then let everything fall away but one.',
+  // [0] 2026-09-23 (KUKY „ok. opravit“): „celý obraz najednou“ nutil celou scénu do 1. věty a model
+  // k ní dokresloval okolí, které v obrazu není („the whole yard still grey“). Změřeno, stejné losy,
+  // 12 čtení: 1. věta 25,0 -> 20,9 slov, nejdelší 33 -> 24, kratší v 9/12 párů, drží v obou půlkách;
+  // starý pokyn model u Jery doslova opsal, nový ne. „Nech vše odpadnout kromě jedné věci“ zůstává —
+  // z něj vzniklo ownerem chválené „jedno zlomené stéblo“ (Hagalaz, 2026-09-23).
+  'Open with one quick glance at the whole image, then let everything fall away but one.',
   'Open on the smallest detail in the image, the part someone would walk past.',
   'Open with the motion already underway in the image. If nothing moves, open with the stillness itself.',
   'Open with the one thing in the image that stays fixed while the rest gives way.',
@@ -224,7 +229,7 @@ const READING_ANGLES = [
 
 // ─── Reading angles IS ─────────────────────────────────────────
 const READING_ANGLES_IS = [
-  'Byrjaðu á allri myndinni í einu, láttu svo allt hverfa nema eitt.',
+  'Líttu fyrst snöggt yfir alla myndina, láttu svo allt hverfa nema eitt.',
   'Byrjaðu á minnsta hlutnum í myndinni, þeim sem flestir gengju fram hjá.',
   'Byrjaðu á hreyfingunni sem er þegar hafin í myndinni. Ef ekkert hreyfist, byrjaðu þá á kyrrðinni sjálfri.',
   'Byrjaðu á því eina í myndinni sem stendur fast meðan allt annað lætur undan.',

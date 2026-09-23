@@ -6732,3 +6732,11 @@ Obsah záznamu platí beze změny. — CODE-tune
   krok = korektor + korpusová brána (viz backlog), ne holý korektor.
 - **Reverzibilita:** snadná (`delete … where original_phrase in (…)`).
 - Affected doc(s): `check-is.py` (5 vzorů) · RUNAR_BACKLOG.md (kandidát korektoru přepsán, růst bloku korekcí).
+
+## 2026-09-23 (7) — Úvodní pokyn „celý obraz najednou" → „jeden rychlý pohled na celý obraz" (v4.45)
+**Rozhodl:** KUKY („ok. opravit") · **Provedl:** CODE-tune
+**Co:** jeden ze sedmi losovaných úvodů čtení (`READING_ANGLES[0]` / `_IS[0]`): EN *„Open with one quick glance at the whole image, then let everything fall away but one."* · IS *„Líttu fyrst snöggt yfir alla myndina, láttu svo allt hverfa nema eitt."* (korpus + is-grammar-qa).
+**Proč:** starý pokyn *„the whole image at once"* tlačil celou scénu do první věty a model k ní dokresloval okolí, které v obrazu není (*„the whole yard still grey"*). Délka obrazu přitom s délkou první věty nesouvisí (r = 0,02, n = 72) — příčina byla v tomhle pokynu.
+**Změřeno** (stejné runy, oblasti a losy, mění se jen pokyn; produkční model, 12 + 12 EN čtení): 1. věta **25,0 → 20,9** slov, nejdelší **33 → 24**, kratší v 9 z 12 párů, drží v obou půlkách (25,8→22,2 · 24,2→19,7); starý stav sedí s produkcí (25,4). Starý pokyn model u Jery doslova opsal (*„Let all of it fall away but the one truth"*), nový ne. Zachována část *„nech vše odpadnout kromě jedné věci"* — z ní vzniklo chválené *„one bent stalk remains"*.
+**Mez:** IS jen jazykově ověřené, neměřené na čteních. Slova „whole/everything" v první větě neubyla (8 → 9) — věta je kratší, ne jiná.
+**Affected doc(s):** `RUNAR_BACKLOG.md` (bod 3 ze tří otevřených uzavřen) — v tomtéž commitu.
