@@ -6682,3 +6682,18 @@ check-is OK · smoke 44/44.
 Záznam o Kolekci (jen jazyk appky) nese omylem datum **2026-09-24**; vznikl **2026-09-23** (datum
 jsem vzal z hlavy, ne z `date`). Nepřepisuje se na místě — log je append-only a smoke ㉗ to hlídá.
 Obsah záznamu platí beze změny. — CODE-tune
+
+## 2026-09-23 (6) — Islandské chyby: vždy do korekcí · pravidla smí test upravit · smyčka ze skutečných čtení
+
+- **Decision (KUKY 2026-09-23), tři body:**
+  1. **Každá potvrzená IS chyba jde VŽDY do korekcí** (DB `runar_corrections` přes shrine + `BAD_PATTERNS`
+     v `check-is.py`). *„Určitě a to vždy! To nás posouvá."* Frázově vázané chyby (kolokace) tam patří přímo;
+     kontextové (shoda podle rodu/role) jako vodítko s kontextem, nebo je chytá opravný průchod.
+  2. **Pravidla s nižším číslem mohou být zastaralá** — *„pokud se testy prokáže, že jakékoliv pravidlo už není
+     potřeba, tak se buď upraví, nebo vymaže."* Týká se i §2 („žádná 4. vrstva"): test 2026-09-23 (4) ukázal,
+     že kontextový korektor nemá vadu, kvůli které zákaz vznikl — **§2 se ZATÍM nemění**, napřed větší test
+     (n = 12 nestačí); změna pak novým datovaným záznamem, který se na tenhle odvolá.
+  3. **Smyčka ze skutečných čtení**: pravidelně kontrolovat vzorek islandských čtení, potvrzené chyby do korekcí —
+     *„čím bude přibývat čtení, tím víc chyb se zachytí, až do momentu, kdy bude už jen pár chyb."*
+- **Affected doc(s):** `memory/decisions-are-directions-not-locks.md` (princip o pravidlech doplněn) ·
+  `check-is.py` (5 frázových vzorů) · `RUNAR_BACKLOG.md` (smyčka + korektor + korekce do shrine).

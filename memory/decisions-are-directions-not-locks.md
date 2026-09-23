@@ -18,3 +18,9 @@ Dohledej datovaný záznam odchodu → pojmenuj konkrétní vadu → vrať verzi
 prokazatelně není → zapiš nové rozhodnutí odkazující na staré. Návrat bez těch kroků není
 rozhodnutí, je to recidiva. Mrtvý kód má proto u sebe komentář *proč* odešel — ten se čte
 dřív, než ho někdo oživí. Pravidlo pro všechny session: `CLAUDE.md` §26.
+
+**Totéž platí pro PRAVIDLA, nejen rozhodnutí.** KUKY 2026-09-23: *„pravidla s nižším číslem můžou být zastaralá,
+jelikož vznikla na začátku. Pokud se testy prokáže, že jakékoliv pravidlo už není potřeba, tak se buď upraví,
+nebo vymaže."* Pravidlo v `CLAUDE.md` (§1…) je důvod z doby vzniku, ne zákon. Když ho měření zpochybní:
+napiš, KTERÉ pravidlo, PROČ vzniklo (datovaný záznam), a CO test ukázal — a navrhni úpravu/smazání s datovaným
+rozhodnutím. Nikdy ho neobcházej potichu; a nikdy ho neber jako důvod neměřit.

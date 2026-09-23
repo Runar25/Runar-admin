@@ -73,6 +73,21 @@
 - [ ] **Tvar „VĚTA" drží „may be" hůř než dvě možnosti a otázka** — 2 ze 16 posledních vět vypadly z tvaru
   možnosti, obě u tvaru věta (`ENDING_OPEN[0]`, `ENDING_HEAVY[1]`), doklady v EVAL_LOG 2026-09-20 (11).
   Patří do tvrdých kontrol produkčního kandidáta; při větším vzorku ověřit, jestli to není náhoda.
+- [ ] ⭐ **KOREKCE DO SHRINE — přidat 4 potvrzené IS chyby** (DECISIONS 2026-09-23 (6) bod 1; kdo: owner/CODE-tune,
+  zápis do produkční DB). Po přidání odsud smazat — pak je vlastní DB (§20).
+  • `heldur vöku yfir` → `vakir yfir` · kontext: *„vaka yfir e-u“ = gæta; „halda vöku“ er notað með „fyrir“ eða „sinni“, ekki með „yfir“*
+  • `handan sjónmáls` → `utan sjónmáls` · kontext: *fast orðasamband: „utan sjónmáls“; „handan sjónmáls“ er ekki notað*
+  • `gæti verið tveir` → `gætu verið tveir` · kontext: *sögnin er í fleirtölu: „það gætu verið tveir …“*
+  • `það rifnar í` → `rifna` · kontext: *„rifna“ er ekki notað ópersónulega; segðu t.d. „blöðin rifna“*
+  (Kontexty ověřeny korpusem po trojicích 2026-09-23. `BAD_PATTERNS` v `check-is.py` už doplněno.)
+- [ ] ⭐ **SMYČKA ZE SKUTEČNÝCH ČTENÍ — IS chyby do korekcí** (DECISIONS 2026-09-23 (6) bod 3). Vzorek islandských
+  čtení z DB → korpusová kontrola (`is-vazba`, `is-grammar-qa`) + opravný průchod → potvrzené chyby (s dokladem
+  a obhajobou) do korekcí. ⚠️ **Soukromí:** CODE-read smí číst jen ownerova čtení; čtení testerů/uživatelů =
+  rozhodnutí podle `RUNAR_PRIVACY.md` (zpracování pro kvalitu, anonymizace), ne mimochodem.
+- [ ] **KANDIDÁT: opravný průchod IS po vygenerování** (EVAL_LOG 2026-09-23 (4); vyžaduje úpravu §2 datovaným
+  rozhodnutím). Test: shoda 4/4 + 1 nová, kolokace 0/3, správný text 0 škod / 1 zbytečný zásah, ~$0,003, ~6 s.
+  **Další krok:** větší test škod na ~30 ownerových IS čteních z produkce (každou změnu ověřit korpusem) +
+  rozhodnout MÍSTO: živé čtení se streamuje → nejspíš opravovat pro uložení do deníku a pro hlas.
 - [ ] **GLOSA V ISLANDSKÉ HLAVIČCE RUNY se propisuje do čtení** (nález CODE-read 2026-09-22, srovnání modelů).
   IS prompt má `DREGNA RÚNA: Raidho (Ferðalag) — …`, EN jen `DRAWN RUNE: Raidho — …`. Výsledek na 42 čteních:
   glosa *„Raidho (Ferðalag)"* v textu **jen v IS** — Opus 5.5 3/3, gpt-6-sol 3/3, gpt-5.6-sol 2/3; v EN ji nenapsal

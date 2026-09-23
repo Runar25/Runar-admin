@@ -1,8 +1,10 @@
 # check-is.py — SOURCE-string IS linter (regression guard).
 # Scans project SOURCE files for known-bad Icelandic LITERALS (typos, wrong tier copy,
 # ASCII-stripped text, Czech leftovers) a human could reintroduce while editing source.
-# It does NOT see model OUTPUT — reading quality is checked by is-grammar-qa.py
-# (GreynirCorrect) + Sigrún (native); runtime fixes live in runar_corrections.
+# It does NOT see model OUTPUT — and NOTHING checks model output live (overeno 2026-09-23,
+# EVAL_LOG 2026-09-23 (4)): gramatiku cteni drzi jen prompt (CLAUDE.md §2 vcetne runar_corrections).
+# is-grammar-qa.py je nastroj na vyzadani, ne za behu. Do 2026-09-23 tu stalo „+ Sigrún (native)" —
+# fronta Sigrún je zrusena od 2026-07-18 (§19.2) a veta budila dojem, ze vystup nekdo kontroluje.
 #
 # Usage: python -X utf8 check-is.py   |   new SOURCE-typo pattern -> BAD_PATTERNS below.
 
@@ -23,6 +25,16 @@ BAD_PATTERNS = [
     # segjum þetta ekki svona á íslensku." V promptu to pak zustalo dva tydny, protoze
     # z reportu nevedla zadna cesta do pravidel. Tenhle radek je ta cesta.
     ('ríður vindinum',  'svífur hátt',  'kalk z EN "riding the wind"; rodily mluvci 2026-08-02'),
+    # 2026-09-23: kolokace a shoda z testu modelu (EVAL_LOG 2026-09-22 (1)/(2), 2026-09-23 (4)); kazda s korpusem.
+    # Proc tady a ne v _MODEL_OUTPUT_ARCHIVE: islandsky text obrazu (RUNE_IMAGES) a promptu pisou AGENTI a presne
+    # tyhle kolokace agent napise — je to i zdrojovy regres, ne jen vystup modelu (DECISIONS 2026-09-23 (6)).
+    # Jen chyby vazane na FRAZI. Kontextove (sá/sú podle rodu, hvora/hvor podle role, eina/einni podle padu)
+    # sem nepatri — hlasily by i spravna pouziti; ty chyta opravny pruchod, ne substring.
+    ('heldur vöku yfir', 'vakir yfir',     'kolokace: „halda vöku" jen s fyrir/sinni; „vöku yfir" korpus 0×, „vakir yfir" 1928×'),
+    ('halda vöku yfir',  'vaka yfir',      'totez v infinitivu'),
+    ('handan sjónmáls',  'utan sjónmáls',  'kolokace: korpus „handan sjónmáls" 0× × „utan sjónmáls" 36×'),
+    ('gæti verið tveir', 'gætu verið tveir', 'shoda s mnoznym podmetem: korpus 0× × 25×'),
+    ('það rifnar í',     '(check context)', '„rifna" neni neosobni („það rifnar í" 0×); osobne: „blöðin rifna"'),
     # SOURCE-authorable typos/phrases = this checker's real job. Model-output errors
     # (prose the model invents) belong to is-grammar-qa + runar_corrections, NOT here;
     # the model-output entries below are kept only as living documentation for now.
@@ -77,7 +89,8 @@ BAD_PATTERNS = [
 # --- MODEL-OUTPUT ARCHIVE (NOT scanned) ---------------------------------
 # Reading-prose grammar errors / invented words the MODEL generates — they never appear
 # in a source file, so scanning source for them is dead weight. Kept as documentation;
-# the live owner of this surface is is-grammar-qa.py (GreynirCorrect) + Sigrún. Not scanned.
+# Not scanned. Model output nikdo za behu nekontroluje; ochrana = runar_corrections v promptu (vzdy doplnit
+# potvrzenou chybu, DECISIONS 2026-09-23 (6)) + is-grammar-qa.py na vyzadani.
 _MODEL_OUTPUT_ARCHIVE = [
     ('Þagninni',         'þögninni',          'wrong word (report 2026-07-09)'),
     ('tóm blað',         'tómt blað',         'gender: blað hk -> tómt (report 2026-07-09)'),
@@ -120,7 +133,7 @@ for fpath in FILES:
                 issues.append((fname, i, bad, correct, note, line.strip()))
 
 if not issues:
-    print('OK: no known-bad IS literals in source. (Model output: is-grammar-qa + Sigrún.)')
+    print('OK: no known-bad IS literals in source. (Model output se za behu NEkontroluje — viz hlavicka souboru.)')
     sys.exit(0)
 else:
     print(f'FOUND {len(issues)} IS issue(s):\n')

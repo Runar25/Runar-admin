@@ -4902,3 +4902,42 @@ ne opis — seznam tam nebyl) · Opus S 1/6 · J 1/6 · B 0/6.
 **Hranice:** 12 položek na buňku, jeden soudce na položku (Claude), jeden jazyk; rozdíly naznačují — S × B u solu
 drží v obou půlkách, S × J v „podle vztahu" je 5 × 3.
 Podklady → `docs/eval/2026-09-22-modely/identita2/`.
+
+## 2026-09-23 (4) — Opravný průchod islandštiny po vygenerování: chytá SHODU, nechytá KOLOKACE, správný text nekazí
+
+**Owner:** *„IS má procházet kontrolou gramatiky už při tvorbě. Jak to, že to není opravováno a vrací se to
+s chybami?… Udělej ten test. Nejde o to, co chci já — ptám se, jaké je nejlepší řešení."*
+**Stav produkce (ověřeno v kódu):** výstup modelu NIKDO po vygenerování nekontroluje. Gramatiku drží jen prompt
+(3 vrstvy, CLAUDE.md §2: IS systémový prompt s gramatickým blokem · IS pack · korekce z DB `runar_corrections`).
+`check-is` / `is-grammar-qa` / `is-vazba` kontrolují texty, které píšeme MY. Slepý post-procesor byl odstraněn
+2026-08-09 (neuměl pád ani rod, „opravoval" správné tvary) a §2 od té doby zakazuje „4. vrstvu".
+⚠️ **Mezera v mých testech:** korekce z DB (3. vrstvu) jsem do testovacích promptů nedával (`corrections = []`).
+Ověřeno: DB má 13 konkrétních frází, **žádná z nalezených chyb by jimi chycena nebyla** — na výsledcích to
+nic neměnilo; do dalších testů je dávám.
+
+**Test:** korektor = gpt-6-sol (v testech 0 IS chyb na 10 textů, nejlevnější), zadání „oprav JEN jasné
+gramatické chyby, styl/obraz/význam nech, když chyba není, vrať beze změny". Napřed 1 text dvakrát
+(reasoning none → nechytil nic; low → nechytil, ale změnil jinde), pak `low` na všechno.
+| | výsledek |
+|---|---|
+| známé chyby **shody** (pád/rod/číslo): *Hvora→Hvor*, 2× *sá→sú*, *gæti→gætu* | **4/4 opraveno** |
+| známé chyby **kolokace/idiomu**: *heldur vöku yfir*, *handan sjónmáls*, *rifnar í þeim* | **0/3** |
+| 12 textů bez nalezené chyby | 10 beze změny · **1 skutečná chyba navíc** (*„lýsir þessu tvennu… sem eina
+  hreyfingu"* → *einni*; korpus *„honum sem góðum"* 26 × *„góðan"* 0, *„því sem einni"* 5 × *„eina"* 0 —
+  naše kontrola ji přehlédla) · 1 **zbytečný zásah** (*„biður þig að"* → *„um að"*; obojí správně, 148 × 354) |
+| škodlivé změny správného textu | **0** |
+| navíc v Algiz | *„ganga sitt"* → *„ganga sína leið"* — spíš vylepšení (34 × 18), ne jistá oprava |
+| cena / čas | ~$0,003 na čtení · 4–11 s (průměr ~6 s) |
+
+**Nálezy:**
+1. ⭐ **Korektor a korekce z DB se doplňují.** Korektor chytá chyby SHODY — závisí na kontextu (rod předchůdce,
+   role ve větě), do frázových korekcí se napsat nedají. Kolokace (*vöku yfir*, *handan sjónmáls*) naopak
+   nevidí — na ty přišel jen korpus — ale jsou vázané na frázi, takže patří do korekcí.
+2. ⭐ **Vada, kvůli které §2 zakázal 4. vrstvu, se tu neukázala**: slepé nahrazování kazilo správné tvary;
+   kontextový korektor ve 12 správných textech nepokazil nic (1 zbytečný zásah). Podle §26 je to očištěná
+   verze — ale na n = 12 to **naznačuje, nedokazuje**. Změna §2 = ownerovo datované rozhodnutí, napřed větší test.
+3. **Latence je skutečný problém**: čtení se v produkci streamuje. Korektor po vygenerování = buď čekat ~6 s
+   na celý text, nebo opravovat až pro ULOŽENÍ do deníku a pro HLAS (ElevenLabs), kde chyba zní nahlas.
+4. Nejvíc chyb vzniká u zdroje: za dva dny Opus 5 **5 tvrdých chyb na 10 IS textů**, gpt-6-sol **0/10**,
+   produkce Opus 4.8 1/3. Volba modelu mění, kolik je co opravovat.
+**Hranice:** 7 známých chyb, 12 čistých textů, jeden korektor, jedna úroveň. Podklady → `docs/eval/2026-09-22-modely/oprava/`.
