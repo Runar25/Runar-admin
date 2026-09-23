@@ -6788,3 +6788,12 @@ Obsah záznamu platí beze změny. — CODE-tune
 Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze změny (cesty 4/12 → 4/12), délka 70,9 → 69,0 slov. Obrácená páka zhoršila → vysvětlení platí.
 **Mez:** jen EN; IS ověřené jazykově, ne čteními. Slovníkové počítání (seznam slov cesta/dům), ne soudce. Nápad „místo podle oblasti" (úzce, 2 oblasti) zůstává otevřený — po tomhle kroku je jeho potřeba menší.
 **Affected doc(s):** `RUNAR_BACKLOG.md` (stará padající kontrola pák — zapsána) — v tomtéž commitu.
+
+## 2026-09-23 (13) — Ask bez vět, které ho zamykaly do čtení (v4.48)
+**Rozhodl:** KUKY („4. ano": nejdřív odebrat zámky a změřit, druhá otázka až potom) · **Provedl:** CODE-tune
+**Co:** `RP_ASK.rules` EN+IS bez „Answer ONLY within this reading", „in image and symbol" a „Deepen or clarify what the runes named". Zůstává: hlas Rúnara, žádná rada, žádná nová věštba ani nové runy, pojistka mimo téma, rozloučení, „řekni to bez obrazů", možnosti na „co to může být pro mě". IS oznamovací tvar („Þú talar sem Rúnar…"), protože rozkazovací is-grammar-qa nepřečetl.
+**Proč:** report „Ask odpověděl skoro stejně jako čtení, má nabídnout víc možností jako statický popis".
+**Změřeno** (19 skutečných ownerových otázek z 23. 9., jejich čtení, produkční model, strop jako v appce): podíl slov odpovědi převzatých ze čtení **0,34 → 0,30** (půlky 0,34/0,35 → 0,28/0,31), nižší v **14 z 19** párů; dvojice slov 0,04 → 0,03; délka beze změny (82 → 80 slov). Stávající stav sedí s produkcí (skutečné odpovědi 0,36). Otázky mimo téma (recept, fotbal) odmítnuty v obou verzích. Kvalitativně: bez zámků Rúnar víc mluví o runě samé (Tiwaz: „not the grand justice Tiwaz is known for, but its smaller face").
+**Nález:** účinek je **malý** — zámky nejsou hlavní příčina opakování. Ask dál dává většinou jeden výklad. Další páka = podklad z ownerových popisů run (3–4 podoby, jak se runa projevuje), jak navrženo v rozboru reportů; musí se lišit od textů do Kolekce.
+**Mez:** jen EN, n = 19. Čtvrtý zámek — „Describe the image" v pravidle proti studenému čtení (`_noColdRead`, sdílené se čtením) — **neměněn**: hlídá bezpečnost, patří mu vlastní měření.
+**Affected doc(s):** `RUNAR_BACKLOG.md` (ověřovací poznámka k Asku) — v tomtéž commitu.
