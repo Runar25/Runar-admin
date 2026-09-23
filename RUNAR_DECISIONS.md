@@ -6750,3 +6750,26 @@ Obsah záznamu platí beze změny. — CODE-tune
 **Změřeno** (3 slepí soudci, detail `docs/archive/2026-09-23-brana-s-popisy.md`): 19 obrazů, které neprošly původní branou → s popisy prošlo 9 (moře u Gebo 3/3); nové obrazy 10/11 3/3, vyřazen „řekneš to na rovinu" (Ansuz); kontroly 5/6 (uhlíky u Kenaz spadly na Ingwaz — brána je přísnější, je to síto, ne verdikt).
 **Mez:** soudci četli EN; IS ověřené korpusem + is-grammar-qa. Obrazy zatím neviděly skutečné čtení — to ukáže testování. 10 neprošlých starých obrazů zůstává v bance, dokud o nich nerozhodne owner.
 **Affected doc(s):** `RUNAR_POPISY_RUN.md` (Tiwaz Znění B, předchozí commit) · `docs/archive/2026-09-23-brana-s-popisy.md` (nový) — v tomtéž commitu.
+
+## 2026-09-23 (12) — Blok korekcí zeštíhlen v DB: rozsah, rozdělení, kratší vysvětlení (pokyn ownera)
+
+- **Co (CODE-read přes `supabase db query --linked`, každá změna s `returning`):**
+  1. `fyrsta ljós vorunnar → fyrsta ljós vorsins`: `lang_scope` `both` → `is` (islandská fráze lezla do EN promptu).
+  2. Řádek *„Auða rúnan, rún hins óþekkta, réttir þér tóm blað" → „Auða rúnin, … tómt blað"* (dvě chyby v jedné větě)
+     rozdělen: týž řádek přepsán na `rúnan → rúnin` (bez vysvětlení) + nový `tóm blað → tómt blað` (`blað er hvorugkyn`).
+     Korpus: *rúnin* 76 × *rúnan* 0, *tómt blað* 48 × *tóm blað* 0, vzor *„X er hvorugkyn"* 40×.
+  3. Vysvětlení zkrácena u 4 řádků z 2026-09-23 (8): `í bótnum`, `loftins`, `eigin sönnu` → bez vysvětlení
+     (*„X er ekki til"* k řádku *„ekki X heldur Y"* nic nepřidává); `flýja honum` → *„„flýja" stýrir þolfalli"*
+     (přenosné pravidlo rekce zůstává; *stýrir þolfalli* v korpusu 22×).
+- **Ověřeno produkční cestou (§19.1):** řádky z DB → `normalizeCorrections` → `getCorrPrompt`, 7 kontrol OK.
+  IS blok **1287 → 1202 tokenů** (a to přibyl řádek), EN **69 → 31**.
+- **NEUDĚLÁNO — mazání:** řádek `test → test replacement` (`both`, od 2026-05-11) jde do každého čtení a nic
+  neopravuje, ale **mazat data CODE nesmí ani s povolením** → maže owner ve shrine. Po smazání EN blok zmizí celý.
+  Dva jednorázové přepisy celých otázek (Fehu, „land sem þornar") zůstávají, dokud je owner nesmaže.
+- **Na základě:** ownerův pokyn 2026-09-23 (*„2. přepni · 3. rozdělit · 4. ok zkrátit"*) k doporučení v backlogu.
+- **Reverzibilita (staré hodnoty):** id `452f5ebd…` lang_scope `both` · id `9f107db0…` original *„Auða rúnan, rún hins
+  óþekkta, réttir þér tóm blað"*, replacement *„Auða rúnin, rún hins óþekkta, réttir þér tómt blað"*, context null ·
+  kontexty: `í bótnum` *„„bótnum" er ekki til; rétt er „í botninum""*, `loftins` *„„loftins" er ekki til; rétt er
+  „loftsins""*, `eigin sönnu` *„rétt er „í eigin sannleika""*, `flýja honum` *„„flýja" stýrir þolfalli: „flýja hann""*.
+  Nový řádek `tóm blað` jde odebrat jen smazáním (owner).
+- Affected doc(s): RUNAR_BACKLOG.md (položka „Blok korekcí roste" — body 2–4 hotové, 1 čeká na ownera).

@@ -90,16 +90,17 @@
   by cache umožnil, ale (a) při dnešním provozu by 5min cache skoro vždy minula a zápis stojí 1,25× → dráž;
   (b) projektový nález „system prompt model ignoruje, per-čtení injekci poslechne" → napřed změřit, jestli korekce
   ze systému drží. **Cache má zatím smysl jen v testech.** Co udělat, od nejlevnějšího:
-  1. **Owner ve shrine smaže řádek `test → test replacement`** (`both`, od 2026-05-11): jde do KAŽDÉHO čtení
+  1. ⏳ **Owner ve shrine smaže řádek `test → test replacement`** (`both`, od 2026-05-11): jde do KAŽDÉHO čtení
      v obou jazycích a nic neopravuje; v repu na něm nic nezávisí (grep 2026-09-23). CODE mazat nesmí.
-  2. `fyrsta ljós vorunnar` má `lang_scope = both`, ale je islandsky → leze i do EN promptu; přepnout na `is`.
+  2. ✅ `fyrsta ljós vorunnar` přepnuto na `is` (DECISIONS 2026-09-23 (12)).
   3. Dva jednorázové přepisy celých otázek (Fehu *„Hvað hefur þú verið að halda innan þín…"*, *„hvar hefur orkan
      þín farið í land sem þornar?"*) opravují styl jedné vygenerované věty, která se doslova nevrátí → kandidáti
-     na smazání (owner). *„Auða rúnan… tóm blað"* nese dvě chyby v jedné větě → rozdělit na dva krátké řádky.
+     na smazání (owner, zatím nerozhodl). ✅ *„Auða rúnan… tóm blað"* rozděleno na `rúnan → rúnin` + `tóm blað → tómt blað`.
      Body 1 + 3 = −186 tokenů (−14 %).
   4. **Pravidlo pro nové řádky** (píše je CODE-read): chyba jen v jádru (1–4 slova); vysvětlení jen tehdy, když nese
      přenosné pravidlo (rekce, kolokace). *„X er ekki til"* k řádku *„ekki X heldur Y"* nic nepřidává — tak jsou
-     napsané i moje dnešní řádky `í bótnum`, `loftins`, `flýja honum`, `eigin sönnu`.
+     napsané i moje dnešní řádky `í bótnum`, `loftins`, `flýja honum`, `eigin sönnu` → ✅ zkráceno. Stav po změnách:
+     IS 1202 tokenů, EN 31 (jen řádek `test`).
   5. Až smyčka poroste: řádky téže třídy sloučit do jedné věty v IS gramatickém bloku (CODE-tune); korekce vázané
      na runu (Gebo, Fehu) posílat jen s tou runou.
 - [ ] **GLOSA V ISLANDSKÉ HLAVIČCE RUNY se propisuje do čtení** (nález CODE-read 2026-09-22, srovnání modelů).
