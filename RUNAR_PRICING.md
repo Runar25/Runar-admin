@@ -38,18 +38,20 @@ Claude model: **Opus 4.8** ($5/$25 per 1M in/out) — zdroj pravdy je `MODELS` v
 `claude-proxy/index.ts`, tady se to NEOPISUJE (§20); tenhle řádek je jen datovaný záznam ke dni.
 ⚠️ **Přeměřeno 2026-08-15** — do té doby tu stálo „Sonnet 4-5 ($3/$15)", což byl model, který
 už neběžel, takže celý sloupec „Claude" i break-even byly počítané na cizí ceně.
-Prompt caching: ✅ deployed (2026-06-09). System prompt (~960 tok EN / ~1.045 IS) cached, ephemeral 5min TTL.
+Prompt caching: ⚠️ **v produkci NEZABÍRÁ** (změřeno 2026-09-23, `readings.usage`, 70 EN čtení za 7 dní): `cache_read` **0/70**, zápis jen 2/70 — přirážka za zápis se tedy neplatí, ale úspora taky ne. Do té doby tu stálo „✅ deployed (2026-06-09), system prompt cached" a sloupec Claude s tím počítal. Proč cache netrefí: 5min TTL mezi čteními + proměnlivý blok na konci promptu → `RUNAR_BACKLOG.md` („Cache má zatím smysl jen v testech").
 ElevenLabs: Multilingual v2/v3 (IS) $0.10/1k chars / Flash (EN) $0.05/1k chars. EL chars = reading text length.
 
 | Reading | EL chars | ~out tok | Claude | EL IS | EL EN | Total IS | Total EN | Credits (RS) |
 |---------|----------|----------|--------|-------|-------|----------|----------|--------------|
-| Single | **272** | 90 | $0.003 | $0.027 | $0.014 | **$0.030** | **$0.017** | **1** |
+| Single | **272** | **137** (EN, změřeno) | **$0.012** (EN, změřeno) | $0.027 | $0.014 | **≈$0.039** ⚠️ | **$0.026** | **1** |
 | Norns (3) | 773 | 145 | $0.004 | $0.077 | $0.039 | **$0.081** | **$0.043** | **2** |
 | Kríž (5) | 1.028 | 185 | $0.005 | $0.103 | $0.051 | **$0.108** | **$0.056** | **3** |
 | Horseshoe (7) | 1.367 | 342 | $0.006 | $0.137 | $0.068 | **$0.143** | **$0.074** | **4** |
 | Yggdrasil (9) | 1.661 | 415 | $0.008 | $0.166 | $0.083 | **$0.174** | **$0.091** | **5** |
 | Life Rune | 0 (text, no voice) | 293–363 | $0.006 | — | — | **$0.006** | **$0.006** | **0** |
 | Founding ritual (= Norns) | 773 | 145 | $0.004 | $0.077 | $0.039 | **$0.081** | **$0.043** | **2** |
+
+**⚠️ Claude u Single PŘEMĚŘEN 2026-09-23** (70 produkčních EN čtení, `readings.usage`): vstup **1717**, výstup **137** tokenů průměrně, cache 0 → **$0,012** na čtení, ne $0,003 (starý sloupec počítal s cache, která nezabírá, a s ~90 výstupními tokeny). IS čtení v tom týdnu nebylo → IS celkem je **odhad** (Claude IS ≈ EN). **Spready a break-even níž drží starý sloupec Claude** — nejspíš podobně podhodnocené; přeměřit, až poběží ve větším počtu. Hlas (EL) zůstává největší položka.
 
 **⚠️ Co je v téhle tabulce změřené a co dopočítané (2026-08-15).**
 - **Single, EL znaky = ZMĚŘENO z produkce.** 155 čtení v dnešním jednolitém formátu
