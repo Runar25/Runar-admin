@@ -547,6 +547,7 @@
 - [ ] Tree DB fáze 2 — přeškálovat: `intention` + `aol` už logujeme server-side (481d313, 094f287).
 
 ### 🟢 Dlouhý ocas (kód, nízká priorita)
+- [ ] **`scripts/utils/test_lever_maps.js` padá na SEEKS (9 ✘) a nikdo to nevidí** — není zapojený ve smoke. Kontroluje, že věta rejstříku obsahuje jméno své hodnoty, ale nálepka registru („The seeker asks for clarity —“) se 2026-09-08 odebrala záměrně (komentář u `_registerContext`). Ověřeno 2026-09-23 na HEAD i po přepisu oblastí: tentýž výsledek, AREAS část prochází. Rozhodnout: SEEKS část přepsat na kontrolu pořadí jinak (např. otisk věty), nebo ji odebrat — a pak test zapojit do smoke, ať hlídá aspoň AREAS. (CODE-tune)
 - [ ] **§18 debt:** lab i prod drží kompozici stromu 2× (`build_tree_production.py`) → vytáhnout `runar-tree-core.js`. Prod navíc načítá enginy z `tree-lab-*` cest. *(soubor zatím neexistuje — je to cíl toho refaktoru)*  <!-- doc-links:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
 - [ ] Strom se **neaktualizuje po čtení** (`renderLivingTree` jen při otevření tabu).
 - [ ] `tree_state`/`tree_readings` — `sql/tree_state.sql` je STARÉ schéma (Vrstva A) pro tree-update; produkční strom čte z `readings` → rozhodnout: rozšířit / nahradit / zahodit.

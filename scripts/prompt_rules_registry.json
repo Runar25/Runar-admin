@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-23",
- "prompt_version": "v4.46-obrazy-z-popisu",
+ "prompt_version": "v4.47-oblast-neni-misto",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -124,7 +124,7 @@
    "zacatek": "THE ESSENCE LINE: after the picture, one short line that names the Bla"
   },
   {
-   "hash": "c6241fac4e51",
+   "hash": "cb96e93d91ea",
    "lang": "en",
    "zdroj": "oblast[0]",
    "zacatek": "The reading is for Love & Relationships — let the image you were given"
@@ -154,7 +154,7 @@
    "zacatek": "The reading is for The Unseen — let the image you were given land on w"
   },
   {
-   "hash": "eeb0af438637",
+   "hash": "d4585b0f04c6",
    "lang": "en",
    "zdroj": "oblast[5]",
    "zacatek": "The reading is for Family & Home — let the image you were given land o"
@@ -166,7 +166,7 @@
    "zacatek": "The reading is for Inner Growth — let the image you were given land on"
   },
   {
-   "hash": "8be19a574434",
+   "hash": "dd2555a14fcc",
    "lang": "en",
    "zdroj": "oblast[7]",
    "zacatek": "The reading is for Crossroads & Decisions — let the image you were giv"
@@ -184,10 +184,10 @@
    "zacatek": "Bring one thing into focus, not one answer; sharpen what matters and l"
   },
   {
-   "hash": "a1933484766b",
+   "hash": "c30f518ab478",
    "lang": "en",
    "zdroj": "registr[2]",
-   "zacatek": "Neither confirm nor refute; describe the ground beneath the decision a"
+   "zacatek": "Neither confirm nor refute."
   },
   {
    "hash": "e2bbed20f0d4",
@@ -724,7 +724,7 @@
    "zacatek": "KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem nefnir auðu rún"
   },
   {
-   "hash": "de924ff40193",
+   "hash": "b15f49adaf12",
    "lang": "is",
    "zdroj": "oblast[0]",
    "zacatek": "Þessi lestur er fyrir Ást & Sambönd — láttu myndina sem þú fékkst lend"
@@ -754,7 +754,7 @@
    "zacatek": "Þessi lestur er fyrir Hið dulda — láttu myndina sem þú fékkst lenda á "
   },
   {
-   "hash": "3516b522f958",
+   "hash": "39c73089402a",
    "lang": "is",
    "zdroj": "oblast[5]",
    "zacatek": "Þessi lestur er fyrir Fjölskyldu & Heimili — láttu myndina sem þú fékk"
@@ -766,7 +766,7 @@
    "zacatek": "Þessi lestur er fyrir Innri Vöxt — láttu myndina sem þú fékkst lenda á"
   },
   {
-   "hash": "1dd8f7fbe93b",
+   "hash": "7b1372e9e3c1",
    "lang": "is",
    "zdroj": "oblast[7]",
    "zacatek": "Þessi lestur er fyrir Vegamót & Ákvarðanir — láttu myndina sem þú fékk"
@@ -784,10 +784,10 @@
    "zacatek": "Dragðu eitt skýrt fram, ekki eitt svar; skerptu það sem máli skiptir, "
   },
   {
-   "hash": "d241259fd492",
+   "hash": "cac6905689ba",
    "lang": "is",
    "zdroj": "registr[2]",
-   "zacatek": "Hvorki staðfestu né hrektu; lýstu jarðveginum undir ákvörðuninni og þv"
+   "zacatek": "Þú hvorki staðfestir né hrekur."
   },
   {
    "hash": "299dd844cdda",

@@ -470,15 +470,17 @@ function _lengthBudget(lang) {
 }
 
 // Kam most dosedne — poradi = AREAS.en (runar-config.js). Bez oblasti zustava obecny cil.
+// 2026-09-23: rodina a rozcestí tu stály jako MÍSTO, stejně jako v _domainContext — a totéž slovo dvakrát v promptu
+// se opisovalo (Thurisaz končil „…than the people in it can bear“). Přepsáno spolu s oblastmi, DECISIONS 2026-09-23 (12).
 const BRIDGE_AREAS = [
   'between the seeker and someone',
   'in where the seeker is going',
   'in what the seeker is making',
   "in the seeker's mending and rest",
   "in what is present in the seeker's life but not shown",
-  "in the seeker's home and the people in it",
+  "in the seeker's family ties",
   'in a slow change in the seeker',
-  "where the seeker's way divides",
+  "in a decision the seeker has not yet made",
 ];
 const BRIDGE_AREAS_IS = [
   'milli leitandans og einhvers annars',
@@ -486,9 +488,9 @@ const BRIDGE_AREAS_IS = [
   'í því sem leitandinn er að smíða',
   'í gróanda leitandans og hvíld',
   'í því sem er til staðar í lífi leitandans en sést ekki',
-  'á heimili leitandans og meðal fólksins þar',
+  'í fjölskylduböndum leitandans',
   'í hægri breytingu hjá leitandanum',
-  'þar sem leið leitandans skiptist',
+  'í ákvörðun sem leitandinn hefur ekki enn tekið',
 ];
 const BRIDGE_DEFAULT = { en: "in the seeker's life", is: 'í lífi leitandans' };
 

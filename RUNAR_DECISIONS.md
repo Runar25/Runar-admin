@@ -6773,3 +6773,18 @@ Obsah záznamu platí beze změny. — CODE-tune
   „loftsins""*, `eigin sönnu` *„rétt er „í eigin sannleika""*, `flýja honum` *„„flýja" stýrir þolfalli: „flýja hann""*.
   Nový řádek `tóm blað` jde odebrat jen smazáním (owner).
 - Affected doc(s): RUNAR_BACKLOG.md (položka „Blok korekcí roste" — body 2–4 hotové, 1 čeká na ownera).
+
+## 2026-09-23 (12) — Oblast už není místo: láska, rodina a rozcestí jako vztah/otázka · Confirmation bez prostorových metafor (v4.47)
+**Rozhodl:** KUKY („3. ano": nejdřív přepsat oblasti popsané jako místo a změřit, teprve pak nápad s místem podle oblasti) · **Provedl:** CODE-tune
+**Co:** `_domainContext` EN+IS — Love „where two people meet" → „on what passes between two people", Family „on a lived-in place and the people in it" → „on family ties and belonging", Crossroads „where a way divides" → „on a choice still open". Most (`BRIDGE_AREAS`) u rodiny a rozcestí totéž. Confirmation (`_registerContext`) bez „ground beneath the decision" a „just out of frame" → jen „Neither confirm nor refute." IS psané islandsky (korpus: fer á milli 1850, fjölskylduböndum 1810, vali sem 266, enn er opið 45; is-grammar-qa čisté — „Hvorki staðfestu né hrektu" nástroj nepřečetl, proto oznamovací tvar).
+**Proč:** model stavěl místo z popisu oblasti přímo do scény (dnešní reporty: všechna 3 čtení s rozcestím přidala cesty, Isa „the ice holds the house still") a opisoval prostorové metafory Confirmation.
+**Změřeno** (produkční model, EN, stejné runy/oblasti/rejstříky/losy, 3 kola × 12 čtení; mění se jen texty oblastí):
+| | teď | přepis | obrácená páka (místo zdůraznit) |
+|---|---|---|---|
+| rozcestí: cesty, které v obrazu nejsou | 9/12 | **2/12** | 11/12 |
+| rodina: domov v 1.–2. větě navíc | 7/12 | **2/12** | 8/12 |
+| Confirmation: doslovný opis metafory | 3/15 | **0/15** | 3/15 |
+| rozcestí: čtení dosedne na rozhodování | 6/12 | **10/12** | 5/12 |
+Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze změny (cesty 4/12 → 4/12), délka 70,9 → 69,0 slov. Obrácená páka zhoršila → vysvětlení platí.
+**Mez:** jen EN; IS ověřené jazykově, ne čteními. Slovníkové počítání (seznam slov cesta/dům), ne soudce. Nápad „místo podle oblasti" (úzce, 2 oblasti) zůstává otevřený — po tomhle kroku je jeho potřeba menší.
+**Affected doc(s):** `RUNAR_BACKLOG.md` (stará padající kontrola pák — zapsána) — v tomtéž commitu.

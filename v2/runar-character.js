@@ -1054,27 +1054,32 @@ function _priorityContext(lensOn, drawn, lang) {
 // most mluvi jen o MOZNOSTI. ⚠️ ODEBRAT zakaz uplne je VYVRACENE (chlad 2/6 -> 4/6) — nezkouset.
 // Bez vyjimky zustavaji Heilun (zakazuje diagnozu, ne oblast) a Fjolskylda (zakazuje, co si
 // leitandi nese od svych lidi) — jejich zakaz s cilem mostu nekolidoval.
+// 2026-09-23 (KUKY „3. ano“, rozbor reportů bod 1): tři oblasti byly popsané jako MÍSTO („where two people
+// meet“, „a lived-in place and the people in it“, „where a way divides“) a model to místo stavěl přímo do scény —
+// rozcestí přidalo cesty, které v obrazu nebyly, rodina přesunula obraz do domu (Isa: „the frozen surface of the house“).
+// Teď vztah/otázka. Změřeno (produkční model, stejné losy, 3 kola × 12): cesty navíc 9/12 -> 2/12, domov v 1.–2. větě
+// 7/12 -> 2/12, rozcestí dosedne na rozhodování 6/12 -> 10/12; obrácená páka (místo zdůraznit) 11/12 a 8/12.
 function _domainContext(area, lang) {
   if (!area) return '';
   var mapEn = [
-    "The reading is for Love & Relationships — let the image you were given land where two people meet. Do not tell them what is true between them and anyone — except in the closing line, and there only as a possibility they may weigh.",
+    "The reading is for Love & Relationships — let the image you were given land on what passes between two people. Do not tell them what is true between them and anyone — except in the closing line, and there only as a possibility they may weigh.",
     "The reading is for Purpose & Path — let the image you were given land on going and direction. Do not tell them where they are headed — except in the closing line, and there only as a possibility they may weigh.",
     "The reading is for Career & Creativity — let the image you were given land on making and work. Do not tell them what they have made or achieved — except in the closing line, and there only as a possibility they may weigh.",
     "The reading is for Healing & Wellbeing — let the image you were given land on mending and rest. No diagnosis, no verdict on their condition.",
     "The reading is for The Unseen — let the image you were given land on what is present but not shown. Do not tell them what they sense — except in the closing line, and there only as a possibility they may weigh.",
-    "The reading is for Family & Home — let the image you were given land on a lived-in place and the people in it. Do not tell them what they carry from their people.",
+    "The reading is for Family & Home — let the image you were given land on family ties and belonging. Do not tell them what they carry from their people.",
     "The reading is for Inner Growth — let the image you were given land on slow change. Do not tell them how they have changed — except in the closing line, and there only as a possibility they may weigh.",
-    "The reading is for Crossroads & Decisions — let the image you were given land where a way divides. Do not tell them what they know or which way they will take — except in the closing line, and there only as a possibility they may weigh."
+    "The reading is for Crossroads & Decisions — let the image you were given land on a choice still open. Do not tell them what they know or which way they will take — except in the closing line, and there only as a possibility they may weigh."
   ];
   var mapIs = [
-    'Þessi lestur er fyrir Ást & Sambönd — láttu myndina sem þú fékkst lenda þar sem tvær manneskjur mætast. Segðu honum ekki hvað er satt milli hans og annarra — nema í lokalínunni, og þá aðeins sem möguleika honum til umhugsunar.',
+    'Þessi lestur er fyrir Ást & Sambönd — láttu myndina sem þú fékkst lenda á því sem fer á milli tveggja manneskja. Segðu honum ekki hvað er satt milli hans og annarra — nema í lokalínunni, og þá aðeins sem möguleika honum til umhugsunar.',
     'Þessi lestur er fyrir Tilgang & Leið — láttu myndina sem þú fékkst lenda á ferð og stefnu. Segðu honum ekki hvert hann stefnir — nema í lokalínunni, og þá aðeins sem möguleika honum til umhugsunar.',
     'Þessi lestur er fyrir Starf & Sköpun — láttu myndina sem þú fékkst lenda á smíð og vinnu. Segðu honum ekki hvað hann hefur gert eða hverju hann hefur áorkað — nema í lokalínunni, og þá aðeins sem möguleika honum til umhugsunar.',
     'Þessi lestur er fyrir Heilun & Líðan — láttu myndina sem þú fékkst lenda á gróanda og hvíld. Engin sjúkdómsgreining, enginn dómur um líðan hans.',
     'Þessi lestur er fyrir Hið dulda — láttu myndina sem þú fékkst lenda á því sem er til staðar en sést ekki. Segðu honum ekki hvað hann skynjar — nema í lokalínunni, og þá aðeins sem möguleika honum til umhugsunar.',
-    'Þessi lestur er fyrir Fjölskyldu & Heimili — láttu myndina sem þú fékkst lenda á byggðum stað og fólkinu í honum. Segðu honum ekki hvað hann ber með sér frá sínu fólki.',
+    'Þessi lestur er fyrir Fjölskyldu & Heimili — láttu myndina sem þú fékkst lenda á fjölskylduböndum og því að tilheyra. Segðu honum ekki hvað hann ber með sér frá sínu fólki.',
     'Þessi lestur er fyrir Innri Vöxt — láttu myndina sem þú fékkst lenda á hægri breytingu. Segðu honum ekki hvernig hann hefur breyst — nema í lokalínunni, og þá aðeins sem möguleika honum til umhugsunar.',
-    'Þessi lestur er fyrir Vegamót & Ákvarðanir — láttu myndina sem þú fékkst lenda þar sem leið skiptist. Segðu honum ekki hvað hann veit eða hvora leiðina hann velur — nema í lokalínunni, og þá aðeins sem möguleika honum til umhugsunar.'
+    'Þessi lestur er fyrir Vegamót & Ákvarðanir — láttu myndina sem þú fékkst lenda á vali sem enn er opið. Segðu honum ekki hvað hann veit eða hvora leiðina hann velur — nema í lokalínunni, og þá aðeins sem möguleika honum til umhugsunar.'
   ];
   var idx = -1;
   if (typeof AREAS !== 'undefined') {
@@ -1094,17 +1099,20 @@ function _registerContext(seeking, lang) {
   var idx = (SEEKS.en || []).indexOf(s);
   if (idx === -1) idx = (SEEKS.is || []).indexOf(s);
   if (idx === -1) return '';
+  // 2026-09-23: Confirmation bez „půdy pod rozhodnutím“ a „těsně mimo záběr“ — prostorové metafory, které model
+  // opisoval do čtení doslova (3/15 -> 0/15). IS „Hvorki staðfestu né hrektu“ nástroj nerozparsoval (E001) →
+  // oznamovací tvar, týž smysl.
   var mapIs = [
     'Láttu rúnina leiða hvert sem hún vill; þvingaðu ekki fram tilgang.',
     'Dragðu eitt skýrt fram, ekki eitt svar; skerptu það sem máli skiptir, en ákvörðunin er leitandans.',
-    'Hvorki staðfestu né hrektu; lýstu jarðveginum undir ákvörðuninni og því sem myndin lætur standa rétt utan rammans.',
+    'Þú hvorki staðfestir né hrekur.',
     'Nefndu núninginn heiðarlega, án þess að mýkja hann í huggun.',
     'Opnaðu spegil, ekki svar; snúðu viðmælandanum inn á við.',
   ];
   var mapEn = [
     'Let the rune lead where it will; do not force a purpose.',
     'Bring one thing into focus, not one answer; sharpen what matters and leave the deciding to them.',
-    'Neither confirm nor refute; describe the ground beneath the decision and what the image leaves standing just out of frame.',
+    'Neither confirm nor refute.',
     'Name the friction honestly, without softening it into comfort.',
     'Open a mirror, not an answer; turn them inward.',
   ];
