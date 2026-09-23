@@ -79,18 +79,14 @@
   **žádný** model. Opus 4.8 a 5 ji zatím neopisují, takže dnešní produkce to nevidí — ale **při jakékoli změně modelu
   to vyleze okamžitě**. ⚠️ **Vstupy jsou DVA** (doměřeno 2026-09-22 (2)): hlavička runy A pokyn *„Nefndu Gebo
   (Félagsskapur) einu sinni og fléttaðu nafnið…"* — ten modelu glosu přímo předepisuje. Oprava jen hlavičky: sol 2/5;
-  obou: 0/5; Norns má glosu v řádcích run (`Gebo (Félagsskapur) —`). **Oprava patří ke zdroji** — IS jméno runy,
+  obou: 0/5; Norns má glosu v řádcích run (`Gebo (Félagsskapur) —`). **Zdroj ověřen 2026-09-23: `RUNES[].is_n` v `runar-runes.js` nese glosu přímo (`"Þurs (Hlið)"`,
+  `"Othila (Aðskilnaður)"`).** **Oprava patří ke zdroji** — IS jméno runy,
   které se do promptů vkládá (dnes nese závorku), ne k jednotlivým řádkům. Doklad: `RUNAR_EVAL_LOG.md` 2026-09-22 (1) a (2).
-- [ ] **KANDIDÁT: NORNS: SEZNAMY KLÍČOVÝCH SLOV u run pryč** (CODE-read 2026-09-22 (3), NEROZHODNUTO — owner).
-  Norns dává ke každé runě řádek se čtyřmi klíčovými slovy; gpt-6-sol je opisuje do závěru Skuld (1/2 v produkci).
-  Bez seznamů 0/2 a runy vstupují vztahem; Opus 5 runy drží z vlastní znalosti. **Blokuje: slepý identitní test**
-  (poznat runy z textu s a bez seznamu, oba modely) — riziko, že u solu identita runy zeslábne (Othila slabší).
-  Přesun „sagt með orðum myndarinnar" k „ástand" sám nic neprokázal (1/2 před i po). **EN doměřeno 2026-09-23:**
-  závěry solu s klíčovým slovem v obou jazycích **3/4 → 0/4**, Opus 1/4 → 0/2 (`RUNAR_EVAL_LOG.md` 2026-09-23 (1)).
-  **Pilot identity 2026-09-23 (2):** bez seznamů žádný propad (ostatní runy 5/6 se seznamy × 4/6 bez, runa obrazu
-  3/3 obojí), ale Ingwaz bez seznamu sklouzl k Dagaz; část úspěchu ramene se seznamy stojí na opsané nálepce
-  („fræ", „birki"). Blokuje už jen větší identitní běh (6+ sad, + Opus 5, výběr z 25) — nebo mezivarianta
-  s JEDNÍM klíčovým slovem na runu.
+- [x] ~~KANDIDÁT: NORNS: SEZNAMY KLÍČOVÝCH SLOV u run pryč~~ — **ZAMÍTNUTO měřením 2026-09-23 (3).**
+  gpt-6-sol bez seznamů ztrácí identitu run (6/12 → 3/12, drží v obou půlkách); varianta s jedním slovem je
+  nejhorší (identita stojí na opsané nálepce, závěr s nálepkou 4/6). Čtyři slova (produkce) = nejlepší identita
+  podle vztahu. Opus 5 seznamy nepotřebuje. **Nezkoušet znovu bez nového důvodu** (§26).
+  Opisování do závěru u solu se 4 slovy bylo 4/10 — kdyby se řešilo, tak jinou pákou (landing), ne seznamy.
 - [ ] **KANDIDÁT: most IS „ástand … sagt með orðum myndarinnar"** (CODE-read 2026-09-22, NEROZHODNUTO — owner).
   Ve tvaru „dvě možnosti" přidat k *„hvort um sig ástand sem gæti átt við"* frázi *„sagt með orðum myndarinnar"*
   (tvar ověřeného Norns landingu A). gpt-6-sol: konce z pojmů (*vani / kostur*) na věcné 5/5; Opus 5: *gæti* beze

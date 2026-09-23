@@ -4864,3 +4864,41 @@ ale jedna runa (Ingwaz) bez seznamu sklouzla. n je malé — **naznačuje, nedok
 (z 5 je strop moc blízko), jeden soudce stačí (druhý stejný model přidal nulu). Mezivarianta k zvážení:
 nechat u runy JEDNO klíčové slovo jako single (`focus on`) místo čtyř — kotva zůstane, plocha k opisu se zmenší.
 Podklady → `docs/eval/2026-09-22-modely/identita/`.
+
+## 2026-09-23 (3) — VĚTŠÍ identitní běh: seznamy klíčových slov u solu NEODEBÍRAT, jedno slovo je nejhorší
+
+**Owner:** *„pusť větší běh i s jedním klíčovým slovem."* Navazuje na pilot 2026-09-23 (2).
+**Jak:** 6 sad × 3 ramena z jednoho postaveného promptu (S = 4 slova u runy = produkce · J = jedno, první ze
+seznamu · B = žádné) × 2 modely (gpt-6-sol, Opus 5), IS, 36 čtení, $0,59. Nejdřív 1 čtení J jako kontrola.
+Soudci: **latinský čtverec** — 6 soudců, každý vidí každou sadu JEN JEDNOU a každou buňku rameno × model jednou
+(jinak by se naučil runy z ramene se seznamy a poznal je i bez nich). Výběr z 24 run (šance ~4 %), 108 položek.
+⚠️ Cestou dvě opravy vlastních nástrojů: islandská jména run začínají i na Þ (*Þurs* = Thurisaz, *Perþ* = Perth) —
+regex `[A-Z]` je neviděl, chytila to pojistka „právě 3×"; a vedlejší nález: glosa je zapečená přímo v datech,
+`RUNES[].is_n = "Þurs (Hlið)"` — to je ten zdroj z backlogu („oprava patří ke zdroji").
+
+**Identita — dvě ostatní runy (bez runy obrazu), 12 položek na buňku:**
+| | 4 slova (S) | 1 slovo (J) | žádné (B) |
+|---|---|---|---|
+| sol — trefeno | 6/12 | 8/12 | **3/12** |
+| sol — z toho **podle nálepky** (slovo ze seznamu v beatu) / **podle vztahu** | 1 / **5** | **5** / 3 | 0 / 3 |
+| Opus 5 — trefeno | 6/12 | 6/12 | 6/12 |
+Půlka proti půlce (sady 1–3 × 4–6) u solu: S 3/6 + 3/6 · J 4/6 + 4/6 · B 2/6 + 1/6 — směr drží v obou.
+**Opisování do závěru Skuld** (slovo z plného seznamu, očištěno o slova, která stojí v promptu i jinde — např.
+*Leið* v názvu oblasti): sol S **1/6** · J **4/6** (*vatn, gjöf+arfur, hagl, kyrrstaða*) · B 1/6 (*kyrrstaða*,
+ne opis — seznam tam nebyl) · Opus S 1/6 · J 1/6 · B 0/6.
+
+**Nálezy:**
+1. ⭐ **Sol bez seznamů ztrácí identitu run** (6/12 → 3/12, drží v obou půlkách). Kandidát „seznamy pryč" z
+   2026-09-22 (3) / 2026-09-23 (1) tím **padá** — opisování sice mizí, ale runy s ním.
+2. ⭐ **Jedno slovo je nejhorší varianta**: nejvyšší hrubé skóre (8/12) stojí z větší části na NÁLEPCE —
+   sol to jedno slovo opíše do beatu (5/12) i do závěru (4/6) a soudce pak runu pozná podle slova. Podle
+   VZTAHU má jedno slovo jen 3/12. Čtyři slova dávají solu celé významové pole a neukazují na jedno slovo k opsání:
+   **podle vztahu nejlíp (5/12), nálepka v beatu jen 1/12.**
+3. **Opus 5 seznamy nepotřebuje** — 6/12 ve všech ramenech; runy drží z vlastní znalosti.
+4. **Opisování v závěru u solu se 4 slovy bylo tady 1/6** (várka 2026-09-22: 3/4) — dohromady 4/10. Problém je
+   menší, než jsem z várky usuzoval, a **seznamy nejsou správná páka** — kdyby se řešil, tak jinde (landing), neměřeno.
+5. Vedlejší: některé obrazy soudce nepoznává v žádném rameni — *prasklina v lávě* (Thurisaz → Hagalaz/Isa),
+   *pláž* (Gebo → Laguz). Patří k identitě obrazů (slepý test 2026-08-22), ne k seznamům.
+**Hranice:** 12 položek na buňku, jeden soudce na položku (Claude), jeden jazyk; rozdíly naznačují — S × B u solu
+drží v obou půlkách, S × J v „podle vztahu" je 5 × 3.
+Podklady → `docs/eval/2026-09-22-modely/identita2/`.

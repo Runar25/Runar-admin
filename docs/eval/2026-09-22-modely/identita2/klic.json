@@ -1,0 +1,866 @@
+{
+ "J1R1.1": {
+  "id": "6B",
+  "arm": "B",
+  "model": "claude-opus-5",
+  "sada": "6",
+  "pravda": "Ansuz",
+  "obrazova": false
+ },
+ "J1R1.2": {
+  "id": "6B",
+  "arm": "B",
+  "model": "claude-opus-5",
+  "sada": "6",
+  "pravda": "Eihwaz",
+  "obrazova": false
+ },
+ "J1R1.3": {
+  "id": "6B",
+  "arm": "B",
+  "model": "claude-opus-5",
+  "sada": "6",
+  "pravda": "Mannaz",
+  "obrazova": true
+ },
+ "J1R2.1": {
+  "id": "4J",
+  "arm": "J",
+  "model": "claude-opus-5",
+  "sada": "4",
+  "pravda": "Uruz",
+  "obrazova": false
+ },
+ "J1R2.2": {
+  "id": "4J",
+  "arm": "J",
+  "model": "claude-opus-5",
+  "sada": "4",
+  "pravda": "Nauthiz",
+  "obrazova": true
+ },
+ "J1R2.3": {
+  "id": "4J",
+  "arm": "J",
+  "model": "claude-opus-5",
+  "sada": "4",
+  "pravda": "Wunjo",
+  "obrazova": false
+ },
+ "J1R3.1": {
+  "id": "2S",
+  "arm": "S",
+  "model": "claude-opus-5",
+  "sada": "2",
+  "pravda": "Fehu",
+  "obrazova": false
+ },
+ "J1R3.2": {
+  "id": "2S",
+  "arm": "S",
+  "model": "claude-opus-5",
+  "sada": "2",
+  "pravda": "Hagalaz",
+  "obrazova": false
+ },
+ "J1R3.3": {
+  "id": "2S",
+  "arm": "S",
+  "model": "claude-opus-5",
+  "sada": "2",
+  "pravda": "Berkana",
+  "obrazova": true
+ },
+ "J1R4.1": {
+  "id": "3J",
+  "arm": "J",
+  "model": "gpt-6-sol",
+  "sada": "3",
+  "pravda": "Raidho",
+  "obrazova": false
+ },
+ "J1R4.2": {
+  "id": "3J",
+  "arm": "J",
+  "model": "gpt-6-sol",
+  "sada": "3",
+  "pravda": "Isa",
+  "obrazova": true
+ },
+ "J1R4.3": {
+  "id": "3J",
+  "arm": "J",
+  "model": "gpt-6-sol",
+  "sada": "3",
+  "pravda": "Sowilo",
+  "obrazova": false
+ },
+ "J1R5.1": {
+  "id": "5B",
+  "arm": "B",
+  "model": "gpt-6-sol",
+  "sada": "5",
+  "pravda": "Thurisaz",
+  "obrazova": true
+ },
+ "J1R5.2": {
+  "id": "5B",
+  "arm": "B",
+  "model": "gpt-6-sol",
+  "sada": "5",
+  "pravda": "Jera",
+  "obrazova": false
+ },
+ "J1R5.3": {
+  "id": "5B",
+  "arm": "B",
+  "model": "gpt-6-sol",
+  "sada": "5",
+  "pravda": "Laguz",
+  "obrazova": false
+ },
+ "J1R6.1": {
+  "id": "1S",
+  "arm": "S",
+  "model": "gpt-6-sol",
+  "sada": "1",
+  "pravda": "Gebo",
+  "obrazova": true
+ },
+ "J1R6.2": {
+  "id": "1S",
+  "arm": "S",
+  "model": "gpt-6-sol",
+  "sada": "1",
+  "pravda": "Ingwaz",
+  "obrazova": false
+ },
+ "J1R6.3": {
+  "id": "1S",
+  "arm": "S",
+  "model": "gpt-6-sol",
+  "sada": "1",
+  "pravda": "Othila",
+  "obrazova": false
+ },
+ "J2R1.1": {
+  "id": "2J",
+  "arm": "J",
+  "model": "gpt-6-sol",
+  "sada": "2",
+  "pravda": "Fehu",
+  "obrazova": false
+ },
+ "J2R1.2": {
+  "id": "2J",
+  "arm": "J",
+  "model": "gpt-6-sol",
+  "sada": "2",
+  "pravda": "Hagalaz",
+  "obrazova": false
+ },
+ "J2R1.3": {
+  "id": "2J",
+  "arm": "J",
+  "model": "gpt-6-sol",
+  "sada": "2",
+  "pravda": "Berkana",
+  "obrazova": true
+ },
+ "J2R2.1": {
+  "id": "5B",
+  "arm": "B",
+  "model": "claude-opus-5",
+  "sada": "5",
+  "pravda": "Thurisaz",
+  "obrazova": true
+ },
+ "J2R2.2": {
+  "id": "5B",
+  "arm": "B",
+  "model": "claude-opus-5",
+  "sada": "5",
+  "pravda": "Jera",
+  "obrazova": false
+ },
+ "J2R2.3": {
+  "id": "5B",
+  "arm": "B",
+  "model": "claude-opus-5",
+  "sada": "5",
+  "pravda": "Laguz",
+  "obrazova": false
+ },
+ "J2R3.1": {
+  "id": "1S",
+  "arm": "S",
+  "model": "claude-opus-5",
+  "sada": "1",
+  "pravda": "Gebo",
+  "obrazova": true
+ },
+ "J2R3.2": {
+  "id": "1S",
+  "arm": "S",
+  "model": "claude-opus-5",
+  "sada": "1",
+  "pravda": "Ingwaz",
+  "obrazova": false
+ },
+ "J2R3.3": {
+  "id": "1S",
+  "arm": "S",
+  "model": "claude-opus-5",
+  "sada": "1",
+  "pravda": "Othila",
+  "obrazova": false
+ },
+ "J2R4.1": {
+  "id": "6S",
+  "arm": "S",
+  "model": "gpt-6-sol",
+  "sada": "6",
+  "pravda": "Ansuz",
+  "obrazova": false
+ },
+ "J2R4.2": {
+  "id": "6S",
+  "arm": "S",
+  "model": "gpt-6-sol",
+  "sada": "6",
+  "pravda": "Eihwaz",
+  "obrazova": false
+ },
+ "J2R4.3": {
+  "id": "6S",
+  "arm": "S",
+  "model": "gpt-6-sol",
+  "sada": "6",
+  "pravda": "Mannaz",
+  "obrazova": true
+ },
+ "J2R5.1": {
+  "id": "3J",
+  "arm": "J",
+  "model": "claude-opus-5",
+  "sada": "3",
+  "pravda": "Raidho",
+  "obrazova": false
+ },
+ "J2R5.2": {
+  "id": "3J",
+  "arm": "J",
+  "model": "claude-opus-5",
+  "sada": "3",
+  "pravda": "Isa",
+  "obrazova": true
+ },
+ "J2R5.3": {
+  "id": "3J",
+  "arm": "J",
+  "model": "claude-opus-5",
+  "sada": "3",
+  "pravda": "Sowilo",
+  "obrazova": false
+ },
+ "J2R6.1": {
+  "id": "4B",
+  "arm": "B",
+  "model": "gpt-6-sol",
+  "sada": "4",
+  "pravda": "Uruz",
+  "obrazova": false
+ },
+ "J2R6.2": {
+  "id": "4B",
+  "arm": "B",
+  "model": "gpt-6-sol",
+  "sada": "4",
+  "pravda": "Nauthiz",
+  "obrazova": true
+ },
+ "J2R6.3": {
+  "id": "4B",
+  "arm": "B",
+  "model": "gpt-6-sol",
+  "sada": "4",
+  "pravda": "Wunjo",
+  "obrazova": false
+ },
+ "J3R1.1": {
+  "id": "3B",
+  "arm": "B",
+  "model": "gpt-6-sol",
+  "sada": "3",
+  "pravda": "Raidho",
+  "obrazova": false
+ },
+ "J3R1.2": {
+  "id": "3B",
+  "arm": "B",
+  "model": "gpt-6-sol",
+  "sada": "3",
+  "pravda": "Isa",
+  "obrazova": true
+ },
+ "J3R1.3": {
+  "id": "3B",
+  "arm": "B",
+  "model": "gpt-6-sol",
+  "sada": "3",
+  "pravda": "Sowilo",
+  "obrazova": false
+ },
+ "J3R2.1": {
+  "id": "1J",
+  "arm": "J",
+  "model": "gpt-6-sol",
+  "sada": "1",
+  "pravda": "Gebo",
+  "obrazova": true
+ },
+ "J3R2.2": {
+  "id": "1J",
+  "arm": "J",
+  "model": "gpt-6-sol",
+  "sada": "1",
+  "pravda": "Ingwaz",
+  "obrazova": false
+ },
+ "J3R2.3": {
+  "id": "1J",
+  "arm": "J",
+  "model": "gpt-6-sol",
+  "sada": "1",
+  "pravda": "Othila",
+  "obrazova": false
+ },
+ "J3R3.1": {
+  "id": "2J",
+  "arm": "J",
+  "model": "claude-opus-5",
+  "sada": "2",
+  "pravda": "Fehu",
+  "obrazova": false
+ },
+ "J3R3.2": {
+  "id": "2J",
+  "arm": "J",
+  "model": "claude-opus-5",
+  "sada": "2",
+  "pravda": "Hagalaz",
+  "obrazova": false
+ },
+ "J3R3.3": {
+  "id": "2J",
+  "arm": "J",
+  "model": "claude-opus-5",
+  "sada": "2",
+  "pravda": "Berkana",
+  "obrazova": true
+ },
+ "J3R4.1": {
+  "id": "5S",
+  "arm": "S",
+  "model": "gpt-6-sol",
+  "sada": "5",
+  "pravda": "Thurisaz",
+  "obrazova": true
+ },
+ "J3R4.2": {
+  "id": "5S",
+  "arm": "S",
+  "model": "gpt-6-sol",
+  "sada": "5",
+  "pravda": "Jera",
+  "obrazova": false
+ },
+ "J3R4.3": {
+  "id": "5S",
+  "arm": "S",
+  "model": "gpt-6-sol",
+  "sada": "5",
+  "pravda": "Laguz",
+  "obrazova": false
+ },
+ "J3R5.1": {
+  "id": "6S",
+  "arm": "S",
+  "model": "claude-opus-5",
+  "sada": "6",
+  "pravda": "Ansuz",
+  "obrazova": false
+ },
+ "J3R5.2": {
+  "id": "6S",
+  "arm": "S",
+  "model": "claude-opus-5",
+  "sada": "6",
+  "pravda": "Eihwaz",
+  "obrazova": false
+ },
+ "J3R5.3": {
+  "id": "6S",
+  "arm": "S",
+  "model": "claude-opus-5",
+  "sada": "6",
+  "pravda": "Mannaz",
+  "obrazova": true
+ },
+ "J3R6.1": {
+  "id": "4B",
+  "arm": "B",
+  "model": "claude-opus-5",
+  "sada": "4",
+  "pravda": "Uruz",
+  "obrazova": false
+ },
+ "J3R6.2": {
+  "id": "4B",
+  "arm": "B",
+  "model": "claude-opus-5",
+  "sada": "4",
+  "pravda": "Nauthiz",
+  "obrazova": true
+ },
+ "J3R6.3": {
+  "id": "4B",
+  "arm": "B",
+  "model": "claude-opus-5",
+  "sada": "4",
+  "pravda": "Wunjo",
+  "obrazova": false
+ },
+ "J4R1.1": {
+  "id": "1J",
+  "arm": "J",
+  "model": "claude-opus-5",
+  "sada": "1",
+  "pravda": "Gebo",
+  "obrazova": true
+ },
+ "J4R1.2": {
+  "id": "1J",
+  "arm": "J",
+  "model": "claude-opus-5",
+  "sada": "1",
+  "pravda": "Ingwaz",
+  "obrazova": false
+ },
+ "J4R1.3": {
+  "id": "1J",
+  "arm": "J",
+  "model": "claude-opus-5",
+  "sada": "1",
+  "pravda": "Othila",
+  "obrazova": false
+ },
+ "J4R2.1": {
+  "id": "3B",
+  "arm": "B",
+  "model": "claude-opus-5",
+  "sada": "3",
+  "pravda": "Raidho",
+  "obrazova": false
+ },
+ "J4R2.2": {
+  "id": "3B",
+  "arm": "B",
+  "model": "claude-opus-5",
+  "sada": "3",
+  "pravda": "Isa",
+  "obrazova": true
+ },
+ "J4R2.3": {
+  "id": "3B",
+  "arm": "B",
+  "model": "claude-opus-5",
+  "sada": "3",
+  "pravda": "Sowilo",
+  "obrazova": false
+ },
+ "J4R3.1": {
+  "id": "5S",
+  "arm": "S",
+  "model": "claude-opus-5",
+  "sada": "5",
+  "pravda": "Thurisaz",
+  "obrazova": true
+ },
+ "J4R3.2": {
+  "id": "5S",
+  "arm": "S",
+  "model": "claude-opus-5",
+  "sada": "5",
+  "pravda": "Jera",
+  "obrazova": false
+ },
+ "J4R3.3": {
+  "id": "5S",
+  "arm": "S",
+  "model": "claude-opus-5",
+  "sada": "5",
+  "pravda": "Laguz",
+  "obrazova": false
+ },
+ "J4R4.1": {
+  "id": "6J",
+  "arm": "J",
+  "model": "gpt-6-sol",
+  "sada": "6",
+  "pravda": "Ansuz",
+  "obrazova": false
+ },
+ "J4R4.2": {
+  "id": "6J",
+  "arm": "J",
+  "model": "gpt-6-sol",
+  "sada": "6",
+  "pravda": "Eihwaz",
+  "obrazova": false
+ },
+ "J4R4.3": {
+  "id": "6J",
+  "arm": "J",
+  "model": "gpt-6-sol",
+  "sada": "6",
+  "pravda": "Mannaz",
+  "obrazova": true
+ },
+ "J4R5.1": {
+  "id": "2B",
+  "arm": "B",
+  "model": "gpt-6-sol",
+  "sada": "2",
+  "pravda": "Fehu",
+  "obrazova": false
+ },
+ "J4R5.2": {
+  "id": "2B",
+  "arm": "B",
+  "model": "gpt-6-sol",
+  "sada": "2",
+  "pravda": "Hagalaz",
+  "obrazova": false
+ },
+ "J4R5.3": {
+  "id": "2B",
+  "arm": "B",
+  "model": "gpt-6-sol",
+  "sada": "2",
+  "pravda": "Berkana",
+  "obrazova": true
+ },
+ "J4R6.1": {
+  "id": "4S",
+  "arm": "S",
+  "model": "gpt-6-sol",
+  "sada": "4",
+  "pravda": "Uruz",
+  "obrazova": false
+ },
+ "J4R6.2": {
+  "id": "4S",
+  "arm": "S",
+  "model": "gpt-6-sol",
+  "sada": "4",
+  "pravda": "Nauthiz",
+  "obrazova": true
+ },
+ "J4R6.3": {
+  "id": "4S",
+  "arm": "S",
+  "model": "gpt-6-sol",
+  "sada": "4",
+  "pravda": "Wunjo",
+  "obrazova": false
+ },
+ "J5R1.1": {
+  "id": "2B",
+  "arm": "B",
+  "model": "claude-opus-5",
+  "sada": "2",
+  "pravda": "Fehu",
+  "obrazova": false
+ },
+ "J5R1.2": {
+  "id": "2B",
+  "arm": "B",
+  "model": "claude-opus-5",
+  "sada": "2",
+  "pravda": "Hagalaz",
+  "obrazova": false
+ },
+ "J5R1.3": {
+  "id": "2B",
+  "arm": "B",
+  "model": "claude-opus-5",
+  "sada": "2",
+  "pravda": "Berkana",
+  "obrazova": true
+ },
+ "J5R2.1": {
+  "id": "5J",
+  "arm": "J",
+  "model": "gpt-6-sol",
+  "sada": "5",
+  "pravda": "Thurisaz",
+  "obrazova": true
+ },
+ "J5R2.2": {
+  "id": "5J",
+  "arm": "J",
+  "model": "gpt-6-sol",
+  "sada": "5",
+  "pravda": "Jera",
+  "obrazova": false
+ },
+ "J5R2.3": {
+  "id": "5J",
+  "arm": "J",
+  "model": "gpt-6-sol",
+  "sada": "5",
+  "pravda": "Laguz",
+  "obrazova": false
+ },
+ "J5R3.1": {
+  "id": "3S",
+  "arm": "S",
+  "model": "gpt-6-sol",
+  "sada": "3",
+  "pravda": "Raidho",
+  "obrazova": false
+ },
+ "J5R3.2": {
+  "id": "3S",
+  "arm": "S",
+  "model": "gpt-6-sol",
+  "sada": "3",
+  "pravda": "Isa",
+  "obrazova": true
+ },
+ "J5R3.3": {
+  "id": "3S",
+  "arm": "S",
+  "model": "gpt-6-sol",
+  "sada": "3",
+  "pravda": "Sowilo",
+  "obrazova": false
+ },
+ "J5R4.1": {
+  "id": "4S",
+  "arm": "S",
+  "model": "claude-opus-5",
+  "sada": "4",
+  "pravda": "Uruz",
+  "obrazova": false
+ },
+ "J5R4.2": {
+  "id": "4S",
+  "arm": "S",
+  "model": "claude-opus-5",
+  "sada": "4",
+  "pravda": "Nauthiz",
+  "obrazova": true
+ },
+ "J5R4.3": {
+  "id": "4S",
+  "arm": "S",
+  "model": "claude-opus-5",
+  "sada": "4",
+  "pravda": "Wunjo",
+  "obrazova": false
+ },
+ "J5R5.1": {
+  "id": "6J",
+  "arm": "J",
+  "model": "claude-opus-5",
+  "sada": "6",
+  "pravda": "Ansuz",
+  "obrazova": false
+ },
+ "J5R5.2": {
+  "id": "6J",
+  "arm": "J",
+  "model": "claude-opus-5",
+  "sada": "6",
+  "pravda": "Eihwaz",
+  "obrazova": false
+ },
+ "J5R5.3": {
+  "id": "6J",
+  "arm": "J",
+  "model": "claude-opus-5",
+  "sada": "6",
+  "pravda": "Mannaz",
+  "obrazova": true
+ },
+ "J5R6.1": {
+  "id": "1B",
+  "arm": "B",
+  "model": "gpt-6-sol",
+  "sada": "1",
+  "pravda": "Gebo",
+  "obrazova": true
+ },
+ "J5R6.2": {
+  "id": "1B",
+  "arm": "B",
+  "model": "gpt-6-sol",
+  "sada": "1",
+  "pravda": "Ingwaz",
+  "obrazova": false
+ },
+ "J5R6.3": {
+  "id": "1B",
+  "arm": "B",
+  "model": "gpt-6-sol",
+  "sada": "1",
+  "pravda": "Othila",
+  "obrazova": false
+ },
+ "J6R1.1": {
+  "id": "2S",
+  "arm": "S",
+  "model": "gpt-6-sol",
+  "sada": "2",
+  "pravda": "Fehu",
+  "obrazova": false
+ },
+ "J6R1.2": {
+  "id": "2S",
+  "arm": "S",
+  "model": "gpt-6-sol",
+  "sada": "2",
+  "pravda": "Hagalaz",
+  "obrazova": false
+ },
+ "J6R1.3": {
+  "id": "2S",
+  "arm": "S",
+  "model": "gpt-6-sol",
+  "sada": "2",
+  "pravda": "Berkana",
+  "obrazova": true
+ },
+ "J6R2.1": {
+  "id": "6B",
+  "arm": "B",
+  "model": "gpt-6-sol",
+  "sada": "6",
+  "pravda": "Ansuz",
+  "obrazova": false
+ },
+ "J6R2.2": {
+  "id": "6B",
+  "arm": "B",
+  "model": "gpt-6-sol",
+  "sada": "6",
+  "pravda": "Eihwaz",
+  "obrazova": false
+ },
+ "J6R2.3": {
+  "id": "6B",
+  "arm": "B",
+  "model": "gpt-6-sol",
+  "sada": "6",
+  "pravda": "Mannaz",
+  "obrazova": true
+ },
+ "J6R3.1": {
+  "id": "1B",
+  "arm": "B",
+  "model": "claude-opus-5",
+  "sada": "1",
+  "pravda": "Gebo",
+  "obrazova": true
+ },
+ "J6R3.2": {
+  "id": "1B",
+  "arm": "B",
+  "model": "claude-opus-5",
+  "sada": "1",
+  "pravda": "Ingwaz",
+  "obrazova": false
+ },
+ "J6R3.3": {
+  "id": "1B",
+  "arm": "B",
+  "model": "claude-opus-5",
+  "sada": "1",
+  "pravda": "Othila",
+  "obrazova": false
+ },
+ "J6R4.1": {
+  "id": "4J",
+  "arm": "J",
+  "model": "gpt-6-sol",
+  "sada": "4",
+  "pravda": "Uruz",
+  "obrazova": false
+ },
+ "J6R4.2": {
+  "id": "4J",
+  "arm": "J",
+  "model": "gpt-6-sol",
+  "sada": "4",
+  "pravda": "Nauthiz",
+  "obrazova": true
+ },
+ "J6R4.3": {
+  "id": "4J",
+  "arm": "J",
+  "model": "gpt-6-sol",
+  "sada": "4",
+  "pravda": "Wunjo",
+  "obrazova": false
+ },
+ "J6R5.1": {
+  "id": "5J",
+  "arm": "J",
+  "model": "claude-opus-5",
+  "sada": "5",
+  "pravda": "Thurisaz",
+  "obrazova": true
+ },
+ "J6R5.2": {
+  "id": "5J",
+  "arm": "J",
+  "model": "claude-opus-5",
+  "sada": "5",
+  "pravda": "Jera",
+  "obrazova": false
+ },
+ "J6R5.3": {
+  "id": "5J",
+  "arm": "J",
+  "model": "claude-opus-5",
+  "sada": "5",
+  "pravda": "Laguz",
+  "obrazova": false
+ },
+ "J6R6.1": {
+  "id": "3S",
+  "arm": "S",
+  "model": "claude-opus-5",
+  "sada": "3",
+  "pravda": "Raidho",
+  "obrazova": false
+ },
+ "J6R6.2": {
+  "id": "3S",
+  "arm": "S",
+  "model": "claude-opus-5",
+  "sada": "3",
+  "pravda": "Isa",
+  "obrazova": true
+ },
+ "J6R6.3": {
+  "id": "3S",
+  "arm": "S",
+  "model": "claude-opus-5",
+  "sada": "3",
+  "pravda": "Sowilo",
+  "obrazova": false
+ }
+}

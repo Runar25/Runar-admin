@@ -1,0 +1,676 @@
+{
+ "soudci": [
+  {
+   "items": [
+    {
+     "id": "J1R1.1",
+     "choice": "Mannaz",
+     "confidence": "medium",
+     "why": "andlit þitt speglast í augum hans — sjálfið séð með augum annars manns"
+    },
+    {
+     "id": "J1R1.2",
+     "choice": "Gebo",
+     "confidence": "low",
+     "why": "tvær myndir hlið við hlið ... Þú heldur báðum í höndum"
+    },
+    {
+     "id": "J1R1.3",
+     "choice": "Kenaz",
+     "confidence": "low",
+     "why": "lærir að spegillinn sýndi aðeins brot og hann þekkir nú meira"
+    },
+    {
+     "id": "J1R2.1",
+     "choice": "Fehu",
+     "confidence": "low",
+     "why": "hnykillinn var stór þegar þú byrjaðir — forði sem eyðist"
+    },
+    {
+     "id": "J1R2.2",
+     "choice": "Nauthiz",
+     "confidence": "medium",
+     "why": "hnykillinn orðinn lítill ... með auga á því sem eftir er"
+    },
+    {
+     "id": "J1R2.3",
+     "choice": "Ingwaz",
+     "confidence": "low",
+     "why": "stykki sem má bindast af og teljast heilt, eða ... bíður nýs hnykils"
+    },
+    {
+     "id": "J1R3.1",
+     "choice": "Ingwaz",
+     "confidence": "medium",
+     "why": "forða undir moldinni, safnaðan sumar eftir sumar og geymdan í dimmu"
+    },
+    {
+     "id": "J1R3.2",
+     "choice": "Hagalaz",
+     "confidence": "high",
+     "why": "hagl ... lemur fyrstu blöðin ... og þau rifna"
+    },
+    {
+     "id": "J1R3.3",
+     "choice": "Berkana",
+     "confidence": "low",
+     "why": "næsti sproti kemur upp í skjóli við vegginn, seinni á ferð og þéttari"
+    },
+    {
+     "id": "J1R4.1",
+     "choice": "Raidho",
+     "confidence": "low",
+     "why": "vísarnir mörkuðu leið frá einni stund til annarrar"
+    },
+    {
+     "id": "J1R4.2",
+     "choice": "Isa",
+     "confidence": "high",
+     "why": "Vísarnir standa kyrrir eins og frosnir í ís"
+    },
+    {
+     "id": "J1R4.3",
+     "choice": "Sowilo",
+     "confidence": "medium",
+     "why": "Sólin fellur á skífuna ... sérð nýja stefnu í birtunni"
+    },
+    {
+     "id": "J1R5.1",
+     "choice": "Hagalaz",
+     "confidence": "low",
+     "why": "Sprungan í hrauninu opnaðist ... verður ekki brúuð"
+    },
+    {
+     "id": "J1R5.2",
+     "choice": "Kenaz",
+     "confidence": "medium",
+     "why": "smíð tíma: mál, efni og vinnubrögð skýrast meðan verkið er enn í höndum"
+    },
+    {
+     "id": "J1R5.3",
+     "choice": "Dagaz",
+     "confidence": "low",
+     "why": "skiljir fast berg eftir og mætir því sem tekur við handan ... verk sem tekur aðra mynd"
+    },
+    {
+     "id": "J1R6.1",
+     "choice": "Laguz",
+     "confidence": "low",
+     "why": "Fjaran hefur skilað því sem bárurnar báru að landi og tekið annað til baka"
+    },
+    {
+     "id": "J1R6.2",
+     "choice": "Ingwaz",
+     "confidence": "low",
+     "why": "Undir sandinum getur fræ verið að skjóta rótum án þess að nokkuð sjáist"
+    },
+    {
+     "id": "J1R6.3",
+     "choice": "Othila",
+     "confidence": "medium",
+     "why": "eitthvað sem þú hefur fengið í arf og átt nú erfitt með að skilja eftir"
+    }
+   ]
+  },
+  {
+   "items": [
+    {
+     "id": "J2R1.1",
+     "choice": "Othila",
+     "confidence": "low",
+     "why": "moldin þegar rík af því sem hafði safnast þar. Rabarbarinn átti þar rætur"
+    },
+    {
+     "id": "J2R1.2",
+     "choice": "Hagalaz",
+     "confidence": "medium",
+     "why": "haglið skellur á nýjum blöðum ... það sem virtist öruggt orðið óljóst"
+    },
+    {
+     "id": "J2R1.3",
+     "choice": "Berkana",
+     "confidence": "low",
+     "why": "heldur vöxturinn áfram ... nýr vöxtur við hlið annars"
+    },
+    {
+     "id": "J2R2.1",
+     "choice": "Hagalaz",
+     "confidence": "medium",
+     "why": "sprakk þar sem það hlaut að springa ... ekki höggvin af neinum"
+    },
+    {
+     "id": "J2R2.2",
+     "choice": "Dagaz",
+     "confidence": "medium",
+     "why": "brúnin hinum megin í dagsbirtu, og þú sérð hversu langt stökkið er"
+    },
+    {
+     "id": "J2R2.3",
+     "choice": "Laguz",
+     "confidence": "medium",
+     "why": "Vatn liggur niðri í sprungunni og þú sérð ekki hvað er undir yfirborðinu"
+    },
+    {
+     "id": "J2R3.1",
+     "choice": "Gebo",
+     "confidence": "high",
+     "why": "tekið við gjöfum úr hafinu og skilað öðrum aftur"
+    },
+    {
+     "id": "J2R3.2",
+     "choice": "Perth",
+     "confidence": "low",
+     "why": "liggur eitthvað grafið og bíður. Það sést ekki ... en það er ekki horfið"
+    },
+    {
+     "id": "J2R3.3",
+     "choice": "Othila",
+     "confidence": "low",
+     "why": "losar sig við það sem sjórinn á ... safnar saman því sem hún ætlar að halda"
+    },
+    {
+     "id": "J2R4.1",
+     "choice": "Ansuz",
+     "confidence": "high",
+     "why": "Orð sem eitt sinn voru sögð verða ekki tekin aftur"
+    },
+    {
+     "id": "J2R4.2",
+     "choice": "Laguz",
+     "confidence": "low",
+     "why": "spegilmyndin helst þar ... Hún breytist hægt eftir því sem augun dvelja við hana"
+    },
+    {
+     "id": "J2R4.3",
+     "choice": "Mannaz",
+     "confidence": "high",
+     "why": "andlit þitt ekki eitt og sér heldur í augum annars manns"
+    },
+    {
+     "id": "J2R5.1",
+     "choice": "Raidho",
+     "confidence": "medium",
+     "why": "bar húsið áfram, stund fyrir stund ... leiðin var lögð af sjálfri sér"
+    },
+    {
+     "id": "J2R5.2",
+     "choice": "Isa",
+     "confidence": "high",
+     "why": "Nú stendur hún kyrr og enginn hefur dregið hana upp"
+    },
+    {
+     "id": "J2R5.3",
+     "choice": "Sowilo",
+     "confidence": "high",
+     "why": "Birtan í glugganum ... sólin áfram að ganga sinn hring"
+    },
+    {
+     "id": "J2R6.1",
+     "choice": "Othila",
+     "confidence": "low",
+     "why": "lykkjur sem hafa þegar verið gerðar. Þær halda verkinu saman"
+    },
+    {
+     "id": "J2R6.2",
+     "choice": "Nauthiz",
+     "confidence": "medium",
+     "why": "með það garn sem eftir er. Hver lykkja tekur sitt, og minna verður eftir"
+    },
+    {
+     "id": "J2R6.3",
+     "choice": "Isa",
+     "confidence": "low",
+     "why": "rúm fyrir hvíld í verkinu sjálfu ... án þess að lykkjurnar rakni"
+    }
+   ]
+  },
+  {
+   "items": [
+    {
+     "id": "J3R1.1",
+     "choice": "Jera",
+     "confidence": "low",
+     "why": "Klukkan á veggnum gekk áður og vísarnir færðust áfram"
+    },
+    {
+     "id": "J3R1.2",
+     "choice": "Isa",
+     "confidence": "high",
+     "why": "Nú standa vísarnir kyrrir ... sömu stöðu á skífunni í hvert sinn"
+    },
+    {
+     "id": "J3R1.3",
+     "choice": "Sowilo",
+     "confidence": "low",
+     "why": "Birtan fellur á skífuna ... hlé þar sem þú sérð leið þína skýrar"
+    },
+    {
+     "id": "J3R2.1",
+     "choice": "Gebo",
+     "confidence": "medium",
+     "why": "Fjaran skilaði einu með síðustu báru og tók annað til baka"
+    },
+    {
+     "id": "J3R2.2",
+     "choice": "Laguz",
+     "confidence": "low",
+     "why": "ný bára á land ... Undir yfirborðinu mótast staður fyrir það sem áður lá hulið"
+    },
+    {
+     "id": "J3R2.3",
+     "choice": "Othila",
+     "confidence": "high",
+     "why": "gjöf sem hefur orðið að arfi eða arfur sem enn liggur hálfur í sandi"
+    },
+    {
+     "id": "J3R3.1",
+     "choice": "Jera",
+     "confidence": "low",
+     "why": "Moldin ... orðin feit af því sem rotnaði þar í fyrra"
+    },
+    {
+     "id": "J3R3.2",
+     "choice": "Hagalaz",
+     "confidence": "high",
+     "why": "Nú koma haglélin á rabarbarann ... þau gata það sem opnaði sig fyrst"
+    },
+    {
+     "id": "J3R3.3",
+     "choice": "Eihwaz",
+     "confidence": "low",
+     "why": "rótin er djúp ... undir götóttu blöðunum heldur hún áfram að ýta"
+    },
+    {
+     "id": "J3R4.1",
+     "choice": "Isa",
+     "confidence": "low",
+     "why": "Sprungan í hrauninu varð til þegar bergið kólnaði og dróst saman"
+    },
+    {
+     "id": "J3R4.2",
+     "choice": "Jera",
+     "confidence": "low",
+     "why": "verk sem unnið er í áföngum fær sinn tíma"
+    },
+    {
+     "id": "J3R4.3",
+     "choice": "Kenaz",
+     "confidence": "low",
+     "why": "stökk þitt ráðist af því sem þú sérð í verkinu ... smíð sem er enn að taka á sig mynd"
+    },
+    {
+     "id": "J3R5.1",
+     "choice": "Othila",
+     "confidence": "low",
+     "why": "lítil mynd af þér, skýr og römmuð inn af öðrum ... þegar ofin"
+    },
+    {
+     "id": "J3R5.2",
+     "choice": "Laguz",
+     "confidence": "low",
+     "why": "stendur þú frammi fyrir spegluninni og hún heldur ekki alveg lögun sinni lengur"
+    },
+    {
+     "id": "J3R5.3",
+     "choice": "Mannaz",
+     "confidence": "medium",
+     "why": "maður sem hættir að leita að sjálfum sér í augnaráði annarra ... þekkja andlit sitt án spegils"
+    },
+    {
+     "id": "J3R6.1",
+     "choice": "Uruz",
+     "confidence": "low",
+     "why": "lykkja eftir lykkju, og þar liggur styrkur sem enginn tekur til baka"
+    },
+    {
+     "id": "J3R6.2",
+     "choice": "Nauthiz",
+     "confidence": "high",
+     "why": "Nú styttist í hnykilinn og þú heldur samt áfram, teygir garnið"
+    },
+    {
+     "id": "J3R6.3",
+     "choice": "Jera",
+     "confidence": "medium",
+     "why": "liggur verkið einhvern tímann fullprjónað í höndum þér"
+    }
+   ]
+  },
+  {
+   "items": [
+    {
+     "id": "J4R1.1",
+     "choice": "Othila",
+     "confidence": "low",
+     "why": "geymdi það án þess að spyrja. Sumt liggur enn undir sandinum, þungt og fast"
+    },
+    {
+     "id": "J4R1.2",
+     "choice": "Perth",
+     "confidence": "low",
+     "why": "hreyfir það sem hulið er ... ekki þegar gengið er um fjöruna og leitað"
+    },
+    {
+     "id": "J4R1.3",
+     "choice": "Gebo",
+     "confidence": "low",
+     "why": "hirðir með hverri báru og skilar með annarri ... það sem þú hélst að væri þitt"
+    },
+    {
+     "id": "J4R2.1",
+     "choice": "Raidho",
+     "confidence": "low",
+     "why": "Klukkan á veggnum gekk lengi og bar húsið áfram"
+    },
+    {
+     "id": "J4R2.2",
+     "choice": "Isa",
+     "confidence": "high",
+     "why": "vísarnir kyrrir ... Kyrrðin er ekki bilun, hún er aðeins þögn"
+    },
+    {
+     "id": "J4R2.3",
+     "choice": "Sowilo",
+     "confidence": "low",
+     "why": "Birtan færist samt yfir skífuna eins og hún gerði alltaf"
+    },
+    {
+     "id": "J4R3.1",
+     "choice": "Thurisaz",
+     "confidence": "low",
+     "why": "Brúnin er hvöss og hún gefur ekki eftir"
+    },
+    {
+     "id": "J4R3.2",
+     "choice": "Ehwaz",
+     "confidence": "low",
+     "why": "fótfestan verður ekki betri en hún er þegar hún er orðin þurr"
+    },
+    {
+     "id": "J4R3.3",
+     "choice": "Laguz",
+     "confidence": "medium",
+     "why": "Djúpt í sprungunni rennur vatn sem enginn sér"
+    },
+    {
+     "id": "J4R4.1",
+     "choice": "Ansuz",
+     "confidence": "low",
+     "why": "Orð sem einu sinni voru sögð verða ekki tekin aftur"
+    },
+    {
+     "id": "J4R4.2",
+     "choice": "Dagaz",
+     "confidence": "low",
+     "why": "birtan breytist hægt. Það sem áður virtist fast fær aðrar línur"
+    },
+    {
+     "id": "J4R4.3",
+     "choice": "Mannaz",
+     "confidence": "medium",
+     "why": "andlit sem þú ert farinn að þekkja sjálfur"
+    },
+    {
+     "id": "J4R5.1",
+     "choice": "Ingwaz",
+     "confidence": "low",
+     "why": "geymdi moldin rætur ... varð eftir í jörðinni, þótt blöðin féllu"
+    },
+    {
+     "id": "J4R5.2",
+     "choice": "Berkana",
+     "confidence": "medium",
+     "why": "teygir rabarbarinn sig upp úr kaldri moldinni, fyrstur allra á vorin"
+    },
+    {
+     "id": "J4R5.3",
+     "choice": "Sowilo",
+     "confidence": "low",
+     "why": "halda stönglarnir áfram að vaxa við vegginn, þar sem birtan nær til þeirra"
+    },
+    {
+     "id": "J4R6.1",
+     "choice": "Uruz",
+     "confidence": "medium",
+     "why": "Þéttleiki þeirra ber merki af kraftinum sem fór í þær"
+    },
+    {
+     "id": "J4R6.2",
+     "choice": "Nauthiz",
+     "confidence": "high",
+     "why": "Hver lykkja kallar á meira garn en eftir er"
+    },
+    {
+     "id": "J4R6.3",
+     "choice": "Ingwaz",
+     "confidence": "low",
+     "why": "rúm fyrir hvíld ... gróandi sem fær að taka sinn tíma"
+    }
+   ]
+  },
+  {
+   "items": [
+    {
+     "id": "J5R1.1",
+     "choice": "Ingwaz",
+     "confidence": "low",
+     "why": "rótarhnyðju sem safnaði forða í allan fyrravetur (orka uložená pod zemí, zrání ve tmě; alternativa Othila/Fehu)"
+    },
+    {
+     "id": "J5R1.2",
+     "choice": "Hagalaz",
+     "confidence": "high",
+     "why": "það haglél sem fellur á það þessa daga getur bæði rifið og vökvað"
+    },
+    {
+     "id": "J5R1.3",
+     "choice": "Fehu",
+     "confidence": "medium",
+     "why": "eigir forða til að deila með öðrum án þess að tæma sjálfan þig ... einhver annar standi í skugga þínum"
+    },
+    {
+     "id": "J5R2.1",
+     "choice": "Thurisaz",
+     "confidence": "low",
+     "why": "enginn kemst yfir hana án þess að stökkva (překážka/brána z minulosti; alternativa Isa kvůli kólnaði)"
+    },
+    {
+     "id": "J5R2.2",
+     "choice": "Kenaz",
+     "confidence": "medium",
+     "why": "hvað smíðin hefur tekið á sig. Í vinnunni kemur það smám saman í ljós"
+    },
+    {
+     "id": "J5R2.3",
+     "choice": "Laguz",
+     "confidence": "low",
+     "why": "vatnið við sprunguna ráðið því hvernig stökkið blasir við ... bíða við vatnsbakkann"
+    },
+    {
+     "id": "J5R3.1",
+     "choice": "Jera",
+     "confidence": "low",
+     "why": "Klukkan á veggnum gekk áður sinn gang ... það verður ekki tekið til baka"
+    },
+    {
+     "id": "J5R3.2",
+     "choice": "Isa",
+     "confidence": "high",
+     "why": "Nú hefur klukkan stöðvast ... Hún sýnir enn sömu stundina, þótt tíminn líði"
+    },
+    {
+     "id": "J5R3.3",
+     "choice": "Dagaz",
+     "confidence": "medium",
+     "why": "Í dagsbirtunni sést betur ... hlé áður en ný stefna skýrist"
+    },
+    {
+     "id": "J5R4.1",
+     "choice": "Uruz",
+     "confidence": "low",
+     "why": "spunnið af sterkum þræði, þykkum og seigum ... án þess að slitna (alternativa Eihwaz)"
+    },
+    {
+     "id": "J5R4.2",
+     "choice": "Nauthiz",
+     "confidence": "medium",
+     "why": "Nú styttist í hnykilinn ... Þú prjónar samt áfram, hægar en fyrr ... þótt efnið minnki"
+    },
+    {
+     "id": "J5R4.3",
+     "choice": "Wunjo",
+     "confidence": "low",
+     "why": "leggja yfir kné og hvíla undir ... finnur samt ylinn af því sem komið er (alternativa Jera)"
+    },
+    {
+     "id": "J5R5.1",
+     "choice": "Gebo",
+     "confidence": "low",
+     "why": "Sú mynd var gefin þér áður en þú hafðir orð yfir hana (alternativa Laguz/Mannaz)"
+    },
+    {
+     "id": "J5R5.2",
+     "choice": "Eihwaz",
+     "confidence": "medium",
+     "why": "eins og viður sem beygist án þess að bresta"
+    },
+    {
+     "id": "J5R5.3",
+     "choice": "Mannaz",
+     "confidence": "medium",
+     "why": "maður sem stendur einn fyrir framan spegil og þekkir loks það sem hann sér"
+    },
+    {
+     "id": "J5R6.1",
+     "choice": "Laguz",
+     "confidence": "low",
+     "why": "Fjaran skilaði einu og tók annað með hverri báru"
+    },
+    {
+     "id": "J5R6.2",
+     "choice": "Perth",
+     "confidence": "medium",
+     "why": "það sem lá undir honum tekur að koma í ljós. Ekki sést enn hvort næsta bára hylur það aftur"
+    },
+    {
+     "id": "J5R6.3",
+     "choice": "Othila",
+     "confidence": "low",
+     "why": "hvað hefur fengið að liggja kyrrt ... eitthvað gamalt sem fær loks að sjást"
+    }
+   ]
+  },
+  {
+   "items": [
+    {
+     "id": "J6R1.1",
+     "choice": "Jera",
+     "confidence": "low",
+     "why": "moldin geymt næringu frá fyrra sumri ... það sem safnaðist áður nær að bera nýjan vöxt"
+    },
+    {
+     "id": "J6R1.2",
+     "choice": "Hagalaz",
+     "confidence": "high",
+     "why": "Hagl fellur á fyrstu blöðin og þau beygjast undan því"
+    },
+    {
+     "id": "J6R1.3",
+     "choice": "Berkana",
+     "confidence": "medium",
+     "why": "ný blöð vaxið þar sem haglið lamdi ... samband sem vex áfram eftir áfall"
+    },
+    {
+     "id": "J6R2.1",
+     "choice": "Ansuz",
+     "confidence": "low",
+     "why": "Það sem þar sást varð ekki tekið til baka þegar orðin voru sögð"
+    },
+    {
+     "id": "J6R2.2",
+     "choice": "Kenaz",
+     "confidence": "low",
+     "why": "svipurinn breytist eftir því hvernig ljósið fellur. Þú sérð það ekki allt í einu"
+    },
+    {
+     "id": "J6R2.3",
+     "choice": "Mannaz",
+     "confidence": "medium",
+     "why": "að sjá sjálfan þig með augum annars, eða að þekkja eigin svip betur"
+    },
+    {
+     "id": "J6R3.1",
+     "choice": "Laguz",
+     "confidence": "low",
+     "why": "þegið margt af sjónum ... Sumt liggur grafið undir yfirborðinu, komið með einhverri báru"
+    },
+    {
+     "id": "J6R3.2",
+     "choice": "Perth",
+     "confidence": "low",
+     "why": "hefur legið hulið nógu lengi til að vera óþekkjanlegt þar til birtan nær því"
+    },
+    {
+     "id": "J6R3.3",
+     "choice": "Othila",
+     "confidence": "medium",
+     "why": "Fjaran heldur því sem hún hefur haldið lengst ... það sem þú hefur borið með þér"
+    },
+    {
+     "id": "J6R4.1",
+     "choice": "Uruz",
+     "confidence": "medium",
+     "why": "Í þeim er krafturinn sem þurfti til að byrja"
+    },
+    {
+     "id": "J6R4.2",
+     "choice": "Nauthiz",
+     "confidence": "high",
+     "why": "garnið er við það að klárast ... þörfin fyrir hvíld verður sýnileg"
+    },
+    {
+     "id": "J6R4.3",
+     "choice": "Wunjo",
+     "confidence": "medium",
+     "why": "gleðin verið fólgin í því sem þegar er komið á prjónana ... léttirinn"
+    },
+    {
+     "id": "J6R5.1",
+     "choice": "Isa",
+     "confidence": "low",
+     "why": "Hraunið kólnaði fyrir löngu og storknaði ... hann heldur bara opinu eins og það var ofið"
+    },
+    {
+     "id": "J6R5.2",
+     "choice": "Jera",
+     "confidence": "medium",
+     "why": "Það sem þú hefur borið hingað er fullþroskað, og fullþroskaður hlutur bíður ekki endalaust"
+    },
+    {
+     "id": "J6R5.3",
+     "choice": "Laguz",
+     "confidence": "low",
+     "why": "Djúpt niðri í sprungunni rennur vatn ... það heldur bara áfram meðan þú stendur kyrr"
+    },
+    {
+     "id": "J6R6.1",
+     "choice": "Raidho",
+     "confidence": "medium",
+     "why": "taldi hvert skref sitt í réttri röð, og gangverkið innra með henni lærði þá leið"
+    },
+    {
+     "id": "J6R6.2",
+     "choice": "Isa",
+     "confidence": "high",
+     "why": "Nú standa vísarnir kyrrir og enginn hefur dregið hana upp"
+    },
+    {
+     "id": "J6R6.3",
+     "choice": "Dagaz",
+     "confidence": "low",
+     "why": "Dagsbirtan fellur á skífuna ... sýnir bæði rykið og tölurnar undir því"
+    }
+   ]
+  }
+ ]
+}
