@@ -1,0 +1,83 @@
+### R1
+
+R1.1 (URÐUR — það sem var ofið)
+Áin hafði lengi runnið jafnt og fært bökkunum frjósama mold. Þar sem tvær manneskjur mætast getur slíkur jarðvegur haldið utan um það sem þær hafa byggt upp.
+MOŽNOSTI: Jera · Uruz · Ansuz · Gebo · Fehu
+
+R1.2 (VERÐANDI — það sem er að verða til)
+Nú bólgnar áin á einni nóttu og tekur með sér það sem stóð of nálægt bakkanum. Þar sem tveir mætast getur raskið sýnt hvað fær staðið og hvað þarf meira rými.
+MOŽNOSTI: Jera · Hagalaz · Dagaz · Kenaz · Wunjo
+
+R1.3 (SKULD — hvert þráðurinn stefnir)
+Á nýjum bakka gæti birki fest rætur ef vatnið lægir, en stefnan er enn opin. Fyrir þig gæti þetta orðið samband sem fær rými til að vaxa á nýjum stað, eða fjarlægð milli ykkar þar sem hvor stendur á sínum bakka.
+MOŽNOSTI: Jera · Wunjo · Othila · Berkana · Perth
+
+### R2
+
+R2.1 (URÐUR — það sem var ofið)
+Í gömlu kistunni liggur það sem eitt sinn var látið af hendi og það sem fékkst í staðinn. Skiptin eru um garð gengin, þótt ekki sjáist lengur hvort tveggja við fyrstu sýn.
+MOŽNOSTI: Algiz · Eihwaz · Ansuz · Gebo · Sowilo
+
+R2.2 (VERÐANDI — það sem er að verða til)
+Nú tekur eitt að skýrast í kistunni, en hitt liggur enn í skugga. Munurinn á því sem þú berð með þér og því sem verður eftir er enn að koma í ljós.
+MOŽNOSTI: Isa · Dagaz · Tiwaz · Ingwaz · Fehu
+
+R2.3 (SKULD — hvert þráðurinn stefnir)
+Ef þú heldur áfram að horfa ofan í kistuna stefnir athyglin að því sem þú telur þitt úr þessum skiptum. Það gæti verið gamalt loforð sem þú geymir eða hlutur sem þú lætur liggja þar sem hann var.
+MOŽNOSTI: Wunjo · Eihwaz · Othila · Sowilo · Tiwaz
+
+### R3
+
+R3.1 (URÐUR — það sem var ofið)
+Í fjallaskarðinu liðaðist kindagatan af sjálfu sér milli steina. Fótspor mótuðu hana löngu áður en þessi stund rann upp.
+MOŽNOSTI: Raidho · Thurisaz · Kenaz · Fehu · Ehwaz
+
+R3.2 (VERÐANDI — það sem er að verða til)
+Nú liggur ís yfir hluta götunnar. Þar hægist á göngunni og næsti kafli sést ekki allur.
+MOŽNOSTI: Algiz · Ingwaz · Tiwaz · Dagaz · Isa
+
+R3.3 (SKULD — hvert þráðurinn stefnir)
+Sólin fellur á ísinn og sýnir hvar gatan heldur áfram. Kuky, þetta gæti verið hlé á kunnugri leið eða upphaf annarrar stefnu þegar ísinn hopar.
+MOŽNOSTI: Algiz · Dagaz · Sowilo · Laguz · Berkana
+
+### R4
+
+R4.1 (URÐUR — það sem var ofið)
+Árbakkinn var traustur, og það sem stóð á honum átti sér stað. Þar gátu tvær manneskjur mæst án þess að vatnið næði til þeirra.
+MOŽNOSTI: Fehu · Thurisaz · Algiz · Tiwaz · Ingwaz
+
+R4.2 (VERÐANDI — það sem er að verða til)
+En áin bólgnar á einni nóttu og tekur með sér það sem stóð of nærri bakkanum. Nú kemur í ljós hve mikið af því sem var á milli þeirra hvíldi á þeim stað.
+MOŽNOSTI: Ansuz · Kenaz · Hagalaz · Dagaz · Othila
+
+R4.3 (SKULD — hvert þráðurinn stefnir)
+Ef þú heldur áfram við ána getur nýr staður fyrir fund þeirra tekið að myndast, en þú getur líka breytt um stefnu. Í lífi þínu gæti þetta verið nýr staður þar sem þið mætið hvor öðrum, eða bakkinn þar sem þið standið hvor í sínu lagi.
+MOŽNOSTI: Berkana · Ingwaz · Perth · Uruz · Dagaz
+
+### R5
+
+R5.1 (URÐUR — það sem var ofið)
+Í gömlu kistunni liggur það sem eitt sinn var gefið og þegið. Það verður ekki tekið til baka, en ekki þarf allt að fylgja með.
+MOŽNOSTI: Fehu · Gebo · Tiwaz · Nauthiz · Thurisaz
+
+R5.2 (VERÐANDI — það sem er að verða til)
+Nú stendur kistan opin. Undir því sem blasir við getur verið fræ sem tekur að spíra, þótt ekki sé enn ljóst hvað úr því vex.
+MOŽNOSTI: Dagaz · Ingwaz · Nauthiz · Eihwaz · Jera
+
+R5.3 (SKULD — hvert þráðurinn stefnir)
+Það sem þú tekur úr kistunni getur enn tilheyrt þér án þess að allt hitt fylgi með. Ef þú heldur áfram í sömu átt gætirðu fundið fyrir gömlum arfi sem fær nýjan stað hjá þér, eða heimili sem verður til þegar eitthvað fær að liggja eftir.
+MOŽNOSTI: Dagaz · Thurisaz · Tiwaz · Eihwaz · Othila
+
+### R6
+
+R6.1 (URÐUR — það sem var ofið)
+Kindagatan hafði liðast um fjallaskarðið áður en þú komst að því. Beygjurnar eru þegar mótaðar í hlíðina og halda stefnu hennar.
+MOŽNOSTI: Algiz · Ansuz · Berkana · Raidho · Ingwaz
+
+R6.2 (VERÐANDI — það sem er að verða til)
+Nú liggur ís yfir hluta götunnar og dregur úr því sem sést fram undan. Þar sem gatan hverfur undir ísinn verður stefnan óljós um stund.
+MOŽNOSTI: Kenaz · Tiwaz · Isa · Ingwaz · Jera
+
+R6.3 (SKULD — hvert þráðurinn stefnir)
+Sólin nær að skarðinu og ísinn glitrar, en gatan sést enn ekki öll. Kuky, þetta gæti verið bið við beygju sem þú þekkir eða leið sem þú sérð fyrst þegar ísinn hopar.
+MOŽNOSTI: Laguz · Eihwaz · Sowilo · Perth · Wunjo

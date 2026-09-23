@@ -1,0 +1,290 @@
+{
+ "R1.1": {
+  "id": "BS",
+  "arm": "S",
+  "sada": "B",
+  "pozice": 1,
+  "pravda": "Fehu",
+  "obrazova": false,
+  "moznosti": [
+   "Jera",
+   "Uruz",
+   "Ansuz",
+   "Gebo",
+   "Fehu"
+  ],
+  "maskovano": false
+ },
+ "R1.2": {
+  "id": "BS",
+  "arm": "S",
+  "sada": "B",
+  "pozice": 2,
+  "pravda": "Hagalaz",
+  "obrazova": true,
+  "moznosti": [
+   "Jera",
+   "Hagalaz",
+   "Dagaz",
+   "Kenaz",
+   "Wunjo"
+  ],
+  "maskovano": false
+ },
+ "R1.3": {
+  "id": "BS",
+  "arm": "S",
+  "sada": "B",
+  "pozice": 3,
+  "pravda": "Berkana",
+  "obrazova": false,
+  "moznosti": [
+   "Jera",
+   "Wunjo",
+   "Othila",
+   "Berkana",
+   "Perth"
+  ],
+  "maskovano": false
+ },
+ "R2.1": {
+  "id": "AB",
+  "arm": "B",
+  "sada": "A",
+  "pozice": 1,
+  "pravda": "Gebo",
+  "obrazova": false,
+  "moznosti": [
+   "Algiz",
+   "Eihwaz",
+   "Ansuz",
+   "Gebo",
+   "Sowilo"
+  ],
+  "maskovano": false
+ },
+ "R2.2": {
+  "id": "AB",
+  "arm": "B",
+  "sada": "A",
+  "pozice": 2,
+  "pravda": "Ingwaz",
+  "obrazova": false,
+  "moznosti": [
+   "Isa",
+   "Dagaz",
+   "Tiwaz",
+   "Ingwaz",
+   "Fehu"
+  ],
+  "maskovano": false
+ },
+ "R2.3": {
+  "id": "AB",
+  "arm": "B",
+  "sada": "A",
+  "pozice": 3,
+  "pravda": "Othila",
+  "obrazova": true,
+  "moznosti": [
+   "Wunjo",
+   "Eihwaz",
+   "Othila",
+   "Sowilo",
+   "Tiwaz"
+  ],
+  "maskovano": false
+ },
+ "R3.1": {
+  "id": "CS",
+  "arm": "S",
+  "sada": "C",
+  "pozice": 1,
+  "pravda": "Raidho",
+  "obrazova": true,
+  "moznosti": [
+   "Raidho",
+   "Thurisaz",
+   "Kenaz",
+   "Fehu",
+   "Ehwaz"
+  ],
+  "maskovano": false
+ },
+ "R3.2": {
+  "id": "CS",
+  "arm": "S",
+  "sada": "C",
+  "pozice": 2,
+  "pravda": "Isa",
+  "obrazova": false,
+  "moznosti": [
+   "Algiz",
+   "Ingwaz",
+   "Tiwaz",
+   "Dagaz",
+   "Isa"
+  ],
+  "maskovano": false
+ },
+ "R3.3": {
+  "id": "CS",
+  "arm": "S",
+  "sada": "C",
+  "pozice": 3,
+  "pravda": "Sowilo",
+  "obrazova": false,
+  "moznosti": [
+   "Algiz",
+   "Dagaz",
+   "Sowilo",
+   "Laguz",
+   "Berkana"
+  ],
+  "maskovano": false
+ },
+ "R4.1": {
+  "id": "BB",
+  "arm": "B",
+  "sada": "B",
+  "pozice": 1,
+  "pravda": "Fehu",
+  "obrazova": false,
+  "moznosti": [
+   "Fehu",
+   "Thurisaz",
+   "Algiz",
+   "Tiwaz",
+   "Ingwaz"
+  ],
+  "maskovano": false
+ },
+ "R4.2": {
+  "id": "BB",
+  "arm": "B",
+  "sada": "B",
+  "pozice": 2,
+  "pravda": "Hagalaz",
+  "obrazova": true,
+  "moznosti": [
+   "Ansuz",
+   "Kenaz",
+   "Hagalaz",
+   "Dagaz",
+   "Othila"
+  ],
+  "maskovano": false
+ },
+ "R4.3": {
+  "id": "BB",
+  "arm": "B",
+  "sada": "B",
+  "pozice": 3,
+  "pravda": "Berkana",
+  "obrazova": false,
+  "moznosti": [
+   "Berkana",
+   "Ingwaz",
+   "Perth",
+   "Uruz",
+   "Dagaz"
+  ],
+  "maskovano": false
+ },
+ "R5.1": {
+  "id": "AS",
+  "arm": "S",
+  "sada": "A",
+  "pozice": 1,
+  "pravda": "Gebo",
+  "obrazova": false,
+  "moznosti": [
+   "Fehu",
+   "Gebo",
+   "Tiwaz",
+   "Nauthiz",
+   "Thurisaz"
+  ],
+  "maskovano": false
+ },
+ "R5.2": {
+  "id": "AS",
+  "arm": "S",
+  "sada": "A",
+  "pozice": 2,
+  "pravda": "Ingwaz",
+  "obrazova": false,
+  "moznosti": [
+   "Dagaz",
+   "Ingwaz",
+   "Nauthiz",
+   "Eihwaz",
+   "Jera"
+  ],
+  "maskovano": false
+ },
+ "R5.3": {
+  "id": "AS",
+  "arm": "S",
+  "sada": "A",
+  "pozice": 3,
+  "pravda": "Othila",
+  "obrazova": true,
+  "moznosti": [
+   "Dagaz",
+   "Thurisaz",
+   "Tiwaz",
+   "Eihwaz",
+   "Othila"
+  ],
+  "maskovano": false
+ },
+ "R6.1": {
+  "id": "CB",
+  "arm": "B",
+  "sada": "C",
+  "pozice": 1,
+  "pravda": "Raidho",
+  "obrazova": true,
+  "moznosti": [
+   "Algiz",
+   "Ansuz",
+   "Berkana",
+   "Raidho",
+   "Ingwaz"
+  ],
+  "maskovano": false
+ },
+ "R6.2": {
+  "id": "CB",
+  "arm": "B",
+  "sada": "C",
+  "pozice": 2,
+  "pravda": "Isa",
+  "obrazova": false,
+  "moznosti": [
+   "Kenaz",
+   "Tiwaz",
+   "Isa",
+   "Ingwaz",
+   "Jera"
+  ],
+  "maskovano": false
+ },
+ "R6.3": {
+  "id": "CB",
+  "arm": "B",
+  "sada": "C",
+  "pozice": 3,
+  "pravda": "Sowilo",
+  "obrazova": false,
+  "moznosti": [
+   "Laguz",
+   "Eihwaz",
+   "Sowilo",
+   "Perth",
+   "Wunjo"
+  ],
+  "maskovano": false
+ }
+}

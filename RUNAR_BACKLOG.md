@@ -87,6 +87,10 @@
   (poznat runy z textu s a bez seznamu, oba modely) — riziko, že u solu identita runy zeslábne (Othila slabší).
   Přesun „sagt með orðum myndarinnar" k „ástand" sám nic neprokázal (1/2 před i po). **EN doměřeno 2026-09-23:**
   závěry solu s klíčovým slovem v obou jazycích **3/4 → 0/4**, Opus 1/4 → 0/2 (`RUNAR_EVAL_LOG.md` 2026-09-23 (1)).
+  **Pilot identity 2026-09-23 (2):** bez seznamů žádný propad (ostatní runy 5/6 se seznamy × 4/6 bez, runa obrazu
+  3/3 obojí), ale Ingwaz bez seznamu sklouzl k Dagaz; část úspěchu ramene se seznamy stojí na opsané nálepce
+  („fræ", „birki"). Blokuje už jen větší identitní běh (6+ sad, + Opus 5, výběr z 25) — nebo mezivarianta
+  s JEDNÍM klíčovým slovem na runu.
 - [ ] **KANDIDÁT: most IS „ástand … sagt með orðum myndarinnar"** (CODE-read 2026-09-22, NEROZHODNUTO — owner).
   Ve tvaru „dvě možnosti" přidat k *„hvort um sig ástand sem gæti átt við"* frázi *„sagt með orðum myndarinnar"*
   (tvar ověřeného Norns landingu A). gpt-6-sol: konce z pojmů (*vani / kostur*) na věcné 5/5; Opus 5: *gæti* beze

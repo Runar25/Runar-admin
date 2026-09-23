@@ -4834,3 +4834,33 @@ ze seznamu. Pořád NEvidí skloňované tvary (*arfi* × *arfur*) — dolní me
 *„handed to you long before you could hold it"*); u solu to z textů působí přijatelně, ale **změřené to není**.
 Další krok podle ownera: slepý identitní test (soudce z textu hádá tažené runy, s × bez seznamů).
 **Hranice:** jeden Norns (Gebo · Ingwaz · Othila), n = 2 sol + 1 Opus na jazyk.
+
+## 2026-09-23 (2) — PILOT identity run bez seznamů klíčových slov (Norns, gpt-6-sol): žádný propad, jedna vada
+
+**Owner:** *„pusť ten test identity, zase napřed na malém."* Otázka z 2026-09-22 (3) / 2026-09-23 (1): když z Norns
+promptu zmizí seznamy klíčových slov (a sol přestane opisovat nálepky do závěru), zeslábne identita run?
+**Jak:** 3 sady run × 2 ramena (S = se seznamy = produkce, B = bez nich) = 6 islandských čtení solu; ramena z JEDNOHO
+postaveného promptu, liší se jen řádky `<Runa> — …`. Soudce dostal každé čtení rozdělené na 3 beaty (pole „rune"
+z JSON zahozeno, latinská jména maskována — žádné v textu nebylo) a u každého beatu 5 run na výběr (šance 20 %).
+⚠️ **Oprava vlastní premisy před měřením:** předpokládal jsem, že obraz nese PRVNÍ runa. Neplatí — u spreadu se
+obraz losuje ze všech tažených (CLAUDE.md, obraznost). Dohledáno v `RUNE_IMAGES`: A → Othila, B → Hagalaz,
+C → Raidho. Proto se počítá zvlášť **runa obrazu** (poznatelná z obrazu v obou ramenech) a **dvě ostatní** (tam je riziko).
+
+| | se seznamy (S) | bez seznamů (B) |
+|---|---|---|
+| runa, které patří obraz | 3/3 | 3/3 |
+| dvě ostatní runy | **5/6** | **4/6** |
+(Počítáno na jednoho soudce: dva různě formulovaní soudci se shodli **18/18** → je to jeden hlas, ne dva.)
+
+**Kde identita slábla:** Ingwaz bez seznamu → soudce hádal Dagaz (*„eitt að skýrast… hitt liggur enn í skugga…
+að koma í ljós"* — bez slova „semeno" čtení sklouzlo k „rozednívání"). Fehu minul soudce v OBOU ramenech
+(S: → Jera, *„fært bökkunum frjósama mold"*; B: → Algiz, *„árbakkinn var traustur"*) — Fehu je slabé tak i tak.
+⚠️ **Co ještě odlišuje ramena (§27, útok 2):** v rameni S stojí část úspěchu přímo na opsané nálepce — *„**fræ** sem
+tekur að spíra"* (klíčové slovo Ingwaz) a *„**birki** fest rætur"* (bříza = Berkana doslova). Tahle metrika tedy
+**odměňuje právě to opisování, které odstraňujeme** — rozdíl 5/6 × 4/6 z části měří nálepku, ne vztah.
+**Závěr pilotu:** propad identity se neukázal (rozdíl jedné položky ze šesti, obě ramena daleko nad šancí 20 %),
+ale jedna runa (Ingwaz) bez seznamu sklouzla. n je malé — **naznačuje, nedokazuje.**
+**Na další krok (návrh):** víc sad (6+), přidat Opus 5 (drží runy z vlastní znalosti?), výběr z 25 místo z 5
+(z 5 je strop moc blízko), jeden soudce stačí (druhý stejný model přidal nulu). Mezivarianta k zvážení:
+nechat u runy JEDNO klíčové slovo jako single (`focus on`) místo čtyř — kotva zůstane, plocha k opisu se zmenší.
+Podklady → `docs/eval/2026-09-22-modely/identita/`.

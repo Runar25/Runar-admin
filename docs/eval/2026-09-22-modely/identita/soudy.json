@@ -1,0 +1,228 @@
+{
+ "soudci": [
+  {
+   "items": [
+    {
+     "id": "R1.1",
+     "choice": "Jera",
+     "confidence": "low",
+     "why": "lengi runnið jafnt og fært bökkunum frjósama mold"
+    },
+    {
+     "id": "R1.2",
+     "choice": "Hagalaz",
+     "confidence": "high",
+     "why": "bólgnar áin á einni nóttu og tekur með sér"
+    },
+    {
+     "id": "R1.3",
+     "choice": "Berkana",
+     "confidence": "high",
+     "why": "birki fest rætur ... rými til að vaxa á nýjum stað"
+    },
+    {
+     "id": "R2.1",
+     "choice": "Gebo",
+     "confidence": "high",
+     "why": "látið af hendi og það sem fékkst í staðinn. Skiptin"
+    },
+    {
+     "id": "R2.2",
+     "choice": "Dagaz",
+     "confidence": "low",
+     "why": "eitt að skýrast ... hitt liggur enn í skugga ... að koma í ljós"
+    },
+    {
+     "id": "R2.3",
+     "choice": "Othila",
+     "confidence": "medium",
+     "why": "því sem þú telur þitt ... gamalt loforð sem þú geymir"
+    },
+    {
+     "id": "R3.1",
+     "choice": "Raidho",
+     "confidence": "high",
+     "why": "kindagatan af sjálfu sér milli steina. Fótspor mótuðu hana"
+    },
+    {
+     "id": "R3.2",
+     "choice": "Isa",
+     "confidence": "high",
+     "why": "ís yfir hluta götunnar. Þar hægist á göngunni"
+    },
+    {
+     "id": "R3.3",
+     "choice": "Sowilo",
+     "confidence": "high",
+     "why": "Sólin fellur á ísinn og sýnir hvar gatan heldur áfram"
+    },
+    {
+     "id": "R4.1",
+     "choice": "Algiz",
+     "confidence": "low",
+     "why": "Árbakkinn var traustur ... án þess að vatnið næði til þeirra"
+    },
+    {
+     "id": "R4.2",
+     "choice": "Hagalaz",
+     "confidence": "high",
+     "why": "áin bólgnar á einni nóttu og tekur með sér"
+    },
+    {
+     "id": "R4.3",
+     "choice": "Berkana",
+     "confidence": "low",
+     "why": "nýr staður fyrir fund þeirra tekið að myndast"
+    },
+    {
+     "id": "R5.1",
+     "choice": "Gebo",
+     "confidence": "high",
+     "why": "var gefið og þegið. Það verður ekki tekið til baka"
+    },
+    {
+     "id": "R5.2",
+     "choice": "Ingwaz",
+     "confidence": "medium",
+     "why": "fræ sem tekur að spíra, þótt ekki sé enn ljóst hvað úr því vex"
+    },
+    {
+     "id": "R5.3",
+     "choice": "Othila",
+     "confidence": "high",
+     "why": "gömlum arfi sem fær nýjan stað hjá þér, eða heimili"
+    },
+    {
+     "id": "R6.1",
+     "choice": "Raidho",
+     "confidence": "high",
+     "why": "Kindagatan hafði liðast um fjallaskarðið ... halda stefnu hennar"
+    },
+    {
+     "id": "R6.2",
+     "choice": "Isa",
+     "confidence": "high",
+     "why": "ís yfir hluta götunnar og dregur úr því sem sést fram undan"
+    },
+    {
+     "id": "R6.3",
+     "choice": "Sowilo",
+     "confidence": "high",
+     "why": "Sólin nær að skarðinu og ísinn glitrar"
+    }
+   ]
+  },
+  {
+   "items": [
+    {
+     "id": "R1.1",
+     "choice": "Jera",
+     "confidence": "low",
+     "why": "Dlouhý, rovnoměrný tok řeky pomalu ukládá úrodnou půdu, a ta pak nese to, co dva lidé postavili: odměna za trpělivý, dlouhý cyklus."
+    },
+    {
+     "id": "R1.2",
+     "choice": "Hagalaz",
+     "confidence": "high",
+     "why": "Řeka se přes noc vzedme a strhne, co stálo příliš blízko: náhlý ničivý zásah zvenčí, který prověří, co vydrží."
+    },
+    {
+     "id": "R1.3",
+     "choice": "Berkana",
+     "confidence": "medium",
+     "why": "Na novém břehu může nový růst zapustit kořeny, až se voda uklidní: nový začátek a růst na novém místě."
+    },
+    {
+     "id": "R2.1",
+     "choice": "Gebo",
+     "confidence": "high",
+     "why": "V truhle leží, co bylo dáno a co se získalo výměnou: dokončená vzájemná výměna darů."
+    },
+    {
+     "id": "R2.2",
+     "choice": "Dagaz",
+     "confidence": "medium",
+     "why": "Jedna věc se v truhle vyjasňuje, druhá je ještě ve stínu: rozdíl teprve vystupuje na světlo, přechod ze tmy do jasu."
+    },
+    {
+     "id": "R2.3",
+     "choice": "Othila",
+     "confidence": "medium",
+     "why": "Pozornost se obrací k tomu, co z výměny považuješ za své a co si ponecháš: vlastnictví, dědictví, co k tobě patří."
+    },
+    {
+     "id": "R3.1",
+     "choice": "Raidho",
+     "confidence": "high",
+     "why": "Stezka se vine průsmykem, vyšlapaná kroky dávno předtím: cesta a pohyb po ní, daný směr pouti."
+    },
+    {
+     "id": "R3.2",
+     "choice": "Isa",
+     "confidence": "high",
+     "why": "Led pokryje část cesty, chůze se zpomalí a další úsek není vidět: zamrznutí, zastavení pohybu."
+    },
+    {
+     "id": "R3.3",
+     "choice": "Sowilo",
+     "confidence": "medium",
+     "why": "Slunce dopadne na led a ukáže, kudy cesta pokračuje: světlo, které vede a odhaluje směr."
+    },
+    {
+     "id": "R4.1",
+     "choice": "Algiz",
+     "confidence": "low",
+     "why": "Pevný břeh drží to, co na něm stojí, a dva lidé se mohou potkat, aniž by na ně voda dosáhla: chráněné, bezpečné místo."
+    },
+    {
+     "id": "R4.2",
+     "choice": "Hagalaz",
+     "confidence": "high",
+     "why": "Řeka se přes noc vzedme a strhne, co stálo příliš blízko, a odhalí, co na tom místě viselo: náhlé ničivé narušení."
+    },
+    {
+     "id": "R4.3",
+     "choice": "Berkana",
+     "confidence": "low",
+     "why": "Po narušení se může začít tvořit nové místo setkání: počátek nového růstu, i když směr zůstává otevřený."
+    },
+    {
+     "id": "R5.1",
+     "choice": "Gebo",
+     "confidence": "high",
+     "why": "V truhle leží, co bylo dáno a přijato, a nedá se to vzít zpět: dar a vzájemná výměna."
+    },
+    {
+     "id": "R5.2",
+     "choice": "Ingwaz",
+     "confidence": "medium",
+     "why": "Pod tím, co je vidět, může ležet semeno, které začíná klíčit, ale ještě není jasné, co z něj vyroste: skrytý zárodek, zrání uvnitř."
+    },
+    {
+     "id": "R5.3",
+     "choice": "Othila",
+     "confidence": "high",
+     "why": "Co si vezmeš z truhly, může zůstat tvoje, staré dědictví dostává nové místo, nebo vzniká domov: dědictví a domov."
+    },
+    {
+     "id": "R6.1",
+     "choice": "Raidho",
+     "confidence": "high",
+     "why": "Stezka se vinula průsmykem dřív, než jsi přišel, a její zatáčky drží směr: cesta a její daný průběh."
+    },
+    {
+     "id": "R6.2",
+     "choice": "Isa",
+     "confidence": "high",
+     "why": "Led pokryje cestu, zmenší výhled dopředu a směr je na chvíli nejasný: zamrznutí a zastavení."
+    },
+    {
+     "id": "R6.3",
+     "choice": "Sowilo",
+     "confidence": "low",
+     "why": "Slunce dosáhne průsmyku a led se třpytí, ale cesta ještě není celá vidět: přicházející světlo, které teprve začíná ukazovat cestu."
+    }
+   ]
+  }
+ ]
+}
