@@ -6644,3 +6644,20 @@ check-is OK · smoke 44/44.
 **Ověřeno:** IS nativně (korpus: *hefur enga merkingu* 235, *í sjálfu sér* 53 304, *speglast í augum* 18, *í augum hins* 90, *lokið er enn* 22 · is-grammar-qa 0 flagů kromě známého šumu *rúnina*) · protlačení produkční cestou **18/18** (Blank rám 60/60 v obou jazycích, nikdy losovaný rám, zápis do draws; jiná runa dál losuje oba rámy; životní runa i Norny s Blank beze změny; nové obrazy dosažitelné a `focus` = jejich aspekt) · golden 0 změn (fixtury ty runy neobsahují — proto protlačení) · registr 207 → 209 · smoke 44/44.
 **Nevyzkoušeno na modelu:** jestli Rúnar s novým rámem opravdu přestane Blank „nechat konat" — to ukáže až čtení. Návrh měření je v `docs/archive/2026-09-22-navrhy-obrazy-a-navod.md`.
 **Affected doc(s):** žádné.
+
+## 2026-09-23 (1) — Banka obrazů: 5 obrazů bez brány nahrazeno + ownerovy připomínky (v4.44)
+**Rozhodl:** KUKY („1. ano · 2. ano obě, čím víc obrazů, tím víc variant") · **Provedl:** CODE-tune
+**Co:** Nasazeno vše z `docs/archive/2026-09-22-navrhy-obrazy-a-navod.md`, sekce A a B:
+- **A — pět obrazů z 2026-09-21/22, které neprošly identitní branou** (soudci je četli jako jinou runu): Ansuz ptáci → stará žena a ztichlý stůl · Algiz světlo v okně → sob na stráži · Mannaz klíč v šuplíku → dva vidí tutéž horu každý po svém · Mannaz melodie → *Hugurinn ber mann hálfa leið* · Gebo otevřené dveře → ruka podává, ruka přijímá.
+- **B — ownerovy připomínky z čtení 2026-09-22:** Wunjo slunce+nehybnost → **obě** varianty (děti bosé na louce · smích z otevřeného okna) · Kenaz horký pramen → pochodeň · Isa klid na fjordu → pod ledem je slyšet potok · Othila zeď předků → stará truhla; klíče „už tam nebydlíš" → ohlazená naběračka · Fehu chléb → stádo z hor; **chléb přesunut k Jera** · Sowilo nový obraz „ve slunci je vidět, kde stojíš".
+**Proč:** kánon (RUNAR_DESIGN „Typ obrazu": každý obraz projde identitní branou) — pět mých obrazů ho obešlo; a ownerovy připomínky z testování (stillness u Wunjo, „fire" pod kamenem, led až v poslední větě, „tvoji předkové", chléb = sdílení).
+**Ověřeno:** každý obraz IS nativně (korpus + is-grammar-qa) a branou (3 slepí soudci, 2 kola, kontroly v kole 2 stejné jako v kole 1) · protlačení: 10 starých znění 0× v bance, 14 nových dosažitelných `_seasonalImagery` · aspekt↔klíč 115/115 · golden 9 klíčů = jen posun losu obrazu/místa (banka 112 → 115) · smoke 44/44.
+⚠️ Brána běžela na EN textu; IS identitu dosud neměří nic.
+**Affected doc(s):** žádné (banka žije v kódu).
+
+## 2026-09-23 (2) — Směry: délka single ~25 s postupně · pestrost znění téže runy
+**Rozhodl:** KUKY · **Zapsal:** CODE-tune
+- **Délka single:** dnes je hlas i při vyšším počtu slov pod 30 s (ElevenLabs). Cíl je **~25 s**, což odpovídá hornímu limitu slov single — *„ale bude to časem, není to naše musí být. Radši postupně než násilím."* Zdroj pravdy délky zůstává `LENGTH_BUDGETS` v `runar-utils.js`; tohle je směr, ne nové číslo.
+- **Pestrost:** Ehwaz přišel ve dvou zněních a **obě platí** — *„to je i jak my nebo Rúnar musí nakonec umět mluvit: u stejné runy najít trochu jinou verzi, jak to říct."* Aby se čtení lišila i při stejných vstupech, je **menší, průběžný úkol**: *„není to tak, že musíme vyloženě hledat"*. Ladí se teď hlavně podle podnětů z testování na lidech (brzy přibudou testeři).
+- **Pojmy:** *statický popis run* = `RUNAR_POPISY_RUN.md` · *statické čtení* = krátký text s hlasem v Kolekci. Vlastník pojmů je hlavička `RUNAR_POPISY_RUN.md`.
+**Affected doc(s):** `RUNAR_POPISY_RUN.md` (pojmy + obě znění Ehwaz) — v tomtéž commitu.

@@ -4,6 +4,10 @@
 # = `v2/runar-runes.js` · mytologie a kánon hlasu = `RUNAR_DESIGN.md` · obrazy do promptu
 # = `RUNE_IMAGES` v `v2/runar-character.js` · rozhodnutí = `RUNAR_DECISIONS.md`.
 
+**Pojmy (KUKY 2026-09-23):** tomuhle se říká **statický popis run** — dlouhý text o tom, co runa
+nese. **Statické čtení** je něco jiného: krátký text **s hlasem** v záložce Kolekce
+(`runar_static_audio`). Když owner řekne „statický popis", myslí tenhle doc.
+
 **Původ:** KUKY, 2026-09-22. Vzniklo promptem *„Udělej mi čtení runy <X>. Jako bys mi říkal, co znamená."*
 Texty jsou **ownerovy, zapsané doslovně** — CODE je needituje (obsah = doména ownera/Coworku).
 
@@ -564,6 +568,11 @@ Možná se tedy ptá:
 ---
 
 ## Ehwaz
+
+*Dvě znění téže runy — obě platí (KUKY 2026-09-23: „obě, akorát jedna je řečena trochu jinak").*
+
+### Znění A
+
 Ehwaz je kůň v pohybu.
 
 Není to cesta, kterou někdo táhne za sebou. Je to pohyb, který vzniká z důvěry mezi dvěma silami.
@@ -589,6 +598,32 @@ Bude vznikat mezi tebou a tím, s čím se pohybuješ.
 A Ehwaz se může ptát:
 
 Kde se právě snažíš tlačit na pohyb — místo abys nejdřív našel společný rytmus?
+
+### Znění B
+
+Ehwaz je pohyb, který vzniká ve dvou.
+
+Je v ní obraz koně a člověka — ne jako někoho, kdo koně ovládá silou, ale jako dvojice, která musí najít společný rytmus.
+
+Ehwaz je runa pohybu, důvěry, spolupráce a změny.
+
+Někdy se člověk snaží posunout věci vlastní silou. Tlačí, táhne, určuje směr. Ale Ehwaz ukazuje jiný druh pohybu.
+
+Když se dva pohybují společně, každý krok jednoho ovlivňuje krok druhého.
+
+Je v tom důvěra.
+
+Musíš trochu povolit otěže, aby se mohl objevit skutečný pohyb. A zároveň musíš vnímat, kdy druhá strana mění tempo.
+
+Ehwaz proto může mluvit o vztahu, partnerství nebo spolupráci. Ale stejně tak může ukazovat na spojení dvou částí vlastního života, které se dosud pohybovaly každá jinam.
+
+Není to runa rychlosti.
+
+Je to runa souhry.
+
+A možná právě proto může být její otázka:
+
+S kým nebo s čím se právě snažíš pohnout — a dokážete najít společný krok?
 
 ---
 
@@ -802,8 +837,7 @@ Co v mém životě ještě nemá jméno — a dokážu to chvíli nechat otevře
 
 **Všech 25 popisů je zapsaných** (stav k 2026-09-22), v pořadí futharku podle `RUNES` v `v2/runar-runes.js`.
 
-⚠️ **Ehwaz existuje ve dvou zněních** — starší přišlo přes in-app report (zůstává v `bug_reports`
-2026-09-22 14:35, začíná „Ehwaz je pohyb, který vzniká ve dvou"), zapsané je novější z konverzace
-(„Ehwaz je kůň v pohybu"). Nejsou to dva kusy téhož textu, ale dva samostatné popisy; čeká potvrzení.
+**Ehwaz má dvě znění a obě platí** (KUKY 2026-09-23): *„to je i jak my nebo Rúnar musí nakonec umět
+mluvit — u stejné runy najít trochu jinou verzi, jak to říct."* Směr pro pestrost čtení → `RUNAR_DECISIONS.md` 2026-09-23.
 
 Proč 13 popisů dorazilo až z konverzace: reporter uřezával text na 1000 znacích → `RUNAR_DECISIONS.md` 2026-09-22 (5).
