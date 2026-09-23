@@ -6709,3 +6709,13 @@ Obsah záznamu platí beze změny. — CODE-tune
   — všechny 4 v bloku promptu, bez rozbitého kódování. Duplicity předem vyloučeny.
 - **Reverzibilita:** snadná — `delete from runar_corrections where original_phrase in (…)`.
 - Affected doc(s): RUNAR_BACKLOG.md (položka „KOREKCE DO SHRINE" uzavřena — teď je vlastní DB, §20).
+
+## 2026-09-23 (6) — Sáček obrazů: nikdy tentýž obraz hned po sobě, motivové obrazy už nevypadávají
+**Podnět:** KUKY report #6 (*„dostal jsem úplně stejné čtení jako minule — neměly by se obrazy nejdřív prostřídat?"*) a #20 (Tiwaz *„pořád mince"*) · **Provedl:** CODE-tune
+**Dvě vady** (nalezeny rozborem reportů, ověřeny skeptikem a protlačením skutečného kódu, 20 000 tahů):
+1. **Přechod kol:** prázdný sáček se naplnil celý a první tah byl čistý los — poslední obraz starého kola mohl vyjít hned první v novém. U run se dvěma dosažitelnými obrazy (Thurisaz a Tiwaz v září) to byl tentýž obraz po sobě v **~25 %** čtení.
+2. **Motivová pojistka zužovala sáček:** sourozenci stejného motivu z něj tiše vypadávali, takže padali o polovinu méně (Jera „seno", Mannaz „zrcadla", Ansuz „volání"; mezi dvěma výskyty téhož obrazu až 142 čtení místo ~19).
+**Oprava:** `_seasonBagPick(…, exclude)` — poslední obraz a sourozenci motivu se vyřadí **jen z tohoto tahu**, v sáčku zůstávají; poslední obraz se pamatuje per sada run (`seasonlast_…`).
+**Ověřeno:** 20 000 tahů na runu — stejný obraz po sobě **0 %** (dřív ~25 %), stejný motiv po sobě 0, četnosti rovnoměrné (Jera 1995–2008). Trvalá kontrola ve smoke ㉟ (každá runa s ≥ 2 kandidáty); sabotáž (vypnuté vyřazení posledního obrazu) ji shodí (23 problémů). Golden = jen posun losu. Smoke 44/44.
+**Mez:** sáček žije v prohlížeči — telefon a počítač mají každý svůj. U run se dvěma obrazy teď platí přesné střídání A-B-A-B; pestrost přinesou až nové obrazy.
+**Affected doc(s):** žádné.

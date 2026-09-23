@@ -424,17 +424,26 @@ function _isColdRune(drawn) { return !!(drawn && drawn.n && _COLD_RUNES.indexOf(
 
 // Shuffle bag in localStorage: returns one id, dealing each once before any repeat,
 // then reshuffles. Per device; falls back to plain random where localStorage is absent.
-function _seasonBagPick(bucket, kind, ids) {
+// `exclude` (2026-09-23): id, ktera se NESMI vybrat v TOMTO tahu (posledni obraz, sourozenci motivu).
+// V sacku ZUSTAVAJI — drive je volajici vyrazoval zuzenim `ids`, sacek se podle nich oriznul
+// a ulozil bez nich, takze z kola tise vypadly (motivove obrazy padaly o polovinu mene casto).
+// Neni-li mimo `exclude` v kole nic, bere se z cele sady; neni-li ani tam, vyrazeni se zrusi.
+function _seasonBagPick(bucket, kind, ids, exclude) {
   var key = 'seasonbag_' + bucket + '_' + kind;
   var remaining = null;
   var ls = (typeof localStorage !== 'undefined') ? localStorage : null;
+  var ex = Array.isArray(exclude) ? exclude : [];
+  var mimo = function (id) { return ex.indexOf(id) === -1; };
   if (ls) {
     try { remaining = JSON.parse(ls.getItem(key) || 'null'); } catch (e) { remaining = null; }
     if (Array.isArray(remaining)) remaining = remaining.filter(function(id) { return ids.indexOf(id) !== -1; });
     else remaining = null;
   }
   if (!remaining || !remaining.length) remaining = ids.slice();
-  var pick = remaining[Math.floor(Math.random() * remaining.length)];
+  var kde = remaining.filter(mimo);
+  if (!kde.length) kde = ids.filter(mimo);     // v kole zbyly jen vyrazene -> vezmi z cele sady
+  if (!kde.length) kde = remaining;            // bez alternativy (1 obraz) vyrazeni neplati
+  var pick = kde[Math.floor(Math.random() * kde.length)];
   if (ls) {
     var next = remaining.filter(function(id) { return id !== pick; });
     try { ls.setItem(key, JSON.stringify(next)); } catch (e) {}
@@ -745,16 +754,26 @@ function _seasonalImagery(lang, drawn) {
       // Motiv-guard (2026-08-22): owner chce ZACHOVAT vic obrazu tehoz motivu (jehnata,
       // pulnocni slunce, odraz), ale dva stejne pojmenovane motivy (7. sloupec) nesmi
       // prijit hned po sobe. Resi VYBER, ne banka ani prompt (KUKY 2026-08-08: zakazy ne).
-      var lastMotif = '';
-      try { if (typeof localStorage !== 'undefined') lastMotif = localStorage.getItem('seasonmotif_' + runeKey) || ''; } catch (e) {}
-      if (lastMotif) {
-        var jineM = cand.filter(function (row) { return (row[7] || '') !== lastMotif; });
-        if (jineM.length) cand = jineM;   // bez alternativy guard poust dal (lepsi motiv nez nic)
-      }
+      // 2026-09-23: guard uz NEZUZUJE `cand` — sourozenci motivu a posledni obraz jdou do `exclude`
+      // (plati jen pro tento tah, v sacku zustanou). Duvod a mereni: komentar u _seasonBagPick.
+      var lastMotif = '', lastImg = '';
+      try {
+        if (typeof localStorage !== 'undefined') {
+          lastMotif = localStorage.getItem('seasonmotif_' + runeKey) || '';
+          lastImg = localStorage.getItem('seasonlast_' + runeKey) || '';
+        }
+      } catch (e) {}
       var cIds = cand.map(function (row) { return row[0] + '|' + row[2].slice(0, 24); });
-      var cPick = _seasonBagPick(bucket, runeKey, cIds);
+      var vyradit = lastImg ? [lastImg] : [];   // nikdy tentyz obraz hned po sobe (report #6)
+      if (lastMotif) cand.forEach(function (row, i) { if ((row[7] || '') === lastMotif) vyradit.push(cIds[i]); });
+      var cPick = _seasonBagPick(bucket, runeKey, cIds, vyradit);
       var hit = cand[cIds.indexOf(cPick)] || cand[Math.floor(Math.random() * cand.length)];
-      try { if (typeof localStorage !== 'undefined') localStorage.setItem('seasonmotif_' + runeKey, hit[7] || ''); } catch (e) {}
+      try {
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem('seasonmotif_' + runeKey, hit[7] || '');
+          localStorage.setItem('seasonlast_' + runeKey, cIds[cand.indexOf(hit)]);
+        }
+      } catch (e) {}
       // id sáčku zůstává odvozené z IS sloupce (výš), takže týž obraz má tutéž
       // identitu v obou jazycích — ochrana proti opakování se jazykem nerozpadá.
       runePhrase = (lang === 'is' ? hit[2] : hit[3]).replace(/\.$/, '');   // věta pokračuje, tečka by ji rozťala
