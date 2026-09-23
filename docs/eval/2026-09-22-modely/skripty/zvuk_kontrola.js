@@ -1,0 +1,10 @@
+'use strict';
+const fs = require('fs'), path = require('path');
+const RE = /(?<![a-z])(hear|heard|hears|hearing|sound|sounds|listen\w*|ears?|murmur\w*|voice|rings?|note|trickl\w*|gurgl\w*)(?![a-z])/gi;
+const n = t => (t.match(RE) || []).length;
+if (n('you can hear it moving') !== 1 || n('the heart and the year') !== 0) throw new Error('pocitadlo zvuku je rozbite');
+const prvni2 = t => t.split(/(?<=[.?!])\s+/).slice(0, 2).join(' ');
+const V = fs.readFileSync(path.join(__dirname, 'opis2', 'vysledky.jsonl'), 'utf8').trim().split('\n').map(JSON.parse).filter(x => x.id === '10-isa-u4' && x.text);
+const I = fs.readFileSync(path.join(__dirname, 'opis-iter.jsonl'), 'utf8').trim().split('\n').map(JSON.parse).filter(x => x.id === '10-isa-u4');
+for (const x of V) console.log(x.model.slice(0, 9).padEnd(10) + ('varka ' + x.rameno).padEnd(12) + 'zvuk v celem cteni ' + n(x.text) + ' · v prvnich 2 vetach ' + n(prvni2(x.text)));
+for (const x of I) console.log(x.model.slice(0, 9).padEnd(10) + x.zneni.padEnd(12) + 'zvuk v celem cteni ' + n(x.text) + ' · v prvnich 2 vetach ' + n(prvni2(x.text)));

@@ -103,13 +103,23 @@
      IS 1202 tokenů, EN 31 (jen řádek `test`).
   5. Až smyčka poroste: řádky téže třídy sloučit do jedné věty v IS gramatickém bloku (CODE-tune); korekce vázané
      na runu (Gebo, Fehu) posílat jen s tou runou.
-- [ ] **Opus 4.8 v produkci začíná větu rozkazem posluchači** (*Notice…*, *See…*) v 6 z 28 EN čtení — nejvíc úhly [0] a [1]
-  (EVAL_LOG 2026-09-23 (7), bod 6). Kánon *„Rúnar never tells the seeker what to do"* je jen v systémovém promptu, který
-  model poslouchá hůř než per-čtení injekci (CLAUDE.md, „KLÍČ"). Nejdřív změřit na víc čteních, pak rozhodnout, jestli se
-  pravidlo nemá přesunout/zopakovat blíž k místu, kde vzniká (úhly). Test na rozkaz → EVAL_LOG 2026-09-06 (*„dá se věta
-  smazáním slov převést na rozkaz?"*).
-- [ ] **Úhel [4] „out of sight" × zvukový obraz (Isa: potok pod ledem slyšet):** Opus 4.8 ztratil zvuk ve 4 ze 4 čtení
-  (obě ramena) — úhel táhne k „neviditelnému pohybu", slyšení vypadne. n = 1 prompt; sledovat, případně výluka úhel × smysl.
+- [ ] **Rada do života v produkčních čteních Opus 4.8** — 3 z 28 EN (*„Notice which direction your body already faces before
+  your mind weighs the reasons"* 2×, *„Watch what you carry toward another"*). Porušuje *„Rúnar never tells the seeker what to do"*
+  (jen v systémovém promptu, který model poslouchá hůř — CLAUDE.md „KLÍČ"). ⚠️ **Vstup do obrazu** (*„See the faint crease…"*,
+  *„Look closer, and you see…"*) vadou NENÍ — owner 2026-09-23: *„to je stejné, jako by řekl podívej."* Test na radu →
+  EVAL_LOG 2026-09-06 (*„dá se věta smazáním slov převést na rozkaz?"*). Změřit na víc čteních, pak rozhodnout.
+- [ ] **Esenční řádek nechává runu jednat jako fyzickou sílu ve scéně** (EVAL_LOG 2026-09-23 (8) bod 2) — *„Jera lifts that
+  cloth a little higher each hour"* (PROD), *„the tighter Nauthiz draws the coil against itself"*. Runa jako podmět slovesa:
+  Opus 12/28, sol 28/28. Tentýž řádek říká *„No invented mechanism"*. Owner: *„to uživateli asi moc neřekne."* Rozlišit
+  runa-vlastnost (*„Nauthiz is the tightness that holds"*) × runa-síla; změřit a navrhnout úpravu esenčního řádku (CODE-tune).
+- [ ] ⭐ **Úhel [4] „out of sight" × zvukový obraz** — owner 2026-09-23: *„nemůže být použito pro zvukové obrazy."* Zkoušena
+  vestavěná výjimka podle precedentu úhlu [2] (EVAL_LOG 2026-09-23 (8) bod 4): Opus 4.8 zvuk v prvních dvou větách 0/4 → 3/3.
+  EN `… If the image lives in sound, open with what is heard but not seen.` · IS (ověřeno korpusem) `… Ef myndin berst að
+  eyrum, byrjaðu þá á því sem heyrist en sést ekki.` **Čeká na ownera:** výjimka ve větě úhlu (doporučeno — žádný nový sloupec
+  dat) × výluka úhlu pro zvukové obrazy (potřebuje u obrazů značku smyslu). Pak handoff CODE-tune.
+- [ ] **Shrine: korekce nejdou smazat** (nález 2026-09-23) — záložka WORD CORRECTIONS umí jen přidat a vypsat
+  (`runar-shrine.html` `saveCorrection`/`loadCorrections`), mazání nemá. Owner tak smaže řádek jen přes Supabase. Doplnit
+  mazání (jen admin, s potvrzením) — CODE-tune.
 - [ ] **GLOSA V ISLANDSKÉ HLAVIČCE RUNY se propisuje do čtení** (nález CODE-read 2026-09-22, srovnání modelů).
   IS prompt má `DREGNA RÚNA: Raidho (Ferðalag) — …`, EN jen `DRAWN RUNE: Raidho — …`. Výsledek na 42 čteních:
   glosa *„Raidho (Ferðalag)"* v textu **jen v IS** — Opus 5.5 3/3, gpt-6-sol 3/3, gpt-5.6-sol 2/3; v EN ji nenapsal
@@ -131,6 +141,9 @@
   zopakovat posluchači jako rozkaz (žádné *look / notice / see*); kontrolní prompty NEvybírat jen podle úniku (regrese k
   průměru) a pustit i PROD; soudci musí vidět systémové pravidlo *„never tells the seeker what to do"*; měřit i ozvěnu
   *„you see/hear"* u solu a stejnost napříč čteními (`measure_sameness.js`). IS až po EN.
+  **2026-09-23 (8): zkoušeno znění `…, down to one detail the sentence does not name.`** — u Opusu převidí bez ozvěny
+  (Nauthiz úsek 6/7 → 3/2/2), runa jako vlastnost, ne síla; riziko studeného čtení těla (Nauthiz 2 ze 3). Owner: nová věta
+  zní líp než produkce. Další krok = várka tohoto znění na týchž 14 promptech (PROD čtení z várky jdou znovu použít).
 - [ ] **KANDIDÁT: most IS „ástand … sagt með orðum myndarinnar"** (CODE-read 2026-09-22, NEROZHODNUTO — owner).
   Ve tvaru „dvě možnosti" přidat k *„hvort um sig ástand sem gæti átt við"* frázi *„sagt með orðum myndarinnar"*
   (tvar ověřeného Norns landingu A). gpt-6-sol: konce z pojmů (*vani / kostur*) na věcné 5/5; Opus 5: *gæti* beze

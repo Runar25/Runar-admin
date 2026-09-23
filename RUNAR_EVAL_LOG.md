@@ -5068,3 +5068,43 @@ pro oba modely**, ne jen pro případný přechod na sol. Další krok → backl
 Claude soudí Clauda (párový design většinu vyrovná, lidské čtení žádné); L1 a L2 jen jeden soudce na pár.
 Podklady → `docs/eval/2026-09-22-modely/opis/varka/` (prompty, 112 textů, měření, slepé i odslepené soudy, klíč, souhrn
 pro kritika) + skripty `opis_*.js`, `wf_opis_*.js`.
+
+## 2026-09-23 (8) — Oprava bodu 3 z (7) (owner) · runa jedná už v produkci · znění „one detail" · úhel [4] + zvuk
+
+**1. Oprava — „Look" není Rúnarův rozkaz (owner):** *„nemyslím, že jde o rozkaz ve smyslu, že mu Rúnar něco přikazuje. To je
+stejné, jako by řekl podívej a začal něco vysvětlovat."* Přetříděno ručně: **vstup do obrazu** (*„See the faint crease in the
+cloth…"*, *„Lean over the rain-barrel…"*, *„Look closer, and you see…"*) je v pořádku; **rada do života** (krok, který má
+hledající udělat) je vada podle kánonu. Rad do života je stejně: PROD 3 (*„Notice which direction your body already faces
+before your mind weighs the reasons"* 2×, *„Watch what you carry toward another"*), NOVÁ 3 (*„Look closer, Kuky, at the one who
+keeps that quiet watch over your house"*, *„Notice which way you are already facing…"*, *„Watch the water, Kuky, and notice…"*).
+**Verdikt (7) platí, důvod ne:** vadou znění „look closer" je, že ho model **opakuje doslova** (*„Look closer, and you see…"* 4×)
+— ozvěna pokynu → formule. Počty rozkazů 6 → 14 v (7) jsou správně, ale neměří vadu.
+
+**2. „Runa jedná" není z nové věty — je v produkci** (owner: *„the tighter Nauthiz draws the coil against itself — říká, že
+Nauthiz to dělá… ještě nikdy takhle o runě nemluvil").* Runa jako podmět slovesa: Opus 4.8 PROD 12/28, NOVÁ 13/28; sol 28/28
+v obou (`runa_jedna.js`, kontrola nástroje *„Jera lifts that cloth"* nalezena). Pochází z esenčního řádku (*„says what the rune
+DOES through this image"*). Nauthiz tahající provaz je nejfyzičtější případ — runa jako síla uvnitř scény; v produkci
+totéž *„Jera lifts that cloth a little higher each hour"*. Tentýž řádek přitom říká *„No invented mechanism"*. → backlog.
+
+**3. Znění `… Let it become your own seeing in the text, down to one detail the sentence does not name.`** (bez slovesa, které
+jde zopakovat posluchači; stojí na ownerem potvrzené formuli — věta ukáže něco, co v obrazu není). 2 prompty × 3 čtení × 2 modely, $0,083:
+| | Opus 4.8 PROD (várka) | Opus 4.8 „detail" | sol PROD (várka) | sol „detail" |
+|---|---|---|---|---|
+| Nauthiz: opsaný úsek · slova obrazu v 1. větě | 6/7 · 8/8, 8/8 | **3/2/2 · 3, 1, 3 z 8** | 3/2 · 6, 5 z 8 | 4/4/3 · 5, 5, 4 z 8 |
+| zvon přes fjord: totéž | 5/5 · 7, 8 z 12 | 4/4/3 · 5, 3, 2 z 12 | 5/7 · 7, 8 z 12 | 5/4/8 · 4, 4, 6 z 12 |
+- Opus: žádné *„Look closer"*, žádný rozkaz; runa jako vlastnost místo síly (*„Nauthiz is the tightness that holds however
+  hard your hands work the fibre"*, *„This is Nauthiz, the swollen fibre that will not slip"*) ve 2 ze 3.
+- ⚠️ **Nové riziko — studené čtení těla:** Nauthiz 2 ze 3 (*„your fingers know this before you do"*, *„your knuckles have learned
+  this before your mind has"*); v PROD téhož promptu nic takového. U zvonu ne. n = 3, jen sledovat ve várce.
+- Sol: na zvonu méně slov obrazu v 1. větě, úsek ne (opakuje jádro *„you turn before you decide to"*). Nauthiz sol neopisuje ani v PROD.
+- Vedlejší: jedno čtení Opusu vyslovilo úhel [0] jako pokyn (*„Let the rest of the far shore fall away, and keep only that
+  turning"*); v PROD je ozvěna úhlu [0] jen popisná (*„Then the field falls away"*, Algiz 2×).
+
+**4. Úhel [4] × zvukový obraz** (owner: *„tak to nemůže být použito pro zvukové obrazy"*). Zkouška precedentu úhlu [2]
+(vestavěná výjimka místo výluky): `… or not yet arrived. If the image lives in sound, open with what is heard but not seen.`
+Isa (*„Under the ice the stream can still be heard"*): **Opus 4.8 zvuk v prvních dvou větách 0/4 (várka PROD+NOVÁ) → 3/3**
+(*„…you can hear it moving where you cannot see it"*); sol ho měl už předtím a drží 3/3. $0,039. Počítadlo zvuku se nejdřív
+tiše rozbilo (Python z `\b` udělal znak backspace → 0 všude) — chytila ho až kontrola na známém vstupu (§27), přeměřeno.
+IS protějšek ověřen korpusem po trojicích: *„Ef myndin berst að eyrum, byrjaðu þá á því sem heyrist en sést ekki."* —
+pozor, doslovné *„lifir í hljóði"* by znamenalo *„žije potichu"* (idiom *í hljóði* = mlčky, 4896×).
+**Hranice:** 1 zvukový obraz × 3 čtení; ostatní zvukové obrazy s úhlem [4] neměřeny.
