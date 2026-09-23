@@ -6805,3 +6805,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 **Deploy:** `claude-proxy` nasazen (owner: „udělej sám"). Před nasazením stažena běžící verze: od repa se lišila JEN stropem Askového promptu (2026-09-22 (3)); po nasazení stažena znovu → server = repo.
 **Mez / otevřené:** od 1. 10. budou mít Uruz, Berkana, Ehwaz, Ingwaz jen 2 dosažitelné obrazy (Dagaz a Blank už teď 2) → dopsat (backlog).
 **Affected doc(s):** `docs/archive/2026-09-23-brana-s-popisy.md` (kolo 4) · `RUNAR_BACKLOG.md` (tenké runy) — v tomtéž commitu.
+
+## 2026-09-23 (15) — Úhel [4] „out of sight" dostane vestavěnou výjimku pro zvukové obrazy (ne výluku) · řádek `test` smazán
+
+- **Co:** owner rozhodl **výjimku ve větě úhlu**, ne výluku úhlu pro zvukové obrazy (*„výjimka"*). Znění:
+  EN `… or not yet arrived. If the image lives in sound, open with what is heard but not seen.`
+  IS `… óséð enn. Ef myndin berst að eyrum, byrjaðu þá á því sem heyrist en sést ekki.` (korpus po trojicích; NE *„í hljóði"* =
+  idiom „mlčky"). Implementace = CODE-tune (`v2/runar-utils.js` `READING_ANGLES[4]` + `READING_ANGLES_IS[4]`), handoff předán.
+- **Proč:** u zvukového obrazu Isa ztratil Opus 4.8 zvuk v prvních dvou větách ve 4 ze 4 čteních; s výjimkou 3/3
+  (EVAL_LOG 2026-09-23 (8) bod 4). Precedens = úhel [2] (*„If nothing moves, open with the stillness itself"*), kánon
+  KUKY 2026-08-16 *„úhel musí pasovat každé runě"*. Výluka by potřebovala u obrazů značku smyslu (nový sloupec dat).
+- **Hranice:** změřen 1 zvukový obraz × 3 čtení, jen EN; IS je nezměřené (výjimka je podmíněná, u nezvukových obrazů nic nemění).
+- **Vedle toho:** owner ve Supabase smazal řádek korekcí `test → test replacement` (id `74282bcc…`, `both`, od 2026-05-11)
+  — šel do každého čtení a nic neopravoval. EN blok korekcí je tím prázdný (`getCorrPrompt('en')` vrací ''), IS 27 řádků;
+  ověřeno produkční cestou. Shrine mazat korekce neumí (backlog).
+- **Reverzibilita:** úhel snadná (odebrat větu); smazaný řádek jen znovu vložit.
+- Affected doc(s): RUNAR_BACKLOG.md (položka úhlu [4] a bod 1 bloku korekcí).
