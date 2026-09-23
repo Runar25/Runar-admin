@@ -7,6 +7,8 @@
 #    vezmi si NEJVYŠŠÍ VOLNÉ číslo toho dne — ne „další po mém posledním". 2026-09-20 takhle vznikly
 #    dvě (2) a dvě (3) a odkazy „DECISIONS 2026-09-20 (3)" přestaly být jednoznačné; opraveno přečíslováním
 #    záznamů CODE-read na (10)–(12).
+#    2026-09-23 znovu: CODE-tune zapsal druhé (6) a (7) → přečíslováno na (9) a (10) (pozdější záznamy
+#    ustupují; na (6) a (7) CODE-read už odkazovaly check-is.py a backlog).
 
 ---
 
@@ -6710,7 +6712,7 @@ Obsah záznamu platí beze změny. — CODE-tune
 - **Reverzibilita:** snadná — `delete from runar_corrections where original_phrase in (…)`.
 - Affected doc(s): RUNAR_BACKLOG.md (položka „KOREKCE DO SHRINE" uzavřena — teď je vlastní DB, §20).
 
-## 2026-09-23 (6) — Sáček obrazů: nikdy tentýž obraz hned po sobě, motivové obrazy už nevypadávají
+## 2026-09-23 (9) — Sáček obrazů: nikdy tentýž obraz hned po sobě, motivové obrazy už nevypadávají
 **Podnět:** KUKY report #6 (*„dostal jsem úplně stejné čtení jako minule — neměly by se obrazy nejdřív prostřídat?"*) a #20 (Tiwaz *„pořád mince"*) · **Provedl:** CODE-tune
 **Dvě vady** (nalezeny rozborem reportů, ověřeny skeptikem a protlačením skutečného kódu, 20 000 tahů):
 1. **Přechod kol:** prázdný sáček se naplnil celý a první tah byl čistý los — poslední obraz starého kola mohl vyjít hned první v novém. U run se dvěma dosažitelnými obrazy (Thurisaz a Tiwaz v září) to byl tentýž obraz po sobě v **~25 %** čtení.
@@ -6733,7 +6735,7 @@ Obsah záznamu platí beze změny. — CODE-tune
 - **Reverzibilita:** snadná (`delete … where original_phrase in (…)`).
 - Affected doc(s): `check-is.py` (5 vzorů) · RUNAR_BACKLOG.md (kandidát korektoru přepsán, růst bloku korekcí).
 
-## 2026-09-23 (7) — Úvodní pokyn „celý obraz najednou" → „jeden rychlý pohled na celý obraz" (v4.45)
+## 2026-09-23 (10) — Úvodní pokyn „celý obraz najednou" → „jeden rychlý pohled na celý obraz" (v4.45)
 **Rozhodl:** KUKY („ok. opravit") · **Provedl:** CODE-tune
 **Co:** jeden ze sedmi losovaných úvodů čtení (`READING_ANGLES[0]` / `_IS[0]`): EN *„Open with one quick glance at the whole image, then let everything fall away but one."* · IS *„Líttu fyrst snöggt yfir alla myndina, láttu svo allt hverfa nema eitt."* (korpus + is-grammar-qa).
 **Proč:** starý pokyn *„the whole image at once"* tlačil celou scénu do první věty a model k ní dokresloval okolí, které v obrazu není (*„the whole yard still grey"*). Délka obrazu přitom s délkou první věty nesouvisí (r = 0,02, n = 72) — příčina byla v tomhle pokynu.

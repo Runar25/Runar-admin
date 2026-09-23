@@ -1888,6 +1888,6 @@ Podklad: `docs/archive/2026-09-23-audit-obrazu.md`. Owner je potřebuje vysvětl
 2. **Chléb u Jera** — KUKY: *„klidně může zůstat, pokud Rúnar bude schopný o něm v runě mluvit lépe.
    Zatím je to slabé!"* → chléb zůstává, ale obraz musí nést Jeru (úroda, odměna za čas), ne „dost pro
    všechny" (to soudci čtou jako Fehu). Úkol: přepsat znění, změřit branou, ukázat čtení.
-3. ✅ **Uzavřeno** → DECISIONS 2026-09-23 (7). ~~**Úvodní pokyn „začni celým obrazem najednou"** (jeden ze 7 losovaných začátků čtení) — dává první
+3. ✅ **Uzavřeno** → DECISIONS 2026-09-23 (10). ~~**Úvodní pokyn „začni celým obrazem najednou"** (jeden ze 7 losovaných začátků čtení) — dává první
    větu ~25 slov proti 17–21 u ostatních a vede model dokreslovat okolí, které v obrazu není.
    Návrh: přepsat a změřit na ~12 čteních před/po. Owner zatím nerozhodl (nevěděl, o co jde).~~
