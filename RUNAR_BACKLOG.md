@@ -103,6 +103,13 @@
      IS 1202 tokenů, EN 31 (jen řádek `test`).
   5. Až smyčka poroste: řádky téže třídy sloučit do jedné věty v IS gramatickém bloku (CODE-tune); korekce vázané
      na runu (Gebo, Fehu) posílat jen s tou runou.
+- [ ] **Opus 4.8 v produkci začíná větu rozkazem posluchači** (*Notice…*, *See…*) v 6 z 28 EN čtení — nejvíc úhly [0] a [1]
+  (EVAL_LOG 2026-09-23 (7), bod 6). Kánon *„Rúnar never tells the seeker what to do"* je jen v systémovém promptu, který
+  model poslouchá hůř než per-čtení injekci (CLAUDE.md, „KLÍČ"). Nejdřív změřit na víc čteních, pak rozhodnout, jestli se
+  pravidlo nemá přesunout/zopakovat blíž k místu, kde vzniká (úhly). Test na rozkaz → EVAL_LOG 2026-09-06 (*„dá se věta
+  smazáním slov převést na rozkaz?"*).
+- [ ] **Úhel [4] „out of sight" × zvukový obraz (Isa: potok pod ledem slyšet):** Opus 4.8 ztratil zvuk ve 4 ze 4 čtení
+  (obě ramena) — úhel táhne k „neviditelnému pohybu", slyšení vypadne. n = 1 prompt; sledovat, případně výluka úhel × smysl.
 - [ ] **GLOSA V ISLANDSKÉ HLAVIČCE RUNY se propisuje do čtení** (nález CODE-read 2026-09-22, srovnání modelů).
   IS prompt má `DREGNA RÚNA: Raidho (Ferðalag) — …`, EN jen `DRAWN RUNE: Raidho — …`. Výsledek na 42 čteních:
   glosa *„Raidho (Ferðalag)"* v textu **jen v IS** — Opus 5.5 3/3, gpt-6-sol 3/3, gpt-5.6-sol 2/3; v EN ji nenapsal
@@ -117,12 +124,13 @@
   nejhorší (identita stojí na opsané nálepce, závěr s nálepkou 4/6). Čtyři slova (produkce) = nejlepší identita
   podle vztahu. Opus 5 seznamy nepotřebuje. **Nezkoušet znovu bez nového důvodu** (§26).
   Opisování do závěru u solu se 4 slovy bylo 4/10 — kdyby se řešilo, tak jinou pákou (landing), ne seznamy.
-- [ ] **KANDIDÁT: věta za obrazem v EN „look closer, at what someone there would notice first"** (CODE-read
-  2026-09-23, EVAL_LOG 2026-09-23 (6)). `_seasonalImagery` EN: `. Let it become your own seeing in the text.` →
-  `. Let it become your own seeing: look closer, at what someone there would notice first.` Na jednom promptu
-  (Algiz, 5×) sol přestal větu obrazu opakovat (úsek 4,0 → 2,2 slova, slova obrazu v 1. větě 3,2 → 1,8 z 5).
-  **Před handoffem:** várka přes všech 7 úhlů (hlavně [4] „out of sight" — 1 čtení ukázalo ozvěnu *„notice… first"*)
-  a nezrakové obrazy, sol + **Opus 4.8 (produkce)**. IS beze změny, dokud měření neukáže opis i v IS.
+- [ ] **KANDIDÁT: věta za obrazem, která přiměje model obraz PŘEVIDĚT** (CODE-read 2026-09-23, EVAL_LOG 2026-09-23 (6)
+  a (7)). Znění *„look closer, at what someone there would notice first"* **zamítnuto pro produkci**: u Opus 4.8 prosakuje
+  jako rozkaz posluchači (6 → 14 z 28 čtení, 4× doslova *„Look closer"*), celkově lepší čtení nezjištěno. Myšlenka ale
+  funguje u obou modelů (začátek obraz převidí, soudci 21 : 4 a 20 : 5). **Další test:** znění BEZ slovesa, které jde
+  zopakovat posluchači jako rozkaz (žádné *look / notice / see*); kontrolní prompty NEvybírat jen podle úniku (regrese k
+  průměru) a pustit i PROD; soudci musí vidět systémové pravidlo *„never tells the seeker what to do"*; měřit i ozvěnu
+  *„you see/hear"* u solu a stejnost napříč čteními (`measure_sameness.js`). IS až po EN.
 - [ ] **KANDIDÁT: most IS „ástand … sagt með orðum myndarinnar"** (CODE-read 2026-09-22, NEROZHODNUTO — owner).
   Ve tvaru „dvě možnosti" přidat k *„hvort um sig ástand sem gæti átt við"* frázi *„sagt með orðum myndarinnar"*
   (tvar ověřeného Norns landingu A). gpt-6-sol: konce z pojmů (*vani / kostur*) na věcné 5/5; Opus 5: *gæti* beze

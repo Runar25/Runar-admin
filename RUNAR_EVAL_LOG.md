@@ -5020,3 +5020,51 @@ Opus 5 2×); jen EN; **produkční model (Opus 4.8) netestován**. IS se neměni
 u solu stejně nízké jako u Opusu (úsek 1–6 × 1–3), ale měření je v IS slepé k ohýbání.
 **Další krok** → backlog (várka přes úhly a nezrakové obrazy, sol + Opus 4.8), teprve pak handoff CODE-tune.
 Podklady → `docs/eval/2026-09-22-modely/opis/opis-vysledky.json` (všech 47 textů + měření).
+
+## 2026-09-23 (7) — VÁRKA k větě za obrazem: převidění ano, celkově lepší čtení nezjištěno, u Opus 4.8 únik rozkazů → toto znění NE
+
+**Owner:** *„pusť várku"* (po 2026-09-23 (6)). **Testované znění:** EN `IMAGE — …: <obraz>. Let it become your own seeing
+in the text.` → `… Let it become your own seeing: look closer, at what someone there would notice first.`
+**Jak:** 14 promptů produkčními buildery (dnešní kód, dnešní blok korekcí): všech 7 úhlů × 2 obrazy — u každého úhlu jeden
+zrakový a jeden nezrakový (zvuk 3×, vůně, hmat 2×, teplo), 5 těžkých run. Dvě ramena se liší JEN tou větou (tvrdá kontrola).
+gpt-6-sol + **claude-opus-4-8 (produkce**, bez thinking, systém v cache jako proxy), 2 opakování = **112 čtení, $0,78**
+(pilot 4 čtení napřed). Bez per-uživatelského kontextu proxy (strom/relace/hlas). Tvrdá měření + slepí soudci ve workflow
+(46 agentů; zadání bez testované věty; pořadí A/B hashem 28:28): L1 jak začátek bere obraz, L2 věrnost obrazu (+ skeptik na
+jednostranný posun), L3 celkově lepší čtení 2× (druhý soudce viděl A/B prohozeně) + rozhodčí. Pak kritik úplnosti a protivník
+závěrů (§27), oba si čísla přepočítali ze surových dat — **hlavní počty sedí, výklad jsem podle nich opravil** (níž).
+
+| | sol PROD | sol NOVÁ | Opus 4.8 PROD | Opus 4.8 NOVÁ |
+|---|---|---|---|---|
+| opsaný úsek z obrazu (průměr slov) | 3,32 | 2,93 | 3,57 | 2,89 |
+| slova obrazu v 1. větě | 54 % | 43 % | 45 % | 37 % |
+| začátek: opakuje / částečně / převidí (soudce L1) | 11 / 13 / 4 | 1 / 17 / 10 | 13 / 8 / 7 | 9 / 3 / 16 |
+| **čtení s rozkazem na začátku věty** (Look/See/Notice…) | 0 | 0 | **6** | **14** (*Look* 0 → 7, z toho 4× *„Look closer"*) |
+| celkově lepší (L3): NOVÁ : PROD | | 17 : 11 | | 14 : 14 |
+
+**Nálezy (po útoku kritika a protivníka):**
+1. **Věta mění, jak model bere obraz — u obou modelů.** Soudci L1: *„obraz víc svůj"* NOVÁ 21 : 4 (sol) a 20 : 5 (Opus), obě
+   půlky. ⚠️ Zčásti je to dané konstrukcí — definice „převidí" v zadání soudce se podobá testované větě. Nezávislá opora bez
+   soudce: slova obrazu v 1. větě u solu klesla v párech 14 : 3 (p ≈ 0,013); opsaný úsek jen slabě (11 : 4 kratší, p ≈ 0,12).
+   U Opusu se „opakuje" skoro nehnulo (13 → 9) — posun je hlavně „částečně → převidí".
+2. **Celkově lepší čtení NEZJIŠTĚNO** (ne „nezlepšuje"): sol 17 : 11 (obě opakování stejným směrem 8–6 a 9–5, ale p ≈ 0,34),
+   Opus 14 : 14. Půlky promptů se rozcházejí, ale půlka = jiné úhly I jiná skupina soudců (jedna skupina dala 7 : 0 pro PROD) —
+   dělení po opakováních je čistší. U Opusu celkový verdikt přebíjí délka: kratší čtení vyhrálo 17 : 10.
+3. ⭐ **U Opus 4.8 (produkce) věta prosakuje jako rozkaz posluchači** — 6 → 14 z 28 čtení, *Look* 0 → 7, 4× doslova *„Look
+   closer"* (*„Look closer, Kuky, at the one who keeps that quiet watch…"*). Párově 9 : 1, 7 ze 14 promptů, 5 úhlů, obě půlky;
+   sol 0 → 0. Porušuje kánon ze systémového promptu *„Rúnar never tells the seeker what to do"* (`runar-character.js` — sekce
+   WHAT NEVER CHANGES). Soudci ho neviděli, proto ho celkový verdikt netrestal (NOVÁ vyhrála 9 ze 14 párů s rozkazem).
+   Věta tak vyměnila **ozvěnu obrazu za ozvěnu pokynu** — tutéž třídu vady (paměť `prompt-directive-makes-model-copy`).
+4. **„Ztráta smyslu" u nezrakových obrazů NEPROKÁZÁNA** (můj první závěr 2 → 5 byl přestřelený): po stejném skeptikovi jako
+   posun je to 2 → 3, rozhodující je jediné čtení (Perth, vůně → *„See the thin thread of steam…"*), p ≈ 0,25. Isa (zvuk pod
+   ledem) ztrácí zvuk v OBOU ramenech — to je úhel [4] „out of sight" × zvukový obraz, ne ta věta.
+5. **Sol má vlastní ozvěnu, kterou design neměřil:** v 1. větě dosadí vnímajícího *„you see / hear / notice…"* 5 → 14 z 28.
+6. **Mimochodem (produkce, nezávisle na větě):** Opus 4.8 začíná větu rozkazem už v PROD v 6 z 28 (*Notice*, *See* — hlavně
+   úhly [0] a [1]); a přetahuje délku ve 27 z 28 (medián 69 slov proti 50–58) — to je známé (2026-09-19/20, směr DECISIONS
+   2026-09-23 (2)), tady jen potvrzeno.
+
+**Verdikt:** **toto znění do produkce NE** — kvůli bodu 3, ne kvůli smyslu. **Myšlenka (přimět model obraz převidět) platí
+pro oba modely**, ne jen pro případný přechod na sol. Další krok → backlog.
+**Hranice:** jen EN (IS netestováno — musel by se napsat islandský protějšek); 2 opakování, efektivně ~14 promptů; soudci =
+Claude soudí Clauda (párový design většinu vyrovná, lidské čtení žádné); L1 a L2 jen jeden soudce na pár.
+Podklady → `docs/eval/2026-09-22-modely/opis/varka/` (prompty, 112 textů, měření, slepé i odslepené soudy, klíč, souhrn
+pro kritika) + skripty `opis_*.js`, `wf_opis_*.js`.
