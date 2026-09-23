@@ -130,3 +130,38 @@ proto navrhuju **nechat**.
 3. **Napsat nové** ze statického popisu run pro runy, které zeslábnou nebo jsou tenké: Fehu, Uruz,
    Gebo, Perth, Eihwaz (+ náhrady za Isa pod ledem, Wunjo kamna). IS nativně, korpus, gramatika, brána.
 4. **Úhel [0]** přepsat a změřit (sekce 1).
+
+## 5. Nové obrazy ze statického popisu run — brána prošla 10 z 11
+
+IS nativně (korpus + is-grammar-qa; W001 u *teningur, fata, trog, barmur* = vzácná slova, BÍN je
+potvrdil). Brána: 3 slepí soudci, 4 kontrolní obrazy z minulých kol daly zase 3/3.
+Vyhýbal jsem se vodě, ohni, rostlinám a domovu — to jsou čtyři tahy, kvůli kterým neprošlo 19 obrazů.
+
+| runa | IS | EN | brána | proč z popisu |
+|---|---|---|---|---|
+| Fehu | Ullin er lögð inn og fyrir hana kemur kaffi og sykur. | The wool is traded in, and coffee and sugar come back for it. | 3/3 | *„hodnota, když se může pohybovat"* |
+| Fehu | Mjólkin flóir yfir barminn á fötunni. | The milk spills over the brim of the pail. | 3/3 | *„voda do nádoby… přeteče"* — mléko, ne voda (voda = Laguz) |
+| Uruz | Nautið rífur sig upp úr mýrinni og heldur áfram. | The bull tears itself up out of the bog and keeps going. | 3/3 | *„nezastavuje se proto, že cesta není pohodlná"* |
+| Gebo | Ókunnugur hjálpar þér að ýta bílnum úr skaflinum og veifar bara þegar hann fer. | A stranger helps push your car out of the drift and only waves as he leaves. | 3/3 | *„dar bez jistoty, že se vrátí… žádné účetnictví"* |
+| Gebo | Tveir bera sama trogið, hvor á sínum enda. | Two carry the same trough, each at their own end. | 2/3 (Ehwaz) | *„dvě síly… prostor, který patří oběma"* |
+| Perth | Teningurinn liggur enn í bikarnum og enginn hefur kastað. | The die still lies in the cup and no one has thrown. | 3/3 | *„ještě nevím"* — a kostka v kalíšku je tradiční obraz Perth |
+| Perth | Spilið liggur á grúfu og enginn hefur snúið því við. | The card lies face down and no one has turned it over. | 2/3 (Blank) | *„nádobu nerozbíjej"* |
+| Eihwaz | Einirinn er grænn undir snjónum allan veturinn. | The juniper stays green under the snow all winter. | 3/3 | *„roste pomalu, přežije dlouho"* — jalovec je islandský stálezelený |
+| Eihwaz | Tréð stendur með ræturnar í myrkrinu og krónuna í birtunni. | The tree stands with its roots in the dark and its crown in the light. | 3/3 | *„stojí mezi dvěma světy"* |
+| Wunjo | Þú sest hjá þeim og enginn spyr hvers vegna þú komst. | You sit down with them and no one asks why you came. | 3/3 | *„nemusíš nic dokazovat"* — místo kamen (Kenaz) |
+| ~~Uruz~~ | ~~Báturinn situr fastur þar til þú ýtir á…~~ | ~~The boat sits stuck until you push…~~ | ❌ Nauthiz | vyřazeno |
+
+## 6. Celý návrh v jednom (co by se změnilo)
+
+- **Přestěhovat** (soudci jednomyslně jinde): Fehu borůvky → Jera · Ansuz jinovatka z dechu → Isa ·
+  Gebo moře → Laguz · Jera těsto → Ingwaz · Perth laguna → Laguz · Mannaz laguna → Laguz.
+- **Vyřadit** (neprošly a mají náhradu): Fehu ovce do ohrady · Uruz láva · Gebo břeh · Perth kamínek ·
+  Wunjo kamna · Ansuz konvice · Ansuz dech „než jsi čekal".
+- **Přidat** 10 obrazů ze sekce 5.
+- **Nechat** navzdory bráně: Nauthiz rostlina, Blank vlasec (pochválená čtení), Nauthiz jehně/kořen
+  (Nauthiz má dost jiných — rozhodni).
+- **Hraniční z minulého nasazení:** Isa *pod ledem* (souhrnně 7/9 Isa) — nechat · chléb v Jera
+  (souhrnně 4/6, zbytek Fehu) — nechat, nebo vyřadit.
+
+Výsledek: nejtenčí runy **Fehu 1 → 3 · Eihwaz 2 → 4 · Perth 2 → 4 · Gebo 2 → 4 · Laguz 3 → 6**;
+žádná runa pod 3 obrazy, které branou prošly.
