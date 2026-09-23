@@ -6742,3 +6742,11 @@ Obsah záznamu platí beze změny. — CODE-tune
 **Změřeno** (stejné runy, oblasti a losy, mění se jen pokyn; produkční model, 12 + 12 EN čtení): 1. věta **25,0 → 20,9** slov, nejdelší **33 → 24**, kratší v 9 z 12 párů, drží v obou půlkách (25,8→22,2 · 24,2→19,7); starý stav sedí s produkcí (25,4). Starý pokyn model u Jery doslova opsal (*„Let all of it fall away but the one truth"*), nový ne. Zachována část *„nech vše odpadnout kromě jedné věci"* — z ní vzniklo chválené *„one bent stalk remains"*.
 **Mez:** IS jen jazykově ověřené, neměřené na čteních. Slova „whole/everything" v první větě neubyla (8 → 9) — věta je kratší, ne jiná.
 **Affected doc(s):** `RUNAR_BACKLOG.md` (bod 3 ze tří otevřených uzavřen) — v tomtéž commitu.
+
+## 2026-09-23 (11) — Brána obrazů se statickými popisy run · 10 nových obrazů z popisů (v4.46)
+**Rozhodl:** KUKY („1. ano 2. přepsat a otestovat"; Tiwaz: „nedáváme nový směr") · **Provedl:** CODE-tune
+**Co:** (a) nová brána: soudce vybírá mezi třemi ownerovými popisy run bez jmen (správná + dvě zaměnitelné). (b) Podle ní do `RUNE_IMAGES`: chléb u Jery přepsán (zaseto na jaře → chléb na stole), mince u Tiwaz dostaly místo (sjoppa), nové Tiwaz ×2 (šíp, zpátky do bouře pro ovci), Thurisaz ×3 (ruka na klice, beran u branky, kopřiva u dveří), Hagalaz ×3 (vichr strhl plot, výpadek proudu, strom s hlubokými kořeny). Tiwaz dostal v `RUNAR_POPISY_RUN.md` ownerovo rozvinuté Znění B.
+**Proč:** Tiwaz, Thurisaz a Hagalaz měly v září jen 2 dosažitelné obrazy → „stejné čtení jako minule"; starý chléb nesl hojnost (Fehu); mince bez místa → model pokaždé dokreslil tentýž pult.
+**Změřeno** (3 slepí soudci, detail `docs/archive/2026-09-23-brana-s-popisy.md`): 19 obrazů, které neprošly původní branou → s popisy prošlo 9 (moře u Gebo 3/3); nové obrazy 10/11 3/3, vyřazen „řekneš to na rovinu" (Ansuz); kontroly 5/6 (uhlíky u Kenaz spadly na Ingwaz — brána je přísnější, je to síto, ne verdikt).
+**Mez:** soudci četli EN; IS ověřené korpusem + is-grammar-qa. Obrazy zatím neviděly skutečné čtení — to ukáže testování. 10 neprošlých starých obrazů zůstává v bance, dokud o nich nerozhodne owner.
+**Affected doc(s):** `RUNAR_POPISY_RUN.md` (Tiwaz Znění B, předchozí commit) · `docs/archive/2026-09-23-brana-s-popisy.md` (nový) — v tomtéž commitu.

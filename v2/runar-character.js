@@ -570,7 +570,9 @@ var RUNE_IMAGES = [
   ['Jera','bright','Þú snýrð heyinu þennan eina þurra eftirmiðdag sem öll vikan leyfir, og það nægir.','You turn the hay the one dry afternoon the whole week allows, and it is enough.','rétt tímasetning','right timing','P','hay'],
   ['Jera','any','Þú sest niður í lok vertíðar og í þetta sinn kallar ekkert á þig að standa upp aftur.','You sit down at the end of the season and this time nothing is calling you to get up again.','umbun','reward','D'],
   // 2026-09-23: chleba z Fehu — soudci ho ctou jako odmenu urody (Jera 3/3); KUKY „cim vic obrazu tim vic variant".
-  ['Jera','any','Brauðið kemur heitt út úr ofninum, nóg handa öllum við borðið.','The bread comes hot from the oven, enough for everyone at the table.','umbun','reward','D'],
+  // 2026-09-23 (KUKY „přepsat a otestovat“): chléb „dost pro všechny“ nesl hojnost = Fehu (brána 0/3 i s popisy 0/3).
+  // Nový nese Jeru z popisu — zaseto na jaře, sklizeň na stole: s popisy 3/3. Korpus: sem sáð var 156, heitt úr ofninum 12.
+  ['Jera','any','Fyrsta brauðið úr bygginu sem sáð var í vor kemur heitt úr ofninum.','The first bread from the barley sown in spring comes hot from the oven.','umbun','reward','D'],
   ['Eihwaz','any','Reyniviðurinn við bæinn leggst flatur í hviðunni og réttir sig um leið og hana lægir.','The rowan by the farmhouse bends flat in the gust and rights itself the moment it drops.','seigla','resilience','P'],
   ['Eihwaz','any','Þegar skriðan fer af stað tekur rótin álagið og jörðin fyrir ofan hana fer hvergi.','When the scree starts to slide the root takes the strain and the ground above it goes nowhere.','seigla','resilience','P'],
   ['Perth','any','Áin veltir steinvölunni þar til hún stöðvast — þú sérð ekki hvar.','The river rolls the pebble until it stops — you cannot see where.','örlög í mótun','fate in the making','E'],
@@ -597,9 +599,24 @@ var RUNE_IMAGES = [
   // ⚠️ Timhle radkem se opravuje i NESOULAD SLOUPCU, nalezeny pri te prilezitosti:
   // puvodni radek mel EN aspekt `justice`, ale IS aspekt `sannleikur` (= truth), tedy
   // dve ruzne stranky runy v jednom radku. IS je ted `rettlaeti`, coz `justice` odpovida.
-  ['Tiwaz','any','Þú skilar til baka skiptimyntinni sem var talin þér í vil.','You give back the change that was counted wrong in your favour.','réttlæti','justice','D'],
+  // 2026-09-23: mince bez místa → model si pokaždé dokreslil tentýž dřevěný pult („across the wood“, owner v reportu).
+  // Místo je teď dané (sjoppa); smysl „v tvůj prospěch“ zůstal. Brána s popisy 3/3. IS bez čárky E001 → s čárkou čisté.
+  ['Tiwaz','any','Í sjoppunni færðu of mikið til baka, og þú skilar mismuninum.','At the kiosk the change comes back wrong in your favour, and you return the difference.','réttlæti','justice','D'],
   ['Tiwaz','cold','Pólstjarnan stendur kyrr meðan allt annað snýst.','The pole star stands still while everything else turns.','sannleikur','truth','E'],
   ['Tiwaz','any','Þú stendur við orð þín þótt það kosti þig svefninn.','You stand by your word though it costs you your sleep.','fórnfýsi','sacrifice','D'],
+  // 2026-09-23 (KUKY: popisy run jako zdroj obrazů; Tiwaz „nedáváme nový směr“): Tiwaz, Thurisaz a Hagalaz měly v září
+  // jen 2 dosažitelné obrazy → „stejné čtení jako minule“. Nové řádky z ownerových popisů (šíp, cena směru, odvaha;
+  // zastavit se u dveří; co zůstane po bouři). Slepá brána S POPISY: každý 3/3. Vyřazen „řekneš to na rovinu“ (Ansuz 2/3).
+  // IS: korpus Risamálheild (út í óveðrið 104, staldrar við 655, bíður með að 164, undir sig hausinn 328, rafmagnið fór af
+  // 468, gengur sjálfkrafa 17, átti djúpar rætur 37), is-grammar-qa čisté („örin“ W001 = šum, BÍN: ör kvk → örin).
+  ['Tiwaz','any','Boginn er spenntur og örin vísar í eina átt — og bíður.','The bow is drawn and the arrow points one way — and waits.','hermannsandi','the warrior spirit','P'],
+  ['Tiwaz','any','Þú ferð aftur út í óveðrið eftir kindinni sem enn vantar.','You go back out into the storm for the one sheep still missing.','hugrekki','courage','P'],
+  ['Thurisaz','any','Þú tekur í húninn — og staldrar við.','You take hold of the door handle — and stop.','aðgát','caution','D'],
+  ['Thurisaz','any','Hrúturinn setur undir sig hausinn við hliðið, og þú bíður með að opna.','The ram lowers its head at the gate, and you wait before you open it.','hlið','gateway','P'],
+  ['Thurisaz','bright','Brenninetlan vex við dyrnar; sá sem fer of hratt fram hjá brennir sig á henni.','The nettle grows by the door; whoever goes past too fast gets stung.','þyrnir','thorn','P'],
+  ['Hagalaz','any','Í nótt reif rokið gömlu girðinguna niður og túnið liggur opið.','In the night the gale tore the old fence down, and the field lies open.','hreinsun','clearing','E'],
+  ['Hagalaz','any','Rafmagnið fer af í óveðrinu og allt sem gengur sjálfkrafa stöðvast.','The power goes out in the storm, and everything that runs by itself stops.','truflun','disruption','D'],
+  ['Hagalaz','any','Eftir óveðrið stendur aðeins tréð sem átti djúpar rætur.','After the storm, only the tree with deep roots is still standing.','umbreyting','transformation','E'],
   ['Berkana','bright','Birkið laufgast fyrst allra, þótt jörðin sé enn köld.','The birch leafs out before all the rest, though the ground is still cold.','nýtt upphaf','new beginnings','P'],
   ['Berkana','bright','Lömbin stíga fyrstu sporin úti í maí.','The lambs take their first steps outside in May.','nýtt upphaf','new beginnings','P','lamb'],
   ['Berkana','any','Fyrsta skref barnsins yfir gólfið er óstöðugt en ákveðið.','The child\'s first step across the floor is unsteady but sure.','nýtt upphaf','new beginnings','D'],
