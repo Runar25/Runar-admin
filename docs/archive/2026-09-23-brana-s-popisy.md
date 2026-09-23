@@ -49,3 +49,18 @@ ale jeden dobrý obraz z šesti může shodit. Proto je to síto, ne verdikt (KU
 - Soudci četli jen EN znění obrazu. IS je ověřené jazykově (korpus, is-grammar-qa), ne branou.
 - Brána měří, jestli obraz **nese runu podle popisu**. Neměří, jak dobré čtení z obrazu vznikne
   (moře u Gebo a laguna u Perth dala čtení, která owner pochválil, a laguna tu přesto neprošla).
+
+## Kolo 3 — 10 obrazů navržených v auditu (`2026-09-23-audit-obrazu.md` sekce 5) + tytéž kontroly
+**9 z 10 prošlo 3/3.** Neprošel *„Two carry the same trough, each at their own end"* (Gebo 0/3, Ehwaz 3/3).
+**Kontroly zopakovaly kolo 2 přesně** (jiné pořadí i kódy popisů): 5 × 3/3, uhlíky u Kenaz 1/3 (Ingwaz 2) —
+brána dává opakovatelný výsledek, ne náhodu.
+
+## Co z toho plyne pro návrh z auditu (k rozhodnutí ownera)
+- **Přidat 9** (vše kromě koryta).
+- **Nevyřazovat, prošly s popisy:** Gebo moře i pobřeží · Ansuz konvice · Wunjo kamna.
+- **Nepřestěhovávat, prošly u své runy:** Ansuz jinovatka z dechu · Jera těsto.
+- **Vyřadit (neprošly ani jednou branou):** Fehu ovce do ohrady · Uruz láva · Perth kamínek v řece ·
+  Ansuz „dech se vrací pomaleji" · Nauthiz kořen přes kamení.
+- **Přestěhovat (obě brány jednomyslně jinde):** Fehu borůvky → Jera · Mannaz odraz v laguně → Laguz.
+- **Ownerovo slovo:** Blank vlasec do tmavé vody (obě brány Perth; čtení owner chválil) · Perth laguna
+  (obě brány Laguz; čtení owner chválil — test na celých čteních).
