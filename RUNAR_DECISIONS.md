@@ -6669,3 +6669,11 @@ check-is OK · smoke 44/44.
 **Ověřeno:** IS nativně (korpus + is-grammar-qa, E001 věty přepsány) · živě v prohlížeči EN i IS: na startu sbalené, rozbalení/aria, sedm odstavců, jiná runa překreslí v aktuálním jazyce · smoke 44/44.
 **Známá mez:** přepnutí jazyka při rozbaleném návodu ho překreslí až při otevření další runy — celé chování jazyka v Kolekci řeší backlog „Statické runy jen v jednom jazyce".
 **Affected doc(s):** `RUNAR_DESIGN.md` zásoba citací — věta o světle je teď **nasazená** (v návodu); poznamenáno v tomtéž commitu.
+
+## 2026-09-24 (1) — Kolekce (statické runy) jen v jazyce appky
+**Rozhodl:** KUKY (2026-09-22 do backlogu; 2026-09-24: „měly být odstraněny malé tečky… a zachováno jen čtení podle mutace celé appky") · **Provedl:** CODE-tune · **Platí pro všechny tiery.**
+**Co:** z dlaždic pryč tečky EN/IS; z detailu runy pryč přepínač EN/IS a druhé jméno — detail ukazuje jméno a v islandštině pod ním islandský výklad (`rnSplit`), Rúnarovo učení jde vždy v jazyce appky. Natvrdo psané texty (žádná nahrávka / chybí soubor / uvítání návštěvníka) přesunuty do `UI_TEXT` (§10) beze změny znění (ověřeno porovnáním se starým kódem).
+**Proč:** člověk má vidět jeden jazyk, ne dva vedle sebe. Přepnutí jazyka Kolekci překreslí už dřív (`setLang` → `loadCollection`).
+**Pozn.:** jména tierů v uvítání zůstávají jako slova, ne `{placeholder}` — islandština je skloňuje (*„gerðu þig að Leitanda"*), dosazený nominativ by byl chyba.
+**Ověřeno živě** (EN i IS, návštěvník): 0 teček, 0 přepínačů, jméno a výklad podle jazyka, návod v jazyce appky.
+**Affected doc(s):** `RUNAR_BACKLOG.md` (položka uzavřena) — v tomtéž commitu.

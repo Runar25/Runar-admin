@@ -1007,24 +1007,20 @@ async function loadCollection() {
   if (notice) {
     notice.style.display = isVisitor ? 'block' : 'none';
     if (isVisitor) {
-      const isIs = lang === 'is';
-      document.getElementById('vcn-text').innerHTML = isIs
-        ? `Þú ert hér <strong>Gestur</strong>. Fimm rúnir bíða þín — dragðu eina og hlustaðu á fornu steinana.<br><br>Viljir þú allar tuttugu og fimm rúnirnar, og lestur sem á aðeins við þig, gerðu þig að <strong>Leitanda</strong>. Skráning er ókeypis.`
-        : `You walk here as a <strong>Visitor</strong>. Five runes await you — draw one, and listen to the ancient stones.<br><br>Should you want all twenty-five, and a reading that speaks to you alone, become a <strong>Rune Seeker</strong>. Free to join.`;
+      // 2026-09-24: text do UI_TEXT (§10). Jmena tieru v nem zustavaji jako slova, ne {placeholder}:
+      // islandstina je sklonuje („gerðu þig að Leitanda" — dativ), dosazeny nominativ by byl chyba.
+      document.getElementById('vcn-text').innerHTML = t('vcn_text');
       document.getElementById('vcn-btn').textContent = t('become_rs_btn');
     }
   }
 
   grid.innerHTML = '';
   RUNES.forEach(r => {
-    const enRows = collAudioMap[r.n]?.en || [];
-    const isRows = collAudioMap[r.n]?.is || [];
-    const hasEn  = enRows.length > 0;
-    const hasIs  = isRows.length > 0;
     const locked  = isVisitor && VISITOR_RUNES.indexOf(r.n) === -1;
 
     const cell = document.createElement('button');
-    cell.className = 'coll-cell' + (hasEn && hasIs ? ' has-audio' : hasEn || hasIs ? ' partial-audio' : '') + (locked ? ' locked' : '');
+    // 2026-09-24: bez trid has-audio/partial-audio — barvily jen tecky EN/IS, ktere odesly.
+    cell.className = 'coll-cell' + (locked ? ' locked' : '');
     if (activeCollRune?.n === r.n) cell.classList.add('active');
 
     const svgHtml = runeSvg(r, { frame: true, cls: 'coll-svg' });
@@ -1032,11 +1028,8 @@ async function loadCollection() {
     const _cp = rnSplit(r);
     cell.innerHTML = `
       ${svgHtml}
-      <span class="coll-name">${_cp.name}</span>${_cp.tr ? `<span class="coll-tr">(${_cp.tr})</span>` : ''}
-      <span class="coll-dots">
-        <span class="coll-dot${hasEn ? ' en' : ''}" title="EN"></span>
-        <span class="coll-dot${hasIs ? ' is' : ''}" title="IS"></span>
-      </span>`;
+      <span class="coll-name">${_cp.name}</span>${_cp.tr ? `<span class="coll-tr">(${_cp.tr})</span>` : ''}`;
+    // 2026-09-24 (KUKY): tecky „ma nahravku EN / IS" pryc — clovek vidi jen svuj jazyk.
 
     cell.dataset.rune = r.n;
     if (!locked) cell.onclick = () => openCollDetail(r, cell);
@@ -1057,8 +1050,11 @@ function openCollDetail(r, cell, skipScroll) {
 
   // Fill static info
   document.getElementById('cd-glyph').innerHTML      = runeSvg(r, { frame: true, cls: 'cd-stone' });
-  document.getElementById('cd-name-en').textContent  = r.n;
-  document.getElementById('cd-name-is').textContent  = r.is_n || '';
+  // 2026-09-24 (KUKY): jen jazyk appky. #cd-name-en nese jmeno, #cd-name-is islandsky vyklad
+  // jmena (jen v IS, v EN prazdny) — ID zustala, aby se nemenilo nic, co na ne sahá.
+  const _np = rnSplit(r);
+  document.getElementById('cd-name-en').textContent  = _np.name;
+  document.getElementById('cd-name-is').textContent  = _np.tr || '';
   document.getElementById('cd-kw').textContent        = lang === 'is' && r.k_is ? r.k_is : r.k;
   const metaParts = [];
   if (r.world)    metaParts.push(rworld(r));
@@ -1110,9 +1106,7 @@ function closeCollDetail() {
 function loadCollAudio(l) {
   if (!activeCollRune) return;
 
-  // Update lang tab UI
-  document.getElementById('cdlang-en').classList.toggle('active', l === 'en');
-  document.getElementById('cdlang-is').classList.toggle('active', l === 'is');
+  // 2026-09-24: prepinac EN/IS z Kolekce odesel (KUKY) — uceni jde vzdy v jazyce appky.
 
   const rows = collAudioMap[activeCollRune.n]?.[l] || [];
   const textEl   = document.getElementById('cd-audio-text');
@@ -1123,7 +1117,7 @@ function loadCollAudio(l) {
 
   if (rows.length === 0) {
     textEl.textContent  = '';
-    playerEl.innerHTML  = `<div class="coll-no-audio">${l === 'is' ? 'Engin hljóðupptaka til.' : 'No recording available yet.'}</div>`;
+    playerEl.innerHTML  = `<div class="coll-no-audio">${t('coll_no_audio')}</div>`;   // §10, 2026-09-24
     return;
   }
 
@@ -1131,7 +1125,7 @@ function loadCollAudio(l) {
   const pick = rows[Math.floor(Math.random() * rows.length)];
   textEl.textContent = pick.text || '';
   if (!pick.audio_url) {
-    playerEl.innerHTML = `<div class="coll-no-audio">${l === 'is' ? 'Hljóðskrá vantar.' : 'Audio file missing.'}</div>`;
+    playerEl.innerHTML = `<div class="coll-no-audio">${t('coll_audio_missing')}</div>`;   // §10, 2026-09-24
   } else {
     playerEl.innerHTML = _makeCapPlayer('coll', pick.audio_url, false);
     _capWire('coll');

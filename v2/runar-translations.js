@@ -286,6 +286,10 @@ const UI_TEXT = {
     helper_ask:         'Tap here — suggested questions open.',
     helper_ask2:        'Ask how the image touches your question.',
     // Navod pod statickou runou (Kolekce), KUKY 2026-09-23. Radky = odstavce, poradi = hierarchie z RUNAR_DESIGN.
+    // Kolekce (2026-09-24, z runar-app.js kvuli §10)
+    coll_no_audio:      'No recording available yet.',
+    coll_audio_missing: 'Audio file missing.',
+    vcn_text:           'You walk here as a <strong>Visitor</strong>. Five runes await you — draw one, and listen to the ancient stones.<br><br>Should you want all twenty-five, and a reading that speaks to you alone, become a <strong>Rune Seeker</strong>. Free to join.',
     guide_title:        'How a reading works',
     guide_lines:        ['You bring the question — where you stand, and what you are carrying.',
                          'The rune opens a way of looking at it: an angle you might not have taken on your own.',
@@ -636,6 +640,9 @@ const UI_TEXT = {
     helper_glyph:       'Snertu rúnina — hún segir nafn sitt og merkingu.',
     helper_ask:         'Smelltu hér, þá opnast tillögur að spurningum.',
     helper_ask2:        'Spurðu hvernig myndin snertir spurningu þína.',
+    coll_no_audio:      'Engin hljóðupptaka til.',
+    coll_audio_missing: 'Hljóðskrá vantar.',
+    vcn_text:           'Þú ert hér <strong>Gestur</strong>. Fimm rúnir bíða þín — dragðu eina og hlustaðu á fornu steinana.<br><br>Viljir þú allar tuttugu og fimm rúnirnar, og lestur sem á aðeins við þig, gerðu þig að <strong>Leitanda</strong>. Skráning er ókeypis.',
     guide_title:        'Hvernig lestur verður til',
     guide_lines:        ['Þú kemur með spurninguna. Hún snýst um stöðu þína og það sem þú berð með þér.',
                          'Rúnin opnar nýtt sjónarhorn á hana, leið til að horfa sem þú hefðir kannski ekki valið.',
