@@ -6697,3 +6697,15 @@ Obsah záznamu platí beze změny. — CODE-tune
      *„čím bude přibývat čtení, tím víc chyb se zachytí, až do momentu, kdy bude už jen pár chyb."*
 - **Affected doc(s):** `memory/decisions-are-directions-not-locks.md` (princip o pravidlech doplněn) ·
   `check-is.py` (5 frázových vzorů) · `RUNAR_BACKLOG.md` (smyčka + korektor + korekce do shrine).
+
+## 2026-09-23 (7) — 4 islandské korekce zapsány do produkční DB (`runar_corrections`)
+
+- **Co:** CODE-read vložil do `runar_corrections` (lang_scope `is`) 4 potvrzené chyby z testů modelů:
+  `heldur vöku yfir → vakir yfir` · `handan sjónmáls → utan sjónmáls` · `gæti verið tveir → gætu verið tveir` ·
+  `það rifnar í → rifna`, každou s islandským kontextem ověřeným korpusem po trojicích.
+- **Kdo a proč:** na výslovný pokyn ownera (*„vždyť to pošli na Supabase sám, přístup máš"*) — naplnění
+  2026-09-23 (6) bod 1 (*potvrzená chyba vždy do korekcí*). Zápis přes `supabase db query --linked`.
+- **Ověřeno (§19):** DB 18 → 22 řádků; řádky protlačeny produkčním `normalizeCorrections` → `getCorrPrompt('is')`
+  — všechny 4 v bloku promptu, bez rozbitého kódování. Duplicity předem vyloučeny.
+- **Reverzibilita:** snadná — `delete from runar_corrections where original_phrase in (…)`.
+- Affected doc(s): RUNAR_BACKLOG.md (položka „KOREKCE DO SHRINE" uzavřena — teď je vlastní DB, §20).

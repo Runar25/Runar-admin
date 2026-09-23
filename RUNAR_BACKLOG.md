@@ -73,13 +73,7 @@
 - [ ] **Tvar „VĚTA" drží „may be" hůř než dvě možnosti a otázka** — 2 ze 16 posledních vět vypadly z tvaru
   možnosti, obě u tvaru věta (`ENDING_OPEN[0]`, `ENDING_HEAVY[1]`), doklady v EVAL_LOG 2026-09-20 (11).
   Patří do tvrdých kontrol produkčního kandidáta; při větším vzorku ověřit, jestli to není náhoda.
-- [ ] ⭐ **KOREKCE DO SHRINE — přidat 4 potvrzené IS chyby** (DECISIONS 2026-09-23 (6) bod 1; kdo: owner/CODE-tune,
-  zápis do produkční DB). Po přidání odsud smazat — pak je vlastní DB (§20).
-  • `heldur vöku yfir` → `vakir yfir` · kontext: *„vaka yfir e-u“ = gæta; „halda vöku“ er notað með „fyrir“ eða „sinni“, ekki með „yfir“*
-  • `handan sjónmáls` → `utan sjónmáls` · kontext: *fast orðasamband: „utan sjónmáls“; „handan sjónmáls“ er ekki notað*
-  • `gæti verið tveir` → `gætu verið tveir` · kontext: *sögnin er í fleirtölu: „það gætu verið tveir …“*
-  • `það rifnar í` → `rifna` · kontext: *„rifna“ er ekki notað ópersónulega; segðu t.d. „blöðin rifna“*
-  (Kontexty ověřeny korpusem po trojicích 2026-09-23. `BAD_PATTERNS` v `check-is.py` už doplněno.)
+- [x] ~~KOREKCE DO SHRINE~~ — zapsáno do DB 2026-09-23 (7); seznam teď vlastní `runar_corrections` (§20).
 - [ ] ⭐ **SMYČKA ZE SKUTEČNÝCH ČTENÍ — IS chyby do korekcí** (DECISIONS 2026-09-23 (6) bod 3). Vzorek islandských
   čtení z DB → korpusová kontrola (`is-vazba`, `is-grammar-qa`) + opravný průchod → potvrzené chyby (s dokladem
   a obhajobou) do korekcí. ⚠️ **Soukromí:** CODE-read smí číst jen ownerova čtení; čtení testerů/uživatelů =
