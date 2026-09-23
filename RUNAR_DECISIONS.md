@@ -6797,3 +6797,11 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 **Nález:** účinek je **malý** — zámky nejsou hlavní příčina opakování. Ask dál dává většinou jeden výklad. Další páka = podklad z ownerových popisů run (3–4 podoby, jak se runa projevuje), jak navrženo v rozboru reportů; musí se lišit od textů do Kolekce.
 **Mez:** jen EN, n = 19. Čtvrtý zámek — „Describe the image" v pravidle proti studenému čtení (`_noColdRead`, sdílené se čtením) — **neměněn**: hlídá bezpečnost, patří mu vlastní měření.
 **Affected doc(s):** `RUNAR_BACKLOG.md` (ověřovací poznámka k Asku) — v tomtéž commitu.
+
+## 2026-09-23 (14) — Banka obrazů podle brány s popisy: −5, 2 přestěhovány, +11, chléb → lopapeysa (v4.49) · deploy claude-proxy
+**Rozhodl:** KUKY („2. ano · 3. nechat"; chléb: „hlavně jeho pěstování či setí se mi moc nelíbí… zkusme najít něco lepšího"; „supabase udělej sám") · **Provedl:** CODE-tune
+**Co:** vyřazeny obrazy, které neprošly ani jednou branou (Fehu ovce do ohrady · Uruz láva · Perth kamínek · Ansuz dech na svahu · Nauthiz kořen přes kamení). Přestěhovány borůvky Fehu → Jera a odraz v laguně Mannaz → Laguz. Přidáno 9 obrazů z auditu (vlna za kávu, mléko přetéká, býk z bažiny, cizinec a auto v závěji, kostka v kalíšku, karta lícem dolů, jalovec pod sněhem, strom mezi tmou a světlem, sedneš si k nim). Chléb u Jery nahrazen lopapeysou (svetr pletený celou zimu), k tomu sušená ryba na sušáku a uzené jehněčí z udírny. Blank vlasec a Perth laguna ZŮSTÁVAJÍ (owner: „nechat" — čtení z nich chválil).
+**Změřeno:** každý přidaný obraz brána s popisy 3/3; 6 kandidátů za chléb všech 6 × 3/3, kontroly 2/2 (`docs/archive/2026-09-23-brana-s-popisy.md`, kolo 4). IS korpus + is-grammar-qa čisté.
+**Deploy:** `claude-proxy` nasazen (owner: „udělej sám"). Před nasazením stažena běžící verze: od repa se lišila JEN stropem Askového promptu (2026-09-22 (3)); po nasazení stažena znovu → server = repo.
+**Mez / otevřené:** od 1. 10. budou mít Uruz, Berkana, Ehwaz, Ingwaz jen 2 dosažitelné obrazy (Dagaz a Blank už teď 2) → dopsat (backlog).
+**Affected doc(s):** `docs/archive/2026-09-23-brana-s-popisy.md` (kolo 4) · `RUNAR_BACKLOG.md` (tenké runy) — v tomtéž commitu.

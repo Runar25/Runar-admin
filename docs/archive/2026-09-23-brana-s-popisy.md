@@ -64,3 +64,10 @@ brána dává opakovatelný výsledek, ne náhodu.
 - **Přestěhovat (obě brány jednomyslně jinde):** Fehu borůvky → Jera · Mannaz odraz v laguně → Laguz.
 - **Ownerovo slovo:** Blank vlasec do tmavé vody (obě brány Perth; čtení owner chválil) · Perth laguna
   (obě brány Laguz; čtení owner chválil — test na celých čteních).
+
+## Kolo 4 — náhrada chleba u Jery (owner: „chleba, hlavně jeho pěstování či setí, se mi nelíbí")
+6 kandidátů bez chleba a bez setí, každý **3/3 Jera**; kontroly (Othila truhla, Uruz břemeno) 2 × 3/3:
+sušená ryba na sušáku · jeřabiny zčervenají a přiletí drozdi · svetr pletený celou zimu · uzené jehněčí
+z udírny · jehňata z května sejdou v září z hor · šícha nejsladší po prvním mrazu.
+Nasazeny tři (svetr místo chleba, ryba, jehněčí), aby Jera měla varianty v každém ročním období.
+Zbylé tři jsou prošlé zálohy, kdyby bylo potřeba.

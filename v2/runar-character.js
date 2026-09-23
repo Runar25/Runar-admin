@@ -479,8 +479,8 @@ var RUNE_IMG_SEASONS = {
 // nad cistym IS textem proti k_is (docs/eval/2026-08-22-aspekty/). Cte ji jen islandska
 // vetev single builderu; prazdny retezec = bez vetsiny hlasu, spadne na nahodne klice.
 var RUNE_IMAGES = [
-  ['Fehu','any','Féð rennur í kvíarnar undir kvöld, hægt og fyrirhafnarlaust.','The sheep drift into the fold toward evening, slow and without effort.','efnisleg velsæld','cattle','P'],
-  ['Fehu','bright','Berjalyngið þyngist af bláberjum þegar ágúst kemur.','The berry-heath grows heavy with bilberries when August comes.','efnisleg velsæld','wealth','P'],
+  // 2026-09-23: přestěhováno od Fehu — obě brány ho čtou jako Jeru 3/3 (úroda v pravý čas, ne bohatství).
+  ['Jera','bright','Berjalyngið þyngist af bláberjum þegar ágúst kemur.','The berry-heath grows heavy with bilberries when August comes.','uppskera','harvest','P'],
   // 2026-09-23 (KUKY: „chleba je spis share nez plenty"): chleba neni Fehu — soudci ho ctou jako Jera 3/3, proto presunut tam. Misto nej fe (= jmeno runy), ktere roste a hybe se. Fehu 2/3 (soused Jera).
   ['Fehu','any','Féð er komið af fjalli og hjörðin er stærri en í vor.','The sheep are down from the mountain, and the flock is bigger than it was in spring.','auður','wealth','P'],
   // 2026-09-09: nahrazeno — puvodni obraz („The scree withstands every spring storm
@@ -491,7 +491,6 @@ var RUNE_IMAGES = [
   // zemetresny kandidat na tyz klic propadl 0/3 (cetl se jako Hagalaz, ktery ma
   // `nature force` a s Uruzem sdili klic `transformation`).
   ['Uruz','any','Nautið snýr sér við í stíunni og öll girðingin hreyfist með.','The bull turns in the pen and the whole fence moves with him.','frumkraftur','primal force','P'],
-  ['Uruz','any','Hraunið man eldinn enn, þótt mosinn hafi lagst yfir.','The lava still remembers the fire, though the moss has settled over it.','frumkraftur','primal force','E'],
   ['Thurisaz','any','Sprungan í hrauninu bíður — þú kemst ekki yfir nema stökkva.','The crack in the lava waits — you cannot cross it without a jump.','þröskuldur','threshold','E'],
   ['Ansuz','bright','Andvarinn ber lóukvakið yfir móann til þín.','The breeze carries the plover\'s call across the moor to you.','skilaboð','messages','P'],
   ['Ansuz','any','Hrafninn sest á staurinn og bíður þess að þú hlustir.','The raven settles on the fencepost and waits for you to listen.','rödd','messages','P'],
@@ -509,8 +508,7 @@ var RUNE_IMAGES = [
   ['Ansuz','any','Klukknahljómur frá kirkju handan fjarðar berst yfir kyrrt loftið og þú snýrð í áttina án þess að ákveða það.','A church bell from across the fjord carries over the still air and you turn toward it without deciding to.','guðleg leiðsögn','divine guidance','E'],
   ['Ansuz','any','Einhver kallar nafn þitt yfir mannþröngina og öll önnur hljóð hverfa.','Someone calls your name across the crowd and every other sound drops away.','rödd','voice','D','the-call'],
   ['Ansuz','any','Yfir hlaðið heyrist á tóninum í kallinu hvort það eru válegar fréttir eða bara kvöldmatur.','Across the yard the pitch of the call alone tells whether it is bad news or only supper.','rödd','voice','P','the-call'],
-  ['Ansuz','cold','Hélan sest á rúðuna af andardrætti þess sem sefur og bráðnar í tæran blett við hverja útöndun.','Frost forms on the pane from the sleeper\'s breath and thaws a clear patch with each exhale.','andardráttur','breath','D','breath'],
-  ['Ansuz','any','Þú kemst upp síðasta hjallann og staldrar við, og andardrátturinn kemur til baka hægar en þú bjóst við.','You come up the last of the slope and stop, and your breath comes back slower than you expected.','andardráttur','breath','P','breath'],
+  ['Ansuz','cold','Hélan sest á rúðuna af andardrætti þess sem sefur og bráðnar í tæran blett við hverja útöndun.','Frost forms on the pane from the sleeper\'s breath and thaws a clear patch with each exhale.','andardráttur','breath','D'],
   // 2026-09-19 (handoff CODE-read #3, owner „ano"): tri necold radky Raidha nesou JADRO
   // misto celeho obrazu — misto dodava los z IMG_PLACES (registr radku). Sceny se pak lisi:
   // 6 cteni produkcnim modelem, seda 0/6 (docs/eval/2026-09-19-produkcni-model/raidho-jadra/).
@@ -542,7 +540,6 @@ var RUNE_IMAGES = [
   ['Hagalaz','cold','Élið skellur á úr heiðskíru og er farið jafn skjótt.','The squall strikes out of a clear sky and is gone just as fast.','náttúruöfl','disruption','E'],
   ['Hagalaz','cold','Haglið lemur þakið og bráðnar á augabragði.','The hail hammers the roof and melts in an instant.','umbreyting','transformation','E'],
   ['Nauthiz','cold','Vorhretið lætur lambið leita fast að ylnum.','The spring cold-snap makes the lamb press close for warmth.','vöxtur í áskorun','growth through challenge','P'],
-  ['Nauthiz','any','Rótin brýtur sér leið gegnum grjótið niður að vatninu.','The root forces its way through the stones down to the water.','vöxtur í áskorun','growth through challenge','P'],
   ['Nauthiz','any','Þú prjónar áfram þótt garnið sé við það að klárast.','You keep knitting though the yarn is almost out.','þrýstingur','growth through challenge','D'],
   // 2026-09-10 (davka 1, Cowork): Nauthiz mel dosazitelnou JEDINOU stranku sveho
   // vyznamu — nize doplnene stranky se do cteni nemohly dostat vubec. Kazdy z techto
@@ -572,10 +569,11 @@ var RUNE_IMAGES = [
   // 2026-09-23: chleba z Fehu — soudci ho ctou jako odmenu urody (Jera 3/3); KUKY „cim vic obrazu tim vic variant".
   // 2026-09-23 (KUKY „přepsat a otestovat“): chléb „dost pro všechny“ nesl hojnost = Fehu (brána 0/3 i s popisy 0/3).
   // Nový nese Jeru z popisu — zaseto na jaře, sklizeň na stole: s popisy 3/3. Korpus: sem sáð var 156, heitt úr ofninum 12.
-  ['Jera','any','Fyrsta brauðið úr bygginu sem sáð var í vor kemur heitt úr ofninum.','The first bread from the barley sown in spring comes hot from the oven.','umbun','reward','D'],
+  // 2026-09-23 (KUKY: chléb a setí se mu nelíbí): chléb pryč, odměna za dlouhou práci jako lopapeysa. Brána s popisy 3/3.
+  // Korpus: í allan vetur 5325, loksins tilbúin 160, lopapeysan sem 44; is-grammar-qa čisté.
+  ['Jera','any','Lopapeysan sem þú prjónaðir í allan vetur er loksins tilbúin.','The sweater you knitted all winter is finally finished.','umbun','reward','D'],
   ['Eihwaz','any','Reyniviðurinn við bæinn leggst flatur í hviðunni og réttir sig um leið og hana lægir.','The rowan by the farmhouse bends flat in the gust and rights itself the moment it drops.','seigla','resilience','P'],
   ['Eihwaz','any','Þegar skriðan fer af stað tekur rótin álagið og jörðin fyrir ofan hana fer hvergi.','When the scree starts to slide the root takes the strain and the ground above it goes nowhere.','seigla','resilience','P'],
-  ['Perth','any','Áin veltir steinvölunni þar til hún stöðvast — þú sérð ekki hvar.','The river rolls the pebble until it stops — you cannot see where.','örlög í mótun','fate in the making','E'],
   ['Perth','any','Andartak glittir í eitthvað á botni lónsins áður en gruggið hylur það aftur.','The lagoon water clears for a moment and something below stirs, then closes over again.','hið hulda sem kemur í ljós','the hidden coming to light','E'],
   ['Perth','any','Í lágri sól koma fótsporin í ljós yfir túnið, andartak, áður en birtan breytist og þau hverfa.','In the low sun a whole trail of footprints comes to light across the field, for a moment, before the light shifts and they are gone.','hið hulda sem kemur í ljós','the hidden coming to light','E'],
   // 2026-09-22 (KUKY „udelej", popis Perth: „ne *nic nevim*, ale *jeste nevim*… mozna ted neni
@@ -617,13 +615,29 @@ var RUNE_IMAGES = [
   ['Hagalaz','any','Í nótt reif rokið gömlu girðinguna niður og túnið liggur opið.','In the night the gale tore the old fence down, and the field lies open.','hreinsun','clearing','E'],
   ['Hagalaz','any','Rafmagnið fer af í óveðrinu og allt sem gengur sjálfkrafa stöðvast.','The power goes out in the storm, and everything that runs by itself stops.','truflun','disruption','D'],
   ['Hagalaz','any','Eftir óveðrið stendur aðeins tréð sem átti djúpar rætur.','After the storm, only the tree with deep roots is still standing.','umbreyting','transformation','E'],
+  // 2026-09-23 (KUKY „2. ano“): 9 obrazů z ownerových popisů run (audit obrazů, sekce 5) — brána S POPISY 3/3 každý;
+  // „dva nesou jedno koryto“ vyřazen (Ehwaz 3/3). + Jera: sušená ryba (jaro–září) a uzené jehněčí (zima), ať má Jera
+  // v každém ročním období dost variant po odchodu chleba. IS: kandidati prošli korpusem + is-grammar-qa (audit 2026-09-23).
+  ['Fehu','any','Ullin er lögð inn og fyrir hana kemur kaffi og sykur.','The wool is traded in, and coffee and sugar come back for it.','hreyfanleg orka','mobile energy','P'],
+  ['Fehu','any','Mjólkin flóir yfir barminn á fötunni.','The milk spills over the brim of the pail.','efnisleg velsæld','material prosperity','P'],
+  ['Uruz','bright','Nautið rífur sig upp úr mýrinni og heldur áfram.','The bull tears itself up out of the bog and keeps going.','hráur kraftur','raw power','P'],
+  ['Gebo','cold','Ókunnugur hjálpar þér að ýta bílnum úr skaflinum og veifar bara þegar hann fer.','A stranger helps push your car out of the drift and only waves as he leaves.','gjöf','gift','P'],
+  ['Perth','any','Teningurinn liggur enn í bikarnum og enginn hefur kastað.','The die still lies in the cup and no one has thrown.','tilviljun','chance','D'],
+  ['Perth','any','Spilið liggur á grúfu og enginn hefur snúið því við.','The card lies face down and no one has turned it over.','hið hulda','the unseen','D'],
+  ['Eihwaz','cold','Einirinn er grænn undir snjónum allan veturinn.','The juniper stays green under the snow all winter.','seigla','resilience','E'],
+  ['Eihwaz','any','Tréð stendur með ræturnar í myrkrinu og krónuna í birtunni.','The tree stands with its roots in the dark and its crown in the light.','heimstré','world-tree','E'],
+  ['Wunjo','any','Þú sest hjá þeim og enginn spyr hvers vegna þú komst.','You sit down with them and no one asks why you came.','tilheyra','belonging','D'],
+  ['Jera','bright','Fiskurinn hefur hangið á hjallinum síðan í vetur og er nú orðinn harður og tilbúinn.','The fish has hung on the drying rack since winter, and now it is hard and ready.','rétt tímasetning','right timing','P'],
+  ['Jera','cold','Hangikjötið sem hékk í reykkofanum í allt haust er tekið niður fyrir veisluna.','The smoked lamb that hung in the smokehouse all autumn is taken down for the feast.','umbun','reward','D'],
   ['Berkana','bright','Birkið laufgast fyrst allra, þótt jörðin sé enn köld.','The birch leafs out before all the rest, though the ground is still cold.','nýtt upphaf','new beginnings','P'],
   ['Berkana','bright','Lömbin stíga fyrstu sporin úti í maí.','The lambs take their first steps outside in May.','nýtt upphaf','new beginnings','P','lamb'],
   ['Berkana','any','Fyrsta skref barnsins yfir gólfið er óstöðugt en ákveðið.','The child\'s first step across the floor is unsteady but sure.','nýtt upphaf','new beginnings','D'],
   ['Ehwaz','any','Hesturinn finnur vaðið yfir jökulána þótt þú sjáir það ekki.','The horse finds the ford across the glacial river though you cannot see it.','traust milli tveggja','trust','P'],
   ['Ehwaz','bright','Þegar annar hesturinn þreytist í brekkunni hægir hinn á sér óbeðinn, og þeir ná brúninni saman.','When one horse tires on the climb the other slows unasked, and they reach the ridge together.','traust milli tveggja','partnership','P'],
   ['Ehwaz','any','Á einstiginu styttir sá sem gengur með þér skrefið að þínu án orða, og gangan jafnast.','On the narrow path the one who walks with you shortens their stride to yours without a word, and the going evens out.','traust milli tveggja','partnership','P'],
-  ['Mannaz','any','Spegilmyndin í lygnu lóninu bærist við minnsta blæ.','The reflection in the still lagoon trembles at the least breath of wind.','sjálfsþekking','self-awareness','P','reflection'],
+  // 2026-09-23: přestěhováno od Mannaz — obě brány Laguz 3/3 (voda, citlivost na nejmenší pohyb). Motiv „reflection“
+  // zůstal jen u Mannaz (dva sourozenci), u Laguz nemá s kým se střídat.
+  ['Laguz','any','Spegilmyndin í lygnu lóninu bærist við minnsta blæ.','The reflection in the still lagoon trembles at the least breath of wind.','innsæi','intuition','P'],
   // 2026-09-22 (audit studenych cteni): "starsi, nez si pamatujes" tvrdilo o tazatelove pameti.
   ['Mannaz','any','Andlitið í regntunnunni hreyfist ekki fyrr en þú hreyfir þig.','The face in the rain-barrel does not move until you do.','sjálfsþekking','self-awareness','P','reflection'],
   // 2026-09-10 (davka 1, Cowork): Mannaz mel dosazitelnou JEDINOU stranku sveho
