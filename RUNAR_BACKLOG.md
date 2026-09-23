@@ -84,9 +84,24 @@
   Árnastofnun schválí (použít jen, když nový tvar doložený a starý ne) → změřit na týchž 30 čteních, jestli
   zůstanou opravy a zmizí škody. Korektor musí dostat **rod oslovení** (kk/kvk/hk). Místo v produkci: text pro
   deník a hlas, ne živý stream (latence ~8 s).
-- [ ] **Blok korekcí roste do KAŽDÉHO IS promptu** (nález 2026-09-23: 27 korekcí = 2318 znaků v každém čtení).
-  Se smyčkou ze skutečných čtení poroste dál → dražší každé čtení. Časem posílat jen korekce relevantní pro
-  danou runu/obraz/tvar, nebo sledovat, kdy blok začne měnit čtení (měřit, ne hádat).
+- [ ] **Blok korekcí roste do KAŽDÉHO IS promptu** — změřeno 2026-09-23 (`count_tokens`, Opus 4.8): IS 27 řádků
+  = **1287 tokenů** (≈ $0,0064 na IS čtení), z toho **419 (33 %) jsou vysvětlení v závorkách**; EN 2 řádky = 69.
+  Blok stojí na konci user promptu, za obsahem čtení → **cache tam principiálně nejde**. Přesun do system promptu
+  by cache umožnil, ale (a) při dnešním provozu by 5min cache skoro vždy minula a zápis stojí 1,25× → dráž;
+  (b) projektový nález „system prompt model ignoruje, per-čtení injekci poslechne" → napřed změřit, jestli korekce
+  ze systému drží. **Cache má zatím smysl jen v testech.** Co udělat, od nejlevnějšího:
+  1. **Owner ve shrine smaže řádek `test → test replacement`** (`both`, od 2026-05-11): jde do KAŽDÉHO čtení
+     v obou jazycích a nic neopravuje; v repu na něm nic nezávisí (grep 2026-09-23). CODE mazat nesmí.
+  2. `fyrsta ljós vorunnar` má `lang_scope = both`, ale je islandsky → leze i do EN promptu; přepnout na `is`.
+  3. Dva jednorázové přepisy celých otázek (Fehu *„Hvað hefur þú verið að halda innan þín…"*, *„hvar hefur orkan
+     þín farið í land sem þornar?"*) opravují styl jedné vygenerované věty, která se doslova nevrátí → kandidáti
+     na smazání (owner). *„Auða rúnan… tóm blað"* nese dvě chyby v jedné větě → rozdělit na dva krátké řádky.
+     Body 1 + 3 = −186 tokenů (−14 %).
+  4. **Pravidlo pro nové řádky** (píše je CODE-read): chyba jen v jádru (1–4 slova); vysvětlení jen tehdy, když nese
+     přenosné pravidlo (rekce, kolokace). *„X er ekki til"* k řádku *„ekki X heldur Y"* nic nepřidává — tak jsou
+     napsané i moje dnešní řádky `í bótnum`, `loftins`, `flýja honum`, `eigin sönnu`.
+  5. Až smyčka poroste: řádky téže třídy sloučit do jedné věty v IS gramatickém bloku (CODE-tune); korekce vázané
+     na runu (Gebo, Fehu) posílat jen s tou runou.
 - [ ] **GLOSA V ISLANDSKÉ HLAVIČCE RUNY se propisuje do čtení** (nález CODE-read 2026-09-22, srovnání modelů).
   IS prompt má `DREGNA RÚNA: Raidho (Ferðalag) — …`, EN jen `DRAWN RUNE: Raidho — …`. Výsledek na 42 čteních:
   glosa *„Raidho (Ferðalag)"* v textu **jen v IS** — Opus 5.5 3/3, gpt-6-sol 3/3, gpt-5.6-sol 2/3; v EN ji nenapsal
@@ -101,6 +116,12 @@
   nejhorší (identita stojí na opsané nálepce, závěr s nálepkou 4/6). Čtyři slova (produkce) = nejlepší identita
   podle vztahu. Opus 5 seznamy nepotřebuje. **Nezkoušet znovu bez nového důvodu** (§26).
   Opisování do závěru u solu se 4 slovy bylo 4/10 — kdyby se řešilo, tak jinou pákou (landing), ne seznamy.
+- [ ] **KANDIDÁT: věta za obrazem v EN „look closer, at what someone there would notice first"** (CODE-read
+  2026-09-23, EVAL_LOG 2026-09-23 (6)). `_seasonalImagery` EN: `. Let it become your own seeing in the text.` →
+  `. Let it become your own seeing: look closer, at what someone there would notice first.` Na jednom promptu
+  (Algiz, 5×) sol přestal větu obrazu opakovat (úsek 4,0 → 2,2 slova, slova obrazu v 1. větě 3,2 → 1,8 z 5).
+  **Před handoffem:** várka přes všech 7 úhlů (hlavně [4] „out of sight" — 1 čtení ukázalo ozvěnu *„notice… first"*)
+  a nezrakové obrazy, sol + **Opus 4.8 (produkce)**. IS beze změny, dokud měření neukáže opis i v IS.
 - [ ] **KANDIDÁT: most IS „ástand … sagt með orðum myndarinnar"** (CODE-read 2026-09-22, NEROZHODNUTO — owner).
   Ve tvaru „dvě možnosti" přidat k *„hvort um sig ástand sem gæti átt við"* frázi *„sagt með orðum myndarinnar"*
   (tvar ověřeného Norns landingu A). gpt-6-sol: konce z pojmů (*vani / kostur*) na věcné 5/5; Opus 5: *gæti* beze

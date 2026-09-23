@@ -4974,3 +4974,49 @@ výchozí `_addressContext`) je původní správně a „oprava" je škoda.
    „prošla" už v červenci (CLAUDE.md §19).
 **Hranice:** 30 čtení, 20 změn, jeden korektor; ověřovatel = Claude s nástroji. Cena $0,13 ($0,004/čtení), ~8 s.
 Podklady → `docs/eval/2026-09-22-modely/oprava/vetsi-test-zmeny.json`.
+
+## 2026-09-23 (6) — Opisování obrazu u gpt-6-sol (EN): páka je VIDĚNÍ, ne slova
+
+**Owner:** *„zkus opravit to kopírování obrazu u solu na jednom čtení."*
+**Jak:** jeden prompt — Single Algiz EN, Family & Home, úhel „pohyb", obraz *„The sheepdog lies where it can see
+the whole flock"* — každá varianta **5× bez jiné změny** (jedno čtení by nerozlišilo páku od náhody: základ sám
+dal úsek od 2 do 7 slov). Nově i s produkčním blokem korekcí (dřívější testy ho neměly). Měří se **nejdelší
+doslovný úsek z věty obrazu** a **kolik obsahových slov obrazu stojí už v 1. větě** (`v1`). 47 čtení sol +
+2 Opus 5, **$0,12**. Změny jen v testu, produkce netknutá.
+
+| věta za obrazem (Algiz, 5×) | úsek (slov) | v1 (z 5) | „eye" |
+|---|---|---|---|
+| produkce: *Let it become your own seeing in the text.* | 5/7/2/2/4 | 3 4 4 2 3 | 1 |
+| + *told in your own words* | 4/3/7/7/4 | 3 4 4 4 2 | 0 |
+| obraz jako fragmenty, ne věta (paměť `prompt-directive-makes-model-copy`) | 2/3/7/5/5 | 1 3 5 5 5 | 0 |
+| + *look closer, at what the eye would catch there* | 2/2/3/2/2 | 1 1 2 2 2 | **4** |
+| + *look closer into it* | 3/2/4/3/3 | 3 3 2 3 4 | 0 |
+| ⭐ + *look closer, at what someone there would notice first* | **2/3/2/2/2** | **2 1 3 2 1** | 0 |
+
+**Nálezy:**
+1. ⭐ **Metrika „doslovný úsek" je u tohohle obrazu napůl slepá** (útok §27): v rameni fragmentů sol větu obrazu
+   vůbec neviděl, a 3× z 5 si ji složil znovu (*„lies down where it can see the whole flock"*) — je to prostě
+   nejprostší anglická věta té scény. Dlouhý úsek ≠ opis. Proto i `v1`.
+2. ⭐ **Skutečný rozdíl proti Opusu** (várka 2026-09-22, 5/5 EN): Opus obraz **převidí fyzickým detailem zevnitř
+   scény** (*„The dog lies at the high edge of the field, head up"*, *„A faint crease in the cloth… no wider than a
+   thumb"*); sol větu obrazu zopakuje jejími slovy a přilepí *„while…"*. Páka proto míří na vidění, ne na slova.
+3. *„In your own words"* nepomohlo (4,0 → 5,0) — sol neopisuje proto, že by nevěděl, že nemá; nemá co jiného říct.
+4. *„What the eye would catch"* zabralo nejvíc, ale se dvěma vadami: slovo prosakuje (*eyes* 4/5, u úhlu [4]
+   *„your eye catches"*) a u **zvukového** obrazu (Ansuz — výška hlasu přes dvůr) táhne k vidění → sol si vymyslel
+   branku a sloupek. Banka obrazů má i nezrakové obrazy, formulace nesmí být zraková.
+5. ⭐ *„Someone there would notice first"* = týž účinek bez oka: úsek 4,0 → 2,2, `v1` 3,2 → 1,8 z 5; první věty
+   převidí (*„The sheepdog's ears turn toward a sound beyond the flock"*, *„…shifts its gaze as one sheep drifts
+   toward the open gate"*). Ansuz 2×: `v1` 4/10 a 3/10 (produkce 8–9/10); jádro *„bad news or supper"* zůstává
+   (6–8 slov), ale ve větě o runě, kde nese podstatu — za vadu to nepovažuju.
+6. Úhel [4] (*„the part of the image that is out of sight"*) s novou větou: 1 čtení, *„You might notice its ears
+   turn first"* = ozvěna pokynu. Jediné čtení — sledovat ve várce.
+7. Opus 5 s verzí „eye" (1 čtení) nepoškozen: *„The dog lies at the high edge of the field, head up…"*.
+8. Vedlejší: na témže promptu sol mezi čteními opakuje hotové fráze (*„ears turn toward a sound beyond the flock"*
+   2× z 5, *„shifts its gaze"* 3× v základu). V provozu se prompt mění (úhel, oblast, obraz) — o pestrosti
+   v provozu to nic neříká.
+
+**Hranice:** jeden obraz × 5 čtení na variantu (+ Ansuz 2×, úhel [4] po 1, 4 další runy s verzí „eye" po 1,
+Opus 5 2×); jen EN; **produkční model (Opus 4.8) netestován**. IS se neměnilo: ve várce je opisování v IS
+u solu stejně nízké jako u Opusu (úsek 1–6 × 1–3), ale měření je v IS slepé k ohýbání.
+**Další krok** → backlog (várka přes úhly a nezrakové obrazy, sol + Opus 4.8), teprve pak handoff CODE-tune.
+Podklady → `docs/eval/2026-09-22-modely/opis/opis-vysledky.json` (všech 47 textů + měření).
