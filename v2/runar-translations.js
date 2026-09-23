@@ -285,6 +285,15 @@ const UI_TEXT = {
     helper_glyph:       'Tap the rune — it tells its name and meaning.',
     helper_ask:         'Tap here — suggested questions open.',
     helper_ask2:        'Ask how the image touches your question.',
+    // Navod pod statickou runou (Kolekce), KUKY 2026-09-23. Radky = odstavce, poradi = hierarchie z RUNAR_DESIGN.
+    guide_title:        'How a reading works',
+    guide_lines:        ['You bring the question — where you stand, and what you are carrying.',
+                         'The rune opens a way of looking at it: an angle you might not have taken on your own.',
+                         'Rúnar gives the rune a voice. It speaks through an image of a place or a moment, something happening out in nature or at a kitchen table. A rune holds more than one word can.',
+                         'The meaning is yours to find. Read the image slowly and notice what stays with you — one detail, one movement. That is where the reading touches your life.',
+                         'The last line is not advice, but a possibility or a question for you to weigh.',
+                         'Rúnar carries the light and points to where you might look. The seeing is yours.',
+                         'Here in the collection, each rune stands on its own. In a reading, it speaks to you.'],
     // ── Dynamic banner strings — used via tp(), vars: {casts}, {casts_month}, {units}, {card}, {n}, {rune}, {bal}, {UNITS}
     // Rule §10: ALL user-visible strings here. tp() in logic files. Adding a language = add block here only.
     rs_banner_counter:  '{casts} remaining',
@@ -627,6 +636,14 @@ const UI_TEXT = {
     helper_glyph:       'Snertu rúnina — hún segir nafn sitt og merkingu.',
     helper_ask:         'Smelltu hér, þá opnast tillögur að spurningum.',
     helper_ask2:        'Spurðu hvernig myndin snertir spurningu þína.',
+    guide_title:        'Hvernig lestur verður til',
+    guide_lines:        ['Þú kemur með spurninguna. Hún snýst um stöðu þína og það sem þú berð með þér.',
+                         'Rúnin opnar nýtt sjónarhorn á hana, leið til að horfa sem þú hefðir kannski ekki valið.',
+                         'Rúnar gefur rúninni rödd. Hún talar í gegnum mynd af stað eða andartaki, af einhverju sem gerist úti í náttúrunni eða við eldhúsborðið. Rún rúmar meira en eitt orð.',
+                         'Merkinguna finnur þú. Lestu myndina hægt og sjáðu hvað situr eftir í þér, eitt smáatriði eða ein hreyfing. Þar snertir lesturinn líf þitt.',
+                         'Síðasta línan er ekki ráð, heldur möguleiki eða spurning sem þú vegur og metur.',
+                         'Rúnar ber ljósið og bendir hvert þú getur horft. En það ert þú sem sérð.',
+                         'Hér í safninu stendur hver rún ein og sér. Í lestri talar hún til þín.'],
     // ── Dynamic banner strings — notaðar með tp(), breytur: {casts}, {casts_month}, {units}, {card}, {n}, {rune}, {bal}, {UNITS}
     rs_banner_counter:  '{casts} eftir',
     rs_banner_desc:     'Þú gengur sem <strong>Leitandi</strong> \u2014 {casts_month} til að byrja, allar tuttugu og fimm rúnirnar opnar, Rúnar hlustandi.<br><br>Þegar hún er gengin og steinarnir eiga enn eftir að segja, opnar {card} dyrnar. Eitt kort. Jafn margar spár og þú berð. Enginn gildistími, engin áskrift.',

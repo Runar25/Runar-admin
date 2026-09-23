@@ -6661,3 +6661,11 @@ check-is OK · smoke 44/44.
 - **Pestrost:** Ehwaz přišel ve dvou zněních a **obě platí** — *„to je i jak my nebo Rúnar musí nakonec umět mluvit: u stejné runy najít trochu jinou verzi, jak to říct."* Aby se čtení lišila i při stejných vstupech, je **menší, průběžný úkol**: *„není to tak, že musíme vyloženě hledat"*. Ladí se teď hlavně podle podnětů z testování na lidech (brzy přibudou testeři).
 - **Pojmy:** *statický popis run* = `RUNAR_POPISY_RUN.md` · *statické čtení* = krátký text s hlasem v Kolekci. Vlastník pojmů je hlavička `RUNAR_POPISY_RUN.md`.
 **Affected doc(s):** `RUNAR_POPISY_RUN.md` (pojmy + obě znění Ehwaz) — v tomtéž commitu.
+
+## 2026-09-23 (3) — Návod „jak čtení funguje" pod statickou runou
+**Rozhodl:** KUKY („ano, stejně to musím vidět, kdyžtak upravíme") · **Provedl:** CODE-tune
+**Co:** V detailu runy v Kolekci, pod Rúnarovým učením, je **sbalený** popisek *„How a reading works / Hvernig lestur verður til"*; po klepnutí se rozbalí sedm krátkých odstavců. Texty v `UI_TEXT` (`guide_title`, `guide_lines`), jen v nastaveném jazyce; maluje `_paintCollGuide()` v `runar-app.js` při rozbalení a při otevření jiné runy.
+**Proč:** reporty #5/#6 (2026-09-21) — uživatel potřebuje vědět, že čtení je obraz a význam hledá sám. Stavba = ownerova hierarchie z RUNAR_DESIGN (*otázka → runa otevře úhel → Rúnar dá runě hlas → význam najde člověk*); předposlední věta = ownerova schválená citace ze zásoby (*„Rúnar drží světlo… ale nevidí za něj"*), EN i IS psané znovu, ne doslovně.
+**Ověřeno:** IS nativně (korpus + is-grammar-qa, E001 věty přepsány) · živě v prohlížeči EN i IS: na startu sbalené, rozbalení/aria, sedm odstavců, jiná runa překreslí v aktuálním jazyce · smoke 44/44.
+**Známá mez:** přepnutí jazyka při rozbaleném návodu ho překreslí až při otevření další runy — celé chování jazyka v Kolekci řeší backlog „Statické runy jen v jednom jazyce".
+**Affected doc(s):** `RUNAR_DESIGN.md` zásoba citací — věta o světle je teď **nasazená** (v návodu); poznamenáno v tomtéž commitu.

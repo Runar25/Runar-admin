@@ -148,7 +148,7 @@ TÉŽ figuru — *popření + „ve skutečnosti dělá tohle"*. Dvě takové na
 | „The rune does not tell you what to do. It shows you what to see." | GPT 2026-09-05 | hero blok — nejblíž té produkční, proto NE na tutéž obrazovku |
 | „Rúnar does not walk the path for you. He helps you see where you stand." | GPT 2026-09-05 | stránka *o Rúnarovi* — mluví o něm, ne o runě |
 | „Guide, not oracle. Direction, not destination." | GPT 2026-09-05 | krátké motto pod jméno / do patičky |
-| „Rúnar drží světlo, ukazuje, kam se může člověk podívat, ale nevidí za něj." | **KUKY** | jediná s obrazem (světlo), ne jen tvrzení; EN chce péči, ne doslovný překlad |
+| „Rúnar drží světlo, ukazuje, kam se může člověk podívat, ale nevidí za něj." | **KUKY** | jediná s obrazem (světlo), ne jen tvrzení; EN chce péči, ne doslovný překlad · **nasazeno 2026-09-23** v návodu v Kolekci (`UI_TEXT.guide_lines`) |
 | „Runa je prostředek, který ti může pomoct najít odpověď v sobě." | **KUKY** 2026-09-05 | vysvětlující text „co je Rúnar", ne citát |
 
 ❌ **Vyřazeno:** „Mirror, not judge" — zrcadlo nic nepřidává, jen odráží, kdežto runa podle

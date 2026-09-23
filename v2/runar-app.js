@@ -878,6 +878,7 @@ function updateUIText() {
   setText('layer2-lbl', t('layer2_lbl'));
   setText('draw-another-btn', t('draw_another'));
   setText('start-over-btn', t('start_over'));
+  setText('coll-guide-lbl', t('guide_title'));   // staticky nadpis navodu v Kolekci (2026-09-23)
   setText('audio-player-lbl', t('voice_player_lbl'));
   setText('ask-lbl', t('ask_lbl'));
   var _askInp = document.getElementById('ask-input'); if (_askInp && typeof _askPlaceholder === 'function') _askInp.placeholder = _askPlaceholder();
@@ -1070,8 +1071,34 @@ function openCollDetail(r, cell, skipScroll) {
 
   // Load audio for current lang
   loadCollAudio(lang);
+  _paintCollGuide();   // navod v aktualnim jazyce, kdyz je rozbaleny (2026-09-23)
 
   if (!skipScroll) det.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// Navod pod statickou runou (KUKY 2026-09-23). Obsah se maluje z UI_TEXT pri otevreni a pri
+// otevreni detailu jine runy — ne v updateUIText (§14: stavovy obsah tam nepatri). Nadpis je
+// staticky preklad, ten nastavuje updateUIText. Sbaleny: sedm radku by pod kazdou runou zakrylo to,
+// kvuli cemu tam clovek prisel (Runarovo uceni).
+function _paintCollGuide() {
+  var lbl = document.getElementById('coll-guide-lbl'), box = document.getElementById('coll-guide');
+  if (lbl) lbl.textContent = t('guide_title');
+  if (!box || box.style.display === 'none') return;
+  box.innerHTML = '';
+  var radky = t('guide_lines');
+  (Array.isArray(radky) ? radky : []).forEach(function (r) {
+    var p = document.createElement('p');
+    p.textContent = r;
+    box.appendChild(p);
+  });
+}
+function toggleCollGuide() {
+  var lbl = document.getElementById('coll-guide-lbl'), box = document.getElementById('coll-guide');
+  if (!lbl || !box) return;
+  var otevrit = box.style.display === 'none';
+  box.style.display = otevrit ? '' : 'none';
+  lbl.setAttribute('aria-expanded', otevrit ? 'true' : 'false');
+  _paintCollGuide();
 }
 
 function closeCollDetail() {
