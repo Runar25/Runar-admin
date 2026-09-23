@@ -510,6 +510,10 @@ Co se před tebou právě rozsvítilo — a co už teď nemůžeš přehlédnout
 
 ## Tiwaz
 
+*Dvě znění téže runy — obě platí. Znění B je rozvinuté (KUKY 2026-09-23). „Rovnováha“ není nový směr runy: tak mluvil Rúnar v jedné odpovědi Asku, ne popis (KUKY 2026-09-23: „nedáváme nový směr“).*
+
+### Znění A
+
 Tiwaz je runa směru, který něco stojí.
 
 Je to šíp namířený jedním směrem. Ne proto, že by ostatní cesty neexistovaly, ale protože přišel okamžik, kdy už není možné stát všemi směry zároveň.
@@ -531,6 +535,86 @@ Ale klid člověka, který ví, proč pokračuje.
 A možná je právě tohle otázka, kterou Tiwaz přináší:
 
 Co je pro tebe natolik důležité, že kvůli tomu stojí za to nést i cenu, kterou to přinese?
+
+### Znění B — rozvinuté
+
+Tiwaz je šíp.
+
+Stojí rovně a míří jedním směrem. Ne proto, že by neexistovaly jiné cesty, ale protože nastal okamžik, kdy je potřeba **zaujmout postoj**.
+
+Šíp je zajímavý právě tím, že jeho síla nevzniká z množství směrů. Musí mít osu. Musí mít napětí. A musí být vypuštěn.
+
+Tiwaz proto není jen o rozhodnutí.
+
+Je o okamžiku, kdy člověk zjistí, že **nemůže stát zároveň na všech stranách**.
+
+Některé možnosti zůstávají otevřené. Ale jedna věc začíná mít větší váhu než ostatní.
+
+Je to runa **odhodlání, odpovědnosti, odvahy a toho, za čím člověk skutečně stojí**.
+
+Tiwaz ale není síla, která chce všechno získat.
+
+Je to síla, která dokáže něco **obětovat pro něco důležitějšího**.
+
+V tom je její zvláštní napětí.
+
+Když si vybereš jeden směr, automaticky něco jiného necháváš za sebou.
+
+A právě tady se objevuje obraz Týra.
+
+Vlk Fenrir má být spoután. Bohové vědí, že bez jeho spoutání bude nebezpečí pokračovat. Ale Fenrir nevěří jejich slibům. Chce pojistku.
+
+Týr vloží ruku do jeho tlamy.
+
+A když se ukáže, že řetěz skutečně drží, přijde o ni.
+
+Tiwaz tedy není příběh o hrdinovi, který vyhraje bez následků.
+
+Je to obraz člověka, který **ví, že některá rozhodnutí mají cenu — a přesto je udělá**.
+
+Proto Tiwaz není pohodlná runa.
+
+Ptá se, co je pro tebe natolik důležité, že kvůli tomu přijmeš i cenu, kterou to může mít.
+
+Ale je tu ještě jedna důležitá věc.
+
+Tiwaz nemusí znamenat boj.
+
+Šíp může být natažený dlouho předtím, než je vypuštěn.
+
+Někdy je největší síla právě v tom, že člověk ještě nejedná. Drží směr. Udržuje napětí. Čeká na okamžik, kdy bude jasné, kam má síla skutečně jít.
+
+A zároveň Tiwaz varuje před jiným druhem síly:
+
+**před bojem jen proto, aby člověk vyhrál.**
+
+Protože vítězství samo o sobě ještě neříká, že cesta měla smysl.
+
+Tiwaz nepotřebuje vítězství za každou cenu.
+
+Potřebuje **směr, který má smysl**.
+
+Možná tedy právě teď není nejdůležitější vědět, jak všechno dopadne.
+
+Možná stačí vědět, **za čím stojíš, i když ještě nevidíš konec cesty**.
+
+A právě tady se Tiwaz obrací od symbolu k člověku.
+
+Neptá se:
+
+*Co chceš získat?*
+
+Ptá se:
+
+**Co jsi ochoten nést?**
+
+Protože to, za čím skutečně stojíme, se často nepozná podle toho, co o tom říkáme.
+
+Pozná se ve chvíli, kdy to něco stojí.
+
+A otázka Tiwaz může být:
+
+**Co je pro tebe tak důležité, že tomu dokážeš zůstat věrný i ve chvíli, kdy tě to něco stojí?**
 
 ---
 
@@ -836,6 +920,8 @@ Co v mém životě ještě nemá jméno — a dokážu to chvíli nechat otevře
 ## Poznámky ke zdroji
 
 **Všech 25 popisů je zapsaných** (stav k 2026-09-22), v pořadí futharku podle `RUNES` v `v2/runar-runes.js`.
+
+**Tiwaz má rozvinuté Znění B** (KUKY 2026-09-23) — hlubší rozbor téže runy (šíp, osa a napětí, Týr, „Co jsi ochoten nést?“), ne jiný význam.
 
 **Ehwaz má dvě znění a obě platí** (KUKY 2026-09-23): *„to je i jak my nebo Rúnar musí nakonec umět
 mluvit — u stejné runy najít trochu jinou verzi, jak to říct."* Směr pro pestrost čtení → `RUNAR_DECISIONS.md` 2026-09-23.
