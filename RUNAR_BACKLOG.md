@@ -1865,3 +1865,15 @@ Reprodukce: `Workflow({scriptPath: '…/overeni-banky-a-zapojeni-wf_82db76b7-381
 
 ## 2026-09-22 — Statické runy (záložka Kolekce): jen jazyk, který má člověk nastavený
 ✅ **Uzavřeno** → `RUNAR_DECISIONS.md` záznam „2026-09-24 (1)" (skutečně 2026-09-23, viz oprava pod ním).
+
+## 2026-09-23 — Tři otevřené body z auditu obrazů (KUKY: „tyhle 3 body si zapamatuj")
+Podklad: `docs/archive/2026-09-23-audit-obrazu.md`. Owner je potřebuje vysvětlit bez interních štítků.
+1. **Celý návrh z auditu** — přestěhovat 6 obrazů k runě, kam je slepí soudci jednomyslně čtou
+   (hlavně voda → Laguz), vyřadit 7, které branou neprošly, přidat 10 nových ze statického popisu run.
+   Owner zatím nerozhodl (nerozuměl odkazu „sekce 6").
+2. **Chléb u Jera** — KUKY: *„klidně může zůstat, pokud Rúnar bude schopný o něm v runě mluvit lépe.
+   Zatím je to slabé!"* → chléb zůstává, ale obraz musí nést Jeru (úroda, odměna za čas), ne „dost pro
+   všechny" (to soudci čtou jako Fehu). Úkol: přepsat znění, změřit branou, ukázat čtení.
+3. **Úvodní pokyn „začni celým obrazem najednou"** (jeden ze 7 losovaných začátků čtení) — dává první
+   větu ~25 slov proti 17–21 u ostatních a vede model dokreslovat okolí, které v obrazu není.
+   Návrh: přepsat a změřit na ~12 čteních před/po. Owner zatím nerozhodl (nevěděl, o co jde).

@@ -26,3 +26,10 @@ neudělal zároveň? jaká jsou tvoje pravidla, co je v memory."* Pravidlo už e
 Výčet souborů, commit hashů a „co jsem kde změnil" je PROCES — ownerovi neříká nic. Report
 říká, co se změnilo V PRODUKTU (co uvidí, co teď funguje jinak) a co potřebuju od něj.
 Hash patří jen do handoffů pro jiné session (protokol „psáno proti commitu"), ne ownerovi.
+
+**KUKY 2026-09-23: „co je sekce 6. nechápu" · „nevím o který úhel jde".** Napsal jsem mu
+*„nasadit celý návrh z auditu (sekce 6)?"* a *„úhel [0] přepsat?"* — štítky, které zná jen dokument
+a kód. **Nikdy se ownera neptej na něco, co jmenuješ interní značkou** (číslo sekce, index úhlu,
+verze promptu, jméno funkce). Řekni jednou větou, **co to je a co se změní**: ne „úhel [0]", ale
+*„pokyn, kterým čtení někdy začíná — ‚začni celým obrazem najednou' — a první věta pak bobtná"*.
+Otázka, které nerozumí, je ztracené kolo pro nás oba.
