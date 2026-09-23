@@ -78,10 +78,15 @@
   čtení z DB → korpusová kontrola (`is-vazba`, `is-grammar-qa`) + opravný průchod → potvrzené chyby (s dokladem
   a obhajobou) do korekcí. ⚠️ **Soukromí:** CODE-read smí číst jen ownerova čtení; čtení testerů/uživatelů =
   rozhodnutí podle `RUNAR_PRIVACY.md` (zpracování pro kvalitu, anonymizace), ne mimochodem.
-- [ ] **KANDIDÁT: opravný průchod IS po vygenerování** (EVAL_LOG 2026-09-23 (4); vyžaduje úpravu §2 datovaným
-  rozhodnutím). Test: shoda 4/4 + 1 nová, kolokace 0/3, správný text 0 škod / 1 zbytečný zásah, ~$0,003, ~6 s.
-  **Další krok:** větší test škod na ~30 ownerových IS čteních z produkce (každou změnu ověřit korpusem) +
-  rozhodnout MÍSTO: živé čtení se streamuje → nejspíš opravovat pro uložení do deníku a pro hlas.
+- [ ] **KANDIDÁT: opravný průchod IS s KORPUSOVOU BRÁNOU** (EVAL_LOG 2026-09-23 (4) a (5); vyžaduje úpravu §2).
+  Holý korektor NEBEZPEČNÝ: na 30 ownerových čteních 10 oprav, ale 3 škody (1 obrací význam) + 1 nejisté.
+  Všechny škody by zastavil korpus (starý tvar doložený, nový ne). **Další test:** korektor navrhne → n-gram
+  Árnastofnun schválí (použít jen, když nový tvar doložený a starý ne) → změřit na týchž 30 čteních, jestli
+  zůstanou opravy a zmizí škody. Korektor musí dostat **rod oslovení** (kk/kvk/hk). Místo v produkci: text pro
+  deník a hlas, ne živý stream (latence ~8 s).
+- [ ] **Blok korekcí roste do KAŽDÉHO IS promptu** (nález 2026-09-23: 27 korekcí = 2318 znaků v každém čtení).
+  Se smyčkou ze skutečných čtení poroste dál → dražší každé čtení. Časem posílat jen korekce relevantní pro
+  danou runu/obraz/tvar, nebo sledovat, kdy blok začne měnit čtení (měřit, ne hádat).
 - [ ] **GLOSA V ISLANDSKÉ HLAVIČCE RUNY se propisuje do čtení** (nález CODE-read 2026-09-22, srovnání modelů).
   IS prompt má `DREGNA RÚNA: Raidho (Ferðalag) — …`, EN jen `DRAWN RUNE: Raidho — …`. Výsledek na 42 čteních:
   glosa *„Raidho (Ferðalag)"* v textu **jen v IS** — Opus 5.5 3/3, gpt-6-sol 3/3, gpt-5.6-sol 2/3; v EN ji nenapsal

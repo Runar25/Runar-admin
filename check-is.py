@@ -35,6 +35,12 @@ BAD_PATTERNS = [
     ('handan sjónmáls',  'utan sjónmáls',  'kolokace: korpus „handan sjónmáls" 0× × „utan sjónmáls" 36×'),
     ('gæti verið tveir', 'gætu verið tveir', 'shoda s mnoznym podmetem: korpus 0× × 25×'),
     ('það rifnar í',     '(check context)', '„rifna" neni neosobni („það rifnar í" 0×); osobne: „blöðin rifna"'),
+    # 2026-09-23 (vetsi test na ownerovych cteni, EVAL_LOG 2026-09-23 (5)): kazda puvodni fraze v korpusu 0×.
+    ('í bótnum',         'í botninum',      'netvar; „í botninum" 1601×'),
+    ('loftins',          'loftsins',        'netvar (chybi -s-); „loftsins" 943×'),
+    ('láta séð til',     'láta sjá',        'idiom je „láta sjá sig" (4021×); tahle chyba „prosla" uz 2026-07 (CLAUDE.md §19)'),
+    ('flýja honum',      'flýja hann',      'flýja ridi akuzativ; „flýja hann" 67× × „honum" 0×'),
+    ('eigin sönnu',      'eigin sannleika', '„sönnu" neni podstatne jmeno; „eigin sannleika" 60×'),
     # SOURCE-authorable typos/phrases = this checker's real job. Model-output errors
     # (prose the model invents) belong to is-grammar-qa + runar_corrections, NOT here;
     # the model-output entries below are kept only as living documentation for now.

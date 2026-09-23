@@ -4941,3 +4941,36 @@ gramatické chyby, styl/obraz/význam nech, když chyba není, vrať beze změny
 4. Nejvíc chyb vzniká u zdroje: za dva dny Opus 5 **5 tvrdých chyb na 10 IS textů**, gpt-6-sol **0/10**,
    produkce Opus 4.8 1/3. Volba modelu mění, kolik je co opravovat.
 **Hranice:** 7 známých chyb, 12 čistých textů, jeden korektor, jedna úroveň. Podklady → `docs/eval/2026-09-22-modely/oprava/`.
+
+## 2026-09-23 (5) — VĚTŠÍ test korektoru na 30 ownerových IS čteních: 10 oprav, ale 3 ŠKODY — sám o sobě není bezpečný
+
+**Owner:** *„pusť ten větší test na mých čteních."* Navazuje na 2026-09-23 (4) (malý test: 0 škod na 12 textech).
+**Data:** všech 30 ownerových islandských čtení z produkce (27. 5. – 9. 8. 2026, starší prompty, model nezapsán;
+od 9. 8. owner islandsky nečetl), 38–198 slov. ⚠️ Texty zůstávají JEN lokálně (repo je veřejné); v archivu jsou
+jen dvojice změn a verdikty. Korektor stejný (gpt-6-sol, reasoning low, stejné zadání). Každou změnu ověřil
+nezávislý ověřovatel ve větě, kde stojí, slovníkem a korpusem.
+
+| 20 změn v 15 z 30 textů | počet |
+|---|---|
+| **skutečná oprava** (*í bótnum→botninum*, *loftins→loftsins*, *láta séð til→láta sjá*, *flýja honum→hann*, *hélt→hélst*, *eigin sönnu→sannleika*, *lífið þitt rúnin→lífsrúnin þín*, *draga í þér→þig*, *bera saman [traust]→hvor til annars*, *styðja við?→við þig?*) | **10** |
+| zbytečný zásah (obojí správně: *leitar/leitar að*, *bindur öðrum/við aðra*, *alið/ræktað*, *heldur rótum/á rætur*, *biður að/um að*, *gefa til/gefa*) | 6 |
+| **ŠKODA** — správné změněno na chybné | **3** |
+| nejisté | 1 |
+**Škody:** *„í rakri jörðinni" → „röku"* (známá past — stavové adj. se členem silně: 3 : 0) · *„við hlið þér" →
+„við hlið þín"* (713 : 0) · *„gefa eftir þægindin" → „þægindunum"* (**obrací význam** — „vzdát se pohodlí" →
+„ustoupit pohodlí"). **Nejisté:** *„vera kyrrt" → „kyrr"* — **korektor nezná rod oslovení**; při neutrálním (hán,
+výchozí `_addressContext`) je původní správně a „oprava" je škoda.
+
+**Nálezy:**
+1. ⭐ **Korektor sám o sobě NENÍ bezpečný**: opraví hodně (10), ale ve 3 z 30 čtení (10 %) pokazí správný text,
+   jednou se změnou významu. Malý test (12 textů) to neukázal — proto byl větší potřeba. **§2 zůstává.**
+2. ⭐ **Všechny 3 škody by zastavil korpus**: starý tvar doložený, nový ne. Kandidát na další krok = korektor
+   NAVRHNE, korpus (n-gram Árnastofnun) SCHVÁLÍ — změna se použije jen, když je nový tvar doložený a starý ne.
+   Přesně to dělal ověřovatel v tomhle testu.
+3. **Korektor musí znát rod oslovení** (kk/kvk/hk), jinak „opravuje" záměrně neutrální tvary.
+4. Starší čtení mají hodně chyb (10 skutečných na 30) — dnešní produkce s novějšími prompty jich má nejspíš míň;
+   tahle data měří hlavně ŠKODY, ne dnešní chybovost.
+5. Pět potvrzených frázových chyb zapsáno do korekcí (DB + `check-is`) — `láta séð til` mezi nimi je ta, která
+   „prošla" už v červenci (CLAUDE.md §19).
+**Hranice:** 30 čtení, 20 změn, jeden korektor; ověřovatel = Claude s nástroji. Cena $0,13 ($0,004/čtení), ~8 s.
+Podklady → `docs/eval/2026-09-22-modely/oprava/vetsi-test-zmeny.json`.

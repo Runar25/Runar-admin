@@ -6719,3 +6719,16 @@ Obsah záznamu platí beze změny. — CODE-tune
 **Ověřeno:** 20 000 tahů na runu — stejný obraz po sobě **0 %** (dřív ~25 %), stejný motiv po sobě 0, četnosti rovnoměrné (Jera 1995–2008). Trvalá kontrola ve smoke ㉟ (každá runa s ≥ 2 kandidáty); sabotáž (vypnuté vyřazení posledního obrazu) ji shodí (23 problémů). Golden = jen posun losu. Smoke 44/44.
 **Mez:** sáček žije v prohlížeči — telefon a počítač mají každý svůj. U run se dvěma obrazy teď platí přesné střídání A-B-A-B; pestrost přinesou až nové obrazy.
 **Affected doc(s):** žádné.
+
+## 2026-09-23 (8) — Dalších 5 islandských korekcí do produkční DB · opravný průchod ZATÍM NE
+
+- **Co:** CODE-read vložil do `runar_corrections` (is) 5 chyb potvrzených ověřovatelem ve větším testu
+  (EVAL_LOG 2026-09-23 (5)): `í bótnum → í botninum` · `loftins → loftsins` · `láta séð til → láta sjá` ·
+  `flýja honum → flýja hann` · `eigin sönnu → eigin sannleika`. Každá původní fráze v korpusu 0×, náhrada doložená,
+  islandský kontext jen z doložených obratů. Totéž do `BAD_PATTERNS`. DB 22 → 27; protlačeno produkčním
+  `getCorrPrompt('is')` — všech 5 v promptu, kódování čisté.
+- **Na základě:** 2026-09-23 (6) bod 1 (*vždy do korekcí*) + ownerův pokyn zapisovat do Supabase sám.
+- **Opravný průchod:** větší test ukázal 3 škody na 30 čtení (jedna obrací význam) → **§2 se NEMĚNÍ.** Další
+  krok = korektor + korpusová brána (viz backlog), ne holý korektor.
+- **Reverzibilita:** snadná (`delete … where original_phrase in (…)`).
+- Affected doc(s): `check-is.py` (5 vzorů) · RUNAR_BACKLOG.md (kandidát korektoru přepsán, růst bloku korekcí).

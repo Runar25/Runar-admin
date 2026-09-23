@@ -1,0 +1,127 @@
+{
+ "poznamka": "Texty ownerovych cteni NEJSOU v repu (verejne) — jen zmeny korektoru a verdikty overeni.",
+ "cteni": 30,
+ "zmeneno_textu": 15,
+ "zmeny": [
+  {
+   "id": "Z1",
+   "z": "draga í þér",
+   "na": "draga í þig",
+   "verdikt": "oprava"
+  },
+  {
+   "id": "Z2",
+   "z": "í bótnum",
+   "na": "í botninum",
+   "verdikt": "oprava"
+  },
+  {
+   "id": "Z3",
+   "z": "styðja við?",
+   "na": "styðja við þig?",
+   "verdikt": "oprava"
+  },
+  {
+   "id": "Z4",
+   "z": "vera kyrrt",
+   "na": "vera kyrr",
+   "verdikt": "nejiste"
+  },
+  {
+   "id": "Z5",
+   "z": "Skýrleikinn sem þú leitar er",
+   "na": "Skýrleikinn sem þú leitar að er",
+   "verdikt": "zbytecne"
+  },
+  {
+   "id": "Z6",
+   "z": "bindur þig raunverulega öðrum",
+   "na": "bindur þig raunverulega við aðra",
+   "verdikt": "zbytecne"
+  },
+  {
+   "id": "Z7",
+   "z": "hélt",
+   "na": "hélst",
+   "verdikt": "oprava"
+  },
+  {
+   "id": "Z8",
+   "z": "alið af umhyggju",
+   "na": "ræktað af umhyggju",
+   "verdikt": "zbytecne"
+  },
+  {
+   "id": "Z9",
+   "z": "heldur enn rótum",
+   "na": "á enn rætur",
+   "verdikt": "zbytecne"
+  },
+  {
+   "id": "Z10",
+   "z": "rakri jörðinni",
+   "na": "röku jörðinni",
+   "verdikt": "skoda"
+  },
+  {
+   "id": "Z11",
+   "z": "við hlið þér",
+   "na": "við hlið þín",
+   "verdikt": "skoda"
+  },
+  {
+   "id": "Z12",
+   "z": "láta séð til þín",
+   "na": "láta sjá þig",
+   "verdikt": "oprava"
+  },
+  {
+   "id": "Z13",
+   "z": "bera saman",
+   "na": "bera hvor til annars",
+   "verdikt": "oprava"
+  },
+  {
+   "id": "Z14",
+   "z": "loftins",
+   "na": "loftsins",
+   "verdikt": "oprava"
+  },
+  {
+   "id": "Z15",
+   "z": "gefa eftir þægindin",
+   "na": "gefa eftir þægindunum",
+   "verdikt": "skoda"
+  },
+  {
+   "id": "Z16",
+   "z": "flýja honum",
+   "na": "flýja hann",
+   "verdikt": "oprava"
+  },
+  {
+   "id": "Z17",
+   "z": "í þinni eigin sönnu",
+   "na": "í þínum eigin sannleika",
+   "verdikt": "oprava"
+  },
+  {
+   "id": "Z18",
+   "z": "lífið þitt rúnin",
+   "na": "lífsrúnin þín",
+   "verdikt": "oprava"
+  },
+  {
+   "id": "Z19",
+   "z": "biður þig að",
+   "na": "biður þig um að",
+   "verdikt": "zbytecne"
+  },
+  {
+   "id": "Z20",
+   "z": "gefa til hins rétta",
+   "na": "gefa hinum rétta",
+   "verdikt": "zbytecne"
+  }
+ ]
+}
