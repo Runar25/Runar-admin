@@ -633,7 +633,8 @@ const UI_TEXT = {
     reading_error:      'Villa vi\u00f0 sp\u00e1.',
     // Hesla zrcadla + helper — viz en blok (IS psano nativne, korpus + is-grammar-qa 2026-09-22).
     motto_image:        'Rúnar talar í myndum — rúnin býr í myndinni.',
-    motto_mirror:       'Myndin er spegill. Það sem þú leitar að, finnur þú í honum sjálfur.',
+    // 2026-09-23: pryc „sjálfur" (muzsky tvar — u zen nesedel; nasel rozbor reportu). Beze slova, ktere nese rod.
+    motto_mirror:       'Myndin er spegill. Það sem þú leitar að, finnur þú í honum.',
     motto_paths:        'Rúnar segir þér ekki hvað þú átt að gera. Hann bendir á möguleika.',
     helper_btn:         'Hjálp við lesturinn',
     helper_title:       'GOTT AÐ VITA',
