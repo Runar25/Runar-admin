@@ -33,7 +33,7 @@ for (const u of UPR.split(',').filter(Boolean)) {
 }
 // klicova slova z radku run (Norns: „<Runa> — a, b, c")
 const kw = [...new Set(P.user.split('\n').map(l => l.match(/^[A-Z][a-z]+ — (.+)$/)).filter(Boolean)
-  .flatMap(m => m[1].toLowerCase().split(/[^a-záðéíóúýþæö]+/)).filter(w => w.length > 4))];
+  .flatMap(m => m[1].toLowerCase().split(/[^a-záðéíóúýþæö]+/)).filter(w => w.length > 3))];   // 2026-09-23: bylo > 4 → detektor nevidel „gift" ani „gjöf" (§27)
 
 (async () => {
   const t0 = Date.now(); let raw, usd;

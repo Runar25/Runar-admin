@@ -85,7 +85,8 @@
   Norns dává ke každé runě řádek se čtyřmi klíčovými slovy; gpt-6-sol je opisuje do závěru Skuld (1/2 v produkci).
   Bez seznamů 0/2 a runy vstupují vztahem; Opus 5 runy drží z vlastní znalosti. **Blokuje: slepý identitní test**
   (poznat runy z textu s a bez seznamu, oba modely) — riziko, že u solu identita runy zeslábne (Othila slabší).
-  Přesun „sagt með orðum myndarinnar" k „ástand" sám nic neprokázal (1/2 před i po). EN neladěno.
+  Přesun „sagt með orðum myndarinnar" k „ástand" sám nic neprokázal (1/2 před i po). **EN doměřeno 2026-09-23:**
+  závěry solu s klíčovým slovem v obou jazycích **3/4 → 0/4**, Opus 1/4 → 0/2 (`RUNAR_EVAL_LOG.md` 2026-09-23 (1)).
 - [ ] **KANDIDÁT: most IS „ástand … sagt með orðum myndarinnar"** (CODE-read 2026-09-22, NEROZHODNUTO — owner).
   Ve tvaru „dvě možnosti" přidat k *„hvort um sig ástand sem gæti átt við"* frázi *„sagt með orðum myndarinnar"*
   (tvar ověřeného Norns landingu A). gpt-6-sol: konce z pojmů (*vani / kostur*) na věcné 5/5; Opus 5: *gæti* beze

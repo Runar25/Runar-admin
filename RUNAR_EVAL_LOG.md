@@ -4807,3 +4807,30 @@ přesně ownerův kánon „runa vztahem, ne rekvizitou" (RUNAR_DESIGN „Stavba
 (1. p.) ano. Solův výsledek to nemění (jeho výskyt byl v 1. pádě), ale čísla „0 klíčových slov" jsou dolní mez.
 **Hranice:** n = 2 (sol), 1 (Opus), jeden Norns, IS. EN Norns závěry solu jsou taky pojmové (*„an old bond still has
 a place, or that its gift remains"*) — neladěno. Podklady → `docs/eval/2026-09-22-modely/varka/norns-iterace.jsonl`.
+
+## 2026-09-23 (1) — Norns závěr u gpt-6-sol v EN: bez seznamů klíčových slov taky čistý · opravený detektor
+
+**Owner:** *„udělej napřed test na EN Norns."* Navazuje na 2026-09-22 (3) (IS). Tatáž páka, tentokrát SAMA
+(přesun „drawn from the image" v IS nic neprokázal, proto vynechán): seznamy klíčových slov u run pryč
+(`Othila — inheritance, letting go, heritage, home` → `Othila`). `norns1-en`, po jednom čtení, 3 volání, ~$0,02.
+
+- **sol 1:** *„The mark may be a place you can call your own, or a boundary you are still coming to know."*
+- **sol 2:** *„You may find a place that has held its shape, or a boundary the sea has changed."*
+- **Opus 5:** *„…what is buried there may be something that was handed to you long before you could hold it, or it may
+  be ground you have been standing on all along without looking down."* — Othila vztahem, bez nálepky; formule (stopa).
+  (Produkční varka: *„an old bond still has a place, or that its **gift** remains after its hold has gone"*.)
+
+**Souhrn obou jazyků** (přepočteno opraveným detektorem, viz níž) — závěr Skuld obsahuje klíčové slovo ze seznamu:
+| | produkce (várka) | bez seznamů |
+|---|---|---|
+| gpt-6-sol | **3/4** (*jafnvægi+heimili*, *gift*, *growth*) | **0/4** (IS 2, EN 2) |
+| Opus 5 | 1/4 (*growth*) | 0/2 |
+V těle zůstávají *gjöf / giving / hagl* — přicházejí z OBRAZU („moře dává a bere", krupobití u Hagalaz), ne jako nálepka.
+
+⚠️ **Oprava vlastního nástroje (§27):** detektor bral jen slova delší než 4 znaky → **neviděl *gift* ani *gjöf***.
+Opraveno na > 3 a všechna Norns čtení přepočtena; závěr z 2026-09-22 (3) platí, čísla jsou teď úplná pro tvary
+ze seznamu. Pořád NEvidí skloňované tvary (*arfi* × *arfur*) — dolní mez.
+⚠️ **Otevřené riziko beze změny:** identita runy bez seznamů. Opus ji drží z vlastní znalosti (IS *arfi*, EN
+*„handed to you long before you could hold it"*); u solu to z textů působí přijatelně, ale **změřené to není**.
+Další krok podle ownera: slepý identitní test (soudce z textu hádá tažené runy, s × bez seznamů).
+**Hranice:** jeden Norns (Gebo · Ingwaz · Othila), n = 2 sol + 1 Opus na jazyk.
