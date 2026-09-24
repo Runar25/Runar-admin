@@ -31,6 +31,7 @@
   function captureContext() {
     var sel = window.getSelection ? window.getSelection() : null;
     var txt = sel ? String(sel).trim() : '';
+    cap.ask = null;
     var tab = activeTab();
     if (txt) {
       cap.text = txt.slice(0, 5000); cap.source = 'selection';
@@ -41,8 +42,19 @@
       cap.ctx = tab + (idEl ? ' · #' + idEl.id : '');
     } else {
       var pane = document.getElementById('apane-' + tab);
-      cap.text = (pane ? (pane.innerText || '') : '').trim().slice(0, 5000);
+      cap.text = (pane ? (pane.innerText || '') : '').trim();
       cap.source = 'screen'; cap.key = ''; cap.ctx = tab + ' · #apane-' + tab;
+      // Odpověď Asku stojí na konci obrazovky → strop 5000 by ji uřízl jako první. Proto se vezme zvlášť
+      // a připojí se na konec, i když se zbytek obrazovky musí zkrátit (2026-09-23, report „chybí mi Ask“).
+      var aq = document.getElementById('ask-question'), aa = document.getElementById('ask-answer');
+      var askA = aa ? (aa.innerText || '').trim() : '';
+      cap.ask = (tab === 'reading' && askA) ? { q: aq ? (aq.innerText || '').trim() : '', a: askA } : null;
+      if (cap.ask) {
+        var askBlok = '\n\n[ASK] ' + cap.ask.q + '\n' + cap.ask.a;
+        var zbytek = Math.max(0, 5000 - askBlok.length);
+        if (cap.text.indexOf(askA) === -1 || cap.text.length > 5000) cap.text = cap.text.replace(askA, '').slice(0, zbytek).trim() + askBlok;
+      }
+      cap.text = cap.text.slice(0, 5000);
     }
   }
 
@@ -168,6 +180,8 @@
     document.getElementById('br-form').classList.toggle('br-hide', !hasName);
     var flag = document.getElementById('br-flag');
     flag.textContent = cap.text ? (L('report_flagging') + ' “' + cap.text.slice(0, 280) + (cap.text.length > 280 ? '…' : '') + '”') : '';
+    // Ask je v náhledu vidět zvlášť — dřív byl až za 280 znaky, takže to vypadalo, že v reportu chybí.
+    if (cap.ask) flag.textContent += '\n\n' + L('report_ask_attached') + ' “' + cap.ask.a.slice(0, 200) + (cap.ask.a.length > 200 ? '…' : '') + '”';
     flag.style.display = cap.text ? 'block' : 'none';
     curType = ''; setStatus('');
     document.getElementById('br-msg').value = '';

@@ -65,6 +65,8 @@ const UI_TEXT = {
     report_who_ph:    'Name or initials',
     report_who_save:  'Save',
     report_flagging:  'Reporting:',
+    // 2026-09-23 (KUKY report: „chybí mi Ask odpověď v reportu") — náhled ukazoval jen 280 znaků, Ask byl až za nimi.
+    report_ask_attached: 'Rúnar\'s answer to your question is attached:',
     report_type:      'Type',
     report_t_replace: 'Replace text',
     report_t_rephrase:'Reword',
@@ -424,6 +426,7 @@ const UI_TEXT = {
     report_who_ph:    'Nafn eða upphafsstafir',
     report_who_save:  'Vista',
     report_flagging:  'Tilkynni:',
+    report_ask_attached: 'Svar Rúnars við spurningunni fylgir með:',
     report_type:      'Tegund',
     report_t_replace: 'Skipta út texta',
     report_t_rephrase:'Umorða',
