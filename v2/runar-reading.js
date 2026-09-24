@@ -41,9 +41,9 @@ var _askLog = [];      // [{ q, a }] výměny v Asku k tomuto čtení (dnes nejv
 // vyrůstají z daného obrazu, NEJSOU chyba (první verze za chybu označila „the bowl still looks untouched“ u obrazu skyru
 // přikrytého přes noc). Délku počítá appka sama (_gptReviewDelka). Jeden text rubriky, jazyk odpovědi se dosazuje.
 var GPT_REVIEW_RULES =
-  'You review one reading from the Rúnar app. Rúnar is a rune guide — a mirror, not an oracle. You get (1) the system prompt ' +
-  'Rúnar writes under, (2) the exact prompt for this reading: the drawn rune with its keywords, the area of life, the IMAGE he ' +
-  'was given and his instructions, (3) the finished reading, (4) any follow-up questions (Ask) with his answers.\n' +
+  'You review one reading from the Rúnar app. Rúnar is a rune guide — a mirror, not an oracle. You get (1) the exact prompt ' +
+  'for this reading: the drawn rune with its keywords, the area of life, the IMAGE he was given and his instructions, ' +
+  '(2) the finished reading, (3) any follow-up questions (Ask) with his answers.\n' +
   'Report ONLY real faults. For each fault quote the exact words and say in one sentence why it is a fault. If a category ' +
   'has no fault, write one short line saying so. Look for exactly these:\n' +
   'A. Claims about the person stated as fact — their feelings, relationships, past, what they know or did, what will happen. ' +
@@ -77,12 +77,12 @@ function _gptReviewPayload() {
   if (!_lastGen) return null;
   var txt = (readerTexts[_lastGen.lang] && readerTexts[_lastGen.lang].short) || '';
   if (!txt) return null;
-  var u = '=== 1. SYSTÉMOVÝ PROMPT, PODLE KTERÉHO RÚNAR PÍŠE ===\n' + _lastGen.sys +
-          '\n\n=== 2. ZADÁNÍ TOHOTO ČTENÍ (' + _lastGen.kind + ', jazyk ' + _lastGen.lang + ') ===\n' + _lastGen.prompt +
-          '\n\n=== 3. HOTOVÉ ČTENÍ ===\n' + txt;
-  if (_askLog.length) u += '\n\n=== 4. ASK ===\n' + _askLog.map(function (x, i) {
+  // Rúnarův systémový prompt se NEPOSÍLÁ (2026-09-24, cena: −31 % vstupu, nálezy stejné) — rubrika stačí.
+  var u = '=== 1. ZADÁNÍ TOHOTO ČTENÍ (' + _lastGen.kind + ', jazyk ' + _lastGen.lang + ') ===\n' + _lastGen.prompt +
+          '\n\n=== 2. HOTOVÉ ČTENÍ ===\n' + txt;
+  if (_askLog.length) u += '\n\n=== 3. ASK ===\n' + _askLog.map(function (x, i) {
     return 'Otázka ' + (i + 1) + ': ' + x.q + '\nOdpověď ' + (i + 1) + ': ' + x.a; }).join('\n\n');
-  else u += '\n\n=== 4. ASK ===\n(bez otázky)';
+  else u += '\n\n=== 3. ASK ===\n(bez otázky)';
   var jaz = _gptReviewJazyk();
   return { system: GPT_REVIEW_RULES.replace('{JAZYK}', _GPT_JAZYK_JMENO[jaz] || 'Czech'), user: u, delka: _gptReviewDelka(jaz) };
 }
