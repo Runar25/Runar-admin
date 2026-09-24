@@ -126,6 +126,11 @@
 - [ ] **Model opakuje slova zadání „friction"** — *„Name the friction honestly"* → *„The friction is plain"* (Opus 5 EN 2×),
   *„Núningurinn er…"* (Opus 4.8 IS). Týž vzor jako „look closer" (EVAL_LOG 2026-09-23 (7)): pokyn nese slovo, které se dá
   zopakovat. Změřit četnost v produkci, pak přeformulovat bez pojmenování (paměť `prompt-nepojmenuj-co-hned-zakazes`).
+- [ ] **Ceník počítá anglický hlas jako Flash, kód používá `eleven_multilingual_v2`** (nález CODE-read 2026-09-24) —
+  `RUNAR_PRICING.md` („Flash (EN) $0.05/1k chars", sloupec EL EN) × kód: `EL_MODEL_EN = 'eleven_multilingual_v2'`
+  v `v2/runar-config.js`, `elevenlabs-proxy` i `elevenlabs-static`. Flash stojí polovinu → **EN hlas je v ceníku
+  podhodnocený 2×**. Rozhodnout: přejít na Flash (levnější, jiný zvuk — owner poslechne), nebo opravit ceník. Vedle toho
+  je model zapsaný na 3 místech (edge funkce config neimportují) — při změně sáhnout na všechna.
 - [ ] **Shrine: korekce nejdou smazat** (nález 2026-09-23) — záložka WORD CORRECTIONS umí jen přidat a vypsat
   (`runar-shrine.html` `saveCorrection`/`loadCorrections`), mazání nemá. Owner tak smaže řádek jen přes Supabase. Doplnit
   mazání (jen admin, s potvrzením) — CODE-tune.
