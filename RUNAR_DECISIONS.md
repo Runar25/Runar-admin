@@ -6865,3 +6865,11 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 **Jak vzniklo:** 3 ukázky schválil owner; 22 run psáno z ownerových popisů, IS nativně, ověřeno is-grammar-qa + korpusem, adversariální kritik + oprava; u Dagaz, Laguz a Sowilo opravy podle kritika dodělal CODE-tune ručně (tamější běh spadl na limitu). check-is chytil „velkomin" u Kenaz (patřilo ke světlu, ne k člověku) — přeformulováno, ne obejito.
 **Mez:** texty viděl owner jen ve 3 ukázkách; zbytek uvidí v appce.
 **Affected doc(s):** `RUNAR_BACKLOG.md` (statické čtení Dagaz odporuje popisu) — v tomtéž commitu.
+
+## 2026-09-24 (6) — Druhý Ask, krok 1: dva Asky ke čtení (premium 2, standard 1, zdarma) — zatím jen admin
+**Rozhodl:** KUKY 2026-09-24 („dvě otázky premium, standard jeden ASK… jako první zkusíme dva ASK jen na čtení runy, kdy Rúnar nebude vědět o předchozí otázce… pak to projedu živým testováním, pak až se to bude nasazovat… všechny otázky ASK jsou zdarma") · **Provedl:** CODE-tune
+**Co:** `TIERS.*.asks_per_reading` (standard 1, premium 2, ostatní 0) + přepínač `ASK_MULTI_LIVE = false`: nové počty má zatím jen admin. Po odpovědi zůstane pole otevřené, dokud je limit; další výměna se přidá pod předchozí odpověď. Každý Ask je jen ke čtení — Rúnar předchozí výměnu nedostává (krok 1). Report přiloží všechny výměny. Opraveno dvojí odeslání Enterem (pole je během dotazu zakázané).
+**Proč jen admin:** server dnes pustí zdarma jen PRVNÍ Ask; druhý by prémiovému uživateli strhl měsíční čtení a standard Ask nesmí vůbec. Admin se neměří, takže owner může živě testovat bez rizika. Serverová část + `ASK_MULTI_LIVE = true` až po ownerově živém testu (plán v `RUNAR_BACKLOG.md`).
+**Ověřeno** (lokální náhled, odpověď modelu simulovaná): admin 2 Asky, pole po 1. zůstane a vyprázdní se, po 2. zmizí, 3. se neodešle; pořadí výměn správné; ne-admin premium 1 / standard 0 beze změny; nové čtení vše vynuluje. Smoke 46/46.
+**Kritický pohled (§21):** v kroku 1 Rúnar neví, na co odpověděl — doptání typu „co jsi tím myslel?" skončí mimo. To řeší až krok 2 (chatování).
+**Affected doc(s):** `RUNAR_BACKLOG.md` (plán kroků, nález 1 opraven) — v tomtéž commitu.

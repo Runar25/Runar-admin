@@ -620,7 +620,24 @@ async function readRune() {
 }
 
 // ─── Ask Rúnar — follow-up Q&A (Premium, one question per reading) ───────────
-var _askUsed = false;
+var _askCount = 0;   // kolik Asků už k tomuto čtení padlo (dřív boolean _askUsed = jen jeden)
+// Kolik Asků smí tenhle člověk k jednomu čtení (2026-09-24, KUKY: premium 2, standard 1, vše zdarma).
+// Dokud ASK_MULTI_LIVE = false, nové počty má jen admin (živý test); ostatní drží dnešní stav (premium 1).
+function _askLimit() {
+  if (!currentUser) return 0;
+  var admin = isAdmin(currentUser.email);
+  if (typeof ASK_MULTI_LIVE !== 'undefined' && (ASK_MULTI_LIVE || admin)) {
+    return (TIERS[admin ? 'premium' : userTier] || {}).asks_per_reading || 0;
+  }
+  return (((TIERS[userTier] || {}).ask === true) || admin) ? 1 : 0;
+}
+// Další výměny (2., 3.…) se přidávají POD předchozí odpověď a pole se posune pod ně, ať to čte jako
+// rozhovor. První výměna zůstává v původních #ask-question/#ask-answer (reporter, styly).
+function _askResetThread() {
+  document.querySelectorAll('#ask-runar .ask-extra').forEach(function (e) { e.remove(); });
+  var wrap = document.getElementById('ask-input-wrap'), teaser = document.getElementById('ask-teaser');
+  if (wrap && teaser && teaser.parentNode) teaser.parentNode.insertBefore(wrap, teaser);
+}
 var _lastReadingId = null;   // id of the last saved reading — links an Ask Runar follow-up to it
 var _askPhIdx = -1;
 // ── ROTACE UKAZEK FORMULACE (KUKY 8.9.) ───────────────────────────────────────
@@ -818,13 +835,14 @@ function _showAsk() {
   var el = document.getElementById('ask-runar');
   if (!el) return;
   // Who gets the follow-up = TIERS.<tier>.ask (§8), not a tier name spelled out here.
-  var canAsk = currentUser && (((TIERS[userTier] || {}).ask === true) || isAdmin(currentUser.email));
+  var canAsk = _askLimit() > 0;
+  _askResetThread();
   // Kdo NEMA opravneni, ale JE prihlaseny, dostane teaser: featura je videt cela,
   // jen se s ni neda hnout (KUKY 2026-08-09). Neprihlaseny nevidi nic — jeho dalsi
   // krok je registrace, ne Premium.
   var teaser = !canAsk && !!currentUser;
   if (!canAsk && !teaser) { el.style.display = 'none'; return; }
-  _askUsed = teaser;   // teaser nesmi projit pres askRunar() ani pri zavolani z konzole
+  _askCount = 0;   // teaser neprojde: _askLimit() je u nej 0
   var tEl = document.getElementById('ask-teaser');
   if (tEl) { tEl.style.display = teaser ? '' : 'none'; if (!teaser) tEl.textContent = ''; }
   _refreshAskTeaser();
@@ -853,10 +871,8 @@ function _trimToSentence(t) {
 }
 
 async function askRunar() {
-  if (_askUsed) return;
-  // Druha pojistka: disabled input je vzhled, ne brana. Skutecnou branu ma proxy
-  // (mode:'ask' + tier != premium -> 403); tohle jen setri zbytecny roundtrip.
-  if (!(currentUser && (((TIERS[userTier] || {}).ask === true) || isAdmin(currentUser.email)))) return;
+  if (_askCount >= _askLimit()) return;
+  // Skutecnou branu ma proxy (mode:'ask' + tier != premium -> 403); tohle jen setri roundtrip.
   var inp = document.getElementById('ask-input');
   var q = inp ? inp.value.trim() : '';
   if (!q) return;
@@ -867,6 +883,7 @@ async function askRunar() {
     : (readerRune ? rn(readerRune) : '');
   var btn = document.getElementById('ask-btn');
   if (btn) { btn.disabled = true; btn.textContent = t('ask_thinking'); }
+  if (inp) inp.disabled = true;   // 2026-09-24: Enter v poli posílal během dotazu druhý Ask (průzkum 2026-09-23)
   setSt('ask-status', '');
   var sys = buildSysPrompt(activeChar, lang);
   var prompt = _askBuild(reading, q, runes);
@@ -889,19 +906,39 @@ async function askRunar() {
   var res = await callProxy(sys, prompt, askCap, shouldUseCredit(), SPREAD_COSTS.single.credits, _askJournal, 'ask'); // FU: lang-aware cap
   if (res.error) {
     if (btn) { btn.disabled = false; btn.textContent = t('ask_btn'); }
+    if (inp) inp.disabled = false;
     setSt('ask-status', _readingErrMsg(res.error), 'err');
     return;
   }
   var answer = _parseSegments(res.text || '').reading || (res.text || '').trim(); // defensive: unwrap if model returns JSON
   answer = _trimToSentence(answer);  // FU pojistka: nikdy useknuty fragment
   if (_askJournal && res && !res.error && !res.ask_saved) { _pendAdd('pendingAsks', { id: _askEntryId, reading_id: _lastReadingId, question: q, answer: answer }); _flushPending(); }
-  _askUsed = true;
+  _askCount++;
   _askLog.push({ q: q, a: answer });   // pro rozbor GPT-6 sol
-  _askPhStop();   // otazka polozena -> pole mizi, timer nema co delat
-  var wrap = document.getElementById('ask-input-wrap'); if (wrap) wrap.style.display = 'none'; // one question -> close
-  var qEl = document.getElementById('ask-question'); if (qEl) { qEl.textContent = q; qEl.style.display = 'block'; } // keep the question visible
-  var ans = document.getElementById('ask-answer'); if (ans) { ans.textContent = ''; ans.style.display = 'block'; }
-  await stream('ask-answer', answer);
+  var dalsi = _askCount < _askLimit();
+  if (!dalsi) _askPhStop();   // limit vyčerpán -> pole mizí, timer nemá co dělat
+  var wrap = document.getElementById('ask-input-wrap');
+  var qEl, ans, ansId;
+  if (_askCount === 1) {
+    qEl = document.getElementById('ask-question'); ans = document.getElementById('ask-answer'); ansId = 'ask-answer';
+  } else {
+    // další výměna pod poslední odpověď (krok 1: Rúnar o předchozí výměně neví — každý Ask jen ke čtení)
+    var posledni = document.querySelectorAll('#ask-runar .ask-answer');
+    posledni = posledni[posledni.length - 1];
+    qEl = document.createElement('div'); qEl.className = 'ask-question ask-extra';
+    ans = document.createElement('div'); ans.className = 'out-txt ask-answer ask-extra'; ansId = 'ask-answer-' + _askCount; ans.id = ansId;
+    posledni.after(qEl); qEl.after(ans);
+  }
+  if (qEl) { qEl.textContent = q; qEl.style.display = 'block'; }
+  if (ans) { ans.textContent = ''; ans.style.display = 'block'; }
+  if (wrap) {
+    if (dalsi && ans) { ans.after(wrap); wrap.style.display = ''; } else wrap.style.display = 'none';
+  }
+  await stream(ansId, answer);
+  if (dalsi) {
+    if (inp) { inp.value = ''; inp.disabled = false; }
+    if (btn) { btn.disabled = false; btn.textContent = t('ask_btn'); }
+  }
 }
 
 function drawAnother() {

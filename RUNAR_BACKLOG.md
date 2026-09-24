@@ -579,8 +579,12 @@
 - [ ] **`data-i18n` refactor** — nejrobustnější prevence zaseklé angličtiny (dnes ruční wiring v updateUIText).
 - [ ] Ask Rúnar v2 — journal 7denní okno + asked-flag (persistence HOTOVÁ).
 - [ ] **GPT-6 sol jako model Rúnarova čtení** (KUKY 2026-09-23: „další krok bude nechat udělat GPT čtení Rúnara, ale ještě na tom pracujeme — dát to do backlogu“). Předstupeň hotový: admin tlačítko „GPT-6 sol“ = rozbor čtení (edge fn `gpt-review`). Evaly modelu vede CODE-read (`RUNAR_EVAL_LOG.md` 2026-09-22+). Pozor: islandská gramatika u solu je slabší (korektor: 3 škody na 30 čtení).
+- [ ] **Druhý Ask — plán po krocích (KUKY 2026-09-24: „vždy postupně od jednoduššího ke komplexnějšímu“; premium 2, standard 1, vše zdarma)**
+  - **Krok 1 HOTOVÝ v klientu, zapnutý JEN pro admina** (`ASK_MULTI_LIVE = false`, `TIERS.*.asks_per_reading`): dva Asky ke čtení, Rúnar o předchozí výměně neví. → owner živě testuje.
+  - **Před ostrým zapnutím (`ASK_MULTI_LIVE = true`) musí jít ven server** (`claude-proxy`): (a) Ask smí i standard (dnes 403 pro vše kromě premium); (b) zdarma do `asks_per_reading` tieru — `legitAsk` dnes pustí zdarma jen PRVNÍ Ask, druhý by prémiovému uživateli strhl měsíční čtení; (c) nad limit odmítnout, nestrhávat; (d) počty zrcadlit z configu + kontrola shody ve smoke (vzor NAME_LORE_LIMIT); (e) atomický zápis `follow_up` (nález 2 níž). Texty „one answer left“ (`ask_teaser`) přepsat podle tieru.
+  - **Krok 2 = chatování:** Rúnar dostane předchozí výměnu (otázka + odpověď), aby se dalo doptat i na odpověď z Asku. Vyžaduje nový blok v `buildAskPrompt` (EN + IS nativně), přepočet stropu 12 000 zn. a měření opakování. Podklad z popisů run pro tenhle krok: `docs/archive/2026-09-24-ask-podoby-run.md`.
 - [ ] **Ask — nálezy z průzkumu 2026-09-23** (workflow 5 čtenářů + skeptici, CODE-tune), opravit s druhým Askem nebo dřív:
-  1. **Dvojí odeslání:** Enter v poli Asku volá `askRunar()`, během dotazu je zakázané jen tlačítko, pole ne → druhý Enter pošle druhý souběžný Ask (a oba projdou jako „první“ zdarma).
+  1. ✅ *(opraveno 2026-09-24 v kroku 1 — pole je během dotazu zakázané)* **Dvojí odeslání:** Enter v poli Asku volá `askRunar()`, během dotazu je zakázané jen tlačítko, pole ne → druhý Enter pošle druhý souběžný Ask (a oba projdou jako „první“ zdarma).
   2. **Zápis `follow_up` není atomický** (`persistJournal`: přečti pole → přidej → zapiš celé) — dva souběžné zápisy ztratí jednu odpověď.
   3. **Otázka v Asku se nečistí** — `_questionSafe` (zalomení, uvozovky) se používá jen na původní otázku čtení, ne na otázku v Asku; `verify_question_injection.js` pokrývá jen tu první.
   4. **`gen_batch.js` volá `buildAskPrompt` se 7 argumenty** (bez spreadu), produkce s 8 → evaly Asku u výkladů měří jiný prompt.

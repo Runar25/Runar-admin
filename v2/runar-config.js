@@ -15,6 +15,10 @@ const TREE_UPDATE = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/tree-
 const RESET_TREE  = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/reset-tree';
 // Rozbor čtení modelem gpt-6-sol — jen admin (KUKY 2026-09-23). Edge funkce nesahá na kredity ani deník.
 const GPT_REVIEW  = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/gpt-review';
+// Druhý Ask, krok 1 (KUKY 2026-09-24): false = nové počty (TIERS.*.asks_per_reading) má JEN admin — owner živě
+// testuje. true = pro všechny; PŘEDTÍM musí jít ven serverová část (claude-proxy: standard smí Ask, N zdarma na
+// čtení, nad limit odmítnout — dnes by druhý Ask prémiovému uživateli strhl měsíční čtení). Viz RUNAR_BACKLOG.md.
+const ASK_MULTI_LIVE = false;
 // Future proxies go here:
 // const NOTIFY_PROXY = '...functions/v1/notify';
 // const LUNAR_PROXY  = '...functions/v1/lunar-context';
@@ -169,6 +173,7 @@ const TIERS = {
     journal:          false,
     ceremonial:       false,
     ask:              false,      // Ask Rúnar (follow-up question on a reading)
+    asks_per_reading: 0,   // Ask otázek na jedno čtení, všechny zdarma (KUKY 2026-09-24); platí pro všechny až s ASK_MULTI_LIVE
     languages:        ['en', 'is'],
   },
   rune_seeker: {
@@ -184,6 +189,7 @@ const TIERS = {
     journal:          5,          // last N readings
     ceremonial:       false,
     ask:              false,      // Ask NIKDY — ani jako placená drobnost (KUKY 2026-08-09)
+    asks_per_reading: 0,   // Ask otázek na jedno čtení, všechny zdarma (KUKY 2026-09-24); platí pro všechny až s ASK_MULTI_LIVE
     languages:        ['en', 'is'],
   },
   standard: {
@@ -196,6 +202,7 @@ const TIERS = {
     journal:          null,
     ceremonial:       false,
     ask:              false,      // Ask = premium only (KUKY 2026-08-09). Hlídá i server.
+    asks_per_reading: 1,   // Ask otázek na jedno čtení, všechny zdarma (KUKY 2026-09-24); platí pro všechny až s ASK_MULTI_LIVE
     languages:        ['en', 'is'],
   },
   premium: {
@@ -208,6 +215,7 @@ const TIERS = {
     journal:          null,
     ceremonial:       true,
     ask:              true,       // one follow-up per reading, text only (no voice)
+    asks_per_reading: 2,   // Ask otázek na jedno čtení, všechny zdarma (KUKY 2026-09-24); platí pro všechny až s ASK_MULTI_LIVE
     languages:        ['en', 'is'],
     physical_unlock:  true,       // QR/NFC product linking
     seasonal_content: true,       // solstices, equinoxes, lunar events

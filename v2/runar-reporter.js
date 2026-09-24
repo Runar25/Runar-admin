@@ -46,13 +46,20 @@
       cap.source = 'screen'; cap.key = ''; cap.ctx = tab + ' · #apane-' + tab;
       // Odpověď Asku stojí na konci obrazovky → strop 5000 by ji uřízl jako první. Proto se vezme zvlášť
       // a připojí se na konec, i když se zbytek obrazovky musí zkrátit (2026-09-23, report „chybí mi Ask“).
-      var aq = document.getElementById('ask-question'), aa = document.getElementById('ask-answer');
-      var askA = aa ? (aa.innerText || '').trim() : '';
-      cap.ask = (tab === 'reading' && askA) ? { q: aq ? (aq.innerText || '').trim() : '', a: askA } : null;
+      // Všechny výměny (od 2026-09-24 může být víc Asků na čtení): otázky a odpovědi v pořadí.
+      var qs = document.querySelectorAll('#ask-runar .ask-question'), as = document.querySelectorAll('#ask-runar .ask-answer');
+      var vym = [];
+      for (var k = 0; k < as.length; k++) { var aT = (as[k].innerText || '').trim(); if (aT) vym.push({ q: qs[k] ? (qs[k].innerText || '').trim() : '', a: aT }); }
+      var askA = vym.map(function (x) { return x.a; }).join('\n\n');
+      cap.ask = (tab === 'reading' && vym.length) ? { q: vym.map(function (x) { return x.q; }).join(' / '), a: askA,
+                 blok: vym.map(function (x) { return '[ASK] ' + x.q + '\n' + x.a; }).join('\n\n') } : null;
       if (cap.ask) {
-        var askBlok = '\n\n[ASK] ' + cap.ask.q + '\n' + cap.ask.a;
+        var askBlok = '\n\n' + cap.ask.blok;
         var zbytek = Math.max(0, 5000 - askBlok.length);
-        if (cap.text.indexOf(askA) === -1 || cap.text.length > 5000) cap.text = cap.text.replace(askA, '').slice(0, zbytek).trim() + askBlok;
+        if (vym.some(function (x) { return cap.text.indexOf(x.a) === -1; }) || cap.text.length > 5000) {
+          vym.forEach(function (x) { cap.text = cap.text.replace(x.a, ''); });
+          cap.text = cap.text.slice(0, zbytek).trim() + askBlok;
+        }
       }
       cap.text = cap.text.slice(0, 5000);
     }
