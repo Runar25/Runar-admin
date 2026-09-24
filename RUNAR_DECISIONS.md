@@ -11,6 +11,7 @@
 #    ustupují; na (6) a (7) CODE-read už odkazovaly check-is.py a backlog).
 #    Znovu 2026-09-23: dvě (12) a dvě (15). Tentokrát ustoupily záznamy CODE-read (→ (16), (17)), protože
 #    na čísla CODE-tune už odkazoval kód (`runar-utils.js`) a CLAUDE.md §5 — menší zásah než měnit cizí odkazy.
+#    Od 2026-09-23 to HLÍDÁ SMOKE ㉩ (`scripts/verify_decisions_numbers.js`) — duplicitní číslo zablokuje commit.
 
 ---
 

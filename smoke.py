@@ -642,6 +642,17 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola vylouceni probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# Číslo za datem v RUNAR_DECISIONS.md je jednoznačný klíč. Pravidlo v hlavičce docu nestačilo:
+# 2026-09-23 vznikly za den tři kolize ((6)/(7), (12), (15)) a odkazy ukazovaly na různé záznamy.
+print('\n' + chr(0x3269) + ' ČÍSLA V DECISIONS JEDNOZNAČNÁ (verify_decisions_numbers.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_decisions_numbers.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola cisel probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
