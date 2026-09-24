@@ -6851,3 +6851,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 **Změřeno:** brána s popisy 16/18 (vyřazeny dvě Berkany, které soudci dali k Ingwaz a Jeře), kontroly 2/2; žitné těsto u horkého pramene prošlo, ale nezařazeno — je to chléb, který owner u Jery odmítl. Po zařazení: žádná runa pod 3 dosažitelné obrazy v žádném ročním období (dříve 6 run). Detail `docs/archive/2026-09-23-brana-s-popisy.md` kolo 5.
 **Mez:** obrazy zatím neviděly skutečné čtení; ukáže testování.
 **Affected doc(s):** `RUNAR_BACKLOG.md` (položka tenkých run uzavřena) · `docs/archive/2026-09-23-brana-s-popisy.md` — v tomtéž commitu.
+
+## 2026-09-24 (4) — Podklad „podoby runy" pro Ask NEZAVEDEN: změřeno, že nepomáhá
+**Rozhodl:** KUKY 2026-09-23 („5. ano" — dát Asku podklad z popisů run) · **Provedl:** CODE-tune
+**Co:** 3–4 podoby, jak se každá z 25 run může projevit (EN + IS, z ownerových popisů, ověřené), vloženy jako zdroj do promptu Asku (jen single) a změřeny. **Do produkce nešlo**; podklad je uložen v `docs/archive/2026-09-24-ask-podoby-run.md` pro pozdější použití (chatování, druhý Ask).
+**Změřeno** (19 skutečných ownerových otázek z 23. 9., produkční model, jinak shodné; A = bez podkladu, B = s ním): slova převzatá ze čtení **0,33 → 0,36** (horší; půlky 0,33/0,34 → 0,36/0,36), nižší jen v 9 z 19 párů; nabídnuté možnosti 0,47 → 0,32 na odpověď; podklad model skoro nepoužil (opis > 60 % slov jedné podoby 2/19). Pojistka mimo téma drží.
+**Nález (§25):** opakování v Asku **není** způsobené nedostatkem materiálu. Otázky jsou většinou o čtení samém („What does Fehu mean in this reading?"), takže odpověď u čtení zůstává. Hranice: n = 19, jen EN, jeden běh.
+**Affected doc(s):** `docs/archive/2026-09-24-ask-podoby-run.md` (nový) — v tomtéž commitu.
+
+## 2026-09-24 (5) — Texty run v Kolekci (25 run) + návod přesunut do záložky čtení
+**Rozhodl:** KUKY 2026-09-23 („4. ano" po ukázkách Fehu/Tiwaz/Hagalaz; „obecný návod patří do záložky čtení nad My reading / For someone") · **Provedl:** CODE-tune
+**Co:** pod statickou runou v Kolekci 4 odstavce pro tu runu (co je · jak ji číst v obraze · co neslibuje · její otázka), v jazyce appky (`UI_TEXT.coll_rune`). Obecný návod „jak čtení funguje" se přesunul do formuláře čtení nad přepínač My reading / For someone (vidí ho i nepřihlášený); jeho poslední řádek o Kolekci nahrazen větou, že v Kolekci je popis každé runy.
+**Jak vzniklo:** 3 ukázky schválil owner; 22 run psáno z ownerových popisů, IS nativně, ověřeno is-grammar-qa + korpusem, adversariální kritik + oprava; u Dagaz, Laguz a Sowilo opravy podle kritika dodělal CODE-tune ručně (tamější běh spadl na limitu). check-is chytil „velkomin" u Kenaz (patřilo ke světlu, ne k člověku) — přeformulováno, ne obejito.
+**Mez:** texty viděl owner jen ve 3 ukázkách; zbytek uvidí v appce.
+**Affected doc(s):** `RUNAR_BACKLOG.md` (statické čtení Dagaz odporuje popisu) — v tomtéž commitu.

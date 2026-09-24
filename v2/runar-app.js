@@ -880,7 +880,7 @@ function updateUIText() {
   setText('layer2-lbl', t('layer2_lbl'));
   setText('draw-another-btn', t('draw_another'));
   setText('start-over-btn', t('start_over'));
-  setText('coll-guide-lbl', t('guide_title'));   // staticky nadpis navodu v Kolekci (2026-09-23)
+  setText('read-guide-lbl', t('guide_title'));   // staticky nadpis navodu — od 2026-09-23 v zalozce cteni
   setText('audio-player-lbl', t('voice_player_lbl'));
   setText('ask-lbl', t('ask_lbl'));
   var _askInp = document.getElementById('ask-input'); if (_askInp && typeof _askPlaceholder === 'function') _askInp.placeholder = _askPlaceholder();
@@ -1069,7 +1069,7 @@ function openCollDetail(r, cell, skipScroll) {
 
   // Load audio for current lang
   loadCollAudio(lang);
-  _paintCollGuide();   // navod v aktualnim jazyce, kdyz je rozbaleny (2026-09-23)
+  _paintCollRuneText(r);   // text TEHLE runy v jazyce appky (KUKY 2026-09-23); pri zmene jazyka sem vede loadCollection
 
   if (!skipScroll) det.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
@@ -1078,8 +1078,20 @@ function openCollDetail(r, cell, skipScroll) {
 // otevreni detailu jine runy — ne v updateUIText (§14: stavovy obsah tam nepatri). Nadpis je
 // staticky preklad, ten nastavuje updateUIText. Sbaleny: sedm radku by pod kazdou runou zakrylo to,
 // kvuli cemu tam clovek prisel (Runarovo uceni).
-function _paintCollGuide() {
-  var lbl = document.getElementById('coll-guide-lbl'), box = document.getElementById('coll-guide');
+// Text runy v Kolekci — 4 odstavce z UI_TEXT.coll_rune (KUKY 2026-09-23: „v Kolekci má pod runou být text přesně
+// pro tu runu z mých popisů, i se závěrečnou otázkou“). Nahradil obecný návod, který se přesunul do záložky čtení.
+function _paintCollRuneText(r) {
+  var box = document.getElementById('cd-rune-text');
+  if (!box) return;
+  box.innerHTML = '';
+  var vse = t('coll_rune'), odst = (vse && r && vse[r.n]) || [];
+  odst.forEach(function (x) { var p = document.createElement('p'); p.textContent = x; box.appendChild(p); });
+  box.style.display = odst.length ? '' : 'none';
+}
+// Návod „jak čtení funguje“ — od 2026-09-23 v záložce čtení nad „My reading / For someone“ (KUKY: „obecný návod
+// patří do záložky čtení“). Maluje se při rozbalení; nadpis je statický překlad (updateUIText).
+function _paintGuide() {
+  var lbl = document.getElementById('read-guide-lbl'), box = document.getElementById('read-guide');
   if (lbl) lbl.textContent = t('guide_title');
   if (!box || box.style.display === 'none') return;
   box.innerHTML = '';
@@ -1090,13 +1102,13 @@ function _paintCollGuide() {
     box.appendChild(p);
   });
 }
-function toggleCollGuide() {
-  var lbl = document.getElementById('coll-guide-lbl'), box = document.getElementById('coll-guide');
+function toggleGuide() {
+  var lbl = document.getElementById('read-guide-lbl'), box = document.getElementById('read-guide');
   if (!lbl || !box) return;
   var otevrit = box.style.display === 'none';
   box.style.display = otevrit ? '' : 'none';
   lbl.setAttribute('aria-expanded', otevrit ? 'true' : 'false');
-  _paintCollGuide();
+  _paintGuide();
 }
 
 function closeCollDetail() {

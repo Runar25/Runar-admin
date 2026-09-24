@@ -106,7 +106,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [rozkaz-a-studene-cteni-hranice.md](rozkaz-a-studene-cteni-hranice.md) — „Look…" jako vstup do obrazu ani fyzický důsledek dřiny („knuckles have learned") NEJSOU porušení kánonu; porušení = rada do života / tvrzení o nitru
 - [always-show-reading-samples.md](always-show-reading-samples.md) — ownerovi vždy ukázat konkrétní TEXT čtení a k němu instrukce, které do čtení vstoupily
 - [write-for-owner-not-process.md](write-for-owner-not-process.md) — ownerovi piš důležité/výsledek, ne proces „co jsi řekl / co budu hledat"
-- [cheapest-deciding-measurement-first.md](cheapest-deciding-measurement-first.md) — napřed nejlevnější měření, které rozhodne; velký počet agentů jen po pilotu 3–5 a se souhlasem ownera
+- [cheapest-deciding-measurement-first.md](cheapest-deciding-measurement-first.md) — ⛔ 2026-09-24 3× spálený limit ownera: obsah dělám SÁM, agenti max 3–5 a víc jen s odhadem tokenů a ownerovým ano; spadlý běh nepouštět znovu bez ptaní
 - [work-efficiently-ask-if-simpler.md](work-efficiently-ask-if-simpler.md) — než spustíš těžký nástroj, zeptej se, jestli to nejde jednodušeji; dlouhý běh protlačí compactem a zabije úkol
 - [decisions-are-directions-not-locks.md](decisions-are-directions-not-locks.md) — rozhodnutí = směr + varování při rozporu, ne zámek navždy
 - [fix-or-log-duplicates-and-errors.md](fix-or-log-duplicates-and-errors.md) — duplikát/chyba → hned opravit, nebo zapsat do BACKLOGu; netiše přejít

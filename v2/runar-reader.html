@@ -258,6 +258,11 @@
 
     <!-- SETUP CARD -->
     <div class="card" id="reader-setup">
+      <!-- Návod „jak čtení funguje“ — nad přepínačem, ne v něm (přepínač návštěvník nevidí, návod ano).
+           KUKY 2026-09-23. Texty = UI_TEXT guide_title / guide_lines; maluje _paintGuide() v runar-app.js. -->
+      <button class="guide-lbl" id="read-guide-lbl" type="button" aria-expanded="false"
+              aria-controls="read-guide" onclick="toggleGuide()">How a reading works</button>
+      <div class="guide" id="read-guide" style="display:none;"></div>
       <!-- READING MODE TOGGLE — shown for RS+ only -->
       <div class="reading-mode-row" id="reading-mode-row" style="display:none;">
         <button class="reading-mode-btn active" id="rmode-btn-mine"    onclick="switchReadingMode('mine')">MY READING</button>
@@ -732,12 +737,10 @@
       <div class="coll-audio-lbl" id="cd-audio-lbl">♪ RÚNAR'S TEACHING</div>
       <div class="coll-audio-text" id="cd-audio-text"></div>
       <div class="coll-audio-player" id="cd-audio-player"></div>
-      <!-- Návod „jak čtení funguje" pod statickou runou (KUKY 2026-09-23), sbalený.
-           Texty = UI_TEXT guide_title / guide_lines; maluje _paintCollGuide() v runar-app.js. -->
+      <!-- Text TEHLE runy (KUKY 2026-09-23) — UI_TEXT.coll_rune, maluje _paintCollRuneText() v runar-app.js.
+           Obecný návod se odsud přesunul do záložky čtení. -->
       <div class="coll-detail-sep"></div>
-      <button class="coll-guide-lbl" id="coll-guide-lbl" type="button" aria-expanded="false"
-              aria-controls="coll-guide" onclick="toggleCollGuide()">How a reading works</button>
-      <div class="coll-guide" id="coll-guide" style="display:none;"></div>
+      <div class="coll-rune-text" id="cd-rune-text"></div>
     </div>
 
   </div><!-- /apane-collection -->

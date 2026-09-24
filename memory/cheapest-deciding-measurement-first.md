@@ -21,6 +21,9 @@ v produkci 3× z 35 a **dvě ze tří jsou jedna jediná runa**. Přitom to rozh
 **zadarmo**: jeden dotaz do DB (`prompt_draws.kws`) a lokální sečtení. Po něm by bylo vidět, že
 klasifikovat všech 64 aspektů nemá co objevit. Owner to musel zastavit uprostřed.
 
+⛔ **2026-09-24 — TŘIKRÁT PO SOBĚ SPÁLENÝ LIMIT OWNERA (nejtěžší případ).** KUKY: *„totálně jsi mi spálil všechny tokeny 3× za sebou! … rozjedeš úkoly s agentama v takové škále, že ani nemůžu dál pracovat! … neskutečně nezodpovědné!"* Pustil jsem naráz TŘI workflowy (texty do Kolekce 22 run × 4 kroky, podklad Asku 25 run × 4 kroky, obrazy 6 run) — přes 200 agentů, ~25 mil. tokenů; dvakrát spadly na limitu session a já je hned „od místa, kde skončily" pustil znovu. Ani „ultracode“ ani ownerovo „ano“ k obsahu NEZNAMENÁ souhlas s tímhle měřítkem.
+**Pravidlo od teď (tvrdé):** (a) obsahovou práci (texty, obrazy, islandštinu) dělám SÁM v hlavní konverzaci, dávkově; (b) agent/workflow jen pro úzký úkol, kde je nezbytně nutný (slepý soudce), max 3–5 agentů; (c) cokoli nad to = napřed odhad tokenů ownerovi a jeho výslovné ano; (d) spadne-li běh na limitu, NIKDY ho sám nepouštím znovu — napřed se zeptám.
+
 **How to apply:**
 1. **Nejdřív to, co už leží.** Produkční data, git, existující export, jeden grep. Nula agentů.
 2. **Napiš predikci a její cenu:** „když vyjde X, dělám A; když Y, končím." Nemáš-li druhou
