@@ -617,6 +617,9 @@
   V ISLANDSKÉ HLAVIČCE"); (2) opis obrazu — věta „one detail" u solu pomohla (převyprávění 20 → 12 z 28); (3) Norns identita
   potřebuje seznamy klíčových slov (nechat); (4) klíč `OPENAI_API_KEY` a volání OpenAI už jsou (edge fn `gpt-review`), ale
   čtecí `claude-proxy` volá jen Anthropic — čtení na sol napojit tam; (5) várka IS + Ask + Norns proti Opus 5.
+  **Postup odsouhlasen 2026-09-24 (DECISIONS (17)):** krok 1 glosa jen v promptu (otestováno, handoff) → kroky 2+3 spojené
+  (admin čte přes sol v appce + věta „one detail" jen pro sol, handoff po nasazení kroku 1) → krok 4 slepé srovnání s Opus 5
+  → krok 5 rozhodnutí (všude / jen EN / vůbec).
 - [ ] **OTEVŘENÉ Z 23.–24. 9. — sepsáno 2026-09-24 na ownerovo „nezapomněli jsme na něco, co leží v chatu?"** (CODE-tune; zdroj: `docs/archive/2026-09-23-rozbor-reportu.md` + chat)
   **Čeká na ownerovo rozhodnutí** (otázky z rozboru, dosud bez odpovědi):
   1. ✅ *(owner 2026-09-24: ANO, když mluví skrze obraz nebo o prostředí, které má každý; tvrzení = činnost, kterou člověk nejspíš nemá — DECISIONS 2026-09-24 (15), rubrika A)* Smí 3. věta čtení říct, co se děje v oblasti tazatele (pochválené Perth/Kenaz to dělají, pravidlo to dnes povoluje jen v poslední větě jako možnost)?

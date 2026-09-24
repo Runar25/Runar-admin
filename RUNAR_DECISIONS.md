@@ -6971,3 +6971,18 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Sledovat na živých čteních:** opis věty z Kolekce (hlavně Laguz), souběh s čočkou životní runy.
 - **Reverzibilita:** jedna řádka v `buildReadingPrompt` (single).
 - Affected doc(s): `RUNAR_DESIGN.md` (Stavba Single, „Z čeho most vyrůstá").
+
+## 2026-09-24 (17) — GPT-6 sol: kroky 2 a 3 spojené — admin čte přes sol v appce, sol dostane vlastní větu za obrazem
+
+- **Co:** owner *„beru tvoje spojení kroků"*. Po nasazení kroku 1 (IS jméno runy bez glosy jen v promptu) jde jedním handoffem:
+  (a) `claude-proxy` umí `gpt-6-sol` **jen pro admina** (server ověřuje, klient nerozhoduje), při chybě spadne na Opus 5,
+  `usage` s modelem se ukládá jako dnes; (b) když admin čte přes sol, dostane věta za obrazem doplněk „one detail" (EN i IS),
+  jako data varianty enginu, ne druhý builder (§18). Ostatní čtení beze změny (Opus 5).
+- **Proč:** krok 2 (věta jen pro sol) nejde ověřit bez kroku 3 (sol v appce). Věta pomohla solu (převyprávění 20 → 12 z 28,
+  EVAL_LOG 2026-09-23 (9)); u Opusu 5 bez účinku (2026-09-24 (3)), proto jen pro sol.
+- **Soukromí:** jen admin (jeho vlastní čtení); pro kohokoli dalšího musí `RUNAR_PRIVACY.md` jmenovat OpenAI jako zpracovatele
+  (stejná podmínka jako `gpt-review`).
+- **Cena:** `scripts/utils/stats.js` umí ocenit usage OpenAI (ceník ověřen 2026-09-24: gpt-6-sol $2 / $0,20 z cache / $10).
+- **Další krok (4):** owner pár dní čte přes sol → CODE-read postaví tytéž prompty (`prompt_draws`) pro Opus 5, slepí soudci +
+  IS gramatika nástroji + přesná cena.
+- Affected doc(s): RUNAR_BACKLOG.md (položka GPT-6 sol).

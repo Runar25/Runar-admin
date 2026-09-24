@@ -67,7 +67,16 @@ const CENIK = {   // USD / 1 M tokenů: [vstup, zápis cache 5 min, zápis 1 h, 
   'claude-opus-4-8': [5, 6.25, 10, 0.5, 25],
   'claude-opus-4-7': [5, 6.25, 10, 0.5, 25],
 };
+// OpenAI (gpt-6-sol pro admin test cteni, owner 2026-09-24 „beru tvoje spojeni kroku"): jiny tvar usage —
+// prompt_tokens (vcetne cachovanych), prompt_tokens_details.cached_tokens, completion_tokens.
+// Cenik overen 2026-09-24 na developers.openai.com/api/docs/pricing (standard): vstup · vstup z cache · vystup za 1 M.
+const CENIK_OPENAI = { 'gpt-6-sol': [2, 0.2, 10], 'gpt-6-luna': [0.1, 0.01, 0.5] };
 function cenaUsage(u) {
+  if (u.prompt_tokens != null) {
+    const o = CENIK_OPENAI[u.model]; if (!o) return null;
+    const ca = (u.prompt_tokens_details && u.prompt_tokens_details.cached_tokens) || 0;
+    return ((u.prompt_tokens - ca) * o[0] + ca * o[1] + (u.completion_tokens || 0) * o[2]) / 1e6;
+  }
   const c = CENIK[u.model]; if (!c) return null;
   const cc = u.cache_creation || {};
   const w5 = cc.ephemeral_5m_input_tokens != null ? cc.ephemeral_5m_input_tokens : (u.cache_creation_input_tokens || 0);
@@ -76,6 +85,8 @@ function cenaUsage(u) {
 }
 // Samotest výpočtu na známém vstupu (§19.1): 1692 vstup + 152 výstup (Opus 4.8) = 0,01226 USD.
 if (Math.abs(cenaUsage({ model: 'claude-opus-4-8', input_tokens: 1692, output_tokens: 152 }) - 0.01226) > 1e-9) { console.error('  ✗ výpočet ceny rozbitý'); process.exit(1); }
+// ... a OpenAI: 1000 vstup (200 z cache) + 100 vystup na gpt-6-sol = (800·2 + 200·0,2 + 100·10) / 1 M = 0,00264 USD.
+if (Math.abs(cenaUsage({ model: 'gpt-6-sol', prompt_tokens: 1000, prompt_tokens_details: { cached_tokens: 200 }, completion_tokens: 100 }) - 0.00264) > 1e-9) { console.error('  ✗ výpočet ceny OpenAI rozbitý'); process.exit(1); }
 // Skupina: admin (ADMIN_EMAILS z v2/runar-config.js — jediny zdroj, §20) > tester (user_profiles.is_tester) > uzivatel.
 // Owner 2026-09-24: „kolik nas stoji cteni — admin zvlast, testeri zvlast, uzivatele zvlast". Tiskne se jen soucet za skupinu.
 const ADMINI = (fs.readFileSync(path.join(__dirname, '..', '..', 'v2', 'runar-config.js'), 'utf8').match(/const ADMIN_EMAILS\s*=\s*\[([^\]]*)\]/) || [, ''])[1]
