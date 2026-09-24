@@ -5262,3 +5262,25 @@ testované byly jen na Opus 4.8 a solu. Opus 5 obraz **neopisuje už bez věty**
 v 1. větě 0,29 → 0,24, párově 5 méně / 4 stejně / 5 víc = **žádný měřitelný účinek**. Single se prodlouží 63,9 → 68,2 slova
 (+7 %, dražší hlas); Norns jednou kratší (153 → 129), jednou delší (135 → 176). Značka „nikdo si nevšiml" 0, ozvěna 0.
 **Závěr:** s Opus 5 věta nepřináší nic a přidává délku → **nepředáno** (varování ownerovi, DECISIONS níž); zůstává kandidátem pro sol.
+
+## 2026-09-24 (4) — GPT krok 1: IS jméno runy BEZ glosy jen v promptu → sol glosu neopisuje (3/5 → 0/5), Opus 5 beze změny
+
+**Owner:** *„GPT pojď na to"* — krok 1 plánu: glosa v islandském jménu runy (`Þurs (Hlið)`), kterou sol opisuje do textu.
+**Zjištění před testem:** `RUNES[].is_n` (s glosou) nečte jen prompt — používá ho i rozhraní (`rn()` v `runar-utils.js`
+pro popisky, strom `runar-tree.js`, Yggdrasil, `data-rune` pro vyskakovací okno). **Oprava u zdroje by změnila, co vidí
+islandský uživatel** → patří jen do promptu (pomocná funkce pro prompty, rozhraní beze změny). Opravuje se tím i věta
+backlogu „oprava patří ke zdroji".
+**Test:** 5 produkčních IS promptů (3 single, 2 Norns) — každé jméno s glosou nahrazeno jménem bez ní (single 2× —
+hlavička + pokyn *„Nefndu …"*; Norns 3× — řádky run); gpt-6-sol a Opus 5 (produkce), 1×; $0,21.
+| | glosa v textu | slov |
+|---|---|---|
+| sol · produkce | **3/5** | 60/67/96/62/105 |
+| sol · bez glosy | **0/5** | 58/69/71/83/97 |
+| Opus 5 · produkce / bez glosy | 0/5 / 0/5 | 49/52/44/123/124 · 46/56/139/65/138 |
+**Islandština** (`is-grammar-qa.py` + ruční průchod 3 nerozparsovaných vět + korpus): sol bez chyby (*þykja vænt um* s dativem,
+*skiptast á að*, *lagði barn í fang*, střední rod *tvö — annað — hitt* ✓). **Opus 5:** *„Slíkt hlé gæti verið **stað**
+þar sem…"* — přísudek po *vera* je 1. pád (*verið staður þar* 34× × *verið stað þar* 0×) → **zapsáno do korekcí**.
+Falešné poplachy nástroje: *kveikt á á ný* (doloženo 7×), *slitinu*, *ausan*, *Kuky*.
+**Závěr:** glosu z promptu vyndat jen v promptu — solu to zastaví opis, Opusu 5 nic nevadí → **handoff CODE-tune**.
+**Hranice:** 5 promptů × 1 čtení na model; identitu run (poznají je soudci i bez glosy?) jsme netestovali — v EN glosa nikdy
+nebyla a identita tam drží.

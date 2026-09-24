@@ -126,11 +126,24 @@
 - [ ] **Model opakuje slova zadání „friction"** — *„Name the friction honestly"* → *„The friction is plain"* (Opus 5 EN 2×),
   *„Núningurinn er…"* (Opus 4.8 IS). Týž vzor jako „look closer" (EVAL_LOG 2026-09-23 (7)): pokyn nese slovo, které se dá
   zopakovat. Změřit četnost v produkci, pak přeformulovat bez pojmenování (paměť `prompt-nepojmenuj-co-hned-zakazes`).
-- [ ] **Ceník počítá anglický hlas jako Flash, kód používá `eleven_multilingual_v2`** (nález CODE-read 2026-09-24) —
-  `RUNAR_PRICING.md` („Flash (EN) $0.05/1k chars", sloupec EL EN) × kód: `EL_MODEL_EN = 'eleven_multilingual_v2'`
-  v `v2/runar-config.js`, `elevenlabs-proxy` i `elevenlabs-static`. Flash stojí polovinu → **EN hlas je v ceníku
-  podhodnocený 2×**. Rozhodnout: přejít na Flash (levnější, jiný zvuk — owner poslechne), nebo opravit ceník. Vedle toho
-  je model zapsaný na 3 místech (edge funkce config neimportují) — při změně sáhnout na všechna.
+- [ ] **HLAS (ElevenLabs) — možnosti a skutečná spotřeba** (owner 2026-09-24: *„budu se na to muset podívat… nevím, jestli se u nich
+  taky něco nezměnilo"*). **Stav k 2026-09-24** (ověřeno na elevenlabs.io/pricing/api a /docs/overview/models; stránky datum neuvádějí,
+  co je nové od června, **nevím**):
+  - **Tarify beze změny** proti `RUNAR_PRICING.md`: Starter $6 (60 000 znaků), Creator $22 (220 000), Pro $99 (990 000), Scale $299
+    (2 990 000), Business $990 (9 900 000). Přečerpání $0,10 / 1 000 znaků (Multilingual, v3) a $0,05 (Flash/Turbo).
+  - **Modely:** islandsky umí JEN rodina v3 — `eleven_v3` (dnes pro IS) a `eleven_v3_conversational` (nízká latence ~280 ms).
+    `eleven_multilingual_v2` (dnes pro EN) islandštinu neumí; `eleven_flash_v2_5` o 50 %% levnější, islandštinu neumí;
+    `eleven_flash_v2` jen angličtina; **Turbo = zastaralé**.
+  - **Rozhodnout (owner poslechne):** anglický hlas — (a) nechat `multilingual_v2`, (b) `flash_v2_5` za polovinu (jiný zvuk),
+    (c) `eleven_v3` jako islandština (stejný model i barva hlasu v obou jazycích). Islandština: zkusit `v3_conversational`?
+  - ⚠️ **Ceník počítá anglický hlas jako Flash, kód používá `eleven_multilingual_v2`** (`v2/runar-config.js`, `elevenlabs-proxy`,
+    `elevenlabs-static`) → EN hlas je v ceníku podhodnocený 2×. Model je zapsaný na 3 místech — při změně sáhnout na všechna.
+  - **Skutečná spotřeba a kdy na vyšší tarif** → handoff CODE-tune 2026-09-24 (položka níž).
+- [ ] **Sledování nákladů na hlas (handoff CODE-tune 2026-09-24, owner „udělej, jak říkáš")** — (1) admin funkce, která zavolá
+  `GET https://api.elevenlabs.io/v1/user/subscription` (klíč `ELEVENLABS_API_KEY`) a vrátí `character_count`, `character_limit`,
+  `next_character_count_reset_unix`, `tier`, `status`, `current_overage`; (2) `elevenlabs-proxy` ukládá u každého generování počet
+  znaků, model, jazyk a uživatele (dnes jen `voice_month_count`) → hlas po skupinách admin/tester/uživatel; (3) týdenní zápis do
+  soukromé tabulky (EL ukazuje jen aktuální období, bez zápisu není trend). Claude po skupinách už ukazuje `stats.js`.
 - [ ] **Shrine: korekce nejdou smazat** (nález 2026-09-23) — záložka WORD CORRECTIONS umí jen přidat a vypsat
   (`runar-shrine.html` `saveCorrection`/`loadCorrections`), mazání nemá. Owner tak smaže řádek jen přes Supabase. Doplnit
   mazání (jen admin, s potvrzením) — CODE-tune.
@@ -141,8 +154,10 @@
   to vyleze okamžitě**. ⚠️ **Vstupy jsou DVA** (doměřeno 2026-09-22 (2)): hlavička runy A pokyn *„Nefndu Gebo
   (Félagsskapur) einu sinni og fléttaðu nafnið…"* — ten modelu glosu přímo předepisuje. Oprava jen hlavičky: sol 2/5;
   obou: 0/5; Norns má glosu v řádcích run (`Gebo (Félagsskapur) —`). **Zdroj ověřen 2026-09-23: `RUNES[].is_n` v `runar-runes.js` nese glosu přímo (`"Þurs (Hlið)"`,
-  `"Othila (Aðskilnaður)"`).** **Oprava patří ke zdroji** — IS jméno runy,
-  které se do promptů vkládá (dnes nese závorku), ne k jednotlivým řádkům. Doklad: `RUNAR_EVAL_LOG.md` 2026-09-22 (1) a (2).
+  `"Othila (Aðskilnaður)"`).** ⚠️ **Oprava 2026-09-24:** u zdroje ne — `is_n` s glosou čte i rozhraní (`rn()`, strom, Yggdrasil,
+  `data-rune`); islandský uživatel by přišel o glosu v popiscích. **Oprava = pomocná funkce jen pro prompty** (jméno bez závorky),
+  rozhraní beze změny. Otestováno (EVAL_LOG 2026-09-24 (4)): sol glosa 3/5 → 0/5, Opus 5 0 → 0 → **handoff CODE-tune předán**.
+  Doklad starší: `RUNAR_EVAL_LOG.md` 2026-09-22 (1) a (2).
 - [x] ~~KANDIDÁT: NORNS: SEZNAMY KLÍČOVÝCH SLOV u run pryč~~ — **ZAMÍTNUTO měřením 2026-09-23 (3).**
   gpt-6-sol bez seznamů ztrácí identitu run (6/12 → 3/12, drží v obou půlkách); varianta s jedním slovem je
   nejhorší (identita stojí na opsané nálepce, závěr s nálepkou 4/6). Čtyři slova (produkce) = nejlepší identita

@@ -6931,3 +6931,11 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   přípravě solu (backlog). Úhel [1] se zkracoval jen kvůli souběhu s touto větou → taky nenasazovat.
 - **Reverzibilita:** nic nenasazeno.
 - Affected doc(s): RUNAR_BACKLOG.md (kandidát věty za obrazem).
+
+## 2026-09-24 (14) — Islandská korekce `verið stað þar → verið staður þar` do produkční DB
+
+- **Co:** CODE-read vložil do `runar_corrections` (is) `verið stað þar` → `verið staður þar`, vysvětlení *„„vera“ tekur nefnifall"*
+  (přenosné pravidlo). Korpus *verið staður þar* 34× × *verið stað þar* 0×; *tekur nefnifall* doloženo. Protlačeno produkční cestou
+  (`normalizeCorrections` → `getCorrPrompt('is')`): v promptu, IS 29 řádků, EN prázdný. Chyba z testu Opus 5 (EVAL_LOG 2026-09-24 (4)).
+- **Na základě:** DECISIONS 2026-09-23 (6) bod 1. **Reverzibilita:** smazání řádku (owner).
+- Affected doc(s): `check-is.py` (vzor).
