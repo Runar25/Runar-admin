@@ -76,8 +76,16 @@ function cenaUsage(u) {
 }
 // Samotest výpočtu na známém vstupu (§19.1): 1692 vstup + 152 výstup (Opus 4.8) = 0,01226 USD.
 if (Math.abs(cenaUsage({ model: 'claude-opus-4-8', input_tokens: 1692, output_tokens: 152 }) - 0.01226) > 1e-9) { console.error('  ✗ výpočet ceny rozbitý'); process.exit(1); }
-const usageRows = q("select coalesce(lang,'?') lang, usage, follow_up from public.readings where drawn_at >= " + OD + ' and usage is not null;');
-const naklady = { skupiny: {}, ask: { n: 0, usd: 0, bez: 0 }, neznamy: [] };
+// Skupina: admin (ADMIN_EMAILS z v2/runar-config.js — jediny zdroj, §20) > tester (user_profiles.is_tester) > uzivatel.
+// Owner 2026-09-24: „kolik nas stoji cteni — admin zvlast, testeri zvlast, uzivatele zvlast". Tiskne se jen soucet za skupinu.
+const ADMINI = (fs.readFileSync(path.join(__dirname, '..', '..', 'v2', 'runar-config.js'), 'utf8').match(/const ADMIN_EMAILS\s*=\s*\[([^\]]*)\]/) || [, ''])[1]
+  .split(',').map(s => s.trim().replace(/^['"]|['"]$/g, '')).filter(e => /^[^\s'@]+@[^\s'@]+$/.test(e));
+if (!ADMINI.length) { console.error('  ✗ ADMIN_EMAILS v runar-config.js nenalezen — skupiny by byly spatne'); process.exit(1); }
+const usageRows = q("select coalesce(r.lang,'?') lang, r.usage, r.follow_up, case when u.email in (" + ADMINI.map(e => "'" + e + "'").join(',')
+  + ") then 'admin' when coalesce(p.is_tester, false) then 'tester' else 'uzivatel' end skupina"
+  + ' from public.readings r left join auth.users u on u.id = r.user_id left join public.user_profiles p on p.id = r.user_id'
+  + ' where r.drawn_at >= ' + OD + ' and r.usage is not null;');
+const naklady = { skupiny: {}, podleSkupin: {}, ask: { n: 0, usd: 0, bez: 0 }, neznamy: [] };
 for (const r of usageRows) {
   for (const f of (r.follow_up || [])) {
     if (f && f.usage && f.usage.model) { const c = cenaUsage(f.usage); if (c == null) naklady.neznamy.push(f.usage.model); else { naklady.ask.n++; naklady.ask.usd += c; } }
@@ -87,6 +95,9 @@ for (const r of usageRows) {
   const c = cenaUsage(u); if (c == null) { naklady.neznamy.push(u.model); continue; }
   const k = u.model + ' · ' + r.lang, g = naklady.skupiny[k] = naklady.skupiny[k] || { n: 0, usd: 0, zapis: 0, zasah: 0 };
   g.n++; g.usd += c; if (u.cache_creation_input_tokens) g.zapis++; if (u.cache_read_input_tokens) g.zasah++;
+  const sg = naklady.podleSkupin[r.skupina] = naklady.podleSkupin[r.skupina] || { n: 0, usd: 0, ask: 0, askUsd: 0 };
+  sg.n++; sg.usd += c;
+  for (const f of (r.follow_up || [])) if (f && f.usage && f.usage.model && cenaUsage(f.usage) != null) { sg.ask++; sg.askUsd += cenaUsage(f.usage); }
 }
 // Kolik čtení přišlo do 5 min (a do 1 h) po PŘEDCHOZÍM čtení v témže jazyce — systémový prompt je pro všechny
 // uživatele téhož jazyka stejný, takže cachi drží teplou kdokoli. To je strop zásahů cache při dnešním provozu.
@@ -218,6 +229,11 @@ for (const [k, g] of Object.entries(naklady.skupiny).sort()) {
 }
 console.log('  čtení celkem $' + nkCelkem.toFixed(4) + ' · Ask s usage ' + naklady.ask.n + (naklady.ask.n ? ' · $' + naklady.ask.usd.toFixed(4) : '') + ' (bez usage ' + naklady.ask.bez + ')');
 if (naklady.neznamy.length) console.log('  ⚠ model bez ceny v CENIK (nezapočítáno): ' + [...new Set(naklady.neznamy)].join(', '));
+console.log('  podle skupin (admin · tester · uzivatel):');
+for (const s of ['admin', 'tester', 'uzivatel']) { const g = naklady.podleSkupin[s] || { n: 0, usd: 0, ask: 0, askUsd: 0 };
+  console.log('    ' + s.padEnd(9) + String(g.n).padStart(4) + ' čtení · $' + g.usd.toFixed(4) + (g.n ? ' · průměr $' + (g.usd / g.n).toFixed(5) : '')
+    + (g.ask ? ' · Ask ' + g.ask + ' · $' + g.askUsd.toFixed(4) : '')); }
+console.log('  (hlas ElevenLabs zatím nejde rozdělit — proxy neukládá znaky; backlog)');
 console.log('\n  ── cache: jak často přijde čtení včas ' + '─'.repeat(8));
 for (const [l, o] of Object.entries(naklady.odstupy)) if (o.n)
   console.log('  ' + l.padEnd(4) + ' do 5 min po předchozím: ' + Math.round(o.do5 / o.n * 100) + ' %  · do 1 h: ' + Math.round(o.do60 / o.n * 100) + ' %  (' + o.n + ' odstupů)');
