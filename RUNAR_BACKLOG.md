@@ -578,6 +578,13 @@
 - [ ] **Nahradit `runar-gathering.js`** + smazat mrtvý kód (modul + `<script>` + sw.js řádek pořád shipují; ř.60 hardcoded „COMING SOON" = §10).
 - [ ] **`data-i18n` refactor** — nejrobustnější prevence zaseklé angličtiny (dnes ruční wiring v updateUIText).
 - [ ] Ask Rúnar v2 — journal 7denní okno + asked-flag (persistence HOTOVÁ).
+- [ ] **GPT-6 sol jako model Rúnarova čtení** (KUKY 2026-09-23: „další krok bude nechat udělat GPT čtení Rúnara, ale ještě na tom pracujeme — dát to do backlogu“). Předstupeň hotový: admin tlačítko „GPT-6 sol“ = rozbor čtení (edge fn `gpt-review`). Evaly modelu vede CODE-read (`RUNAR_EVAL_LOG.md` 2026-09-22+). Pozor: islandská gramatika u solu je slabší (korektor: 3 škody na 30 čtení).
+- [ ] **Ask — nálezy z průzkumu 2026-09-23** (workflow 5 čtenářů + skeptici, CODE-tune), opravit s druhým Askem nebo dřív:
+  1. **Dvojí odeslání:** Enter v poli Asku volá `askRunar()`, během dotazu je zakázané jen tlačítko, pole ne → druhý Enter pošle druhý souběžný Ask (a oba projdou jako „první“ zdarma).
+  2. **Zápis `follow_up` není atomický** (`persistJournal`: přečti pole → přidej → zapiš celé) — dva souběžné zápisy ztratí jednu odpověď.
+  3. **Otázka v Asku se nečistí** — `_questionSafe` (zalomení, uvozovky) se používá jen na původní otázku čtení, ne na otázku v Asku; `verify_question_injection.js` pokrývá jen tu první.
+  4. **`gen_batch.js` volá `buildAskPrompt` se 7 argumenty** (bez spreadu), produkce s 8 → evaly Asku u výkladů měří jiný prompt.
+  5. Hlavička `claude-proxy/index.ts` pořád popisuje záložní řetěz končící Sonnet 5, přitom MODELS = opus-4-8, opus-4-7.
 - [ ] Export dat subjektu (mazání už kaskáduje přes delete-account).
 - [ ] Eval pipeline: pseudonymizace (opt-out exkluze HOTOVÁ).
 - [ ] `_moodContext`/`_intentionContext` — zapojit intention, nebo smazat mood (mood z UI ODSTRANĚN, helper dřímá).  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
@@ -892,6 +899,7 @@ generuje text, který s Rúnarem nemá nic společného.
 **Zmizí to samo**, když se prompt přesune na server (výš). Do té doby aspoň vědět, že to tak je.
 
 ### `ADMIN_EMAILS` žije na DVOU místech — a je to ten bezpečnostní druh duplikátu (2026-08-16)
+⚠️ **Aktualizace 2026-09-23 (CODE-tune):** míst není dvě, ale **sedm** (config + 6 edge funkcí: claude-proxy, list-readings, list-reports, elevenlabs-static, tree-update, gpt-review) + RLS politiky v `sql/`. Shodu kódu teď hlídá **smoke ㉪** (`scripts/verify_admin_emails.js`, sabotáž ověřena). Cíl níž (server = jediný zdroj) platí dál.
 `v2/runar-config.js:171` a `supabase/functions/claude-proxy/index.ts:441` mají každý svůj seznam.
 Rozejdou se při první změně a **rozejdou se tiše**: klient někoho pustí do admin UI, server ho
 odmítne (nebo naopak). §20 s bezpečnostním dopadem.

@@ -13,6 +13,8 @@ const EL_PROXY  = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/elevenl
 const EL_STATIC = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/elevenlabs-static';
 const TREE_UPDATE = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/tree-update';
 const RESET_TREE  = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/reset-tree';
+// Rozbor čtení modelem gpt-6-sol — jen admin (KUKY 2026-09-23). Edge funkce nesahá na kredity ani deník.
+const GPT_REVIEW  = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/gpt-review';
 // Future proxies go here:
 // const NOTIFY_PROXY = '...functions/v1/notify';
 // const LUNAR_PROXY  = '...functions/v1/lunar-context';

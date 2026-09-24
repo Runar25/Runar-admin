@@ -6835,3 +6835,12 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 **Ověřeno** v prohlížeči (lokální náhled, simulovaný stav bez volání serveru): single IS→EN — glyf drží, volby „Heilun & Líðan · Skýrleiki · Í þessari stund" → „Healing & Wellbeing · Clarity · Right now"; Kříž 5 run EN→IS→EN — 5 kamenů, volby i text výkladu ve správném jazyce; „Draw another" hlavičku vynuluje. Smoke 44/44.
 **Mez:** skutečné čtení přes server v náhledu neproběhlo (stálo by kredit); deník volby u karet zatím neukazuje.
 **Affected doc(s):** `CLAUDE.md` §5 — v tomtéž commitu.
+
+## 2026-09-24 (2) — Tlačítko „GPT-6 sol": rozbor hotového čtení a Asku (jen admin)
+**Rozhodl:** KUKY 2026-09-23 („chtěl bych tlačítko GPT 6 SOL… ukázal by se rozbor Rúnarova čtení od Opus a taky ASK… teď to musím udělat manuálně"; další krok = GPT jako model čtení → backlog) · **Provedl:** CODE-tune
+**Co:** pod hotovým čtením (single i výklady) má admin tlačítko „GPT-6 sol". Pošle modelu gpt-6-sol přesný systémový prompt a přesné zadání, se kterým čtení vzniklo, hotový text a výměny v Asku; vrátí česky rozbor v pěti bodech (hlas · runa · kde to ustřelilo · Ask · co změnit) s citacemi. Server = nová edge funkce `gpt-review`: jen brána (admin JWT, pevný model, strop velikosti), žádný zápis, žádné kredity — záměrně mimo `claude-proxy`, která nese peníze.
+**Proč takhle:** bez přesného zadání GPT nepozná opsanou větu ani obraz přidaný navíc. Samostatná funkce = chyba v ní nesáhne na placení.
+**Soukromí:** jen adminova vlastní čtení v jeho session; čtení testerů/uživatelů k OpenAI nejdou, dokud privacy nejmenuje OpenAI jako zpracovatele.
+**Ověřeno:** payload poskládaný produkční funkcí → gpt-6-sol se stejnými parametry jako edge funkce (lokálně): odpověď česky, 5 bodů, citace; na ownerově čtení Isy z 23. 9. správně označil „In your home the talk has gone flat and careful" jako tvrzení o rodině. Edge funkce nasazena, bez přihlášení 401, s neplatným 401. Seznam adminů teď ve 7 kopiích → nová kontrola smoke ㉪ (sabotáž ověřena).
+**Čeká na ownera:** secret `OPENAI_API_KEY` v Supabase (klíče do služeb nevkládám sám) — do té doby tlačítko hlásí „OPENAI_API_KEY is not set".
+**Affected doc(s):** `RUNAR_BACKLOG.md` (ADMIN_EMAILS aktualizováno, GPT jako model čtení, nálezy k Asku) — v tomtéž commitu.

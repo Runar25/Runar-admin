@@ -541,6 +541,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .rseg{transition:color 0.35s ease;}
 .rseg.on{color:var(--gold);}
 .rlbl-glyph.seg-active{text-shadow:0 0 9px rgba(255,191,0,0.45);}
+/* GPT-6 sol rozbor — jen admin (KUKY 2026-09-23). Tlačítko kopíruje obrys ze zlaté konvence, výstup je čistý text. */
+.gpt-review{margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,191,0,0.14);}
+.btn-gpt-review{padding:8px 16px;background:transparent;border:1px solid rgba(255,191,0,0.7);color:var(--gold);font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:1.5px;cursor:pointer;}
+.btn-gpt-review:disabled{opacity:0.5;cursor:wait;}
+.gpt-review-out{margin-top:12px;font-size:0.95em;line-height:1.55;color:var(--white);white-space:pre-wrap;}
 /* Ask Rúnar — follow-up Q&A (Premium, one question per reading) */
 #ask-runar{margin-top:22px;padding-top:20px;border-top:1px solid rgba(255,191,0,0.14);}
 .ask-lbl{font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:12px;}

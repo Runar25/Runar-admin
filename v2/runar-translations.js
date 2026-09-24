@@ -67,6 +67,10 @@ const UI_TEXT = {
     report_flagging:  'Reporting:',
     // 2026-09-23 (KUKY report: „chybí mi Ask odpověď v reportu") — náhled ukazoval jen 280 znaků, Ask byl až za nimi.
     report_ask_attached: 'Rúnar\'s answer to your question is attached:',
+    // GPT-6 sol rozbor čtení — jen admin (KUKY 2026-09-23). Název modelu se nepřekládá.
+    gpt_review_btn:   'GPT-6 sol',
+    gpt_review_wait:  'GPT-6 sol is reading…',
+    gpt_review_err:   'GPT-6 sol did not answer: {msg}',
     report_type:      'Type',
     report_t_replace: 'Replace text',
     report_t_rephrase:'Reword',
@@ -427,6 +431,9 @@ const UI_TEXT = {
     report_who_save:  'Vista',
     report_flagging:  'Tilkynni:',
     report_ask_attached: 'Svar Rúnars við spurningunni fylgir með:',
+    gpt_review_btn:   'GPT-6 sol',
+    gpt_review_wait:  'GPT-6 sol er að lesa…',
+    gpt_review_err:   'GPT-6 sol svaraði ekki: {msg}',
     report_type:      'Tegund',
     report_t_replace: 'Skipta út texta',
     report_t_rephrase:'Umorða',

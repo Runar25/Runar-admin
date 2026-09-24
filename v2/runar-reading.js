@@ -28,6 +28,73 @@ var _lastSegs = [];  // Fáze B1: per-rune [{rune,text}] segments of the last re
 // se zivotni runou by viselo na jeho pravopisu. Plni se tam, kde `_lastSegs` (2026-09-10).
 var _lastDrawn = [];
 
+// ─── GPT-6 SOL: ROZBOR ČTENÍ (jen admin, KUKY 2026-09-23) ─────────────────────────────
+// Owner dosud kopíroval čtení a Ask ručně do chatu s GPT a nechal si ho rozebrat. Tlačítko pošle totéž
+// jedním klikem: PŘESNÝ systémový prompt a PŘESNÉ zadání, se kterým čtení vzniklo (_lastGen — bez nich
+// GPT nevidí, jaký obraz a úhel Rúnar dostal, a nepozná opsanou větu ze zadání), hotový text a výměny v Asku.
+// Jen vlastní čtení v adminově session: cizí čtení k OpenAI nejdou (RUNAR_PRIVACY.md — OpenAI není uvedený
+// zpracovatel). Odpověď je česky, protože ji čte owner.
+var _lastGen = null;   // { sys, prompt, lang, kind } posledního vygenerovaného čtení
+var _askLog = [];      // [{ q, a }] výměny v Asku k tomuto čtení (dnes nejvýš jedna)
+var GPT_REVIEW_RULES =
+  'Jsi nezávislý posuzovatel čtení run v aplikaci Rúnar. Rúnar je průvodce runami — zrcadlo, ne věštec: ' +
+  'nepředpovídá, nic o člověku netvrdí, mluví jedním obrazem a obyčejnými slovy. Dostaneš (1) systémový prompt, ' +
+  'podle kterého Rúnar píše, (2) přesné zadání tohoto čtení (tažená runa a její klíčová slova, oblast, obraz, pokyny), ' +
+  '(3) hotové čtení a (4) případné otázky v Asku s Rúnarovými odpověďmi.\n' +
+  'Napiš česky, stručně a konkrétně, v tomto pořadí:\n' +
+  '1. Jak to zní — je to Rúnarův hlas? Co zní dobře, co ne.\n' +
+  '2. Runa — nese čtení podstatu tažené runy, nebo zůstalo jen u obrazu? Poznal by člověk runu?\n' +
+  '3. Kde to ustřelilo — tvrzení o člověku, které Rúnar nemůže vědět; vymyšlená fakta; věštění; klišé; věta opsaná ' +
+  'ze zadání; věci přidané do obrazu, které v zadání nebyly; rozpor se zadáním.\n' +
+  '4. Ask — odpověděl na otázku, nebo zopakoval čtení? Nabídl víc než jeden výklad, když se na to otázka ptala?\n' +
+  '5. Co změnit — nejvýš 3 konkrétní návrhy.\n' +
+  'U každého nálezu cituj krátký úsek textu v uvozovkách. Co je v pořádku, řekni jednou větou a nerozepisuj. ' +
+  'Islandskou gramatiku a vazby neposuzuj jako verdikt — jen upozorni, ať se ověří nástrojem.';
+function _gptReviewPayload() {
+  if (!_lastGen) return null;
+  var txt = (readerTexts[_lastGen.lang] && readerTexts[_lastGen.lang].short) || '';
+  if (!txt) return null;
+  var u = '=== 1. SYSTÉMOVÝ PROMPT, PODLE KTERÉHO RÚNAR PÍŠE ===\n' + _lastGen.sys +
+          '\n\n=== 2. ZADÁNÍ TOHOTO ČTENÍ (' + _lastGen.kind + ', jazyk ' + _lastGen.lang + ') ===\n' + _lastGen.prompt +
+          '\n\n=== 3. HOTOVÉ ČTENÍ ===\n' + txt;
+  if (_askLog.length) u += '\n\n=== 4. ASK ===\n' + _askLog.map(function (x, i) {
+    return 'Otázka ' + (i + 1) + ': ' + x.q + '\nOdpověď ' + (i + 1) + ': ' + x.a; }).join('\n\n');
+  else u += '\n\n=== 4. ASK ===\n(bez otázky)';
+  return { system: GPT_REVIEW_RULES, user: u };
+}
+function _showGptReview() {
+  var box = document.getElementById('gpt-review');
+  if (!box) return;
+  var on = !!(currentUser && isAdmin(currentUser.email) && _lastGen);
+  box.style.display = on ? 'block' : 'none';
+  var out = document.getElementById('gpt-review-out'); if (out) out.textContent = '';
+  var b = document.getElementById('gpt-review-btn'); if (b) { b.disabled = false; b.textContent = t('gpt_review_btn'); }
+}
+function _hideGptReview() {
+  var box = document.getElementById('gpt-review'); if (box) box.style.display = 'none';
+}
+async function gptReview() {
+  if (!(currentUser && isAdmin(currentUser.email))) return;
+  var p = _gptReviewPayload();
+  var out = document.getElementById('gpt-review-out'), b = document.getElementById('gpt-review-btn');
+  if (!p || !out) return;
+  if (b) { b.disabled = true; b.textContent = t('gpt_review_wait'); }
+  out.textContent = '';
+  try {
+    var headers = { 'Content-Type': 'application/json' };
+    var sess = await sb.auth.getSession();
+    var tok = sess && sess.data && sess.data.session && sess.data.session.access_token;
+    if (tok) headers['Authorization'] = 'Bearer ' + tok;
+    var res = await fetch(GPT_REVIEW, { method: 'POST', headers: headers, body: JSON.stringify(p) });
+    var d = await res.json().catch(function () { return {}; });
+    if (!res.ok || d.error) out.textContent = tp('gpt_review_err', { msg: (d.message || d.error || ('HTTP ' + res.status)) });
+    else out.textContent = (d.text || '') + (d.cut ? '\n…' : '');
+  } catch (e) {
+    out.textContent = tp('gpt_review_err', { msg: String(e && e.message || e) });
+  }
+  if (b) { b.disabled = false; b.textContent = t('gpt_review_btn'); }
+}
+
 // ─── HLAVIČKA ČTENÍ: tažená runa + volby čtení (2026-09-23) ─────────────────────────────
 // KUKY 2026-09-23: „vedle vybrané runy by se mělo zobrazit, co si uživatel vybere — AREA, SEEKING,
 // INTENTION“ (poprvé v reportu 2026-09-21). Volby se berou jako INDEXY v okamžiku čtení: pilulky
@@ -152,6 +219,7 @@ async function _generateReading() {
   _paintLoadingMotto();
   if (_rdLoadEl) _rdLoadEl.style.display = 'block';
   var _aqS = document.getElementById('ask-runar'); if (_aqS) _aqS.style.display = 'none';
+  _hideGptReview();
   var _pL1 = document.getElementById('layer1-lbl');
   var _pL2 = document.getElementById('layer2-lbl');
   // Unified: hide layer2 + clear label before API call
@@ -165,6 +233,7 @@ async function _generateReading() {
   var _castNow = _castIdx(u);
   const sys = buildSysPrompt(activeChar, lang);
   const prompt = buildReadingPrompt(u, drawn, lang, corrections);
+  _lastGen = { sys: sys, prompt: prompt, lang: lang, kind: 'single' };   // pro rozbor GPT-6 sol (jen admin)
 
   // Journal meta for the SERVER-SIDE save (proxy persists atomically with the deduction).
   // Only for a logged-in user saving their own reading; null = do not save.
@@ -744,6 +813,8 @@ function _refreshAskTeaser() {
 }
 
 function _showAsk() {
+  _askLog = [];
+  _showGptReview();
   var el = document.getElementById('ask-runar');
   if (!el) return;
   // Who gets the follow-up = TIERS.<tier>.ask (§8), not a tier name spelled out here.
@@ -825,6 +896,7 @@ async function askRunar() {
   answer = _trimToSentence(answer);  // FU pojistka: nikdy useknuty fragment
   if (_askJournal && res && !res.error && !res.ask_saved) { _pendAdd('pendingAsks', { id: _askEntryId, reading_id: _lastReadingId, question: q, answer: answer }); _flushPending(); }
   _askUsed = true;
+  _askLog.push({ q: q, a: answer });   // pro rozbor GPT-6 sol
   _askPhStop();   // otazka polozena -> pole mizi, timer nema co delat
   var wrap = document.getElementById('ask-input-wrap'); if (wrap) wrap.style.display = 'none'; // one question -> close
   var qEl = document.getElementById('ask-question'); if (qEl) { qEl.textContent = q; qEl.style.display = 'block'; } // keep the question visible
@@ -1035,6 +1107,7 @@ async function _generateSpreadReading(o) {
   _paintLoadingMotto(); // tyz duvod jako u prvniho mista (reporty #5/#6)
   if (rdLoad) rdLoad.style.display = 'block';
   var _aqP = document.getElementById('ask-runar'); if (_aqP) _aqP.style.display = 'none';
+  _hideGptReview();
   _hdr = null;
   var pL1 = document.getElementById('layer1-lbl');
   var pL2 = document.getElementById('layer2-lbl');
@@ -1045,6 +1118,7 @@ async function _generateSpreadReading(o) {
   var _castNowS = _castIdx(u);
   var sys = buildSysPrompt(activeChar, lang);
   var prompt = o.buildPrompt(u, o.runes, lang, corrections);
+  _lastGen = { sys: sys, prompt: prompt, lang: lang, kind: o.kind };   // pro rozbor GPT-6 sol (jen admin)
 
   // Journal meta for the SERVER-SIDE save (proxy persists atomically with the deduction).
   var _runeDisplay = o.runes.map(function (r) { return ((r.g || '') + ' ' + (rn(r) || '').toUpperCase()).trim(); }).join(' · ');
