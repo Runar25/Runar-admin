@@ -355,7 +355,9 @@ async function persistJournal(
           if (eid && arr.some((e: any) => e && e.id === eid)) {
             askSaved = true; // already appended -> idempotent success
           } else {
-            arr.push({ id: eid, q: journal.question ?? "", a: journal.answer ?? composeReading(text) });
+            // usage (2026-09-23): cena Asku z dat, ne odhadem — větev ask ho do té doby zahazovala.
+            arr.push({ id: eid, q: journal.question ?? "", a: journal.answer ?? composeReading(text),
+                       ...(usage ? { usage } : {}) });
             const { error: fuErr } = await sb().from("readings")
               .update({ follow_up: arr }).eq("id", rid).eq("user_id", userId);
             if (fuErr) console.error("follow_up update failed:", fuErr.message);
