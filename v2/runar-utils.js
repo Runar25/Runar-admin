@@ -534,6 +534,32 @@ function _endingShape(drawn, lang, seeking, area) {
 }
 
 
+// ── OTÁZKA RUNY POD POSLEDNÍ VĚTOU (2026-09-24, KUKY „7. zkus to“) ─────────────────
+// Každý ownerův popis runy končí otázkou jen té runy. Konec čtení ji dostane jako ZDROJ, ze kterého
+// vyroste, ne jako text k vyslovení (memory prompt-directive-makes-model-copy: sloveso zdroje, ne „použij“).
+// Důvod: konec občas vyzněl naprázdno (Algiz 2026-09-23 „cesta se váží“ — tautologie, ani jedna strana
+// ownerovy otázky). Pilot na produkčním modelu, týž los s otázkou a bez ní, slepý soudce: konec nese
+// otázku runy víc ve 12 z 12 dvojic (EN 6/6, IS 6/6), délka beze změny → RUNAR_DECISIONS 2026-09-24.
+// „…vlastními slovy“: bez toho islandština opsala 4+ slov z otázky ve 3 ze 6 čtení, s tím v 1 ze 6
+// (Laguz „áður en þú átt orð yfir það“); angličtina 0/6 v obou zněních.
+// Zdroj = 4. odstavec textu runy v Kolekci (UI_TEXT[lang].coll_rune) — JEDNO místo (§20), ownerem
+// schválené v obou jazycích. Uvozovací část před dvojtečkou („Perhaps it asks:“) se odřízne.
+// Jen SINGLE a jen bez vlastní otázky tazatele: když se ptá sám, konec patří jeho otázce (§13 — spready
+// a čtení životní runy mají jiný konec a sem nevedou).
+function _runeQuestion(rune, lang) {
+  if (!rune || typeof UI_TEXT === 'undefined') return '';
+  var blok = UI_TEXT[lang === 'is' ? 'is' : 'en'];
+  var odst = blok && blok.coll_rune && blok.coll_rune[rune.n];
+  var p = odst && odst[3];
+  if (!p) return '';
+  var i = p.indexOf(':');
+  var q = (i !== -1 ? p.slice(i + 1) : p).trim();
+  if (!q) return '';
+  return lang === 'is'
+    ? ' Láttu hana eiga rót í spurningu rúnarinnar („' + q + '“) en segðu hana með þínum eigin orðum.'
+    : " Let it grow out of the rune's question (\"" + q + "\"), but say it in your own words.";
+}
+
 // ─── VARIABILITY POOLS (V2) ──────────────────────────────────────
 // DEAD CODE (kept for history, NOT wired). WHY / WHO / WHEN:
 //   Shrine-only variability pools (aspect / imagery / register / placement),

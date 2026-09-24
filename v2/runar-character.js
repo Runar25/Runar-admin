@@ -1688,7 +1688,9 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     hasQ ? S.qBranch(rn(drawn), drawn.g, _questionSafe(u.question)) : S.noqBranch(rn(drawn), drawn.g, worldRef),
     // 2026-09-20: most bere REJSTRIK (tvar) a OBLAST (kam dosedne) misto uhlu — uhel
     // potreboval jen zrusena vyluka uhel[6] x open[1].
-    _endingShape(drawn, lang, u.seeking, u.area),
+    _endingShape(drawn, lang, u.seeking, u.area)
+      // 2026-09-24: otázka runy jako zdroj poslední věty — jen bez vlastní otázky tazatele (_runeQuestion, runar-utils.js).
+      + (hasQ ? '' : _runeQuestion(drawn, lang)),
     // v4.4 (2026-08-22): COCKA SE VRACI — owner: "v single je life rune jako cocka,
     // neni hotovo dokud neni cocka". Priorita zustava VEN (vrati se, az mereni ukaze
     // konflikt oblast x obraz; soulad zatim drzi; `lensOn` se tu proto porad necte).

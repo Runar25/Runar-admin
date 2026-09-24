@@ -1,0 +1,140 @@
+[
+ {
+  "runa": "Algiz",
+  "arm": 1,
+  "area": "Purpose & Path",
+  "seek": "General Guidance",
+  "otazka": "Perhaps it asks you: what do you need to protect now — and what do you not need to hold your boundary against?",
+  "reading": "The dog lies on the rise where the whole flock stays in view, and the rest falls away — only that wide seeing remains. Algiz is watching from a place high enough that nothing needs chasing. Guarding is not the same as gripping; some things keep themselves once they are seen. Where you are going may ask less defending than you think, and more open sky.",
+  "usage": {
+   "input_tokens": 926,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 128,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Isa",
+  "arm": 1,
+  "area": "Family & Home",
+  "seek": "Reflection",
+  "otazka": "Perhaps it asks: what in your life is not moving now — and what could you see if you let it be this time?",
+  "reading": "At the edge of the frozen water, the surface gives way to sound, and under the ice the stream can still be heard running. Isa holds the surface still while the water beneath keeps its course. Something in your home has gone quiet this way, held rather than ended. Kuky, what within your family has stopped moving — and what might you hear in it if you stood still long enough to listen?",
+  "usage": {
+   "input_tokens": 876,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 134,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Thurisaz",
+  "arm": 1,
+  "area": "Family & Home",
+  "seek": "Confirmation",
+  "otazka": "In that pause, it asks: what will appear if, this time, you do not strike back?",
+  "reading": "The crack in the lava stays where it is, while the ground on either side shifts and settles around it. Thurisaz holds that gap open, neither closing it nor widening it. Between you and your people, the same fixed distance waits, and no one has jumped yet. This may be a rift held by old habit, or a quiet standing down that no one has named.",
+  "usage": {
+   "input_tokens": 871,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 128,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Uruz",
+  "arm": 1,
+  "area": "Career & Creativity",
+  "seek": "Insight into Challenge",
+  "otazka": "Rather than telling you to be stronger, it asks: what strength is already in you, and what could come of it?",
+  "reading": "Before the bull comes into view, you hear the suck and tear of the bog letting go of it. Then it climbs out, mud to the shoulder, and keeps walking without shaking itself clean. Uruz is strength that moves while still carrying the weight it came through. In your work this may be the state you are in — hauling, not yet clean, still going.",
+  "usage": {
+   "input_tokens": 928,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 128,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Gebo",
+  "arm": 1,
+  "area": "Love & Relationships",
+  "seek": "Clarity",
+  "otazka": "The question points both ways: what are you willing to give without knowing it will return — and what can you receive without repaying it at once?",
+  "reading": "One hand holds something out, the other opens to take it. Neither hand pulls back, and the weight passes between them without a word. Gebo holds that moment open, before the giving is counted or answered. Between you and someone, it may be that what has been offered is still waiting to be taken in, unhurried and unrepaid.",
+  "usage": {
+   "input_tokens": 930,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 118,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Laguz",
+  "arm": 1,
+  "area": "Inner Growth",
+  "seek": "General Guidance",
+  "otazka": "Perhaps it asks: what do you feel inside before you have words for it?",
+  "reading": "The lagoon holds a mountain on its surface, and the least breath of wind scatters it into pieces. The stone itself never moves, only the water carrying its picture. Laguz keeps that reflection through every tremor, gathering it back when the air goes quiet. Something in you may already know its own shape, Kuky, long before the surface settles enough to show it.",
+  "usage": {
+   "input_tokens": 900,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 133,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ }
+]

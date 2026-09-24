@@ -1,0 +1,140 @@
+[
+ {
+  "runa": "Algiz",
+  "arm": 1,
+  "area": "Tilgangur & Leið",
+  "seek": "Almenn leiðsögn",
+  "otazka": "Ef til vill er þetta spurning hennar: Hvað þarft þú að vernda núna — og gagnvart hverju þarft þú ekki að setja mörk?",
+  "reading": "Fjárhundurinn liggur uppi í brekkunni og sér alla hjörðina í einu. Hann eltir ekki hverja kind, hann heldur bara auga með jaðrinum. Algiz gerir þetta sama: hún vakir yfir heildinni í stað þess að grípa inn í allt. Kannski stendur þú þar núna, sjálft þig rólegt á hæðinni, og margt þarf ekki gæslu þína.",
+  "usage": {
+   "input_tokens": 1580,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 1787,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 180,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Isa",
+  "arm": 1,
+  "area": "Fjölskylda & Heimili",
+  "seek": "Hugleiðing",
+  "otazka": "Hún gæti spurt þig: Hvað er kyrrt í lífi þínu núna — og hvað gætir þú séð ef þú létir það eiga sig í þetta sinn?",
+  "reading": "Við bakkann þar sem ísinn tekur við af vatninu heyrist enn í læknum undir. Isa heldur yfirborðinu kyrru meðan straumurinn rennur áfram niðri. Sumt í heimilinu liggur svona, hljótt að ofan og lifandi að neðan. Hvað er kyrrt milli þín og þinna núna, Kuky, og hvað heyrir þú ef þú lætur það standa óhreyft í þetta sinn?",
+  "usage": {
+   "input_tokens": 1540,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 1787,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 194,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Thurisaz",
+  "arm": 1,
+  "area": "Fjölskylda & Heimili",
+  "seek": "Staðfesting",
+  "otazka": "Á því augnabliki spyr hún: Hvað birtist ef þú slærð ekki frá þér í þetta sinn?",
+  "reading": "Hraunið er allt á hreyfingu nema brúnin sjálf, sem stendur föst meðan sprungan opnast. Þurs heldur þessari brún kyrri meðan hitt gliðnar. Handan hennar bíður hin brúnin, jafn köld og jafn þögul. Þetta gæti verið stökk sem þú átt ógert við þitt fólk, eða brún sem þú stendur á ein og lætur ósagt.",
+  "usage": {
+   "input_tokens": 1521,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 1787,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 179,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Uruz",
+  "arm": 1,
+  "area": "Starf & Sköpun",
+  "seek": "Innsýn í áskorun",
+  "otazka": "Hún biður þig ekki um meiri styrk. Hún spyr frekar: Hvaða kraftur býr í þér nú þegar, og hvað gæti orðið úr honum?",
+  "reading": "Fyrst heyrist soghljóðið í mýrinni, áður en nokkuð sést. Svo rífur nautið fótinn upp úr leðjunni og heldur áfram, skítugt og þungt. Uruz er krafturinn sem kemst áfram án þess að verða hreinn af því. Í því sem þú ert að smíða gæti þetta verið þyngslin sjálf, ekki hindrunin heldur aflið.",
+  "usage": {
+   "input_tokens": 1593,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 1787,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 169,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Gebo",
+  "arm": 1,
+  "area": "Ást & Sambönd",
+  "seek": "Skýrleiki",
+  "otazka": "Spurningin gengur í báðar áttir: Hvað vilt þú gefa án þess að vita hvort það skili sér aftur — og hvað getur þú þegið án þess að þurfa strax að gefa eitthvað í staðinn?",
+  "reading": "Ein hönd réttir fram og önnur opnast á móti, og milli þeirra stendur örlítið bil. Gebo heldur því bili opnu meðan báðar hendur hreyfast. Hvorug þeirra veit hvað hin ber. Það gæti verið að þú standir þarna með lófann opinn, óviss um hvort eitthvað komi til baka.",
+  "usage": {
+   "input_tokens": 1655,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 1787,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 147,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Laguz",
+  "arm": 1,
+  "area": "Innri Vöxtur",
+  "seek": "Almenn leiðsögn",
+  "otazka": "Hún gæti spurt þig: Hvað finnur þú innra með þér áður en þú átt orð yfir það?",
+  "reading": "Steinninn á lónsbotninum haggast ekki þótt spegilmyndin bærist við minnsta blæ. Laguz heldur vatninu yfir honum, hvort sem það er kyrrt eða krappt. Yfirborðið segir eitt í dag og annað á morgun. Kannski, Kuky, þekkirðu grjótið undir áður en þú átt orð yfir það.",
+  "usage": {
+   "input_tokens": 1558,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 1787,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 161,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ }
+]

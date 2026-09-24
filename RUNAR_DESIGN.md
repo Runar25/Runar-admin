@@ -128,6 +128,12 @@ Kánon zrcadla už tady je. Tohle mu dává **jméno a mechanismus** — a jedno
   slova „ty/þú"**. Rozhoduje, jestli má děj ve větě **vlastníka** — bezvlastnická vnitřní událost
   („myšlenka chodí celou noc dokola") padne na jediného kandidáta, který zbývá: tazatele.
   Doklad a oprava → `RUNAR_DECISIONS.md` 2026-09-22 (4).
+- ⭐ **Obraz přenesený do oblasti NENÍ tvrzení (KUKY 2026-09-24, „rozsekneme to jednou pro vždy").** Věta, která nese
+  **pohyb obrazu** do zvolené oblasti (Perth: *„In your work, some piece rises unbidden, half-formed, then sinks back"*),
+  pořád mluví skrze obraz — říká, co se děje v obraze, ne co člověk dělá. Totéž **prostředí, které má každý** (domov,
+  blízcí, práce): *„každý má domov, takže mu to říká, že má něco hledat u sebe doma."* **Tvrzením je činnost nebo
+  okolnost, kterou člověk nejspíš nemá** („tvoje zahrada", „když maluješ") — tu smí Rúnar nést jen jako obraz, ne jako
+  jeho život. Platí pro čtení i Ask. Používá to rubrika GPT rozboru, kategorie A (`GPT_REVIEW_RULES`, `runar-reading.js`).
 
 ### Citace a motta pro UI (schválená zásoba)
 
@@ -1258,8 +1264,10 @@ plus dvě síta výš a kontrola „čí je to pozemek" (předmět/sloveso nesm�
 2. **Věty mají v praxi role, i když je nikdo nepředepisuje** (předepsat je bylo měřeno a zamítnuto — dražší, nic nedá):
    věta 1 = úhel + místo/scéna · věta 2 = esence (jméno runy; NEJPŘETÍŽENĚJŠÍ — padá tam i jméno člověka a aspekt) ·
    poslední = konec/most; „you stand" na začátku dělá úhel [6], na konci dělal konec (vypuštěno).
-3. **Most k člověku** — jediné místo, kde smí čtení mluvit o životě člověka, vždy jako MOŽNOST („this may be…"),
-   nikdy diagnóza ani krok. **Od 2026-09-20 není most losovaný naslepo — řídí ho to, co člověk zadal:**
+3. **Most k člověku** — jediné místo, kde smí čtení **tvrdit** něco o životě člověka, vždy jako MOŽNOST („this may be…"),
+   nikdy diagnóza ani krok. ⚠️ **Věta před mostem smí nést pohyb obrazu do zvolené oblasti** (KUKY 2026-09-24: *„pořád
+   mluví skrze obraz, neříká, co člověk dělá, ale co se děje v obraze"*) — to tvrzení není; hranici vlastní sekce
+   „Cold reading" výš. **Od 2026-09-20 není most losovaný naslepo — řídí ho to, co člověk zadal:**
 
    ⭐ **Most: AREA určuje KAM dosedne, SEEKING určuje JAKÝ TVAR vezme** (KUKY 2026-09-20: *„ano, most ať dosedne
    do AREA a tvar ať určuje SEEKING"*). Není to nová myšlenka — je to první mechanismus ke kánonu **„runa je základ,
@@ -1287,8 +1295,11 @@ plus dvě síta výš a kontrola „čí je to pozemek" (předmět/sloveso nesm�
    TOHO tvaru, který rejstřík zvolil (otázka bez útěchy, dvě možnosti bez útěchy). Jinak by Reflection změkčila Hagalaz.
    ⚠️ **Rameno Reflection hlídat:** otázkový tvar umí navádět a v Asku dělal doslovové ocásky — vlastní kontrola v testu.
    ⚠️ **Dvě možnosti = pravidlo pro čočku životní runy** — čočka se projeví jako jedna z možností, nejmenovaná.
-   **Znění vlastní KÓD, doc ho neopisuje (§20):** `SEEK_SHAPE` · `BRIDGE_AREAS(_IS)` · `ENDING_OPEN/HEAVY(_IS)`
-   v `v2/runar-utils.js`, výjimka v `_domainContext` (`runar-character.js`). Nasazeno v4.36 + v4.37.
+   **Z čeho most vyrůstá (od v4.53, KUKY 2026-09-24 „zkus to"):** z **otázky runy** — té, kterou končí ownerův popis
+   runy a text v Kolekci. Model ji dostane jako zdroj, ne jako větu k vyslovení; jen single a jen bez vlastní otázky
+   tazatele. Proč a měření → `RUNAR_DECISIONS.md` 2026-09-24 (16).
+   **Znění vlastní KÓD, doc ho neopisuje (§20):** `SEEK_SHAPE` · `BRIDGE_AREAS(_IS)` · `ENDING_OPEN/HEAVY(_IS)` ·
+   `_runeQuestion` v `v2/runar-utils.js`, výjimka v `_domainContext` (`runar-character.js`). Nasazeno v4.36 + v4.37.
    Oba pooly mají tytéž tři tvary ve stejném pořadí, takže **každý tvar má i těžký protějšek** — těžkost runy
    volí pool, rejstřík volí tvar.
    <!-- changelog 2026-09-20: při vkládání mechanismu mi tu zůstal osiřelý odstavec z původního znění bodu 3

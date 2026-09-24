@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-24",
- "prompt_version": "v4.52-parita-obrazu",
+ "prompt_version": "v4.53-otazka-runy",
  "pravidla": [
   {
    "hash": "084253a8b9d6",

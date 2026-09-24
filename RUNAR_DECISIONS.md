@@ -6939,3 +6939,35 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   (`normalizeCorrections` → `getCorrPrompt('is')`): v promptu, IS 29 řádků, EN prázdný. Chyba z testu Opus 5 (EVAL_LOG 2026-09-24 (4)).
 - **Na základě:** DECISIONS 2026-09-23 (6) bod 1. **Reverzibilita:** smazání řádku (owner).
 - Affected doc(s): `check-is.py` (vzor).
+
+## 2026-09-24 (15) — Věta, která nese obraz do oblasti, NENÍ tvrzení o člověku (rubrika GPT rozboru, kategorie A)
+
+- **Rozhodl:** KUKY 2026-09-24, bod 1 („rozsekneme to jednou pro vždy"), po ukázce Perth a Kenaz (Career & Creativity), kde třetí
+  věta zní *„In your work, some piece rises unbidden, half-formed, then sinks back…"*. Owner: *„pořád mluví skrze obraz. Neříká úplně,
+  co člověk dělá, ale co se děje v obraze… každý má domov, takže mu to říká, že má něco hledat u sebe doma. Záleží, jestli je to
+  činnost, kterou člověk pravděpodobně nikdy nedělá… to platí i pro naše cold reading."*
+- **Co:** pohyb obrazu přenesený do zvolené oblasti a prostředí, které má každý (domov, blízcí, práce), viděné skrz obraz = NE tvrzení.
+  Tvrzení = činnost nebo okolnost, kterou člověk nejspíš nemá, podaná jako jeho. Prompt čtení se NEMĚNÍ (nic takového nezakazoval);
+  mění se měřítko: rubrika rozboru (`GPT_REVIEW_RULES` A) by jinak Perth i Kenaz hlásila jako chybu.
+- **Návrh, který tím padl:** CODE-tune navrhoval pravidlo „obecně ano, konkrétní fakta o vztazích ne" — owner hranici položil jinam
+  (podle toho, jestli prostředí člověk má, ne podle konkrétnosti).
+- **Bod 2 (Confirmation, dvě možnosti vs. jedna):** owner *„necháme být"* — beze změny.
+- Affected doc(s): `RUNAR_DESIGN.md` (Cold reading — nový bod; Stavba Single bod 3 opraven: „jediné místo, kde smí čtení mluvit
+  o životě" odporovalo tomuhle rozhodnutí).
+
+## 2026-09-24 (16) — Otázka runy jako skrytý zdroj poslední věty (v4.53)
+
+- **Rozhodl:** KUKY 2026-09-24, bod 7 („zkus to"). **Provedl:** CODE-tune.
+- **Co:** single čtení bez vlastní otázky tazatele dostane za pokyn konce otázku runy (4. odstavec textu v Kolekci, `UI_TEXT.coll_rune`)
+  jako zdroj: *„Let it grow out of the rune's question (…), but say it in your own words."* / *„Láttu hana eiga rót í spurningu
+  rúnarinnar (…) en segðu hana með þínum eigin orðum."* (`_runeQuestion`, `runar-utils.js`).
+- **Proč:** konec čtení občas vyzněl naprázdno (Algiz 2026-09-23 „cesta se váží"), přitom ownerův popis každé runy končí otázkou,
+  která má dvě skutečné strany.
+- **Měřeno (produkční model Opus 5, týž los s otázkou a bez ní, slepý soudce):** konec nese otázku runy víc ve **12 z 12** dvojic
+  (EN 6/6, IS 6/6). Délka beze změny. Doslovný opis ≥ 4 slov z otázky: EN 0/6; IS 3/6 s prvním rámcem → **1/6** s „vlastními slovy"
+  (Laguz: *„áður en þú átt orð yfir það"* — věta z Kolekce se tak může ve čtení objevit). Data → `docs/eval/2026-09-24-otazka-runy/`.
+- **Hranice:** n = 6 na jazyk, jeden los na runu; netestováno s životní runou (čočka tvaruje taky poslední větu) ani na spreadech.
+  Spready a čtení s vlastní otázkou záměrně NE (§13: mají jiný konec). Golden: změnil se jen `single_noq_en/is`.
+- **Sledovat na živých čteních:** opis věty z Kolekce (hlavně Laguz), souběh s čočkou životní runy.
+- **Reverzibilita:** jedna řádka v `buildReadingPrompt` (single).
+- Affected doc(s): `RUNAR_DESIGN.md` (Stavba Single, „Z čeho most vyrůstá").

@@ -11,8 +11,9 @@ const path = require('path');
 // 2026-09-21: default mireny na committed baseline (v rootu vznikal druhy, zastaraly soubor).
 const OUT = process.argv[2] || 'scripts/golden/golden_baseline.json';
 
-// Only the files the builders need (avoid t()/UI_TEXT redeclaration noise).
-const files = ['runar-config.js', 'runar-runes.js', 'runar-utils.js', 'runar-character.js'];
+// Only the files the builders need. 2026-09-24: + runar-translations.js — single čtení bere otázku runy
+// z UI_TEXT.coll_rune (_runeQuestion); bez něj by golden tu část promptu vůbec neviděl (§19.3).
+const files = ['runar-config.js', 'runar-runes.js', 'runar-translations.js', 'runar-utils.js', 'runar-character.js'];
 
 const M = {};
 Object.getOwnPropertyNames(Math).forEach((k) => { M[k] = Math[k]; });

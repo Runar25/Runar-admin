@@ -1,0 +1,278 @@
+[
+ {
+  "runa": "Algiz",
+  "arm": 0,
+  "area": "Purpose & Path",
+  "seek": "General Guidance",
+  "otazka": "Perhaps it asks you: what do you need to protect now — and what do you not need to hold your boundary against?",
+  "reading": "The dog lies on the slope where the whole flock stays in view, then the sheep blur and one wandering ewe holds its eyes. Algiz is that watchfulness, the wide look that keeps its edges while it narrows to one moving thing. You can see far without following everything you see. Where you are going, the choosing may already be happening in what you keep your eyes on.",
+  "usage": {
+   "input_tokens": 878,
+   "cache_creation_input_tokens": 801,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 801,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 134,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Algiz",
+  "arm": 1,
+  "area": "Purpose & Path",
+  "seek": "General Guidance",
+  "otazka": "Perhaps it asks you: what do you need to protect now — and what do you not need to hold your boundary against?",
+  "reading": "The sheepdog lies on the rise, taking in the whole flock at once, then its eyes settle on the one ewe drifting toward the edge. Algiz is that watching — it holds the wide field open while guarding the one thing that could wander off. Not every sheep needs chasing, and not every direction needs defending. Where you are going, the watching may matter more than the fence.",
+  "usage": {
+   "input_tokens": 919,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 137,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Isa",
+  "arm": 0,
+  "area": "Family & Home",
+  "seek": "Reflection",
+  "otazka": "Perhaps it asks: what in your life is not moving now — and what could you see if you let it be this time?",
+  "reading": "Where the ice thins at the bank, the surface gives way to sound, and the stream runs on beneath it. Isa holds the water still on top while the current keeps its own pace below. A house can go quiet this way, the talk thinning while something else carries on under it. Kuky, what is still moving under the quiet in your family?",
+  "usage": {
+   "input_tokens": 829,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 120,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Isa",
+  "arm": 1,
+  "area": "Family & Home",
+  "seek": "Reflection",
+  "otazka": "Perhaps it asks: what in your life is not moving now — and what could you see if you let it be this time?",
+  "reading": "Where the stream meets the ice, the water goes quiet but does not stop, and you can still hear it running beneath the white crust. Isa holds the surface still while the current keeps its course underneath. A house can be like that in winter, quiet at the table, moving somewhere lower down. What is held still between you and your people, Kuky, and what might you hear if you stopped breaking the ice?",
+  "usage": {
+   "input_tokens": 869,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 141,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Thurisaz",
+  "arm": 0,
+  "area": "Family & Home",
+  "seek": "Confirmation",
+  "otazka": "In that pause, it asks: what will appear if, this time, you do not strike back?",
+  "reading": "The lava has split, and the far edge stays where it has always been while the ground between gives way. Thurisaz holds that gap open, neither closing it nor narrowing the distance. The far side is family, standing clear and unmoved, close enough to see and too far to reach by walking. This may be a rift that stays a rift, or a crossing no one has yet made.",
+  "usage": {
+   "input_tokens": 831,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 133,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Thurisaz",
+  "arm": 1,
+  "area": "Family & Home",
+  "seek": "Confirmation",
+  "otazka": "In that pause, it asks: what will appear if, this time, you do not strike back?",
+  "reading": "The lava holds its shape on both sides, and only the crack between them gives way. Thurisaz stands at that gap, keeping the two edges apart. Here the ground is family, and the gap sits between you and someone at the same table. This may be a rift that stays open, or a space where no blow is returned.",
+  "usage": {
+   "input_tokens": 864,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 115,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Uruz",
+  "arm": 0,
+  "area": "Career & Creativity",
+  "seek": "Insight into Challenge",
+  "otazka": "Rather than telling you to be stronger, it asks: what strength is already in you, and what could come of it?",
+  "reading": "Before the bull breaks the surface you hear the suck of the bog, the heave of a body that has not yet risen. Uruz is that pull — strength spending itself against the ground that holds it. The work costs more than it looks like it should, and the mud does not thank you. What you are making may be moving under conditions that will not ease.",
+  "usage": {
+   "input_tokens": 889,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 121,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Uruz",
+  "arm": 1,
+  "area": "Career & Creativity",
+  "seek": "Insight into Challenge",
+  "otazka": "Rather than telling you to be stronger, it asks: what strength is already in you, and what could come of it?",
+  "reading": "Before you see the bull, you hear it — the suck and tear of bog letting go of something that refuses to stay. Then the mud breaks, and it walks on, heavy and streaked, not clean. Uruz is the strength that moves through the ground holding it, not around it. The work in your hands may be pulling free that way, coated in what it came out of.",
+  "usage": {
+   "input_tokens": 921,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 129,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Gebo",
+  "arm": 0,
+  "area": "Love & Relationships",
+  "seek": "Clarity",
+  "otazka": "The question points both ways: what are you willing to give without knowing it will return — and what can you receive without repaying it at once?",
+  "reading": "One hand holds something out, and the other opens to take it. Gebo keeps both hands in the same motion, neither one finished without the other. Watch the moment the offer leaves one palm and has not yet landed in the other. Between you and someone, the giving and the taking may not be weighed evenly, and that is worth your attention.",
+  "usage": {
+   "input_tokens": 877,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 121,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Gebo",
+  "arm": 1,
+  "area": "Love & Relationships",
+  "seek": "Clarity",
+  "otazka": "The question points both ways: what are you willing to give without knowing it will return — and what can you receive without repaying it at once?",
+  "reading": "One hand holds something out, the other opens to take it, and neither pulls back. Gebo holds both hands in that moment, before either closes. Notice which hand is easier for you to be, the giving or the taking. Between you and someone, the exchange may be waiting on the harder of the two.",
+  "usage": {
+   "input_tokens": 923,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 109,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Laguz",
+  "arm": 0,
+  "area": "Inner Growth",
+  "seek": "General Guidance",
+  "otazka": "Perhaps it asks: what do you feel inside before you have words for it?",
+  "reading": "The lagoon holds a mountain on its surface, and the least breath of wind scatters it into pieces. The stone itself has not moved; only the seeing of it broke. Laguz carries that reflection, and returns it whole when the water settles. Kuky, it may be that your looking has grown steadier than the surface it rests on.",
+  "usage": {
+   "input_tokens": 862,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 123,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Laguz",
+  "arm": 1,
+  "area": "Inner Growth",
+  "seek": "General Guidance",
+  "otazka": "Perhaps it asks: what do you feel inside before you have words for it?",
+  "reading": "The stone at the lagoon's bottom stays where it is, while the reflection above it breaks apart at the least breath of wind. Laguz holds that water, letting it shake and then settle again. What you see on the surface is not the same thing as what rests below it. Something steady may already be there, Kuky, under all that trembling.",
+  "usage": {
+   "input_tokens": 893,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 121,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ }
+]

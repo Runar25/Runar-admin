@@ -619,14 +619,14 @@
   čtecí `claude-proxy` volá jen Anthropic — čtení na sol napojit tam; (5) várka IS + Ask + Norns proti Opus 5.
 - [ ] **OTEVŘENÉ Z 23.–24. 9. — sepsáno 2026-09-24 na ownerovo „nezapomněli jsme na něco, co leží v chatu?"** (CODE-tune; zdroj: `docs/archive/2026-09-23-rozbor-reportu.md` + chat)
   **Čeká na ownerovo rozhodnutí** (otázky z rozboru, dosud bez odpovědi):
-  1. Smí 3. věta čtení říct, co se děje v oblasti tazatele (pochválené Perth/Kenaz to dělají, pravidlo to dnes povoluje jen v poslední větě jako možnost)?
-  2. „Confirmation" končí vždy dvěma možnostmi — nechat, dávat jednu, nebo střídat? (owner u Thurisaz chtěl jednu odpověď)
+  1. ✅ *(owner 2026-09-24: ANO, když mluví skrze obraz nebo o prostředí, které má každý; tvrzení = činnost, kterou člověk nejspíš nemá — DECISIONS 2026-09-24 (15), rubrika A)* Smí 3. věta čtení říct, co se děje v oblasti tazatele (pochválené Perth/Kenaz to dělají, pravidlo to dnes povoluje jen v poslední větě jako možnost)?
+  2. ✅ *(owner 2026-09-24: necháme být)* „Confirmation" končí vždy dvěma možnostmi — nechat, dávat jednu, nebo střídat? (owner u Thurisaz chtěl jednu odpověď)
   3. ✅ *(owner 2026-09-24: ANO, jen kde sedí k runě — k napsání)* Sen jako obraz — zkusit 3–4 obrazy, kde sen patří někomu jinému / probuzení (Perth, Laguz, Dagaz)? V kánonu o snech nic není.
   4. ✅ *(2026-09-24: bublina nad místem OK; průhlednost = jako ⚑ — opraveno)* Helper „?": (a) na formuláři bublina „tady je návod" místo hesla zrcadla, nebo obojí? (b) vadila průhlednost kolečka, nebo okénka?
-  5. Tvůj nápad „místo podle oblasti" (úzce: Family + Career, 3–4 runy) — po přepisu oblastí (DECISIONS 2026-09-23 (12)) je potřeba menší; dělat?
+  5. ⏸ *(owner 2026-09-24: šlo o víc slov pro oblast, ne o místo — viz položka „Slova oblastí se opakují" níž)* Tvůj nápad „místo podle oblasti" (úzce: Family + Career, 3–4 runy) — po přepisu oblastí (DECISIONS 2026-09-23 (12)) je potřeba menší; dělat?
   6. ✅ *(zjištěno z user_agent reportů: vše z mobilu)* Fakta: Thurisaz 22. 9. a 23. 9. na stejném zařízení? · Jera brambory: vadila hlavně věta „What you gave to your rest was quiet…" (tvrdí, co jsi dělal)?
   **Schváleno / slíbeno, NEHOTOVO:**
-  7. **Otázka runy jako skrytý podklad poslední věty čtení** (owner „ok" změřit; v Kolekci už otázka je) — čtení ji nesmí citovat doslova.
+  7. ✅ *(hotovo 2026-09-24, v4.53 — DECISIONS 2026-09-24 (16); sledovat opis věty z Kolekce a souběh s čočkou životní runy)* **Otázka runy jako skrytý podklad poslední věty čtení** (owner „ok" změřit; v Kolekci už otázka je) — čtení ji nesmí citovat doslova.
   8. **Obraz napříč zařízeními** (rebarbora 2× po sobě) — CODE-tune 2026-09-23 slíbil „jako další krok"; plán v položce „Obraz se může zopakovat napříč zařízeními" níž.
   9. Helper „?" má ukazovat i na návod (návod je od 2026-09-24 v záložce čtení).
   10. Deník: u karet čtení ukázat volby (oblast · hledání · záměr) jako ve čtení (report 2026-09-21 „s glyfem runy napsané, na co jsem se ptal").
@@ -637,6 +637,11 @@
   14. ⏸ *(owner: měřit na živých Ascích — slova obrazu v uložených odpovědích před/po odebrání věty)* Ask: pravidlo proti studenému čtení v něm nese „Describe the image" — čtvrtý zámek do čtení, neměřen (DECISIONS 2026-09-23 (13)).
   15. ⏸ *(owner: zatím nechat, bude jich víc k opravě)* Statická čtení (Kolekce, s hlasem) vznikla před popisy run — Dagaz popisu odporuje (položka níž); projít i ostatní 24 proti popisům.
   **Hlídat po živém testování:** Opus 5 (délka Norns, Ask, `readings.usage.model`) · kvalita rozboru gpt-6-luna (vymýšlí výtky?) · dva Asky (krok 1, jen admin) → pak server + `ASK_MULTI_LIVE` · ~35 nových obrazů z 23.–24. 9. ve skutečných čteních.
+- [ ] **Slova oblastí se opakují — rozšířit (KUKY 2026-09-24, bod 5: „Rúnar používá work, práce… tím obohatit obraz, platí i pro ostatní AREA; sledovat, jak moc se opakují")**
+  - **Změřeno 2026-09-24** (`scripts/utils/oblasti_slova.js`, EN, prompty v4.39+, 7–10 čtení na oblast): Career „work" 8/8 a „making" 6/8 · Love „between" 8/8 · Healing „rest" 8/10 a „mending" 6/10 · Purpose „going" 6/9. Ve všech čteních ostatních oblastí je „work" jen ve 4 %.
+  - **Příčina (zjištěno čtením promptu):** jsou to přesně slova, která v promptu stojí DVAKRÁT — v popisu oblasti (`_domainContext`: „land on making and work") i v cíli mostu (`BRIDGE_AREAS`: „in what the seeker is making"). Model je vrací.
+  - **Návrh CODE-tune (čeká na ownera):** nepřidávat do promptu seznam dalších slov — model by opakoval ta nová (memory `prompt-directive-makes-model-copy`). Místo toho 3–4 **podoby oblasti losované per čtení** (Career: práce pro druhé · věc dělaná rukama · nápad, který nabírá tvar · řemeslo), každá bez opakovaného podstatného jména, a slovo oblasti v promptu jen jednou. Měřit tímtéž skriptem před/po.
+  - IS: jen 22 čtení s oblastí a všechna ze starších promptů — islandský stav zatím nejde změřit.
 - [ ] **Druhý Ask — plán po krocích (KUKY 2026-09-24: „vždy postupně od jednoduššího ke komplexnějšímu“; premium 2, standard 1, vše zdarma)**
   - **Krok 1 HOTOVÝ v klientu, zapnutý JEN pro admina** (`ASK_MULTI_LIVE = false`, `TIERS.*.asks_per_reading`): dva Asky ke čtení, Rúnar o předchozí výměně neví. → owner živě testuje.
   - **Před ostrým zapnutím (`ASK_MULTI_LIVE = true`) musí jít ven server** (`claude-proxy`): (a) Ask smí i standard (dnes 403 pro vše kromě premium); (b) zdarma do `asks_per_reading` tieru — `legitAsk` dnes pustí zdarma jen PRVNÍ Ask, druhý by prémiovému uživateli strhl měsíční čtení; (c) nad limit odmítnout, nestrhávat; (d) počty zrcadlit z configu + kontrola shody ve smoke (vzor NAME_LORE_LIMIT); (e) atomický zápis `follow_up` (nález 2 níž). Texty „one answer left“ (`ask_teaser`) přepsat podle tieru.
