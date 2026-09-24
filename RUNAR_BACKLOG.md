@@ -90,9 +90,9 @@
   by cache umožnil, ale (a) při dnešním provozu by 5min cache skoro vždy minula a zápis stojí 1,25× → dráž;
   (b) projektový nález „system prompt model ignoruje, per-čtení injekci poslechne" → napřed změřit, jestli korekce
   ze systému drží. **Cache má zatím smysl jen v testech.** Co udělat, od nejlevnějšího:
-  1. ✅ **Owner smazal řádek `test → test replacement`** přes Supabase (shrine to neumí) — DECISIONS 2026-09-23 (15). (`both`, od 2026-05-11): jde do KAŽDÉHO čtení
+  1. ✅ **Owner smazal řádek `test → test replacement`** přes Supabase (shrine to neumí) — DECISIONS 2026-09-23 (17). (`both`, od 2026-05-11): jde do KAŽDÉHO čtení
      v obou jazycích a nic neopravuje; v repu na něm nic nezávisí (grep 2026-09-23). CODE mazat nesmí.
-  2. ✅ `fyrsta ljós vorunnar` přepnuto na `is` (DECISIONS 2026-09-23 (12)).
+  2. ✅ `fyrsta ljós vorunnar` přepnuto na `is` (DECISIONS 2026-09-23 (16)).
   3. Dva jednorázové přepisy celých otázek (Fehu *„Hvað hefur þú verið að halda innan þín…"*, *„hvar hefur orkan
      þín farið í land sem þornar?"*) opravují styl jedné vygenerované věty, která se doslova nevrátí → kandidáti
      na smazání (owner, zatím nerozhodl). ✅ *„Auða rúnan… tóm blað"* rozděleno na `rúnan → rúnin` + `tóm blað → tómt blað`.
@@ -115,7 +115,7 @@
 - [ ] ⭐ **Úhel [4] „out of sight" × zvukový obraz** — owner 2026-09-23: *„nemůže být použito pro zvukové obrazy."* Zkoušena
   vestavěná výjimka podle precedentu úhlu [2] (EVAL_LOG 2026-09-23 (8) bod 4): Opus 4.8 zvuk v prvních dvou větách 0/4 → 3/3.
   EN `… If the image lives in sound, open with what is heard but not seen.` · IS (ověřeno korpusem) `… Ef myndin berst að
-  eyrum, byrjaðu þá á því sem heyrist en sést ekki.` ✅ **Owner rozhodl výjimku** (DECISIONS 2026-09-23 (15)) → handoff
+  eyrum, byrjaðu þá á því sem heyrist en sést ekki.` ✅ **Owner rozhodl výjimku** (DECISIONS 2026-09-23 (17)) → handoff
   CODE-tune předán; zbývá nasadit.
 - [ ] **Shrine: korekce nejdou smazat** (nález 2026-09-23) — záložka WORD CORRECTIONS umí jen přidat a vypsat
   (`runar-shrine.html` `saveCorrection`/`loadCorrections`), mazání nemá. Owner tak smaže řádek jen přes Supabase. Doplnit

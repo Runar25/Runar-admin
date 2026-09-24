@@ -9,6 +9,8 @@
 #    záznamů CODE-read na (10)–(12).
 #    2026-09-23 znovu: CODE-tune zapsal druhé (6) a (7) → přečíslováno na (9) a (10) (pozdější záznamy
 #    ustupují; na (6) a (7) CODE-read už odkazovaly check-is.py a backlog).
+#    Znovu 2026-09-23: dvě (12) a dvě (15). Tentokrát ustoupily záznamy CODE-read (→ (16), (17)), protože
+#    na čísla CODE-tune už odkazoval kód (`runar-utils.js`) a CLAUDE.md §5 — menší zásah než měnit cizí odkazy.
 
 ---
 
@@ -6751,7 +6753,7 @@ Obsah záznamu platí beze změny. — CODE-tune
 **Mez:** soudci četli EN; IS ověřené korpusem + is-grammar-qa. Obrazy zatím neviděly skutečné čtení — to ukáže testování. 10 neprošlých starých obrazů zůstává v bance, dokud o nich nerozhodne owner.
 **Affected doc(s):** `RUNAR_POPISY_RUN.md` (Tiwaz Znění B, předchozí commit) · `docs/archive/2026-09-23-brana-s-popisy.md` (nový) — v tomtéž commitu.
 
-## 2026-09-23 (12) — Blok korekcí zeštíhlen v DB: rozsah, rozdělení, kratší vysvětlení (pokyn ownera)
+## 2026-09-23 (16) — Blok korekcí zeštíhlen v DB: rozsah, rozdělení, kratší vysvětlení (pokyn ownera)
 
 - **Co (CODE-read přes `supabase db query --linked`, každá změna s `returning`):**
   1. `fyrsta ljós vorunnar → fyrsta ljós vorsins`: `lang_scope` `both` → `is` (islandská fráze lezla do EN promptu).
@@ -6806,7 +6808,7 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 **Mez / otevřené:** od 1. 10. budou mít Uruz, Berkana, Ehwaz, Ingwaz jen 2 dosažitelné obrazy (Dagaz a Blank už teď 2) → dopsat (backlog).
 **Affected doc(s):** `docs/archive/2026-09-23-brana-s-popisy.md` (kolo 4) · `RUNAR_BACKLOG.md` (tenké runy) — v tomtéž commitu.
 
-## 2026-09-23 (15) — Úhel [4] „out of sight" dostane vestavěnou výjimku pro zvukové obrazy (ne výluku) · řádek `test` smazán
+## 2026-09-23 (17) — Úhel [4] „out of sight" dostane vestavěnou výjimku pro zvukové obrazy (ne výluku) · řádek `test` smazán
 
 - **Co:** owner rozhodl **výjimku ve větě úhlu**, ne výluku úhlu pro zvukové obrazy (*„výjimka"*). Znění:
   EN `… or not yet arrived. If the image lives in sound, open with what is heard but not seen.`
