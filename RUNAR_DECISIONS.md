@@ -6886,3 +6886,13 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 **Změřeno** (ownerovo čtení Isy z 23. 9. se skutečným obrazem): sol s přemýšlením 1647/469 tokenů ~0,8 c · sol bez 1647/274 ~0,6 c · **luna bez 1647/277 ~0,03 c**; luna bez Rúnarova systémového promptu **1137/233 ~0,023 c** se stejnými nálezy (tvrzení o domácnosti, dům a trubky mimo obraz, Ask opakuje čtení). Luna v jednom z běhů přidala vymyšlenou výtku (u Isy „chybí kořeny") — rozptyl modelu, n = 3 běhy. Opakovaný stejný rozbor jde z cache (levnější); nový vždy zapisuje do cache.
 **Co:** edge fn `gpt-review` → `gpt-6-luna`, `reasoning_effort: none` (fallback `minimal`); klient neposílá Rúnarův systémový prompt; tlačítko „GPT-6 luna". Sol zůstává v záloze (jedna konstanta v edge fn).
 **Affected doc(s):** žádné.
+
+## 2026-09-24 (9) — Islandská korekce `barninu lagt → barnið lagt` do produkční DB
+
+- **Co:** CODE-read vložil do `runar_corrections` (is): `barninu lagt` → `barnið lagt`, vysvětlení *„„leggja“ stýrir þolfalli"*
+  (přenosné pravidlo rekce). Ověřeno: slovník (*leggja* — fallstjórn þolfall), korpus *barnið lagt* 42× × *barninu lagt* 0×.
+  Protlačeno produkční cestou (`normalizeCorrections` → `getCorrPrompt('is')`): řádek v promptu, IS 28 řádků, EN blok prázdný.
+- **Na základě:** DECISIONS 2026-09-23 (6) bod 1 (*potvrzená IS chyba vždy do korekcí*); chyba z testu Opus 5 (EVAL_LOG 2026-09-24 (2)).
+- **Nezapsáno:** Opus 4.8 *„hvor á sinn hátt"* (má být *hvort*) — závisí na rodu podmětu, řetězcová korekce by opravovala i správné tvary.
+- **Reverzibilita:** smazání řádku (owner).
+- Affected doc(s): `check-is.py` (vzor).

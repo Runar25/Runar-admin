@@ -5196,3 +5196,41 @@ značka *„nikdo si nevšiml"* **0/4** (s plným úhlem 4/4, PROD 1/4), opis z�
 **Hranice:** Opus 5 jen 1 opakování (n = 14 EN, 3 IS); p u 9 : 5 ≈ 0,42; soudci = Claude; IS soudci bez nástrojů.
 Podklady → `docs/eval/2026-09-22-modely/opis/is/`, `…/opus5-vs-opus48/`, `…/opis/varka/` (rameno `detail_u1`, Opus 5),
 skripty `opis_build_is.js`, `opis_mereni_is_u1.js`, `opis_pary3.js`, `opus5_soudy.js`, `opus5_tvrda.js`, `wf_opus5_vs_opus48.js`.
+
+## 2026-09-24 (2) — Opus 5 × Opus 4.8 na single + Norns, EN i IS: Opus 5 lepší, hlavně v islandštině
+
+**Owner:** *„změř jen pár run na single a Norns. Chci přejít na Opus 5. Ale existuje ještě lepší řešení? GPT je ve hře,
+nepotřebuju to teď uspěchat."* **Jak:** produkční prompty beze změny (dnešní kód a korekce): 3 runy single (Fehu · Hagalaz
+· Mannaz) + 2 sestavy Norns (Gebo/Ingwaz/Othila · Fehu/Hagalaz/Berkana), EN i IS, 1× každým modelem = 20 čtení, $0,36.
+Opus 5 s `thinking: disabled` (bez něj nevrátí text — 2026-09-24 (1)). Slepí soudci (12 agentů, kánon viditelný, druhý
+soudce A/B prohozeně) + ruční IS kontrola s korpusem.
+
+| slepí soudci (Opus 5 : Opus 4.8) | EN | IS |
+|---|---|---|
+| single | 2 : 1 | **3 : 0** |
+| Norns | 1 : 1 | **2 : 0** |
+Shoda obou soudců 10/10. **Dohromady se 14 EN + 3 IS dvojicemi z 2026-09-24 (1): Opus 5 20 : 8** (znaménkový test p ≈ 0,04;
+EN část táhnou i rady do života, které dává Opus 4.8 — bez nich byla EN 6 : 5).
+
+| $/čtení · slov (tento běh) | Opus 4.8 | Opus 5 |
+|---|---|---|
+| single EN | 0,0114 · 66/55/61 | 0,0079 · 56/67/67 |
+| single IS | 0,0222 · 56/63/64 | 0,0252 · 49/52/44 |
+| Norns EN | 0,0153 · 111/113 | 0,0151 · **153/135** |
+| Norns IS | 0,0252 · 119/125 | 0,0253 · 123/124 |
+(ceny kolísají hlavně podle toho, jestli trefily teplou cache; ceník i tokenizér stejné — 2026-09-24 (1).)
+
+**Islandština — ověřeno ručně a korpusem:**
+- **Opus 4.8** *„…raðar því sem augun taka inn, **hvor** á sinn hátt"* — podmět *Tvö* (střední rod) → *hvort*; táž třída jako jeho
+  *„Hvora sem er"* 2026-09-22. Do korekcí NE — správný tvar závisí na rodu podmětu, řádek s řetězcem by opravoval i správné *hvor*.
+  Opus 4.8 také otevřel doslova islandským zněním úhlu (*„Líttu snöggt yfir alla myndina, láttu svo allt hverfa nema eitt."*)
+  a pustil do textu slovo zadání (*„Núningurinn er…"*).
+- **Opus 5** *„Svo er **barninu** lagt í fangið"* — *leggja* řídí akuzativ (slovník), *barnið lagt* 42× × *barninu lagt* 0× →
+  **zapsáno do korekcí** (DECISIONS níž). Jinak čisté; nástroj hlásil jen slabá podezření (*kyrri*, *slitinu*, *klæðin* — ověřeno správně).
+- Součet IS chyb v dnešních a včerejších testech: Opus 4.8 2 ve 14 čteních · Opus 5 3 (2 různé) v 11 — srovnatelné, malé n.
+
+**Nálezy:** (1) Opus 5 je ve slepém srovnání lepší, nejvýrazněji v IS (8 : 0 přes single i Norns). (2) ⚠️ **Opus 5 píše delší
+anglické Norns** (153/135 × 111/113 slov) → dražší hlas (ElevenLabs platí za znaky); u single je naopak kratší. (3) Oba
+modely pouštějí slova zadání do textu (*„The friction is plain"* Opus 5 EN · *„Núningurinn"* Opus 4.8 IS) — vada zadání
+(*„Name the friction honestly"*), ne modelu → backlog. **Hranice:** 1 čtení na buňku, soudci = Claude (tatáž rodina).
+Podklady → `docs/eval/2026-09-22-modely/opus5-single-norns/`, skripty `opus5_build.js`, `opus5_mereni.js`, `opus5_soudy4.js`.

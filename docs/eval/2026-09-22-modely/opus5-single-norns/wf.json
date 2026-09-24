@@ -1,0 +1,596 @@
+{
+ "vysledky": [
+  {
+   "c": "en1",
+   "l1": [
+    {
+     "pid": "N01",
+     "a_retells": "partly",
+     "b_retells": "no",
+     "closer_to_source": "A",
+     "note": "A keeps 'flock', 'coming down', 'more than went up'; B recasts it as a broad, wider noise."
+    },
+    {
+     "pid": "N02",
+     "a_retells": "partly",
+     "b_retells": "partly",
+     "closer_to_source": "B",
+     "note": "Both open on their own fencepost detail. B then says 'Overnight the river swells' word for word; A paraphrases 'rose in the night'."
+    },
+    {
+     "pid": "N03",
+     "a_retells": "mostly",
+     "b_retells": "mostly",
+     "closer_to_source": "A",
+     "note": "Both copy 'The face in the rain-barrel holds still'. A keeps 'until you do' (lean in first); B changes it to the water being touched."
+    },
+    {
+     "pid": "N04",
+     "a_retells": "mostly",
+     "b_retells": "partly",
+     "closer_to_source": "A",
+     "note": "A retells 'every wave' setting down and drawing back, with a trading/even-exchange clause added. B keeps only the shore setting something down."
+    },
+    {
+     "pid": "N05",
+     "a_retells": "partly",
+     "b_retells": "mostly",
+     "closer_to_source": "B",
+     "note": "B's first sentence is the source nearly whole (wool to trading post, coffee and sugar came back). A spreads it across relationship framing."
+    }
+   ],
+   "l2": [
+    {
+     "pid": "N01",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "N02",
+     "a_verdict": "drifts",
+     "a_drift": "River takes only the ground and explicitly spares the post; the taking becomes undermining and mending.",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "N03",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "N04",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "drifts",
+     "b_drift": "Per-wave give-and-keep exchange becomes a one-time gift 'without asking anything back' that sinks.",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "N05",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "drifts",
+     "b_drift": "Invented hailstorm on the road home, with goods dropped and sacks split, pulls the scene from trade to loss.",
+     "b_sense_kept": "n/a"
+    }
+   ],
+   "l3a": [
+    {
+     "pid": "N01",
+     "better": "A",
+     "reason": "Both claim the seeker's achievement before the close. A is tighter, 'grown' is clearer, and its close is concrete ('work that has bred more work'). B's 'wider noise' is awkward, and its close guesses at the seeker's head.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [
+      "the one you have been keeping in your head"
+     ],
+     "force_a": [
+      "Fehu counts what returned and finds the number grown."
+     ],
+     "force_b": [
+      "Fehu counts what walks down, and the number has changed."
+     ],
+     "formula_a": [],
+     "formula_b": []
+    },
+    {
+     "pid": "N02",
+     "better": "A",
+     "reason": "A's fencepost detail is consistent, and it names the friction bluntly ('no careful thinking changes where you set it'). B contradicts itself (the post is left standing, then pulled loose) and ends on added urgency.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [
+      "the ground you counted on"
+     ],
+     "force_a": [
+      "Hagalaz carried off the ground beneath it, not the post itself."
+     ],
+     "force_b": [
+      "Hagalaz pulls it loose along with the bank that held it."
+     ],
+     "formula_a": [],
+     "formula_b": []
+    },
+    {
+     "pid": "N03",
+     "better": "B",
+     "reason": "B stays in the mirror image and turns the seeker inward, as the brief asks. A reads the seeker's mind ('the one you think of') and tells what is true between them before the close.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [
+      "The one you think of may be doing the same"
+     ],
+     "inner_b": [
+      "the part of yourself you have not yet turned to look at"
+     ],
+     "force_a": [
+      "Mannaz reflects only what stands before the water"
+     ],
+     "force_b": [
+      "Mannaz sits in that surface, giving back only what leans over it"
+     ],
+     "formula_a": [],
+     "formula_b": []
+    },
+    {
+     "pid": "N04",
+     "better": "B",
+     "reason": "A carries the exchange image more fully, but its sentences run far too long to read aloud and it predicts ('will not show... for a long while'). B is leaner and still weaves all three beats.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "Walking on as you are"
+     ],
+     "formula_b": [
+      "is yours to weigh",
+      "beneath the surface of things"
+     ]
+    },
+    {
+     "pid": "N05",
+     "better": "B",
+     "reason": "B makes each beat concrete (the trade, the hail, the clearing) and lands well on two people. A invents a past event with another person and softens the disruption. B's birch beat is weak.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [
+      "are still learning what you carried home"
+     ],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "Where you are heading"
+     ],
+     "formula_b": []
+    }
+   ],
+   "l3b": [
+    {
+     "pid": "N01",
+     "better": "A",
+     "reason": "B sits closer to the word count. 'More voices than went up' is cleaner, and its closing names a concrete holding. A assumes a count kept in their head.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [
+      "the one you have been keeping in your head"
+     ],
+     "force_a": [
+      "Fehu counts what returned and finds the number grown"
+     ],
+     "force_b": [
+      "Fehu counts what walks down, and the number has changed"
+     ],
+     "formula_a": [],
+     "formula_b": []
+    },
+    {
+     "pid": "N02",
+     "better": "A",
+     "reason": "B's leaning post with half its footing gone is the sharper small detail. It names the friction honestly and closes on a real two-way choice. A's 'cannot wait' adds pressure.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Hagalaz carried off the ground beneath it, not the post itself"
+     ],
+     "force_b": [
+      "Hagalaz pulls it loose along with the bank that held it"
+     ],
+     "formula_a": [],
+     "formula_b": []
+    },
+    {
+     "pid": "N03",
+     "better": "B",
+     "reason": "A stays within the word count and turns the mirror inward, as the brief asks. B assumes someone they think of and ends by pushing them to move first.",
+     "advice_a": [
+      "What might the water show, if you were the one to move first?"
+     ],
+     "advice_b": [],
+     "inner_a": [
+      "The one you think of may be doing the same"
+     ],
+     "inner_b": [
+      "the part of yourself you have not yet turned to look at"
+     ],
+     "force_a": [
+      "Mannaz reflects only what stands before the water"
+     ],
+     "force_b": [
+      "Mannaz sits in that surface, giving back only what leans over it"
+     ],
+     "formula_a": [],
+     "formula_b": []
+    },
+    {
+     "pid": "N04",
+     "better": "B",
+     "reason": "A gives three clear beats in leaner sentences. B runs long, adds comfort ('not the same as nothing'), predicts ('will not show for a long while') and repeats the brief's wording.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "Walking on as you are"
+     ],
+     "formula_b": [
+      "is yours to weigh",
+      "beneath the surface of things"
+     ]
+    },
+    {
+     "pid": "N05",
+     "better": "B",
+     "reason": "A carries the trade image through the hail concretely. B's opening beat (what was) makes up a past between the seeker and another person, and its hail beat is vague. A runs long, though.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "Where you are heading"
+     ],
+     "formula_b": []
+    }
+   ],
+   "tiebreak": [],
+   "skeptik": [
+    {
+     "pid": "N02",
+     "strana": "A",
+     "kind": "drift",
+     "text": "River takes only the ground and explicitly spares the post; the taking becomes undermining and mending.",
+     "refuted": false,
+     "reason": "The claim holds. The text says \"carried off the ground beneath it, not the post itself\", so the post survives. Taking becomes erosion, which opens the \"keep mending\" option."
+    },
+    {
+     "pid": "N04",
+     "strana": "B",
+     "kind": "drift",
+     "text": "Per-wave give-and-keep exchange becomes a one-time gift 'without asking anything back' that sinks.",
+     "refuted": true,
+     "reason": "The per-wave rhythm is weaker, but both halves stay: the shore sets something down and later \"shows what it has kept\". The tide keeps folding back, so the give-and-keep sense survives."
+    },
+    {
+     "pid": "N05",
+     "strana": "B",
+     "kind": "drift",
+     "text": "Invented hailstorm on the road home, with goods dropped and sacks split, pulls the scene from trade to loss.",
+     "refuted": true,
+     "reason": "The hail comes from the drawn rune, Hagalaz, and happens in the same scene one step on. Sentence one keeps the wool-for-coffee trade, and the landing returns to an uneven share."
+    }
+   ]
+  },
+  {
+   "c": "is1",
+   "l1": [
+    {
+     "pid": "N06",
+     "a_retells": "partly",
+     "b_retells": "mostly",
+     "closer_to_source": "B",
+     "note": "A frames it with its own scale, keeping only 'kaffið og sykurinn koma'. B is the source nearly verbatim plus 'á borðið', 'til baka'."
+    },
+    {
+     "pid": "N07",
+     "a_retells": "mostly",
+     "b_retells": "mostly",
+     "closer_to_source": "B",
+     "note": "Both give the source verbatim, changing only tense. A first copies the angle instruction and adds 'í myrkri'."
+    },
+    {
+     "pid": "N08",
+     "a_retells": "partly",
+     "b_retells": "mostly",
+     "closer_to_source": "B",
+     "note": "A keeps 'horfa á sama fjallið', then its own 'leið upp / vegg'. B keeps 'Tvö… horfa' and paraphrases 'hvort sitt' closely."
+    },
+    {
+     "pid": "N09",
+     "a_retells": "mostly",
+     "b_retells": "mostly",
+     "closer_to_source": "B",
+     "note": "Both open with the source sentence verbatim. A adds two clauses; B adds one."
+    },
+    {
+     "pid": "N10",
+     "a_retells": "no",
+     "b_retells": "no",
+     "closer_to_source": "same",
+     "note": "Both openings are the reading's own scene. The source's handover and step back appear only in sentence five."
+    }
+   ],
+   "l2": [
+    {
+     "pid": "N06",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "N07",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "N08",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "N09",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "N10",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "drifts",
+     "b_drift": "Midwife, mother and newborn vanish; a hailstorm takes over the scene, leaving only an abstract 'something laid in arms'.",
+     "b_sense_kept": "n/a"
+    }
+   ],
+   "l3a": [
+    {
+     "pid": "N06",
+     "better": "A",
+     "reason": "A follows the angle (the scale stands firm) and keeps the image lean. B skips the angle and says what he did outside the last line.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Fehu heldur voginni kyrri meðan skiptin ganga yfir hana."
+     ],
+     "force_b": [
+      "Meðan verðið breytist heldur Fehu því sem þú lagðir fram í hendi."
+     ],
+     "formula_a": [],
+     "formula_b": [
+      "gæti verkið verið tilbúið að standa á eigin fótum"
+     ]
+    },
+    {
+     "pid": "N07",
+     "better": "B",
+     "reason": "A copies the angle instruction and 'núningurinn' into the text, runs 63 words and cold-reads. B is lean, within the word count and keeps the image.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [
+      "án þess að þú tækir eftir því"
+     ],
+     "inner_b": [
+      "það sem þú hélst að væri hljótt"
+     ],
+     "force_a": [
+      "Hagalaz slekkur á vananum sem hélt valinu í gangi"
+     ],
+     "force_b": [
+      "Hagalaz gerir ekkert nýtt, Kuky, hún slekkur bara á því sem gekk af sjálfu sér."
+     ],
+     "formula_a": [
+      "Líttu snöggt yfir alla myndina, láttu svo allt hverfa nema eitt.",
+      "Núningurinn er þessi kyrrð"
+     ],
+     "formula_b": []
+    },
+    {
+     "pid": "N08",
+     "better": "A",
+     "reason": "A is concrete (a way up against a wall) and ends on an open question. B runs 64 words, slips on gender with 'hvor' and answers its own question.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "Mannaz, Kuky, talar um að"
+     ],
+     "formula_b": []
+    },
+    {
+     "pid": "N09",
+     "better": "B",
+     "reason": "B carries one ladle image through all three beats and lands on the unseen. A adds a seed-in-the-wood image, rune keyword labels and long comma chains.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [],
+     "formula_b": [
+      "Haldir þú áfram að halda um hana eins og nú",
+      "það gætu verið tveir hlutir í senn:"
+     ]
+    },
+    {
+     "pid": "N10",
+     "better": "A",
+     "reason": "A keeps the birth image concrete through all three beats despite small case slips. B swaps in literal hail, piles up rune keywords and ends on a let-go cliché.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [
+      "Nú fer haglél um það sem áður virtist fast, og hríðin skekur það sem borið var fram."
+     ],
+     "formula_a": [],
+     "formula_b": [
+      "umhyggja sem lærir að sleppa taki"
+     ]
+    }
+   ],
+   "l3b": [
+    {
+     "pid": "N06",
+     "better": "A",
+     "reason": "B follows the angle exactly: the scale stands still, Fehu holds it, and it ends on 'heldur vegur'. A skips the angle and says what the seeker worked for before the last line.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Fehu heldur voginni kyrri meðan skiptin ganga yfir hana."
+     ],
+     "force_b": [
+      "Meðan verðið breytist heldur Fehu því sem þú lagðir fram í hendi."
+     ],
+     "formula_a": [],
+     "formula_b": []
+    },
+    {
+     "pid": "N07",
+     "better": "B",
+     "reason": "B opens by copying the angle instruction word for word, lets the brief's 'núningur' leak in, runs over the word count and ends on 'must choose'. A is lean and blunt.",
+     "advice_a": [
+      "þú stendur einn og verður að velja í höndunum það sem vélin valdi áður fyrir þig"
+     ],
+     "advice_b": [],
+     "inner_a": [
+      "án þess að þú tækir eftir því"
+     ],
+     "inner_b": [
+      "það sem þú hélst að væri hljótt"
+     ],
+     "force_a": [
+      "Hagalaz slekkur á vananum sem hélt valinu í gangi"
+     ],
+     "force_b": [
+      "hún slekkur bara á því sem gekk af sjálfu sér"
+     ],
+     "formula_a": [
+      "Líttu snöggt yfir alla myndina, láttu svo allt hverfa nema eitt.",
+      "Núningurinn er þessi kyrrð"
+     ],
+     "formula_b": [],
+     "formula_b_note": []
+    },
+    {
+     "pid": "N08",
+     "better": "A",
+     "reason": "B's 'leið upp / vegg' is concrete and lands on the relationship, and its question stays open. A is over the word count, says 'hvor' where 'hvort' is needed, and moralizes.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "Mannaz, Kuky, talar um að"
+     ],
+     "formula_b": []
+    },
+    {
+     "pid": "N09",
+     "better": "B",
+     "reason": "A carries the worn handle through all three beats and ends on two real states. B leaks brief keywords (jafnvægi, fræ, 'ekki lokið') and adds a seed image that goes nowhere.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "Eitthvað þarna vex hægt, ekki lokið",
+      "þessi slit segja frá jafnvægi sem eitt sinn var haldið"
+     ],
+     "formula_b": [
+      "það gætu verið tveir hlutir í senn"
+     ]
+    },
+    {
+     "pid": "N10",
+     "better": "A",
+     "reason": "B turns the midwife scene into all three runes (birth as the disruption) and lands it on two people. A swaps in a literal hailstorm and lists rune keywords.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [
+      "Nú fer haglél um það sem áður virtist fast, og hríðin skekur það sem borið var fram."
+     ],
+     "formula_a": [],
+     "formula_b": [
+      "Þessi auður er efniviðurinn sem lagður er í hendur tveggja.",
+      "Í þessu róti hreinsast eitthvað"
+     ]
+    }
+   ],
+   "tiebreak": [],
+   "skeptik": [
+    {
+     "pid": "N10",
+     "strana": "B",
+     "kind": "drift",
+     "text": "Midwife, mother and newborn vanish; a hailstorm takes over the scene, leaving only an abstract 'something laid in arms'.",
+     "refuted": true,
+     "reason": "The figures are gone, but the image's action survives: \"lagt í fangið, og svo er stigið eitt skref til baka\", plus \"treysta því sem hún ól\" at the close."
+    }
+   ]
+  }
+ ]
+}

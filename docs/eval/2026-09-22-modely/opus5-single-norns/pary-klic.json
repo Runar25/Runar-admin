@@ -1,0 +1,72 @@
+{
+ "N01": {
+  "id": "01-single-fehu-en",
+  "lang": "en",
+  "spread": "single",
+  "A": "opus48",
+  "B": "opus5"
+ },
+ "N02": {
+  "id": "02-single-hagalaz-en",
+  "lang": "en",
+  "spread": "single",
+  "A": "opus5",
+  "B": "opus48"
+ },
+ "N03": {
+  "id": "03-single-mannaz-en",
+  "lang": "en",
+  "spread": "single",
+  "A": "opus48",
+  "B": "opus5"
+ },
+ "N04": {
+  "id": "04-norns-gebo-ingwaz-othila-en",
+  "lang": "en",
+  "spread": "norns",
+  "A": "opus5",
+  "B": "opus48"
+ },
+ "N05": {
+  "id": "05-norns-fehu-hagalaz-berkana-en",
+  "lang": "en",
+  "spread": "norns",
+  "A": "opus48",
+  "B": "opus5"
+ },
+ "N06": {
+  "id": "06-single-fehu-is",
+  "lang": "is",
+  "spread": "single",
+  "A": "opus5",
+  "B": "opus48"
+ },
+ "N07": {
+  "id": "07-single-hagalaz-is",
+  "lang": "is",
+  "spread": "single",
+  "A": "opus48",
+  "B": "opus5"
+ },
+ "N08": {
+  "id": "08-single-mannaz-is",
+  "lang": "is",
+  "spread": "single",
+  "A": "opus5",
+  "B": "opus48"
+ },
+ "N09": {
+  "id": "09-norns-gebo-ingwaz-othila-is",
+  "lang": "is",
+  "spread": "norns",
+  "A": "opus48",
+  "B": "opus5"
+ },
+ "N10": {
+  "id": "10-norns-fehu-hagalaz-berkana-is",
+  "lang": "is",
+  "spread": "norns",
+  "A": "opus5",
+  "B": "opus48"
+ }
+}

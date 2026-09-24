@@ -41,6 +41,7 @@ BAD_PATTERNS = [
     ('láta séð til',     'láta sjá',        'idiom je „láta sjá sig" (4021×); tahle chyba „prosla" uz 2026-07 (CLAUDE.md §19)'),
     ('flýja honum',      'flýja hann',      'flýja ridi akuzativ; „flýja hann" 67× × „honum" 0×'),
     ('eigin sönnu',      'eigin sannleika', '„sönnu" neni podstatne jmeno; „eigin sannleika" 60×'),
+    ('barninu lagt',     'barnið lagt',     'leggja ridi akuzativ (slovnik); „barnið lagt" 42× × „barninu lagt" 0× (Opus 5, 2026-09-24)'),
     # SOURCE-authorable typos/phrases = this checker's real job. Model-output errors
     # (prose the model invents) belong to is-grammar-qa + runar_corrections, NOT here;
     # the model-output entries below are kept only as living documentation for now.

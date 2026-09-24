@@ -121,6 +121,11 @@
   kratší; cena za čtení stejná až nižší (s teplou cache EN $0,0080 × $0,0119). ⚠️ **V proxy NUTNÉ `thinking: {type:'disabled'}`**
   — bez něj Opus 5 přemýšlí, na `max_tokens` 700 nevrátí text. Vady: pouští slova zadání (*„The friction is plain"*), v IS
   převypráví obraz víc. Rozhoduje owner; před přechodem várka IS (IS primární) a Ask/Norns.
+  **2026-09-24 (2): single + Norns EN i IS** — Opus 5 : Opus 4.8 = 3 : 2 EN, **5 : 0 IS**; dohromady 20 : 8. Pozor: Opus 5 píše
+  delší anglické Norns (dražší hlas). Owner: *„chci přejít na Opus 5… nepotřebuju to teď uspěchat."* Ask netestován.
+- [ ] **Model opakuje slova zadání „friction"** — *„Name the friction honestly"* → *„The friction is plain"* (Opus 5 EN 2×),
+  *„Núningurinn er…"* (Opus 4.8 IS). Týž vzor jako „look closer" (EVAL_LOG 2026-09-23 (7)): pokyn nese slovo, které se dá
+  zopakovat. Změřit četnost v produkci, pak přeformulovat bez pojmenování (paměť `prompt-nepojmenuj-co-hned-zakazes`).
 - [ ] **EN systémový prompt se v produkci nikdy necachuje** (Opus 4.8, 801 tokenů pod minimem; 40/40 ownerových čtení) —
   `cache_control` na něm nic nedělá. IS se cachuje, ale při řídkém provozu je zápis dražší než žádná cache. Změřit skutečný
   poměr hit/zápis v IS provozu, pak rozhodnout (CODE-tune, `claude-proxy`).

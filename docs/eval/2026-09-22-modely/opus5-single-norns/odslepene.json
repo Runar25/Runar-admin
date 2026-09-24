@@ -1,0 +1,332 @@
+[
+ {
+  "pid": "N01",
+  "id": "01-single-fehu-en",
+  "lang": "en",
+  "opus5_retells": "no",
+  "opus5_drift": false,
+  "opus5_lost": false,
+  "opus5_advice": [],
+  "opus5_inner": [
+   "the one you have been keeping in your head"
+  ],
+  "opus5_force": [
+   "Fehu counts what walks down, and the number has changed.",
+   "Fehu counts what walks down, and the number has changed"
+  ],
+  "opus5_formula": [],
+  "opus48_retells": "partly",
+  "opus48_drift": false,
+  "opus48_lost": false,
+  "opus48_advice": [],
+  "opus48_inner": [],
+  "opus48_force": [
+   "Fehu counts what returned and finds the number grown.",
+   "Fehu counts what returned and finds the number grown"
+  ],
+  "opus48_formula": [],
+  "l3a": "opus48",
+  "l3b": "opus48",
+  "l3": "opus48",
+  "duvody": [
+   "Both claim the seeker's achievement before the close. [A=opus48] is tighter, 'grown' is clearer, and its close is concrete ('work that has bred more work'). [B=opus5]'s 'wider noise' is awkward, and its close guesses at the seeker's head.",
+   "[B=opus5] sits closer to the word count. 'More voices than went up' is cleaner, and its closing names a concrete holding. [A=opus48] assumes a count kept in their head."
+  ]
+ },
+ {
+  "pid": "N02",
+  "id": "02-single-hagalaz-en",
+  "lang": "en",
+  "opus5_retells": "partly",
+  "opus5_drift": true,
+  "opus5_lost": false,
+  "opus5_advice": [],
+  "opus5_inner": [],
+  "opus5_force": [
+   "Hagalaz carried off the ground beneath it, not the post itself.",
+   "Hagalaz carried off the ground beneath it, not the post itself"
+  ],
+  "opus5_formula": [],
+  "opus48_retells": "partly",
+  "opus48_drift": false,
+  "opus48_lost": false,
+  "opus48_advice": [],
+  "opus48_inner": [
+   "the ground you counted on"
+  ],
+  "opus48_force": [
+   "Hagalaz pulls it loose along with the bank that held it.",
+   "Hagalaz pulls it loose along with the bank that held it"
+  ],
+  "opus48_formula": [],
+  "l3a": "opus5",
+  "l3b": "opus5",
+  "l3": "opus5",
+  "duvody": [
+   "[A=opus5]'s fencepost detail is consistent, and it names the friction bluntly ('no careful thinking changes where you set it'). [B=opus48] contradicts itself (the post is left standing, then pulled loose) and ends on added urgency.",
+   "[B=opus48]'s leaning post with half its footing gone is the sharper small detail. It names the friction honestly and closes on a real two-way choice. [A=opus5]'s 'cannot wait' adds pressure."
+  ]
+ },
+ {
+  "pid": "N03",
+  "id": "03-single-mannaz-en",
+  "lang": "en",
+  "opus5_retells": "mostly",
+  "opus5_drift": false,
+  "opus5_lost": false,
+  "opus5_advice": [],
+  "opus5_inner": [
+   "the part of yourself you have not yet turned to look at"
+  ],
+  "opus5_force": [
+   "Mannaz sits in that surface, giving back only what leans over it"
+  ],
+  "opus5_formula": [],
+  "opus48_retells": "mostly",
+  "opus48_drift": false,
+  "opus48_lost": false,
+  "opus48_advice": [
+   "What might the water show, if you were the one to move first?"
+  ],
+  "opus48_inner": [
+   "The one you think of may be doing the same"
+  ],
+  "opus48_force": [
+   "Mannaz reflects only what stands before the water"
+  ],
+  "opus48_formula": [],
+  "l3a": "opus5",
+  "l3b": "opus5",
+  "l3": "opus5",
+  "duvody": [
+   "[B=opus5] stays in the mirror image and turns the seeker inward, as the brief asks. [A=opus48] reads the seeker's mind ('the one you think of') and tells what is true between them before the close.",
+   "[A=opus48] stays within the word count and turns the mirror inward, as the brief asks. [B=opus5] assumes someone they think of and ends by pushing them to move first."
+  ]
+ },
+ {
+  "pid": "N04",
+  "id": "04-norns-gebo-ingwaz-othila-en",
+  "lang": "en",
+  "opus5_retells": "mostly",
+  "opus5_drift": false,
+  "opus5_lost": false,
+  "opus5_advice": [],
+  "opus5_inner": [],
+  "opus5_force": [],
+  "opus5_formula": [
+   "Walking on as you are"
+  ],
+  "opus48_retells": "partly",
+  "opus48_drift": false,
+  "opus48_lost": false,
+  "opus48_advice": [],
+  "opus48_inner": [],
+  "opus48_force": [],
+  "opus48_formula": [
+   "is yours to weigh",
+   "beneath the surface of things"
+  ],
+  "l3a": "opus48",
+  "l3b": "opus48",
+  "l3": "opus48",
+  "duvody": [
+   "[A=opus5] carries the exchange image more fully, but its sentences run far too long to read aloud and it predicts ('will not show... for a long while'). [B=opus48] is leaner and still weaves all three beats.",
+   "[A=opus5] gives three clear beats in leaner sentences. [B=opus48] runs long, adds comfort ('not the same as nothing'), predicts ('will not show for a long while') and repeats the brief's wording."
+  ]
+ },
+ {
+  "pid": "N05",
+  "id": "05-norns-fehu-hagalaz-berkana-en",
+  "lang": "en",
+  "opus5_retells": "mostly",
+  "opus5_drift": false,
+  "opus5_lost": false,
+  "opus5_advice": [],
+  "opus5_inner": [],
+  "opus5_force": [],
+  "opus5_formula": [],
+  "opus48_retells": "partly",
+  "opus48_drift": false,
+  "opus48_lost": false,
+  "opus48_advice": [],
+  "opus48_inner": [
+   "are still learning what you carried home"
+  ],
+  "opus48_force": [],
+  "opus48_formula": [
+   "Where you are heading"
+  ],
+  "l3a": "opus5",
+  "l3b": "opus5",
+  "l3": "opus5",
+  "duvody": [
+   "[B=opus5] makes each beat concrete (the trade, the hail, the clearing) and lands well on two people. [A=opus48] invents a past event with another person and softens the disruption. [B=opus5]'s birch beat is weak.",
+   "[A=opus48] carries the trade image through the hail concretely. [B=opus5]'s opening beat (what was) makes up a past between the seeker and another person, and its hail beat is vague. [A=opus48] runs long, though."
+  ]
+ },
+ {
+  "pid": "N06",
+  "id": "06-single-fehu-is",
+  "lang": "is",
+  "opus5_retells": "partly",
+  "opus5_drift": false,
+  "opus5_lost": false,
+  "opus5_advice": [],
+  "opus5_inner": [],
+  "opus5_force": [
+   "Fehu heldur voginni kyrri meðan skiptin ganga yfir hana."
+  ],
+  "opus5_formula": [],
+  "opus48_retells": "mostly",
+  "opus48_drift": false,
+  "opus48_lost": false,
+  "opus48_advice": [],
+  "opus48_inner": [],
+  "opus48_force": [
+   "Meðan verðið breytist heldur Fehu því sem þú lagðir fram í hendi."
+  ],
+  "opus48_formula": [
+   "gæti verkið verið tilbúið að standa á eigin fótum"
+  ],
+  "l3a": "opus5",
+  "l3b": "opus5",
+  "l3": "opus5",
+  "duvody": [
+   "[A=opus5] follows the angle (the scale stands firm) and keeps the image lean. [B=opus48] skips the angle and says what he did outside the last line.",
+   "[B=opus48] follows the angle exactly: the scale stands still, Fehu holds it, and it ends on 'heldur vegur'. [A=opus5] skips the angle and says what the seeker worked for before the last line."
+  ]
+ },
+ {
+  "pid": "N07",
+  "id": "07-single-hagalaz-is",
+  "lang": "is",
+  "opus5_retells": "mostly",
+  "opus5_drift": false,
+  "opus5_lost": false,
+  "opus5_advice": [],
+  "opus5_inner": [
+   "það sem þú hélst að væri hljótt"
+  ],
+  "opus5_force": [
+   "Hagalaz gerir ekkert nýtt, Kuky, hún slekkur bara á því sem gekk af sjálfu sér.",
+   "hún slekkur bara á því sem gekk af sjálfu sér"
+  ],
+  "opus5_formula": [],
+  "opus48_retells": "mostly",
+  "opus48_drift": false,
+  "opus48_lost": false,
+  "opus48_advice": [
+   "þú stendur einn og verður að velja í höndunum það sem vélin valdi áður fyrir þig"
+  ],
+  "opus48_inner": [
+   "án þess að þú tækir eftir því"
+  ],
+  "opus48_force": [
+   "Hagalaz slekkur á vananum sem hélt valinu í gangi"
+  ],
+  "opus48_formula": [
+   "Líttu snöggt yfir alla myndina, láttu svo allt hverfa nema eitt.",
+   "Núningurinn er þessi kyrrð"
+  ],
+  "l3a": "opus5",
+  "l3b": "opus5",
+  "l3": "opus5",
+  "duvody": [
+   "[A=opus48] copies the angle instruction and 'núningurinn' into the text, runs 63 words and cold-reads. [B=opus5] is lean, within the word count and keeps the image.",
+   "[B=opus5] opens by copying the angle instruction word for word, lets the brief's 'núningur' leak in, runs over the word count and ends on 'must choose'. [A=opus48] is lean and blunt."
+  ]
+ },
+ {
+  "pid": "N08",
+  "id": "08-single-mannaz-is",
+  "lang": "is",
+  "opus5_retells": "partly",
+  "opus5_drift": false,
+  "opus5_lost": false,
+  "opus5_advice": [],
+  "opus5_inner": [],
+  "opus5_force": [],
+  "opus5_formula": [
+   "Mannaz, Kuky, talar um að"
+  ],
+  "opus48_retells": "mostly",
+  "opus48_drift": false,
+  "opus48_lost": false,
+  "opus48_advice": [],
+  "opus48_inner": [],
+  "opus48_force": [],
+  "opus48_formula": [],
+  "l3a": "opus5",
+  "l3b": "opus5",
+  "l3": "opus5",
+  "duvody": [
+   "[A=opus5] is concrete (a way up against a wall) and ends on an open question. [B=opus48] runs 64 words, slips on gender with 'hvor' and answers its own question.",
+   "[B=opus48]'s 'leið upp / vegg' is concrete and lands on the relationship, and its question stays open. [A=opus5] is over the word count, says 'hvor' where 'hvort' is needed, and moralizes."
+  ]
+ },
+ {
+  "pid": "N09",
+  "id": "09-norns-gebo-ingwaz-othila-is",
+  "lang": "is",
+  "opus5_retells": "mostly",
+  "opus5_drift": false,
+  "opus5_lost": false,
+  "opus5_advice": [],
+  "opus5_inner": [],
+  "opus5_force": [],
+  "opus5_formula": [
+   "Haldir þú áfram að halda um hana eins og nú",
+   "það gætu verið tveir hlutir í senn:",
+   "það gætu verið tveir hlutir í senn"
+  ],
+  "opus48_retells": "mostly",
+  "opus48_drift": false,
+  "opus48_lost": false,
+  "opus48_advice": [],
+  "opus48_inner": [],
+  "opus48_force": [],
+  "opus48_formula": [
+   "Eitthvað þarna vex hægt, ekki lokið",
+   "þessi slit segja frá jafnvægi sem eitt sinn var haldið"
+  ],
+  "l3a": "opus5",
+  "l3b": "opus5",
+  "l3": "opus5",
+  "duvody": [
+   "[B=opus5] carries one ladle image through all three beats and lands on the unseen. [A=opus48] adds a seed-in-the-wood image, rune keyword labels and long comma chains.",
+   "[A=opus48] carries the worn handle through all three beats and ends on two real states. [B=opus5] leaks brief keywords (jafnvægi, fræ, 'ekki lokið') and adds a seed image that goes nowhere."
+  ]
+ },
+ {
+  "pid": "N10",
+  "id": "10-norns-fehu-hagalaz-berkana-is",
+  "lang": "is",
+  "opus5_retells": "no",
+  "opus5_drift": false,
+  "opus5_lost": false,
+  "opus5_advice": [],
+  "opus5_inner": [],
+  "opus5_force": [],
+  "opus5_formula": [],
+  "opus48_retells": "no",
+  "opus48_drift": false,
+  "opus48_lost": false,
+  "opus48_advice": [],
+  "opus48_inner": [],
+  "opus48_force": [
+   "Nú fer haglél um það sem áður virtist fast, og hríðin skekur það sem borið var fram."
+  ],
+  "opus48_formula": [
+   "umhyggja sem lærir að sleppa taki",
+   "Þessi auður er efniviðurinn sem lagður er í hendur tveggja.",
+   "Í þessu róti hreinsast eitthvað"
+  ],
+  "l3a": "opus5",
+  "l3b": "opus5",
+  "l3": "opus5",
+  "duvody": [
+   "[A=opus5] keeps the birth image concrete through all three beats despite small case slips. [B=opus48] swaps in literal hail, piles up rune keywords and ends on a let-go cliché.",
+   "[B=opus48] turns the midwife scene into all three runes (birth as the disruption) and lands it on two people. [A=opus5] swaps in a literal hailstorm and lists rune keywords."
+  ]
+ }
+]
