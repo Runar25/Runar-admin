@@ -1,0 +1,2487 @@
+[
+ {
+  "pid": "D01",
+  "id": "02-ansuz-u0",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "smysl": "sluch",
+  "uhel": 0,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [
+   "Notice which direction your body already faces before your mind weighs the reasons."
+  ],
+  "prod_inner": [],
+  "prod_force": [],
+  "prod_formula": [
+   "asks nothing but your attention"
+  ],
+  "detail_retells": "partly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [
+   "the direction already known to you",
+   "may be the direction already known to you"
+  ],
+  "detail_force": [],
+  "detail_formula": [
+   "waiting only for your ear"
+  ],
+  "closer": "prod",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "B's third sentence gives life advice outright. A keeps the bell carried through, though it runs long and its close hints at inner knowledge.",
+   "A breaks the canon with direct life advice ('Notice which direction...'). B carries the bell image cleanly, though its close hints at inner knowledge."
+  ],
+  "prod_slov": 70,
+  "detail_slov": 65,
+  "prod_text": "The fjord holds still, water and far shore and pale sky, and then a church bell sounds across it and you turn toward it before you choose to. Ansuz is that pull, the note that reaches you and asks nothing but your attention. Notice which direction your body already faces before your mind weighs the reasons. Where you turn without deciding, Kuky, may be the way already speaking to you.",
+  "detail_text": "The bell reaches across the fjord and everything else in the wide morning falls quiet around that one sound. Ansuz is that carrying, a call that finds you before you choose to answer. You turn toward it without deciding, the water still and the far shore holding its shape. That pull, Kuky, may be the direction already known to you, waiting only for your ear."
+ },
+ {
+  "pid": "D02",
+  "id": "01-algiz-u0",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "smysl": "zrak",
+  "uhel": 0,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [
+   "Algiz keeps its post over that one, steady while the rest scatters",
+   "Algiz keeps its post over that one, steady while the rest scatters."
+  ],
+  "prod_formula": [
+   "Then the field falls away, Kuky, and only one shape remains"
+  ],
+  "detail_retells": "no",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [
+   "worth turning toward again"
+  ],
+  "detail_inner": [
+   "This is your house too, Kuky, everyone in view and one held closer."
+  ],
+  "detail_force": [
+   "Algiz holds that watch, steady, letting the rest of the field blur",
+   "Algiz holds that watch, steady, letting the rest of the field blur."
+  ],
+  "detail_formula": [],
+  "closer": "prod",
+  "l3a": "prod",
+  "l3b": "prod",
+  "l3": "prod",
+  "duvody": [
+   "B's image is sharper, but its question adds advice ('worth turning toward again'). A's question stays open, though A is long and its 'one shape' is vague.",
+   "A tells Kuky what their house is ('one held closer') and its question nudges toward action. B's question stays open, though its image blurs a little."
+  ],
+  "prod_slov": 69,
+  "detail_slov": 65,
+  "prod_text": "The sheepdog lies on the rise where the whole flock stays in view, and for now all of it holds together in one glance. Then the field falls away, Kuky, and only one shape remains under your watching. Algiz keeps its post over that one, steady while the rest scatters. Might there be a single person in your home who has quietly settled where you can always see them?",
+  "detail_text": "The dog on the hill takes in the whole scene, then settles on the one ewe near the fence line. Algiz holds that watch, steady, letting the rest of the field blur. This is your house too, Kuky, everyone in view and one held closer. Might there be someone under your roof who has drifted toward the edge of your seeing, worth turning toward again?"
+ },
+ {
+  "pid": "D03",
+  "id": "01-algiz-u0",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "smysl": "zrak",
+  "uhel": 0,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [
+   "at home you may find protection less in guarding every corner than in noticing who has wandered toward the edge"
+  ],
+  "prod_inner": [],
+  "prod_force": [
+   "Algiz holds that watchful place",
+   "Algiz holds that watchful place."
+  ],
+  "prod_formula": [
+   "less in guarding every corner than in noticing",
+   "have a place among your people"
+  ],
+  "detail_retells": "mostly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [
+   "you may know a similar watchfulness at home"
+  ],
+  "detail_force": [
+   "Algiz holds that open view without leaving its place",
+   "Algiz holds that open view without leaving its place."
+  ],
+  "detail_formula": [],
+  "closer": "detail",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "A's third sentence lectures, handing over a lesson about how to protect. B brings the image home concretely (door) and asks gently, with only a soft 'you may know'.",
+   "B gives a lesson and hands over a conclusion about where protection lies. A has a stronger essence line, and its guess at home life is hedged."
+  ],
+  "prod_slov": 57,
+  "detail_slov": 59,
+  "prod_text": "The sheepdog watches the whole flock from a rise, then its gaze settles on the one near the open gate. Algiz holds that watchful place. Kuky, at home you may find protection less in guarding every corner than in noticing who has wandered toward the edge. Could that kind of seeing have a place among your people?",
+  "detail_text": "You see the whole flock from where the sheepdog lies, then your eye settles on one lamb near the gate. Algiz holds that open view without leaving its place. Kuky, you may know a similar watchfulness at home, where you can hear who comes through the door. Could that quiet attention be one kind of protection for your household?"
+ },
+ {
+  "pid": "D04",
+  "id": "01-algiz-u0",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "smysl": "zrak",
+  "uhel": 0,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [
+   "Algiz holds that watch without closing the gate",
+   "Algiz holds that watch without closing the gate."
+  ],
+  "prod_formula": [],
+  "detail_retells": "partly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [
+   "Algiz holds the dog's watch steady",
+   "Algiz holds the dog's watch steady."
+  ],
+  "detail_formula": [
+   "Could such quiet protection have a place among your people at home?"
+  ],
+  "closer": "prod",
+  "l3a": "prod",
+  "l3b": "prod",
+  "l3": "prod",
+  "duvody": [
+   "B builds one clear idea, a watch kept without closing the gate, and carries it into the question. A's kitchen window is apt, but its close is generic.",
+   "A carries the open gate through to its closing question ('room for each person to move'). B swaps in a second scene, a kitchen window, and ends on a generic question."
+  ],
+  "prod_slov": 63,
+  "detail_slov": 62,
+  "prod_text": "The sheepdog sees the whole flock from its place by the house, then watches the one lamb near the open gate. Algiz holds that watch without closing the gate. Kuky, the dog stays where it can see the yard and the people passing through it. Could protection in your home look like that kind of watchfulness, with room for each person to move?",
+  "detail_text": "You see the sheepdog and the whole flock across the yard, then your eye settles on one lamb at the gate. Algiz holds the dog's watch steady. Kuky, you can picture that watch from a kitchen window, where voices carry and someone keeps an eye on who comes and goes. Could such quiet protection have a place among your people at home?"
+ },
+ {
+  "pid": "D05",
+  "id": "01-algiz-u0",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "smysl": "zrak",
+  "uhel": 0,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [
+   "Algiz holds this steady, taking in the room and the ones moving through it",
+   "Algiz holds this steady, taking in the room and the ones moving through it."
+  ],
+  "prod_formula": [
+   "a seeing that keeps the whole house within its sight",
+   "then the wider scene falls away and only that watching remains"
+  ],
+  "detail_retells": "partly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [
+   "Algiz keeps that watch, holding the space around what grazes freely",
+   "Algiz keeps that watch, holding the space around what grazes freely."
+  ],
+  "detail_formula": [
+   "holding the space"
+  ],
+  "closer": "prod",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "Both run long. A follows the angle down to one concrete edge. B falls away into an abstract 'watching' and jumps from field to room mid-sentence.",
+   "B is more concrete (ears turned to the edge, space around what grazes freely). A echoes the brief's wording and jumps from field to room without warning. Both run long."
+  ],
+  "prod_slov": 68,
+  "detail_slov": 71,
+  "prod_text": "The dog lies at the field's edge, seeing the whole flock at once, then the wider scene falls away and only that watching remains. Algiz holds this steady, taking in the room and the ones moving through it. Here, Kuky, is a seeing that keeps the whole house within its sight. Might there be a place in your home from which you already watch over everyone in it?",
+  "detail_text": "The dog lies on the rise where the whole flock rests below, ears turned to the far edge, and the eye settles there. Algiz keeps that watch, holding the space around what grazes freely. This is the room where your people gather, Kuky, seen from the one spot that takes it all in. Might there be a place in your home from which the whole of it stays within your sight?"
+ },
+ {
+  "pid": "D06",
+  "id": "02-ansuz-u0",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "smysl": "sluch",
+  "uhel": 0,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [
+   "Ansuz draws your attention to a sound beyond your own shore",
+   "Ansuz draws your attention to a sound beyond your own shore."
+  ],
+  "prod_formula": [],
+  "detail_retells": "mostly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [
+   "Ansuz brings a distant call into the open",
+   "Ansuz brings a distant call into the open, where you can hear it clearly."
+  ],
+  "detail_formula": [],
+  "closer": "prod",
+  "l3a": "prod",
+  "l3b": "prod",
+  "l3": "prod",
+  "duvody": [
+   "A has one sharp, honest insight: no direction, only the distance made plain. Its closing possibility is fitting. B is pleasant but redundant ('where you can hear it clearly').",
+   "B's 'makes the distance plain' sharpens the image without giving a direction, and 'a call you have yet to place' closes well. A repeats itself and leans on atmosphere."
+  ],
+  "prod_slov": 61,
+  "detail_slov": 60,
+  "prod_text": "Across the fjord, you see the church on the far shore; its bell carries through still air, and you turn before you decide to. Ansuz draws your attention to a sound beyond your own shore. That sound gives you no direction, but it makes the distance plain. Kuky, your path may hold room for a call you have yet to place.",
+  "detail_text": "Across the fjord, you hear a church bell, and its sound reaches you over water and still air. You turn toward it before you choose to, while the last note hangs beneath the clouds. Ansuz brings a distant call into the open, where you can hear it clearly. Kuky, your direction may be taking shape around what keeps reaching you."
+ },
+ {
+  "pid": "D07",
+  "id": "02-ansuz-u0",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "smysl": "sluch",
+  "uhel": 0,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [
+   "Ansuz brings a distant sound into the direction you face",
+   "Ansuz brings a distant sound into the direction you face."
+  ],
+  "prod_formula": [
+   "this may be a time when"
+  ],
+  "detail_retells": "mostly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [
+   "As you consider your direction"
+  ],
+  "detail_force": [
+   "Ansuz brings a distant sound into clear hearing",
+   "Ansuz brings a distant sound into clear hearing."
+  ],
+  "detail_formula": [
+   "this may be a time when",
+   "comes into focus through listening"
+  ],
+  "closer": "prod",
+  "l3a": "prod",
+  "l3b": "prod",
+  "l3": "prod",
+  "duvody": [
+   "B stays inside the image ('does not name a road') and keeps its close honest. A narrates the seeker considering their direction and drifts into abstract 'voices'.",
+   "A stays with the bell and its note. B drifts to 'voices', assumes Kuky is 'considering', and closes on a self-help line."
+  ],
+  "prod_slov": 62,
+  "detail_slov": 61,
+  "prod_text": "Across the fjord, a church bell carries through still air, and you turn toward it before you decide to listen. Ansuz brings a distant sound into the direction you face. The bell does not name a road, but its clear note gives you one point to attend to. Kuky, this may be a time when your direction remains open, yet less vague.",
+  "detail_text": "Across the fjord, you see the church bell swing; its sound crosses the still air, and you turn before deciding to. Ansuz brings a distant sound into clear hearing. As you consider your direction, one voice may carry farther than the others, without settling where you go. Kuky, this may be a time when your purpose comes into focus through listening."
+ },
+ {
+  "pid": "D08",
+  "id": "03-jera-u1",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "smysl": "zrak",
+  "uhel": 1,
+  "prod_retells": "partly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [
+   "Jera holds that slow work in place"
+  ],
+  "prod_formula": [
+   "work already finding its form"
+  ],
+  "detail_retells": "no",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [
+   "Jera holds the slow lift beneath it"
+  ],
+  "detail_formula": [
+   "quietly taking shape",
+   "the hours between shaping and seeing a result are part of the work"
+  ],
+  "closer": "prod",
+  "l3a": "prod",
+  "l3b": "prod",
+  "l3": "prod",
+  "duvody": [
+   "B is leaner and nearer the word count; A's third sentence reads as a small lesson. Both endings are soft, but B's contrast is clearer.",
+   "A is lean and near the word count. B runs 66 words, has an awkward 'beside your worktable' and a lecturing third sentence, and its two ending states barely differ."
+  ],
+  "prod_slov": 59,
+  "detail_slov": 66,
+  "prod_text": "You might miss the slight rise in the cloth at the edge of the bowl, where the dough presses upward while no one watches. Jera holds that slow work in place. In making things, you can see movement without yet seeing a finished shape. What you have in hand may be unfinished work, or work already finding its form.",
+  "detail_text": "A small crease forms where the cloth rests against the bowl, easy to miss beside your worktable. Jera holds the slow lift beneath it, while the dough rises without a hand on it. In your making, the hours between shaping and seeing a result are part of the work, though they offer little to show. What you are making may be unfinished, or quietly taking shape."
+ },
+ {
+  "pid": "D09",
+  "id": "03-jera-u1",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "smysl": "zrak",
+  "uhel": 1,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [],
+  "prod_formula": [
+   "this is the living moment"
+  ],
+  "detail_retells": "partly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [],
+  "detail_formula": [
+   "in the present",
+   "Jera holds that slow work in the present"
+  ],
+  "closer": "prod",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "B opens on a truly overlooked detail (flour dust) and ends on a real contrast. A copies brief wording ('this is the living moment') and its two options overlap.",
+   "A opens on a truly small detail (flour dust) and its ending offers two distinct states. B leaks 'this is the living moment' and its two states nearly repeat each other."
+  ],
+  "prod_slov": 61,
+  "detail_slov": 66,
+  "prod_text": "At the edge of the bowl, the cloth rises by a finger’s width as the dough works unseen. Jera holds that small change in view. In your work, this is the living moment: the slow lift is real, though the loaf is not yet ready to shape. What you are making may be gaining strength, or it may still need time.",
+  "detail_text": "A dusting of flour clings to the cloth's edge as the dough beneath it rises by small degrees. Jera holds that slow work in the present, where a little more height is visible each hour. At your worktable, the cloth still covers what takes shape, so the final form remains out of sight. What you are making may be ready to shape, or still gathering strength."
+ },
+ {
+  "pid": "D10",
+  "id": "02-ansuz-u0",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "smysl": "sluch",
+  "uhel": 0,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [
+   "Notice what pulls your head around when you are not deciding"
+  ],
+  "prod_inner": [],
+  "prod_force": [
+   "Ansuz is that sound reaching you, a call that finds your ear across open air"
+  ],
+  "prod_formula": [
+   "that turning tells you more than any plan"
+  ],
+  "detail_retells": "partly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [
+   "Ansuz is the call that reaches you before you choose it"
+  ],
+  "detail_formula": [
+   "Let the rest fall away and stay with that turning",
+   "Let the rest fall away and stay with that turning.",
+   "something in the direction of your going answers"
+  ],
+  "closer": "prod",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "A gives life advice ('Notice what pulls your head around') and runs to 81 words. B leaks the angle instruction but keeps the owner's boundary.",
+   "Both are long and open on a sprawling first sentence. B gives life advice ('Notice what pulls your head around') and hands over a conclusion. A leaks the angle instruction but its ending holds."
+  ],
+  "prod_slov": 81,
+  "detail_slov": 71,
+  "prod_text": "The still fjord holds everything at once, the water, the far shore, the grey sky, and then one church bell carries across and you turn toward it before you choose to. Ansuz is that sound reaching you, a call that finds your ear across open air. Notice what pulls your head around when you are not deciding, Kuky, for that turning tells you more than any plan. Your direction may already be a thing you hear, not a thing you settle.",
+  "detail_text": "Across the still fjord a bell rings out, the water holds its light, the far bank waits, and you turn toward the sound before you know you have turned. Let the rest fall away and stay with that turning. Ansuz is the call that reaches you before you choose it, and something in the direction of your going answers. This may be, Kuky, a path already leaning toward what it hears."
+ },
+ {
+  "pid": "D11",
+  "id": "03-jera-u1",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "smysl": "zrak",
+  "uhel": 1,
+  "prod_retells": "partly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [
+   "the shape it takes is not yours to force now"
+  ],
+  "prod_inner": [],
+  "prod_force": [
+   "Jera does its slow work under that cover, raising the dough"
+  ],
+  "prod_formula": [
+   "a thing still gathering what it needs",
+   "the shape it takes is not yours to force now"
+  ],
+  "detail_retells": "partly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [
+   "Jera lifts that weight slow, one quiet hour at a time"
+  ],
+  "detail_formula": [
+   "work still gathering itself",
+   "one quiet hour at a time"
+  ],
+  "closer": "detail",
+  "l3a": "detail",
+  "l3b": "prod",
+  "l3": "detail!",
+  "duvody": [
+   "Very close. A's 'not yours to force now' is prescriptive; B's ending is fresher. Both are long, and both presume what the seeker did earlier.",
+   "Near tie, both overlong. B's essence line runs cleaner. A makes up the seeker's past 'pushing', uses the stock 'one quiet hour at a time' and the stiff 'lifts that weight slow'.",
+   "B ties the image to work: \"in the making\", and it ends on two states of the work. A says \"thing\" twice and edges into lecturing with \"not yours to force\". Both run over."
+  ],
+  "prod_slov": 77,
+  "detail_slov": 75,
+  "prod_text": "See the faint crease in the cloth, the small lift no eye caught in the hour it happened. Jera does its slow work under that cover, raising the dough while the room stays quiet. What you set down earlier is still moving, unhurried and out of your watch, and the shape it takes is not yours to force now. This may be a thing rising into its full form, or a thing still gathering what it needs.",
+  "detail_text": "See the faint crease where the cloth first began to rise, the wrinkle no one thought to watch. Jera lifts that weight slow, one quiet hour at a time, working when the room is empty. What you set down in the making moves without your hand on it now, and the pushing you did will not hurry it. This may be work still gathering itself, or work already fuller than the eye can yet read."
+ },
+ {
+  "pid": "D12",
+  "id": "04-perth-u1",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "smysl": "cich",
+  "uhel": 1,
+  "prod_retells": "no",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [],
+  "prod_formula": [
+   "something real that remains hard to name"
+  ],
+  "detail_retells": "no",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [],
+  "detail_formula": [
+   "taking shape without yet being clear to you",
+   "Perhaps something in your life is taking shape"
+  ],
+  "closer": "detail",
+  "l3a": "prod",
+  "l3b": "prod",
+  "l3": "prod",
+  "duvody": [
+   "B names the friction honestly (enough, or burning) and closes plainly. A's close is soft, reuses the source phrase and adds no friction.",
+   "A names the friction honestly (the pot may be burning) and ends plainly. B's 'whether ready' is soft and its ending echoes the source with comfort, against the brief."
+  ],
+  "prod_slov": 63,
+  "detail_slov": 67,
+  "prod_text": "A thin curl of steam slips from beneath the lid, easy to miss beside the stronger smell. Perth leaves what is forming out of sight, even as its presence reaches you. The lid stays on, and the smell cannot tell you whether the pot holds enough or has begun to burn. You may be living with something real that remains hard to name.",
+  "detail_text": "A bead of water gathers where your pot lid meets the rim, while a smell slips out before you can see what cooks beneath it. Perth gives the unseen a trace you can notice, not a clear view. Your lid stays on, and the smell cannot tell you whether the contents are ready. Perhaps something in your life is taking shape without yet being clear to you."
+ },
+ {
+  "pid": "D13",
+  "id": "03-jera-u1",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "smysl": "zrak",
+  "uhel": 1,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [
+   "Jera lifts that cloth a little higher each hour"
+  ],
+  "prod_formula": [
+   "What sits just out of frame",
+   "Your making moves this way too"
+  ],
+  "detail_retells": "partly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [
+   "Jera lifts the work slowly, while your hands are turned elsewhere",
+   "Jera lifts the work slowly"
+  ],
+  "detail_formula": [
+   "doing its quiet part"
+  ],
+  "closer": "prod",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "A is lean, nearer the count and closes cleanly on two states. B copies the source sentence, spells out the simile and leaks 'just out of frame'.",
+   "B is leaner and its ending offers two distinct states. A copies the source image almost word for word, leaks 'just out of frame' from the brief and spells out the analogy ('Your making moves this way too')."
+  ],
+  "prod_slov": 69,
+  "detail_slov": 64,
+  "prod_text": "See the small crease in the cloth, the fold no one thinks to watch as it rises. Jera lifts that cloth a little higher each hour, working while the room is empty. Your making moves this way too, slow under cover, adding to itself when your back is turned. What sits just out of frame may be a thing already risen, or a thing still finding its full height.",
+  "detail_text": "See the faint crease where the cloth has risen, the line no one thought to mark an hour ago. Jera lifts the work slowly, while your hands are turned elsewhere. What you set down before is doing its quiet part now, the shape still hidden under the covering. This may be a thing already made, or a thing not yet ready to be seen."
+ },
+ {
+  "pid": "D14",
+  "id": "04-perth-u1",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "smysl": "cich",
+  "uhel": 1,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [
+   "Perth is that scent, the thing at work where you cannot yet look"
+  ],
+  "prod_formula": [
+   "Something is taking shape in the dark of the water"
+  ],
+  "detail_retells": "no",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [
+   "Perth is the smell that reaches you before the cooking is done"
+  ],
+  "detail_formula": [
+   "before you have a name for it"
+  ],
+  "closer": "prod",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "B follows the small-detail angle and names friction honestly ('no longer what you put in'), though it is long. A skips the angle and ends on comfort.",
+   "A follows the small-detail angle (wet gleam under the lid) and names the friction plainly, but runs 80 words. B opens on the whole image, copies the source and softens it into comfort."
+  ],
+  "prod_slov": 64,
+  "detail_slov": 80,
+  "prod_text": "The lid sits tight on the pot, but the smell has already slipped under it. Perth is that scent, the thing at work where you cannot yet look. Something is taking shape in the dark of the water, and the covered pot will not tell you how far along it is. What you cannot see may be nearer done than the closed lid suggests.",
+  "detail_text": "The steam has begun to darken the underside of the lid, a wet gleam you would not think to look for. Perth is the smell that reaches you before the cooking is done, the change already underway beneath what stays closed. You cannot yet see what the heat is making of it, only that it is no longer what you put in. Something in your life may already be turning, out of sight, before you have a name for it."
+ },
+ {
+  "pid": "D15",
+  "id": "04-perth-u1",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "smysl": "cich",
+  "uhel": 1,
+  "prod_retells": "no",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [],
+  "prod_formula": [
+   "Something in your life may be changing"
+  ],
+  "detail_retells": "no",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [],
+  "detail_formula": [
+   "You might walk past",
+   "something changing in your life without yet knowing what it is",
+   "You may sense something changing in your life"
+  ],
+  "closer": "detail",
+  "l3a": "prod",
+  "l3b": "prod",
+  "l3": "prod",
+  "duvody": [
+   "A is leaner and nearer the word count, with cleaner friction. B's opening echoes the brief and 'what remains unfinished' is clumsy. Both closings are generic.",
+   "B is tighter and nearer the word count. A turns the angle instruction into text ('You might walk past') and runs to 66 words. Both close on a generic 'something changing'."
+  ],
+  "prod_slov": 61,
+  "detail_slov": 66,
+  "prod_text": "A faint line of steam escapes beneath the pot lid, easy to miss until the smell reaches you. Perth draws your attention to what is taking shape before you can see it. The lid stays on, and the smell gives you no way to know what is inside. Something in your life may be changing without yet being clear to you.",
+  "detail_text": "You might walk past the thin curl of steam escaping beneath the pot’s lid, but the smell reaches you first. Perth gives you a trace of what is taking shape before you can see it. The lid stays in place, and the smell gives you no way to know what remains unfinished. You may sense something changing in your life without yet knowing what it is."
+ },
+ {
+  "pid": "D16",
+  "id": "05-gebo-u2",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "smysl": "zrak",
+  "uhel": 2,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [],
+  "prod_formula": [
+   "you can picture two people meeting at that edge",
+   "Could this be a way you and someone meet now?"
+  ],
+  "detail_retells": "partly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [],
+  "detail_formula": [],
+  "closer": "prod",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "A stays within the count, deepens the image (what the shore keeps beneath) and ends on a concrete question. B leaks the brief and its question is vague.",
+   "B keeps the seeker in the scene ('past your feet') and ends on a specific mirror question. A's 'you can picture two people' feels constructed, and its question is vague."
+  ],
+  "prod_slov": 57,
+  "detail_slov": 58,
+  "prod_text": "The sea gives to the shore and draws back in the same breath, leaving water where dry sand lay. Gebo shows how giving and receiving can belong to the same exchange. Kuky, you can picture two people meeting at that edge, where neither holds the water still. Could this be a way you and someone meet now?",
+  "detail_text": "The sea gives the shore a thin wash of water, then draws it back past your feet. Gebo shows giving and receiving as one movement. Kuky, you can see where the water reaches, but not what the shore keeps beneath its surface. Could something between you and someone else have room for both an offering and a return?"
+ },
+ {
+  "pid": "D17",
+  "id": "05-gebo-u2",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "smysl": "zrak",
+  "uhel": 2,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [
+   "when you think of someone close, you can notice what moves freely between you and what seems harder to receive"
+  ],
+  "prod_inner": [
+   "what seems harder to receive"
+  ],
+  "prod_force": [],
+  "prod_formula": [
+   "Could this be a way you meet each other now?"
+  ],
+  "detail_retells": "no",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [],
+  "detail_formula": [
+   "when you picture two people standing at that edge"
+  ],
+  "closer": "prod",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "A drops the image for an introspection instruction that presumes difficulty in receiving. B carries the shore through, despite its awkward dangling middle clause.",
+   "A carries the shore image into its question. B drops the image, suggests a reflective step and assumes something is hard to receive."
+  ],
+  "prod_slov": 60,
+  "detail_slov": 58,
+  "prod_text": "The sea gives to the shore and draws back in the same breath, leaving wet sand where the water stood. Gebo names the exchange without deciding who gives more. Kuky, when you think of someone close, you can notice what moves freely between you and what seems harder to receive. Could this be a way you meet each other now?",
+  "detail_text": "The sea reaches up the shore and draws back, leaving a thin line of foam where wet sand turns dry. Gebo holds giving and receiving in the same movement. Kuky, when you picture two people standing at that edge, neither wave stays and neither leaves the shore unchanged. Could something between you and someone else move this way?"
+ },
+ {
+  "pid": "D18",
+  "id": "04-perth-u1",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "smysl": "cich",
+  "uhel": 1,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [
+   "Something is already taking shape below your knowing"
+  ],
+  "prod_force": [],
+  "prod_formula": [
+   "Perth works like that",
+   "that is the whole friction of it"
+  ],
+  "detail_retells": "no",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [
+   "You do not know yet what has been set going"
+  ],
+  "detail_force": [
+   "Perth is that thickening you smell before you see it"
+  ],
+  "detail_formula": [],
+  "closer": "prod",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "A follows the smallest-detail angle with a concrete fogged lid and fresh wording, though it runs long. B leaks 'friction', says 'Perth works like that' and cold-reads 'below your knowing'.",
+   "B opens on the overlooked detail and stays concrete. A writes the brief's 'friction' into the text and states something 'below your knowing' as fact. Both run far over length."
+  ],
+  "prod_slov": 72,
+  "detail_slov": 78,
+  "prod_text": "The lid sits tight on the pot, and only the drift of smell tells you anything is happening at all. Perth works like that, a slow change hidden under a cover you cannot lift yet. You have nothing to look at, only the trace on the air, and that is the whole friction of it. Something is already taking shape below your knowing, and it may not be ready to be seen.",
+  "detail_text": "The steam has fogged the underside of the lid, a wet grey film no one thinks to notice. Perth is that thickening you smell before you see it, the change happening under a cover still closed. You do not know yet what has been set going, only that the pot is no longer just water and cold. Something is forming beneath the lid you have not lifted, and it may be closer to done than you would guess."
+ },
+ {
+  "pid": "D19",
+  "id": "05-gebo-u2",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "smysl": "zrak",
+  "uhel": 2,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [
+   "what feels uneven between you and another"
+  ],
+  "prod_force": [],
+  "prod_formula": [
+   "This is Gebo, the exchange between the water and the sand",
+   "the exchange between the water and the sand"
+  ],
+  "detail_retells": "partly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [],
+  "detail_formula": [
+   "This is Gebo, the exchange between the sea and the shore",
+   "the exchange between the sea and the shore"
+  ],
+  "closer": "prod",
+  "l3a": "prod",
+  "l3b": "detail",
+  "l3": "prod!",
+  "duvody": [
+   "Both copy the brief's example essence line. A is shorter and hedged. B asserts what is true between them and adds a second image, the ledger.",
+   "A's shell and its ledger question make a sharp mirror. B's question assumes the seeker feels things are uneven and drifts toward comfort. Both run over length.",
+   "A is 66 words to B's 72. It hedges the claim about the relationship and ends on the tide. B's third sentence asserts it, its essence line copies the brief's example, and \"ledgers\" brings in a second picture."
+  ],
+  "prod_slov": 66,
+  "detail_slov": 72,
+  "prod_text": "The sea slides up the shore and draws back in one motion, giving and taking without keeping count. This is Gebo, the exchange between the water and the sand, where neither hoards what passes between them. What you offer, Kuky, and what returns to you may not arrive in the same breath. Could what feels uneven between you and another simply be the tide, still moving?",
+  "detail_text": "The wave slides up the sand and draws back in the same breath, leaving one shell it did not carry off. This is Gebo, the exchange between the sea and the shore, neither one keeping what it hands over. What you offer and what returns, Kuky, arrive on the same tide, not counted, not weighed. Might what passes between you and this other be one motion rather than two ledgers held apart?"
+ },
+ {
+  "pid": "D20",
+  "id": "06-laguz-u2",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "smysl": "hmat",
+  "uhel": 2,
+  "prod_retells": "mostly",
+  "prod_drift": true,
+  "prod_driftText": "Groundswell becomes water moving through roots and soil; scene relocated underground, though felt-before-seen is kept.",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [
+   "Laguz carries that slow current beneath the soil"
+  ],
+  "prod_formula": [],
+  "detail_retells": "no",
+  "detail_drift": true,
+  "detail_driftText": "Opens on water through roots and soil darkening (seen first); groundswell replaced by soil scene, touch comes later.",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [
+   "Laguz carries that movement through the ground",
+   "Laguz carries that movement through the ground."
+  ],
+  "detail_formula": [
+   "For your mending and rest",
+   "a time of change too quiet to measure yet",
+   "this may be a time of change"
+  ],
+  "closer": "prod",
+  "l3a": "prod",
+  "l3b": "prod",
+  "l3": "prod",
+  "duvody": [
+   "A is exactly at the count and its closing ties the image to mending: rest taking hold unseen. B runs over, echoes the brief's label and ends generically.",
+   "B is close to the word count and links rest to the image cleanly. A repeats its opening in sentence three and runs to 63 words."
+  ],
+  "prod_slov": 59,
+  "detail_slov": 63,
+  "prod_text": "You feel the ground shift under your feet before you see water moving through the roots. Laguz carries that slow current beneath the soil, where your eyes cannot follow it. You may notice the movement only when the ground begins to settle again. Kuky, your mending may have this quiet shape: rest taking hold before you can see it.",
+  "detail_text": "Water presses through the roots beneath your feet, and a small patch of soil darkens before the surface shifts. Laguz carries that movement through the ground. You may feel its pressure before you can see where the water reaches, while the roots remain in place. For your mending and rest, Kuky, this may be a time of change too quiet to measure yet."
+ },
+ {
+  "pid": "D21",
+  "id": "06-laguz-u2",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "smysl": "hmat",
+  "uhel": 2,
+  "prod_retells": "no",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [
+   "Laguz carries that slow movement through the roots",
+   "Laguz carries that slow movement through the roots."
+  ],
+  "prod_formula": [
+   "this may be how your mending stands"
+  ],
+  "detail_retells": "mostly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [
+   "Laguz carries that water slowly through the ground beneath you",
+   "Laguz carries that water slowly through the ground beneath you."
+  ],
+  "detail_formula": [
+   "this may be a time when mending has room to rest"
+  ],
+  "closer": "detail",
+  "l3a": "prod",
+  "l3b": "prod",
+  "l3": "prod",
+  "duvody": [
+   "B is leaner and within the count, and its closing carries the image into mending and rest. A repeats 'beneath', runs over and ends muddled ('mending has room to rest').",
+   "A stays within the word count, and its close keeps the friction ('movement still beneath'). B repeats 'beneath', runs long and ends softly on 'room to rest'."
+  ],
+  "prod_slov": 57,
+  "detail_slov": 62,
+  "prod_text": "Water presses upward beneath your feet, though the ground above it stays still. Laguz carries that slow movement through the roots. You cannot see where it begins, but you can feel the ground change before its surface gives any sign. Kuky, this may be how your mending stands: quiet enough for rest, with movement still beneath it.",
+  "detail_text": "You feel the ground shift beneath your feet before you see water rise through the roots, darkening the soil around them. Laguz carries that water slowly through the ground beneath you. You may notice how the roots hold as the soil softens, with nothing hurried in their movement. For you, Kuky, this may be a time when mending has room to rest."
+ },
+ {
+  "pid": "D22",
+  "id": "05-gebo-u2",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "smysl": "zrak",
+  "uhel": 2,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [
+   "Watch what you carry toward another, and what returns to you unbidden."
+  ],
+  "prod_inner": [],
+  "prod_force": [],
+  "prod_formula": [
+   "This is Gebo, Kuky, the exchange that lives between the shore and the water",
+   "This is Gebo, Kuky, the exchange that lives between the shore and the water."
+  ],
+  "detail_retells": "partly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [],
+  "detail_formula": [
+   "This is Gebo, the exchange between the sea and the shore"
+  ],
+  "closer": "prod",
+  "l3a": "prod",
+  "l3b": "detail",
+  "l3": "detail!",
+  "duvody": [
+   "A runs 83 words, far past the count, and lifts the brief's example wording. B stays lean and ends on a good question, though it slips in one piece of advice.",
+   "A gives life advice ('Watch what you carry'). B has a sharper image (the darkened shore) but runs far over the word count, about 83 words.",
+   "B's \"Watch what you carry toward another\" advises the seeker, breaking canon. A runs long (83 words) but keeps a concrete shoreline image through to the close."
+  ],
+  "prod_slov": 60,
+  "detail_slov": 83,
+  "prod_text": "The sea reaches up the sand and draws back in the same breath, giving and taking without keeping count. This is Gebo, Kuky, the exchange that lives between the shore and the water. Watch what you carry toward another, and what returns to you unbidden. Could what passes between you and someone be one motion, given and received at once?",
+  "detail_text": "The wave slides up the sand and draws back in the same breath, leaving the shore darker where it touched. This is Gebo, the exchange between the sea and the shore, neither one keeping what passes between them. What you offer to someone, Kuky, and what returns to you may not arrive in the same shape or hour. Could what moves between you two be measured less by what you hold, and more by what you let cross the line where you meet?"
+ },
+ {
+  "pid": "D23",
+  "id": "06-laguz-u2",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "smysl": "hmat",
+  "uhel": 2,
+  "prod_retells": "partly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [
+   "Rest comes not by force but by letting the slow water do its work beneath you.",
+   "only that you stand and feel it come"
+  ],
+  "prod_inner": [],
+  "prod_force": [
+   "Laguz moves under the surface, carrying what the light has not yet touched."
+  ],
+  "prod_formula": [
+   "not by force but by",
+   "Rest comes not by force but by letting the slow water do its work beneath you.",
+   "carrying what the light has not yet touched"
+  ],
+  "detail_retells": "partly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [
+   "You feel the pull before you name it"
+  ],
+  "detail_force": [
+   "Laguz moves in that water beneath, carrying warmth up into cold feet."
+  ],
+  "detail_formula": [],
+  "closer": "detail",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "A's ending names a state, as asked. B drifts into prescription ('letting the slow water do its work', 'stand and feel it come') and a stock 'not by force' phrase.",
+   "B is concrete (warmth into cold feet, water at the ankles), closer to the word count and ends on the source image. A is aphoristic and closes with a soft instruction."
+  ],
+  "prod_slov": 65,
+  "detail_slov": 61,
+  "prod_text": "The water rises through the ground and reaches your feet before your eyes ever find it. Laguz moves under the surface, carrying what the light has not yet touched. Rest comes not by force but by letting the slow water do its work beneath you. This may be a mending that asks nothing of you yet, Kuky, only that you stand and feel it come.",
+  "detail_text": "The ground shifts under your soles before your eyes catch it, a slow swell rising through wet earth. Laguz moves in that water beneath, carrying warmth up into cold feet. You feel the pull before you name it, and the standing water holds still around your ankles. This may be the rest that comes underneath, Kuky, felt before it is seen."
+ },
+ {
+  "pid": "D24",
+  "id": "07-hagalaz-u3",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "smysl": "zrak",
+  "uhel": 3,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [
+   "Hagalaz clears the ground around it."
+  ],
+  "prod_formula": [],
+  "detail_retells": "mostly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [
+   "Hagalaz clears the broken rails from the crossing."
+  ],
+  "detail_formula": [],
+  "closer": "prod",
+  "l3a": "prod",
+  "l3b": "prod",
+  "l3": "prod",
+  "duvody": [
+   "The two are nearly identical. B stays within the word count, and 'not what held it in place' reaches toward the roots. A runs over.",
+   "A is within the word count, ties the divide to 'your way' and sharpens the point ('not what held it in place'). B only describes the scene and runs slightly over."
+  ],
+  "prod_slov": 56,
+  "detail_slov": 61,
+  "prod_text": "The gatepost still stands where your way divides, though last night’s gale tore down the old fence and left the field open. Hagalaz clears the ground around it. In the dark, you can see where the fence stood, but not what held it in place. Kuky, this may be a choice made without the old boundary.",
+  "detail_text": "The gatepost stays upright where the track divides, though the night gale has brought down the old fence and left the field open. Hagalaz clears the broken rails from the crossing. In the dark, you can still see where each stretch of fence once stood by the holes in the earth. Kuky, this may be a choice without its old boundaries."
+ },
+ {
+  "pid": "D25",
+  "id": "06-laguz-u2",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "smysl": "hmat",
+  "uhel": 2,
+  "prod_retells": "partly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [
+   "Laguz carries what has gathered beneath, moving where no push can hurry it."
+  ],
+  "prod_formula": [
+   "This may be the hour",
+   "in its own time, unforced"
+  ],
+  "detail_retells": "mostly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [
+   "You feel the pull without needing to name it"
+  ],
+  "detail_force": [
+   "Laguz moves in that unseen tide, carrying what sinks and what rises alike."
+  ],
+  "detail_formula": [
+   "a rest that mends beneath the surface, out of sight"
+  ],
+  "closer": "detail",
+  "l3a": "prod",
+  "l3b": "prod",
+  "l3": "prod",
+  "duvody": [
+   "A is leaner and near the count. B runs 68 words, adds a simile to the swell, and says the seeker doesn't need to name the pull.",
+   "B is leaner and near the word count. A's simile contradicts itself (rising like water finding a lower place), A tells what the seeker feels inside, and A runs long."
+  ],
+  "prod_slov": 60,
+  "detail_slov": 68,
+  "prod_text": "The water underfoot shifts before your eyes catch it, a slow rise felt through the soles. Laguz carries what has gathered beneath, moving where no push can hurry it. You feel the pull along the ground, and there is nothing here to fight. This may be the hour, Kuky, when rest comes as water does, in its own time, unforced.",
+  "detail_text": "The ground shifts under your feet before your eyes catch the swell, a slow rising through the soles like water finding a lower place. Laguz moves in that unseen tide, carrying what sinks and what rises alike. You feel the pull without needing to name it, standing where the current is quiet and cool. This may be, Kuky, a rest that mends beneath the surface, out of sight."
+ },
+ {
+  "pid": "D26",
+  "id": "07-hagalaz-u3",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "smysl": "zrak",
+  "uhel": 3,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [
+   "Hagalaz clears the ground around it."
+  ],
+  "prod_formula": [
+   "the open field offers no answer about which way leads across it"
+  ],
+  "detail_retells": "partly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [
+   "Hagalaz opens the field on both sides of the post."
+  ],
+  "detail_formula": [],
+  "closer": "prod",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "B's rusted hinge makes the post concrete, and the fallen rails land cleanly on the dividing way, within the count. A runs over, and its 'offers no answer' sounds stock.",
+   "A is within the word count, has a concrete rusted hinge and lands on the divided way. B gives the post roots, which is odd, uses stock 'offers no answer', and runs over."
+  ],
+  "prod_slov": 61,
+  "detail_slov": 56,
+  "prod_text": "The fence post stays fixed where the way divides, though the night gale has torn the rails away and left the field open. Hagalaz clears the ground around it. You can see the roots beneath the post now, but the open field offers no answer about which way leads across it. Kuky, this may be a choice without its old boundary.",
+  "detail_text": "The gatepost stands after the night gale tears down the old fence, with one rusted hinge still hanging from it. Hagalaz opens the field on both sides of the post. Where your way divides, the fallen rails no longer mark which ground belongs to which path. Kuky, this may be a choice without the old boundary."
+ },
+ {
+  "pid": "D27",
+  "id": "07-hagalaz-u3",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "smysl": "zrak",
+  "uhel": 3,
+  "prod_retells": "no",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [
+   "Hagalaz has torn the boundary open"
+  ],
+  "prod_formula": [
+   "This, Kuky, may be the hour",
+   "no longer chooses for you",
+   "This, Kuky, may be the hour where"
+  ],
+  "detail_retells": "no",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [
+   "Hagalaz clears the line that once told the field from the road."
+  ],
+  "detail_formula": [
+   "This, Kuky, is the hour",
+   "no longer decides for you",
+   "This, Kuky, is the hour when"
+  ],
+  "closer": "prod",
+  "l3a": "prod",
+  "l3b": "prod",
+  "l3": "prod",
+  "duvody": [
+   "B's closing states 'is the hour' as fact instead of a possibility to weigh. A keeps the 'may', though its third sentence repeats the first.",
+   "A's images are stronger, but its closing states a fact ('is the hour') instead of a possibility. B keeps 'may be' but repeats the posts. Both run long."
+  ],
+  "prod_slov": 66,
+  "detail_slov": 65,
+  "prod_text": "The gate posts still stand, though the fence between them lies flat in the wet grass. Hagalaz has torn the boundary open, and the field runs off in two directions now with nothing to mark where one ends. What held the line is gone, and what remains upright is only the posts. This, Kuky, may be the hour where the fence no longer chooses for you.",
+  "detail_text": "The gate still stands where the fence fell, its post sunk deep while the rails lie flat in the wet grass. Hagalaz clears the line that once told the field from the road. Now two ways run open where one edge held them apart, and the ground gives no marker back. This, Kuky, is the hour when the old boundary no longer decides for you."
+ },
+ {
+  "pid": "D28",
+  "id": "08-ansuz-u3",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "smysl": "sluch",
+  "uhel": 3,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [
+   "Ansuz carries that change through the air, clear before the water boils."
+  ],
+  "prod_formula": [],
+  "detail_retells": "no",
+  "detail_drift": true,
+  "detail_driftText": "Note holds steady instead of changing; you watch steam curl and the lid tremble instead of hearing without looking.",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [
+   "Ansuz carries that note through the air as the water nears its boil."
+  ],
+  "detail_formula": [
+   "the kettle gives no answer about what comes next"
+  ],
+  "closer": "prod",
+  "l3a": "prod",
+  "l3b": "prod",
+  "l3": "prod",
+  "duvody": [
+   "B stays in count and shows what lies just out of frame, as the brief asks. A runs 67 words, contradicts the image's changing note, and uses a stock 'no answer'.",
+   "A is exactly on count and faithful to sound, points out of frame (how long it has been heating) and gives two clean states. B contradicts the note and adds visuals."
+  ],
+  "prod_slov": 58,
+  "detail_slov": 67,
+  "prod_text": "The kettle stays on the stove as its note changes, and you hear the shift without looking. Ansuz carries that change through the air, clear before the water boils. You cannot tell from the sound alone how long the water has been heating. In your own slow change, this may be growing clarity or simply a sharper ear.",
+  "detail_text": "You hear the kettle’s note hold steady while steam curls past the spout and the lid begins to tremble. Ansuz carries that note through the air as the water nears its boil. You can hear a change before you can see it, though the kettle gives no answer about what comes next. This may be growing patience in you, or a clearer ear for what is changing."
+ },
+ {
+  "pid": "D29",
+  "id": "08-ansuz-u3",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "smysl": "sluch",
+  "uhel": 3,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [
+   "You have no answer from the sound alone"
+  ],
+  "prod_force": [
+   "Ansuz carries that change into the air.",
+   "Ansuz carries that change into the air"
+  ],
+  "prod_formula": [
+   "You have no answer from the sound alone"
+  ],
+  "detail_retells": "mostly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [
+   "Ansuz carries that shift in sound through the room, where nothing else has yet moved.",
+   "Ansuz carries that shift in sound through the room"
+  ],
+  "detail_formula": [
+   "a wider sense of what matters"
+  ],
+  "closer": "prod",
+  "l3a": "detail",
+  "l3b": "prod",
+  "l3": "prod!",
+  "duvody": [
+   "B keeps the kettle concrete (thinning note, cool handle, nothing else moved) and ends cleanly; A's third sentence goes abstract.",
+   "B's closing pair ties back to hearing and lands on slow change; A's cool handle is decoration, and 'wider sense of what matters' is vague.",
+   "A ties sound to slow change (\"once familiar begins to sound different\") and ends in hearing terms. B's picture is concrete, but its ending drifts to generic \"what matters\"."
+  ],
+  "prod_slov": 58,
+  "detail_slov": 58,
+  "prod_text": "The kettle stays on the stove as its note changes, and you hear the shift without looking. Ansuz carries that change into the air. You have no answer from the sound alone, only a moment when something once familiar begins to sound different. Perhaps you are hearing more clearly, or perhaps you are still learning what to hear.",
+  "detail_text": "The kettle stays on the stove while its low note thins, just before the water boils. You hear the change without looking, and the handle remains cool to the touch. Ansuz carries that shift in sound through the room, where nothing else has yet moved. You may be finding steadier attention, or a wider sense of what matters."
+ },
+ {
+  "pid": "D30",
+  "id": "08-ansuz-u3",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "smysl": "sluch",
+  "uhel": 3,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [
+   "You have been listening this way for some time, catching the change in tone under the ordinary hours.",
+   "You have been listening this way for some time, catching the change in tone under the ordinary hours"
+  ],
+  "prod_force": [
+   "Ansuz carries that shift to your ear before your eyes have anything to show.",
+   "Ansuz carries that shift to your ear before your eyes have anything to show"
+  ],
+  "prod_formula": [
+   "under the ordinary hours"
+  ],
+  "detail_retells": "partly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [
+   "Ansuz carries that sound to the ear that was already listening.",
+   "Ansuz carries that sound to the ear that was already listening"
+  ],
+  "detail_formula": [],
+  "closer": "prod",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "Both run about 68 words. A tells the seeker how they have been listening for some time; B stays in the scene until the closing line.",
+   "B tells the seeker how they have been listening, which is cold reading outside the closing line. Both run over the word count."
+  ],
+  "prod_slov": 68,
+  "detail_slov": 68,
+  "prod_text": "The note changes just before the kettle boils, and the sound stays true while everything in the water is turning. Ansuz carries that shift to your ear before your eyes have anything to show. You have been listening this way for some time, catching the change in tone under the ordinary hours. This may be a hearing grown patient, or a knowing that no longer needs to look.",
+  "detail_text": "The note in the kettle shifts while the water stays where it sits, and you catch the change before your eyes turn to it. Ansuz carries that sound to the ear that was already listening. The steam has not risen yet, though the room knows what comes. This may be a hearing that has sharpened in you, or a patience that no longer needs to look to know."
+ },
+ {
+  "pid": "D31",
+  "id": "07-hagalaz-u3",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "smysl": "zrak",
+  "uhel": 3,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [
+   "the post shows only where you once chose to stop"
+  ],
+  "prod_force": [
+   "Hagalaz clears the line that kept the field marked, and now the open grass runs both ways.",
+   "Hagalaz clears the line that kept the field marked"
+  ],
+  "prod_formula": [
+   "the way you take may be yours alone to set"
+  ],
+  "detail_retells": "partly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [
+   "Hagalaz clears what the gale could not hold, and leaves the ground plain to walk.",
+   "Hagalaz clears what the gale could not hold, and leaves the ground plain to walk"
+  ],
+  "detail_formula": [],
+  "closer": "prod",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "Both are over the word count. A's gate and two ways from one post land the crossroads, and it ends on 'may be'. B asserts, then softens into 'yours alone to set'.",
+   "B shows two ways spreading and closes with a hedged state. A asserts 'This is', narrates a past choice and softens. Both run long."
+  ],
+  "prod_slov": 73,
+  "detail_slov": 75,
+  "prod_text": "The gale tore the fence down in the night, yet the gatepost stands, planted deep where the ground holds. Hagalaz clears the line that kept the field marked, and now the open grass runs both ways. What was fenced off is fenced off no longer, and the post shows only where you once chose to stop. This is a boundary undone, Kuky, and the way you take may be yours alone to set.",
+  "detail_text": "The gate still stands where the fence gave way, one post rooted while the field lies open on every side. Hagalaz clears what the gale could not hold, and leaves the ground plain to walk. Now the boundary that told you where to turn is gone, and two ways spread from the same bare post. This, Kuky, may be the hour where nothing marks the path but the gate you have not yet passed through."
+ },
+ {
+  "pid": "D32",
+  "id": "09-ehwaz-u4",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "smysl": "zrak",
+  "uhel": 4,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [],
+  "prod_formula": [
+   "At the fork"
+  ],
+  "detail_retells": "mostly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [],
+  "detail_formula": [
+   "where your way divides",
+   "trust taking shape through contact, not certainty"
+  ],
+  "closer": "tie",
+  "l3a": "prod",
+  "l3b": "prod",
+  "l3": "prod",
+  "duvody": [
+   "B names the friction honestly (you can't stand on both banks) and makes the Ehwaz line concrete. A lifts the brief's phrasing and leans on 'X, not Y'.",
+   "A names the friction honestly (not both banks), and its essence line catches horse and rider moving together. B repeats the brief's wording 'where your way divides'."
+  ],
+  "prod_slov": 57,
+  "detail_slov": 57,
+  "prod_text": "Beneath the glacial river, the ford lies out of sight, and you watch the horse find its footing where the current breaks. Ehwaz makes trust a matter of moving together without seeing the whole crossing. At the fork, you cannot have the sure ground of both banks. Kuky, this may be a choice made with incomplete sight.",
+  "detail_text": "Beneath the glacial river, the ford lies beyond your sight, but the horse feels firm ground through the current. Ehwaz shows trust taking shape through contact, not certainty. At the crossing, you cannot see where each hoof will land, and the water keeps moving. Kuky, where your way divides, this may be trust without a clear view."
+ },
+ {
+  "pid": "D33",
+  "id": "08-ansuz-u3",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "smysl": "sluch",
+  "uhel": 3,
+  "prod_retells": "partly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [
+   "What steadies you now is the listening itself, the hearing that runs ahead of proof.",
+   "What steadies you now is the listening itself"
+  ],
+  "prod_force": [
+   "Ansuz carries that shift in sound before the eye can find it.",
+   "Ansuz carries that shift in sound before the eye can find it"
+  ],
+  "prod_formula": [],
+  "detail_retells": "no",
+  "detail_drift": true,
+  "detail_driftText": "Note held steady; steam and trembling lid added; the changing note appears only in the seeker line.",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [
+   "You have been learning to hear the change before the eye confirms it, one small reading at a time.",
+   "You have been learning to hear the change before the eye confirms it, one small reading at a time"
+  ],
+  "detail_force": [
+   "Ansuz carries that note to you across the kitchen, unseen and plain.",
+   "Ansuz carries that note to you across the kitchen"
+  ],
+  "detail_formula": [
+   "The steam gives way",
+   "one small reading at a time"
+  ],
+  "closer": "prod",
+  "l3a": "prod",
+  "l3b": "prod",
+  "l3": "prod",
+  "duvody": [
+   "Both are over length and both cold-read. B's image is plainer but cleaner. A lifts 'gives way' from the brief, adds a meta 'one small reading', and narrates the seeker's change.",
+   "Both cold-read and both run long. B also tells the seeker how they have changed, drifts from the image and adds a meta line, 'one small reading at a time'."
+  ],
+  "prod_slov": 69,
+  "detail_slov": 70,
+  "prod_text": "The note holds steady while the water beneath it turns, and you catch the change without looking at the flame. Ansuz carries that shift in sound before the eye can find it. What steadies you now is the listening itself, the hearing that runs ahead of proof. This may be a keener ear you are growing, or an old trust in what you sense before you can name it.",
+  "detail_text": "The steam gives way, the lid trembles, yet the note holds steady in the room before the water breaks. Ansuz carries that note to you across the kitchen, unseen and plain. You have been learning to hear the change before the eye confirms it, one small reading at a time. This may be patience settling in you, or it may be an old readiness you had only mistaken for waiting."
+ },
+ {
+  "pid": "D34",
+  "id": "09-ehwaz-u4",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "smysl": "zrak",
+  "uhel": 4,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [],
+  "prod_formula": [
+   "where your way divides"
+  ],
+  "detail_retells": "mostly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [],
+  "detail_formula": [
+   "Ehwaz brings trust into the living moment",
+   "Where your way divides"
+  ],
+  "closer": "tie",
+  "l3a": "prod",
+  "l3b": "prod",
+  "l3": "prod",
+  "duvody": [
+   "A's 'gives trust a footing' stays inside the image and hits the word count. B lifts two brief phrases ('the living moment', 'where your way divides').",
+   "B's 'gives trust a footing' grows out of the image, and it names two ways within the word count. A repeats the brief's 'living moment' and runs slightly over."
+  ],
+  "prod_slov": 58,
+  "detail_slov": 59,
+  "prod_text": "Beneath the glacial river, the ford lies out of sight as your horse feels for firm ground. Ehwaz gives trust a footing before you can see the crossing. At the bank, you still face two ways, and the current leaves little room for certainty. Kuky, where your way divides, this may be a choice made without full sight.",
+  "detail_text": "Beneath the glacial river, the ford lies out of sight as the horse feels for firm ground with one hoof. Ehwaz brings trust into the living moment, where you cannot see the whole crossing. At the bank, the current pulls hard enough to make waiting difficult. Where your way divides, Kuky, this may be a choice made without certainty."
+ },
+ {
+  "pid": "D35",
+  "id": "10-isa-u4",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "smysl": "sluch",
+  "uhel": 4,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [
+   "Isa holds the surface still while the water continues below.",
+   "Isa holds the surface still while the water continues below"
+  ],
+  "prod_formula": [],
+  "detail_retells": "mostly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [
+   "Isa holds the surface still while movement continues below it.",
+   "Isa holds the surface still while movement continues below it"
+  ],
+  "detail_formula": [],
+  "closer": "prod",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "A earns 'just as slowly' with water wearing a stone smooth. B's crossed ground never shows anything slow, so its closing question is unearned.",
+   "B's stone worn smooth carries the image one step on and lands squarely on slow change. A's 'roots hidden from sight' feels forced, though its closing is tidy."
+  ],
+  "prod_slov": 55,
+  "detail_slov": 57,
+  "prod_text": "Beneath the ice, you can still hear the stream moving past roots hidden from sight. Isa holds the surface still while the water continues below. You cannot see how much ground the stream has crossed from where you stand. Could a change in you be moving just as slowly, without yet showing at the surface?",
+  "detail_text": "Beneath the ice, you can hear the stream moving over stones, though the surface gives nothing away. Isa holds the surface still while movement continues below it. You cannot see how long the water takes to wear a stone smooth. Could a change in you be taking shape just as slowly, beyond what you can yet see?"
+ },
+ {
+  "pid": "D36",
+  "id": "09-ehwaz-u4",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "smysl": "zrak",
+  "uhel": 4,
+  "prod_retells": "partly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [
+   "This may be the moment, Kuky, when you must move before you can see the footing beneath you",
+   "This may be the moment, Kuky, when you must move before you can see the footing beneath you."
+  ],
+  "prod_inner": [],
+  "prod_force": [
+   "Ehwaz is the horse that reads the water through its legs"
+  ],
+  "prod_formula": [],
+  "detail_retells": "partly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [
+   "Ehwaz is the horse that reads the ford through its hooves"
+  ],
+  "detail_formula": [],
+  "closer": "detail",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "B names the friction honestly (current against footing) and closes on trust as a plain state; A's 'you must move' prescribes. Both run over the word count.",
+   "A names honest friction (current against footing) and closes on a state, trust; B's close drifts into 'you must move'. Both overlong."
+  ],
+  "prod_slov": 65,
+  "detail_slov": 71,
+  "prod_text": "Below the churning surface lies a bed of firm stones, unseen from where you stand. Ehwaz is the horse that reads the water through its legs, finding the crossing your eyes cannot mark. The far bank shows two openings and no sign of which the ford serves. This may be the moment, Kuky, when you must move before you can see the footing beneath you.",
+  "detail_text": "Beneath the grey water lies a firm line of stone, and you cannot see it from where you stand. Ehwaz is the horse that reads the ford through its hooves, feeling the crossing your eyes deny. The current pulls one way, the footing holds another, and the two do not agree here at the bank. This may be trust asked of you, Kuky, before the far shore has proven itself safe."
+ },
+ {
+  "pid": "D37",
+  "id": "09-ehwaz-u4",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "smysl": "zrak",
+  "uhel": 4,
+  "prod_retells": "partly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [],
+  "prod_formula": [
+   "Where your way divides here"
+  ],
+  "detail_retells": "mostly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [
+   "you must move on knowing that is not yours to hold",
+   "where you must move on knowing that is not yours to hold"
+  ],
+  "detail_inner": [],
+  "detail_force": [],
+  "detail_formula": [
+   "knowing that is not yours to hold"
+  ],
+  "closer": "detail",
+  "l3a": "prod",
+  "l3b": "prod",
+  "l3": "prod",
+  "duvody": [
+   "B carries the ford cleanly and lands where the way divides; A's opening sentence is overlong, its closing grammar is garbled, and it prescribes moving.",
+   "A's image is concrete and its close names a clear state; B's last line is garbled and directive ('you must move on'). Both overlong."
+  ],
+  "prod_slov": 74,
+  "detail_slov": 75,
+  "prod_text": "Under the churning glacial water lies a firm gravel bed, a crossing you cannot see from the bank. The horse feels for it with each hoof, reading the river through its own weight and nerve. Ehwaz is that trust between rider and animal, the ground found by feel where the eye fails. Where your way divides here, Kuky, the surest footing may be the one you cannot see until you are already on it.",
+  "detail_text": "Below the churning glacial water lies the ford you cannot see, and the horse feels for it hoof by hoof where you would only find the drop. Ehwaz is the trust between one who must cross and one who already knows the crossing. The far bank waits, cold and plain, and your own eyes give you nothing. This may be the place, Kuky, where you must move on knowing that is not yours to hold."
+ },
+ {
+  "pid": "D38",
+  "id": "10-isa-u4",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "smysl": "sluch",
+  "uhel": 4,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [
+   "Isa holds the surface still while water continues beneath it"
+  ],
+  "prod_formula": [
+   "a slow change in you"
+  ],
+  "detail_retells": "mostly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [
+   "Isa holds the surface in place while the water keeps moving below"
+  ],
+  "detail_formula": [
+   "taking shape before you can name it"
+  ],
+  "closer": "prod",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "Both within count. B keeps the sound concrete (over stones, meets the bank); A leans on the hedge 'You may notice' and closes on sight, not sound.",
+   "A keeps sound concrete (water meeting the bank) and asks a sharper inward question; B's third sentence is wordy and slack."
+  ],
+  "prod_slov": 57,
+  "detail_slov": 56,
+  "prod_text": "Under the ice, you can hear the stream moving where you cannot see it. Isa holds the surface still while water continues beneath it. You may notice how little the sound tells you about the current, even when you stand close enough to hear it. Could a slow change in you remain just as hard to see?",
+  "detail_text": "Beneath the ice, you hear the stream moving over stones, though the bank looks still. Isa holds the surface in place while the water keeps moving below. You cannot see its course from here, but you can hear where it meets the bank. Could a change in you be taking shape before you can name it?"
+ },
+ {
+  "pid": "D39",
+  "id": "10-isa-u4",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "smysl": "sluch",
+  "uhel": 4,
+  "prod_retells": "partly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [
+   "Isa holds the water quiet",
+   "Isa holds the water quiet, yet the current runs on unseen under the crust"
+  ],
+  "prod_formula": [
+   "What looks like nothing changing is often the slow work you cannot watch happening"
+  ],
+  "detail_retells": "no",
+  "detail_drift": true,
+  "detail_driftText": "Sound dropped entirely; stream told only as unseen movement under a visually still surface.",
+  "detail_lost": true,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [
+   "Isa holds the surface hard",
+   "Isa holds the surface hard while the current runs on"
+  ],
+  "detail_formula": [
+   "What looks like nothing happening is the slow work that never shows itself in the moment"
+  ],
+  "closer": "prod",
+  "l3a": "prod",
+  "l3b": "prod",
+  "l3": "prod",
+  "duvody": [
+   "Near twins. A honours the sound image, ear to the ice, in its closing question; B never uses sound at all.",
+   "B uses the image's sound (ear to the ice), and its question stays inside the picture. A drops hearing entirely. Both overlong."
+  ],
+  "prod_slov": 62,
+  "detail_slov": 62,
+  "prod_text": "Beneath the frozen surface the stream still moves, though your eye finds only white stillness. Isa holds the water quiet, yet the current runs on unseen under the crust. What looks like nothing changing is often the slow work you cannot watch happening. If you set your ear to the ice, might the water underneath be further along than the surface admits?",
+  "detail_text": "Beneath the white lid the water is still moving, though your eye finds only stillness above. Isa holds the surface hard while the current runs on, unseen and unhurried. What looks like nothing happening is the slow work that never shows itself in the moment. Could the change you cannot yet see be already running under the ice you are standing on?"
+ },
+ {
+  "pid": "D40",
+  "id": "11-mannaz-u5",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "smysl": "zrak",
+  "uhel": 5,
+  "prod_retells": "partly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [],
+  "prod_formula": [
+   "that space leaves room for what you notice without asking you to settle it"
+  ],
+  "detail_retells": "partly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [],
+  "detail_formula": [
+   "room to breathe"
+  ],
+  "closer": "prod",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "A's 'water settles without asking you to hold still' lands rest concretely; B's third sentence is abstract, wellness-toned filler. A's 'room to breathe' is stock.",
+   "B's edge (face giving way to sky, spreading ring) is concrete and near the word count; A's third sentence is abstract therapy-speak."
+  ],
+  "prod_slov": 62,
+  "detail_slov": 59,
+  "prod_text": "At the rain-barrel’s rim, your face meets the sky, and the water holds both until you move. Mannaz makes that small change visible: your reflection shifts with you, while the sky remains open above it. In mending, that space leaves room for what you notice without asking you to settle it. Your rest may be a clearer view, or simply a pause.",
+  "detail_text": "At the edge of your reflection in the rain-barrel, the face gives way to open sky, and a faint ring spreads when you shift. Mannaz lets you notice what changes with your movement and what stays beyond it. The water settles without asking you to hold still. For your mending, this may be quiet rest or room to breathe."
+ },
+ {
+  "pid": "D41",
+  "id": "11-mannaz-u5",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "smysl": "zrak",
+  "uhel": 5,
+  "prod_retells": "partly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [],
+  "prod_formula": [
+   "remains beyond the frame",
+   "a moment of clearer sight or a moment of rest"
+  ],
+  "detail_retells": "partly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [],
+  "detail_formula": [],
+  "closer": "detail",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "B carries the ripple and the stillness through to two distinct, honest states (rest or waiting); A's 'beyond the frame' leaks the brief and its ending repeats itself.",
+   "A stays concrete and ends on two distinct, unsoftened states (rest or waiting); B leaks 'beyond the frame' and repeats 'a moment of'."
+  ],
+  "prod_slov": 61,
+  "detail_slov": 59,
+  "prod_text": "At the edge of the rain-barrel, your face gives way to open sky when you shift your gaze. Mannaz brings your own seeing into view. The water stays still enough for you to notice the change, while the air above it remains beyond the frame. In your mending, this may be a moment of clearer sight or a moment of rest.",
+  "detail_text": "At the rain-barrel’s rim, your face meets the open air; a small ripple crosses it only when you lean closer. Mannaz lets you see how your own movement changes what you see. The water settles when you hold still, though the air above it keeps moving. For your mending, that stillness may be rest, or it may be waiting."
+ },
+ {
+  "pid": "D42",
+  "id": "10-isa-u4",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "smysl": "sluch",
+  "uhel": 4,
+  "prod_retells": "partly",
+  "prod_drift": true,
+  "prod_driftText": "Audible stream becomes silent: 'under the quiet', 'cannot yet hear'; told as unseen motion instead.",
+  "prod_lost": true,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [],
+  "prod_formula": [
+   "unhurried and unseen",
+   "What looks like standing may be slow work carried on out of sight"
+  ],
+  "detail_retells": "mostly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [
+   "under the part of you that has gone still"
+  ],
+  "detail_force": [],
+  "detail_formula": [
+   "What looks frozen from above is only quiet"
+  ],
+  "closer": "detail",
+  "l3a": "prod",
+  "l3b": "prod",
+  "l3": "prod",
+  "duvody": [
+   "B stays within count and closes lean, with a neat 'cannot yet hear'; A runs long, repeats 'not stopped', and presumes a part of the seeker has gone still.",
+   "A is lean, within the word count, and asks plainly, tied to hearing. B runs long, repeats 'not stopped' and presumes an inner stillness."
+  ],
+  "prod_slov": 56,
+  "detail_slov": 67,
+  "prod_text": "Beneath the frozen surface, the stream still moves, though nothing shows on top. Isa is that stillness held over water that has not stopped running. What looks like standing may be slow work carried on out of sight, unhurried and unseen. Might you already be moving under the quiet, in a way you cannot yet hear?",
+  "detail_text": "Beneath the ice a stream still moves, unseen but not stopped, its sound rising through the white. Isa is that held surface, the stillness laid over water that has not stopped flowing. What looks frozen from above is only quiet, working its slow way through the dark below. Could the change you cannot yet see be moving anyway, under the part of you that has gone still?"
+ },
+ {
+  "pid": "D43",
+  "id": "12-wunjo-u5",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "smysl": "teplo",
+  "uhel": 5,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [
+   "You may notice how a room changes when someone has made space before anyone asks."
+  ],
+  "prod_force": [],
+  "prod_formula": [
+   "in small, ordinary ways",
+   "the simple comfort of warmth"
+  ],
+  "detail_retells": "partly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [],
+  "detail_formula": [
+   "even when no one speaks of it"
+  ],
+  "closer": "prod",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "B keeps the stove scene concrete (damp coat, chair pulled closer) and carries it through; A drifts into a guess about what the seeker notices.",
+   "A carries the image concretely (damp coat among others, chair drawn closer) into home; B drifts abstract in sentence three and ends on stock phrasing."
+  ],
+  "prod_slov": 56,
+  "detail_slov": 59,
+  "prod_text": "At your doorway, cold air meets the warmth of a stove someone has lit. Wunjo brings the simple comfort of warmth made ready for another person. You may notice how a room changes when someone has made space before anyone asks. In your home, belonging may be something your people make together in small, ordinary ways.",
+  "detail_text": "At the doorway, cold air meets the stove’s warmth as you come in, and a damp coat hangs beside the others. Wunjo makes belonging visible in the warmth people share. You can hear someone moving a chair closer to the stove. In your home, this may be a quiet ease between people, even when no one speaks of it."
+ },
+ {
+  "pid": "D44",
+  "id": "11-mannaz-u5",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "smysl": "zrak",
+  "uhel": 5,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [],
+  "prod_formula": [
+   "only you can weigh which it is"
+  ],
+  "detail_retells": "mostly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [
+   "a stillness you have mistaken for healing already done"
+  ],
+  "detail_force": [],
+  "detail_formula": [],
+  "closer": "tie",
+  "l3a": "prod",
+  "l3b": "prod",
+  "l3": "prod",
+  "duvody": [
+   "Both run well over the word count, but B is longer still, and its second option edges toward a verdict on the seeker's healing.",
+   "B lands the image on rest (ripples settling) and offers two clean states; A runs to 83 words and edges into verdict on healing."
+  ],
+  "prod_slov": 72,
+  "detail_slov": 83,
+  "prod_text": "At the rim of the rain-barrel your face waits, still until you lean in, and the water holds only what you bring to it. Mannaz is that seeing, the way you meet yourself when the surface goes calm. Rest does the same work, letting the ripples fall until the reflection steadies. This quiet may be recovery gathering, or simply the pause before you look, and only you can weigh which it is.",
+  "detail_text": "At the rim of the rain-barrel the reflected face holds still, and it waits there until you lean in and break the surface. Mannaz is that stillness giving back your own seeing, the water calm enough to show what leans over it. Nothing in the barrel moves on its own, so the rest you find there is yours to enter or leave untouched. This may be a quiet where you finally see clearly, or a stillness you have mistaken for healing already done."
+ },
+ {
+  "pid": "D45",
+  "id": "12-wunjo-u5",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "smysl": "teplo",
+  "uhel": 5,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [],
+  "prod_formula": [
+   "Wunjo gives belonging a simple shape"
+  ],
+  "detail_retells": "mostly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [],
+  "detail_formula": [
+   "in the living moment",
+   "how closeness stands among you"
+  ],
+  "closer": "prod",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "A's ticking kettle makes the scene concrete, despite a leaked phrase and a tense slip; B only restates the image and stays generic.",
+   "B opens at the edge with a concrete ticking kettle and focuses unannounced care; A mostly restates the image, vague sounds, thin ending. B leaks brief wording."
+  ],
+  "prod_slov": 57,
+  "detail_slov": 58,
+  "prod_text": "You come in from the cold, and warm air meets you at the doorway. Someone has lit the stove, and the room holds the ordinary sounds of people at home. Wunjo gives belonging a simple shape: there is warmth you can share. In your home, this may be a moment of ease among the people gathered there.",
+  "detail_text": "At the doorway, cold air meets the stove’s warmth as you come in, and a kettle ticks beside it. Someone has lit the fire before you arrive. Wunjo gives belonging a small, shared place in the living moment. In your home, this may be how closeness stands among you: in ordinary care, without anyone needing to announce it."
+ },
+ {
+  "pid": "D46",
+  "id": "12-wunjo-u5",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "smysl": "teplo",
+  "uhel": 5,
+  "prod_retells": "partly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [],
+  "prod_formula": [
+   "one becoming the other where you step through",
+   "one becoming the other"
+  ],
+  "detail_retells": "no",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [],
+  "detail_formula": [
+   "one becomes the other as you cross",
+   "one becomes the other"
+  ],
+  "closer": "prod",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "A is nearer the word count, with concrete detail (coat, second chair) and a clean ending; B runs to about 82 words with a padded middle.",
+   "B is tighter with a concrete second chair carrying the scene; A balloons to about 80 words and its essence describes transition rather than belonging."
+  ],
+  "prod_slov": 80,
+  "detail_slov": 65,
+  "prod_text": "At the door the cold ends and the warmth begins, one becoming the other where you step through. Someone lit the stove before you came, and Wunjo is that turning, the shift from being out in the weather to being held by a room. The heat was made by hands, not by chance, and it waits whether or not it is noticed. This may be a house where belonging is kept ready for you, quietly, by the people already inside.",
+  "detail_text": "At the door the cold on your coat meets the warmth someone kept for you, and one becomes the other as you cross. This is Wunjo, the thawing that happens when a room has been held for your coming. Notice the second chair drawn near the stove, waiting without being asked. In this house, belonging may be something already tended for you, not something owed."
+ },
+ {
+  "pid": "D47",
+  "id": "13-thurisaz-u6",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "smysl": "zrak",
+  "uhel": 6,
+  "prod_retells": "partly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [],
+  "prod_formula": [
+   "heat rising from the roots of the ground",
+   "Thurisaz marks the threshold"
+  ],
+  "detail_retells": "partly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [],
+  "detail_formula": [
+   "Thurisaz marks the threshold"
+  ],
+  "closer": "detail",
+  "l3a": "prod",
+  "l3b": "prod",
+  "l3": "prod",
+  "duvody": [
+   "B stays within the count and names the friction honestly (a choice you cannot make gradually); A's ending, direction remains uncertain, is soft and generic.",
+   "A stays in word count and ends on honest friction (a choice not made gradually); B's image is concrete but its close is generic uncertainty."
+  ],
+  "prod_slov": 54,
+  "detail_slov": 62,
+  "prod_text": "You stand at a crack in the lava, with heat rising from the roots of the ground. Thurisaz marks the threshold: the gap remains until you jump. You cannot know from this side whether the far edge offers firm footing. Kuky, this may be where your direction becomes a choice you cannot make gradually.",
+  "detail_text": "You stand at a crack in the lava, with one boot on rough black stone and the far edge beyond a single jump. Thurisaz marks the threshold where your footing ends and the ground offers no easy crossing. You can see the gap, but you cannot know how the landing feels from here. Kuky, this may be where your direction remains uncertain."
+ },
+ {
+  "pid": "D48",
+  "id": "12-wunjo-u5",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "smysl": "teplo",
+  "uhel": 5,
+  "prod_retells": "partly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [],
+  "prod_formula": [
+   "What this may be is",
+   "until a house feels like a house"
+  ],
+  "detail_retells": "mostly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [],
+  "detail_formula": [
+   "where one air becomes another"
+  ],
+  "closer": "detail",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "B has the sharper essence line (being expected) and carries the warmth into its ending; A has a formulaic opening to its close and a tautology.",
+   "A's essence (small ease of being expected) is plain and graspable; B's close opens clumsily with 'What this may be is' plus a tautology."
+  ],
+  "prod_slov": 65,
+  "detail_slov": 64,
+  "prod_text": "At the door, cold gives way to warmth, and you cross the line where outside becomes inside. Someone lit the stove before you came, so the room already holds you. This is Wunjo, the warmth passed hand to hand until a house feels like a house. What this may be is a home where the welcome is kept lit whether or not anyone announces it.",
+  "detail_text": "You step in from the cold and the outer chill turns to warmth at the threshold, where one air becomes another. Someone lit the stove before you came, and the room holds the heat without a word said. This is Wunjo, the small ease of being expected in a place. That warmth waiting for you may be how belonging already stands in your home."
+ },
+ {
+  "pid": "D49",
+  "id": "13-thurisaz-u6",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "smysl": "zrak",
+  "uhel": 6,
+  "prod_retells": "partly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [
+   "Thurisaz brings you to a threshold you cannot cross without a jump"
+  ],
+  "prod_formula": [
+   "heat rising from the roots beneath it"
+  ],
+  "detail_retells": "partly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [],
+  "detail_formula": [],
+  "closer": "prod",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "B's picture is more concrete (red heat under a black rim), its essence adds meaning, and its ending is sharper; A's essence line only repeats the image.",
+   "A has fresher concrete detail (red heat under black rim), a plain essence and sharp close; B restates the image line and leaks brief wording."
+  ],
+  "prod_slov": 56,
+  "detail_slov": 60,
+  "prod_text": "You stand before a crack in the lava, with heat rising from the roots beneath it. Thurisaz brings you to a threshold you cannot cross without a jump. You can see the far edge, but you cannot measure the landing from here. Kuky, you may be facing a direction that gives you no gradual way in.",
+  "detail_text": "You stand at a crack in the lava, with red heat showing beneath its black rim. Thurisaz marks the point where going on demands a jump rather than another careful step. You cannot know from this edge how steady the far side is, and the gap stays open. Kuky, this may be a direction you can only judge after crossing."
+ },
+ {
+  "pid": "D50",
+  "id": "11-mannaz-u5",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "smysl": "zrak",
+  "uhel": 5,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [],
+  "prod_formula": [
+   "This is Mannaz, the seeing that only answers",
+   "patience learning its own pace"
+  ],
+  "detail_retells": "partly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [],
+  "detail_formula": [
+   "This is Mannaz, the seeing that only answers"
+  ],
+  "closer": "prod",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "A opens at the rim-water edge as the angle asks and ends on two vivid states; B skips the edge and leans stock.",
+   "B opens at the rim where barrel meets water, as the angle asks, and lands rest concretely (loosening around the eyes). Both run far over length."
+  ],
+  "prod_slov": 77,
+  "detail_slov": 80,
+  "prod_text": "Lean over the rain-barrel and the face in the water holds still until you shift, then it moves with you. This is Mannaz, the seeing that only answers when you first turn toward it. Your own mending waits at that same edge, quiet in the dark water, taking its shape from how you look. What rests there may be patience learning its own pace, or it may be a rest you have not yet let yourself take.",
+  "detail_text": "Where the barrel's rim meets the water, your face waits in the surface and holds still until you lean in. This is Mannaz, the seeing that only answers the one who bends to look. Nothing there moves on its own, so the rain-barrel gives back only the stillness you bring to it, down to the loosening around your eyes. What you find in that water may be rest you have finally allowed, or rest still leaning just out of reach."
+ },
+ {
+  "pid": "D51",
+  "id": "13-thurisaz-u6",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "smysl": "zrak",
+  "uhel": 6,
+  "prod_retells": "no",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [],
+  "prod_formula": [
+   "This is the threshold",
+   "This is the threshold, Kuky"
+  ],
+  "detail_retells": "partly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [
+   "the edge that stops the crossing until you leave the ground"
+  ],
+  "detail_formula": [],
+  "closer": "detail",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "B is leaner, nearer the count, and carries the image through heat and measuring eyes; A's close fits better but reads slacker.",
+   "A is shorter and plainer, with concrete heat through the boots. B's closing leans toward comfort and nudges toward the jump. Both over length."
+  ],
+  "prod_slov": 72,
+  "detail_slov": 66,
+  "prod_text": "You stand at the edge where the lava has split, and the crack runs black beneath your feet. Thurisaz is that gap, the break the ground itself sets down before you go on. There is no path around it, only the jump or the standing still, and the standing has its own cost. This is the threshold, Kuky, and it may be that your direction begins the moment you leave the ground.",
+  "detail_text": "You stand at the lip of the lava, the black crack open before your feet, no bridge and no way around it. Thurisaz is the fire held in that gap, the edge that stops the crossing until you leave the ground. Your eyes keep measuring the far side, the heat rising through your boots. This waiting, Kuky, may be the whole of where you are now."
+ },
+ {
+  "pid": "D52",
+  "id": "14-nauthiz-u6",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "smysl": "hmat",
+  "uhel": 6,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [
+   "Nauthiz holds the knot where the wet fibers meet.",
+   "Nauthiz holds the knot where the wet fibers meet"
+  ],
+  "prod_formula": [
+   "In your work"
+  ],
+  "detail_retells": "mostly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [
+   "Nauthiz holds the knot fast.",
+   "Nauthiz holds the knot fast"
+  ],
+  "detail_formula": [
+   "In your work, the limit is plain",
+   "the limit is plain:"
+  ],
+  "closer": "tie",
+  "l3a": "prod",
+  "l3b": "prod",
+  "l3": "prod",
+  "duvody": [
+   "Both on count; B keeps touch at the fingers and a concrete essence line, while A's 'the limit is plain' turns abstract.",
+   "A stays a mirror with touch detail (knot pressed against fingers). B repeats 'holds' and hands over an answer: 'the limit is plain'."
+  ],
+  "prod_slov": 54,
+  "detail_slov": 54,
+  "prod_text": "You stand over a rope swollen tight with rain, its knot pressed hard against your fingers however you pull. Nauthiz holds the knot where the wet fibers meet. In your work, the strain lies at one point, though the whole rope bears your weight. Could that tight place be shaping what you are making?",
+  "detail_text": "You stand over a rope swollen with rain, its frayed end dark with mud, and the knot holds however hard you pull. Nauthiz holds the knot fast. In your work, the limit is plain: more force leaves less room to see how the strands meet. Could that tight place shape what you are making?"
+ },
+ {
+  "pid": "D53",
+  "id": "14-nauthiz-u6",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "smysl": "hmat",
+  "uhel": 6,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [
+   "Nauthiz holds the knot fast.",
+   "Nauthiz holds the knot fast"
+  ],
+  "prod_formula": [
+   "Could this constraint be shaping what you make"
+  ],
+  "detail_retells": "partly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [
+   "Could the piece you are making need a different hold?"
+  ],
+  "detail_inner": [],
+  "detail_force": [
+   "Nauthiz holds the knot where you pull.",
+   "Nauthiz holds the knot where you pull"
+  ],
+  "detail_formula": [
+   "In your work"
+  ],
+  "closer": "prod",
+  "l3a": "prod",
+  "l3b": "prod",
+  "l3": "prod",
+  "duvody": [
+   "B's closing question points to a step to take; A keeps the question open, though 'this constraint' and 'unfinished' presume.",
+   "B carries the scene one step on (rope anchored in earth) and its question weighs a possibility. A's closing quietly suggests a different grip."
+  ],
+  "prod_slov": 56,
+  "detail_slov": 54,
+  "prod_text": "You stand over a wet rope, pulling at a knot that has swollen too tight to give. Nauthiz holds the knot fast. Beneath your hands, the rope stays anchored in the earth, so each pull meets the same resistance. Could this constraint be shaping what you make, even as it keeps part of your work unfinished?",
+  "detail_text": "You grip the wet rope close to the knot, but its swollen strands hold fast against your fingers. Nauthiz holds the knot where you pull. In your work, that grip leaves little room to shift your hands, though the rope runs on beneath them. Could the piece you are making need a different hold?"
+ },
+ {
+  "pid": "D54",
+  "id": "13-thurisaz-u6",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "smysl": "zrak",
+  "uhel": 6,
+  "prod_retells": "partly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [],
+  "prod_inner": [],
+  "prod_force": [
+   "the ground that asks a jump before it asks anything else"
+  ],
+  "prod_formula": [
+   "Direction here is not a slow walk forward, it is a single choice with air beneath it",
+   "This may be the threshold",
+   "asks a jump before it asks anything else"
+  ],
+  "detail_retells": "partly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [],
+  "detail_force": [],
+  "detail_formula": [
+   "This is the threshold",
+   "This is the threshold, Kuky"
+  ],
+  "closer": "prod",
+  "l3a": "prod",
+  "l3b": "detail",
+  "l3": "prod!",
+  "duvody": [
+   "B's close offers a possibility about going on, as the brief asks; A states its ending as fact, though A's image is sharper.",
+   "B is concrete and honest: close enough to see, too far to step, a crossing that won't narrow. A uses a 'not X, it is Y' formula.",
+   "A has richer imagery but closes on certainty (\"This is the threshold\") instead of a possibility. B hedges its close, lands on direction and keeps the image. Both run long (74, 77 words)."
+  ],
+  "prod_slov": 77,
+  "detail_slov": 74,
+  "prod_text": "You stand at the edge of the crack in the lava, and the black rock drops away into dark where no bridge will grow. Thurisaz is that gap that will not close for waiting, the ground that asks a jump before it asks anything else. Direction here is not a slow walk forward, it is a single choice with air beneath it. This may be the threshold, Kuky, where going on means leaving the near side behind.",
+  "detail_text": "You stand at the edge where the lava split apart, the far side close enough to see, too far to step. Thurisaz is that break in the ground, the place where going forward asks the whole body to leave the earth for a moment. The heat rises from below and the crossing will not narrow itself for you. This is the threshold, Kuky, and it stays a threshold until you jump or turn back."
+ },
+ {
+  "pid": "D55",
+  "id": "14-nauthiz-u6",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "smysl": "hmat",
+  "uhel": 6,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [
+   "Might the tightness be asking to be worked from a different angle than the one you have set your weight against?"
+  ],
+  "prod_inner": [],
+  "prod_force": [
+   "Here Nauthiz holds the work fast, refusing the force you bring against it.",
+   "Nauthiz holds the work fast, refusing the force you bring against it"
+  ],
+  "prod_formula": [
+   "Might the tightness be asking"
+  ],
+  "detail_retells": "mostly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [
+   "What might loosen in the making if you stopped pulling at it?"
+  ],
+  "detail_inner": [
+   "The work you are gripping so hard"
+  ],
+  "detail_force": [
+   "Nauthiz holds the fibres fast"
+  ],
+  "detail_formula": [],
+  "closer": "prod",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "B is tighter and nearer the count, with a tactile knuckle image; A runs far over and repeats the source sentence. Both endings imply a step.",
+   "A is leaner, with a tactile knuckle-hard knot. B runs 80 words, uses long sentences, and hands over a conclusion. Both closings imply a step."
+  ],
+  "prod_slov": 80,
+  "detail_slov": 66,
+  "prod_text": "You stand over the rope, hands raw, and the knot has swollen tight in the wet where it will not give however you pull. Here Nauthiz holds the work fast, refusing the force you bring against it. The harder you haul, the more the wet rope drinks and closes, and the pulling itself becomes the thing keeping you here. Might the tightness be asking to be worked from a different angle than the one you have set your weight against?",
+  "detail_text": "Your hands are on the rope, and it has swollen tight in the wet, the knot hard as a knuckle beneath your grip. You pull one way, then the other, and Nauthiz holds the fibres fast. The work you are gripping so hard may be the very thing that will not move by force. What might loosen in the making if you stopped pulling at it?"
+ },
+ {
+  "pid": "D56",
+  "id": "14-nauthiz-u6",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "smysl": "hmat",
+  "uhel": 6,
+  "prod_retells": "mostly",
+  "prod_drift": false,
+  "prod_driftText": "",
+  "prod_lost": false,
+  "prod_advice": [
+   "Might the thing you are making ask not for more force from you, but for the patience to let the wet loosen it in its own time?",
+   "but for the patience to let the wet loosen it in its own time"
+  ],
+  "prod_inner": [
+   "the shape you want to force from it"
+  ],
+  "prod_force": [
+   "Here Nauthiz holds the work fast, refusing the shape you want to force from it.",
+   "Nauthiz holds the work fast, refusing the shape you want to force from it"
+  ],
+  "prod_formula": [
+   "in its own time"
+  ],
+  "detail_retells": "mostly",
+  "detail_drift": false,
+  "detail_driftText": "",
+  "detail_lost": false,
+  "detail_advice": [],
+  "detail_inner": [
+   "the place you most want it loose"
+  ],
+  "detail_force": [
+   "This is Nauthiz, holding the work fast at the place you most want it loose.",
+   "Nauthiz, holding the work fast at the place you most want it loose"
+  ],
+  "detail_formula": [
+   "This is Nauthiz",
+   "What might this piece be teaching you"
+  ],
+  "closer": "prod",
+  "l3a": "detail",
+  "l3b": "detail",
+  "l3": "detail",
+  "duvody": [
+   "A is lean, with a crisp strain line and no step; B runs over, ends on patience advice, and 'wet loosen it' contradicts the swollen rope.",
+   "B is shorter and sharper ('strain is in your fingers, not the rope'). A runs 80 words and closes on advice about patience."
+  ],
+  "prod_slov": 80,
+  "detail_slov": 64,
+  "prod_text": "You stand over the rope, hands raw, and the knot has swollen tight in the wet and will not give however you pull. Here Nauthiz holds the work fast, refusing the shape you want to force from it. The harder you haul, the deeper the knot sets, and still your grip stays clenched. Might the thing you are making ask not for more force from you, but for the patience to let the wet loosen it in its own time?",
+  "detail_text": "Your hands are on the wet rope, working the knot that swelled shut in the rain, and the harder you pull the tighter it sets against you. This is Nauthiz, holding the work fast at the place you most want it loose. The strain is in your fingers, not the rope. What might this piece be teaching you that only a stuck thing could?"
+ }
+]

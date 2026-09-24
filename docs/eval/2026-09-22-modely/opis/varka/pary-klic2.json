@@ -1,0 +1,394 @@
+{
+ "D01": {
+  "id": "02-ansuz-u0",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "A": "detail",
+  "B": "prod"
+ },
+ "D02": {
+  "id": "01-algiz-u0",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D03": {
+  "id": "01-algiz-u0",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D04": {
+  "id": "01-algiz-u0",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "A": "detail",
+  "B": "prod"
+ },
+ "D05": {
+  "id": "01-algiz-u0",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "A": "detail",
+  "B": "prod"
+ },
+ "D06": {
+  "id": "02-ansuz-u0",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D07": {
+  "id": "02-ansuz-u0",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "A": "detail",
+  "B": "prod"
+ },
+ "D08": {
+  "id": "03-jera-u1",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "A": "detail",
+  "B": "prod"
+ },
+ "D09": {
+  "id": "03-jera-u1",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D10": {
+  "id": "02-ansuz-u0",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D11": {
+  "id": "03-jera-u1",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D12": {
+  "id": "04-perth-u1",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "A": "detail",
+  "B": "prod"
+ },
+ "D13": {
+  "id": "03-jera-u1",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "A": "detail",
+  "B": "prod"
+ },
+ "D14": {
+  "id": "04-perth-u1",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D15": {
+  "id": "04-perth-u1",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D16": {
+  "id": "05-gebo-u2",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "A": "detail",
+  "B": "prod"
+ },
+ "D17": {
+  "id": "05-gebo-u2",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D18": {
+  "id": "04-perth-u1",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "A": "detail",
+  "B": "prod"
+ },
+ "D19": {
+  "id": "05-gebo-u2",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D20": {
+  "id": "06-laguz-u2",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D21": {
+  "id": "06-laguz-u2",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "A": "detail",
+  "B": "prod"
+ },
+ "D22": {
+  "id": "05-gebo-u2",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "A": "detail",
+  "B": "prod"
+ },
+ "D23": {
+  "id": "06-laguz-u2",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "A": "detail",
+  "B": "prod"
+ },
+ "D24": {
+  "id": "07-hagalaz-u3",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "A": "detail",
+  "B": "prod"
+ },
+ "D25": {
+  "id": "06-laguz-u2",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D26": {
+  "id": "07-hagalaz-u3",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D27": {
+  "id": "07-hagalaz-u3",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D28": {
+  "id": "08-ansuz-u3",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "A": "detail",
+  "B": "prod"
+ },
+ "D29": {
+  "id": "08-ansuz-u3",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D30": {
+  "id": "08-ansuz-u3",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D31": {
+  "id": "07-hagalaz-u3",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "A": "detail",
+  "B": "prod"
+ },
+ "D32": {
+  "id": "09-ehwaz-u4",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "A": "detail",
+  "B": "prod"
+ },
+ "D33": {
+  "id": "08-ansuz-u3",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "A": "detail",
+  "B": "prod"
+ },
+ "D34": {
+  "id": "09-ehwaz-u4",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D35": {
+  "id": "10-isa-u4",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "A": "detail",
+  "B": "prod"
+ },
+ "D36": {
+  "id": "09-ehwaz-u4",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D37": {
+  "id": "09-ehwaz-u4",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "A": "detail",
+  "B": "prod"
+ },
+ "D38": {
+  "id": "10-isa-u4",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D39": {
+  "id": "10-isa-u4",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D40": {
+  "id": "11-mannaz-u5",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "A": "detail",
+  "B": "prod"
+ },
+ "D41": {
+  "id": "11-mannaz-u5",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D42": {
+  "id": "10-isa-u4",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "A": "detail",
+  "B": "prod"
+ },
+ "D43": {
+  "id": "12-wunjo-u5",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D44": {
+  "id": "11-mannaz-u5",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D45": {
+  "id": "12-wunjo-u5",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "A": "detail",
+  "B": "prod"
+ },
+ "D46": {
+  "id": "12-wunjo-u5",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "A": "detail",
+  "B": "prod"
+ },
+ "D47": {
+  "id": "13-thurisaz-u6",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "A": "detail",
+  "B": "prod"
+ },
+ "D48": {
+  "id": "12-wunjo-u5",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D49": {
+  "id": "13-thurisaz-u6",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D50": {
+  "id": "11-mannaz-u5",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "A": "detail",
+  "B": "prod"
+ },
+ "D51": {
+  "id": "13-thurisaz-u6",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D52": {
+  "id": "14-nauthiz-u6",
+  "model": "gpt-6-sol",
+  "rep": 1,
+  "A": "detail",
+  "B": "prod"
+ },
+ "D53": {
+  "id": "14-nauthiz-u6",
+  "model": "gpt-6-sol",
+  "rep": 2,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D54": {
+  "id": "13-thurisaz-u6",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "A": "detail",
+  "B": "prod"
+ },
+ "D55": {
+  "id": "14-nauthiz-u6",
+  "model": "claude-opus-4-8",
+  "rep": 1,
+  "A": "prod",
+  "B": "detail"
+ },
+ "D56": {
+  "id": "14-nauthiz-u6",
+  "model": "claude-opus-4-8",
+  "rep": 2,
+  "A": "detail",
+  "B": "prod"
+ }
+}

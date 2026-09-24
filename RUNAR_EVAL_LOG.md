@@ -5108,3 +5108,49 @@ tiše rozbilo (Python z `\b` udělal znak backspace → 0 všude) — chytila ho
 IS protějšek ověřen korpusem po trojicích: *„Ef myndin berst að eyrum, byrjaðu þá á því sem heyrist en sést ekki."* —
 pozor, doslovné *„lifir í hljóði"* by znamenalo *„žije potichu"* (idiom *í hljóði* = mlčky, 4896×).
 **Hranice:** 1 zvukový obraz × 3 čtení; ostatní zvukové obrazy s úhlem [4] neměřeny.
+
+## 2026-09-23 (9) — VÁRKA znění „one detail": převyprávění obrazu klesá u obou modelů, celkově lepší čtení NEZJIŠTĚNO
+
+**Owner:** *„výjimka, nová várka, handoff."* **Znění:** EN `… Let it become your own seeing in the text, down to one detail the
+sentence does not name.` Týchž 14 promptů jako (7), produkční čtení z (7) použita znovu, nové rameno 56 čtení (sol + Opus 4.8,
+2×), **$0,39**. Slepí soudci 46 agentů, tentokrát **se systémovým promptem (kánon) i ownerovými hranicemi** v zadání
+(paměť `rozkaz-a-studene-cteni-hranice`); čočka převyprávění bez slov testovaného znění; skeptik i na ztracený smysl. Pak
+kritik a protivník — **oba přepočítali, čísla sedí; výklad opraven** (níž).
+
+| | sol PROD | sol DETAIL | Opus 4.8 PROD | Opus 4.8 DETAIL |
+|---|---|---|---|---|
+| začátek převypráví obraz: většinou / částečně / ne | 20 / 5 / 3 | 12 / 10 / 6 | 15 / 11 / 2 | 7 / 14 / 7 |
+| slova obrazu v 1. větě · opsaný úsek ≥ 5 slov | 54 % · 4 | 46 % · 1 | 45 % · 7 | 34 % · 2 |
+| celkově lepší (DETAIL : PROD) | | 12 : 16 | | 18 : 10 |
+| ozvěna znění · rozkaz posluchači | 0 · 0 | 0 · 0 | 0 · 6 | 0 · 3 |
+
+**Nálezy:**
+1. ⭐ **Převyprávění obrazu klesá u obou modelů** — soudci párově sol 10 : 1 (p ≈ 0,01), Opus 15 : 5 (p ≈ 0,04), shoda s tvrdou
+   metrikou na 28 z 32 párů. ⚠️ U Opusu stojí signál soudců hlavně v první půlce promptů (druhá 5 : 4); opsaný úsek sám je
+   v šumu (rozdíl mezi opakováními PROD skoro stejný jako mezi rameny) — nese to `v1` a soudci.
+2. **Celkově lepší čtení NEZJIŠTĚNO u žádného modelu.** Opus 18 : 10 (p ≈ 0,19) dělají skoro celé **rady do života v PROD**:
+   ve všech 9 párech, kde radu měla jen jedna strana, ta strana prohrála (soudci viděli kánon). Bez těch párů **10 : 8**.
+   Tvrdé rozkazy s radou (*„Notice which direction your body already faces…"*, *„Watch what you carry…"*) 3 → 0, ale jen ze
+   2 promptů. Sol 12 : 16, opakování si odporují.
+3. **Úbytek rad vyvažují tvrzení o nitru:** soudcovské značky 6 → 10, po ownerově hranici (fyzický obraz se nepočítá)
+   **4 → 6**, nezajištěných 3 → 2. DETAIL občas radu **převede** na studené čtení (PROD *„Notice which direction your body already
+   faces"* → DETAIL *„the direction already known to you"*). Značky soudci neověřovali skeptikem.
+4. ⚠️ **Úhel [1] × DETAIL se zdvojí** — úhel říká *„the smallest detail… the part someone would walk past"*, věta *„one detail the
+   sentence does not name"*. Opus pak detail pokaždé označí za přehlédnutý: *„the wrinkle no one thought to watch"*, *„the line no
+   one thought to mark"*, *„a wet gleam you would not think to look for"*, *„a wet grey film no one thinks to notice"* — **4/4**
+   (PROD 1/4). Soudci to neoznačili a ty páry odměnili. Vedle toho se tentýž detail opakuje mezi opakováními (zamlžená
+   poklice Perth 2×, *„The wave slides up the sand and draws back in the same breath"* Gebo 2×).
+5. Beze změny: runa jako síla ve scéně (~60 % v obou ramenech — problém produkce, DETAIL ho neřeší ani nedělá); posun obrazu
+   1 → 2; délka není matoucí (průměr +0,4 slova, kratší vyhrálo 16/26).
+6. **Oprava (8) bod 3:** *„your knuckles have learned this before your mind has"* NENÍ studené čtení — owner: *„je to fyzická
+   věc, která má znázorňovat dřinu, ne tvrzení, co se člověku děje."* Hranice → paměť `rozkaz-a-studene-cteni-hranice`.
+
+**Verdikt:** DETAIL obhájí **jen méně převyprávění**, ne lepší čtení. Do produkce (EN) jen jako vratná zkouška, a až po:
+(a) změření IS protějšku stejnými metrikami (IS je primární; znění ověřené korpusem je připravené níž), (b) vyřešení zdvojení
+s úhlem [1]. IS: *„Láttu hana verða að þinni eigin sýn í textanum, niður í smáatriði sem ekki kemur fram í setningunni."*
+(trojice: *niður í smáatriði* 65 · *í smáatriði sem* 30 · *smáatriði sem ekki* 17 · *sem ekki kemur* 869 · *ekki kemur fram*
+1398 · *fram í setningunni* 8; vyřazeno *í eitt smáatriði* 0×).
+**Hranice:** jen EN; efektivně ~14 promptů; PROD čtení z jiného běhu (nepřegenerována); žádné placebo rameno; soudce =
+Claude (tatáž rodina jako Opus 4.8), značky rada/nitro jen soudcovské.
+Podklady → `docs/eval/2026-09-22-modely/opis/varka/` (rameno `detail` ve `vysledky.jsonl`, `soudy2-*`, `mereni3.json`,
+`pary-klic2.json`, `souhrn2-pro-kritika.md`) + skripty `opis_analyza2.js`, `opis_pary2.js`, `opis_soudy2.js`, `wf_detail_*.js`.

@@ -7,7 +7,7 @@ const fs = require('fs'), os = require('os'), path = require('path');
 const DIR = path.join(__dirname, 'opis2');
 const K_ANT = fs.readFileSync(path.join(os.homedir(), '.claude', 'runar-api-key.txt'), 'utf8').trim();
 const K_OAI = fs.readFileSync(path.join(os.homedir(), '.claude', 'runar-openai-key.txt'), 'utf8').trim();
-const [REP = '2', FILTR = ''] = process.argv.slice(2);
+const [REP = '2', FILTR = '', RAMENA = 'prod,nova'] = process.argv.slice(2);   // 2026-09-23: + rameno 'detail' (znění „one detail")
 const MODELY = ['gpt-6-sol', 'claude-opus-4-8'];
 const CENA = { 'claude-opus-4-8': { in: 5, w: 6.25, hit: 0.5, out: 25 }, 'gpt-6-sol': { in: 2, hit: 0.2, out: 10 } };
 const OUTF = path.join(DIR, 'vysledky.jsonl');
@@ -39,7 +39,7 @@ function text(raw) {
 const ukoly = [];
 for (const f of fs.readdirSync(DIR).filter(f => /^\d\d-.+\.json$/.test(f) && f.includes(FILTR)).sort()) {
   const P = JSON.parse(fs.readFileSync(path.join(DIR, f), 'utf8'));
-  for (let rep = 1; rep <= +REP; rep++) for (const model of MODELY) for (const rameno of ['prod', 'nova']) {
+  for (let rep = 1; rep <= +REP; rep++) for (const model of MODELY) for (const rameno of RAMENA.split(',')) {
     const klic = [P.id, model, rameno, rep].join('|');
     if (!hotovo.has(klic)) ukoly.push({ P, model, rameno, rep, klic });
   }

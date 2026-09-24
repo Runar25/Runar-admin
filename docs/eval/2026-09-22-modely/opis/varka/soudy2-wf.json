@@ -1,0 +1,3281 @@
+{
+ "vysledky": [
+  {
+   "c": "c1",
+   "l1": [
+    {
+     "pid": "D01",
+     "a_retells": "partly",
+     "b_retells": "mostly",
+     "closer_to_source": "B",
+     "note": "A keeps only 'bell across the fjord'; B retells bell, stillness, turning toward it before choosing."
+    },
+    {
+     "pid": "D02",
+     "a_retells": "mostly",
+     "b_retells": "no",
+     "closer_to_source": "A",
+     "note": "A: 'sheepdog lies... whole flock stays in view' near-verbatim; B: dog 'takes in the whole scene', own words."
+    },
+    {
+     "pid": "D03",
+     "a_retells": "mostly",
+     "b_retells": "mostly",
+     "closer_to_source": "B",
+     "note": "Both source clause plus gaze-settles clause; B keeps 'see', 'where the sheepdog lies', 'whole flock'."
+    },
+    {
+     "pid": "D04",
+     "a_retells": "partly",
+     "b_retells": "mostly",
+     "closer_to_source": "B",
+     "note": "A reframes: you see dog and flock; B 'sheepdog sees the whole flock from its place' plus clause."
+    },
+    {
+     "pid": "D05",
+     "a_retells": "partly",
+     "b_retells": "mostly",
+     "closer_to_source": "B",
+     "note": "A keeps 'lies... where the whole flock' but flock 'rests below'; B 'lies... seeing the whole flock'."
+    },
+    {
+     "pid": "D06",
+     "a_retells": "mostly",
+     "b_retells": "mostly",
+     "closer_to_source": "A",
+     "note": "Both retell full source; A keeps 'carries through still air', 'decide'; B paraphrases 'reaches', 'choose'."
+    },
+    {
+     "pid": "D07",
+     "a_retells": "mostly",
+     "b_retells": "mostly",
+     "closer_to_source": "B",
+     "note": "B near-verbatim: 'church bell carries through still air, you turn toward it'; A adds swing, 'crosses'."
+    }
+   ],
+   "l2": [
+    {
+     "pid": "D01",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "yes",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "yes"
+    },
+    {
+     "pid": "D02",
+     "a_verdict": "drifts",
+     "a_drift": "Adds the rest of the flock scattering while the dog guards only one, which undoes the watch over the whole.",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "D03",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "D04",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "D05",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "D06",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "yes",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "yes"
+    },
+    {
+     "pid": "D07",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "yes",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "yes"
+    }
+   ],
+   "l3a": [
+    {
+     "pid": "D01",
+     "better": "A",
+     "reason": "B's third sentence gives life advice outright. A keeps the bell carried through, though it runs long and its close hints at inner knowledge.",
+     "advice_a": [],
+     "advice_b": [
+      "Notice which direction your body already faces before your mind weighs the reasons."
+     ],
+     "inner_a": [
+      "the direction already known to you"
+     ],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "waiting only for your ear"
+     ],
+     "formula_b": [
+      "asks nothing but your attention"
+     ]
+    },
+    {
+     "pid": "D02",
+     "better": "A",
+     "reason": "B's image is sharper, but its question adds advice ('worth turning toward again'). A's question stays open, though A is long and its 'one shape' is vague.",
+     "advice_a": [],
+     "advice_b": [
+      "worth turning toward again"
+     ],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Algiz keeps its post over that one, steady while the rest scatters"
+     ],
+     "force_b": [
+      "Algiz holds that watch, steady, letting the rest of the field blur"
+     ],
+     "formula_a": [],
+     "formula_b": []
+    },
+    {
+     "pid": "D03",
+     "better": "B",
+     "reason": "A's third sentence lectures, handing over a lesson about how to protect. B brings the image home concretely (door) and asks gently, with only a soft 'you may know'.",
+     "advice_a": [
+      "at home you may find protection less in guarding every corner than in noticing who has wandered toward the edge"
+     ],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [
+      "you may know a similar watchfulness at home"
+     ],
+     "force_a": [
+      "Algiz holds that watchful place"
+     ],
+     "force_b": [
+      "Algiz holds that open view without leaving its place"
+     ],
+     "formula_a": [
+      "less in guarding every corner than in noticing"
+     ],
+     "formula_b": []
+    },
+    {
+     "pid": "D04",
+     "better": "B",
+     "reason": "B builds one clear idea, a watch kept without closing the gate, and carries it into the question. A's kitchen window is apt, but its close is generic.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Algiz holds the dog's watch steady"
+     ],
+     "force_b": [
+      "Algiz holds that watch without closing the gate"
+     ],
+     "formula_a": [
+      "Could such quiet protection have a place among your people at home?"
+     ],
+     "formula_b": []
+    },
+    {
+     "pid": "D05",
+     "better": "A",
+     "reason": "Both run long. A follows the angle down to one concrete edge. B falls away into an abstract 'watching' and jumps from field to room mid-sentence.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Algiz keeps that watch, holding the space around what grazes freely"
+     ],
+     "force_b": [
+      "Algiz holds this steady, taking in the room and the ones moving through it"
+     ],
+     "formula_a": [
+      "holding the space"
+     ],
+     "formula_b": [
+      "a seeing that keeps the whole house within its sight"
+     ]
+    },
+    {
+     "pid": "D06",
+     "better": "A",
+     "reason": "A has one sharp, honest insight: no direction, only the distance made plain. Its closing possibility is fitting. B is pleasant but redundant ('where you can hear it clearly').",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Ansuz draws your attention to a sound beyond your own shore"
+     ],
+     "force_b": [
+      "Ansuz brings a distant call into the open"
+     ],
+     "formula_a": [],
+     "formula_b": []
+    },
+    {
+     "pid": "D07",
+     "better": "B",
+     "reason": "B stays inside the image ('does not name a road') and keeps its close honest. A narrates the seeker considering their direction and drifts into abstract 'voices'.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [
+      "As you consider your direction"
+     ],
+     "inner_b": [],
+     "force_a": [
+      "Ansuz brings a distant sound into clear hearing"
+     ],
+     "force_b": [
+      "Ansuz brings a distant sound into the direction you face"
+     ],
+     "formula_a": [
+      "this may be a time when"
+     ],
+     "formula_b": [
+      "this may be a time when"
+     ]
+    }
+   ],
+   "l3b": [
+    {
+     "pid": "D01",
+     "better": "A",
+     "reason": "A breaks the canon with direct life advice ('Notice which direction...'). B carries the bell image cleanly, though its close hints at inner knowledge.",
+     "advice_a": [],
+     "advice_b": [
+      "Notice which direction your body already faces before your mind weighs the reasons."
+     ],
+     "inner_a": [
+      "may be the direction already known to you"
+     ],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [],
+     "formula_b": []
+    },
+    {
+     "pid": "D02",
+     "better": "A",
+     "reason": "A tells Kuky what their house is ('one held closer') and its question nudges toward action. B's question stays open, though its image blurs a little.",
+     "advice_a": [],
+     "advice_b": [
+      "worth turning toward again"
+     ],
+     "inner_a": [],
+     "inner_b": [
+      "This is your house too, Kuky, everyone in view and one held closer."
+     ],
+     "force_a": [
+      "Algiz keeps its post over that one, steady while the rest scatters."
+     ],
+     "force_b": [
+      "Algiz holds that watch, steady, letting the rest of the field blur."
+     ],
+     "formula_a": [
+      "Then the field falls away, Kuky, and only one shape remains"
+     ],
+     "formula_b": []
+    },
+    {
+     "pid": "D03",
+     "better": "B",
+     "reason": "B gives a lesson and hands over a conclusion about where protection lies. A has a stronger essence line, and its guess at home life is hedged.",
+     "advice_a": [
+      "at home you may find protection less in guarding every corner than in noticing who has wandered toward the edge"
+     ],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [
+      "you may know a similar watchfulness at home"
+     ],
+     "force_a": [
+      "Algiz holds that watchful place."
+     ],
+     "force_b": [
+      "Algiz holds that open view without leaving its place."
+     ],
+     "formula_a": [
+      "have a place among your people"
+     ],
+     "formula_b": []
+    },
+    {
+     "pid": "D04",
+     "better": "B",
+     "reason": "A carries the open gate through to its closing question ('room for each person to move'). B swaps in a second scene, a kitchen window, and ends on a generic question.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Algiz holds the dog's watch steady."
+     ],
+     "force_b": [
+      "Algiz holds that watch without closing the gate."
+     ],
+     "formula_a": [
+      "Could such quiet protection have a place among your people at home?"
+     ],
+     "formula_b": []
+    },
+    {
+     "pid": "D05",
+     "better": "A",
+     "reason": "B is more concrete (ears turned to the edge, space around what grazes freely). A echoes the brief's wording and jumps from field to room without warning. Both run long.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Algiz keeps that watch, holding the space around what grazes freely."
+     ],
+     "force_b": [
+      "Algiz holds this steady, taking in the room and the ones moving through it."
+     ],
+     "formula_a": [],
+     "formula_b": [
+      "then the wider scene falls away and only that watching remains"
+     ]
+    },
+    {
+     "pid": "D06",
+     "better": "A",
+     "reason": "B's 'makes the distance plain' sharpens the image without giving a direction, and 'a call you have yet to place' closes well. A repeats itself and leans on atmosphere.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Ansuz draws your attention to a sound beyond your own shore."
+     ],
+     "force_b": [
+      "Ansuz brings a distant call into the open, where you can hear it clearly."
+     ],
+     "formula_a": [],
+     "formula_b": []
+    },
+    {
+     "pid": "D07",
+     "better": "B",
+     "reason": "A stays with the bell and its note. B drifts to 'voices', assumes Kuky is 'considering', and closes on a self-help line.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [
+      "As you consider your direction"
+     ],
+     "inner_b": [],
+     "force_a": [
+      "Ansuz brings a distant sound into clear hearing."
+     ],
+     "force_b": [
+      "Ansuz brings a distant sound into the direction you face."
+     ],
+     "formula_a": [
+      "this may be a time when",
+      "comes into focus through listening"
+     ],
+     "formula_b": [
+      "this may be a time when"
+     ]
+    }
+   ],
+   "tiebreak": [],
+   "skeptik": [
+    {
+     "pid": "D02",
+     "strana": "A",
+     "kind": "drift",
+     "text": "Adds the rest of the flock scattering while the dog guards only one, which undoes the watch over the whole.",
+     "refuted": true,
+     "reason": "The brief's angle orders narrowing to one. The dog still watches from the rise, and \"the rest scatters\" reads as the field fading from view, not a new event."
+    }
+   ]
+  },
+  {
+   "c": "c2",
+   "l1": [
+    {
+     "pid": "D08",
+     "a_retells": "no",
+     "b_retells": "partly",
+     "closer_to_source": "B",
+     "note": "A opens on its own crease detail; B keeps 'dough presses upward while no one watches' nearly verbatim."
+    },
+    {
+     "pid": "D09",
+     "a_retells": "mostly",
+     "b_retells": "partly",
+     "closer_to_source": "A",
+     "note": "A reads as a synonym retelling: cloth rises, dough works unseen. B adds flour; 'a little more height each hour' echoes."
+    },
+    {
+     "pid": "D10",
+     "a_retells": "mostly",
+     "b_retells": "partly",
+     "closer_to_source": "A",
+     "note": "A keeps 'church bell carries across... you turn toward it'. B rephrases and adds two clauses."
+    },
+    {
+     "pid": "D11",
+     "a_retells": "partly",
+     "b_retells": "partly",
+     "closer_to_source": "B",
+     "note": "Both open on a crease. B's second line 'lifts... hour... working when room is empty' tracks the source more closely."
+    },
+    {
+     "pid": "D12",
+     "a_retells": "no",
+     "b_retells": "no",
+     "closer_to_source": "A",
+     "note": "Both tell their own scene (bead of water, curl of steam). A keeps the smell escaping the covered pot."
+    },
+    {
+     "pid": "D13",
+     "a_retells": "partly",
+     "b_retells": "mostly",
+     "closer_to_source": "B",
+     "note": "B's second line is nearly the source verbatim: 'lifts that cloth a little higher each hour, working while'."
+    },
+    {
+     "pid": "D14",
+     "a_retells": "mostly",
+     "b_retells": "no",
+     "closer_to_source": "A",
+     "note": "A copies 'lid... on the pot, but the smell...' closely. B opens on its own steam-darkened lid."
+    }
+   ],
+   "l2": [
+    {
+     "pid": "D08",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "D09",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "D10",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "yes",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "yes"
+    },
+    {
+     "pid": "D11",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "D12",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "yes",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "yes"
+    },
+    {
+     "pid": "D13",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "D14",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "yes",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "yes"
+    }
+   ],
+   "l3a": [
+    {
+     "pid": "D08",
+     "better": "B",
+     "reason": "B is leaner and nearer the word count; A's third sentence reads as a small lesson. Both endings are soft, but B's contrast is clearer.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Jera holds the slow lift beneath it"
+     ],
+     "force_b": [
+      "Jera holds that slow work in place"
+     ],
+     "formula_a": [
+      "quietly taking shape"
+     ],
+     "formula_b": [
+      "work already finding its form"
+     ]
+    },
+    {
+     "pid": "D09",
+     "better": "B",
+     "reason": "B opens on a truly overlooked detail (flour dust) and ends on a real contrast. A copies brief wording ('this is the living moment') and its two options overlap.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "this is the living moment"
+     ],
+     "formula_b": [
+      "in the present"
+     ]
+    },
+    {
+     "pid": "D10",
+     "better": "B",
+     "reason": "A gives life advice ('Notice what pulls your head around') and runs to 81 words. B leaks the angle instruction but keeps the owner's boundary.",
+     "advice_a": [
+      "Notice what pulls your head around when you are not deciding"
+     ],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Ansuz is that sound reaching you, a call that finds your ear across open air"
+     ],
+     "force_b": [
+      "Ansuz is the call that reaches you before you choose it"
+     ],
+     "formula_a": [
+      "that turning tells you more than any plan"
+     ],
+     "formula_b": [
+      "Let the rest fall away and stay with that turning"
+     ]
+    },
+    {
+     "pid": "D11",
+     "better": "B",
+     "reason": "Very close. A's 'not yours to force now' is prescriptive; B's ending is fresher. Both are long, and both presume what the seeker did earlier.",
+     "advice_a": [
+      "the shape it takes is not yours to force now"
+     ],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Jera does its slow work under that cover, raising the dough"
+     ],
+     "force_b": [
+      "Jera lifts that weight slow, one quiet hour at a time"
+     ],
+     "formula_a": [
+      "a thing still gathering what it needs"
+     ],
+     "formula_b": [
+      "work still gathering itself"
+     ]
+    },
+    {
+     "pid": "D12",
+     "better": "B",
+     "reason": "B names the friction honestly (enough, or burning) and closes plainly. A's close is soft, reuses the source phrase and adds no friction.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "taking shape without yet being clear to you"
+     ],
+     "formula_b": [
+      "something real that remains hard to name"
+     ]
+    },
+    {
+     "pid": "D13",
+     "better": "A",
+     "reason": "A is lean, nearer the count and closes cleanly on two states. B copies the source sentence, spells out the simile and leaks 'just out of frame'.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Jera lifts the work slowly, while your hands are turned elsewhere"
+     ],
+     "force_b": [
+      "Jera lifts that cloth a little higher each hour"
+     ],
+     "formula_a": [],
+     "formula_b": [
+      "What sits just out of frame",
+      "Your making moves this way too"
+     ]
+    },
+    {
+     "pid": "D14",
+     "better": "B",
+     "reason": "B follows the small-detail angle and names friction honestly ('no longer what you put in'), though it is long. A skips the angle and ends on comfort.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Perth is that scent, the thing at work where you cannot yet look"
+     ],
+     "force_b": [
+      "Perth is the smell that reaches you before the cooking is done"
+     ],
+     "formula_a": [],
+     "formula_b": [
+      "before you have a name for it"
+     ]
+    }
+   ],
+   "l3b": [
+    {
+     "pid": "D08",
+     "better": "B",
+     "reason": "A is lean and near the word count. B runs 66 words, has an awkward 'beside your worktable' and a lecturing third sentence, and its two ending states barely differ.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Jera holds the slow lift beneath it"
+     ],
+     "force_b": [
+      "Jera holds that slow work in place"
+     ],
+     "formula_a": [
+      "the hours between shaping and seeing a result are part of the work",
+      "quietly taking shape"
+     ],
+     "formula_b": []
+    },
+    {
+     "pid": "D09",
+     "better": "B",
+     "reason": "A opens on a truly small detail (flour dust) and its ending offers two distinct states. B leaks 'this is the living moment' and its two states nearly repeat each other.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "this is the living moment"
+     ],
+     "formula_b": [
+      "Jera holds that slow work in the present"
+     ]
+    },
+    {
+     "pid": "D10",
+     "better": "B",
+     "reason": "Both are long and open on a sprawling first sentence. B gives life advice ('Notice what pulls your head around') and hands over a conclusion. A leaks the angle instruction but its ending holds.",
+     "advice_a": [
+      "Notice what pulls your head around when you are not deciding"
+     ],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Ansuz is that sound reaching you, a call that finds your ear across open air"
+     ],
+     "force_b": [
+      "Ansuz is the call that reaches you before you choose it"
+     ],
+     "formula_a": [
+      "that turning tells you more than any plan"
+     ],
+     "formula_b": [
+      "Let the rest fall away and stay with that turning.",
+      "something in the direction of your going answers"
+     ]
+    },
+    {
+     "pid": "D11",
+     "better": "A",
+     "reason": "Near tie, both overlong. B's essence line runs cleaner. A makes up the seeker's past 'pushing', uses the stock 'one quiet hour at a time' and the stiff 'lifts that weight slow'.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Jera does its slow work under that cover, raising the dough"
+     ],
+     "force_b": [
+      "Jera lifts that weight slow, one quiet hour at a time"
+     ],
+     "formula_a": [
+      "the shape it takes is not yours to force now"
+     ],
+     "formula_b": [
+      "one quiet hour at a time"
+     ]
+    },
+    {
+     "pid": "D12",
+     "better": "B",
+     "reason": "A names the friction honestly (the pot may be burning) and ends plainly. B's 'whether ready' is soft and its ending echoes the source with comfort, against the brief.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "Perhaps something in your life is taking shape"
+     ],
+     "formula_b": []
+    },
+    {
+     "pid": "D13",
+     "better": "A",
+     "reason": "B is leaner and its ending offers two distinct states. A copies the source image almost word for word, leaks 'just out of frame' from the brief and spells out the analogy ('Your making moves this way too').",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Jera lifts the work slowly"
+     ],
+     "force_b": [
+      "Jera lifts that cloth a little higher each hour"
+     ],
+     "formula_a": [
+      "doing its quiet part"
+     ],
+     "formula_b": [
+      "What sits just out of frame",
+      "Your making moves this way too"
+     ]
+    },
+    {
+     "pid": "D14",
+     "better": "B",
+     "reason": "A follows the small-detail angle (wet gleam under the lid) and names the friction plainly, but runs 80 words. B opens on the whole image, copies the source and softens it into comfort.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Perth is that scent, the thing at work where you cannot yet look"
+     ],
+     "force_b": [
+      "Perth is the smell that reaches you before the cooking is done"
+     ],
+     "formula_a": [
+      "Something is taking shape in the dark of the water"
+     ],
+     "formula_b": []
+    }
+   ],
+   "tiebreak": [
+    {
+     "pid": "D11",
+     "better": "B",
+     "reason": "B ties the image to work: \"in the making\", and it ends on two states of the work. A says \"thing\" twice and edges into lecturing with \"not yours to force\". Both run over."
+    }
+   ],
+   "skeptik": []
+  },
+  {
+   "c": "c3",
+   "l1": [
+    {
+     "pid": "D15",
+     "a_retells": "no",
+     "b_retells": "no",
+     "closer_to_source": "B",
+     "note": "Both open on steam in their own words; B's 'but the smell reaches you first' echoes the source's structure."
+    },
+    {
+     "pid": "D16",
+     "a_retells": "partly",
+     "b_retells": "mostly",
+     "closer_to_source": "B",
+     "note": "B keeps 'gives to the shore... in the same breath' nearly verbatim; A keeps only 'the sea gives the shore'."
+    },
+    {
+     "pid": "D17",
+     "a_retells": "mostly",
+     "b_retells": "no",
+     "closer_to_source": "A",
+     "note": "A retells 'gives to the shore... same breath' plus a clause; B uses its own verbs, 'reaches up'."
+    },
+    {
+     "pid": "D18",
+     "a_retells": "no",
+     "b_retells": "mostly",
+     "closer_to_source": "B",
+     "note": "B paraphrases lid-on-pot plus the smell telling you; A opens on fogged lid underside, its own detail."
+    },
+    {
+     "pid": "D19",
+     "a_retells": "mostly",
+     "b_retells": "partly",
+     "closer_to_source": "A",
+     "note": "A carries 'giving and taking' plus a summary; B keeps only 'in the same breath' with its own wave and shell."
+    },
+    {
+     "pid": "D20",
+     "a_retells": "mostly",
+     "b_retells": "no",
+     "closer_to_source": "A",
+     "note": "A mirrors 'feel under your feet before you see'; B builds its own scene of soil darkening."
+    },
+    {
+     "pid": "D21",
+     "a_retells": "mostly",
+     "b_retells": "no",
+     "closer_to_source": "A",
+     "note": "A mirrors 'feel under your feet before you see' plus a clause; B's opening is its own still-ground picture."
+    }
+   ],
+   "l2": [
+    {
+     "pid": "D15",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "yes",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "yes"
+    },
+    {
+     "pid": "D16",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "D17",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "D18",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "yes",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "yes"
+    },
+    {
+     "pid": "D19",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "D20",
+     "a_verdict": "drifts",
+     "a_drift": "Groundswell becomes water moving through roots and soil; scene relocated underground, though felt-before-seen is kept.",
+     "a_sense_kept": "yes",
+     "b_verdict": "drifts",
+     "b_drift": "Opens on water through roots and soil darkening (seen first); groundswell replaced by soil scene, touch comes later.",
+     "b_sense_kept": "yes"
+    },
+    {
+     "pid": "D21",
+     "a_verdict": "drifts",
+     "a_drift": "Groundswell becomes water rising through roots, darkening and softening soil; invented root-and-soil scene.",
+     "a_sense_kept": "yes",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "yes"
+    }
+   ],
+   "l3a": [
+    {
+     "pid": "D15",
+     "better": "A",
+     "reason": "A is leaner and nearer the word count, with cleaner friction. B's opening echoes the brief and 'what remains unfinished' is clumsy. Both closings are generic.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "Something in your life may be changing"
+     ],
+     "formula_b": [
+      "You might walk past",
+      "something changing in your life without yet knowing what it is"
+     ]
+    },
+    {
+     "pid": "D16",
+     "better": "A",
+     "reason": "A stays within the count, deepens the image (what the shore keeps beneath) and ends on a concrete question. B leaks the brief and its question is vague.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [],
+     "formula_b": [
+      "you can picture two people meeting at that edge",
+      "Could this be a way you and someone meet now?"
+     ]
+    },
+    {
+     "pid": "D17",
+     "better": "B",
+     "reason": "A drops the image for an introspection instruction that presumes difficulty in receiving. B carries the shore through, despite its awkward dangling middle clause.",
+     "advice_a": [
+      "when you think of someone close, you can notice what moves freely between you and what seems harder to receive"
+     ],
+     "advice_b": [],
+     "inner_a": [
+      "what seems harder to receive"
+     ],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "Could this be a way you meet each other now?"
+     ],
+     "formula_b": [
+      "when you picture two people standing at that edge"
+     ]
+    },
+    {
+     "pid": "D18",
+     "better": "A",
+     "reason": "A follows the smallest-detail angle with a concrete fogged lid and fresh wording, though it runs long. B leaks 'friction', says 'Perth works like that' and cold-reads 'below your knowing'.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [
+      "You do not know yet what has been set going"
+     ],
+     "inner_b": [
+      "Something is already taking shape below your knowing"
+     ],
+     "force_a": [
+      "Perth is that thickening you smell before you see it"
+     ],
+     "force_b": [],
+     "formula_a": [],
+     "formula_b": [
+      "Perth works like that",
+      "that is the whole friction of it"
+     ]
+    },
+    {
+     "pid": "D19",
+     "better": "A",
+     "reason": "Both copy the brief's example essence line. A is shorter and hedged. B asserts what is true between them and adds a second image, the ledger.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [
+      "what feels uneven between you and another"
+     ],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "This is Gebo, the exchange between the water and the sand"
+     ],
+     "formula_b": [
+      "This is Gebo, the exchange between the sea and the shore"
+     ]
+    },
+    {
+     "pid": "D20",
+     "better": "A",
+     "reason": "A is exactly at the count and its closing ties the image to mending: rest taking hold unseen. B runs over, echoes the brief's label and ends generically.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Laguz carries that slow current beneath the soil"
+     ],
+     "force_b": [
+      "Laguz carries that movement through the ground"
+     ],
+     "formula_a": [],
+     "formula_b": [
+      "For your mending and rest",
+      "a time of change too quiet to measure yet"
+     ]
+    },
+    {
+     "pid": "D21",
+     "better": "B",
+     "reason": "B is leaner and within the count, and its closing carries the image into mending and rest. A repeats 'beneath', runs over and ends muddled ('mending has room to rest').",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Laguz carries that water slowly through the ground beneath you"
+     ],
+     "force_b": [
+      "Laguz carries that slow movement through the roots"
+     ],
+     "formula_a": [
+      "this may be a time when mending has room to rest"
+     ],
+     "formula_b": [
+      "this may be how your mending stands"
+     ]
+    }
+   ],
+   "l3b": [
+    {
+     "pid": "D15",
+     "better": "A",
+     "reason": "B is tighter and nearer the word count. A turns the angle instruction into text ('You might walk past') and runs to 66 words. Both close on a generic 'something changing'.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "Something in your life may be changing"
+     ],
+     "formula_b": [
+      "You might walk past",
+      "You may sense something changing in your life"
+     ]
+    },
+    {
+     "pid": "D16",
+     "better": "A",
+     "reason": "B keeps the seeker in the scene ('past your feet') and ends on a specific mirror question. A's 'you can picture two people' feels constructed, and its question is vague.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [],
+     "formula_b": [
+      "you can picture two people meeting at that edge"
+     ]
+    },
+    {
+     "pid": "D17",
+     "better": "B",
+     "reason": "A carries the shore image into its question. B drops the image, suggests a reflective step and assumes something is hard to receive.",
+     "advice_a": [
+      "when you think of someone close, you can notice what moves freely between you and what seems harder to receive"
+     ],
+     "advice_b": [],
+     "inner_a": [
+      "what seems harder to receive"
+     ],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [],
+     "formula_b": [
+      "when you picture two people standing at that edge"
+     ]
+    },
+    {
+     "pid": "D18",
+     "better": "A",
+     "reason": "B opens on the overlooked detail and stays concrete. A writes the brief's 'friction' into the text and states something 'below your knowing' as fact. Both run far over length.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [
+      "You do not know yet what has been set going"
+     ],
+     "inner_b": [
+      "Something is already taking shape below your knowing"
+     ],
+     "force_a": [
+      "Perth is that thickening you smell before you see it"
+     ],
+     "force_b": [],
+     "formula_a": [],
+     "formula_b": [
+      "that is the whole friction of it",
+      "Perth works like that"
+     ]
+    },
+    {
+     "pid": "D19",
+     "better": "B",
+     "reason": "A's shell and its ledger question make a sharp mirror. B's question assumes the seeker feels things are uneven and drifts toward comfort. Both run over length.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [
+      "what feels uneven between you and another"
+     ],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "the exchange between the water and the sand"
+     ],
+     "formula_b": [
+      "the exchange between the sea and the shore"
+     ]
+    },
+    {
+     "pid": "D20",
+     "better": "A",
+     "reason": "B is close to the word count and links rest to the image cleanly. A repeats its opening in sentence three and runs to 63 words.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Laguz carries that slow current beneath the soil"
+     ],
+     "force_b": [
+      "Laguz carries that movement through the ground."
+     ],
+     "formula_a": [],
+     "formula_b": [
+      "For your mending and rest",
+      "this may be a time of change"
+     ]
+    },
+    {
+     "pid": "D21",
+     "better": "B",
+     "reason": "A stays within the word count, and its close keeps the friction ('movement still beneath'). B repeats 'beneath', runs long and ends softly on 'room to rest'.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Laguz carries that water slowly through the ground beneath you."
+     ],
+     "force_b": [
+      "Laguz carries that slow movement through the roots."
+     ],
+     "formula_a": [
+      "this may be a time when mending has room to rest"
+     ],
+     "formula_b": [
+      "this may be how your mending stands"
+     ]
+    }
+   ],
+   "tiebreak": [
+    {
+     "pid": "D19",
+     "better": "A",
+     "reason": "A is 66 words to B's 72. It hedges the claim about the relationship and ends on the tide. B's third sentence asserts it, its essence line copies the brief's example, and \"ledgers\" brings in a second picture."
+    }
+   ],
+   "skeptik": [
+    {
+     "pid": "D21",
+     "strana": "A",
+     "kind": "drift",
+     "text": "Groundswell becomes water rising through roots, darkening and softening soil; invented root-and-soil scene.",
+     "refuted": true,
+     "reason": "The core event survives: the ground is felt shifting underfoot before anything is seen, so touch leads. The roots and soil read \"groundswell\" literally and fit the brief's roots world."
+    }
+   ]
+  },
+  {
+   "c": "c4",
+   "l1": [
+    {
+     "pid": "D22",
+     "a_retells": "partly",
+     "b_retells": "mostly",
+     "closer_to_source": "B",
+     "note": "Both keep 'in the same breath'; B also keeps 'the sea' and 'giving and taking'."
+    },
+    {
+     "pid": "D23",
+     "a_retells": "partly",
+     "b_retells": "partly",
+     "closer_to_source": "A",
+     "note": "Both rephrase 'felt before seen' with synonyms; A keeps ground+swell, B turns it into groundwater."
+    },
+    {
+     "pid": "D24",
+     "a_retells": "mostly",
+     "b_retells": "mostly",
+     "closer_to_source": "B",
+     "note": "Both add a gatepost clause, then retell gale/fence/field open; B keeps 'tore down' word for word."
+    },
+    {
+     "pid": "D25",
+     "a_retells": "partly",
+     "b_retells": "mostly",
+     "closer_to_source": "B",
+     "note": "B retells ground, feet, swell, before almost whole; A keeps only felt/before around its own water."
+    },
+    {
+     "pid": "D26",
+     "a_retells": "mostly",
+     "b_retells": "partly",
+     "closer_to_source": "A",
+     "note": "A retells night gale, torn, field open; B keeps 'gale tears down the old fence', adds hinge, drops field."
+    },
+    {
+     "pid": "D27",
+     "a_retells": "no",
+     "b_retells": "no",
+     "closer_to_source": "A",
+     "note": "Both tell fallen fence in own words; A's second sentence echoes 'torn... open... field'."
+    },
+    {
+     "pid": "D28",
+     "a_retells": "no",
+     "b_retells": "mostly",
+     "closer_to_source": "B",
+     "note": "B keeps kettle, note changes, hear without looking; A's note holds steady, the reverse of the source."
+    }
+   ],
+   "l2": [
+    {
+     "pid": "D22",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "D23",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "yes",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "yes"
+    },
+    {
+     "pid": "D24",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "D25",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "yes",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "yes"
+    },
+    {
+     "pid": "D26",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "D27",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "D28",
+     "a_verdict": "drifts",
+     "a_drift": "Note holds steady instead of changing; you watch steam curl and the lid tremble instead of hearing without looking.",
+     "a_sense_kept": "yes",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "yes"
+    }
+   ],
+   "l3a": [
+    {
+     "pid": "D22",
+     "better": "B",
+     "reason": "A runs 83 words, far past the count, and lifts the brief's example wording. B stays lean and ends on a good question, though it slips in one piece of advice.",
+     "advice_a": [],
+     "advice_b": [
+      "Watch what you carry toward another, and what returns to you unbidden."
+     ],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "This is Gebo, the exchange between the sea and the shore"
+     ],
+     "formula_b": [
+      "This is Gebo, Kuky, the exchange that lives between the shore and the water"
+     ]
+    },
+    {
+     "pid": "D23",
+     "better": "A",
+     "reason": "A's ending names a state, as asked. B drifts into prescription ('letting the slow water do its work', 'stand and feel it come') and a stock 'not by force' phrase.",
+     "advice_a": [],
+     "advice_b": [
+      "Rest comes not by force but by letting the slow water do its work beneath you.",
+      "only that you stand and feel it come"
+     ],
+     "inner_a": [
+      "You feel the pull before you name it"
+     ],
+     "inner_b": [],
+     "force_a": [
+      "Laguz moves in that water beneath, carrying warmth up into cold feet."
+     ],
+     "force_b": [
+      "Laguz moves under the surface, carrying what the light has not yet touched."
+     ],
+     "formula_a": [],
+     "formula_b": [
+      "not by force but by"
+     ]
+    },
+    {
+     "pid": "D24",
+     "better": "B",
+     "reason": "The two are nearly identical. B stays within the word count, and 'not what held it in place' reaches toward the roots. A runs over.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Hagalaz clears the broken rails from the crossing."
+     ],
+     "force_b": [
+      "Hagalaz clears the ground around it."
+     ],
+     "formula_a": [],
+     "formula_b": []
+    },
+    {
+     "pid": "D25",
+     "better": "A",
+     "reason": "A is leaner and near the count. B runs 68 words, adds a simile to the swell, and says the seeker doesn't need to name the pull.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [
+      "You feel the pull without needing to name it"
+     ],
+     "force_a": [
+      "Laguz carries what has gathered beneath, moving where no push can hurry it."
+     ],
+     "force_b": [
+      "Laguz moves in that unseen tide, carrying what sinks and what rises alike."
+     ],
+     "formula_a": [
+      "This may be the hour",
+      "in its own time, unforced"
+     ],
+     "formula_b": []
+    },
+    {
+     "pid": "D26",
+     "better": "B",
+     "reason": "B's rusted hinge makes the post concrete, and the fallen rails land cleanly on the dividing way, within the count. A runs over, and its 'offers no answer' sounds stock.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Hagalaz clears the ground around it."
+     ],
+     "force_b": [
+      "Hagalaz opens the field on both sides of the post."
+     ],
+     "formula_a": [
+      "the open field offers no answer about which way leads across it"
+     ],
+     "formula_b": []
+    },
+    {
+     "pid": "D27",
+     "better": "A",
+     "reason": "B's closing states 'is the hour' as fact instead of a possibility to weigh. A keeps the 'may', though its third sentence repeats the first.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Hagalaz has torn the boundary open"
+     ],
+     "force_b": [
+      "Hagalaz clears the line that once told the field from the road."
+     ],
+     "formula_a": [
+      "This, Kuky, may be the hour",
+      "no longer chooses for you"
+     ],
+     "formula_b": [
+      "This, Kuky, is the hour",
+      "no longer decides for you"
+     ]
+    },
+    {
+     "pid": "D28",
+     "better": "B",
+     "reason": "B stays in count and shows what lies just out of frame, as the brief asks. A runs 67 words, contradicts the image's changing note, and uses a stock 'no answer'.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Ansuz carries that note through the air as the water nears its boil."
+     ],
+     "force_b": [
+      "Ansuz carries that change through the air, clear before the water boils."
+     ],
+     "formula_a": [
+      "the kettle gives no answer about what comes next"
+     ],
+     "formula_b": []
+    }
+   ],
+   "l3b": [
+    {
+     "pid": "D22",
+     "better": "A",
+     "reason": "A gives life advice ('Watch what you carry'). B has a sharper image (the darkened shore) but runs far over the word count, about 83 words.",
+     "advice_a": [],
+     "advice_b": [
+      "Watch what you carry toward another, and what returns to you unbidden."
+     ],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "This is Gebo, the exchange between the sea and the shore"
+     ],
+     "formula_b": [
+      "This is Gebo, Kuky, the exchange that lives between the shore and the water."
+     ]
+    },
+    {
+     "pid": "D23",
+     "better": "A",
+     "reason": "B is concrete (warmth into cold feet, water at the ankles), closer to the word count and ends on the source image. A is aphoristic and closes with a soft instruction.",
+     "advice_a": [],
+     "advice_b": [
+      "only that you stand and feel it come"
+     ],
+     "inner_a": [
+      "You feel the pull before you name it"
+     ],
+     "inner_b": [],
+     "force_a": [
+      "Laguz moves in that water beneath, carrying warmth up into cold feet."
+     ],
+     "force_b": [
+      "Laguz moves under the surface, carrying what the light has not yet touched."
+     ],
+     "formula_a": [],
+     "formula_b": [
+      "Rest comes not by force but by letting the slow water do its work beneath you.",
+      "carrying what the light has not yet touched"
+     ]
+    },
+    {
+     "pid": "D24",
+     "better": "B",
+     "reason": "A is within the word count, ties the divide to 'your way' and sharpens the point ('not what held it in place'). B only describes the scene and runs slightly over.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Hagalaz clears the broken rails from the crossing."
+     ],
+     "force_b": [
+      "Hagalaz clears the ground around it."
+     ],
+     "formula_a": [],
+     "formula_b": []
+    },
+    {
+     "pid": "D25",
+     "better": "A",
+     "reason": "B is leaner and near the word count. A's simile contradicts itself (rising like water finding a lower place), A tells what the seeker feels inside, and A runs long.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [
+      "You feel the pull without needing to name it"
+     ],
+     "force_a": [
+      "Laguz carries what has gathered beneath, moving where no push can hurry it."
+     ],
+     "force_b": [
+      "Laguz moves in that unseen tide, carrying what sinks and what rises alike."
+     ],
+     "formula_a": [
+      "in its own time, unforced"
+     ],
+     "formula_b": [
+      "a rest that mends beneath the surface, out of sight"
+     ]
+    },
+    {
+     "pid": "D26",
+     "better": "B",
+     "reason": "A is within the word count, has a concrete rusted hinge and lands on the divided way. B gives the post roots, which is odd, uses stock 'offers no answer', and runs over.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Hagalaz clears the ground around it."
+     ],
+     "force_b": [
+      "Hagalaz opens the field on both sides of the post."
+     ],
+     "formula_a": [
+      "the open field offers no answer about which way leads across it"
+     ],
+     "formula_b": []
+    },
+    {
+     "pid": "D27",
+     "better": "A",
+     "reason": "A's images are stronger, but its closing states a fact ('is the hour') instead of a possibility. B keeps 'may be' but repeats the posts. Both run long.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Hagalaz has torn the boundary open"
+     ],
+     "force_b": [
+      "Hagalaz clears the line that once told the field from the road."
+     ],
+     "formula_a": [
+      "This, Kuky, may be the hour where"
+     ],
+     "formula_b": [
+      "This, Kuky, is the hour when"
+     ]
+    },
+    {
+     "pid": "D28",
+     "better": "B",
+     "reason": "A is exactly on count and faithful to sound, points out of frame (how long it has been heating) and gives two clean states. B contradicts the note and adds visuals.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Ansuz carries that note through the air as the water nears its boil."
+     ],
+     "force_b": [
+      "Ansuz carries that change through the air, clear before the water boils."
+     ],
+     "formula_a": [
+      "the kettle gives no answer about what comes next"
+     ],
+     "formula_b": []
+    }
+   ],
+   "tiebreak": [
+    {
+     "pid": "D22",
+     "better": "A",
+     "reason": "B's \"Watch what you carry toward another\" advises the seeker, breaking canon. A runs long (83 words) but keeps a concrete shoreline image through to the close."
+    }
+   ],
+   "skeptik": [
+    {
+     "pid": "D28",
+     "strana": "A",
+     "kind": "drift",
+     "text": "Note holds steady instead of changing; you watch steam curl and the lid tremble instead of hearing without looking.",
+     "refuted": false,
+     "reason": "The image's core event, a note changing heard without looking, becomes a note holding steady while you watch steam and a trembling lid. A later line only half recovers it."
+    }
+   ]
+  },
+  {
+   "c": "c5",
+   "l1": [
+    {
+     "pid": "D29",
+     "a_retells": "mostly",
+     "b_retells": "mostly",
+     "closer_to_source": "A",
+     "note": "A keeps 'note changes' and 'hear without looking' in one line; B paraphrases the note ('low note thins') and adds the handle."
+    },
+    {
+     "pid": "D30",
+     "a_retells": "mostly",
+     "b_retells": "partly",
+     "closer_to_source": "A",
+     "note": "A says 'note changes just before the kettle boils' nearly word for word; B swaps in synonyms: shifts, catch, eyes turn."
+    },
+    {
+     "pid": "D31",
+     "a_retells": "partly",
+     "b_retells": "mostly",
+     "closer_to_source": "B",
+     "note": "B's first clause copies 'gale tore the fence down in the night'; A starts on its own gate and keeps only 'field lies open'."
+    },
+    {
+     "pid": "D32",
+     "a_retells": "mostly",
+     "b_retells": "mostly",
+     "closer_to_source": "same",
+     "note": "Both rearrange the same pieces: glacial river, ford out of sight, horse finding its footing."
+    },
+    {
+     "pid": "D33",
+     "a_retells": "no",
+     "b_retells": "partly",
+     "closer_to_source": "B",
+     "note": "A builds its own scene (steam, lid, steady note); B echoes 'catch the change without looking'."
+    },
+    {
+     "pid": "D34",
+     "a_retells": "mostly",
+     "b_retells": "mostly",
+     "closer_to_source": "same",
+     "note": "The two openings match almost exactly; B only adds 'with one hoof'."
+    },
+    {
+     "pid": "D35",
+     "a_retells": "mostly",
+     "b_retells": "mostly",
+     "closer_to_source": "B",
+     "note": "Both say the source again with a clause added; B keeps 'still' and adds less."
+    }
+   ],
+   "l2": [
+    {
+     "pid": "D29",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "yes",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "yes"
+    },
+    {
+     "pid": "D30",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "yes",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "yes"
+    },
+    {
+     "pid": "D31",
+     "a_verdict": "drifts",
+     "a_drift": "Invented standing gate becomes the centre; closes on a gate to pass through, against the open field.",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "D32",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "D33",
+     "a_verdict": "drifts",
+     "a_drift": "Note held steady; steam and trembling lid added; the changing note appears only in the seeker line.",
+     "a_sense_kept": "yes",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "yes"
+    },
+    {
+     "pid": "D34",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "D35",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "yes",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "yes"
+    }
+   ],
+   "l3a": [
+    {
+     "pid": "D29",
+     "better": "B",
+     "reason": "B keeps the kettle concrete (thinning note, cool handle, nothing else moved) and ends cleanly; A's third sentence goes abstract.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [
+      "You have no answer from the sound alone"
+     ],
+     "inner_b": [],
+     "force_a": [
+      "Ansuz carries that change into the air."
+     ],
+     "force_b": [
+      "Ansuz carries that shift in sound through the room, where nothing else has yet moved."
+     ],
+     "formula_a": [
+      "You have no answer from the sound alone"
+     ],
+     "formula_b": [
+      "a wider sense of what matters"
+     ]
+    },
+    {
+     "pid": "D30",
+     "better": "B",
+     "reason": "Both run about 68 words. A tells the seeker how they have been listening for some time; B stays in the scene until the closing line.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [
+      "You have been listening this way for some time, catching the change in tone under the ordinary hours."
+     ],
+     "inner_b": [],
+     "force_a": [
+      "Ansuz carries that shift to your ear before your eyes have anything to show."
+     ],
+     "force_b": [
+      "Ansuz carries that sound to the ear that was already listening."
+     ],
+     "formula_a": [],
+     "formula_b": []
+    },
+    {
+     "pid": "D31",
+     "better": "A",
+     "reason": "Both are over the word count. A's gate and two ways from one post land the crossroads, and it ends on 'may be'. B asserts, then softens into 'yours alone to set'.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Hagalaz clears what the gale could not hold, and leaves the ground plain to walk."
+     ],
+     "force_b": [
+      "Hagalaz clears the line that kept the field marked, and now the open grass runs both ways."
+     ],
+     "formula_a": [],
+     "formula_b": [
+      "the way you take may be yours alone to set"
+     ]
+    },
+    {
+     "pid": "D32",
+     "better": "B",
+     "reason": "B names the friction honestly (you can't stand on both banks) and makes the Ehwaz line concrete. A lifts the brief's phrasing and leans on 'X, not Y'.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "where your way divides",
+      "trust taking shape through contact, not certainty"
+     ],
+     "formula_b": [
+      "At the fork"
+     ]
+    },
+    {
+     "pid": "D33",
+     "better": "B",
+     "reason": "Both are over length and both cold-read. B's image is plainer but cleaner. A lifts 'gives way' from the brief, adds a meta 'one small reading', and narrates the seeker's change.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [
+      "You have been learning to hear the change before the eye confirms it, one small reading at a time."
+     ],
+     "inner_b": [
+      "What steadies you now is the listening itself, the hearing that runs ahead of proof."
+     ],
+     "force_a": [
+      "Ansuz carries that note to you across the kitchen, unseen and plain."
+     ],
+     "force_b": [
+      "Ansuz carries that shift in sound before the eye can find it."
+     ],
+     "formula_a": [
+      "The steam gives way",
+      "one small reading at a time"
+     ],
+     "formula_b": []
+    },
+    {
+     "pid": "D34",
+     "better": "A",
+     "reason": "A's 'gives trust a footing' stays inside the image and hits the word count. B lifts two brief phrases ('the living moment', 'where your way divides').",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "where your way divides"
+     ],
+     "formula_b": [
+      "Ehwaz brings trust into the living moment",
+      "Where your way divides"
+     ]
+    },
+    {
+     "pid": "D35",
+     "better": "A",
+     "reason": "A earns 'just as slowly' with water wearing a stone smooth. B's crossed ground never shows anything slow, so its closing question is unearned.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Isa holds the surface still while movement continues below it."
+     ],
+     "force_b": [
+      "Isa holds the surface still while the water continues below."
+     ],
+     "formula_a": [],
+     "formula_b": []
+    }
+   ],
+   "l3b": [
+    {
+     "pid": "D29",
+     "better": "A",
+     "reason": "B's closing pair ties back to hearing and lands on slow change; A's cool handle is decoration, and 'wider sense of what matters' is vague.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Ansuz carries that change into the air"
+     ],
+     "force_b": [
+      "Ansuz carries that shift in sound through the room"
+     ],
+     "formula_a": [],
+     "formula_b": [
+      "a wider sense of what matters"
+     ]
+    },
+    {
+     "pid": "D30",
+     "better": "B",
+     "reason": "B tells the seeker how they have been listening, which is cold reading outside the closing line. Both run over the word count.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [
+      "You have been listening this way for some time, catching the change in tone under the ordinary hours"
+     ],
+     "inner_b": [],
+     "force_a": [
+      "Ansuz carries that shift to your ear before your eyes have anything to show"
+     ],
+     "force_b": [
+      "Ansuz carries that sound to the ear that was already listening"
+     ],
+     "formula_a": [
+      "under the ordinary hours"
+     ],
+     "formula_b": []
+    },
+    {
+     "pid": "D31",
+     "better": "A",
+     "reason": "B shows two ways spreading and closes with a hedged state. A asserts 'This is', narrates a past choice and softens. Both run long.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [
+      "the post shows only where you once chose to stop"
+     ],
+     "force_a": [
+      "Hagalaz clears what the gale could not hold, and leaves the ground plain to walk"
+     ],
+     "force_b": [
+      "Hagalaz clears the line that kept the field marked"
+     ],
+     "formula_a": [],
+     "formula_b": [
+      "the way you take may be yours alone to set"
+     ]
+    },
+    {
+     "pid": "D32",
+     "better": "B",
+     "reason": "A names the friction honestly (not both banks), and its essence line catches horse and rider moving together. B repeats the brief's wording 'where your way divides'.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "where your way divides",
+      "trust taking shape through contact, not certainty"
+     ],
+     "formula_b": []
+    },
+    {
+     "pid": "D33",
+     "better": "B",
+     "reason": "Both cold-read and both run long. B also tells the seeker how they have changed, drifts from the image and adds a meta line, 'one small reading at a time'.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [
+      "You have been learning to hear the change before the eye confirms it, one small reading at a time"
+     ],
+     "inner_b": [
+      "What steadies you now is the listening itself"
+     ],
+     "force_a": [
+      "Ansuz carries that note to you across the kitchen"
+     ],
+     "force_b": [
+      "Ansuz carries that shift in sound before the eye can find it"
+     ],
+     "formula_a": [
+      "one small reading at a time"
+     ],
+     "formula_b": []
+    },
+    {
+     "pid": "D34",
+     "better": "A",
+     "reason": "B's 'gives trust a footing' grows out of the image, and it names two ways within the word count. A repeats the brief's 'living moment' and runs slightly over.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "where your way divides"
+     ],
+     "formula_b": [
+      "Ehwaz brings trust into the living moment",
+      "Where your way divides"
+     ]
+    },
+    {
+     "pid": "D35",
+     "better": "A",
+     "reason": "B's stone worn smooth carries the image one step on and lands squarely on slow change. A's 'roots hidden from sight' feels forced, though its closing is tidy.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Isa holds the surface still while movement continues below it"
+     ],
+     "force_b": [
+      "Isa holds the surface still while the water continues below"
+     ],
+     "formula_a": [],
+     "formula_b": []
+    }
+   ],
+   "tiebreak": [
+    {
+     "pid": "D29",
+     "better": "A",
+     "reason": "A ties sound to slow change (\"once familiar begins to sound different\") and ends in hearing terms. B's picture is concrete, but its ending drifts to generic \"what matters\"."
+    }
+   ],
+   "skeptik": [
+    {
+     "pid": "D31",
+     "strana": "A",
+     "kind": "drift",
+     "text": "Invented standing gate becomes the centre; closes on a gate to pass through, against the open field.",
+     "refuted": true,
+     "reason": "The fallen fence, gale and open field are all kept. The gate belongs to that fence, and the brief asked for a fixed thing. That is scene detail, not drift."
+    },
+    {
+     "pid": "D33",
+     "strana": "A",
+     "kind": "drift",
+     "text": "Note held steady; steam and trembling lid added; the changing note appears only in the seeker line.",
+     "refuted": false,
+     "reason": "The image's core event, the note changing, becomes \"the note holds steady\" in the picture. The change shows up only in \"you have been learning to hear the change\". Sound kept, event inverted."
+    }
+   ]
+  },
+  {
+   "c": "c6",
+   "l1": [
+    {
+     "pid": "D36",
+     "a_retells": "partly",
+     "b_retells": "partly",
+     "closer_to_source": "B",
+     "note": "B keeps verbatim 'you cannot see it' and 'ford'; A paraphrases as 'unseen', 'crossing your eyes cannot mark'."
+    },
+    {
+     "pid": "D37",
+     "a_retells": "mostly",
+     "b_retells": "partly",
+     "closer_to_source": "A",
+     "note": "A: 'glacial water... the ford you cannot see... horse feels for it' is the source plus a clause; B swaps ford for gravel bed."
+    },
+    {
+     "pid": "D38",
+     "a_retells": "mostly",
+     "b_retells": "mostly",
+     "closer_to_source": "A",
+     "note": "A 'Under the ice, you can hear the stream' nearly verbatim; B 'Beneath the ice, you hear the stream' plus clause."
+    },
+    {
+     "pid": "D39",
+     "a_retells": "partly",
+     "b_retells": "no",
+     "closer_to_source": "A",
+     "note": "A keeps 'the stream still' but drops sound; B's 'white lid' and 'water' are its own words."
+    },
+    {
+     "pid": "D40",
+     "a_retells": "partly",
+     "b_retells": "partly",
+     "closer_to_source": "B",
+     "note": "B's 'holds both until you move' echoes 'does not move until you do'; A's sky and ring are its own."
+    },
+    {
+     "pid": "D41",
+     "a_retells": "partly",
+     "b_retells": "partly",
+     "closer_to_source": "B",
+     "note": "Both name face and rain-barrel; B's 'only when you lean closer' mirrors the source's conditional more closely."
+    },
+    {
+     "pid": "D42",
+     "a_retells": "mostly",
+     "b_retells": "partly",
+     "closer_to_source": "A",
+     "note": "A: 'Beneath the ice a stream still moves... its sound rising' retells source; B drops the sound."
+    }
+   ],
+   "l2": [
+    {
+     "pid": "D36",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "D37",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "D38",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "yes",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "yes"
+    },
+    {
+     "pid": "D39",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "yes",
+     "b_verdict": "drifts",
+     "b_drift": "Sound dropped entirely; stream told only as unseen movement under a visually still surface.",
+     "b_sense_kept": "no"
+    },
+    {
+     "pid": "D40",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "D41",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "D42",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "yes",
+     "b_verdict": "drifts",
+     "b_drift": "Audible stream becomes silent: 'under the quiet', 'cannot yet hear'; told as unseen motion instead.",
+     "b_sense_kept": "no"
+    }
+   ],
+   "l3a": [
+    {
+     "pid": "D36",
+     "better": "B",
+     "reason": "B names the friction honestly (current against footing) and closes on trust as a plain state; A's 'you must move' prescribes. Both run over the word count.",
+     "advice_a": [
+      "This may be the moment, Kuky, when you must move before you can see the footing beneath you"
+     ],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Ehwaz is the horse that reads the water through its legs"
+     ],
+     "force_b": [
+      "Ehwaz is the horse that reads the ford through its hooves"
+     ],
+     "formula_a": [],
+     "formula_b": []
+    },
+    {
+     "pid": "D37",
+     "better": "B",
+     "reason": "B carries the ford cleanly and lands where the way divides; A's opening sentence is overlong, its closing grammar is garbled, and it prescribes moving.",
+     "advice_a": [
+      "you must move on knowing that is not yours to hold"
+     ],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "knowing that is not yours to hold"
+     ],
+     "formula_b": [
+      "Where your way divides here"
+     ]
+    },
+    {
+     "pid": "D38",
+     "better": "B",
+     "reason": "Both within count. B keeps the sound concrete (over stones, meets the bank); A leans on the hedge 'You may notice' and closes on sight, not sound.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Isa holds the surface still while water continues beneath it"
+     ],
+     "force_b": [
+      "Isa holds the surface in place while the water keeps moving below"
+     ],
+     "formula_a": [
+      "a slow change in you"
+     ],
+     "formula_b": [
+      "taking shape before you can name it"
+     ]
+    },
+    {
+     "pid": "D39",
+     "better": "A",
+     "reason": "Near twins. A honours the sound image, ear to the ice, in its closing question; B never uses sound at all.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Isa holds the water quiet"
+     ],
+     "force_b": [
+      "Isa holds the surface hard"
+     ],
+     "formula_a": [
+      "What looks like nothing changing is often the slow work you cannot watch happening"
+     ],
+     "formula_b": [
+      "What looks like nothing happening is the slow work that never shows itself in the moment"
+     ]
+    },
+    {
+     "pid": "D40",
+     "better": "A",
+     "reason": "A's 'water settles without asking you to hold still' lands rest concretely; B's third sentence is abstract, wellness-toned filler. A's 'room to breathe' is stock.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "room to breathe"
+     ],
+     "formula_b": [
+      "that space leaves room for what you notice without asking you to settle it"
+     ]
+    },
+    {
+     "pid": "D41",
+     "better": "B",
+     "reason": "B carries the ripple and the stillness through to two distinct, honest states (rest or waiting); A's 'beyond the frame' leaks the brief and its ending repeats itself.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "remains beyond the frame",
+      "a moment of clearer sight or a moment of rest"
+     ],
+     "formula_b": []
+    },
+    {
+     "pid": "D42",
+     "better": "B",
+     "reason": "B stays within count and closes lean, with a neat 'cannot yet hear'; A runs long, repeats 'not stopped', and presumes a part of the seeker has gone still.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [
+      "under the part of you that has gone still"
+     ],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "What looks frozen from above is only quiet"
+     ],
+     "formula_b": [
+      "unhurried and unseen"
+     ]
+    }
+   ],
+   "l3b": [
+    {
+     "pid": "D36",
+     "better": "B",
+     "reason": "A names honest friction (current against footing) and closes on a state, trust; B's close drifts into 'you must move'. Both overlong.",
+     "advice_a": [
+      "This may be the moment, Kuky, when you must move before you can see the footing beneath you."
+     ],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [],
+     "formula_b": []
+    },
+    {
+     "pid": "D37",
+     "better": "B",
+     "reason": "A's image is concrete and its close names a clear state; B's last line is garbled and directive ('you must move on'). Both overlong.",
+     "advice_a": [
+      "where you must move on knowing that is not yours to hold"
+     ],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [],
+     "formula_b": [
+      "Where your way divides here"
+     ]
+    },
+    {
+     "pid": "D38",
+     "better": "B",
+     "reason": "A keeps sound concrete (water meeting the bank) and asks a sharper inward question; B's third sentence is wordy and slack.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Isa holds the surface still while water continues beneath it"
+     ],
+     "force_b": [
+      "Isa holds the surface in place while the water keeps moving below"
+     ],
+     "formula_a": [],
+     "formula_b": []
+    },
+    {
+     "pid": "D39",
+     "better": "A",
+     "reason": "B uses the image's sound (ear to the ice), and its question stays inside the picture. A drops hearing entirely. Both overlong.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Isa holds the water quiet, yet the current runs on unseen under the crust"
+     ],
+     "force_b": [
+      "Isa holds the surface hard while the current runs on"
+     ],
+     "formula_a": [
+      "What looks like nothing changing is often the slow work you cannot watch happening"
+     ],
+     "formula_b": [
+      "What looks like nothing happening is the slow work that never shows itself in the moment"
+     ]
+    },
+    {
+     "pid": "D40",
+     "better": "A",
+     "reason": "B's edge (face giving way to sky, spreading ring) is concrete and near the word count; A's third sentence is abstract therapy-speak.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "room to breathe"
+     ],
+     "formula_b": [
+      "that space leaves room for what you notice without asking you to settle it"
+     ]
+    },
+    {
+     "pid": "D41",
+     "better": "B",
+     "reason": "A stays concrete and ends on two distinct, unsoftened states (rest or waiting); B leaks 'beyond the frame' and repeats 'a moment of'.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "remains beyond the frame",
+      "a moment of clearer sight or a moment of rest"
+     ],
+     "formula_b": []
+    },
+    {
+     "pid": "D42",
+     "better": "B",
+     "reason": "A is lean, within the word count, and asks plainly, tied to hearing. B runs long, repeats 'not stopped' and presumes an inner stillness.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [
+      "under the part of you that has gone still"
+     ],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "What looks frozen from above is only quiet"
+     ],
+     "formula_b": [
+      "What looks like standing may be slow work carried on out of sight"
+     ]
+    }
+   ],
+   "tiebreak": [],
+   "skeptik": [
+    {
+     "pid": "D39",
+     "strana": "B",
+     "kind": "drift",
+     "text": "Sound dropped entirely; stream told only as unseen movement under a visually still surface.",
+     "refuted": false,
+     "reason": "The claim holds. Reading B never mentions hearing: water is \"moving\", \"unseen\", \"your eye finds only stillness\", \"cannot yet see\". The image's sound sense is gone."
+    },
+    {
+     "pid": "D39",
+     "strana": "B",
+     "kind": "sense",
+     "text": "the non-sight sense of the image is lost",
+     "refuted": false,
+     "reason": "B has no hearing, ear or sound anywhere. The heard stream becomes movement noticed by eye (\"your eye finds\", \"unseen\", \"cannot yet see\"), so the sound is gone."
+    },
+    {
+     "pid": "D42",
+     "strana": "B",
+     "kind": "drift",
+     "text": "Audible stream becomes silent: 'under the quiet', 'cannot yet hear'; told as unseen motion instead.",
+     "refuted": false,
+     "reason": "B never has the stream heard. It moves \"unseen\", \"nothing shows\", and the ending says \"quiet\" and \"cannot yet hear\". That reverses the image's sound."
+    },
+    {
+     "pid": "D42",
+     "strana": "B",
+     "kind": "sense",
+     "text": "the non-sight sense of the image is lost",
+     "refuted": false,
+     "reason": "B makes the stream move and stay unseen, but never heard. Its only sound words, \"quiet\" and \"cannot yet hear\", deny the audible stream the image has."
+    }
+   ]
+  },
+  {
+   "c": "c7",
+   "l1": [
+    {
+     "pid": "D43",
+     "a_retells": "mostly",
+     "b_retells": "partly",
+     "closer_to_source": "A",
+     "note": "A keeps 'stove someone has lit' almost word for word. B keeps 'you come in' and cold, drops who lit it, adds a coat."
+    },
+    {
+     "pid": "D44",
+     "a_retells": "mostly",
+     "b_retells": "mostly",
+     "closer_to_source": "same",
+     "note": "Both retell the face staying still 'until you lean in', each with one clause tacked on."
+    },
+    {
+     "pid": "D45",
+     "a_retells": "mostly",
+     "b_retells": "mostly",
+     "closer_to_source": "B",
+     "note": "B nearly verbatim: 'You come in from the cold' and 'Someone has lit the stove'. A adds a kettle."
+    },
+    {
+     "pid": "D46",
+     "a_retells": "no",
+     "b_retells": "partly",
+     "closer_to_source": "B",
+     "note": "A's own words ('warmth someone kept for you'), no stove. B's second sentence: 'Someone lit the stove before you came'."
+    },
+    {
+     "pid": "D47",
+     "a_retells": "partly",
+     "b_retells": "partly",
+     "closer_to_source": "A",
+     "note": "Both open with 'crack in the lava'. A also keeps the jump. B's first sentence adds its own rising heat."
+    },
+    {
+     "pid": "D48",
+     "a_retells": "partly",
+     "b_retells": "mostly",
+     "closer_to_source": "B",
+     "note": "Both take 'Someone lit the stove before you came'. B also keeps 'in from the cold'. A's first sentence is its own."
+    },
+    {
+     "pid": "D49",
+     "a_retells": "partly",
+     "b_retells": "partly",
+     "closer_to_source": "A",
+     "note": "A's Thurisaz line repeats 'cannot cross without a jump' word for word. B paraphrases it."
+    }
+   ],
+   "l2": [
+    {
+     "pid": "D43",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "yes",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "yes"
+    },
+    {
+     "pid": "D44",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "D45",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "yes",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "yes"
+    },
+    {
+     "pid": "D46",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "yes",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "yes"
+    },
+    {
+     "pid": "D47",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "D48",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "yes",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "yes"
+    },
+    {
+     "pid": "D49",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    }
+   ],
+   "l3a": [
+    {
+     "pid": "D43",
+     "better": "B",
+     "reason": "B keeps the stove scene concrete (damp coat, chair pulled closer) and carries it through; A drifts into a guess about what the seeker notices.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [
+      "You may notice how a room changes when someone has made space before anyone asks."
+     ],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "in small, ordinary ways"
+     ],
+     "formula_b": [
+      "even when no one speaks of it"
+     ]
+    },
+    {
+     "pid": "D44",
+     "better": "A",
+     "reason": "Both run well over the word count, but B is longer still, and its second option edges toward a verdict on the seeker's healing.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [
+      "a stillness you have mistaken for healing already done"
+     ],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "only you can weigh which it is"
+     ],
+     "formula_b": []
+    },
+    {
+     "pid": "D45",
+     "better": "A",
+     "reason": "A's ticking kettle makes the scene concrete, despite a leaked phrase and a tense slip; B only restates the image and stays generic.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "in the living moment"
+     ],
+     "formula_b": []
+    },
+    {
+     "pid": "D46",
+     "better": "A",
+     "reason": "A is nearer the word count, with concrete detail (coat, second chair) and a clean ending; B runs to about 82 words with a padded middle.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "one becomes the other as you cross"
+     ],
+     "formula_b": [
+      "one becoming the other where you step through"
+     ]
+    },
+    {
+     "pid": "D47",
+     "better": "B",
+     "reason": "B stays within the count and names the friction honestly (a choice you cannot make gradually); A's ending, direction remains uncertain, is soft and generic.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "Thurisaz marks the threshold"
+     ],
+     "formula_b": [
+      "heat rising from the roots of the ground",
+      "Thurisaz marks the threshold"
+     ]
+    },
+    {
+     "pid": "D48",
+     "better": "B",
+     "reason": "B has the sharper essence line (being expected) and carries the warmth into its ending; A has a formulaic opening to its close and a tautology.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "What this may be is",
+      "until a house feels like a house"
+     ],
+     "formula_b": [
+      "where one air becomes another"
+     ]
+    },
+    {
+     "pid": "D49",
+     "better": "B",
+     "reason": "B's picture is more concrete (red heat under a black rim), its essence adds meaning, and its ending is sharper; A's essence line only repeats the image.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Thurisaz brings you to a threshold you cannot cross without a jump"
+     ],
+     "force_b": [],
+     "formula_a": [
+      "heat rising from the roots beneath it"
+     ],
+     "formula_b": []
+    }
+   ],
+   "l3b": [
+    {
+     "pid": "D43",
+     "better": "B",
+     "reason": "A carries the image concretely (damp coat among others, chair drawn closer) into home; B drifts abstract in sentence three and ends on stock phrasing.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "in small, ordinary ways",
+      "the simple comfort of warmth"
+     ],
+     "formula_b": []
+    },
+    {
+     "pid": "D44",
+     "better": "A",
+     "reason": "B lands the image on rest (ripples settling) and offers two clean states; A runs to 83 words and edges into verdict on healing.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [
+      "a stillness you have mistaken for healing already done"
+     ],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "only you can weigh which it is"
+     ],
+     "formula_b": []
+    },
+    {
+     "pid": "D45",
+     "better": "A",
+     "reason": "B opens at the edge with a concrete ticking kettle and focuses unannounced care; A mostly restates the image, vague sounds, thin ending. B leaks brief wording.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "in the living moment",
+      "how closeness stands among you"
+     ],
+     "formula_b": [
+      "Wunjo gives belonging a simple shape"
+     ]
+    },
+    {
+     "pid": "D46",
+     "better": "A",
+     "reason": "B is tighter with a concrete second chair carrying the scene; A balloons to about 80 words and its essence describes transition rather than belonging.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "one becomes the other"
+     ],
+     "formula_b": [
+      "one becoming the other"
+     ]
+    },
+    {
+     "pid": "D47",
+     "better": "B",
+     "reason": "A stays in word count and ends on honest friction (a choice not made gradually); B's image is concrete but its close is generic uncertainty.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "Thurisaz marks the threshold"
+     ],
+     "formula_b": [
+      "heat rising from the roots of the ground",
+      "Thurisaz marks the threshold"
+     ]
+    },
+    {
+     "pid": "D48",
+     "better": "B",
+     "reason": "A's essence (small ease of being expected) is plain and graspable; B's close opens clumsily with 'What this may be is' plus a tautology.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "What this may be is",
+      "until a house feels like a house"
+     ],
+     "formula_b": [
+      "where one air becomes another"
+     ]
+    },
+    {
+     "pid": "D49",
+     "better": "B",
+     "reason": "A has fresher concrete detail (red heat under black rim), a plain essence and sharp close; B restates the image line and leaks brief wording.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Thurisaz brings you to a threshold you cannot cross without a jump"
+     ],
+     "force_b": [],
+     "formula_a": [
+      "heat rising from the roots beneath it"
+     ],
+     "formula_b": []
+    }
+   ],
+   "tiebreak": [],
+   "skeptik": []
+  },
+  {
+   "c": "c8",
+   "l1": [
+    {
+     "pid": "D50",
+     "a_retells": "partly",
+     "b_retells": "mostly",
+     "closer_to_source": "B",
+     "note": "B keeps 'rain-barrel', 'the face in the water holds still until you shift'. A rephrases with its own rim framing."
+    },
+    {
+     "pid": "D51",
+     "a_retells": "no",
+     "b_retells": "partly",
+     "closer_to_source": "B",
+     "note": "A keeps only lava and crack. B's 'no bridge and no way around it' echoes 'cannot cross'."
+    },
+    {
+     "pid": "D52",
+     "a_retells": "mostly",
+     "b_retells": "mostly",
+     "closer_to_source": "same",
+     "note": "Both open on the swollen rope and 'however you pull', each adding one clause of its own."
+    },
+    {
+     "pid": "D53",
+     "a_retells": "mostly",
+     "b_retells": "partly",
+     "closer_to_source": "A",
+     "note": "A condenses the source: knot 'swollen too tight to give'. B swaps in grip and strands 'hold fast'."
+    },
+    {
+     "pid": "D54",
+     "a_retells": "partly",
+     "b_retells": "partly",
+     "closer_to_source": "B",
+     "note": "B keeps the literal 'the crack in the lava'. A paraphrases the jump as 'too far to step'."
+    },
+    {
+     "pid": "D55",
+     "a_retells": "mostly",
+     "b_retells": "mostly",
+     "closer_to_source": "A",
+     "note": "A is near-verbatim with 'hands raw' added. B keeps 'swollen tight in the wet' and adds a knuckle simile."
+    },
+    {
+     "pid": "D56",
+     "a_retells": "mostly",
+     "b_retells": "mostly",
+     "closer_to_source": "B",
+     "note": "B is near-verbatim with 'hands raw' added. A retells it with its own verbs ('swelled shut', 'sets')."
+    }
+   ],
+   "l2": [
+    {
+     "pid": "D50",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "D51",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "D52",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "yes",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "yes"
+    },
+    {
+     "pid": "D53",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "yes",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "yes"
+    },
+    {
+     "pid": "D54",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "n/a",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "n/a"
+    },
+    {
+     "pid": "D55",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "yes",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "yes"
+    },
+    {
+     "pid": "D56",
+     "a_verdict": "holds",
+     "a_drift": "",
+     "a_sense_kept": "yes",
+     "b_verdict": "holds",
+     "b_drift": "",
+     "b_sense_kept": "yes"
+    }
+   ],
+   "l3a": [
+    {
+     "pid": "D50",
+     "better": "A",
+     "reason": "A opens at the rim-water edge as the angle asks and ends on two vivid states; B skips the edge and leans stock.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "This is Mannaz, the seeing that only answers"
+     ],
+     "formula_b": [
+      "This is Mannaz, the seeing that only answers",
+      "patience learning its own pace"
+     ]
+    },
+    {
+     "pid": "D51",
+     "better": "B",
+     "reason": "B is leaner, nearer the count, and carries the image through heat and measuring eyes; A's close fits better but reads slacker.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "This is the threshold"
+     ],
+     "formula_b": []
+    },
+    {
+     "pid": "D52",
+     "better": "B",
+     "reason": "Both on count; B keeps touch at the fingers and a concrete essence line, while A's 'the limit is plain' turns abstract.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Nauthiz holds the knot fast."
+     ],
+     "force_b": [
+      "Nauthiz holds the knot where the wet fibers meet."
+     ],
+     "formula_a": [
+      "In your work, the limit is plain"
+     ],
+     "formula_b": [
+      "In your work"
+     ]
+    },
+    {
+     "pid": "D53",
+     "better": "A",
+     "reason": "B's closing question points to a step to take; A keeps the question open, though 'this constraint' and 'unfinished' presume.",
+     "advice_a": [],
+     "advice_b": [
+      "Could the piece you are making need a different hold?"
+     ],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Nauthiz holds the knot fast."
+     ],
+     "force_b": [
+      "Nauthiz holds the knot where you pull."
+     ],
+     "formula_a": [
+      "Could this constraint be shaping what you make"
+     ],
+     "formula_b": [
+      "In your work"
+     ]
+    },
+    {
+     "pid": "D54",
+     "better": "B",
+     "reason": "B's close offers a possibility about going on, as the brief asks; A states its ending as fact, though A's image is sharper.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [
+      "This is the threshold"
+     ],
+     "formula_b": [
+      "Direction here is not a slow walk forward, it is a single choice with air beneath it",
+      "This may be the threshold"
+     ]
+    },
+    {
+     "pid": "D55",
+     "better": "B",
+     "reason": "B is tighter and nearer the count, with a tactile knuckle image; A runs far over and repeats the source sentence. Both endings imply a step.",
+     "advice_a": [
+      "Might the tightness be asking to be worked from a different angle than the one you have set your weight against?"
+     ],
+     "advice_b": [
+      "What might loosen in the making if you stopped pulling at it?"
+     ],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Here Nauthiz holds the work fast, refusing the force you bring against it."
+     ],
+     "force_b": [
+      "Nauthiz holds the fibres fast"
+     ],
+     "formula_a": [],
+     "formula_b": []
+    },
+    {
+     "pid": "D56",
+     "better": "A",
+     "reason": "A is lean, with a crisp strain line and no step; B runs over, ends on patience advice, and 'wet loosen it' contradicts the swollen rope.",
+     "advice_a": [],
+     "advice_b": [
+      "Might the thing you are making ask not for more force from you, but for the patience to let the wet loosen it in its own time?"
+     ],
+     "inner_a": [
+      "the place you most want it loose"
+     ],
+     "inner_b": [
+      "the shape you want to force from it"
+     ],
+     "force_a": [
+      "This is Nauthiz, holding the work fast at the place you most want it loose."
+     ],
+     "force_b": [
+      "Here Nauthiz holds the work fast, refusing the shape you want to force from it."
+     ],
+     "formula_a": [
+      "This is Nauthiz",
+      "What might this piece be teaching you"
+     ],
+     "formula_b": [
+      "in its own time"
+     ]
+    }
+   ],
+   "l3b": [
+    {
+     "pid": "D50",
+     "better": "A",
+     "reason": "B opens at the rim where barrel meets water, as the angle asks, and lands rest concretely (loosening around the eyes). Both run far over length.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [],
+     "formula_a": [],
+     "formula_b": []
+    },
+    {
+     "pid": "D51",
+     "better": "B",
+     "reason": "A is shorter and plainer, with concrete heat through the boots. B's closing leans toward comfort and nudges toward the jump. Both over length.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [
+      "the edge that stops the crossing until you leave the ground"
+     ],
+     "formula_a": [
+      "This is the threshold, Kuky"
+     ],
+     "formula_b": []
+    },
+    {
+     "pid": "D52",
+     "better": "B",
+     "reason": "A stays a mirror with touch detail (knot pressed against fingers). B repeats 'holds' and hands over an answer: 'the limit is plain'.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Nauthiz holds the knot fast"
+     ],
+     "force_b": [
+      "Nauthiz holds the knot where the wet fibers meet"
+     ],
+     "formula_a": [
+      "the limit is plain:"
+     ],
+     "formula_b": []
+    },
+    {
+     "pid": "D53",
+     "better": "A",
+     "reason": "B carries the scene one step on (rope anchored in earth) and its question weighs a possibility. A's closing quietly suggests a different grip.",
+     "advice_a": [],
+     "advice_b": [
+      "Could the piece you are making need a different hold?"
+     ],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [
+      "Nauthiz holds the knot fast"
+     ],
+     "force_b": [
+      "Nauthiz holds the knot where you pull"
+     ],
+     "formula_a": [],
+     "formula_b": []
+    },
+    {
+     "pid": "D54",
+     "better": "A",
+     "reason": "B is concrete and honest: close enough to see, too far to step, a crossing that won't narrow. A uses a 'not X, it is Y' formula.",
+     "advice_a": [],
+     "advice_b": [],
+     "inner_a": [],
+     "inner_b": [],
+     "force_a": [],
+     "force_b": [
+      "the ground that asks a jump before it asks anything else"
+     ],
+     "formula_a": [
+      "This is the threshold, Kuky"
+     ],
+     "formula_b": [
+      "Direction here is not a slow walk forward, it is a single choice with air beneath it",
+      "asks a jump before it asks anything else"
+     ]
+    },
+    {
+     "pid": "D55",
+     "better": "B",
+     "reason": "A is leaner, with a tactile knuckle-hard knot. B runs 80 words, uses long sentences, and hands over a conclusion. Both closings imply a step.",
+     "advice_a": [
+      "Might the tightness be asking to be worked from a different angle than the one you have set your weight against?"
+     ],
+     "advice_b": [
+      "What might loosen in the making if you stopped pulling at it?"
+     ],
+     "inner_a": [],
+     "inner_b": [
+      "The work you are gripping so hard"
+     ],
+     "force_a": [
+      "Nauthiz holds the work fast, refusing the force you bring against it"
+     ],
+     "force_b": [
+      "Nauthiz holds the fibres fast"
+     ],
+     "formula_a": [
+      "Might the tightness be asking"
+     ],
+     "formula_b": []
+    },
+    {
+     "pid": "D56",
+     "better": "A",
+     "reason": "B is shorter and sharper ('strain is in your fingers, not the rope'). A runs 80 words and closes on advice about patience.",
+     "advice_a": [],
+     "advice_b": [
+      "but for the patience to let the wet loosen it in its own time"
+     ],
+     "inner_a": [
+      "the place you most want it loose"
+     ],
+     "inner_b": [
+      "the shape you want to force from it"
+     ],
+     "force_a": [
+      "Nauthiz, holding the work fast at the place you most want it loose"
+     ],
+     "force_b": [
+      "Nauthiz holds the work fast, refusing the shape you want to force from it"
+     ],
+     "formula_a": [
+      "What might this piece be teaching you"
+     ],
+     "formula_b": []
+    }
+   ],
+   "tiebreak": [
+    {
+     "pid": "D54",
+     "better": "B",
+     "reason": "A has richer imagery but closes on certainty (\"This is the threshold\") instead of a possibility. B hedges its close, lands on direction and keeps the image. Both run long (74, 77 words)."
+    }
+   ],
+   "skeptik": []
+  }
+ ]
+}

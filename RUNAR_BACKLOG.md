@@ -143,7 +143,9 @@
   *„you see/hear"* u solu a stejnost napříč čteními (`measure_sameness.js`). IS až po EN.
   **2026-09-23 (8): zkoušeno znění `…, down to one detail the sentence does not name.`** — u Opusu převidí bez ozvěny
   (Nauthiz úsek 6/7 → 3/2/2), runa jako vlastnost, ne síla; riziko studeného čtení těla (Nauthiz 2 ze 3). Owner: nová věta
-  zní líp než produkce. Další krok = várka tohoto znění na týchž 14 promptech (PROD čtení z várky jdou znovu použít).
+  zní líp než produkce. **Várka hotová (EVAL_LOG 2026-09-23 (9)):** převyprávění klesá u obou modelů, celkově lepší čtení
+  nezjištěno (Opus 18 : 10 dělají rady v PROD, bez nich 10 : 8). **Před produkcí:** IS protějšek změřit stejnými metrikami
+  (znění ověřené korpusem je v EVAL_LOG) + vyřešit zdvojení s úhlem [1] (*„no one thought to watch"* 4/4).
 - [ ] **KANDIDÁT: most IS „ástand … sagt með orðum myndarinnar"** (CODE-read 2026-09-22, NEROZHODNUTO — owner).
   Ve tvaru „dvě možnosti" přidat k *„hvort um sig ástand sem gæti átt við"* frázi *„sagt með orðum myndarinnar"*
   (tvar ověřeného Norns landingu A). gpt-6-sol: konce z pojmů (*vani / kostur*) na věcné 5/5; Opus 5: *gæti* beze
