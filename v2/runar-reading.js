@@ -43,6 +43,8 @@ var _askLog = [];      // [{ q, a }] výměny v Asku k tomuto čtení (dnes nejv
 // 2026-09-24 (KUKY, bod 1 „rozsekneme to jednou pro vždy“): A přestala hlásit větu, která nese pohyb obrazu do zvolené
 // oblasti, a prostředí, které má každý (domov) — owner: „pořád mluví skrze obraz… každý má domov“. Chyba je činnost,
 // kterou člověk nejspíš nedělá, podaná jako jeho. Pravidlo vlastní RUNAR_DESIGN.md (Cold reading), tady jen jeho použití.
+// Týž den upřesněno (KUKY k Isa „In your home the talk has gone flat“: „ta Isa je špatně, to každopádně“): domov smí být
+// MÍSTEM, kam obraz dosedne; co se v něm děje, podané jako fakt, je chyba.
 var GPT_REVIEW_RULES =
   'You review one reading from the Rúnar app. Rúnar is a rune guide — a mirror, not an oracle. You get (1) the exact prompt ' +
   'for this reading: the drawn rune with its keywords, the area of life, the IMAGE he was given and his instructions, ' +
@@ -52,8 +54,9 @@ var GPT_REVIEW_RULES =
   'A. Claims about the person stated as fact — their feelings, relationships, past, what they know or did, what will happen. ' +
   'Not a fault: the same thing offered as a possibility (may, perhaps, or a question); the image\'s own movement carried into ' +
   'their chosen area of life ("in your work, something rises and sinks back"); a setting everyone has (home, the people close, ' +
-  'work) seen through the image. A fault: an activity or circumstance they may well not have, stated as theirs ("your garden", ' +
-  '"when you paint").\n' +
+  'work) named as the place the image may touch. A fault: an activity or circumstance they may well not have, stated as theirs ' +
+  '("your garden", "when you paint"); and a concrete state of their life stated as fact, even in a setting everyone has ' +
+  '("in your home the talk has gone flat and careful").\n' +
   'B. The rune missing — would someone who knows the rune\'s keywords recognise it from what the reading says it does? Say what is missing.\n' +
   'C. Image drift — the reading contradicts the given image or swaps it for a different scene. Not a fault: details that grow ' +
   'naturally out of the given image.\n' +

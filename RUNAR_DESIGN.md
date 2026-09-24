@@ -133,7 +133,10 @@ Kánon zrcadla už tady je. Tohle mu dává **jméno a mechanismus** — a jedno
   pořád mluví skrze obraz — říká, co se děje v obraze, ne co člověk dělá. Totéž **prostředí, které má každý** (domov,
   blízcí, práce): *„každý má domov, takže mu to říká, že má něco hledat u sebe doma."* **Tvrzením je činnost nebo
   okolnost, kterou člověk nejspíš nemá** („tvoje zahrada", „když maluješ") — tu smí Rúnar nést jen jako obraz, ne jako
-  jeho život. Platí pro čtení i Ask. Používá to rubrika GPT rozboru, kategorie A (`GPT_REVIEW_RULES`, `runar-reading.js`).
+  jeho život. ⚠️ **Prostředí je MÍSTO, ne tvrzení o stavu v něm** (týž den upřesněno k Isa *„In your home the talk has
+  gone flat and careful"* — owner: *„ta Isa je špatně, to každopádně"*): domov smí být tam, kam obraz dosedne; co se v něm
+  děje, podané jako fakt, je tvrzení. Platí pro čtení i Ask. Používá to rubrika GPT rozboru, kategorie A
+  (`GPT_REVIEW_RULES`, `runar-reading.js`).
 
 ### Citace a motta pro UI (schválená zásoba)
 

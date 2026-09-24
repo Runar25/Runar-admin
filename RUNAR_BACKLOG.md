@@ -622,14 +622,14 @@
   → krok 5 rozhodnutí (všude / jen EN / vůbec).
 - [ ] **OTEVŘENÉ Z 23.–24. 9. — sepsáno 2026-09-24 na ownerovo „nezapomněli jsme na něco, co leží v chatu?"** (CODE-tune; zdroj: `docs/archive/2026-09-23-rozbor-reportu.md` + chat)
   **Čeká na ownerovo rozhodnutí** (otázky z rozboru, dosud bez odpovědi):
-  1. ✅ *(owner 2026-09-24: ANO, když mluví skrze obraz nebo o prostředí, které má každý; tvrzení = činnost, kterou člověk nejspíš nemá — DECISIONS 2026-09-24 (15), rubrika A)* Smí 3. věta čtení říct, co se děje v oblasti tazatele (pochválené Perth/Kenaz to dělají, pravidlo to dnes povoluje jen v poslední větě jako možnost)?
+  1. ✅ *(owner 2026-09-24: ANO, když mluví skrze obraz nebo o prostředí, které má každý; tvrzení = činnost, kterou člověk nejspíš nemá, a stav v prostředí podaný jako fakt — Isa „the talk has gone flat“ je špatně; DECISIONS 2026-09-24 (15) + (19), rubrika A)* Smí 3. věta čtení říct, co se děje v oblasti tazatele (pochválené Perth/Kenaz to dělají, pravidlo to dnes povoluje jen v poslední větě jako možnost)?
   2. ✅ *(owner 2026-09-24: necháme být)* „Confirmation" končí vždy dvěma možnostmi — nechat, dávat jednu, nebo střídat? (owner u Thurisaz chtěl jednu odpověď)
   3. ✅ *(owner 2026-09-24: ANO, jen kde sedí k runě — k napsání)* Sen jako obraz — zkusit 3–4 obrazy, kde sen patří někomu jinému / probuzení (Perth, Laguz, Dagaz)? V kánonu o snech nic není.
   4. ✅ *(2026-09-24: bublina nad místem OK; průhlednost = jako ⚑ — opraveno)* Helper „?": (a) na formuláři bublina „tady je návod" místo hesla zrcadla, nebo obojí? (b) vadila průhlednost kolečka, nebo okénka?
   5. ⏸ *(owner 2026-09-24: šlo o víc slov pro oblast, ne o místo — viz položka „Slova oblastí se opakují" níž)* Tvůj nápad „místo podle oblasti" (úzce: Family + Career, 3–4 runy) — po přepisu oblastí (DECISIONS 2026-09-23 (12)) je potřeba menší; dělat?
   6. ✅ *(zjištěno z user_agent reportů: vše z mobilu)* Fakta: Thurisaz 22. 9. a 23. 9. na stejném zařízení? · Jera brambory: vadila hlavně věta „What you gave to your rest was quiet…" (tvrdí, co jsi dělal)?
   **Schváleno / slíbeno, NEHOTOVO:**
-  7. ✅ *(hotovo 2026-09-24, v4.53 — DECISIONS 2026-09-24 (16); sledovat opis věty z Kolekce a souběh s čočkou životní runy)* **Otázka runy jako skrytý podklad poslední věty čtení** (owner „ok" změřit; v Kolekci už otázka je) — čtení ji nesmí citovat doslova.
+  7. ✅ *(hotovo 2026-09-24, v4.53 — DECISIONS 2026-09-24 (16); sledovat opis věty z Kolekce a souběh s čočkou životní runy; owner: možná bude třeba víc otázek na runu kvůli pestrosti konců — rozhodne se po živých testech)* **Otázka runy jako skrytý podklad poslední věty čtení** (owner „ok" změřit; v Kolekci už otázka je) — čtení ji nesmí citovat doslova.
   8. **Obraz napříč zařízeními** (rebarbora 2× po sobě) — CODE-tune 2026-09-23 slíbil „jako další krok"; plán v položce „Obraz se může zopakovat napříč zařízeními" níž.
   9. Helper „?" má ukazovat i na návod (návod je od 2026-09-24 v záložce čtení).
   10. Deník: u karet čtení ukázat volby (oblast · hledání · záměr) jako ve čtení (report 2026-09-21 „s glyfem runy napsané, na co jsem se ptal").
@@ -640,6 +640,11 @@
   14. ⏸ *(owner: měřit na živých Ascích — slova obrazu v uložených odpovědích před/po odebrání věty)* Ask: pravidlo proti studenému čtení v něm nese „Describe the image" — čtvrtý zámek do čtení, neměřen (DECISIONS 2026-09-23 (13)).
   15. ⏸ *(owner: zatím nechat, bude jich víc k opravě)* Statická čtení (Kolekce, s hlasem) vznikla před popisy run — Dagaz popisu odporuje (položka níž); projít i ostatní 24 proti popisům.
   **Hlídat po živém testování:** Opus 5 (délka Norns, Ask, `readings.usage.model`) · kvalita rozboru gpt-6-luna (vymýšlí výtky?) · dva Asky (krok 1, jen admin) → pak server + `ASK_MULTI_LIVE` · ~35 nových obrazů z 23.–24. 9. ve skutečných čteních.
+- [ ] **Tvrzení o stavu domova („In your home the talk has gone flat“) prompt pořád umí** (DECISIONS 2026-09-24 (19); owner: „ta Isa je špatně“).
+  Doklad z dnešního pilotu na produkčním modelu: Isa, Family & Home — *„Something in your home has gone quiet this way, held rather than ended.“*
+  Rozbor GPT to teď hlásí (rubrika A), prompt tomu nebrání: NO COLD READING hlídá jen nitro („what is true, stirring, or known inside them“),
+  ne stav vztahů a domova. Oprava = změna obsahu promptu → napřed změřit, jak často to dnes vzniká (Family & Home, Love), pak odebrat příčinu,
+  ne přidat zákaz (memory `oprava-promptu-odebira-vadu`). (CODE-tune)
 - [ ] **Slova oblastí se opakují — rozšířit (KUKY 2026-09-24, bod 5: „Rúnar používá work, práce… tím obohatit obraz, platí i pro ostatní AREA; sledovat, jak moc se opakují")**
   - **Změřeno 2026-09-24** (`scripts/utils/oblasti_slova.js`, EN, prompty v4.39+, 7–10 čtení na oblast): Career „work" 8/8 a „making" 6/8 · Love „between" 8/8 · Healing „rest" 8/10 a „mending" 6/10 · Purpose „going" 6/9. Ve všech čteních ostatních oblastí je „work" jen ve 4 %.
   - **Příčina (zjištěno čtením promptu):** jsou to přesně slova, která v promptu stojí DVAKRÁT — v popisu oblasti (`_domainContext`: „land on making and work") i v cíli mostu (`BRIDGE_AREAS`: „in what the seeker is making"). Model je vrací.

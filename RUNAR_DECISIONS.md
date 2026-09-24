@@ -7000,3 +7000,12 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   `yRn()`; `runar-utils.js` nenačítá. Kdyby se vracela do produkce, jméno do promptu tam musí jít taky bez glosy.
 - **Reverzibilita:** `rnPrompt` → `rn`.
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka „GLOSA V ISLANDSKÉ HLAVIČCE RUNY" uzavřena).
+
+## 2026-09-24 (19) — Upřesnění (15): domov smí být MÍSTEM, stav v něm podaný jako fakt je tvrzení
+
+- **Rozhodl:** KUKY 2026-09-24 k Isa *„In your home the talk has gone flat and careful"*: *„ta Isa je špatně. To každopádně."*
+- **Co:** (15) platí dál pro pohyb obrazu v oblasti a pro prostředí, které má každý, jako místo. Konkrétní stav života v tom
+  prostředí podaný jako fakt je tvrzení → rubrika GPT rozboru (A) ho teď hlásí.
+- **Otevřené:** dnešní prompt tenhle tvar pořád umí — pilot otázky runy (2026-09-24 (16)) dal u Isa *„Something in your home has
+  gone quiet this way"*. Oprava promptu = změna obsahu, měřit → `RUNAR_BACKLOG.md`.
+- Affected doc(s): `RUNAR_DESIGN.md` (Cold reading — bod upřesněn), `RUNAR_BACKLOG.md`.
