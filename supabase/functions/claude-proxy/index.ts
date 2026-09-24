@@ -25,6 +25,8 @@
 //   up, so even a broad Anthropic overload returns a reading instead of a 503. Sonnet
 //   is the last-resort safety net (more capacity, slightly lesser IS quality). A
 //   genuine 4xx (bad request) never falls through.
+// GPT-6 SOL (2026-09-24): admin smí číst přes gpt-6-sol (body.engine = 'sol', rozhoduje isAdmin z JWT);
+//   selže-li, čtení jde na MODELS výš a usage nese model, který opravdu běžel. Viz callSol().
 // Deploy: supabase functions deploy claude-proxy --project-ref pmitxjvkeovijreepror --no-verify-jwt
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
@@ -255,6 +257,48 @@ async function callClaudeWithRetry(
   return { ok: false, status: lastStatus, error: lastError };
 }
 
+// ── GPT-6 sol jako čtecí engine — JEN admin (2026-09-24, DECISIONS 2026-09-24 (17)) ──────────
+// Owner pár dní čte v appce přes sol; CODE-read pak z prompt_draws postaví tytéž prompty pro Opus 5 a nechá
+// je slepě soudit (krok 4). Klient posílá engine:'sol', ROZHODUJE server (isAdmin z JWT, ne klient).
+// Soukromí: jen adminova vlastní čtení — pro kohokoli dalšího musí RUNAR_PRIVACY.md jmenovat OpenAI jako
+// zpracovatele (táž podmínka jako gpt-review). Vrací null při jakékoli chybě → čtení jde na Claude.
+// reasoning_effort 'none' (jako gpt-review: přemýšlení stálo víc než polovinu výstupu); 400 → 'minimal'.
+// Časový strop 50 s: když sol selže pozdě, fallback na Claude (55 s na pokus) se musí vejít do limitu funkce.
+const SOL_MODEL = "gpt-6-sol";
+async function callSol(system: string, prompt: string, maxTokens: number, key: string):
+  Promise<{ text: string; usage: Record<string, unknown> | null } | null> {
+  const ctl = new AbortController();
+  const timer = setTimeout(() => ctl.abort(), 50000);
+  try {
+    for (const eff of ["none", "minimal"]) {
+      const res = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: { "content-type": "application/json", authorization: "Bearer " + key },
+        body: JSON.stringify({
+          model: SOL_MODEL, reasoning_effort: eff, max_completion_tokens: maxTokens,
+          messages: [...(system ? [{ role: "system", content: system }] : []), { role: "user", content: prompt }],
+        }),
+        signal: ctl.signal,
+      });
+      if (res.status === 400 && eff === "none") continue;
+      if (!res.ok) {
+        console.warn("sol failed:", res.status, (await res.text().catch(() => "")).slice(0, 300));
+        return null;
+      }
+      const d = await res.json().catch(() => null);
+      const text = String(d?.choices?.[0]?.message?.content ?? "").trim();
+      if (!text) { console.warn("sol: empty text, finish_reason", d?.choices?.[0]?.finish_reason); return null; }
+      return { text, usage: d?.usage ?? null };
+    }
+    return null;
+  } catch (e) {
+    console.warn("sol threw:", (e as Error).name === "AbortError" ? "timeout" : (e as Error).message);
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 // ── Deduction plan — decided up front, applied only after a successful reading ─
 // Monthly cast cap for the paid tiers. MIRROR of TIERS.standard/premium.monthly_readings
 // in v2/runar-config.js — the proxy is Deno and cannot import the client config, so the two
@@ -426,6 +470,7 @@ serve(async (req: Request) => {
       mode        = "",
       spread_cost = 1,     // number of credits/balance to deduct (= number of runes)
       journal     = null,  // reading meta to persist server-side (null = do not save)
+      engine      = "",    // 'sol' = GPT-6 sol místo Claude — platí JEN pro admina (callSol, 2026-09-24)
     } = body;
     // life_rune_reset (2026-09-14) nevola Clauda, prompt nema — stejna vyjimka jako resave.
     // Nalezeno sondou na zivem endpointu: reset s prazdnym promptem koncil 400 pred auth.
@@ -732,6 +777,17 @@ serve(async (req: Request) => {
     if (baseSystem)      systemParts.push({ type: "text", text: baseSystem, cache_control: { type: "ephemeral" } });
     if (dynamicContext)  systemParts.push({ type: "text", text: dynamicContext });
 
+    // ── GPT-6 sol (jen admin) — při chybě níž normální cesta přes Claude ──
+    let data: any = null;
+    let text = "";
+    if (engine === "sol" && isAdmin) {
+      const openaiKey = Deno.env.get("OPENAI_API_KEY");
+      const sol = openaiKey ? await callSol(baseSystem + dynamicContext, String(prompt ?? ""), cappedMaxTokens, openaiKey) : null;
+      if (sol) { text = sol.text; data = { model: SOL_MODEL, usage: sol.usage }; }
+      else console.warn("sol unavailable — falling back to Claude");
+    }
+
+    if (!text) {
     // ── Call Claude (timeout + retry) ──
     const anthropicKey = Deno.env.get("ANTHROPIC_API_KEY");
     if (!anthropicKey) return json({ error: "API key not configured" }, 500);
@@ -777,14 +833,14 @@ serve(async (req: Request) => {
       }, 503);
     }
 
-    const data = result.data;
+    data = result.data;
     // A 2xx body that still carries an error object = a genuine bad request; do
     // not retry, do not deduct.
     if (data?.error) return json({ error: data.error.message ?? "Claude error" }, 400);
 
     // Text podle TYPU bloku, ne první blok (2026-09-24): kdyby model vrátil napřed blok přemýšlení,
     // content[0].text by byl prázdný a čtení by skončilo chybou „empty“, přestože text přišel.
-    const text = (Array.isArray(data?.content) ? data.content : [])
+    text = (Array.isArray(data?.content) ? data.content : [])
       .filter((c: any) => c && c.type === "text").map((c: any) => c.text || "").join("");
     if (!text) {
       return json({
@@ -792,6 +848,7 @@ serve(async (req: Request) => {
         message: "No reading came through — please try again.",
       }, 503);
     }
+    }   // konec cesty přes Claude (sol ji přeskočí, když vrátil text)
 
     // ── Reading succeeded — NOW deduct the credit/balance ──
     const creditsRemaining = await applyDeduction(deductPlan, userId,

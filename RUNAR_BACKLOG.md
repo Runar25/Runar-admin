@@ -620,6 +620,11 @@
   **Postup odsouhlasen 2026-09-24 (DECISIONS (17)):** krok 1 glosa jen v promptu (otestováno, handoff) → kroky 2+3 spojené
   (admin čte přes sol v appce + věta „one detail" jen pro sol, handoff po nasazení kroku 1) → krok 4 slepé srovnání s Opus 5
   → krok 5 rozhodnutí (všude / jen EN / vůbec).
+  **Stav 2026-09-24:** kroky 1 a 2+3 NASAZENÉ (DECISIONS 2026-09-24 (18) + (20)) — admin přepne „Read with GPT-6 sol (test)“ pod
+  „Begin the reading“ → čtení (single, spready) i Ask jdou přes sol, usage nese `model: gpt-6-sol`. Teď owner pár dní čte → krok 4 (CODE-read).
+  ⚠️ **Pro krok 4 (cena):** `scripts/utils/stats.js` nepočítá `prompt_tokens_details.cache_write_tokens` — OpenAI je vrací u každého
+  nového čtení (test 2026-09-24: 2124 z 2127 vstupních tokenů) a na ownerově přehledu OpenAI jsou „cache writes“ placená položka.
+  Cenu zápisu doplnit z ceníku OpenAI (neodhadovat) — jinak bude sol v přehledu levnější, než je. (nalezl CODE-tune, pro CODE-read)
 - [ ] **OTEVŘENÉ Z 23.–24. 9. — sepsáno 2026-09-24 na ownerovo „nezapomněli jsme na něco, co leží v chatu?"** (CODE-tune; zdroj: `docs/archive/2026-09-23-rozbor-reportu.md` + chat)
   **Čeká na ownerovo rozhodnutí** (otázky z rozboru, dosud bez odpovědi):
   1. ✅ *(owner 2026-09-24: ANO, když mluví skrze obraz nebo o prostředí, které má každý; tvrzení = činnost, kterou člověk nejspíš nemá, a stav v prostředí podaný jako fakt — Isa „the talk has gone flat“ je špatně; DECISIONS 2026-09-24 (15) + (19), rubrika A)* Smí 3. věta čtení říct, co se děje v oblasti tazatele (pochválené Perth/Kenaz to dělají, pravidlo to dnes povoluje jen v poslední větě jako možnost)?

@@ -564,6 +564,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .gpt-review{margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,191,0,0.14);}
 .btn-gpt-review{padding:8px 16px;background:transparent;border:1px solid rgba(255,191,0,0.7);color:var(--gold);font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:1.5px;cursor:pointer;}
 .btn-gpt-review:disabled{opacity:0.5;cursor:wait;}
+/* Přepínač GPT-6 sol pod „Begin the reading" — jen admin (2026-09-24). Týž tichý štítek jako ostatní admin prvky. */
+.sol-toggle{display:flex;align-items:center;gap:8px;margin-top:14px;font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:1.5px;color:var(--muted);cursor:pointer;}
+.sol-toggle input{accent-color:var(--gold);margin:0;cursor:pointer;}
 .gpt-review-out{margin-top:12px;font-size:0.95em;line-height:1.55;color:var(--white);white-space:pre-wrap;}
 /* Ask Rúnar — follow-up Q&A (Premium, one question per reading) */
 #ask-runar{margin-top:22px;padding-top:20px;border-top:1px solid rgba(255,191,0,0.14);}

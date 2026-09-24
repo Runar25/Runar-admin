@@ -103,6 +103,24 @@ function _showGptReview() {
   var out = document.getElementById('gpt-review-out'); if (out) out.textContent = '';
   var b = document.getElementById('gpt-review-btn'); if (b) { b.disabled = false; b.textContent = t('gpt_review_btn'); }
 }
+// ─── GPT-6 sol jako čtecí engine (jen admin, 2026-09-24, DECISIONS 2026-09-24 (17)) ─────────────
+// Owner pár dní čte přes sol, pak CODE-read postaví tytéž prompty pro Opus 5 a nechá je slepě soudit.
+// Volba žije v localStorage (jen tenhle prohlížeč); READ_ENGINE čtou buildery i callProxy. Ne-admin = vždy opus,
+// i kdyby v localStorage něco zůstalo. Server sol stejně pustí jen adminovi — tohle je pohodlí, ne brána.
+function _paintSolToggle() {
+  var box = document.getElementById('sol-toggle'), cb = document.getElementById('sol-toggle-cb');
+  var admin = !!(currentUser && isAdmin(currentUser.email));
+  var on = false;
+  if (admin) { try { on = localStorage.getItem('runar_engine') === 'sol'; } catch (e) {} }
+  READ_ENGINE = on ? 'sol' : 'opus';
+  if (box) box.style.display = admin ? 'flex' : 'none';
+  if (cb) cb.checked = on;
+}
+function toggleSol(on) {
+  if (!(currentUser && isAdmin(currentUser.email))) return;
+  try { localStorage.setItem('runar_engine', on ? 'sol' : ''); } catch (e) {}
+  _paintSolToggle();
+}
 function _hideGptReview() {
   var box = document.getElementById('gpt-review'); if (box) box.style.display = 'none';
 }

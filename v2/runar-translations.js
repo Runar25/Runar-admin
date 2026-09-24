@@ -69,6 +69,8 @@ const UI_TEXT = {
     report_ask_attached: 'Rúnar\'s answer to your question is attached:',
     // GPT-6 sol rozbor čtení — jen admin (KUKY 2026-09-23). Název modelu se nepřekládá.
     gpt_review_btn:   'GPT-6 luna',   // model = supabase/functions/gpt-review MODEL (2026-09-24 sol -> luna, cena)
+    // Přepínač čtení přes GPT-6 sol — jen admin, test (2026-09-24, DECISIONS 2026-09-24 (17)).
+    sol_toggle:       'Read with GPT-6 sol (test)',
     gpt_review_wait:  'GPT-6 luna is reading…',
     gpt_review_err:   'GPT-6 luna did not answer: {msg}',
     report_type:      'Type',
@@ -463,6 +465,7 @@ const UI_TEXT = {
     report_flagging:  'Tilkynni:',
     report_ask_attached: 'Svar Rúnars við spurningunni fylgir með:',
     gpt_review_btn:   'GPT-6 luna',
+    sol_toggle:       'Lestur með GPT-6 sol (prófun)',
     gpt_review_wait:  'GPT-6 luna er að lesa…',
     gpt_review_err:   'GPT-6 luna svaraði ekki: {msg}',
     report_type:      'Tegund',

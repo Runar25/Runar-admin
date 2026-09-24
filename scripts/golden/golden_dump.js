@@ -35,6 +35,9 @@ const sandbox = {
   },
 };
 sandbox.window = sandbox; sandbox.self = sandbox; sandbox.globalThis = sandbox;
+// Uložit/vrátit stav sáčku obrazů (in-memory localStorage) — pro otisk varianty, která nesmí posunout ostatní.
+sandbox._bagSave = () => JSON.stringify(bag);
+sandbox._bagLoad = (x) => { Object.keys(bag).forEach((k) => { delete bag[k]; }); Object.assign(bag, JSON.parse(x)); };
 
 let code = 'var lang="en"; var userGender="hk"; var corrections=[]; var currentUser=null; var userName="";\n';
 for (const f of files) code += '\n/* ===== ' + f + ' ===== */\n' + fs.readFileSync(DIR + f, 'utf8') + '\n;\n';
@@ -66,7 +69,14 @@ var samplecorr = [{ from:'Arctic', to:'Norðurljós', lang:'both', context:'test
   // Bez tohoto klice projde zmena uhlu [0]/[1] jako "0 zmen" (§19.2 tiche zelene).
   grab('angles_'+L,      function(){ return (L==='is'?READING_ANGLES_IS:READING_ANGLES).join('\\n'); });
   grab('single_'+L,      function(){ return buildReadingPrompt(u, drawn, L, []); });
+  var _bagPred = _bagSave();
   grab('single_noq_'+L,  function(){ return buildReadingPrompt(u2, drawn, L, []); });
+  // 2026-09-24: varianta enginu GPT-6 sol (jen admin) — věta za obrazem má doplněk „one detail“ (IMAGE_SEEING).
+  // Bez tohoto klíče by změna té varianty prošla jako „0 změn“. Staví se ze STEJNÉHO stavu sáčku obrazů jako
+  // single_noq (liší se tedy jen tou větou) a sáček se pak vrátí, aby se ostatní otisky nepohnuly.
+  var _bagPo = _bagSave(); _bagLoad(_bagPred);
+  grab('single_sol_'+L,  function(){ READ_ENGINE = 'sol'; try { return buildReadingPrompt(u2, drawn, L, []); } finally { READ_ENGINE = 'opus'; } });
+  _bagLoad(_bagPo);
   grab('single_corr_'+L, function(){ return buildReadingPrompt(u, drawn, L, samplecorr); });
   grab('single_selflife_'+L, function(){ return buildReadingPrompt(u, u.lifeRune, L, []); });
   grab('norns_'+L,       function(){ return buildNornsPrompt(u, pool.slice(0,3), L, []); });

@@ -880,6 +880,7 @@ function updateUIText() {
   setText('layer2-lbl', t('layer2_lbl'));
   setText('draw-another-btn', t('draw_another'));
   setText('start-over-btn', t('start_over'));
+  setText('sol-toggle-lbl', t('sol_toggle'));   // staticky popisek prepinace GPT-6 sol (jen admin ho vidi)
   setText('read-guide-lbl', t('guide_title'));   // staticky nadpis navodu — od 2026-09-23 v zalozce cteni
   setText('audio-player-lbl', t('voice_player_lbl'));
   setText('ask-lbl', t('ask_lbl'));
@@ -1307,7 +1308,10 @@ async function callProxy(sys, prompt, maxTokens, use_credit = false, credit_cost
 
     const res  = await fetch(PROXY, {
       method: 'POST', headers,
-      body: JSON.stringify({ system: sys, prompt, max_tokens: maxTokens, use_credit, spread_cost: credit_cost, journal, mode })
+      body: JSON.stringify({ system: sys, prompt, max_tokens: maxTokens, use_credit, spread_cost: credit_cost, journal, mode,
+        // GPT-6 sol (jen admin, 2026-09-24): jen čtení (single, spready, založení) a Ask — jejich prompty nesou
+        // větu za obrazem podle READ_ENGINE. Životní runa a rozbor jména zůstávají na Claude. Server bez admina ignoruje.
+        engine: (typeof READ_ENGINE !== 'undefined' && READ_ENGINE === 'sol' && (mode === '' || mode === 'ask' || mode === 'founding')) ? 'sol' : undefined })
     });
     const data = await res.json();
 

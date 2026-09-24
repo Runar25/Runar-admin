@@ -7009,3 +7009,21 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Otevřené:** dnešní prompt tenhle tvar pořád umí — pilot otázky runy (2026-09-24 (16)) dal u Isa *„Something in your home has
   gone quiet this way"*. Oprava promptu = změna obsahu, měřit → `RUNAR_BACKLOG.md`.
 - Affected doc(s): `RUNAR_DESIGN.md` (Cold reading — bod upřesněn), `RUNAR_BACKLOG.md`.
+
+## 2026-09-24 (20) — GPT-6 sol v appce jen pro admina: kroky 2+3 z (17) nasazené (v4.55, claude-proxy)
+
+- **Co:** handoff CODE-read (psáno proti 4f8e568), owner *„až proveď krok 1"* po nasazení (18).
+  (a) `claude-proxy`: pole `engine: 'sol'` platí JEN pro admina (isAdmin z JWT); `callSol()` volá `gpt-6-sol` (reasoning `none`,
+  400 → `minimal`, strop 50 s), text jde týmž parserem, usage se ukládá s `model: 'gpt-6-sol'`. Selže-li cokoli → normální cesta
+  přes `MODELS` (Opus 5) a usage nese model, který opravdu běžel. Kredity, limity a deník beze změny.
+  (b) Klient: přepínač „Read with GPT-6 sol (test)" pod „Begin the reading", vidí ho jen admin, volba v localStorage. Posílá se
+  u čtení (single, spready, založení) a Asku; čtení životní runy a rozbor jména zůstávají na Claude (jejich prompty větu za obrazem nemají).
+  (c) Věta za obrazem jako DATA podle enginu (`IMAGE_SEEING` v `runar-character.js`, klíč `READ_ENGINE` v `runar-utils.js`) —
+  pro sol s doplňkem „one detail", pro Opus beze změny (§18, žádný druhý builder).
+- **Ověřeno:** golden — Opus prompty bajtově beze změny, nová varianta `single_sol_en/is` se liší JEN doplňkem; nasazená funkce =
+  repo (stažena a porovnána před i po deployi); tvar volání na jednom produkčním IS zadání: `none` přijato, parser OK, bez glosy;
+  v náhledu: návštěvník přepínač nevidí, ne-admin s uloženou volbou zůstává na Opus, admin posílá `engine: 'sol'` jen u čtení a Asku.
+- **Neověřeno:** celá cesta s adminovým přihlášením (JWT má jen owner) → první ostré čtení ověří owner; `usage.model` v DB to ukáže.
+- **Soukromí:** jen adminova vlastní čtení; pro kohokoli dalšího musí `RUNAR_PRIVACY.md` jmenovat OpenAI (beze změny oproti (17)).
+- **Reverzibilita:** přepínač vypnout (klient) · engine v proxy se bez adminova `engine:'sol'` nikdy nespustí.
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka GPT-6 sol — stav + nález k ceně zápisu do cache).

@@ -229,6 +229,7 @@ function updateAuthUI() {
   updateTabVisibility();
   updateAuthLabel();
   updateBanners();
+  if (typeof _paintSolToggle === 'function') _paintSolToggle();   // GPT-6 sol jen pro admina (2026-09-24)
 }
 
 // ── SPECIFIC QUESTION GATE ────────────────────────────────

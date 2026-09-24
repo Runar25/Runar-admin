@@ -618,6 +618,12 @@ function _randomPlacement(){ return RUNE_PLACEMENTS[Math.floor(Math.random() * R
 // ─── rk() ─────────────────────────────────────────
 function rk(r)  { return lang === 'is' ? r.k_is : r.k; }
 
+// ─── READ_ENGINE (2026-09-24, DECISIONS 2026-09-24 (17)) ───────────
+// Kdo píše čtení: 'opus' (všichni) | 'sol' (jen admin, přepínač v readeru — _paintSolToggle v runar-reading.js).
+// Čtou ho buildery (věta za obrazem, IMAGE_SEEING v runar-character.js) a callProxy (pole engine).
+// Server engine bez admina ignoruje — tohle není brána, jen volba.
+var READ_ENGINE = 'opus';
+
 // ─── rn() ─────────────────────────────────────────
 function rn(r)  { return lang === 'is' ? r.is_n : r.n; }
 

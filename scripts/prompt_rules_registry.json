@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-24",
- "prompt_version": "v4.54-jmeno-bez-glosy",
+ "prompt_version": "v4.55-sol-admin",
  "pravidla": [
   {
    "hash": "084253a8b9d6",

@@ -856,14 +856,26 @@ function _seasonalImagery(lang, drawn) {
   var phrase = runePhrase || ((lang === 'is') ? img.is : img.en);
   // Misto z losu (jen radky s jadrem). Format testovan CODE-read: stitek „Staður:" dal
   // v is-grammar-qa Z002+E001, cela veta cista — proto IS jako veta, EN jako „Where:".
+  var sees = IMAGE_SEEING[lang === 'is' ? 'is' : 'en'];
+  var seeing = (typeof READ_ENGINE !== 'undefined' && sees[READ_ENGINE]) ? sees[READ_ENGINE] : sees.opus;
   if (lang === 'is')
     return 'MYND — héðan kemur myndin í þessum lestri: ' + phrase
       + (placePair ? '. Þetta á sér stað ' + placePair[0] : '')
-      + '. Láttu hana verða að þinni eigin sýn í textanum.';
+      + '. ' + seeing;
   return 'IMAGE — the picture in this reading comes from here: ' + phrase
     + (placePair ? '. Where: ' + placePair[1] : '')
-    + '. Let it become your own seeing in the text.';
+    + '. ' + seeing;
 }
+// Věta za obrazem podle ENGINU (2026-09-24, handoff CODE-read, DECISIONS 2026-09-24 (17)). Doplněk „one detail“
+// jen pro GPT-6 sol: solu snížil převyprávění obrazu (20 → 12 z 28, EVAL_LOG 2026-09-23 (9)); u Opusu 5 bez účinku
+// a +7 % délky (2026-09-24 (13)), proto Opus dál bez něj. IS ověřeno korpusem po trojicích (EVAL_LOG 2026-09-23 (9)).
+// Klíč = READ_ENGINE (runar-utils.js); neznámý engine → opus.
+var IMAGE_SEEING = {
+  en: { opus: 'Let it become your own seeing in the text.',
+        sol:  'Let it become your own seeing in the text, down to one detail the sentence does not name.' },
+  is: { opus: 'Láttu hana verða að þinni eigin sýn í textanum.',
+        sol:  'Láttu hana verða að þinni eigin sýn í textanum, niður í smáatriði sem ekki kemur fram í setningunni.' },
+};
 
 // DESCRIBE, DO NOT EXPLAIN (eval v0.4 Priority 1, 9/9): every gate-fail sat in an explaining
 // sentence, not the image. Rúnar may say what happens in the world; never what it MEANS
