@@ -650,11 +650,21 @@
   Rozbor GPT to teď hlásí (rubrika A), prompt tomu nebrání: NO COLD READING hlídá jen nitro („what is true, stirring, or known inside them“),
   ne stav vztahů a domova. Oprava = změna obsahu promptu → napřed změřit, jak často to dnes vzniká (Family & Home, Love), pak odebrat příčinu,
   ne přidat zákaz (memory `oprava-promptu-odebira-vadu`). (CODE-tune)
+- [ ] **Islandský úhel se opisuje do čtení jako první věta** (nalezeno 2026-09-24 v pilotu podob oblastí; CODE-tune).
+  `READING_ANGLES_IS` (`runar-utils.js`) má *„Líttu fyrst snöggt yfir alla myndina, láttu svo allt hverfa nema eitt."* — rozkaz
+  čtenáři, který model může použít jako první větu. Stalo se u Opus 5 (*„Líttu snöggt yfir alla myndina, láttu svo allt hverfa nema
+  laukinn í moldinni."*) i u Opus 4.8 (EVAL_LOG 2026-09-24). EN znění *„Open with one quick glance…"* je pokyn PISATELI a opsat
+  nejde. Návrh: IS jako pokyn pisateli (např. *„Byrjaðu á…"*), ověřit nástroji a změřit opis na produkčním modelu před/po.
 - [ ] **Slova oblastí se opakují — rozšířit (KUKY 2026-09-24, bod 5: „Rúnar používá work, práce… tím obohatit obraz, platí i pro ostatní AREA; sledovat, jak moc se opakují")**
   - **Změřeno 2026-09-24** (`scripts/utils/oblasti_slova.js`, EN, prompty v4.39+, 7–10 čtení na oblast): Career „work" 8/8 a „making" 6/8 · Love „between" 8/8 · Healing „rest" 8/10 a „mending" 6/10 · Purpose „going" 6/9. Ve všech čteních ostatních oblastí je „work" jen ve 4 %.
   - **Příčina (zjištěno čtením promptu):** jsou to přesně slova, která v promptu stojí DVAKRÁT — v popisu oblasti (`_domainContext`: „land on making and work") i v cíli mostu (`BRIDGE_AREAS`: „in what the seeker is making"). Model je vrací.
   - **Návrh CODE-tune (čeká na ownera):** nepřidávat do promptu seznam dalších slov — model by opakoval ta nová (memory `prompt-directive-makes-model-copy`). Místo toho 3–4 **podoby oblasti losované per čtení** (Career: práce pro druhé · věc dělaná rukama · nápad, který nabírá tvar · řemeslo), každá bez opakovaného podstatného jména, a slovo oblasti v promptu jen jednou. Měřit tímtéž skriptem před/po.
   - IS: jen 22 čtení s oblastí a všechna ze starších promptů — islandský stav zatím nejde změřit.
+  - **Připraveno 2026-09-24 (owner „5. připrav"), NENASAZENO — čeká na ownera:** podoby všech 8 oblastí EN + IS (IS ověřeno
+    nástroji) + pilot Career na Opus 5 → `docs/eval/2026-09-24-podoby-oblasti/`. IS slovo oblasti 5/6 → 2/6; EN „work" 6/6 → 5/6
+    (model jím popisuje i dění runy — hypotéza „dvakrát v promptu" pro EN padla); konec „in your work" 4/6 → 2/6 a míří jinam.
+    Po schválení: losovat podobu per čtení (jeden los pro `_domainContext` i `BRIDGE_AREAS`), zapsat ji do `prompt_draws`,
+    golden pro každou podobu, a po týdnu živých čtení přeměřit `oblasti_slova.js`.
 - [ ] **Druhý Ask — plán po krocích (KUKY 2026-09-24: „vždy postupně od jednoduššího ke komplexnějšímu“; premium 2, standard 1, vše zdarma)**
   - **Krok 1 HOTOVÝ v klientu, zapnutý JEN pro admina** (`ASK_MULTI_LIVE = false`, `TIERS.*.asks_per_reading`): dva Asky ke čtení, Rúnar o předchozí výměně neví. → owner živě testuje.
   - **Před ostrým zapnutím (`ASK_MULTI_LIVE = true`) musí jít ven server** (`claude-proxy`): (a) Ask smí i standard (dnes 403 pro vše kromě premium); (b) zdarma do `asks_per_reading` tieru — `legitAsk` dnes pustí zdarma jen PRVNÍ Ask, druhý by prémiovému uživateli strhl měsíční čtení; (c) nad limit odmítnout, nestrhávat; (d) počty zrcadlit z configu + kontrola shody ve smoke (vzor NAME_LORE_LIMIT); (e) atomický zápis `follow_up` (nález 2 níž). Texty „one answer left“ (`ask_teaser`) přepsat podle tieru.
