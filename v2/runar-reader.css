@@ -375,8 +375,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .coll-audio-text{font-size:0.92em;font-style:italic;color:var(--muted);line-height:1.85;margin-bottom:14px;}
 /* Návod pod statickou runou (2026-09-23). Popisek = týž vzhled jako popisek Asku (malé kapitálky,
    +/−), ale vlastní třída: .ask-lbl dědí font a barvu z rodiče, v Kolekci by vypadal jinak. */
+/* 2026-09-24 (KUKY: „vypadá jako úplně nový font… nemá pod sebou mezeru, je nalepené na rámečku“):
+   tlačítko nedědí písmo rodiče, takže bez font-family kreslilo systémové bezpatkové. Teď týž vzhled
+   jako „✦ HOW RÚNAR SEES THE RUNE“ v Kolekci (Cinzel, zlatá) a mezera pod ním. */
 .guide-lbl{background:none;border:0;padding:0;cursor:pointer;display:block;width:100%;text-align:center;
-  font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:4px;}
+  font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;text-transform:uppercase;color:var(--gold);
+  margin:4px 0 20px;}
 .guide-lbl::after{content:" +";opacity:.55;}
 .guide-lbl[aria-expanded="true"]::after{content:" −";}
 .guide-lbl:focus-visible{outline:1px solid var(--gold);outline-offset:4px;}
@@ -443,6 +447,13 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .card-lbl{font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:2px;color:var(--gold);margin-bottom:16px;}
 .flbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--gold);display:block;margin:16px 0 6px;}
 .flbl:first-child{margin-top:0;}
+/* 2026-09-24: „THE SITUATION“ je první dítě #q-section → pravidlo výš mu vzalo horní mezeru a lepilo se
+   na tlačítka „This reading is for“ (vidět na ownerově screenshotu). Mezeru nese obal. */
+#q-section{margin-top:16px;}
+/* Táž vada u islandského „Hvernig Rúnar ávarpar þig“ (první dítě #setup-gender-row, lepilo se na pole jména);
+   navíc jako jediný popisek nebyl verzálkami — text z UI_TEXT je psaný malými. */
+#setup-gender-row{margin-top:16px;}
+#setup-gender-lbl{text-transform:uppercase;}
 .opt{opacity:0.45;font-size:0.85em;}
 .q-teaser-txt{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--muted);opacity:0.45;margin:14px 0 6px;}
 .note{font-size:0.9em;color:var(--muted);font-style:italic;line-height:1.7;margin-bottom:14px;}
