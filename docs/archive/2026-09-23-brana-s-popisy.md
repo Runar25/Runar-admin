@@ -71,3 +71,11 @@ sušená ryba na sušáku · jeřabiny zčervenají a přiletí drozdi · svetr 
 z udírny · jehňata z května sejdou v září z hor · šícha nejsladší po prvním mrazu.
 Nasazeny tři (svetr místo chleba, ryba, jehněčí), aby Jera měla varianty v každém ročním období.
 Zbylé tři jsou prošlé zálohy, kdyby bylo potřeba.
+
+## Kolo 5 — tenké runy (2026-09-24)
+Od října by Uruz, Berkana, Ehwaz a Ingwaz měly jen 2 obrazy (Dagaz a Blank od března do září).
+18 kandidátů z ownerových popisů (3 na runu), IS ověřené korpusem a is-grammar-qa.
+**16 z 18 prošlo** (15× 3/3, skyr u Ingwaz 2/3); kontroly 2/2 znovu 3/3.
+Neprošly: pupeny na holé bříze (Berkana → Ingwaz 3/3) · palčáky, ze kterých dítě vyrostlo (Berkana → Jera 3/3).
+Nezařazeno, i když prošlo: žitné těsto u horkého pramene (Ingwaz 3/3) — zase chléb, který owner u Jery nechtěl.
+Po zařazení žádná runa nemá v žádném období méně než 3 dosažitelné obrazy.

@@ -629,6 +629,26 @@ var RUNE_IMAGES = [
   ['Wunjo','any','Þú sest hjá þeim og enginn spyr hvers vegna þú komst.','You sit down with them and no one asks why you came.','tilheyra','belonging','D'],
   ['Jera','bright','Fiskurinn hefur hangið á hjallinum síðan í vetur og er nú orðinn harður og tilbúinn.','The fish has hung on the drying rack since winter, and now it is hard and ready.','rétt tímasetning','right timing','P'],
   ['Jera','cold','Hangikjötið sem hékk í reykkofanum í allt haust er tekið niður fyrir veisluna.','The smoked lamb that hung in the smokehouse all autumn is taken down for the feast.','umbun','reward','D'],
+  // 2026-09-24: tenké runy — od října by Uruz, Berkana, Ehwaz a Ingwaz měly jen 2 obrazy (Dagaz a Blank na jaře–v září
+  // taky), a se dvěma se čtení střídá A-B-A-B („stejné čtení jako minule“). Z ownerových popisů, brána S POPISY:
+  // 16 z 18 prošlo (15 zařazeno; 14× 3/3, skyr 2/3), kontroly 2/2. Vyřazeno: pupeny na holé bříze (Ingwaz 3/3),
+  // palčáky, ze kterých dítě vyrostlo (Jera 3/3), a žitné těsto u horkého pramene (prošlo, ale je to zase chléb —
+  // owner 2026-09-23 chléb u Jery nechtěl). IS: korpus + is-grammar-qa (workflow tenke-runy-obrazy).
+  ['Uruz','cold','Hreindýrstarfurinn öslar snjóinn upp að bringu og hægir ekki á sér.','The reindeer stag wades through chest-deep snow and does not slow down.','hráur kraftur','raw power','P'],
+  ['Uruz','cold','Þú rekur járnkarlinn af öllu afli í frosna jörðina og hún gefur sig.','You drive the iron bar into the frozen ground with all your might, and it gives way.','hráur kraftur','raw power','P'],
+  ['Uruz','any','Strákurinn fer í sjómann við stóra bróður sinn og vinnur í fyrsta sinn.','The boy arm-wrestles his big brother and wins for the first time.','styrkur','strength','D'],
+  ['Berkana','any','Ljósmóðirin leggur nýfædda barnið í fang móðurinnar og stígur svo skref til baka.','The midwife lays the newborn in its mother\'s arms, then takes a step back.','fæðing','birth','P'],
+  ['Ehwaz','cold','Þú teymir hestinn yfir snjóinn og taumurinn á milli ykkar er slakur.','You lead the horse across the snow, and the rope between you hangs slack.','traust milli tveggja','trust','P'],
+  ['Ehwaz','cold','Tvö draga sleða yfir skaflana og hann rennur fyrst þegar þau leggjast á eitt.','Two haul a sled over the drifts, and it glides only once they pull together.','hreyfing','movement','P'],
+  ['Ehwaz','cold','Tvö dansa vals á þorrablótinu og enginn sér lengur hvort þeirra ræður ferðinni.','Two waltz at the midwinter feast, and no one can tell anymore which of them leads.','samfylgd','partnership','D'],
+  ['Ingwaz','any','Þú hrærir skeið af gamla skyrinu út í volga mjólkina, breiðir yfir og lætur standa yfir nótt.','You stir a spoon of the old skyr into the warm milk, cover it and leave it overnight.','fræ','seed','D'],
+  ['Ingwaz','cold','Fylfull hryssa krafsar í snjóinn úti í haga; folaldið fæðist ekki fyrr en með vorinu.','A mare in foal paws the snow in the pasture; her foal will not be born until spring.','nýtt líf','new life','P'],
+  ['Dagaz','any','Síðasta haftið í göngunum er sprengt og dagsbirtan skín inn hinum megin frá.','The last wall of rock in the tunnel is blasted, and daylight shines in from the other side.','bylting','breakthrough','P'],
+  ['Dagaz','bright','Þú stendur uppi í skarðinu milli tveggja dala; fyrir aftan þig er enn dimmt en fram undan er orðið bjart.','You stand high in the pass between two valleys; behind you it is still dark, and ahead it has grown light.','tímamót','turning point','P'],
+  ['Dagaz','bright','Um lágnættið verður allt hljótt eitt andartak; svo syngja fuglarnir aftur og nýr dagur er runninn upp.','At midnight all goes quiet a moment; then the birds sing again, and a new day has dawned.','dögun','dawn','E'],
+  ['Blank','bright','Þú flettir gestabókinni í fjallaskálanum og kemur að auðri síðu.','You leaf through the guestbook in the mountain hut and come to a blank page.','óskrifaður möguleiki','unwritten potential','D'],
+  ['Blank','bright','Þú leitar að nafni dalsins á kortinu, en þar stendur ekkert.','You look for the valley\'s name on the map, but nothing is written there.','hið óþekkta','the unknown','P'],
+  ['Blank','bright','Svartur sandur teygir sig út að sjóndeildarhring og hvergi sjást kennileiti.','Black sand stretches out to the horizon, and nowhere are any landmarks to be seen.','tómið','the void','E'],
   ['Berkana','bright','Birkið laufgast fyrst allra, þótt jörðin sé enn köld.','The birch leafs out before all the rest, though the ground is still cold.','nýtt upphaf','new beginnings','P'],
   ['Berkana','bright','Lömbin stíga fyrstu sporin úti í maí.','The lambs take their first steps outside in May.','nýtt upphaf','new beginnings','P','lamb'],
   ['Berkana','any','Fyrsta skref barnsins yfir gólfið er óstöðugt en ákveðið.','The child\'s first step across the floor is unsteady but sure.','nýtt upphaf','new beginnings','D'],

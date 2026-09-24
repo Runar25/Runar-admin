@@ -6844,3 +6844,10 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 **Ověřeno:** payload poskládaný produkční funkcí → gpt-6-sol se stejnými parametry jako edge funkce (lokálně): odpověď česky, 5 bodů, citace; na ownerově čtení Isy z 23. 9. správně označil „In your home the talk has gone flat and careful" jako tvrzení o rodině. Edge funkce nasazena, bez přihlášení 401, s neplatným 401. Seznam adminů teď ve 7 kopiích → nová kontrola smoke ㉪ (sabotáž ověřena).
 **Čeká na ownera:** secret `OPENAI_API_KEY` v Supabase (klíče do služeb nevkládám sám) — do té doby tlačítko hlásí „OPENAI_API_KEY is not set".
 **Affected doc(s):** `RUNAR_BACKLOG.md` (ADMIN_EMAILS aktualizováno, GPT jako model čtení, nálezy k Asku) — v tomtéž commitu.
+
+## 2026-09-24 (3) — Tenké runy: +15 obrazů, žádná runa pod 3 obrazy v žádném období (v4.50)
+**Podnět:** report „stejné čtení jako minule" (Tiwaz/Thurisaz v září měly 2 obrazy → A-B-A-B); měření po v4.49: od 1. 10. totéž hrozilo Uruz, Berkana, Ehwaz, Ingwaz, na jaře–v září Dagaz a Blank · **Provedl:** CODE-tune (v rámci ownerova „čím víc obrazů, tím víc variant")
+**Co:** +15 obrazů z ownerových popisů run (Uruz 3, Berkana 1, Ehwaz 3, Ingwaz 2, Dagaz 3, Blank 3).
+**Změřeno:** brána s popisy 16/18 (vyřazeny dvě Berkany, které soudci dali k Ingwaz a Jeře), kontroly 2/2; žitné těsto u horkého pramene prošlo, ale nezařazeno — je to chléb, který owner u Jery odmítl. Po zařazení: žádná runa pod 3 dosažitelné obrazy v žádném ročním období (dříve 6 run). Detail `docs/archive/2026-09-23-brana-s-popisy.md` kolo 5.
+**Mez:** obrazy zatím neviděly skutečné čtení; ukáže testování.
+**Affected doc(s):** `RUNAR_BACKLOG.md` (položka tenkých run uzavřena) · `docs/archive/2026-09-23-brana-s-popisy.md` — v tomtéž commitu.
