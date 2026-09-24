@@ -5255,7 +5255,7 @@ Ask (usage se ukládá od dneška): 5 otázek, průměr $0,01219. 222 starších
   cache, $0,00772–0,008 s teplou (v testu 16/17 teplých, protože běžely těsně po sobě) · single IS Opus 4.8 $0,02381 ·
   Opus 5 $0,02704 (5/6 studených) · Norns EN $0,01532 × $0,01508 · Norns IS $0,02520 × $0,02533.
   **Skutečný průměr Opus 5 v produkci nejde spočítat předem** — záleží na tom, kolik volání trefí teplou cache; po přechodu
-  ho `cena_cteni.js` spočítá přesně.
+  ho `stats.js` spočítá přesně.
 
 **Věta „one detail" + zkrácený úhel [1] na Opus 5** (14 EN single + 2 Norns, $0,20) — owner je schválil 2026-09-24, ale
 testované byly jen na Opus 4.8 a solu. Opus 5 obraz **neopisuje už bez věty**: opsaný úsek 2,64 → 2,50, slova obrazu

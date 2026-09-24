@@ -38,7 +38,11 @@ Claude model: **Opus 5** od 2026-09-24 (fallback Opus 4.8; oba $5/$25 per 1M in/
 `claude-proxy/index.ts`, tady se to NEOPISUJE (§20); tenhle řádek je jen datovaný záznam ke dni.
 ⚠️ **Přeměřeno 2026-08-15** — do té doby tu stálo „Sonnet 4-5 ($3/$15)", což byl model, který
 už neběžel, takže celý sloupec „Claude" i break-even byly počítané na cizí ceně.
-Prompt caching: ⚠️ **v produkci NEZABÍRÁ** (změřeno 2026-09-23, `readings.usage`, 70 EN čtení za 7 dní): `cache_read` **0/70**, zápis jen 2/70 — přirážka za zápis se tedy neplatí, ale úspora taky ne. Do té doby tu stálo „✅ deployed (2026-06-09), system prompt cached" a sloupec Claude s tím počítal. Proč cache netrefí: 5min TTL mezi čteními + proměnlivý blok na konci promptu → `RUNAR_BACKLOG.md` („Cache má zatím smysl jen v testech").
+Prompt caching: ⚠️ **v produkci NEZABÍRÁ** (změřeno 2026-09-23, `readings.usage`, 70 EN čtení za 7 dní): `cache_read` **0/70**, zápis jen 2/70 — přirážka za zápis se tedy neplatí, ale úspora taky ne. Do té doby tu stálo „✅ deployed (2026-06-09), system prompt cached" a sloupec Claude s tím počítal. Proč cache netrefí: ⚠️ **oprava 2026-09-24 (CODE-read, změřeno v `readings.usage` + dokumentace Anthropic):** od 2026-09-19 má EN
+systémový prompt 801 tokenů, **pod minimem Opus 4.8 (1 024)** → necachoval se vůbec (API to přejde bez chyby); do té doby se
+cachoval a zapisoval 61×, trefil 15×. Proměnlivý blok na konci je v user promptu, systémové cache se netýká. **Opus 5 (od
+2026-09-24) má minimum 512 → systémový prompt se znovu cachuje.** Jak často je cache teplá a kdy se vyplatí (bod zvratu
+5min cache 21,7 %, 1h cache 52,6 % čtení) → `node scripts/utils/stats.js`. Rozhodnutí o cache = až s uživateli (owner).
 ElevenLabs: Multilingual v2/v3 (IS) $0.10/1k chars / Flash (EN) $0.05/1k chars. EL chars = reading text length.
 
 | Reading | EL chars | ~out tok | Claude | EL IS | EL EN | Total IS | Total EN | Credits (RS) |

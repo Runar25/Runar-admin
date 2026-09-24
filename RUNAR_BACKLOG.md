@@ -117,7 +117,7 @@
   EN `… If the image lives in sound, open with what is heard but not seen.` · IS (ověřeno korpusem) `… Ef myndin berst að
   eyrum, byrjaðu þá á því sem heyrist en sést ekki.` ✅ **Owner rozhodl výjimku** (DECISIONS 2026-09-23 (17)) → handoff
   CODE-tune předán; zbývá nasadit.
-- [x] **Opus 5 místo Opus 4.8 — NASAZENO 2026-09-24** (DECISIONS 2026-09-24 (10) a (11), CODE-tune `19d2a4c`). Hlídat délku EN Norns, Ask a skutečnou cenu (`scripts/cena_cteni.js`). (EVAL_LOG 2026-09-24 (1)) — EN: slepí soudci 9 : 5, méně opisu, 0 rozkazů,
+- [x] **Opus 5 místo Opus 4.8 — NASAZENO 2026-09-24** (DECISIONS 2026-09-24 (10) a (11), CODE-tune `19d2a4c`). Hlídat délku EN Norns, Ask a skutečnou cenu (`node scripts/utils/stats.js`). (EVAL_LOG 2026-09-24 (1)) — EN: slepí soudci 9 : 5, méně opisu, 0 rozkazů,
   kratší; cena za čtení stejná až nižší (s teplou cache EN $0,0080 × $0,0119). ⚠️ **V proxy NUTNÉ `thinking: {type:'disabled'}`**
   — bez něj Opus 5 přemýšlí, na `max_tokens` 700 nevrátí text. Vady: pouští slova zadání (*„The friction is plain"*), v IS
   převypráví obraz víc. Rozhoduje owner; před přechodem várka IS (IS primární) a Ask/Norns.
@@ -126,14 +126,6 @@
 - [ ] **Model opakuje slova zadání „friction"** — *„Name the friction honestly"* → *„The friction is plain"* (Opus 5 EN 2×),
   *„Núningurinn er…"* (Opus 4.8 IS). Týž vzor jako „look closer" (EVAL_LOG 2026-09-23 (7)): pokyn nese slovo, které se dá
   zopakovat. Změřit četnost v produkci, pak přeformulovat bez pojmenování (paměť `prompt-nepojmenuj-co-hned-zakazes`).
-- [ ] **EN systémový prompt se v produkci nikdy necachuje** (Opus 4.8, 801 tokenů pod minimem; 40/40 ownerových čtení) —
-  `cache_control` na něm nic nedělá. IS se cachuje, ale při řídkém provozu je zápis dražší než žádná cache. Změřit skutečný
-  poměr hit/zápis v IS provozu, pak rozhodnout (CODE-tune, `claude-proxy`).
-- [ ] ⏸ **GPT-6 sol jako model čtení — připravit POMALU, až owner řekne** (owner 2026-09-24). Co je známo (EVAL_LOG 2026-09-22 (1)–(3),
-  2026-09-23 (6)–(9)): ~7× levnější, EN silný, IS gramatika v testech čistá. Před nasazením: (1) glosa v IS hlavičce — oprava ke
-  zdroji `RUNES[].is_n` (položka níž); (2) opis obrazu — věta „one detail" u solu pomohla (převyprávění 20 → 12 z 28);
-  (3) Norns identita potřebuje seznamy klíčových slov (nechat); (4) proxy umí jen Anthropic — přidat OpenAI volání;
-  (5) várka IS + Ask + Norns proti Opus 5. **Nezačínat bez pokynu ownera.**
 - [ ] **Shrine: korekce nejdou smazat** (nález 2026-09-23) — záložka WORD CORRECTIONS umí jen přidat a vypsat
   (`runar-shrine.html` `saveCorrection`/`loadCorrections`), mazání nemá. Owner tak smaže řádek jen přes Supabase. Doplnit
   mazání (jen admin, s potvrzením) — CODE-tune.
@@ -600,6 +592,11 @@
 - [ ] **`data-i18n` refactor** — nejrobustnější prevence zaseklé angličtiny (dnes ruční wiring v updateUIText).
 - [ ] Ask Rúnar v2 — journal 7denní okno + asked-flag (persistence HOTOVÁ).
 - [ ] **GPT-6 sol jako model Rúnarova čtení** (KUKY 2026-09-23: „další krok bude nechat udělat GPT čtení Rúnara, ale ještě na tom pracujeme — dát to do backlogu“). Předstupeň hotový: admin tlačítko „GPT-6 sol“ = rozbor čtení (edge fn `gpt-review`). Evaly modelu vede CODE-read (`RUNAR_EVAL_LOG.md` 2026-09-22+). Pozor: islandská gramatika u solu je slabší (korektor: 3 škody na 30 čtení).
+  ⏸ **Owner 2026-09-24: „připravit pomalu, až zase řeknu" — nezačínat bez pokynu.** Co musí být hotové (CODE-read, měřeno —
+  EVAL_LOG 2026-09-22 (1)–(3), 2026-09-23 (6)–(9)): (1) glosa v IS hlavičce — oprava ke zdroji `RUNES[].is_n` (položka „GLOSA
+  V ISLANDSKÉ HLAVIČCE"); (2) opis obrazu — věta „one detail" u solu pomohla (převyprávění 20 → 12 z 28); (3) Norns identita
+  potřebuje seznamy klíčových slov (nechat); (4) klíč `OPENAI_API_KEY` a volání OpenAI už jsou (edge fn `gpt-review`), ale
+  čtecí `claude-proxy` volá jen Anthropic — čtení na sol napojit tam; (5) várka IS + Ask + Norns proti Opus 5.
 - [ ] **OTEVŘENÉ Z 23.–24. 9. — sepsáno 2026-09-24 na ownerovo „nezapomněli jsme na něco, co leží v chatu?"** (CODE-tune; zdroj: `docs/archive/2026-09-23-rozbor-reportu.md` + chat)
   **Čeká na ownerovo rozhodnutí** (otázky z rozboru, dosud bez odpovědi):
   1. Smí 3. věta čtení říct, co se děje v oblasti tazatele (pochválené Perth/Kenaz to dělají, pravidlo to dnes povoluje jen v poslední větě jako možnost)?
