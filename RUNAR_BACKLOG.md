@@ -117,7 +117,7 @@
   EN `… If the image lives in sound, open with what is heard but not seen.` · IS (ověřeno korpusem) `… Ef myndin berst að
   eyrum, byrjaðu þá á því sem heyrist en sést ekki.` ✅ **Owner rozhodl výjimku** (DECISIONS 2026-09-23 (17)) → handoff
   CODE-tune předán; zbývá nasadit.
-- [ ] **Kandidát: Opus 5 místo Opus 4.8** (EVAL_LOG 2026-09-24 (1)) — EN: slepí soudci 9 : 5, méně opisu, 0 rozkazů,
+- [x] **Opus 5 místo Opus 4.8 — NASAZENO 2026-09-24** (DECISIONS 2026-09-24 (10) a (11), CODE-tune `19d2a4c`). Hlídat délku EN Norns, Ask a skutečnou cenu (`scripts/cena_cteni.js`). (EVAL_LOG 2026-09-24 (1)) — EN: slepí soudci 9 : 5, méně opisu, 0 rozkazů,
   kratší; cena za čtení stejná až nižší (s teplou cache EN $0,0080 × $0,0119). ⚠️ **V proxy NUTNÉ `thinking: {type:'disabled'}`**
   — bez něj Opus 5 přemýšlí, na `max_tokens` 700 nevrátí text. Vady: pouští slova zadání (*„The friction is plain"*), v IS
   převypráví obraz víc. Rozhoduje owner; před přechodem várka IS (IS primární) a Ask/Norns.
@@ -129,6 +129,11 @@
 - [ ] **EN systémový prompt se v produkci nikdy necachuje** (Opus 4.8, 801 tokenů pod minimem; 40/40 ownerových čtení) —
   `cache_control` na něm nic nedělá. IS se cachuje, ale při řídkém provozu je zápis dražší než žádná cache. Změřit skutečný
   poměr hit/zápis v IS provozu, pak rozhodnout (CODE-tune, `claude-proxy`).
+- [ ] ⏸ **GPT-6 sol jako model čtení — připravit POMALU, až owner řekne** (owner 2026-09-24). Co je známo (EVAL_LOG 2026-09-22 (1)–(3),
+  2026-09-23 (6)–(9)): ~7× levnější, EN silný, IS gramatika v testech čistá. Před nasazením: (1) glosa v IS hlavičce — oprava ke
+  zdroji `RUNES[].is_n` (položka níž); (2) opis obrazu — věta „one detail" u solu pomohla (převyprávění 20 → 12 z 28);
+  (3) Norns identita potřebuje seznamy klíčových slov (nechat); (4) proxy umí jen Anthropic — přidat OpenAI volání;
+  (5) várka IS + Ask + Norns proti Opus 5. **Nezačínat bez pokynu ownera.**
 - [ ] **Shrine: korekce nejdou smazat** (nález 2026-09-23) — záložka WORD CORRECTIONS umí jen přidat a vypsat
   (`runar-shrine.html` `saveCorrection`/`loadCorrections`), mazání nemá. Owner tak smaže řádek jen přes Supabase. Doplnit
   mazání (jen admin, s potvrzením) — CODE-tune.
@@ -160,7 +165,8 @@
   (znění ověřené korpusem je v EVAL_LOG) + vyřešit zdvojení s úhlem [1] (*„no one thought to watch"* 4/4).
   **2026-09-24 (1):** IS test — Opus 4.8 v IS obraz skoro neopisuje ani v produkci, věta nepomohla → **IS neměnit**, jen EN.
   Úhel [1] bez *„the part someone would walk past"* + věta: značka 0/4, opis nízký (4 čtení) — zkrácení úhlu by se ale
-  projevilo i bez věty, nezměřeno. **Čeká na ownera:** EN věta do produkce ano/ne + co s úhlem [1].
+  projevilo i bez věty, nezměřeno. Owner 2026-09-24 schválil (EN věta + zkrátit úhel [1]). ⚠️ **Na Opus 5 (jde do produkce)
+  bez účinku** a +7 % délky single (EVAL_LOG 2026-09-24 (3)) → **nepředáno, čeká na potvrzení**; kandidát pro sol.
 - [ ] **KANDIDÁT: most IS „ástand … sagt með orðum myndarinnar"** (CODE-read 2026-09-22, NEROZHODNUTO — owner).
   Ve tvaru „dvě možnosti" přidat k *„hvort um sig ástand sem gæti átt við"* frázi *„sagt með orðum myndarinnar"*
   (tvar ověřeného Norns landingu A). gpt-6-sol: konce z pojmů (*vani / kostur*) na věcné 5/5; Opus 5: *gæti* beze

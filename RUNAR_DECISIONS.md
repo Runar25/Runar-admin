@@ -6904,3 +6904,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 **Ověřeno před nasazením** (tvar požadavku jako proxy): čtení Kenaz EN — end_turn, jen textový blok, 60 slov; Ask („What could this mean for my work?") — end_turn, 122 tokenů, dvě konkrétní možnosti. Nasazeno; stažená běžící verze = repo.
 **Hlídat:** délku anglických Norns (Opus 5 v testu delší → dražší hlas), Ask na víc otázkách, `readings.usage.model` u nových čtení.
 **Affected doc(s):** `RUNAR_PRICING.md` (řádek „Claude model") — v tomtéž commitu.
+
+## 2026-09-24 (10) — Přechod čtení na Opus 5 · GPT-6 sol později · věta „one detail" s Opus 5 nepředána
+
+- **Opus 5:** owner *„ok. jdem na Opus 5."* Podklady EVAL_LOG 2026-09-24 (1)–(3): slepí soudci 20 : 8 (IS 8 : 0), cena za čtení
+  srovnatelná (týž ceník i tokenizér). Implementace = CODE-tune (`claude-proxy` MODELS: `claude-opus-5` → záloha
+  `claude-opus-4-8`; **u Opus 5 nutné `thinking: {type:'disabled'}`**) — **nasazeno** CODE-tune (commit `19d2a4c`,
+  záznam 2026-09-24 (11)).
+- **GPT-6 sol:** owner *„budu chtít pomalu připravit. Zatím jen v backlogu, budeme na něm pracovat, až zase řeknu."* → backlog.
+- **Věta „one detail" + zkrácený úhel [1]:** owner schválil (*„jo… jako vždy po testech uvidíme"*, *„zkrátit"*). ⚠️ **Varování
+  CODE-read (§21):** měřeno jen na Opus 4.8 a solu; na Opus 5, který jde do produkce, **bez účinku** a +7 % délky single
+  (EVAL_LOG 2026-09-24 (3)). **Nepředáno CODE-tune — čeká na potvrzení ownera s touto informací.**
+- Affected doc(s): RUNAR_BACKLOG.md (Opus 5, sol, kandidát věty).

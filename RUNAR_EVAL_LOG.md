@@ -5234,3 +5234,29 @@ anglické Norns** (153/135 × 111/113 slov) → dražší hlas (ElevenLabs plat�
 modely pouštějí slova zadání do textu (*„The friction is plain"* Opus 5 EN · *„Núningurinn"* Opus 4.8 IS) — vada zadání
 (*„Name the friction honestly"*), ne modelu → backlog. **Hranice:** 1 čtení na buňku, soudci = Claude (tatáž rodina).
 Podklady → `docs/eval/2026-09-22-modely/opus5-single-norns/`, skripty `opus5_build.js`, `opus5_mereni.js`, `opus5_soudy4.js`.
+
+## 2026-09-24 (3) — Přesná cena hotových čtení · věta „one detail" s Opus 5 bez účinku
+
+**Owner:** *„jak jsi zjistil přesnou cenu? Nechci odhady, čtení už jsou hotová a chci to znát přesně."*
+**Metoda (žádný odhad):** API u každého čtení vrací přesné tokeny (vstup · zápis do cache · čtení z cache · výstup) a proxy
+je ukládá do `readings.usage`. Cena = tokeny × ceník, ověřený 2026-09-24 na platform.claude.com/docs/en/about-claude/pricing
+(Opus 5 i 4.8: vstup $5 · zápis 5 min $6,25 · čtení cache $0,50 · výstup $25 za 1 M; `inference_geo: us` ×1,1 — všechna
+čtení `global`). Nástroj → `scripts/cena_cteni.js` (samotest výpočtu; model bez ceny nahlásí, nepočítá potichu).
+
+**Produkce — 149 ownerových čtení s uloženým usage (2026-08-15 → 2026-09-24), všechna EN single, Opus 4.8:**
+celkem **$2,1459** · průměr **$0,01440** · medián $0,01241 · min $0,00725 · max $0,02972 · thinking 0 tokenů.
+Ask (usage se ukládá od dneška): 5 otázek, průměr $0,01219. 222 starších čtení usage nemá.
+- **Cache:** do 2026-09-19 02:14 se systémový prompt cachoval (~1 377 tokenů) — **61 zápisů (o 25 % dražší) a jen 15 zásahů**,
+  tedy při ownerově tempu cache víc stála, než ušetřila. Od té chvíle má EN systémový prompt 801 tokenů = **pod minimem
+  Opus 4.8 (1 024)** → necachuje se vůbec (API to přejde bez chyby). Minimum Opus 5 je 512 → bude se znovu cachovat.
+- **Testovací čtení (tokeny z API, přesně za každé volání):** single EN Opus 4.8 $0,01141 · Opus 5 $0,01258 se studenou
+  cache, $0,00772–0,008 s teplou (v testu 16/17 teplých, protože běžely těsně po sobě) · single IS Opus 4.8 $0,02381 ·
+  Opus 5 $0,02704 (5/6 studených) · Norns EN $0,01532 × $0,01508 · Norns IS $0,02520 × $0,02533.
+  **Skutečný průměr Opus 5 v produkci nejde spočítat předem** — záleží na tom, kolik volání trefí teplou cache; po přechodu
+  ho `cena_cteni.js` spočítá přesně.
+
+**Věta „one detail" + zkrácený úhel [1] na Opus 5** (14 EN single + 2 Norns, $0,20) — owner je schválil 2026-09-24, ale
+testované byly jen na Opus 4.8 a solu. Opus 5 obraz **neopisuje už bez věty**: opsaný úsek 2,64 → 2,50, slova obrazu
+v 1. větě 0,29 → 0,24, párově 5 méně / 4 stejně / 5 víc = **žádný měřitelný účinek**. Single se prodlouží 63,9 → 68,2 slova
+(+7 %, dražší hlas); Norns jednou kratší (153 → 129), jednou delší (135 → 176). Značka „nikdo si nevšiml" 0, ozvěna 0.
+**Závěr:** s Opus 5 věta nepřináší nic a přidává délku → **nepředáno** (varování ownerovi, DECISIONS níž); zůstává kandidátem pro sol.
