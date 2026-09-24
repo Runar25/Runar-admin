@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-24",
- "prompt_version": "v4.51-uhel-zvuk",
+ "prompt_version": "v4.52-parita-obrazu",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -838,7 +838,7 @@
    "zacatek": "LESTRARHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og up"
   },
   {
-   "hash": "d70cdb7319b3",
+   "hash": "497414e30a08",
    "lang": "is",
    "zdroj": "single",
    "zacatek": "Rúnar notar eina mynd í hverjum lestri og ber hana í gegn. Hann telur "

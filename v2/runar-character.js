@@ -747,9 +747,10 @@ var _imgAspektEN = '';
 // duplikat hlasu focused („…if it cannot be felt, it does not belong here", oboje z e3a3c40)
 // a jediny NAMERENY ucinek byla barva a pocasi: Raidho grey/wind 8/9 -> bez vety 0/3, grey
 // 4/12 -> 0/12 (RUNAR_EVAL_LOG 2026-09-19 „Odkud grey"). Brzda na pocasi (bod 7) pak netreba.
+// 2026-09-24: IS dorovnána na EN („í sama umhverfi“ + věta o přirovnání na metafoře) — rozbor reportů 2026-09-23.
 function _imageRules(lang) {
   if (lang === 'is')
-    return 'MYNDIN\nRúnar notar eina mynd í hverjum lestri og ber hana í gegn. Hann telur ekki upp myndir. Önnur mynd á aðeins rétt á sér ef hún færir þá fyrstu einu skrefi lengra. Ef tvær ótengdar myndir standa hlið við hlið segja þær ekkert. Myndin verður að tengjast því hvar þessi manneskja stendur núna. Andrúmsloft eitt og sér er skreyting, ekki lestur.';
+    return 'MYNDIN\nRúnar notar eina mynd í hverjum lestri og ber hana í gegn. Hann telur ekki upp myndir. Önnur mynd á aðeins rétt á sér ef hún færir þá fyrstu einu skrefi lengra, í sama umhverfi. Ef tvær ótengdar myndir standa hlið við hlið segja þær ekkert. Settu aldrei viðlíkingu ofan á myndlíkingu. Myndin verður að tengjast því hvar þessi manneskja stendur núna. Andrúmsloft eitt og sér er skreyting, ekki lestur.';
   return 'THE IMAGE\nRúnar uses one image per reading and carries it through; he does not list images. A second picture earns its place only when it takes the first one further — the same scene, one step on. Two unrelated pictures side by side say nothing. Never a simile stacked on a metaphor. The image must connect to where this person is standing right now — atmosphere on its own is decoration, not a reading.';
 }
 // Pravidla + radek IMAGE jako JEDEN blok zpravy (jedno misto, §18).

@@ -601,21 +601,21 @@
   **Čeká na ownerovo rozhodnutí** (otázky z rozboru, dosud bez odpovědi):
   1. Smí 3. věta čtení říct, co se děje v oblasti tazatele (pochválené Perth/Kenaz to dělají, pravidlo to dnes povoluje jen v poslední větě jako možnost)?
   2. „Confirmation" končí vždy dvěma možnostmi — nechat, dávat jednu, nebo střídat? (owner u Thurisaz chtěl jednu odpověď)
-  3. Sen jako obraz — zkusit 3–4 obrazy, kde sen patří někomu jinému / probuzení (Perth, Laguz, Dagaz)? V kánonu o snech nic není.
-  4. Helper „?": (a) na formuláři bublina „tady je návod" místo hesla zrcadla, nebo obojí? (b) vadila průhlednost kolečka, nebo okénka?
+  3. ✅ *(owner 2026-09-24: ANO, jen kde sedí k runě — k napsání)* Sen jako obraz — zkusit 3–4 obrazy, kde sen patří někomu jinému / probuzení (Perth, Laguz, Dagaz)? V kánonu o snech nic není.
+  4. ✅ *(2026-09-24: bublina nad místem OK; průhlednost = jako ⚑ — opraveno)* Helper „?": (a) na formuláři bublina „tady je návod" místo hesla zrcadla, nebo obojí? (b) vadila průhlednost kolečka, nebo okénka?
   5. Tvůj nápad „místo podle oblasti" (úzce: Family + Career, 3–4 runy) — po přepisu oblastí (DECISIONS 2026-09-23 (12)) je potřeba menší; dělat?
-  6. Fakta: Thurisaz 22. 9. a 23. 9. na stejném zařízení? · Jera brambory: vadila hlavně věta „What you gave to your rest was quiet…" (tvrdí, co jsi dělal)?
+  6. ✅ *(zjištěno z user_agent reportů: vše z mobilu)* Fakta: Thurisaz 22. 9. a 23. 9. na stejném zařízení? · Jera brambory: vadila hlavně věta „What you gave to your rest was quiet…" (tvrdí, co jsi dělal)?
   **Schváleno / slíbeno, NEHOTOVO:**
   7. **Otázka runy jako skrytý podklad poslední věty čtení** (owner „ok" změřit; v Kolekci už otázka je) — čtení ji nesmí citovat doslova.
   8. **Obraz napříč zařízeními** (rebarbora 2× po sobě) — CODE-tune 2026-09-23 slíbil „jako další krok"; plán v položce „Obraz se může zopakovat napříč zařízeními" níž.
   9. Helper „?" má ukazovat i na návod (návod je od 2026-09-24 v záložce čtení).
   10. Deník: u karet čtení ukázat volby (oblast · hledání · záměr) jako ve čtení (report 2026-09-21 „s glyfem runy napsané, na co jsem se ptal").
   **Nálezy z rozboru, dosud nezapsané:**
-  11. Délka: 16 ze 17 čtení z 23. 9. mělo 62–81 slov proti rozpočtu 50–58 (dražší hlas); Opus 5 píše navíc delší EN Norny. Rozbor GPT teď délku ukazuje.
-  12. Islandská pravidla obrazu nemají dvě věty, které má anglická verze (parita EN/IS).
-  13. Několik textů v appce má barvu `--dim`, kterou §5 pro text zakazuje.
-  14. Ask: pravidlo proti studenému čtení v něm nese „Describe the image" — čtvrtý zámek do čtení, neměřen (DECISIONS 2026-09-23 (13)).
-  15. Statická čtení (Kolekce, s hlasem) vznikla před popisy run — Dagaz popisu odporuje (položka níž); projít i ostatní 24 proti popisům.
+  11. ⏸ *(owner: sledovat, řešení hledat později)* Délka: 16 ze 17 čtení z 23. 9. mělo 62–81 slov proti rozpočtu 50–58 (dražší hlas); Opus 5 píše navíc delší EN Norny. Rozbor GPT teď délku ukazuje.
+  12. ✅ *(hotovo 2026-09-24, v4.52)* Islandská pravidla obrazu nemají dvě věty, které má anglická verze (parita EN/IS).
+  13. ✅ *(hotovo 2026-09-24)* Několik textů v appce má barvu `--dim`, kterou §5 pro text zakazuje.
+  14. ⏸ *(owner: měřit na živých Ascích — slova obrazu v uložených odpovědích před/po odebrání věty)* Ask: pravidlo proti studenému čtení v něm nese „Describe the image" — čtvrtý zámek do čtení, neměřen (DECISIONS 2026-09-23 (13)).
+  15. ⏸ *(owner: zatím nechat, bude jich víc k opravě)* Statická čtení (Kolekce, s hlasem) vznikla před popisy run — Dagaz popisu odporuje (položka níž); projít i ostatní 24 proti popisům.
   **Hlídat po živém testování:** Opus 5 (délka Norns, Ask, `readings.usage.model`) · kvalita rozboru gpt-6-luna (vymýšlí výtky?) · dva Asky (krok 1, jen admin) → pak server + `ASK_MULTI_LIVE` · ~35 nových obrazů z 23.–24. 9. ve skutečných čteních.
 - [ ] **Druhý Ask — plán po krocích (KUKY 2026-09-24: „vždy postupně od jednoduššího ke komplexnějšímu“; premium 2, standard 1, vše zdarma)**
   - **Krok 1 HOTOVÝ v klientu, zapnutý JEN pro admina** (`ASK_MULTI_LIVE = false`, `TIERS.*.asks_per_reading`): dva Asky ke čtení, Rúnar o předchozí výměně neví. → owner živě testuje.

@@ -21,7 +21,7 @@
       "background:rgba(14,22,34,.82);color:var(--gold,#FFBF00);border:1px solid var(--gold,#FFBF00);" +
       "font-family:Cinzel,serif;font-size:19px;line-height:44px;text-align:center;cursor:pointer;" +
       "z-index:99998;opacity:.55;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);transition:opacity .2s}" +
-      "#hb-btn:hover,#hb-btn:focus,#hb-btn[aria-expanded='true']{opacity:1}" +
+      "@media (hover:hover){#hb-btn:hover{opacity:1}}#hb-btn:focus-visible{opacity:1}" +
       "#hb-layer{position:fixed;inset:0;z-index:99999;display:none;pointer-events:none}" +
       "#hb-layer.on{display:block}" +
       ".hb-tip{position:fixed;max-width:290px;background:#0f1827;border:1px solid var(--gold,#FFBF00);" +

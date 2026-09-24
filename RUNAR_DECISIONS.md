@@ -6916,3 +6916,9 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   CODE-read (§21):** měřeno jen na Opus 4.8 a solu; na Opus 5, který jde do produkce, **bez účinku** a +7 % délky single
   (EVAL_LOG 2026-09-24 (3)). **Nepředáno CODE-tune — čeká na potvrzení ownera s touto informací.**
 - Affected doc(s): RUNAR_BACKLOG.md (Opus 5, sol, kandidát věty).
+
+## 2026-09-24 (12) — Tři drobné opravy z otevřených věcí + ownerovy odpovědi
+**Rozhodl:** KUKY 2026-09-24 (odpovědi na seznam otevřených věcí) · **Provedl:** CODE-tune
+**Co:** (a) kolečko „?" stejně průhledné jako ⚑ reportu — plné jen při najetí myší / z klávesnice; dřív svítilo naplno při otevřených bublinách a na Androidu zůstalo rozsvícené (report 2026-09-23 17:11). (b) Islandská pravidla obrazu dorovnána na angličtinu („í sama umhverfi" + „Settu aldrei viðlíkingu ofan á myndlíkingu.", korpus + is-grammar-qa; v4.52). (c) 13 textových pravidel CSS z `--dim` na `--muted` (§5).
+**Ownerovy odpovědi:** sny jako obraz ANO, jen kde sedí k runě · délka čtení: sledovat a hledat řešení později · zámek „Describe the image" v Asku měřit na živých Ascích · statická čtení zatím nechat · helper se bude postupně rozšiřovat na další místa · zařízení: obě čtení Thurisaz i rebarbora z mobilu (Android, user_agent v reportech) → opakování nezpůsobila dvě zařízení, ale stará verze kódu a málo obrazů.
+**Affected doc(s):** `RUNAR_BACKLOG.md` (stav otevřených věcí) — v tomtéž commitu.
