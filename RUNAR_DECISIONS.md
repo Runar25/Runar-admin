@@ -6896,3 +6896,11 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Nezapsáno:** Opus 4.8 *„hvor á sinn hátt"* (má být *hvort*) — závisí na rodu podmětu, řetězcová korekce by opravovala i správné tvary.
 - **Reverzibilita:** smazání řádku (owner).
 - Affected doc(s): `check-is.py` (vzor).
+
+## 2026-09-24 (9) — Čtení na Claude Opus 5 (fallback Opus 4.8) · deploy claude-proxy
+**Rozhodl:** KUKY 2026-09-24 („chci přejít na Opus 5… nepotřebuju to teď uspěchat"; handoff CODE-read proti 9eb551b) · **Provedl:** CODE-tune
+**Proč:** slepí soudci 20 : 8 pro Opus 5, v islandštině 8 : 0 (single + Norns, EN i IS); stejný ceník i tokenizér → stejná cena čtení (RUNAR_EVAL_LOG 2026-09-24 (1)+(2)).
+**Co:** `claude-proxy` MODELS `["claude-opus-5", "claude-opus-4-8"]`; Opus 5 dostává `thinking: {type: "disabled"}` (bez toho na 700 tokenech vrátí prázdný text — změřeno CODE-read); text odpovědi se bere podle typu bloku, ne z prvního bloku (pojistka proti prázdnému čtení, kdyby přišel napřed blok přemýšlení). Opus 4.7 z řetězu vypadl.
+**Ověřeno před nasazením** (tvar požadavku jako proxy): čtení Kenaz EN — end_turn, jen textový blok, 60 slov; Ask („What could this mean for my work?") — end_turn, 122 tokenů, dvě konkrétní možnosti. Nasazeno; stažená běžící verze = repo.
+**Hlídat:** délku anglických Norns (Opus 5 v testu delší → dražší hlas), Ask na víc otázkách, `readings.usage.model` u nových čtení.
+**Affected doc(s):** `RUNAR_PRICING.md` (řádek „Claude model") — v tomtéž commitu.

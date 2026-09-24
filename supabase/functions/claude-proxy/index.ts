@@ -742,7 +742,9 @@ serve(async (req: Request) => {
     // does NOT fall through to the next model.
     // sonnet-5 dropped as last-resort 2026-08-17: unpredictable thinking-token cost,
     // owner wanted it gone not replaced (see RUNAR_PRICING.md "Volba modelu čtení").
-    const MODELS = ["claude-opus-4-8", "claude-opus-4-7"];
+    // 2026-09-24: primární claude-opus-5, fallback claude-opus-4-8 (owner „chci přejít na Opus 5“; slepí soudci 20 : 8,
+    // v IS 8 : 0; stejná cena — RUNAR_EVAL_LOG 2026-09-24 (1)+(2)). Opus 4.7 z řetězu vypadl, fallback je dnešní model.
+    const MODELS = ["claude-opus-5", "claude-opus-4-8"];
     let result: { ok: true; data: any } | { ok: false; status: number; error: string } =
       { ok: false, status: 503, error: "no attempt" };
     for (const model of MODELS) {
@@ -751,6 +753,9 @@ serve(async (req: Request) => {
         max_tokens: cappedMaxTokens,
         system:   systemParts.length > 0 ? systemParts : undefined,
         messages: [{ role: "user", content: prompt }],
+        // Opus 5 bez vypnutého přemýšlení na max_tokens 700 spálí vše na thinking a vrátí PRÁZDNÝ text
+        // (změřeno CODE-read: stop_reason max_tokens, 0 znaků). Opus 4.8 parametr nedostává (jako dosud).
+        ...(model.indexOf("opus-5") !== -1 ? { thinking: { type: "disabled" } } : {}),
       }, anthropicKey);
       if (result.ok) break;
       // Fall back only on a genuine overload (429/5xx), NOT on a timeout (504) — a slow
@@ -777,7 +782,10 @@ serve(async (req: Request) => {
     // not retry, do not deduct.
     if (data?.error) return json({ error: data.error.message ?? "Claude error" }, 400);
 
-    const text = data?.content?.[0]?.text ?? "";
+    // Text podle TYPU bloku, ne první blok (2026-09-24): kdyby model vrátil napřed blok přemýšlení,
+    // content[0].text by byl prázdný a čtení by skončilo chybou „empty“, přestože text přišel.
+    const text = (Array.isArray(data?.content) ? data.content : [])
+      .filter((c: any) => c && c.type === "text").map((c: any) => c.text || "").join("");
     if (!text) {
       return json({
         error:   "empty",

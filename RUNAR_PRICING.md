@@ -34,7 +34,7 @@ Standard subscription is the product.
 
 **Measured 2026-06-14** (script `scripts/utils/measure_reading_costs.js`, 3–4 real samples/type via prod proxy).
 Supersedes the old "430 char" base — readings were re-tuned 2026-06-12/14 (single shortened, Norns→~770, Kríž→~1030).
-Claude model: **Opus 4.8** ($5/$25 per 1M in/out) — zdroj pravdy je `MODELS` v
+Claude model: **Opus 5** od 2026-09-24 (fallback Opus 4.8; oba $5/$25 per 1M in/out, stejný tokenizér — cena čtení se nemění) — zdroj pravdy je `MODELS` v
 `claude-proxy/index.ts`, tady se to NEOPISUJE (§20); tenhle řádek je jen datovaný záznam ke dni.
 ⚠️ **Přeměřeno 2026-08-15** — do té doby tu stálo „Sonnet 4-5 ($3/$15)", což byl model, který
 už neběžel, takže celý sloupec „Claude" i break-even byly počítané na cizí ceně.
