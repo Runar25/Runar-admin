@@ -36,20 +36,43 @@ var _lastDrawn = [];
 // zpracovatel). Odpověď je česky, protože ji čte owner.
 var _lastGen = null;   // { sys, prompt, lang, kind } posledního vygenerovaného čtení
 var _askLog = [];      // [{ q, a }] výměny v Asku k tomuto čtení (dnes nejvýš jedna)
+// Rubrika v1 (2026-09-24, po prvním živém rozboru — owner: délka „o ničem“, „ustřeluje sám“, rady „k ničemu“):
+// hledá JEN šest druhů chyb, každou dokládá citací; NEsoudí délku, gramatiku ani přepisy. Detaily, které přirozeně
+// vyrůstají z daného obrazu, NEJSOU chyba (první verze za chybu označila „the bowl still looks untouched“ u obrazu skyru
+// přikrytého přes noc). Délku počítá appka sama (_gptReviewDelka). Jeden text rubriky, jazyk odpovědi se dosazuje.
 var GPT_REVIEW_RULES =
-  'Jsi nezávislý posuzovatel čtení run v aplikaci Rúnar. Rúnar je průvodce runami — zrcadlo, ne věštec: ' +
-  'nepředpovídá, nic o člověku netvrdí, mluví jedním obrazem a obyčejnými slovy. Dostaneš (1) systémový prompt, ' +
-  'podle kterého Rúnar píše, (2) přesné zadání tohoto čtení (tažená runa a její klíčová slova, oblast, obraz, pokyny), ' +
-  '(3) hotové čtení a (4) případné otázky v Asku s Rúnarovými odpověďmi.\n' +
-  'Napiš česky, stručně a konkrétně, v tomto pořadí:\n' +
-  '1. Jak to zní — je to Rúnarův hlas? Co zní dobře, co ne.\n' +
-  '2. Runa — nese čtení podstatu tažené runy, nebo zůstalo jen u obrazu? Poznal by člověk runu?\n' +
-  '3. Kde to ustřelilo — tvrzení o člověku, které Rúnar nemůže vědět; vymyšlená fakta; věštění; klišé; věta opsaná ' +
-  'ze zadání; věci přidané do obrazu, které v zadání nebyly; rozpor se zadáním.\n' +
-  '4. Ask — odpověděl na otázku, nebo zopakoval čtení? Nabídl víc než jeden výklad, když se na to otázka ptala?\n' +
-  '5. Co změnit — nejvýš 3 konkrétní návrhy.\n' +
-  'U každého nálezu cituj krátký úsek textu v uvozovkách. Co je v pořádku, řekni jednou větou a nerozepisuj. ' +
-  'Islandskou gramatiku a vazby neposuzuj jako verdikt — jen upozorni, ať se ověří nástrojem.';
+  'You review one reading from the Rúnar app. Rúnar is a rune guide — a mirror, not an oracle. You get (1) the system prompt ' +
+  'Rúnar writes under, (2) the exact prompt for this reading: the drawn rune with its keywords, the area of life, the IMAGE he ' +
+  'was given and his instructions, (3) the finished reading, (4) any follow-up questions (Ask) with his answers.\n' +
+  'Report ONLY real faults. For each fault quote the exact words and say in one sentence why it is a fault. If a category ' +
+  'has no fault, write one short line saying so. Look for exactly these:\n' +
+  'A. Claims about the person stated as fact — their feelings, relationships, past, what they know or did, what will happen. ' +
+  'Not a fault: the same thing offered as a possibility (may, perhaps, or a question).\n' +
+  'B. The rune missing — would someone who knows the rune\'s keywords recognise it from what the reading says it does? Say what is missing.\n' +
+  'C. Image drift — the reading contradicts the given image or swaps it for a different scene. Not a fault: details that grow ' +
+  'naturally out of the given image.\n' +
+  'D. Copying — a sentence or phrase taken word for word from the instructions (quote both).\n' +
+  'E. Voice — advice or instructions, moralising, fear, promises, mystical show or cliché.\n' +
+  'F. Ask — did each answer respond to the question actually asked, or only repeat the reading?\n' +
+  'Do not comment on length, word count, grammar or spelling. Do not suggest rewrites. Plain text, no markdown, no asterisks. ' +
+  'Write your answer in {JAZYK}.';
+// Jazyk rozboru podle přihlášeného admina (owner česky, Sigrún anglicky — KUKY 2026-09-24). Seznam = GPT_REVIEW_LANG v configu.
+function _gptReviewJazyk() {
+  var e = (currentUser && currentUser.email || '').toLowerCase();
+  return (typeof GPT_REVIEW_LANG !== 'undefined' && GPT_REVIEW_LANG[e]) || 'cs';
+}
+var _GPT_JAZYK_JMENO = { cs: 'Czech', en: 'English' };
+var _GPT_DELKA = { cs: 'Délka čtení: {n} slov (zadání {od}–{do})', en: 'Reading length: {n} words (the prompt asks {od}–{do})' };
+// Délka = to, co owner chce vidět a GPT počítat neumí: slova hotového čtení proti rozpočtu v zadání (EN „words“ / IS „orð“).
+function _gptReviewDelka(jazyk) {
+  if (!_lastGen) return '';
+  var txt = (readerTexts[_lastGen.lang] && readerTexts[_lastGen.lang].short) || '';
+  var n = (txt.match(/[^\s—–-]+/g) || []).length;
+  var m = String(_lastGen.prompt || '').match(/(\d+)\s*(?:[–-]|to|til)\s*(\d+)\s*(words|orð)/);   // LENGTH_BUDGETS: „50 to 58 words“
+  var sablona = _GPT_DELKA[jazyk] || _GPT_DELKA.cs;
+  return m ? sablona.replace('{n}', n).replace('{od}', m[1]).replace('{do}', m[2])
+           : sablona.replace('{n}', n).replace(/ \(.*\)$/, '');
+}
 function _gptReviewPayload() {
   if (!_lastGen) return null;
   var txt = (readerTexts[_lastGen.lang] && readerTexts[_lastGen.lang].short) || '';
@@ -60,7 +83,8 @@ function _gptReviewPayload() {
   if (_askLog.length) u += '\n\n=== 4. ASK ===\n' + _askLog.map(function (x, i) {
     return 'Otázka ' + (i + 1) + ': ' + x.q + '\nOdpověď ' + (i + 1) + ': ' + x.a; }).join('\n\n');
   else u += '\n\n=== 4. ASK ===\n(bez otázky)';
-  return { system: GPT_REVIEW_RULES, user: u };
+  var jaz = _gptReviewJazyk();
+  return { system: GPT_REVIEW_RULES.replace('{JAZYK}', _GPT_JAZYK_JMENO[jaz] || 'Czech'), user: u, delka: _gptReviewDelka(jaz) };
 }
 function _showGptReview() {
   var box = document.getElementById('gpt-review');
@@ -85,10 +109,11 @@ async function gptReview() {
     var sess = await sb.auth.getSession();
     var tok = sess && sess.data && sess.data.session && sess.data.session.access_token;
     if (tok) headers['Authorization'] = 'Bearer ' + tok;
-    var res = await fetch(GPT_REVIEW, { method: 'POST', headers: headers, body: JSON.stringify(p) });
+    var res = await fetch(GPT_REVIEW, { method: 'POST', headers: headers, body: JSON.stringify({ system: p.system, user: p.user }) });
     var d = await res.json().catch(function () { return {}; });
     if (!res.ok || d.error) out.textContent = tp('gpt_review_err', { msg: (d.message || d.error || ('HTTP ' + res.status)) });
-    else out.textContent = (d.text || '') + (d.cut ? '\n…' : '');
+    // hvězdičky z markdownu pryč (rubrika je zakazuje, ale model je občas stejně napíše — owner je viděl v 1. rozboru)
+    else out.textContent = (p.delka ? p.delka + '\n\n' : '') + String(d.text || '').replace(/\*\*/g, '') + (d.cut ? '\n…' : '');
   } catch (e) {
     out.textContent = tp('gpt_review_err', { msg: String(e && e.message || e) });
   }

@@ -19,6 +19,8 @@ const GPT_REVIEW  = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/gpt-r
 // testuje. true = pro všechny; PŘEDTÍM musí jít ven serverová část (claude-proxy: standard smí Ask, N zdarma na
 // čtení, nad limit odmítnout — dnes by druhý Ask prémiovému uživateli strhl měsíční čtení). Viz RUNAR_BACKLOG.md.
 const ASK_MULTI_LIVE = false;
+// Jazyk rozboru GPT-6 sol podle admina (KUKY 2026-09-24: „anglicky pro Sigrún“). Kdo tu není, dostane češtinu.
+const GPT_REVIEW_LANG = { 'info@agndofa.is': 'en' };
 // Future proxies go here:
 // const NOTIFY_PROXY = '...functions/v1/notify';
 // const LUNAR_PROXY  = '...functions/v1/lunar-context';

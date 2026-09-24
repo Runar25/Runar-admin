@@ -1083,6 +1083,7 @@ function openCollDetail(r, cell, skipScroll) {
 function _paintCollRuneText(r) {
   var box = document.getElementById('cd-rune-text');
   if (!box) return;
+  var lbl = document.getElementById('cd-rune-lbl'); if (lbl) lbl.textContent = t('coll_rune_lbl');
   box.innerHTML = '';
   var vse = t('coll_rune'), odst = (vse && r && vse[r.n]) || [];
   odst.forEach(function (x) { var p = document.createElement('p'); p.textContent = x; box.appendChild(p); });

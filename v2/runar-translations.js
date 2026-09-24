@@ -396,6 +396,7 @@ const UI_TEXT = {
     name_modal_btn:   'LET THE RUNE READING BEGIN',
     name_modal_ph:    'Your name or nickname',
     shrine_audio_lbl: "\u266a R\u00daNAR'S TEACHING",
+    coll_rune_lbl:    '\u2726 HOW R\u00daNAR SEES THE RUNE',   // nadpis textu runy v Kolekci (KUKY 2026-09-24)
     invalid_date:     'INVALID DATE',
     language_lbl:       'LANGUAGE',
   },
@@ -779,6 +780,7 @@ const UI_TEXT = {
     name_modal_btn:   'L\u00c1TA SP\u00c1NA HEFJAST',
     name_modal_ph:    'Nafn \u00feitt e\u00f0a g\u00e6lunafn',
     shrine_audio_lbl: '\u266a R\u00daNAR KENNIR',
+    coll_rune_lbl:    '\u2726 HVERNIG R\u00daNAR S\u00c9R R\u00daNINA',
     invalid_date:     '\u00d3GILD DAGSETNING',
     language_lbl:       'TUNGUM\u00c1L',
   },
