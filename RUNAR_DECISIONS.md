@@ -6922,3 +6922,12 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 **Co:** (a) kolečko „?" stejně průhledné jako ⚑ reportu — plné jen při najetí myší / z klávesnice; dřív svítilo naplno při otevřených bublinách a na Androidu zůstalo rozsvícené (report 2026-09-23 17:11). (b) Islandská pravidla obrazu dorovnána na angličtinu („í sama umhverfi" + „Settu aldrei viðlíkingu ofan á myndlíkingu.", korpus + is-grammar-qa; v4.52). (c) 13 textových pravidel CSS z `--dim` na `--muted` (§5).
 **Ownerovy odpovědi:** sny jako obraz ANO, jen kde sedí k runě · délka čtení: sledovat a hledat řešení později · zámek „Describe the image" v Asku měřit na živých Ascích · statická čtení zatím nechat · helper se bude postupně rozšiřovat na další místa · zařízení: obě čtení Thurisaz i rebarbora z mobilu (Android, user_agent v reportech) → opakování nezpůsobila dvě zařízení, ale stará verze kódu a málo obrazů.
 **Affected doc(s):** `RUNAR_BACKLOG.md` (stav otevřených věcí) — v tomtéž commitu.
+
+## 2026-09-24 (13) — Věta „one detail" a zkrácený úhel [1] se NEnasazují — zůstávají kandidátem pro sol
+
+- **Co:** owner *„1. ok"* na doporučení CODE-read: s Opus 5 (produkce od 2026-09-24) věta bez měřitelného účinku a +7 % délky
+  single (EVAL_LOG 2026-09-24 (3)). Rozhodnutí 2026-09-24 (10) („nepředáno, čeká na potvrzení") je tím uzavřeno: **nenasazovat**.
+- **Proč zůstává kandidátem:** u gpt-6-sol převyprávění obrazu snížila (20 → 12 z 28, EVAL_LOG 2026-09-23 (9)) — vrátit se k ní při
+  přípravě solu (backlog). Úhel [1] se zkracoval jen kvůli souběhu s touto větou → taky nenasazovat.
+- **Reverzibilita:** nic nenasazeno.
+- Affected doc(s): RUNAR_BACKLOG.md (kandidát věty za obrazem).

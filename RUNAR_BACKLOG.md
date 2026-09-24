@@ -158,7 +158,7 @@
   **2026-09-24 (1):** IS test — Opus 4.8 v IS obraz skoro neopisuje ani v produkci, věta nepomohla → **IS neměnit**, jen EN.
   Úhel [1] bez *„the part someone would walk past"* + věta: značka 0/4, opis nízký (4 čtení) — zkrácení úhlu by se ale
   projevilo i bez věty, nezměřeno. Owner 2026-09-24 schválil (EN věta + zkrátit úhel [1]). ⚠️ **Na Opus 5 (jde do produkce)
-  bez účinku** a +7 % délky single (EVAL_LOG 2026-09-24 (3)) → **nepředáno, čeká na potvrzení**; kandidát pro sol.
+  bez účinku** a +7 % délky single (EVAL_LOG 2026-09-24 (3)) → **owner: nenasazovat (DECISIONS 2026-09-24 (13))**; kandidát pro sol.
 - [ ] **KANDIDÁT: most IS „ástand … sagt með orðum myndarinnar"** (CODE-read 2026-09-22, NEROZHODNUTO — owner).
   Ve tvaru „dvě možnosti" přidat k *„hvort um sig ástand sem gæti átt við"* frázi *„sagt með orðum myndarinnar"*
   (tvar ověřeného Norns landingu A). gpt-6-sol: konce z pojmů (*vani / kostur*) na věcné 5/5; Opus 5: *gæti* beze
