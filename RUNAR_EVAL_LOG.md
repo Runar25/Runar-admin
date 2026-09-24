@@ -5241,7 +5241,9 @@ Podklady → `docs/eval/2026-09-22-modely/opus5-single-norns/`, skripty `opus5_b
 **Metoda (žádný odhad):** API u každého čtení vrací přesné tokeny (vstup · zápis do cache · čtení z cache · výstup) a proxy
 je ukládá do `readings.usage`. Cena = tokeny × ceník, ověřený 2026-09-24 na platform.claude.com/docs/en/about-claude/pricing
 (Opus 5 i 4.8: vstup $5 · zápis 5 min $6,25 · čtení cache $0,50 · výstup $25 za 1 M; `inference_geo: us` ×1,1 — všechna
-čtení `global`). Nástroj → `scripts/cena_cteni.js` (samotest výpočtu; model bez ceny nahlásí, nepočítá potichu).
+čtení `global`). Nástroj → `node scripts/utils/stats.js` sekce „náklady" a „cache" (samotest výpočtu; model bez ceny nahlásí).
+  ⚠️ Do téhož dne tu stál samostatný `scripts/cena_cteni.js` — byl to druhý nástroj na totéž sledování; sloučen do `stats.js`
+  (rozhodnutí 2026-08-15 „sběr dat před vizualizací": provoz a cena patří do jednoho přehledu), `cena_cteni.js` smazán.
 
 **Produkce — 149 ownerových čtení s uloženým usage (2026-08-15 → 2026-09-24), všechna EN single, Opus 4.8:**
 celkem **$2,1459** · průměr **$0,01440** · medián $0,01241 · min $0,00725 · max $0,02972 · thinking 0 tokenů.

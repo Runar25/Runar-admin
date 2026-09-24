@@ -22,7 +22,8 @@ function q(sql) {
   const tmp = path.join(os.tmpdir(), 'runar_stats_' + Date.now() + '.sql');
   fs.writeFileSync(tmp, sql, 'utf8');
   try {
-    const out = execSync('supabase db query --linked -f "' + tmp + '"',
+    // --workdir: bez nej supabase hleda projekt v aktualni slozce a skript bezel jen z korene repa (2026-09-24).
+    const out = execSync('supabase --workdir "' + path.join(__dirname, '..', '..') + '" db query --linked -f "' + tmp + '"',
       { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: 1 << 24 });
     const m = out.match(/\[[\s\S]*\]/);
     return m ? JSON.parse(m[0]) : [];
@@ -54,6 +55,49 @@ const jazyk = q('select coalesce(lang,'+"'?'"+') lang, count(*) n from public.re
 const kvalita = q('select count(*) n, count(prompt_draws) s_draws,' +
   ' count(*) filter (where spread_data is not null) spready' +
   ' from public.readings where drawn_at >= ' + OD + ';')[0];
+
+// ── Náklady a cache (CODE-read 2026-09-24) ──────────────────────────────────────────────
+// PŘESNÁ cena z `readings.usage` (tokeny, které API vrátilo u každého čtení; proxy je ukládá od 2026-08-15)
+// × ceník ověřený 2026-09-24 na platform.claude.com/docs/en/about-claude/pricing. Owner: „nechci odhady."
+// Proč tady a ne ve zvláštním skriptu: sledování provozu (špička, růst) a cena patří k sobě — rozhodnutí
+// 2026-08-15 „sběr dat před vizualizací". Do 2026-09-24 tu stálo „tokeny ani cache NEUKLÁDÁME" — zastaralé.
+// Nový model → řádek do CENIK; model, který tu není, se nahlásí (nepočítá se potichu).
+const CENIK = {   // USD / 1 M tokenů: [vstup, zápis cache 5 min, zápis 1 h, čtení cache, výstup]
+  'claude-opus-5': [5, 6.25, 10, 0.5, 25],
+  'claude-opus-4-8': [5, 6.25, 10, 0.5, 25],
+  'claude-opus-4-7': [5, 6.25, 10, 0.5, 25],
+};
+function cenaUsage(u) {
+  const c = CENIK[u.model]; if (!c) return null;
+  const cc = u.cache_creation || {};
+  const w5 = cc.ephemeral_5m_input_tokens != null ? cc.ephemeral_5m_input_tokens : (u.cache_creation_input_tokens || 0);
+  return (u.inference_geo === 'us' ? 1.1 : 1) * ((u.input_tokens || 0) * c[0] + w5 * c[1] + (cc.ephemeral_1h_input_tokens || 0) * c[2]
+    + (u.cache_read_input_tokens || 0) * c[3] + (u.output_tokens || 0) * c[4]) / 1e6;
+}
+// Samotest výpočtu na známém vstupu (§19.1): 1692 vstup + 152 výstup (Opus 4.8) = 0,01226 USD.
+if (Math.abs(cenaUsage({ model: 'claude-opus-4-8', input_tokens: 1692, output_tokens: 152 }) - 0.01226) > 1e-9) { console.error('  ✗ výpočet ceny rozbitý'); process.exit(1); }
+const usageRows = q("select coalesce(lang,'?') lang, usage, follow_up from public.readings where drawn_at >= " + OD + ' and usage is not null;');
+const naklady = { skupiny: {}, ask: { n: 0, usd: 0, bez: 0 }, neznamy: [] };
+for (const r of usageRows) {
+  for (const f of (r.follow_up || [])) {
+    if (f && f.usage && f.usage.model) { const c = cenaUsage(f.usage); if (c == null) naklady.neznamy.push(f.usage.model); else { naklady.ask.n++; naklady.ask.usd += c; } }
+    else naklady.ask.bez++;
+  }
+  const u = r.usage; if (!u || !u.model) continue;
+  const c = cenaUsage(u); if (c == null) { naklady.neznamy.push(u.model); continue; }
+  const k = u.model + ' · ' + r.lang, g = naklady.skupiny[k] = naklady.skupiny[k] || { n: 0, usd: 0, zapis: 0, zasah: 0 };
+  g.n++; g.usd += c; if (u.cache_creation_input_tokens) g.zapis++; if (u.cache_read_input_tokens) g.zasah++;
+}
+// Kolik čtení přišlo do 5 min (a do 1 h) po PŘEDCHOZÍM čtení v témže jazyce — systémový prompt je pro všechny
+// uživatele téhož jazyka stejný, takže cachi drží teplou kdokoli. To je strop zásahů cache při dnešním provozu.
+const casy = q("select coalesce(lang,'?') lang, extract(epoch from drawn_at) t from public.readings where drawn_at >= " + OD + ' order by drawn_at;');
+naklady.odstupy = {};
+{ const posl = {};
+  for (const r of casy) { const o = naklady.odstupy[r.lang] = naklady.odstupy[r.lang] || { n: 0, do5: 0, do60: 0 };
+    const t = Number(r.t); if (posl[r.lang] != null) { o.n++; if (t - posl[r.lang] <= 300) o.do5++; if (t - posl[r.lang] <= 3600) o.do60++; } posl[r.lang] = t; } }
+// Bod zvratu (přesně z ceníku): 5min cache se vyplatí, když zásahů > (1,25 − 1) / (1,25 − 0,1) = 21,7 %;
+// 1h cache (zápis 2×), když zásahů > (2 − 1) / (2 − 0,1) = 52,6 %.
+naklady.zlom5 = 0.25 / 1.15; naklady.zlom60 = 1 / 1.9;
 
 const HTML_OUT = argv.includes('--html');
 if (HTML_OUT) {
@@ -121,7 +165,7 @@ if (HTML_OUT) {
 }
 
 if (JSON_OUT) {
-  console.log(JSON.stringify({ dny: DNY, celkem, denne, hodiny, tydne: dny, jazyk, kvalita }, null, 1));
+  console.log(JSON.stringify({ dny: DNY, celkem, denne, hodiny, tydne: dny, jazyk, kvalita, naklady }, null, 1));
   process.exit(0);
 }
 
@@ -165,5 +209,16 @@ jazyk.forEach((r) => console.log('  ' + String(r.lang).padEnd(4) + String(r.n).p
 console.log('\n  ── co o těch čteních víme ' + '─'.repeat(19));
 console.log('  s prompt_draws (které páky padly): ' + kvalita.s_draws + ' z ' + kvalita.n);
 console.log('  spready                          : ' + kvalita.spready);
-console.log('  ⚠ tokeny ani cache NEUKLÁDÁME — proxy `usage` z odpovědi zahazuje.');
-console.log('    Bez toho nejde říct, co čtení stálo ani jestli se trefuje do cache.\n');
+console.log('\n  ── náklady (přesně z readings.usage × ceník) ' + '─'.repeat(2));
+let nkCelkem = 0;
+for (const [k, g] of Object.entries(naklady.skupiny).sort()) {
+  nkCelkem += g.usd;
+  console.log('  ' + k.padEnd(22) + String(g.n).padStart(4) + ' čtení · $' + g.usd.toFixed(4) + ' · průměr $' + (g.usd / g.n).toFixed(5)
+    + ' · cache zápis/zásah ' + g.zapis + '/' + g.zasah);
+}
+console.log('  čtení celkem $' + nkCelkem.toFixed(4) + ' · Ask s usage ' + naklady.ask.n + (naklady.ask.n ? ' · $' + naklady.ask.usd.toFixed(4) : '') + ' (bez usage ' + naklady.ask.bez + ')');
+if (naklady.neznamy.length) console.log('  ⚠ model bez ceny v CENIK (nezapočítáno): ' + [...new Set(naklady.neznamy)].join(', '));
+console.log('\n  ── cache: jak často přijde čtení včas ' + '─'.repeat(8));
+for (const [l, o] of Object.entries(naklady.odstupy)) if (o.n)
+  console.log('  ' + l.padEnd(4) + ' do 5 min po předchozím: ' + Math.round(o.do5 / o.n * 100) + ' %  · do 1 h: ' + Math.round(o.do60 / o.n * 100) + ' %  (' + o.n + ' odstupů)');
+console.log('  vyplatí se: 5min cache nad ' + (naklady.zlom5 * 100).toFixed(1) + ' % · 1h cache nad ' + (naklady.zlom60 * 100).toFixed(1) + ' % (bod zvratu z ceníku)\n');
