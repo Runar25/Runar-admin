@@ -40,6 +40,9 @@ var _askLog = [];      // [{ q, a }] výměny v Asku k tomuto čtení (dnes nejv
 // hledá JEN šest druhů chyb, každou dokládá citací; NEsoudí délku, gramatiku ani přepisy. Detaily, které přirozeně
 // vyrůstají z daného obrazu, NEJSOU chyba (první verze za chybu označila „the bowl still looks untouched“ u obrazu skyru
 // přikrytého přes noc). Délku počítá appka sama (_gptReviewDelka). Jeden text rubriky, jazyk odpovědi se dosazuje.
+// 2026-09-24 (KUKY, bod 1 „rozsekneme to jednou pro vždy“): A přestala hlásit větu, která nese pohyb obrazu do zvolené
+// oblasti, a prostředí, které má každý (domov) — owner: „pořád mluví skrze obraz… každý má domov“. Chyba je činnost,
+// kterou člověk nejspíš nedělá, podaná jako jeho. Pravidlo vlastní RUNAR_DESIGN.md (Cold reading), tady jen jeho použití.
 var GPT_REVIEW_RULES =
   'You review one reading from the Rúnar app. Rúnar is a rune guide — a mirror, not an oracle. You get (1) the exact prompt ' +
   'for this reading: the drawn rune with its keywords, the area of life, the IMAGE he was given and his instructions, ' +
@@ -47,7 +50,10 @@ var GPT_REVIEW_RULES =
   'Report ONLY real faults. For each fault quote the exact words and say in one sentence why it is a fault. If a category ' +
   'has no fault, write one short line saying so. Look for exactly these:\n' +
   'A. Claims about the person stated as fact — their feelings, relationships, past, what they know or did, what will happen. ' +
-  'Not a fault: the same thing offered as a possibility (may, perhaps, or a question).\n' +
+  'Not a fault: the same thing offered as a possibility (may, perhaps, or a question); the image\'s own movement carried into ' +
+  'their chosen area of life ("in your work, something rises and sinks back"); a setting everyone has (home, the people close, ' +
+  'work) seen through the image. A fault: an activity or circumstance they may well not have, stated as theirs ("your garden", ' +
+  '"when you paint").\n' +
   'B. The rune missing — would someone who knows the rune\'s keywords recognise it from what the reading says it does? Say what is missing.\n' +
   'C. Image drift — the reading contradicts the given image or swaps it for a different scene. Not a fault: details that grow ' +
   'naturally out of the given image.\n' +
