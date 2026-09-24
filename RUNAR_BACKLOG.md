@@ -147,7 +147,7 @@
 - [ ] **Shrine: korekce nejdou smazat** (nález 2026-09-23) — záložka WORD CORRECTIONS umí jen přidat a vypsat
   (`runar-shrine.html` `saveCorrection`/`loadCorrections`), mazání nemá. Owner tak smaže řádek jen přes Supabase. Doplnit
   mazání (jen admin, s potvrzením) — CODE-tune.
-- [ ] **GLOSA V ISLANDSKÉ HLAVIČCE RUNY se propisuje do čtení** (nález CODE-read 2026-09-22, srovnání modelů).
+- [x] **HOTOVO 2026-09-24 (v4.54, DECISIONS 2026-09-24 (18)) — jméno do promptu přes `rnPrompt()`, rozhraní s glosou dál.** **GLOSA V ISLANDSKÉ HLAVIČCE RUNY se propisuje do čtení** (nález CODE-read 2026-09-22, srovnání modelů).
   IS prompt má `DREGNA RÚNA: Raidho (Ferðalag) — …`, EN jen `DRAWN RUNE: Raidho — …`. Výsledek na 42 čteních:
   glosa *„Raidho (Ferðalag)"* v textu **jen v IS** — Opus 5.5 3/3, gpt-6-sol 3/3, gpt-5.6-sol 2/3; v EN ji nenapsal
   **žádný** model. Opus 4.8 a 5 ji zatím neopisují, takže dnešní produkce to nevidí — ale **při jakékoli změně modelu

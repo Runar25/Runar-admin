@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-24",
- "prompt_version": "v4.53-otazka-runy",
+ "prompt_version": "v4.54-jmeno-bez-glosy",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -988,12 +988,6 @@
    "zacatek": "Þetta er lestur lífsrúnar Anna — ekki lestur dagsins, heldur lestur þe"
   },
   {
-   "hash": "d37b33f773fc",
-   "lang": "is",
-   "zdroj": "liferune",
-   "zacatek": "LÍFSRÚNA: Ansuz (Boðberi)"
-  },
-  {
    "hash": "9b0c55769011",
    "lang": "is",
    "zdroj": "liferune",
@@ -1036,10 +1030,10 @@
    "zacatek": "HLUTI 2 — RÚNIN (5–6 setningar):"
   },
   {
-   "hash": "07171fe987ec",
+   "hash": "2b25cd5b9e02",
    "lang": "is",
    "zdroj": "liferune",
-   "zacatek": "Ansuz (Boðberi) sem jarðvegur lífs Anna. Lögun rúnarinnar og hvað hún "
+   "zacatek": "Ansuz sem jarðvegur lífs Anna. Lögun rúnarinnar og hvað hún ber í sér."
   },
   {
    "hash": "5dbce23e4744",

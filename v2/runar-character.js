@@ -1029,11 +1029,11 @@ function _lensContext(life, drawn, lang) {
   if (_lifeWasDrawn(life, list)) return '';
   var many = list.length > 1;
   if (lang === 'is') {
-    var subjIs = many ? 'rúnurnar sem dregnar voru' : rn(list[0]);
-    return 'LOKALINSA — lífsrúnin ' + rn(life) + ': Láttu hana móta AÐEINS síðustu setninguna eða spurninguna, ekkert á undan henni. Meginmálið fjallar um ' + subjIs + '. Nefndu lífsrúnuna aldrei. Ef hún kemur ekki af sjálfu sér í lokin, slepptu henni.';
+    var subjIs = many ? 'rúnurnar sem dregnar voru' : rnPrompt(list[0]);
+    return 'LOKALINSA — lífsrúnin ' + rnPrompt(life) + ': Láttu hana móta AÐEINS síðustu setninguna eða spurninguna, ekkert á undan henni. Meginmálið fjallar um ' + subjIs + '. Nefndu lífsrúnuna aldrei. Ef hún kemur ekki af sjálfu sér í lokin, slepptu henni.';
   }
-  var subjEn = many ? 'the runes that were drawn' : rn(list[0]);
-  return 'CLOSING LENS — the life rune ' + rn(life) + ': let it shape ONLY the last sentence or question, nothing before it. The body of the reading is about ' + subjEn + '. Never name the life rune. If it does not come to the ending naturally, leave it out.';
+  var subjEn = many ? 'the runes that were drawn' : rnPrompt(list[0]);
+  return 'CLOSING LENS — the life rune ' + rnPrompt(life) + ': let it shape ONLY the last sentence or question, nothing before it. The body of the reading is about ' + subjEn + '. Never name the life rune. If it does not come to the ending naturally, leave it out.';
 }
 
 // Tie-breaker when life rune + area + seeking do not gather into one image. Was duplicated
@@ -1047,12 +1047,12 @@ function _priorityContext(lensOn, drawn, lang) {
   if (!list.length) return '';
   var many = list.length > 1;
   if (lang === 'is') {
-    var subjIs = many ? 'rúnunum sem dregnar voru' : rn(list[0]);
+    var subjIs = many ? 'rúnunum sem dregnar voru' : rnPrompt(list[0]);
     return lensOn
       ? 'Ef þetta rennur ekki saman í eina náttúrlega mynd: Haltu ' + subjIs + ' fremst, virtu leitina og sviðið, og láttu lífsrúnu-linsuna hopa — hún má hverfa alveg fremur en að vera þvinguð. Aldrei hlaða þessu upp sem aðskildum staðhæfingum.'
       : 'Ef þetta rennur ekki saman í eina náttúrlega mynd: Haltu ' + subjIs + ' fremst og virtu leitina og sviðið. Aldrei hlaða þessu upp sem aðskildum staðhæfingum.';
   }
-  var subjEn = many ? 'the runes that were drawn' : rn(list[0]);
+  var subjEn = many ? 'the runes that were drawn' : rnPrompt(list[0]);
   return lensOn
     ? 'If these do not gather into one natural image: keep ' + subjEn + ' in front, honour the seeking and the area, and let the life-rune lens recede — it may vanish entirely rather than be forced. Never stack them as separate statements.'
     : 'If these do not gather into one natural image: keep ' + subjEn + ' in front and honour the seeking and the area. Never stack them as separate statements.';
@@ -1254,7 +1254,7 @@ var RP_LIFE = {
     header:'Þú ert Rúnar, rúnavörður Agndofa.',
     PERSON:'MANNESKJAN', LIFE:'LÍFSRÚNA', BORN:'FÆDD/UR', MONTH:'ÍSLENSKUR MÁNUÐUR',
     ELEM:'FRUMEFNI', CORE:'KJARNAORÐ',
-    rname:function(r){ return r.is_n; },
+    rname:function(r){ return _bezGlosy(r.is_n); },   // 2026-09-24: bez glosy „(Eignir)“ — viz rnPrompt() v runar-utils.js
     rcore:function(r){ return r.k_is; },
     birth:function(d,m,y){ return d + '. ' + m + '. ' + y; },
     intro:function(name){ return 'Þetta er lestur lífsrúnar ' + name + ' — ekki lestur dagsins, heldur lestur þess sem ' + name + ' hefur borið í sér frá fæðingu.'; },
@@ -1435,11 +1435,11 @@ function _dvergarContext(question, lang) {
 function _askLifeContext(life, lang) {
   if (!life) return '';
   if (lang === 'is')
-    return 'LÍFSRÚNIN — leitandinn ber sjálfur ' + rn(life) + '; hún var ekki dregin núna og '
+    return 'LÍFSRÚNIN — leitandinn ber sjálfur ' + rnPrompt(life) + '; hún var ekki dregin núna og '
       + 'lesturinn fjallar ekki um hana. Nefndu hana ekki að fyrra bragði. Ef spurningin snýr '
       + 'að henni máttu svara út frá henni, í einni eða tveimur setningum, og snúa svo aftur '
       + 'að rúnunum sem dregnar voru.';
-  return 'LIFE RUNE — the seeker carries ' + rn(life) + ' as their own; it was not drawn today '
+  return 'LIFE RUNE — the seeker carries ' + rnPrompt(life) + ' as their own; it was not drawn today '
     + 'and the reading is not about it. Do not bring it up on your own. If their question '
     + 'reaches for it, you may answer from it in a sentence or two, then return to the runes '
     + 'that were drawn.';
@@ -1652,7 +1652,7 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     : drawnKws.sort(function(){ return 0.5 - Math.random(); }).slice(0, Math.min(3, drawnKws.length)).join(', ');
   var worldRef = rworld(drawn) || S.worldFb(pickedKws);
   var hasQ = !!(u.question && u.question.trim());
-  var drawnCtx = S.DRAWN + ': ' + rn(drawn) + ' — ' + S.focus + ': ' + pickedKws
+  var drawnCtx = S.DRAWN + ': ' + rnPrompt(drawn) + ' — ' + S.focus + ': ' + pickedKws
     + (drawn.world ? ' · ' + S.REALM_drawn + ': ' + rworld(drawn) + ' · ' + S.ELEM + ': ' + relements(drawn) : '');
   var parts = [
     S.PERSON + ': ' + u.name,
@@ -1685,7 +1685,7 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     // `worldRef` se otevírací větvi pořád předává, ale ta ho už NEVYPISUJE: popis světa
     // stojí v hlavičce `DRAWN RUNE` a do 2026-08-13 se opakoval i tady (nález
     // `lint_prompts.js --dup`). Parametr zůstal, aby se neměnila signatura packu.
-    hasQ ? S.qBranch(rn(drawn), drawn.g, _questionSafe(u.question)) : S.noqBranch(rn(drawn), drawn.g, worldRef),
+    hasQ ? S.qBranch(rnPrompt(drawn), drawn.g, _questionSafe(u.question)) : S.noqBranch(rnPrompt(drawn), drawn.g, worldRef),
     // 2026-09-20: most bere REJSTRIK (tvar) a OBLAST (kam dosedne) misto uhlu — uhel
     // potreboval jen zrusena vyluka uhel[6] x open[1].
     _endingShape(drawn, lang, u.seeking, u.area)
@@ -1947,7 +1947,7 @@ function buildAskPrompt(reading, question, runes, lang, corrections, life, cast,
         if (RUNES[i].n === h || _hola(RUNES[i].is_n) === h) { r = RUNES[i]; break; }
       if (!r) return n;
       var k = (lang === 'is') ? (r.k_is || r.k) : r.k;
-      return n + ' — ' + k;
+      return h + ' — ' + k;   // 2026-09-24: holé jméno (h), ne „Gebo (Félagsskapur)“ — viz rnPrompt()
     }).filter(Boolean).join('; ');
   }
   return [
@@ -2030,7 +2030,7 @@ function _kwBrief(r) {
 function _spreadBlock(r, label) {
   // v4.7 (2026-08-23): inline vetev odstranena — kriz byl posledni, kdo ji volal
   // (sjednoceni formatu pozic, BACKLOG:226). Jeden tvar pro vsechny 4 spready.
-  return label + '\n' + rn(r) + ' — ' + _kwBrief(r);
+  return label + '\n' + rnPrompt(r) + ' — ' + _kwBrief(r);
 }
 
 function buildKrizPromptCross(u, runes, lang, corrections) {
@@ -2056,7 +2056,7 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
     // Byl jedinym s inline tvarem (BACKLOG:226); dedup z drivejska na tohle cekal.
     _spreadBlock(rCtr, P[0]), '', _spreadBlock(rAbo, P[1]), '', _spreadBlock(rBel, P[2]), '', _spreadBlock(rBeh, P[3]), '', _spreadBlock(rAhe, P[4]),
   ].join('\n');
-  var ctrName = rn(rCtr);
+  var ctrName = rnPrompt(rCtr);
   return [
     ctx, '',
     S.intro, '',

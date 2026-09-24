@@ -765,7 +765,7 @@ function _askBuild(reading, q, runes) {
 }
 function _askSpread() {
   return { mode: _spreadMode,
-           runy: (_lastDrawn || []).filter(Boolean).map(function (r) { return rn(r); }) };
+           runy: (_lastDrawn || []).filter(Boolean).map(function (r) { return rnPrompt(r); }) };   // do promptu bez glosy (2026-09-24)
 }
 function _askCast() {
   var u = readerUser || {};
@@ -911,7 +911,7 @@ async function askRunar() {
   if (!reading) return;
   var runes = (_lastSegs && _lastSegs.length)
     ? _lastSegs.map(function (s) { return s.rune; }).filter(Boolean).join(', ')
-    : (readerRune ? rn(readerRune) : '');
+    : (readerRune ? rnPrompt(readerRune) : '');   // do promptu bez glosy (2026-09-24)
   var btn = document.getElementById('ask-btn');
   if (btn) { btn.disabled = true; btn.textContent = t('ask_thinking'); }
   if (inp) inp.disabled = true;   // 2026-09-24: Enter v poli posílal během dotazu druhý Ask (průzkum 2026-09-23)

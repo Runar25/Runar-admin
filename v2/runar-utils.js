@@ -621,11 +621,20 @@ function rk(r)  { return lang === 'is' ? r.k_is : r.k; }
 // ─── rn() ─────────────────────────────────────────
 function rn(r)  { return lang === 'is' ? r.is_n : r.n; }
 
+// Glosa v závorce za islandským jménem („Þurs (Hlið)“) — JEDEN regex pro rnSplit i rnPrompt.
+var _GLOSA_RE = /^(.*?)\s*\(([^)]*)\)\s*$/;
+function _bezGlosy(jmeno) { var m = _GLOSA_RE.exec(jmeno || ''); return m ? m[1] : (jmeno || ''); }
+
+// rnPrompt() — jméno runy DO PROMPTU (2026-09-24, handoff CODE-read, owner „GPT pojď na to“, krok 1).
+// Glosa „(Hlið)“ je pro člověka v rozhraní; model ji opisoval do čtení — gpt-6-sol ve 3 z 5 islandských čtení,
+// bez glosy 0 z 5 (Opus 5 0/5 v obou; EVAL_LOG 2026-09-24 (4)). Do promptu tedy holé jméno, rozhraní dál rn().
+function rnPrompt(r) { return _bezGlosy(rn(r)); }
+
 // rnSplit() -- jmeno + (preklad) do dvou casti
 // IS: 'Fehu (Eignir)' -> {name:'Fehu', tr:'Eignir'} · EN: 'Fehu' -> {name:'Fehu', tr:''}
 function rnSplit(r) {
   var full = rn(r);
-  var m = /^(.*?)\s*\(([^)]*)\)\s*$/.exec(full);
+  var m = _GLOSA_RE.exec(full);
   if (m) return { name: m[1], tr: m[2] };
   return { name: full, tr: '' };
 }

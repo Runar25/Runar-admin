@@ -6986,3 +6986,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Další krok (4):** owner pár dní čte přes sol → CODE-read postaví tytéž prompty (`prompt_draws`) pro Opus 5, slepí soudci +
   IS gramatika nástroji + přesná cena.
 - Affected doc(s): RUNAR_BACKLOG.md (položka GPT-6 sol).
+
+## 2026-09-24 (18) — Islandské jméno runy v promptu BEZ glosy (v4.54) — krok 1 z (17)
+
+- **Co:** handoff CODE-read (psáno proti 52ec758), owner *„udělej první handoff"*. Nová `rnPrompt(r)` (`runar-utils.js`) = jméno bez
+  závorky („Þurs", ne „Þurs (Hlið)"); jde do všech promptů: hlavička single, pokyn „Nefndu … einu sinni", řádky run ve spreadech,
+  čočka životní runy, řádek životní runy, čtení životní runy (`RP_LIFE.is.rname`) a Ask (runy + spread, builder bere holé jméno,
+  ať přijde odkudkoli). Rozhraní dál `rn()` s glosou — zdroj `RUNES` beze změny.
+- **Proč:** gpt-6-sol opisuje glosu do čtení (3/5 → 0/5 bez ní), Opus 5 0/5 v obou (EVAL_LOG 2026-09-24 (4)).
+- **Ověřeno:** golden — anglické prompty bajtově beze změny (0 z 19), islandské se liší JEN odstraněnou glosou (15 z 19), žádná
+  glosa v žádném promptu. Deník ukládá `drawn.n` (anglicky), takže Gathering glosu nedostával ani dřív.
+- **Vědomě mimo (§13):** `runar-yggdrasil.html` — laboratorní stránka jen z admin rozhraní, s vlastními anglickými prompty a vlastním
+  `yRn()`; `runar-utils.js` nenačítá. Kdyby se vracela do produkce, jméno do promptu tam musí jít taky bez glosy.
+- **Reverzibilita:** `rnPrompt` → `rn`.
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka „GLOSA V ISLANDSKÉ HLAVIČCE RUNY" uzavřena).
