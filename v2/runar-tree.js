@@ -350,7 +350,8 @@ function updateTreeTab() {
       var nmV = document.getElementById('tree-rune-name-teaser');
       if (nmV) nmV.textContent = runeName;
       var glV = document.getElementById('tree-rune-glyph-teaser');
-      if (glV) glV.innerHTML = runeSvg(rune, { frame: false, cls: 'rune-svg-fl' });
+      // KÁMEN (KUKY 2026-09-23: „změnit glyf životních run na naše glyfy“) — dřív holá linka (§5 z 2026-07-14).
+      if (glV) glV.innerHTML = runeSvg(rune, { frame: true, cls: 'tree-stone' });
       var ttV = document.getElementById('tree-teaser-text');
       if (ttV) ttV.textContent = t('tree_visitor_read');
       // Nabidka „za 3 kredity" nema pro nepřihlášeného smysl — nema ucet ani zustatek.
@@ -430,7 +431,7 @@ function updateTreeTab() {
       var nm = document.getElementById('tree-rune-name-teaser');
       var gl = document.getElementById('tree-rune-glyph-teaser');
       if (nm) nm.textContent = runeName;
-      if (gl) gl.innerHTML = runeSvg(rune, { frame: false, cls: 'rune-svg-fl' });
+      if (gl) gl.innerHTML = runeSvg(rune, { frame: true, cls: 'tree-stone' });
       var tt = document.getElementById('tree-teaser-text');
       if (tt) tt.textContent = t('tree_rs_teaser');
       var lb = document.getElementById('tree-rune-label'); if (lb) lb.textContent = t('life_rune_lbl');
@@ -478,7 +479,7 @@ function updateTreeTab() {
       var nm = document.getElementById('tree-rune-name-cta');
       var gl = document.getElementById('tree-rune-glyph-cta');
       if (nm) nm.textContent = runeName;
-      if (gl) gl.innerHTML = runeSvg(rune, { frame: false, cls: 'rune-svg-fl' });
+      if (gl) gl.innerHTML = runeSvg(rune, { frame: true, cls: 'tree-stone' });
       var intro = document.getElementById('tree-reveal-intro');
       var lbc = document.getElementById('tree-rune-label-cta'); if (lbc) lbc.textContent = t('life_rune_lbl');
       if (intro) intro.textContent = t('tree_reveal_intro');
@@ -825,7 +826,7 @@ async function generateLifeRuneReading() {
   var loadGlyph = document.getElementById('tree-loading-glyph');
   var loadTxt = document.getElementById('tree-loading-text');
   if (loadEl) loadEl.style.display = 'block';
-  if (loadGlyph) loadGlyph.innerHTML = runeSvg(rune, { frame: false, cls: 'rune-svg-fl' });
+  if (loadGlyph) loadGlyph.innerHTML = runeSvg(rune, { frame: true, cls: 'tree-stone' });
   if (loadTxt) loadTxt.textContent = t('reading_loading');
 
   var name = _lifeRuneName();

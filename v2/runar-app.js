@@ -348,7 +348,10 @@ async function confirmLangSwitch() {
 function showCachedReading(l) {
   const cached = readerTexts[l];
   if (!cached) return;
-  document.getElementById('out-short').textContent = cached.short;
+  // Výklad má vlastní okno (o.outId); #out-short je u výkladu skrytý — do 2026-09-23 sem šel i text výkladu
+  // a okno výkladu zůstalo po přepnutí jazyka ve starém jazyce.
+  var _outId = (typeof _hdr !== 'undefined' && _hdr && !_hdr.single && _hdr.outId) ? _hdr.outId : 'out-short';
+  document.getElementById(_outId).textContent = cached.short;
   document.getElementById('out-deep').textContent  = cached.deep || '';
   document.getElementById('audio-player').classList.remove('visible');
   document.getElementById('runar-audio').src = '';
@@ -868,13 +871,12 @@ function updateUIText() {
   setText('mode-btn-kriz',      t('spread_mode_kriz'));
   setText('mode-btn-horseshoe', t('spread_mode_horseshoe'));
   setText('mode-btn-yggdrasil', t('spread_mode_yggdrasil'));
-  setText('s5-kriz-lbl', '✦ ' + t('spread_mode_kriz'));
-  setText('s7-horseshoe-lbl', '✦ ' + t('spread_mode_horseshoe'));
-  setText('s9-yggdrasil-lbl', '✦ ' + t('spread_mode_yggdrasil'));
+  // Hlavičky čtení (single i výklady) kreslí _paintReadingHeader() — nese stav (tažené runy + volby),
+  // takže do updateUIText nepatří (§14). Do 2026-09-23 se tu přepisovaly a glyf po přepnutí jazyka mizel.
   setPH('redeem-input', t('redeem_ph'));
   setText('btn-speak', t('speak_btn'));
   setText('badge-life-note', t('badge_life_note'));
-  setText('layer1-lbl', t('layer1_lbl'));
+  if (typeof _paintReadingHeader === 'function') _paintReadingHeader();
   setText('layer2-lbl', t('layer2_lbl'));
   setText('draw-another-btn', t('draw_another'));
   setText('start-over-btn', t('start_over'));

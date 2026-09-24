@@ -6821,3 +6821,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   ověřeno produkční cestou. Shrine mazat korekce neumí (backlog).
 - **Reverzibilita:** úhel snadná (odebrat větu); smazaný řádek jen znovu vložit.
 - Affected doc(s): RUNAR_BACKLOG.md (položka úhlu [4] a bod 1 bloku korekcí).
+
+## 2026-09-23 (15) — Hlavička čtení: životní runa jako kámen všude · volby čtení u tažené runy
+**Rozhodl:** KUKY („Změnit glyf životních run na naše glyfy. Vedle vybrané runy by se mělo také zobrazit, co si uživatel vybere — AREA, SEEKING, INTENTION. Je to v reportu"; report 2026-09-21: „s glyfem runy napsané, na co jsem se ptal v Area a seeking") · **Provedl:** CODE-tune
+**Co:**
+1. Glyf životní runy = **kámen** (`frame:true`) i v odznaku nad čtením a v záložce Life Rune (ukázka, výzva, načítání). Mění §5 (2026-07-14 holá linka „esence"; 2026-09-14 kámen jen v hlavičce hotového čtení). Holá linka zůstává jen u textového popisku runy při výběru.
+2. U tažené runy (single) a u pásu run (všechny výklady) tichý řádek s volbami: oblast · hledání · záměr (jen vyplněné). Bere se v okamžiku čtení (jako indexy), skládá se v aktuálním jazyce.
+3. Hlavičku kreslí jedna funkce `_paintReadingHeader()`; `updateUIText()` ji jen volá.
+**Nalezeno a opraveno cestou (§22):** (a) přepnutí jazyka u zobrazeného čtení přepsalo hlavičku na „✦ RÚNAR SPEAKS"/jméno výkladu a glyf tažené runy zmizel (porušení §14); (b) u výkladu šel text po přepnutí jazyka do skrytého okna single a okno výkladu zůstalo ve starém jazyce; (c) jméno životní runy v odznaku se s jazykem nepřekreslilo.
+**Ověřeno** v prohlížeči (lokální náhled, simulovaný stav bez volání serveru): single IS→EN — glyf drží, volby „Heilun & Líðan · Skýrleiki · Í þessari stund" → „Healing & Wellbeing · Clarity · Right now"; Kříž 5 run EN→IS→EN — 5 kamenů, volby i text výkladu ve správném jazyce; „Draw another" hlavičku vynuluje. Smoke 44/44.
+**Mez:** skutečné čtení přes server v náhledu neproběhlo (stálo by kredit); deník volby u karet zatím neukazuje.
+**Affected doc(s):** `CLAUDE.md` §5 — v tomtéž commitu.

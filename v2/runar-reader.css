@@ -501,6 +501,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .slot-stone{height:1.7em;width:auto;vertical-align:middle;}
 .cd-stone{width:clamp(60px,20vw,88px);height:auto;}
 .jcard-stone{width:28px;height:auto;}
+/* Životní runa = KÁMEN i v odznaku a ve stromě (KUKY 2026-09-23: „změnit glyf životních run na naše glyfy").
+   Odznak je tichá vedlejší řádka → menší kámen než tažená runa (.rlbl-stone). */
+.badge-stone{width:20px;height:auto;vertical-align:middle;}
+.tree-stone{width:clamp(48px,14vw,64px);height:auto;}
 .rlbl-glyph.seg-active .rune-svg{filter:drop-shadow(0 0 9px rgba(255,191,0,0.45));}
 .rb-svg{width:clamp(38px,11vw,72px);height:auto;aspect-ratio:72/88;display:block;}
 .rb-n{font-family:'Cinzel',serif;font-size:0.85em;letter-spacing:0.5px;color:var(--muted);margin-top:4px;}
@@ -529,6 +533,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .rlbl-glyph:hover{opacity:0.72;}
 .rlbl-name{font-size:0.72rem;letter-spacing:2px;color:var(--muted);margin-left:9px;vertical-align:middle;}
 .rlbl-sep{font-size:1.4rem;color:var(--border);margin:0 6px;vertical-align:middle;}
+/* Volby čtení u tažené runy — oblast · hledání · záměr (KUKY 2026-09-23, report 2026-09-21).
+   Tichý řádek vedle runy; na úzkém displeji pod ní. Barva textu = --muted (§5: --dim nikdy pro text). */
+.rlbl-cast{display:inline-block;margin-left:14px;font-size:0.66rem;letter-spacing:1px;color:var(--muted);vertical-align:middle;line-height:1.5;}
+@media(max-width:560px){.rlbl-cast{display:block;margin-left:0;margin-top:8px;}}
 /* Fáze B1 — tap a rune glyph -> its text-segment turns gold. Others unchanged (no dimming). */
 .rseg{transition:color 0.35s ease;}
 .rseg.on{color:var(--gold);}

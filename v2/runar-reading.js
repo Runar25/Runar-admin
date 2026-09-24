@@ -27,6 +27,64 @@ var _lastSegs = [];  // Fáze B1: per-rune [{rune,text}] segments of the last re
 // KTERE runy padly — a to `_lastSegs` neumi: jeho jmena psal model do JSON, takze porovnani
 // se zivotni runou by viselo na jeho pravopisu. Plni se tam, kde `_lastSegs` (2026-09-10).
 var _lastDrawn = [];
+
+// ─── HLAVIČKA ČTENÍ: tažená runa + volby čtení (2026-09-23) ─────────────────────────────
+// KUKY 2026-09-23: „vedle vybrané runy by se mělo zobrazit, co si uživatel vybere — AREA, SEEKING,
+// INTENTION“ (poprvé v reportu 2026-09-21). Volby se berou jako INDEXY v okamžiku čtení: pilulky
+// si člověk mezitím může přepnout pro další čtení, a řádek má říkat, s čím vzniklo TOHLE čtení.
+// Popisek se skládá až při kreslení, v aktuálním jazyce — proto přežije přepnutí jazyka.
+// Hlavičku kreslí JEN _paintReadingHeader(). Do 2026-09-23 ji updateUIText() při přepnutí jazyka
+// přepsal na „✦ RÚNAR SPEAKS“ (single) nebo na jméno výkladu (Kriz/Horseshoe/Yggdrasil) a glyf tažené
+// runy zmizel — porušení §14 (updateUIText smí jen statické texty), nalezeno při této práci.
+var _hdr = null;   // null = žádné hotové čtení · {lblId, runes, single, cast:{area,seeking,intention}}
+var _SPREAD_LBL = { norns: 's3-norns-lbl', kriz: 's5-kriz-lbl', horseshoe: 's7-horseshoe-lbl', yggdrasil: 's9-yggdrasil-lbl' };
+function _castIdx(u) {
+  var c = {};
+  [['area', typeof AREAS === 'undefined' ? null : AREAS],
+   ['seeking', typeof SEEKS === 'undefined' ? null : SEEKS],
+   ['intention', typeof INTENTIONS === 'undefined' ? null : INTENTIONS]].forEach(function (p) {
+    var v = u && u[p[0]], D = p[1];
+    if (!v || !D) return;
+    var i = (D.en || []).indexOf(v);
+    if (i === -1) i = (D.is || []).indexOf(v);
+    c[p[0]] = i >= 0 ? i : v;   // mimo seznam (volný text) zůstává, jak je
+  });
+  return c;
+}
+function _castLineHtml(cast) {
+  if (!cast) return '';
+  var casti = [['area', typeof AREAS === 'undefined' ? null : AREAS],
+               ['seeking', typeof SEEKS === 'undefined' ? null : SEEKS],
+               ['intention', typeof INTENTIONS === 'undefined' ? null : INTENTIONS]].map(function (p) {
+    var v = cast[p[0]], D = p[1];
+    if (v === undefined || v === null || v === '') return '';
+    if (typeof v === 'number') return (D && (D[lang] || D.en || [])[v]) || '';
+    return String(v);
+  }).filter(Boolean);
+  if (!casti.length) return '';
+  return '<span class="rlbl-cast">' + casti.map(escapeHtml).join(' · ') + '</span>';
+}
+function _paintReadingHeader() {
+  var l1 = document.getElementById('layer1-lbl');
+  // Odznak životní runy nese jméno v jazyce UI → po přepnutí jazyka překreslit (dřív zůstalo v tom starém).
+  var _bd = document.getElementById('reader-badge');
+  if (_bd && _bd.style.display !== 'none' && typeof readerUser !== 'undefined' && readerUser && readerUser.lifeRune) _renderLifeBadge(readerUser.lifeRune);
+  Object.keys(_SPREAD_LBL).forEach(function (m) {
+    var el = document.getElementById(_SPREAD_LBL[m]);
+    if (el && !(_hdr && _hdr.lblId === _SPREAD_LBL[m]) && m !== 'norns') el.textContent = '✦ ' + t('spread_mode_' + m);
+  });
+  if (!_hdr) { if (l1) l1.textContent = t('layer1_lbl'); return; }
+  var el = document.getElementById(_hdr.lblId);
+  if (!el) return;
+  var runy = _hdr.runes.map(function (r, i) {
+    return '<span class="rlbl-glyph" data-rune="' + rn(r) + '" data-kw="' + rk(r) + '" data-seg="' + i + '">' + runeSvg(r, { frame: true, cls: 'rlbl-stone' }) + '</span>';
+  });
+  el.innerHTML = _hdr.single
+    ? runy[0] + '<span class="rlbl-name">' + rn(_hdr.runes[0]).toUpperCase() + '</span>' + _castLineHtml(_hdr.cast)
+    : runy.join('<span class="rlbl-sep">·</span>') + _castLineHtml(_hdr.cast);
+  el.classList.remove('pulsing');
+  if (!_hdr.single && l1) l1.textContent = t('layer1_lbl');
+}
 // _parseSegments lives in runar-character.js now (shared reader+shrine, §18/§20 —
 // same reason the reading-prompt builders do). character.js loads before this file,
 // so callers below still see it as a global.
@@ -67,7 +125,8 @@ function _renderLifeBadge(life) {
     var g = document.getElementById('badge-life-g');
     var n = document.getElementById('badge-life-name');
     var note = document.getElementById('badge-life-note');
-    if (g) g.innerHTML = runeSvg(life, { frame: false, cls: 'rune-svg-fl' });
+    // KÁMEN (KUKY 2026-09-23: „změnit glyf životních run na naše glyfy“) — dřív holá linka podle §5 z 2026-07-14.
+    if (g) g.innerHTML = runeSvg(life, { frame: true, cls: 'badge-stone' });
     if (n) n.textContent = rn(life);
     if (note) note.textContent = t('badge_life_note');
     badge.style.display = 'flex';
@@ -98,10 +157,12 @@ async function _generateReading() {
   // Unified: hide layer2 + clear label before API call
   var _preL2 = document.getElementById('single-layer2');
   if (_preL2) _preL2.style.display = 'none';
+  _hdr = null;
   if (_pL1) { _pL1.textContent = ''; _pL1.classList.add('pulsing'); }
   if (_pL2) _pL2.classList.add('pulsing');
 
   const u = readerUser, drawn = readerRune;
+  var _castNow = _castIdx(u);
   const sys = buildSysPrompt(activeChar, lang);
   const prompt = buildReadingPrompt(u, drawn, lang, corrections);
 
@@ -180,7 +241,8 @@ async function _generateReading() {
   var _ul2 = document.getElementById('single-layer2');
   var _ul1lbl = document.getElementById('layer1-lbl');
   if (_ul2) _ul2.style.display = 'none';
-  if (_ul1lbl) { _ul1lbl.innerHTML = '<span class="rlbl-glyph" data-rune="' + rn(drawn) + '" data-kw="' + rk(drawn) + '" data-seg="0">' + runeSvg(drawn, { frame: true, cls: 'rlbl-stone' }) + '</span><span class="rlbl-name">' + rn(drawn).toUpperCase() + '</span>'; _ul1lbl.classList.remove('pulsing'); }
+  _hdr = { lblId: 'layer1-lbl', runes: [drawn], single: true, cast: _castNow };
+  if (_ul1lbl) _paintReadingHeader();
   await stream('out-short', reading);
   _renderSegments('out-short', _lastSegs);
   _showAsk();
@@ -775,6 +837,7 @@ function drawAnother() {
   var _daL2 = document.getElementById('single-layer2');
   var _daLbl = document.getElementById('layer1-lbl');
   if (_daL2) _daL2.style.display = '';
+  _hdr = null;
   if (_daLbl) _daLbl.textContent = t('layer1_lbl');
   if (_spreadMode === 'norns') { _spread3Runes = []; _updateSpread3Slots(); }
   if (_spreadMode === 'kriz') { _spread5Runes = []; _updateSpread5Slots(); }
@@ -797,11 +860,13 @@ function _resetReadingTab() {
   _spreadMode = 'single';
   _spread3Runes = []; _spread5Runes = []; _spread7Runes = []; _spread9Runes = [];
   readerRune = null; readerTexts = {}; voiceGenerated = {};
+  _hdr = null;
   _hideAllSpreadOutputs();
   var _ro = document.getElementById('reader-output'); if (_ro) _ro.style.display = 'none';
   ['single','kriz','norns','horseshoe','yggdrasil'].forEach(function(m){
     var _b = document.getElementById('mode-btn-' + m); if (_b) _b.classList.toggle('active', m === 'single');
   });
+  _hdr = null;
   var _l1 = document.getElementById('layer1-lbl'); if (_l1) { _l1.textContent = t('layer1_lbl'); _l1.classList.remove('pulsing'); }
   _updateSpread3Slots(); _updateSpread5Slots(); _updateSpread7Slots(); _updateSpread9Slots();
   _syncNornsGate();
@@ -970,12 +1035,14 @@ async function _generateSpreadReading(o) {
   _paintLoadingMotto(); // tyz duvod jako u prvniho mista (reporty #5/#6)
   if (rdLoad) rdLoad.style.display = 'block';
   var _aqP = document.getElementById('ask-runar'); if (_aqP) _aqP.style.display = 'none';
+  _hdr = null;
   var pL1 = document.getElementById('layer1-lbl');
   var pL2 = document.getElementById('layer2-lbl');
   if (pL1) pL1.classList.add('pulsing');
   if (pL2) pL2.classList.add('pulsing');
 
   var u = readerUser;
+  var _castNowS = _castIdx(u);
   var sys = buildSysPrompt(activeChar, lang);
   var prompt = o.buildPrompt(u, o.runes, lang, corrections);
 
@@ -1031,7 +1098,8 @@ async function _generateSpreadReading(o) {
   readerTexts[lang] = { short: text, deep: '' };
 
   var lbl = document.getElementById(o.lblId);
-  if (lbl) lbl.innerHTML = o.runes.map(function(r, i) { return '<span class="rlbl-glyph" data-rune="' + rn(r) + '" data-kw="' + rk(r) + '" data-seg="' + i + '">' + runeSvg(r, { frame: true, cls: 'rlbl-stone' }) + '</span>'; }).join('<span class="rlbl-sep">·</span>');
+  _hdr = { lblId: o.lblId, outId: o.outId, runes: o.runes.slice(), single: false, cast: _castNowS };
+  if (lbl) _paintReadingHeader();
 
   if (currentUser) {
     // Journal saved SERVER-SIDE by the proxy (atomic with the deduction). Refresh local views.
