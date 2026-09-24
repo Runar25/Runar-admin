@@ -68,9 +68,9 @@ const UI_TEXT = {
     // 2026-09-23 (KUKY report: „chybí mi Ask odpověď v reportu") — náhled ukazoval jen 280 znaků, Ask byl až za nimi.
     report_ask_attached: 'Rúnar\'s answer to your question is attached:',
     // GPT-6 sol rozbor čtení — jen admin (KUKY 2026-09-23). Název modelu se nepřekládá.
-    gpt_review_btn:   'GPT-6 sol',
-    gpt_review_wait:  'GPT-6 sol is reading…',
-    gpt_review_err:   'GPT-6 sol did not answer: {msg}',
+    gpt_review_btn:   'GPT-6 luna',   // model = supabase/functions/gpt-review MODEL (2026-09-24 sol -> luna, cena)
+    gpt_review_wait:  'GPT-6 luna is reading…',
+    gpt_review_err:   'GPT-6 luna did not answer: {msg}',
     report_type:      'Type',
     report_t_replace: 'Replace text',
     report_t_rephrase:'Reword',
@@ -462,9 +462,9 @@ const UI_TEXT = {
     report_who_save:  'Vista',
     report_flagging:  'Tilkynni:',
     report_ask_attached: 'Svar Rúnars við spurningunni fylgir með:',
-    gpt_review_btn:   'GPT-6 sol',
-    gpt_review_wait:  'GPT-6 sol er að lesa…',
-    gpt_review_err:   'GPT-6 sol svaraði ekki: {msg}',
+    gpt_review_btn:   'GPT-6 luna',
+    gpt_review_wait:  'GPT-6 luna er að lesa…',
+    gpt_review_err:   'GPT-6 luna svaraði ekki: {msg}',
     report_type:      'Tegund',
     report_t_replace: 'Skipta út texta',
     report_t_rephrase:'Umorða',

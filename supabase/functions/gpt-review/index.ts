@@ -18,7 +18,10 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 // Kopie seznamu adminů (další kopie: v2/runar-config.js a ostatní edge funkce). Shodu hlídá smoke
 // (scripts/verify_admin_emails.js) — bez toho by se kopie tiše rozešly.
 const ADMIN_EMAILS = ["kukula@agndofa.is", "info@agndofa.is"];
-const MODEL = "gpt-6-sol";
+// 2026-09-24 (KUKY: „0,2 centu je hodně moc… musí být levnější nebo použít levnější model“): sol -> luna.
+// Změřeno na ownerově čtení Isy (1647 vstup): sol s přemýšlením ~0,8 c, sol bez ~0,6 c, luna ~0,03 c (ceník run.js).
+// Luna našla tatáž tvrzení o člověku i pokyn, ale 1 vymyšlená výtka a 1 přehlédnutý obraz — sol zůstává v záloze.
+const MODEL = "gpt-6-luna";
 const MAX_SYSTEM = 20000;
 const MAX_USER = 30000;
 
@@ -51,19 +54,25 @@ serve(async (req) => {
   const key = Deno.env.get("OPENAI_API_KEY");
   if (!key) return json({ error: "no_key", message: "OPENAI_API_KEY is not set on the server." }, 503);
 
-  // reasoning_effort 'low': rozbor potřebuje trochu úvahy; 'none' (produkční tvar u čtení) sem nepatří.
+  // reasoning_effort 'none' (2026-09-24, cena): přemýšlení stálo u solu víc než polovinu výstupu a rozbor bez něj vyšel stejně.
+  // Model, který 'none' nebere, vrátí 400 → zkusí se 'minimal' (tvar jako scripts/utils/gen_direct.js).
   const ctl = new AbortController();
   const timer = setTimeout(() => ctl.abort(), 120000);
   try {
-    const res = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: { "content-type": "application/json", authorization: "Bearer " + key },
-      body: JSON.stringify({
-        model: MODEL, reasoning_effort: "low", max_completion_tokens: 2500,
-        messages: [{ role: "system", content: system }, { role: "user", content: userMsg }],
-      }),
-      signal: ctl.signal,
-    });
+    let res: Response | null = null;
+    for (const eff of ["none", "minimal"]) {
+      res = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: { "content-type": "application/json", authorization: "Bearer " + key },
+        body: JSON.stringify({
+          model: MODEL, reasoning_effort: eff, max_completion_tokens: 2500,
+          messages: [{ role: "system", content: system }, { role: "user", content: userMsg }],
+        }),
+        signal: ctl.signal,
+      });
+      if (res.status !== 400) break;
+    }
+    if (!res) return json({ error: "openai", message: "no response" }, 502);
     const data = await res.json().catch(() => ({}));
     if (!res.ok) return json({ error: "openai", message: (data?.error?.message) || ("HTTP " + res.status) }, 502);
     const text = (data?.choices?.[0]?.message?.content || "").trim();
