@@ -37,6 +37,11 @@ klíč `~/.claude/runar-api-key.txt`, generátor `docs/eval/2026-09-19-produkcni
 Důvod: subagent Claude Opus 5 produkční vady nereprodukoval (Raidho volba 0/3 vs produkce 4/4; Ask tvrzení 0/3 vs 3/3) —
 test podezřelého s ním nic nerozhodne. Obecné pokusy o tvar/obsah dál můžou jet na subagentech; hon na produkční vadu ne.
 
+⭐ **VÝJIMKA 2 (KUKY 2026-09-22: *„máš přístup na GPT API… udělej jedno stejné čtení pro všechny, měříme tokeny, kolik
+nás to stojí"*): SROVNÁNÍ MODELŮ jede přes API** — chování a cenu cizího modelu (gpt-6-sol, Opus 5, Opus 4.8) subagent
+nenapodobí. Platí i pro testy promptu, které mají ukázat, jak se ten který model zachová (várky 2026-09-23 k větě za
+obrazem). Vždy **napřed malý pilot**, owner schvaluje velikost várky; skripty v `docs/eval/2026-09-22-modely/skripty/`.
+
 Souvisí: [[measure-dont-eyeball]] · [[attack-the-metric-not-just-the-result]] ·
 [[work-efficiently-ask-if-simpler]] · [[runar-api-key-file]] (klíč zůstává pro jiné použití,
 ne pro generování čtení).

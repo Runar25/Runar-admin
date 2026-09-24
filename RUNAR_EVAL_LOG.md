@@ -5154,3 +5154,45 @@ s úhlem [1]. IS: *„Láttu hana verða að þinni eigin sýn í textanum, nið
 Claude (tatáž rodina jako Opus 4.8), značky rada/nitro jen soudcovské.
 Podklady → `docs/eval/2026-09-22-modely/opis/varka/` (rameno `detail` ve `vysledky.jsonl`, `soudy2-*`, `mereni3.json`,
 `pary-klic2.json`, `souhrn2-pro-kritika.md`) + skripty `opis_analyza2.js`, `opis_pary2.js`, `opis_soudy2.js`, `wf_detail_*.js`.
+
+## 2026-09-24 (1) — Věta „one detail" v IS · úhel [1] bez „walk past" · Opus 5 × Opus 4.8: kvalita, cena, cache
+
+**Owner:** *„ano, pusť IS test a variantu bez úhlu [1], jen pár čtení. Jak si vede Opus 5 oproti Opus 4.8? Jak to vychází
+cenově?"* Vše přes API (paměť `cteni-generuj-tady-ne-pres-api`, výjimka 2 — srovnání modelů), $0,47 celkem.
+
+**1. IS test věty „one detail"** (3 prompty z várky — Algiz, zvon přes fjord, Nauthiz; produkční IS buildery s glosou
+i korekcemi; znění `…, niður í smáatriði sem ekki kemur fram í setningunni.`; Opus 4.8 + sol, po 1 čtení). Opis měřen
+KMENY (5 znaků — přesná shoda je v IS slepá k ohýbání, kmenovač ověřen na *hjörðina/hjörðin*):
+- **Opus 4.8 opisuje v IS málo už v produkci** (kmeny obrazu v 1. větě 1/5, 1/12, 2/9); věta nepomohla, u Nauthize opis
+  **zvedla** (souvislý úsek 9 kmenů). Sol mírně méně (7/12 → 5/12, 7/9 → 4/9), úsek beze změny.
+- **Gramatika 15 IS textů** (`is-grammar-qa.py` + ruční průchod 5 nerozparsovaných vět + korpus): skutečná chyba žádná.
+  Falešné poplachy nástroje: *Kuky*, *hjörðina → jörðina*, *bleytan*. Ověřeno: *smala* řídí dativ (*engum er smalað* ✓),
+  *innan sjónmáls* 13×, *honum kyrrum* 43×; *við smíð* je vzácnější tvar (59× × *við smíði* 2416×), ne chyba. Sol opsal
+  glosu *„Ansuz (Boðberi)"* — známá vada hlavičky (backlog).
+- **Závěr:** v IS vada, kterou věta řeší, u produkčního modelu není → **IS neměnit** (precedens: EN úhel [4] 2026-08-21).
+
+**2. Úhel [1] × věta** (Opus 4.8, Jera + Perth, 2×): varianta *úhel [1] bez „the part someone would walk past"* + věta →
+značka *„nikdo si nevšiml"* **0/4** (s plným úhlem 4/4, PROD 1/4), opis zůstává nízký (úsek 2/2/2/3). Vynechat větu při
+úhlu [1] = produkce, a ta tam opisuje (Jera úsek 8, Perth 6). Zkrácení úhlu by ale změnilo úhel [1] i bez věty — nezměřeno.
+
+**3. Opus 5 × Opus 4.8** (14 produkčních EN promptů, Opus 5 1× · Opus 4.8 2×; + 3 IS):
+| | Opus 4.8 (produkce) | Opus 5 |
+|---|---|---|
+| slov (rozpočet 50–58) | 69,9 | 63,1 |
+| opsaný úsek · úsek ≥ 5 · slova obrazu v 1. větě | 3,57 · 7/28 · 45 % | 2,64 · 0/14 · 29 % |
+| rozkaz posluchači na začátku věty | 6/28 | 0/14 |
+| slepí soudci EN (14 dvojic, kánon viditelný) | 5 | **9** (shoda 13/14; bez dvojic s radou jen u jedné strany Opus 5 6 : 5) |
+| slepí soudci IS (3 dvojice) | 0 | 3 (ale Opus 5 v IS obraz převypráví víc: 3/3 „většinou") |
+- Vady Opus 5: **pouští slova zadání do textu** — *„The friction is plain"* 2× (zadání *„Name the friction honestly"*); u vůně
+  (Perth) smysl ztratil; IS: soudce hlásil kalk *„betur en augun gera"* — korpus to nerozhodne (4 slova; *„en ég geri"*
+  6599×), vedeno jako neověřené.
+- ⭐ **Opus 5 BEZ parametru `thinking` přemýšlí sám** (adaptive): spálil celých 700 tokenů, `stop_reason = max_tokens`,
+  **žádný text**. Prostá výměna ID v `claude-proxy` MODELS by čtení rozbila — nutné `thinking: {type:'disabled'}`.
+- **Cena** (týž tokenizér — vstup EN 1705 × 1704, IS 4437 × 4425; ceník stejný $5/$25; Opus 5 píše o ~7 % méně):
+  EN Opus 4.8 **$0,0119 vždy** · Opus 5 **$0,0126 studená / $0,0080 teplá cache** · IS oba ~$0,029 studená / ~$0,019 teplá.
+- ⭐ **EN systémový prompt (801 tokenů) Opus 4.8 do cache vůbec neuloží** — je pod jeho minimem; potvrzeno v produkci:
+  **40/40** posledních ownerových EN čtení bez cache. Opus 5 ho uloží. IS (1787 tokenů) ukládají oba. Při řídkém provozu
+  (cache žije 5 min) je zápis o 25 % dražší než žádná cache — IS čtení na studené cache stojí ~$0,029 proti ~$0,027 bez ní.
+**Hranice:** Opus 5 jen 1 opakování (n = 14 EN, 3 IS); p u 9 : 5 ≈ 0,42; soudci = Claude; IS soudci bez nástrojů.
+Podklady → `docs/eval/2026-09-22-modely/opis/is/`, `…/opus5-vs-opus48/`, `…/opis/varka/` (rameno `detail_u1`, Opus 5),
+skripty `opis_build_is.js`, `opis_mereni_is_u1.js`, `opis_pary3.js`, `opus5_soudy.js`, `opus5_tvrda.js`, `wf_opus5_vs_opus48.js`.

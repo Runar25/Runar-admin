@@ -1,0 +1,104 @@
+{
+ "M01": {
+  "id": "01-algiz-u0",
+  "lang": "en",
+  "A": "opus5",
+  "B": "opus48"
+ },
+ "M02": {
+  "id": "02-ansuz-u0",
+  "lang": "en",
+  "A": "opus48",
+  "B": "opus5"
+ },
+ "M03": {
+  "id": "03-jera-u1",
+  "lang": "en",
+  "A": "opus5",
+  "B": "opus48"
+ },
+ "M04": {
+  "id": "04-perth-u1",
+  "lang": "en",
+  "A": "opus48",
+  "B": "opus5"
+ },
+ "M05": {
+  "id": "05-gebo-u2",
+  "lang": "en",
+  "A": "opus5",
+  "B": "opus48"
+ },
+ "M06": {
+  "id": "06-laguz-u2",
+  "lang": "en",
+  "A": "opus48",
+  "B": "opus5"
+ },
+ "M07": {
+  "id": "07-hagalaz-u3",
+  "lang": "en",
+  "A": "opus5",
+  "B": "opus48"
+ },
+ "M08": {
+  "id": "08-ansuz-u3",
+  "lang": "en",
+  "A": "opus48",
+  "B": "opus5"
+ },
+ "M09": {
+  "id": "09-ehwaz-u4",
+  "lang": "en",
+  "A": "opus5",
+  "B": "opus48"
+ },
+ "M10": {
+  "id": "10-isa-u4",
+  "lang": "en",
+  "A": "opus48",
+  "B": "opus5"
+ },
+ "M11": {
+  "id": "11-mannaz-u5",
+  "lang": "en",
+  "A": "opus5",
+  "B": "opus48"
+ },
+ "M12": {
+  "id": "12-wunjo-u5",
+  "lang": "en",
+  "A": "opus48",
+  "B": "opus5"
+ },
+ "M13": {
+  "id": "13-thurisaz-u6",
+  "lang": "en",
+  "A": "opus5",
+  "B": "opus48"
+ },
+ "M14": {
+  "id": "14-nauthiz-u6",
+  "lang": "en",
+  "A": "opus48",
+  "B": "opus5"
+ },
+ "I01": {
+  "id": "01-algiz-u0",
+  "lang": "is",
+  "A": "opus48",
+  "B": "opus5"
+ },
+ "I02": {
+  "id": "02-ansuz-u0",
+  "lang": "is",
+  "A": "opus5",
+  "B": "opus48"
+ },
+ "I03": {
+  "id": "14-nauthiz-u6",
+  "lang": "is",
+  "A": "opus48",
+  "B": "opus5"
+ }
+}

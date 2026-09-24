@@ -1,0 +1,559 @@
+[
+ {
+  "pid": "M01",
+  "id": "01-algiz-u0",
+  "lang": "en",
+  "opus5_retells": "mostly",
+  "opus5_drift": false,
+  "opus5_lost": false,
+  "opus5_advice": [],
+  "opus5_inner": [
+   "You know this, Kuky, from any room where people move around each other."
+  ],
+  "opus5_force": [
+   "Algiz holds that wide seeing steady while the eye goes where it must."
+  ],
+  "opus5_formula": [],
+  "opus48_retells": "mostly",
+  "opus48_drift": false,
+  "opus48_lost": false,
+  "opus48_advice": [],
+  "opus48_inner": [],
+  "opus48_force": [
+   "Algiz keeps its post over that one, steady while the rest scatters."
+  ],
+  "opus48_formula": [
+   "Then the field falls away"
+  ],
+  "l3a": "opus48",
+  "l3b": "opus48",
+  "l3": "opus48",
+  "duvody": [
+   "[B=opus48] follows the angle cleanly, turns the dog's watch into the seeker's own seeing, avoids cold reading. [A=opus5] says 'You know this'. Both 69 words.",
+   "[B=opus48] tells Kuky what they know ('You know this'). [A=opus5] follows the glance-then-one angle and ends on a fair home question. Both run to 69 words."
+  ]
+ },
+ {
+  "pid": "M02",
+  "id": "02-ansuz-u0",
+  "lang": "en",
+  "opus5_retells": "mostly",
+  "opus5_drift": false,
+  "opus5_lost": false,
+  "opus5_advice": [],
+  "opus5_inner": [],
+  "opus5_force": [
+   "Ansuz is the sound that carries further than the one who made it, and reaches you where you stand."
+  ],
+  "opus5_formula": [
+   "and the rest falls away"
+  ],
+  "opus48_retells": "mostly",
+  "opus48_drift": false,
+  "opus48_lost": false,
+  "opus48_advice": [
+   "Notice which direction your body already faces before your mind weighs the reasons."
+  ],
+  "opus48_inner": [],
+  "opus48_force": [
+   "Ansuz is that pull, the note that reaches you and asks nothing but your attention."
+  ],
+  "opus48_formula": [],
+  "l3a": "opus5",
+  "l3b": "opus5",
+  "l3": "opus5",
+  "duvody": [
+   "[B=opus5]: exactly 58 words, angle followed, lean lines, Kuky late. [A=opus48] runs 70 words, has a long opening line, and gives advice ('Notice which direction…').",
+   "[A=opus48] hits 58 words with a clean essence line and the name late. [B=opus5] gives advice ('Notice which direction...'), runs to 70 words and ends close to an omen."
+  ]
+ },
+ {
+  "pid": "M03",
+  "id": "03-jera-u1",
+  "lang": "en",
+  "opus5_retells": "partly",
+  "opus5_drift": false,
+  "opus5_lost": false,
+  "opus5_advice": [],
+  "opus5_inner": [],
+  "opus5_force": [
+   "Jera holds that cloth up while the dough works underneath, unwatched."
+  ],
+  "opus5_formula": [
+   "is the part no one looks at"
+  ],
+  "opus48_retells": "partly",
+  "opus48_drift": false,
+  "opus48_lost": false,
+  "opus48_advice": [
+   "the shape it takes is not yours to force now"
+  ],
+  "opus48_inner": [],
+  "opus48_force": [
+   "Jera does its slow work under that cover, raising the dough while the room stays quiet."
+  ],
+  "opus48_formula": [],
+  "l3a": "opus5",
+  "l3b": "opus5",
+  "l3": "opus5",
+  "duvody": [
+   "[A=opus5] is tighter (64 words vs 77), lands on work plainly, and gives a clean two-state ending. [B=opus48] asserts the work is still moving and adds 'not yours to force'.",
+   "[B=opus48] is tighter, with a concrete crease, a covered bowl and two distinct closing states. [A=opus5] runs to 77 words and lectures ('not yours to force')."
+  ]
+ },
+ {
+  "pid": "M04",
+  "id": "04-perth-u1",
+  "lang": "en",
+  "opus5_retells": "no",
+  "opus5_drift": true,
+  "opus5_lost": true,
+  "opus5_advice": [],
+  "opus5_inner": [],
+  "opus5_force": [
+   "Perth is the working that happens under a cover you did not lift."
+  ],
+  "opus5_formula": [
+   "The friction is plain:",
+   "easy to walk past"
+  ],
+  "opus48_retells": "mostly",
+  "opus48_drift": false,
+  "opus48_lost": false,
+  "opus48_advice": [],
+  "opus48_inner": [],
+  "opus48_force": [
+   "Perth is that scent, the thing at work where you cannot yet look."
+  ],
+  "opus48_formula": [],
+  "l3a": "opus48",
+  "l3b": "opus48",
+  "l3": "opus48",
+  "duvody": [
+   "[A=opus48] carries the smell through in full sentences. [B=opus5] opens on a fragment, drops the smell, and leaks brief wording ('The friction is plain', 'easy to walk past').",
+   "[A=opus48] leaks instructions ('The friction is plain', 'easy to walk past'), opens on a fragment and drops the smell. [B=opus5] keeps the smell and names the friction naturally."
+  ]
+ },
+ {
+  "pid": "M05",
+  "id": "05-gebo-u2",
+  "lang": "en",
+  "opus5_retells": "no",
+  "opus5_drift": false,
+  "opus5_lost": false,
+  "opus5_advice": [],
+  "opus5_inner": [],
+  "opus5_force": [
+   "This is Gebo, the exchange between the sea and the shore, where neither side stays untouched."
+  ],
+  "opus5_formula": [
+   "the exchange between the sea and the shore"
+  ],
+  "opus48_retells": "mostly",
+  "opus48_drift": false,
+  "opus48_lost": false,
+  "opus48_advice": [],
+  "opus48_inner": [
+   "what feels uneven between you and another"
+  ],
+  "opus48_force": [
+   "This is Gebo, the exchange between the water and the sand, where neither hoards what passes between them."
+  ],
+  "opus48_formula": [
+   "the exchange between the water and the sand"
+  ],
+  "l3a": "opus5",
+  "l3b": "opus5",
+  "l3": "opus5",
+  "duvody": [
+   "[A=opus5]'s question stays a mirror at 59 words. [B=opus48] presumes an unevenness, closes on a reassuring answer, and runs 66 words. [A=opus5] copies the brief's example verbatim.",
+   "Both copy the brief's 'exchange' example. [A=opus5] assumes the seeker feels unevenness and runs to 66 words. [B=opus48] stays close to the count with a clean question."
+  ]
+ },
+ {
+  "pid": "M06",
+  "id": "06-laguz-u2",
+  "lang": "en",
+  "opus5_retells": "mostly",
+  "opus5_drift": false,
+  "opus5_lost": false,
+  "opus5_advice": [],
+  "opus5_inner": [],
+  "opus5_force": [
+   "Laguz carries that water beneath the surface, unhurried, going where the land lets it."
+  ],
+  "opus5_formula": [],
+  "opus48_retells": "mostly",
+  "opus48_drift": false,
+  "opus48_lost": false,
+  "opus48_advice": [
+   "Rest comes not by force but by letting the slow water do its work beneath you.",
+   "only that you stand and feel it come"
+  ],
+  "opus48_inner": [],
+  "opus48_force": [
+   "Laguz moves under the surface, carrying what the light has not yet touched."
+  ],
+  "opus48_formula": [
+   "Rest comes not by force but by letting"
+  ],
+  "l3a": "opus5",
+  "l3b": "opus5",
+  "l3": "opus5",
+  "duvody": [
+   "[B=opus5] ends on a state, as the brief asks. [A=opus48] prescribes how rest comes and ends by telling the seeker to stand and feel it.",
+   "[B=opus5] prescribes ('by letting', 'stand and feel it come'). [A=opus48] stays descriptive, though its swell through stone blurs and 'Mending often works this way' generalizes."
+  ]
+ },
+ {
+  "pid": "M07",
+  "id": "07-hagalaz-u3",
+  "lang": "en",
+  "opus5_retells": "no",
+  "opus5_drift": false,
+  "opus5_lost": false,
+  "opus5_advice": [],
+  "opus5_inner": [],
+  "opus5_force": [
+   "Hagalaz took the fence and left the field open on every side."
+  ],
+  "opus5_formula": [],
+  "opus48_retells": "no",
+  "opus48_drift": false,
+  "opus48_lost": false,
+  "opus48_advice": [],
+  "opus48_inner": [],
+  "opus48_force": [
+   "Hagalaz has torn the boundary open",
+   "Hagalaz has torn the boundary open, and the field runs off in two directions now"
+  ],
+  "opus48_formula": [],
+  "l3a": "opus48",
+  "l3b": "opus48",
+  "l3": "opus48",
+  "duvody": [
+   "[B=opus48] lands on the divided way ('two directions') and carries the fence into a concrete close. [A=opus5]'s ending turns abstract and slightly empowering.",
+   "[A=opus5] lands on the divide ('two directions') and closes on the image ('fence no longer chooses'). [B=opus48]'s 'every side' and 'own choosing' drift toward self-help."
+  ]
+ },
+ {
+  "pid": "M08",
+  "id": "08-ansuz-u3",
+  "lang": "en",
+  "opus5_retells": "no",
+  "opus5_drift": false,
+  "opus5_lost": false,
+  "opus5_advice": [],
+  "opus5_inner": [],
+  "opus5_force": [
+   "Ansuz carries that change of note across the room before the water ever moves."
+  ],
+  "opus5_formula": [],
+  "opus48_retells": "mostly",
+  "opus48_drift": false,
+  "opus48_lost": false,
+  "opus48_advice": [],
+  "opus48_inner": [
+   "You have been listening this way for some time, catching the change in tone under the ordinary hours."
+  ],
+  "opus48_force": [
+   "Ansuz carries that shift to your ear before your eyes have anything to show."
+  ],
+  "opus48_formula": [],
+  "l3a": "opus5",
+  "l3b": "opus5",
+  "l3": "opus5",
+  "duvody": [
+   "[B=opus5] opens on the fixed kettle as the angle asks and stays in the scene; [A=opus48] narrates the seeker's listening habit before the closing line.",
+   "[A=opus48] opens on the fixed kettle as the angle asks and stays in the image. [B=opus5]'s third sentence tells the seeker how they have been listening."
+  ]
+ },
+ {
+  "pid": "M09",
+  "id": "09-ehwaz-u4",
+  "lang": "en",
+  "opus5_retells": "partly",
+  "opus5_drift": false,
+  "opus5_lost": false,
+  "opus5_advice": [
+   "you are asked to move before the footing proves itself"
+  ],
+  "opus5_inner": [],
+  "opus5_force": [],
+  "opus5_formula": [
+   "The friction is real"
+  ],
+  "opus48_retells": "no",
+  "opus48_drift": false,
+  "opus48_lost": false,
+  "opus48_advice": [
+   "you must move before you can see the footing beneath you",
+   "when you must move before you can see the footing beneath you"
+  ],
+  "opus48_inner": [],
+  "opus48_force": [
+   "Ehwaz is the horse that reads the water through its legs, finding the crossing your eyes cannot mark."
+  ],
+  "opus48_formula": [],
+  "l3a": "opus48",
+  "l3b": "opus48",
+  "l3": "opus48",
+  "duvody": [
+   "[B=opus48] lands the image on a divided way (two openings); [A=opus5] leaks the brief's 'friction' instruction and never shows a fork.",
+   "[A=opus5] puts a way that divides into the scene with the far bank's two openings. [B=opus48] leaks the brief ('The friction is real') and never shows a fork."
+  ]
+ },
+ {
+  "pid": "M10",
+  "id": "10-isa-u4",
+  "lang": "en",
+  "opus5_retells": "partly",
+  "opus5_drift": true,
+  "opus5_lost": true,
+  "opus5_advice": [],
+  "opus5_inner": [
+   "What looks like a halt in you may be work that has gone out of sight.",
+   "that you thought had stopped"
+  ],
+  "opus5_force": [
+   "Isa holds the surface still while the water keeps its course underneath."
+  ],
+  "opus5_formula": [],
+  "opus48_retells": "partly",
+  "opus48_drift": true,
+  "opus48_lost": true,
+  "opus48_advice": [],
+  "opus48_inner": [],
+  "opus48_force": [
+   "Isa holds the water quiet, yet the current runs on unseen under the crust."
+  ],
+  "opus48_formula": [
+   "What looks like nothing changing is often the slow work you cannot watch happening."
+  ],
+  "l3a": "opus48",
+  "l3b": "opus5",
+  "l3": "opus48!",
+  "duvody": [
+   "Both are lean and close well; [B=opus5] presumes the seeker's inner halt and beliefs, while [A=opus48] stays in the image with its question.",
+   "[A=opus48] ends on an open question that turns the seeker inward. [B=opus5] uses a stock aphorism and ends on a comforting yes-or-no question. Both miss the sound until late.",
+   "[B=opus5]'s \"a halt in you\" describes the seeker's state before the closing line, and \"you thought had stopped\" does it again. [A=opus48] keeps to the image and ends on a sound-led possibility. Both run over 58 words."
+  ]
+ },
+ {
+  "pid": "M11",
+  "id": "11-mannaz-u5",
+  "lang": "en",
+  "opus5_retells": "no",
+  "opus5_drift": false,
+  "opus5_lost": false,
+  "opus5_advice": [],
+  "opus5_inner": [],
+  "opus5_force": [],
+  "opus5_formula": [
+   "the water holds no verdict on it"
+  ],
+  "opus48_retells": "partly",
+  "opus48_drift": false,
+  "opus48_lost": false,
+  "opus48_advice": [],
+  "opus48_inner": [],
+  "opus48_force": [],
+  "opus48_formula": [
+   "only you can weigh which it is"
+  ],
+  "l3a": "opus5",
+  "l3b": "opus5",
+  "l3": "opus5",
+  "duvody": [
+   "[A=opus5]'s opening follows the edge angle (sky becoming face) and stays shorter; [B=opus48] runs long, with a bloated first sentence and a leaked 'only you can weigh'.",
+   "[B=opus48] follows the edge angle exactly (the sky becoming a face), is leaner, and ends cleanly. [A=opus5] explains rest and closes on a leaked 'only you can weigh'."
+  ]
+ },
+ {
+  "pid": "M12",
+  "id": "12-wunjo-u5",
+  "lang": "en",
+  "opus5_retells": "partly",
+  "opus5_drift": false,
+  "opus5_lost": false,
+  "opus5_advice": [],
+  "opus5_inner": [],
+  "opus5_force": [],
+  "opus5_formula": [],
+  "opus48_retells": "partly",
+  "opus48_drift": false,
+  "opus48_lost": false,
+  "opus48_advice": [],
+  "opus48_inner": [],
+  "opus48_force": [],
+  "opus48_formula": [],
+  "l3a": "opus5",
+  "l3b": "opus5",
+  "l3": "opus5",
+  "duvody": [
+   "[B=opus5] is lean and within count, with a clean essence line and a concrete home closing; [A=opus48] runs about 81 words in heavy sentences.",
+   "[A=opus48] is lean and close to the word count, and sharpens one specific thing (the unspoken tending). [B=opus5] runs to 80 words with a long, comforting close."
+  ]
+ },
+ {
+  "pid": "M13",
+  "id": "13-thurisaz-u6",
+  "lang": "en",
+  "opus5_retells": "partly",
+  "opus5_drift": false,
+  "opus5_lost": false,
+  "opus5_advice": [],
+  "opus5_inner": [],
+  "opus5_force": [],
+  "opus5_formula": [],
+  "opus48_retells": "no",
+  "opus48_drift": false,
+  "opus48_lost": false,
+  "opus48_advice": [],
+  "opus48_inner": [],
+  "opus48_force": [],
+  "opus48_formula": [
+   "This is the threshold"
+  ],
+  "l3a": "opus5",
+  "l3b": "opus5",
+  "l3": "opus5",
+  "duvody": [
+   "[A=opus5] is tight and on count, with concrete friction ('costs you the same daylight') and a plain close; [B=opus48] runs long and drops a flat 'This is the threshold'.",
+   "[B=opus48] is tighter and near the word count, with a crisp essence line. Its concrete daylight cost and plain close beat [A=opus5]'s longer, more declarative 'This is the threshold'."
+  ]
+ },
+ {
+  "pid": "M14",
+  "id": "14-nauthiz-u6",
+  "lang": "en",
+  "opus5_retells": "mostly",
+  "opus5_drift": false,
+  "opus5_lost": false,
+  "opus5_advice": [
+   "Could the thing you are making be asking for dry air rather than more strength?",
+   "the hour for forcing it has not come"
+  ],
+  "opus5_inner": [],
+  "opus5_force": [
+   "Nauthiz holds the knot closed while the fibres stay tight."
+  ],
+  "opus5_formula": [],
+  "opus48_retells": "mostly",
+  "opus48_drift": false,
+  "opus48_lost": false,
+  "opus48_advice": [
+   "Might the tightness be asking to be worked from a different angle than the one you have set your weight against?"
+  ],
+  "opus48_inner": [],
+  "opus48_force": [
+   "Here Nauthiz holds the work fast, refusing the force you bring against it."
+  ],
+  "opus48_formula": [],
+  "l3a": "opus5",
+  "l3b": "opus5",
+  "l3": "opus5",
+  "duvody": [
+   "[B=opus5] is nearer the word count and its question lands on what is being made; [A=opus48] runs about 80 words and ends on plainer advice.",
+   "[A=opus48] lands the knot on the seeker's making and stays nearer the count. [B=opus5]'s image is vivid but runs to 80 words and barely touches work."
+  ]
+ },
+ {
+  "pid": "I01",
+  "id": "01-algiz-u0",
+  "lang": "is",
+  "opus5_retells": "mostly",
+  "opus5_drift": false,
+  "opus5_lost": false,
+  "opus5_advice": [],
+  "opus5_inner": [],
+  "opus5_force": [
+   "Algiz heldur honum kyrrum meðan hann horfir."
+  ],
+  "opus5_formula": [],
+  "opus48_retells": "mostly",
+  "opus48_drift": false,
+  "opus48_lost": false,
+  "opus48_advice": [],
+  "opus48_inner": [],
+  "opus48_force": [
+   "Algiz heldur augunum opnum yfir öllum sem sofa við hlið hans."
+  ],
+  "opus48_formula": [
+   "Líttu fyrst yfir alla myndina, láttu svo allt hverfa nema einn punkt."
+  ],
+  "l3a": "opus5",
+  "l3b": "opus5",
+  "l3": "opus5",
+  "duvody": [
+   "[A=opus48] opens by reciting the angle instruction nearly verbatim. [B=opus5] carries the herd image further (counting with eyes) and gives a cleaner two-state family ending.",
+   "[B=opus5] opens by pasting the angle instruction verbatim and loses focus. [A=opus48] keeps one concrete image, is in range, and ends on two plain family states."
+  ]
+ },
+ {
+  "pid": "I02",
+  "id": "02-ansuz-u0",
+  "lang": "is",
+  "opus5_retells": "mostly",
+  "opus5_drift": false,
+  "opus5_lost": false,
+  "opus5_advice": [],
+  "opus5_inner": [],
+  "opus5_force": [
+   "Ansuz ber hljóðið yfir vatnið, alla leið að þér."
+  ],
+  "opus5_formula": [],
+  "opus48_retells": "mostly",
+  "opus48_drift": false,
+  "opus48_lost": false,
+  "opus48_advice": [],
+  "opus48_inner": [],
+  "opus48_force": [
+   "Ansuz ber hann til þín, svo þú snýrð í áttina án þess að ákveða það."
+  ],
+  "opus48_formula": [
+   "Þú lítur yfir fjörðinn allan, svo hverfur allt nema eitt.",
+   "svo hverfur allt nema eitt"
+  ],
+  "l3a": "opus5",
+  "l3b": "opus5",
+  "l3": "opus5",
+  "duvody": [
+   "[A=opus5] is lean and extends the image concretely (someone standing and ringing). [B=opus48] echoes the angle instruction and packs the image and the rune into one heavy sentence.",
+   "[B=opus48] takes the image one real step further (someone stands and rings) and is leaner. [A=opus5] echoes the instruction wording and drifts into vague calling."
+  ]
+ },
+ {
+  "pid": "I03",
+  "id": "14-nauthiz-u6",
+  "lang": "is",
+  "opus5_retells": "mostly",
+  "opus5_drift": false,
+  "opus5_lost": false,
+  "opus5_advice": [],
+  "opus5_inner": [],
+  "opus5_force": [
+   "Nauthiz heldur hnútnum þéttum meðan þú vinnur."
+  ],
+  "opus5_formula": [],
+  "opus48_retells": "partly",
+  "opus48_drift": false,
+  "opus48_lost": false,
+  "opus48_advice": [
+   "Hann gefur sig ekki fyrir kraftinum einum, Kuky, heldur fyrir þolinmæði.",
+   "Gæti þessi hnútur í verkinu þínu verið það sem kennir þér hvar þú átt að hætta að toga?"
+  ],
+  "opus48_inner": [],
+  "opus48_force": [
+   "Nauðsyn heldur hnútnum saman, hversu fast sem þú togar."
+  ],
+  "opus48_formula": [],
+  "l3a": "opus5",
+  "l3b": "opus5",
+  "l3": "opus5",
+  "duvody": [
+   "[A=opus48] invents a patience moral and asks a leading question about stopping. [B=opus5]'s hands-learn image and plain closing question fit the brief, despite the calque 'augun gera'.",
+   "[A=opus48] ends on an open, blunt mirror question. [B=opus5] moralizes about patience, and its question points to a step (stop pulling). [A=opus48] is slightly short."
+  ]
+ }
+]

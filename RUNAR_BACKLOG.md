@@ -117,6 +117,13 @@
   EN `… If the image lives in sound, open with what is heard but not seen.` · IS (ověřeno korpusem) `… Ef myndin berst að
   eyrum, byrjaðu þá á því sem heyrist en sést ekki.` ✅ **Owner rozhodl výjimku** (DECISIONS 2026-09-23 (17)) → handoff
   CODE-tune předán; zbývá nasadit.
+- [ ] **Kandidát: Opus 5 místo Opus 4.8** (EVAL_LOG 2026-09-24 (1)) — EN: slepí soudci 9 : 5, méně opisu, 0 rozkazů,
+  kratší; cena za čtení stejná až nižší (s teplou cache EN $0,0080 × $0,0119). ⚠️ **V proxy NUTNÉ `thinking: {type:'disabled'}`**
+  — bez něj Opus 5 přemýšlí, na `max_tokens` 700 nevrátí text. Vady: pouští slova zadání (*„The friction is plain"*), v IS
+  převypráví obraz víc. Rozhoduje owner; před přechodem várka IS (IS primární) a Ask/Norns.
+- [ ] **EN systémový prompt se v produkci nikdy necachuje** (Opus 4.8, 801 tokenů pod minimem; 40/40 ownerových čtení) —
+  `cache_control` na něm nic nedělá. IS se cachuje, ale při řídkém provozu je zápis dražší než žádná cache. Změřit skutečný
+  poměr hit/zápis v IS provozu, pak rozhodnout (CODE-tune, `claude-proxy`).
 - [ ] **Shrine: korekce nejdou smazat** (nález 2026-09-23) — záložka WORD CORRECTIONS umí jen přidat a vypsat
   (`runar-shrine.html` `saveCorrection`/`loadCorrections`), mazání nemá. Owner tak smaže řádek jen přes Supabase. Doplnit
   mazání (jen admin, s potvrzením) — CODE-tune.
@@ -146,6 +153,9 @@
   zní líp než produkce. **Várka hotová (EVAL_LOG 2026-09-23 (9)):** převyprávění klesá u obou modelů, celkově lepší čtení
   nezjištěno (Opus 18 : 10 dělají rady v PROD, bez nich 10 : 8). **Před produkcí:** IS protějšek změřit stejnými metrikami
   (znění ověřené korpusem je v EVAL_LOG) + vyřešit zdvojení s úhlem [1] (*„no one thought to watch"* 4/4).
+  **2026-09-24 (1):** IS test — Opus 4.8 v IS obraz skoro neopisuje ani v produkci, věta nepomohla → **IS neměnit**, jen EN.
+  Úhel [1] bez *„the part someone would walk past"* + věta: značka 0/4, opis nízký (4 čtení) — zkrácení úhlu by se ale
+  projevilo i bez věty, nezměřeno. **Čeká na ownera:** EN věta do produkce ano/ne + co s úhlem [1].
 - [ ] **KANDIDÁT: most IS „ástand … sagt með orðum myndarinnar"** (CODE-read 2026-09-22, NEROZHODNUTO — owner).
   Ve tvaru „dvě možnosti" přidat k *„hvort um sig ástand sem gæti átt við"* frázi *„sagt með orðum myndarinnar"*
   (tvar ověřeného Norns landingu A). gpt-6-sol: konce z pojmů (*vani / kostur*) na věcné 5/5; Opus 5: *gæti* beze

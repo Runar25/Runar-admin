@@ -1,27 +1,33 @@
-// CODE-read 2026-09-23 — spusti varku opis2/*.json: kazdy prompt × rameno (prod|nova) × model × opakovani.
+// CODE-read 2026-09-23 — spusti varku <slozka>/*.json: kazdy prompt × rameno × model × opakovani.
 // Opus 4.8 = PRODUKCE (claude-proxy MODELS[0]): bez thinking, system s cache_control — jako proxy. gpt-6-sol: reasoning none.
-// Pokracuje, kde skoncil (klic uz v vysledky.jsonl se preskoci). Soubezne max 6 volani.
-//   node opis_run.js [opakovani=2] [filtr-id]
+// Opus 5: thinking {type:'disabled'} — stejne jako srovnani 2026-09-22 (1). Varianta „claude-opus-5@bez" posle volani
+// BEZ parametru thinking (tak, jak dnes vola proxy) — at je videt, co by model delal po prosté vymene ID.
+// Pokracuje, kde skoncil (klic uz ve vysledky.jsonl se preskoci). Soubezne max 6 volani. Uklada i tokeny a latenci.
+//   node opis_run.js [opakovani=2] [filtr-id] [ramena=prod,nova] [modely=gpt-6-sol,claude-opus-4-8] [slozka=opis2]
 'use strict';
 const fs = require('fs'), os = require('os'), path = require('path');
-const DIR = path.join(__dirname, 'opis2');
 const K_ANT = fs.readFileSync(path.join(os.homedir(), '.claude', 'runar-api-key.txt'), 'utf8').trim();
 const K_OAI = fs.readFileSync(path.join(os.homedir(), '.claude', 'runar-openai-key.txt'), 'utf8').trim();
-const [REP = '2', FILTR = '', RAMENA = 'prod,nova'] = process.argv.slice(2);   // 2026-09-23: + rameno 'detail' (znění „one detail")
-const MODELY = ['gpt-6-sol', 'claude-opus-4-8'];
-const CENA = { 'claude-opus-4-8': { in: 5, w: 6.25, hit: 0.5, out: 25 }, 'gpt-6-sol': { in: 2, hit: 0.2, out: 10 } };
+const [REP = '2', FILTR = '', RAMENA = 'prod,nova', MOD = 'gpt-6-sol,claude-opus-4-8', SLOZKA = 'opis2'] = process.argv.slice(2);
+const DIR = path.join(__dirname, SLOZKA);
+const MODELY = MOD.split(',');
+const CENA = { 'claude-opus-4-8': { in: 5, w: 6.25, hit: 0.5, out: 25 }, 'claude-opus-5': { in: 5, w: 6.25, hit: 0.5, out: 25 }, 'gpt-6-sol': { in: 2, hit: 0.2, out: 10 } };
 const OUTF = path.join(DIR, 'vysledky.jsonl');
 const hotovo = new Set(fs.existsSync(OUTF) ? fs.readFileSync(OUTF, 'utf8').trim().split('\n').filter(Boolean).map(l => JSON.parse(l)).filter(x => !x.error).map(x => x.klic) : []);
 
-async function volej(model, sys, user, maxTok) {
+async function volej(modelTag, sys, user, maxTok) {
+  const [model, varianta] = modelTag.split('@');
+  const t0 = Date.now();
   if (model.startsWith('claude')) {
+    const body = { model, max_tokens: maxTok, system: [{ type: 'text', text: sys, cache_control: { type: 'ephemeral' } }], messages: [{ role: 'user', content: user }] };
+    if (model === 'claude-opus-5' && varianta !== 'bez') body.thinking = { type: 'disabled' };
     const r = await fetch('https://api.anthropic.com/v1/messages', { method: 'POST',
-      headers: { 'x-api-key': K_ANT, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
-      body: JSON.stringify({ model, max_tokens: maxTok, system: [{ type: 'text', text: sys, cache_control: { type: 'ephemeral' } }],
-        messages: [{ role: 'user', content: user }] }) });
+      headers: { 'x-api-key': K_ANT, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' }, body: JSON.stringify(body) });
     const j = await r.json(); if (!r.ok) throw new Error(JSON.stringify(j.error));
     const u = j.usage, c = CENA[model];
-    return { raw: j.content.filter(x => x.type === 'text').map(x => x.text).join('').trim(), stop: j.stop_reason,
+    return { raw: j.content.filter(x => x.type === 'text').map(x => x.text).join('').trim(), stop: j.stop_reason, ms: Date.now() - t0,
+      thinkingBloku: j.content.filter(x => x.type === 'thinking' || x.type === 'redacted_thinking').length,
+      tok: { in: u.input_tokens, cw: u.cache_creation_input_tokens || 0, cr: u.cache_read_input_tokens || 0, out: u.output_tokens },
       usd: (u.input_tokens * c.in + (u.cache_creation_input_tokens || 0) * c.w + (u.cache_read_input_tokens || 0) * c.hit + u.output_tokens * c.out) / 1e6 };
   }
   const r = await fetch('https://api.openai.com/v1/chat/completions', { method: 'POST',
@@ -30,7 +36,8 @@ async function volej(model, sys, user, maxTok) {
       messages: [{ role: 'system', content: sys }, { role: 'user', content: user }] }) });
   const j = await r.json(); if (!r.ok) throw new Error(JSON.stringify(j.error));
   const u = j.usage, c = CENA[model], ca = (u.prompt_tokens_details && u.prompt_tokens_details.cached_tokens) || 0;
-  return { raw: j.choices[0].message.content.trim(), stop: j.choices[0].finish_reason, usd: ((u.prompt_tokens - ca) * c.in + ca * c.hit + u.completion_tokens * c.out) / 1e6 };
+  return { raw: j.choices[0].message.content.trim(), stop: j.choices[0].finish_reason, ms: Date.now() - t0,
+    tok: { in: u.prompt_tokens - ca, cr: ca, out: u.completion_tokens }, usd: ((u.prompt_tokens - ca) * c.in + ca * c.hit + u.completion_tokens * c.out) / 1e6 };
 }
 function text(raw) {
   try { return JSON.parse(raw.slice(raw.indexOf('['), raw.lastIndexOf(']') + 1)).map(x => x.text).join(' ').trim(); } catch (e) { return null; }
@@ -40,6 +47,7 @@ const ukoly = [];
 for (const f of fs.readdirSync(DIR).filter(f => /^\d\d-.+\.json$/.test(f) && f.includes(FILTR)).sort()) {
   const P = JSON.parse(fs.readFileSync(path.join(DIR, f), 'utf8'));
   for (let rep = 1; rep <= +REP; rep++) for (const model of MODELY) for (const rameno of RAMENA.split(',')) {
+    if (!P.ramena[rameno]) continue;
     const klic = [P.id, model, rameno, rep].join('|');
     if (!hotovo.has(klic)) ukoly.push({ P, model, rameno, rep, klic });
   }
@@ -53,10 +61,10 @@ async function worker() {
     try {
       const o = await volej(u.model, u.P.sys, u.P.ramena[u.rameno], u.P.max_tokens);
       const t = text(o.raw); usd += o.usd;
-      zapis = { klic: u.klic, id: u.P.id, model: u.model, rameno: u.rameno, rep: u.rep, text: t, raw: t ? undefined : o.raw, stop: o.stop, usd: o.usd };
+      zapis = { klic: u.klic, id: u.P.id, model: u.model, rameno: u.rameno, rep: u.rep, text: t, raw: t ? undefined : o.raw, stop: o.stop, usd: o.usd, ms: o.ms, tok: o.tok, thinkingBloku: o.thinkingBloku };
       if (!t) chyb++;
     } catch (e) { zapis = { klic: u.klic, id: u.P.id, model: u.model, rameno: u.rameno, rep: u.rep, error: e.message.slice(0, 300) }; chyb++; }
-    fs.appendFileSync(path.join(DIR, 'vysledky.jsonl'), JSON.stringify(zapis) + '\n');
+    fs.appendFileSync(OUTF, JSON.stringify(zapis) + '\n');
   }
 }
 (async () => {
