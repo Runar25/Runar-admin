@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-24",
- "prompt_version": "v4.50-tenke-runy",
+ "prompt_version": "v4.51-uhel-zvuk",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -28,7 +28,7 @@
    "zacatek": "Open with the one thing in the image that stays fixed while the rest g"
   },
   {
-   "hash": "5c45959d9508",
+   "hash": "3baebbd06b0a",
    "lang": "en",
    "zdroj": "uhel[4]",
    "zacatek": "Open with the part of the image that is out of sight — under it, behin"
@@ -628,10 +628,10 @@
    "zacatek": "Byrjaðu á því eina í myndinni sem stendur fast meðan allt annað lætur "
   },
   {
-   "hash": "8935f0ee5405",
+   "hash": "8fc5ee04b04d",
    "lang": "is",
    "zdroj": "uhel[4]",
-   "zacatek": "Byrjaðu á því sem myndin felur undir yfirborðinu, óséð enn."
+   "zacatek": "Byrjaðu á því sem myndin felur undir yfirborðinu, óséð enn. Ef myndin "
   },
   {
    "hash": "d541cc208519",

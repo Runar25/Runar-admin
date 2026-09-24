@@ -222,7 +222,10 @@ const READING_ANGLES = [
   // 2026-08-21: 7/8 studenych cteni proti prumeru poolu 5,1. „Hides beneath its surface"
   // model cetl jako pozvanku mluvit o skrytem V CLOVEKU. Skryte ted zustava v obraze.
   // Islandsky protejsek se nemeni — viz hlavicka patche.
-  'Open with the part of the image that is out of sight — under it, behind it, or not yet arrived.',
+  // 2026-09-24 (owner 2026-09-23, DECISIONS 2026-09-23 (17), handoff CODE-read): u zvukového obrazu (Isa „Under the ice
+  // the stream can still be heard“) Opus 4.8 zvuk v prvních dvou větách ztratil 4/4; s výjimkou 3/3 (EVAL_LOG 2026-09-23 (8)).
+  // Výjimka ve větě úhlu, ne výluka — stejný vzor jako [2] „If nothing moves…“. Mez: 1 obraz × 3 čtení, jen EN.
+  'Open with the part of the image that is out of sight — under it, behind it, or not yet arrived. If the image lives in sound, open with what is heard but not seen.',
   'Open at the edge of the image, where one thing turns into another.',
   'Open by setting the seeker inside the image, at the spot where it is happening.',
 ];
@@ -233,7 +236,9 @@ const READING_ANGLES_IS = [
   'Byrjaðu á minnsta hlutnum í myndinni, þeim sem flestir gengju fram hjá.',
   'Byrjaðu á hreyfingunni sem er þegar hafin í myndinni. Ef ekkert hreyfist, byrjaðu þá á kyrrðinni sjálfri.',
   'Byrjaðu á því eina í myndinni sem stendur fast meðan allt annað lætur undan.',
-  'Byrjaðu á því sem myndin felur undir yfirborðinu, óséð enn.',
+  // [4] 2026-09-24: táž výjimka pro zvukový obraz jako EN. Korpus: berst að eyrum 12, byrjaðu þá á 75, því sem heyrist 53,
+  // en sést ekki 111. NE „lifir í hljóði“ — „í hljóði“ = mlčky. is-grammar-qa čisté (W001 u „byrjaðu“ = šum rozkazovacího tvaru).
+  'Byrjaðu á því sem myndin felur undir yfirborðinu, óséð enn. Ef myndin berst að eyrum, byrjaðu þá á því sem heyrist en sést ekki.',
   'Byrjaðu á jaðri myndarinnar, þar sem eitt verður að öðru.',
   'Byrjaðu á því að setja leitandann inn í myndina, á staðinn þar sem hún gerist.',
 ];
