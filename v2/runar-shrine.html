@@ -287,6 +287,7 @@ textarea::placeholder{color:var(--dim);}
   <button class="tab"     id="tab-codes-btn"    onclick="showTab('codes')">ᚠ GIFT CODES</button>
   <button class="tab"     id="tab-reports-btn"  onclick="showTab('reports')">⚑ REPORTS</button>
   <button class="tab"     id="tab-readings-btn" onclick="showTab('readings')">📜 READINGS</button>
+  <button class="tab"     id="tab-voice-btn"    onclick="showTab('voice')">🔊 VOICE</button>
   <a class="tab" href="runar-yggdrasil.html" style="text-decoration:none;">🌳 YGGDRASIL</a>
   <a class="tab" href="runar-reader.html" style="text-decoration:none;">👁 USER VIEW</a>
 </div>
@@ -444,6 +445,31 @@ textarea::placeholder{color:var(--dim);}
   </div>
 </div>
 
+<!-- VOICE (2026-09-25, KUKY „ano ukaž živý stav"): předplatné ElevenLabs + naše evidence hlasu. Maluje runar-voice-admin.js. -->
+<div class="pane" id="pane-voice">
+  <style>
+    #pane-voice .vc-big{font-size:2em;color:var(--gold);margin:6px 0;}
+    #pane-voice .vc-big span{font-size:0.45em;color:#b9c4d6;}
+    #pane-voice .vc-bar{height:8px;background:#0d1220;border:1px solid var(--border);margin:6px 0 2px;}
+    #pane-voice .vc-bar div{height:100%;background:var(--gold);}
+    #pane-voice .vc-pct,#pane-voice .vc-meta,#pane-voice .vc-note{color:#b9c4d6;font-size:0.85em;margin:4px 0;}
+    #pane-voice .vc-note{font-style:italic;}
+    #pane-voice h4{color:var(--gold);font-size:0.8em;letter-spacing:1.5px;margin:18px 0 6px;text-transform:uppercase;}
+    #pane-voice h5{color:#c9b77a;font-size:0.75em;letter-spacing:1px;margin:10px 0 4px;}
+    #pane-voice .vc-cols{display:flex;gap:24px;flex-wrap:wrap;}
+    #pane-voice .vc-tab{border-collapse:collapse;font-size:0.85em;color:#e6e9f0;font-variant-numeric:tabular-nums;}
+    #pane-voice .vc-tab td,#pane-voice .vc-tab th{padding:3px 12px 3px 0;text-align:left;}
+    #pane-voice .vc-tab th{color:#8a94a6;font-weight:normal;}
+    #pane-voice .vc-empty{color:#8a94a6;font-size:0.85em;}
+  </style>
+  <div class="card">
+    <div class="card-lbl">🔊 HLAS — ELEVENLABS</div>
+    <button class="btn" onclick="loadVoice()">Obnovit</button>
+    <div class="status" id="st-voice"></div>
+    <div id="voice-box"></div>
+  </div>
+</div>
+
 <div class="pane" id="pane-readings">
   <style>
     #pane-readings .rd-item{border:1px solid var(--border);border-left:3px solid var(--gold);padding:10px 12px;margin-bottom:8px;background:#0d1220;}
@@ -490,6 +516,7 @@ textarea::placeholder{color:var(--dim);}
 </div><!-- .app -->
 <script src="runar-reports-admin.js"></script>
 <script src="runar-readings-admin.js"></script>
+<script src="runar-voice-admin.js"></script>
 <script>
 const sb = supabase.createClient(SB_URL, SB_KEY);
 
@@ -678,7 +705,7 @@ function updateUIText() {
 
 // ─── TABS ───────────────────────────────────────────────
 function showTab(name) {
-  ['teach','progress','correct','codes','reports','readings'].forEach(n => {
+  ['teach','progress','correct','codes','reports','readings','voice'].forEach(n => {
     document.getElementById('pane-' + n)?.classList.remove('on');
     document.getElementById('tab-' + n + '-btn')?.classList.remove('on');
   });
@@ -689,6 +716,7 @@ function showTab(name) {
   if (name === 'codes')    initCodesTab();
   if (name === 'reports') { window.initReportsTab(); window.loadReports(); }
   if (name === 'readings') { window.initReadingsTab(); window.loadReadings(); }
+  if (name === 'voice')    window.loadVoice();   // 2026-09-25: živý stav ElevenLabs (runar-voice-admin.js)
 }
 
 // ─── GIFT CODES ─────────────────────────────────────────
