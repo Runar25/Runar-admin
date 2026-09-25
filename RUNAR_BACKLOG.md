@@ -622,7 +622,7 @@
   → krok 5 rozhodnutí (všude / jen EN / vůbec).
   **Stav 2026-09-24:** kroky 1 a 2+3 NASAZENÉ (DECISIONS 2026-09-24 (18) + (20)) — admin přepne „Read with GPT-6 sol (test)“ pod
   „Begin the reading“ → čtení (single, spready) i Ask jdou přes sol, usage nese `model: gpt-6-sol`. Teď owner pár dní čte → krok 4 (CODE-read).
-  ⚠️ **Pro krok 4 (cena):** `scripts/utils/stats.js` nepočítá `prompt_tokens_details.cache_write_tokens` — OpenAI je vrací u každého
+  ✅ **Opraveno 2026-09-25 (CODE-read, `ef74ccd`):** zápis do cache OpenAI = 1,25× vstupní sazby (dokumentace OpenAI, prompt caching), samotest. Původní nález: ⚠️ **Pro krok 4 (cena):** `scripts/utils/stats.js` nepočítá `prompt_tokens_details.cache_write_tokens` — OpenAI je vrací u každého
   nového čtení (test 2026-09-24: 2124 z 2127 vstupních tokenů) a na ownerově přehledu OpenAI jsou „cache writes“ placená položka.
   Cenu zápisu doplnit z ceníku OpenAI (neodhadovat) — jinak bude sol v přehledu levnější, než je. (nalezl CODE-tune, pro CODE-read)
 - [ ] **OTEVŘENÉ Z 23.–24. 9. — sepsáno 2026-09-24 na ownerovo „nezapomněli jsme na něco, co leží v chatu?"** (CODE-tune; zdroj: `docs/archive/2026-09-23-rozbor-reportu.md` + chat)
