@@ -167,8 +167,7 @@
     // Stitek vyznamu ma prednost pred vsim: zvyrazni a popup zavri.
     var chip = e.target && e.target.closest ? e.target.closest('.rune-pop-kw-item') : null;
     if (chip) { applyKwHl(chip); hide(); clearSeg(); return; }
-    // 2026-09-25: i glyf životní runy v hlavičce (data-rune-pop, _renderLifeBadge) — report KUKY 08:28.
-    var g = e.target && e.target.closest ? e.target.closest('.rlbl-glyph, [data-rune-pop]') : null;
+    var g = e.target && e.target.closest ? e.target.closest('.rlbl-glyph') : null;
     if (!g || !g.getAttribute('data-rune')) { hide(); clearSeg(); clearKwHl(); return; }
 
     var p = ensure();

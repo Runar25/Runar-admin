@@ -94,9 +94,7 @@ function renderJournal(entries) {
 
     if (isSpread) {
       // ── Multi-rune spread card (Norns / Kríž / Horseshoe / Yggdrasil / Gathering) ──
-      const rawEx   = (e.deep_text || '').trim().slice(0, 160);
       const spreadNm = escapeHtml(spreadLabel(e.rune_name, e.lang));
-      const excerpt = escapeHtml(rawEx);
       return `<div class="jcard" id="jcard-${i}">
         <div class="jcard-header" onclick="toggleJournalEntry(${i})">
           <div class="jcard-left">
@@ -105,21 +103,16 @@ function renderJournal(entries) {
               <div class="jcard-name">✦ ${spreadNm} · ${langU}</div>
               <div class="jcard-date">${dateStr}</div>
               <div class="jcard-gathering-runes">${shortT}</div>
-              <div class="jcard-excerpt">${excerpt}${rawEx.length >= 160 ? '…' : ''}</div>
+              <div class="jcard-excerpt" id="jex-${i}">${deepT}</div>
             </div>
           </div>
           <div class="jcard-arrow" id="jarr-${i}">▾</div>
         </div>
-        <div class="jcard-body" id="jbody-${i}" style="display:none;">
-          <div class="jcard-layer-lbl">✦ ${spreadNm}</div>
-          <div class="jcard-text" style="font-style:italic;line-height:1.9;">${deepT}</div>
-        </div>
+        <div class="jcard-body" id="jbody-${i}" style="display:none;"></div>
       </div>`;
     }
 
     // ── Regular reading card ──
-    const rawEx   = (e.short_text || '').trim().slice(0, 160);
-    const excerpt = escapeHtml(rawEx);
     const areaStr = e.area ? ` · ${escapeHtml(e.area)}` : '';
     return `<div class="jcard" id="jcard-${i}">
       <div class="jcard-header" onclick="toggleJournalEntry(${i})">
@@ -128,17 +121,14 @@ function renderJournal(entries) {
           <div class="jcard-info">
             <div class="jcard-name">${nameU} · ${langU}</div>
             <div class="jcard-date">${dateStr}${areaStr}</div>
-            <div class="jcard-excerpt">${excerpt}${rawEx.length >= 160 ? '…' : ''}</div>
+            <div class="jcard-excerpt" id="jex-${i}">${shortT}</div>
             <button class="jcard-select-btn" id="jselect-btn-${i}" onclick="event.stopPropagation();toggleRuneSelection(${i})">${t('jcard_select')}</button>
           </div>
         </div>
         <div class="jcard-arrow" id="jarr-${i}">▾</div>
       </div>
       <div class="jcard-body" id="jbody-${i}" style="display:none;">
-        <div class="jcard-layer-lbl">${t('layer1_lbl')}</div>
-        <div class="jcard-text">${shortT}</div>
         ${e.deep_text ? `
-        <div class="jcard-divider">· · ·</div>
         <div class="jcard-layer-lbl">${t('layer2_lbl')}</div>
         <div class="jcard-text">${deepT}</div>` : ''}
         ${e.question ? `<div class="jcard-question">❝ ${escapeHtml(e.question)} ❞</div>` : ''}
@@ -210,12 +200,16 @@ function populateJournalFilters(entries) {
     + areas.map(a => `<option value="${a}">${a}</option>`).join('');
 }
 
+// 2026-09-25 (KUKY: „jen ho rozbalit… nebude tam 2× začátek“): úryvek v hlavičce se rozbalí na celý text; tělo karty
+// už čtení neopakuje (nese jen hlubší vrstvu, otázku, životní runu a hlas). Prázdné tělo (spread) zůstává schované.
 function toggleJournalEntry(i) {
   const body  = document.getElementById(`jbody-${i}`);
   const arrow = document.getElementById(`jarr-${i}`);
-  if (!body) return;
-  const open = body.style.display !== 'none';
-  body.style.display = open ? 'none' : 'block';
+  const ex = document.getElementById(`jex-${i}`);
+  if (!body && !ex) return;
+  const open = ex ? ex.classList.contains('jcard-excerpt--open') : body.style.display !== 'none';
+  if (ex) ex.classList.toggle('jcard-excerpt--open', !open);   // vypne CSS ořez na 2 řádky (runar-reader.css)
+  if (body) body.style.display = (open || !body.innerHTML.trim()) ? 'none' : 'block';
   if (arrow) arrow.classList.toggle('open', !open);
 }
 

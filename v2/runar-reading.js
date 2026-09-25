@@ -271,12 +271,13 @@ function _renderLifeBadge(life) {
     // KÁMEN (KUKY 2026-09-23: „změnit glyf životních run na naše glyfy“) — dřív holá linka podle §5 z 2026-07-14.
     if (g) {
       g.innerHTML = runeSvg(life, { frame: true, cls: 'badge-stone' });
-      // 2026-09-25 (report KUKY: „i u life rune by se měla při kliku na glyf ukázat okno s meaning of the rune“):
-      // tytéž údaje jako glyfy v textu čtení; runar-rune-popup.js ho pozná podle data-rune-pop. Bez data-seg —
-      // životní runa v textu čtení segment nemá, zvýraznění se tedy přeskočí.
+      // 2026-09-25 (reporty KUKY: okno s významem po klepnutí + „stejné vlastnosti jako ty ostatní“): TÁŽ třída
+      // `rlbl-glyph` jako glyfy v textu čtení (a jako životní runa ve stromě, runar-tree.js) — dá okno s významem
+      // (runar-rune-popup.js), kurzor i jemné ztmavnutí při najetí (runar-reader.css). Bez data-seg: životní runa
+      // v textu čtení segment nemá, zvýraznění textu se přeskočí.
+      g.classList.add('rlbl-glyph');
       g.setAttribute('data-rune', rn(life));
       g.setAttribute('data-kw', rk(life));
-      g.setAttribute('data-rune-pop', '1');
     }
     if (n) n.textContent = rn(life);
     if (note) note.textContent = t('badge_life_note');
