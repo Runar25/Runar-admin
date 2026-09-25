@@ -158,9 +158,10 @@ for (const L of ['en', 'is']) {
   rekni(sx.includes(T.ask_h_now) && sx.length === bez.length,
         L + '  neznámý záměr → spadne zpátky na obecné „proč teď"');
 
-  // strop: i když je vybráno ÚPLNĚ VŠECHNO, seznam musí zůstat do šesti
+  // strop: i když je vybráno ÚPLNĚ VŠECHNO, seznam musí zůstat do sedmi
+  // (2026-09-25: 6 → 7 — owner chtěl tip „Explain <runa> without the image“, který se nabízí u každého čtení)
   const max = hinty(L, [R('Jera'), R('Ansuz'), R('Mannaz')], R('Gebo'), 'Should I take it?', OBL, ZAM[1]);
-  rekni(max.length <= 6, L + '  všechno vybráno → seznam má ' + max.length + ' tipů (strop 6)');
+  rekni(max.length <= 7, L + '  všechno vybráno → seznam má ' + max.length + ' tipů (strop 7)');
   rekni(!max.some(x => /\{[a-z_]+\}/.test(x)), L + '  všechno vybráno → žádný nedosazený {placeholder}');
   rekni(max.filter((x, i) => max.indexOf(x) !== i).length === 0, L + '  všechno vybráno → žádný tip dvakrát');
 }
