@@ -71,11 +71,20 @@ const CENIK = {   // USD / 1 M tokenů: [vstup, zápis cache 5 min, zápis 1 h, 
 // prompt_tokens (vcetne cachovanych), prompt_tokens_details.cached_tokens, completion_tokens.
 // Cenik overen 2026-09-24 na developers.openai.com/api/docs/pricing (standard): vstup · vstup z cache · vystup za 1 M.
 const CENIK_OPENAI = { 'gpt-6-sol': [2, 0.2, 10], 'gpt-6-luna': [0.1, 0.01, 0.5] };
+// Zapis do cache (2026-09-25, nalezl CODE-tune: prvni verze ho pocitala jako bezny vstup → sol vychazel levnejsi, nez je).
+// Dokumentace OpenAI (developers.openai.com/api/docs/guides/prompt-caching, overeno 2026-09-25): „For GPT-5.6 and later,
+// cache writes cost 1.25× the standard, uncached input-token rate" a zapis NENI priplatek — kazdy vstupni token ma jednu
+// sazbu: bezny · z cache · zapis. prompt_tokens = vsechny tri dohromady. Pole: prompt_tokens_details.{cached_tokens,
+// cache_write_tokens} (Chat Completions, tak je uklada claude-proxy); input_tokens_details.* (Responses API) pro jistotu taky.
+const OPENAI_ZAPIS = 1.25;
 function cenaUsage(u) {
-  if (u.prompt_tokens != null) {
+  if (u.prompt_tokens != null || u.input_tokens_details) {
     const o = CENIK_OPENAI[u.model]; if (!o) return null;
-    const ca = (u.prompt_tokens_details && u.prompt_tokens_details.cached_tokens) || 0;
-    return ((u.prompt_tokens - ca) * o[0] + ca * o[1] + (u.completion_tokens || 0) * o[2]) / 1e6;
+    const vstup = u.prompt_tokens != null ? u.prompt_tokens : (u.input_tokens || 0);
+    const det = u.prompt_tokens_details || u.input_tokens_details || {};
+    const ca = det.cached_tokens || 0, zap = det.cache_write_tokens || 0;
+    const vystup = u.completion_tokens != null ? u.completion_tokens : (u.output_tokens || 0);
+    return ((vstup - ca - zap) * o[0] + ca * o[1] + zap * o[0] * OPENAI_ZAPIS + vystup * o[2]) / 1e6;
   }
   const c = CENIK[u.model]; if (!c) return null;
   const cc = u.cache_creation || {};
@@ -87,6 +96,8 @@ function cenaUsage(u) {
 if (Math.abs(cenaUsage({ model: 'claude-opus-4-8', input_tokens: 1692, output_tokens: 152 }) - 0.01226) > 1e-9) { console.error('  ✗ výpočet ceny rozbitý'); process.exit(1); }
 // ... a OpenAI: 1000 vstup (200 z cache) + 100 vystup na gpt-6-sol = (800·2 + 200·0,2 + 100·10) / 1 M = 0,00264 USD.
 if (Math.abs(cenaUsage({ model: 'gpt-6-sol', prompt_tokens: 1000, prompt_tokens_details: { cached_tokens: 200 }, completion_tokens: 100 }) - 0.00264) > 1e-9) { console.error('  ✗ výpočet ceny OpenAI rozbitý'); process.exit(1); }
+// ... se zapisem: 1000 vstup (200 z cache, 700 zapis) + 100 vystup = (100·2 + 200·0,2 + 700·2,5 + 100·10) / 1 M = 0,00299 USD.
+if (Math.abs(cenaUsage({ model: 'gpt-6-sol', prompt_tokens: 1000, prompt_tokens_details: { cached_tokens: 200, cache_write_tokens: 700 }, completion_tokens: 100 }) - 0.00299) > 1e-9) { console.error('  ✗ výpočet zápisu do cache OpenAI rozbitý'); process.exit(1); }
 // Skupina: admin (ADMIN_EMAILS z v2/runar-config.js — jediny zdroj, §20) > tester (user_profiles.is_tester) > uzivatel.
 // Owner 2026-09-24: „kolik nas stoji cteni — admin zvlast, testeri zvlast, uzivatele zvlast". Tiskne se jen soucet za skupinu.
 const ADMINI = (fs.readFileSync(path.join(__dirname, '..', '..', 'v2', 'runar-config.js'), 'utf8').match(/const ADMIN_EMAILS\s*=\s*\[([^\]]*)\]/) || [, ''])[1]
@@ -105,7 +116,8 @@ for (const r of usageRows) {
   const u = r.usage; if (!u || !u.model) continue;
   const c = cenaUsage(u); if (c == null) { naklady.neznamy.push(u.model); continue; }
   const k = u.model + ' · ' + r.lang, g = naklady.skupiny[k] = naklady.skupiny[k] || { n: 0, usd: 0, zapis: 0, zasah: 0 };
-  g.n++; g.usd += c; if (u.cache_creation_input_tokens) g.zapis++; if (u.cache_read_input_tokens) g.zasah++;
+  const od = u.prompt_tokens_details || u.input_tokens_details || {};   // OpenAI: jina pole nez Anthropic
+  g.n++; g.usd += c; if (u.cache_creation_input_tokens || od.cache_write_tokens) g.zapis++; if (u.cache_read_input_tokens || od.cached_tokens) g.zasah++;
   const sg = naklady.podleSkupin[r.skupina] = naklady.podleSkupin[r.skupina] || { n: 0, usd: 0, ask: 0, askUsd: 0 };
   sg.n++; sg.usd += c;
   for (const f of (r.follow_up || [])) if (f && f.usage && f.usage.model && cenaUsage(f.usage) != null) { sg.ask++; sg.askUsd += cenaUsage(f.usage); }
