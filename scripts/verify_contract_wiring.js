@@ -108,8 +108,10 @@ const BUILDERS = ['single', 'norns', 'kriz', 'horseshoe', 'yggdrasil'];
 // v4.1 (2026-08-22): oblast se do single vratila (krok 1/3) -> domain zpet mezi povinne.
 // v4.2 (2026-08-22): registr se vratil (krok 2/3) -> zpet mezi povinne.
 // v4.4 (2026-08-22): cocka se vratila (krok 4) -> lens zpet mezi povinne u single.
-const REQUIRED  = b => b === 'single' ? ['coldread', 'domain', 'register', 'lens'] : Object.keys(PARTS);
-const FORBIDDEN = b => b === 'single' ? ['priority'] : [];
+// 2026-09-25 (KUKY: „životní runa bude jen na vyžádání v ASK, jinak do čtení zasahovat nebude“): čočka je ZAKÁZANÁ všude —
+// kontrakt se obrátil z „lens povinně“ na „lens nikde“ (_lifeLens vrací null).
+const REQUIRED  = b => b === 'single' ? ['coldread', 'domain', 'register'] : Object.keys(PARTS).filter(k => k !== 'lens');
+const FORBIDDEN = b => b === 'single' ? ['priority', 'lens'] : ['lens'];
 let fail = 0;
 
 for (const L of ['en', 'is']) {
@@ -119,7 +121,7 @@ for (const L of ['en', 'is']) {
     if (missing.length) { fail++; console.log('FAIL  ' + b + '_' + L + '  missing: ' + missing.join(', ')); }
     const navic = FORBIDDEN(b).filter(k => has(txt, k));
     if (navic.length) { fail++; console.log('FAIL  ' + b + '_' + L + '  kostra prolomena — ledova brana v promptu: ' + navic.join(', ')); }
-    if (!missing.length && !navic.length) console.log('OK    ' + b + '_' + L + (b === 'single' ? '  kostra: coldread + ledove brany NEJSOU' : '  lens+domain+register+priority+coldread'));
+    if (!missing.length && !navic.length) console.log('OK    ' + b + '_' + L + (b === 'single' ? '  kostra: coldread + ledove brany NEJSOU, cocka nikde' : '  domain+register+priority+coldread, cocka nikde'));
     const dup = Object.keys(PARTS).filter(k => times(txt, k) > 1);
     if (dup.length) { fail++; console.log('FAIL  ' + b + '_' + L + '  gate dvakrat v promptu: ' + dup.join(', ')); }
   }
@@ -205,10 +207,10 @@ if (!DESCRIBE_MARK.en || !DESCRIBE_MARK.is) {
     if (!(O['single_' + L] || '').includes(podmet[L])) {
       fail++; console.log('FAIL  single_' + L + '  misto-veta ztratila podmet (osirele zajmeno)');
     }
-    // lens flag na fixturach TOHOTO skriptu: norns_ cocku MA, single_lensoff ji ma vypnutou.
+    // lens flag: od 2026-09-25 cocka nebezi nikde → draws.lens = 0 u vsech fixtur (i norns_ se zivotni runou).
     const dS   = sandbox._promptDraws(O['norns_' + L] || '', L);
     const dBez = sandbox._promptDraws(O['single_lensoff_' + L] || '', L);
-    if (!dS || dS.lens !== 1) { fail++; console.log('FAIL  draws.lens: norns_' + L + ' ma byt 1, je ' + (dS && dS.lens)); }
+    if (!dS || dS.lens !== 0) { fail++; console.log('FAIL  draws.lens: norns_' + L + ' ma byt 0, je ' + (dS && dS.lens)); }
     if (!dBez || dBez.lens !== 0) { fail++; console.log('FAIL  draws.lens: single_lensoff_' + L + ' ma byt 0, je ' + (dBez && dBez.lens)); }
   }
   console.log('OK    obraz bez „sensory" (podmet drzi) · prompt_draws nese lens 1/0');

@@ -654,6 +654,11 @@
   Rozbor GPT to teď hlásí (rubrika A), prompt tomu nebrání: NO COLD READING hlídá jen nitro („what is true, stirring, or known inside them“),
   ne stav vztahů a domova. Oprava = změna obsahu promptu → napřed změřit, jak často to dnes vzniká (Family & Home, Love), pak odebrat příčinu,
   ne přidat zákaz (memory `oprava-promptu-odebira-vadu`). (CODE-tune)
+- [ ] **Úklid po vypnutí čočky životní runy (2026-09-25, DECISIONS 2026-09-25 (7))** — `user_profiles.life_rune_in_readings` v DB
+  nikdo nečte ani nepíše → zahodit migrací (owner spustí SQL) + odebrat z `sql/2026-07-16_user_profiles_column_grants.sql`/smoke ⑩;
+  mrtvé větve `_lensContext` / lens část `_priorityContext` smazat, až bude jisté, že se čočka nevrací. (CODE-tune)
+- [ ] **Text zamčeného Asku pro Rune Seekera** — dnes *„Rúnar has one answer left — Premium hears it.“* (sedí na starý model „jedna odpověď
+  zbývá“). Owner: *„něco přirozeného… nemělo by se to úplně vymykat“* ostatním teaserům (*„Deeper questions open with {tier}.“*). Návrh v chatu 2026-09-25.
 - [ ] **NA ZÍTRA (owner 2026-09-25, „jsme na 99 %… uděláme zítra po restartu tokenů“)** (CODE-tune)
   1. **Deník — co uživatel zadal a Asky:** u karty vedle AREA i SEEKING a INTENTION; THE SITUATION (volná otázka), když ji zadal;
      všechny výměny Asku i s otázkou; **jen pro adminy** model, který čtení napsal (GPT-6 sol / který Opus — `readings.usage.model`).

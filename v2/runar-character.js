@@ -1033,7 +1033,11 @@ function _lifeWasDrawn(life, drawn) {
 // Badge v UI a `life_rune` v journalu berou `u.lifeRune` dal napřimo — tohle je JEN pro prompt,
 // aby se vypnuta cocka neprojevila tim, ze uzivateli zmizi i jeho vlastni runa z obrazovky.
 // Default = zapnuto: chybejici pole (starsi volajici, shrine, fixture) se chova jako dnes.
-function _lifeLens(u) { return (u && u.lifeLensOn === false) ? null : ((u && u.lifeRune) || null); }
+// 2026-09-25 (KUKY: „životní runa bude jen na vyžádání v ASK, jinak do čtení zasahovat nebude“): čočka VYPNUTÁ ve všech
+// builderech (single + 4 spready) — vrací vždy null, takže _lensContext i lens větev _priorityContext mlčí. Přepínač
+// „Let my life rune colour the ending“ odešel s ní. Životní runa zůstává v Asku (_askLifeContext) — na dotaz.
+// ⚠️ Sloupec user_profiles.life_rune_in_readings zůstává v DB nepoužitý (zahodit při úklidu, BACKLOG).
+function _lifeLens(u) { return null; }
 
 function _lensContext(life, drawn, lang) {
   if (!life) return '';

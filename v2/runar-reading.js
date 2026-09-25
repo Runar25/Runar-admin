@@ -459,7 +459,6 @@ function startReading() {
   // Life rune from DB (own reading) or null (reading for someone else)
   var lifeRune = (isMine && _lifeRuneNum) ? RUNES[_lifeRuneNum - 1] : null;
   readerUser = { name, d: null, m: null, y: null, lifeRune,
-    lifeLensOn: (typeof lifeRuneInReadings === 'undefined') ? true : !!lifeRuneInReadings,
     area: readerUser.area || '', seeking: readerUser.seeking || '',
     intention: readerUser.intention || '',
     question: document.getElementById('r-question').value.trim() };
@@ -841,9 +840,8 @@ function _askHints() {
   // ZIVOTNI RUNA PRVNI — jediny tip, ktery zna obe jmena, a otazka, kterou si owner polozil
   // sam (2026-09-10). Odpada, kdyz byla tazena: pak je predmetem cteni a „jak ovlivnuje
   // sebe" nedava smysl (tentyz test, ktery v promptu dela `_lifeWasDrawn`).
-  if (life && dr.length && !lifeDrawn)
-    out.push(many ? tp('ask_h_life_all', { life: rnSplit(life).name })
-                  : tp('ask_hint_life', { life: rnSplit(life).name, rune: rnSplit(dr[0]).name }));
+  // 2026-09-25 (KUKY: „aby se to nevztahovalo přesně na runu, ale čtení“) — jedna věta pro single i spread.
+  if (life && dr.length && !lifeDrawn) out.push(tp('ask_h_life_all', { life: rnSplit(life).name }));
   out.push(!many && dr[0] ? tp('ask_h_rune', { rune: rnSplit(dr[0]).name }) : t('ask_h_runes'));
   // 2026-09-25 (KUKY): výklad runy bez obrazu — owner tak Asku dává otázku sám a odpověď „perfektně vysvětluje význam runy“.
   out.push(!many && dr[0] ? tp('ask_h_explain', { rune: rnSplit(dr[0]).name }) : t('ask_h_explain_all'));
@@ -863,10 +861,15 @@ function _askHints() {
   out.push(_zi >= 0 ? t(['ask_h_when_now', 'ask_h_when_ahead', 'ask_h_when_past'][_zi])
                     : t('ask_h_now'));
   var _hi = _seekIdx(u.seeking);
-  out.push(_hi > 0 ? t(['', 'ask_h_seek_clarity', 'ask_h_seek_confirm',
-                        'ask_h_seek_challenge', 'ask_h_seek_reflect'][_hi])
-                   : t('ask_h_unseen'));
-  return out.filter(Boolean);
+  // 2026-09-25 (KUKY): „Does this confirm what I already feel?“ Rúnar z podstaty odmítá (zrcadlo nepotvrzuje) → jen když
+  // otázek není dost (méně než 6); jinak se řádek vynechá, nic ho nenahrazuje.
+  if (!(_hi === 2 && out.length >= 6))
+    out.push(_hi > 0 ? t(['', 'ask_h_seek_clarity', 'ask_h_seek_confirm',
+                          'ask_h_seek_challenge', 'ask_h_seek_reflect'][_hi])
+                     : t('ask_h_unseen'));
+  // 2026-09-25 (KUKY: „při druhém asku mi nabízí stejnou možnost, kterou jsem použil při prvním“): položené otázky pryč.
+  var polozene = (_askLog || []).map(function (x) { return String(x.q || '').trim().toLowerCase(); });
+  return out.filter(Boolean).filter(function (x) { return polozene.indexOf(x.trim().toLowerCase()) === -1; });
 }
 // Jedno ze tri hesel zrcadla do #reading-loading-motto (prazdne = prvek chybi, nic nespadne).
 function _paintLoadingMotto() {

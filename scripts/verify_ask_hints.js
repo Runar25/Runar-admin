@@ -76,8 +76,9 @@ for (const L of ['en', 'is']) {
   // ── 1) single + životní runa, která tažená NEBYLA ────────────────────────────
   const a = hinty(L, [R('Jera')], R('Gebo'), '');
   rekni(a.length >= 4, L + '  single: nápověda má ' + a.length + ' tipů');
-  rekni(a[0] && a[0].includes(jm(R('Gebo'))) && a[0].includes(jm(R('Jera'))),
-        L + '  single: první tip nese OBĚ jména (životní + tažená) — ' + JSON.stringify(a[0] || ''));
+  // 2026-09-25 (KUKY: „aby se to nevztahovalo přesně na runu, ale čtení“): první tip jmenuje životní runu a ptá se na ČTENÍ.
+  rekni(a[0] === glob('tp')('ask_h_life_all', { life: jm(R('Gebo')) }),
+        L + '  single: první tip se ptá, jak životní runa ovlivní ČTENÍ — ' + JSON.stringify(a[0] || ''));
   // ⚠️ `a.slice(1)` schválně: první tip je ten o životní runě a jméno tažené runy nese taky,
   // takže `a.some(...)` by tuhle podmínku splnil i tehdy, kdyby tip na význam runy úplně
   // zmizel. Odhalil to mutační test (konstantní seznam prošel zeleně).
@@ -210,7 +211,9 @@ for (const L of ['en', 'is']) {
                   T.ask_h_seek_challenge, T.ask_h_seek_reflect];
   const bezH = hinty(L, [R('Jera')], R('Gebo'), '', '', '');
   for (let i = 1; i < HL.length; i++) {
-    const sH = hinty(L, [R('Jera')], R('Gebo'), '', '', '', HL[i]);
+    // 2026-09-25: „Does this confirm…“ (i = 2) jen když je otázek málo → ověřuje se BEZ životní runy (kratší seznam), níž zvlášť.
+    const sH = hinty(L, [R('Jera')], i === 2 ? null : R('Gebo'), '', '', '', HL[i]);
+    const bezH = hinty(L, [R('Jera')], i === 2 ? null : R('Gebo'), '', '', '');
     rekni(sH.includes(ocekHl[i]), L + '  hledání „' + HL[i] + '" → „' + ocekHl[i] + '"');
     rekni(!sH.includes(T.ask_h_unseen), L + '  hledání „' + HL[i] + '" → „co nevidím" zmizelo');
     rekni(sH.length === bezH.length, L + '  hledání „' + HL[i] + '" NEPŘIDALO řádek');
@@ -223,7 +226,16 @@ for (const L of ['en', 'is']) {
   rekni(hlX.includes(T.ask_h_unseen) && hlX.length === bezH.length,
         L + '  neznámé hledání → spadne zpátky na „co nevidím"');
   // Uložené ve druhém jazyce se musí trefit taky — index, ne shoda řetězce.
-  const hlD = hinty(L, [R('Jera')], R('Gebo'), '', '', '', glob('SEEKS')[L === 'en' ? 'is' : 'en'][2]);
+  const hlD = hinty(L, [R('Jera')], null, '', '', '', glob('SEEKS')[L === 'en' ? 'is' : 'en'][2]);
+  // …a s plným seznamem (životní runa) se vynechá a nic ho nenahradí.
+  const hlPln = hinty(L, [R('Jera')], R('Gebo'), '', '', '', HL[2]);
+  rekni(!hlPln.includes(T.ask_h_seek_confirm) && !hlPln.includes(T.ask_h_unseen) && hlPln.length === 6,
+        L + '  „Confirmation“ při dostatku otázek (6) vynechá potvrzovací tip');
+  // položená otázka se v dalším Asku znovu nenabídne (KUKY 2026-09-25)
+  glob('_askLog').length = 0; glob('_askLog').push({ q: T.ask_h_unseen, a: 'x' });
+  const poAsku = hinty(L, [R('Jera')], R('Gebo'), '', '', '');
+  rekni(!poAsku.includes(T.ask_h_unseen), L + '  položená otázka se v dalším Asku nenabízí');
+  glob('_askLog').length = 0;
   rekni(hlD.includes(T.ask_h_seek_confirm),
         L + '  hledání uložené ve druhém jazyce se přesto trefí do správné věty');
 

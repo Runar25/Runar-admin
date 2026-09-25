@@ -7118,3 +7118,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Rubrika luny:** jen vady, které jsou důležité a jisté; kategorie bez vady se nepíšou; věta se čte v kontextu celé scény; „you" jako
   postava scény není tvrzení (owner k reportům 2026-09-25: *„nemá zbytečně psát… pokud si tím není jistý, ať to nepíše"*).
 - Affected doc(s): žádný jiný (kód nese důvody v komentářích).
+
+## 2026-09-25 (7) — Životní runa do čtení nezasahuje, jen na dotaz v Asku (v4.60); nápověda Asku: bez opakování, „clearer image“, potvrzení jen při nedostatku
+
+- **Rozhodl:** KUKY 2026-09-25: *„životní runa bude jen na vyžádání v ASK, jinak do čtení zasahovat nebude. takže můžeme odstranit
+  let my life rune colour the reading. life rune je tím pádem ve čtení extra featura na dotaz pro standard a premium."*
+- **Co (čtení):** čočka životní runy VYPNUTÁ ve všech builderech (`_lifeLens` → null); přepínač „Let my life rune colour the ending"
+  a jeho obsluha pryč (HTML, `runar-app.js`, texty). Golden: z 12 promptů zmizela čočka, jinde beze změny. Sloupec
+  `user_profiles.life_rune_in_readings` zůstává v DB nepoužitý (backlog). Kontroly ㉚ a kontrakt obráceny na „čočka nikde".
+- **Co (nápověda Asku):** (a) otázka položená v předchozím Asku se znovu nenabízí (report: *„při druhém asku mi nabízí stejnou možnost"*);
+  (b) životní runa: *„How does my life rune X affect this reading?"* i u single (*„aby se to nevztahovalo přesně na runu, ale čtení"*);
+  (c) obraz s oblastí: *„{area} — can you give me a clearer image?"* / *„getur þú gefið mér skýrari mynd?"*; (d) *„Does this confirm
+  what I already feel?"* jen když je otázek méně než 6 — Rúnar ji z podstaty odmítá.
+- **Otevřené:** text zamčeného Asku pro Rune Seekera (dnes *„Rúnar has one answer left — Premium hears it."*) — návrh čeká na ownera.
+- Affected doc(s): `RUNAR_BACKLOG.md`.

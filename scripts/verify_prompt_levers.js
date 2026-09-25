@@ -158,8 +158,10 @@ const VYJIMKY = {
         + 'nezvýšilo, takže „spready bez úhlu splývají" neobstálo. → RUNAR_EVAL_LOG.md 2026-08-18.',
   },
   lens: {
-    cesty: ['ask', 'liferune'],
-    proc: 'Životní runa JE ta čočka (nemá se zrcadlit sama); `ask` navazuje na hotové čtení. '
+    cesty: ['single', 'norns', 'kriz', 'horseshoe', 'yggdrasil', 'ask', 'liferune'],
+    proc: '2026-09-25 VYPNUTÁ VŠUDE (KUKY: „životní runa bude jen na vyžádání v ASK, jinak do čtení zasahovat nebude“) — '
+        + '_lifeLens vrací null, životní runa jen v Asku přes _askLifeContext. Dřív: '
+        + 'Životní runa JE ta čočka (nemá se zrcadlit sama); `ask` navazuje na hotové čtení. '
         + 'Zápis „u velkých spreadů nedochází" (2026-08-18) byl artefakt fixture (lifeRune mezi '
         + 'taženými — čočka správně ustoupila); opraveno 2026-08-23, čočka dochází všude.',
   },

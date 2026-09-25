@@ -529,7 +529,6 @@ function _showTreeReading(rune, runeName, isIs) {
   setPH('tree-name-inp', t('tree_name_ph'));
   // Prepinac cocky bydli v tomhle okne (2026-09-15) a jeho viditelnost visi na _lifeRuneNum —
   // ten je az TED jiste nacteny (flags select v fetchUserProfile umi dobehnout driv).
-  if (typeof _syncLifeLensUI === 'function') _syncLifeLensUI();
 }
 
 // ADMIN: reset zivotni runy (KUKY 2026-09-14). Navrat tlacitka odstraneneho 2026-07-19 —
