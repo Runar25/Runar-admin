@@ -7083,3 +7083,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   je to popis scény."* Není vada. Lunin rozbor je jen podnět (memory `gpt-rozbor-neni-zavazny`).
 - **Reverzibilita:** každá změna jedna řádka dat.
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka „Reporty 2026-09-25").
+
+## 2026-09-25 (4) — Rozbory čtení od GPT se ukládají (gpt_reviews); jsou podklad k ověření, ne závazný nález
+
+- **Rozhodl:** KUKY 2026-09-25: *„ano. budeme ukládat."* a zároveň *„gpt analýza není pro nás závazná bez odsouhlasení! cokoliv řekne,
+  se musí prověřit před tím, než se začne něco měnit. obrazy nečte moc dobře."* **Provedl:** CODE-tune.
+- **Co:** `gpt-review` po úspěšném rozboru uloží text, model, jazyk rozboru, verzi zadání a `reading_id` do `gpt_reviews` (RLS bez politik,
+  zápis service role). Klient posílá `reading_id` posledního čtení; složení čtení v adminově reportu nese `reading id` → report ↔ čtení ↔ rozbor.
+  Migrace `sql/2026-09-25_gpt_reviews.sql` — spustil CODE-tune (ověřeno zkušebním zápisem s rollbackem).
+- **Jak se s tím pracuje:** session CODE čte rozbory přes CLI spolu se čtením a ownerovým reportem; nález z rozboru se ověří (§24) a teprve
+  s ownerovým souhlasem se něco mění. Z verdiktů jde spočítat, jak často má rozbor pravdu (dnes owner: bod A 3× špatně z 4).
+- **Neověřeno:** zápis z živého rozboru (potřebuje adminovo přihlášení) → po prvním rozboru ověří CODE-tune řádek v DB.
+- Affected doc(s): `RUNAR_PRIVACY.md` (Retence — rozbory GPT), memory `gpt-rozbor-neni-zavazny`.

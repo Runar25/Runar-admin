@@ -130,6 +130,8 @@ function _slozeniCteni() {
   var L = _lastGen.lang, isIs = L === 'is', d = _promptDraws(_lastGen.prompt, L) || {};
   var out = ['[READING COMPOSITION — admin]',
     'model: ' + (_lastGen.model || '?') + ' · prompt ' + RUNAR_PROMPT_VERSION + ' · ' + _lastGen.kind + ' · ' + L];
+  // id čtení = spojka report ↔ čtení v DB ↔ uložený rozbor GPT (gpt_reviews.reading_id), 2026-09-25
+  if (_lastReadingId) out.push('reading id: ' + _lastReadingId);
   var ang = isIs ? READING_ANGLES_IS : READING_ANGLES;
   if (typeof d.angle === 'number') out.push('angle: ' + ang[d.angle]);
   if (d.image) out.push('image: ' + d.image + (d.place ? ' (place: ' + d.place + ')' : ''));
@@ -160,7 +162,9 @@ async function gptReview() {
     var sess = await sb.auth.getSession();
     var tok = sess && sess.data && sess.data.session && sess.data.session.access_token;
     if (tok) headers['Authorization'] = 'Bearer ' + tok;
-    var res = await fetch(GPT_REVIEW, { method: 'POST', headers: headers, body: JSON.stringify({ system: p.system, user: p.user }) });
+    // 2026-09-25: reading_id + jazyk + verze → server rozbor uloží k čtení (gpt_reviews), ať jde ověřit proti reportu.
+    var res = await fetch(GPT_REVIEW, { method: 'POST', headers: headers, body: JSON.stringify({ system: p.system, user: p.user,
+      reading_id: _lastReadingId || null, review_lang: _gptReviewJazyk(), prompt_version: RUNAR_PROMPT_VERSION }) });
     var d = await res.json().catch(function () { return {}; });
     if (!res.ok || d.error) out.textContent = tp('gpt_review_err', { msg: (d.message || d.error || ('HTTP ' + res.status)) });
     // hvězdičky z markdownu pryč (rubrika je zakazuje, ale model je občas stejně napíše — owner je viděl v 1. rozboru)

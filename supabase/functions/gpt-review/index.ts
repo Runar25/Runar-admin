@@ -9,6 +9,9 @@
 // protože jen on zná přesné zadání, se kterým čtení vzniklo.
 // Soukromí: tlačítko je jen v adminově vlastní session (jeho čtení). Cizí čtení (shrine, testeři) sem NEJDOU,
 // dokud privacy stránka nejmenuje OpenAI jako zpracovatele (RUNAR_PRIVACY.md).
+// 2026-09-25 (KUKY „ano. budeme ukládat“): každý rozbor se uloží do gpt_reviews (+ reading_id, když ho klient pošle) —
+// podklad k ověření a k měření, jak často má rozbor pravdu. Rozbor NENÍ závazný (memory gpt-rozbor-neni-zavazny).
+// Selhání zápisu rozbor neshodí (vrací saved:false). Tabulka: sql/2026-09-25_gpt_reviews.sql.
 // Secret: OPENAI_API_KEY (nastavuje owner). Deploy:
 //   supabase functions deploy gpt-review --project-ref pmitxjvkeovijreepror --no-verify-jwt
 
@@ -47,6 +50,8 @@ serve(async (req) => {
   let body: any = {};
   try { body = await req.json(); } catch { return json({ error: "Bad JSON" }, 400); }
   const system = String(body.system ?? "");
+  // uuid čtení, ke kterému rozbor patří (jen pro uložení; neplatný tvar = uloží se bez vazby)
+  const readingId = /^[0-9a-f-]{36}$/i.test(String(body.reading_id ?? "")) ? String(body.reading_id) : null;
   const userMsg = String(body.user ?? "");
   if (!system || !userMsg) return json({ error: "Missing system or user" }, 400);
   if (system.length > MAX_SYSTEM || userMsg.length > MAX_USER) return json({ error: "too_long" }, 400);
@@ -76,8 +81,18 @@ serve(async (req) => {
     const data = await res.json().catch(() => ({}));
     if (!res.ok) return json({ error: "openai", message: (data?.error?.message) || ("HTTP " + res.status) }, 502);
     const text = (data?.choices?.[0]?.message?.content || "").trim();
+    let saved = false;
+    if (text) {
+      const { error: sErr } = await sb.from("gpt_reviews").insert({
+        user_id: user.id, reading_id: readingId, model: MODEL,
+        review_lang: typeof body.review_lang === "string" ? body.review_lang.slice(0, 8) : null,
+        prompt_version: typeof body.prompt_version === "string" ? body.prompt_version.slice(0, 60) : null,
+        text, usage: data?.usage ?? null,
+      });
+      if (sErr) console.error("gpt_reviews insert failed:", sErr.message); else saved = true;
+    }
     return json({ text, model: data?.model ?? MODEL, usage: data?.usage ?? null,
-                  cut: data?.choices?.[0]?.finish_reason === "length" });
+                  cut: data?.choices?.[0]?.finish_reason === "length", saved });
   } catch (e) {
     return json({ error: "openai", message: (e as Error)?.name === "AbortError" ? "timeout" : String(e) }, 502);
   } finally {

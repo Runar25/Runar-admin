@@ -79,6 +79,9 @@ a souhlasí na pravdivém textu. Detail → `RUNAR_DECISIONS.md` 2026-09-11 (8).
   `user_id` má `on delete set null` → po smazání účtu zbude anonymní účetní řádek, stejná úvaha jako u `credit_ledger` výš.
   Klient tabulku nečte ani nepíše (RLS bez politik). Snímky předplatného (`voice_quota_snapshots`) osobní údaj nenesou.
   Migrace: `sql/2026-09-25_voice_usage.sql`.
+- **Rozbory čtení od GPT (`gpt_reviews`, od 2026-09-25)** — jen z tlačítka v adminově vlastní session (text jeho čtení jde k OpenAI,
+  viz `gpt-review`); uloží se text rozboru, model, id čtení a admin. Cizí čtení sem nejdou. Smazáním účtu admina zmizí
+  (`on delete cascade`). Klient tabulku nečte ani nepíše. Migrace: `sql/2026-09-25_gpt_reviews.sql`.
 
 ## Implementační checklist
 **DB (owner v SQL editoru — viz `sql/2026-07-13_privacy_columns.sql`):**
