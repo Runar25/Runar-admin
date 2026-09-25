@@ -1,0 +1,414 @@
+RÚNAR — KOMPLEXNÍ OBRAZOVÝ PROSTOR RUN
+24 RUN + UNKNOWN / BLANK
+
+CÍL
+Jedna runa nemá jeden obraz. Má vlastní krajinu možných obrazů.
+
+Obraz musí být realisticky představitelný a zároveň rozpoznatelně spojený s konkrétní runou. Nemusí být doslovným zobrazením symbolu. Může být fyzický, vztahový, myšlenkový, vnitřní nebo abstraktně jednající, ale musí vycházet z něčeho skutečně představitelného.
+
+Svět a element runy jsou orientační pole, ne pevná omezení.
+
+DOPORUČENÁ STRUKTURA
+- jádro runy
+- hlavní napětí
+- 8–12 obrazových rodin
+- každá rodina 5–10 konkrétních scén
+
+Cíl: přibližně 40–100 kvalitně odlišných obrazů na runu.
+
+FEHU
+Jádro: Hodnota v pohybu. Zdroj, který lze vlastnit, používat, rozmnožovat, ztratit nebo předávat.
+Obrazové oblasti:
+- živý majetek: stádo, růst stáda, prodej zvířete, návrat stáda, péče o zvířata
+- zásoby: obilí, dřevo, voda, krmivo, nástroje, plná sýpka
+- hodnota v pohybu: prodej, výroba, směna, odměna, investice zdroje do další práce
+- vnitřní Fehu: člověk si uvědomí skutečnou hodnotu, objeví nevyužitý zdroj, rozliší vlastnictví od skutečného užitku
+Fehu × Gebo: Gebo je vztah výměny; Fehu je hodnota, která je předmětem výměny.
+
+URUZ
+Jádro: Syrová životní síla, tělo, odolnost, tlak, proměna formy.
+Obrazové oblasti:
+- tělo: fyzická námaha, zvedání těžkého předmětu, únava, zvykání si na zátěž
+- přírodní síla: kořeny rozrušující skálu, divoké zvíře, strom v nepříznivých podmínkách, voda rozrušující tvrdý povrch
+- proměna: stará struktura přestává držet, něco se rozpadá a vzniká nový tvar
+Uruz × Tiwaz: Uruz = mám sílu; Tiwaz = kam ji vložím.
+
+THURISAZ
+Jádro: Síla nárazu, hranice, trn, odpor, okamžik před nebo po zásahu.
+Obrazové oblasti:
+- trnitá cesta
+- zavřené dveře
+- člověk zastavený před nebezpečím
+- konflikt těsně před vypuknutím
+- náhlý náraz
+- něco rozbíjející dosavadní postup
+- ruka připravená k činu, ale ještě nezasažená
+- uvědomění, že další krok bude mít důsledek
+Thurisaz × Nauthiz: Nauthiz = nemohu, protože něco potřebuji; Thurisaz = narazil jsem.
+
+ANSUZ
+Jádro: Slovo, hlas, naslouchání, význam vznikající komunikací.
+Obrazové oblasti:
+- někdo něco vysloví
+- něco je konečně řečeno
+- člověk něco zaslechne
+- slovo změní význam předchozí situace
+- otázka otevře nové přemýšlení
+- hledání správných slov
+- pochopení až při vyslovení
+- ticho před důležitou větou
+- starý dopis
+- hlas z dálky
+
+RAIDHO
+Jádro: Cesta jako uspořádaný pohyb v čase.
+Obrazové oblasti:
+- pěší cesta
+- jízda
+- změna směru
+- návrat
+- cesta podle značek
+- rytmus kroků
+- cesta s několika etapami
+- zpětné pochopení její logiky
+- odbočka, která se ukáže jako součást cesty
+Raidho × Ehwaz: Raidho = cesta; Ehwaz = společný pohyb.
+
+KENAZ
+Jádro: Světlo, které odhaluje nebo umožňuje vytvořit.
+Obrazové oblasti:
+- pochodeň v tmavé místnosti
+- světlo na detailu
+- kovářský oheň
+- práce při světle
+- nalezení chyby díky osvětlení
+- spojení dvou myšlenek
+- pochopení principu
+- vytvoření něčeho díky nové znalosti
+Kenaz × Sowilo: Kenaz = vidím něco, co jsem předtím neviděl; Sowilo = vidím celek jasně.
+
+GEBO
+Jádro: Vznik něčeho mezi dvěma stranami skrze dar, výměnu nebo vzájemnost.
+Obrazové oblasti:
+- dar
+- pomoc
+- vzájemná služba
+- sdílení
+- důvěra
+- nabídka bez jistoty návratu
+- přijetí
+- něco společně vytvořené
+- vztah změněný výměnou
+Gebo není jen „dát“; musí existovat druhá strana.
+
+WUNJO
+Jádro: Souznění. Pocit, že něco zapadlo na své místo.
+Obrazové oblasti:
+- návrat domů
+- smích mezi přáteli
+- společná oslava
+- dokončená práce
+- uvolnění po napětí
+- pocit přijetí
+- věc, která konečně funguje
+- člověk mezi lidmi, kde nemusí nic dokazovat
+- shledání
+Wunjo × Gebo: Gebo = výměna vytvoří vztah; Wunjo = vztah přinese soulad.
+
+HAGALAZ
+Jádro: Vnější síla rozbije předchozí uspořádání.
+Obrazové oblasti:
+- kroupy
+- bouře
+- povodeň
+- spadlý strom
+- rozbitá střecha
+- zničená úroda
+- plán zmařený okolnostmi
+- něco odhalené po poškození
+- stará konstrukce nevydrží
+Hagalaz × Thurisaz: Thurisaz = narazil jsem na sílu; Hagalaz = síla přišla ke mně.
+
+NAUTHIZ
+Jádro: Potřeba vzniklá omezením.
+Obrazové oblasti:
+- nedostatek vody
+- poslední zásoba
+- nedostatek času
+- zavřené dveře
+- nemožnost získat něco potřebného
+- člověk musí něco oželet
+- rozlišení potřeby a touhy
+- omezení odhalí prioritu
+- improvizace bez dostatku prostředků
+Nauthiz × Isa: Nauthiz = nemohu, protože něco potřebuji; Isa = nemohu, protože se pohyb zastavil.
+
+ISA
+Jádro: Zastavení. Nehybnost. Zadržený pohyb.
+Obrazové oblasti:
+- led
+- zamrzlá řeka
+- loď v ledu
+- čekání
+- odložené rozhodnutí
+- ticho
+- nehybnost
+- člověk přestane tlačit
+- nic se nehýbe, ale proces není mrtvý
+Klíč: Nic se neděje — a právě to je dění.
+
+JERA
+Jádro: Čas + cyklus + výsledek.
+Obrazové oblasti:
+- setí → růst → sklizeň
+- roční období
+- zrání
+- opakující se práce
+- návrat stejné situace v jiné fázi
+- dlouhodobý výsledek
+- sklizeň něčeho, co člověk sám zasel
+- pochopení dlouhodobého vzorce
+Jera × Ingwaz: Jera = cyklus dokončí svou cestu; Ingwaz = něco dozrává uvnitř před novým začátkem.
+
+EIHWAZ
+Jádro: Osa, vytrvalost, přechod mezi stavy, schopnost vydržet proměnu.
+Obrazové oblasti:
+- tis
+- hluboké kořeny
+- most
+- průchod mezi dvěma místy
+- člověk mezi dvěma etapami života
+- starý strom přežívající změny
+- změna uvnitř, zvenku ještě málo viditelná
+- překážka, kterou nelze odstranit, ale lze kolem ní projít
+Eihwaz není prostě „síla“; je to schopnost zůstat osou během změny.
+
+PERTHRO
+Jádro: Skrytý obsah, možnost, náhoda, tajemství, něco ještě neodhaleného.
+Obrazové oblasti:
+- zavřená nádoba
+- skrytá místnost
+- neznámý výsledek
+- náhodný nález
+- chybějící informace
+- něco objevené náhodou
+- možnost, která se objeví bez plánování
+- otázka, kterou zatím nelze zodpovědět
+Perthro × Blank: Perthro = něco je skryté; Blank = nevíme, co tam má být, nebo zda tam má být vůbec něco.
+
+ALGIZ
+Jádro: Bdělost, ochranná hranice, instinkt.
+Obrazové oblasti:
+- zvíře zpozorní
+- člověk zaslechne zvuk
+- pocit nebezpečí
+- hlídání hranice
+- ochrana dítěte
+- odmítnutí pustit něco dál
+- náhlé uvědomění okolí
+- otevřený prostor umožní včas něco zahlédnout
+Algiz není „ochrana“ jako štít; je to vnímám → zpozorním → hranice se aktivuje.
+
+SOWILO
+Jádro: Slunce, jasnost, celek, vitalita, světlo.
+Obrazové oblasti:
+- východ slunce
+- světlo po tmě
+- jasný výhled
+- pochopení celku
+- něco se ukáže v plném světle
+- obnovená energie
+- sebejistota
+- pocit, že není třeba nic skrývat
+Sowilo × Kenaz: Kenaz = pochodeň v temné místnosti; Sowilo = denní světlo, ve kterém už není potřeba pochodeň.
+
+TIWAZ
+Jádro: Směr + zásada + rozhodnutí + cena.
+Obrazové oblasti:
+- rozcestí
+- dvě možnosti a jeden zvolený směr
+- člověk se za někoho postaví
+- člověk odmítne ustoupit
+- někdo drží slovo
+- rozhodnutí něco stojí
+- přijetí následku
+- šíp
+- soustředění síly jedním směrem
+- „vím, za čím stojím“
+Tiwaz × Raidho: Raidho = jak cesta pokračuje; Tiwaz = za čím stojím.
+
+BERKANA
+Jádro: Zrození, růst, péče, nový živý tvar.
+Obrazové oblasti:
+- první listy
+- výhonek
+- narození
+- péče
+- mladý strom
+- nový projekt
+- nový vztah
+- něco křehkého
+- ochrana nového začátku
+Berkana × Ingwaz: Berkana = něco začíná růst; Ingwaz = něco dozrává uvnitř.
+
+EHWAZ
+Jádro: Dva pohyby se spojí do jednoho rytmu.
+Obrazové oblasti:
+- kůň a jezdec
+- dva lidé nesoucí náklad
+- spolupráce
+- společná cesta
+- důvěra
+- přizpůsobení tempa
+- pohyb mezi dvěma místy
+- změna díky vztahu
+Ehwaz × Gebo: Gebo = výměna; Ehwaz = společný pohyb.
+
+MANNAZ
+Jádro: Člověk jako bytost mezi ostatními lidmi; sebepoznání skrze vztah.
+Obrazové oblasti:
+- zrcadlo
+- rozhovor
+- skupina
+- vlastní slepé místo
+- člověk vidí sebe v druhém
+- rozdíl mezi sebepojetím a obrazem u ostatních
+- společnost formující jednotlivce
+- hledání vlastního místa
+Mannaz × Ansuz: Ansuz = co mezi lidmi zazní; Mannaz = co mezi lidmi poznám o sobě.
+
+LAGUZ
+Jádro: Proud, hloubka, intuice, pohyb podle něčeho, co nelze celé vysvětlit.
+Obrazové oblasti:
+- řeka
+- déšť
+- moře
+- hladina
+- proud pod povrchem
+- voda obtékající překážku
+- člověk následující intuici
+- pocit před vysvětlením
+- něco vynořující se z podvědomí
+Laguz × Raidho: Raidho = já jdu cestou; Laguz = něco mě nese nebo vede jako proud.
+
+INGWAZ
+Jádro: Vnitřní zrání, uzavření, nahromadění a přechod do nového cyklu.
+Obrazové oblasti:
+- semeno
+- pupen
+- uzavřený prostor
+- dokončení práce
+- nahromaděná energie
+- pocit dokončení
+- poslední krok před novým začátkem
+- vnitřní příprava
+Ingwaz × Berkana: Berkana = zrození; Ingwaz = zrání před zrozením / uzavření před novým cyklem.
+
+OTHALA
+Jádro: Domov, dědictví, kořeny, místo, které člověk přijímá a předává.
+Obrazové oblasti:
+- rodinný dům
+- půda
+- dědictví
+- starý předmět
+- návrat domů
+- rodová paměť
+- rodinný způsob života
+- rozhodování, co zachovat
+- rozhodování, co nepředat dál
+Othala × Fehu: Fehu = co vlastním / používám / směňuji; Othala = co patří ke mně skrze původ, domov a dědictví.
+
+DAGAZ
+Jádro: Přechod. Dvě strany se setkají a vzniká nový stav.
+Obrazové oblasti:
+- úsvit
+- otevření dveří
+- změna perspektivy
+- pochopení
+- průchod mezi tmou a světlem
+- člověk už není tím, kým byl před chvílí
+- nový způsob vidění
+- překročení prahu
+Dagaz × Sowilo: Sowilo = světlo je přítomné; Dagaz = světlo právě mění stav, ve kterém člověk je.
+
+UNKNOWN / BLANK
+Jádro: Význam není určen.
+Ne „nic“, ne „budoucnost“, ne „osud“, ne „tajemství“. Je to místo, kde význam zatím chybí nebo ještě nevznikl.
+
+Obrazové rodiny:
+Nepřítomnost:
+- místo, kde měl stát dům
+- prázdná židle
+- chybějící stránka
+- přerušená cesta
+
+Neznámé:
+- mlha
+- zavřená nádoba
+- neprůhledné dveře
+- voda bez viditelného dna
+
+Ještě bez tvaru:
+- myšlenka bez slov
+- plán bez podoby
+- semeno před vyklíčením
+
+Přerušená kontinuita:
+- stopa končí
+- příběh má mezeru
+- cesta mizí
+
+Zrcadlo:
+- člověk si uvědomí, co do prázdného místa sám očekával
+
+Blank × Perthro:
+Perthro = něco je skryté.
+Blank = nevíme, co tam má být — nebo zda tam má být vůbec něco.
+
+SYSTÉM PROTI OPAKOVÁNÍ
+
+Nevytvářet 30 náhodných obrazů jedné runy.
+
+Lepší struktura:
+Runa → 8–12 obrazových rodin → každá rodina 5–10 konkrétních scén.
+
+Tím může jedna runa získat přibližně 40–100 kvalitně odlišných obrazů.
+
+Příklad Fehu:
+- zásoby: sýpka, dřevo, obilí, voda, krmivo, nástroje
+- živý majetek: stádo, růst stáda, prodej zvířete, návrat stáda, péče o zvířata
+- hodnota v pohybu: prodej, výroba, směna, odměna, investice zdroje do další práce
+
+OBRAZOVÁ VZDÁLENOST
+
+Systém by neměl pouze vědět:
+„Tuhle scénu už použil.“
+
+Měl by vědět:
+„Tahle nová scéna je příliš podobná tomu, co člověk viděl nedávno.“
+
+Například:
+Fehu → stádo v ohradě
+by mělo dočasně snížit pravděpodobnost:
+Fehu → stádo na pastvině
+
+ale nemusí blokovat:
+Fehu → člověk počítá zásoby dřeva.
+
+Tím vzniká rozmanitost bez ztráty identity runy.
+
+DŮLEŽITÝ FILTR PRO KAŽDÝ OBRAZ
+
+1. Je fyzicky nebo psychologicky realistický?
+2. Je z něj možné poznat konkrétní runu?
+3. Není příliš obecný?
+4. Nemohl by stejně dobře patřit třem jiným runám?
+5. Není jen parafrází již použitého obrazu?
+6. Odpovídá přirozeně světu a elementárnímu charakteru runy, aniž by byl tímto světem svázán?
+7. Ukazuje situaci nebo dění, místo aby vysvětloval význam?
+
+CÍL
+
+Nevytvářet databázi „významů run“.
+
+Vytvořit pro každou runu dostatečně široký, ale stále rozpoznatelný prostor realistických obrazů, ze kterého může Rúnar vybírat a který se může měnit podle otázky, kontextu a předchozích obrazů.

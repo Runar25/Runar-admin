@@ -285,6 +285,7 @@ const UI_TEXT = {
     // Helper ? (runar-helper.js) — report #2, KUKY 2026-09-21: zviditelnit glyf-tap a Ask ("veci ktere nejdou na prvni pohled videt").
     helper_btn:         'Help with the reading',
     helper_title:       'GOOD TO KNOW',
+    helper_guide:       'Tap here — it shows how a reading works.',
     helper_glyph:       'Tap the rune — it tells its name and meaning.',
     helper_ask:         'Tap here — suggested questions open.',
     helper_ask2:        'Ask how the image touches your question.',
@@ -364,7 +365,7 @@ const UI_TEXT = {
     ask_h_life_all:     'How does my life rune {life} affect this reading?',
     ask_btn:            'ASK',
     ask_thinking:       'Rúnar listens…',
-    ask_teaser:         'Rúnar has one answer left — {tier} hears it.',
+    ask_teaser:         'Your own questions to Rúnar open with {tier}.',   // 2026-09-25 KUKY (stavba jako q_teaser)
     err_no_credits:     'No readings remain. Use a {card} to continue.',
     err_monthly_limit: 'This month\u2019s readings are all drawn. They return with the new month.',
     err_voice_month:   'The voice has spoken {n} times this month. It returns with the new month.',
@@ -675,6 +676,7 @@ const UI_TEXT = {
     motto_paths:        'Rúnar segir þér ekki hvað þú átt að gera. Hann bendir á möguleika.',
     helper_btn:         'Hjálp við lesturinn',
     helper_title:       'GOTT AÐ VITA',
+    helper_guide:       'Smelltu hér til að sjá hvernig lestur verður til.',
     helper_glyph:       'Snertu rúnina — hún segir nafn sitt og merkingu.',
     helper_ask:         'Smelltu hér, þá opnast tillögur að spurningum.',
     helper_ask2:        'Spurðu hvernig myndin snertir spurningu þína.',
@@ -746,7 +748,7 @@ const UI_TEXT = {
     ask_h_life_all:     'Hvernig hefur lífsrúnin {life} áhrif á þennan lestur?',
     ask_btn:            'SPYRJA',
     ask_thinking:       'Rúnar hlustar…',
-    ask_teaser:         'Rúnar á eftir eitt svar — {tier} heyrir það.',
+    ask_teaser:         'Eigin spurningar þínar til Rúnars opnast með {tier}.',
     err_no_credits:     'Þú átt enga spá eftir. Notaðu {card} til að halda áfram.',
     err_monthly_limit: '\u00de\u00fa hefur nota\u00f0 alla lestrana \u00fe\u00edna \u00ed \u00feessum m\u00e1nu\u00f0i. \u00deeir koma aftur me\u00f0 n\u00fdjum m\u00e1nu\u00f0i.',
     err_voice_month:   'Röddin hefur talað {n} sinnum í þessum mánuði. Hún kemur aftur með nýjum mánuði.',

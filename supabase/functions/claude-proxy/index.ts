@@ -305,6 +305,9 @@ async function callSol(system: string, prompt: string, maxTokens: number, key: s
 // copies are kept honest by smoke ⑨ (scripts/verify_monthly_limits.js), which fails if they
 // drift. Counting unit = reading-units (SPREAD_COSTS), not runes: Yggdrasil costs 5, not 9.
 const MONTHLY_LIMITS: Record<string, number> = { standard: 50, premium: 75 };
+// Kolik Asků na jedno čtení, všechny zdarma (KUKY 2026-09-24/25: „dva asky pro premium už pusť a standard bude mít 1 ASK“).
+// ZRCADLÍ TIERS.<tier>.asks_per_reading v v2/runar-config.js — shodu hlídá smoke ⑨ (scripts/verify_monthly_limits.js).
+const ASKS_PER_READING: Record<string, number> = { free_trial: 0, rune_seeker: 0, standard: 1, premium: 2 };
 
 // Calendar month key, e.g. "2026-07". Stored next to the counter so the month rolls over
 // on first use instead of needing a scheduled reset.
@@ -590,32 +593,28 @@ serve(async (req: Request) => {
     // Deduction is applied after a verified-successful reading (credit safety).
     let deductPlan: DeductPlan = { kind: "none" };
 
-    // ── Ask Rúnar = PREMIUM ONLY ─────────────────────────────────────────────
-    // MIRROR of TIERS.<tier>.ask (runar-config.js). The client hides the ask box for
-    // everyone else, but a hidden box is not a gate — nothing here asked about tier.
-    // What that let through: `standard` got follow-ups entirely FREE (legitAsk below
-    // makes them cap-exempt, and the rune_seeker deduction branch does not apply to
-    // them, so no cap, no credit, no check); `rune_seeker` got them by spending a
-    // credit or their one free reading — a tier that must not reach the feature at all.
-    // (isAdmin already resolves to userTier 'premium' above, so admins pass.)
-    if (mode === "ask" && userTier !== "premium") {
+    // ── Ask Rúnar: počet na čtení podle tarifu (2026-09-25) ───────────────────────────
+    // Dřív „PREMIUM ONLY“ a zdarma jen PRVNÍ Ask — druhý by prémiovému uživateli strhl měsíční čtení a Standard by
+    // dostal 403. Teď: tarif bez Asku (askLimit 0) → 403 jako dřív (skrytý box není brána); pravý follow-up (kind 'ask'
+    // na vlastním čtení) je zdarma, dokud follow_up nemá askLimit položek; nad limit se ODMÍTNE a NIC se nestrhne.
+    // Ask bez ověřitelného čtení (neuložené čtení pro někoho) dál počítá jako čtení — „any doubt -> it counts“.
+    // (isAdmin výš dává userTier 'premium' → admin má 2.) ⚠️ Dva souběžné Asky můžou oba projít jako zdarma — zápis
+    // follow_up není atomický (BACKLOG „Ask — nálezy“ bod 2); cena omylu je jedna odpověď navíc.
+    const askLimit = ASKS_PER_READING[userTier] ?? 0;
+    if (mode === "ask" && askLimit < 1) {
       return json({ error: "unavailable", message: "The runes are quiet. Try again shortly." }, 403);
     }
-
-    // ── Paid tiers: monthly cast cap (the subscription they bought) ──
-    // A follow-up question is NOT a cast: it hangs off a reading that was already counted
-    // (one per reading — _askUsed), and it costs a subscriber nothing today. Counting it
-    // would quietly halve the subscription they bought.
-    // A follow-up (ask) is cap-exempt ONLY when it is a genuine follow-up: kind 'ask' on a
-    // reading that exists, is this user's, and has not been asked yet. Otherwise mode:'ask'
-    // on an ordinary reading would skip the cap forever. The lookup mirrors the follow_up
-    // append below, so if it passes here the append will too. Any doubt -> it counts.
     let legitAsk = false;
     if (mode === "ask" && journal?.kind === "ask" && journal?.reading_id && userId) {
       const { data: parent } = await sb().from("readings")
         .select("follow_up").eq("id", journal.reading_id).eq("user_id", userId).maybeSingle();
-      legitAsk = !!parent && (parent.follow_up == null ||
-        (Array.isArray(parent.follow_up) && parent.follow_up.length === 0));
+      if (parent) {
+        const used = Array.isArray(parent.follow_up) ? parent.follow_up.length : 0;
+        if (used >= askLimit) {
+          return json({ error: "ask_limit", message: "The runes have answered all they will for this reading." }, 403);
+        }
+        legitAsk = true;
+      }
     }
     // ── Zivotni runa je ZDARMA — a cenu urcuje SERVER, ne klient ─────────────
     // Neceni se podle `spread_cost` (to je cislo od klienta, proto ta podlaha

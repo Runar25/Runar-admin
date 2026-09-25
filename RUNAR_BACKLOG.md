@@ -659,6 +659,14 @@
   mrtvé větve `_lensContext` / lens část `_priorityContext` smazat, až bude jisté, že se čočka nevrací. (CODE-tune)
 - [ ] **Text zamčeného Asku pro Rune Seekera** — dnes *„Rúnar has one answer left — Premium hears it.“* (sedí na starý model „jedna odpověď
   zbývá“). Owner: *„něco přirozeného… nemělo by se to úplně vymykat“* ostatním teaserům (*„Deeper questions open with {tier}.“*). Návrh v chatu 2026-09-25.
+- [ ] **NA ZÍTRA — další body (owner 2026-09-25 večer)** (CODE-tune)
+  1. **Mnohem víc konců čtení s otázkou, s ohledem na runu** — owner: *„líbí se mi otázky na konci a chtěl bych, abychom jich udělali
+     mnohem víc… pro některou runu se může hodit něco jiného než pro jinou.“* Dnes `ENDING_OPEN/HEAVY` mají po 1 otázkovém tvaru.
+     Návrh zítra: pool otázkových konců + vazba na runu (např. z otázek run v Kolekci) → změřit opakování před/po.
+  2. **Druhý soubor obrazů od GPT** → `docs/inbox/2026-09-25-gpt-komplexni-obrazovy-prostor.txt` (jádro · napětí · obrazové rodiny ·
+     dvojice run „X × Y“ · systém proti opakování s obrazovou vzdáleností). Zpracovat spolu s prvním souborem.
+  3. **Hagalaz: „Hagalaz opens the field where the boards once stood“** — owner: *„nevím, jestli se mi líbí, že Rúnar používá runu jako
+     nástroj pro něco, co nejde úplně poznat z obrazu.“* Podívat se na esenční rámec [1] („the rune … is the one doing something“).
 - [ ] **NA ZÍTRA (owner 2026-09-25, „jsme na 99 %… uděláme zítra po restartu tokenů“)** (CODE-tune)
   1. **Deník — co uživatel zadal a Asky:** u karty vedle AREA i SEEKING a INTENTION; THE SITUATION (volná otázka), když ji zadal;
      všechny výměny Asku i s otázkou; **jen pro adminy** model, který čtení napsal (GPT-6 sol / který Opus — `readings.usage.model`).
@@ -704,7 +712,7 @@
     Po schválení: losovat podobu per čtení (jeden los pro `_domainContext` i `BRIDGE_AREAS`), zapsat ji do `prompt_draws`,
     golden pro každou podobu, a po týdnu živých čtení přeměřit `oblasti_slova.js`.
 - [ ] **Druhý Ask — plán po krocích (KUKY 2026-09-24: „vždy postupně od jednoduššího ke komplexnějšímu“; premium 2, standard 1, vše zdarma)**
-  - **Krok 1 HOTOVÝ v klientu, zapnutý JEN pro admina** (`ASK_MULTI_LIVE = false`, `TIERS.*.asks_per_reading`): dva Asky ke čtení, Rúnar o předchozí výměně neví. → owner živě testuje.
+  - ✅ **2026-09-25 ŽIVĚ pro všechny (DECISIONS 2026-09-25 (8)):** server `ASKS_PER_READING`, `ASK_MULTI_LIVE = true`, teaser „Your own questions to Rúnar open with {tier}.“ Dříve: **Krok 1 HOTOVÝ v klientu, zapnutý JEN pro admina** (`ASK_MULTI_LIVE = false`, `TIERS.*.asks_per_reading`): dva Asky ke čtení, Rúnar o předchozí výměně neví. → owner živě testuje.
   - **Před ostrým zapnutím (`ASK_MULTI_LIVE = true`) musí jít ven server** (`claude-proxy`): (a) Ask smí i standard (dnes 403 pro vše kromě premium); (b) zdarma do `asks_per_reading` tieru — `legitAsk` dnes pustí zdarma jen PRVNÍ Ask, druhý by prémiovému uživateli strhl měsíční čtení; (c) nad limit odmítnout, nestrhávat; (d) počty zrcadlit z configu + kontrola shody ve smoke (vzor NAME_LORE_LIMIT); (e) atomický zápis `follow_up` (nález 2 níž). Texty „one answer left“ (`ask_teaser`) přepsat podle tieru.
   - **Krok 2 = chatování:** Rúnar dostane předchozí výměnu (otázka + odpověď), aby se dalo doptat i na odpověď z Asku. Vyžaduje nový blok v `buildAskPrompt` (EN + IS nativně), přepočet stropu 12 000 zn. a měření opakování. Podklad z popisů run pro tenhle krok: `docs/archive/2026-09-24-ask-podoby-run.md`.
 - [ ] **Ask — nálezy z průzkumu 2026-09-23** (workflow 5 čtenářů + skeptici, CODE-tune), opravit s druhým Askem nebo dřív:

@@ -7132,3 +7132,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   what I already feel?"* jen když je otázek méně než 6 — Rúnar ji z podstaty odmítá.
 - **Otevřené:** text zamčeného Asku pro Rune Seekera (dnes *„Rúnar has one answer left — Premium hears it."*) — návrh čeká na ownera.
 - Affected doc(s): `RUNAR_BACKLOG.md`.
+
+## 2026-09-25 (8) — Dva Asky pro Premium, jeden pro Standard — ŽIVĚ (claude-proxy nasazen); text zamčeného Asku; nápověda ukazuje na návod
+
+- **Rozhodl:** KUKY 2026-09-25: *„dva asky pro premium už pusť a standard bude mít teda 1 ASK"* · text *„Your own questions to Rúnar
+  open with {tier}."* (varianta 1, stavba jako „Deeper questions open with {tier}.") · *„nápověda by měla ukázat na HOW A READING WORKS"*.
+- **Co (server):** `ASKS_PER_READING = { free_trial 0, rune_seeker 0, standard 1, premium 2 }` (zrcadlo `TIERS.*.asks_per_reading`, hlídá
+  smoke ⑨ — ověřeno i obráceně: podstrčený nesoulad premium 3 × 2 kontrola chytí). Tarif bez Asku → 403 jako dřív; pravý follow-up
+  zdarma do limitu; nad limit **odmítnuto, nic se nestrhne** (dřív by druhý Ask vzal prémiovému uživateli měsíční čtení).
+  Nasazený kód = repo (staženo a porovnáno před i po).
+- **Co (klient):** `ASK_MULTI_LIVE = true`; teaser zamčeného Asku nese nejnižší tarif s Askem (dnes Standard); nápověda „?" má nový cíl
+  `#read-guide-lbl` (*„Tap here — it shows how a reading works."* / *„Smelltu hér til að sjá hvernig lestur verður til."*).
+- **Známé riziko:** dva souběžné Asky na tomtéž čtení můžou oba projít jako zdarma (zápis `follow_up` není atomický) — BACKLOG „Ask — nálezy" bod 2.
+- Affected doc(s): `RUNAR_BACKLOG.md` (plán dvou Asků — krok 1 živě).

@@ -10,6 +10,8 @@
 
   // Cile: [selektor, klic hlavni vety, klic druhe vety nebo ""]. Poradi = shora dolu.
   var CILE = [
+    // 2026-09-25 (KUKY: „nápověda by měla ukázat na HOW A READING WORKS“) — návod nad formulářem.
+    ["#read-guide-lbl", "helper_guide", ""],
     [".rlbl-glyph", "helper_glyph", ""],
     ["#ask-lbl", "helper_ask", "helper_ask2"]
   ];

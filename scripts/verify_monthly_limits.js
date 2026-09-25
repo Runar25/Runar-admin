@@ -92,6 +92,21 @@ else if (cfgJm !== pxJm) {
   console.log('OK    rozbor jmena: ' + cfgJm + ' rozbory od modelu (config == proxy, strop se porovnava)');
 }
 
+// Asky na čtení (2026-09-25): TIERS.<tier>.asks_per_reading (config, klient) == ASKS_PER_READING (claude-proxy, vynucuje)
+// a proxy s nimi opravdu porovnává — jinak by mrtvá konstanta prošla zeleně.
+{
+  const pxA = proxy.match(/const ASKS_PER_READING[^=]*=\s*\{([^}]*)\}/);
+  for (const tier of ['free_trial', 'rune_seeker', 'standard', 'premium']) {
+    const m0 = cfg.match(new RegExp('^\\s{2}' + tier + ':\\s*\\{', 'm'));
+    const c = m0 ? (cfg.slice(m0.index, m0.index + 1600).match(/asks_per_reading:\s*(\d+)/) || [])[1] : null;
+    const p = pxA ? (pxA[1].match(new RegExp(tier + '\\s*:\\s*(\\d+)')) || [])[1] : null;
+    if (c == null || p == null || c !== p) { fail++; console.log('FAIL  asky ' + tier + ': config ' + c + ' × proxy ' + p); }
+  }
+  if (!/used\s*>=\s*askLimit/.test(proxy) || !/ASKS_PER_READING\[userTier\]/.test(proxy)) {
+    fail++; console.log('FAIL  asky: ASKS_PER_READING v proxy nic nevynucuje');
+  } else if (fail === 0) console.log('OK    asky na čtení: config == proxy a strop se porovnává');
+}
+
 console.log(fail === 0 ? '\nMonthly caps agree — config is enforced by the proxy.'
                        : '\n' + fail + ' MISMATCH — the cap the user pays for is not the cap enforced.');
 process.exit(fail ? 1 : 0);

@@ -926,7 +926,9 @@ function _askPlaceholder() {
 function _refreshAskTeaser() {
   var tEl = document.getElementById('ask-teaser');
   if (!tEl || tEl.style.display === 'none') return;
-  var _pt = (lang === 'is' ? TIERS.premium.label_is : TIERS.premium.label);
+  // 2026-09-25: nejnižší tarif, který Ask má (Standard, od ASK_MULTI_LIVE) — ne natvrdo Premium (§8).
+  var _tk = ['standard', 'premium'].filter(function (k) { return (TIERS[k] || {}).asks_per_reading > 0; })[0] || 'premium';
+  var _pt = (lang === 'is' ? TIERS[_tk].label_is : TIERS[_tk].label);
   tEl.textContent = tp('ask_teaser', { tier: _pt });
 }
 

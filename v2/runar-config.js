@@ -18,7 +18,7 @@ const GPT_REVIEW  = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/gpt-r
 // Druhý Ask, krok 1 (KUKY 2026-09-24): false = nové počty (TIERS.*.asks_per_reading) má JEN admin — owner živě
 // testuje. true = pro všechny; PŘEDTÍM musí jít ven serverová část (claude-proxy: standard smí Ask, N zdarma na
 // čtení, nad limit odmítnout — dnes by druhý Ask prémiovému uživateli strhl měsíční čtení). Viz RUNAR_BACKLOG.md.
-const ASK_MULTI_LIVE = false;
+const ASK_MULTI_LIVE = true;   // 2026-09-25 KUKY „dva asky pro premium už pusť a standard bude mít 1 ASK“ — server claude-proxy ASKS_PER_READING
 // Jazyk rozboru GPT-6 sol podle admina (KUKY 2026-09-24: „anglicky pro Sigrún“). Kdo tu není, dostane češtinu.
 const GPT_REVIEW_LANG = { 'info@agndofa.is': 'en' };
 // Future proxies go here:
