@@ -655,17 +655,17 @@
   ne stav vztahů a domova. Oprava = změna obsahu promptu → napřed změřit, jak často to dnes vzniká (Family & Home, Love), pak odebrat příčinu,
   ne přidat zákaz (memory `oprava-promptu-odebira-vadu`). (CODE-tune)
 - [ ] **Reporty 2026-09-25 (owner, 10 čtení, 7× gpt-6-sol) — návrhy čekají na ownera** (CODE-tune; lunin rozbor jen podnět — memory `gpt-rozbor-neni-zavazny`)
-  1. **„grey hour“ (Dagaz, Opus 5):** zdroj = EN obraz *„The turn of the light comes without your noticing…“* — doslovný kalk IS *„Ljósaskiptin“*
+  1. ✅ *(opraveno 2026-09-25, v4.57 — EN obraz pojmenuje svítání)* **„grey hour“ (Dagaz, Opus 5):** zdroj = EN obraz *„The turn of the light comes without your noticing…“* — doslovný kalk IS *„Ljósaskiptin“*
      (přechod světla, islandsky běžné slovo); angličtina pro to běžné slovo nemá, model si vymyslel „grey hour“. Návrh: EN *„Dawn comes without your
      noticing when night became day.“* (IS beze změny). Podobně *„You wake, and the light in the room has already changed“* → model dosadil „grey to gold“.
-  2. **„The roots below stay out of sight“ (Thurisaz, sol):** zdroj = hlavička runy `World: the roots, what lies beneath` (Thurisaz = Hel, `rworld`);
+  2. ✅ *(owner: vypnout světy — hotovo 2026-09-25, v4.58)* **„The roots below stay out of sight“ (Thurisaz, sol):** zdroj = hlavička runy `World: the roots, what lies beneath` (Thurisaz = Hel, `rworld`);
      sol ji udělal částí obrazu. Návrh: změřit, jak často modely svět z hlavičky kreslí do scény, pak rozhodnout (formulace / pozice).
-  3. **Ask × životní runa (sol 2×):** *„Gebo … was not drawn in this reading. It does not change what Dagaz holds“* — opis věty z `_askLifeContext`
+  3. ✅ *(věta odebrána 2026-09-25, v4.58; owner ověří na živých čteních)* **Ask × životní runa (sol 2×):** *„Gebo … was not drawn in this reading. It does not change what Dagaz holds“* — opis věty z `_askLifeContext`
      („it was not drawn today and the reading is not about it“). Owner: *„chceme znát jejich vztah… sem to nepatří“*. Návrh: odebrat nálepku
      „not drawn“, když se ptá, odpovědět, jak se životní runa s taženou potkává. Ověřit na solu i Opusu před/po.
   4. **Blank (sol):** *„Blank is the stone that bears no mark“* = doslova z `ESSENCE_BLANK`. Owner se přiklání k pojmenování runy jejím významem
      v obraze („the unknown“, „nepřítomnost něčeho očekávaného“) — ještě nerozhodnuto, sbírat přirovnání.
-  5. **„You see the room more clearly where sunlight reaches the floor“ (Dagaz, sol):** owner — vnímání podané jako fakt, má být možnost.
+  5. ✖ *(NENÍ vada — owner 2026-09-25: „jen část nic neznamená, záleží na celém kontextu… je to popis scény“)* **„You see the room more clearly…“ (Dagaz, sol).**
   6. **Rubrika luny, bod A:** owner 2× „nesmysl“ (Fehu *„You can keep every drop contained“*, Dagaz *„the hills come back“*), 1× „správné, ale v obraze“
      (Uruz), 1× souhlas (bod 5). Luna bere „you“ jako postavu scény za tvrzení o člověku. Úprava rubriky jen s ownerovým ano.
   Owner k solu: *„zatím GPT dělá dobré čtení“*; Fehu (sol) *„zatím asi nejlepší čtení“*.

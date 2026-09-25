@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-25",
- "prompt_version": "v4.57-dagaz-svitani",
+ "prompt_version": "v4.58-bez-sveta",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -1186,10 +1186,10 @@
    "zacatek": "Skilaðu EINGÖNGU svari þínu sem samfelldum texta. Ekkert JSON, engar f"
   },
   {
-   "hash": "24c3c3e8ff91",
+   "hash": "53d4dc6f2891",
    "lang": "is",
    "zdroj": "ask",
-   "zacatek": "LÍFSRÚNIN — leitandinn ber sjálfur Ehwaz; hún var ekki dregin núna og "
+   "zacatek": "LÍFSRÚNIN — leitandinn ber sjálfur Ehwaz. Nefndu hana ekki að fyrra br"
   },
   {
    "hash": "723d0f5d263b",

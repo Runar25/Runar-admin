@@ -1451,12 +1451,12 @@ function _dvergarContext(question, lang) {
 function _askLifeContext(life, lang) {
   if (!life) return '';
   if (lang === 'is')
-    return 'LÍFSRÚNIN — leitandinn ber sjálfur ' + rnPrompt(life) + '; hún var ekki dregin núna og '
-      + 'lesturinn fjallar ekki um hana. Nefndu hana ekki að fyrra bragði. Ef spurningin snýr '
+    // 2026-09-25: věta „hún var ekki dregin núna og lesturinn fjallar ekki um hana“ ven — sol ji opisoval do odpovědi
+    // místo vztahu run (report 2026-09-25 09:20, KUKY „odeber větu“). EN větev níž totéž.
+    return 'LÍFSRÚNIN — leitandinn ber sjálfur ' + rnPrompt(life) + '. Nefndu hana ekki að fyrra bragði. Ef spurningin snýr '
       + 'að henni máttu svara út frá henni, í einni eða tveimur setningum, og snúa svo aftur '
       + 'að rúnunum sem dregnar voru.';
-  return 'LIFE RUNE — the seeker carries ' + rnPrompt(life) + ' as their own; it was not drawn today '
-    + 'and the reading is not about it. Do not bring it up on your own. If their question '
+  return 'LIFE RUNE — the seeker carries ' + rnPrompt(life) + ' as their own. Do not bring it up on your own. If their question '
     + 'reaches for it, you may answer from it in a sentence or two, then return to the runes '
     + 'that were drawn.';
 }
@@ -1669,7 +1669,11 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
   var worldRef = rworld(drawn) || S.worldFb(pickedKws);
   var hasQ = !!(u.question && u.question.trim());
   var drawnCtx = S.DRAWN + ': ' + rnPrompt(drawn) + ' — ' + S.focus + ': ' + pickedKws
-    + (drawn.world ? ' · ' + S.REALM_drawn + ': ' + rworld(drawn) + ' · ' + S.ELEM + ': ' + relements(drawn) : '');
+    // 2026-09-25: SVĚT runy (World/Heimur) z hlavičky VEN — owner: „pojďme je vypnout… čím víc vstupů, tím větší guláš“.
+    // Doklad: sol z Thurisaz (svět Hel „the roots, what lies beneath“) udělal kus obrazu „The roots below stay out of sight“
+    // (report 2026-09-25 11:29). Přínos světa v hlavičce nikdy změřen nebyl (přibyl s otevírací větví, DECISIONS 2026-08-13).
+    // Živly zůstávají. Návrat jen očištěný a změřený (§26) — rworld() i REALM_* štítky zůstávají pro ten případ v kódu.
+    + (drawn.world ? ' · ' + S.ELEM + ': ' + relements(drawn) : '');
   var parts = [
     S.PERSON + ': ' + u.name,
     // drawn == life: NEopakovat tutéž runu podruhé jako kontext a NEpřidávat hotovou

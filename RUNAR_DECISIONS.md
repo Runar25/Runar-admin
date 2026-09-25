@@ -7065,3 +7065,21 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Na koho čeká:** CODE-read rozšíří `stats.js` o hlas (`voice_usage` × ceník EL podle modelu) a o poslední snímek předplatného.
 - **Reverzibilita:** odebrat dva řádky `logVoice`/`weeklyQuota` z funkcí; tabulky lze zahodit.
 - Affected doc(s): `RUNAR_PRIVACY.md` (Retence — evidence hlasu), `RUNAR_BACKLOG.md` (položka Sledování nákladů na hlas).
+
+## 2026-09-25 (3) — Z reportů 2026-09-25: svítání v obrazech Dagaz, svět runy z hlavičky ven, věta o životní runě z Asku ven (v4.57, v4.58)
+
+- **Rozhodl:** KUKY 2026-09-25 k rozboru svých reportů (10 čtení, 7 přes gpt-6-sol). **Provedl:** CODE-tune.
+- **(1) Dagaz — „grey hour" (v4.57):** *„jsem rád, že jsme to našli. opravit změnou obrazu."* EN *„The turn of the light…"* byl doslovný kalk
+  IS *„Ljósaskiptin"*; angličtina pro tu chvíli běžné slovo nemá a Opus 5 si vymyslel „grey hour". Nově *„Dawn comes without your noticing
+  when night became day."* a *„You wake, and dawn has already changed the light in the room."* (dřív „grey to gold"). IS beze změny.
+- **(2) Svět runy z hlavičky ven (v4.58):** *„těžko říct, jestli tam ty světy musí být. pojďme je vypnout. … čím víc vstupů dáváme promptu,
+  tím větší guláš."* Doklad: sol u Thurisaz (svět Hel *„the roots, what lies beneath"*) napsal *„The roots below stay out of sight"*.
+  Přínos světa nikdy změřen nebyl. Živly zůstávají; `rworld()` zůstává v kódu pro případný očištěný návrat (§26).
+- **(3) Ask × životní runa (v4.58):** *„odeber větu. já to vyzkouším na živých čteních."* Pryč *„it was not drawn today and the reading
+  is not about it"* (IS *„hún var ekki dregin núna og lesturinn fjallar ekki um hana"*) — sol ji 2× opsal místo vztahu run.
+- **Ověřeno:** golden — změnil se JEN řádek hlavičky single (bez světa) a řádek životní runy v Asku; IS věta is-grammar-qa čistá.
+  Chování na živých čteních ověří owner.
+- **Neplatí:** bod 5 z rozboru (*„You see the room more clearly…"* jako tvrzení) — owner: *„jen část nic neznamená, záleží na celém kontextu…
+  je to popis scény."* Není vada. Lunin rozbor je jen podnět (memory `gpt-rozbor-neni-zavazny`).
+- **Reverzibilita:** každá změna jedna řádka dat.
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka „Reporty 2026-09-25").
