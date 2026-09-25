@@ -854,7 +854,9 @@ function _askHints() {
     && ((AREAS.en || []).indexOf(u.area) !== -1 || (AREAS.is || []).indexOf(u.area) !== -1))
     ? u.area : '';
   out.push(_obl ? tp('ask_h_image_area', { area: _obl }) : t('ask_h_image'));
-  if (u.question) out.push(t('ask_h_asked'));          // jen kdyz clovek otazku opravdu polozil
+  // OSOBNÍ SLOT (2026-09-25, KUKY „přidáváme další větu… nepůjdeme přes 7“): s vlastní otázkou „jak to souvisí s tím, na co jsem
+  // se ptal“, bez ní „How does this reading affect me?“ — týž vzor jako časový slot níž (přesnější věta přebírá místo).
+  out.push(u.question ? t('ask_h_asked') : t('ask_h_me'));
   // CASOVY SLOT: „proc zrovna ted" je nejobecnejsi otazka po case. Kdyz si clovek zamer
   // zvolil, prebira ten slot presnejsi veta — ne dalsi radek navic.
   var _zi = _intentIdx(u.intention);

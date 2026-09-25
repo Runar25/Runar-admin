@@ -358,6 +358,7 @@ const UI_TEXT = {
     ask_h_when_ahead:   'What in this has to do with the decision ahead?',
     ask_h_when_past:    'What in this has to do with the past?',
     ask_h_asked:        'How does this relate to what I asked?',
+    ask_h_me:           'How does this reading affect me?',   // 2026-09-25 owner; bez vlastní otázky místo ask_h_asked
     ask_h_now:          'Why is this showing up now?',
     ask_h_unseen:       'What am I not seeing here?',
     ask_h_seek_clarity: 'What is this making clearer?',
@@ -744,6 +745,7 @@ const UI_TEXT = {
     ask_h_when_ahead:   'Hvað snýr að ákvörðuninni sem framundan er?',
     ask_h_when_past:    'Hvað snýr að því sem liðið er?',
     ask_h_asked:        'Hvernig tengist þetta því sem ég spurði um?',
+    ask_h_me:           'Hvaða áhrif hefur þessi lestur á mig?',
     ask_h_now:          'Af hverju kemur þetta upp núna?',
     ask_h_unseen:       'Hvað er það sem ég sé ekki hér?',
     ask_h_seek_clarity: 'Hvað er þetta að gera skýrara?',
