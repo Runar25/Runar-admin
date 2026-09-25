@@ -467,8 +467,10 @@ const ESSENCE_FRAMES_IS = [
 // se nelosuje a v `_promptDraws` se zapise jako essence = 'blank'.
 // Jen SINGLE: spready esencni radek nemaji od v4.9 a jmena run v textu nerikaji, takze tam
 // ten rozpor nevznika (§13 — cesta zvazena, ne zapomenuta).
-const ESSENCE_BLANK = 'THE ESSENCE LINE: after the picture, one short line that names the Blank once — the stone that bears no mark. It has no meaning in itself; the line leaves that empty place open instead of filling it. Plain words a stranger to runes can grasp. No invented mechanism, no fate. Never tell the seeker what it means for them.';
-const ESSENCE_BLANK_IS = 'KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem nefnir auðu rúnina einu sinni — steininn sem ekkert merki ber. Hún hefur enga merkingu í sjálfu sér; línan lætur auða rýmið standa opið í stað þess að fylla það. Hversdagsleg orð sem ókunnugur skilur. Engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.';
+// 2026-09-25 (KUKY: runa má být jmenovaná svým významem obsaženým v obraze — „the unknown, not decided yet“, „nepřítomnost
+// něčeho očekávaného“): pryč „the stone that bears no mark“ — sol ji opsal doslova a popsal jen vzhled kamene (report 09:56).
+const ESSENCE_BLANK = 'THE ESSENCE LINE: after the picture, one short line that names the Blank once and says what it is in this scene — what is not yet known, not yet decided, or missing where something was expected. It gives no meaning of its own; the line leaves that open place open instead of filling it. Plain words a stranger to runes can grasp. No invented mechanism, no fate. Never tell the seeker what it means for them.';
+const ESSENCE_BLANK_IS = 'KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem nefnir auðu rúnina einu sinni og segir hvað hún er í þessari mynd — það sem enn er óþekkt, enn óráðið eða vantar þar sem búist var við einhverju. Hún gefur enga merkingu af sjálfri sér; línan lætur opna rýmið standa opið í stað þess að fylla það. Hversdagsleg orð sem ókunnugur skilur. Engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.';
 function _essenceFrame(lang, rune) {
   if (rune && rune.n === 'Blank') return lang === 'is' ? ESSENCE_BLANK_IS : ESSENCE_BLANK;
   var pool = lang === 'is' ? ESSENCE_FRAMES_IS : ESSENCE_FRAMES;

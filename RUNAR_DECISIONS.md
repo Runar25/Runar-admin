@@ -7095,3 +7095,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   s ownerovým souhlasem se něco mění. Z verdiktů jde spočítat, jak často má rozbor pravdu (dnes owner: bod A 3× špatně z 4).
 - **Neověřeno:** zápis z živého rozboru (potřebuje adminovo přihlášení) → po prvním rozboru ověří CODE-tune řádek v DB.
 - Affected doc(s): `RUNAR_PRIVACY.md` (Retence — rozbory GPT), memory `gpt-rozbor-neni-zavazny`.
+
+## 2026-09-25 (5) — Blank se ve čtení jmenuje tím, čím je ve scéně, ne vzhledem kamene (v4.59)
+
+- **Rozhodl:** KUKY 2026-09-25 (*„4. ano, přesně tak to chci"*) na výklad: věta o runě má u Blank říct, co runa znamená v té konkrétní
+  scéně („the unknown", „not decided yet", „nepřítomnost něčeho očekávaného"), ne popsat kámen.
+- **Co:** `ESSENCE_BLANK(_IS)` — pryč *„the stone that bears no mark"* / *„steininn sem ekkert merki ber"* (sol to opsal doslova, report
+  09:56); nově *„says what it is in this scene — what is not yet known, not yet decided, or missing where something was expected"* /
+  *„segir hvað hún er í þessari mynd — það sem enn er óþekkt, enn óráðið eða vantar þar sem búist var við einhverju"* (is-grammar-qa čisté;
+  *búist var við* 7394× místo nedoloženého *einhvers var vænst* 0×). Zbytek rámce beze změny.
+- **Riziko ke sledování:** výčet tří významů může model opisovat (memory `prompt-directive-makes-model-copy`) — ověří owner na živých čteních.
+- **Zbytek podnětů od GPT** (obrazy pro 24 run + Blank) → zítra, `RUNAR_BACKLOG.md` „NA ZÍTRA".
+- Affected doc(s): `RUNAR_BACKLOG.md`.

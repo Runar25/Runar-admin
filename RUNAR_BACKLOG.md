@@ -654,6 +654,16 @@
   Rozbor GPT to teď hlásí (rubrika A), prompt tomu nebrání: NO COLD READING hlídá jen nitro („what is true, stirring, or known inside them“),
   ne stav vztahů a domova. Oprava = změna obsahu promptu → napřed změřit, jak často to dnes vzniká (Family & Home, Love), pak odebrat příčinu,
   ne přidat zákaz (memory `oprava-promptu-odebira-vadu`). (CODE-tune)
+- [ ] **NA ZÍTRA (owner 2026-09-25, „jsme na 99 %… uděláme zítra po restartu tokenů“)** (CODE-tune)
+  1. **Deník — co uživatel zadal a Asky:** u karty vedle AREA i SEEKING a INTENTION; THE SITUATION (volná otázka), když ji zadal;
+     všechny výměny Asku i s otázkou; **jen pro adminy** model, který čtení napsal (GPT-6 sol / který Opus — `readings.usage.model`).
+     Zkontrolovat, že `loadJournal` vybírá `seeking, intention, question, follow_up, usage` (dnes zřejmě ne všechny).
+  2. **Obrazy od GPT pro 24 run + Blank** → `docs/inbox/2026-09-25-gpt-obrazy-24-run-plus-blank.txt`. Owner: *„je to inspirace,
+     musí být zkrácený či mírně upravený“* — zkrátit/upravit do `RUNE_IMAGES` (EN + IS nativně, ověřit nástroji), brána s popisy runy.
+     Blank: pět rodin obrazů (nepřítomnost · neznámé · potenciál · přerušení příběhu · zrcadlo) — dnes má 3 obrazy.
+  3. ⏸ **Živly (Elements) v hlavičce runy NECHAT** — owner: *„o elementech rozhodneme, až pokud se objeví problém“*. Hlídat: kdyby
+     se živel propisoval do obrazu (oheň, vzduch…) jako svět Hel („roots“), je to ten problém (DECISIONS 2026-09-25 (3)).
+  4. Po prvním živém rozboru luny ověřit řádek v `gpt_reviews` (DECISIONS 2026-09-25 (4)).
 - [ ] **Reporty 2026-09-25 (owner, 10 čtení, 7× gpt-6-sol) — návrhy čekají na ownera** (CODE-tune; lunin rozbor jen podnět — memory `gpt-rozbor-neni-zavazny`)
   1. ✅ *(opraveno 2026-09-25, v4.57 — EN obraz pojmenuje svítání)* **„grey hour“ (Dagaz, Opus 5):** zdroj = EN obraz *„The turn of the light comes without your noticing…“* — doslovný kalk IS *„Ljósaskiptin“*
      (přechod světla, islandsky běžné slovo); angličtina pro to běžné slovo nemá, model si vymyslel „grey hour“. Návrh: EN *„Dawn comes without your
@@ -663,7 +673,7 @@
   3. ✅ *(věta odebrána 2026-09-25, v4.58; owner ověří na živých čteních)* **Ask × životní runa (sol 2×):** *„Gebo … was not drawn in this reading. It does not change what Dagaz holds“* — opis věty z `_askLifeContext`
      („it was not drawn today and the reading is not about it“). Owner: *„chceme znát jejich vztah… sem to nepatří“*. Návrh: odebrat nálepku
      „not drawn“, když se ptá, odpovědět, jak se životní runa s taženou potkává. Ověřit na solu i Opusu před/po.
-  4. **Blank (sol):** *„Blank is the stone that bears no mark“* = doslova z `ESSENCE_BLANK`. Owner se přiklání k pojmenování runy jejím významem
+  4. ✅ *(opraveno 2026-09-25, v4.59 — věta o runě ji jmenuje tím, čím je ve scéně: neznámé / nerozhodnuté / chybějící)* **Blank (sol):** *„Blank is the stone that bears no mark“* = doslova z `ESSENCE_BLANK`. Owner se přiklání k pojmenování runy jejím významem
      v obraze („the unknown“, „nepřítomnost něčeho očekávaného“) — ještě nerozhodnuto, sbírat přirovnání.
   5. ✖ *(NENÍ vada — owner 2026-09-25: „jen část nic neznamená, záleží na celém kontextu… je to popis scény“)* **„You see the room more clearly…“ (Dagaz, sol).**
   6. **Rubrika luny, bod A:** owner 2× „nesmysl“ (Fehu *„You can keep every drop contained“*, Dagaz *„the hills come back“*), 1× „správné, ale v obraze“
