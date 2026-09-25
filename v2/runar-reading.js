@@ -49,12 +49,16 @@ var GPT_REVIEW_RULES =
   'You review one reading from the Rúnar app. Rúnar is a rune guide — a mirror, not an oracle. You get (1) the exact prompt ' +
   'for this reading: the drawn rune with its keywords, the area of life, the IMAGE he was given and his instructions, ' +
   '(2) the finished reading, (3) any follow-up questions (Ask) with his answers.\n' +
-  'Report ONLY real faults. For each fault quote the exact words and say in one sentence why it is a fault. If a category ' +
-  'has no fault, write one short line saying so. Look for exactly these:\n' +
+  // 2026-09-25 (KUKY: „nemá zbytečně psát, pokud tam nic nenajde… pokud si tím není jistý, ať to nepíše“): žádné řádky „bez vady“.
+  'Report ONLY faults that matter and that you are sure of; if you are not sure, leave it out. For each fault quote the exact ' +
+  'words and say in one sentence why it is a fault. Do not mention categories without a fault. If you find nothing important, ' +
+  'reply with one short line saying so. Read every sentence in the context of the whole scene — how it begins, goes on and ends. ' +
+  'Look for exactly these:\n' +
   'A. Claims about the person stated as fact — their feelings, relationships, past, what they know or did, what will happen. ' +
   'Not a fault: the same thing offered as a possibility (may, perhaps, or a question); the image\'s own movement carried into ' +
   'their chosen area of life ("in your work, something rises and sinks back"); a setting everyone has (home, the people close, ' +
-  'work) named as the place the image may touch. A fault: an activity or circumstance they may well not have, stated as theirs ' +
+  'work) named as the place the image may touch; "you" as the figure inside the image scene ("you stand", "you see the room"), ' +
+  'which describes the scene, not the person\'s life. A fault: an activity or circumstance they may well not have, stated as theirs ' +
   '("your garden", "when you paint"); and a concrete state of their life stated as fact, even in a setting everyone has ' +
   '("in your home the talk has gone flat and careful").\n' +
   'B. The rune missing — would someone who knows the rune\'s keywords recognise it from what the reading says it does? Say what is missing.\n' +
@@ -841,6 +845,8 @@ function _askHints() {
     out.push(many ? tp('ask_h_life_all', { life: rnSplit(life).name })
                   : tp('ask_hint_life', { life: rnSplit(life).name, rune: rnSplit(dr[0]).name }));
   out.push(!many && dr[0] ? tp('ask_h_rune', { rune: rnSplit(dr[0]).name }) : t('ask_h_runes'));
+  // 2026-09-25 (KUKY): výklad runy bez obrazu — owner tak Asku dává otázku sám a odpověď „perfektně vysvětluje význam runy“.
+  out.push(!many && dr[0] ? tp('ask_h_explain', { rune: rnSplit(dr[0]).name }) : t('ask_h_explain_all'));
   // Obraz nese KAZDE cteni (150/150 dvojic) — a kdyz si clovek vybral oblast, tentyz radek
   // ji rovnou pojmenuje. Prompt oblast zna, ale ma zakazane ji vyslovit; tady se na ni
   // smi zeptat nahlas. Popisek uz je v aktualnim jazyce (_syncPillLang v runar-app.js).

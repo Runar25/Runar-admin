@@ -349,6 +349,9 @@ const UI_TEXT = {
     // 2026-09-08: ukazky, JAK se zeptat (handoff #55). Rotuji po ~3 s, viz _askPhStart.
     ask_h_rune:         'What does {rune} mean in this reading?',
     ask_h_runes:        'What do these runes mean together?',
+    // 2026-09-25 (KUKY): výklad runy bez obrazu — Rúnar v něm „perfektně vysvětluje význam runy“.
+    ask_h_explain:      'Explain {rune} without the image.',
+    ask_h_explain_all:  'Explain these runes without the image.',
     ask_h_image:        'What is the image pointing to?',
     ask_h_image_area:   '{area} — where does the image land?',
     ask_h_when_now:     'What in this has to do with right now?',
@@ -733,6 +736,8 @@ const UI_TEXT = {
     ask_placeholder:    'Hvað vakti athygli þína?',
     ask_h_rune:         'Hvað merkir {rune} í þessum lestri?',
     ask_h_runes:        'Hvað merkja þessar rúnir saman?',
+    ask_h_explain:      'Útskýrðu {rune} án myndarinnar.',
+    ask_h_explain_all:  'Útskýrðu þessar rúnir án myndarinnar.',
     ask_h_image:        'Hvað er myndin að benda á?',
     ask_h_image_area:   '{area} — hvar lendir myndin?',
     ask_h_when_now:     'Hvað snýr að þessari stundu?',

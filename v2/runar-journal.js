@@ -17,7 +17,7 @@ async function loadJournal() {
   if (!currentUser) { hideJournal(); return; }
   try {
     let q = sb.from('readings')
-      .select('id, rune_name, rune_glyph, lang, short_text, deep_text, area, seeking, question, life_rune, credits_used, drawn_at')
+      .select('id, rune_name, rune_glyph, lang, short_text, deep_text, area, aol, seeking, intention, question, life_rune, credits_used, drawn_at, follow_up, usage')
       .eq('user_id', currentUser.id)
       // 'someone' readings (tester test data) never appear in the user's own journal
       .or('reading_mode.is.null,reading_mode.eq.mine')
@@ -40,6 +40,31 @@ function hideJournal() {
   const content = document.getElementById('journal-content');
   if (gate)    gate.style.display    = 'block';
   if (content) content.style.display = 'none';
+}
+
+// 2026-09-25: co člověk zadal (oblast · hledání · záměr) do řádku s datem; u spreadu nese oblast `aol` (area = 'spread').
+function _jVolby(e, isSpread) {
+  const v = [isSpread ? e.aol : e.area, e.seeking, e.intention].filter(Boolean).map(escapeHtml);
+  return v.length ? ' · ' + v.join(' · ') : '';
+}
+// Situace, výměny Asku (otázka + odpověď) a pro adminy model, který čtení napsal (readings.usage.model).
+function _jDetail(e) {
+  let h = e.question ? `<div class="jcard-question">❝ ${escapeHtml(e.question)} ❞</div>` : '';
+  const asks = Array.isArray(e.follow_up) ? e.follow_up.filter(function (f) { return f && f.a; }) : [];
+  if (asks.length) h += `<div class="jcard-layer-lbl" style="margin-top:18px;">${t('ask_lbl')}</div>` + asks.map(function (f) {
+    return (f.q ? `<div class="jcard-question">❝ ${escapeHtml(f.q)} ❞</div>` : '') + `<div class="jcard-text">${escapeHtml(f.a)}</div>`;
+  }).join('');
+  if (e.life_rune) h += `<div class="jcard-life-rune">${t('life_rune_short')}: ${escapeHtml(e.life_rune)}</div>`;
+  const m = e.usage && e.usage.model;
+  if (m && currentUser && isAdmin(currentUser.email)) h += `<div class="jcard-life-rune">Model: ${escapeHtml(_jModel(m))}</div>`;
+  return h;
+}
+// „claude-opus-4-8“ → „Opus 4.8“, „gpt-6-sol“ → „GPT-6 sol“ (jen popisek pro admina).
+function _jModel(m) {
+  m = String(m);
+  if (m.indexOf('claude-') === 0) { const p = m.slice(7).split('-'); return p[0].charAt(0).toUpperCase() + p[0].slice(1) + ' ' + p.slice(1).join('.'); }
+  if (m.indexOf('gpt-') === 0) return 'GPT-' + m.slice(4).replace('-', ' ');
+  return m;
 }
 
 function renderJournal(entries) {
@@ -101,26 +126,25 @@ function renderJournal(entries) {
             <div class="jcard-glyph" style="opacity:0.7;">✦</div>
             <div class="jcard-info">
               <div class="jcard-name">✦ ${spreadNm} · ${langU}</div>
-              <div class="jcard-date">${dateStr}</div>
+              <div class="jcard-date">${dateStr}${_jVolby(e, true)}</div>
               <div class="jcard-gathering-runes">${shortT}</div>
               <div class="jcard-excerpt" id="jex-${i}">${deepT}</div>
             </div>
           </div>
           <div class="jcard-arrow" id="jarr-${i}">▾</div>
         </div>
-        <div class="jcard-body" id="jbody-${i}" style="display:none;"></div>
+        <div class="jcard-body" id="jbody-${i}" style="display:none;">${_jDetail(e)}</div>
       </div>`;
     }
 
     // ── Regular reading card ──
-    const areaStr = e.area ? ` · ${escapeHtml(e.area)}` : '';
     return `<div class="jcard" id="jcard-${i}">
       <div class="jcard-header" onclick="toggleJournalEntry(${i})">
         <div class="jcard-left">
           <div class="jcard-glyph">${glyphHtml}</div>
           <div class="jcard-info">
             <div class="jcard-name">${nameU} · ${langU}</div>
-            <div class="jcard-date">${dateStr}${areaStr}</div>
+            <div class="jcard-date">${dateStr}${_jVolby(e, false)}</div>
             <div class="jcard-excerpt" id="jex-${i}">${shortT}</div>
             <button class="jcard-select-btn" id="jselect-btn-${i}" onclick="event.stopPropagation();toggleRuneSelection(${i})">${t('jcard_select')}</button>
           </div>
@@ -131,8 +155,7 @@ function renderJournal(entries) {
         ${e.deep_text ? `
         <div class="jcard-layer-lbl">${t('layer2_lbl')}</div>
         <div class="jcard-text">${deepT}</div>` : ''}
-        ${e.question ? `<div class="jcard-question">❝ ${escapeHtml(e.question)} ❞</div>` : ''}
-        ${e.life_rune ? `<div class="jcard-life-rune">${t('life_rune_short')}: ${escapeHtml(e.life_rune)}</div>` : ''}
+        ${_jDetail(e)}
         <button class="jcard-audio-btn" id="jaudio-btn-${i}" onclick="playJournalAudio('${safeRune}','${safeLang}',${i})">${t('jcard_audio_btn')}</button>
         <div class="jcard-audio-player" id="jaudio-${i}"></div>
       </div>

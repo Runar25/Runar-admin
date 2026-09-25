@@ -7107,3 +7107,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Riziko ke sledování:** výčet tří významů může model opisovat (memory `prompt-directive-makes-model-copy`) — ověří owner na živých čteních.
 - **Zbytek podnětů od GPT** (obrazy pro 24 run + Blank) → zítra, `RUNAR_BACKLOG.md` „NA ZÍTRA".
 - Affected doc(s): `RUNAR_BACKLOG.md`.
+
+## 2026-09-25 (6) — Deník ukazuje volby, situaci a Asky; Ask nabízí „Explain <runa> without the image"; luna píše jen důležité a jisté
+
+- **Rozhodl:** KUKY 2026-09-25. **Provedl:** CODE-tune.
+- **Deník:** řádek s datem nese oblast · hledání · záměr; rozbalená karta situaci, všechny výměny Asku (otázka + odpověď) a pro adminy model,
+  který čtení napsal (`readings.usage.model` → „GPT-6 sol" / „Opus 5"). Jen existující třídy deníku.
+- **Ask:** nový návrh otázky *„Explain {rune} without the image."* / *„Útskýrðu {rune} án myndarinnar."* (owner: Rúnar i GPT v ní
+  „perfektně vysvětlují význam runy").
+- **Rubrika luny:** jen vady, které jsou důležité a jisté; kategorie bez vady se nepíšou; věta se čte v kontextu celé scény; „you" jako
+  postava scény není tvrzení (owner k reportům 2026-09-25: *„nemá zbytečně psát… pokud si tím není jistý, ať to nepíše"*).
+- Affected doc(s): žádný jiný (kód nese důvody v komentářích).
