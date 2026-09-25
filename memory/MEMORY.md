@@ -144,3 +144,4 @@ Snapshot = **historický záznam ke svému datu**, ne popis dneška. Nikdy z ně
 - [snapshots/2026-08-26-vegvisir-pouti-a-p1.md](snapshots/2026-08-26-vegvisir-pouti-a-p1.md) — Vegvísir: tři plné pouti (mechaničnost systematická) + rozdělaný TEST P1 pozitivního učení
 - [snapshots/2026-09-18-kratke-obrazy-a-vstupy-cteni.md](snapshots/2026-09-18-kratke-obrazy-a-vstupy-cteni.md) — CODE-read: rozbíjení povedeného Raidha jednou změnou, krátké obrazy, esenční řádek, konce; co čeká na ownera ← NEJNOVĚJŠÍ
 - [snapshots/2026-09-22-tree-panel-palma-zaloha.md](snapshots/2026-09-22-tree-panel-palma-zaloha.md) — CODE-tree: kůra odložena, panel TVAR/VZHLED/ODLOŽENO, palma = počet větví; crown composer zálohován v gitu
+- [snapshots/2026-09-25-modely-opus5-sol-naklady.md](snapshots/2026-09-25-modely-opus5-sol-naklady.md) — CODE-read: Opus 5 nasazen, sol kroky 1–3 (čeká krok 4 = slepé srovnání), stats.js náklady, korekce, sobotní test korektoru ← NEJNOVĚJŠÍ
