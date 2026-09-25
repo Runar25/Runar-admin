@@ -689,9 +689,10 @@ var RUNE_IMAGES = [
   ['Othila','any','Úr gömlu kistunni tekur þú eitt með þér og lætur hitt liggja.','From the old chest you take one thing with you and leave the rest lying.','að sleppa','letting go','D'],
   // 2026-09-23: „uz tam nebydlis" tvrdilo, ze ctenar kdysi bydlel ve starem dome (studene cteni, sweep 2026-09-22). Prvni tvar popisu Othila bez tvrzeni, ci byly ty ruce. Othila 3/3.
   ['Othila','any','Skaftið á gömlu ausunni er slitið þar sem aðrar hendur héldu um það.','The handle of the old ladle is worn smooth where other hands held it.','arfur','inheritance','D'],
-  ['Dagaz','any','Ljósaskiptin koma án þess að þú takir eftir hvenær nóttin varð að degi.','The turn of the light comes without your noticing when night became day.','dögun','dawn','E'],
+  // 2026-09-25: EN obou řádků níž pojmenuje svítání — dřív „The turn of the light“ (kalk „Ljósaskiptin“) dal „grey hour“.
+  ['Dagaz','any','Ljósaskiptin koma án þess að þú takir eftir hvenær nóttin varð að degi.','Dawn comes without your noticing when night became day.','dögun','dawn','E'],
   ['Dagaz','cold','Fyrsta skíman snýr aftur eftir svartasta skammdegið.','The first glimmer returns after the blackest midwinter dark.','dögun','dawn','E'],
-  ['Dagaz','any','Þú vaknar og birtan í herberginu hefur þegar breyst.','You wake, and the light in the room has already changed.','umbreyting','turning point','D'],
+  ['Dagaz','any','Þú vaknar og birtan í herberginu hefur þegar breyst.','You wake, and dawn has already changed the light in the room.','umbreyting','turning point','D'],
   ['Blank','any','Niðaþokan hylur fjörðinn og þú veist ekki hvað bíður handan hennar.','The thick fog hides the fjord and you do not know what waits beyond it.','hið óþekkta','the unknown','E'],
   ['Blank','cold','Nýfallinn snjór liggur yfir slóðinni og engin spor eru komin í hann.','New snow lies over the track and no one has stepped in it yet.','óskrifaður möguleiki','unwritten potential','E'],
   ['Blank','any','Handfærið liggur í dökku vatninu og ekkert hefur enn snert það.','The line runs down into dark water and nothing has touched it yet.','hið óþekkta','unwritten potential','P'],

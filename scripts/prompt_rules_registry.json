@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-25",
- "prompt_version": "v4.56-podoby-oblasti",
+ "prompt_version": "v4.57-dagaz-svitani",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
