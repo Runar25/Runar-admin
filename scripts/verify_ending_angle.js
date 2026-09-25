@@ -1,7 +1,7 @@
 // ㉨ MOST A PER-CTENI LOSY: co rozhoduje o konci, a da se to precist zpetne
 //
 // PROC: od v4.36 uz konec neni cisty los. TVAR urcuje rejstrik (SEEK_SHAPE), CIL oblast
-// (BRIDGE_AREAS -> {L}), a tezkost jen to, ze se sahne do druheho poolu. Tri veci se tu
+// (podoba oblasti z AREA_FACES -> {L}; do 2026-09-25 BRIDGE_AREAS), a tezkost jen to, ze se sahne do druheho poolu. Tri veci se tu
 // rozbiji tise:
 //  (1) nekdo prehodi AREAS nebo SEEKS v configu a INDEXOVANE mapy zustanou — cil i tvar
 //      pak patri jine oblasti/rejstriku, a v textu to nikdo nepozna,
@@ -20,7 +20,8 @@
 //  · bez rejstriku (i u „General Guidance") padnou vsechny tri tvary,
 //  · kazda z osmi oblasti da svuj cil a bez oblasti zustane obecny,
 //  · kazdy esencni ram, rozpocet delky i umisteni jmena padne,
-//  · `_promptDraws` pozna tvar i s vlozenou frazi oblasti (ending · essence · len · name).
+//  · `_promptDraws` pozna tvar i s vlozenou frazi oblasti (ending · essence · len · name),
+//  · kazda PODOBA oblasti dosedne do radku oblasti i mostu, v jednom cteni stejna, a zapise se (od 2026-09-25).
 //
 //   node scripts/verify_ending_angle.js
 'use strict';
@@ -130,6 +131,54 @@ for (const L of ['en', 'is']) {
     for (let i = 0; i < 4000; i++) videno.add(np('Anna', L));
     rekni(videno.size === poolN.length, L + '  umisteni jmena: vsech ' + poolN.length + ' variant padlo');
     rekni(np(L === 'is' ? 'þú' : 'you', L) === '' && np('', L) === '', L + '  bez jmena zadny pokyn o jmene (§12 fallback)');
+  }
+}
+
+// (9) PODOBY OBLASTÍ (2026-09-25): každá podoba × jazyk padne a nese se do řádku oblasti i do mostu; v jednom čtení je
+//     podoba v obou STEJNÁ (jeden los) a `_promptDraws` ji pozná. Protlačeno celým single builderem (character.js),
+//     proto vlastní sandbox — ten výš character.js nenačítá.
+{
+  const T = { console: { log() {}, warn() {}, error() {} } };
+  T.window = T; T.globalThis = T;
+  T.document = { getElementById: () => null, querySelector: () => null, querySelectorAll: () => [] };
+  T.localStorage = { getItem: () => null, setItem() {}, removeItem() {} };
+  vm.createContext(T);
+  vm.runInContext(['runar-config.js', 'runar-runes.js', 'runar-translations.js', 'runar-utils.js', 'runar-character.js']
+    .map((f) => fs.readFileSync(D + f, 'utf8')).join('\n;\n') + '\n;var lang = "en";', T);
+  const FACES = vm.runInContext('AREA_FACES', T), AREAS2 = vm.runInContext('AREAS', T), RUNES2 = vm.runInContext('RUNES', T);
+  const dom = vm.runInContext('_domainContext', T), most = vm.runInContext('_bridgeTarget', T);
+  const bld = vm.runInContext('buildReadingPrompt', T), drw = vm.runInContext('_promptDraws', T);
+  rekni(FACES.length === AREAS2.en.length, '     podoby: ' + FACES.length + ' oblastí = ' + AREAS2.en.length + ' v AREAS');
+  for (const L of ['en', 'is']) {
+    vm.runInContext('lang = "' + L + '";', T);   // rn()/rk() čtou globální jazyk jako v appce
+    let spatne = 0, podob = 0;
+    AREAS2[L].forEach((a, i) => FACES[i].forEach((f, k) => {
+      podob++;
+      const d = dom(a, L, k), m = most(a, L, k), land = f[L][0], cil = f[L][1];
+      if (d.split((L === 'is' ? 'lenda á ' : 'land on ') + land + '.').length !== 2 || d.indexOf('{F}') !== -1 || m !== cil) {
+        spatne++; console.log('    podoba ' + L + ' ' + i + '.' + k + ' nesedí');
+      }
+    }));
+    rekni(spatne === 0, L + '  podoby oblastí: všech ' + podob + ' dosedne do řádku oblasti i mostu');
+    // štítek v DRUHÉM jazyce (DB má IS čtení s EN štítkem) dá tutéž oblast
+    const cizi = AREAS2[L === 'is' ? 'en' : 'is'][2];
+    rekni(most(cizi, L, 0) === FACES[2][0][L][1], L + '  štítek oblasti v druhém jazyce dá tentýž cíl mostu');
+    // celý builder: jeden los pro obojí + zápis do draws; všechny podoby padnou
+    let nesoulad = 0, bezZapisu = 0; const videno = FACES.map(() => new Set());
+    for (let n = 0; n < 1200; n++) {
+      const i = n % FACES.length;
+      const p = bld({ name: 'Anna', area: AREAS2[L][i], seeking: '', question: '', intention: '' }, RUNES2[n % RUNES2.length], L, []);
+      const dr = drw(p, L);
+      const k = dr ? dr.area_face : undefined;
+      if (typeof k !== 'number') { bezZapisu++; continue; }
+      videno[i].add(k);
+      if (p.indexOf(FACES[i][k][L][1]) === -1) nesoulad++;
+    }
+    rekni(bezZapisu === 0, L + '  _promptDraws zapíše podobu u každého čtení s oblastí (1200 promptů)');
+    rekni(nesoulad === 0, L + '  řádek oblasti a most mají v jednom čtení TUTÉŽ podobu');
+    rekni(videno.every((st, i) => st.size === FACES[i].length), L + '  všechny podoby padají (' + videno.map((st) => st.size).join('/') + ')');
+    const bez = drw(bld({ name: 'Anna', area: '', seeking: '', question: '', intention: '' }, RUNES2[3], L, []), L);
+    rekni(bez && bez.area_face === undefined, L + '  bez oblasti se podoba nezapisuje');
   }
 }
 

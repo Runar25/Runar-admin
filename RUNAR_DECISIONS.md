@@ -7027,3 +7027,21 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Soukromí:** jen adminova vlastní čtení; pro kohokoli dalšího musí `RUNAR_PRIVACY.md` jmenovat OpenAI (beze změny oproti (17)).
 - **Reverzibilita:** přepínač vypnout (klient) · engine v proxy se bez adminova `engine:'sol'` nikdy nespustí.
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka GPT-6 sol — stav + nález k ceně zápisu do cache).
+
+## 2026-09-25 (1) — Podoby oblastí nasazené: každá oblast 3–5 podob, jeden los na čtení (v4.56)
+
+- **Rozhodl:** KUKY 2026-09-25: *„podoby jsou dobré. nasadíme a po pár dnech vyhodnotíme."* Návrh a pilot → `docs/eval/2026-09-24-podoby-oblasti/`.
+- **Co:** `AREA_FACES` (`runar-utils.js`) nahrazuje `BRIDGE_AREAS(_IS)` — pro každou oblast 3–5 podob `[kam obraz dosedne, cíl mostu]`
+  v EN i IS. Single builder losuje JEDNU podobu (`_drawAreaFace`) a předá ji řádku oblasti (`_domainContext`, šablona `{F}`) i mostu
+  (`_endingShape` → `_bridgeTarget`). Spready mají jen řádek oblasti a losují si podobu samy. `_promptDraws` zapisuje `area_face`.
+  Podoba [0] = znění do v4.55.
+- **Proč:** slova oblasti se opakovala (Career „work" 8/8, Love „between" 8/8, Healing „rest" 8/10 — `oblasti_slova.js`). Pilot Career:
+  IS slovo oblasti 5/6 → 2/6, konec „in your work" 4/6 → 2/6; EN „work" jen 6/6 → 5/6 (model jím popisuje i dění runy).
+- **Vedlejší oprava:** cíl mostu dřív hledal štítek oblasti jen v seznamu jazyka čtení → IS čtení s anglickým štítkem (v DB 7) dostalo
+  obecný cíl, zatímco řádek oblasti štítek poznal. Teď obojí stejně.
+- **Ověřeno:** golden beze změny (jeho oblasti jsou volný text) · nová kontrola ve smoke ㉨ (9): všech 29 podob × EN/IS dosedne do řádku
+  i mostu, v jednom čtení tatáž podoba (1200 promptů), všechny podoby padají, zápis do draws; negativní kontrola: builder se dvěma losy
+  dá nesoulad ve 279 ze 400 → kontrola ho chytí · registr pravidel má každou podobu zvlášť.
+- **Vyhodnocení po pár dnech:** `node scripts/utils/oblasti_slova.js --od v4.56` proti stavu z 2026-09-24 (+ `prompt_draws.area_face`).
+- **Reverzibilita:** `_drawAreaFace` vracet 0 = znění do v4.55.
+- Affected doc(s): `RUNAR_DESIGN.md` (Stavba Single — „Kam dosedne" + seznam dat, která vlastní kód), `RUNAR_BACKLOG.md`.

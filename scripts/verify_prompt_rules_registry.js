@@ -59,7 +59,8 @@ function pravidla() {
   // jmeno runy nebo osoby (viz DATA regex nize). Bez teto normalizace by tataz instrukce
   // mela az devet podob a registr by na kazde nove oblasti cervenal.
   const normalizujCil = (t, lang) => {
-    const cile = (lang === 'is' ? glob('BRIDGE_AREAS_IS') : glob('BRIDGE_AREAS')) || [];
+    // 2026-09-25: cíle mostu jsou podoby oblastí (AREA_FACES[oblast][podoba][jazyk][1]), ne BRIDGE_AREAS.
+    const cile = [].concat(...(glob('AREA_FACES') || [])).map((f) => f[lang === 'is' ? 'is' : 'en'][1]);
     const vychozi = glob('BRIDGE_DEFAULT') || {};
     const vsechny = cile.concat([vychozi[lang === 'is' ? 'is' : 'en']]).filter(Boolean)
       .sort((a, b) => b.length - a.length);   // nejdriv nejdelsi, at kratsi cil nerozseka delsi
@@ -85,7 +86,9 @@ const DATA = /^(PERSON|DRAWN|SEEKER|LIFE|AREA|SEEKING|INTENTION|QUESTION|REALM|E
     (L === 'is' ? glob('ESSENCE_FRAMES_IS') : glob('ESSENCE_FRAMES') || []).forEach((a, i) => pridej(L, 'esence[' + i + ']', a));
     // 2026-09-22: ram Prazdne runy — neni v losu (plyne z runy), fixture ho nikdy nepostavi.
     pridej(L, 'esence[blank]', L === 'is' ? glob('ESSENCE_BLANK_IS') : glob('ESSENCE_BLANK'));
-    zJaz('AREAS', L).forEach((a, i) => pridej(L, 'oblast[' + i + ']', S._domainContext(a, L)));
+    // 2026-09-25: každá PODOBA oblasti zvlášť — jinak by se registrovala jen ta, kterou zrovna vylosuje Math.random.
+    zJaz('AREAS', L).forEach((a, i) => ((glob('AREA_FACES') || [])[i] || [null])
+      .forEach((_, f) => pridej(L, 'oblast[' + i + '.' + f + ']', S._domainContext(a, L, f))));
     zJaz('SEEKS', L).forEach((a, i) => pridej(L, 'registr[' + i + ']', S._registerContext(a, L)));
     zJaz('INTENTIONS', L).forEach((a, i) => pridej(L, 'zamer[' + i + ']', S._intentionContext(a, L)));
     pridej(L, 'cocka', S._lensContext(RUNES[18], RUNES[3], L));

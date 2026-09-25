@@ -1106,34 +1106,37 @@ function _priorityContext(lensOn, drawn, lang) {
 // rozcestí přidalo cesty, které v obrazu nebyly, rodina přesunula obraz do domu (Isa: „the frozen surface of the house“).
 // Teď vztah/otázka. Změřeno (produkční model, stejné losy, 3 kola × 12): cesty navíc 9/12 -> 2/12, domov v 1.–2. větě
 // 7/12 -> 2/12, rozcestí dosedne na rozhodování 6/12 -> 10/12; obrácená páka (místo zdůraznit) 11/12 a 8/12.
-function _domainContext(area, lang) {
+// 2026-09-25: „kam dosedne“ je PODOBA z AREA_FACES (runar-utils.js) dosazená za {F}; `face` = los z builderu,
+// bez něj (spready) vlastní los. Zbytek věty (zákaz + výjimka pro poslední větu) je dál per oblast tady.
+function _domainContext(area, lang, face) {
   if (!area) return '';
   var mapEn = [
-    "The reading is for Love & Relationships — let the image you were given land on what passes between two people. Do not tell them what is true between them and anyone — except in the closing line, and there only as a possibility they may weigh.",
-    "The reading is for Purpose & Path — let the image you were given land on going and direction. Do not tell them where they are headed — except in the closing line, and there only as a possibility they may weigh.",
-    "The reading is for Career & Creativity — let the image you were given land on making and work. Do not tell them what they have made or achieved — except in the closing line, and there only as a possibility they may weigh.",
-    "The reading is for Healing & Wellbeing — let the image you were given land on mending and rest. No diagnosis, no verdict on their condition.",
-    "The reading is for The Unseen — let the image you were given land on what is present but not shown. Do not tell them what they sense — except in the closing line, and there only as a possibility they may weigh.",
-    "The reading is for Family & Home — let the image you were given land on family ties and belonging. Do not tell them what they carry from their people.",
-    "The reading is for Inner Growth — let the image you were given land on slow change. Do not tell them how they have changed — except in the closing line, and there only as a possibility they may weigh.",
-    "The reading is for Crossroads & Decisions — let the image you were given land on a choice still open. Do not tell them what they know or which way they will take — except in the closing line, and there only as a possibility they may weigh."
+    "The reading is for Love & Relationships — let the image you were given land on {F}. Do not tell them what is true between them and anyone — except in the closing line, and there only as a possibility they may weigh.",
+    "The reading is for Purpose & Path — let the image you were given land on {F}. Do not tell them where they are headed — except in the closing line, and there only as a possibility they may weigh.",
+    "The reading is for Career & Creativity — let the image you were given land on {F}. Do not tell them what they have made or achieved — except in the closing line, and there only as a possibility they may weigh.",
+    "The reading is for Healing & Wellbeing — let the image you were given land on {F}. No diagnosis, no verdict on their condition.",
+    "The reading is for The Unseen — let the image you were given land on {F}. Do not tell them what they sense — except in the closing line, and there only as a possibility they may weigh.",
+    "The reading is for Family & Home — let the image you were given land on {F}. Do not tell them what they carry from their people.",
+    "The reading is for Inner Growth — let the image you were given land on {F}. Do not tell them how they have changed — except in the closing line, and there only as a possibility they may weigh.",
+    "The reading is for Crossroads & Decisions — let the image you were given land on {F}. Do not tell them what they know or which way they will take — except in the closing line, and there only as a possibility they may weigh."
   ];
   var mapIs = [
-    'Þessi lestur er fyrir Ást & Sambönd — láttu myndina sem þú fékkst lenda á því sem fer á milli tveggja manneskja. Segðu honum ekki hvað er satt milli hans og annarra — nema í lokalínunni, og þá aðeins sem möguleika honum til umhugsunar.',
-    'Þessi lestur er fyrir Tilgang & Leið — láttu myndina sem þú fékkst lenda á ferð og stefnu. Segðu honum ekki hvert hann stefnir — nema í lokalínunni, og þá aðeins sem möguleika honum til umhugsunar.',
-    'Þessi lestur er fyrir Starf & Sköpun — láttu myndina sem þú fékkst lenda á smíð og vinnu. Segðu honum ekki hvað hann hefur gert eða hverju hann hefur áorkað — nema í lokalínunni, og þá aðeins sem möguleika honum til umhugsunar.',
-    'Þessi lestur er fyrir Heilun & Líðan — láttu myndina sem þú fékkst lenda á gróanda og hvíld. Engin sjúkdómsgreining, enginn dómur um líðan hans.',
-    'Þessi lestur er fyrir Hið dulda — láttu myndina sem þú fékkst lenda á því sem er til staðar en sést ekki. Segðu honum ekki hvað hann skynjar — nema í lokalínunni, og þá aðeins sem möguleika honum til umhugsunar.',
-    'Þessi lestur er fyrir Fjölskyldu & Heimili — láttu myndina sem þú fékkst lenda á fjölskylduböndum og því að tilheyra. Segðu honum ekki hvað hann ber með sér frá sínu fólki.',
-    'Þessi lestur er fyrir Innri Vöxt — láttu myndina sem þú fékkst lenda á hægri breytingu. Segðu honum ekki hvernig hann hefur breyst — nema í lokalínunni, og þá aðeins sem möguleika honum til umhugsunar.',
-    'Þessi lestur er fyrir Vegamót & Ákvarðanir — láttu myndina sem þú fékkst lenda á vali sem enn er opið. Segðu honum ekki hvað hann veit eða hvora leiðina hann velur — nema í lokalínunni, og þá aðeins sem möguleika honum til umhugsunar.'
+    'Þessi lestur er fyrir Ást & Sambönd — láttu myndina sem þú fékkst lenda á {F}. Segðu honum ekki hvað er satt milli hans og annarra — nema í lokalínunni, og þá aðeins sem möguleika honum til umhugsunar.',
+    'Þessi lestur er fyrir Tilgang & Leið — láttu myndina sem þú fékkst lenda á {F}. Segðu honum ekki hvert hann stefnir — nema í lokalínunni, og þá aðeins sem möguleika honum til umhugsunar.',
+    'Þessi lestur er fyrir Starf & Sköpun — láttu myndina sem þú fékkst lenda á {F}. Segðu honum ekki hvað hann hefur gert eða hverju hann hefur áorkað — nema í lokalínunni, og þá aðeins sem möguleika honum til umhugsunar.',
+    'Þessi lestur er fyrir Heilun & Líðan — láttu myndina sem þú fékkst lenda á {F}. Engin sjúkdómsgreining, enginn dómur um líðan hans.',
+    'Þessi lestur er fyrir Hið dulda — láttu myndina sem þú fékkst lenda á {F}. Segðu honum ekki hvað hann skynjar — nema í lokalínunni, og þá aðeins sem möguleika honum til umhugsunar.',
+    'Þessi lestur er fyrir Fjölskyldu & Heimili — láttu myndina sem þú fékkst lenda á {F}. Segðu honum ekki hvað hann ber með sér frá sínu fólki.',
+    'Þessi lestur er fyrir Innri Vöxt — láttu myndina sem þú fékkst lenda á {F}. Segðu honum ekki hvernig hann hefur breyst — nema í lokalínunni, og þá aðeins sem möguleika honum til umhugsunar.',
+    'Þessi lestur er fyrir Vegamót & Ákvarðanir — láttu myndina sem þú fékkst lenda á {F}. Segðu honum ekki hvað hann veit eða hvora leiðina hann velur — nema í lokalínunni, og þá aðeins sem möguleika honum til umhugsunar.'
   ];
   var idx = -1;
   if (typeof AREAS !== 'undefined') {
     idx = (AREAS.en || []).indexOf(area);
     if (idx === -1) idx = (AREAS.is || []).indexOf(area);
   }
-  if (idx >= 0 && idx < mapEn.length) return lang === 'is' ? mapIs[idx] : mapEn[idx];
+  if (idx >= 0 && idx < mapEn.length)
+    return (lang === 'is' ? mapIs[idx] : mapEn[idx]).replace('{F}', _areaFace(idx, face, lang)[0]);
   // ⚠️ ZACHYTNA SIT pro oblast, ktera v AREAS neni (volny text z gen_batch, 'spread' z DB,
   // budouci oblast pridana jinde). Bez ni by neznama oblast prisla o instrukci UPLNE — tise.
   if (lang === 'is')
@@ -1679,6 +1682,8 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
   ].filter(Boolean).join('\n');
   // Uhel se losuje JEDNOU a predava i losu konce (vylouceni uhel[6] x open[1], bod C).
   var angleDraw = _randomAngle(lang);
+  // 2026-09-25: JEDEN los podoby oblasti pro řádek oblasti i most — jinak by obraz dosedl na jedno a konec mířil jinam.
+  var areaFace = _drawAreaFace(u.area);
   return [
     parts,
     S.angleIntro + angleDraw,
@@ -1690,7 +1695,7 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     // propisou do cteni"), nad kostrou a uz s PREPSANYM znenim _domainContext (cil
     // obrazu, ne vlastni obrazky; puvodni zneni bylo na zebriku 21.8. nejhorsi krok,
     // svety 1,50). Mereni navratu -> docs/eval/2026-08-22-navrat-pak/.
-    u.area ? _domainContext(u.area, lang) : '',
+    u.area ? _domainContext(u.area, lang, areaFace) : '',
     // v4.2 (2026-08-22): "co hledam" se vraci (krok 2/3), zmerene — viz
     // docs/eval/2026-08-22-navrat-pak/. Zamer + priorita/cocka zatim VEN.
     u.seeking ? _registerContext(u.seeking, lang) : '',
@@ -1700,7 +1705,7 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     hasQ ? S.qBranch(rnPrompt(drawn), drawn.g, _questionSafe(u.question)) : S.noqBranch(rnPrompt(drawn), drawn.g, worldRef),
     // 2026-09-20: most bere REJSTRIK (tvar) a OBLAST (kam dosedne) misto uhlu — uhel
     // potreboval jen zrusena vyluka uhel[6] x open[1].
-    _endingShape(drawn, lang, u.seeking, u.area)
+    _endingShape(drawn, lang, u.seeking, u.area, areaFace)
       // 2026-09-24: otázka runy jako zdroj poslední věty — jen bez vlastní otázky tazatele (_runeQuestion, runar-utils.js).
       + (hasQ ? '' : _runeQuestion(drawn, lang)),
     // v4.4 (2026-08-22): COCKA SE VRACI — owner: "v single je life rune jako cocka,

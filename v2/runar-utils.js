@@ -340,6 +340,12 @@ function _promptDraws(prompt, lang) {
       return null;
     };
     out.ending = najdi(heavyP, 'heavy') || najdi(openP, 'open') || undefined;
+    // Podoba oblasti (2026-09-25): která padla — bez záznamu by vyhodnocení „po pár dnech“ nevědělo, co měří.
+    // Kotva „land on X.“ / „lenda á X.“ z _domainContext; index podoby v AREA_FACES (oblast sama leží v DB).
+    var lnd = isIs ? 'lenda á ' : 'land on ';
+    for (var ai = 0; ai < AREA_FACES.length && out.area_face === undefined; ai++)
+      for (var af = 0; af < AREA_FACES[ai].length; af++)
+        if (p.indexOf(lnd + AREA_FACES[ai][af][isIs ? 'is' : 'en'][0] + '.') !== -1) { out.area_face = af; break; }
     // ZDROJ volby tvaru (rejstrik vs los) se sem NEZAPISUJE: `seeking` uz lezi v DB u ctení
     // (claude-proxy uklada journal.seeking), takze se dopocita spojenim s `ending` — druha
     // kopie by se rozesla (§20). Z promptu sameho ho precist nejde: hlavicka „Seeking:" byla
@@ -400,7 +406,7 @@ function _promptDraws(prompt, lang) {
 // tvar smi pribyt, az bude zmereny (owner o tom vi).
 // ── MOST K CLOVEKU (2026-09-20, KUKY) ─────────────────────────────────────────
 // Konec pojmenuje, co to MUZE byt v zivote leitandy — jako stav k zvazeni, nikdy rada.
-// TVAR urcuje rejstrik (SEEK_SHAPE), CIL urcuje oblast ({L} = BRIDGE_AREAS). Oba pooly maji
+// TVAR urcuje rejstrik (SEEK_SHAPE), CIL urcuje oblast ({L} = podoba oblasti, AREA_FACES). Oba pooly maji
 // tytez TRI tvary ve stejnem poradi, takze tvar = index a tezkost = jen volba poolu:
 //   [0] veta · [1] dve moznosti · [2] otazka
 // „may be" musi zustat v KAZDEM tvaru — zneni bez nej zabilo tvar moznosti 2/2 (DECISIONS
@@ -474,29 +480,119 @@ function _lengthBudget(lang) {
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
-// Kam most dosedne — poradi = AREAS.en (runar-config.js). Bez oblasti zustava obecny cil.
-// 2026-09-23: rodina a rozcestí tu stály jako MÍSTO, stejně jako v _domainContext — a totéž slovo dvakrát v promptu
-// se opisovalo (Thurisaz končil „…than the people in it can bear“). Přepsáno spolu s oblastmi, DECISIONS 2026-09-23 (12).
-const BRIDGE_AREAS = [
-  'between the seeker and someone',
-  'in where the seeker is going',
-  'in what the seeker is making',
-  "in the seeker's mending and rest",
-  "in what is present in the seeker's life but not shown",
-  "in the seeker's family ties",
-  'in a slow change in the seeker',
-  "in a decision the seeker has not yet made",
+// ── PODOBY OBLASTÍ (2026-09-25, KUKY „podoby jsou dobré, nasadíme a po pár dnech vyhodnotíme“) ──────────────
+// Pořadí = AREAS.en (runar-config.js). Každá oblast má 3–5 podob; na čtení se losuje JEDNA (_drawAreaFace) a nese ji
+// řádek oblasti (_domainContext: „land on …“ / „lenda á …“, þgf.) i cíl mostu (_bridgeTarget: „what this may be …“).
+// [0] = znění do v4.55. Nahradilo BRIDGE_AREAS(_IS) — jedno místo pro obojí, jinak by se los rozjel.
+// Proč: slova oblasti se opakovala (Career „work“ 8/8, Love „between“ 8/8, Healing „rest“ 8/10 — scripts/utils/oblasti_slova.js).
+// Pilot Career na Opus 5 (docs/eval/2026-09-24-podoby-oblasti/): IS slovo oblasti 5/6 → 2/6, konec „in your work“ 4/6 → 2/6;
+// EN „work“ jen 6/6 → 5/6 (model jím popisuje i dění runy). Pravidla psaní: vztah, ne místo ani scéna (2026-08-21 příklady
+// obrazů otevřely druhý svět; 2026-09-23 místo stavělo cesty a dům do scény); žádná činnost, kterou člověk mít nemusí
+// (DECISIONS 2026-09-24 (15)/(19)). IS ověřeno is-grammar-qa + korpusem (README v docs/eval).
+// [land, bridge] na podobu; test všech podob × jazyků → scripts/verify_ending_angle.js (8).
+// Rodina a rozcestí stály do 2026-09-23 jako MÍSTO a model je opisoval do scény → DECISIONS 2026-09-23 (12).
+const AREA_FACES = [
+  // Love & Relationships
+  [
+    { en: ['what passes between two people', 'between the seeker and someone'],
+      is: ['því sem fer á milli tveggja manneskja', 'milli leitandans og einhvers annars'] },
+    { en: ['what is given and received', 'in what the seeker gives and what they receive'],
+      is: ['því sem er gefið og þegið', 'í því sem leitandinn gefur og því sem hann þiggur'] },
+    { en: ['nearness and distance between people', 'in how near the seeker stands to someone'],
+      is: ['nálægð og fjarlægð milli fólks', 'í því hve nærri leitandinn stendur einhverjum'] },
+    { en: ['being seen through another person\'s eyes', 'in how someone else sees the seeker'],
+      is: ['því að sjást með augum annarrar manneskju', 'í því hvernig einhver annar sér leitandann'] },
+  ],
+  // Purpose & Path
+  [
+    { en: ['going and direction', 'in where the seeker is going'],
+      is: ['ferð og stefnu', 'í því hvert leitandinn stefnir'] },
+    { en: ['the next step alone', 'in the seeker\'s next step'],
+      is: ['næsta skrefi einu', 'í næsta skrefi leitandans'] },
+    { en: ['what gives someone the will to continue', 'in what gives the seeker the will to continue'],
+      is: ['því sem gefur manneskju vilja til að halda áfram', 'í því sem gefur leitandanum vilja til að halda áfram'] },
+    { en: ['an aim pursued for a long time', 'in an aim the seeker has long pursued'],
+      is: ['markmiði sem lengi hefur verið stefnt að', 'í markmiði sem leitandinn hefur lengi stefnt að'] },
+  ],
+  // Career & Creativity
+  [
+    { en: ['making and work', 'in what the seeker is making'],
+      is: ['smíð og vinnu', 'í því sem leitandinn er að smíða'] },
+    { en: ['work done for others', 'in the work the seeker does for others'],
+      is: ['vinnu sem unnin er fyrir aðra', 'í því sem leitandinn vinnur fyrir aðra'] },
+    { en: ['something coming into being', 'in something the seeker is bringing into being'],
+      is: ['því sem er að verða til', 'í því sem leitandinn er að skapa'] },
+    { en: ['an idea not yet made real', 'in an idea the seeker has not yet made real'],
+      is: ['hugmynd sem enn er ekki orðin að veruleika', 'í hugmynd sem leitandinn hefur ekki enn gert að veruleika'] },
+    { en: ['skill and the long practice behind it', 'in the seeker\'s skill and the practice behind it'],
+      is: ['kunnáttu og langri æfingu sem liggur að baki henni', 'í kunnáttu leitandans og æfingunni sem liggur að baki'] },
+  ],
+  // Healing & Wellbeing
+  [
+    { en: ['mending and rest', 'in the seeker\'s mending and rest'],
+      is: ['gróanda og hvíld', 'í gróanda leitandans og hvíld'] },
+    { en: ['what gives strength back', 'in what gives the seeker strength back'],
+      is: ['því sem veitir styrk á ný', 'í því sem veitir leitandanum styrk á ný'] },
+    { en: ['the pace that can be kept', 'in the pace the seeker can keep'],
+      is: ['þeim hraða sem hægt er að halda', 'í þeim hraða sem leitandinn getur haldið'] },
+    { en: ['care given and received', 'in the care the seeker gives and the care they receive'],
+      is: ['umhyggju sem er veitt og þegin', 'í umhyggjunni sem leitandinn veitir og þeirri sem hann þiggur'] },
+  ],
+  // The Unseen
+  [
+    { en: ['what is present but not shown', 'in what is present in the seeker\'s life but not shown'],
+      is: ['því sem er til staðar en sést ekki', 'í því sem er til staðar í lífi leitandans en sést ekki'] },
+    { en: ['what is felt before it is seen', 'in something the seeker senses before seeing it'],
+      is: ['því sem finnst áður en það sést', 'í einhverju sem leitandinn skynjar áður en hann sér það'] },
+    { en: ['what works quietly, out of view', 'in what works quietly in the seeker\'s life'],
+      is: ['því sem vinnur í kyrrþey', 'í því sem vinnur í kyrrþey í lífi leitandans'] },
+  ],
+  // Family & Home
+  [
+    { en: ['family ties and belonging', 'in the seeker\'s family ties'],
+      is: ['fjölskylduböndum og því að tilheyra', 'í fjölskylduböndum leitandans'] },
+    { en: ['the people one belongs to', 'in the people the seeker belongs to'],
+      is: ['fólkinu sem maður tilheyrir', 'í fólkinu sem leitandinn tilheyrir'] },
+    { en: ['the generations before and after', 'in what links the seeker to those before and after'],
+      is: ['kynslóðunum á undan og á eftir', 'í því sem tengir leitandann við þá sem komu á undan og þá sem koma á eftir'] },
+  ],
+  // Inner Growth
+  [
+    { en: ['slow change', 'in a slow change in the seeker'],
+      is: ['hægri breytingu', 'í hægri breytingu hjá leitandanum'] },
+    { en: ['what is being outgrown', 'in something the seeker is outgrowing'],
+      is: ['því sem manneskja vex upp úr', 'í einhverju sem leitandinn er að vaxa upp úr'] },
+    { en: ['what ripens with time', 'in what is ripening in the seeker'],
+      is: ['því sem þroskast með tímanum', 'í því sem er að þroskast í leitandanum'] },
+  ],
+  // Crossroads & Decisions
+  [
+    { en: ['a choice still open', 'in a decision the seeker has not yet made'],
+      is: ['vali sem enn er opið', 'í ákvörðun sem leitandinn hefur ekki enn tekið'] },
+    { en: ['what each option would ask', 'in what each option would ask of the seeker'],
+      is: ['því sem hvor kostur myndi krefjast', 'í því sem hvor kostur myndi krefjast af leitandanum'] },
+    { en: ['the waiting before a choice', 'in the seeker\'s waiting before a choice'],
+      is: ['biðinni áður en valið er', 'í bið leitandans áður en hann velur'] },
+  ],
 ];
-const BRIDGE_AREAS_IS = [
-  'milli leitandans og einhvers annars',
-  'í því hvert leitandinn stefnir',
-  'í því sem leitandinn er að smíða',
-  'í gróanda leitandans og hvíld',
-  'í því sem er til staðar í lífi leitandans en sést ekki',
-  'í fjölskylduböndum leitandans',
-  'í hægri breytingu hjá leitandanum',
-  'í ákvörðun sem leitandinn hefur ekki enn tekið',
-];
+// Index oblasti v AREA_FACES — štítek oblasti může přijít v kterémkoli jazyce (DB má IS čtení s EN štítkem).
+function _areaIdx(area) {
+  if (!area || typeof AREAS === 'undefined') return -1;
+  var i = (AREAS.en || []).indexOf(area);
+  if (i === -1) i = (AREAS.is || []).indexOf(area);
+  return (i >= 0 && AREA_FACES[i]) ? i : -1;
+}
+// Jeden los podoby na čtení (builder ho předá řádku oblasti i mostu). Bez známé oblasti -1.
+function _drawAreaFace(area) {
+  var i = _areaIdx(area);
+  return i < 0 ? -1 : Math.floor(Math.random() * AREA_FACES[i].length);
+}
+// [land, bridge] pro oblast a podobu; neurčená / neplatná podoba = vlastní los (spready mají jen řádek oblasti).
+function _areaFace(idx, face, lang) {
+  var fs = AREA_FACES[idx];
+  var f = (typeof face === 'number' && fs[face]) ? face : Math.floor(Math.random() * fs.length);
+  return fs[f][lang === 'is' ? 'is' : 'en'];
+}
 const BRIDGE_DEFAULT = { en: "in the seeker's life", is: 'í lífi leitandans' };
 
 // Tvar podle rejstriku — poradi = SEEKS.en: General · Clarity · Confirmation ·
@@ -505,14 +601,14 @@ const BRIDGE_DEFAULT = { en: "in the seeker's life", is: 'í lífi leitandans' }
 // tezkosti, nema dostat utechu. Tezka runa pak jen vynuti h, tvar nemeni.
 const SEEK_SHAPE = [null, { i: 0, h: false }, { i: 1, h: false }, { i: 0, h: true }, { i: 2, h: false }];
 
-function _bridgeTarget(area, lang) {
-  var seznam = lang === 'is' ? BRIDGE_AREAS_IS : BRIDGE_AREAS;
-  var vsechny = (typeof AREAS !== 'undefined' && AREAS && AREAS[lang]) ? AREAS[lang] : null;
-  var i = vsechny ? vsechny.indexOf(area) : -1;
-  return (i >= 0 && seznam[i]) ? seznam[i] : BRIDGE_DEFAULT[lang === 'is' ? 'is' : 'en'];
+// 2026-09-25: cíl mostu z AREA_FACES podle podoby. Do té doby se štítek hledal jen v seznamu JAZYKA čtení, takže IS
+// čtení s anglickým štítkem oblasti (v DB je jich 7) dostalo obecný cíl, zatímco řádek oblasti štítek poznal — teď obojí stejně.
+function _bridgeTarget(area, lang, face) {
+  var i = _areaIdx(area);
+  return i >= 0 ? _areaFace(i, face, lang)[1] : BRIDGE_DEFAULT[lang === 'is' ? 'is' : 'en'];
 }
 
-function _endingShape(drawn, lang, seeking, area) {
+function _endingShape(drawn, lang, seeking, area, face) {
   var list = (Array.isArray(drawn) ? drawn : [drawn]).filter(Boolean);
   var heavy = false;
   if (typeof HEAVY_RUNES !== 'undefined' && HEAVY_RUNES && HEAVY_RUNES.names)
@@ -530,7 +626,7 @@ function _endingShape(drawn, lang, seeking, area) {
 
   var pool = heavy ? (lang === 'is' ? ENDING_HEAVY_IS : ENDING_HEAVY)
                    : (lang === 'is' ? ENDING_OPEN_IS : ENDING_OPEN);
-  return pool[idx].split('{L}').join(_bridgeTarget(area, lang));
+  return pool[idx].split('{L}').join(_bridgeTarget(area, lang, face));   // face = los podoby z builderu (2026-09-25)
 }
 
 

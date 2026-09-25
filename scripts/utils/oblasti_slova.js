@@ -8,7 +8,7 @@
 //
 // První měření 2026-09-24 (EN, prompty v4.39+, 7–10 čtení na oblast): Career „work" 7/7 a „making" 6/7,
 // Love „between" 8/8, Healing „mending" 6/10 a „rest" 8/10, Purpose „going" 6/9 — všechno slova, která stojí
-// v promptu DVAKRÁT (popis oblasti `_domainContext` + cíl mostu `BRIDGE_AREAS`). Rozhodnutí → RUNAR_BACKLOG.md.
+// v promptu DVAKRÁT (popis oblasti `_domainContext` + cíl mostu, tehdy `BRIDGE_AREAS`). Od 2026-09-25 se oblast losuje z podob (`AREA_FACES`).
 //
 // Spuštění (z kořene repa):  node scripts/utils/oblasti_slova.js [--od v4.47]
 //   --od vX.Y  … jen čtení s prompt_version od téhle verze (bez parametru v4.39, od kdy platí dnešní stavba čtení)

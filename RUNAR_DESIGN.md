@@ -1289,7 +1289,9 @@ plus dvě síta výš a kontrola „čí je to pozemek" (předmět/sloveso nesm�
    | General Guidance | *„let the rune lead where it will"* | **los** ze tří tvarů (dnešek) |
 
    **Kam dosedne:** mění se JEDINÁ fráze v mostu (`in the seeker's life` → fráze oblasti), zbytek znění je společný —
-   jedna cesta kódem, oblast jako data (§18). Oblast v ostatních větách zůstává tím, čím je dnes: **zdrojem obrazu**,
+   jedna cesta kódem, oblast jako data (§18). **Od 2026-09-25 má každá oblast 3–5 PODOB** (KUKY: „podoby jsou dobré"):
+   na čtení se losuje jedna a nese ji řádek oblasti i most — proti opakování slova oblasti (Career „work" 8/8). Proč a
+   měření → `RUNAR_DECISIONS.md` 2026-09-25 (1). Oblast v ostatních větách zůstává tím, čím je dnes: **zdrojem obrazu**,
    ne cílem tvrzení. Tím se nevrací studené čtení, které ta změna v srpnu srazila (EN 10/16 → 2,3/16).
 
    ⚠️ **Čtyři stavy, protože obě pole jsou NEPOVINNÁ a nezávislá:** nic (los tvaru, most bez oblasti) · jen AREA
@@ -1301,7 +1303,7 @@ plus dvě síta výš a kontrola „čí je to pozemek" (předmět/sloveso nesm�
    **Z čeho most vyrůstá (od v4.53, KUKY 2026-09-24 „zkus to"):** z **otázky runy** — té, kterou končí ownerův popis
    runy a text v Kolekci. Model ji dostane jako zdroj, ne jako větu k vyslovení; jen single a jen bez vlastní otázky
    tazatele. Proč a měření → `RUNAR_DECISIONS.md` 2026-09-24 (16).
-   **Znění vlastní KÓD, doc ho neopisuje (§20):** `SEEK_SHAPE` · `BRIDGE_AREAS(_IS)` · `ENDING_OPEN/HEAVY(_IS)` ·
+   **Znění vlastní KÓD, doc ho neopisuje (§20):** `SEEK_SHAPE` · `AREA_FACES` (podoby oblastí, od 2026-09-25) · `ENDING_OPEN/HEAVY(_IS)` ·
    `_runeQuestion` v `v2/runar-utils.js`, výjimka v `_domainContext` (`runar-character.js`). Nasazeno v4.36 + v4.37.
    Oba pooly mají tytéž tři tvary ve stejném pořadí, takže **každý tvar má i těžký protějšek** — těžkost runy
    volí pool, rejstřík volí tvar.

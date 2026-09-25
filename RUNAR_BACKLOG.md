@@ -655,12 +655,16 @@
   čtenáři, který model může použít jako první větu. Stalo se u Opus 5 (*„Líttu snöggt yfir alla myndina, láttu svo allt hverfa nema
   laukinn í moldinni."*) i u Opus 4.8 (EVAL_LOG 2026-09-24). EN znění *„Open with one quick glance…"* je pokyn PISATELI a opsat
   nejde. Návrh: IS jako pokyn pisateli (např. *„Byrjaðu á…"*), ověřit nástroji a změřit opis na produkčním modelu před/po.
+- [ ] **`scripts/utils/test_lever_maps.js` je červený od 2026-09-08 a nikdo to nevidí** (nalezl CODE-tune 2026-09-25; není ve smoke).
+  Část SEEKS čeká, že věta `_registerContext` JMENUJE svůj rejstřík („Clarity"…) — jména ale byla 2026-09-08 ze zadání záměrně
+  odebrána (memory `prompt-nepojmenuj-co-hned-zakazes`), takže 9 z 10 kontrol padá (ověřeno i na kódu před v4.56). Část AREAS
+  prochází. Oprava: pro SEEKS jinou kotvu (tvar mostu hlídá už smoke ㉨ (1)) nebo SEEKS část odebrat, a test zapojit do smoke.
 - [ ] **Slova oblastí se opakují — rozšířit (KUKY 2026-09-24, bod 5: „Rúnar používá work, práce… tím obohatit obraz, platí i pro ostatní AREA; sledovat, jak moc se opakují")**
   - **Změřeno 2026-09-24** (`scripts/utils/oblasti_slova.js`, EN, prompty v4.39+, 7–10 čtení na oblast): Career „work" 8/8 a „making" 6/8 · Love „between" 8/8 · Healing „rest" 8/10 a „mending" 6/10 · Purpose „going" 6/9. Ve všech čteních ostatních oblastí je „work" jen ve 4 %.
   - **Příčina (zjištěno čtením promptu):** jsou to přesně slova, která v promptu stojí DVAKRÁT — v popisu oblasti (`_domainContext`: „land on making and work") i v cíli mostu (`BRIDGE_AREAS`: „in what the seeker is making"). Model je vrací.
   - **Návrh CODE-tune (čeká na ownera):** nepřidávat do promptu seznam dalších slov — model by opakoval ta nová (memory `prompt-directive-makes-model-copy`). Místo toho 3–4 **podoby oblasti losované per čtení** (Career: práce pro druhé · věc dělaná rukama · nápad, který nabírá tvar · řemeslo), každá bez opakovaného podstatného jména, a slovo oblasti v promptu jen jednou. Měřit tímtéž skriptem před/po.
   - IS: jen 22 čtení s oblastí a všechna ze starších promptů — islandský stav zatím nejde změřit.
-  - **Připraveno 2026-09-24 (owner „5. připrav"), NENASAZENO — čeká na ownera:** podoby všech 8 oblastí EN + IS (IS ověřeno
+  - ✅ **NASAZENO 2026-09-25 (v4.56, DECISIONS 2026-09-25 (1)) — owner: „po pár dnech vyhodnotíme“ → `node scripts/utils/oblasti_slova.js --od v4.56`.** Původně: podoby všech 8 oblastí EN + IS (IS ověřeno
     nástroji) + pilot Career na Opus 5 → `docs/eval/2026-09-24-podoby-oblasti/`. IS slovo oblasti 5/6 → 2/6; EN „work" 6/6 → 5/6
     (model jím popisuje i dění runy — hypotéza „dvakrát v promptu" pro EN padla); konec „in your work" 4/6 → 2/6 a míří jinam.
     Po schválení: losovat podobu per čtení (jeden los pro `_domainContext` i `BRIDGE_AREAS`), zapsat ji do `prompt_draws`,
