@@ -5,6 +5,7 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { logVoice, weeklyQuota } from "../_shared/voice_usage.ts";
 
 const EL_API_KEY     = Deno.env.get("ELEVENLABS_API_KEY");
 const EL_VOICE_ID    = "2UI8v2ibbwQTijaYAte1"; // same voice for both langs
@@ -119,6 +120,12 @@ serve(async (req) => {
     // ucetnictvi by bylo horsi nez o jeden nezapocitany hlas prijit.
     await sb().from("user_profiles")
       .update({ voice_month_key: vKey, voice_month_count: vUsed + 1 }).eq("id", userId);
+
+    // Evidence hlasu (2026-09-25, handoff CODE-read): znaky × model × jazyk × uživatel — bez ní nejde hlas rozdělit na
+    // admin / tester / uživatel ani ocenit podle modelu. Plus nejvýš jednou za 7 dní snímek předplatného EL (trend spotřeby).
+    // Obojí jen loguje chyby, hlas už se ozval. Tabulky: sql/2026-09-25_voice_usage.sql.
+    await logVoice(sb(), { user_id: userId, source: "dynamic", lang: lang === "is" ? "is" : "en", model: resolvedModel, chars: text.length });
+    await weeklyQuota(sb(), EL_API_KEY);
 
     // Convert to base64
     const buf   = await elRes.arrayBuffer();

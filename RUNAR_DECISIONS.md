@@ -7045,3 +7045,23 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Vyhodnocení po pár dnech:** `node scripts/utils/oblasti_slova.js --od v4.56` proti stavu z 2026-09-24 (+ `prompt_draws.area_face`).
 - **Reverzibilita:** `_drawAreaFace` vracet 0 = znění do v4.55.
 - Affected doc(s): `RUNAR_DESIGN.md` (Stavba Single — „Kam dosedne" + seznam dat, která vlastní kód), `RUNAR_BACKLOG.md`.
+
+## 2026-09-25 (2) — Evidence nákladů na hlas: každé generování + týdenní snímek předplatného ElevenLabs (bez plánovače)
+
+- **Co:** handoff CODE-read (psáno proti 52ec758), owner 2026-09-25 *„tak handoff k nákladům a elevenlabs"*.
+  (1) Nová admin funkce `voice-usage`: živý stav předplatného EL (`GET /v1/user/subscription` — znaky v období, limit, reset, tarif),
+  každý dotaz uloží i snímek. (2) `elevenlabs-proxy` a `elevenlabs-static` zapisují každé úspěšné generování do `voice_usage`
+  (znaky, model, jazyk, uživatel, čas; žádný text). (3) Týdenní řada: `elevenlabs-proxy` po úspěšném hlasu uloží snímek předplatného,
+  je-li poslední starší než 7 dní (`voice_quota_snapshots`). Sdílený kód `supabase/functions/_shared/voice_usage.ts`.
+  Migrace `sql/2026-09-25_voice_usage.sql` — **spustil CODE-tune** (dvě nové tabulky, RLS bez politik; ověřeno zkušebním zápisem
+  v transakci s rollbackem a kontrolou omezení).
+- **Proč bez pg_cron:** v projektu není zapnutý; zapnutí rozšíření a trvalá plánovaná úloha je změna nastavení databáze, kterou owner
+  výslovně neschválil. Snímek „po prvním hlasu v týdnu" dá tutéž řadu; týden bez hlasu ve čtení nemá snímek, ale čítač EL běží dál,
+  takže další snímek součet dožene.
+- **Proč se týdenní součty Clauda a hlasu NEUKLÁDAJÍ:** jsou dopočitatelné kdykoli z `readings.usage` a `voice_usage` — týdenní tabulka
+  by byla druhá kopie (§20). Skupiny admin / tester / uživatel se taky dopočítají při dotazu (jako `stats.js`), uložené by zastaraly.
+- **Ověřeno:** nasazené hlasové funkce = repo před deployem; po deployi všechny tři naběhnou a bez přihlášení vrátí 401; smoke ㉪
+  vidí 7 kopií seznamu adminů. **Neověřeno:** skutečný zápis při hlasu (potřebuje přihlášeného uživatele) → owner přehraje jeden hlas.
+- **Na koho čeká:** CODE-read rozšíří `stats.js` o hlas (`voice_usage` × ceník EL podle modelu) a o poslední snímek předplatného.
+- **Reverzibilita:** odebrat dva řádky `logVoice`/`weeklyQuota` z funkcí; tabulky lze zahodit.
+- Affected doc(s): `RUNAR_PRIVACY.md` (Retence — evidence hlasu), `RUNAR_BACKLOG.md` (položka Sledování nákladů na hlas).

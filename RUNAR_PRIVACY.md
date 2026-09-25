@@ -74,6 +74,11 @@ a souhlasí na pravdivém textu. Detail → `RUNAR_DECISIONS.md` 2026-09-11 (8).
   ⚠️ **Platí jen dokud žádná jiná tabulka mapování nedrží.** Až přibude Shopify / objednávky,
   tenhle závěr se musí přezkoumat — objednávka s e-mailem a `user_id` mapování obnoví.
   ⚠️ Tohle je technický rozbor, ne posudek — patří na seznam pro právní/DPO review (viz backlog).
+- **Evidence hlasu (`voice_usage`, od 2026-09-25)** — u každého generování jen počet znaků, model, jazyk, čas a `user_id`;
+  **žádný text**. Účel: náklady na hlas po skupinách a volba tarifu ElevenLabs (oprávněný zájem, účetnictví služby).
+  `user_id` má `on delete set null` → po smazání účtu zbude anonymní účetní řádek, stejná úvaha jako u `credit_ledger` výš.
+  Klient tabulku nečte ani nepíše (RLS bez politik). Snímky předplatného (`voice_quota_snapshots`) osobní údaj nenesou.
+  Migrace: `sql/2026-09-25_voice_usage.sql`.
 
 ## Implementační checklist
 **DB (owner v SQL editoru — viz `sql/2026-07-13_privacy_columns.sql`):**

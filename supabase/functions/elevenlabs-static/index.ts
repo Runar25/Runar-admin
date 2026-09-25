@@ -5,6 +5,7 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
+import { logVoice } from "../_shared/voice_usage.ts"
 
 const EL_API_KEY     = Deno.env.get('ELEVENLABS_API_KEY')
 const EL_VOICE_ID_EN = '2UI8v2ibbwQTijaYAte1'
@@ -81,9 +82,12 @@ serve(async (req) => {
     }
 
     const audioBuffer = await elRes.arrayBuffer()
+    const sb = createClient(SB_URL, SB_KEY)
+    // Evidence hlasu (2026-09-25): i statické audio stojí znaky ElevenLabs — zapsat hned po vygenerování, ne až po
+    // uložení (když Storage selže, znaky už jsou zaplacené). user_id = admin, který generoval.
+    await logVoice(sb, { user_id: caller.id, source: 'static', lang: lang === 'is' ? 'is' : 'en', model: resolvedModel, chars: text.length })
 
     // 2. Ulož audio do Supabase Storage
-    const sb = createClient(SB_URL, SB_KEY)
     const fileName = `static/${lang}/${rune_name.toLowerCase()}_${version}.mp3`
 
     const { error: uploadError } = await sb.storage
