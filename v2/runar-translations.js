@@ -64,9 +64,8 @@ const UI_TEXT = {
     report_who:       'Who are you?',
     report_who_ph:    'Name or initials',
     report_who_save:  'Save',
+    // 2026-09-25: náhled reportu ukazuje celý zachycený text, zvláštní řádek o přiloženém Asku (report_ask_attached) odešel.
     report_flagging:  'Reporting:',
-    // 2026-09-23 (KUKY report: „chybí mi Ask odpověď v reportu") — náhled ukazoval jen 280 znaků, Ask byl až za nimi.
-    report_ask_attached: 'Rúnar\'s answer to your question is attached:',
     // GPT-6 sol rozbor čtení — jen admin (KUKY 2026-09-23). Název modelu se nepřekládá.
     gpt_review_btn:   'GPT-6 luna',   // model = supabase/functions/gpt-review MODEL (2026-09-24 sol -> luna, cena)
     // Přepínač čtení přes GPT-6 sol — jen admin, test (2026-09-24, DECISIONS 2026-09-24 (17)).
@@ -463,7 +462,6 @@ const UI_TEXT = {
     report_who_ph:    'Nafn eða upphafsstafir',
     report_who_save:  'Vista',
     report_flagging:  'Tilkynni:',
-    report_ask_attached: 'Svar Rúnars við spurningunni fylgir með:',
     gpt_review_btn:   'GPT-6 luna',
     sol_toggle:       'Lestur með GPT-6 sol (prófun)',
     gpt_review_wait:  'GPT-6 luna er að lesa…',

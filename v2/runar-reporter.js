@@ -43,6 +43,9 @@
     } else {
       var pane = document.getElementById('apane-' + tab);
       cap.text = (pane ? (pane.innerText || '') : '').trim();
+      // Složení čtení (jen admin, 2026-09-25) jde na konec a strop 5000 se mu uvolní předem — jinak by ho uřízl.
+      var slozeni = (tab === 'reading' && typeof _slozeniCteni === 'function') ? _slozeniCteni() : '';
+      var MAX = slozeni ? 5000 - slozeni.length - 2 : 5000;
       cap.source = 'screen'; cap.key = ''; cap.ctx = tab + ' · #apane-' + tab;
       // Odpověď Asku stojí na konci obrazovky → strop 5000 by ji uřízl jako první. Proto se vezme zvlášť
       // a připojí se na konec, i když se zbytek obrazovky musí zkrátit (2026-09-23, report „chybí mi Ask“).
@@ -55,13 +58,13 @@
                  blok: vym.map(function (x) { return '[ASK] ' + x.q + '\n' + x.a; }).join('\n\n') } : null;
       if (cap.ask) {
         var askBlok = '\n\n' + cap.ask.blok;
-        var zbytek = Math.max(0, 5000 - askBlok.length);
-        if (vym.some(function (x) { return cap.text.indexOf(x.a) === -1; }) || cap.text.length > 5000) {
+        var zbytek = Math.max(0, MAX - askBlok.length);
+        if (vym.some(function (x) { return cap.text.indexOf(x.a) === -1; }) || cap.text.length > MAX) {
           vym.forEach(function (x) { cap.text = cap.text.replace(x.a, ''); });
           cap.text = cap.text.slice(0, zbytek).trim() + askBlok;
         }
       }
-      cap.text = cap.text.slice(0, 5000);
+      cap.text = cap.text.slice(0, MAX) + (slozeni ? '\n\n' + slozeni : '');
     }
   }
 
@@ -81,7 +84,7 @@
       'font-family:inherit;max-height:88vh;overflow:auto}' +
       '#br-panel h3{margin:0 0 10px;color:var(--gold,#FFBF00);font-size:16px;letter-spacing:.04em}' +
       '.br-flag{font-size:12px;color:#9fb0c8;background:rgba(255,255,255,.05);border-radius:8px;' +
-      'padding:8px 10px;margin:0 0 12px;max-height:64px;overflow:auto;white-space:pre-wrap}' +
+      'padding:8px 10px;margin:0 0 12px;max-height:38vh;overflow:auto;white-space:pre-wrap}' +   // celý text (2026-09-25)
       '.br-lbl{font-size:12px;color:#9fb0c8;margin:10px 0 6px;letter-spacing:.05em}' +
       '.br-types{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}' +
       '.br-type{padding:8px 4px;border:1px solid #2a3a52;border-radius:8px;background:transparent;' +
@@ -186,9 +189,9 @@
     document.getElementById('br-name-step').classList.toggle('br-hide', hasName);
     document.getElementById('br-form').classList.toggle('br-hide', !hasName);
     var flag = document.getElementById('br-flag');
-    flag.textContent = cap.text ? (L('report_flagging') + ' “' + cap.text.slice(0, 280) + (cap.text.length > 280 ? '…' : '') + '”') : '';
-    // Ask je v náhledu vidět zvlášť — dřív byl až za 280 znaky, takže to vypadalo, že v reportu chybí.
-    if (cap.ask) flag.textContent += '\n\n' + L('report_ask_attached') + ' “' + cap.ask.a.slice(0, 200) + (cap.ask.a.length > 200 ? '…' : '') + '”';
+    // 2026-09-25 (report KUKY 08:41: „potřeboval bych v okně reportu vidět celý text — čtení runy, Ask, Ask, GPT analýza“):
+    // náhled ukazuje CELÝ zachycený text (dřív 280 znaků + 200 z Asku), v rolovacím poli. Odesílá se beze změny totéž.
+    flag.textContent = cap.text ? (L('report_flagging') + '\n' + cap.text) : '';
     flag.style.display = cap.text ? 'block' : 'none';
     curType = ''; setStatus('');
     document.getElementById('br-msg').value = '';

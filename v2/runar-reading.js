@@ -121,6 +121,30 @@ function toggleSol(on) {
   try { localStorage.setItem('runar_engine', on ? 'sol' : ''); } catch (e) {}
   _paintSolToggle();
 }
+// ─── Složení čtení pro report (jen admin, 2026-09-25) ───────────────────────────────────
+// KUKY (report 08:41): „líbilo by se mi vidět v reportu jen pro adminy, z čeho se to čtení složilo“. Čte se zpětně
+// z hotového promptu (_promptDraws — tentýž zápis, který jde do DB), takže je to přesně to, co model dostal.
+// Štítky anglicky: čtou ho oba admini (owner i Sigrún); je to meta, ne text pro uživatele.
+function _slozeniCteni() {
+  if (!_lastGen || !(currentUser && isAdmin(currentUser.email))) return '';
+  var L = _lastGen.lang, isIs = L === 'is', d = _promptDraws(_lastGen.prompt, L) || {};
+  var out = ['[READING COMPOSITION — admin]',
+    'model: ' + (_lastGen.model || '?') + ' · prompt ' + RUNAR_PROMPT_VERSION + ' · ' + _lastGen.kind + ' · ' + L];
+  var ang = isIs ? READING_ANGLES_IS : READING_ANGLES;
+  if (typeof d.angle === 'number') out.push('angle: ' + ang[d.angle]);
+  if (d.image) out.push('image: ' + d.image + (d.place ? ' (place: ' + d.place + ')' : ''));
+  var ai = (typeof _areaIdx === 'function' && readerUser) ? _areaIdx(readerUser.area) : -1;
+  if (typeof d.area_face === 'number' && ai >= 0) out.push('area face: ' + AREA_FACES[ai][d.area_face][isIs ? 'is' : 'en'][0]);
+  if (d.ending) {
+    var tvar = ['one line', 'two possibilities', 'a question'][Number(String(d.ending).slice(-1))] || d.ending;
+    out.push('ending: ' + tvar + (String(d.ending).indexOf('heavy') === 0 ? ' (heavy — no comfort)' : ''));
+  }
+  if (d.essence !== undefined) out.push('essence line: ' + (d.essence === 'blank' ? 'Blank' : ['what the rune does', 'the rune acts in the scene'][d.essence]));
+  if (d.kws) out.push('keywords: ' + d.kws);
+  out.push('life-rune lens: ' + (d.lens ? 'yes' : 'no'));
+  if (_lastGen.kind === 'single') out.push('rune question under the ending: ' + (/grow out of the rune|eiga rót í spurningu/.test(_lastGen.prompt) ? 'yes' : 'no'));
+  return out.join('\n');
+}
 function _hideGptReview() {
   var box = document.getElementById('gpt-review'); if (box) box.style.display = 'none';
 }
@@ -245,7 +269,15 @@ function _renderLifeBadge(life) {
     var n = document.getElementById('badge-life-name');
     var note = document.getElementById('badge-life-note');
     // KÁMEN (KUKY 2026-09-23: „změnit glyf životních run na naše glyfy“) — dřív holá linka podle §5 z 2026-07-14.
-    if (g) g.innerHTML = runeSvg(life, { frame: true, cls: 'badge-stone' });
+    if (g) {
+      g.innerHTML = runeSvg(life, { frame: true, cls: 'badge-stone' });
+      // 2026-09-25 (report KUKY: „i u life rune by se měla při kliku na glyf ukázat okno s meaning of the rune“):
+      // tytéž údaje jako glyfy v textu čtení; runar-rune-popup.js ho pozná podle data-rune-pop. Bez data-seg —
+      // životní runa v textu čtení segment nemá, zvýraznění se tedy přeskočí.
+      g.setAttribute('data-rune', rn(life));
+      g.setAttribute('data-kw', rk(life));
+      g.setAttribute('data-rune-pop', '1');
+    }
     if (n) n.textContent = rn(life);
     if (note) note.textContent = t('badge_life_note');
     badge.style.display = 'flex';
@@ -302,6 +334,7 @@ async function _generateReading() {
   } : null;
   _lastReadingId = null;
   const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens, shouldUseCredit(), SPREAD_COSTS.single.credits, _journal);
+  if (_lastGen && res && res.model) _lastGen.model = res.model;   // skutečný model (sol může spadnout na Opus) — složení v reportu
   _lastReadingId = (res && res.reading_id) || (_journal ? _journal.id : null);
   if (_journal && res && !res.error && res.text && !res.reading_id) _pendAdd('pendingReadings', { id: _journal.id, journal: _journal, model_text: res.text });
   _flushPending();
@@ -1229,6 +1262,7 @@ async function _generateSpreadReading(o) {
                             _isFounding ? false : shouldUseCredit(),
                             _isFounding ? 0 : o.credits,
                             _journalS, _isFounding ? 'founding' : '');
+  if (_lastGen && res && res.model) _lastGen.model = res.model;
   _lastReadingId = (res && res.reading_id) || (_journalS ? _journalS.id : null);
   if (_journalS && res && !res.error && res.text && !res.reading_id) _pendAdd('pendingReadings', { id: _journalS.id, journal: _journalS, model_text: res.text });
   _flushPending();

@@ -1328,6 +1328,7 @@ async function callProxy(sys, prompt, maxTokens, use_credit = false, credit_cost
     }
 
     return { text: data.content?.[0]?.text || data.text || '', reading_id: data.reading_id, saved: data.saved, ask_saved: data.ask_saved,
+             model: (data.usage && data.usage.model) || null,   // 2026-09-25: skutečný model (fallback) — složení čtení v reportu
              name_lore_for: data.name_lore_for, name_lore_count: data.name_lore_count, name_lore_saved: data.name_lore_saved,
              reset: data.reset };
   } catch (e) { console.error('callProxy:', e && e.message); return { error: 'network_error' }; }
