@@ -359,5 +359,35 @@ sandbox.readerRune = R('Jera'); sandbox._lastDrawn = [R('Jera')]; sandbox._askPh
 const ph = glob('_askPlaceholder')();
 rekni(glob('_askHints')().includes(ph), 'placeholder pole je jeden z tipů nápovědy — „' + ph + '"');
 
+// ── 12) Ask nese VÝZNAM RUNY, ze kterého single čtení vzniklo (2026-09-26, handoff CODE-read) ──
+// Seed-and-assert na hranici čtení → Ask: prompt čtení se postaví PRODUKČNÍM builderem a uloží tam, kam ho ukládá produkce
+// (`_lastGen`, runar-reading.js), a Ask se skládá přes `_askBuild`. Aspekt musí přežít až do Ask promptu; kde nepatří, nesmí být.
+for (const L of ['en', 'is']) {
+  const znacka = L === 'is' ? 'rúnarinnar í lestrinum sem þú gafst' : 'In this reading';
+  const kenaz = R('Kenaz');
+  sandbox.lang = L;
+  sandbox.readerUser = { name: 'Anna', lifeRune: null, question: '', area: '', intention: '', seeking: '' };
+  const pr = glob('buildReadingPrompt')(sandbox.readerUser, kenaz, L, []);
+  const asp = (glob('_promptDraws')(pr, L) || {}).kws || '';
+  sandbox._lastGen = { sys: '', prompt: pr, lang: L, kind: 'single' };
+  let p = promptZeStavu(L, { drawn: [kenaz] });
+  rekni(!!asp && p.indexOf(znacka) !== -1 && p.indexOf(asp) !== -1, L + '  Ask nese aspekt čtení („' + asp + '“)');
+  const k = (L === 'is' ? kenaz.k_is : kenaz.k).split(',').map(x => x.trim()).filter(x => asp.toLowerCase().indexOf(x.toLowerCase()) === -1);
+  rekni(k.length > 0 && k.every(x => p.indexOf(x) !== -1), L + '  ostatní klíče runy zůstávají (' + k.length + ')');
+  // jiný jazyk Asku než čtení → bez aspektu (byl by v cizím jazyce)
+  sandbox._lastGen = { sys: '', prompt: pr, lang: L === 'is' ? 'en' : 'is', kind: 'single' };
+  p = promptZeStavu(L, { drawn: [kenaz] });
+  rekni(p.indexOf(znacka) === -1, L + '  Ask v jiném jazyce než čtení → bez aspektu');
+  // `_lastGen` jiné runy (neúspěšné nové čtení nechá starý) → bez aspektu
+  sandbox._lastGen = { sys: '', prompt: pr, lang: L, kind: 'single' };
+  p = promptZeStavu(L, { drawn: [R('Jera')] });
+  rekni(p.indexOf(znacka) === -1, L + '  prompt čtení jiné runy → bez aspektu');
+  // spread → bez aspektu
+  sandbox._lastGen = { sys: '', prompt: pr, lang: L, kind: 'norns' };
+  p = promptZeStavu(L, { mode: 'norns', drawn: [kenaz, R('Jera'), R('Gebo')] });
+  rekni(p.indexOf(znacka) === -1, L + '  spread → bez aspektu');
+}
+sandbox._lastGen = null;
+
 console.log(fail ? '\n' + fail + ' selhalo' : '\nOK  nápověda Ask odpovídá stavu čtení');
 process.exit(fail ? 1 : 0);

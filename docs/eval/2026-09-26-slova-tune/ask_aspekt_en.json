@@ -1,0 +1,142 @@
+[
+ {
+  "runa": "Kenaz",
+  "aspekt": "inner light",
+  "prvni": "torch",
+  "reading": "You are sitting on the bench, and a single lamp hangs above you, throwing its circle onto the boards and the ground at your feet. Past that edge the dark stays dark, and everything inside it is plain to see. Kenaz is that narrow light, showing a small thing well rather than everything poorly. What has come clear in your own small circle lately, and what might follow from having seen it?",
+  "ask": [
+   {
+    "q": "What do you mean?",
+    "arm": "bez",
+    "text": "Plainly, then. Kenaz is a torch — a small flame, not a sun. It lights one thing at a time, and what it lights, it lights well. That is the whole of what was drawn.\n\nSo the reading points at something narrow rather than something large. Not the shape of your life, but one thing you have recently come to understand with some clarity. The rest stays unlit, and Kenaz makes no claim about it.\n\nThat is all the rune holds. The rest is yours to weigh."
+   },
+   {
+    "q": "What do you mean?",
+    "arm": "s",
+    "text": "Kenaz is a small light, not a large one. It shows one thing clearly and leaves the rest unlit. That is the whole of it.\n\nSo the reading was not about what is hidden from you, but about the little that isn't — some matter you have come to understand plainly, in detail, while much around it stays unclear. Kenaz says nothing about whether that understanding is large or useful. Only that it is yours, and clear, and worth looking at squarely before deciding what it means."
+   },
+   {
+    "q": "Explain Kenaz without the image.",
+    "arm": "bez",
+    "text": "Kenaz is a made light — a torch, not the sun. It is knowledge that comes from working at something, the kind you get by handling a thing closely rather than surveying it from above. It shows a little, and shows it well. That is its limit and its use. It also carries fire's double nature: the same flame that lets you see can burn what it touches. What the rune holds here is the narrowness itself — one clear thing, and the question of what follows from knowing it."
+   },
+   {
+    "q": "Explain Kenaz without the image.",
+    "arm": "s",
+    "text": "Kenaz is knowing something rather than knowing about it. It is the rune of skill learned by hand, of craft, of a thing understood well enough to be made or repaired. Its range is small by nature — it does not illuminate a life, it illuminates a task, a question, a piece of work.\n\nThe word behind it is fire, but the useful kind: a flame kept for light and for shaping, not for burning through. What it holds here is clarity in one place, and what that clarity is good for."
+   }
+  ]
+ },
+ {
+  "runa": "Fehu",
+  "aspekt": "material prosperity",
+  "prvni": "wealth",
+  "reading": "The pail stays where it was set, while the milk runs white over the rim and down the wood. Fehu holds the full measure and lets the overflow go. What the ground takes is not counted, yet the pail is not empty. Kuky, this may be plenty that has nowhere to go, or plenty already moving past your hands.",
+  "ask": [
+   {
+    "q": "What do you mean?",
+    "arm": "bez",
+    "text": "Plainly, Kuky: Fehu is the rune of wealth that moves — cattle, goods, anything that can be counted and can also be spent. It holds what it holds, and no more. The overflow is the part beyond the measure.\n\nSo the reading names two possibilities, not one. There may be more of something in your life than there is use for it. Or there may be something leaving your hands already, steadily, without much notice taken of it.\n\nWhich of those it is, I do not know."
+   },
+   {
+    "q": "What do you mean?",
+    "arm": "s",
+    "text": "Plainly, Kuky: Fehu is the rune of wealth — cattle, goods, money, anything that can be counted and moved. What it holds here is not lack but excess. There is more coming in than is being held, and some of it is going somewhere you are not tracking.\n\nThat could mean resources sitting idle with no use found for them. It could mean money, time or effort leaving steadily in ways you have not tallied. The rune names the overflow; it does not say which."
+   },
+   {
+    "q": "Explain Fehu without the image.",
+    "arm": "bez",
+    "text": "Fehu is wealth of the movable kind — herds, coin, goods, anything that can be counted and carried. It is not a rune of holding still. What it names tends to increase, and what increases either moves on or spills.\n\nSo the rune speaks of quantity and of flow together, Kuky. It marks that there is enough of something, and that enough is not the same as settled. Some of it stays within your reach, some of it goes elsewhere. Fehu does not say which portion is which."
+   },
+   {
+    "q": "Explain Fehu without the image.",
+    "arm": "s",
+    "text": "Fehu is wealth that moves — cattle, coin, goods that can be counted and spent. It is not stored value but value in circulation, the kind that must be kept, tended, given, or lost.\n\nHere it came up meaning material prosperity: what you hold, in plain terms. Money, work, resources, things with weight.\n\nAnd Fehu carries both sides at once — having, and the fact that what is had does not stay still. Kuky, the rune names abundance without settling where yours currently rests."
+   }
+  ]
+ },
+ {
+  "runa": "Laguz",
+  "aspekt": "intuition",
+  "prvni": "water",
+  "reading": "You stand on wet sand, and the swell moves under your soles before your eyes find it out on the water. Laguz is that knowing carried by water, arriving in the body ahead of the sight. The sea does not announce itself, it simply presses upward through the ground you hold. What might you already be sensing now, before you have the words to name it?",
+  "ask": [
+   {
+    "q": "What do you mean?",
+    "arm": "bez",
+    "text": "Plainly: Laguz is the rune of water, and of the kind of knowing that comes before thought. Sometimes you react to something — a room, a conversation, a decision — before you can explain why. The body registers it first; the words come later, if they come at all.\n\nThat is all the rune holds here. Not a message about your future, and not a claim about what is stirring in you. Only the reminder that feeling often runs ahead of understanding, and that the gap between them is ordinary."
+   },
+   {
+    "q": "What do you mean?",
+    "arm": "s",
+    "text": "Plainly, then. Laguz here is intuition — the kind of knowing that reaches you through the body before you can explain it. A feeling of unease or certainty that arrives without argument behind it.\n\nThe wet sand was only a way of picturing that: the pressure felt through the feet before anything shows on the water.\n\nSo the rune points at knowing that comes without reasoning. Whether you have any such sense at the moment, and what it concerns, is yours to say — the rune names the kind of thing, not the content."
+   },
+   {
+    "q": "Explain Laguz without the image.",
+    "arm": "bez",
+    "text": "Laguz names the part of knowing that does not come through thought. It is feeling, memory, dream, the sense of a thing before you can explain it — information you hold without having examined it.\n\nIt carries no instruction and makes no promise. It marks a way of knowing, not a truth. Such knowing can be accurate and can be wrong, and it rarely arrives with its reasons attached.\n\nThat is what was drawn: the kind of understanding that reaches you before language does."
+   },
+   {
+    "q": "Explain Laguz without the image.",
+    "arm": "s",
+    "text": "Laguz is the rune of water, and of what moves the way water does — feeling, memory, dream, the parts of knowing that arrive without reasoning. Here it stands for intuition: a sense of something registering before you can account for it, or explain how you came by it.\n\nIt says nothing about whether such a sense is correct. It marks only that this kind of knowing is in play, and that it works faster than words do."
+   }
+  ]
+ },
+ {
+  "runa": "Ansuz",
+  "aspekt": "wisdom",
+  "prvni": "messages",
+  "reading": "You are standing at the stove with your back to the kettle, and the note shifts, and you know it before you turn. Ansuz is the sound arriving ahead of the sight, meaning carried on air. The water has been climbing a long while; only now does it speak. What might reach you today if you trusted the change in tone before you looked?",
+  "ask": [
+   {
+    "q": "What do you mean?",
+    "arm": "bez",
+    "text": "Plainly: Ansuz is the rune of speech, breath, and meaning that arrives as sound. I drew it and nothing more.\n\nWhat it holds is this — some things announce themselves before you can see them. Word, tone, a change in the pitch of something ordinary. Information reaching you through a channel you weren't watching.\n\nThe kettle was only my way of saying it. Sound came first; sight came after.\n\nSo the rune points at hearing, and at what you might make of something heard rather than seen."
+   },
+   {
+    "q": "What do you mean?",
+    "arm": "s",
+    "text": "Plainly: Ansuz is the rune of wisdom that arrives as sound — a message, a voice, something understood through hearing rather than seeing.\n\nThe kettle was the picture, but here is the point. Something can be known before it is looked at. A change in tone, a word said in passing, a shift in how someone speaks to you — these carry information, and they often arrive earlier than the proof.\n\nThe rune holds that kind of knowing. What you do with a thing heard early is yours to weigh."
+   },
+   {
+    "q": "Explain Ansuz without the image.",
+    "arm": "bez",
+    "text": "Ansuz is the rune of speech, breath, and meaning that travels. It concerns what is communicated — a word, a message, something understood — and the fact that understanding often arrives through hearing rather than seeing.\n\nIt names a kind of knowing that comes early, before there is anything to look at. Not certainty, only signal.\n\nDrawn on its own, it holds the moment when something becomes audible after a long stretch of being silent, and the question of whether it is given weight."
+   },
+   {
+    "q": "Explain Ansuz without the image.",
+    "arm": "s",
+    "text": "Ansuz is the rune of speech, breath, and the message that arrives. It holds wisdom of a particular kind — not what you work out by thinking, but what comes to you from outside, through words, through sound, through someone else's mouth or your own.\n\nHere it draws attention to the gap between hearing and seeing. Something is audible before it is visible. The rune marks that difference, and asks what you do with information that arrives early."
+   }
+  ]
+ },
+ {
+  "runa": "Perth",
+  "aspekt": "the unseen",
+  "prvni": "chance",
+  "reading": "You stand at the stove with the lid still on, and the smell reaching you is not yet a dish you could name. Perth is that stretch between the smell and the naming, when something is forming out of sight. Lifting the lid too early tells you less, not more. What is cooking in your life that you cannot name yet, and what if the naming simply is not ready?",
+  "ask": [
+   {
+    "q": "What do you mean?",
+    "arm": "bez",
+    "text": "Plainly, then. Perth is the rune of what is hidden and not yet shown. It does not say what the hidden thing is, and it does not promise the outcome will be good or bad — only that some part of the matter is still out of view.\n\nSo the reading points at a gap: something in your situation is underway, and you do not yet have a word for it. Not knowing the word is not a failure of yours. It may simply be that the thing has not finished becoming what it is."
+   },
+   {
+    "q": "What do you mean?",
+    "arm": "s",
+    "text": "Plainly: Perth is the rune of what is still hidden. It does not say what the hidden thing is, and neither do I.\n\nSomething in your life is underway without having taken a shape you can describe. That is the whole of it. You may want to settle it early, give it a name so you can handle it — the rune only notes that the naming may not be available yet, not that you are failing to see it.\n\nNothing is owed to you here, and nothing is being withheld. It is simply not finished."
+   },
+   {
+    "q": "Explain Perth without the image.",
+    "arm": "bez",
+    "text": "Perth is the rune of what is hidden and not yet shown. It marks a situation where something is taking shape outside your view, and where the outcome is genuinely undecided — chance is still at work in it. It carries luck, but not a promised kind.\n\nWhat Perth holds here is timing. Something in your circumstances has not yet reached the point where it can be named, and pressing for a name early gives you a guess rather than knowledge. The rune says only that it is unfinished."
+   },
+   {
+    "q": "Explain Perth without the image.",
+    "arm": "s",
+    "text": "Perth is the rune of what is not yet visible. It marks a stage where something has begun but has not taken a shape you could describe, and where the information you want does not exist yet — not because it is withheld, but because it has not formed.\n\nIt also carries chance, and the hidden coming to light in its own time. What Perth does not carry is any promise about what that will turn out to be. It names the condition, not the outcome."
+   }
+  ]
+ }
+]

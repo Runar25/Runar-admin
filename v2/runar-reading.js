@@ -823,7 +823,16 @@ function _intentIdx(v) {
 function _askBuild(reading, q, runes) {
   var _lf = (readerUser && readerUser.lifeRune) || null;
   if (_lf && (_lastDrawn || []).some(function (r) { return r && r.n === _lf.n; })) _lf = null;
-  return buildAskPrompt(reading, q, runes, lang, corrections, _lf, _askCast(), _askSpread());
+  return buildAskPrompt(reading, q, runes, lang, corrections, _lf, _askCast(), _askSpread(), _askAspect());
+}
+// Význam runy, ze kterého single čtení vzniklo (2026-09-26, viz buildAskPrompt). Čte se z promptu TOHO čtení (`_lastGen`) —
+// stejný zdroj, jaký zapisuje prompt_draws.kws, žádná druhá kopie. Prázdné, když: nejde o single; Ask je v jiném jazyce než
+// čtení (aspekt by byl v cizím jazyce); nebo `_lastGen` patří jiné runě (neúspěšné nové čtení nechá starý `_lastGen`).
+function _askAspect() {
+  if (!_lastGen || _lastGen.kind !== 'single' || _lastGen.lang !== lang) return '';
+  var d = (_lastDrawn || []).filter(Boolean);
+  if (d.length !== 1 || _lastGen.prompt.indexOf(': ' + rnPrompt(d[0]) + ' — ') === -1) return '';
+  return (_promptDraws(_lastGen.prompt, _lastGen.lang) || {}).kws || '';
 }
 function _askSpread() {
   return { mode: _spreadMode,

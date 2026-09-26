@@ -1,0 +1,58 @@
+[
+ {
+  "runa": "Kenaz",
+  "aspekt": "innra ljós",
+  "prvni": "kyndill",
+  "reading": "Það logar á einum lampa yfir hefilbekknum, og allt annað í verkstæðinu hverfur í rökkur. Kenaz er þessi litli logi, sem lýsir ekki upp allan salinn heldur aðeins spýtuna í höndunum. Það sem er innan birtunnar sést, hitt bíður. Hvað er það sem birtan þín fellur á núna, sem þú getur ekki lengur litið undan?",
+  "ask": [
+   {
+    "q": "Hvað meinarðu?",
+    "arm": "bez",
+    "text": "Kenaz er lítið ljós, ekki mikið. Það sem ég meina er einfalt: hún bendir á að athygli þín rúmar ekki allt í einu. Eitthvað eitt er innan birtunnar núna — verk, spurning, manneskja — og hitt bíður í rökkrinu án þess að hverfa.\n\nÉg veit ekki hvað það er hjá þér. Rúnin nefnir það ekki. Hún nefnir aðeins að birtan er þröng og að það sem hún fellur á sést vel á meðan hún stendur."
+   },
+   {
+    "q": "Hvað meinarðu?",
+    "arm": "s",
+    "text": "Ég meina þetta einfalt. Kenaz er lítið ljós, ekki stórt. Hún lýsir ekki heilt hús, heldur það sem er næst höndum.\n\nÍ þessum lestri ber hún innra ljós. Það segir ekki hvað þú átt að sjá. Það segir aðeins að birtan er afmörkuð, og að eitthvað eitt liggur innan hennar meðan annað bíður í rökkrinu.\n\nSpurningin mín var ekki gáta. Hún var bein spurning: hvað er það sem liggur innan þinnar birtu núna."
+   },
+   {
+    "q": "Útskýrðu Kenaz án myndarinnar.",
+    "arm": "bez",
+    "text": "Kenaz er eldur í haldi. Ekki bálið sem eyðir, heldur logi sem einhver ber og heldur við. Hann merkir þekkingu sem fæst með því að gera, og kunnáttu sem lærist við vinnu. Hann merkir líka takmörk: einn logi lýsir lítið svæði í einu.\n\nRúnin lofar engum skilningi og segir ekkert um hvað þú sérð. Hún nefnir aðeins að birta sé bundin einum stað, og að það sem stendur utan hennar sé enn óséð. Þar með er hún sögð, án myndar."
+   },
+   {
+    "q": "Útskýrðu Kenaz án myndarinnar.",
+    "arm": "s",
+    "text": "Kenaz er rún þekkingar sem fæst af eigin reynslu, ekki þeirrar sem einhver réttir þér. Hún merkir kunnáttu í höndum, þolinmæði við smíði, skilning sem kemur smám saman. Hún merkir líka eld og kyndil — takmarkaða birtu. Í þessum lestri ber hún innra ljós.\n\nKenaz lofar ekki fullri yfirsýn. Hún nefnir aðeins að það sem sést núna sé afmarkað, og að afmörkunin sé eðli hennar. Lampinn var mynd. Þetta er efnið."
+   }
+  ]
+ },
+ {
+  "runa": "Laguz",
+  "aspekt": "innsæi",
+  "prvni": "vatn",
+  "reading": "Þú stendur í fjöruborðinu og finnur undiröldu færast um ökklana áður en þú sérð hana koma. Laguz er þessi hreyfing undir yfirborðinu, sem líkaminn skynjar löngu á undan auganu. Sjórinn bíður ekki eftir að þú skiljir hann. Hvað gæti verið að hreyfast í þínu eigin lífi, sem þú finnur áður en þú átt orð yfir það?",
+  "ask": [
+   {
+    "q": "Hvað meinarðu?",
+    "arm": "bez",
+    "text": "Ég meina þetta einfalt. Laguz er rún vatns og þess sem hreyfist undir yfirborði. Í lestrinum stóð ekki að eitthvað sé að gerast hjá þér. Þar var spurning.\n\nFólk finnur stundum eitthvað í líkamanum áður en það á orð yfir það. Óróleika fyrir ákvörðun. Þreytu sem á sér ekki skýringu. Það er allt og sumt sem myndin nefnir.\n\nHvort eitthvað slíkt á við þig veit ég ekki. Rúnin bendir á þann möguleika, ekkert meira. Þú átt sjálft hvort þar er nokkuð að finna."
+   },
+   {
+    "q": "Hvað meinarðu?",
+    "arm": "s",
+    "text": "Ég meina það einfalt. Laguz stendur hér fyrir innsæi — vitneskju sem kemur á undan orðunum.\n\nStundum veit líkaminn eitthvað fyrst. Þú finnur óróleika fyrir samtal, eða léttir eftir ákvörðun sem þú hafðir ekki enn tekið. Það þýðir ekki að þú vitir svarið. Það þýðir aðeins að eitthvað gerir vart við sig áður en þú getur skýrt það.\n\nÉg veit ekki hvað það er hjá þér. Rúnin bendir á þetta bil — milli þess að finna og þess að skilja. Spurningin var hvort þú kannist við það bil."
+   },
+   {
+    "q": "Útskýrðu Laguz án myndarinnar.",
+    "arm": "bez",
+    "text": "Laguz stendur fyrir vatn. Í fornri merkingu er hún tengd því sem rennur, því sem býr undir yfirborði og því sem maður skynjar áður en hann getur orðað það. Innsæi, tilfinningar, minni og draumar falla þar undir.\n\nHún lýsir ekki atburði og segir ekki til um niðurstöðu. Hún nefnir aðeins að sumt í mannlífi færist áfram án þess að vera hugsað til enda fyrst.\n\nÞað er allt og sumt sem rúnin ber. Hvað þú gerir við þá lýsingu er ekki mitt að segja."
+   },
+   {
+    "q": "Útskýrðu Laguz án myndarinnar.",
+    "arm": "s",
+    "text": "Laguz merkir vatn. Í þessum lestri ber hún innsæi — þá vitneskju sem kemur án röksemda og án orða, og er því erfitt að treysta.\n\nAðrar merkingar hennar liggja nærri: flæði, tilfinningar, minni, draumar, það sem er undir vitundinni frekar en í henni.\n\nRúnin segir ekki hvort slík vitneskja reynist rétt. Hún nefnir aðeins að hún sé til, og að hún berist á undan skilningnum.\n\nÞað er allt sem hún ber. Hvað þú gerir við það er ekki hennar að segja."
+   }
+  ]
+ }
+]

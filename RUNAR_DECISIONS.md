@@ -7186,3 +7186,22 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   zatímco pokyn konce říká „never what to do about it“ (platí i pro nové napětí). Výsledkem bývá hypotetický krok („…if you cut away…?“).
   Bez změny; vrátit se k tomu, až se to v živých čteních projeví jako rada.
 - Affected doc(s): žádný.
+
+## 2026-09-26 (4) — Ask dostane význam runy, ze kterého single čtení vzniklo (aspekt obrazu), před ostatními klíči
+
+- **Rozhodl:** KUKY 2026-09-26 *„ano jeď 3 → 1 → 2, ukaž čtení“* — krok 1 handoffu CODE-read (EVAL_LOG 2026-09-26 (1)).
+- **Proč:** report 2026-09-25 21:12 — čtení Kenaz o řezbářství (aspekt creativity), Ask vysvětlil Kenaz jako „flame / fire“: Ask dostal
+  jen jméno runy + VŠECHNY klíče a vzal první (torch). Aspekt čtení (`focus on:` v promptu, totéž co `prompt_draws.kws`) Ask neznal.
+- **Co:** `buildAskPrompt(…, aspect)`; klient `_askAspect()` (runar-reading.js) ho čte z promptu TOHO čtení (`_lastGen`). Jen single,
+  jen stejný jazyk Asku jako čtení, jen když `_lastGen` patří tažené runě; spready beze změny (víc hlaviček). Ostatní klíče zůstávají
+  za aspektem — „Explain <runa> without the image“ má dát celý význam. Texty v `RP_ASK.*.aspect` (data per jazyk, §18).
+- **Změřeno (Opus 5, `docs/eval/2026-09-26-slova-tune/ask_aspekt*`):** EN 5 run — „What do you mean?“ začne aspektem čtení 4/5 s ním,
+  1/5 bez něj; ownerův případ Kenaz × creativity: *„Kenaz here is creativity as removal“* × bez *„Kenaz is the torch and the blade“*.
+  „Explain … without the image“ drží celý význam v obou ramenech (aspekt ho nezúžil). **IS:** první znění hlasem Rúnara
+  (*„Í þessum lestri ber hún innra ljós“*) model **opsal doslova 3/4** → přepsáno na větu o čtení modelu s aspektem jako přísudkem
+  v nominativu (*„Merking rúnarinnar í lestrinum sem þú gafst var …“* — neskloňuje se ani hodnota, ani IS jméno runy); opis 0/4,
+  účinek v IS **slabý** (Kenaz × sköpunargleði: bez „Kenaz er kyndillinn“, s „rún elds og ljóss… eitthvað sé byrjað að taka á sig
+  lögun“). n malé — hlídat v reportech.
+- **Kontrola:** smoke (`verify_ask_hints.js` bod 12): prompt čtení z produkčního builderu → `_lastGen` → `_askBuild`; aspekt přežije
+  a klíče zůstanou; jiný jazyk / jiná runa / spread → bez aspektu. Mutace (vyndaný argument `_askAspect()`) → 2 FAIL.
+- Affected doc(s): žádný (Ask má znění v kódu; RUNAR_DESIGN Ask neopisuje).

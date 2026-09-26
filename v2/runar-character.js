@@ -1735,6 +1735,8 @@ var RP_ASK = {
       return 'You gave the seeker this rune reading:\n"' + reading + '"\nRunes drawn: ' + runes + '.';
     },
     q: function (question) { return 'They now ask ONE follow-up question about it:\n"' + question + '"'; },
+    // 2026-09-26: význam runy, ze kterého čtení vzniklo — viz buildAskPrompt. `rest` = ostatní klíče (bez těch z aspektu).
+    aspect: function (name, a, rest) { return 'In this reading ' + name + ' carries the sense of ' + a + (rest.length ? '. Its other senses are ' + rest.join(', ') : ''); },
     // 2026-09-23 (KUKY „4. ano“, report „Ask odpověděl skoro stejně jako čtení“): pryč „Answer ONLY within this reading“,
     // „in image and symbol“ a „Deepen or clarify what the runes named“ — tři věty, které Ask vracely do čtení.
     // Změřeno na 19 skutečných ownerových otázkách, produkční model: slova převzatá ze čtení 0,34 -> 0,30, méně v 14/19
@@ -1757,6 +1759,14 @@ var RP_ASK = {
       return 'Þú gafst leitandanum þennan rúnalestur:\n"' + reading + '"\nRúnir sem dregnar voru: ' + runes + '.';
     },
     q: function (question) { return 'Nú spyr leitandinn EINNAR spurningar um hann:\n"' + question + '"'; },
+    aspect: function (name, a, rest) {
+      var og = rest.length > 1 ? rest.slice(0, -1).join(', ') + ' og ' + rest[rest.length - 1] : rest.join('');
+      // Aspekt = přísudek v nominativu („…var innra ljós“) → hodnota ani jméno runy se neskloňují (IS jména run jsou
+      // podstatná jména: Þurs, Fé…). Věta mluví o čtení modelu, ne hlasem Rúnara — v1 hlasem Rúnara model opsal 3/4.
+      var fleiri = a.indexOf(',') !== -1;
+      return (fleiri ? 'Merkingar' : 'Merking') + ' rúnarinnar í lestrinum sem þú gafst ' + (fleiri ? 'voru ' : 'var ') + a
+        + (rest.length ? '. Aðrar merkingar hennar eru ' + og : '');
+    },
     // 2026-09-23: totéž co EN výš. „Talaðu sem Rúnar — …“ nástroj nerozparsoval (E001) → oznamovací tvar, týž smysl.
     rules:
       'Þú talar sem Rúnar, hljóðlátur og íhugull, og gefur aldrei ráð eða fyrirmæli. Gefðu EKKI nýjan spádóm og dragðu ekki nýjar rúnir. Hafðu þetta þétt — ekki meira en um 90 orð. Þetta svar er lesið, aldrei talað upphátt, svo það má taka það rými sem skýring þarf.\n' +
@@ -1954,7 +1964,7 @@ function buildNameLorePrompt(name, zaznam, lang, corrections) {
 }
 
 // reading = the text Rúnar gave · question = seeker's follow-up · runes = comma list of rune names
-function buildAskPrompt(reading, question, runes, lang, corrections, life, cast, spread) {
+function buildAskPrompt(reading, question, runes, lang, corrections, life, cast, spread, aspect) {
   var S = RP_ASK[lang] || RP_ASK.en;
   // 2026-09-21 (reporty #3/#4, owner „dej ask klicova slova runy"): Ask nesl jen JMENO runy
   // a model si vyznam domyslel — prirovnani pak nesedela k tomu, co runa v NASEM kanonu je.
@@ -1963,6 +1973,13 @@ function buildAskPrompt(reading, question, runes, lang, corrections, life, cast,
   // Jmeno prichazi i jako "Gebo (Félagsskapur)" (IS rn(), nebo model opsal prompt) — porovnava
   // se bez zavorkove casti, jinak IS mine. Klice se vesi pomlckou, ne zavorkou (dvojita zavorka).
   var runyText = String(runes || '');
+  // 2026-09-26 (handoff CODE-read, RUNAR_EVAL_LOG 2026-09-26 (1); owner „ano jeď 3 → 1 → 2“): `aspect` = význam, ze kterého
+  // single čtení vzniklo (aspekt obrazu, v promptu čtení `focus on:`). Bez něj Ask vzal PRVNÍ klíč seznamu — report 2026-09-25
+  // 21:12: čtení Kenaz o řezbářství (aspekt creativity), Ask vysvětlil Kenaz jako „flame / fire“. Pilot CODE-read (Opus 5, 3×):
+  // oheň/plamen 3/3 → s aspektem 0/3. Ostatní klíče ZŮSTÁVAJÍ (za aspektem) — „Explain <runa> without the image“ má dát celý
+  // význam runy, ne jen ten jeden. Jen u jedné runy: spready mají víc hlaviček a `_promptDraws` čte jen první (§13 — cesta zvážena).
+  var _asp = String(aspect || '').trim();
+  var _jedna = runyText.split(/[,;]/).filter(function (x) { return x.trim(); }).length === 1;
   if (typeof RUNES !== 'undefined') {
     var _hola = function (x) { return String(x || '').replace(/\s*\(.*$/, '').trim(); };
     runyText = runyText.split(/[,;]/).map(function (kus) {
@@ -1973,6 +1990,12 @@ function buildAskPrompt(reading, question, runes, lang, corrections, life, cast,
         if (RUNES[i].n === h || _hola(RUNES[i].is_n) === h) { r = RUNES[i]; break; }
       if (!r) return n;
       var k = (lang === 'is') ? (r.k_is || r.k) : r.k;
+      if (_asp && _jedna) {
+        var al = _asp.toLowerCase();
+        var rest = String(k).split(',').map(function (x) { return x.trim(); })
+          .filter(function (x) { return x && al.indexOf(x.toLowerCase()) === -1; });
+        return h + '. ' + S.aspect(h, _asp, rest);
+      }
       return h + ' — ' + k;   // 2026-09-24: holé jméno (h), ne „Gebo (Félagsskapur)“ — viz rnPrompt()
     }).filter(Boolean).join('; ');
   }
