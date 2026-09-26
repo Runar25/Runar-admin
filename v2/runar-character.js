@@ -735,6 +735,20 @@ var RUNE_IMAGES = [
   ['Eihwaz', 'any', 'Gamla tréð í kirkjugarðinum hefur lifað lengur en allir sem gróðursettu það.', 'The old tree in the churchyard has outlived everyone who planted it.', 'þol', 'endurance', 'P'],
   ['Laguz', 'any', 'Lækurinn mætir steininum og rennur einfaldlega fram hjá honum.', 'The brook meets the stone and simply goes round it.', 'flæði', 'flow', 'E'],
   ['Laguz', 'any', 'Áin hverfur ofan í hraunið og kemur aftur upp sem lind langt niðri í dalnum.', 'The river sinks into the lava field and rises again as a spring far down the valley.', 'dulvitund', 'the unconscious', 'E'],
+  // ── 2026-09-26 kolo 2 (runy s 5 obrazy): brána se statickými popisy 12/12 (10 × 3/3; Isa jasný mrazivý vzduch 2/3 → Sowilo 1,
+  // Perth mlha a ovce 2/3 → Dagaz 1). IS korpus + is-grammar-qa čisté.
+  ['Kenaz', 'any', 'Undir lampanum sést hárfín sprunga í bollanum, þótt enginn hafi séð hana frá hinum enda stofunnar.', 'Under the lamp the hairline crack in the cup shows, though no one saw it from across the room.', 'þekking', 'knowledge', 'D'],
+  ['Kenaz', 'any', 'Eldspýtu er kveikt í rafmagnsleysinu, og allt herbergið tekur aftur á sig mynd.', 'A match is struck in the power cut, and the whole room gets its shape back.', 'eldur', 'fire', 'D'],
+  ['Gebo', 'any', 'Þú lánar nágrannanum kerruna þína, og um haustið liggur lambalæri á tröppunum hjá þér.', 'You lend the neighbour your trailer, and in the autumn a leg of lamb turns up on your step.', 'gefa og þiggja', 'giving and receiving', 'D'],
+  ['Gebo', 'cold', 'Eftir óveðrið moka nágrannarnir frá dyrunum hvor hjá öðrum, fyrst á einum bænum og svo á hinum.', 'After the storm the neighbours dig out each other\'s doors, first one house, then the other.', 'félagsskapur', 'companionship', 'P'],
+  ['Isa', 'cold', 'Báturinn situr fastur í ísnum í höfninni, en úti á firðinum er enginn ís.', 'The boat lies frozen in at the harbour, and the fjord beyond it is open water.', 'hlé', 'pause', 'E'],
+  ['Isa', 'cold', 'Í frostinu er loftið svo tært að bærinn handan fjarðarins virðist innan seilingar.', 'In the hard frost the air is so clear that the farm across the fjord looks close enough to touch.', 'skýrleiki í kulda', 'clarity through cold', 'E'],
+  ['Perth', 'any', 'Á fjörunni liggur rekaspýta með útskurði sem enginn hér kann að lesa.', 'A plank washes up on the beach with carving on it that no one here can read.', 'tilviljun', 'chance', 'E'],
+  ['Perth', 'any', 'Þokunni léttir af hlíðinni, og þar uppi er kind sem enginn vissi að vantaði.', 'The fog lifts off the hill, and there is a sheep up there that no one knew was missing.', 'hið hulda sem kemur í ljós', 'the hidden coming to light', 'P'],
+  ['Tiwaz', 'any', 'Á vegamótunum tekur þú vinstri slóðina, og sú hægri er horfin í þokuna að baki þér.', 'At the fork you take the left track, and the right one is gone behind you in the fog.', 'fórnfýsi', 'sacrifice', 'E'],
+  ['Tiwaz', 'any', 'Á fundinum tekur þú upp hanskann fyrir þann sem er ekki á staðnum.', 'At the meeting you stand up for the one who is not in the room.', 'réttlæti', 'justice', 'D'],
+  ['Mannaz', 'any', 'Á gömlu bekkjarmyndinni finnur þú þig aðeins á því hvernig þú stendur.', 'In the old class photo you find yourself only by the way you stand.', 'sjálfið', 'the self', 'D'],
+  ['Mannaz', 'any', 'Í kórnum hverfur röddin þín inn í hinar og er samt þín.', 'In the choir your voice disappears into the others and is still yours.', 'mannleg vitund', 'humanity', 'D'],
 ];
 
 // Obrazy pro runy, které padly, a které se hodí do TÉTO části roku.

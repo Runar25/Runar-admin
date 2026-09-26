@@ -7294,3 +7294,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Kontrola:** smoke ㊱ register, ㉟ motivy, aspekt↔klíč zelené; protlačeno builderem (nový obraz Laguz v promptu 51/300).
 - **Zbývá:** další runy z GPT souboru (hlavně ty s 5 obrazy) a druhý soubor (obrazové rodiny, dvojice run) — další kola.
 - Affected doc(s): `RUNAR_BACKLOG.md`.
+
+## 2026-09-26 (11) — Obrazy z GPT inspirace, kolo 2: +12 pro runy s pěti obrazy (v4.67)
+
+- **Rozhodl:** tatáž pověřenost jako (10) (KUKY *„pak jdi na obrazy… klidně to udělej tak, co je nejlepší“*).
+- **Co:** Kenaz +2 (pod lampou vidět vlasovou prasklinu v hrnku · sirka při výpadku proudu vrátí pokoji tvar) · Gebo +2 (půjčíš sousedovi
+  vozík, na podzim ti na schodech leží jehněčí kýta · po bouři sousedé odhrabou dveře jeden druhému) · Isa +2 (loď zamrzlá v přístavu,
+  venku na fjordu žádný led · v mrazu tak čirý vzduch, že statek přes fjord je na dosah) · Perth +2 (na břeh vyplaví prkno s řezbou, kterou
+  tu nikdo nepřečte · mlha se zvedne a nahoře je ovce, o které nikdo nevěděl, že chybí) · Tiwaz +2 (na rozcestí vezmeš levou, pravá zmizí
+  v mlze · na schůzi se zastaneš toho, kdo tu není) · Mannaz +2 (na staré třídní fotce se najdeš jen podle toho, jak stojíš · ve sboru tvůj
+  hlas zmizí v ostatních a pořád je tvůj). Banka 157 → 169.
+- **Brána:** 12/12 (10 × 3/3; Isa čirý vzduch 2/3 → Sowilo, Perth ovce v mlze 2/3 → Dagaz). Oprava metody: popis Tiwaz obsahoval jméno
+  boha („s Týrem“), které by soudcům runu prozradilo — z popisu pro bránu odstraněno (`brana_build.py`). IS korpus + is-grammar-qa čisté.
+- Affected doc(s): `RUNAR_BACKLOG.md`.

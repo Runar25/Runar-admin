@@ -1,0 +1,14 @@
+[
+ {"id":"K1","runa":"Kenaz","en":"Under the lamp the hairline crack in the cup shows, though no one saw it from across the room.","gpt":"světlo odhalí poškození, které z dálky nebylo vidět","plete":["Perth","Sowilo"]},
+ {"id":"K2","runa":"Kenaz","en":"A match is struck in the power cut, and the whole room gets its shape back.","gpt":"oheň nebo světlo, které něco odhalí a dá tomu tvar","plete":["Sowilo","Dagaz"]},
+ {"id":"G1","runa":"Gebo","en":"You lend the neighbour your trailer, and in the autumn a leg of lamb turns up on your step.","gpt":"přijme pomoc a později nabídne něco, co má hodnotu","plete":["Fehu","Wunjo"]},
+ {"id":"G2","runa":"Gebo","en":"After the storm the neighbours dig out each other's doors, first one house, then the other.","gpt":"dva lidé si rozdělí práci a oba získají","plete":["Ehwaz","Mannaz"]},
+ {"id":"I1","runa":"Isa","en":"The boat lies frozen in at the harbour, and the fjord beyond it is open water.","gpt":"loď uvězněná v ledu, přestože cesta před ní existuje","plete":["Nauthiz","Thurisaz"]},
+ {"id":"I2","runa":"Isa","en":"In the hard frost the air is so clear that the farm across the fjord looks close enough to touch.","gpt":"všechno ztichne a člověk si všimne jediné věci","plete":["Sowilo","Dagaz"]},
+ {"id":"P2","runa":"Perth","en":"A plank washes up on the beach with carving on it that no one here can read.","gpt":"náhodně nalezený předmět otevře možnost","plete":["Ansuz","Laguz"]},
+ {"id":"P3","runa":"Perth","en":"The fog lifts off the hill, and there is a sheep up there that no one knew was missing.","gpt":"něco je přítomné, ale ještě není dostupné","plete":["Algiz","Dagaz"]},
+ {"id":"T1","runa":"Tiwaz","en":"At the fork you take the left track, and the right one is gone behind you in the fog.","gpt":"volba jednoho směru znamená opustit druhý","plete":["Raidho","Thurisaz"]},
+ {"id":"T2","runa":"Tiwaz","en":"At the meeting you stand up for the one who is not in the room.","gpt":"zůstane stát za člověkem, i když ho to něco stojí","plete":["Mannaz","Ansuz"]},
+ {"id":"M1","runa":"Mannaz","en":"In the old class photo you find yourself only by the way you stand.","gpt":"rozdíl mezi tím, jak se sám popisuje a jak ho vidí ostatní","plete":["Othila","Perth"]},
+ {"id":"M2","runa":"Mannaz","en":"In the choir your voice disappears into the others and is still yours.","gpt":"místo ve skupině ovlivňuje, kým v ní je","plete":["Wunjo","Ansuz"]}
+]

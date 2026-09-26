@@ -17,6 +17,8 @@ def popis(runa):
     t = doc[i + len(runa) + 5: j].strip()
     if '### Znění A' in t:   # Tiwaz / Ehwaz: první znění
         t = t.split('### Znění A', 1)[1].split('### Znění B', 1)[0].strip()
+    # jména bohů a jejich tvary prozradí runu (Tiwaz: „Je spojován s Týrem — bohem…“) → pryč i se skloňováním
+    t = re.sub(r'Týr\w*\s*—\s*', '', t)
     for jm in JMENA.get(runa, [runa]):
         t = re.sub(r'\b' + re.escape(jm) + r'\b', 'Tato runa', t)
     return t

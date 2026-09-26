@@ -701,8 +701,8 @@
   1. **Deník — co uživatel zadal a Asky:** u karty vedle AREA i SEEKING a INTENTION; THE SITUATION (volná otázka), když ji zadal;
      všechny výměny Asku i s otázkou; **jen pro adminy** model, který čtení napsal (GPT-6 sol / který Opus — `readings.usage.model`).
      Zkontrolovat, že `loadJournal` vybírá `seeking, intention, question, follow_up, usage` (dnes zřejmě ne všechny).
-  2. **Obrazy od GPT pro 24 run + Blank** — **kolo 1 hotové 2026-09-26** (+13: Fehu, Algiz, Othila, Raidho, Eihwaz, Laguz; DECISIONS (10),
-     `docs/eval/2026-09-26-obrazy/`); další kola: runy s 5 obrazy, pak Blank a druhý soubor. → `docs/inbox/2026-09-25-gpt-obrazy-24-run-plus-blank.txt`. Owner: *„je to inspirace,
+  2. **Obrazy od GPT pro 24 run + Blank** — **kola 1+2 hotová 2026-09-26** (+13 Fehu, Algiz, Othila, Raidho, Eihwaz, Laguz; +12 Kenaz, Gebo, Isa, Perth, Tiwaz, Mannaz; DECISIONS (10) (11),
+     `docs/eval/2026-09-26-obrazy/`); zbývá: runy s 6+ obrazy, Blank a druhý soubor. → `docs/inbox/2026-09-25-gpt-obrazy-24-run-plus-blank.txt`. Owner: *„je to inspirace,
      musí být zkrácený či mírně upravený“* — zkrátit/upravit do `RUNE_IMAGES` (EN + IS nativně, ověřit nástroji), brána s popisy runy.
      Blank: pět rodin obrazů (nepřítomnost · neznámé · potenciál · přerušení příběhu · zrcadlo) — dnes má 3 obrazy.
   3. ⏸ **Živly (Elements) v hlavičce runy NECHAT** — owner: *„o elementech rozhodneme, až pokud se objeví problém“*. Hlídat: kdyby
