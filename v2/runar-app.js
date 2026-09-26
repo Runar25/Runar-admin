@@ -1387,12 +1387,15 @@ function _renderYourPath() {
   const lk = isIs ? 'is' : 'en';
 
   // ══ PANEL_TIERS — single source of truth for all side-panel tier data ══
-  // PANEL_TIERS — reads from TIER_LIMITS.panel_props (Rule §8: never hardcode here)
+  // Visitor = pozvánka (TIER_LIMITS.free_trial.panel_props); ostatní tiery = výpis featur SLOŽENÝ z configu (tierFeatures,
+  // 2026-09-26 — KUKY „abychom to pořád nemuseli dělat manuálně“). Poznámka „coming soon“ do translations (§10).
+  const _feat = function (id) { return { en: tierFeatures(id, 'en'), is: tierFeatures(id, 'is') }; };
+  const _soon = { en: t('tier_soon'), is: t('tier_soon') };
   const PANEL_TIERS = [
     { id: 'free_trial',  name: _tierName('free_trial'),  props: TIER_LIMITS.free_trial.panel_props  },
-    { id: 'rune_seeker', name: _tierName('rune_seeker'), props: TIER_LIMITS.rune_seeker.panel_props },
-    { id: 'standard',    name: _tierName('standard'), note: { en: '— coming soon', is: '— bráðlega' }, props: TIER_LIMITS.standard.panel_props  },
-    { id: 'premium',     name: _tierName('premium'),  note: { en: '— coming soon', is: '— bráðlega' }, props: TIER_LIMITS.premium.panel_props   },
+    { id: 'rune_seeker', name: _tierName('rune_seeker'), props: _feat('rune_seeker') },
+    { id: 'standard',    name: _tierName('standard'), note: _soon, props: _feat('standard') },
+    { id: 'premium',     name: _tierName('premium'),  note: _soon, props: _feat('premium') },
   ];
 
   const currData = PANEL_TIERS.find(function(t) { return t.id === normTier; }) || PANEL_TIERS[0];

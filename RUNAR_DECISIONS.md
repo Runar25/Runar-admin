@@ -7261,3 +7261,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   builder** návrat s otázkou 75/400 (EN) · 95/400 (IS), bez otázky 0/400 — mutace (hasQ nepředané z builderu) → FAIL. Admin „složení
   čtení“ má popisky pro napětí (od v4.61 tam chyběl a ukazoval se syrový „open3“) i návrat.
 - Affected doc(s): `RUNAR_DESIGN.md` (tabulka mostu, řádek General) · `RUNAR_BACKLOG.md`.
+
+## 2026-09-26 (9) — Výpis featur tierů se skládá z nastavení (TIER_FEATURES), ne ručně
+
+- **Rozhodl:** KUKY 2026-09-26: *„v účtech potřebuju změnit, co mají jako feature — rune seeker, standard i premium. chtělo by to dělat
+  tak, abychom to pořád nemuseli dělat manuálně. věci přibývají a odpadají.“* + *„ano, postav to“* (nad návrhem výpisu v chatu).
+- **Proč:** výpis byl ručně ve dvou kopiích (`TIER_LIMITS.*.panel_props` + `runar-help.html`, tam ještě třetí statická v buňkách) a všechny
+  zastaraly: Yggdrasil jako výhoda Premium (má ho každý přihlášený — CLAUDE.md), Ceremonial mode (nepostaveno), The Gathering (nahrazuje
+  se), Ask chyběl, čísla 50/75 opsaná; IS *„Allt í Vegfarandi“* bylo navíc ve špatném pádu.
+- **Co:** `TIER_FEATURES` v `runar-config.js` — každá featura = jeden řádek s podmínkou nad nastavením tieru (měsíční čtení, dárek při
+  registraci, Rúnakort, hlas, deník, Asky). `tierFeatures(id, lang)` z nich skládá výpis; Premium složí řádky shodné se Standardem do
+  *„Everything a Rune Walker has.“* / *„Allt sem Vegfarandi hefur.“* — jen když má opravdu všechno, co Standard. Panel účtu i nápověda
+  výpis berou odsud. Visitor zůstává pozvánkou (`panel_props`). Nepostavené věci řádek nemají — přibude, až budou postavené.
+  „— coming soon“ přesunuto do `UI_TEXT.tier_soon` (§10). `VOCAB.cast.is_dat_pl` (*spám*) pro islandské šablony.
+- **Kontrola:** smoke ㉫ (`verify_tier_features.js`): čísla ve výpisu = TIERS; změna `asks_per_reading` / `monthly_readings` se propíše
+  sama; vypnutý Ask → řádek zmizí a Premium přestane tvrdit „Everything…“; panel i nápověda skládají přes tierFeatures; ruční
+  panel_props se nevrátily. Prohlížeč: panel účtu i nápověda ukazují nový výpis.
+- Affected doc(s): žádný (výpis vlastní kód; RUNAR_PRICING featury tierů neopisuje).

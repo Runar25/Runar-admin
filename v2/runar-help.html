@@ -147,7 +147,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
             </tr>
             <tr>
               <td>RUNE SEEKER</td>
-              <td id="td-seeker">Free account. One reading when you join. Reading Gift Card keeps the door open. All twenty-five runes open. A journal of your last five readings.</td>
+              <td id="td-seeker"></td>
             </tr>
             <tr>
               <td>+ READING CARD</td>
@@ -155,11 +155,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
             </tr>
             <tr>
               <td><span id="tier-lbl-standard">RUNE WALKER</span> <span style="opacity:0.4;font-size:0.85em">soon</span></td>
-              <td id="td-standard">50 readings per month. Rúnar's voice always. Your full chronicle — every reading, going back to the beginning.</td>
+              <td id="td-standard"></td>
             </tr>
             <tr>
               <td><span id="tier-lbl-premium">RUNE WANDERER</span> <span style="opacity:0.4;font-size:0.85em">soon</span></td>
-              <td id="td-premium">Everything in Rune Walker. Ceremonial mode. Seasonal readings at solstices and equinoxes. Multi-rune spreads.</td>
+              <td id="td-premium"></td>
             </tr>
           </tbody>
         </table>
@@ -289,10 +289,10 @@ const CONTENT = {
     's2-lbl':        'YOUR ACCOUNT',
     'th-tier':       'TIER', 'th-what': 'WHAT YOU GET',
     'td-visitor':    '1 reading, no account needed. Five runes open to you — enough to sense what waits inside.',
-    'td-seeker':     'Free account. One reading when you join. Reading Gift Card keeps the door open. All twenty-five runes open. A journal of your last five readings.',
+    'td-seeker':     tierFeatures('rune_seeker', 'en').join(' '),   // 2026-09-26: skládá se z configu (TIER_FEATURES), ne ručně
     'td-card':       'Credits never expire and follow your account across devices. Rúnar\'s voice speaks your reading aloud.',
-    'td-standard':   '50 readings per month. Rúnar\'s voice always. Full journal + filters — every reading, going back to the beginning.',
-    'td-premium':    '75 readings per month. Everything in ' + TIERS.standard.label + '. Yggdrasil — all nine worlds. Ceremonial mode.',
+    'td-standard':   tierFeatures('standard', 'en').join(' '),
+    'td-premium':    tierFeatures('premium', 'en').join(' '),
     's3-lbl':        'READING CARDS',
     's3-physical-title': 'PHYSICAL CARD',
     's3-physical-body':  `<p>Available at the Agndofa shop in Iceland and online at <a href="https://agndofa.is" target="_blank" style="color:var(--gold);opacity:0.85;">agndofa.is</a>. A small card with a unique code. Redeem it in the app — credits are added to your account immediately.</p>`,
@@ -341,10 +341,10 @@ const CONTENT = {
     's2-lbl':        'REIKNINGUR ÞINN',
     'th-tier':       'STIG', 'th-what': 'HVAÐ FÆR ÞÚ',
     'td-visitor':    'Einn lestur, engan reikning þarf. Fimm rúnir eru þér opnar — nóg til að finna hvað bíður inni.',
-    'td-seeker':     'Ókeypis reikningur. Einn frjáls lestur þegar þú skráir þig. Lestur gjafakort heldur dyrunum opnum. Allar tuttugu og fimm rúnirnar opnar. Dagbók síðustu fimm lestrana.',
+    'td-seeker':     tierFeatures('rune_seeker', 'is').join(' '),
     'td-card':       'Þegar mánaðarlegir lestrar eru gengnar — lesturarkort heldur dyrunum opnum. Kreditarnir renna aldrei út. Rödd Rúnars les lesturinn þinn upphátt.',
-    'td-standard':   '50 lestrar á mánuði. Rödd Rúnars alltaf. Full kronika þín — sérhver lestur, allt frá upphafi.',
-    'td-premium':    '75 lestrar á mánuði. Allt í ' + TIERS.standard.label_is + '. Yggdrasil — níu heimar. Ceremonial ham.',
+    'td-standard':   tierFeatures('standard', 'is').join(' '),
+    'td-premium':    tierFeatures('premium', 'is').join(' '),
     's3-lbl':        'LESTURARKORT',
     's3-physical-title': 'LÍKAMLEGT KORT',
     's3-physical-body':  `<p>Fæst í Agndofa búð á Íslandi og á netinu á <a href="https://agndofa.is" target="_blank" style="color:var(--gold);opacity:0.85;">agndofa.is</a>. Lítið kort með einstökum kóða. Innleysið í appinu — kreditarnir bætast við samstundis.</p>`,

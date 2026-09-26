@@ -664,6 +664,17 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola adminu probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# Výpis featur tierů (panel účtu + nápověda) se od 2026-09-26 SKLÁDÁ z nastavení (TIER_FEATURES v runar-config.js).
+# KUKY: „abychom to pořád nemuseli dělat manuálně“ — ruční kopie zastaraly (Yggdrasil jako výhoda Premium, Ask chyběl).
+print('\n' + chr(0x326B) + ' FEATURY TIERŮ Z NASTAVENÍ (verify_tier_features.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_tier_features.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola featur tieru probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

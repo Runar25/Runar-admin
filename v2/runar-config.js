@@ -312,7 +312,7 @@ const TRANSFORMATION_PAIRS = {
 // Last updated: 2026-05-29
 const TIER_LIMITS = {
   // Rule §8: ALL user-facing tier values live here — never hardcode in UI text.
-  // When any value changes, update here only. panel_props labels must match.
+  // When any value changes, update here only. Výpis featur tierů se skládá sám — TIER_FEATURES + tierFeatures() níž.
   free_trial: {
     onboarding:   1,     // lifetime readings for Visitor
     weekly_drip:  0,
@@ -327,34 +327,77 @@ const TIER_LIMITS = {
     journal_entries: 5,
     onboarding_label_en: 'one free reading',
     onboarding_label_is: 'ein frjáls spá',
-    journal_label_en:    'last 5 readings',
-    journal_label_is:    'síðustu 5 spár',
-    panel_props: {
-      en: ['One free reading to start, then rune readings.', '{card} unveils all features.', 'Limited journal (last 5 readings).'],
-      is: ['Ein frjáls spá til að byrja, síðan spár.', '{card} opnar allar aðgerðir.', 'Takmörkuð dagbók (síðustu 5 spár).'],
-    },
+    // panel_props + journal_label_* ODEBRÁNY 2026-09-26 — výpis featur skládá tierFeatures() z TIER_FEATURES (níž).
   },
   standard: {
     onboarding:    null,
     weekly_drip:   null,
     monthly_limit: 50,   // casts per month — change here, UI updates automatically
     journal_entries: null,
-    panel_props: {
-      en: ['50 readings / month.', 'Voice on every reading.', 'Full journal + filters.', 'The Gathering.'],
-      is: ['50 spár / mánuð.', 'Rödd á hverri spá.', 'Full dagbók + síur.', 'The Gathering.'],
-    },
   },
   premium: {
     onboarding:    null,
     weekly_drip:   null,
     monthly_limit: 75,   // casts per month
     journal_entries: null,
-    panel_props: {
-      en: ['75 readings / month.', 'Everything in ' + TIERS.standard.label + '.', 'Yggdrasil — all nine worlds.', 'Ceremonial mode.'],
-      is: ['75 spár / mánuð.', 'Allt í ' + TIERS.standard.label_is + '.', 'Yggdrasil — níu heimar.', 'Ceremonial mode.'],
-    },
   },
 };
+
+// ─── TIER FEATURES — co tier umí, SLOŽENÉ z nastavení (2026-09-26) ──────────────
+// KUKY: „chtělo by to dělat tak, abychom to pořád nemuseli dělat manuálně. věci přibývají a odpadají.“ Do té doby byl výpis psaný
+// ručně ve dvou kopiích (TIER_LIMITS.*.panel_props a runar-help.html) a obě zastaraly: Yggdrasil jako výhoda Premium (má ho každý
+// přihlášený), Ceremonial mode (nepostaveno), The Gathering (nahrazuje se), Ask chyběl úplně, čísla opsaná natvrdo.
+// Jak to funguje: každá featura = JEDEN řádek níž; `hodnota(tier, id)` čte nastavení tieru a vrací null (featura se neukáže) nebo
+// hodnotu, ze které `en`/`is` složí větu. Číslo v nastavení se změní → věta se změní sama. Nová featura = nový řádek; zrušená =
+// smazat řádek nebo vypnout její flag v TIERS. Nepostavené věci (ceremonial, seasonal_content, physical_unlock) tu ŘÁDEK NEMAJÍ —
+// přibude, až budou postavené a budou mít ověřenou islandštinu.
+// Premium: řádky, které má stejné jako Standard, se složí do „Everything a Rune Walker has.“ (TIER_FEATURES_BASE).
+// IS šablony počítají s ženským „spá“ (VOCAB.cast) — kdyby se slovo změnilo, přečíst znovu pády. is-grammar-qa čisté (2026-09-26).
+const _N_WORD = { en: ['', 'One', 'Two', 'Three', 'Four'], is_f: ['', 'Ein', 'Tvær', 'Þrjár', 'Fjórar'] };
+const TIER_FEATURES = [
+  { key: 'month', hodnota: function (t) { return t.monthly_readings > 0 ? t.monthly_readings : null; },
+    en: function (n) { return n + ' ' + (n === 1 ? VOCAB.cast.en : VOCAB.cast.en_pl) + ' a month.'; },
+    is: function (n) { return n + ' ' + (n === 1 ? VOCAB.cast.is : VOCAB.cast.is_pl) + ' á mánuði.'; } },
+  { key: 'join', hodnota: function (t, id) { return (id !== 'free_trial' && !(t.monthly_readings > 0) && (TIER_LIMITS[id] || {}).onboarding > 0) ? TIER_LIMITS[id].onboarding : null; },
+    en: function (n) { return n === 1 ? 'One free ' + VOCAB.cast.en + ' when you join.' : n + ' free ' + VOCAB.cast.en_pl + ' when you join.'; },
+    is: function (n) { return n === 1 ? 'Ein frjáls ' + VOCAB.cast.is + ' þegar þú skráir þig.' : n + ' frjálsar ' + VOCAB.cast.is_pl + ' þegar þú skráir þig.'; } },
+  { key: 'card', hodnota: function (t, id) { return (id !== 'free_trial' && !(t.monthly_readings > 0) && t.voice_credits) ? true : null; },
+    en: function () { return 'A ' + VOCAB.card.en + ' opens further ' + VOCAB.cast.en_pl + '.'; },
+    is: function () { return VOCAB.card.is + ' opnar fleiri ' + VOCAB.cast.is_pl + '.'; } },
+  { key: 'voice', hodnota: function (t, id) { return (id !== 'free_trial' && (t.voice_monthly || t.voice_credits)) ? true : null; },
+    en: function () { return 'Rúnar\u2019s voice reads every reading aloud.'; },
+    is: function () { return 'Rödd Rúnars les hverja ' + VOCAB.cast.is + ' upphátt.'; } },
+  { key: 'journal', hodnota: function (t) { return t.journal === null ? 'all' : (t.journal > 0 ? t.journal : null); },
+    en: function (v) { return v === 'all' ? 'Your full journal \u2014 every reading, back to the first.' : 'Journal of your last ' + v + ' readings.'; },
+    is: function (v) { return v === 'all' ? 'Dagbók með öllum ' + VOCAB.cast.is_dat_pl + ' þínum, allt frá þeirri fyrstu.' : 'Dagbók með síðustu ' + v + ' ' + VOCAB.cast.is_dat_pl + ' þínum.'; } },
+  { key: 'ask', hodnota: function (t) { return t.asks_per_reading > 0 ? t.asks_per_reading : null; },
+    en: function (n) { return (_N_WORD.en[n] || n) + (n === 1 ? ' question' : ' questions') + ' of your own to Rúnar on every reading.'; },
+    is: function (n) { return (_N_WORD.is_f[n] || n) + ' eigin ' + (n === 1 ? 'spurning' : 'spurningar') + ' til Rúnars við hverja ' + VOCAB.cast.is + '.'; } },
+];
+// Kdo stojí „nad“ kým: řádky shodné se základem se složí do jedné věty.
+const TIER_FEATURES_BASE = { premium: 'standard' };
+function tierFeatures(id, lang) {
+  var L = lang === 'is' ? 'is' : 'en';
+  var radky = function (tid) {
+    var t = TIERS[tid] || {}, out = [];
+    TIER_FEATURES.forEach(function (f) { var v = f.hodnota(t, tid); if (v !== null && v !== undefined) out.push({ key: f.key, text: f[L](v) }); });
+    return out;
+  };
+  var moje = radky(id), zakl = TIER_FEATURES_BASE[id];
+  if (!zakl) return moje.map(function (r) { return r.text; });
+  var jehoR = radky(zakl), jeho = jehoR.map(function (r) { return r.text; });
+  var mojeK = moje.map(function (r) { return r.key; });
+  var navic = moje.filter(function (r) { return jeho.indexOf(r.text) === -1; });
+  // „Everything …“ jen když tier má KAŽDOU featuru základu — jinak by věta tvrdila něco, co tier nemá
+  var maVse = jehoR.every(function (r) { return mojeK.indexOf(r.key) !== -1; });
+  if (!maVse || navic.length === moje.length) return moje.map(function (r) { return r.text; });
+  var jm = L === 'is' ? TIERS[zakl].label_is : TIERS[zakl].label;
+  var vse = L === 'is' ? 'Allt sem ' + jm + ' hefur.' : 'Everything a ' + jm + ' has.';
+  // „Everything …“ hned za první řádek, když je to počet čtení (nejdůležitější věc tieru); jinak na začátek
+  return navic.length && navic[0].key === 'month'
+    ? [navic[0].text, vse].concat(navic.slice(1).map(function (r) { return r.text; }))
+    : [vse].concat(navic.map(function (r) { return r.text; }));
+}
 
 // ─── SPREAD COSTS ────────────────────────────────────────
 // cost = number of runes in spread.
@@ -379,7 +422,7 @@ const SPREAD_COSTS = {
 // use these to pluralize + translate everywhere in the UI.
 const VOCAB = {
   unit: { en: 'rune reading', en_pl: 'rune readings', is: 'spá', is_pl: 'spár' },
-  cast: { en: 'rune reading', en_pl: 'rune readings', is: 'sp\u00e1',      is_pl: 'sp\u00e1r'        },
+  cast: { en: 'rune reading', en_pl: 'rune readings', is: 'sp\u00e1',      is_pl: 'sp\u00e1r', is_dat_pl: 'sp\u00e1m' },   // is_dat_pl: TIER_FEATURES (2026-09-26)
   card: { en: 'Rune Reading Card', en_pl: 'Rune Reading Cards', is: 'R\u00fanakort', is_pl: 'R\u00fanakort' },
 };
 // ─── SPREAD CONFIG — single source of truth ──────────────
