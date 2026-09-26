@@ -5348,3 +5348,33 @@ G *„Kenaz — in this reading: creativity (its other senses: …)“* → **0/
 
 **Vedlejší:** starší harnessy CODE-read nenačítají `runar-translations.js` → bez otázky runy (README archivu). Plánovaná
 úloha korektoru (2026-09-26 03:00) visí ve stavu „running“ od 03:00:15 — nezapsala nic.
+
+## 2026-09-26 (2) — Korektor IS s korpusovou bránou: škody 3 → 0, ale z 10 oprav projdou jen 1–3
+
+**Owner:** *„můžeš teď udělat test korektury, jestli to pomůže"* (naplánováno na 2026-09-26 03:00; plánovaná úloha visela
+na prvním příkazu, pustil jsem ji ručně). Týchž 20 změn korektoru (gpt-6-sol) na 30 ownerových IS čteních s ověřenými verdikty
+z EVAL_LOG 2026-09-23 (4)/(5): 10 oprav · 3 škody · 6 zbytečných (obojí správně) · 1 nejistá (rod oslovení). Korektor jsem
+znovu nevolal, žádné placené API.
+**Brána:** n-gram Árnastofnun (táž funkce jako `is-vazba.py --freq`); změna PROJDE jen když nový tvar je doložený (> 0)
+a starý ne (= 0). Okno = jádro změny + kontext věty, 2–3 slova. Samotest: *í rakri jörðinni → í röku jörðinni* (škoda) =
+0 × 0 → ZASTAVENO ✓. Skript `docs/eval/2026-09-22-modely/oprava/brana.py` (bez textů ownera; výsledky lokálně).
+| | primární okno (3 slova, levý kontext) | propustí aspoň jedno okno | propustí aspoň jedno 2slovné okno |
+|---|---|---|---|
+| opravy (10) | 1 | **3** | **3** |
+| škody (3) | **0** | **0** | **0** |
+| zbytečné (6) | 1 | 1 | 0 |
+| nejistá (1) | 0 | 0 | 0 |
+Propuštěné opravy: *í bótnum → í botninum* (0 × 1601), *loftins og → loftsins og* (0 × 121), *flýja honum → flýja hann* (0 × 67).
+Škody zastaví každé okno: *í rakri* 37 × *í röku* 256 a *rakri jörðinni* 3 × 0; *við hlið þér* 713 × *við hlið þín* 0;
+*eftir þægindin* 0 × *eftir þægindunum* 0.
+**Proč neprojde 7 oprav:** (a) trojice se vzácným slovem = 0 × 0 (v primárním okně 9 z 20 změn) — korpus nerozhodne, brána
+zastaví; (b) oprava VAZBY, ne tvaru: *draga í þér → þig* — dvojice *í þér* i *í þig* jsou běžné, sloveso s předložkou a zájmenem
+jsou 3 slova a ta 0 × 0; (c) vložení slova (*styðja við → styðja við þig*): starý text je sám platná fráze (40 368), takže podle
+pravidla neprojde NIKDY; (d) přeformulování delší než 3 slova (*lífið þitt rúnin → lífsrúnin þín*).
+**Útok na nástroj (§27):** rozhodnutí se podle okna obrací u Z2, Z14 (oprava: 3slovné okno 0 × 0 zastaví, 2slovné propustí)
+a Z20 (zbytečná: *gefa til hins → gefa hinum* projde, *til hins rétta → hinum rétta* 7 × 88 ne). Škody se neobrátily v žádném okně.
+Obrácená páka na pravidlo: změkčit ho na poměr (nový ≫ starý) by pustilo škodu Z10 (*í rakri* 37 × *í röku* 256 = 7×) → zamítnuto.
+**Závěr:** brána dělá z korektoru BEZPEČNÝ nástroj (0 škod z 3), ale SLABÝ: automaticky projdou jen pravopisné a tvarové chyby
+(3 z 10). Opravy vazeb, vložení a přeformulování brána neumí posoudit — ty musí jít dál jako NÁVRH k ověření (`is-vazba.py`
++ člověk), ne jako oprava. Nejistá změna (rod oslovení) zůstává problém korektoru, ne brány.
+**Hranice:** 20 změn z jednoho běhu jednoho korektoru; 3 škody jsou malý vzorek pro tvrzení „bezpečný"; korpus vidí ≤ 3 slova.

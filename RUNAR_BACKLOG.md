@@ -84,6 +84,10 @@
   Árnastofnun schválí (použít jen, když nový tvar doložený a starý ne) → změřit na týchž 30 čteních, jestli
   zůstanou opravy a zmizí škody. Korektor musí dostat **rod oslovení** (kk/kvk/hk). Místo v produkci: text pro
   deník a hlas, ne živý stream (latence ~8 s).
+  → **Test 2026-09-26 (EVAL_LOG 2026-09-26 (2)):** brána zastavila 3/3 škody v každém okně, ale propustila jen 3 z 10 oprav
+  (pravopis a tvar: *bótnum*, *loftins*, *flýja honum*); opravy vazeb, vložení a delší přeformulování korpus (≤ 3 slova) neposoudí.
+  **Doporučení:** automaticky jen změny, které brána propustí (okno 2 slova); ostatní změny korektoru jako NÁVRH k ověření
+  (is-vazba + owner), nikdy rovnou do textu. Další krok, až bude korektor v plánu: větší vzorek škod (dnes jen 3).
 - [ ] **Blok korekcí roste do KAŽDÉHO IS promptu** — změřeno 2026-09-23 (`count_tokens`, Opus 4.8): IS 27 řádků
   = **1287 tokenů** (≈ $0,0064 na IS čtení), z toho **419 (33 %) jsou vysvětlení v závorkách**; EN 2 řádky = 69.
   Blok stojí na konci user promptu, za obsahem čtení → **cache tam principiálně nejde**. Přesun do system promptu
@@ -676,6 +680,8 @@
   → **Nález CODE-read 2026-09-26** (`RUNAR_EVAL_LOG.md` 2026-09-26 (1)): „work“ nechodí z žádného bloku promptu (5 ramen, 4–6/6,
   i bez oblasti 6/6); mapa vět; esenční rámec [1] dělá z runy aktéra (výčet sloves 19/41); Ask bez aspektu čtení (oheň 3/3 → 0/3).
   Handoff CODE-tune předán.
+  **Owner 2026-09-26:** „work“ — cíl je, aby činnost z obrazu zůstala v obraze a pojmenovala se jeho slovy (malování ≠ work);
+  **teď neřešit**, owner udělá víc čtení a vrátí se. **Ask (aktivní aspekt runy): řešit** → handoff CODE-tune.
 - [ ] **NA ZÍTRA — další body (owner 2026-09-25 večer)** (CODE-tune)
   1. **Mnohem víc konců čtení s otázkou, s ohledem na runu** — owner: *„líbí se mi otázky na konci a chtěl bych, abychom jich udělali
      mnohem víc… pro některou runu se může hodit něco jiného než pro jinou.“* Dnes `ENDING_OPEN/HEAVY` mají po 1 otázkovém tvaru.
