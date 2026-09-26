@@ -1,0 +1,15 @@
+{
+ "F4": ["Aflinn er seldur á bryggjunni, og um kvöldið eru peningarnir orðnir að nýjum netum.", "hreyfanleg orka", "mobile energy", "P", "any"],
+ "F5": ["Kýrin er seld um haustið, og það sem fékkst fyrir hana dugar heimilinu út veturinn.", "búfé", "cattle", "P", "any"],
+ "A1": ["Úti á heiðinni brestur í kvisti, og allur hópurinn þagnar til að hlusta.", "vernd", "protection", "P", "any"],
+ "A2": ["Af hólnum sérð þú hryðjuna koma inn fjörðinn löngu áður en hún nær túninu.", "vernd", "protection", "E", "bright"],
+ "O1": ["Þú kemur aftur á bæinn þar sem þú ólst upp, og eldhúsið er minna en í minningunni.", "heimili", "home", "D", "any"],
+ "O2": ["Prjónarnir hennar mömmu þinnar eru nú í þínum höndum, með síðustu umferðina hennar enn á þeim.", "arfur", "inheritance", "D", "any"],
+ "O4": ["Fjórar fjölskyldur hafa setið við sama borð á bænum, og borðið stendur enn á sínum stað.", "hefðir", "heritage", "D", "any"],
+ "R1": ["Af skarðinu lítur þú til baka, og sporin þín í snjónum mynda eina línu niður dalinn.", "leið", "the road", "E", "cold"],
+ "R3": ["Slóðin sveigir fyrir hraunið og kemur aftur á sína línu hinum megin.", "leið", "the road", "E", "any"],
+ "E2": ["Reyniviðurinn stendur ber á milli síðasta frosts og fyrsta laufs.", "dauði og endurfæðing", "death and rebirth", "E", "bright"],
+ "E4": ["Gamla tréð í kirkjugarðinum hefur lifað lengur en allir sem gróðursettu það.", "þol", "endurance", "P", "any"],
+ "L1": ["Lækurinn mætir steininum og rennur einfaldlega fram hjá honum.", "flæði", "flow", "E", "any"],
+ "L3": ["Áin hverfur ofan í hraunið og kemur aftur upp sem lind langt niðri í dalnum.", "dulvitund", "the unconscious", "E", "any"]
+}

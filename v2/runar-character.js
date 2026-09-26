@@ -718,6 +718,23 @@ var RUNE_IMAGES = [
   ['Berkana','bright','Rabarbarinn teygir sig upp úr kaldri moldinni við suðurvegginn, fyrstur allra á vorin.','The rhubarb noses up through the cold soil by the south wall.','nýtt upphaf','new beginnings','P'],
   // 2026-09-23 (KUKY: „mluvi o teplu a pak fire, pod kamenem to nesedi"): horky pramen je teplo bez svetla i plamene; skryte teplo uz nese [21]. Kyndill = prvni klic Kenaz. Kenaz 3/3.
   ['Kenaz','any','Kyndillinn lýsir aðeins nokkur skref fram á veginn.','The torch lights only a few steps of the way ahead.','kyndill','torch','P'],
+  // ── 2026-09-26: z GPT inspirace (docs/inbox/2026-09-25-gpt-obrazy-24-run-plus-blank.txt), zkráceno na konkrétní islandskou scénu;
+  // nápady o vnitřním stavu („člověk si uvědomí…“) vynechány — ve čtení by z nich bylo tvrzení o nitru. Brána se statickými popisy
+  // (3 slepí soudci, docs/eval/2026-09-26-obrazy/) každý 3/3. Neprošly: kajka na hnízdě (Algiz → Berkana 3/3), tölt (Raidho → Ehwaz 3/3).
+  // IS vymyšleno islandsky, korpus + is-grammar-qa čisté („sérðu“ nerozparsováno → „sérð þú“).
+  ['Fehu', 'any', 'Aflinn er seldur á bryggjunni, og um kvöldið eru peningarnir orðnir að nýjum netum.', 'The catch is sold at the harbour, and by evening the money has become new nets.', 'hreyfanleg orka', 'mobile energy', 'P'],
+  ['Fehu', 'any', 'Kýrin er seld um haustið, og það sem fékkst fyrir hana dugar heimilinu út veturinn.', 'The cow is sold in the autumn, and what she fetched carries the household through the winter.', 'búfé', 'cattle', 'P'],
+  ['Algiz', 'any', 'Úti á heiðinni brestur í kvisti, og allur hópurinn þagnar til að hlusta.', 'Out on the heath a twig snaps, and the whole party goes quiet to listen.', 'vernd', 'protection', 'P'],
+  ['Algiz', 'bright', 'Af hólnum sérð þú hryðjuna koma inn fjörðinn löngu áður en hún nær túninu.', 'From the knoll you see the squall coming up the fjord long before it reaches the hayfield.', 'vernd', 'protection', 'E'],
+  ['Othila', 'any', 'Þú kemur aftur á bæinn þar sem þú ólst upp, og eldhúsið er minna en í minningunni.', 'You come back to the farm you grew up on, and the kitchen is smaller than you remembered.', 'heimili', 'home', 'D'],
+  ['Othila', 'any', 'Prjónarnir hennar mömmu þinnar eru nú í þínum höndum, með síðustu umferðina hennar enn á þeim.', 'Your mother\'s knitting needles are in your hands now, with her last row still on them.', 'arfur', 'inheritance', 'D'],
+  ['Othila', 'any', 'Fjórar fjölskyldur hafa setið við sama borð á bænum, og borðið stendur enn á sínum stað.', 'Four families have sat at the same table in the farmhouse, and the table has stayed where it is.', 'hefðir', 'heritage', 'D'],
+  ['Raidho', 'cold', 'Af skarðinu lítur þú til baka, og sporin þín í snjónum mynda eina línu niður dalinn.', 'From the pass you look back, and your tracks in the snow make one line down the valley.', 'leið', 'the road', 'E'],
+  ['Raidho', 'any', 'Slóðin sveigir fyrir hraunið og kemur aftur á sína línu hinum megin.', 'The track bends round the lava and comes back to its line on the other side.', 'leið', 'the road', 'E'],
+  ['Eihwaz', 'bright', 'Reyniviðurinn stendur ber á milli síðasta frosts og fyrsta laufs.', 'The rowan stands bare between the last frost and the first leaf.', 'dauði og endurfæðing', 'death and rebirth', 'E'],
+  ['Eihwaz', 'any', 'Gamla tréð í kirkjugarðinum hefur lifað lengur en allir sem gróðursettu það.', 'The old tree in the churchyard has outlived everyone who planted it.', 'þol', 'endurance', 'P'],
+  ['Laguz', 'any', 'Lækurinn mætir steininum og rennur einfaldlega fram hjá honum.', 'The brook meets the stone and simply goes round it.', 'flæði', 'flow', 'E'],
+  ['Laguz', 'any', 'Áin hverfur ofan í hraunið og kemur aftur upp sem lind langt niðri í dalnum.', 'The river sinks into the lava field and rises again as a spring far down the valley.', 'dulvitund', 'the unconscious', 'E'],
 ];
 
 // Obrazy pro runy, které padly, a které se hodí do TÉTO části roku.

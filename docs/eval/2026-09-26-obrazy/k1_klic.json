@@ -1,0 +1,477 @@
+{
+ "kandidati": [
+  "F4",
+  "F5",
+  "A1",
+  "A2",
+  "A4",
+  "O1",
+  "O2",
+  "O4",
+  "R1",
+  "R2",
+  "R3",
+  "E2",
+  "E4",
+  "L1",
+  "L3"
+ ],
+ "soudci": [
+  [
+   {
+    "n": 1,
+    "id": "R2",
+    "spravne": "R72",
+    "kody": {
+     "R60": "Ehwaz",
+     "R72": "Raidho",
+     "R26": "Laguz"
+    }
+   },
+   {
+    "n": 2,
+    "id": "R1",
+    "spravne": "R72",
+    "kody": {
+     "R55": "Eihwaz",
+     "R60": "Ehwaz",
+     "R72": "Raidho"
+    }
+   },
+   {
+    "n": 3,
+    "id": "A4",
+    "spravne": "R64",
+    "kody": {
+     "R22": "Berkana",
+     "R64": "Algiz",
+     "R56": "Othila"
+    }
+   },
+   {
+    "n": 4,
+    "id": "F5",
+    "spravne": "R18",
+    "kody": {
+     "R56": "Othila",
+     "R18": "Fehu",
+     "R65": "Jera"
+    }
+   },
+   {
+    "n": 5,
+    "id": "E4",
+    "spravne": "R55",
+    "kody": {
+     "R56": "Othila",
+     "R55": "Eihwaz",
+     "R22": "Berkana"
+    }
+   },
+   {
+    "n": 6,
+    "id": "O2",
+    "spravne": "R56",
+    "kody": {
+     "R69": "Gebo",
+     "R56": "Othila",
+     "R40": "Nauthiz"
+    }
+   },
+   {
+    "n": 7,
+    "id": "E2",
+    "spravne": "R55",
+    "kody": {
+     "R65": "Jera",
+     "R55": "Eihwaz",
+     "R22": "Berkana"
+    }
+   },
+   {
+    "n": 8,
+    "id": "F4",
+    "spravne": "R18",
+    "kody": {
+     "R65": "Jera",
+     "R69": "Gebo",
+     "R18": "Fehu"
+    }
+   },
+   {
+    "n": 9,
+    "id": "A1",
+    "spravne": "R64",
+    "kody": {
+     "R78": "Isa",
+     "R95": "Ansuz",
+     "R64": "Algiz"
+    }
+   },
+   {
+    "n": 10,
+    "id": "O4",
+    "spravne": "R56",
+    "kody": {
+     "R65": "Jera",
+     "R56": "Othila",
+     "R38": "Mannaz"
+    }
+   },
+   {
+    "n": 11,
+    "id": "L3",
+    "spravne": "R26",
+    "kody": {
+     "R72": "Raidho",
+     "R96": "Perth",
+     "R26": "Laguz"
+    }
+   },
+   {
+    "n": 12,
+    "id": "O1",
+    "spravne": "R56",
+    "kody": {
+     "R56": "Othila",
+     "R26": "Laguz",
+     "R72": "Raidho"
+    }
+   },
+   {
+    "n": 13,
+    "id": "L1",
+    "spravne": "R26",
+    "kody": {
+     "R72": "Raidho",
+     "R26": "Laguz",
+     "R55": "Eihwaz"
+    }
+   },
+   {
+    "n": 14,
+    "id": "R3",
+    "spravne": "R72",
+    "kody": {
+     "R55": "Eihwaz",
+     "R26": "Laguz",
+     "R72": "Raidho"
+    }
+   },
+   {
+    "n": 15,
+    "id": "A2",
+    "spravne": "R64",
+    "kody": {
+     "R64": "Algiz",
+     "R31": "Hagalaz",
+     "R72": "Raidho"
+    }
+   }
+  ],
+  [
+   {
+    "n": 1,
+    "id": "L1",
+    "spravne": "R61",
+    "kody": {
+     "R58": "Eihwaz",
+     "R61": "Laguz",
+     "R73": "Raidho"
+    }
+   },
+   {
+    "n": 2,
+    "id": "O2",
+    "spravne": "R16",
+    "kody": {
+     "R16": "Othila",
+     "R87": "Nauthiz",
+     "R62": "Gebo"
+    }
+   },
+   {
+    "n": 3,
+    "id": "O1",
+    "spravne": "R16",
+    "kody": {
+     "R61": "Laguz",
+     "R73": "Raidho",
+     "R16": "Othila"
+    }
+   },
+   {
+    "n": 4,
+    "id": "F5",
+    "spravne": "R30",
+    "kody": {
+     "R93": "Jera",
+     "R30": "Fehu",
+     "R16": "Othila"
+    }
+   },
+   {
+    "n": 5,
+    "id": "E4",
+    "spravne": "R58",
+    "kody": {
+     "R21": "Berkana",
+     "R58": "Eihwaz",
+     "R16": "Othila"
+    }
+   },
+   {
+    "n": 6,
+    "id": "O4",
+    "spravne": "R16",
+    "kody": {
+     "R83": "Mannaz",
+     "R93": "Jera",
+     "R16": "Othila"
+    }
+   },
+   {
+    "n": 7,
+    "id": "A4",
+    "spravne": "R17",
+    "kody": {
+     "R21": "Berkana",
+     "R17": "Algiz",
+     "R16": "Othila"
+    }
+   },
+   {
+    "n": 8,
+    "id": "F4",
+    "spravne": "R30",
+    "kody": {
+     "R93": "Jera",
+     "R62": "Gebo",
+     "R30": "Fehu"
+    }
+   },
+   {
+    "n": 9,
+    "id": "A1",
+    "spravne": "R17",
+    "kody": {
+     "R17": "Algiz",
+     "R35": "Ansuz",
+     "R82": "Isa"
+    }
+   },
+   {
+    "n": 10,
+    "id": "R1",
+    "spravne": "R73",
+    "kody": {
+     "R81": "Ehwaz",
+     "R58": "Eihwaz",
+     "R73": "Raidho"
+    }
+   },
+   {
+    "n": 11,
+    "id": "A2",
+    "spravne": "R17",
+    "kody": {
+     "R17": "Algiz",
+     "R57": "Hagalaz",
+     "R73": "Raidho"
+    }
+   },
+   {
+    "n": 12,
+    "id": "R2",
+    "spravne": "R73",
+    "kody": {
+     "R81": "Ehwaz",
+     "R61": "Laguz",
+     "R73": "Raidho"
+    }
+   },
+   {
+    "n": 13,
+    "id": "R3",
+    "spravne": "R73",
+    "kody": {
+     "R58": "Eihwaz",
+     "R61": "Laguz",
+     "R73": "Raidho"
+    }
+   },
+   {
+    "n": 14,
+    "id": "L3",
+    "spravne": "R61",
+    "kody": {
+     "R73": "Raidho",
+     "R61": "Laguz",
+     "R13": "Perth"
+    }
+   },
+   {
+    "n": 15,
+    "id": "E2",
+    "spravne": "R58",
+    "kody": {
+     "R93": "Jera",
+     "R21": "Berkana",
+     "R58": "Eihwaz"
+    }
+   }
+  ],
+  [
+   {
+    "n": 1,
+    "id": "R3",
+    "spravne": "R40",
+    "kody": {
+     "R28": "Eihwaz",
+     "R89": "Laguz",
+     "R40": "Raidho"
+    }
+   },
+   {
+    "n": 2,
+    "id": "L3",
+    "spravne": "R89",
+    "kody": {
+     "R89": "Laguz",
+     "R16": "Perth",
+     "R40": "Raidho"
+    }
+   },
+   {
+    "n": 3,
+    "id": "O1",
+    "spravne": "R75",
+    "kody": {
+     "R40": "Raidho",
+     "R75": "Othila",
+     "R89": "Laguz"
+    }
+   },
+   {
+    "n": 4,
+    "id": "O4",
+    "spravne": "R75",
+    "kody": {
+     "R84": "Jera",
+     "R21": "Mannaz",
+     "R75": "Othila"
+    }
+   },
+   {
+    "n": 5,
+    "id": "F5",
+    "spravne": "R26",
+    "kody": {
+     "R75": "Othila",
+     "R26": "Fehu",
+     "R84": "Jera"
+    }
+   },
+   {
+    "n": 6,
+    "id": "A4",
+    "spravne": "R76",
+    "kody": {
+     "R63": "Berkana",
+     "R76": "Algiz",
+     "R75": "Othila"
+    }
+   },
+   {
+    "n": 7,
+    "id": "E2",
+    "spravne": "R28",
+    "kody": {
+     "R28": "Eihwaz",
+     "R84": "Jera",
+     "R63": "Berkana"
+    }
+   },
+   {
+    "n": 8,
+    "id": "A1",
+    "spravne": "R76",
+    "kody": {
+     "R86": "Ansuz",
+     "R76": "Algiz",
+     "R90": "Isa"
+    }
+   },
+   {
+    "n": 9,
+    "id": "R1",
+    "spravne": "R40",
+    "kody": {
+     "R40": "Raidho",
+     "R38": "Ehwaz",
+     "R28": "Eihwaz"
+    }
+   },
+   {
+    "n": 10,
+    "id": "R2",
+    "spravne": "R40",
+    "kody": {
+     "R89": "Laguz",
+     "R38": "Ehwaz",
+     "R40": "Raidho"
+    }
+   },
+   {
+    "n": 11,
+    "id": "L1",
+    "spravne": "R89",
+    "kody": {
+     "R40": "Raidho",
+     "R28": "Eihwaz",
+     "R89": "Laguz"
+    }
+   },
+   {
+    "n": 12,
+    "id": "O2",
+    "spravne": "R75",
+    "kody": {
+     "R65": "Nauthiz",
+     "R45": "Gebo",
+     "R75": "Othila"
+    }
+   },
+   {
+    "n": 13,
+    "id": "F4",
+    "spravne": "R26",
+    "kody": {
+     "R84": "Jera",
+     "R45": "Gebo",
+     "R26": "Fehu"
+    }
+   },
+   {
+    "n": 14,
+    "id": "E4",
+    "spravne": "R28",
+    "kody": {
+     "R63": "Berkana",
+     "R75": "Othila",
+     "R28": "Eihwaz"
+    }
+   },
+   {
+    "n": 15,
+    "id": "A2",
+    "spravne": "R76",
+    "kody": {
+     "R40": "Raidho",
+     "R71": "Hagalaz",
+     "R76": "Algiz"
+    }
+   }
+  ]
+ ]
+}

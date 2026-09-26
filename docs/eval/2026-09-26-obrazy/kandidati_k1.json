@@ -1,0 +1,17 @@
+[
+ {"id":"F4","runa":"Fehu","en":"The catch is sold at the harbour, and by evening the money has become new nets.","gpt":"peníze přicházejí a odcházejí, hodnota se ukazuje v použití","plete":["Gebo","Jera"]},
+ {"id":"F5","runa":"Fehu","en":"The cow is sold in the autumn, and what she fetched carries the household through the winter.","gpt":"hodnota živá a v pohybu","plete":["Othila","Jera"]},
+ {"id":"A1","runa":"Algiz","en":"Out on the heath a twig snaps, and the whole party goes quiet to listen.","gpt":"v lese zaslechne zvuk a přestane mluvit","plete":["Ansuz","Isa"]},
+ {"id":"A2","runa":"Algiz","en":"From the knoll you see the squall coming up the fjord long before it reaches the hayfield.","gpt":"otevřený prostor dovolí vidět nebezpečí dřív","plete":["Hagalaz","Raidho"]},
+ {"id":"A4","runa":"Algiz","en":"The eider hen spreads herself over the nest and does not stir when you pass.","gpt":"bdělost, instinkt, hranice mezi člověkem a tím, co přichází","plete":["Berkana","Othila"]},
+ {"id":"O1","runa":"Othila","en":"You come back to the farm you grew up on, and the kitchen is smaller than you remembered.","gpt":"vrátí se do domu, kde vyrůstal, vidí ho jinýma očima","plete":["Raidho","Laguz"]},
+ {"id":"O2","runa":"Othila","en":"Your mother's knitting needles are in your hands now, with her last row still on them.","gpt":"starý předmět přejde z rodiče na dítě","plete":["Nauthiz","Gebo"]},
+ {"id":"O4","runa":"Othila","en":"Four families have sat at the same table in the farmhouse, and the table has stayed where it is.","gpt":"dům zůstává stejný, lidé se mění","plete":["Mannaz","Jera"]},
+ {"id":"R1","runa":"Raidho","en":"From the pass you look back, and your tracks in the snow make one line down the valley.","gpt":"kroky vytvořily jeden směr","plete":["Ehwaz","Eihwaz"]},
+ {"id":"R2","runa":"Raidho","en":"The horse falls into the tölt, and the ride finds its own even beat.","gpt":"jezdec najde vlastní rytmus","plete":["Ehwaz","Laguz"]},
+ {"id":"R3","runa":"Raidho","en":"The track bends round the lava and comes back to its line on the other side.","gpt":"změní směr, aniž by opustil cestu","plete":["Laguz","Eihwaz"]},
+ {"id":"E2","runa":"Eihwaz","en":"The rowan stands bare between the last frost and the first leaf.","gpt":"mezi tím, co skončilo, a tím, co ještě nemá podobu","plete":["Berkana","Jera"]},
+ {"id":"E4","runa":"Eihwaz","en":"The old tree in the churchyard has outlived everyone who planted it.","gpt":"starý tis přežívá zimu, bouře i změny","plete":["Othila","Berkana"]},
+ {"id":"L1","runa":"Laguz","en":"The brook meets the stone and simply goes round it.","gpt":"potok obtéká kámen a pokračuje jinou cestou","plete":["Raidho","Eihwaz"]},
+ {"id":"L3","runa":"Laguz","en":"The river sinks into the lava field and rises again as a spring far down the valley.","gpt":"voda mizí pod zemí a objeví se jinde","plete":["Perth","Raidho"]}
+]

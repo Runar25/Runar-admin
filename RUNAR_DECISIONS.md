@@ -7278,3 +7278,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   sama; vypnutý Ask → řádek zmizí a Premium přestane tvrdit „Everything…“; panel i nápověda skládají přes tierFeatures; ruční
   panel_props se nevrátily. Prohlížeč: panel účtu i nápověda ukazují nový výpis.
 - Affected doc(s): žádný (výpis vlastní kód; RUNAR_PRICING featury tierů neopisuje).
+
+## 2026-09-26 (10) — Obrazy z GPT inspirace, kolo 1: +13 obrazů pro runy s nejmenší bankou (v4.66)
+
+- **Rozhodl:** KUKY 2026-09-26 *„pak jdi na obrazy… klidně to udělej tak, co je nejlepší“*; k souboru od GPT 2026-09-25: *„je to inspirace,
+  musí být zkrácené či mírně upravené“*.
+- **Co:** Fehu +2 (úlovek → nové sítě · kráva prodaná na podzim živí dům přes zimu) · Algiz +2 (praskne větvička, skupina ztichne · z kopce
+  vidíš přeháňku dřív, než dojde k louce) · Othila +3 (kuchyň menší než ve vzpomínce · máminy jehlice s její poslední řadou · čtyři rodiny
+  u téhož stolu) · Raidho +2 (stopy ve sněhu jedna linie · cesta obejde lávu a vrátí se do své linie) · Eihwaz +2 (jeřáb holý mezi
+  posledním mrazem a prvním listem · strom na hřbitově přežil všechny, kdo ho sázeli) · Laguz +2 (potok obteče kámen · řeka zmizí v lávě
+  a vyvěrá jako pramen). Banka 144 → 157.
+- **Jak vybráno:** z GPT souboru jen nápady, které jdou ukázat jako konkrétní scéna; „člověk si uvědomí / pochopí…“ vynecháno (tvrzení o
+  nitru). Brána se statickými popisy run (metoda `docs/archive/2026-09-23-brana-s-popisy.md`, 3 slepí soudci): 13 × **3/3**, 2 × 0/3 —
+  kajka na hnízdě (Algiz → Berkana), tölt (Raidho → Ehwaz) nezařazeny. IS nativně, korpus + is-grammar-qa čisté.
+- **Kontrola:** smoke ㊱ register, ㉟ motivy, aspekt↔klíč zelené; protlačeno builderem (nový obraz Laguz v promptu 51/300).
+- **Zbývá:** další runy z GPT souboru (hlavně ty s 5 obrazy) a druhý soubor (obrazové rodiny, dvojice run) — další kola.
+- Affected doc(s): `RUNAR_BACKLOG.md`.
