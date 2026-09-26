@@ -5409,3 +5409,35 @@ shape does not need"* · *„Gebo is that moment, the gift and the taking of it 
 spona se ukázala jako ta cesta, kterou chce u Blank („The blank is the unknown"). Délka beze změny (P 57–72, N 60–71 slov;
 obě ramena nad rozpočtem 50–58 — známý stav, ne účinek změny). „work" P 2/6, N 3/6 (Jera, Nauthiz — viz 2026-09-26 (1)).
 **Hranice:** EN, 6 obrazů × 1 čtení; IS jen ověřené znění, čtení netestována; jeden slepý soudce.
+
+## 2026-09-26 (4) — Esence bez „<runa> is that…“: znění N3 · Blank v promptu jako „the blank rune“
+
+**Owner:** *„zkus znění, které rozbije ‚is that'"* + *„Blank je něco jiného — nemá jedinečné jméno, dá se zaměnit; mělo by to být
+blank rune nebo unknown rune"*. Tytéž 6 obrazů a losy jako 2026-09-26 (3), Opus 5, $0,17.
+| znění [1] | přebírá činnost (slepě) | význam srozumitelný (slepě) | „<runa> is …“ | „is that“ |
+|---|---|---|---|---|
+| P produkce | 6/6 | 3/6 | 0/6 | 0/6 |
+| N (2026-09-26 (3)) | 0/6 | 6/6 | 6/6 | 5/6 |
+| N2 „sets the rune beside the thing that carries its meaning" | — | — | 5/6 | 4/6 |
+| **N3** „gives the meaning … let the sentence find its own shape rather than a definition" | **0/6** | **6/6** | 6/6 | **2/6** |
+| N4 „names the rune inside it — not as the subject of the sentence" | 1/6 | 4/6 | **0/6** | 0/6 |
+N2 nesouzeno (spona zůstala → vyřazeno). N4 sponu zabil, ale přinesl nový vzorec *„…sits …“* 3/6 (*„where Kenaz sits"*, *„sits Ansuz"*),
+jednu runu-aktéra (*„The gale of Hagalaz left the field wide open"*) a jednu větu bez významu (*„In that small distance between palms,
+Gebo lives"*). **N3** drží obojí, co měl N, a „is that" snižuje 5 → 2: *„Hagalaz is the storm that removes what was holding a shape in
+place"* · *„Jera is the season come round, what was worked long ago now warm in your hands"* · *„Gebo is the rune of that passing, the
+gift and the taking as one act"*. Spona „X is …" se znění nedá vzít, aniž by trpěl význam (N4) — model s pokynem „jméno + význam"
+sahá po definici.
+**N3 EN:** *„THE ESSENCE LINE: after the picture, one short line that names the rune once and gives the meaning the picture already
+holds, in plain words a stranger to runes can grasp — let the sentence find its own shape rather than a definition. No invented
+mechanism, no fate. Never tell the seeker what it means for them."*
+**N3 IS:** *„KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem nefnir rúnina einu sinni og dregur fram þá merkingu sem þegar býr
+í þessari mynd, með hversdagslegum orðum sem ókunnugur skilur. Hún finnur sitt eigið form í stað skilgreiningar. Engin uppdiktuð
+skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann."* Korpus: *dregur fram þá* 57, *þá merkingu sem* 233,
+*sem þegar býr* 31, *býr í þessari* 72, *finna sitt eigið* 47, *finnur sitt eigið* 8, *eigið form* 39, *í stað skilgreiningar* 8;
+nulové trojice *hún finnur sitt*, *merkingu sem þegar* jsou řídkost (dvojice a sousední trojice doložené). is-grammar-qa jen Z002
+(konvence produkčního rámce) a planý W001 *rúnina → brúnina*. Zamítnuto: *láttu setninguna* 0, *línan má* 0.
+**Blank:** EN prompt jmenuje runu holým „Blank" na 3 místech (hlavička `DRAWN RUNE: Blank` z `rnPrompt`, *„Mention Blank by name
+once"*, `ESSENCE_BLANK` *„names the Blank once"*) → ownerova čtení 3/3 *„Blank is… / Blank holds…"*. IS už má *„Auða rúnin"*. Test:
+všechna tři místa → „the blank rune", 3 obrazy Blank → **3/3** čtení jmenuje *„the blank rune"* (*„The blank rune is that empty
+space, the place no one has named yet"*).
+**Hranice:** EN, 6 obrazů × 1 čtení na znění, jeden slepý soudce na kolo; IS čtení netestována; Blank 3 čtení.

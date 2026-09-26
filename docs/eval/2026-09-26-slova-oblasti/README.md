@@ -13,6 +13,8 @@ Handoff CODE-tune (psáno proti `f679170`). Nálezy a čísla vlastní `RUNAR_EV
 | `pilot_ask.js` | Ask u Kenaz: F produkce × G s aspektem čtení (vstupy a odpovědi jen lokálně) |
 | `pilot_esence_nova.js` (+ `.jsonl`) | esenční rámec [1]: produkce × nové znění (runa jmenovaná významem v obraze) |
 | `slepe_esence.txt`, `slepe_klic.json`, `slepy_soudce_esence.txt` | slepé souzení esenčních vět (vstup, klíč, verdikty) |
+| `pilot_esence_2.js`, `pilot_esence_4.js` (+ `.jsonl`) | znění N2, N3, N4 proti sponě „is that“ + Blank jako „the blank rune“ |
+| `slepe_esence2.txt`, `slepe_klic2.json`, `slepy_soudce_esence2.txt` | slepé souzení N3 × N4 |
 | `mereni.js`, `vety3.js`, `mapa.js` | měření na ownerových čteních z DB (export jen lokálně) |
 
 **Ownerova data do repa nejdou:** export čtení, text Kenaz čtení s jeho otázkou a odpovědi Asku leží v
