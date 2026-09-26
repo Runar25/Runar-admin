@@ -15,10 +15,8 @@ const TREE_UPDATE = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/tree-
 const RESET_TREE  = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/reset-tree';
 // Rozbor čtení modelem gpt-6-sol — jen admin (KUKY 2026-09-23). Edge funkce nesahá na kredity ani deník.
 const GPT_REVIEW  = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/gpt-review';
-// Druhý Ask, krok 1 (KUKY 2026-09-24): false = nové počty (TIERS.*.asks_per_reading) má JEN admin — owner živě
-// testuje. true = pro všechny; PŘEDTÍM musí jít ven serverová část (claude-proxy: standard smí Ask, N zdarma na
-// čtení, nad limit odmítnout — dnes by druhý Ask prémiovému uživateli strhl měsíční čtení). Viz RUNAR_BACKLOG.md.
-const ASK_MULTI_LIVE = true;   // 2026-09-25 KUKY „dva asky pro premium už pusť a standard bude mít 1 ASK“ — server claude-proxy ASKS_PER_READING
+// ASK_MULTI_LIVE ODEBRÁN 2026-09-26 (úklid): byl to vypínač náběhu dvou Asků (2026-09-24/25); od spuštění kdo smí Ask a kolikrát
+// říká jen TIERS.*.asks_per_reading (zrcadlo serverového ASKS_PER_READING v claude-proxy, shodu hlídá smoke ⑨).
 // Jazyk rozboru GPT-6 sol podle admina (KUKY 2026-09-24: „anglicky pro Sigrún“). Kdo tu není, dostane češtinu.
 const GPT_REVIEW_LANG = { 'info@agndofa.is': 'en' };
 // Future proxies go here:
@@ -174,8 +172,7 @@ const TIERS = {
     voice_static:     true,       // pre-generované audio v Collection
     journal:          false,
     ceremonial:       false,
-    ask:              false,      // Ask Rúnar (follow-up question on a reading)
-    asks_per_reading: 0,   // Ask otázek na jedno čtení, všechny zdarma (KUKY 2026-09-24); platí pro všechny až s ASK_MULTI_LIVE
+    asks_per_reading: 0,   // Ask otázek na jedno čtení, všechny zdarma (KUKY 2026-09-24); 0 = Ask jen jako teaser; JEDINÁ pravda o Asku tieru (2026-09-26)
     languages:        ['en', 'is'],
   },
   rune_seeker: {
@@ -190,8 +187,7 @@ const TIERS = {
     voice_static:     true,       // pre-generované audio v Collection
     journal:          5,          // last N readings
     ceremonial:       false,
-    ask:              false,      // Ask NIKDY — ani jako placená drobnost (KUKY 2026-08-09)
-    asks_per_reading: 0,   // Ask otázek na jedno čtení, všechny zdarma (KUKY 2026-09-24); platí pro všechny až s ASK_MULTI_LIVE
+    asks_per_reading: 0,   // Ask otázek na jedno čtení, všechny zdarma (KUKY 2026-09-24); 0 = Ask jen jako teaser; JEDINÁ pravda o Asku tieru (2026-09-26)
     languages:        ['en', 'is'],
   },
   standard: {
@@ -203,21 +199,19 @@ const TIERS = {
     voice_static:     true,
     journal:          null,
     ceremonial:       false,
-    ask:              false,      // Ask = premium only (KUKY 2026-08-09). Hlídá i server.
-    asks_per_reading: 1,   // Ask otázek na jedno čtení, všechny zdarma (KUKY 2026-09-24); platí pro všechny až s ASK_MULTI_LIVE
+    asks_per_reading: 1,   // Ask otázek na jedno čtení, všechny zdarma (KUKY 2026-09-24); 0 = Ask jen jako teaser; JEDINÁ pravda o Asku tieru (2026-09-26)
     languages:        ['en', 'is'],
   },
   premium: {
     label:            'Rune Wanderer',
     label_is:         'Ferðalangur',
-    monthly_readings: 75,          // Rune Wanderer: 75/month — matches TIER_LIMITS.premium.monthly_limit
+    monthly_readings: 75,          // Rune Wanderer: 75/month
     voice_monthly:    true,
     voice_credits:    true,
     voice_static:     true,
     journal:          null,
     ceremonial:       true,
-    ask:              true,       // one follow-up per reading, text only (no voice)
-    asks_per_reading: 2,   // Ask otázek na jedno čtení, všechny zdarma (KUKY 2026-09-24); platí pro všechny až s ASK_MULTI_LIVE
+    asks_per_reading: 2,   // Ask otázek na jedno čtení, všechny zdarma (KUKY 2026-09-24); 0 = Ask jen jako teaser; JEDINÁ pravda o Asku tieru (2026-09-26)
     languages:        ['en', 'is'],
     physical_unlock:  true,       // QR/NFC product linking
     seasonal_content: true,       // solstices, equinoxes, lunar events
@@ -332,13 +326,11 @@ const TIER_LIMITS = {
   standard: {
     onboarding:    null,
     weekly_drip:   null,
-    monthly_limit: 50,   // casts per month — change here, UI updates automatically
     journal_entries: null,
   },
   premium: {
     onboarding:    null,
     weekly_drip:   null,
-    monthly_limit: 75,   // casts per month
     journal_entries: null,
   },
 };

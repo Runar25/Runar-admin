@@ -616,7 +616,7 @@
 - [ ] Tree DB fáze 2 — přeškálovat: `intention` + `aol` už logujeme server-side (481d313, 094f287).
 
 ### 🟢 Dlouhý ocas (kód, nízká priorita)
-- [ ] **`scripts/utils/test_lever_maps.js` padá na SEEKS (9 ✘) a nikdo to nevidí** — není zapojený ve smoke. Kontroluje, že věta rejstříku obsahuje jméno své hodnoty, ale nálepka registru („The seeker asks for clarity —“) se 2026-09-08 odebrala záměrně (komentář u `_registerContext`). Ověřeno 2026-09-23 na HEAD i po přepisu oblastí: tentýž výsledek, AREAS část prochází. Rozhodnout: SEEKS část přepsat na kontrolu pořadí jinak (např. otisk věty), nebo ji odebrat — a pak test zapojit do smoke, ať hlídá aspoň AREAS. (CODE-tune)
+- [x] **VYŘEŠENO 2026-09-26 (kotva SEEKS = význam věty, test ve smoke ㉬; DECISIONS 2026-09-26 (12))** ~~`scripts/utils/test_lever_maps.js` padá na SEEKS (9 ✘) a nikdo to nevidí~~ — není zapojený ve smoke. Kontroluje, že věta rejstříku obsahuje jméno své hodnoty, ale nálepka registru („The seeker asks for clarity —“) se 2026-09-08 odebrala záměrně (komentář u `_registerContext`). Ověřeno 2026-09-23 na HEAD i po přepisu oblastí: tentýž výsledek, AREAS část prochází. Rozhodnout: SEEKS část přepsat na kontrolu pořadí jinak (např. otisk věty), nebo ji odebrat — a pak test zapojit do smoke, ať hlídá aspoň AREAS. (CODE-tune)
 - [ ] **§18 debt:** lab i prod drží kompozici stromu 2× (`build_tree_production.py`) → vytáhnout `runar-tree-core.js`. Prod navíc načítá enginy z `tree-lab-*` cest. *(soubor zatím neexistuje — je to cíl toho refaktoru)*  <!-- doc-links:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
 - [x] ~~Strom se **neaktualizuje po čtení** (`renderLivingTree` jen při otevření tabu).~~ **Není vada — KUKY 2026-09-26:** strom se nemusí překreslit hned, změnu může člověk vidět klidně až druhý den. (Owner říká, že to už někde stojí; v `RUNAR_DECISIONS/TREE/DESIGN` jsem to nenašel, proto to píšu sem.)
 - [ ] `tree_state`/`tree_readings` — `sql/tree_state.sql` je STARÉ schéma (Vrstva A) pro tree-update; produkční strom čte z `readings` → rozhodnout: rozšířit / nahradit / zahodit.
@@ -663,9 +663,10 @@
   Rozbor GPT to teď hlásí (rubrika A), prompt tomu nebrání: NO COLD READING hlídá jen nitro („what is true, stirring, or known inside them“),
   ne stav vztahů a domova. Oprava = změna obsahu promptu → napřed změřit, jak často to dnes vzniká (Family & Home, Love), pak odebrat příčinu,
   ne přidat zákaz (memory `oprava-promptu-odebira-vadu`). (CODE-tune)
-- [ ] **Úklid po vypnutí čočky životní runy (2026-09-25, DECISIONS 2026-09-25 (7))** — `user_profiles.life_rune_in_readings` v DB
-  nikdo nečte ani nepíše → zahodit migrací (owner spustí SQL) + odebrat z `sql/2026-07-16_user_profiles_column_grants.sql`/smoke ⑩;
-  mrtvé větve `_lensContext` / lens část `_priorityContext` smazat, až bude jisté, že se čočka nevrací. (CODE-tune)
+- [ ] **Úklid po vypnutí čočky životní runy (2026-09-25, DECISIONS 2026-09-25 (7))** — **2026-09-26: mrtvé větve z builderů pryč**
+  (golden beze změny; `_lensContext` zůstal jako laboratorní funkce, DECISIONS 2026-09-26 (12)). **Zbývá:** DB sloupec
+  `user_profiles.life_rune_in_readings` (nikdo nečte ani nepíše) zahodit migrací — ČEKÁ na ownerovo ano (trvalá změna DB) — a zároveň
+  odebrat grant z `sql/2026-07-16_user_profiles_column_grants.sql`. (CODE-tune)
 - [ ] **Text zamčeného Asku pro Rune Seekera** — dnes *„Rúnar has one answer left — Premium hears it.“* (sedí na starý model „jedna odpověď
   zbývá“). Owner: *„něco přirozeného… nemělo by se to úplně vymykat“* ostatním teaserům (*„Deeper questions open with {tier}.“*). Návrh v chatu 2026-09-25.
 - [ ] **Konce čtení: víc tvarů — napětí (v4.61) a návrat k otázce (v4.65) NASAZENO, obraz ne — HLÍDAT v živých čteních** (CODE-tune, 2026-09-26)
@@ -731,7 +732,7 @@
   → **Změřeno 2026-09-26 (CODE-read, EVAL_LOG 2026-09-26 (5)): přepis NEPOMÁHÁ, nechat produkci.** Dvě znění jako pokyn pisateli
   (*„Byrjaðu á því að renna augunum…"*, *„Fyrsta setningin nefnir myndina alla…"*) převyprávěla své sloveso 2/6 (Rúnar v 1. osobě /
   rozkaz *„Staðnæmstu…"*), produkce 1/6; doslovný opis z 2026-09-24 se v 7 čteních neopakoval. Owner souhlasí → zavřeno.
-- [ ] **`scripts/utils/test_lever_maps.js` je červený od 2026-09-08 a nikdo to nevidí** (nalezl CODE-tune 2026-09-25; není ve smoke).
+- [x] **VYŘEŠENO 2026-09-26 (smoke ㉬)** ~~`scripts/utils/test_lever_maps.js` je červený od 2026-09-08 a nikdo to nevidí~~ (nalezl CODE-tune 2026-09-25; není ve smoke).
   Část SEEKS čeká, že věta `_registerContext` JMENUJE svůj rejstřík („Clarity"…) — jména ale byla 2026-09-08 ze zadání záměrně
   odebrána (memory `prompt-nepojmenuj-co-hned-zakazes`), takže 9 z 10 kontrol padá (ověřeno i na kódu před v4.56). Část AREAS
   prochází. Oprava: pro SEEKS jinou kotvu (tvar mostu hlídá už smoke ㉨ (1)) nebo SEEKS část odebrat, a test zapojit do smoke.
@@ -1840,7 +1841,7 @@ Rozhodnutí a celý kontext → `RUNAR_DECISIONS.md` 2026-09-11.
 Fanout po nasazení našel osm věcí; čtyři jsem opravil hned (commit `9cb5aa3`), tyhle čtyři
 mají vlastní cenu a nepatří do téhož commitu.
 
-### 1. `scripts/utils/test_lever_maps.js` je TIŠE ČERVENÝ a není ve smoke
+### 1. ✅ (2026-09-26: opraveno a ve smoke ㉬) `scripts/utils/test_lever_maps.js` je TIŠE ČERVENÝ a není ve smoke
 Spuštěno 2026-09-11: **exit 1, 9 problémů**, a `grep test_lever_maps smoke.py` = **0**. Nikdo to
 tedy nevidí. Jeho premisa (*„každá věta svou hodnotu JMENUJE"*) padla commitem z 2026-09-08.
 **Hlídal ale reálnou expozici:** přeskládání `SEEKS` pošle každému čtení cizí registr a **nic

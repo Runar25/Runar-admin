@@ -675,6 +675,18 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola featur tieru probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# Mapy pák (AREAS → _domainContext, SEEKS → _registerContext) jsou indexované POŘADÍM: přeskládaný seznam dá každému čtení
+# cizí instrukci a nic nespadne. Test existoval od 2026-08-16, ale ve smoke nebyl a od 2026-09-08 tiše padal (kotva SEEKS
+# = jméno rejstříku, které se tehdy záměrně odebralo). 2026-09-26 kotva = význam věty a test zapojen (BACKLOG, úklid).
+print('\n' + chr(0x326C) + ' MAPY PÁK PODLE POŘADÍ (utils/test_lever_maps.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'utils', 'test_lever_maps.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola map pak probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

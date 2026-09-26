@@ -1067,9 +1067,8 @@ function _lifeWasDrawn(life, drawn) {
 // 2026-09-25 (KUKY: „životní runa bude jen na vyžádání v ASK, jinak do čtení zasahovat nebude“): čočka VYPNUTÁ ve všech
 // builderech (single + 4 spready) — vrací vždy null, takže _lensContext i lens větev _priorityContext mlčí. Přepínač
 // „Let my life rune colour the ending“ odešel s ní. Životní runa zůstává v Asku (_askLifeContext) — na dotaz.
-// ⚠️ Sloupec user_profiles.life_rune_in_readings zůstává v DB nepoužitý (zahodit při úklidu, BACKLOG).
-function _lifeLens(u) { return null; }
-
+// 2026-09-26 (úklid): _lifeLens (vracel vždy null) i volání čočky z builderů ODEBRÁNY. _lensContext níž už v žádném builderu
+// NENÍ — zůstává pro laboratoř (scripts/utils/gen_batch.js --life-rune) a registr pravidel; návrat do čtení jen podle §26.
 function _lensContext(life, drawn, lang) {
   if (!life) return '';
   var list = (Array.isArray(drawn) ? drawn : [drawn]).filter(Boolean);
@@ -1688,9 +1687,6 @@ var RP_SINGLE = {
 
 function buildReadingPromptSingle(u, drawn, lang, corrections) {
   var S = RP_SINGLE[lang] || RP_SINGLE.en;
-  var life = _lifeLens(u);
-  var isLifeRune = _lifeWasDrawn(life, drawn);
-  var lensOn = !!life && !isLifeRune;
   // 2026-08-22: obraz se vybira PRED klici a islandske klice se vazou na jeho stranku.
   // Duvod + mereni v hlavicce RUNE_IMAGES a RUNAR_DECISIONS 2026-08-22; EN zustava
   // na nahodnych klicich (efekt tam zadny a nahoda drzi pestrost).
@@ -1749,10 +1745,8 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     _endingShape(drawn, lang, u.seeking, u.area, areaFace, hasQ)   // hasQ: 2026-09-26 návrat k otázce jen s otázkou
       // 2026-09-24: otázka runy jako zdroj poslední věty — jen bez vlastní otázky tazatele (_runeQuestion, runar-utils.js).
       + (hasQ ? '' : _runeQuestion(drawn, lang)),
-    // v4.4 (2026-08-22): COCKA SE VRACI — owner: "v single je life rune jako cocka,
-    // neni hotovo dokud neni cocka". Priorita zustava VEN (vrati se, az mereni ukaze
-    // konflikt oblast x obraz; soulad zatim drzi; `lensOn` se tu proto porad necte).
-    _lensContext(life, drawn, lang),
+    // Čočka životní runy (v4.4–v4.59) z builderu ODEBRÁNA 2026-09-26 (úklid) — od v4.60 byla vypnutá (životní runa jen
+    // v Asku); _lensContext zůstává jako laboratorní funkce, návrat jen podle §26.
     S.closing(u.name) + (S.langInstr ? S.langInstr : '') + getCorrPrompt(lang, corrections),
     _addressContext(lang),
     S.json,
@@ -2118,8 +2112,6 @@ function _spreadBlock(r, label) {
 function buildKrizPromptCross(u, runes, lang, corrections) {
   var S = RP_KRIZ[lang] || RP_KRIZ.en;
   var rCtr = runes[0], rAbo = runes[1], rBel = runes[2], rBeh = runes[3], rAhe = runes[4];
-  var life = _lifeLens(u);
-  var lensOn = !!life && !_lifeWasDrawn(life, runes);
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
     u.area    ? S.area + ': ' + u.area : '',
@@ -2153,9 +2145,8 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
     u.seeking ? _registerContext(u.seeking, lang) : '',
     // v4.14 (2026-08-23, KUKY): dosednutí — S.landing nahrazuje otázkový los (viz yggdrasil v4.13).
     S.landing,
-    (lensOn || u.area || u.seeking) ? _priorityContext(lensOn, runes, lang) : '',
+    (u.area || u.seeking) ? _priorityContext(false, runes, lang) : '',   // false = bez čočky (odebrána 2026-09-26)
   ].concat(S.instructions(ctrName)).concat([
-    _lensContext(life, runes, lang),
     S.closing(u.name) + (S.langInstr ? ' ' + S.langInstr : '') + getCorrPrompt(lang, corrections),
     _addressContext(lang),
     S.json,
@@ -2212,8 +2203,6 @@ var RP_NORNS = {
 function buildNornsPromptFate(u, runes, lang, corrections) {
   var S = RP_NORNS[lang] || RP_NORNS.en;
   var rUrd = runes[0], rVerd = runes[1], rSkul = runes[2];
-  var life = _lifeLens(u);
-  var lensOn = !!life && !_lifeWasDrawn(life, runes);
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
     u.area    ? S.area + ': ' + u.area : '',
@@ -2242,9 +2231,8 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
     u.seeking ? _registerContext(u.seeking, lang) : '',
     // v4.14 (2026-08-23, KUKY): dosednutí — S.landing nahrazuje otázkový los (viz yggdrasil v4.13).
     S.landing,
-    (lensOn || u.area || u.seeking) ? _priorityContext(lensOn, runes, lang) : '',
+    (u.area || u.seeking) ? _priorityContext(false, runes, lang) : '',   // false = bez čočky (odebrána 2026-09-26)
   ].concat(S.beats).concat([
-    _lensContext(life, runes, lang),
     S.bigInstruction(u.name),
     S.json,
     (S.langInstr ? S.langInstr : ''),
@@ -2292,8 +2280,6 @@ var RP_HORSESHOE = {
 
 function buildHorseshoePromptSeven(u, runes, lang, corrections) {
   var S = RP_HORSESHOE[lang] || RP_HORSESHOE.en;
-  var life = _lifeLens(u);
-  var lensOn = !!life && !_lifeWasDrawn(life, runes);
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
     u.area    ? S.area + ': ' + u.area : '',
@@ -2325,9 +2311,8 @@ function buildHorseshoePromptSeven(u, runes, lang, corrections) {
     u.seeking ? _registerContext(u.seeking, lang) : '',
     // v4.14 (2026-08-23, KUKY): dosednutí — S.landing nahrazuje otázkový los (viz yggdrasil v4.13).
     S.landing,
-    (lensOn || u.area || u.seeking) ? _priorityContext(lensOn, runes, lang) : '',
+    (u.area || u.seeking) ? _priorityContext(false, runes, lang) : '',   // false = bez čočky (odebrána 2026-09-26)
   ].concat(S.beats).concat([
-    _lensContext(life, runes, lang),
     S.closing(u.name),
     _addressContext(lang),
     S.json,
@@ -2385,8 +2370,6 @@ var RP_YGGDRASIL = {
 
 function buildYggdrasilPromptNine(u, runes, lang, corrections) {
   var S = RP_YGGDRASIL[lang] || RP_YGGDRASIL.en;
-  var life = _lifeLens(u);
-  var lensOn = !!life && !_lifeWasDrawn(life, runes);
   var ctx = [
     u.name    ? S.seeker + ': ' + u.name : '',
     u.area    ? S.area + ': ' + u.area : '',
@@ -2423,9 +2406,8 @@ function buildYggdrasilPromptNine(u, runes, lang, corrections) {
     // v4.13 (2026-08-23, KUKY): dosednutí — S.landing NAHRAZUJE otázkový los _endingShape.
     // Dvě protichůdné instrukce konce = jedna jede mrtvá (vzor v4.9). Oblouk se MĚŘÍ (scripts/oblouk.py).
     S.landing,
-    (lensOn || u.area || u.seeking) ? _priorityContext(lensOn, runes, lang) : '',
+    (u.area || u.seeking) ? _priorityContext(false, runes, lang) : '',   // false = bez čočky (odebrána 2026-09-26)
   ].concat(S.beats).concat([
-    _lensContext(life, runes, lang),
     S.closing(u.name),
     _addressContext(lang),
     S.json,

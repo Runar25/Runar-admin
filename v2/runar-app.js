@@ -528,7 +528,7 @@ function _syncPrivacyUI() {
 // Checkbox checked = keep helping (opted in); unchecked = opt out.
 function onOptOutToggle(cb) { setAnalyticsOptOut(!cb.checked); }
 // 2026-09-25: přepínač čočky životní runy odešel (onLifeLensToggle · setLifeRuneInReadings · _syncLifeLensUI) — čočka vypnutá,
-// životní runa jen na dotaz v Asku (KUKY). Důvod u _lifeLens v runar-character.js.
+// životní runa jen na dotaz v Asku (KUKY). Důvod u _lensContext v runar-character.js (RUNAR_DECISIONS 2026-09-25 (7)).
 
 async function setAnalyticsOptOut(optOut) {
   if (!currentUser) return;

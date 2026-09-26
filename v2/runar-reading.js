@@ -714,15 +714,12 @@ async function readRune() {
 
 // ─── Ask Rúnar — follow-up Q&A (Premium, one question per reading) ───────────
 var _askCount = 0;   // kolik Asků už k tomuto čtení padlo (dřív boolean _askUsed = jen jeden)
-// Kolik Asků smí tenhle člověk k jednomu čtení (2026-09-24, KUKY: premium 2, standard 1, vše zdarma).
-// Dokud ASK_MULTI_LIVE = false, nové počty má jen admin (živý test); ostatní drží dnešní stav (premium 1).
+// Kolik Asků smí tenhle člověk k jednomu čtení (2026-09-24, KUKY: premium 2, standard 1, vše zdarma). Jediný zdroj =
+// TIERS.*.asks_per_reading (2026-09-26: náhradní větev přes TIERS.*.ask a vypínač ASK_MULTI_LIVE odebrány — neběžely).
+// Admin = premium (server dělá totéž, claude-proxy isAdmin → userTier 'premium').
 function _askLimit() {
   if (!currentUser) return 0;
-  var admin = isAdmin(currentUser.email);
-  if (typeof ASK_MULTI_LIVE !== 'undefined' && (ASK_MULTI_LIVE || admin)) {
-    return (TIERS[admin ? 'premium' : userTier] || {}).asks_per_reading || 0;
-  }
-  return (((TIERS[userTier] || {}).ask === true) || admin) ? 1 : 0;
+  return (TIERS[isAdmin(currentUser.email) ? 'premium' : userTier] || {}).asks_per_reading || 0;
 }
 // Další výměny (2., 3.…) se přidávají POD předchozí odpověď a pole se posune pod ně, ať to čte jako
 // rozhovor. První výměna zůstává v původních #ask-question/#ask-answer (reporter, styly).
@@ -935,7 +932,7 @@ function _askPlaceholder() {
 function _refreshAskTeaser() {
   var tEl = document.getElementById('ask-teaser');
   if (!tEl || tEl.style.display === 'none') return;
-  // 2026-09-25: nejnižší tarif, který Ask má (Standard, od ASK_MULTI_LIVE) — ne natvrdo Premium (§8).
+  // 2026-09-25: nejnižší tarif, který Ask má (dnes Standard) — ne natvrdo Premium (§8).
   var _tk = ['standard', 'premium'].filter(function (k) { return (TIERS[k] || {}).asks_per_reading > 0; })[0] || 'premium';
   var _pt = (lang === 'is' ? TIERS[_tk].label_is : TIERS[_tk].label);
   tEl.textContent = tp('ask_teaser', { tier: _pt });
@@ -946,7 +943,7 @@ function _showAsk() {
   _showGptReview();
   var el = document.getElementById('ask-runar');
   if (!el) return;
-  // Who gets the follow-up = TIERS.<tier>.ask (§8), not a tier name spelled out here.
+  // Who gets the follow-up = TIERS.<tier>.asks_per_reading (§8), not a tier name spelled out here.
   var canAsk = _askLimit() > 0;
   _askResetThread();
   // Kdo NEMA opravneni, ale JE prihlaseny, dostane teaser: featura je videt cela,

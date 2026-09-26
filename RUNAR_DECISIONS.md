@@ -7307,3 +7307,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Brána:** 12/12 (10 × 3/3; Isa čirý vzduch 2/3 → Sowilo, Perth ovce v mlze 2/3 → Dagaz). Oprava metody: popis Tiwaz obsahoval jméno
   boha („s Týrem“), které by soudcům runu prozradilo — z popisu pro bránu odstraněno (`brana_build.py`). IS korpus + is-grammar-qa čisté.
 - Affected doc(s): `RUNAR_BACKLOG.md`.
+
+## 2026-09-26 (12) — Úklid: jedna pravda o Asku tieru, bez mrtvých větví čočky, test map pák ve smoke
+
+- **Rozhodl:** KUKY 2026-09-26 *„pak úklid… klidně to udělej tak, co je nejlepší“*.
+- **Co:** (1) `TIERS.*.ask` a vypínač `ASK_MULTI_LIVE` odebrány — kdo smí Ask a kolikrát říká jen `asks_per_reading` (zrcadlo serverového
+  `ASKS_PER_READING`, smoke ⑨). `ask` tvrdil opak (Standard `false`, ač má 1 Ask) a četla ho jen náhradní větev, která od 2026-09-25
+  neběžela. (2) `TIER_LIMITS.*.monthly_limit` pryč — kopie `TIERS.*.monthly_readings` bez čtenáře. (3) Mrtvé větve čočky životní runy
+  z pěti builderů (`_lifeLens` → null od v4.60) — **golden beze změny**; `_lensContext` zůstává jako laboratorní funkce (návrat jen §26).
+  (4) `scripts/utils/test_lever_maps.js` (tiše červený od 2026-09-08): kotva SEEKS = VÝZNAM věty rejstříku (jméno se ze zadání odebralo
+  záměrně), přidána kontrola posunu rejstříků, test zapojen do smoke ㉬.
+- **Čeká na ownera:** DB sloupec `user_profiles.life_rune_in_readings` (nikdo nečte ani nepíše) — smazání je trvalá změna DB.
+- Affected doc(s): `RUNAR_BACKLOG.md`.
