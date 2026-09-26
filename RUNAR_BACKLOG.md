@@ -668,12 +668,10 @@
   mrtvé větve `_lensContext` / lens část `_priorityContext` smazat, až bude jisté, že se čočka nevrací. (CODE-tune)
 - [ ] **Text zamčeného Asku pro Rune Seekera** — dnes *„Rúnar has one answer left — Premium hears it.“* (sedí na starý model „jedna odpověď
   zbývá“). Owner: *„něco přirozeného… nemělo by se to úplně vymykat“* ostatním teaserům (*„Deeper questions open with {tier}.“*). Návrh v chatu 2026-09-25.
-- [ ] **Konce čtení: víc tvarů — napětí NASAZENO (v4.61), návrat k otázce čeká, obraz ne** (CODE-tune, 2026-09-26)
-  Owner: *„chci více různých konců, ne stejné… přidat víc možností, ne vyměnit“* — tvary se PŘIDÁVAJÍ do losu, pevné tvary rejstříků
-  zůstávají. Napětí → DECISIONS 2026-09-26 (1). Zbývá: (a) **návrat k otázce** (typ 9, jen s vlastní otázkou tazatele) — přepis
-  srazil formuli „Perhaps the question is less about…“ 4/6 → 0/6, ale přinesl pokyn 1/6 a pojistku „only your own hands can measure
-  that“ 1/6; ještě jedno kolo znění, pak ukázat ownerovi. (b) **obraz** (typ 6) — nedoporučeno (nestabilní, vrací vadu v4.32). (c) Hlídat
-  v živých čteních: EN stavbu „may be A, and B“ se zopakovaným jménem (pilot 3/6), IS vymyšlená slova v napětí (pilot 1/6 „bærunni“).
+- [ ] **Konce čtení: víc tvarů — napětí (v4.61) a návrat k otázce (v4.65) NASAZENO, obraz ne — HLÍDAT v živých čteních** (CODE-tune, 2026-09-26)
+  Owner: *„chci více různých konců, ne stejné… přidat víc možností, ne vyměnit“*. Rozhodnutí → DECISIONS 2026-09-26 (1) a (8). Hlídat:
+  EN „may be A, and B“ se zopakovaným jménem (napětí, pilot 3/6) · IS vymyšlená slova v napětí (pilot 1/6) · návrat: předpoklad o nitru
+  („the stillness you wait for“, pilot 1/6) a vzorec „what looks like X is Y“. **Obraz** (typ 6) nenasazen — nestabilní, vrací vadu v4.32.
   Data: `docs/eval/2026-09-26-konce/`.
 - [ ] **Slova oblasti a „co jde do které věty“ — CODE-read hotovo (EVAL_LOG 2026-09-26 (1)–(3)); CODE-tune nasadil kroky 3 · 1 · 2**
   **2026-09-26 nasazeno:** Career podoby bez „work“ (v4.62, DECISIONS (2) — model „work“ říká dál, 6/6) · Ask nese aspekt čtení

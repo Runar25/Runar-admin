@@ -7246,3 +7246,18 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   Protlačeno produkční cestou (`normalizeCorrections` → `getCorrPrompt`): v IS bloku, v EN ne, žádné „undefined“; DB 30 řádků.
 - **Na základě:** DECISIONS 2026-09-23 (6) bod 1 (potvrzené IS chyby rovnou do korekcí). **Reverzibilita:** smazání řádku (owner).
 - Affected doc(s): `check-is.py` (vzor).
+
+## 2026-09-26 (8) — Návrat k otázce = pátý tvar konce, jen v losu a jen s vlastní otázkou tazatele (v4.65)
+
+- **Rozhodl:** KUKY 2026-09-26 *„doladit návrat k otázce“* (navazuje na (1): *„přidat víc možností, ne vyměnit“*).
+- **Co:** `ENDING_OPEN/HEAVY(_IS)[4]` = návrat k otázce (typ 9 z tarotové typologie): konec ukáže tazatelovu VLASTNÍ otázku jinak, zevnitř
+  obrazu. `_endingShape(…, hasQ)` ho losuje jen když tazatel napsal „The situation“; pevné tvary rejstříků beze změny (i s otázkou).
+- **Tři kola** (`docs/eval/2026-09-26-konce/`, Opus 5, tytéž případy): (1) „what else the question may be about“ → formule *„Perhaps the
+  question is less about X, and more about Y“* 4/6; (2) „sets their question down inside the image“ → formule 0/6, ale pokyn tazateli 1/6
+  („Put the silence … down“), návrat jen 3/6; (3) **„their question is seen again from inside the image … and looks different there“**
+  → slepý soudce návrat 5/6 (+1 napůl), pokyn 0/6, pojistka 0/6, tvrzení 1/6 (předpoklad), formule 0/6. IS 3 čtení: parsovatelné 3/3,
+  návrat implicitnější (otázku nejmenuje, ukáže ji obrazem).
+- **Kontrola:** smoke ㉨ — bez otázky nikdy návrat, s otázkou padne všech 5 tvarů; rejstříky s otázkou drží svůj tvar; **přes celý single
+  builder** návrat s otázkou 75/400 (EN) · 95/400 (IS), bez otázky 0/400 — mutace (hasQ nepředané z builderu) → FAIL. Admin „složení
+  čtení“ má popisky pro napětí (od v4.61 tam chyběl a ukazoval se syrový „open3“) i návrat.
+- Affected doc(s): `RUNAR_DESIGN.md` (tabulka mostu, řádek General) · `RUNAR_BACKLOG.md`.

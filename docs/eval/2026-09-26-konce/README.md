@@ -44,3 +44,15 @@ napsal CODE-tune (ne skutečné). Soudce měřil tvar, ukotvení, radu a tvrzen�
 Produkční cesta v4.61, pool vynucený na [3]. Tvar napětí 6/6 (Algiz spíš „na rozhraní dvou“). is-grammar-qa na samotných koncích:
 5/6 parsovatelné; Laguz si vytvořil slovo („kyrrðin sem þolir **bærunni** og **bæran**…“ — z obrazu „spegilmyndin bærist“) → E001 + S004.
 Celá čtení: E001 3/6 (srovnání: pilot 2026-09-24 IS 2/6 — při n = 6 bez rozdílu). Rozhodnutí → `RUNAR_DECISIONS.md` 2026-09-26 (1).
+
+## Kolo 3 — návrat k otázce (v4.64, `konce_pilot_k3.json`, slepý soudce `slepi_soudce_k3.txt` / `soudce_k3_klic.json`)
+
+Owner „doladit návrat k otázce“. Tytéž případy a otázky; od v4.61 má pool 4 tvary, harness teď přepisuje všechny.
+| znění | návrat (ano / napůl) | pokyn | tvrzení (předpoklad) | pojistka | svěžest Ø |
+|---|---|---|---|---|---|
+| C2 „sets their question down inside the image“ | 3 / 3 | 0 | 1 | 0 | 1,8 |
+| C3a „the image answers their question from a side the question did not look at“ | 5 / 1 | **1** („Listen at the edge“) | 1 | 0 | 2,3 |
+| **C3b** „their question is seen again from inside the image … and looks different there“ | **5 / 1** | **0** | 1 | 0 | 2,3 |
+Formule „Perhaps the question is less about…“ ani v jednom rameni. Nasazeno C3b → `RUNAR_DECISIONS.md` 2026-09-26 (7).
+IS (`navrat_is.js` / `.json`, 3 čtení s otázkou, pool vynucený na [4]): parsovatelné 3/3; návrat v IS implicitnější — otázku
+nejmenuje, ukáže ji obrazem (Uruz *„Það sem þú býrð til fyrir aðra gæti borið sömu leðju, og þau gætu kallað það þrek.“*).

@@ -142,7 +142,7 @@ function _slozeniCteni() {
   var ai = (typeof _areaIdx === 'function' && readerUser) ? _areaIdx(readerUser.area) : -1;
   if (typeof d.area_face === 'number' && ai >= 0) out.push('area face: ' + AREA_FACES[ai][d.area_face][isIs ? 'is' : 'en'][0]);
   if (d.ending) {
-    var tvar = ['one line', 'two possibilities', 'a question'][Number(String(d.ending).slice(-1))] || d.ending;
+    var tvar = ['one line', 'two possibilities', 'a question', 'tension (both at once)', 'return to their question'][Number(String(d.ending).slice(-1))] || d.ending;
     out.push('ending: ' + tvar + (String(d.ending).indexOf('heavy') === 0 ? ' (heavy — no comfort)' : ''));
   }
   if (d.essence !== undefined) out.push('essence line: ' + (d.essence === 'blank' ? 'Blank' : ['what the rune does', 'the rune named by the meaning in the picture'][d.essence]));

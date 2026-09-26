@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-26",
- "prompt_version": "v4.64-esence-n3-blank",
+ "prompt_version": "v4.65-navrat-k-otazce",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -70,6 +70,12 @@
    "zacatek": "End on one line that holds, at the same time, two things this may be {"
   },
   {
+   "hash": "6672b64f9b4e",
+   "lang": "en",
+   "zdroj": "zakonceni_open[4]",
+   "zacatek": "End on one line where their question is seen again from inside the ima"
+  },
+  {
    "hash": "e2d331c1be69",
    "lang": "en",
    "zdroj": "zakonceni_heavy[0]",
@@ -92,6 +98,12 @@
    "lang": "en",
    "zdroj": "zakonceni_heavy[3]",
    "zacatek": "End on one line that holds, at the same time, two things this may be {"
+  },
+  {
+   "hash": "03d9022dad74",
+   "lang": "en",
+   "zdroj": "zakonceni_heavy[4]",
+   "zacatek": "End on one line where their question is seen again from inside the ima"
   },
   {
    "hash": "5397d757cba8",
@@ -808,6 +820,12 @@
    "zacatek": "Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið {L}, bæði í"
   },
   {
+   "hash": "5406ee9ec5c9",
+   "lang": "is",
+   "zdroj": "zakonceni_open[4]",
+   "zacatek": "Endaðu á einni línu þar sem spurning hans birtist aftur inni í myndinn"
+  },
+  {
    "hash": "43f000e5e0ad",
    "lang": "is",
    "zdroj": "zakonceni_heavy[0]",
@@ -830,6 +848,12 @@
    "lang": "is",
    "zdroj": "zakonceni_heavy[3]",
    "zacatek": "Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið {L}, bæði í"
+  },
+  {
+   "hash": "7e39f302eeb7",
+   "lang": "is",
+   "zdroj": "zakonceni_heavy[4]",
+   "zacatek": "Endaðu á einni línu þar sem spurning hans birtist aftur inni í myndinn"
   },
   {
    "hash": "6f5502bf6da0",

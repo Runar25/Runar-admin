@@ -53,6 +53,8 @@ const tvar = (t, L) => {
   const q = L === 'is' ? 'einni spurningu' : 'one question';
   const dve = L === 'is' ? 'nefnir tvennt' : 'two things';
   const nap = L === 'is' ? 'bæði í senn' : 'at the same time';   // napeti (2026-09-26) — obsahuje i „dve“, proto napred
+  const nav = L === 'is' ? 'spurning hans birtist aftur' : 'their question is seen again';   // navrat k otazce (2026-09-26)
+  if (t.indexOf(nav) !== -1) return 'navrat';
   return t.indexOf(q) !== -1 ? 'otazka' : (t.indexOf(nap) !== -1 ? 'napeti' : (t.indexOf(dve) !== -1 ? 'dve' : 'veta'));
 };
 
@@ -81,7 +83,17 @@ for (const L of ['en', 'is']) {
   for (const rej of [undefined, SK[L][0]]) {
     const videno = new Set();
     for (let i = 0; i < 2000; i++) videno.add(tvar(es(lehka, L, rej, oblast), L));
-    rekni(videno.size === O[L].length && videno.has('napeti'), L + '  bez urceni (' + (rej || 'nezadano') + '): vsech ' + O[L].length + ' tvaru padne vc. napeti (videno ' + [...videno].join('/') + ')');
+    rekni(videno.size === O[L].length - 1 && videno.has('napeti') && !videno.has('navrat'), L + '  bez urceni (' + (rej || 'nezadano') + '), bez otazky: padne ' + (O[L].length - 1) + ' tvaru vc. napeti, NIKDY navrat (videno ' + [...videno].join('/') + ')');
+    // s vlastni otazkou tazatele (hasQ) padne i navrat k otazce — a jen tehdy
+    const sQ = new Set();
+    for (let i = 0; i < 2000; i++) sQ.add(tvar(es(lehka, L, rej, oblast, undefined, true), L));
+    rekni(sQ.size === O[L].length && sQ.has('navrat'), L + '  bez urceni (' + (rej || 'nezadano') + '), s otazkou: vsech ' + O[L].length + ' tvaru vc. navratu (videno ' + [...sQ].join('/') + ')');
+  }
+  // pevne tvary rejstriku se s otazkou NEMENI (owner: „pridat vic moznosti, ne vymenit“)
+  for (const [rejstrik, chtene] of ocekavane) {
+    const v2 = new Set();
+    for (let i = 0; i < 300; i++) v2.add(tvar(es(lehka, L, rejstrik, oblast, undefined, true), L));
+    rekni(v2.size === 1 && v2.has(chtene), L + '  rejstrik „' + rejstrik + '" s otazkou dava dal ' + chtene);
   }
   // (3b) kazdy tvar obou poolu pozna `_promptDraws` pod SVYM indexem — v IS zacinaji dve moznosti [1] a napeti [3]
   //      stejne („nefnir tvennt sem þetta gæti verið“), rozlisi je az cast za {L}; zamena by tise zkreslila kazde mereni konce.
@@ -172,6 +184,18 @@ for (const L of ['en', 'is']) {
       }
     }));
     rekni(spatne === 0, L + '  podoby oblastí: všech ' + podob + ' dosedne do řádku oblasti i mostu');
+    // (10) NÁVRAT K OTÁZCE přes CELÝ builder (2026-09-26): s vlastní otázkou tazatele ho single builder v losu dá, bez ní nikdy.
+    //      Kontrola výš volá _endingShape přímo — díra v produkčním volání (hasQ nepředané) by jí prošla, tahle ne.
+    {
+      const nav = L === 'is' ? 'spurning hans birtist aftur' : 'their question is seen again';
+      let sQ = 0, bezQ = 0;
+      for (let n = 0; n < 400; n++) {
+        const r = RUNES2[n % RUNES2.length];
+        if (bld({ name: 'Anna', area: '', seeking: '', question: 'Should I go?', intention: '' }, r, L, []).indexOf(nav) !== -1) sQ++;
+        if (bld({ name: 'Anna', area: '', seeking: '', question: '', intention: '' }, r, L, []).indexOf(nav) !== -1) bezQ++;
+      }
+      rekni(sQ > 0 && bezQ === 0, L + '  builder: návrat k otázce s otázkou ' + sQ + '/400, bez otázky ' + bezQ + '/400');
+    }
     // štítek v DRUHÉM jazyce (DB má IS čtení s EN štítkem) dá tutéž oblast
     const cizi = AREAS2[L === 'is' ? 'en' : 'is'][2];
     rekni(most(cizi, L, 0) === FACES[2][0][L][1], L + '  štítek oblasti v druhém jazyce dá tentýž cíl mostu');

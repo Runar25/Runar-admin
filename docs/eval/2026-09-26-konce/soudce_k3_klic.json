@@ -1,0 +1,92 @@
+[
+ {
+  "id": 1,
+  "runa": "Isa",
+  "arm": "C2"
+ },
+ {
+  "id": 2,
+  "runa": "Gebo",
+  "arm": "C2"
+ },
+ {
+  "id": 3,
+  "runa": "Algiz",
+  "arm": "C3a"
+ },
+ {
+  "id": 4,
+  "runa": "Uruz",
+  "arm": "C3a"
+ },
+ {
+  "id": 5,
+  "runa": "Laguz",
+  "arm": "C3b"
+ },
+ {
+  "id": 6,
+  "runa": "Gebo",
+  "arm": "C3b"
+ },
+ {
+  "id": 7,
+  "runa": "Algiz",
+  "arm": "C3b"
+ },
+ {
+  "id": 8,
+  "runa": "Laguz",
+  "arm": "C3a"
+ },
+ {
+  "id": 9,
+  "runa": "Laguz",
+  "arm": "C2"
+ },
+ {
+  "id": 10,
+  "runa": "Algiz",
+  "arm": "C2"
+ },
+ {
+  "id": 11,
+  "runa": "Thurisaz",
+  "arm": "C3a"
+ },
+ {
+  "id": 12,
+  "runa": "Uruz",
+  "arm": "C2"
+ },
+ {
+  "id": 13,
+  "runa": "Thurisaz",
+  "arm": "C3b"
+ },
+ {
+  "id": 14,
+  "runa": "Isa",
+  "arm": "C3b"
+ },
+ {
+  "id": 15,
+  "runa": "Isa",
+  "arm": "C3a"
+ },
+ {
+  "id": 16,
+  "runa": "Gebo",
+  "arm": "C3a"
+ },
+ {
+  "id": 17,
+  "runa": "Thurisaz",
+  "arm": "C2"
+ },
+ {
+  "id": 18,
+  "runa": "Uruz",
+  "arm": "C3b"
+ }
+]

@@ -1286,7 +1286,7 @@ plus dvě síta výš a kontrola „čí je to pozemek" (předmět/sloveso nesm�
    | Confirmation | *„neither confirm nor refute"* | **dvě možnosti** (jediný čestný tvar, když nesmím ani potvrdit, ani vyvrátit) |
    | Insight into Challenge | *„name the friction honestly, without softening it into comfort"* | **těžká věta** bez útěchy |
    | Reflection | *„open a mirror, not an answer; turn them inward"* | **otázka** |
-   | General Guidance | *„let the rune lead where it will"* | **los** ze všech tvarů: věta · dvě možnosti · otázka · **napětí** (od 2026-09-26) |
+   | General Guidance | *„let the rune lead where it will"* | **los** ze všech tvarů: věta · dvě možnosti · otázka · **napětí** (od 2026-09-26) · s vlastní otázkou tazatele i **návrat k otázce** |
 
    **Kam dosedne:** mění se JEDINÁ fráze v mostu (`in the seeker's life` → fráze oblasti), zbytek znění je společný —
    jedna cesta kódem, oblast jako data (§18). **Od 2026-09-25 má každá oblast 3–5 PODOB** (KUKY: „podoby jsou dobré"):

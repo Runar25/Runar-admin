@@ -408,7 +408,13 @@ function _promptDraws(prompt, lang) {
 // Konec pojmenuje, co to MUZE byt v zivote leitandy — jako stav k zvazeni, nikdy rada.
 // TVAR urcuje rejstrik (SEEK_SHAPE), CIL urcuje oblast ({L} = podoba oblasti, AREA_FACES). Oba pooly maji
 // tytez CTYRI tvary ve stejnem poradi, takze tvar = index a tezkost = jen volba poolu:
-//   [0] veta · [1] dve moznosti · [2] otazka · [3] napeti
+//   [0] veta · [1] dve moznosti · [2] otazka · [3] napeti · [4] navrat k otazce (JEN s vlastni otazkou tazatele)
+// [4] NAVRAT K OTAZCE (2026-09-26, KUKY „doladit navrat k otazce“; typ 9 z tarotove typologie): konec ukaze tazatelovu VLASTNI
+// otazku jinak, zevnitr obrazu. Bez otazky nema k cemu se vratit, proto ho _endingShape bez `hasQ` nelosuje. Tri kola
+// (docs/eval/2026-09-26-konce/): „what else the question may be about“ → formule „Perhaps the question is less about X, and more
+// about Y“ 4/6 (pokyn mluvil O otazce); „sets their question down inside the image“ → formule 0/6, ale sloveso se zrcadlilo do
+// pokynu tazateli („Put the silence … down“) a navrat jen 3/6; TOTO zneni (trpny tvar, nikdo nic nepoklada): slepy soudce navrat
+// 5/6, pokyn 0/6, pojistka 0/6, tvrzeni 1/6 (predpoklad „the stillness you wait for“). Pridano, nic nenahrazuje.
 // [3] NAPETI (2026-09-26, KUKY „chci vice ruznych koncu, ne stejne… napeti nasad“; typ 7 z tarotove typologie):
 // dve veci NARAZ, ktere se tahnou proti sobe a zustanou nevyresene — ne volba „X, nebo Y“ jako [1]. Pridano, NIC
 // nenahrazuje (owner: „dve moznosti se mi libi, urcite to nechci rusit“); pada jen v losu (SEEK_SHAPE null).
@@ -422,6 +428,7 @@ const ENDING_OPEN = [
   "End on one line that holds out two things this may be {L}, each a state that may be so, left for them to weigh.",
   "End on one question that holds out what this may be {L} \u2014 asked as a possibility they can weigh, never as something you know about them.",
   "End on one line that holds, at the same time, two things this may be {L} \u2014 both may be so together, pulling against each other, left unresolved; never what to do about it.",
+  "End on one line where their question is seen again from inside the image {L} and looks different there \u2014 something that may be so, never something you know about them.",
 ];
 // Tezke zneni TYCHZ tri tvaru: drzi „may be", ubira jen utechu (RUNAR_DESIGN „Stavba Single
 // cteni" bod 3). Bere je tezka runa (HEAVY_RUNES) i rejstrik „Insight into Challenge".
@@ -430,18 +437,21 @@ const ENDING_HEAVY = [
   "End on one line that holds out two things this may be {L}, each a state that may be so \u2014 said plainly, without comfort or softening.",
   "End on one question that holds out what this may be {L} \u2014 asked as a possibility they can weigh, said plainly; no comfort, nothing softened.",
   "End on one line that holds, at the same time, two things this may be {L} \u2014 both may be so together, pulling against each other, left unresolved; said plainly, without comfort or softening.",
+  "End on one line where their question is seen again from inside the image {L} and looks different there \u2014 something that may be so, said plainly; no comfort, nothing softened.",
 ];
 const ENDING_OPEN_IS = [
   'Endaðu á einni línu sem nefnir hvað þetta gæti verið {L} — ástand sem gæti átt við, honum til umhugsunar; hún nefnir hvernig hlutirnir gætu staðið, aldrei hvað skuli gera.',
   'Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið {L}, hvort um sig ástand sem gæti átt við, honum til umhugsunar.',
   'Endaðu á einni spurningu sem spyr hvað þetta gæti verið {L} — sem möguleika sem hann getur vegið og metið, aldrei sem eitthvað sem þú veist um hann.',
   'Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið {L}, bæði í senn — tvennt sem togast á og er skilið eftir óleyst; aldrei hvað skuli gera.',
+  'Endaðu á einni línu þar sem spurning hans birtist aftur inni í myndinni {L} og lítur þar öðruvísi út — eitthvað sem gæti átt við, aldrei eitthvað sem þú veist um hann.',
 ];
 const ENDING_HEAVY_IS = [
   'Endaðu á einni línu sem nefnir hvað þetta gæti verið {L} — ástand sem gæti átt við, sagt umbúðalaust; engin huggun, ekkert mildað.',
   'Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið {L}, hvort um sig ástand sem gæti átt við — sagt umbúðalaust, engin huggun, ekkert mildað.',
   'Endaðu á einni spurningu sem spyr hvað þetta gæti verið {L} — sem möguleika sem hann getur vegið og metið, sagt umbúðalaust; engin huggun, ekkert mildað.',
   'Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið {L}, bæði í senn — tvennt sem togast á og er skilið eftir óleyst; sagt umbúðalaust, engin huggun, ekkert mildað.',
+  'Endaðu á einni línu þar sem spurning hans birtist aftur inni í myndinni {L} og lítur þar öðruvísi út — eitthvað sem gæti átt við, sagt umbúðalaust; engin huggun, ekkert mildað.',
 ];
 // ─── Rozpocet delky (single) ──────────────────────────────────
 // Dve delky, losuje se per cteni. Neni to jen o poctu slov: pri jinem rozpoctu musi model
@@ -639,7 +649,8 @@ function _bridgeTarget(area, lang, face) {
   return i >= 0 ? _areaFace(i, face, lang)[1] : BRIDGE_DEFAULT[lang === 'is' ? 'is' : 'en'];
 }
 
-function _endingShape(drawn, lang, seeking, area, face) {
+// hasQ = tazatel napsal vlastní otázku → v losu smí padnout i [4] návrat k otázce (poslední tvar poolu); bez ní jen [0]–[3].
+function _endingShape(drawn, lang, seeking, area, face, hasQ) {
   var list = (Array.isArray(drawn) ? drawn : [drawn]).filter(Boolean);
   var heavy = false;
   if (typeof HEAVY_RUNES !== 'undefined' && HEAVY_RUNES && HEAVY_RUNES.names)
@@ -651,7 +662,7 @@ function _endingShape(drawn, lang, seeking, area, face) {
   var seeks = (typeof SEEKS !== 'undefined' && SEEKS && SEEKS[lang]) ? SEEKS[lang] : null;
   var si = seeks ? seeks.indexOf(seeking) : -1;
   var volba = (si >= 0 && SEEK_SHAPE[si]) ? SEEK_SHAPE[si] : null;
-  var pocet = (lang === 'is' ? ENDING_OPEN_IS : ENDING_OPEN).length;
+  var pocet = (lang === 'is' ? ENDING_OPEN_IS : ENDING_OPEN).length - (hasQ ? 0 : 1);   // [4] návrat jen s otázkou (2026-09-26)
   var idx = volba ? volba.i : Math.floor(Math.random() * pocet);
   if (volba && volba.h) heavy = true;
 

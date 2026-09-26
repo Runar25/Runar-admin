@@ -45,9 +45,17 @@ TVAR.A2 = { o: "End on one plain image of how this may stand now {L}: one concre
             h: "End on one plain image of how this may stand now {L}: one concrete thing there, in their own life, that may be so — shown plainly, without comfort or softening, and not something for them to do." };
 TVAR.C2 = { o: "End on one line that sets their question down inside the image {L} and lets it be seen from there — something that may be so, never something you know about them.",
             h: "End on one line that sets their question down inside the image {L} and lets it be seen from there — something that may be so, said plainly; no comfort, nothing softened." };
+// Kolo 3 (téhož dne, owner „doladit návrat k otázce“): C2 odstranil formuli „Perhaps the question is less about…“ (0/6), ale
+// „sets their question down“ se zrcadlilo do pokynu tazateli 1/6 („Put the silence … down on that ice and listen“) a jednou
+// přišla pojistka „only your own hands can measure that“. C3a: obraz odpoví z jiné strany, bez slovesa, které by šlo zrcadlit.
+// C3b: otázka je znovu VIDĚNÁ zevnitř obrazu (trpný tvar — nikdo nic „nepokládá“). Od v4.61 má pool 4 tvary → přepisují se všechny.
+TVAR.C3a = { o: "End on one line where the image answers their question from a side the question did not look at {L} \u2014 something that may be so, never something you know about them.",
+             h: "End on one line where the image answers their question from a side the question did not look at {L} \u2014 something that may be so, said plainly; no comfort, nothing softened." };
+TVAR.C3b = { o: "End on one line where their question is seen again from inside the image {L} and looks different there \u2014 something that may be so, never something you know about them.",
+             h: "End on one line where their question is seen again from inside the image {L} and looks different there \u2014 something that may be so, said plainly; no comfort, nothing softened." };
 function postav(c, arm) {
   const [runa, ai, si, q] = c;
-  for (let i = 0; i < 3; i++) { OPEN[i] = arm === '0' ? OPEN0[i] : TVAR[arm].o; HEAVY[i] = arm === '0' ? HEAVY0[i] : TVAR[arm].h; }
+  for (let i = 0; i < OPEN.length; i++) { OPEN[i] = arm === '0' ? OPEN0[i] : TVAR[arm].o; HEAVY[i] = arm === '0' ? HEAVY0[i] : TVAR[arm].h; }
   vm.runInContext('__s=' + (runa.length * 7919 + ai * 31 + si) + ';', S);
   const rune = R.find(r => r.n === runa);
   return S.buildReadingPrompt({ name: 'Kuky', area: A.en[ai], seeking: SK.en[si], question: arm[0] === 'C' ? q : '', intention: '' }, rune, 'en', []);
