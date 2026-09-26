@@ -677,6 +677,9 @@
   slova, obraz) a sestavit mapu vstupů po větách (věta 1 · 2 · 3 · konec). Sem patří i Hagalaz „opens the field where the boards once
   stood“ (esenční rámec [1] „runa ve scéně něco dělá“). CODE-tune implementuje podle nálezu. Pozn.: podoby oblastí (v4.56) „work“ v EN
   nesrazily (6/6 → 5/6) — model jím popisuje i dění runy; to je výchozí bod, ne vyřešená věc.
+  → **Nález CODE-read 2026-09-26** (`RUNAR_EVAL_LOG.md` 2026-09-26 (1)): „work“ nechodí z žádného bloku promptu (5 ramen, 4–6/6,
+  i bez oblasti 6/6); mapa vět; esenční rámec [1] dělá z runy aktéra (výčet sloves 19/41); Ask bez aspektu čtení (oheň 3/3 → 0/3).
+  Handoff CODE-tune předán.
 - [ ] **NA ZÍTRA — další body (owner 2026-09-25 večer)** (CODE-tune)
   1. **Mnohem víc konců čtení s otázkou, s ohledem na runu** — owner: *„líbí se mi otázky na konci a chtěl bych, abychom jich udělali
      mnohem víc… pro některou runu se může hodit něco jiného než pro jinou.“* Dnes `ENDING_OPEN/HEAVY` mají po 1 otázkovém tvaru.

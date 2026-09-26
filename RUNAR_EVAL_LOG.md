@@ -5284,3 +5284,67 @@ Falešné poplachy nástroje: *kveikt á á ný* (doloženo 7×), *slitinu*, *au
 **Závěr:** glosu z promptu vyndat jen v promptu — solu to zastaví opis, Opusu 5 nic nevadí → **handoff CODE-tune**.
 **Hranice:** 5 promptů × 1 čtení na model; identitu run (poznají je soudci i bez glosy?) jsme netestovali — v EN glosa nikdy
 nebyla a identita tam drží.
+
+## 2026-09-26 (1) — Odkud „work“ · mapa vět · esenční rámec [1] · Ask u Kenaz (handoff CODE-tune, psáno proti f679170)
+
+**Owner:** Career & Creativity a obraz s lidskou činností → Rúnar řekne „work“, ne slova té činnosti (tah štětcem, čára
+tužkou). Hagalaz *„opens the field where the boards once stood“* = runa jako nástroj pro něco, co z obrazu nejde poznat.
+Report 2026-09-25 21:12 (Kenaz, řezbářství): Ask vysvětlil Kenaz jako *flame / fire*, ne jako kreativitu.
+**Data:** 84 ownerových EN single čtení s `prompt_draws` (DB, jen lokálně) + 36 pilotních volání Opus 5 jako claude-proxy
+($0,24 čtení + Ask). Skripty → `docs/eval/2026-09-26-slova-oblasti/`.
+
+**1. „work“ nechodí z žádného bloku promptu — model jím sám pojmenuje lidskou dřinu v obraze.**
+DB: Career 10/10 čtení s „work“ (ostatní oblasti 0–2), v 7 z 10 ve větě 3 — do v4.56 měla Career jen podobu
+„making and work“, takže to slovo v promptu stálo. Pilot: 3 obrazy s činností (Kenaz hobliny, Nauthiz pletení, Jera
+upletený svetr) × 2, Clarity, podoba [2] (slovo work v promptu nemá):
+| rameno | work ve čtení |
+|---|---|
+| A produkce | 4/6 |
+| B bez „Career & “ ve štítku | 5/6 |
+| C esenční rámec [1] místo [0] | 5/6 |
+| D bez oblasti vůbec | **6/6** |
+| E + věta „činnost v obraze si drží vlastní slova“ | 4/6 |
+Hypotézy „štítek Career“, „esenční rámec [0]“ i „kandidátní věta“ padly. Nulová transformace D (oblast pryč) čísla nesnížila.
+Kde slovo sedí: z 25 vět s „work“ je 22 ve větě 2 (esence) nebo 3. Po runách (A–E dohromady): **Nauthiz 10/10, Jera 9/10,
+Kenaz 5/10** — u run, jejichž význam JE úsilí (Nauthiz nouze a dřina, Jera odměna za práci), je to model, který říká jejich
+význam obyčejným slovem („Nauthiz is the work that continues while the supply runs thin“). Z promptu slovo nesou jen
+podoby Career [0] „making and work“ a [1] „work done for others“ (a IS *vinnu*) — ownerův případ Kenaz 2026-09-25 měl
+právě podobu [0] a konec *„What might your work look like…“*. Pilot CODE-tune (2026-09-24): podoby bez slova ho mají 3/4.
+**Hranice:** EN, 3 obrazy, n = 6 na rameno; IS netestována.
+
+**2. Mapa vět** (produkční single bez vlastní otázky; pozice změřené na 84 čtyřvětých čteních):
+| věta | co ji zadává | změřeno |
+|---|---|---|
+| 1 | úhel (*„Open with…“*) + blok THE IMAGE + řádek IMAGE | you v 40/84 |
+| 2 | esenční rámec (*„after the picture, one short line“*) + *„Mention <runa> by name once“* | jméno runy ve 2. větě 74/84, ve 3. 10/84 |
+| 3 | **nic výslovně** — plní ji řádek oblasti *„let the image land on {F}“* (neurčuje větu) a *„must connect to where this person is standing“* | you 49/84; u Career „work“ 7/10 |
+| 4 | konec: tvar ze SEEKING + cíl z podoby oblasti + otázka runy | you 70/84 |
+| rozptýleně | jméno člověka (střed / závěr / vůbec), NO COLD READING, délka | Kuky ve 3. 17×, ve 4. 17×, ve 2. 2× |
+**Překryvy:** (a) oblast dvakrát — řádek oblasti (v praxi věta 3) i most (věta 4) nesou TUTÉŽ losovanou podobu, takže
+slovo oblasti padá do dvou vět (s podobou [2] končí pilot na „…you are making“ ve 13 z 30 čtení — cíl mostu je „in something the seeker is bringing into being“); (b) SEEKING dvakrát —
+řádek rejstříku i tvar konce; (c) jméno runy dvakrát — větev *„Mention by name once“* i rámec [1] *„named here, once“*;
+(d) **otázka runy × kánon** — *„Let it grow out of the rune's question“* nese u některých run rozhodnutí o činu (grep otázek 25 run, mimo jiné Kenaz *„what will you do with it“*,
+Thurisaz *„if you do not strike back“*, Othila *„will you choose“*, Wunjo *„will you let yourself“*), zatímco týž pokyn
+konce říká *„never what to do about it“* a systémový prompt *„never tells the seeker what to do“*. Ownerův Kenaz konec
+*„…if you cut away the part you have been keeping out of habit?“* je hypotetický krok. Porušení neposuzuju (hranice
+owner, memory `rozkaz-a-studene-cteni-hranice`), jen rozpor dvou pokynů v témže řádku.
+RUNAR_DESIGN „Stavba Single“ bod 2 role vět 1 · 2 · poslední už popisuje; nové je, že **věta 3 nemá zadání a oblast ji
+vyplní přenosem obrazu do života** („The work in your hands…“, „Your work is built on…“).
+
+**3. Esenční rámec [1] dělá z runy herce, který přebírá činnost obrazu.** DB: rámec [1] → runa je podmětem slovesa
+z výčtu *moves, holds, opens, carries* v **19/41** čtení (+ *keeps* 7×), rámec [0] v **0/43** (tam spona *„X is …“* 33/43 —
+kvůli ní [1] vznikl, DECISIONS 2026-09-20). Hagalaz (sol, rámec [1]): obraz *„the gale tore the old fence down, and the field
+lies open“* → *„Hagalaz opens the field“*, runa převzala roli vichru. Pilot C (čteno mnou, ne slepě): runa dělá, co v obraze
+dělá někdo jiný, v 5/6 — *„Kenaz keeps the edge steady“* (drží ruka) 2×, *„Jera closes the last stitch“* (plete člověk),
+*„Nauthiz holds that thinning thread taut between your hands“*. Příčina: role *„is the one doing something in that scene“*
++ výčet sloves, který model opisuje. Směr (ownerův princip u Blank, DECISIONS 2026-09-25): runa jmenovaná **významem,
+který obraz obsahuje**, ne jako další aktér.
+
+**4. Ask nedostává aspekt, ze kterého čtení vzniklo.** `buildAskPrompt` přidá ke jménu runy celý seznam `RUNES.k`
+(Kenaz *„torch, inner light, creativity, knowledge, fire“*), čtení ale vzniklo z aspektu obrazu (`prompt_draws.kws` =
+*creativity*). Pilot na ownerově otázce, 3× na rameno: F produkce → oheň / plamen / pochodeň **3/3** (*„the flame you work by“*);
+G *„Kenaz — in this reading: creativity (its other senses: …)“* → **0/3**, jedna odpověď *„Kenaz here is creativity as a carving“*.
+**Hranice:** 1 čtení, 1 otázka, n = 3.
+
+**Vedlejší:** starší harnessy CODE-read nenačítají `runar-translations.js` → bez otázky runy (README archivu). Plánovaná
+úloha korektoru (2026-09-26 03:00) visí ve stavu „running“ od 03:00:15 — nezapsala nic.
