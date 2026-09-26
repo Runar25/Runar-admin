@@ -17,6 +17,9 @@ var ELEMENTS = {
 };
 var ELEMENT_TINT = 0.18;
 
+/* 2026-09-26 (KUKY: sjednotit podle aplikace): znaky a jmena = v2/runar-runes.js.
+   Sowilo tu melo U+16CB misto U+16CA -> strom Sowilo nenasel (zivotni runa dostala
+   kmen Berkany). Klice k: se NEMENI — jsou to vnitrni identifikatory. */
 var RUNES = [
   { k:'fehu', name:'Fehu', g:'ᚠ', el:'fire',  curve:0.35, taper:1.00 },
   { k:'uruz', name:'Uruz', g:'ᚢ', el:'earth', curve:0.18, taper:0.70 },
@@ -31,16 +34,16 @@ var RUNES = [
   { k:'isa', name:'Isa', g:'ᛁ', el:'shadow', curve:0.04, taper:1.25 },
   { k:'jera', name:'Jera', g:'ᛃ', el:'earth', curve:0.50, taper:0.95 },
   { k:'eihwaz', name:'Eihwaz', g:'ᛇ', el:'earth', curve:0.20, taper:1.00 },
-  { k:'perthro', name:'Perthro', g:'ᛈ', el:'water', curve:0.50, taper:1.00 },
+  { k:'perthro', name:'Perth', g:'ᛈ', el:'water', curve:0.50, taper:1.00 },
   { k:'algiz', name:'Algiz', g:'ᛉ', el:'air', curve:0.22, taper:1.00 },
-  { k:'sowilo', name:'Sowilo', g:'ᛋ', el:'fire', curve:0.55, taper:1.00 },
+  { k:'sowilo', name:'Sowilo', g:'ᛊ', el:'fire', curve:0.55, taper:1.00 },
   { k:'tiwaz', name:'Tiwaz', g:'ᛏ', el:'fire', curve:0.08, taper:1.10 },
-  { k:'berkano', name:'Berkano', g:'ᛒ', el:'water', curve:0.65, taper:0.90 },
+  { k:'berkano', name:'Berkana', g:'ᛒ', el:'water', curve:0.65, taper:0.90 },
   { k:'ehwaz', name:'Ehwaz', g:'ᛖ', el:'air', curve:0.30, taper:0.95 },
   { k:'mannaz', name:'Mannaz', g:'ᛗ', el:'air', curve:0.30, taper:1.00 },
   { k:'laguz', name:'Laguz', g:'ᛚ', el:'water', curve:0.58, taper:1.05 },
   { k:'ingwaz', name:'Ingwaz', g:'ᛜ', el:'water', curve:0.60, taper:0.95 },
-  { k:'othala', name:'Othala', g:'ᛟ', el:'earth', curve:0.40, taper:0.92 },
+  { k:'othala', name:'Othila', g:'ᛟ', el:'earth', curve:0.40, taper:0.92 },
   { k:'dagaz', name:'Dagaz', g:'ᛞ', el:'fire', curve:0.45, taper:1.00 },
   { k:'odinn', name:'Odinn', g:'◇', el:'shadow', curve:0.40, taper:1.05, blank:true }
 ];

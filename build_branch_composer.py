@@ -36,6 +36,9 @@ var ELEMENT_TINT = 0.26;
 /* ---- the 24 + Odinn. aett / world / element are REAL data from
    runar-runes.js. curve/sub/taper = shape signature, seed for the
    Composer to tune. ---- */
+/* 2026-09-26 (KUKY: sjednotit podle aplikace): znaky a jmena = v2/runar-runes.js.
+   Sowilo tu melo U+16CB misto U+16CA -> strom Sowilo nenasel (zivotni runa dostala
+   kmen Berkany). Klice k: se NEMENI — jsou to vnitrni identifikatory. */
 var RUNES = [
   { k:'fehu',     name:'Fehu',     g:'ᚠ', aett:'freya',    world:'midgard', el:'fire',   curve:0.35, sub:2, taper:1.00 },
   { k:'uruz',     name:'Uruz',     g:'ᚢ', aett:'freya',    world:'midgard', el:'earth',  curve:0.18, sub:1, taper:0.70 },
@@ -50,16 +53,16 @@ var RUNES = [
   { k:'isa',      name:'Isa',      g:'ᛁ', aett:'heimdall', world:'hel',     el:'shadow', curve:0.04, sub:0, taper:1.25 },
   { k:'jera',     name:'Jera',     g:'ᛃ', aett:'heimdall', world:'midgard', el:'earth',  curve:0.50, sub:1, taper:0.95 },
   { k:'eihwaz',   name:'Eihwaz',   g:'ᛇ', aett:'heimdall', world:'hel',     el:'earth',  curve:0.20, sub:1, taper:1.00 },
-  { k:'perthro',  name:'Perthro',  g:'ᛈ', aett:'heimdall', world:'hel',     el:'water',  curve:0.50, sub:2, taper:1.00 },
+  { k:'perthro',  name:'Perth',    g:'ᛈ', aett:'heimdall', world:'hel',     el:'water',  curve:0.50, sub:2, taper:1.00 },
   { k:'algiz',    name:'Algiz',    g:'ᛉ', aett:'heimdall', world:'asgard',  el:'air',    curve:0.22, sub:2, taper:1.00 },
-  { k:'sowilo',   name:'Sowilo',   g:'ᛋ', aett:'heimdall', world:'asgard',  el:'fire',   curve:0.55, sub:1, taper:1.00 },
+  { k:'sowilo',   name:'Sowilo',   g:'ᛊ', aett:'heimdall', world:'asgard',  el:'fire',   curve:0.55, sub:1, taper:1.00 },
   { k:'tiwaz',    name:'Tiwaz',    g:'ᛏ', aett:'tyr',      world:'asgard',  el:'fire',   curve:0.08, sub:1, taper:1.10 },
-  { k:'berkano',  name:'Berkano',  g:'ᛒ', aett:'tyr',      world:'midgard', el:'water',  curve:0.65, sub:1, taper:0.90 },
+  { k:'berkano',  name:'Berkana',  g:'ᛒ', aett:'tyr',      world:'midgard', el:'water',  curve:0.65, sub:1, taper:0.90 },
   { k:'ehwaz',    name:'Ehwaz',    g:'ᛖ', aett:'tyr',      world:'midgard', el:'air',    curve:0.30, sub:2, taper:0.95 },
   { k:'mannaz',   name:'Mannaz',   g:'ᛗ', aett:'tyr',      world:'asgard',  el:'air',    curve:0.30, sub:2, taper:1.00 },
   { k:'laguz',    name:'Laguz',    g:'ᛚ', aett:'tyr',      world:'hel',     el:'water',  curve:0.58, sub:0, taper:1.10 },
   { k:'ingwaz',   name:'Ingwaz',   g:'ᛜ', aett:'tyr',      world:'asgard',  el:'water',  curve:0.60, sub:1, taper:0.95 },
-  { k:'othala',   name:'Othala',   g:'ᛟ', aett:'tyr',      world:'asgard',  el:'earth',  curve:0.40, sub:2, taper:0.95 },
+  { k:'othala',   name:'Othila',   g:'ᛟ', aett:'tyr',      world:'asgard',  el:'earth',  curve:0.40, sub:2, taper:0.95 },
   { k:'dagaz',    name:'Dagaz',    g:'ᛞ', aett:'tyr',      world:'asgard',  el:'fire',   curve:0.45, sub:1, taper:1.00 },
   { k:'odinn',    name:'Odinn',    g:'◇', aett:'none',     world:'midgard', el:'shadow', curve:0.40, sub:0, taper:1.10, blank:true }
 ];
