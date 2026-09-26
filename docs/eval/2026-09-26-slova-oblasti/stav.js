@@ -17,6 +17,7 @@ module.exports = function stav(o) {
   if (o.angle !== undefined) vm.runInContext('_randomAngle = function(l){ return (l==="is"?READING_ANGLES_IS:READING_ANGLES)[' + o.angle + ']; };', S);
   if (o.face !== undefined) vm.runInContext('_drawAreaFace = function(){ return ' + o.face + '; };', S);
   if (o.essence !== undefined) vm.runInContext('var __E=' + o.essence + '; _essenceFrame = function(l, r){ if (r && r.n==="Blank") return l==="is"?ESSENCE_BLANK_IS:ESSENCE_BLANK; return (l==="is"?ESSENCE_FRAMES_IS:ESSENCE_FRAMES)[__E]; };', S);
+  if (o.essenceText) vm.runInContext('var __ET=' + JSON.stringify(o.essenceText) + '; _essenceFrame = function(){ return __ET; };', S);
   const sys = vm.runInContext('buildSysPrompt(null, ' + L + ')', S);
   const u = { name: 'Kuky', area: o.area, seeking: o.seeking };
   const user = vm.runInContext('buildReadingPromptSingle(' + JSON.stringify(u) + ', RUNES.filter(function(r){return r.n===' + JSON.stringify(o.rune) + ';})[0], ' + L + ', [])', S);

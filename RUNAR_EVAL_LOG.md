@@ -5378,3 +5378,34 @@ Obrácená páka na pravidlo: změkčit ho na poměr (nový ≫ starý) by pusti
 (3 z 10). Opravy vazeb, vložení a přeformulování brána neumí posoudit — ty musí jít dál jako NÁVRH k ověření (`is-vazba.py`
 + člověk), ne jako oprava. Nejistá změna (rod oslovení) zůstává problém korektoru, ne brány.
 **Hranice:** 20 změn z jednoho běhu jednoho korektoru; 3 škody jsou malý vzorek pro tvrzení „bezpečný"; korpus vidí ≤ 3 slova.
+
+## 2026-09-26 (3) — Esenční rámec [1] nově: runa jmenovaná významem v obraze → přebírání činnosti 6/6 → 0/6
+
+**Owner:** *„ano, připrav znění esence a udělej malý test"* (navazuje na 2026-09-26 (1) bod 3 — Hagalaz „opens the field").
+**Nové znění [1]** (princip, který owner schválil u Blank, DECISIONS 2026-09-25: runa jmenovaná významem, který obraz obsahuje):
+*„THE ESSENCE LINE: after the picture, one short line that names the rune once and says what it is in this scene — the meaning
+that already lives in the picture. Plain words a stranger to runes can grasp. No invented mechanism, no fate. Never tell the
+seeker what it means for them."* Odebráno: role *„is the one doing something in that scene"* a výčet *„it moves, holds, opens,
+carries"*. **Nic se nepřidalo** (memory `oprava-promptu-odebira-vadu`).
+**IS** (od základu podle `ESSENCE_BLANK_IS`, který je v produkci): *„KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem nefnir
+rúnina einu sinni og segir hvað hún er í þessari mynd — þá merkingu sem þegar býr í henni. Hversdagsleg orð sem ókunnugur skilur.
+Engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann."* Korpus: *þá merkingu sem* 233,
+*sem þegar býr* 31, *býr í henni* 89, *hvað hún er* 12 709, *í þessari mynd* 3659. is-grammar-qa: Z002 (velké písmeno po
+„KJARNALÍNAN:" — sdílí s produkčním rámcem, konvence) a W001 *rúnina → brúnina* (planý poplach, *rúnina* v korpusu 35×).
+Varianta *„býr í myndinni"* zamítnuta (0).
+**Test:** 6 obrazů, ve kterých jedná něco jiného než runa (vichr, ruka s nožem, pletoucí 2×, hlas, dávající ruka), různé oblasti
+a rejstříky, tytéž losy; Opus 5 jako claude-proxy, $0,095. Esenční věty zamíchané a posouzené **slepým soudcem** (subagent, bez
+kontextu):
+| | runa přebírá činnost jiného / neukázanou (A) | cizinec pochopí význam runy (B) | spona „X is …“ |
+|---|---|---|---|
+| P produkce [1] | **6/6** | 3/6 | 0/6 |
+| N nové znění | **0/6** | **6/6** | 6/6 |
+P: *„Hagalaz pulls down what was standing"* (dělá vichr) · *„Kenaz keeps the edge steady"* (ruka) · *„Jera closes the row"*
+(pletoucí) · *„Nauthiz holds that final thread taut"* · *„Ansuz carries that single sound"* · *„Gebo rests in that gap, touching
+both palms"*. N: *„Hagalaz is that wind, the thing that clears without asking"* · *„Kenaz is the cut that takes off what the
+shape does not need"* · *„Gebo is that moment, the gift and the taking of it held in the same breath"*.
+**Cena změny:** N dává sponu 6/6, z toho *„<runa> is that …"* 5/6 (*„is that moment"* 2×). Rámec [0] dává sponu 33/43 (DB) → s novým
+[1] by byla spona skoro v každém čtení — a právě proti sponě [1] 2026-09-20 vznikl (DECISIONS 2026-09-20 (3)). Rozhodne owner:
+spona se ukázala jako ta cesta, kterou chce u Blank („The blank is the unknown"). Délka beze změny (P 57–72, N 60–71 slov;
+obě ramena nad rozpočtem 50–58 — známý stav, ne účinek změny). „work" P 2/6, N 3/6 (Jera, Nauthiz — viz 2026-09-26 (1)).
+**Hranice:** EN, 6 obrazů × 1 čtení; IS jen ověřené znění, čtení netestována; jeden slepý soudce.

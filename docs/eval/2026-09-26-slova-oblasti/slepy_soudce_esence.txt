@@ -1,0 +1,5 @@
+Slepý soudce (subagent, bez kontextu, bez nástrojů) 2026-09-26 — vstup slepe_esence.txt, klíč ramen slepe_klic.json.
+A = runa koná činnost, která v obraze patří někomu jinému / kterou obraz neukazuje · B = cizinec pochopí, co runa znamená
+1 A no  B yes · 2 A yes B no · 3 A no B yes · 4 A yes B yes · 5 A yes B yes · 6 A no B yes
+7 A no  B yes · 8 A yes B no · 9 A no B yes · 10 A yes B no · 11 A no B yes · 12 A yes B yes
+Po klíči: P (produkce [1]) A 6/6, B 3/6 · N (nové znění) A 0/6, B 6/6.

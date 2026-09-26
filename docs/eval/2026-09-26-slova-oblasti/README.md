@@ -11,6 +11,8 @@ Handoff CODE-tune (psáno proti `f679170`). Nálezy a čísla vlastní `RUNAR_EV
 | `pilot_cinnost.js` (+ `.jsonl`) | rameno E: produkce + věta „činnost v obraze si drží vlastní slova“ |
 | `souhrn.js` | „work“ po ramenech, pozice ve větách, cena |
 | `pilot_ask.js` | Ask u Kenaz: F produkce × G s aspektem čtení (vstupy a odpovědi jen lokálně) |
+| `pilot_esence_nova.js` (+ `.jsonl`) | esenční rámec [1]: produkce × nové znění (runa jmenovaná významem v obraze) |
+| `slepe_esence.txt`, `slepe_klic.json`, `slepy_soudce_esence.txt` | slepé souzení esenčních vět (vstup, klíč, verdikty) |
 | `mereni.js`, `vety3.js`, `mapa.js` | měření na ownerových čteních z DB (export jen lokálně) |
 
 **Ownerova data do repa nejdou:** export čtení, text Kenaz čtení s jeho otázkou a odpovědi Asku leží v
