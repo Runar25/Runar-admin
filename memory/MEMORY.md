@@ -147,3 +147,4 @@ Snapshot = **historický záznam ke svému datu**, ne popis dneška. Nikdy z ně
 - [snapshots/2026-09-26-tune-konce-oblast-obrazy.md](snapshots/2026-09-26-tune-konce-oblast-obrazy.md) — CODE-tune: po resetu tokenů konce (6/7/9), obrazy od GPT, slova oblasti (CODE-read) ← NEJNOVĚJŠÍ
 - [snapshots/2026-09-25-modely-opus5-sol-naklady.md](snapshots/2026-09-25-modely-opus5-sol-naklady.md) — CODE-read: Opus 5 nasazen, sol kroky 1–3 (čeká krok 4 = slepé srovnání), stats.js náklady, korekce, sobotní test korektoru
 - [snapshots/2026-09-26-slova-esence-islandstina.md](snapshots/2026-09-26-slova-esence-islandstina.md) — CODE-read: „work“ odloženo, esence N3 (EN), Blank rune, Ask aspekt, korektor s bránou, stats.js hlas, IS úhel nechán, korekce þig vantar ← NEJNOVĚJŠÍ
+- [snapshots/2026-09-26-tree-diagnoza-po-castech.md](snapshots/2026-09-26-tree-diagnoza-po-castech.md) — CODE-tree: diagnóza stromu po částech (owner chce po jedné!), část 1 semínko hotová + opravená; další = Norny
