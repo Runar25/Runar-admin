@@ -1,0 +1,28 @@
+Slepý soudce kola 1 (subagent, bez nástrojů, jen slepi_soudce.txt + soudce_zadani.txt) — výtah verdiktů. Klíč: soudce_klic.json.
+#1 IMG | anchored partly | advice yes ("Look at the near edge…")
+#2 S | yes | —
+#3 RET | yes | —
+#4 TEN | yes | —
+#5 ALT+TEN | partly | —
+#6 IMG | yes | advice yes ("Stand at the kitchen table and listen…")
+#7 Q | yes | —
+#8 ALT | partly | —
+#9 TEN | yes | inner_claim borderline, hedged by "may"
+#10 RET | yes | —
+#11 ALT | partly | —
+#12 S | partly | —
+#13 RET | yes | —
+#14 TEN | partly | —
+#15 RET | yes | —
+#16 IMG | partly | —
+#17 S+IMG | partly | ("someone" vague; last clause ungrammatical)
+#18 RET | yes | —
+#19 TEN | yes | (no hedge)
+#20 IMG | yes | —
+#21 Q | partly | inner_claim yes by presupposition ("the part that trembles at each small wind")
+#22 RET | yes | (assumes the seeker has children)
+#23 TEN | yes | —
+#24 TEN | yes | —
+Opakování ≥3: "Perhaps the question is less about X, (than/and more about) Y" #3 #10 #13 (doslova), širší "less X … more Y" #2 #3 #10 #13 #18;
+"may be A, and B" s opakovaným jménem #9 #14 #23; "may be X, or Y" #5 #8 #11; "both" jako značka napětí #4 #5 #19;
+"the work you hand to others" #4 #20 #24 (vše Career); budoucí generace jako pointa v Family #8 #22 #23; všechna čtení s otázkou tazatele skončila RET.

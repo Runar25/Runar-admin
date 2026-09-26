@@ -1,0 +1,578 @@
+[
+ {
+  "runa": "Algiz",
+  "arm": "0",
+  "area": "Purpose & Path",
+  "seek": "General Guidance",
+  "question": "",
+  "konec": "End on one line that holds out two things this may be in where the seeker is going, each a state that may be so, left for them to weigh. Let it grow out of the rune's question (\"what do you need to protect now — and what do you not need to hold your boundary against?\"), but say it in your own words.",
+  "reading": "The dog lies at the high edge of the field, taking in the whole flock at once, then its eyes settle on one ewe drifting toward the fence. Algiz holds that watch steady, wide first, then narrow. Not every direction needs guarding, only the one that is moving. What lies ahead may be a road worth standing over, or one you can walk without watching your back.",
+  "usage": {
+   "input_tokens": 876,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 134,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Algiz",
+  "arm": "A",
+  "area": "Purpose & Path",
+  "seek": "General Guidance",
+  "question": "",
+  "konec": "End on one plain image of how this may stand in where the seeker is going — one concrete thing there they can look at; shown, not explained, and never what to do about it. Let it grow out of the rune's question (\"what do you need to protect now — and what do you not need to hold your boundary against?\"), but say it in your own words.",
+  "reading": "The dog takes in the whole hillside at once, then settles on the one ewe drifting toward the ridge. Algiz holds that watch open, wide enough for the flock, narrow enough for the one. Not everything in the field needs guarding, and the dog knows the difference. Ahead there may be a gate left standing open, because nothing on the far side asks to be kept out.",
+  "usage": {
+   "input_tokens": 886,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 137,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Algiz",
+  "arm": "B",
+  "area": "Purpose & Path",
+  "seek": "General Guidance",
+  "question": "",
+  "konec": "End on one line that holds, at the same time, two things this may be in where the seeker is going — both may be so together, pulling against each other, left unresolved; never what to do about it. Let it grow out of the rune's question (\"what do you need to protect now — and what do you not need to hold your boundary against?\"), but say it in your own words.",
+  "reading": "The sheepdog lies at the edge of the field, watching the whole flock at once. Then the field narrows to one ewe drifting toward the fence line. Algiz holds that wide gaze steady while the eye picks out what moves. Where you are going, keeping watch may be what keeps you whole, and what keeps you standing still.",
+  "usage": {
+   "input_tokens": 891,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 124,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Algiz",
+  "arm": "C",
+  "area": "Purpose & Path",
+  "seek": "General Guidance",
+  "question": "Should I take the job abroad or stay where I am?",
+  "konec": "End by turning back to their question: one line that shows, from the image, what else the question may be about in where the seeker is going — offered as something that may be so, never as something you know about them.",
+  "reading": "The dog lies on the rise where the whole flock is in view, the strays, the close ones, the far edge of the field. Then the field narrows, and only the watching remains. Algiz holds that high ground, keeping the wide sight open while the sheep move where they will. Perhaps the question is less about which field, and more about whether you can still see the whole of it from where you stand.",
+  "usage": {
+   "input_tokens": 864,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 135,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Isa",
+  "arm": "0",
+  "area": "Family & Home",
+  "seek": "Reflection",
+  "question": "",
+  "konec": "End on one question that holds out what this may be in what links the seeker to those before and after — asked as a possibility they can weigh, said plainly; no comfort, nothing softened. Let it grow out of the rune's question (\"what in your life is not moving now — and what could you see if you let it be this time?\"), but say it in your own words.",
+  "reading": "Where the ice meets the water, the stream keeps its voice under a lid of white. Isa holds a thing still without ending it. Kuky, a house can go quiet like that for years, one generation's silence laid over another's. What in your family has stopped moving, and what might you hear in it if you stood over the ice a while longer?",
+  "usage": {
+   "input_tokens": 882,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 121,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Isa",
+  "arm": "A",
+  "area": "Family & Home",
+  "seek": "Reflection",
+  "question": "",
+  "konec": "End on one plain image of how this may stand in what links the seeker to those before and after — one concrete thing there they can look at; shown plainly, without comfort or softening, and never what to do about it. Let it grow out of the rune's question (\"what in your life is not moving now — and what could you see if you let it be this time?\"), but say it in your own words.",
+  "reading": "Where the ice thickens over the stream, the water goes on moving and can still be heard from the bank. Isa is that held surface, sound without sight. Kuky, a house holds its own stillness this way, between the ones who came before you and the ones who come after. Stand at the kitchen table and listen for what runs under it.",
+  "usage": {
+   "input_tokens": 887,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 118,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Isa",
+  "arm": "B",
+  "area": "Family & Home",
+  "seek": "Reflection",
+  "question": "",
+  "konec": "End on one line that holds, at the same time, two things this may be in what links the seeker to those before and after — both may be so together, pulling against each other, left unresolved; said plainly, without comfort or softening. Let it grow out of the rune's question (\"what in your life is not moving now — and what could you see if you let it be this time?\"), but say it in your own words.",
+  "reading": "Where the river hardens, the surface goes still and the water beneath keeps running. Isa is the held form over a movement that does not stop. Kuky, stand at that edge a moment and listen rather than break through. In your house this may be a stillness that keeps something safe for those after you, and a stillness that keeps them from hearing it.",
+  "usage": {
+   "input_tokens": 891,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 122,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Isa",
+  "arm": "C",
+  "area": "Family & Home",
+  "seek": "Reflection",
+  "question": "Why has it gone so cold between me and my brother?",
+  "konec": "End by turning back to their question: one line that shows, from the image, what else the question may be about in what links the seeker to those before and after — offered as something that may be so, said plainly; no comfort, nothing softened.",
+  "reading": "Where the stream meets the ice, the water does not stop, it goes quiet and keeps moving underneath. Isa is that held surface, Kuky, hard above and running below. The same water passed through your parents' house and will pass through the houses after. Perhaps the question is less about your brother than about which silences your family learned to stand on.",
+  "usage": {
+   "input_tokens": 866,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 122,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Thurisaz",
+  "arm": "0",
+  "area": "Family & Home",
+  "seek": "Confirmation",
+  "question": "",
+  "konec": "End on one line that holds out two things this may be in what links the seeker to those before and after, each a state that may be so — said plainly, without comfort or softening. Let it grow out of the rune's question (\"what will appear if, this time, you do not strike back?\"), but say it in your own words.",
+  "reading": "The crack in the lava holds its width while the ground on both sides shifts and settles. Thurisaz is the gap that does not close for your convenience, the edge that stays edge. Older feet stopped here, younger ones will come to the same opening. Your part may be the jump, or the standing still that lets someone after you see how wide it truly is.",
+  "usage": {
+   "input_tokens": 878,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 128,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Thurisaz",
+  "arm": "A",
+  "area": "Family & Home",
+  "seek": "Confirmation",
+  "question": "",
+  "konec": "End on one plain image of how this may stand in what links the seeker to those before and after — one concrete thing there they can look at; shown plainly, without comfort or softening, and never what to do about it. Let it grow out of the rune's question (\"what will appear if, this time, you do not strike back?\"), but say it in your own words.",
+  "reading": "The lava has split, and the crack holds its width while the ground on both sides crumbles at the edges. Thurisaz is the force that opens a gap and keeps it open. Behind you the field runs back through your people, ahead of you it runs on, and the break sits in the middle of it. Look at the near edge, where nobody has jumped yet and the moss is still whole.",
+  "usage": {
+   "input_tokens": 890,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 137,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Thurisaz",
+  "arm": "B",
+  "area": "Family & Home",
+  "seek": "Confirmation",
+  "question": "",
+  "konec": "End on one line that holds, at the same time, two things this may be in what links the seeker to those before and after — both may be so together, pulling against each other, left unresolved; said plainly, without comfort or softening. Let it grow out of the rune's question (\"what will appear if, this time, you do not strike back?\"), but say it in your own words.",
+  "reading": "The lava holds, but the crack stays open, and the ground gives way at its lip. Thurisaz is the edge that will not close for you — it asks the jump or the halt. Your family stands on one side, the ones coming after on the other. This gap is both what keeps you apart and the only reason the leap means anything.",
+  "usage": {
+   "input_tokens": 894,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 119,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Thurisaz",
+  "arm": "C",
+  "area": "Family & Home",
+  "seek": "Confirmation",
+  "question": "Should I tell my mother what I really think?",
+  "konec": "End by turning back to their question: one line that shows, from the image, what else the question may be about in what links the seeker to those before and after — offered as something that may be so, said plainly; no comfort, nothing softened.",
+  "reading": "The crack in the lava holds its edge while everything around it crumbles underfoot. Thurisaz is the gap that stays open, keeping two sides of one rock apart. A jump takes a moment, the landing lasts longer. What you would say to your mother may also be about which side of that crack your children one day stand on.",
+  "usage": {
+   "input_tokens": 876,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 120,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Uruz",
+  "arm": "0",
+  "area": "Career & Creativity",
+  "seek": "Insight into Challenge",
+  "question": "",
+  "konec": "End on one line that names what this may be in the work the seeker does for others — a state that may be so, said plainly, without comfort or softening. Let it grow out of the rune's question (\"what strength is already in you, and what could come of it?\"), but say it in your own words.",
+  "reading": "Before the bull breaks the surface, there is only the sucking sound of the bog and the strain you cannot see. Then it heaves up, streaked black to the shoulder, and walks on without shaking itself clean. Uruz carries the weight of that mud rather than washing it off. In the work you hand to others, the force may be plain and the finish may not be, and both may be true at once.",
+  "usage": {
+   "input_tokens": 901,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 139,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Uruz",
+  "arm": "A",
+  "area": "Career & Creativity",
+  "seek": "Insight into Challenge",
+  "question": "",
+  "konec": "End on one plain image of how this may stand in the work the seeker does for others — one concrete thing there they can look at; shown plainly, without comfort or softening, and never what to do about it. Let it grow out of the rune's question (\"what strength is already in you, and what could come of it?\"), but say it in your own words.",
+  "reading": "Before the bull is seen there is the sound of it, the suck and heave of the bog giving way. Uruz pulls the weight up out of the mud and keeps the legs moving. The ground does not let go politely, and the work you carry for others drags the same way. The thing you hand them may still be caked with what you hauled it through.",
+  "usage": {
+   "input_tokens": 917,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 121,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Uruz",
+  "arm": "B",
+  "area": "Career & Creativity",
+  "seek": "Insight into Challenge",
+  "question": "",
+  "konec": "End on one line that holds, at the same time, two things this may be in the work the seeker does for others — both may be so together, pulling against each other, left unresolved; said plainly, without comfort or softening. Let it grow out of the rune's question (\"what strength is already in you, and what could come of it?\"), but say it in your own words.",
+  "reading": "Before the bull breaks the surface, there is only the suck and heave of the bog, and the mud closing again over nothing. Then the shoulders come up, and the animal walks on, still hung with the weight it climbed through. Uruz carries that mud out with the beast. The work you hand to others may be strong because it cost you that much, and heavy for the same reason.",
+  "usage": {
+   "input_tokens": 921,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 133,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Uruz",
+  "arm": "C",
+  "area": "Career & Creativity",
+  "seek": "Insight into Challenge",
+  "question": "Do I have it in me to finish the book I started?",
+  "konec": "End by turning back to their question: one line that shows, from the image, what else the question may be about in the work the seeker does for others — offered as something that may be so, said plainly; no comfort, nothing softened.",
+  "reading": "Before the bull comes into view, you hear the suck and tear of the bog letting go of something heavy. Uruz is that pull upward, hauling weight out of ground that holds on. The mire does not release the book gladly, and each page costs more than the last. What you are asking may be less whether the strength is there, and more whether the thing you drag out is still worth carrying to the people waiting for it.",
+  "usage": {
+   "input_tokens": 904,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 142,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Gebo",
+  "arm": "0",
+  "area": "Love & Relationships",
+  "seek": "Clarity",
+  "question": "",
+  "konec": "End on one line that names what this may be in how near the seeker stands to someone — a state that may be so, offered for them to weigh; it names how things may stand, never what to do about it. Let it grow out of the rune's question (\"what are you willing to give without knowing it will return — and what can you receive without repaying it at once?\"), but say it in your own words.",
+  "reading": "One hand holds something out, and the other opens to take it, and for a moment both are held in the same gesture. Gebo is the exchange itself, the water passing between two vessels. Watch which hand you keep busy, the offering one or the receiving one. It may be that nearness here rests less on what you give than on what you can take without hurrying to even the weight.",
+  "usage": {
+   "input_tokens": 942,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 129,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Gebo",
+  "arm": "A",
+  "area": "Love & Relationships",
+  "seek": "Clarity",
+  "question": "",
+  "konec": "End on one plain image of how this may stand in how near the seeker stands to someone — one concrete thing there they can look at; shown, not explained, and never what to do about it. Let it grow out of the rune's question (\"what are you willing to give without knowing it will return — and what can you receive without repaying it at once?\"), but say it in your own words.",
+  "reading": "One hand holds something out, and the other opens to take it, and for a moment both are in motion. Gebo is the exchange itself, the passing between two hands that neither owns alone. Notice what is held out here, and whether the giving waits on something coming back. Perhaps the thing between you and someone is a hand still extended, and how long it stays that way.",
+  "usage": {
+   "input_tokens": 940,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 128,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Gebo",
+  "arm": "B",
+  "area": "Love & Relationships",
+  "seek": "Clarity",
+  "question": "",
+  "konec": "End on one line that holds, at the same time, two things this may be in how near the seeker stands to someone — both may be so together, pulling against each other, left unresolved; never what to do about it. Let it grow out of the rune's question (\"what are you willing to give without knowing it will return — and what can you receive without repaying it at once?\"), but say it in your own words.",
+  "reading": "One hand holds something out, and the other opens to take it, and neither hand is still. Gebo is the passing between two hands, where the giving and the taking are one motion. Watch which hand you are in this, and whether it tires. Nearness may be the thing you hold out freely, and the thing you cannot yet let yourself accept.",
+  "usage": {
+   "input_tokens": 945,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 122,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Gebo",
+  "arm": "C",
+  "area": "Love & Relationships",
+  "seek": "Clarity",
+  "question": "Is this relationship still good for me?",
+  "konec": "End by turning back to their question: one line that shows, from the image, what else the question may be about in how near the seeker stands to someone — offered as something that may be so, never as something you know about them.",
+  "reading": "One hand holds something out, and the other is already reaching to take it. Gebo is the exchange itself, the moment where two hands meet and neither is empty. Watch which hand stays open longer, and whether the weight passes both ways. Perhaps the question is less about what you receive, and more about how close you are standing when you give.",
+  "usage": {
+   "input_tokens": 908,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 120,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Laguz",
+  "arm": "0",
+  "area": "Inner Growth",
+  "seek": "General Guidance",
+  "question": "",
+  "konec": "End on one question that holds out what this may be in what is ripening in the seeker — asked as a possibility they can weigh, never as something you know about them. Let it grow out of the rune's question (\"what do you feel inside before you have words for it?\"), but say it in your own words.",
+  "reading": "The lagoon holds the mountain upside down, and a breath of wind scatters it into pieces. The stone itself has not moved. Laguz is the water that answers every passing thing while the shape beneath stays where it is, Kuky. What might be standing steady in you, under the part that trembles at each small wind?",
+  "usage": {
+   "input_tokens": 900,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 118,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Laguz",
+  "arm": "A",
+  "area": "Inner Growth",
+  "seek": "General Guidance",
+  "question": "",
+  "konec": "End on one plain image of how this may stand in what is ripening in the seeker — one concrete thing there they can look at; shown, not explained, and never what to do about it. Let it grow out of the rune's question (\"what do you feel inside before you have words for it?\"), but say it in your own words.",
+  "reading": "The stone beneath the lagoon holds its shape while the reflection above it breaks at a breath of wind. Laguz is the water that knows the shore before the eye measures it. What you sense first, Kuky, arrives long before the words for it do. Perhaps in time you will trust the stone more than the trembling picture on the surface.",
+  "usage": {
+   "input_tokens": 906,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 124,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Laguz",
+  "arm": "B",
+  "area": "Inner Growth",
+  "seek": "General Guidance",
+  "question": "",
+  "konec": "End on one line that holds, at the same time, two things this may be in what is ripening in the seeker — both may be so together, pulling against each other, left unresolved; never what to do about it. Let it grow out of the rune's question (\"what do you feel inside before you have words for it?\"), but say it in your own words.",
+  "reading": "The stone beneath the lagoon holds its place while the surface breaks apart at a breath of wind. Laguz is the water that knows a thing before the picture on it settles. What ripens slowly, Kuky, is the difference between the trembling and the stone. A knowing that arrives before words may be the oldest part of you, or the least finished — both at once.",
+  "usage": {
+   "input_tokens": 911,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 131,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "runa": "Laguz",
+  "arm": "C",
+  "area": "Inner Growth",
+  "seek": "General Guidance",
+  "question": "Why do I keep stopping just before I change?",
+  "konec": "End by turning back to their question: one line that shows, from the image, what else the question may be about in what is ripening in the seeker — offered as something that may be so, never as something you know about them.",
+  "reading": "The lagoon holds the mountain whole, and one breath of wind scatters it into pieces. Laguz is the water that keeps the shape only while it stays unstirred. The stone above, Kuky, never moved — only the surface that carried it. Perhaps the pause before changing is not refusal, but the water waiting to settle enough to see what it already holds.",
+  "usage": {
+   "input_tokens": 892,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 133,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ }
+]

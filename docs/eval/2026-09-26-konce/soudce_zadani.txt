@@ -1,0 +1,20 @@
+You are judging only the ENDINGS of 24 short rune readings. You know nothing about how they were produced; do not guess.
+Each reading is headed by its number, the life area the seeker chose, and — for some — the question the seeker asked.
+The ending = the last sentence (or the last two, if the last is only a few words and clearly belongs to the one before).
+
+For EACH reading return:
+1. ending: the ending, quoted exactly.
+2. shape: the ONE label that fits best —
+   S   = a plain statement of what this may be in the seeker's life
+   ALT = two alternatives offered side by side ("X, or Y")
+   Q   = an open question put to the seeker
+   IMG = a concrete picture set in the seeker's life, left to be looked at; its meaning is not spelled out
+   TEN = two things held together at once, pulling against each other, left unresolved ("X, and yet Y")
+   RET = it turns back to the seeker's own question and shows it differently
+   (add a second label only if a second shape is clearly just as present)
+3. anchored: could a reader who saw nothing but this reading tell what part of their life the ending points to? yes / partly / no
+4. inner_claim: does the ending state as FACT something about the seeker's feelings, thoughts, motives or knowledge (not offered as a possibility)? yes / no — if yes, quote the words
+5. advice: does the ending tell the seeker what to do? yes / no
+
+After all 24: list any wording or sentence construction that recurs in 3 or more endings, with the reading numbers.
+Be strict and literal. Return plain text, one block per reading.
