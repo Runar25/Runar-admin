@@ -7205,3 +7205,18 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Kontrola:** smoke (`verify_ask_hints.js` bod 12): prompt čtení z produkčního builderu → `_lastGen` → `_askBuild`; aspekt přežije
   a klíče zůstanou; jiný jazyk / jiná runa / spread → bez aspektu. Mutace (vyndaný argument `_askAspect()`) → 2 FAIL.
 - Affected doc(s): žádný (Ask má znění v kódu; RUNAR_DESIGN Ask neopisuje).
+
+## 2026-09-26 (5) — Věta o runě (esenční rámec [1]): runa jmenovaná tím, co v obraze znamená, ne jako ta, kdo tam něco dělá (v4.63)
+
+- **Rozhodl:** KUKY 2026-09-26 *„ano jeď 3 → 1 → 2“* (krok 2) + CODE-read *„připrav znění esence a udělej malý test“*.
+- **Proč:** Hagalaz *„opens the field where the boards once stood“* — owner: *„nevím, jestli se mi líbí, že Rúnar používá runu jako nástroj
+  pro něco, co nejde úplně poznat z obrazu.“* Rámec [1] říkal *„is the one doing something in that scene: it moves, holds, opens, carries“*:
+  runa brala činnost, kterou v obraze dělá někdo jiný (vichr, ruka, pletoucí), a výčet sloves model opisoval (19/41).
+- **Co:** [1] EN/IS = znění CODE-read (EVAL_LOG 2026-09-26 (3)) — role aktéra i výčet ODEBRÁNY, nic nepřidáno; princip z Blank
+  (DECISIONS 2026-09-25 (5)). [0] beze změny, los mezi [0] a [1] zůstává.
+- **Změřeno:** CODE-read EN 6 obrazů s cizím aktérem, slepý soudce: runa přebírá cizí činnost 6/6 → 0/6, cizinec pochopí význam
+  3/6 → 6/6. CODE-tune IS 3 čtení (`docs/eval/2026-09-26-slova-tune/esence_is.json`): *„Hagalaz er veðrið sem tók niður það sem hélt
+  ekki“*, *„Kenaz er þetta ljós“*, *„Gebo er þessi sama hreyfing, gjöf og móttaka í einu andartaki“* — is-grammar-qa bez E001.
+- **Cena / hlídat:** spona *„<runa> is that …“* EN 5/6, IS 3/3. [1] vznikl 2026-09-20 (3) PROTI sponě z [0]; teď ji dávají oba rámce.
+  Owner ji chtěl u Blank („The blank is the unknown“) — když se z ní stane formule, řešit (ne pojmenovat a zakázat).
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka „Slova oblasti“).

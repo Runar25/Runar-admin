@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-26",
- "prompt_version": "v4.62-career-bez-work",
+ "prompt_version": "v4.63-esence-vyznam",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -124,10 +124,10 @@
    "zacatek": "THE ESSENCE LINE: after the picture, one short line that says what the"
   },
   {
-   "hash": "20507370661e",
+   "hash": "d8932f6ccf21",
    "lang": "en",
    "zdroj": "esence[1]",
-   "zacatek": "THE ESSENCE LINE: after the picture, one short line where the rune — n"
+   "zacatek": "THE ESSENCE LINE: after the picture, one short line that names the run"
   },
   {
    "hash": "d4bd74cb6649",
@@ -862,10 +862,10 @@
    "zacatek": "KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem segir hvað rúni"
   },
   {
-   "hash": "323cf6569c16",
+   "hash": "78b0df9122a0",
    "lang": "is",
    "zdroj": "esence[1]",
-   "zacatek": "KJARNALÍNAN: á eftir myndinni kemur ein stutt lína þar sem rúnin — nef"
+   "zacatek": "KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem nefnir rúnina e"
   },
   {
    "hash": "18528f4a43a4",

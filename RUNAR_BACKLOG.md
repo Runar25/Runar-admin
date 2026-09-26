@@ -670,7 +670,11 @@
   that“ 1/6; ještě jedno kolo znění, pak ukázat ownerovi. (b) **obraz** (typ 6) — nedoporučeno (nestabilní, vrací vadu v4.32). (c) Hlídat
   v živých čteních: EN stavbu „may be A, and B“ se zopakovaným jménem (pilot 3/6), IS vymyšlená slova v napětí (pilot 1/6 „bærunni“).
   Data: `docs/eval/2026-09-26-konce/`.
-- [ ] **Slova oblasti a „co jde do které věty“ — pro CODE-read (handoff předán 2026-09-26, psáno proti f679170)**
+- [ ] **Slova oblasti a „co jde do které věty“ — CODE-read hotovo (EVAL_LOG 2026-09-26 (1)–(3)); CODE-tune nasadil kroky 3 · 1 · 2**
+  **2026-09-26 nasazeno:** Career podoby bez „work“ (v4.62, DECISIONS (2) — model „work“ říká dál, 6/6) · Ask nese aspekt čtení
+  (DECISIONS (4)) · esenční rámec [1] = význam v obraze (v4.63, DECISIONS (5)). **Zbývá:** ownerův cíl „činnost z obrazu jeho slovy“
+  (malování ≠ work) — owner: *teď neřešit, udělá víc čtení a vrátí se* (zapsal CODE-read); spona „<runa> is that…“ hlídat.
+  Původní zadání:
   Owner: *„pokud je v obraze malování a člověk se zeptá na Career & Creativity, kreativita si o to přímo říká, ale Rúnar použije slovo
   práce, work… jak to udělat, aby dokázal najít ta správná slova“* — lidská činnost v obrazu má zůstat činností obrazu (tah štětcem,
   čára tužkou), ne „work“. Úkol: najít, odkud „work“ a podobná slova přicházejí (oblast, podoby oblastí, esenční rámce, úhly, klíčová

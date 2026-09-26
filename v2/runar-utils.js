@@ -461,14 +461,21 @@ const LENGTH_BUDGETS_IS = [
 // ── ESENCNI RAM (2026-09-20) — dve zneni teze instrukce, losuje se per cteni.
 // [0] = dosavadni produkcni zneni (bylo v VOICE_PROFILES.focused.rules.describe, presunuto
 //       sem k ostatnim losovanym pokynum promptu — §18: los patri k losum, ne k profilu hlasu)
-// [1] = „runa kona": runa je PODMET slovesa cinnosti a jmenuje se v teze vete
+// [1] = runa jmenovana v teze vete TIM, CO V OBRAZE ZNAMENA (od 2026-09-26). Do te doby „runa kona“: „is the one doing
+//       something in that scene: it moves, holds, opens, carries“ — a runa brala cinnost, kterou v obraze dela nekdo jiny
+//       (KUKY u Hagalaz „opens the field where the boards once stood“: „nevim, jestli se mi libi, ze Runar pouziva runu jako
+//       nastroj pro neco, co nejde uplne poznat z obrazu“). Vycet sloves model opisoval (19/41, ramec [0] 0/43). Nove zneni
+//       jen ODEBIRA roli aktera i vycet a bere princip, ktery owner schvalil u Blank (DECISIONS 2026-09-25 (5)): runa se jmenuje
+//       vyznamem, ktery obraz obsahuje. Slepy soudce (CODE-read, EVAL_LOG 2026-09-26 (3)): runa prebira cizi cinnost 6/6 -> 0/6,
+//       cizinec pochopi vyznam 3/6 -> 6/6. CENA: spona „<runa> is that …“ 5/6 — [1] puvodne vznikl PROTI spone (DECISIONS
+//       2026-09-20 (3)); hlidat, jestli se z ni nestane formule.
 const ESSENCE_FRAMES = [
   'THE ESSENCE LINE: after the picture, one short line that says what the rune DOES through this image — its sense in plain words a stranger to runes can grasp. The familiar word may live inside the doing ("exchange between the sea and the shore"). Never a fixed formula. No invented mechanism, no fate. Never tell the seeker what it means for them.',
-  'THE ESSENCE LINE: after the picture, one short line where the rune — named here, once — is the one doing something in that scene: it moves, holds, opens, carries. Plain words a stranger to runes can grasp. No invented mechanism, no fate. Never tell the seeker what it means for them.',
+  'THE ESSENCE LINE: after the picture, one short line that names the rune once and says what it is in this scene — the meaning that already lives in the picture. Plain words a stranger to runes can grasp. No invented mechanism, no fate. Never tell the seeker what it means for them.',
 ];
 const ESSENCE_FRAMES_IS = [
   'KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem segir hvað rúnin GERIR í gegnum þessa mynd — merking hennar með hversdagslegum orðum sem ókunnugur skilur. Kunnuglega orðið má lifa inni í myndinni. Aldrei föst formúla. Engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.',
-  'KJARNALÍNAN: á eftir myndinni kemur ein stutt lína þar sem rúnin — nefnd þar einu sinni — er sú sem gerir eitthvað í myndinni. Hún hreyfir, heldur, opnar eða ber. Hversdagsleg orð sem ókunnugur skilur. Engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.',
+  'KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem nefnir rúnina einu sinni og segir hvað hún er í þessari mynd — þá merkingu sem þegar býr í henni. Hversdagsleg orð sem ókunnugur skilur. Engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.',
 ];
 // PRAZDNA RUNA (2026-09-22, KUKY „udelej" + popis runy v RUNAR_POPISY_RUN.md): oba ramy vyse
 // rikaji, co runa DELA — [1] dokonce „runa je ta, ktera v te scene neco dela". U Blank to vyrabi
