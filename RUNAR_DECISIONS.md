@@ -7145,3 +7145,22 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   `#read-guide-lbl` (*„Tap here — it shows how a reading works."* / *„Smelltu hér til að sjá hvernig lestur verður til."*).
 - **Známé riziko:** dva souběžné Asky na tomtéž čtení můžou oba projít jako zdarma (zápis `follow_up` není atomický) — BACKLOG „Ask — nálezy" bod 2.
 - Affected doc(s): `RUNAR_BACKLOG.md` (plán dvou Asků — krok 1 živě).
+
+## 2026-09-26 (1) — Napětí = čtvrtý tvar konce, padá jen v losu (v4.61); dvě možnosti ani jiný pevný tvar se neruší
+
+- **Rozhodl:** KUKY 2026-09-26: *„dvě možnosti se mi líbí. určitě to nechci rušit. já chci více různých konců, ne stejné! tohle nebylo
+  o tom je vyměnit, ale přidat víc možností. mělo to být v general… napětí nasaď."* (Můj návrh „Confirmation → napětí místo dvou
+  možností" a „Clarity → obraz" tím padá; Clarity má zůstat věta i proto, že kdo chce jasno, nemá dostat nevysvětlený obraz.)
+- **Co:** `ENDING_OPEN/HEAVY(_IS)[3]` = napětí (typ 7 z tarotové typologie, kterou owner vložil 2026-09-25): dvě věci NARAZ, které se
+  táhnou proti sobě a zůstanou nevyřešené — ne volba „X, nebo Y". Padá jen tam, kde `SEEK_SHAPE` je `null` (General Guidance
+  a čtení bez rejstříku), los teď ze čtyř tvarů. Rejstříky s pevným tvarem beze změny. „may be" zůstává (DECISIONS 2026-09-20 (4)).
+- **Měření (Opus 5, stejné losy, `docs/eval/2026-09-26-konce/`):** EN — slepý soudce tvar napětí 6/6, rada 0/6, tvrzení o nitru 0/6,
+  ukotvení v oblasti 4 ano / 2 napůl. IS — tvar 6/6, konce parsovatelné 5/6; 1/6 si vytvořil slovo („bærunni", Laguz — z obrazu
+  „bærist"). Slabina EN: 3/6 táž stavba „may be A, and B" s opakovaným podstatným jménem.
+- **Nenasazeno z pilotu:** *obraz* (typ 6) — nestabilní (5/6 → po přepisu 2/6), 2/6 skončily pokynem a 4/6 kotvily napůl = vracela
+  se vada, kvůli které obraz z konce odešel ve v4.32 (§26). *Návrat k otázce* (typ 9) — tvar 6/6, ale 4/6 formule „Perhaps the
+  question is less about X, and more about Y"; přepis formuli srazil na 0/6, přinesl pokyn 1/6 a pojistku 1/6. Čeká na ownera.
+- **Kontrola:** smoke ㉨ (`verify_ending_angle.js`) — v losu padnou všechny čtyři tvary vč. napětí; `_promptDraws` pozná každý tvar
+  pod SVÝM indexem (v IS začínají dvě možnosti a napětí stejně, liší se až za `{L}`) — negativní kontrola: napětí, které v sobě
+  nese celé znění [1], se pozná jako open1 → kontrola padne.
+- Affected doc(s): `RUNAR_DESIGN.md` (Stavba Single, tabulka mostu — řádek General) · `RUNAR_BACKLOG.md`.

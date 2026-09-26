@@ -38,3 +38,9 @@ kterou owner vložil 2026-09-25 — 1–4 verdikt/rada/varování/predikce jsou 
 
 **Hranice:** n = 6 na tvar, jeden los na případ, jen EN, bez životní runy; kolo 2 bez slepého soudce. Otázky tazatele
 napsal CODE-tune (ne skutečné). Soudce měřil tvar, ukotvení, radu a tvrzení — ne „je konec lepší“; to je ownerův úsudek.
+
+## Po nasazení napětí (v4.61) — IS, 6 čtení (`napeti_is.js` / `.json`)
+
+Produkční cesta v4.61, pool vynucený na [3]. Tvar napětí 6/6 (Algiz spíš „na rozhraní dvou“). is-grammar-qa na samotných koncích:
+5/6 parsovatelné; Laguz si vytvořil slovo („kyrrðin sem þolir **bærunni** og **bæran**…“ — z obrazu „spegilmyndin bærist“) → E001 + S004.
+Celá čtení: E001 3/6 (srovnání: pilot 2026-09-24 IS 2/6 — při n = 6 bez rozdílu). Rozhodnutí → `RUNAR_DECISIONS.md` 2026-09-26 (1).

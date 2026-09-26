@@ -1286,7 +1286,7 @@ plus dvě síta výš a kontrola „čí je to pozemek" (předmět/sloveso nesm�
    | Confirmation | *„neither confirm nor refute"* | **dvě možnosti** (jediný čestný tvar, když nesmím ani potvrdit, ani vyvrátit) |
    | Insight into Challenge | *„name the friction honestly, without softening it into comfort"* | **těžká věta** bez útěchy |
    | Reflection | *„open a mirror, not an answer; turn them inward"* | **otázka** |
-   | General Guidance | *„let the rune lead where it will"* | **los** ze tří tvarů (dnešek) |
+   | General Guidance | *„let the rune lead where it will"* | **los** ze všech tvarů: věta · dvě možnosti · otázka · **napětí** (od 2026-09-26) |
 
    **Kam dosedne:** mění se JEDINÁ fráze v mostu (`in the seeker's life` → fráze oblasti), zbytek znění je společný —
    jedna cesta kódem, oblast jako data (§18). **Od 2026-09-25 má každá oblast 3–5 PODOB** (KUKY: „podoby jsou dobré"):
@@ -1305,8 +1305,11 @@ plus dvě síta výš a kontrola „čí je to pozemek" (předmět/sloveso nesm�
    tazatele. Proč a měření → `RUNAR_DECISIONS.md` 2026-09-24 (16).
    **Znění vlastní KÓD, doc ho neopisuje (§20):** `SEEK_SHAPE` · `AREA_FACES` (podoby oblastí, od 2026-09-25) · `ENDING_OPEN/HEAVY(_IS)` ·
    `_runeQuestion` v `v2/runar-utils.js`, výjimka v `_domainContext` (`runar-character.js`). Nasazeno v4.36 + v4.37.
-   Oba pooly mají tytéž tři tvary ve stejném pořadí, takže **každý tvar má i těžký protějšek** — těžkost runy
-   volí pool, rejstřík volí tvar.
+   Oba pooly mají tytéž tvary ve stejném pořadí, takže **každý tvar má i těžký protějšek** — těžkost runy
+   volí pool, rejstřík volí tvar. **Napětí** (dvě věci naráz, nevyřešené — ne volba „X, nebo Y") padá jen v losu:
+   owner chce *„více různých konců, ne stejné"* — tvary se PŘIDÁVAJÍ, pevné tvary rejstříků zůstávají. Proč a měření →
+   `RUNAR_DECISIONS.md` 2026-09-26 (1).
+   <!-- changelog 2026-09-26: „tři tvary" → tvary bez počtu (počet vlastní kód); řádek General nese napětí. -->
    <!-- changelog 2026-09-20: při vkládání mechanismu mi tu zůstal osiřelý odstavec z původního znění bodu 3
         („tři tvary + zvláštní znění pro těžké runy") — dvakrát totéž a navíc zastaralé, protože v4.34 dodala
         těžký protějšek každému tvaru. Sloučeno; ukazatel na backlog nahrazen ukazatelem na kód, znění je nasazené. -->

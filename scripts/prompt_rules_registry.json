@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
- "zapsano": "2026-09-25",
- "prompt_version": "v4.60-bez-cocky",
+ "zapsano": "2026-09-26",
+ "prompt_version": "v4.61-napeti",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -64,6 +64,12 @@
    "zacatek": "End on one question that holds out what this may be {L} — asked as a p"
   },
   {
+   "hash": "f7723f6b3e5c",
+   "lang": "en",
+   "zdroj": "zakonceni_open[3]",
+   "zacatek": "End on one line that holds, at the same time, two things this may be {"
+  },
+  {
    "hash": "e2d331c1be69",
    "lang": "en",
    "zdroj": "zakonceni_heavy[0]",
@@ -80,6 +86,12 @@
    "lang": "en",
    "zdroj": "zakonceni_heavy[2]",
    "zacatek": "End on one question that holds out what this may be {L} — asked as a p"
+  },
+  {
+   "hash": "1baec6a22f46",
+   "lang": "en",
+   "zdroj": "zakonceni_heavy[3]",
+   "zacatek": "End on one line that holds, at the same time, two things this may be {"
   },
   {
    "hash": "5397d757cba8",
@@ -790,6 +802,12 @@
    "zacatek": "Endaðu á einni spurningu sem spyr hvað þetta gæti verið {L} — sem mögu"
   },
   {
+   "hash": "49912285117f",
+   "lang": "is",
+   "zdroj": "zakonceni_open[3]",
+   "zacatek": "Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið {L}, bæði í"
+  },
+  {
    "hash": "43f000e5e0ad",
    "lang": "is",
    "zdroj": "zakonceni_heavy[0]",
@@ -806,6 +824,12 @@
    "lang": "is",
    "zdroj": "zakonceni_heavy[2]",
    "zacatek": "Endaðu á einni spurningu sem spyr hvað þetta gæti verið {L} — sem mögu"
+  },
+  {
+   "hash": "fcc43821071b",
+   "lang": "is",
+   "zdroj": "zakonceni_heavy[3]",
+   "zacatek": "Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið {L}, bæði í"
   },
   {
    "hash": "6f5502bf6da0",

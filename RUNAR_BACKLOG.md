@@ -659,17 +659,13 @@
   mrtvé větve `_lensContext` / lens část `_priorityContext` smazat, až bude jisté, že se čočka nevrací. (CODE-tune)
 - [ ] **Text zamčeného Asku pro Rune Seekera** — dnes *„Rúnar has one answer left — Premium hears it.“* (sedí na starý model „jedna odpověď
   zbývá“). Owner: *„něco přirozeného… nemělo by se to úplně vymykat“* ostatním teaserům (*„Deeper questions open with {tier}.“*). Návrh v chatu 2026-09-25.
-- [ ] **Konce čtení: víc tvarů (typy 6/7/9) — ČEKÁ na ownerův pokyn po resetu tokenů** (CODE-tune, návrh 2026-09-26)
-  Owner: *„u těch konců máme něco nastavené — větou, otázkou, dvě možnosti… tady vidím prostor pro vylepšení“*; z typologie tarotových
-  konců vybral jako možné 5–10 (1–4 verdikt/rada/varování/predikce = proti kánonu). Dnes: 3 tvary (věta · dvě možnosti · otázka) se
-  společnou kostrou „this may be … {L}“, tvar volí SEEKING (`SEEK_SHAPE`, `ENDING_OPEN/HEAVY` v runar-utils.js).
-  **Návrh CODE-tune:** přidat (6) OBRAZ — konec se stáhne do jednoho obrazu postaveného v oblasti, bez vysloveného významu;
-  (7) NAPĚTÍ — obojí naráz, ne volba „X, nebo Y“ (pro Confirmation místo dvou možností — owner u Thurisaz chtěl jinak);
-  (9) NÁVRAT K OTÁZCE — jen když tazatel napsal „The situation“; riziko studeného čtení (příklad z typologie je tvrzení o nitru),
-  musí vyjít z obrazu a zůstat možností. (8) integrace už je ve spreadech, (10) ticho zatím ne (Algiz „cesta se váží“ = prázdný konec,
-  bez mostu konce nedosedaly 2/6 × 6/6). Rozdělení: Clarity → obraz · Confirmation → napětí · Reflection → otázka (s vlastní otázkou
-  návrat) · Challenge → těžká věta / těžké napětí · General → los ze všech. **Napřed pilot** (Opus 5, stejné losy, ~6 čtení na tvar,
-  1 slepý soudce: dosednutí do oblasti · tvrzení o člověku · opis pokynu · stejnost konců). Owner rozdělení zatím NEPOTVRDIL.
+- [ ] **Konce čtení: víc tvarů — napětí NASAZENO (v4.61), návrat k otázce čeká, obraz ne** (CODE-tune, 2026-09-26)
+  Owner: *„chci více různých konců, ne stejné… přidat víc možností, ne vyměnit“* — tvary se PŘIDÁVAJÍ do losu, pevné tvary rejstříků
+  zůstávají. Napětí → DECISIONS 2026-09-26 (1). Zbývá: (a) **návrat k otázce** (typ 9, jen s vlastní otázkou tazatele) — přepis
+  srazil formuli „Perhaps the question is less about…“ 4/6 → 0/6, ale přinesl pokyn 1/6 a pojistku „only your own hands can measure
+  that“ 1/6; ještě jedno kolo znění, pak ukázat ownerovi. (b) **obraz** (typ 6) — nedoporučeno (nestabilní, vrací vadu v4.32). (c) Hlídat
+  v živých čteních: EN stavbu „may be A, and B“ se zopakovaným jménem (pilot 3/6), IS vymyšlená slova v napětí (pilot 1/6 „bærunni“).
+  Data: `docs/eval/2026-09-26-konce/`.
 - [ ] **Slova oblasti a „co jde do které věty“ — pro CODE-read (handoff předán 2026-09-26, psáno proti f679170)**
   Owner: *„pokud je v obraze malování a člověk se zeptá na Career & Creativity, kreativita si o to přímo říká, ale Rúnar použije slovo
   práce, work… jak to udělat, aby dokázal najít ta správná slova“* — lidská činnost v obrazu má zůstat činností obrazu (tah štětcem,

@@ -17,7 +17,8 @@
 //  · rejstrik dava DETERMINISTICKY tvar (Clarity veta · Confirmation dve moznosti · Reflection otazka),
 //  · „Insight into Challenge" bere tezke zneni i u LEHKE runy; tezka runa vynuti tezke zneni,
 //    ale tvar rejstriku NEMENI,
-//  · bez rejstriku (i u „General Guidance") padnou vsechny tri tvary,
+//  · bez rejstriku (i u „General Guidance") padnou VSECHNY tvary poolu (od 2026-09-26 ctyri, + napeti),
+//  · kazdy tvar kazdeho poolu `_promptDraws` pozna pod SVYM indexem (napeti a dve moznosti v IS zacinaji stejne),
 //  · kazda z osmi oblasti da svuj cil a bez oblasti zustane obecny,
 //  · kazdy esencni ram, rozpocet delky i umisteni jmena padne,
 //  · `_promptDraws` pozna tvar i s vlozenou frazi oblasti (ending · essence · len · name),
@@ -51,7 +52,8 @@ const tvrdy = (t) => /without comfort|no comfort|nothing softened|umbúðalaust|
 const tvar = (t, L) => {
   const q = L === 'is' ? 'einni spurningu' : 'one question';
   const dve = L === 'is' ? 'nefnir tvennt' : 'two things';
-  return t.indexOf(q) !== -1 ? 'otazka' : (t.indexOf(dve) !== -1 ? 'dve' : 'veta');
+  const nap = L === 'is' ? 'bæði í senn' : 'at the same time';   // napeti (2026-09-26) — obsahuje i „dve“, proto napred
+  return t.indexOf(q) !== -1 ? 'otazka' : (t.indexOf(nap) !== -1 ? 'napeti' : (t.indexOf(dve) !== -1 ? 'dve' : 'veta'));
 };
 
 for (const L of ['en', 'is']) {
@@ -75,11 +77,21 @@ for (const L of ['en', 'is']) {
   const tt = es(tezka, L, potvrzeni, oblast);
   rekni(tvrdy(tt) && tvar(tt, L) === 'dve', L + '  tezka runa: tezke zneni, ale TVAR rejstriku nemeni');
 
-  // (3) bez rejstriku i u „General Guidance" padnou vsechny tri tvary
+  // (3) bez rejstriku i u „General Guidance" padnou vsechny tvary poolu
   for (const rej of [undefined, SK[L][0]]) {
     const videno = new Set();
     for (let i = 0; i < 2000; i++) videno.add(tvar(es(lehka, L, rej, oblast), L));
-    rekni(videno.size === 3, L + '  bez urceni (' + (rej || 'nezadano') + '): vsechny tri tvary padnou (videno ' + videno.size + ')');
+    rekni(videno.size === O[L].length && videno.has('napeti'), L + '  bez urceni (' + (rej || 'nezadano') + '): vsech ' + O[L].length + ' tvaru padne vc. napeti (videno ' + [...videno].join('/') + ')');
+  }
+  // (3b) kazdy tvar obou poolu pozna `_promptDraws` pod SVYM indexem — v IS zacinaji dve moznosti [1] a napeti [3]
+  //      stejne („nefnir tvennt sem þetta gæti verið“), rozlisi je az cast za {L}; zamena by tise zkreslila kazde mereni konce.
+  {
+    let zle = 0;
+    for (const [pool, zn] of [[O[L], 'open'], [H[L], 'heavy']]) pool.forEach((t, i) => {
+      const d = draws('X' + String.fromCharCode(10) + t.split('{L}').join(AR[L][2]) + String.fromCharCode(10) + 'Y', L);
+      if (!d || d.ending !== zn + i) { zle++; console.log('    ' + zn + '[' + i + '] -> ' + (d && d.ending)); }
+    });
+    rekni(zle === 0, L + '  _promptDraws pozna kazdy tvar pod svym indexem (' + (O[L].length + H[L].length) + ')');
   }
 
   // (4) kazda oblast da SVUJ cil; bez oblasti obecny

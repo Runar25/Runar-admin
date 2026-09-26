@@ -407,14 +407,21 @@ function _promptDraws(prompt, lang) {
 // ── MOST K CLOVEKU (2026-09-20, KUKY) ─────────────────────────────────────────
 // Konec pojmenuje, co to MUZE byt v zivote leitandy — jako stav k zvazeni, nikdy rada.
 // TVAR urcuje rejstrik (SEEK_SHAPE), CIL urcuje oblast ({L} = podoba oblasti, AREA_FACES). Oba pooly maji
-// tytez TRI tvary ve stejnem poradi, takze tvar = index a tezkost = jen volba poolu:
-//   [0] veta · [1] dve moznosti · [2] otazka
+// tytez CTYRI tvary ve stejnem poradi, takze tvar = index a tezkost = jen volba poolu:
+//   [0] veta · [1] dve moznosti · [2] otazka · [3] napeti
+// [3] NAPETI (2026-09-26, KUKY „chci vice ruznych koncu, ne stejne… napeti nasad“; typ 7 z tarotove typologie):
+// dve veci NARAZ, ktere se tahnou proti sobe a zustanou nevyresene — ne volba „X, nebo Y“ jako [1]. Pridano, NIC
+// nenahrazuje (owner: „dve moznosti se mi libi, urcite to nechci rusit“); pada jen v losu (SEEK_SHAPE null).
+// Pilot Opus 5 (docs/eval/2026-09-26-konce/): tvar 6/6 u slepeho soudce, rada 0/6, tvrzeni o nitru 0/6; slabina 3/6
+// stejna stavba „may be A, and B“ s opakovanym podstatnym jmenem — hlidat. „at the same time“ stoji PRED {L}: za nim
+// se cetl jako soucast oblasti („…does for others at the same time“).
 // „may be" musi zustat v KAZDEM tvaru — zneni bez nej zabilo tvar moznosti 2/2 (DECISIONS
 // 2026-09-20 (4)). Otazkovy tvar navadi 2/6 (CODE-read) — znama vada, hlidat pri mereni.
 const ENDING_OPEN = [
   "End on one line that names what this may be {L} \u2014 a state that may be so, offered for them to weigh; it names how things may stand, never what to do about it.",
   "End on one line that holds out two things this may be {L}, each a state that may be so, left for them to weigh.",
   "End on one question that holds out what this may be {L} \u2014 asked as a possibility they can weigh, never as something you know about them.",
+  "End on one line that holds, at the same time, two things this may be {L} \u2014 both may be so together, pulling against each other, left unresolved; never what to do about it.",
 ];
 // Tezke zneni TYCHZ tri tvaru: drzi „may be", ubira jen utechu (RUNAR_DESIGN „Stavba Single
 // cteni" bod 3). Bere je tezka runa (HEAVY_RUNES) i rejstrik „Insight into Challenge".
@@ -422,16 +429,19 @@ const ENDING_HEAVY = [
   "End on one line that names what this may be {L} \u2014 a state that may be so, said plainly, without comfort or softening.",
   "End on one line that holds out two things this may be {L}, each a state that may be so \u2014 said plainly, without comfort or softening.",
   "End on one question that holds out what this may be {L} \u2014 asked as a possibility they can weigh, said plainly; no comfort, nothing softened.",
+  "End on one line that holds, at the same time, two things this may be {L} \u2014 both may be so together, pulling against each other, left unresolved; said plainly, without comfort or softening.",
 ];
 const ENDING_OPEN_IS = [
   'Endaðu á einni línu sem nefnir hvað þetta gæti verið {L} — ástand sem gæti átt við, honum til umhugsunar; hún nefnir hvernig hlutirnir gætu staðið, aldrei hvað skuli gera.',
   'Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið {L}, hvort um sig ástand sem gæti átt við, honum til umhugsunar.',
   'Endaðu á einni spurningu sem spyr hvað þetta gæti verið {L} — sem möguleika sem hann getur vegið og metið, aldrei sem eitthvað sem þú veist um hann.',
+  'Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið {L}, bæði í senn — tvennt sem togast á og er skilið eftir óleyst; aldrei hvað skuli gera.',
 ];
 const ENDING_HEAVY_IS = [
   'Endaðu á einni línu sem nefnir hvað þetta gæti verið {L} — ástand sem gæti átt við, sagt umbúðalaust; engin huggun, ekkert mildað.',
   'Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið {L}, hvort um sig ástand sem gæti átt við — sagt umbúðalaust, engin huggun, ekkert mildað.',
   'Endaðu á einni spurningu sem spyr hvað þetta gæti verið {L} — sem möguleika sem hann getur vegið og metið, sagt umbúðalaust; engin huggun, ekkert mildað.',
+  'Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið {L}, bæði í senn — tvennt sem togast á og er skilið eftir óleyst; sagt umbúðalaust, engin huggun, ekkert mildað.',
 ];
 // ─── Rozpocet delky (single) ──────────────────────────────────
 // Dve delky, losuje se per cteni. Neni to jen o poctu slov: pri jinem rozpoctu musi model
@@ -598,7 +608,8 @@ function _areaFace(idx, face, lang) {
 const BRIDGE_DEFAULT = { en: "in the seeker's life", is: 'í lífi leitandans' };
 
 // Tvar podle rejstriku — poradi = SEEKS.en: General · Clarity · Confirmation ·
-// Insight into Challenge · Reflection. `null` = los ze tri tvaru (tak to bezelo do 2026-09-20).
+// Insight into Challenge · Reflection. `null` = los ze VSECH tvaru poolu (do 2026-09-20 jediny rezim; od 2026-09-26
+// ctyri — napeti pada JEN tady, pevne tvary rejstriku zustaly, owner: „pridat vic moznosti, ne vymenit“).
 // `h:true` u „Insight into Challenge" = tezke zneni i u LEHKE runy: kdo si rekne o vhled do
 // tezkosti, nema dostat utechu. Tezka runa pak jen vynuti h, tvar nemeni.
 const SEEK_SHAPE = [null, { i: 0, h: false }, { i: 1, h: false }, { i: 0, h: true }, { i: 2, h: false }];
