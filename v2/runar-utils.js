@@ -527,11 +527,16 @@ const AREA_FACES = [
       is: ['markmiði sem lengi hefur verið stefnt að', 'í markmiði sem leitandinn hefur lengi stefnt að'] },
   ],
   // Career & Creativity
+  // 2026-09-26 (KUKY: „v obraze malování, člověk se zeptá na Career & Creativity… Rúnar použije slovo work“; handoff CODE-read
+  // RUNAR_EVAL_LOG 2026-09-26 (1)): „work“ nechodí z žádného bloku promptu — model jím sám pojmenuje dřinu v obraze; z promptu
+  // ho nesly JEN podoby [0] „making and work“ a [1] „work done for others“ (+ IS „vinnu“). Ownerův Kenaz 2026-09-25 měl podobu [0]
+  // a konec „What might your work look like…“. Slovo vyndáno; u run, jejichž význam JE úsilí (Nauthiz, Jera), zůstane — to je
+  // jejich význam, ne prompt. IS: „sköpun og mótun“ (korpus 6), „búið til fyrir“ (470), „býr til fyrir“ (43).
   [
-    { en: ['making and work', 'in what the seeker is making'],
-      is: ['smíð og vinnu', 'í því sem leitandinn er að smíða'] },
-    { en: ['work done for others', 'in the work the seeker does for others'],
-      is: ['vinnu sem unnin er fyrir aðra', 'í því sem leitandinn vinnur fyrir aðra'] },
+    { en: ['making and shaping', 'in what the seeker is making'],
+      is: ['sköpun og mótun', 'í því sem leitandinn er að smíða'] },
+    { en: ['what is made for others', 'in what the seeker makes for others'],
+      is: ['því sem er búið til fyrir aðra', 'í því sem leitandinn býr til fyrir aðra'] },
     { en: ['something coming into being', 'in something the seeker is bringing into being'],
       is: ['því sem er að verða til', 'í því sem leitandinn er að skapa'] },
     { en: ['an idea not yet made real', 'in an idea the seeker has not yet made real'],

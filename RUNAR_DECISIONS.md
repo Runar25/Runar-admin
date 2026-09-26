@@ -7164,3 +7164,25 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   pod SVÝM indexem (v IS začínají dvě možnosti a napětí stejně, liší se až za `{L}`) — negativní kontrola: napětí, které v sobě
   nese celé znění [1], se pozná jako open1 → kontrola padne.
 - Affected doc(s): `RUNAR_DESIGN.md` (Stavba Single, tabulka mostu — řádek General) · `RUNAR_BACKLOG.md`.
+
+## 2026-09-26 (2) — Career & Creativity: slovo „work“ / „vinnu“ z podob oblasti ven (v4.62) — prompt ho už nenese, model ho říká dál
+
+- **Rozhodl:** KUKY 2026-09-26 *„ano jeď 3 → 1 → 2, ukaž čtení“* nad handoffem CODE-read (psáno proti 30f8d3b, RUNAR_EVAL_LOG 2026-09-26 (1)).
+- **Co:** `AREA_FACES` Career [0] `making and work` → `making and shaping` (IS `smíð og vinnu` → `sköpun og mótun`); [1] `work done for
+  others` / `in the work the seeker does for others` → `what is made for others` / `in what the seeker makes for others` (IS
+  `því sem er búið til fyrir aðra` / `í því sem leitandinn býr til fyrir aðra`). IS korpus + is-grammar-qa v reálném promptu čisté.
+- **Proč:** CODE-read: „work“ nechodí z žádného bloku promptu — jediný nosič byly tyhle dvě podoby (ownerův Kenaz 2026-09-25 měl [0]).
+- **Změřeno (Opus 5, `docs/eval/2026-09-26-slova-tune/`):** EN 3 runy × podoba [0] a [1] → **„work“ dál 6/6** („The work you hand to others…“,
+  „In your work there may be…“). Nález = **prompt už to slovo nenese, model jím sám pojmenuje, co člověk v Career dělá** — potvrzuje
+  CODE-read (bez oblasti 6/6). IS 3/3 používá „verk / smíð / mótar“, „vinna“ jen jako sloveso 1×. Ownerův cíl (činnost z obrazu vlastními
+  slovy — tah štětcem) tím vyřešený NENÍ; pokyn „činnost si drží vlastní slova“ u CODE-read nepomohl (4/6). Další krok až podle provozu
+  (`scripts/utils/oblasti_slova.js --od v4.62`).
+- Affected doc(s): žádný (znění vlastní kód, RUNAR_DESIGN na podoby jen odkazuje).
+
+## 2026-09-26 (3) — Otázka runy, která se ptá na čin, × „never what to do about it“ v témže konci: NECHAT
+
+- **Rozhodl:** KUKY 2026-09-26: *„nechame jak je. víme o tom. pokud to začne vadit, tak s tím něco uděláme.“*
+- **Co:** CODE-read (EVAL_LOG 2026-09-26 (1), mapa vět (d)) našel, že `_runeQuestion` u Kenaz, Thurisaz, Othila, Wunjo nese rozhodnutí o činu,
+  zatímco pokyn konce říká „never what to do about it“ (platí i pro nové napětí). Výsledkem bývá hypotetický krok („…if you cut away…?“).
+  Bez změny; vrátit se k tomu, až se to v živých čteních projeví jako rada.
+- Affected doc(s): žádný.

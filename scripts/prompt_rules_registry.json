@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-26",
- "prompt_version": "v4.61-napeti",
+ "prompt_version": "v4.62-career-bez-work",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -184,13 +184,13 @@
    "zacatek": "The reading is for Purpose & Path — let the image you were given land "
   },
   {
-   "hash": "4293cf7b56ea",
+   "hash": "ada1c4bc33d6",
    "lang": "en",
    "zdroj": "oblast[2.0]",
    "zacatek": "The reading is for Career & Creativity — let the image you were given "
   },
   {
-   "hash": "08d07e7664e5",
+   "hash": "335d6f295fc3",
    "lang": "en",
    "zdroj": "oblast[2.1]",
    "zacatek": "The reading is for Career & Creativity — let the image you were given "
@@ -922,13 +922,13 @@
    "zacatek": "Þessi lestur er fyrir Tilgang & Leið — láttu myndina sem þú fékkst len"
   },
   {
-   "hash": "c1c9c8f37af9",
+   "hash": "9e850ac79151",
    "lang": "is",
    "zdroj": "oblast[2.0]",
    "zacatek": "Þessi lestur er fyrir Starf & Sköpun — láttu myndina sem þú fékkst len"
   },
   {
-   "hash": "fa1143b75bf3",
+   "hash": "fbe6fcdf1fe6",
    "lang": "is",
    "zdroj": "oblast[2.1]",
    "zacatek": "Þessi lestur er fyrir Starf & Sköpun — láttu myndina sem þú fékkst len"
