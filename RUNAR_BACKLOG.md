@@ -724,14 +724,14 @@
   6. **Rubrika luny, bod A:** owner 2× „nesmysl“ (Fehu *„You can keep every drop contained“*, Dagaz *„the hills come back“*), 1× „správné, ale v obraze“
      (Uruz), 1× souhlas (bod 5). Luna bere „you“ jako postavu scény za tvrzení o člověku. Úprava rubriky jen s ownerovým ano.
   Owner k solu: *„zatím GPT dělá dobré čtení“*; Fehu (sol) *„zatím asi nejlepší čtení“*.
-- [ ] **Islandský úhel se opisuje do čtení jako první věta** (nalezeno 2026-09-24 v pilotu podob oblastí; CODE-tune).
+- [x] ~~**Islandský úhel se opisuje do čtení jako první věta**~~ — **ZAVŘENO 2026-09-26, owner: „úhel necháme“** (přepisy horší, viz níž). (nalezeno 2026-09-24 v pilotu podob oblastí; CODE-tune).
   `READING_ANGLES_IS` (`runar-utils.js`) má *„Líttu fyrst snöggt yfir alla myndina, láttu svo allt hverfa nema eitt."* — rozkaz
   čtenáři, který model může použít jako první větu. Stalo se u Opus 5 (*„Líttu snöggt yfir alla myndina, láttu svo allt hverfa nema
   laukinn í moldinni."*) i u Opus 4.8 (EVAL_LOG 2026-09-24). EN znění *„Open with one quick glance…"* je pokyn PISATELI a opsat
   nejde. Návrh: IS jako pokyn pisateli (např. *„Byrjaðu á…"*), ověřit nástroji a změřit opis na produkčním modelu před/po.
   → **Změřeno 2026-09-26 (CODE-read, EVAL_LOG 2026-09-26 (5)): přepis NEPOMÁHÁ, nechat produkci.** Dvě znění jako pokyn pisateli
   (*„Byrjaðu á því að renna augunum…"*, *„Fyrsta setningin nefnir myndina alla…"*) převyprávěla své sloveso 2/6 (Rúnar v 1. osobě /
-  rozkaz *„Staðnæmstu…"*), produkce 1/6; doslovný opis z 2026-09-24 se v 7 čteních neopakoval. Položku lze zavřít, pokud owner souhlasí.
+  rozkaz *„Staðnæmstu…"*), produkce 1/6; doslovný opis z 2026-09-24 se v 7 čteních neopakoval. Owner souhlasí → zavřeno.
 - [ ] **`scripts/utils/test_lever_maps.js` je červený od 2026-09-08 a nikdo to nevidí** (nalezl CODE-tune 2026-09-25; není ve smoke).
   Část SEEKS čeká, že věta `_registerContext` JMENUJE svůj rejstřík („Clarity"…) — jména ale byla 2026-09-08 ze zadání záměrně
   odebrána (memory `prompt-nepojmenuj-co-hned-zakazes`), takže 9 z 10 kontrol padá (ověřeno i na kódu před v4.56). Část AREAS
