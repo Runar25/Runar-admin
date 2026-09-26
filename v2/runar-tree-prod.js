@@ -203,7 +203,15 @@ function render(canvas, opts) {
   ctx.beginPath(); ctx.moveTo(W*0.06,trunkT.groundY); ctx.lineTo(W*0.94,trunkT.groundY); ctx.stroke();
   /* ZALOZENI: bez cteni = holy life-rune kmen + koreny (seedling), zadne vetve; cteni rostou korunu */
   var founding=(log.length===0);
-  var realAge=founding ? 25 : log.length*crownT.readingEvery;
+  /* SEMINKO -> CTENI NAVAZUJI (2026-09-26, KUKY: "navazat na seminko"). Driv mel holy
+     kmen vek 25 a prvni cteni vek 1*3 = 3, takze se kmen po prvnim cteni ztencil o ~28 %
+     a tloustku seminka dohnal az kolem 9. cteni (zmereno na enginu kmene). Ted se vek
+     cteni pricita k veku seminka — kmen se uz nikdy neztenci. ⚠️ Neplati to pro VETVE:
+     delka vetve se tu meri proti nejsilnejsimu elementu (domV = count/mx), takze kdyz jeden
+     element prevazi, ostatni vetve se zkrati (zmereno: Norny 407 px -> +1 single 385 px).
+     Lab to ma vyresene jinak (F5: delka = praxe te runy) — diagnoza, cast 8. */
+  var SEED_AGE=25;
+  var realAge=SEED_AGE + log.length*crownT.readingEvery;
   var dobSeed=hashStr(''+dob.d+'-'+dob.m+'-'+dob.y);
   var lifeLean=((hashStr('lean'+rune)%1000)/1000-0.5)*0.30;
   var rt=founding ? {els:[],total:1,mx:1,big:{h:0,wd:0,ms:0}} : routingFromLog(log);
