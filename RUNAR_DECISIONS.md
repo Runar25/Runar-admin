@@ -7237,3 +7237,12 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   „the blank rune“ i „The blank rune“; mutace (párování přes rnPrompt vyndané) → 2 FAIL. Admin „složení čtení“: popisek [1] opraven
   (od v4.63 tam zastarale stálo „the rune acts in the scene“).
 - Affected doc(s): žádný (znění vlastní kód).
+
+## 2026-09-26 (7) — Islandská korekce `þú vantar → þig vantar` do produkční DB
+
+- **Co:** CODE-read vložil do `runar_corrections` (is) `þú vantar` → `þig vantar`, vysvětlení *„„vanta“ hefur frumlag í þolfalli: mig vantar,
+  þig vantar"* (přenosné pravidlo; původní znění se závorkou dávalo v bloku závorku v závorce → upraveno). Slovník: *vanta* — podmět
+  *þolfall*; korpus *sem þig vantar* 1700 × *sem þú vantar* 0. Chyba 3/24 islandských čtení Opus 5, vždy Nauthiz (EVAL_LOG 2026-09-26 (5)).
+  Protlačeno produkční cestou (`normalizeCorrections` → `getCorrPrompt`): v IS bloku, v EN ne, žádné „undefined“; DB 30 řádků.
+- **Na základě:** DECISIONS 2026-09-23 (6) bod 1 (potvrzené IS chyby rovnou do korekcí). **Reverzibilita:** smazání řádku (owner).
+- Affected doc(s): `check-is.py` (vzor).

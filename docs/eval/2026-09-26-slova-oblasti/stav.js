@@ -19,8 +19,11 @@ module.exports = function stav(o) {
   if (o.essence !== undefined) vm.runInContext('var __E=' + o.essence + '; _essenceFrame = function(l, r){ if (r && r.n==="Blank") return l==="is"?ESSENCE_BLANK_IS:ESSENCE_BLANK; return (l==="is"?ESSENCE_FRAMES_IS:ESSENCE_FRAMES)[__E]; };', S);
   if (o.essenceText) vm.runInContext('var __ET=' + JSON.stringify(o.essenceText) + '; _essenceFrame = function(){ return __ET; };', S);
   const sys = vm.runInContext('buildSysPrompt(null, ' + L + ')', S);
-  const u = { name: 'Kuky', area: o.area, seeking: o.seeking };
-  const user = vm.runInContext('buildReadingPromptSingle(' + JSON.stringify(u) + ', RUNES.filter(function(r){return r.n===' + JSON.stringify(o.rune) + ';})[0], ' + L + ', [])', S);
+  // IS: štítky oblasti a hledání v jazyce čtení (_endingShape hledá SEEKS[lang]; s EN štítkem by tvar konce losoval naslepo).
+  const tr = (co, v) => { if (!v || (o.lang || 'en') === 'en') return v; const A = vm.runInContext(co, S); const i = A.en.indexOf(v); return i < 0 ? v : A.is[i]; };
+  if (o.angleText) vm.runInContext('var __AT=' + JSON.stringify(o.angleText) + '; _randomAngle = function(){ return __AT; };', S);
+  const u = { name: 'Kuky', area: tr('AREAS', o.area), seeking: tr('SEEKS', o.seeking) };
+  const user = vm.runInContext('buildReadingPromptSingle(' + JSON.stringify(u) + ', RUNES.filter(function(r){return r.n===' + JSON.stringify(o.rune) + ';})[0], ' + L + ', normalizeCorrections(' + JSON.stringify(o.korekce || []) + '))', S);
   return { sys, user, S };
 };
 if (require.main === module) {

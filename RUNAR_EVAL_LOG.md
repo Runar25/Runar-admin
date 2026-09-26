@@ -5441,3 +5441,41 @@ once"*, `ESSENCE_BLANK` *„names the Blank once"*) → ownerova čtení 3/3 *�
 všechna tři místa → „the blank rune", 3 obrazy Blank → **3/3** čtení jmenuje *„the blank rune"* (*„The blank rune is that empty
 space, the place no one has named yet"*).
 **Hranice:** EN, 6 obrazů × 1 čtení na znění, jeden slepý soudce na kolo; IS čtení netestována; Blank 3 čtení.
+
+## 2026-09-26 (5) — Islandština: esence N3 nepomáhá (nechat), úhel [0] nechat (přepisy horší), nová korekce *þú vantar*
+
+**Owner:** *„ty islandské věci udělej tak, aby to bylo co nejlepší"*. Opus 5 jako claude-proxy, IS, oslovení kk, tytéž 6 obrazů
+jako 2026-09-26 (3)/(4); 30 čtení, $0,43. ⚠️ Prvních 24 čtení (`pilot_is.jsonl`) běželo **bez bloku korekcí** (patch harnessu
+spadl a běh šel beze změny) — ramena si jsou rovná, srovnání platí; u gramatiky to znamená, že chyby, které blok korekcí zná,
+by v produkci nebyly (žádná z nalezených v bloku nebyla). Rameno UN2 (6 čtení) už s živými korekcemi z DB.
+
+**1. Esence IS: produkce (EP, „segir hvað hún er … þá merkingu sem þegar býr í henni") × N3-IS (E3).** Obě ramena runu jmenují
+sponou 6/6 (*„Hagalaz er rokið sem reif girðinguna niður"*, *„Kenaz er ljósið við vinnuborðið"*), runa nepřebírá činnost v žádném
+(čteno mnou, ne slepě). E3 zvyšuje *„<runa> er þessi / þetta"* 2/6 → 4/6 — v islandštině N3 nic nezlepší. **Nechat produkci**
+(CODE-tune v4.64 nasadil N3 jen EN — správně).
+**Vedlejší:** rámec [0] (*„hvað rúnin GERIR"*) v IS udělal z Hagalaz vichr 3/3 (*„Hagalaz fellir það sem stóð"*, *„rífur niður"*) —
+táž třída vady jako [1] před v4.63, jen jeden obraz; ostatní runy s [0] sponou nebo *„talar um"*. Neměřeno v EN, nenavrhuji změnu.
+
+**2. Úhel [0] IS — přepis NEPOMÁHÁ (nález „není to X").** Vada podle 2026-09-24 = pokyn převyprávěný do čtení. Tři znaky na 6 čtení:
+| znění úhlu [0] | „mynd-" (meta) | Rúnar v 1. osobě „ég" | rozkaz čtenáři |
+|---|---|---|---|
+| UP produkce *„Líttu fyrst snöggt yfir alla myndina, láttu svo allt hverfa nema eitt."* | 0 | 1 | 0 |
+| UN *„Byrjaðu á því að renna augunum yfir alla myndina og staldra svo við eitt atriði."* | 0 | **2** | 0 |
+| UN2 *„Fyrsta setningin nefnir myndina alla í fáum orðum og staðnæmist svo við eitt atriði."* | 0 | 0 | **2** |
+UN: *„Ég renni augunum yfir túnið og staldra við staurinn…"*; UN2: *„Staðnæmstu við fyrstu lykkjuna…"*, *„Staðnæmstu við höndina…"*.
+Sloveso pokynu se převypráví, ať zní jakkoli (*líttu → renna/staldra → staðnæmast*). Doslovný opis z 2026-09-24 (*„Líttu snöggt yfir
+alla myndina…"*) se v 7 dnešních čteních s produkčním [0] **neopakoval**; produkční znění model převádí do obrazu jako EN (*„Þú lítur
+snöggt yfir peysuna alla, og svo hverfur allt nema ein lykkja"* ≈ EN *„You see the full pail, then only the thin white stream…"*).
+EN [0] kontrola (DB, 4 ownerova čtení od změny 2026-09-23): převedeno do obrazu 4/4, slova pokynu 1/4. **Doporučení: IS [0] nechat.**
+Obě přepsaná znění prošla is-grammar-qa čistě a korpusem (*að renna augunum* 56, *staldra svo við* 5, *staðnæmist við* 110,
+*fyrsta setningin* 281) — problém není islandština, ale sloveso, které se dá vyprávět. **Hranice:** 6 čtení na znění.
+
+**3. Gramatika (is-grammar-qa + ručně + korpus, 30 čtení).** Nástroj hlásil jen plané poplachy (*garnið → barnið*, *Kuky → Kukl*,
+*teygist → tengist*, malé písmeno po dvojtečce); 5 vět nerozparsoval (E001) — prošel jsem je ručně. Skutečné chyby:
+- ***„hvað þú vantar" / „sem þú vantar" / „og vantar meira"*** (subjekt 1. pádem) — *vanta* má podmět ve 4. pádě (slovník: *þolfall*);
+  *sem þig vantar* 1 700 × *sem þú vantar* 0, *hvað þig vantar* 219 × *hvað þú vantar* 0. **3/24, vždy Nauthiz** (její IS popis stojí na
+  *vantar*). S korekcemi z DB UN2 Nauthiz napsal správně *„hvað þig vantar"* (1/1 — korekce tehdy ještě nebyla, náhoda). → **korekce
+  do DB + check-is** (DECISIONS 2026-09-26).
+- *„öll lykkjurnar"* → *allar lykkjurnar* (173 × 0) — jednorázová shoda rodu, do korekcí NE (owner k jednorázovým řádkům 2026-09-25).
+- Podezřelé, neopravováno: *„gjöfin og þágan eru sami hluturinn"* (*þágan* 3× — řídké, nejisté); *„Hvaða girðingu ert þú ekki búinn
+  að ákveða hvort þú reisir aftur?"* (vytýkání z vedlejší otázky, E001; nevím, jestli je to chyba — korpus to neposoudí, > 3 slova).

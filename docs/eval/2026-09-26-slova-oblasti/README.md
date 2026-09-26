@@ -15,6 +15,7 @@ Handoff CODE-tune (psáno proti `f679170`). Nálezy a čísla vlastní `RUNAR_EV
 | `slepe_esence.txt`, `slepe_klic.json`, `slepy_soudce_esence.txt` | slepé souzení esenčních vět (vstup, klíč, verdikty) |
 | `pilot_esence_2.js`, `pilot_esence_4.js` (+ `.jsonl`) | znění N2, N3, N4 proti sponě „is that“ + Blank jako „the blank rune“ |
 | `slepe_esence2.txt`, `slepe_klic2.json`, `slepy_soudce_esence2.txt` | slepé souzení N3 × N4 |
+| `pilot_is.js`, `pilot_is2.js` (+ `.jsonl`) | islandština: esence produkce × N3, úhel [0] produkce × dvě přepsaná znění (pilot_is BEZ korekcí — viz EVAL_LOG (5)) |
 | `mereni.js`, `vety3.js`, `mapa.js` | měření na ownerových čteních z DB (export jen lokálně) |
 
 **Ownerova data do repa nejdou:** export čtení, text Kenaz čtení s jeho otázkou a odpovědi Asku leží v
