@@ -138,10 +138,11 @@
   - **Modely:** islandsky umí JEN rodina v3 — `eleven_v3` (dnes pro IS) a `eleven_v3_conversational` (nízká latence ~280 ms).
     `eleven_multilingual_v2` (dnes pro EN) islandštinu neumí; `eleven_flash_v2_5` o 50 %% levnější, islandštinu neumí;
     `eleven_flash_v2` jen angličtina; **Turbo = zastaralé**.
-  - **Rozhodnout (owner poslechne):** anglický hlas — (a) nechat `multilingual_v2`, (b) `flash_v2_5` za polovinu (jiný zvuk),
-    (c) `eleven_v3` jako islandština (stejný model i barva hlasu v obou jazycích). Islandština: zkusit `v3_conversational`?
+  - ✅ **Rozhodnuto 2026-09-26 (owner): anglický hlas ZŮSTÁVÁ `eleven_multilingual_v2`** — *„tak jak to je, má důvod a tím důvodem
+    je hlas"*. Flash ani v3 pro EN se nezkouší. (Islandština: `v3_conversational` nezkoušeno, nikdo nechtěl.)
   - ⚠️ **Ceník počítá anglický hlas jako Flash, kód používá `eleven_multilingual_v2`** (`v2/runar-config.js`, `elevenlabs-proxy`,
     `elevenlabs-static`) → EN hlas je v ceníku podhodnocený 2×. Model je zapsaný na 3 místech — při změně sáhnout na všechna.
+    **Po rozhodnutí 2026-09-26 zbývá opravit ceník** (`RUNAR_PRICING.md`: EN = Multilingual $0,10/1k, ne Flash $0,05) — CODE-tune `[pricing]`.
   - **Skutečná spotřeba a kdy na vyšší tarif** → handoff CODE-tune 2026-09-24 (položka níž).
 - [ ] **Sledování nákladů na hlas (handoff CODE-tune 2026-09-24, owner „udělej, jak říkáš")** — (1) admin funkce, která zavolá
   `GET https://api.elevenlabs.io/v1/user/subscription` (klíč `ELEVENLABS_API_KEY`) a vrátí `character_count`, `character_limit`,
@@ -150,7 +151,8 @@
   soukromé tabulky (EL ukazuje jen aktuální období, bez zápisu není trend). Claude po skupinách už ukazuje `stats.js`.
   **Stav 2026-09-25 (DECISIONS 2026-09-25 (2)): body 1–3 NASAZENÉ** (funkce `voice-usage`, zápis v `elevenlabs-proxy`/`-static`,
   tabulky `voice_usage` + `voice_quota_snapshots`, týdenní snímek bez plánovače). Zbývá: (a) owner přehraje jeden hlas → CODE-tune
-  ověří řádek v `voice_usage` a první snímek; (b) CODE-read: `stats.js` o hlas po skupinách a modelech + poslední snímek;
+  ověří řádek v `voice_usage` a první snímek; (b) ✅ *(2026-09-26)* CODE-read: `stats.js` o hlas po skupinách a modelech + poslední snímek
+  (sekce „hlas ElevenLabs": znaky po skupinách / modelu / zdroji, předplatné z posledního snímku, přečerpání, naše znaky od resetu);
   (c) živý stav z `voice-usage` zatím nemá místo v UI — nabídnuto ownerovi (panel ve shrine).
 - [ ] **Shrine: korekce nejdou smazat** (nález 2026-09-23) — záložka WORD CORRECTIONS umí jen přidat a vypsat
   (`runar-shrine.html` `saveCorrection`/`loadCorrections`), mazání nemá. Owner tak smaže řádek jen přes Supabase. Doplnit

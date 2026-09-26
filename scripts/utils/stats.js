@@ -122,6 +122,32 @@ for (const r of usageRows) {
   sg.n++; sg.usd += c;
   for (const f of (r.follow_up || [])) if (f && f.usage && f.usage.model && cenaUsage(f.usage) != null) { sg.ask++; sg.askUsd += cenaUsage(f.usage); }
 }
+// ── Hlas ElevenLabs (CODE-read 2026-09-26) ───────────────────────────────────────────────
+// Zdroj: `voice_usage` (řádek na každé generování: znaky, model, jazyk, uživatel — zapisuje elevenlabs-proxy od 2026-09-25,
+// sql/2026-09-25_voice_usage.sql) a poslední `voice_quota_snapshots` (stav předplatného přímo od EL). Do té doby tu stálo
+// „hlas zatím nejde rozdělit — proxy neukládá znaky". PŘESNĚ: znaky jsou to, co EL účtuje. Peníze: dokud se nepřečerpá
+// limit, platí se jen předplatné (pevná částka) — za znak navíc se neplatí nic; přečerpání × sazba až nad limit.
+// Sazby přečerpání ověřeny 2026-09-24 na elevenlabs.io/pricing/api (RUNAR_BACKLOG „HLAS (ElevenLabs)"). Nový model → řádek sem.
+const EL_PRECERPANI = { 'eleven_multilingual_v2': 0.10, 'eleven_v3': 0.10, 'eleven_v3_conversational': 0.10, 'eleven_flash_v2_5': 0.05, 'eleven_flash_v2': 0.05 };   // USD / 1000 znaků
+const EL_TARIF = { starter: 6, creator: 22, pro: 99, scale: 299, business: 990 };   // USD / měsíc, tamtéž
+const hlasRows = q("select v.source, coalesce(v.lang,'?') lang, v.model, case when u.email in (" + ADMINI.map(e => "'" + e + "'").join(',')
+  + ") then 'admin' when coalesce(p.is_tester, false) then 'tester' else 'uzivatel' end skupina, count(*) n, sum(v.chars) chars"
+  + ' from public.voice_usage v left join auth.users u on u.id = v.user_id left join public.user_profiles p on p.id = v.user_id'
+  + ' where v.created_at >= ' + OD + ' group by 1,2,3,4;');
+const snimek = q('select taken_at, source, tier, status, character_count, character_limit, next_reset_at from public.voice_quota_snapshots order by taken_at desc limit 1;')[0] || null;
+// Naše znaky v AKTUÁLNÍM období EL (od posledního resetu) — k porovnání s čítačem EL: rozdíl = hlas mimo aplikaci
+// (EL web, testy) nebo generování z doby před voice_usage.
+const vObdobiEL = snimek && snimek.next_reset_at ? Number((q("select coalesce(sum(chars),0) c from public.voice_usage where created_at >= timestamptz '"
+  + snimek.next_reset_at + "' - interval '1 month';")[0] || { c: 0 }).c) : null;
+const hlas = { podleSkupin: {}, podleModelu: {}, zdroj: {}, n: 0, znaky: 0, snimek, vObdobiEL, neznamy: [] };
+for (const r of hlasRows) {
+  const n = Number(r.n), c = Number(r.chars);
+  hlas.n += n; hlas.znaky += c;
+  for (const [m, k] of [[hlas.podleSkupin, r.skupina], [hlas.podleModelu, r.model + ' · ' + r.lang], [hlas.zdroj, r.source]]) {
+    const g = m[k] = m[k] || { n: 0, znaky: 0 }; g.n += n; g.znaky += c;
+  }
+  if (EL_PRECERPANI[r.model] == null) hlas.neznamy.push(r.model);
+}
 // Kolik čtení přišlo do 5 min (a do 1 h) po PŘEDCHOZÍM čtení v témže jazyce — systémový prompt je pro všechny
 // uživatele téhož jazyka stejný, takže cachi drží teplou kdokoli. To je strop zásahů cache při dnešním provozu.
 const casy = q("select coalesce(lang,'?') lang, extract(epoch from drawn_at) t from public.readings where drawn_at >= " + OD + ' order by drawn_at;');
@@ -199,7 +225,7 @@ if (HTML_OUT) {
 }
 
 if (JSON_OUT) {
-  console.log(JSON.stringify({ dny: DNY, celkem, denne, hodiny, tydne: dny, jazyk, kvalita, naklady }, null, 1));
+  console.log(JSON.stringify({ dny: DNY, celkem, denne, hodiny, tydne: dny, jazyk, kvalita, naklady, hlas }, null, 1));
   process.exit(0);
 }
 
@@ -256,7 +282,25 @@ console.log('  podle skupin (admin · tester · uzivatel):');
 for (const s of ['admin', 'tester', 'uzivatel']) { const g = naklady.podleSkupin[s] || { n: 0, usd: 0, ask: 0, askUsd: 0 };
   console.log('    ' + s.padEnd(9) + String(g.n).padStart(4) + ' čtení · $' + g.usd.toFixed(4) + (g.n ? ' · průměr $' + (g.usd / g.n).toFixed(5) : '')
     + (g.ask ? ' · Ask ' + g.ask + ' · $' + g.askUsd.toFixed(4) : '')); }
-console.log('  (hlas ElevenLabs zatím nejde rozdělit — proxy neukládá znaky; backlog)');
+console.log('\n  ── hlas ElevenLabs (přesně z voice_usage — znaky = to, co EL účtuje) ' + '─'.repeat(2));
+if (!hlas.n) console.log('  za období žádné generování ve voice_usage (zapisuje se od 2026-09-25)');
+else {
+  console.log('  ' + hlas.n + ' generování · ' + hlas.znaky + ' znaků · průměr ' + Math.round(hlas.znaky / hlas.n) + ' znaků');
+  console.log('  podle skupin (admin · tester · uzivatel):');
+  for (const s of ['admin', 'tester', 'uzivatel']) { const g = hlas.podleSkupin[s] || { n: 0, znaky: 0 };
+    console.log('    ' + s.padEnd(9) + String(g.n).padStart(4) + ' × · ' + String(g.znaky).padStart(7) + ' znaků'); }
+  console.log('  podle modelu a jazyka:');
+  for (const [k, g] of Object.entries(hlas.podleModelu).sort()) console.log('    ' + k.padEnd(30) + String(g.n).padStart(4) + ' × · ' + String(g.znaky).padStart(7) + ' znaků');
+  console.log('  zdroj: ' + Object.entries(hlas.zdroj).map(([k, g]) => (k === 'dynamic' ? 'čtení' : k === 'static' ? 'Kolekce (statický)' : k) + ' ' + g.n + '×').join(' · '));
+  if (hlas.neznamy.length) console.log('  ⚠ model bez sazby v EL_PRECERPANI: ' + [...new Set(hlas.neznamy)].join(', '));
+}
+if (hlas.snimek) {
+  const s = hlas.snimek, pouz = Number(s.character_count), lim = Number(s.character_limit), tarif = EL_TARIF[String(s.tier || '').toLowerCase()];
+  console.log('  předplatné EL (snímek ' + String(s.taken_at).slice(0, 16) + ', ' + s.source + '): ' + s.tier + (tarif != null ? ' $' + tarif + '/měsíc' : ' (cena tarifu neznámá)')
+    + ' · ' + s.status + ' · ' + pouz + ' z ' + lim + ' znaků (' + Math.round(pouz / (lim || 1) * 100) + ' %) · reset ' + String(s.next_reset_at).slice(0, 10));
+  console.log('  přečerpání: ' + (pouz > lim ? (pouz - lim) + ' znaků nad limit — platí se navíc podle modelu (EL_PRECERPANI)' : '0 — platí se jen předplatné'));
+  if (hlas.vObdobiEL != null) console.log('  z toho zapsáno ve voice_usage od resetu: ' + hlas.vObdobiEL + ' znaků (rozdíl = hlas mimo aplikaci nebo před 2026-09-25; snímek je starší než dnešek)');
+} else console.log('  předplatné EL: zatím žádný snímek (voice_quota_snapshots)');
 console.log('\n  ── cache: jak často přijde čtení včas ' + '─'.repeat(8));
 for (const [l, o] of Object.entries(naklady.odstupy)) if (o.n)
   console.log('  ' + l.padEnd(4) + ' do 5 min po předchozím: ' + Math.round(o.do5 / o.n * 100) + ' %  · do 1 h: ' + Math.round(o.do60 / o.n * 100) + ' %  (' + o.n + ' odstupů)');
