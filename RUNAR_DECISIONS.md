@@ -7220,3 +7220,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Cena / hlídat:** spona *„<runa> is that …“* EN 5/6, IS 3/3. [1] vznikl 2026-09-20 (3) PROTI sponě z [0]; teď ji dávají oba rámce.
   Owner ji chtěl u Blank („The blank is the unknown“) — když se z ní stane formule, řešit (ne pojmenovat a zakázat).
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka „Slova oblasti“).
+
+## 2026-09-26 (6) — Věta o runě EN znění N3 (méně „is that“), IS beze změny; Blank v EN promptu „the blank rune“; IS akuzativ Blank (v4.64)
+
+- **Rozhodl:** KUKY 2026-09-26 *„ano nasaď“* nad handoffem CODE-read (psáno proti 6975536; EVAL_LOG 2026-09-26 (4)). U CODE-read owner:
+  *„zkus znění, které rozbije ‚is that‘“* a *„Blank je něco jiného — nemá jedinečné jméno, dá se zaměnit; mělo by to být blank rune“*.
+- **Co (1):** `ESSENCE_FRAMES[1]` EN = N3 (*„…gives the meaning the picture already holds… let the sentence find its own shape rather
+  than a definition“*): CODE-read slepě — přebírání 0/6, význam 6/6, „is that“ 5/6 → 2/6. **IS [1] zůstává N** (v4.63): CODE-tune 6 IS
+  čtení, tytéž losy — N3 větu o runě rozbil 2/6 (N 0/6), „er þetta/þessi“ nechal 4/6 (N 5/6) a přinesl vzorec „X er þetta: …“ 2/6.
+- **Co (2):** `rnPrompt` bere jméno do promptu z dat `RUNE_PROMPT_NAME` — Blank EN = „the blank rune“ (hlavička, větve, spready),
+  `ESSENCE_BLANK` „names the blank rune once“. Rozhraní dál `rn()` („Blank“). Ask páruje jména i přes `rnPrompt` (bez ohledu na velké
+  písmeno z JSON modelu) — jinak by Blank v Asku přišel o klíčová slova i aspekt (past (a) z handoffu).
+- **Co (3), nalezeno cestou (§22):** IS větve *„Nefndu X einu sinni“* / *„Láttu X svara“* chtějí akuzativ; u Blank stálo *„Nefndu Auða
+  rúnin“* → `rnPromptAcc` (`RUNE_PROMPT_NAME.Blank.is_acc` = „auðu rúnina“). Ostatní IS jména mají 1. = 4. pád.
+- **Kontrola:** smoke (`verify_ask_hints.js` bod 13): EN prompt Blank bez holého „Blank“, IS akuzativ v obou větvích, Ask spáruje
+  „the blank rune“ i „The blank rune“; mutace (párování přes rnPrompt vyndané) → 2 FAIL. Admin „složení čtení“: popisek [1] opraven
+  (od v4.63 tam zastarale stálo „the rune acts in the scene“).
+- Affected doc(s): žádný (znění vlastní kód).

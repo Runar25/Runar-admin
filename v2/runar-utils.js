@@ -469,12 +469,18 @@ const LENGTH_BUDGETS_IS = [
 //       vyznamem, ktery obraz obsahuje. Slepy soudce (CODE-read, EVAL_LOG 2026-09-26 (3)): runa prebira cizi cinnost 6/6 -> 0/6,
 //       cizinec pochopi vyznam 3/6 -> 6/6. CENA: spona „<runa> is that …“ 5/6 — [1] puvodne vznikl PROTI spone (DECISIONS
 //       2026-09-20 (3)); hlidat, jestli se z ni nestane formule.
+//       → TÝŽ DEN znění N3 (owner u CODE-read: „zkus znění, které rozbije ‚is that‘“; EVAL_LOG 2026-09-26 (4)): „gives the meaning
+//       the picture already holds … let the sentence find its own shape rather than a definition“ — přebírání 0/6 a význam 6/6
+//       drží, „is that“ 5/6 → 2/6. Spona „<runa> is …“ zůstává 6/6: bez ní trpí význam (N4: 4/6, nový vzorec „…sits…“ 3/6).
+//       N3 JEN EN: v IS (6 čtení, tytéž losy) „er þetta/þessi“ zůstal 4/6, přibyl vzorec „X er þetta: …“ 2/6 a věta o runě
+//       nerozparsovaná 2/6 (N: 0/6) — IS [1] proto drží znění N.
 const ESSENCE_FRAMES = [
   'THE ESSENCE LINE: after the picture, one short line that says what the rune DOES through this image — its sense in plain words a stranger to runes can grasp. The familiar word may live inside the doing ("exchange between the sea and the shore"). Never a fixed formula. No invented mechanism, no fate. Never tell the seeker what it means for them.',
-  'THE ESSENCE LINE: after the picture, one short line that names the rune once and says what it is in this scene — the meaning that already lives in the picture. Plain words a stranger to runes can grasp. No invented mechanism, no fate. Never tell the seeker what it means for them.',
+  'THE ESSENCE LINE: after the picture, one short line that names the rune once and gives the meaning the picture already holds, in plain words a stranger to runes can grasp — let the sentence find its own shape rather than a definition. No invented mechanism, no fate. Never tell the seeker what it means for them.',
 ];
 const ESSENCE_FRAMES_IS = [
   'KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem segir hvað rúnin GERIR í gegnum þessa mynd — merking hennar með hversdagslegum orðum sem ókunnugur skilur. Kunnuglega orðið má lifa inni í myndinni. Aldrei föst formúla. Engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.',
+  // IS [1] = znění N, ne N3: N3 v IS „er þetta/þessi“ nerozbil (4/6) a rozbil větu 2/6 (E001) — viz hlavička rámců.
   'KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem nefnir rúnina einu sinni og segir hvað hún er í þessari mynd — þá merkingu sem þegar býr í henni. Hversdagsleg orð sem ókunnugur skilur. Engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.',
 ];
 // PRAZDNA RUNA (2026-09-22, KUKY „udelej" + popis runy v RUNAR_POPISY_RUN.md): oba ramy vyse
@@ -486,7 +492,7 @@ const ESSENCE_FRAMES_IS = [
 // ten rozpor nevznika (§13 — cesta zvazena, ne zapomenuta).
 // 2026-09-25 (KUKY: runa má být jmenovaná svým významem obsaženým v obraze — „the unknown, not decided yet“, „nepřítomnost
 // něčeho očekávaného“): pryč „the stone that bears no mark“ — sol ji opsal doslova a popsal jen vzhled kamene (report 09:56).
-const ESSENCE_BLANK = 'THE ESSENCE LINE: after the picture, one short line that names the Blank once and says what it is in this scene — what is not yet known, not yet decided, or missing where something was expected. It gives no meaning of its own; the line leaves that open place open instead of filling it. Plain words a stranger to runes can grasp. No invented mechanism, no fate. Never tell the seeker what it means for them.';
+const ESSENCE_BLANK = 'THE ESSENCE LINE: after the picture, one short line that names the blank rune once and says what it is in this scene — what is not yet known, not yet decided, or missing where something was expected. It gives no meaning of its own; the line leaves that open place open instead of filling it. Plain words a stranger to runes can grasp. No invented mechanism, no fate. Never tell the seeker what it means for them.';
 const ESSENCE_BLANK_IS = 'KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem nefnir auðu rúnina einu sinni og segir hvað hún er í þessari mynd — það sem enn er óþekkt, enn óráðið eða vantar þar sem búist var við einhverju. Hún gefur enga merkingu af sjálfri sér; línan lætur opna rýmið standa opið í stað þess að fylla það. Hversdagsleg orð sem ókunnugur skilur. Engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.';
 function _essenceFrame(lang, rune) {
   if (rune && rune.n === 'Blank') return lang === 'is' ? ESSENCE_BLANK_IS : ESSENCE_BLANK;
@@ -755,7 +761,20 @@ function _bezGlosy(jmeno) { var m = _GLOSA_RE.exec(jmeno || ''); return m ? m[1]
 // rnPrompt() — jméno runy DO PROMPTU (2026-09-24, handoff CODE-read, owner „GPT pojď na to“, krok 1).
 // Glosa „(Hlið)“ je pro člověka v rozhraní; model ji opisoval do čtení — gpt-6-sol ve 3 z 5 islandských čtení,
 // bez glosy 0 z 5 (Opus 5 0/5 v obou; EVAL_LOG 2026-09-24 (4)). Do promptu tedy holé jméno, rozhraní dál rn().
-function rnPrompt(r) { return _bezGlosy(rn(r)); }
+// 2026-09-26 (KUKY u CODE-read: „Blank je něco jiného — nemá jedinečné jméno, dá se zaměnit; mělo by to být blank rune nebo unknown
+// rune“): holé „Blank“ v EN promptu → ownerova čtení 3/3 „Blank is… / Blank holds…“, jako by to bylo jméno. Test CODE-read (EVAL_LOG
+// 2026-09-26 (4)): „the blank rune“ → 3/3 čtení ho tak jmenuje. IS už má „Auða rúnin“. Jen PROMPT — rozhraní dál rn(). Data, ne větev (§18).
+// `is_acc` = tvar pro větve, kde jméno stojí v akuzativu („Nefndu … einu sinni“, „Láttu … svara“) — rnPromptAcc().
+var RUNE_PROMPT_NAME = { Blank: { en: 'the blank rune', is_acc: 'auðu rúnina' } };
+function rnPrompt(r) {
+  var z = r && RUNE_PROMPT_NAME[r.n];
+  if (z && z[lang === 'is' ? 'is' : 'en']) return z[lang === 'is' ? 'is' : 'en'];
+  return _bezGlosy(rn(r));
+}
+function rnPromptAcc(r) {
+  var z = r && RUNE_PROMPT_NAME[r.n];
+  return (lang === 'is' && z && z.is_acc) ? z.is_acc : rnPrompt(r);
+}
 
 // rnSplit() -- jmeno + (preklad) do dvou casti
 // IS: 'Fehu (Eignir)' -> {name:'Fehu', tr:'Eignir'} · EN: 'Fehu' -> {name:'Fehu', tr:''}

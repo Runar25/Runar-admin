@@ -389,5 +389,32 @@ for (const L of ['en', 'is']) {
 }
 sandbox._lastGen = null;
 
+// ── 13) BLANK: jméno v promptu čtení i v Asku (2026-09-26, handoff CODE-read; owner „Blank … nemá jedinečné jméno“) ──
+// EN prompt jmenuje runu „the blank rune“ (ne holé „Blank“, které model bral jako jméno); IS větve mají akuzativ „auðu rúnina“
+// (dřív „Nefndu Auða rúnin einu sinni“). Past z handoffu: Ask páruje jména s RUNES — „the blank rune“ (i s velkým T z JSON
+// modelu) se musí spárovat, jinak Blank v Asku přijde o klíčová slova i o aspekt čtení.
+{
+  const blank = R('Blank');
+  sandbox.lang = 'en';
+  const u0 = { name: 'Anna', lifeRune: null, question: '', area: '', intention: '', seeking: '' };
+  let p = glob('buildReadingPrompt')(u0, blank, 'en', []);
+  rekni(/DRAWN RUNE: the blank rune — /.test(p) && /names the blank rune once/.test(p) && !/\bBlank\b/.test(p),
+        'en  Blank v promptu čtení = „the blank rune“, žádné holé „Blank“');
+  sandbox.lang = 'is';
+  for (const q of ['', 'Hvað á ég að gera?']) {
+    p = glob('buildReadingPrompt')(Object.assign({}, u0, { question: q }), blank, 'is', []);
+    rekni(/auðu rúnina/.test(p) && !/(Nefndu|Láttu) Auða rúnin/.test(p),
+          'is  Blank ve větvi ' + (q ? 's otázkou' : 'bez otázky') + ': akuzativ „auðu rúnina“');
+  }
+  sandbox.lang = 'en';
+  sandbox.readerUser = u0;
+  sandbox._lastGen = null;
+  const k = blank.k.split(',').map(x => x.trim());
+  for (const jm of ['the blank rune', 'The blank rune']) {
+    const ap = glob('buildAskPrompt')('Text.', 'What?', jm, 'en', [], null, {}, { mode: 'single', runy: [jm] }, '');
+    rekni(k.every(x => ap.indexOf(x) !== -1), 'en  Ask spáruje „' + jm + '“ s runou (klíčová slova v promptu)');
+  }
+}
+
 console.log(fail ? '\n' + fail + ' selhalo' : '\nOK  nápověda Ask odpovídá stavu čtení');
 process.exit(fail ? 1 : 0);

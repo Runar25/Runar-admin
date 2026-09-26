@@ -1711,7 +1711,8 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     // `worldRef` se otevírací větvi pořád předává, ale ta ho už NEVYPISUJE: popis světa
     // stojí v hlavičce `DRAWN RUNE` a do 2026-08-13 se opakoval i tady (nález
     // `lint_prompts.js --dup`). Parametr zůstal, aby se neměnila signatura packu.
-    hasQ ? S.qBranch(rnPrompt(drawn), drawn.g, _questionSafe(u.question)) : S.noqBranch(rnPrompt(drawn), drawn.g, worldRef),
+    // 2026-09-26: rnPromptAcc — IS větve mají jméno v akuzativu (u Blank „auðu rúnina“, ne „Auða rúnin“); EN = rnPrompt.
+    hasQ ? S.qBranch(rnPromptAcc(drawn), drawn.g, _questionSafe(u.question)) : S.noqBranch(rnPromptAcc(drawn), drawn.g, worldRef),
     // 2026-09-20: most bere REJSTRIK (tvar) a OBLAST (kam dosedne) misto uhlu — uhel
     // potreboval jen zrusena vyluka uhel[6] x open[1].
     _endingShape(drawn, lang, u.seeking, u.area, areaFace)
@@ -1987,7 +1988,8 @@ function buildAskPrompt(reading, question, runes, lang, corrections, life, cast,
       if (!n) return null;
       var h = _hola(n), r = null;
       for (var i = 0; i < RUNES.length; i++)
-        if (RUNES[i].n === h || _hola(RUNES[i].is_n) === h) { r = RUNES[i]; break; }
+        if (RUNES[i].n === h || _hola(RUNES[i].is_n) === h
+            || rnPrompt(RUNES[i]).toLowerCase() === h.toLowerCase()) { r = RUNES[i]; break; }   // 2026-09-26: „the blank rune“ (i z JSON modelu s velkým T)
       if (!r) return n;
       var k = (lang === 'is') ? (r.k_is || r.k) : r.k;
       if (_asp && _jedna) {

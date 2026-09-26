@@ -145,7 +145,7 @@ function _slozeniCteni() {
     var tvar = ['one line', 'two possibilities', 'a question'][Number(String(d.ending).slice(-1))] || d.ending;
     out.push('ending: ' + tvar + (String(d.ending).indexOf('heavy') === 0 ? ' (heavy — no comfort)' : ''));
   }
-  if (d.essence !== undefined) out.push('essence line: ' + (d.essence === 'blank' ? 'Blank' : ['what the rune does', 'the rune acts in the scene'][d.essence]));
+  if (d.essence !== undefined) out.push('essence line: ' + (d.essence === 'blank' ? 'Blank' : ['what the rune does', 'the rune named by the meaning in the picture'][d.essence]));
   if (d.kws) out.push('keywords: ' + d.kws);
   out.push('life-rune lens: ' + (d.lens ? 'yes' : 'no'));
   if (_lastGen.kind === 'single') out.push('rune question under the ending: ' + (/grow out of the rune|eiga rót í spurningu/.test(_lastGen.prompt) ? 'yes' : 'no'));
