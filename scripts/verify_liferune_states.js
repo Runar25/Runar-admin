@@ -555,20 +555,34 @@ async function drat() {
   vm.runInContext('_lifeRuneText = null; _lifeRuneLang = null; lang = "en";', S);
 }
 
-// ── VZOREC: každá z 24 run může vyjít, Blank nikdy (2026-09-27) ──
-// Do 2026-09-27 Fehu nevyšla z žádného data narození (ciferný součet součtu d+m+y dal 2–24, nikdy 1) — nalezl CODE-tree
-// až diagnózou stromu, žádná kontrola to nevěděla. Protlačeno skutečnou calcLifeRune přes všechny dny 1900–2030.
+// ── VÝPOČET: runové půlměsíce (2026-09-27, HANDOFF62; DECISIONS 2026-09-27 (3)) ──
+// Do 2026-09-27 ciferný součet — Fehu nevyšla z žádného data (nalezl CODE-tree). Teď půlměsíc narození s pevnými daty.
+// Protlačeno skutečnou calcLifeRune přes KAŽDÝ den běžného i přestupného roku (pasti z HANDOFF62: přestupný rok, 29. 2., Eihwaz
+// přes Nový rok, tabulka bez mezery i bez záložního výsledku).
 {
-  const calc = vm.runInContext('calcLifeRune', S), vidno = {};
-  let spatne = 0;
-  for (let x = new Date(Date.UTC(1900, 0, 1)); x <= new Date(Date.UTC(2030, 11, 31)); x.setUTCDate(x.getUTCDate() + 1)) {
-    const r = calc(x.getUTCDate(), x.getUTCMonth() + 1, x.getUTCFullYear());
-    if (!r || r.n === 'Blank') { spatne++; continue; }
-    vidno[r.n] = (vidno[r.n] || 0) + 1;
+  const calc = vm.runInContext('calcLifeRune', S), RR = vm.runInContext('RUNES', S), ST = vm.runInContext('LIFE_RUNE_STARTS', S);
+  for (const Y of [2025, 2024]) {
+    const vidno = {}; let dni = 0, spatne = 0;
+    for (let x = new Date(Date.UTC(Y, 0, 1)); x.getUTCFullYear() === Y; x.setUTCDate(x.getUTCDate() + 1)) {
+      const r = calc(x.getUTCDate(), x.getUTCMonth() + 1, Y); dni++;
+      if (!r || r.n === 'Blank') { spatne++; continue; }
+      vidno[r.n] = (vidno[r.n] || 0) + 1;
+    }
+    const delky = Object.values(vidno);
+    rekni(Object.keys(vidno).length === 24 && spatne === 0 && delky.every(v => v >= 14 && v <= 16),
+          'calcLifeRune ' + Y + ': ' + dni + ' dní → všech 24 run, každá 14–16 dní, nikdy Blank ani nic');
   }
-  const n = Object.keys(vidno).length;
-  rekni(n === 24 && spatne === 0, 'calcLifeRune: z dat 1900–2030 vyjde všech 24 run (vyšlo ' + n + '), nikdy Blank ani nic (' + spatne + ')');
-  rekni(calc(15, 7, 1985).n === 'Jera', 'calcLifeRune: 15. 7. 1985 → 1+5+7+1+9+8+5 = 36 → 12 = Jera');
+  // každý začátek období patří SVÉ runě a den před ním runě předchozí (hraniční den = nová runa)
+  let hranice = 0;
+  ST.forEach(function (st, i) {
+    const pred = new Date(Date.UTC(2025, st[0] - 1, st[1] - 1));
+    if (calc(st[1], st[0], 2025).n === RR[i].n && calc(pred.getUTCDate(), pred.getUTCMonth() + 1, 2025).n === RR[(i + 23) % 24].n) hranice++;
+  });
+  rekni(hranice === 24, 'calcLifeRune: všech 24 hranic — začátek patří nové runě, den před ním předchozí (' + hranice + '/24)');
+  rekni(calc(12, 12, 1981).n === 'Isa' && calc(13, 12, 1981).n === 'Jera' && calc(29, 2, 2024).n === 'Tiwaz'
+        && calc(1, 1, 2000).n === 'Eihwaz' && calc(12, 1, 2000).n === 'Eihwaz' && calc(13, 1, 2000).n === 'Perth',
+        'calcLifeRune: 12. 12. Isa · 13. 12. Jera · 29. 2. Tiwaz · 1. 1. a 12. 1. Eihwaz · 13. 1. Perth');
+  rekni(calc(1, 13, 2000) === null && calc(0, 5, 2000) === null, 'calcLifeRune: neplatné datum → žádná runa (null), ne náhodná runa');
 }
 
 drat().then(() => {

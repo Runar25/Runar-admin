@@ -232,17 +232,38 @@ const RUNES = [
 ];
 
 // ─── LIFE RUNE CALCULATOR ───────────────────────────────
-// Ciferný součet VŠECH číslic data (15. 7. 1985 → 1+5 + 7 + 1+9+8+5 = 36), nad 24 se odečítá 24 (36 → 12 = Jera);
-// 1–24 = RUNES[0..23], Blank není životní runa. KUKY 2026-09-27: „zdroj nemám, udělej C“ (RUNAR_DECISIONS 2026-09-27 (2)).
-// PROČ: do té doby se sečetly číslice SOUČTU d+m+y a redukovalo se ciferným součtem nad 24 — u skutečných let vyjde
-// 2–24, nikdy 1, takže Fehu nevyšla nikdy (0,0 % dnů 1930–2012, nalezl CODE-tree) a rozložení bylo 0,7–9,4 %.
-// Tahle metoda: všech 24 run, 1,9–6,4 %. Metoda nemá externí zdroj (owner) — je to rozhodnutí, ne tradice.
-// ⚠️ Změna vzorce mění runu existujícím účtům → uložené life_rune_* je třeba srovnat (hlídá verify_liferune_states).
+// Životní runa = RUNOVÝ PŮLMĚSÍC, ve kterém se člověk narodil (KUKY 2026-09-27, HANDOFF62 Cowork; RUNAR_DECISIONS 2026-09-27 (3)).
+// Rok je rozdělený na 24 období po 15–16 dnech s PEVNÝMI daty, cyklus začíná Fehu 29. 6. Je to moderní rozdělení roku (poprvé
+// publikované 1990), ne dochovaný severský systém — historicky doložená „rodná runa“ neexistuje. Autor se v aplikaci nejmenuje (owner).
+// Zdroje a srovnání variant → docs/eval/2026-09-27-zivotni-runa/README.md.
+// PROČ ne numerologie: ciferný součet data nemá k runám žádný vztah (stejné datum dalo podle pořadí sčítání Gebo i Fehu); půlměsíc
+// je místo v kruhu roku a dá se vysvětlit jednou větou.
+// Konvence: hraniční den patří NOVÉ runě (tabulky se v něm překrývají; tahle konvence jediná nedá dnu dvě runy).
+// Sowilo od 13. 2. — tak ho mají všechny tři tabulky ověřené 2026-09-27 (asktherunes, WeMystic, Uniwelry); Coworkův druhý zdroj
+// uváděl 12. 2. (neověřeno, stránka nedostupná). Důsledek: Algiz 16 dní, Sowilo 14. Pět run má 16 dní, jedna 14, ostatní 15.
+// PASTI (HANDOFF62, změřeno): (1) nikdy „den v roce“ — v přestupném roce se druhá půlka tabulky posune; porovnává se jen
+// (měsíc, den). (2) 29. 2. padne do Tiwaz. (3) Eihwaz přechází přes Nový rok (28. 12. – 12. 1.). (4) Tabulka je úplná — každý den
+// má právě jednu runu, žádný záložní výsledek. Hlídá verify_liferune_states.js (všechny dny přestupného i běžného roku).
+// Pořadí = RUNES[0..23] (Fehu … Dagaz); hodnota = [měsíc, den] ZAČÁTKU období.
+const LIFE_RUNE_STARTS = [
+  [6, 29], [7, 14], [7, 29], [8, 13], [8, 29], [9, 13], [9, 28], [10, 13],      // Fehu Uruz Thurisaz Ansuz Raidho Kenaz Gebo Wunjo
+  [10, 28], [11, 13], [11, 28], [12, 13], [12, 28], [1, 13], [1, 28], [2, 13],  // Hagalaz Nauthiz Isa Jera Eihwaz Perth Algiz Sowilo
+  [2, 27], [3, 14], [3, 30], [4, 14], [4, 29], [5, 14], [5, 29], [6, 14],       // Tiwaz Berkana Ehwaz Mannaz Laguz Ingwaz Othila Dagaz
+];
 function calcLifeRune(d, m, y) {
-  const cif = (n) => String(n).split('').map(Number).reduce((a, b) => a + b, 0);
-  let s = cif(d) + cif(m) + cif(y);
-  while (s > 24) s -= 24;
-  return RUNES[s - 1];
+  d = Number(d); m = Number(m);
+  // Neplatné datum = žádná runa (null), ne náhodná runa. Nehází: runar-yggdrasil.html sem posílá ručně psané číslo bez kontroly
+  // rozsahu a výjimka by rozbila vstup do Yggdrasilu. Úplnost TABULKY hlídá smoke (každý den roku má právě jednu runu).
+  if (!(m >= 1 && m <= 12 && d >= 1 && d <= 31)) return null;
+  const k = m * 100 + d;
+  // runa, jejíž začátek je v kalendářním roce nejpozději před datem; před 13. 1. žádný není → Eihwaz (28. 12. přes Nový rok)
+  let best = -1, bestKey = -1;
+  LIFE_RUNE_STARTS.forEach(function (st, i) {
+    const sk = st[0] * 100 + st[1];
+    if (sk <= k && sk > bestKey) { bestKey = sk; best = i; }
+  });
+  if (best === -1) best = LIFE_RUNE_STARTS.findIndex(function (st) { return st[0] === 12 && st[1] === 28; });   // Eihwaz
+  return RUNES[best];
 }
 
 // ─── AREA OF LIFE OPTIONS ───────────────────────────────
