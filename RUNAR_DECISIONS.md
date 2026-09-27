@@ -7463,3 +7463,12 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Kontrola:** smoke ㉟ (`verify_image_motifs.js` bod 3) — se znalostí obrazu z deníku padne 0/300 (EN i IS), bez ní 38/300 a 40/300;
   mutace (vyřazení vypnuté) → FAIL. Golden beze změny.
 - Affected doc(s): `RUNAR_BACKLOG.md`.
+
+## 2026-09-27 (11) — Owner smazal dva jednorázové řádky korekcí (otázky o nitru)
+
+- **Co:** owner spustil SQL z BACKLOGu (`delete from runar_corrections where id in ('77c67110-…', '143202e0-…')`) — řádek „Þegar talað er
+  um Fehu" (náhrada *„Hvað innra með þér vill nú fá að stíga fram í ljósið?“*) a *„…land sem þornar“* (*„Hvar í lífi þínu hefur orkan runnið
+  í þurran jarðveg?“*). Ověřeno CODE-read v DB: 28 řádků, žádný z těch dvou.
+- **Proč:** náhrady byly otázky o životě tazatele; blok korekcí je vkládá do každého IS promptu a řádek Fehu prosákl doslova do čtení
+  (EVAL_LOG 2026-09-27 (4)). Otázka z 2026-09-25 („smazat?“) tím uzavřena.
+- **Reverzibilita:** texty řádků jsou citované výš. Affected doc(s): `RUNAR_BACKLOG.md` (položka SMAZAT → hotovo) — v tomto commitu.
