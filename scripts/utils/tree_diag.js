@@ -180,7 +180,7 @@ if (cast === '2c') {
 // ── LAB: protlaci SKUTECNOU stranku labu (v2/tree-lab-crown-composer/crown-composer.html,
 //    vygenerovanou z build_crown_composer.py) s danym logem. DOM je obecny stub; zapisy do
 //    prvku se pamatuji (btable = prehled vetvi, grow = cisla rustu), kresba jako u aplikace.
-function labRun(log, htmlPath) {
+function labRun(log, htmlPath, inj) {
   const html = fs.readFileSync(htmlPath || (DIR + 'tree-lab-crown-composer/crown-composer.html'), 'utf8');
   const inline = html.slice(html.indexOf('<script>', html.indexOf('runar-branch.js')) + 8, html.lastIndexOf('</script>'));
   const els = {}, c = recCanvas(), store = { crownLog: JSON.stringify(log) };
@@ -202,11 +202,11 @@ function labRun(log, htmlPath) {
   let code = 'var lang="en";\n';
   for (const f of ['runar-runes.js', 'tree-lab-trunk-composer/runar-trunk.js', 'tree-lab-branch-composer/runar-branch.js'])
     code += fs.readFileSync(DIR + f, 'utf8') + '\n;\n';
-  vm.runInContext(code + inline.replace('window._draw=draw;', 'window._draw=draw; window._P=_pick;'), lsb, { filename: 'lab' });
+  vm.runInContext(code + inline.replace('window._draw=draw;', 'window._draw=draw; window._P=_pick; if(window.__INJ){ Object.assign(crownT,__INJ.crownT||{}); Object.assign(trunkT,__INJ.trunkT||{}); Object.assign(rootsT,__INJ.rootsT||{}); if(__INJ.rune) state.rune=__INJ.rune; if(__INJ.dob){ state.d=__INJ.dob.d; state.m=__INJ.dob.m; state.y=__INJ.dob.y; } }'), lsb, { filename: 'lab' });
   const strip = s => String(s).replace(/<[^>]+>/g, ' ').replace(/&middot;/g, '·').replace(/&rarr;/g, '→').replace(/\s+/g, ' ').trim();
   return { grow: strip(els.grow ? els.grow.innerHTML : ''), btable: strip(els.btable ? els.btable.innerHTML : ''),
            age: strip(els.ageread ? els.ageread.textContent : ''), fills: c.fills,
-           picks: (lsb._P || []).filter(p => typeof p.k === 'number').map(p => p.meta) };
+           picks: (lsb._P || []).filter(p => typeof p.k === 'number').map(p => p.meta), allPicks: (lsb._P || []) };
 }
 if (cast === 'lab2') {
   // CAST 2 v LABU: zakladaci Norny (lab log = klice run, ne znaky)
@@ -246,4 +246,31 @@ if (cast === 'lab2b') {
   console.log('(3) stary strom 120 cteni: vetvi pred/po', o.picks.length, '/', n.picks.length, '| beze zmeny', same);
   diffs.forEach(([m, q]) => { const lost = (m.tw || []).map(t => t.name).filter(x => !(q.tw || []).map(t => t.name).includes(x));
     console.log('     ', m.name, '— zmizele odbocky:', lost.join(',') || '-', '| byly to hlavni runy jinych vetvi?', lost.every(x => mainsO.has(x)) ? 'ANO (zamer)' : 'NE — CHYBA'); });
+}
+
+if (cast === 'own') {
+  // Owneruv ulozeny strom (_tree_state.json, tlacitko ULOZIT -> Code): tentyz log I posuvniky.
+  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const r = labRun(st.log, null, st);
+  console.log(r.grow.slice(0, 160));
+  console.log('HLAVNI VETVE (vystup z kmene):');
+  r.picks.forEach(m => console.log('  ', (m.name + '').padEnd(8), (m.el + '').padEnd(6), 'vyska', m.frac != null ? Math.round(m.frac * 100) + ' %' : '?', '| pozice', m.norn || '-', '| odbocek', (m.tw || []).length, '| z toho vlastni pramen:', (m.tw || []).filter(t => t.pramen).map(t => t.name).join(',') || '-'));
+  const other = r.allPicks.filter(p => typeof p.k !== 'number');
+  const kinds = {}; other.forEach(p => { const t = String(p.k).replace(/[0-9_].*$/, '') || String(p.k); kinds[t] = (kinds[t] || 0) + 1; });
+  console.log('ostatni klikatelne kusy podle druhu:', JSON.stringify(kinds));
+  const gs = other.filter(p => p.meta && (p.meta.grad || /^g/.test(String(p.k))));
+  gs.slice(0, 6).forEach(p => console.log('   graduant', p.k, JSON.stringify(p.meta).slice(0, 200)));
+}
+if (cast === 'own2') {
+  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const r = labRun(st.log, null, st);
+  const shown = new Set(); r.picks.forEach(m => { shown.add(m.name); (m.tw || []).forEach(t => shown.add(t.name)); });
+  const drawn = {}; st.log.forEach((rd, i) => rd.runes.forEach(x => { const n = B.RUNES.filter(q => q.k === x.rune)[0].name;
+    (drawn[x.el] = drawn[x.el] || {}); drawn[x.el][n] = drawn[x.el][n] || { n: 0, first: i + 1 }; drawn[x.el][n].n++; }));
+  Object.keys(drawn).forEach(el => console.log(el.padEnd(6), Object.entries(drawn[el]).map(([n, v]) => n + ' ' + v.n + 'x (od #' + v.first + ')' + (shown.has(n) ? '' : ' ✗NEVIDITELNA')).join(' · ')));
+  // kdy dostal ktery element vetev: prehraj log po jednom a sleduj pribyvajici hlavni vetve
+  let prev = []; const ev = [];
+  for (let n = 1; n <= st.log.length; n++) { const v = labRun(st.log.slice(0, n), null, st).picks.map(m => m.name + '/' + m.el);
+    v.filter(x => !prev.includes(x)).forEach(x => ev.push('#' + n + ' ' + x)); prev = v; }
+  console.log('nove hlavni vetve (cteni -> vetev):', ev.join(' | '));
 }
