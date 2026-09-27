@@ -5479,3 +5479,30 @@ Obě přepsaná znění prošla is-grammar-qa čistě a korpusem (*að renna aug
 - *„öll lykkjurnar"* → *allar lykkjurnar* (173 × 0) — jednorázová shoda rodu, do korekcí NE (owner k jednorázovým řádkům 2026-09-25).
 - Podezřelé, neopravováno: *„gjöfin og þágan eru sami hluturinn"* (*þágan* 3× — řídké, nejisté); *„Hvaða girðingu ert þú ekki búinn
   að ákveða hvort þú reisir aftur?"* (vytýkání z vedlejší otázky, E001; nevím, jestli je to chyba — korpus to neposoudí, > 3 slova).
+
+## 2026-09-27 (1) — Vegvísir: jak říct Rúnarovi scénu ramene — vyhrává znovu otázka bez jmen run (Q1), teď na Opus 5
+
+**Owner:** *„pusť test scény ramene"* · *„píše člověk a vytvoříme svět, ze kterého bude moct vybírat… budeme to testovat
+jednodušeji na statických vstupech… jde o to, jak to Rúnarovi říct; na tom, jak je formulována otázka, záleží."*
+**Co se testovalo — jednou větou:** varianta **V3** (střed = Gebo jako chůze, varianty kola 2; rameno = tažená runa; scéna =
+statická volba ze „světa"; nic se nepřenáší; jen EN) — měnila se **jen formulace, jak scéna a otázka dojdou k Rúnarovi**.
+Netestováno: přenos, životní runa jako rameno, islandština, jak se podává střed. Ramena Isa · Jera · Perth · Raidho (Gebo =
+životní runa, v sáčku není — DECISIONS 2026-08-25). Scény: vrcholek hory · pobřeží při odlivu · pták v dálce · chata u ohně.
+Systémový prompt produkční, prompt ramene testovací (`docs/eval/2026-09-27-vegvisir-scena/scena.js`). Opus 5, 16 textů, $0,10.
+| formulace | Gebo předvedené ve scéně (slepě) | zavírá | tvrzení o nitru | průměr kvality 1–5 |
+|---|---|---|---|---|
+| **Q1** *„I'm standing on a mountain top. What passes between me and this place?"* (= F z 2026-09-12) | **3/4** | 1/4 | 0/4 | **4,25** |
+| Q2 scénu podá aplikace jako fakt + *„What does Isa show me here?"* | 1/4 | 0/4 | 0/4 | 3,25 |
+| Q3 *„… How is Isa connected to Gebo?"* (ownerův baseline z 2026-09-12) | 1/4 | 0/4 | 0/4 | 3,25 |
+| Q4 scéna + „runa padla", bez otázky | 0/4 (1× Gebo chybí) | 1/4 | 0/4 | 3,25 |
+Q1 nejlepší texty (5/5): *„The mountain does not meet you halfway. You climbed, and it held still — that is the whole of the exchange,
+and Isa sits in it… The wind takes your warmth. The rock takes nothing, and offers the same."* · *„You give your weight to wet sand, the
+sand gives it back through your soles, and neither of you asks the other to stay."* Ostatní formulace Gebo **vysvětlují** (*„Gebo is
+the weight of exchange, given and matched"*, *„that is Gebo's business"*).
+⭐ **Nález:** výsledek z 2026-09-12 (tehdy texty psal Claude v konverzaci) **se potvrdil na produkčním modelu** — otázka *„What passes
+between me and this place?"* nese Gebo sama (*passes between*), takže Rúnar výměnu předvede ve scéně místo definice.
+**Vady Q1:** Perth zavírá útěchou (*„What you cannot see is not empty, only unmeasured"*); Raidho opsal variantu chůze doslova
+(*„meets you halfway, and halfway is where it stops"*, 5 slov) — riziko z 2026-09-12 („hotová věta o runě se opíše") platí dál.
+**Mimochodem:** Rúnar jmenuje Gebo ve 13/16 textech i v Q1 — protože střed je v promptu uveden jménem. Další proměnná k testu:
+jak podat střed (se jménem × jen chůze). Tvrzení o nitru 0/16, scénu drží 16/16 (Q2 Raidho přidal sníh, soudce nechal projít).
+**Hranice:** n = 4 na formulaci, 1 text na buňku, jeden slepý soudce; jen EN; scény i runy v páru pevné.

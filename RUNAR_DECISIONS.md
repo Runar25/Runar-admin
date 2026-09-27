@@ -7344,3 +7344,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Kontrola:** `verify_liferune_states.js` (smoke) — z dat 1900–2030 vyjde všech 24 run, nikdy Blank; vzorový výpočet 15. 7. 1985 = Jera.
   Se starým vzorcem obě tvrzení padají. Strom má tvar pro všech 24 (CODE-tree `tree_diag.js` A).
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka Fehu, poznámka Vegvísir).
+
+## 2026-09-27 (3) — Vegvísir: jen anglicky · scény ze statického světa napřed · nic se nepřenáší · krajiny/momenty/nit odloženy
+
+- **Jen anglicky** (KUKY 2026-09-27: *„a budou jen anglicky"*). Vegvísir se staví a testuje pouze v EN; islandská verze se neplánuje.
+- **Scéna ramene = co zvolí člověk.** Napřed **svět statických scén**, ze kterého vybírá; vlastní slova až později (KUKY: *„vytvoříme
+  svět, ze kterého bude moct vybírat, než mu dáme volnost vstupovat do scény svými slovy"*). Otevřené je, jak scénu a otázku říct
+  Rúnarovi (první měření EVAL_LOG 2026-09-27 (1)).
+- **Mezi rameny se nic nepřenáší** (KUKY: *„člověk tvoří ASKem příběh, a tím pádem by se asi nic přenášet nemělo, ale potenciálně taky
+  otestovat"*). ⚠️ Ruší povinnou historii „jedna materiálová fráze" (RUNAR_DESIGN Vegvísir, ratifikováno 2026-08-23) jako VÝCHOZÍ stav —
+  zůstává jako varianta k testu. Tvrdý limit „nesený materiál nemá v produkci cestu" (BACKLOG) tím přestává být blokerem.
+- **Krajiny, momenty, krajinný graf a osa „nit" ODLOŽENY** (KUKY: *„zatím potenciálně necháme, ale měla velké mezery. ASK vypadá, že bude
+  lepší"*) — patřily k verzi „pouť" (ramena procházejí krajinami a nesou materiál), kterou V3 × Ask nahrazuje.
+- **Životní runa jako rameno** — v1 NE (DECISIONS 2026-08-25) platí; alternativa „leží v šuplíku" (KUKY), teď se netestuje.
+- Affected doc(s): `RUNAR_BACKLOG.md` (rámec Vegvísiru, položky krajin), `RUNAR_DESIGN.md` Vegvísir (historie) — v tomto commitu.

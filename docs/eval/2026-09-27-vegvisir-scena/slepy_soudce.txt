@@ -1,0 +1,6 @@
+Slepý soudce (subagent, jen slepe.txt) 2026-09-27. A zavírá · B tvrzení o nitru (2. osoba se NEpočítá) · C Gebo · D scéna · E runa srozumitelná · F 1–5
+1 no no explained stays yes 4 · 2 YES no explained stays yes 3 · 3 no no explained stays yes 3 (vymyšlený sníh) · 4 no no explained stays yes 3
+5 no no SHOWN stays yes 5 · 6 YES no ABSENT stays yes 3 · 7 no no SHOWN stays yes 4 · 8 no no explained stays yes 3
+9 no no SHOWN stays yes 4 · 10 no no SHOWN stays yes 4 · 11 no no explained stays yes 3 · 12 no no explained stays yes 3
+13 no no SHOWN stays yes 5 · 14 no no explained stays yes 3 · 15 no no explained stays yes 3 · 16 no no explained stays yes 3
+Po klíči (slepe_klic.json): Q1 shown 3/4, zavírá 1/4, F 5/5/4/3 (Isa, Jera, Raidho, Perth) · Q2 shown 1/4, F 3,25 · Q3 shown 1/4, F 3,25 · Q4 shown 0/4, zavírá 1/4, Gebo chybí 1/4, F 3,25.

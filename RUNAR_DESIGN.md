@@ -829,6 +829,8 @@ dovnitř"). Copy z toho vzniká hlasem Rúnara přes Cowork.
   znamená zastavení"*, ale *„to, co předtím mlčelo, teď vydává zvuk"*.
   🔒 Tvar, který tohle drží, je **změřený**: druhá vrstva funguje, když ji nese TÝŽ obraz, a selhává,
   když přijde pojmenovaná nebo jako přirovnání (→ `RUNAR_EVAL_LOG.md` 2026-08-23).
+- ⚠️ **2026-09-27 (KUKY, DECISIONS 2026-09-27 (3)): výchozí stav je NIC SE NEPŘENÁŠÍ** — příběh tvoří člověk Askem; odstavec
+  níž zůstává jako varianta k testu, ne jako rozhodnutí.
 - ⭐ **Historie se nese POVINNĚ, ale MALÁ: jedna extrahovaná materiálová fráze z předchozího
   ramene** (extrahuje model). Tvarové zákazy: nikdy jméno runy, nikdy přirovnání; smí být
   proměněná, popřená, nebo přítomná jako nepřítomnost — vztah je svobodný, přítomnost ne.
