@@ -227,6 +227,12 @@ function render(canvas, opts) {
   var linearN=Math.min((trunkT.strandMax||28), 3+Math.floor(realAge/every));
   var targetN=founding ? 0 : Math.max(1, Math.min(linearN, Math.round(crownT.maxMains)));
   var branchEls=founding ? [] : stableAssign(log, els, targetN);
+  /* ZADNA FALESNA VETEV (2026-09-27, KUKY: "nechci falesne vetve, to jsem nechtel od zacatku").
+     Drive se chybejici slot doplnil kopii posledniho (branchEls[k] || posledni), takze
+     u 1 002 z 2 024 moznych Noren byla jedna runa nakreslena 2x a jina tazena runa vubec
+     (Kenaz·Fehu·Laguz -> Kenaz, Laguz, Laguz). Vetvi je ted tolik, kolik je skutecnych
+     slotu; prebytecny pramen zustane v kmeni (jako v labu, mainsN). */
+  targetN=Math.min(targetN, branchEls.length);
 
   var all=[], crown=[], roots=[]; var strandK=0, strands=[];
   var pick=[];   /* {k, pts, meta} pro inspekci klepnutim (admin) */
