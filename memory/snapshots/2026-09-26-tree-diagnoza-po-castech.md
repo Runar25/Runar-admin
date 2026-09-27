@@ -36,9 +36,13 @@ měř přímo na enginu (část `1b`).
   „hledání cesty kolem"). Mění rozhodnutí 2026-08-07 (9 pramenů + odbočky). Můj návrh k němu:
   z kmene vychází **rameno elementu**, runy se od něj odlupují jako vlastní větve (max 5 ramen
   u kmene, přesto každá runa svou větev); kořeny zrcadlově.
-- **Čeká na ownera:** (1) mají pozice Noren význam (urð níž/kořen · skuld výš), (2) pěstovat
-  nový strom v LABU (doporučeno; lab ale nemá semínko a tahá runy náhodně), (3) dočasně
-  v aplikaci jen zakázat zdvojení větve?
+- **Owner rozhodl (2026-09-27):** pozice Noren ano · pěstujeme v LABU · v aplikaci zakázat
+  zdvojení. **HOTOVO téhož dne:** aplikace bez falešné kopie; lab má semínko, zakládací Norny
+  = 3 vlastní prameny (skuld nahoře · verðandi · urð nejníž) a „runa jen jednou".
+- **Další = část 3 (single).** V labu po Nornách zatím běží STARÝ model (větve podle elementu
+  po 5 taženích, odbočky za opakování). Otevřená otázka na ownera: opakovaná runa = silnější
+  / delší táž větev, nebo další větev té runy? (Moje doporučení: táž větev silnější — „1 runa
+  = 1 pramen".) Lab nástroj: `tree_diag.js lab2` / `lab2b` (protlačí skutečnou stránku labu).
 - Owner si založí nový strom a poroste **současně se mnou** — každý segment opravit od začátku.
 
 ## Co visí
