@@ -1353,8 +1353,10 @@ kolik jich je — „V3" nebyla alternativa k „V4", šly postavit obě naráz.
 - ⚠️ **Proč varianty, doloženo omylem:** když střed byl JEDEN pevný text, všechna čtyři ramena
   skončila v témže obraze („crossing" 4/4). KUKY: *„křížení je v každém čtení, takže je to nuda."*
 - ✅ **Změřeno 2026-09-12 (n=4):** žádné slovo společné všem ramenům (proti „crossing" 4/4) · varianty
-  se neopsaly · vazba dorazila 4/4 i u statických run · zavírá 1/4 · ⚠️ **tvrzení o čtenáři 2/4 —
-  když se chůze napíše jako „your"**. Další krok: chůzi ukázat na obrazu, ne říct o něm.
+  se neopsaly · vazba dorazila 4/4 i u statických run · zavírá 1/4 · ~~tvrzení o čtenáři 2/4 — když se chůze
+  napíše jako „your"~~ ⚠️ **Opraveno 2026-09-27 (owner): 2. osoba NENÍ tvrzení** — *„you je prostě you a není to
+  kontext"*; měřidlo CODE-read bylo špatně, „další krok: chůzi ukázat na obrazu" tím padá (memory
+  `rozkaz-a-studene-cteni-hranice` bod 3).
   → `RUNAR_EVAL_LOG.md` 2026-09-12.
 
 **ŽIVOTNÍ RUNA GEBO — varianty chůze (dosud JEN v chatu, zapsáno 2026-09-12).**
@@ -1384,7 +1386,10 @@ vazba dorazí jen k runě s pohybem (Jera ✅ Gebo ✅ · Perth ❌ Isa ❌).
   1. Vegvísir = **střed + 8 ramen**; není spread, vlastní režim, nic se nedědí. ✅
   2. **Střed = životní runa**, netáhne se, kterákoli z **24** (Blank ne — ověřeno `calcLifeRune`: modulo 24). ⚠️ *CODE-tree 2026-09-26: z reálných dat narození vyjde jen 23 — Fehu nikdy; viz Tree sekce „FEHU NIKDY NEVYJDE".* ✅
   3. **Rameno = tažená runa**, jakákoli; pozice nemá vlastní význam (`RUNAR_DESIGN.md:750`, `:817`). ✅
-  4. Může životní runa padnout i jako rameno? → **TESTOVAT** (dosud: V2 nejmlhavější, NE-V3 zavírá, V3 prošla — nerozhodnuto).
+  4. Může životní runa padnout i jako rameno? → **v1 ROZHODNUTO 2026-08-25: NE, životní runa není v sáčku** (DECISIONS
+     2026-08-25 — self-reference, hranice domov ≠ cesta); „návrat domova skrze tutéž runu" = uchovaná alternativa.
+     Owner 2026-09-27: *„budeme muset otestovat"* → test alternativy, v1 platí. (⚠️ Do 2026-09-27 tu stálo jen „TESTOVAT
+     — nerozhodnuto" a rozhodnutí z 2026-08-25 se tím tiše ztrácelo — §20.) Signály dosud: V2 nejmlhavější, NE-V3 zavírá, V3 prošla.
   5. Čas: rameno ne dřív než po 9 nocích; dva Asky ne dřív než po 3 a po 6 dnech. ✅
   6. **Čtení ramene ≈ 90 slov** („tam, kde je velká ASK"); „vyčerpávající" a víc odstavců ZRUŠENO. ✅
   7. Bez obrazů z banky — jediný vstup je ukotvení. ✅

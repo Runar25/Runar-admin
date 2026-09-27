@@ -18,6 +18,12 @@ Dvě pravidla kánonu se snadno měří přísněji, než je owner myslí. Hrani
    jako obraz** porušení NENÍ: *„your knuckles have learned this before your mind has"* znázorňuje dřinu, ne vnitřek.
    Owner: *„stejně může říct, že když udeříš prudce pěstí do zdi, tak si můžeš zlomit ruku… jedno vede k druhému."*
 
+3. **„you / your" samo o sobě NENÍ tvrzení o člověku** (owner 2026-09-27, Vegvísir V3): *„to you už tady bylo hodněkrát
+   a hodněkrát to nic neznamenalo, jelikož you je prostě you a není to kontext. Co když je před tím ‚may you', bude to
+   stejné… asi ne, že."* V3 jsem vedl *„Your pace was never yours to set alone"* jako vadu 2/4 jen kvůli 2. osobě a
+   navrhl další test „chůzi ukázat na obrazu místo your" — obojí padlo. 2. osoba je gramatika, ne obsah; posuzuje se, CO
+   věta tvrdí (vnitřní stav → porušení), ne komu.
+
 **Why:** 2026-09-23 jsem ve várce počítal každé *Look/See/Notice* na začátku věty jako porušení (6 → 14 z 28) a *knuckles*
 jako studené čtení; obojí owner opravil. Skutečná vada znění „look closer" byla jiná — model ho **opakoval doslova** (formule).
 
