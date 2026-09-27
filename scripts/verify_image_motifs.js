@@ -91,6 +91,32 @@ for (const drawn of RUNES) {
 }
 
 if (!motivRuny.length) { fail++; console.log('FAIL  zadne motivove radky — guard nema co hlidat (cekan aspon 1)'); }
+// 3) OBRAZ NAPŘÍČ ZAŘÍZENÍMI (2026-09-27, KUKY „jeď bod 3“): obraz z posledního čtení téže runy v DENÍKU (_imgServerLast,
+//    plní runar-reading.js z readings.prompt_draws.image) nesmí padnout — ani když ho toto zařízení nezná (prázdný localStorage).
+//    Kontrola obráceně: bez té znalosti tentýž obraz padá (jinak by zelená byla náhoda malé banky).
+{
+  const bucketNow = vm.runInContext('_seasonBucket(new Date().getMonth() + 1)', S);
+  const runa = RUNES.find(r => r.n === 'Ansuz');
+  const cand = vm.runInContext('_runeImageCandidates', S)(runa, bucketNow);
+  if (cand.length < 2) { fail++; console.log('FAIL  Ansuz má v bucketu ' + bucketNow + ' méně než 2 obrazy — test nemá co vyřadit'); }
+  else for (const [jaz, sl] of [['en', 3], ['is', 2]]) {
+    const cil = cand[0], txt = String(cil[sl]).replace(/\.\s*$/, '');
+    const tahni = (znam) => {
+      let padl = 0;
+      for (let i = 0; i < 300; i++) {
+        for (const k of Object.keys(uloz)) delete uloz[k];          // jiné zařízení: localStorage nic neví
+        vm.runInContext('_imgServerLast = ' + JSON.stringify(znam ? { Ansuz: txt } : {}) + ';', S);
+        const vystup = vm.runInContext('_seasonalImagery', S)(jaz, runa);
+        if (vystup.indexOf(txt) !== -1) padl++;
+      }
+      return padl;
+    };
+    const s = tahni(true), bez = tahni(false);
+    if (s !== 0 || bez === 0) { fail++; console.log('FAIL  ' + jaz + ' obraz z deníku: se znalostí padl ' + s + '/300, bez ní ' + bez + '/300'); }
+    else console.log('OK    ' + jaz + ' obraz z posledního čtení v deníku nepadne (0/300), bez znalosti padá (' + bez + '/300)');
+  }
+  vm.runInContext('_imgServerLast = {};', S);
+}
 console.log(fail === 0
   ? 'OK    motivy obrazu: ' + Object.keys(poc).length + ' motivu / ' + motivRuny.length + ' run, ' + overeno + ' tahu bez dvojiteho motivu, ' + tahu + ' tahu bez stejneho obrazu po sobe (bucket ' + bucket + ')'
   : 'CELKEM ' + fail + ' problem(u)');

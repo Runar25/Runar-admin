@@ -7450,3 +7450,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   **Co:** `buildAskPrompt` → `S.q(_questionSafe(question))` (táž funkce jako u úvodní otázky čtení). `verify_question_injection.js` (smoke)
   má novou cestu `ask_q` — mutace (bez čištění) → FAIL. Golden beze změny (normální otázka projde nedotčená).
 - Affected doc(s): `RUNAR_BACKLOG.md`.
+
+## 2026-09-27 (10) — Obraz se neopakuje ani napříč zařízeními: los vyřadí obraz z posledního čtení téže runy v deníku
+
+- **Rozhodl:** KUKY 2026-09-27 *„jeď bod 3, obraz napříč zařízeními“* (BACKLOG; report 2026-09-23 *„podruhé za sebou rebarbora“* — Berkana na
+  dvou zařízeních).
+- **Proč:** sáček obrazů i „poslední obraz“ žijí v localStorage = per zařízení; z jiného zařízení mohl padnout tentýž obraz hned znovu.
+- **Co:** před sestavením single promptu klient načte `prompt_draws.image` z POSLEDNÍHO čtení téže runy uživatele (`readings`, řazeno
+  `drawn_at`) → `_imgServerLast` (character.js); `_seasonalImagery` ten obraz vyřadí stejnou cestou jako poslední obraz zařízení
+  (`_seasonBagPick(…, exclude)`, v sáčku zůstává). Text se páruje přes IS i EN sloupec (čtení mohlo být v druhém jazyce). Jen přihlášený;
+  návštěvník dál jen localStorage. Nikdy nezdrží čtení: chyba nebo 1,5 s → jede se bez toho. Spready beze změny (jen localStorage).
+- **Kontrola:** smoke ㉟ (`verify_image_motifs.js` bod 3) — se znalostí obrazu z deníku padne 0/300 (EN i IS), bez ní 38/300 a 40/300;
+  mutace (vyřazení vypnuté) → FAIL. Golden beze změny.
+- Affected doc(s): `RUNAR_BACKLOG.md`.

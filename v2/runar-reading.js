@@ -34,6 +34,21 @@ var _lastDrawn = [];
 // GPT nevidí, jaký obraz a úhel Rúnar dostal, a nepozná opsanou větu ze zadání), hotový text a výměny v Asku.
 // Jen vlastní čtení v adminově session: cizí čtení k OpenAI nejdou (RUNAR_PRIVACY.md — OpenAI není uvedený
 // zpracovatel). Odpověď je česky, protože ji čte owner.
+// 2026-09-27 (BACKLOG „Obraz se může zopakovat napříč zařízeními“): obraz z POSLEDNÍHO čtení téže runy z deníku → _imgServerLast
+// (character.js), _seasonalImagery ho vyřadí z losu. Sáček a „poslední obraz“ jsou dál v localStorage (per zařízení) — tohle je
+// jen pojistka napříč zařízeními. Nikdy nezdrží čtení: při chybě nebo po 1,5 s se jede bez ní (jako dřív).
+async function _loadServerLastImage(drawn) {
+  _imgServerLast = {};
+  if (!currentUser || typeof sb === 'undefined' || !sb || !drawn || !drawn.n) return;
+  try {
+    var dotaz = sb.from('readings').select('prompt_draws').eq('user_id', currentUser.id).eq('rune_name', drawn.n)
+      .order('drawn_at', { ascending: false }).limit(1);
+    var res = await Promise.race([dotaz, new Promise(function (ok) { setTimeout(function () { ok(null); }, 1500); })]);
+    var row = res && !res.error && res.data && res.data[0];
+    var img = row && row.prompt_draws && row.prompt_draws.image;
+    if (img) _imgServerLast[drawn.n] = _imgNorm(img);
+  } catch (e) {}
+}
 var _lastGen = null;   // { sys, prompt, lang, kind } posledního vygenerovaného čtení
 var _askLog = [];      // [{ q, a }] výměny v Asku k tomuto čtení (dnes nejvýš jedna)
 // Rubrika v1 (2026-09-24, po prvním živém rozboru — owner: délka „o ničem“, „ustřeluje sám“, rady „k ničemu“):
@@ -325,6 +340,7 @@ async function _generateReading() {
   const u = readerUser, drawn = readerRune;
   var _castNow = _castIdx(u);
   const sys = buildSysPrompt(activeChar, lang);
+  await _loadServerLastImage(drawn);   // 2026-09-27: obraz z posledního čtení téže runy (jakékoli zařízení) → los ho vyřadí
   const prompt = buildReadingPrompt(u, drawn, lang, corrections);
   _lastGen = { sys: sys, prompt: prompt, lang: lang, kind: 'single' };   // pro rozbor GPT-6 sol (jen admin)
 

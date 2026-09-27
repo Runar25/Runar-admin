@@ -769,6 +769,11 @@ function _runeImageCandidates(drawn, bucket) {
 // EN a spready ho plni a ignoruji.
 var _imgAspektIS = '';
 var _imgAspektEN = '';
+// 2026-09-27 (KUKY „jeď bod 3, obraz napříč zařízeními“): { runa: text obrazu } z POSLEDNÍHO čtení té runy v deníku
+// (readings.prompt_draws.image). Plní ho runar-reading.js (_loadServerLastImage) těsně před sestavením single promptu;
+// _seasonalImagery ten obraz vyřadí z losu stejně jako „poslední obraz z tohoto zařízení“. Prázdné = návštěvník / bez deníku.
+var _imgServerLast = {};
+function _imgNorm(s) { return String(s || '').trim().replace(/\.\s*$/, '').trim(); }
 // M1 (2026-09-18, krok 2 uklidu; owner schvalil architekturu „kazda cast cteni na jednom
 // miste"): pravidla obrazu bydlela v systemove pateri (_spine THE IMAGE) a radek IMAGE ve
 // zprave — dve mista pro jednu cast cteni. Ted jsou pravidla TADY, hned nad radkem IMAGE,
@@ -850,6 +855,11 @@ function _seasonalImagery(lang, drawn) {
       var cIds = cand.map(function (row) { return row[0] + '|' + row[2].slice(0, 24); });
       var vyradit = lastImg ? [lastImg] : [];   // nikdy tentyz obraz hned po sobe (report #6)
       if (lastMotif) cand.forEach(function (row, i) { if ((row[7] || '') === lastMotif) vyradit.push(cIds[i]); });
+      // Poslední obraz téže runy z DENÍKU — i když padl na jiném zařízení (text je v jazyce toho čtení, proto IS i EN sloupec).
+      cand.forEach(function (row, i) {
+        var s = _imgServerLast[row[0]];
+        if (s && (_imgNorm(row[2]) === s || _imgNorm(row[3]) === s) && vyradit.indexOf(cIds[i]) === -1) vyradit.push(cIds[i]);
+      });
       var cPick = _seasonBagPick(bucket, runeKey, cIds, vyradit);
       var hit = cand[cIds.indexOf(cPick)] || cand[Math.floor(Math.random() * cand.length)];
       try {
