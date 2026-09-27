@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-27",
- "prompt_version": "v4.68-zivotni-runa-vysvetleni",
+ "prompt_version": "v4.69-zivotni-runa-bez-otazky",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -568,7 +568,7 @@
    "zacatek": "SECTION 2 — THE RUNE, EXPLAINED (8–10 sentences):"
   },
   {
-   "hash": "f12238fcaac6",
+   "hash": "de5934e28f0e",
    "lang": "en",
    "zdroj": "liferune",
    "zacatek": "Explain Ansuz fully and in plain words, as you would to someone who as"
@@ -1330,7 +1330,7 @@
    "zacatek": "HLUTI 2 — RÚNIN ÚTSKÝRÐ (8–10 setningar):"
   },
   {
-   "hash": "4bf4578a67de",
+   "hash": "b565eb942b98",
    "lang": "is",
    "zdroj": "liferune",
    "zacatek": "Útskýrðu rúnina til fulls og á skýru máli, eins og fyrir þann sem spyr"

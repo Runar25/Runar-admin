@@ -7423,3 +7423,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Změřeno (Opus 5, `docs/eval/2026-09-27-zivotni-runa/cteni_pilot.*`):** Isa EN 334 slov, Fehu EN 321, Gebo IS 345 — každý význam
   vysvětlený, druhá strana, co runa neslibuje, otázka na konci. IS výstup: E001 3/15 vět (obvyklá míra výstupu modelu).
 - Affected doc(s): `RUNAR_BACKLOG.md`.
+
+## 2026-09-27 (8) — Čtení životní runy končí větou, která drží runu celou — bez otázky (v4.69)
+
+- **Rozhodl:** KUKY 2026-09-27: *„nevím, jestli má končit otázkou. je to podobný výklad jako v horoskopu znamení“* → po testu *„ano nasaď“*.
+- **Proč:** čtení životní runy je trvalé (zamčené, v záložce pořád) — otázka na současný život čtenáře (*„What in your life has gone still…?“*)
+  stárne; popis znamení končí tím, co runa JE. Otázka runy zůstává doma v Kolekci a u denních čtení (`_runeQuestion`, DECISIONS 2026-09-24 (16)).
+- **Co:** poslední instrukce části 2 (`RP_LIFE.*.p2`): *„End on one plain sentence that holds the whole rune together — no question, and nothing
+  about the person's life now.“* / IS *„Endaðu á einni einfaldri setningu sem heldur rúninni saman í heild — engin spurning og ekkert um líf
+  manneskjunnar núna.“* (is-grammar-qa bez E001). `_runeQuestion` ze životní runy pryč.
+- **Změřeno (Opus 5, `docs/eval/2026-09-27-zivotni-runa/konec_pilot.*`):** 4/4 bez otázky (Isa, Fehu EN · Gebo, Þurs IS), např. *„Isa is the rune
+  of what is held still, and of the seeing that stillness allows.“*
+- Affected doc(s): žádný.
