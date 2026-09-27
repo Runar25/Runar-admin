@@ -23,3 +23,8 @@ zápisy o Vegvísiru, včetně vlastního návrhu „vyčerpávající = rameno 
 pozorovatelný jev** (kolik slov · kolik odstavců · co v textu být MÁ a co NESMÍ). Když to nejde,
 **zeptej se na to číslo** — jednou, konkrétně. Do docu patří to číslo; jeho slovo nanejvýš
 jako citace, proč to číslo vzniklo. Souvisí: [[measure-dont-eyeball]] · [[dont-invent-fact-critical]].
+
+**Druhý případ (2026-09-27, Vegvísir):** owner k testům řekl *„a budou jen anglicky"* a já to zapsal do DECISIONS jako
+rozhodnutí o jazyce produktu. Myslel jazyk, ve kterém TEĎ pracuje: *„vegvísir nebude jen anglicky, já ho teď jako všechno
+dělám anglicky. Ty ho budeš dělat i IS."* Věta o pracovním postupu ≠ produktové rozhodnutí — u čehokoli, co by ubralo IS
+(primární jazyk, §2), se zeptej, než to zapíšeš jako rozhodnutí.

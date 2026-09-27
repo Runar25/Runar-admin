@@ -7358,3 +7358,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   lepší"*) — patřily k verzi „pouť" (ramena procházejí krajinami a nesou materiál), kterou V3 × Ask nahrazuje.
 - **Životní runa jako rameno** — v1 NE (DECISIONS 2026-08-25) platí; alternativa „leží v šuplíku" (KUKY), teď se netestuje.
 - Affected doc(s): `RUNAR_BACKLOG.md` (rámec Vegvísiru, položky krajin), `RUNAR_DESIGN.md` Vegvísir (historie) — v tomto commitu.
+
+## 2026-09-27 (4) — OPRAVA (3): Vegvísir NENÍ jen anglicky · otázka uživatele = cesta, ne vztah
+
+- **Oprava zápisu 2026-09-27 (3), bod „Jen anglicky" — byl CHYBNĚ.** KUKY: *„vegvísir nebude jen anglicky, já ho teď jako všechno dělám
+  anglicky. Ty ho budeš dělat i IS."* Owner navrhuje v EN; **islandskou verzi dělá CODE-read** (rovnou hotovou a ověřenou, §2).
+  CODE-read si „teď anglicky" vyložil jako rozhodnutí o jazyce produktu.
+- **Co uživatel píše = CESTA (obraz, kudy jde), ne vztah.** KUKY: *„uživatel vytváří obraz, cestu, kudy půjde, ne vztahy. Budeme se držet
+  při zemi a půjdeme jednoduchou cestou a nedělat z toho hned ‚what passes between me and this place'. Na to se může zeptat zpětně."*
+  Příklad ownera: *„jedu na lodi po moři"* = obraz pro runu. Formulace Q1 z EVAL_LOG 2026-09-27 (1) tím **není cílový tvar** rámce —
+  je to otázka, kterou si člověk může položit dodatečně (Ask).
+- Body (3) „statický svět scén napřed", „nic se nepřenáší", „krajiny odloženy", „životní runa jako rameno v šuplíku" platí beze změny.
+- Affected doc(s): `RUNAR_BACKLOG.md` (rámec Vegvísiru bod 9) — v tomto commitu.

@@ -5506,3 +5506,5 @@ between me and this place?"* nese Gebo sama (*passes between*), takže Rúnar v�
 **Mimochodem:** Rúnar jmenuje Gebo ve 13/16 textech i v Q1 — protože střed je v promptu uveden jménem. Další proměnná k testu:
 jak podat střed (se jménem × jen chůze). Tvrzení o nitru 0/16, scénu drží 16/16 (Q2 Raidho přidal sníh, soudce nechal projít).
 **Hranice:** n = 4 na formulaci, 1 text na buňku, jeden slepý soudce; jen EN; scény i runy v páru pevné.
+⚠️ **Owner k výsledku (téhož dne):** uživatel tvoří **cestu, ne vztah** — Q1 není cílový tvar ramene, jen otázka, kterou si člověk může
+položit zpětně (DECISIONS 2026-09-27 (4)). Nález platí pro tu zpětnou otázku, ne pro stavbu ramene.

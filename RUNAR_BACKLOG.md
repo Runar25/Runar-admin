@@ -1397,9 +1397,10 @@ vazba dorazí jen k runě s pohybem (Jera ✅ Gebo ✅ · Perth ❌ Isa ❌).
   6. **Čtení ramene ≈ 90 slov** („tam, kde je velká ASK"); „vyčerpávající" a víc odstavců ZRUŠENO. ✅
   7. Bez obrazů z banky — jediný vstup je ukotvení. ✅
   8. Guardrail „výklad se nezavírá" — owner si nepamatoval, co dělá; vysvětleno: Rúnar nesmí skončit tím, co to pro člověka znamená nebo co má dělat.
-  9. **(2026-09-27)** Jen **anglicky** · scéna ramene = volba člověka ze **statického světa** (vlastní slova později) · mezi rameny se
-     **nic nepřenáší** (přenos = varianta k testu) · krajiny/momenty/graf/nit **odloženy** → DECISIONS 2026-09-27 (3).
-     Test scény ramene: nejlépe *„I'm standing on a mountain top. What passes between me and this place?"* (EVAL_LOG 2026-09-27 (1)).
+  9. **(2026-09-27)** Owner navrhuje v EN, **CODE-read dělá i IS** (⚠️ zápis „jen anglicky" byl chybný, opraveno DECISIONS 2026-09-27 (4)) ·
+     scéna ramene = **CESTA, kterou člověk zvolí** (*„jedu na lodi po moři"*), ne vztah; napřed ze **statického světa**, vlastní slova
+     později · mezi rameny se **nic nepřenáší** (přenos = varianta k testu) · krajiny/momenty/graf/nit **odloženy** → DECISIONS 2026-09-27 (3).
+     *„What passes between me and this place?"* (vyšla nejlépe, EVAL_LOG 2026-09-27 (1)) = otázka, kterou si člověk může položit ZPĚTNĚ, ne tvar ramene.
 
 - [ ] **MOŽNOST: cestu pro rameno píše UŽIVATEL — do Asku, vlastními slovy** (KUKY 2026-09-12).
   **Proč, z dat:** (a) cokoli napíšeme, co má Gebo reprezentovat, Rúnar v každém čtení převezme
