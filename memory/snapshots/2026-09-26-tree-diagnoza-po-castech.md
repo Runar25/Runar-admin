@@ -28,6 +28,19 @@ Po částech!!!"* Jedna část = změřit → výsledek → jeho rozhodnutí →
 Metrika „šířka u země" je x-rozsah svazku (hýbe ji i prohnutí kmene), ne tloušťka; tloušťku
 měř přímo na enginu (část `1b`).
 
+## Doplněno 2026-09-27 — část 2 (Norny) změřena, čeká na ownera
+- Nálezy v backlogu („NORNY: POLOVINA ZAKLÁDACÍCH STROMŮ…"). Hook opraven (owner „ano").
+- ⭐ **Ownerův NOVÝ MODEL (směr, ještě nezapsaný do DECISIONS — napřed jeho potvrzení):**
+  runa = vlastní pramen (kořen + kmen + větev), až 25; kmen = 3D kruh pramenů; element určuje,
+  kam runa smí; prameny téhož elementu vedou spolu a **rozdělí se** (místo graduace — ta je
+  „hledání cesty kolem"). Mění rozhodnutí 2026-08-07 (9 pramenů + odbočky). Můj návrh k němu:
+  z kmene vychází **rameno elementu**, runy se od něj odlupují jako vlastní větve (max 5 ramen
+  u kmene, přesto každá runa svou větev); kořeny zrcadlově.
+- **Čeká na ownera:** (1) mají pozice Noren význam (urð níž/kořen · skuld výš), (2) pěstovat
+  nový strom v LABU (doporučeno; lab ale nemá semínko a tahá runy náhodně), (3) dočasně
+  v aplikaci jen zakázat zdvojení větve?
+- Owner si založí nový strom a poroste **současně se mnou** — každý segment opravit od začátku.
+
 ## Co visí
-- Oprava hooku `tree-guard.sh`: vysvětleno ownerovi, odpověď ano/ne zatím nepřišla.
+- ~~Oprava hooku `tree-guard.sh`~~ — hotovo 2026-09-27.
 - Blank má ve stromě jiný znak (◇ proti ○); čtení s Blank to řeší zvlášť (`blank → odinn`) — ověřit v části 3.
