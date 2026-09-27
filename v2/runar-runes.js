@@ -45,7 +45,7 @@ const RUNES = [
     n: 'Raidho',   is_n: 'Raidho (Ferðalag)',
     g: 'ᚱ',        svg: 'Raidho',
     k:    'the road, movement, natural rhythm, right action',
-    k_is: 'leið, hreyfing, náttúruleg röð, rétt breytni',
+    k_is: 'leið, hreyfing, taktur, rétt breytni',   // 2026-09-27: dřív „…röð“ = řada/pořadí (slovník), EN i kánon = rytmus
     formula_is: 'Raidho er rún leiðarinnar, hreyfingar og innri takts.',
     world: 'Midgard',   elements: ['Air'],
     aett: 'freya',
@@ -63,7 +63,7 @@ const RUNES = [
     n: 'Gebo',     is_n: 'Gebo (Félagsskapur)',
     g: 'ᚷ',        svg: 'Gebo',
     k:    'gift, companionship, giving and receiving, balance',
-    k_is: 'gjöf, félagsskapur, gefa og þiggja, jafnvægi',
+    k_is: 'gjöf, félagsskapur, að gefa og þiggja, jafnvægi',   // 2026-09-27: holý infinitiv → „að …“ (Ask: „var gefa og þiggja“ korpus 0×)
     formula_is: 'Gebo er rún tengsla, gjafa og þess sem flæðir á milli fólks af einlægni.',
     world: 'Midgard',   elements: ['Water'],
     aett: 'freya',
@@ -72,7 +72,7 @@ const RUNES = [
     n: 'Wunjo',    is_n: 'Wunjo (Gleði)',
     g: 'ᚹ',        svg: 'Wunjo',
     k:    'joy, happiness, harmony, belonging, wish fulfilled',
-    k_is: 'gleði, hamingja, sátt, tilheyra, uppfyllt ósk',
+    k_is: 'gleði, hamingja, sátt, að tilheyra, uppfyllt ósk',   // 2026-09-27: holé sloveso → „að tilheyra“ (4542×; „var tilheyra“ 8×)
     formula_is: 'Wunjo er rún gleði, sáttar og þess sem fyllir þegar maður er á réttum stað.',
     world: 'Midgard',   elements: ['Air'],
     aett: 'freya',
@@ -126,7 +126,7 @@ const RUNES = [
     n: 'Perth',    is_n: 'Perþ (Duldir hlutir)',
     g: 'ᛈ',        svg: 'Perth',
     k:    'chance, the hidden coming to light, fate in the making, luck, the unseen',
-    k_is: 'tilviljun, hið hulda sem kemur í ljós, örlög í mótun, happ, hið hulda',
+    k_is: 'tilviljun, hið hulda sem kemur í ljós, örlög í mótun, happ, hið ósýnilega',   // 2026-09-27: „the unseen“ splýval s „hið hulda…“ (2× táž hlava)
     formula_is: 'Perþ er rún tilviljunar, leyndarmálsins og örlaga sem enn eru að mótast.',
     world: 'Hel',       elements: ['Water', 'Shadow'],
     aett: 'heimdall',
@@ -135,7 +135,7 @@ const RUNES = [
     n: 'Algiz',    is_n: 'Algiz (Vernd)',
     g: 'ᛉ',        svg: 'Algiz',
     k:    'protection, higher powers, shelter, connection to divine',
-    k_is: 'vernd, hærri öfl, skjól, guðleg tenging',
+    k_is: 'vernd, æðri máttarvöld, skjól, guðleg tenging',   // 2026-09-27: dřív kalk z EN „higher powers“ (korpus 0× v každém tvaru); slovníková kolokace, 727×
     formula_is: 'Algiz er rún verndar, hærri afla og þess sem hlífir þegar við vitum það ekki.',
     world: 'Asgard',    elements: ['Air'],
     aett: 'heimdall',
@@ -207,7 +207,7 @@ const RUNES = [
     n: 'Othila',   is_n: 'Othila (Aðskilnaður)',
     g: 'ᛟ',        svg: 'Othila',
     k:    'inheritance, letting go, heritage, home, ancestral wisdom, foundation, belonging',
-    k_is: 'arfur, að sleppa, hefðir, heimili, forfeðraviska, grunnur, tilheyra',
+    k_is: 'arfur, að sleppa, hefðir, heimili, forfeðraviska, grunnur, að tilheyra',   // 2026-09-27: holé sloveso → „að tilheyra“ (jako Wunjo)
     formula_is: 'Othila er rún arfsins, heimilis og þess sem þarf að sleppa til að vera sjálfur sér.',
     world: 'Asgard',    elements: ['Earth'],
     aett: 'tyr',

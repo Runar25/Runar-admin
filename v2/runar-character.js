@@ -513,7 +513,7 @@ var RUNE_IMAGES = [
   // misto celeho obrazu — misto dodava los z IMG_PLACES (registr radku). Sceny se pak lisi:
   // 6 cteni produkcnim modelem, seda 0/6 (docs/eval/2026-09-19-produkcni-model/raidho-jadra/).
   // Tvar radku s jadrem: [runa, sezona, is, en, aspekt_is, aspekt_en, registr, motiv|'', 'jadro'].
-  ['Raidho','bright','Kindagatan liðast af sjálfu sér','a sheep-track winding of its own accord','náttúruleg röð','natural rhythm','P','','jadro'],
+  ['Raidho','bright','Kindagatan liðast af sjálfu sér','a sheep-track winding of its own accord','taktur','natural rhythm','P','','jadro'],
   ['Raidho','cold','Skafrenningurinn finnur alltaf sömu leiðina milli þúfnanna.','The drifting snow always finds the same way between the tussocks.','leið','natural rhythm','E'],
   ['Kenaz','any','Aflinn glóir í dimmri smiðjunni og hamarinn mótar járnið.','The forge glows in the dark shed and the iron takes its shape.','kyndill','fire','D'],
   ['Kenaz','any','Glæðurnar lifa undir öskunni fram á morgun.','The embers stay alive under the ash until morning.','innra ljós','inner light','D'],
@@ -522,21 +522,21 @@ var RUNE_IMAGES = [
   // obe pulky jsou podmnoziny puvodni vety, zadne nove vazby. „Nikdy spolu."
   ['Kenaz','any','Það logar á einum lampa yfir hefilbekknum.','A single lamp over the bench.','innra ljós','inner light','D'],
   ['Kenaz','any','Spænirnir liðast undan egginni.','The shavings curl away from the blade.','sköpunargleði','creativity','D'],
-  ['Gebo','any','Sjórinn gefur og tekur á fjörunni í sömu andránni.','The sea gives and takes on the shore in the same breath.','gefa og þiggja','giving and receiving','E'],
-  ['Gebo','any','Fjaran skilar einu og hirðir annað með hverri báru.','The shore returns one thing and keeps another with every wave.','gefa og þiggja','giving and receiving','E'],
+  ['Gebo','any','Sjórinn gefur og tekur á fjörunni í sömu andránni.','The sea gives and takes on the shore in the same breath.','að gefa og þiggja','giving and receiving','E'],
+  ['Gebo','any','Fjaran skilar einu og hirðir annað með hverri báru.','The shore returns one thing and keeps another with every wave.','að gefa og þiggja','giving and receiving','E'],
   // 2026-09-22 (druha vlna): dve ohniska jako u Kenaz lampa/hoblina — dva podmety spojene 'og'
   // bez interakce; model stavel scenu ze dveri a esenci z kavy (eval 2026-08-21, readings 238).
   // 2026-09-23 (identitni brana, 3 slepi soudci): otevrene dvere cetli jako Othila/Wunjo -> dve ruce z popisu Gebo („jedna ruka podava, druha prijima"), Gebo 3/3.
-  ['Gebo','any','Önnur höndin réttir fram og hin tekur á móti.','One hand holds something out, and the other receives it.','gefa og þiggja','giving and receiving','D'],
+  ['Gebo','any','Önnur höndin réttir fram og hin tekur á móti.','One hand holds something out, and the other receives it.','að gefa og þiggja','giving and receiving','D'],
   ['Gebo','any','Kaffi bíður á borðinu handa tveimur.','Coffee waits on the table for two.','félagsskapur','companionship','D'],
   // 2026-09-23 (KUKY: „proc by Wunjo melo byt stillness… radost, ze paprsky konecne na travu"): slunce = pozemek Sowilo, nehybnost = Isa. Travu a „konecne" nese deti, ne slunce. Wunjo 3/3.
   ['Wunjo','bright','Börnin hlaupa berfætt út á túnið um leið og grasið er orðið þurrt.','The children run barefoot onto the field the moment the grass is dry.','gleði','joy','P'],
   // 2026-09-23 (KUKY „ano obe, cim vic obrazu tim vic variant"): druha varianta ze stejneho popisu Wunjo („smich u stolu"). Wunjo 3/3.
   ['Wunjo','bright','Hlátur berst út um opinn gluggann og enginn flýtir sér inn.','Laughter carries out of the open window and no one hurries back in.','hamingja','happiness','D'],
   // 2026-09-22 (dve ohniska, jako lampa/hoblina): lampy + hlasy — zustavaji hlasy, lampy pryc.
-  ['Wunjo','any','Húsið fyllist af röddum áður en maturinn er tilbúinn.','The house fills with voices before the food is ready.','tilheyra','belonging','D'],
-  ['Wunjo','any','Ein rödd byrjar sönginn og stofan tekur undir, línu fyrir línu.','One voice starts the song and the room finds it line by line.','tilheyra','belonging','D'],
-  ['Wunjo','any','Þú kemur inn úr kuldanum og einhver hefur kynt ofninn.','You come in out of the cold and someone has lit the stove.','tilheyra','belonging','D'],
+  ['Wunjo','any','Húsið fyllist af röddum áður en maturinn er tilbúinn.','The house fills with voices before the food is ready.','að tilheyra','belonging','D'],
+  ['Wunjo','any','Ein rödd byrjar sönginn og stofan tekur undir, línu fyrir línu.','One voice starts the song and the room finds it line by line.','að tilheyra','belonging','D'],
+  ['Wunjo','any','Þú kemur inn úr kuldanum og einhver hefur kynt ofninn.','You come in out of the cold and someone has lit the stove.','að tilheyra','belonging','D'],
   ['Hagalaz','cold','Élið skellur á úr heiðskíru og er farið jafn skjótt.','The squall strikes out of a clear sky and is gone just as fast.','náttúruöfl','disruption','E'],
   ['Hagalaz','cold','Haglið lemur þakið og bráðnar á augabragði.','The hail hammers the roof and melts in an instant.','umbreyting','transformation','E'],
   ['Nauthiz','cold','Vorhretið lætur lambið leita fast að ylnum.','The spring cold-snap makes the lamb press close for warmth.','vöxtur í áskorun','growth through challenge','P'],
@@ -579,7 +579,7 @@ var RUNE_IMAGES = [
   // 2026-09-22 (KUKY „udelej", popis Perth: „ne *nic nevim*, ale *jeste nevim*… mozna ted neni
   // potreba nadobu rozbijet"): obraz, ktery nese JESTE — obsah skryty, ale uz se neco dela.
   // Ostatni tri obrazy Perth nesou „nevis" (kaminek zmizi, hladina se zavre, stopy zmizi).
-  ['Perth','any','Lokið er enn á pottinum, en ilmurinn segir að eitthvað sé að verða til.','The lid is still on the pot, but the smell says something is taking shape.','hið hulda','the unseen','D'],
+  ['Perth','any','Lokið er enn á pottinum, en ilmurinn segir að eitthvað sé að verða til.','The lid is still on the pot, but the smell says something is taking shape.','hið ósýnilega','the unseen','D'],
   ['Algiz','any','Torfveggurinn stendur á milli þín og vindsins og í dyragættinni er logn.','The turf wall takes the wind so the doorway stays calm.','skjól','shelter','P'],
   ['Algiz','any','Fjárhundurinn liggur þar sem hann sér alla hjörðina.','The sheepdog lies where it can see the whole flock.','vernd','protection','P'],
   // 2026-09-12: IS aspekt skjól → vernd. EN tu nese „protection", ktere o radek vys paruje
@@ -623,10 +623,10 @@ var RUNE_IMAGES = [
   ['Uruz','bright','Nautið rífur sig upp úr mýrinni og heldur áfram.','The bull tears itself up out of the bog and keeps going.','hráur kraftur','raw power','P'],
   ['Gebo','cold','Ókunnugur hjálpar þér að ýta bílnum úr skaflinum og veifar bara þegar hann fer.','A stranger helps push your car out of the drift and only waves as he leaves.','gjöf','gift','P'],
   ['Perth','any','Teningurinn liggur enn í bikarnum og enginn hefur kastað.','The die still lies in the cup and no one has thrown.','tilviljun','chance','D'],
-  ['Perth','any','Spilið liggur á grúfu og enginn hefur snúið því við.','The card lies face down and no one has turned it over.','hið hulda','the unseen','D'],
+  ['Perth','any','Spilið liggur á grúfu og enginn hefur snúið því við.','The card lies face down and no one has turned it over.','hið ósýnilega','the unseen','D'],
   ['Eihwaz','cold','Einirinn er grænn undir snjónum allan veturinn.','The juniper stays green under the snow all winter.','seigla','resilience','E'],
   ['Eihwaz','any','Tréð stendur með ræturnar í myrkrinu og krónuna í birtunni.','The tree stands with its roots in the dark and its crown in the light.','heimstré','world-tree','E'],
-  ['Wunjo','any','Þú sest hjá þeim og enginn spyr hvers vegna þú komst.','You sit down with them and no one asks why you came.','tilheyra','belonging','D'],
+  ['Wunjo','any','Þú sest hjá þeim og enginn spyr hvers vegna þú komst.','You sit down with them and no one asks why you came.','að tilheyra','belonging','D'],
   ['Jera','bright','Fiskurinn hefur hangið á hjallinum síðan í vetur og er nú orðinn harður og tilbúinn.','The fish has hung on the drying rack since winter, and now it is hard and ready.','rétt tímasetning','right timing','P'],
   ['Jera','cold','Hangikjötið sem hékk í reykkofanum í allt haust er tekið niður fyrir veisluna.','The smoked lamb that hung in the smokehouse all autumn is taken down for the feast.','umbun','reward','D'],
   // 2026-09-24: tenké runy — od října by Uruz, Berkana, Ehwaz a Ingwaz měly jen 2 obrazy (Dagaz a Blank na jaře–v září
@@ -739,7 +739,7 @@ var RUNE_IMAGES = [
   // Perth mlha a ovce 2/3 → Dagaz 1). IS korpus + is-grammar-qa čisté.
   ['Kenaz', 'any', 'Undir lampanum sést hárfín sprunga í bollanum, þótt enginn hafi séð hana frá hinum enda stofunnar.', 'Under the lamp the hairline crack in the cup shows, though no one saw it from across the room.', 'þekking', 'knowledge', 'D'],
   ['Kenaz', 'any', 'Eldspýtu er kveikt í rafmagnsleysinu, og allt herbergið tekur aftur á sig mynd.', 'A match is struck in the power cut, and the whole room gets its shape back.', 'eldur', 'fire', 'D'],
-  ['Gebo', 'any', 'Þú lánar nágrannanum kerruna þína, og um haustið liggur lambalæri á tröppunum hjá þér.', 'You lend the neighbour your trailer, and in the autumn a leg of lamb turns up on your step.', 'gefa og þiggja', 'giving and receiving', 'D'],
+  ['Gebo', 'any', 'Þú lánar nágrannanum kerruna þína, og um haustið liggur lambalæri á tröppunum hjá þér.', 'You lend the neighbour your trailer, and in the autumn a leg of lamb turns up on your step.', 'að gefa og þiggja', 'giving and receiving', 'D'],
   ['Gebo', 'cold', 'Eftir óveðrið moka nágrannarnir frá dyrunum hvor hjá öðrum, fyrst á einum bænum og svo á hinum.', 'After the storm the neighbours dig out each other\'s doors, first one house, then the other.', 'félagsskapur', 'companionship', 'P'],
   ['Isa', 'cold', 'Báturinn situr fastur í ísnum í höfninni, en úti á firðinum er enginn ís.', 'The boat lies frozen in at the harbour, and the fjord beyond it is open water.', 'hlé', 'pause', 'E'],
   ['Isa', 'cold', 'Í frostinu er loftið svo tært að bærinn handan fjarðarins virðist innan seilingar.', 'In the hard frost the air is so clear that the farm across the fjord looks close enough to touch.', 'skýrleiki í kulda', 'clarity through cold', 'E'],
@@ -1804,6 +1804,11 @@ var RP_ASK = {
       var og = rest.length > 1 ? rest.slice(0, -1).join(', ') + ' og ' + rest[rest.length - 1] : rest.join('');
       // Aspekt = přísudek v nominativu („…var innra ljós“) → hodnota ani jméno runy se neskloňují (IS jména run jsou
       // podstatná jména: Þurs, Fé…). Věta mluví o čtení modelu, ne hlasem Rúnara — v1 hlasem Rúnara model opsal 3/4.
+      // 2026-09-27 (audit klíčů run, DECISIONS 2026-09-27 (13)): přísudek → klíč v k_is musí být JMENNÁ fráze. Holé sloveso
+      // dávalo „…var tilheyra.“ (korpus 8× × „að tilheyra“ 4542×) a is-grammar-qa to pustil ZELENĚ — našel to až korpus.
+      // Zbylé E001 v této větě a v seznamu „Aðrar merkingar…“ jsou roztříděné, ne neviděné: „hið óþekkta / hið ósýnilega“ a
+      // „að gefa og þiggja“ = slepota nástroje (nulový test: „Hann trúir á hið ósýnilega.“ i „Það skiptir máli að gefa og þiggja.“
+      // → E001); Othila „…grunnur og að tilheyra“ padá jen v dlouhém seznamu (krátké „frið og að tilheyra“ projde), E001 tam byl i dřív.
       var fleiri = a.indexOf(',') !== -1;
       return (fleiri ? 'Merkingar' : 'Merking') + ' rúnarinnar í lestrinum sem þú gafst ' + (fleiri ? 'voru ' : 'var ') + a
         + (rest.length ? '. Aðrar merkingar hennar eru ' + og : '');

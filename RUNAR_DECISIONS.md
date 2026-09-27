@@ -7492,3 +7492,33 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Kontrola:** golden — změnilo se 18 IS klíčů, **EN žádný**; registr v4.70; contract wiring (IS značka tie-breakeru zkrácena na
   „saman í eina náttúrlega mynd“), ending/levers/injection/ask/kalendář zelené; check-is čisté.
 - Affected doc(s): `RUNAR_BACKLOG.md`.
+
+## 2026-09-27 (13) — Islandské klíče run: 5 oprav tvaru a slova (Algiz, Wunjo, Othila, Gebo, Perth) + Raidho „taktur“; Fehu zůstává tok (v4.71)
+
+- **Rozhodl:** KUKY 2026-09-27 *„ano oprav tvar 1–4, raidho taktur, fehu nech tok“* — po auditu Cowork-tune („výpis významů +
+  potenciální problémy“, předaný ownerem jako hypotézy). Ověřeno slovníkem a korpusem (`is-vazba.py`), kánonem `RUNAR_POPISY_RUN.md`,
+  produkční cestou a daty v DB.
+- **Proč to vůbec vadí:** `k_is` není jen palivo promptu — člověk ho čte v kolekci a po ťuknutí na runu, čtení životní runy vysvětluje
+  každý klíč, Ask je vypisuje a aspekt obrazu (vždy klíč z `k_is`) jde do Ask věty jako přísudek (*„Merking … var <klíč>.“*).
+- **Změny (`runar-runes.js` + tytéž aspekty v `RUNE_IMAGES`):**
+  1. Algiz: kalk z EN „higher powers“ → *æðri máttarvöld* (slovníková kolokace, korpus 727×; původní spojení 0× v každém tvaru). Přidáno do `check-is.py` BAD_PATTERNS.
+  2. Wunjo, Othila: holé sloveso *tilheyra* → *að tilheyra*. Ask dělal *„…var tilheyra.“* (korpus 8× × *að tilheyra* 4542×) — **is-grammar-qa to pustil zeleně**, našel to až korpus.
+  3. Gebo: *gefa og þiggja* → *að gefa og þiggja* (Ask *„var gefa og þiggja“* 0×); shodně s už existujícím *að bíða*, *að sleppa*.
+  4. Perth: EN „the hidden coming to light“ a „the unseen“ splývaly v IS do dvakrát *hið hulda* → druhé *hið ósýnilega* (187×).
+  5. Raidho: *náttúruleg röð* = řada / pořadí (slovník: *„tré stóðu í röð“*), EN i kánon (*„pohyb, rytmus“*) = rytmus → *taktur*.
+- **Fehu zůstává tok** (owner): kánon *„Fehu je něco, co proudí… síla, která má hodnotu tehdy, když se může pohybovat“*. Návrh B z auditu
+  (Fehu = majetek, ne tok) by kánon obrátil — zamítnuto.
+- **Nezměněno, owner nevybral:** Eihwaz „protection“ (jediná z trojice bez opory v kánonu — Thurisaz i Algiz ji v popisech mají) a
+  zdvojené/abstraktní EN klíče (Uruz „raw power“ + „primal force“, Sowilo „sun“ + „life force“ + „solar energy“; čtení životní runy je
+  bere doslova — Fehu 2/2 vzorky *„Mobile energy is the part people forget…“*).
+- **Co neobstálo (§25 — zapisuje se stejně):** „protection“ na třech runách se neslévá — spready berou první 4 klíče a tam ji má jen
+  Algiz; obě ostrá čtení Thurisaz s aspektem „protection“ byla trnitý plot (n=2) · Kenaz *sköpunargleði* = běžné IS slovo pro tvořivost ·
+  Nauthiz *þrýstingur* — kánon má „omezení“ i „tlak“ · Dagaz *bylting* slovník zná i jako převratnou změnu (*„bylting í fiskveiðum“*) ·
+  tvrzení „strom čte `RUNES[].k`“ neplatí — composery mají vlastní seznam run, změna klíčů strom nemění (CODE-tree netřeba) ·
+  `formula_is` („rún flæðis“) čte jen adminská `runar-yggdrasil.html` (BACKLOG ji už má) · korpusový sweep víceslovných klíčů (13 z 28
+  „0×“) je slepota nástroje, ne nález: hledá přesný tvar, ohnuté tvary existují (*hráan kraft* 3×, *dauða og endurfæðingu* 19×).
+- **Kontrola:** golden — změnilo se 8 IS klíčů (6 spreadů + 2 Ask), po zpětné záměně jen zamýšlená slova; EN žádný. Aspekt ↔ klíč
+  (`verify_image_aspect_key`) zelený. Ask věta pro všech 92 IS aspektů přes is-grammar-qa: E001 12 → 13, rozdíl = Perth *hið ósýnilega*;
+  E001 roztříděny v komentáři u `RP_ASK.is.aspect` (slepota nástroje dokázaná nulovým testem). **Automatický hlídač na „klíč = holé
+  sloveso“ není** — is-grammar-qa ho nevidí a korpus nejde do smoke.
+- Affected doc(s): žádný (hodnoty klíčů bydlí jen v `runar-runes.js`, §20).

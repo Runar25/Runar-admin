@@ -128,6 +128,8 @@ _MODEL_OUTPUT_ARCHIVE = [
     ('lífs rúnuna',       'lífsrúnuna',         'should be one compound word'),
     ('nýtt upphaf, hlúð', 'umhyggja, fæðing',   'hlúð is not a noun'),
     ('nýs upphaf og',     'nýs upphafs og',     'genitive of upphaf'),
+    # 2026-09-27 (audit klicu run, DECISIONS 2026-09-27 (13)): klic Algiz byl kalk z EN „higher powers“.
+    ('hærri öfl',         'æðri máttarvöld',    'kalk z EN „higher powers“: korpus 0× v kazdem tvaru; slovnik: kolokace „æðri máttarvöld“ 727×'),
 ]
 
 issues = []
