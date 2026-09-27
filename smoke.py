@@ -687,6 +687,17 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola map pak probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# §5 v deníku: runy spreadu ze short_text se vykreslí jako kameny z runeSvg, ne jako znaky písma (a Blank nikdy „○“).
+# Do 2026-09-27 to deník dělal textem a nic to nehlídalo (KUKY „jeď bod 4, deník spready glyfy“).
+print('\n' + chr(0x326D) + ' DENÍK: RUNY SPREADU JAKO KAMENY (verify_journal_glyphs.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_journal_glyphs.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola deniku probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

@@ -99,6 +99,23 @@ function renderJournal(entries) {
     return;
   }
 
+  // Řádek run spreadu („ᛃ JERA · ᛖ EHWAZ · ○ BLANK“, uložený rune_display) → kámen z runeSvg + jméno (2026-09-27, §5).
+  // Runa se hledá podle GLYFU (jednoznačný v obou jazycích; jméno je v jazyce čtení). Co se nepozná (Gathering, starý formát),
+  // zůstane textem jako dřív — nic se neztratí.
+  const _jSpreadRunes = function (txt) {
+    const s = String(txt || '');
+    if (!s || typeof RUNES === 'undefined' || typeof runeSvg !== 'function') return escapeHtml(s);
+    let poznano = 0;
+    const html = s.split(' · ').map(function (kus) {
+      const k = kus.trim(), mez = k.indexOf(' ');
+      const g = mez > 0 ? k.slice(0, mez) : '', jm = mez > 0 ? k.slice(mez + 1) : k;
+      const r = g ? RUNES.find(function (x) { return x.g === g; }) : null;
+      if (!r) return escapeHtml(k);
+      poznano++;
+      return '<span class="jcard-srune">' + runeSvg(r, { frame: true, cls: 'badge-stone' }) + ' ' + escapeHtml(jm) + '</span>';
+    }).join(' · ');
+    return poznano ? html : escapeHtml(s);
+  };
   list.innerHTML = entries.map((e, i) => {
     const d       = new Date(e.drawn_at);
     const locale  = isIs ? 'is-IS' : 'en-GB';
@@ -127,7 +144,7 @@ function renderJournal(entries) {
             <div class="jcard-info">
               <div class="jcard-name">✦ ${spreadNm} · ${langU}</div>
               <div class="jcard-date">${dateStr}${_jVolby(e, true)}</div>
-              <div class="jcard-gathering-runes">${shortT}</div>
+              <div class="jcard-gathering-runes">${_jSpreadRunes(e.short_text)}</div>
               <div class="jcard-excerpt" id="jex-${i}">${deepT}</div>
             </div>
           </div>
