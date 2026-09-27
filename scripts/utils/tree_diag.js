@@ -107,3 +107,53 @@ if (cast === '1c') {
   const s = measure({ log: [], rune: keyOf(gS) || 'berkano', dob }), b = measure({ log: [], rune: 'berkano', dob });
   console.log('seminko Sowilo vs Berkana: kmen', s.sirkaKmeneUZeme, 'vs', b.sirkaKmeneUZeme, '|', s.sig === b.sig ? 'STEJNY OBRAZEK (spatne)' : 'ruzne (dobre)');
 }
+if (cast === '2') {
+  // CAST 2 — ZAKLADACI NORNY. Co z Noren v aplikaci vyroste a na cem to zavisi?
+  const dob = { d: 14, m: 6, y: 1988 }, life = 'uruz';
+  const G = n => (RUNES.filter(r => r.n === n)[0]).g;
+  const elOf = g => { const r = RUNES.filter(x => x.g === g)[0]; return ((r.elements || ['Earth'])[0]).toLowerCase(); };
+  const rd = (spread, names) => ({ spread, runes: names.map(n => ({ rune: G(n), el: elOf(G(n)) })), area: null, intention: null });
+  function run(log) {
+    const c = recCanvas(); const pick = P.render(c.canvas, { log, rune: life, dob });
+    const below = c.fills.filter(f => f.some(([x, y]) => y > GROUND + 2));
+    return { vetve: (pick.pick || []).map(p => p.meta.name + '/' + p.meta.el), fills: c.fills,
+             sigKoruna: JSON.stringify(c.fills.filter(f => f.every(([x, y]) => y <= GROUND))).length,
+             sigKoreny: JSON.stringify(below), korenu: below.length };
+  }
+  console.log('elementy run v aplikaci:', ['Kenaz','Isa','Laguz','Fehu','Sowilo','Thurisaz'].map(n => n + '=' + elOf(G(n))).join(' '));
+  const a = run([rd('norns', ['Kenaz', 'Isa', 'Laguz'])]);
+  console.log('A) Norny Kenaz·Isa·Laguz  -> hlavnich vetvi:', a.vetve.length, a.vetve.join(', '), '| tvaru pod zemi:', a.korenu);
+  const b = run([rd('norns', ['Laguz', 'Kenaz', 'Isa'])]);
+  console.log('B) tytez runy, jine POZICE (urd/verdandi/skuld) -> stejny obrazek?', a.sigKoruna === b.sigKoruna && a.sigKoreny === b.sigKoreny ? 'ANO (pozice se nepouziva)' : 'ne');
+  const c = run([rd('single', ['Kenaz']), rd('single', ['Isa']), rd('single', ['Laguz'])]);
+  console.log('C) Norny vs 3 samostatne single -> vetve', c.vetve.join(', '), '| koruna stejna?', a.sigKoruna === c.sigKoruna ? 'ANO' : 'NE (lisi se)', '| koreny stejne?', a.sigKoreny === c.sigKoreny ? 'ANO' : 'NE');
+  const d = run([rd('norns', ['Fehu', 'Kenaz', 'Sowilo'])]);
+  console.log('D) Norny se 3 runami JEDNOHO elementu -> hlavnich vetvi:', d.vetve.length, d.vetve.join(', '));
+  const e = run([rd('norns', ['Thurisaz', 'Isa', 'Laguz'])]);
+  console.log('E) jina runa (Kenaz -> Thurisaz), koreny se zmenily?', a.sigKoreny === e.sigKoreny ? 'NE (koreny nezavisi na runach pramene)' : 'ano');
+  // Kolik cteni do 4. / 5. hlavni vetve (vse single, ruzne elementy)?
+  const seq = ['Fehu','Uruz','Ansuz','Kenaz','Gebo','Wunjo','Hagalaz','Nauthiz','Isa','Jera','Eihwaz','Perth','Algiz','Sowilo','Tiwaz','Berkana','Ehwaz','Mannaz','Laguz','Ingwaz','Othila','Dagaz'];
+  let log = [rd('norns', ['Kenaz', 'Isa', 'Laguz'])], last = 3, out = [];
+  for (let i = 0; i < 80; i++) { log = log.concat([rd('single', [seq[i % seq.length]])]);
+    const n = run(log).vetve.length; if (n !== last) { out.push((log.length) + '. cteni -> ' + n + ' vetvi'); last = n; } }
+  console.log('F) pribyvani hlavnich vetvi (Norny + ruzne single):', out.join(' | ') || 'zadna zmena');
+  const runes = new Set(); log.forEach(r => r.runes.forEach(x => runes.add(x.rune)));
+  console.log('   po', log.length, 'ctenich: ruznych run tazeno', runes.size, ', vetvi', last);
+}
+if (cast === '2b') {
+  // Utok na nalez D: je to jen pripad "3 runy jednoho elementu", nebo bezna vec?
+  const dob = { d: 14, m: 6, y: 1988 }, life = 'uruz';
+  const elOf = g => { const r = RUNES.filter(x => x.g === g)[0]; return ((r.elements || ['Earth'])[0]).toLowerCase(); };
+  const R24 = RUNES.filter(r => r.n !== 'Blank');
+  const vetve = log => (P.render(recCanvas().canvas, { log, rune: life, dob }).pick || []).map(p => p.meta.name);
+  const nr = names => ({ spread: 'norns', runes: names.map(n => { const g = R24.filter(r => r.n === n)[0].g; return { rune: g, el: elOf(g) }; }), area: null, intention: null });
+  console.log('Kenaz·Fehu·Laguz (2 ohne):', vetve([nr(['Kenaz', 'Fehu', 'Laguz'])]).join(', '));
+  // Vsechny mozne Norny (3 ruzne runy ze 24, poradi na vysledek nema vliv pro tuhle otazku)
+  let tot = 0, dup = 0, missing = 0;
+  for (let a = 0; a < 24; a++) for (let b = a + 1; b < 24; b++) for (let c = b + 1; c < 24; c++) {
+    const names = [R24[a].n, R24[b].n, R24[c].n]; const v = vetve([nr(names)]); tot++;
+    if (new Set(v).size < v.length) dup++;
+    if (names.some(n => !v.includes(n))) missing++;
+  }
+  console.log('vsech kombinaci Noren:', tot, '| s ZDVOJENOU vetvi:', dup, '(' + (dup / tot * 100).toFixed(0) + ' %)', '| kde nejaka tazena runa CHYBI:', missing, '(' + (missing / tot * 100).toFixed(0) + ' %)');
+}
