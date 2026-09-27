@@ -1,0 +1,6 @@
+Slepý soudce (subagent, jen slepe_spektrum.txt, 24 textů) 2026-09-27. Po klíči slepe_spektrum_klic.json:
+en v2 | zavírá 0/6 | nitro 0 | přidá do scény 1 | definice runy 3/6 | meta 0 | F 4,00
+en v3 | zavírá 1/6 (minor) | nitro 0 | přidá 0 | definice 3/6 | meta 0 | F 4,00
+is v2 | zavírá 1/6 (minor) | nitro 0 | přidá 3 (Agndofa rčení, přísloví o koni, led) | definice 6/6 | meta 1 („…því ég veit það ekki. Ég sé aðeins bátinn") | F 3,00
+is v3 | zavírá 0/6 | nitro 3 (Fehu řádek korekce doslova; „veist ekki hver gaf hann"; „reynist þyngra en þú hugðir") | přidá 1 (led) | definice 6/6 | meta 0 | F 2,83
+Po druzích (F): pohyb EN 5/5 · IS 2/3 | zastavení EN 4/4 · IS 3/3 (led 3/4) | nález EN 4/4 · IS 4/2 | setkání 3 všude | dar EN 4/4 · IS 3/3 | pohled do dálky EN 4/4 · IS 3/3

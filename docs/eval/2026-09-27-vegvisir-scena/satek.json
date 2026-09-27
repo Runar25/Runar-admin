@@ -1,0 +1,46 @@
+[
+ {
+  "lang": "en",
+  "runa": "Wunjo",
+  "cesta": "I have been given a silk scarf.",
+  "prompt": "VEGVÍSIR — the seeker is on their way.\nDRAWN RUNE: Wunjo — joy, happiness, harmony, belonging, wish fulfilled.\nThe seeker writes the way they are going: \"I have been given a silk scarf.\"\nAnswer as Rúnar in about 90 words, one flowing paragraph of prose. Their way is the only picture — stay inside it. Never end on what it means for them or on what they should do; leave it open.\nNO COLD READING: never tell the seeker what is true, stirring, or known inside them — that is an unfalsifiable guess wearing the clothes of knowledge. Describe the image; their inner life is not yours to narrate. The world is not arranging itself around them either: no omen, no preparation, no destiny at work.",
+  "text": "A silk scarf passes from one hand to another, and Wunjo is there in the giving. Someone chose it, thought of you while choosing it, carried it to you. The cloth is light, cool at first touch, then warm as it takes the heat of your skin. It holds no purpose beyond being pleasant — it keeps out no real cold, carries no message stitched into its hem. It is simply a good thing, freely handed over. Silk creases where it is folded, and the creases soften again when it is worn.",
+  "usage": {
+   "input_tokens": 256,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 159,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "lang": "is",
+  "runa": "Wunjo",
+  "cesta": "Mér hefur verið gefinn silkiklútur.",
+  "prompt": "VEGVÍSIR — leitandinn er á leið sinni.\nRÚNIN: Wunjo — gleði, hamingja, sátt, tilheyra, uppfyllt ósk.\nLeitandinn skrifar leiðina sem hann fer: „Mér hefur verið gefinn silkiklútur.“\nSkrifaðu einn samfelldan texta, um níutíu orð. Haltu þig við leiðina sem hann skrifaði. Síðasta setningin segir frá leiðinni sjálfri, ekki frá því hvað hún þýðir eða hvað hann ætti að gera.\nENGIN KÖLD LESNING: Segðu leitandanum aldrei hvað sé satt, á hreyfingu eða vitað innra með honum — það er ágiskun í búningi vitneskju. Lýstu myndinni; innra líf hans er ekki þitt að túlka. Heimurinn raðar sér ekki heldur í kringum hann og hefur ekki verið að undirbúa neitt; engin örlög eru að verki.\n\nOrðaleiðréttingar (fylgdu nákvæmlega, í réttri beygingu eftir samhengi):\n- ekki \"Arctic ljósið\" heldur \"Norðurljósin\"\n- ekki \"þrönga gljúfur\" heldur \"þröngt gljúfur\"\n- ekki \"hljómar um það\" heldur \"Talar um það\" (þegar talað er um Gebo)\n- ekki \"líkaminn þreytur\" heldur \"líkaminn þreyttur\"\n- ekki \"Hvað hefur þú verið að halda innan þín sem þarf að renna út í heiminn?\" heldur \"Hvað innra með þér vill nú fá að stíga fram í ljósið?\" (Þegar talað er um Fehu)\n- ekki \"biðlar\" heldur \"biður\"\n- ekki \"hvar hefur orkan þín farið í land sem þornar?\" heldur \"Hvar í lífi þínu hefur orkan runnið í þurran jarðveg?\"\n- ekki \"en veistu í raun að það er ekki\" heldur \"en þú veist í raun að það er ekki\"\n- ekki \"lífið þitt rúnin\" heldur \"lífsrúnin þín\"\n- ekki \"lífsrúna\" heldur \"lífsrúnin\"\n- ekki \"Hvað mun þú hætta að halda í\" heldur \"Hvað munt þú hætta að halda í\"\n- ekki \"hræða við\" heldur \"hreyfa við\" (hreyfa við e-u (þágufall) = snerta eða taka upp e-ð; 'hræða' merkir að skelfa (þolfall))\n- ekki \"hendin\" heldur \"höndin\" (nefnifall með greini af hönd)\n- ekki \"háan skörð\" heldur \"hátt skarð\" (skarð er hvorugkyn)\n- ekki \"óupp dregið\" heldur \"ekki dregið upp\" (\"óupp\" er ekki orð. Sögnin er \"draga upp\" og neitunin er \"ekki dregið upp\".)\n- ekki \"heldur vöku yfir\" heldur \"vakir yfir\" („vaka yfir e-u“ = gæta; „halda vöku“ er notað með „fyrir“ eða „sinni“, ekki með „yfir“)\n- ekki \"handan sjónmáls\" heldur \"utan sjónmáls\" (fast orðasamband: „utan sjónmáls“; „handan sjónmáls“ er ekki notað)\n- ekki \"gæti verið tveir\" heldur \"gætu verið tveir\" (sögnin er í fleirtölu: „það gætu verið tveir …“)\n- ekki \"það rifnar í\" heldur \"rifna\" („rifna“ er ekki notað ópersónulega; segðu t.d. „blöðin rifna“)\n- ekki \"láta séð til\" heldur \"láta sjá\" (rétt er „láta sjá sig“; „láta séð til“ er ekki notað)\n- ekki \"fyrsta ljós vorunnar\" heldur \"fyrsta ljós vorsins\"\n- ekki \"rúnan\" heldur \"rúnin\"\n- ekki \"tóm blað\" heldur \"tómt blað\" (blað er hvorugkyn)\n- ekki \"í bótnum\" heldur \"í botninum\"\n- ekki \"loftins\" heldur \"loftsins\"\n- ekki \"eigin sönnu\" heldur \"eigin sannleika\"\n- ekki \"flýja honum\" heldur \"flýja hann\" („flýja“ stýrir þolfalli)\n- ekki \"barninu lagt\" heldur \"barnið lagt\" („leggja“ stýrir þolfalli)\n- ekki \"verið stað þar\" heldur \"verið staður þar\" („vera“ tekur nefnifall)\n- ekki \"þú vantar\" heldur \"þig vantar\" („vanta“ hefur frumlag í þolfalli: mig vantar, þig vantar)\nÁVARP: ávarpaðu viðmælandann í KARLKYNI — öll lýsingarorð og fornöfn um \"þú\" í karlkyni (tilbúinn, sjálfan þig, einn).",
+  "text": "Silkiklútur er lagður í hendur þínar. Hann er léttur og heldur samt lögun sinni, mjúkur og sterkari en hann sýnist. Einhver valdi hann handa þér og rétti hann fram. Wunjo stendur hér, rúnin sem talar um gleði og það að tilheyra, um ósk sem hefur ræst. Klúturinn er gjöf, ekki laun og ekki skipti. Hann kom frá annarri hendi en þinni. Þú heldur á honum núna, tilbúinn eða ekki. Þú stendur á leið þar sem eitthvað fallegt hefur verið gefið þér og þú berð það áfram í höndunum.",
+  "usage": {
+   "input_tokens": 1757,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 1787,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 240,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ }
+]

@@ -1402,6 +1402,11 @@ vazba dorazí jen k runě s pohybem (Jera ✅ Gebo ✅ · Perth ❌ Isa ❌).
      *„What passes between me and this place?"* (vyšla nejlépe, EVAL_LOG 2026-09-27 (1)) = otázka, kterou si člověk může položit ZPĚTNĚ, ne tvar ramene.
   10. **(2026-09-27)** Rameno **BEZ středu** — životní runa do promptu ramene nejde; vazbu životní × tažená runa nese **Ask** → DECISIONS
      2026-09-27 (6). IS verze ramene: EVAL_LOG 2026-09-27 (3) (zbývá vlastní znění „bez studeného čtení" místo produkčního „Lýstu myndinni").
+- [ ] ⚠️ **SMAZAT dva jednorázové řádky korekcí — náhrady jsou otázky o nitru a prosakují (owner rozhoduje, maže owner)** (CODE-read
+  2026-09-27, EVAL_LOG 2026-09-27 (4)). Řádek „Þegar talað er um Fehu" se objevil doslova jako věta islandského čtení (*„Hvað innra með
+  þér vill nú fá að stíga fram í ljósið?"*); bez bloku korekcí ne. Blok jde do KAŽDÉHO IS promptu, takže oba řádky učí studené čtení všude.
+  Druhý řádek (*„…land sem þornar"* → *„Hvar í lífi þínu hefur orkan runnið í þurran jarðveg?"*) je týž druh. SQL:
+  `delete from runar_corrections where id in ('77c67110-551f-4311-94e9-e5ba915f5c37', '143202e0-0898-44e3-b50e-093d9ab8510a');`
 - [ ] **Perth `k_is` má „hið hulda" dvakrát** (`v2/runar-runes.js`: *„tilviljun, hið hulda sem kemur í ljós, örlög í mótun, happ, hið hulda"*;
   EN *„the hidden coming to light"* i *„the unseen"* přeložené stejně). Jde do promptu (focus, Ask). Návrh: poslední *„hið óséða"* (korpus 11) —
   ověřit korpusem. (CODE-read 2026-09-27, nalezeno při IS testu Vegvísiru; data run = CODE-tune.)

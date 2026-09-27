@@ -5555,3 +5555,40 @@ Plané poplachy nástroje: *brattann*, *bankanna*, *peningurinn*, *mál*, *kjör
 **Vedlejší (data):** `RUNES` Perth `k_is` má *„hið hulda"* 2× (*„hið hulda sem kemur í ljós … hið hulda"* = EN *the hidden coming to light* i
 *the unseen*) → BACKLOG.
 **Hranice:** 4 cesty × 2 texty na kolo, jeden slepý soudce (čte islandsky, není rodilý mluvčí — gramatiku soudí nástroje); runy a cesty v páru pevné.
+
+## 2026-09-27 (4) — Vegvísir: hranice „cesty" (pohyb · zastavení · nález · setkání · dar · pohled do dálky) — EN drží, IS definuje runu
+
+**Owner:** *„jedna věc je cesta a druhá, že na té cestě může člověk něco najít… zastaví se, kouká kolem sebe, nebo napíše, že se na něj
+někdo hezky usmál. Hledám, jak bude Rúnar reagovat a co musíme udělat."* (Předtím *„I have been given a silk scarf"* pro náhodnou runu →
+Wunjo, EN ukázal runu v šátku, IS ji vysvětlil a na konec přidal *„Þú stendur á leið…"*.)
+**Co se testovalo:** 6 vstupů × EN/IS × prompt **v2** (*„the way they are going"* + produkční *„Describe the image / Lýstu myndinni"*) ×
+**v3** (*„what is happening on their way" / „hvað gerist á leið hans"* + vlastní *„Describe what happens on their way" / „Lýstu því sem
+gerist á leið hans"*; IS konec *„Síðasta setningin segir frá því sem gerist. Hún segir ekki hvað það þýðir…"*). Runa na vstup losem
+(Nauthiz · Isa · Fehu · Raidho · Dagaz · Ehwaz), bez středu. IS věty přes korpus + is-grammar-qa (*staldra við á* 253, *lít í kringum*
+200, *brosti hlýlega* 19, *í fjarska* 2571, *lýstu því sem* 92). Opus 5, 24 + 6 textů, $0,32. Slepý soudce na 24.
+| | zavírá | tvrzení o nitru | přidá do scény | definuje runu | meta | kvalita 1–5 |
+|---|---|---|---|---|---|---|
+| EN v2 | 0/6 | 0 | 1 | 3/6 | 0 | 4,00 |
+| EN v3 | 1/6 (slabě) | 0 | 0 | 3/6 | 0 | 4,00 |
+| IS v2 | 1/6 (slabě) | 0 | 3 | **6/6** | 1 | 3,00 |
+| IS v3 | 0/6 | **3** | 1 | **6/6** | 0 | 2,83 |
+⭐ **1. EN zvládá všech šest druhů stejně** (pohyb 5/5, ostatní 4, setkání 3): zůstane v okamžiku, nezavírá, netvrdí o nitru. v2 × v3 v EN beze
+rozdílu → neutrální *„what is happening on their way"* nic nestojí a sedí i na šátek/úsměv (v2 *„the way they are going"* ho v IS nutil do „leið").
+Nejslabší druh je **setkání** (3 ve všech ramenech): plošší, v EN předpovídá další lidi (*„some of whom will meet your eye"*).
+⭐ **2. Runa si přinese svůj živel, když ho okamžik nemá:** Isa → led/mráz k *„zastavím se a rozhlédnu"* 4/4, Dagaz → svítání k šátku 4/4.
+Známý jev (RUNAR_DESIGN „Stavba Single" bod 1: bez dodané scény se runa sjede do živlu); ve Vegvísiru ale mění scénu, kterou napsal člověk → **rozhodne owner**.
+⭐ **3. IS vždy definuje runu** (*„rúnin sem talar um…"*, *„er rún X"*) 12/12 proti EN 6/12. **Hypotéza „nese to blok korekcí" (řádek
+*„hljómar um það → Talar um það"*) PADLA:** IS v3 bez bloku 6/6 definice, *talar um* 4/6 = totéž. Zdroj zůstává nenalezený (kandidát:
+hlavička *„RÚNIN: X — klíčová slova"*; netestováno).
+⭐ **4. Jednorázový řádek korekcí prosákl doslova jako otázka o nitru:** IS Fehu (nález klíče) *„Hvað innra með þér vill nú fá að stíga
+fram í ljósið?"* = náhradní text řádku `77c67110…` („Þegar talað er um Fehu"). Bez bloku se neobjevil (0/1). Stejný druh má řádek `143202e0…`
+(*„Hvar í lífi þínu hefur orkan runnið í þurran jarðveg?"*) — obě náhrady jsou otázky o životě tazatele, tedy vzor studeného čtení,
+který blok vkládá do KAŽDÉHO islandského promptu (i produkčního) → doporučení smazat (owner, DECISIONS 2026-09-23 (6); SQL v BACKLOGu).
+**5. IS další vady:** vymyšlené rčení/lore *„Í Agndofa er sagt að hver gata muni þá sem ganga hana"* a *„Hestur og maður komast lengra saman…"*
+(§23) · tvrzení o nitru i bez bloku (*„Þú ferð ekki einn, jafnvel þegar þú heldur að þú gerir það"*, *„Þú veist ekki hver gaf þér klútinn"*) ·
+konec v3 = věta o větru 7/12 (*„Vindurinn ber…"*, *„Vindur kemur af austri"*) — pokyn „poslední věta řekne, co se děje" vyrobil formuli ·
+gramatika 2/12 jednorázově: *„hver handtak"* → *hvert handtak* (73 × 0), *„veginn liggur"* → *vegurinn liggur* (299 × 24).
+**Co z toho plyne (návrh, rozhodne owner):** (a) EN rameno: prompt v3, jinak beze změny; (b) živel runy ve scéně — povolit, nebo ne;
+(c) IS: definici runy a vymyšlená rčení řešit dalším testem (obrácená páka: hlavička bez klíčových slov); (d) smazat dva jednorázové řádky korekcí.
+**Hranice:** 1 text na buňku, 6 run (každý druh vstupu jen s jednou runou — druh a runa jsou smíchané), jeden slepý soudce; IS soudí
+nástroje, ne rodilý mluvčí.
