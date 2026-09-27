@@ -113,14 +113,15 @@ rekni(key(undefined, 7, 1985) === null && key(NaN, NaN, NaN) === null, 'neplatn�
   const en = fn('buildLifeRunePrompt')('Thor', gebo, 4, 7, 1985, 'en', false, null);
   const is = fn('buildLifeRunePrompt')('Thor', gebo, 4, 7, 1985, 'is', false, null);
   rekni(/ICELANDIC MONTH: Sólmánuður — /.test(en) && en.indexOf('Heyannir') === -1, 'EN prompt: „ICELANDIC MONTH: Sólmánuður", Heyannir nikde');
-  rekni(/ÍSLENSKUR MÁNUÐUR: Sólmánuður — /.test(is) && is.indexOf('Tíminn er sólmánuður.') !== -1, 'IS prompt: měsíc v řádku i ve větě („Tíminn er sólmánuður.")');
-  // Množné jméno měsíce: dřív „Hvað ber Heyannir" (sloveso v jednotném čísle). Teď v přísudku.
+  // 2026-09-27: část 1 stojí na půlměsíci runy, islandský měsíc je v ní kontext v ZÁVORCE, malým písmenem (DECISIONS 2026-09-27 (7)).
+  rekni(/ÍSLENSKUR MÁNUÐUR: Sólmánuður — /.test(is) && is.indexOf('(sólmánuður)') !== -1, 'IS prompt: měsíc v řádku i ve větě („(sólmánuður)")');
+  // Množné jméno měsíce: dřív „Hvað ber Heyannir" (sloveso v jednotném čísle). Teď v závorce, s ničím se neshoduje.
   const hey = fn('buildLifeRunePrompt')('Thor', gebo, 1, 8, 1985, 'is', false, null);
-  rekni(hey.indexOf('Tíminn er heyannir.') !== -1 && !/Hvað ber heyannir/i.test(hey) && !/Hvað ber sólmánuður/i.test(is),
-        'IS prompt: jméno měsíce už není podmět („Hvað ber Heyannir" nesedělo číslem)');
+  rekni(hey.indexOf('(heyannir)') !== -1 && !/Hvað ber heyannir/i.test(hey) && !/Hvað ber sólmánuður/i.test(is),
+        'IS prompt: jméno měsíce není podmět („Hvað ber Heyannir" nesedělo číslem)');
   // 2026: léto 23. 4. → aukanætur 22.–25. 7. (středa), heyannir od neděle 26. 7.
   const auk = fn('buildLifeRunePrompt')('Thor', gebo, 23, 7, 2026, 'is', false, null);
-  rekni(auk.indexOf('Tíminn er aukanætur.') !== -1 && key(21, 7, 2026) === 'solmanudur' && key(26, 7, 2026) === 'heyannir',
+  rekni(auk.indexOf('(aukanætur)') !== -1 && key(21, 7, 2026) === 'solmanudur' && key(26, 7, 2026) === 'heyannir',
         'aukanætur 2026 (22.–25. 7.) dojdou do promptu; 21. 7. sólmánuður, 26. 7. heyannir');
   const nic = fn('buildLifeRunePrompt')('Thor', gebo, undefined, undefined, undefined, 'en', false, null);
   rekni(nic.indexOf('ICELANDIC MONTH: unknown month') !== -1, 'bez data → „unknown month", nic si nevymyslí');

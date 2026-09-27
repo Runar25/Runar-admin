@@ -229,13 +229,16 @@ console.log('OK    spready bez esencniho radku (nejmenuj drzi, v4.9)');
 // ── Life rune: a full reading, so it carries the body's gates ────────────────
 for (const L of ['en', 'is']) {
   const txt = O['liferune_' + L] || '';
+  // 2026-09-27 (KUKY „vysvětlena v každém významu… do hloubky a srozumitelně“): `describe` (esenční řádek „after the picture…“)
+  // ze životní runy ODEBRÁN — čtení runu vysvětluje, obraz nestaví; řádek o obrazu tam rozporoval zadání (DECISIONS 2026-09-27 (7)).
+  // Brána coldread zůstává povinná; describe tu teď NESMÍ být.
   const need = {
-    describe: [DESCRIBE_MARK[L]],
     coldread: ['NO COLD READING', 'ENGIN KÖLD LESNING'],
   };
   const missing = Object.keys(need).filter(k => !need[k].some(x => txt.includes(x)));
+  if (txt.includes(DESCRIBE_MARK[L])) missing.push('describe NESMÍ být (od 2026-09-27)');
   if (missing.length) { fail++; console.log('FAIL  liferune_' + L + '  missing: ' + missing.join(', ')); }
-  else console.log('OK    liferune_' + L + '  describe+coldread');
+  else console.log('OK    liferune_' + L + '  coldread, bez describe');
   // pritomnost nestaci — gate dvakrat prevazi zbytek promptu
   const dupLR = Object.keys(need).filter(function (k) {
     return need[k].reduce(function (n, p) { return n + (txt.split(p).length - 1); }, 0) > 1;
