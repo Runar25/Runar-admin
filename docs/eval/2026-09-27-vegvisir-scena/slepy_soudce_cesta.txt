@@ -1,0 +1,5 @@
+Slepý soudce (subagent, jen slepe_cesta.txt) 2026-09-27. A zavírá · B tvrzení o nitru · C runa srozumitelná · D drží cestu · E cizí myšlenka · F 1–5
+1 no no yes YES no 4 · 2 no no yes no „What you give the sea and what it gives back sit on the same scale" 3 · 3 no no yes YES no 4 („on this arm" = žargon)
+4 no no yes no „Gebo holds the centre here — the crossing is not yours alone to time" 2 · 5 no no yes no „Gebo waits uncarved at the centre, the meeting held halfway" 3
+6 no no yes YES no 4 · 7 no no yes no „neither one carrying the other" 3 · 8 no no yes YES no 4 („on this arm" = žargon)
+Po klíči: C (se středem) drží cestu 0/4, cizí myšlenka 4/4, F 2,75 · B (bez středu) drží cestu 4/4, cizí 0/4, F 4,0.

@@ -5508,3 +5508,24 @@ jak podat střed (se jménem × jen chůze). Tvrzení o nitru 0/16, scénu drž�
 **Hranice:** n = 4 na formulaci, 1 text na buňku, jeden slepý soudce; jen EN; scény i runy v páru pevné.
 ⚠️ **Owner k výsledku (téhož dne):** uživatel tvoří **cestu, ne vztah** — Q1 není cílový tvar ramene, jen otázka, kterou si člověk může
 položit zpětně (DECISIONS 2026-09-27 (4)). Nález platí pro tu zpětnou otázku, ne pro stavbu ramene.
+
+## 2026-09-27 (2) — Vegvísir: rameno jako CESTA — bez středu v promptu drží cestu 4/4, se středem 0/4
+
+**Owner:** *„uživatel vytváří obraz, cestu, kudy půjde, ne vztahy… jednoduchou cestou"*; příklad *„jedu na lodi po moři"*
+(DECISIONS 2026-09-27 (4)). **Co se testovalo — jednou větou:** rameno = tažená runa + **cesta, kterou člověk napíše** (statická volba:
+kameny přes řeku · strmá stezka do hory · loď na moři · les za soumraku), žádná otázka na vztah; měnilo se **jen to, jestli je v promptu
+střed** (C = Gebo jako chůze, varianty kola 2 · B = bez středu). Isa · Jera · Perth · Raidho, jen EN (IS až se ustálí tvar), Opus 5, 8 textů, $0,05.
+| | drží cestu (slepě) | cizí myšlenka (slepě) | zavírá | tvrzení o nitru | runa srozumitelná | kvalita 1–5 |
+|---|---|---|---|---|---|---|
+| **B bez středu** | **4/4** | **0/4** | 0/4 | 0/4 | 4/4 | **4,0** |
+| C se středem | 0/4 | 4/4 | 0/4 | 0/4 | 4/4 | 2,75 |
+Se středem se do každé cesty vloží Gebo nebo jeho chůze: *„Gebo holds the centre here — the crossing is not yours alone to time"* (Isa, 2/5) ·
+*„Gebo waits uncarved at the centre, the meeting held halfway"* (Raidho — opsaná varianta chůze, znovu) · *„What you give the sea and what
+it gives back sit on the same scale"* (Perth) · *„neither one carrying the other"* (Jera). Bez středu: *„Ice makes the crossing clearer and slower
+at once — you can see the whole line of stones now… and you can see how far apart they truly are"* (Isa) · *„Some boats round the headland on
+a fair reach, some wait three days in a cove for the same crossing, and the difference is not always skill"* (Perth).
+⭐ **Nález:** při čisté cestě střed v promptu ramene **škodí** — Rúnar ho do obrazu vnutí jako vztah, o který člověk nežádal. Vztah k životní
+runě se dá nechat na zpětnou otázku (Ask), kde vyšla nejlépe *„What passes between me and this place?"* (2026-09-27 (1)). Rozhodne owner.
+**Vedlejší:** slovo *arm* z promptu prosakuje do textu (*„Isa lies on this arm"*, *„Raidho falls on this arm"* — 3/8; soudce: žargon) →
+v promptu rameno nejmenovat „arm".
+**Hranice:** n = 4 na rameno, 1 text na buňku, jeden slepý soudce; runy a cesty v páru pevné; jen EN.
