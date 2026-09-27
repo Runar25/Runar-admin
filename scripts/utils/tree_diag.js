@@ -157,3 +157,93 @@ if (cast === '2b') {
   }
   console.log('vsech kombinaci Noren:', tot, '| s ZDVOJENOU vetvi:', dup, '(' + (dup / tot * 100).toFixed(0) + ' %)', '| kde nejaka tazena runa CHYBI:', missing, '(' + (missing / tot * 100).toFixed(0) + ' %)');
 }
+if (cast === '2c') {
+  // Utok na opravu "zadne zdvojeni": dlouha nahodna historie (Norny + mix single/spready),
+  // v kazdem kroku: je nekde zdvojena vetev? kolik vetvi? Deterministicky los (seed).
+  const dob = { d: 14, m: 6, y: 1988 }, life = 'uruz';
+  const R24 = RUNES.filter(r => r.n !== 'Blank');
+  const elOf = g => { const r = RUNES.filter(x => x.g === g)[0]; return ((r.elements || ['Earth'])[0]).toLowerCase(); };
+  let s = 12345; const rnd = () => (s = (s * 1103515245 + 12345) >>> 0) / 4294967296;
+  const draw = (n, spread) => { const pool = R24.slice(), runes = [];
+    for (let i = 0; i < n; i++) { const r = pool.splice(Math.floor(rnd() * pool.length), 1)[0]; runes.push({ rune: r.g, el: elOf(r.g) }); }
+    return { spread, runes, area: null, intention: null }; };
+  let log = [draw(3, 'norns')], dupSteps = 0, maxV = 0, sameRune = 0;
+  for (let i = 0; i < 150; i++) {
+    const x = rnd(); log = log.concat([x < 0.7 ? draw(1, 'single') : x < 0.85 ? draw(3, 'norns') : x < 0.95 ? draw(5, 'kriz') : draw(9, 'yggdrasil')]);
+    const v = (P.render(recCanvas().canvas, { log, rune: life, dob }).pick || []).map(p => p.meta.name + '#' + p.meta.ord);
+    if (new Set(v).size < v.length) dupSteps++; maxV = Math.max(maxV, v.length);
+    const nm = v.map(x => x.split('#')[0]); if (new Set(nm).size < nm.length) sameRune++;
+  }
+  console.log('151 cteni nahodne: kroku se zdvojenou vetvi (stejna runa i poradi):', dupSteps, '| max vetvi:', maxV, '| kroku, kde TAZ RUNA nese 2 vetve (jine poradi v elementu):', sameRune);
+}
+
+// ── LAB: protlaci SKUTECNOU stranku labu (v2/tree-lab-crown-composer/crown-composer.html,
+//    vygenerovanou z build_crown_composer.py) s danym logem. DOM je obecny stub; zapisy do
+//    prvku se pamatuji (btable = prehled vetvi, grow = cisla rustu), kresba jako u aplikace.
+function labRun(log, htmlPath) {
+  const html = fs.readFileSync(htmlPath || (DIR + 'tree-lab-crown-composer/crown-composer.html'), 'utf8');
+  const inline = html.slice(html.indexOf('<script>', html.indexOf('runar-branch.js')) + 8, html.lastIndexOf('</script>'));
+  const els = {}, c = recCanvas(), store = { crownLog: JSON.stringify(log) };
+  const mk = id => els[id] || (els[id] = new Proxy({ id, style: {}, dataset: {}, classList: { add(){}, remove(){}, toggle(){}, contains(){ return false; } },
+      innerHTML: '', textContent: '', value: '', children: [], checked: false }, {
+      get(t, p) { if (p in t) return t[p];
+        if (p === 'getBoundingClientRect') return () => ({ left: 0, top: 0, width: 560, height: 900 });
+        if (p === 'querySelectorAll') return () => []; if (p === 'querySelector') return () => null;
+        if (p === 'getContext') return (k) => k === '2d' ? c.canvas.getContext() : null;
+        return () => {}; }, set(t, p, v) { t[p] = v; return true; } }));
+  const lsb = { Math, JSON, console, Date, parseInt, parseFloat, isNaN, Uint8ClampedArray, devicePixelRatio: 1 };
+  lsb.window = lsb; lsb.globalThis = lsb; lsb.self = lsb;
+  lsb.document = { getElementById: mk, createElement: () => { const e = mk('__el' + Object.keys(els).length); return e; },
+                   querySelector: () => null, querySelectorAll: () => [], addEventListener(){}, body: mk('body') };
+  lsb.localStorage = { getItem: k => (k in store ? store[k] : null), setItem: (k, v) => { store[k] = v; }, removeItem: k => { delete store[k]; } };
+  lsb.addEventListener = () => {}; lsb.getComputedStyle = () => ({ position: 'relative' });
+  lsb.requestAnimationFrame = () => 0; lsb.setTimeout = () => 0; lsb.alert = () => {}; lsb.confirm = () => false; lsb.navigator = {};
+  vm.createContext(lsb);
+  let code = 'var lang="en";\n';
+  for (const f of ['runar-runes.js', 'tree-lab-trunk-composer/runar-trunk.js', 'tree-lab-branch-composer/runar-branch.js'])
+    code += fs.readFileSync(DIR + f, 'utf8') + '\n;\n';
+  vm.runInContext(code + inline.replace('window._draw=draw;', 'window._draw=draw; window._P=_pick;'), lsb, { filename: 'lab' });
+  const strip = s => String(s).replace(/<[^>]+>/g, ' ').replace(/&middot;/g, '·').replace(/&rarr;/g, '→').replace(/\s+/g, ' ').trim();
+  return { grow: strip(els.grow ? els.grow.innerHTML : ''), btable: strip(els.btable ? els.btable.innerHTML : ''),
+           age: strip(els.ageread ? els.ageread.textContent : ''), fills: c.fills,
+           picks: (lsb._P || []).filter(p => typeof p.k === 'number').map(p => p.meta) };
+}
+if (cast === 'lab2') {
+  // CAST 2 v LABU: zakladaci Norny (lab log = klice run, ne znaky)
+  const K = n => B.RUNES.filter(r => r.name === n)[0];
+  const rd = (spread, names) => ({ spread, runes: names.map(n => ({ rune: K(n).k, el: K(n).el })), area: null, intention: null });
+  for (const [lbl, log] of [['0 cteni (seminko)', []], ['Norny Kenaz·Fehu·Laguz', [rd('norns', ['Kenaz', 'Fehu', 'Laguz'])]],
+                            ['Norny Kenaz·Isa·Laguz', [rd('norns', ['Kenaz', 'Isa', 'Laguz'])]]]) {
+    const r = labRun(log);
+    console.log('LAB', lbl.padEnd(24), '|', r.age, '|', r.grow.slice(0, 90));
+    console.log('     vetve:', r.btable.slice(0, 260));
+  }
+}
+
+if (cast === 'lab2b') {
+  // Utok na labovou zmenu: (1) vysky podle pozic Noren, (2) seminko ma koreny,
+  // (3) stare stromy (prvni cteni NENI Norny) — co presne se zmenilo proti puvodnimu labu.
+  const BEFORE = process.argv[3];
+  const K = n => B.RUNES.filter(r => r.name === n)[0];
+  const rd = (spread, names) => ({ spread, runes: names.map(n => ({ rune: K(n).k, el: K(n).el })), area: null, intention: null });
+  const a = labRun([rd('norns', ['Kenaz', 'Fehu', 'Laguz'])]);
+  console.log('(1) Norny urd=Kenaz verdandi=Fehu skuld=Laguz:');
+  a.picks.forEach(m => console.log('    ', (m.name + '').padEnd(7), 'pozice', (m.norn + '').padEnd(8), 'vyska na kmeni', Math.round(m.frac * 100) + ' %', '| odbocek', (m.tw || []).length));
+  const s0 = labRun([]); const below = s0.fills.filter(f => f.some(([x, y]) => y > GROUND + 2)).length;
+  console.log('(2) seminko: tvaru pod zemi', below, '| nad zemi', s0.fills.length - below);
+  let sd = 777; const rnd = () => (sd = (sd * 1103515245 + 12345) >>> 0) / 4294967296;
+  const RB = B.RUNES.filter(r => r.k !== 'odinn');
+  const draw = (n, sp) => { const pool = RB.slice(), rs = [];
+    for (let i = 0; i < n; i++) { const r = pool.splice(Math.floor(rnd() * pool.length), 1)[0]; rs.push({ rune: r.k, el: r.el }); }
+    return { spread: sp, runes: rs, area: null, intention: null }; };
+  let log = []; for (let i = 0; i < 120; i++) log.push(rnd() < 0.75 ? draw(1, 'single') : draw(3, 'norns'));
+  log[0] = draw(1, 'single');   // prvni cteni NENI Norny -> zakladaci pravidlo se neuplatni
+  const o = labRun(log, BEFORE), n = labRun(log);
+  const desc = m => m.name + ':' + (m.tw || []).map(t => t.name).join(',');
+  const mainsO = new Set(o.picks.map(m => m.name));
+  let same = 0, diffs = [];
+  o.picks.forEach((m, i) => { const q = n.picks[i]; if (q && desc(m) === desc(q)) same++; else diffs.push([m, q]); });
+  console.log('(3) stary strom 120 cteni: vetvi pred/po', o.picks.length, '/', n.picks.length, '| beze zmeny', same);
+  diffs.forEach(([m, q]) => { const lost = (m.tw || []).map(t => t.name).filter(x => !(q.tw || []).map(t => t.name).includes(x));
+    console.log('     ', m.name, '— zmizele odbocky:', lost.join(',') || '-', '| byly to hlavni runy jinych vetvi?', lost.every(x => mainsO.has(x)) ? 'ANO (zamer)' : 'NE — CHYBA'); });
+}
