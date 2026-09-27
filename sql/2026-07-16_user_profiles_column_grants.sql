@@ -47,10 +47,8 @@ where id = '0d1c4ce7-68ef-4036-bc46-c4128c9f09bf';
 --   upsert({ id }, { onConflict:'id', ignoreDuplicates:true }) -> bez chyby
 --                                   (zakládání profilu novým uživatelům funguje)
 
--- 2026-09-10: life_rune_in_readings — uživatelská volba, smí ji měnit klient.
--- Sloupec zakládá sql/2026-09-10_life_rune_in_readings.sql; grant bydlí TADY, protože
--- zapisovatelnou plochu vlastní tenhle soubor a hlídá ji smoke ⑩ (jinak tichá 403).
-grant update (life_rune_in_readings) on public.user_profiles to authenticated;
+-- 2026-09-10 až 2026-09-27: life_rune_in_readings (volba čočky životní runy) — grant ODEBRÁN se sloupcem,
+-- viz sql/2026-09-27_drop_life_rune_in_readings.sql (čočka od v4.60 neběží, klient sloupec nečte ani nepíše).
 
 -- 2026-09-12: DVE JMENA. Klient smi menit severske jmeno a volbu osloveni.
 -- Sloupce zaklada sql/2026-09-12_two_names.sql; grant bydli TADY, protoze zapisovatelnou

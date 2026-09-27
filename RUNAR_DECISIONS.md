@@ -7319,3 +7319,11 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   záměrně), přidána kontrola posunu rejstříků, test zapojen do smoke ㉬.
 - **Čeká na ownera:** DB sloupec `user_profiles.life_rune_in_readings` (nikdo nečte ani nepíše) — smazání je trvalá změna DB.
 - Affected doc(s): `RUNAR_BACKLOG.md`.
+
+## 2026-09-27 (1) — DB: sloupec `user_profiles.life_rune_in_readings` zahozen (deploy SQL, CODE-tune)
+
+- **Rozhodl:** KUKY 2026-09-27 *„ano, pusť to sám“* (nad SQL v chatu, úklid z 2026-09-26 (12)).
+- **Co:** `alter table public.user_profiles drop column if exists life_rune_in_readings;` — spuštěno CODE-tune přes `supabase db query
+  --linked`, ověřeno (sloupec v `information_schema` 0×). Stav před: 4 profily, u 2 volba `false` — bez účinku, čočka od v4.60 neběží.
+  Migrace `sql/2026-09-27_drop_life_rune_in_readings.sql`; grant odebrán z `sql/2026-07-16_user_profiles_column_grants.sql` (smoke ⑩).
+- Affected doc(s): `RUNAR_BACKLOG.md` (úklid po čočce — hotovo).

@@ -663,10 +663,8 @@
   Rozbor GPT to teď hlásí (rubrika A), prompt tomu nebrání: NO COLD READING hlídá jen nitro („what is true, stirring, or known inside them“),
   ne stav vztahů a domova. Oprava = změna obsahu promptu → napřed změřit, jak často to dnes vzniká (Family & Home, Love), pak odebrat příčinu,
   ne přidat zákaz (memory `oprava-promptu-odebira-vadu`). (CODE-tune)
-- [ ] **Úklid po vypnutí čočky životní runy (2026-09-25, DECISIONS 2026-09-25 (7))** — **2026-09-26: mrtvé větve z builderů pryč**
-  (golden beze změny; `_lensContext` zůstal jako laboratorní funkce, DECISIONS 2026-09-26 (12)). **Zbývá:** DB sloupec
-  `user_profiles.life_rune_in_readings` (nikdo nečte ani nepíše) zahodit migrací — ČEKÁ na ownerovo ano (trvalá změna DB) — a zároveň
-  odebrat grant z `sql/2026-07-16_user_profiles_column_grants.sql`. (CODE-tune)
+- [x] **Úklid po vypnutí čočky životní runy — HOTOVO** (2026-09-26 mrtvé větve z builderů, DECISIONS 2026-09-26 (12); 2026-09-27 DB sloupec
+  `life_rune_in_readings` zahozen + grant odebrán, DECISIONS 2026-09-27 (1)). `_lensContext` zůstává jako laboratorní funkce (§26).
 - [ ] **Text zamčeného Asku pro Rune Seekera** — dnes *„Rúnar has one answer left — Premium hears it.“* (sedí na starý model „jedna odpověď
   zbývá“). Owner: *„něco přirozeného… nemělo by se to úplně vymykat“* ostatním teaserům (*„Deeper questions open with {tier}.“*). Návrh v chatu 2026-09-25.
 - [ ] **Konce čtení: víc tvarů — napětí (v4.61) a návrat k otázce (v4.65) NASAZENO, obraz ne — HLÍDAT v živých čteních** (CODE-tune, 2026-09-26)

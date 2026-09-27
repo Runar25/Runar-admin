@@ -1472,9 +1472,9 @@ function _dvergarContext(question, lang) {
 // „how does my Life Rune affect this reading", dostal odpoved o rune, kterou si model musel
 // domyslet. To je presne ta trida chyby, kterou §23 zakazuje, jen schovana za plynulou vetou.
 //
-// ⚠️ Blok NENI cocka ze cteni a nerídi se prepinacem `life_rune_in_readings`. Ten rozhoduje,
-// jestli zivotni runa smi barvit ZAVER cteni, kam ji nikdo nezval (brala si ho v 10 ze 12
-// cteni — proto ta volba vznikla). Tady se nic nebere: Runar mlci, dokud se leitandi nezepta.
+// ⚠️ Blok NENI cocka ze cteni. Cocka (do v4.59, s prepinacem `life_rune_in_readings` — sloupec zahozen 2026-09-27)
+// barvila ZAVER cteni, kam ji nikdo nezval (brala si ho v 10 ze 12 cteni). Tady se nic nebere: Runar mlci,
+// dokud se leitandi nezepta.
 // Pravidlo je jednou vetou: prepinac ridi, co Runar rekne SAM OD SEBE, nikdy to, nac se smi
 // clovek zeptat. Kdyby ho ridil i tady, vypnuti cocky by zivotni runu smazalo uplne — a to
 // je opak toho, proc volba vznikla (mела ji z zaveru cteni PRESUNOUT do Ask).
