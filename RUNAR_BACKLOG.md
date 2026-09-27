@@ -1400,6 +1400,11 @@ vazba dorazí jen k runě s pohybem (Jera ✅ Gebo ✅ · Perth ❌ Isa ❌).
      scéna ramene = **CESTA, kterou člověk zvolí** (*„jedu na lodi po moři"*), ne vztah; napřed ze **statického světa**, vlastní slova
      později · mezi rameny se **nic nepřenáší** (přenos = varianta k testu) · krajiny/momenty/graf/nit **odloženy** → DECISIONS 2026-09-27 (3).
      *„What passes between me and this place?"* (vyšla nejlépe, EVAL_LOG 2026-09-27 (1)) = otázka, kterou si člověk může položit ZPĚTNĚ, ne tvar ramene.
+  10. **(2026-09-27)** Rameno **BEZ středu** — životní runa do promptu ramene nejde; vazbu životní × tažená runa nese **Ask** → DECISIONS
+     2026-09-27 (6). IS verze ramene: EVAL_LOG 2026-09-27 (3) (zbývá vlastní znění „bez studeného čtení" místo produkčního „Lýstu myndinni").
+- [ ] **Perth `k_is` má „hið hulda" dvakrát** (`v2/runar-runes.js`: *„tilviljun, hið hulda sem kemur í ljós, örlög í mótun, happ, hið hulda"*;
+  EN *„the hidden coming to light"* i *„the unseen"* přeložené stejně). Jde do promptu (focus, Ask). Návrh: poslední *„hið óséða"* (korpus 11) —
+  ověřit korpusem. (CODE-read 2026-09-27, nalezeno při IS testu Vegvísiru; data run = CODE-tune.)
 
 - [ ] **MOŽNOST: cestu pro rameno píše UŽIVATEL — do Asku, vlastními slovy** (KUKY 2026-09-12).
   **Proč, z dat:** (a) cokoli napíšeme, co má Gebo reprezentovat, Rúnar v každém čtení převezme

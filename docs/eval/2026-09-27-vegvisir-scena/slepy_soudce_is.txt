@@ -1,0 +1,7 @@
+Slepý soudce IS kolo 1 (slepe_is.txt, 8 IS + 4 EN): A zavírá · B nitro · C runa · D cesta · E meta · F 1–5
+1 no no yes yes no 4 · 2 no no yes yes no 4 · 3 no no yes yes no 4 · 4 no no yes yes no 4 · 5 no no yes yes „Raidho er dregin" 3 · 6 YES no yes yes no 3
+7 no no yes yes no 5 · 8 no no yes yes no 5 · 9 no no yes partly no 4 · 10 no no yes yes „Ísinn í rúninni" 3 · 11 YES no yes yes „Raidho liggur við þessa mynd" 2 · 12 YES no yes yes no 3
+Po klíči: IS zavírá 3/8, meta 3/8, cesta 8/8, F 3,4 · EN zavírá 0/4, meta 0/4, cesta 3,5/4, F 4,25.
+Slepý soudce IS kolo 2 (slepe_is2.txt, 8 IS): 1 no no yes yes no 4 · 2 no no yes yes „Raidho liggur yfir þessari mynd" 3 · 3 no no yes yes „Isa liggur yfir þessari leið" 4
+4 no no yes yes no 4 · 5 no no yes yes no 4 · 6 no no yes yes „Raidho liggur yfir þeirri mynd" 3 · 7 no no yes yes no 4 · 8 no no yes yes „Isa liggur yfir þessari leið" 4
+Po klíči: zavírá 0/8, meta 4/8 (2× mynd z produkčního „Lýstu myndinni", 2× štítek „liggur yfir þessari leið"), cesta 8/8, F 3,75.

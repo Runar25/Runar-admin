@@ -5529,3 +5529,29 @@ runě se dá nechat na zpětnou otázku (Ask), kde vyšla nejlépe *„What pass
 **Vedlejší:** slovo *arm* z promptu prosakuje do textu (*„Isa lies on this arm"*, *„Raidho falls on this arm"* — 3/8; soudce: žargon) →
 v promptu rameno nejmenovat „arm".
 **Hranice:** n = 4 na rameno, 1 text na buňku, jeden slepý soudce; runy a cesty v páru pevné; jen EN.
+
+## 2026-09-27 (3) — Vegvísir IS: rameno jako cesta bez středu — kolo 2 bez zavírání (3/8 → 0/8), zbývá meta *mynd* z produkčního bloku
+
+**Owner:** *„ano, bez středu. pusť IS test"* (DECISIONS 2026-09-27 (6)). Rameno = runa + cesta vlastními slovy, bez středu. Prompt ramene
+**psaný islandsky od základu** (ne překlad), každá věta přes is-grammar-qa a korpus: cesty *„Ég fer yfir ána á steinum"* (*fara yfir ána*
+106, *yfir ána á* 147) · *„Ég geng brattan stíg upp á fjall"* (*brattan stíg* 10 — nástrojové *brattann* je planý poplach, 0) · *„Ég sigli
+bát úti á sjó"* (*sigla bát* 24, *úti á sjó* 3143) · *„Ég geng í gegnum skóg í rökkrinu"*. Věty, které parser nerozebral (E001), přepsány,
+dokud je nerozebral (*„Svaraðu sem Rúnar…"* → vypuštěno, Rúnara drží systémový prompt). Produkční systémový prompt, blok korekcí z DB
+a oslovení kk. Opus 5, 8 IS × 2 kola + 4 EN, $0,29. Slepý soudce po každém kole.
+| | zavírá | meta řeč | drží cestu | kvalita 1–5 |
+|---|---|---|---|---|
+| IS kolo 1 (*„Leið hans er eina myndin… lesturinn stendur opinn"*, štítek *DREGNA RÚNA*) | 3/8 | 3/8 | 8/8 | 3,4 |
+| **IS kolo 2** (*„Haltu þig við leiðina sem hann skrifaði. Síðasta setningin segir frá leiðinni sjálfri, ekki frá því hvað hún þýðir eða hvað hann ætti að gera."*, štítek *RÚNIN*) | **0/8** | 4/8 | 8/8 | **3,75** |
+| EN (hlavička bez „arm") | 0/4 | 0/4 (*arm* 3/8 → 0/4) | 3,5/4 | 4,25 |
+Kolo 1 zavíralo poučkou (*„gangan sjálf á sinn eigin tíma og hann verður ekki styttur"*); v kole 2 poslední věta popisuje cestu
+(*„…og malarurðin gefur eftir undir hverju skrefi"*). **Meta v kole 2:** *„Raidho liggur yfir þessari mynd"* 2× — slovo *mynd* v mém
+promptu už není; **zdroj = produkční `_noColdRead('is')` „Lýstu myndinni"** (EN „Describe the image"). V běžném čtení sedí (obraz dodáváme),
+ve Vegvísiru je obrazem cesta → Vegvísir potřebuje vlastní znění (*„Lýstu leiðinni"*), ne produkční blok. Dále štítkový vzorec
+*„<runa> liggur yfir þessari leið"* 4/8 (EN obdobně *„Isa lies on the water"*, *„Jera falls here"*).
+**Gramatika (nástroj + ručně + korpus):** kolo 1 — *„hvor tveggja er eins og hún er"* → *hvort tveggja … það* (966 × 16) · rozbitá věta
+*„hefur tekið sinn skref fyrir skref"* · *„heldur kyrru undir fótum"* (idiom je *halda kyrru fyrir*, 1881); kolo 2 — *„hver skref"* → *hvert
+skref* (927 × 2) · *„undir kjölnum"* nestandardní (*kilinum* 153 × *kjölnum* 21). Vše jednorázové → do korekcí ne.
+Plané poplachy nástroje: *brattann*, *bankanna*, *peningurinn*, *mál*, *kjörnum*.
+**Vedlejší (data):** `RUNES` Perth `k_is` má *„hið hulda"* 2× (*„hið hulda sem kemur í ljós … hið hulda"* = EN *the hidden coming to light* i
+*the unseen*) → BACKLOG.
+**Hranice:** 4 cesty × 2 texty na kolo, jeden slepý soudce (čte islandsky, není rodilý mluvčí — gramatiku soudí nástroje); runy a cesty v páru pevné.

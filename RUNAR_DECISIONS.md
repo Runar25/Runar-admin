@@ -7393,3 +7393,13 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   hranice Tiwaz) → FAIL. Strom má tvar pro všech 24 (`tree_diag.js` A).
 - **Čeká na ownera:** text o původu do záložky životní runy (EN + IS, bez jména autora) — návrh v chatu.
 - Affected doc(s): `RUNAR_BACKLOG.md` · `docs/eval/2026-09-27-zivotni-runa/README.md`.
+
+## 2026-09-27 (6) — Vegvísir: rameno BEZ středu · vazbu životní runa × tažená runa nese Ask
+
+- **Rameno = tažená runa + cesta, kterou člověk napíše. Životní runa (střed) do promptu ramene NEJDE.** KUKY: *„ano, bez středu."*
+  Na základě EVAL_LOG 2026-09-27 (2): se středem Rúnar vnutil Gebo do každé cesty (cizí myšlenka 4/4, drží cestu 0/4), bez středu 0/4 a 4/4.
+- **Vztah životní runy a tažené runy řeší Ask** — KUKY: *„Ask se zatím ukazuje jako velmi silný právě pro tyhle vazby, jako je life rune
+  a tažená runa."* Nejlépe dosud *„What passes between me and this place?"* (EVAL_LOG 2026-09-27 (1)).
+- ⚠️ Mění V3 z 2026-09-12 („statický střed × dynamická ramena", střed = chůze ve variantách): chůze středu v rameni nebude; zda a kde se
+  použije (Ask), rozhodne další test.
+- Affected doc(s): `RUNAR_BACKLOG.md` (rámec Vegvísiru) — v tomto commitu.
