@@ -7370,3 +7370,26 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   je to otázka, kterou si člověk může položit dodatečně (Ask).
 - Body (3) „statický svět scén napřed", „nic se nepřenáší", „krajiny odloženy", „životní runa jako rameno v šuplíku" platí beze změny.
 - Affected doc(s): `RUNAR_BACKLOG.md` (rámec Vegvísiru bod 9) — v tomto commitu.
+
+## 2026-09-27 (5) — Životní runa = runový půlměsíc narození (pevná data); nahrazuje (2) téhož dne
+
+- **Rozhodl:** KUKY 2026-09-27 — po vlastním hledání se Coworkem (HANDOFF62): *„dospělo se nakonec ke stejnému výsledku jako u tebe“*.
+  Autor systému se v aplikaci **nikde nejmenuje** (owner). Shadow Rune se tu neřeší (otevřená zvlášť).
+- **Co:** `calcLifeRune` = runa půlměsíce, ve kterém se člověk narodil — 24 období po 15–16 dnech s PEVNÝMI daty, Fehu od 29. 6.
+  (`LIFE_RUNE_STARTS` v `runar-runes.js`). Hraniční den patří nové runě. Porovnává se jen (měsíc, den) — ne den v roce (přestupný rok).
+  29. 2. padne do Tiwaz, Eihwaz přechází přes Nový rok. Neplatné datum → `null`.
+- **Proč:** numerologie nemá k runám vztah (totéž datum dalo podle pořadí sčítání Gebo i Fehu); půlměsíc je místo v kruhu roku.
+  Moderní systém (poprvé publikován 1990), historicky doložená rodná runa neexistuje — průzkum `docs/eval/2026-09-27-zivotni-runa/`.
+  12. 12. 1981 → **Isa** (shoduje se s ownerovou dřívější „osudovou runou dne“).
+- **Tabulka:** 23 z 24 začátků shodně v Coworkových i CODE-tune zdrojích. **Sowilo: 13. 2.** — tak ho mají všechny tři tabulky, které
+  CODE-tune 2026-09-27 viděl (asktherunes, WeMystic, Uniwelry); Coworkův druhý zdroj uváděl 12. 2. (stránka nedostupná, neověřeno).
+  Důsledek: Algiz 16 dní, Sowilo 14; dalších pět run 16 dní (Ansuz, Hagalaz, Eihwaz, Berkana, Othila), zbytek 15 — rozdělení NENÍ
+  rovnoměrné (to je vlastnost kalendáře, ne vada). Změna na 12. 2. = jedna řádka dat, kdyby owner chtěl.
+- **Účty (spuštěno CODE-tune, po nasazení klienta):** všechny 3 profily s datem narození jsou bez uloženého čtení životní runy —
+  dvěma se vynulovalo už u (2), třetímu (9. 10. 1980, uložená Ansuz, nově Gebo) teď. Záloha textů lokálně mimo repo, DOB beze změny.
+  Nové čtení se vygeneruje podle půlměsíců (zdarma).
+- **Kontrola:** `verify_liferune_states.js` (smoke) — každý den roku 2025 i 2024 má právě jednu runu (14–16 dní), všech 24 hranic,
+  pevné body (12. 12. Isa, 13. 12. Jera, 29. 2. Tiwaz, 1. 1. / 12. 1. Eihwaz, 13. 1. Perth), neplatné datum → null. Mutace (posunutá
+  hranice Tiwaz) → FAIL. Strom má tvar pro všech 24 (`tree_diag.js` A).
+- **Čeká na ownera:** text o původu do záložky životní runy (EN + IS, bez jména autora) — návrh v chatu.
+- Affected doc(s): `RUNAR_BACKLOG.md` · `docs/eval/2026-09-27-zivotni-runa/README.md`.

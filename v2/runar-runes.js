@@ -232,7 +232,7 @@ const RUNES = [
 ];
 
 // ─── LIFE RUNE CALCULATOR ───────────────────────────────
-// Životní runa = RUNOVÝ PŮLMĚSÍC, ve kterém se člověk narodil (KUKY 2026-09-27, HANDOFF62 Cowork; RUNAR_DECISIONS 2026-09-27 (3)).
+// Životní runa = RUNOVÝ PŮLMĚSÍC, ve kterém se člověk narodil (KUKY 2026-09-27, HANDOFF62 Cowork; RUNAR_DECISIONS 2026-09-27 (5)).
 // Rok je rozdělený na 24 období po 15–16 dnech s PEVNÝMI daty, cyklus začíná Fehu 29. 6. Je to moderní rozdělení roku (poprvé
 // publikované 1990), ne dochovaný severský systém — historicky doložená „rodná runa“ neexistuje. Autor se v aplikaci nejmenuje (owner).
 // Zdroje a srovnání variant → docs/eval/2026-09-27-zivotni-runa/README.md.

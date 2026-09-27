@@ -555,7 +555,7 @@ async function drat() {
   vm.runInContext('_lifeRuneText = null; _lifeRuneLang = null; lang = "en";', S);
 }
 
-// ── VÝPOČET: runové půlměsíce (2026-09-27, HANDOFF62; DECISIONS 2026-09-27 (3)) ──
+// ── VÝPOČET: runové půlměsíce (2026-09-27, HANDOFF62; DECISIONS 2026-09-27 (5)) ──
 // Do 2026-09-27 ciferný součet — Fehu nevyšla z žádného data (nalezl CODE-tree). Teď půlměsíc narození s pevnými daty.
 // Protlačeno skutečnou calcLifeRune přes KAŽDÝ den běžného i přestupného roku (pasti z HANDOFF62: přestupný rok, 29. 2., Eihwaz
 // přes Nový rok, tabulka bez mezery i bez záložního výsledku).

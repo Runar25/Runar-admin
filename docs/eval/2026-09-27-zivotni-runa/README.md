@@ -1,6 +1,6 @@
 # Životní runa — průzkum metod (2026-09-27)
 
-**Stav:** podklad k rozhodnutí ownera, nic nerozhodnuto. Live je varianta C (DECISIONS 2026-09-27 (2)); owner: *„tak asi změna…
+**Stav:** ROZHODNUTO 2026-09-27 — runové půlměsíce s pevnými daty (DECISIONS 2026-09-27 (5)); tenhle soubor je podklad. Live je varianta C (DECISIONS 2026-09-27 (2)); owner: *„tak asi změna…
 napřed mi řekni, co si o tom myslíš“* nad handoffem „Rúnar Life Rune — provenance“ (runový sluneční kalendář). Výzkum: 1 agent
 (web), vlastní výpočet polohy Slunce (Meeus kap. 25).
 
