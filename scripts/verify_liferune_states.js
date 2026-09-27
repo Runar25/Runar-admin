@@ -555,6 +555,22 @@ async function drat() {
   vm.runInContext('_lifeRuneText = null; _lifeRuneLang = null; lang = "en";', S);
 }
 
+// ── VZOREC: každá z 24 run může vyjít, Blank nikdy (2026-09-27) ──
+// Do 2026-09-27 Fehu nevyšla z žádného data narození (ciferný součet součtu d+m+y dal 2–24, nikdy 1) — nalezl CODE-tree
+// až diagnózou stromu, žádná kontrola to nevěděla. Protlačeno skutečnou calcLifeRune přes všechny dny 1900–2030.
+{
+  const calc = vm.runInContext('calcLifeRune', S), vidno = {};
+  let spatne = 0;
+  for (let x = new Date(Date.UTC(1900, 0, 1)); x <= new Date(Date.UTC(2030, 11, 31)); x.setUTCDate(x.getUTCDate() + 1)) {
+    const r = calc(x.getUTCDate(), x.getUTCMonth() + 1, x.getUTCFullYear());
+    if (!r || r.n === 'Blank') { spatne++; continue; }
+    vidno[r.n] = (vidno[r.n] || 0) + 1;
+  }
+  const n = Object.keys(vidno).length;
+  rekni(n === 24 && spatne === 0, 'calcLifeRune: z dat 1900–2030 vyjde všech 24 run (vyšlo ' + n + '), nikdy Blank ani nic (' + spatne + ')');
+  rekni(calc(15, 7, 1985).n === 'Jera', 'calcLifeRune: 15. 7. 1985 → 1+5+7+1+9+8+5 = 36 → 12 = Jera');
+}
+
 drat().then(() => {
   if (fail) { console.log('\nFAIL — ' + fail + ' tvrzení o záložce životní runy neplatí.'); process.exit(1); }
   console.log('\nOK — životní runa funguje i bez účtu (návštěvník dostane runu, čtení zůstává za přihlášením).');

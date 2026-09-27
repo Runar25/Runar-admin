@@ -232,10 +232,17 @@ const RUNES = [
 ];
 
 // ─── LIFE RUNE CALCULATOR ───────────────────────────────
+// Ciferný součet VŠECH číslic data (15. 7. 1985 → 1+5 + 7 + 1+9+8+5 = 36), nad 24 se odečítá 24 (36 → 12 = Jera);
+// 1–24 = RUNES[0..23], Blank není životní runa. KUKY 2026-09-27: „zdroj nemám, udělej C“ (RUNAR_DECISIONS 2026-09-27 (2)).
+// PROČ: do té doby se sečetly číslice SOUČTU d+m+y a redukovalo se ciferným součtem nad 24 — u skutečných let vyjde
+// 2–24, nikdy 1, takže Fehu nevyšla nikdy (0,0 % dnů 1930–2012, nalezl CODE-tree) a rozložení bylo 0,7–9,4 %.
+// Tahle metoda: všech 24 run, 1,9–6,4 %. Metoda nemá externí zdroj (owner) — je to rozhodnutí, ne tradice.
+// ⚠️ Změna vzorce mění runu existujícím účtům → uložené life_rune_* je třeba srovnat (hlídá verify_liferune_states).
 function calcLifeRune(d, m, y) {
-  let s = String(d + m + y).split('').map(Number).reduce((a, b) => a + b, 0);
-  while (s > 24) s = String(s).split('').map(Number).reduce((a, b) => a + b, 0);
-  return RUNES[(s - 1 + 24) % 24];
+  const cif = (n) => String(n).split('').map(Number).reduce((a, b) => a + b, 0);
+  let s = cif(d) + cif(m) + cif(y);
+  while (s > 24) s -= 24;
+  return RUNES[s - 1];
 }
 
 // ─── AREA OF LIFE OPTIONS ───────────────────────────────
