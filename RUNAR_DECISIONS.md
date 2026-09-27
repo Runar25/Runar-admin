@@ -7522,3 +7522,24 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   E001 roztříděny v komentáři u `RP_ASK.is.aspect` (slepota nástroje dokázaná nulovým testem). **Automatický hlídač na „klíč = holé
   sloveso“ není** — is-grammar-qa ho nevidí a korpus nejde do smoke.
 - Affected doc(s): žádný (hodnoty klíčů bydlí jen v `runar-runes.js`, §20).
+
+## 2026-09-27 (14) — Obrazy z GPT inspirace, kolo 3: +16 pro runy s 6–7 obrazy a Blank (v4.72)
+
+- **Rozhodl:** KUKY 2026-09-27 *„jeď bod 6, obrazy“* (BACKLOG „Obrazy od GPT pro 24 run + Blank“; pověřenost jako (10)/(11) z 2026-09-26).
+- **Co:** Uruz +1 (opřeš se do balvanu na poli u statku, posune se kousek, pak ještě) · Thurisaz +2 (hádka u stolu ztichla, další slovo rozhodne ·
+  trnitý keř zachytí rukáv krok před hranou rokle) · Wunjo +2 (ráno po hádce se oba smějete téže věci · kamenná zeď hotová, všichni stojí
+  a dívají se) · Hagalaz +1 (trajekt kvůli bouři nepluje, svatba s polovinou hostů) · Nauthiz +1 (hodina do lodi, balíš jen to nezbytné) ·
+  Sowilo +2 (konečně u vörðy na vrcholu, slunce do tváře · starý pes se v prvním jarním slunci natáhne na schodech) · Berkana +2 (březová
+  sazenice v závětří starších stromů · hlášený mráz, plachta přes sazenice) · Ehwaz +1 (gauč dolů po úzkých schodech jde, až přestanete
+  poroučet) · Ingwaz +1 (zapečetěný sud se syrovátkou do Þorri) · Dagaz +1 (otevřeš chlév a ranní světlo zaplaví tmavé kóje) · Blank +2
+  (věta ve starém deníku končí v půli, zbytek stránky prázdný — rodina *přerušení příběhu* · děti se dívají na týž holý kus zdi a každé
+  vidí jiný obraz — rodina *zrcadlo*). Banka 169 → 185. Jera (13) a Ansuz (10) vědomě vynechány.
+- **Brána (3 slepí soudci, popisy run z `RUNAR_POPISY_RUN.md`):** 16/18 — 14 × 3/3, Wunjo zeď 2/3 → Jera, Berkana plachta 2/3 → Algiz.
+  **Nezařazeny:** Uruz ledovcová řeka valí balvany **0/3 → Laguz** (voda nese identitu silněji než síla) · Blank základy, na kterých dům
+  nikdy nestál **0/3 → Othila** (dům = domov; rodina *nepřítomnost* zůstává otevřená). Brána nově umí prázdnou runu (`brana_build.py`:
+  nadpis popisu „Prázdná runa — Unknown“). Materiál `docs/eval/2026-09-26-obrazy/k3_*`.
+- **IS:** psáno islandsky; is-grammar-qa čisté (4 věty přepsány, dokud je nástroj nerozparsoval), vazby a kolokace v korpusu
+  (*heldur aftur af* 695×, *teygir úr sér* 79×, *í einu vetfangi* 1919×, *mjakast* 2113×…). Aspekty = klíče runy (verify zelený).
+- **Kontrola:** protlačeno produkčním builderem — nový obraz v promptu single ~42–51/300 v EN i IS (Blank, Thurisaz, Sowilo, Dagaz);
+  golden: změnily se jen řádky obrazu (los z větší sady); motivy, obraz napříč zařízeními, check-is zelené.
+- Affected doc(s): `RUNAR_BACKLOG.md` — v tomto commitu.

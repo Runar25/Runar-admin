@@ -1,0 +1,20 @@
+{
+ "U1": ["Þú leggst á stóra steininn í túninu af öllum kröftum, og hann mjakast örlítið, og svo aðeins meira.", "styrkur", "strength", "P", "bright"],
+ "U2": ["Jökuláin veltir stórgrýti eftir botninum, og undir vatninu heyrast steinarnir skella saman.", "hráur kraftur", "raw power", "E", "bright"],
+ "T1": ["Þrætan við borðið hefur þagnað í bili, og allir vita að næsta orð ræður því hvernig fer.", "þröskuldur", "threshold", "D", "any"],
+ "T2": ["Þyrnirunni krækir í ermina og heldur aftur af þér, einu skrefi frá gilbrúninni.", "aðgát", "caution", "P", "any"],
+ "W1": ["Morguninn eftir rifrildið hlæið þið bæði að því sama, og hvorugt ykkar minnist á það.", "sátt", "harmony", "D", "any"],
+ "W2": ["Hleðslan er fullgerð, og allir standa kyrrir um stund og horfa á hana.", "gleði", "joy", "P", "bright"],
+ "H1": ["Ferjan siglir ekki vegna óveðursins, og brúðkaupið er haldið með hálfan gestahópinn.", "truflun", "disruption", "D", "any"],
+ "N1": ["Það er klukkutími í bátinn, og þú pakkar aðeins því sem þú getur ekki verið án.", "nauðsyn", "necessity", "D", "any"],
+ "S1": ["Þú nærð loksins upp að vörðunni á tindinum, og sólin skín beint framan í þig.", "sigur", "victory", "P", "bright"],
+ "S2": ["Í fyrstu hlýju vorsólinni teygir gamli hundurinn úr sér á tröppunum í fullri lengd.", "lífskraftur", "life force", "P", "bright"],
+ "B1": ["Birkiplantan vex upp í skjóli eldri trjánna, um handarbreidd á ári.", "þroski", "growth", "P", "any"],
+ "B2": ["Frosti er spáð í nótt, og þú breiðir lak yfir plönturnar áður en þú ferð að sofa.", "umhyggja", "nurturing", "P", "bright"],
+ "E1": ["Þið berið sófann niður þröngan stigann, og hann kemst ekki fyrr en þið hættið að segja hvort öðru fyrir verkum.", "samfylgd", "partnership", "D", "any"],
+ "I1": ["Súrtunnan stendur lokuð í búrinu, og enginn opnar hana fyrr en á þorra.", "innri þróun", "inner development", "D", "cold"],
+ "D1": ["Þú opnar fjósdyrnar, og morgunbirtan flæðir í einu vetfangi inn í dimma básana.", "ljós", "light", "D", "any"],
+ "X1": ["Setningin í gömlu dagbókinni endar í miðju kafi, og það sem eftir er af síðunni er autt.", "hið óþekkta", "the unknown", "D", "any"],
+ "X2": ["Grunnurinn var steyptur fyrir mörgum árum, en húsið var aldrei reist.", "tómið", "the void", "P", "any"],
+ "X3": ["Börnin horfa á sama auða blettinn á veggnum, og hvert þeirra sér þar aðra mynd.", "óskrifaður möguleiki", "unwritten potential", "D", "any"]
+}

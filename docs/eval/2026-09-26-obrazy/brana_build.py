@@ -10,11 +10,14 @@ kand = json.load(io.open(os.path.join(HERE, sys.argv[1]), encoding='utf-8'))
 pred = sys.argv[2]
 doc = io.open(ROOT + 'RUNAR_POPISY_RUN.md', encoding='utf-8').read()
 JMENA = {'Othila': ['Othila', 'Othala', 'Óðal'], 'Berkana': ['Berkana', 'Berkano'], 'Tiwaz': ['Tiwaz', 'Týr'], 'Sowilo': ['Sowilo'],
-         'Eihwaz': ['Eihwaz'], 'Perth': ['Perth', 'Perthro'], 'Raidho': ['Raidho'], 'Ehwaz': ['Ehwaz']}
+         'Eihwaz': ['Eihwaz'], 'Perth': ['Perth', 'Perthro'], 'Raidho': ['Raidho'], 'Ehwaz': ['Ehwaz'],
+         'Blank': ['Prázdná runa', 'Blank']}   # 2026-09-27 kolo 3: prázdná runa má v popisech jiný nadpis
+NADPIS = {'Blank': 'Prázdná runa — Unknown'}
 def popis(runa):
-    i = doc.index('\n## ' + runa + '\n')
+    h = NADPIS.get(runa, runa)
+    i = doc.index('\n## ' + h + '\n')
     j = doc.find('\n---', i + 5)
-    t = doc[i + len(runa) + 5: j].strip()
+    t = doc[i + len(h) + 5: j].strip()
     if '### Znění A' in t:   # Tiwaz / Ehwaz: první znění
         t = t.split('### Znění A', 1)[1].split('### Znění B', 1)[0].strip()
     # jména bohů a jejich tvary prozradí runu (Tiwaz: „Je spojován s Týrem — bohem…“) → pryč i se skloňováním

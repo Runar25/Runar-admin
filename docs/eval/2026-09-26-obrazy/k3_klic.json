@@ -1,0 +1,570 @@
+{
+ "kandidati": [
+  "U1",
+  "U2",
+  "T1",
+  "T2",
+  "W1",
+  "W2",
+  "H1",
+  "N1",
+  "S1",
+  "S2",
+  "B1",
+  "B2",
+  "E1",
+  "I1",
+  "D1",
+  "X1",
+  "X2",
+  "X3"
+ ],
+ "soudci": [
+  [
+   {
+    "n": 1,
+    "id": "W1",
+    "spravne": "R92",
+    "kody": {
+     "R18": "Ehwaz",
+     "R31": "Gebo",
+     "R92": "Wunjo"
+    }
+   },
+   {
+    "n": 2,
+    "id": "W2",
+    "spravne": "R92",
+    "kody": {
+     "R85": "Othila",
+     "R92": "Wunjo",
+     "R38": "Jera"
+    }
+   },
+   {
+    "n": 3,
+    "id": "B1",
+    "spravne": "R22",
+    "kody": {
+     "R65": "Ingwaz",
+     "R69": "Eihwaz",
+     "R22": "Berkana"
+    }
+   },
+   {
+    "n": 4,
+    "id": "X1",
+    "spravne": "R60",
+    "kody": {
+     "R60": "Blank",
+     "R95": "Ansuz",
+     "R39": "Perth"
+    }
+   },
+   {
+    "n": 5,
+    "id": "X2",
+    "spravne": "R60",
+    "kody": {
+     "R85": "Othila",
+     "R60": "Blank",
+     "R39": "Perth"
+    }
+   },
+   {
+    "n": 6,
+    "id": "B2",
+    "spravne": "R22",
+    "kody": {
+     "R65": "Ingwaz",
+     "R64": "Algiz",
+     "R22": "Berkana"
+    }
+   },
+   {
+    "n": 7,
+    "id": "S2",
+    "spravne": "R33",
+    "kody": {
+     "R33": "Sowilo",
+     "R22": "Berkana",
+     "R92": "Wunjo"
+    }
+   },
+   {
+    "n": 8,
+    "id": "U2",
+    "spravne": "R28",
+    "kody": {
+     "R56": "Laguz",
+     "R78": "Hagalaz",
+     "R28": "Uruz"
+    }
+   },
+   {
+    "n": 9,
+    "id": "T1",
+    "spravne": "R15",
+    "kody": {
+     "R15": "Thurisaz",
+     "R78": "Hagalaz",
+     "R84": "Tiwaz"
+    }
+   },
+   {
+    "n": 10,
+    "id": "D1",
+    "spravne": "R55",
+    "kody": {
+     "R55": "Dagaz",
+     "R40": "Kenaz",
+     "R33": "Sowilo"
+    }
+   },
+   {
+    "n": 11,
+    "id": "T2",
+    "spravne": "R15",
+    "kody": {
+     "R15": "Thurisaz",
+     "R64": "Algiz",
+     "R68": "Raidho"
+    }
+   },
+   {
+    "n": 12,
+    "id": "N1",
+    "spravne": "R35",
+    "kody": {
+     "R35": "Nauthiz",
+     "R85": "Othila",
+     "R68": "Raidho"
+    }
+   },
+   {
+    "n": 13,
+    "id": "S1",
+    "spravne": "R33",
+    "kody": {
+     "R84": "Tiwaz",
+     "R68": "Raidho",
+     "R33": "Sowilo"
+    }
+   },
+   {
+    "n": 14,
+    "id": "X3",
+    "spravne": "R60",
+    "kody": {
+     "R39": "Perth",
+     "R72": "Mannaz",
+     "R60": "Blank"
+    }
+   },
+   {
+    "n": 15,
+    "id": "E1",
+    "spravne": "R18",
+    "kody": {
+     "R31": "Gebo",
+     "R18": "Ehwaz",
+     "R72": "Mannaz"
+    }
+   },
+   {
+    "n": 16,
+    "id": "U1",
+    "spravne": "R28",
+    "kody": {
+     "R15": "Thurisaz",
+     "R35": "Nauthiz",
+     "R28": "Uruz"
+    }
+   },
+   {
+    "n": 17,
+    "id": "H1",
+    "spravne": "R78",
+    "kody": {
+     "R15": "Thurisaz",
+     "R35": "Nauthiz",
+     "R78": "Hagalaz"
+    }
+   },
+   {
+    "n": 18,
+    "id": "I1",
+    "spravne": "R65",
+    "kody": {
+     "R38": "Jera",
+     "R26": "Isa",
+     "R65": "Ingwaz"
+    }
+   }
+  ],
+  [
+   {
+    "n": 1,
+    "id": "B1",
+    "spravne": "R21",
+    "kody": {
+     "R62": "Eihwaz",
+     "R61": "Ingwaz",
+     "R21": "Berkana"
+    }
+   },
+   {
+    "n": 2,
+    "id": "X1",
+    "spravne": "R81",
+    "kody": {
+     "R81": "Blank",
+     "R29": "Perth",
+     "R35": "Ansuz"
+    }
+   },
+   {
+    "n": 3,
+    "id": "S1",
+    "spravne": "R22",
+    "kody": {
+     "R26": "Tiwaz",
+     "R12": "Raidho",
+     "R22": "Sowilo"
+    }
+   },
+   {
+    "n": 4,
+    "id": "T2",
+    "spravne": "R92",
+    "kody": {
+     "R12": "Raidho",
+     "R17": "Algiz",
+     "R92": "Thurisaz"
+    }
+   },
+   {
+    "n": 5,
+    "id": "S2",
+    "spravne": "R22",
+    "kody": {
+     "R42": "Wunjo",
+     "R22": "Sowilo",
+     "R21": "Berkana"
+    }
+   },
+   {
+    "n": 6,
+    "id": "N1",
+    "spravne": "R34",
+    "kody": {
+     "R74": "Othila",
+     "R12": "Raidho",
+     "R34": "Nauthiz"
+    }
+   },
+   {
+    "n": 7,
+    "id": "X3",
+    "spravne": "R81",
+    "kody": {
+     "R73": "Mannaz",
+     "R81": "Blank",
+     "R29": "Perth"
+    }
+   },
+   {
+    "n": 8,
+    "id": "D1",
+    "spravne": "R58",
+    "kody": {
+     "R22": "Sowilo",
+     "R16": "Kenaz",
+     "R58": "Dagaz"
+    }
+   },
+   {
+    "n": 9,
+    "id": "B2",
+    "spravne": "R21",
+    "kody": {
+     "R61": "Ingwaz",
+     "R17": "Algiz",
+     "R21": "Berkana"
+    }
+   },
+   {
+    "n": 10,
+    "id": "U1",
+    "spravne": "R79",
+    "kody": {
+     "R92": "Thurisaz",
+     "R79": "Uruz",
+     "R34": "Nauthiz"
+    }
+   },
+   {
+    "n": 11,
+    "id": "H1",
+    "spravne": "R82",
+    "kody": {
+     "R82": "Hagalaz",
+     "R34": "Nauthiz",
+     "R92": "Thurisaz"
+    }
+   },
+   {
+    "n": 12,
+    "id": "X2",
+    "spravne": "R81",
+    "kody": {
+     "R74": "Othila",
+     "R29": "Perth",
+     "R81": "Blank"
+    }
+   },
+   {
+    "n": 13,
+    "id": "W2",
+    "spravne": "R42",
+    "kody": {
+     "R97": "Jera",
+     "R74": "Othila",
+     "R42": "Wunjo"
+    }
+   },
+   {
+    "n": 14,
+    "id": "W1",
+    "spravne": "R42",
+    "kody": {
+     "R42": "Wunjo",
+     "R57": "Gebo",
+     "R30": "Ehwaz"
+    }
+   },
+   {
+    "n": 15,
+    "id": "U2",
+    "spravne": "R79",
+    "kody": {
+     "R79": "Uruz",
+     "R82": "Hagalaz",
+     "R13": "Laguz"
+    }
+   },
+   {
+    "n": 16,
+    "id": "E1",
+    "spravne": "R30",
+    "kody": {
+     "R73": "Mannaz",
+     "R30": "Ehwaz",
+     "R57": "Gebo"
+    }
+   },
+   {
+    "n": 17,
+    "id": "T1",
+    "spravne": "R92",
+    "kody": {
+     "R26": "Tiwaz",
+     "R82": "Hagalaz",
+     "R92": "Thurisaz"
+    }
+   },
+   {
+    "n": 18,
+    "id": "I1",
+    "spravne": "R61",
+    "kody": {
+     "R83": "Isa",
+     "R97": "Jera",
+     "R61": "Ingwaz"
+    }
+   }
+  ],
+  [
+   {
+    "n": 1,
+    "id": "U1",
+    "spravne": "R69",
+    "kody": {
+     "R30": "Thurisaz",
+     "R95": "Nauthiz",
+     "R69": "Uruz"
+    }
+   },
+   {
+    "n": 2,
+    "id": "X1",
+    "spravne": "R38",
+    "kody": {
+     "R96": "Perth",
+     "R86": "Ansuz",
+     "R38": "Blank"
+    }
+   },
+   {
+    "n": 3,
+    "id": "W2",
+    "spravne": "R92",
+    "kody": {
+     "R65": "Jera",
+     "R15": "Othila",
+     "R92": "Wunjo"
+    }
+   },
+   {
+    "n": 4,
+    "id": "N1",
+    "spravne": "R95",
+    "kody": {
+     "R15": "Othila",
+     "R13": "Raidho",
+     "R95": "Nauthiz"
+    }
+   },
+   {
+    "n": 5,
+    "id": "I1",
+    "spravne": "R84",
+    "kody": {
+     "R21": "Isa",
+     "R65": "Jera",
+     "R84": "Ingwaz"
+    }
+   },
+   {
+    "n": 6,
+    "id": "X3",
+    "spravne": "R38",
+    "kody": {
+     "R96": "Perth",
+     "R40": "Mannaz",
+     "R38": "Blank"
+    }
+   },
+   {
+    "n": 7,
+    "id": "T2",
+    "spravne": "R30",
+    "kody": {
+     "R13": "Raidho",
+     "R30": "Thurisaz",
+     "R76": "Algiz"
+    }
+   },
+   {
+    "n": 8,
+    "id": "S1",
+    "spravne": "R90",
+    "kody": {
+     "R49": "Tiwaz",
+     "R13": "Raidho",
+     "R90": "Sowilo"
+    }
+   },
+   {
+    "n": 9,
+    "id": "B1",
+    "spravne": "R63",
+    "kody": {
+     "R45": "Eihwaz",
+     "R84": "Ingwaz",
+     "R63": "Berkana"
+    }
+   },
+   {
+    "n": 10,
+    "id": "H1",
+    "spravne": "R93",
+    "kody": {
+     "R95": "Nauthiz",
+     "R93": "Hagalaz",
+     "R30": "Thurisaz"
+    }
+   },
+   {
+    "n": 11,
+    "id": "E1",
+    "spravne": "R26",
+    "kody": {
+     "R71": "Gebo",
+     "R40": "Mannaz",
+     "R26": "Ehwaz"
+    }
+   },
+   {
+    "n": 12,
+    "id": "U2",
+    "spravne": "R69",
+    "kody": {
+     "R93": "Hagalaz",
+     "R16": "Laguz",
+     "R69": "Uruz"
+    }
+   },
+   {
+    "n": 13,
+    "id": "B2",
+    "spravne": "R63",
+    "kody": {
+     "R76": "Algiz",
+     "R84": "Ingwaz",
+     "R63": "Berkana"
+    }
+   },
+   {
+    "n": 14,
+    "id": "W1",
+    "spravne": "R92",
+    "kody": {
+     "R92": "Wunjo",
+     "R26": "Ehwaz",
+     "R71": "Gebo"
+    }
+   },
+   {
+    "n": 15,
+    "id": "S2",
+    "spravne": "R90",
+    "kody": {
+     "R90": "Sowilo",
+     "R63": "Berkana",
+     "R92": "Wunjo"
+    }
+   },
+   {
+    "n": 16,
+    "id": "D1",
+    "spravne": "R28",
+    "kody": {
+     "R75": "Kenaz",
+     "R28": "Dagaz",
+     "R90": "Sowilo"
+    }
+   },
+   {
+    "n": 17,
+    "id": "X2",
+    "spravne": "R38",
+    "kody": {
+     "R96": "Perth",
+     "R38": "Blank",
+     "R15": "Othila"
+    }
+   },
+   {
+    "n": 18,
+    "id": "T1",
+    "spravne": "R30",
+    "kody": {
+     "R93": "Hagalaz",
+     "R30": "Thurisaz",
+     "R49": "Tiwaz"
+    }
+   }
+  ]
+ ]
+}

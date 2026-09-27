@@ -704,9 +704,10 @@
      všechny výměny Asku i s otázkou; **jen pro adminy** model, který čtení napsal (GPT-6 sol / který Opus — `readings.usage.model`).
      Zkontrolovat, že `loadJournal` vybírá `seeking, intention, question, follow_up, usage` (dnes zřejmě ne všechny).
   2. **Obrazy od GPT pro 24 run + Blank** — **kola 1+2 hotová 2026-09-26** (+13 Fehu, Algiz, Othila, Raidho, Eihwaz, Laguz; +12 Kenaz, Gebo, Isa, Perth, Tiwaz, Mannaz; DECISIONS (10) (11),
-     `docs/eval/2026-09-26-obrazy/`); zbývá: runy s 6+ obrazy, Blank a druhý soubor. → `docs/inbox/2026-09-25-gpt-obrazy-24-run-plus-blank.txt`. Owner: *„je to inspirace,
-     musí být zkrácený či mírně upravený“* — zkrátit/upravit do `RUNE_IMAGES` (EN + IS nativně, ověřit nástroji), brána s popisy runy.
-     Blank: pět rodin obrazů (nepřítomnost · neznámé · potenciál · přerušení příběhu · zrcadlo) — dnes má 3 obrazy.
+     `docs/eval/2026-09-26-obrazy/`); **kolo 3 hotové 2026-09-27** (+16: runy s 6–7 obrazy + Blank přerušení příběhu a zrcadlo; DECISIONS 2026-09-27 (14)).
+     Zbývá: Blank rodina **nepřítomnost** (základy bez domu padly 0/3 → Othila — hledat nepřítomnost bez domova/ztráty) · Jera (13) a Ansuz (10)
+     vědomě vynechány · **druhý soubor** `docs/inbox/2026-09-25-gpt-komplexni-obrazovy-prostor.txt`. Zdroj kol 1–3: `docs/inbox/2026-09-25-gpt-obrazy-24-run-plus-blank.txt`.
+     Owner: *„je to inspirace, musí být zkrácený či mírně upravený“* — do `RUNE_IMAGES` (EN + IS nativně, ověřit nástroji), brána s popisy runy.
   3. ⏸ **Živly (Elements) v hlavičce runy NECHAT** — owner: *„o elementech rozhodneme, až pokud se objeví problém“*. Hlídat: kdyby
      se živel propisoval do obrazu (oheň, vzduch…) jako svět Hel („roots“), je to ten problém (DECISIONS 2026-09-25 (3)).
   4. Po prvním živém rozboru luny ověřit řádek v `gpt_reviews` (DECISIONS 2026-09-25 (4)).
