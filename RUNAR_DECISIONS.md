@@ -7327,3 +7327,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   --linked`, ověřeno (sloupec v `information_schema` 0×). Stav před: 4 profily, u 2 volba `false` — bez účinku, čočka od v4.60 neběží.
   Migrace `sql/2026-09-27_drop_life_rune_in_readings.sql`; grant odebrán z `sql/2026-07-16_user_profiles_column_grants.sql` (smoke ⑩).
 - Affected doc(s): `RUNAR_BACKLOG.md` (úklid po čočce — hotovo).
+
+## 2026-09-27 (2) — Životní runa: ciferný součet všech číslic data, nad 24 minus 24 (vyjde všech 24 run, i Fehu)
+
+- **Rozhodl:** KUKY 2026-09-27: *„zdroj nemám, udělej C“* — nad handoffem CODE-tree (547d2b2) a čtyřmi změřenými variantami v chatu.
+- **Proč:** `calcLifeRune` sčítal číslice SOUČTU d+m+y a redukoval ciferným součtem nad 24 → u skutečných let 2–24, nikdy 1 → **Fehu
+  nevyšla nikdy** (0,0 % dnů 1930–2012), rozložení 0,7 % (Perth) až 9,4 % (Gebo). Vzorec byl v kódu od 2026-05-10 bez doloženého zdroje.
+- **Co:** ciferný součet všech číslic data (15. 7. 1985 → 1+5+7+1+9+8+5 = 36), nad 24 se odečítá 24 (→ 12 = Jera); Blank není životní
+  runa. Změřeno: všech 24 run, 1,9–6,4 %. **Metoda nemá externí zdroj — je to rozhodnutí, ne tradice** (§23). Varianty, které
+  neprošly: číslice celého data + redukce ciferným součtem (22 run, Fehu 0) · (d+m+y) mod 24 (rovnoměrné, ale bez ciferného součtu).
+- **Stávající účty (spuštěno CODE-tune přes `supabase db query --linked`, po nasazení klienta):** 3 profily s datem narození. Dvěma
+  se runa změnila (4. 7. 1985 Gebo → Nauthiz, 12. 12. 1981 Gebo → Fehu) → uložené čtení životní runy (`life_rune_number/text/lang`)
+  vynulováno, datum narození ponecháno — čtení se vygeneruje znovu (zdarma). Záloha textů lokálně mimo repo. Třetí (9. 10. 1980)
+  měl uloženou Ansuz, ačkoli starý vzorec dával Nauthiz (strom a text se rozcházely) — nový vzorec dává Ansuz, takže se srovnal sám.
+  Historická čtení v `readings` beze změny.
+- **Kontrola:** `verify_liferune_states.js` (smoke) — z dat 1900–2030 vyjde všech 24 run, nikdy Blank; vzorový výpočet 15. 7. 1985 = Jera.
+  Se starým vzorcem obě tvrzení padají. Strom má tvar pro všech 24 (CODE-tree `tree_diag.js` A).
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka Fehu, poznámka Vegvísir).
