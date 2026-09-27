@@ -7435,3 +7435,18 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Změřeno (Opus 5, `docs/eval/2026-09-27-zivotni-runa/konec_pilot.*`):** 4/4 bez otázky (Isa, Fehu EN · Gebo, Þurs IS), např. *„Isa is the rune
   of what is held still, and of the seeing that stillness allows.“*
 - Affected doc(s): žádný.
+
+## 2026-09-27 (9) — Ask: odpověď do deníku atomicky (DB funkce `append_follow_up`); otázka Asku čištěná jako otázka čtení — deploy claude-proxy
+
+- **Rozhodl:** KUKY 2026-09-27 *„ano jeď 1 a 2“* (BACKLOG „Ask — nálezy z průzkumu 2026-09-23“, body 2 a 3).
+- **(1) Proč:** `persistJournal` dělal přečti `follow_up` → přidej → zapiš celé pole. Dva souběžné Asky na tomtéž čtení (Premium má od
+  2026-09-25 dva) si přepsaly výsledek — jedna odpověď, kterou uživatel viděl, z deníku zmizela.
+  **Co:** `public.append_follow_up(reading, user, entry)` (`sql/2026-09-27_append_follow_up.sql`, spuštěno CODE-tune) — jeden UPDATE přidá prvek
+  a v témže příkazu hlídá idempotenci podle `id`; vrací appended / duplicate / missing. Security definer → execute JEN `service_role`
+  (ověřeno: anon ✗, authenticated ✗). Test v DB v bloku s rollbackem: appended → duplicate při opakování → missing pro cizího uživatele;
+  v datech nic nezůstalo. claude-proxy volá `rpc('append_follow_up')`; nasazeno, běžící kód = repo (staženo a porovnáno před i po).
+  Zbývá známá hrana: dva souběžné Asky můžou oba projít kontrolou limitu → výjimečně jedna odpověď nad limit (cena jedna odpověď), žádná se neztratí.
+- **(2) Proč:** otázka Asku šla do promptu syrově v uvozovkách — rovná uvozovka ukončila úsek, zalomení podvrhlo nový řádek instrukce.
+  **Co:** `buildAskPrompt` → `S.q(_questionSafe(question))` (táž funkce jako u úvodní otázky čtení). `verify_question_injection.js` (smoke)
+  má novou cestu `ask_q` — mutace (bez čištění) → FAIL. Golden beze změny (normální otázka projde nedotčená).
+- Affected doc(s): `RUNAR_BACKLOG.md`.

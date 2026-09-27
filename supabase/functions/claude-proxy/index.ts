@@ -394,23 +394,18 @@ async function persistJournal(
     if (journal.kind === "ask") {
       const rid = journal.reading_id;
       if (rid) {
-        const { data: cur, error: selErr } = await sb().from("readings")
-          .select("follow_up").eq("id", rid).eq("user_id", userId).maybeSingle();
-        if (!selErr && cur) {
-          const arr = Array.isArray(cur.follow_up) ? cur.follow_up : [];
-          const eid = journal.ask_entry_id ?? null;
-          if (eid && arr.some((e: any) => e && e.id === eid)) {
-            askSaved = true; // already appended -> idempotent success
-          } else {
-            // usage (2026-09-23): cena Asku z dat, ne odhadem — větev ask ho do té doby zahazovala.
-            arr.push({ id: eid, q: journal.question ?? "", a: journal.answer ?? composeReading(text),
-                       ...(usage ? { usage } : {}) });
-            const { error: fuErr } = await sb().from("readings")
-              .update({ follow_up: arr }).eq("id", rid).eq("user_id", userId);
-            if (fuErr) console.error("follow_up update failed:", fuErr.message);
-            else askSaved = true;
-          }
-        }
+        // 2026-09-27 (KUKY „ano jeď 1 a 2“): ATOMICKY v databázi — dřív přečti pole → přidej → zapiš celé, takže dva souběžné
+        // Asky (Premium má od 2026-09-25 dva) si přepsaly výsledek a jedna odpověď z deníku zmizela. append_follow_up přidá
+        // prvek jedním UPDATE a v témže příkazu hlídá idempotenci podle id (retry / resave nepřidá duplikát).
+        // sql/2026-09-27_append_follow_up.sql; volat smí jen service_role.
+        // usage (2026-09-23): cena Asku z dat, ne odhadem — větev ask ho do té doby zahazovala.
+        const entry = { id: journal.ask_entry_id ?? null, q: journal.question ?? "", a: journal.answer ?? composeReading(text),
+                        ...(usage ? { usage } : {}) };
+        const { data: st, error: fuErr } = await sb().rpc("append_follow_up",
+          { p_reading_id: rid, p_user_id: userId, p_entry: entry });
+        if (fuErr) console.error("follow_up append failed:", fuErr.message);
+        else if (st === "appended" || st === "duplicate") askSaved = true;   // duplicate = už uloženo → idempotentní úspěch
+        else console.error("follow_up append: čtení nenalezeno", rid);
       }
     } else {
       const isSpread = journal.kind === "spread";
@@ -598,8 +593,9 @@ serve(async (req: Request) => {
     // dostal 403. Teď: tarif bez Asku (askLimit 0) → 403 jako dřív (skrytý box není brána); pravý follow-up (kind 'ask'
     // na vlastním čtení) je zdarma, dokud follow_up nemá askLimit položek; nad limit se ODMÍTNE a NIC se nestrhne.
     // Ask bez ověřitelného čtení (neuložené čtení pro někoho) dál počítá jako čtení — „any doubt -> it counts“.
-    // (isAdmin výš dává userTier 'premium' → admin má 2.) ⚠️ Dva souběžné Asky můžou oba projít jako zdarma — zápis
-    // follow_up není atomický (BACKLOG „Ask — nálezy“ bod 2); cena omylu je jedna odpověď navíc.
+    // (isAdmin výš dává userTier 'premium' → admin má 2.) ⚠️ Dva souběžné Asky můžou oba projít kontrolou limitu (obě vidí
+    // starý počet); cena omylu je jedna odpověď navíc. Zápis do deníku je od 2026-09-27 atomický (append_follow_up) — žádná
+    // odpověď se už neztratí, jen může výjimečně přibýt jedna nad limit.
     const askLimit = ASKS_PER_READING[userTier] ?? 0;
     if (mode === "ask" && askLimit < 1) {
       return json({ error: "unavailable", message: "The runes are quiet. Try again shortly." }, 403);

@@ -753,8 +753,8 @@
   - **Krok 2 = chatování:** Rúnar dostane předchozí výměnu (otázka + odpověď), aby se dalo doptat i na odpověď z Asku. Vyžaduje nový blok v `buildAskPrompt` (EN + IS nativně), přepočet stropu 12 000 zn. a měření opakování. Podklad z popisů run pro tenhle krok: `docs/archive/2026-09-24-ask-podoby-run.md`.
 - [ ] **Ask — nálezy z průzkumu 2026-09-23** (workflow 5 čtenářů + skeptici, CODE-tune), opravit s druhým Askem nebo dřív:
   1. ✅ *(opraveno 2026-09-24 v kroku 1 — pole je během dotazu zakázané)* **Dvojí odeslání:** Enter v poli Asku volá `askRunar()`, během dotazu je zakázané jen tlačítko, pole ne → druhý Enter pošle druhý souběžný Ask (a oba projdou jako „první“ zdarma).
-  2. **Zápis `follow_up` není atomický** (`persistJournal`: přečti pole → přidej → zapiš celé) — dva souběžné zápisy ztratí jednu odpověď.
-  3. **Otázka v Asku se nečistí** — `_questionSafe` (zalomení, uvozovky) se používá jen na původní otázku čtení, ne na otázku v Asku; `verify_question_injection.js` pokrývá jen tu první.
+  2. ✅ *(opraveno 2026-09-27 — `append_follow_up` v DB, DECISIONS 2026-09-27 (9))* ~~**Zápis `follow_up` není atomický**~~ (`persistJournal`: přečti pole → přidej → zapiš celé) — dva souběžné zápisy ztratí jednu odpověď.
+  3. ✅ *(opraveno 2026-09-27 — `_questionSafe` i v Asku, test ask_q)* ~~**Otázka v Asku se nečistí**~~ — `_questionSafe` (zalomení, uvozovky) se používá jen na původní otázku čtení, ne na otázku v Asku; `verify_question_injection.js` pokrývá jen tu první.
   4. **`gen_batch.js` volá `buildAskPrompt` se 7 argumenty** (bez spreadu), produkce s 8 → evaly Asku u výkladů měří jiný prompt.
   5. Hlavička `claude-proxy/index.ts` pořád popisuje záložní řetěz končící Sonnet 5, přitom MODELS = opus-4-8, opus-4-7.
 - [ ] Export dat subjektu (mazání už kaskáduje přes delete-account).

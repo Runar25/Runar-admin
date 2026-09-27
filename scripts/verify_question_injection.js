@@ -46,6 +46,8 @@ const CESTY = {
   yggdrasil: (q, L) => fn('buildYggdrasilPrompt')({ name: 'Kuky', question: q }, RUNES.slice(0, 9), L, null),
   ask:       (q, L) => fn('buildAskPrompt')('A reading about the road.', 'What does this mean?', [RUNES[0]], L, null,
                                             null, { question: q }, null),
+  // 2026-09-27: samotná otázka ASKU (ne úvodní otázka čtení) — do té doby šla do promptu syrově a test ji neviděl.
+  ask_q:     (q, L) => fn('buildAskPrompt')('A reading about the road.', q, [RUNES[0]], L, null, null, {}, null),
 };
 
 for (const L of ['en', 'is']) {
@@ -73,4 +75,4 @@ for (const L of ['en', 'is']) {
 }
 
 if (fail) { console.log('\nFAIL — uživatelská otázka může v ' + fail + ' případech vystoupit z místa v promptu.'); process.exit(1); }
-console.log('\nOK — otázka nemůže strukturálně přepsat instrukci (6 cest × 2 řeči, uvozovka i zalomení).');
+console.log('\nOK — otázka nemůže strukturálně přepsat instrukci (7 cest × 2 řeči vč. otázky Asku, uvozovka i zalomení).');

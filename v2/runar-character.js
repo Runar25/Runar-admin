@@ -2034,7 +2034,9 @@ function buildAskPrompt(reading, question, runes, lang, corrections, life, cast,
   }
   return [
     S.intro(reading, runyText),
-    S.q(question),
+    // 2026-09-27: otázka Asku je DATA jako úvodní otázka čtení — _questionSafe (zalomení, rovná uvozovka, délka). Do té doby šla
+    // syrově: uvozovka ukončila úsek v „…question about it: \"<q>\"“ a zalomení podvrhlo nový řádek instrukce (verify_question_injection).
+    S.q(_questionSafe(question)),
     S.rules,
     // Jediné místo, kde se dvergar dostanou do promptu — a jen když se na ně otázka ptá.
     // Stojí ZA `S.rules`, protože ta říká „nesouvisející otázky neodpovídej"; tohle je
