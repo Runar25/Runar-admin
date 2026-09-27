@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
- "zapsano": "2026-09-26",
- "prompt_version": "v4.65-navrat-k-otazce",
+ "zapsano": "2026-09-27",
+ "prompt_version": "v4.68-zivotni-runa-vysvetleni",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -538,10 +538,10 @@
    "zacatek": "ICELANDIC MONTH: Ýlir — winter in full darkness, aurora, the sky speak"
   },
   {
-   "hash": "2df76b58fd34",
+   "hash": "476011d7812d",
    "lang": "en",
    "zdroj": "liferune",
-   "zacatek": "CORE ENERGY: messages, wisdom, divine guidance, voice, breath"
+   "zacatek": "MEANINGS: messages, wisdom, divine guidance, voice, breath"
   },
   {
    "hash": "e0742d481565",
@@ -550,34 +550,34 @@
    "zacatek": "Write in two sections — no headers or labels in the output:"
   },
   {
-   "hash": "b08bf749eda9",
+   "hash": "e68de61c1670",
    "lang": "en",
    "zdroj": "liferune",
-   "zacatek": "SECTION 1 — THE DATE (3 sentences):"
+   "zacatek": "SECTION 1 — THE PLACE IN THE YEAR (2–3 sentences):"
   },
   {
-   "hash": "499c471094b4",
+   "hash": "6e66c59fd489",
    "lang": "en",
    "zdroj": "liferune",
-   "zacatek": "What does Ýlir carry in the Icelandic year? The quality of that time —"
+   "zacatek": "Ansuz holds the half-month from 13 August – 28 August in the runic yea"
   },
   {
-   "hash": "cbb08d8f1a5d",
+   "hash": "925828f1c9b7",
    "lang": "en",
    "zdroj": "liferune",
-   "zacatek": "SECTION 2 — THE RUNE (5–6 sentences):"
+   "zacatek": "SECTION 2 — THE RUNE, EXPLAINED (8–10 sentences):"
   },
   {
-   "hash": "641d5623b2e7",
+   "hash": "f12238fcaac6",
    "lang": "en",
    "zdroj": "liferune",
-   "zacatek": "Ansuz as the soil of Annas life. The shape of the rune and what it car"
+   "zacatek": "Explain Ansuz fully and in plain words, as you would to someone who as"
   },
   {
-   "hash": "ecea1c5ce8d0",
+   "hash": "f128f529cb98",
    "lang": "en",
    "zdroj": "liferune",
-   "zacatek": "Rules: Runar voice. Poetic, direct. Do not explain — reveal."
+   "zacatek": "Rules: Rúnar's voice — calm and clear. Explain the meaning in words, n"
   },
   {
    "hash": "3ce7988db686",
@@ -1300,10 +1300,10 @@
    "zacatek": "ÍSLENSKUR MÁNUÐUR: Ýlir — svartasta skammdegið, norðurljós, himinninn "
   },
   {
-   "hash": "dab4c2e06e28",
+   "hash": "e13c12951202",
    "lang": "is",
    "zdroj": "liferune",
-   "zacatek": "KJARNAORÐ: skilaboð, viska, guðleg leiðsögn, rödd, andardráttur"
+   "zacatek": "MERKINGAR: skilaboð, viska, guðleg leiðsögn, rödd, andardráttur"
   },
   {
    "hash": "6af9c54a5145",
@@ -1312,34 +1312,34 @@
    "zacatek": "Skrifaðu í tveimur hlutum — engar fyrirsagnir í úttakinu:"
   },
   {
-   "hash": "af2c609de78a",
+   "hash": "972435b2058d",
    "lang": "is",
    "zdroj": "liferune",
-   "zacatek": "HLUTI 1 — DAGSETNINGIN (3 setningar):"
+   "zacatek": "HLUTI 1 — STAÐURINN Í ÁRINU (2–3 setningar):"
   },
   {
-   "hash": "482f4782ab65",
+   "hash": "8e097613a3b4",
    "lang": "is",
    "zdroj": "liferune",
-   "zacatek": "Tíminn er ýlir. Hvað ber sá tími í íslensku ári? Hvaða gæði hafði hann"
+   "zacatek": "Lífsrúnin er Ansuz. Tímabil hennar í rúnaárinu er 13. ágúst – 28. ágús"
   },
   {
-   "hash": "f1e6ec09ff7d",
+   "hash": "a71e9d29f3c1",
    "lang": "is",
    "zdroj": "liferune",
-   "zacatek": "HLUTI 2 — RÚNIN (5–6 setningar):"
+   "zacatek": "HLUTI 2 — RÚNIN ÚTSKÝRÐ (8–10 setningar):"
   },
   {
-   "hash": "2b25cd5b9e02",
+   "hash": "4bf4578a67de",
    "lang": "is",
    "zdroj": "liferune",
-   "zacatek": "Ansuz sem jarðvegur lífs Anna. Lögun rúnarinnar og hvað hún ber í sér."
+   "zacatek": "Útskýrðu rúnina til fulls og á skýru máli, eins og fyrir þann sem spyr"
   },
   {
-   "hash": "5dbce23e4744",
+   "hash": "cf8fb8a2ee06",
    "lang": "is",
    "zdroj": "liferune",
-   "zacatek": "Reglur: Rúnars rödd. Ljóðrænt, beint. Útskýrðu ekki — opinberaðu."
+   "zacatek": "Reglur: rödd Rúnars — róleg og skýr. Útskýrðu merkinguna með orðum, ek"
   },
   {
    "hash": "ed797875a8ca",

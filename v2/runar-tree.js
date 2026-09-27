@@ -319,6 +319,9 @@ function updateTreeTab() {
   // a prosakovalo i do stavu bez zivotni runy (pod formular na datum narozeni).
   var states = ['tree-no-dob','tree-rs-teaser','tree-reveal-cta','tree-loading','tree-reading-exists','tree-founding-cta'];
   states.forEach(function(id){ var el=document.getElementById(id); if(el) el.style.display='none'; });
+  // 2026-09-27: odkud runa je (půlměsíc narození, moderní rozdělení roku) — pod runou ve všech stavech, kde se runa ukazuje;
+  // statický text, ale plní se tady, protože prvky existují jen v téhle záložce (DECISIONS 2026-09-27 (5)).
+  document.querySelectorAll('.tree-lr-origin').forEach(function (el) { el.textContent = t('tree_lr_origin'); });
   var _gsec = document.getElementById('tree-growth-section');
   if (_gsec) _gsec.style.display = 'block';
   // PRED vetvenim: `updateTreeTab` ma nekolik `return`u a sekce se ma chovat spravne

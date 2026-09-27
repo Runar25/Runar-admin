@@ -250,6 +250,22 @@ const LIFE_RUNE_STARTS = [
   [10, 28], [11, 13], [11, 28], [12, 13], [12, 28], [1, 13], [1, 28], [2, 13],  // Hagalaz Nauthiz Isa Jera Eihwaz Perth Algiz Sowilo
   [2, 27], [3, 14], [3, 30], [4, 14], [4, 29], [5, 14], [5, 29], [6, 14],       // Tiwaz Berkana Ehwaz Mannaz Laguz Ingwaz Othila Dagaz
 ];
+// Názvy měsíců pro lifeRuneSpan (EN + IS, islandsky malým písmenem, jak je jazyk píše).
+const LIFE_RUNE_MONTHS = {
+  en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+  is: ['janúar', 'febrúar', 'mars', 'apríl', 'maí', 'júní', 'júlí', 'ágúst', 'september', 'október', 'nóvember', 'desember'],
+};
+// Půlměsíc runy jako text: „28 November – 12 December“ / „28. nóvember – 12. desember“ (konec = den před začátkem další runy).
+// Pro čtení životní runy (RP_LIFE p1, 2026-09-27). Blank / neznámá runa → ''.
+function lifeRuneSpan(rune, lang) {
+  const i = RUNES.indexOf(rune);
+  if (i < 0 || i > 23) return '';
+  const a = LIFE_RUNE_STARTS[i], b = LIFE_RUNE_STARTS[(i + 1) % 24];
+  const konec = new Date(Date.UTC(2025, b[0] - 1, b[1] - 1));   // běžný rok; 29. 2. je uvnitř Tiwaz, konce se netýká
+  const M = LIFE_RUNE_MONTHS[lang === 'is' ? 'is' : 'en'];
+  const f = function (d, m) { return lang === 'is' ? d + '. ' + M[m - 1] : d + ' ' + M[m - 1]; };
+  return f(a[1], a[0]) + ' – ' + f(konec.getUTCDate(), konec.getUTCMonth() + 1);
+}
 function calcLifeRune(d, m, y) {
   d = Number(d); m = Number(m);
   // Neplatné datum = žádná runa (null), ne náhodná runa. Nehází: runar-yggdrasil.html sem posílá ručně psané číslo bez kontroly

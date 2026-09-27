@@ -234,6 +234,9 @@ const UI_TEXT = {
     tree_signin_note:   'Sign in to discover your life rune.',
     tree_visitor_dob:   'Your life rune is written into the day you were born. Enter it, and see which one you carry.',
     tree_visitor_read:  'Sign in to read what this rune carries.',
+    // 2026-09-27 (KUKY „ano zapoj“; DECISIONS 2026-09-27 (5)): odkud životní runa je. Autora nejmenuje (owner), ale přiznává, že
+    // rozdělení roku je moderní — ne dochované ze severu (HANDOFF62 Cowork, upraveno CODE-tune: „halves“ → „half-months“).
+    tree_lr_origin:     'The runic year turns through twenty-four half-months, one rune to each. Your life rune is the one the sun stood in on the day you came. The runes are old; this way of dividing the year is not — it is a modern reckoning, not something carried down from the old north.',
     name_lore_lbl:      'YOUR NORSE NAME',
     name_lore_intro_add: 'Your life rune comes from the day you were born. A name is a separate thread — give Rúnar your Norse name, your own or one you choose, and he will read what it carries.',
     name_lore_add_btn:  'Give Rúnar your Norse name',
@@ -627,6 +630,8 @@ const UI_TEXT = {
     tree_signin_note:   'Skr\u00e1\u00f0u þig til a\u00f0 uppgötva l\u00edfsr\u00fanuna þ\u00edna.',
     tree_visitor_dob:   'Lífsrúnin þín er skrifuð í daginn sem þú fæddist. Sláðu inn fæðingardaginn og sjáðu hvaða rún þú berð.',
     tree_visitor_read:  'Skráðu þig til að lesa hvað þessi rún ber.',
+    // IS vymyšleno islandsky, ne přeloženo; is-grammar-qa čisté, korpus: komst í heiminn 158, hálfa mánuði 157, sólin var í 19, úr fornöld 223.
+    tree_lr_origin:     'Árið snýst í gegnum tuttugu og fjóra hálfa mánuði, ein rún fyrir hvern. Lífsrúnin þín er sú sem sólin var í daginn sem þú komst í heiminn. Rúnirnar eru fornar, en þessi skipting ársins er það ekki. Hún er ný, ekki arfur úr fornöld.',
     name_lore_lbl:      'NORRÆNA NAFNIÐ ÞITT',
     name_lore_intro_add: 'Lífsrúnin þín kemur frá deginum sem þú fæddist. Nafnið er annar þráður — gefðu Rúnari norræna nafnið þitt, þitt eigið eða nafn sem þú velur þér, og hann les hvað það ber.',
     name_lore_add_btn:  'Gefðu Rúnari norræna nafnið þitt',

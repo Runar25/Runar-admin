@@ -1303,40 +1303,46 @@ var RP_LIFE = {
   is: {
     header:'Þú ert Rúnar, rúnavörður Agndofa.',
     PERSON:'MANNESKJAN', LIFE:'LÍFSRÚNA', BORN:'FÆDD/UR', MONTH:'ÍSLENSKUR MÁNUÐUR',
-    ELEM:'FRUMEFNI', CORE:'KJARNAORÐ',
+    ELEM:'FRUMEFNI', CORE:'MERKINGAR',
     rname:function(r){ return _bezGlosy(r.is_n); },   // 2026-09-24: bez glosy „(Eignir)“ — viz rnPrompt() v runar-utils.js
     rcore:function(r){ return r.k_is; },
     birth:function(d,m,y){ return d + '. ' + m + '. ' + y; },
     intro:function(name){ return 'Þetta er lestur lífsrúnar ' + name + ' — ekki lestur dagsins, heldur lestur þess sem ' + name + ' hefur borið í sér frá fæðingu.'; },
     sections:'Skrifaðu í tveimur hlutum — engar fyrirsagnir í úttakinu:',
-    p1Label:'HLUTI 1 — DAGSETNINGIN (3 setningar):',
+    p1Label:'HLUTI 1 — STAÐURINN Í ÁRINU (2–3 setningar):',
     // 2026-09-12: bylo „Hvað ber ' + monthName + ' í íslensku ári?" — jméno měsíce jako podmět, takže
     // u množného Heyannir / Aukanætur nesedělo sloveso („Hvað ber Heyannir"). Teď stojí v přísudku,
     // kde se nic neshoduje. Malým písmenem, jak islandština měsíce píše (Vísindavefur, Almanak HÍ).
-    p1:function(monthName, name){ return 'Tíminn er ' + String(monthName).toLowerCase() + '. Hvað ber sá tími í íslensku ári? Hvaða gæði hafði hann — hvað var að gerast í landinu þegar ' + name + ' kom til sögunnar? Ekki stjörnuspeki. Andrúmsloft.'; },
-    p2Label:'HLUTI 2 — RÚNIN (5–6 setningar):',
-    p2:function(runeName, name){ return runeName + ' sem jarðvegur lífs ' + name + '. Lögun rúnarinnar og hvað hún ber í sér. Gjöfin — hvað kemur náttúrulega til manneskju sem fæðist undir þessari rúnu. Skugginn — hvar sama orkan verður erfið. Eitt samfellt flæði — ekki listi. Flettu inn nafninu ' + name + ' einu sinni eða tvisvar. Endaðu með einni mjúkri, opinni spurningu.'; },
+    // 2026-09-27: životní runa = půlměsíc narození (DECISIONS 2026-09-27 (5)) → část 1 stojí na tom období, islandský měsíc je kontext.
+    p1:function(runeName, span, monthName, name){ return 'Lífsrúnin er ' + runeName + '. Tímabil hennar í rúnaárinu er ' + span + ' — sá hluti ársins sem ' + name + ' fæddist á. Hvað er þessi tími í íslensku ári (' + String(monthName).toLowerCase() + ') — hvað eru landið og birtan að gera — og hvernig ber hann nú þegar eitthvað af rúninni í sér? Andrúmsloft, ekki stjörnuspeki.'; },
+    p2Label:'HLUTI 2 — RÚNIN ÚTSKÝRÐ (8–10 setningar):',
+    // 2026-09-27 (KUKY: vysvětlit v každém významu, jako Ask „Explain … without the image“): dřív „jarðvegur lífs“, „gjöfin — hvað
+    // kemur náttúrulega til manneskju sem fæðist undir þessari rúnu“ = nálepka povahy (tvrzení o člověku) a jen 5–6 vět.
+    p2:function(runeName, core, name, rune){ return 'Útskýrðu rúnina til fulls og á skýru máli, eins og fyrir þann sem spyr hvað hún merkir án myndar. Útskýrðu hvað nafn rúnarinnar og lögun hennar merkja og hvað hver merking hennar felur í sér, eins og þær eru taldar upp hér að ofan. Segðu hvernig merkingarnar eiga saman sem ein rún. Segðu síðan frá hinni hliðinni: hvað sama rún verður þegar hún gengur of langt eða þegar hana vantar, og hvað hún lofar ekki. Textinn fjallar um rúnina, ekki um skapgerð manneskjunnar, og segir henni aldrei hvernig hún er. Nafnið ' + name + ' kemur einu sinni fyrir í textanum. Endaðu á einni hljóðlátri, opinni spurningu.' + _runeQuestion(rune, 'is'); },
     nameInstr:function(name){ return 'Bættu við hluta um nafnið ' + name + ' — merkingu þess á norrænu, goðsagnalega mynd eða persónu sem tengist nafninu.'; },
-    rules:['Reglur: Rúnars rödd. Ljóðrænt, beint. Útskýrðu ekki — opinberaðu.',
+    // 2026-09-27: dřív „Útskýrðu ekki — opinberaðu“ (nevysvětluj) — přesný opak toho, co owner chce.
+    rules:['Reglur: rödd Rúnars — róleg og skýr. Útskýrðu merkinguna með orðum, ekki með myndum. Ein stutt mynd má fylgja ef hún skýrir merkingu, en hún kemur aldrei í staðinn fyrir útskýringuna.',
            'Ekki nota "ferðalag" sem myndlíkingu. Ekki "faðmaðu" eða "styrktu". Engar upphrópunarmerki.'],
     langInstr:'Svaraðu einungis á íslensku.',
   },
   en: {
     header:'You are Runar, rune keeper of Agndofa.',
     PERSON:'PERSON', LIFE:'LIFE RUNE', BORN:'BORN', MONTH:'ICELANDIC MONTH',
-    ELEM:'ELEMENT', CORE:'CORE ENERGY',
+    ELEM:'ELEMENT', CORE:'MEANINGS',
     rname:function(r){ return r.n; },
     rcore:function(r){ return r.k; },
     birth:function(d,m,y){ return d + ' ' + m + ' ' + y; },
     intro:function(name){ return 'This is the life rune reading of ' + name + ' — not a reading of today, but of what ' + name + ' has carried since birth.'; },
     sections:'Write in two sections — no headers or labels in the output:',
-    p1Label:'SECTION 1 — THE DATE (3 sentences):',
-    p1:function(monthName, name){ return 'What does ' + monthName + ' carry in the Icelandic year? The quality of that time — what the land was doing when ' + name + ' arrived. Not astrology. Atmosphere.'; },
-    p2Label:'SECTION 2 — THE RUNE (5–6 sentences):',
-    p2:function(runeName, name){ return runeName + ' as the soil of ' + name + 's life. The shape of the rune and what it carries. The gift — what comes naturally to someone born under this rune. The shadow — where the same energy becomes difficult. One continuous flow — not a list. Weave ' + name + 's name in once or twice. End with one quiet, open question.'; },
+    p1Label:'SECTION 1 — THE PLACE IN THE YEAR (2–3 sentences):',
+    p1:function(runeName, span, monthName, name){ return runeName + ' holds the half-month from ' + span + ' in the runic year — the stretch of the year ' + name + ' was born in. What that time is in the Icelandic year (' + monthName + ') — what the land and the light are doing — and how it already carries something of ' + runeName + '. Atmosphere, not astrology.'; },
+    p2Label:'SECTION 2 — THE RUNE, EXPLAINED (8–10 sentences):',
+    // 2026-09-27: viz IS výš. Dřív „as the soil of ' + name + 's life“ (bez apostrofu: „Kukys life“) a „the gift — what comes
+    // naturally to someone born under this rune“ = nálepka povahy.
+    p2:function(runeName, core, name, rune){ return 'Explain ' + runeName + ' fully and in plain words, as you would to someone who asked what it means without images. Say what its name and its shape mean, and what each of its meanings listed above holds. Say how the meanings belong together as one rune. Then its other side: what the same rune becomes when it goes too far or when it is missing, and what it does not promise. The text is about the rune, not about the person\'s character, and never tells them what they are like. The name ' + name + ' appears once. End with one quiet, open question.' + _runeQuestion(rune, 'en'); },
     nameInstr:function(name){ return 'Add a section about the name ' + name + ' — its meaning in Old Norse or Norse mythology, a mythological figure or quality that the name carries.'; },
     // 3rd rule is EN-only on purpose: an Icelandic month name needs glossing for an EN reader.
-    rules:['Rules: Runar voice. Poetic, direct. Do not explain — reveal.',
+    rules:['Rules: Rúnar\'s voice — calm and clear. Explain the meaning in words, not in images. One short image may come with it where it makes a sense clearer, but never in place of the explanation.',
            'Do not use journey as a metaphor. Do not use embrace or empower. No exclamation marks.',
            'If you name the Icelandic month, gloss it in English at first mention — e.g. "Sólmánuður, the month of the midnight sun". Never open the reading with an unglossed Icelandic word.'],
     langInstr:'Respond in English.',
@@ -1362,15 +1368,15 @@ function buildLifeRuneBase(name, rune, day, month, year, lang, isPremium) {
     S.BORN + ': ' + S.birth(day, month, year),
     S.MONTH + ': ' + monthDesc,
     S.ELEM + ': ' + (Array.isArray(rune.elements) ? rune.elements.join(' / ') : rune.elements),
-    S.CORE + ': ' + S.rcore(rune),
+    S.CORE + ': ' + S.rcore(rune),   // významy runy — část 2 se na ně odkazuje („listed above“ / „hér að ofan“), 2026-09-27
     '',
     S.sections,
     '',
     S.p1Label,
-    S.p1(monthDesc.split(' — ')[0], name),
+    S.p1(S.rname(rune), lifeRuneSpan(rune, L), monthDesc.split(' — ')[0], name),
     '',
     S.p2Label,
-    S.p2(S.rname(rune), name),
+    S.p2(S.rname(rune), S.rcore(rune), name, rune),
     '',
     (nameInstr ? nameInstr + '\n' : ''),
   ].concat(S.rules).concat([S.langInstr]);
@@ -1391,7 +1397,7 @@ function buildLifeRunePrompt(name, rune, day, month, year, lang, isPremium, corr
     // Do 2026-08-17 to byla JEDINA IS cesta bez nej (zmereno na slozenem promptu vsech sedmi),
     // takze si model rod ctenare volil sam. EN vraci '' a filter(Boolean) to zahodi.
     _addressContext(lang),
-    _describeRule(lang),
+    // _describeRule (esenční řádek „after the picture…“) ODEBRÁN 2026-09-27 — patří čtení s obrazem; tady rozporoval „vysvětli“.
     _noColdRead(lang),
     getCorrPrompt(lang, corrections),
   ].filter(Boolean).join('\n\n');

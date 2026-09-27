@@ -1,0 +1,74 @@
+[
+ {
+  "name": "Kuky",
+  "d": 12,
+  "m": 12,
+  "y": 1981,
+  "L": "en",
+  "rune": "Isa",
+  "text": "Ýlir, the second month of the Icelandic winter, holds the dark at its deepest — the sun barely lifts above the horizon, and the aurora moves over the snow when the sky is clear. Water that ran freely in autumn has gone hard, and the land does nothing visible for weeks at a time. This is the stretch Isa keeps, from the end of November into the middle of December, and it is the plainest example of what the rune means: things are not lost, only held.\n\nIsa is the old word for ice, and its shape is a single vertical line — one stroke, no branches, no movement. That line is the rune's whole argument: something has come to a stop, and the stop is not damage. Ice is water that has not gone anywhere; the substance is unchanged, only the motion is suspended. Stillness here means the absence of movement rather than the absence of life, and waiting means time passing without anything being decided. A pause is a gap in action, nothing more — it is not failure and it is not rest earned. The clarity that comes through cold is the practical kind: still water shows what moves beneath it, and a stopped situation can be looked at in a way a moving one cannot. These meanings hold together because they are one condition described from different sides — the halt, the time inside the halt, and what becomes visible because of it. Taken too far, Isa is a stop that outlasts its reason, a delay kept past the point where waiting still serves anything; where it is missing, there is motion without pause, and decisions made before there was time to see them. Isa does not promise that the thaw comes soon, or that the clarity will be welcome, or that what waited will be unchanged when it moves again, Kuky. What in your life has gone still — and what might become visible while it stays that way?",
+  "usage": {
+   "input_tokens": 815,
+   "cache_creation_input_tokens": 801,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 801,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 546,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "name": "Anna",
+  "d": 4,
+  "m": 7,
+  "y": 1985,
+  "L": "en",
+  "rune": "Fehu",
+  "text": "At the turn from June into July, Sólmánuður, the month of the sun, is at its full height — the light does not leave, and the nights are only a thinner kind of day. The grass has come up, the animals are out on the summer pasture, and what was only a hope in spring has become something that can be counted. That is Fehu's season: the year's wealth standing in a field, alive and able to walk away.\n\nFehu means cattle, and in the old world cattle were wealth itself — what you owned, what fed you, what you could trade or give. Its shape is two short arms angled upward from a single stave, read by many as the horns of an ox, though the lines also suggest something held out rather than held close. Wealth here is not only coin; it is whatever you have that has worth and use. Material prosperity is the plain sense of it — food, shelter, tools, the things that keep a household standing. Mobile energy is the part people forget: cattle are property that moves, that must be driven, fed and watched, and can be lost in a night. So the rune joins two things that seem opposed — having, and the fact that what is had will not stay still. That is why Fehu is called the first rune and also the most restless one; it names the kind of wealth that only stays wealth while it circulates, as a herd stays a herd only by grazing new ground. Turned too far, it becomes hoarding, or the greed that measures everything and values nothing, or the opposite emptiness where there is nothing in hand to work with. Fehu does not promise riches to anyone, Anna, and it does not say that what you gain will keep. What do you hold now that would be worth more in motion than at rest?",
+  "usage": {
+   "input_tokens": 815,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 801,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 513,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ },
+ {
+  "name": "Sigrún",
+  "d": 9,
+  "m": 10,
+  "y": 1980,
+  "L": "is",
+  "rune": "Gebo",
+  "text": "Í lok september og fram í október er haustmánuður genginn í garð. Landið er þá hvorki grænt né hvítt, heldur einhvers staðar á milli — lyngið rautt, grasið fölnað, og dagurinn styttist um nokkrar mínútur hvern sólarhring. Þetta er tími uppskeru og tími þess að ganga frá; það sem landið gaf um sumarið er tekið inn, og um leið er byrjað að skila birtunni aftur. Þar liggur Gebo þegar í árinu sjálfu — tvær hreyfingar í senn, hvorug án hinnar.\n\nGebo þýðir einfaldlega gjöf. Lögun rúnarinnar er kross á ská, tvö strik sem skerast — hvorugt strikið ber hitt uppi, og punkturinn þar sem þau mætast tilheyrir báðum. Merkingin gjöf stendur fyrir það sem gengur á milli án þess að hafa verið keypt. Félagsskapur er sú merking sem snýr að sambandinu sjálfu, því að gjöf verður aðeins til þar sem tveir aðilar eru, gefandi og þiggjandi. Að gefa og þiggja er hreyfingin í báðar áttir, og rúnin gerir engan greinarmun á því hvor er æðri; að þiggja er jafn stór hlutur og að gefa. Jafnvægi er svo það sem verður til þegar hreyfingin gengur í báðar áttir yfir tíma — ekki nákvæm skiptajöfnuður, heldur það að hvorugur endinn tæmist. Þessar fjórar merkingar eru ein hugsun séð frá fjórum hliðum: það sem fer á milli fólks, skilyrðið fyrir því, hreyfingin sjálf og ástandið sem hún skilur eftir. Hin hliðin er sú að gjöf getur orðið skuld; þegar gefið er of mikið eða með væntingu bindur gjöfin þann sem þiggur, og þegar aldrei er þegið verður gefandinn einn þótt hann standi í miðjum hópi — og þar sem rúnina vantar með öllu verður hvorki samband né skipti, aðeins tveir aðskildir aðilar. Gebo lofar ekki að það sem gefið er komi aftur, og ekki heldur að það sé metið, Sigrún; hún nefnir aðeins lögun skiptanna, ekki niðurstöðu þeirra. Spurning rúnarinnar er tvöföld, eins og strikin sjálf.\n\nHvað ertu tilbúið að láta frá þér án þess að vita hvort nokkuð kemur á móti — og hvað gætirðu tekið við án þess að finna þörf fyrir að jafna það samstundis?",
+  "usage": {
+   "input_tokens": 1328,
+   "cache_creation_input_tokens": 1787,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 1787,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 968,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global"
+  }
+ }
+]

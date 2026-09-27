@@ -7403,3 +7403,23 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - ⚠️ Mění V3 z 2026-09-12 („statický střed × dynamická ramena", střed = chůze ve variantách): chůze středu v rameni nebude; zda a kde se
   použije (Ask), rozhodne další test.
 - Affected doc(s): `RUNAR_BACKLOG.md` (rámec Vegvísiru) — v tomto commitu.
+
+## 2026-09-27 (7) — Čtení životní runy: runa vysvětlená v každém významu (jako Ask „Explain … without the image“); text o původu pod runou (v4.68)
+
+- **Rozhodl:** KUKY 2026-09-27: *„ano zapoj“* (text o původu, Sowilo 13. 2.) a *„life rune by měla být vysvětlena v každém svém významu přesně
+  jako když v ASK Rúnarovi řeknu explain the rune without image. připodobnit life rune ke své podstatě… a umístit ji do období nebo
+  měsíce je určitě zajímavé, ale runa by jinak měla být popsána do hloubky a srozumitelně.“*
+- **Co (text o původu):** `UI_TEXT.*.tree_lr_origin` pod odhalenou runou ve všech třech stavech záložky (návštěvník/RS, Standard+ před
+  čtením, hotové čtení; `.tree-lr-origin`, styl `tree-gate-text`). Autora nejmenuje, přiznává moderní rozdělení roku. IS nativně,
+  is-grammar-qa čisté. Ověřeno v prohlížeči (návštěvník, 12. 12. 1981 → Isa + text).
+- **Co (čtení, `RP_LIFE`):** část 1 = **místo v roce** (2–3 věty): půlměsíc runy (`lifeRuneSpan`, „28 November – 12 December“) a co v tu
+  dobu dělá islandská krajina a světlo; islandský měsíc jen jako kontext. Část 2 = **runa vysvětlená** (8–10 vět): jméno a tvar, každý
+  význam (řádek MEANINGS / MERKINGAR), jak k sobě patří, druhá strana (přehnaná / chybějící) a co neslibuje; o runě, ne o povaze
+  člověka; konec vyrůstá z otázky runy (`_runeQuestion`).
+- **Odebráno:** *„Poetic, direct. Do not explain — reveal“* / *„Útskýrðu ekki — opinberaðu“* (přesný opak zadání) · *„the gift — what comes
+  naturally to someone born under this rune“* (nálepka povahy, tvrzení o člověku) · `_describeRule` („THE ESSENCE LINE: after the picture…“ —
+  patří čtení s obrazem) · chyba EN *„Kukys life“* (bez apostrofu). IS popisek *KJARNAORÐ* → *MERKINGAR* (korpus 2×, nástroj ho opravoval);
+  IS věty přepsány, dokud jim is-grammar-qa nerozumí (dřív E001: *Útskýrðu Þurs…*, *Talaðu…*, *Fléttaðu…*).
+- **Změřeno (Opus 5, `docs/eval/2026-09-27-zivotni-runa/cteni_pilot.*`):** Isa EN 334 slov, Fehu EN 321, Gebo IS 345 — každý význam
+  vysvětlený, druhá strana, co runa neslibuje, otázka na konci. IS výstup: E001 3/15 vět (obvyklá míra výstupu modelu).
+- Affected doc(s): `RUNAR_BACKLOG.md`.
