@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-27",
- "prompt_version": "v4.69-zivotni-runa-bez-otazky",
+ "prompt_version": "v4.70-is-vety-parsovatelne",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -376,10 +376,10 @@
    "zacatek": "CLOSING LENS — the life rune Ehwaz: let it shape ONLY the last sentenc"
   },
   {
-   "hash": "1a15866e7cd8",
+   "hash": "7198e3a14631",
    "lang": "en",
    "zdroj": "priorita",
-   "zacatek": "If these do not gather into one natural image: keep Ansuz in front, ho"
+   "zacatek": "If these do not gather into one natural image: keep Ansuz in front and"
   },
   {
    "hash": "0ef332fa312c",
@@ -862,19 +862,19 @@
    "zacatek": "Ávarpaðu {name} einu sinni í miðjunni, sem viðurkenningu fremur en kyn"
   },
   {
-   "hash": "55115a15fe2f",
+   "hash": "c3b9b54fcf5b",
    "lang": "is",
    "zdroj": "jmeno[1]",
-   "zacatek": "Láttu nafn {name} koma seint, undir lokin, sem hljóðláta viðurkenningu"
+   "zacatek": "Láttu nafnið {name} koma seint, undir lokin, sem hljóðláta viðurkennin"
   },
   {
-   "hash": "7e7877a04c38",
+   "hash": "5f3616a15bd2",
    "lang": "is",
    "zdroj": "jmeno[2]",
-   "zacatek": "Í þetta sinn skaltu ekki nota nafn {name} — láttu lesturinn standa án "
+   "zacatek": "Notaðu ekki nafnið {name} í þetta sinn. Lesturinn stendur án þess."
   },
   {
-   "hash": "f8d2e9d14416",
+   "hash": "2d577bc64a1b",
    "lang": "is",
    "zdroj": "delka[0]",
    "zacatek": "Gefðu einn samfelldan lestur — 4 stuttar setningar, 50 til 58 orð alls"
@@ -1126,10 +1126,10 @@
    "zacatek": "LOKALINSA — lífsrúnin Ehwaz: Láttu hana móta AÐEINS síðustu setninguna"
   },
   {
-   "hash": "f6cfe95ccf0c",
+   "hash": "2423531c1e19",
    "lang": "is",
    "zdroj": "priorita",
-   "zacatek": "Ef þetta rennur ekki saman í eina náttúrlega mynd: Haltu Ansuz fremst,"
+   "zacatek": "Stundum rennur þetta ekki saman í eina náttúrlega mynd. Haltu þá Ansuz"
   },
   {
    "hash": "b759b407958d",
@@ -1192,7 +1192,7 @@
    "zacatek": "Nú spyr leitandinn EINNAR spurningar um hann:"
   },
   {
-   "hash": "7064dd914de8",
+   "hash": "41e5e136dcec",
    "lang": "is",
    "zdroj": "ask",
    "zacatek": "Þú talar sem Rúnar, hljóðlátur og íhugull, og gefur aldrei ráð eða fyr"
@@ -1210,10 +1210,10 @@
    "zacatek": "Ef leitandinn þakkar eða kveður í stað þess að spyrja, svaraðu með ein"
   },
   {
-   "hash": "579cefec8934",
+   "hash": "de42ba2ce3af",
    "lang": "is",
    "zdroj": "ask",
-   "zacatek": "Ef spurningin snýst ekki um þennan lestur (spjall, staðreyndir, ótengd"
+   "zacatek": "Svaraðu ekki spurningu sem snýst ekki um þennan lestur. Það á við um s"
   },
   {
    "hash": "a44f27b4ed4f",
@@ -1228,13 +1228,13 @@
    "zacatek": "Ef leitandinn spyr hvað þetta gæti verið fyrir hann, nefndu einn eða t"
   },
   {
-   "hash": "4dacec5f8599",
+   "hash": "99d76a462f8a",
    "lang": "is",
    "zdroj": "ask",
-   "zacatek": "Skilaðu EINGÖNGU svari þínu sem samfelldum texta. Ekkert JSON, engar f"
+   "zacatek": "Skilaðu EINGÖNGU svari þínu sem samfelldum texta. Ekki nota JSON, fyri"
   },
   {
-   "hash": "53d4dc6f2891",
+   "hash": "92fe04711f35",
    "lang": "is",
    "zdroj": "ask",
    "zacatek": "LÍFSRÚNIN — leitandinn ber sjálfur Ehwaz. Nefndu hana ekki að fyrra br"
@@ -1306,10 +1306,10 @@
    "zacatek": "MERKINGAR: skilaboð, viska, guðleg leiðsögn, rödd, andardráttur"
   },
   {
-   "hash": "6af9c54a5145",
+   "hash": "d41d46340579",
    "lang": "is",
    "zdroj": "liferune",
-   "zacatek": "Skrifaðu í tveimur hlutum — engar fyrirsagnir í úttakinu:"
+   "zacatek": "Skrifaðu í tveimur hlutum og hafðu engar fyrirsagnir í úttakinu."
   },
   {
    "hash": "972435b2058d",
@@ -1342,10 +1342,10 @@
    "zacatek": "Reglur: rödd Rúnars — róleg og skýr. Útskýrðu merkinguna með orðum, ek"
   },
   {
-   "hash": "ed797875a8ca",
+   "hash": "dcf4bad65cad",
    "lang": "is",
    "zdroj": "liferune",
-   "zacatek": "Ekki nota \"ferðalag\" sem myndlíkingu. Ekki \"faðmaðu\" eða \"styrktu\". En"
+   "zacatek": "Ekki nota „ferðalag“ sem myndlíkingu. Orðin „faðmaðu“ og „styrktu“ eru"
   },
   {
    "hash": "c34c4316bc6d",
@@ -1432,10 +1432,10 @@
    "zacatek": "Forðastu óhlutbundnar, dulúðlega hljómandi setningar sem segja ekkert "
   },
   {
-   "hash": "c6976cc71ccb",
+   "hash": "26440f5828a1",
    "lang": "is",
    "zdroj": "system",
-   "zacatek": "Rúnar spáir aldrei um hlutlæga örlög eða fullyrðir algerar sannanir."
+   "zacatek": "Rúnar spáir aldrei um hlutlæg örlög og fullyrðir aldrei algerar sannan"
   },
   {
    "hash": "c60875aa55b6",

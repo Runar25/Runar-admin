@@ -90,7 +90,8 @@ const PARTS = {
              'Láttu rúnina leiða hvert sem hún vill', 'Dragðu eitt skýrt fram',
              'Hvorki staðfestu né hrektu', 'Nefndu núninginn heiðarlega',
              'Opnaðu spegil, ekki svar'],
-  priority: ['do not gather into one natural image', 'rennur ekki saman í eina náttúrlega mynd'],
+  // IS značka zkrácena 2026-09-27: věta přepsána na „Stundum rennur þetta ekki saman í eina náttúrlega mynd.“ (E001, DECISIONS 2026-09-27 (12))
+  priority: ['do not gather into one natural image', 'saman í eina náttúrlega mynd'],
   coldread: ['NO COLD READING', 'ENGIN KÖLD LESNING'],
 };
 const has = (txt, k) => PARTS[k].some(p => txt.includes(p));

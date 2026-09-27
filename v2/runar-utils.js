@@ -260,8 +260,8 @@ const NAME_PLACEMENTS = [
 ];
 const NAME_PLACEMENTS_IS = [
   'Ávarpaðu {name} einu sinni í miðjunni, sem viðurkenningu fremur en kynningu.',
-  'Láttu nafn {name} koma seint, undir lokin, sem hljóðláta viðurkenningu.',
-  'Í þetta sinn skaltu ekki nota nafn {name} — láttu lesturinn standa án þess.',
+  'Láttu nafnið {name} koma seint, undir lokin, sem hljóðláta viðurkenningu.',   // 2026-09-27: „nafnið“ (apozice), dřív E001
+  'Notaðu ekki nafnið {name} í þetta sinn. Lesturinn stendur án þess.',   // 2026-09-27: dřív „Í þetta sinn skaltu… —“ (E001)
 ];
 function _namePlacement(name, lang) {
   // No real name: reading.js:238 fills the §12 fallback ('you' / 'þú') when the name field is blank
@@ -466,7 +466,7 @@ const LENGTH_BUDGETS = [
   'One flowing reading — 4 short sentences, 50 to 58 words total. It will be read aloud, so keep every sentence lean — about 28 to 33 seconds spoken. No sections, no labels, no line breaks between thoughts.',
 ];
 const LENGTH_BUDGETS_IS = [
-  'Gefðu einn samfelldan lestur — 4 stuttar setningar, 50 til 58 orð alls. Hann verður lesinn upphátt, svo hafðu hverja setningu létta — um 28 til 33 sekúndur. Engar fyrirsagnir, engar hlutaskiptingar.',
+  'Gefðu einn samfelldan lestur — 4 stuttar setningar, 50 til 58 orð alls. Hann verður lesinn upphátt. Hafðu því hverja setningu létta. Upplesturinn tekur um 28 til 33 sekúndur. Engar fyrirsagnir, engar hlutaskiptingar.',   // 2026-09-27: věta „…, svo hafðu… —“ E001
 ];
 // ── ESENCNI RAM (2026-09-20) — dve zneni teze instrukce, losuje se per cteni.
 // [0] = dosavadni produkcni zneni (bylo v VOICE_PROFILES.focused.rules.describe, presunuto

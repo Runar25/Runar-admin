@@ -7472,3 +7472,23 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Proč:** náhrady byly otázky o životě tazatele; blok korekcí je vkládá do každého IS promptu a řádek Fehu prosákl doslova do čtení
   (EVAL_LOG 2026-09-27 (4)). Otázka z 2026-09-25 („smazat?“) tím uzavřena.
 - **Reverzibilita:** texty řádků jsou citované výš. Affected doc(s): `RUNAR_BACKLOG.md` (položka SMAZAT → hotovo) — v tomto commitu.
+
+## 2026-09-27 (12) — Islandské věty promptu přepsané, dokud jim is-grammar-qa nerozumí; cestou 4 skutečné chyby (v4.70)
+
+- **Rozhodl:** KUKY 2026-09-27 *„jeď bod 5, islandské věty v promptu“* (BACKLOG „IS: dlouhé víceklauzové věty promptu nejdou rozparsovat (E001)“; §19.2).
+- **Sken:** všechny IS řádky promptu (golden 40 builderů + pooly): 179 řádků, **55 E001**; zhruba polovina nejsou věty (štítky pozic,
+  seznamy klíčů, zadání JSON) — ty nástroj z principu nerozparsuje a zůstávají. Z vět v živých cestách přepsáno 22, každá ověřená
+  samostatně (is-grammar-qa bez E001), smysl beze změny.
+- **Skutečné chyby nalezené cestou:** *„Engar upphrópunarmerki“* → *engin* (merki = stř. rod; životní runa) · *„spáir aldrei um hlutlæga
+  örlög“* → *hlutlæg* (örlög = stř. mn.; systémový prompt) · *„Rúnar 1–3 / 4–5 / 6–9“* u Yggdrasilu (Rúnar = 2. pád / jméno) → *Fyrstu þrjár
+  rúnirnar… / Fjórða og fimmta rúnin… / Síðustu fjórar rúnirnar…* · kříž *„bærðu þær í röddinn“* (röddinn neexistuje, bærðu = pohni) →
+  *„berðu þær í röddinni“*, *„flettu út“* → *„farðu þaðan út á við“* (EN „spiral outward“). Ask: *„karakter“* (anglicismus) → *„hlutverk“*.
+- **Přepsáno (vzorec):** nástroj nerozumí *skaltu…*, *hvorki… né*, *má… svara*, *„…, svo hafðu… —“*, štítku s fragmentem („Þriðja rúnin
+  (Undir): hvað…“) → krátké celé věty. Místa: `_priorityContext` (4 spready; mrtvá větev čočky pryč), `NAME_PLACEMENTS_IS[1–2]`,
+  `LENGTH_BUDGETS_IS`, RP_ASK IS (3 věty), `_askLifeContext`, RP_LIFE IS (2), Norny (niðurlag + takt), kříž (pozice 3–5 + úvod),
+  Yggdrasil (niðurlag + 3 vrstvy + jména), systémový prompt (1 věta).
+- **Nechány záměrně:** otázka runy v uvozovkách (data z Kolekce; forma citace měřená kvůli opisu, DECISIONS 2026-09-24 (16)) a řádek
+  ÁVARP (rod oslovení — bez vlastního měření neměnit).
+- **Kontrola:** golden — změnilo se 18 IS klíčů, **EN žádný**; registr v4.70; contract wiring (IS značka tie-breakeru zkrácena na
+  „saman í eina náttúrlega mynd“), ending/levers/injection/ask/kalendář zelené; check-is čisté.
+- Affected doc(s): `RUNAR_BACKLOG.md`.
