@@ -58,6 +58,18 @@ měř přímo na enginu (část `1b`).
 - Bash v téhle session občas padá na „classifier no verdict" — neopakovat do 10×, dělat mezitím
   čtení/dokumenty a dokončit, až owner napíše „pokračuj".
 
+## Doplněno 2026-09-29 — kapradí vráceno, krok 1 postaven, krok 2 čeká
+- Růstový strom (každé tažení drobná rovná větev) = kapradí → **vráceno na a8fe597**. Owner: *„tak jak
+  to bylo předtím bylo dobré, jen měly narůstat větve … jako twigy"* a *„všechno si najdi, než začneš
+  měnit"*. Pravidla umístění jsou v `docs/archive/tree/runar-tree-placement.md` (výška: záměr › oblast ›
+  seeking › svět; strana: nitro vlevo / svět vpravo; úhel z elementu) a cílový koncept v
+  `docs/archive/tree/RUNAR_TREE_BOUGHS.md` (rameno → runy se odštěpují v místě své zóny).
+- **Krok 1 hotový** (RUNAR_TREE.md §5 „KROK 1"). **Krok 2 = 25 pramenů:** ramena (≤ 9–10 v kmeni)
+  nesou 2–3 prameny run „v sobě" (tlustší, dokud jdou spolu), runa dostane vlastní pramen postupně
+  (strom musí mít místo — tempo = posuvník), kmen = 3D kruh (natočitelný), každý pramen svůj kořen.
+  Pozor: 2026-08-05 „nikdy neshlukovat větve VEDLE SEBE" — svazek je V SOBĚ, ne vedle.
+- Seeking v logu stromu chybí (lab i aplikace) — bez něj ho nejde použít.
+
 ## Co visí
 - ~~Oprava hooku `tree-guard.sh`~~ — hotovo 2026-09-27.
 - Blank má ve stromě jiný znak (◇ proti ○); čtení s Blank to řeší zvlášť (`blank → odinn`) — ověřit v části 3.
