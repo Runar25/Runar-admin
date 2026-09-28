@@ -181,7 +181,10 @@ function buildBranch(spec, T) {
   /* spec.dev = explicit signed bend from base: the limb STARTS along base
      (parent tangent) and bends to base+dev -> smooth emergence, no sharp join.
      default null = elev/side-driven theta0 (identical to before). */
-  var side = (spec.dev != null) ? (spec.dev >= 0 ? 1 : -1)
+  /* 2026-09-29: dev ~ 0 (vudci vetev rovnobezne s kmenem) = znamenko je sum -> strana ohybu se
+     preklapela s kazdym drobnym rustem kmene (zmereno: −0.00016 -> +0.00068, spicka o 81 px, 37°).
+     Pod prahem rozhodne pevna strana z runy a seedu (bez cerpani rnd -> ostatni tvar beze zmeny). */
+  var side = (spec.dev != null) ? (Math.abs(spec.dev) < 0.05 ? (((hashStr(R.k) ^ (spec.seed||0)) & 1) ? 1 : -1) : (spec.dev >= 0 ? 1 : -1))
            : ((lat !== 0) ? (lat > 0 ? 1 : -1) : (rnd() < 0.5 ? -1 : 1));
   var openBase = lerp(1.15, 0.30, elevN);     /* low elev = reaches out, high = up */
   var theta0 = (spec.dev != null) ? (base + spec.dev)
