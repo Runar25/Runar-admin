@@ -7593,3 +7593,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   `runar-character.js` opraveny, `audit-is-yfirlestur.py` bez mrtvých položek. `formula_is` (rúnaþula) tím nemá žádného čtenáře —
   zůstává v `runar-runes.js` jako lore.
 - Affected doc(s): `RUNAR_BACKLOG.md` — v tomto commitu.
+
+## 2026-09-28 (5) — Čas odpovědi a pokusy do usage; Ask ukáže „Rúnar listens…“ hned (deploy claude-proxy)
+
+- **Rozhodl:** KUKY 2026-09-28 k pomalému druhému Asku u Mannaz: *„ano zapisovat. ať víme… pokud bude uživatel netrpělivý, mohl by
+  pokazit svoje čtení… ať je to pro uživatele vizuálně zřetelné“*.
+- **Proč:** usage neslo jen model, který nakonec odpověděl — jestli čas sežralo opakování po 529, přechod na záložní model, nebo
+  pomalé generování, nešlo z dat zjistit. Na klientu se během čekání měnil jen nápis tlačítka.
+- **Co:** proxy zapisuje do usage každého čtení i Asku `ms` (od zavolání modelu po odpověď) a `tries` (každý pokus: `claude-opus-5`,
+  `claude-opus-5:529`, `claude-opus-5:timeout`, `sol`, `sol:fail`…). Klient: otázka a pod ní *„Rúnar listens…“* s dechem načítání čtení
+  (existující vizuál i text `ask_thinking`) hned po odeslání; při chybě výměna zmizí a otázka zůstane v poli.
+- **Kontrola:** prohlížeč se simulovaným zpožděním (během čekání otázka + loader, pole skryté; po odpovědi loader nahrazen, pole pod
+  odpovědí; chybová cesta uklidí). Deploy: běžící verze před = HEAD, po = pracovní kopie; funkce naběhla (preflight 204).
+  **Neověřeno živě:** první skutečný Ask/čtení s `ms`/`tries` v DB — zkontrolovat po ownerově dalším čtení.
+- Affected doc(s): žádný.

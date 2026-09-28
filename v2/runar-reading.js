@@ -1008,6 +1008,29 @@ async function askRunar() {
   if (btn) { btn.disabled = true; btn.textContent = t('ask_thinking'); }
   if (inp) inp.disabled = true;   // 2026-09-24: Enter v poli posílal během dotazu druhý Ask (průzkum 2026-09-23)
   setSt('ask-status', '');
+  // 2026-09-28 (KUKY k pomalému Asku: „ať je to pro uživatele vizuálně zřetelné“): otázka a „Rúnar listens…“ se ukážou HNED,
+  // ne až s odpovědí. Dřív se během čekání změnil jen nápis tlačítka — netrpělivý člověk nevěděl, jestli se něco děje.
+  // Vizuál = týž dech jako načítání čtení (.whispers-loading-*), text = existující ask_thinking; nic nového.
+  var cislo = _askCount + 1;
+  var wrap = document.getElementById('ask-input-wrap');
+  var qEl, ans, ansId;
+  if (cislo === 1) {
+    qEl = document.getElementById('ask-question'); ans = document.getElementById('ask-answer'); ansId = 'ask-answer';
+  } else {
+    // další výměna pod poslední odpověď (krok 1: Rúnar o předchozí výměně neví — každý Ask jen ke čtení)
+    var posledni = document.querySelectorAll('#ask-runar .ask-answer');
+    posledni = posledni[posledni.length - 1];
+    qEl = document.createElement('div'); qEl.className = 'ask-question ask-extra';
+    ans = document.createElement('div'); ans.className = 'out-txt ask-answer ask-extra'; ansId = 'ask-answer-' + cislo; ans.id = ansId;
+    posledni.after(qEl); qEl.after(ans);
+  }
+  if (qEl) { qEl.textContent = q; qEl.style.display = 'block'; }
+  if (ans) {
+    ans.innerHTML = '<div class="whispers-loading-inner"><span class="whispers-loading-star">&#x16b1;</span>'
+      + '<div class="whispers-loading-label">' + escapeHtml(t('ask_thinking')) + '</div></div>';
+    ans.style.display = 'block';
+  }
+  if (wrap) wrap.style.display = 'none';   // pole se vrátí pod odpověď, až přijde
   var sys = buildSysPrompt(activeChar, lang);
   var prompt = _askBuild(reading, q, runes);
   // Attach the follow-up whenever the reading was actually stored — _lastReadingId is set
@@ -1028,6 +1051,10 @@ async function askRunar() {
   var askCap = 320;
   var res = await callProxy(sys, prompt, askCap, shouldUseCredit(), SPREAD_COSTS.single.credits, _askJournal, 'ask'); // FU: lang-aware cap
   if (res.error) {
+    // chyba: výměna zmizí, jako by se Ask nestal (otázka zůstává v poli k novému pokusu)
+    if (cislo === 1) { if (qEl) qEl.style.display = 'none'; if (ans) { ans.innerHTML = ''; ans.style.display = 'none'; } }
+    else { if (qEl) qEl.remove(); if (ans) ans.remove(); }
+    if (wrap) wrap.style.display = '';
     if (btn) { btn.disabled = false; btn.textContent = t('ask_btn'); }
     if (inp) inp.disabled = false;
     setSt('ask-status', _readingErrMsg(res.error), 'err');
@@ -1040,20 +1067,7 @@ async function askRunar() {
   _askLog.push({ q: q, a: answer });   // pro rozbor GPT-6 sol
   var dalsi = _askCount < _askLimit();
   if (!dalsi) _askPhStop();   // limit vyčerpán -> pole mizí, timer nemá co dělat
-  var wrap = document.getElementById('ask-input-wrap');
-  var qEl, ans, ansId;
-  if (_askCount === 1) {
-    qEl = document.getElementById('ask-question'); ans = document.getElementById('ask-answer'); ansId = 'ask-answer';
-  } else {
-    // další výměna pod poslední odpověď (krok 1: Rúnar o předchozí výměně neví — každý Ask jen ke čtení)
-    var posledni = document.querySelectorAll('#ask-runar .ask-answer');
-    posledni = posledni[posledni.length - 1];
-    qEl = document.createElement('div'); qEl.className = 'ask-question ask-extra';
-    ans = document.createElement('div'); ans.className = 'out-txt ask-answer ask-extra'; ansId = 'ask-answer-' + _askCount; ans.id = ansId;
-    posledni.after(qEl); qEl.after(ans);
-  }
-  if (qEl) { qEl.textContent = q; qEl.style.display = 'block'; }
-  if (ans) { ans.textContent = ''; ans.style.display = 'block'; }
+  if (ans) ans.textContent = '';   // pryč „Rúnar listens…“, přichází odpověď
   if (wrap) {
     if (dalsi && ans) { ans.after(wrap); wrap.style.display = ''; } else wrap.style.display = 'none';
   }

@@ -201,12 +201,14 @@ function buildVoiceContext(scale: number, settled: boolean): string {
 async function callClaudeWithRetry(
   payload: unknown,
   apiKey: string,
+  tries: string[] = [],   // 2026-09-28: záznam pokusů do usage (model + výsledek), viz `ms`/`tries` u persistJournal
 ): Promise<{ ok: true; data: any } | { ok: false; status: number; error: string }> {
   const RETRYABLE = new Set([408, 409, 429, 500, 502, 503, 504, 529]);
   const MAX_ATTEMPTS = 3;
   const PER_ATTEMPT_MS = 55000; // the 9-rune Yggdrasil reading legitimately takes ~40s; 30s cut it off
   let lastStatus = 503;
   let lastError = "no response";
+  const m = String((payload as any)?.model ?? "?");
 
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
     const controller = new AbortController();
@@ -225,6 +227,7 @@ async function callClaudeWithRetry(
       clearTimeout(timer);
 
       if (res.ok) {
+        tries.push(m);
         return { ok: true, data: await res.json() };
       }
 
@@ -233,6 +236,7 @@ async function callClaudeWithRetry(
       const raw = await res.text().catch(() => "");
       lastStatus = res.status;
       lastError = `status ${res.status}: ${raw.slice(0, 300)}`;
+      tries.push(m + ":" + res.status);
 
       if (!RETRYABLE.has(res.status) || attempt === MAX_ATTEMPTS) {
         return { ok: false, status: res.status, error: lastError };
@@ -242,6 +246,7 @@ async function callClaudeWithRetry(
       const aborted = (e as Error).name === "AbortError";
       lastStatus = aborted ? 504 : 503;
       lastError = aborted ? "upstream timeout" : ((e as Error).message || "network error");
+      tries.push(m + (aborted ? ":timeout" : ":net"));
       // A timeout = the generation is slow, not a transient blip — retrying just burns the
       // invocation budget. Return immediately (a network error still retries).
       if (aborted || attempt === MAX_ATTEMPTS) {
@@ -775,11 +780,15 @@ serve(async (req: Request) => {
     // ── GPT-6 sol (jen admin) — při chybě níž normální cesta přes Claude ──
     let data: any = null;
     let text = "";
+    // 2026-09-28 (KUKY: „ano zapisovat, ať víme“): doba odpovědi a pokusy do usage — druhý Ask u Mannaz trval dlouho a z dat
+    // nešlo říct proč (usage neslo jen model, který nakonec odpověděl).
+    const t0 = Date.now();
+    const tries: string[] = [];
     if (engine === "sol" && isAdmin) {
       const openaiKey = Deno.env.get("OPENAI_API_KEY");
       const sol = openaiKey ? await callSol(baseSystem + dynamicContext, String(prompt ?? ""), cappedMaxTokens, openaiKey) : null;
-      if (sol) { text = sol.text; data = { model: SOL_MODEL, usage: sol.usage }; }
-      else console.warn("sol unavailable — falling back to Claude");
+      if (sol) { text = sol.text; data = { model: SOL_MODEL, usage: sol.usage }; tries.push("sol"); }
+      else { tries.push("sol:fail"); console.warn("sol unavailable — falling back to Claude"); }
     }
 
     if (!text) {
@@ -807,7 +816,7 @@ serve(async (req: Request) => {
         // Opus 5 bez vypnutého přemýšlení na max_tokens 700 spálí vše na thinking a vrátí PRÁZDNÝ text
         // (změřeno CODE-read: stop_reason max_tokens, 0 znaků). Opus 4.8 parametr nedostává (jako dosud).
         ...(model.indexOf("opus-5") !== -1 ? { thinking: { type: "disabled" } } : {}),
-      }, anthropicKey);
+      }, anthropicKey, tries);
       if (result.ok) break;
       // Fall back only on a genuine overload (429/5xx), NOT on a timeout (504) — a slow
       // generation would just time out again on the next model and blow the time budget.
@@ -863,7 +872,7 @@ serve(async (req: Request) => {
     if (journal && userId) {
       const u = data?.usage ?? null;
       const r = await persistJournal(journal, userId, text, deductPlan.kind === "paid",
-        u ? { ...u, model: data?.model ?? null } : null);
+        u ? { ...u, model: data?.model ?? null, ms: Date.now() - t0, tries } : null);
       readingId = r.readingId;
       askSaved  = r.askSaved;
     }
