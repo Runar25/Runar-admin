@@ -484,12 +484,17 @@ const LENGTH_BUDGETS_IS = [
 //       drží, „is that“ 5/6 → 2/6. Spona „<runa> is …“ zůstává 6/6: bez ní trpí význam (N4: 4/6, nový vzorec „…sits…“ 3/6).
 //       N3 JEN EN: v IS (6 čtení, tytéž losy) „er þetta/þessi“ zůstal 4/6, přibyl vzorec „X er þetta: …“ 2/6 a věta o runě
 //       nerozparsovaná 2/6 (N: 0/6) — IS [1] proto drží znění N.
+// [0] od 2026-09-28: dřív „what the rune DOES through this image“ / „hvað rúnin GERIR“ — tatáž vada, kterou [1] zbavil
+//       26. 9.: runa si brala děj, který v obraze koná někdo jiný (KUKY: „Berkana is that crossing“ — kajka převádí káčata).
+//       Nově „which side of the rune this picture shows“ — runa není aktér, obraz ukazuje jednu její stránku. Měřeno
+//       (docs/eval/2026-09-28-esence0, Opus 5, týž prompt, slepý soudce): EN cizí děj 4/6 → 2/6, cizinec pochopí 2/6 → 5/6;
+//       IS 1/6 → 0/6, 5/6 → 5/6; „side/hlið“ se neopisuje (0/12), spona „is that / er þetta“ 4 → 1. HLÍDAT: IS „talar um“ 0 → 3/6.
 const ESSENCE_FRAMES = [
-  'THE ESSENCE LINE: after the picture, one short line that says what the rune DOES through this image — its sense in plain words a stranger to runes can grasp. The familiar word may live inside the doing ("exchange between the sea and the shore"). Never a fixed formula. No invented mechanism, no fate. Never tell the seeker what it means for them.',
+  'THE ESSENCE LINE: after the picture, one short line that says which side of the rune this picture shows — its sense in plain words a stranger to runes can grasp. The familiar word may live inside the scene ("exchange between the sea and the shore"). Never a fixed formula. No invented mechanism, no fate. Never tell the seeker what it means for them.',
   'THE ESSENCE LINE: after the picture, one short line that names the rune once and gives the meaning the picture already holds, in plain words a stranger to runes can grasp — let the sentence find its own shape rather than a definition. No invented mechanism, no fate. Never tell the seeker what it means for them.',
 ];
 const ESSENCE_FRAMES_IS = [
-  'KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem segir hvað rúnin GERIR í gegnum þessa mynd — merking hennar með hversdagslegum orðum sem ókunnugur skilur. Kunnuglega orðið má lifa inni í myndinni. Aldrei föst formúla. Engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.',
+  'KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem segir hvaða hlið rúnarinnar þessi mynd sýnir — merking hennar með hversdagslegum orðum sem ókunnugur skilur. Kunnuglega orðið má lifa inni í myndinni. Aldrei föst formúla. Engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.',
   // IS [1] = znění N, ne N3: N3 v IS „er þetta/þessi“ nerozbil (4/6) a rozbil větu 2/6 (E001) — viz hlavička rámců.
   'KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem nefnir rúnina einu sinni og segir hvað hún er í þessari mynd — þá merkingu sem þegar býr í henni. Hversdagsleg orð sem ókunnugur skilur. Engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.',
 ];

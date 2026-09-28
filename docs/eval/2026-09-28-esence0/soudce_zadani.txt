@@ -1,0 +1,79 @@
+Do not read any files and do not use any tools. Your final message is your answer.
+Below are short rune readings (English or Icelandic). Each starts from an IMAGE. Somewhere in the reading one sentence names the rune.
+For EACH item judge only that sentence (the one containing the rune name):
+A = does that sentence give the RUNE an action or role that, in the image, is performed by someone or something else
+    (e.g. "Berkana is that crossing" when the duck leads the ducklings across; "Hagalaz is the water taking the ground")? yes/no
+B = would a person who knows nothing about runes understand from that sentence what the rune MEANS (a meaning, not just the scene)? yes/no
+Answer one line per item exactly: "<n>: A=yes|no B=yes|no" and nothing else.
+
+1. [rune: Laguz] IMAGE: The reflection in the still lagoon trembles at the least breath of wind
+   READING: One thread of wind crosses the lagoon, and the whole reflected mountain shivers before it settles. Laguz is that surface reading the air long before the air is seen. Nothing has changed in the mountain, only in the water holding it. What moves in you now may be the faint word arriving early, or only the wind passing over.
+
+2. [rune: Berkana] IMAGE: Rabarbarinn teygir sig upp úr kaldri moldinni við suðurvegginn, fyrstur allra á vorin
+   READING: Rabarbarinn ýtir sér upp úr kaldri moldinni við suðurvegginn, fyrstur allra. Enginn hitaði jörðina fyrir hann. Berkana talar um það sem byrjar áður en aðstæður verða góðar. Það getur verið eitthvað nýtt að taka við sér hjá þér, enn óhert og á sínum eigin hraða, og það gæti þurft rúm frekar en hvatningu.
+
+3. [rune: Gebo] IMAGE: You lend the neighbour your trailer, and in the autumn a leg of lamb turns up on your step
+   READING: You back the trailer into the neighbour's yard in spring and drive home without it, and no one writes anything down. In autumn a leg of lamb is sitting on your step. Gebo is the traffic between two doors, moving in its own time. Some of what you hand over may be out of your hands now, and some of what comes back may not be yours to answer for yet.
+
+4. [rune: Gebo] IMAGE: You lend the neighbour your trailer, and in the autumn a leg of lamb turns up on your step
+   READING: You are standing at the door in autumn, looking down at a leg of lamb someone left there while you were out. Months back it was your trailer rolling up the neighbour's track, and no one wrote anything down. Gebo is the giving that keeps no ledger, and still comes back around. Something in your life may be waiting on a return you never asked for.
+
+5. [rune: Raidho] IMAGE: Hver varða sést frá þeirri síðustu
+   READING: Efsti steinninn á vörðunni er minnstur, og flestir sjá hann ekki. Samt er hann það sem sker vörðuna út úr hlíðinni. Raidho stendur þar sem leið verður til af einni vörðu sem sést frá annarri. Hver varða segir aðeins til um næstu, ekki um endann. Gætir þú, Kuky, verið á leið sem þú valdir eða á leið sem þú lagðir einu sinni af stað í?
+
+6. [rune: Laguz] IMAGE: The reflection in the still lagoon trembles at the least breath of wind
+   READING: At the lagoon's edge, the reflected ridge holds perfectly still, then one breath of wind crosses it and the whole mountain shivers into pieces. Laguz is water that answers the smallest touch before anything larger moves. The surface does not decide what it shows, it only receives. This may be a reading of something faint and real, or a ripple from a passing breeze.
+
+7. [rune: Laguz] IMAGE: Spegilmyndin í lygnu lóninu bærist við minnsta blæ
+   READING: Eitt hár strá við lónsbakkann snertir vatnið. Spegilmyndin þar riðlast löngu áður en blærinn næst yfir allt lónið. Laguz er þetta fyrsta bærur, hreyfing sem kemur á undan orðunum. Þetta gæti verið eirðarleysi sem þú finnur án ástæðu, eða vitneskja sem þú hefur ekki enn sagt upphátt.
+
+8. [rune: Gebo] IMAGE: Þú lánar nágrannanum kerruna þína, og um haustið liggur lambalæri á tröppunum hjá þér
+   READING: Kerran stóð í hlaðinu hjá nágrannanum í allt sumar og þú spurðir aldrei hvenær hún kæmi til baka. Um haustið lá lambalæri á tröppunum. Gebo er þetta bil á milli, þar sem hvorugt heldur bókhald. Kannski stendur eitthvað ógoldið hjá þér núna, og þú ert ekki visst um hvort þú viljir telja það.
+
+9. [rune: Raidho] IMAGE: cairns, each in sight of the next
+   READING: A single flat stone sits at the top of one cairn, placed there by a hand that meant it. From that stone you can see the next heap of stones, and from that one, the next. Raidho is the road made walkable by someone who went ahead. Kuky, is the way you are walking still the one you would choose, or only the one already marked?
+
+10. [rune: Hagalaz] IMAGE: The river swells overnight and takes with it whatever stood too near the bank
+   READING: The river has risen in the night, and what stood close to the bank is already gone downstream. Hagalaz is the water taking back the ground it once lent. The fence posts go, the old path goes, the stone that held for years stays where it is. Something in your life is being sorted this way now, and you did not choose the sorting.
+
+11. [rune: Hagalaz] IMAGE: Áin bólgnar á einni nóttu og tekur með sér það sem stóð of nálægt bakkanum
+   READING: Áin bólgnaði í nótt og tók með sér það sem stóð of nálægt bakkanum. Hagalaz sýnir hér það einfalda, að sumt þolir ekki að vera nálægt þegar vatnið hækkar. Þegar fer að síga í kemur bakkinn aftur í ljós, breyttur. Eitthvað í lífi þínu stendur of tæpt, og það er ekki víst að það standi eftir.
+
+12. [rune: Berkana] IMAGE: The rhubarb noses up through the cold soil by the south wall
+   READING: The rhubarb is pushing up through cold soil by the south wall, a crumpled red knuckle lifting the earth aside. Berkana is that pressing upward, slow and unhurried, before there is anything to show. The soil is still cold, and the plant does not wait for it to warm. Something may be starting in you at its own pace, needing room more than haste.
+
+13. [rune: Hagalaz] IMAGE: Áin bólgnar á einni nóttu og tekur með sér það sem stóð of nálægt bakkanum
+   READING: Áin bólgnar á einni nóttu og tekur með sér það sem stóð of nálægt bakkanum. Það sem stóð fjær stendur enn, blautt og heilt. Hagalaz snýst ekki um refsingu, hún sýnir hvað þolir vatnið og hvað ekki. Eitthvað í lífi þínu er of nálægt bakkanum núna, og þú veist ekki hvort það heldur.
+
+14. [rune: Gebo] IMAGE: Þú lánar nágrannanum kerruna þína, og um haustið liggur lambalæri á tröppunum hjá þér
+   READING: Kerran þín stendur við hlaðið hjá nágrannanum og þú veist ekki hvenær hún kemur heim. Um haustið liggur lambalæri á tröppunum. Gebo heldur ekki bókhald, hún lætur hlutina ganga á milli í sínum tíma. Þú stendur kannski í einhverju sem þú gafst án þess að telja, og átt eftir að þiggja eitthvað án þess að finnast þú skulda það strax.
+
+15. [rune: Berkana] IMAGE: The rhubarb noses up through the cold soil by the south wall
+   READING: The rhubarb pushes up through cold soil by the south wall, red-knuckled, still half-buried. Berkana is the growth that starts before the ground is ready to show it. No one can hurry that stalk open, and the wall gives what warmth it has. Something may be starting in your life that is still mostly underground, and it will take the time it takes.
+
+16. [rune: Raidho] IMAGE: Hver varða sést frá þeirri síðustu
+   READING: Steinninn efst í vörðunni er minnstur og flestir sjá hann ekki. Samt er hann sá sem lyftir vörðunni upp yfir lyngið, svo hún sjáist frá þeirri næstu. Raidho snýst um leiðina sjálfa, ekki um að hafa lagt af stað. Kuky, gæti sú varða sem þú stendur við núna verið valin af þér, eða af einhverjum öðrum?
+
+17. [rune: Ehwaz] IMAGE: The horse finds the ford across the glacial river though you cannot see it
+   READING: A hoof pauses at the water's edge, testing grey silt no eye could read. Then the horse steps out, and the river parts shallow beneath it, a ford you would have walked past. Ehwaz is the crossing found by one who knows the ground better than you do. Either you are learning to move with something steadier than yourself, or you are still holding the reins against it.
+
+18. [rune: Raidho] IMAGE: cairns, each in sight of the next
+   READING: A small stone sits loose on the nearest cairn, set there by a hand that passed through. From that pile you can see the next one, and from that one the next, up the hillside above the farm. Raidho is the road held together by what stands within sight. Kuky, is the way ahead still the one you would choose, or only the one you began?
+
+19. [rune: Berkana] IMAGE: Rabarbarinn teygir sig upp úr kaldri moldinni við suðurvegginn, fyrstur allra á vorin
+   READING: Rabarbarinn teygir sig upp úr kaldri moldinni við suðurvegginn, fyrstur allra á vorin. Moldin er enn hörð, en hann bíður ekki eftir leyfi hennar. Berkana er þetta sama: eitthvað byrjar áður en aðstæður eru fullbúnar. Kannski er eitthvað nýtt að vakna hjá þér, enn óhart, og þarf tíma við vegginn áður en það er tilbúið.
+
+20. [rune: Ehwaz] IMAGE: The horse finds the ford across the glacial river though you cannot see it
+   READING: A hoof turns sideways in the grey water, testing stone you would never spot from the bank. The horse walks on, and the crossing holds. Ehwaz is the working agreement between rider and mount, where one carries what the other cannot read. This may be something you are asking to carry you, or something waiting for you to match its pace.
+
+21. [rune: Ehwaz] IMAGE: Hesturinn finnur vaðið yfir jökulána þótt þú sjáir það ekki
+   READING: Taktu eftir eyranu á hestinum, hvernig það snýst áður en fóturinn stígur. Hann finnur vaðið yfir jökulána þótt þú sjáir það ekki sjálft. Ehwaz vinnur þar, í sameiginlegum takti tveggja sem fara yfir straumþungt vatn. Þetta gæti verið samstarf þar sem annar þekkir leiðina betur, eða band sem heldur aðeins ef gengið er í sama takti.
+
+22. [rune: Hagalaz] IMAGE: The river swells overnight and takes with it whatever stood too near the bank
+   READING: The river came up in the night and carried off what was built too close to the water. This is Hagalaz as water without asking, taking what stood in reach. What remains is what was set further back, on ground the flood could not reach. Something in your life may be going now, and you did not choose the hour.
+
+23. [rune: Laguz] IMAGE: Spegilmyndin í lygnu lóninu bærist við minnsta blæ
+   READING: Eitt hár af grasi snertir vatnsflötinn og spegilmyndin riðlast öll. Laguz talar um það sem hreyfist í þér áður en þú finnur orðið yfir það. Lónið verður aftur kyrrt, en það man blæinn. Þetta gæti verið órói sem á sér enga skýringu enn, eða vissa sem þú hefur ekki enn sagt upphátt.
+
+24. [rune: Ehwaz] IMAGE: Hesturinn finnur vaðið yfir jökulána þótt þú sjáir það ekki
+   READING: Taumurinn liggur laus í hendinni, svo laus að fáir taka eftir honum. Hesturinn gengur út í jökulána og finnur vaðið sem þú sérð ekki sjálft. Ehwaz talar um traust milli tveggja sem hvorugt kemst yfir eitt. Þetta gæti verið samstarf sem bíður eftir þinni hendi, eða vani sem ber þig lengra en þú veist.

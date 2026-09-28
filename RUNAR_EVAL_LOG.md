@@ -92,6 +92,12 @@ Tady je to složené. Žádné nové měření, jen jedna stránka místo pěti 
 | **CELÝ klíčový seznam runy** | stopa prostého významu **17 % → 0 %** ↓ | `KLICE`, sonda „proč metafora" |
 | **JEDEN konkrétnější klíč** téže runy | **17 %** — beze změny, drží | `ASPEKT`, táž sonda |
 | **pokyn hlasu** („name the friction honestly") | echo nálepky **0/20**, ale stopa obsahu ve čtení **silnější** | register, 8.9. |
+| **sloveso dělá z runy aktéra** („what the rune **DOES** through this image") | runa si vezme děj, který v obrazu koná někdo jiný — *„Berkana is that crossing"* (kajka převádí káčata), *„Hagalaz is the water taking…"*: EN **4/6**; znění *„which side of the rune this picture shows"* **2/6**, cizinec pochopí 2/6 → 5/6 | esence [0], 28.9. (DECISIONS 2026-09-28 (6)) |
+| **slovo z pokynu v dovětku** („They know which rune **fell**") | slovo se objeví v odpovědi — *„the rune that fell"* 4/10 (Opus i GPT) | Ask životní runa, 28.9. |
+| ⚠️ **„není to X": kontrast „the runes that were drawn" v pokynu** | podezřelý z upozornění *„…does not change the rune that was drawn"* — **větu odebrat nepomohlo** (GPT 4/5, Opus 5/5 i bez ní). Upozornění rodí OTÁZKA na runu, která nepadla, ne náš pokyn | Ask životní runa, 28.9. |
+
+⚠️ **Měřítko se dvakrát mýlilo (§27):** regex na „does not change" minul *„Isa was not drawn here"* a *„Uruz alone"* — model upozornění
+přeformuluje. Počítat **smysl věty** (tvrdí, že životní runa není tažená / nic nemění?), ne jeden tvar.
 
 ⭐ **Pravidlo, které z toho plyne:**
 1. **Nikdy hotovou větu o runě.** Je to definice a definice se opisují. Platí i pro krásně

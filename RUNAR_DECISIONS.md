@@ -7607,3 +7607,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   odpovědí; chybová cesta uklidí). Deploy: běžící verze před = HEAD, po = pracovní kopie; funkce naběhla (preflight 204).
   **Neověřeno živě:** první skutečný Ask/čtení s `ms`/`tries` v DB — zkontrolovat po ownerově dalším čtení.
 - Affected doc(s): žádný.
+
+## 2026-09-28 (6) — Esenční řádek [0]: „which side of the rune this picture shows“ místo „what the rune DOES“ (v4.74) · Ask a životní runa: není to náš pokyn
+
+- **Rozhodl:** KUKY 2026-09-28 k Berkaně (*„Berkana is that crossing“*): *„opravit. nemůžeme používat zavádějící slova“*; k věte
+  *„…but it does not change the rune that was drawn“* (GPT, report 11:15): *„zbytečná informace“* → „ano“ na test.
+- **Esence [0]:** EN *„says what the rune DOES through this image“* → *„says which side of the rune this picture shows“*; IS *„hvað rúnin
+  GERIR“* → *„hvaða hlið rúnarinnar þessi mynd sýnir“* (is-grammar-qa jen Z002 za dvojtečkou). Tatáž vada, kterou [1] zbavil 26. 9.
+  **Změřeno** (`docs/eval/2026-09-28-esence0/`, Opus 5, týž prompt, liší se jen rámec, 6 run × jazyk, slepý soudce): EN runa bere
+  cizí děj **4/6 → 2/6**, cizinec pochopí **2/6 → 5/6**; IS 1/6 → 0/6, 5/6 → 5/6; „side/hlið“ se neopisuje (0/12); spona „is that /
+  er þetta“ 4 → 1. **Hlídat:** IS *„X talar um…“* 0 → 3/6 — kandidát na novou formuli. **Hranice:** n = 6 na buňku, jeden soudce.
+- **Ask × životní runa — není to X (§25):** podezření „upozornění rodí věta *then return to the runes that were drawn*“ **padlo**.
+  Varianty (`docs/eval/2026-09-28-ask-zivotni/`, ownerovo čtení Uruz + otázka na Isu, 5 odpovědí na rameno): produkce GPT 5/5 ·
+  věta bez „return“ 5/5 · bez slova „drawn“ 5/5 · **věta pryč úplně 4/5** · Opus 5 produkce 5/5 · dovětek „They know which rune fell“
+  Opus 3/5, GPT 4/5 (a slovo „fell“ se opisuje). Upozornění rodí sama otázka na runu, která nepadla. **Prompt beze změny** — žádná
+  varianta nebyla lepší bez vedlejší vady. Měřítko se dvakrát mýlilo (úzký regex) → přeměřeno smyslem věty.
+- Affected doc(s): `RUNAR_EVAL_LOG.md` (stránka „Jak má vypadat VSTUP do promptu“, 3 řádky) — v tomto commitu.

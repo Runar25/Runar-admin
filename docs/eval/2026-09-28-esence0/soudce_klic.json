@@ -1,0 +1,146 @@
+[
+ {
+  "n": 1,
+  "L": "en",
+  "runa": "Laguz",
+  "arm": "stare"
+ },
+ {
+  "n": 2,
+  "L": "is",
+  "runa": "Berkana",
+  "arm": "nove"
+ },
+ {
+  "n": 3,
+  "L": "en",
+  "runa": "Gebo",
+  "arm": "stare"
+ },
+ {
+  "n": 4,
+  "L": "en",
+  "runa": "Gebo",
+  "arm": "nove"
+ },
+ {
+  "n": 5,
+  "L": "is",
+  "runa": "Raidho",
+  "arm": "stare"
+ },
+ {
+  "n": 6,
+  "L": "en",
+  "runa": "Laguz",
+  "arm": "nove"
+ },
+ {
+  "n": 7,
+  "L": "is",
+  "runa": "Laguz",
+  "arm": "stare"
+ },
+ {
+  "n": 8,
+  "L": "is",
+  "runa": "Gebo",
+  "arm": "nove"
+ },
+ {
+  "n": 9,
+  "L": "en",
+  "runa": "Raidho",
+  "arm": "nove"
+ },
+ {
+  "n": 10,
+  "L": "en",
+  "runa": "Hagalaz",
+  "arm": "stare"
+ },
+ {
+  "n": 11,
+  "L": "is",
+  "runa": "Hagalaz",
+  "arm": "nove"
+ },
+ {
+  "n": 12,
+  "L": "en",
+  "runa": "Berkana",
+  "arm": "stare"
+ },
+ {
+  "n": 13,
+  "L": "is",
+  "runa": "Hagalaz",
+  "arm": "stare"
+ },
+ {
+  "n": 14,
+  "L": "is",
+  "runa": "Gebo",
+  "arm": "stare"
+ },
+ {
+  "n": 15,
+  "L": "en",
+  "runa": "Berkana",
+  "arm": "nove"
+ },
+ {
+  "n": 16,
+  "L": "is",
+  "runa": "Raidho",
+  "arm": "nove"
+ },
+ {
+  "n": 17,
+  "L": "en",
+  "runa": "Ehwaz",
+  "arm": "nove"
+ },
+ {
+  "n": 18,
+  "L": "en",
+  "runa": "Raidho",
+  "arm": "stare"
+ },
+ {
+  "n": 19,
+  "L": "is",
+  "runa": "Berkana",
+  "arm": "stare"
+ },
+ {
+  "n": 20,
+  "L": "en",
+  "runa": "Ehwaz",
+  "arm": "stare"
+ },
+ {
+  "n": 21,
+  "L": "is",
+  "runa": "Ehwaz",
+  "arm": "stare"
+ },
+ {
+  "n": 22,
+  "L": "en",
+  "runa": "Hagalaz",
+  "arm": "nove"
+ },
+ {
+  "n": 23,
+  "L": "is",
+  "runa": "Laguz",
+  "arm": "nove"
+ },
+ {
+  "n": 24,
+  "L": "is",
+  "runa": "Ehwaz",
+  "arm": "nove"
+ }
+]
