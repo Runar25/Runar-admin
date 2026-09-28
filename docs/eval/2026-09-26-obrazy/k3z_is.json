@@ -1,0 +1,107 @@
+{
+ "U1z": [
+  "Þú leggst á steininn í túninu og hann mjakast.",
+  "styrkur",
+  "strength",
+  "P",
+  "bright"
+ ],
+ "T1z": [
+  "Þrætan við borðið þagnar, einu orði frá því að upp úr sjóði.",
+  "þröskuldur",
+  "threshold",
+  "D",
+  "any"
+ ],
+ "T2z": [
+  "Þyrnir krækir í ermina einu skrefi frá gilbrúninni.",
+  "aðgát",
+  "caution",
+  "P",
+  "any"
+ ],
+ "W1z": [
+  "Morguninn eftir rifrildið hlæið þið bæði að því sama.",
+  "sátt",
+  "harmony",
+  "D",
+  "any"
+ ],
+ "W2z": [
+  "Hleðslan er fullgerð og allir standa og horfa á hana.",
+  "gleði",
+  "joy",
+  "P",
+  "bright"
+ ],
+ "H1z": [
+  "Á brúðkaupsdaginn kemst ferjan ekki úr höfn vegna óveðurs.",
+  "truflun",
+  "disruption",
+  "D",
+  "any"
+ ],
+ "N1z": [
+  "Þú pakkar í flýti aðeins því sem þú getur ekki verið án.",
+  "nauðsyn",
+  "necessity",
+  "D",
+  "any"
+ ],
+ "S1z": [
+  "Við vörðuna á tindinum skín sólin beint framan í þig.",
+  "sigur",
+  "victory",
+  "P",
+  "bright"
+ ],
+ "S2z": [
+  "Gamli hundurinn teygir úr sér í sólinni á tröppunum.",
+  "lífskraftur",
+  "life force",
+  "P",
+  "bright"
+ ],
+ "B1z": [
+  "Birkiplantan vex í skjóli eldri trjánna.",
+  "þroski",
+  "growth",
+  "P",
+  "any"
+ ],
+ "B2z": [
+  "Þú breiðir lak yfir plönturnar áður en frystir í nótt.",
+  "umhyggja",
+  "nurturing",
+  "P",
+  "bright"
+ ],
+ "E1z": [
+  "Sófinn kemst niður þröngan stigann þegar þið hættið að segja hvort öðru fyrir verkum.",
+  "samfylgd",
+  "partnership",
+  "D",
+  "any"
+ ],
+ "D1z": [
+  "Þú opnar fjósdyrnar og birtan flæðir inn í dimma básana.",
+  "ljós",
+  "light",
+  "D",
+  "any"
+ ],
+ "X1z": [
+  "Setning í gömlu dagbókinni endar í miðju kafi og síðan fyrir neðan er auð.",
+  "hið óþekkta",
+  "the unknown",
+  "D",
+  "any"
+ ],
+ "X3z": [
+  "Hvert barnanna sér sína mynd í sama auða blettinum á veggnum.",
+  "óskrifaður möguleiki",
+  "unwritten potential",
+  "D",
+  "any"
+ ]
+}

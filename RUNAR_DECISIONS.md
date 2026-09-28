@@ -7623,3 +7623,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   Opus 3/5, GPT 4/5 (a slovo „fell“ se opisuje). Upozornění rodí sama otázka na runu, která nepadla. **Prompt beze změny** — žádná
   varianta nebyla lepší bez vedlejší vady. Měřítko se dvakrát mýlilo (úzký regex) → přeměřeno smyslem věty.
 - Affected doc(s): `RUNAR_EVAL_LOG.md` (stránka „Jak má vypadat VSTUP do promptu“, 3 řádky) — v tomto commitu.
+
+## 2026-09-28 (7) — Obrazy kola 3 zkrácené podle klíče (medián 17 → 12 slov); Wunjo zeď a Berkana plachta pryč (v4.75)
+
+- **Rozhodl:** KUKY 2026-09-28 *„najdi k tomu klíč jak to zkrátit… už máme dost informací o tom, co zní dobře a co dělá problémy“*.
+- **Klíč** (vlastník `RUNAR_DESIGN.md` „Délka a tvar obrazu“): jedna scéna · jeden, kdo koná · žádná druhá událost · žádné časové slovo,
+  které runu nenese · slovo nesoucí runu zůstává · ~12 slov · po zkrácení znovu brána.
+- **Co:** 12 obrazů přepsáno (EN + IS, is-grammar-qa čisté, spojení v korpusu; tři přepsána dvakrát, protože korpus původní spojení
+  neznal: *fyrir næturfrostið* 0×, *í fyrstu hlýju* 0×, *stöðvar ferjuna* 0×). Brána znovu (`docs/eval/2026-09-26-obrazy/k3z_*`):
+  **12/15** — Dagaz chlév zkrácený **0/3** → zůstává původní znění (3/3); Wunjo hotová zeď 1/3 a Berkana plachta 1/3 (dlouhé byly jen 2/3)
+  → z banky pryč. Banka 185 → 182.
+- **Otázka „nutí dlouhý obraz dlouhou první větu?“** — změřeno dřív: **ne** (r = 0,02, n = 72; 2026-09-23 (10)). Krátí se kvůli tvaru
+  a opisování, ne kvůli první větě.
+- Affected doc(s): `RUNAR_DESIGN.md` (nová podsekce) — v tomto commitu.

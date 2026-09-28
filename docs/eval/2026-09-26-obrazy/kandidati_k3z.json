@@ -1,0 +1,152 @@
+[
+ {
+  "id": "U1z",
+  "runa": "Uruz",
+  "en": "You lean into the boulder in the home field, and it shifts.",
+  "gpt": "člověk se opírá do těžkého kamene, posune ho jen o několik centimetrů",
+  "plete": [
+   "Nauthiz",
+   "Thurisaz"
+  ]
+ },
+ {
+  "id": "T1z",
+  "runa": "Thurisaz",
+  "en": "The quarrel at the table goes quiet, one word short of boiling over.",
+  "gpt": "konflikt těsně před vypuknutím, další slovo může situaci změnit",
+  "plete": [
+   "Tiwaz",
+   "Hagalaz"
+  ]
+ },
+ {
+  "id": "T2z",
+  "runa": "Thurisaz",
+  "en": "A thorn snags your sleeve one step short of the gully's edge.",
+  "gpt": "trnitý keř v cestě; nejde projít bez zpomalení (+ kánon: překážka, která ochrání před příliš rychlým krokem)",
+  "plete": [
+   "Algiz",
+   "Raidho"
+  ]
+ },
+ {
+  "id": "W1z",
+  "runa": "Wunjo",
+  "en": "The morning after the quarrel, you both laugh at the same thing.",
+  "gpt": "dva lidé se po hádce znovu smějí stejné věci",
+  "plete": [
+   "Gebo",
+   "Ehwaz"
+  ]
+ },
+ {
+  "id": "W2z",
+  "runa": "Wunjo",
+  "en": "The stone wall is finished, and everyone stands and looks at it.",
+  "gpt": "několik lidí dokončí společnou práci a na chvíli jen stojí a dívají se na výsledek",
+  "plete": [
+   "Jera",
+   "Othila"
+  ]
+ },
+ {
+  "id": "H1z",
+  "runa": "Hagalaz",
+  "en": "On the wedding day, the storm keeps the ferry in harbour.",
+  "gpt": "plán se rozpadne kvůli události, kterou člověk nemohl ovlivnit",
+  "plete": [
+   "Nauthiz",
+   "Thurisaz"
+  ]
+ },
+ {
+  "id": "N1z",
+  "runa": "Nauthiz",
+  "en": "In a hurry, you pack only what you cannot do without.",
+  "gpt": "nedostatek času ukáže, co člověk skutečně potřebuje",
+  "plete": [
+   "Raidho",
+   "Othila"
+  ]
+ },
+ {
+  "id": "S1z",
+  "runa": "Sowilo",
+  "en": "At the summit cairn, the sun shines straight into your face.",
+  "gpt": "slunce po dlouhém šeru osvítí cestu (+ vítězství)",
+  "plete": [
+   "Tiwaz",
+   "Raidho"
+  ]
+ },
+ {
+  "id": "S2z",
+  "runa": "Sowilo",
+  "en": "The old dog stretches out full length in the sun on the steps.",
+  "gpt": "životní síla slunce (vlastní)",
+  "plete": [
+   "Berkana",
+   "Wunjo"
+  ]
+ },
+ {
+  "id": "B1z",
+  "runa": "Berkana",
+  "en": "The birch sapling grows in the shelter of the older trees.",
+  "gpt": "mladý strom roste pomalu mezi staršími stromy",
+  "plete": [
+   "Eihwaz",
+   "Ingwaz"
+  ]
+ },
+ {
+  "id": "B2z",
+  "runa": "Berkana",
+  "en": "You spread a sheet over the seedlings before it freezes tonight.",
+  "gpt": "člověk chrání něco nového, protože je to ještě příliš křehké",
+  "plete": [
+   "Algiz",
+   "Ingwaz"
+  ]
+ },
+ {
+  "id": "E1z",
+  "runa": "Ehwaz",
+  "en": "The sofa gets down the narrow stairs once you stop giving each other orders.",
+  "gpt": "dva lidé nesou těžký předmět; pohyb je snazší, když začnou reagovat jeden na druhého",
+  "plete": [
+   "Gebo",
+   "Mannaz"
+  ]
+ },
+ {
+  "id": "D1z",
+  "runa": "Dagaz",
+  "en": "You open the byre door, and light floods the dark stalls.",
+  "gpt": "dveře se otevřou mezi tmavou místností a světlem venku",
+  "plete": [
+   "Sowilo",
+   "Kenaz"
+  ]
+ },
+ {
+  "id": "X1z",
+  "runa": "Blank",
+  "en": "A sentence in the old diary breaks off, and the page below is blank.",
+  "gpt": "přerušení příběhu: nedopsaná věta čeká na slovo",
+  "plete": [
+   "Perth",
+   "Ansuz"
+  ]
+ },
+ {
+  "id": "X3z",
+  "runa": "Blank",
+  "en": "Each child sees a different picture in the same bare patch of wall.",
+  "gpt": "zrcadlo: prázdná stránka vyvolá v různých lidech jiné představy",
+  "plete": [
+   "Mannaz",
+   "Perth"
+  ]
+ }
+]

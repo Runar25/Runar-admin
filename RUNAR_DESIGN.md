@@ -1253,6 +1253,23 @@ ať vyjdou z mapy mezer a z brány · **každý obraz jakéhokoli typu projde id
 (generátor navrhuje, soudce rozhoduje; přebytek kandidátů = normální provoz, ne selhání) ·
 plus dvě síta výš a kontrola „čí je to pozemek" (předmět/sloveso nesmí být jádrem sousední runy).
 
+### Délka a tvar obrazu — klíč ke zkrácení (KUKY 2026-09-28, změřeno)
+*Changelog: 2026-09-28 založeno — owner: „najdi k tomu klíč jak to zkrátit… už máme dost informací o tom, co zní dobře
+a co dělá problémy“. Důvod: obrazy kola 3 měly medián 17 slov (starší banka 13) a skládaly se z příběhů o dvou událostech.*
+
+1. **Jedna scéna, jeden, kdo koná.** Obraz patří runě toho, kdo v něm koná — ledovcová řeka valící balvany šla 3/3 k Laguz,
+   ne k Uruz (síla v obraze JE voda). U Uruz musí konat tělo.
+2. **Žádná druhá událost.** „…a pak se stalo ještě…“ (trajekt nepluje **a** svatba je s polovinou hostů) je příběh, ne obraz.
+   Pokračování téhož děje smí zůstat („the track bends round the lava and comes back to its line“).
+3. **Žádné časové ani kalendářní slovo, které runu nenese.** Kdy se obraz smí ukázat, řídí sloupec sezóny, ne text
+   („…no one will open it before midwinter“ — owner: *„vůbec se mi nelíbí“*). **Výjimka = slovo, které runu nese:**
+   Dagaz „morning… all at once“ — zkrácený bez nich spadl z 3/3 na **0/3** (zbylo obyčejné světlo → Kenaz/Sowilo).
+4. **Slovo, které nese runu, zůstává; ostatní jde pryč.** Po zkrácení obraz vždy znovu projde branou — kratší obraz může
+   identitu ztratit (2026-09-28: 12/15 drželo, 3 ne).
+5. **Délka kolem 12 slov** (medián zkrácených, které prošly branou; obrazy, které owner označil za dobré, mají 11–16).
+   ⚠️ **Délka obrazu NEřídí délku první věty čtení** (r = 0,02, n = 72; DECISIONS 2026-09-23 (10)) — důvod ke krácení je
+   tvar a opisování (z dlouhého obrazu model převzal 5 ze 7 slov, EVAL_LOG 2026-09-14), ne první věta.
+
 
 
 ---
