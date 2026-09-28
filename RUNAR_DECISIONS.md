@@ -7561,3 +7561,12 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Kontrola:** prohlížeč (reader bez modulu: 0 chybějících funkcí, všechny skripty 200, `updateUIText` na deníku projde), smoke zelený,
   golden beze změny.
 - Affected doc(s): `CLAUDE.md` (výpis souborů, load order, věta u spreadů) · `RUNAR_BACKLOG.md` · `RUNAR_DESIGN.md` — v tomto commitu.
+
+## 2026-09-28 (2) — Kolo 3 obrazů: Ingwaz sud se syrovátkou vyřazen, Uruz „inches“ → „shifts“ (v4.73)
+
+- **Rozhodl:** KUKY 2026-09-28 — k sudu *„tohle se mi vůbec nelíbí“*; k Uruz *„my tu nepoužíváme inche ale centimetry“*.
+- **Co:** Ingwaz *„The whey barrel stands sealed in the pantry…“* pryč (Ingwaz zpět na 6 obrazů). Uruz: *inches* bylo sloveso
+  („posouvá se kousek po kousku“), ale čte se jako jednotka → *„and it shifts a little, then a little more“*; IS *mjakast* beze změny.
+- **Otevřené (owner):** délka nových obrazů (medián EN 17 slov × 13 ve starší bance) a roční období uvnitř obrazu — posoudit proti
+  ownerovým hodnocením čtení, ne odhadem. Dřívější měření (DECISIONS 2026-09-23 (10)): délka obrazu × délka 1. věty r = 0,02, n = 72.
+- Affected doc(s): žádný.

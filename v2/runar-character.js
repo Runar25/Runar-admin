@@ -753,7 +753,8 @@ var RUNE_IMAGES = [
   // (14 × 3/3; Wunjo dokončená kamenná zeď 2/3 → Jera, Berkana plachta přes sazenice 2/3 → Algiz). Nezařazeny: Uruz ledovcová řeka
   // 0/3 → Laguz (voda nese identitu líp než síla), Blank základy bez domu 0/3 → Othila (dům = domov). Blank: rodiny přerušení
   // příběhu a zrcadlo. IS psáno islandsky, is-grammar-qa + korpus čisté (4 věty přepsány, dokud nerozparsovány).
-  ['Uruz', 'bright', 'Þú leggst á stóra steininn í túninu af öllum kröftum, og hann mjakast örlítið, og svo aðeins meira.', 'You throw your weight against the big stone in the home field, and it inches a little, then a little more.', 'styrkur', 'strength', 'P'],
+  // 2026-09-28 owner: Ingwaz sud se syrovátkou vyřazen („vůbec se mi nelíbí“); Uruz „inches“ → „shifts“ (četlo se jako palce).
+  ['Uruz', 'bright', 'Þú leggst á stóra steininn í túninu af öllum kröftum, og hann mjakast örlítið, og svo aðeins meira.', 'You throw your weight against the big stone in the home field, and it shifts a little, then a little more.', 'styrkur', 'strength', 'P'],
   ['Thurisaz', 'any', 'Þrætan við borðið hefur þagnað í bili, og allir vita að næsta orð ræður því hvernig fer.', 'The quarrel at the table has gone quiet for now, and everyone knows the next word will decide how it goes.', 'þröskuldur', 'threshold', 'D'],
   ['Thurisaz', 'any', 'Þyrnirunni krækir í ermina og heldur aftur af þér, einu skrefi frá gilbrúninni.', 'A thornbush snags your sleeve and holds you back, one step short of the gully\'s edge.', 'aðgát', 'caution', 'P'],
   ['Wunjo', 'any', 'Morguninn eftir rifrildið hlæið þið bæði að því sama, og hvorugt ykkar minnist á það.', 'The morning after the quarrel you both laugh at the same thing, and neither of you mentions it.', 'sátt', 'harmony', 'D'],
@@ -765,7 +766,6 @@ var RUNE_IMAGES = [
   ['Berkana', 'any', 'Birkiplantan vex upp í skjóli eldri trjánna, um handarbreidd á ári.', 'The birch sapling grows up in the shelter of the older trees, a hand\'s breadth a year.', 'þroski', 'growth', 'P'],
   ['Berkana', 'bright', 'Frosti er spáð í nótt, og þú breiðir lak yfir plönturnar áður en þú ferð að sofa.', 'Frost is forecast tonight, and you spread a sheet over the seedlings before you go to bed.', 'umhyggja', 'nurturing', 'P'],
   ['Ehwaz', 'any', 'Þið berið sófann niður þröngan stigann, og hann kemst ekki fyrr en þið hættið að segja hvort öðru fyrir verkum.', 'You carry the sofa down the narrow stairs together, and it only goes once you stop telling each other what to do.', 'samfylgd', 'partnership', 'D'],
-  ['Ingwaz', 'cold', 'Súrtunnan stendur lokuð í búrinu, og enginn opnar hana fyrr en á þorra.', 'The whey barrel stands sealed in the pantry, and no one will open it before midwinter.', 'innri þróun', 'inner development', 'D'],
   ['Dagaz', 'any', 'Þú opnar fjósdyrnar, og morgunbirtan flæðir í einu vetfangi inn í dimma básana.', 'You open the byre door, and the morning light floods into the dark stalls all at once.', 'ljós', 'light', 'D'],
   ['Blank', 'any', 'Setningin í gömlu dagbókinni endar í miðju kafi, og það sem eftir er af síðunni er autt.', 'The sentence in the old diary stops halfway, and the rest of the page is blank.', 'hið óþekkta', 'the unknown', 'D'],
   ['Blank', 'any', 'Börnin horfa á sama auða blettinn á veggnum, og hvert þeirra sér þar aðra mynd.', 'The children look at the same bare patch of wall, and each of them sees a different picture there.', 'óskrifaður möguleiki', 'unwritten potential', 'D'],
