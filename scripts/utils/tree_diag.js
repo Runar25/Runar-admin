@@ -25,7 +25,7 @@ function recCanvas() {
   const ctx = new Proxy({}, { get(t, p) {
     if (p === 'beginPath') return () => { path = []; };
     if (p === 'moveTo' || p === 'lineTo') return (x, y) => { path.push([x, y]); };
-    if (p === 'fill') return () => { if (path.length) fills.push(path); path = []; };
+    if (p === 'fill') return () => { if (path.length) { path.col = t.fillStyle; fills.push(path); } path = []; };
     if (typeof p === 'string' && /^[a-z]/.test(p) && !['fillStyle','strokeStyle','lineWidth','globalAlpha'].includes(p))
       return () => {};
     return t[p];
@@ -414,4 +414,27 @@ if (cast === 'jump2') {
     if (r > 8) rot++; if (s > 8) { slide++; if (process.env.JDET) { const rd = st.log[n - 1]; console.log('   #' + n, rd.spread.padEnd(10), 'runy', rd.runes.map(x => x.rune).join(','), '| sklouz', s.toFixed(0), 'px | otoc', r.toFixed(0) + '°'); } }
     worstR = Math.max(worstR, r); worstS = Math.max(worstS, s); prev = cur; }
   console.log('cteni', st.log.length, '| kroku s OTOCENIM vetve > 8°:', rot, '(nejvic', worstR.toFixed(0) + '°)', '| kroku se SKLOUZNUTIM uchyceni > 8 px:', slide, '(nejvic', worstS.toFixed(0), 'px)');
+}
+if (cast === 'sliders') {
+  // AUDIT POSUVNIKU (2026-09-28, KUKY: "projdi posuvniky a odstran ty, co nic nedelaji"). Kazdy
+  // posuvnik min -> max na ownerove strome; zmena = tvar (bunky mrizky 4 px) + barva (fillStyle).
+  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const html = fs.readFileSync(DIR + 'tree-lab-crown-composer/crown-composer.html', 'utf8');
+  const panels = []; const re = /makeTune\('([a-z-]+)',\s*\[([\s\S]*?)\]\s*,\s*(crownT|trunkT|rootsT)\)/g; let m;
+  while ((m = re.exec(html))) { const arr = eval('[' + m[2] + ']'); arr.forEach(a => panels.push({ panel: m[1], obj: m[3], key: a[0], min: a[1], max: a[2], lbl: a[4] })); }
+  const base = { crownT: Object.assign({}, st.crownT), trunkT: Object.assign({}, st.trunkT), rootsT: Object.assign({}, st.rootsT), rune: st.rune, dob: st.dob };
+  delete base.crownT.twigMax;   // jeho ulozena 14 = stary vyznam; nech vychozi 5
+  const sig = inj => { const r = labRun(st.log, null, inj); const cells = new Set(), cols = {};
+    r.fills.forEach(f => { f.forEach(([x, y]) => cells.add((x >> 2) + ',' + (y >> 2))); cols[f.col] = (cols[f.col] || 0) + 1; }); return { cells, cols, n: r.fills.length }; };
+  const out = [];
+  for (const s0 of panels) {
+    const a = JSON.parse(JSON.stringify(base)), b = JSON.parse(JSON.stringify(base));
+    a[s0.obj][s0.key] = s0.min; b[s0.obj][s0.key] = s0.max;
+    const A = sig(a), Bs = sig(b); let inter = 0; A.cells.forEach(c => { if (Bs.cells.has(c)) inter++; });
+    const shape = 1 - inter / Math.max(1, A.cells.size + Bs.cells.size - inter);
+    const keys = new Set([...Object.keys(A.cols), ...Object.keys(Bs.cols)]); let cd = 0, tot = 0;
+    keys.forEach(k => { cd += Math.abs((A.cols[k] || 0) - (Bs.cols[k] || 0)); tot += (A.cols[k] || 0) + (Bs.cols[k] || 0); });
+    out.push({ ...s0, shape, color: tot ? cd / tot : 0 });
+  }
+  out.forEach(o => console.log(o.panel.padEnd(16), o.key.padEnd(14), ('tvar ' + (o.shape * 100).toFixed(1) + '%').padEnd(11), ('barva ' + (o.color * 100).toFixed(1) + '%').padEnd(12), o.lbl));
 }

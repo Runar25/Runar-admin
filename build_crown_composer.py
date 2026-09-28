@@ -177,8 +177,6 @@ HTML = r"""<!DOCTYPE html>
       </div>
       <div class="card"><div class="lbl sec">TVAR &middot; co strom rika</div><div class="tune" id="tune-crown"></div>
         <div class="lbl sec" style="margin-top:10px">VZHLED &middot; jak vypada</div><div class="tune" id="tune-crown-look"></div>
-        <div class="lbl sec" id="park-head" style="margin-top:10px;cursor:pointer"><span id="park-arrow">&#9656;</span> ODLOZENO &middot; dorozhodnute / jiny rezim</div>
-        <div class="tune" id="tune-crown-park" style="display:none"></div>
         <div class="btnrow"><button class="jb" data-reset="crown">reset koruny</button></div></div>
       <div class="card"><div class="lbl sec">TUNING &middot; KMEN</div><div class="tune" id="tune-trunk"></div>
         <div class="btnrow"><button class="jb" data-reset="trunk">reset kmene</button></div></div>
@@ -416,42 +414,27 @@ HTML = r"""<!DOCTYPE html>
      (hodnoty zustavaji na defaultu v crownT/trunkT/rootsT; vratit = pridat radek zpet). */
   /* TVAR — paky, ktere rozhoduji, CO strom o cloveku rika. Tady ma ladeni smysl:
      je to rozhodovani o modelu, ne o vzhledu. */
+  /* 2026-09-28 (KUKY: "odstran ty, co nic nedelaji a co nam jsou k nicemu"), zmereno min->max na jeho
+     strome: exitFloor a kidsMax 0 % (5 pramenu, zadna graduace) · maxMains k nicemu (pramen = element,
+     posuvnik jen skryval elementy; KUKY ho dal na 25 a cekal 25 vetvi). */
   makeTune('tune-crown', [
-    ['maxMains',3,25,1,'max hlavnich vetvi'],['exitFloor',0.05,0.85,0.01,'kam nejniz smi vetev (proti palme)'],
     ['intZone',0,0.4,0.02,'intention -> vyska'],['areaSide',0,0.8,0.05,'area -> strana'],
     ['aettStr',0,1,0.05,'aett -> charakter'],
-    ['twigMax',2,12,1,'max vetvi na vetvi (pak o patro niz)'],
-    ['kidsMax',0,4,1,'runy schovane pod graduantem'] ], crownT);
+    ['twigMax',2,12,1,'max vetvi na vetvi (pak o patro niz)'] ], crownT);
   /* VZHLED — jak to vypada. Doladi se jednou a zapece; nema smysl u toho sedet. */
   makeTune('tune-crown-look', [
     ['length',30,160,1,'delka hlavni'],['curve',0,1.5,0.05,'gesto (ohyb)'],['variace',0,1,0.05,'variace vetvi'],
-    ['gradLen',1,5,0.05,'delka graduanta'],['gradStrandW',0.2,1,0.05,'sila pramene graduanta (1 = jako rodic)'],
     ['objem',0,1.5,0.05,'OBJEM: presah stinu pres obrys'],['tonPramene',0,0.6,0.02,'rozdil tonu mezi prameny'],
     ['zrod',0.05,1,0.05,'velikost nove vetve (zrod)'],['dorust',1,12,1,'za kolik cteni vetev doroste'] ], crownT);
-  /* ODLOZENO — nic se nemaze (KUKY): bud uz je to rozhodnute, nebo to v tomhle rezimu
-     nefunguje. `pestrost cteni` je mrtva vzdy, kdyz je log (pouziva ji jen demo strom);
-     tri WebGL paky ziji jen v rezimu "WebGL kura". Kura cela sem — "neni to ono". */
-  makeTune('tune-crown-park', [
-    ['twU0',0,1,0.01,'odbocky od (podil delky)'],['twU1',0,1,0.01,'odbocky do'],
-    ['gradU0',0,1,0.01,'graduanti od'],['gradU1',0,1,0.01,'graduanti do'],
-    ['twigSpread',0,0.1,0.005,'rozestup opakovani'],['gradGap',0,6,0.2,'odstup graduanta uvnitr vetve'],
-    ['gradStrand',0,1,1,'ZRUSENO 2026-09-28: verze B (pramen vedle rodice = shluk)'],
-    ['childN',0,6,1,'ZRUSENO 2026-09-28: vetvicky bez runy'],['twigPer',1,8,1,'ZRUSENO 2026-09-28: opakovani = silnejsi tataz vetev'],
-    ['hrebeny',0,1.5,0.05,'HREBENY kury'],['textura',0,1,0.05,'textura kury'],['ryhy',0,1.5,0.05,'sila ryh v kure'],
-    ['stylKury',0,1,1,'styl kury: 0 rytina / 1 malba'],['kuraVek',0,1,1,'kura nese vek pramene'],
-    ['glZrno',8,120,2,'WebGL: meritko kury podel vetve'],['glHloubka',0,1,0.05,'WebGL: hloubka prasklin'],
-    ['diversity',0,1,0.05,'pestrost cteni (mrtva, kdyz je log)'] ], crownT);
-  (function(){ var h=document.getElementById('park-head'), b=document.getElementById('tune-crown-park');
-    if(h&&b) h.addEventListener('click', function(){ var open=(b.style.display!=='none');
-      b.style.display=open?'none':'block';
-      document.getElementById('park-arrow').innerHTML=open?'&#9656;':'&#9662;'; }); })();
+  /* ODLOZENO odstraneno 2026-09-28: 12 z 15 posuvniku melo na KUKYho strome 0 % ucinek (graduace,
+     odbocky, verze B, WebGL, pestrost), zbytek byla kura, ktera je odlozena. Hodnoty zustaly v crownT. */
   /* PROPLETANI: swirlX = twist * laneStep * 1.1 * sin(faze + twist*h*2PI) -> aby se prameny
      krizily, musi byt amplituda vetsi nez rozestup lane (laneStep = thickness * bundleSpread).
      Pri 25 pramenech to delalo nahuštění samo; pri 9 se to musi nastavit. */
   makeTune('tune-trunk', [ ['thickness',3,16,0.5,'sila pramene'],['lean',0,2,0.05,'naklon'],
     ['twist',0,2.5,0.05,'propletani pramenu'],['bundleSpread',0.08,0.9,0.02,'rozestup pramenu'],
     ['wobble',0,2,0.05,'vlnitost kmene'],['wobFreq',0.3,3,0.1,'frekvence vlneni'],
-    ['strandEvery',20,365,5,'novy pramen (dny)'],['treeHeightMax',300,560,10,'vyska kmene'] ], trunkT);
+    ['treeHeightMax',300,560,10,'vyska kmene'] ], trunkT);   /* strandEvery pryc 2026-09-28: prameny vznikaji s elementem, ne s vekem (0 %) */
   /* KORENY (F4): paky ZAPOJENE. Drive: curve/wobble/tipLift natvrdo v rTT + `rootFan` nedelal nic
      (tvaroval jen tu cast limbu, co se od Kroku 3 nekresli). */
   makeTune('tune-roots', [ ['fan',-1.6,1.6,0.05,'rozevreni korenu (- = dovnitr/krizi)'],['length',40,200,5,'delka korenu'],
