@@ -7582,3 +7582,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Neověřeno:** report 08:46 „kolekce je mimo rámeček na mobilu“ — na 360 i 375 px (EN i IS, přihlášený i návštěvník) se nereprodukuje;
   se zvětšeným písmem systému (115 %) přetéká **horní lišta** (`.topbar-right`, +11 px), ne kolekce. Čeká na screenshot od ownera.
 - Affected doc(s): žádný.
+
+## 2026-09-28 (4) — Adminská stránka Yggdrasilu (`runar-yggdrasil.html`) archivována
+
+- **Rozhodl:** KUKY 2026-09-28 *„yggdrasil co je ve shrine archivovat“* (BACKLOG: napojit na buildery, nebo archivovat).
+- **Proč:** stránka „The World of Yggdrasil“ (záložka 🌳 ve shrine) skládala tři prompty sama v template literálech, mimo buildery —
+  každé rozhodnutí o hlasu ji minulo (pořád vkládala rúnaþulu vypnutou 2026-08-09; 7× kopírovaný anglický pokyn „odpovídej islandsky“).
+  Spread Yggdrasil v readeru s ní nesouvisí a zůstává.
+- **Co:** soubor přesunut do `docs/archive/` (s hlavičkou proč), záložka ze shrine pryč, komentáře v `runar-runes.js` a
+  `runar-character.js` opraveny, `audit-is-yfirlestur.py` bez mrtvých položek. `formula_is` (rúnaþula) tím nemá žádného čtenáře —
+  zůstává v `runar-runes.js` jako lore.
+- Affected doc(s): `RUNAR_BACKLOG.md` — v tomto commitu.

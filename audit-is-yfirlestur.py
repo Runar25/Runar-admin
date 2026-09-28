@@ -49,9 +49,7 @@ FILES = [
     'runar-reading.js',
     'runar-tree.js',
     'runar-utils.js',
-    'runar-gathering.js',
     'runar-help.html',
-    'runar-yggdrasil.html',
     'runar-reader.html',
 ]
 

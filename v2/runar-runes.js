@@ -268,7 +268,7 @@ function lifeRuneSpan(rune, lang) {
 }
 function calcLifeRune(d, m, y) {
   d = Number(d); m = Number(m);
-  // Neplatné datum = žádná runa (null), ne náhodná runa. Nehází: runar-yggdrasil.html sem posílá ručně psané číslo bez kontroly
+  // Neplatné datum = žádná runa (null), ne náhodná runa. Nehází: adminská Yggdrasil stránka (archivována 2026-09-28) sem posílala ručně psané číslo bez kontroly
   // rozsahu a výjimka by rozbila vstup do Yggdrasilu. Úplnost TABULKY hlídá smoke (každý den roku má právě jednu runu).
   if (!(m >= 1 && m <= 12 && d >= 1 && d <= 31)) return null;
   const k = m * 100 + d;

@@ -1689,7 +1689,7 @@ var RP_SINGLE = {
     // Rúnaþula se do promptu NEVKLÁDÁ a mechanika je pryč (2026-08-10). Vkládala hotovou
     // větu z `formula_is` — tedy DEFINICI runy tři řádky nad zákazem definic
     // (_describeRule) — a model ji opisoval doslova, 2/2 v ostrých IS čteních.
-    // Formule zůstávají v runar-runes.js jako lore (čte je i runar-yggdrasil.html),
+    // Formule zůstávají v runar-runes.js jako lore (jediný čtenář, adminská Yggdrasil stránka, archivován 2026-09-28),
     // jen sem nevedou. Cesta zpět je `git revert`, ne vypnutá větev čekající v kódu.
     langInstr:'',
     worldFb:function(pk){ return 'lifandi leiðin'; },
