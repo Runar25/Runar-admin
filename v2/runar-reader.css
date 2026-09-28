@@ -747,12 +747,6 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 /* Empty state */
 .journal-empty{text-align:center;padding:36px 20px;font-family:'Cinzel',serif;font-size:0.63em;letter-spacing:2px;color:var(--muted);line-height:2;}
 
-/* ── THE GATHERING ── */
-.whispers-section{border:1px solid rgba(255,191,0,0.18);background:rgba(255,191,0,0.025);padding:20px 22px;margin-bottom:28px;}
-.whispers-title{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:3px;color:var(--gold);margin-bottom:8px;}
-.whispers-sub{font-size:0.82em;font-style:italic;color:var(--gold);opacity:0.65;margin-bottom:16px;line-height:1.65;letter-spacing:0.5px;}
-.whispers-desc{font-size:0.86em;font-style:italic;color:var(--muted);line-height:1.75;margin-bottom:18px;}
-.whispers-desc strong{color:var(--gold);font-style:normal;font-weight:400;}
 /* Loading pulse */
 @keyframes runar-breathe{0%,100%{opacity:0.4;}50%{opacity:1;}}
 /* Tester bar — viditelny jen tester uctum, drzeny stranou (mala, ztlumena). */
@@ -763,30 +757,6 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .whispers-loading-label{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2.5px;color:var(--gold);animation:runar-breathe 2.4s ease-in-out infinite;animation-delay:0.3s;}
 /* Heslo zrcadla pod loading labelem — klidné (bez dechu), --muted je pro text povolené (§5 zakazuje jen --dim) */
 .reading-loading-motto{font-style:italic;font-size:0.72em;line-height:1.55;color:var(--muted);max-width:340px;margin:12px auto 0;}
-.whispers-counter{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--teal);margin-bottom:14px;}
-.whispers-btn{width:100%;padding:12px;background:rgba(255,191,0,0.08);border:1px solid rgba(255,191,0,0.35);color:var(--gold);font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2.5px;cursor:pointer;transition:all 0.2s;margin-bottom:6px;}
-.whispers-btn:hover:not(:disabled){background:rgba(255,191,0,0.14);border-color:rgba(255,191,0,0.6);}
-.whispers-btn:disabled{opacity:0.35;cursor:default;}
-.whispers-btn.sec{background:transparent;border-color:var(--border2);color:var(--muted);margin-top:6px;}
-.whispers-btn.sec:hover:not(:disabled){border-color:var(--muted);color:var(--white);}
-.whispers-lock{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:1.5px;color:var(--muted);margin-top:10px;font-style:italic;}
-.whispers-need-more{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:1.5px;color:var(--muted);margin-top:8px;}
-/* Selection mode */
-.jcard-select-btn{display:none;margin-top:10px;background:none;border:1px solid rgba(255,191,0,0.3);color:var(--gold);font-family:'Cinzel',serif;font-size:0.55em;letter-spacing:2px;padding:6px 14px;cursor:pointer;transition:all 0.2s;opacity:0.7;}
-.jcard-select-btn:hover{opacity:1;border-color:rgba(255,191,0,0.7);}
-.jcard-select-btn.selected{background:rgba(255,191,0,0.1);border-color:var(--gold);opacity:1;}
-.whispers-selecting .jcard-select-btn{display:inline-block;}
-.jcard.whispers-selected{border-color:rgba(255,191,0,0.45);background:rgba(255,191,0,0.04);}
-/* Whispers output */
-.whispers-runes-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid rgba(255,191,0,0.12);}
-.whispers-rune-chip{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1.5px;color:var(--gold);opacity:0.9;}
-.whispers-rune-sep{color:var(--dim);opacity:0.4;font-size:0.7em;}
-.whispers-out-text{font-size:0.9em;font-style:italic;color:var(--muted);line-height:1.9;}
-.whispers-voice-btn{margin-top:20px;background:none;border:1px solid rgba(255,191,0,0.3);color:var(--gold);font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:2px;padding:9px 18px;cursor:pointer;transition:all 0.2s;display:block;width:100%;}
-.whispers-voice-btn:hover{border-color:rgba(255,191,0,0.65);}
-.whispers-voice-btn:disabled{opacity:0.35;cursor:default;}
-.whispers-audio-wrap{margin-top:10px;}
-.whispers-audio-wrap audio{width:100%;}
 
 /* ── TOAST removed per owner (green showToast notification) ── */
 

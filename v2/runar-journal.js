@@ -2,8 +2,7 @@
 // RÚNAR · JOURNAL
 // DB load, render, filter, audio playback for reading journal
 // Depends on globals: lang, currentUser, userTier, sb
-// Depends on functions: t(), _makeCapPlayer(), _capWire(),
-//   updateWhispersUI() [runar-gathering.js]
+// Depends on functions: t(), _makeCapPlayer(), _capWire()
 // ═══════════════════════════════════════════════════════
 
 // ─── DB: JOURNAL ─────────────────────────────────────────
@@ -163,7 +162,6 @@ function renderJournal(entries) {
             <div class="jcard-name">${nameU} · ${langU}</div>
             <div class="jcard-date">${dateStr}${_jVolby(e, false)}</div>
             <div class="jcard-excerpt" id="jex-${i}">${shortT}</div>
-            <button class="jcard-select-btn" id="jselect-btn-${i}" onclick="event.stopPropagation();toggleRuneSelection(${i})">${t('jcard_select')}</button>
           </div>
         </div>
         <div class="jcard-arrow" id="jarr-${i}">▾</div>

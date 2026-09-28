@@ -625,7 +625,8 @@
 - [x] ~~Strom se **neaktualizuje po čtení** (`renderLivingTree` jen při otevření tabu).~~ **Není vada — KUKY 2026-09-26:** strom se nemusí překreslit hned, změnu může člověk vidět klidně až druhý den. (Owner říká, že to už někde stojí; v `RUNAR_DECISIONS/TREE/DESIGN` jsem to nenašel, proto to píšu sem.)
 - [ ] `tree_state`/`tree_readings` — `sql/tree_state.sql` je STARÉ schéma (Vrstva A) pro tree-update; produkční strom čte z `readings` → rozhodnout: rozšířit / nahradit / zahodit.
 - [ ] `detectPatterns()` — motor Gatheringu, neimplementováno (čeká na patterns doc + tree_state).
-- [ ] **Nahradit `runar-gathering.js`** + smazat mrtvý kód (modul + `<script>` + sw.js řádek pořád shipují; ř.60 hardcoded „COMING SOON" = §10).
+- [ ] **Nahradit `runar-gathering.js`** <!-- doc-links:ok 2026-09-28 soubor záměrně smazán, odkaz je historie --> — ✅ *mrtvý kód smazán 2026-09-28* (modul, `<script>`, sw.js, výběr karet v deníku, CSS, klíče
+  překladů; DECISIONS 2026-09-28 (1)); stará logika je v gitu (`git log -- v2/runar-gathering.js`). Zbývá **nová podoba** (čeká na `detectPatterns()` výš).
 - [ ] **`data-i18n` refactor** — nejrobustnější prevence zaseklé angličtiny (dnes ruční wiring v updateUIText).
 - [ ] Ask Rúnar v2 — journal 7denní okno + asked-flag (persistence HOTOVÁ).
 - [ ] **GPT-6 sol jako model Rúnarova čtení** (KUKY 2026-09-23: „další krok bude nechat udělat GPT čtení Rúnara, ale ještě na tom pracujeme — dát to do backlogu“). Předstupeň hotový: admin tlačítko „GPT-6 sol“ = rozbor čtení (edge fn `gpt-review`). Evaly modelu vede CODE-read (`RUNAR_EVAL_LOG.md` 2026-09-22+). Pozor: islandská gramatika u solu je slabší (korektor: 3 škody na 30 čtení).

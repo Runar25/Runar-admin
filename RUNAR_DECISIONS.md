@@ -7543,3 +7543,21 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Kontrola:** protlačeno produkčním builderem — nový obraz v promptu single ~42–51/300 v EN i IS (Blank, Thurisaz, Sowilo, Dagaz);
   golden: změnily se jen řádky obrazu (los z větší sady); motivy, obraz napříč zařízeními, check-is zelené.
 - Affected doc(s): `RUNAR_BACKLOG.md` — v tomto commitu.
+
+## 2026-09-28 (1) — Úklid: ruční Gathering smazán (provedení rozhodnutí 2026-07-04), mrtvé pole `deeper` pryč
+
+- **Rozhodl:** KUKY 2026-09-28 *„jeď bod 7, úklid“*. Smazání modulu je **provedení** rozhodnutí 2026-07-04 („ruční Gathering =
+  MRTVÁ, ke smazání: modul + `<script>` v readeru + řádek v `sw.js`“), které do dneška nikdo neudělal.
+- **Ověřeno, že je mrtvý:** panel (`whispers-section/-desc/-request-btn`) v HTML není od 2026-06-07, výběr karet
+  (`enterWhispersSelection`) nic nevolalo, `updateWhispersUI` běžel naprázdno; poslední Gathering čtení v DB 2026-05-30 (2 celkem).
+- **Co:** modul `v2/runar-gathering.js` + `<script>` + řádek v `sw.js` · volání z `updateUIText` · skryté tlačítko výběru na každé kartě
+  deníku · CSS jen pro modul (`whispers-section…`, výběr karet, výstup; `whispers-loading-*` zůstává — nese načítání čtení) · 18 klíčů
+  překladů (EN+IS) · `smoke.py` seznamy. Cestou zmizel i uživateli neviditelný islandský text s tvarem *helgisiðr* (staroseverský, ne
+  dnešní *helgisiður*).
+- **`deeper`:** `_parseSegments` vracel `deeper` z `deeper_meaning`, `runar-reading.js` ho ukládal do `_lastDeeper` — žádný prompt
+  o `deeper_meaning` nežádá a nikdo ho nečetl. Pryč. Zbloudilé `deeper_meaning` se do textu dál nedostane (smoke ⑦ případ „deeper field“).
+- **Zůstává (plán, RUNAR_TREE.md §7):** Gathering = automatický nad deníkem přes `detectPatterns()`; cena v `SPREAD_COSTS.gathering`
+  nechána pro něj. `_moodContext` z mého seznamu už v kódu nebyl (0 výskytů).
+- **Kontrola:** prohlížeč (reader bez modulu: 0 chybějících funkcí, všechny skripty 200, `updateUIText` na deníku projde), smoke zelený,
+  golden beze změny.
+- Affected doc(s): `CLAUDE.md` (výpis souborů, load order, věta u spreadů) · `RUNAR_BACKLOG.md` · `RUNAR_DESIGN.md` — v tomto commitu.

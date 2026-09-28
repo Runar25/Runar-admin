@@ -19,9 +19,8 @@
 // ─── PURE PROMPT BUILDER ─────────────────────────────────────
 // Receives everything as parameters — no globals read.
 // Returns the full prompt string for _generateReading().
-// Fáze A — segmentovaný výstup: parse JSON [{rune,text,deeper_meaning}].
-// Fallback: když to není JSON, ber celý text jako jedno čtení (graceful). deeper drží jen v paměti.
-var _lastDeeper = '';
+// Fáze A — segmentovaný výstup: parse JSON [{rune,text}]. Fallback: když to není JSON, ber celý text jako jedno čtení.
+// 2026-09-28: `_lastDeeper` pryč — `deeper_meaning` žádný prompt nežádá a hodnota se nikde nečetla.
 var _lastSegs = [];  // Fáze B1: per-rune [{rune,text}] segments of the last reading (tap highlight)
 // Runove OBJEKTY posledniho cteni (single i spread). Napoveda i Ask prompt potrebuji vedet,
 // KTERE runy padly — a to `_lastSegs` neumi: jeho jmena psal model do JSON, takze porovnani
@@ -393,7 +392,6 @@ async function _generateReading() {
   // Unified reading — single block, no split
   var _seg = _parseSegments(res.text);
   const reading = _seg.reading.trim();
-  _lastDeeper = _seg.deeper; // Fáze A: deeper jen v paměti (zatím se neukládá/nezobrazuje)
   _lastSegs = _seg.segs;
   _lastDrawn = [readerRune];
   readerTexts[lang] = { short: reading, deep: '' };
@@ -1329,7 +1327,6 @@ async function _generateSpreadReading(o) {
 
   var _seg = _parseSegments(res.text || '');
   var text = _seg.reading;
-  _lastDeeper = _seg.deeper; // Fáze A: deeper jen v paměti
   _lastSegs = _seg.segs;
   _lastDrawn = (o.runes || []).slice();
   readerTexts[lang] = { short: text, deep: '' };

@@ -758,7 +758,7 @@ Stará funkce (týdenní rituál, whispers-section, journal karta) odstraněna:
 - updateWhispersUI() odstraněno z renderJournal()
 - Stará DB data (area='gathering') zůstávají v DB — tichý skip při renderování
 
-runar-gathering.js zachován beze změny — čeká na reimplementaci jako tree pattern detector.
+Starý modul Gatheringu **odstraněn 2026-09-28** (DECISIONS 2026-07-04: ruční Gathering = mrtvý, ke smazání; 2026-09-28 (1) = provedení). Nová podoba = automatický Gathering nad deníkem, `RUNAR_TREE.md` §7. <!-- doc-links:ok 2026-09-28 soubor záměrně smazán -->
 Nová logika potřebuje tree_state DB (neexistuje). Implementace: čeká na V3.
 
 ### Vegvísir (8 ramen, seriálový) — ÚČEL A ČAS (owner ratifikoval 2026-08-23)
@@ -1216,7 +1216,7 @@ Corrections blok z getCorrPrompt() musí být vždy připojen k IS promptu.
 Implementováno ve všech 3 generováních ✅:
 - Normální čtení: buildReadingPromptIS()
 - Life rune: buildLifeRunePromptIS()
-- The Gathering: buildWhispersPrompt() IS větev
+- ~~The Gathering: buildWhispersPrompt() IS větev~~ (modul odstraněn 2026-09-28; nový Gathering prompt musí vrstvu korekcí mít taky)
 
 Každý nový prompt musí žít v mytologickém světě.
 Rúnar není asistent. Je průvodce na cestě Rune Seekera.

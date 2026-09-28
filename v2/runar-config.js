@@ -243,7 +243,7 @@ const APP = {
 // Determines intensity of pattern reactions on the tree.
 // Does NOT gate whether a pattern triggers — only how strongly.
 // Adjust after first 50 users based on real data.
-// Used by: detectPatterns() in runar-gathering.js / runar-tree.js
+// Used by: plánovaný detectPatterns() (BACKLOG) — zatím ho nic nečte; runar-gathering.js odstraněn 2026-09-28.
 const PATTERN_WINDOW = {
   high: 7,    // days — strong visual + heavier reading tone
   mid:  14,   // days — medium visual

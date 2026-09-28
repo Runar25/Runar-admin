@@ -17,7 +17,6 @@ JS_FILES = [
     'runar-utils.js',
     'runar-journal.js',
     'runar-tree.js',
-    'runar-gathering.js',
     'runar-auth.js',
     'runar-reading.js',
     'runar-app.js',
@@ -29,7 +28,6 @@ LOGIC_FILES = [
     'runar-reading.js',
     'runar-app.js',
     'runar-tree.js',
-    'runar-gathering.js',
     'runar-journal.js',
 ]
 

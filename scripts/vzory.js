@@ -9,7 +9,7 @@
 // systém · Single · Ask · Norns · Kříž · Horseshoe · Yggdrasil · životní runa · rozbor jména, EN i IS,
 // přes 80 losů (úhel, délka, konec, jméno, obraz) a varianty kontextu (otázka, oblast, hledání, záměr,
 // životní runa). Čtení a otázka uživatele se podstrčí jako «CTENI»/«OTAZKA», aby se nepočítaly jako vzor.
-// Není tu The Gathering (runar-gathering.js se nahrazuje) ani laboratorní buildSysPromptV2.
+// Není tu The Gathering (runar-gathering.js odstraněn 2026-09-28) ani laboratorní buildSysPromptV2.
 //
 //   node scripts/vzory.js            → souhrn + znění
 //   node scripts/vzory.js --json     → strojově

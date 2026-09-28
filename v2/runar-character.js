@@ -45,7 +45,7 @@ Rúnar does not use exclamation marks.`,
   //    KOHO oslovit, `grammar` JAKYM SLOVESNYM TVAREM (þú treystir, ne infinitiv).
   // M2 (2026-09-18, krok 2): format VYPRAZDNEN — kazdy builder nese svuj format ve SVE zprave
   // (single: LENGTH_BUDGETS+closing · spready: closing/bigInstruction+json · Ask: rules ·
-  // zivotni runa: sections · rozbor jmena: task · Gathering: buildWhispersPrompt). Druhou
+  // zivotni runa: sections · rozbor jmena: task). Druhou
   // osobu drzi grammar bod 1. Pole ZUSTAVA kvuli vlastni postave (jeji format se sklada dal);
   // hranice: vlastni postava bez formatu I gramatiky ted druhou osobu nema odkud vzit —
   // zapsano v DECISIONS 2026-09-18 (2).
@@ -1631,7 +1631,7 @@ ${base.format ? 'RESPONSE FORMAT\n' + base.format + '\n\n' : ''}${base.grammar ?
 // post-processor `applyISCorrections` odstraněn 2026-08-09 (vypnutý od 10. 7.,
 // ale pořád volaný na 5 místech — kód tvrdil, že se korekce aplikují).
 // Pravidlo „žádná 4. vrstva" bydlí v CLAUDE.md §2.
-// Called by: runar-reading.js, runar-gathering.js, runar-tree.js, runar-app.js
+// Called by: runar-reading.js, runar-tree.js, runar-app.js
 function getCorrPrompt(lang, corrections) {
   if (!corrections || !corrections.length) return '';
   const rel = corrections.filter(c => c.from_word && c.to_word && (!c.lang || c.lang === 'both' || c.lang === lang));
@@ -1647,7 +1647,7 @@ function getCorrPrompt(lang, corrections) {
 // ─── SEGMENT PARSER (model JSON output -> flowing text) ──
 // Shared reader+shrine (§18/§20). Server mirror = claude-proxy composeReading (smoke ⑦).
 function _parseSegments(raw) {
-  if (!raw) return { reading: '', deeper: '', segs: [] };
+  if (!raw) return { reading: '', segs: [] };
   var s = String(raw);
   var a = s.indexOf('['), b = s.lastIndexOf(']');
   if (a !== -1 && b > a) {
@@ -1661,11 +1661,11 @@ function _parseSegments(raw) {
           reading = (reading + ' ' + tail).trim();
           if (segs.length) segs[segs.length - 1].text = (segs[segs.length - 1].text + ' ' + tail).trim();
         }
-        return { reading: reading, deeper: j.map(function (x) { return x.deeper_meaning || ''; }).filter(Boolean).join('\n'), segs: segs };
+        return { reading: reading, segs: segs };   // 2026-09-28: `deeper` pryč (nikdo ho nečetl); zbloudilé deeper_meaning se dál do textu nedostane (smoke ⑦)
       }
     } catch (e) {}
   }
-  return { reading: String(raw), deeper: '', segs: [] };
+  return { reading: String(raw), segs: [] };
 }
 
 // ─── READING PROMPT BUILDERS ────────────────────────────

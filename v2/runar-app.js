@@ -774,7 +774,6 @@ function _updateGateTexts() {
   setText('journal-gate-btn', lang === 'is' ? 'GERAST LEITANDI →' : 'BECOME A RUNE SEEKER →');
   // Re-render journal if it's open (picks up new lang labels)
   if (activeAppTab === 'journal' && _journalCache.length > 0) renderJournal(_journalCache);
-  else if (activeAppTab === 'journal') updateWhispersUI();
   // Single-source text updates for elements not covered elsewhere
   setText('redeem-btn', lang === 'is' ? 'INNLEYSA' : 'REDEEM');
   // Podnadpis slibuje magic link jen tehdy, kdyz e-mailove prihlaseni opravdu je (AUTH_EMAIL_ENABLED).

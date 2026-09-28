@@ -25,7 +25,6 @@ runar-character.js    — DEF_CHAR_EN/IS, buildSysPrompt(), RP_* packs + buildRe
 runar-utils.js        — t(), tp(), vn(), vl(), setText/setSt/showToast, stream, isAdmin() (seznam ADMIN_EMAILS v runar-config.js)
 runar-journal.js      — loadJournal(), renderJournal(), filterJournal()
 runar-tree.js         — updateTreeTab(), generateLifeRuneReading(), loadLifeRuneFromDB()
-runar-gathering.js    — The Gathering (NAHRADIT — stará logika, čeká na tree_state DB)
 runar-auth.js         — updateAuthUI(), PWA, sign-in, redeem
 runar-reading.js      — startReading(), _generateReading(), generateVoice()
 runar-app.js          — state, DB init, fetchUserProfile(), showAppTab()
@@ -49,7 +48,7 @@ runar-config.js → runar-runes.js → runar-translations.js → runar-character
 → runar-utils.js → runar-svgs.js
 → [reader]: runar-journal.js
             → tree-lab-trunk-composer/runar-trunk.js → tree-lab-branch-composer/runar-branch.js
-            → runar-tree-prod.js → runar-tree.js → runar-gathering.js
+            → runar-tree-prod.js → runar-tree.js
             → runar-auth.js → runar-reading.js → runar-app.js
             → runar-reporter.js → runar-rune-popup.js → runar-helper.js
 ```
@@ -355,10 +354,10 @@ Kredity = **per typ čtení**, NE počet run. Počty run i ceny = `SPREAD_COSTS`
 (config = zdroj pravdy, **tady se neopisují**). Předplatné počítá tytéž jednotky. Founding = Norns.
 
 Které spready existují, vlastní `SPREAD_COSTS` / `SPREAD_CONFIG` — **tady se to neopisuje**.
-Jediná výjimka je The Gathering: v configu není a nahrazuje se (proč → výpis souborů výš
-u `runar-gathering.js`, blocker → `RUNAR_BACKLOG.md`).
+Jediná výjimka je The Gathering: starý modul `runar-gathering.js` odstraněn 2026-09-28 (v aplikaci <!-- doc-links:ok 2026-09-28 soubor záměrně smazán, odkaz je historie -->
+neměl vstup, `RUNAR_DECISIONS.md` 2026-09-28 (1)); nová podoba čeká na `detectPatterns` → `RUNAR_BACKLOG.md`.
 <!-- 2026-08-18: tady stál výčet pěti spreadů + „= ✅ produkce", tedy STAV, který §20.4 zakazuje
-     a který navíc říkal totéž co řádka o `runar-gathering.js` o 326 řádek výš. Duplikát uvnitř
+     a který navíc říkal totéž co tehdejší řádka o modulu Gatheringu o 326 řádek výš. Duplikát uvnitř
      jednoho souboru; pět spreadů je v configu, takže se dá odkázat místo opisovat. -->
 
 **Gating:** blokuje se jen **Visitor** (nepřihlášený) — ten má Single 1×. Každý přihlášený dosáhne
