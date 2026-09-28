@@ -45,6 +45,15 @@ měř přímo na enginu (část `1b`).
   = 1 pramen".) Lab nástroj: `tree_diag.js lab2` / `lab2b` (protlačí skutečnou stránku labu).
 - Owner si založí nový strom a poroste **současně se mnou** — každý segment opravit od začátku.
 
+## Doplněno 2026-09-28 — nový model postaven v labu
+- Owner potvrdil pravidla 1–7 + a) + b); postaveno a změřeno na jeho stromě (pravidla bydlí v
+  `RUNAR_TREE.md` §5, tady se neopisují). Kontroly: `tree_diag.js model` (jeho uložený strom) a
+  `model2` (náhodné stromy + přehrání po jednom čtení).
+- **Další krok:** owner si strom v labu prohlédne (Ctrl+F5). Otevřené: **mapa run / priority**
+  (kam se která runa naklání, výška, strana) — pravidlo 7; a **port do aplikace** až po jeho ok.
+- Bash v téhle session občas padá na „classifier no verdict" — neopakovat do 10×, dělat mezitím
+  čtení/dokumenty a dokončit, až owner napíše „pokračuj".
+
 ## Co visí
 - ~~Oprava hooku `tree-guard.sh`~~ — hotovo 2026-09-27.
 - Blank má ve stromě jiný znak (◇ proti ○); čtení s Blank to řeší zvlášť (`blank → odinn`) — ověřit v části 3.

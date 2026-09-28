@@ -244,6 +244,7 @@ HTML = r"""<!DOCTYPE html>
   var _pick=[], _selK=null, _dbgAll=[], _hidden={}, _fit=1;   /* _fit<1 = strom se zmensil, aby se vesel */   /* _hidden[k]=1 -> pramen se nekresli (prehled: zap/vyp) */
   var RBK={}; B.RUNES.forEach(function(r){ RBK[r.k]=r; });   /* rune key -> record (pro inspekci twigu) */
   var _ownMain={};   /* runy, ktere uz maji vlastni pramen (plni draw) — ty nevisi jako odbocky */
+  var _runeHost={};  /* runa -> index pramene, na jehoz vetvi roste (stableAssign) */
   /* PREHLED VETVI: hodnoty vedle sebe (prehlednejsi nez cist ze stromu). Cte TATAZ meta,
      co pohani inspekci -> zadny druhy zdroj pravdy, nemuze se rozejit. */
   function renderBTable(){
@@ -298,7 +299,7 @@ HTML = r"""<!DOCTYPE html>
 
     if(!m.twig && !m.root){                    /* HLAVNI VETEV: proc tady + proc tak velka */
       H+='<br><b style="color:var(--gold)">PROC TADY</b><br>'+
-         'vyska na kmeni <b>'+P(m.frac)+'</b> '+D('= kostra '+P(m.eFrac)+' '+(m.intPart>=0?'+':'')+P(m.intPart)+(m.norn?(' z pozice Noren ('+m.norn+')'):' z intention'))+'<br>'+
+         'vyska na kmeni <b>'+P(m.frac)+'</b> '+D('= kostra '+P(m.eFrac)+' '+(m.intPart>=0?'+':'')+P(m.intPart)+(m.norn?(' z pozice Noren ('+m.norn+')'):' z intention')+(Math.abs(m.gapPart||0)>1e-6?(' '+(m.gapPart>=0?'+':'')+P(m.gapPart)+' rozestup od starsiho pramene'):''))+'<br>'+
          'smer <b>'+deg(m.ang)+'</b> '+D('= kostra '+deg(m.eAng)+' '+(m.leanPart>=0?'+':'')+deg(m.leanPart)+' life-rune '+(m.areaPart>=0?'+':'')+deg(m.areaPart)+' area')+'<br>'+
          '<br><b style="color:var(--gold)">PROC TAK VELKA</b><br>'+
          'pramen roste <b>'+Math.round(m.strandAge)+' dni</b> '+D('(narodil se v den '+Math.round(m.born)+')')+'<br>'+
@@ -402,12 +403,11 @@ HTML = r"""<!DOCTYPE html>
     ['maxMains',3,25,1,'max hlavnich vetvi'],['exitFloor',0.05,0.85,0.01,'kam nejniz smi vetev (proti palme)'],
     ['intZone',0,0.4,0.02,'intention -> vyska'],['areaSide',0,0.8,0.05,'area -> strana'],
     ['aettStr',0,1,0.05,'aett -> charakter'],
-    ['twigPer',1,8,1,'kolik tazeni = dalsi odbocka'],['twigMax',2,24,1,'strop odbocek na vetev'],
+    ['twigMax',2,24,1,'strop odbocek na vetev'],
     ['kidsMax',0,4,1,'runy schovane pod graduantem'] ], crownT);
   /* VZHLED — jak to vypada. Doladi se jednou a zapece; nema smysl u toho sedet. */
   makeTune('tune-crown-look', [
     ['length',30,160,1,'delka hlavni'],['curve',0,1.5,0.05,'gesto (ohyb)'],['variace',0,1,0.05,'variace vetvi'],
-    ['childN',0,6,1,'odbocky (twigy) — NENESOU runu, jen zahustuji'],
     ['gradLen',1,5,0.05,'delka graduanta'],['gradStrandW',0.2,1,0.05,'sila pramene graduanta (1 = jako rodic)'],
     ['objem',0,1.5,0.05,'OBJEM: presah stinu pres obrys'],['tonPramene',0,0.6,0.02,'rozdil tonu mezi prameny'] ], crownT);
   /* ODLOZENO — nic se nemaze (KUKY): bud uz je to rozhodnute, nebo to v tomhle rezimu
@@ -417,7 +417,8 @@ HTML = r"""<!DOCTYPE html>
     ['twU0',0,1,0.01,'odbocky od (podil delky)'],['twU1',0,1,0.01,'odbocky do'],
     ['gradU0',0,1,0.01,'graduanti od'],['gradU1',0,1,0.01,'graduanti do'],
     ['twigSpread',0,0.1,0.005,'rozestup opakovani'],['gradGap',0,6,0.2,'odstup graduanta uvnitr vetve'],
-    ['gradStrand',0,1,1,'VERZE B: graduant = vlastni pramen'],
+    ['gradStrand',0,1,1,'ZRUSENO 2026-09-28: verze B (pramen vedle rodice = shluk)'],
+    ['childN',0,6,1,'ZRUSENO 2026-09-28: vetvicky bez runy'],['twigPer',1,8,1,'ZRUSENO 2026-09-28: opakovani = silnejsi tataz vetev'],
     ['hrebeny',0,1.5,0.05,'HREBENY kury'],['textura',0,1,0.05,'textura kury'],['ryhy',0,1.5,0.05,'sila ryh v kure'],
     ['stylKury',0,1,1,'styl kury: 0 rytina / 1 malba'],['kuraVek',0,1,1,'kura nese vek pramene'],
     ['glZrno',8,120,2,'WebGL: meritko kury podel vetve'],['glHloubka',0,1,0.05,'WebGL: hloubka prasklin'],
@@ -570,9 +571,7 @@ HTML = r"""<!DOCTYPE html>
     var lg=state.log.slice(0,n);
     if(!lg.length) return {n:0,targetN:0,assign:[],els:[],total:1};
     var rt=routingFromLog(lg);
-    var realAge=lg.length*crownT.readingEvery, every=Math.max(20,trunkT.strandEvery);
-    var linearN=Math.min((trunkT.strandMax||28), 3+Math.floor(realAge/every));
-    var targetN=Math.max(1, Math.min(linearN, Math.round(crownT.maxMains)));
+    var targetN=Math.max(1, Math.round(crownT.maxMains));   /* = draw(): pocet pramenu neridi vek (2026-09-28) */
     var be=stableAssign(lg, rt.els, targetN);
     return {n:n, targetN:targetN, assign:be.map(function(e){return e.el;}), els:rt.els, total:rt.total};
   }
@@ -857,7 +856,7 @@ HTML = r"""<!DOCTYPE html>
     var seen=(be.runeSeen&&be.runeSeen.length)?be.runeSeen:null;
     if(!seen) return [];
     var brk=mainRuneOf(be,k).k, gset=(be.runeGrad||{}), pool=runesByEl[be.el]||B.RUNES;
-    var others=[]; for(var i=0;i<seen.length;i++){ if(seen[i]!==brk && !_ownMain[seen[i]]) others.push(seen[i]); }
+    var others=[]; for(var i=0;i<seen.length;i++){ if(seen[i]!==brk && !_ownMain[seen[i]] && _runeHost[seen[i]]===k) others.push(seen[i]); }
     return others.filter(function(x){ return gset[x]; })
                  .sort(function(a,b){ return (gset[a]-gset[b]) || (others.indexOf(a)-others.indexOf(b)); })
                  .slice(0,2)
@@ -915,7 +914,10 @@ HTML = r"""<!DOCTYPE html>
        runy uz NEPOSOUVA stavajici odbocky (konec preskakovani). Hlubsi urovne = puvodni
        dekorativni rekurze (male twigy) - NETKNUTE. */
     var childList=(childRunes && childRunes.length && typeof childRunes[0]==='object')?childRunes:null;   /* F2: i hloubeji - graduant nese vlastni odbocky */
-    var n=childList?childList.length:Math.max(0, Math.round(cfg.childN*sizeFactor));
+    /* 6 (2026-09-28, KUKY: "kazda vetev, ktera vznikne, nese runu"): vetve rostou JEN ze seznamu
+       run. Drive bez seznamu vznikla ozdobna rekurze (`childN`) — zakladaci Norny tak mely vetvicky
+       hned od prvniho cteni a kazda odbocka dalsi dve patra bez runy. */
+    var n=childList?childList.length:0;
     for(var c=0;c<n;c++){
       var ci=childList?childList[c]:null;
       var fu=ci ? (ci.u!=null ? ci.u                                                       /* F7: pevne misto runy (zlaty rez) */
@@ -1034,29 +1036,50 @@ HTML = r"""<!DOCTYPE html>
      -> zadne preskupeni. Vraci element-objekty jako assignBranchEls (engine downstream NETKNUTY). */
   function stableAssign(log, els, maxN){
     var elByName={}; els.forEach(function(e){ elByName[e.el]=e; });
-    var slots=[], nb={}, cnt={}, EXTRA=5, ELEM_CAP={fire:2,water:2,air:2,earth:2,shadow:1};   /* F0: strop hlavnich vetvi per element (stin 1), ne uniform */
+    var slots=[], nb={}, cnt={};
+    /* NOVY MODEL (2026-09-28, KUKY: "ano 1-7 plati, a) ano, b) ano"). Pramen = element, ne vek:
+       - runa elementu, ktery uz pramen ma -> vetev NA jeho vetvi (runeHost), ne novy pramen;
+       - element bez pramene -> pramen HNED pri prvni jeho rune. Drive az podle veku stromu
+         (3 + vek/80): na KUKYho strome zeme cekala 17 cteni a stin nedostal nic -> jeho runy
+         nebyly nikde videt;
+       - nejvys 1 pramen na element. Drive `EXTRA`: dominantni element dostal po 5 tazenich
+         druhy pramen (vzduch mel 2, stin 0). Vyjimka = zakladaci Norny (niz).
+       - a) ma-li element 2 prameny z Noren, nova runa jde na ten s MENE vetvemi (sticky:
+         kde jednou vyrostla, tam zustane). */
+    var runeHost={}, hostLoad={};
+    var fnd=(log.length && log[0].spread==='norns' && (log[0].runes||[]).length===3);
     /* ZAKLADACI NORNY (2026-09-27, KUKY: "kazda vetev, ktera vznikne, nese runu" + pozice Noren
        "ano"). Kazda ze tri run prvniho cteni = VLASTNI pramen, i kdyz dve sdileji element
        (drive: Kenaz·Fehu·Laguz -> jen 2 vetve, Fehu jako odbocka). Poradi slotu = vyznam pozice:
        skuld (budoucnost) = vudci vetev nahore, verdandi (ted) = strana, urd (minulost) = nejniz.
        Pozice v cteni = SPREAD_CONFIG.norns.positions (0 urd · 1 verdandi · 2 skuld). */
-    if(log.length && log[0].spread==='norns' && (log[0].runes||[]).length===3){
+    if(fnd){
       [{pos:2,axis:1,nm:'skuld'},{pos:1,axis:0,nm:'verdandi'},{pos:0,axis:-1,nm:'urd'}].forEach(function(n){
         var r=log[0].runes[n.pos]; if(!r || slots.length>=maxN) return;
         slots.push({ el:r.el, runeK:r.rune, norn:n.axis, nornName:n.nm }); nb[r.el]=(nb[r.el]||0)+1; });
     }
-    for(var i=0;i<log.length;i++){ var rs=log[i].runes||[];
-      for(var j=0;j<rs.length;j++){ var el=rs[j].el; cnt[el]=(cnt[el]||0)+1;
-        var want=Math.min((ELEM_CAP[el]||2), 1+Math.floor((cnt[el]-1)/EXTRA)), have=nb[el]||0;
-        while(have<want && slots.length<maxN){ slots.push({ el:el }); have++; nb[el]=have; }
+    var isMain={}; slots.forEach(function(sl){ isMain[sl.runeK]=1; });
+    for(var i=(fnd?1:0);i<log.length;i++){ var rs=log[i].runes||[];
+      for(var j=0;j<rs.length;j++){ var el=rs[j].el, rk=rs[j].rune; cnt[el]=(cnt[el]||0)+1;
+        if(!nb[el]){                                   /* 3: element bez pramene -> pramen hned */
+          if(slots.length<maxN){ slots.push({ el:el, runeK:rk, bornIdx:i }); nb[el]=1; isMain[rk]=1; }
+          continue;
+        }
+        if(isMain[rk] || runeHost[rk]!=null) continue; /* uz ma pramen / uz nekde visi (sticky) */
+        var best=-1;                                   /* 2 + a): vetev na prameni elementu s nejmene vetvemi */
+        for(var h=0;h<slots.length;h++){ if(slots[h].el!==el) continue;
+          if(best<0 || (hostLoad[h]||0)<(hostLoad[best]||0)) best=h; }
+        if(best>=0){ runeHost[rk]=best; hostLoad[best]=(hostLoad[best]||0)+1; }
       }
     }
     var seen={};
-    return slots.map(function(sl){ var nm=sl.el, o=(seen[nm]=(seen[nm]===undefined?0:seen[nm]+1));
+    var _out=slots.map(function(sl){ var nm=sl.el, o=(seen[nm]=(seen[nm]===undefined?0:seen[nm]+1));
       var base=elByName[nm]||{el:nm, count:cnt[nm]||1, world:ELEM_WORLD[nm], aett:ELEM_AETT[nm], rune:(runesByEl[nm]||B.RUNES)[0], runeSeen:[]};
       var out={}; for(var p in base) out[p]=base[p]; out.ord=o;
-      if(sl.runeK){ out.runeK=sl.runeK; out.norn=sl.norn; out.nornName=sl.nornName; }   /* zakladaci pramen: runa dana, ne ord-ta */
+      if(sl.runeK){ out.runeK=sl.runeK; out.norn=sl.norn; out.nornName=sl.nornName; }   /* runa pramene je dana, ne ord-ta */
+      out.bornIdx=(sl.bornIdx==null)?null:sl.bornIdx;   /* ctení, kdy pramen vznikl (zakladaci = null = od semínka) */
       return out; });
+    _out.runeHost=runeHost; return _out;
   }
   /* allocate n branches across elements proportional to count (largest remainder),
      interleaved for spread; each read element gets >=1 if room */
@@ -1132,7 +1155,9 @@ HTML = r"""<!DOCTYPE html>
        Objem kmene se NEkompenzuje tloustkou (KUKY: nechat a podivat se, jak to vypada). */
     var every=Math.max(20,trunkT.strandEvery);
     var linearN=3+Math.floor(realAge/every);                                     /* rust poctu v case */
-    var targetN=seed ? 0 : Math.max(1, Math.min(linearN, Math.round(crownT.maxMains)));     /* strop = maxMains */
+    /* 2026-09-28: pramen vznika s elementem, ne s vekem (pravidlo 3) -> strop je jen maxMains.
+       `linearN` (3 + vek/80) zustava jen jako cislo; pocet pramenu uz neridi. */
+    var targetN=seed ? 0 : Math.max(1, Math.round(crownT.maxMains));     /* strop = maxMains */
     var branchEls=stableAssign(vlog, els, targetN);
     var mainsN=seed ? 0 : Math.max(1, Math.min(targetN, branchEls.length));                 /* skutecne tazene runy */
     trunkT.strandMax=seed ? 3 : mainsN;   /* F0b: pramen = runa, 1:1 · seminko: 3 zakladaci prameny bez runy */
@@ -1145,10 +1170,22 @@ HTML = r"""<!DOCTYPE html>
     /* RUNA JEN JEDNOU (2026-09-27, KUKY: "nechci falesne vetve"). Runa s vlastnim pramenem uz
        nevisi jako odbocka na jine vetvi. Drive se dve vetve tehoz elementu nesly navzajem
        (zakladaci Kenaz·Fehu: Fehu vetev + Fehu odbocka na Kenazi). */
+    _runeHost=branchEls.runeHost||{};
     _ownMain={}; for(var om=0; om<mainsN; om++){ var omr=mainRuneOf(branchEls[om]||{}, om); if(omr) _ownMain[omr.k]=1; }
     var gradStrands=[], LANE0=[0,1,-1,2,-2,3,-3,4,-4,5,-5,6,-6,7,-7];
     delete trunkT.laneOrder; delete trunkT.bornOrder; delete trunkT.strandMin;
-    if(crownT.gradStrand){
+    /* PRAVIDLO 3 i v KMENI (2026-09-28). Engine kmene si pocet pramenu pocital sam podle veku
+       (3 + vek/80) a pramen s>=3 "rodil" az v den (s-2)*80, takze i po zmene stableAssign cekala
+       zeme na pramen do #19 a stin do #46 (zmereno na KUKYho strome). Ted: pramenu je tolik, kolik
+       je elementu (strandMin), a kazdy se narodi v den, kdy prisel jeho element (bornOrder). */
+    if(!seed && mainsN>0){ trunkT.strandMin=mainsN; trunkT.bornOrder=[];
+      for(var bo=0; bo<mainsN; bo++){ var bIx=(branchEls[bo]||{}).bornIdx;
+        trunkT.bornOrder[bo]=(bIx==null) ? 0 : SEED_AGE + bIx*crownT.readingEvery; } }
+    /* 5 (2026-09-28, KUKY: "zhluk nekolika vetvi na jedno misto nesmi existovat"): verze B pousti
+       pramen graduanta z kmene na TEMZ miste jako rodice -> na jeho strome 13 pramenu v 5 vyskach.
+       Posuvnik zustava (§26: navrat jen ocisteny), ale nic nedela. */
+    var GRAD_STRAND_ZRUSENO=true;
+    if(crownT.gradStrand && !GRAD_STRAND_ZRUSENO){
       var lanes=[], borns=[];
       for(var pk=0; pk<mainsN; pk++){ lanes[pk]=LANE0[pk%LANE0.length]; borns[pk]=(pk<3)?0:(pk-2)*every; }
       /* ZAKON "1 pramen = 1 runa" plati i tady. Element ma az 2 hlavni vetve a obe berou
@@ -1209,6 +1246,7 @@ HTML = r"""<!DOCTYPE html>
       return { rspine:rspine, rdepth:rdepth, rdevUsed:rdevUsed, rf:rf };
     }
     var mainInfo={};   /* verze B: co graduant potrebuje od rodice (patef vetve, vystup z kmene) */
+    var _usedFrac=[];  /* vysky vystupu STARSICH pramenu (pravidlo 5) */
     gt.limbs.forEach(function(L){
       var last=L.pts[L.pts.length-1];
       var rE=0; for(var ri0=L.pts.length-1;ri0>=0;ri0--){ if(L.pts[ri0].y>=trunkT.groundY-1){ rE=ri0; break; } }   /* KROK 3: baze = prvni bod od VRCHU na urovni zeme (prechod kmen<->koren). Backward-scan chyta i up-koren -> trunk-engine vlastni koren (0..rE) se VZDY vyloudi a nahradi composer korenem. */
@@ -1230,7 +1268,16 @@ HTML = r"""<!DOCTYPE html>
           var ang=e.ang + lifeLean*0.6 + (be.areaLat||0)*crownT.areaSide;       /* KROK 2: area -> strana */
           var nAx=(be.norn!=null) ? be.norn : (be.intAxis||0);   /* zakladaci Norny: osa pozice, jinak prumer intention elementu */
           var frac=clamp(e.frac + nAx*crownT.intZone, 0.30, 0.98);   /* KROK 2: intention -> vyska (jemny posun) */
-          var born=(k<3)?0:(k-2)*every, strandAge=realAge-born;
+          /* PRAVIDLO 5 (2026-09-28, KUKY: "kazdy pramen ma zacinat v jine vysce"). Utok na model
+             nasel prameny 2 % od sebe: urd (pozice ho posune dolu na 0,73) padl vedle pramene k=4
+             (0,71). Novy pramen se vyhne vyskam STARSICH o aspon `exitStep` — zkousi dolu, nahoru,
+             pak o dva kroky… Starsi pramen se nikdy nehne (prameny se zpracuji v poradi vzniku). */
+          var gapH=Math.max(0.02, crownT.exitStep), frac0=frac;
+          var clashAt=function(f){ for(var uq=0; uq<_usedFrac.length; uq++){ if(Math.abs(f-_usedFrac[uq])<gapH-1e-9) return true; } return false; };
+          if(clashAt(frac)){ for(var st=1; st<=12; st++){ var dn=clamp(frac0-st*gapH,0.30,0.98), up=clamp(frac0+st*gapH,0.30,0.98);
+              if(!clashAt(dn)){ frac=dn; break; } if(!clashAt(up)){ frac=up; break; } } }
+          _usedFrac.push(frac);
+          var born=(trunkT.bornOrder && trunkT.bornOrder[k]!=null) ? trunkT.bornOrder[k] : ((k<3)?0:(k-2)*every), strandAge=realAge-born;   /* = narozeni pramene v enginu kmene */
           var domV=clamp(be.count/rt.mx, 0.25, 1);            /* dominantni element = 1 */
           var sizeF=(0.35+0.65*ageLen(strandAge))*(0.6+0.5*domV);   /* born-visible: mlada vetev vyrasi na ~35% a doroste */
           var vigor=sizeF;
@@ -1268,7 +1315,7 @@ HTML = r"""<!DOCTYPE html>
           var tu=function(key,isG){ return runeU(bpool, key, isG?crownT.gradU0:crownT.twU0,
                                                              isG?crownT.gradU1:crownT.twU1); };
           if(seenK){ var rcnt=(be.runeCnt||{}), gset=(be.runeGrad||{}), tslot=0;
-            var others=[]; for(var ti=0;ti<seenK.length;ti++){ if(seenK[ti]!==brune.k && !_ownMain[seenK[ti]]) others.push(seenK[ti]); }
+            var others=[]; for(var ti=0;ti<seenK.length;ti++){ if(seenK[ti]!==brune.k && !_ownMain[seenK[ti]] && _runeHost[seenK[ti]]===k) others.push(seenK[ti]); }
             /* F2: max 2 graduace na pramen - nejtazenejsi z tech, co prekrocily prah (sticky) */
             /* F2-fix: STICKY VYBER - kdo prekrocil prah driv, ten graduuje a uz o to neprijde.
                Drive "dva nejtazenejsi" -> jedno cteni prehodilo poradi, graduant se vymenil
@@ -1281,16 +1328,20 @@ HTML = r"""<!DOCTYPE html>
             var host=null;
             for(var tj=0;tj<others.length;tj++){ var rk2=others[tj];
               var tn=rcnt[rk2]||1, tg=0.55+0.45*Math.min(1,(tn-1)/4);
+              /* b) (2026-09-28, KUKY): opakovana runa = TATAZ vetev silnejsi a delsi, zadna druha.
+                 Do 5 tazeni roste jako dosud, pak dal pomalu zakonem praxe F5 (bez stropu). */
+              var pfN=function(n){ return 0.62+0.27*Math.log(1+(n-1)/2)/Math.log(3); };
+              var tMore=(tn>5)?pfN(tn)/pfN(5):1; tg*=tMore;
               /* F9: ODBOCKA ZA KAZDY VYSKYT. Prvni tazeni = odbocka na miste sve runy (zlaty rez),
                  kazde dalsi `twigPer` tazeni prida vyhon VEDLE ni (stridave nad/pod) - shluk je
                  zadouci, cte se jako "sem chodis casto". Strop `twigMax` drzi citelnost. */
-              var reps=1+Math.floor((tn-1)/Math.max(1,crownT.twigPer));
+              var reps=1;   /* b): drive F9 = odbocka za kazde `twigPer`-te tazeni (shluk tehoz); zruseno 2026-09-28 */
               var baseU=tu(rk2, !!isG[rk2]);
               for(var rp=0; rp<reps; rp++){
                 if(twRunes.length>=crownT.twigMax) break;
                 var uu=clamp(baseU + rp*crownT.twigSpread*((rp%2)?-1:1), crownT.twU0, crownT.twU1);
                 var gg=Math.max(0.45, tg*(1-0.10*rp));          /* opakovani jsou drobnejsi */
-                if(rp===0 && isG[rk2]){ var ge={ k:rk2, slot:tslot, slots:twSlots, g:1.35, grad:true, kids:[], n:tn, u:uu };
+                if(rp===0 && isG[rk2]){ var ge={ k:rk2, slot:tslot, slots:twSlots, g:1.35*tMore, grad:true, kids:[], n:tn, u:uu };
                   twRunes.push(ge); tslot++; host=ge; }
                 else if(rp===0 && host && host.kids.length < crownT.kidsMax){
                   host.kids.push({ k:rk2, slot:host.kids.length, slots:twSlots, g:tg, n:tn, u:uu }); }
@@ -1316,7 +1367,7 @@ HTML = r"""<!DOCTYPE html>
             mainLimb.age01 = clamp(strandAge/Math.max(1,trunkT.matureDays), 0, 1);   /* pro `kuraVek` */
             _pick.push({ k:k, pts:mainLimb.pts, meta:{ el:be.el, aett:be.aett, world:be.world, name:brune.name, g:brune.g, count:be.count,
               idx:k, ord:be.ord, runeN:(be.runeCnt&&be.runeCnt[brune.k])||null,
-              frac:frac, eFrac:e.frac, intPart:nAx*crownT.intZone, norn:be.nornName||null,
+              frac:frac, eFrac:e.frac, intPart:nAx*crownT.intZone, gapPart:frac-frac0, norn:be.nornName||null,
               ang:ang, eAng:e.ang, leanPart:lifeLean*0.6, areaPart:(be.areaLat||0)*crownT.areaSide,
               born:born, strandAge:strandAge, domV:domV, sizeF:sizeF, lenF:lenF, rootDev:rdevUsed,
               tw:twRunes.map(function(t){ return { name:(RBK[t.k]?RBK[t.k].name:t.k), n:t.n||0, g:t.g, grad:!!t.grad, rep:t.rep||0, pick:('t'+k+'_'+t.k+(t.rep?('_'+t.rep):'')),

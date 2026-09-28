@@ -4,6 +4,8 @@
 # §20: hodnoty (curve=0.65, maxMains=9…) NEOPISUJE — bydlí v kódu; tady je MAPA VZTAHŮ (co → co → jak).
 # VÝZNAM (co má páka ZNAMENAT + PROČ) doplňuje Cowork-tree (sémantická vrstva) — sloupec „význam →Cowork".
 # Vznik 2026-08-07 (CODE-tree). Živý dokument — bude se upravovat, jak na systému začneme dělat.
+# ⚠️ 2026-09-28: NOVÝ MODEL (RUNAR_TREE.md §5 — pramen = element, runy = větve na větvích, žádná větev bez runy)
+#    přepsal vrstvy D (kompozice) a H (odbočky/graduace). Tam, kde se tahle mapa rozchází, platí RUNAR_TREE.md.
 # Vlastník: CODE-tree (mechanika + implementace) · Cowork-tree (význam) · KUKY (rozhoduje).
 
 ## Jak číst

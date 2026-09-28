@@ -274,3 +274,69 @@ if (cast === 'own2') {
     v.filter(x => !prev.includes(x)).forEach(x => ev.push('#' + n + ' ' + x)); prev = v; }
   console.log('nove hlavni vetve (cteni -> vetev):', ev.join(' | '));
 }
+if (cast === 'model') {
+  // KONTROLA NOVEHO MODELU (2026-09-28) na ownerove ulozenem strome, s jeho posuvniky.
+  // Kazde pravidlo = jedno overeni na VYSLEDKU (co se nakreslilo), ne na kodu.
+  const HTML = process.argv[3] || null;
+  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const log = st.log, r = labRun(log, HTML, st);
+  const nm = k => B.RUNES.filter(q => q.k === k)[0].name;
+  console.log(r.grow.slice(0, 110));
+  const mains = r.picks, where = {};
+  mains.forEach(m => { where[m.name] = (where[m.name] || []).concat(['PRAMEN ' + m.el]);
+    (m.tw || []).forEach(t => { where[t.name] = (where[t.name] || []).concat(['vetev na ' + m.name]); }); });
+  mains.forEach(m => console.log('  PRAMEN', (m.name + '').padEnd(8), (m.el + '').padEnd(6), 'vyska', Math.round(m.frac * 100) + '%', (m.norn ? '(' + m.norn + ')' : '').padEnd(11),
+    '| vetve na nem:', (m.tw || []).map(t => t.name + ' ' + t.n + 'x' + (t.grad ? '*' : '')).join(', ') || '-'));
+  const drawn = [...new Set(log.flatMap(rd => rd.runes.map(x => nm(x.rune))))];
+  const perEl = {}; mains.forEach(m => perEl[m.el] = (perEl[m.el] || 0) + 1);
+  const hs = mains.map(m => m.frac).sort((a, b) => a - b); let gap = 1; for (let i = 1; i < hs.length; i++) gap = Math.min(gap, hs[i] - hs[i - 1]);
+  const els = [...new Set(log.flatMap(rd => rd.runes.map(x => x.el)))];
+  console.log('P2/P3 kazda tazena runa videt:', drawn.filter(n => !where[n]).length ? 'NE — chybi ' + drawn.filter(n => !where[n]).join(',') : 'ANO (' + drawn.length + ' run)');
+  console.log('b) kazda runa PRAVE JEDNOU:', drawn.filter(n => (where[n] || []).length > 1).length ? 'NE — ' + drawn.filter(n => (where[n] || []).length > 1).map(n => n + ' ' + where[n].join('+')).join(' | ') : 'ANO');
+  console.log('P3 kazdy tazeny element ma pramen:', els.filter(e => !perEl[e]).length ? 'NE — ' + els.filter(e => !perEl[e]).join(',') : 'ANO (' + els.join(',') + ')');
+  console.log('P4 pramenu na element:', JSON.stringify(perEl));
+  console.log('P5 nejmensi rozestup vysek pramenu:', Math.round(gap * 1000) / 10 + ' % vysky kmene');
+  const tw = r.allPicks.filter(p => String(p.k).startsWith('t')).length, runeTw = mains.reduce((a, m) => a + (m.tw || []).length, 0);
+  console.log('P6 klikatelnych vetvi na vetvich:', tw, '| run na vetvich:', runeTw, '| nakreslenych tvaru celkem:', r.fills.length);
+  let prev = [], ev = [];
+  for (let n = 1; n <= log.length; n++) { const v = labRun(log.slice(0, n), HTML, st).picks.map(m => m.name + '/' + m.el);
+    v.filter(x => !prev.includes(x)).forEach(x => ev.push('#' + n + ' ' + x)); prev = v; }
+  console.log('P3 kdy vznikl pramen:', ev.join(' | '));
+}
+if (cast === 'model2') {
+  // Utok na novy model: (1) prehrani po jednom cteni — nic uz vyrostleho se nesmi presunout
+  // (runa nezmeni pramen, pramen nezmeni runu, nezmizi); (2) Norny se 2 runami jednoho elementu
+  // (pravidlo a: vyvazene, kazda runa jednou); (3) 6 nahodnych stromu — pravidla 2-6 plati vzdy.
+  const K = n => B.RUNES.filter(r => r.name === n)[0];
+  const RB = B.RUNES.filter(r => r.k !== 'odinn');
+  const mk = (sp, rs) => ({ spread: sp, runes: rs.map(r => ({ rune: r.k, el: r.el })), area: null, intention: null });
+  const check = (log, lbl, replay) => {
+    const bad = []; let prevHost = {};
+    const steps = replay ? log.map((_, i) => i + 1) : [log.length];
+    let last = null;
+    for (const n of steps) {
+      const r = labRun(log.slice(0, n)); last = r;
+      const host = {}; r.picks.forEach((m, i) => { host[m.name] = 'P:' + i; (m.tw || []).forEach(t => { if (host[t.name]) bad.push('#' + n + ' ' + t.name + ' 2x'); host[t.name] = 'V:' + m.name; }); });
+      Object.keys(prevHost).forEach(x => { if (host[x] !== prevHost[x]) bad.push('#' + n + ' ' + x + ' ' + prevHost[x] + ' -> ' + (host[x] || 'ZMIZELA')); });
+      prevHost = host;
+    }
+    const drawn = new Set(log.flatMap(rd => rd.runes.map(x => B.RUNES.filter(q => q.k === x.rune)[0].name)));
+    const miss = [...drawn].filter(x => !prevHost[x]);
+    const hs = last.picks.map(m => m.frac).sort((a, b) => a - b); let gap = 1; for (let i = 1; i < hs.length; i++) gap = Math.min(gap, hs[i] - hs[i - 1]);
+    const perEl = {}; last.picks.forEach(m => perEl[m.el] = (perEl[m.el] || 0) + 1);
+    console.log(lbl.padEnd(34), '| pramenu', last.picks.length, JSON.stringify(perEl), '| chybi', miss.length, '| presunu/2x', bad.length, bad.slice(0, 3).join('; '), '| min rozestup', Math.round(gap * 1000) / 10 + '%');
+    return last;
+  };
+  // (2) zakladaci Norny se 2 ohnivymi + dalsi ohen
+  const f = [mk('norns', [K('Kenaz'), K('Fehu'), K('Laguz')]), mk('single', [K('Tiwaz')]), mk('single', [K('Sowilo')]), mk('single', [K('Dagaz')]), mk('single', [K('Thurisaz')]), mk('single', [K('Tiwaz')])];
+  const r2 = check(f, 'Norny 2x ohen + 4 dalsi ohnive', true);
+  r2.picks.forEach(m => console.log('     ', m.name, '->', (m.tw || []).map(t => t.name + ' ' + t.n + 'x').join(', ') || '-'));
+  // (3) nahodne stromy
+  let sd = 4242; const rnd = () => (sd = (sd * 1103515245 + 12345) >>> 0) / 4294967296;
+  const draw = (n, sp) => { const pool = RB.slice(), rs = []; for (let i = 0; i < n; i++) rs.push(pool.splice(Math.floor(rnd() * pool.length), 1)[0]); return mk(sp, rs); };
+  for (let t = 0; t < 6; t++) {
+    const N = [15, 40, 80, 120, 40, 60][t]; const log = [draw(3, 'norns')];
+    for (let i = 1; i < N; i++) { const x = rnd(); log.push(x < 0.7 ? draw(1, 'single') : x < 0.85 ? draw(3, 'norns') : x < 0.95 ? draw(5, 'compass') : draw(9, 'yggdrasil')); }
+    check(log, 'nahodny strom ' + (t + 1) + ' (' + N + ' cteni' + (t < 2 ? ', po jednom' : '') + ')', t < 2);
+  }
+}
