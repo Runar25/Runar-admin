@@ -26,9 +26,13 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .topbar{position:sticky;top:0;z-index:50;background:rgba(10,12,18,0.94);border-bottom:1px solid rgba(46,74,112,0.4);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);}
 .topbar-inner{max-width:1140px;margin:0 auto;padding:13px 28px;display:flex;align-items:center;justify-content:space-between;}
 .brand{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:4px;color:var(--gold);opacity:0.85;text-decoration:none;cursor:pointer;}
-.topbar-right{display:flex;align-items:center;gap:18px;}
+/* 2026-09-28 (report KUKY, screenshot s useknutým hamburgerem): uvítání v liště je po zmizení jen průhledné (opacity 0), ale
+   šířku drží dál — na úzkém okně vytlačilo jméno a hamburger ven (iframe 340 px: +26 px vodorovný posuv). min-width:0 +
+   smršťování jen u uvítání: když místo chybí, zkrátí se ono, hamburger a jméno zůstanou celé. */
+.topbar-right{display:flex;align-items:center;gap:18px;min-width:0;}
+.topbar-right .auth-badge,.topbar-right .hamburger-btn{flex-shrink:0;}
 /* ── TOPBAR GREETING ── */
-#topbar-greeting{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.95em;color:var(--gold);opacity:0;white-space:nowrap;pointer-events:none;transition:opacity 0.7s ease;margin-right:4px;}
+#topbar-greeting{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.95em;color:var(--gold);opacity:0;white-space:nowrap;pointer-events:none;transition:opacity 0.7s ease;margin-right:4px;min-width:0;overflow:hidden;text-overflow:ellipsis;}
 #topbar-greeting.show{opacity:1;}
 /* ── TIER BADGE (in banners) ── */
 .tier-badge{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:rgba(255,191,0,0.72);white-space:nowrap;}
@@ -272,7 +276,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 
 /* ── SECONDARY TAB ROW (Reading, Journal, Collection) ── */
 .app-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:28px;}
-.app-tab{flex:1;min-width:0;text-align:center;font-family:'Cinzel',serif;font-size:0.68em;letter-spacing:0.8px;color:var(--muted);padding:12px 4px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:transparent;white-space:nowrap;transition:all 0.2s;}
+/* 2026-09-28 (report KUKY, screenshoty): flex:1 dával třem záložkám STEJNOU třetinu, „◈ RUNES COLLECTION“ se do ní nevešel
+   a přetékal ven (změřeno v iframe: 401–490 px o 6–13 px, ≤380 px o až 13 px + vodorovný posuv stránky). flex:1 1 auto dělí
+   šířku podle délky popisku — delší záložka dostane víc. */
+.app-tab{flex:1 1 auto;min-width:0;text-align:center;font-family:'Cinzel',serif;font-size:0.68em;letter-spacing:0.8px;color:var(--muted);padding:12px 4px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:transparent;white-space:nowrap;transition:all 0.2s;}
 .app-tab:hover{color:var(--white);}
 .app-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
 @media(max-width:400px){.app-tab{font-size:0.56em;letter-spacing:0.2px;}.app-tab-primary{font-size:0.62em;}}
