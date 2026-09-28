@@ -51,6 +51,10 @@ měř přímo na enginu (část `1b`).
   `model2` (náhodné stromy + přehrání po jednom čtení).
 - **Další krok:** owner si strom v labu prohlédne (Ctrl+F5). Otevřené: **mapa run / priority**
   (kam se která runa naklání, výška, strana) — pravidlo 7; a **port do aplikace** až po jeho ok.
+- **Večer 2026-09-28: RŮSTOVÝ STROM** (owner změnil b): každé tažení = větev, max 5 na větvi,
+  roste postupně, poloha při zrodu, odhalování). Pravidla v `RUNAR_TREE.md` §5. Owner chce **vidět**
+  a říct „takhle ano / takhle ne" — posuvníky `zrod`, `dorust`, `twigMax` jsou jeho. Kontroly:
+  `tree_diag.js grow` + `jump2` (⚠️ `labRun` do dneška tiše měřil výchozí posuvníky — opraveno).
 - Bash v téhle session občas padá na „classifier no verdict" — neopakovat do 10×, dělat mezitím
   čtení/dokumenty a dokončit, až owner napíše „pokračuj".
 

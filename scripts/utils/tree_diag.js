@@ -197,6 +197,7 @@ function labRun(log, htmlPath, inj) {
                    querySelector: () => null, querySelectorAll: () => [], addEventListener(){}, body: mk('body') };
   lsb.localStorage = { getItem: k => (k in store ? store[k] : null), setItem: (k, v) => { store[k] = v; }, removeItem: k => { delete store[k]; } };
   lsb.addEventListener = () => {}; lsb.getComputedStyle = () => ({ position: 'relative' });
+  lsb.__INJ = inj || null;   /* posuvniky/zivotni runa ownera (bez toho se tise meri vychozi hodnoty — chyba do 2026-09-28) */
   lsb.requestAnimationFrame = () => 0; lsb.setTimeout = () => 0; lsb.alert = () => {}; lsb.confirm = () => false; lsb.navigator = {};
   vm.createContext(lsb);
   let code = 'var lang="en";\n';
@@ -339,4 +340,78 @@ if (cast === 'model2') {
     for (let i = 1; i < N; i++) { const x = rnd(); log.push(x < 0.7 ? draw(1, 'single') : x < 0.85 ? draw(3, 'norns') : x < 0.95 ? draw(5, 'compass') : draw(9, 'yggdrasil')); }
     check(log, 'nahodny strom ' + (t + 1) + ' (' + N + ' cteni' + (t < 2 ? ', po jednom' : '') + ')', t < 2);
   }
+}
+if (cast === 'jump') {
+  // PRESKAKOVANI: prehraj ownerov strom po jednom cteni a zmer, o kolik se pohne to, co UZ
+  // existovalo (spicka hlavni vetve a odbocek; klic = runa). Pohyb kvuli rustu je v poradku
+  // jen maly a plynuly; skok = velky pohyb jednim ctenim. fit = auto-zmenseni obrazu.
+  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, JSON.parse(process.argv[3] || '{}')) });
+  const snap = n => { const r = labRun(st.log.slice(0, n), process.env.JH || null, inj); const o = {};
+    r.allPicks.forEach(p => { if (!p.pts || !p.pts.length || String(p.k).startsWith('r')) return;
+      const key = (typeof p.k === 'number' ? 'M:' : 'T:') + (p.meta && p.meta.name) + (typeof p.k === 'number' ? '' : '@' + String(p.k).split('_')[0]);
+      const t = p.pts[p.pts.length - 1]; o[key] = t; });
+    const fm = r.grow.match(/zmensen na (\d+) %/); return { o, fit: fm ? +fm[1] : 100 }; };
+  let prev = snap(1), rows = [];
+  for (let n = 2; n <= st.log.length; n++) {
+    const cur = snap(n); let mx = 0, who = '', sum = 0, cnt = 0;
+    Object.keys(prev.o).forEach(k => { if (!cur.o[k]) return; const d = Math.hypot(cur.o[k].x - prev.o[k].x, cur.o[k].y - prev.o[k].y);
+      sum += d; cnt++; if (d > mx) { mx = d; who = k; } });
+    const rd = st.log[n - 1];
+    rows.push({ n, mx, who, avg: cnt ? sum / cnt : 0, fit: cur.fit, dfit: cur.fit - prev.fit, sp: rd.spread, ai: (rd.area || '-') + '/' + (rd.intention || '-') });
+    prev = cur;
+  }
+  const big = rows.filter(r => r.mx > 12).sort((a, b) => b.mx - a.mx);
+  console.log('kroku', rows.length, '| se skokem > 12 px:', big.length, '| prumerny posun existujicich spicek na cteni:', (rows.reduce((a, r) => a + r.avg, 0) / rows.length).toFixed(1), 'px');
+  big.slice(0, 12).forEach(r => console.log('  #' + r.n, (r.sp + '').padEnd(9), r.ai.padEnd(22), 'max', r.mx.toFixed(0).padStart(3), 'px', r.who.padEnd(22), '| prumer', r.avg.toFixed(1), '| fit', r.fit + '%', r.dfit ? '(' + (r.dfit > 0 ? '+' : '') + r.dfit + ')' : ''));
+  const fits = rows.filter(r => r.dfit !== 0).length; console.log('kroku, kdy se zmenilo auto-zmenseni celeho obrazu:', fits);
+}
+if (cast === 'injtest') {
+  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  for (const iz of [0, 0.12, 0.4]) { const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { intZone: iz }) });
+    const r = labRun(st.log, null, inj); console.log('intZone', iz, '->', r.picks.map(m => m.name + ' ' + Math.round(m.frac * 100) + '% int' + (m.intPart != null ? m.intPart.toFixed(3) : '?')).join(' | ')); }
+}
+if (cast === 'grow') {
+  // RUSTOVY STROM (2026-09-28) na ownerove strome: kazde tazeni = vetev, max `twigMax` deti,
+  // nova vetev mala, materska se jen prodluzuje (nikdy nezkrati).
+  const HTML = process.argv[3] || null;
+  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, zrod: 0.3, dorust: 4 }) });
+  const arc = pts => { let a = 0; for (let i = 1; i < pts.length; i++) a += Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y); return a; };
+  const r = labRun(st.log, HTML, inj);
+  const draws = st.log.reduce((a, rd) => a + rd.runes.length, 0);
+  const mains = r.allPicks.filter(p => typeof p.k === 'number'), tws = r.allPicks.filter(p => String(p.k).startsWith('t'));
+  let maxKids = 0; mains.forEach(m => maxKids = Math.max(maxKids, (m.meta.tw || []).length)); tws.forEach(t => maxKids = Math.max(maxKids, (t.meta.kids || []).length));
+  console.log('tazeni', draws, '| vetvi celkem (prameny + vetve na vetvich)', mains.length + tws.length, '| nejvic deti na jedne vetvi', maxKids);
+  // zrod a rust: prehrat po jednom, sledovat delku kazde vetve (klic = pick k)
+  const len = {}, born = {}; let shrink = 0, shrinkMax = 0, newSizes = [];
+  for (let n = 1; n <= st.log.length; n++) {
+    const q = labRun(st.log.slice(0, n), HTML, inj);
+    q.allPicks.forEach(p => { if (typeof p.k !== 'number' && !String(p.k).startsWith('t')) return;
+      const key = String(p.k), L = arc(typeof p.k === 'number' ? p.pts.slice(-Math.max(2, Math.floor(p.pts.length / 2))) : p.pts);
+      if (len[key] == null) { born[key] = n; if (n > 1) newSizes.push(L); }
+      else if (L < len[key] - 1.5) { shrink++; shrinkMax = Math.max(shrinkMax, len[key] - L); }
+      len[key] = L; });
+  }
+  newSizes.sort((a, b) => a - b); const med = newSizes[Math.floor(newSizes.length / 2)];
+  const mature = Object.keys(len).filter(k => k.startsWith('t')).map(k => len[k]).sort((a, b) => a - b);
+  console.log('nova vetev pri zrodu: median', med.toFixed(0), 'px | dospela vetev (median na konci)', mature[Math.floor(mature.length / 2)].toFixed(0), 'px | nejdelsi', mature[mature.length - 1].toFixed(0), 'px');
+  console.log('zkraceni existujici vetve mezi dvema ctenimi:', shrink, 'x (nejvic o', shrinkMax.toFixed(1), 'px)');
+}
+if (cast === 'jump2') {
+  // PRESKAKOVANI presneji: skok = OTOCENI existujici vetve nebo SKLOUZNUTI jejiho uchyceni.
+  // Prodlouzeni (spicka jde dal ve svem smeru) je rust, ne skok. Vetev = odbocka (klic t...).
+  const HTML = process.argv[3] || null;
+  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, zrod: 0.3, dorust: 4 }) });
+  const snap = n => { const o = {}; labRun(st.log.slice(0, n), HTML, inj).allPicks.forEach(p => {
+      if (!String(p.k).startsWith('t') || !p.pts || p.pts.length < 2) return;
+      const a = p.pts[0], b = p.pts[p.pts.length - 1]; o[String(p.k)] = { x: a.x, y: a.y, ang: Math.atan2(b.y - a.y, b.x - a.x) }; }); return o; };
+  let prev = snap(1), rot = 0, slide = 0, worstR = 0, worstS = 0;
+  for (let n = 2; n <= st.log.length; n++) { const cur = snap(n); let r = 0, s = 0;
+    Object.keys(prev).forEach(k => { if (!cur[k]) return; let d = Math.abs(cur[k].ang - prev[k].ang); if (d > Math.PI) d = 2 * Math.PI - d;
+      r = Math.max(r, d * 180 / Math.PI); s = Math.max(s, Math.hypot(cur[k].x - prev[k].x, cur[k].y - prev[k].y)); });
+    if (r > 8) rot++; if (s > 8) { slide++; if (process.env.JDET) { const rd = st.log[n - 1]; console.log('   #' + n, rd.spread.padEnd(10), 'runy', rd.runes.map(x => x.rune).join(','), '| sklouz', s.toFixed(0), 'px | otoc', r.toFixed(0) + '°'); } }
+    worstR = Math.max(worstR, r); worstS = Math.max(worstS, s); prev = cur; }
+  console.log('cteni', st.log.length, '| kroku s OTOCENIM vetve > 8°:', rot, '(nejvic', worstR.toFixed(0) + '°)', '| kroku se SKLOUZNUTIM uchyceni > 8 px:', slide, '(nejvic', worstS.toFixed(0), 'px)');
 }
