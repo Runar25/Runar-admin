@@ -444,6 +444,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 
 /* ── CARDS & FORMS ── */
 .card{background:var(--card);border:1px solid var(--border);padding:24px;margin-bottom:20px;}
+/* 2026-09-28 (report KUKY 08:50): na mobilu rámeček kolem výběru čtení „zabírá místo a ostatní [záložky] to mají bez něj“ —
+   border + pozadí + 24 px odsazení braly 50 px šířky z 328. Desktop si rámeček nechává („vizuálně vypadá dobře“). */
+@media(max-width:480px){#reader-setup{background:none;border:none;padding:0;}}
 .card-lbl{font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:2px;color:var(--gold);margin-bottom:16px;}
 .flbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--gold);display:block;margin:16px 0 6px;}
 .flbl:first-child{margin-top:0;}

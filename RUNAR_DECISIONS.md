@@ -7570,3 +7570,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Otevřené (owner):** délka nových obrazů (medián EN 17 slov × 13 ve starší bance) a roční období uvnitř obrazu — posoudit proti
   ownerovým hodnocením čtení, ne odhadem. Dřívější měření (DECISIONS 2026-09-23 (10)): délka obrazu × délka 1. věty r = 0,02, n = 72.
 - Affected doc(s): žádný.
+
+## 2026-09-28 (3) — Reporty ownera: rámeček výběru čtení na mobilu pryč, Ask „What is this reading telling me?“, v kolekci „RUNE READING“
+
+- **Rozhodl:** KUKY v reportech 2026-09-28 (08:50, 09:44, 11:15).
+- **Co:** (a) `#reader-setup` na mobilu (≤480 px) bez okraje, pozadí a odsazení — *„zabírá místo a ostatní to mají bez něj“*; desktop
+  beze změny (*„vizuálně vypadá dobře“*). Na 360 px to vrátí 50 px šířky. (b) Nabídka Asku bez vlastní otázky: *How does this reading
+  affect me?* → **What is this reading telling me?** · IS *Hvað segir þessi lestur mér?* (is-grammar-qa čisté) — *„co mi to říká“ je pro
+  Rúnara snazší než „jak mě to ovlivňuje“*. (c) Popisek zvuku/textu v detailu runy v kolekci: *RÚNAR'S TEACHING* → **RUNE READING** ·
+  IS *RÚNAR KENNIR* → *RÚNALESTUR*.
+- **Neověřeno:** report 08:46 „kolekce je mimo rámeček na mobilu“ — na 360 i 375 px (EN i IS, přihlášený i návštěvník) se nereprodukuje;
+  se zvětšeným písmem systému (115 %) přetéká **horní lišta** (`.topbar-right`, +11 px), ne kolekce. Čeká na screenshot od ownera.
+- Affected doc(s): žádný.

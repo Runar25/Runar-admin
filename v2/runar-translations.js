@@ -350,7 +350,7 @@ const UI_TEXT = {
     ask_h_when_ahead:   'What in this has to do with the decision ahead?',
     ask_h_when_past:    'What in this has to do with the past?',
     ask_h_asked:        'How does this relate to what I asked?',
-    ask_h_me:           'How does this reading affect me?',   // 2026-09-25 owner; bez vlastní otázky místo ask_h_asked
+    ask_h_me:           'What is this reading telling me?',   // 2026-09-25 owner; bez vlastní otázky místo ask_h_asked · 2026-09-28 report KUKY: „co mi to říká“ zodpoví Rúnar snáz než „jak mě to ovlivňuje“
     ask_h_now:          'Why is this showing up now?',
     ask_h_unseen:       'What am I not seeing here?',
     ask_h_seek_clarity: 'What is this making clearer?',
@@ -389,7 +389,7 @@ const UI_TEXT = {
     name_modal_skip:  'Continue without a name',
     name_modal_btn:   'LET THE RUNE READING BEGIN',
     name_modal_ph:    'Your name or nickname',
-    shrine_audio_lbl: "\u266a R\u00daNAR'S TEACHING",
+    shrine_audio_lbl: "\u266a RUNE READING",   // 2026-09-28 report KUKY: je to jen rune reading (drive RUNAR'S TEACHING)
     coll_rune_lbl:    '\u2726 HOW R\u00daNAR SEES THE RUNE',   // nadpis textu runy v Kolekci (KUKY 2026-09-24)
     invalid_date:     'INVALID DATE',
     language_lbl:       'LANGUAGE',
@@ -726,7 +726,7 @@ const UI_TEXT = {
     ask_h_when_ahead:   'Hvað snýr að ákvörðuninni sem framundan er?',
     ask_h_when_past:    'Hvað snýr að því sem liðið er?',
     ask_h_asked:        'Hvernig tengist þetta því sem ég spurði um?',
-    ask_h_me:           'Hvaða áhrif hefur þessi lestur á mig?',
+    ask_h_me:           'Hvað segir þessi lestur mér?',   // 2026-09-28 viz EN; is-grammar-qa čisté
     ask_h_now:          'Af hverju kemur þetta upp núna?',
     ask_h_unseen:       'Hvað er það sem ég sé ekki hér?',
     ask_h_seek_clarity: 'Hvað er þetta að gera skýrara?',
@@ -765,7 +765,7 @@ const UI_TEXT = {
     name_modal_skip:  'Halda \u00e1fram \u00e1n nafns',
     name_modal_btn:   'L\u00c1TA SP\u00c1NA HEFJAST',
     name_modal_ph:    'Nafn \u00feitt e\u00f0a g\u00e6lunafn',
-    shrine_audio_lbl: '\u266a R\u00daNAR KENNIR',
+    shrine_audio_lbl: '\u266a R\u00daNALESTUR',   // 2026-09-28 viz EN (drive RUNAR KENNIR)
     coll_rune_lbl:    '\u2726 HVERNIG R\u00daNAR S\u00c9R R\u00daNINA',
     invalid_date:     '\u00d3GILD DAGSETNING',
     language_lbl:       'TUNGUM\u00c1L',
