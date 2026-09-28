@@ -203,8 +203,10 @@ function labRun(log, htmlPath, inj) {
   let code = 'var lang="en";\n';
   for (const f of ['runar-runes.js', 'tree-lab-trunk-composer/runar-trunk.js', 'tree-lab-branch-composer/runar-branch.js'])
     code += fs.readFileSync(DIR + f, 'utf8') + '\n;\n';
+  if (inj && inj.__hookSrc) code += ';' + inj.__hookSrc + ';';   /* ladici hacek (jen diagnoza) */
   vm.runInContext(code + inline.replace('window._draw=draw;', 'window._draw=draw; window._P=_pick; if(window.__INJ){ Object.assign(crownT,__INJ.crownT||{}); Object.assign(trunkT,__INJ.trunkT||{}); Object.assign(rootsT,__INJ.rootsT||{}); if(__INJ.rune) state.rune=__INJ.rune; if(__INJ.dob){ state.d=__INJ.dob.d; state.m=__INJ.dob.m; state.y=__INJ.dob.y; } }'), lsb, { filename: 'lab' });
   const strip = s => String(s).replace(/<[^>]+>/g, ' ').replace(/&middot;/g, '·').replace(/&rarr;/g, '→').replace(/\s+/g, ' ').trim();
+  if (lsb.__BB) console.log('BB', lsb.__BB.join(' || '));
   return { grow: strip(els.grow ? els.grow.innerHTML : ''), btable: strip(els.btable ? els.btable.innerHTML : ''),
            age: strip(els.ageread ? els.ageread.textContent : ''), fills: c.fills,
            picks: (lsb._P || []).filter(p => typeof p.k === 'number').map(p => p.meta), allPicks: (lsb._P || []) };
@@ -409,9 +411,10 @@ if (cast === 'jump2') {
       const a = p.pts[0], b = p.pts[p.pts.length - 1]; o[String(p.k)] = { x: a.x, y: a.y, ang: Math.atan2(b.y - a.y, b.x - a.x) }; }); return o; };
   let prev = snap(1), rot = 0, slide = 0, worstR = 0, worstS = 0;
   for (let n = 2; n <= st.log.length; n++) { const cur = snap(n); let r = 0, s = 0;
+    let who = '';
     Object.keys(prev).forEach(k => { if (!cur[k]) return; let d = Math.abs(cur[k].ang - prev[k].ang); if (d > Math.PI) d = 2 * Math.PI - d;
-      r = Math.max(r, d * 180 / Math.PI); s = Math.max(s, Math.hypot(cur[k].x - prev[k].x, cur[k].y - prev[k].y)); });
-    if (r > 8) rot++; if (s > 8) { slide++; if (process.env.JDET) { const rd = st.log[n - 1]; console.log('   #' + n, rd.spread.padEnd(10), 'runy', rd.runes.map(x => x.rune).join(','), '| sklouz', s.toFixed(0), 'px | otoc', r.toFixed(0) + '°'); } }
+      r = Math.max(r, d * 180 / Math.PI); const sl = Math.hypot(cur[k].x - prev[k].x, cur[k].y - prev[k].y); if (sl > s) { s = sl; who = k; } });
+    if (r > 8) rot++; if (s > 8) { slide++; if (process.env.JDET) { const rd = st.log[n - 1]; console.log('   #' + n, rd.spread.padEnd(10), 'runy', rd.runes.map(x => x.rune).join(','), '| sklouz', s.toFixed(0), 'px', who, '| otoc', r.toFixed(0) + '°'); } }
     worstR = Math.max(worstR, r); worstS = Math.max(worstS, s); prev = cur; }
   console.log('cteni', st.log.length, '| kroku s OTOCENIM vetve > 8°:', rot, '(nejvic', worstR.toFixed(0) + '°)', '| kroku se SKLOUZNUTIM uchyceni > 8 px:', slide, '(nejvic', worstS.toFixed(0), 'px)');
 }
@@ -437,4 +440,29 @@ if (cast === 'sliders') {
     out.push({ ...s0, shape, color: tot ? cd / tot : 0 });
   }
   out.forEach(o => console.log(o.panel.padEnd(16), o.key.padEnd(14), ('tvar ' + (o.shape * 100).toFixed(1) + '%').padEnd(11), ('barva ' + (o.color * 100).toFixed(1) + '%').padEnd(12), o.lbl));
+}
+if (cast === 'stage1') {
+  // KROK 1 (2026-09-29): vetve z opakovani jako twigy. Na ownerove strome: pocet vetvi vs tazeni,
+  // velikost a zakriveni (proti verzi a8fe597, ktera se mu libila), strana podle oblasti.
+  const HTML = process.argv[3] || null;
+  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5 }) });
+  const arc = pts => { let a = 0; for (let i = 1; i < pts.length; i++) a += Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y); return a; };
+  const r = labRun(st.log, HTML, inj);
+  const draws = st.log.reduce((a, rd) => a + rd.runes.length, 0);
+  const mains = r.allPicks.filter(p => typeof p.k === 'number'), tw = r.allPicks.filter(p => String(p.k).startsWith('t') && p.pts);
+  const L = tw.map(p => arc(p.pts)).sort((a, b) => a - b), q = f => L.length ? L[Math.floor(f * (L.length - 1))].toFixed(0) : '-';
+  const str = tw.map(p => { const a = p.pts[0], b = p.pts[p.pts.length - 1]; return Math.hypot(b.x - a.x, b.y - a.y) / Math.max(1e-6, arc(p.pts)); }).sort((a, b) => a - b);
+  console.log('tazeni', draws, '| hlavnich', mains.length, '| vetvi na vetvich', tw.length, '| delka px: 10%', q(0.1), 'median', q(0.5), '90%', q(0.9), '| primost median', str.length ? str[Math.floor(str.length / 2)].toFixed(2) : '-', '| tvaru', r.fills.length);
+  // strana: vetve z opakovani nesou oblast; smer spicky vs pata (na platne) — nitro ma jit doleva
+  if (!HTML) {
+    const cx = 280; let inL = 0, inR = 0, outL = 0, outR = 0;
+    const byKey = {}; tw.forEach(p => byKey[String(p.k)] = p);
+    // oblast neni v pick meta -> spocitej z logu: klic t<k>_<runa>_<born>_<ix>; born = index cteni
+    tw.forEach(p => { const m = String(p.k).match(/^t\d+_([a-z]+)_(\d+)_(\d+)$/); if (!m) return;
+      const rd = st.log[+m[2]]; if (!rd || !rd.area) return; const a = p.pts[0], b = p.pts[p.pts.length - 1], dx = b.x - a.x;
+      const inner = ['healing', 'family', 'inner'].includes(rd.area), outer = ['purpose', 'career', 'spirituality'].includes(rd.area);
+      if (inner) { dx < 0 ? inL++ : inR++; } if (outer) { dx < 0 ? outL++ : outR++; } });
+    console.log('vetve z NITRA: doleva', inL, 'doprava', inR, '| vetve ze SVETA: doleva', outL, 'doprava', outR);
+  }
 }
