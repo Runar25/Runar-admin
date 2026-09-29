@@ -5636,3 +5636,10 @@ perspektiva_is_norny.js`, Opus 5, týž prompt, liší se jen řádek za obrazem
 zhoršil** — spread má vlastní závěr (osa Noren), pokyn „k tazateli až poslední věta“ se s ním tluče; B jednou udělal ze čtenáře psa
 (*„Perhaps you are still lying on the rise…“*). → B nasazen **jen do single** (DECISIONS 2026-09-29 (1)). **Hranice:** n = 4 a 3;
 ownerův případ (Norny přes GPT) zůstává otevřený → `RUNAR_BACKLOG.md`.
+
+## 2026-09-29 (3) — ⚠️ OPRAVA k (1) a (2): soudce viděl obraz, uživatel ne — čísla „jasnosti“ neplatí
+
+Soudce v testu perspektivy dostal u každého čtení řádek `PICTURE: <text obrazu>`. Uživatel obraz nikdy nevidí — je jen v promptu.
+Varianta B proto prošla s *„She waits at the grass edge…“* (kajka v textu nepadne) jako „jasné 7/8“ — soudce si zájmeno doplnil z obrazu.
+**Neplatí:** sloupec „vztah k životu jasný“ a „kde je čtenář“ v (1) i (2) jako důkaz pro nasazení. Platí jen jako srovnání ramen se
+stejnou chybou. Našel owner čtením textu, ne měření (DECISIONS 2026-09-29 (2)). Pravidlo pro všechny soudce: **vidí jen to, co uživatel.**

@@ -790,9 +790,9 @@ function _runeImageCandidates(drawn, bucket) {
 // EN a spready ho plni a ignoruji.
 var _imgAspektIS = '';
 var _imgAspektEN = '';
-// 2026-09-29: obraz má cizí hlavní postavu (zvíře) — index 9 „postava“ v RUNE_IMAGES. Single builder pak za obraz přidá
-// RP_SINGLE.cizi (perspektiva B, test 3). Nastavuje _seasonalImagery, čte buildReadingPromptSingle.
-var _imgCiziPostava = false;
+// 2026-09-29: index 9 „postava“ v RUNE_IMAGES = zvíře v hlavní roli obrazu. Perspektiva B, která ho četla, STAŽENA týž den
+// (otvírala čtení zájmenem bez předchůdce — „She waits…“ — uživatel obraz nevidí; DECISIONS 2026-09-29 (2)). Značka zůstává
+// jako podklad nového testu; kód ji zatím nečte.
 // 2026-09-27 (KUKY „jeď bod 3, obraz napříč zařízeními“): { runa: text obrazu } z POSLEDNÍHO čtení té runy v deníku
 // (readings.prompt_draws.image). Plní ho runar-reading.js (_loadServerLastImage) těsně před sestavením single promptu;
 // _seasonalImagery ten obraz vyřadí z losu stejně jako „poslední obraz z tohoto zařízení“. Prázdné = návštěvník / bez deníku.
@@ -844,7 +844,6 @@ var IMG_PLACES = {
 function _seasonalImagery(lang, drawn) {
   _imgAspektIS = '';
   _imgAspektEN = '';
-  _imgCiziPostava = false;
   var placePair = null;   // [is, en] misto pro radek s jadrem; null = uplny obraz bez mista
   var m = new Date().getMonth() + 1;
   var bucket = _seasonBucket(m);
@@ -898,7 +897,6 @@ function _seasonalImagery(lang, drawn) {
       runePhrase = (lang === 'is' ? hit[2] : hit[3]).replace(/\.$/, '');   // věta pokračuje, tečka by ji rozťala
       _imgAspektIS = hit[4] || '';
       _imgAspektEN = hit[5] || '';
-      _imgCiziPostava = hit[9] === 'postava';
       // Jadro dostava MISTO losem ze seznamu sveho registru (sacek: klic per registr).
       if (hit[8] === 'jadro' && IMG_PLACES[hit[6]]) {
         var mista = IMG_PLACES[hit[6]];
@@ -1699,8 +1697,6 @@ var RP_SINGLE = {
     // jen sem nevedou. Cesta zpět je `git revert`, ne vypnutá větev čekající v kódu.
     langInstr:'',
     worldFb:function(pk){ return 'lifandi leiðin'; },
-    // 2026-09-29 perspektiva B (viz buildReadingPromptSingle); is-grammar-qa čisté, „án orðsins „þú““ v uvozovkách nástroj nerozparsoval.
-    cizi:'Aðalpersóna myndarinnar er ekki leitandinn. Segðu myndina frá sjónarhorni hennar án þess að ávarpa leitandann. Láttu aðeins síðustu línuna beinast að honum.',
     angleIntro:'LESTRARHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og upphaf): ',
     qBranch:function(rune,g,q){ return 'Láttu ' + rune + ' svara spurningunni: "' + q + '" — í myndum og táknmáli, ekki ráðgjöf. Nefndu ' + rune + ' einu sinni og fléttaðu nafnið náttúrlega inn í textann.'; },
     // Prvni veta („koma fram í myndum, ekki útskýringu") ODSTRANENA 2026-08-21: zadavala
@@ -1715,7 +1711,6 @@ var RP_SINGLE = {
     AREA:'AREA', SEEK:'SEEKING',
     langInstr:'Respond in English.',
     worldFb:function(pk){ return pk; },
-    cizi:'The main figure of this picture is not the seeker. Tell the picture from that figure\'s side, without "you", and let only the last line turn to the seeker.',
     angleIntro:'READING ANGLE (follow this entry point — let it shape the opening and tone): ',
     // 2026-09-18: „Speak to what lies beneath the question." ODEBRANO — zadalo nitro tazatele
     // (proti NO COLD READING). IS protejsek tez; spready podobnou vetu nemaji (grep).
@@ -1735,10 +1730,6 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
   // Duvod + mereni v hlavicce RUNE_IMAGES a RUNAR_DECISIONS 2026-08-22; EN zustava
   // na nahodnych klicich (efekt tam zadny a nahoda drzi pestrost).
   var imgLine = _seasonalImagery(lang, drawn);
-  // 2026-09-29 (KUKY „ano B, nasaď to“; report 2026-09-28 15:17 „podle Asku jsem pochopil, že ten sheepdog jsem já“): u obrazu
-  // se zvířetem v hlavní roli bylo nejasné, kde je čtenář (4/8 jasně). B: obraz z její strany, k tazateli až poslední věta → 7/8,
-  // jednotně 8/8, pestré začátky. Jen single — v Nornách B vztah k životu zhoršil (EVAL_LOG 2026-09-29 (2)).
-  if (_imgCiziPostava && S.cizi) imgLine += '\n' + S.cizi;
   var drawnKws = rk(drawn).split(',').map(function(s){ return s.trim(); }).filter(Boolean);
   // v4.0: vazba plati pro OBE reci (viz komentar u RUNE_IMAGES).
   var _imgAspekt = (lang === 'is') ? _imgAspektIS : _imgAspektEN;

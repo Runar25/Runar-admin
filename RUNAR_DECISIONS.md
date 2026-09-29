@@ -7655,3 +7655,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   přepíše (každá runa × sezóna má runový obraz), stav je nedosažitelný. Registr promptu nově skenuje i `RP_SINGLE.cizi` (golden takový obraz
   nevylosuje). Kontrola motivů ㉟ zná 10. sloupec.
 - Affected doc(s): `RUNAR_EVAL_LOG.md` (2026-09-29 (2)) · `RUNAR_BACKLOG.md` (Norny otevřené) — v tomto commitu.
+
+## 2026-09-29 (2) — Perspektiva B STAŽENA týž den: otvírala čtení zájmenem, které uživatel nemá k čemu vztáhnout (v4.77)
+
+- **Rozhodl:** KUKY 2026-09-29 *„máš tam she, ale uživatel nezná obraz, takže ona, she mu nic neřekne… jako vždy to budeme pořádně
+  testovat, než něco nasadíme. To, že jsi to neodhalil, znamená, že jen slepě následuješ, a ani jsi to nezkontroloval!“*
+- **Vada:** B (*„Tell the picture from that figure's side, without "you"“*) → *„She waits at the grass edge… the ducklings gather behind
+  her… Berkana is the care…“* — kajka v textu nikdy nepadne. Obraz je jen v PROMPTU, uživatel ho nevidí; zájmeno visí ve vzduchu.
+- **Proč to měření minulo (kořen):** slepý soudce dostal ke každému čtení i text obrazu (`PICTURE: …`) — věděl víc než uživatel a zájmeno
+  si doplnil. A CODE si výstupy nepřečetl očima uživatele, přestože je měl před sebou. **Pravidlo:** soudce dostává jen to, co vidí
+  uživatel (text čtení + to, co ukazuje aplikace), nikdy obsah promptu; a výstupy se před nasazením čtou jako uživatel.
+- **Co:** pokyn z builderu i `RP_SINGLE` pryč, `_promptDraws.postava` pryč, registr bez něj. Živě se nevygenerovalo žádné čtení s B (DB 0).
+  **Zůstává** značka `postava` u 11 obrazů (fakt o obrazu, podklad nového testu; nic ji nečte, hlídá ji `verify_image_register.js`).
+- **Dál:** test znovu — soudce bez textu obrazu; totéž přeměřit u esenčního řádku 2026-09-28 (6), kde soudce obraz taky viděl.
+- Affected doc(s): `RUNAR_EVAL_LOG.md` (oprava k 2026-09-29 (1)+(2)) — v tomto commitu.

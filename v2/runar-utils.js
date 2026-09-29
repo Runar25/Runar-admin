@@ -327,9 +327,6 @@ function _promptDraws(prompt, lang) {
     // pro-nekoho). Rekonstrukce ji pak hada; CODE-read se tak spletl u Isa df160bfb.
     // Kotva = zacatek bloku _lensContext, jednoznacny v obou recich.
     out.lens = p.indexOf(isIs ? 'LOKALINSA — lífsrúnin' : 'CLOSING LENS — the life rune') !== -1 ? 1 : 0;
-    // 2026-09-29: perspektiva B u obrazu se zvířetem (RP_SINGLE.cizi) — bez záznamu by rozbor čtení nevěděl, že v promptu byla.
-    var ciziT = (typeof RP_SINGLE !== 'undefined' && RP_SINGLE[isIs ? 'is' : 'en']) ? RP_SINGLE[isIs ? 'is' : 'en'].cizi : '';
-    if (ciziT && p.indexOf(ciziT) !== -1) out.postava = 1;
 
     var heavyP = isIs ? ENDING_HEAVY_IS : ENDING_HEAVY;
     var openP  = isIs ? ENDING_OPEN_IS  : ENDING_OPEN;
