@@ -5620,3 +5620,19 @@ v rašeliništi · dva koně) × 2 losy, produkční single builder, týž los, 
 ⇒ **Obě ownerovy možnosti nejasnost odstraní.** P1 je o chlup jasnější, ale každé čtení začne stejně; P2 drží pestrost.
 **Hranice:** n = 8 na rameno, EN, single čtení na Opusu 5. Ownerův případ byl **spread Norny přes GPT** — ten test nepokrývá.
 Nasazení potřebuje vědět, KTERÉ obrazy mají cizí hlavní postavu (v bance 13 se zvířetem bez „you“) → značka v datech, ne odhad z textu.
+
+## 2026-09-29 (2) — Test 3, kolo 2: perspektiva B v islandštině a ve spreadu Norny
+
+**Proč:** owner *„ano B, nasaď to“* — před nasazením dvě plochy, které kolo 1 nepokrylo (`docs/eval/2026-09-29-perspektiva/
+perspektiva_is_norny.js`, Opus 5, týž prompt, liší se jen řádek za obrazem; slepý soudce stejnými otázkami).
+| plocha | rameno | kde je čtenář | vztah k životu jasný |
+|---|---|---|---|
+| IS single (4 obrazy) | P0 | mimo obraz 4/4 | 4/4 |
+| IS single | B | mimo obraz 4/4 | 4/4 |
+| EN Norny, pes u stáda (3 losy) | P0 | nejasné 2 · mimo 1 | 2/3 |
+| EN Norny | B | mimo obraz 3/3 | **1/3** ↓ |
+
+⇒ **IS single: B beze škody** (islandská produkce už drží čtenáře mimo obraz). **Norny: B jednotí pozici, ale vztah k životu
+zhoršil** — spread má vlastní závěr (osa Noren), pokyn „k tazateli až poslední věta“ se s ním tluče; B jednou udělal ze čtenáře psa
+(*„Perhaps you are still lying on the rise…“*). → B nasazen **jen do single** (DECISIONS 2026-09-29 (1)). **Hranice:** n = 4 a 3;
+ownerův případ (Norny přes GPT) zůstává otevřený → `RUNAR_BACKLOG.md`.

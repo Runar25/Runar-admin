@@ -1,0 +1,86 @@
+[
+ {
+  "n": 1,
+  "plocha": "en-norny",
+  "runa": "Algiz\u00b7Ingwaz\u00b7Uruz",
+  "arm": "B"
+ },
+ {
+  "n": 2,
+  "plocha": "is-single",
+  "runa": "Uruz",
+  "arm": "P0"
+ },
+ {
+  "n": 3,
+  "plocha": "en-norny",
+  "runa": "Algiz\u00b7Ingwaz\u00b7Uruz",
+  "arm": "B"
+ },
+ {
+  "n": 4,
+  "plocha": "is-single",
+  "runa": "Berkana",
+  "arm": "B"
+ },
+ {
+  "n": 5,
+  "plocha": "en-norny",
+  "runa": "Algiz\u00b7Ingwaz\u00b7Uruz",
+  "arm": "P0"
+ },
+ {
+  "n": 6,
+  "plocha": "is-single",
+  "runa": "Ehwaz",
+  "arm": "B"
+ },
+ {
+  "n": 7,
+  "plocha": "is-single",
+  "runa": "Berkana",
+  "arm": "P0"
+ },
+ {
+  "n": 8,
+  "plocha": "is-single",
+  "runa": "Uruz",
+  "arm": "B"
+ },
+ {
+  "n": 9,
+  "plocha": "is-single",
+  "runa": "Ehwaz",
+  "arm": "P0"
+ },
+ {
+  "n": 10,
+  "plocha": "is-single",
+  "runa": "Algiz",
+  "arm": "P0"
+ },
+ {
+  "n": 11,
+  "plocha": "en-norny",
+  "runa": "Algiz\u00b7Ingwaz\u00b7Uruz",
+  "arm": "P0"
+ },
+ {
+  "n": 12,
+  "plocha": "en-norny",
+  "runa": "Algiz\u00b7Ingwaz\u00b7Uruz",
+  "arm": "P0"
+ },
+ {
+  "n": 13,
+  "plocha": "is-single",
+  "runa": "Algiz",
+  "arm": "B"
+ },
+ {
+  "n": 14,
+  "plocha": "en-norny",
+  "runa": "Algiz\u00b7Ingwaz\u00b7Uruz",
+  "arm": "B"
+ }
+]

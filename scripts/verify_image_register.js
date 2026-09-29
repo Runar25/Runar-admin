@@ -55,6 +55,43 @@ if (!IMGS.length) { fail++; console.log('FAIL  banka prazdna'); }
   }
   if (!fail) console.log('OK    jadra: ' + jadra.length + ' radku, mista registru uplna, rozklad image+place drzi');
 }
+// ── POSTAVA (2026-09-29, test 3): obraz se zvířetem v hlavní roli (index 9 „postava“) dostane v SINGLE čtení za obraz pokyn B
+// (RP_SINGLE.cizi); jiný obraz ho nedostane a spready taky ne (v Nornách B zhoršil vztah k životu). Protlačeno produkčním builderem —
+// kontrola vidí VÝSLEDEK v promptu (§19), ne jen značku v datech.
+{
+  const P = { console: { log() {}, warn() {}, error() {} } }; P.window = P; P.globalThis = P;
+  P.document = { getElementById: () => null, querySelector: () => null, querySelectorAll: () => [] };
+  const st = {}; P.localStorage = { getItem: (k) => st[k] || null, setItem: (k, v) => { st[k] = v; }, removeItem: (k) => { delete st[k]; } };
+  vm.createContext(P);
+  for (const f of ['runar-config.js', 'runar-runes.js', 'runar-translations.js', 'runar-utils.js', 'runar-character.js'])
+    vm.runInContext(fs.readFileSync(D + f, 'utf8') + '\n;\n', P);
+  vm.runInContext('var __s=1;Math.random=function(){__s=(__s*1103515245+12345)%2147483648;return __s/2147483648;};', P);
+  const IM = vm.runInContext('RUNE_IMAGES', P), RU = vm.runInContext('RUNES', P), RP = vm.runInContext('RP_SINGLE', P);
+  const post = IM.filter((r) => r[9] === 'postava');
+  if (!post.length) { fail++; console.log('FAIL  zadny obraz se znackou „postava“'); }
+  const sYou = post.filter((r) => /\byou(r)?\b/i.test(r[3]));
+  if (sYou.length) { fail++; console.log('FAIL  „postava“ u obrazu, kde je „you“ (ctenar JE v obraze): ' + sYou.map((r) => r[0]).join(', ')); }
+  const u = { name: 'Kuky', area: '', seeking: '', question: '', intention: '' };
+  const najdi = (stav, test) => { for (let s = 1; s < 5000; s++) { for (const k of Object.keys(st)) delete st[k];
+    P.__s = s * 7919; vm.runInContext('__s=' + (s * 7919) + ';', P); const p = stav(); if (test(p)) return p; } return null; };
+  for (const L of ['en', 'is']) {
+    vm.runInContext('lang="' + L + '"', P);
+    const cizi = RP[L].cizi, obr = (r) => (L === 'is' ? r[2] : r[3]).replace(/\.$/, '');
+    const pes = post.find((r) => r[0] === 'Algiz');
+    const sPes = najdi(() => P.buildReadingPrompt(u, RU.find((r) => r.n === 'Algiz'), L, []), (p) => p.indexOf(obr(pes)) !== -1);
+    const bez = IM.find((r) => r[0] === 'Algiz' && r[9] !== 'postava');
+    const sBez = najdi(() => P.buildReadingPrompt(u, RU.find((r) => r.n === 'Algiz'), L, []), (p) => p.indexOf(obr(bez)) !== -1);
+    const nor = najdi(() => P.buildNornsPrompt(u, ['Algiz', 'Ingwaz', 'Uruz'].map((n) => RU.find((r) => r.n === n)), L, []), (p) => p.indexOf(obr(pes)) !== -1);
+    const radky = (sPes || '').split('\n'), i = radky.findIndex((l) => l.indexOf(obr(pes)) !== -1);
+    const d = sPes ? (P._promptDraws(sPes, L) || {}) : {};
+    const ok = sPes && radky[i + 1] === cizi && d.postava === 1 && sBez && sBez.indexOf(cizi) === -1 && nor && nor.indexOf(cizi) === -1;
+    if (!ok) { fail++; console.log('FAIL  ' + L + ' postava: single se psem ' + (sPes ? (radky[i + 1] === cizi ? 'ma pokyn' : 'BEZ pokynu') : 'nevylosovan')
+      + ' · draws.postava ' + d.postava + ' · jiny obraz ' + (sBez ? (sBez.indexOf(cizi) === -1 ? 'bez' : 'S POKYNEM') : 'nevylosovan')
+      + ' · Norny ' + (nor ? (nor.indexOf(cizi) === -1 ? 'bez' : 'S POKYNEM') : 'nevylosovany')); }
+    else console.log('OK    ' + L + ' postava: single se psem ma pokyn B hned za obrazem (draws.postava=1), jiny obraz a Norny bez nej');
+  }
+  if (!fail) console.log('OK    postava: ' + post.length + ' obrazu se zviretem v hlavni roli, zadny s „you“');
+}
 console.log(fail === 0
   ? 'OK    register obrazu: ' + IMGS.length + ' radku, vsechny D|E|P  (D ' + poc.D + ' · E ' + poc.E + ' · P ' + poc.P + ')'
   : 'CELKEM ' + fail + ' radku bez platneho registru');

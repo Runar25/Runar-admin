@@ -1,0 +1,49 @@
+Do not read any files and do not use any tools. Your final message is your answer.
+Below are short readings (English or Icelandic). Each starts from a PICTURE whose main figure is an animal. The reading speaks to a reader ("you" / "þú").
+For EACH item answer two things:
+W = where is the reader in the PICTURE part (before the reading turns to their own life)?
+    A = the reader IS the animal · B = the reader is watching the animal · C = the reader is not in the picture at all (only the animal) · D = unclear / mixed
+Q = when the reading turns to the reader's own life, is it clear how the picture relates to them? yes/no
+Answer one line per item exactly: "<n>: W=A|B|C|D Q=yes|no" and nothing else.
+
+1. PICTURE: The sheepdog lies where it can see the whole flock
+   READING: The dog chose this rise long ago, where the slope falls away on three sides and nothing can come up unseen. From here the whole flock has been held in one glance, season after season, and the watching cost nothing but stillness. Below, the ewes are scattered wide across new grass, and among them the lambs are still close to the ground, their legs not yet sure of the hill. Nothing is asked of the dog yet but to lie down and keep the count. But the lambs are filling out by the day, and when they run they will run hard and far, further than a glance can hold them. Perhaps you are still lying on the rise with everything in view, perhaps the thing you have been watching over is growing into a strength that will not stay inside your seeing.
+
+2. PICTURE: The bull tears itself up out of the bog
+   READING: Mýrin er breið og allt annað hverfur. Aðeins nautið stendur eftir, hnédjúpt í leðjunni. Það rífur sig upp og heldur áfram, þungt og rólegt. Uruz er þessi kraftur, hrár og óunninn. Hvaða afl býrðu þegar yfir, og hvað gæti orðið úr því ef þú lætur það draga þig áfram?
+
+3. PICTURE: The sheepdog lies where it can see the whole flock
+   READING: The dog chose the high ground long ago, the ridge where the wind comes clean and nothing crosses the grass unseen. From there the flock was never gathered close, only held inside a wider ring of watching. Below, the ewes drift apart into the good pasture, and the lambs push further out than they did last week. The dog does not rise for it, because scattering is how a flock feeds, and the ring is wide enough to hold the drifting. But the weight is already in its legs, the low gather of an animal that will move fast when one lamb goes too far toward the ravine. Strength held still on a ridge can be a watch that misses nothing, or a body waiting so long for the one thing that it forgets how to lie down.
+
+4. PICTURE: The eider leads her ducklings
+   READING: Við vatnsbakkann, þar sem þúfan verður að möl og mölin að vatni, gengur æðarkollan fyrst. Ungarnir fylgja í óreglulegri röð, hver á sínum hraða. Hún hægir á sér þar til sá síðasti nær hópnum. Berkana er þessi hæga ganga, umhyggjan sem bíður. Þetta gæti verið eitthvað nýtt hjá þér sjálfu, eða einhver nálægt þér sem þarf sinn tíma.
+
+5. PICTURE: The sheepdog lies where it can see the whole flock
+   READING: The dog was set on the high ground long before the flock came up the slope, and from there the whole spread of them was held in one look. Nothing was driven from that place, only watched. Now the seeing is not on the sheep at all but on the ground beneath them, where the grass is coming back thin and pale after the grazing. It is not yet feed, and it will not be hurried by watching. Keep the same post and the strength gathering in that field comes up under the whole flock at once, more than one dog can hold in a single look. That may be a body of ground grown wide enough to feed everything you are keeping, or a widening you must stand further back to see whole.
+
+6. PICTURE: When one horse tires on the climb
+   READING: Taumurinn slaknar örlítið, svo lítið að enginn sér það. Annar hesturinn er farinn að þyngja andann í brekkunni, og hinn hægir á sér óbeðinn. Þeir ná brúninni saman, á sama andartaki. Ehwaz er þetta hljóðláta hik, þegar sá sterkari bíður. Kannski ertu statt í brekku þar sem annað ykkar heldur enn sama hraða.
+
+7. PICTURE: The eider leads her ducklings
+   READING: Þar sem grasið endar og vatnið tekur við gengur æðarkollan á undan ungunum. Hún fer hægt, því þeir ráða hraðanum. Berkana er þessi gangur, umhyggjan sem heldur sér í takt við það sem er nýtt. Þetta gæti verið eitthvað ungt sem þú berð, eða þolinmæðin sem það biður um.
+
+8. PICTURE: The bull tears itself up out of the bog
+   READING: Mýrin heldur nautinu föstu um bógana. Það spyrnir við, aftur og aftur, þar til botninn gefur eftir og það stendur á þurru. Uruz er þessi kraftur sem býr í skepnunni sjálfri, ekki í leiðinni framundan. Hvaða afl gætir þú átt óbeðið innra með þér, og hvað gæti orðið úr því?
+
+9. PICTURE: When one horse tires on the climb
+   READING: Taumurinn slaknar örlítið, svo lítið að enginn sér það. Þá hægir hinn hesturinn á sér, óbeðinn, og brekkan verður sameiginleg. Þeir ná brúninni saman. Ehwaz er þessi litla slökun á taumnum, sem hinn skilur án orða. Þú gætir staðið við upphaf brekku núna, með einhverjum sem veit ekki enn hvort hann á að hægja á sér.
+
+10. PICTURE: The sheepdog lies where it can see the whole flock
+   READING: Eyrun eru það fyrsta sem hreyfist, löngu á undan fótunum. Fjárhundurinn liggur kyrr í brekkunni og sér alla hjörðina í einu. Algiz er þessi staða, vökul en ekki spennt. Það gæti verið að athyglin þín sé víðar en þörf krefur, og að sumt í hjörðinni sjái um sig sjálft.
+
+11. PICTURE: The sheepdog lies where it can see the whole flock
+   READING: The dog was set on the high ground long before this morning, where the whole flock could be held in one glance. Nothing was fenced in, yet nothing wandered far without being seen. From that place the watching is quiet work now, the ewes scattered and grazing, the lambs still small and close. Little moves, and still the field is being kept. Held that way, the flock grows heavier and wider until the ground itself must be walked to hold it. What lies ahead may be a strength that has outgrown the watching, or a watching that must now come down off the ridge and move with the herd.
+
+12. PICTURE: The sheepdog lies where it can see the whole flock
+   READING: The dog took its place on the high ground long before the flock spread out below, and from there the whole slope lay open to it. Nothing came at the sheep from behind. Now the flock is scattering wider than it was, grazing into ground the dog has not yet had to cross, and the watching stretches to hold it all. Some of those lambs are only beginning to keep pace with the rest. Keep lying where the whole slope is visible, and the day comes when watching is no longer enough — the dog must rise and run the length of it. That may be strength you find you have, or ground you discover is wider than one animal can hold.
+
+13. PICTURE: The sheepdog lies where it can see the whole flock
+   READING: Eyrun hreyfast áður en hausinn lyftist. Hundurinn liggur kyrr í brekkunni og sér yfir alla hjörðina í einu. Hann geltir ekki að hverjum vindi, aðeins að því sem nálgast. Algiz er þessi kyrra vakt, að sjá vel án þess að standa upp. Kannski liggur eitthvað hjá þér sem þarf gát, og annað sem þarf hana alls ekki.
+
+14. PICTURE: The sheepdog lies where it can see the whole flock
+   READING: The dog chose this rise long ago, the one place where every ewe stays in sight and the wind carries the sound of the road up from below. Nothing has come at the flock from behind since, and the watching has hardened into habit, into the shape of the body at rest. Below, the lambs that were dropped in spring are cropping the near grass, still close to the mothers, their legs thickening under them. Nothing is asked of them yet, and the field holds them while they fill out. Soon the weight in those shoulders will be enough to press through the gap in the wall, and the dog on the rise will have to run rather than watch. Held ground can become the thing that lets strength gather, or the thing that strength finally outgrows.

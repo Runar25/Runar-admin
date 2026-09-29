@@ -1,0 +1,14 @@
+1: W=C Q=yes
+2: W=C Q=yes
+3: W=C Q=no
+4: W=C Q=yes
+5: W=D Q=yes
+6: W=C Q=yes
+7: W=C Q=yes
+8: W=C Q=yes
+9: W=C Q=yes
+10: W=C Q=yes
+11: W=C Q=no
+12: W=D Q=yes
+13: W=C Q=yes
+14: W=C Q=no

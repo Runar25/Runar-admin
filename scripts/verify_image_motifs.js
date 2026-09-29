@@ -25,12 +25,15 @@ const IMGS = vm.runInContext('RUNE_IMAGES', S);
 const RUNES = vm.runInContext('RUNES', S);
 let fail = 0;
 
-// 1) struktura: 7 sloupcu · 8 (motiv neprazdny) · 9 (jadro: motiv smi byt '', index 8 = 'jadro')
+// 1) struktura: 7 sloupcu · 8 (motiv neprazdny) · 9 (jadro: motiv smi byt '', index 8 = 'jadro') · 10 (postava: index 9)
 for (const row of IMGS) {
   // 2026-08-23: register (povinny) na indexu 6, motiv (volitelny) na 7 — viz ㊱.
   // 2026-09-19: radek s JADREM ma 9 sloupcu — [8]==='jadro', motiv na [7] smi byt ''.
   const ok9 = row.length === 9 && row[8] === 'jadro' && typeof row[7] === 'string';
-  if (!ok9 && (row.length < 7 || row.length > 8 || (row.length === 8 && !(typeof row[7] === 'string' && row[7])))) {
+  // 2026-09-29: radek s POSTAVOU ma 10 sloupcu — [9]==='postava' (obraz se zviretem v hlavni roli, perspektiva B), [7] motiv
+  // i [8] jadro smi byt ''. Bez teto vetve by pravidlo o prazdnem motivu shodilo kazdy takovy radek.
+  const ok10 = row.length === 10 && row[9] === 'postava' && typeof row[7] === 'string' && (row[8] === '' || row[8] === 'jadro');
+  if (!ok9 && !ok10 && (row.length < 7 || row.length > 8 || (row.length === 8 && !(typeof row[7] === 'string' && row[7])))) {
     fail++; console.log('FAIL  vadny radek (' + row[0] + '): ' + row.length + ' sloupcu / prazdny motiv');
   }
 }

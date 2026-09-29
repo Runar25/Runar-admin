@@ -701,6 +701,9 @@
      dvojice run „X × Y“ · systém proti opakování s obrazovou vzdáleností). Zpracovat spolu s prvním souborem.
   3. **Hagalaz: „Hagalaz opens the field where the boards once stood“** — owner: *„nevím, jestli se mi líbí, že Rúnar používá runu jako
      nástroj pro něco, co nejde úplně poznat z obrazu.“* Podívat se na esenční rámec [1] („the rune … is the one doing something“).
+- [ ] **Perspektiva obrazu se zvířetem ve SPREADECH (ownerův případ: Norny přes GPT, pes u stáda, report 2026-09-28 15:17)** —
+  single má od 2026-09-29 pokyn B (DECISIONS 2026-09-29 (1)); v Nornách B vztah k životu zhoršil (2/3 → 1/3, n = 3, EVAL_LOG 2026-09-29 (2)),
+  protože spread má vlastní závěr (osa Noren). Hledat znění, které se se závěrem spreadu netluče, a měřit i na GPT (ownerův engine).
 - [ ] 👁 **SLEDOVAT: „unshown“ z tváře oblasti The Unseen** (KUKY 2026-09-29: *„zapíšeme a budeme sledovat, jestli a kde se objeví znova“*;
   k Mannaz 2026-09-28: *„jestli se to hodí do čtení — mně moc ne“*). Zdroj = `AREA_FACES` The Unseen [0] *„what is present but not shown“*
   (`v2/runar-utils.js`) — model z „not shown“ udělá *„What sits unshown…“*. Stav 2026-09-29 (prompty od v4.47): **1 ze 2** čtení s touto

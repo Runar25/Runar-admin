@@ -7636,3 +7636,22 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Otázka „nutí dlouhý obraz dlouhou první větu?“** — změřeno dřív: **ne** (r = 0,02, n = 72; 2026-09-23 (10)). Krátí se kvůli tvaru
   a opisování, ne kvůli první větě.
 - Affected doc(s): `RUNAR_DESIGN.md` (nová podsekce) — v tomto commitu.
+
+## 2026-09-29 (1) — Perspektiva B u obrazů se zvířetem v hlavní roli (jen single čtení, v4.76)
+
+- **Rozhodl:** KUKY 2026-09-29 *„ano B, nasaď to… nechceme všechny obrazy z pohledu zvířete, jde o rozmanitost. Člověk obyčejně pozoruje
+  někoho jiného… jedna věc je obraz, který uživatel přečte, a pak co ten obraz pro něj znamená. B vypadá, že to splňuje.“*
+- **Co:** 11 obrazů se zvířetem v hlavní roli má v `RUNE_IMAGES` značku `postava` (index 9). Single builder za takový obraz přidá
+  `RP_SINGLE.cizi`: EN *„The main figure of this picture is not the seeker. Tell the picture from that figure's side, without "you", and
+  let only the last line turn to the seeker.“* · IS *„Aðalpersóna myndarinnar er ekki leitandinn. Segðu myndina frá sjónarhorni hennar án
+  þess að ávarpa leitandann. Láttu aðeins síðustu línuna beinast að honum.“* (is-grammar-qa čisté; verze s „án orðsins „þú““ E001).
+  Obrazy s jiným člověkem beze změny — tam je čtenář pozorovatel, jak owner popisuje. `_promptDraws` zapisuje `postava: 1`.
+- **Proč a čísla:** EVAL_LOG 2026-09-29 (1)+(2): EN single dnes nejednotně (vztah k životu 4/8) → B 7/8 a jednotně 8/8, pestré začátky
+  (varianta „díváš se“ 8/8 „You watch…“ = formule); IS single beze škody (4/4); **Norny B zhoršil (2/3 → 1/3) → spready bez B.**
+- **Druhá osoba (gauč) — bez změny:** Ehwaz 7/7 a Gebo 7/7 obrazů už druhou bytost nese napříč aspekty; samostatný pokyn by opakoval.
+- **Kontrola:** `verify_image_register.js` protlačí produkčním builderem obraz psa (single = pokyn hned za obrazem + draws.postava 1),
+  jiný obraz Algiz a Norny se psem (= bez pokynu), obě řeči; `postava` nesmí stát u obrazu s „you“. Mutace: vyndaný řádek v builderu
+  → 2× FAIL, nečtená značka → 2× FAIL; vyndané nulování značky kontrola **nevidí** — při dnešních datech ho každý výběr runového obrazu
+  přepíše (každá runa × sezóna má runový obraz), stav je nedosažitelný. Registr promptu nově skenuje i `RP_SINGLE.cizi` (golden takový obraz
+  nevylosuje). Kontrola motivů ㉟ zná 10. sloupec.
+- Affected doc(s): `RUNAR_EVAL_LOG.md` (2026-09-29 (2)) · `RUNAR_BACKLOG.md` (Norny otevřené) — v tomto commitu.
