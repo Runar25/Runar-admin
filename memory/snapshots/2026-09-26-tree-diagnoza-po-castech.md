@@ -69,6 +69,11 @@ měř přímo na enginu (část `1b`).
   (strom musí mít místo — tempo = posuvník), kmen = 3D kruh (natočitelný), každý pramen svůj kořen.
   Pozor: 2026-08-05 „nikdy neshlukovat větve VEDLE SEBE" — svazek je V SOBĚ, ne vedle.
 - Seeking v logu stromu chybí (lab i aplikace) — bez něj ho nejde použít.
+- **Krok 2 hotový téhož dne** (10 pramenů = povýšení graduanti; RUNAR_TREE.md §5 „KROK 2"). Owner si ho
+  prohlédne. **Další na řadě: levá/pravá strana** — poloha větví zatím neodpovídá nitru/světu (ramena se
+  střídají bez ohledu na oblast); pak 3D kruh kmene, kořeny (proplétat, do stran a dolů), seeking do logu.
+- Push commitu kroku 2 může viset, když cizí rozpracovaná práce shodí pre-push smoke (2026-09-29:
+  `verify_image_motifs.js` kvůli CODE-tune) — nesahat na cizí, pushnout později.
 
 ## Co visí
 - ~~Oprava hooku `tree-guard.sh`~~ — hotovo 2026-09-27.
