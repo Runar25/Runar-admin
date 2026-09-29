@@ -453,7 +453,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .card{background:var(--card);border:1px solid var(--border);padding:24px;margin-bottom:20px;}
 /* 2026-09-28 (report KUKY 08:50): na mobilu rámeček kolem výběru čtení „zabírá místo a ostatní [záložky] to mají bez něj“ —
    border + pozadí + 24 px odsazení braly 50 px šířky z 328. Desktop si rámeček nechává („vizuálně vypadá dobře“). */
-@media(max-width:480px){#reader-setup{background:none;border:none;padding:0;}}
+/* 2026-09-29 (report 13:04 + screenshot): totéž pro rámeček kolem výběru run (#reader-rune-card) — „co jsme odstraňovali,
+   tady zůstalo“. Desktop si oba rámečky nechává. */
+@media(max-width:480px){#reader-setup,#reader-rune-card{background:none;border:none;padding:0;}}
 .card-lbl{font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:2px;color:var(--gold);margin-bottom:16px;}
 .flbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--gold);display:block;margin:16px 0 6px;}
 .flbl:first-child{margin-top:0;}
@@ -836,9 +838,13 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .s3-slot.filled{color:var(--gold);text-shadow:0 0 12px rgba(255,191,0,0.4);}
 .s3-slot.filled:hover{background:rgba(255,191,0,0.08);text-decoration:line-through;opacity:0.7;}
 .s3-sep{color:var(--border);font-size:0.8em;}
+/* Cena čtení pod kroužky (2026-09-29, reporty 13:01/13:06/13:09) — vzhled .note, jen na střed. */
+.spread-cost{text-align:center;margin:-6px 0 16px;}
 
 /* ── SPREAD5 SLOT TRACKER (Cross) — cross layout ── */
-.spread5-slots{margin-bottom:18px;padding:10px 10px 6px;background:rgba(255,191,0,0.04);border-radius:4px;}
+/* 2026-09-29 (report 13:08 „cross by měl být víc uprostřed“): JS rámeček zobrazí jako flex, ale bez justify-content kříž
+   seděl vlevo (střed rámečku x=505, kříž x=289). */
+.spread5-slots{margin-bottom:18px;padding:10px 10px 6px;background:rgba(255,191,0,0.04);border-radius:4px;justify-content:center;}
 .s5-cross{display:flex;flex-direction:column;align-items:center;gap:4px;}
 .s5-row{display:flex;align-items:center;justify-content:center;gap:20px;}
 .s5-slot{font-size:1.3em;color:var(--dim-text);transition:all 0.3s;min-width:1.6em;text-align:center;

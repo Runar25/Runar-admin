@@ -7676,3 +7676,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   druhá (RP_HORSESHOE IS) nalezena při čtení builderů kvůli rozboru Norn (§22). Znění shodné s Křížem; is-grammar-qa jen W001 (šum).
 - **Kontrola:** golden — změnily se jen `horseshoe_is` a `horseshoe_lens_is`, jen tahle věta.
 - Affected doc(s): žádný.
+
+## 2026-09-29 (4) — UI z reportů: cena čtení u každého typu, rámeček výběru run na mobilu pryč, kříž Compassu na střed, „Upgrade your journey“
+
+- **Rozhodl:** KUKY 2026-09-29 *„ano začni UI“*, *„rámeček, co ohraničuje všechno uvnitř — runy, single, spreads, dole dvě tlačítka“*,
+  *„dáme ‚Upgrade your journey‘“*; reporty 13:01/13:06/13:09 (cena), 13:04 (rámeček), 13:08 (centrování).
+- **Co:** (a) řádek *„This reading costs {casts}.“* / *„Þessi lestur kostar {casts}.“* pod kroužky spreadu, u single pod přepínačem —
+  číslo z `SPREAD_COSTS`, jednotka z VOCAB (1 rune reading · 2 spár…); návštěvník ho nevidí (single zdarma, spready zamčené).
+  (b) `#reader-rune-card` na mobilu (≤480 px) bez rámečku, jako `#reader-setup` 2026-09-28 (3); desktop beze změny. (c) `.spread5-slots`
+  dostal `justify-content:center` — kříž seděl 216 px vlevo od středu, ostatní spready byly na středu. (d) `sp_higher_path`
+  *THE JOURNEY BEYOND* → **UPGRADE YOUR JOURNEY**; IS *FERÐIN HANDAN* → *TAKTU FERÐINA LENGRA* (obrat „taka X lengra“ 158×, is-grammar-qa čisté).
+- **Kontrola:** prohlížeč — cena ve všech 5 typech EN i IS, návštěvník/odhlášený skryto, kříž posun −1 px, rámečky na 400 px pryč a na
+  700 px zůstávají, bez vodorovného posuvu.
+- Affected doc(s): žádný.

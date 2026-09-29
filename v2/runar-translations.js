@@ -114,6 +114,7 @@ const UI_TEXT = {
     speak_btn:        'HEAR RÚNAR SPEAK',
     speak_btn_add:    'ADD RUNE',
     speak_btn_draw:   'DRAW YOUR RUNES',
+    spread_cost:      'This reading costs {casts}.',   // 2026-09-29 reporty ownera: cena čtení nikde nebyla
     life_rune_lbl:    'YOUR LIFE RUNE',
     drawn_lbl:        'DRAWN RUNE',
     badge_life_note:  'your life rune',
@@ -210,7 +211,7 @@ const UI_TEXT = {
     got_it_btn:         'GOT IT',
     sp_account_title:   'YOUR ACCOUNT',
     sp_guide_link:      '? GUIDE & FAQ',
-    sp_higher_path:     'THE JOURNEY BEYOND',
+    sp_higher_path:     'UPGRADE YOUR JOURNEY',   // 2026-09-29 KUKY: „dáme Upgrade your journey“ (dřív THE JOURNEY BEYOND)
     sp_install_btn:     '\u2b07 INSTALL R\u00daNAR',
     sp_privacy_link:    'PRIVACY POLICY',
     sp_privacy_settings_lbl: 'PRIVACY',
@@ -499,6 +500,7 @@ const UI_TEXT = {
     speak_btn:        'HEYRA RÚNAR TALA',
     speak_btn_add:    'BÆTA VIÐ RÚNU',
     speak_btn_draw:   'DRAGÐU RÚNIRNAR',
+    spread_cost:      'Þessi lestur kostar {casts}.',   // 2026-09-29 viz EN; is-grammar-qa čisté (spá/spár = 4. pád)
     life_rune_lbl:    'LÍFSRÚNIN ÞÍN',
     drawn_lbl:        'DREGIN RÚNA',
     badge_life_note:  'lífsrúnin þín',
@@ -596,7 +598,7 @@ const UI_TEXT = {
     got_it_btn:         'SKILI\u00d0',
     sp_account_title:   'REIKNINGUR \u00dEINN',
     sp_guide_link:      '? LEI\u00d0BEININGAR & SPURNINGAR',
-    sp_higher_path:     'FER\u00d0IN HANDAN',
+    sp_higher_path:     'TAKTU FERÐINA LENGRA',   // 2026-09-29 viz EN; obrat „taka X lengra“ (korpus 158×), dřív FERÐIN HANDAN
     sp_install_btn:     '\u2b07 SETJA INN R\u00daNAR',
     sp_privacy_link:    'PERS\u00d3NUVERNDARSTEFNA',
     sp_privacy_settings_lbl: 'PERS\u00d3NUVERND',

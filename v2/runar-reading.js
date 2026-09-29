@@ -518,11 +518,26 @@ function _setSpreadMode(mode) {
   _updateSpread5Slots();
   _updateSpread7Slots();
   _updateSpread9Slots();
+  _paintSpreadCost();
   // Spread mode: reset btn-speak to 'DRAW YOUR RUNES'
   if (mode !== 'single') {
     var _sb = document.getElementById('btn-speak');
     if (_sb) { _sb.textContent = t('speak_btn_draw'); _sb.disabled = true; }
   }
+}
+
+// Cena tohoto typu čtení (2026-09-29, reporty KUKY 13:01/13:06/13:09: „chybová hláška říká, že nemám dost kreditu, ale nikde
+// nevidím, kolik to stojí“). Číslo z SPREAD_COSTS (§8), jednotka z VOCAB (§15). Návštěvník ho nevidí — single má zdarma a spready
+// jsou pro něj zamčené. Volá _setSpreadMode a _updateReadingForm (přepnutí jazyka, načtení profilu).
+var _SPREAD_COST_KEY = { single: 'single', norns: 'norns', kriz: 'cross', horseshoe: 'horseshoe', yggdrasil: 'yggdrasil' };
+function _paintSpreadCost() {
+  var el = document.getElementById('spread-cost');
+  if (!el) return;
+  var c = SPREAD_COSTS[_SPREAD_COST_KEY[_spreadMode] || 'single'];
+  var navstevnik = !currentUser || userTier === 'free_trial';
+  if (navstevnik || !c) { el.style.display = 'none'; return; }
+  el.textContent = tp('spread_cost', { casts: vn('cast', c.credits, lang) });
+  el.style.display = '';
 }
 
 // Runy aktuálního spreadu (multi-rune) → zabránit duplicitnímu výběru
@@ -1430,6 +1445,7 @@ function switchReadingMode(mode) {
 // Update Reading setup form based on mode + user state.
 // Called on: showAppTab('reading'), lang change, login, name save.
 function _updateReadingForm() {
+  _paintSpreadCost();   // 2026-09-29: cena čtení se mění s jazykem a s přihlášením
   var isMine    = (_readingMode === 'mine');
   var isRS      = currentUser && (userTier === 'rune_seeker' || userTier === 'standard'
                   || userTier === 'premium' || isAdmin(currentUser.email));
