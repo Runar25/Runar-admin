@@ -75,6 +75,15 @@ měř přímo na enginu (část `1b`).
 - Push commitu kroku 2 může viset, když cizí rozpracovaná práce shodí pre-push smoke (2026-09-29:
   `verify_image_motifs.js` kvůli CODE-tune) — nesahat na cizí, pushnout později.
 
+- **Krok 3 (levá = nitro, pravá = svět) postaven téhož dne** (RUNAR_TREE.md §5 „KROK 3", commit 9f793ea) —
+  čeká na ownerovo oko. Rameno se pomalu přetočí na stranu, kam jeho čtení jasně převáží. Zamítnuté
+  varianty jsou vypsané v tom záznamu (strana ze zakládajícího čtení = šum; natočení přes `dev` = zrcadlení
+  tvaru). Měření: `tree_diag.js sides` / `lreval` / `limbs` / `limbjump` / `jump2`. Snímky do prohlížeče:
+  lab na `localhost:7788` (python server ownera), log přes `localStorage.crownLog`, posuvníky přes DOM
+  (`makeTune` pořadí); snímek plátna přes `_savepng.js` (7799) → ⚠️ přepisuje ownerův `_tree_shot.jpg`.
+  **Další kandidáti (owner vybere):** náklon kmene podle poměru nitro/svět („proč je kmen zakroucený" —
+  dnes jen životní runa), 3D kruh kmene, kořeny, seeking do logu, strana graduanta podle rovnováhy.
+
 ## Co visí
 - ~~Oprava hooku `tree-guard.sh`~~ — hotovo 2026-09-27.
 - Blank má ve stromě jiný znak (◇ proti ○); čtení s Blank to řeší zvlášť (`blank → odinn`) — ověřit v části 3.
