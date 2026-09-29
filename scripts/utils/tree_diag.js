@@ -411,10 +411,10 @@ if (cast === 'jump2') {
       const a = p.pts[0], b = p.pts[p.pts.length - 1]; o[String(p.k)] = { x: a.x, y: a.y, ang: Math.atan2(b.y - a.y, b.x - a.x) }; }); return o; };
   let prev = snap(1), rot = 0, slide = 0, worstR = 0, worstS = 0;
   for (let n = 2; n <= st.log.length; n++) { const cur = snap(n); let r = 0, s = 0;
-    let who = '';
+    let who = '', whoR = '';
     Object.keys(prev).forEach(k => { if (!cur[k]) return; let d = Math.abs(cur[k].ang - prev[k].ang); if (d > Math.PI) d = 2 * Math.PI - d;
-      r = Math.max(r, d * 180 / Math.PI); const sl = Math.hypot(cur[k].x - prev[k].x, cur[k].y - prev[k].y); if (sl > s) { s = sl; who = k; } });
-    if (r > 8) rot++; if (s > 8) { slide++; if (process.env.JDET) { const rd = st.log[n - 1]; console.log('   #' + n, rd.spread.padEnd(10), 'runy', rd.runes.map(x => x.rune).join(','), '| sklouz', s.toFixed(0), 'px', who, '| otoc', r.toFixed(0) + '°'); } }
+      if (d * 180 / Math.PI > r) whoR = k; r = Math.max(r, d * 180 / Math.PI); const sl = Math.hypot(cur[k].x - prev[k].x, cur[k].y - prev[k].y); if (sl > s) { s = sl; who = k; } });
+    if (r > 8) { rot++; if (process.env.RDET) { const rd = st.log[n - 1]; console.log('   ROT #' + n, rd.spread.padEnd(10), rd.runes.map(x => x.rune).join(','), '|', r.toFixed(0) + '°', whoR); } } if (s > 8) { slide++; if (process.env.JDET) { const rd = st.log[n - 1]; console.log('   #' + n, rd.spread.padEnd(10), 'runy', rd.runes.map(x => x.rune).join(','), '| sklouz', s.toFixed(0), 'px', who, '| otoc', r.toFixed(0) + '°'); } }
     worstR = Math.max(worstR, r); worstS = Math.max(worstS, s); prev = cur; }
   console.log('cteni', st.log.length, '| kroku s OTOCENIM vetve > 8°:', rot, '(nejvic', worstR.toFixed(0) + '°)', '| kroku se SKLOUZNUTIM uchyceni > 8 px:', slide, '(nejvic', worstS.toFixed(0), 'px)');
 }
@@ -465,4 +465,19 @@ if (cast === 'stage1') {
       if (inner) { dx < 0 ? inL++ : inR++; } if (outer) { dx < 0 ? outL++ : outR++; } });
     console.log('vetve z NITRA: doleva', inL, 'doprava', inR, '| vetve ze SVETA: doleva', outL, 'doprava', outR);
   }
+}
+if (cast === 'stage2') {
+  // KROK 2 (2026-09-29): graduant = vlastni pramen + samostatna hlavni vetev. Na ownerove strome.
+  const HTML = process.argv[3] || null;
+  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, maxMains: 10, gradStrand: 1 }) });
+  const arc = pts => { let a = 0; for (let i = 1; i < pts.length; i++) a += Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y); return a; };
+  const r = labRun(st.log, HTML, inj);
+  const draws = st.log.reduce((a, rd) => a + rd.runes.length, 0);
+  const mains = r.allPicks.filter(p => typeof p.k === 'number'), tw = r.allPicks.filter(p => String(p.k).startsWith('t') && p.pts);
+  console.log(r.grow.slice(0, 70), '| tazeni', draws, '| hlavnich', mains.length, '| vetvi na vetvich', tw.length, '| celkem', mains.length + tw.length);
+  mains.forEach(p => { const m = p.meta; const L = arc(p.pts.slice(-30));
+    console.log('  ', (m.gradOf ? 'GRADUANT z ' + m.gradOf : 'pramen').padEnd(18), (m.name + '').padEnd(8), (m.el + '').padEnd(6), 'tazena', String(m.runeN).padStart(3) + 'x', '| delka vetve', L.toFixed(0).padStart(4), 'px | vetvi na ni', (m.tw || []).length); });
+  const names = {}; mains.forEach(p => { names[p.meta.name] = (names[p.meta.name] || 0) + 1; });
+  tw.forEach(p => { const m = String(p.k).match(/^t(\d+)_([a-z]+)$/); if (m) { const nm = B.RUNES.filter(q => q.k === m[2])[0].name; if (names[nm]) console.log('   ⚠ runa', nm, 'je hlavni vetev I twig na strand', m[1]); } });
 }

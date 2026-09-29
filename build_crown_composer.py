@@ -371,7 +371,7 @@ HTML = r"""<!DOCTYPE html>
           zrod:0.3, dorust:4,   /* 2026-09-29: nova vetev se rodi mala a doroste za `dorust` cteni */
           gradLen:1,   /* o kolik je graduant delsi nez bezna odbocka (1.35 = drivejsi stav) */
           gradStrand:1, gradStrandW:0.65, gradGap:2.2,   /* VERZE B: graduant = vlastni pramen (0 = verze A, dnesni stav) */   /* F9: kolik tazeni = dalsi odbocka · strop na vetev · rozestup opakovani */   /* F7: kam po delce vetve sedaji odbocky / graduanti */
-          canopy:0.5, diversity:0.4, readingEvery:3, vigorMature:25, maxMains:9, variace:0.7, textura:0.85,
+          canopy:0.5, diversity:0.4, readingEvery:3, vigorMature:25, maxMains:10, gradFrac:0.33, gradEvery:12, variace:0.7, textura:0.85,
           glZrno:34, glHloubka:0.85,   /* WebGL rezim: meritko textury podel vetve · hloubka prasklin */
           hrebeny:0.8, tonPramene:0.22,   /* KURA ZE STAVBY: sila hrebenu · rozdil tonu mezi prameny */
           objem:0.6, ryhy:0.7, stylKury:0, kuraVek:0,   /* KURA: presah stinu · sila ryh · rytina|malba · nese vek */ intZone:0.12, areaSide:0.35, aettStr:0.6 };
@@ -424,7 +424,8 @@ HTML = r"""<!DOCTYPE html>
   /* TVAR — paky, ktere rozhoduji, CO strom o cloveku rika. Tady ma ladeni smysl:
      je to rozhodovani o modelu, ne o vzhledu. */
   makeTune('tune-crown', [
-    ['maxMains',3,25,1,'max hlavnich vetvi'],['exitFloor',0.05,0.85,0.01,'kam nejniz smi vetev (proti palme)'],
+    /* gradFrac (prah povyseni) z panelu pryc: na KUKYho strome 0.33 i 0.6 dalo totez — brzdou je misto */
+    ['maxMains',3,25,1,'max pramenu v kmeni'],['gradEvery',1,40,1,'novy pramen nejdriv za N cteni (tempo)'],['exitFloor',0.05,0.85,0.01,'kam nejniz smi vetev (proti palme)'],
     ['intZone',0,0.4,0.02,'intention -> vyska'],['areaSide',0,0.8,0.05,'area -> strana'],
     ['aettStr',0,1,0.05,'aett -> charakter'],
     ['twigMax',2,12,1,'max vetvi na jedne vetvi (pak o patro niz)'],
@@ -442,7 +443,7 @@ HTML = r"""<!DOCTYPE html>
     ['twU0',0,1,0.01,'odbocky od (podil delky)'],['twU1',0,1,0.01,'odbocky do'],
     ['gradU0',0,1,0.01,'graduanti od'],['gradU1',0,1,0.01,'graduanti do'],
     ['twigSpread',0,0.1,0.005,'rozestup opakovani'],['gradGap',0,6,0.2,'odstup graduanta uvnitr vetve'],
-    ['gradStrand',0,1,1,'ZRUSENO 2026-09-28: verze B (pramen vedle rodice = shluk)'],
+    ['gradStrand',0,1,1,'graduant = vlastni pramen (0 = vypnuto)'],
     ['childN',0,6,1,'ZRUSENO 2026-09-28: vetvicky bez runy'],['twigPer',1,8,1,'ZRUSENO 2026-09-28: opakovani = silnejsi tataz vetev'],
     ['hrebeny',0,1.5,0.05,'HREBENY kury'],['textura',0,1,0.05,'textura kury'],['ryhy',0,1.5,0.05,'sila ryh v kure'],
     ['stylKury',0,1,1,'styl kury: 0 rytina / 1 malba'],['kuraVek',0,1,1,'kura nese vek pramene'],
@@ -885,7 +886,7 @@ HTML = r"""<!DOCTYPE html>
     return others.filter(function(x){ return gset[x]; })
                  .sort(function(a,b){ return (gset[a]-gset[b]) || (others.indexOf(a)-others.indexOf(b)); })
                  .slice(0,2)
-                 .map(function(x,i){ return { rune:x, u:runeU(pool, x, crownT.gradU0, crownT.gradU1),
+                 .map(function(x,i){ return { rune:x, u:runeU(pool, x, crownT.gradU0, crownT.gradU1), at:(be.runeGradAt||{})[x],
                                               slot:i, name:(RBK[x]?RBK[x].name:x) }; });
   }
 
@@ -1029,6 +1030,7 @@ HTML = r"""<!DOCTYPE html>
     var intS=[0,0,0,0,0], intN=[0,0,0,0,0], areaS=[0,0,0,0,0], areaN=[0,0,0,0,0], aettCnt=[{},{},{},{},{}];
     var runeSeen=[[],[],[],[],[]];   /* #2: TAŽENÉ runy per element v poradi prvniho vyskytu (sticky) */
     var runeCnt=[{},{},{},{},{}];    /* F1: kolikrat byla KAZDA runa tazena (rust odbocky) */
+    var runeGradAt=[{},{},{},{},{}];   /* KROK 2: index cteni, kdy runa prekrocila prah -> kdy se narodi jeji pramen */
     var runeGrad=[{},{},{},{},{}];   /* F2: runa, ktera NEKDY dosahla prahu graduace = STICKY (nikdy nedegraduje) */
     var gradSeq=[0,0,0,0,0];         /* F2-fix: PORADI prekroceni prahu -> graduuji PRVNI DVA, ne dva nejtazenejsi */
     for(var i=0;i<log.length;i++){
@@ -1041,7 +1043,8 @@ HTML = r"""<!DOCTYPE html>
         var rk=runes[j].rune; if(rk!=null && runeSeen[e].indexOf(rk)<0) runeSeen[e].push(rk);
         if(rk!=null) runeCnt[e][rk]=(runeCnt[e][rk]||0)+1;   /* F1 */
         if(rk!=null){ var mk0=runeSeen[e][0], mc0=runeCnt[e][mk0]||1;   /* F2: prah = ~1/3 tazeni hlavni runy, min 3 */
-          if(rk!==mk0 && !runeGrad[e][rk] && runeCnt[e][rk]>=Math.max(3, mc0/3)) runeGrad[e][rk]=++gradSeq[e]; }
+          /* prah = podil tazeni hlavni runy (`gradFrac`, drive natvrdo 1/3) = TEMPO povysovani (KUKY 2026-09-29) */
+          if(rk!==mk0 && !runeGrad[e][rk] && runeCnt[e][rk]>=Math.max(3, mc0*(crownT.gradFrac||0.33))){ runeGrad[e][rk]=++gradSeq[e]; runeGradAt[e][rk]=i; } }
         var ae=KEY_AETT[runes[j].rune]||'freya'; aettCnt[e][ae]=(aettCnt[e][ae]||0)+1;
         if(ia!==undefined){ intS[e]+=ia; intN[e]++; }
         if(al!==undefined){ areaS[e]+=al; areaN[e]++; }
@@ -1055,7 +1058,7 @@ HTML = r"""<!DOCTYPE html>
     var els=[];
     for(var e3=0;e3<5;e3++){ if(cnt[e3]>0){ var elN=ELEMS[e3], pool=runesByEl[elN]||B.RUNES;
       els.push({ el:elN, count:cnt[e3], first:first[e3], world:ELEM_WORLD[elN], aett:domAett(aettCnt[e3]), rune:pool[0],
-                 runeSeen:runeSeen[e3].slice(), runeCnt:runeCnt[e3], runeGrad:runeGrad[e3],
+                 runeSeen:runeSeen[e3].slice(), runeCnt:runeCnt[e3], runeGrad:runeGrad[e3], runeGradAt:runeGradAt[e3],
                  intAxis: intN[e3]?intS[e3]/intN[e3]:0, areaLat: areaN[e3]?areaS[e3]/areaN[e3]:0 }); } }
     els.sort(function(a,b){return a.first-b.first;});
     var total=0, mx=1; els.forEach(function(x){ total+=x.count; mx=Math.max(mx,x.count); });
@@ -1225,31 +1228,40 @@ HTML = r"""<!DOCTYPE html>
     if(!seed && mainsN>0){ trunkT.strandMin=mainsN; trunkT.bornOrder=[];
       for(var bo=0; bo<mainsN; bo++){ var bIx=(branchEls[bo]||{}).bornIdx;
         trunkT.bornOrder[bo]=(bIx==null) ? 0 : SEED_AGE + bIx*crownT.readingEvery; } }
-    /* 5 (2026-09-28, KUKY: "zhluk nekolika vetvi na jedno misto nesmi existovat"): verze B pousti
-       pramen graduanta z kmene na TEMZ miste jako rodice -> na jeho strome 13 pramenu v 5 vyskach.
-       Posuvnik zustava (§26: navrat jen ocisteny), ale nic nedela. */
-    var GRAD_STRAND_ZRUSENO=true;
-    if(crownT.gradStrand && !GRAD_STRAND_ZRUSENO){
+    /* KROK 2 (2026-09-29, KUKY: "napred musis dat tech 10 pramenu a ne 5 · runa dostane vlastni pramen
+       tim, ze bude povysena jako graduant"). Verze B vracena OCISTENA (§26): drive (2026-09-28) byla
+       vypnuta, protoze pramen graduanta vedl jako viditelna druha cara vedle rodice (= shluk) a sam
+       graduant zustal jen vetsim twigem. Ted pramen jde kmenem vedle rodice a v jeho vystupu splyne
+       s ramenem (rameno je az k odstepeni tlustsi); graduant roste jako samostatna hlavni vetev.
+       Kolik pramenu celkem: `maxMains` (10). Narozeni pramene graduanta = cteni, kdy prekrocil prah. */
+    if(crownT.gradStrand && !seed){
       var lanes=[], borns=[];
-      for(var pk=0; pk<mainsN; pk++){ lanes[pk]=LANE0[pk%LANE0.length]; borns[pk]=(pk<3)?0:(pk-2)*every; }
-      /* ZAKON "1 pramen = 1 runa" plati i tady. Element ma az 2 hlavni vetve a obe berou
-         odbocky ze stejneho souboru run, takze tataz runa graduuje na obou (gebo u berkano
-         i u perthro) a nekdy uz sama nese hlavni vetev (sowilo). Vlastni pramen dostane
-         jen runa, ktera jeste zadny nema; jinde zustava obycejnou odbockou. */
+      for(var pk=0; pk<mainsN; pk++){ lanes[pk]=LANE0[pk%LANE0.length]; borns[pk]=(trunkT.bornOrder&&trunkT.bornOrder[pk]!=null)?trunkT.bornOrder[pk]:0; }
+      /* ZAKON "1 pramen = 1 runa": vlastni pramen dostane jen runa, ktera jeste zadny nema. */
       var taken={}; for(var mk=0; mk<mainsN; mk++){ var mr0=mainRuneOf(branchEls[mk]||{}, mk); if(mr0) taken[mr0.k]=1; }
-      for(var pk2=0; pk2<mainsN; pk2++){
-        var gl=graduatesFor(branchEls[pk2]||{}, pk2);
-        for(var gj=0; gj<gl.length; gj++){
-          if(taken[gl[gj].rune]) continue;   /* uz ma vlastni pramen -> tady zustane odbockou */
-          taken[gl[gj].rune]=1;
-          var si=mainsN+gradStrands.length;
-          lanes[si]=lanes[pk2] + (gj%2?-1:1)*0.33;   /* tretinova draha vedle rodice; +-0.5 se srazelo se sousedy */
-          borns[si]=borns[pk2];
-          gradStrands.push({ p:pk2, rune:gl[gj].rune, u:gl[gj].u, slot:gl[gj].slot, name:gl[gj].name });
-        }
+      var capS=Math.max(mainsN, Math.round(crownT.maxMains));
+      /* PORADI POVYSENI = CAS (2026-09-29): kdo prah prekrocil drive, dostane pramen drive. Drive se strop
+         plnil v poradi pramenu, takze na KUKYho strome zeme a stin nedostaly nic jen kvuli poradi. */
+      var cand=[];
+      for(var pk2=0; pk2<mainsN; pk2++){ var gl=graduatesFor(branchEls[pk2]||{}, pk2);
+        for(var gj=0; gj<gl.length; gj++) cand.push({ pk:pk2, gj:gj, g:gl[gj] }); }
+      cand.sort(function(a,b){ return ((a.g.at!=null?a.g.at:1e9)-(b.g.at!=null?b.g.at:1e9)) || (a.pk-b.pk) || (a.gj-b.gj); });
+      var perP={}, gEvery=Math.max(1, Math.round(crownT.gradEvery||12)), lastIx=vlog.length-1;
+      for(var cq=0; cq<cand.length && mainsN+gradStrands.length<capS; cq++){ var C=cand[cq];
+        if(taken[C.g.rune] || (perP[C.pk]||0)>=2) continue;
+        /* MISTO (tempo): j-ty povyseny pramen strom pusti nejdriv v cteni (j+1)*gradEvery; drive
+           runa ceka jako twig. Poradi = kdo prah prekrocil drive -> append-only, nic se neprehazi. */
+        var openAt=(gradStrands.length+1)*gEvery-1, effAt=Math.max((C.g.at!=null)?C.g.at:0, openAt);
+        if(effAt>lastIx) break;
+        taken[C.g.rune]=1; perP[C.pk]=(perP[C.pk]||0)+1;
+        var si=mainsN+gradStrands.length;
+        lanes[si]=lanes[C.pk] + (perP[C.pk]%2?1:-1)*0.33;   /* tretinova draha vedle rodice; +-0.5 se srazelo se sousedy */
+        borns[si]=Math.max(borns[C.pk], SEED_AGE + effAt*crownT.readingEvery);
+        gradStrands.push({ p:C.pk, rune:C.g.rune, u:C.g.u, slot:C.g.slot, name:C.g.name, at:effAt });
       }
       if(gradStrands.length){ trunkT.strandMax=mainsN+gradStrands.length;
-        trunkT.strandMin=trunkT.strandMax; trunkT.laneOrder=lanes; trunkT.bornOrder=borns; }
+        trunkT.strandMin=trunkT.strandMax; trunkT.laneOrder=lanes; trunkT.bornOrder=borns;
+        gradStrands.forEach(function(G){ _ownMain[G.rune]=1; }); }   /* povyseny uz nevisi jako twig rodice */
     }
     var gt=Tk.buildTrunk({rune:state.rune,dob:{d:state.d,m:state.m,y:state.y}}, trunkT);
     var el=gt.info.el;
@@ -1401,8 +1413,14 @@ HTML = r"""<!DOCTYPE html>
           /* VETVE Z OPAKOVANI (2026-09-29): na kazdy twig jeho vlastni dalsi tazeni; na hlavni linii
              dalsi tazeni runy pramene. Twigy prvniho tazeni se NEMENI (KUKY: "tak jak to bylo, bylo dobre"). */
           var _rt=branchEls.repTree||{}, _tb=branchEls.twigBirth||{};
+          /* poradi, v jakem runy na tohle rameno prisly — VCETNE povysenych (seznam se jen prodluzuje) */
+          var hostOrd=(seenK||[]).filter(function(x){ return x!==brune.k && _runeHost[x]===k; });
           var addRep=function(list){ list.forEach(function(t){ if(t.rep===true) return;
             var b0=_tb[t.k]; if(b0){ t.side=sideOf(b0.area); t.steer=b0; }
+            /* strana (slot) i tvar (sid) z RUNY, ne z poradi v seznamu — povyseni jine runy je jinak
+               preklopilo (Othila 88°, KUKYho strom #19, 2026-09-29) */
+            var rix=0; for(var rq=0; rq<B.RUNES.length; rq++){ if(B.RUNES[rq].k===t.k){ rix=rq; break; } }
+            var hix=hostOrd.indexOf(t.k); t.slot=(hix>=0)?hix:rix; t.sid=500+rix;   /* stridani = poradi prichodu na rameno */
             if(_rt[t.k]) t.kids=(t.kids||[]).concat(repKids(_rt[t.k], vlog.length));
             if(t.kids && t.kids.length) addRep(t.kids.filter(function(x){ return x.rep!==true; })); }); };
           if(seenK) addRep(twRunes);
@@ -1419,7 +1437,8 @@ HTML = r"""<!DOCTYPE html>
                      (dobSeed ^ (k*0x9e37))>>>0, lenF, ex.w, ex.depth, 0, sizeF, twRunes);
           /* verze B: patef vetve se za chvili prepise (dole se k ni prilepi kmen), takze
              kopie TED. Graduant se po ni povede zevnitr az k mistu, kde se odlepi. */
-          if(mainLimb) mainInfo[k]={ spine:mainLimb.pts.slice(), ei:ei, be:be, pf:pf, emg:emg, el:be.el };
+          if(mainLimb) mainInfo[k]={ spine:mainLimb.pts.slice(), ei:ei, be:be, pf:pf, emg:emg, el:be.el,
+                                    limb:mainLimb, tp:trunkPart.length, frac:frac, mcfg:mcfg, name:brune.name };   /* KROK 2 */
           for(var ct=_cStart; ct<crown.length; ct++){ crown[ct].k=k; crown[ct].age01=_curAge01; }
           if(mainLimb){ mainLimb.pts = trunkPart.concat(mainLimb.pts); mainLimb.src='vetev'; mainLimb.k=k;
             mainLimb.age01 = clamp(strandAge/Math.max(1,trunkT.matureDays), 0, 1);   /* pro `kuraVek` */
@@ -1432,36 +1451,46 @@ HTML = r"""<!DOCTYPE html>
                 pramen:!!(crownT.gradStrand && gradStrands.some(function(G){ return G.p===k && G.rune===t.k; })),
                 kids:(t.kids||[]).map(function(x){ return { name:(RBK[x.k]?RBK[x.k].name:x.k), pick:('t'+k+'_'+x.k) }; }) }; }) } }); }
         } else if(crownT.gradStrand && gradStrands[k-mainsN] && mainInfo[gradStrands[k-mainsN].p]){
-          /* VERZE B -- GRADUANT JAKO PRAMEN. Jedna souvisla cara:
-             koren -> kmen (vedle rodice, vynori se v JEHO vystupu) -> uvnitr rodicovske vetve
-             -> odlepi se na sve pozici u (1/5-3/5, pravidlo F2). Vetev graduanta uz kresli
-             growBranch rodice, takze tady koncime presne v jejim pocatecnim bode = bezesve. */
+          /* KROK 2 (2026-09-29) — GRADUANT = VLASTNI PRAMEN + SAMOSTATNA HLAVNI VETEV.
+             (a) koren + kmen: vlastni pramen vedle rodice az k jeho vystupu, tam splyne s ramenem;
+             (b) rameno rodice je az k mistu odstepeni TLUSTSI (KUKY: "tak dlouho, jak jdou spolu, ma
+                 byt videt na vetsi tloustce, nez se rozdeli") — zadna druha viditelna cara vedle;
+             (c) v miste odstepeni (1/5-3/5 rodice, pravidlo F2) roste graduant jako HLAVNI vetev:
+                 delka z vlastni praxe (pf) x nabeh jeho pramene (emg), vlastni koren, vlastni vetve. */
           var GS=gradStrands[k-mainsN], par=mainInfo[GS.p], sM=clamp(crownT.gradStrandW,0.15,1);
-          var GR=buildRootFor(L, rE, GS.rune, GS.name, par.be, k, par.pf, par.emg, sM);
-          var gTrunk=GR.rspine.slice().reverse().concat(L.pts.slice(rE+1, par.ei+1));
-          for(var gw=0; gw<gTrunk.length; gw++) gTrunk[gw]={ x:gTrunk[gw].x, y:gTrunk[gw].y,
-            ct:gTrunk[gw].ct, depth:gTrunk[gw].depth-0.02, w:gTrunk[gw].w*sM };
-          /* spojka uvnitr rodicovske vetve: odsazena o gradGap px na stranu, kam graduant
-             odejde, a odsazeni se ztraci k nule presne v miste odlepeni -> navaze bezesve. */
-          var ps=par.spine, pidx=Math.max(1, Math.min(ps.length-1, Math.round(GS.u*(ps.length-1))));
-          var gside=(GS.slot%2===0)?1:-1, conn=[];
-          /* graduant vystupuje z kmene o svou drahu vedle rodice -> spojka musi zacit PRESNE
-             tam (jinak skok). Odchylka se linearne ztraci a mezi prameny se udela oblouk
-             (sin = nula na obou koncich), takze se viditelne pletou a v miste odlepeni splynou. */
-          var gEnd=gTrunk[gTrunk.length-1], d0x=gEnd.x-ps[0].x, d0y=gEnd.y-ps[0].y;
-          for(var ci3=0; ci3<=pidx; ci3++){
-            var sp=ps[ci3], sq=ps[Math.max(0,ci3-1)], t3=(pidx?ci3/pidx:1);
-            var ta=Math.atan2(sp.y-sq.y, sp.x-sq.x);
-            var bulge=Math.sin(Math.PI*t3)*crownT.gradGap*gside;
-            conn.push({ x:sp.x + (1-t3)*d0x + Math.cos(ta+Math.PI/2)*bulge,
-                        y:sp.y + (1-t3)*d0y + Math.sin(ta+Math.PI/2)*bulge,
-                        ct:sp.ct, depth:sp.depth-0.02, w:sp.w*lerp(0.60,0.28,t3)*sM });
-          }
-          var gPts=gTrunk.concat(conn);
-          all.push({ pts:gPts, depth:L.depth, el:par.el, src:'vetev', k:GS.p, age01:_curAge01 });
-          _pick.push({ k:'g'+GS.p+'_'+GS.rune, pts:gPts, meta:{ el:par.el, aett:par.be.aett, world:par.be.world,
-            name:GS.name, count:'-', gradStrand:true, strand:GS.p, mirrorU:GS.u,
-            runeN:(par.be.runeCnt&&par.be.runeCnt[GS.rune])||null } });
+          var gBorn=(trunkT.bornOrder&&trunkT.bornOrder[k]!=null)?trunkT.bornOrder[k]:0, gAge=Math.max(1, realAge-gBorn);
+          var gN=(par.be.runeCnt&&par.be.runeCnt[GS.rune])||1;
+          var gPf=0.62+0.27*Math.log(1+(gN-1)/2)/Math.log(3), gEmg=clamp(gAge/90, 0.35, 1);
+          var GR=buildRootFor(L, rE, GS.rune, GS.name, par.be, k, gPf, gEmg, sM);
+          var gei=exitIndex(L.pts, par.frac);
+          var gTrunk=GR.rspine.slice().reverse().concat(L.pts.slice(rE+1, gei+1));
+          var gn=gTrunk.length, gfade=Math.max(2, Math.round(gn*0.10));
+          for(var gw=0; gw<gn; gw++){ var gq=gTrunk[gw], ff2=(gw>=gn-gfade)?(gn-1-gw)/gfade:1;   /* konec splyne s ramenem */
+            gTrunk[gw]={ x:gq.x, y:gq.y, ct:gq.ct, depth:gq.depth-0.02, w:gq.w*(0.25+0.75*ff2) }; }
+          all.push({ pts:gTrunk, depth:L.depth, el:par.el, src:'pramen', k:k, age01:_curAge01 });
+          var lp=par.limb.pts, tp0=par.tp, nL=lp.length-tp0;
+          var sidx=Math.max(1, Math.min(nL-2, Math.round(GS.u*(nL-1))));
+          for(var ti=0; ti<=sidx; ti++){ var pp0=lp[tp0+ti], fct=1+0.35*Math.min(1,(sidx-ti)/3);
+            lp[tp0+ti]={ x:pp0.x, y:pp0.y, t:pp0.t, ct:pp0.ct, depth:pp0.depth, w:pp0.w*fct }; }
+          var sp=par.spine[sidx], sq=par.spine[Math.max(0,sidx-1)], sAng=Math.atan2(sp.y-sq.y, sp.x-sq.x);
+          var gjg=(((k*2654435761)>>>0)%100)/100, aOff=0.55+0.25*gjg;
+          var gb0=(branchEls.twigBirth||{})[GS.rune], gsd=sideOf(gb0?gb0.area:null);
+          var gSide=gsd ? ((gsd*Math.cos(sAng+aOff) >= gsd*Math.cos(sAng-aOff)) ? 1 : -1) : ((GS.slot%2===0)?1:-1);
+          var gcfg={}; for(var gk in par.mcfg) gcfg[gk]=par.mcfg[gk]; gcfg._k=k;
+          var gLen=gPf*gEmg*(crownT.gradLen||1);
+          var gRt=(branchEls.repTree||{})[GS.rune], gKids=gRt ? repKids(gRt, vlog.length) : [];
+          var _gStart=crown.length;
+          var gLimb=growBranch(crown, gcfg, sp.x, sp.y, sAng, gSide*aOff, 'main', GS.rune, (dobSeed ^ (k*0x9e37))>>>0,
+                               gLen, sp.w*0.85, sp.depth+0.01, 0, gPf*gEmg, gKids);
+          for(var gc=_gStart; gc<crown.length; gc++){ crown[gc].k=k; crown[gc].age01=clamp(gAge/Math.max(1,trunkT.matureDays),0,1); }
+          if(gLimb){ gLimb.src='vetev'; gLimb.k=k;
+            _pick.push({ k:k, pts:gLimb.pts, meta:{ el:par.el, aett:par.be.aett, world:(RBK[GS.rune]?RBK[GS.rune].world:par.be.world),
+              name:GS.name, g:(RBK[GS.rune]?RBK[GS.rune].g:null), count:par.be.count, idx:k, runeN:gN,
+              frac:par.frac, eFrac:par.frac, intPart:0, gapPart:0, norn:null, splitU:GS.u, gradOf:par.name,
+              ang:sAng+gSide*aOff, eAng:sAng, leanPart:0, areaPart:0,
+              born:gBorn, strandAge:gAge, domV:1, sizeF:gPf*gEmg, lenF:gLen, rootDev:GR.rdevUsed,
+              tw:gKids.map(function(t){ return { name:(RBK[t.k]?RBK[t.k].name:t.k), n:t.n||0, g:t.g, grad:false, rep:1,
+                pick:('t'+k+'_'+t.k+(t.id!=null?('_'+t.id):'')), kids:[] }; }) } }); }
         } else {
           /* REINFORCE: extra strand stays as trunk MASS (no new branch). Taper its
              top to ~0 so it MELTS into the bundle (no floating blunt stub). */
@@ -1536,11 +1565,12 @@ HTML = r"""<!DOCTYPE html>
 
     var months=Math.round(realAge/30.4);
     var mix=els.slice().sort(function(a,b){return b.count-a.count;}).map(function(e){return e.el+' '+Math.round(100*e.count/rt.total)+'%';}).join(' · ');
-    document.getElementById('ageread').textContent='vek '+realAge+' dni (~'+months+' mes) · '+nR+' cteni · '+mainsN+' vetvi';
+    var _nG=(typeof gradStrands!=='undefined')?gradStrands.length:0;   /* KROK 2: povyseni graduanti jsou taky hlavni vetve */
+    document.getElementById('ageread').textContent='vek '+realAge+' dni (~'+months+' mes) · '+nR+' cteni · '+(mainsN+_nG)+' hlavnich vetvi';
     document.getElementById('logread').textContent = useLog ? (vlog.length+' cteni'+(state._viewN!=null?(' / '+state.log.length+' (prehravani)'):' v logu (strom z realnych cteni)')) : (seed ? 'seminko · 0 cteni — prvni cteni (Norny) zalozi prameny' : 'log prazdny -> TREE AGE slider (demo rezim)');
     document.getElementById('grow').innerHTML=
       'vek <b>'+realAge+'</b> dni (~'+months+' mes) &middot; cteni <b>'+nR+'</b><br>'+
-      'prameny <b>'+(gt.info.strandN||mainsN)+'</b> &rarr; vetvi <b>'+mainsN+'</b> (cap '+Math.round(crownT.maxMains)+') &middot; koreny '+roots.length+'<br>'+
+      'prameny <b>'+(gt.info.strandN||mainsN)+'</b> &rarr; hlavnich vetvi <b>'+(mainsN+_nG)+'</b> (z toho povysenych '+_nG+', strop '+Math.round(crownT.maxMains)+') &middot; koreny '+roots.length+'<br>'+
       'mix elementu: <span style="color:var(--dim)">'+(mix||'-')+'</span><br>'+
       'expanze: vyska '+Math.round(hExp*100)+'% &middot; sirka '+Math.round(wExp*100)+'% &middot; mohutnost '+Math.round(mExp*100)+'%'+
       (_fit<0.999?('<br><span style="color:var(--gold)">fit: strom zmensen na '+Math.round(_fit*100)+' %, aby se vesel na platno</span>'):'')+
