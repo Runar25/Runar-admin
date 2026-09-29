@@ -198,7 +198,12 @@ function buildBranch(spec, T) {
   /* 2026-09-29: dev ~ 0 (vudci vetev rovnobezne s kmenem) = znamenko je sum -> strana ohybu se
      preklapela s kazdym drobnym rustem kmene (zmereno: −0.00016 -> +0.00068, spicka o 81 px, 37°).
      Pod prahem rozhodne pevna strana z runy a seedu (bez cerpani rnd -> ostatni tvar beze zmeny). */
-  var side = (spec.dev != null) ? (Math.abs(spec.dev) < 0.05 ? (((hashStr(R.k) ^ (spec.seed||0)) & 1) ? 1 : -1) : (spec.dev >= 0 ? 1 : -1))
+  /* 2026-09-29: `spec.side` = strana ohybu od volajiciho (+1/-1; 0 = pevne z runy a seedu). Prah 0,05
+     sam je hrana: odchylka od tecny kmene se s rustem kmene posouva a kdyz ho prekroci, tvar se
+     zrcadli (Eihwaz −0,0506 -> −0,0489 mezi dvema ctenimi, graduant na nem skocil o 22°). Koruna
+     ted predava stranu z casove stale veliciny. Bez `side` = beze zmeny. */
+  var side = (spec.side === 1 || spec.side === -1) ? spec.side
+           : (spec.dev != null) ? ((spec.side === 0 || Math.abs(spec.dev) < 0.05) ? (((hashStr(R.k) ^ (spec.seed||0)) & 1) ? 1 : -1) : (spec.dev >= 0 ? 1 : -1))
            : ((lat !== 0) ? (lat > 0 ? 1 : -1) : (rnd() < 0.5 ? -1 : 1));
   var openBase = lerp(1.15, 0.30, elevN);     /* low elev = reaches out, high = up */
   var theta0 = (spec.dev != null) ? (base + spec.dev)

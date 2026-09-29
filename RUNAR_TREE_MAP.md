@@ -6,6 +6,8 @@
 # Vznik 2026-08-07 (CODE-tree). Živý dokument — bude se upravovat, jak na systému začneme dělat.
 # ⚠️ 2026-09-28: NOVÝ MODEL (RUNAR_TREE.md §5 — pramen = element, runy = větve na větvích, žádná větev bez runy)
 #    přepsal vrstvy D (kompozice) a H (odbočky/graduace). Tam, kde se tahle mapa rozchází, platí RUNAR_TREE.md.
+# ⚠️ 2026-09-29: vrstva C opravena — strana ramene = rovnováha jeho čtení (KROK 3), tvar větve ze záměru živý (KROK 1);
+#    řádky tvrdily „SPÍCÍ" a „strana z areaSide", což od kroků 1 a 3 neplatí.
 # Vlastník: CODE-tree (mechanika + implementace) · Cowork-tree (význam) · KUKY (rozhoduje).
 
 ## Jak číst
@@ -40,11 +42,11 @@ Laděno v branch composeru → `RUNE_TUNE`; fallback = signatura v `RUNES` (runa
 ## Vrstva C — VSTUPY ČTENÍ (modulace: „area/intention posouvají tvar")
 | vstup | mechanika | stav | význam →Cowork |
 |---|---|---|---|
-| `area` | POZICE: strana (`AREA_LAT`) · hustota odboček (`AREA_SUB`) | strana = LIVE (`areaSide`) · hustota do tvaru = ⚠️SPÍCÍ | dovnitř/ven |
-| `intention` | POZICE: výška (`INT_AXIS`→`intZone`) · TVAR: délka/tip/sukovitost (`sLen`/`sTip`/`sGnarl`) | výška = LIVE · tvar = ⚠️SPÍCÍ | urð/verðandi/skuld |
+| `area` | POZICE: strana RAMENE z rovnováhy všech jeho čtení (`limbPath`: přetočení na stranu, kam jasně převáží, + natočení `areaSide`) · strana VĚTVE z jejího čtení (`sideOf`) · hustota odboček (`AREA_SUB`) | strana = LIVE (KROK 3, 2026-09-29 — RUNAR_TREE.md §5) · hustota = ⚠️SPÍCÍ (`subScale` 0 v koruně) | dovnitř/ven |
+| `intention` | POZICE: výška (`INT_AXIS`→`intZone`) · TVAR: délka/tip/sukovitost (`sLen`/`sTip`/`sGnarl`) | výška = LIVE · tvar = LIVE pro větve z čtení (KROK 1, 2026-09-29) | urð/verðandi/skuld |
 | `seeking` | zatím nepoužito | 🆕 | 3. hlas výškové osy (backlog §3A) |
 | `steer` | síla řízení celkově | `T.steer` | |
-> ⚠️ **Reading → POZICE jede** (area→strana, intention→výška). **Reading → TVAR (steering v buildBranch) je SPÍCÍ** — strom neposílá `intention/area` do `buildBranch`. **Tvůj „tip lift řízený čtením" = zapojit tuhle spící vrstvu** (půl hotové).
+> ⚠️ *Do 2026-09-29 tu stálo „Reading → TVAR je SPÍCÍ — strom neposílá `intention/area` do `buildBranch`". Od KROKU 1 je posílá (`growBranch` → `STEER_AREA`/`STEER_INT`), viz RUNAR_TREE.md §5.*
 
 ## Vrstva D — POZICE / KOMPOZICE (kde větev vyleze z kmene)
 | páka | mechanika | kde | pozn. |
