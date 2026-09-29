@@ -701,6 +701,14 @@
      dvojice run „X × Y“ · systém proti opakování s obrazovou vzdáleností). Zpracovat spolu s prvním souborem.
   3. **Hagalaz: „Hagalaz opens the field where the boards once stood“** — owner: *„nevím, jestli se mi líbí, že Rúnar používá runu jako
      nástroj pro něco, co nejde úplně poznat z obrazu.“* Podívat se na esenční rámec [1] („the rune … is the one doing something“).
+- [ ] 👁 **SLEDOVAT: „unshown“ z tváře oblasti The Unseen** (KUKY 2026-09-29: *„zapíšeme a budeme sledovat, jestli a kde se objeví znova“*;
+  k Mannaz 2026-09-28: *„jestli se to hodí do čtení — mně moc ne“*). Zdroj = `AREA_FACES` The Unseen [0] *„what is present but not shown“*
+  (`v2/runar-utils.js`) — model z „not shown“ udělá *„What sits unshown…“*. Stav 2026-09-29 (prompty od v4.47): **1 ze 2** čtení s touto
+  tváří, v ostatních oblastech 0. Přeměřit: `supabase db query --linked "select area, prompt_draws->>'area_face' face, count(*) n,
+  count(*) filter (where short_text ~* '\m(un)?shown\M' or deep_text ~* '\m(un)?shown\M') s from readings where prompt_version >=
+  'v4.47' and area is not null and area not in ('spread','gathering','') group by 1,2 order by 1,2"` (širší obraz slov oblastí:
+  `node scripts/utils/oblasti_slova.js`). Když se vrací: podoby tváře jako DATA (losovat jedno znění), ne výčet v jednom pokynu —
+  výčet model opisuje (sloveso v esenci 19/41).
 - [ ] **NA ZÍTRA (owner 2026-09-25, „jsme na 99 %… uděláme zítra po restartu tokenů“)** (CODE-tune)
   1. **Deník — co uživatel zadal a Asky:** u karty vedle AREA i SEEKING a INTENTION; THE SITUATION (volná otázka), když ji zadal;
      všechny výměny Asku i s otázkou; **jen pro adminy** model, který čtení napsal (GPT-6 sol / který Opus — `readings.usage.model`).

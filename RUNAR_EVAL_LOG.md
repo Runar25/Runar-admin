@@ -5598,3 +5598,25 @@ gramatika 2/12 jednorázově: *„hver handtak"* → *hvert handtak* (73 × 0), 
 (c) IS: definici runy a vymyšlená rčení řešit dalším testem (obrácená páka: hlavička bez klíčových slov); (d) smazat dva jednorázové řádky korekcí.
 **Hranice:** 1 text na buňku, 6 run (každý druh vstupu jen s jednou runou — druh a runa jsou smíchané), jeden slepý soudce; IS soudí
 nástroje, ne rodilý mluvčí.
+
+## 2026-09-29 (1) — Test 3: kdo je „ty“, když hlavní postavou obrazu je zvíře · druhá osoba u run mezi dvěma
+
+**Proč (owner):** report 2026-09-28 15:17 (Norny, GPT): *„Podle Asku jsem pochopil, že ten sheepdog jsem já… v první větě to není tak
+pojmenováno… nebo ukázat obraz jejím pohledem a v závěrečné otázce to přenést na uživatele?“* + otázka, jestli druhou osobu (gauč) psát
+do obrazu, nebo dodávat zvlášť. KUKY 2026-09-29: *„jeď test 3“*.
+
+**Druhá osoba — rozhodla inventura, test netřeba:** Ehwaz **7/7** obrazů nese dvě bytosti (ty + kůň, dva táhnou saně, dva tančí…),
+Gebo **7/7** výměnu mezi dvěma stranami — napříč všemi aspekty. Druhá bytost tedy NENÍ vázaná na jeden význam; samostatný pokyn
+„runa je mezi dvěma“ by jen zopakoval, co obraz už nese.
+
+**Perspektiva — pilot** (`docs/eval/2026-09-29-perspektiva/`): 4 obrazy se zvířetem jako hlavní postavou (pes u stáda · kajka · býk
+v rašeliništi · dva koně) × 2 losy, produkční single builder, týž los, Opus 5, EN; liší se jen řádek za `IMAGE`. Slepý soudce:
+| rameno | kde je čtenář v obrazu | vztah k životu jasný | první slova |
+|---|---|---|---|
+| P0 produkce | **nejednotně:** mimo obraz 4 · dívá se 2 · JE zvíře 1 · nejasné 1 | **4/8** | pestrá |
+| P1 „ty se díváš“ | dívá se **8/8** | **8/8** | ⚠️ **8/8 začíná „You watch / notice / hear…“** — nová formule |
+| P2 „pohledem postavy, jen poslední věta k tobě“ | mimo obraz **8/8** | **7/8** | pestrá (One ear · She waits · Mud to the shoulders…) |
+
+⇒ **Obě ownerovy možnosti nejasnost odstraní.** P1 je o chlup jasnější, ale každé čtení začne stejně; P2 drží pestrost.
+**Hranice:** n = 8 na rameno, EN, single čtení na Opusu 5. Ownerův případ byl **spread Norny přes GPT** — ten test nepokrývá.
+Nasazení potřebuje vědět, KTERÉ obrazy mají cizí hlavní postavu (v bance 13 se zvířetem bez „you“) → značka v datech, ne odhad z textu.
