@@ -701,6 +701,22 @@
      dvojice run „X × Y“ · systém proti opakování s obrazovou vzdáleností). Zpracovat spolu s prvním souborem.
   3. **Hagalaz: „Hagalaz opens the field where the boards once stood“** — owner: *„nevím, jestli se mi líbí, že Rúnar používá runu jako
      nástroj pro něco, co nejde úplně poznat z obrazu.“* Podívat se na esenční rámec [1] („the rune … is the one doing something“).
+- [ ] **PODKOVA (7 run) — Opus z ní nesloží celistvé čtení; dlouhodobá práce** (KUKY 2026-09-29 20:19/20:25: *„jak je horseshoe dlouhé, tak má
+  opus problém z toho vytvořit celistvé čtení… ani v Asku si s tím nedokázal moc poradit… budu muset udělat víc čtení a najít řešení,
+  teď ho nevidím“*; *„7 run je hodně a v obraze se ztrácí to, co můžou představovat. Potřebuji lepší vysvětlení na konci, jinak nám uživatel
+  uteče.“*). Doklad: čtení 2026-09-29 20:10 (Dagaz·Tiwaz·Ansuz·Wunjo·Mannaz·Ingwaz·Isa, 619 výstupních tokenů, 13 s) — jeden obraz
+  (ovce v bouři) nese všech 7 pozic, runy v něm nejsou poznat; druhý Ask (*„could you describe the reading better way?“*) je nejblíž tomu, co
+  owner chce — obyčejné vysvětlení run po pozicích. Směr k ověření: u dlouhých spreadů závěr, který runy pojmenuje významem (jako Ask).
+  Owner udělá víc čtení; řešení se hledá na nich, ne odhadem.
+- [ ] **Závěrečná myšlenka čtení („motivační věta“) — body 7/8/9 ownera 2026-09-29** (report 20:06 u Kříže: *„závěrečná věta toho moc
+  neřekne… hodilo by se mít na závěr u spreadu nějakou myšlenku navíc… neříkat, co má dělat, ale něco nabídnout. Takové shrnutí, které má
+  myšlenku“*; vzory ownera z kolekce: Uruz *„What in you is ready to break through stone?“*, *„Listen closely to what speaks when you are
+  still.“*; původně jen pro Standard/Premium). Pilot 3 čtení: `docs/eval/2026-09-29-myslenka/` — čeká na ownerovo čtení.
+- [ ] **Před spuštěním: viditelnost + sklad dobrých vět** (KUKY 2026-09-29 bod 6: *„některá čtení jsou fakt dobrá, popřípadě vyjde dobrý
+  závěr, a to chci ukládat tak, abychom měli materiál na vizuální tvorbu“*; report 10:13: *„Jak se maximálně zviditelnit ve vyhledávačích a
+  taky při AI vyhledávání… Tohle je práce před spuštěním.“*). (a) SEO + AI vyhledávání (popisky run, tvar run v kolekci, statické texty jako
+  obsah). (b) Ukládání vybraných čtení/vět pro vizuály — návrh: nový typ v reportéru „uložit“ (výběr textu + id čtení); vyžaduje rozšířit
+  check `bug_reports.type` (sql) → čeká na ownerovo ano.
 - [ ] **Perspektiva obrazu se zvířetem ve SPREADECH (ownerův případ: Norny přes GPT, pes u stáda, report 2026-09-28 15:17)** —
   single má od 2026-09-29 pokyn B (DECISIONS 2026-09-29 (1)); v Nornách B vztah k životu zhoršil (2/3 → 1/3, n = 3, EVAL_LOG 2026-09-29 (2)),
   protože spread má vlastní závěr (osa Noren). Hledat znění, které se se závěrem spreadu netluče, a měřit i na GPT (ownerův engine).
