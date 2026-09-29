@@ -34,8 +34,11 @@ Standard subscription is the product.
 
 **Measured 2026-06-14** (script `scripts/utils/measure_reading_costs.js`, 3–4 real samples/type via prod proxy).
 Supersedes the old "430 char" base — readings were re-tuned 2026-06-12/14 (single shortened, Norns→~770, Kríž→~1030).
-Claude model: **Opus 5** od 2026-09-24 (fallback Opus 4.8; oba $5/$25 per 1M in/out, stejný tokenizér — cena čtení se nemění) — zdroj pravdy je `MODELS` v
-`claude-proxy/index.ts`, tady se to NEOPISUJE (§20); tenhle řádek je jen datovaný záznam ke dni.
+Claude model: **Opus 5** od 2026-09-24 (fallback Opus 4.8; stejný ceník i tokenizér — cena čtení se nemění) — zdroj pravdy je `MODELS` v
+`claude-proxy/index.ts`, ceník modelů `MODEL_PRICES` v `v2/runar-config.js`; tady se to NEOPISUJE (§20); tenhle řádek je jen datovaný záznam ke dni.
+**Cena KAŽDÉHO čtení od 2026-09-29** se počítá sama z tokenů, které vrátilo API (`readingCostUsd`, `v2/runar-utils.js`): admin ji vidí
+v deníku u čtení i Asku, souhrny GPT × Opus po typech čtení dává `node scripts/utils/stats.js` (DECISIONS 2026-09-29 (5)).
+*(2026-09-29: odsud pryč opsaná čísla „$5/$25 per 1M“ — od toho dne bydlí jen v `MODEL_PRICES`.)*
 ⚠️ **Přeměřeno 2026-08-15** — do té doby tu stálo „Sonnet 4-5 ($3/$15)", což byl model, který
 už neběžel, takže celý sloupec „Claude" i break-even byly počítané na cizí ceně.
 Prompt caching: ⚠️ **v produkci NEZABÍRÁ** (změřeno 2026-09-23, `readings.usage`, 70 EN čtení za 7 dní): `cache_read` **0/70**, zápis jen 2/70 — přirážka za zápis se tedy neplatí, ale úspora taky ne. Do té doby tu stálo „✅ deployed (2026-06-09), system prompt cached" a sloupec Claude s tím počítal. Proč cache netrefí: ⚠️ **oprava 2026-09-24 (CODE-read, změřeno v `readings.usage` + dokumentace Anthropic):** od 2026-09-19 má EN
