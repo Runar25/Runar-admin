@@ -2305,7 +2305,8 @@ var RP_HORSESHOE = {
     beats:[
       'Lestu allar sjö sem eitt samfellt stef — ekki sjö aðskildir lestrar.',
       'Rúnin 7 (Niðurstaða) er ekki spá — sjáðu hana sem stefnu ef þráðurinn heldur áfram.',
-      'Nefndu ekki staðsetningarnar í úttakinu. Bærðu þær í röddinn.',
+      // 2026-09-29: dřív „Bærðu þær í röddinn“ (röddinn neexistuje, bærðu = pohni) — totéž opraveno v Kříži 2026-09-27, tahle kopie zůstala.
+      'Nefndu ekki staðsetningarnar í úttakinu en berðu þær í röddinni.',
       'Sérhver rúna verður að setja mark sitt — láttu allar sjö móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leitandinn sér þær þegar.',
     ],
     closing:function(name){ return 'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. ' + _namePlacement(name, 'is') + ' 11 til 12 setningar.'; },

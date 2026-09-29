@@ -7669,3 +7669,10 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   **Zůstává** značka `postava` u 11 obrazů (fakt o obrazu, podklad nového testu; nic ji nečte, hlídá ji `verify_image_register.js`).
 - **Dál:** test znovu — soudce bez textu obrazu; totéž přeměřit u esenčního řádku 2026-09-28 (6), kde soudce obraz taky viděl.
 - Affected doc(s): `RUNAR_EVAL_LOG.md` (oprava k 2026-09-29 (1)+(2)) — v tomto commitu.
+
+## 2026-09-29 (3) — Podkova IS: „Bærðu þær í röddinn“ → „berðu þær í röddinni“ (druhá kopie chyby opravené v Kříži, v4.78)
+
+- **Co:** táž vadná věta jako v Kříži 2026-09-27 (12) — *röddinn* neexistuje, *bærðu* = pohni. Tehdy se opravila jedna ze dvou kopií;
+  druhá (RP_HORSESHOE IS) nalezena při čtení builderů kvůli rozboru Norn (§22). Znění shodné s Křížem; is-grammar-qa jen W001 (šum).
+- **Kontrola:** golden — změnily se jen `horseshoe_is` a `horseshoe_lens_is`, jen tahle věta.
+- Affected doc(s): žádný.
