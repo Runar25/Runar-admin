@@ -391,6 +391,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .guide-lbl::after{content:" +";opacity:.55;}
 .guide-lbl[aria-expanded="true"]::after{content:" −";}
 .guide-lbl:focus-visible{outline:1px solid var(--gold);outline-offset:4px;}
+/* „+“ u popisků oblasti / hledání / záměru (2026-09-29, report KUKY 11:32) — tentýž znak jako u „How a reading works“. */
+.hint-tgl{background:none;border:0;padding:0 0 0 6px;margin:0;font:inherit;color:inherit;cursor:pointer;}
+.hint-tgl::after{content:"+";opacity:.55;}
+.hint-tgl[aria-expanded="true"]::after{content:"−";}
+.hint-tgl:focus-visible{outline:1px solid var(--gold);outline-offset:3px;}
+.form-hint{margin:-2px 0 10px;}
 .guide{margin-top:14px;}
 /* Text runy v Kolekci (2026-09-23): stejné písmo jako návod, ale plná barva — je to obsah, ne nápověda. */
 /* 2026-09-24 (KUKY: „jiný font, mělo by být odděleno výrazněji“): stejné písmo jako Rúnarovo učení (.coll-audio-text),

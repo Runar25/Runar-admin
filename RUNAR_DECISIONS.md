@@ -7705,3 +7705,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   vstup) → všechny FAIL.
 - **Mezera (neřešeno):** čtení životní runy a rozbor jména se neukládají do `readings`, jejich cena se nikde nezapisuje.
 - Affected doc(s): žádný (ceny bydlí v configu; `RUNAR_PRICING.md` na ně jen odkazuje).
+
+## 2026-09-29 (6) — „How a reading works“ začíná tím, co člověk volí; „+“ u oblasti, hledání a záměru (jedna věta)
+
+- **Rozhodl:** KUKY 2026-09-29 — report 10:04 (*„mělo by být: you bring the question… in area of life, pak pojmenovat seeking a intention“*),
+  report 11:32 (*„rozbalovací helper vedle AREA OF LIFE (OPTIONAL) +“*), odpověď *„3. udělej to“*, *„4. tohle stačí… není potřeba to víc
+  vysvětlovat, alespoň ne zatím“*.
+- **Co:** (a) první řádek návodu nahrazen čtyřmi: otázka + oblast · hledání = jak Rúnar mluví · záměr = čas čtení · vše volitelné (EN + IS,
+  is-grammar-qa čisté). Pátý řádek *„a way of looking at it“* → *„…at your question“* / *„á hana“* → *„á spurninguna“* — po nových řádcích
+  „it/hana“ nemělo předchůdce (nalezeno čtením jako uživatel). (b) „+“ za popiskem AREA / SEEKING / INTENTION rozbalí jednu větu
+  (*„The area tells Rúnar where in your life to let the picture land.“* · *„This sets the tone.“* · *„This sets the time the reading speaks
+  to.“*; IS ověřeno); vzhled = „How a reading works +“. Přepnutí jazyka přepíše i otevřenou nápovědu.
+- **Kontrola:** prohlížeč (otevřít/zavřít, IS při otevřené nápovědě, nový začátek návodu), smoke zelený.
+- Affected doc(s): žádný.

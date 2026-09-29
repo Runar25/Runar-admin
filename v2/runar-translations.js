@@ -56,6 +56,10 @@ const UI_TEXT = {
     month_ph:         'Month',
     year_ph:          'Year',
     area_lbl:         'AREA OF LIFE',
+    // 2026-09-29 (KUKY bod 4: jen jedna věta, „není potřeba to víc vysvětlovat, alespoň ne zatím“) — rozbalí „+“ u popisku.
+    area_hint:        'The area tells Rúnar where in your life to let the picture land.',
+    seek_hint:        'This sets the tone.',
+    intention_hint:   'This sets the time the reading speaks to.',
     seek_lbl:         'WHAT ARE YOU SEEKING?',
     intention_lbl:    'THIS READING IS FOR',
     report_btn:       'Report a note',
@@ -291,8 +295,13 @@ const UI_TEXT = {
     coll_audio_missing: 'Audio file missing.',
     vcn_text:           'You walk here as a <strong>Visitor</strong>. Five runes await you — draw one, and listen to the ancient stones.<br><br>Should you want all twenty-five, and a reading that speaks to you alone, become a <strong>Rune Seeker</strong>. Free to join.',
     guide_title:        'How a reading works',
-    guide_lines:        ['You bring the question — where you stand, and what you are carrying.',
-                         'The rune opens a way of looking at it: an angle you might not have taken on your own.',
+    // 2026-09-29 (report KUKY 10:04 „mělo by být: you bring the question… in area of life, pak pojmenovat seeking a intention“):
+    // první řádek nahrazen čtyřmi o tom, co člověk volí a co to ve čtení dělá (oblast · tón · čas · volitelné).
+    guide_lines:        ['You bring the question, and you choose where it lives: the area of life the reading turns to.',
+                         'What you are seeking sets how Rúnar speaks: one thing brought into focus, a difficulty named honestly, or a mirror held up.',
+                         'What the reading is for sets its time: what is happening now, what lies ahead, or what has already passed.',
+                         'All three are optional. Leave them open, and the rune leads on its own.',
+                         'The rune opens a way of looking at your question: an angle you might not have taken on your own.',   // 2026-09-29: „it“ po nových řádcích nemělo k čemu patřit
                          'Rúnar gives the rune a voice. It speaks through an image of a place or a moment, something happening out in nature or at a kitchen table. A rune holds more than one word can.',
                          'The meaning is yours to find. Read the image slowly and notice what stays with you — one detail, one movement. That is where the reading touches your life.',
                          'The last line is not advice, but a possibility or a question for you to weigh.',
@@ -447,6 +456,9 @@ const UI_TEXT = {
     month_ph:         'Mánuður',
     year_ph:          'Ár',
     area_lbl:         'SVIÐ LÍFSINS',
+    area_hint:        'Sviðið segir Rúnari hvar í lífi þínu myndin á að lenda.',   // 2026-09-29 viz EN; is-grammar-qa čisté
+    seek_hint:        'Þetta ræður tóninum.',
+    intention_hint:   'Þetta ræður því um hvaða tíma lesturinn talar.',
     seek_lbl:         'HVAÐ ERTU AÐ LEITA AÐ?',
     intention_lbl:    'ÞESSI LESTUR ER FYRIR',
     report_btn:       'Tilkynna athugasemd',
@@ -674,8 +686,12 @@ const UI_TEXT = {
     coll_audio_missing: 'Hljóðskrá vantar.',
     vcn_text:           'Þú ert hér <strong>Gestur</strong>. Fimm rúnir bíða þín — dragðu eina og hlustaðu á fornu steinana.<br><br>Viljir þú allar tuttugu og fimm rúnirnar, og lestur sem á aðeins við þig, gerðu þig að <strong>Leitanda</strong>. Skráning er ókeypis.',
     guide_title:        'Hvernig lestur verður til',
-    guide_lines:        ['Þú kemur með spurninguna. Hún snýst um stöðu þína og það sem þú berð með þér.',
-                         'Rúnin opnar nýtt sjónarhorn á hana, leið til að horfa sem þú hefðir kannski ekki valið.',
+    // 2026-09-29 viz EN; psáno islandsky, is-grammar-qa čisté.
+    guide_lines:        ['Þú kemur með spurninguna og velur hvar hún á heima, það svið lífsins sem lesturinn snýr að.',
+                         'Það sem þú leitar að ræður því hvernig Rúnar talar: hann dregur eitt atriði fram, nefnir erfiðleika eins og þeir eru eða er þér spegill.',
+                         'Tilgangur lestursins ræður því um hvaða tíma hann talar, það sem gerist núna, það sem er framundan eða það sem er liðið.',
+                         'Ekkert af þessu er skylda. Ef þú velur ekkert leiðir rúnin sjálf.',
+                         'Rúnin opnar nýtt sjónarhorn á spurninguna, leið til að horfa sem þú hefðir kannski ekki valið.',   // 2026-09-29 viz EN („hana“ bez předchůdce)
                          'Rúnar gefur rúninni rödd. Hún talar í gegnum mynd af stað eða andartaki, af einhverju sem gerist úti í náttúrunni eða við eldhúsborðið. Rún rúmar meira en eitt orð.',
                          'Merkinguna finnur þú. Lestu myndina hægt og sjáðu hvað situr eftir í þér, eitt smáatriði eða ein hreyfing. Þar snertir lesturinn líf þitt.',
                          'Síðasta línan er ekki ráð, heldur möguleiki eða spurning sem þú vegur og metur.',

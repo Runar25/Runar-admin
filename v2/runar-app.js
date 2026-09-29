@@ -726,11 +726,15 @@ function _updateAreaSeekLabels() {
       ? ' <span class="visitor-lock-hint">' + (lang === 'is' ? '· Reading Gift Card opnar allt' : '· Reading Gift Card unveils all') + '</span>'
       : '';
   const _optSpan = _isVisitor ? '' : ' <span class="opt">'+t('opt')+'</span>';
-  if (albl) albl.innerHTML = t('area_lbl') + _optSpan + _lockHint;
+  // 2026-09-29 (report KUKY 11:32): „+“ za popiskem rozbalí jednu větu, co volba ve čtení dělá (toggleFormHint níž).
+  const _tgl = function (k) { const box = document.getElementById(k + '-hint'); const open = !!(box && box.style.display !== 'none');
+    return ' <button class="hint-tgl" type="button" aria-expanded="' + open + '" aria-controls="' + k + '-hint" onclick="toggleFormHint(\'' + k + '\')"></button>'; };
+  if (albl) albl.innerHTML = t('area_lbl') + _optSpan + _tgl('area') + _lockHint;
   const slbl = document.getElementById('seek-lbl');
-  if (slbl) slbl.innerHTML = t('seek_lbl') + _optSpan + _lockHint;
+  if (slbl) slbl.innerHTML = t('seek_lbl') + _optSpan + _tgl('seek') + _lockHint;
   const ilbl = document.getElementById('intention-lbl');
-  if (ilbl) ilbl.innerHTML = t('intention_lbl') + _optSpan + _lockHint;
+  if (ilbl) ilbl.innerHTML = t('intention_lbl') + _optSpan + _tgl('intention') + _lockHint;
+  ['area', 'seek', 'intention'].forEach(function (k) { setText(k + '-hint', t(k + '_hint')); });   // přepnutí jazyka přepíše i otevřenou nápovědu
   const qlbl = document.getElementById('q-lbl');
   if (qlbl) qlbl.innerHTML = t('q_lbl') + ' <span class="opt">'+t('opt')+'</span>';
   // Napoveda k otazce. Patri SEM (a ne do updateUIText primo), protoze je soucasti
@@ -1069,6 +1073,15 @@ function _paintGuide() {
     p.textContent = r;
     box.appendChild(p);
   });
+}
+// Jedna věta pod popiskem oblasti / hledání / záměru (2026-09-29, report KUKY 11:32; owner: „tohle stačí“).
+function toggleFormHint(k) {
+  var box = document.getElementById(k + '-hint'); if (!box) return;
+  var otevrit = box.style.display === 'none';
+  box.textContent = t(k + '_hint');
+  box.style.display = otevrit ? '' : 'none';
+  var lbl = document.getElementById(k + '-lbl'), b = lbl && lbl.querySelector('.hint-tgl');
+  if (b) b.setAttribute('aria-expanded', otevrit ? 'true' : 'false');
 }
 function toggleGuide() {
   var lbl = document.getElementById('read-guide-lbl'), box = document.getElementById('read-guide');
