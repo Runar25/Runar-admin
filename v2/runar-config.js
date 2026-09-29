@@ -409,6 +409,26 @@ const SPREAD_COSTS = {
                                            // ne tohle cislo; klient si zdarma rict nesmi.
 };
 
+// ─── MODEL_PRICES — ceník modelů čtení (USD / 1 M tokenů) ─────────────
+// 2026-09-29 (KUKY „přesně vědět, kolik nás stojí… měřit automaticky, ať vidíme každé čtení“): přestěhováno ze
+// scripts/utils/stats.js, aby cenu počítal JEDEN výpočet (readingCostUsd v runar-utils.js) pro deník, report i stats.js (§20).
+// Ověřeno: Anthropic 2026-09-24 (platform.claude.com/docs/en/about-claude/pricing) · OpenAI 2026-09-24 (developers.openai.com/
+// api/docs/pricing) · zápis do cache OpenAI 2026-09-25 (…/guides/prompt-caching: „cache writes cost 1.25× the uncached input rate“).
+// Nový model → řádek sem. Model, který tu není, cenu nemá (null) a hlásí se — nepočítá se potichu.
+const MODEL_PRICES = {
+  anthropic: {   // [vstup, zápis cache 5 min, zápis cache 1 h, čtení cache, výstup]
+    'claude-opus-5':   [5, 6.25, 10, 0.5, 25],
+    'claude-opus-4-8': [5, 6.25, 10, 0.5, 25],
+    'claude-opus-4-7': [5, 6.25, 10, 0.5, 25],
+  },
+  openai: {      // [vstup, vstup z cache, výstup]; zápis do cache = vstup × openaiCacheWrite
+    'gpt-6-sol':  [2, 0.2, 10],
+    'gpt-6-luna': [0.1, 0.01, 0.5],
+  },
+  openaiCacheWrite: 1.25,
+  usGeo: 1.1,    // Anthropic inference_geo 'us' = +10 %
+};
+
 // ─── VOCABULARY — single source of truth ─────────────
 // Change here only — vn(key, n, lang) and vl(key, lang) in runar-utils.js
 // use these to pluralize + translate everywhere in the UI.

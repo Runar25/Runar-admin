@@ -148,6 +148,7 @@ function _slozeniCteni() {
   var L = _lastGen.lang, isIs = L === 'is', d = _promptDraws(_lastGen.prompt, L) || {};
   var out = ['[READING COMPOSITION — admin]',
     'model: ' + (_lastGen.model || '?') + ' · prompt ' + RUNAR_PROMPT_VERSION + ' · ' + _lastGen.kind + ' · ' + L];
+  if (_lastGen.usage && costLabel(_lastGen.usage)) out.push('cost: ' + costLabel(_lastGen.usage));   // 2026-09-29
   // id čtení = spojka report ↔ čtení v DB ↔ uložený rozbor GPT (gpt_reviews.reading_id), 2026-09-25
   if (_lastReadingId) out.push('reading id: ' + _lastReadingId);
   var ang = isIs ? READING_ANGLES_IS : READING_ANGLES;
@@ -358,7 +359,8 @@ async function _generateReading() {
   } : null;
   _lastReadingId = null;
   const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens, shouldUseCredit(), SPREAD_COSTS.single.credits, _journal);
-  if (_lastGen && res && res.model) _lastGen.model = res.model;   // skutečný model (sol může spadnout na Opus) — složení v reportu
+  if (_lastGen && res && res.model) _lastGen.model = res.model;
+  if (_lastGen && res && res.usage) _lastGen.usage = res.usage;   // 2026-09-29: cena čtení do reportu (costLabel)   // skutečný model (sol může spadnout na Opus) — složení v reportu
   _lastReadingId = (res && res.reading_id) || (_journal ? _journal.id : null);
   if (_journal && res && !res.error && res.text && !res.reading_id) _pendAdd('pendingReadings', { id: _journal.id, journal: _journal, model_text: res.text });
   _flushPending();
@@ -1330,6 +1332,7 @@ async function _generateSpreadReading(o) {
                             _isFounding ? 0 : o.credits,
                             _journalS, _isFounding ? 'founding' : '');
   if (_lastGen && res && res.model) _lastGen.model = res.model;
+  if (_lastGen && res && res.usage) _lastGen.usage = res.usage;   // 2026-09-29: cena čtení do reportu (costLabel)
   _lastReadingId = (res && res.reading_id) || (_journalS ? _journalS.id : null);
   if (_journalS && res && !res.error && res.text && !res.reading_id) _pendAdd('pendingReadings', { id: _journalS.id, journal: _journalS, model_text: res.text });
   _flushPending();

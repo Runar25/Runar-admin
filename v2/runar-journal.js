@@ -48,14 +48,17 @@ function _jVolby(e, isSpread) {
 }
 // Situace, výměny Asku (otázka + odpověď) a pro adminy model, který čtení napsal (readings.usage.model).
 function _jDetail(e) {
+  // 2026-09-29 (KUKY „ať přesně vidíme každé čtení“): admin vidí u modelu i cenu a čas — u čtení i u každé výměny Asku.
+  const adm = !!(currentUser && isAdmin(currentUser.email));
+  const meta = function (us) { const l = costLabel(us); return `<div class="jcard-life-rune">Model: ${escapeHtml(_jModel(us.model))}${l ? ' · ' + escapeHtml(l) : ''}</div>`; };
   let h = e.question ? `<div class="jcard-question">❝ ${escapeHtml(e.question)} ❞</div>` : '';
   const asks = Array.isArray(e.follow_up) ? e.follow_up.filter(function (f) { return f && f.a; }) : [];
   if (asks.length) h += `<div class="jcard-layer-lbl" style="margin-top:18px;">${t('ask_lbl')}</div>` + asks.map(function (f) {
-    return (f.q ? `<div class="jcard-question">❝ ${escapeHtml(f.q)} ❞</div>` : '') + `<div class="jcard-text">${escapeHtml(f.a)}</div>`;
+    return (f.q ? `<div class="jcard-question">❝ ${escapeHtml(f.q)} ❞</div>` : '') + `<div class="jcard-text">${escapeHtml(f.a)}</div>`
+      + (adm && f.usage && f.usage.model ? meta(f.usage) : '');
   }).join('');
   if (e.life_rune) h += `<div class="jcard-life-rune">${t('life_rune_short')}: ${escapeHtml(e.life_rune)}</div>`;
-  const m = e.usage && e.usage.model;
-  if (m && currentUser && isAdmin(currentUser.email)) h += `<div class="jcard-life-rune">Model: ${escapeHtml(_jModel(m))}</div>`;
+  if (adm && e.usage && e.usage.model) h += meta(e.usage);
   return h;
 }
 // „claude-opus-4-8“ → „Opus 4.8“, „gpt-6-sol“ → „GPT-6 sol“ (jen popisek pro admina).

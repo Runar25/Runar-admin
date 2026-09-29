@@ -62,36 +62,14 @@ const kvalita = q('select count(*) n, count(prompt_draws) s_draws,' +
 // Proč tady a ne ve zvláštním skriptu: sledování provozu (špička, růst) a cena patří k sobě — rozhodnutí
 // 2026-08-15 „sběr dat před vizualizací". Do 2026-09-24 tu stálo „tokeny ani cache NEUKLÁDÁME" — zastaralé.
 // Nový model → řádek do CENIK; model, který tu není, se nahlásí (nepočítá se potichu).
-const CENIK = {   // USD / 1 M tokenů: [vstup, zápis cache 5 min, zápis 1 h, čtení cache, výstup]
-  'claude-opus-5': [5, 6.25, 10, 0.5, 25],
-  'claude-opus-4-8': [5, 6.25, 10, 0.5, 25],
-  'claude-opus-4-7': [5, 6.25, 10, 0.5, 25],
-};
-// OpenAI (gpt-6-sol pro admin test cteni, owner 2026-09-24 „beru tvoje spojeni kroku"): jiny tvar usage —
-// prompt_tokens (vcetne cachovanych), prompt_tokens_details.cached_tokens, completion_tokens.
-// Cenik overen 2026-09-24 na developers.openai.com/api/docs/pricing (standard): vstup · vstup z cache · vystup za 1 M.
-const CENIK_OPENAI = { 'gpt-6-sol': [2, 0.2, 10], 'gpt-6-luna': [0.1, 0.01, 0.5] };
-// Zapis do cache (2026-09-25, nalezl CODE-tune: prvni verze ho pocitala jako bezny vstup → sol vychazel levnejsi, nez je).
-// Dokumentace OpenAI (developers.openai.com/api/docs/guides/prompt-caching, overeno 2026-09-25): „For GPT-5.6 and later,
-// cache writes cost 1.25× the standard, uncached input-token rate" a zapis NENI priplatek — kazdy vstupni token ma jednu
-// sazbu: bezny · z cache · zapis. prompt_tokens = vsechny tri dohromady. Pole: prompt_tokens_details.{cached_tokens,
-// cache_write_tokens} (Chat Completions, tak je uklada claude-proxy); input_tokens_details.* (Responses API) pro jistotu taky.
-const OPENAI_ZAPIS = 1.25;
-function cenaUsage(u) {
-  if (u.prompt_tokens != null || u.input_tokens_details) {
-    const o = CENIK_OPENAI[u.model]; if (!o) return null;
-    const vstup = u.prompt_tokens != null ? u.prompt_tokens : (u.input_tokens || 0);
-    const det = u.prompt_tokens_details || u.input_tokens_details || {};
-    const ca = det.cached_tokens || 0, zap = det.cache_write_tokens || 0;
-    const vystup = u.completion_tokens != null ? u.completion_tokens : (u.output_tokens || 0);
-    return ((vstup - ca - zap) * o[0] + ca * o[1] + zap * o[0] * OPENAI_ZAPIS + vystup * o[2]) / 1e6;
-  }
-  const c = CENIK[u.model]; if (!c) return null;
-  const cc = u.cache_creation || {};
-  const w5 = cc.ephemeral_5m_input_tokens != null ? cc.ephemeral_5m_input_tokens : (u.cache_creation_input_tokens || 0);
-  return (u.inference_geo === 'us' ? 1.1 : 1) * ((u.input_tokens || 0) * c[0] + w5 * c[1] + (cc.ephemeral_1h_input_tokens || 0) * c[2]
-    + (u.cache_read_input_tokens || 0) * c[3] + (u.output_tokens || 0) * c[4]) / 1e6;
-}
+// 2026-09-29: ceník a výpočet se přestěhovaly do v2/runar-config.js (MODEL_PRICES) a v2/runar-utils.js (readingCostUsd) — tentýž
+// výpočet teď adminovi ukazuje deník u každého čtení (KUKY „ať přesně vidíme každé čtení“; §20: jeden výpočet, ne dva).
+const vm = require('vm');
+const SB = { console: { log() {}, warn() {}, error() {} }, localStorage: { getItem: () => null, setItem() {}, removeItem() {} } };
+SB.window = SB; SB.document = { getElementById: () => null, querySelector: () => null, querySelectorAll: () => [] };
+vm.createContext(SB);
+for (const f of ['runar-config.js', 'runar-utils.js']) vm.runInContext(fs.readFileSync(path.join(__dirname, '..', '..', 'v2', f), 'utf8') + '\n;\n', SB);
+const cenaUsage = vm.runInContext('readingCostUsd', SB);
 // Samotest výpočtu na známém vstupu (§19.1): 1692 vstup + 152 výstup (Opus 4.8) = 0,01226 USD.
 if (Math.abs(cenaUsage({ model: 'claude-opus-4-8', input_tokens: 1692, output_tokens: 152 }) - 0.01226) > 1e-9) { console.error('  ✗ výpočet ceny rozbitý'); process.exit(1); }
 // ... a OpenAI: 1000 vstup (200 z cache) + 100 vystup na gpt-6-sol = (800·2 + 200·0,2 + 100·10) / 1 M = 0,00264 USD.
@@ -103,19 +81,22 @@ if (Math.abs(cenaUsage({ model: 'gpt-6-sol', prompt_tokens: 1000, prompt_tokens_
 const ADMINI = (fs.readFileSync(path.join(__dirname, '..', '..', 'v2', 'runar-config.js'), 'utf8').match(/const ADMIN_EMAILS\s*=\s*\[([^\]]*)\]/) || [, ''])[1]
   .split(',').map(s => s.trim().replace(/^['"]|['"]$/g, '')).filter(e => /^[^\s'@]+@[^\s'@]+$/.test(e));
 if (!ADMINI.length) { console.error('  ✗ ADMIN_EMAILS v runar-config.js nenalezen — skupiny by byly spatne'); process.exit(1); }
-const usageRows = q("select coalesce(r.lang,'?') lang, r.usage, r.follow_up, case when u.email in (" + ADMINI.map(e => "'" + e + "'").join(',')
+const usageRows = q("select coalesce(r.lang,'?') lang, r.area, r.usage, r.follow_up, case when u.email in (" + ADMINI.map(e => "'" + e + "'").join(',')
   + ") then 'admin' when coalesce(p.is_tester, false) then 'tester' else 'uzivatel' end skupina"
   + ' from public.readings r left join auth.users u on u.id = r.user_id left join public.user_profiles p on p.id = r.user_id'
   + ' where r.drawn_at >= ' + OD + ' and r.usage is not null;');
-const naklady = { skupiny: {}, podleSkupin: {}, ask: { n: 0, usd: 0, bez: 0 }, neznamy: [] };
+const naklady = { skupiny: {}, podleSkupin: {}, ask: { n: 0, usd: 0, bez: 0 }, askModel: {}, neznamy: [] };
 for (const r of usageRows) {
   for (const f of (r.follow_up || [])) {
     if (f && f.usage && f.usage.model) { const c = cenaUsage(f.usage); if (c == null) naklady.neznamy.push(f.usage.model); else { naklady.ask.n++; naklady.ask.usd += c; } }
+    // 2026-09-29: Ask i podle modelu — owner porovnává GPT a Opus (Ask běží na enginu, který je zrovna zapnutý).
+    if (f && f.usage && f.usage.model && cenaUsage(f.usage) != null) { const am = naklady.askModel[f.usage.model] = naklady.askModel[f.usage.model] || { n: 0, usd: 0 }; am.n++; am.usd += cenaUsage(f.usage); }
     else naklady.ask.bez++;
   }
   const u = r.usage; if (!u || !u.model) continue;
   const c = cenaUsage(u); if (c == null) { naklady.neznamy.push(u.model); continue; }
-  const k = u.model + ' · ' + r.lang, g = naklady.skupiny[k] = naklady.skupiny[k] || { n: 0, usd: 0, zapis: 0, zasah: 0 };
+  // 2026-09-29: + druh čtení — GPT a Opus porovnávat na stejném typu (spread je delší než single).
+  const k = u.model + ' · ' + r.lang + ' · ' + (r.area === 'spread' ? 'spread' : 'single'), g = naklady.skupiny[k] = naklady.skupiny[k] || { n: 0, usd: 0, zapis: 0, zasah: 0 };
   const od = u.prompt_tokens_details || u.input_tokens_details || {};   // OpenAI: jina pole nez Anthropic
   g.n++; g.usd += c; if (u.cache_creation_input_tokens || od.cache_write_tokens) g.zapis++; if (u.cache_read_input_tokens || od.cached_tokens) g.zasah++;
   const sg = naklady.podleSkupin[r.skupina] = naklady.podleSkupin[r.skupina] || { n: 0, usd: 0, ask: 0, askUsd: 0 };
@@ -273,11 +254,12 @@ console.log('\n  ── náklady (přesně z readings.usage × ceník) ' + '─'
 let nkCelkem = 0;
 for (const [k, g] of Object.entries(naklady.skupiny).sort()) {
   nkCelkem += g.usd;
-  console.log('  ' + k.padEnd(22) + String(g.n).padStart(4) + ' čtení · $' + g.usd.toFixed(4) + ' · průměr $' + (g.usd / g.n).toFixed(5)
+  console.log('  ' + k.padEnd(32) + String(g.n).padStart(4) + ' čtení · $' + g.usd.toFixed(4) + ' · průměr $' + (g.usd / g.n).toFixed(5)
     + ' · cache zápis/zásah ' + g.zapis + '/' + g.zasah);
 }
 console.log('  čtení celkem $' + nkCelkem.toFixed(4) + ' · Ask s usage ' + naklady.ask.n + (naklady.ask.n ? ' · $' + naklady.ask.usd.toFixed(4) : '') + ' (bez usage ' + naklady.ask.bez + ')');
-if (naklady.neznamy.length) console.log('  ⚠ model bez ceny v CENIK (nezapočítáno): ' + [...new Set(naklady.neznamy)].join(', '));
+for (const [m, g] of Object.entries(naklady.askModel).sort()) console.log('  Ask · ' + m.padEnd(26) + String(g.n).padStart(4) + ' · $' + g.usd.toFixed(4) + ' · průměr $' + (g.usd / g.n).toFixed(5));
+if (naklady.neznamy.length) console.log('  ⚠ model bez ceny v MODEL_PRICES (v2/runar-config.js, nezapočítáno): ' + [...new Set(naklady.neznamy)].join(', '));
 console.log('  podle skupin (admin · tester · uzivatel):');
 for (const s of ['admin', 'tester', 'uzivatel']) { const g = naklady.podleSkupin[s] || { n: 0, usd: 0, ask: 0, askUsd: 0 };
   console.log('    ' + s.padEnd(9) + String(g.n).padStart(4) + ' čtení · $' + g.usd.toFixed(4) + (g.n ? ' · průměr $' + (g.usd / g.n).toFixed(5) : '')

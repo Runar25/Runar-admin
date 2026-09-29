@@ -7689,3 +7689,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Kontrola:** prohlížeč — cena ve všech 5 typech EN i IS, návštěvník/odhlášený skryto, kříž posun −1 px, rámečky na 400 px pryč a na
   700 px zůstávají, bez vodorovného posuvu.
 - Affected doc(s): žádný.
+
+## 2026-09-29 (5) — Cena každého čtení automaticky: jeden ceník v configu, admin ji vidí v deníku u čtení i u Asku
+
+- **Rozhodl:** KUKY 2026-09-29 *„potřebuju přesně vědět, kolik nás stojí [GPT] oproti Opus… chci tohle měřit automaticky tak, ať přesně
+  vidíme každé čtení, které uděláme.“*
+- **Co:** ceník modelů → `MODEL_PRICES` v `v2/runar-config.js` (dřív jen ve `scripts/utils/stats.js`); výpočet → `readingCostUsd` +
+  `costLabel` v `v2/runar-utils.js` (sdílí reader i shrine, §3). Deník adminovi u každého čtení i výměny Asku ukáže *„Model: Opus 5 ·
+  $0.0123 · 4.2 s“* (čas z `usage.ms`, zapisuje proxy od 2026-09-28 (5)); report čtení nese řádek `cost:`. `stats.js` počítá TÝMŽ
+  výpočtem (§20) a nově dělí čtení na single/spread a Asky podle modelu.
+- **První čísla (posledních 3 dny, EN, admin):** Opus 5 single **$0.0114** · spread **$0.0181** · Ask **$0.0097**; GPT-6 sol single
+  **$0.0036** · spread **$0.0046** · Ask **$0.0040**. Malé n (1–17 na buňku) — `node scripts/utils/stats.js` průběžně.
+- **Kontrola:** smoke ㉮ `verify_reading_cost.js` — výpočet na 3 známých vstupech, neznámý model → null, produkční `renderJournal`
+  (admin vidí cenu u čtení i Asku, běžný uživatel ne). Mutace (cena z deníku pryč · jiná cena Opusu · zápis cache OpenAI jako běžný
+  vstup) → všechny FAIL.
+- **Mezera (neřešeno):** čtení životní runy a rozbor jména se neukládají do `readings`, jejich cena se nikde nezapisuje.
+- Affected doc(s): žádný (ceny bydlí v configu; `RUNAR_PRICING.md` na ně jen odkazuje).

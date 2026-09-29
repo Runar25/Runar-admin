@@ -696,6 +696,17 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola deniku probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# Cena čtení: jeden výpočet (MODEL_PRICES v config + readingCostUsd v utils) pro deník, report i stats.js; admin ji vidí u každého
+# čtení i Asku, běžný uživatel ne (KUKY 2026-09-29 „ať přesně vidíme každé čtení“).
+print('\n' + chr(0x326E) + ' CENA ČTENÍ (verify_reading_cost.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_reading_cost.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola ceny probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

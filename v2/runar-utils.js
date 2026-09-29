@@ -886,3 +886,31 @@ function stream(id, text) {
   });
 }
 
+// ─── readingCostUsd — přesná cena čtení z usage, které vrátilo API (2026-09-29) ─────────────
+// KUKY: „potřebuju přesně vědět, kolik nás stojí… měřit automaticky, ať přesně vidíme každé čtení“. Výpočet přestěhován ze
+// scripts/utils/stats.js (CODE-read 2026-09-24; zápis do cache OpenAI opravil CODE-tune 2026-09-25) — sdílí ho deník (admin),
+// report čtení a stats.js (§20). Anthropic: vstup + zápis cache (5 min / 1 h) + čtení cache + výstup. OpenAI: prompt_tokens
+// obsahuje i cache → (vstup − z cache − zápis) + z cache × sazba + zápis × vstup × 1,25 + výstup. Neznámý model → null.
+function readingCostUsd(u) {
+  if (!u || typeof MODEL_PRICES === 'undefined') return null;
+  if (u.prompt_tokens != null || u.input_tokens_details) {
+    var o = MODEL_PRICES.openai[u.model]; if (!o) return null;
+    var vstup = u.prompt_tokens != null ? u.prompt_tokens : (u.input_tokens || 0);
+    var det = u.prompt_tokens_details || u.input_tokens_details || {};
+    var ca = det.cached_tokens || 0, zap = det.cache_write_tokens || 0;
+    var vystup = u.completion_tokens != null ? u.completion_tokens : (u.output_tokens || 0);
+    return ((vstup - ca - zap) * o[0] + ca * o[1] + zap * o[0] * MODEL_PRICES.openaiCacheWrite + vystup * o[2]) / 1e6;
+  }
+  var c = MODEL_PRICES.anthropic[u.model]; if (!c) return null;
+  var cc = u.cache_creation || {};
+  var w5 = cc.ephemeral_5m_input_tokens != null ? cc.ephemeral_5m_input_tokens : (u.cache_creation_input_tokens || 0);
+  return (u.inference_geo === 'us' ? MODEL_PRICES.usGeo : 1) * ((u.input_tokens || 0) * c[0] + w5 * c[1]
+    + (cc.ephemeral_1h_input_tokens || 0) * c[2] + (u.cache_read_input_tokens || 0) * c[3] + (u.output_tokens || 0) * c[4]) / 1e6;
+}
+// Popisek pro admina: „$0.0142 · 4.1 s“ — čas jen tam, kde ho proxy zapsala (od 2026-09-28, usage.ms).
+function costLabel(u) {
+  var c = readingCostUsd(u), p = [];
+  if (c != null) p.push('$' + c.toFixed(4));
+  if (u && u.ms != null) p.push((u.ms / 1000).toFixed(1) + ' s');
+  return p.join(' · ');
+}

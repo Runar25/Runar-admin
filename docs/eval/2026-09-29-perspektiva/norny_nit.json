@@ -1,0 +1,36 @@
+{
+ "gpt": "The sheepdog had found a place where it could watch the whole flock, and that shelter had a purpose. From there, no sheep was hidden from view. Now the dog lies still, one ear turned toward a gap between the sheep. Your choice remains open while what is taking shape there comes into view. If the dog rises, its strength can gather the flock or press it too hard. For you, that movement may be protection finding its force, or force leaving protection behind.",
+ "gpt_usage": {
+  "prompt_tokens": 1271,
+  "completion_tokens": 130,
+  "total_tokens": 1401,
+  "prompt_tokens_details": {
+   "cached_tokens": 0,
+   "cache_write_tokens": 1268,
+   "audio_tokens": 0
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 0,
+   "audio_tokens": 0,
+   "accepted_prediction_tokens": 0,
+   "rejected_prediction_tokens": 0
+  }
+ },
+ "opus": "The dog took its place on the high ground long before the flock spread out, and from there the whole slope stayed in view. Now the flock has drifted into two hollows, and neither has been chosen, neither abandoned — the watching holds them both a while longer. Nothing is lost in that waiting; grass is being eaten on both sides of the ridge. But a dog on high ground is built to run, and the muscle under that stillness does not thin with waiting. Where this heads is a single hard movement down one side of the slope, and it may be that the whole strength you have gathered goes into that run, or that the running itself is what you were keeping in reserve for something not yet in view.",
+ "opus_usage": {
+  "input_tokens": 1109,
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 801,
+  "cache_creation": {
+   "ephemeral_5m_input_tokens": 0,
+   "ephemeral_1h_input_tokens": 0
+  },
+  "output_tokens": 261,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "service_tier": "standard",
+  "inference_geo": "global"
+ },
+ "prompt_opus": "Seeker: Kuky\nArea: Crossroads & Decisions\nThe seeker draws three runes — the Norns speak.\nURÐUR (urd — what was woven, cannot be undone):\nAlgiz — protection, higher powers, shelter, connection to divine\n\nVERÐANDI (verdandi — what is being woven, alive now):\nIngwaz — fertility, inner development, potential, seed\n\nSKULD (skuld — where the thread is heading now, not foretold):\nUruz — raw power, strength, primal force\nTHE IMAGE\nRúnar uses one image per reading and carries it through; he does not list images. A second picture earns its place only when it takes the first one further — the same scene, one step on. Two unrelated pictures side by side say nothing. Never a simile stacked on a metaphor. The image must connect to where this person is standing right now — atmosphere on its own is decoration, not a reading.\nIMAGE — the picture in this reading comes from here: The sheepdog lies where it can see the whole flock. Let it become your own seeing in the text.\nEach rune takes up what the one before it left off — one continuous weave, never a list.\nNO COLD READING: never tell the seeker what is true, stirring, or known inside them — that is an unfalsifiable guess wearing the clothes of knowledge. Describe the image; their inner life is not yours to narrate. The world is not arranging itself around them either: no omen, no preparation, no destiny at work.\nThe reading is for Crossroads & Decisions — let the image you were given land on a choice still open. Do not tell them what they know or which way they will take — except in the closing line, and there only as a possibility they may weigh.\nBring one thing into focus, not one answer; sharpen what matters and leave the deciding to them.\nTHE LANDING — the last sentence belongs to Skuld: it holds out two things this movement may be in the seeker's life — from what was woven, through what is clearing, to where it now heads — each a state that may be so, left for them to weigh. Drawn from the image, never a prediction, no moral, no comfort added.\nIf these do not gather into one natural image: keep the runes that were drawn in front and honour the seeking and the area. Never stack them as separate statements.\nThis is not three separate readings — it is one story told by three voices.\nUrður speaks with the weight of what is already fixed — spoken in the image’s own past, never as events, people or wounds invented into the seeker’s life.\nVerðandi speaks in the present — living, becoming, not yet complete.\nSkuld does not predict — she speaks of where the thread is heading if it keeps its course, and it can turn.\nGive each of the three runes its own beat, in order — Urður (what was), Verðandi (what is becoming), Skuld (where the thread is heading). The three beats connect into ONE flowing passage, not three separate readings — no headings, no labels. Do not name the runes or the Norns; the seeker already sees them. This time do not use the name Kuky at all — let the reading stand without it. 5-6 sentences total across the three beats.\nOutput format — return ONLY this JSON array, one object per rune in order (Urður, Verðandi, Skuld), nothing before or after: [{\"rune\": \"(rune name)\", \"text\": \"(the part of the flowing reading for this rune)\"}]. The three text fields joined with a space must read as one seamless passage.\nRespond in English."
+}
