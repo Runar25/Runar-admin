@@ -5666,3 +5666,20 @@ Materiál: `docs/eval/2026-09-29-testy/test_1.json` (EN), `docs/eval/2026-09-30-
   a další věta ho rozřeší (vrzající ohrada) — hranice, ne zájmeno bez předchůdce jako u B. Čtení se k tazateli neobrací (krátký rozpočet délky).
 - is-grammar-qa na všech IS výstupech: jen šum (W001 *hjörðina→jörðina*, *viðinn→liðinn*; Z002), žádné E001.
 - **Hranice:** n = 1–2 na buňku, žádné číslo „jasnosti“ — jen čtení. Kříž / Podkova / Yggdrasil s obrazem zvířete netestovány.
+
+## 2026-09-30 (3) — Myšlenka na závěr „z runy“ (bod 7) a esenční řádek [0] bez obrazu (bod 11): testy 2026-09-29
+
+Materiál: `docs/eval/2026-09-29-testy/test_7.json`, `test_11.json` (produkční prompt; u 7 jeden řádek pokynu na konec, u 11 vždy rámec [0]).
+- **7 — myšlenka z runy, ne z obrazu:** Kříž (Opus) *„The empty rune is not silence — it is what has not yet been named. What would you
+  call it, if you had to?“* · Norny (GPT) *„What remains a matter of chance, even when you act with care?“* · single Uruz (Opus) *„What holds
+  its shape without being tamed?“*. Owner 2026-09-30: *„není to úplně ono… Standard a Premium… budeme to zkoušet, zatím to neukládej“* →
+  nenasazeno.
+- **Z čeho to model skládá (ověřeno v promptu):** o runě má jen jméno a 3–4 klíčová slova z řádku run (single navíc otázku runy
+  z Kolekce, `_runeQuestion`, ta ale patří poslední větě čtení). Vzor ownera není z Kolekce `coll_rune`, ale z **poslední věty statického
+  čtení** `runar_static_audio` (ověřeno dotazem 2026-09-30): Uruz *„…the wild ox that breaks through frozen ground… What in you is ready to
+  break through stone?“*, Ansuz *„…Listen closely to what speaks when you are still.“* — květen 2026, sonnet-4-5, starý hlas; věta roste
+  z KONKRÉTNÍHO obrazu runy (pratur, kámen), ne z abstraktního klíče. Tentýž rozdíl je vidět na testu: z klíčů vychází obecná otázka.
+- **11 — esence [0] bez obrazu (Opus ×3):** Berkana (*„Berkana is the warmth given away so something else can move“*) a Gebo (*„Gebo is this
+  traffic between houses, where nothing is counted but everything moves“*) srozumitelné; Hagalaz nese děj obrazu (*„the water taking back what
+  was built too close“*). Owner: *„ještě se na to podívám“*.
+- **Hranice:** n = 3 + 3, soudí owner čtením.

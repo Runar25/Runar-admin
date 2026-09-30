@@ -712,6 +712,9 @@
   neřekne… hodilo by se mít na závěr u spreadu nějakou myšlenku navíc… neříkat, co má dělat, ale něco nabídnout. Takové shrnutí, které má
   myšlenku“*; vzory ownera z kolekce: Uruz *„What in you is ready to break through stone?“*, *„Listen closely to what speaks when you are
   still.“*; původně jen pro Standard/Premium). Pilot 3 čtení: `docs/eval/2026-09-29-myslenka/` — čeká na ownerovo čtení.
+  **Kolo 2 (z runy, ne z obrazu)** — owner 2026-09-30 *„není to úplně ono, Standard a Premium, budeme to zkoušet, zatím to neukládej“*.
+  Ownerovy vzory jsou poslední věty statických čtení `runar_static_audio` (rostou z konkrétního obrazu runy); model měl jen klíče.
+  Další kolo podle ownerovy volby směru (EVAL_LOG 2026-09-30 (3)); jen Standard/Premium; nic neukládat.
 - [ ] **Před spuštěním: viditelnost + sklad dobrých vět** (KUKY 2026-09-29 bod 6: *„některá čtení jsou fakt dobrá, popřípadě vyjde dobrý
   závěr, a to chci ukládat tak, abychom měli materiál na vizuální tvorbu“*; report 10:13: *„Jak se maximálně zviditelnit ve vyhledávačích a
   taky při AI vyhledávání… Tohle je práce před spuštěním.“*). (a) SEO + AI vyhledávání (popisky run, tvar run v kolekci, statické texty jako
