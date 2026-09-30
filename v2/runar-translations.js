@@ -83,6 +83,7 @@ const UI_TEXT = {
     report_t_visual:  'Visual / layout',
     report_t_crash:   'Error / crash',
     report_t_other:   'Other',
+    report_t_keep:    '✦ Keep this',   // 2026-09-30 (KUKY bod 6): uložit dobré čtení / větu pro vizuály
     report_msg:       'What is wrong?',
     report_msg_ph:    'A short note',
     report_repl_lbl:  'Correct text',
@@ -509,6 +510,7 @@ const UI_TEXT = {
     report_t_visual:  'Útlit / sjónrænt',
     report_t_crash:   'Villa / hrun',
     report_t_other:   'Annað',
+    report_t_keep:    '✦ Geyma þetta',
     report_msg:       'Hvað er að?',
     report_msg_ph:    'Stutt athugasemd',
     report_repl_lbl:  'Réttur texti',

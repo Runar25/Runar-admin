@@ -4,7 +4,8 @@
 // Závisí na globálech: sb (supabase client), t() (translations), lang. Načítat po runar-app.js.
 (function () {
   var TESTER_KEY = 'bug_tester', QUEUE_KEY = 'bug_queue';
-  var TYPES = ['replace', 'rephrase', 'pattern', 'visual', 'crash', 'other'];
+  // 2026-09-30 (KUKY bod 6): „keep“ = uložit dobré čtení / větu pro vizuály — ne chyba, proto přes celou šířku a poslední.
+  var TYPES = ['replace', 'rephrase', 'pattern', 'visual', 'crash', 'other', 'keep'];
   var APP_VERSION = 'unknown';
   var cap = { text: '', source: 'screen', key: '', ctx: '' };
   var curType = '';
@@ -30,6 +31,8 @@
   }
   function captureContext() {
     var sel = window.getSelection ? window.getSelection() : null;
+    // 2026-09-30 (bod 6): id čtení do screen_context — u „keep“ jediná cesta od uložené věty k celému čtení (readings.id).
+    var rid = (typeof _lastReadingId !== 'undefined' && _lastReadingId) ? ' · reading ' + _lastReadingId : '';
     var txt = sel ? String(sel).trim() : '';
     cap.ask = null;
     var tab = activeTab();
@@ -39,14 +42,14 @@
       var keyed = el && el.closest ? el.closest('[data-i18n]') : null;
       cap.key = keyed ? keyed.getAttribute('data-i18n') : '';
       var idEl = el && el.closest ? el.closest('[id]') : null;
-      cap.ctx = tab + (idEl ? ' · #' + idEl.id : '');
+      cap.ctx = tab + (idEl ? ' · #' + idEl.id : '') + (tab === 'reading' ? rid : '');
     } else {
       var pane = document.getElementById('apane-' + tab);
       cap.text = (pane ? (pane.innerText || '') : '').trim();
       // Složení čtení (jen admin, 2026-09-25) jde na konec a strop 5000 se mu uvolní předem — jinak by ho uřízl.
       var slozeni = (tab === 'reading' && typeof _slozeniCteni === 'function') ? _slozeniCteni() : '';
       var MAX = slozeni ? 5000 - slozeni.length - 2 : 5000;
-      cap.source = 'screen'; cap.key = ''; cap.ctx = tab + ' · #apane-' + tab;
+      cap.source = 'screen'; cap.key = ''; cap.ctx = tab + ' · #apane-' + tab + (tab === 'reading' ? rid : '');
       // Odpověď Asku stojí na konci obrazovky → strop 5000 by ji uřízl jako první. Proto se vezme zvlášť
       // a připojí se na konec, i když se zbytek obrazovky musí zkrátit (2026-09-23, report „chybí mi Ask“).
       // Všechny výměny (od 2026-09-24 může být víc Asků na čtení): otázky a odpovědi v pořadí.
@@ -90,6 +93,7 @@
       '.br-type{padding:8px 4px;border:1px solid #2a3a52;border-radius:8px;background:transparent;' +
       'color:#cdd7e6;font-size:12px;cursor:pointer;text-align:center}' +
       '.br-type.on{border-color:var(--gold,#FFBF00);color:var(--gold,#FFBF00)}' +
+      '.br-type[data-type="keep"]{grid-column:1/-1}' +
       '#br-msg,#br-repl,#br-name{width:100%;box-sizing:border-box;background:rgba(255,255,255,.05);' +
       'border:1px solid #2a3a52;border-radius:8px;color:#e8ecf3;padding:9px 11px;font-family:inherit;' +
       'font-size:14px;margin-top:4px}' +
@@ -219,8 +223,9 @@
       tester: (localStorage.getItem(TESTER_KEY) || '').slice(0, 40),
       type: curType,
       // 2026-09-22: 1000 -> 5000. Owner psal do reportu popisy run (~1000-1300 zn.) a 13 z 25
-      // se urizlo presne na 1000 vcetne zaverecne otazky. DB limit nema (sloupec text),
-      // strop byl jen tady; 5000 = tyz rad jako cap.text vyse.
+      // se urizlo presne na 1000 vcetne zaverecne otazky; 5000 = tyz rad jako cap.text vyse.
+      // ⚠️ 2026-09-30: „DB limit nemá“ byl OMYL — DB měla check <= 1000, delší hlášení odmítla a fronta ho držela
+      // navždy (flush níž maže jen úspěch). Strop v DB zvednut na 5000: sql/2026-09-30_bug_reports_keep_a_limity.sql.
       message: (document.getElementById('br-msg').value || '').slice(0, 5000),
       suggested_replacement: curType === 'replace' ? (document.getElementById('br-repl').value || '').slice(0, 5000) : null,
       flagged_text: cap.text || null,

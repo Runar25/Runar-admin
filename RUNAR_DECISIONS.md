@@ -7771,3 +7771,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   data (neprázdný) + 4 odstavce textu runy (dosud bez hlídání). Mutace: vyndaný řádek, chybějící IS runa, kratší text runy → FAIL.
   Prohlížeč: 320/375/414/1024 px bez vodorovného posuvu; přepnutí EN↔IS přepíše popis v otevřeném detailu.
 - Affected doc(s): žádný (texty bydlí v translations.js).
+
+## 2026-09-30 (4) — Reportér: „✦ Keep this“ ukládá dobré čtení / větu pro vizuály · OPRAVA: DB odmítala hlášení delší než 1000 znaků
+
+- **Rozhodl:** KUKY 2026-09-29 bod 6 (*„některá čtení jsou fakt dobrá, popřípadě vyjde dobrý závěr, a to chci ukládat tak, abychom měli
+  materiál na vizuální tvorbu“*) → *„6. ano“* na návrh „nový typ v reportéru + změna povolených typů v DB“.
+- **Co:** typ `keep` v `bug_reports` (sql/2026-09-30_bug_reports_keep_a_limity.sql, puštěno CODE-tune, ověřeno `pg_get_constraintdef`).
+  Reportér: tlačítko *„✦ Keep this“* / *„✦ Geyma þetta“* přes celou šířku pod typy chyb. Uloží označený text (nebo celou obrazovku) a u
+  záložky čtení nově i **id čtení** v `screen_context` (u všech hlášení ze čtení — spojka na `readings.id`, losy, model). Shrine ✦.
+  Výpis pro vizuály = SQL v hlavičce migrace.
+- **OPRAVA (§22, nalezeno při téže práci):** DB měla `message` a `suggested_replacement` ≤ 1000 znaků, reportér od 2026-09-22 posílá až
+  5000 (komentář „DB limit nemá“ byl omyl). Delší hlášení DB odmítla a zůstalo ve frontě zařízení — flush maže jen úspěch/duplicitu, tester
+  viděl „odesláno“. Strop v DB → 5000; uvízlá hlášení odejdou při příštím otevření appky na zařízení, kde vznikla.
+- **Kontrola:** prohlížeč s vypnutým zápisem (insert nahrazen, nic neodešlo): typ `keep`, `screen_context` *„reading · #apane-reading ·
+  reading <id>“*, 869 znaků obrazovky; fronta i testovací jméno po testu smazány. Omezení v produkční DB přečtena po migraci.
+- **Neřešeno:** Slack upozornění (`notify-report`) ukáže `keep` s výchozí 🚩 — kosmetika, bez nasazení funkce.
+- Affected doc(s): `RUNAR_BACKLOG.md` (sklad dobrých vět — hotovo) — v tomto commitu.

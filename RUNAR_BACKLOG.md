@@ -718,8 +718,8 @@
 - [ ] **Před spuštěním: viditelnost + sklad dobrých vět** (KUKY 2026-09-29 bod 6: *„některá čtení jsou fakt dobrá, popřípadě vyjde dobrý
   závěr, a to chci ukládat tak, abychom měli materiál na vizuální tvorbu“*; report 10:13: *„Jak se maximálně zviditelnit ve vyhledávačích a
   taky při AI vyhledávání… Tohle je práce před spuštěním.“*). (a) SEO + AI vyhledávání (popisky run, tvar run v kolekci, statické texty jako
-  obsah). (b) Ukládání vybraných čtení/vět pro vizuály — návrh: nový typ v reportéru „uložit“ (výběr textu + id čtení); vyžaduje rozšířit
-  check `bug_reports.type` (sql) → čeká na ownerovo ano.
+  obsah). (b) ✅ Ukládání vybraných čtení/vět pro vizuály — HOTOVO 2026-09-30: „✦ Keep this“ v reportéru (text + id čtení),
+  DECISIONS 2026-09-30 (4); výpis = SQL v hlavičce `sql/2026-09-30_bug_reports_keep_a_limity.sql`.
 - [x] **Norny: obraz se zvířetem — VYŘEŠENO 2026-09-30** (DECISIONS 2026-09-30 (2)): Skuld mluví o niti, ne o „tobě“; za obraz
   zvířete jde B2 (pojmenuj + z jeho strany, k tazateli až poslední věta); jméno ne uprostřed. EN test ownera + IS kontrola.
 - [ ] **Obraz se zvířetem v Kříži / Podkově / Yggdrasilu** — pokyn `IMG_POSTAVA` tam NENÍ (netestováno; kontrola ㊱ hlídá, aby se
