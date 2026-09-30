@@ -707,6 +707,17 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola ceny probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# Texty Kolekce: popis tvaru vedle glyfu + 4 odstavce textu runy — protlačené produkční openCollDetail v obou jazycích
+# (KUKY 2026-09-30 bod 5: „dáme popis do rune collection přesně vedle toho velkého glyfu“). Klíč v datech nestačí (§19.3).
+print('\n' + chr(0x326F) + ' TEXTY KOLEKCE (verify_coll_shape.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_coll_shape.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola textu kolekce probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

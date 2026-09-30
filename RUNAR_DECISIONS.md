@@ -7754,3 +7754,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   nit ve všech Nornách. Mutace **11/11 FAIL** (příznak nikdy / vždy, B2 pryč, jen jmenuj, single s B2, IS „þú“ zpět, EN „you“ zpět,
   draws bez záznamu, pokyn v Kříži, jméno uprostřed ×2). Nový kód skládá **byte po bytu** tytéž EN prompty, jaké owner četl v testu (4/4).
 - Affected doc(s): `RUNAR_EVAL_LOG.md` (2026-09-30 (2)) · `RUNAR_BACKLOG.md` (Norny vyřešeno, ostatní spready otevřené) — v tomto commitu.
+
+## 2026-09-30 (3) — Popis tvaru runy vedle velkého glyfu v Kolekci (25 run, EN + IS)
+
+- **Rozhodl:** KUKY 2026-09-29 k 5 anglickým ukázkám: *„vypadá to dobře, zní to dobře, udělej všechny. Dáme popis do rune collection přesně
+  vedle toho velkého glyfu… vidíš glyf a čteš popis.“* K Thurisaz: *„OLD english?“*
+- **Co:** `UI_TEXT[en|is].coll_shape` (runar-translations.js) = 1–3 věty na runu: nejdřív holý tvar (čáry), pak co v něm lze vidět — obraz
+  drží význam z textu runy v Kolekci (`coll_rune`). Maluje `openCollDetail` do `#cd-shape` pod jménem, vpravo od kamene; přepnutí jazyka
+  ho přepíše. Na telefonu (≤ 480 px) užší okraje jmen, ať má text vedle kamene šířku (375 px: sloupec 163 px, výška ≈ výška kamene).
+- **Hranice obsahu (§23):** kánon o tvarech nic nemá → Rúnarův pohled, **žádná etymologie ani historie**. Thurisaz byl v ukázce se
+  staroanglickým *þorn* — pryč, zůstal obraz trnu na stonku. Prázdná runa = hladká tvář kamene.
+- **IS:** psáno islandsky; is-grammar-qa čisté (2× E001 u vět bez slovesa → přepsáno; zbylé W001 jsou falešné: *snertist, elgur, berri,
+  strikum*); nedoložené vazby nahrazeny doloženými (*„slagbrandur fyrir dyrum“*, *„setur undir sig hausinn“* 328, *„innan túngarðs“*,
+  *„takast í hendur“* 535, *„verður á vegi“* 776, *„á alla vegu“* 1577). Eihwaz drží slovo kánonu *ýviðurinn*.
+- **Kontrola:** smoke ㉯ `verify_coll_shape.js` otevře každou z 25 run PRODUKČNÍ `openCollDetail` v obou jazycích a čte DOM: popis tvaru =
+  data (neprázdný) + 4 odstavce textu runy (dosud bez hlídání). Mutace: vyndaný řádek, chybějící IS runa, kratší text runy → FAIL.
+  Prohlížeč: 320/375/414/1024 px bez vodorovného posuvu; přepnutí EN↔IS přepíše popis v otevřeném detailu.
+- Affected doc(s): žádný (texty bydlí v translations.js).

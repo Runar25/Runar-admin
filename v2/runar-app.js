@@ -1029,6 +1029,9 @@ function openCollDetail(r, cell, skipScroll) {
   document.getElementById('cd-name-en').textContent  = _np.name;
   document.getElementById('cd-name-is').textContent  = _np.tr || '';
   document.getElementById('cd-kw').textContent        = lang === 'is' && r.k_is ? r.k_is : r.k;
+  // 2026-09-30 (KUKY bod 5): popis tvaru vedle glyfu, v jazyce appky; přepnutí jazyka sem vede přes loadCollection.
+  var _tv = t('coll_shape');
+  document.getElementById('cd-shape').textContent    = (_tv && typeof _tv === 'object' && _tv[r.n]) || '';
   const metaParts = [];
   if (r.world)    metaParts.push(rworld(r));
   if (r.elements) metaParts.push(r.elements.join(' · '));

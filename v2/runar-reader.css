@@ -373,6 +373,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .coll-detail-names{flex:1;padding:0 18px;}
 .coll-detail-en{font-family:'Cinzel',serif;font-size:0.9em;letter-spacing:2px;color:var(--white);margin-bottom:3px;}
 .coll-detail-is{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.5px;color:var(--muted);}
+/* Popis tvaru runy vedle glyfu (2026-09-30, KUKY bod 5) — písmo Rúnarova učení (.coll-audio-text), menší, ať sedí vedle kamene. */
+.coll-detail-shape{font-size:0.84em;font-style:italic;color:var(--muted);line-height:1.6;margin-top:10px;}
+/* Na telefonu užší okraje jmen, ať má popis vedle kamene šířku (375 px: sloupec 145 → 163 px, výška ~ výška kamene). */
+@media(max-width:480px){.coll-detail-names{padding:0 6px 0 12px;}}
 .coll-detail-close{background:none;border:none;color:var(--dim);font-size:1.1em;cursor:pointer;padding:4px;}
 .coll-detail-close:hover{color:var(--white);}
 .coll-detail-kw{font-size:0.9em;font-style:italic;color:var(--muted);line-height:1.7;margin-bottom:8px;}

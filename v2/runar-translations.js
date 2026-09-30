@@ -310,6 +310,36 @@ const UI_TEXT = {
     // Text runy pod statickou runou v Kolekci (KUKY 2026-09-23 „4. ano“ po schválení tónu na Fehu/Tiwaz/Hagalaz).
     // Z ownerových statických popisů (RUNAR_POPISY_RUN.md); 4 odstavce: co runa je · jak ji číst v obraze ·
     // co neslibuje · její otázka. IS psané nativně, ověřené is-grammar-qa + korpusem (workflow kolekce-texty).
+    // Tvar runy vedle velkého glyfu v detailu Kolekce (KUKY 2026-09-29 bod 5: „udělej všechny… přesně vedle toho velkého glyfu“).
+    // Kánon o tvarech nic nemá → Rúnarův pohled na tvar (co v něm lze vidět), žádná etymologie ani historie
+    // (Thurisaz původně s „Old English þorn“ — owner: „OLD english?“ → jen obraz). Obraz drží význam z coll_rune níž.
+    coll_shape: {
+      Fehu: 'One upright line with two short arms lifted from it to the right. You can see the horns of a beast in it, turned to the side, or a stem that has put out shoots and is still growing. Either way it reaches outward; it does not stay still.',
+      Uruz: 'One line stands straight, and from its top a second comes down on a long slant, like a broad back, or a head lowered to push. It stands on its own two legs and leans its weight forward.',
+      Thurisaz: 'An upright line with a sharp point growing out of its side, like a thorn on a stem: something you cannot run your hand along without noticing.',
+      Ansuz: 'An upright line with two branches slanting down from its top, like words leaving a mouth and falling toward whoever is there to hear them.',
+      Raidho: 'An upright line with a loop at its top and a leg stepping out below, forward and to the right. It is a shape in motion: something leaning into the road, one foot already on its way.',
+      Kenaz: 'Two short lines meet in a point and open to the right, like light spreading from a single flame. It does not fill the room; it reaches only as far as the next step.',
+      Gebo: 'Two lines cross at the centre, and neither lies over the other. Take one away and what is left is only a slanted stroke; the sign exists only while both are there.',
+      Wunjo: 'An upright line with a small closed triangle at its top, like a flag raised over a house when everyone has come home. The shape is complete; nothing in it is still reaching.',
+      Hagalaz: 'Two upright lines, and a single stroke falling across the gap between them at a slant, like hail driving between two posts. The posts still stand when it has passed.',
+      Nauthiz: 'An upright line with a short stroke laid across it at a slant, like a bar across a doorway. The line goes on below it, but not without having met it.',
+      Isa: 'A single upright line, nothing more. Like an icicle, or a person standing still in the cold: everything else has fallen away, and this is what is left.',
+      Jera: 'Two small bent strokes, one above and one below, each turned toward the other without touching. Like two halves of the year going round, one bringing in what the other sowed.',
+      Eihwaz: 'An upright line whose two ends are bent away in opposite directions, one at the top and one at the bottom. Like a yew trunk with a branch above and a root below: it holds on to both and grows slowly between them.',
+      Perth: 'An upright line with two bent strokes on its side, open like a cup tipped on its side, or a lid lifted just enough to guess what is inside. You see the opening, not what it holds.',
+      Algiz: 'An upright line that opens into three at the top, like an elk lifting its antlers, or a raised hand. It is the shape of something that has heard a sound and does not yet know what it was.',
+      Sowilo: 'A line that breaks, turns and breaks again, like sunlight striking through a gap in the cloud. It comes in one stroke, and for a moment everything in its path is lit.',
+      Tiwaz: 'An upright line with two strokes sloping down from its tip, like an arrowhead pointing upward. Everything in the shape leans one way; there is no second direction in it.',
+      Berkana: 'An upright line with two pointed swellings on its side, one above the other, like two buds on a bare twig: small and still closed, but already full.',
+      Ehwaz: 'Two upright lines joined across the top by strokes that dip and meet between them. Like two horses walking side by side, or a horse and the one who rides it: neither stands alone in the shape.',
+      Mannaz: 'Two upright lines, and two strokes that cross between their tops, like two people clasping hands. Out of two, one figure is made.',
+      Laguz: 'An upright line with a short stroke falling from its top to one side, like a wave breaking, or water running off a ledge. It bends downward, the way water always finds the lower way.',
+      Ingwaz: 'A small diamond, closed on every side: four short lines that meet. Like a seed in a closed husk, holding everything it needs and letting nothing out until it is ready.',
+      Othila: 'A closed diamond standing on two legs that cross beneath it, like a house on its own ground, or a home-field inside its old wall. What is inside has been kept for a long time.',
+      Dagaz: 'Two triangles that meet at a single point, closed at either side, like night and day touching at dawn. The shape turns on that point, where one becomes the other.',
+      Blank: 'No line at all, only the smooth face of the stone. Whatever you look for in it, you bring with you.',
+    },
     coll_rune: {
       Fehu: ['Fehu is value that moves. Like water poured into a vessel: for a while there is too little, then it runs over.', 'In a reading, look at what flows in the image — what gathers, passes on, spills over. Fehu is in that movement, not in what is counted.', 'It promises no gain. What flows in can flow out. What you tend grows; what you leave standing loses its strength.', 'It may ask you: what is in your hands now that could come alive if you let it move?'],
       Uruz: ['Uruz is the strength of an aurochs, heavy and untamed. It asks no one whether it may pass.', 'In a reading, look for what in the image keeps going though the way is hard. Uruz brings no ready answer, only the power to change.', 'It is not for show. Something in it is still unpolished, so it can be uncomfortable: it brings you up against your own strength, and its limits.', 'Rather than telling you to be stronger, it asks: what strength is already in you, and what could come of it?'],
@@ -697,6 +727,35 @@ const UI_TEXT = {
                          'Síðasta línan er ekki ráð, heldur möguleiki eða spurning sem þú vegur og metur.',
                          'Rúnar ber ljósið og bendir hvert þú getur horft. En það ert þú sem sérð.',
                          'Í safninu er lýsing á hverri rún.'],
+    // Tvar runy (viz EN). Psáno islandsky; is-grammar-qa čisté (E001 u holých vět bez slovesa → přepsáno), vazby z korpusu:
+    // „undir sig hausinn“ 328 · „slagbrandur“ 19 · „innan túngarðs“ 10 · „takast í hendur“ 535 · „verður á vegi“ 776 · „á alla vegu“ 1577.
+    coll_shape: {
+      Fehu: 'Ein lóðrétt lína með tveimur stuttum örmum sem lyftast út úr henni til hægri. Í henni má sjá horn á skepnu sem snýr til hliðar, eða stöngul sem ber nýja sprota og er enn að vaxa. Hvort sem er teygir hún sig út á við og stendur ekki kyrr.',
+      Uruz: 'Ein lína stendur bein og frá efri enda hennar liggur önnur löng lína á ská niður, eins og breitt bak eða naut sem setur undir sig hausinn. Hún stendur í báða fætur og hallar þunga sínum fram.',
+      Thurisaz: 'Lóðrétt lína með hvössum oddi sem gengur út úr hliðinni, eins og þyrnir á stilk. Enginn rennir hendinni eftir henni án þess að finna fyrir oddinum.',
+      Ansuz: 'Lóðrétt lína og frá efri enda hennar hallast tvær greinar niður á við, eins og orð sem falla af vörum og berast þeim sem hlustar.',
+      Raidho: 'Lóðrétt lína með lykkju efst og fót sem stígur út undan henni, fram og til hægri. Formið er á ferð. Það hallar sér fram og hefur þegar stigið fyrsta skrefið.',
+      Kenaz: 'Tvær stuttar línur sem mætast og opnast svo til hægri, eins og birta sem breiðist út frá einum loga. Hún fyllir ekki herbergið og nær ekki lengra en að næsta skrefi.',
+      Gebo: 'Tvær línur krossast í miðjunni og hvorug liggur ofan á hinni. Ef önnur er tekin burt stendur aðeins eftir hallandi strik. Táknið er aðeins til meðan báðar eru þar.',
+      Wunjo: 'Lóðrétt lína með litlum lokuðum þríhyrningi efst, eins og fáni sem er dreginn að húni þegar allir eru komnir heim. Formið er heilt og ekkert í því teygir sig lengur eftir neinu.',
+      Hagalaz: 'Tvær lóðréttar línur og eitt strik sem fellur á ská yfir bilið á milli þeirra, eins og hagl sem skellur á milli tveggja staura. Staurarnir standa enn þegar það er gengið yfir.',
+      Nauthiz: 'Lóðrétt lína með stuttu striki sem liggur þvert yfir hana á ská, eins og slagbrandur fyrir dyrum. Línan heldur áfram fyrir neðan strikið, en ekki án þess að hafa mætt því.',
+      Isa: 'Ein lóðrétt lína og ekkert annað. Eins og grýlukerti eða manneskja sem stendur kyrr í kuldanum. Allt annað er horfið og þetta er það sem eftir stendur.',
+      Jera: 'Tvö lítil beygð strik, annað ofar og hitt neðar, og hvort um sig snýr að hinu án þess að þau snertist. Eins og tveir helmingar ársins sem fara hringinn, og annar skilar því sem hinn sáði.',
+      Eihwaz: 'Lóðrétt lína sem er beygð sín í hvora áttina, efst og neðst. Hún er eins og ýviðurinn, með grein fyrir ofan og rót fyrir neðan. Hann heldur í hvort tveggja og vex hægt þar á milli.',
+      Perth: 'Lóðrétt lína með tveimur beygðum strikum á hliðinni, opin eins og bikar sem hefur oltið á hliðina, eða lok sem hefur verið lyft rétt nógu mikið til að geta sér til um hvað er undir. Þú sérð opið en ekki það sem leynist fyrir innan.',
+      Algiz: 'Lóðrétt lína sem greinist í þrennt efst, eins og elgur sem lyftir hornunum eða hönd sem er rétt upp. Þetta er form þess sem hefur heyrt hljóð og veit ekki enn hvað það var.',
+      Sowilo: 'Lína sem brotnar, beygir og brotnar aftur, eins og sólargeisli sem brýst í gegnum rof í skýjunum. Hann kemur í einu höggi og um stund lýsir hann upp allt sem verður á vegi hans.',
+      Tiwaz: 'Lóðrétt lína með tveimur strikum sem halla niður frá toppnum, eins og örvaroddur sem vísar upp. Allt í forminu stefnir í eina átt og önnur stefna er ekki til í því.',
+      Berkana: 'Lóðrétt lína með tveimur oddhvössum bungum á hliðinni, hvorri ofan við aðra, eins og tveir brumknappar á berri grein. Þeir eru litlir og enn lokaðir en þegar fullir.',
+      Ehwaz: 'Tvær lóðréttar línur sem eru tengdar að ofan með strikum sem mætast í lægð á milli þeirra. Eins og tveir hestar sem ganga hlið við hlið, eða hestur og sá sem situr hann. Hvorugur stendur einn í forminu.',
+      Mannaz: 'Tvær lóðréttar línur og tvö strik sem krossast á milli toppanna, eins og tvær manneskjur sem takast í hendur. Úr tveimur verður ein mynd.',
+      Laguz: 'Lóðrétt lína með stuttu striki sem fellur frá toppnum til hliðar, eins og alda sem brotnar eða vatn sem rennur fram af brún. Hún sveigir niður á við, því vatn leitar alltaf þangað sem lægra er.',
+      Ingwaz: 'Lítill tígull sem er lokaður á alla vegu, fjórar stuttar línur sem mætast. Eins og fræ í lokuðu hýði sem geymir allt sem það þarf og hleypir engu út fyrr en það er tilbúið.',
+      Othila: 'Lokaður tígull sem stendur á tveimur fótum sem krossast undir honum, eins og hús á eigin grunni eða tún innan túngarðs. Það sem er innan hans hefur lengi verið varðveitt.',
+      Dagaz: 'Tveir þríhyrningar sem mætast í einum punkti og eru lokaðir til beggja hliða, eins og nótt og dagur sem snertast í dögun. Formið snýst um þennan punkt, þar sem annað verður að hinu.',
+      Blank: 'Engin lína, aðeins sléttur flötur steinsins. Það sem þú leitar að í honum kemur með þér.',
+    },
     coll_rune: {
       Fehu: ['Fehu er auður sem er á hreyfingu. Hún er eins og vatn sem hellt er í ílát. Um stund er það of lítið og svo flæðir það yfir barminn.', 'Í lestri horfir þú á það sem streymir í myndinni, safnast, berst áfram eða flæðir yfir. Fehu er í hreyfingunni, ekki í því sem er talið.', 'Hún lofar engu. Það sem rennur inn getur runnið út. Það sem þú hlúir að vex. Það sem þú lætur standa kyrrt missir kraftinn.', 'Kannski spyr hún: Hvað hefur þú í höndunum núna sem gæti lifnað við ef þú leyfðir því að streyma?'],
       Uruz: ['Uruz er kraftur villts úruxa, sem er þungur og óbeislaður. Hún spyr engan um leyfi og heldur sínu striki.', 'Í lestri horfir þú á það sem heldur áfram í myndinni, þótt leiðin sé ekki greið. Rúnin hefur engin svör á reiðum höndum, en hún gefur þér kraft til að breytast.', 'Hún er ekki gerð til að sýnast. Í henni er eitthvað hrátt, og því er hún stundum óþægileg. Hún sýnir þér hvað þú getur, og hvar mörkin liggja.', 'Hún biður þig ekki um meiri styrk. Hún spyr frekar: Hvaða kraftur býr í þér nú þegar, og hvað gæti orðið úr honum?'],
