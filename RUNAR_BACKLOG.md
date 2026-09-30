@@ -654,6 +654,15 @@
   (c) **technicky** je přepnutí jedna podmínka v `claude-proxy`
   (dnes `isAdmin` → všichni / po jazyce / po typu); fallback na Claude při chybě nebo 50 s timeoutu už existuje; IS čtení přes sol
   od uživatelů zatím 0 — první týden sledovat is-grammar-qa na živých IS textech.
+  **Rešerše Cowork HOTOVÁ 2026-09-30** → `docs/inbox/2026-09-30-cowork-soukromi-openai.md` (fakta se zdroji; IS návrhy neověřené).
+  Odpovědi CODE na její otázky (ověřeno v kódu): Q1 záložní Anthropic ZŮSTÁVÁ (sol selže → Opus přes MODELS) → souhlas musí
+  jmenovat OBA; Q2 prompt životní runy posílá CELÉ datum narození („BORN: den měsíc rok“, runar-character.js), runa se počítá jen
+  ze dne a měsíce → rok je navíc (minimalizace, čl. 5 GDPR) — návrh vyndat, čeká na ownera; Q3 obě volání OpenAI jdou přes
+  /v1/chat/completions, ne /responses. **Čeká na ownera:** (1) před přepnutím podepsat DPA OpenAI (pro EHP = OpenAI Ireland Ltd.);
+  (2) ⚠️ UŽ TEĎ, nezávisle na OpenAI: zásady „Your readings“ (agndofa.is, znění v RUNAR_PRIVACY.md) přenos do USA nejmenují
+  vůbec, a appková `v2/runar-privacy.html` sice jmenuje Anthropic i ElevenLabs, ale neříká USA a u Supabase tvrdí „Your data never
+  leaves the European Economic Area“ — text čtení přitom jde do USA; (3) souhlas testerů vynulovat AŽ v nasazení, které přepne;
+  (4) rok narození z promptu. Právní text měnit jen s ownerovým ano (a právní kontrolou před publikací).
 - [ ] **OTEVŘENÉ Z 23.–24. 9. — sepsáno 2026-09-24 na ownerovo „nezapomněli jsme na něco, co leží v chatu?"** (CODE-tune; zdroj: `docs/archive/2026-09-23-rozbor-reportu.md` + chat)
   **Čeká na ownerovo rozhodnutí** (otázky z rozboru, dosud bez odpovědi):
   1. ✅ *(owner 2026-09-24: ANO, když mluví skrze obraz nebo o prostředí, které má každý; tvrzení = činnost, kterou člověk nejspíš nemá, a stav v prostředí podaný jako fakt — Isa „the talk has gone flat“ je špatně; DECISIONS 2026-09-24 (15) + (19), rubrika A)* Smí 3. věta čtení říct, co se děje v oblasti tazatele (pochválené Perth/Kenaz to dělají, pravidlo to dnes povoluje jen v poslední větě jako možnost)?
