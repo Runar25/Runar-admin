@@ -106,6 +106,66 @@
    "zacatek": "End on one line where their question is seen again from inside the ima"
   },
   {
+   "hash": "4886853261ba",
+   "lang": "en",
+   "zdroj": "zakonceni_open[0]+otazka",
+   "zacatek": "End on one line that names what this may be {L} — a state that may be "
+  },
+  {
+   "hash": "1b9da201017f",
+   "lang": "en",
+   "zdroj": "zakonceni_open[1]+otazka",
+   "zacatek": "End on one line that holds out two things this may be {L}, each a stat"
+  },
+  {
+   "hash": "6430c956f600",
+   "lang": "en",
+   "zdroj": "zakonceni_open[2]+otazka",
+   "zacatek": "End on one question that holds out what this may be {L} — asked as a p"
+  },
+  {
+   "hash": "5b790dcf9110",
+   "lang": "en",
+   "zdroj": "zakonceni_open[3]+otazka",
+   "zacatek": "End on one line that holds, at the same time, two things this may be {"
+  },
+  {
+   "hash": "2d310ccd8a18",
+   "lang": "en",
+   "zdroj": "zakonceni_open[4]+otazka",
+   "zacatek": "End on one line where their question is seen again from inside the ima"
+  },
+  {
+   "hash": "49d3f0235641",
+   "lang": "en",
+   "zdroj": "zakonceni_heavy[0]+otazka",
+   "zacatek": "End on one line that names what this may be {L} — a state that may be "
+  },
+  {
+   "hash": "a0002143d564",
+   "lang": "en",
+   "zdroj": "zakonceni_heavy[1]+otazka",
+   "zacatek": "End on one line that holds out two things this may be {L}, each a stat"
+  },
+  {
+   "hash": "6bf7c5f08c9f",
+   "lang": "en",
+   "zdroj": "zakonceni_heavy[2]+otazka",
+   "zacatek": "End on one question that holds out what this may be {L} — asked as a p"
+  },
+  {
+   "hash": "7b8877ed217a",
+   "lang": "en",
+   "zdroj": "zakonceni_heavy[3]+otazka",
+   "zacatek": "End on one line that holds, at the same time, two things this may be {"
+  },
+  {
+   "hash": "aa05bdefdb97",
+   "lang": "en",
+   "zdroj": "zakonceni_heavy[4]+otazka",
+   "zacatek": "End on one line where their question is seen again from inside the ima"
+  },
+  {
    "hash": "5397d757cba8",
    "lang": "en",
    "zdroj": "jmeno[0]",
@@ -574,12 +634,6 @@
    "zacatek": "Mention Ansuz by name once, woven naturally. One clear insight is enou"
   },
   {
-   "hash": "5b790dcf9110",
-   "lang": "en",
-   "zdroj": "single",
-   "zacatek": "End on one line that holds, at the same time, two things this may be {"
-  },
-  {
    "hash": "b2f917950216",
    "lang": "en",
    "zdroj": "single",
@@ -1021,6 +1075,66 @@
    "hash": "7e39f302eeb7",
    "lang": "is",
    "zdroj": "zakonceni_heavy[4]",
+   "zacatek": "Endaðu á einni línu þar sem spurning hans birtist aftur inni í myndinn"
+  },
+  {
+   "hash": "fb59e81beb20",
+   "lang": "is",
+   "zdroj": "zakonceni_open[0]+otazka",
+   "zacatek": "Endaðu á einni línu sem nefnir hvað þetta gæti verið {L} — ástand sem "
+  },
+  {
+   "hash": "b1c8d323331c",
+   "lang": "is",
+   "zdroj": "zakonceni_open[1]+otazka",
+   "zacatek": "Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið {L}, hvort "
+  },
+  {
+   "hash": "f803b8de5edc",
+   "lang": "is",
+   "zdroj": "zakonceni_open[2]+otazka",
+   "zacatek": "Endaðu á einni spurningu sem spyr hvað þetta gæti verið {L} — sem mögu"
+  },
+  {
+   "hash": "84b11c526cc9",
+   "lang": "is",
+   "zdroj": "zakonceni_open[3]+otazka",
+   "zacatek": "Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið {L}, bæði í"
+  },
+  {
+   "hash": "2e448aa726a6",
+   "lang": "is",
+   "zdroj": "zakonceni_open[4]+otazka",
+   "zacatek": "Endaðu á einni línu þar sem spurning hans birtist aftur inni í myndinn"
+  },
+  {
+   "hash": "ac7ad4790fd2",
+   "lang": "is",
+   "zdroj": "zakonceni_heavy[0]+otazka",
+   "zacatek": "Endaðu á einni línu sem nefnir hvað þetta gæti verið {L} — ástand sem "
+  },
+  {
+   "hash": "61b113650f8d",
+   "lang": "is",
+   "zdroj": "zakonceni_heavy[1]+otazka",
+   "zacatek": "Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið {L}, hvort "
+  },
+  {
+   "hash": "e79a3457cb95",
+   "lang": "is",
+   "zdroj": "zakonceni_heavy[2]+otazka",
+   "zacatek": "Endaðu á einni spurningu sem spyr hvað þetta gæti verið {L} — sem mögu"
+  },
+  {
+   "hash": "37cfb7f9c32f",
+   "lang": "is",
+   "zdroj": "zakonceni_heavy[3]+otazka",
+   "zacatek": "Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið {L}, bæði í"
+  },
+  {
+   "hash": "023d6c88a1b4",
+   "lang": "is",
+   "zdroj": "zakonceni_heavy[4]+otazka",
    "zacatek": "Endaðu á einni línu þar sem spurning hans birtist aftur inni í myndinn"
   },
   {
@@ -1490,12 +1604,6 @@
    "lang": "is",
    "zdroj": "single",
    "zacatek": "Nefndu Ansuz einu sinni og fléttaðu nafnið náttúrlega inn í textann. E"
-  },
-  {
-   "hash": "fb59e81beb20",
-   "lang": "is",
-   "zdroj": "single",
-   "zacatek": "Endaðu á einni línu sem nefnir hvað þetta gæti verið {L} — ástand sem "
   },
   {
    "hash": "1f5248709dbd",

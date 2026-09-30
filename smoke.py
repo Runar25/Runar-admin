@@ -84,6 +84,7 @@ IGNORE_VALS  = {
     'STANDARD', 'PREMIUM', 'FREE TRIAL', 'RUNE SEEKER',
     'RUNE WALKER', 'RUNE KEEPER', 'THE GATHERING',
     'TROJICE', 'NORNS', 'KRIZ', 'HORSESHOE', 'YGGDRASIL',
+    'SINGLE',   # 2026-09-30: klíč druhu čtení pro myšlenku ✦ (_thoughtFor), ne text pro uživatele — jako NORNS/KRIZ výš
     'RUNE CARD', 'GET A RUNE CARD',
     'VISITOR', 'GESTUR', 'VEGFARANDI',
     'EN', 'IS', 'OK', 'HTML', 'CSS', 'DB', 'URL', 'JS',

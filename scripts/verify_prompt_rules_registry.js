@@ -80,6 +80,13 @@ const DATA = /^(PERSON|DRAWN|SEEKER|LIFE|AREA|SEEKING|INTENTION|QUESTION|REALM|E
     (L === 'is' ? glob('READING_ANGLES_IS') : glob('READING_ANGLES') || []).forEach((a, i) => pridej(L, 'uhel[' + i + ']', a));
     (L === 'is' ? glob('ENDING_OPEN_IS') : glob('ENDING_OPEN') || []).forEach((a, i) => pridej(L, 'zakonceni_open[' + i + ']', a));
     (L === 'is' ? glob('ENDING_HEAVY_IS') : glob('ENDING_HEAVY') || []).forEach((a, i) => pridej(L, 'zakonceni_heavy[' + i + ']', a));
+    // 2026-09-30: s překlady nese konec single čtení i otázku runy (_runeQuestion — bez vlastní otázky tazatele). Konec se losuje,
+    // takže registrovat jen ten, který padl při --zapis, dávalo nestabilní červenou. Registrují se VŠECHNY konce × otázka runy fixture.
+    const _otz = S._runeQuestion(RUNES[3], L);
+    if (_otz) {
+      (L === 'is' ? glob('ENDING_OPEN_IS') : glob('ENDING_OPEN') || []).forEach((a, i) => pridej(L, 'zakonceni_open[' + i + ']+otazka', a + _otz));
+      (L === 'is' ? glob('ENDING_HEAVY_IS') : glob('ENDING_HEAVY') || []).forEach((a, i) => pridej(L, 'zakonceni_heavy[' + i + ']+otazka', a + _otz));
+    }
     (L === 'is' ? glob('NAME_PLACEMENTS_IS') : glob('NAME_PLACEMENTS') || []).forEach((a, i) => pridej(L, 'jmeno[' + i + ']', a));
     (L === 'is' ? glob('LENGTH_BUDGETS_IS') : glob('LENGTH_BUDGETS') || []).forEach((a, i) => pridej(L, 'delka[' + i + ']', a));
     // 2026-09-20: ESENCNI RAMY do poolu — pribyly ve v4.35, ale registr je nesbiral, takze se
