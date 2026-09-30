@@ -774,6 +774,18 @@
      napětí a rodiny scén na runu (cíl 40–100 obrazů/runu), „dvojice run X × Y“ (18 rozlišení typu Kenaz = pochodeň × Sowilo = denní
      světlo), „obrazová vzdálenost“ proti podobným scénám po sobě (u nás zčásti značka motivu), 7bodový filtr obrazu. Použitelné:
      dvojice run jako kontrola banky (sedí obraz víc na sousední runu?) a chybějící rodiny jako menu nových obrazů. Čeká na ownera.
+     **Owner 2026-09-30: „1 ok, 2 ok, 3 ok, udělej kontrolu podle dvojic“ → kontrola hotová (CODE-tune čtením, 17 dvojic × 182 obrazů;
+     index = pořadí v RUNE_IMAGES).** Obrazy, které sedí stejně nebo líp na sousední runu dvojice — čeká na ownerovo rozhodnutí, co opravit:
+     1. Jera #44 *„The dough lifts the cloth a little higher each hour, working while no one watches“* ↔ Ingwaz (skryté zrání; skoro týž
+        obraz jako Ingwaz #91 skyr přes noc) · 2. Sowilo #128 *„The year's first ray of sun touches the mountain peak after the long midwinter
+        dark“* ↔ Dagaz #120 *„The first glimmer returns after the blackest midwinter dark“* (týž obraz dvakrát; světlo MĚNÍ stav = Dagaz)
+     3. Blank #122 *„The thick fog hides the fjord…“* ↔ Perth (skryté = Perth; Blank = nevíme, jestli tam vůbec něco je) · 4. Ingwaz #136
+        *„The grass greens over the seed-bed…“* ↔ Berkana (růst už je vidět) · 5. Gebo #24 *„Coffee waits on the table for two“* ↔ Isa #41
+        *„The cup of coffee goes cold… while you wait“* (týž motiv, čte se jako čekání) · 6. Raidho #16 *„The drifting snow always finds the
+        same way…“* ↔ Laguz #113 *„Water finds its own way down the slope…“* (týž tvar věty) · 7. Isa #134 *„Under the ice the stream can
+        still be heard“* ↔ Laguz (proud pod hladinou je v GPT rodinách Laguz) — mírné · 8. Nauthiz #38 zatuhlý uzel spíš odpor (Thurisaz)
+        než nedostatek — kánon Nauthiz („dveře, které chtění neotevře“) ho ale kryje, NECHAT · mimo dvojice: Mannaz #109 *„The mind
+        carries you half the way“* není scéna, jen výrok (filtr obrazu bod 7). Oprava = nový obraz EN + IS (ověřit), brány ㊱ ㉟ aspekt↔klíč.
      Owner: *„je to inspirace, musí být zkrácený či mírně upravený“* — do `RUNE_IMAGES` (EN + IS nativně, ověřit nástroji), brána s popisy runy.
   3. ⏸ **Živly (Elements) v hlavičce runy NECHAT** — owner: *„o elementech rozhodneme, až pokud se objeví problém“*. Hlídat: kdyby
      se živel propisoval do obrazu (oheň, vzduch…) jako svět Hel („roots“), je to ten problém (DECISIONS 2026-09-25 (3)).
