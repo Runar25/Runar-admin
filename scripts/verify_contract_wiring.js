@@ -136,6 +136,12 @@ for (const L of ['en', 'is']) {
     if (has(off, 'lens')) { fail++; console.log('FAIL  ' + b + '_lensoff_' + L + '  lens present though the user turned it off'); }
     else console.log('OK    ' + b + '_lensoff_' + L + '  lens off when the user says so');
   }
+  // 2026-09-30 (KUKY „tak to můžeme vynechat“ — minimalizace údajů jdoucích k modelu do USA): rok narození do promptu
+  // životní runy NESMÍ; den a měsíc ano. Fixture výš staví prompt produkčním builderem s rokem 1990 — rok v textu = FAIL.
+  const lr = O['liferune_' + L] || '';
+  if (!lr) { fail++; console.log('FAIL  liferune_' + L + '  prompt se nepostavil'); }
+  else if (lr.indexOf('1990') !== -1) { fail++; console.log('FAIL  liferune_' + L + '  rok narození je v promptu'); }
+  else console.log('OK    liferune_' + L + '  bez roku narození (den a měsíc stačí)');
 }
 
 // Zneni pravidla `describe` VLASTNI `_describeRule` (a prepisuje ho aktivni hlasovy profil).

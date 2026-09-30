@@ -7861,3 +7861,13 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   (Cowork symbionti). Pozn.: aplikace hlásí ukončení „tasks on this computer“ od 6. 10. — kdyby Cowork po tom datu nešel spustit,
   rozhodne owner znovu.
 - Affected doc(s): `CLAUDE.md` (poznámka z (9) odebrána) — v tomto commitu.
+
+## 2026-09-30 (11) — Prompt životní runy bez roku narození (minimalizace údajů, v4.82)
+
+- **Rozhodl:** KUKY 2026-09-30 k otázce z rešerše soukromí (Q2, `docs/inbox/2026-09-30-cowork-soukromi-openai.md`): *„aha, tak to můžeme vynechat“*.
+- **Co:** řádek `BORN:` / `FÆDD/UR:` nese jen den a měsíc (*„15 6“* / *„15. 6.“*). Rok dál počítá islandský měsíc v appce (začátek léta se
+  rok od roku posouvá — `icelandicMonthKey`); do promptu jde jen jméno měsíce. Důvod: čtení rok nepotřebuje a jel by k modelu do USA navíc
+  (čl. 5 odst. 1 c GDPR).
+- **Kontrola:** smoke ⑧ `verify_contract_wiring.js` staví prompt životní runy produkčním builderem s rokem 1990 — rok v textu = FAIL
+  (mutace: starý builder → 2× FAIL). Golden: změna jen v řádku narození.
+- Affected doc(s): `RUNAR_PRIVACY.md` (co jde k modelu) — v tomto commitu.

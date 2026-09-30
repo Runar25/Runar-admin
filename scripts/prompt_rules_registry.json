@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-30",
- "prompt_version": "v4.81-essence-without-picture",
+ "prompt_version": "v4.82-life-no-birth-year",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -1310,12 +1310,6 @@
    "lang": "is",
    "zdroj": "liferune",
    "zacatek": "Þetta er lestur lífsrúnar Anna — ekki lestur dagsins, heldur lestur þe"
-  },
-  {
-   "hash": "9b0c55769011",
-   "lang": "is",
-   "zdroj": "liferune",
-   "zacatek": "FÆDD/UR: 24. 12. 1979"
   },
   {
    "hash": "0bcf35b0a38d",

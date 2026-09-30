@@ -1363,7 +1363,7 @@ var RP_LIFE = {
     ELEM:'FRUMEFNI', CORE:'MERKINGAR',
     rname:function(r){ return _bezGlosy(r.is_n); },   // 2026-09-24: bez glosy „(Eignir)“ — viz rnPrompt() v runar-utils.js
     rcore:function(r){ return r.k_is; },
-    birth:function(d,m,y){ return d + '. ' + m + '. ' + y; },
+    birth:function(d,m){ return d + '. ' + m + '.'; },   // 2026-09-30: bez roku (minimalizace údajů, viz buildLifeRuneBase)
     intro:function(name){ return 'Þetta er lestur lífsrúnar ' + name + ' — ekki lestur dagsins, heldur lestur þess sem ' + name + ' hefur borið í sér frá fæðingu.'; },
     sections:'Skrifaðu í tveimur hlutum og hafðu engar fyrirsagnir í úttakinu.',   // 2026-09-27: dřív E001
     p1Label:'HLUTI 1 — STAÐURINN Í ÁRINU (2–3 setningar):',
@@ -1389,7 +1389,7 @@ var RP_LIFE = {
     ELEM:'ELEMENT', CORE:'MEANINGS',
     rname:function(r){ return r.n; },
     rcore:function(r){ return r.k; },
-    birth:function(d,m,y){ return d + ' ' + m + ' ' + y; },
+    birth:function(d,m){ return d + ' ' + m; },   // 2026-09-30: bez roku (minimalizace údajů, viz buildLifeRuneBase)
     intro:function(name){ return 'This is the life rune reading of ' + name + ' — not a reading of today, but of what ' + name + ' has carried since birth.'; },
     sections:'Write in two sections — no headers or labels in the output:',
     p1Label:'SECTION 1 — THE PLACE IN THE YEAR (2–3 sentences):',
@@ -1423,7 +1423,9 @@ function buildLifeRuneBase(name, rune, day, month, year, lang, isPremium) {
     '',
     S.PERSON + ': ' + name,
     S.LIFE + ': ' + S.rname(rune),
-    S.BORN + ': ' + S.birth(day, month, year),
+    // 2026-09-30 (KUKY „tak to můžeme vynechat“): rok narození do promptu nejde — čtení ho nepotřebuje a jel by k modelu do USA
+    // navíc (čl. 5 GDPR, minimalizace). Rok dál počítá islandský měsíc výš (getBirthMonth), do promptu jde jen jeho jméno.
+    S.BORN + ': ' + S.birth(day, month),
     S.MONTH + ': ' + monthDesc,
     S.ELEM + ': ' + (Array.isArray(rune.elements) ? rune.elements.join(' / ') : rune.elements),
     S.CORE + ': ' + S.rcore(rune),   // významy runy — část 2 se na ně odkazuje („listed above“ / „hér að ofan“), 2026-09-27

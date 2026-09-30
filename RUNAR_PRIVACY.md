@@ -7,6 +7,9 @@
 - **`readings` řádek** = osobní údaj: `user_id` → identita (user_profiles: jméno, DOB; auth: email).
 - **`question` (volný text)** = potenciálně **zvláštní kategorie (čl. 9)** — lidé píšou zdraví, vztahy, víru.
 - `area` / `seeking` / `life_rune` (z DOB) = osobní situace.
+- **Co jde k modelu** (Anthropic, USA — a po přepnutí i OpenAI): jméno, když ho člověk zadá · volby (oblast, hledání, záměr) ·
+  volná otázka · u životní runy DEN a MĚSÍC narození a jméno islandského měsíce — **rok ne** (od 2026-09-30, minimalizace čl. 5 odst. 1 c;
+  rok počítá jen appka, `RUNAR_DECISIONS.md` 2026-09-30 (11)) · u Asku jeho otázky a text čtení. Hlas: text čtení k ElevenLabs (USA).
 
 ## Právní základy — KTERÝ na CO (klíč k „bez popupu")
 | Účel | Základ | UI dopad |
