@@ -98,6 +98,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [break-your-own-work-before-reporting.md](break-your-own-work-before-reporting.md) — po hotovem kusu na nej ZAUTOC SAM a teprve pak hlas; necekej na vyzvu ownera
 - [attack-the-metric-not-just-the-result.md](attack-the-metric-not-just-the-result.md) — utoc na NASTROJ driv nez na vysledek: pulka vs pulka, co jeste odlisuje referenci, nulova transformace (CLAUDE.md §27)
 - [soudce-vidi-jen-co-uzivatel.md](soudce-vidi-jen-co-uzivatel.md) — slepý soudce dostane jen to, co vidí uživatel (ne obraz z promptu); výstupy před nasazením čti sám jako uživatel
+- [you-neni-prohresek.md](you-neni-prohresek.md) — „you“ ve čtení není prohřešek; soudce, který ho hlásí bez kontextu, je vadný nástroj — oprav ho, ownerovi nehlas
 - [selhany-verifier-neni-vyvraceny-nalez.md](selhany-verifier-neni-vyvraceny-nalez.md) — ve workflow: agent, který spadl, není vyvrácený nález; spočítej a ohlas neověřené
 - [test-the-lever-that-binds.md](test-the-lever-that-binds.md) — ověř, že měníš tu vazbu, která výsledek opravdu drží (strop tokenů ≠ délková páka)
 - [rekni-kterou-variantu-testujes.md](rekni-kterou-variantu-testujes.md) — před testem jednou větou kterou variantu testuju; varianta z docu; test pro Vegvísir z JEHO rámce, ne z produkce

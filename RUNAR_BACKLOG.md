@@ -770,7 +770,7 @@
   4. ✅ *(opraveno 2026-09-25, v4.59 — věta o runě ji jmenuje tím, čím je ve scéně: neznámé / nerozhodnuté / chybějící)* **Blank (sol):** *„Blank is the stone that bears no mark“* = doslova z `ESSENCE_BLANK`. Owner se přiklání k pojmenování runy jejím významem
      v obraze („the unknown“, „nepřítomnost něčeho očekávaného“) — ještě nerozhodnuto, sbírat přirovnání.
   5. ✖ *(NENÍ vada — owner 2026-09-25: „jen část nic neznamená, záleží na celém kontextu… je to popis scény“)* **„You see the room more clearly…“ (Dagaz, sol).**
-  6. **Rubrika luny, bod A:** owner 2× „nesmysl“ (Fehu *„You can keep every drop contained“*, Dagaz *„the hills come back“*), 1× „správné, ale v obraze“
+  6. ✅ *(2026-09-30: bod A z rubriky VYNDÁN — DECISIONS 2026-09-30 (7))* **Rubrika luny, bod A:** owner 2× „nesmysl“ (Fehu *„You can keep every drop contained“*, Dagaz *„the hills come back“*), 1× „správné, ale v obraze“
      (Uruz), 1× souhlas (bod 5). Luna bere „you“ jako postavu scény za tvrzení o člověku. Úprava rubriky jen s ownerovým ano.
   Owner k solu: *„zatím GPT dělá dobré čtení“*; Fehu (sol) *„zatím asi nejlepší čtení“*.
 - [x] ~~**Islandský úhel se opisuje do čtení jako první věta**~~ — **ZAVŘENO 2026-09-26, owner: „úhel necháme“** (přepisy horší, viz níž). (nalezeno 2026-09-24 v pilotu podob oblastí; CODE-tune).

@@ -59,6 +59,10 @@ var _askLog = [];      // [{ q, a }] výměny v Asku k tomuto čtení (dnes nejv
 // kterou člověk nejspíš nedělá, podaná jako jeho. Pravidlo vlastní RUNAR_DESIGN.md (Cold reading), tady jen jeho použití.
 // Týž den upřesněno (KUKY k Isa „In your home the talk has gone flat“: „ta Isa je špatně, to každopádně“): domov smí být
 // MÍSTEM, kam obraz dosedne; co se v něm děje, podané jako fakt, je chyba.
+// 2026-09-30 (KUKY: „soudce kouká jen na you a nekouká na kontext… buď s tím něco udělej, nebo mi to nepiš“): bod A PRYČ.
+// Luna tvrzení o člověku posoudit neumí — i s výjimkami (15) a (19) brala „you“ ve scéně za výrok o životě (4 uložené rozbory:
+// „káva pro dva“ → „Kuky čeká na někoho“) a vypisovala A i bez nálezu. Tvrzení posuzuje owner; v čtení je hlídá _noColdRead.
+// Návrat jen očištěný (§26): jiný model / jiná metoda, ne další výjimka do téhož odstavce.
 var GPT_REVIEW_RULES =
   'You review one reading from the Rúnar app. Rúnar is a rune guide — a mirror, not an oracle. You get (1) the exact prompt ' +
   'for this reading: the drawn rune with its keywords, the area of life, the IMAGE he was given and his instructions, ' +
@@ -68,13 +72,6 @@ var GPT_REVIEW_RULES =
   'words and say in one sentence why it is a fault. Do not mention categories without a fault. If you find nothing important, ' +
   'reply with one short line saying so. Read every sentence in the context of the whole scene — how it begins, goes on and ends. ' +
   'Look for exactly these:\n' +
-  'A. Claims about the person stated as fact — their feelings, relationships, past, what they know or did, what will happen. ' +
-  'Not a fault: the same thing offered as a possibility (may, perhaps, or a question); the image\'s own movement carried into ' +
-  'their chosen area of life ("in your work, something rises and sinks back"); a setting everyone has (home, the people close, ' +
-  'work) named as the place the image may touch; "you" as the figure inside the image scene ("you stand", "you see the room"), ' +
-  'which describes the scene, not the person\'s life. A fault: an activity or circumstance they may well not have, stated as theirs ' +
-  '("your garden", "when you paint"); and a concrete state of their life stated as fact, even in a setting everyone has ' +
-  '("in your home the talk has gone flat and careful").\n' +
   'B. The rune missing — would someone who knows the rune\'s keywords recognise it from what the reading says it does? Say what is missing.\n' +
   'C. Image drift — the reading contradicts the given image or swaps it for a different scene. Not a fault: details that grow ' +
   'naturally out of the given image.\n' +

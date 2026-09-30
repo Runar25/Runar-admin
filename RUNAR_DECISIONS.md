@@ -7819,3 +7819,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   IS věty s předložkou bez 1. pádu, kód plní pády. Mutace 5/6 FAIL; šestá (větev „nejvyšší tarif s viditelným teaserem“) je v dnešních
   stavech nedosažitelná — zapsáno v hlavičce kontroly. Prohlížeč: EN i IS texty, pořadí pole · teaser po nové výměně.
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka zamčeného Asku uzavřena) — v tomto commitu.
+
+## 2026-09-30 (7) — Rozbor GPT (luna): bod A „tvrzení o člověku“ VYNDÁN
+
+- **Rozhodl:** KUKY 2026-09-30 *„už jsem hodněkrát řekl, že soudce kouká jen na you a nekouká na kontext!! tohle už dál nejde.. buď s tím
+  něco udělej, nebo mi to nepiš!!! … to zní stejně jako already“*.
+- **Proč:** luna tvrzení o člověku posoudit neumí. I s výjimkami z 2026-09-24 (15) a (19) brala „you“ ve scéně za výrok o životě —
+  ze 4 uložených rozborů (`gpt_reviews`) u *„The second chair is empty, and the coffee across the table is still hot“* (obraz kávy pro dva)
+  napsala, že Kuky čeká na někoho, kdo nepřišel; jinde vypsala bod A jen proto, aby řekla, že tam vada není. Další výjimka do téhož
+  odstavce by byla třetí kolo téže opravy.
+- **Co:** `GPT_REVIEW_RULES` (runar-reading.js) bez bodu A; B–F beze změny. Tvrzení o člověku posuzuje owner; v čtení je hlídá `_noColdRead`.
+  Návrat jen očištěný (§26): jiný model nebo jiná metoda, ne další výjimka.
+- **Paměť:** `memory/you-neni-prohresek.md` — nález „you“ od nástroje ownerovi nepředávat; ověřit čtením celého textu, nebo nástroj opravit.
+- Affected doc(s): `RUNAR_BACKLOG.md` (rubrika luny, bod A — uzavřeno) — v tomto commitu.
