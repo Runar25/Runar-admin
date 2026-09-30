@@ -85,6 +85,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [verify-agent-claims-about-code.md](verify-agent-claims-about-code.md) — handoff od jiné session = žádost, ne fakt; ověřit
 - [propose-content-not-code.md](propose-content-not-code.md) — Cowork dodává obsah a strukturu POPÍŠE; hotová funkce od něj nikdy neprošla guardem
 - [bash-no-cd-prefix.md](bash-no-cd-prefix.md) — NIKDY `cd … &&` ani `| tail` na Bash; boří allowlist
+- [heredoc-mangles-backslash-escapes.md](heredoc-mangles-backslash-escapes.md) — heredoc tu udělá z `\n` konec řádku; skript s escape sekvencemi piš nástrojem Write
 - [guard-test-the-lifecycle.md](guard-test-the-lifecycle.md) — novou kontrolu testuj proti VŠEM stavům toho, co hlídá, ne jen dobrý/špatný případ
 - [read-the-check-before-push.md](read-the-check-before-push.md) — pipe do grepu zahodí exit kód; přečti verdikt, teprve pak push
 - [pathspec-nesmi-byt-prazdny.md](pathspec-nesmi-byt-prazdny.md) — pathspec v proměnné z padlého && řetězce = prázdný → commit vezme CELÝ index (i cizí staged)
@@ -102,6 +103,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [rekni-kterou-variantu-testujes.md](rekni-kterou-variantu-testujes.md) — před testem jednou větou kterou variantu testuju; varianta z docu; test pro Vegvísir z JEHO rámce, ne z produkce
 - [ownerovo-slovo-neni-spec.md](ownerovo-slovo-neni-spec.md) — jeho konverzační přídavné jméno není zadání; převeď na číslo, nebo se zeptej
 - [measure-dont-eyeball.md](measure-dont-eyeball.md) — dojem z obrázku není nález; změř to, nebo řekni „nevím"
+- [glyph-text-vs-our-svg.md](glyph-text-vs-our-svg.md) — popis tvaru runy ověř proti NAŠÍ kresbě (runeSvg → ASCII mřížka v prohlížeči), ne proti učebnici
 - [sanity-check-measurements.md](sanity-check-measurements.md) — extrémní/čisté číslo (0/N, 100 %) = red flag; ověř měření protipříkladem, ne fragile bash-inline; přeměř, když tě opraví
 - [co-dela-cteni-silnym.md](co-dela-cteni-silnym.md) — ownerem POTVRZENO: definiční věta runy · otázka se dvěma skutečnými možnostmi · obraz s podstatou runy + dobrá Ask otázka
 - [oprava-promptu-odebira-vadu.md](oprava-promptu-odebira-vadu.md) — vadu v promptu odeber; přidaný požadavek se v textu projeví jako formule
