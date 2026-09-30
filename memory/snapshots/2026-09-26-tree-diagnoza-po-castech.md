@@ -84,6 +84,13 @@ měř přímo na enginu (část `1b`).
   **Další kandidáti (owner vybere):** náklon kmene podle poměru nitro/svět („proč je kmen zakroucený" —
   dnes jen životní runa), 3D kruh kmene, kořeny, seeking do logu, strana graduanta podle rovnováhy.
 
+- **Krok 3b (2026-09-30):** kostra `FR` co nejvíc rozložená (strany v pořadí zrodu, i graduanti; graduant smí
+  na druhou stranu) + galerie „jak se může strom vyvíjet" (6 typů lidí × 20, `tree_diag.js scen`). Galerie se
+  kreslí v prohlížeči: dočasná kopie labu s hákem `window.__G` (crownT/trunkT/rootsT/state/draw), stejný
+  generátor lidí jako `scen` (⚠️ násobení BEZ `Math.imul`, jinak jiná čtení), snímky přes vlastní ukladač ve
+  scratchpadu (port 7797) → ownerův `_tree_shot.jpg` zůstane. Otázky na ownera: životní runa hýbe stranou
+  (Perth +4,8°)? · Norny se smí překlopit? · paměť stromu celý život vs poslední čtení? · pak náklon kmene.
+
 ## Co visí
 - ~~Oprava hooku `tree-guard.sh`~~ — hotovo 2026-09-27.
 - Blank má ve stromě jiný znak (◇ proti ○); čtení s Blank to řeší zvlášť (`blank → odinn`) — ověřit v části 3.
