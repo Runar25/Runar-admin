@@ -5710,3 +5710,5 @@ near the bank“*), v textu čtení nic postavené není. Týž prompt a losy ja
   close“ se přestěhovalo do věty OBRAZU, kde má předchůdce) · Berkana *„the rune of growth that keeps its own timing, tended rather than
   hurried“* · Gebo *„the gift that moves both ways, and neither side keeps count“* — **3/3**.
 - **Hranice:** n = 3 + 1, jen EN a jen rámec [0]; IS znění ani rámec [1] netestovány. Materiál: `docs/eval/2026-09-30-myslenka-esence/`.
+- **Doplněk (nasazení v4.81, DECISIONS 2026-09-30 (5)):** IS znění B, 1 kontrolní čtení (Hagalaz, řeka, Opus 5): esence *„Hagalaz nefnir brot
+  sem koma utan frá og bíða ekki eftir að þú sért tilbúið.“*; is-grammar-qa jen šum (jméno, „annaðhvort“, spojovací způsob).

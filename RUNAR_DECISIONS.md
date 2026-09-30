@@ -7787,3 +7787,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   reading <id>“*, 869 znaků obrazovky; fronta i testovací jméno po testu smazány. Omezení v produkční DB přečtena po migraci.
 - **Neřešeno:** Slack upozornění (`notify-report`) ukáže `keep` s výchozí 🚩 — kosmetika, bez nasazení funkce.
 - Affected doc(s): `RUNAR_BACKLOG.md` (sklad dobrých vět — hotovo) — v tomto commitu.
+
+## 2026-09-30 (5) — Esenční řádek [0]: čtenář zná jen slova čtení, ne obraz za nimi (v4.81)
+
+- **Rozhodl:** KUKY 2026-09-30 k Hagalaz *„the water taking back what was built too close“*: *„tohle nechápu, was built too close?
+  co má esenční řádek bez obrazu dělat“* → po testu *„jo to zní dobře, nasadit“*.
+- **Vada:** rámec [0] říkal *„The familiar word may live inside the scene (…)“* (IS *„Kunnuglega orðið má lifa inni í myndinni.“*) —
+  zval model říct význam předměty obrazu. Obraz ale čtenář nevidí, zná jen slova čtení; „built“ přišlo ze skrytého obrazu (*„whatever
+  stood too near the bank“*), v textu nic postaveného nebylo.
+- **Co:** ta věta pryč a místo ní *„The seeker knows only the words of the reading, not the picture behind them: say what the rune means
+  in its own terms, not what happens in the scene.“* · IS *„Leitandinn þekkir aðeins orð lestursins, ekki myndina að baki þeim. Segðu því
+  hvað rúnin sjálf merkir, ekki hvað gerist í myndinni.“* (is-grammar-qa čisté; korpus u téže stavby s běžnými slovy). Rámec [1] beze změny
+  (netestován).
+- **Měřeno:** EVAL_LOG 2026-09-30 (5) — jen odebrat 2/3, odebrat + věta 3/3 (EN, Opus 5, čteno jako uživatel). IS kontrola (Hagalaz, řeka):
+  *„Hagalaz nefnir brot sem koma utan frá og bíða ekki eftir að þú sért tilbúið.“* — význam runy; „co stálo příliš blízko“ zůstalo ve větě
+  obrazu, kde ho čtenář vidí (`docs/eval/2026-09-30-myslenka-esence/esence_is.json`).
+- Affected doc(s): `RUNAR_EVAL_LOG.md` (2026-09-30 (5) už zapsán v `07df6c2`) — tady jen doplněk níž.

@@ -497,12 +497,19 @@ const LENGTH_BUDGETS_IS = [
 //       Nově „which side of the rune this picture shows“ — runa není aktér, obraz ukazuje jednu její stránku. Měřeno
 //       (docs/eval/2026-09-28-esence0, Opus 5, týž prompt, slepý soudce): EN cizí děj 4/6 → 2/6, cizinec pochopí 2/6 → 5/6;
 //       IS 1/6 → 0/6, 5/6 → 5/6; „side/hlið“ se neopisuje (0/12), spona „is that / er þetta“ 4 → 1. HLÍDAT: IS „talar um“ 0 → 3/6.
+// [0] od 2026-09-30 (KUKY k Hagalaz „tohle nechápu, was built too close?… nasadit“): věta „The familiar word may live inside
+//       the scene (…)“ PRYČ — zvala model říct význam předměty obrazu, a obraz čtenář nevidí (jen slova čtení). Hagalaz pak
+//       „the water taking back what was built too close“: nic postaveného v textu čtení nebylo, přišlo ze skrytého obrazu.
+//       Nově řádek výslovně říká, že čtenář zná jen slova čtení → význam runy jejími slovy, ne děj scény. Měřeno (Opus 5,
+//       týž prompt a losy, čteno jako uživatel): jen odebrat 2/3 (Hagalaz dál „what stood too close“), odebrat + věta 3/3
+//       (EVAL_LOG 2026-09-30 (5)). IS stejně: „Kunnuglega orðið má lifa inni í myndinni.“ pryč + věta psaná islandsky.
 const ESSENCE_FRAMES = [
-  'THE ESSENCE LINE: after the picture, one short line that says which side of the rune this picture shows — its sense in plain words a stranger to runes can grasp. The familiar word may live inside the scene ("exchange between the sea and the shore"). Never a fixed formula. No invented mechanism, no fate. Never tell the seeker what it means for them.',
+  'THE ESSENCE LINE: after the picture, one short line that says which side of the rune this picture shows — its sense in plain words a stranger to runes can grasp. The seeker knows only the words of the reading, not the picture behind them: say what the rune means in its own terms, not what happens in the scene. Never a fixed formula. No invented mechanism, no fate. Never tell the seeker what it means for them.',
   'THE ESSENCE LINE: after the picture, one short line that names the rune once and gives the meaning the picture already holds, in plain words a stranger to runes can grasp — let the sentence find its own shape rather than a definition. No invented mechanism, no fate. Never tell the seeker what it means for them.',
 ];
 const ESSENCE_FRAMES_IS = [
-  'KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem segir hvaða hlið rúnarinnar þessi mynd sýnir — merking hennar með hversdagslegum orðum sem ókunnugur skilur. Kunnuglega orðið má lifa inni í myndinni. Aldrei föst formúla. Engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.',
+  // 2026-09-30 [0] viz EN; is-grammar-qa čisté, korpus: „myndin sjálf“ 415 · „orð textans“ 5 · „sjálft merkir“ 8 · „að baki þeim“ 2425.
+  'KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem segir hvaða hlið rúnarinnar þessi mynd sýnir — merking hennar með hversdagslegum orðum sem ókunnugur skilur. Leitandinn þekkir aðeins orð lestursins, ekki myndina að baki þeim. Segðu því hvað rúnin sjálf merkir, ekki hvað gerist í myndinni. Aldrei föst formúla. Engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.',
   // IS [1] = znění N, ne N3: N3 v IS „er þetta/þessi“ nerozbil (4/6) a rozbil větu 2/6 (E001) — viz hlavička rámců.
   'KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem nefnir rúnina einu sinni og segir hvað hún er í þessari mynd — þá merkingu sem þegar býr í henni. Hversdagsleg orð sem ókunnugur skilur. Engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.',
 ];
