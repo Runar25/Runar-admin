@@ -1699,6 +1699,45 @@ function _parseSegments(raw) {
   return { reading: String(raw), segs: [] };
 }
 
+// ── MYŠLENKA ✦ NA KONEC ČTENÍ (2026-09-30, KUKY „nasaď to“, „myšlenka je bez hlasu“) ──────────────────────────────
+// Jeden krátký řádek po čtení: myšlenka z toho, co runa JE (zdroj = 1. odstavec jejího textu v Kolekci, UI_TEXT.coll_rune), ne
+// z obrazu. SMÍ se obrátit k člověku otázkou nebo tichým pozváním — POVOLENO, neopravovat (RUNAR_DESIGN.md, Cold reading;
+// DECISIONS 2026-09-30 (8)). Zdroj v uvozovkách + „vlastními slovy“ = zdroj, ne text k opsání (memory prompt-directive-makes-model-copy).
+// Kdo a kde rozhoduje _thoughtFor (runar-reading.js): tarif TIERS.*.reading_thought, druh čtení single · Kříž · Norny.
+// Testy: EVAL_LOG 2026-09-30 (4) a (6). Znění EN = otestované slovo od slova; IS psáno islandsky (is-grammar-qa, korpus).
+var THOUGHT_MARK = {
+  en: 'AFTER THE READING — after everything else, on a new line beginning with ✦',
+  is: 'Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til viðbótar í nýrri línu sem hefst á ✦',
+};
+var THOUGHT_LINE = {
+  en: function (jm, zdroj) { return THOUGHT_MARK.en + ', one more short line set apart: a thought offered for the seeker to carry away, grown from what ' + jm + ' is, not from the picture. Its source: "' + zdroj + '" Let it grow out of that, but say it in your own words, and turn it toward the seeker: a question to them, or a quiet invitation to notice something. Never advice about their life, never a claim about what they feel or know.'; },
+  // IS jako plné věty (celek jedním souvětím = E001); is-grammar-qa čisté i se skutečným odstavcem runy; korpus „boð um að“ 4312 ·
+  // „ráð um það“ 321 · „sprottin af“ 1182 · „sér á parti“ 850 · „taka eftir einhverju“ 57.
+  is: function (jm, zdroj) { return THOUGHT_MARK.is + '. Hún stendur sér á parti og er hugsun sem leitandinn getur tekið með sér, sprottin af því sem ' + jm + ' er en ekki af myndinni. Uppspretta hennar er þessi: „' + zdroj + '“ Láttu hana vaxa upp úr þessu en segðu hana með þínum eigin orðum og beindu henni að leitandanum. Hún er spurning til hans eða hljóðlátt boð um að taka eftir einhverju. Aldrei ráð um það hvað hann eigi að gera og aldrei fullyrðing um hvað hann finnur eða veit.'; },
+};
+function _thoughtLine(lng, rune) {
+  if (!rune || typeof UI_TEXT === 'undefined') return '';
+  var L = lng === 'is' ? 'is' : 'en';
+  var odst = UI_TEXT[L] && UI_TEXT[L].coll_rune && UI_TEXT[L].coll_rune[rune.n];
+  var zdroj = odst && odst[0];
+  if (!zdroj) return '';
+  var jm = L === 'is' ? rnPrompt(rune) : (rune.n === 'Blank' ? 'the Blank rune' : rune.n);
+  return THOUGHT_LINE[L](jm, zdroj);
+}
+// Oddělí řádek ✦ od čtení pro ZOBRAZENÍ a HLAS. _parseSegments výš zůstává zrcadlem serverového composeReading (deník drží
+// celý text i s ✦). Model píše ✦ za JSON pole (parser ho přilepí k poslední části) i dovnitř posledního textu — obojí se chytí.
+function _splitThought(reading, segs) {
+  var s = String(reading || '');
+  var i = s.indexOf('\u2726');
+  var kopie = (segs || []).map(function (x) { return { rune: x.rune, text: x.text }; });
+  if (i === -1) return { reading: s, segs: kopie, thought: '' };
+  for (var k = kopie.length - 1; k >= 0; k--) {
+    var j = kopie[k].text.indexOf('\u2726');
+    if (j !== -1) { kopie[k].text = kopie[k].text.slice(0, j).trim(); break; }
+  }
+  return { reading: s.slice(0, i).trim(), segs: kopie, thought: s.slice(i + 1).replace(/^[\s:\u2013\u2014-]+/, '').trim() };
+}
+
 // ─── READING PROMPT BUILDERS ────────────────────────────
 // buildReadingPromptSingle + lang dispatcher.
 // Defined here (runar-character.js) so runar-shrine.html can use them

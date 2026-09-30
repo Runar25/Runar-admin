@@ -5724,3 +5724,11 @@ something. Never advice about their life, never a claim about what they feel or 
 - **Čtení CODE jako uživatel:** 3/3 se obrací k člověku a jde skrze obraz runy, který je ve větě vidět (dech/pauza, nádoba, pratur) — blíž
   ownerovým vzorům než (4). Žádná rada do života, žádné tvrzení o nitru (otázky). Kříž je na jeden řádek dlouhý.
 - **Hranice:** n = 3, EN; IS znění ani spready Podkova/Yggdrasil netestovány; nenasazeno.
+
+## 2026-09-30 (7) — Myšlenka ✦ po nasazení (v4.83), produkční cesta: prompt z builderu + `_thoughtLine`, výstup přes `_splitThought`
+
+Opus 5, 1 čtení na druh (`docs/eval/2026-09-30-myslenka-esence/myslenka_nasazeni.json`):
+- **EN single Uruz:** ✦ *„The aurochs asks no permission to pass — where in you is there strength that has never once been granted?“*
+- **IS single Isa:** ✦ *„Vatnið sem frýs man hvernig það rann. Hvað hljóðnaði hjá þér nýlega?“* (is-grammar-qa jen falešné W001)
+- **EN Norny (zdroj Perth):** ✦ *„Some things stay shut until they open on their own — can you sit with a closed lid without deciding what is inside?“*
+- Řádek ✦ oddělen od textu čtení 3/3, `_promptDraws.thought = 1` 3/3. **Hranice:** n = 3, nasazení ověřuje tvar a cestu, ne kvalitu na velkém vzorku.

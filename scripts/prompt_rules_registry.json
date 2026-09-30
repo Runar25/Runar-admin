@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-30",
- "prompt_version": "v4.82-life-no-birth-year",
+ "prompt_version": "v4.83-reading-thought",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -158,6 +158,156 @@
    "lang": "en",
    "zdroj": "postava[norny]",
    "zacatek": "The main figure of this picture is not the seeker, and the seeker has "
+  },
+  {
+   "hash": "314d6fd3f999",
+   "lang": "en",
+   "zdroj": "myslenka[Fehu]",
+   "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
+  },
+  {
+   "hash": "439231a9681a",
+   "lang": "en",
+   "zdroj": "myslenka[Uruz]",
+   "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
+  },
+  {
+   "hash": "463b553fb2ef",
+   "lang": "en",
+   "zdroj": "myslenka[Thurisaz]",
+   "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
+  },
+  {
+   "hash": "be2bc3346848",
+   "lang": "en",
+   "zdroj": "myslenka[Ansuz]",
+   "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
+  },
+  {
+   "hash": "b6a499e53a54",
+   "lang": "en",
+   "zdroj": "myslenka[Raidho]",
+   "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
+  },
+  {
+   "hash": "70c3469276e7",
+   "lang": "en",
+   "zdroj": "myslenka[Kenaz]",
+   "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
+  },
+  {
+   "hash": "67dcade6fb15",
+   "lang": "en",
+   "zdroj": "myslenka[Gebo]",
+   "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
+  },
+  {
+   "hash": "e1f1b183e9f3",
+   "lang": "en",
+   "zdroj": "myslenka[Wunjo]",
+   "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
+  },
+  {
+   "hash": "34ce1c2395bb",
+   "lang": "en",
+   "zdroj": "myslenka[Hagalaz]",
+   "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
+  },
+  {
+   "hash": "ec6776630029",
+   "lang": "en",
+   "zdroj": "myslenka[Nauthiz]",
+   "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
+  },
+  {
+   "hash": "c6b1c7d7a1f0",
+   "lang": "en",
+   "zdroj": "myslenka[Isa]",
+   "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
+  },
+  {
+   "hash": "0d80b1c1ba1c",
+   "lang": "en",
+   "zdroj": "myslenka[Jera]",
+   "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
+  },
+  {
+   "hash": "d99fcf80661a",
+   "lang": "en",
+   "zdroj": "myslenka[Eihwaz]",
+   "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
+  },
+  {
+   "hash": "d296d6d53b61",
+   "lang": "en",
+   "zdroj": "myslenka[Perth]",
+   "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
+  },
+  {
+   "hash": "76c416086876",
+   "lang": "en",
+   "zdroj": "myslenka[Algiz]",
+   "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
+  },
+  {
+   "hash": "4b188503d0c6",
+   "lang": "en",
+   "zdroj": "myslenka[Sowilo]",
+   "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
+  },
+  {
+   "hash": "bc8d1948046f",
+   "lang": "en",
+   "zdroj": "myslenka[Tiwaz]",
+   "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
+  },
+  {
+   "hash": "754fadae8476",
+   "lang": "en",
+   "zdroj": "myslenka[Berkana]",
+   "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
+  },
+  {
+   "hash": "a615fe505ca6",
+   "lang": "en",
+   "zdroj": "myslenka[Ehwaz]",
+   "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
+  },
+  {
+   "hash": "0cd92bfa4c16",
+   "lang": "en",
+   "zdroj": "myslenka[Mannaz]",
+   "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
+  },
+  {
+   "hash": "3d1b10760bba",
+   "lang": "en",
+   "zdroj": "myslenka[Laguz]",
+   "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
+  },
+  {
+   "hash": "c13e04e4d811",
+   "lang": "en",
+   "zdroj": "myslenka[Ingwaz]",
+   "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
+  },
+  {
+   "hash": "dc44a8c1c2a6",
+   "lang": "en",
+   "zdroj": "myslenka[Othila]",
+   "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
+  },
+  {
+   "hash": "e3b9b64e3d65",
+   "lang": "en",
+   "zdroj": "myslenka[Dagaz]",
+   "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
+  },
+  {
+   "hash": "5e144f03e794",
+   "lang": "en",
+   "zdroj": "myslenka[Blank]",
+   "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
   },
   {
    "hash": "cb96e93d91ea",
@@ -422,6 +572,12 @@
    "lang": "en",
    "zdroj": "single",
    "zacatek": "Mention Ansuz by name once, woven naturally. One clear insight is enou"
+  },
+  {
+   "hash": "5b790dcf9110",
+   "lang": "en",
+   "zdroj": "single",
+   "zacatek": "End on one line that holds, at the same time, two things this may be {"
   },
   {
    "hash": "b2f917950216",
@@ -922,6 +1078,156 @@
    "zacatek": "Leitandinn er ekki aðalpersóna myndarinnar og hefur ekki séð hana. Seg"
   },
   {
+   "hash": "c780ba7bab63",
+   "lang": "is",
+   "zdroj": "myslenka[Fehu]",
+   "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
+  },
+  {
+   "hash": "8c38af44df34",
+   "lang": "is",
+   "zdroj": "myslenka[Uruz]",
+   "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
+  },
+  {
+   "hash": "6fab92a5ba1a",
+   "lang": "is",
+   "zdroj": "myslenka[Thurisaz]",
+   "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
+  },
+  {
+   "hash": "58422afe8387",
+   "lang": "is",
+   "zdroj": "myslenka[Ansuz]",
+   "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
+  },
+  {
+   "hash": "2c7cce881318",
+   "lang": "is",
+   "zdroj": "myslenka[Raidho]",
+   "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
+  },
+  {
+   "hash": "aed3b2c124f3",
+   "lang": "is",
+   "zdroj": "myslenka[Kenaz]",
+   "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
+  },
+  {
+   "hash": "150735177420",
+   "lang": "is",
+   "zdroj": "myslenka[Gebo]",
+   "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
+  },
+  {
+   "hash": "644bcfb8ded8",
+   "lang": "is",
+   "zdroj": "myslenka[Wunjo]",
+   "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
+  },
+  {
+   "hash": "1b69ffe19b37",
+   "lang": "is",
+   "zdroj": "myslenka[Hagalaz]",
+   "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
+  },
+  {
+   "hash": "9a928eea3f16",
+   "lang": "is",
+   "zdroj": "myslenka[Nauthiz]",
+   "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
+  },
+  {
+   "hash": "4ecf7e756639",
+   "lang": "is",
+   "zdroj": "myslenka[Isa]",
+   "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
+  },
+  {
+   "hash": "b4faab97e279",
+   "lang": "is",
+   "zdroj": "myslenka[Jera]",
+   "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
+  },
+  {
+   "hash": "e5f501dd7ed7",
+   "lang": "is",
+   "zdroj": "myslenka[Eihwaz]",
+   "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
+  },
+  {
+   "hash": "8de963a2fbb0",
+   "lang": "is",
+   "zdroj": "myslenka[Perth]",
+   "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
+  },
+  {
+   "hash": "b10647e521a8",
+   "lang": "is",
+   "zdroj": "myslenka[Algiz]",
+   "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
+  },
+  {
+   "hash": "eae257818992",
+   "lang": "is",
+   "zdroj": "myslenka[Sowilo]",
+   "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
+  },
+  {
+   "hash": "069c1a2b61c6",
+   "lang": "is",
+   "zdroj": "myslenka[Tiwaz]",
+   "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
+  },
+  {
+   "hash": "f2ce06db380d",
+   "lang": "is",
+   "zdroj": "myslenka[Berkana]",
+   "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
+  },
+  {
+   "hash": "c25ceae8ecb1",
+   "lang": "is",
+   "zdroj": "myslenka[Ehwaz]",
+   "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
+  },
+  {
+   "hash": "7a5e83da67a0",
+   "lang": "is",
+   "zdroj": "myslenka[Mannaz]",
+   "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
+  },
+  {
+   "hash": "e3c7f2a0e0e3",
+   "lang": "is",
+   "zdroj": "myslenka[Laguz]",
+   "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
+  },
+  {
+   "hash": "6101c707d569",
+   "lang": "is",
+   "zdroj": "myslenka[Ingwaz]",
+   "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
+  },
+  {
+   "hash": "845f9fcc8330",
+   "lang": "is",
+   "zdroj": "myslenka[Othila]",
+   "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
+  },
+  {
+   "hash": "f6a3daafa50b",
+   "lang": "is",
+   "zdroj": "myslenka[Dagaz]",
+   "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
+  },
+  {
+   "hash": "66a2e80709d0",
+   "lang": "is",
+   "zdroj": "myslenka[Blank]",
+   "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
+  },
+  {
    "hash": "b15f49adaf12",
    "lang": "is",
    "zdroj": "oblast[0.0]",
@@ -1184,6 +1490,12 @@
    "lang": "is",
    "zdroj": "single",
    "zacatek": "Nefndu Ansuz einu sinni og fléttaðu nafnið náttúrlega inn í textann. E"
+  },
+  {
+   "hash": "fb59e81beb20",
+   "lang": "is",
+   "zdroj": "single",
+   "zacatek": "Endaðu á einni línu sem nefnir hvað þetta gæti verið {L} — ástand sem "
   },
   {
    "hash": "1f5248709dbd",

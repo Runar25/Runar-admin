@@ -343,6 +343,9 @@ function _promptDraws(prompt, lang) {
     // Bez záznamu by rozbor čtení nevěděl, že v promptu byl (táž vada jako u čočky výš).
     var pT = (typeof IMG_POSTAVA !== 'undefined') ? (IMG_POSTAVA[isIs ? 'is' : 'en']) : null;
     if (pT && p.indexOf(pT.jmenuj) !== -1) out.postava = p.indexOf(pT.pohled) !== -1 ? 2 : 1;
+    // 2026-09-30: myšlenka ✦ na konci (THOUGHT_MARK) — rozbor pozná, že ji prompt žádal.
+    var tM = (typeof THOUGHT_MARK !== 'undefined') ? THOUGHT_MARK[isIs ? 'is' : 'en'] : '';
+    if (tM && p.indexOf(tM) !== -1) out.thought = 1;
 
     var heavyP = isIs ? ENDING_HEAVY_IS : ENDING_HEAVY;
     var openP  = isIs ? ENDING_OPEN_IS  : ENDING_OPEN;

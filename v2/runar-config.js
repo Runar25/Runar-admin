@@ -62,7 +62,7 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 // v4.17 (2026-09-10): Ask zna zivotni runu. Do te doby ji `buildAskPrompt` nedostaval, takze
 //    odpoved na „jak me ovlivnuje moje zivotni runa" si model musel domyslet. Prompt ji ted nese
 //    jako tichy fakt — Runar ji nevyslovi sam od sebe, jen kdyz se na ni clovek zepta.
-const RUNAR_PROMPT_VERSION = 'v4.82-life-no-birth-year';
+const RUNAR_PROMPT_VERSION = 'v4.83-reading-thought';
 
 // Mesicni strop hlasu. KUKY 2026-09-11: „limit na hlas max 5 na mesic — je to spis
 // ochutnavka nez aby to porad vyuzivali." ElevenLabs se plati po znacich a jedine, co ho
@@ -176,6 +176,7 @@ const TIERS = {
     journal:          false,
     ceremonial:       false,
     asks_per_reading: 0,   // Ask otázek na jedno čtení, všechny zdarma (KUKY 2026-09-24); 0 = Ask jen jako teaser; JEDINÁ pravda o Asku tieru (2026-09-26)
+    reading_thought:  false,   // myšlenka ✦ na konec čtení (KUKY 2026-09-30: „Standard a Premium“); čte _thoughtFor v runar-reading.js
     languages:        ['en', 'is'],
   },
   rune_seeker: {
@@ -193,6 +194,7 @@ const TIERS = {
     journal:          5,          // last N readings
     ceremonial:       false,
     asks_per_reading: 0,   // Ask otázek na jedno čtení, všechny zdarma (KUKY 2026-09-24); 0 = Ask jen jako teaser; JEDINÁ pravda o Asku tieru (2026-09-26)
+    reading_thought:  false,   // myšlenka ✦ na konec čtení (KUKY 2026-09-30: „Standard a Premium“); čte _thoughtFor v runar-reading.js
     languages:        ['en', 'is'],
   },
   standard: {
@@ -207,6 +209,7 @@ const TIERS = {
     journal:          null,
     ceremonial:       false,
     asks_per_reading: 1,   // Ask otázek na jedno čtení, všechny zdarma (KUKY 2026-09-24); 0 = Ask jen jako teaser; JEDINÁ pravda o Asku tieru (2026-09-26)
+    reading_thought:  true,   // myšlenka ✦ na konec čtení (KUKY 2026-09-30: „Standard a Premium“); čte _thoughtFor v runar-reading.js
     languages:        ['en', 'is'],
   },
   premium: {
@@ -221,6 +224,7 @@ const TIERS = {
     journal:          null,
     ceremonial:       true,
     asks_per_reading: 2,   // Ask otázek na jedno čtení, všechny zdarma (KUKY 2026-09-24); 0 = Ask jen jako teaser; JEDINÁ pravda o Asku tieru (2026-09-26)
+    reading_thought:  true,   // myšlenka ✦ na konec čtení (KUKY 2026-09-30: „Standard a Premium“); čte _thoughtFor v runar-reading.js
     languages:        ['en', 'is'],
     physical_unlock:  true,       // QR/NFC product linking
     seasonal_content: true,       // solstices, equinoxes, lunar events

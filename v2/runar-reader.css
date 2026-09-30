@@ -644,6 +644,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .layer2{background:#0a0e18;padding:20px;margin-bottom:16px;}
 .layer2-lbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--muted);margin-bottom:10px;}
 .out-txt{font-size:1.05em;line-height:1.9;font-style:italic;color:var(--white);}
+/* Myšlenka ✦ po čtení (2026-09-30) — oddělená od textu čtení a mimo jeho prvek (hlas ji nečte); písmo čtení, zlatě. */
+.reading-thought{font-size:1.05em;line-height:1.8;font-style:italic;color:var(--gold);text-align:center;margin:22px 8px 6px;}
 .stream-cur{display:none;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 @keyframes pulse-fade{0%,100%{opacity:0.35}50%{opacity:1}}

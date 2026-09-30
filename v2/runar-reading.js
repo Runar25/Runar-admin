@@ -316,6 +316,7 @@ async function _generateReading() {
   document.getElementById('runar-audio').src = ''; setSt('st-voice', '');
   document.getElementById('out-short').innerHTML = '';
   document.getElementById('out-deep').innerHTML  = '';
+  _clearThought();
   const _rdLoadEl = document.getElementById('reading-loading');
   const _rdLoadTxt = document.getElementById('reading-loading-txt');
   if (_rdLoadTxt) _rdLoadTxt.textContent = t('reading_loading');
@@ -338,7 +339,8 @@ async function _generateReading() {
   var _castNow = _castIdx(u);
   const sys = buildSysPrompt(activeChar, lang);
   await _loadServerLastImage(drawn);   // 2026-09-27: obraz z posledního čtení téže runy (jakékoli zařízení) → los ho vyřadí
-  const prompt = buildReadingPrompt(u, drawn, lang, corrections);
+  var prompt = buildReadingPrompt(u, drawn, lang, corrections);
+  var _thL = _thoughtFor('SINGLE', [drawn], lang); if (_thL) prompt += '\n' + _thL;   // 2026-09-30: myšlenka ✦ (Standard/Premium)
   _lastGen = { sys: sys, prompt: prompt, lang: lang, kind: 'single' };   // pro rozbor GPT-6 sol (jen admin)
 
   // Journal meta for the SERVER-SIDE save (proxy persists atomically with the deduction).
@@ -390,8 +392,9 @@ async function _generateReading() {
 
   // Unified reading — single block, no split
   var _seg = _parseSegments(res.text);
-  const reading = _seg.reading.trim();
-  _lastSegs = _seg.segs;
+  var _th = _splitThought(_seg.reading.trim(), _seg.segs);   // 2026-09-30: řádek ✦ zvlášť — ne do textu čtení ani do hlasu
+  const reading = _th.reading;
+  _lastSegs = _th.segs;
   _lastDrawn = [readerRune];
   readerTexts[lang] = { short: reading, deep: '' };
 
@@ -421,6 +424,7 @@ async function _generateReading() {
   if (_ul1lbl) _paintReadingHeader();
   await stream('out-short', reading);
   _renderSegments('out-short', _lastSegs);
+  _paintThought('out-short', _th.thought);
   _showAsk();
   document.getElementById('out-deep').innerHTML = '';
 
@@ -492,6 +496,7 @@ var _spread7Runes = [];   // Horseshoe (7 runes)
 var _spread9Runes = [];   // Yggdrasil (9 worlds)
 // ─── SPREAD MODE ─────────────────────────────────────────
 function _setSpreadMode(mode) {
+  _clearThought();   // 2026-09-30 (§13)
   _spreadMode   = mode;
   _spread3Runes = [];
   _spread5Runes = [];
@@ -745,6 +750,30 @@ var _askCount = 0;   // kolik Asků už k tomuto čtení padlo (dřív boolean _
 // Kolik Asků smí tenhle člověk k jednomu čtení (2026-09-24, KUKY: premium 2, standard 1, vše zdarma). Jediný zdroj =
 // TIERS.*.asks_per_reading (2026-09-26: náhradní větev přes TIERS.*.ask a vypínač ASK_MULTI_LIVE odebrány — neběžely).
 // Admin = premium (server dělá totéž, claude-proxy isAdmin → userTier 'premium').
+// Myšlenka ✦ (2026-09-30, KUKY „nasaď to“): jen tarif s TIERS.*.reading_thought (admin = premium, jako Ask), jen single / Kříž /
+// Norny — otestované (EVAL_LOG 2026-09-30 (4)(6)); Horseshoe a Yggdrasil ne (zdrojová runa pro ně nerozhodnuta, netestováno).
+// Zdrojová runa: single = tažená, Kříž = střed (runes[0]), Norny = Skuld (runes[2] — závěr patří jí).
+var _THOUGHT_SOURCE = { SINGLE: 0, KRIZ: 0, NORNS: 2 };
+function _thoughtAllowed() {
+  if (!currentUser) return false;
+  return !!(TIERS[isAdmin(currentUser.email) ? 'premium' : userTier] || {}).reading_thought;
+}
+function _thoughtFor(kind, runes, lng) {
+  if (!_thoughtAllowed() || !Object.prototype.hasOwnProperty.call(_THOUGHT_SOURCE, kind)) return '';
+  var r = (runes || [])[_THOUGHT_SOURCE[kind]];
+  return r ? _thoughtLine(lng, r) : '';
+}
+// Řádek ✦ jako SOUSED výstupu čtení, ne uvnitř: generateVoice čte innerText výstupu → myšlenka zůstane bez hlasu (KUKY).
+function _paintThought(afterId, thought) {
+  var el = document.getElementById('reading-thought');
+  if (!el) { el = document.createElement('p'); el.id = 'reading-thought'; el.className = 'reading-thought'; }
+  var kotva = document.getElementById(afterId);
+  if (!thought || !kotva) { el.textContent = ''; el.style.display = 'none'; return; }
+  kotva.after(el);
+  el.textContent = '\u2726 ' + thought;
+  el.style.display = '';
+}
+function _clearThought() { var el = document.getElementById('reading-thought'); if (el) { el.textContent = ''; el.style.display = 'none'; } }
 function _askLimit() {
   if (!currentUser) return 0;
   return (TIERS[isAdmin(currentUser.email) ? 'premium' : userTier] || {}).asks_per_reading || 0;
@@ -1116,6 +1145,7 @@ async function askRunar() {
 }
 
 function drawAnother() {
+  _clearThought();   // 2026-09-30: myšlenka ✦ patří jen k čtení, které ji neslo (§13)
   // Restore layer2 + reset layer1 label for next reading
   var _daL2 = document.getElementById('single-layer2');
   var _daLbl = document.getElementById('layer1-lbl');
@@ -1156,6 +1186,7 @@ function _resetReadingTab() {
 }
 
 function resetReader() {
+  _clearThought();   // 2026-09-30 (§13)
   _spreadMode = 'single';
   _spread3Runes = []; _spread5Runes = []; _spread7Runes = []; _spread9Runes = [];
   _updateSpread3Slots(); _updateSpread5Slots(); _updateSpread7Slots(); _updateSpread9Slots();
@@ -1310,6 +1341,7 @@ async function _generateSpreadReading(o) {
   // Sdilene telo => pokryva norns/kriz/horseshoe/yggdrasil + founding najednou (§13).
   var _lbl0 = document.getElementById(o.lblId); if (_lbl0) _lbl0.innerHTML = '';
   var _out0 = document.getElementById(o.outId); if (_out0) _out0.innerHTML = '';
+  _clearThought();
   _renderLifeBadge(readerUser.lifeRune);
 
   var rdLoad = document.getElementById('reading-loading');
@@ -1329,6 +1361,7 @@ async function _generateSpreadReading(o) {
   var _castNowS = _castIdx(u);
   var sys = buildSysPrompt(activeChar, lang);
   var prompt = o.buildPrompt(u, o.runes, lang, corrections);
+  var _thS = _thoughtFor(o.kind, o.runes, lang); if (_thS) prompt += '\n' + _thS;   // 2026-09-30: myšlenka ✦ (Kříž, Norny)
   _lastGen = { sys: sys, prompt: prompt, lang: lang, kind: o.kind };   // pro rozbor GPT-6 sol (jen admin)
 
   // Journal meta for the SERVER-SIDE save (proxy persists atomically with the deduction).
@@ -1378,8 +1411,9 @@ async function _generateSpreadReading(o) {
   }
 
   var _seg = _parseSegments(res.text || '');
-  var text = _seg.reading;
-  _lastSegs = _seg.segs;
+  var _thX = _splitThought(_seg.reading, _seg.segs);   // 2026-09-30: řádek ✦ zvlášť (viz single)
+  var text = _thX.reading;
+  _lastSegs = _thX.segs;
   _lastDrawn = (o.runes || []).slice();
   readerTexts[lang] = { short: text, deep: '' };
 
@@ -1395,6 +1429,7 @@ async function _generateSpreadReading(o) {
 
   await stream(o.outId, text);
   _renderSegments(o.outId, _lastSegs);
+  _paintThought(o.outId, _thX.thought);
   _showAsk();
 
   // U zalozeni se hlas NENABIZI — je to textovy ritual a jeho bezplatnost stoji

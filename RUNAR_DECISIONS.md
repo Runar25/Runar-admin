@@ -7871,3 +7871,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Kontrola:** smoke ⑧ `verify_contract_wiring.js` staví prompt životní runy produkčním builderem s rokem 1990 — rok v textu = FAIL
   (mutace: starý builder → 2× FAIL). Golden: změna jen v řádku narození.
 - Affected doc(s): `RUNAR_PRIVACY.md` (co jde k modelu) — v tomto commitu.
+
+## 2026-09-30 (12) — Myšlenka ✦ na konec čtení NASAZENA: Standard a Premium, single · Kříž · Norny, bez hlasu (v4.83)
+
+- **Rozhodl:** KUKY 2026-09-30 *„nasaď to“* · *„myšlenka je bez hlasu“* · dřív *„Standard a Premium“*; znění podle kol EVAL_LOG 2026-09-30 (4)+(6).
+- **Co:** za prompt se přidá řádek `_thoughtLine` (runar-character.js): myšlenka z toho, co runa JE — zdroj = 1. odstavec jejího textu
+  v Kolekci (UI_TEXT.coll_rune), vlastními slovy, obrácená k člověku otázkou nebo tichým pozváním (povoleno, DECISIONS 2026-09-30 (8)).
+  EN = otestované znění slovo od slova; IS psáno islandsky jako plné věty (celé souvětí = E001 → přepsáno), is-grammar-qa čisté u všech run.
+  **Kdo:** `TIERS.*.reading_thought` (Standard, Premium; admin = premium). **Kde:** single (tažená runa), Kříž (střed), Norny (Skuld);
+  Podkova a Yggdrasil NE (netestováno, zdrojová runa nerozhodnuta). **Zobrazení:** samostatný zlatý řádek ✦ POD čtením, mimo jeho
+  prvek — `generateVoice` čte jen text čtení, myšlenku nečte. Parser `_parseSegments` beze změny (zrcadlo serverového `composeReading`),
+  řádek odděluje až `_splitThought`; **deník** drží celý text i s ✦ (server ho ukládá). `_promptDraws.thought = 1`.
+- **Kontrola:** smoke ㉱ `verify_thought.js` — tarify, druhy, zdrojová runa (EN+IS), oddělení obou podob výstupu, zapojení v toku
+  (vykreslení MIMO výstup). Mutace 6/6 FAIL. Registr ㉜ nově načítá překlady → vidí řádek myšlenky (25 run × 2) i konec s otázkou runy
+  v produkční podobě (do dneška ho znal jen zkrácený — táž slepota). Produkční cesta, 3 čtení (EN single, IS single, EN Norny): ✦ odděleno
+  ve všech třech (EVAL_LOG 2026-09-30 (7)). Prohlížeč: soused výstupu, text čtení bez ✦, přepnutí spreadu řádek smaže.
+- Affected doc(s): `RUNAR_EVAL_LOG.md` (2026-09-30 (7)) · `RUNAR_BACKLOG.md` (závěrečná myšlenka — nasazeno) — v tomto commitu.

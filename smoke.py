@@ -729,6 +729,17 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola zamceneho Asku probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# Myšlenka ✦ na konec čtení (KUKY 2026-09-30 „nasaď to“, „myšlenka je bez hlasu“): tarif, druh čtení, zdrojová runa, oddělení
+# od textu čtení (a tím od hlasu) — produkční funkce z runar-reading.js a runar-character.js.
+print('\n' + chr(0x3271) + ' MYSLENKA NA KONEC CTENI (verify_thought.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_thought.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola myslenky probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

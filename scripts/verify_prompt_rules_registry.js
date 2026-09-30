@@ -23,7 +23,9 @@ const S = { console: { log() {}, warn() {}, error() {} } };
 S.window = S; S.globalThis = S; S.lang = 'en';
 S.document = { getElementById: () => null, querySelector: () => null };
 vm.createContext(S);
-for (const f of ['runar-config.js', 'runar-runes.js', 'runar-utils.js', 'runar-character.js'])
+// 2026-09-30: + překlady — myšlenka ✦ i otázka runy (_runeQuestion) berou text z UI_TEXT.coll_rune; bez nich by je registr
+// nikdy neviděl (táž slepota jako u rámce Prázdné runy).
+for (const f of ['runar-config.js', 'runar-runes.js', 'runar-translations.js', 'runar-utils.js', 'runar-character.js'])
   vm.runInContext(fs.readFileSync(D + f, 'utf8'), S);
 
 // 2026-09-20: pin _seasonLine odstranen — radek sezony uz v promptu neni.
@@ -89,6 +91,9 @@ const DATA = /^(PERSON|DRAWN|SEEKER|LIFE|AREA|SEEKING|INTENTION|QUESTION|REALM|E
     // 2026-09-30: pokyn k obrazu se zvířetem (IMG_POSTAVA) — jen u 11 obrazů; fixture ho nevylosuje, takže by ho registr nikdy neviděl.
     pridej(L, 'postava[single]', S._postavaPokyn(L, false));
     pridej(L, 'postava[norny]', S._postavaPokyn(L, true));
+    // 2026-09-30: myšlenka ✦ — přidává ji runar-reading.js za prompt (Standard/Premium), builder ji neskládá → řádek na každou runu.
+    vm.runInContext('lang = "' + L + '"', S);
+    RUNES.forEach((r) => pridej(L, 'myslenka[' + r.n + ']', S._thoughtLine(L, r)));
     // 2026-09-25: každá PODOBA oblasti zvlášť — jinak by se registrovala jen ta, kterou zrovna vylosuje Math.random.
     zJaz('AREAS', L).forEach((a, i) => ((glob('AREA_FACES') || [])[i] || [null])
       .forEach((_, f) => pridej(L, 'oblast[' + i + '.' + f + ']', S._domainContext(a, L, f))));
