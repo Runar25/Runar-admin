@@ -86,6 +86,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [propose-content-not-code.md](propose-content-not-code.md) — Cowork dodává obsah a strukturu POPÍŠE; hotová funkce od něj nikdy neprošla guardem
 - [bash-no-cd-prefix.md](bash-no-cd-prefix.md) — NIKDY `cd … &&` ani `| tail` na Bash; boří allowlist
 - [heredoc-mangles-backslash-escapes.md](heredoc-mangles-backslash-escapes.md) — heredoc tu udělá z `\n` konec řádku; skript s escape sekvencemi piš nástrojem Write
+- [ceske-nazvy-spreadu-v-kodu.md](ceske-nazvy-spreadu-v-kodu.md) — ve v2/ (i v komentářích) názvy spreadů anglicky; „Podkova“ zastaví check-is a commit
 - [guard-test-the-lifecycle.md](guard-test-the-lifecycle.md) — novou kontrolu testuj proti VŠEM stavům toho, co hlídá, ne jen dobrý/špatný případ
 - [read-the-check-before-push.md](read-the-check-before-push.md) — pipe do grepu zahodí exit kód; přečti verdikt, teprve pak push
 - [pathspec-nesmi-byt-prazdny.md](pathspec-nesmi-byt-prazdny.md) — pathspec v proměnné z padlého && řetězce = prázdný → commit vezme CELÝ index (i cizí staged)

@@ -5732,3 +5732,14 @@ Opus 5, 1 čtení na druh (`docs/eval/2026-09-30-myslenka-esence/myslenka_nasaze
 - **IS single Isa:** ✦ *„Vatnið sem frýs man hvernig það rann. Hvað hljóðnaði hjá þér nýlega?“* (is-grammar-qa jen falešné W001)
 - **EN Norny (zdroj Perth):** ✦ *„Some things stay shut until they open on their own — can you sit with a closed lid without deciding what is inside?“*
 - Řádek ✦ oddělen od textu čtení 3/3, `_promptDraws.thought = 1` 3/3. **Hranice:** n = 3, nasazení ověřuje tvar a cestu, ne kvalitu na velkém vzorku.
+
+## 2026-09-30 (8) — Isa × Family & Home: tvrzení o stavu domova na dnešním promptu (v4.82) — 0/3
+
+Owner k Isa *„In your home the talk has gone flat and careful“* (2026-09-23, v4.44): *„v tomhle případě to chyba je. Změnit obraz?“*
+Obraz tehdy byl příroda (*„Under the ice the stream can still be heard“*) — tvrzení vzniklo až při dosednutí do oblasti, ne v obraze.
+Od 2026-09-23 žádné živé čtení s Family & Home → změřeno 3 čtení, produkční builder, Opus 5 (`docs/eval/2026-09-30-domov/`):
+- EN, týž obraz s ledem: *„In a house, that can look like conversations left where they are, the same seats, the same silences. Some ties
+  are not broken now, only still.“* — dům jako MÍSTO a možnost („can look like“), ne stav jeho domova.
+- EN, káva stydne: *„…a cup set down in a house that waits… Some houses keep a stillness that outlasts the people who first sat in it.“*
+- IS, káva stydne: domov vůbec nejmenuje; *„þú“* jen jako postava obrazu.
+- **Závěr:** obraz měnit netřeba; dnešní prompt (podoby oblastí v4.56, konce) tvrzení 0/3. **Hranice:** n = 3, jedna runa; hlídat živá čtení.

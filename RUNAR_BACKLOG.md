@@ -663,6 +663,9 @@
   vůbec, a appková `v2/runar-privacy.html` sice jmenuje Anthropic i ElevenLabs, ale neříká USA a u Supabase tvrdí „Your data never
   leaves the European Economic Area“ — text čtení přitom jde do USA; (3) souhlas testerů vynulovat AŽ v nasazení, které přepne;
   (4) rok narození z promptu. Právní text měnit jen s ownerovým ano (a právní kontrolou před publikací).
+  **Owner 2026-09-30:** (1) ano — DPA podepíše owner před přepnutím · (2) ano → texty EN+IS připraveny, ověřené:
+  `docs/inbox/2026-09-30-navrh-textu-soukromi.md` (appka runar-privacy.html + agndofa.is + tcm_body pro přepnutí) — čeká na právní
+  kontrolu a „publikovat“ · (3) ano — souhlas testerů vynulovat v témže nasazení, které přepne · (4) HOTOVO v4.82 (DECISIONS (11)).
 - [ ] **OTEVŘENÉ Z 23.–24. 9. — sepsáno 2026-09-24 na ownerovo „nezapomněli jsme na něco, co leží v chatu?"** (CODE-tune; zdroj: `docs/archive/2026-09-23-rozbor-reportu.md` + chat)
   **Čeká na ownerovo rozhodnutí** (otázky z rozboru, dosud bez odpovědi):
   1. ✅ *(owner 2026-09-24: ANO, když mluví skrze obraz nebo o prostředí, které má každý; tvrzení = činnost, kterou člověk nejspíš nemá, a stav v prostředí podaný jako fakt — Isa „the talk has gone flat“ je špatně; DECISIONS 2026-09-24 (15) + (19), rubrika A)* Smí 3. věta čtení říct, co se děje v oblasti tazatele (pochválené Perth/Kenaz to dělají, pravidlo to dnes povoluje jen v poslední větě jako možnost)?
@@ -683,7 +686,9 @@
   14. ⏸ *(owner: měřit na živých Ascích — slova obrazu v uložených odpovědích před/po odebrání věty)* Ask: pravidlo proti studenému čtení v něm nese „Describe the image" — čtvrtý zámek do čtení, neměřen (DECISIONS 2026-09-23 (13)).
   15. ⏸ *(owner: zatím nechat, bude jich víc k opravě)* Statická čtení (Kolekce, s hlasem) vznikla před popisy run — Dagaz popisu odporuje (položka níž); projít i ostatní 24 proti popisům.
   **Hlídat po živém testování:** Opus 5 (délka Norns, Ask, `readings.usage.model`) · kvalita rozboru gpt-6-luna (vymýšlí výtky?) · dva Asky (krok 1, jen admin) → pak server + `ASK_MULTI_LIVE` · ~35 nových obrazů z 23.–24. 9. ve skutečných čteních.
-- [ ] **Tvrzení o stavu domova („In your home the talk has gone flat“) prompt pořád umí** (DECISIONS 2026-09-24 (19); owner: „ta Isa je špatně“).
+- [ ] 👁 **Tvrzení o stavu domova („In your home the talk has gone flat“) prompt pořád umí** (DECISIONS 2026-09-24 (19); owner: „ta Isa je špatně“).
+  **2026-09-30 změřeno (EVAL_LOG 2026-09-30 (8)):** příčina nebyl obraz (příroda); na v4.82 tvrzení 0/3 (Isa × Family & Home, i týž obraz).
+  Zbývá jen HLÍDAT živá čtení — od 23. 9. nebylo žádné s Family & Home. Obraz neměnit.
   Doklad z dnešního pilotu na produkčním modelu: Isa, Family & Home — *„Something in your home has gone quiet this way, held rather than ended.“*
   Rozbor GPT to teď hlásí (rubrika A), prompt tomu nebrání: NO COLD READING hlídá jen nitro („what is true, stirring, or known inside them“),
   ne stav vztahů a domova. Oprava = změna obsahu promptu → napřed změřit, jak často to dnes vzniká (Family & Home, Love), pak odebrat příčinu,
@@ -765,6 +770,10 @@
      `docs/eval/2026-09-26-obrazy/`); **kolo 3 hotové 2026-09-27** (+16: runy s 6–7 obrazy + Blank přerušení příběhu a zrcadlo; DECISIONS 2026-09-27 (14)).
      Zbývá: Blank rodina **nepřítomnost** (základy bez domu padly 0/3 → Othila — hledat nepřítomnost bez domova/ztráty) · Jera (13) a Ansuz (10)
      vědomě vynechány · **druhý soubor** `docs/inbox/2026-09-25-gpt-komplexni-obrazovy-prostor.txt`. Zdroj kol 1–3: `docs/inbox/2026-09-25-gpt-obrazy-24-run-plus-blank.txt`.
+     **Druhý soubor prošel CODE 2026-09-30 (owner „mrkni, co se z toho dá vytáhnout“):** NENÍ to seznam obrazů, ale metoda — jádro,
+     napětí a rodiny scén na runu (cíl 40–100 obrazů/runu), „dvojice run X × Y“ (18 rozlišení typu Kenaz = pochodeň × Sowilo = denní
+     světlo), „obrazová vzdálenost“ proti podobným scénám po sobě (u nás zčásti značka motivu), 7bodový filtr obrazu. Použitelné:
+     dvojice run jako kontrola banky (sedí obraz víc na sousední runu?) a chybějící rodiny jako menu nových obrazů. Čeká na ownera.
      Owner: *„je to inspirace, musí být zkrácený či mírně upravený“* — do `RUNE_IMAGES` (EN + IS nativně, ověřit nástroji), brána s popisy runy.
   3. ⏸ **Živly (Elements) v hlavičce runy NECHAT** — owner: *„o elementech rozhodneme, až pokud se objeví problém“*. Hlídat: kdyby
      se živel propisoval do obrazu (oheň, vzduch…) jako svět Hel („roots“), je to ten problém (DECISIONS 2026-09-25 (3)).
