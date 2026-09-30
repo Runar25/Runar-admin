@@ -1032,10 +1032,8 @@ function openCollDetail(r, cell, skipScroll) {
   // 2026-09-30 (KUKY bod 5): popis tvaru vedle glyfu, v jazyce appky; přepnutí jazyka sem vede přes loadCollection.
   var _tv = t('coll_shape');
   document.getElementById('cd-shape').textContent    = (_tv && typeof _tv === 'object' && _tv[r.n]) || '';
-  const metaParts = [];
-  if (r.world)    metaParts.push(rworld(r));
-  if (r.elements) metaParts.push(r.elements.join(' · '));
-  document.getElementById('cd-meta').textContent = metaParts.join('  ·  ');
+  // 2026-09-30 (KUKY „vyndat“): řádek svět · živel („THE ROOTS, WHAT LIES BENEATH · FIRE“) z detailu pryč — člověku nic neřekl;
+  // data RUNES.world/elements zůstávají (strom, hlavička runy v promptu).
 
   // Show detail
   const det = document.getElementById('coll-detail');
