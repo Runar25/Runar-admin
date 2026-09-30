@@ -7718,3 +7718,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   to.“*; IS ověřeno); vzhled = „How a reading works +“. Přepnutí jazyka přepíše i otevřenou nápovědu.
 - **Kontrola:** prohlížeč (otevřít/zavřít, IS při otevřené nápovědě, nový začátek návodu), smoke zelený.
 - Affected doc(s): žádný.
+
+## 2026-09-30 (1) — Fehu bez klíče „mobile energy / hreyfanleg orka“ (v4.79)
+
+- **Rozhodl:** KUKY 2026-09-29 k mým náhradám klíče (*„ani jedna tvoje varianta není dobrá… k čemu použiješ what flows?“*) a směr:
+  *„buď ty klíče najde sám model, a pokud ne, tak je musíme nabídnout“*; 2026-09-30 *„2 ano“*.
+- **Co:** `RUNES` Fehu `k` / `k_is` = tři položky (*wealth, cattle, material prosperity* / *efnisleg velsæld, auður, búfé*). Dva obrazy,
+  které odebraný klíč nesly jako aspekt: vlna vyměněná za kávu a cukr → `auður` / *wealth*; úlovek, z jehož peněz jsou večer nové sítě →
+  `efnisleg velsæld` / *material prosperity*. Ostatní Fehu obrazy beze změny.
+- **Proč to stačí:** ownerův kánon *„Fehu je něco, co proudí“* model přinese sám i bez strojového slova — životní runa bez klíče EN 3/3,
+  IS 1/1 (EVAL_LOG 2026-09-30 (1)).
+- **Kontrola:** aspekt↔klíč (`verify_image_aspect_key.js`) zelené — počet položek `k` a `k_is` dál sedí; golden: změna jen v řádcích Fehu
+  (spready, životní runa) a ve `focus on` jednoho obrazu.
+- Affected doc(s): `RUNAR_EVAL_LOG.md` (2026-09-30 (1)) — v tomto commitu.

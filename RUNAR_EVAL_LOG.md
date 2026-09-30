@@ -5643,3 +5643,12 @@ Soudce v testu perspektivy dostal u každého čtení řádek `PICTURE: <text ob
 Varianta B proto prošla s *„She waits at the grass edge…“* (kajka v textu nepadne) jako „jasné 7/8“ — soudce si zájmeno doplnil z obrazu.
 **Neplatí:** sloupec „vztah k životu jasný“ a „kde je čtenář“ v (1) i (2) jako důkaz pro nasazení. Platí jen jako srovnání ramen se
 stejnou chybou. Našel owner čtením textu, ne měření (DECISIONS 2026-09-29 (2)). Pravidlo pro všechny soudce: **vidí jen to, co uživatel.**
+
+## 2026-09-30 (1) — Fehu bez klíče „mobile energy / hreyfanleg orka“: přinese model „bohatství, které proudí“ sám?
+
+Otázka ownera (2026-09-29): *„buď ty klíče najde sám model, a pokud ne, tak je musíme nabídnout.“* Produkční `buildLifeRunePrompt`,
+jediná změna = klíč pryč, Opus 5. Soudil owner čtením (EN) a CODE čtením jako uživatel (IS).
+- **EN 3/3** (`docs/eval/2026-09-29-testy/test_2.json`): každé čtení samo nese pohyb bohatství (co se má, i co se s tím dělá).
+- **IS 1/1** (`docs/eval/2026-09-30-postava-is/postava_is.json`): *„í fornum skilningi er auður ekki kyrrstæður sjóður heldur það sem
+  gengur milli handa“* · *„þess vegna er Fehu rún hreyfingar fremur en geymslu“*. is-grammar-qa jen šum (W001/Z002).
+- **Hranice:** n = 4, jen životní runa; single a spready s Fehu netestovány zvlášť (klíč tam je jen jeden z řádku run, nebo aspekt obrazu).

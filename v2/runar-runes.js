@@ -8,8 +8,10 @@ const RUNES = [
   {
     n: 'Fehu',     is_n: 'Fehu (Eignir)',
     g: 'ᚠ',        svg: 'Fehu',
-    k:    'wealth, cattle, material prosperity, mobile energy',
-    k_is: 'efnisleg velsæld, auður, búfé, hreyfanleg orka',
+    // 2026-09-30 (KUKY „2 ano“): „mobile energy / hreyfanleg orka“ pryč — strojové slovo pro „bohatství, které proudí“;
+    // bez něj ten význam model přinesl sám (EN 3/3, IS 1/1 — docs/eval/2026-09-29-testy, 2026-09-30-postava-is). DECISIONS 2026-09-30 (1).
+    k:    'wealth, cattle, material prosperity',
+    k_is: 'efnisleg velsæld, auður, búfé',
     formula_is: 'Fehu er rún flæðis, næringar og þess sem vill vaxa.',
     world: 'Midgard',   elements: ['Fire', 'Earth'],
     aett: 'freya',

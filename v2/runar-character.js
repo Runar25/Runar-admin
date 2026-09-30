@@ -618,7 +618,7 @@ var RUNE_IMAGES = [
   // 2026-09-23 (KUKY „2. ano“): 9 obrazů z ownerových popisů run (audit obrazů, sekce 5) — brána S POPISY 3/3 každý;
   // „dva nesou jedno koryto“ vyřazen (Ehwaz 3/3). + Jera: sušená ryba (jaro–září) a uzené jehněčí (zima), ať má Jera
   // v každém ročním období dost variant po odchodu chleba. IS: kandidati prošli korpusem + is-grammar-qa (audit 2026-09-23).
-  ['Fehu','any','Ullin er lögð inn og fyrir hana kemur kaffi og sykur.','The wool is traded in, and coffee and sugar come back for it.','hreyfanleg orka','mobile energy','P'],
+  ['Fehu','any','Ullin er lögð inn og fyrir hana kemur kaffi og sykur.','The wool is traded in, and coffee and sugar come back for it.','auður','wealth','P'],   // 2026-09-30: aspekt „mobile energy“ z klíčů Fehu odebrán
   ['Fehu','any','Mjólkin flóir yfir barminn á fötunni.','The milk spills over the brim of the pail.','efnisleg velsæld','material prosperity','P'],
   ['Uruz','bright','Nautið rífur sig upp úr mýrinni og heldur áfram.','The bull tears itself up out of the bog and keeps going.','hráur kraftur','raw power','P', '', '', 'postava'],
   ['Gebo','cold','Ókunnugur hjálpar þér að ýta bílnum úr skaflinum og veifar bara þegar hann fer.','A stranger helps push your car out of the drift and only waves as he leaves.','gjöf','gift','P'],
@@ -722,7 +722,7 @@ var RUNE_IMAGES = [
   // nápady o vnitřním stavu („člověk si uvědomí…“) vynechány — ve čtení by z nich bylo tvrzení o nitru. Brána se statickými popisy
   // (3 slepí soudci, docs/eval/2026-09-26-obrazy/) každý 3/3. Neprošly: kajka na hnízdě (Algiz → Berkana 3/3), tölt (Raidho → Ehwaz 3/3).
   // IS vymyšleno islandsky, korpus + is-grammar-qa čisté („sérðu“ nerozparsováno → „sérð þú“).
-  ['Fehu', 'any', 'Aflinn er seldur á bryggjunni, og um kvöldið eru peningarnir orðnir að nýjum netum.', 'The catch is sold at the harbour, and by evening the money has become new nets.', 'hreyfanleg orka', 'mobile energy', 'P'],
+  ['Fehu', 'any', 'Aflinn er seldur á bryggjunni, og um kvöldið eru peningarnir orðnir að nýjum netum.', 'The catch is sold at the harbour, and by evening the money has become new nets.', 'efnisleg velsæld', 'material prosperity', 'P'],   // 2026-09-30: viz vlna výš
   ['Fehu', 'any', 'Kýrin er seld um haustið, og það sem fékkst fyrir hana dugar heimilinu út veturinn.', 'The cow is sold in the autumn, and what she fetched carries the household through the winter.', 'búfé', 'cattle', 'P'],
   ['Algiz', 'any', 'Úti á heiðinni brestur í kvisti, og allur hópurinn þagnar til að hlusta.', 'Out on the heath a twig snaps, and the whole party goes quiet to listen.', 'vernd', 'protection', 'P'],
   ['Algiz', 'bright', 'Af hólnum sérð þú hryðjuna koma inn fjörðinn löngu áður en hún nær túninu.', 'From the knoll you see the squall coming up the fjord long before it reaches the hayfield.', 'vernd', 'protection', 'E'],
