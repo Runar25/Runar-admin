@@ -7844,3 +7844,11 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Stav:** řádek ✦ zatím NENÍ nasazený (jen test; Standard/Premium, o nasazení se rozhoduje zvlášť). Kolo s obratem k člověku →
   EVAL_LOG 2026-09-30 (6).
 - Affected doc(s): `RUNAR_DESIGN.md` (Cold reading — povolení ✦) · `RUNAR_EVAL_LOG.md` (2026-09-30 (6)) — v tomto commitu.
+
+## 2026-09-30 (9) — Cowork končí: handoffy a rešerše se předávají CODE session
+
+- **Rozhodl:** KUKY 2026-09-30 *„cowork prý končí nebo co a máš všechno předávat code!“* (aplikace: „Tasks on this computer are being
+  deprecated… From October 6, you won't be able to start new ones. For new work on this computer, use Claude Code.“).
+- **Co:** nové handoffy (úkoly, rešerše, obsahové audity) adresuje CODE-tune jiné CODE session; formát beze změny (`psáno proti commitu`,
+  `ZMĚNĚNO:`). Poslední výstup Coworku (rešerše soukromí OpenAI) převzat do `docs/inbox/2026-09-30-cowork-soukromi-openai.md`.
+- Affected doc(s): `CLAUDE.md` (sekce „N paralelních session“ — upozornění u Cowork lanes) — v tomto commitu.
