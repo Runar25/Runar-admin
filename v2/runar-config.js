@@ -163,6 +163,9 @@ const TIERS = {
   free_trial: {
     label:            'Visitor',
     label_is:         'Gestur',
+   // 2026-09-30: IS pády jména pro věty „…með {tier}“ (3. p.) a „yfir í {tier}“ (4. p.) — tierLabel() v runar-utils.js
+    label_is_acc:     'Gest',
+    label_is_dat:     'Gesti',
     readings:         1,          // total, no account needed — CHANGED 2026-05-29
     // ↓ VOICE FLAGS — flip here to enable/disable without touching logic
     // voice_monthly: true = Visitor slyší hlas při svém 1 čtení
@@ -178,6 +181,8 @@ const TIERS = {
   rune_seeker: {
     label:            'Rune Seeker',
     label_is:         'Leitandi',
+    label_is_acc:     'Leitanda',
+    label_is_dat:     'Leitanda',
     monthly_readings: null,        // legacy — RS uses free_balance (1 onboarding), no monthly reset
     // ↓ VOICE FLAGS — flip here to enable/disable without touching logic
     // voice_monthly: true = hlas pro free čtení (model B: 1 při registraci, bez měsíčního resetu)
@@ -193,6 +198,8 @@ const TIERS = {
   standard: {
     label:            'Rune Walker',
     label_is:         'Vegfarandi',
+    label_is_acc:     'Vegfaranda',
+    label_is_dat:     'Vegfaranda',
     monthly_readings: 50,          // Rune Walker: 50/month
     voice_monthly:    true,
     voice_credits:    true,
@@ -205,6 +212,8 @@ const TIERS = {
   premium: {
     label:            'Rune Wanderer',
     label_is:         'Ferðalangur',
+    label_is_acc:     'Ferðalang',
+    label_is_dat:     'Ferðalangi',
     monthly_readings: 75,          // Rune Wanderer: 75/month
     voice_monthly:    true,
     voice_credits:    true,

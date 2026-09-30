@@ -757,7 +757,10 @@ function _askLimit() {
 function _askResetThread() {
   document.querySelectorAll('#ask-runar .ask-extra').forEach(function (e) { e.remove(); });
   var wrap = document.getElementById('ask-input-wrap'), teaser = document.getElementById('ask-teaser');
-  if (wrap && teaser && teaser.parentNode) teaser.parentNode.insertBefore(wrap, teaser);
+  // 2026-09-30: teaser mohl odejít pod poslední odpověď (_showAskMoreTeaser) — vrátit pořadí pole · teaser · první otázka.
+  var q1 = document.getElementById('ask-question');
+  if (q1 && q1.parentNode) { if (wrap) q1.parentNode.insertBefore(wrap, q1); if (teaser) q1.parentNode.insertBefore(teaser, q1); }
+  else if (wrap && teaser && teaser.parentNode) teaser.parentNode.insertBefore(wrap, teaser);
 }
 var _lastReadingId = null;   // id of the last saved reading — links an Ask Runar follow-up to it
 var _askPhIdx = -1;
@@ -960,13 +963,32 @@ function _askPlaceholder() {
 // jazyka (§13 full-path) — vola ji `_showAsk` i `updateUIText` (runar-app.js).
 // Jmeno tieru VZDY z configu, nikdy natvrdo (§8/§15); jazykova varianta je domaci
 // inline ternar (vzor runar-app.js:789/798, sdileny helper neexistuje).
+// Tarif, který dá víc otázek než můj limit — nejnižší takový (§8: počty z TIERS.*.asks_per_reading, jména z configu).
+function _askVyssiTarif(lim) {
+  return ['standard', 'premium'].filter(function (k) { return ((TIERS[k] || {}).asks_per_reading || 0) > lim; })[0] || null;
+}
 function _refreshAskTeaser() {
   var tEl = document.getElementById('ask-teaser');
   if (!tEl || tEl.style.display === 'none') return;
+  var lim = _askLimit();
+  // 2026-09-30 (KUKY: „u Standard má druhou, kterou Premium odemyká“): vyčerpaný limit → další otázku otevírá vyšší tarif.
+  if (lim > 0) {
+    var vt = _askVyssiTarif(lim);
+    if (!vt) { tEl.style.display = 'none'; return; }
+    tEl.textContent = tp('ask_teaser_more', { tier: tierLabel(vt, lang, 'dat') });
+    return;
+  }
   // 2026-09-25: nejnižší tarif, který Ask má (dnes Standard) — ne natvrdo Premium (§8).
-  var _tk = ['standard', 'premium'].filter(function (k) { return (TIERS[k] || {}).asks_per_reading > 0; })[0] || 'premium';
-  var _pt = (lang === 'is' ? TIERS[_tk].label_is : TIERS[_tk].label);
-  tEl.textContent = tp('ask_teaser', { tier: _pt });
+  tEl.textContent = tp('ask_teaser', { tier: tierLabel(_askVyssiTarif(0) || 'premium', lang, 'dat') });
+}
+// Po poslední povolené otázce: řádek „další otázku otevírá <tarif>“ pod poslední odpovědí (jen když vyšší tarif dá víc).
+function _showAskMoreTeaser(pod) {
+  var tEl = document.getElementById('ask-teaser');
+  var lim = _askLimit();
+  if (!tEl || !lim || !_askVyssiTarif(lim)) return;
+  if (pod && pod.after) pod.after(tEl);
+  tEl.style.display = '';
+  _refreshAskTeaser();
 }
 
 function _showAsk() {
@@ -1084,6 +1106,7 @@ async function askRunar() {
   _askLog.push({ q: q, a: answer });   // pro rozbor GPT-6 sol
   var dalsi = _askCount < _askLimit();
   if (!dalsi) _askPhStop();   // limit vyčerpán -> pole mizí, timer nemá co dělat
+  if (!dalsi) _showAskMoreTeaser(ans);   // 2026-09-30: Standard po své otázce uvidí, že další otevírá Premium
   if (ans) ans.textContent = '';   // pryč „Rúnar listens…“, přichází odpověď
   if (wrap) {
     if (dalsi && ans) { ans.after(wrap); wrap.style.display = ''; } else wrap.style.display = 'none';

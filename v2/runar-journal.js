@@ -193,10 +193,8 @@ async function updateJournalTeaser() {
       .select('id', { count: 'exact', head: true })
       .eq('user_id', currentUser.id);
     if (count && count > 5) {
-      const isIs = lang === 'is';
-      txt.innerHTML = isIs
-        ? `Sérhver lestur sem þú hefur tekið er geymdur — ${count} samtals. Farðu yfir í <strong style="color:var(--gold);font-style:normal;">${TIERS.standard.label_is}</strong> til að opna fulla króniku þína.`
-        : `Every reading you have ever taken is kept — ${count} in total. Move to <strong style="color:var(--gold);font-style:normal;">${TIERS.standard.label}</strong> to open your full journal.`;
+      // 2026-09-30: text z překladů (dřív natvrdo tady, druhá kopie journal_teaser); IS tarif ve 4. pádě („yfir í Vegfaranda“).
+      txt.innerHTML = tp('journal_teaser_count', { count: count, tier: tierLabel('standard', lang, 'acc') });
       teaser.style.display = 'block';
     }
   } catch { /* silent */ }

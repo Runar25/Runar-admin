@@ -183,6 +183,14 @@ function vlp(key, lang) {
 // tp('rs_banner_desc', { casts_month: vn('cast', 1, 'en'), card: vl('card', 'en') })
 // Rule: ALL user-visible strings live in UI_TEXT (translations.js).
 // Adding a language = add new block to UI_TEXT + VOCAB. Zero other files change.
+// Jméno tarifu do věty: EN label, IS v požadovaném pádu (TIERS.*.label_is_dat / _acc; bez pádu 1. pád). 2026-09-30:
+// lákací věty „…opnast með {tier}“ dosazovaly 1. pád (Vegfarandi) místo 3. (Vegfaranda) — jedna funkce místo tří ternárů (§18).
+function tierLabel(key, lng, pad) {
+  var T = (typeof TIERS !== 'undefined' && TIERS[key]) || null;
+  if (!T) return key;
+  if (lng !== 'is') return T.label;
+  return (pad && T['label_is_' + pad]) || T.label_is;
+}
 function tp(key, vars) {
   var s = t(key);
   if (!s || !vars) return s || key;

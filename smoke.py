@@ -718,6 +718,17 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola textu kolekce probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# Zamčený Ask + pády jmen tarifů v IS větách (KUKY 2026-09-30: „Standard má druhou, kterou Premium odemyká“; IS „með Vegfarandi“
+# = 1. pád po předložce, is-grammar-qa to nevidí). Stavy tarifů protlačené produkčními funkcemi.
+print('\n' + chr(0x3270) + ' ZAMCENY ASK A PADY TARIFU (verify_ask_teaser.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_ask_teaser.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola zamceneho Asku probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

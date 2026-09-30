@@ -45,6 +45,7 @@ const UI_TEXT = {
     auth_modal_sub_google: 'No password needed — continue with Google.',
     q_teaser:             'Deeper questions open with {tier}.',
     journal_teaser:       'Every reading you have ever taken is kept. Move to {tier} to open your full journal.',
+    journal_teaser_count: 'Every reading you have ever taken is kept — {count} in total. Move to <strong style="color:var(--gold);font-style:normal;">{tier}</strong> to open your full journal.',   // 2026-09-30: dřív natvrdo v runar-journal.js
     tree_growth_quote:    '<em>"The tree does not grow between visits.<br>It grows through them — slowly,<br>the way birch roots find water under stone.<br>Each rune you draw is already here.<br>Come back. The tree remembers."</em>',
     setup_someone_lbl:    '✦ READING FOR SOMEONE',
     setup_someone_note:   'Enter the name of the person you are reading for. This reading will not be added to your journal.',
@@ -402,6 +403,7 @@ const UI_TEXT = {
     ask_btn:            'ASK',
     ask_thinking:       'Rúnar listens…',
     ask_teaser:         'Your own questions to Rúnar open with {tier}.',   // 2026-09-25 KUKY (stavba jako q_teaser)
+    ask_teaser_more:    'Another question opens with {tier}.',   // 2026-09-30 KUKY: po poslední otázce tarifu (Standard → Premium)
     err_no_credits:     'No readings remain. Use a {card} to continue.',
     err_monthly_limit: 'This month\u2019s readings are all drawn. They return with the new month.',
     err_voice_month:   'The voice has spoken {n} times this month. It returns with the new month.',
@@ -476,6 +478,7 @@ const UI_TEXT = {
     auth_modal_sub_google: 'Ekkert lykilorð þarf — haltu áfram með Google.',
     q_teaser:             'Dýpri spurningar opnast með {tier}.',
     journal_teaser:       'Sérhver lestur sem þú hefur tekið er geymdur. Farðu yfir í {tier} til að opna fulla króniku þína.',
+    journal_teaser_count: 'Sérhver lestur sem þú hefur tekið er geymdur — {count} samtals. Farðu yfir í <strong style="color:var(--gold);font-style:normal;">{tier}</strong> til að opna fulla króniku þína.',   // {tier} ve 4. pádě (tierLabel)
     tree_growth_quote:    '<em>"Tréð vex ekki milli heimsókna.<br>Það vex í gegnum þær — hægt,<br>eins og bjarkarrætur finna vatn undir steini.<br>Sérhver rún sem þú dregur er þegar hér.<br>Komdu aftur. Tréð man."</em>',
     setup_someone_lbl:    '✦ SPÁ FYRIR AÐRA',
     setup_someone_note:   'Sláðu inn nafn þess sem þú ert að spá fyrir. Þessi spá fer ekki í dagbókina þína.',
@@ -816,6 +819,7 @@ const UI_TEXT = {
     ask_btn:            'SPYRJA',
     ask_thinking:       'Rúnar hlustar…',
     ask_teaser:         'Eigin spurningar þínar til Rúnars opnast með {tier}.',
+    ask_teaser_more:    'Önnur spurning opnast með {tier}.',   // {tier} v 3. pádě (tierLabel); is-grammar-qa čisté, „önnur spurning“ 1572
     err_no_credits:     'Þú átt enga spá eftir. Notaðu {card} til að halda áfram.',
     err_monthly_limit: '\u00de\u00fa hefur nota\u00f0 alla lestrana \u00fe\u00edna \u00ed \u00feessum m\u00e1nu\u00f0i. \u00deeir koma aftur me\u00f0 n\u00fdjum m\u00e1nu\u00f0i.',
     err_voice_month:   'Röddin hefur talað {n} sinnum í þessum mánuði. Hún kemur aftur með nýjum mánuði.',

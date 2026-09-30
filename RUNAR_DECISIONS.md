@@ -7803,3 +7803,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   *„Hagalaz nefnir brot sem koma utan frá og bíða ekki eftir að þú sért tilbúið.“* — význam runy; „co stálo příliš blízko“ zůstalo ve větě
   obrazu, kde ho čtenář vidí (`docs/eval/2026-09-30-myslenka-esence/esence_is.json`).
 - Affected doc(s): `RUNAR_EVAL_LOG.md` (2026-09-30 (5) už zapsán v `07df6c2`) — tady jen doplněk níž.
+
+## 2026-09-30 (6) — Zamčený Ask: po poslední otázce tarifu „další otevírá <vyšší tarif>“ · OPRAVA: IS jména tarifů v pádu
+
+- **Rozhodl:** KUKY 2026-09-30 *„Asku pro Rune Seekera: Standard hears it, a u Standard má druhou, kterou Premium odemyká“*.
+- **Co:** Rune Seeker (0 otázek) vidí dál *„Your own questions to Rúnar open with {Standard}.“* (tak je to od 2026-09-25 — položka BACKLOGu
+  s „Premium hears it“ byla zastaralá). **Nově** Standard po své jediné otázce: pod odpovědí *„Another question opens with {Premium}.“* /
+  *„Önnur spurning opnast með {Premium}.“* (tarif s víc otázkami se počítá z `TIERS.*.asks_per_reading`, jména z configu — §8). Premium
+  a admin nic. Nová výměna vrátí teaser na jeho místo.
+- **OPRAVA (§22):** IS lákací věty dosazovaly jméno tarifu v 1. pádě i po předložce (*„opnast með Vegfarandi“*, *„yfir í Vegfarandi“*;
+  korpus *„með vegfaranda“* 7 × *„með vegfarandi“* 0; ostatní IS texty skloňují — *„gerðu þig að Leitanda“*). is-grammar-qa to nevidí.
+  Pády jako data: `TIERS.*.label_is_dat` / `_acc`; do vět je dává `tierLabel(klíč, jazyk, pád)` (runar-utils.js). Věta deníku
+  s počtem čtení stála natvrdo v runar-journal.js (druhá kopie `journal_teaser`, §20) → šablona `journal_teaser_count`.
+- **Kontrola:** smoke ㉰ `verify_ask_teaser.js` — stavy Rune Seeker / Standard po otázce / Premium protlačené produkčními funkcemi (EN+IS),
+  IS věty s předložkou bez 1. pádu, kód plní pády. Mutace 5/6 FAIL; šestá (větev „nejvyšší tarif s viditelným teaserem“) je v dnešních
+  stavech nedosažitelná — zapsáno v hlavičce kontroly. Prohlížeč: EN i IS texty, pořadí pole · teaser po nové výměně.
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka zamčeného Asku uzavřena) — v tomto commitu.

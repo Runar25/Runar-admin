@@ -884,10 +884,10 @@ function updateUIText() {
   // natvrdo text pokracovat-bez-jmena a v rezimu uprav to prepisovalo zrusit (§14).
   if (typeof _nameModalTexts === 'function') _nameModalTexts();
   setText('auth-or', t('auth_or'));
-  var _stlbl = (lang === 'is' ? TIERS.standard.label_is : TIERS.standard.label);
-  setText('q-teaser-txt', tp('q_teaser', { tier: _stlbl }));
+  // 2026-09-30: IS „opnast með {tier}“ chce 3. pád, „yfir í {tier}“ 4. pád (tierLabel) — dřív 1. pád („með Vegfarandi“).
+  setText('q-teaser-txt', tp('q_teaser', { tier: tierLabel('standard', lang, 'dat') }));
   var _jtxt = document.getElementById('journal-teaser-txt');
-  if (_jtxt) _jtxt.innerHTML = tp('journal_teaser', { tier: _stlbl });
+  if (_jtxt) _jtxt.innerHTML = tp('journal_teaser', { tier: tierLabel('standard', lang, 'acc') });
   var _jr = document.querySelector('#jf-rune option[value=""]');
   if (_jr) _jr.textContent = t('jf_all_runes');
   var _ja = document.querySelector('#jf-area option[value=""]');

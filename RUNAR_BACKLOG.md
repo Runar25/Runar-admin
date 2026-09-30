@@ -681,7 +681,8 @@
   ne přidat zákaz (memory `oprava-promptu-odebira-vadu`). (CODE-tune)
 - [x] **Úklid po vypnutí čočky životní runy — HOTOVO** (2026-09-26 mrtvé větve z builderů, DECISIONS 2026-09-26 (12); 2026-09-27 DB sloupec
   `life_rune_in_readings` zahozen + grant odebrán, DECISIONS 2026-09-27 (1)). `_lensContext` zůstává jako laboratorní funkce (§26).
-- [ ] **Text zamčeného Asku pro Rune Seekera** — dnes *„Rúnar has one answer left — Premium hears it.“* (sedí na starý model „jedna odpověď
+- [x] **HOTOVO 2026-09-30 (DECISIONS 2026-09-30 (6)):** Rune Seeker → Standard (platilo od 25. 9.), Standard po otázce → Premium. Původně:
+  **Text zamčeného Asku pro Rune Seekera** — dnes *„Rúnar has one answer left — Premium hears it.“* (sedí na starý model „jedna odpověď
   zbývá“). Owner: *„něco přirozeného… nemělo by se to úplně vymykat“* ostatním teaserům (*„Deeper questions open with {tier}.“*). Návrh v chatu 2026-09-25.
 - [ ] **Konce čtení: víc tvarů — napětí (v4.61) a návrat k otázce (v4.65) NASAZENO, obraz ne — HLÍDAT v živých čteních** (CODE-tune, 2026-09-26)
   Owner: *„chci více různých konců, ne stejné… přidat víc možností, ne vyměnit“*. Rozhodnutí → DECISIONS 2026-09-26 (1) a (8). Hlídat:
