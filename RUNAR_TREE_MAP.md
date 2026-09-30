@@ -8,6 +8,7 @@
 #    přepsal vrstvy D (kompozice) a H (odbočky/graduace). Tam, kde se tahle mapa rozchází, platí RUNAR_TREE.md.
 # ⚠️ 2026-09-29: vrstva C opravena — strana ramene = rovnováha jeho čtení (KROK 3), tvar větve ze záměru živý (KROK 1);
 #    řádky tvrdily „SPÍCÍ" a „strana z areaSide", což od kroků 1 a 3 neplatí.
+# ⚠️ 2026-09-30: vrstvy D a H — úhel ramene dává kostra `FR` (ne `emergence`), graduant smí na druhou stranu (KROK 3b).
 # Vlastník: CODE-tree (mechanika + implementace) · Cowork-tree (význam) · KUKY (rozhoduje).
 
 ## Jak číst
@@ -51,7 +52,8 @@ Laděno v branch composeru → `RUNE_TUNE`; fallback = signatura v `RUNES` (runa
 ## Vrstva D — POZICE / KOMPOZICE (kde větev vyleze z kmene)
 | páka | mechanika | kde | pozn. |
 |---|---|---|---|
-| `emergence(k)` | výška odlomení (`frac`) + úhel; k0–2 zakládací, k≥3 postupně níž | build_*composer | ⚠️ vyladěno na ~9 → **při 25 chuchvalec** (nefix) |
+| `emergence(k)` | výška odlomení (`frac`); k0–2 zakládací, k≥3 postupně níž | build_*composer | ⚠️ vyladěno na ~9 → **při 25 chuchvalec** (nefix) |
+| kostra `FR` | ÚHEL ramene: strana v pořadí zrodu (vůdčí nahoru, strany se liší nejvýš o 1, při shodě lehčí strana), rozevření zlatým řezem; i graduanti | crown builder (od 2026-09-30) | KUKY: „co nejvíce rozložit“ |
 | `exitIndex` | najde bod odlomení na kmeni dle `frac` | | |
 | `lifeLean` | naklonění celku dle Life Rune | | |
 | `intZone` / `areaSide` | posun `frac`/strany dle čtení | crownT | |
@@ -80,7 +82,7 @@ Laděno v branch composeru → `RUNE_TUNE`; fallback = signatura v `RUNES` (runa
 |---|---|---|---|
 | `childN` | počet twigů | crownT | |
 | `twRunes` | twig = ostatní runy elementu (dnes generováno znovu, negraduje) | composer | |
-| **graduace 2./3. dominant** | 🆕 chová se jako prvních 9, ALE **odbočí od RODIČE v 1/5–3/5 jeho délky** (NIKDY u kmene, NIKDY na špičce — jinak nepřirozené); následuje rodiče do strany | (k postavení) | KUKY směr; doladit |
+| **graduace 2./3. dominant** | chová se jako prvních 9, ALE **odbočí od RODIČE v 1/5–3/5 jeho délky** (NIKDY u kmene, NIKDY na špičce — jinak nepřirozené); ~~následuje rodiče do strany~~ → od 2026-09-30 strana z kostry `FR` a z vlastních čtení, smí na druhou stranu než rodič (KUKY: „i povýšené rameno může jít z leva do prava“) | crown builder | RUNAR_TREE.md §5 KROK 2 + 3b |
 
 ## Vrstva I — SÍLY / PŘITAŽLIVOST (→ Cowork design)
 ⭐ **Na KAŽDÝ výskyt ve stromě musí být odpověď „proč"** (KUKY). Které runy se přitahují, proč má

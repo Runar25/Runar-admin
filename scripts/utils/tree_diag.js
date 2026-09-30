@@ -570,7 +570,8 @@ if (cast === 'lreval') {
     r.allPicks.forEach(p => { if (!p.pts || p.pts.length < 2 || String(p.k).startsWith('r')) return; if (!(typeof p.k === 'number' || String(p.k).startsWith('t'))) return;
       const pts = typeof p.k === 'number' ? p.pts.slice(-30) : p.pts; const L = arc(pts); let sx = 0; pts.forEach(q => sx += q.x); sx /= pts.length;
       if (sx < cx) mL += L; else mR += L;
-      if (typeof p.k === 'number' && p.k > 0 && Math.abs((p.meta.ang + Math.PI / 2) * 180 / Math.PI) < 8) vert++; });
+      if (typeof p.k === 'number' && p.k > 0 && Math.abs((p.meta.ang + Math.PI / 2) * 180 / Math.PI) < 8) { vert++;
+        if (process.env.VDET) { const m = p.meta; console.log('   svisle:', m.name, 'k' + p.k, m.gradOf ? 'graduant z ' + m.gradOf : 'rameno', '| kostra', ((m.eAng + Math.PI / 2) * 180 / Math.PI).toFixed(0) + '°', '| ted', ((m.ang + Math.PI / 2) * 180 / Math.PI).toFixed(0) + '°', '| strana', m.lrS0, '->', m.lrS, '| b', m.bal ? m.bal.b.toFixed(2) : '-', '| cteni', m.bal ? m.bal.n : '-'); } } });
     let nIn = 0, nOut = 0, nOth = 0; log.forEach(rd => { const k = rd.runes.length; if (INNER.includes(rd.area)) nIn += k; else if (OUTER.includes(rd.area)) nOut += k; else nOth += k; });
     return { L: mL / (mL + mR), ideal: (nIn + nOth / 2) / (nIn + nOut + nOth), vert };
   };
@@ -606,4 +607,96 @@ if (cast === 'at') {
   const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
   const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, zrod: 0.3, dorust: 4 }) });
   (process.env.NS || '56,57').split(',').map(Number).forEach(n => { console.log('--- N=' + n); labRun(st.log.slice(0, n), HTML, inj); });
+}
+if (cast === 'scen') {
+  // JAK SE MUZE STROM VYVIJET (2026-09-30, KUKY: "chtelo by to znat pravdepodobnost, jak se muze strom
+  // vyvijet podle moznosti, co muzou nastat"). 6 typu lidi x 20 nahodnych lidi, strom po 10/50/150/300
+  // cteni: kolik hmoty lezi vlevo (nitro) a kolik ramen se preklopilo. Zapise scratch JSON (argv[4]).
+  const HTML = process.argv[3] && process.argv[3] !== '-' ? process.argv[3] : null, OUT = process.argv[4] || null;
+  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const SC = [
+    { id: 'vyvazeny', nm: 'vyvážený (35 % nitro · 35 % svět · 30 % střed)', a: [0.35, 0.35, 0.30] },
+    { id: 'mirne_nitro', nm: 'mírně nitro (50 · 30 · 20)', a: [0.50, 0.30, 0.20] },
+    { id: 'nitro', nm: 'převážně nitro (70 · 15 · 15)', a: [0.70, 0.15, 0.15] },
+    { id: 'svet', nm: 'převážně svět (15 · 70 · 15)', a: [0.15, 0.70, 0.15] },
+    { id: 'zmena', nm: 'změna: první polovina nitro, druhá svět', a: [0.70, 0.15, 0.15], b: [0.15, 0.70, 0.15] },
+    { id: 'bez', nm: 'bez oblasti (nikdy nevyplní)', a: [0, 0, 0] } ];
+  const NS = [10, 50, 150, 300], NSEED = +(process.env.NSEED || 20);
+  const RB = B.RUNES.filter(r => r.k !== 'odinn'), I = ['healing', 'family', 'inner'], O = ['purpose', 'career', 'spirituality'], M = ['love', 'crossroads'];
+  const gen = (seed, sc, N) => { let s = seed; const rnd = () => (s = (s * 1103515245 + 12345) >>> 0) / 4294967296;
+    const mix = i => (sc.b && i >= N / 2) ? sc.b : sc.a;
+    const area = i => { const [pI, pO, pM] = mix(i), x = rnd(); if (x < pI) return I[Math.floor(rnd() * 3)]; if (x < pI + pO) return O[Math.floor(rnd() * 3)]; if (x < pI + pO + pM) return M[Math.floor(rnd() * 2)]; return null; };
+    const pick = n => { const pool = RB.slice(), rs = []; for (let i = 0; i < n; i++) { const r = pool.splice(Math.floor(rnd() * pool.length), 1)[0]; rs.push({ rune: r.k, el: r.el }); } return rs; };
+    const log = [{ spread: 'norns', runes: pick(3), area: area(0), intention: null }];
+    for (let i = 1; i < N; i++) { const x = rnd(); log.push({ spread: x < 0.8 ? 'single' : 'compass', runes: pick(x < 0.8 ? 1 : 5), area: area(i), intention: null }); }
+    return log; };
+  const arc = pts => { let a = 0; for (let i = 1; i < pts.length; i++) a += Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y); return a; };
+  const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, maxMains: 10, gradStrand: 1 }, process.env.LRCFG ? JSON.parse(process.env.LRCFG) : {}) });
+  if (process.env.RUNE) inj.rune = process.env.RUNE;
+  const ONLY = process.env.ONLY ? process.env.ONLY.split(',') : null;
+  let curInj = inj;
+  const measure = log => { const r = labRun(log, HTML, curInj); let mL = 0, mR = 0, flipped = 0, sw = 0, limbs = 0;
+    r.allPicks.forEach(p => { if (!p.pts || p.pts.length < 2 || String(p.k).startsWith('r')) return; if (!(typeof p.k === 'number' || String(p.k).startsWith('t'))) return;
+      const pts = typeof p.k === 'number' ? p.pts.slice(-30) : p.pts, L = arc(pts); let sx = 0; pts.forEach(q => sx += q.x); sx /= pts.length; if (sx < 280) mL += L; else mR += L;
+      if (typeof p.k === 'number') { limbs++; if (p.meta.lrS0 && p.meta.lrS !== p.meta.lrS0) flipped++; sw += p.meta.lrSw || 0; } });
+    return { L: mL / Math.max(1, mL + mR), flipped, sw, limbs }; };
+  const q = (a, f) => { const b = a.slice().sort((x, y) => x - y); return b[Math.min(b.length - 1, Math.max(0, Math.round(f * (b.length - 1))))]; };
+  const res = [];
+  SC.forEach((sc, si) => { if (ONLY && !ONLY.includes(sc.id)) return; const rows = [];
+    for (let k = 0; k < NSEED; k++) { const seed = 1000 + k * 17 + si * 101, log = gen(seed, sc, 300), row = { seed };
+      /* DOBRAND: kazdy modelovy clovek jine datum narozeni (tvar vetvi se seje z data -> jinak vsichni sdileji KUKYho) */
+      curInj = process.env.DOBRAND ? Object.assign({}, inj, { dob: { d: 1 + (seed * 7) % 28, m: 1 + (seed * 5) % 12, y: 1950 + (seed * 3) % 55 } }) : inj;
+      NS.forEach(N => { row[N] = measure(log.slice(0, N)); }); rows.push(row); }
+    const out = { id: sc.id, nm: sc.nm, def: sc, by: {} };
+    NS.forEach(N => { const Ls = rows.map(r => r[N].L); out.by[N] = { med: q(Ls, 0.5), p10: q(Ls, 0.1), p90: q(Ls, 0.9),
+      left: Ls.filter(x => x >= 0.65).length / Ls.length, right: Ls.filter(x => x <= 0.35).length / Ls.length,
+      flipped: rows.reduce((a, r) => a + r[N].flipped, 0) / rows.length, sw: rows.reduce((a, r) => a + r[N].sw, 0) / rows.length, limbs: rows.reduce((a, r) => a + r[N].limbs, 0) / rows.length }; });
+    const at300 = rows.map(r => ({ seed: r.seed, L: r[300].L })).sort((a, b) => a.L - b.L), med = out.by[300].med;
+    out.typical = at300.slice().sort((a, b) => Math.abs(a.L - med) - Math.abs(b.L - med))[0];
+    out.spread = [0.05, 0.35, 0.65, 0.95].map(f => at300[Math.round(f * (at300.length - 1))]);
+    out.cells = { typical: NS.map(N => ({ N, L: rows.find(r => r.seed === out.typical.seed)[N].L })) };
+    res.push(out);
+    const pc = x => (100 * x).toFixed(0).padStart(3);
+    console.log('\n' + sc.nm);
+    NS.forEach(N => { const b = out.by[N]; console.log('  po', String(N).padStart(3), 'cteni | hmota vlevo median', pc(b.med), '%  (8 z 10 lidi mezi', pc(b.p10).trim() + '–' + pc(b.p90).trim(), '%) | jasne vlevo', pc(b.left), '% | jasne vpravo', pc(b.right), '% | ramen', b.limbs.toFixed(1), '| preklopenych', b.flipped.toFixed(1), '| preklopeni celkem', b.sw.toFixed(1)); });
+  });
+  if (OUT) fs.writeFileSync(OUT, JSON.stringify(res, null, 1));
+}
+if (cast === 'biasdig') {
+  // ODKUD JE VYCHYLKA VPRAVO u lidi bez oblasti (2026-09-30): hmota rozdelena podle strany KOSTRY ramene
+  // (vlevo / vudci / vpravo) a podle toho, kde skutecne lezi (x < 280 / x >= 280). 20 lidi, 300 cteni.
+  const HTML = process.argv[3] && process.argv[3] !== '-' ? process.argv[3] : null;
+  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, maxMains: 10, gradStrand: 1 }) });
+  const RB = B.RUNES.filter(r => r.k !== 'odinn');
+  const arc = pts => { let a = 0; for (let i = 1; i < pts.length; i++) a += Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y); return a; };
+  const tot = {};
+  const add = (k, v) => { tot[k] = (tot[k] || 0) + v; };
+  for (let u = 0; u < 20; u++) { let s = 1000 + u * 17 + 5 * 101; const rnd = () => (s = (s * 1103515245 + 12345) >>> 0) / 4294967296;
+    const pick = n => { const pool = RB.slice(), rs = []; for (let i = 0; i < n; i++) { const r = pool.splice(Math.floor(rnd() * pool.length), 1)[0]; rs.push({ rune: r.k, el: r.el }); } return rs; };
+    rnd(); const log = [{ spread: 'norns', runes: pick(3), area: null, intention: null }];
+    for (let i = 1; i < 300; i++) { rnd(); const x = rnd(); log.push({ spread: x < 0.8 ? 'single' : 'compass', runes: pick(x < 0.8 ? 1 : 5), area: null, intention: null }); }
+    const r = labRun(log, HTML, inj), side = {};
+    r.allPicks.forEach(p => { if (typeof p.k === 'number') side[p.k] = p.meta.lrS0 === 0 || p.k === 0 ? 'V' : (p.meta.lrS0 < 0 ? 'L' : 'P'); });
+    r.allPicks.forEach(p => { if (!p.pts || p.pts.length < 2) return; const K = String(p.k); let k;
+      if (typeof p.k === 'number') k = p.k; else if (K.startsWith('t')) k = +K.slice(1).split('_')[0]; else return;
+      const pts = typeof p.k === 'number' ? p.pts.slice(-30) : p.pts, L = arc(pts); let sx = 0; pts.forEach(q => sx += q.x); sx /= pts.length;
+      add((side[k] || '?') + (typeof p.k === 'number' ? '-rameno' : '-vetvicky') + (sx < 280 ? ' lezi VLEVO' : ' lezi VPRAVO'), L); }); }
+  const all = Object.values(tot).reduce((a, b) => a + b, 0);
+  Object.keys(tot).sort().forEach(k => console.log(k.padEnd(32), (100 * tot[k] / all).toFixed(1).padStart(5), '%'));
+}
+if (cast === 'leader') {
+  // Vudci vetev u lidi bez oblasti: smer, cast "zivotni runa", natoceni, kde lezi spicka vuci zakladu.
+  const HTML = process.argv[3] && process.argv[3] !== '-' ? process.argv[3] : null;
+  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, maxMains: 10, gradStrand: 1 }) });
+  if (process.env.RUNE) inj.rune = process.env.RUNE;
+  const RB = B.RUNES.filter(r => r.k !== 'odinn');
+  for (let u = 0; u < 8; u++) { let s = 1000 + u * 17 + 5 * 101; const rnd = () => (s = (s * 1103515245 + 12345) >>> 0) / 4294967296;
+    const pick = n => { const pool = RB.slice(), rs = []; for (let i = 0; i < n; i++) { const r = pool.splice(Math.floor(rnd() * pool.length), 1)[0]; rs.push({ rune: r.k, el: r.el }); } return rs; };
+    rnd(); const log = [{ spread: 'norns', runes: pick(3), area: null, intention: null }];
+    for (let i = 1; i < 300; i++) { rnd(); const x = rnd(); log.push({ spread: x < 0.8 ? 'single' : 'compass', runes: pick(x < 0.8 ? 1 : 5), area: null, intention: null }); }
+    const r = labRun(log, HTML, inj), p = r.allPicks.find(q => q.k === 0), m = p.meta, pts = p.pts.slice(-30);
+    const d = v => (v * 180 / Math.PI).toFixed(1);
+    console.log(m.name.padEnd(8), 'smer', d(m.ang + Math.PI / 2), '| zivotni runa', d(m.leanPart), '| natoceni', d(m.areaPart), '| koruna: zaklad x', pts[0].x.toFixed(0), 'spicka x', pts[pts.length - 1].x.toFixed(0), '| max vychyleni', (Math.max(...pts.map(q => q.x)) - 280).toFixed(0), (Math.min(...pts.map(q => q.x)) - 280).toFixed(0)); }
 }
