@@ -7731,3 +7731,26 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Kontrola:** aspekt↔klíč (`verify_image_aspect_key.js`) zelené — počet položek `k` a `k_is` dál sedí; golden: změna jen v řádcích Fehu
   (spready, životní runa) a ve `focus on` jednoho obrazu.
 - Affected doc(s): `RUNAR_EVAL_LOG.md` (2026-09-30 (1)) — v tomto commitu.
+
+## 2026-09-30 (2) — Obraz se zvířetem v hlavní roli: single „pojmenuj ho“, Norny „pojmenuj + z jeho strany“ (B2); Skuld = nit, ne „ty“ (v4.80)
+
+- **Rozhodl:** KUKY 2026-09-30 *„1 ano nasaď“* + *„12 ano“* — k testům 2026-09-29: *„B2 dobrý, nit dobrý, mně nevadí, že GPT dal
+  ‚Your choice remains open‘“*; dřív: *„chce to rozluštit to čtení Norns, proč začíná psem a pak tam dá mě“*.
+- **Návrat očištěný (§26):** perspektiva B stažena 2026-09-29 (2), protože vyprávěla za zvíře a nikde ho nepojmenovala (*„She waits…“*;
+  uživatel obraz nevidí). Nový pokyn začíná přesně tím, co chybělo: *„…and the seeker has not seen the picture: name the figure plainly
+  the first time it appears.“*
+- **Co:** (a) `IMG_POSTAVA` v `v2/runar-character.js` = jediné místo textu (EN + IS vedle sebe); příznak `_imgPostava` nastaví
+  `_seasonalImagery` z indexu 9 (`postava`, 11 obrazů). **Single** → jen `jmenuj`; **Norny** → `jmenuj` + `pohled` (B2); obojí hned za
+  obrazem. **Kříž / Podkova / Yggdrasil bez pokynu** (netestováno). (b) **Norny, Skuld:** beat + bigInstruction *„where you are heading if
+  you keep walking…“* → *„where the thread is heading…“* (IS *„hvert þráðurinn stefnir“*) — tentýž obraz, jaký už nesl štítek SKULD.
+  „Ty“ spolu s oblastí Rozcestí posazovalo čtenáře do obrazu (pes → „ty“). (c) **S B2 se jméno nelosuje „uprostřed“** (jen pozdě / vůbec) —
+  rozpor nalezený při registraci ㉜: *„Address {name} once in the middle“* proti *„let only the last line turn to the seeker“*. Los se
+  nemění (týž počet volání `Math.random`), mění se jen výsledek. (d) `_promptDraws.postava` = 1 (single) / 2 (Norny).
+- **IS:** psáno islandsky; is-grammar-qa čisté (věta s dvojtečkou a *„nefndu … berum orðum“* = E001 → přepsáno na dvě věty); korpus:
+  *„segðu skýrt“* 14 · *„skýrt hver“* 340 · *„þegar hún birtist“* 512 · *„beinast að honum“* 148 · *„tekið aðra stefnu“* 123
+  (*„nefna skýrt“* 0 → nepoužito). IS kontrola po 1 čtení: EVAL_LOG 2026-09-30 (2).
+- **Kontrola:** smoke ㊱ `verify_image_register.js` protlačí VŠECH 182 obrazů produkčními buildery v obou řečech: 11 se zvířetem →
+  single `jmenuj` a Norny B2 hned za obrazem, jméno nikdy uprostřed; 171 ostatních bez pokynu; Kříž/Podkova/Yggdrasil bez pokynu; Skuld =
+  nit ve všech Nornách. Mutace **11/11 FAIL** (příznak nikdy / vždy, B2 pryč, jen jmenuj, single s B2, IS „þú“ zpět, EN „you“ zpět,
+  draws bez záznamu, pokyn v Kříži, jméno uprostřed ×2). Nový kód skládá **byte po bytu** tytéž EN prompty, jaké owner četl v testu (4/4).
+- Affected doc(s): `RUNAR_EVAL_LOG.md` (2026-09-30 (2)) · `RUNAR_BACKLOG.md` (Norny vyřešeno, ostatní spready otevřené) — v tomto commitu.

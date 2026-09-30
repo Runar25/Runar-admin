@@ -263,7 +263,7 @@ const NAME_PLACEMENTS_IS = [
   'Láttu nafnið {name} koma seint, undir lokin, sem hljóðláta viðurkenningu.',   // 2026-09-27: „nafnið“ (apozice), dřív E001
   'Notaðu ekki nafnið {name} í þetta sinn. Lesturinn stendur án þess.',   // 2026-09-27: dřív „Í þetta sinn skaltu… —“ (E001)
 ];
-function _namePlacement(name, lang) {
+function _namePlacement(name, lang, jenKonec) {
   // No real name: reading.js:238 fills the §12 fallback ('you' / 'þú') when the name field is blank
   // (Visitor, for-someone, no saved name). Emit NO name instruction — there is nothing to place or
   // omit, and "do not use the name þú" would fight the mandated second-person voice.
@@ -274,7 +274,11 @@ function _namePlacement(name, lang) {
   // position. Reordering a pool without moving it silently breaks the ratio.
   if (Math.random() < 0.55) return pool[pool.length - 1].split('{name}').join(name);
   var placed = pool.slice(0, pool.length - 1); // early / middle / late
-  return placed[Math.floor(Math.random() * placed.length)].split('{name}').join(name);
+  var i = Math.floor(Math.random() * placed.length);
+  // 2026-09-30: jenKonec = Norny s obrazem zvířete (B2 „k tazateli až poslední věta“, IMG_POSTAVA) — „uprostřed“ by B2
+  // odporovalo, proto ho nahradí poslední varianta (pozdě). Los se nemění (týž počet volání Math.random), jen výsledek.
+  if (jenKonec) i = placed.length - 1;
+  return placed[i].split('{name}').join(name);
 }
 
 // ─── _promptDraws(prompt, lang) ──────────────────────────────────
@@ -327,6 +331,10 @@ function _promptDraws(prompt, lang) {
     // pro-nekoho). Rekonstrukce ji pak hada; CODE-read se tak spletl u Isa df160bfb.
     // Kotva = zacatek bloku _lensContext, jednoznacny v obou recich.
     out.lens = p.indexOf(isIs ? 'LOKALINSA — lífsrúnin' : 'CLOSING LENS — the life rune') !== -1 ? 1 : 0;
+    // 2026-09-30: pokyn k obrazu se zvířetem v hlavní roli (IMG_POSTAVA) — 1 = jen „pojmenuj“ (single), 2 = + pohled (Norny).
+    // Bez záznamu by rozbor čtení nevěděl, že v promptu byl (táž vada jako u čočky výš).
+    var pT = (typeof IMG_POSTAVA !== 'undefined') ? (IMG_POSTAVA[isIs ? 'is' : 'en']) : null;
+    if (pT && p.indexOf(pT.jmenuj) !== -1) out.postava = p.indexOf(pT.pohled) !== -1 ? 2 : 1;
 
     var heavyP = isIs ? ENDING_HEAVY_IS : ENDING_HEAVY;
     var openP  = isIs ? ENDING_OPEN_IS  : ENDING_OPEN;

@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-09-30",
- "prompt_version": "v4.79-fehu-keys",
+ "prompt_version": "v4.80-norns-thread-figure",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -146,6 +146,18 @@
    "lang": "en",
    "zdroj": "esence[blank]",
    "zacatek": "THE ESSENCE LINE: after the picture, one short line that names the bla"
+  },
+  {
+   "hash": "91a1cf774b59",
+   "lang": "en",
+   "zdroj": "postava[single]",
+   "zacatek": "The main figure of this picture is not the seeker, and the seeker has "
+  },
+  {
+   "hash": "8222fe9d4eb7",
+   "lang": "en",
+   "zdroj": "postava[norny]",
+   "zacatek": "The main figure of this picture is not the seeker, and the seeker has "
   },
   {
    "hash": "cb96e93d91ea",
@@ -896,6 +908,18 @@
    "lang": "is",
    "zdroj": "esence[blank]",
    "zacatek": "KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem nefnir auðu rún"
+  },
+  {
+   "hash": "368156cdfd52",
+   "lang": "is",
+   "zdroj": "postava[single]",
+   "zacatek": "Leitandinn er ekki aðalpersóna myndarinnar og hefur ekki séð hana. Seg"
+  },
+  {
+   "hash": "7ff4a8d71398",
+   "lang": "is",
+   "zdroj": "postava[norny]",
+   "zacatek": "Leitandinn er ekki aðalpersóna myndarinnar og hefur ekki séð hana. Seg"
   },
   {
    "hash": "b15f49adaf12",

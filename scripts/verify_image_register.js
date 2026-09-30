@@ -55,14 +55,67 @@ if (!IMGS.length) { fail++; console.log('FAIL  banka prazdna'); }
   }
   if (!fail) console.log('OK    jadra: ' + jadra.length + ' radku, mista registru uplna, rozklad image+place drzi');
 }
-// ── POSTAVA (2026-09-29): značka index 9 „postava“ = zvíře v hlavní roli obrazu. Perspektiva B, která ji četla, stažena týž den
-// (DECISIONS 2026-09-29 (2)) — tady se hlídá jen, že značka sedí: existuje a nestojí u obrazu, kde je čtenář („you“).
+// ── POSTAVA (2026-09-30): obraz se zvířetem v hlavní roli (index 9 „postava“) dostane HNED ZA OBRAZ pokyn z IMG_POSTAVA —
+// single jen „pojmenuj“, Norny „pojmenuj + z jeho strany“ (B2); jiný obraz nic; Cross/Horseshoe/Yggdrasil nic (netestováno).
+// Norny mají Skuld jako NIT, ne „kam jdeš ty“. Protlačeno PRODUKČNÍM builderem (§19): řádek se vnutí jako jediný kandidát
+// (_runeImageCandidates), příznak nastaví skutečný _seasonalImagery → kontrola vidí VÝSLEDEK v promptu, ne značku v datech.
+// Běží přes VŠECH 182 řádků střídavě, takže příznak, který by se nepřepsal, by u dalšího obrazu bez zvířete zčervenal.
+// DECISIONS 2026-09-30 (2). Předchůdce (perspektiva B jen v single) stažen 2026-09-29 (2) — nepojmenoval zvíře.
 {
-  const post = IMGS.filter((r) => r[9] === 'postava');
+  const P = { console: { log() {}, warn() {}, error() {} } }; P.window = P; P.globalThis = P;
+  P.document = { getElementById: () => null, querySelector: () => null, querySelectorAll: () => [] };
+  const st = {}; P.localStorage = { getItem: (k) => st[k] || null, setItem: (k, v) => { st[k] = v; }, removeItem: (k) => { delete st[k]; } };
+  vm.createContext(P);
+  for (const f of ['runar-config.js', 'runar-runes.js', 'runar-translations.js', 'runar-utils.js', 'runar-character.js'])
+    vm.runInContext(fs.readFileSync(D + f, 'utf8') + '\n;\n', P);
+  vm.runInContext('var __s=1;Math.random=function(){__s=(__s*1103515245+12345)%2147483648;return __s/2147483648;};'
+    + 'var __vnut=null, __cand=_runeImageCandidates; _runeImageCandidates=function(d,b){ return __vnut ? [__vnut] : __cand(d,b); };', P);
+  const IM = vm.runInContext('RUNE_IMAGES', P), RU = vm.runInContext('RUNES', P), POK = vm.runInContext('IMG_POSTAVA', P);
+  const post = IM.filter((r) => r[9] === 'postava');
   const sYou = post.filter((r) => /\byou(r)?\b/i.test(r[3]));
   if (!post.length) { fail++; console.log('FAIL  zadny obraz se znackou „postava“'); }
-  else if (sYou.length) { fail++; console.log('FAIL  „postava“ u obrazu s „you“: ' + sYou.map((r) => r[0]).join(', ')); }
-  else console.log('OK    postava: ' + post.length + ' obrazu se zviretem v hlavni roli, zadny s „you“ (znacku zatim nic necte)');
+  if (sYou.length) { fail++; console.log('FAIL  „postava“ u obrazu, kde je „you“ (ctenar JE v obraze): ' + sYou.map((r) => r[0]).join(', ')); }
+  const u = { name: 'Kuky', area: '', seeking: '', question: '', intention: '' };
+  const runa = (n) => RU.find((r) => r.n === n);
+  const vady = [];
+  for (const L of ['en', 'is']) {
+    vm.runInContext('lang="' + L + '"', P);
+    const mark = L === 'is' ? 'MYND — ' : 'IMAGE — ';
+    const zaObrazem = (p) => { const r = p.split('\n'), i = r.findIndex((l) => l.indexOf(mark) === 0); return i === -1 ? '(bez obrazu)' : r[i + 1]; };
+    const J = POK[L].jmenuj, B2 = POK[L].jmenuj + ' ' + POK[L].pohled;
+    const nit = L === 'is' ? 'hvert þráðurinn stefnir' : 'where the thread is heading';
+    const ty = L === 'is' ? 'hvert þú stefnir' : 'where you are heading';
+    const stred = vm.runInContext(L === 'is' ? 'NAME_PLACEMENTS_IS' : 'NAME_PLACEMENTS', P)[0].split('{name}').join(u.name);
+    let nStred = 0;   // kolikrát „uprostřed“ padlo u Norn BEZ zvířete — důkaz, že los tu variantu vůbec nabízí (jinak by kontrola nic nehlídala)
+    let nPost = 0, nJine = 0;
+    for (const row of IM) {
+      P.__vnut = row; vm.runInContext('__vnut = this.__vnut;', P);
+      const r0 = runa(row[0]); if (!r0) { vady.push(L + ' ' + row[0] + ': runa neexistuje'); continue; }
+      const dalsi = RU.filter((r) => r.n !== row[0]).slice(0, 2);
+      const sP = P.buildReadingPrompt(u, r0, L, []), nP = P.buildNornsPrompt(u, [r0].concat(dalsi), L, []);
+      const ds = P._promptDraws(sP, L) || {}, dn = P._promptDraws(nP, L) || {};
+      const jm = row[0] + ' „' + String(row[3]).slice(0, 28) + '…“';
+      if (nP.indexOf(ty) !== -1 || nP.split(nit).length - 1 < 3) vady.push(L + ' Norny ' + jm + ': Skuld není nit (štítek + beat + bigInstruction)');
+      if (row[9] === 'postava') {
+        nPost++;
+        if (zaObrazem(sP) !== J || sP.indexOf(POK[L].pohled) !== -1 || ds.postava !== 1) vady.push(L + ' single ' + jm + ': za obrazem „' + String(zaObrazem(sP)).slice(0, 40) + '…“, draws.postava ' + ds.postava);
+        if (zaObrazem(nP) !== B2 || dn.postava !== 2) vady.push(L + ' Norny ' + jm + ': za obrazem „' + String(zaObrazem(nP)).slice(0, 40) + '…“, draws.postava ' + dn.postava);
+        if (nP.indexOf(stred) !== -1) vady.push(L + ' Norny ' + jm + ': B2 a zároveň „jméno uprostřed“ — odporuje „k tazateli až poslední věta“');
+        const ost = [['Cross', P.buildKrizPrompt(u, [r0].concat(RU.filter((r) => r.n !== row[0]).slice(0, 4)), L, [])],
+                     ['Horseshoe', P.buildHorseshoePrompt(u, [r0].concat(RU.filter((r) => r.n !== row[0]).slice(0, 6)), L, [])],
+                     ['Yggdrasil', P.buildYggdrasilPrompt(u, [r0].concat(RU.filter((r) => r.n !== row[0]).slice(0, 8)), L, [])]];
+        for (const [sp, p] of ost) if (p.indexOf(J) !== -1) vady.push(L + ' ' + sp + ' ' + jm + ': pokyn tam je, ale netestován (DECISIONS 2026-09-30 (2): jen single + Norny)');
+      } else {
+        nJine++;
+        if (sP.indexOf(J) !== -1 || nP.indexOf(J) !== -1 || ds.postava !== undefined || dn.postava !== undefined) vady.push(L + ' ' + jm + ': obraz BEZ zvířete, a pokyn v promptu je');
+        if (nP.indexOf(stred) !== -1) nStred++;
+      }
+    }
+    if (!nStred) vady.push(L + ' Norny: „jméno uprostřed“ nepadlo ani jednou ani bez zvířete — kontrola B2 × jméno by nic nehlídala');
+    P.__vnut = null; vm.runInContext('__vnut = null;', P);
+    if (!vady.some((v) => v.indexOf(L + ' ') === 0)) console.log('OK    ' + L + ' postava: ' + nPost + ' obrazu se zviretem → single „pojmenuj“, Norny B2 hned za obrazem a jmeno nikdy uprostred (bez zvirete ' + nStred + '×); ' + nJine + ' jinych bez pokynu; Skuld = nit');
+  }
+  if (vady.length) { fail += vady.length; vady.slice(0, 12).forEach((v) => console.log('FAIL  ' + v)); if (vady.length > 12) console.log('FAIL  … a dalsich ' + (vady.length - 12)); }
 }
 console.log(fail === 0
   ? 'OK    register obrazu: ' + IMGS.length + ' radku, vsechny D|E|P  (D ' + poc.D + ' · E ' + poc.E + ' · P ' + poc.P + ')'

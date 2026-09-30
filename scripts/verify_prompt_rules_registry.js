@@ -86,6 +86,9 @@ const DATA = /^(PERSON|DRAWN|SEEKER|LIFE|AREA|SEEKING|INTENTION|QUESTION|REALM|E
     (L === 'is' ? glob('ESSENCE_FRAMES_IS') : glob('ESSENCE_FRAMES') || []).forEach((a, i) => pridej(L, 'esence[' + i + ']', a));
     // 2026-09-22: ram Prazdne runy — neni v losu (plyne z runy), fixture ho nikdy nepostavi.
     pridej(L, 'esence[blank]', L === 'is' ? glob('ESSENCE_BLANK_IS') : glob('ESSENCE_BLANK'));
+    // 2026-09-30: pokyn k obrazu se zvířetem (IMG_POSTAVA) — jen u 11 obrazů; fixture ho nevylosuje, takže by ho registr nikdy neviděl.
+    pridej(L, 'postava[single]', S._postavaPokyn(L, false));
+    pridej(L, 'postava[norny]', S._postavaPokyn(L, true));
     // 2026-09-25: každá PODOBA oblasti zvlášť — jinak by se registrovala jen ta, kterou zrovna vylosuje Math.random.
     zJaz('AREAS', L).forEach((a, i) => ((glob('AREA_FACES') || [])[i] || [null])
       .forEach((_, f) => pridej(L, 'oblast[' + i + '.' + f + ']', S._domainContext(a, L, f))));

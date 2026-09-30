@@ -790,9 +790,32 @@ function _runeImageCandidates(drawn, bucket) {
 // EN a spready ho plni a ignoruji.
 var _imgAspektIS = '';
 var _imgAspektEN = '';
-// 2026-09-29: index 9 „postava“ v RUNE_IMAGES = zvíře v hlavní roli obrazu. Perspektiva B, která ho četla, STAŽENA týž den
-// (otvírala čtení zájmenem bez předchůdce — „She waits…“ — uživatel obraz nevidí; DECISIONS 2026-09-29 (2)). Značka zůstává
-// jako podklad nového testu; kód ji zatím nečte.
+// 2026-09-30 (KUKY „1 ano nasaď“ + „12 ano“): index 9 „postava“ v RUNE_IMAGES = zvíře v hlavní roli obrazu (11 řádků).
+// Uživatel obraz NEVIDÍ. Čtení, které zvíře nepojmenuje, mu dá „she/he“ bez předchůdce, nebo ho do zvířete posadí
+// (report 2026-09-28 15:17: „podle Asku jsem pochopil, že ten sheepdog jsem já“). Proto pokyn hned za obraz:
+//   single → jen `jmenuj` (owner: „pro single se moc nemění“ — pohled se nemění, jen se zvíře pojmenuje);
+//   Norny  → `jmenuj` + `pohled` (B2) — tam model čtenáře do zvířete posazoval (pes → „ty“), EVAL_LOG 2026-09-29 (2).
+// NÁVRAT OČIŠTĚNÝ (§26): perspektiva B stažena 2026-09-29 (DECISIONS 2026-09-29 (2)), protože vyprávěla za zvíře
+// a nikde ho nepojmenovala („She waits…“). `jmenuj` je přesně ta chybějící věta. Testy: docs/eval/2026-09-29-testy (EN),
+// IS kontrola 2026-09-30 (docs/eval/2026-09-30-postava-is). Příznak nastavuje _seasonalImagery, čtou buildReadingPromptSingle
+// a buildNornsPromptFate; _promptDraws zapisuje, že pokyn v promptu byl. Cross / Horseshoe / Yggdrasil pokyn NEMAJÍ (netestováno).
+var _imgPostava = false;
+var IMG_POSTAVA = {
+  en: {
+    jmenuj: 'The main figure of this picture is not the seeker, and the seeker has not seen the picture: name the figure plainly the first time it appears.',
+    pohled: 'Tell the picture from that figure\'s side, without "you", and let only the last line turn to the seeker.',
+  },
+  // IS psáno islandsky: is-grammar-qa čisté (věta s dvojtečkou a „nefndu … berum orðum“ = E001 → přepsáno na dvě věty);
+  // korpus: „segðu skýrt“ 14 · „skýrt hver“ 340 · „þegar hún birtist“ 512 · „beinast að honum“ 148 („nefna skýrt“ 0 → nepoužito).
+  is: {
+    jmenuj: 'Leitandinn er ekki aðalpersóna myndarinnar og hefur ekki séð hana. Segðu því skýrt hver aðalpersónan er þegar hún birtist fyrst.',
+    pohled: 'Lýstu myndinni frá sjónarhorni aðalpersónunnar án þess að ávarpa leitandann, og láttu aðeins síðustu setninguna beinast að honum.',
+  },
+};
+function _postavaPokyn(lang, sPohledem) {
+  var P = IMG_POSTAVA[lang] || IMG_POSTAVA.en;
+  return sPohledem ? P.jmenuj + ' ' + P.pohled : P.jmenuj;
+}
 // 2026-09-27 (KUKY „jeď bod 3, obraz napříč zařízeními“): { runa: text obrazu } z POSLEDNÍHO čtení té runy v deníku
 // (readings.prompt_draws.image). Plní ho runar-reading.js (_loadServerLastImage) těsně před sestavením single promptu;
 // _seasonalImagery ten obraz vyřadí z losu stejně jako „poslední obraz z tohoto zařízení“. Prázdné = návštěvník / bez deníku.
@@ -844,6 +867,7 @@ var IMG_PLACES = {
 function _seasonalImagery(lang, drawn) {
   _imgAspektIS = '';
   _imgAspektEN = '';
+  _imgPostava = false;
   var placePair = null;   // [is, en] misto pro radek s jadrem; null = uplny obraz bez mista
   var m = new Date().getMonth() + 1;
   var bucket = _seasonBucket(m);
@@ -897,6 +921,7 @@ function _seasonalImagery(lang, drawn) {
       runePhrase = (lang === 'is' ? hit[2] : hit[3]).replace(/\.$/, '');   // věta pokračuje, tečka by ji rozťala
       _imgAspektIS = hit[4] || '';
       _imgAspektEN = hit[5] || '';
+      _imgPostava = hit[9] === 'postava';   // zvíře v hlavní roli → pokyn za obraz (IMG_POSTAVA)
       // Jadro dostava MISTO losem ze seznamu sveho registru (sacek: klic per registr).
       if (hit[8] === 'jadro' && IMG_PLACES[hit[6]]) {
         var mista = IMG_PLACES[hit[6]];
@@ -1730,6 +1755,7 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
   // Duvod + mereni v hlavicce RUNE_IMAGES a RUNAR_DECISIONS 2026-08-22; EN zustava
   // na nahodnych klicich (efekt tam zadny a nahoda drzi pestrost).
   var imgLine = _seasonalImagery(lang, drawn);
+  if (_imgPostava) imgLine += '\n' + _postavaPokyn(lang, false);   // 2026-09-30: zvíře v hlavní roli → pojmenuj ho (IMG_POSTAVA)
   var drawnKws = rk(drawn).split(',').map(function(s){ return s.trim(); }).filter(Boolean);
   // v4.0: vazba plati pro OBE reci (viz komentar u RUNE_IMAGES).
   var _imgAspekt = (lang === 'is') ? _imgAspektIS : _imgAspektEN;
@@ -2226,9 +2252,11 @@ var RP_NORNS = {
       'Þetta eru ekki þrír aðskildir lestrar — þetta er ein saga sem Nornirnar segja saman.',
       'Urður talar af þyngd þess sem er þegar fast — í fortíð myndarinnar sjálfrar, aldrei sem atburðir, fólk eða sár sem fundin eru upp í lífi leitandans.',
       'Verðandi talar í nútíð — lifandi, að verða til, ekki lokið.',
-      'Skuld talar ekki eins og spámaður — heldur um hvert þú stefnir núna, ef þú heldur áfram eins og nú. Þú getur breytt stefnunni.',
+      // 2026-09-30 viz EN: „hvert þú stefnir“ → nit, tentýž obraz jako štítek SKULD („hvert þráðurinn stefnir“). is-grammar-qa čisté,
+      // korpus „tekið aðra stefnu“ 123.
+      'Skuld talar ekki eins og spámaður — heldur um hvert þráðurinn stefnir ef hann heldur áfram eins og nú. Hann getur enn tekið aðra stefnu.',
     ],
-    bigInstruction:function(name){ return 'Gefðu hverri rún sinn eigin takt í röð. Urður er það sem var, Verðandi það sem er að verða og Skuld hvert þú stefnir. Taktarnir þrír renna saman í EINN samfelldan straum, ekki þrjá aðskilda lestra — engar fyrirsagnir, engin merki. Nefndu ekki rúnirnar né Nornirnar; leitandinn sér þær þegar. ' + _namePlacement(name, 'is') + ' 5 til 6 setningar alls yfir taktana þrjá.'; },
+    bigInstruction:function(name, jenKonec){ return 'Gefðu hverri rún sinn eigin takt í röð. Urður er það sem var, Verðandi það sem er að verða og Skuld hvert þráðurinn stefnir. Taktarnir þrír renna saman í EINN samfelldan straum, ekki þrjá aðskilda lestra — engar fyrirsagnir, engin merki. Nefndu ekki rúnirnar né Nornirnar; leitandinn sér þær þegar. ' + _namePlacement(name, 'is', jenKonec) + ' 5 til 6 setningar alls yfir taktana þrjá.'; },
     json:'Skilaðu EINGÖNGU þessu JSON fylki, einum hlut á rúnu í röð (Urður, Verðandi, Skuld), engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rúnu)"}]. Þrír text-reitir tengdir með bili verða að lesast sem ein samfelld heild.',
   },
   en: {
@@ -2242,9 +2270,11 @@ var RP_NORNS = {
       // a osob do jeho zivota (A/B mereno). Minulost mluvi v materialu obrazu.
       'Urður speaks with the weight of what is already fixed — spoken in the image\u2019s own past, never as events, people or wounds invented into the seeker\u2019s life.',
       'Verðandi speaks in the present — living, becoming, not yet complete.',
-      'Skuld does not predict — she speaks of where you are heading if you keep walking as you are now, and you can walk differently.',
+      // 2026-09-30 (KUKY „1 ano“): „where YOU are heading if you keep walking“ + oblast Rozcestí („volba ještě otevřená“)
+      // posazovaly čtenáře do obrazu — Norny začaly psem a skončily „ty“ (report 2026-09-28). Nit = tentýž obraz jako štítek SKULD.
+      'Skuld does not predict — she speaks of where the thread is heading if it keeps its course, and it can turn.',
     ],
-    bigInstruction:function(name){ return 'Give each of the three runes its own beat, in order — Urður (what was), Verðandi (what is becoming), Skuld (where you are heading). The three beats connect into ONE flowing passage, not three separate readings — no headings, no labels. Do not name the runes or the Norns; the seeker already sees them. ' + _namePlacement(name, 'en') + ' 5-6 sentences total across the three beats.'; },
+    bigInstruction:function(name, jenKonec){ return 'Give each of the three runes its own beat, in order — Urður (what was), Verðandi (what is becoming), Skuld (where the thread is heading). The three beats connect into ONE flowing passage, not three separate readings — no headings, no labels. Do not name the runes or the Norns; the seeker already sees them. ' + _namePlacement(name, 'en', jenKonec) + ' 5-6 sentences total across the three beats.'; },
     json:'Output format — return ONLY this JSON array, one object per rune in order (Urður, Verðandi, Skuld), nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)"}]. The three text fields joined with a space must read as one seamless passage.',
   },
 };
@@ -2271,6 +2301,7 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
     S.intro, '',
     runesBlock, '',
     _imageBlock(lang, _seasonalImagery(lang, runes)),
+    _imgPostava ? _postavaPokyn(lang, true) : '',   // 2026-09-30: zvíře v hlavní roli → B2 (IMG_POSTAVA); čte se AŽ po losu obrazu výš
     // v4.9 (2026-08-23): esencni radek VEN ze spreadu — rikal "pojmenuj runu" proti
     // zamernemu "nejmenuj" tehoz promptu (dve protichudne instrukce; mereno vitezilo
     // nejmenuj a radek jel mrtvy). Jmena nese UI pozic. Misto nej vztahova vazba:
@@ -2282,7 +2313,7 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
     S.landing,
     (u.area || u.seeking) ? _priorityContext(false, runes, lang) : '',   // false = bez čočky (odebrána 2026-09-26)
   ].concat(S.beats).concat([
-    S.bigInstruction(u.name),
+    S.bigInstruction(u.name, _imgPostava),   // 2026-09-30: s B2 jméno jen pozdě / vůbec — „uprostřed“ odporuje „k tazateli až poslední věta“
     S.json,
     (S.langInstr ? S.langInstr : ''),
     _addressContext(lang),

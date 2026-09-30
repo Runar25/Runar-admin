@@ -717,9 +717,11 @@
   taky při AI vyhledávání… Tohle je práce před spuštěním.“*). (a) SEO + AI vyhledávání (popisky run, tvar run v kolekci, statické texty jako
   obsah). (b) Ukládání vybraných čtení/vět pro vizuály — návrh: nový typ v reportéru „uložit“ (výběr textu + id čtení); vyžaduje rozšířit
   check `bug_reports.type` (sql) → čeká na ownerovo ano.
-- [ ] **Perspektiva obrazu se zvířetem ve SPREADECH (ownerův případ: Norny přes GPT, pes u stáda, report 2026-09-28 15:17)** —
-  single má od 2026-09-29 pokyn B (DECISIONS 2026-09-29 (1)); v Nornách B vztah k životu zhoršil (2/3 → 1/3, n = 3, EVAL_LOG 2026-09-29 (2)),
-  protože spread má vlastní závěr (osa Noren). Hledat znění, které se se závěrem spreadu netluče, a měřit i na GPT (ownerův engine).
+- [x] **Norny: obraz se zvířetem — VYŘEŠENO 2026-09-30** (DECISIONS 2026-09-30 (2)): Skuld mluví o niti, ne o „tobě“; za obraz
+  zvířete jde B2 (pojmenuj + z jeho strany, k tazateli až poslední věta); jméno ne uprostřed. EN test ownera + IS kontrola.
+- [ ] **Obraz se zvířetem v Kříži / Podkově / Yggdrasilu** — pokyn `IMG_POSTAVA` tam NENÍ (netestováno; kontrola ㊱ hlídá, aby se
+  tam nedostal bez testu). Až owner uvidí čtení, kde se čtenář plete se zvířetem nebo visí zájmeno: 1 testovací čtení s `jmenuj`
+  (bez pohledu — spready mají vlastní závěr), číst jako uživatel, pak rozhodnout.
 - [ ] 👁 **SLEDOVAT: „unshown“ z tváře oblasti The Unseen** (KUKY 2026-09-29: *„zapíšeme a budeme sledovat, jestli a kde se objeví znova“*;
   k Mannaz 2026-09-28: *„jestli se to hodí do čtení — mně moc ne“*). Zdroj = `AREA_FACES` The Unseen [0] *„what is present but not shown“*
   (`v2/runar-utils.js`) — model z „not shown“ udělá *„What sits unshown…“*. Stav 2026-09-29 (prompty od v4.47): **1 ze 2** čtení s touto

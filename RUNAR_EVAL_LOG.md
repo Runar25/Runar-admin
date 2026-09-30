@@ -5652,3 +5652,17 @@ jediná změna = klíč pryč, Opus 5. Soudil owner čtením (EN) a CODE čtení
 - **IS 1/1** (`docs/eval/2026-09-30-postava-is/postava_is.json`): *„í fornum skilningi er auður ekki kyrrstæður sjóður heldur það sem
   gengur milli handa“* · *„þess vegna er Fehu rún hreyfingar fremur en geymslu“*. is-grammar-qa jen šum (W001/Z002).
 - **Hranice:** n = 4, jen životní runa; single a spready s Fehu netestovány zvlášť (klíč tam je jen jeden z řádku run, nebo aspekt obrazu).
+
+## 2026-09-30 (2) — Obraz se zvířetem (Norny B2 + nit, single „pojmenuj“): EN testy 2026-09-29 a IS kontrola
+
+Produkční buildery, liší se jen popsané řádky; čte owner (EN) a CODE jako uživatel (IS) — nikdo neviděl text obrazu.
+Materiál: `docs/eval/2026-09-29-testy/test_1.json` (EN), `docs/eval/2026-09-30-postava-is/postava_is.json` (IS).
+- **Norny se psem, oblast Rozcestí (EN):** GPT čisté (jednou vložené *„Your choice remains open“* — owner OK); Opus většinou čisté,
+  poslední věta *„the moment you name which way the flock goes“*. Owner: *„B2 dobrý, nit dobrý“*.
+- **Single se zvířetem (EN, Opus, jen „pojmenuj“):** Uruz v ohradě — býk pojmenovaný; Ehwaz čisté. Owner: *„pro single se moc nemění“*.
+- **IS Norny se psem (Opus):** *„Fjárhundurinn hefur legið lengi í brekkunni ofan við hjörðina…“* — zvíře pojmenované hned, „þú“ až
+  v poslední větě: *„Þú stendur kannski þar sem yfirsýnin er enn nóg, eða þar sem hún dugar ekki lengur ein og sér.“*
+- **IS single Uruz (Opus):** *„Áður en nokkuð sést heyrist það. Nautið stendur í stíunni…“* — býk pojmenovaný; úvodní „það“ míří dopředu
+  a další věta ho rozřeší (vrzající ohrada) — hranice, ne zájmeno bez předchůdce jako u B. Čtení se k tazateli neobrací (krátký rozpočet délky).
+- is-grammar-qa na všech IS výstupech: jen šum (W001 *hjörðina→jörðina*, *viðinn→liðinn*; Z002), žádné E001.
+- **Hranice:** n = 1–2 na buňku, žádné číslo „jasnosti“ — jen čtení. Kříž / Podkova / Yggdrasil s obrazem zvířete netestovány.
