@@ -5683,3 +5683,30 @@ Materiál: `docs/eval/2026-09-29-testy/test_7.json`, `test_11.json` (produkční
   traffic between houses, where nothing is counted but everything moves“*) srozumitelné; Hagalaz nese děj obrazu (*„the water taking back what
   was built too close“*). Owner: *„ještě se na to podívám“*.
 - **Hranice:** n = 3 + 3, soudí owner čtením.
+
+## 2026-09-30 (4) — Myšlenka ✦ ze ZDROJE: první odstavec textu runy z Kolekce (owner „7. jeď možnost 1, udělej 3 čtení“)
+
+Týž prompt jako kolo 2 (losy z `docs/eval/2026-09-29-testy/test_7.json`), jen poslední řádek: myšlenka roste z toho, co runa JE — zdroj
+= `coll_rune[runa][0]` v uvozovkách, „say it in your own words“, „not from the picture“. Zdrojová runa: Kříž = střed, Norny = Skuld,
+single = tažená. Materiál: `docs/eval/2026-09-30-myslenka-esence/` (skript + `test_7.json`).
+- **Kříž (Blank, Opus):** *„A page with no sign on it is not empty — what would you call the space between one thing and the next?“*
+- **Norny (Perth, GPT):** *„A closed vessel keeps part of its contents unknown, however carefully you guess.“* — skoro parafráze zdroje.
+- **Single Uruz (Opus):** *„What asks no permission to move does not always announce itself first.“* (řádek ✦ zapsal model DOVNITŘ
+  JSON textu — v produkci by se zobrazil jako poslední věta čtení; kdyby se nasazovalo, parsovat ✦ zvlášť.)
+- **Čtení CODE jako uživatel:** konkrétnější než kolo 2 (obraz runy: nádoba, „neptá se“), ale bez obratu k člověku, který mají ownerovy
+  vzory (*„What in you is ready to break through stone?“*). Ty vzory navíc lámou dvě pravidla pokynu: *„Listen closely…“* je rada,
+  *„What in you…“* míří dovnitř — pokyn je zakazuje, proto vychází neosobní aforismus. Rozhoduje owner.
+- **Hranice:** n = 3, EN, soudí owner čtením.
+
+## 2026-09-30 (5) — Esenční řádek [0] tak, aby mu rozuměl čtenář, který obraz nezná (owner k Hagalaz „was built too close?“)
+
+Vada: rámec [0] říká *„The familiar word may live inside the scene ("exchange between the sea and the shore")“* — zve model říct význam
+předměty obrazu. Hagalaz pak *„the water taking back what was built too close“*: „built“ je jen ve skrytém obrazu (*„whatever stood too
+near the bank“*), v textu čtení nic postavené není. Týž prompt a losy jako `docs/eval/2026-09-29-testy/test_11.json`, Opus 5, EN.
+- **A = věta o scéně PRYČ:** Berkana *„the care that goes ahead of something new and holds the pace steady“* · Gebo *„the exchange that
+  keeps no ledger“* · Hagalaz *„the sudden weather that takes what stood too close“* — **2/3**, Hagalaz dál visí na skrytém obrazu.
+- **B = A + „The seeker knows only the words of the reading, not the picture behind them: say what the rune means in its own terms, not
+  what happens in the scene.“** Hagalaz *„the sudden weather that takes without asking, and leaves the ground changed“* (a „built too
+  close“ se přestěhovalo do věty OBRAZU, kde má předchůdce) · Berkana *„the rune of growth that keeps its own timing, tended rather than
+  hurried“* · Gebo *„the gift that moves both ways, and neither side keeps count“* — **3/3**.
+- **Hranice:** n = 3 + 1, jen EN a jen rámec [0]; IS znění ani rámec [1] netestovány. Materiál: `docs/eval/2026-09-30-myslenka-esence/`.

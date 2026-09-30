@@ -639,17 +639,19 @@
   (admin čte přes sol v appce + věta „one detail" jen pro sol, handoff po nasazení kroku 1) → krok 4 slepé srovnání s Opus 5
   → krok 5 rozhodnutí (všude / jen EN / vůbec).
   **Stav 2026-09-24:** kroky 1 a 2+3 NASAZENÉ (DECISIONS 2026-09-24 (18) + (20)) — admin přepne „Read with GPT-6 sol (test)“ pod
-  „Begin the reading“ → čtení (single, spready) i Ask jdou přes sol, usage nese `model: gpt-6-sol`. Teď owner pár dní čte → krok 4 (CODE-read).
+  „Begin the reading“ → čtení (single, spready) i Ask jdou přes sol, usage nese `model: gpt-6-sol`. Teď owner pár dní čte → krok 4. **Krok 4 dělá owner sám průběžně** (KUKY 2026-09-30: *„ty ho dělat nebudeš, to dělám já
+  už nějakou dobu“*) — CODE ani CODE-read ho nepouštějí.
   ✅ **Opraveno 2026-09-25 (CODE-read, `ef74ccd`):** zápis do cache OpenAI = 1,25× vstupní sazby (dokumentace OpenAI, prompt caching), samotest. Původní nález: ⚠️ **Pro krok 4 (cena):** `scripts/utils/stats.js` nepočítá `prompt_tokens_details.cache_write_tokens` — OpenAI je vrací u každého
   nového čtení (test 2026-09-24: 2124 z 2127 vstupních tokenů) a na ownerově přehledu OpenAI jsou „cache writes“ placená položka.
   Cenu zápisu doplnit z ceníku OpenAI (neodhadovat) — jinak bude sol v přehledu levnější, než je. (nalezl CODE-tune, pro CODE-read)
   **Podklad k přechodu UŽIVATELŮ (KUKY 2026-09-29 bod 10 „připrav to“; CODE-tune 2026-09-30).** Cena a rychlost se měří samy
   (`node scripts/utils/stats.js`, ceník `MODEL_PRICES`), kvalita v EVAL_LOG 2026-09-22 (1)–(3) a 2026-09-23 (4). Co zbývá PŘED přepnutím:
-  (a) **soukromí** — dnes jde k OpenAI jen adminovo vlastní čtení (`RUNAR_PRIVACY.md`, gpt_reviews + engine sol za `isAdmin` v proxy);
+  (a) **soukromí** — rešerše předána Cowork 2026-09-30 (handoff v chatu: podmínky OpenAI + návrh textů souhlasu a zásad EN/IS,
+  výsledek do repa přes CODE). Dnes jde k OpenAI jen adminovo vlastní čtení (`RUNAR_PRIVACY.md`, gpt_reviews + engine sol za `isAdmin` v proxy);
   pro uživatele: OpenAI (USA) do souhlasu testerů `tcm_body` EN+IS **a vynulovat `tester_consent_at`** (souhlas na starém znění nový
   zpracovatel nepokrývá — týž krok jako 2026-09-11 (8)), OpenAI do zásad na agndofa.is, smluvní podmínky OpenAI (DPA, doba uchování
-  dat API) ověřit v jejich aktuální dokumentaci — neodhadovat; (b) **krok 4** slepé srovnání (CODE-read) se soudcem, který vidí JEN
-  text čtení (memory `soudce-vidi-jen-co-uzivatel`), IS i EN; (c) **technicky** je přepnutí jedna podmínka v `claude-proxy`
+  dat API) ověřit v jejich aktuální dokumentaci — neodhadovat; (b) **krok 4** dělá owner sám (čte v appce přes sol), viz výš;
+  (c) **technicky** je přepnutí jedna podmínka v `claude-proxy`
   (dnes `isAdmin` → všichni / po jazyce / po typu); fallback na Claude při chybě nebo 50 s timeoutu už existuje; IS čtení přes sol
   od uživatelů zatím 0 — první týden sledovat is-grammar-qa na živých IS textech.
 - [ ] **OTEVŘENÉ Z 23.–24. 9. — sepsáno 2026-09-24 na ownerovo „nezapomněli jsme na něco, co leží v chatu?"** (CODE-tune; zdroj: `docs/archive/2026-09-23-rozbor-reportu.md` + chat)
@@ -663,8 +665,8 @@
   **Schváleno / slíbeno, NEHOTOVO:**
   7. ✅ *(hotovo 2026-09-24, v4.53 — DECISIONS 2026-09-24 (16); sledovat opis věty z Kolekce a souběh s čočkou životní runy; owner: možná bude třeba víc otázek na runu kvůli pestrosti konců — rozhodne se po živých testech)* **Otázka runy jako skrytý podklad poslední věty čtení** (owner „ok" změřit; v Kolekci už otázka je) — čtení ji nesmí citovat doslova.
   8. ✅ *(2026-09-27)* **Obraz napříč zařízeními** (rebarbora 2× po sobě) — CODE-tune 2026-09-23 slíbil „jako další krok"; plán v položce „Obraz se může zopakovat napříč zařízeními" níž.
-  9. Helper „?" má ukazovat i na návod (návod je od 2026-09-24 v záložce čtení).
-  10. Deník: u karet čtení ukázat volby (oblast · hledání · záměr) jako ve čtení (report 2026-09-21 „s glyfem runy napsané, na co jsem se ptal").
+  9. ✅ *(hotovo 2026-09-26, `f679170` „nápověda na návod“)* Helper „?" má ukazovat i na návod (návod je od 2026-09-24 v záložce čtení).
+  10. ✅ *(hotovo 2026-09-26, `833be33`)* Deník: u karet čtení ukázat volby (oblast · hledání · záměr) jako ve čtení (report 2026-09-21 „s glyfem runy napsané, na co jsem se ptal").
   **Nálezy z rozboru, dosud nezapsané:**
   11. ⏸ *(owner: sledovat, řešení hledat později)* Délka: 16 ze 17 čtení z 23. 9. mělo 62–81 slov proti rozpočtu 50–58 (dražší hlas); Opus 5 píše navíc delší EN Norny. Rozbor GPT teď délku ukazuje.
   12. ✅ *(hotovo 2026-09-24, v4.52)* Islandská pravidla obrazu nemají dvě věty, které má anglická verze (parita EN/IS).
@@ -724,6 +726,7 @@
   **Kolo 2 (z runy, ne z obrazu)** — owner 2026-09-30 *„není to úplně ono, Standard a Premium, budeme to zkoušet, zatím to neukládej“*.
   Ownerovy vzory jsou poslední věty statických čtení `runar_static_audio` (rostou z konkrétního obrazu runy); model měl jen klíče.
   Další kolo podle ownerovy volby směru (EVAL_LOG 2026-09-30 (3)); jen Standard/Premium; nic neukládat.
+  **Kolo 3 (owner „7. jeď možnost 1“):** zdroj = 1. odstavec textu runy z Kolekce → EVAL_LOG 2026-09-30 (4); čeká na ownerovo čtení.
 - [ ] **Před spuštěním: viditelnost + sklad dobrých vět** (KUKY 2026-09-29 bod 6: *„některá čtení jsou fakt dobrá, popřípadě vyjde dobrý
   závěr, a to chci ukládat tak, abychom měli materiál na vizuální tvorbu“*; report 10:13: *„Jak se maximálně zviditelnit ve vyhledávačích a
   taky při AI vyhledávání… Tohle je práce před spuštěním.“*). (a) SEO + AI vyhledávání (popisky run, tvar run v kolekci, statické texty jako
@@ -743,7 +746,7 @@
   `node scripts/utils/oblasti_slova.js`). Když se vrací: podoby tváře jako DATA (losovat jedno znění), ne výčet v jednom pokynu —
   výčet model opisuje (sloveso v esenci 19/41).
 - [ ] **NA ZÍTRA (owner 2026-09-25, „jsme na 99 %… uděláme zítra po restartu tokenů“)** (CODE-tune)
-  1. **Deník — co uživatel zadal a Asky:** u karty vedle AREA i SEEKING a INTENTION; THE SITUATION (volná otázka), když ji zadal;
+  1. ✅ *(hotovo 2026-09-26, `833be33` „deník: volby, situace, Asky a model pro admina“)* **Deník — co uživatel zadal a Asky:** u karty vedle AREA i SEEKING a INTENTION; THE SITUATION (volná otázka), když ji zadal;
      všechny výměny Asku i s otázkou; **jen pro adminy** model, který čtení napsal (GPT-6 sol / který Opus — `readings.usage.model`).
      Zkontrolovat, že `loadJournal` vybírá `seeking, intention, question, follow_up, usage` (dnes zřejmě ne všechny).
   2. **Obrazy od GPT pro 24 run + Blank** — **kola 1+2 hotová 2026-09-26** (+13 Fehu, Algiz, Othila, Raidho, Eihwaz, Laguz; +12 Kenaz, Gebo, Isa, Perth, Tiwaz, Mannaz; DECISIONS (10) (11),
@@ -753,7 +756,7 @@
      Owner: *„je to inspirace, musí být zkrácený či mírně upravený“* — do `RUNE_IMAGES` (EN + IS nativně, ověřit nástroji), brána s popisy runy.
   3. ⏸ **Živly (Elements) v hlavičce runy NECHAT** — owner: *„o elementech rozhodneme, až pokud se objeví problém“*. Hlídat: kdyby
      se živel propisoval do obrazu (oheň, vzduch…) jako svět Hel („roots“), je to ten problém (DECISIONS 2026-09-25 (3)).
-  4. Po prvním živém rozboru luny ověřit řádek v `gpt_reviews` (DECISIONS 2026-09-25 (4)).
+  4. ✅ *(ověřeno 2026-09-30: `gpt_reviews` 4 řádky, poslední 2026-09-26)* Po prvním živém rozboru luny ověřit řádek v `gpt_reviews` (DECISIONS 2026-09-25 (4)).
 - [ ] **Reporty 2026-09-25 (owner, 10 čtení, 7× gpt-6-sol) — návrhy čekají na ownera** (CODE-tune; lunin rozbor jen podnět — memory `gpt-rozbor-neni-zavazny`)
   1. ✅ *(opraveno 2026-09-25, v4.57 — EN obraz pojmenuje svítání)* **„grey hour“ (Dagaz, Opus 5):** zdroj = EN obraz *„The turn of the light comes without your noticing…“* — doslovný kalk IS *„Ljósaskiptin“*
      (přechod světla, islandsky běžné slovo); angličtina pro to běžné slovo nemá, model si vymyslel „grey hour“. Návrh: EN *„Dawn comes without your
