@@ -7852,3 +7852,12 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Co:** nové handoffy (úkoly, rešerše, obsahové audity) adresuje CODE-tune jiné CODE session; formát beze změny (`psáno proti commitu`,
   `ZMĚNĚNO:`). Poslední výstup Coworku (rešerše soukromí OpenAI) převzat do `docs/inbox/2026-09-30-cowork-soukromi-openai.md`.
 - Affected doc(s): `CLAUDE.md` (sekce „N paralelních session“ — upozornění u Cowork lanes) — v tomto commitu.
+
+## 2026-09-30 (10) — OPRAVA (9): Cowork NEKONČÍ — lanes platí beze změny
+
+- **Rozhodl:** KUKY 2026-09-30 *„já se tě spíš ptal, jestli končí? Prý nekončí. Takže čajk.“* Záznam (9) vznikl z mého špatného čtení:
+  owner se PTAL, já z otázky udělal pravidlo.
+- **Co:** (9) neplatí. Poznámka v `CLAUDE.md` odebrána, paměť `handoffy-pro-code-cowork-konci` smazána. Handoffy dál podle lanes
+  (Cowork symbionti). Pozn.: aplikace hlásí ukončení „tasks on this computer“ od 6. 10. — kdyby Cowork po tom datu nešel spustit,
+  rozhodne owner znovu.
+- Affected doc(s): `CLAUDE.md` (poznámka z (9) odebrána) — v tomto commitu.

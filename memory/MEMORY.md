@@ -71,7 +71,6 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [working-style.md](working-style.md) — workflow, Python skripty, IS primární jazyk, verifikace
 - [is-done-together-not-for-sigrun.md](is-done-together-not-for-sigrun.md) — IS děláme rovnou pořádně a ověřeně; žádné „draft pro Sigrún"
 - [handoff-text-in-code-block.md](handoff-text-in-code-block.md) — text k předání jiné session VŽDY do code blocku
-- [handoffy-pro-code-cowork-konci.md](handoffy-pro-code-cowork-konci.md) — Cowork končí (od 2026-10-06 nejdou nové); handoffy a rešerše předávat CODE session
 - [paste-sql-explicitly.md](paste-sql-explicitly.md) — když má owner spustit SQL, vlož přesné SQL; žádné „jako minule"
 - [read-token-from-clipboard.md](read-token-from-clipboard.md) — eval token si načti ze schránky sám; owner ho do souboru nevkládá
 - [runar-api-key-file.md](runar-api-key-file.md) — Anthropic klíč bydlí v `~/.claude/runar-api-key.txt`, generátor si ho vezme sám; ownera nežádat

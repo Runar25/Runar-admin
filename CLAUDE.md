@@ -449,9 +449,6 @@ SÁM — bez ownera.
   ⚠️ **`[read]`, ne `[reader]`** — `[reading]` je v historii 46× jako téma a `[reader]`
   by se od něj v `git log` nedalo odlišit pohledem (změřeno 2026-08-18).
 - **CODE-tree** → prefix `[tree]`: vizuální engine — runar-tree-prod.js (generovaný `build_tree_production.py`), tree-lab composery (runar-branch.js, runar-trunk.js), build_*composer.py, tree-lab-*/, tree-snapshots/, `RUNAR_TREE_*` docs, `tree_state` DB. Doménový doc = RUNAR_TREE.md.
-- ⚠️ **2026-09-30: Cowork KONČÍ** (aplikace: „tasks on this computer are being deprecated… from October 6 you won't be able to
-  start new ones“). KUKY: *„máš všechno předávat CODE“* → handoffy a rešerše jdou **CODE session**, ne Coworku (DECISIONS 2026-09-30 (9),
-  memory `handoffy-pro-code-cowork-konci`). Odrážka níž platí pro výstupy, které ještě doběhnou.
 - **Cowork-tune · Cowork-read · Cowork-tree** → prefix `[cowork]`: design, docs, eval-OBSAH,
   copy audit, handoffy. Každý je **symbiont své CODE session** — ta se s ním radí o obsahu. Repo **READ-ONLY přes `git show HEAD:`** (ne `git status`, ten zapisuje do indexu); do repa píše VÝHRADNĚ přes CODE. Další Cowork session = táž lane, táž pravidla.
 
