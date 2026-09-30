@@ -643,6 +643,15 @@
   ✅ **Opraveno 2026-09-25 (CODE-read, `ef74ccd`):** zápis do cache OpenAI = 1,25× vstupní sazby (dokumentace OpenAI, prompt caching), samotest. Původní nález: ⚠️ **Pro krok 4 (cena):** `scripts/utils/stats.js` nepočítá `prompt_tokens_details.cache_write_tokens` — OpenAI je vrací u každého
   nového čtení (test 2026-09-24: 2124 z 2127 vstupních tokenů) a na ownerově přehledu OpenAI jsou „cache writes“ placená položka.
   Cenu zápisu doplnit z ceníku OpenAI (neodhadovat) — jinak bude sol v přehledu levnější, než je. (nalezl CODE-tune, pro CODE-read)
+  **Podklad k přechodu UŽIVATELŮ (KUKY 2026-09-29 bod 10 „připrav to“; CODE-tune 2026-09-30).** Cena a rychlost se měří samy
+  (`node scripts/utils/stats.js`, ceník `MODEL_PRICES`), kvalita v EVAL_LOG 2026-09-22 (1)–(3) a 2026-09-23 (4). Co zbývá PŘED přepnutím:
+  (a) **soukromí** — dnes jde k OpenAI jen adminovo vlastní čtení (`RUNAR_PRIVACY.md`, gpt_reviews + engine sol za `isAdmin` v proxy);
+  pro uživatele: OpenAI (USA) do souhlasu testerů `tcm_body` EN+IS **a vynulovat `tester_consent_at`** (souhlas na starém znění nový
+  zpracovatel nepokrývá — týž krok jako 2026-09-11 (8)), OpenAI do zásad na agndofa.is, smluvní podmínky OpenAI (DPA, doba uchování
+  dat API) ověřit v jejich aktuální dokumentaci — neodhadovat; (b) **krok 4** slepé srovnání (CODE-read) se soudcem, který vidí JEN
+  text čtení (memory `soudce-vidi-jen-co-uzivatel`), IS i EN; (c) **technicky** je přepnutí jedna podmínka v `claude-proxy`
+  (dnes `isAdmin` → všichni / po jazyce / po typu); fallback na Claude při chybě nebo 50 s timeoutu už existuje; IS čtení přes sol
+  od uživatelů zatím 0 — první týden sledovat is-grammar-qa na živých IS textech.
 - [ ] **OTEVŘENÉ Z 23.–24. 9. — sepsáno 2026-09-24 na ownerovo „nezapomněli jsme na něco, co leží v chatu?"** (CODE-tune; zdroj: `docs/archive/2026-09-23-rozbor-reportu.md` + chat)
   **Čeká na ownerovo rozhodnutí** (otázky z rozboru, dosud bez odpovědi):
   1. ✅ *(owner 2026-09-24: ANO, když mluví skrze obraz nebo o prostředí, které má každý; tvrzení = činnost, kterou člověk nejspíš nemá, a stav v prostředí podaný jako fakt — Isa „the talk has gone flat“ je špatně; DECISIONS 2026-09-24 (15) + (19), rubrika A)* Smí 3. věta čtení říct, co se děje v oblasti tazatele (pochválené Perth/Kenaz to dělají, pravidlo to dnes povoluje jen v poslední větě jako možnost)?
