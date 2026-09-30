@@ -4,6 +4,8 @@ description: "Nez pustis drahe mereni (agenti, davky, workflow), udelej to NEJLE
 metadata:
   node_type: memory
   type: feedback
+  originSessionId: 12b7cce8-c1bb-4d60-afe0-c53fe2a58d0b
+  modified: 2026-09-30T23:12:06.710Z
 ---
 
 Než spustíš drahé měření (agenti, dávky, workflow), udělej **to nejlevnější měření, které
@@ -33,6 +35,16 @@ klasifikovat všech 64 aspektů nemá co objevit. Owner to musel zastavit uprost
    placení za obhajobu metriky, kterou právě vyvrátila produkce ([[attack-the-metric-not-just-the-result]]).
 
 5. **Pilot 3–5 agentů → ukázat → teprve se souhlasem ownera škálovat.**
+
+📏 **Cena jednoho slepého soudce (změřeno 2026-09-30):** Agent tool, sonnet, jeden soubor ~5 tis. tokenů
+(14 obrazů × 14 popisů) = **185–204 tis. tokenů a 11–14 min NA SOUDCE**; 3 soudci ≈ **0,58 M**.
+Můj odhad byl ~6 tis. — mýlil jsem se 30×. Cenu dělá režie agenta (kontext projektu + dlouhé
+přemýšlení), ne délka úlohy. **Proto:** odhad pro ownera počítej ~0,2 M na soudce; víc úloh dej
+do JEDNOHO souboru pro téhož soudce, ne víc soudců.
+⚠️ **Past v návrhu brány:** stejný počet obrazů a popisů + dva obrazy téže runy → soudci předpokládají
+„jeden obraz = jeden popis" a druhý obraz téže runy odsunou jinam (doloženo 2× v odůvodněních:
+„přirozeněji T, ale T nese O4"). Do zadání vždy napsat: *„k jednomu popisu může patřit víc obrazů,
+k některému žádný"*, nebo dát obrazů víc než popisů.
 
 ⛔ **Velký počet agentů = napřed se ZEPTAT ownera** (KUKY 2026-09-12, podruhé týž den): *„příště se
 zeptáš, pokud budeš chtít použít nesmyslný počet agentů! Napřed máš zkusit pár, abys vůbec zjistil,
