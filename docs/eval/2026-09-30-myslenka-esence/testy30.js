@@ -22,11 +22,14 @@ const UI = vm.runInContext('UI_TEXT', S);
 const zdroj = (runa) => UI.en.coll_rune[runa][0];
 const jmeno = (runa) => runa === 'Blank' ? 'the Blank rune' : runa;
 const MYSLENKA = (runa) => 'AFTER THE READING — after everything else, on a new line beginning with ✦, one more short line set apart: a thought offered for the seeker to carry away, grown from what ' + jmeno(runa) + ' is, not from the picture. Its source: "' + zdroj(runa) + '" Let it grow out of that, but say it in your own words. A quiet question or a still line. Never what to do, never a claim about what they feel or know.';
+// 7b (2026-09-30, owner: „obrať se k člověku — ano, … zkusíme to a uvidíme“): týž zdroj, navíc obrat k člověku otázkou nebo pozváním.
+const MYSLENKA_OSOBA = (runa) => 'AFTER THE READING — after everything else, on a new line beginning with ✦, one more short line set apart: a thought offered for the seeker to carry away, grown from what ' + jmeno(runa) + ' is, not from the picture. Its source: "' + zdroj(runa) + '" Let it grow out of that, but say it in your own words, and turn it toward the seeker: a question to them, or a quiet invitation to notice something. Never advice about their life, never a claim about what they feel or know.';
 const E0 = vm.runInContext('ESSENCE_FRAMES', S);
 const SCENA = ' The familiar word may live inside the scene ("exchange between the sea and the shore").';
 const E0_A = E0[0].replace(SCENA, '');
 const E0_B = E0_A.replace(' Never a fixed formula.', ' The seeker knows only the words of the reading, not the picture behind them: say what the rune means in its own terms, not what happens in the scene. Never a fixed formula.');
-if (E0_A === E0[0] || E0_B === E0_A) throw new Error('rámec [0] se nezměnil — věta o scéně v něm není');
+// Pojistka jen pro běhy esence (11, 11b): od v4.81 (2026-09-30) je B v produkci, věta o scéně v rámci už není — záznam, ne opakovatelný test.
+if (/^11/.test(process.argv[2] || '') && (E0_A === E0[0] || E0_B === E0_A)) throw new Error('rámec [0] se nezměnil — věta o scéně v něm není');
 function losuj(engine, stav, test) {
   vm.runInContext('READ_ENGINE="' + engine + '"', S);
   for (let s = 1; s < 8000; s++) {
@@ -62,16 +65,16 @@ const u = (area, seeking) => ({ name: 'Kuky', area, seeking, question: '', inten
 (async () => {
   const kdo = process.argv[2], sys = S.buildSysPrompt(null, 'en'), out = [];
   const zapis = async (jm, engine, p, pokyn) => { const t = spoj(await volej(engine, sys, p)); out.push({ jm, pokyn, text: t }); console.log('\n== ' + jm + '\n' + t); };
-  if (kdo === '7') {
+  if (kdo === '7' || kdo === '7b') {
     const beh = [
-      ['Kříž · myšlenka ze zdroje (Blank, střed) · Opus', 'opus', 'Blank', () => S.buildKrizPrompt(u('The Unseen', 'Reflection'), ['Blank', 'Tiwaz', 'Perth', 'Ingwaz', 'Sowilo'].map(rr), 'en', []),
+      [(kdo === '7b' ? '[7b] ' : '') + 'Kříž · myšlenka ze zdroje (Blank, střed) · Opus', 'opus', 'Blank', () => S.buildKrizPrompt(u('The Unseen', 'Reflection'), ['Blank', 'Tiwaz', 'Perth', 'Ingwaz', 'Sowilo'].map(rr), 'en', []),
         (d) => (d.image || '').indexOf('In the low sun a whole trail') === 0 && d.area_face === 2 && d.name === 1],
-      ['Norny · myšlenka ze zdroje (Perth, Skuld) · GPT', 'sol', 'Perth', () => S.buildNornsPrompt(u('Purpose & Path', 'Confirmation'), ['Nauthiz', 'Tiwaz', 'Perth'].map(rr), 'en', []),
+      [(kdo === '7b' ? '[7b] ' : '') + 'Norny · myšlenka ze zdroje (Perth, Skuld) · GPT', 'sol', 'Perth', () => S.buildNornsPrompt(u('Purpose & Path', 'Confirmation'), ['Nauthiz', 'Tiwaz', 'Perth'].map(rr), 'en', []),
         (d) => (d.image || '').indexOf('The rope has swollen') === 0 && d.area_face === 0 && d.name === 2],
-      ['Single Uruz · myšlenka ze zdroje · Opus', 'opus', 'Uruz', () => S.buildReadingPrompt(u('Purpose & Path', 'Confirmation'), rr('Uruz'), 'en', []),
+      [(kdo === '7b' ? '[7b] ' : '') + 'Single Uruz · myšlenka ze zdroje · Opus', 'opus', 'Uruz', () => S.buildReadingPrompt(u('Purpose & Path', 'Confirmation'), rr('Uruz'), 'en', []),
         (d) => (d.image || '').indexOf('The bull tears itself') === 0],
     ];
-    for (const [jm, eng, runa, stav, test] of beh) await zapis(jm, eng, losuj(eng, stav, test) + '\n' + MYSLENKA(runa), MYSLENKA(runa));
+    for (const [jm, eng, runa, stav, test] of beh) await zapis(jm, eng, losuj(eng, stav, test) + '\n' + (kdo === '7b' ? MYSLENKA_OSOBA : MYSLENKA)(runa), (kdo === '7b' ? MYSLENKA_OSOBA : MYSLENKA)(runa));
   }
   if (kdo === '11') {
     const esence = (runa, ob, ram) => { let p = losuj('opus', () => S.buildReadingPrompt(u('', ''), rr(runa), 'en', []), (d) => (d.image || '').indexOf(ob) === 0);

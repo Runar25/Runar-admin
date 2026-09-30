@@ -7832,3 +7832,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   Návrat jen očištěný (§26): jiný model nebo jiná metoda, ne další výjimka.
 - **Paměť:** `memory/you-neni-prohresek.md` — nález „you“ od nástroje ownerovi nepředávat; ověřit čtením celého textu, nebo nástroj opravit.
 - Affected doc(s): `RUNAR_BACKLOG.md` (rubrika luny, bod A — uzavřeno) — v tomto commitu.
+
+## 2026-09-30 (8) — Myšlenka ✦ na konci čtení SMÍ oslovit člověka (otázka / tiché pozvání) — povoleno, neopravovat
+
+- **Rozhodl:** KUKY 2026-09-30 ke kolu „myšlenka ze zdroje“ (EVAL_LOG 2026-09-30 (4)): *„7 tohle je dobré! Obrať se k člověku — ano, ale
+  stále je to přes obraz, co vidím (a page with no sign, a closed vessel)… zkusíme to a uvidíme. Zapiš, že je to povolené, ať se nějaká
+  jiná session to nesnaží opravit.“*
+- **Co platí:** řádek ✦ se smí obrátit k člověku otázkou (*„What in you…“*) nebo tichým pozváním všímat si (*„Listen closely…“*), vedeným
+  obrazem RUNY, který je v té větě vidět. Není to tvrzení ani rada do života — kánon zrcadla to nepřekračuje. Nesmí dál: tvrdit, co
+  cítí nebo ví, a radit, co má v životě udělat. Vlastník pravidla = `RUNAR_DESIGN.md`, sekce Cold reading.
+- **Stav:** řádek ✦ zatím NENÍ nasazený (jen test; Standard/Premium, o nasazení se rozhoduje zvlášť). Kolo s obratem k člověku →
+  EVAL_LOG 2026-09-30 (6).
+- Affected doc(s): `RUNAR_DESIGN.md` (Cold reading — povolení ✦) · `RUNAR_EVAL_LOG.md` (2026-09-30 (6)) — v tomto commitu.

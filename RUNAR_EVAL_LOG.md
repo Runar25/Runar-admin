@@ -5712,3 +5712,15 @@ near the bank“*), v textu čtení nic postavené není. Týž prompt a losy ja
 - **Hranice:** n = 3 + 1, jen EN a jen rámec [0]; IS znění ani rámec [1] netestovány. Materiál: `docs/eval/2026-09-30-myslenka-esence/`.
 - **Doplněk (nasazení v4.81, DECISIONS 2026-09-30 (5)):** IS znění B, 1 kontrolní čtení (Hagalaz, řeka, Opus 5): esence *„Hagalaz nefnir brot
   sem koma utan frá og bíða ekki eftir að þú sért tilbúið.“*; is-grammar-qa jen šum (jméno, „annaðhvort“, spojovací způsob).
+
+## 2026-09-30 (6) — Myšlenka ✦ ze zdroje + obrat k člověku (owner „obrať se k člověku — ano… zkusíme to a uvidíme“)
+
+Týž prompt a losy jako (4); v pokynu navíc *„…and turn it toward the seeker: a question to them, or a quiet invitation to notice
+something. Never advice about their life, never a claim about what they feel or know.“* Materiál: `docs/eval/2026-09-30-myslenka-esence/test_7b.json`.
+- **Kříž (Blank, Opus):** *„The Blank rune carries no sign at all, only a held breath in the middle of the telling — what would you notice, if
+  you stayed in that pause a while longer than is comfortable?“* (dlouhé)
+- **Norny (Perth, GPT):** *„What might remain unknown to you until the vessel opens?“*
+- **Single Uruz (Opus):** *„The aurochs never wondered whether it was strong enough — what would you attempt if the question did not come up?“*
+- **Čtení CODE jako uživatel:** 3/3 se obrací k člověku a jde skrze obraz runy, který je ve větě vidět (dech/pauza, nádoba, pratur) — blíž
+  ownerovým vzorům než (4). Žádná rada do života, žádné tvrzení o nitru (otázky). Kříž je na jeden řádek dlouhý.
+- **Hranice:** n = 3, EN; IS znění ani spready Podkova/Yggdrasil netestovány; nenasazeno.
