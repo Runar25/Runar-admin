@@ -5743,3 +5743,32 @@ Od 2026-09-23 žádné živé čtení s Family & Home → změřeno 3 čtení, p
 - EN, káva stydne: *„…a cup set down in a house that waits… Some houses keep a stillness that outlasts the people who first sat in it.“*
 - IS, káva stydne: domov vůbec nejmenuje; *„þú“* jen jako postava obrazu.
 - **Závěr:** obraz měnit netřeba; dnešní prompt (podoby oblastí v4.56, konce) tvrzení 0/3. **Hranice:** n = 3, jedna runa; hlídat živá čtení.
+
+## 2026-10-01 (1) — Kontrola dvojic run proti skutečným čtením: 7 obrazů (čtení z DB + brána s popisy)
+
+Owner 2026-09-30: *„musíš to zkontrolovat s reálným čtením… zkontroluj čtení i ze staršího promptu, jak se v něm runa popisuje"*.
+Zdroj: tabulka `readings` (495 čtení, 17. 5. – 30. 9.), hledáno v `prompt_draws.image` i v textu (čtení před v1.5 draws nemají).
+Výpis s plnými texty zůstal MIMO repo (repo je veřejné, čtení nesou jména testerů).
+
+**Čtení, kde obraz padl:**
+- **Gebo, káva pro dva** (dnešní znění 2×, starší „Dyrnar standa opnar og kaffi…" 2×): ve **4/4** druhý člověk u stolu není —
+  *„the seat across from you still empty for now"* (22. 9.), *„The second chair is empty"* (25. 9.), *„…bíður eftir orði sem er ósagt enn"* (26. 8.).
+  Isa se svou kávou (3 čtení) píše totéž čekání. Runu Gebo čtení pojmenuje správně, scéna ukazuje opak.
+- **Prázdná runa, mlha** (5 čtení): ve **4/5** za mlhou něco JE — *„the home beyond it stands"* (11. 8.), *„the far shore"* (6. 9., 25. 9.) = slovník Perth
+  (ve čteních Perth: *„what the water has kept out of sight"*, *„not yet surfaced"*).
+- **Ingwaz, tráva nad sadbou** (1 čtení, 21. 9.): protimluv *„The grass greens over the seed-bed while the ground above shows nothing at all."*
+- **Mannaz, přísloví** *Hugurinn ber mann hálfa leið* (1 čtení, 25. 9.): obraz pominut, vlastní scéna (*„A loose thread catches at the shoulder…"*).
+- **Jera, těsto:** dnešní znění 0×; starší *„The dough needs its time"* 3×: sklizeň 1× · čekání 1× (*„the waiting that no pressing of thumbs can shorten"*)
+  · skrytá práce 1× (*„that quiet working underneath"* ≈ Ingwaz se skyrem *„turning one thing into another without a sound"*).
+- **Sowilo, paprsek po zimní tmě** a **Raidho, závěj:** 0 čtení. Dagaz se ve čteních popisuje právě návratem světla (*„Dagaz turns the dark toward
+  the light"*); Raidho u obrazu, který se hýbe SÁM (ovčí stezka), sklouzl do slov Laguz (*„the going that finds its own way without a hand to steer it"*).
+
+**Brána s popisy** (3 slepí soudci, sonnet; 14 ownerových popisů run bez jmen; 7 starých + 7 nových obrazů, EN):
+staré — mlha Perth 3/3 · paprsek Dagaz 3/3 · závěj Laguz 3/3 · tráva Berkana 2 + Isa 1 · přísloví Ehwaz 2 + Raidho 1 · káva Wunjo 2 + Gebo 1
+· těsto **Jera 2** + Berkana 1. Nové — 6× 3/3, Jera (marmeláda) 2/3. Druhá volba u nové Prázdné runy: Perth 3× (hranice zůstává tenká).
+
+**Útok na nástroj (§27):** 14 obrazů na 14 popisů a dva obrazy téže runy → soudci předpokládali párování 1:1 a dva to napsali
+(nová Jera → Isa *„přirozeněji Jera, ale Jera už má obraz"*; stará tráva → Isa *„B a N už mají jiné obrazy"*). Ty dva hlasy jsou artefakt
+zadání; ostatní odůvodnění citují popisy. **Cena:** 577 tis. tokenů (3 soudci po 11–14 min) — memory `cheapest-deciding-measurement-first`.
+**Hranice:** čtení jsou z různých verzí promptu (v1.6–v4.59), n = 0–5 na obraz; Sowilo a Raidho stojí jen na bráně. Těsto u Jery je nejslabší
+případ (brána ho nechala u Jery). Nová čtení s novými obrazy zatím žádná — owner: *„ať na čtení narazím, tak ho zkritizuju sám nebo testeři"*.

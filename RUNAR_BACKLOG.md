@@ -786,6 +786,9 @@
         still be heard“* ↔ Laguz (proud pod hladinou je v GPT rodinách Laguz) — mírné · 8. Nauthiz #38 zatuhlý uzel spíš odpor (Thurisaz)
         než nedostatek — kánon Nauthiz („dveře, které chtění neotevře“) ho ale kryje, NECHAT · mimo dvojice: Mannaz #109 *„The mind
         carries you half the way“* není scéna, jen výrok (filtr obrazu bod 7). Oprava = nový obraz EN + IS (ověřit), brány ㊱ ㉟ aspekt↔klíč.
+     ✅ **2026-10-01 HOTOVO (owner „všech 7, nasaď“):** 1–6 + Mannaz nahrazeny (v4.84, DECISIONS 2026-10-01 (1)); 7 (Isa pod ledem) a 8 (Nauthiz)
+     zůstávají. Ověřeno skutečnými čteními z DB a branou s popisy (EVAL_LOG 2026-10-01 (1)). 👁 Hlídat první živá čtení s novými obrazy —
+     owner je zkritizuje sám nebo testeři; pozor hlavně na Gebo (deka pro dva → může sklouznout k „partnerovi“) a Prázdnou runu (hranice s Perth).
      Owner: *„je to inspirace, musí být zkrácený či mírně upravený“* — do `RUNE_IMAGES` (EN + IS nativně, ověřit nástroji), brána s popisy runy.
   3. ⏸ **Živly (Elements) v hlavičce runy NECHAT** — owner: *„o elementech rozhodneme, až pokud se objeví problém“*. Hlídat: kdyby
      se živel propisoval do obrazu (oheň, vzduch…) jako svět Hel („roots“), je to ten problém (DECISIONS 2026-09-25 (3)).

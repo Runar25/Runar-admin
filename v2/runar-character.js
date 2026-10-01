@@ -514,7 +514,9 @@ var RUNE_IMAGES = [
   // 6 cteni produkcnim modelem, seda 0/6 (docs/eval/2026-09-19-produkcni-model/raidho-jadra/).
   // Tvar radku s jadrem: [runa, sezona, is, en, aspekt_is, aspekt_en, registr, motiv|'', 'jadro'].
   ['Raidho','bright','Kindagatan liðast af sjálfu sér','a sheep-track winding of its own accord','taktur','natural rhythm','P','','jadro'],
-  ['Raidho','cold','Skafrenningurinn finnur alltaf sömu leiðina milli þúfnanna.','The drifting snow always finds the same way between the tussocks.','leið','natural rhythm','E'],
+  // 2026-10-01 (KUKY „vsech 7, nasad“, kontrola dvojic run): zavej, ktera si cestu najde SAMA, je tvar Laguz („Water finds its own way“),
+  // brana s popisy Laguz 3/3. Raidho ve ctenich zije chuzi, ne veci, ktera se hybe sama. Rytmus nalezeny az chuzi (popis Raidho), Raidho 3/3.
+  ['Raidho','cold','Á langri göngu yfir snævi þakta heiðina finnur þú taktinn og hættir að telja skrefin.','On the long walk across the snowy heath you find your rhythm and stop counting the steps.','taktur','natural rhythm','P'],
   ['Kenaz','any','Aflinn glóir í dimmri smiðjunni og hamarinn mótar járnið.','The forge glows in the dark shed and the iron takes its shape.','kyndill','fire','D'],
   ['Kenaz','any','Glæðurnar lifa undir öskunni fram á morgun.','The embers stay alive under the ash until morning.','innra ljós','inner light','D'],
   // 2026-09-21 (report #7, KUKY: „Blade pak svetlo — ten blade tam nezapada!"): puvodni radek
@@ -528,7 +530,9 @@ var RUNE_IMAGES = [
   // bez interakce; model stavel scenu ze dveri a esenci z kavy (eval 2026-08-21, readings 238).
   // 2026-09-23 (identitni brana, 3 slepi soudci): otevrene dvere cetli jako Othila/Wunjo -> dve ruce z popisu Gebo („jedna ruka podava, druha prijima"), Gebo 3/3.
   ['Gebo','any','Önnur höndin réttir fram og hin tekur á móti.','One hand holds something out, and the other receives it.','að gefa og þiggja','giving and receiving','D'],
-  ['Gebo','any','Kaffi bíður á borðinu handa tveimur.','Coffee waits on the table for two.','félagsskapur','companionship','D'],
+  // 2026-10-01 (kontrola dvojic): kava pro dva — ve 4 ze 4 cteni druhy clovek u stolu nebyl (prazdna zidle, cekani = Isa, jejiz kava stydne);
+  // brana Wunjo 2, Gebo 1. Deka pro dva: oba jsou u toho a oba ubiraji („prostor, ktery patri obema“, popis Gebo), Gebo 3/3. Aspekt jafnvaegi (dosud 0 obrazu).
+  ['Gebo','any','Tvö deila einu teppi á köldu kvöldi og hvort togar það ögn minna til sín svo það nái yfir bæði.','On a cold evening two share one blanket, each pulling it a little less their own way so it covers both.','jafnvægi','balance','D'],
   // 2026-09-23 (KUKY: „proc by Wunjo melo byt stillness… radost, ze paprsky konecne na travu"): slunce = pozemek Sowilo, nehybnost = Isa. Travu a „konecne" nese deti, ne slunce. Wunjo 3/3.
   ['Wunjo','bright','Börnin hlaupa berfætt út á túnið um leið og grasið er orðið þurrt.','The children run barefoot onto the field the moment the grass is dry.','gleði','joy','P'],
   // 2026-09-23 (KUKY „ano obe, cim vic obrazu tim vic variant"): druha varianta ze stejneho popisu Wunjo („smich u stolu"). Wunjo 3/3.
@@ -555,7 +559,10 @@ var RUNE_IMAGES = [
   ['Isa','any','Kaffibollinn kólnar á borðinu meðan þú bíður.','The cup of coffee goes cold on the table while you wait.','að bíða','waiting','D'],
   ['Jera','bright','Heyið þornar örlítið meir hverja stund sem sólin helst, og að kvöldi er það tilbúið að snúa.','The hay dries a shade more each hour the sun holds, and by evening it is ready to turn.','þolinmæði','patience','P'],
   ['Jera','any','Sólarhringurinn lengist hægt fram á vorið.','The day lengthens slowly toward spring.','þolinmæði','patience','E'],
-  ['Jera','any','Deigið lyftir dúknum örlítið hærra hverja stund, að verki meðan enginn fylgist með.','The dough lifts the cloth a little higher each hour, working while no one watches.','þolinmæði','patience','D'],
+  // 2026-10-01 (kontrola dvojic): testo = skryte zrani (Ingwaz ma skyr pres noc); starsi zneni testa se ve 2 ze 3 cteni stocilo k cekani
+  // a „quiet working underneath“. Leto se vraci v zime (popis Jery: sklizis, co jsi udelal driv); zadne seti ani pestovani (KUKY u chleba 2026-09-23).
+  // Jera 2/3 — treti hlas Isa s poznamkou „prirozeneji Jera, ale Jera uz ma obraz“ = vada zadani brany (par 1:1), ne obrazu.
+  ['Jera','cold','Í skammdeginu opnar þú krukku af bláberjasultunni sem þú bjóst til í ágúst.','In the dark of winter you open a jar of the blueberry jam you made in August.','hringur','cycle','D'],
   // 2026-09-10 (davka 1, Cowork): Jera mel dosazitelnou JEDINOU stranku sveho
   // vyznamu — nize doplnene stranky se do cteni nemohly dostat vubec. Kazdy z techto
   // radku prosel identitnim soudcem 3/3; ze stejne davky jich 14 propadlo a nenasazuje se.
@@ -674,7 +681,9 @@ var RUNE_IMAGES = [
   // 2026-09-22 (druha vlna): studene cteni bez 'þú' — myslenka bez vlastnika ve scene padne na
   // ctenare (ruminace + nespavost). Tyz aspekt na vnejsim jevu, 'enginn' jako u [75].
   // 2026-09-23 (identitni brana, 3 slepi soudci): melodii cetli jako Laguz 3/3 (pamet je v klicich Laguz) -> islandske prislovi, Mannaz 3/3.
-  ['Mannaz','any','Hugurinn ber mann hálfa leið.','The mind carries you half the way.','hugur','mind','D'],
+  // 2026-10-01 (kontrola dvojic): prislovi neni scena — jedine cteni s nim (2026-09-25) ho pominulo a vymyslelo si vlastni („a loose thread…“);
+  // brana Ehwaz 2, Raidho 1 („mysl nese“ = kun nese jezdce). Okno jako zrcadlo pri setmeni: ty mezi ostatnimi (popis Mannaz), Mannaz 3/3.
+  ['Mannaz','any','Þegar dimmir speglast stofan í glugganum og þú sérð þig þar meðal hinna.','When it gets dark, the room is mirrored in the window, and you see yourself there among the others.','sjálfsþekking','self-awareness','D','reflection'],
   // 2026-09-22 (KUKY „obraz o zrcadle by byl zajimavy" + popis Mannaz „je v ni zrcadlo… nekdy
   // potrebuje druheho cloveka, aby uvidel, co sam zevnitr videt nemuze"): zrcadlo V CLOVEKU.
   // Motiv 'reflection' jako [72]/[73] — anti-opakovani nepusti dve zrcadla po sobe.
@@ -693,13 +702,17 @@ var RUNE_IMAGES = [
   ['Dagaz','any','Ljósaskiptin koma án þess að þú takir eftir hvenær nóttin varð að degi.','Dawn comes without your noticing when night became day.','dögun','dawn','E'],
   ['Dagaz','cold','Fyrsta skíman snýr aftur eftir svartasta skammdegið.','The first glimmer returns after the blackest midwinter dark.','dögun','dawn','E'],
   ['Dagaz','any','Þú vaknar og birtan í herberginu hefur þegar breyst.','You wake, and dawn has already changed the light in the room.','umbreyting','turning point','D'],
-  ['Blank','any','Niðaþokan hylur fjörðinn og þú veist ekki hvað bíður handan hennar.','The thick fog hides the fjord and you do not know what waits beyond it.','hið óþekkta','the unknown','E'],
+  // 2026-10-01 (kontrola dvojic): za mlhou NECO je — ve 4 z 5 cteni („the home beyond it stands“, „the far shore“) = slovnik Perth, brana Perth 3/3.
+  // Prazdna runa = chybi znak, ne skryta vec (popis: „Nehledej vyznam tam, kde zatim zadny neni“). Nebe bez znameni k pocasi, Blank 3/3 (druha volba Perth 3x).
+  ['Blank','any','Þú lítur til himins til að lesa í veðrið, en hann er blýgrár og gefur ekkert til kynna.','You look up at the sky to read the weather, but it is leaden grey and tells you nothing.','hið óþekkta','the unknown','E'],
   ['Blank','cold','Nýfallinn snjór liggur yfir slóðinni og engin spor eru komin í hann.','New snow lies over the track and no one has stepped in it yet.','óskrifaður möguleiki','unwritten potential','E'],
   ['Blank','any','Handfærið liggur í dökku vatninu og ekkert hefur enn snert það.','The line runs down into dark water and nothing has touched it yet.','hið óþekkta','unwritten potential','P'],
   ['Hagalaz','bright','Haglél lemur túnið í júní og er farið áður en birtir til.','Hail rakes the hayfield in June and is gone before the sky clears.','hagl','hail','E'],
   ['Hagalaz','any','Áin bólgnar á einni nóttu og tekur með sér það sem stóð of nálægt bakkanum.','The river swells overnight and takes with it whatever stood too near the bank.','náttúruöfl','disruption','E'],
   ['Sowilo','bright','Miðnætursólin heldur túninu björtu langt fram yfir háttatíma.','The midnight sun keeps the hayfield bright long after bedtime.','sól','sun','E','midnight-sun'],
-  ['Sowilo','cold','Fyrsti sólargeisli ársins snertir fjallstindinn eftir langa skammdegið.','The year\'s first ray of sun touches the mountain peak after the long midwinter dark.','sól','sun','E'],
+  // 2026-10-01 (kontrola dvojic): prvni paprsek po zimni tme = navrat svetla, slovnik Dagaz („turns the dark toward the light“), brana Dagaz 3/3.
+  // Druha strana Sowilo z popisu: ostre svetlo oslni. Sowilo 3/3.
+  ['Sowilo','cold','Sólskinið á snjónum er svo bjart að þú pírir augun.','The sunshine on the snow is so bright that you narrow your eyes.','sól','sun','E'],
   ['Sowilo','cold','Lág vetrarsól glampar á ísilögðum polli um hádegi.','A low winter sun glints on a frozen puddle at midday.','skýrleiki','clarity','E'],
   ['Sowilo','cold','Sólin nær loks niður í dalinn og lýsir upp bæinn litla stund.','The sun finally reaches down into the valley and lights up the farm for a little while.','sól','sun','P'],
   // 2026-09-23 (staticky popis Sowilo: „osviti cestu, takze najednou vidis, kde stojis… ted to muzes videt"): vsech 5 obrazu Sowilo bylo „slunce se objevi", zadny tohle. Sowilo 3/3 („kdyz slunce vyjde" davalo 2/3 — svitani = Dagaz).
@@ -709,7 +722,9 @@ var RUNE_IMAGES = [
   // 2026-09-23 (KUKY: „pokud by zmrzl, ma to byt v prvni vete, ne na konci"): obraz byl klid, ne led; model si led pridal az v posledni vete. Led ted stoji prvni. Isa 3/3.
   ['Isa','any','Undir ísnum heyrist enn í læknum.','Under the ice the stream can still be heard.','ís','ice','E'],
   ['Isa','any','Klukkan á veggnum hefur stöðvast og enginn hefur dregið hana upp.','The clock on the wall has stopped and no one has wound it.','kyrrstaða','waiting','D'],
-  ['Ingwaz','bright','Grasið grænkar yfir sáðreitnum löngu áður en nokkuð sést á yfirborðinu.','The grass greens over the seed-bed long before anything shows on the surface.','innri þróun','inner development','P'],
+  // 2026-10-01 (kontrola dvojic): zelenajici trava = viditelny rust (Berkana); jedine cteni (2026-09-21) muselo napsat protimluv („greens… shows nothing“),
+  // brana Berkana 2, Isa 1. Pysja v nore zraje uzavrena a ven jde az hotova (popis Ingwaz), Ingwaz 3/3. Zvire v hlavni roli -> 'postava'.
+  ['Ingwaz','bright','Lundapysjan hírist allt sumarið inni í holunni þar sem enginn sér hana og fer ekki fyrr en hún er tilbúin að halda út á hafið.','The puffin chick huddles deep in its burrow all summer where no one sees it, and does not leave until it is ready for the sea.','innri þróun','inner development','P', '', '', 'postava'],
   ['Ingwaz','bright','Eggið liggur heilt í hreiðrinu, hlýtt, og ekkert í því sést enn.','The egg lies whole in the nest, warm, and nothing of it shows yet.','möguleiki','potential','P'],
   ['Thurisaz','any','Þyrnigerðið hleypir engu í gegn án þess að taka eitthvað í staðinn.','The thorn hedge lets nothing through without cost.','þyrnir','protection','P'],
   ['Thurisaz','cold','Þyrnóttur runninn stendur ber og svartur í hríðinni, en broddarnir bíða enn.','The thorn-bush stands bare and black in the blizzard, but the spines are still waiting.','þyrnir','caution','E'],

@@ -1249,6 +1249,9 @@ identity a z povahy chybějící práce (87 % nepokrytých stránek run jsou abs
 3. **SLOVNÍ/VÝPOVĚDNÍ OBRAZ** — výpověď o stavu, bez věci i bez děje. **První pilot prošel
    branou 3/3** (2026-09-10, Mannaz-`mind`) — „nula měření" už neplatí, ale **jeden kandidát
    není doklad typu**; před širším použitím pořád platí pilot + měření pestrosti.
+   ⚠️ **V produkci (2026-10-01):** slovní obraz Mannaz *„Hugurinn ber mann hálfa leið“* dostal jedno čtení — model ho pominul
+   a postavil si vlastní scénu; brána s popisy ho dala k Ehwaz („mysl nese“ = kůň nese jezdce). Z banky odešel
+   (DECISIONS 2026-10-01 (1), měření EVAL_LOG 2026-10-01 (1)). Jedno čtení — doklad, ne pravidlo.
 
 **Pravidla:** typ se **páruje s povahou stránky runy** (živel→fyzický · ctnost/čin→situační ·
 stav/přechod→kandidát na slovní), nikdy plošná preference — ⭐ **doloženo obráceně dvakrát:**

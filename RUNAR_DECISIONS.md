@@ -7887,3 +7887,34 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   v produkční podobě (do dneška ho znal jen zkrácený — táž slepota). Produkční cesta, 3 čtení (EN single, IS single, EN Norny): ✦ odděleno
   ve všech třech (EVAL_LOG 2026-09-30 (7)). Prohlížeč: soused výstupu, text čtení bez ✦, přepnutí spreadu řádek smaže.
 - Affected doc(s): `RUNAR_EVAL_LOG.md` (2026-09-30 (7)) · `RUNAR_BACKLOG.md` (závěrečná myšlenka — nasazeno) — v tomto commitu.
+
+## 2026-10-01 (1) — Banka obrazů: 7 obrazů z kontroly dvojic run nahrazeno (v4.84)
+
+- **Rozhodl:** KUKY 2026-10-01 *„všech 7, nasaď. ať na čtení narazím, tak ho zkritizuju sám nebo testeři"* (k návrhu z 2026-09-30:
+  *„1–6 a Mannaz oprav… musíš to zkontrolovat s reálným čtením"*). **Provedl:** CODE-tune.
+- **Co:** `RUNE_IMAGES` (`v2/runar-character.js`), 7 řádků, pořadí v bance beze změny; důvod u každého v komentáři nad ním (§28):
+  1. Jera, těsto → *„In the dark of winter you open a jar of the blueberry jam you made in August."* / *„Í skammdeginu opnar þú krukku af
+     bláberjasultunni sem þú bjóst til í ágúst."* — cold · D · cycle/hringur (žádné setí ani pěstování — owner u chleba 2026-09-23 (14)).
+  2. Sowilo, první paprsek po zimní tmě → *„The sunshine on the snow is so bright that you narrow your eyes."* / *„Sólskinið á snjónum er svo
+     bjart að þú pírir augun."* — cold · E · sun.
+  3. Prázdná runa, mlha → *„You look up at the sky to read the weather, but it is leaden grey and tells you nothing."* / *„Þú lítur til himins
+     til að lesa í veðrið, en hann er blýgrár og gefur ekkert til kynna."* — any · E · the unknown.
+  4. Ingwaz, tráva nad sadbou → *„The puffin chick huddles deep in its burrow all summer where no one sees it, and does not leave until it is
+     ready for the sea."* / *„Lundapysjan hírist allt sumarið inni í holunni þar sem enginn sér hana og fer ekki fyrr en hún er tilbúin að halda
+     út á hafið."* — bright · P · inner development · `postava` (pokyn pojmenovat zvíře, DECISIONS 2026-09-30 (2)).
+  5. Gebo, káva pro dva → *„On a cold evening two share one blanket, each pulling it a little less their own way so it covers both."* /
+     *„Tvö deila einu teppi á köldu kvöldi og hvort togar það ögn minna til sín svo það nái yfir bæði."* — any · D · balance/jafnvægi (Gebo dosud 0).
+  6. Raidho, závěj → *„On the long walk across the snowy heath you find your rhythm and stop counting the steps."* / *„Á langri göngu yfir snævi
+     þakta heiðina finnur þú taktinn og hættir að telja skrefin."* — cold · **P** (člověk jdoucí krajinou) · natural rhythm/taktur.
+  7. Mannaz, přísloví → *„When it gets dark, the room is mirrored in the window, and you see yourself there among the others."* / *„Þegar dimmir
+     speglast stofan í glugganum og þú sérð þig þar meðal hinna."* — any · D · self-awareness/sjálfsþekking · motiv `reflection`.
+- **Proč:** obrazy nesly sousední runu dvojice. Doloženo skutečnými čteními (káva u Gebo 4/4 prázdná židle = čekání Isy · mlha 4/5 „co je za ní“
+  = Perth · tráva protimluv · přísloví pominuto) a branou s popisy (staré 0–1/3, jen těsto 2/3; nové 6× 3/3 + Jera 2/3). Měření EVAL_LOG 2026-10-01 (1).
+  Těsto má důkaz nejslabší — owner přesto „všech 7".
+- **Ověřeno:** IS psáno islandsky, is-grammar-qa 0 vad (Raidho: varování Y001 „snævi“ — korpus *snævi þakta* 113 × *snjóþakta* 4 → ponecháno),
+  korpus is-vazba u každé vazby · aspekt↔klíč 182/182 · registr D/E/P 182 · postava 12 (single i Norny B2) · motivy OK · protlačení
+  `_seasonalImagery`: každý nový obraz padá ve své sezóně EN i IS (27–50/200), mimo sezónu 0, stará znění nikde · golden: změna jen v obrazech,
+  které losovač vytáhl (single EN Raidho, Horseshoe s čočkou Gebo) · registr ㉜ přepsán pro v4.84 · check-is čistý.
+- **Nevyzkoušeno na modelu:** čtení s novými obrazy zatím žádné — kritiku udělá owner nebo testeři, až na ně narazí.
+- Affected doc(s): `RUNAR_EVAL_LOG.md` (2026-10-01 (1)) · `RUNAR_BACKLOG.md` (kontrola dvojic — hotovo) · `RUNAR_DESIGN.md` (Typ obrazu:
+  slovní obraz v produkci) — v tomto commitu.
