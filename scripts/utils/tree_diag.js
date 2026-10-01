@@ -700,3 +700,37 @@ if (cast === 'leader') {
     const d = v => (v * 180 / Math.PI).toFixed(1);
     console.log(m.name.padEnd(8), 'smer', d(m.ang + Math.PI / 2), '| zivotni runa', d(m.leanPart), '| natoceni', d(m.areaPart), '| koruna: zaklad x', pts[0].x.toFixed(0), 'spicka x', pts[pts.length - 1].x.toFixed(0), '| max vychyleni', (Math.max(...pts.map(q => q.x)) - 280).toFixed(0), (Math.min(...pts.map(q => q.x)) - 280).toFixed(0)); }
 }
+if (cast === 'tiers') {
+  // PATRA (2026-10-01, KUKY: "vetve se zhlukuji, vysoky strom bez pater — proc?"). Pro KUKYho strom a modelove
+  // lidi: kde ramena vychazeji z kmene (vyska 0 = zem, 1 = vrchol kmene), pod jakym uhlem, a jak je hmota
+  // vetvi rozlozena po vyskach (podil v pasmech po 0,2 vysky kmene; nad 1 = koruna nad vrcholem kmene).
+  const HTML = process.argv[3] && process.argv[3] !== '-' ? process.argv[3] : null;
+  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, maxMains: 10, gradStrand: 1 }, process.env.LRCFG ? JSON.parse(process.env.LRCFG) : {}) });
+  const RB = B.RUNES.filter(r => r.k !== 'odinn'), I = ['healing', 'family', 'inner'], O = ['purpose', 'career', 'spirituality'], M = ['love', 'crossroads'], IN = ['past', 'present', 'decision'];
+  const gen = (seed, mix, N, ints) => { let s = seed; const rnd = () => (s = (s * 1103515245 + 12345) >>> 0) / 4294967296;
+    const area = () => { const x = rnd(); if (x < mix[0]) return I[Math.floor(rnd() * 3)]; if (x < mix[0] + mix[1]) return O[Math.floor(rnd() * 3)]; if (x < mix[0] + mix[1] + mix[2]) return M[Math.floor(rnd() * 2)]; return null; };
+    const intn = () => ints ? IN[Math.floor(rnd() * 3)] : null;
+    const pick = n => { const pool = RB.slice(), rs = []; for (let i = 0; i < n; i++) { const r = pool.splice(Math.floor(rnd() * pool.length), 1)[0]; rs.push({ rune: r.k, el: r.el }); } return rs; };
+    const log = [{ spread: 'norns', runes: pick(3), area: area(), intention: intn() }];
+    for (let i = 1; i < N; i++) { const x = rnd(); log.push({ spread: x < 0.8 ? 'single' : 'compass', runes: pick(x < 0.8 ? 1 : 5), area: area(), intention: intn() }); }
+    return log; };
+  const arc = pts => { let a = 0; for (let i = 1; i < pts.length; i++) a += Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y); return a; };
+  const one = (lbl, log) => { const r = labRun(log, HTML, inj), gy = 660, ty = inj.trunkT ? null : null;
+    const mains = r.allPicks.filter(p => typeof p.k === 'number');
+    const topY = Math.min(...mains.filter(p => !p.meta.gradOf).map(p => { const f = p.meta.frac; return f; }));
+    const ex = mains.map(p => { const m = p.meta, a = Math.round((m.ang + Math.PI / 2) * 180 / Math.PI);
+      return (m.gradOf ? 'G' : '') + m.name + ' ' + (m.gradOf ? ('z ' + m.gradOf + ' u' + (+m.splitU).toFixed(2)) : ('@' + (+m.frac).toFixed(2))) + ' ' + (a >= 0 ? '+' : '') + a + '°'; });
+    // hmota po vyskach: vyska v jednotkach vysky kmene (frac); y vrcholu kmene odhadneme z vudci vetve (frac 0.98)
+    const lead = mains.find(p => p.k === 0); const trunkTopY = (() => { let y = 1e9; lead.pts.forEach(q => y = Math.min(y, q.y)); return y; })();
+    const tl = mains.filter(p => !p.meta.gradOf).map(p => p.meta.frac);
+    const H = {}; let tot = 0;
+    r.allPicks.forEach(p => { if (!p.pts || p.pts.length < 2 || String(p.k).startsWith('r')) return; if (!(typeof p.k === 'number' || String(p.k).startsWith('t'))) return;
+      const pts = typeof p.k === 'number' ? p.pts.slice(-30) : p.pts, L = arc(pts); let sy = 0; pts.forEach(q => sy += q.y); sy /= pts.length;
+      const hh = (gy - sy) / (gy - 270); const b = Math.max(0, Math.min(8, Math.floor(hh / 0.2))); H[b] = (H[b] || 0) + L; tot += L; });
+    const hist = Object.keys(H).sort((a, b) => a - b).map(b => (b * 0.2).toFixed(1) + '–' + ((+b + 1) * 0.2).toFixed(1) + ':' + Math.round(100 * H[b] / tot) + '%').join(' ');
+    console.log('\n' + lbl + '\n  ramena:', ex.join(' | ') + '\n  hmota po vyskach (vyska kmene = 1):', hist); };
+  one('KUKYho strom (359 cteni)', st.log);
+  one('modelovy clovek, vyvazeny, BEZ zameru (150)', gen(1136, [0.35, 0.35, 0.3], 150, false));
+  one('modelovy clovek, vyvazeny, nahodny zamer minulost/ted/budoucnost (150)', gen(1136, [0.35, 0.35, 0.3], 150, true));
+}

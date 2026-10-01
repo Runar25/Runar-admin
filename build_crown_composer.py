@@ -1288,7 +1288,7 @@ HTML = r"""<!DOCTYPE html>
     _runeHost=branchEls.runeHost||{};
     _ownMain={}; for(var om=0; om<mainsN; om++){ var omr=mainRuneOf(branchEls[om]||{}, om); if(omr) _ownMain[omr.k]=1; }
     var gradStrands=[], LANE0=[0,1,-1,2,-2,3,-3,4,-4,5,-5,6,-6,7,-7];
-    delete trunkT.laneOrder; delete trunkT.bornOrder; delete trunkT.strandMin;
+    delete trunkT.laneOrder; delete trunkT.bornOrder; delete trunkT.strandMin; delete trunkT.exitFrac;
     /* PRAVIDLO 3 i v KMENI (2026-09-28). Engine kmene si pocet pramenu pocital sam podle veku
        (3 + vek/80) a pramen s>=3 "rodil" az v den (s-2)*80, takze i po zmene stableAssign cekala
        zeme na pramen do #19 a stin do #46 (zmereno na KUKYho strome). Ted: pramenu je tolik, kolik
@@ -1331,6 +1331,21 @@ HTML = r"""<!DOCTYPE html>
         trunkT.strandMin=trunkT.strandMax; trunkT.laneOrder=lanes; trunkT.bornOrder=borns;
         gradStrands.forEach(function(G){ _ownMain[G.rune]=1; }); }   /* povyseny uz nevisi jako twig rodice */
     }
+    /* VYSKY VYSTUPU predem (2026-10-01): engine kmene je potrebuje, aby kmen zuzoval podle pramenu, ktere
+       v dane vysce jeste jsou (T.exitFrac). Stejny vypocet jako drive v cyklu ramen (emergence + Norny /
+       zamer zakladajiciho cteni + pravidlo 5), jen o krok driv; graduant opousti kmen s rodicem. */
+    var FRAC=[], FRAC0=[];
+    if(!seed && mainsN>0){ var uFr=[], gapH0=Math.max(0.02, crownT.exitStep);
+      var clash0=function(f){ for(var uq=0; uq<uFr.length; uq++){ if(Math.abs(f-uFr[uq])<gapH0-1e-9) return true; } return false; };
+      for(var fk2=0; fk2<mainsN; fk2++){ var be2=branchEls[fk2]||{};
+        var iAx2=(be2.birthInt!=null && INT_AXIS[be2.birthInt]!=null) ? INT_AXIS[be2.birthInt] : 0;
+        var nAx2=(be2.norn!=null) ? be2.norn : iAx2;
+        var f2=clamp(emergence(fk2).frac + nAx2*crownT.intZone, 0.30, 0.98), f20=f2;
+        if(clash0(f2)){ for(var st2=1; st2<=12; st2++){ var dn2=clamp(f20-st2*gapH0,0.30,0.98), up2=clamp(f20+st2*gapH0,0.30,0.98);
+            if(!clash0(dn2)){ f2=dn2; break; } if(!clash0(up2)){ f2=up2; break; } } }
+        uFr.push(f2); FRAC[fk2]=f2; FRAC0[fk2]=f20; }
+      gradStrands.forEach(function(G, j){ FRAC[mainsN+j]=FRAC[G.p]; FRAC0[mainsN+j]=FRAC[G.p]; });
+      trunkT.exitFrac=FRAC.slice(); }
     /* KOSTRA CO NEJVIC ROZLOZENA (2026-09-30, KUKY: "prvnich 10 pramenu je dobre co nejvice rozlozit,
        aby byl na zacatku strom vyvazeny, pro to, aby se pak mohlo rozhodovat"). Vsechna ramena — i
        povysene graduanty (KUKY: "i povysene rameno muze jit treba z leva do prava") — dostanou stranu
@@ -1444,14 +1459,15 @@ HTML = r"""<!DOCTYPE html>
           var LB={ b:LP.b, n:LP.n, c:LP.c };
           var iAx=(be.birthInt!=null && INT_AXIS[be.birthInt]!=null) ? INT_AXIS[be.birthInt] : 0;
           var nAx=(be.norn!=null) ? be.norn : iAx;   /* zakladaci Norny: osa pozice, jinak zamer zakladajiciho cteni */
-          var frac=clamp(e.frac + nAx*crownT.intZone, 0.30, 0.98);   /* KROK 2: intention -> vyska (jemny posun) */
+          var frac=(FRAC[k]!=null) ? FRAC0[k] : clamp(e.frac + nAx*crownT.intZone, 0.30, 0.98);   /* KROK 2: intention -> vyska (jemny posun) */
           /* PRAVIDLO 5 (2026-09-28, KUKY: "kazdy pramen ma zacinat v jine vysce"). Utok na model
              nasel prameny 2 % od sebe: urd (pozice ho posune dolu na 0,73) padl vedle pramene k=4
              (0,71). Novy pramen se vyhne vyskam STARSICH o aspon `exitStep` — zkousi dolu, nahoru,
              pak o dva kroky… Starsi pramen se nikdy nehne (prameny se zpracuji v poradi vzniku). */
           var gapH=Math.max(0.02, crownT.exitStep), frac0=frac;
+          if(FRAC[k]!=null) frac=FRAC[k];   /* spocitano predem (vcetne pravidla 5) — tataz hodnota dostal engine kmene */
           var clashAt=function(f){ for(var uq=0; uq<_usedFrac.length; uq++){ if(Math.abs(f-_usedFrac[uq])<gapH-1e-9) return true; } return false; };
-          if(clashAt(frac)){ for(var st=1; st<=12; st++){ var dn=clamp(frac0-st*gapH,0.30,0.98), up=clamp(frac0+st*gapH,0.30,0.98);
+          if(FRAC[k]==null && clashAt(frac)){ for(var st=1; st<=12; st++){ var dn=clamp(frac0-st*gapH,0.30,0.98), up=clamp(frac0+st*gapH,0.30,0.98);
               if(!clashAt(dn)){ frac=dn; break; } if(!clashAt(up)){ frac=up; break; } } }
           _usedFrac.push(frac);
           var born=(trunkT.bornOrder && trunkT.bornOrder[k]!=null) ? trunkT.bornOrder[k] : ((k<3)?0:(k-2)*every), strandAge=realAge-born;   /* = narozeni pramene v enginu kmene */

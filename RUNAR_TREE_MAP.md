@@ -9,6 +9,7 @@
 # ⚠️ 2026-09-29: vrstva C opravena — strana ramene = rovnováha jeho čtení (KROK 3), tvar větve ze záměru živý (KROK 1);
 #    řádky tvrdily „SPÍCÍ" a „strana z areaSide", což od kroků 1 a 3 neplatí.
 # ⚠️ 2026-09-30: vrstvy D a H — úhel ramene dává kostra `FR` (ne `emergence`), graduant smí na druhou stranu (KROK 3b).
+# ⚠️ 2026-10-01: vrstva F — kmen jako svazek (`T.exitFrac`); vrstva C — mapa výšky (které čtení dole/nahoře) bydlí v RUNAR_TREE.md §3.
 # Vlastník: CODE-tree (mechanika + implementace) · Cowork-tree (význam) · KUKY (rozhoduje).
 
 ## Jak číst
@@ -69,6 +70,7 @@ Laděno v branch composeru → `RUNE_TUNE`; fallback = signatura v `RUNES` (runa
 
 ## Vrstva F — KMEN
 | `trunkT` | lean · wobble · thickness · `bundleSpread` (překryv pramenů = jedno tělo) · baseFlare · twist · `rootFan` | runar-trunk.js |
+| `T.exitFrac` (lab) | kmen jako SVAZEK: šířka ~ odmocnina z počtu pramenů, které v dané výšce ještě jsou; pramen se v kmeni nezužuje; pata jen u země (2026-10-01, RUNAR_TREE.md §5) | runar-trunk.js · crown builder |
 
 ## Vrstva G — KOŘENY (mají být ≠ větev)
 | páka | mechanika | kde | pozn. |

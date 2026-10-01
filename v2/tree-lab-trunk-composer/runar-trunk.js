@@ -115,6 +115,17 @@ function buildTrunk(spec, T) {
   var strandN = Math.min((T.strandMax||28), Math.max(T.strandMin||0, 3 + Math.max(0, Math.floor(treeAge/every))));  /* cap = perf/visual safety pri testovani */
   var baseW = T.thickness * arch.widthMul;          /* per-strand width at full age */
   var laneStep = baseW * T.bundleSpread;            /* < baseW => overlap => one body */
+  /* KMEN JAKO SVAZEK (2026-10-01, KUKY: "kmen, kde jsou vsechny prameny, je nejmohutnejsi; kdyz se odpoji
+     prvni vetev, je o tu vetev chudsi atd. az k posledni vetvi, ktera je sama"). Jen kdyz koruna preda
+     T.exitFrac (vyska vystupu kazdeho pramene, 0 = zem, 1 = vrchol); bez nej beze zmeny (aplikace).
+     Sirka svazku ~ odmocnina z poctu pramenu, ktere v dane vysce jeste jsou (prurez = soucet pramenu).
+     Drive se kazdy pramen sam zuzoval na 46 % a pata se stahovala do pulky vysky: KUKYho strom 40 px
+     u zeme, 15 px tesne pod prvni vetvi (vsech 10 pramenu jeste v kmeni), nad ni skoro beze zmeny. */
+  var PIPE = !!(T.exitFrac && T.exitFrac.length), laneStep0 = laneStep;   /* propleteni pocita z PUVODNIHO rozestupu (jinak se z kmene stane provaz s mezerami) */
+  if (PIPE) { var minL=0, maxL0=0; for (var pl=0; pl<strandN; pl++){ var lv=laneAt(pl); if(lv<minL) minL=lv; if(lv>maxL0) maxL0=lv; }
+    laneStep = baseW * ageThick(treeAge) * (Math.sqrt(strandN) - 1) / Math.max(1, maxL0-minL) * (T.bundleSpread/0.08); }
+  function activeN(h){ var n=0; for (var a=0; a<strandN; a++){ var e=(T.exitFrac[a]!=null)?T.exitFrac[a]:1.2;
+      n += 1 - smooth(clamp((h-(e-0.03))/0.06, 0, 1)); } return n; }
   /* T.laneOrder (nepovinne): explicitni draha kazdeho pramene ve svazku.
      POZN.: `maxLane` se dal v enginu NIKDE nepouziva (mrtvy kod uz pred touhle zmenou),
      takze sirku svazku neridi ani LANE, ani laneOrder -- rozhoduje jen `laneStep`. */
@@ -160,16 +171,17 @@ function buildTrunk(spec, T) {
       var h=j/(NT-1);
       var weave = Math.sin(weavePh + h*1.6*6.283) * sBaseW*0.06;
       var tw = twistAmt * h * 6.283;
-      var swirlX = twistAmt * laneStep * 1.1 * Math.sin(twPhase + tw);
+      var swirlX = twistAmt * laneStep0 * 1.1 * Math.sin(twPhase + tw);
       var swirlD = twistAmt * 0.6 * Math.cos(twPhase + tw);
-      var fl = 1 + T.baseFlare * flareGate * Math.pow(1 - smooth(Math.min(1, h/0.5)), 1.6);  /* buttress from mid, opens ~8mo */
+      var fl = 1 + T.baseFlare * flareGate * Math.pow(1 - smooth(Math.min(1, h/(PIPE?0.2:0.5))), 1.6);  /* buttress from mid, opens ~8mo; PIPE: jen u zeme */
+      var fC = PIPE ? Math.sqrt(Math.max(1, activeN(h))/strandN) : 1;   /* PIPE: svazek se stahuje, jak prameny odchazeji */
       var proF = proGate * (1 - smooth(Math.min(1, h/0.5)));   /* rib only in lower trunk */
       trunkPts.push({
-        x: center(h) + laneX*fl + weave + swirlX + proSide*proF*baseW*2.0,  /* rib bulges to the side */
+        x: center(h) + laneX*fl*fC + weave + swirlX*fC + proSide*proF*baseW*2.0,  /* rib bulges to the side */
         y: lerp(groundY, topY, h),
         ct: lerp(0.46, 0.66, h),
         depth: clamp(strandDepth + Math.sin(weavePh+h*3)*0.05 + swirlD + proF*0.5, -0.95, 0.95),
-        w: sBaseW * lerp(1.0, 0.46, smooth(h)) * (1 + proF*0.4)              /* old rib thicker */
+        w: sBaseW * (PIPE ? lerp(1.0, 0.85, h) : lerp(1.0, 0.46, smooth(h))) * (1 + proF*0.4)   /* old rib thicker; PIPE: pramen se v kmeni nezuzuje */
       });
     }
     var baseX = trunkPts[0].x, baseDepth = trunkPts[0].depth;
