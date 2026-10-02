@@ -522,7 +522,9 @@ var RUNE_IMAGES = [
   // 2026-09-21 (report #7, KUKY: „Blade pak svetlo — ten blade tam nezapada!"): puvodni radek
   // nesl lampu I hoblinu, model pak stavel scenu z jednoho a esenci z druheho. Rozdeleno;
   // obe pulky jsou podmnoziny puvodni vety, zadne nove vazby. „Nikdy spolu."
-  ['Kenaz','any','Það logar á einum lampa yfir hefilbekknum.','A single lamp over the bench.','innra ljós','inner light','D'],
+  // 2026-10-02: EN „over the bench“ -> „burns over the workbench“ — parita s IS (hefilbekkur = ponk). GPT cetl lavici
+  // a psal „the empty place beside you“ -> nepritomnost cloveka v dome (ownerovo cteni 9e90f070, EVAL_LOG 2026-10-02 (1)).
+  ['Kenaz','any','Það logar á einum lampa yfir hefilbekknum.','A single lamp burns over the workbench.','innra ljós','inner light','D'],
   ['Kenaz','any','Spænirnir liðast undan egginni.','The shavings curl away from the blade.','sköpunargleði','creativity','D'],
   ['Gebo','any','Sjórinn gefur og tekur á fjörunni í sömu andránni.','The sea gives and takes on the shore in the same breath.','að gefa og þiggja','giving and receiving','E'],
   ['Gebo','any','Fjaran skilar einu og hirðir annað með hverri báru.','The shore returns one thing and keeps another with every wave.','að gefa og þiggja','giving and receiving','E'],
