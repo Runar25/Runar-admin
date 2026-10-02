@@ -730,18 +730,20 @@
 
     <!-- Inline detail (appears below grid when rune clicked) -->
     <div class="coll-detail" id="coll-detail" style="display:none;">
+      <!-- 2026-10-02 (KUKY reporty 2026-10-02 09:54 a 09:56): jméno zlatě písmem jako AGNDOFA přímo NAD kamenem a významy
+           (#cd-kw) VEDLE jména — bez nadpisu „Meaning“ (owner: „už být nemusí, pokud to bude jasně spojené se jménem runy“).
+           Pod tím kámen a popis tvaru (UI_TEXT.coll_shape) vedle sebe i na telefonu; kámen se svisle srovná s popisem.
+           Plní openCollDetail() podle ID — ID se nemění. -->
       <div class="coll-detail-header">
-        <div class="coll-detail-glyph" id="cd-glyph"></div>
         <div class="coll-detail-names">
-          <div class="coll-detail-en" id="cd-name-en"></div>
-          <div class="coll-detail-is" id="cd-name-is"></div>
+          <span class="coll-detail-en" id="cd-name-en"></span>
+          <span class="coll-detail-is" id="cd-name-is"></span>
+          <span class="coll-detail-kw" id="cd-kw"></span>
         </div>
         <button class="coll-detail-close" onclick="closeCollDetail()">✕</button>
-        <!-- 2026-09-30 (KUKY bod 5): popis tvaru runy — UI_TEXT.coll_shape, maluje openCollDetail(). Vlastní buňka mřížky
-             hlavičky: na desktopu vedle kamene pod jménem, na telefonu pod kamenem přes celou šířku (runar-reader.css). -->
+        <div class="coll-detail-glyph" id="cd-glyph"></div>
         <div class="coll-detail-shape" id="cd-shape"></div>
       </div>
-      <div class="coll-detail-kw"  id="cd-kw"></div>
       <div class="coll-detail-sep"></div>
       <!-- 2026-09-23 (KUKY): přepínač EN/IS odstraněn — učení jde vždy v jazyce appky. -->
       <div class="coll-audio-lbl" id="cd-audio-lbl">♪ RUNE READING</div>

@@ -7932,3 +7932,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   funkce běží s `verify_jwt: false` (adminství ověřuje sama z JWT) — deploy musí to nastavení zachovat.
 - ⚠️ **Účinné až po** `supabase functions deploy claude-proxy` se zachovaným `--no-verify-jwt` — deploy pouští owner.
 - Affected doc(s): `RUNAR_EVAL_LOG.md` (2026-10-02 (1)) — v tomto commitu.
+
+## 2026-10-02 (2) — Kolekce: mřížka 5 × 5 jako ve čtení · jméno nad kamenem, významy vedle jména, popis tvaru vedle kamene i na telefonu
+
+- **Rozhodl:** KUKY — reporty 2026-10-01 07:37 (*„udělejme to stejně jako je v rune reading, dlaždice rune 5x5"*), 2026-10-02 09:54
+  (*„popis tvaru runy by měl i na mobilu být vedle glyfu… jméno runy přímo nad runou zlatým písmem, font stejný jako agndofa"*) a 09:56
+  + upřesnění 2026-10-02: *„řádek s významy… úvod už být nemusí, pokud to bude jasně spojené se jménem runy. Vedle jména runy."*
+  **Provedl:** CODE-tune.
+- **Co:** `v2/runar-reader.css` + `v2/runar-reader.html` (bez změny JS — ID prvků zůstala): dlaždice Kolekce sdílejí pravidla s dlaždicemi
+  čtení (`.rb-svg,.coll-svg` · `.rb-n,.coll-name` · `.rb-t,.coll-tr`), na telefonu pevně 5 sloupců. Detail: nahoře jméno (Cinzel, zlatá,
+  proklad 4 px = `.brand`) a hned za ním významy; pod tím kámen a popis tvaru vedle sebe, kámen svisle na střed popisu.
+- **Návrat očištěný (§26):** 2026-09-30 šel popis tvaru na telefonu pod kámen — vedle kamene měl sloupec ~160 px a 11 úzkých řádků.
+  Teď: jméno nad kamenem (nebere sloupec), kámen na telefonu 56 px, užší okraje detailu → změřeno v prohlížeči na 375 px:
+  sloupec popisu 242 px, Ansuz 4 řádky, kámen na středu popisu.
+- **Ověřeno:** prohlížeč 375 px i 1280 px (mřížka 5 × 64 px / 5 × 123 px; jméno zlaté s prokladem 4 px; na desktopu významy na řádku
+  se jménem, na telefonu hned pod ním) · smoke.
+- Affected doc(s): žádné (vzhled žije v CSS).

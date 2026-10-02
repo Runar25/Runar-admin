@@ -349,7 +349,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 
 /* ── COLLECTION ── */
 .coll-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:4px;align-items:stretch;}
-@media(max-width:480px){.coll-grid{grid-template-columns:repeat(4,1fr);}}
+/* 2026-10-02 (KUKY „udělejme to stejně jako je v rune reading, dlaždice rune 5x5“): na telefonu 5 sloupců jako mřížka čtení
+   (dřív 4). Pevně 5, ne auto-fill jako .rune-grid — 25 run = 5 řad po pěti na každé šířce. */
+@media(max-width:480px){.coll-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;}}
 .coll-cell{
   min-height:120px;height:100%;box-sizing:border-box;padding:8px 4px;
   background:#0d1220;border:1px solid var(--border);
@@ -358,33 +360,33 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 }
 .coll-cell:hover{background:rgba(255,191,0,0.06);border-color:var(--gold);}
 .coll-cell.active{background:rgba(255,191,0,0.1);border-color:var(--gold);box-shadow:0 0 10px rgba(255,191,0,0.12);}
-.coll-svg{width:64px;height:78px;display:block;}
-.coll-name{font-family:'Cinzel',serif;font-size:0.78em;letter-spacing:0.5px;color:var(--muted);margin-top:2px;}
 .coll-cell.active .coll-name{color:var(--gold);}
-.coll-tr{display:block;font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:0.3px;line-height:1.05;margin-top:1px;color:#6f86a0;opacity:0.85;text-align:center;max-width:100%;overflow-wrap:anywhere;}
 .coll-cell.active .coll-tr{color:var(--gold);opacity:0.8;}
-@media(max-width:480px){.coll-svg{width:44px;height:54px;}.coll-name{font-size:0.66em;}}
 
 /* Collection detail */
 .coll-detail{background:var(--card);border:1px solid var(--gold);margin-top:12px;padding:24px;animation:fadeUp 0.3s ease;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
-/* 2026-09-30: mřížka místo flexu — popis tvaru (.coll-detail-shape) má vlastní buňku: na desktopu vedle kamene pod jménem,
-   na telefonu (≤ 480 px) pod kamenem přes celou šířku. Vedle kamene měl na 375 px sloupec ~160 px a 11 úzkých řádků. */
-.coll-detail-header{display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"g n x" "g s s";align-items:start;margin-bottom:18px;}
+/* 2026-10-02 (KUKY reporty 2026-10-02 09:54/09:56): nahoře jméno zlatě písmem jako AGNDOFA (.brand) a hned vedle významy —
+   přímo nad kamenem; pod tím kámen + popis tvaru vedle sebe i na telefonu, kámen svisle na střed popisu (krátký i dlouhý).
+   NÁVRAT OČIŠTĚNÝ (§26): 2026-09-30 šel popis na telefonu pod kámen, protože vedle něj měl na 375 px sloupec ~160 px
+   a 11 úzkých řádků. Vada byla šířka sloupce: jméno teď nad kamenem (nebere sloupec), na telefonu menší kámen (56 px)
+   a užší okraje detailu → sloupec popisu ~240 px. */
+.coll-detail-header{display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"n n x" "g s s";column-gap:18px;row-gap:14px;align-items:center;margin-bottom:18px;}
 .coll-detail-header .coll-detail-glyph{grid-area:g;}
-.coll-detail-header .coll-detail-names{grid-area:n;}
-.coll-detail-header .coll-detail-close{grid-area:x;}
+.coll-detail-header .coll-detail-names{grid-area:n;align-self:start;}
+.coll-detail-header .coll-detail-close{grid-area:x;align-self:start;}
 .coll-detail-header .coll-detail-shape{grid-area:s;}
 .coll-detail-glyph{font-size:3.2em;line-height:1;color:var(--gold);opacity:0.8;}
-.coll-detail-names{padding:0 18px;}
-.coll-detail-en{font-family:'Cinzel',serif;font-size:0.9em;letter-spacing:2px;color:var(--white);margin-bottom:3px;}
+.coll-detail-names{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:12px;row-gap:4px;}
+.coll-detail-en{font-family:'Cinzel',serif;font-size:0.9em;letter-spacing:4px;color:var(--gold);}   /* = .brand (AGNDOFA) */
 .coll-detail-is{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.5px;color:var(--muted);}
+.coll-detail-is:empty{display:none;}
 /* Popis tvaru runy vedle glyfu (2026-09-30, KUKY bod 5) — písmo Rúnarova učení (.coll-audio-text), menší, ať sedí vedle kamene. */
-.coll-detail-shape{font-size:0.92em;font-style:italic;color:var(--muted);line-height:1.85;margin-top:8px;padding:0 18px;}   /* = .coll-audio-text (KUKY: „stejný jako ostatní písmo“) */
-@media(max-width:480px){.coll-detail-header{grid-template-areas:"g n x" "s s s";}.coll-detail-shape{padding:0;margin-top:14px;}}
+.coll-detail-shape{font-size:0.92em;font-style:italic;color:var(--muted);line-height:1.85;}   /* = .coll-audio-text (KUKY: „stejný jako ostatní písmo“) */
+@media(max-width:480px){.coll-detail{padding:18px 16px;}.coll-detail-header{column-gap:12px;}.coll-detail-header .cd-stone{width:56px;}}
 .coll-detail-close{background:none;border:none;color:var(--dim);font-size:1.1em;cursor:pointer;padding:4px;}
 .coll-detail-close:hover{color:var(--white);}
-.coll-detail-kw{font-size:0.9em;font-style:italic;color:var(--muted);line-height:1.7;margin-bottom:18px;}   /* 2026-09-30: 8 → 18 px, pod ním už není řádek svět · živel */
+.coll-detail-kw{font-size:0.92em;font-style:italic;color:var(--muted);line-height:1.5;}   /* 2026-10-02: vedle jména v hlavičce (dřív samostatný řádek pod ní) */
 .coll-detail-sep{width:32px;height:1px;background:linear-gradient(to right,var(--gold),transparent);margin:14px 0;}
 .coll-audio-lbl{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--gold);margin-bottom:10px;}
 .coll-audio-text{font-size:0.92em;font-style:italic;color:var(--muted);line-height:1.85;margin-bottom:14px;}
@@ -548,12 +550,13 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .badge-stone{width:20px;height:auto;vertical-align:middle;}
 .tree-stone{width:clamp(48px,14vw,64px);height:auto;}
 .rlbl-glyph.seg-active .rune-svg{filter:drop-shadow(0 0 9px rgba(255,191,0,0.45));}
-.rb-svg{width:clamp(38px,11vw,72px);height:auto;aspect-ratio:72/88;display:block;}
-.rb-n{font-family:'Cinzel',serif;font-size:0.85em;letter-spacing:0.5px;color:var(--muted);margin-top:4px;}
+/* .coll-* = dlaždice Kolekce: od 2026-10-02 stejný kámen a písmo jako dlaždice čtení (owner: „stejně jako je v rune reading“). */
+.rb-svg,.coll-svg{width:clamp(38px,11vw,72px);height:auto;aspect-ratio:72/88;display:block;}
+.rb-n,.coll-name{font-family:'Cinzel',serif;font-size:0.85em;letter-spacing:0.5px;color:var(--muted);margin-top:4px;}
 .rb.on .rb-n{color:var(--blue);}
-.rb-t{display:block;font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:0.3px;line-height:1.05;margin-top:1px;color:#6f86a0;opacity:0.85;text-align:center;max-width:100%;overflow-wrap:anywhere;}
+.rb-t,.coll-tr{display:block;font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:0.3px;line-height:1.05;margin-top:1px;color:#6f86a0;opacity:0.85;text-align:center;max-width:100%;overflow-wrap:anywhere;}
 .rb.on .rb-t{color:var(--blue);opacity:0.75;}
-@media(max-width:480px){.rb-n{font-size:0.6em;letter-spacing:0;}.rb-t{font-size:0.56em;letter-spacing:0;line-height:1.02;}.rb{min-height:96px;padding:6px 3px;}}
+@media(max-width:480px){.rb-n,.coll-name{font-size:0.6em;letter-spacing:0;}.rb-t,.coll-tr{font-size:0.56em;letter-spacing:0;line-height:1.02;}.rb,.coll-cell{min-height:96px;padding:6px 3px;}}
 .rune-info{font-size:0.9em;color:#8bb8d8;font-style:italic;min-height:18px;margin:6px 0;}
 
 /* 2026-09-24 (KUKY „13. opravit“; nález rozboru reportů 2026-09-23): 13 TEXTOVÝCH pravidel mělo color:var(--dim),
