@@ -5772,3 +5772,32 @@ staré — mlha Perth 3/3 · paprsek Dagaz 3/3 · závěj Laguz 3/3 · tráva Be
 zadání; ostatní odůvodnění citují popisy. **Cena:** 577 tis. tokenů (3 soudci po 11–14 min) — memory `cheapest-deciding-measurement-first`.
 **Hranice:** čtení jsou z různých verzí promptu (v1.6–v4.59), n = 0–5 na obraz; Sowilo a Raidho stojí jen na bráně. Těsto u Jery je nejslabší
 případ (brána ho nechala u Jery). Nová čtení s novými obrazy zatím žádná — owner: *„ať na čtení narazím, tak ho zkritizuju sám nebo testeři"*.
+
+## 2026-10-02 (1) — Obraz × oblast: oblast od první věty (B), jádro obrazu + oblast (B2) · gpt-6.1-sol
+
+Ownerovy reporty 2026-10-01/02 ke čtením přes GPT: obraz a oblast se *„bijí"* — model napíše obraz (často doslova) a pak zvlášť
+větu s oblastí, slovy z promptu (*„In what you give and receive…"*, *„Among your people…"*, *„…gives you strength back"*).
+Příčina v promptu: `_domainContext` — *„let the image you were given land on {podoba}"*, tedy dva kroky z konstrukce.
+Ownerův nápad (Raidho): obraz jen jako prostředí, zbytek ze vstupu uživatele. Harness + texty: `docs/eval/2026-10-02-oblast-od-prvni-vety/`.
+
+**Jak:** produkční prompt v4.84 (builder + řádek myšlenky ✦) se STEJNÝMI losy jako tři ownerova nejslabší čtení (Fehu × Love,
+Kenaz × Family, Ansuz × Healing); model `gpt-6.1-sol` ve všech větvích. A = produkce · B = jen řádek oblasti: *„from the first
+sentence, set the scene in {podoba}: the place and the people come from there; from the picture… take only what happens in it"*
+· B2 = B + obraz zkrácený na jádro bez místa (jádra napsal CODE-tune jen pro test, např. Kenaz *„One small light shows only what
+is close at hand"*).
+
+**Výsledek (1 čtení na větev a runu):**
+- **B = beze změny.** Model si nechá celou scénu obrazu (prodej krávy, lampa nad lavicí, zvon přes fjord); nanejvýš přidá místo
+  (*„In your family's home, you see a single lamp above the bench…"*). U Fehu prodej krávy sám splní „what is given and received".
+- **B2 = scéna v oblasti od první věty**, ale obecná a s předpoklady o životě tazatele: Kenaz *„You see your family around the
+  kitchen table…"*, Fehu *„You stand beside two partners as a cow passes between them…"* (kráva se vrátila z aspektu *cattle*),
+  Ansuz *„…in the garden where you rest"*. Islandský svět obrazů zmizel.
+- **Slova podoby oblasti doslova ve všech větvích** (*„Among your people"* A i B i B2) — tahle vada na variantě nezávisí.
+- **Kenaz má vadu parity:** EN *„A single lamp over the bench."* × IS *„…yfir hefilbekknum"* (truhlářský ponk). GPT čte lavici →
+  *„the empty place beside you"* (ownerovo čtení na 6-sol) / *„the worn place beside your own"* (6.1) → nepřítomnost člověka v domě.
+
+**gpt-6.1-sol:** `reasoning_effort` *none* i *minimal* odmítne (400 unsupported_value) — nejnižší je *low*. Při *low* přemýšlí
+190–330 tokenů na čtení (platí se jako výstup). Cena (ceník 2026-10-02, Standard): ownerových 6 čtení na 6-sol průměrně
+**0,0042 USD** · 3 čtení A na 6.1 **0,0063 USD** (bez zápisu do cache; s ním o ~0,0006 víc). Text kvalitou srovnatelný
+(6.1 Fehu: *„On the empty stall's latch, you can still see a pale tuft of hair."*).
+**Hranice:** n = 1 na větev; soudí owner čtením, ne metrika. B2 jádra nejsou v bance.

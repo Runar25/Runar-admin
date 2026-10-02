@@ -436,6 +436,7 @@ const MODEL_PRICES = {
   },
   openai: {      // [vstup, vstup z cache, výstup]; zápis do cache = vstup × openaiCacheWrite
     'gpt-6-sol':  [2, 0.2, 10],
+    'gpt-6.1-sol': [2, 0.1, 10],   // 2026-10-02 ověřeno developers.openai.com/api/docs/pricing (Standard, short context; cache write 2,50 = 1,25×)
     'gpt-6-luna': [0.1, 0.01, 0.5],
   },
   openaiCacheWrite: 1.25,

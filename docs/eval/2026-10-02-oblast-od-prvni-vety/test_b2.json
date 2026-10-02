@@ -1,0 +1,83 @@
+[
+ {
+  "runa": "Fehu",
+  "area": "Love & Relationships",
+  "seek": "Clarity",
+  "varianta": "B2",
+  "jadro": "Something of value changes hands, and what it brings carries others through a lean time.",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "usage": {
+   "prompt_tokens": 1303,
+   "completion_tokens": 429,
+   "total_tokens": 1732,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 1300,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 331,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  },
+  "prompt": "PERSON: Kuky\nDRAWN RUNE: Fehu — focus on: cattle · Elements: Fire, Earth\nREADING ANGLE (follow this entry point — let it shape the opening and tone): Open at the edge of the image, where one thing turns into another.\nTHE IMAGE\nRúnar uses one image per reading and carries it through; he does not list images. A second picture earns its place only when it takes the first one further — the same scene, one step on. Two unrelated pictures side by side say nothing. Never a simile stacked on a metaphor. The image must connect to where this person is standing right now — atmosphere on its own is decoration, not a reading.\nIMAGE — the picture in this reading comes from here: Something of value changes hands, and what it brings carries others through a lean time. Let it become your own seeing in the text, down to one detail the sentence does not name.\nTHE ESSENCE LINE: after the picture, one short line that says which side of the rune this picture shows — its sense in plain words a stranger to runes can grasp. The seeker knows only the words of the reading, not the picture behind them: say what the rune means in its own terms, not what happens in the scene. Never a fixed formula. No invented mechanism, no fate. Never tell the seeker what it means for them.\nNO COLD READING: never tell the seeker what is true, stirring, or known inside them — that is an unfalsifiable guess wearing the clothes of knowledge. Describe the image; their inner life is not yours to narrate. The world is not arranging itself around them either: no omen, no preparation, no destiny at work.\nOne flowing reading — 4 short sentences, 50 to 58 words total. It will be read aloud, so keep every sentence lean — about 28 to 33 seconds spoken. No sections, no labels, no line breaks between thoughts.\nThe reading is for Love & Relationships — from the first sentence, set the scene in what is given and received: the place and the people come from there; from the picture you were given, take only what happens in it. Do not tell them what is true between them and anyone — except in the closing line, and there only as a possibility they may weigh.\nBring one thing into focus, not one answer; sharpen what matters and leave the deciding to them.\nMention Fehu by name once, woven naturally. One clear insight is enough — do not pack everything in.\nEnd on one line that names what this may be in what the seeker gives and what they receive — a state that may be so, offered for them to weigh; it names how things may stand, never what to do about it. Let it grow out of the rune's question (\"what is in your hands now that could come alive if you let it move?\"), but say it in your own words.\nOne paragraph. No breaks. No labels. Address Kuky once in the middle, as a recognition rather than an introduction. Stay within the word count — short sentences, no filler. Respond in English.\nOutput format — return ONLY this JSON array, nothing before or after: [{\"rune\": \"(the rune name)\", \"text\": \"(the reading exactly as instructed above, one flowing paragraph)\"}]\nAFTER THE READING — after everything else, on a new line beginning with ✦, one more short line set apart: a thought offered for the seeker to carry away, grown from what Fehu is, not from the picture. Its source: \"Fehu is value that moves. Like water poured into a vessel: for a while there is too little, then it runs over.\" Let it grow out of that, but say it in your own words, and turn it toward the seeker: a question to them, or a quiet invitation to notice something. Never advice about their life, never a claim about what they feel or know.",
+  "text": "[{\"rune\":\"Fehu\",\"text\":\"You stand beside two partners as a cow passes between them, its milk feeding another household through lean winter. You see a frayed rope loosen from one hand, Kuky, and settle into the other. Fehu names wealth that sustains through exchange. What you give and receive may keep more than affection alive between you.\\n✦ What makes what you have valuable to someone else?\"}]"
+ },
+ {
+  "runa": "Kenaz",
+  "area": "Family & Home",
+  "seek": "Clarity",
+  "varianta": "B2",
+  "jadro": "One small light shows only what is close at hand.",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "usage": {
+   "prompt_tokens": 1290,
+   "completion_tokens": 333,
+   "total_tokens": 1623,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 1287,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 233,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  },
+  "prompt": "PERSON: Kuky\nDRAWN RUNE: Kenaz — focus on: inner light · Elements: Fire\nREADING ANGLE (follow this entry point — let it shape the opening and tone): Open with one quick glance at the whole image, then let everything fall away but one.\nTHE IMAGE\nRúnar uses one image per reading and carries it through; he does not list images. A second picture earns its place only when it takes the first one further — the same scene, one step on. Two unrelated pictures side by side say nothing. Never a simile stacked on a metaphor. The image must connect to where this person is standing right now — atmosphere on its own is decoration, not a reading.\nIMAGE — the picture in this reading comes from here: One small light shows only what is close at hand. Let it become your own seeing in the text, down to one detail the sentence does not name.\nTHE ESSENCE LINE: after the picture, one short line that says which side of the rune this picture shows — its sense in plain words a stranger to runes can grasp. The seeker knows only the words of the reading, not the picture behind them: say what the rune means in its own terms, not what happens in the scene. Never a fixed formula. No invented mechanism, no fate. Never tell the seeker what it means for them.\nNO COLD READING: never tell the seeker what is true, stirring, or known inside them — that is an unfalsifiable guess wearing the clothes of knowledge. Describe the image; their inner life is not yours to narrate. The world is not arranging itself around them either: no omen, no preparation, no destiny at work.\nOne flowing reading — 4 short sentences, 50 to 58 words total. It will be read aloud, so keep every sentence lean — about 28 to 33 seconds spoken. No sections, no labels, no line breaks between thoughts.\nThe reading is for Family & Home — from the first sentence, set the scene in the people one belongs to: the place and the people come from there; from the picture you were given, take only what happens in it. Do not tell them what they carry from their people.\nBring one thing into focus, not one answer; sharpen what matters and leave the deciding to them.\nMention Kenaz by name once, woven naturally. One clear insight is enough — do not pack everything in.\nEnd on one line that names what this may be in the people the seeker belongs to — a state that may be so, offered for them to weigh; it names how things may stand, never what to do about it. Let it grow out of the rune's question (\"what do you see more clearly than before — and what will you do with it, now that you cannot look past it?\"), but say it in your own words.\nOne paragraph. No breaks. No labels. This time do not use the name Kuky at all — let the reading stand without it. Stay within the word count — short sentences, no filler. Respond in English.\nOutput format — return ONLY this JSON array, nothing before or after: [{\"rune\": \"(the rune name)\", \"text\": \"(the reading exactly as instructed above, one flowing paragraph)\"}]\nAFTER THE READING — after everything else, on a new line beginning with ✦, one more short line set apart: a thought offered for the seeker to carry away, grown from what Kenaz is, not from the picture. Its source: \"Kenaz is a light that reaches only a step ahead of you, to a door that was there all along, unseen.\" Let it grow out of that, but say it in your own words, and turn it toward the seeker: a question to them, or a quiet invitation to notice something. Never advice about their life, never a claim about what they feel or know.",
+  "text": "[{\"rune\":\"Kenaz\",\"text\":\"You see your family around the kitchen table, then only one hand beside a small flame. The light reaches a single finger resting against the grain. Kenaz names your capacity to see clearly, without seeing everything. Among your people, this may be a small detail becoming harder to overlook, while its meaning remains yours to consider.\\n✦ What might you recognise before you can see what comes next?\"}]"
+ },
+ {
+  "runa": "Ansuz",
+  "area": "Healing & Wellbeing",
+  "seek": "Reflection",
+  "varianta": "B2",
+  "jadro": "A sound from far off reaches you, and you turn toward it before you decide to.",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "usage": {
+   "prompt_tokens": 1260,
+   "completion_tokens": 383,
+   "total_tokens": 1643,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 1257,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 292,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  },
+  "prompt": "PERSON: Kuky\nDRAWN RUNE: Ansuz — focus on: divine guidance · Elements: Air\nREADING ANGLE (follow this entry point — let it shape the opening and tone): Open with the one thing in the image that stays fixed while the rest gives way.\nTHE IMAGE\nRúnar uses one image per reading and carries it through; he does not list images. A second picture earns its place only when it takes the first one further — the same scene, one step on. Two unrelated pictures side by side say nothing. Never a simile stacked on a metaphor. The image must connect to where this person is standing right now — atmosphere on its own is decoration, not a reading.\nIMAGE — the picture in this reading comes from here: A sound from far off reaches you, and you turn toward it before you decide to. Let it become your own seeing in the text, down to one detail the sentence does not name.\nTHE ESSENCE LINE: after the picture, one short line that says which side of the rune this picture shows — its sense in plain words a stranger to runes can grasp. The seeker knows only the words of the reading, not the picture behind them: say what the rune means in its own terms, not what happens in the scene. Never a fixed formula. No invented mechanism, no fate. Never tell the seeker what it means for them.\nNO COLD READING: never tell the seeker what is true, stirring, or known inside them — that is an unfalsifiable guess wearing the clothes of knowledge. Describe the image; their inner life is not yours to narrate. The world is not arranging itself around them either: no omen, no preparation, no destiny at work.\nOne flowing reading — 4 short sentences, 50 to 58 words total. It will be read aloud, so keep every sentence lean — about 28 to 33 seconds spoken. No sections, no labels, no line breaks between thoughts.\nThe reading is for Healing & Wellbeing — from the first sentence, set the scene in what gives strength back: the place and the people come from there; from the picture you were given, take only what happens in it. No diagnosis, no verdict on their condition.\nOpen a mirror, not an answer; turn them inward.\nMention Ansuz by name once, woven naturally. One clear insight is enough — do not pack everything in.\nEnd on one question that holds out what this may be in what gives the seeker strength back — asked as a possibility they can weigh, never as something you know about them. Let it grow out of the rune's question (\"what will change if you truly hear what is coming to you now?\"), but say it in your own words.\nOne paragraph. No breaks. No labels. This time do not use the name Kuky at all — let the reading stand without it. Stay within the word count — short sentences, no filler. Respond in English.\nOutput format — return ONLY this JSON array, nothing before or after: [{\"rune\": \"(the rune name)\", \"text\": \"(the reading exactly as instructed above, one flowing paragraph)\"}]\nAFTER THE READING — after everything else, on a new line beginning with ✦, one more short line set apart: a thought offered for the seeker to carry away, grown from what Ansuz is, not from the picture. Its source: \"Ansuz is a word that comes at the right moment and stays with you longer than it should.\" Let it grow out of that, but say it in your own words, and turn it toward the seeker: a question to them, or a quiet invitation to notice something. Never advice about their life, never a claim about what they feel or know.",
+  "text": "[{\"rune\":\"Ansuz\",\"text\":\"Your bench stays firm as conversation fades in the garden where you rest. A distant voice reaches you, and you turn toward it with one hand still resting on the worn wood. Ansuz names guidance received through words you hear. Could hearing someone more fully change what gives you strength here?\\n✦ Which words stay with you after their moment has passed?\"}]"
+ }
+]

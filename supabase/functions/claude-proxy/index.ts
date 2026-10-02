@@ -267,15 +267,19 @@ async function callClaudeWithRetry(
 // je slepě soudit (krok 4). Klient posílá engine:'sol', ROZHODUJE server (isAdmin z JWT, ne klient).
 // Soukromí: jen adminova vlastní čtení — pro kohokoli dalšího musí RUNAR_PRIVACY.md jmenovat OpenAI jako
 // zpracovatele (táž podmínka jako gpt-review). Vrací null při jakékoli chybě → čtení jde na Claude.
-// reasoning_effort 'none' (jako gpt-review: přemýšlení stálo víc než polovinu výstupu); 400 → 'minimal'.
+// reasoning_effort: u gpt-6-sol bylo 'none' (jako gpt-review: přemýšlení stálo víc než polovinu výstupu).
+// 2026-10-02 gpt-6.1-sol (KUKY „vyšel sol 6.1, zkusíme ho“): 'none' ani 'minimal' NEpřijme (400 unsupported_value,
+// ověřeno voláním API) → nejnižší je 'low'. Test 3 čtení: přemýšlení 190–330 tokenů, cena čtení ~0,0042 → ~0,0063 USD
+// (EVAL_LOG 2026-10-02 (1)). Jediný pokus — dva odmítnuté by jen prodloužily čekání. Zpět na 6-sol = oba řádky níž.
 // Časový strop 50 s: když sol selže pozdě, fallback na Claude (55 s na pokus) se musí vejít do limitu funkce.
-const SOL_MODEL = "gpt-6-sol";
+const SOL_MODEL = "gpt-6.1-sol";
+const SOL_EFFORTS = ["low"];   // gpt-6-sol: ["none", "minimal"]
 async function callSol(system: string, prompt: string, maxTokens: number, key: string):
   Promise<{ text: string; usage: Record<string, unknown> | null } | null> {
   const ctl = new AbortController();
   const timer = setTimeout(() => ctl.abort(), 50000);
   try {
-    for (const eff of ["none", "minimal"]) {
+    for (const eff of SOL_EFFORTS) {
       const res = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: { "content-type": "application/json", authorization: "Bearer " + key },
@@ -285,7 +289,7 @@ async function callSol(system: string, prompt: string, maxTokens: number, key: s
         }),
         signal: ctl.signal,
       });
-      if (res.status === 400 && eff === "none") continue;
+      if (res.status === 400 && eff !== SOL_EFFORTS[SOL_EFFORTS.length - 1]) continue;
       if (!res.ok) {
         console.warn("sol failed:", res.status, (await res.text().catch(() => "")).slice(0, 300));
         return null;

@@ -7918,3 +7918,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Nevyzkoušeno na modelu:** čtení s novými obrazy zatím žádné — kritiku udělá owner nebo testeři, až na ně narazí.
 - Affected doc(s): `RUNAR_EVAL_LOG.md` (2026-10-01 (1)) · `RUNAR_BACKLOG.md` (kontrola dvojic — hotovo) · `RUNAR_DESIGN.md` (Typ obrazu:
   slovní obraz v produkci) — v tomto commitu.
+
+## 2026-10-02 (1) — Admin čte přes gpt-6.1-sol (v repu; účinné až po deployi claude-proxy, ten pustí owner)
+
+- **Rozhodl:** KUKY — report 2026-10-01 *„Vyšel model sol6.1, zkusíme ho"* + 2026-10-02 *„všechny v tomhle pořadí"* (bod 1:
+  přepnout admina na 6.1, cenu ověřit předem). **Provedl:** CODE-tune.
+- **Co:** `claude-proxy` — `SOL_MODEL = "gpt-6.1-sol"`, `SOL_EFFORTS = ["low"]` (dřív pevně none → minimal). Ceník
+  `MODEL_PRICES` (`v2/runar-config.js`) + řádek `gpt-6.1-sol` [2 · 0,10 · 10 USD / 1 M], ověřeno na stránce ceníku OpenAI.
+- **Proč low:** 6.1 nepřijme *none* ani *minimal* (400, ověřeno voláním API). Pouhá výměna jména by každé čtení tiše poslala na
+  Claude (callSol vrátí null → fallback). Důsledek: model před čtením přemýšlí a čtení stojí ~0,0063 místo ~0,0042 USD
+  (EVAL_LOG 2026-10-02 (1)). Návrat na 6-sol = dva řádky (model + `["none", "minimal"]`).
+- **Ověřeno:** běžící proxy (staženo `supabase functions download`) = repo HEAD před změnou → deploy nic cizího nepřepíše;
+  funkce běží s `verify_jwt: false` (adminství ověřuje sama z JWT) — deploy musí to nastavení zachovat.
+- ⚠️ **Účinné až po** `supabase functions deploy claude-proxy` se zachovaným `--no-verify-jwt` — deploy pouští owner.
+- Affected doc(s): `RUNAR_EVAL_LOG.md` (2026-10-02 (1)) — v tomto commitu.
