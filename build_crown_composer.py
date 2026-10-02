@@ -1240,6 +1240,11 @@ HTML = r"""<!DOCTYPE html>
     ctx.clearRect(0,0,W,H);
     _pick.length=0;
     var vlog=(state._viewN!=null) ? state.log.slice(0,state._viewN) : state.log;   /* KROK 1.5: prehravani po cteni N */
+    /* ZALOZENI JE NUTNA PODMINKA (2026-10-02, KUKY: "strom neroste bez zalozeni! NIKDY. napred zivotni runa,
+       pak norns"). Strom zacina PRVNIMI Nornami (3 runy); cteni pred nimi do stromu nepatri, bez Noren seminko.
+       Drive lab rostl i bez Noren (prameny z prvnich run). */
+    (function(){ var fi=-1; for(var q=0;q<vlog.length;q++){ var rq=vlog[q]; if(rq && rq.spread==='norns' && (rq.runes||[]).length===3){ fi=q; break; } }
+      vlog = (fi<0) ? [] : vlog.slice(fi); })();
     var useLog=vlog && vlog.length>0;                                 /* KROK 1: realna cteni ridi strom */
     /* SEMINKO (2026-09-27, KUKY: pestovat novy strom v labu od zacatku). Drive tu byla "prazdna
        puda" bez kmene; aplikace ale bez cteni kresli holy kmen zivotni runy s koreny (RUNAR_TREE.md

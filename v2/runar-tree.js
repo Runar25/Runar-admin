@@ -251,9 +251,24 @@ async function renderLivingTree(rune) {
       if (wrap) wrap.style.display = 'none'; return;
     }
     var log = [];
-    try {
+    // ZALOZENI JE NUTNA PODMINKA (KUKY 2026-10-02: "strom neroste bez zalozeni! NIKDY. napred zivotni
+    // runa, pak norns"). Drive se zivy strom kreslil ze VSECH cteni i bez zalozeni: owner po resetu
+    // zivotni runy (reset maze i zalozeni, cteni nechava) videl strom z 410 cteni a zaroven vyzvu
+    // "dalsi jsou Norny". Ted: bez zalozeni jen seminko; se zalozenim strom roste OD zakladaciho cteni
+    // (drivejsi cteni zustavaji v deniku, do stromu nepatri). Nenajde-li se zakladaci cteni, strom se
+    // nesmaze — vezmou se vsechna (lepsi nez uzivateli strom tise vymazat).
+    if (userTreeFounded) try {
+      var pf  = await sb.from('user_profiles').select('tree_founded_at, founding_reading_id').eq('id', currentUser.id).maybeSingle();
       var res = await sb.from('readings').select('*').eq('user_id', currentUser.id).order('drawn_at', { ascending: true });
-      if (res && res.data) log = readingsToTreeLog(res.data);
+      if (res && res.data) {
+        var rows = res.data, pd = (pf && pf.data) || {}, start = -1;
+        if (pd.founding_reading_id) for (var q = 0; q < rows.length; q++) { if (rows[q].id === pd.founding_reading_id) { start = q; break; } }
+        if (start < 0 && pd.tree_founded_at) {   /* zakladaci cteni se uklada tesne PRED znackou */
+          var tf = new Date(pd.tree_founded_at).getTime() - 15 * 60 * 1000;
+          for (var q2 = 0; q2 < rows.length; q2++) { if (new Date(rows[q2].drawn_at).getTime() >= tf) { start = q2; break; } }
+        }
+        log = readingsToTreeLog(rows.slice(Math.max(0, start)));
+      }
     } catch(e) {}
     var bk = (window.RunarBranch && window.RunarBranch.RUNES.filter(function(x){ return x.g === rune.g; })[0]);
     _treeLog  = log;
