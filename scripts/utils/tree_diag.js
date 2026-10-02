@@ -734,3 +734,64 @@ if (cast === 'tiers') {
   one('modelovy clovek, vyvazeny, BEZ zameru (150)', gen(1136, [0.35, 0.35, 0.3], 150, false));
   one('modelovy clovek, vyvazeny, nahodny zamer minulost/ted/budoucnost (150)', gen(1136, [0.35, 0.35, 0.3], 150, true));
 }
+if (cast === 'zscen') {
+  // VYSKA = CAS (V4, 2026-10-02): modelovi lide podle toho, KAM se divaji (zamer, oblast, seeking). Pro kazdy typ
+  // 12 lidi, strom po 10/50/150/300 cteni: vyska stromu (od zeme po vrch koruny, px), kolik hmoty je u korenu
+  // (spodnich 45 % vysky stromu), nahore (nad 75 %), median vystupu ramen; plus strana. JSON -> argv[4].
+  const HTML = process.argv[3] && process.argv[3] !== '-' ? process.argv[3] : null, OUT = process.argv[4] || null;
+  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, maxMains: 10, gradStrand: 1 }, process.env.LRCFG ? JSON.parse(process.env.LRCFG) : {}) });
+  const SC = [
+    { id: 'minulost', nm: 'minulost, rodina, nitro (60 % čtení)', int: [0.6, 0.2, 0.2], area: [0.6, 0.2, 0.2], seek: [0.6, 0.2, 0.2] },
+    { id: 'budoucnost', nm: 'budoucnost, poslání, práce (60 % čtení)', int: [0.2, 0.2, 0.6], area: [0.2, 0.2, 0.6], seek: [0.2, 0.3, 0.5] },
+    { id: 'pritomnost', nm: 'přítomnost, vztahy, rozcestí (60 % čtení)', int: [0.2, 0.6, 0.2], area: [0.2, 0.6, 0.2], seek: [0.2, 0.6, 0.2] },
+    { id: 'vsude', nm: 'dívá se všude (vše rovnoměrně)', int: [1/3, 1/3, 1/3], area: [3/8, 2/8, 3/8], seek: [0.4, 0.4, 0.2] },
+    { id: 'nic', nm: 'nic nevyplňuje (jen runy)', int: null, area: null, seek: null } ];
+  const NS = [10, 50, 150, 300], NSEED = +(process.env.NSEED || 12);
+  const RB = B.RUNES.filter(r => r.k !== 'odinn'), AI = ['healing', 'family', 'inner'], AM = ['love', 'crossroads'], AO = ['purpose', 'career', 'spirituality'];
+  const gen = (seed, sc, N) => { let s = seed; const rnd = () => (s = (s * 1103515245 + 12345) >>> 0) / 4294967296;
+    const pick3 = (p, a, b, c) => { const x = rnd(); return x < p[0] ? a() : (x < p[0] + p[1] ? b() : c()); };
+    const one = arr => () => arr[Math.floor(rnd() * arr.length)];
+    const intn = () => sc.int ? pick3(sc.int, () => 'past', () => 'present', () => 'decision') : null;
+    const area = () => sc.area ? pick3(sc.area, one(AI), one(AM), one(AO)) : null;
+    const seek = () => sc.seek ? pick3(sc.seek, one(['insight', 'reflection']), one(['clarity', 'confirmation']), () => 'general') : null;
+    const pick = n => { const pool = RB.slice(), rs = []; for (let i = 0; i < n; i++) { const r = pool.splice(Math.floor(rnd() * pool.length), 1)[0]; rs.push({ rune: r.k, el: r.el }); } return rs; };
+    const log = [{ spread: 'norns', runes: pick(3), area: area(), intention: intn(), seeking: seek() }];
+    for (let i = 1; i < N; i++) { const x = rnd(); log.push({ spread: x < 0.8 ? 'single' : 'compass', runes: pick(x < 0.8 ? 1 : 5), area: area(), intention: intn(), seeking: seek() }); }
+    return log; };
+  const arc = pts => { let a = 0; for (let i = 1; i < pts.length; i++) a += Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y); return a; };
+  const measure = log => { const r = labRun(log, HTML, inj), gy = 660; let minY = 1e9; const items = [];
+    r.allPicks.forEach(p => { if (!p.pts || p.pts.length < 2 || String(p.k).startsWith('r')) return; if (!(typeof p.k === 'number' || String(p.k).startsWith('t'))) return;
+      const pts = typeof p.k === 'number' ? p.pts.slice(-30) : p.pts; let sy = 0, sx = 0; pts.forEach(q => { sy += q.y; sx += q.x; if (q.y < minY) minY = q.y; }); items.push({ L: arc(pts), y: sy / pts.length, x: sx / pts.length }); });
+    const H = gy - minY; let lo = 0, hi = 0, tot = 0, left = 0;
+    items.forEach(it => { const h = (gy - it.y) / H; tot += it.L; if (h < 0.45) lo += it.L; if (h > 0.75) hi += it.L; if (it.x < 280) left += it.L; });
+    const ex = r.allPicks.filter(p => typeof p.k === 'number' && !p.meta.gradOf && p.k > 0).map(p => +p.meta.frac).sort((a, b) => a - b);
+    return { H, lo: lo / tot, hi: hi / tot, left: left / tot, exMed: ex.length ? ex[Math.floor(ex.length / 2)] : null }; };
+  const med = a => { const b = a.slice().sort((x, y) => x - y); return b[Math.floor(b.length / 2)]; };
+  const res = [];
+  SC.forEach((sc, si) => { const rows = [];
+    for (let k = 0; k < NSEED; k++) { const seed = 2000 + k * 31 + si * 211, log = gen(seed, sc, 300), row = { seed }; NS.forEach(N => { row[N] = measure(log.slice(0, N)); }); rows.push(row); }
+    const out = { id: sc.id, nm: sc.nm, def: sc, by: {} };
+    NS.forEach(N => { out.by[N] = { H: med(rows.map(r => r[N].H)), lo: med(rows.map(r => r[N].lo)), hi: med(rows.map(r => r[N].hi)), left: med(rows.map(r => r[N].left)), ex: med(rows.map(r => r[N].exMed || 0)) }; });
+    const at = rows.map(r => ({ seed: r.seed, lo: r[300].lo, H: r[300].H })).sort((a, b) => a.lo - b.lo), mlo = out.by[300].lo;
+    out.typical = at.slice().sort((a, b) => Math.abs(a.lo - mlo) - Math.abs(b.lo - mlo))[0];
+    out.spread = [0.05, 0.35, 0.65, 0.95].map(f => at[Math.round(f * (at.length - 1))]);
+    out.cells = { typical: NS.map(N => { const rr = rows.find(r => r.seed === out.typical.seed)[N]; return { N, lo: rr.lo, hi: rr.hi, H: rr.H }; }) };
+    res.push(out);
+    const pc = x => (100 * x).toFixed(0).padStart(3) + ' %';
+    console.log('\n' + sc.nm);
+    NS.forEach(N => { const b = out.by[N]; console.log('  po', String(N).padStart(3), 'cteni | vyska stromu', Math.round(b.H), 'px | u korenu', pc(b.lo), '| nahore', pc(b.hi), '| vystupy ramen median', (b.ex || 0).toFixed(2), '| vlevo', pc(b.left)); });
+  });
+  if (OUT) fs.writeFileSync(OUT, JSON.stringify(res, null, 1));
+}
+if (cast === 'twigat') {
+  // Ladeni jedne vetvicky mezi dvema ctenimi: KEYS="t2_dagaz_62_3,t2_dagaz" NS="84,85"
+  const HTML = process.argv[3] && process.argv[3] !== '-' ? process.argv[3] : null;
+  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, zrod: 0.3, dorust: 4 }) });
+  const keys = (process.env.KEYS || '').split(',');
+  (process.env.NS || '84,85').split(',').map(Number).forEach(n => { const r = labRun(st.log.slice(0, n), HTML, inj);
+    keys.forEach(k => { const p = r.allPicks.find(q => String(q.k) === k); if (!p) { console.log('N=' + n, k, '— neni'); return; }
+      const a = p.pts[0], b = p.pts[p.pts.length - 1], m = p.meta || {};
+      console.log('N=' + n, k.padEnd(18), 'zacatek', a.x.toFixed(1) + ',' + a.y.toFixed(1), '| smer', (Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI).toFixed(1) + '°', '| delka', p.pts.length, 'b.', '| slot', m.slot, 'fu', m.fu != null ? (+m.fu).toFixed(3) : '-'); }); });
+}

@@ -10,6 +10,7 @@
 #    řádky tvrdily „SPÍCÍ" a „strana z areaSide", což od kroků 1 a 3 neplatí.
 # ⚠️ 2026-09-30: vrstvy D a H — úhel ramene dává kostra `FR` (ne `emergence`), graduant smí na druhou stranu (KROK 3b).
 # ⚠️ 2026-10-01: vrstva F — kmen jako svazek (`T.exitFrac`); vrstva C — mapa výšky (které čtení dole/nahoře) bydlí v RUNAR_TREE.md §3.
+# ⚠️ 2026-10-02: vrstvy C/D — výška ramene, místo runy na rameni i místo čtení na větvi jdou ze ZÓNY čtení (záměr/oblast/seeking/pozice/svět, RUNAR_TREE.md §3 + §5 KROK 4); úhel odchodu podle elementu.
 # Vlastník: CODE-tree (mechanika + implementace) · Cowork-tree (význam) · KUKY (rozhoduje).
 
 ## Jak číst
