@@ -690,6 +690,11 @@
   převypráví a oblast připojí zvláštní větou, často slovy podoby oblasti (*„Among your people“*). Zkoušeno a horší nebo stejné než A:
   B, B2, C (karta), D1, D2 (DECISIONS 2026-10-03 (4)). Nasazen jen výběr obrazu podle oblasti (řeší střet, ne stavbu). Další páka podle
   kódu: méně povinných kroků ve 4 větách (Ask má jednu otázku a prostor a píše líp — EVAL_LOG 2026-10-03 (1)). Napřed s ownerem.
+  👁 **Owner 2026-10-03: „zatím s tím nic dělat nebudeme… čtení bude přibývat a řekne nám víc, kde ten problém je nebo není.“** → SLEDOVAT.
+  Na ownerovu otázku *„model takhle nedostane, nebo jo?“*: dostane — testy stavěly prompt TOUŽ funkcí (`buildReadingPrompt`) a ownerovo
+  skutečné čtení Kenaz 2026-10-02 (draws `area_face: 1`) končí *„Among your people, someone's absence…“*, totéž co v testu.
+  Jak přeměřit z živých čtení: u single s oblastí vzít `prompt_draws->>'area_face'`, podobu z `AREA_FACES` a spočítat, kolik čtení nese
+  její slova doslova (přistání [0] i most [1]) — a kolik vět čtení mluví o oblasti. Až bude dost čtení (owner řekne).
 - [ ] 👁 **Tvrzení o stavu domova („In your home the talk has gone flat“) prompt pořád umí** (DECISIONS 2026-09-24 (19); owner: „ta Isa je špatně“).
   **2026-09-30 změřeno (EVAL_LOG 2026-09-30 (8)):** příčina nebyl obraz (příroda); na v4.82 tvrzení 0/3 (Isa × Family & Home, i týž obraz).
   Zbývá jen HLÍDAT živá čtení — od 23. 9. nebylo žádné s Family & Home. Obraz neměnit.
