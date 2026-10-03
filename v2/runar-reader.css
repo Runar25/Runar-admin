@@ -377,16 +377,16 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .coll-detail-header .coll-detail-close{grid-area:x;align-self:start;}
 .coll-detail-header .coll-detail-shape{grid-area:s;}
 .coll-detail-glyph{font-size:3.2em;line-height:1;color:var(--gold);opacity:0.8;}
-.coll-detail-names{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:12px;row-gap:4px;}
-.coll-detail-en{font-family:'Cinzel',serif;font-size:0.9em;letter-spacing:4px;color:var(--gold);}   /* = .brand (AGNDOFA) */
-.coll-detail-is{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.5px;color:var(--muted);}
+.coll-detail-names{display:flex;flex-wrap:nowrap;align-items:baseline;column-gap:12px;}   /* 2026-10-03: nowrap — významy zůstanou VEDLE jména i na telefonu */
+.coll-detail-en{flex:none;font-family:'Cinzel',serif;font-size:0.9em;letter-spacing:4px;color:var(--gold);}   /* = .brand (AGNDOFA) */
+.coll-detail-is{flex:none;font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.5px;color:var(--muted);}
 .coll-detail-is:empty{display:none;}
 /* Popis tvaru runy vedle glyfu (2026-09-30, KUKY bod 5) — písmo Rúnarova učení (.coll-audio-text), menší, ať sedí vedle kamene. */
 .coll-detail-shape{font-size:0.92em;font-style:italic;color:var(--muted);line-height:1.85;}   /* = .coll-audio-text (KUKY: „stejný jako ostatní písmo“) */
 @media(max-width:480px){.coll-detail{padding:18px 16px;}.coll-detail-header{column-gap:12px;}.coll-detail-header .cd-stone{width:56px;}}
 .coll-detail-close{background:none;border:none;color:var(--dim);font-size:1.1em;cursor:pointer;padding:4px;}
 .coll-detail-close:hover{color:var(--white);}
-.coll-detail-kw{font-size:0.92em;font-style:italic;color:var(--muted);line-height:1.5;}   /* 2026-10-02: vedle jména v hlavičce (dřív samostatný řádek pod ní) */
+.coll-detail-kw{flex:1;min-width:0;font-size:0.92em;font-style:italic;color:var(--gold);opacity:0.85;line-height:1.5;}   /* 2026-10-03 (KUKY): zlatě vedle jména; zalamuje se ve svém sloupci */
 .coll-detail-sep{width:32px;height:1px;background:linear-gradient(to right,var(--gold),transparent);margin:14px 0;}
 .coll-audio-lbl{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--gold);margin-bottom:10px;}
 .coll-audio-text{font-size:0.92em;font-style:italic;color:var(--muted);line-height:1.85;margin-bottom:14px;}
