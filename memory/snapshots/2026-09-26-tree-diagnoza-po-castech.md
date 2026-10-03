@@ -91,6 +91,15 @@ měř přímo na enginu (část `1b`).
   scratchpadu (port 7797) → ownerův `_tree_shot.jpg` zůstane. Otázky na ownera: životní runa hýbe stranou
   (Perth +4,8°)? · Norny se smí překlopit? · paměť stromu celý život vs poslední čtení? · pak náklon kmene.
 
+- **2026-10-01–03:** kmen jako svazek (tloušťka podle pramenů, pata jen 40 %) · mapa výšky (RUNAR_TREE.md §3) ·
+  krok 4 „výška = čas“ v labu (zóna čtení řídí výšku ramen, místo čtení, výšku stromu; úhel podle elementu) ·
+  ⛔ založení = NUTNÁ podmínka (KUKY), po založení strom obsahuje VŠECHNA čtení (i před ním), Norny první — jen v LABU.
+  ⚠️ Brána založení byla krátce i v produkci a ownerovi (reset mu smazal založení) sebrala strom → produkce vrácena
+  na starý živý strom; **před portem vrátit ownerovi založení**. Seeking: aplikace ho ukládá, převod do stromu doplněn.
+  **Čeká na ownera:** jeho nový nápad „zóny × elementy“ (3 zóny koruny × oheň/voda/vzduch/země, stín na hranách →
+  až 14 ramen v patrech; čtení jde na rameno svého elementu ve své zóně, NE na větev své runy; rameno začíná
+  neutrálně a ohýbá ho přítok čtení; úhel podle elementu zrušit). Schéma poslané, čeká na „sedí / nesedí“.
+
 ## Co visí
 - ~~Oprava hooku `tree-guard.sh`~~ — hotovo 2026-09-27.
 - Blank má ve stromě jiný znak (◇ proti ○); čtení s Blank to řeší zvlášť (`blank → odinn`) — ověřit v části 3.
