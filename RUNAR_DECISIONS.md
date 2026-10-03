@@ -8168,3 +8168,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   se stejnou stranou po 15 px 48).
 - Affected doc(s): `RUNAR_TREE.md` §5 („KAŽDÁ VĚTEV Z JINÉHO MÍSTA") · `RUNAR_TREE_MAP.md` §2, §3, §5, §7, §9, §12, §13 ·
   `RUNAR_BACKLOG.md` — v tomto commitu.
+
+## 2026-10-03 (16) — Strom (lab): povýšená větev se od matky stočí rychle (přes 15 % své délky)
+
+- **Rozhodl:** CODE-tree, ohlášené ownerovi jako další krok po obrázku 4 („opravím bez změny tvaru ramen"). **Provedl:** CODE-tree, jen LAB.
+- **Proč:** s ranním tvarem ramen (2026-10-03 (15)) běžela povýšená větev podél své matky — 146 souběhů z 285 na 24 modelových
+  stromech. Příčina změřená oběma směry páky: povýšená vyrůstá ve směru matky a ke svému úhlu se stáčela přes 45 % své délky
+  (napojení jako rameno z kmene), takže první kus běžel s matkou souběžně. Stočení přes 15 %: 146 → 18 (všech souběhů 285 → 158);
+  přes 70 %: 162. Nepomohlo (změřeno a zahozeno): odštěpení dřív na matce (137), úhel od směru špičky matky (117), poloviční
+  zdvih špičky povýšené (148).
+- **Co se nemění:** ramena z kmene si drží ranní napojení (`limbBendU`, výchozí 0,45). Na KUKYho stromě (1 povýšená) žádná viditelná
+  změna (`tree_render.js`), otočení i skoky beze změny.
+- Affected doc(s): `RUNAR_TREE_MAP.md` §7, §9 · `RUNAR_BACKLOG.md` (souběhy větví) — v tomto commitu.

@@ -1918,6 +1918,10 @@ HTML = r"""<!DOCTYPE html>
       if(Math.abs(gDev)>GMAX){ var gEx=(Math.abs(gDev)-GMAX)*(gDev>0?1:-1); gBase=sAng+gEx; gDev-=gEx; }
       var gLB={ b:gLP.b, n:gLP.n, c:gLP.c };
       var gcfg={}; for(var gk in par.mcfg) gcfg[gk]=par.mcfg[gk]; gcfg._k=k; gcfg._side=gSide;   /* strana ohybu = strana odbocky (casove stala) */
+      /* RYCHLA ODBOCKA (2026-10-03): povysena se ke svemu uhlu stoci pres 15 % sve delky, ne pres 45 % jako rameno z kmene —
+         jinak prvni kus bezel ve smeru matky souběžne s ni (modelove stromy: soubehu povysena + matka 146 -> 18; obracene,
+         stoceni pres 70 % delky: 162). Ramena z kmene si drzi ranni napojeni (posuvnik limbBendU; KUKY obrazek 4). */
+      gcfg.limbBendU=Math.min(0.15, (crownT.limbBendU!=null) ? crownT.limbBendU : 0.45);
       var gLen=gPf*gEmg*(crownT.gradLen||1);
       var gRt=(branchEls.gradTree||[])[GS.gi], gKids=gRt ? repKids(gRt, vlog.length, bandLoHi(par.el, par.be.band||0)) : [];   /* cteni od povyseni */
       var _gStart=crown.length;
