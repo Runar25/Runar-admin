@@ -50,3 +50,10 @@ Souvisí: [[napred-dohledej-co-uz-je]], [[ownerovo-slovo-neni-spec]].
 vidí výchozí hodnoty z kódu. Já měřil s jeho uloženými (`_tree_state.json`: podlaha výstupu 0,13) a dvě ramena „přesně
 z jednoho místa" při výchozí podlaze 0,50 mi utekla; on je uviděl hned. Kontroly, které mají chránit jeho pohled, pouštěj
 s výchozími hodnotami (tak běží smoke ㉳) a jeho uložené ber jako druhý případ, ne jediný.
+
+**6. Po změně modelu projdi VŠECHNO, co o něm mluví (2026-10-03, CODE-tree).** Krok 5 změnil, co je větvička (jedno čtení na rameni
+elementu), a inspekce dál psala „tuhle runu jsi táhl 1x" (byl to počet čtení NA větvičce), „délka roste s opakováním runy" a u ramene
+vždy „pořadí v elementu: 1."; posuvníky nahrazených mechanik visely bez účinku a RESET strom nemazal. Owner: *„proč se informace
+nemění? proč pořád něco nefunguje? kdo dělá chybu a proč?"* Měřil jsem geometrii, ne to, co o ní říká rozhraní. **Po každé změně
+modelu projdi: inspekci (každý druh části), přehled větví, text RŮST, audit posuvníků (`tree_diag.js sliders`, DEFAULTS=1), reset
+a vymazání, docs.** Co jde, hlídá smoke ㉳ (místa větví, klikatelnost, inspekce = log).
