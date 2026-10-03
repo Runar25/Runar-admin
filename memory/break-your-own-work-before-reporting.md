@@ -57,3 +57,12 @@ vždy „pořadí v elementu: 1."; posuvníky nahrazených mechanik visely bez �
 nemění? proč pořád něco nefunguje? kdo dělá chybu a proč?"* Měřil jsem geometrii, ne to, co o ní říká rozhraní. **Po každé změně
 modelu projdi: inspekci (každý druh části), přehled větví, text RŮST, audit posuvníků (`tree_diag.js sliders`, DEFAULTS=1), reset
 a vymazání, docs.** Co jde, hlídá smoke ㉳ (místa větví, klikatelnost, inspekce = log).
+
+**7. Číslo opravené, strom ztracený — před hlášením vykresli CELÝ strom vedle verze, kterou owner naposledy přijal (2026-10-03, CODE-tree).**
+Překryvy jsem srazil 226 → 49 a dodržel 30 px — a cestou kvůli nim přidal vějíř (nižší rameno vodorovněji), změnil tvar ramen a nechal
+podlahu sjet k 10 % kmene. Na jeho stromě z toho byla rovná tyč s vodorovnými klacky od země a vidlicí na špici. Owner: *„a je to koště.
+předělal jsi víc věcí, než jsi měl, a už to není strom."* Žádné z mých měřidel se neptalo „vypadá to jako strom?". **Před hlášením změny
+stromu: `scripts/utils/tree_render.js` (jeho strom, výchozí posuvníky) vedle poslední přijaté verze — a podívat se.** Změna, kterou owner
+nezadal (tvar, úhly, podlaha), patří na obrázek zvlášť, ne schovaná v balíku s tou zadanou. A jeho pravidlo s číslem („30px min.") nejdřív
+ukaž s důsledkem (kolik ramen se vejde, jak strom vypadá), než ho zapečeš — 30 px mezi všemi rameny nechalo 8 ramen, on myslel stejnou stranu.
+Souvisí: [[runar-trunk-incremental-rule]], [[ownerovo-slovo-neni-spec]].
