@@ -8088,3 +8088,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Otevřené:** proč KUKY viděl „začíná na 185 čteních" — v labu jsem to nenasimuloval (VYMAZAT funguje); pravděpodobně RESET bez
   smazání čtení nebo zakládací Norny až po mnoha čteních. Ověřit s ním.
 - Affected doc(s): `RUNAR_BACKLOG.md` (posuvníky) — v tomto commitu.
+
+## 2026-10-03 (11) — Lab stromu: inspekce a přehled větví mluví podle dnešního modelu; smoke ㉳ hlídá, že inspekce = log
+
+- **Rozhodl:** KUKY 2026-10-03 *„proč se informace nemění? proč pořád něco nefunguje? kdo dělá chybu a proč?"*. **Provedl:** CODE-tree, jen LAB.
+- **Co bylo špatně (chyba CODE-tree):** inspekce popisovala model z kroku 1 — u větvičky „tuhle runu jsi táhl 1x" (byl to počet čtení
+  NA větvičce, u listu vždy 1), „délka roste s opakováním této runy" (od kroku 5 neplatí), u ramene vždy „pořadí v elementu: 1."
+  (od zón vždy 0); v přehledu sloupec „grad" vždy prázdný (povýšené už nejsou větvičky). Krok 5 změnil mechaniku a rozhraní,
+  které o ní mluví, jsem neprošel.
+- **Teď:** větvička — ze kterého čtení vznikla (oblast, záměr, seeking, zóna, strana), na čem roste a kde, kolik čtení nese,
+  kolikrát runa padla na celém stromě; rameno — kolikrát runa padla, kolik čtení na něm roste, při kterém čtení vzniklo, kolik
+  povýšených z něj; přehled: sloupce „čtení" a „povýš.". Smoke ㉳ porovná inspekci s logem (mutace: předchozí verze 3 576 rozporů).
+- Affected doc(s): žádné (inspekce žije v kódu labu).

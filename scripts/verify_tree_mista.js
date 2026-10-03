@@ -12,6 +12,8 @@
 //   (b) vetve na tomtez rodici (vetvicky i povysene) zacinaji aspon MIN_SIB px od sebe,
 //   (c) kazdy nakresleny tah patri klikatelne casti stromu,
 //   (d) v kmeni je nejvys 15 pramenu (14 mist element × zona, vzacne 15. pri trech zakladacich runach stinu).
+//   (e) INSPEKCE odpovida logu (2026-10-03, KUKY: "proc se informace nemeni?" — inspekce popisovala model z kroku 1):
+//       vetvicka vznikla ze cteni, ktere jeji runu opravdu obsahuje; "tahl celkem Nx" = skutecny pocet v logu.
 //
 //   node scripts/verify_tree_mista.js            (TREE_LAB_HTML=<cesta> = jina kopie labu, napr. pro mutacni test)
 const path = require('path'), cp = require('child_process'), fs = require('fs');
@@ -56,9 +58,18 @@ LOGS.forEach(([nm, log]) => NS.forEach(n => {
   const drawn = r.sb._DA ? r.sb._DA() : null, picked = new Set(r.allPicks.map(p => p.pts));
   if (!drawn) fails.push('lab neda seznam nakreslenych tahu (_DA) — kontrola klikatelnosti nebezi');
   else { const bad = drawn.filter(L => !picked.has(L.pts)); if (bad.length) fails.push(nm + ' po ' + n + ': ' + bad.length + ' nakreslenych tahu nejde kliknout (' + [...new Set(bad.map(L => L.src || '?'))].join(', ') + ')'); }
+  /* (e) inspekce proti logu */
+  const sub = log.slice(0, n), tot = {}, nameOf = {}; B.RUNES.forEach(x => { nameOf[x.k] = x.name; });
+  sub.forEach(rd => (rd.runes || []).forEach(x => { tot[nameOf[x.rune]] = (tot[nameOf[x.rune]] || 0) + 1; }));
+  r.allPicks.forEach(p => { const m = p.meta || {}; if (m.root) return;
+    if (m.runeTot != null && m.runeTot !== tot[m.name]) fails.push(nm + ' po ' + n + ': inspekce ' + m.name + ' "tahl celkem ' + m.runeTot + 'x", v logu ' + (tot[m.name] || 0) + 'x');
+    if (m.twig) { if (m.born == null || !sub[m.born]) fails.push(nm + ' po ' + n + ': vetvicka ' + m.name + ' nevi, ze ktereho cteni vznikla');
+      else if (!(sub[m.born].runes || []).some(x => nameOf[x.rune] === m.name)) fails.push(nm + ' po ' + n + ': vetvicka ' + m.name + ' tvrdi cteni #' + (m.born + 1) + ', ale v nem jeji runa neni');
+      if (m.runeTot == null) fails.push(nm + ' po ' + n + ': vetvicka ' + m.name + ' bez poctu tazeni'); }
+    else if (typeof p.k === 'number' && m.runeTot == null) fails.push(nm + ' po ' + n + ': rameno ' + m.name + ' bez poctu tazeni'); });
   const sm = /prameny (\d+)/.exec(r.grow), sn = sm ? +sm[1] : null; if (sn != null) maxStr = Math.max(maxStr, sn);
   if (sn == null) fails.push(nm + ' po ' + n + ': pocet pramenu v kmeni nejde precist');
   else if (sn > MAX_STRANDS) fails.push(nm + ' po ' + n + ': ' + sn + ' pramenu v kmeni (max ' + MAX_STRANDS + ' — povysene vetve nemaji vlastni pramen)');
 }));
-if (fails.length) { fails.slice(0, 12).forEach(f => console.log('   ' + f)); console.log('strom: ' + fails.length + ' poruseni (vetve ze stejneho mista / neklikatelne / prameny navic)'); process.exit(1); }
-console.log('strom (lab): ' + runs + ' stromu — vystupy ramen aspon ' + worstE.toFixed(0) + ' px od sebe, vetve na rodici aspon ' + worstS.toFixed(1) + ' px, vse klikatelne, nejvys ' + maxStr + ' pramenu v kmeni');
+if (fails.length) { fails.slice(0, 12).forEach(f => console.log('   ' + f)); console.log('strom: ' + fails.length + ' poruseni (vetve ze stejneho mista / neklikatelne / prameny navic / inspekce neodpovida logu)'); process.exit(1); }
+console.log('strom (lab): ' + runs + ' stromu — vystupy ramen aspon ' + worstE.toFixed(0) + ' px od sebe, vetve na rodici aspon ' + worstS.toFixed(1) + ' px, vse klikatelne, inspekce = log, nejvys ' + maxStr + ' pramenu v kmeni');

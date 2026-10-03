@@ -755,7 +755,7 @@ check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 # Strom (lab, CODE-tree 2026-10-03): kazda vetev z jineho mista + nic neklikatelneho + nejvys 15 pramenu. KUKY: "nechci, aby
 # vyrustaly dve nebo vice vetvi ze stejneho mista — tohle resim od samoho zacatku" · "na strome nema byt nic, co sam uzivatel
 # nevytvoril". Pred opravou 19 dvojic ramen pod 10 px a 55 neklikatelnych tahu; hlidal to jen owner okem.
-print('\n' + chr(0x3273) + ' STROM: VETVE Z JINYCH MIST (verify_tree_mista.js)')
+print('\n' + chr(0x3273) + ' STROM (lab): MISTA VETVI, KLIKATELNOST, INSPEKCE (verify_tree_mista.js)')
 r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_tree_mista.js')],
                    capture_output=True, text=True, encoding='utf-8')
 passed = r.returncode == 0
