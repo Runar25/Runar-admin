@@ -8038,3 +8038,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Kontrola:** ㉱ `verify_thought.js` nově protlačí produkční `renderJournal` se stubem DOM (single, spread, staré čtení); mutace
   (myšlenka neoddělená) = 2 vady. Prohlížeč: karta Fehu i Norny — text bez ✦, zlatý řádek po rozbalení, zabalená bez něj.
 - Affected doc(s): `RUNAR_BACKLOG.md` (myšlenka ✦ — deník hotov) — v tomto commitu.
+
+## 2026-10-03 (7) — Myšlenka ✦ i pro Podkovu a Yggdrasil (v4.88)
+
+- **Rozhodl:** KUKY 2026-10-03 *„10 myšlenku ✦ i pro Podkovu a Yggdrasil"*. **Provedl:** CODE-tune.
+- **Co:** `_THOUGHT_SOURCE` (`v2/runar-reading.js`) + `HORSESHOE: 6`, `YGGDRASIL: 3`. Zdrojová runa: **Podkova = runa 7 Výsledek**
+  (závěr patří jí — týž důvod jako Skuld u Norny); **Yggdrasil = runa 4 Midgard** (svět člověka, střed kmene — jako střed u Kříže).
+  Tarif, oddělení od textu a hlasu i deník jedou touž spreadovou cestou jako Kříž a Norny. Změnit zdroj = jedno číslo v mapě.
+- **Ověřeno:** 2 čtení produkční cestou (`docs/eval/2026-10-03-myslenka-podkova-ygg/`, limity tokenů jako appka): Podkova na sol 6
+  (zdroj Dagaz) *„✦ Does a question you have carried sound different to you now?"* · Yggdrasil na Opus 5 (zdroj Gebo v Midgardu)
+  *„✦ A gift only becomes a gift when a hand reaches out to take it — which of the two hands do you find easier to be?"*; obě bez
+  useknutí, `_parseSegments` + `_splitThought` myšlenku oddělí. Kontrola ㉱: zdroj Podkovy = runa 7, Yggdrasilu = runa 4, jiné pozice ne.
+- Affected doc(s): `RUNAR_BACKLOG.md` (myšlenka ✦ — Podkova a Yggdrasil hotovo) — v tomto commitu.

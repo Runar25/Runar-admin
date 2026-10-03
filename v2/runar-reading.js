@@ -751,9 +751,10 @@ var _askCount = 0;   // kolik Asků už k tomuto čtení padlo (dřív boolean _
 // TIERS.*.asks_per_reading (2026-09-26: náhradní větev přes TIERS.*.ask a vypínač ASK_MULTI_LIVE odebrány — neběžely).
 // Admin = premium (server dělá totéž, claude-proxy isAdmin → userTier 'premium').
 // Myšlenka ✦ (2026-09-30, KUKY „nasaď to“): jen tarif s TIERS.*.reading_thought (admin = premium, jako Ask), jen single / Kříž /
-// Norny — otestované (EVAL_LOG 2026-09-30 (4)(6)); Horseshoe a Yggdrasil ne (zdrojová runa pro ně nerozhodnuta, netestováno).
-// Zdrojová runa: single = tažená, Kříž = střed (runes[0]), Norny = Skuld (runes[2] — závěr patří jí).
-var _THOUGHT_SOURCE = { SINGLE: 0, KRIZ: 0, NORNS: 2 };
+// Norny — otestované (EVAL_LOG 2026-09-30 (4)(6)). 2026-10-03 (KUKY „myšlenku ✦ i pro Podkovu a Yggdrasil“): i Horseshoe a Yggdrasil.
+// Zdrojová runa: single = tažená, Kříž = střed (runes[0]), Norny = Skuld (runes[2] — závěr patří jí), Horseshoe = runa 7 Výsledek
+// (runes[6] — týž důvod jako Skuld), Yggdrasil = runa 4 Midgard (runes[3] — svět člověka, střed kmene; jako střed u Kříže).
+var _THOUGHT_SOURCE = { SINGLE: 0, KRIZ: 0, NORNS: 2, HORSESHOE: 6, YGGDRASIL: 3 };
 function _thoughtAllowed() {
   if (!currentUser) return false;
   return !!(TIERS[isAdmin(currentUser.email) ? 'premium' : userTier] || {}).reading_thought;
@@ -1361,7 +1362,7 @@ async function _generateSpreadReading(o) {
   var _castNowS = _castIdx(u);
   var sys = buildSysPrompt(activeChar, lang);
   var prompt = o.buildPrompt(u, o.runes, lang, corrections);
-  var _thS = _thoughtFor(o.kind, o.runes, lang); if (_thS) prompt += '\n' + _thS;   // 2026-09-30: myšlenka ✦ (Kříž, Norny)
+  var _thS = _thoughtFor(o.kind, o.runes, lang); if (_thS) prompt += '\n' + _thS;   // 2026-09-30: myšlenka ✦ (Kříž, Norny; od 2026-10-03 i Horseshoe a Yggdrasil)
   _lastGen = { sys: sys, prompt: prompt, lang: lang, kind: o.kind };   // pro rozbor GPT-6 sol (jen admin)
 
   // Journal meta for the SERVER-SIDE save (proxy persists atomically with the deduction).

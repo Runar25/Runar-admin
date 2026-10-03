@@ -61,7 +61,12 @@ for (const L of ['en', 'is']) {
   ocek(L + ' single: Ansuz 1. odstavec', S._thoughtFor('SINGLE', [runa('Ansuz')], L).indexOf(UI[L].coll_rune.Ansuz[0]) !== -1);
   ocek(L + ' Kříž: zdroj = střed', k.indexOf(zdroj('Blank')) !== -1 && k.indexOf(zdroj('Sowilo')) === -1);
   ocek(L + ' Norny: zdroj = Skuld', n.indexOf(zdroj('Perth')) !== -1 && n.indexOf(zdroj('Nauthiz')) === -1);
-  ocek(L + ' Podkova / Yggdrasil bez myšlenky', !S._thoughtFor('HORSESHOE', pet.concat(tri), L) && !S._thoughtFor('YGGDRASIL', pet.concat(tri), L));
+  // 2026-10-03 (KUKY „i pro Podkovu a Yggdrasil“): Podkova = runa 7 Výsledek, Yggdrasil = runa 4 Midgard; ostatní pozice zdrojem nejsou.
+  const sedm = ['Fehu', 'Uruz', 'Thurisaz', 'Ansuz', 'Raidho', 'Kenaz', 'Gebo'].map(runa);
+  const devet = ['Wunjo', 'Hagalaz', 'Nauthiz', 'Isa', 'Jera', 'Eihwaz', 'Perth', 'Algiz', 'Sowilo'].map(runa);
+  const hs = S._thoughtFor('HORSESHOE', sedm, L), yg = S._thoughtFor('YGGDRASIL', devet, L);
+  ocek(L + ' Podkova: zdroj = runa 7 (Výsledek)', hs.indexOf(MARK[L]) === 0 && hs.indexOf(zdroj('Gebo')) !== -1 && hs.indexOf(zdroj('Fehu')) === -1);
+  ocek(L + ' Yggdrasil: zdroj = runa 4 (Midgard)', yg.indexOf(MARK[L]) === 0 && yg.indexOf(zdroj('Isa')) !== -1 && yg.indexOf(zdroj('Wunjo')) === -1 && yg.indexOf(zdroj('Sowilo')) === -1);
   // _promptDraws pozná, že prompt myšlenku nesl
   ocek(L + ' _promptDraws.thought', (S._promptDraws('X\n' + s1, L) || {}).thought === 1);
 }
@@ -95,4 +100,4 @@ for (const [jm, kus] of [['single prompt', "var _thL = _thoughtFor('SINGLE', [dr
     && th[1].indexOf('Hverju') !== -1 && th.every((x) => x.indexOf('✦') === 0), JSON.stringify(th));
 }
 if (vady.length) { vady.forEach((v) => console.log('FAIL  ' + v)); console.log('CELKEM ' + vady.length + ' vad v myšlence ✦'); process.exit(1); }
-console.log('OK    myšlenka ✦: jen Standard/Premium/admin, single·Kříž·Norny se správnou zdrojovou runou (EN+IS), oddělená od textu a hlasu — i v deníku (zlatý řádek)');
+console.log('OK    myšlenka ✦: jen Standard/Premium/admin, single·Kříž·Norny·Podkova·Yggdrasil se správnou zdrojovou runou (EN+IS), oddělená od textu a hlasu — i v deníku (zlatý řádek)');
