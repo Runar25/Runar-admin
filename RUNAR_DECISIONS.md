@@ -8076,3 +8076,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Proč smoke:** pravidlo měsíce hlídal jen owner okem a já ho v kroku 5 neměřil — měřil jsem s jeho uloženými posuvníky (podlaha
   0,13), ne s výchozími, které má v prohlížeči. ㉳ `verify_tree_mista.js` běží s výchozími posuvníky.
 - Affected doc(s): `RUNAR_TREE.md` §5 (pravidlo 5, PROTI PALMĚ, nový záznam) · `RUNAR_TREE_MAP.md` vrstva D — v tomto commitu.
+
+## 2026-10-03 (10) — Lab stromu: RESET vrací i strom (semínko); posuvníky sladěné s modelem
+
+- **Rozhodl:** KUKY 2026-10-03 *„nefunguje reset strom… spousta posuvníků nefunguje, jelikož jsi je nechal být · není to vůbec
+  sladěné · pokračuj v labu, ne produkce"*. **Provedl:** CODE-tree, jen LAB (aplikace beze změny).
+- **Co:** (1) Globální RESET maže i čtení → strom začne od semínka (dřív vracel jen posuvníky, datum a ladění run, strom zůstal).
+  Jen čtení maže dál VYMAZAT / znovu, jen posuvníky reset panelu. (2) Čtení bez založení: lab psal „semínko · 0 čtení", i když
+  v logu čtení byla; teď „N čtení čeká na založení — strom roste až po Nornách". (3) Z panelu pryč 12 posuvníků, které po krocích
+  1–5 nic nedělají (seznam v `RUNAR_BACKLOG.md`, položka „Lab: zredukovat posuvníky"); povýšení přesunuto do TVARU.
+- **Otevřené:** proč KUKY viděl „začíná na 185 čteních" — v labu jsem to nenasimuloval (VYMAZAT funguje); pravděpodobně RESET bez
+  smazání čtení nebo zakládací Norny až po mnoha čteních. Ověřit s ním.
+- Affected doc(s): `RUNAR_BACKLOG.md` (posuvníky) — v tomto commitu.

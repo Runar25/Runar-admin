@@ -187,7 +187,7 @@ HTML = r"""<!DOCTYPE html>
       </div>
       <div class="card"><div class="lbl sec">TVAR &middot; co strom rika</div><div class="tune" id="tune-crown"></div>
         <div class="lbl sec" style="margin-top:10px">VZHLED &middot; jak vypada</div><div class="tune" id="tune-crown-look"></div>
-        <div class="lbl sec" id="park-head" style="margin-top:10px;cursor:pointer"><span id="park-arrow">&#9656;</span> ODLOZENO &middot; dorozhodnute / jiny rezim</div>
+        <div class="lbl sec" id="park-head" style="margin-top:10px;cursor:pointer"><span id="park-arrow">&#9656;</span> ODLOZENO &middot; kura (kresli jen rezim kuze / WebGL)</div>
         <div class="tune" id="tune-crown-park" style="display:none"></div>
         <div class="btnrow"><button class="jb" data-reset="crown">reset koruny</button></div></div>
       <div class="card"><div class="lbl sec">TUNING &middot; KMEN</div><div class="tune" id="tune-trunk"></div>
@@ -578,7 +578,8 @@ HTML = r"""<!DOCTYPE html>
      je to rozhodovani o modelu, ne o vzhledu. */
   makeTune('tune-crown', [
     /* gradFrac (prah povyseni) z panelu pryc: na KUKYho strome 0.33 i 0.6 dalo totez — brzdou je misto */
-    ['maxMains',3,25,1,'max ramen (14 mist element x zona + povyseni)'],['gradEvery',1,40,1,'novy pramen nejdriv za N cteni (tempo)'],['exitFloor',0.05,0.85,0.01,'kam nejniz smi vetev (proti palme)'],
+    ['maxMains',3,25,1,'max ramen (14 mist element x zona + povyseni)'],['gradStrand',0,1,1,'povyseni runy na vlastni vetev (0 = vypnuto)'],
+    ['gradEvery',1,40,1,'povysena vetev nejdriv za N cteni (tempo)'],['exitFloor',0.05,0.85,0.01,'kam nejniz smi vetev (proti palme)'],
     ['intZone',0,0.6,0.02,'cas cteni (zamer/oblast/seeking) -> vyska ramene'],['areaSide',0,0.8,0.05,'nitro/svet -> natoceni ramene'],
     ['aettStr',0,1,0.05,'aett -> charakter'],
     ['twigMax',2,12,1,'max vetvi na jedne vetvi (pak o patro niz)'],
@@ -587,23 +588,19 @@ HTML = r"""<!DOCTYPE html>
   /* VZHLED — jak to vypada. Doladi se jednou a zapece; nema smysl u toho sedet. */
   makeTune('tune-crown-look', [
     ['length',30,160,1,'delka hlavni'],['curve',0,1.5,0.05,'gesto (ohyb)'],['variace',0,1,0.05,'variace vetvi'],
-    ['gradLen',1,5,0.05,'delka graduanta'],['gradStrandW',0.2,1,0.05,'o kolik povysena vetev ztlusti matku (1 = jako matka)'],
+    ['gradLen',1,5,0.05,'delka povysene vetve'],
     ['objem',0,1.5,0.05,'OBJEM: presah stinu pres obrys'],['tonPramene',0,0.6,0.02,'rozdil tonu mezi prameny'],
-    ['zrod',0.05,1,0.05,'velikost nove vetve (zrod)'],['dorust',1,12,1,'za kolik cteni vetev doroste'] ], crownT);
+    ['zrod',0.05,1,0.05,'velikost NOVE vetvicky (jen cerstva cteni)'],['dorust',1,12,1,'za kolik cteni nova vetvicka doroste'] ], crownT);
   /* ODLOZENO — nic se nemaze (KUKY): bud uz je to rozhodnute, nebo to v tomhle rezimu
      nefunguje. `pestrost cteni` je mrtva vzdy, kdyz je log (pouziva ji jen demo strom);
      tri WebGL paky ziji jen v rezimu "WebGL kura". Kura cela sem — "neni to ono". */
   makeTune('tune-crown-park', [
-    ['twU0',0,1,0.01,'odbocky od (podil delky)'],['twU1',0,1,0.01,'odbocky do'],
-    ['gradU0',0,1,0.01,'graduanti od'],['gradU1',0,1,0.01,'graduanti do'],
-    ['twigSpread',0,0.1,0.005,'rozestup opakovani'],['gradGap',0,6,0.2,'odstup graduanta uvnitr vetve'],
-    ['kidsMax',0,4,1,'ZRUSENO 2026-10-03: cteni jdou na rameno elementu'],
-    ['gradStrand',0,1,1,'povyseni runy na vlastni vetev (0 = vypnuto)'],
-    ['childN',0,6,1,'ZRUSENO 2026-09-28: vetvicky bez runy'],['twigPer',1,8,1,'ZRUSENO 2026-09-28: opakovani = silnejsi tataz vetev'],
-    ['hrebeny',0,1.5,0.05,'HREBENY kury'],['textura',0,1,0.05,'textura kury'],['ryhy',0,1.5,0.05,'sila ryh v kure'],
-    ['stylKury',0,1,1,'styl kury: 0 rytina / 1 malba'],['kuraVek',0,1,1,'kura nese vek pramene'],
-    ['glZrno',8,120,2,'WebGL: meritko kury podel vetve'],['glHloubka',0,1,0.05,'WebGL: hloubka prasklin'],
-    ['diversity',0,1,0.05,'pestrost cteni (mrtva, kdyz je log)'] ], crownT);
+    /* 2026-10-03 (KUKY: "spousta posuvniku nefunguje"): pryc twU0/twU1, gradU0/gradU1, twigSpread, gradGap, kidsMax,
+       childN, twigPer, diversity — jejich mechaniku nahradily kroky 1–5 (audit tree_diag sliders: 0 % zmeny). Zustava kura. */
+    /* ryhy + kuraVek pryc (2026-10-03): v prohlizeci zmena 0,06 % / 0 % pixelu v rezimu kuze i WebGL */
+    ['hrebeny',0,1.5,0.05,'HREBENY kury'],['textura',0,1,0.05,'textura kury'],
+    ['stylKury',0,1,1,'styl kury: 0 rytina / 1 malba'],
+    ['glZrno',8,120,2,'WebGL: meritko kury podel vetve'],['glHloubka',0,1,0.05,'WebGL: hloubka prasklin'] ], crownT);
   (function(){ var h=document.getElementById('park-head'), b=document.getElementById('tune-crown-park');
     if(h&&b) h.addEventListener('click', function(){ var open=(b.style.display!=='none');
       b.style.display=open?'none':'block';
@@ -614,7 +611,7 @@ HTML = r"""<!DOCTYPE html>
   makeTune('tune-trunk', [ ['thickness',3,16,0.5,'sila pramene'],['lean',0,2,0.05,'naklon'],
     ['twist',0,2.5,0.05,'propletani pramenu'],['bundleSpread',0.08,0.9,0.02,'rozestup pramenu'],
     ['wobble',0,2,0.05,'vlnitost kmene'],['wobFreq',0.3,3,0.1,'frekvence vlneni'],
-    ['strandEvery',20,365,5,'novy pramen (dny)'],['treeHeightMax',300,560,10,'vyska kmene'] ], trunkT);
+    ['treeHeightMax',300,560,10,'vyska kmene'] ], trunkT);   /* strandEvery pryc (2026-10-03): prameny zaklada cteni, ne vek */
   /* KORENY (F4): paky ZAPOJENE. Drive: curve/wobble/tipLift natvrdo v rTT + `rootFan` nedelal nic
      (tvaroval jen tu cast limbu, co se od Kroku 3 nekresli). */
   makeTune('tune-roots', [ ['fan',-1.6,1.6,0.05,'rozevreni korenu (- = dovnitr/krizi)'],['length',40,200,5,'delka korenu'],
@@ -633,6 +630,9 @@ HTML = r"""<!DOCTYPE html>
     try{ localStorage.removeItem('runeTune'); }catch(e){}
     TUNES.forEach(function(t){ t.inp.value=t.t[t.k]; t.out.textContent=t.t[t.k]; });
     ageSlider.value=state.treeAge;
+    /* i strom (2026-10-03, KUKY: "nefunguje reset strom"): cteni pryc -> seminko. Drive RESET vracel jen posuvniky, datum
+       a ladeni run a strom zustal se vsemi ctenimi. Jen cteni maze VYMAZAT / znovu, jen posuvniky reset panelu. */
+    state.log=[]; state._viewN=null; state.demo=false; saveLog(); renderHist();
     document.getElementById('dob-d').value=state.d; document.getElementById('dob-m').value=state.m; document.getElementById('dob-y').value=state.y;
     document.querySelectorAll('.rb').forEach(function(x){x.classList.toggle('on',x.dataset.k===state.rune);});
     document.querySelectorAll('#skin-seg .jb').forEach(function(x){x.classList.toggle('on',(x.dataset.s==='skin')===state.skin);});
@@ -672,7 +672,7 @@ HTML = r"""<!DOCTYPE html>
   }
   function randDob(){ state.d=1+Math.floor(Math.random()*28); state.m=1+Math.floor(Math.random()*12); state.y=1950+Math.floor(Math.random()*60);
     document.getElementById('dob-d').value=state.d; document.getElementById('dob-m').value=state.m; document.getElementById('dob-y').value=state.y; draw(); }
-  document.getElementById('reset-all').addEventListener('click', function(){ if(window.confirm('RESET vseho na vychozi (vc. ladeni run)?')) resetAll(); });
+  document.getElementById('reset-all').addEventListener('click', function(){ if(window.confirm('RESET vseho: smaze i cteni (strom zacne od seminka) a vrati posuvniky, datum narozeni i ladeni run. Pokracovat?')) resetAll(); });
   document.getElementById('dbg-src').addEventListener('click', function(){ state.dbg=!state.dbg; this.style.color=state.dbg?'#34c759':''; draw(); });
   document.getElementById('copy-state').addEventListener('click', copyState);
   document.getElementById('rand-dob').addEventListener('click', randDob);
@@ -1877,7 +1877,10 @@ HTML = r"""<!DOCTYPE html>
     var mix=els.slice().sort(function(a,b){return b.count-a.count;}).map(function(e){return e.el+' '+Math.round(100*e.count/rt.total)+'%';}).join(' · ');
     var _nG=(typeof gradStrands!=='undefined')?gradStrands.length:0;   /* KROK 2: povyseni graduanti jsou taky hlavni vetve */
     document.getElementById('ageread').textContent='vek '+realAge+' dni (~'+months+' mes) · '+nR+' cteni · '+(mainsN+_nG)+' hlavnich vetvi';
-    document.getElementById('logread').textContent = useLog ? (vlog.length+' cteni'+(state._viewN!=null?(' / '+state.log.length+' (prehravani)'):' v logu (strom z realnych cteni)')) : (seed ? 'seminko · 0 cteni — prvni cteni (Norny) zalozi prameny' : 'log prazdny -> TREE AGE slider (demo rezim)');
+    document.getElementById('logread').textContent = useLog ? (vlog.length+' cteni'+(state._viewN!=null?(' / '+state.log.length+' (prehravani)'):' v logu (strom z realnych cteni)')) : (seed ? (((state._viewN!=null) ? state._viewN : state.log.length)
+              ? ('seminko · ' + ((state._viewN!=null) ? state._viewN : state.log.length) + ' cteni ceka na zalozeni — strom roste az po Nornach (3 runy), pak v nem budou vsechna')
+              : 'seminko · 0 cteni — prvni cteni (Norny) zalozi prameny')
+            : 'log prazdny -> TREE AGE slider (demo rezim)');   /* drive "0 cteni" i s plnym logem bez Noren (KUKY 2026-10-03: "zacina na 185 ctenich?") */
     document.getElementById('grow').innerHTML=
       'vek <b>'+realAge+'</b> dni (~'+months+' mes) &middot; cteni <b>'+nR+'</b><br>'+
       'prameny <b>'+(gt.info.strandN||mainsN)+'</b> &rarr; hlavnich vetvi <b>'+(mainsN+_nG)+'</b> (mist element×zona '+mainsN+', povysenych '+_nG+', strop '+Math.round(crownT.maxMains)+') &middot; koreny '+roots.length+'<br>'+

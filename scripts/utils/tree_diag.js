@@ -425,9 +425,12 @@ if (cast === 'sliders') {
   const html = fs.readFileSync(DIR + 'tree-lab-crown-composer/crown-composer.html', 'utf8');
   const panels = []; const re = /makeTune\('([a-z-]+)',\s*\[([\s\S]*?)\]\s*,\s*(crownT|trunkT|rootsT)\)/g; let m;
   while ((m = re.exec(html))) { const arr = eval('[' + m[2] + ']'); arr.forEach(a => panels.push({ panel: m[1], obj: m[3], key: a[0], min: a[1], max: a[2], lbl: a[4] })); }
-  const base = { crownT: Object.assign({}, st.crownT), trunkT: Object.assign({}, st.trunkT), rootsT: Object.assign({}, st.rootsT), rune: st.rune, dob: st.dob };
+  // DEFAULTS=1 (2026-10-03): vychozi posuvniky labu = to, co owner vidi v prohlizeci (lab si posuvniky nepamatuje)
+  const base = process.env.DEFAULTS ? { crownT: {}, trunkT: {}, rootsT: {}, rune: st.rune, dob: st.dob }
+                                    : { crownT: Object.assign({}, st.crownT), trunkT: Object.assign({}, st.trunkT), rootsT: Object.assign({}, st.rootsT), rune: st.rune, dob: st.dob };
   delete base.crownT.twigMax;   // jeho ulozena 14 = stary vyznam; nech vychozi 5
-  const sig = inj => { const r = labRun(st.log, null, inj); const cells = new Set(), cols = {};
+  const LOGS = process.env.LOGN ? st.log.slice(0, +process.env.LOGN) : st.log;   // LOGN = mlady strom (prvnich N cteni)
+  const sig = inj => { const r = labRun(LOGS, null, inj); const cells = new Set(), cols = {};
     r.fills.forEach(f => { f.forEach(([x, y]) => cells.add((x >> 2) + ',' + (y >> 2))); cols[f.col] = (cols[f.col] || 0) + 1; }); return { cells, cols, n: r.fills.length }; };
   const out = [];
   for (const s0 of panels) {
