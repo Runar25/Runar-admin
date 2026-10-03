@@ -45,3 +45,8 @@ přenesl a žádné z mých měřidel se na tu větu neptalo. Owner: *„jak ti 
 si načti všechno, jak to má být udělané“*. **Před hlášením vypiš jeho věty ze zadání jako seznam a u každé
 napiš, čím ve výsledku je splněná (číslo, obrázek, test).** Kde to nejde, je to nález, ne hotovo.
 Souvisí: [[napred-dohledej-co-uz-je]], [[ownerovo-slovo-neni-spec]].
+
+**5. Měř v prostředí, ve kterém se owner dívá (2026-10-03, CODE-tree).** Lab si posuvníky NEPAMATUJE — owner v prohlížeči
+vidí výchozí hodnoty z kódu. Já měřil s jeho uloženými (`_tree_state.json`: podlaha výstupu 0,13) a dvě ramena „přesně
+z jednoho místa" při výchozí podlaze 0,50 mi utekla; on je uviděl hned. Kontroly, které mají chránit jeho pohled, pouštěj
+s výchozími hodnotami (tak běží smoke ㉳) a jeho uložené ber jako druhý případ, ne jediný.
