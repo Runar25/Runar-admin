@@ -7974,3 +7974,25 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   mutace (mapa vypnutá) = 6 vad. Golden beze změny (řádek myšlenky skládá runar-reading.js, ne buildery). Registr ㉜ v4.86.
 - **Nevyzkoušeno na modelu:** owner: *„řekne až čtení"*.
 - Affected doc(s): žádné.
+
+## 2026-10-03 (3) — Výběr obrazu podle oblasti: oblast vyřadí obrazy, které patří jen do jiných oblastí (v4.87)
+
+- **Rozhodl:** KUKY 2026-10-03 *„obraz vybírat podle oblasti, jeď"* (k návrhu z 2026-10-02: obrazy zůstanou, jen se vybírají podle
+  zvolené oblasti). **Provedl:** CODE-tune.
+- **Co:** 11. sloupec `RUNE_IMAGES` = kódy oblastí, do kterých scéna SAMA patří (`IMG_OBLAST_KODY` = pořadí `AREAS.en`:
+  l Love · p Path · c Career · h Healing · u Unseen · f Family · g Inner Growth · x Crossroads). Označeno 34 obrazů — prodej a obchod
+  (kráva, vlna, úlovek → c/f), dílna (výheň, ponk, hobliny → c/g), domov a rodina (f), dva lidé a vztah (l), tělo a odpočinek (h).
+  Přírodní a obecné obrazy značku nemají a sedí kamkoli. `_imgPodleOblasti` (v `_seasonalImagery`) pro zvolenou oblast vyřadí obrazy
+  označené JEN jinými oblastmi; nezbude-li nic, platí všichni kandidáti. Oblast předává single i všechny čtyři spready (§13).
+  **Bez oblasti beze změny** (owner: *„někdo žádnou oblast nedodá… v tom případě by neměl mít obraz problém"*).
+- **Proč výběr, ne pokyn:** test 2026-10-02/03 na třech modelech (EVAL_LOG 2026-10-02 (1), 2026-10-03 (1)) — pokyn „scénu postav v oblasti"
+  GPT ignoruje a jádro obrazu dává obecné scény; obraz v čtení vždy převládne. Ve stylu KUKY 2026-08-08: *„zákazy nejsou to, kterým
+  směrem bychom měli jít"* — řeší se, CO se do promptu dostane.
+- **Příklad:** Fehu × Love dřív losoval i prodej krávy / vlny / úlovku; teď stádo z hor nebo mléko přes okraj. Kenaz × Family už nedostane
+  výheň, ponk ani hobliny (zůstanou uhlíky, pochodeň, prasklina v hrnku, sirka při výpadku proudu).
+- **Kontrola:** smoke ㉲ `verify_image_area.js` — kódy, filtr nad 25 runami × 8 oblastmi × 6 obdobími (EN i IS štítek), bez oblasti
+  beze změny, produkčně single (Fehu × Love, Kenaz × Family EN i IS) i Norny; mutace (filtr vypnutý) = 587 vad. ㉟ zná tvar řádku
+  s 11 sloupci. Mezery (oblast s jediným obrazem tam, kde jich runa má víc): 0. Golden beze změny.
+- **Mez:** značky jsou úsudek CODE-tune — owner je může přeznačit (seznam v kódu u každého řádku). Kde runa pro oblast nemá žádný
+  vhodný obraz, filtr nepomůže — to je práce na bance, ne na výběru.
+- Affected doc(s): žádné (banka a výběr žijí v kódu).

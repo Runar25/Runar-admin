@@ -741,6 +741,17 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola myslenky probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# Obraz podle oblasti (KUKY 2026-10-03 „obraz vybírat podle oblasti, jeď“): zvolená oblast vyřadí obrazy, které patří jen do
+# jiných oblastí (11. sloupec RUNE_IMAGES) — výsledek produkční cestou (single i Norny), EN i IS štítek, bez oblasti beze změny.
+print('\n' + chr(0x3272) + ' OBRAZ PODLE OBLASTI (verify_image_area.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_image_area.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola obrazu podle oblasti probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

@@ -5801,3 +5801,25 @@ is close at hand"*).
 **0,0042 USD** · 3 čtení A na 6.1 **0,0063 USD** (bez zápisu do cache; s ním o ~0,0006 víc). Text kvalitou srovnatelný
 (6.1 Fehu: *„On the empty stall's latch, you can still see a pale tuft of hair."*).
 **Hranice:** n = 1 na větev; soudí owner čtením, ne metrika. B2 jádra nejsou v bance.
+
+## 2026-10-03 (1) — Test oblasti A / B / B2 na Opus 5 a sol 6 · co dostane čtení a co Ask (z kódu)
+
+Owner: *„pokud jsi ten test udělal pro sol 6.1, tak znova, ale pro opus 5 a sol 6"* + *„v ASK byl schopný model krásně a přesně
+vystihnout… čtení dostává hodně omezení a mantinelů… pravdu znáš spíš ty podle kódu"*. Týž harness a losy jako EVAL_LOG
+2026-10-02 (1), prompt s `READ_ENGINE` daného modelu; Kenaz už s „burns over the workbench" (v4.85). `docs/eval/2026-10-02-oblast-od-prvni-vety/`
+(`test_b_modely.js`, `test_b_opus5.json`, `test_b_sol6.json`).
+
+**Výsledek (1 čtení na větev a runu):**
+- **B (jen řádek oblasti):** Opus oblast do scény vtáhne a obraz si nechá — Kenaz *„The house is dark and quiet, the others asleep upstairs,
+  and in the back room a single lamp burns over the workbench."* sol 6 jen přidá *„At home, among your family"* (jako 6.1).
+- **B2 (jádro bez místa):** na všech třech modelech obecná scéna; u Fehu se kráva vrátí z aspektu *cattle* (sol 6 *„At the fence, a cow
+  passes from one hand to another"*, Opus *„At the fence line a cow is handed over"*). ⇒ B2 nepokračuje.
+- **Slova podoby oblasti doslova:** *„Among your people"* u sol 6 ve všech větvích, u Opusu v B.
+- **Myšlenka ✦ na Opusu** nese metaforu 1. odstavce (*„Fehu pours slowly, then suddenly the cup is full…"*) — týž jev jako reporty 2026-10-01.
+
+**Čtení × Ask z kódu** (produkční buildery v4.85, Kenaz × Family & Home, sol): uživatelský prompt čtení **631 slov, 39 vět, 25 s omezením**
+(never / not / only…) a do **4 krátkých vět, 50–58 slov, čtených nahlas** musí vejít ~7 pevných kroků: úhel otevření · obraz · esenční
+řádek · přistání na oblasti · jméno runy jednou a jméno člověka až ke konci · konec znovu na podobě oblasti · myšlenka ✦. Ask dostane
+**hotové čtení + JEDNU otázku**, ~90 slov, *„may take the room an explanation needs"*, zbytek pravidel jsou jen podmíněné větve.
+Podoba oblasti stojí v promptu čtení **dvakrát** (přistání i konec) → odtud doslovné *„Among your people"*.
+**Hranice:** n = 1 na větev; počty vět jsou hrubé (regex na zákazy), ukazují řád, ne přesnou míru.
