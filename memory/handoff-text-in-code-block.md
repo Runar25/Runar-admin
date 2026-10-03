@@ -28,3 +28,10 @@ sdělit, tak to dej do něj, jinak to nepiš. Mně to je úplně jedno!"*
   udělat on, nebo přiznaná mez mého vlastního tvrzení.
 - ani jedno → **nepsat vůbec.** Kuky není kurýr mých poznámek o cizí práci.
 
+⚠️ **Handoff jen pro ZMĚNY, ne pro obecné informace (KUKY 2026-10-03).** Dal jsem mu handoff pro CODE-tune
+s odpovědí na jejich otázku, kde stálo hlavně „nic neměň, je to správně". Owner: *„proč mi dávat handoff
+s tím, že se nic nemění? to mu mám předávat nic neříkající informace? to mu to někam zapiš, ale mě tím
+neotravuj. já si to tam musím číst, abych zjistil, že tam není nic důležitého. handoff děláme pro změny."*
+**How to apply:** příjemce má něco ZMĚNIT nebo udělat → handoff (v bloku). Jen informace / potvrzení /
+„beze změny" → zapsat tam, kde to druhá session najde (BACKLOG u souvisejícího úkolu, doc, který čte) a
+ownerovi o tom nanejvýš jednu větu, žádný blok k přeposlání.

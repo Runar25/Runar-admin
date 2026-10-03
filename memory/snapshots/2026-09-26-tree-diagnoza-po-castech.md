@@ -100,6 +100,11 @@ měř přímo na enginu (část `1b`).
   až 14 ramen v patrech; čtení jde na rameno svého elementu ve své zóně, NE na větev své runy; rameno začíná
   neutrálně a ohýbá ho přítok čtení; úhel podle elementu zrušit). Schéma poslané, čeká na „sedí / nesedí“.
 
+- **2026-10-03 (krok 5, lab):** zóny × elementy postaveny — pramen = místo element × zóna (14) + 11 povýšených, čtení na rameni
+  svého elementu v zóně, úhel = neutrální start + tíha čtení (směr ohybu jsem navázal na zónu čtení — moje interpretace, KUKY
+  řekl jen „něco nahoru, něco do strany, něco dolů“). Pravidla + čísla RUNAR_TREE.md §5 KROK 5, DECISIONS 2026-10-03 (5).
+  KUKY dřív: min 9 pramenů (nikdy 5!), 25 run = povýšení zůstává, handoff jen pro změny. Galerie poslaná, čeká na jeho oko.
+
 ## Co visí
 - ~~Oprava hooku `tree-guard.sh`~~ — hotovo 2026-09-27.
 - Blank má ve stromě jiný znak (◇ proti ○); čtení s Blank to řeší zvlášť (`blank → odinn`) — ověřit v části 3.
