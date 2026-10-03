@@ -11,7 +11,7 @@
 # ⚠️ 2026-09-30: vrstvy D a H — úhel ramene dává kostra `FR` (ne `emergence`), graduant smí na druhou stranu (KROK 3b).
 # ⚠️ 2026-10-01: vrstva F — kmen jako svazek (`T.exitFrac`); vrstva C — mapa výšky (které čtení dole/nahoře) bydlí v RUNAR_TREE.md §3.
 # ⚠️ 2026-10-02: vrstvy C/D — výška ramene, místo runy na rameni i místo čtení na větvi jdou ze ZÓNY čtení (záměr/oblast/seeking/pozice/svět, RUNAR_TREE.md §3 + §5 KROK 4); úhel odchodu podle elementu.
-# ⚠️ 2026-10-03: vrstvy C/D/H — pramen = místo ELEMENT × ZÓNA (14) + povýšení (11); čtení na rameni svého elementu v zóně; úhel ramene = tíha čtení (RUNAR_TREE.md §5 KROK 5).
+# ⚠️ 2026-10-03: vrstvy C/D/H — pramen = místo ELEMENT × ZÓNA (v kmeni nejvýš 14); povýšení (až 11) je součástí pramene matky; čtení na rameni svého elementu v zóně; úhel ramene = tíha čtení (RUNAR_TREE.md §5 KROK 5).
 # Vlastník: CODE-tree (mechanika + implementace) · Cowork-tree (význam) · KUKY (rozhoduje).
 
 ## Jak číst
@@ -88,7 +88,7 @@ Laděno v branch composeru → `RUNE_TUNE`; fallback = signatura v `RUNES` (runa
 |---|---|---|---|
 | `childN` | počet twigů | crownT | |
 | `twRunes` | twig = JEDNO ČTENÍ (tvar jeho runy) na rameni svého elementu v zóně; plné rameno → o patro níž | composer (KROK 5) | |
-| **graduace 2./3. dominant** | chová se jako prvních 9, ALE **odbočí od RODIČE v 1/5–3/5 jeho délky** (NIKDY u kmene, NIKDY na špičce — jinak nepřirozené); ~~následuje rodiče do strany~~ → od 2026-09-30 strana z kostry `FR` a z vlastních čtení, smí na druhou stranu než rodič (KUKY: „i povýšené rameno může jít z leva do prava“) | crown builder | RUNAR_TREE.md §5 KROK 2 + 3b · od 2026-10-03 v rámci ramene element × zóna, nejvýš 11 (KROK 5) |
+| **graduace 2./3. dominant** | chová se jako prvních 9, ALE **odbočí od RODIČE v 1/5–3/5 jeho délky** (NIKDY u kmene, NIKDY na špičce — jinak nepřirozené); ~~následuje rodiče do strany~~ → od 2026-09-30 strana z kostry `FR` a z vlastních čtení, smí na druhou stranu než rodič (KUKY: „i povýšené rameno může jít z leva do prava“) | crown builder | RUNAR_TREE.md §5 KROK 2 + 3b · od 2026-10-03 v rámci ramene element × zóna, nejvýš 11, BEZ vlastního pramene a kořene — matka je do odštěpení tlustší (KROK 5) |
 
 ## Vrstva I — SÍLY / PŘITAŽLIVOST (→ Cowork design)
 ⭐ **Na KAŽDÝ výskyt ve stromě musí být odpověď „proč"** (KUKY). Které runy se přitahují, proč má

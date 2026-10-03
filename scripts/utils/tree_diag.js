@@ -204,7 +204,7 @@ function labRun(log, htmlPath, inj) {
   for (const f of ['runar-runes.js', 'tree-lab-trunk-composer/runar-trunk.js', 'tree-lab-branch-composer/runar-branch.js'])
     code += fs.readFileSync(DIR + f, 'utf8') + '\n;\n';
   if (inj && inj.__hookSrc) code += ';' + inj.__hookSrc + ';';   /* ladici hacek (jen diagnoza) */
-  vm.runInContext(code + inline.replace('window._draw=draw;', 'window._draw=draw; window._P=_pick; if(window.__INJ){ Object.assign(crownT,__INJ.crownT||{}); Object.assign(trunkT,__INJ.trunkT||{}); Object.assign(rootsT,__INJ.rootsT||{}); if(__INJ.rune) state.rune=__INJ.rune; if(__INJ.dob){ state.d=__INJ.dob.d; state.m=__INJ.dob.m; state.y=__INJ.dob.y; } }'), lsb, { filename: 'lab' });
+  vm.runInContext(code + inline.replace('window._draw=draw;', 'window._draw=draw; window._P=_pick; window._DA=function(){ return _dbgAll; }; if(window.__INJ){ Object.assign(crownT,__INJ.crownT||{}); Object.assign(trunkT,__INJ.trunkT||{}); Object.assign(rootsT,__INJ.rootsT||{}); if(__INJ.rune) state.rune=__INJ.rune; if(__INJ.dob){ state.d=__INJ.dob.d; state.m=__INJ.dob.m; state.y=__INJ.dob.y; } }'), lsb, { filename: 'lab' });
   const strip = s => String(s).replace(/<[^>]+>/g, ' ').replace(/&middot;/g, '·').replace(/&rarr;/g, '→').replace(/\s+/g, ' ').trim();
   if (lsb.__BB) console.log('BB', lsb.__BB.join(' || '));
   return { grow: strip(els.grow ? els.grow.innerHTML : ''), btable: strip(els.btable ? els.btable.innerHTML : ''),
@@ -957,4 +957,19 @@ if (cast === 'zattack') {
   // 4) prefix: strom po 25 ctenich z dlouheho logu = strom z prvnich 25
   const c1 = labRun(lg2.slice(0, 25), HTML, inj()), c2 = labRun(lg2.slice(0, 25).concat([]), HTML, inj());
   console.log('prefix stabilni (25):', sig(c1) === sig(c2) ? 'ANO' : 'NE');
+}
+if (cast === 'klik') {
+  // NA STROME NIC, CO UZIVATEL NEVYTVORIL (2026-10-03, KUKY: "vidim to, ale kliknout na to nejde? … na strome nema byt nic,
+  // co sam uzivatel nevytvoril"). Kazdy nakresleny tah musi patrit nejake klikatelne casti (stejne pole bodu jako v _pick).
+  // Plus pocet pramenu v kmeni (nejvys 14) a povysenych vetvi. KUKYho strom + prehrani po krocich.
+  const HTML = process.argv[3] && process.argv[3] !== '-' ? process.argv[3] : null;
+  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, maxMains: 25, gradStrand: 1 }, process.env.LRCFG ? JSON.parse(process.env.LRCFG) : {}) });
+  (process.env.NS || '3,10,30,60,100,200,' + st.log.length).split(',').map(Number).forEach(n => {
+    const r = labRun(st.log.slice(0, n), HTML, inj), drawn = r.sb._DA ? r.sb._DA() : [], picked = new Set(r.allPicks.map(p => p.pts));
+    const bad = {}; drawn.forEach(L => { if (!picked.has(L.pts)) { const k = L.src || '?'; bad[k] = (bad[k] || 0) + 1; } });
+    const m = /prameny (\d+)/.exec(r.grow), mm = r.picks;
+    console.log('po', String(n).padStart(3), 'cteni | pramenu v kmeni', m ? m[1] : '?', '| ramen', mm.filter(x => !x.gradOf).length, '| povysenych', mm.filter(x => x.gradOf).length,
+      '| nakreslenych tahu', drawn.length, '| z toho NEKLIKATELNYCH', Object.values(bad).reduce((a, b) => a + b, 0), JSON.stringify(bad));
+  });
 }

@@ -8050,3 +8050,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   *„✦ A gift only becomes a gift when a hand reaches out to take it — which of the two hands do you find easier to be?"*; obě bez
   useknutí, `_parseSegments` + `_splitThought` myšlenku oddělí. Kontrola ㉱: zdroj Podkovy = runa 7, Yggdrasilu = runa 4, jiné pozice ne.
 - Affected doc(s): `RUNAR_BACKLOG.md` (myšlenka ✦ — Podkova a Yggdrasil hotovo) — v tomto commitu.
+
+## 2026-10-03 (8) — Strom (lab): povýšená větev nemá vlastní pramen — v kmeni nejvýš 14 pramenů (oprava (5))
+
+- **Rozhodl:** KUKY 2026-10-03 *„nemělo být maximálně 14 pramenů s tím, že ostatní jsou graduenti a jsou součástí právě těch 14 pramenů?
+  · 11 povýšených mají mít stejný pramen s těmi 14 · má být povýšená větev součástí své matky, nebo má být oddělená? — mají být jedno
+  do té doby, než se oddělí · na stromě nemá být nic, co uživatel sám nevytvořil"*. **Provedl:** CODE-tree, jen LAB.
+- **Co:** (5) dala povýšeným větvím vlastní pramen a kořen (krok 2, verze B z 2026-09-29) → 25 trubek v kmeni. Teď: kmen má jen místa
+  element × zóna (nejvýš 14); povýšená větev je až do místa odštěpení součástí pramene matky (matka je od kořene po to místo tlustší)
+  a od něj roste jako samostatná větev. Mění KROK 2 bod (a) „pramen jde kmenem vedle rodiče“.
+- **Proč to (5) udělala špatně:** ve zprávě o zónách stálo „prameny budou místa element × zóna“ a KUKY odpověděl „graduant sdílí kmen
+  a je jen větší, protože obsahuje 2 stejné elementy“ — přesto jsem nechal pramen z kroku 2 a ohlásil 25 pramenů.
+- **Kontrola:** `tree_diag.js klik` — každý nakreslený tah musí patřit klikatelné části; po opravě 0 (opraveny i vidlice zrcadlených
+  větviček u kořenů, neklikatelné už před zónami). Přeskakování beze změny (`jump2` 0 otočení > 8°, `limbjump` 0 > 5°).
+- Affected doc(s): `RUNAR_TREE.md` §5 (KROK 2 + KROK 5) · `RUNAR_TREE_MAP.md` (hlavička, vrstva H) — v tomto commitu.
