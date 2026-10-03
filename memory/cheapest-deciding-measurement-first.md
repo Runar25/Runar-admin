@@ -41,6 +41,8 @@ klasifikovat všech 64 aspektů nemá co objevit. Owner to musel zastavit uprost
 Můj odhad byl ~6 tis. — mýlil jsem se 30×. Cenu dělá režie agenta (kontext projektu + dlouhé
 přemýšlení), ne délka úlohy. **Proto:** odhad pro ownera počítej ~0,2 M na soudce; víc úloh dej
 do JEDNOHO souboru pro téhož soudce, ne víc soudců.
+📏 **Druhý bod (2026-10-03):** i drobná brána (2 obrazy × 3 popisy, ~4 tis. znaků) stála **90 · 92 · 113 tis.**
+na soudce, celkem **0,29 M** — malá úloha cenu skoro nesníží. Jedno další kolo brány = počítej ~0,3 M a řekni to ownerovi předem.
 ⚠️ **Past v návrhu brány:** stejný počet obrazů a popisů + dva obrazy téže runy → soudci předpokládají
 „jeden obraz = jeden popis" a druhý obraz téže runy odsunou jinam (doloženo 2× v odůvodněních:
 „přirozeněji T, ale T nese O4"). Do zadání vždy napsat: *„k jednomu popisu může patřit víc obrazů,
