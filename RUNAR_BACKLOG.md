@@ -1062,6 +1062,13 @@ Rozpory, které nejsou textové — dvě instrukce, které si neodporují slovy,
 A cokoli v datech mimo repo. To zachytí jen měření na výstupu modelu.
 
 ## Nálezy z workflow — k triáži
+
+### Smoke `verify_decisions_followthrough.js` trvá ~30 minut — brzdí každý push (2026-10-03, CODE-tree)
+Lokální smoke 2026-10-03 běžel 17:33–18:05, skoro celou dobu v téhle kontrole: pro každý řádek `Affected doc(s)` volá zvlášť
+`git blame --line-porcelain -L n,n -- RUNAR_DECISIONS.md` a každé volání prochází historii souboru, který se mění skoro
+v každém commitu (8 000+ řádků). Čím víc rozhodnutí a commitů, tím pomaleji (pre-push hook to pouští při každém pushi).
+**Návrh:** jeden `git blame --line-porcelain -- RUNAR_DECISIONS.md` celého souboru, výsledek zaindexovat podle čísla řádku
+(jeden průchod historií místo stovek). Ověřit, že výsledek (seznam nesplněných `Affected doc(s)`) je beze změny.
 Ukládá se sem automaticky. Surový materiál žije v `docs/findings/`, tady je jen ukazatel (§20).
 <!-- AUTO-NALEZY -->
 - [2026-08-15 — test pojistky](docs/findings/2026-08-15-wf_a188371f-db1.md) · běh `wf_a188371f-db1` · 9 agentů — **k triáži**
