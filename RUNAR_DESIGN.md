@@ -1261,6 +1261,14 @@ ať vyjdou z mapy mezer a z brány · **každý obraz jakéhokoli typu projde id
 (generátor navrhuje, soudce rozhoduje; přebytek kandidátů = normální provoz, ne selhání) ·
 plus dvě síta výš a kontrola „čí je to pozemek" (předmět/sloveso nesmí být jádrem sousední runy).
 
+### Obraz od modelu (KUKY 2026-10-03)
+*Changelog: 2026-10-03 založeno — owner: „pokud model sám něco vymyslí a zní to dobře, tak to můžeme použít" (u scény,
+kterou model vymyslel v jeho Asku ke Kenazu). Rozhodnutí `RUNAR_DECISIONS.md` 2026-10-03 (14).*
+- Scénu, kterou si model sám vymyslí ve čtení nebo v Asku, smí banka převzít. Kandidáty sbírá reportér: **✦ Keep this**.
+- Jde stejnou cestou jako každý obraz: identitní brána (výš), islandština psaná od začátku a ověřená, register, oblast.
+  **„Zní dobře" bránu nenahrazuje:** první kandidát (Kenaz, stůl pod lampou a prázdná židle) zněl dobře a soudci ho dali
+  k Othile 2/3 — scéna doma táhne k domovu (`RUNAR_EVAL_LOG.md` 2026-10-03 (4)).
+
 ### Délka a tvar obrazu — klíč ke zkrácení (KUKY 2026-09-28, změřeno)
 *Changelog: 2026-09-28 založeno — owner: „najdi k tomu klíč jak to zkrátit… už máme dost informací o tom, co zní dobře
 a co dělá problémy“. Důvod: obrazy kola 3 měly medián 17 slov (starší banka 13) a skládaly se z příběhů o dvou událostech.*

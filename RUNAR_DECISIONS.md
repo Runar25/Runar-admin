@@ -8130,3 +8130,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   Ask úhel dál, další páka je úhel [0] sám, ne další věta v Asku.
 - Golden: změna jen ve 4 promptech Ask (`ask_*`), registr pravidel v4.89.
 - Affected doc(s): žádné.
+
+## 2026-10-03 (14) — Obraz, který si vymyslí model, smí do banky — stejnou branou jako každý jiný
+
+- **Rozhodl:** KUKY 2026-10-03 *„pokud model sám něco vymyslí a zní to dobře, tak to můžeme použít"* (ke scéně, kterou model
+  vymyslel v jeho Asku ke Kenazu: stůl s lampou a prázdná židle). **Provedl:** CODE-tune.
+- **Co:** na zdroji obrazu nezáleží. Kandidáty sbírá reportér (**✦ Keep this**); do banky jde scéna přes identitní bránu a ostatní
+  síta jako každý obraz (`RUNAR_DESIGN.md` „Obraz od modelu"). Zastaralý komentář nad `RUNE_IMAGES` („zatím JEN islandsky… CODE si
+  obraznost nevymýšlí") přepsán — EN sloupec tam je od 2026-08-10 a tvrzení o zdroji odporovalo tomuhle směru.
+- **Proč brána zůstává:** první kandidát zněl dobře a brána ho dala k Othile 2/3 (`RUNAR_EVAL_LOG.md` 2026-10-03 (4)). Do banky
+  zatím nešel; které znění a kterou runu, rozhodne owner.
+- Affected doc(s): `RUNAR_DESIGN.md` (nová sekce „Obraz od modelu").

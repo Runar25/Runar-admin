@@ -457,7 +457,9 @@ function _seasonBagPick(bucket, kind, ids, exclude) {
 // části roku, takže srpnový obraz se v lednu nikdy nenabídne. Řeší to VÝBĚR, ne další
 // zákaz v promptu (KUKY 2026-08-08: „zákazy nejsou to, kterým směrem bychom měli jít").
 // Nesedí-li žádný runový obraz, jede sezónní pool jako dosud.
-// ⚠️ Zatím JEN islandsky — EN verze Cowork nedodal a CODE si obraznost nevymýšlí.
+// Odkud obraz přijde, je jedno (Cowork, owner, CODE i scéna, kterou si vymyslel model — RUNAR_DESIGN „Obraz od modelu“,
+// 2026-10-03); do banky jde jen přes identitní bránu. Do 2026-10-03 tu stálo „Zatím JEN islandsky — EN verze Cowork nedodal
+// a CODE si obraznost nevymýšlí“: EN sloupec má každý řádek od 2026-08-10 a tvrzení o zdroji odporovalo ownerovu směru.
 var RUNE_IMG_SEASONS = {
   any:    ['deepwinter', 'spring', 'earlysummer', 'highsummer', 'autumn', 'darkening'],
   bright: ['spring', 'earlysummer', 'highsummer', 'autumn'],
