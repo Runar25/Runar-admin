@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
- "zapsano": "2026-10-02",
- "prompt_version": "v4.85-kenaz-workbench",
+ "zapsano": "2026-10-03",
+ "prompt_version": "v4.86-myslenka-odstavec",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -220,19 +220,19 @@
    "zacatek": "The main figure of this picture is not the seeker, and the seeker has "
   },
   {
-   "hash": "314d6fd3f999",
+   "hash": "df9b6a4b06e3",
    "lang": "en",
    "zdroj": "myslenka[Fehu]",
    "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
   },
   {
-   "hash": "439231a9681a",
+   "hash": "cab9b346b760",
    "lang": "en",
    "zdroj": "myslenka[Uruz]",
    "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
   },
   {
-   "hash": "463b553fb2ef",
+   "hash": "4afe88f94af0",
    "lang": "en",
    "zdroj": "myslenka[Thurisaz]",
    "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
@@ -268,7 +268,7 @@
    "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
   },
   {
-   "hash": "34ce1c2395bb",
+   "hash": "a3f471bd2f33",
    "lang": "en",
    "zdroj": "myslenka[Hagalaz]",
    "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
@@ -280,25 +280,25 @@
    "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
   },
   {
-   "hash": "c6b1c7d7a1f0",
+   "hash": "25cb38c64d8a",
    "lang": "en",
    "zdroj": "myslenka[Isa]",
    "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
   },
   {
-   "hash": "0d80b1c1ba1c",
+   "hash": "d7a84a4e4d4e",
    "lang": "en",
    "zdroj": "myslenka[Jera]",
    "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
   },
   {
-   "hash": "d99fcf80661a",
+   "hash": "fdf902f213c9",
    "lang": "en",
    "zdroj": "myslenka[Eihwaz]",
    "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
   },
   {
-   "hash": "d296d6d53b61",
+   "hash": "554ce48b8b3b",
    "lang": "en",
    "zdroj": "myslenka[Perth]",
    "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
@@ -310,25 +310,25 @@
    "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
   },
   {
-   "hash": "4b188503d0c6",
+   "hash": "c54ccfca0148",
    "lang": "en",
    "zdroj": "myslenka[Sowilo]",
    "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
   },
   {
-   "hash": "bc8d1948046f",
+   "hash": "ff3b370c94a8",
    "lang": "en",
    "zdroj": "myslenka[Tiwaz]",
    "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
   },
   {
-   "hash": "754fadae8476",
+   "hash": "8ffc23b70d57",
    "lang": "en",
    "zdroj": "myslenka[Berkana]",
    "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
   },
   {
-   "hash": "a615fe505ca6",
+   "hash": "404134ef046d",
    "lang": "en",
    "zdroj": "myslenka[Ehwaz]",
    "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
@@ -340,25 +340,25 @@
    "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
   },
   {
-   "hash": "3d1b10760bba",
+   "hash": "70b25836600c",
    "lang": "en",
    "zdroj": "myslenka[Laguz]",
    "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
   },
   {
-   "hash": "c13e04e4d811",
+   "hash": "52c0a9965216",
    "lang": "en",
    "zdroj": "myslenka[Ingwaz]",
    "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
   },
   {
-   "hash": "dc44a8c1c2a6",
+   "hash": "05e4384428a1",
    "lang": "en",
    "zdroj": "myslenka[Othila]",
    "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
   },
   {
-   "hash": "e3b9b64e3d65",
+   "hash": "122aff5b5fd5",
    "lang": "en",
    "zdroj": "myslenka[Dagaz]",
    "zacatek": "AFTER THE READING — after everything else, on a new line beginning wit"
@@ -1192,19 +1192,19 @@
    "zacatek": "Leitandinn er ekki aðalpersóna myndarinnar og hefur ekki séð hana. Seg"
   },
   {
-   "hash": "c780ba7bab63",
+   "hash": "beef23ffbfed",
    "lang": "is",
    "zdroj": "myslenka[Fehu]",
    "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
   },
   {
-   "hash": "8c38af44df34",
+   "hash": "24c5c4864c03",
    "lang": "is",
    "zdroj": "myslenka[Uruz]",
    "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
   },
   {
-   "hash": "6fab92a5ba1a",
+   "hash": "69952edf2d1e",
    "lang": "is",
    "zdroj": "myslenka[Thurisaz]",
    "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
@@ -1240,7 +1240,7 @@
    "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
   },
   {
-   "hash": "1b69ffe19b37",
+   "hash": "eb77cfab1138",
    "lang": "is",
    "zdroj": "myslenka[Hagalaz]",
    "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
@@ -1252,25 +1252,25 @@
    "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
   },
   {
-   "hash": "4ecf7e756639",
+   "hash": "10d4ff9d1fe4",
    "lang": "is",
    "zdroj": "myslenka[Isa]",
    "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
   },
   {
-   "hash": "b4faab97e279",
+   "hash": "fbacd47d5f72",
    "lang": "is",
    "zdroj": "myslenka[Jera]",
    "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
   },
   {
-   "hash": "e5f501dd7ed7",
+   "hash": "5a682baff53c",
    "lang": "is",
    "zdroj": "myslenka[Eihwaz]",
    "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
   },
   {
-   "hash": "8de963a2fbb0",
+   "hash": "410c995b767e",
    "lang": "is",
    "zdroj": "myslenka[Perth]",
    "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
@@ -1282,25 +1282,25 @@
    "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
   },
   {
-   "hash": "eae257818992",
+   "hash": "3c178a6f989c",
    "lang": "is",
    "zdroj": "myslenka[Sowilo]",
    "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
   },
   {
-   "hash": "069c1a2b61c6",
+   "hash": "4c4fce39c246",
    "lang": "is",
    "zdroj": "myslenka[Tiwaz]",
    "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
   },
   {
-   "hash": "f2ce06db380d",
+   "hash": "5b68cc1a4524",
    "lang": "is",
    "zdroj": "myslenka[Berkana]",
    "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
   },
   {
-   "hash": "c25ceae8ecb1",
+   "hash": "49cef213f821",
    "lang": "is",
    "zdroj": "myslenka[Ehwaz]",
    "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
@@ -1312,25 +1312,25 @@
    "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
   },
   {
-   "hash": "e3c7f2a0e0e3",
+   "hash": "7a78b111c739",
    "lang": "is",
    "zdroj": "myslenka[Laguz]",
    "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
   },
   {
-   "hash": "6101c707d569",
+   "hash": "8bdc76c751e0",
    "lang": "is",
    "zdroj": "myslenka[Ingwaz]",
    "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
   },
   {
-   "hash": "845f9fcc8330",
+   "hash": "84a21ba9c93a",
    "lang": "is",
    "zdroj": "myslenka[Othila]",
    "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "
   },
   {
-   "hash": "f6a3daafa50b",
+   "hash": "8e3605019ba3",
    "lang": "is",
    "zdroj": "myslenka[Dagaz]",
    "zacatek": "Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til "

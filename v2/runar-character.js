@@ -1717,7 +1717,8 @@ function _parseSegments(raw) {
 }
 
 // ── MYŠLENKA ✦ NA KONEC ČTENÍ (2026-09-30, KUKY „nasaď to“, „myšlenka je bez hlasu“) ──────────────────────────────
-// Jeden krátký řádek po čtení: myšlenka z toho, co runa JE (zdroj = 1. odstavec jejího textu v Kolekci, UI_TEXT.coll_rune), ne
+// Jeden krátký řádek po čtení: myšlenka z toho, co runa JE (zdroj = odstavec jejího textu v Kolekci, UI_TEXT.coll_rune —
+// 1. nebo 3. podle THOUGHT_ODSTAVEC níž), ne
 // z obrazu. SMÍ se obrátit k člověku otázkou nebo tichým pozváním — POVOLENO, neopravovat (RUNAR_DESIGN.md, Cold reading;
 // DECISIONS 2026-09-30 (8)). Zdroj v uvozovkách + „vlastními slovy“ = zdroj, ne text k opsání (memory prompt-directive-makes-model-copy).
 // Kdo a kde rozhoduje _thoughtFor (runar-reading.js): tarif TIERS.*.reading_thought, druh čtení single · Kříž · Norny.
@@ -1732,11 +1733,17 @@ var THOUGHT_LINE = {
   // „ráð um það“ 321 · „sprottin af“ 1182 · „sér á parti“ 850 · „taka eftir einhverju“ 57.
   is: function (jm, zdroj) { return THOUGHT_MARK.is + '. Hún stendur sér á parti og er hugsun sem leitandinn getur tekið með sér, sprottin af því sem ' + jm + ' er en ekki af myndinni. Uppspretta hennar er þessi: „' + zdroj + '“ Láttu hana vaxa upp úr þessu en segðu hana með þínum eigin orðum og beindu henni að leitandanum. Hún er spurning til hans eða hljóðlátt boð um að taka eftir einhverju. Aldrei ráð um það hvað hann eigi að gera og aldrei fullyrðing um hvað hann finnur eða veit.'; },
 };
+// 2026-10-03 (KUKY „3 ano“): odstavec Kolekce, ze kterého myšlenka roste. Výchozí 1. odstavec ([0]); runy tady berou 3. ([2] =
+// druhá strana runy), protože jejich 1. odstavec je metafora a model ji nesl do otázky — reporty 2026-10-01: Uruz „weight to
+// pass without asking leave“, Thurisaz „sharp edge ask for your care“. Ansuz s 1. odstavcem o člověku owner označil „keep“.
+// Čte i kontrola ㉱ (verify_thought.js) — jedno místo.
+var THOUGHT_ODSTAVEC = { Fehu: 2, Uruz: 2, Thurisaz: 2, Hagalaz: 2, Isa: 2, Jera: 2, Eihwaz: 2, Perth: 2,
+                         Sowilo: 2, Tiwaz: 2, Berkana: 2, Ehwaz: 2, Laguz: 2, Ingwaz: 2, Othila: 2, Dagaz: 2 };
 function _thoughtLine(lng, rune) {
   if (!rune || typeof UI_TEXT === 'undefined') return '';
   var L = lng === 'is' ? 'is' : 'en';
   var odst = UI_TEXT[L] && UI_TEXT[L].coll_rune && UI_TEXT[L].coll_rune[rune.n];
-  var zdroj = odst && odst[0];
+  var zdroj = odst && odst[THOUGHT_ODSTAVEC[rune.n] || 0];
   if (!zdroj) return '';
   var jm = L === 'is' ? rnPrompt(rune) : (rune.n === 'Blank' ? 'the Blank rune' : rune.n);
   return THOUGHT_LINE[L](jm, zdroj);

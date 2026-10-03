@@ -19,6 +19,8 @@ const zdrojVar = (src.match(/\nvar _THOUGHT_SOURCE = [^\n]*\n/) || [''])[0];
 if (!zdrojVar) { console.log('FAIL  _THOUGHT_SOURCE v runar-reading.js chybí'); process.exit(1); }
 vm.runInContext('var currentUser = null, userTier = "", lang = "en";\n' + zdrojVar + vyrizni('_thoughtAllowed') + '\n' + vyrizni('_thoughtFor'), S);
 const R = vm.runInContext('RUNES', S), UI = vm.runInContext('UI_TEXT', S), MARK = vm.runInContext('THOUGHT_MARK', S);
+// 2026-10-03: index odstavce bere kontrola z TÉŽE mapy jako produkce (THOUGHT_ODSTAVEC, runar-character.js) — §20.
+const ODST = vm.runInContext('THOUGHT_ODSTAVEC', S);
 const ADMIN = (vm.runInContext('typeof ADMIN_EMAILS !== "undefined" ? ADMIN_EMAILS : []', S) || [])[0];
 const runa = (n) => R.find((r) => r.n === n);
 const vady = [];
@@ -50,9 +52,13 @@ stav('premium', 'a@example.com');
 const pet = ['Blank', 'Tiwaz', 'Perth', 'Ingwaz', 'Sowilo'].map(runa), tri = ['Nauthiz', 'Tiwaz', 'Perth'].map(runa);
 for (const L of ['en', 'is']) {
   vm.runInContext('lang = "' + L + '"', S);
-  const zdroj = (n) => UI[L].coll_rune[n][0];
+  const zdroj = (n) => UI[L].coll_rune[n][ODST[n] || 0];
   const s1 = S._thoughtFor('SINGLE', [runa('Uruz')], L), k = S._thoughtFor('KRIZ', pet, L), n = S._thoughtFor('NORNS', tri, L);
   ocek(L + ' single: zdroj = tažená runa', s1.indexOf(MARK[L]) === 0 && s1.indexOf(zdroj('Uruz')) !== -1);
+  // 2026-10-03: Uruz bere 3. odstavec — metafora z 1. („aurochs… asks no one whether it may pass“) v promptu být NESMÍ;
+  // Ansuz dál 1. odstavec (owner „keep“). Hlídá, že mapa opravdu platí, ne jen že existuje.
+  ocek(L + ' single: Uruz bez 1. odstavce', ODST.Uruz === 2 && s1.indexOf(UI[L].coll_rune.Uruz[0]) === -1);
+  ocek(L + ' single: Ansuz 1. odstavec', S._thoughtFor('SINGLE', [runa('Ansuz')], L).indexOf(UI[L].coll_rune.Ansuz[0]) !== -1);
   ocek(L + ' Kříž: zdroj = střed', k.indexOf(zdroj('Blank')) !== -1 && k.indexOf(zdroj('Sowilo')) === -1);
   ocek(L + ' Norny: zdroj = Skuld', n.indexOf(zdroj('Perth')) !== -1 && n.indexOf(zdroj('Nauthiz')) === -1);
   ocek(L + ' Podkova / Yggdrasil bez myšlenky', !S._thoughtFor('HORSESHOE', pet.concat(tri), L) && !S._thoughtFor('YGGDRASIL', pet.concat(tri), L));

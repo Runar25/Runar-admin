@@ -7959,3 +7959,18 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Proč hned:** repo nesmí nést nenasazený model — kdo by proxy nasadil kvůli čemukoli jinému, přepnul by ownerovi model bez rozhodnutí.
 - **„Pár čtení na 6.1":** 9 testovacích čtení z 2026-10-02 je v `docs/eval/2026-10-02-oblast-od-prvni-vety/` (EVAL_LOG 2026-10-02 (1)).
 - Affected doc(s): žádné.
+
+## 2026-10-03 (2) — Myšlenka ✦: u 16 run roste z 3. odstavce textu Kolekce místo z 1. (v4.86)
+
+- **Rozhodl:** KUKY 2026-10-03 *„myšlenka je myslím správná. To, jak to bude vypadat, řekne až čtení. 3 ano."* (k seznamu kandidátů
+  z 2026-10-02). **Provedl:** CODE-tune.
+- **Co:** `THOUGHT_ODSTAVEC` (`v2/runar-character.js`) — Fehu, Uruz, Thurisaz, Hagalaz, Isa, Jera, Eihwaz, Perth, Sowilo, Tiwaz,
+  Berkana, Ehwaz, Laguz, Ingwaz, Othila, Dagaz berou 3. odstavec (druhá strana runy); ostatních 9 (Ansuz, Raidho, Kenaz, Gebo, Wunjo,
+  Nauthiz, Algiz, Mannaz, Blank) dál 1. odstavec. Obě řeči z téhož indexu (IS odstavce jsou paralelní a ověřené z Kolekce).
+- **Proč:** 1. odstavec je u těch run metafora (tur, ostří, kroupy, tis, nádoba, slunce…) a model ji nesl do otázky — reporty 2026-10-01:
+  Uruz *„What in you has the weight to pass without asking leave?"*, Thurisaz *„Where does a sharp edge ask for your care?"*. Ansuz
+  s 1. odstavcem o člověku owner označil „keep". Othila: 1. odstavec (*„things passed from older hands into yours"*) navíc předpokládá předky.
+- **Kontrola:** ㉱ `verify_thought.js` bere index z TÉŽE mapy (§20) a nově hlídá, že Uruz 1. odstavec v promptu nemá a Ansuz ho má;
+  mutace (mapa vypnutá) = 6 vad. Golden beze změny (řádek myšlenky skládá runar-reading.js, ne buildery). Registr ㉜ v4.86.
+- **Nevyzkoušeno na modelu:** owner: *„řekne až čtení"*.
+- Affected doc(s): žádné.
