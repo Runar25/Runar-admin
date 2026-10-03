@@ -24,7 +24,20 @@ def popis(runa):
     t = re.sub(r'Týr\w*\s*—\s*', '', t)
     for jm in JMENA.get(runa, [runa]):
         t = re.sub(r'\b' + re.escape(jm) + r'\b', 'Tato runa', t)
+    # 2026-10-03: i české pády („A otázka Othily může být“ prozradilo soudci kód Othily) — kmen bez koncového -a, jen od 4 znaků
+    # (krátké kmeny jako „Is“ by sebraly i obyčejná slova).
+    for jm in JMENA.get(runa, [runa]):
+        kmen = jm[:-1] if jm.endswith('a') else jm
+        if len(kmen) >= 4:
+            t = re.sub(r'\b' + re.escape(kmen) + r'\w*', 'Tato runa', t)
     return t
+def prosak(text, runy):
+    # pojistka (2026-10-03): žádné jméno run z úlohy, v žádném tvaru, nesmí k soudci dojít
+    for r in runy:
+        for jm in JMENA.get(r, [r]):
+            kmen = jm[:-1] if jm.endswith('a') and len(jm) > 4 else jm
+            m = re.search(r'\b' + re.escape(kmen) + r'\w*', text)
+            if m: raise SystemExit('jméno runy prosakuje k soudci: ' + m.group(0))
 runy = sorted({k['runa'] for k in kand} | {p for k in kand for p in k['plete']})
 klic = {'kandidati': [k['id'] for k in kand], 'soudci': []}
 for s in range(3):
@@ -39,6 +52,7 @@ for s in range(3):
              '=== DESCRIPTIONS ===']
     for r in sorted(runy, key=lambda x: kod[x]):
         radky += ['', '[' + kod[r] + ']', popis(r)]
+    prosak('\n'.join(radky), runy)
     radky += ['', '=== IMAGES ===']
     zaznam = []
     for n, k in enumerate(poradi, 1):

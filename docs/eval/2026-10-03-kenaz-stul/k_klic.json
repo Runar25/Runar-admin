@@ -1,0 +1,74 @@
+{
+ "kandidati": [
+  "K1",
+  "K0"
+ ],
+ "soudci": [
+  [
+   {
+    "n": 1,
+    "id": "K1",
+    "spravne": "R95",
+    "kody": {
+     "R22": "Othila",
+     "R95": "Kenaz",
+     "R64": "Isa"
+    }
+   },
+   {
+    "n": 2,
+    "id": "K0",
+    "spravne": "R95",
+    "kody": {
+     "R22": "Othila",
+     "R95": "Kenaz",
+     "R64": "Isa"
+    }
+   }
+  ],
+  [
+   {
+    "n": 1,
+    "id": "K1",
+    "spravne": "R35",
+    "kody": {
+     "R21": "Othila",
+     "R17": "Isa",
+     "R35": "Kenaz"
+    }
+   },
+   {
+    "n": 2,
+    "id": "K0",
+    "spravne": "R35",
+    "kody": {
+     "R35": "Kenaz",
+     "R17": "Isa",
+     "R21": "Othila"
+    }
+   }
+  ],
+  [
+   {
+    "n": 1,
+    "id": "K0",
+    "spravne": "R86",
+    "kody": {
+     "R76": "Isa",
+     "R63": "Othila",
+     "R86": "Kenaz"
+    }
+   },
+   {
+    "n": 2,
+    "id": "K1",
+    "spravne": "R86",
+    "kody": {
+     "R86": "Kenaz",
+     "R63": "Othila",
+     "R76": "Isa"
+    }
+   }
+  ]
+ ]
+}

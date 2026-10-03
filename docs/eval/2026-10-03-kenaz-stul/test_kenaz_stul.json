@@ -1,0 +1,106 @@
+[
+ {
+  "area": "Family & Home",
+  "seed": 4,
+  "draws": {
+   "v": 1,
+   "angle": 2,
+   "image": "The lamp over the kitchen table lights every chair, and one of them is empty",
+   "lens": 0,
+   "thought": 1,
+   "ending": "open0",
+   "area_face": 0,
+   "len": 0,
+   "essence": 1,
+   "kws": "knowledge",
+   "name": 2
+  },
+  "usage": {
+   "prompt_tokens": 1247,
+   "completion_tokens": 100,
+   "total_tokens": 1347,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 1244,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  },
+  "prompt": "PERSON: Kuky\nDRAWN RUNE: Kenaz — focus on: knowledge · Elements: Fire\nREADING ANGLE (follow this entry point — let it shape the opening and tone): Open with the motion already underway in the image. If nothing moves, open with the stillness itself.\nTHE IMAGE\nRúnar uses one image per reading and carries it through; he does not list images. A second picture earns its place only when it takes the first one further — the same scene, one step on. Two unrelated pictures side by side say nothing. Never a simile stacked on a metaphor. The image must connect to where this person is standing right now — atmosphere on its own is decoration, not a reading.\nIMAGE — the picture in this reading comes from here: The lamp over the kitchen table lights every chair, and one of them is empty. Let it become your own seeing in the text, down to one detail the sentence does not name.\nTHE ESSENCE LINE: after the picture, one short line that names the rune once and gives the meaning the picture already holds, in plain words a stranger to runes can grasp — let the sentence find its own shape rather than a definition. No invented mechanism, no fate. Never tell the seeker what it means for them.\nNO COLD READING: never tell the seeker what is true, stirring, or known inside them — that is an unfalsifiable guess wearing the clothes of knowledge. Describe the image; their inner life is not yours to narrate. The world is not arranging itself around them either: no omen, no preparation, no destiny at work.\nOne flowing reading — 4 short sentences, 50 to 58 words total. It will be read aloud, so keep every sentence lean — about 28 to 33 seconds spoken. No sections, no labels, no line breaks between thoughts.\nThe reading is for Family & Home — let the image you were given land on family ties and belonging. Do not tell them what they carry from their people.\nBring one thing into focus, not one answer; sharpen what matters and leave the deciding to them.\nMention Kenaz by name once, woven naturally. One clear insight is enough — do not pack everything in.\nEnd on one line that names what this may be in the seeker's family ties — a state that may be so, offered for them to weigh; it names how things may stand, never what to do about it. Let it grow out of the rune's question (\"what do you see more clearly than before — and what will you do with it, now that you cannot look past it?\"), but say it in your own words.\nOne paragraph. No breaks. No labels. This time do not use the name Kuky at all — let the reading stand without it. Stay within the word count — short sentences, no filler. Respond in English.\nOutput format — return ONLY this JSON array, nothing before or after: [{\"rune\": \"(the rune name)\", \"text\": \"(the reading exactly as instructed above, one flowing paragraph)\"}]\nAFTER THE READING — after everything else, on a new line beginning with ✦, one more short line set apart: a thought offered for the seeker to carry away, grown from what Kenaz is, not from the picture. Its source: \"Kenaz is a light that reaches only a step ahead of you, to a door that was there all along, unseen.\" Let it grow out of that, but say it in your own words, and turn it toward the seeker: a question to them, or a quiet invitation to notice something. Never advice about their life, never a claim about what they feel or know.",
+  "text": "[{\"rune\":\"Kenaz\",\"text\":\"The lamp’s light spreads across the kitchen table and reaches every chair, though one stays empty beside a folded napkin. Kenaz gives light enough to see what is there and what is missing. The empty place remains part of the table, whether anyone speaks of it or not. In your family, belonging may have room for someone whose absence is plain.\"}]\n✦ What comes into view when you can see only one step ahead?"
+ },
+ {
+  "area": "Family & Home",
+  "seed": 11,
+  "draws": {
+   "v": 1,
+   "angle": 3,
+   "image": "The lamp over the kitchen table lights every chair, and one of them is empty",
+   "lens": 0,
+   "thought": 1,
+   "ending": "open0",
+   "area_face": 2,
+   "len": 0,
+   "essence": 0,
+   "kws": "knowledge",
+   "name": 0
+  },
+  "usage": {
+   "prompt_tokens": 1270,
+   "completion_tokens": 107,
+   "total_tokens": 1377,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 1267,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  },
+  "prompt": "PERSON: Kuky\nDRAWN RUNE: Kenaz — focus on: knowledge · Elements: Fire\nREADING ANGLE (follow this entry point — let it shape the opening and tone): Open with the one thing in the image that stays fixed while the rest gives way.\nTHE IMAGE\nRúnar uses one image per reading and carries it through; he does not list images. A second picture earns its place only when it takes the first one further — the same scene, one step on. Two unrelated pictures side by side say nothing. Never a simile stacked on a metaphor. The image must connect to where this person is standing right now — atmosphere on its own is decoration, not a reading.\nIMAGE — the picture in this reading comes from here: The lamp over the kitchen table lights every chair, and one of them is empty. Let it become your own seeing in the text, down to one detail the sentence does not name.\nTHE ESSENCE LINE: after the picture, one short line that says which side of the rune this picture shows — its sense in plain words a stranger to runes can grasp. The seeker knows only the words of the reading, not the picture behind them: say what the rune means in its own terms, not what happens in the scene. Never a fixed formula. No invented mechanism, no fate. Never tell the seeker what it means for them.\nNO COLD READING: never tell the seeker what is true, stirring, or known inside them — that is an unfalsifiable guess wearing the clothes of knowledge. Describe the image; their inner life is not yours to narrate. The world is not arranging itself around them either: no omen, no preparation, no destiny at work.\nOne flowing reading — 4 short sentences, 50 to 58 words total. It will be read aloud, so keep every sentence lean — about 28 to 33 seconds spoken. No sections, no labels, no line breaks between thoughts.\nThe reading is for Family & Home — let the image you were given land on the generations before and after. Do not tell them what they carry from their people.\nBring one thing into focus, not one answer; sharpen what matters and leave the deciding to them.\nMention Kenaz by name once, woven naturally. One clear insight is enough — do not pack everything in.\nEnd on one line that names what this may be in what links the seeker to those before and after — a state that may be so, offered for them to weigh; it names how things may stand, never what to do about it. Let it grow out of the rune's question (\"what do you see more clearly than before — and what will you do with it, now that you cannot look past it?\"), but say it in your own words.\nOne paragraph. No breaks. No labels. Address Kuky once in the middle, as a recognition rather than an introduction. Stay within the word count — short sentences, no filler. Respond in English.\nOutput format — return ONLY this JSON array, nothing before or after: [{\"rune\": \"(the rune name)\", \"text\": \"(the reading exactly as instructed above, one flowing paragraph)\"}]\nAFTER THE READING — after everything else, on a new line beginning with ✦, one more short line set apart: a thought offered for the seeker to carry away, grown from what Kenaz is, not from the picture. Its source: \"Kenaz is a light that reaches only a step ahead of you, to a door that was there all along, unseen.\" Let it grow out of that, but say it in your own words, and turn it toward the seeker: a question to them, or a quiet invitation to notice something. Never advice about their life, never a claim about what they feel or know.",
+  "text": "[{\"rune\":\"Kenaz\",\"text\":\"The lamp stays steady over your kitchen table as chairs shift and generations come and go; one place remains empty, its seat still lit. Kenaz, Kuky, gives light enough to notice what absence leaves visible. You can see the place without knowing who, if anyone, will fill it. In your family, this may be a question shared by those before you and those who follow.\\n✦ What comes into view when you look only one step ahead?\"}]"
+ },
+ {
+  "area": "",
+  "seed": 4,
+  "draws": {
+   "v": 1,
+   "angle": 2,
+   "image": "The lamp over the kitchen table lights every chair, and one of them is empty",
+   "lens": 0,
+   "thought": 1,
+   "ending": "open0",
+   "len": 0,
+   "essence": 0,
+   "kws": "knowledge",
+   "name": 2
+  },
+  "usage": {
+   "prompt_tokens": 1239,
+   "completion_tokens": 102,
+   "total_tokens": 1341,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 1236,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  },
+  "prompt": "PERSON: Kuky\nDRAWN RUNE: Kenaz — focus on: knowledge · Elements: Fire\nREADING ANGLE (follow this entry point — let it shape the opening and tone): Open with the motion already underway in the image. If nothing moves, open with the stillness itself.\nTHE IMAGE\nRúnar uses one image per reading and carries it through; he does not list images. A second picture earns its place only when it takes the first one further — the same scene, one step on. Two unrelated pictures side by side say nothing. Never a simile stacked on a metaphor. The image must connect to where this person is standing right now — atmosphere on its own is decoration, not a reading.\nIMAGE — the picture in this reading comes from here: The lamp over the kitchen table lights every chair, and one of them is empty. Let it become your own seeing in the text, down to one detail the sentence does not name.\nTHE ESSENCE LINE: after the picture, one short line that says which side of the rune this picture shows — its sense in plain words a stranger to runes can grasp. The seeker knows only the words of the reading, not the picture behind them: say what the rune means in its own terms, not what happens in the scene. Never a fixed formula. No invented mechanism, no fate. Never tell the seeker what it means for them.\nNO COLD READING: never tell the seeker what is true, stirring, or known inside them — that is an unfalsifiable guess wearing the clothes of knowledge. Describe the image; their inner life is not yours to narrate. The world is not arranging itself around them either: no omen, no preparation, no destiny at work.\nOne flowing reading — 4 short sentences, 50 to 58 words total. It will be read aloud, so keep every sentence lean — about 28 to 33 seconds spoken. No sections, no labels, no line breaks between thoughts.\nBring one thing into focus, not one answer; sharpen what matters and leave the deciding to them.\nMention Kenaz by name once, woven naturally. One clear insight is enough — do not pack everything in.\nEnd on one line that names what this may be in the seeker's life — a state that may be so, offered for them to weigh; it names how things may stand, never what to do about it. Let it grow out of the rune's question (\"what do you see more clearly than before — and what will you do with it, now that you cannot look past it?\"), but say it in your own words.\nOne paragraph. No breaks. No labels. This time do not use the name Kuky at all — let the reading stand without it. Stay within the word count — short sentences, no filler. Respond in English.\nOutput format — return ONLY this JSON array, nothing before or after: [{\"rune\": \"(the rune name)\", \"text\": \"(the reading exactly as instructed above, one flowing paragraph)\"}]\nAFTER THE READING — after everything else, on a new line beginning with ✦, one more short line set apart: a thought offered for the seeker to carry away, grown from what Kenaz is, not from the picture. Its source: \"Kenaz is a light that reaches only a step ahead of you, to a door that was there all along, unseen.\" Let it grow out of that, but say it in your own words, and turn it toward the seeker: a question to them, or a quiet invitation to notice something. Never advice about their life, never a claim about what they feel or know.",
+  "text": "[{\"rune\":\"Kenaz\",\"text\":\"The lamp casts your chair’s shadow across the kitchen table, while another chair sits empty beside a cooling cup. Kenaz speaks of knowledge that makes one thing plain without explaining everything around it. You can see the empty place, though its meaning is not settled by the light. This may be a time when something is clear to you, but what follows remains open.\\n✦ What stands just within your sight now that once went unnoticed?\"}]"
+ }
+]

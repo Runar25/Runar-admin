@@ -1,0 +1,4 @@
+[
+ {"id": "K1", "runa": "Kenaz", "en": "The lamp over the kitchen table lights every chair, and one of them is empty.", "gpt": "nový řádek banky (světlo je podmět)", "plete": ["Isa", "Othila"]},
+ {"id": "K0", "runa": "Kenaz", "en": "You sit at a table with a lamp on, and one chair is empty.", "gpt": "modelova scéna z ownerova Asku 2026-10-02 (prázdná židle je jádro)", "plete": ["Isa", "Othila"]}
+]

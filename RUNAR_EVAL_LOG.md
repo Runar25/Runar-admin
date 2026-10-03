@@ -5873,3 +5873,30 @@ away but one"*).
 
 **Hranice:** n = 4 na buňku, dvě čtení, obě s úhlem [0]; sol 6, ne Opus; IS věta ověřená gramatikou a korpusem, modelem neběžela.
 Slovo *whole* je hrubý zástup úhlu (chytí i esenci *„the whole way forward"*); netvrdí se, že W2 úhel odstraní úplně.
+
+## 2026-10-03 (4) — Obraz Kenaz „stůl pod lampou, prázdná židle": brána ho dala k Othile, do banky nešel · únik jména v bráně
+
+Owner: *„tenhle obraz bych chtěl jako nový, obraz pro Kenaz"*. Scénu si vymyslel model v jeho Asku (Kenaz × Family & Home, 2026-10-02:
+*„You sit at a table with a lamp on, and one chair is empty. Kenaz lights that chair, but it does not tell you why it is empty."*).
+Navržený řádek: *„The lamp over the kitchen table lights every chair, and one of them is empty."* (světlo jako podmět — předpoklad byl,
+že židle sama sklouzne k Ise). Harness, čtení a soubory soudců `docs/eval/2026-10-03-kenaz-stul/`.
+
+**Brána s popisy** (3 slepí soudci, sonnet; popisy Kenaz · Isa · Othila z `RUNAR_POPISY_RUN.md` bez jmen; v zadání věta, že víc obrazů
+smí patřit k jednomu popisu): navržený řádek **Kenaz 1/3, Othila 2/3** · modelova původní scéna **Kenaz 1/3, Othila 2/3** · Isa 0.
+Každý soudce dal oběma zněním **týž** hlas → změna podmětu na světlo nepohnula nikým (nulová páka); předpoklad „židle → Isa" padl.
+Táhne domov: kuchyňský stůl a židle pro rodinu = popis Othily *„místo, kam se vracíš. Dům…"*. **Do banky nešlo** — řádek vrácen
+z pracovního stromu před commitem. **Cena:** 0,29 M tokenů (90 · 92 · 113 tis.), i u úlohy se dvěma obrazy a třemi popisy.
+
+**Pilot čtení** (produkční `buildReadingPrompt` s navrženým řádkem, sol 6, dva seedy u Family & Home + jeden bez oblasti): Kenaz
+nesl světlo, které ukáže, co tam je, ve 3/3 (*„Kenaz gives light enough to see what is there and what is missing"*); **1/3** končilo
+tvrzením, že v rodině někdo chybí (*„In your family, belonging may have room for someone whose absence is plain."*). Čtení runu zná
+z promptu, takže o identitě obrazu nevypovídá — to dělá brána.
+
+**Únik jména v bráně (opraveno):** builder `docs/eval/2026-09-26-obrazy/brana_build.py` nahrazoval jen základní tvar jména a popis
+Othily obsahuje *„A otázka Othily může být"* — soudce viděl, který kód je Othila. Ve všech 25 popisech je to jediný pád, který prosákl.
+Starší kolo 3 mělo Othilu na výběr u W2 (Wunjo, prošel 2/3), N1 (Nauthiz, 3/3) a X2 (Prázdná runa, **0/3 → Othila 3/3**, do banky
+nešel). Únik mohl táhnout jen k Othile, takže **žádný obraz kvůli němu neprošel neprávem**; X2 (dům, který nikdy nestál) mohl padnout
+i kvůli němu. Builder teď nahrazuje i pády a build zastaví, když v popisech zůstane jméno kterékoli runy z úlohy (ověřeno mutací:
+bez nahrazování pádů skončí na *„prosakuje: Othily"*). Dnešní brána běžela už opravená.
+
+**Hranice:** n = 3 soudci, dva soupeři (ne všech 25 run); pilot n = 3, sol 6, jen EN.
