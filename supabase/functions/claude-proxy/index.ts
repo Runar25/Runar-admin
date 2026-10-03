@@ -270,10 +270,11 @@ async function callClaudeWithRetry(
 // reasoning_effort: u gpt-6-sol bylo 'none' (jako gpt-review: přemýšlení stálo víc než polovinu výstupu).
 // 2026-10-02 gpt-6.1-sol (KUKY „vyšel sol 6.1, zkusíme ho“): 'none' ani 'minimal' NEpřijme (400 unsupported_value,
 // ověřeno voláním API) → nejnižší je 'low'. Test 3 čtení: přemýšlení 190–330 tokenů, cena čtení ~0,0042 → ~0,0063 USD
-// (EVAL_LOG 2026-10-02 (1)). Jediný pokus — dva odmítnuté by jen prodloužily čekání. Zpět na 6-sol = oba řádky níž.
+// (EVAL_LOG 2026-10-02 (1)). 2026-10-03 owner: 6.1 zatím NE (dražší, sol 6 se ještě ladí) — proxy zůstává na 6-sol.
+// Přepnutí na 6.1 = oba řádky níž: "gpt-6.1-sol" + ["low"] (jediný pokus; dva odmítnuté by jen prodloužily čekání).
 // Časový strop 50 s: když sol selže pozdě, fallback na Claude (55 s na pokus) se musí vejít do limitu funkce.
-const SOL_MODEL = "gpt-6.1-sol";
-const SOL_EFFORTS = ["low"];   // gpt-6-sol: ["none", "minimal"]
+const SOL_MODEL = "gpt-6-sol";
+const SOL_EFFORTS = ["none", "minimal"];   // gpt-6.1-sol: ["low"]
 async function callSol(system: string, prompt: string, maxTokens: number, key: string):
   Promise<{ text: string; usage: Record<string, unknown> | null } | null> {
   const ctl = new AbortController();

@@ -7948,3 +7948,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno:** prohlížeč 375 px i 1280 px (mřížka 5 × 64 px / 5 × 123 px; jméno zlaté s prokladem 4 px; na desktopu významy na řádku
   se jménem, na telefonu hned pod ním) · smoke.
 - Affected doc(s): žádné (vzhled žije v CSS).
+
+## 2026-10-03 (1) — gpt-6.1-sol zatím NE: proxy v repu zpět na gpt-6-sol (mění 2026-10-02 (1))
+
+- **Rozhodl:** KUKY 2026-10-03 *„sol 6.1 je dražší, tak ho zatím necháme. sol 6 ještě není vyladěný. Zkusíme napřed pár čtení na 6.1
+  a pak se uvidí."* **Provedl:** CODE-tune.
+- **Co:** `claude-proxy` v repu zpět `SOL_MODEL = "gpt-6-sol"`, `SOL_EFFORTS = ["none", "minimal"]` — chováním totéž, co běží (deploy 6.1
+  se nekonal). Struktura `SOL_EFFORTS` zůstává, přepnutí na 6.1 = dva řádky (`"gpt-6.1-sol"` + `["low"]`). Ceník 6.1 v `MODEL_PRICES`
+  zůstává (testy a stats.js ho potřebují).
+- **Proč hned:** repo nesmí nést nenasazený model — kdo by proxy nasadil kvůli čemukoli jinému, přepnul by ownerovi model bez rozhodnutí.
+- **„Pár čtení na 6.1":** 9 testovacích čtení z 2026-10-02 je v `docs/eval/2026-10-02-oblast-od-prvni-vety/` (EVAL_LOG 2026-10-02 (1)).
+- Affected doc(s): žádné.
