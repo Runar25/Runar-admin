@@ -125,6 +125,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [prompt-map-artifact.md](prompt-map-artifact.md) — vizuální reference mapa Rúnarova promptu (artifact URL); snapshot, pravda = kód
 - [cowork-handoff-quality-bar.md](cowork-handoff-quality-bar.md) — standard pro Cowork content/research/eval handoffy: 12 návyků (závěr napřed, živé ověření, značka původu, přiznané mezery)
 - [runar-project.md](runar-project.md) — vyprázdněno 2026-07-18, jen rozcestník
+- [runar-not-public-yet.md](runar-not-public-yet.md) — Rúnar není veřejně spuštěný; návrhy pro agndofa.is nesmí posílat zákazníky do appky
 - [is-grammar-adjective-gender.md](is-grammar-adjective-gender.md) — nejdřív rod podstatného, pak skloňuj přídavné
 - [is-vazba-check.md](is-vazba-check.md) — islandskou vazbu (rekce/pád/kolokace/idiom) ověř `is-vazba.py` (nútímamálsorðabók API + korpus), vrstva nad BÍN, nehádej
 - [runar-tree-engine-lab.md](runar-tree-engine-lab.md) — historie iterací enginu (boughs přestavba = regrese)
