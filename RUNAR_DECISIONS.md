@@ -8115,3 +8115,18 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   work, that may look like a sharp response to something you have made…"*).
 - **Daň:** Kenazův nový domácí obraz se ownerovi líbil (report 2026-10-02 10:09) — s novou nápovědou zůstane u lavice. Vrácení = 2 řádky.
 - Affected doc(s): žádné.
+
+## 2026-10-03 (13) — Ask nepřevypráví, jak čtení obraz otevřelo (v4.89)
+
+- **Rozhodl:** KUKY 2026-10-03 *„12 Ask opakuje úhel, oprav to"* (report 2026-10-01 09:59 u Uruz: *„Model vyloženě opakuje angle,
+  což by neměl"*). **Provedl:** CODE-tune.
+- **Co:** `RP_ASK` (`v2/runar-character.js`) má na začátku pravidel novou větu. EN *„They have just read this reading. Do not retell
+  how it opened, where it looked first and what it narrowed to; speak from what the picture holds."* · IS *„Leitandinn er nýbúinn að
+  lesa lesturinn. Þú endursegir ekki hvernig hann hófst, hvert hann leit fyrst eða að hverju hann beindist, heldur talar út frá því
+  sem myndin geymir."* (is-grammar-qa čisté, korpus u kódu). Obraz čtení Ask dál smí — drží to 2026-10-03 (12).
+- **Proč tahle věta:** měření → `RUNAR_EVAL_LOG.md` 2026-10-03 (3). U „clearer image" úhel 2/4 → 0/4 a obraz čtení dál 4/4.
+  Přísnější „neopakuj čtení" úhel zabil i s obrazem; škrt *„Describe the image"* byl horší.
+- **Úhel [0] čtení zůstává**, přestože je zdrojem: z něj je Uruz, které owner v témže reportu nazval *„Velmi dobré čtení"*. Ponese-li
+  Ask úhel dál, další páka je úhel [0] sám, ne další věta v Asku.
+- Golden: změna jen ve 4 promptech Ask (`ask_*`), registr pravidel v4.89.
+- Affected doc(s): žádné.

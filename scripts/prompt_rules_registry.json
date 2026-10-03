@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-10-03",
- "prompt_version": "v4.88-myslenka-horseshoe-yggdrasil",
+ "prompt_version": "v4.89-ask-bez-uhlu",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -664,10 +664,10 @@
    "zacatek": "They now ask ONE follow-up question about it:"
   },
   {
-   "hash": "c3c31410c805",
+   "hash": "c2432937072c",
    "lang": "en",
    "zdroj": "ask",
-   "zacatek": "Speak as Rúnar — quiet, reflective, never advice or instruction. Do NO"
+   "zacatek": "They have just read this reading. Do not retell how it opened, where i"
   },
   {
    "hash": "552848e7c13f",
@@ -1636,10 +1636,10 @@
    "zacatek": "Nú spyr leitandinn EINNAR spurningar um hann:"
   },
   {
-   "hash": "41e5e136dcec",
+   "hash": "fb71fc6ef349",
    "lang": "is",
    "zdroj": "ask",
-   "zacatek": "Þú talar sem Rúnar, hljóðlátur og íhugull, og gefur aldrei ráð eða fyr"
+   "zacatek": "Leitandinn er nýbúinn að lesa lesturinn. Þú endursegir ekki hvernig ha"
   },
   {
    "hash": "e7adf4a2d2ec",

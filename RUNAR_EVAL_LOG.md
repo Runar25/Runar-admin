@@ -5838,3 +5838,38 @@ Kenaz obraz vůbec nezmíní. Bez karty viditelné v appce by člověk obraz nem
 **Slova podoby doslova** (ručně, 1 čtení na buňku): A 3/3 (*„Between those before you and those after"*, *„how you give care and receive it"*,
 *„In another person's eyes"*) · D1 1/3 · D2 1/3 (*„the care you give and receive"*). Obě varianty ubraly; rozlišit je n = 3 neumí.
 **Hranice:** n = 1 na buňku, posuzováno čtením; sol 6, ne Opus.
+
+## 2026-10-03 (3) — Ask opakuje úhel čtení: A / V / W / W2 (sol 6) · úhel [0] v databázi
+
+Owner: *„12 Ask opakuje úhel, oprav to"* (report 2026-10-01 09:59 u Uruz, čtení s úhlem [0]: *„Model vyloženě opakuje angle, což by
+neměl"*; Ask tehdy: *„It does not show you … the whole path"*, *„your fingers find an edge first"*). Harness a odpovědi
+`docs/eval/2026-10-03-ask-clearer-image/test_ask_uhel.js` (+ `docs/eval/2026-10-03-ask-clearer-image/test_ask_uhel_W.json` a `…_W2.json`). Dvě ownerova čtení s úhlem [0]
+(Uruz × Purpose & Path, Kenaz × Family & Home), dvě otázky (nápověda *„… can you make this image clearer?"* a *„What is this reading
+telling me?"*), 4 odpovědi na otázku a variantu; produkční `buildAskPrompt`, sol 6, strop 320.
+
+**Varianty:** A = dnešní prompt · V = bez *„Describe the image;"* (hypotéza: Ask obraz popíše znovu, i s úhlem) · W = *„They have just
+read this reading. Do not repeat it back to them, neither its picture in the same words nor the way it opened. Give them what it did
+not say."* · W2 = *„They have just read this reading. Do not retell how it opened, where it looked first and what it narrowed to; speak
+from what the picture holds."*
+
+**Výsledek** (posouzeno čtením celé odpovědi; úhel = stavba *celek → jen část*, např. *„too large to see or move all at once. Your
+fingers find one edge"*):
+
+| | clearer: úhel | clearer: obraz čtení | telling: úhel |
+|---|---|---|---|
+| A | 2/4 | 4/4 | 3/4 |
+| V | 4/4 | 4/4 | 3/4 |
+| W | 0/4 | 0/4 | 1/4 |
+| W2 | 0/4 | 4/4 | 2/4 |
+
+V je horší → *„Describe the image"* příčina není. W úhel zabije, ale s ním i obraz (proti bodu 13, 2026-10-03 (12)). Oba zbylé
+úhly u W2 jsou Uruz a nesou *„the whole way forward"*, které je i v esenci čtení — vysvětlit čtení je u té otázky v pořádku.
+
+**Databáze** (EN čtení s `prompt_draws.angle`, regex na celé slovo, stav 2026-10-03):
+- *whole* v textu čtení: úhel [0] **13/31 (42 %)**, úhly 1–6 **12/142 (8 %)**; *whole* nebo *only*: 20/31 (65 %) proti 39/142 (27 %).
+- *whole* v odpovědi Ask: ke čtení s úhlem [0] **6/33 (18 %)**, k ostatním **12/149 (8 %)**.
+⇒ Ask úhel přebírá ze čtení a zdroj je úhel [0] (`READING_ANGLES[0]`, *„one quick glance at the whole image, then let everything fall
+away but one"*).
+
+**Hranice:** n = 4 na buňku, dvě čtení, obě s úhlem [0]; sol 6, ne Opus; IS věta ověřená gramatikou a korpusem, modelem neběžela.
+Slovo *whole* je hrubý zástup úhlu (chytí i esenci *„the whole way forward"*); netvrdí se, že W2 úhel odstraní úplně.
