@@ -8141,3 +8141,30 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Proč brána zůstává:** první kandidát zněl dobře a brána ho dala k Othile 2/3 (`RUNAR_EVAL_LOG.md` 2026-10-03 (4)). Do banky
   zatím nešel; které znění a kterou runu, rozhodne owner.
 - Affected doc(s): `RUNAR_DESIGN.md` (nová sekce „Obraz od modelu").
+
+## 2026-10-03 (15) — Strom (lab): 30 px mezi rameny na stejné straně, levé a pravé 15 px; když ramena potřebují místo, povyroste kmen (oprava „koště")
+
+- **Rozhodl:** KUKY 2026-10-03: nejdřív *„30px min."* (mezi výstupy ramen, po ukázce 15 px), pak k výsledku *„a je to koště.
+  předělal jsi víc věcí, než jsi měl, a už to není strom. spodní větev skoro u země. velká mezera pod 3 větvemi u špice"*; ze čtyř
+  obrázků vybral č. 4; k limitu počtu ramen *„když bude strom růst do nebe, tak nemá limit"*. **Provedl:** CODE-tree, jen LAB.
+- **Co udělalo koště (chyba CODE-tree, tři změny navíc):** (1) 30 px mezi VŠEMI rameny a podlaha směla ustoupit až k 10 % kmene →
+  na jeho kmen (64 čtení, ~260 px) 8 ramen jako příčky žebříku od 17 %, zbylých 5 run povýšených, dvě z nich (Thurisaz, Tiwaz)
+  vidlicí na vůdčí větvi; (2) „vějíř" proti překryvům: na každé straně nižší rameno aspoň o 0,25 rad vodorovněji → vodorovné klacky;
+  (3) tvar ramen proti překryvům (napojení 0,15, zdvih špičky 0,5) → tuhá rovná ramena. Rovnější kmen (náklon 0,3, vlnění 0,2) je
+  jeho zadání a zůstává.
+- **Teď:** tvar ramen ranní (`limbBendU` 0,45, `limbTip` 1), vějíř zrušen, `exitMinPx` = rozestup na STEJNÉ straně (30), levé–pravé
+  polovina; strana pro rozestup = kam rameno opravdu míří (v překlápění obě). Kapacita kmene počítá s polovinou od podlahy
+  `exitFloor`. Když se ramena nevejdou (dvě na stejné straně nad sebou, jednostranný čtenář), **povyroste kmen** (nejvýš po výšku
+  obrazovky) a podlaha drží 22 %. Výška kmene v každém čtení = ta, kterou strom tehdy měl (dřív historie počítala s dnešní → ramena
+  si mezi čteními měnila pořadí: Laguz 15 % → 51 % → 16 % mezi čteními 58–60, úhly skákaly o 15–30°).
+- **Změřeno (výchozí posuvníky):** KUKYho strom 12 ramen a 1 povýšená (ráno 14 a 1), v každém okamžiku růstu nic pod 22 %, na
+  stejné straně ≥ 30 px, levo-pravo ≥ 15 px; otočení větvičky > 8° 0, ramene > 5° 0, sklouznutí uchycení > 8 px 20 (ráno 23,
+  nejvíc 25 px proti 17 px — rozestup 30 px znamená větší odsun sousedů při zrodu ramene). 352 modelových stromů: nic pod 22 %,
+  stejná strana ≥ 30 px; kmen vyšší u 17 z 56 (medián 0, nejvíc +23 %). Dva zbývající „souběhy" na jeho stromě (Gebo + Uruz,
+  Hagalaz + Eihwaz, 21–24°) jsou podle výřezu mělká křížení, obě větve vidět.
+- **Otevřené:** na modelových stromech se s ranním tvarem ramen vrátily překryvy (285; ráno 250, koště 49) — nejčastěji povýšená
+  podél matky (146) → `RUNAR_BACKLOG.md`.
+- **Hlídá smoke ㉳:** stejná strana ≥ 29 px, levo-pravo ≥ 14 px, žádné rameno pod podlahou (mutace: bez růstu kmene 5 porušení,
+  se stejnou stranou po 15 px 48).
+- Affected doc(s): `RUNAR_TREE.md` §5 („KAŽDÁ VĚTEV Z JINÉHO MÍSTA") · `RUNAR_TREE_MAP.md` §2, §3, §5, §7, §9, §12, §13 ·
+  `RUNAR_BACKLOG.md` — v tomto commitu.

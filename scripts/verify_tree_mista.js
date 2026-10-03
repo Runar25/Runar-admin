@@ -8,17 +8,22 @@
 //
 // Protlaci lab (build_crown_composer.py -> crown-composer.html, vychozi posuvniky) dvema pevnymi logy a v nekolika
 // okamzicich rustu overi:
-//   (a) vystupy ramen z kmene jsou od sebe aspon MIN_EXIT px,
+//   (a) vystupy ramen z kmene jsou od sebe aspon MIN_EXIT px, kdyz miri na STEJNOU stranu, a aspon MIN_EXIT_LR px mezi
+//       levym a pravym ramenem (a od vudci vetve) — KUKY 2026-10-03 "30px min.", pak obrazek 4: 30 px vsude nechalo na
+//       mladem kmeni jen 8 ramen a strom vypadal jako koste; leve a prave se stridaji v polovine,
 //   (b) vetve na tomtez rodici (vetvicky i povysene) zacinaji aspon MIN_SIB px od sebe,
 //   (c) kazdy nakresleny tah patri klikatelne casti stromu,
 //   (d) v kmeni je nejvys 15 pramenu (14 mist element × zona, vzacne 15. pri trech zakladacich runach stinu).
 //   (e) INSPEKCE odpovida logu (2026-10-03, KUKY: "proc se informace nemeni?" — inspekce popisovala model z kroku 1):
 //       vetvicka vznikla ze cteni, ktere jeji runu opravdu obsahuje; "tahl celkem Nx" = skutecny pocet v logu.
+//   (f) zadne rameno nevychazi pod podlahou FLOOR (vychozi exitFloor 0,22) — KUKY 2026-10-03 "spodni vetev skoro u zeme"
+//       (rameno na 17 % kmene: rozestup se nevesel a podlaha ustoupila; ted misto toho povyroste kmen).
 //
 //   node scripts/verify_tree_mista.js            (TREE_LAB_HTML=<cesta> = jina kopie labu, napr. pro mutacni test)
 const path = require('path'), cp = require('child_process'), fs = require('fs');
 const ROOT = path.resolve(__dirname, '..');
-const MIN_EXIT = 10, MIN_SIB = 4, MAX_STRANDS = 15;
+const MIN_EXIT = 29, MIN_EXIT_LR = 14, MIN_SIB = 4, MAX_STRANDS = 15, FLOOR = 0.215;   // FLOOR: vychozi exitFloor 0,22 minus zaokrouhleni; MIN_EXIT: KUKY 2026-10-03 "30px min." (drive 10 — mene nez sirka kmene); MIN_EXIT_LR: levo-pravo = polovina (obrazek 4)
+const sideOf = m => (m.idx === 0) ? 0 : (Math.cos(m.ang) >= 0 ? 1 : -1);   // strana = kam rameno skutecne miri (nakresleny uhel), vudci 0
 let html = process.env.TREE_LAB_HTML || null;
 if (!html) {   // lab neni v gitu (generuje ho builder) -> postavit cerstvy
   const r = cp.spawnSync('python', ['-X', 'utf8', path.join(ROOT, 'build_crown_composer.py')], { encoding: 'utf8' });
@@ -39,14 +44,17 @@ const gen = (seed, sc, N) => { let s = seed; const rnd = () => (s = (s * 1103515
   return log; };
 const LOGS = [['vsude', gen(3933, [1 / 3, 1 / 3, 1 / 3], 300)], ['minulost', gen(3000, [0.6, 0.2, 0.2], 300)]];
 const NS = [20, 60, 150, 300];
-const fails = []; let worstE = 1e9, worstS = 1e9, maxStr = 0, runs = 0;
+const fails = []; let worstE = 1e9, worstLR = 1e9, worstS = 1e9, maxStr = 0, runs = 0;
 LOGS.forEach(([nm, log]) => NS.forEach(n => {
   const r = labRun(log.slice(0, n), html, null); runs++;
   const mains = r.picks.filter(m => !m.gradOf && m.exitX != null);
   if (mains.length < 3) fails.push(nm + ' po ' + n + ': chybi souradnice vystupu ramen (exitX) — inspekce se zmenila?');
+  mains.forEach(m => { if (m.idx !== 0 && m.frac < FLOOR) fails.push(nm + ' po ' + n + ': rameno ' + m.name + ' vychazi na ' + (m.frac * 100).toFixed(0) + ' % kmene (podlaha ' + Math.round(FLOOR * 100) + ' %)'); });
   for (let a = 0; a < mains.length; a++) for (let b = a + 1; b < mains.length; b++) {
-    const d = Math.hypot(mains[a].exitX - mains[b].exitX, mains[a].exitY - mains[b].exitY); worstE = Math.min(worstE, d);
-    if (d < MIN_EXIT) fails.push(nm + ' po ' + n + ': ramena ' + mains[a].name + ' a ' + mains[b].name + ' vychazeji ' + d.toFixed(1) + ' px od sebe (min ' + MIN_EXIT + ')'); }
+    const d = Math.hypot(mains[a].exitX - mains[b].exitX, mains[a].exitY - mains[b].exitY), sa = sideOf(mains[a]), same = sa !== 0 && sa === sideOf(mains[b]);
+    if (same) worstE = Math.min(worstE, d); else worstLR = Math.min(worstLR, d);
+    const need = same ? MIN_EXIT : MIN_EXIT_LR;
+    if (d < need) fails.push(nm + ' po ' + n + ': ramena ' + mains[a].name + ' a ' + mains[b].name + (same ? ' (stejna strana)' : ' (levo-pravo)') + ' vychazeji ' + d.toFixed(1) + ' px od sebe (min ' + need + ')'); }
   const byP = {};
   r.allPicks.forEach(p => { const m = p.meta || {}; let pk = null, pt = null;
     if (m.parentKey != null && p.pts && p.pts.length) { pk = String(m.parentKey); pt = p.pts[0]; }
@@ -71,5 +79,5 @@ LOGS.forEach(([nm, log]) => NS.forEach(n => {
   if (sn == null) fails.push(nm + ' po ' + n + ': pocet pramenu v kmeni nejde precist');
   else if (sn > MAX_STRANDS) fails.push(nm + ' po ' + n + ': ' + sn + ' pramenu v kmeni (max ' + MAX_STRANDS + ' — povysene vetve nemaji vlastni pramen)');
 }));
-if (fails.length) { fails.slice(0, 12).forEach(f => console.log('   ' + f)); console.log('strom: ' + fails.length + ' poruseni (vetve ze stejneho mista / neklikatelne / prameny navic / inspekce neodpovida logu)'); process.exit(1); }
-console.log('strom (lab): ' + runs + ' stromu — vystupy ramen aspon ' + worstE.toFixed(0) + ' px od sebe, vetve na rodici aspon ' + worstS.toFixed(1) + ' px, vse klikatelne, inspekce = log, nejvys ' + maxStr + ' pramenu v kmeni');
+if (fails.length) { fails.slice(0, 12).forEach(f => console.log('   ' + f)); console.log('strom: ' + fails.length + ' poruseni (vetve ze stejneho mista / pod podlahou / neklikatelne / prameny navic / inspekce neodpovida logu)'); process.exit(1); }
+console.log('strom (lab): ' + runs + ' stromu — vystupy ramen na stejne strane aspon ' + worstE.toFixed(0) + ' px, levo-pravo aspon ' + worstLR.toFixed(0) + ' px, zadne pod podlahou, vetve na rodici aspon ' + worstS.toFixed(1) + ' px, vse klikatelne, inspekce = log, nejvys ' + maxStr + ' pramenu v kmeni');

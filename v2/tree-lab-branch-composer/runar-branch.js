@@ -114,8 +114,10 @@ function paletteRgb(pal,t){ var s=[hexRgb(pal.dark),hexRgb(pal.mid),hexRgb(pal.b
 function barkRgb(t,el){ var b=paletteRgb(TREE_BASE,t); var p=ELEMENTS[el]; if(!p)return b; return mixRgb(b,paletteRgb(p,t),ELEMENT_TINT*Math.pow(clamp(t,0,1),1.3)); }
 function leafRgb(el,t){ var b=paletteRgb(LEAF_BASE,t); var p=ELEMENTS[el]; if(!p||el==='shadow')return b; return mixRgb(b,hexRgb(p.base),0.18); }
 
-function branchAngle(u, startAng, targetAng, arc, wob1, wob2, wobAmp, tipLift) {
-  var bend = smooth(Math.min(1, u / 0.45));
+/* bendU (nepovinne, 2026-10-03): po jake casti delky vetev dojede z tecny rodice na svuj uhel. Bez nej 0,45 = beze zmeny
+   (aplikace). Lab ho u ramen zkracuje: ramena bezela prvni ~45 % delky podel kmene a schovavala ramena nad sebou. */
+function branchAngle(u, startAng, targetAng, arc, wob1, wob2, wobAmp, tipLift, bendU) {
+  var bend = smooth(Math.min(1, u / (bendU || 0.45)));
   var ba = lerp(startAng, targetAng, bend) + arc * smooth(u) * 1.3
          + Math.sin(u * wob2 * Math.PI + wob1) * 0.10 * wobAmp * bend;
   var lift = tipLift * smooth((u - 0.55) / 0.45);
@@ -210,7 +212,7 @@ function buildBranch(spec, T) {
   var twist = (spec.twist != null) ? spec.twist : 0;
   var twPh = rnd() * 6.283;
   var pts = integrate(ox, oy, L, 30,
-    function(u){ var a = branchAngle(u, base, theta0, arc, wob1, wob2, wobAmp, tipLift);
+    function(u){ var a = branchAngle(u, base, theta0, arc, wob1, wob2, wobAmp, tipLift, spec.bendU);
                  return a + twist * Math.sin(u * 2.0 * Math.PI + twPh) * smooth(u); },
     0.45, 1.0, w0, w1, taper);
 
