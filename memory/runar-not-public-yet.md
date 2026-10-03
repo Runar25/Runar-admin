@@ -10,6 +10,6 @@ metadata:
 
 Rúnar is **still in development and not launched** to the public (KUKY 2026-10-03). The URL in CLAUDE.md ("Produkce: runar25.github.io/…") is the testing deployment, not a public launch.
 
-**Why:** in the Agndofa store review I proposed linking the cacao page and the rune stones to the app ("draw your first rune free"). KUKY corrected it: Rúnar isn't deployed, so it can't be promoted yet.
+**Why:** in the Agndofa store review I proposed linking the cacao page and the rune-set product (Runes) to the app ("draw your first rune free"). KUKY corrected it: Rúnar isn't deployed, so it can't be promoted yet.
 
-**How to apply:** suggestions for agndofa.is (cacao, rune stones, The Moment) must stand without the app: the glyph story, a link to The Moment, a QR code to The Moment, the ritual world. Links to Rúnar only after the owner says it has launched. Related: [[copy-always-in-runar-voice]].
+**How to apply:** suggestions for agndofa.is (cacao, the rune-set product, The Moment) must stand without the app: the glyph story, a link to The Moment, a QR code to The Moment, the ritual world. Links to Rúnar only after the owner says it has launched. Related: [[copy-always-in-runar-voice]].
