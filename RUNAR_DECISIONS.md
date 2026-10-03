@@ -8064,3 +8064,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Kontrola:** `tree_diag.js klik` — každý nakreslený tah musí patřit klikatelné části; po opravě 0 (opraveny i vidlice zrcadlených
   větviček u kořenů, neklikatelné už před zónami). Přeskakování beze změny (`jump2` 0 otočení > 8°, `limbjump` 0 > 5°).
 - Affected doc(s): `RUNAR_TREE.md` §5 (KROK 2 + KROK 5) · `RUNAR_TREE_MAP.md` (hlavička, vrstva H) — v tomto commitu.
+
+## 2026-10-03 (9) — Strom (lab): každá větev z jiného místa je zaručená a hlídá ji smoke ㉳; výchozí podlaha výstupu 0,50 → 0,22
+
+- **Rozhodl:** KUKY 2026-10-03 *„proč dvě větve vyrůstají přesně z jednoho místa? … nechci, aby vyrůstaly dvě nebo více větví ze
+  stejného místa!!!! — tohle řeším od samého začátku"* (pravidlo je jeho od začátku; nové je, že ho hlídá kód). **Provedl:** CODE-tree, jen LAB.
+- **Co:** výšky ramen na kmeni drží rozestup i za růstu (zrod do volné mezery, pořadí se nemění, podlaha ustoupí rozestupu), výstup
+  je přesně ve výšce, větvičky a povýšené větve dostávají místo na rodiči v pořadí příchodu s minimálním odstupem. Výchozí `exitFloor`
+  0,50 → 0,22: s třemi patry zón se 13 ramen při 0,50 tlačilo do horní půlky kmene. Mechanika a čísla `RUNAR_TREE.md` §5
+  („KAŽDÁ VĚTEV Z JINÉHO MÍSTA").
+- **Proč smoke:** pravidlo měsíce hlídal jen owner okem a já ho v kroku 5 neměřil — měřil jsem s jeho uloženými posuvníky (podlaha
+  0,13), ne s výchozími, které má v prohlížeči. ㉳ `verify_tree_mista.js` běží s výchozími posuvníky.
+- Affected doc(s): `RUNAR_TREE.md` §5 (pravidlo 5, PROTI PALMĚ, nový záznam) · `RUNAR_TREE_MAP.md` vrstva D — v tomto commitu.

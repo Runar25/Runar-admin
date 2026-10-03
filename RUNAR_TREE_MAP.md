@@ -59,7 +59,8 @@ Laděno v branch composeru → `RUNE_TUNE`; fallback = signatura v `RUNES` (runa
 | místo `bandOf` | rameno = element × pásmo zóny (urð · verðandi · skuld, stín na hranách); výška = střed pásma + zóna čtení v pásmu | crown builder (KROK 5, 2026-10-03) | KUKY: „zóny to můžou řešit“ |
 | kostra `FR` | STRANA ramene v pořadí zrodu (vůdčí nahoru, strany se liší nejvýš o 1, při shodě lehčí strana); rozevření = neutrální `bendN` (dřív zlatý řez, pak element) | crown builder (od 2026-09-30) | KUKY: „co nejvíce rozložit“ |
 | tíha `bendMag` | ohyb ramene čteními: minulost dolů · teď do strany · budoucnost nahoru, síla = počet (`bendK`, `bendStr`) | crown builder (KROK 5) | KUKY: „formují se pod svou tíhou“ |
-| `exitIndex` | najde bod odlomení na kmeni dle `frac` | | |
+| `exitPoint` | bod odlomení na kmeni přesně ve výšce `frac` (mezi body pramene; dřív nejbližší ze 40 bodů) | crown builder | |
+| rozestup výstupů | nové rameno do volné mezery, pořadí podle výšky se nemění, stejný krok pro všechna, podlaha ustoupí ~12 px rozestupu; místa na rodiči v pořadí příchodu (8 % / 10 % délky) | crown builder (2026-10-03) | KUKY: „nechci dvě větve ze stejného místa“ · hlídá smoke ㉳ |
 | `lifeLean` | naklonění celku dle Life Rune | | |
 | `intZone` / `areaSide` | posun `frac`/strany dle čtení | crownT | |
 

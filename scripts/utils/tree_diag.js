@@ -45,7 +45,7 @@ function measure(opts) {
 }
 const keyOf = g => { const r = B.RUNES.filter(x => x.g === g)[0]; return r ? r.k : null; };
 
-const cast = process.argv[2] || '1';
+const cast = (require.main === module) ? (process.argv[2] || '1') : '__lib__';   // require() z verify_tree_mista.js (smoke ㉳) = jen labRun, zadny cast
 if (cast === '1') {
   // A) Kazda zivotni runa, kterou muze calcLifeRune vratit, musi mit tvar v rendereru
   //    (jinak runar-tree.js tise spadne na 'berkano').
@@ -973,3 +973,37 @@ if (cast === 'klik') {
       '| nakreslenych tahu', drawn.length, '| z toho NEKLIKATELNYCH', Object.values(bad).reduce((a, b) => a + b, 0), JSON.stringify(bad));
   });
 }
+if (cast === 'misto') {
+  // DVE VETVE ZE STEJNEHO MISTA (2026-10-03, KUKY: "proc dve vetve vyrustaji presne z jednoho mista? … nechci, aby vyrustaly
+  // dve nebo vice vetvi ze stejneho mista — tohle resim od samoho zacatku"). (a) ramena z kmene: vzdalenost vystupu (px);
+  // (b) na jednom rodici (rameno, povysena, vetvicka): zacatky jeho primych vetvi. Posuvniky: VYCHOZI labu (tak je ma KUKY
+  // v prohlizeci) nebo SLIDERS=kuky (jeho ulozene). KUKYho log prehrany po krocich + modelovi lide (NSEED).
+  const HTML = process.argv[3] && process.argv[3] !== '-' ? process.argv[3] : null;
+  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const CF = process.env.SLIDERS === 'kuky' ? Object.assign({}, st.crownT, { twigMax: 5, maxMains: 25, gradStrand: 1 }) : {};
+  const inj = { crownT: Object.assign(CF, process.env.LRCFG ? JSON.parse(process.env.LRCFG) : {}), trunkT: process.env.SLIDERS === 'kuky' ? st.trunkT : {}, rootsT: process.env.SLIDERS === 'kuky' ? st.rootsT : {}, rune: st.rune, dob: st.dob };
+  const MINX = +(process.env.MINX || 10), MINT = +(process.env.MINT || 3);
+  const check = log => { const r = labRun(log, HTML, inj), mains = r.picks.filter(m => !m.gradOf && m.exitX != null);
+    let minE = 1e9, pairE = '', badE = 0;
+    for (let a = 0; a < mains.length; a++) for (let b = a + 1; b < mains.length; b++) { const d = Math.hypot(mains[a].exitX - mains[b].exitX, mains[a].exitY - mains[b].exitY);
+      if (d < minE) { minE = d; pairE = mains[a].name + '+' + mains[b].name; } if (d < MINX) badE++; }
+    const byP = {}; r.allPicks.forEach(p => { const m = p.meta || {}; let pk = null, pt = null;
+      if (m.parentKey != null && p.pts && p.pts.length) { pk = String(m.parentKey); pt = p.pts[0]; }
+      else if (typeof p.k === 'number' && m.gradOf && m.splitX != null) { pk = String(m.gradOfK); pt = { x: m.splitX, y: m.splitY }; }
+      if (pk != null && pt) (byP[pk] = byP[pk] || []).push({ x: pt.x, y: pt.y, nm: m.name }); });
+    let minT = 1e9, badT = 0, pairT = '';
+    Object.keys(byP).forEach(k => { const L = byP[k]; for (let a = 0; a < L.length; a++) for (let b = a + 1; b < L.length; b++) { const d = Math.hypot(L[a].x - L[b].x, L[a].y - L[b].y);
+      if (d < minT) { minT = d; pairT = k + ':' + L[a].nm + '+' + L[b].nm; } if (d < MINT) badT++; } });
+    if (process.env.DETAIL) { const arcOf = k => { const pp = r.allPicks.find(q => String(q.k) === k); if (!pp) return null; let a = 0; const P = typeof pp.k === 'number' ? pp.pts.slice(-30) : pp.pts; for (let i = 1; i < P.length; i++) a += Math.hypot(P[i].x - P[i-1].x, P[i].y - P[i-1].y); return a; };
+      const rows = []; Object.keys(byP).forEach(k => { const L = byP[k]; for (let a = 0; a < L.length; a++) for (let b = a + 1; b < L.length; b++) rows.push({ d: Math.hypot(L[a].x - L[b].x, L[a].y - L[b].y), k, a: L[a].nm, b: L[b].nm, n: L.length }); });
+      rows.sort((x, y) => x.d - y.d).slice(0, +process.env.DETAIL).forEach(x => { const al = arcOf(x.k); console.log('     ', x.d.toFixed(1), 'px | rodic', x.k, '(delka', al == null ? '?' : al.toFixed(0), 'px, deti', x.n + ')', x.a, '+', x.b); }); }
+    return { minE, pairE, badE, minT, pairT, badT, n: mains.length, hasT: Object.keys(byP).length }; };
+  const NS = (process.env.NS || '10,20,30,40,50,60,80,100,150,200,300,' + st.log.length).split(',').map(Number);
+  let worstE = 1e9, sumBadE = 0, sumBadT = 0;
+  console.log('KUKYHO LOG, posuvniky', process.env.SLIDERS === 'kuky' ? 'jeho ulozene' : 'VYCHOZI labu');
+  NS.forEach(n => { const c = check(st.log.slice(0, n)); worstE = Math.min(worstE, c.minE); sumBadE += c.badE; sumBadT += c.badT;
+    console.log('  po', String(n).padStart(3), '| ramen', String(c.n).padStart(2), '| nejblizsi vystupy z kmene', c.minE.toFixed(1), 'px (' + c.pairE + ')', '| pod', MINX, 'px:', c.badE,
+      c.hasT ? ('| na jednom rodici nejbliz ' + c.minT.toFixed(1) + ' px, pod ' + MINT + ' px: ' + c.badT) : ''); });
+  console.log('  CELKEM: dvojic ramen pod', MINX, 'px:', sumBadE, '| nejhorsi', worstE.toFixed(1), 'px', '| dvojic na rodici pod', MINT, 'px:', sumBadT);
+}
+module.exports = { labRun }; labRun.branch = B;   // smoke ㉳ (verify_tree_mista.js)

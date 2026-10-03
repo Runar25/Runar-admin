@@ -380,22 +380,36 @@ HTML = r"""<!DOCTYPE html>
   function zoneU(rk, ix, z){ var b=rhythmBand(rk), f=clamp((z+1)/2 + 0.14*((((ix+1)*0.6180339887)%1)-0.5), 0, 1); return b[0]+(b[1]-b[0])*f; }
   /* uzly opakovani -> seznam deti pro growBranch. Velikost: zrod `zrod`, dospela za `dorust` cteni
      stromu, pak s vlastnimi vetvemi dal pomalu (zakon praxe F5). Tvar: steering branch composeru. */
-  /* ZONY (2026-10-03): na rameni sedi vetvicky ruznych run — kde, urcuje RYTMUS RODICE (kam on dava sve odbocky), poradi
-     zrodu zlatym rezem (misto se nikdy neposune) a z 30 % zona cteni uvnitr pasma ramene (minulost u zakladu). Drive
-     rytmus runy vetvicky — ta visela na vetvi sve vlastni runy, takze rodic a dite byla tataz runa. */
-  function kidU(pk, ix, z, lh){ var b=rhythmBand(pk), g=((ix+1)*0.6180339887)%1;
-    var zf=(lh && z!=null) ? clamp((z-lh[0])/Math.max(1e-6, lh[1]-lh[0]), 0, 1) : 0.5;
-    return b[0]+(b[1]-b[0])*clamp(0.7*g+0.3*zf, 0, 1); }
-  function repKids(node, NR, lh){ var zr=clamp(crownT.zrod||0.3,0.05,1), dr=Math.max(1,crownT.dorust||4);
+  /* MISTO VETVICKY NA RODICI (2026-10-03): rytmus RODICE (kam on dava sve odbocky) + poradi zrodu zlatym rezem — dve
+     sourozenecke vetvicky tak nikdy nesedi na stejnem miste (prvnich 5 bodu zlateho rezu je od sebe aspon 0,146 pasma).
+     Prime deti RAMENE maji misto predpocitane (`uo`, rozdelovac mist v drawu), aby se vyhnuly i povysenym vetvim.
+     Drive 0,7 × zlaty rez + 0,3 × zona: dve vetvicky se mohly potkat na tomtez bode (KUKY: "nechci, aby vyrustaly dve
+     nebo vice vetvi ze stejneho mista"). */
+  function repKids(node, NR, lh, uo){ var zr=clamp(crownT.zrod||0.3,0.05,1), dr=Math.max(1,crownT.dorust||4);
     var pfv=function(x){ return 0.62+0.27*Math.log(1+(x-1)/2)/Math.log(3); };
+    /* hlubsi urovne: tentyz rozdelovac mist (sourozenci v poradi zrodu, aspon DMIN_T od starsich) — uzky rytmus runy
+       ('base' 0,28–0,58) jinak natlacil 4 vetvicky na 3–6 px od sebe (KUKYho strom, 359 cteni, tree_diag misto) */
+    var placedK=[], uK=node.kids.map(function(c, ix){ var u=(uo && uo[ix]!=null) ? uo[ix] : freeSpot(rhythmU(node.k, ix), 0.08, 0.97, placedK, false); placedK.push({ u:u, g:false }); return u; });
     return node.kids.map(function(c, ix){ var age=NR-c.born, ramp=Math.min(1, zr+(1-zr)*Math.max(0,age-1)/dr);
-      return { k:c.k, rep:true, slot:ix, slots:Math.max(1,Math.round(crownT.twigMax||5)), u:kidU(node.k, ix, c.z, lh), g:ramp*pfv(c.n)/pfv(1),
+      return { k:c.k, rep:true, slot:ix, slots:Math.max(1,Math.round(crownT.twigMax||5)), u:uK[ix], g:ramp*pfv(c.n)/pfv(1),
                n:c.n, side:sideOf(c.area), steer:{ area:c.area, intention:c.intention }, sid:1000+c.born*13+ix, id:c.born+'_'+ix, born:c.born,
                kids:repKids(c, NR, lh) }; }); }
+  /* ROZDELOVAC MIST NA RAMENI (2026-10-03, KUKY: "nechci, aby vyrustaly dve nebo vice vetvi ze stejneho mista").
+     Prime vetvicky ramene i povysene vetve z nej dostavaji misto v PORADI, jak prisly; kazda nova se drzi aspon
+     DMIN_T (vetvicka × vetvicka) / DMIN_G (kdyz jde o povysenou) od vsech starsich na tomtez rameni. Misto se urci
+     jednou pri zrodu a uz se nehne (zavisi jen na starsich). */
+  var DMIN_T=0.08, DMIN_G=0.10;   /* podil delky rodice: vetvicka × vetvicka · cokoli s povysenou */
+  function freeSpot(want, lo, hi, placed, isG){ var best=null, bestD=-1;
+    for(var k=0; k<=200; k++){ var off=(k===0)?0:((k%2?1:-1)*Math.ceil(k/2)*0.005), u=want+off; if(u<lo || u>hi) continue;
+      var md=1e9, ok=true; for(var p=0; p<placed.length; p++){ var d=Math.abs(u-placed[p].u), need=(isG || placed[p].g) ? DMIN_G : DMIN_T;
+        if(d<need) ok=false; md=Math.min(md, d-need); }
+      if(ok) return u; if(md>bestD){ bestD=md; best=u; } }
+    return (best!=null) ? best : clamp(want, lo, hi); }
   /* steering branch composeru ma vlastni klice (runar-branch.js AREA_LAT/INTENT_ELEV) */
   var STEER_AREA={ love:'love_relationships', family:'family', healing:'healing', inner:'inner_growth', spirituality:'spirituality', crossroads:'crossroads', purpose:'purpose', career:'career' };
   var STEER_INT={ past:'understanding_past', present:'right_now', decision:'decision_ahead' };
   var _runeHost={};  /* runa -> index pramene, na jehoz vetvi roste (stableAssign) */
+  var _KU={};        /* ZONY: misto primych vetvicek ramene q (podle poradi ix) — rozdelovac mist v drawu */
   /* PREHLED VETVI: hodnoty vedle sebe (prehlednejsi nez cist ze stromu). Cte TATAZ meta,
      co pohani inspekci -> zadny druhy zdroj pravdy, nemuze se rozejit. */
   function renderBTable(){
@@ -499,7 +513,8 @@ HTML = r"""<!DOCTYPE html>
           matureDays:365, minSize:0.2, treeHeightMax:370, w:460, cx:W/2, groundY:660, topY:300 };
   /* crown = branch-engine "jazyk tvaru" + composition (emergence/fractal) */
   var crownT={ length:105, width:6, curve:0.8, taper:1.0, wobble:0.45, tipLift:0.35, jitter:0.12, steer:1,
-          exitFloor:0.50,   /* kam nejniz smi vetev vyrust z kmene (podil vysky) — nizsi = mene palma */
+          exitFloor:0.22,   /* kam nejniz smi vetev vyrust z kmene (podil vysky). 0,50 -> 0,22 (2026-10-03): se zonami ma koruna
+                               tri patra; pri 0,50 se 13 ramen tlacilo do horni pulky kmene a vystupy padaly 6–10 px od sebe */
           ctNear:0.45, ctFar:1.0, foundAng:0.78, exitTop:0.96, exitStep:0.07, twist:0.15,
           childN:2, maxDepth:3, levelRatio:0.62, childWidth:0.7,
           twU0:0.15, twU1:0.93, gradU0:0.20, gradU1:0.85, kidsMax:0,   /* F8: kolik run smi graduant pobrat (0 = vsechny zustanou na hlavni vetvi) */
@@ -1073,7 +1088,7 @@ HTML = r"""<!DOCTYPE html>
       var pkey = si ? ('t'+(cfg._k!=null?cfg._k:'x')+'_'+rune+(si.id!=null?('_'+si.id):'')) : ('t'+_pick.length);   /* stabilni klic -> proklik z panelu funguje i po prekresleni */
       if(rr) _pick.push({ k:pkey, pts:pts, meta:{ el:rr.el, aett:rr.aett, world:rr.world, name:rr.name, g:rr.g, count:'-',
         twig:true, grad:!!(si&&si.grad), slot:si?si.slot:null, slots:si?si.slots:null, fu:si?si.fu:null,
-        gGrow:si?si.g:null, runeN:si?si.n:null,
+        gGrow:si?si.g:null, runeN:si?si.n:null, parentKey:si?si.parentKey:null,
         kids:(si&&si.kids)?si.kids.map(function(x){ return { name:(RBK[x.k]?RBK[x.k].name:x.k), pick:('t'+(cfg._k!=null?cfg._k:'x')+'_'+x.k+(x.id!=null?('_'+x.id):'')) }; }):[] } }); }
     /* vetve z opakovani smi jit hloub nez maxDepth — rekurze jede jen po seznamu run (pravidlo 6) */
     if(level>=cfg.maxDepth && !(childRunes && childRunes.length && typeof childRunes[0]==='object')) return me;
@@ -1092,9 +1107,12 @@ HTML = r"""<!DOCTYPE html>
                               : (ci.grad ? ((ci.slots<=1)?0.40:(0.20+0.40*(ci.slot/(ci.slots-1))))
                                          : ((ci.slots<=1)?0.6:(0.40+0.45*(ci.slot/(ci.slots-1))))))
                 : ((n===1)?0.6:(0.4+0.45*(c/(n-1))));
-      var idx=Math.max(1, Math.min(pts.length-2, Math.round(fu*(pts.length-1))));
-      var p=pts[idx], q=pts[idx-1];
-      var pang=Math.atan2(p.y-q.y, p.x-q.x);            /* parent tangent at the join */
+      /* presne misto u (2026-10-03): interpolace mezi body rodice (30 bodu). Drive nejblizsi bod: dve vetvicky blizko sebe
+         se slily do tehoz bodu (KUKY: "nechci, aby vyrustaly dve nebo vice vetvi ze stejneho mista"). */
+      var fiU=clamp(fu, 1/(pts.length-1), (pts.length-2)/(pts.length-1))*(pts.length-1), i0U=Math.min(pts.length-2, Math.floor(fiU)), tU=fiU-i0U;
+      var pa0=pts[i0U], pb0=pts[i0U+1], q=pa0;
+      var p={ x:lerp(pa0.x,pb0.x,tU), y:lerp(pa0.y,pb0.y,tU), w:lerp(pa0.w,pb0.w,tU) };
+      var pang=Math.atan2(pb0.y-pa0.y, pb0.x-pa0.x);            /* parent tangent at the join */
       /* V4c (2026-10-02): zapis uhlu NAVAZUJE na rodice (do ±180° od jeho vlastniho zakladu), od kmene ven. atan2
          vraci vetev mirici vodorovne doleva jednou jako +178°, jindy −175°; engine zdviha spicku linearnim
          prolnutim k −90°, takze z +178° sel dlouhou cestou pres pravou stranu -> vetvicka skakala o 35° (Dagaz
@@ -1120,7 +1138,8 @@ HTML = r"""<!DOCTYPE html>
       var cLen=(ci&&ci.grad)?cGrow*(cfg.gradLen||1):cGrow;   /* graduant delsi a silnejsi, ale NE hustsi */
       growBranch(out, cfg, p.x, p.y, pang, cSide*(0.40+0.30*jig), childRole, cRune, (seed*131+cs*7)>>>0,
                  lenScale*cfg.levelRatio*cLen, p.w*cfg.childWidth*(0.75+0.25*Math.min(1,cLen)), depthZ+cSide*0.05, level+1, sizeFactor*cfg.levelRatio*cGrow,
-                 (ci&&ci.kids&&ci.kids.length)?ci.kids:null, ci?{slot:ci.slot,slots:ci.slots,g:ci.g,grad:!!ci.grad,kids:ci.kids,n:ci.n,fu:fu,id:ci.id,steer:ci.steer||null,rep:!!ci.rep}:null);
+                 (ci&&ci.kids&&ci.kids.length)?ci.kids:null, ci?{slot:ci.slot,slots:ci.slots,g:ci.g,grad:!!ci.grad,kids:ci.kids,n:ci.n,fu:fu,id:ci.id,steer:ci.steer||null,rep:!!ci.rep,
+                                                              parentKey:((level>=1 && typeof pkey!=='undefined') ? pkey : cfg._k)}:null);
     }
     return me;
   }
@@ -1335,6 +1354,13 @@ HTML = r"""<!DOCTYPE html>
     var frac=_f0 + Math.max(0, _st-_f0)*Math.pow(_dec, t);
     return { frac:frac };
   }
+  /* PRESNY VYSTUP (2026-10-03): bod pramene ve vysce `frac`, interpolovany mezi dvema body (pramen ma 40 bodu na kmen).
+     Drive nejblizsi bod: dve ramena 0,01 od sebe vysla z tehoz bodu a vyska skakala po 1/39 kmene. */
+  function exitPoint(pts, frac, from){ var ty=lerp(trunkT.groundY, trunkT.topY, frac), n=pts.length, i0=Math.max(0, from||0);
+    for(var i=i0; i<n-1; i++){ var a=pts[i], b=pts[i+1]; if(a.y>=ty && b.y<ty){ var t=(a.y-ty)/Math.max(1e-6, a.y-b.y);
+        return { i:i, tang:Math.atan2(b.y-a.y, b.x-a.x), p:{ x:lerp(a.x,b.x,t), y:ty, w:lerp(a.w,b.w,t), ct:lerp(a.ct,b.ct,t), depth:lerp(a.depth,b.depth,t), t:(a.t!=null&&b.t!=null)?lerp(a.t,b.t,t):a.t } }; } }
+    var j=exitIndex(pts, frac), pa=pts[Math.max(0,j-1)], pb=pts[j];
+    return { i:j, tang:Math.atan2(pb.y-pa.y, pb.x-pa.x), p:{ x:pb.x, y:pb.y, w:pb.w, ct:pb.ct, depth:pb.depth, t:pb.t } }; }
   function exitIndex(pts, frac){
     var targetY=lerp(trunkT.groundY, trunkT.topY, frac), best=pts.length-1, bd=1e9;
     for(var i=0;i<pts.length;i++){ if(pts[i].y<=trunkT.groundY+1){ var dd=Math.abs(pts[i].y-targetY); if(dd<bd){bd=dd;best=i;} } }
@@ -1440,41 +1466,76 @@ HTML = r"""<!DOCTYPE html>
        cteni (zadny skok). Vudci vetev = vrchol kmene. Posuvnik intZone = sila casu na vysku (0,4 = plna). Tataz
        smycka vede i polohu RUNY podel ramene (RUZ 0..1: minulost u zakladu, budoucnost ke spicce, BOUGHS). */
     if(!seed && mainsN>0){
-      var HL=clamp(Math.max(0.22, crownT.exitFloor||0.22), 0.15, 0.6), HH=crownT.exitTop-0.06, G0b=Math.max(0.02, crownT.exitStep), KZ=3;
+      var HL=clamp((crownT.exitFloor!=null)?crownT.exitFloor:0.22, 0.12, 0.6), HH=crownT.exitTop-0.06, G0b=Math.max(0.02, crownT.exitStep), KZ=3;
       var zsp=clamp((crownT.intZone!=null ? crownT.intZone : 0.4)/0.4, 0, 1.5);
       var DS=branchEls.drawSec||[];
       var zs=[], zn=[], hh=[], bornQ=[], zc=[], rz={}, rn={}, ru={};
       for(var q4=0; q4<mainsN; q4++){ zs[q4]=0; zn[q4]=0; hh[q4]=null; zc[q4]={ dole:0, stred:0, nahore:0 }; var bi4=(branchEls[q4]||{}).bornIdx; bornQ[q4]=(bi4==null)?0:bi4; }
       /* ZONY (2026-10-03): cil = STRED PASMA ramene (urd · verdandi · skuld; stin na hranach) a uvnitr pasma prumer zon jeho
-         cteni (tlumeny KZ: prvni cteni rameno od stredu pasma skoro neodtahne). Drive stred kmene ± prumer zon celeho
-         elementu — mix vsech zon, takze ramena stala kolem poloviny. Element vysku uz nemeni (ELEM_Z), poradi v pasmu
-         dava zona cteni (KUKY: "rozprostreni elementu neni systematicke"). */
+         cteni (tlumeny KZ). Element vysku nemeni (KUKY: "rozprostreni elementu neni systematicke"). */
+      var HLe=HL;
       var tgtOf=function(q){ var be4=branchEls[q]||{}, bd4=be4.band||0, c4=bandC(be4.el, bd4), lh4=bandLoHi(be4.el, bd4);
         var av4=zn[q] ? clamp(zs[q]/zn[q], lh4[0], lh4[1]) : c4, Z=c4+(av4-c4)*zn[q]/(zn[q]+KZ);
-        return clamp(0.5*(HL+HH)+0.5*(HH-HL)*clamp(Z*zsp,-1,1), HL, HH); };
+        return clamp(0.5*(HLe+HH)+0.5*(HH-HLe)*clamp(Z*zsp,-1,1), HLe, HH); };
+      /* KAZDE RAMENO Z JINEHO MISTA — ZARUCENE (2026-10-03, KUKY: "proc dve vetve vyrustaji presne z jednoho mista? …
+         nechci, aby vyrustaly dve nebo vice vetvi ze stejneho mista — tohle resim od samoho zacatku"). Drive se rozestup
+         hlidal jen u CILU a skutecna vyska k nemu klouzala, takze nove rameno (narozene rovnou na cili) a starsi (teprve
+         odjizdejici) stala chvili ve stejne vysce; s vychozi podlahou 0,50 vychazely dvojice 6–10 px od sebe. Ted:
+         - nove rameno se narodi do nejblizsi VOLNE mezery mezi SKUTECNYMI vyskami (starsi se nehnou);
+         - poradi ramen podle vysky se nikdy nemeni (zadne predbihani = nikdy nejsou ve stejne vysce); cile se rozestupuji
+           v tomhle poradi a rameno k cili jede nejvys o STEP za cteni — rozestup >= G0 se tim nikdy nezmensi;
+         - G0 = exitStep, kdyz je misto; jinak min. GMIN (~12 px) a koruna radeji sahne niz (podlaha ustoupi rozestupu). */
+      var Hpx=Math.max(80, trunkT.groundY-trunkT.topY), GMIN=clamp(12/Hpx, 0.02, 0.07), capT=crownT.exitTop-G0b, STEP=0.006, ordL=[];
       for(var i3=0; i3<vlog.length; i3++){ var rs3=vlog[i3].runes||[];
         for(var j3=0; j3<rs3.length; j3++){ var rk3=rs3[j3].rune, z3=readZone(vlog[i3], j3, rk3), q5=(DS[i3]||[])[j3];
           rz[rk3]=(rz[rk3]||0)+z3; rn[rk3]=(rn[rk3]||0)+1;
           if(q5!=null && q5<mainsN){ zs[q5]+=z3; zn[q5]++; zc[q5][zoneWord(z3)]++; } }
-        var live=[]; for(var q6=1; q6<mainsN; q6++){ if(bornQ[q6]<=i3) live.push({ q:q6, t:tgtOf(q6) }); }
-        live.sort(function(a,b){ return a.t-b.t; });
-        /* rozestup: exitStep, a kdyz se ramena do kmene nevejdou (14 ramen × 0,07 > vyska koruny), uz jen tolik, kolik je mista */
-        var capT=crownT.exitTop-G0b, G0=Math.min(G0b, (capT-HL)/Math.max(1, live.length-1));
-        for(var a6=1; a6<live.length; a6++) live[a6].t=Math.max(live[a6].t, live[a6-1].t+G0);
-        for(var a7=live.length-1; a7>=0; a7--){ var cp7=(a7===live.length-1) ? capT : live[a7+1].t-G0; if(live[a7].t>cp7) live[a7].t=cp7; }
-        live.forEach(function(L){ hh[L.q]=(hh[L.q]==null) ? L.t : hh[L.q]+clamp(L.t-hh[L.q], -0.006, 0.006); });   /* 0,012 -> 0,006: posun > 8 px na spickach */
+        var newb=[]; for(var q6=1; q6<mainsN; q6++){ if(bornQ[q6]<=i3 && hh[q6]==null) newb.push(q6); }
+        var nLive=ordL.length+newb.length;
+        if(!nLive) continue;
+        HLe=Math.max(0.10, Math.min(HL, capT-Math.max(0, nLive-1)*GMIN));
+        var G0=Math.min(G0b, (capT-HLe)/Math.max(1, nLive-1));
+        newb.forEach(function(q){ var t=tgtOf(q), best=null, bestD=1e9, wide=null, wideW=-1;
+          for(var g=0; g<=ordL.length; g++){ var lo=(g===0)?HLe:hh[ordL[g-1]], hi=(g===ordL.length)?capT:hh[ordL[g]];
+            var loC=(g===0)?lo:lo+G0, hiC=(g===ordL.length)?hi:hi-G0;   /* od podlahy a stropu netreba odstup */
+            if(hi-lo>wideW){ wideW=hi-lo; wide={ g:g, pos:(g===0) ? Math.max(lo, hi-G0) : ((g===ordL.length) ? Math.min(hi, lo+G0) : (lo+hi)/2) }; }
+            if(hiC>=loC){ var pos=clamp(t, loC, hiC), d=Math.abs(pos-t); if(d<bestD){ bestD=d; best={ g:g, pos:pos }; } } }
+          var pk=best||wide; hh[q]=pk.pos; ordL.splice(pk.g, 0, q); });
+        var Tg=ordL.map(function(q){ return clamp(tgtOf(q), HLe, capT); });
+        for(var a6=1; a6<Tg.length; a6++) Tg[a6]=Math.max(Tg[a6], Tg[a6-1]+G0);
+        for(var a7=Tg.length-1; a7>=0; a7--) Tg[a7]=Math.min(Tg[a7], (a7===Tg.length-1) ? capT : Tg[a7+1]-G0);
+        /* dokud je nekde mezera pod G0 (nove rameno se muselo vklinit), jedou VSECHNA ramena rychleji (0,02 za cteni);
+           stejny krok pro vsechny = zadna mezera se cestou nezmensi. Pomaly krok 0,006 vracel rozestup az za ~6 cteni a mlady
+           strom, kde se ramena rodi rychle za sebou, mel vystupy 8 px od sebe (smoke ㉳, 2026-10-03). */
+        /* v cteni, kdy se rameno narodilo, dva takove kroky: spread (Kompas, Kriz…) jich muze zalozit vic naraz a kazde
+           pulilo nejsirsi mezeru (KUKYho strom #35: tri nova ramena, vystupy 8,6 px od sebe) */
+        for(var rp8=0; rp8<(newb.length?2:1); rp8++){
+          var tight=false; for(var a8=1; a8<ordL.length; a8++){ if(hh[ordL[a8]]-hh[ordL[a8-1]]<G0-1e-6){ tight=true; break; } }
+          if(rp8>0 && !tight) break;
+          var stp=tight ? 0.02 : STEP;
+          ordL.forEach(function(q, a){ hh[q]+=clamp(Tg[a]-hh[q], -stp, stp); }); }
         for(var rk4 in rz){ var tu4=clamp((rz[rk4]/(rn[rk4]+2)+1)/2, 0, 1); ru[rk4]=(ru[rk4]==null) ? tu4 : ru[rk4]+clamp(tu4-ru[rk4], -0.01, 0.01); }
       }
       FRAC[0]=clamp(crownT.exitTop+0.02, 0.30, 0.98); FRAC0[0]=FRAC[0];   /* vudci vetev (zakladaci skuld) = vrchol kmene */
       for(var q7=1; q7<mainsN; q7++){ FRAC0[q7]=tgtOf(q7); FRAC[q7]=(hh[q7]!=null) ? hh[q7] : FRAC0[q7]; }
       for(var q8=0; q8<mainsN; q8++) ZST[q8]={ z:zs[q8]/(zn[q8]+KZ), n:zn[q8], c:zc[q8] };
       RUZ=ru; _RUZ=ru;
-      /* ODSTEPENI GRADUANTA podel rodice (F2: 1/5–3/5) = zona jeho cteni uvnitr pasma rodice DO CHVILE POVYSENI — pak
-         uz se nehne (drive plynule s kazdym ctenim -> klouzalo po rodici). */
+      /* ODSTEPENI GRADUANTA podel matky (F2: 1/5–3/5) = zona jeho cteni uvnitr pasma matky DO CHVILE POVYSENI. */
       gradStrands.forEach(function(G){ var be5=branchEls[G.p]||{}, lh5=bandLoHi(be5.el, be5.band||0), s5=0, n5=0;
         for(var i5=0; i5<=Math.min(G.at, vlog.length-1); i5++){ var r5=vlog[i5].runes||[];
           for(var j5=0; j5<r5.length; j5++){ if(r5[j5].rune===G.rune && (DS[i5]||[])[j5]===G.p){ s5+=readZone(vlog[i5], j5, G.rune); n5++; } } }
         G.u=0.20+0.40*(n5 ? clamp((s5/n5-lh5[0])/Math.max(1e-6, lh5[1]-lh5[0]), 0, 1) : 0.5); });
+      /* ROZDELOVAC MIST NA RAMENI: prime vetvicky (v poradi zrodu) a povysene (v chvili povyseni) — kazda nova aspon DMIN
+         od starsich. Prime deti ramene pak sedi na _KU[q][ix], povysena na G.u. */
+      _KU={};
+      for(var qq=0; qq<mainsN; qq++){ var sT=(branchEls.secTree||[])[qq]; if(!sT) continue; var fk=sT.k, ev=[];
+        sT.kids.forEach(function(c, ix){ ev.push({ t:c.born, o:0, ix:ix, want:rhythmU(fk, ix) }); });
+        gradStrands.forEach(function(G){ if(G.p===qq) ev.push({ t:G.at, o:1, G:G, want:G.u }); });
+        ev.sort(function(a,b){ return (a.t-b.t) || (a.o-b.o) || ((a.ix||0)-(b.ix||0)); });
+        var placed=[], ku=[];
+        ev.forEach(function(e){ var isG=!!e.G, u=freeSpot(e.want, isG?0.18:0.08, isG?0.62:0.97, placed, isG);
+          placed.push({ u:u, g:isG }); if(isG) e.G.u=u; else ku[e.ix]=u; });
+        _KU[qq]=ku; }
       trunkT.exitFrac=FRAC.slice(); }
     /* KOSTRA CO NEJVIC ROZLOZENA (2026-09-30, KUKY: "prvnich 10 pramenu je dobre co nejvice rozlozit,
        aby byl na zacatku strom vyvazeny, pro to, aby se pak mohlo rozhodovat"). Vsechna ramena — i
@@ -1632,15 +1693,15 @@ HTML = r"""<!DOCTYPE html>
           var ac=AETT_CHAR[be.aett]; if(ac){ var as=crownT.aettStr;
             mcfg.curve*=(1+(ac.curve-1)*as); mcfg.tipLift=crownT.tipLift*(1+(ac.tipLift-1)*as); mcfg.wobble*=(1+(ac.wobble-1)*as); }
           var lenF=pf*emg*(1+vA*0.045*(2*mr()-1));   /* F5: praxe x nabeh; nahoda jen +-3 % (drive +-28 % a prebijela data) */
-          var ei=exitIndex(L.pts, frac);
+          var EP=exitPoint(L.pts, frac, rE), ei=EP.i;   /* presna vyska mezi body pramene (drive nejblizsi z 40 bodu = skok 1/39 kmene) */
           /* --- KOREN (composer, per-runa, dolu): SPINE se VPLETE do tahu kmene (jako vetev, jen dolu),
              twigy zvlast. Trunk-engine vlastni koren (0..rE) se NEkresli = vypnuty (KROK 3). --- */
           var _R=buildRootFor(L, rE, brune.k, brune.name, be, k, pf, emg, 1);
           var rspine=_R.rspine, rdepth=_R.rdepth, rdevUsed=_R.rdevUsed;
           /* JEDEN souvisly tah: koren-spine(spicka->baze) + kmen(nad bazi->vystup) + vetev = bezesve napojeni jako u vetve */
-          var trunkPart=rspine.slice().reverse().concat(L.pts.slice(rE+1, ei+1));
-          var ex=L.pts[ei], exq=L.pts[Math.max(0,ei-1)];
-          var tang=Math.atan2(ex.y-exq.y, ex.x-exq.x);
+          var trunkPart=rspine.slice().reverse().concat(L.pts.slice(rE+1, ei+1), [EP.p]);
+          var ex=EP.p;
+          var tang=EP.tang;
           /* F1: odbocky = OSTATNI TAZENE runy elementu. slots = pocet run elementu-1 (KONSTANTA,
              nezavisi na tom kolik jich uz padlo) -> pozice odbocky je dana jeji runou a nehne se.
              g = rust z poctu tazeni te runy (1x = kratka, 5x+ = plna). */
@@ -1649,7 +1710,7 @@ HTML = r"""<!DOCTYPE html>
              rameno (`twigMax`) -> o patro niz do vetvicky s nejmensim podstromem (fraktal). Drive: prvni tazeni runy = odbocka
              na miste runy, kazde dalsi tazeni = vetev NA vetvi te runy (krok 1). */
           var twRunes=[], twSlots=Math.max(1,(bpool.length-1)), _sT=(branchEls.secTree||[])[k];
-          if(_sT) twRunes=repKids(_sT, vlog.length, bandLoHi(be.el, be.band||0));
+          if(_sT) twRunes=repKids(_sT, vlog.length, bandLoHi(be.el, be.band||0), _KU[k]);   /* mista z rozdelovace (zadne dve na jednom miste) */
           else { for(var tc=1;tc<=Math.max(0,Math.round(mcfg.childN))+1;tc++){ var dk=bpool[(k+tc)%bpool.length].k;   /* demo bez logu */
                    twRunes.push({ k:dk, slot:tc-1, slots:twSlots, g:1, u:runeU(bpool, dk, crownT.twU0, crownT.twU1) }); } }
           /* F10: zrcadlit prvnich `mirrorN` korunnich odbocek do korene (tytez runy, dolu) */
@@ -1675,6 +1736,7 @@ HTML = r"""<!DOCTYPE html>
               frac:frac, eFrac:e.frac, intPart:nAx*crownT.intZone, gapPart:frac-frac0, norn:be.nornName||null,
               ang:ang, eAng:eAng, leanPart:lifeLean*0.6, areaPart:tiltR, bal:LB, lrS:LP.s, lrS0:side0, lrSw:LP.sw, zst:(k>0 ? ZST[k] : null),
               zone:(be.band!=null ? bandWord(be.el, be.band) : null), zoneS:(be.band!=null ? (be.el==='shadow' ? 'hrana' : ['urd','verd','skuld'][be.band+1]) : null),
+              exitX:ex.x, exitY:ex.y,
               secN:be.count, ownN:be.ownN, bendMag:LP.mag, bendZ:LP.z, bendN0:mag0,
               born:born, strandAge:strandAge, domV:domV, sizeF:sizeF, lenF:lenF, rootDev:rdevUsed,
               tw:twRunes.map(function(t){ return { name:(RBK[t.k]?RBK[t.k].name:t.k), n:t.n||0, g:t.g, grad:!!t.grad, rep:t.rep||0, pick:('t'+k+'_'+t.k+(t.id!=null?('_'+t.id):(t.rep?('_'+t.rep):''))),
@@ -1733,6 +1795,7 @@ HTML = r"""<!DOCTYPE html>
           frac:par.frac, eFrac:par.frac, intPart:0, gapPart:0, norn:null, splitU:GS.u, gradOf:par.name,
           ang:gAng, eAng:gFrame, leanPart:lifeLean*0.6, areaPart:gAng-gFrame-lifeLean*0.6, bal:gLB, lrS:gLP.s, lrS0:gfr.side, lrSw:gLP.sw,
           zone:(par.be.band!=null ? bandWord(par.el, par.be.band) : null), zoneS:'povys.', gradAt:GS.at, bendMag:gLP.mag, bendZ:gLP.z, bendN0:gfr.mag, ownN:gN,
+          splitX:sp.x, splitY:sp.y, gradOfK:GS.p,
           born:gBorn, strandAge:gAge, domV:1, sizeF:gPf*gEmg, lenF:gLen, rootDev:null,
           tw:gKids.map(function(t){ return { name:(RBK[t.k]?RBK[t.k].name:t.k), n:t.n||0, g:t.g, grad:false, rep:1, born:(t.born!=null?t.born:null),
             pick:('t'+k+'_'+t.k+(t.id!=null?('_'+t.id):'')), kids:[] }; }) } }); }
