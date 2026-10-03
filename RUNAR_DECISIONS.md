@@ -8100,3 +8100,18 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   kolikrát runa padla na celém stromě; rameno — kolikrát runa padla, kolik čtení na něm roste, při kterém čtení vzniklo, kolik
   povýšených z něj; přehled: sloupce „čtení" a „povýš.". Smoke ㉳ porovná inspekci s logem (mutace: předchozí verze 3 576 rozporů).
 - Affected doc(s): žádné (inspekce žije v kódu labu).
+
+## 2026-10-03 (12) — Ask „clearer image“ zůstává u obrazu ze čtení
+
+- **Rozhodl:** KUKY 2026-10-03 *„13 pro Ask: ať u clearer image zůstane u stejného obrazu"* (report 2026-10-01 10:36 u Thurisaz:
+  *„Dal mi jiný obraz… Jak to, že nezůstal u stejného obrazu?"*). **Provedl:** CODE-tune.
+- **Co:** nápověda `ask_h_image_area` (`v2/runar-translations.js`): *„{area} — can you give me a clearer image?"* → *„{area} — can you
+  make this image clearer?"*; IS *„getur þú gefið mér skýrari mynd?"* → *„getur þú gert þessa mynd skýrari?"* (is-grammar-qa čisté,
+  korpus „gert þessa mynd" 64 · „myndina skýrari" 11). Původní záměr 2026-09-25 (7) „obraz s oblastí" zůstává — mění se jen to, že
+  „give me a … image" si model četl jako NOVÝ obraz.
+- **Změřeno** (`docs/eval/2026-10-03-ask-clearer-image/`, produkční `buildAskPrompt`, sol 6, strop 320): stará nápověda dala ve všech
+  třech ownerových Ascích nový obraz (Thurisaz *„a draft on your desk"*, Kenaz *„a table with a lamp on, and one chair is empty"*,
+  Fehu *„two people at a table"*); nová 3/3 tentýž obraz převedený do oblasti (Thurisaz *„The ram is the pressure at the gate. In your
+  work, that may look like a sharp response to something you have made…"*).
+- **Daň:** Kenazův nový domácí obraz se ownerovi líbil (report 2026-10-02 10:09) — s novou nápovědou zůstane u lavice. Vrácení = 2 řádky.
+- Affected doc(s): žádné.

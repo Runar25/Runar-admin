@@ -387,7 +387,9 @@ const UI_TEXT = {
     ask_h_explain:      'Explain {rune} without the image.',
     ask_h_explain_all:  'Explain these runes without the image.',
     ask_h_image:        'What is the image pointing to?',
-    ask_h_image_area:   '{area} — can you give me a clearer image?',   // 2026-09-25 KUKY
+    // 2026-10-03 (KUKY „ať u clearer image zůstane u stejného obrazu“; report 2026-10-01 u Thurisaz „dal mi jiný obraz“): „give me a
+    // clearer image“ model četl jako NOVÝ obraz (3 ze 3 ownerových Asků). „make THIS image clearer“ = tentýž obraz, 3 ze 3 (sol 6).
+    ask_h_image_area:   '{area} — can you make this image clearer?',
     ask_h_when_now:     'What in this has to do with right now?',
     ask_h_when_ahead:   'What in this has to do with the decision ahead?',
     ask_h_when_past:    'What in this has to do with the past?',
@@ -803,7 +805,7 @@ const UI_TEXT = {
     ask_h_explain:      'Útskýrðu {rune} án myndarinnar.',
     ask_h_explain_all:  'Útskýrðu þessar rúnir án myndarinnar.',
     ask_h_image:        'Hvað er myndin að benda á?',
-    ask_h_image_area:   '{area} — getur þú gefið mér skýrari mynd?',
+    ask_h_image_area:   '{area} — getur þú gert þessa mynd skýrari?',   // 2026-10-03: tentýž obraz (viz EN); is-grammar-qa čisté, korpus „gert þessa mynd“ 64 · „myndina skýrari“ 11
     ask_h_when_now:     'Hvað snýr að þessari stundu?',
     ask_h_when_ahead:   'Hvað snýr að ákvörðuninni sem framundan er?',
     ask_h_when_past:    'Hvað snýr að því sem liðið er?',
