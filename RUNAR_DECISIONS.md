@@ -8027,3 +8027,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   nahoru, něco jiného do strany, další dolů"*, ne čím. Nesedí-li to, je to jedna páka (`bendTarget`).
 - **Produkce beze změny** (port až po KUKYho oku; před portem vrátit ownerovi založení).
 - Affected doc(s): `RUNAR_TREE.md` §3 (mapa výšky) + §5 · `RUNAR_TREE_MAP.md` vrstvy C/D/H — v tomto commitu.
+
+## 2026-10-03 (6) — Deník: myšlenka ✦ zlatým řádkem pod textem, jako ve čtení
+
+- **Rozhodl:** KUKY 2026-10-03 *„11 udělej zlatý řádek ✦ i v deníku"*. **Provedl:** CODE-tune.
+- **Co:** `renderJournal` (`v2/runar-journal.js`) odtrhne myšlenku z uloženého textu TOUŽ funkcí jako čtení (`_splitThought`,
+  runar-character.js — §18): single ze `short_text`, spread z `deep_text`. Text karty je bez ✦, myšlenka je vlastní řádek
+  `.jcard-thought` (zlatá kurzíva na střed, jako `.reading-thought`) — jen u rozbaleného záznamu; zabalený ukazuje začátek čtení.
+  Stará čtení bez ✦ beze změny. Uložený text v DB se NEMĚNÍ (server ukládá celý výstup, DECISIONS 2026-09-30 (12)).
+- **Kontrola:** ㉱ `verify_thought.js` nově protlačí produkční `renderJournal` se stubem DOM (single, spread, staré čtení); mutace
+  (myšlenka neoddělená) = 2 vady. Prohlížeč: karta Fehu i Norny — text bez ✦, zlatý řádek po rozbalení, zabalená bez něj.
+- Affected doc(s): `RUNAR_BACKLOG.md` (myšlenka ✦ — deník hotov) — v tomto commitu.

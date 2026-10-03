@@ -72,5 +72,27 @@ for (const [jm, kus] of [['single prompt', "var _thL = _thoughtFor('SINGLE', [dr
                           ['spread split + kresba', "_paintThought(o.outId, _thX.thought);"],
                           ['soused výstupu, ne uvnitř', "kotva.after(el);"]])
   ocek('runar-reading.js: ' + jm, src.indexOf(kus) !== -1);
+// 5) DENÍK (2026-10-03, KUKY „11 udělej zlatý řádek ✦ i v deníku“): server ukládá celý výstup i s ✦, takže deník ho musí odtrhnout
+//    sám. Produkční renderJournal se stubem DOM — text karty bez ✦, myšlenka ve vlastním .jcard-thought (single ze short_text,
+//    spread z deep_text), staré čtení bez ✦ bez řádku.
+{
+  const el = {};
+  S.document.getElementById = (id) => (el[id] || (el[id] = { id: id, style: {}, innerHTML: '', textContent: '' }));
+  vm.runInContext(fs.readFileSync(D + 'runar-journal.js', 'utf8') + '\n;\n', S);
+  vm.runInContext('currentUser = { id: "t", email: "a@example.com" }; userTier = "premium"; lang = "en";', S);
+  S.renderJournal([
+    { rune_name: 'Fehu', rune_glyph: '', lang: 'en', area: 'Love & Relationships', drawn_at: '2026-10-01T07:38:00Z', deep_text: '',
+      short_text: 'Fehu shows how value changes hands. In what you give and receive, there may be enough.\n✦ Where does it begin to feel like enough?' },
+    { rune_name: 'NORNS', rune_glyph: '', lang: 'is', area: 'spread', drawn_at: '2026-10-01T11:28:00Z', short_text: 'PERTH · EIHWAZ · EHWAZ',
+      deep_text: 'Þokan lá á hlíðinni. Nú léttir þokunni. ✦ Hverju ert þú að svara í dag?' },
+    { rune_name: 'Isa', rune_glyph: '', lang: 'en', area: '', drawn_at: '2026-09-19T11:04:00Z', deep_text: '', short_text: 'Isa is the stillness that holds.' },
+  ]);
+  const html = el['journal-list'] ? el['journal-list'].innerHTML : '';
+  const ex = [...html.matchAll(/class="jcard-excerpt" id="jex-\d+">([^<]*)</g)].map((m) => m[1]);
+  const th = [...html.matchAll(/class="jcard-thought">([^<]*)</g)].map((m) => m[1]);
+  ocek('deník: tři karty, text bez ✦', ex.length === 3 && ex.every((x) => x.indexOf('✦') === -1), JSON.stringify(ex));
+  ocek('deník: zlatý řádek u single i spreadu, u starého čtení ne', th.length === 2 && th[0].indexOf('feel like enough') !== -1
+    && th[1].indexOf('Hverju') !== -1 && th.every((x) => x.indexOf('✦') === 0), JSON.stringify(th));
+}
 if (vady.length) { vady.forEach((v) => console.log('FAIL  ' + v)); console.log('CELKEM ' + vady.length + ' vad v myšlence ✦'); process.exit(1); }
-console.log('OK    myšlenka ✦: jen Standard/Premium/admin, single·Kříž·Norny se správnou zdrojovou runou (EN+IS), oddělená od textu a hlasu');
+console.log('OK    myšlenka ✦: jen Standard/Premium/admin, single·Kříž·Norny se správnou zdrojovou runou (EN+IS), oddělená od textu a hlasu — i v deníku (zlatý řádek)');

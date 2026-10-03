@@ -752,6 +752,10 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 /* 2026-09-25 (KUKY: „v journal není potřeba to čtení znovu zobrazit celé, ale jen ho rozbalit… nebude tam 2× začátek“):
    rozbalená karta vypne ořez úryvku — celý text na místě, tělo karty ho už neopakuje (toggleJournalEntry). */
 .jcard-excerpt--open{display:block;-webkit-line-clamp:unset;overflow:visible;}
+/* 2026-10-03 (KUKY „zlatý řádek ✦ i v deníku“): myšlenka ✦ jako ve čtení (.reading-thought) — zlatá, kurzíva, na střed; jen u
+   rozbaleného záznamu (zabalený ukazuje začátek čtení, ne myšlenku). */
+.jcard-thought{display:none;font-size:0.92em;line-height:1.7;font-style:italic;color:var(--gold);text-align:center;margin:14px 8px 2px;}
+.jcard-excerpt--open + .jcard-thought{display:block;}
 .jcard-arrow{font-size:0.75em;color:var(--dim);transition:transform 0.25s;flex-shrink:0;padding-top:4px;}
 .jcard-arrow.open{transform:rotate(180deg);}
 .jcard-body{padding:4px 18px 20px;border-top:1px solid rgba(255,191,0,0.12);}

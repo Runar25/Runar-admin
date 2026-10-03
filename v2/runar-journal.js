@@ -69,6 +69,17 @@ function _jModel(m) {
   return m;
 }
 
+// 2026-10-03 (KUKY „11 udělej zlatý řádek ✦ i v deníku“): myšlenka ✦ je v uloženém textu čtení uvnitř (server ukládá celý výstup,
+// DECISIONS 2026-09-30 (12)). Deník ji odtrhne TOUŽ funkcí jako čtení (_splitThought, runar-character.js — §18) a ukáže zlatým
+// řádkem pod textem; zabalený záznam ukazuje jen začátek čtení (řádek se odkryje s rozbalením, runar-reader.css .jcard-thought).
+function _jThought(txt) {
+  const s = String(txt || '');
+  if (typeof _splitThought !== 'function' || s.indexOf('\u2726') === -1) return { text: s, thought: '' };
+  const sp = _splitThought(s, []);
+  return { text: sp.reading, thought: sp.thought };
+}
+function _jThoughtHtml(th) { return th ? `<div class="jcard-thought">\u2726 ${escapeHtml(th)}</div>` : ''; }
+
 function renderJournal(entries) {
   const list = document.getElementById('journal-list');
   if (!list) return;
@@ -135,6 +146,8 @@ function renderJournal(entries) {
     const glyphHtml = _jr ? runeSvg(_jr, { frame: true, cls: 'jcard-stone' }) : glyph;
     const shortT = escapeHtml(e.short_text || '');
     const deepT  = escapeHtml(e.deep_text || '');
+    // Text čtení stojí u spreadu v deep_text, u single v short_text — odtud se odtrhne myšlenka ✦ (_jThought výš).
+    const _jt = _jThought(isSpread ? e.deep_text : e.short_text);
 
     if (isSpread) {
       // ── Multi-rune spread card (Norns / Kríž / Horseshoe / Yggdrasil / Gathering) ──
@@ -147,7 +160,7 @@ function renderJournal(entries) {
               <div class="jcard-name">✦ ${spreadNm} · ${langU}</div>
               <div class="jcard-date">${dateStr}${_jVolby(e, true)}</div>
               <div class="jcard-gathering-runes">${_jSpreadRunes(e.short_text)}</div>
-              <div class="jcard-excerpt" id="jex-${i}">${deepT}</div>
+              <div class="jcard-excerpt" id="jex-${i}">${escapeHtml(_jt.text)}</div>${_jThoughtHtml(_jt.thought)}
             </div>
           </div>
           <div class="jcard-arrow" id="jarr-${i}">▾</div>
@@ -164,7 +177,7 @@ function renderJournal(entries) {
           <div class="jcard-info">
             <div class="jcard-name">${nameU} · ${langU}</div>
             <div class="jcard-date">${dateStr}${_jVolby(e, false)}</div>
-            <div class="jcard-excerpt" id="jex-${i}">${shortT}</div>
+            <div class="jcard-excerpt" id="jex-${i}">${escapeHtml(_jt.text)}</div>${_jThoughtHtml(_jt.thought)}
           </div>
         </div>
         <div class="jcard-arrow" id="jarr-${i}">▾</div>

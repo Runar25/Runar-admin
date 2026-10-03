@@ -753,7 +753,7 @@
   Další kolo podle ownerovy volby směru (EVAL_LOG 2026-09-30 (3)); jen Standard/Premium; nic neukládat.
   **Kolo 3 (owner „7. jeď možnost 1“):** zdroj = 1. odstavec textu runy z Kolekce → EVAL_LOG 2026-09-30 (4); čeká na ownerovo čtení.
   ✅ **NASAZENO 2026-09-30 (v4.83, DECISIONS 2026-09-30 (12)):** Standard/Premium, single · Kříž · Norny, bez hlasu. Zbývá: Podkova
-  a Yggdrasil (zdrojová runa?), deník zobrazuje ✦ uvnitř textu (styl jako ve čtení zatím ne), hlídat opakování tvaru na živých čteních.
+  a Yggdrasil (zdrojová runa?), hlídat opakování tvaru na živých čteních. ✅ Deník: zlatý řádek ✦ jako ve čtení (2026-10-03, DECISIONS 2026-10-03 (6)).
 - [ ] **Před spuštěním: viditelnost + sklad dobrých vět** (KUKY 2026-09-29 bod 6: *„některá čtení jsou fakt dobrá, popřípadě vyjde dobrý
   závěr, a to chci ukládat tak, abychom měli materiál na vizuální tvorbu“*; report 10:13: *„Jak se maximálně zviditelnit ve vyhledávačích a
   taky při AI vyhledávání… Tohle je práce před spuštěním.“*). (a) SEO + AI vyhledávání (popisky run, tvar run v kolekci, statické texty jako
