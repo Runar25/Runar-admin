@@ -5823,3 +5823,18 @@ vystihnout… čtení dostává hodně omezení a mantinelů… pravdu znáš sp
 **hotové čtení + JEDNU otázku**, ~90 slov, *„may take the room an explanation needs"*, zbytek pravidel jsou jen podmíněné větve.
 Podoba oblasti stojí v promptu čtení **dvakrát** (přistání i konec) → odtud doslovné *„Among your people"*.
 **Hranice:** n = 1 na větev; počty vět jsou hrubé (regex na zákazy), ukazují řád, ne přesnou míru.
+
+## 2026-10-03 (2) — Karta (Tarot) a oblast jen jednou: A / C / D1 / D2, sol 6, obrazy už podle oblasti (v4.87)
+
+Owner: *„ano pusť 3 čtení s kartou a jeď among your people"*. Harness + texty `docs/eval/2026-10-03-karta-a-oblast/`. Tři případy jako dřív
+(Fehu × Love, Kenaz × Family, Ansuz × Healing), jeden prompt A, varianty z něj: **C** karta — řádek IMAGE → *„THE CARD — above this reading
+the seeker sees this picture… Do not retell or describe the picture; they already see it. Read it for them."*, řádek úhlu pryč ·
+**D1** podoba oblasti jen v přistání, konec s obecným *„in the seeker's life"* · **D2** podoba jen v konci, přistání bez podoby.
+⚠️ D1 obrací ownerovo 2026-09-20 *„most ať dosedne do AREA"* (RUNAR_DESIGN „Stavba Single").
+
+**Výběr podle oblasti funguje:** Fehu × Love dostal stádo z hor (ne prodej), Kenaz × Family uhlíky pod popelem (ne dílnu).
+**Karta (C):** čtení se změní ve výklad — 3/3 začínají jménem runy (*„Fehu names wealth…"*, *„Kenaz speaks of…"*, *„Ansuz speaks to…"*);
+Kenaz obraz vůbec nezmíní. Bez karty viditelné v appce by člověk obraz neměl vůbec → C dává smysl JEN s kartou v UI.
+**Slova podoby doslova** (ručně, 1 čtení na buňku): A 3/3 (*„Between those before you and those after"*, *„how you give care and receive it"*,
+*„In another person's eyes"*) · D1 1/3 · D2 1/3 (*„the care you give and receive"*). Obě varianty ubraly; rozlišit je n = 3 neumí.
+**Hranice:** n = 1 na buňku, posuzováno čtením; sol 6, ne Opus.
