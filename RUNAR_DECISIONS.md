@@ -7996,3 +7996,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Mez:** značky jsou úsudek CODE-tune — owner je může přeznačit (seznam v kódu u každého řádku). Kde runa pro oblast nemá žádný
   vhodný obraz, filtr nepomůže — to je práce na bance, ne na výběru.
 - Affected doc(s): žádné (banka a výběr žijí v kódu).
+
+## 2026-10-03 (4) — Obraz × oblast: zůstává dnešní prompt (A); karta ani „oblast jen jednou" nic lepšího nedaly
+
+- **Rozhodl:** KUKY 2026-10-03 *„upřímně. A je nejlepší. C je divné. D1 a D2 taky nic. Hledám, jak to změnit k lepšímu, ale pokud nové verze
+  nic lepšího nedávají, tak zůstáváme u té, která funguje, i když není dokonalá. Ale problém tím vyřešený není."*
+- **Co:** beze změny promptu. Zkoušeno a NEnasazeno: B (věta o oblasti „scénu postav v oblasti od první věty"), B2 (obraz zkrácený na
+  jádro), C (karta — obraz viditelný, čtení ho jen vykládá), D1 (podoba oblasti jen v přistání), D2 (jen v konci). Měření EVAL_LOG
+  2026-10-02 (1), 2026-10-03 (1) a (2); čtení vedle sebe `docs/eval/2026-10-02-oblast-od-prvni-vety/cteni_A_B_B2.md`.
+- **Zůstává nasazené:** výběr obrazu podle oblasti (2026-10-03 (3)) — ten řeší jen střet obrazu s oblastí (prodej krávy u Love), ne stavbu.
+- **Problém trvá** (owner): čtení obraz převypráví a oblast připojí zvláštní větou, slovy podoby oblasti (*„Among your people"*).
+  Otevřené v `RUNAR_BACKLOG.md`. Nález z kódu pro další krok: čtení má ~7 pevných kroků ve 4 větách, Ask jednu otázku a prostor
+  (EVAL_LOG 2026-10-03 (1)) — páka je spíš v počtu povinných kroků než v další větě navíc.
+- Affected doc(s): `RUNAR_BACKLOG.md` (obraz × oblast — otevřené) — v tomto commitu.

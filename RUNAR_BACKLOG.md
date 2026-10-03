@@ -686,6 +686,10 @@
   14. ⏸ *(owner: měřit na živých Ascích — slova obrazu v uložených odpovědích před/po odebrání věty)* Ask: pravidlo proti studenému čtení v něm nese „Describe the image" — čtvrtý zámek do čtení, neměřen (DECISIONS 2026-09-23 (13)).
   15. ⏸ *(owner: zatím nechat, bude jich víc k opravě)* Statická čtení (Kolekce, s hlasem) vznikla před popisy run — Dagaz popisu odporuje (položka níž); projít i ostatní 24 proti popisům.
   **Hlídat po živém testování:** Opus 5 (délka Norns, Ask, `readings.usage.model`) · kvalita rozboru gpt-6-luna (vymýšlí výtky?) · dva Asky (krok 1, jen admin) → pak server + `ASK_MULTI_LIVE` · ~35 nových obrazů z 23.–24. 9. ve skutečných čteních.
+- [ ] **Obraz × oblast ve čtení — NEVYŘEŠENO** (ownerovy reporty 2026-10-01/02; owner 2026-10-03: *„problém tím vyřešený není“*). Čtení obraz
+  převypráví a oblast připojí zvláštní větou, často slovy podoby oblasti (*„Among your people“*). Zkoušeno a horší nebo stejné než A:
+  B, B2, C (karta), D1, D2 (DECISIONS 2026-10-03 (4)). Nasazen jen výběr obrazu podle oblasti (řeší střet, ne stavbu). Další páka podle
+  kódu: méně povinných kroků ve 4 větách (Ask má jednu otázku a prostor a píše líp — EVAL_LOG 2026-10-03 (1)). Napřed s ownerem.
 - [ ] 👁 **Tvrzení o stavu domova („In your home the talk has gone flat“) prompt pořád umí** (DECISIONS 2026-09-24 (19); owner: „ta Isa je špatně“).
   **2026-09-30 změřeno (EVAL_LOG 2026-09-30 (8)):** příčina nebyl obraz (příroda); na v4.82 tvrzení 0/3 (Isa × Family & Home, i týž obraz).
   Zbývá jen HLÍDAT živá čtení — od 23. 9. nebylo žádné s Family & Home. Obraz neměnit.
