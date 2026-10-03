@@ -105,6 +105,11 @@ měř přímo na enginu (část `1b`).
   řekl jen „něco nahoru, něco do strany, něco dolů“). Pravidla + čísla RUNAR_TREE.md §5 KROK 5, DECISIONS 2026-10-03 (5).
   KUKY dřív: min 9 pramenů (nikdy 5!), 25 run = povýšení zůstává, handoff jen pro změny. Galerie poslaná, čeká na jeho oko.
 
+- **2026-10-03 odpoledne:** KUKY zóny vrátil: povýšené měly vlastní pramen → 25 trubek, kmen se rozpadl, neklikatelné
+  trubky vedle matek. Opraveno (DECISIONS 2026-10-03 (8)): v kmeni nejvýš 14 pramenů, povýšená větev je součástí pramene
+  matky až do odštěpení; `tree_diag.js klik` hlídá, že každý nakreslený tah je klikatelný. Jeho pravidlo: lab/produkce jsou
+  „prakticky správně, chci to ladit“ — upravovat, ne přestavovat; každou jeho větu ze zadání ověřit proti výsledku.
+
 ## Co visí
 - ~~Oprava hooku `tree-guard.sh`~~ — hotovo 2026-09-27.
 - Blank má ve stromě jiný znak (◇ proti ○); čtení s Blank to řeší zvlášť (`blank → odinn`) — ověřit v části 3.

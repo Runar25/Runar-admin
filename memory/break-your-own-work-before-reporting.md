@@ -36,3 +36,12 @@ je z tohohle dne). Nález bez testu se vrátí.
 
 Souvisí: [[attack-the-metric-not-just-the-result]] (útok na nástroj) · [[measure-dont-eyeball]] ·
 [[read-the-check-before-push]].
+
+**4. Proti ownerovým větám z posledního zadání, jedna po druhé (2026-10-03, CODE-tree).** Zóny jsem změřil
+ze všech stran (skákání, strany, výšky, okrajové případy) a ohlásil „25 pramenů“ — a přitom owner v zadání
+řekl *„graduant sdílí kmen a je jen větší, protože obsahuje 2 stejné elementy“* a já sám předtím napsal
+„prameny budou místa element × zóna“. Starou mechaniku (vlastní pramen graduanta z kroku 2) jsem tiše
+přenesl a žádné z mých měřidel se na tu větu neptalo. Owner: *„jak ti to mám vysvětlit??? 14 pramenů…
+si načti všechno, jak to má být udělané“*. **Před hlášením vypiš jeho věty ze zadání jako seznam a u každé
+napiš, čím ve výsledku je splněná (číslo, obrázek, test).** Kde to nejde, je to nález, ne hotovo.
+Souvisí: [[napred-dohledej-co-uz-je]], [[ownerovo-slovo-neni-spec]].
