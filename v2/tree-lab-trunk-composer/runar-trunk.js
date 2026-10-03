@@ -173,7 +173,10 @@ function buildTrunk(spec, T) {
       var tw = twistAmt * h * 6.283;
       var swirlX = twistAmt * laneStep0 * 1.1 * Math.sin(twPhase + tw);
       var swirlD = twistAmt * 0.6 * Math.cos(twPhase + tw);
-      var fl = 1 + T.baseFlare * flareGate * Math.pow(1 - smooth(Math.min(1, h/(PIPE?0.2:0.5))), 1.6);  /* buttress from mid, opens ~8mo; PIPE: jen u zeme */
+      /* PIPE: pata jen u zeme a jen na 40 % (2026-10-03, KUKY: "u korenu rozsirujes az moc, mezi prameny jde videt skrz").
+         Svazek uz je sam siroky (odmocnina z poctu pramenu); plne rozevreni paty ho u zeme roztahlo na 58–62 px
+         proti 43–46 px vys a prameny se prestaly prekryvat -> tmave okraje vypadaly jako skviry. */
+      var fl = 1 + T.baseFlare * (PIPE?0.4:1) * flareGate * Math.pow(1 - smooth(Math.min(1, h/(PIPE?0.2:0.5))), 1.6);  /* buttress from mid, opens ~8mo; PIPE: jen u zeme */
       var fC = PIPE ? Math.sqrt(Math.max(1, activeN(h))/strandN) : 1;   /* PIPE: svazek se stahuje, jak prameny odchazeji */
       var proF = proGate * (1 - smooth(Math.min(1, h/0.5)));   /* rib only in lower trunk */
       trunkPts.push({

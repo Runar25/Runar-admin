@@ -49,6 +49,13 @@ function _intentionNorn(label) {
   if (i < 0 || typeof INTENTIONS === 'undefined') return null;
   return (INTENTIONS.norns || [])[i] || null;
 }
+// Seeking (2026-10-03): aplikace ho u kazdeho cteni uklada (readings.seeking), strom ho dosud nedostaval.
+// Stejne jako zamer mluvi jazykem Noren — SEEKS.norns (General Guidance = null = neutralni).
+function _seekNorn(label) {
+  var i = _labelIndex(label, typeof SEEKS !== 'undefined' ? SEEKS : null);
+  if (i < 0 || typeof SEEKS === 'undefined') return null;
+  return (SEEKS.norns || [])[i] || null;
+}
 
 function readingsToTreeLog(rows) {
   var byGlyph = {};
@@ -80,7 +87,7 @@ function readingsToTreeLog(rows) {
     if (!isSpread) runes = [runes[0]];
     var area = (row.area && row.area !== 'spread') ? row.area : (row.aol || null);
     out.push({ spread: isSpread ? name.toLowerCase() : 'single', runes: runes,
-               area: _areaSlug(area), intention: _intentionNorn(row.intention) });
+               area: _areaSlug(area), intention: _intentionNorn(row.intention), seeking: _seekNorn(row.seeking) });
   });
   return out;
 }
@@ -254,9 +261,10 @@ async function renderLivingTree(rune) {
     // ZALOZENI JE NUTNA PODMINKA (KUKY 2026-10-02: "strom neroste bez zalozeni! NIKDY. napred zivotni
     // runa, pak norns"). Drive se zivy strom kreslil ze VSECH cteni i bez zalozeni: owner po resetu
     // zivotni runy (reset maze i zalozeni, cteni nechava) videl strom z 410 cteni a zaroven vyzvu
-    // "dalsi jsou Norny". Ted: bez zalozeni jen seminko; se zalozenim strom roste OD zakladaciho cteni
-    // (drivejsi cteni zustavaji v deniku, do stromu nepatri). Nenajde-li se zakladaci cteni, strom se
-    // nesmaze — vezmou se vsechna (lepsi nez uzivateli strom tise vymazat).
+    // "dalsi jsou Norny". Ted: bez zalozeni jen seminko. Se zalozenim strom obsahuje VSECHNA cteni, i ta
+    // pred zalozenim (KUKY 2026-10-03: "nekdo si zalozi strom az po 20 ctenich… od zalozeni ma strom v
+    // sobe 20 cteni"); zakladaci Norny jdou PRVNI (davaji obrys), ostatni v case. 2026-10-02 se tu omylem
+    // bralo jen OD zakladaciho cteni.
     if (userTreeFounded) try {
       var pf  = await sb.from('user_profiles').select('tree_founded_at, founding_reading_id').eq('id', currentUser.id).maybeSingle();
       var res = await sb.from('readings').select('*').eq('user_id', currentUser.id).order('drawn_at', { ascending: true });
@@ -267,7 +275,9 @@ async function renderLivingTree(rune) {
           var tf = new Date(pd.tree_founded_at).getTime() - 15 * 60 * 1000;
           for (var q2 = 0; q2 < rows.length; q2++) { if (new Date(rows[q2].drawn_at).getTime() >= tf) { start = q2; break; } }
         }
-        log = readingsToTreeLog(rows.slice(Math.max(0, start)));
+        var ordered = rows.slice();
+        if (start >= 0) ordered.unshift(ordered.splice(start, 1)[0]);   /* zakladaci Norny prvni, pak vse v case */
+        log = readingsToTreeLog(ordered);
       }
     } catch(e) {}
     var bk = (window.RunarBranch && window.RunarBranch.RUNES.filter(function(x){ return x.g === rune.g; })[0]);

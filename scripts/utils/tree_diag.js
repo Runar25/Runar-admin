@@ -209,7 +209,7 @@ function labRun(log, htmlPath, inj) {
   if (lsb.__BB) console.log('BB', lsb.__BB.join(' || '));
   return { grow: strip(els.grow ? els.grow.innerHTML : ''), btable: strip(els.btable ? els.btable.innerHTML : ''),
            age: strip(els.ageread ? els.ageread.textContent : ''), fills: c.fills,
-           picks: (lsb._P || []).filter(p => typeof p.k === 'number').map(p => p.meta), allPicks: (lsb._P || []) };
+           picks: (lsb._P || []).filter(p => typeof p.k === 'number').map(p => p.meta), allPicks: (lsb._P || []), sb: lsb };
 }
 if (cast === 'lab2') {
   // CAST 2 v LABU: zakladaci Norny (lab log = klice run, ne znaky)
@@ -794,4 +794,45 @@ if (cast === 'twigat') {
     keys.forEach(k => { const p = r.allPicks.find(q => String(q.k) === k); if (!p) { console.log('N=' + n, k, '— neni'); return; }
       const a = p.pts[0], b = p.pts[p.pts.length - 1], m = p.meta || {};
       console.log('N=' + n, k.padEnd(18), 'zacatek', a.x.toFixed(1) + ',' + a.y.toFixed(1), '| smer', (Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI).toFixed(1) + '°', '| delka', p.pts.length, 'b.', '| slot', m.slot, 'fu', m.fu != null ? (+m.fu).toFixed(3) : '-'); }); });
+}
+
+if (cast === 'gaps') {
+  // MEZERY V KMENI (2026-10-03, KUKY: "u korenu rozsirujes az moc, mezi prameny jde videt skrz"). Na vyskach
+  // kmene: sirka svazku (od kraje ke kraji) a kolik z ni je skutecne pokryto prameny (1,00 = zadna mezera).
+  // Potrebuje HTML s haky window.__ALL (cesta jako argv[3]).
+  const HTML = process.argv[3];
+  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, maxMains: 10, gradStrand: 1 }) });
+  const LOGS = [['KUKY', st.log]];
+  if (process.env.SEEDS) { const RB = B.RUNES.filter(r => r.k !== 'odinn'); process.env.SEEDS.split(',').map(Number).forEach(sd => { let s = sd; const rnd = () => (s = (s * 1103515245 + 12345) >>> 0) / 4294967296;
+      const pick = n => { const pool = RB.slice(), rs = []; for (let i = 0; i < n; i++) { const r = pool.splice(Math.floor(rnd() * pool.length), 1)[0]; rs.push({ rune: r.k, el: r.el }); } return rs; };
+      const lg = [{ spread: 'norns', runes: pick(3), area: null, intention: null }]; for (let i = 1; i < 300; i++) { const x = rnd(); lg.push({ spread: x < 0.8 ? 'single' : 'compass', runes: pick(x < 0.8 ? 1 : 5), area: null, intention: null }); }
+      LOGS.push(['seed ' + sd, lg]); }); }
+  LOGS.forEach(([lbl, LOG]) => {
+  const r = labRun(LOG, HTML, inj), all = r.sb.__ALL || [], gy = 660;
+  const ty = Math.min(...all.filter(L => L.src === 'vetev' || L.src === 'pramen').map(L => Math.min(...L.pts.map(q => q.y))));
+  const out = [];
+  [0.01, 0.03, 0.05, 0.08, 0.12, 0.16, 0.20, 0.30].forEach(h => { const y = gy - h * (gy - 270);
+    const segs = []; all.forEach(L => { if (!(L.src === 'vetev' || L.src === 'pramen' || L.src === 'reinforce')) return; const P = L.pts;
+      for (let i = 1; i < P.length; i++) { const a = P[i - 1], b = P[i]; if ((a.y - y) * (b.y - y) <= 0 && a.y !== b.y) { const t = (y - a.y) / (b.y - a.y), x = a.x + (b.x - a.x) * t, w = a.w + (b.w - a.w) * t; if (Math.abs(x - 280) < 80) segs.push([x - w / 2, x + w / 2]); } } });
+    if (!segs.length) return; segs.sort((p, q) => p[0] - q[0]); const lo = segs[0][0], hi = Math.max(...segs.map(s2 => s2[1]));
+    let cov = 0, cur = null; segs.forEach(s2 => { if (!cur || s2[0] > cur[1]) { if (cur) cov += cur[1] - cur[0]; cur = [s2[0], s2[1]]; } else cur[1] = Math.max(cur[1], s2[1]); }); if (cur) cov += cur[1] - cur[0];
+    out.push('h' + h.toFixed(2) + ': sirka ' + (hi - lo).toFixed(0) + ' px, pokryto ' + (100 * cov / (hi - lo)).toFixed(0) + ' %'); });
+  console.log(lbl.padEnd(10), out.join(' | '));
+  });
+}
+if (cast === 'prefound') {
+  // ZALOZENI AZ PO CTENICH (2026-10-03): 20 cteni bez Noren, pak Norny, pak 30 cteni. Strom pred Nornami = seminko,
+  // po nich musi obsahovat VSECHNA cteni (vetvi tolik, kolik je tazeni) a zakladaci runy jsou prvni tri ramena.
+  const HTML = process.argv[3] && process.argv[3] !== '-' ? process.argv[3] : null;
+  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, maxMains: 10, gradStrand: 1 }) });
+  const RB = B.RUNES.filter(r => r.k !== 'odinn'); let s = 777; const rnd = () => (s = (s * 1103515245 + 12345) >>> 0) / 4294967296;
+  const one = () => { const r = RB[Math.floor(rnd() * RB.length)]; return { rune: r.k, el: r.el }; };
+  const log = []; for (let i = 0; i < 20; i++) log.push({ spread: 'single', runes: [one()], area: 'family', intention: 'past' });
+  const nr = [RB[3], RB[10], RB[20]].map(r => ({ rune: r.k, el: r.el })); log.push({ spread: 'norns', runes: nr, area: 'career', intention: 'decision' });
+  for (let i = 0; i < 30; i++) log.push({ spread: 'single', runes: [one()], area: 'love', intention: 'present' });
+  [20, 21, 51].forEach(n => { const r = labRun(log.slice(0, n), HTML, inj); const mains = r.allPicks.filter(p => typeof p.k === 'number');
+    const tw = r.allPicks.filter(p => String(p.k).startsWith('t')).length;
+    console.log('po ' + n + ' cteni:', mains.length ? ('ramena ' + mains.map(p => p.meta.name + (p.meta.norn ? '(' + p.meta.norn + ')' : '')).join(', ') + ' | vetvi ' + tw + ' | tazeni ' + log.slice(0, n).reduce((a, rd) => a + rd.runes.length, 0)) : 'seminko (zadne rameno)'); });
 }
