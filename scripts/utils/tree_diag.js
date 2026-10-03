@@ -405,7 +405,7 @@ if (cast === 'jump2') {
   // Prodlouzeni (spicka jde dal ve svem smeru) je rust, ne skok. Vetev = odbocka (klic t...).
   const HTML = process.argv[3] || null;
   const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
-  const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, zrod: 0.3, dorust: 4 }) });
+  const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, zrod: 0.3, dorust: 4 }, process.env.LRCFG ? JSON.parse(process.env.LRCFG) : {}) });
   const snap = n => { const o = {}; labRun(st.log.slice(0, n), HTML, inj).allPicks.forEach(p => {
       if (!String(p.k).startsWith('t') || !p.pts || p.pts.length < 2) return;
       const a = p.pts[0], b = p.pts[p.pts.length - 1]; o[String(p.k)] = { x: a.x, y: a.y, ang: Math.atan2(b.y - a.y, b.x - a.x) }; }); return o; };
@@ -788,12 +788,12 @@ if (cast === 'twigat') {
   // Ladeni jedne vetvicky mezi dvema ctenimi: KEYS="t2_dagaz_62_3,t2_dagaz" NS="84,85"
   const HTML = process.argv[3] && process.argv[3] !== '-' ? process.argv[3] : null;
   const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
-  const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, zrod: 0.3, dorust: 4 }) });
+  const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, zrod: 0.3, dorust: 4 }, process.env.LRCFG ? JSON.parse(process.env.LRCFG) : {}) });
   const keys = (process.env.KEYS || '').split(',');
   (process.env.NS || '84,85').split(',').map(Number).forEach(n => { const r = labRun(st.log.slice(0, n), HTML, inj);
     keys.forEach(k => { const p = r.allPicks.find(q => String(q.k) === k); if (!p) { console.log('N=' + n, k, '— neni'); return; }
       const a = p.pts[0], b = p.pts[p.pts.length - 1], m = p.meta || {};
-      console.log('N=' + n, k.padEnd(18), 'zacatek', a.x.toFixed(1) + ',' + a.y.toFixed(1), '| smer', (Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI).toFixed(1) + '°', '| delka', p.pts.length, 'b.', '| slot', m.slot, 'fu', m.fu != null ? (+m.fu).toFixed(3) : '-'); }); });
+      console.log('N=' + n, k.padEnd(18), 'zacatek', a.x.toFixed(1) + ',' + a.y.toFixed(1), '| smer', (Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI).toFixed(1) + '°', '| delka', p.pts.length, 'b.', '| slot', m.slot, 'fu', m.fu != null ? (+m.fu).toFixed(3) : '-', '| g', m.gGrow != null ? (+m.gGrow).toFixed(3) : '-', '| n', m.runeN); }); });
 }
 
 if (cast === 'gaps') {
@@ -835,4 +835,126 @@ if (cast === 'prefound') {
   [20, 21, 51].forEach(n => { const r = labRun(log.slice(0, n), HTML, inj); const mains = r.allPicks.filter(p => typeof p.k === 'number');
     const tw = r.allPicks.filter(p => String(p.k).startsWith('t')).length;
     console.log('po ' + n + ' cteni:', mains.length ? ('ramena ' + mains.map(p => p.meta.name + (p.meta.norn ? '(' + p.meta.norn + ')' : '')).join(', ') + ' | vetvi ' + tw + ' | tazeni ' + log.slice(0, n).reduce((a, rd) => a + rd.runes.length, 0)) : 'seminko (zadne rameno)'); });
+}
+if (cast === 'zony') {
+  // ZONY × ELEMENTY (2026-10-03): ramena = mista element × zona (14) + povyseni (11). (1) KUKYho strom s jeho posuvniky,
+  // jen maxMains 25 (14 + 11, KUKY) a twigMax 5; (2) jak pribyvaji ramena pri prehrani; (3) modelovi lide (5 typu × NSEED):
+  // kolik ramen a pramenu po N ctenich, vysky a uhly po pasmech (tiha), povyseni, cteni na sousedni zone.
+  const HTML = process.argv[3] && process.argv[3] !== '-' ? process.argv[3] : null;
+  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const CF = Object.assign({}, st.crownT, { twigMax: 5, maxMains: 25, gradStrand: 1 }, process.env.LRCFG ? JSON.parse(process.env.LRCFG) : {});
+  const inj = Object.assign({}, st, { crownT: CF });
+  const dv = a => Math.round((a + Math.PI / 2) * 180 / Math.PI);   // od svislice, + vpravo
+  const strandsOf = r => { const m = /prameny (\d+)/.exec(r.grow); return m ? +m[1] : null; };
+  const nearOf = r => { const m = /(\d+) cteni na sousedni zone/.exec(r.grow); return m ? +m[1] : 0; };
+  if (!process.env.SKIP1) {
+    const r = labRun(st.log, HTML, inj);
+    console.log('KUKYHO STROM (' + st.log.length + ' cteni):', r.grow.slice(0, 230));
+    r.picks.slice().sort((a, b) => a.idx - b.idx).forEach(m => console.log('  #' + String(m.idx + 1).padStart(2), (m.name + '').padEnd(9), (m.el + '').padEnd(6),
+      (m.gradOf ? ('povysena z ' + m.gradOf + ' (cteni #' + (m.gradAt + 1) + ')') : (m.zone || '-')).padEnd(26), 'vyska', (m.frac != null ? Math.round(m.frac * 100) : '?') + ' %',
+      '| smer', String(dv(m.ang)).padStart(4) + '°', '| ohyb', (m.bendN0 != null ? Math.round(m.bendN0 * 57.3) : '?') + '° ->', (m.bendMag != null ? Math.round(m.bendMag * 57.3) : '?') + '°',
+      '| cteni na rameni', m.ownN != null ? m.ownN : '-', '| vetvicek', (m.tw || []).length));
+    const NS1 = [1, 3, 5, 10, 20, 30, 50, 100, 200, st.log.length];
+    console.log('  RUST (prehrani):'); NS1.forEach(n => { const q = labRun(st.log.slice(0, n), HTML, inj), mm = q.picks;
+      console.log('   po', String(n).padStart(3), 'cteni: ramen z kmene', mm.filter(m => !m.gradOf).length, '| povysenych', mm.filter(m => m.gradOf).length, '| pramenu v kmeni', strandsOf(q), '| na sousedni zone', nearOf(q)); });
+  }
+  const SC = [
+    { id: 'minulost', int: [0.6, 0.2, 0.2], area: [0.6, 0.2, 0.2], seek: [0.6, 0.2, 0.2] },
+    { id: 'pritomnost', int: [0.2, 0.6, 0.2], area: [0.2, 0.6, 0.2], seek: [0.2, 0.6, 0.2] },
+    { id: 'budoucnost', int: [0.2, 0.2, 0.6], area: [0.2, 0.2, 0.6], seek: [0.2, 0.3, 0.5] },
+    { id: 'vsude', int: [1/3, 1/3, 1/3], area: [3/8, 2/8, 3/8], seek: [0.4, 0.4, 0.2] },
+    { id: 'nic', int: null, area: null, seek: null } ];
+  const NS = (process.env.NS || '3,10,20,50,150,300').split(',').map(Number), NSEED = +(process.env.NSEED || 8);
+  const RB = B.RUNES.filter(r => r.k !== 'odinn'), AI = ['healing', 'family', 'inner'], AM = ['love', 'crossroads'], AO = ['purpose', 'career', 'spirituality'];
+  const gen = (seed, sc, N) => { let s = seed; const rnd = () => (s = (s * 1103515245 + 12345) >>> 0) / 4294967296;
+    const pick3 = (p, a, b, c) => { const x = rnd(); return x < p[0] ? a() : (x < p[0] + p[1] ? b() : c()); };
+    const one = arr => () => arr[Math.floor(rnd() * arr.length)];
+    const intn = () => sc.int ? pick3(sc.int, () => 'past', () => 'present', () => 'decision') : null;
+    const area = () => sc.area ? pick3(sc.area, one(AI), one(AM), one(AO)) : null;
+    const seek = () => sc.seek ? pick3(sc.seek, one(['insight', 'reflection']), one(['clarity', 'confirmation']), () => 'general') : null;
+    const pick = n => { const pool = RB.slice(), rs = []; for (let i = 0; i < n; i++) { const r = pool.splice(Math.floor(rnd() * pool.length), 1)[0]; rs.push({ rune: r.k, el: r.el }); } return rs; };
+    const log = [{ spread: 'norns', runes: pick(3), area: area(), intention: intn(), seeking: seek() }];
+    for (let i = 1; i < N; i++) { const x = rnd(); log.push({ spread: x < 0.8 ? 'single' : 'compass', runes: pick(x < 0.8 ? 1 : 5), area: area(), intention: intn(), seeking: seek() }); }
+    return log; };
+  const med = a => { if (!a.length) return NaN; const b = a.slice().sort((x, y) => x - y); return b[Math.floor(b.length / 2)]; };
+  const band = m => m.gradOf ? 'povys' : (/hrana/.test(m.zone || '') ? 'hrana' : (/^urd/.test(m.zone || '') ? 'urd' : (/^verd/.test(m.zone || '') ? 'verd' : (/^skuld/.test(m.zone || '') ? 'skuld' : '?'))));
+  const maxN = Math.max.apply(null, NS);
+  SC.forEach((sc, si) => { const by = {}; NS.forEach(N => { by[N] = { sec: [], gr: [], str: [], near: [] }; });
+    const hb = { urd: [], verd: [], skuld: [], hrana: [] }, ab = { urd: [], verd: [], skuld: [], hrana: [], povys: [] };
+    for (let k = 0; k < NSEED; k++) { const log = gen(3000 + k * 37 + si * 311, sc, maxN);
+      NS.forEach(N => { const q = labRun(log.slice(0, N), HTML, inj), mm = q.picks;
+        by[N].sec.push(mm.filter(m => !m.gradOf).length); by[N].gr.push(mm.filter(m => m.gradOf).length); by[N].str.push(strandsOf(q) || 0); by[N].near.push(nearOf(q));
+        if (N === maxN) mm.forEach(m => { const b = band(m); if (m.idx > 0 && hb[b]) hb[b].push(m.frac); if (m.idx > 0 && ab[b]) ab[b].push(Math.abs(dv(m.ang))); }); }); }
+    console.log('\n' + sc.id + ' (' + NSEED + ' lidi):');
+    NS.forEach(N => { const b = by[N]; console.log('  po', String(N).padStart(3), 'cteni: ramen z kmene', med(b.sec), '(' + Math.min.apply(null, b.sec) + '–' + Math.max.apply(null, b.sec) + ')',
+      '| povysenych', med(b.gr), '| pramenu', med(b.str), '| cteni na sousedni zone', med(b.near)); });
+    console.log('  po ' + maxN + ': vyska ramen (median) urd', (med(hb.urd) * 100 || 0).toFixed(0) + ' % · hrana', (med(hb.hrana) * 100 || 0).toFixed(0) + ' % · verdandi', (med(hb.verd) * 100 || 0).toFixed(0) + ' % · skuld', (med(hb.skuld) * 100 || 0).toFixed(0) + ' %',
+      '| uhel od svislice urd', med(ab.urd) + '° · verdandi', med(ab.verd) + '° · skuld', med(ab.skuld) + '° · povysene', med(ab.povys) + '°');
+  });
+}
+if (cast === 'limbat') {
+  // Ladeni ramene mezi ctenimi: K="13" NS="246,247" -> smer, delka, vyska, spicka, tw (LRCFG jako jinde)
+  const HTML = process.argv[3] && process.argv[3] !== '-' ? process.argv[3] : null;
+  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, zrod: 0.3, dorust: 4 }, process.env.LRCFG ? JSON.parse(process.env.LRCFG) : {}) });
+  const K = (process.env.K || '0').split(',').map(Number);
+  (process.env.NS || '246,247').split(',').map(Number).forEach(n => { const r = labRun(st.log.slice(0, n), HTML, inj);
+    K.forEach(k => { const p = r.allPicks.find(q => q.k === k); if (!p) { console.log('N=' + n, k, '— neni'); return; } const m = p.meta, e = p.pts[p.pts.length - 1];
+      console.log('N=' + n, '#' + k, (m.name + '').padEnd(8), 'smer', ((m.ang + Math.PI / 2) * 57.3).toFixed(1) + '°', '| lenF', (+m.lenF).toFixed(3), '| frac', (+m.frac).toFixed(3), '| spicka', e.x.toFixed(1) + ',' + e.y.toFixed(1), '| bodu', p.pts.length, '| ownN', m.ownN, '| tang', m.tang!=null?(m.tang*57.3).toFixed(1):'-', 'ei', m.ei, 'ex', m.exx!=null?m.exx.toFixed(1)+','+m.exy.toFixed(1):'-', 'dev', m.devv!=null?(m.devv*57.3).toFixed(1):'-', '| tw', (m.tw || []).map(t => t.name + '(' + t.born + ')').join(' ')); }); });
+}
+if (cast === 'lrdbg') {
+  // Kam jde hmota mladeho/stareho stromu po ramenech (ZONY 2026-10-03): typ TYPE (a = [nitro, svet, stred]), N cteni, SEEDS.
+  const HTML = process.argv[3] && process.argv[3] !== '-' ? process.argv[3] : null;
+  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, maxMains: 25, gradStrand: 1 }, process.env.LRCFG ? JSON.parse(process.env.LRCFG) : {}) });
+  const A = JSON.parse(process.env.A || '[0.35,0.35,0.30]'), N = +(process.env.N || 10);
+  if (process.env.RUNE) inj.rune = process.env.RUNE;   // jina zivotni runa (vyboulen kmene)
+  const RB = B.RUNES.filter(r => r.k !== 'odinn'), AI = ['healing', 'family', 'inner'], AM = ['love', 'crossroads'], AO = ['purpose', 'career', 'spirituality'];
+  (process.env.SEEDS || '1,2,3').split(',').map(Number).forEach(seed => { let s = 9000 + seed * 97; const rnd = () => (s = (s * 1103515245 + 12345) >>> 0) / 4294967296;
+    const pick = n => { const pool = RB.slice(), rs = []; for (let i = 0; i < n; i++) { const r = pool.splice(Math.floor(rnd() * pool.length), 1)[0]; rs.push({ rune: r.k, el: r.el }); } return rs; };
+    const area = () => { const x = rnd(); return x < A[0] ? AI[Math.floor(rnd() * 3)] : (x < A[0] + A[1] ? AO[Math.floor(rnd() * 3)] : (x < A[0] + A[1] + A[2] ? AM[Math.floor(rnd() * 2)] : null)); };
+    const log = [{ spread: 'norns', runes: pick(3), area: area(), intention: null }];
+    for (let i = 1; i < N; i++) log.push({ spread: 'single', runes: pick(1), area: area(), intention: null });
+    const r = labRun(log, HTML, inj), per = {}; let L = 0, R = 0;
+    const arc = pts => { let a = 0, l = 0; for (let i = 1; i < pts.length; i++) { const d = Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y); a += d; if ((pts[i].x + pts[i - 1].x) / 2 < 280) l += d; } return [a, l]; };
+    r.allPicks.forEach(p => { if (!p.pts || p.pts.length < 2) return; const ks = String(p.k); let k = null;
+      if (typeof p.k === 'number') k = p.k; else { const m = /^t(\d+)_/.exec(ks); if (m) k = +m[1]; } if (k == null) return;
+      const pts = typeof p.k === 'number' ? p.pts.slice(-30) : p.pts, [a, l] = arc(pts); per[k] = per[k] || { a: 0, l: 0 }; per[k].a += a; per[k].l += l; L += l; R += a - l; });
+    console.log('seed', seed, '| hmota vlevo', Math.round(100 * L / (L + R)) + ' %');
+    r.picks.slice().sort((a, b) => a.idx - b.idx).forEach(m => { const q = per[m.idx] || { a: 0, l: 0 };
+      console.log('   #' + String(m.idx + 1).padStart(2), (m.name + '').padEnd(8), (m.zoneS || '').padEnd(6), 'strana', String(m.lrS0).padStart(2), '->', String(m.lrS).padStart(2), '| smer', String(Math.round((m.ang + Math.PI / 2) * 57.3)).padStart(4) + '°',
+        '| hmota', Math.round(q.a), 'z toho vlevo', Math.round(q.l), '| cteni', m.bal ? m.bal.n : '-', '(n', m.bal ? m.bal.c.nitro : '-', 's', m.bal ? m.bal.c.svet : '-', ')'); });
+  });
+}
+if (cast === 'zattack') {
+  // UTOK NA ZONY (2026-10-03): okrajove pripady — Norny se 2–3 runami stinu, strop maxMains 9 (stara hodnota ownera),
+  // povyseni vypnute, cteni pred zalozenim = jako po jednom po Nornach, zadne zalozeni = seminko, demo bez logu.
+  const HTML = process.argv[3] && process.argv[3] !== '-' ? process.argv[3] : null;
+  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const base = { twigMax: 5, maxMains: 25, gradStrand: 1 };
+  const inj = cf => Object.assign({}, st, { crownT: Object.assign({}, st.crownT, base, cf || {}) });
+  const K = n => B.RUNES.filter(r => r.name === n)[0]; const R = n => ({ rune: K(n).k, el: K(n).el });
+  const RB = B.RUNES.filter(r => r.k !== 'odinn'); let s = 4242; const rnd = () => (s = (s * 1103515245 + 12345) >>> 0) / 4294967296;
+  const AR = ['healing', 'family', 'inner', 'love', 'crossroads', 'purpose', 'career', 'spirituality', null], IN = ['past', 'present', 'decision', null];
+  const single = () => { const r = RB[Math.floor(rnd() * RB.length)]; return { spread: 'single', runes: [{ rune: r.k, el: r.el }], area: AR[Math.floor(rnd() * AR.length)], intention: IN[Math.floor(rnd() * IN.length)] }; };
+  const sig = r => JSON.stringify(r.picks.map(m => [m.name, m.zone, Math.round(m.frac * 1000), Math.round(m.ang * 1000), (m.tw || []).length]));
+  const cnt = r => { const mm = r.picks; return mm.filter(m => !m.gradOf).length + ' ramen + ' + mm.filter(m => m.gradOf).length + ' povys.'; };
+  // 1) Norny se stinem
+  for (const names of [['Isa', 'Hagalaz', 'Fehu'], ['Fehu', 'Isa', 'Hagalaz'], ['Isa', 'Hagalaz', 'Odinn']]) {
+    const lg = [{ spread: 'norns', runes: names.map(R), area: null, intention: null }]; const r = labRun(lg, HTML, inj());
+    console.log('Norny', names.join('·').padEnd(22), '->', cnt(r), '|', r.picks.map(m => m.name + ':' + m.zone).join(' , ')); }
+  // 2) strop 9, povyseni vypnute, normalni
+  const lg2 = [{ spread: 'norns', runes: ['Kenaz', 'Laguz', 'Algiz'].map(R), area: 'family', intention: 'past' }]; for (let i = 0; i < 150; i++) lg2.push(single());
+  for (const [lbl, cf] of [['normal (25)', {}], ['strop 9', { maxMains: 9 }], ['povyseni vypnute', { gradStrand: 0 }]]) {
+    const r = labRun(lg2, HTML, inj(cf)); const m = /(\d+) cteni na sousedni/.exec(r.grow);
+    console.log(lbl.padEnd(18), '->', cnt(r), '| na sousedni zone', m ? m[1] : 0, '| elementy s ramenem', [...new Set(r.picks.map(x => x.el))].sort().join(',')); }
+  // 3) cteni pred zalozenim
+  const pre = [], post = []; for (let i = 0; i < 20; i++) pre.push(single()); for (let i = 0; i < 30; i++) post.push(single());
+  const N0 = { spread: 'norns', runes: ['Dagaz', 'Isa', 'Uruz'].map(R), area: 'career', intention: 'decision' };
+  const a = labRun(pre.concat([N0], post), HTML, inj()), b = labRun([N0].concat(pre, post), HTML, inj());
+  console.log('20 cteni -> Norny -> 30:', cnt(a), '| shodne s Norny -> 50 po jednom:', sig(a) === sig(b) ? 'ANO' : 'NE');
+  const a2 = labRun(pre.slice(0, 20), HTML, inj()); console.log('jen 20 cteni bez Noren:', a2.grow.slice(0, 60), '| hlavnich vetvi', a2.picks.length);
+  // 4) prefix: strom po 25 ctenich z dlouheho logu = strom z prvnich 25
+  const c1 = labRun(lg2.slice(0, 25), HTML, inj()), c2 = labRun(lg2.slice(0, 25).concat([]), HTML, inj());
+  console.log('prefix stabilni (25):', sig(c1) === sig(c2) ? 'ANO' : 'NE');
 }

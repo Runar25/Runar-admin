@@ -8009,3 +8009,21 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   Otevřené v `RUNAR_BACKLOG.md`. Nález z kódu pro další krok: čtení má ~7 pevných kroků ve 4 větách, Ask jednu otázku a prostor
   (EVAL_LOG 2026-10-03 (1)) — páka je spíš v počtu povinných kroků než v další větě navíc.
 - Affected doc(s): `RUNAR_BACKLOG.md` (obraz × oblast — otevřené) — v tomto commitu.
+
+## 2026-10-03 (5) — Strom (lab): prameny = místa element × zóna (14) + povýšení (11), čtení na rameni svého elementu, úhel z tíhy čtení
+
+- **Rozhodl:** KUKY 2026-10-03 *„postav zóny jako další krok · 14 ramen ok · tím nám zůstává 11 ramen, která by měla být zařazená jako
+  graduanti, tam kde je to potřeba · povýšení je potřeba, máme 25 run · kmen, co jde až do špičky, je taky element · každý strom roste
+  jako proutek… formují se pod svou tíhou, ta runová čtení jsou ta tíha · i u založení Noren"* (a dřív týž den: *„usadí se na větvi své
+  runy — to je přesně to, co nechci; má se usadit na stejném elementu"*, *„úhel dává element? proto vidím hodně vodorovných větví"*).
+  **Provedl:** CODE-tree, jen LAB (`build_crown_composer.py`).
+- **Co:** pramen už není element (5–7 ramen + povýšení v koruně), ale místo *element × pásmo zóny* (urð · verðandi · skuld; stín dvě
+  pásma na hranách) → nejvýš 14 ramen z kmene + 11 povýšených run. Čtení = větvička své runy na rameni svého elementu ve své zóně;
+  rameno založí první čtení, které tam patří; povýšení zůstává, jen v rámci ramene; úhel ramene = neutrální start + ohyb tíhou čtení
+  (minulost dolů · teď do strany · budoucnost nahoru). Pravidla a měření bydlí v `RUNAR_TREE.md` §5 KROK 5.
+- **Mění:** `RUNAR_TREE.md` §5 NOVÝ MODEL body 2–4 (1 pramen na element), KROK 1 (další tažení na větvi runy), KROK 4 bod (1) a (3)
+  (čtení podél větve runy, úhel podle elementu) — označeno v docu. Strop `maxMains` 10 → 25.
+- **Moje interpretace k ověření okem:** směr ohybu jsem navázal na zónu čtení (svislá osa stromu = čas); KUKY řekl *„něco je směru
+  nahoru, něco jiného do strany, další dolů"*, ne čím. Nesedí-li to, je to jedna páka (`bendTarget`).
+- **Produkce beze změny** (port až po KUKYho oku; před portem vrátit ownerovi založení).
+- Affected doc(s): `RUNAR_TREE.md` §3 (mapa výšky) + §5 · `RUNAR_TREE_MAP.md` vrstvy C/D/H — v tomto commitu.

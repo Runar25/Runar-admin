@@ -11,6 +11,7 @@
 # ⚠️ 2026-09-30: vrstvy D a H — úhel ramene dává kostra `FR` (ne `emergence`), graduant smí na druhou stranu (KROK 3b).
 # ⚠️ 2026-10-01: vrstva F — kmen jako svazek (`T.exitFrac`); vrstva C — mapa výšky (které čtení dole/nahoře) bydlí v RUNAR_TREE.md §3.
 # ⚠️ 2026-10-02: vrstvy C/D — výška ramene, místo runy na rameni i místo čtení na větvi jdou ze ZÓNY čtení (záměr/oblast/seeking/pozice/svět, RUNAR_TREE.md §3 + §5 KROK 4); úhel odchodu podle elementu.
+# ⚠️ 2026-10-03: vrstvy C/D/H — pramen = místo ELEMENT × ZÓNA (14) + povýšení (11); čtení na rameni svého elementu v zóně; úhel ramene = tíha čtení (RUNAR_TREE.md §5 KROK 5).
 # Vlastník: CODE-tree (mechanika + implementace) · Cowork-tree (význam) · KUKY (rozhoduje).
 
 ## Jak číst
@@ -47,7 +48,7 @@ Laděno v branch composeru → `RUNE_TUNE`; fallback = signatura v `RUNES` (runa
 |---|---|---|---|
 | `area` | POZICE: strana RAMENE z rovnováhy všech jeho čtení (`limbPath`: přetočení na stranu, kam jasně převáží, + natočení `areaSide`) · strana VĚTVE z jejího čtení (`sideOf`) · hustota odboček (`AREA_SUB`) | strana = LIVE (KROK 3, 2026-09-29 — RUNAR_TREE.md §5) · hustota = ⚠️SPÍCÍ (`subScale` 0 v koruně) | dovnitř/ven |
 | `intention` | POZICE: výška (`INT_AXIS`→`intZone`) · TVAR: délka/tip/sukovitost (`sLen`/`sTip`/`sGnarl`) | výška = LIVE · tvar = LIVE pro větve z čtení (KROK 1, 2026-09-29) | urð/verðandi/skuld |
-| `seeking` | zatím nepoužito | 🆕 | 3. hlas výškové osy (backlog §3A) |
+| `seeking` | 3. hlas zóny čtení (váha 0,2) → pásmo ramene a jeho výška | LIVE v labu (KROK 4, 2026-10-02); převod v aplikaci ho předává od 2026-10-03, starý engine aplikace ho nepoužívá | 3. hlas výškové osy |
 | `steer` | síla řízení celkově | `T.steer` | |
 > ⚠️ *Do 2026-09-29 tu stálo „Reading → TVAR je SPÍCÍ — strom neposílá `intention/area` do `buildBranch`". Od KROKU 1 je posílá (`growBranch` → `STEER_AREA`/`STEER_INT`), viz RUNAR_TREE.md §5.*
 
@@ -55,7 +56,9 @@ Laděno v branch composeru → `RUNE_TUNE`; fallback = signatura v `RUNES` (runa
 | páka | mechanika | kde | pozn. |
 |---|---|---|---|
 | `emergence(k)` | výška odlomení (`frac`); k0–2 zakládací, k≥3 postupně níž | build_*composer | ⚠️ vyladěno na ~9 → **při 25 chuchvalec** (nefix) |
-| kostra `FR` | ÚHEL ramene: strana v pořadí zrodu (vůdčí nahoru, strany se liší nejvýš o 1, při shodě lehčí strana), rozevření zlatým řezem; i graduanti | crown builder (od 2026-09-30) | KUKY: „co nejvíce rozložit“ |
+| místo `bandOf` | rameno = element × pásmo zóny (urð · verðandi · skuld, stín na hranách); výška = střed pásma + zóna čtení v pásmu | crown builder (KROK 5, 2026-10-03) | KUKY: „zóny to můžou řešit“ |
+| kostra `FR` | STRANA ramene v pořadí zrodu (vůdčí nahoru, strany se liší nejvýš o 1, při shodě lehčí strana); rozevření = neutrální `bendN` (dřív zlatý řez, pak element) | crown builder (od 2026-09-30) | KUKY: „co nejvíce rozložit“ |
+| tíha `bendMag` | ohyb ramene čteními: minulost dolů · teď do strany · budoucnost nahoru, síla = počet (`bendK`, `bendStr`) | crown builder (KROK 5) | KUKY: „formují se pod svou tíhou“ |
 | `exitIndex` | najde bod odlomení na kmeni dle `frac` | | |
 | `lifeLean` | naklonění celku dle Life Rune | | |
 | `intZone` / `areaSide` | posun `frac`/strany dle čtení | crownT | |
@@ -84,8 +87,8 @@ Laděno v branch composeru → `RUNE_TUNE`; fallback = signatura v `RUNES` (runa
 | páka | mechanika | kde | pozn. |
 |---|---|---|---|
 | `childN` | počet twigů | crownT | |
-| `twRunes` | twig = ostatní runy elementu (dnes generováno znovu, negraduje) | composer | |
-| **graduace 2./3. dominant** | chová se jako prvních 9, ALE **odbočí od RODIČE v 1/5–3/5 jeho délky** (NIKDY u kmene, NIKDY na špičce — jinak nepřirozené); ~~následuje rodiče do strany~~ → od 2026-09-30 strana z kostry `FR` a z vlastních čtení, smí na druhou stranu než rodič (KUKY: „i povýšené rameno může jít z leva do prava“) | crown builder | RUNAR_TREE.md §5 KROK 2 + 3b |
+| `twRunes` | twig = JEDNO ČTENÍ (tvar jeho runy) na rameni svého elementu v zóně; plné rameno → o patro níž | composer (KROK 5) | |
+| **graduace 2./3. dominant** | chová se jako prvních 9, ALE **odbočí od RODIČE v 1/5–3/5 jeho délky** (NIKDY u kmene, NIKDY na špičce — jinak nepřirozené); ~~následuje rodiče do strany~~ → od 2026-09-30 strana z kostry `FR` a z vlastních čtení, smí na druhou stranu než rodič (KUKY: „i povýšené rameno může jít z leva do prava“) | crown builder | RUNAR_TREE.md §5 KROK 2 + 3b · od 2026-10-03 v rámci ramene element × zóna, nejvýš 11 (KROK 5) |
 
 ## Vrstva I — SÍLY / PŘITAŽLIVOST (→ Cowork design)
 ⭐ **Na KAŽDÝ výskyt ve stromě musí být odpověď „proč"** (KUKY). Které runy se přitahují, proč má
