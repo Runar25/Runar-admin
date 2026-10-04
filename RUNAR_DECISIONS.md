@@ -8213,3 +8213,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   `_askBuild`: první Ask bez bloku, jen poslední výměna, jen týž jazyk, blok před novou otázkou) · golden `ask_earlier_*` (stávajících
   40 klíčů beze změny) · registr pravidel teď skládá i Ask s výměnou (dřív ji neviděl). Mutace 5/5 chyceny.
 - Affected doc(s): `RUNAR_BACKLOG.md` (Druhý Ask — krok 2 hotový).
+
+## 2026-10-04 (3) — Sol čte s přemýšlením `low` (claude-proxy; účinné po deployi ownerem)
+
+- **Rozhodl:** KUKY 2026-10-04 *„nepotřebuju bez něj, ty já znám, a vidím, že čtení potřebuju s low"* (na návrh testu none × low).
+  **Provedl:** CODE-tune. Mění 2026-10-03 (1) jen v úsilí; model zůstává `gpt-6-sol`.
+- **Co (`supabase/functions/claude-proxy/index.ts`, `callSol`):** `SOL_EFFORTS = ["low"]` (dřív `["none", "minimal"]`) ·
+  `max_completion_tokens` + `SOL_REASONING_HEADROOM` 1000, protože přemýšlení se do stropu počítá (Ask má strop 320) ·
+  `prompt_cache_options: {mode: "explicit"}` — implicitní cache zapisovala celý vstup za 1,25× a nikdy se nečetla. Cestou opraven
+  zastaralý komentář u řetězu modelů Claude (*„Primary Opus 4.8 … fall back to Opus 4.7"*, neplatí od 2026-09-24).
+- **Měřeno** (`RUNAR_EVAL_LOG.md` 2026-10-04 (3)): sol 6 `low` 58 slov, ~6 s, $0,0057 za čtení (dnes `none` ~$0,0042), useknuté 0/6.
+- **Otevřené pro ownera:** sol 6.1 má od `low` stejný ceník a v pilotu byl levnější na čtení ($0,0046 — méně přemýšlí), s méně
+  koncovkami v Asku (5/14 × 8/14, na hraně šumu), ale pomalejší (8,7 × 6,3 s). Přepnutí = jen `SOL_MODEL`.
+- **Ověřeno před deployem:** běžící proxy (`supabase functions download`) = repo před touto změnou, liší se jen nenasazeným refaktorem
+  konstant z 2026-10-02 (chování shodné) → deploy nic cizího nepřepíše.
+- ⚠️ **Účinné až po** `supabase functions deploy claude-proxy --project-ref pmitxjvkeovijreepror --no-verify-jwt` — pouští owner.
+- Affected doc(s): `RUNAR_BACKLOG.md` (cache solu, komentář proxy, koncovka Asku, Opus 5 `low`).

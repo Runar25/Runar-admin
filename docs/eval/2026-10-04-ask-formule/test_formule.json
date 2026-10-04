@@ -1,0 +1,822 @@
+[
+ {
+  "id": "adaae0c3",
+  "runa": "Hagalaz",
+  "q": "Love & Relationships — can you make this image clearer?",
+  "varianta": "A",
+  "k": 0,
+  "formule": true,
+  "kde": "does not tell",
+  "odpoved": "The loose hinge is what once held a boundary in place. With Hagalaz, that boundary may be a shared routine or an agreement that no longer holds as it did. The open field is room for something to be said without that old shape around it. It does not tell you whether you and the other person grow closer. It leaves the difference between closeness and habit visible, but not settled."
+ },
+ {
+  "id": "adaae0c3",
+  "runa": "Hagalaz",
+  "q": "Love & Relationships — can you make this image clearer?",
+  "varianta": "A",
+  "k": 1,
+  "formule": false,
+  "kde": "",
+  "odpoved": "The broken fence marks a change in what keeps two people together. With Hagalaz, that change may come through a disruption neither person chose. The open field is room for an honest exchange, not a sign that closeness returns. What remains may be care that can speak plainly, or a familiar pattern that continues after the closeness has thinned. The image leaves that distinction with you."
+ },
+ {
+  "id": "adaae0c3",
+  "runa": "Hagalaz",
+  "q": "Love & Relationships — can you make this image clearer?",
+  "varianta": "M",
+  "k": 0,
+  "formule": true,
+  "kde": "does not say",
+  "odpoved": "The broken fence is an old way of keeping things in place between you and someone else. Hagalaz suggests that a disruption may have made that way harder to maintain. The open field is the space left behind: you may find room for a more honest exchange, or you may see that familiar habits have been holding you together. The rune does not say which is true, or what follows."
+ },
+ {
+  "id": "adaae0c3",
+  "runa": "Hagalaz",
+  "q": "Love & Relationships — can you make this image clearer?",
+  "varianta": "M",
+  "k": 1,
+  "formule": false,
+  "kde": "",
+  "odpoved": "The loose hinge means the old way of relating may no longer hold as it did. Hagalaz names the disruption, not its outcome. You and the other person may now have room to say something the old pattern kept closed. The question is whether what remains between you is still a bond you both choose, or a habit that has kept you near each other."
+ },
+ {
+  "id": "adaae0c3",
+  "runa": "Hagalaz",
+  "q": "Love & Relationships — can you make this image clearer?",
+  "varianta": "P",
+  "k": 0,
+  "formule": true,
+  "kde": "does not settle",
+  "odpoved": "The loose hinge means the old way of being together no longer holds things in place. Hagalaz points to disruption, not to a promised ending or a fresh start. In the open space, you may find that you still speak to each other with care, or that habit has been doing much of the holding. The rune does not settle which it is."
+ },
+ {
+  "id": "adaae0c3",
+  "runa": "Hagalaz",
+  "q": "Love & Relationships — can you make this image clearer?",
+  "varianta": "P",
+  "k": 1,
+  "formule": false,
+  "kde": "",
+  "odpoved": "The loose hinge means the old way of holding the relationship together may no longer work. Hagalaz names that disruption, not a verdict on whether you stay close or part. The open field is the space left when a familiar pattern gives way. In that space, closeness and habit may look alike for a while. The reading leaves the difference open."
+ },
+ {
+  "id": "adaae0c3",
+  "runa": "Hagalaz",
+  "q": "Love & Relationships — can you make this image clearer?",
+  "varianta": "N",
+  "k": 0,
+  "formule": true,
+  "kde": "does not say",
+  "odpoved": "The loose hinge suggests that an old way of being together no longer holds as firmly as it did. You may notice a silence you can no longer mistake for peace, or a closeness that remains when the usual pattern falls away. Hagalaz names that disruption and the space it leaves. It does not say whether the bond ends or changes."
+ },
+ {
+  "id": "adaae0c3",
+  "runa": "Hagalaz",
+  "q": "Love & Relationships — can you make this image clearer?",
+  "varianta": "N",
+  "k": 1,
+  "formule": false,
+  "kde": "",
+  "odpoved": "The broken fence marks a change in what keeps you and another person together. You may find that an old arrangement no longer holds, leaving more room for an honest exchange. Hagalaz calls this a clearing, not a promise that closeness grows. The open field also leaves room for a harder possibility: what feels familiar between you may have less warmth than you thought."
+ },
+ {
+  "id": "adaae0c3",
+  "runa": "Hagalaz",
+  "q": "Love & Relationships — can you make this image clearer?",
+  "varianta": "C",
+  "k": 0,
+  "formule": true,
+  "kde": "cannot tell",
+  "odpoved": "The loose hinge matters because the gate no longer closes as it once did. In a relationship, Hagalaz may point to a disruption that leaves familiar ways of relating exposed. You may find room to speak more plainly, but the opening alone cannot tell you whether the bond holds through closeness or habit."
+ },
+ {
+  "id": "adaae0c3",
+  "runa": "Hagalaz",
+  "q": "Love & Relationships — can you make this image clearer?",
+  "varianta": "C",
+  "k": 1,
+  "formule": true,
+  "kde": "does not tell",
+  "odpoved": "The broken fence is a boundary or pattern that no longer holds as it did. In a relationship, Hagalaz can point to a disruption that leaves more room for honesty, but the opening does not tell you whether closeness remains. You may find that you can speak more freely together, or that an old routine has been holding you together. The image leaves that distinction open."
+ },
+ {
+  "id": "adaae0c3",
+  "runa": "Hagalaz",
+  "q": "Love & Relationships — can you make this image clearer?",
+  "varianta": "R",
+  "k": 0,
+  "formule": true,
+  "kde": "does not say",
+  "odpoved": "The broken fence marks a boundary that no longer holds as it did. In a relationship, that could mean a familiar way of keeping distance has been disturbed, or that an old agreement no longer fits. Hagalaz names the disruption and the space it leaves. You may find room to speak more plainly there, but the rune does not say how either person will respond."
+ },
+ {
+  "id": "adaae0c3",
+  "runa": "Hagalaz",
+  "q": "Love & Relationships — can you make this image clearer?",
+  "varianta": "R",
+  "k": 1,
+  "formule": false,
+  "kde": "",
+  "odpoved": "In this image, you can see that the fence no longer marks a firm boundary. The loose hinge suggests something between you and another person may no longer hold as it did. Hagalaz calls this a clearing, not a promise of closeness. You may have more room to speak plainly, but the image leaves the other person’s response open."
+ },
+ {
+  "id": "dfc1cc84",
+  "runa": "Gebo",
+  "q": "Explain Gebo without the image.",
+  "varianta": "A",
+  "k": 0,
+  "formule": false,
+  "kde": "",
+  "odpoved": "Gebo holds giving and receiving without requiring an immediate return. You may offer something freely, or accept a gift without owing its equal at once. Balance here does not mean keeping score. It means each person has room to give and to receive, though neither choice comes with an assurance of what follows."
+ },
+ {
+  "id": "dfc1cc84",
+  "runa": "Gebo",
+  "q": "Explain Gebo without the image.",
+  "varianta": "A",
+  "k": 1,
+  "formule": false,
+  "kde": "",
+  "odpoved": "Gebo speaks of giving and receiving without keeping an exact account. You may offer something without knowing what comes back, or accept something without owing an immediate return. Its balance is not a settled debt. It is the room a gift or a companionship can have when neither side demands an equal exchange at once."
+ },
+ {
+  "id": "dfc1cc84",
+  "runa": "Gebo",
+  "q": "Explain Gebo without the image.",
+  "varianta": "M",
+  "k": 0,
+  "formule": false,
+  "kde": "",
+  "odpoved": "Gebo speaks of giving and receiving without keeping a strict account. A gift does not have to be repaid at once, and receiving does not make you indebted. In this reading, one choice may involve offering something without knowing what comes back. The other may involve accepting what is offered without rushing to make things even. Gebo holds both possibilities open; it does not name the right choice for you."
+ },
+ {
+  "id": "dfc1cc84",
+  "runa": "Gebo",
+  "q": "Explain Gebo without the image.",
+  "varianta": "M",
+  "k": 1,
+  "formule": false,
+  "kde": "",
+  "odpoved": "Gebo is the rune of giving and receiving. In this reading, it holds a choice that may involve offering something without knowing what comes back, or accepting something without needing to repay it at once. The balance it names is not a strict account of what each person owes. It leaves room for a gift to remain a gift."
+ },
+ {
+  "id": "dfc1cc84",
+  "runa": "Gebo",
+  "q": "Explain Gebo without the image.",
+  "varianta": "P",
+  "k": 0,
+  "formule": true,
+  "kde": "leaves room for both",
+  "odpoved": "Gebo is the rune of giving and receiving. In this reading, a gift does not create an immediate debt, and receiving does not require you to repay it at once. Its sense of balance leaves room for both sides to give freely, without keeping strict account. It does not tell you which choice is right."
+ },
+ {
+  "id": "dfc1cc84",
+  "runa": "Gebo",
+  "q": "Explain Gebo without the image.",
+  "varianta": "P",
+  "k": 1,
+  "formule": false,
+  "kde": "",
+  "odpoved": "Gebo holds giving and receiving without making either one a debt. A gift can be offered without assurance of return, and you can receive without owing an immediate answer. It also speaks to companionship and balance, though balance need not mean that both sides give the same thing at the same time. Neither choice is marked as the right one."
+ },
+ {
+  "id": "dfc1cc84",
+  "runa": "Gebo",
+  "q": "Explain Gebo without the image.",
+  "varianta": "N",
+  "k": 0,
+  "formule": false,
+  "kde": "",
+  "odpoved": "Gebo is the rune of gifts and exchange. You may give something without knowing what comes back, or receive something without owing an immediate return. It also speaks to companionship and balance: each person has room to offer what they can, without keeping an exact count."
+ },
+ {
+  "id": "dfc1cc84",
+  "runa": "Gebo",
+  "q": "Explain Gebo without the image.",
+  "varianta": "N",
+  "k": 1,
+  "formule": true,
+  "kde": "does not promise",
+  "odpoved": "Gebo concerns what you give and what you receive. You may offer something without knowing whether it will be returned. You may also receive without owing an immediate reply. The rune leaves room for generosity and companionship, but it does not promise an equal exchange or tell you which choice is right."
+ },
+ {
+  "id": "dfc1cc84",
+  "runa": "Gebo",
+  "q": "Explain Gebo without the image.",
+  "varianta": "C",
+  "k": 0,
+  "formule": false,
+  "kde": "",
+  "odpoved": "Gebo holds giving and receiving without making them a trade. You may give something without knowing what comes back, or receive something without owing an immediate return. Its balance is not a settled account. It leaves room for a gift to remain a gift, even between companions."
+ },
+ {
+  "id": "dfc1cc84",
+  "runa": "Gebo",
+  "q": "Explain Gebo without the image.",
+  "varianta": "C",
+  "k": 1,
+  "formule": false,
+  "kde": "",
+  "odpoved": "Gebo is the rune of giving and receiving. You may offer something without knowing what comes back, or accept something without owing an immediate return. Its balance is not a strict account of equal exchanges. It leaves room for a gift to be freely given and for companionship to grow without keeping score."
+ },
+ {
+  "id": "dfc1cc84",
+  "runa": "Gebo",
+  "q": "Explain Gebo without the image.",
+  "varianta": "R",
+  "k": 0,
+  "formule": false,
+  "kde": "",
+  "odpoved": "Gebo speaks of giving and receiving without keeping a strict account. A gift may be freely given, and you may receive it without owing an immediate return. In companionship, balance need not mean that each person gives the same thing at the same time."
+ },
+ {
+  "id": "dfc1cc84",
+  "runa": "Gebo",
+  "q": "Explain Gebo without the image.",
+  "varianta": "R",
+  "k": 1,
+  "formule": false,
+  "kde": "",
+  "odpoved": "Gebo speaks of giving and receiving without keeping a strict account. A gift may be freely given, and you need not repay it at once. In companionship, balance does not mean each person gives the same thing at the same time. It means there is room for both to give and receive."
+ },
+ {
+  "id": "97e1af3e",
+  "runa": "Hagalaz",
+  "q": "Purpose & Path — can you make this image clearer?",
+  "varianta": "A",
+  "k": 0,
+  "formule": true,
+  "kde": "does not say",
+  "odpoved": "Hagalaz makes the image less about finding a new purpose and more about seeing what happens when a familiar source of direction stops working. That might be a role you rely on, or a routine that gives your days their shape. The rune does not say that either one must end. It holds the uncertainty of disruption: you may see what still matters to you when the usual structure is quiet."
+ },
+ {
+  "id": "97e1af3e",
+  "runa": "Hagalaz",
+  "q": "Purpose & Path — can you make this image clearer?",
+  "varianta": "A",
+  "k": 1,
+  "formule": false,
+  "kde": "",
+  "odpoved": "Hagalaz does not point to a new purpose. It shows a disruption that makes an old source of direction less reliable. That could be work that once gave your days structure, or a plan that depended on things staying as they were. The question in the image is what still matters to you when that structure falls quiet. The rune leaves that answer with you."
+ },
+ {
+  "id": "97e1af3e",
+  "runa": "Hagalaz",
+  "q": "Purpose & Path — can you make this image clearer?",
+  "varianta": "M",
+  "k": 0,
+  "formule": true,
+  "kde": "does not say",
+  "odpoved": "The image holds a pause in what usually keeps your days moving. For your purpose and path, Hagalaz points to a disruption that may show you which parts of your work depend on a familiar routine, and which still matter when that routine stops. It does not say the interruption gives you a new purpose. It leaves room for you to notice what remains worth your time."
+ },
+ {
+  "id": "97e1af3e",
+  "runa": "Hagalaz",
+  "q": "Purpose & Path — can you make this image clearer?",
+  "varianta": "M",
+  "k": 1,
+  "formule": false,
+  "kde": "",
+  "odpoved": "For your purpose and path, Hagalaz points to a disruption that may reveal how much you rely on a familiar role or routine to give your days direction. The quiet fridge is something practical no longer working as expected. The stopped clock is the loss of an old measure for your time. The question is not which path is meant for you, but what still matters to you when those measures fall away."
+ },
+ {
+  "id": "97e1af3e",
+  "runa": "Hagalaz",
+  "q": "Purpose & Path — can you make this image clearer?",
+  "varianta": "P",
+  "k": 0,
+  "formule": true,
+  "kde": "does not show",
+  "odpoved": "Hagalaz does not show you a fixed purpose or a path laid out ahead. It shows a disruption that makes familiar routines less reliable. In that pause, the difference between what keeps running out of habit and what still matters to you may become easier to see. The rune does not settle which is which for you."
+ },
+ {
+  "id": "97e1af3e",
+  "runa": "Hagalaz",
+  "q": "Purpose & Path — can you make this image clearer?",
+  "varianta": "P",
+  "k": 1,
+  "formule": true,
+  "kde": "does not show",
+  "odpoved": "Hagalaz does not show you a fixed purpose or a path already laid out. It shows a break in what usually carries your days. In that break, the question is whether your sense of purpose rests on a routine that has stopped, or on something that still matters when the routine is gone. The rune leaves that distinction with you."
+ },
+ {
+  "id": "97e1af3e",
+  "runa": "Hagalaz",
+  "q": "Purpose & Path — can you make this image clearer?",
+  "varianta": "N",
+  "k": 0,
+  "formule": true,
+  "kde": "does not show",
+  "odpoved": "Hagalaz does not show you a fixed purpose or a clear route. It shows a disruption that makes your usual sense of direction harder to rely on. The stopped fridge and clock point to ordinary structures you may have counted on. You may find that work no longer gives your days the shape it once did, or that an old reason for continuing no longer feels enough. The rune leaves open what still matters to you when those structures fall quiet."
+ },
+ {
+  "id": "97e1af3e",
+  "runa": "Hagalaz",
+  "q": "Purpose & Path — can you make this image clearer?",
+  "varianta": "N",
+  "k": 1,
+  "formule": true,
+  "kde": "does not show",
+  "odpoved": "Hagalaz does not show you a fixed purpose or a path laid out ahead. It shows a disruption that makes an old source of momentum less reliable. You may find that a role no longer gives you the same reason to get up each day, or that a routine has been carrying more of your direction than you knew. The question it leaves with you is what still matters when that support falls quiet."
+ },
+ {
+  "id": "97e1af3e",
+  "runa": "Hagalaz",
+  "q": "Purpose & Path — can you make this image clearer?",
+  "varianta": "C",
+  "k": 0,
+  "formule": true,
+  "kde": "leaves open",
+  "odpoved": "Hagalaz does not name a purpose for you. It shows how a disruption can make an old way of carrying on impossible. In the image, the clock stops with the power; the hours remain, but nothing marks them for you. Your path may look different when work, habit, or another steady structure no longer sets its pace. The reading leaves open what still matters to you when that structure falls quiet."
+ },
+ {
+  "id": "97e1af3e",
+  "runa": "Hagalaz",
+  "q": "Purpose & Path — can you make this image clearer?",
+  "varianta": "C",
+  "k": 1,
+  "formule": true,
+  "kde": "does not show",
+  "odpoved": "Hagalaz does not show you a destination. It shows you a break in what has kept your days moving. In terms of purpose, that could be work that once gave you a reason to get up, or a role that no longer asks the same things of you. The reading leaves open whether that work or role has ended, or whether its hold on you has changed."
+ },
+ {
+  "id": "97e1af3e",
+  "runa": "Hagalaz",
+  "q": "Purpose & Path — can you make this image clearer?",
+  "varianta": "R",
+  "k": 0,
+  "formule": true,
+  "kde": "does not show",
+  "odpoved": "Kuky, Hagalaz does not show a fixed purpose or a path laid out ahead of you. It shows an interruption to the routines that usually give your days their shape. In practical terms, that may mean a role you rely on changes, or a plan stops working as expected. The quiet after that disruption leaves room to see what still matters when those routines no longer carry you."
+ },
+ {
+  "id": "97e1af3e",
+  "runa": "Hagalaz",
+  "q": "Purpose & Path — can you make this image clearer?",
+  "varianta": "R",
+  "k": 1,
+  "formule": false,
+  "kde": "",
+  "odpoved": "Hagalaz does not name a purpose for you. It shows what disruption can make visible: a part of your daily life that depends on a routine you no longer want to rely on, or a plan that cannot hold under changed conditions. The quiet fridge and stopped clock make that dependence concrete. You may find that something still matters to you without the structure that used to carry it. The rune leaves that distinction open for you to recognize."
+ },
+ {
+  "id": "d1afc721",
+  "runa": "Hagalaz",
+  "q": "Career & Creativity — can you make this image clearer?",
+  "varianta": "A",
+  "k": 0,
+  "formule": true,
+  "kde": "cannot tell",
+  "odpoved": "Hagalaz points to disruption, not a verdict on your work. In career terms, it could be a project changing suddenly or a role losing the shape you expected. In creative terms, a piece made for others may no longer work as planned, while one part of it still proves useful. The fence post marks that distinction: you cannot tell at once what has held, but the break makes it easier to see."
+ },
+ {
+  "id": "d1afc721",
+  "runa": "Hagalaz",
+  "q": "Career & Creativity — can you make this image clearer?",
+  "varianta": "A",
+  "k": 1,
+  "formule": true,
+  "kde": "does not say",
+  "odpoved": "Hagalaz makes the break sudden, not necessarily final. In your work, a project might change sharply under criticism, or a piece made for others might lose the form you expected. The fence post is what remains useful after that change: a sound idea, a clear purpose, or something another person can rely on. The rune does not say which part holds."
+ },
+ {
+  "id": "d1afc721",
+  "runa": "Hagalaz",
+  "q": "Career & Creativity — can you make this image clearer?",
+  "varianta": "M",
+  "k": 0,
+  "formule": true,
+  "kde": "does not say",
+  "odpoved": "In your work, Hagalaz points to a disruption that changes a project before you can see what remains. A piece you make for others may need a different form, or a role you rely on may shift. The fence post is what still holds: a useful part of the work, even if the original plan no longer stands. The rune does not say which part survives."
+ },
+ {
+  "id": "d1afc721",
+  "runa": "Hagalaz",
+  "q": "Career & Creativity — can you make this image clearer?",
+  "varianta": "M",
+  "k": 1,
+  "formule": true,
+  "kde": "does not say",
+  "odpoved": "In your work, the squall could be a project changing suddenly or a familiar way of making things no longer holding up. Hagalaz does not say that the disruption is good or that it leaves everything intact. The fence post points to what may remain useful through it: a skill, a clear purpose, or a piece of work that gives someone else something steady to use. You may not see which part holds until the noise settles."
+ },
+ {
+  "id": "d1afc721",
+  "runa": "Hagalaz",
+  "q": "Career & Creativity — can you make this image clearer?",
+  "varianta": "P",
+  "k": 0,
+  "formule": true,
+  "kde": "does not say",
+  "odpoved": "In your work, Hagalaz points to disruption rather than failure. A plan or a piece you have made may change shape under pressure, and its value may not be clear at once. The fence post is what remains useful when the familiar shape is gone. The reading does not say what will survive; it leaves that question open."
+ },
+ {
+  "id": "d1afc721",
+  "runa": "Hagalaz",
+  "q": "Career & Creativity — can you make this image clearer?",
+  "varianta": "P",
+  "k": 1,
+  "formule": true,
+  "kde": "leaves open",
+  "odpoved": "In your work, Hagalaz points to disruption rather than a verdict on what you make. A project may change shape suddenly, or something you made for others may meet a response you did not expect. The fence post is what remains useful after the break. The reading leaves open what that might be, and what may no longer hold."
+ },
+ {
+  "id": "d1afc721",
+  "runa": "Hagalaz",
+  "q": "Career & Creativity — can you make this image clearer?",
+  "varianta": "N",
+  "k": 0,
+  "formule": true,
+  "kde": "does not say",
+  "odpoved": "In your work, Hagalaz points to a disruption that changes the shape of something you make. A project may lose its familiar form, or an unexpected response may show which part still serves people. The fence post is that useful part: it holds even when the rest changes. The rune does not say what will survive, only that the break may make its strength easier to see."
+ },
+ {
+  "id": "d1afc721",
+  "runa": "Hagalaz",
+  "q": "Career & Creativity — can you make this image clearer?",
+  "varianta": "N",
+  "k": 1,
+  "formule": true,
+  "kde": "does not say",
+  "odpoved": "In your work, Hagalaz points to a disruption that interrupts a familiar way of making things. A project may change shape under pressure, or a piece you make for others may meet an unexpected response. The reading does not say that the work is lost or that it succeeds. It leaves open what holds once the disturbance passes."
+ },
+ {
+  "id": "d1afc721",
+  "runa": "Hagalaz",
+  "q": "Career & Creativity — can you make this image clearer?",
+  "varianta": "C",
+  "k": 0,
+  "formule": true,
+  "kde": "leaves open",
+  "odpoved": "Hagalaz points to a disruption in your work, not to a verdict on its worth. A project made for others may change shape when plans break or a response comes that you did not expect. The fence post is what remains useful: perhaps a part of the work that still serves someone, even when the original design no longer holds. The reading leaves open what survives and what needs making again."
+ },
+ {
+  "id": "d1afc721",
+  "runa": "Hagalaz",
+  "q": "Career & Creativity — can you make this image clearer?",
+  "varianta": "C",
+  "k": 1,
+  "formule": true,
+  "kde": "leaves open",
+  "odpoved": "Hagalaz points to a disruption in your work, not to a verdict on its worth. A project may change suddenly, or something you make for others may meet a response you did not expect. The fence post is what remains useful when the familiar shape no longer holds. The reading leaves open which part of your work that might be."
+ },
+ {
+  "id": "d1afc721",
+  "runa": "Hagalaz",
+  "q": "Career & Creativity — can you make this image clearer?",
+  "varianta": "R",
+  "k": 0,
+  "formule": true,
+  "kde": "does not say",
+  "odpoved": "In your work, Hagalaz points to a disruption that makes the structure easier to see. A project made for others may face a changed brief, a sharp response, or an interruption you cannot plan around. The fence post is what remains steady, but the image does not say which part of the work that is. It leaves room for you to notice what holds once the immediate disturbance passes."
+ },
+ {
+  "id": "d1afc721",
+  "runa": "Hagalaz",
+  "q": "Career & Creativity — can you make this image clearer?",
+  "varianta": "R",
+  "k": 1,
+  "formule": true,
+  "kde": "does not say",
+  "odpoved": "In your work, Hagalaz may look like a sudden change to a project or a response you did not expect. It does not say the piece fails. The fence post stands, but the picture leaves open what holds steady: the work itself, your way of making it, or something else."
+ },
+ {
+  "id": "c87c173a",
+  "runa": "Ehwaz",
+  "q": "Healing & Wellbeing — can you make this image clearer?",
+  "varianta": "A",
+  "k": 0,
+  "formule": false,
+  "kde": "",
+  "odpoved": "The slack rope matters because you can move without being pulled. In healing, Ehwaz holds the possibility that support helps when you have room to set your own pace. The strain in the picture is not the horse or the movement itself. It is the effort of keeping pace when you need something slower."
+ },
+ {
+  "id": "c87c173a",
+  "runa": "Ehwaz",
+  "q": "Healing & Wellbeing — can you make this image clearer?",
+  "varianta": "A",
+  "k": 1,
+  "formule": false,
+  "kde": "",
+  "odpoved": "The slack rope matters: you are moving, but you are not being dragged. Ehwaz holds trust between two who can move together without forcing the same pace. In healing and wellbeing, that may look like support that gives you room to rest, or a shared routine that helps until keeping up begins to cost you. The image leaves that difference open."
+ },
+ {
+  "id": "c87c173a",
+  "runa": "Ehwaz",
+  "q": "Healing & Wellbeing — can you make this image clearer?",
+  "varianta": "M",
+  "k": 0,
+  "formule": false,
+  "kde": "",
+  "odpoved": "The slack rope matters. You can move without being pulled, and the horse can stay beside you without being forced. For healing, Ehwaz points to the kind of support that leaves you room to set your pace. That may be another person’s company, or a way of caring for your body that does not demand more than you can give. The question is where you feel met, and where keeping pace becomes a strain."
+ },
+ {
+  "id": "c87c173a",
+  "runa": "Ehwaz",
+  "q": "Healing & Wellbeing — can you make this image clearer?",
+  "varianta": "M",
+  "k": 1,
+  "formule": false,
+  "kde": "",
+  "odpoved": "The slack rope matters. You can move beside someone without either of you having to pull. For your wellbeing, Ehwaz may point to the ease of being supported at a pace you can bear. It also leaves room for a harder question: whether keeping pace with someone else costs you more than the company gives back."
+ },
+ {
+  "id": "c87c173a",
+  "runa": "Ehwaz",
+  "q": "Healing & Wellbeing — can you make this image clearer?",
+  "varianta": "P",
+  "k": 0,
+  "formule": false,
+  "kde": "",
+  "odpoved": "The slack rope matters. You can move alongside someone without being pulled or having to pull them. In healing and wellbeing, Ehwaz holds trust as a shared pace, not a demand to keep up. You may find strength in being met where you are, while also noticing when keeping pace costs you more than it gives."
+ },
+ {
+  "id": "c87c173a",
+  "runa": "Ehwaz",
+  "q": "Healing & Wellbeing — can you make this image clearer?",
+  "varianta": "P",
+  "k": 1,
+  "formule": true,
+  "kde": "does not say",
+  "odpoved": "The slack rope means you do not have to pull hard for movement to happen. Ehwaz holds trust between you and what supports you, whether that is another person or a steady way of caring for yourself. For your wellbeing, the difference is between a pace that leaves room for you and one you must strain to keep. The rune does not say which pace you have now."
+ },
+ {
+  "id": "c87c173a",
+  "runa": "Ehwaz",
+  "q": "Healing & Wellbeing — can you make this image clearer?",
+  "varianta": "N",
+  "k": 0,
+  "formule": false,
+  "kde": "",
+  "odpoved": "The slack rope matters because you can move without being pulled. In healing, Ehwaz points to trust that leaves room for your pace, whether that comes from another person or from the way you treat your own limits. Being met may ease the strain. Trying to keep pace when you have little strength may add to it."
+ },
+ {
+  "id": "c87c173a",
+  "runa": "Ehwaz",
+  "q": "Healing & Wellbeing — can you make this image clearer?",
+  "varianta": "N",
+  "k": 1,
+  "formule": false,
+  "kde": "",
+  "odpoved": "The slack rope is the heart of the image. You can move beside someone without being pulled, and you can slow without losing their company. In healing, Ehwaz holds that kind of trust. Support may give you strength back when your pace is met. Keeping up with someone else may cost you strength instead."
+ },
+ {
+  "id": "c87c173a",
+  "runa": "Ehwaz",
+  "q": "Healing & Wellbeing — can you make this image clearer?",
+  "varianta": "R",
+  "k": 0,
+  "formule": true,
+  "kde": "does not promise",
+  "odpoved": "For your healing and wellbeing, Ehwaz shows trust without strain. The slack rope matters: you and the horse move together, but neither has to force the other’s pace. This may speak to support that leaves you room to rest, or to progress that does not require you to push through every difficult day. The rune does not promise recovery. It gives you a way to look at the pace and company of it."
+ },
+ {
+  "id": "c87c173a",
+  "runa": "Ehwaz",
+  "q": "Healing & Wellbeing — can you make this image clearer?",
+  "varianta": "R",
+  "k": 1,
+  "formule": false,
+  "kde": "",
+  "odpoved": "For healing and wellbeing, Ehwaz holds the possibility of progress without strain. The slack rope means you are not dragging the horse, and it is not dragging you. Trust here is a shared pace, not a demand to move faster. That could mean support from another person, or a gentler way of living with what your body can manage today."
+ },
+ {
+  "id": "6b486609",
+  "runa": "Hagalaz",
+  "q": "What is this reading telling me?",
+  "varianta": "A",
+  "k": 0,
+  "formule": true,
+  "kde": "does not settle",
+  "odpoved": "Hagalaz points to a disruption that may pass quickly, while its effect on a relationship takes longer to become clear. You may find that something has changed, or that the bond holds despite the strain. The reading does not settle which."
+ },
+ {
+  "id": "6b486609",
+  "runa": "Hagalaz",
+  "q": "What is this reading telling me?",
+  "varianta": "A",
+  "k": 1,
+  "formule": true,
+  "kde": "leaves that open",
+  "odpoved": "Hagalaz points to a disruption that may pass quickly, while its effects take longer to see. A sharp exchange does not, by itself, tell you whether a bond is broken or still holds. The reading leaves that open."
+ },
+ {
+  "id": "6b486609",
+  "runa": "Hagalaz",
+  "q": "What is this reading telling me?",
+  "varianta": "M",
+  "k": 0,
+  "formule": true,
+  "kde": "leaves open",
+  "odpoved": "Hagalaz points to a sudden disruption, not a fixed outcome. A sharp exchange may pass quickly, while the quiet afterward takes longer to understand. The reading leaves open whether the tie between you has changed or still holds."
+ },
+ {
+  "id": "6b486609",
+  "runa": "Hagalaz",
+  "q": "What is this reading telling me?",
+  "varianta": "M",
+  "k": 1,
+  "formule": true,
+  "kde": "leaves open",
+  "odpoved": "Hagalaz points to a disruption, not a settled outcome. A sharp exchange may pass quickly, while the silence after it lasts longer. The reading leaves open whether a family tie has changed or still holds. It does not confirm either one."
+ },
+ {
+  "id": "6b486609",
+  "runa": "Hagalaz",
+  "q": "What is this reading telling me?",
+  "varianta": "P",
+  "k": 0,
+  "formule": true,
+  "kde": "does not say",
+  "odpoved": "Hagalaz holds a disruption that may pass quickly without leaving things quite as they were. A sharp exchange can end, while the silence around it remains. The reading does not say whether a bond breaks or holds. It leaves that question open."
+ },
+ {
+  "id": "6b486609",
+  "runa": "Hagalaz",
+  "q": "What is this reading telling me?",
+  "varianta": "P",
+  "k": 1,
+  "formule": true,
+  "kde": "leaves open",
+  "odpoved": "Hagalaz speaks of a sudden disruption, not a lasting verdict. A sharp exchange may pass quickly, while the silence afterward takes longer to settle. The reading leaves open whether a bond changes or holds. It does not confirm either outcome."
+ },
+ {
+  "id": "6b486609",
+  "runa": "Hagalaz",
+  "q": "What is this reading telling me?",
+  "varianta": "N",
+  "k": 0,
+  "formule": true,
+  "kde": "does not confirm",
+  "odpoved": "Hagalaz holds the possibility of a sudden disruption. You may be looking at a sharp exchange that passes quickly, while the silence afterward takes longer to settle. The reading does not confirm whether a bond is broken or secure. It leaves room for either, because the change may lie in how you relate after the disturbance."
+ },
+ {
+  "id": "6b486609",
+  "runa": "Hagalaz",
+  "q": "What is this reading telling me?",
+  "varianta": "N",
+  "k": 1,
+  "formule": true,
+  "kde": "does not confirm",
+  "odpoved": "Hagalaz points to a disruption you cannot control, such as a sharp exchange that ends quickly but leaves a silence behind. The reading does not confirm that a bond is broken or that it is unchanged. It holds both possibilities open."
+ },
+ {
+  "id": "6b486609",
+  "runa": "Hagalaz",
+  "q": "What is this reading telling me?",
+  "varianta": "C",
+  "k": 0,
+  "formule": true,
+  "kde": "does not say",
+  "odpoved": "Hagalaz points to a sudden disruption, not a lasting state. A sharp exchange may pass quickly, while the silence after it stays. The reading does not say whether a bond breaks or holds. It leaves that uncertain."
+ },
+ {
+  "id": "6b486609",
+  "runa": "Hagalaz",
+  "q": "What is this reading telling me?",
+  "varianta": "C",
+  "k": 1,
+  "formule": true,
+  "kde": "leaves open",
+  "odpoved": "Hagalaz speaks of a sudden disruption, not a lasting verdict. A sharp exchange may pass quickly, while the quiet afterward takes longer to settle. The reading leaves open whether a family tie changes or holds. It does not say which."
+ },
+ {
+  "id": "6b486609",
+  "runa": "Hagalaz",
+  "q": "What is this reading telling me?",
+  "varianta": "R",
+  "k": 0,
+  "formule": true,
+  "kde": "does not say",
+  "odpoved": "Hagalaz speaks of a sudden disruption, not a lasting state. A sharp exchange may be brief, while the quiet afterward takes longer to settle. The reading does not say what happens next. It holds the difference between the moment of impact and what remains after it."
+ },
+ {
+  "id": "6b486609",
+  "runa": "Hagalaz",
+  "q": "What is this reading telling me?",
+  "varianta": "R",
+  "k": 1,
+  "formule": true,
+  "kde": "does not say",
+  "odpoved": "Hagalaz points to a sudden disruption, not a lasting state. In the reading, a sharp exchange may pass quickly, while the silence afterward takes longer to settle. It does not say what caused the exchange or how it ends. It leaves room to notice the difference between the moment itself and what remains after it."
+ },
+ {
+  "id": "348600f2",
+  "runa": "Hagalaz",
+  "q": "Explain Hagalaz without the image.",
+  "varianta": "A",
+  "k": 0,
+  "formule": true,
+  "kde": "does not say",
+  "odpoved": "Hagalaz names disruption. In this reading, something that seemed settled may no longer hold in the same way. You may hear different accounts of what has changed. The rune does not say which account is right, or whether a bond breaks or remains."
+ },
+ {
+  "id": "348600f2",
+  "runa": "Hagalaz",
+  "q": "Explain Hagalaz without the image.",
+  "varianta": "A",
+  "k": 1,
+  "formule": true,
+  "kde": "does not say",
+  "odpoved": "Hagalaz names disruption. Something that seemed settled may no longer hold in the same way. In this reading, that change may affect a family bond, but the rune does not say whether the bond breaks or remains. It leaves room for both."
+ },
+ {
+  "id": "348600f2",
+  "runa": "Hagalaz",
+  "q": "Explain Hagalaz without the image.",
+  "varianta": "M",
+  "k": 0,
+  "formule": true,
+  "kde": "does not say",
+  "odpoved": "Hagalaz names a disruption you cannot simply set aside. It does not say which bond is changed, or whether a bond remains steady through it. In this reading, you have room for both possibilities."
+ },
+ {
+  "id": "348600f2",
+  "runa": "Hagalaz",
+  "q": "Explain Hagalaz without the image.",
+  "varianta": "M",
+  "k": 1,
+  "formule": true,
+  "kde": "leaves room for both",
+  "odpoved": "Hagalaz names disruption, not a verdict. In this reading, a change may unsettle a family bond without telling you whether that bond breaks or holds. You may hear different accounts of what changed. The rune leaves room for both uncertainty and connection."
+ },
+ {
+  "id": "348600f2",
+  "runa": "Hagalaz",
+  "q": "Explain Hagalaz without the image.",
+  "varianta": "P",
+  "k": 0,
+  "formule": true,
+  "kde": "leaves open",
+  "odpoved": "Hagalaz names disruption. In this reading, it leaves open whether a family bond is unsettled or still holds despite the change. It does not confirm which account is right, and it does not say what happens next."
+ },
+ {
+  "id": "348600f2",
+  "runa": "Hagalaz",
+  "q": "Explain Hagalaz without the image.",
+  "varianta": "P",
+  "k": 1,
+  "formule": true,
+  "kde": "leaves open",
+  "odpoved": "Hagalaz names a disruption that changes what people can rely on. In this reading, it leaves open more than one account of what has changed between family members. It does not say whether a bond breaks or holds."
+ },
+ {
+  "id": "348600f2",
+  "runa": "Hagalaz",
+  "q": "Explain Hagalaz without the image.",
+  "varianta": "N",
+  "k": 0,
+  "formule": true,
+  "kde": "does not confirm",
+  "odpoved": "Hagalaz names a disruption you cannot simply ignore. Something you counted on may have changed, and you may not yet know what that change means for a bond. The rune does not confirm that the bond is broken. It leaves room for it to be unsettled and still holding."
+ },
+ {
+  "id": "348600f2",
+  "runa": "Hagalaz",
+  "q": "Explain Hagalaz without the image.",
+  "varianta": "N",
+  "k": 1,
+  "formule": true,
+  "kde": "does not settle",
+  "odpoved": "Hagalaz names a disruption you cannot simply set aside. In this reading, it leaves your family ties open to more than one reading. You may feel a bond has changed, or you may find it still holds despite the change. The rune does not settle which is so."
+ },
+ {
+  "id": "348600f2",
+  "runa": "Hagalaz",
+  "q": "Explain Hagalaz without the image.",
+  "varianta": "C",
+  "k": 0,
+  "formule": true,
+  "kde": "does not settle",
+  "odpoved": "Hagalaz names a disruption that changes something you have counted on. In this reading, that may mean a family bond feels less settled, though it does not mean the bond is broken. The rune leaves room for more than one account of what has changed, and it does not settle which account is yours."
+ },
+ {
+  "id": "348600f2",
+  "runa": "Hagalaz",
+  "q": "Explain Hagalaz without the image.",
+  "varianta": "C",
+  "k": 1,
+  "formule": true,
+  "kde": "does not say",
+  "odpoved": "Hagalaz names a disruption that changes what seemed settled. It does not say whether a family bond is broken or still holding. In this reading, you have room to notice both possibilities without treating either as certain."
+ },
+ {
+  "id": "348600f2",
+  "runa": "Hagalaz",
+  "q": "Explain Hagalaz without the image.",
+  "varianta": "R",
+  "k": 0,
+  "formule": true,
+  "kde": "does not say",
+  "odpoved": "Hagalaz names a disruption you cannot simply ignore. It does not say who caused it or settle which account is right. In this reading, something that seemed fixed may no longer hold as it did, and people may understand that change differently. The rune leaves that difference open."
+ },
+ {
+  "id": "348600f2",
+  "runa": "Hagalaz",
+  "q": "Explain Hagalaz without the image.",
+  "varianta": "R",
+  "k": 1,
+  "formule": true,
+  "kde": "does not confirm",
+  "odpoved": "Hagalaz names a disruption that changes what seemed settled. In this reading, you may find that an old understanding of a family matter no longer fits. More than one account may have a place, but the rune does not confirm which is right."
+ }
+]

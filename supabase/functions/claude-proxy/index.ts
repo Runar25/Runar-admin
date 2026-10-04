@@ -271,10 +271,15 @@ async function callClaudeWithRetry(
 // 2026-10-02 gpt-6.1-sol (KUKY „vyšel sol 6.1, zkusíme ho“): 'none' ani 'minimal' NEpřijme (400 unsupported_value,
 // ověřeno voláním API) → nejnižší je 'low'. Test 3 čtení: přemýšlení 190–330 tokenů, cena čtení ~0,0042 → ~0,0063 USD
 // (EVAL_LOG 2026-10-02 (1)). 2026-10-03 owner: 6.1 zatím NE (dražší, sol 6 se ještě ladí) — proxy zůstává na 6-sol.
-// Přepnutí na 6.1 = oba řádky níž: "gpt-6.1-sol" + ["low"] (jediný pokus; dva odmítnuté by jen prodloužily čekání).
+// (Do 2026-10-04: přepnutí na 6.1 = SOL_MODEL + ["low"]; od 2026-10-04 je `low` i u 6 → stačí SOL_MODEL.)
 // Časový strop 50 s: když sol selže pozdě, fallback na Claude (55 s na pokus) se musí vejít do limitu funkce.
+// 2026-10-04 (KUKY „vidím že čtení potřebuju s low“, DECISIONS 2026-10-04 (3)): sol 6 přemýšlí na `low` (dřív none/minimal).
+// Pilot EVAL_LOG 2026-10-04 (3): čtení 58 slov, přemýšlení 230–380 tok., ~6 s, $0,0057; useknuté 0/6. Přemýšlení se POČÍTÁ do
+// max_completion_tokens → SOL_REASONING_HEADROOM navíc, jinak by u Asku (strop 320) mohlo sníst odpověď. gpt-6.1-sol: stejná
+// cena, `low` je jeho nejnižší → přepnutí = jen SOL_MODEL.
 const SOL_MODEL = "gpt-6-sol";
-const SOL_EFFORTS = ["none", "minimal"];   // gpt-6.1-sol: ["low"]
+const SOL_EFFORTS = ["low"];
+const SOL_REASONING_HEADROOM = 1000;
 async function callSol(system: string, prompt: string, maxTokens: number, key: string):
   Promise<{ text: string; usage: Record<string, unknown> | null } | null> {
   const ctl = new AbortController();
@@ -285,7 +290,12 @@ async function callSol(system: string, prompt: string, maxTokens: number, key: s
         method: "POST",
         headers: { "content-type": "application/json", authorization: "Bearer " + key },
         body: JSON.stringify({
-          model: SOL_MODEL, reasoning_effort: eff, max_completion_tokens: maxTokens,
+          model: SOL_MODEL, reasoning_effort: eff,
+          max_completion_tokens: maxTokens + (eff === "none" || eff === "minimal" ? 0 : SOL_REASONING_HEADROOM),
+          // 2026-10-04: implicitní cache zapisovala skoro celý vstup (zápis = 1,25× ceny vstupu) a nikdy se z ní nečetlo —
+          // 23 čtení od 1. 10.: zápis 30 855 z 30 924 tokenů, čtení 0. Explicitní režim bez zarážek zápis vypne (ověřeno
+          // voláním API: cache_write_tokens 1220 → 0). Prompty se mezi čteními liší, takže cache nic neušetří.
+          prompt_cache_options: { mode: "explicit" },
           messages: [...(system ? [{ role: "system", content: system }] : []), { role: "user", content: prompt }],
         }),
         signal: ctl.signal,
@@ -801,10 +811,9 @@ serve(async (req: Request) => {
     const anthropicKey = Deno.env.get("ANTHROPIC_API_KEY");
     if (!anthropicKey) return json({ error: "API key not configured" }, 500);
 
-    // Primary Opus 4.8; on a sustained overload-class failure (all internal retries
-    // exhausted) fall back to Opus 4.7 — near-identical quality, separate capacity — so a
-    // peak-load overload returns a reading instead of a 503. A 4xx (genuine bad request)
-    // does NOT fall through to the next model.
+    // Na přetížení (429/5xx po vyčerpání interních pokusů) jde čtení na další model řetězu, ať místo 503 přijde čtení.
+    // 4xx (skutečně špatný požadavek) dál NEpropadá. (Do 2026-10-04 tu stálo „Primary Opus 4.8 … fall back to Opus 4.7“ —
+    // od 2026-09-24 neplatí, platný řetěz stojí o pár řádků níž.)
     // sonnet-5 dropped as last-resort 2026-08-17: unpredictable thinking-token cost,
     // owner wanted it gone not replaced (see RUNAR_PRICING.md "Volba modelu čtení").
     // 2026-09-24: primární claude-opus-5, fallback claude-opus-4-8 (owner „chci přejít na Opus 5“; slepí soudci 20 : 8,

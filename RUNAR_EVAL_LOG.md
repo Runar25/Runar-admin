@@ -5958,3 +5958,35 @@ Ownerův případ Ehwaz se při opakování bez výměny (A) tentokrát nezopako
 
 **Hranice:** n = 2 na variantu a dvojici; jen EN; IS blok ověřen gramatikou a korpusem, modelem neběžel; netestována otázka přímo
 na slovo z první odpovědi (*„what did you mean by…"*) — to je hlavní nová schopnost, bez výměny ji model neumí z principu.
+
+## 2026-10-04 (3) — Přemýšlení `low`: sol 6 × sol 6.1 × Opus 5 · koncovka Asku není z pravidel promptu · cache solu
+
+Owner: *„určitě bych zkusil opus 5 low"* · *„vidím že čtení potřebuju s low"* (sol) · *„4. podívej se na to"* (koncovka Asku).
+Harnessy a výstupy `docs/eval/2026-10-04-low-effort/` a `docs/eval/2026-10-04-ask-formule/`.
+
+**Čtení** (3 single — Hagalaz × Family · Fehu × Love · Wunjo × Inner Growth — produkční prompt + ✦, 2× každé, strop 700):
+
+| | slov | ✦ slov | čas | $/čtení | přemýšlení | useknuté |
+|---|---|---|---|---|---|---|
+| sol 6 `low` | 58 | 13 | 6,3 s | 0,0057 | 230–380 tok. | 0/6 |
+| sol 6.1 `low` | 57 | 10 | 8,7 s | 0,0046 | 165–275 tok. | 0/6 |
+| Opus 5 dnes (vypnuté) | 71 | 17 | 4,0 s | 0,0105 | — | 0/6 |
+| Opus 5 `low` (adaptive) | 63 | 15 | 6,0 s | 0,0148 | výstup 171–700 tok. | **1/6** |
+
+⚠️ **Opus 5 `low` na produkčním stropu 700 jednou useknul čtení uprostřed věty** (Wunjo: *„…ready to explain. It"*, bez ✦,
+`stop_reason: max_tokens`) a dvakrát se ke stropu blížil (424, 332). Přemýšlení je u něj nestálé — produkce by potřebovala rezervu.
+Kratší než dnes (63 × 71 slov) — Anthropic píše, že effort délku nespolehlivě řídí; tady to šlo opačně než „vypnuto", n = 6.
+
+**Koncovka Asku** (*„the rune does not say which…"*, širší regex v harnessu; 7 ownerových prvních otázek, 2× každá):
+- **Není z pravidel promptu** (sol 6 `none`, obrácená páka §25): produkce **8/14** · bez *„Do not mirror"* 8/14 · bez *„possibilities…
+  may be so"* 11/14 · bez NO COLD READING 10/14 · bez hledání 10/12 · bez poslední věty čtení 9/14 · bez kánonové *„never predicts fate
+  or claims absolute truths"* 11/14 · **bez všeho naráz 8/14**. ⇒ Žádné pravidlo ani jejich součet ji nedělá; je to návyk modelů u výkladu
+  čtení se dvěma možnostmi (Opus ji píše taky).
+- **Podle enginu** (produkční prompt): sol 6 `low` 8/14 · sol 6.1 `low` **5/14** · Opus 5 dnes 7/14 · Opus 5 `low` **5/14**. Rozdíl
+  5 × 8 ze 14 je na hraně šumu (sd ~1,9) — sklon, ne důkaz. Useknuté ani prázdné Asky na stropu 320: 0 u všech.
+
+**Cache solu:** implicitní cache zapisuje skoro celý vstup (23 čtení od 1. 10.: 30 855 z 30 924 tokenů) a nic se z ní nečte; zápis stojí
+1,25× vstupu (ceník gpt-6-sol 2026-10-04: vstup $2,00, zápis $2,50, z cache $0,20). `prompt_cache_options: {mode: "explicit"}` zápis
+vypne — ověřeno voláním: `cache_write_tokens` 1220 → 0. `MODEL_PRICES` zápis počítá správně (`openaiCacheWrite` 1,25 od 2026-09-25).
+
+**Hranice:** n = 6 čtení / 14 Asků na engine, jen EN, jeden den; čas a cena kolísají (Opus `low` 0,0100–0,0232 $).

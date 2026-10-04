@@ -707,6 +707,12 @@
   Podoba [0] už nese *belonging* (*„family ties and belonging"*), [1] je tedy skoro duplikát. **Návrh CODE-tune 2026-10-04, čeká na ownerovu volbu:** (A) podobu [1] odebrat —
   odebere zdroj *„Among your people"* a nic nového nepřidá; (B) nahradit domovem, který Family & Home mezi podobami nemá
   (*„home and the people who share it"*). IS až po volbě, nativně a ověřeně (§2).
+  **Owner 2026-10-04: *„spíš odebrat. Uvidíme po přidání low effort."*** → odebrat AŽ po nasazení solu na `low` a pár čteních
+  (jedna změna naráz, ať jde poznat, co co udělalo).
+- [ ] **Opus 5 s přemýšlením `low` — čeká na ownera** (KUKY 2026-10-04: *„počkáme na opus 5 s low"*). Pilot EVAL_LOG 2026-10-04 (3):
+  63 slov × dnes 71, ~6 s × 4 s, $0,0148 × $0,0105; **1/6 čtení useknuté** na stropu 700 → pro produkci tvar
+  `thinking: {type: "adaptive"}` + `output_config: {effort: "low"}` a `max_tokens` s rezervou na přemýšlení (claude-proxy).
+  Anthropic (Prompting Claude Opus 5): *„thinking enabled at low effort performs better than thinking disabled at similar cost"*.
 - [ ] 👁 **Tvrzení o stavu domova („In your home the talk has gone flat“) prompt pořád umí** (DECISIONS 2026-09-24 (19); owner: „ta Isa je špatně“).
   **2026-09-30 změřeno (EVAL_LOG 2026-09-30 (8)):** příčina nebyl obraz (příroda); na v4.82 tvrzení 0/3 (Isa × Family & Home, i týž obraz).
   Zbývá jen HLÍDAT živá čtení — od 23. 9. nebylo žádné s Family & Home. Obraz neměnit.
@@ -862,7 +868,9 @@
     Druhý Ask první nevidí, takže ho zopakuje. Navíc ta závěrečná formule (*„the rune/reading does not say which…"*) stojí ve **14 z 19**
     Asků od 2026-10-03 (sol 10/12, Opus 5 4/7; EVAL_LOG 2026-10-04 (1)) — se dvěma Asky ji člověk uvidí dvakrát po sobě. Vyslovně ji
     žádné pravidlo nechce; kandidáti v promptu Asku: *„neither confirm it nor take it up"* a *„one or two concrete possibilities… each
-    spoken as something that may be so"* (neměřeno). **Krok 2 ji neodstranil** (EVAL_LOG 2026-10-04 (2): ve slovech méně, tahem asi 6/12
+    spoken as something that may be so"* — **změřeno 2026-10-04: není z pravidel** (každé zvlášť ani všechna naráz koncovku
+    neuberou, EVAL_LOG 2026-10-04 (3)); je to návyk modelů. Podle enginu sol 6 `low` 8/14 · 6.1 `low` 5/14 · Opus 5 7/14 · Opus 5 `low`
+    5/14 (sklon, ne důkaz). **Krok 2 ji neodstranil** (EVAL_LOG 2026-10-04 (2): ve slovech méně, tahem asi 6/12
     proti 8/12) → samostatná položka: najít, které pravidlo ji vyvolává, a odebrat příčinu (memory `oprava-promptu-odebira-vadu`).
 - [ ] **Ask — nálezy z průzkumu 2026-09-23** (workflow 5 čtenářů + skeptici, CODE-tune), opravit s druhým Askem nebo dřív:
   1. ✅ *(opraveno 2026-09-24 v kroku 1 — pole je během dotazu zakázané)* **Dvojí odeslání:** Enter v poli Asku volá `askRunar()`, během dotazu je zakázané jen tlačítko, pole ne → druhý Enter pošle druhý souběžný Ask (a oba projdou jako „první“ zdarma).
@@ -1083,13 +1091,13 @@ A cokoli v datech mimo repo. To zachytí jen měření na výstupu modelu.
 
 ## Nálezy z workflow — k triáži
 
-### sol: prompt se zapisuje do cache, ale nikdy se z ní nečte — možná platíme zápis navíc (2026-10-04, CODE-tune)
-Od 1. 10. 23 čtení přes gpt-6-sol: `cache_write_tokens` 30 855 ze 30 924 vstupních tokenů, `cached_tokens` 0 (Asky občas trefí, jednou 1 169).
-Stránka OpenAI *Using GPT-6* píše u explicitní cache, že zápis stojí 1,25× běžného vstupu — u GPT-5.6; jestli to platí pro gpt-6-sol,
-**nevím**. Pokud ano, vstup solu je o čtvrtinu dražší, než počítá `MODEL_PRICES.openai` (zápis tam není). Ověřit v ceníku OpenAI;
-kdyby platil, zvážit vypnutí implicitní cache v `callSol` (claude-proxy — deploy dělá owner). Malá částka, ale skrytá.
+### sol: prompt se zapisuje do cache, ale nikdy se z ní nečte — ✅ oprava v repu, čeká na deploy proxy (2026-10-04, CODE-tune)
+Od 1. 10. 23 čtení přes gpt-6-sol: `cache_write_tokens` 30 855 ze 30 924 vstupních tokenů, `cached_tokens` 0. Ceník gpt-6-sol
+(2026-10-04): zápis $2,50 = 1,25× vstupu → platili jsme čtvrtinu vstupu navíc za nic. `MODEL_PRICES` to počítá **správně**
+(`openaiCacheWrite` 1,25 od 2026-09-25) — do 2026-10-04 tu stálo, že zápis v ceníku chybí; omyl CODE-tune. Oprava:
+`prompt_cache_options: {mode: "explicit"}` v `callSol` (ověřeno voláním: zápis 1220 → 0), DECISIONS 2026-10-04 (3).
 
-### claude-proxy: zastaralý komentář u řetězu modelů (2026-10-04, CODE-tune)
+### claude-proxy: zastaralý komentář u řetězu modelů — ✅ opraveno v repu, čeká na deploy proxy (2026-10-04, CODE-tune)
 `supabase/functions/claude-proxy/index.ts` u `MODELS` začíná *„Primary Opus 4.8; … fall back to Opus 4.7“*, o pár řádků níž stojí platné
 *„2026-09-24: primární claude-opus-5, fallback claude-opus-4-8“*. Kód je správně, první odstavec lže. Opravit při příštím deployi proxy
 (změna jen komentáře; v repu ji neprovádím samostatně, ať se repo a nasazená proxy nerozcházejí bez deploye).
