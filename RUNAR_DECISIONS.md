@@ -8239,3 +8239,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Opus 5 zůstává s vypnutým přemýšlením:** pilot `RUNAR_EVAL_LOG.md` 2026-10-04 (3) — cena +41 %, +2 s, 1/6 čtení useknuté na
   stropu 700, owner čtení nehodnotí jako lepší. Vracet se jen s rezervou `max_tokens` a novým důvodem (§26).
 - Affected doc(s): `RUNAR_BACKLOG.md` (Opus 5 `low` zavřeno; cache solu a komentář proxy nasazeny).
+
+## 2026-10-04 (5) — Sol pro admina = gpt-6.1-sol na `low` (proxy v75)
+
+- **Rozhodl:** KUKY 2026-10-04 *„nasadíme sol 6.1 low"* (po třech čteních z 6.1). **Provedl:** CODE-tune. Mění 2026-10-03 (1)
+  (*„6.1 zatím NE — dražší"*): důvod padl, protože od 2026-10-04 (3) přemýšlí na `low` i sol 6 a ceník je stejný.
+- **Co:** `SOL_MODEL = "gpt-6.1-sol"` v `supabase/functions/claude-proxy/index.ts`; úsilí `low`, rezerva tokenů a explicitní cache beze
+  změny. Návrat na 6 = jen tenhle řádek.
+- **Měřeno** (`RUNAR_EVAL_LOG.md` 2026-10-04 (3)): 6.1 `low` 57 slov, $0,0046 za čtení (6 `low` $0,0057), koncovka Asku 5/14 (6: 8/14,
+  na hraně šumu), ale pomalejší — 8,7 s proti 6,3 s.
+- **Deploy:** CODE-tune na ownerův pokyn, stejně jako v74 (stažený kód porovnán s HEAD, `verify_jwt: false` zachováno).
+- Affected doc(s): žádné.

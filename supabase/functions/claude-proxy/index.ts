@@ -277,7 +277,10 @@ async function callClaudeWithRetry(
 // Pilot EVAL_LOG 2026-10-04 (3): čtení 58 slov, přemýšlení 230–380 tok., ~6 s, $0,0057; useknuté 0/6. Přemýšlení se POČÍTÁ do
 // max_completion_tokens → SOL_REASONING_HEADROOM navíc, jinak by u Asku (strop 320) mohlo sníst odpověď. gpt-6.1-sol: stejná
 // cena, `low` je jeho nejnižší → přepnutí = jen SOL_MODEL.
-const SOL_MODEL = "gpt-6-sol";
+// 2026-10-04 (KUKY „nasadíme sol 6.1 low“, DECISIONS 2026-10-04 (5)): gpt-6.1-sol. Stejný ceník jako 6 ($2 / $10, zápis cache
+// $2,50), v pilotu levnější na čtení ($0,0046 × $0,0057 — méně přemýšlí), méně koncovek v Asku (5/14 × 8/14, na hraně šumu),
+// ale pomalejší (8,7 × 6,3 s). EVAL_LOG 2026-10-04 (3). Návrat na 6 = jen tenhle řádek.
+const SOL_MODEL = "gpt-6.1-sol";
 const SOL_EFFORTS = ["low"];
 const SOL_REASONING_HEADROOM = 1000;
 async function callSol(system: string, prompt: string, maxTokens: number, key: string):
