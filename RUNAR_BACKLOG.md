@@ -701,9 +701,10 @@
   její slova doslova (přistání [0] i most [1]) — a kolik vět čtení mluví o oblasti. Až bude dost čtení (owner řekne).
   ⭐ **Owner 2026-10-03 23:46 (report u Hagalaz × Family & Home): *„area face: the people one belongs to. Model to hodně používá
   a nezní to dobře. Přeformulujeme to."*** Podoba Family & Home [1] (`AREA_FACES` v `v2/runar-utils.js`) dala v živých čteních
-  *„Among your people"*, *„In the people you belong to… making a racket while it stands"* (owner: *„to je špatný"*) a *„what passes
-  between your people"* (owner se v Asku musel zeptat *„What people do you mean?"*). Podoba [0] už nese *belonging* (*„family ties
-  and belonging"*), [1] je tedy skoro duplikát. **Návrh CODE-tune 2026-10-04, čeká na ownerovu volbu:** (A) podobu [1] odebrat —
+  *„Among your people"* (sol) a *„In the people you belong to… making a racket while it stands"* (Opus; owner: *„to je špatný"*).
+  ⚠️ **Oprava 2026-10-04:** *„what passes between your people"* → *„What people do you mean?"* (čtení 202c4140, Opus) sem NEpatří —
+  mělo podobu [2] *generace* a „your people" si Opus vytvořil sám (draws `area_face: 2`); do 2026-10-04 to tu stálo pod [1].
+  Podoba [0] už nese *belonging* (*„family ties and belonging"*), [1] je tedy skoro duplikát. **Návrh CODE-tune 2026-10-04, čeká na ownerovu volbu:** (A) podobu [1] odebrat —
   odebere zdroj *„Among your people"* a nic nového nepřidá; (B) nahradit domovem, který Family & Home mezi podobami nemá
   (*„home and the people who share it"*). IS až po volbě, nativně a ověřeně (§2).
 - [ ] 👁 **Tvrzení o stavu domova („In your home the talk has gone flat“) prompt pořád umí** (DECISIONS 2026-09-24 (19); owner: „ta Isa je špatně“).
