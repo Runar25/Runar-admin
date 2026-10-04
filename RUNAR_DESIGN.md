@@ -1267,7 +1267,8 @@ kterou model vymyslel v jeho Asku ke Kenazu). Rozhodnutí `RUNAR_DECISIONS.md` 2
 - Scénu, kterou si model sám vymyslí ve čtení nebo v Asku, smí banka převzít. Kandidáty sbírá reportér: **✦ Keep this**.
 - Jde stejnou cestou jako každý obraz: identitní brána (výš), islandština psaná od začátku a ověřená, register, oblast.
   **„Zní dobře" bránu nenahrazuje:** první kandidát (Kenaz, stůl pod lampou a prázdná židle) zněl dobře a soudci ho dali
-  k Othile 2/3 — scéna doma táhne k domovu (`RUNAR_EVAL_LOG.md` 2026-10-03 (4)).
+  k Othile 2/3 — scéna doma táhne k domovu (`RUNAR_EVAL_LOG.md` 2026-10-03 (4)). Přepsané znění (rozsvícení, které židli
+  odhalí) šlo do banky **bez brány, na ownerovo slovo** — výjimka pro ten jeden řádek (`RUNAR_DECISIONS.md` 2026-10-04 (1)).
 
 ### Délka a tvar obrazu — klíč ke zkrácení (KUKY 2026-09-28, změřeno)
 *Changelog: 2026-09-28 založeno — owner: „najdi k tomu klíč jak to zkrátit… už máme dost informací o tom, co zní dobře

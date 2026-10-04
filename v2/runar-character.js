@@ -760,6 +760,12 @@ var RUNE_IMAGES = [
   // Perth mlha a ovce 2/3 → Dagaz 1). IS korpus + is-grammar-qa čisté.
   ['Kenaz', 'any', 'Undir lampanum sést hárfín sprunga í bollanum, þótt enginn hafi séð hana frá hinum enda stofunnar.', 'Under the lamp the hairline crack in the cup shows, though no one saw it from across the room.', 'þekking', 'knowledge', 'D'],
   ['Kenaz', 'any', 'Eldspýtu er kveikt í rafmagnsleysinu, og allt herbergið tekur aftur á sig mynd.', 'A match is struck in the power cut, and the whole room gets its shape back.', 'eldur', 'fire', 'D'],
+  // 2026-10-04 (KUKY „A, nasaď to bez brány“) — BEZ identitní brány, na ownerovo slovo (DECISIONS 2026-10-04 (1)). Scéna z jeho Asku
+  // (Kenaz × Family & Home, 2026-10-02: stůl s lampou, prázdná židle). Statické znění „lamp over the kitchen table lights every chair…“
+  // dala brána k Othile 2/3 (kuchyňský stůl = domov; EVAL_LOG 2026-10-03 (4)). Tohle nese OKAMŽIK, kdy světlo odhalí — popis Kenazu
+  // „světlo, které ukáže něco, co bychom raději neviděli“; bez „kitchen“ a „every chair“. 'f': jinde by prázdná židle tvrdila něco o
+  // něčím životě. IS korpus: „sérð þá“ 910 · „þá fyrst að“ 432 · „sá þá fyrst“ 61 · „auða stólinn“ 7 · „kveikir á lampanum“ 5.
+  ['Kenaz', 'any', 'Þú kveikir á lampanum yfir borðinu og sérð þá fyrst auða stólinn.', 'You switch on the lamp over the table, and only then do you see the empty chair.', 'þekking', 'knowledge', 'D', '', '', '', 'f'],
   ['Gebo', 'any', 'Þú lánar nágrannanum kerruna þína, og um haustið liggur lambalæri á tröppunum hjá þér.', 'You lend the neighbour your trailer, and in the autumn a leg of lamb turns up on your step.', 'að gefa og þiggja', 'giving and receiving', 'D'],
   ['Gebo', 'cold', 'Eftir óveðrið moka nágrannarnir frá dyrunum hvor hjá öðrum, fyrst á einum bænum og svo á hinum.', 'After the storm the neighbours dig out each other\'s doors, first one house, then the other.', 'félagsskapur', 'companionship', 'P'],
   ['Isa', 'cold', 'Báturinn situr fastur í ísnum í höfninni, en úti á firðinum er enginn ís.', 'The boat lies frozen in at the harbour, and the fjord beyond it is open water.', 'hlé', 'pause', 'E'],

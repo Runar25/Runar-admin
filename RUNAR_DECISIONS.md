@@ -8180,3 +8180,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Co se nemění:** ramena z kmene si drží ranní napojení (`limbBendU`, výchozí 0,45). Na KUKYho stromě (1 povýšená) žádná viditelná
   změna (`tree_render.js`), otočení i skoky beze změny.
 - Affected doc(s): `RUNAR_TREE_MAP.md` §7, §9 · `RUNAR_BACKLOG.md` (souběhy větví) — v tomto commitu.
+
+## 2026-10-04 (1) — Nový obraz Kenaz: rozsvícená lampa odhalí prázdnou židli — bez brány, na ownerovo slovo (v4.90)
+
+- **Rozhodl:** KUKY 2026-10-04 *„A, nasaď to bez brány"*. **Provedl:** CODE-tune.
+- **Co:** `RUNE_IMAGES` + Kenaz: EN *„You switch on the lamp over the table, and only then do you see the empty chair."* · IS *„Þú kveikir
+  á lampanum yfir borðinu og sérð þá fyrst auða stólinn."* (is-grammar-qa čisté, korpus u řádku) · aspekt þekking / knowledge ·
+  register D · oblast `f` (jen Family & Home a čtení bez oblasti).
+- **Výjimka z brány:** `RUNAR_DESIGN.md` chce identitní bránu pro každý obraz; tenhle řádek ji nemá na ownerovo slovo. Statické
+  znění téže scény brána dala k Othile 2/3 (`RUNAR_EVAL_LOG.md` 2026-10-03 (4)); přepsané nese okamžik odhalení, jak Kenaz popisuje
+  `RUNAR_POPISY_RUN.md` (*„světlo, které ukáže něco, co bychom raději neviděli"*), a nemá „kitchen" ani „every chair". Rozhodnutí se
+  týká jen tohoto řádku.
+- **Riziko na oko:** pilot statického znění skončil 1× ze 3 tvrzením o rodině (*„someone whose absence is plain"*).
+- Affected doc(s): `RUNAR_DESIGN.md` („Obraz od modelu").
