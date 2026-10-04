@@ -1,0 +1,80 @@
+[
+ {
+  "id": "171f1704",
+  "runa": "Fehu",
+  "area": "Love & Relationships",
+  "seeking": "General Guidance",
+  "model": "claude-opus-5",
+  "aspekt": "material prosperity",
+  "text": "The milk reaches the rim of the pail and keeps rising, and the pail stops being a container the moment it overflows. Fehu is wealth in motion, worth that only counts once it changes hands. What runs down the side is not lost, it is simply no longer yours to hold. Between you and another this may be plenty spilling over, or plenty held too long.",
+  "q1": "What is this reading telling me?",
+  "a1": "Fehu speaks of what moves between people, not what sits still. Worth that stays in the pail stops being worth at all — it only counts in the giving and the taking.\n\nSo the reading names two shapes without choosing between them. There may be more passing between you and another than either of you can hold, running over the side. Or something may have been kept back so long it has gone thick in the keeping.\n\nWhich of those you are standing in, the rune does not say.",
+  "q2": "Love & Relationships — can you give me a clearer image?",
+  "a2_produkce": "Picture the pail set between two people. Fehu counts worth only as it moves, so what matters here is what passes across — time given, care given, the plain daily tending that one person does and the other receives.\n\nIt may be that more is flowing between you than either of you can account for, and the spill down the side is no loss. It may be that one of you has been holding the pail steady for a long while, and nothing has yet changed hands."
+ },
+ {
+  "id": "dfc1cc84",
+  "runa": "Gebo",
+  "area": "Crossroads & Decisions",
+  "seeking": "Confirmation",
+  "model": "gpt-6-sol",
+  "aspekt": "giving and receiving",
+  "text": "A grain of black sand clings to the shell the water leaves by your feet. The next wave takes the shell and leaves the grain. Gebo names the space between giving and receiving, where neither side owes an immediate return. One choice may ask for a gift without assurance; the other, for room to receive without settling the debt at once.",
+  "q1": "Explain Gebo without the image.",
+  "a1": "Gebo speaks of giving and receiving without keeping an exact account. A gift may be freely offered, and receiving it need not create an immediate debt. In your reading, this leaves two possibilities open: you may give without knowing what comes back, or receive without having to repay at once. Gebo does not say which choice is yours.",
+  "q2": "Crossroads & Decisions — can you make this image clearer?",
+  "a2_produkce": "The shell moves with the water, while the grain stays behind. Neither is the better choice. Gebo makes the difference clearer: one choice may mean giving something without knowing what comes back, while the other may mean accepting something without being ready to give in return. The rune does not confirm which choice is right for you. It holds the question of what each choice asks you to give or receive."
+ },
+ {
+  "id": "202c4140",
+  "runa": "Hagalaz",
+  "area": "Family & Home",
+  "seeking": "General Guidance",
+  "model": "claude-opus-5",
+  "aspekt": "transformation",
+  "text": "The hail comes down hard on the roof, every stone of it white and loud, and the whole house hears it. Then it is water on the slates, gone before you reach the window. This is Hagalaz: the sudden thing that strikes and does not stay, though the striking was real. Kuky, what passes between your people may be damage and may be weather at once, and no one in the house can yet say which.",
+  "q1": "what passes between your people? What people do you mean?",
+  "a1": "I meant the ones you share a house with, Kuky — the family and home this reading was cast for. Hagalaz does not name them for me. It only shows the striking and the water that follows, and a house where more than one person heard it.\n\nWho stood in which room is yours to know. The rune holds the weather, not the names.",
+  "q2": "every stone of it white and loud. Every stone? Is it stone or hail? Im confused",
+  "a2_produkce": "Hail. \"Stone\" is only how hail falls — hard, round, striking like gravel on the slates. That is what Hagalaz names: ice thrown down, loud and real while it lands, water on the roof a moment later.\n\nSo the rune holds two things at once. Something struck. And what struck is made of a substance that does not keep its shape. Whether what it left behind is damage or only noise is not something the rune settles."
+ },
+ {
+  "id": "3092db33",
+  "runa": "Wunjo",
+  "area": "Inner Growth",
+  "seeking": "Insight into Challenge",
+  "model": "gpt-6-sol",
+  "aspekt": "belonging",
+  "text": "The empty chair stays put while the talk shifts around it, and you sit down without anyone asking why you came. Wunjo names the ease of belonging without having to earn it. Still, silence can be hard to accept when you are used to explaining yourself. Kuky, perhaps you are outgrowing the need to justify enjoying what is already good.",
+  "q1": "How does my life rune Isa affect this reading?",
+  "a1": "Isa, as your life rune, can give you a way to consider the stillness in this picture. An empty chair does not ask you to explain yourself, and you may find that silence either restful or uneasy. Wunjo is the rune drawn here. It holds the possibility that you belong without having to earn your place.",
+  "q2": "What does this say about the hard part?",
+  "a2_produkce": "The hard part in this reading is the silence around your place at the table. Wunjo speaks of belonging, but it does not make that silence easy to accept. You may find yourself wanting a reason you are welcome, even when no one asks you to give one."
+ },
+ {
+  "id": "d1afc721",
+  "runa": "Hagalaz",
+  "area": "Career & Creativity",
+  "seeking": "General Guidance",
+  "model": "gpt-6-sol",
+  "aspekt": "disruption",
+  "text": "A fence post stays upright as a squall tears through a clear sky, then leaves the grass wet and still. Hagalaz names the sudden break that shows what holds. Kuky, a piece made for others can meet such a break without showing at once what survives it. What you make may leave a familiar shape in ruins and still give someone a firm place to stand.",
+  "q1": "Career & Creativity — can you make this image clearer?",
+  "a1": "Hagalaz points to a disruption in your work, not to a verdict on its worth. A project made for others may have to change shape when circumstances shift. The fence post is what remains useful through that change: a clear idea, a skill, or a piece of work someone can still rely on. The reading does not say what survives, only that a break can make it easier to see.",
+  "q2": "How does my life rune Isa affect this reading?",
+  "a2_produkce": "Isa brings stillness to your question, but it does not change the rune drawn. You may see that stillness in the fence post: it remains upright while the squall passes. Hagalaz names the break around it. In what you make for others, the reading leaves open what holds and what takes a different shape."
+ },
+ {
+  "id": "c87c173a",
+  "runa": "Ehwaz",
+  "area": "Healing & Wellbeing",
+  "seeking": null,
+  "model": "gpt-6-sol",
+  "aspekt": "trust",
+  "text": "A fleck of snow rests on the rope as you lead the horse across the white ground. The rope hangs slack, and neither of you pulls against the other. Ehwaz shows trust as movement made together, with room for each to find a pace. In what gives you strength back, there may be relief in being met and strain in keeping pace.",
+  "q1": "Healing & Wellbeing — can you make this image clearer?",
+  "a1": "The slack rope matters: you and the horse move together without either one forcing the pace. In healing, Ehwaz points to trust that leaves room for your own pace. That may mean support that eases the effort, or it may bring the strain of trying to keep up. The image holds both possibilities; it does not say which one is yours.",
+  "q2": "Explain Ehwaz without the image.",
+  "a2_produkce": "Ehwaz holds trust between partners who move together without forcing the pace. For you, that may mean support that leaves room for your own pace. It may also name the strain of keeping up when that room is missing. The rune does not say which is yours."
+ }
+]

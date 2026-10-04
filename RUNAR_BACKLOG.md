@@ -853,13 +853,16 @@
 - [ ] **Druhý Ask — plán po krocích (KUKY 2026-09-24: „vždy postupně od jednoduššího ke komplexnějšímu“; premium 2, standard 1, vše zdarma)**
   - ✅ **2026-09-25 ŽIVĚ pro všechny (DECISIONS 2026-09-25 (8)):** server `ASKS_PER_READING`, `ASK_MULTI_LIVE = true`, teaser „Your own questions to Rúnar open with {tier}.“ Dříve: **Krok 1 HOTOVÝ v klientu, zapnutý JEN pro admina** (`ASK_MULTI_LIVE = false`, `TIERS.*.asks_per_reading`): dva Asky ke čtení, Rúnar o předchozí výměně neví. → owner živě testuje.
   - **Před ostrým zapnutím (`ASK_MULTI_LIVE = true`) musí jít ven server** (`claude-proxy`): (a) Ask smí i standard (dnes 403 pro vše kromě premium); (b) zdarma do `asks_per_reading` tieru — `legitAsk` dnes pustí zdarma jen PRVNÍ Ask, druhý by prémiovému uživateli strhl měsíční čtení; (c) nad limit odmítnout, nestrhávat; (d) počty zrcadlit z configu + kontrola shody ve smoke (vzor NAME_LORE_LIMIT); (e) atomický zápis `follow_up` (nález 2 níž). Texty „one answer left“ (`ask_teaser`) přepsat podle tieru.
-  - **Krok 2 = chatování:** Rúnar dostane předchozí výměnu (otázka + odpověď), aby se dalo doptat i na odpověď z Asku. Vyžaduje nový blok v `buildAskPrompt` (EN + IS nativně), přepočet stropu 12 000 zn. a měření opakování. Podklad z popisů run pro tenhle krok: `docs/archive/2026-09-24-ask-podoby-run.md`.
+  - ✅ **Krok 2 HOTOVÝ 2026-10-04 (DECISIONS 2026-10-04 (2), v4.91):** druhý Ask dostane poslední výměnu; doslovné opakování první odpovědi
+    na polovinu (EVAL_LOG 2026-10-04 (2)). Strop 12 000 zn. stačí (nejdelší Ask 8 302 + blok ≤ ~1 550). Dřív: *Krok 2 = chatování: Rúnar
+    dostane předchozí výměnu, aby se dalo doptat i na odpověď z Asku.* Podklad `docs/archive/2026-09-24-ask-podoby-run.md` zůstává pro chatování dál.
     **Doklad, proč na tom záleží (owner 2026-10-03, Ehwaz):** *„1. Ask výborně vysvětlí, ale druhý spíš jen opakuje. Poslední věta úplně."*
     První (clearer image) končí *„it does not say which one is yours"*, druhý (without the image) *„The rune does not say which is yours"*.
     Druhý Ask první nevidí, takže ho zopakuje. Navíc ta závěrečná formule (*„the rune/reading does not say which…"*) stojí ve **14 z 19**
     Asků od 2026-10-03 (sol 10/12, Opus 5 4/7; EVAL_LOG 2026-10-04 (1)) — se dvěma Asky ji člověk uvidí dvakrát po sobě. Vyslovně ji
     žádné pravidlo nechce; kandidáti v promptu Asku: *„neither confirm it nor take it up"* a *„one or two concrete possibilities… each
-    spoken as something that may be so"* (neměřeno). Měřit spolu s krokem 2.
+    spoken as something that may be so"* (neměřeno). **Krok 2 ji neodstranil** (EVAL_LOG 2026-10-04 (2): ve slovech méně, tahem asi 6/12
+    proti 8/12) → samostatná položka: najít, které pravidlo ji vyvolává, a odebrat příčinu (memory `oprava-promptu-odebira-vadu`).
 - [ ] **Ask — nálezy z průzkumu 2026-09-23** (workflow 5 čtenářů + skeptici, CODE-tune), opravit s druhým Askem nebo dřív:
   1. ✅ *(opraveno 2026-09-24 v kroku 1 — pole je během dotazu zakázané)* **Dvojí odeslání:** Enter v poli Asku volá `askRunar()`, během dotazu je zakázané jen tlačítko, pole ne → druhý Enter pošle druhý souběžný Ask (a oba projdou jako „první“ zdarma).
   2. ✅ *(opraveno 2026-09-27 — `append_follow_up` v DB, DECISIONS 2026-09-27 (9))* ~~**Zápis `follow_up` není atomický**~~ (`persistJournal`: přečti pole → přidej → zapiš celé) — dva souběžné zápisy ztratí jednu odpověď.
@@ -1078,6 +1081,17 @@ Rozpory, které nejsou textové — dvě instrukce, které si neodporují slovy,
 A cokoli v datech mimo repo. To zachytí jen měření na výstupu modelu.
 
 ## Nálezy z workflow — k triáži
+
+### sol: prompt se zapisuje do cache, ale nikdy se z ní nečte — možná platíme zápis navíc (2026-10-04, CODE-tune)
+Od 1. 10. 23 čtení přes gpt-6-sol: `cache_write_tokens` 30 855 ze 30 924 vstupních tokenů, `cached_tokens` 0 (Asky občas trefí, jednou 1 169).
+Stránka OpenAI *Using GPT-6* píše u explicitní cache, že zápis stojí 1,25× běžného vstupu — u GPT-5.6; jestli to platí pro gpt-6-sol,
+**nevím**. Pokud ano, vstup solu je o čtvrtinu dražší, než počítá `MODEL_PRICES.openai` (zápis tam není). Ověřit v ceníku OpenAI;
+kdyby platil, zvážit vypnutí implicitní cache v `callSol` (claude-proxy — deploy dělá owner). Malá částka, ale skrytá.
+
+### claude-proxy: zastaralý komentář u řetězu modelů (2026-10-04, CODE-tune)
+`supabase/functions/claude-proxy/index.ts` u `MODELS` začíná *„Primary Opus 4.8; … fall back to Opus 4.7“*, o pár řádků níž stojí platné
+*„2026-09-24: primární claude-opus-5, fallback claude-opus-4-8“*. Kód je správně, první odstavec lže. Opravit při příštím deployi proxy
+(změna jen komentáře; v repu ji neprovádím samostatně, ať se repo a nasazená proxy nerozcházejí bez deploye).
 
 ### Smoke `verify_decisions_followthrough.js` trvá ~30 minut — brzdí každý push (2026-10-03, CODE-tree)
 Lokální smoke 2026-10-03 běžel 17:33–18:05, skoro celou dobu v téhle kontrole: pro každý řádek `Affected doc(s)` volá zvlášť

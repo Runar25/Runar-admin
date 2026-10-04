@@ -48,6 +48,12 @@ const CESTY = {
                                             null, { question: q }, null),
   // 2026-09-27: samotná otázka ASKU (ne úvodní otázka čtení) — do té doby šla do promptu syrově a test ji neviděl.
   ask_q:     (q, L) => fn('buildAskPrompt')('A reading about the road.', q, [RUNES[0]], L, null, null, {}, null),
+  // 2026-10-04 krok 2 Asku: předchozí výměna jde do promptu druhého Asku — otázku psal člověk, odpověď model (a model
+  // mohl text útoku zopakovat). Obojí musí zůstat uvnitř svého úseku.
+  ask_pred_q: (q, L) => fn('buildAskPrompt')('A reading about the road.', 'And what else?', [RUNES[0]], L, null, null, {}, null, '',
+                                             [{ q: q, a: 'An earlier answer.' }]),
+  ask_pred_a: (q, L) => fn('buildAskPrompt')('A reading about the road.', 'And what else?', [RUNES[0]], L, null, null, {}, null, '',
+                                             [{ q: 'What does it mean?', a: q }]),
 };
 
 for (const L of ['en', 'is']) {
@@ -75,4 +81,4 @@ for (const L of ['en', 'is']) {
 }
 
 if (fail) { console.log('\nFAIL — uživatelská otázka může v ' + fail + ' případech vystoupit z místa v promptu.'); process.exit(1); }
-console.log('\nOK — otázka nemůže strukturálně přepsat instrukci (7 cest × 2 řeči vč. otázky Asku, uvozovka i zalomení).');
+console.log('\nOK — otázka nemůže strukturálně přepsat instrukci (9 cest × 2 řeči vč. otázky Asku a předchozí výměny, uvozovka i zalomení).');

@@ -49,7 +49,7 @@ async function _loadServerLastImage(drawn) {
   } catch (e) {}
 }
 var _lastGen = null;   // { sys, prompt, lang, kind } posledního vygenerovaného čtení
-var _askLog = [];      // [{ q, a }] výměny v Asku k tomuto čtení (dnes nejvýš jedna)
+var _askLog = [];      // [{ q, a, lang }] výměny v Asku k tomuto čtení — rozbor GPT-6 sol a od 2026-10-04 i předchozí výměna pro další Ask (_askBuild)
 // Rubrika v1 (2026-09-24, po prvním živém rozboru — owner: délka „o ničem“, „ustřeluje sám“, rady „k ničemu“):
 // hledá JEN šest druhů chyb, každou dokládá citací; NEsoudí délku, gramatiku ani přepisy. Detaily, které přirozeně
 // vyrůstají z daného obrazu, NEJSOU chyba (první verze za chybu označila „the bowl still looks untouched“ u obrazu skyru
@@ -881,7 +881,9 @@ function _intentIdx(v) {
 function _askBuild(reading, q, runes) {
   var _lf = (readerUser && readerUser.lifeRune) || null;
   if (_lf && (_lastDrawn || []).some(function (r) { return r && r.n === _lf.n; })) _lf = null;
-  return buildAskPrompt(reading, q, runes, lang, corrections, _lf, _askCast(), _askSpread(), _askAspect());
+  // 2026-10-04 krok 2: předchozí výměna jen ve STEJNÉM jazyce — po přepnutí jazyka by stála v cizí řeči vedle čtení.
+  var _pred = (_askLog || []).filter(function (x) { return x && x.lang === lang; });
+  return buildAskPrompt(reading, q, runes, lang, corrections, _lf, _askCast(), _askSpread(), _askAspect(), _pred);
 }
 // Význam runy, ze kterého single čtení vzniklo (2026-09-26, viz buildAskPrompt). Čte se z promptu TOHO čtení (`_lastGen`) —
 // stejný zdroj, jaký zapisuje prompt_draws.kws, žádná druhá kopie. Prázdné, když: nejde o single; Ask je v jiném jazyce než
@@ -1083,7 +1085,7 @@ async function askRunar() {
   if (cislo === 1) {
     qEl = document.getElementById('ask-question'); ans = document.getElementById('ask-answer'); ansId = 'ask-answer';
   } else {
-    // další výměna pod poslední odpověď (krok 1: Rúnar o předchozí výměně neví — každý Ask jen ke čtení)
+    // další výměna pod poslední odpověď (od 2026-10-04 krok 2: Rúnar dostane i poslední výměnu, viz _askBuild)
     var posledni = document.querySelectorAll('#ask-runar .ask-answer');
     posledni = posledni[posledni.length - 1];
     qEl = document.createElement('div'); qEl.className = 'ask-question ask-extra';
@@ -1130,7 +1132,7 @@ async function askRunar() {
   answer = _trimToSentence(answer);  // FU pojistka: nikdy useknuty fragment
   if (_askJournal && res && !res.error && !res.ask_saved) { _pendAdd('pendingAsks', { id: _askEntryId, reading_id: _lastReadingId, question: q, answer: answer }); _flushPending(); }
   _askCount++;
-  _askLog.push({ q: q, a: answer });   // pro rozbor GPT-6 sol
+  _askLog.push({ q: q, a: answer, lang: lang });   // rozbor GPT-6 sol + předchozí výměna pro další Ask (krok 2, _askBuild)
   var dalsi = _askCount < _askLimit();
   if (!dalsi) _askPhStop();   // limit vyčerpán -> pole mizí, timer nemá co dělat
   if (!dalsi) _showAskMoreTeaser(ans);   // 2026-09-30: Standard po své otázce uvidí, že další otevírá Premium

@@ -141,6 +141,12 @@ const DATA = /^(PERSON|DRAWN|SEEKER|LIFE|AREA|SEEKING|INTENTION|QUESTION|REALM|E
       { mode: 'kriz', runy: ['Fehu', 'Uruz', 'Thurisaz', 'Ansuz', 'Raidho'] })
       .split(String.fromCharCode(10))
       .forEach(r => { if (!DATA.test(r.trim())) pridej(L, 'ask', r); });
+    // 2026-10-04 krok 2 Asku: blok předchozí výměny (RP_ASK.*.earlier) jde do promptu jen s desátým argumentem — bez něj
+    // ho registr neviděl (při prvním --zapis po nasazení: pořád 331 pravidel, tatáž tichá zelená jako 2026-09-11).
+    S.buildAskPrompt('A reading.', 'What do you mean?', RUNES[3].n, L, null, null, null, null, '',
+      [{ q: 'What does it mean?', a: 'An earlier answer.' }])
+      .split(String.fromCharCode(10))
+      .forEach(r => { if (!DATA.test(r.trim())) pridej(L, 'ask', r); });
     S.buildSysPrompt(null, L).split(String.fromCharCode(10)).forEach(r => pridej(L, 'system', r));
   }
   // Dedup: prvni vyskyt vyhrava, proto jsou pooly nahore.

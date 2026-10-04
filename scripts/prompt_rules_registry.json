@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
- "zapsano": "2026-10-03",
- "prompt_version": "v4.89-ask-bez-uhlu",
+ "zapsano": "2026-10-04",
+ "prompt_version": "v4.91-ask-krok2",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -842,6 +842,18 @@
    "lang": "en",
    "zdroj": "ask",
    "zacatek": "POSITIONS IN THIS READING — the seeker sees these named on screen, so "
+  },
+  {
+   "hash": "b734dd8b5911",
+   "lang": "en",
+   "zdroj": "ask",
+   "zacatek": "EARLIER IN THIS CONVERSATION — they asked:"
+  },
+  {
+   "hash": "96f458e38ee5",
+   "lang": "en",
+   "zdroj": "ask",
+   "zacatek": "They already have that answer — do not give it again. Answer what the "
   },
   {
    "hash": "6ecd330c9a42",
@@ -1826,6 +1838,18 @@
    "lang": "is",
    "zdroj": "ask",
    "zacatek": "STÖÐURNAR Í LESTRINUM — leitandinn sér þær nefndar á skjánum, svo spur"
+  },
+  {
+   "hash": "290a046bfeee",
+   "lang": "is",
+   "zdroj": "ask",
+   "zacatek": "FYRR Í ÞESSU SAMTALI — leitandinn spurði:"
+  },
+  {
+   "hash": "70589a2568db",
+   "lang": "is",
+   "zdroj": "ask",
+   "zacatek": "Hann hefur þegar fengið það svar — gefðu honum það ekki aftur. Svaraðu"
   },
   {
    "hash": "6ecd330c9a42",

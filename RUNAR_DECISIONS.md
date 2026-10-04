@@ -8193,3 +8193,23 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   týká jen tohoto řádku.
 - **Riziko na oko:** pilot statického znění skončil 1× ze 3 tvrzením o rodině (*„someone whose absence is plain"*).
 - Affected doc(s): `RUNAR_DESIGN.md` („Obraz od modelu").
+
+## 2026-10-04 (2) — Krok 2 Asku: druhý Ask dostane poslední předchozí výměnu (v4.91)
+
+- **Rozhodl:** KUKY 2026-10-04 *„3. ano"* (na otázku, zda se pustit do kroku 2); doklad z jeho reportu 2026-10-03 u Ehwaz: *„1. Ask
+  výborně vysvětlí, ale druhý spíš jen opakuje. Poslední věta úplně."* **Provedl:** CODE-tune. Mění krok 1 z 2026-09-24 (6)
+  (*„Rúnar předchozí výměnu nedostává"*).
+- **Co:** `buildAskPrompt` má desátý parametr `earlier`; `_askBuild` (`v2/runar-reading.js`) mu předá `_askLog` jen ve stejném
+  jazyce. Do promptu jde **jen poslední** výměna, mezi čtení a novou otázku: EN *„EARLIER IN THIS CONVERSATION — they asked: … and you
+  answered: … They already have that answer — do not give it again. Answer what the new question adds; if it asks about something in
+  your answer, pick up the thread there."* · IS *„FYRR Í ÞESSU SAMTALI — … Hann hefur þegar fengið það svar — gefðu honum það ekki
+  aftur. Svaraðu því sem nýja spurningin bætir við; ef hún spyr um eitthvað í svari þínu, taktu upp þráðinn þar."* (is-grammar-qa
+  čisté — první znění *„byrjaðu þar"* dalo W001, přepsáno; korpus u kódu). Otázka i odpověď jdou přes `_questionSafe` (odpověď se
+  ořezává až na 1200 zn.).
+- **Proč:** pilot `RUNAR_EVAL_LOG.md` 2026-10-04 (2) — doslovné opakování první odpovědi na polovinu (sol 2,9 → 1,3 trojic, Opus 4,3 →
+  2,0), délka beze změny. Koncovou formuli to neřeší (BACKLOG). Druhý Ask teď také umí odpovědět na otázku o slově z první odpovědi.
+- **Strop:** blok ≤ ~1 550 zn.; nejdelší Ask prompt v produkci 8 302 zn. → pod `MAX_PROMPT_CHARS` 12 000 (claude-proxy); proxy beze změny.
+- **Kontroly:** ㉥ `verify_question_injection.js` +2 cesty (útok v dřívější otázce i odpovědi) · `verify_ask_hints.js` sekce 13 (přes
+  `_askBuild`: první Ask bez bloku, jen poslední výměna, jen týž jazyk, blok před novou otázkou) · golden `ask_earlier_*` (stávajících
+  40 klíčů beze změny) · registr pravidel teď skládá i Ask s výměnou (dřív ji neviděl). Mutace 5/5 chyceny.
+- Affected doc(s): `RUNAR_BACKLOG.md` (Druhý Ask — krok 2 hotový).

@@ -94,6 +94,9 @@ var samplecorr = [{ from:'Arctic', to:'Norðurljós', lang:'both', context:'test
   // golden diffem jako "0 zmen" a musela se overit rucni sondou (§19.2 tiche zelene).
   grab('ask_'+L,          function(){ return buildAskPrompt('SAMPLE READING', 'what does it mean for me', 'Raidho', L, [], null, null, null); });
   grab('ask_life_'+L,     function(){ return buildAskPrompt('SAMPLE READING', 'what does it mean for me', 'Raidho', L, [], u.lifeRune, null, null); });
+  // 2026-10-04 krok 2 Asku: druhý Ask s předchozí výměnou (bez ní je ask_* beze změny — ověřeno 40/40 klíčů).
+  grab('ask_earlier_'+L,  function(){ return buildAskPrompt('SAMPLE READING', 'and what does that ask of me', 'Raidho', L, [], null, null, null, '',
+                                                             [{ q: 'what does it mean for me', a: 'SAMPLE ANSWER' }]); });
   grab('namelore_'+L,     function(){ return buildNameLorePrompt('Sigrún', _nameLookupGolden(), L, []); });
 });
 // Zaznam ze seznamu jmen bez nacitani runar-names.js (jen tvar, ktery _nameFacts cte).

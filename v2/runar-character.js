@@ -1917,6 +1917,12 @@ var RP_ASK = {
       return 'You gave the seeker this rune reading:\n"' + reading + '"\nRunes drawn: ' + runes + '.';
     },
     q: function (question) { return 'They now ask ONE follow-up question about it:\n"' + question + '"'; },
+    // 2026-10-04 krok 2 Asku (KUKY „3. ano“) — viz _askEarlier. q i a už prošly _questionSafe (DATA, hlídá ㉥).
+    earlier: function (q, a) {
+      return 'EARLIER IN THIS CONVERSATION — they asked:\n"' + q + '"\nand you answered:\n"' + a + '"\n'
+        + 'They already have that answer — do not give it again. Answer what the new question adds; '
+        + 'if it asks about something in your answer, pick up the thread there.';
+    },
     // 2026-09-26: význam runy, ze kterého čtení vzniklo — viz buildAskPrompt. `rest` = ostatní klíče (bez těch z aspektu).
     aspect: function (name, a, rest) { return 'In this reading ' + name + ' carries the sense of ' + a + (rest.length ? '. Its other senses are ' + rest.join(', ') : ''); },
     // 2026-09-23 (KUKY „4. ano“, report „Ask odpověděl skoro stejně jako čtení“): pryč „Answer ONLY within this reading“,
@@ -1945,6 +1951,13 @@ var RP_ASK = {
       return 'Þú gafst leitandanum þennan rúnalestur:\n"' + reading + '"\nRúnir sem dregnar voru: ' + runes + '.';
     },
     q: function (question) { return 'Nú spyr leitandinn EINNAR spurningar um hann:\n"' + question + '"'; },
+    // 2026-10-04: totéž co EN. Psáno islandsky; is-grammar-qa čisté (první znění „byrjaðu þar“ dalo W001 → přepsáno),
+    // korpus „í þessu samtali“ 616 · „hefur þegar fengið“ 1680 · „í svari þínu“ 174 · „upp þráðinn þar“ 905 · „taktu upp þráðinn“ 9.
+    earlier: function (q, a) {
+      return 'FYRR Í ÞESSU SAMTALI — leitandinn spurði:\n"' + q + '"\nog þú svaraðir:\n"' + a + '"\n'
+        + 'Hann hefur þegar fengið það svar — gefðu honum það ekki aftur. Svaraðu því sem nýja spurningin bætir við; '
+        + 'ef hún spyr um eitthvað í svari þínu, taktu upp þráðinn þar.';
+    },
     aspect: function (name, a, rest) {
       var og = rest.length > 1 ? rest.slice(0, -1).join(', ') + ' og ' + rest[rest.length - 1] : rest.join('');
       // Aspekt = přísudek v nominativu („…var innra ljós“) → hodnota ani jméno runy se neskloňují (IS jména run jsou
@@ -1981,27 +1994,28 @@ var RP_ASK = {
 // Runar smi znat — jinak na otazku „co to znamena pro moji praci" odpovida z niceho.
 // ⚠️ Na rozdil od `_askLifeContext` tady NEJDE o vec mimo cteni: cteni uz tam dopadlo.
 // Blok tedy nerika „nepatri to sem", ale „uz je to receno — nezvedej to sam a neopakuj to".
-// ⚠️ SEEKING se sem vedome NEPREDAVA: je to ocekavani o odpovedi a RP_ASK.rules zrcadleni
-// zakazuje. Znalost seekingu by Runara tlacila presne tam, kam nesmi.
+// SEEKING (hledani) se sem PREDAVA od DECISIONS 2026-09-11 (3) jako tichy fakt — blok ho nezveda sam. Do 2026-10-04 tu
+// stalo, ze se „vedome NEPREDAVA“ (ocekavani o odpovedi, zrcadleni zakazuji RP_ASK.rules): platilo jen pred 2026-09-11.
 // Popisky prichazi uz v aktualnim jazyce (`_syncPillLang` v runar-app.js), takze se tu
 // nedohledavaji podruhe.
 // Puvodni otazka je text od uzivatele. Do promptu uz jde v ceste cteni (radka QUESTION),
 // takze tohle neni nova plocha — ale je to DRUHA kopie, a proto se tu na rozdil od cteni
 // KRATI. Delka otazky bez limitu je otevrena pre-launch polozka (RUNAR_BACKLOG); nova
 // kopie ji nesmi zhorsit. Rez jde po posledni cele vete, at to nekonci v pulce slova.
-function _askTrimQ(q) {
+function _askTrimQ(q, max) {
+  var m = max || 300;   // 2026-10-04: strop jako parametr — odpověď z předchozí výměny (krok 2 Asku) je delší než otázka
   var t = String(q || '').trim();
-  if (!t || t.length <= 300) return t;
-  var rez = t.slice(0, 300);
+  if (!t || t.length <= m) return t;
+  var rez = t.slice(0, m);
   var i = Math.max(rez.lastIndexOf('.'), rez.lastIndexOf('?'), rez.lastIndexOf('!'));
   return (i > 40 ? rez.slice(0, i + 1) : rez).trim() + '…';
 }
 // Text otazky od uzivatele je DATA, ne instrukce. Tady se z nej odstrani jen to, cim by
 // instrukci mohl prepsat — zalomeni radku a rovna uvozovka. Duvod a doklad o dire viz
 // scripts/verify_question_injection.js (2026-09-12).
-function _questionSafe(q) {
+function _questionSafe(q, max) {
   var t = String(q || '').replace(/[\r\n\t\u2028\u2029]+/g, ' ').replace(/"/g, "'").replace(/ {2,}/g, ' ');
-  return _askTrimQ(t);
+  return _askTrimQ(t, max);
 }
 function _askCastContext(cast, lang) {
   var c = cast || {}, area = c.area, intention = c.intention, hledani = c.seeking,
@@ -2158,8 +2172,19 @@ function buildNameLorePrompt(name, zaznam, lang, corrections) {
   ].filter(Boolean).join('\n\n');
 }
 
-// reading = the text Rúnar gave · question = seeker's follow-up · runes = comma list of rune names
-function buildAskPrompt(reading, question, runes, lang, corrections, life, cast, spread, aspect) {
+// 2026-10-04 krok 2 Asku (KUKY „3. ano“): POSLEDNÍ předchozí výměna (otázka + odpověď). Do té doby (krok 1, DECISIONS
+// 2026-09-24 (6)) druhý Ask první neviděl a zopakoval ho — report 2026-10-03 u Ehwaz: „druhý spíš jen opakuje. Poslední věta
+// úplně.“ Jen poslední: s premium 2 Asky je to jediná, a velikost bloku zůstává omezená (otázka ≤ 300 zn., odpověď ≤ 1200) —
+// nejdelší Ask prompt v produkci 8302 zn. + blok < 12000 (MAX_PROMPT_CHARS v claude-proxy). Otázku psal člověk, odpověď
+// model — obojí je DATA a jde přes _questionSafe (zalomení, rovná uvozovka; hlídá ㉥ verify_question_injection).
+function _askEarlier(earlier, S) {
+  var e = (earlier || []).filter(function (x) { return x && x.q && x.a; });
+  if (!e.length) return '';
+  var x = e[e.length - 1];
+  return S.earlier(_questionSafe(x.q), _questionSafe(x.a, 1200));
+}
+// reading = the text Rúnar gave · question = seeker's follow-up · runes = comma list of rune names · earlier = [{q, a}] (krok 2)
+function buildAskPrompt(reading, question, runes, lang, corrections, life, cast, spread, aspect, earlier) {
   var S = RP_ASK[lang] || RP_ASK.en;
   // 2026-09-21 (reporty #3/#4, owner „dej ask klicova slova runy"): Ask nesl jen JMENO runy
   // a model si vyznam domyslel — prirovnani pak nesedela k tomu, co runa v NASEM kanonu je.
@@ -2197,6 +2222,7 @@ function buildAskPrompt(reading, question, runes, lang, corrections, life, cast,
   }
   return [
     S.intro(reading, runyText),
+    _askEarlier(earlier, S),   // krok 2 (2026-10-04): předchozí výměna stojí mezi čtením a novou otázkou
     // 2026-09-27: otázka Asku je DATA jako úvodní otázka čtení — _questionSafe (zalomení, rovná uvozovka, délka). Do té doby šla
     // syrově: uvozovka ukončila úsek v „…question about it: \"<q>\"“ a zalomení podvrhlo nový řádek instrukce (verify_question_injection).
     S.q(_questionSafe(question)),

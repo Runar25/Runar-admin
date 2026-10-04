@@ -5937,3 +5937,24 @@ possibilities… each spoken as something that may be so"*. Druhý Ask první ne
 **Hranice:** všechno jsou ownerova čtení, Hagalaz n = 8 proti 4; „without the image" u sol single n = 5 (2 před v4.89, 3 po). Podíl slov
 ze čtení je hrubý: delší odpověď (Opus ~85 slov, sol ~50) má víc nových slov a podíl jí klesá — srovnání **uvnitř sol** (před / po) tím
 zatížené není, délky jsou podobné.
+
+## 2026-10-04 (2) — Krok 2 Asku: druhý Ask s předchozí výměnou opakuje první odpověď o polovinu méně (pilot před nasazením)
+
+Owner: *„3. ano"* (krok 2: druhý Ask dostane poslední výměnu). Harness, ownerovy dvojice a odpovědi `docs/eval/2026-10-04-ask-krok2/`.
+Šest ownerových čtení s dvěma Asky (DB 3.–4. 10.), druhá otázka **bez** výměny (A = produkce v4.90) a **s** výměnou (H = v4.91);
+engine jako owner četl (sol 6 4×, Opus 5 2×), 2 odpovědi na variantu, produkční `buildAskPrompt` a tvar volání proxy.
+
+| | doslovné trojice z 1. odpovědi | koncová formule (regex) | obsahová slova z 1. odp. | slov |
+|---|---|---|---|---|
+| sol 6 A → H (n = 8) | 2,9 → **1,3** | 6/8 → **2/8** | 0,29 → 0,27 | 53 → 53 |
+| Opus 5 A → H (n = 4) | 4,3 → **2,0** | 1/4 → **0/4** | 0,25 → 0,24 | 84 → 82 |
+
+Doslovné opakování první odpovědi klesá na polovinu u obou modelů. Riziko, že sol z vložené odpovědi začne opisovat, se
+neukázalo (trojic ubylo). Obsahová slova se nehnou — obě odpovědi mluví o téže runě.
+**Útok na nástroj (§27):** regex formule nevidí přeformulované varianty — v H stojí *„The rune does not sort you into one"*,
+*„Fehu alone does not mark"*, *„The rune leaves room for both"*. Čtením: tah „runa neříká, která z možností" zůstává asi v **6/12**
+odpovědí H proti asi **8/12** v A. ⇒ Krok 2 řeší opakování PRVNÍ ODPOVĚDI, ne formuli; ta má zdroj v pravidlech Asku (BACKLOG).
+Ownerův případ Ehwaz se při opakování bez výměny (A) tentokrát nezopakoval (0/2) — produkční opakování bylo zčásti náhoda.
+
+**Hranice:** n = 2 na variantu a dvojici; jen EN; IS blok ověřen gramatikou a korpusem, modelem neběžel; netestována otázka přímo
+na slovo z první odpovědi (*„what did you mean by…"*) — to je hlavní nová schopnost, bez výměny ji model neumí z principu.

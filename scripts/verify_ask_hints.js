@@ -416,5 +416,26 @@ sandbox._lastGen = null;
   }
 }
 
+// ── 13) Krok 2 Asku (2026-10-04, KUKY „3. ano“): předchozí výměna dojde do promptu přes `_askBuild` ──
+// Stav se seeduje tam, kam ho píše produkce (`_askLog` v runar-reading.js, plní askRunar po odpovědi). Jen POSLEDNÍ výměna,
+// jen ve STEJNÉM jazyce, a stojí PŘED novou otázkou. Bez výměny (první Ask) blok nesmí být.
+for (const L of ['en', 'is']) {
+  const hlava = L === 'is' ? 'FYRR Í ÞESSU SAMTALI' : 'EARLIER IN THIS CONVERSATION';
+  sandbox._lastGen = null;
+  sandbox._askLog = [];
+  let p = promptZeStavu(L, { drawn: [R('Ehwaz')] });
+  rekni(p.indexOf(hlava) === -1, L + '  první Ask: žádná předchozí výměna');
+  sandbox._askLog = [{ q: 'Q-STARA', a: 'A-STARA', lang: L }, { q: 'Q-POSLEDNI', a: 'A-POSLEDNI', lang: L }];
+  p = promptZeStavu(L, { drawn: [R('Ehwaz')] });
+  rekni(p.indexOf(hlava) !== -1 && p.indexOf('Q-POSLEDNI') !== -1 && p.indexOf('A-POSLEDNI') !== -1,
+        L + '  další Ask nese poslední výměnu (otázku i odpověď)');
+  rekni(p.indexOf('Q-STARA') === -1 && p.indexOf('A-STARA') === -1, L + '  starší výměna ne — jen poslední');
+  rekni(p.indexOf(hlava) < p.indexOf('A co ted?'), L + '  výměna stojí před novou otázkou');
+  sandbox._askLog = [{ q: 'Q-JINA-REC', a: 'A-JINA-REC', lang: L === 'is' ? 'en' : 'is' }];
+  p = promptZeStavu(L, { drawn: [R('Ehwaz')] });
+  rekni(p.indexOf('Q-JINA-REC') === -1 && p.indexOf(hlava) === -1, L + '  výměna v jiné řeči se nepředá');
+}
+sandbox._askLog = [];
+
 console.log(fail ? '\n' + fail + ' selhalo' : '\nOK  nápověda Ask odpovídá stavu čtení');
 process.exit(fail ? 1 : 0);
