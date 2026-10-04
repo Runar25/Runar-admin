@@ -5903,7 +5903,7 @@ bez nahrazování pádů skončí na *„prosakuje: Othily"*). Dnešní brána b
 
 ## 2026-10-04 (1) — Živá čtení 3.–4. 10.: Hagalaz sol 6 × Opus 5 · „without the image" opisuje čtení už před v4.89 · formule v Ascích
 
-Zdroj: ownerova čtení 2026-10-03 13:03 → 2026-10-04 12:04 — **18 čtení** (sol 6 12×, Opus 5 6×), **19 Asků**, **22 reportů** (8× ✦ Keep).
+Zdroj: ownerova čtení 2026-10-03 13:03 → 2026-10-04 12:04 — **18 čtení** (sol 6 12×, Opus 5 6×), **19 Asků**, **22 reportů** (9× ✦ Keep, 13× poznámka).
 Texty v DB (`readings`, `bug_reports`), mimo repo.
 
 **Hagalaz, sol 6 × Opus 5** (owner: *„všech hagalaz čtení… sol 6 proti opus 5"*). V DB 28 Hagalaz EN single; na témže promptu v4.89 je
