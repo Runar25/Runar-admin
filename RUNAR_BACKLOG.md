@@ -699,6 +699,13 @@
   skutečné čtení Kenaz 2026-10-02 (draws `area_face: 1`) končí *„Among your people, someone's absence…“*, totéž co v testu.
   Jak přeměřit z živých čtení: u single s oblastí vzít `prompt_draws->>'area_face'`, podobu z `AREA_FACES` a spočítat, kolik čtení nese
   její slova doslova (přistání [0] i most [1]) — a kolik vět čtení mluví o oblasti. Až bude dost čtení (owner řekne).
+  ⭐ **Owner 2026-10-03 23:46 (report u Hagalaz × Family & Home): *„area face: the people one belongs to. Model to hodně používá
+  a nezní to dobře. Přeformulujeme to."*** Podoba Family & Home [1] (`AREA_FACES` v `v2/runar-utils.js`) dala v živých čteních
+  *„Among your people"*, *„In the people you belong to… making a racket while it stands"* (owner: *„to je špatný"*) a *„what passes
+  between your people"* (owner se v Asku musel zeptat *„What people do you mean?"*). Podoba [0] už nese *belonging* (*„family ties
+  and belonging"*), [1] je tedy skoro duplikát. **Návrh CODE-tune 2026-10-04, čeká na ownerovu volbu:** (A) podobu [1] odebrat —
+  odebere zdroj *„Among your people"* a nic nového nepřidá; (B) nahradit domovem, který Family & Home mezi podobami nemá
+  (*„home and the people who share it"*). IS až po volbě, nativně a ověřeně (§2).
 - [ ] 👁 **Tvrzení o stavu domova („In your home the talk has gone flat“) prompt pořád umí** (DECISIONS 2026-09-24 (19); owner: „ta Isa je špatně“).
   **2026-09-30 změřeno (EVAL_LOG 2026-09-30 (8)):** příčina nebyl obraz (příroda); na v4.82 tvrzení 0/3 (Isa × Family & Home, i týž obraz).
   Zbývá jen HLÍDAT živá čtení — od 23. 9. nebylo žádné s Family & Home. Obraz neměnit.
@@ -847,6 +854,12 @@
   - ✅ **2026-09-25 ŽIVĚ pro všechny (DECISIONS 2026-09-25 (8)):** server `ASKS_PER_READING`, `ASK_MULTI_LIVE = true`, teaser „Your own questions to Rúnar open with {tier}.“ Dříve: **Krok 1 HOTOVÝ v klientu, zapnutý JEN pro admina** (`ASK_MULTI_LIVE = false`, `TIERS.*.asks_per_reading`): dva Asky ke čtení, Rúnar o předchozí výměně neví. → owner živě testuje.
   - **Před ostrým zapnutím (`ASK_MULTI_LIVE = true`) musí jít ven server** (`claude-proxy`): (a) Ask smí i standard (dnes 403 pro vše kromě premium); (b) zdarma do `asks_per_reading` tieru — `legitAsk` dnes pustí zdarma jen PRVNÍ Ask, druhý by prémiovému uživateli strhl měsíční čtení; (c) nad limit odmítnout, nestrhávat; (d) počty zrcadlit z configu + kontrola shody ve smoke (vzor NAME_LORE_LIMIT); (e) atomický zápis `follow_up` (nález 2 níž). Texty „one answer left“ (`ask_teaser`) přepsat podle tieru.
   - **Krok 2 = chatování:** Rúnar dostane předchozí výměnu (otázka + odpověď), aby se dalo doptat i na odpověď z Asku. Vyžaduje nový blok v `buildAskPrompt` (EN + IS nativně), přepočet stropu 12 000 zn. a měření opakování. Podklad z popisů run pro tenhle krok: `docs/archive/2026-09-24-ask-podoby-run.md`.
+    **Doklad, proč na tom záleží (owner 2026-10-03, Ehwaz):** *„1. Ask výborně vysvětlí, ale druhý spíš jen opakuje. Poslední věta úplně."*
+    První (clearer image) končí *„it does not say which one is yours"*, druhý (without the image) *„The rune does not say which is yours"*.
+    Druhý Ask první nevidí, takže ho zopakuje. Navíc ta závěrečná formule (*„the rune/reading does not say which…"*) stojí ve **14 z 19**
+    Asků od 2026-10-03 (sol 10/12, Opus 5 4/7; EVAL_LOG 2026-10-04 (1)) — se dvěma Asky ji člověk uvidí dvakrát po sobě. Vyslovně ji
+    žádné pravidlo nechce; kandidáti v promptu Asku: *„neither confirm it nor take it up"* a *„one or two concrete possibilities… each
+    spoken as something that may be so"* (neměřeno). Měřit spolu s krokem 2.
 - [ ] **Ask — nálezy z průzkumu 2026-09-23** (workflow 5 čtenářů + skeptici, CODE-tune), opravit s druhým Askem nebo dřív:
   1. ✅ *(opraveno 2026-09-24 v kroku 1 — pole je během dotazu zakázané)* **Dvojí odeslání:** Enter v poli Asku volá `askRunar()`, během dotazu je zakázané jen tlačítko, pole ne → druhý Enter pošle druhý souběžný Ask (a oba projdou jako „první“ zdarma).
   2. ✅ *(opraveno 2026-09-27 — `append_follow_up` v DB, DECISIONS 2026-09-27 (9))* ~~**Zápis `follow_up` není atomický**~~ (`persistJournal`: přečti pole → přidej → zapiš celé) — dva souběžné zápisy ztratí jednu odpověď.

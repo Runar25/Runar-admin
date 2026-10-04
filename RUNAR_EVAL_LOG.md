@@ -5900,3 +5900,40 @@ i kvůli němu. Builder teď nahrazuje i pády a build zastaví, když v popisec
 bez nahrazování pádů skončí na *„prosakuje: Othily"*). Dnešní brána běžela už opravená.
 
 **Hranice:** n = 3 soudci, dva soupeři (ne všech 25 run); pilot n = 3, sol 6, jen EN.
+
+## 2026-10-04 (1) — Živá čtení 3.–4. 10.: Hagalaz sol 6 × Opus 5 · „without the image" opisuje čtení už před v4.89 · formule v Ascích
+
+Zdroj: ownerova čtení 2026-10-03 13:03 → 2026-10-04 12:04 — **18 čtení** (sol 6 12×, Opus 5 6×), **19 Asků**, **22 reportů** (8× ✦ Keep).
+Texty v DB (`readings`, `bug_reports`), mimo repo.
+
+**Hagalaz, sol 6 × Opus 5** (owner: *„všech hagalaz čtení… sol 6 proti opus 5"*). V DB 28 Hagalaz EN single; na témže promptu v4.89 je
+**8× sol, 4× Opus 5**:
+
+| | slov čtení (bez ✦) | slov / větu | slov ✦ myšlenky |
+|---|---|---|---|
+| sol 6 (8) | 60 (56–66) | 15,1 | 11,6 |
+| Opus 5 (4) | 70 (64–76) | 17,5 | 23,3 |
+
+Opus píše myšlenku ✦ jako výrok + otázku (*„Some things stand through the hail not because they are strong, but because they were set
+deep — which of the things around you would you be curious to test?"*), sol jen otázku. Starší Opus 4.8 (v4.42, v4.44, n = 2) měl 64 a 67
+slov — kratší nebyl. Ownerovy verdikty: sol 5× *dobré / moc hezké / povedené*; Opus *„úplně nezvládl… špatně chápe"* (svatba a trajekt:
+*„The crossing was planned by one generation and is waited on by another"*), *„In the people you belong to… making a racket while it
+stands"* = *„špatný"*, *„every stone of it white and loud"* → owner v Asku *„Is it stone or hail?"*; ale věta *„In work, the fashionable
+parts go first, and the habits you built slowly are the last to move"* (Opus) = *„líbí se mi"*.
+Podoby oblasti: sol je bere skoro doslova (Purpose [2] *„what gives you the will to continue"*; Family [2] *„those before you and those
+who come after"* + *„what links you"*, rozložené do dvou vět), Opus z nich dělá děj (generace u trajektu).
+
+**Ask „Explain … without the image"** — podíl obsahových slov odpovědi, která stojí i ve čtení (bez stop-slov), napříč verzemi:
+sol single **43 % (v4.80) · 39 % (v4.84) · 42 / 31 / 29 % (v4.89)**; Opus 5 **5–21 %** ve všech verzích (v4.89: 17 %); doslovné trojice
+0–3 u obou. ⇒ Ownerův dojem *„po poslední změně bere odpověď až moc ze čtení"* **v4.89 nezpůsobila** — sol to dělal stejně i předtím;
+je to model. Opus místo toho vykládá runu (*„Hagalaz is the rune of force arriving from outside you…"* — owner: *„super"*).
+
+**Formule na konci Asku** (*„the rune/reading does not say / tell / confirm which…"*, *„leaves open"*): **14 z 19** (sol 10/12, Opus 5 4/7).
+Regex: `(does not|doesn't|cannot|will not) (yet )?(say|tell|confirm|settle|decide|show|promise)|gives no confirmation|leaves (that|this|the)
+(question )?open|leaves open`. Kandidáti v promptu Asku (neměřeno): *„neither confirm it nor take it up"* a *„one or two concrete
+possibilities… each spoken as something that may be so"*. Druhý Ask první nevidí (krok 1, DECISIONS 2026-09-24 (6)) → owner u Ehwaz:
+*„druhý spíš jen opakuje. Poslední věta úplně."*
+
+**Hranice:** všechno jsou ownerova čtení, Hagalaz n = 8 proti 4; „without the image" u sol single n = 5 (2 před v4.89, 3 po). Podíl slov
+ze čtení je hrubý: delší odpověď (Opus ~85 slov, sol ~50) má víc nových slov a podíl jí klesá — srovnání **uvnitř sol** (před / po) tím
+zatížené není, délky jsou podobné.
