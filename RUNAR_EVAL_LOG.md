@@ -5990,3 +5990,22 @@ Kratší než dnes (63 × 71 slov) — Anthropic píše, že effort délku nespo
 vypne — ověřeno voláním: `cache_write_tokens` 1220 → 0. `MODEL_PRICES` zápis počítá správně (`openaiCacheWrite` 1,25 od 2026-09-25).
 
 **Hranice:** n = 6 čtení / 14 Asků na engine, jen EN, jeden den; čas a cena kolísají (Opus `low` 0,0100–0,0232 $).
+
+## 2026-10-04 (4) — Prompt proti návodům Anthropicu a OpenAI: co se dalo změřit hned
+
+Owner: *„hlubší kontrolu promptu podle toho, co jsi našel o modelech… najít nesrovnalosti, pak vyřešíme, co budeme dělat"*.
+Návody čtené 2026-10-04 přímo u výrobců: Anthropic *Prompting best practices*, *Prompting Claude Opus 5*, *…Opus 5.5*, stránka modelu
+Opus 5 · OpenAI *Using GPT-6*, *Prompt engineering*, *A model guide for the GPT-6 family* (2. 10.), stránky modelů gpt-6-sol a 6.1, API
+reference Chat Completions. Nálezy a návrhy → `RUNAR_BACKLOG.md` „Prompt × návody výrobců". Tady jen čísla:
+
+- **Řádek ✦ proti JSONu** (pilot `docs/eval/2026-10-04-low-effort/test_low.json`): sol vždy uvnitř JSONu 12/12 · Opus 5 dnes 3× uvnitř,
+  3× za JSONem · Opus 5 `low` 1× uvnitř, 4× za, 1× chybí. Prompt říká *„return ONLY this JSON array, nothing before or after"* a hned
+  pod tím *„after everything else, on a new line beginning with ✦"*. Parser (`_splitThought`) zvládne obojí.
+- **Věty se zákazem** (never / not / no / avoid…): systémový prompt 21/37 (57 %) · single 22/39 (56 %) · Ask 18/34 (53 %) · Norny
+  21/40 (53 %). Důraz VELKÝMI (NO, ONLY, NEVER…): 2–5 slov na prompt.
+- **Výstupy** (EN single od 20. 9.): Opus 5 n = 26 — pomlčka 0,15 na čtení (4/26), slova ze zakázaného seznamu 0, XML značky 0;
+  sol n = 38 — pomlčky 0, zakázaná slova 0. ⇒ Varování Anthropicu (vypnuté přemýšlení pouští značky) a nezávislých testů (Opus
+  píše pomlčky) se v našich krátkých čteních neprojevují.
+- **Cache Claude** (Opus 5 od 25. 9., n = 27): zápis 19 600, čtení 4 005 tokenů → zhruba nula (~0,02 centu na čtení), na rozdíl od solu.
+
+**Hranice:** jen EN prompty (IS mají stejnou stavbu, zvlášť nezkoumány); počty vět jsou hrubé (dělení na věty regexem).

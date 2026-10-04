@@ -8229,3 +8229,13 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   konstant z 2026-10-02 (chování shodné) → deploy nic cizího nepřepíše.
 - ⚠️ **Účinné až po** `supabase functions deploy claude-proxy --project-ref pmitxjvkeovijreepror --no-verify-jwt` — pouští owner.
 - Affected doc(s): `RUNAR_BACKLOG.md` (cache solu, komentář proxy, koncovka Asku, Opus 5 `low`).
+
+## 2026-10-04 (4) — claude-proxy nasazena (v74): sol `low` + bez zbytečného zápisu do cache · Opus 5 `low` NE
+
+- **Rozhodl:** KUKY 2026-10-04 *„nasaď supabase, máš přístup"* (deploy) · *„nevypadá to lépe, takže ne"* (Opus 5 `low`).
+  **Provedl:** CODE-tune.
+- **Deploy:** `supabase functions deploy claude-proxy --project-ref pmitxjvkeovijreepror --no-verify-jwt` → verze 74. Stažený nasazený
+  kód = repo HEAD `4e07626` (shodný), `verify_jwt: false` zachováno. Účinné: sol čte na `low`, zápis do cache vypnutý (2026-10-04 (3)).
+- **Opus 5 zůstává s vypnutým přemýšlením:** pilot `RUNAR_EVAL_LOG.md` 2026-10-04 (3) — cena +41 %, +2 s, 1/6 čtení useknuté na
+  stropu 700, owner čtení nehodnotí jako lepší. Vracet se jen s rezervou `max_tokens` a novým důvodem (§26).
+- Affected doc(s): `RUNAR_BACKLOG.md` (Opus 5 `low` zavřeno; cache solu a komentář proxy nasazeny).

@@ -709,7 +709,7 @@
   (*„home and the people who share it"*). IS až po volbě, nativně a ověřeně (§2).
   **Owner 2026-10-04: *„spíš odebrat. Uvidíme po přidání low effort."*** → odebrat AŽ po nasazení solu na `low` a pár čteních
   (jedna změna naráz, ať jde poznat, co co udělalo).
-- [ ] **Opus 5 s přemýšlením `low` — čeká na ownera** (KUKY 2026-10-04: *„počkáme na opus 5 s low"*). Pilot EVAL_LOG 2026-10-04 (3):
+- [x] **Opus 5 s přemýšlením `low` — NE** (KUKY 2026-10-04: *„nevypadá to lépe, takže ne"*, DECISIONS 2026-10-04 (4)). Pilot EVAL_LOG 2026-10-04 (3):
   63 slov × dnes 71, ~6 s × 4 s, $0,0148 × $0,0105; **1/6 čtení useknuté** na stropu 700 → pro produkci tvar
   `thinking: {type: "adaptive"}` + `output_config: {effort: "low"}` a `max_tokens` s rezervou na přemýšlení (claude-proxy).
   Anthropic (Prompting Claude Opus 5): *„thinking enabled at low effort performs better than thinking disabled at similar cost"*.
@@ -1091,13 +1091,40 @@ A cokoli v datech mimo repo. To zachytí jen měření na výstupu modelu.
 
 ## Nálezy z workflow — k triáži
 
-### sol: prompt se zapisuje do cache, ale nikdy se z ní nečte — ✅ oprava v repu, čeká na deploy proxy (2026-10-04, CODE-tune)
+### Prompt × návody výrobců (Anthropic Opus 5, OpenAI GPT-6) — nálezy 2026-10-04, ČEKÁ NA OWNERA, co s nimi (CODE-tune)
+Owner: *„najít nesrovnalosti, pak vyřešíme, co budeme dělat“*. Čísla → EVAL_LOG 2026-10-04 (4); citace výrobců ověřené na jejich stránkách.
+1. **Rozpor JSON × ✦** — *„return ONLY this JSON array, nothing before or after"* a hned *„after everything else… ✦"*. Opus dává ✦
+   napůl za JSON, sol dovnitř. Oba výrobci: jasný, nerozporný pokyn. Návrh: ✦ jako pole v JSONu, nebo výslovně „řádek za JSONem".
+2. **Délka u Opusu 5** — Anthropic: Opus 5 píše delší, effort délku neřídí, *„prompt for it explicitly"* + *„a short reminder near the
+   end of the prompt"*. U nás číslo uprostřed, na konci jen *„Stay within the word count"* bez čísla a úplně poslední je sekce ✦.
+   Příznak: Opus 5 čtení ~70 slov proti rozpočtu 50–58 (sol 58–60). Levný test: připomínka s číslem jako poslední řádek.
+3. **Pravidla dvakrát i třikrát** — OpenAI: *„State each instruction once"* (štíhlejší prompty +10–15 % v jejich evalech). Single:
+   délka 2× (+ „no filler" v systému), jeden odstavec 3×, jméno runy jednou 2×, jazyk 2× (systém + čtení), „neříkej, co dělat" 2× v systému.
+4. **Zákazy místo pokynů** — Anthropic: *„Tell Claude what to do instead of what not to do"*. Zákaz má 53–57 % vět každého promptu.
+   Souvisí s ownerovým *„čtení dostává hodně omezení a mantinelů"* a s tím, že Ask (méně zákazů) píše líp (EVAL_LOG 2026-10-03 (1)).
+5. **Data uvnitř pokynů** — oba výrobci: oddělit vstupy od pokynů (XML / Markdown). U nás obraz, podoba oblasti a otázka runy stojí
+   uvnitř vět s pokynem (*„IMAGE — … comes from here: <obraz>. Let it become…"*, *„land on <podoba>"*). Příznak: sol bere vstupy skoro
+   doslova (*„Among your people"*, *„what links you to those before and after"*). Memory `prompt-directive-makes-model-copy`: rámování
+   jako zdroj opisování snížilo (měřeno na Claudovi) — na solu neměřeno.
+6. **Příliš předepsaný postup pro model, který přemýšlí** — OpenAI (GPT-6 průvodce 2. 10.): *„overly specific guidance can now hinder
+   results"*. Sol teď přemýšlí (`low`) a dostává ~7 pevných kroků do 4 vět. Souvisí s nevyřešeným „Obraz × oblast" výš.
+7. **Kontrola vlastní práce v systémovém promptu** — *„LANGUAGE & STYLE — check every sentence before returning"*. Anthropic přímo
+   k Opusu 5: ověřovací pokyny *„can cause over-verification… remove these instructions rather than rewriting them"*. Příznak neměřen.
+8. **Napětí „spoj s člověkem" × „netvrď nic o něm"** — *„The image must connect to where this person is standing right now"* proti
+   NO COLD READING a *„Do not tell them what they carry from their people"*. Přesně v té zóně leží ownerovy výtky (tvrzení o domově,
+   *„someone whose absence is plain"*). OpenAI: nejasné nebo rozporné pokyny model brzdí.
+**Zkontrolováno a v pořádku:** důvod u délky (čte se nahlas) · role v systémovém promptu · stálé napřed, proměnné potom · pomlčky,
+zakázaná slova a uniklé značky ve výstupech 0 · cache Claude zhruba nula. **Nízká priorita:** otázka uživatele v uvozovkách místo
+značek (Anthropic `<pasted_content>` je pro VLOŽENÝ text) · `system` × `developer` role u solu v Chat Completions (neověřeno) ·
+`verbosity` u solu (délka teď sedí).
+
+### sol: prompt se zapisuje do cache, ale nikdy se z ní nečte — ✅ NASAZENO 2026-10-04 (proxy v74, DECISIONS 2026-10-04 (4))
 Od 1. 10. 23 čtení přes gpt-6-sol: `cache_write_tokens` 30 855 ze 30 924 vstupních tokenů, `cached_tokens` 0. Ceník gpt-6-sol
 (2026-10-04): zápis $2,50 = 1,25× vstupu → platili jsme čtvrtinu vstupu navíc za nic. `MODEL_PRICES` to počítá **správně**
 (`openaiCacheWrite` 1,25 od 2026-09-25) — do 2026-10-04 tu stálo, že zápis v ceníku chybí; omyl CODE-tune. Oprava:
 `prompt_cache_options: {mode: "explicit"}` v `callSol` (ověřeno voláním: zápis 1220 → 0), DECISIONS 2026-10-04 (3).
 
-### claude-proxy: zastaralý komentář u řetězu modelů — ✅ opraveno v repu, čeká na deploy proxy (2026-10-04, CODE-tune)
+### claude-proxy: zastaralý komentář u řetězu modelů — ✅ NASAZENO 2026-10-04 (proxy v74)
 `supabase/functions/claude-proxy/index.ts` u `MODELS` začíná *„Primary Opus 4.8; … fall back to Opus 4.7“*, o pár řádků níž stojí platné
 *„2026-09-24: primární claude-opus-5, fallback claude-opus-4-8“*. Kód je správně, první odstavec lže. Opravit při příštím deployi proxy
 (změna jen komentáře; v repu ji neprovádím samostatně, ať se repo a nasazená proxy nerozcházejí bez deploye).
