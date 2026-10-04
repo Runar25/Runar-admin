@@ -136,7 +136,7 @@
   - **Tarify beze změny** proti `RUNAR_PRICING.md`: Starter $6 (60 000 znaků), Creator $22 (220 000), Pro $99 (990 000), Scale $299
     (2 990 000), Business $990 (9 900 000). Přečerpání $0,10 / 1 000 znaků (Multilingual, v3) a $0,05 (Flash/Turbo).
   - **Modely:** islandsky umí JEN rodina v3 — `eleven_v3` (dnes pro IS) a `eleven_v3_conversational` (nízká latence ~280 ms).
-    `eleven_multilingual_v2` (dnes pro EN) islandštinu neumí; `eleven_flash_v2_5` o 50 %% levnější, islandštinu neumí;
+    `eleven_multilingual_v2` (dnes pro EN) islandštinu neumí; `eleven_flash_v2_5` o 50 % levnější, islandštinu neumí;
     `eleven_flash_v2` jen angličtina; **Turbo = zastaralé**.
   - ✅ **Rozhodnuto 2026-09-26 (owner): anglický hlas ZŮSTÁVÁ `eleven_multilingual_v2`** — *„tak jak to je, má důvod a tím důvodem
     je hlas"*. Flash ani v3 pro EN se nezkouší. (Islandština: `v3_conversational` nezkoušeno, nikdo nechtěl.)
