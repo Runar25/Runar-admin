@@ -101,6 +101,10 @@ const DATA = /^(PERSON|DRAWN|SEEKER|LIFE|AREA|SEEKING|INTENTION|QUESTION|REALM|E
     // 2026-09-30: myšlenka ✦ — přidává ji runar-reading.js za prompt (Standard/Premium), builder ji neskládá → řádek na každou runu.
     vm.runInContext('lang = "' + L + '"', S);
     RUNES.forEach((r) => pridej(L, 'myslenka[' + r.n + ']', S._thoughtLine(L, r)));
+    // 2026-10-04: připomínka délky — přidává ji runar-reading.js na konec promptu single, builder ji neskládá.
+    const _pripom = S._lengthReminder(L);
+    if (!_pripom) throw new Error('_lengthReminder(' + L + ') je prázdná — regex nesedí na řádek _lengthBudget');
+    pridej(L, 'delka_pripominka', _pripom);
     // 2026-09-25: každá PODOBA oblasti zvlášť — jinak by se registrovala jen ta, kterou zrovna vylosuje Math.random.
     zJaz('AREAS', L).forEach((a, i) => ((glob('AREA_FACES') || [])[i] || [null])
       .forEach((_, f) => pridej(L, 'oblast[' + i + '.' + f + ']', S._domainContext(a, L, f))));

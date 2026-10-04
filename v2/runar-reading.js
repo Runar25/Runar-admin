@@ -341,6 +341,8 @@ async function _generateReading() {
   await _loadServerLastImage(drawn);   // 2026-09-27: obraz z posledního čtení téže runy (jakékoli zařízení) → los ho vyřadí
   var prompt = buildReadingPrompt(u, drawn, lang, corrections);
   var _thL = _thoughtFor('SINGLE', [drawn], lang); if (_thL) prompt += '\n' + _thL;   // 2026-09-30: myšlenka ✦ (Standard/Premium)
+  // 2026-10-04 (audit promptu bod 2): připomínka délky s číslem ÚPLNĚ na konci — za ✦ (Anthropic k Opusu 5, viz _lengthReminder).
+  var _dR = _lengthReminder(lang); if (_dR) prompt += '\n' + _dR;
   _lastGen = { sys: sys, prompt: prompt, lang: lang, kind: 'single' };   // pro rozbor GPT-6 sol (jen admin)
 
   // Journal meta for the SERVER-SIDE save (proxy persists atomically with the deduction).

@@ -6009,3 +6009,19 @@ reference Chat Completions. Nálezy a návrhy → `RUNAR_BACKLOG.md` „Prompt �
 - **Cache Claude** (Opus 5 od 25. 9., n = 27): zápis 19 600, čtení 4 005 tokenů → zhruba nula (~0,02 centu na čtení), na rozdíl od solu.
 
 **Hranice:** jen EN prompty (IS mají stejnou stavbu, zvlášť nezkoumány); počty vět jsou hrubé (dělení na věty regexem).
+
+## 2026-10-04 (5) — ✦ dovnitř JSONu a připomínka délky na konci: Opus ✦ 6/6 uvnitř, čtení o ~8 slov kratší (v4.92)
+
+Owner: *„1 a 2, jeď"* (audit promptu × návody výrobců, BACKLOG „Prompt × návody výrobců"). Harness a výstupy
+`docs/eval/2026-10-04-mysl-json-delka/`. A = v4.91, B = v4.92 (produkční cesta: builder + ✦ + připomínka v pořadí runar-reading.js).
+Tři čtení jako 2026-10-04 (3) (týž seed), 2× každé.
+
+| | slov čtení | v rozpočtu 50–58 | ✦ uvnitř JSONu |
+|---|---|---|---|
+| Opus 5 A → B | 72,5 (66–77) → **64,3 (58–67)** | 0/6 → 1/6 | 2/6 → **6/6** |
+| sol 6.1 `low` A → B | 53,0 → 53,3 | 6/6 → 6/6 | 6/6 → 6/6 |
+
+Po runách u Opusu: Hagalaz 75/76 → 66/67 · Fehu 77/74 → 65/65 · Wunjo 66/67 → 65/58 — posun drží u všech tří. Sol se nezkrátil pod
+rozpočet (OpenAI varuje, že pokyny ke stručnosti umí zkrátit moc — tady ne). Opus je pořád nad rozpočtem; myšlenka ✦ u něj zůstává
+dlouhá (výrok + otázka, 14–25 slov).
+**Hranice:** n = 6 na buňku, jen EN, jen single; IS a spready neměřeny.

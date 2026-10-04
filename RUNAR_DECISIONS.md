@@ -8250,3 +8250,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   na hraně šumu), ale pomalejší — 8,7 s proti 6,3 s.
 - **Deploy:** CODE-tune na ownerův pokyn, stejně jako v74 (stažený kód porovnán s HEAD, `verify_jwt: false` zachováno).
 - Affected doc(s): žádné.
+
+## 2026-10-04 (6) — Myšlenka ✦ uvnitř JSONu a připomínka délky na konci promptu single (v4.92)
+
+- **Rozhodl:** KUKY 2026-10-04 *„1 a 2, jeď"* (body auditu promptu × návody výrobců). **Provedl:** CODE-tune.
+- **Co:** (1) `THOUGHT_MARK` (`v2/runar-character.js`): *„after everything else"* → *„inside the JSON, at the end of the last "text"
+  value"* (IS *„Í lok síðasta textans inni í JSON-fylkinu…"*, is-grammar-qa čisté) — dřív prompt říkal „jen JSON, nic za ním" a hned
+  pod tím „za tím ✦". (2) `_lengthReminder` (`v2/runar-utils.js`) — úplně poslední řádek promptu single, přidává ho
+  `runar-reading.js` za ✦: EN *„Length, once more: the reading itself is 4 short sentences, 50 to 58 words."* · IS *„Lengdin enn og
+  aftur: Lesturinn sjálfur er 4 stuttar setningar, 50 til 58 orð."* Čísla bere z TÉHOŽ losu `_lengthBudget` (žádná druhá kopie);
+  když regex nesedí, registr pravidel spadne (ověřeno mutací).
+- **Proč:** Anthropic k Opusu 5 — *„prompt for it explicitly… a short reminder near the end of the prompt"*; oba výrobci — pokyny si
+  nesmí odporovat. **Měřeno** (`RUNAR_EVAL_LOG.md` 2026-10-04 (5)): Opus ✦ uvnitř 2/6 → 6/6, čtení 72,5 → 64,3 slov (pořád nad 50–58);
+  sol beze změny (53 slov). Golden builderů beze změny (✦ i připomínku přidává runar-reading.js), registr 337 pravidel.
+- Affected doc(s): `RUNAR_BACKLOG.md` („Prompt × návody výrobců" body 1–2).

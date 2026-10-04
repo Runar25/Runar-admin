@@ -541,9 +541,28 @@ function _essenceFrame(lang, rune) {
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
+// 2026-10-04: poslední los rozpočtu si funkce pamatuje — čte ho _lengthReminder (jedna kopie čísel, §20).
+var _lastLengthBudget = { en: LENGTH_BUDGETS[0], is: LENGTH_BUDGETS_IS[0] };
 function _lengthBudget(lang) {
   var pool = lang === "is" ? LENGTH_BUDGETS_IS : LENGTH_BUDGETS;
-  return pool[Math.floor(Math.random() * pool.length)];
+  var b = pool[Math.floor(Math.random() * pool.length)];
+  _lastLengthBudget[lang === 'is' ? 'is' : 'en'] = b;
+  return b;
+}
+// ── PŘIPOMÍNKA DÉLKY NA KONCI (2026-10-04, KUKY „1 a 2, jeď“; audit promptu, BACKLOG „Prompt × návody výrobců“ bod 2) ──
+// Anthropic (Prompting Claude Opus 5): Opus 5 píše delší než předchozí Opusy, effort délku nespolehlivě řídí — „prompt for it
+// explicitly… pair the instruction with a short reminder near the end of the prompt“. U nás bylo číslo jen uprostřed
+// (_lengthBudget) a na konci „Stay within the word count“ bez čísla, úplně poslední byla sekce ✦. Opus 5 čtení ~70 slov proti
+// 50–58 (EVAL_LOG 2026-10-04 (3)). runar-reading.js ji přidá ÚPLNĚ na konec promptu single (za ✦). Čísla se berou z TÉHOŽ losu
+// rozpočtu (regex nad řádkem _lengthBudget) — nesedí-li regex, připomínka se vynechá a hlídá to kontrola ㉜ registru.
+// IS: is-grammar-qa čisté (po dvojtečce celá věta → velké písmeno, Z002 na první verzi); korpus „enn og aftur“ 30 384.
+function _lengthReminder(lang) {
+  var je = lang === 'is';
+  var b = _lastLengthBudget[je ? 'is' : 'en'] || '';
+  var m = je ? b.match(/(\d+) stuttar setningar, (\d+) til (\d+) orð/) : b.match(/(\d+) short sentences, (\d+) to (\d+) words/);
+  if (!m) return '';
+  return je ? 'Lengdin enn og aftur: Lesturinn sjálfur er ' + m[1] + ' stuttar setningar, ' + m[2] + ' til ' + m[3] + ' orð.'
+            : 'Length, once more: the reading itself is ' + m[1] + ' short sentences, ' + m[2] + ' to ' + m[3] + ' words.';
 }
 
 // ── PODOBY OBLASTÍ (2026-09-25, KUKY „podoby jsou dobré, nasadíme a po pár dnech vyhodnotíme“) ──────────────

@@ -1093,11 +1093,11 @@ A cokoli v datech mimo repo. To zachytí jen měření na výstupu modelu.
 
 ### Prompt × návody výrobců (Anthropic Opus 5, OpenAI GPT-6) — nálezy 2026-10-04, ČEKÁ NA OWNERA, co s nimi (CODE-tune)
 Owner: *„najít nesrovnalosti, pak vyřešíme, co budeme dělat“*. Čísla → EVAL_LOG 2026-10-04 (4); citace výrobců ověřené na jejich stránkách.
-1. **Rozpor JSON × ✦** — *„return ONLY this JSON array, nothing before or after"* a hned *„after everything else… ✦"*. Opus dává ✦
-   napůl za JSON, sol dovnitř. Oba výrobci: jasný, nerozporný pokyn. Návrh: ✦ jako pole v JSONu, nebo výslovně „řádek za JSONem".
+1. ✅ **Rozpor JSON × ✦ — HOTOVO 2026-10-04 (v4.92, DECISIONS 2026-10-04 (6)):** ✦ výslovně dovnitř JSONu; Opus 2/6 → 6/6 uvnitř.
 2. **Délka u Opusu 5** — Anthropic: Opus 5 píše delší, effort délku neřídí, *„prompt for it explicitly"* + *„a short reminder near the
    end of the prompt"*. U nás číslo uprostřed, na konci jen *„Stay within the word count"* bez čísla a úplně poslední je sekce ✦.
-   Příznak: Opus 5 čtení ~70 slov proti rozpočtu 50–58 (sol 58–60). Levný test: připomínka s číslem jako poslední řádek.
+   Příznak: Opus 5 čtení ~70 slov proti rozpočtu 50–58 (sol 58–60). ◐ **2026-10-04 (v4.92):** připomínka s číslem jako poslední
+   řádek single → Opus 72,5 → 64,3 slov (EVAL_LOG 2026-10-04 (5)); pořád nad rozpočtem. Spready a IS zatím bez připomínky.
 3. **Pravidla dvakrát i třikrát** — OpenAI: *„State each instruction once"* (štíhlejší prompty +10–15 % v jejich evalech). Single:
    délka 2× (+ „no filler" v systému), jeden odstavec 3×, jméno runy jednou 2×, jazyk 2× (systém + čtení), „neříkej, co dělat" 2× v systému.
 4. **Zákazy místo pokynů** — Anthropic: *„Tell Claude what to do instead of what not to do"*. Zákaz má 53–57 % vět každého promptu.

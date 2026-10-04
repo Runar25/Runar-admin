@@ -1749,9 +1749,14 @@ function _parseSegments(raw) {
 // DECISIONS 2026-09-30 (8)). Zdroj v uvozovkách + „vlastními slovy“ = zdroj, ne text k opsání (memory prompt-directive-makes-model-copy).
 // Kdo a kde rozhoduje _thoughtFor (runar-reading.js): tarif TIERS.*.reading_thought, druh čtení single · Kříž · Norny.
 // Testy: EVAL_LOG 2026-09-30 (4) a (6). Znění EN = otestované slovo od slova; IS psáno islandsky (is-grammar-qa, korpus).
+// 2026-10-04 (KUKY „1 a 2, jeď“; audit promptu × návody výrobců, BACKLOG „Prompt × návody výrobců“ bod 1): do té doby
+// „after everything else / Þegar allt annað er komið“ — a o řádek výš stojí „return ONLY this JSON array, nothing before or
+// after“. Rozpor: Opus dával ✦ napůl ZA JSON (3/6, s přemýšlením 4/6), sol vždy dovnitř (12/12; EVAL_LOG 2026-10-04 (4)).
+// Parser zvládne obojí, ale pokyn si nesmí odporovat → ✦ výslovně DOVNITŘ, na konec posledního textu (jak to dělá sol).
+// IS: is-grammar-qa čisté; „í lok síðasta“ 11 399 (korpus), „aftast í síðasta“ 0 → nepoužito.
 var THOUGHT_MARK = {
-  en: 'AFTER THE READING — after everything else, on a new line beginning with ✦',
-  is: 'Á EFTIR LESTRINUM: Þegar allt annað er komið kemur ein stutt lína til viðbótar í nýrri línu sem hefst á ✦',
+  en: 'AFTER THE READING — inside the JSON, at the end of the last "text" value, on a new line beginning with ✦',
+  is: 'Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein stutt lína til viðbótar í nýrri línu sem hefst á ✦',
 };
 var THOUGHT_LINE = {
   en: function (jm, zdroj) { return THOUGHT_MARK.en + ', one more short line set apart: a thought offered for the seeker to carry away, grown from what ' + jm + ' is, not from the picture. Its source: "' + zdroj + '" Let it grow out of that, but say it in your own words, and turn it toward the seeker: a question to them, or a quiet invitation to notice something. Never advice about their life, never a claim about what they feel or know.'; },
