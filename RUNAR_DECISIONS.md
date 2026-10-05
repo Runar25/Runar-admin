@@ -8310,3 +8310,25 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   z edge funkce. Owner (report 07:40): *„Pokud jsi změnil model na sol6.1, proč jsi to taky neupravil… nevíš, kde co je."* Ověřeno
   mutací (proxy na 6.1 → 2× FAIL).
 - Affected doc(s): `RUNAR_BACKLOG.md` (audit: co do labu, co malé) · `CLAUDE.md` (lane CODE-tune).
+
+## 2026-10-05 (4) — Strom (lab): kmen roste spolu s rozpětím ramen; ramena na stejné straně se už nesbíhají
+
+- **Rozhodl:** KUKY 2026-10-05 *„pokračuj, oprav i ty dvě ramena na stejné straně. strom musí zároveň růst do výšky s tím, jak roste
+  do šířky. nevím, jak to je teď, já to spíš nevidím. jak to?"*. **Provedl:** CODE-tree, jen LAB.
+- **Jak to bylo (změřeno):** modelový strom od 20 do 300 čtení — koruna 3× širší, kmen jen o 60 % vyšší (výška/šířka 1,5 → 0,9);
+  KUKYho strom od 20 do 64 čtení kmen +20 %, koruna +42 %. Šířku dělá délka ramen (čtení na nich), výška kmene rostla jen s věkem a brzy
+  se zpomalila.
+- **Teď — výška:** kmen je aspoň `hwRatio` × rozpětí ramen (ramena + povýšené, bez větviček; výchozí 0,75 = poměr KUKYho stromu kolem
+  20. čtení); když ne, doroste. Posuvník „výška kmene : rozpětí ramen". První verze téhož dne (výška stromu ≥ 1,25 × šířka celé koruny)
+  držela poměr přesně, ale kmen mezi čteními skákal až o 20 px a občas se zkrátil (šířku mění skokem větvičky, které vyčuhují) — zahozena.
+  KUKYho strom po 64 čteních: kmen 259 → 296 px; modelový po 300 čteních 390 → 562 px.
+- **Teď — ramena na stejné straně:** příčina změřená oběma směry páky: rameno vyrůstá podél kmene a od něj se odklání přes 45 % své délky,
+  takže strmé spodní rameno vyjelo po kmeni až k výstupu ramene nad ním na téže straně (vypadalo to jako dvě větve z jednoho místa);
+  pomalejší odklon všem: souběhů 47 → 86. Oprava ve dvou částech: (a) rameno s blízkým sousedem nad sebou na téže straně se odkloní dřív,
+  nejvýš o 30 % (plný rychlý odklon srazil souběhy na 17, ale ramena odcházela od kmene v ostrém úhlu jako klacky — „koště"); (b) na každé
+  straně spodní rameno nesmí být strmější než rameno nad ním (nejmenší změna, která obrácení odstraní; bez svorek zrušeného vějíře).
+  Nepomohlo (změřeno a zahozeno): kolmý rozestup podle sklonu (47 → 48), rozestup podle délky odlepení (48), slabší zdvih špiček (42).
+- **Změřeno (výchozí posuvníky, proti commitu a89e32c):** 24 modelových stromů souběhů 158 → 62, z toho dvě ramena na stejné straně
+  74 → 21; 352 stromů: stejná strana ≥ 30 px, levo-pravo ≥ 15 px, nic pod 22 %; KUKYho strom v každém okamžiku růstu totéž, jediné
+  mělké křížení (Gebo + Uruz, obě větve vidět); otočení větvičky > 8° 0, ramene > 5° 0, sklouznutí > 8 px 25 (dřív 20, nejvíc 20 px proti 25).
+- Affected doc(s): `RUNAR_TREE.md` §5 (nový záznam) · `RUNAR_TREE_MAP.md` §2, §5, §7, §13 · `RUNAR_BACKLOG.md` (souběhy) — v tomto commitu.

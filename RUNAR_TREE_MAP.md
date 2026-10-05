@@ -25,7 +25,7 @@
 - Strana čtení (nitro/svět) = **oblast** (`AREA_LAT`); bez oblasti svět runy jen mírně (`latOf`). **Promítne se:** překlopení a natočení ramene, strana větvičky na rodiči.
 
 ## 2. Velikost stromu (draw, před stavbou)
-- **Výška kmene** = věk (semínko + počet čtení × `readingEvery`) × `treeHeightMax` × velké spready ohně/vzduchu (`hExp`) × celková zóna (`Ztree`: budoucnost vyšší). Jedna rovnice `trunkTopY` pro draw, kapacitu (§3) i časovou smyčku (§5). **Kmen ještě povyroste**, když se ramena s rozestupem nevejdou (časová smyčka §5, `needH`; nejvýš po výšku obrazovky).
+- **Výška kmene** = věk (semínko + počet čtení × `readingEvery`) × `treeHeightMax` × velké spready ohně/vzduchu (`hExp`) × celková zóna (`Ztree`: budoucnost vyšší). Jedna rovnice `trunkTopY` pro draw, kapacitu (§3) i časovou smyčku (§5). **Kmen ještě povyroste**, když se ramena s rozestupem nevejdou (časová smyčka §5, `needH`; nejvýš po výšku obrazovky), a **roste s rozpětím ramen**: je aspoň `hwRatio` × rozpětí ramen a povýšených (bez větviček); když ne, draw se postaví znovu s vyšším kmenem (`_hwTop`, nejvýš jeden přepočet; rozpětí na výšce kmene skoro nezávisí).
 - ⚠️ **MRTVÉ:** `wExp` (velké spready vody/země → „šířka“) a `mExp` (stínu → „mohutnost“) se spočítají (`effCanopy`, `girth`) a **nikde se nepoužijí** — panel RŮST je přesto ukazuje jako „expanze: šířka / mohutnost“. Nalezeno 2026-10-03 při mapování.
 - **Promítne se:** výška kmene = kolik místa je pro ramena (kapacita, §3) a jak daleko od sebe vycházejí.
 
@@ -49,6 +49,7 @@ Prochází čtení od založení; po každém čtení:
 - **Rozestup**: nové rameno se narodí do nejbližší volné mezery mezi skutečnými výškami; pořadí podle výšky se nemění; sousední výstupy na **stejné straně** aspoň `exitMinPx`, levé–pravé (a od vůdčí větve) polovinu. Strana = kam rameno opravdu míří (úhel z minulého čtení); do 0,2 rad od svislice (v překlápění) platí obě. Když se nevejdou, **povyroste kmen** (`needH`, jen roste); podlaha (`exitFloor`) ustoupí jen u stropu obrazovky. Krok k cíli malý; dokud je někde mezera pod rozestupem, až 12 rychlých kroků v jednom čtení.
 - **Cílový úhel**: neutrální poloha (FR) **ohnutá tíhou** (`bendMag`: zóna čtení = směr nahoru/do strany/dolů, počet čtení = síla, `bendK`, `bendStr`) + **natočení za čteními** (`areaSide` × rovnováha nitro/svět) + životní runa (`lifeLean`), omezeno `softSide`.
 - ~~Vějíř~~ **zrušen 2026-10-03** (DECISIONS (15)): nutil na každé straně nižší rameno vodorovněji než rameno nad ním → vodorovné klacky od země nahoru („koště").
+- **Pořadí úhlů na straně** (2026-10-05): spodní rameno nesmí být strmější než rameno nad ním — porušená dvojice se srovná na průměr, spodní aspoň o 0,10 rad vodorovněji; bez svorek.
 - K cílovému úhlu rameno jde nejvýš `LR_STEP` za čtení (žádný skok).
 - **Promítne se:** `FRAC` (výšky → engine kmene `T.exitFrac` → zúžení svazku), `_ANG` (úhly ramen), `_KU` (místa větviček na rameni) a místo odštěpení povýšené větve.
 
@@ -60,7 +61,7 @@ Prochází čtení od založení; po každém čtení:
 
 ## 7. Tvar ramene po délce — `growBranch` → `buildBranch` → `branchAngle` (`runar-branch.js`)
 Směr ramene se po délce mění — **tohle rozhoduje, jestli se ramena potkají, ne místo výstupu**:
-1. **Napojení:** rameno začíná ve směru tečny kmene (svisle) a ke svému cílovému úhlu se stáčí plynule přes první část délky (`branchAngle`, `bend`). Do té doby běží podél kmene — přes místa, kde vycházejí ramena nad ním.
+1. **Napojení:** rameno začíná ve směru tečny kmene (svisle) a ke svému cílovému úhlu se stáčí plynule přes první část délky (`branchAngle`, `bend`). Do té doby běží podél kmene — přes místa, kde vycházejí ramena nad ním. Má-li nad sebou na téže straně blízko souseda, odkloní se dřív (nejvýš o 30 %; „NAPOJENI PODLE MISTA“) — jinak vyjelo k jeho výstupu a ramena splynula.
 2. **Prohnutí** (`arc`): po celé délce se otáčí na stranu ohybu, síla = element (`curveMul`) × runa (`curve`) × posuvník gesto (`curve`, × variace a ætt).
 3. **Vlnění** (`wobble` × runa).
 4. **Zdvih špičky** (`tipLift` × runa × záměr; „up“ špičky silněji): poslední část délky se stáčí zpět ke svislici — špička nižšího ramene stoupá k rameni nad ním.
@@ -93,6 +94,7 @@ Směr ramene se po délce mění — **tohle rozhoduje, jestli se ramena potkaj�
 | max ramen · povýšení · tempo | počet ramen a povýšených větví (§3) |
 | kam nejníž smí větev · rozestup ramen na stejné straně | výšky výstupů, kapacita kmene, růst kmene kvůli místu (§2, §3, §5) |
 | napojení ramene · zdvih špičky ramen | tvar ramen po délce (§7) |
+| výška kmene : rozpětí ramen | výška kmene, jak strom roste do výšky se šířkou (§2) |
 | čas čtení → výška | jak silně zóna posouvá výšku ramene (§5) |
 | nitro/svět → natočení | úhel ramene za oblastmi čtení (§5) |
 | tíha · kolik čtení ohne · neutrální poloha | úhel ramene (§5) |

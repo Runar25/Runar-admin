@@ -417,6 +417,7 @@ HTML = r"""<!DOCTYPE html>
   function trunkTopY(age, bigH, zSum, zN){ var hf=age/(age+420), hX=Math.min(1.2, bigH/18), Zt=zN ? zSum/(zN+8) : 0;
     return clamp(trunkT.groundY - lerp(180, trunkT.treeHeightMax, hf)*(1+0.2*hX)*(1+0.22*Zt), 110, trunkT.groundY-110); }
   var SEED_AGE0=25;   /* = SEED_AGE v drawu (vek seminka); stableAssign z nej pocita vysku kmene pri kazdem cteni */
+  var _hwTop=null;   /* PROPORCE: vrchol kmene pro druhy pruchod drawu (kmen doroste k sirce koruny), jinak null */
   var _ANG=[], _GANG=[], _GTURN=[];   /* uhel ramen v case (casova smycka vysek v drawu); _GTURN = smer odbocky povysene */
   var _runeTot={}, _vlogRef=[];   /* INSPEKCE (2026-10-03): kolikrat runa padla na celem strome + log, ze ktereho se prave kreslilo */
   /* PREHLED VETVI: hodnoty vedle sebe (prehlednejsi nez cist ze stromu). Cte TATAZ meta,
@@ -544,7 +545,7 @@ HTML = r"""<!DOCTYPE html>
           gradLen:1,   /* o kolik je graduant delsi nez bezna odbocka (1.35 = drivejsi stav) */
           gradStrand:1, gradStrandW:0.65, gradGap:2.2,   /* VERZE B: graduant = vlastni pramen (0 = verze A, dnesni stav) */   /* F9: kolik tazeni = dalsi odbocka · strop na vetev · rozestup opakovani */   /* F7: kam po delce vetve sedaji odbocky / graduanti */
           canopy:0.5, diversity:0.4, readingEvery:3, vigorMature:25, maxMains:25, gradFrac:0.33, gradEvery:12,
-          bendN:0.65, bendK:8, bendStr:1, exitMinPx:30, limbBendU:0.45, limbTip:1,   /* tvar ramen = ranni (2026-10-03 KUKY "a je to koste": 0,15 / 0,5 proti prekryvum delalo tuhe vodorovne klacky) */   /* exitMinPx (2026-10-03, KUKY "30px min." + obrazek 4): rozestup vystupu ramen na STEJNE strane; leve a prave se stridaji v polovine */
+          bendN:0.65, bendK:8, bendStr:1, exitMinPx:30, limbBendU:0.45, limbTip:1, hwRatio:0.75,   /* hwRatio (2026-10-05, KUKY "strom musi zaroven rust do vysky s tim, jak roste do sirky"): kmen aspon hwRatio × rozpeti ramen; 0,75 = KUKYho strom kolem 20. cteni */   /* tvar ramen = ranni (2026-10-03 KUKY "a je to koste": 0,15 / 0,5 proti prekryvum delalo tuhe vodorovne klacky) */   /* exitMinPx (2026-10-03, KUKY "30px min." + obrazek 4): rozestup vystupu ramen na STEJNE strane; leve a prave se stridaji v polovine */
             /* TIHA (2026-10-03): neutralni rozevreni ramene · kolik cteni ho ohne napul · sila; maxMains 10 -> 25 = 14 mist element×zona + 11 povyseni (KUKY) */
           variace:0.7, textura:0.85,
           glZrno:34, glHloubka:0.85,   /* WebGL rezim: meritko textury podel vetve · hloubka prasklin */
@@ -607,7 +608,8 @@ HTML = r"""<!DOCTYPE html>
     ['twigMax',2,12,1,'max vetvi na jedne vetvi (pak o patro niz)'],
     ['bendStr',0,1.5,0.05,'tiha cteni -> ohyb ramene (nahoru/do strany/dolu)'],['bendK',1,40,1,'kolik cteni ohne rameno napul'],
     ['bendN',0.2,1.2,0.05,'neutralni poloha noveho ramene (od svislice)'],
-    ['exitMinPx',10,60,1,'rozestup ramen na stejne strane (px); levo-pravo polovina'] ], crownT);
+    ['exitMinPx',10,60,1,'rozestup ramen na stejne strane (px); levo-pravo polovina'],
+    ['hwRatio',0.3,1.5,0.05,'vyska kmene : rozpeti ramen (kmen doroste, kdyz ramena zesiri)'] ], crownT);
   /* VZHLED — jak to vypada. Doladi se jednou a zapece; nema smysl u toho sedet. */
   makeTune('tune-crown-look', [
     ['length',30,160,1,'delka hlavni'],['curve',0,1.5,0.05,'gesto (ohyb)'],['variace',0,1,0.05,'variace vetvi'],
@@ -1657,11 +1659,21 @@ HTML = r"""<!DOCTYPE html>
         var liveG=[]; gradStrands.forEach(function(G, j){ if(G.at<=i3 && hh[G.p]!=null){ liveG.push(j);
           var frg=FR[100+j]||{ side:0, mag:0 }, tg=-Math.PI/2 + lifeLean*0.6 + (gS0[j] ? gSd[j]*bendMag(frg.mag, gZ[j], gN[j]) : 0) + (crownT.areaSide||0)*(gSl[j]/(gN[j]+K0s));
           tgA['g'+j]=softSide(tg, -Math.PI/2); } });
+        /* PORADI UHLU NA STRANE (2026-10-05, KUKY "oprav i ty dve ramena na stejne strane"): spodni rameno strmejsi nez rameno nad
+           nim na teze strane do nej vzdy vroste (modelove stromy: Tiwaz/Othila 67°/38°, Raidho/Hagalaz 80°/38°). Nejmensi zmena,
+           ktera obraceni odstrani: porusena dvojice (a retez) se srovna na prumer, spodni aspon o FANM vodorovneji (PAV). Zadne
+           svorky — zruseny vejir (DECISIONS 2026-10-03 (15)) nutil 0,25 rad na kazde rameno a svorky az do vodorovna (koste). */
+        [1,-1].forEach(function(sd6){ var E6=ordL.filter(function(q){ return sdQ[q]===sd6; }).sort(function(a,b){ return hh[b]-hh[a]; });
+          if(E6.length<2) return; var FANM=0.10, bl=[];
+          E6.forEach(function(q, a){ var v=(tgA[q]+Math.PI/2)*sd6 - a*FANM; bl.push({ v:v, n:1 });
+            while(bl.length>1 && bl[bl.length-2].v>bl[bl.length-1].v){ var b2=bl.pop(), b1=bl.pop(); bl.push({ v:(b1.v*b1.n+b2.v*b2.n)/(b1.n+b2.n), n:b1.n+b2.n }); } });
+          var a2=0; bl.forEach(function(b){ for(var t=0; t<b.n; t++, a2++){ var q=E6[a2]; tgA[q]=-Math.PI/2 + sd6*(b.v + a2*FANM); } }); });
         ordL.forEach(function(q){ angQ[q]=(angQ[q]==null) ? tgA[q] : angQ[q]+clamp(tgA[q]-angQ[q], -LR_STEP, LR_STEP); });
         liveG.forEach(function(j){ var tg=tgA['g'+j]; gAngQ[j]=(gAngQ[j]==null) ? tg : gAngQ[j]+clamp(tg-gAngQ[j], -LR_STEP, LR_STEP); });
         for(var rk4 in rz){ var tu4=clamp((rz[rk4]/(rn[rk4]+2)+1)/2, 0, 1); ru[rk4]=(ru[rk4]==null) ? tu4 : ru[rk4]+clamp(tu4-ru[rk4], -0.01, 0.01); }
       }
       if(HfinQ>0) trunkT.topY=Math.min(trunkT.topY, trunkT.groundY-HfinQ);   /* kmen povyrostl, kdyz ramena potrebovala misto (needH) */
+      if(_hwTop!=null) trunkT.topY=Math.min(trunkT.topY, _hwTop);   /* PROPORCE: druhy pruchod — kmen doroste k sirce koruny */
       FRAC[0]=clamp(crownT.exitTop+0.02, 0.30, 0.98); FRAC0[0]=FRAC[0];   /* vudci vetev (zakladaci skuld) = vrchol kmene */
       for(var q7=1; q7<mainsN; q7++){ FRAC0[q7]=tgtOf(q7); FRAC[q7]=(hh[q7]!=null) ? hh[q7] : FRAC0[q7]; ANG[q7]=angQ[q7]; }
       _ANG=ANG; gradStrands.forEach(function(G, j){ _GANG[j]=gAngQ[j]; _GTURN[j]=gTurnQ[j]; });
@@ -1833,6 +1845,18 @@ HTML = r"""<!DOCTYPE html>
                        (dobSeed^(k*0x9b1)^(mi*0x2f5))>>>0,
                        rootsT.length*rootsT.mirrorLen*pf*emg, rdepth-0.05, k, mi, be);
           }
+          /* NAPOJENI PODLE MISTA (2026-10-05, KUKY "oprav i ty dve ramena na stejne strane"): rameno vyrusta podel kmene a od nej
+             se odklani pres `limbBendU` sve delky. Strme rameno pod jinym ramenem na teze strane tak vyjelo po kmeni az k jeho
+             vystupu a ramena se tam prekryla (modelove stromy: vetsina z 47 soubehu ramen na stejne strane; vypadalo to jako dve
+             vetve z jednoho mista). Odklon se zrychli jen tolik, aby rameno bylo od kmene aspon o sirku (wSep) dal, nez doroste
+             k vystupu souseda nad sebou (gUp): bocni posun po vystoupani s ~ odklon × s^3 / (bendU×L)^2. Odklon nejvys o 30 %
+             rychlejsi nez `limbBendU` — plne rychly srazil soubehy 47 -> 17, ale ramena odchazela od kmene v ostrem uhlu jako klacky. */
+          var sdK=((ang+Math.PI/2)>=0) ? 1 : -1, Hn=trunkT.groundY-trunkT.topY, gUp=1e9;
+          for(var jn=0; jn<mainsN; jn++){ if(jn===k || FRAC[jn]==null || FRAC[jn]<=frac || (jn>0 && _ANG[jn]==null)) continue;
+            if(jn===0 || (((_ANG[jn]+Math.PI/2)>=0) ? 1 : -1)===sdK) gUp=Math.min(gUp, (FRAC[jn]-frac)*Hn); }
+          if(k>0 && gUp<1e9){ var dlt=Math.max(0.03, Math.abs(ang-tang)), Lpx=mcfg.length*2.4*lenF, wSep=1.5*ex.w+4;
+            var bU0=(mcfg.limbBendU!=null) ? mcfg.limbBendU : 0.45;
+            mcfg.limbBendU=Math.max(0.7*bU0, Math.min(bU0, 0.8*Math.sqrt(dlt*gUp*gUp*gUp/wSep)/Math.max(1, Lpx))); }   /* nejvys o 30 % rychleji: plny rychly odklon delal z ramen tuhe klacky (koste) */
           var _cStart=crown.length;   /* vse, co growBranch prida, patri TETO vetvi -> otagovat k */
           var mainLimb=growBranch(crown, mcfg, ex.x, ex.y, tang, ang-tang, 'main', brune.k,   /* V4b: roste rovnou do sveho smeru (drive kostra + tuhe otoceni -> smycky) */
                      (dobSeed ^ (k*0x9e37))>>>0, lenF, ex.w, ex.depth, 0, sizeF, twRunes);
@@ -1958,6 +1982,18 @@ HTML = r"""<!DOCTYPE html>
        spliced do souvisleho tahu koren->kmen->vetev + runove korinky pushnute do roots[].
        = STEJNY mechanismus jako vetev, jen dolu. */
 
+    /* PROPORCE (2026-10-05, KUKY: "strom musi zaroven rust do vysky s tim, jak roste do sirky. nevim, jak to je ted, ja to spis
+       nevidim"). Zmereno: modelovy strom od 20 do 300 cteni koruna 3× sirsi, kmen jen o 60 % vyssi -> vyska/sirka 1,5 -> 0,9.
+       Sirka roste s delkou ramen (cteni na nich), vyska kmene s vekem a brzy se zpomali. Ted: kmen je aspon hwRatio × ROZPETI
+       RAMEN (ramena + povysene, bez vetvicek) — kdyz ne, doroste a strom se postavi znovu (rozpeti na vysce kmene skoro
+       nezavisi). Rozpeti ramen, ne sirka cele koruny: vetvicky, ktere vycuhuji, meni sirku skokem a kmen pak mezi ctenimi
+       skakal az o 20 px a obcas se zkratil (prvni verze téhož dne). Nejvys jeden prepocet; stromek s vyssim kmenem se nemeni. */
+    if(_hwTop==null && _pick.length){ var cx0=1e9, cx1=-1e9;
+      _pick.forEach(function(p){ if(typeof p.k!=='number' || !p.pts) return; var tp0=(p.meta && p.meta.tp) || 0;
+        for(var pi=tp0; pi<p.pts.length; pi++){ var q=p.pts[pi]; if(q.y>=trunkT.groundY-2) continue; if(q.x<cx0) cx0=q.x; if(q.x>cx1) cx1=q.x; } });
+      var cWw=cx1-cx0, hT0=trunkT.groundY-trunkT.topY, wantT=((crownT.hwRatio!=null) ? crownT.hwRatio : 0.75)*cWw;
+      if(cWw>0 && hT0<wantT-1){ _hwTop=trunkT.groundY-Math.min(1000, wantT);
+        try { draw(); } finally { _hwTop=null; } return; } }
     crown.forEach(function(L){ all.push(L); });
     roots.forEach(function(L){ all.push(L); });
     all.sort(function(a,b){ return a.depth-b.depth; });

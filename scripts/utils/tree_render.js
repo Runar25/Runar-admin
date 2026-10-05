@@ -7,21 +7,21 @@
 // mel, a uz to neni strom." Zadne meridlo se neptalo, jak to vypada. Pred hlasenim zmeny stromu: tahle kresba vedle
 // posledni verze, kterou owner prijal, a podivat se (memory break-your-own-work-before-reporting, bod 7).
 //   node scripts/utils/tree_render.js out.png "popis|cesta.html|{crownT json}" ...   (cesta '-' = aktualni lab)
-//   LOGN=30 = strom po prvnich 30 ctenich; LOGFILE=log.json = jiny log nez KUKYho. Starsi verzi labu postav z
+//   LOGN=30 = strom po prvnich 30 ctenich (nebo 4. pole panelu: "popis|html|{}|30" = rust vedle sebe); LOGFILE=log.json = jiny log nez KUKYho. Starsi verzi labu postav z
 //   `git show <commit>:build_crown_composer.py` s DST jinam.
 const fs = require('fs'), zlib = require('zlib');
 const { labRun } = require('./tree_diag.js');
 const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
 if (process.env.LOGFILE) st.log = JSON.parse(fs.readFileSync(process.env.LOGFILE, 'utf8'));   // LOGFILE = jiny log (JSON pole cteni), napr. modelovy strom
 const LOGN = process.env.LOGN ? +process.env.LOGN : st.log.length;
-const out = process.argv[2], specs = process.argv.slice(3).map(s => { const [lbl, html, cf] = s.split('|'); return { lbl, html: html === '-' ? null : html, cf: cf ? JSON.parse(cf) : {} }; });
+const out = process.argv[2], specs = process.argv.slice(3).map(s => { const [lbl, html, cf, ln] = s.split('|'); return { lbl, html: html === '-' ? null : html, cf: cf ? JSON.parse(cf) : {}, logn: ln ? +ln : LOGN }; });
 const PW = 336, PH = 540, M = 8;
 const parseCol = c => { c = String(c || '#ccc'); let m;
   if ((m = c.match(/^#([0-9a-f]{6})$/i))) return [parseInt(m[1].slice(0, 2), 16), parseInt(m[1].slice(2, 4), 16), parseInt(m[1].slice(4, 6), 16), 1];
   if ((m = c.match(/^#([0-9a-f]{3})$/i))) return [parseInt(m[1][0] + m[1][0], 16), parseInt(m[1][1] + m[1][1], 16), parseInt(m[1][2] + m[1][2], 16), 1];
   if ((m = c.match(/rgba?\(([^)]+)\)/))) { const p = m[1].split(',').map(Number); return [p[0], p[1], p[2], p.length > 3 ? p[3] : 1]; }
   return [200, 200, 200, 1]; };
-const runs = specs.map(sp => { const r = labRun(st.log.slice(0, LOGN), sp.html, { crownT: sp.cf, trunkT: {}, rootsT: {}, rune: st.rune, dob: st.dob });
+const runs = specs.map(sp => { const r = labRun(st.log.slice(0, sp.logn), sp.html, { crownT: sp.cf, trunkT: {}, rootsT: {}, rune: st.rune, dob: st.dob });
   const Mn = r.picks.filter(m => !m.gradOf && m.exitX != null).sort((a, b) => a.frac - b.frac);
   console.log(sp.lbl + ':', Mn.length, 'ramen,', r.picks.filter(m => m.gradOf).length, 'povysenych | vysky', Mn.map(m => (m.frac * 100).toFixed(0)).join(' '));
   return r.fills.filter(f => f.length >= 3); });
