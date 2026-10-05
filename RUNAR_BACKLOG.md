@@ -1091,6 +1091,14 @@ A cokoli v datech mimo repo. To zachytí jen měření na výstupu modelu.
 
 ## Nálezy z workflow — k triáži
 
+### Směr: jeden obraz, víc významů (KUKY 2026-10-05) — návrh čeká (CODE-tune)
+Owner: *„nature force ho hodí i pro řeku. Jde mi spíš o to, že by bylo fajn, kdyby nějaký obraz mohl být popsán různými meanings.
+Neříkám, že to teď asi pasuje na všechny obrazy pod runou."* Dnes nese každý obraz v `RUNE_IMAGES` JEDEN význam (sloupec aspektu)
+a ten jde do promptu jako „focus on: …" → esenční věta ho pojmenuje; u Hagalazu nese „disruption" 4 obrazy z 8 (stejně Algiz,
+Gebo, Wunjo, Ehwaz, Berkana). Návrh: u obrazů, kde to opravdu sedí, 2–3 významy a los mezi nimi (malá změna dat + výběru,
+ne promptu). Rizika: význam se jmenuje nahlas, musí sedět na scénu (aspekty se dřív ověřovaly bránou proti k_is); IS aspekt
+k EN; `_promptDraws.kws` musí dál zapisovat, který padl (databáze čtení ho ukazuje). Začít jednou runou (Hagalaz), ukázat ownerovi.
+
 ### Ask mluví o OBRAZU místo o runách: „The picture does not say…" (owner 2026-10-04 14:38) — MALÁ oprava, čeká (CODE-tune)
 Owner u Asku k Nornám (Perth · Algiz · Eihwaz, nápověda „Inner Growth — can you make this image clearer?"): *„The picture does not say
 what you will find, or that the fog stays away."* → *„Není to obraz, ale jsou to runy. Obraz je jen prostředek, jak to uživateli ukázat.

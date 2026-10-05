@@ -44,7 +44,8 @@ serve(async (req) => {
     const limit = Math.min(Math.max(Number(body.limit) || 100, 1), 500);
 
     let q = sb.from("readings")
-      .select("id,user_id,rune_name,rune_glyph,lang,short_text,deep_text,area,aol,seeking,intention,question,life_rune,follow_up,prompt_version,address,reading_mode,credits_used,drawn_at")
+      // 2026-10-05: + prompt_draws (obraz, význam, úhel, podoba oblasti) a usage (model) — databáze čtení v shrine.
+      .select("id,user_id,rune_name,rune_glyph,lang,short_text,deep_text,area,aol,seeking,intention,question,life_rune,follow_up,prompt_version,address,reading_mode,credits_used,drawn_at,prompt_draws,usage")
       .order("drawn_at", { ascending: false })
       .limit(limit);
     if (lang && lang !== "all") q = q.eq("lang", lang);
@@ -77,7 +78,28 @@ serve(async (req) => {
       }));
     // Note: opt-out/testers filters run after the row limit, so a filtered view can show
     // fewer than `limit` rows — acceptable for an admin tool (opt-out is rare).
-    return json({ readings: enriched });
+    // 2026-10-05 (KUKY „databáze čtení … kde bylo co dobře použito“): ke čtení jeho reporty a ✦ Keep. runar-reporter.js píše do
+    // bug_reports.screen_context „… reading <uuid>“ — mapuje se podle toho. Reporty jsou doplněk: když dotaz selže, čtení se
+    // vrátí bez nich (prohlížeč nesmí spadnout kvůli poznámkám).
+    const byId: Record<string, unknown[]> = {};
+    if (enriched.length) {
+      try {
+        const od = enriched[enriched.length - 1].drawn_at;
+        const { data: reps } = await sb.from("bug_reports")
+          .select("created_at,type,message,flagged_text,screen_context")
+          .ilike("screen_context", "%reading %")
+          .gte("created_at", od)
+          .order("created_at", { ascending: true })
+          .limit(3000);
+        for (const rp of (reps || [])) {
+          const m = String(rp.screen_context || "").match(/reading ([0-9a-f-]{36})/);
+          if (!m) continue;
+          (byId[m[1]] = byId[m[1]] || []).push({ at: rp.created_at, type: rp.type, message: rp.message ?? "",
+            flagged: String(rp.flagged_text ?? "").slice(0, 600) });
+        }
+      } catch (_) { /* bez reportů */ }
+    }
+    return json({ readings: enriched.map((r: any) => ({ ...r, reports: byId[r.id] || [] })) });
 
   } catch (e) {
     return json({ error: (e as Error).message }, 500);

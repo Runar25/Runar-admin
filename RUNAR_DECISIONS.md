@@ -8332,3 +8332,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   74 → 21; 352 stromů: stejná strana ≥ 30 px, levo-pravo ≥ 15 px, nic pod 22 %; KUKYho strom v každém okamžiku růstu totéž, jediné
   mělké křížení (Gebo + Uruz, obě větve vidět); otočení větvičky > 8° 0, ramene > 5° 0, sklouznutí > 8 px 25 (dřív 20, nejvíc 20 px proti 25).
 - Affected doc(s): `RUNAR_TREE.md` §5 (nový záznam) · `RUNAR_TREE_MAP.md` §2, §5, §7, §13 · `RUNAR_BACKLOG.md` (souběhy) — v tomto commitu.
+
+## 2026-10-05 (4) — Databáze čtení v shrine: runa → obrazy → všechna čtení obrazu, s ownerovými poznámkami a ✦ Keep
+
+- **Rozhodl:** KUKY 2026-10-05 *„chci začít dělat databázi čtení… Musíme čtení nějak organizovat, abychom je dokázali lépe najít.
+  Kde bylo co dobře použito."* a *„bude super, pokud můžu vybrat jednu runu, třeba Hagalaz, a určitý obraz, a tím uvidím všechna
+  různá čtení toho obrazu pro tu runu. Pravděpodobně najdeme i další využití."* **Provedl:** CODE-tune.
+- **Co:** žádná druhá kopie dat (§20) — rozšířen dosavadní prohlížeč čtení v shrine. `supabase/functions/list-readings` vrací i
+  `prompt_draws` (obraz, význam, úhel, podoba oblasti) a `usage` (model) a ke každému čtení jeho reporty a ✦ Keep (bug_reports podle
+  „reading <uuid>" ve `screen_context`; když ten dotaz selže, čtení přijdou bez nich). `v2/runar-readings-admin.js` + `runar-shrine.html`:
+  výběr runy (až 500 jejích čtení) → přehled obrazů (kolikrát padl, význam, naposled, počet poznámek a ✦), klik na obraz = jen jeho
+  čtení; filtry význam · model · „s poznámkou" · „✦ uloženo"; hledání v textu, Ascích a poznámkách. Obraz se páruje s řádkem
+  `RUNE_IMAGES` podle EN i IS znění — obě řeči téhož obrazu v jednom řádku.
+- **Ověřeno:** skutečná data Hagalazu (41 čtení, mimo repo): přehled 8 obrazů + 14 starých bez záznamu obrazu, řeka 6 čtení / 3 s
+  poznámkami, hledání „výborn" 2, ✦ 7. Smoke ㉵ (`scripts/verify_readings_db.js`, smyšlená čtení) 10/10; mutace párování IS → FAIL.
+  `list-readings` v10 nasazena (bez přihlášení 401). **Přihlášenou cestu v shrine ověří owner.**
+- Affected doc(s): `RUNAR_BACKLOG.md` (směr „jeden obraz, víc významů").

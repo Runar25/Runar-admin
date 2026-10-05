@@ -495,6 +495,21 @@ textarea::placeholder{color:var(--dim);}
     #pane-readings .rd-fu-a{color:#e6e9f0;line-height:1.6;font-size:0.9em;white-space:pre-wrap;margin-top:2px;}
     #pane-readings .rd-act{font-size:0.72em;padding:3px 9px;background:transparent;border:1px solid var(--border);color:#8a94a6;cursor:pointer;}
     #pane-readings .rd-act:hover{border-color:var(--gold);color:var(--gold);}
+    /* 2026-10-05 databáze čtení: výběr runy/obrazu, přehled obrazů, skladba čtení, ownerovy poznámky a ✦ Keep */
+    #pane-readings select,#pane-readings input[type=search]{background:#0d1220;color:#e6e9f0;border:1px solid var(--border);padding:4px 8px;font-size:0.8em;max-width:280px;}
+    #pane-readings input[type=search]{flex:1;min-width:180px;}
+    #pane-readings .rd-sum{width:100%;border-collapse:collapse;margin:8px 0 12px;font-size:0.8em;}
+    #pane-readings .rd-sum th{text-align:left;color:#8a94a6;font-weight:normal;letter-spacing:0.5px;border-bottom:1px solid var(--border);padding:4px 6px;}
+    #pane-readings .rd-sum td{padding:4px 6px;border-bottom:1px solid rgba(255,255,255,0.05);color:#c9d3e2;cursor:pointer;}
+    #pane-readings .rd-sum tr:hover td{color:var(--gold);}
+    #pane-readings .rd-sum tr.on td{color:var(--gold);background:rgba(255,191,0,0.06);}
+    #pane-readings .rd-skladba{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:6px 0;}
+    #pane-readings .rd-obraz{font-size:0.82em;color:#c9b77a;width:100%;}
+    #pane-readings .rd-tag{font-size:0.66em;letter-spacing:0.5px;color:#8a94a6;border:1px solid var(--border);padding:1px 6px;border-radius:3px;}
+    #pane-readings .rd-reps{margin:8px 0 4px;padding:7px 10px;background:rgba(120,160,255,0.05);border-left:2px solid rgba(120,160,255,0.35);}
+    #pane-readings .rd-rep{font-size:0.84em;color:#e6e9f0;margin:3px 0;line-height:1.5;}
+    #pane-readings .rd-rep-at{color:#6f7c92;font-size:0.85em;}
+    #pane-readings .rd-rep-sel{color:#b9c4d6;font-style:italic;font-size:0.92em;margin:2px 0 0 18px;}
   </style>
   <div class="card">
     <div class="card-lbl">📜 READINGS</div>
@@ -507,6 +522,17 @@ textarea::placeholder{color:var(--dim);}
       <span id="rd-count" style="font-size:0.78em;color:#6f7c92;margin-left:8px;"></span>
       <button class="rd-act" style="margin-left:auto;" onclick="loadReadings()">↻ Refresh</button>
     </div>
+    <!-- 2026-10-05 DATABÁZE ČTENÍ (KUKY): vyber runu → přehled jejích obrazů (kolikrát padl, význam, tvoje poznámky, ✦); klik na obraz = všechna jeho čtení -->
+    <div class="pills" style="margin-top:6px;align-items:center;gap:6px;flex-wrap:wrap;">
+      <select id="rd-rune" onchange="setRdRune(this.value)"><option value="">Všechny runy (posledních 100)</option></select>
+      <select id="rd-img" onchange="setRdFilter('img', this.value)"><option value="">Všechny obrazy</option></select>
+      <select id="rd-kws" onchange="setRdFilter('kws', this.value)"><option value="">Všechny významy</option></select>
+      <select id="rd-model" onchange="setRdFilter('model', this.value)"><option value="">Všechny modely</option></select>
+      <div class="pill" id="rd-f-notes" onclick="toggleRdFilter('notes')">💬 S poznámkou</div>
+      <div class="pill" id="rd-f-keep" onclick="toggleRdFilter('keep')">✦ Uloženo</div>
+      <input id="rd-q" type="search" placeholder="Hledat v textu, Ascích a poznámkách…" oninput="setRdFilter('q', this.value)">
+    </div>
+    <div id="rd-summary"></div>
     <div class="status" id="st-readings"></div>
     <div id="readings-list"><div class="empty">Open this tab to load…</div></div>
   </div>

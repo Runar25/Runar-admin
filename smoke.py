@@ -776,6 +776,17 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola stitku modelu probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# ㉵ Databáze čtení v shrine (CODE-tune 2026-10-05, KUKY: „vyberu runu a obraz a uvidím všechna čtení toho obrazu“). Smyšlená
+# čtení (repo je veřejné): obraz EN+IS = jeden řádek přehledu, výběr obrazu, poznámky a ✦ Keep, filtry. Mutace párování IS → FAIL.
+print('\n' + chr(0x3275) + ' DATABAZE CTENI V SHRINE (verify_readings_db.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_readings_db.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola databaze cteni probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
