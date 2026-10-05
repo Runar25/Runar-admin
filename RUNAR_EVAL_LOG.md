@@ -6059,3 +6059,20 @@ Opus ztratil tvar „výrok + otázka" (*„Hail is not a verdict, and not every
 jednu otázku (*„Where might you already be held, with no need to earn it?"*, IS *„Hvað í þínu húsi á sér dýpri rætur en þú hélst?"*).
 IS myšlenky B: is-grammar-qa bez nálezu kromě slabého W001 u *„mættirðu"* (tvar je správně). Sol se zkrátil o 1–2 slova.
 **Hranice:** n = 6 na buňku, tři runy, jen single; kvalita posouzena čtením, ne soudcem.
+
+## 2026-10-05 (3) — Kolo k4: brána nových obrazů 9/10 a „které významy obraz unese“; soudci s výběrem víc významů volí KONKRÉTNÍ
+
+**Data:** `docs/eval/2026-09-26-obrazy/` — `kandidati_k4.json`, `k4_*` (brána, 3 soudci) a `vyz_*` (významy, 2 soudci, pravidlo
+předem 4/4 v hlavičce `vyznamy_build.js`). Soudci = subagenti, ne API (KUKY 2026-10-05). Co se podle toho změnilo: DECISIONS
+2026-10-05 (8)–(11). Spotřeba: 5 subagentů ≈ 593 tis. tokenů (3 × brána ≈ 107 tis., 2 × významy ≈ 135 tis.).
+
+**Nález o nástroji (§27):** formát „označ VŠECHNY významy, které obraz nese“ dává 0/4 právě abstraktním významům, které dřívější
+soudci (formát „vyber jeden nejlepší“) volili — pletení, ledovcová řeka a hodiny 3/3, probuzení 2/3, strom a cesta v mapě
+2026-08-22 nejsou: *transformation* (strom), *growth through challenge* (pletení), *the unconscious* (ledovcová řeka), *turning
+point* (probuzení), *waiting* (zastavené hodiny), *movement* (cesta). Místo nich bere konkrétní, na povrchu scény viditelné:
+*clearing / nature force, need, water / flow, dawn / light, stillness / pause, the road*. Dosavadní význam prošel 4/4 u 16 z 24
+obrazů. **Proto 0/4 z tohoto formátu NENÍ důkaz, že význam na obraz nesedí** — jen že leží pod povrchem. Druhá stopa téhož:
+*nature force* 4/4 u všech 9 obrazů Hagalazu — identita runy prošla všude.
+**Důsledek pro použití:** 4/4 z tohoto formátu je dobrý doklad PRO význam, 0/4 slabý doklad PROTI. Přidané významy kroku B
+(*hail*, *nature force*) jsou z té konkrétní strany — sledovat v ownerově testování, jestli čtení s nimi nezní plošeji.
+**Hranice:** n = 2 soudci (stejný model) × 32 obrazů × 2 jazyky; brána jen EN text (IS parita psaním + is-grammar-qa).
