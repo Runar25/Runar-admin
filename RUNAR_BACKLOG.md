@@ -1495,7 +1495,11 @@ Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je 
 
 ---
 
-## Vegvísir (Cowork návrh 2026-08-15 · konsolidace 2026-08-22 · AKTIVNÍ TÉMA)
+## Vegvísir (Cowork návrh 2026-08-15 · konsolidace 2026-08-22 · ⏸ ODLOŽENO 2026-10-05)
+
+⏸ **ODLOŽENO 2026-10-05 (owner: „zatím odkládáme, vrátíme se k tomu").** Kde jsme skončili a co visí (neposouzená EN čtení
+z testu hranic, živel runy ve scéně, IS definice runy, prompt v3) → `memory/snapshots/2026-10-05-vegvisir-odlozen.md`;
+rozhodnutí DECISIONS 2026-09-27 (3) (4) (6); měření EVAL_LOG 2026-09-27 (1)–(4).
 
 ### ⭐ VARIANTY STAVBY — přepsáno 2026-09-12 (KUKY: „to je to stejné!" — měl pravdu)
 
