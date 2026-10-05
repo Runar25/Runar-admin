@@ -1111,6 +1111,15 @@ k EN; `_promptDraws.kws` musí dál zapisovat, který padl (databáze čtení ho
   pořadí klíčů (Fehu, část Dagazu) zbývá 14 obrazů se skutečně jiným významem a 3 skoro synonyma (Ansuz dopis voice/messages, Thurisaz trn thorn/protection/caution, Laguz
   flow/intuition, Othila home/heritage, Ehwaz trust/partnership…) — hotoví kandidáti na dva významy bez nového souzení.
 - Tvar definiční věty (*„Hagalaz names X"*) víc významů nezmění — to je prompt → lab CODE-read.
+**Kolo k4 (2026-10-05, DECISIONS 2026-10-05 (9)–(11)):** B hotovo pro Hagalaz (+1 význam na obraz), C hotovo u 6 obrazů,
+D 7 nových obrazů. **Čeká na ownera — 9 rozporů** (k4 odmítlo 0/4 význam, který vybrali srpnoví soudci): Isa hodiny *waiting* ·
+Laguz ledovcová řeka *the unconscious* · Nauthiz pletení *growth through challenge* · Ingwaz semínko *innri þróun* · Dagaz
+probuzení *turning point* · Raidho cesta *movement* · Ansuz havran a dopis *rödd* · Othila zřícenina *heritage*/*hefðir*; a u
+Hagalazu *transformation* (strom 0/4, střecha 1+1). Návrhy náhrad v DECISIONS (10). Formát k4 (víc významů) se od srpnového
+(jeden nejlepší) liší, takže 0/4 není důkaz — rozhodnutí je obsahové.
+**Data (§22):** `k` a `k_is` nejdou ve stejném pořadí u Fehu (wealth↔auður) a Dagazu (breakthrough↔bylting, light↔ljós,
+transformation↔umbreyting); Othila heritage↔hefðir neodpovídá smyslem (heritage≈arfur). Nic to dnes nerozbije (seznamy se
+čtou zvlášť po jazycích), ale párování víc významů je tam ruční — smoke ㉤ ho ukazuje žlutě. Srovnat pořadí = obsahový krok.
 
 ### ✅ Trajekt u Hagalazu: owner ho čte jako špatný obraz (KUKY 2026-10-05) — PŘEPSÁN (DECISIONS 2026-10-05 (8))
 *„Jednou jsem dostal trajekt a přišlo mi to jako špatný obraz."* Řádek `RUNE_IMAGES` Hagalaz *„On the wedding day, the storm keeps

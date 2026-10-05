@@ -8415,3 +8415,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   transformation 17 %, hail 8 %).
 - **K rozhodnutí ownera (neměněno):** *transformation* u stromu 0/4 a u střechy 1+1 — soudci ho v těch scénách nevidí.
 - Affected doc(s): `RUNAR_BACKLOG.md` (směr „jeden obraz, víc významů").
+
+## 2026-10-05 (10) — Krok C: šest obrazů, kde se islandští a angličtí soudci rozešli a k4 potvrdilo obojí, nese oba významy
+
+- **Rozhodl:** KUKY 2026-10-05 (*„B, C, D, E… pusť se do toho"*). **Provedl:** CODE-tune.
+- **Co:** dvojice z dosavadního IS a EN významu, obě potvrzené v k4 4/4: Laguz voda si najde cestu flow | intuition · Thurisaz
+  trnitý keř ve vánici thorn | caution · Ehwaz unavený kůň trust | partnership · Ehwaz úzká stezka trust | partnership · Blank vlasec
+  v temné vodě the unknown | unwritten potential · Thurisaz trnový plot thorn | protection.
+- **Neměněno — rozpor zdrojů, rozhodne owner (9 obrazů):** k4 odmítlo 0/4 význam, který srpnoví soudci vybrali: Isa hodiny
+  *waiting* (k4: stillness, pause) · Laguz ledovcová řeka *the unconscious* (k4: water, flow) · Nauthiz pletení *growth through
+  challenge* (k4: need) · Ingwaz semínko *innri þróun* (k4: potential, seed) · Dagaz probuzení *turning point* (k4: dawn, light,
+  transformation) · Raidho cesta za zatáčkou *movement* (k4: the road) · Ansuz havran a dopis *rödd/voice* (k4: messages; havran i
+  divine guidance) · Othila zřícenina *heritage* (EN 2/2, IS *hefðir* 0/2, ale *arfur* 2/2 — v `k`/`k_is` heritage↔hefðir,
+  podle smyslu heritage≈arfur).
+- **Nález v datech (§22, zapsán do BACKLOGu):** `k` a `k_is` nejdou ve stejném pořadí u Fehu a Dagazu (Dagaz: breakthrough↔ljós,
+  light↔umbreyting) a u Othily neodpovídá smysl (heritage↔hefðir). Smoke ㉤ to u víc významů ukazuje žlutě.
+- Affected doc(s): `RUNAR_BACKLOG.md`.
