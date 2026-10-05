@@ -1091,7 +1091,16 @@ A cokoli v datech mimo repo. To zachytí jen měření na výstupu modelu.
 
 ## Nálezy z workflow — k triáži
 
+### Ask mluví o OBRAZU místo o runách: „The picture does not say…" (owner 2026-10-04 14:38) — MALÁ oprava, čeká (CODE-tune)
+Owner u Asku k Nornám (Perth · Algiz · Eihwaz, nápověda „Inner Growth — can you make this image clearer?"): *„The picture does not say
+what you will find, or that the fog stays away."* → *„Není to obraz, ale jsou to runy. Obraz je jen prostředek, jak to uživateli ukázat.
+Pravděpodobně to přihází z otázky ‚can you make this image clearer?‘. Udělám ještě pár a uvidíme."* Kandidáti (neměřeno): nápověda
+„make this image clearer" (2026-10-03 (12)) a konec první věty RP_ASK *„speak from what the picture holds"* (2026-10-03 (13)).
+Až owner řekne: pilot s *„…from what the runes drawn hold"* místo obrazu, měřit „the picture/image does (not)…" a úhel.
+
 ### Prompt × návody výrobců (Anthropic Opus 5, OpenAI GPT-6) — nálezy 2026-10-04, ČEKÁ NA OWNERA, co s nimi (CODE-tune)
+⭐ **KUKY 2026-10-05: velké body (4, 5, 6, 8) a přestavba promptu → LAB CODE-read, ne produkce** (DECISIONS 2026-10-05 (3)).
+Do produkce jen malé ověřené opravy přes CODE-tune, po jedné. Body 1–3 a myšlenka ≤ 12 slov už jsou v produkci (v4.92–v4.94).
 Owner: *„najít nesrovnalosti, pak vyřešíme, co budeme dělat“*. Čísla → EVAL_LOG 2026-10-04 (4); citace výrobců ověřené na jejich stránkách.
 1. ✅ **Rozpor JSON × ✦ — HOTOVO 2026-10-04 (v4.92, DECISIONS 2026-10-04 (6)):** ✦ výslovně dovnitř JSONu; Opus 2/6 → 6/6 uvnitř.
 2. **Délka u Opusu 5** — Anthropic: Opus 5 píše delší, effort délku neřídí, *„prompt for it explicitly"* + *„a short reminder near the

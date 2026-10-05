@@ -764,6 +764,18 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola mist vetvi probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# ㉴ Štítek modelu v UI = model v edge funkci (CODE-tune 2026-10-05). KUKY (report 2026-10-05 07:40): „Pokud jsi změnil model
+# na sol6.1, proč jsi to taky neupravil… Tady v readeru. Což znamená, že nevíš, kde co je.“ Proxy běžela na gpt-6.1-sol, přepínač
+# admina hlásil „GPT-6 sol“ — dvě místa (edge funkce × překlady), která nikdo nehlídal.
+print('\n' + chr(0x3274) + ' STITEK MODELU = MODEL V PROXY (verify_model_labels.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_model_labels.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola stitku modelu probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

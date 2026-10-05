@@ -279,9 +279,14 @@ async function callClaudeWithRetry(
 // cena, `low` je jeho nejnižší → přepnutí = jen SOL_MODEL.
 // 2026-10-04 (KUKY „nasadíme sol 6.1 low“, DECISIONS 2026-10-04 (5)): gpt-6.1-sol. Stejný ceník jako 6 ($2 / $10, zápis cache
 // $2,50), v pilotu levnější na čtení ($0,0046 × $0,0057 — méně přemýšlí), méně koncovek v Asku (5/14 × 8/14, na hraně šumu),
-// ale pomalejší (8,7 × 6,3 s). EVAL_LOG 2026-10-04 (3). Návrat na 6 = jen tenhle řádek.
-const SOL_MODEL = "gpt-6.1-sol";
-const SOL_EFFORTS = ["low"];
+// ale pomalejší (8,7 × 6,3 s). EVAL_LOG 2026-10-04 (3).
+// 2026-10-05 ZPĚT na gpt-6-sol BEZ přemýšlení (KUKY „vracíme se ke stabilní sol 6 bez effort“, DECISIONS 2026-10-05 (3)). Živá
+// čtení 6.1 `low`: obraz si vymýšlí detaily a protiřečí si (*„bare forearms… sleeves wet“*, *„dark seam between two tiles“* — owner:
+// „úplný nesmysl… Sol6.1.low je zatím nejhorší“), čtení 8,5–17,4 s proti 2,8–4,1 s u solu 6 bez přemýšlení. Přemýšlející modely
+// se k tomuhle promptu chovají jinak — zkoumat jen v labu (CODE-read), ne v produkci. Rezerva tokenů níž se pro none/minimal
+// nepoužije; explicitní cache zůstává (jen cena, chování nemění).
+const SOL_MODEL = "gpt-6-sol";
+const SOL_EFFORTS = ["none", "minimal"];
 const SOL_REASONING_HEADROOM = 1000;
 async function callSol(system: string, prompt: string, maxTokens: number, key: string):
   Promise<{ text: string; usage: Record<string, unknown> | null } | null> {

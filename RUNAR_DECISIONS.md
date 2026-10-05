@@ -8289,3 +8289,24 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Měřeno** (`RUNAR_EVAL_LOG.md` 2026-10-05 (2)): Opus EN 18,3 → 11,0 slov, IS 15,8 → 11,0, jedna věta 12/12; čtení beze změny.
   Daň: zmizí dvoudílný tvar „výrok + otázka" (owner si 2026-10-03 jeden takový uložil přes ✦ Keep this, 21 slov).
 - Affected doc(s): žádné.
+
+## 2026-10-05 (3) — Zpět na sol 6 bez přemýšlení (proxy v76) · nová taktika: do produkce jen malé opravy, velké změny v labu
+
+- **Rozhodl:** KUKY 2026-10-05 *„Vracíme se ke stabilní sol 6 bez effort… To, co je v auditu, a velkou změnu promptu uděláme
+  na nečisto. Bude si s tím hrát CODE-read… Může to úplně rozbít prompt a já chci dělat jen menší opravy, jelikož to fungovalo
+  dobře… Byla velká chyba, že jsem chtěl nasadit sol 6.1 a Opus s přemýšlením. Chovají se úplně jinak."* **Provedl:** CODE-tune.
+  Mění 2026-10-04 (3) a (5).
+- **Proč zpět** (reporty 2026-10-05, sol 6.1 `low`): obraz si vymýšlí a protiřečí si (*„hail strikes your bare forearms… leaving your
+  sleeves wet"*; *„melts along the dark seam between two tiles"* — owner: *„úplný nesmysl… Sol6.1.low je zatím nejhorší. Vrátíme se na
+  sol 6. Ten fungoval dobře."*), čtení trvá 8,5–17,4 s proti 2,8–4,1 s u solu 6 bez přemýšlení.
+- **Co:** `SOL_MODEL = "gpt-6-sol"`, `SOL_EFFORTS = ["none", "minimal"]` (`supabase/functions/claude-proxy/index.ts`), deploy v76
+  (stažený kód = repo, `verify_jwt: false`). Explicitní cache zůstává (jen cena). **Opus se NEMĚNIL:** v produkci od 2026-09-24 pořád
+  `claude-opus-5` s vypnutým přemýšlením — Opus `low` byl jen pilot, 2026-10-04 (4) „ne". U Opusu se mezitím změnil jen prompt
+  (v4.91 krok 2 Asku, v4.92 ✦ v JSONu + připomínka délky, v4.93 bez duplicit, v4.94 myšlenka ≤ 12 slov) — o návratu rozhoduje owner.
+- **Taktika:** do produkce jen malé, změřené opravy (CODE-tune, po jedné). Velké zásahy do promptu (body 4, 5, 6, 8 auditu
+  „Prompt × návody výrobců"), přestavba promptu a zkoušky přemýšlejících modelů → **lab CODE-read**: varianty v paměti nebo vlastních
+  souborech, nikdy `v2/`; owner rozhodne, co z labu a kdy půjde ven.
+- **Kontrola ㉴** (`scripts/verify_model_labels.js`): štítek přepínače solu a tlačítka rozboru (EN i IS) musí nést jméno modelu
+  z edge funkce. Owner (report 07:40): *„Pokud jsi změnil model na sol6.1, proč jsi to taky neupravil… nevíš, kde co je."* Ověřeno
+  mutací (proxy na 6.1 → 2× FAIL).
+- Affected doc(s): `RUNAR_BACKLOG.md` (audit: co do labu, co malé) · `CLAUDE.md` (lane CODE-tune).

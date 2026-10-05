@@ -442,6 +442,8 @@ SÁM — bez ownera.
 **Lanes (kdo co vlastní):**
 - **CODE-tune** → prefix `[tune]` (+ `[fix]`/`[pricing]` jako téma; `[reading]` se jako téma
   UŽ NEPOUŽÍVÁ — plete se s lane `[read]` níž, viz důvod tam): reading systém, prompty (buildery v runar-character.js), config (TIERS/SPREAD_COSTS/SPREAD_CONFIG/VOCAB), pricing, translations, reader UI/CSS, reporter, auth, app, journal, eval-IMPLEMENTACE, copy. = vše KROMĚ tree vizuálu.
+  ⭐ **Od 2026-10-05 (KUKY): do produkce jen MALÉ ověřené opravy, po jedné.** Velké zásahy do promptu a zkoušky jiných modelů
+  (přemýšlení, 6.1, 5.5) napřed v labu CODE-read — sol 6.1 `low` produkci rozbil (DECISIONS 2026-10-05 (3)).
 - **CODE-reader** → prefix `[read]`: **čte, testuje, mapuje — produkční kód NESAHÁ**
   (KUKY 2026-08-17: *„codování dělá CODE-tune, ty jsi code-reader"*). Jak má Rúnar znít,
   hlas × model, pestrost čtení; nálezy píše do `RUNAR_EVAL_LOG.md` a `RUNAR_DESIGN.md`,
