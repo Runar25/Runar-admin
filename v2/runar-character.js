@@ -802,6 +802,20 @@ var RUNE_IMAGES = [
   ['Dagaz', 'any', 'Þú opnar fjósdyrnar, og morgunbirtan flæðir í einu vetfangi inn í dimma básana.', 'You open the byre door, and the morning light floods into the dark stalls all at once.', 'ljós', 'light', 'D'],
   ['Blank', 'any', 'Setning í gömlu dagbókinni endar í miðju kafi og síðan fyrir neðan er auð.', 'A sentence in the old diary breaks off, and the page below is blank.', 'hið óþekkta', 'the unknown', 'D'],
   ['Blank', 'any', 'Hvert barnanna sér sína mynd í sama auða blettinum á veggnum.', 'Each child sees a different picture in the same bare patch of wall.', 'óskrifaður möguleiki', 'unwritten potential', 'D'],
+  // ── 2026-10-05 kolo k4 (KUKY „B, C, D, E… pusť se do toho“): runy, které mají v nějaké oblasti a období jen 2 obrazy (Fehu všude,
+  // Wunjo a Berkana v zimě) a Algiz, kde 4 z 5 obrazů nese „protection“. IS myšleno islandsky; is-grammar-qa 0 nálezů; korpus:
+  // „hlaðinn fiski“ 3 · „ristir djúpt“ 233 · „í hvert hús“ 494 · „stendur opið“ 83 · „í hríðinni“ 116 · „í heita pottinum“ 1861 ·
+  // „hlæja að sögunni“ 6 · „dilla skottinu“ 49 · „hleypur á móti“ 37 · „á gluggakistunni“ 48 · „teygja sig að“ 46 · „græðlinginn“ 21.
+  // Brána se statickými popisy (docs/eval/2026-09-26-obrazy/k4_*) každý 3/3; neprošel kámen skrytého lidu (Algiz → Perth 3/3).
+  // Významy z k4 (2 soudci, 4/4 = oba EN i oba IS); dominantní význam runy (> 40 % jejích obrazů) nový obraz nedostane:
+  // Algiz bez protection, Wunjo bez belonging, Berkana bez new beginnings.
+  ['Fehu', 'any', 'Báturinn kemur að bryggju svo hlaðinn fiski að hann ristir djúpt.', 'The boat comes in so laden with fish it sits deep in the water.', 'auður|efnisleg velsæld', 'wealth|material prosperity', 'P'],
+  ['Fehu', 'any', 'Heita vatnið rennur inn í hvert hús í dalnum.', 'The hot water runs into every house in the valley.', 'efnisleg velsæld', 'material prosperity', 'D'],
+  ['Algiz', 'cold', 'Sæluhúsið stendur opið í hríðinni fyrir hvern sem þarf.', 'The mountain hut stands open in the blizzard for anyone who needs it.', 'skjól', 'shelter', 'E'],
+  ['Wunjo', 'cold', 'Í heita pottinum í frostinu hlæja allir að sömu sögunni.', 'In the hot pot under the frost, everyone laughs at the same story.', 'gleði|hamingja', 'joy|happiness', 'D'],
+  ['Wunjo', 'any', 'Hundurinn hleypur á móti þér að hliðinu og getur ekki hætt að dilla skottinu.', 'The dog runs to meet you at the gate and cannot stop wagging.', 'gleði|hamingja', 'joy|happiness', 'D'],   // bez „postava“: v obraze je „you“ (smoke ㊱ — čtenář je ve scéně)
+  ['Berkana', 'any', 'Á gluggakistunni teygja smáplönturnar sig að birtunni.', 'On the windowsill the seedlings stretch toward the light.', 'þroski', 'growth', 'D'],
+  ['Berkana', 'any', 'Þú vökvar græðlinginn og lætur hann svo í friði.', 'You water the cutting and then leave it alone.', 'umhyggja', 'nurturing', 'D'],
 ];
 
 // Obrazy pro runy, které padly, a které se hodí do TÉTO části roku.

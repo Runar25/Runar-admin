@@ -8431,3 +8431,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Nález v datech (§22, zapsán do BACKLOGu):** `k` a `k_is` nejdou ve stejném pořadí u Fehu a Dagazu (Dagaz: breakthrough↔ljós,
   light↔umbreyting) a u Othily neodpovídá smysl (heritage↔hefðir). Smoke ㉤ to u víc významů ukazuje žlutě.
 - Affected doc(s): `RUNAR_BACKLOG.md`.
+
+## 2026-10-05 (11) — Krok D: 7 nových obrazů tam, kde jich bylo nejmíň (Fehu, Algiz, Wunjo, Berkana)
+
+- **Rozhodl:** KUKY 2026-10-05 (*„B, C, D, E… pusť se do toho"*). **Provedl:** CODE-tune (obsah psán islandsky napřed).
+- **Proč tyhle runy:** změřeno nad bankou × oblastmi × obdobími — Fehu mělo v některé oblasti jen 2 obrazy po celý rok (3 z 5 jsou
+  obchod, značené jen pro Career/Family), Wunjo a Berkana 2 obrazy v zimě; Algiz nesl *protection* u 4 z 5 obrazů.
+- **Co:** Fehu loď tak plná ryb, že sedí hluboko (wealth | material prosperity) · Fehu horká voda teče do každého domu v údolí
+  (material prosperity) · Algiz horská chata otevřená ve vánici pro každého (shelter) · Wunjo horký bazének v mrazu, všichni se
+  smějí téže historce (joy | happiness) · Wunjo pes u branky nepřestane vrtět ocasem (joy | happiness) ·
+  Berkana sazeničky na okně se natahují ke světlu (growth) · Berkana zaliješ řízek a necháš ho být (nurturing). Bez značky oblasti.
+- **Ověřeno:** brána se statickými popisy každý 3/3; *„nikdo nesahá na kámen skrytého lidu"* (Algiz) neprošel — 3/3 Perth, vyřazen.
+  Významy z k4 4/4; dominantní význam runy (> 40 % jejích obrazů) nový obraz nedostal. IS is-grammar-qa 0 nálezů, vazby v korpusu.
+- **Kdo co nevidí:** jak s novými obrazy naloží model, ukáže ownerovo testování (databáze čtení: runa → obraz → čtení).
+- Affected doc(s): `RUNAR_BACKLOG.md` (směr „jeden obraz, víc významů" — kolo k4).
