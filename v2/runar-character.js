@@ -1758,11 +1758,16 @@ var THOUGHT_MARK = {
   en: 'AFTER THE READING — inside the JSON, at the end of the last "text" value, on a new line beginning with ✦',
   is: 'Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein stutt lína til viðbótar í nýrri línu sem hefst á ✦',
 };
+// 2026-10-05 (KUKY „zkrať myšlenku u Opusu“): jedna věta, nejvýš THOUGHT_MAX_SLOV slov — jedno číslo pro EN i IS (§20).
+// Do té doby „one more short line“ bez čísla: Opus EN 18 slov (13–25), polovina myšlenek výrok + otázka; sol 11, vždy jedna věta.
+// S limitem (EVAL_LOG 2026-10-05 (2)): Opus EN 11,0 · IS 11,0 slov, jedna věta 12/12; sol 9–10; čtení beze změny. Anthropic
+// k Opusu 5: délku říct výslovně. IS „Línan er ein setning, í mesta lagi … orð.“ is-grammar-qa čisté, korpus „í mesta lagi“ 13 419.
+var THOUGHT_MAX_SLOV = 12;
 var THOUGHT_LINE = {
-  en: function (jm, zdroj) { return THOUGHT_MARK.en + ', one more short line set apart: a thought offered for the seeker to carry away, grown from what ' + jm + ' is, not from the picture. Its source: "' + zdroj + '" Let it grow out of that, but say it in your own words, and turn it toward the seeker: a question to them, or a quiet invitation to notice something. Never advice about their life, never a claim about what they feel or know.'; },
+  en: function (jm, zdroj) { return THOUGHT_MARK.en + ', one more line set apart — a single sentence of at most ' + THOUGHT_MAX_SLOV + ' words: a thought offered for the seeker to carry away, grown from what ' + jm + ' is, not from the picture. Its source: "' + zdroj + '" Let it grow out of that, but say it in your own words, and turn it toward the seeker: a question to them, or a quiet invitation to notice something. Never advice about their life, never a claim about what they feel or know.'; },
   // IS jako plné věty (celek jedním souvětím = E001); is-grammar-qa čisté i se skutečným odstavcem runy; korpus „boð um að“ 4312 ·
   // „ráð um það“ 321 · „sprottin af“ 1182 · „sér á parti“ 850 · „taka eftir einhverju“ 57.
-  is: function (jm, zdroj) { return THOUGHT_MARK.is + '. Hún stendur sér á parti og er hugsun sem leitandinn getur tekið með sér, sprottin af því sem ' + jm + ' er en ekki af myndinni. Uppspretta hennar er þessi: „' + zdroj + '“ Láttu hana vaxa upp úr þessu en segðu hana með þínum eigin orðum og beindu henni að leitandanum. Hún er spurning til hans eða hljóðlátt boð um að taka eftir einhverju. Aldrei ráð um það hvað hann eigi að gera og aldrei fullyrðing um hvað hann finnur eða veit.'; },
+  is: function (jm, zdroj) { return THOUGHT_MARK.is + '. Línan er ein setning, í mesta lagi ' + THOUGHT_MAX_SLOV + ' orð. Hún stendur sér á parti og er hugsun sem leitandinn getur tekið með sér, sprottin af því sem ' + jm + ' er en ekki af myndinni. Uppspretta hennar er þessi: „' + zdroj + '“ Láttu hana vaxa upp úr þessu en segðu hana með þínum eigin orðum og beindu henni að leitandanum. Hún er spurning til hans eða hljóðlátt boð um að taka eftir einhverju. Aldrei ráð um það hvað hann eigi að gera og aldrei fullyrðing um hvað hann finnur eða veit.'; },
 };
 // 2026-10-03 (KUKY „3 ano“): odstavec Kolekce, ze kterého myšlenka roste. Výchozí 1. odstavec ([0]); runy tady berou 3. ([2] =
 // druhá strana runy), protože jejich 1. odstavec je metafora a model ji nesl do otázky — reporty 2026-10-01: Uruz „weight to

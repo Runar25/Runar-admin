@@ -8279,3 +8279,13 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Měřeno** (`RUNAR_EVAL_LOG.md` 2026-10-05 (1)): 48 čtení, runa 1× · jeden odstavec · ✦ uvnitř vždy; délky v šumu. Golden: změna jen
   závěrečného řádku všech variant single (EN i IS), spready beze změny. Registr 336 pravidel.
 - Affected doc(s): `RUNAR_BACKLOG.md` („Prompt × návody výrobců" bod 3).
+
+## 2026-10-05 (2) — Myšlenka ✦: jedna věta, nejvýš 12 slov (v4.94)
+
+- **Rozhodl:** KUKY 2026-10-05 *„pak zkrať myšlenku u Opusu"*. **Provedl:** CODE-tune.
+- **Co (`v2/runar-character.js`):** `THOUGHT_MAX_SLOV = 12` (jedno číslo pro oba jazyky) · EN *„one more line set apart — a single
+  sentence of at most 12 words"* místo *„one more short line set apart"* · IS přidaná věta *„Línan er ein setning, í mesta lagi 12 orð."*
+  (is-grammar-qa čisté). Platí pro oba enginy — sol byl už krátký a zkrátil se jen o 1–2 slova.
+- **Měřeno** (`RUNAR_EVAL_LOG.md` 2026-10-05 (2)): Opus EN 18,3 → 11,0 slov, IS 15,8 → 11,0, jedna věta 12/12; čtení beze změny.
+  Daň: zmizí dvoudílný tvar „výrok + otázka" (owner si 2026-10-03 jeden takový uložil přes ✦ Keep this, 21 slov).
+- Affected doc(s): žádné.

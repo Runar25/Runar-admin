@@ -6042,3 +6042,20 @@ obě TÝMŽ builderem a seedem (A jen vrátí starý závěr). Tři čtení × 2
 evalech) tady neměřitelný — n = 6 a žádná metrika kvality.
 **Myšlenka ✦ (B, výchozí stav pro další krok):** Opus EN 12–20 slov, 2/6 dvě věty · Opus IS 11–15, 1/6 · sol EN 8–12 a IS 8–14, vždy jedna věta.
 **Hranice:** jen single; spready mají vlastní kopie téhož závěru (BACKLOG).
+
+## 2026-10-05 (2) — Myšlenka ✦: „jedna věta, nejvýš 12 slov" — Opus 18 → 11 slov, vždy jedna věta (v4.94)
+
+Owner: *„zkrať myšlenku u Opusu"*. Harness a výstupy `docs/eval/2026-10-05-myslenka-kratsi/`. A = v4.93 (*„one more short line"*),
+B = *„one more line set apart — a single sentence of at most 12 words"* (IS *„Línan er ein setning, í mesta lagi 12 orð."*).
+
+| | ✦ slov A → B | jedna věta A → B | čtení slov A → B |
+|---|---|---|---|
+| Opus EN | 18,3 (13–25) → **11,0 (10–12)** | 3/6 → 6/6 | 67,7 → 64,7 |
+| Opus IS | 15,8 (13–20) → **11,0 (9–13)** | 5/6 → 6/6 | 52,8 → 53,2 |
+| sol EN | 11,3 → 9,3 | 6/6 → 6/6 | 53,5 → 52,5 |
+| sol IS | 11,8 → 10,2 | 6/6 → 6/6 | 55,7 → 54,7 |
+
+Opus ztratil tvar „výrok + otázka" (*„Hail is not a verdict, and not everything standing is meant to fall — what has held…"*) a píše
+jednu otázku (*„Where might you already be held, with no need to earn it?"*, IS *„Hvað í þínu húsi á sér dýpri rætur en þú hélst?"*).
+IS myšlenky B: is-grammar-qa bez nálezu kromě slabého W001 u *„mættirðu"* (tvar je správně). Sol se zkrátil o 1–2 slova.
+**Hranice:** n = 6 na buňku, tři runy, jen single; kvalita posouzena čtením, ne soudcem.
