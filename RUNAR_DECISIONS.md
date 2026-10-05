@@ -8371,3 +8371,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   v databázi čtení bude řeka s oběma významy vedle sebe.
 - **Očekávání:** „disruption" v říjnové rotaci Hagalazu ze 3 ze 6 obrazů na 2 ze 6 (výpadek proudu celý, řeka a poryv napůl).
 - Affected doc(s): `RUNAR_BACKLOG.md` (směr „jeden obraz, víc významů": A hotovo, B a C čekají · trajekt · podoba oblasti [2]).
+
+## 2026-10-05 (7) — Databáze čtení: filtr oblasti a hledání
+
+- **Rozhodl:** KUKY 2026-10-05 *„přidej filtr oblasti a hledání"* — jeho test: *„chci víckrát vidět stejný obraz… a jestli ho při
+  stejné area a seeking řekne stejně, nebo udělá něco jinak."* **Provedl:** CODE-tune.
+- **Co:** dva výběry v shrine (oblast, hledání) vedle obrazu, významu a modelu; počty u voleb se počítají nad ostatními filtry; při
+  změně runy zůstávají (srovnání napříč runami). Aplikace ukládá oblast i hledání štítkem SVÉHO jazyka (v datech i anglické čtení
+  s „Almenn leiðsögn"), proto se sjednocují na anglický štítek přes `AREAS`/`SEEKS` — islandské čtení téhož výběru padne do téže volby.
+- **Ověřeno:** smoke ㉵ +4 kontroly (islandský štítek oblasti i hledání, počet u volby, jiné hledání nic nepustí); mutace „bez
+  sjednocení" → 3 FAIL. Skutečná data: Hagalaz × Family & Home × Confirmation = 7 čtení, každé s jiným obrazem (sáček).
+- Affected doc(s): žádný (přehled databáze čtení vlastní záznam 2026-10-05 (5) a kód).

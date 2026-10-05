@@ -15,7 +15,7 @@
   var _testersOnly = false;
   var _wired = false;
   var _rune = '';                 // '' = posledních 100 čtení všech run; runa = až 500 čtení té runy
-  var _f = { img: '', kws: '', model: '', notes: false, keep: false, q: '' };
+  var _f = { img: '', kws: '', model: '', area: '', seek: '', notes: false, keep: false, q: '' };
   var _rows = [];
   var SPREADY = ['NORNS', 'KRIZ', 'HORSESHOE', 'YGGDRASIL'];
   var REP_IKONA = { keep: '✦', other: '🚩', visual: '🎨', replace: '✏️', rephrase: '✏️', pattern: '🔁', crash: '💥' };
@@ -54,6 +54,18 @@
   }
   function model(r) { return (r.usage && r.usage.model) || '—'; }
   function vyznam(r) { return (r.prompt_draws && r.prompt_draws.kws) || ''; }
+  // 2026-10-05 (KUKY: „chci víckrát vidět stejný obraz… jestli ho při stejné area a seeking řekne stejně, nebo udělá něco jinak“):
+  // oblast a hledání se ukládají ŠTÍTKEM jazyka aplikace (data: anglické čtení s „Almenn leiðsögn“) → sjednotit na anglický
+  // štítek přes AREAS/SEEKS (jeden zdroj, runar-runes.js), jinak by islandské čtení téhož výběru spadlo do jiné volby.
+  function nadEN(sez, v) {
+    if (!v || typeof sez === 'undefined' || !sez) return v || '';
+    var i = (sez.en || []).indexOf(v);
+    if (i === -1) i = (sez.is || []).indexOf(v);
+    return i === -1 ? v : sez.en[i];
+  }
+  function oblast(r) { return nadEN(typeof AREAS !== 'undefined' ? AREAS : null, r.aol || (r.area === 'spread' ? '' : r.area)); }
+  function hledani(r) { return nadEN(typeof SEEKS !== 'undefined' ? SEEKS : null, r.seeking); }
+  var KLIC = { img: function (r) { return obraz(r).key; }, kws: vyznam, model: model, area: oblast, seek: hledani };
   function reporty(r) { return Array.isArray(r.reports) ? r.reports : []; }
   function maPoznamku(r) { return reporty(r).some(function (x) { return x.type !== 'keep' && String(x.message || '').trim(); }); }
   function maKeep(r) { return reporty(r).some(function (x) { return x.type === 'keep'; }); }
@@ -66,6 +78,8 @@
     if (bez !== 'img' && _f.img && obraz(r).key !== _f.img) return false;
     if (bez !== 'kws' && _f.kws && vyznam(r) !== _f.kws) return false;
     if (bez !== 'model' && _f.model && model(r) !== _f.model) return false;
+    if (bez !== 'area' && _f.area && oblast(r) !== _f.area) return false;
+    if (bez !== 'seek' && _f.seek && hledani(r) !== _f.seek) return false;
     if (_f.notes && !maPoznamku(r)) return false;
     if (_f.keep && !maKeep(r)) return false;
     if (_f.q && hledatV(r).indexOf(_f.q.toLowerCase()) === -1) return false;
@@ -140,7 +154,7 @@
     var pocty = {}, popisy = {};
     _rows.forEach(function (r) {
       if (!prosel(r, klic)) return;
-      var k = klic === 'img' ? obraz(r).key : klic === 'kws' ? vyznam(r) : model(r);
+      var k = KLIC[klic](r);
       if (!k) return;
       pocty[k] = (pocty[k] || 0) + 1;
       if (!popisy[k]) popisy[k] = popis(r);
@@ -193,6 +207,8 @@
     naplnVyber('rd-img', 'Všechny obrazy', 'img', function (r) { return obraz(r).label; });
     naplnVyber('rd-kws', 'Všechny významy', 'kws', vyznam);
     naplnVyber('rd-model', 'Všechny modely', 'model', model);
+    naplnVyber('rd-area', 'Všechny oblasti', 'area', oblast);   // oblast a hledání při změně runy zůstávají — srovnání napříč runami
+    naplnVyber('rd-seek', 'Všechna hledání', 'seek', hledani);
     renderSouhrn();
     render(_rows.filter(function (r) { return prosel(r); }));
   }

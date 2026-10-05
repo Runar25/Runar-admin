@@ -528,6 +528,9 @@ textarea::placeholder{color:var(--dim);}
       <select id="rd-img" onchange="setRdFilter('img', this.value)"><option value="">Všechny obrazy</option></select>
       <select id="rd-kws" onchange="setRdFilter('kws', this.value)"><option value="">Všechny významy</option></select>
       <select id="rd-model" onchange="setRdFilter('model', this.value)"><option value="">Všechny modely</option></select>
+      <!-- 2026-10-05 (KUKY „přidej filtr oblasti a hledání“): týž obraz × táž oblast × hledání — jak ho model řekne pokaždé -->
+      <select id="rd-area" onchange="setRdFilter('area', this.value)"><option value="">Všechny oblasti</option></select>
+      <select id="rd-seek" onchange="setRdFilter('seek', this.value)"><option value="">Všechna hledání</option></select>
       <div class="pill" id="rd-f-notes" onclick="toggleRdFilter('notes')">💬 S poznámkou</div>
       <div class="pill" id="rd-f-keep" onclick="toggleRdFilter('keep')">✦ Uloženo</div>
       <input id="rd-q" type="search" placeholder="Hledat v textu, Ascích a poznámkách…" oninput="setRdFilter('q', this.value)">

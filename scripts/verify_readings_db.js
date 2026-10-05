@@ -30,6 +30,12 @@ const DATA = [
   cteni('3', 'en', MIMO, 'hail', 'claude-opus-5'),
   cteni('4', 'en', '', '', 'claude-opus-5', [], 'Staré čtení bez obrazu'),
 ];
+// 2026-10-05 filtr oblasti a hledání: islandské čtení nese islandské štítky (tak je ukládá aplikace v islandštině).
+const AR = vm.runInContext('AREAS', S), SK = vm.runInContext('SEEKS', S), iF = AR.en.indexOf('Family & Home'), iC = SK.en.indexOf('Confirmation');
+Object.assign(DATA[0], { area: 'Family & Home', seeking: 'Confirmation' });
+Object.assign(DATA[1], { area: AR.is[iF], seeking: SK.is[iC] });
+Object.assign(DATA[2], { area: 'Inner Growth', seeking: 'General Guidance' });
+Object.assign(DATA[3], { area: '', seeking: '' });
 const T = S.__rdTest;
 T.setRune('Hagalaz'); T.setRows(DATA); T.renderAll();
 const sum = el['rd-summary'].innerHTML;
@@ -53,6 +59,15 @@ rekni(el['rd-count'].textContent === '1 z 4', 'filtr ✦ Uloženo (' + el['rd-co
 S.toggleRdFilter('keep');
 S.setRdFilter('model', 'claude-opus-5');
 rekni(el['rd-count'].textContent === '3 z 4', 'filtr modelu (' + el['rd-count'].textContent + ')');
+S.setRdFilter('model', '');
+S.setRdFilter('area', 'Family & Home');
+rekni(el['rd-count'].textContent === '2 z 4', 'filtr oblasti bere anglický i islandský štítek (' + el['rd-count'].textContent + ')');
+rekni(/Family &amp; Home \(2\)/.test(el['rd-area'].innerHTML), 'volba oblasti ukazuje počet čtení');
+S.setRdFilter('seek', 'Confirmation');
+rekni(el['rd-count'].textContent === '2 z 4', 'oblast + hledání, islandské „' + SK.is[iC] + '“ = Confirmation (' + el['rd-count'].textContent + ')');
+S.setRdFilter('seek', 'General Guidance');
+rekni(el['rd-count'].textContent === '0 z 4', 'jiné hledání v téže oblasti nic nepustí (' + el['rd-count'].textContent + ')');
+S.setRdFilter('area', ''); S.setRdFilter('seek', '');
 
 if (fail) { console.log('\n' + fail + ' selhalo'); process.exit(1); }
-console.log('\nOK    databáze čtení: obraz EN+IS v jednom řádku, výběr obrazu, poznámky a ✦ Keep, filtry a hledání sedí');
+console.log('\nOK    databáze čtení: obraz EN+IS v jednom řádku, výběr obrazu, poznámky a ✦ Keep, filtry (i oblast a hledání napříč jazyky) a hledání sedí');
