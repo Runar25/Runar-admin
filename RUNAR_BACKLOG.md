@@ -1112,7 +1112,7 @@ k EN; `_promptDraws.kws` musí dál zapisovat, který padl (databáze čtení ho
   flow/intuition, Othila home/heritage, Ehwaz trust/partnership…) — hotoví kandidáti na dva významy bez nového souzení.
 - Tvar definiční věty (*„Hagalaz names X"*) víc významů nezmění — to je prompt → lab CODE-read.
 
-### Trajekt u Hagalazu: owner ho čte jako špatný obraz (KUKY 2026-10-05) — volba čeká (CODE-tune)
+### ✅ Trajekt u Hagalazu: owner ho čte jako špatný obraz (KUKY 2026-10-05) — PŘEPSÁN (DECISIONS 2026-10-05 (8))
 *„Jednou jsem dostal trajekt a přišlo mi to jako špatný obraz."* Řádek `RUNE_IMAGES` Hagalaz *„On the wedding day, the storm keeps
 the ferry in harbour."* (`lf` = jen Love a Family). Jediné čtení: 948649a5 (2026-10-03, Family & Home · Confirmation, Opus 5,
 `area_face: 2`); owner u něj: *„sice si hezky vymyslí příběh, ale špatně chápe"*. Rozbor CODE-tune: scéna nese vlastní příběh

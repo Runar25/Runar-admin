@@ -1,0 +1,12 @@
+[
+ {"id": "T1", "runa": "Hagalaz", "en": "The storm breaks the window and puts out the candles on the table.", "is": "Óveðrið brýtur rúðuna og slekkur á kertunum á borðinu.", "plete": ["Kenaz", "Thurisaz"]},
+ {"id": "T2", "runa": "Hagalaz", "en": "The gale breaks the panes of the greenhouse you built together.", "is": "Rokið brýtur rúðurnar í gróðurhúsinu sem þið byggðuð saman.", "plete": ["Thurisaz", "Berkana"]},
+ {"id": "F1", "runa": "Fehu", "en": "The boat comes in so laden with fish it sits deep in the water.", "is": "Báturinn kemur að bryggju svo hlaðinn fiski að hann ristir djúpt.", "plete": ["Jera", "Laguz"]},
+ {"id": "F2", "runa": "Fehu", "en": "The hot water runs into every house in the valley.", "is": "Heita vatnið rennur inn í hvert hús í dalnum.", "plete": ["Laguz", "Gebo"]},
+ {"id": "A1", "runa": "Algiz", "en": "The mountain hut stands open in the blizzard for anyone who needs it.", "is": "Sæluhúsið stendur opið í hríðinni fyrir hvern sem þarf.", "plete": ["Othila", "Nauthiz"]},
+ {"id": "A2", "runa": "Algiz", "en": "No one touches the stone where the hidden people live.", "is": "Enginn hreyfir við steininum þar sem huldufólk býr.", "plete": ["Perth", "Othila"]},
+ {"id": "W1", "runa": "Wunjo", "en": "In the hot pot under the frost, everyone laughs at the same story.", "is": "Í heita pottinum í frostinu hlæja allir að sömu sögunni.", "plete": ["Gebo", "Kenaz"]},
+ {"id": "W2", "runa": "Wunjo", "en": "The dog runs to meet you at the gate and cannot stop wagging.", "is": "Hundurinn hleypur á móti þér að hliðinu og getur ekki hætt að dilla skottinu.", "plete": ["Ehwaz", "Algiz"]},
+ {"id": "B1", "runa": "Berkana", "en": "On the windowsill the seedlings stretch toward the light.", "is": "Á gluggakistunni teygja smáplönturnar sig að birtunni.", "plete": ["Ingwaz", "Sowilo"]},
+ {"id": "B2", "runa": "Berkana", "en": "You water the cutting and then leave it alone.", "is": "Þú vökvar græðlinginn og lætur hann svo í friði.", "plete": ["Ingwaz", "Jera"]}
+]

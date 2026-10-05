@@ -788,7 +788,12 @@ var RUNE_IMAGES = [
   ['Thurisaz', 'any', 'Þrætan við borðið þagnar, einu orði frá því að upp úr sjóði.', 'The quarrel at the table goes quiet, one word short of boiling over.', 'þröskuldur', 'threshold', 'D', '', '', '', 'lf'],
   ['Thurisaz', 'any', 'Þyrnir krækir í ermina einu skrefi frá gilbrúninni.', 'A thorn snags your sleeve one step short of the gully\'s edge.', 'aðgát', 'caution', 'P'],
   ['Wunjo', 'any', 'Morguninn eftir rifrildið hlæið þið bæði að því sama.', 'The morning after the quarrel, you both laugh at the same thing.', 'sátt', 'harmony', 'D', '', '', '', 'lf'],
-  ['Hagalaz', 'any', 'Á brúðkaupsdaginn kemst ferjan ekki úr höfn vegna óveðurs.', 'On the wedding day, the storm keeps the ferry in harbour.', 'truflun', 'disruption', 'D', '', '', '', 'lf'],
+  // 2026-10-05 (KUKY „přepsat trajekt“): „On the wedding day, the storm keeps the ferry in harbour.“ nesl vlastní příběh (svatba, hosté),
+  // bouře v něm jen zdržela a krupobití si model dodal sám; podoba oblasti „generace“ se na svatbu přilepila (čtení 948649a5:
+  // „The crossing was planned by one generation and is waited on by another.“). Nová scéna: síla z nebe, jeden aktér, něco pevného
+  // se rozbije a plán (prostřený stůl) padne — popis Hagalazu „plán se rozpadne“. Brána k4 3/3 (proti Kenazu a Thurisazu), významy
+  // k4: disruption 4/4 · nature force 4/4. IS korpus: „brýtur rúðuna“ 8 · „slökkva á kertunum“ 37; is-grammar-qa čisté.
+  ['Hagalaz', 'any', 'Óveðrið brýtur rúðuna og slekkur á kertunum á borðinu.', 'The storm breaks the window and puts out the candles on the table.', 'truflun|náttúruöfl', 'disruption|nature force', 'D', '', '', '', 'lf'],
   ['Nauthiz', 'any', 'Þú pakkar í flýti aðeins því sem þú getur ekki verið án.', 'In a hurry, you pack only what you cannot do without.', 'nauðsyn', 'necessity', 'D'],
   ['Sowilo', 'bright', 'Við vörðuna á tindinum skín sólin beint framan í þig.', 'At the summit cairn, the sun shines straight into your face.', 'sigur', 'victory', 'P'],
   ['Sowilo', 'bright', 'Gamli hundurinn teygir úr sér í sólinni á tröppunum.', 'The old dog stretches out full length in the sun on the steps.', 'lífskraftur', 'life force', 'P', '', '', 'postava'],

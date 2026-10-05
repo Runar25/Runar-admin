@@ -8382,3 +8382,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno:** smoke ㉵ +4 kontroly (islandský štítek oblasti i hledání, počet u volby, jiné hledání nic nepustí); mutace „bez
   sjednocení" → 3 FAIL. Skutečná data: Hagalaz × Family & Home × Confirmation = 7 čtení, každé s jiným obrazem (sáček).
 - Affected doc(s): žádný (přehled databáze čtení vlastní záznam 2026-10-05 (5) a kód).
+
+## 2026-10-05 (8) — Trajekt u Hagalazu přepsán: bouře rozbije okno a zhasne svíčky na stole (v4.96)
+
+- **Rozhodl:** KUKY 2026-10-05 *„přepsat trajekt"* (dřív: *„jednou jsem dostal trajekt a přišlo mi to jako špatný obraz"*).
+  **Provedl:** CODE-tune.
+- **Proč:** *„On the wedding day, the storm keeps the ferry in harbour."* nesl vlastní příběh (svatba, hosté) — přesně protipříklad
+  pravidla 2 v `RUNAR_DESIGN.md` „Délka a tvar obrazu"; bouře jen zdržela, nic nevzala ani neodkryla, takže krupobití si model
+  dodal sám, a podoba oblasti *generace* se na svatbu přilepila (čtení 948649a5, owner: *„špatně chápe"*).
+- **Co:** týž slot (Hagalaz, `lf` = Love a Family, registr D): *„Óveðrið brýtur rúðuna og slekkur á kertunum á borðinu."* /
+  *„The storm breaks the window and puts out the candles on the table."* Jeden aktér (bouře), něco pevného se rozbije a plán
+  (prostřený stůl) padne — popis Hagalazu *„plán se rozpadne"*. Významy disruption | nature force. Druhá varianta (skleník, který
+  jste postavili spolu) prošla taky 3/3 — zůstává v `docs/eval/2026-09-26-obrazy/kandidati_k4.json` jako rezerva.
+- **Ověřeno:** brána se statickými popisy k4 3/3 (proti Kenazu a Thurisazu); významy k4 4/4 (disruption, nature force); IS
+  is-grammar-qa 0 nálezů, korpus *„brýtur rúðuna"* 8 · *„slökkva á kertunum"* 37 (tvar *„kertin slokkna"* korpus nezná → přepsáno
+  na *„slekkur á kertunum"*, kde koná bouře). Smoke obrazů (㉤ ㉲ ㉟ ㊱) zelené. `RUNAR_PROMPT_VERSION` v4.96-obrazy-k4.
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka „Trajekt" uzavřena).
