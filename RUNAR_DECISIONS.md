@@ -8333,7 +8333,7 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   mělké křížení (Gebo + Uruz, obě větve vidět); otočení větvičky > 8° 0, ramene > 5° 0, sklouznutí > 8 px 25 (dřív 20, nejvíc 20 px proti 25).
 - Affected doc(s): `RUNAR_TREE.md` §5 (nový záznam) · `RUNAR_TREE_MAP.md` §2, §5, §7, §13 · `RUNAR_BACKLOG.md` (souběhy) — v tomto commitu.
 
-## 2026-10-05 (4) — Databáze čtení v shrine: runa → obrazy → všechna čtení obrazu, s ownerovými poznámkami a ✦ Keep
+## 2026-10-05 (5) — Databáze čtení v shrine: runa → obrazy → všechna čtení obrazu, s ownerovými poznámkami a ✦ Keep
 
 - **Rozhodl:** KUKY 2026-10-05 *„chci začít dělat databázi čtení… Musíme čtení nějak organizovat, abychom je dokázali lépe najít.
   Kde bylo co dobře použito."* a *„bude super, pokud můžu vybrat jednu runu, třeba Hagalaz, a určitý obraz, a tím uvidím všechna
