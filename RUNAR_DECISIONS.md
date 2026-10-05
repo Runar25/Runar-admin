@@ -8348,3 +8348,26 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   poznámkami, hledání „výborn" 2, ✦ 7. Smoke ㉵ (`scripts/verify_readings_db.js`, smyšlená čtení) 10/10; mutace párování IS → FAIL.
   `list-readings` v10 nasazena (bez přihlášení 401). **Přihlášenou cestu v shrine ověří owner.**
 - Affected doc(s): `RUNAR_BACKLOG.md` (směr „jeden obraz, víc významů").
+
+## 2026-10-05 (6) — Obraz smí nést víc významů; řeka a poryv u Hagalazu: nature force | disruption (krok A, v4.95)
+
+- **Rozhodl:** KUKY 2026-10-05 *„ok. pojedeme postupně, dej mi A"* — první ze tří kroků (A řeka a poryv · B brána „které významy
+  obraz unese" pro všech 8 obrazů Hagalazu · C obrazy ostatních run, kde islandští a angličtí soudci vybrali jiný význam). Předtím:
+  *„nature force ho hodí i pro řeku… bylo by fajn, kdyby nějaký obraz mohl být popsán různými meanings."* **Provedl:** CODE-tune.
+- **Proč:** u Hagalazu neslo „disruption" 4 z 8 obrazů; v říjnu dostalo obraz s tímto významem 12 z 22 ownerových čtení a slovo
+  padlo doslova v 7 ze 13 čtení s tímto významem (definiční věta *„Hagalaz names (the) disruption…"* v 6 z 9 vět se slovem).
+  Islandsky nesou řeka a poryv „náttúruöfl": soudci 2026-08-22 se rozešli (řeka EN 2× disruption + 1× nature force, IS 2×
+  náttúruöfl + 1× umbreyting; poryv EN 3/3 disruption, IS 3/3 náttúruöfl) — oba významy na scénu sedí.
+- **Co:** aspekt v `RUNE_IMAGES` smí být „a|b" (stejné pořadí v IS i EN). `_seasonalImagery` losuje JEDEN index pro oba jazyky,
+  sáček per obraz (na jednom zařízení se významy střídají). Do promptu jde vždy jen jeden význam, takže `prompt_draws.kws`, databáze
+  čtení i Ask ho vidí beze změny. Řeka a poryv: `náttúruöfl|truflun` / `nature force|disruption`. `RUNAR_PROMPT_VERSION`
+  v4.95-dva-vyznamy — čtení po změně se v databázi čtení odliší. Prompt (pokyny) se nemění.
+- **§26:** jediný dřívější obraz s EN „nature force" (poryv přes suchopýr) šel ven 2026-08-22 jako vadný OBRAZ (C3 „sky/roof/
+  sill/root", track A), ne kvůli významu — tahle změna žádnou dřívější vadu nevrací.
+- **Ověřeno:** smoke ㉤ (`scripts/verify_image_aspect_key.js`) rozšířen: každá alternativa je klíč runy, IS a EN mají stejně
+  alternativ, produkční cestou jde do promptu jeden význam, `kws` = týž, v jednom tahu IS = EN, v kole sáčku padne každý jednou.
+  Mutace 5/5 chyceny (IS jen jeden význam · význam mimo `k` · surový sloupec do promptu · IS a EN jiný index · náhoda místo
+  sáčku). Golden 42/42 beze změny (fixtury tyto obrazy nelosují). Jak se s „nature force" vypořádá model, ukáže ownerovo testování;
+  v databázi čtení bude řeka s oběma významy vedle sebe.
+- **Očekávání:** „disruption" v říjnové rotaci Hagalazu ze 3 ze 6 obrazů na 2 ze 6 (výpadek proudu celý, řeka a poryv napůl).
+- Affected doc(s): `RUNAR_BACKLOG.md` (směr „jeden obraz, víc významů": A hotovo, B a C čekají · trajekt · podoba oblasti [2]).

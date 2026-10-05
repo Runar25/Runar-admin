@@ -547,7 +547,7 @@ var RUNE_IMAGES = [
   ['Wunjo','any','Húsið fyllist af röddum áður en maturinn er tilbúinn.','The house fills with voices before the food is ready.','að tilheyra','belonging','D', '', '', '', 'f'],
   ['Wunjo','any','Ein rödd byrjar sönginn og stofan tekur undir, línu fyrir línu.','One voice starts the song and the room finds it line by line.','að tilheyra','belonging','D'],
   ['Wunjo','any','Þú kemur inn úr kuldanum og einhver hefur kynt ofninn.','You come in out of the cold and someone has lit the stove.','að tilheyra','belonging','D', '', '', '', 'fhl'],
-  ['Hagalaz','cold','Élið skellur á úr heiðskíru og er farið jafn skjótt.','The squall strikes out of a clear sky and is gone just as fast.','náttúruöfl','disruption','E'],
+  ['Hagalaz','cold','Élið skellur á úr heiðskíru og er farið jafn skjótt.','The squall strikes out of a clear sky and is gone just as fast.','náttúruöfl|truflun','nature force|disruption','E'],   // 2026-10-05: dva významy (krok A) — důvod u _seasonalImagery
   ['Hagalaz','cold','Haglið lemur þakið og bráðnar á augabragði.','The hail hammers the roof and melts in an instant.','umbreyting','transformation','E'],
   ['Nauthiz','cold','Vorhretið lætur lambið leita fast að ylnum.','The spring cold-snap makes the lamb press close for warmth.','vöxtur í áskorun','growth through challenge','P', '', '', 'postava'],
   ['Nauthiz','any','Þú prjónar áfram þótt garnið sé við það að klárast.','You keep knitting though the yarn is almost out.','þrýstingur','growth through challenge','D'],
@@ -714,7 +714,7 @@ var RUNE_IMAGES = [
   ['Blank','cold','Nýfallinn snjór liggur yfir slóðinni og engin spor eru komin í hann.','New snow lies over the track and no one has stepped in it yet.','óskrifaður möguleiki','unwritten potential','E'],
   ['Blank','any','Handfærið liggur í dökku vatninu og ekkert hefur enn snert það.','The line runs down into dark water and nothing has touched it yet.','hið óþekkta','unwritten potential','P'],
   ['Hagalaz','bright','Haglél lemur túnið í júní og er farið áður en birtir til.','Hail rakes the hayfield in June and is gone before the sky clears.','hagl','hail','E'],
-  ['Hagalaz','any','Áin bólgnar á einni nóttu og tekur með sér það sem stóð of nálægt bakkanum.','The river swells overnight and takes with it whatever stood too near the bank.','náttúruöfl','disruption','E'],
+  ['Hagalaz','any','Áin bólgnar á einni nóttu og tekur með sér það sem stóð of nálægt bakkanum.','The river swells overnight and takes with it whatever stood too near the bank.','náttúruöfl|truflun','nature force|disruption','E'],   // 2026-10-05: dva významy (krok A) — důvod u _seasonalImagery
   ['Sowilo','bright','Miðnætursólin heldur túninu björtu langt fram yfir háttatíma.','The midnight sun keeps the hayfield bright long after bedtime.','sól','sun','E','midnight-sun'],
   // 2026-10-01 (kontrola dvojic): prvni paprsek po zimni tme = navrat svetla, slovnik Dagaz („turns the dark toward the light“), brana Dagaz 3/3.
   // Druha strana Sowilo z popisu: ostre svetlo oslni. Sowilo 3/3.
@@ -962,8 +962,18 @@ function _seasonalImagery(lang, drawn, area) {
       // id sáčku zůstává odvozené z IS sloupce (výš), takže týž obraz má tutéž
       // identitu v obou jazycích — ochrana proti opakování se jazykem nerozpadá.
       runePhrase = (lang === 'is' ? hit[2] : hit[3]).replace(/\.$/, '');   // věta pokračuje, tečka by ji rozťala
-      _imgAspektIS = hit[4] || '';
-      _imgAspektEN = hit[5] || '';
+      // 2026-10-05 (KUKY „nature force ho hodí i pro řeku… bylo by fajn, kdyby nějaký obraz mohl být popsán různými meanings“):
+      // obraz smí nést VÍC významů — „a|b“ v obou sloupcích, stejné pořadí (i-tý islandský = i-tý anglický; hlídá smoke ㉤).
+      // Losuje se JEDEN index pro oba jazyky, sáček per obraz → na zařízení se významy střídají. Do promptu (`focus on:`) jde
+      // vždy jen jeden; prompt_draws.kws i Ask ho čtou z promptu, takže dál vidí jediný význam. Doklad: u Hagalazu neslo
+      // „disruption“ 4 z 8 obrazů a 12 z 22 říjnových čtení, slovo bylo vysloveno v 7 ze 13 čtení s tímto významem; soudci
+      // 2026-08-22 se u řeky a poryvu rozešli (řeka EN 2× disruption + 1× nature force, IS 2× náttúruöfl + 1× umbreyting;
+      // poryv EN 3/3 disruption, IS 3/3 náttúruöfl) — oba významy na scénu sedí. Obraz s jediným významem los nečerpá.
+      var aIS = String(hit[4] || '').split('|'), aEN = String(hit[5] || '').split('|'), aI = 0;
+      if (aIS.length > 1 && aIS.length === aEN.length)
+        aI = Number(_seasonBagPick('vyznam', cIds[cand.indexOf(hit)], aIS.map(function (x, i) { return String(i); }))) || 0;
+      _imgAspektIS = (aIS[aI] || '').trim();
+      _imgAspektEN = (aEN[aI] || '').trim();
       _imgPostava = hit[9] === 'postava';   // zvíře v hlavní roli → pokyn za obraz (IMG_POSTAVA)
       // Jadro dostava MISTO losem ze seznamu sveho registru (sacek: klic per registr).
       if (hit[8] === 'jadro' && IMG_PLACES[hit[6]]) {

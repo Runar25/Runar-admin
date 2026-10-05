@@ -417,6 +417,9 @@
 
 - [ ] **PORT NOVÉHO STROMU DO APLIKACE (CODE-tree, až po KUKYho oku na labu).** Lab má založení jako nutnou podmínku, zóny × elementy, povýšení a tíhu čtení (`RUNAR_TREE.md` §2 + §5 kroky 1–5); aplikace kreslí starý živý strom ze všech čtení (KUKY 2026-10-03: „novou si rád prohlédnu, až bude skoro hotová“). ⚠️ **Před portem vrátit ownerovi záznam o založení** (`tree_founded_at` + `founding_reading_id` — smazal je reset životní runy), jinak uvidí semínko. **Pro CODE-tune (odpověď na jejich otázku z 2026-10-02 „roste živý strom bez založení?“):** ne, nikdy (KUKY, `RUNAR_TREE.md` §2); jejich výzva `tree-founding-cta` při `tree_founded_at = NULL` je správně a nic se na ní nemění; seeking ukládají správně. Posuvník historie („jak mi strom rostl“) musí v aplikaci zůstat i po portu.
 - [ ] **Strom (lab): souběhy větví na modelových stromech** (CODE-tree, 2026-10-03, DECISIONS (15), (16)). Na 24 modelových stromech (`ovtypes`) 158 souběhů (ráno 250, s „koštětem“ 49 — tvar ramen, který KUKY odmítl). „Povýšená podél matky“ vyřešená (146 → 18, DECISIONS (16); nepomohlo: dřívější odštěpení, úhel od špičky matky, menší zdvih špičky povýšené). Dvě ramena na stejné straně 74 → 21 (DECISIONS 2026-10-05 (4)); všech souběhů 62. **Zbývá:** dvě ramena na stejné straně (21), povýšená + povýšená (16), povýšená + jiné rameno (15). Každý kandidát změřit oběma směry páky + `scripts/utils/tree_render.js` (KUKYho strom i modelový), tvar ramen z kmene NEMĚNIT. Na KUKYho stromě dnes žádný (dvě mělká křížení, obě větve vidět).
+- [ ] ⭐ **Strom (lab): strany nevyvážené — kostra počítá povýšené větve, které na své straně nerostou** (CODE-tree, nalezeno 2026-10-05 při čtení KUKYho uloženého stromu, `scripts/utils/tree_read.js`). KUKYho strom (280 čtení): vlevo 9 ramen + 6 povýšených (243 čtení na nich), vpravo 4 + 5 (115). Jeho čtení přitom stranu nepřevažují (oblasti nitro 98 · svět 95). **Mechanika:** kostra `FR` přiděluje stranu ramenům i povýšeným větvím v pořadí zrodu a vyvažuje počet (na papíře L 12 · P 12, z toho povýšené L 4 · P 7). Od 2026-10-03 ale povýšená roste ze strany své matky (`growGrad`, `_GTURN`), stranu z kostry nepoužije → pozdější ramena (Uruz, Mannaz, Eihwaz) šla všechna doleva, protože vpravo „byly“ povýšené. **Oprava (návrh):** kostra vyvažuje jen ramena, nebo povýšené počítá na straně matky. Změřit `tree_read.js` + `tree_render.js` na KUKYho a modelových stromech; změna stran = změna vzhledu → ukázat ownerovi.
+- [ ] ⭐ **Strom (lab): rameno se narodí do první volné mezery, ne podle zóny — a už se nepřesune** (CODE-tree, nalezeno 2026-10-05, týž strom). Raidho: všech 24 čtení o minulosti, přesto nejvýš na kmeni (89 %). Narodilo se v 7. čtení s cílem 0,30, kmen byl plný a jediná volná mezera byla úplně nahoře; pořadí ramen se od 2026-10-03 nemění (rozestup), takže tam zůstalo. Totéž Uruz (minulost, 64 %) a Eihwaz (budoucnost, 47 %); rameno, které se narodí, když je místo, sedí podle zóny (Kenaz, Perth dole; Algiz, Berkana nahoře). Zóna = hlavní význam výšky (`RUNAR_TREE.md` §3A) → tady neplatí. **Oprava (návrh):** při zrodu vložit podle cíle (mezi ramena, jejichž cíle ho obklopují) a sousedy rozestoupit (kmen doroste — `needH`), místo první volné mezery; nebo dovolit pomalé předbíhání ramen na OPAČNÝCH stranách. Hlídat skoky (`jump2`) a rozestup (smoke ㉳).
+- [ ] **Strom (lab): povýšená běží podél matky, když matka padá dolů** (CODE-tree, 2026-10-05). KUKYho strom: Hagalaz podél Odinnu 41 px při 9°, Fehu podél Tiwazu 23 px při 17° (obrázek s vyznačením: `scripts/utils/tree_render.js` + detektor). Matka s tíhou dolů (minulost) je v místě odštěpení skoro vodorovná nebo pod ní; povýšená odbočí o `GREL` „nahoru“, ale matka se dál stáčí dolů a povýšená s ní chvíli běží. Rychlá odbočka (2026-10-03 (16)) to zkrátila, nezrušila.
 - [ ] **Lab: mrtvé úhly povýšených z vějíře** (CODE-tree, 2026-10-03). V časové smyčce `build_crown_composer.py` se pro povýšené počítá strana a cílový úhel (`gIx`, `gN`, `gSv`, `gSl`, `gZ`, `gSd`, `gS0`, `liveG`, `tgA['g'+j]`, `gAngQ` → `_GANG`) a nic to nečte — úhel povýšené bere `growGrad` od směru matky (`_GTURN`). Smazat s golden-verify (stejná kresba na KUKYho a modelových stromech).
 - [ ] **Lab RŮST: „expanze šířka / mohutnost“ ukazuje mrtvé hodnoty** (CODE-tree, nalezeno 2026-10-03 při mapování). `wExp` a `mExp` se spočítají (`effCanopy`, `girth`) a nikde se nepoužijí (`RUNAR_TREE_MAP.md` §2). Buď zapojit (co mají velké spready vody/země a stínu na stromě znamenat, rozhodne owner), nebo z RŮST vyřadit.
 - [ ] **Fotorealistická kůra = WebGL, vlastní projekt (rozbor 2026-08-10).** KUKY chce obojí — kresbu i fotografii. Kresbu řeší „kůra ze stavby" (`hrebeny` + `tonPramene`, viz RUNAR_TREE.md). **Fotografii 2D plátno neumí**: textura potřebuje plochu a canvas kreslí siluetu, takže se dlaždice drží obrazovky a čte se jako nálepka (ověřeno a vráceno 2026-08-10). Cesta je **UV mapování na pás trojúhelníků ve WebGL** — strom jako geometrie s materiálem kůry, stínování i textura per pixel. Není to posuvník, je to přepis rendereru; zatím jen v labu, produkce běží na telefonech.
@@ -709,6 +712,8 @@
   (*„home and the people who share it"*). IS až po volbě, nativně a ověřeně (§2).
   **Owner 2026-10-04: *„spíš odebrat. Uvidíme po přidání low effort."*** → odebrat AŽ po nasazení solu na `low` a pár čteních
   (jedna změna naráz, ať jde poznat, co co udělalo).
+  ➕ **2026-10-05, doklad k podobě [2] *generace*:** trajekt × Family & Home (čtení 948649a5, `area_face: 2`) →
+  *„The crossing was planned by one generation and is waited on by another."* — owner: *„špatně chápe"*. Viz položka „Trajekt".
 - [x] **Opus 5 s přemýšlením `low` — NE** (KUKY 2026-10-04: *„nevypadá to lépe, takže ne"*, DECISIONS 2026-10-04 (4)). Pilot EVAL_LOG 2026-10-04 (3):
   63 slov × dnes 71, ~6 s × 4 s, $0,0148 × $0,0105; **1/6 čtení useknuté** na stropu 700 → pro produkci tvar
   `thinking: {type: "adaptive"}` + `output_config: {effort: "low"}` a `max_tokens` s rezervou na přemýšlení (claude-proxy).
@@ -1091,13 +1096,30 @@ A cokoli v datech mimo repo. To zachytí jen měření na výstupu modelu.
 
 ## Nálezy z workflow — k triáži
 
-### Směr: jeden obraz, víc významů (KUKY 2026-10-05) — návrh čeká (CODE-tune)
+### Směr: jeden obraz, víc významů (KUKY 2026-10-05) — krok A nasazen (v4.95), B a C čekají (CODE-tune)
 Owner: *„nature force ho hodí i pro řeku. Jde mi spíš o to, že by bylo fajn, kdyby nějaký obraz mohl být popsán různými meanings.
 Neříkám, že to teď asi pasuje na všechny obrazy pod runou."* Dnes nese každý obraz v `RUNE_IMAGES` JEDEN význam (sloupec aspektu)
 a ten jde do promptu jako „focus on: …" → esenční věta ho pojmenuje; u Hagalazu nese „disruption" 4 obrazy z 8 (stejně Algiz,
 Gebo, Wunjo, Ehwaz, Berkana). Návrh: u obrazů, kde to opravdu sedí, 2–3 významy a los mezi nimi (malá změna dat + výběru,
 ne promptu). Rizika: význam se jmenuje nahlas, musí sedět na scénu (aspekty se dřív ověřovaly bránou proti k_is); IS aspekt
 k EN; `_promptDraws.kws` musí dál zapisovat, který padl (databáze čtení ho ukazuje). Začít jednou runou (Hagalaz), ukázat ownerovi.
+**Krok A hotov** (DECISIONS 2026-10-05 (6)): aspekt smí být „a|b", jeden los pro oba jazyky, sáček per obraz; řeka a poryv
+`nature force|disruption`. Owner chce **postupně, po jednom** — další krok volí on:
+- **B** — brána „které z pěti významů obraz unese" pro všech 8 obrazů Hagalazu (3 soudci × obraz × jazyk, smí vybrat víc; 48 krátkých
+  volání). Obraz dostane všechny významy, na kterých se shodnou.
+- **C** — ostatní runy: u 25 ze 183 obrazů vybrali islandští a angličtí soudci jiný význam; po odečtení těch, kde jde jen o jiné
+  pořadí klíčů (Fehu, část Dagazu) zbývá 14 obrazů se skutečně jiným významem a 3 skoro synonyma (Ansuz dopis voice/messages, Thurisaz trn thorn/protection/caution, Laguz
+  flow/intuition, Othila home/heritage, Ehwaz trust/partnership…) — hotoví kandidáti na dva významy bez nového souzení.
+- Tvar definiční věty (*„Hagalaz names X"*) víc významů nezmění — to je prompt → lab CODE-read.
+
+### Trajekt u Hagalazu: owner ho čte jako špatný obraz (KUKY 2026-10-05) — volba čeká (CODE-tune)
+*„Jednou jsem dostal trajekt a přišlo mi to jako špatný obraz."* Řádek `RUNE_IMAGES` Hagalaz *„On the wedding day, the storm keeps
+the ferry in harbour."* (`lf` = jen Love a Family). Jediné čtení: 948649a5 (2026-10-03, Family & Home · Confirmation, Opus 5,
+`area_face: 2`); owner u něj: *„sice si hezky vymyslí příběh, ale špatně chápe"*. Rozbor CODE-tune: scéna nese vlastní příběh
+(svatba, hosté) a čtení ho převypráví; bouře tu jen zdrží, nic nebere ani neodkrývá, takže model musel krupobití dodat sám
+(*„Hagalaz is the hail that comes down on the day you had arranged"*); podoba oblasti [2] *generace* se na svatbu přilepila
+(*„The crossing was planned by one generation and is waited on by another."*). Možnosti: vyřadit (Hagalaz má dalších 7) ·
+přepsat na scénu, kde síla něco opravdu vezme (nový obsah → brána) · nechat. Doporučení CODE-tune: vyřadit, jako další malý krok.
 
 ### Ask mluví o OBRAZU místo o runách: „The picture does not say…" (owner 2026-10-04 14:38) — MALÁ oprava, čeká (CODE-tune)
 Owner u Asku k Nornám (Perth · Algiz · Eihwaz, nápověda „Inner Growth — can you make this image clearer?"): *„The picture does not say
