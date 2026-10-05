@@ -1823,14 +1823,19 @@ var RP_SINGLE = {
     // Prvni veta („koma fram í myndum, ekki útskýringu") ODSTRANENA 2026-08-21: zadavala
     // opak toho, co zada `_describeRule` v produkcnim profilu. IS 4/20 -> 8/20.
     noqBranch:function(rune,g,world){ return 'Nefndu ' + rune + ' einu sinni og fléttaðu nafnið náttúrlega inn í textann. Ein skýr innsýn nægir — ekki troða öllu inn.'; },
-    closing:function(name){ return 'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. ' + _namePlacement(name, 'is') + ' Haltu þig innan orðafjöldans — stuttar setningar, ekkert uppfyllingarefni.'; },
+    // 2026-10-05 (KUKY „bod 3 jeď“; OpenAI „State each instruction once“): pryč „Einn texti. Engar hlutaskiptingar. Engar
+    // fyrirsagnir.“ (tytéž stojí v řádku rozpočtu _lengthBudget) a „Haltu þig innan orðafjöldans — stuttar setningar“ (rozpočet
+    // + připomínka délky na konci). „Ekkert uppfyllingarefni“ ZŮSTÁVÁ jako věta — islandský systémový prompt ji na rozdíl od EN
+    // nemá. is-grammar-qa čisté, korpus „sleppa öllu“ 1135.
+    closing:function(name){ var nm = _namePlacement(name, 'is'); return (nm ? nm + ' ' : '') + 'Sleppu öllu uppfyllingarefni.'; },
     json:'Skilaðu EINGÖNGU þessu JSON fylki, engu á undan eða eftir: [{"rune": "(nafn rúnunnar)", "text": "(lesturinn nákvæmlega eins og fyrirmælin að ofan segja, einn samfelldur texti)"}]',
   },
   en: {
     PERSON:'PERSON', LIFE:'LIFE RUNE', DRAWN:'DRAWN RUNE', focus:'focus on',
     REALM_life:'Realm', REALM_drawn:'World', ELEM:'Elements',
     AREA:'AREA', SEEK:'SEEKING',
-    langInstr:'Respond in English.',
+    // 2026-10-05: „Respond in English.“ pryč — systémový prompt nese „Respond only in English.“ (bod 3 auditu, jednou).
+    langInstr:'',
     worldFb:function(pk){ return pk; },
     angleIntro:'READING ANGLE (follow this entry point — let it shape the opening and tone): ',
     // 2026-09-18: „Speak to what lies beneath the question." ODEBRANO — zadalo nitro tazatele
@@ -1840,7 +1845,11 @@ var RP_SINGLE = {
     // jako u islandske vetve; anglicky model ji sice prebijel, ale rozpor v zadani
     // neni neco, co se nechava stat proto, ze jeden model si poradi.
     noqBranch:function(rune,g,world){ return 'Mention ' + rune + ' by name once, woven naturally. One clear insight is enough — do not pack everything in.'; },
-    closing:function(name){ return 'One paragraph. No breaks. No labels. ' + _namePlacement(name, 'en') + ' Stay within the word count — short sentences, no filler. '; },
+    // 2026-10-05 (bod 3 auditu): pryč „One paragraph. No breaks. No labels.“ (řádek rozpočtu: „No sections, no labels, no line
+    // breaks between thoughts“ + JSON „one flowing paragraph“) a „Stay within the word count — short sentences, no filler.“
+    // (rozpočet + připomínka délky na konci + systémové „No filler“). „Mention <runa> by name once“ v qBranch/noqBranch
+    // ZŮSTÁVÁ: esenční rámec [0] runu jmenovat neříká, jen [1] — u poloviny čtení je to jediný pokyn (do auditu omylem jako duplikát).
+    closing:function(name){ return _namePlacement(name, 'en'); },
     json:'Output format — return ONLY this JSON array, nothing before or after: [{"rune": "(the rune name)", "text": "(the reading exactly as instructed above, one flowing paragraph)"}]',
   },
 };

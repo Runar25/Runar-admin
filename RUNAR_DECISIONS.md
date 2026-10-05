@@ -8264,3 +8264,18 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   nesmí odporovat. **Měřeno** (`RUNAR_EVAL_LOG.md` 2026-10-04 (5)): Opus ✦ uvnitř 2/6 → 6/6, čtení 72,5 → 64,3 slov (pořád nad 50–58);
   sol beze změny (53 slov). Golden builderů beze změny (✦ i připomínku přidává runar-reading.js), registr 337 pravidel.
 - Affected doc(s): `RUNAR_BACKLOG.md` („Prompt × návody výrobců" body 1–2).
+
+## 2026-10-05 (1) — Prompt single: každé pravidlo jednou (v4.93)
+
+- **Rozhodl:** KUKY 2026-10-05 *„bod 3 jeď"* (audit promptu × návody výrobců; OpenAI *„State each instruction once"*).
+  **Provedl:** CODE-tune.
+- **Co (`RP_SINGLE` v `v2/runar-character.js`):** závěr EN už jen umístění jména — pryč *„One paragraph. No breaks. No labels."*,
+  *„Stay within the word count — short sentences, no filler."* a *„Respond in English."* (kryjí je řádek rozpočtu, připomínka délky
+  na konci a systémový prompt). IS: pryč *„Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir."* a *„Haltu þig innan orðafjöldans —
+  stuttar setningar"*; *„ekkert uppfyllingarefni"* zůstává jako *„Sleppu öllu uppfyllingarefni."* — islandský systémový prompt pravidlo
+  o vatě nemá (is-grammar-qa čisté, korpus „sleppa öllu" 1135).
+- **Co zůstalo a proč:** *„Mention <runa> by name once"* — v auditu omylem jako duplikát; esenční rámec [0] runu jmenovat neříká, jen
+  [1], takže u poloviny čtení je to jediný pokyn. Systémový prompt (kánon hlasu, DEF_CHAR) beze změny.
+- **Měřeno** (`RUNAR_EVAL_LOG.md` 2026-10-05 (1)): 48 čtení, runa 1× · jeden odstavec · ✦ uvnitř vždy; délky v šumu. Golden: změna jen
+  závěrečného řádku všech variant single (EN i IS), spready beze změny. Registr 336 pravidel.
+- Affected doc(s): `RUNAR_BACKLOG.md` („Prompt × návody výrobců" bod 3).

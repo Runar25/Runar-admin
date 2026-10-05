@@ -1098,8 +1098,10 @@ Owner: *„najít nesrovnalosti, pak vyřešíme, co budeme dělat“*. Čísla 
    end of the prompt"*. U nás číslo uprostřed, na konci jen *„Stay within the word count"* bez čísla a úplně poslední je sekce ✦.
    Příznak: Opus 5 čtení ~70 slov proti rozpočtu 50–58 (sol 58–60). ◐ **2026-10-04 (v4.92):** připomínka s číslem jako poslední
    řádek single → Opus 72,5 → 64,3 slov (EVAL_LOG 2026-10-04 (5)); pořád nad rozpočtem. Spready a IS zatím bez připomínky.
-3. **Pravidla dvakrát i třikrát** — OpenAI: *„State each instruction once"* (štíhlejší prompty +10–15 % v jejich evalech). Single:
-   délka 2× (+ „no filler" v systému), jeden odstavec 3×, jméno runy jednou 2×, jazyk 2× (systém + čtení), „neříkej, co dělat" 2× v systému.
+3. ✅ **Pravidla dvakrát i třikrát — single HOTOVO 2026-10-05 (v4.93, DECISIONS 2026-10-05 (1)):** závěr bez kopií délky, odstavce
+   a jazyka. „Jméno runy 2×" byl omyl auditu (rámec [0] runu nejmenuje) — zůstává. Systémový prompt (kánon) nedotčen; jeho
+   „Never hand a conclusion" × „never tells the seeker what to do" nejsou čisté kopie (závěr × krok). **Zbývá:** spready mají
+   vlastní kopie (Norny: „not three separate readings" 2×, „Respond in English." vedle systému) — měnit až s měřením.
 4. **Zákazy místo pokynů** — Anthropic: *„Tell Claude what to do instead of what not to do"*. Zákaz má 53–57 % vět každého promptu.
    Souvisí s ownerovým *„čtení dostává hodně omezení a mantinelů"* a s tím, že Ask (méně zákazů) píše líp (EVAL_LOG 2026-10-03 (1)).
 5. **Data uvnitř pokynů** — oba výrobci: oddělit vstupy od pokynů (XML / Markdown). U nás obraz, podoba oblasti a otázka runy stojí

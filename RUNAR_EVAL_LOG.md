@@ -6025,3 +6025,20 @@ Po runách u Opusu: Hagalaz 75/76 → 66/67 · Fehu 77/74 → 65/65 · Wunjo 66/
 rozpočet (OpenAI varuje, že pokyny ke stručnosti umí zkrátit moc — tady ne). Opus je pořád nad rozpočtem; myšlenka ✦ u něj zůstává
 dlouhá (výrok + otázka, 14–25 slov).
 **Hranice:** n = 6 na buňku, jen EN, jen single; IS a spready neměřeny.
+
+## 2026-10-05 (1) — Pravidla v promptu single jen jednou (v4.93): nic se nerozbilo, délky beze změny
+
+Owner: *„bod 3 jeď"* (audit promptu × návody výrobců). Harness a výstupy `docs/eval/2026-10-05-bez-duplicit/`. A = v4.92, B = v4.93,
+obě TÝMŽ builderem a seedem (A jen vrátí starý závěr). Tři čtení × 2, Opus 5 a sol 6.1 `low`, EN i IS (48 čtení).
+
+| | slov A → B | runa jmenovaná právě 1× | bez zalomení | ✦ uvnitř JSONu |
+|---|---|---|---|---|
+| Opus EN | 66,2 → 64,0 | 6/6 → 6/6 | 6/6 → 6/6 | 6/6 → 6/6 |
+| Opus IS | 50,8 → 54,2 | 6/6 → 6/6 | 6/6 → 6/6 | 6/6 → 6/6 |
+| sol EN | 53,5 → 53,7 | 6/6 → 6/6 | 6/6 → 6/6 | 6/6 → 6/6 |
+| sol IS | 54,8 → 54,0 | 6/6 → 6/6 | 6/6 → 6/6 | 6/6 → 6/6 |
+
+Škrt nic nerozbil; rozdíly délek jsou v šumu (rozpětí u Opusu EN 53–77). Přínos štíhlejšího promptu (OpenAI uvádí +10–15 % ve svých
+evalech) tady neměřitelný — n = 6 a žádná metrika kvality.
+**Myšlenka ✦ (B, výchozí stav pro další krok):** Opus EN 12–20 slov, 2/6 dvě věty · Opus IS 11–15, 1/6 · sol EN 8–12 a IS 8–14, vždy jedna věta.
+**Hranice:** jen single; spready mají vlastní kopie téhož závěru (BACKLOG).

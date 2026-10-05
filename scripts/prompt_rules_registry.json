@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
- "zapsano": "2026-10-04",
- "prompt_version": "v4.92-mysl-json-delka",
+ "zapsano": "2026-10-05",
+ "prompt_version": "v4.93-bez-duplicit",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -638,12 +638,6 @@
    "lang": "en",
    "zdroj": "single",
    "zacatek": "Mention Ansuz by name once, woven naturally. One clear insight is enou"
-  },
-  {
-   "hash": "b2f917950216",
-   "lang": "en",
-   "zdroj": "single",
-   "zacatek": "One paragraph. No breaks. No labels. Stay within the word count — shor"
   },
   {
    "hash": "a45d56ca34db",
@@ -1630,10 +1624,10 @@
    "zacatek": "Nefndu Ansuz einu sinni og fléttaðu nafnið náttúrlega inn í textann. E"
   },
   {
-   "hash": "1f5248709dbd",
+   "hash": "4e02346319cb",
    "lang": "is",
    "zdroj": "single",
-   "zacatek": "Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. Haltu þig innan "
+   "zacatek": "Sleppu öllu uppfyllingarefni."
   },
   {
    "hash": "1a87c639d13d",
