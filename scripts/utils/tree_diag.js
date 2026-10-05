@@ -595,12 +595,13 @@ if (cast === 'limbjump') {
   const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
   const over = process.env.LRCFG ? JSON.parse(process.env.LRCFG) : {};
   const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, zrod: 0.3, dorust: 4 }, over) });
+  // podle KLICE vetve (k), ne jmena runy: od 2026-10-05 nese tutez runu vic vetvi a podle jmena se porovnavaly ruzne (falesna otoceni)
   const snap = n => { const o = {}; labRun(st.log.slice(0, n), HTML, inj).allPicks.forEach(p => { if (typeof p.k !== 'number') return;
-    o[p.meta.name] = { a: (p.meta.ang + Math.PI / 2) * 180 / Math.PI, b: p.meta.bal ? p.meta.bal.b : null, n: p.meta.bal ? p.meta.bal.n : null, grad: p.meta.gradOf || '' }; }); return o; };
+    o[p.k] = { name: p.meta.name, a: (p.meta.ang + Math.PI / 2) * 180 / Math.PI, b: p.meta.bal ? p.meta.bal.b : null, n: p.meta.bal ? p.meta.bal.n : null, grad: p.meta.gradOf || '' }; }); return o; };
   let prev = snap(1), cnt = 0;
   for (let n = 2; n <= st.log.length; n++) { const cur = snap(n);
-    Object.keys(cur).forEach(k => { if (!prev[k]) return; const d = cur[k].a - prev[k].a; if (Math.abs(d) > 5) { cnt++;
-      console.log('#' + n, k.padEnd(9), cur[k].grad ? ('(povys z ' + cur[k].grad + ')') : '', prev[k].a.toFixed(0) + '° -> ' + cur[k].a.toFixed(0) + '°', '| b', prev[k].b == null ? '-' : prev[k].b.toFixed(2), '->', cur[k].b == null ? '-' : cur[k].b.toFixed(2), '| cteni', prev[k].n, '->', cur[k].n); } });
+    Object.keys(cur).forEach(k => { if (!prev[k] || prev[k].name !== cur[k].name) return; const d = cur[k].a - prev[k].a; if (Math.abs(d) > 5) { cnt++;
+      console.log('#' + n, cur[k].name.padEnd(9), cur[k].grad ? ('(povys z ' + cur[k].grad + ')') : '', prev[k].a.toFixed(0) + '° -> ' + cur[k].a.toFixed(0) + '°', '| b', prev[k].b == null ? '-' : prev[k].b.toFixed(2), '->', cur[k].b == null ? '-' : cur[k].b.toFixed(2), '| cteni', prev[k].n, '->', cur[k].n); } });
     prev = cur; }
   console.log('otoceni ramene > 5°:', cnt);
 }

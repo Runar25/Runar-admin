@@ -16,6 +16,9 @@
 //   (d) v kmeni je nejvys 15 pramenu (14 mist element × zona, vzacne 15. pri trech zakladacich runach stinu).
 //   (e) INSPEKCE odpovida logu (2026-10-03, KUKY: "proc se informace nemeni?" — inspekce popisovala model z kroku 1):
 //       vetvicka vznikla ze cteni, ktere jeji runu opravdu obsahuje; "tahl celkem Nx" = skutecny pocet v logu.
+//   (g) KAZDE CTENI NA SVEM MISTE (KUKY 2026-10-05: "kazde cteni, kazde!!! mam ji presne tam, kam patri"): kazde tazeni visi na
+//       vetvi sveho elementu a sveho pasma zony, a ma-li cteni stranu (oblast nitro/svet), i na sve strane; vetev se stranou je
+//       NAKRESLENA na te strane (uhel). Data z labu (window._PLACE), strana kresby z picku. Drive ~80 cteni na opacne strane.
 //   (f) zadne rameno nevychazi pod podlahou FLOOR (vychozi exitFloor 0,22) — KUKY 2026-10-03 "spodni vetev skoro u zeme"
 //       (rameno na 17 % kmene: rozestup se nevesel a podlaha ustoupila; ted misto toho povyroste kmen).
 //
@@ -63,11 +66,26 @@ LOGS.forEach(([nm, log]) => NS.forEach(n => {
   Object.keys(byP).forEach(k => { const L = byP[k]; for (let a = 0; a < L.length; a++) for (let b = a + 1; b < L.length; b++) {
     const d = Math.hypot(L[a].x - L[b].x, L[a].y - L[b].y); worstS = Math.min(worstS, d);
     if (d < MIN_SIB) fails.push(nm + ' po ' + n + ': na rodici ' + k + ' vetve ' + L[a].nm + ' a ' + L[b].nm + ' zacinaji ' + d.toFixed(1) + ' px od sebe (min ' + MIN_SIB + ')'); } });
+  /* (g) misto kazdeho cteni */
+  const sub = log.slice(0, n);
+  const PL = r.sb._PLACE;
+  if (!PL) fails.push('lab nevystavuje misto cteni (_PLACE) — kontrola mist nebezi');
+  else { let off = 0, ex = '', offS = 0;
+    const SIDE = { healing: -1, family: -1, inner: -1, purpose: 1, career: 1, spirituality: 1 };   // osa B (RUNAR_TREE.md §3), nezavisle na labu; logy zacinaji Nornami -> poradi cteni = poradi v labu
+    PL.rd.forEach((row, i) => (row || []).forEach((key, j) => { if (key == null) return; const [el, b, sd] = key.split('|'), o = (PL.own[i] || [])[j];
+      const br = (o == null) ? null : (o >= 100 ? PL.grads[o - 100] : PL.sec[o]);
+      if (!br || br.el !== el || String(br.band) !== b || (+sd !== 0 && br.side !== +sd)) { off++; if (!ex) ex = ' (cteni #' + (i + 1) + ' ' + key + ' visi na ' + (br ? br.el + '|' + br.band + '|' + br.side : 'nicem') + ')'; }
+      const exp = SIDE[(sub[i] || {}).area] || 0; if (exp && br && br.side !== exp) offS++; }));
+    if (off) fails.push(nm + ' po ' + n + ': ' + off + ' tazeni mimo sve misto' + ex);
+    if (offS) fails.push(nm + ' po ' + n + ': ' + offS + ' tazeni se stranou z oblasti visi na vetvi druhe strany');
+    r.allPicks.forEach(p => { if (typeof p.k !== 'number' || !p.meta) return; const br = (p.k >= 100) ? PL.grads[p.k - 100] : PL.sec[p.k];
+      if (!br || !br.side || p.meta.idx === 0) return; const ds = Math.cos(p.meta.ang) >= 0 ? 1 : -1;
+      if (ds !== br.side) fails.push(nm + ' po ' + n + ': vetev ' + p.meta.name + ' patri na stranu ' + (br.side > 0 ? 'svet (vpravo)' : 'nitro (vlevo)') + ', nakreslena na druhe'); }); }
   const drawn = r.sb._DA ? r.sb._DA() : null, picked = new Set(r.allPicks.map(p => p.pts));
   if (!drawn) fails.push('lab neda seznam nakreslenych tahu (_DA) — kontrola klikatelnosti nebezi');
   else { const bad = drawn.filter(L => !picked.has(L.pts)); if (bad.length) fails.push(nm + ' po ' + n + ': ' + bad.length + ' nakreslenych tahu nejde kliknout (' + [...new Set(bad.map(L => L.src || '?'))].join(', ') + ')'); }
   /* (e) inspekce proti logu */
-  const sub = log.slice(0, n), tot = {}, nameOf = {}; B.RUNES.forEach(x => { nameOf[x.k] = x.name; });
+  const tot = {}, nameOf = {}; B.RUNES.forEach(x => { nameOf[x.k] = x.name; });
   sub.forEach(rd => (rd.runes || []).forEach(x => { tot[nameOf[x.rune]] = (tot[nameOf[x.rune]] || 0) + 1; }));
   r.allPicks.forEach(p => { const m = p.meta || {}; if (m.root) return;
     if (m.runeTot != null && m.runeTot !== tot[m.name]) fails.push(nm + ' po ' + n + ': inspekce ' + m.name + ' "tahl celkem ' + m.runeTot + 'x", v logu ' + (tot[m.name] || 0) + 'x');
@@ -79,5 +97,5 @@ LOGS.forEach(([nm, log]) => NS.forEach(n => {
   if (sn == null) fails.push(nm + ' po ' + n + ': pocet pramenu v kmeni nejde precist');
   else if (sn > MAX_STRANDS) fails.push(nm + ' po ' + n + ': ' + sn + ' pramenu v kmeni (max ' + MAX_STRANDS + ' — povysene vetve nemaji vlastni pramen)');
 }));
-if (fails.length) { fails.slice(0, 12).forEach(f => console.log('   ' + f)); console.log('strom: ' + fails.length + ' poruseni (vetve ze stejneho mista / pod podlahou / neklikatelne / prameny navic / inspekce neodpovida logu)'); process.exit(1); }
-console.log('strom (lab): ' + runs + ' stromu — vystupy ramen na stejne strane aspon ' + worstE.toFixed(0) + ' px, levo-pravo aspon ' + worstLR.toFixed(0) + ' px, zadne pod podlahou, vetve na rodici aspon ' + worstS.toFixed(1) + ' px, vse klikatelne, inspekce = log, nejvys ' + maxStr + ' pramenu v kmeni');
+if (fails.length) { fails.slice(0, 12).forEach(f => console.log('   ' + f)); console.log('strom: ' + fails.length + ' poruseni (vetve ze stejneho mista / pod podlahou / cteni mimo sve misto / neklikatelne / prameny navic / inspekce neodpovida logu)'); process.exit(1); }
+console.log('strom (lab): ' + runs + ' stromu — vystupy ramen na stejne strane aspon ' + worstE.toFixed(0) + ' px, levo-pravo aspon ' + worstLR.toFixed(0) + ' px, zadne pod podlahou, kazde cteni na svem miste, vetve na rodici aspon ' + worstS.toFixed(1) + ' px, vse klikatelne, inspekce = log, nejvys ' + maxStr + ' pramenu v kmeni');

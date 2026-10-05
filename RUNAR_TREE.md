@@ -60,6 +60,7 @@ Dvě **spojité, prolínající se** osy. Box (runa/oblast) do zóny jen *míř�
 **Osa B — DOVNITŘ / VEN (strana):**
 `vlevo = nitro (innangard) ↔ střed = liminál ↔ vpravo = svět (útangard)`
 Řídí **area of life.** (innangarðr = ohrazený domov / bezpečí; útangarðr = divočina za plotem = vnější svět — severská hranice „uvnitř / venku".)
+⭐ **Od 2026-10-05 (lab) je strana součástí MÍSTA čtení** (element × pásmo × strana) a **každé čtení visí na svém místě** — KUKY: *„strom je zrcadlem čtení člověka … runa nemá svoje pevné místo, to má element skrze zóny … každé čtení, každé!!! mám ji přesně tam, kam patří.“* Love, Crossroads a čtení bez oblasti stranu nezakládají (přidají se k větvi elementu v tom pásmu). Mechanika → `RUNAR_TREE_MAP.md` §3, rozhodnutí → `RUNAR_DECISIONS.md` 2026-10-05 (12).
 
 **Pole oblastí (padají samy → diagonála příběhu):**
 ```

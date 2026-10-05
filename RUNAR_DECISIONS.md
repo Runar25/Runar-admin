@@ -8445,3 +8445,29 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   Významy z k4 4/4; dominantní význam runy (> 40 % jejích obrazů) nový obraz nedostal. IS is-grammar-qa 0 nálezů, vazby v korpusu.
 - **Kdo co nevidí:** jak s novými obrazy naloží model, ukáže ownerovo testování (databáze čtení: runa → obraz → čtení).
 - Affected doc(s): `RUNAR_BACKLOG.md` (směr „jeden obraz, víc významů" — kolo k4).
+
+## 2026-10-05 (12) — Strom (lab): každé čtení na svém místě — místo = element × pásmo zóny × strana; žádné střídání stran
+
+- **Rozhodl:** KUKY 2026-10-05 *„jaké střídání? strom je zrcadlem čtení člověka. vytváříme zóny, máme area, seeking, intention a další
+  tak, že mají svoje místa na stromě a tam se mají objevit … runa nemá svoje pevné místo. to má element skrze zóny. to znamená, že
+  povýšená může být jakákoliv runa toho správného elementu, která je potřeba umístit … každé čtení, každé!!! mám ji přesně tam, kam
+  patří."* Doptáno: Love/Crossroads/bez oblasti se přidají k větvi elementu; 14 pramenů, povýšených kolik je třeba. **Provedl:** CODE-tree, jen LAB.
+- **Nalezeno čtením jeho stromu z dat** (`scripts/utils/tree_read.js`, 280 čtení): strany 9 : 4 ramen (kostra vyvažovala počty a
+  počítala i povýšené, které na přidělené straně nerostly); Raidho s 24 čteními o minulosti nahoře (narodilo se do jediné volné
+  mezery, pořadí se nemění); 5 čtení na „sousední zóně“; zhruba 80 čtení se stranou viselo na rameni druhé strany.
+- **Teď:** (1) místo = element × pásmo × strana; čtení jde vždy na své místo, založí ho jakákoli runa elementu; (2) první místo
+  elementu×pásma = rameno s pramenem (≤ 14), další místa = povýšené větve z ramene téhož elementu na straně místa; nemá-li element
+  na té straně rameno, vlastní výstup z kmene (sdílí pramen); povýšení podle četnosti runy zrušeno; (3) strana ramene z dat, ne
+  střídání (§26: dřív zamítnuté „strana podle zakládajícího čtení“ vadilo, protože rameno neslo směs obou stran — teď ji nenese);
+  (4) nové rameno se rodí do mezery své zóny, sousedé se rozestoupí; (5) čtení povýšené patří jí; místo odštěpení ze zakládajícího
+  čtení (stálé); dolní strop směru i pro povýšené.
+- **Změřeno (KUKYho strom, 280 čtení):** všech 342 tažení na svém místě (dřív ~80 na opačné straně + 5 vedle); zóny odspodu
+  minulost → přítomnost → budoucnost; strany 15 : 16 větví; otočení větvičky > 8° 0, větve > 5° 1 (7°), sklouznutí > 8 px 76
+  (dřív 99), ale nejvíc 47 px (dřív 29 — rozestoupení při zrodu podle zóny). **Horší:** souběhy na jeho stromě 13 (dřív 2), na
+  24 modelových ~93 (dřív 62) — shluk strmých větví budoucnosti/světa nahoře vpravo → `RUNAR_BACKLOG.md`.
+- **Zkoušeno a zahozeno:** místa pro druhou stranu jako vlastní výstupy z kmene (30 výstupů: ramena u země, úhly vějířem = koště);
+  povýšená z ramene druhé strany přes kmen (6 z 11 pravých se vracelo, svazek souběžných, 12 souběhů); místo odštěpení ze všech
+  čtení (klouzalo o 46 px).
+- **Hlídá smoke ㉳ (g):** každé tažení na větvi svého elementu, pásma a strany (strana i nezávisle z oblasti v logu); větev se
+  stranou nakreslená na té straně. Mutace (prohozené strany) 69 porušení. `tree_diag.js limbjump` teď počítá podle klíče větve.
+- Affected doc(s): `RUNAR_TREE_MAP.md` §3, §4, §5, §9, §12, §13 · `RUNAR_TREE.md` §3 · `RUNAR_BACKLOG.md` — v tomto commitu.
