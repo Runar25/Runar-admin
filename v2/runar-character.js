@@ -548,7 +548,7 @@ var RUNE_IMAGES = [
   ['Wunjo','any','Ein rödd byrjar sönginn og stofan tekur undir, línu fyrir línu.','One voice starts the song and the room finds it line by line.','að tilheyra','belonging','D'],
   ['Wunjo','any','Þú kemur inn úr kuldanum og einhver hefur kynt ofninn.','You come in out of the cold and someone has lit the stove.','að tilheyra','belonging','D', '', '', '', 'fhl'],
   ['Hagalaz','cold','Élið skellur á úr heiðskíru og er farið jafn skjótt.','The squall strikes out of a clear sky and is gone just as fast.','náttúruöfl|truflun','nature force|disruption','E'],   // 2026-10-05: dva významy (krok A) — důvod u _seasonalImagery
-  ['Hagalaz','cold','Haglið lemur þakið og bráðnar á augabragði.','The hail hammers the roof and melts in an instant.','umbreyting','transformation','E'],
+  ['Hagalaz','cold','Haglið lemur þakið og bráðnar á augabragði.','The hail hammers the roof and melts in an instant.','umbreyting|hagl','transformation|hail','E'],   // 2026-10-05 B: +1 význam z k4 (4/4), vyrovnává podíly významů Hagalazu (transformation jen 1+1 — ownerovi)
   ['Nauthiz','cold','Vorhretið lætur lambið leita fast að ylnum.','The spring cold-snap makes the lamb press close for warmth.','vöxtur í áskorun','growth through challenge','P', '', '', 'postava'],
   ['Nauthiz','any','Þú prjónar áfram þótt garnið sé við það að klárast.','You keep knitting though the yarn is almost out.','þrýstingur','growth through challenge','D'],
   // 2026-09-10 (davka 1, Cowork): Nauthiz mel dosazitelnou JEDINOU stranku sveho
@@ -626,8 +626,8 @@ var RUNE_IMAGES = [
   ['Thurisaz','any','Hrúturinn setur undir sig hausinn við hliðið, og þú bíður með að opna.','The ram lowers its head at the gate, and you wait before you open it.','hlið','gateway','P'],
   ['Thurisaz','bright','Brenninetlan vex við dyrnar; sá sem fer of hratt fram hjá brennir sig á henni.','The nettle grows by the door; whoever goes past too fast gets stung.','þyrnir','thorn','P'],
   ['Hagalaz','any','Í nótt reif rokið gömlu girðinguna niður og túnið liggur opið.','In the night the gale tore the old fence down, and the field lies open.','hreinsun','clearing','E'],
-  ['Hagalaz','any','Rafmagnið fer af í óveðrinu og allt sem gengur sjálfkrafa stöðvast.','The power goes out in the storm, and everything that runs by itself stops.','truflun','disruption','D'],
-  ['Hagalaz','any','Eftir óveðrið stendur aðeins tréð sem átti djúpar rætur.','After the storm, only the tree with deep roots is still standing.','umbreyting','transformation','E'],
+  ['Hagalaz','any','Rafmagnið fer af í óveðrinu og allt sem gengur sjálfkrafa stöðvast.','The power goes out in the storm, and everything that runs by itself stops.','truflun|náttúruöfl','disruption|nature force','D'],   // 2026-10-05 B: +1 význam z k4 (4/4), vyrovnává podíly významů Hagalazu
+  ['Hagalaz','any','Eftir óveðrið stendur aðeins tréð sem átti djúpar rætur.','After the storm, only the tree with deep roots is still standing.','umbreyting|hreinsun','transformation|clearing','E'],   // 2026-10-05 B: +1 význam z k4 (4/4), vyrovnává podíly významů Hagalazu (transformation 0/4 — ownerovi)
   // 2026-09-23 (KUKY „2. ano“): 9 obrazů z ownerových popisů run (audit obrazů, sekce 5) — brána S POPISY 3/3 každý;
   // „dva nesou jedno koryto“ vyřazen (Ehwaz 3/3). + Jera: sušená ryba (jaro–září) a uzené jehněčí (zima), ať má Jera
   // v každém ročním období dost variant po odchodu chleba. IS: kandidati prošli korpusem + is-grammar-qa (audit 2026-09-23).
@@ -713,7 +713,7 @@ var RUNE_IMAGES = [
   ['Blank','any','Þú lítur til himins til að lesa í veðrið, en hann er blýgrár og gefur ekkert til kynna.','You look up at the sky to read the weather, but it is leaden grey and tells you nothing.','hið óþekkta','the unknown','E'],
   ['Blank','cold','Nýfallinn snjór liggur yfir slóðinni og engin spor eru komin í hann.','New snow lies over the track and no one has stepped in it yet.','óskrifaður möguleiki','unwritten potential','E'],
   ['Blank','any','Handfærið liggur í dökku vatninu og ekkert hefur enn snert það.','The line runs down into dark water and nothing has touched it yet.','hið óþekkta','unwritten potential','P'],
-  ['Hagalaz','bright','Haglél lemur túnið í júní og er farið áður en birtir til.','Hail rakes the hayfield in June and is gone before the sky clears.','hagl','hail','E'],
+  ['Hagalaz','bright','Haglél lemur túnið í júní og er farið áður en birtir til.','Hail rakes the hayfield in June and is gone before the sky clears.','hagl|náttúruöfl','hail|nature force','E'],   // 2026-10-05 B: +1 význam z k4 (4/4), vyrovnává podíly významů Hagalazu
   ['Hagalaz','any','Áin bólgnar á einni nóttu og tekur með sér það sem stóð of nálægt bakkanum.','The river swells overnight and takes with it whatever stood too near the bank.','náttúruöfl|truflun','nature force|disruption','E'],   // 2026-10-05: dva významy (krok A) — důvod u _seasonalImagery
   ['Sowilo','bright','Miðnætursólin heldur túninu björtu langt fram yfir háttatíma.','The midnight sun keeps the hayfield bright long after bedtime.','sól','sun','E','midnight-sun'],
   // 2026-10-01 (kontrola dvojic): prvni paprsek po zimni tme = navrat svetla, slovnik Dagaz („turns the dark toward the light“), brana Dagaz 3/3.

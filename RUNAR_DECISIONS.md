@@ -8398,3 +8398,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   is-grammar-qa 0 nálezů, korpus *„brýtur rúðuna"* 8 · *„slökkva á kertunum"* 37 (tvar *„kertin slokkna"* korpus nezná → přepsáno
   na *„slekkur á kertunum"*, kde koná bouře). Smoke obrazů (㉤ ㉲ ㉟ ㊱) zelené. `RUNAR_PROMPT_VERSION` v4.96-obrazy-k4.
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka „Trajekt" uzavřena).
+
+## 2026-10-05 (9) — Krok B: obrazy Hagalazu dostaly druhý význam podle soudců k4 (vyrovnání podílů)
+
+- **Rozhodl:** KUKY 2026-10-05 *„pojedeme dál podle předešlého listu. B, C, D, E. Napřed všechno pořádně analyzuj a pusť se do
+  toho."* **Provedl:** CODE-tune.
+- **Měření (kolo k4, `docs/eval/2026-09-26-obrazy/vyz_*`):** 2 soudci (subagenti, ne API), obraz + seznam významů runy bez jména
+  runy, smí označit víc. Pravidlo zapsané PŘED čtením odpovědí: význam obraz unese při 4/4 (oba soudci v EN i oba v IS).
+- **Co nástroj ukázal o sobě (§27):** *nature force* dostalo 4/4 u VŠECH 9 obrazů Hagalazu — je to identita runy, ne stránka
+  obrazu; přidat všechno 4/4 by vyrobilo novou jednotvárnost. Proto ke každému obrazu nejvýš JEDEN přidaný význam, a jen takový,
+  který vyrovnává podíly významů runy. Druhá slabina: soudci k4 (výběr víc významů) odmítli 0/4 některé významy, které srpnoví
+  soudci (výběr jednoho) dali 3/3 — formát otázky výsledek mění, takže 0/4 NENÍ důkaz, že starý význam je špatně (viz C).
+- **Co:** střecha s krupobitím transformation → transformation | hail · strom s kořeny transformation → transformation | clearing ·
+  výpadek proudu disruption → disruption | nature force · krupobití na senech hail → hail | nature force. Plot (clearing) beze
+  změny. Podíly v říjnové rotaci (6 obrazů): nejčastější význam ze 33 % na 25 % (disruption, nature force, clearing po 25 %,
+  transformation 17 %, hail 8 %).
+- **K rozhodnutí ownera (neměněno):** *transformation* u stromu 0/4 a u střechy 1+1 — soudci ho v těch scénách nevidí.
+- Affected doc(s): `RUNAR_BACKLOG.md` (směr „jeden obraz, víc významů").

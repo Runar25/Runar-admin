@@ -1,0 +1,1771 @@
+{
+ "pravidlo": "význam = 2/2 EN a 2/2 IS (4/4)",
+ "obrazy": [
+  {
+   "id": "Hagalaz:The squall strikes",
+   "sk": "H",
+   "runa": "Hagalaz",
+   "en": "The squall strikes out of a clear sky and is gone just as fast.",
+   "is": "Élið skellur á úr heiðskíru og er farið jafn skjótt."
+  },
+  {
+   "id": "Hagalaz:The hail hammers",
+   "sk": "H",
+   "runa": "Hagalaz",
+   "en": "The hail hammers the roof and melts in an instant.",
+   "is": "Haglið lemur þakið og bráðnar á augabragði."
+  },
+  {
+   "id": "Hagalaz:In the night the gale",
+   "sk": "H",
+   "runa": "Hagalaz",
+   "en": "In the night the gale tore the old fence down, and the field lies open.",
+   "is": "Í nótt reif rokið gömlu girðinguna niður og túnið liggur opið."
+  },
+  {
+   "id": "Hagalaz:The power goes out",
+   "sk": "H",
+   "runa": "Hagalaz",
+   "en": "The power goes out in the storm, and everything that runs by itself stops.",
+   "is": "Rafmagnið fer af í óveðrinu og allt sem gengur sjálfkrafa stöðvast."
+  },
+  {
+   "id": "Hagalaz:After the storm",
+   "sk": "H",
+   "runa": "Hagalaz",
+   "en": "After the storm, only the tree with deep roots is still standing.",
+   "is": "Eftir óveðrið stendur aðeins tréð sem átti djúpar rætur."
+  },
+  {
+   "id": "Hagalaz:Hail rakes",
+   "sk": "H",
+   "runa": "Hagalaz",
+   "en": "Hail rakes the hayfield in June and is gone before the sky clears.",
+   "is": "Haglél lemur túnið í júní og er farið áður en birtir til."
+  },
+  {
+   "id": "Hagalaz:The river swells",
+   "sk": "H",
+   "runa": "Hagalaz",
+   "en": "The river swells overnight and takes with it whatever stood too near the bank.",
+   "is": "Áin bólgnar á einni nóttu og tekur með sér það sem stóð of nálægt bakkanum."
+  },
+  {
+   "id": "Ansuz:The raven settles",
+   "sk": "C",
+   "runa": "Ansuz",
+   "en": "The raven settles on the fencepost and waits for you to listen.",
+   "is": "Hrafninn sest á staurinn og bíður þess að þú hlustir."
+  },
+  {
+   "id": "Nauthiz:You keep knitting",
+   "sk": "C",
+   "runa": "Nauthiz",
+   "en": "You keep knitting though the yarn is almost out.",
+   "is": "Þú prjónar áfram þótt garnið sé við það að klárast."
+  },
+  {
+   "id": "Laguz:The glacial river",
+   "sk": "C",
+   "runa": "Laguz",
+   "en": "The glacial river runs grey and heavy, full of what it carries down from above.",
+   "is": "Jökuláin rennur grá og þung, full af því sem hún ber að ofan."
+  },
+  {
+   "id": "Laguz:Water finds its own way",
+   "sk": "C",
+   "runa": "Laguz",
+   "en": "Water finds its own way down the slope, and no one shows it the path.",
+   "is": "Vatnið finnur sér leið niður hlíðina, enginn vísar því."
+  },
+  {
+   "id": "Ingwaz:The seed lies",
+   "sk": "C",
+   "runa": "Ingwaz",
+   "en": "The seed lies in the frozen ground and waits for its time.",
+   "is": "Fræið liggur í frosinni jörð og bíður síns tíma."
+  },
+  {
+   "id": "Othila:The old farmstead",
+   "sk": "C",
+   "runa": "Othila",
+   "en": "The old farmstead stands in ruins but still holds warmth in memory.",
+   "is": "Gamli bærinn stendur í tóftum en heldur enn hita í minningunni."
+  },
+  {
+   "id": "Dagaz:You wake, and dawn",
+   "sk": "C",
+   "runa": "Dagaz",
+   "en": "You wake, and dawn has already changed the light in the room.",
+   "is": "Þú vaknar og birtan í herberginu hefur þegar breyst."
+  },
+  {
+   "id": "Isa:The clock on the wall",
+   "sk": "C",
+   "runa": "Isa",
+   "en": "The clock on the wall has stopped and no one has wound it.",
+   "is": "Klukkan á veggnum hefur stöðvast og enginn hefur dregið hana upp."
+  },
+  {
+   "id": "Thurisaz:The thorn-bush",
+   "sk": "C",
+   "runa": "Thurisaz",
+   "en": "The thorn-bush stands bare and black in the blizzard, but the spines are still waiting.",
+   "is": "Þyrnóttur runninn stendur ber og svartur í hríðinni, en broddarnir bíða enn."
+  },
+  {
+   "id": "Ansuz:The letter comes",
+   "sk": "C0",
+   "runa": "Ansuz",
+   "en": "The letter comes with the boat at last and lies unopened on the table.",
+   "is": "Bréfið kemur loks með bátnum og liggur óopnað á borðinu."
+  },
+  {
+   "id": "Ehwaz:When one horse tires",
+   "sk": "C0",
+   "runa": "Ehwaz",
+   "en": "When one horse tires on the climb the other slows unasked, and they reach the ridge together.",
+   "is": "Þegar annar hesturinn þreytist í brekkunni hægir hinn á sér óbeðinn, og þeir ná brúninni saman."
+  },
+  {
+   "id": "Ehwaz:On the narrow path",
+   "sk": "C0",
+   "runa": "Ehwaz",
+   "en": "On the narrow path the one who walks with you shortens their stride to yours without a word, and the going evens out.",
+   "is": "Á einstiginu styttir sá sem gengur með þér skrefið að þínu án orða, og gangan jafnast."
+  },
+  {
+   "id": "Blank:The line runs down",
+   "sk": "C0",
+   "runa": "Blank",
+   "en": "The line runs down into dark water and nothing has touched it yet.",
+   "is": "Handfærið liggur í dökku vatninu og ekkert hefur enn snert það."
+  },
+  {
+   "id": "Raidho:a road vanishing",
+   "sk": "C0",
+   "runa": "Raidho",
+   "en": "a road vanishing round the next bend",
+   "is": "Vegurinn hverfur fyrir næstu beygju"
+  },
+  {
+   "id": "Thurisaz:The thorn hedge",
+   "sk": "C0",
+   "runa": "Thurisaz",
+   "en": "The thorn hedge lets nothing through without cost.",
+   "is": "Þyrnigerðið hleypir engu í gegn án þess að taka eitthvað í staðinn."
+  },
+  {
+   "id": "T1",
+   "sk": "N",
+   "runa": "Hagalaz",
+   "en": "The storm breaks the window and puts out the candles on the table.",
+   "is": "Óveðrið brýtur rúðuna og slekkur á kertunum á borðinu."
+  },
+  {
+   "id": "T2",
+   "sk": "N",
+   "runa": "Hagalaz",
+   "en": "The gale breaks the panes of the greenhouse you built together.",
+   "is": "Rokið brýtur rúðurnar í gróðurhúsinu sem þið byggðuð saman."
+  },
+  {
+   "id": "F1",
+   "sk": "N",
+   "runa": "Fehu",
+   "en": "The boat comes in so laden with fish it sits deep in the water.",
+   "is": "Báturinn kemur að bryggju svo hlaðinn fiski að hann ristir djúpt."
+  },
+  {
+   "id": "F2",
+   "sk": "N",
+   "runa": "Fehu",
+   "en": "The hot water runs into every house in the valley.",
+   "is": "Heita vatnið rennur inn í hvert hús í dalnum."
+  },
+  {
+   "id": "A1",
+   "sk": "N",
+   "runa": "Algiz",
+   "en": "The mountain hut stands open in the blizzard for anyone who needs it.",
+   "is": "Sæluhúsið stendur opið í hríðinni fyrir hvern sem þarf."
+  },
+  {
+   "id": "A2",
+   "sk": "N",
+   "runa": "Algiz",
+   "en": "No one touches the stone where the hidden people live.",
+   "is": "Enginn hreyfir við steininum þar sem huldufólk býr."
+  },
+  {
+   "id": "W1",
+   "sk": "N",
+   "runa": "Wunjo",
+   "en": "In the hot pot under the frost, everyone laughs at the same story.",
+   "is": "Í heita pottinum í frostinu hlæja allir að sömu sögunni."
+  },
+  {
+   "id": "W2",
+   "sk": "N",
+   "runa": "Wunjo",
+   "en": "The dog runs to meet you at the gate and cannot stop wagging.",
+   "is": "Hundurinn hleypur á móti þér að hliðinu og getur ekki hætt að dilla skottinu."
+  },
+  {
+   "id": "B1",
+   "sk": "N",
+   "runa": "Berkana",
+   "en": "On the windowsill the seedlings stretch toward the light.",
+   "is": "Á gluggakistunni teygja smáplönturnar sig að birtunni."
+  },
+  {
+   "id": "B2",
+   "sk": "N",
+   "runa": "Berkana",
+   "en": "You water the cutting and then leave it alone.",
+   "is": "Þú vökvar græðlinginn og lætur hann svo í friði."
+  }
+ ],
+ "soudci": [
+  [
+   {
+    "n": 1,
+    "id": "F2",
+    "lang": "is",
+    "pismena": {
+     "a": "efnisleg velsæld",
+     "b": "búfé",
+     "c": "auður"
+    }
+   },
+   {
+    "n": 2,
+    "id": "A1",
+    "lang": "en",
+    "pismena": {
+     "a": "shelter",
+     "b": "protection",
+     "c": "connection to divine",
+     "d": "higher powers"
+    }
+   },
+   {
+    "n": 3,
+    "id": "B2",
+    "lang": "is",
+    "pismena": {
+     "a": "þroski",
+     "b": "fæðing",
+     "c": "umhyggja",
+     "d": "nýtt upphaf",
+     "e": "björk"
+    }
+   },
+   {
+    "n": 4,
+    "id": "Hagalaz:The power goes out",
+    "lang": "en",
+    "pismena": {
+     "a": "disruption",
+     "b": "nature force",
+     "c": "clearing",
+     "d": "hail",
+     "e": "transformation"
+    }
+   },
+   {
+    "n": 5,
+    "id": "Raidho:a road vanishing",
+    "lang": "is",
+    "pismena": {
+     "a": "taktur",
+     "b": "hreyfing",
+     "c": "rétt breytni",
+     "d": "leið"
+    }
+   },
+   {
+    "n": 6,
+    "id": "Othila:The old farmstead",
+    "lang": "en",
+    "pismena": {
+     "a": "letting go",
+     "b": "inheritance",
+     "c": "ancestral wisdom",
+     "d": "belonging",
+     "e": "foundation",
+     "f": "home",
+     "g": "heritage"
+    }
+   },
+   {
+    "n": 7,
+    "id": "T2",
+    "lang": "is",
+    "pismena": {
+     "a": "umbreyting",
+     "b": "truflun",
+     "c": "náttúruöfl",
+     "d": "hagl",
+     "e": "hreinsun"
+    }
+   },
+   {
+    "n": 8,
+    "id": "Ehwaz:When one horse tires",
+    "lang": "en",
+    "pismena": {
+     "a": "horse",
+     "b": "partnership",
+     "c": "progress",
+     "d": "trust",
+     "e": "movement"
+    }
+   },
+   {
+    "n": 9,
+    "id": "Thurisaz:The thorn-bush",
+    "lang": "is",
+    "pismena": {
+     "a": "þröskuldur",
+     "b": "vernd",
+     "c": "hlið",
+     "d": "þyrnir",
+     "e": "ógnandi kraftur",
+     "f": "aðgát"
+    }
+   },
+   {
+    "n": 10,
+    "id": "Dagaz:You wake, and dawn",
+    "lang": "is",
+    "pismena": {
+     "a": "dögun",
+     "b": "bylting",
+     "c": "tímamót",
+     "d": "umbreyting",
+     "e": "ljós"
+    }
+   },
+   {
+    "n": 11,
+    "id": "Othila:The old farmstead",
+    "lang": "is",
+    "pismena": {
+     "a": "hefðir",
+     "b": "að tilheyra",
+     "c": "heimili",
+     "d": "arfur",
+     "e": "forfeðraviska",
+     "f": "að sleppa",
+     "g": "grunnur"
+    }
+   },
+   {
+    "n": 12,
+    "id": "Hagalaz:The hail hammers",
+    "lang": "is",
+    "pismena": {
+     "a": "náttúruöfl",
+     "b": "hreinsun",
+     "c": "truflun",
+     "d": "umbreyting",
+     "e": "hagl"
+    }
+   },
+   {
+    "n": 13,
+    "id": "Ingwaz:The seed lies",
+    "lang": "is",
+    "pismena": {
+     "a": "nýtt líf",
+     "b": "frjósemi",
+     "c": "fræ",
+     "d": "innri þróun",
+     "e": "möguleiki"
+    }
+   },
+   {
+    "n": 14,
+    "id": "Laguz:Water finds its own way",
+    "lang": "is",
+    "pismena": {
+     "a": "dulvitund",
+     "b": "tilfinningar",
+     "c": "vatn",
+     "d": "innsæi",
+     "e": "draumar",
+     "f": "flæði",
+     "g": "minni"
+    }
+   },
+   {
+    "n": 15,
+    "id": "Isa:The clock on the wall",
+    "lang": "is",
+    "pismena": {
+     "a": "hlé",
+     "b": "að bíða",
+     "c": "ís",
+     "d": "skýrleiki í kulda",
+     "e": "kyrrstaða"
+    }
+   },
+   {
+    "n": 16,
+    "id": "Laguz:The glacial river",
+    "lang": "is",
+    "pismena": {
+     "a": "dulvitund",
+     "b": "tilfinningar",
+     "c": "flæði",
+     "d": "vatn",
+     "e": "minni",
+     "f": "innsæi",
+     "g": "draumar"
+    }
+   },
+   {
+    "n": 17,
+    "id": "W2",
+    "lang": "en",
+    "pismena": {
+     "a": "happiness",
+     "b": "joy",
+     "c": "harmony",
+     "d": "wish fulfilled",
+     "e": "belonging"
+    }
+   },
+   {
+    "n": 18,
+    "id": "Ingwaz:The seed lies",
+    "lang": "en",
+    "pismena": {
+     "a": "fertility",
+     "b": "new life",
+     "c": "inner development",
+     "d": "seed",
+     "e": "potential"
+    }
+   },
+   {
+    "n": 19,
+    "id": "A2",
+    "lang": "en",
+    "pismena": {
+     "a": "shelter",
+     "b": "higher powers",
+     "c": "protection",
+     "d": "connection to divine"
+    }
+   },
+   {
+    "n": 20,
+    "id": "Blank:The line runs down",
+    "lang": "is",
+    "pismena": {
+     "a": "örlög",
+     "b": "óskrifaður möguleiki",
+     "c": "tómið",
+     "d": "Óðinn",
+     "e": "hið óþekkta"
+    }
+   },
+   {
+    "n": 21,
+    "id": "B1",
+    "lang": "is",
+    "pismena": {
+     "a": "nýtt upphaf",
+     "b": "björk",
+     "c": "þroski",
+     "d": "umhyggja",
+     "e": "fæðing"
+    }
+   },
+   {
+    "n": 22,
+    "id": "B1",
+    "lang": "en",
+    "pismena": {
+     "a": "new beginnings",
+     "b": "growth",
+     "c": "birch",
+     "d": "birth",
+     "e": "nurturing"
+    }
+   },
+   {
+    "n": 23,
+    "id": "B2",
+    "lang": "en",
+    "pismena": {
+     "a": "birth",
+     "b": "new beginnings",
+     "c": "birch",
+     "d": "growth",
+     "e": "nurturing"
+    }
+   },
+   {
+    "n": 24,
+    "id": "Hagalaz:Hail rakes",
+    "lang": "is",
+    "pismena": {
+     "a": "hagl",
+     "b": "umbreyting",
+     "c": "truflun",
+     "d": "hreinsun",
+     "e": "náttúruöfl"
+    }
+   },
+   {
+    "n": 25,
+    "id": "Ansuz:The letter comes",
+    "lang": "is",
+    "pismena": {
+     "a": "guðleg leiðsögn",
+     "b": "rödd",
+     "c": "andardráttur",
+     "d": "skilaboð",
+     "e": "viska"
+    }
+   },
+   {
+    "n": 26,
+    "id": "Ehwaz:On the narrow path",
+    "lang": "en",
+    "pismena": {
+     "a": "movement",
+     "b": "partnership",
+     "c": "horse",
+     "d": "progress",
+     "e": "trust"
+    }
+   },
+   {
+    "n": 27,
+    "id": "Hagalaz:In the night the gale",
+    "lang": "en",
+    "pismena": {
+     "a": "transformation",
+     "b": "nature force",
+     "c": "clearing",
+     "d": "disruption",
+     "e": "hail"
+    }
+   },
+   {
+    "n": 28,
+    "id": "Laguz:The glacial river",
+    "lang": "en",
+    "pismena": {
+     "a": "flow",
+     "b": "intuition",
+     "c": "dreams",
+     "d": "water",
+     "e": "the unconscious",
+     "f": "emotion",
+     "g": "memory"
+    }
+   },
+   {
+    "n": 29,
+    "id": "F2",
+    "lang": "en",
+    "pismena": {
+     "a": "wealth",
+     "b": "cattle",
+     "c": "material prosperity"
+    }
+   },
+   {
+    "n": 30,
+    "id": "Ansuz:The raven settles",
+    "lang": "is",
+    "pismena": {
+     "a": "rödd",
+     "b": "guðleg leiðsögn",
+     "c": "viska",
+     "d": "andardráttur",
+     "e": "skilaboð"
+    }
+   },
+   {
+    "n": 31,
+    "id": "Hagalaz:After the storm",
+    "lang": "en",
+    "pismena": {
+     "a": "nature force",
+     "b": "transformation",
+     "c": "clearing",
+     "d": "disruption",
+     "e": "hail"
+    }
+   },
+   {
+    "n": 32,
+    "id": "A2",
+    "lang": "is",
+    "pismena": {
+     "a": "æðri máttarvöld",
+     "b": "skjól",
+     "c": "guðleg tenging",
+     "d": "vernd"
+    }
+   },
+   {
+    "n": 33,
+    "id": "Nauthiz:You keep knitting",
+    "lang": "en",
+    "pismena": {
+     "a": "constraint",
+     "b": "need",
+     "c": "necessity",
+     "d": "growth through challenge"
+    }
+   },
+   {
+    "n": 34,
+    "id": "Blank:The line runs down",
+    "lang": "en",
+    "pismena": {
+     "a": "destiny",
+     "b": "Odin",
+     "c": "the void",
+     "d": "unwritten potential",
+     "e": "the unknown"
+    }
+   },
+   {
+    "n": 35,
+    "id": "Hagalaz:The river swells",
+    "lang": "is",
+    "pismena": {
+     "a": "hreinsun",
+     "b": "truflun",
+     "c": "hagl",
+     "d": "umbreyting",
+     "e": "náttúruöfl"
+    }
+   },
+   {
+    "n": 36,
+    "id": "Isa:The clock on the wall",
+    "lang": "en",
+    "pismena": {
+     "a": "stillness",
+     "b": "clarity through cold",
+     "c": "ice",
+     "d": "pause",
+     "e": "waiting"
+    }
+   },
+   {
+    "n": 37,
+    "id": "Hagalaz:The hail hammers",
+    "lang": "en",
+    "pismena": {
+     "a": "disruption",
+     "b": "nature force",
+     "c": "hail",
+     "d": "clearing",
+     "e": "transformation"
+    }
+   },
+   {
+    "n": 38,
+    "id": "Nauthiz:You keep knitting",
+    "lang": "is",
+    "pismena": {
+     "a": "þrýstingur",
+     "b": "nauðsyn",
+     "c": "þörf",
+     "d": "vöxtur í áskorun"
+    }
+   },
+   {
+    "n": 39,
+    "id": "Thurisaz:The thorn hedge",
+    "lang": "is",
+    "pismena": {
+     "a": "ógnandi kraftur",
+     "b": "aðgát",
+     "c": "hlið",
+     "d": "þröskuldur",
+     "e": "vernd",
+     "f": "þyrnir"
+    }
+   },
+   {
+    "n": 40,
+    "id": "Ehwaz:When one horse tires",
+    "lang": "is",
+    "pismena": {
+     "a": "hreyfing",
+     "b": "traust milli tveggja",
+     "c": "samfylgd",
+     "d": "hestur",
+     "e": "framfarir"
+    }
+   },
+   {
+    "n": 41,
+    "id": "Hagalaz:The river swells",
+    "lang": "en",
+    "pismena": {
+     "a": "hail",
+     "b": "disruption",
+     "c": "nature force",
+     "d": "transformation",
+     "e": "clearing"
+    }
+   },
+   {
+    "n": 42,
+    "id": "T2",
+    "lang": "en",
+    "pismena": {
+     "a": "disruption",
+     "b": "hail",
+     "c": "transformation",
+     "d": "nature force",
+     "e": "clearing"
+    }
+   },
+   {
+    "n": 43,
+    "id": "Thurisaz:The thorn-bush",
+    "lang": "en",
+    "pismena": {
+     "a": "gateway",
+     "b": "threshold",
+     "c": "disruptive force",
+     "d": "thorn",
+     "e": "protection",
+     "f": "caution"
+    }
+   },
+   {
+    "n": 44,
+    "id": "Hagalaz:The squall strikes",
+    "lang": "is",
+    "pismena": {
+     "a": "náttúruöfl",
+     "b": "truflun",
+     "c": "umbreyting",
+     "d": "hreinsun",
+     "e": "hagl"
+    }
+   },
+   {
+    "n": 45,
+    "id": "Ansuz:The raven settles",
+    "lang": "en",
+    "pismena": {
+     "a": "voice",
+     "b": "divine guidance",
+     "c": "wisdom",
+     "d": "messages",
+     "e": "breath"
+    }
+   },
+   {
+    "n": 46,
+    "id": "W2",
+    "lang": "is",
+    "pismena": {
+     "a": "sátt",
+     "b": "að tilheyra",
+     "c": "hamingja",
+     "d": "gleði",
+     "e": "uppfyllt ósk"
+    }
+   },
+   {
+    "n": 47,
+    "id": "T1",
+    "lang": "is",
+    "pismena": {
+     "a": "náttúruöfl",
+     "b": "hreinsun",
+     "c": "truflun",
+     "d": "umbreyting",
+     "e": "hagl"
+    }
+   },
+   {
+    "n": 48,
+    "id": "Thurisaz:The thorn hedge",
+    "lang": "en",
+    "pismena": {
+     "a": "threshold",
+     "b": "disruptive force",
+     "c": "gateway",
+     "d": "protection",
+     "e": "thorn",
+     "f": "caution"
+    }
+   },
+   {
+    "n": 49,
+    "id": "Hagalaz:In the night the gale",
+    "lang": "is",
+    "pismena": {
+     "a": "truflun",
+     "b": "hreinsun",
+     "c": "hagl",
+     "d": "náttúruöfl",
+     "e": "umbreyting"
+    }
+   },
+   {
+    "n": 50,
+    "id": "W1",
+    "lang": "en",
+    "pismena": {
+     "a": "joy",
+     "b": "belonging",
+     "c": "harmony",
+     "d": "wish fulfilled",
+     "e": "happiness"
+    }
+   },
+   {
+    "n": 51,
+    "id": "Hagalaz:The power goes out",
+    "lang": "is",
+    "pismena": {
+     "a": "umbreyting",
+     "b": "truflun",
+     "c": "hagl",
+     "d": "hreinsun",
+     "e": "náttúruöfl"
+    }
+   },
+   {
+    "n": 52,
+    "id": "Raidho:a road vanishing",
+    "lang": "en",
+    "pismena": {
+     "a": "movement",
+     "b": "natural rhythm",
+     "c": "right action",
+     "d": "the road"
+    }
+   },
+   {
+    "n": 53,
+    "id": "Hagalaz:The squall strikes",
+    "lang": "en",
+    "pismena": {
+     "a": "hail",
+     "b": "nature force",
+     "c": "clearing",
+     "d": "disruption",
+     "e": "transformation"
+    }
+   },
+   {
+    "n": 54,
+    "id": "T1",
+    "lang": "en",
+    "pismena": {
+     "a": "clearing",
+     "b": "nature force",
+     "c": "disruption",
+     "d": "transformation",
+     "e": "hail"
+    }
+   },
+   {
+    "n": 55,
+    "id": "Dagaz:You wake, and dawn",
+    "lang": "en",
+    "pismena": {
+     "a": "transformation",
+     "b": "light",
+     "c": "dawn",
+     "d": "turning point",
+     "e": "breakthrough"
+    }
+   },
+   {
+    "n": 56,
+    "id": "A1",
+    "lang": "is",
+    "pismena": {
+     "a": "æðri máttarvöld",
+     "b": "guðleg tenging",
+     "c": "skjól",
+     "d": "vernd"
+    }
+   },
+   {
+    "n": 57,
+    "id": "F1",
+    "lang": "en",
+    "pismena": {
+     "a": "material prosperity",
+     "b": "wealth",
+     "c": "cattle"
+    }
+   },
+   {
+    "n": 58,
+    "id": "Hagalaz:After the storm",
+    "lang": "is",
+    "pismena": {
+     "a": "umbreyting",
+     "b": "truflun",
+     "c": "náttúruöfl",
+     "d": "hagl",
+     "e": "hreinsun"
+    }
+   },
+   {
+    "n": 59,
+    "id": "W1",
+    "lang": "is",
+    "pismena": {
+     "a": "gleði",
+     "b": "að tilheyra",
+     "c": "sátt",
+     "d": "hamingja",
+     "e": "uppfyllt ósk"
+    }
+   },
+   {
+    "n": 60,
+    "id": "Hagalaz:Hail rakes",
+    "lang": "en",
+    "pismena": {
+     "a": "clearing",
+     "b": "transformation",
+     "c": "disruption",
+     "d": "hail",
+     "e": "nature force"
+    }
+   },
+   {
+    "n": 61,
+    "id": "F1",
+    "lang": "is",
+    "pismena": {
+     "a": "búfé",
+     "b": "auður",
+     "c": "efnisleg velsæld"
+    }
+   },
+   {
+    "n": 62,
+    "id": "Ansuz:The letter comes",
+    "lang": "en",
+    "pismena": {
+     "a": "messages",
+     "b": "wisdom",
+     "c": "voice",
+     "d": "divine guidance",
+     "e": "breath"
+    }
+   },
+   {
+    "n": 63,
+    "id": "Ehwaz:On the narrow path",
+    "lang": "is",
+    "pismena": {
+     "a": "traust milli tveggja",
+     "b": "hreyfing",
+     "c": "samfylgd",
+     "d": "hestur",
+     "e": "framfarir"
+    }
+   },
+   {
+    "n": 64,
+    "id": "Laguz:Water finds its own way",
+    "lang": "en",
+    "pismena": {
+     "a": "emotion",
+     "b": "flow",
+     "c": "intuition",
+     "d": "memory",
+     "e": "the unconscious",
+     "f": "water",
+     "g": "dreams"
+    }
+   }
+  ],
+  [
+   {
+    "n": 1,
+    "id": "Ansuz:The raven settles",
+    "lang": "is",
+    "pismena": {
+     "a": "andardráttur",
+     "b": "rödd",
+     "c": "viska",
+     "d": "guðleg leiðsögn",
+     "e": "skilaboð"
+    }
+   },
+   {
+    "n": 2,
+    "id": "Ansuz:The letter comes",
+    "lang": "is",
+    "pismena": {
+     "a": "guðleg leiðsögn",
+     "b": "viska",
+     "c": "skilaboð",
+     "d": "andardráttur",
+     "e": "rödd"
+    }
+   },
+   {
+    "n": 3,
+    "id": "Dagaz:You wake, and dawn",
+    "lang": "en",
+    "pismena": {
+     "a": "breakthrough",
+     "b": "turning point",
+     "c": "transformation",
+     "d": "light",
+     "e": "dawn"
+    }
+   },
+   {
+    "n": 4,
+    "id": "B1",
+    "lang": "is",
+    "pismena": {
+     "a": "nýtt upphaf",
+     "b": "fæðing",
+     "c": "björk",
+     "d": "umhyggja",
+     "e": "þroski"
+    }
+   },
+   {
+    "n": 5,
+    "id": "Raidho:a road vanishing",
+    "lang": "en",
+    "pismena": {
+     "a": "natural rhythm",
+     "b": "right action",
+     "c": "the road",
+     "d": "movement"
+    }
+   },
+   {
+    "n": 6,
+    "id": "F2",
+    "lang": "en",
+    "pismena": {
+     "a": "wealth",
+     "b": "cattle",
+     "c": "material prosperity"
+    }
+   },
+   {
+    "n": 7,
+    "id": "T2",
+    "lang": "en",
+    "pismena": {
+     "a": "transformation",
+     "b": "hail",
+     "c": "nature force",
+     "d": "clearing",
+     "e": "disruption"
+    }
+   },
+   {
+    "n": 8,
+    "id": "A2",
+    "lang": "is",
+    "pismena": {
+     "a": "skjól",
+     "b": "guðleg tenging",
+     "c": "vernd",
+     "d": "æðri máttarvöld"
+    }
+   },
+   {
+    "n": 9,
+    "id": "Raidho:a road vanishing",
+    "lang": "is",
+    "pismena": {
+     "a": "taktur",
+     "b": "rétt breytni",
+     "c": "hreyfing",
+     "d": "leið"
+    }
+   },
+   {
+    "n": 10,
+    "id": "B1",
+    "lang": "en",
+    "pismena": {
+     "a": "growth",
+     "b": "birch",
+     "c": "new beginnings",
+     "d": "birth",
+     "e": "nurturing"
+    }
+   },
+   {
+    "n": 11,
+    "id": "Ansuz:The raven settles",
+    "lang": "en",
+    "pismena": {
+     "a": "voice",
+     "b": "breath",
+     "c": "wisdom",
+     "d": "messages",
+     "e": "divine guidance"
+    }
+   },
+   {
+    "n": 12,
+    "id": "Othila:The old farmstead",
+    "lang": "is",
+    "pismena": {
+     "a": "að tilheyra",
+     "b": "hefðir",
+     "c": "forfeðraviska",
+     "d": "heimili",
+     "e": "að sleppa",
+     "f": "arfur",
+     "g": "grunnur"
+    }
+   },
+   {
+    "n": 13,
+    "id": "Nauthiz:You keep knitting",
+    "lang": "is",
+    "pismena": {
+     "a": "vöxtur í áskorun",
+     "b": "nauðsyn",
+     "c": "þrýstingur",
+     "d": "þörf"
+    }
+   },
+   {
+    "n": 14,
+    "id": "Laguz:The glacial river",
+    "lang": "en",
+    "pismena": {
+     "a": "memory",
+     "b": "flow",
+     "c": "the unconscious",
+     "d": "dreams",
+     "e": "intuition",
+     "f": "water",
+     "g": "emotion"
+    }
+   },
+   {
+    "n": 15,
+    "id": "W2",
+    "lang": "is",
+    "pismena": {
+     "a": "hamingja",
+     "b": "sátt",
+     "c": "uppfyllt ósk",
+     "d": "gleði",
+     "e": "að tilheyra"
+    }
+   },
+   {
+    "n": 16,
+    "id": "Thurisaz:The thorn hedge",
+    "lang": "is",
+    "pismena": {
+     "a": "þröskuldur",
+     "b": "aðgát",
+     "c": "ógnandi kraftur",
+     "d": "vernd",
+     "e": "hlið",
+     "f": "þyrnir"
+    }
+   },
+   {
+    "n": 17,
+    "id": "Hagalaz:The squall strikes",
+    "lang": "is",
+    "pismena": {
+     "a": "truflun",
+     "b": "hagl",
+     "c": "náttúruöfl",
+     "d": "hreinsun",
+     "e": "umbreyting"
+    }
+   },
+   {
+    "n": 18,
+    "id": "Hagalaz:The hail hammers",
+    "lang": "en",
+    "pismena": {
+     "a": "transformation",
+     "b": "nature force",
+     "c": "disruption",
+     "d": "hail",
+     "e": "clearing"
+    }
+   },
+   {
+    "n": 19,
+    "id": "Nauthiz:You keep knitting",
+    "lang": "en",
+    "pismena": {
+     "a": "constraint",
+     "b": "need",
+     "c": "growth through challenge",
+     "d": "necessity"
+    }
+   },
+   {
+    "n": 20,
+    "id": "T1",
+    "lang": "is",
+    "pismena": {
+     "a": "hreinsun",
+     "b": "náttúruöfl",
+     "c": "truflun",
+     "d": "umbreyting",
+     "e": "hagl"
+    }
+   },
+   {
+    "n": 21,
+    "id": "Hagalaz:The hail hammers",
+    "lang": "is",
+    "pismena": {
+     "a": "truflun",
+     "b": "náttúruöfl",
+     "c": "hreinsun",
+     "d": "umbreyting",
+     "e": "hagl"
+    }
+   },
+   {
+    "n": 22,
+    "id": "Hagalaz:After the storm",
+    "lang": "is",
+    "pismena": {
+     "a": "truflun",
+     "b": "hreinsun",
+     "c": "náttúruöfl",
+     "d": "hagl",
+     "e": "umbreyting"
+    }
+   },
+   {
+    "n": 23,
+    "id": "Thurisaz:The thorn-bush",
+    "lang": "en",
+    "pismena": {
+     "a": "caution",
+     "b": "thorn",
+     "c": "threshold",
+     "d": "disruptive force",
+     "e": "gateway",
+     "f": "protection"
+    }
+   },
+   {
+    "n": 24,
+    "id": "A1",
+    "lang": "is",
+    "pismena": {
+     "a": "vernd",
+     "b": "skjól",
+     "c": "æðri máttarvöld",
+     "d": "guðleg tenging"
+    }
+   },
+   {
+    "n": 25,
+    "id": "Blank:The line runs down",
+    "lang": "is",
+    "pismena": {
+     "a": "óskrifaður möguleiki",
+     "b": "hið óþekkta",
+     "c": "örlög",
+     "d": "Óðinn",
+     "e": "tómið"
+    }
+   },
+   {
+    "n": 26,
+    "id": "Hagalaz:Hail rakes",
+    "lang": "is",
+    "pismena": {
+     "a": "truflun",
+     "b": "hreinsun",
+     "c": "hagl",
+     "d": "umbreyting",
+     "e": "náttúruöfl"
+    }
+   },
+   {
+    "n": 27,
+    "id": "B2",
+    "lang": "is",
+    "pismena": {
+     "a": "umhyggja",
+     "b": "þroski",
+     "c": "nýtt upphaf",
+     "d": "fæðing",
+     "e": "björk"
+    }
+   },
+   {
+    "n": 28,
+    "id": "Blank:The line runs down",
+    "lang": "en",
+    "pismena": {
+     "a": "Odin",
+     "b": "the unknown",
+     "c": "destiny",
+     "d": "the void",
+     "e": "unwritten potential"
+    }
+   },
+   {
+    "n": 29,
+    "id": "Hagalaz:The squall strikes",
+    "lang": "en",
+    "pismena": {
+     "a": "disruption",
+     "b": "transformation",
+     "c": "clearing",
+     "d": "hail",
+     "e": "nature force"
+    }
+   },
+   {
+    "n": 30,
+    "id": "Ingwaz:The seed lies",
+    "lang": "en",
+    "pismena": {
+     "a": "seed",
+     "b": "potential",
+     "c": "inner development",
+     "d": "fertility",
+     "e": "new life"
+    }
+   },
+   {
+    "n": 31,
+    "id": "Ehwaz:On the narrow path",
+    "lang": "en",
+    "pismena": {
+     "a": "horse",
+     "b": "trust",
+     "c": "movement",
+     "d": "progress",
+     "e": "partnership"
+    }
+   },
+   {
+    "n": 32,
+    "id": "Isa:The clock on the wall",
+    "lang": "en",
+    "pismena": {
+     "a": "clarity through cold",
+     "b": "waiting",
+     "c": "stillness",
+     "d": "ice",
+     "e": "pause"
+    }
+   },
+   {
+    "n": 33,
+    "id": "Laguz:Water finds its own way",
+    "lang": "is",
+    "pismena": {
+     "a": "vatn",
+     "b": "innsæi",
+     "c": "flæði",
+     "d": "minni",
+     "e": "draumar",
+     "f": "tilfinningar",
+     "g": "dulvitund"
+    }
+   },
+   {
+    "n": 34,
+    "id": "Isa:The clock on the wall",
+    "lang": "is",
+    "pismena": {
+     "a": "hlé",
+     "b": "kyrrstaða",
+     "c": "skýrleiki í kulda",
+     "d": "ís",
+     "e": "að bíða"
+    }
+   },
+   {
+    "n": 35,
+    "id": "Othila:The old farmstead",
+    "lang": "en",
+    "pismena": {
+     "a": "foundation",
+     "b": "belonging",
+     "c": "ancestral wisdom",
+     "d": "inheritance",
+     "e": "home",
+     "f": "heritage",
+     "g": "letting go"
+    }
+   },
+   {
+    "n": 36,
+    "id": "A1",
+    "lang": "en",
+    "pismena": {
+     "a": "protection",
+     "b": "shelter",
+     "c": "higher powers",
+     "d": "connection to divine"
+    }
+   },
+   {
+    "n": 37,
+    "id": "Ehwaz:On the narrow path",
+    "lang": "is",
+    "pismena": {
+     "a": "traust milli tveggja",
+     "b": "samfylgd",
+     "c": "framfarir",
+     "d": "hestur",
+     "e": "hreyfing"
+    }
+   },
+   {
+    "n": 38,
+    "id": "T1",
+    "lang": "en",
+    "pismena": {
+     "a": "clearing",
+     "b": "disruption",
+     "c": "hail",
+     "d": "nature force",
+     "e": "transformation"
+    }
+   },
+   {
+    "n": 39,
+    "id": "F2",
+    "lang": "is",
+    "pismena": {
+     "a": "búfé",
+     "b": "efnisleg velsæld",
+     "c": "auður"
+    }
+   },
+   {
+    "n": 40,
+    "id": "T2",
+    "lang": "is",
+    "pismena": {
+     "a": "hagl",
+     "b": "náttúruöfl",
+     "c": "hreinsun",
+     "d": "truflun",
+     "e": "umbreyting"
+    }
+   },
+   {
+    "n": 41,
+    "id": "Hagalaz:The power goes out",
+    "lang": "is",
+    "pismena": {
+     "a": "umbreyting",
+     "b": "hagl",
+     "c": "hreinsun",
+     "d": "truflun",
+     "e": "náttúruöfl"
+    }
+   },
+   {
+    "n": 42,
+    "id": "W1",
+    "lang": "is",
+    "pismena": {
+     "a": "gleði",
+     "b": "uppfyllt ósk",
+     "c": "hamingja",
+     "d": "að tilheyra",
+     "e": "sátt"
+    }
+   },
+   {
+    "n": 43,
+    "id": "Hagalaz:The river swells",
+    "lang": "is",
+    "pismena": {
+     "a": "náttúruöfl",
+     "b": "truflun",
+     "c": "hagl",
+     "d": "hreinsun",
+     "e": "umbreyting"
+    }
+   },
+   {
+    "n": 44,
+    "id": "Laguz:Water finds its own way",
+    "lang": "en",
+    "pismena": {
+     "a": "the unconscious",
+     "b": "flow",
+     "c": "memory",
+     "d": "intuition",
+     "e": "dreams",
+     "f": "water",
+     "g": "emotion"
+    }
+   },
+   {
+    "n": 45,
+    "id": "Hagalaz:In the night the gale",
+    "lang": "is",
+    "pismena": {
+     "a": "náttúruöfl",
+     "b": "hreinsun",
+     "c": "hagl",
+     "d": "truflun",
+     "e": "umbreyting"
+    }
+   },
+   {
+    "n": 46,
+    "id": "A2",
+    "lang": "en",
+    "pismena": {
+     "a": "shelter",
+     "b": "protection",
+     "c": "connection to divine",
+     "d": "higher powers"
+    }
+   },
+   {
+    "n": 47,
+    "id": "Hagalaz:The river swells",
+    "lang": "en",
+    "pismena": {
+     "a": "disruption",
+     "b": "transformation",
+     "c": "clearing",
+     "d": "nature force",
+     "e": "hail"
+    }
+   },
+   {
+    "n": 48,
+    "id": "Thurisaz:The thorn-bush",
+    "lang": "is",
+    "pismena": {
+     "a": "aðgát",
+     "b": "þyrnir",
+     "c": "hlið",
+     "d": "þröskuldur",
+     "e": "ógnandi kraftur",
+     "f": "vernd"
+    }
+   },
+   {
+    "n": 49,
+    "id": "Hagalaz:Hail rakes",
+    "lang": "en",
+    "pismena": {
+     "a": "transformation",
+     "b": "disruption",
+     "c": "hail",
+     "d": "nature force",
+     "e": "clearing"
+    }
+   },
+   {
+    "n": 50,
+    "id": "Ehwaz:When one horse tires",
+    "lang": "en",
+    "pismena": {
+     "a": "horse",
+     "b": "movement",
+     "c": "progress",
+     "d": "trust",
+     "e": "partnership"
+    }
+   },
+   {
+    "n": 51,
+    "id": "Hagalaz:The power goes out",
+    "lang": "en",
+    "pismena": {
+     "a": "hail",
+     "b": "transformation",
+     "c": "clearing",
+     "d": "disruption",
+     "e": "nature force"
+    }
+   },
+   {
+    "n": 52,
+    "id": "Hagalaz:After the storm",
+    "lang": "en",
+    "pismena": {
+     "a": "hail",
+     "b": "disruption",
+     "c": "nature force",
+     "d": "clearing",
+     "e": "transformation"
+    }
+   },
+   {
+    "n": 53,
+    "id": "W2",
+    "lang": "en",
+    "pismena": {
+     "a": "wish fulfilled",
+     "b": "happiness",
+     "c": "joy",
+     "d": "belonging",
+     "e": "harmony"
+    }
+   },
+   {
+    "n": 54,
+    "id": "Hagalaz:In the night the gale",
+    "lang": "en",
+    "pismena": {
+     "a": "hail",
+     "b": "disruption",
+     "c": "transformation",
+     "d": "clearing",
+     "e": "nature force"
+    }
+   },
+   {
+    "n": 55,
+    "id": "F1",
+    "lang": "en",
+    "pismena": {
+     "a": "wealth",
+     "b": "cattle",
+     "c": "material prosperity"
+    }
+   },
+   {
+    "n": 56,
+    "id": "Dagaz:You wake, and dawn",
+    "lang": "is",
+    "pismena": {
+     "a": "umbreyting",
+     "b": "dögun",
+     "c": "bylting",
+     "d": "tímamót",
+     "e": "ljós"
+    }
+   },
+   {
+    "n": 57,
+    "id": "Ansuz:The letter comes",
+    "lang": "en",
+    "pismena": {
+     "a": "divine guidance",
+     "b": "voice",
+     "c": "wisdom",
+     "d": "breath",
+     "e": "messages"
+    }
+   },
+   {
+    "n": 58,
+    "id": "Ehwaz:When one horse tires",
+    "lang": "is",
+    "pismena": {
+     "a": "traust milli tveggja",
+     "b": "hestur",
+     "c": "hreyfing",
+     "d": "framfarir",
+     "e": "samfylgd"
+    }
+   },
+   {
+    "n": 59,
+    "id": "Ingwaz:The seed lies",
+    "lang": "is",
+    "pismena": {
+     "a": "möguleiki",
+     "b": "nýtt líf",
+     "c": "frjósemi",
+     "d": "innri þróun",
+     "e": "fræ"
+    }
+   },
+   {
+    "n": 60,
+    "id": "Laguz:The glacial river",
+    "lang": "is",
+    "pismena": {
+     "a": "tilfinningar",
+     "b": "vatn",
+     "c": "flæði",
+     "d": "innsæi",
+     "e": "draumar",
+     "f": "dulvitund",
+     "g": "minni"
+    }
+   },
+   {
+    "n": 61,
+    "id": "B2",
+    "lang": "en",
+    "pismena": {
+     "a": "nurturing",
+     "b": "new beginnings",
+     "c": "birth",
+     "d": "growth",
+     "e": "birch"
+    }
+   },
+   {
+    "n": 62,
+    "id": "F1",
+    "lang": "is",
+    "pismena": {
+     "a": "efnisleg velsæld",
+     "b": "búfé",
+     "c": "auður"
+    }
+   },
+   {
+    "n": 63,
+    "id": "Thurisaz:The thorn hedge",
+    "lang": "en",
+    "pismena": {
+     "a": "thorn",
+     "b": "threshold",
+     "c": "disruptive force",
+     "d": "caution",
+     "e": "gateway",
+     "f": "protection"
+    }
+   },
+   {
+    "n": 64,
+    "id": "W1",
+    "lang": "en",
+    "pismena": {
+     "a": "joy",
+     "b": "belonging",
+     "c": "wish fulfilled",
+     "d": "harmony",
+     "e": "happiness"
+    }
+   }
+  ]
+ ]
+}

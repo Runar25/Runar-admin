@@ -1,0 +1,977 @@
+[
+ {
+  "id": "Hagalaz:The squall strikes",
+  "sk": "H",
+  "runa": "Hagalaz",
+  "en": "The squall strikes out of a clear sky and is gone just as fast.",
+  "ted": [
+   "nature force",
+   "disruption"
+  ],
+  "radky": [
+   {
+    "en": "disruption",
+    "is": "truflun",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "nature force",
+    "is": "náttúruöfl",
+    "nEN": 2,
+    "nIS": 2
+   }
+  ],
+  "prijato": [
+   "disruption",
+   "nature force"
+  ]
+ },
+ {
+  "id": "Hagalaz:The hail hammers",
+  "sk": "H",
+  "runa": "Hagalaz",
+  "en": "The hail hammers the roof and melts in an instant.",
+  "ted": [
+   "transformation"
+  ],
+  "radky": [
+   {
+    "en": "hail",
+    "is": "hagl",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "nature force",
+    "is": "náttúruöfl",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "transformation",
+    "is": "umbreyting",
+    "nEN": 1,
+    "nIS": 1
+   }
+  ],
+  "prijato": [
+   "hail",
+   "nature force"
+  ]
+ },
+ {
+  "id": "Hagalaz:In the night the gale",
+  "sk": "H",
+  "runa": "Hagalaz",
+  "en": "In the night the gale tore the old fence down, and the field lies open.",
+  "ted": [
+   "clearing"
+  ],
+  "radky": [
+   {
+    "en": "disruption",
+    "is": "truflun",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "clearing",
+    "is": "hreinsun",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "nature force",
+    "is": "náttúruöfl",
+    "nEN": 2,
+    "nIS": 2
+   }
+  ],
+  "prijato": [
+   "disruption",
+   "clearing",
+   "nature force"
+  ]
+ },
+ {
+  "id": "Hagalaz:The power goes out",
+  "sk": "H",
+  "runa": "Hagalaz",
+  "en": "The power goes out in the storm, and everything that runs by itself stops.",
+  "ted": [
+   "disruption"
+  ],
+  "radky": [
+   {
+    "en": "disruption",
+    "is": "truflun",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "nature force",
+    "is": "náttúruöfl",
+    "nEN": 2,
+    "nIS": 2
+   }
+  ],
+  "prijato": [
+   "disruption",
+   "nature force"
+  ]
+ },
+ {
+  "id": "Hagalaz:After the storm",
+  "sk": "H",
+  "runa": "Hagalaz",
+  "en": "After the storm, only the tree with deep roots is still standing.",
+  "ted": [
+   "transformation"
+  ],
+  "radky": [
+   {
+    "en": "clearing",
+    "is": "hreinsun",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "nature force",
+    "is": "náttúruöfl",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "disruption",
+    "is": "truflun",
+    "nEN": 1,
+    "nIS": 1
+   },
+   {
+    "en": "transformation",
+    "is": "umbreyting",
+    "nEN": 0,
+    "nIS": 0
+   }
+  ],
+  "prijato": [
+   "clearing",
+   "nature force"
+  ]
+ },
+ {
+  "id": "Hagalaz:Hail rakes",
+  "sk": "H",
+  "runa": "Hagalaz",
+  "en": "Hail rakes the hayfield in June and is gone before the sky clears.",
+  "ted": [
+   "hail"
+  ],
+  "radky": [
+   {
+    "en": "hail",
+    "is": "hagl",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "disruption",
+    "is": "truflun",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "nature force",
+    "is": "náttúruöfl",
+    "nEN": 2,
+    "nIS": 2
+   }
+  ],
+  "prijato": [
+   "hail",
+   "disruption",
+   "nature force"
+  ]
+ },
+ {
+  "id": "Hagalaz:The river swells",
+  "sk": "H",
+  "runa": "Hagalaz",
+  "en": "The river swells overnight and takes with it whatever stood too near the bank.",
+  "ted": [
+   "nature force",
+   "disruption"
+  ],
+  "radky": [
+   {
+    "en": "disruption",
+    "is": "truflun",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "clearing",
+    "is": "hreinsun",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "nature force",
+    "is": "náttúruöfl",
+    "nEN": 2,
+    "nIS": 2
+   }
+  ],
+  "prijato": [
+   "disruption",
+   "clearing",
+   "nature force"
+  ]
+ },
+ {
+  "id": "Ansuz:The raven settles",
+  "sk": "C",
+  "runa": "Ansuz",
+  "en": "The raven settles on the fencepost and waits for you to listen.",
+  "ted": [
+   "messages"
+  ],
+  "radky": [
+   {
+    "en": "messages",
+    "is": "skilaboð",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "divine guidance",
+    "is": "guðleg leiðsögn",
+    "nEN": 2,
+    "nIS": 2
+   }
+  ],
+  "prijato": [
+   "messages",
+   "divine guidance"
+  ]
+ },
+ {
+  "id": "Nauthiz:You keep knitting",
+  "sk": "C",
+  "runa": "Nauthiz",
+  "en": "You keep knitting though the yarn is almost out.",
+  "ted": [
+   "growth through challenge"
+  ],
+  "radky": [
+   {
+    "en": "need",
+    "is": "þörf",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "constraint",
+    "is": "þrýstingur",
+    "nEN": 2,
+    "nIS": 0
+   },
+   {
+    "en": "growth through challenge",
+    "is": "vöxtur í áskorun",
+    "nEN": 0,
+    "nIS": 0
+   }
+  ],
+  "prijato": [
+   "need"
+  ]
+ },
+ {
+  "id": "Laguz:The glacial river",
+  "sk": "C",
+  "runa": "Laguz",
+  "en": "The glacial river runs grey and heavy, full of what it carries down from above.",
+  "ted": [
+   "the unconscious"
+  ],
+  "radky": [
+   {
+    "en": "water",
+    "is": "vatn",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "flow",
+    "is": "flæði",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "the unconscious",
+    "is": "dulvitund",
+    "nEN": 0,
+    "nIS": 0
+   }
+  ],
+  "prijato": [
+   "water",
+   "flow"
+  ]
+ },
+ {
+  "id": "Laguz:Water finds its own way",
+  "sk": "C",
+  "runa": "Laguz",
+  "en": "Water finds its own way down the slope, and no one shows it the path.",
+  "ted": [
+   "intuition"
+  ],
+  "radky": [
+   {
+    "en": "water",
+    "is": "vatn",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "flow",
+    "is": "flæði",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "intuition",
+    "is": "innsæi",
+    "nEN": 2,
+    "nIS": 2
+   }
+  ],
+  "prijato": [
+   "water",
+   "flow",
+   "intuition"
+  ]
+ },
+ {
+  "id": "Ingwaz:The seed lies",
+  "sk": "C",
+  "runa": "Ingwaz",
+  "en": "The seed lies in the frozen ground and waits for its time.",
+  "ted": [
+   "potential"
+  ],
+  "radky": [
+   {
+    "en": "potential",
+    "is": "möguleiki",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "seed",
+    "is": "fræ",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "new life",
+    "is": "nýtt líf",
+    "nEN": 1,
+    "nIS": 1
+   }
+  ],
+  "prijato": [
+   "potential",
+   "seed"
+  ]
+ },
+ {
+  "id": "Othila:The old farmstead",
+  "sk": "C",
+  "runa": "Othila",
+  "en": "The old farmstead stands in ruins but still holds warmth in memory.",
+  "ted": [
+   "heritage"
+  ],
+  "radky": [
+   {
+    "en": "home",
+    "is": "heimili",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "inheritance",
+    "is": "arfur",
+    "nEN": 0,
+    "nIS": 2
+   },
+   {
+    "en": "heritage",
+    "is": "hefðir",
+    "nEN": 2,
+    "nIS": 0
+   }
+  ],
+  "prijato": [
+   "home"
+  ]
+ },
+ {
+  "id": "Dagaz:You wake, and dawn",
+  "sk": "C",
+  "runa": "Dagaz",
+  "en": "You wake, and dawn has already changed the light in the room.",
+  "ted": [
+   "turning point"
+  ],
+  "radky": [
+   {
+    "en": "dawn",
+    "is": "dögun",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "light",
+    "is": "ljós",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "transformation",
+    "is": "umbreyting",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "turning point",
+    "is": "tímamót",
+    "nEN": 0,
+    "nIS": 0
+   }
+  ],
+  "prijato": [
+   "dawn",
+   "light",
+   "transformation"
+  ]
+ },
+ {
+  "id": "Isa:The clock on the wall",
+  "sk": "C",
+  "runa": "Isa",
+  "en": "The clock on the wall has stopped and no one has wound it.",
+  "ted": [
+   "waiting"
+  ],
+  "radky": [
+   {
+    "en": "stillness",
+    "is": "kyrrstaða",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "pause",
+    "is": "hlé",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "waiting",
+    "is": "að bíða",
+    "nEN": 0,
+    "nIS": 0
+   }
+  ],
+  "prijato": [
+   "stillness",
+   "pause"
+  ]
+ },
+ {
+  "id": "Thurisaz:The thorn-bush",
+  "sk": "C",
+  "runa": "Thurisaz",
+  "en": "The thorn-bush stands bare and black in the blizzard, but the spines are still waiting.",
+  "ted": [
+   "caution"
+  ],
+  "radky": [
+   {
+    "en": "caution",
+    "is": "aðgát",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "thorn",
+    "is": "þyrnir",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "disruptive force",
+    "is": "ógnandi kraftur",
+    "nEN": 0,
+    "nIS": 2
+   }
+  ],
+  "prijato": [
+   "caution",
+   "thorn"
+  ]
+ },
+ {
+  "id": "Ansuz:The letter comes",
+  "sk": "C0",
+  "runa": "Ansuz",
+  "en": "The letter comes with the boat at last and lies unopened on the table.",
+  "ted": [
+   "messages"
+  ],
+  "radky": [
+   {
+    "en": "messages",
+    "is": "skilaboð",
+    "nEN": 2,
+    "nIS": 2
+   }
+  ],
+  "prijato": [
+   "messages"
+  ]
+ },
+ {
+  "id": "Ehwaz:When one horse tires",
+  "sk": "C0",
+  "runa": "Ehwaz",
+  "en": "When one horse tires on the climb the other slows unasked, and they reach the ridge together.",
+  "ted": [
+   "partnership"
+  ],
+  "radky": [
+   {
+    "en": "horse",
+    "is": "hestur",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "trust",
+    "is": "traust milli tveggja",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "partnership",
+    "is": "samfylgd",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "progress",
+    "is": "framfarir",
+    "nEN": 1,
+    "nIS": 0
+   }
+  ],
+  "prijato": [
+   "horse",
+   "trust",
+   "partnership"
+  ]
+ },
+ {
+  "id": "Ehwaz:On the narrow path",
+  "sk": "C0",
+  "runa": "Ehwaz",
+  "en": "On the narrow path the one who walks with you shortens their stride to yours without a word, and the going evens out.",
+  "ted": [
+   "partnership"
+  ],
+  "radky": [
+   {
+    "en": "trust",
+    "is": "traust milli tveggja",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "partnership",
+    "is": "samfylgd",
+    "nEN": 2,
+    "nIS": 2
+   }
+  ],
+  "prijato": [
+   "trust",
+   "partnership"
+  ]
+ },
+ {
+  "id": "Blank:The line runs down",
+  "sk": "C0",
+  "runa": "Blank",
+  "en": "The line runs down into dark water and nothing has touched it yet.",
+  "ted": [
+   "unwritten potential"
+  ],
+  "radky": [
+   {
+    "en": "the unknown",
+    "is": "hið óþekkta",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "unwritten potential",
+    "is": "óskrifaður möguleiki",
+    "nEN": 2,
+    "nIS": 2
+   }
+  ],
+  "prijato": [
+   "the unknown",
+   "unwritten potential"
+  ]
+ },
+ {
+  "id": "Raidho:a road vanishing",
+  "sk": "C0",
+  "runa": "Raidho",
+  "en": "a road vanishing round the next bend",
+  "ted": [
+   "movement"
+  ],
+  "radky": [
+   {
+    "en": "the road",
+    "is": "leið",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "movement",
+    "is": "hreyfing",
+    "nEN": 0,
+    "nIS": 0
+   }
+  ],
+  "prijato": [
+   "the road"
+  ]
+ },
+ {
+  "id": "Thurisaz:The thorn hedge",
+  "sk": "C0",
+  "runa": "Thurisaz",
+  "en": "The thorn hedge lets nothing through without cost.",
+  "ted": [
+   "protection"
+  ],
+  "radky": [
+   {
+    "en": "threshold",
+    "is": "þröskuldur",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "thorn",
+    "is": "þyrnir",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "protection",
+    "is": "vernd",
+    "nEN": 2,
+    "nIS": 2
+   }
+  ],
+  "prijato": [
+   "threshold",
+   "thorn",
+   "protection"
+  ]
+ },
+ {
+  "id": "T1",
+  "sk": "N",
+  "runa": "Hagalaz",
+  "en": "The storm breaks the window and puts out the candles on the table.",
+  "ted": [],
+  "radky": [
+   {
+    "en": "disruption",
+    "is": "truflun",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "nature force",
+    "is": "náttúruöfl",
+    "nEN": 2,
+    "nIS": 2
+   }
+  ],
+  "prijato": [
+   "disruption",
+   "nature force"
+  ]
+ },
+ {
+  "id": "T2",
+  "sk": "N",
+  "runa": "Hagalaz",
+  "en": "The gale breaks the panes of the greenhouse you built together.",
+  "ted": [],
+  "radky": [
+   {
+    "en": "disruption",
+    "is": "truflun",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "nature force",
+    "is": "náttúruöfl",
+    "nEN": 2,
+    "nIS": 2
+   }
+  ],
+  "prijato": [
+   "disruption",
+   "nature force"
+  ]
+ },
+ {
+  "id": "F1",
+  "sk": "N",
+  "runa": "Fehu",
+  "en": "The boat comes in so laden with fish it sits deep in the water.",
+  "ted": [],
+  "radky": [
+   {
+    "en": "wealth",
+    "is": "auður",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "material prosperity",
+    "is": "efnisleg velsæld",
+    "nEN": 2,
+    "nIS": 2
+   }
+  ],
+  "prijato": [
+   "wealth",
+   "material prosperity"
+  ]
+ },
+ {
+  "id": "F2",
+  "sk": "N",
+  "runa": "Fehu",
+  "en": "The hot water runs into every house in the valley.",
+  "ted": [],
+  "radky": [
+   {
+    "en": "material prosperity",
+    "is": "efnisleg velsæld",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "wealth",
+    "is": "auður",
+    "nEN": 1,
+    "nIS": 1
+   }
+  ],
+  "prijato": [
+   "material prosperity"
+  ]
+ },
+ {
+  "id": "A1",
+  "sk": "N",
+  "runa": "Algiz",
+  "en": "The mountain hut stands open in the blizzard for anyone who needs it.",
+  "ted": [],
+  "radky": [
+   {
+    "en": "protection",
+    "is": "vernd",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "shelter",
+    "is": "skjól",
+    "nEN": 2,
+    "nIS": 2
+   }
+  ],
+  "prijato": [
+   "protection",
+   "shelter"
+  ]
+ },
+ {
+  "id": "A2",
+  "sk": "N",
+  "runa": "Algiz",
+  "en": "No one touches the stone where the hidden people live.",
+  "ted": [],
+  "radky": [
+   {
+    "en": "protection",
+    "is": "vernd",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "higher powers",
+    "is": "æðri máttarvöld",
+    "nEN": 2,
+    "nIS": 2
+   }
+  ],
+  "prijato": [
+   "protection",
+   "higher powers"
+  ]
+ },
+ {
+  "id": "W1",
+  "sk": "N",
+  "runa": "Wunjo",
+  "en": "In the hot pot under the frost, everyone laughs at the same story.",
+  "ted": [],
+  "radky": [
+   {
+    "en": "joy",
+    "is": "gleði",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "happiness",
+    "is": "hamingja",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "belonging",
+    "is": "að tilheyra",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "harmony",
+    "is": "sátt",
+    "nEN": 1,
+    "nIS": 1
+   }
+  ],
+  "prijato": [
+   "joy",
+   "happiness",
+   "belonging"
+  ]
+ },
+ {
+  "id": "W2",
+  "sk": "N",
+  "runa": "Wunjo",
+  "en": "The dog runs to meet you at the gate and cannot stop wagging.",
+  "ted": [],
+  "radky": [
+   {
+    "en": "joy",
+    "is": "gleði",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "happiness",
+    "is": "hamingja",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "belonging",
+    "is": "að tilheyra",
+    "nEN": 2,
+    "nIS": 2
+   }
+  ],
+  "prijato": [
+   "joy",
+   "happiness",
+   "belonging"
+  ]
+ },
+ {
+  "id": "B1",
+  "sk": "N",
+  "runa": "Berkana",
+  "en": "On the windowsill the seedlings stretch toward the light.",
+  "ted": [],
+  "radky": [
+   {
+    "en": "growth",
+    "is": "þroski",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "new beginnings",
+    "is": "nýtt upphaf",
+    "nEN": 2,
+    "nIS": 2
+   }
+  ],
+  "prijato": [
+   "growth",
+   "new beginnings"
+  ]
+ },
+ {
+  "id": "B2",
+  "sk": "N",
+  "runa": "Berkana",
+  "en": "You water the cutting and then leave it alone.",
+  "ted": [],
+  "radky": [
+   {
+    "en": "nurturing",
+    "is": "umhyggja",
+    "nEN": 2,
+    "nIS": 2
+   },
+   {
+    "en": "growth",
+    "is": "þroski",
+    "nEN": 1,
+    "nIS": 1
+   },
+   {
+    "en": "new beginnings",
+    "is": "nýtt upphaf",
+    "nEN": 1,
+    "nIS": 1
+   }
+  ],
+  "prijato": [
+   "nurturing"
+  ]
+ }
+]
