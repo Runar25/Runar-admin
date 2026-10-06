@@ -1141,6 +1141,9 @@ Až owner řekne: pilot s *„…from what the runes drawn hold"* místo obrazu,
 ⭐ **KUKY 2026-10-05: velké body (4, 5, 6, 8) a přestavba promptu → LAB CODE-read, ne produkce** (DECISIONS 2026-10-05 (3)).
 Do produkce jen malé ověřené opravy přes CODE-tune, po jedné. Body 1–3 a myšlenka ≤ 12 slov už jsou v produkci (v4.92–v4.94).
 Owner: *„najít nesrovnalosti, pak vyřešíme, co budeme dělat“*. Čísla → EVAL_LOG 2026-10-04 (4); citace výrobců ověřené na jejich stránkách.
+⏸ **LAB CODE-read (handoff CODE-tune proti `598522d`): připraveno, NEZAČATO** — 2026-10-05 načteno vše, co už bylo k bodům 4/5/6/8
+a přemýšlení změřeno, a sepsán závěr pro přestavbu → `memory/snapshots/2026-10-05-lab-co-uz-vime.md`. Owner 2026-10-06 lab odložil
+(„potřebuju, abys udělal něco jiného"). Navázat od bodu 8.
 1. ✅ **Rozpor JSON × ✦ — HOTOVO 2026-10-04 (v4.92, DECISIONS 2026-10-04 (6)):** ✦ výslovně dovnitř JSONu; Opus 2/6 → 6/6 uvnitř.
 2. **Délka u Opusu 5** — Anthropic: Opus 5 píše delší, effort délku neřídí, *„prompt for it explicitly"* + *„a short reminder near the
    end of the prompt"*. U nás číslo uprostřed, na konci jen *„Stay within the word count"* bez čísla a úplně poslední je sekce ✦.

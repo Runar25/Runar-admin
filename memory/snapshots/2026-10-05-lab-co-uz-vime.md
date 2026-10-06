@@ -45,6 +45,20 @@ celé předělávat."* Zadání: handoff CODE-tune proti `598522d` (audit body 4
   rozbil produkci (DECISIONS 10-05 (3)). Strop ≥ ~2000 + kontrola stop_reason; effort délku neřídí.
 - Oprava pro jeden model druhému často nic nedá (one detail, glosa, World/Elements jen sol). Subagent produkční vady nereprodukuje (09-19 (3)).
 
+## Co z toho plyne pro přestavbu (závěr CODE-read, ukázáno ownerovi 2026-10-05)
+1. Neškrtat holé zákazy — každý přepsat na kladný cíl a hranici nechat jako pojmenovanou výjimku.
+2. Kladné věty psát bez fráze, kterou může model zopakovat čtenáři (kritérium/podmínka, ne slovo k použití).
+3. Data ven z pokynů — každé jednou, s rámem zdroje, bez ochuzení (seznamy klíčových slov u solu zůstávají).
+4. Postup uvolnit UBÍRÁNÍM kroků, ne přidáváním; změřené prvky (los délky, most „may be", úhel, připomínka délky, ✦ ≤ 12 slov,
+   jeden obraz, „Mention <runa> by name once") nechat stát.
+5. Větu bodu 8 vyndat a hlídat větu 3 i dosednutí do oblasti (přenos k člověku jen v řízeném mostu).
+6. Přemýšlení zkoušet až na vyčištěném promptu, strop ~2000, hlídat useknutí a latenci, na cílovém modelu přes API.
+7. Lab po jedné páce, pilot 5 čtení na variantu, soudce vidí jen to, co uživatel, ownerovi celé texty.
+
+## Stav labu
+Připraveno, **nezačato** — owner 2026-10-06: *„všechno zapiš, ať se to neztratí. Potřebuju, abys udělal něco jiného."*
+Navázat od bodu 8 (nejlevnější rozhodující měření), pak 5, pak 4+6, pak přemýšlení.
+
 ## Metodika pro lab
 Jedna páka na rameno, ≥ 5 opakování, pilot napřed · obrácená páka · soudce vidí jen to, co uživatel · různě formulované rubriky,
 max 3–5 soudců · všechny losy zaznamenat (délka!) · IS korpusem a is-grammar-qa · ownerovi celé texty.
