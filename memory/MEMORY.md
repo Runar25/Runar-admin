@@ -92,7 +92,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [pathspec-nesmi-byt-prazdny.md](pathspec-nesmi-byt-prazdny.md) — pathspec v proměnné z padlého && řetězce = prázdný → commit vezme CELÝ index (i cizí staged)
 - [napred-dohledej-co-uz-je.md](napred-dohledej-co-uz-je.md) — před měřením/novou položkou/nástrojem prohledej PRICING/DECISIONS/BACKLOG a git log ostatních lane; paralelní session to často už udělaly
 - [parallel-code-sessions-collision.md](parallel-code-sessions-collision.md) — víc Code session ve sdíleném stromě; pathspec commit, patch do scratchpadu, status před sáhnutím
-- [test-vstup-jako-v-produkci.md](test-vstup-jako-v-produkci.md) — test formulace přes API: napřed vytiskni jeden hotový prompt a porovnej s produkcí ([object Object] dal falešný závěr)
+- [test-vstup-jako-v-produkci.md](test-vstup-jako-v-produkci.md) — test formulace přes API: napřed vytiskni jeden hotový prompt a porovnej s produkcí ([object Object] a ✦ z DB daly 2× týž den falešný vstup)
 - [prompt-directive-makes-model-copy.md](prompt-directive-makes-model-copy.md) — "pouzij tenhle text" v promptu = model ho opise doslova; ramuj jako zdroj (12 % -> 56 %, p=0,002)
 - [falsify-by-reversing-the-lever.md](falsify-by-reversing-the-lever.md) — hypotezu "pridej X" testuj tak, ze X jeste UBERES; obracena predpoved musi platit (CLAUDE.md §25)
 - [loading-a-page-proves-existence-not-authenticity.md](loading-a-page-proves-existence-not-authenticity.md) — nacteni URL overi ze existuje, ne ze je prava; zjisti kdo ji vlastni a jestli jsou ucty skutecne
@@ -117,7 +117,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [always-show-reading-samples.md](always-show-reading-samples.md) — ownerovi vždy ukázat konkrétní TEXT čtení a k němu instrukce, které do čtení vstoupily
 - [testovani-jedne-runy-je-zamer.md](testovani-jedne-runy-je-zamer.md) — owner testuje jednu runu opakovaně schválně; jeho „pořád stejné X“ nevysvětluj jeho metodou, dohledej konkrétní případ
 - [write-for-owner-not-process.md](write-for-owner-not-process.md) — ownerovi piš důležité/výsledek, ne proces „co jsi řekl / co budu hledat"
-- [cheapest-deciding-measurement-first.md](cheapest-deciding-measurement-first.md) — ⛔ 2026-09-24 3× spálený limit ownera: obsah dělám SÁM, agenti max 3–5 a víc jen s odhadem tokenů a ownerovým ano; spadlý běh nepouštět znovu bez ptaní
+- [cheapest-deciding-measurement-first.md](cheapest-deciding-measurement-first.md) — ⛔ 2026-09-24 3× spálený limit ownera: obsah dělám SÁM, agenti max 3–5 a víc jen s odhadem tokenů a ownerovým ano; API nad ~50 volání jen s jeho ano (2026-10-06: 480 bez ptaní); spadlý běh nepouštět znovu bez ptaní
 - [work-efficiently-ask-if-simpler.md](work-efficiently-ask-if-simpler.md) — než spustíš těžký nástroj, zeptej se, jestli to nejde jednodušeji; dlouhý běh protlačí compactem a zabije úkol
 - [decisions-are-directions-not-locks.md](decisions-are-directions-not-locks.md) — rozhodnutí = směr + varování při rozporu, ne zámek navždy
 - [fix-or-log-duplicates-and-errors.md](fix-or-log-duplicates-and-errors.md) — duplikát/chyba → hned opravit, nebo zapsat do BACKLOGu; netiše přejít
