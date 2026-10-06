@@ -84,7 +84,7 @@ IS 365 proti 353) — při n = 5 a jiných obrazech to není prokázané.
 
 | varianta | ozvěna „drawn“ | „X is yours, but Y is the rune…“ | „ice“ | vazba na obraz |
 |---|---|---|---|---|
-| kolo 4: blok životní runy před v4.98 („…then return to the runes that were drawn“) | 15/18 | — | 3/18 | 16/18 |
+| kolo 4: blok životní runy před v4.98 („…then return to the runes that were drawn“) | 15/18 | — | 2/18 | 16/18 |
 | kolo 4: blok od v4.98 (bez té věty) | 14/18 | — | 3/18 | 17/18 |
 | kolo 5: P0 = produkce v4.99 | 11/18 | 8/18 | 2/18 | 18/18 |
 | kolo 5: P1 = Ask bez slova „drawn“ (5 míst) | **3/18** | **2/18** | 4/18 | 15/18 |
