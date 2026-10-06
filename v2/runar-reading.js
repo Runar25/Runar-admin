@@ -999,11 +999,11 @@ function _askHints() {
   var _zi = _intentIdx(u.intention);
   if (_zi >= 0) out.push(t(['ask_h_when_now', 'ask_h_when_ahead', 'ask_h_when_past'][_zi]));
   var _hi = _seekIdx(u.seeking);
-  // 2026-09-25 (KUKY): „Does this confirm what I already feel?“ Rúnar z podstaty odmítá (zrcadlo nepotvrzuje) → jen když
-  // otázek není dost (méně než 6); jinak se řádek vynechá, nic ho nenahrazuje.
-  if (!(_hi === 2 && out.length >= 6))
-    out.push(_hi > 0 ? t(['', 'ask_h_seek_clarity', 'ask_h_seek_confirm',
-                          'ask_h_seek_challenge', 'ask_h_seek_reflect'][_hi])
+  // 2026-10-06 (KUKY „pryč“): „Does this confirm what I already feel?“ úplně pryč. Rúnar ho z podstaty odmítá (zrcadlo
+  // nepotvrzuje, DECISIONS 2026-09-25); do té doby se ukazoval jen při méně než 6 tipech a po odebrání „Why now“ by naskakoval
+  // častěji. U hledání Confirmation se řádek vynechá a nic ho nenahrazuje — týž vzor, jaký dřív platil při plném seznamu.
+  if (_hi !== 2)
+    out.push(_hi > 0 ? t(['', 'ask_h_seek_clarity', '', 'ask_h_seek_challenge', 'ask_h_seek_reflect'][_hi])
                      : t('ask_h_unseen'));
   // 2026-09-25 (KUKY: „při druhém asku mi nabízí stejnou možnost, kterou jsem použil při prvním“): položené otázky pryč.
   var polozene = (_askLog || []).map(function (x) { return String(x.q || '').trim().toLowerCase(); });

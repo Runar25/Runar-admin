@@ -216,13 +216,17 @@ for (const L of ['en', 'is']) {
   // nezajistíme!" Můj původní důvod pro vynechání (zrcadlení) v měření neobstál — 0/27
   // ve všech čtyřech podmínkách (RUNAR_EVAL_LOG.md 2026-09-11 (2)).
   const HL = glob('SEEKS')[L];
-  const ocekHl = ['', T.ask_h_seek_clarity, T.ask_h_seek_confirm,
-                  T.ask_h_seek_challenge, T.ask_h_seek_reflect];
+  const ocekHl = ['', T.ask_h_seek_clarity, '', T.ask_h_seek_challenge, T.ask_h_seek_reflect];
   const bezH = hinty(L, [R('Jera')], R('Gebo'), '', '', '');
+  const POTVRZ = /confirm what I already feel|Staðfestir þetta/i;   // odstraněný tip — nesmí se vrátit
   for (let i = 1; i < HL.length; i++) {
-    // 2026-09-25: „Does this confirm…“ (i = 2) jen když je otázek málo → ověřuje se BEZ životní runy (kratší seznam), níž zvlášť.
-    const sH = hinty(L, [R('Jera')], i === 2 ? null : R('Gebo'), '', '', '', HL[i]);
-    const bezH = hinty(L, [R('Jera')], i === 2 ? null : R('Gebo'), '', '', '');
+    const sH = hinty(L, [R('Jera')], R('Gebo'), '', '', '', HL[i]);
+    const bezH = hinty(L, [R('Jera')], R('Gebo'), '', '', '');
+    if (i === 2) {   // 2026-10-06 (KUKY „pryč“): Confirmation tip nemá — řádek se vynechá a nic ho nenahradí (ani „co nevidím")
+      rekni(T.ask_h_seek_confirm === undefined && !sH.some((x) => POTVRZ.test(x)) && !sH.includes(T.ask_h_unseen) && sH.length === bezH.length - 1,
+            L + '  hledání „' + HL[i] + '" → žádný tip z hledání (potvrzovací odstraněn, nic ho nenahradí)');
+      continue;
+    }
     rekni(sH.includes(ocekHl[i]), L + '  hledání „' + HL[i] + '" → „' + ocekHl[i] + '"');
     rekni(!sH.includes(T.ask_h_unseen), L + '  hledání „' + HL[i] + '" → „co nevidím" zmizelo');
     rekni(sH.length === bezH.length, L + '  hledání „' + HL[i] + '" NEPŘIDALO řádek');
@@ -235,19 +239,18 @@ for (const L of ['en', 'is']) {
   rekni(hlX.includes(T.ask_h_unseen) && hlX.length === bezH.length,
         L + '  neznámé hledání → spadne zpátky na „co nevidím"');
   // Uložené ve druhém jazyce se musí trefit taky — index, ne shoda řetězce.
-  const hlD = hinty(L, [R('Jera')], null, '', '', '', glob('SEEKS')[L === 'en' ? 'is' : 'en'][2]);
-  // …a s plným seznamem (životní runa) se vynechá a nic ho nenahradí.
-  // 2026-10-06: plný seznam (6) teď dělá životní runa + ZÁMĚR — bez záměru časový tip zmizel („Why is this showing up now?“
-  // odstraněn), seznam bez záměru má 5 a potvrzovací tip se podle pravidla „jen když otázek není dost“ ukáže.
-  const hlPln = hinty(L, [R('Jera')], R('Gebo'), '', '', ZAM, HL[2]);
-  rekni(!hlPln.includes(T.ask_h_seek_confirm) && !hlPln.includes(T.ask_h_unseen) && hlPln.length === 6,
-        L + '  „Confirmation“ při dostatku otázek (6) vynechá potvrzovací tip');
+  // 2026-10-06: dřív se tu bral index 2 (Confirmation) — ten tip už nemá, proto 1 (Clarity).
+  const hlD = hinty(L, [R('Jera')], null, '', '', '', glob('SEEKS')[L === 'en' ? 'is' : 'en'][1]);
+  // Confirmation i s krátkým seznamem (bez životní runy, bez záměru) — potvrzovací tip se už neukáže nikdy.
+  const hlKr = hinty(L, [R('Jera')], null, '', '', '', HL[2]);
+  rekni(!hlKr.some((x) => POTVRZ.test(x)) && !hlKr.includes(T.ask_h_unseen),
+        L + '  „Confirmation“ i při krátkém seznamu (' + hlKr.length + ') potvrzovací tip nemá');
   // položená otázka se v dalším Asku znovu nenabídne (KUKY 2026-09-25)
   glob('_askLog').length = 0; glob('_askLog').push({ q: T.ask_h_unseen, a: 'x' });
   const poAsku = hinty(L, [R('Jera')], R('Gebo'), '', '', '');
   rekni(!poAsku.includes(T.ask_h_unseen), L + '  položená otázka se v dalším Asku nenabízí');
   glob('_askLog').length = 0;
-  rekni(hlD.includes(T.ask_h_seek_confirm),
+  rekni(hlD.includes(T.ask_h_seek_clarity),
         L + '  hledání uložené ve druhém jazyce se přesto trefí do správné věty');
 
   // Neznámý štítek oblasti (v DB řádku stává `area: 'spread'`) nesmí vyrobit tip.

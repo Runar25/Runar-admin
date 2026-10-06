@@ -1159,13 +1159,12 @@ zásah → lab CODE-read, nebo nechat; rozhodne owner. Podmět *„the picture"*
 (*„Say what the runes of this reading hold, in the terms of their own question"*) žádná z mých variant neodebrala → první test pro CODE-read.
 Monitor ozvěn tenhle řádek od 2026-10-06 ukazuje sám („odkud" u ozvěny pokynu).
 
-### Slova tipů Asku — pokus B 2026-10-06 — tipy vyřešeny (DECISIONS 2026-10-06 (12)), zbývá otázka a IS (CODE-tune)
+### Slova tipů Asku — pokus B 2026-10-06 — tipy vyřešeny (DECISIONS 2026-10-06 (12), (13)), zbývá IS (CODE-tune)
 Měřeno na solu, EN, 3 čtení × 3 (`docs/eval/2026-10-06-ask-otazky/README.md`). Každé znění tipu má svůj stálý začátek odpovědi;
 jiná slova formuli přesunou, neodstraní (směr → `RUNAR_DESIGN.md` „Slova, která dáváme modelu", body 4–5).
 - ✅ **`ask_h_now`** *„Why is this showing up now?"* — **odstraněn** (owner *„odstranit"*); odpověď začínala odmítnutím 9/9.
 - ✅ **`ask_h_seek_challenge`** → *„Where does this get hard?"* / IS *„Hvar verður þetta erfitt?"* (owner *„opravit"*, *„ok"*).
-- ⚠️ **OWNER:** *„Does this confirm what I already feel?"* se podle pravidla 2026-09-25 ukazuje jen při méně než 6 tipech. Bez časového
-  tipu má seznam se životní runou a bez záměru 5 → u hledání Confirmation se teď ukáže. Rúnar ho podle pravidel taky odmítá — nechat?
+- ✅ *„Does this confirm what I already feel?"* — **odstraněn** (owner *„pryč"*, DECISIONS 2026-10-06 (13)); u Confirmation žádný tip z hledání.
 - **`ask_h_rune`** a **`ask_h_image`** — náhrady nebyly lepší (jen přesunuly formuli), zůstávají.
 - **IS strana změn 2026-10-06 neměřena:** IS rámce esence (v4.99 a v5.01 jen EN) a v IS Asku pořád *„Rúnir sem dregnar voru"* /
   *„dregnu rúnirnar"* (v5.00 jen EN). Změřit, jestli sol dělá totéž v islandštině, než se na IS sáhne. Islandská slovesa definiční

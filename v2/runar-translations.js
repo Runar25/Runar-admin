@@ -423,7 +423,6 @@ const UI_TEXT = {
     ask_h_me:           'What is this reading telling me?',   // 2026-09-25 owner; bez vlastní otázky místo ask_h_asked · 2026-09-28 report KUKY: „co mi to říká“ zodpoví Rúnar snáz než „jak mě to ovlivňuje“
     ask_h_unseen:       'What am I not seeing here?',
     ask_h_seek_clarity: 'What is this making clearer?',
-    ask_h_seek_confirm: 'Does this confirm what I already feel?',
     ask_h_seek_challenge: 'Where does this get hard?',   // 2026-10-06 (KUKY „opravit“): dřív „…about the hard part?“ — sol vracel „the hard part“ 9/9; tohle 0/9, bez stálého začátku (docs/eval/2026-10-06-ask-otazky)
     ask_h_seek_reflect: 'What is this asking me to stay with?',
     ask_h_life_all:     'How does my life rune {life} affect this reading?',
@@ -867,7 +866,6 @@ const UI_TEXT = {
     ask_h_me:           'Hvað segir þessi lestur mér?',   // 2026-09-28 viz EN; is-grammar-qa čisté
     ask_h_unseen:       'Hvað er það sem ég sé ekki hér?',
     ask_h_seek_clarity: 'Hvað er þetta að gera skýrara?',
-    ask_h_seek_confirm: 'Staðfestir þetta það sem ég finn nú þegar?',
     ask_h_seek_challenge: 'Hvar verður þetta erfitt?',   // 2026-10-06 viz EN; is-grammar-qa čisté, korpus „hvar verður þetta“ 48 · „verður þetta erfitt“ 354 („hvar reynir á“ 0 → nepoužito)
     ask_h_seek_reflect: 'Hvað er þetta að biðja mig að staldra við?',
     ask_h_life_all:     'Hvernig hefur lífsrúnin {life} áhrif á þennan lestur?',

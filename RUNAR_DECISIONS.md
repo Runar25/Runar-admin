@@ -8661,3 +8661,11 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   Se životní runou a bez záměru je jich teď 5 → u hledání Confirmation se potvrzovací tip nově ukáže (dřív ho vytlačil „Why now“).
   Otázka na ownera, jestli ho tam chce — Rúnar ho podle pravidel taky odmítá.
 - Affected doc(s): žádný (test tipů `verify_ask_hints.js` upraven v témže commitu).
+
+## 2026-10-06 (13) — Ask: tip „Does this confirm what I already feel?“ odstraněn
+
+- **Rozhodl:** KUKY 2026-10-06 *„pryč“* — na otázku, co s ním, když se po odebrání „Why now“ začal ukazovat u hledání Confirmation bez
+  záměru. **Provedl:** CODE-tune.
+- **Proč:** Rúnar ho z podstaty odmítá (zrcadlo nepotvrzuje, DECISIONS 2026-09-25); dosud se ukazoval jen při méně než 6 tipech.
+- **Co:** u hledání Confirmation žádný tip z hledání — řádek se vynechá a nic ho nenahradí; `ask_h_seek_confirm` pryč z `UI_TEXT` (EN i IS).
+- Affected doc(s): žádný (test tipů `verify_ask_hints.js` upraven v témže commitu).
