@@ -51,3 +51,27 @@ nenamlouvají), ElevenLabs EN $0,05 / 1k znaků, IS $0,10 / 1k (`RUNAR_PRICING.m
 
 Ask platí hlavně VSTUP (systémový prompt + text čtení), proto krátká odpověď šetří jen ~$0,0003. Islandština má zhruba
 dvojnásobek tokenů. Pro srovnání Opus 5 (ownerova čtení 2026-10-05): čtení ~$0,0087, Ask ~$0,0056 (EN, s cache).
+
+## 3. Kolo 3 — „show itself in this picture“ × „show itself in this reading“ (dnešní produkční blok LIFE RUNE), n = 9
+
+| otázka | fráze z otázky v odpovědi | ozvěna „drawn“ | vazba na obraz tažené runy |
+|---|---|---|---|
+| *How does my life rune Isa show itself in this picture?* | 2/9 („in this picture“) | 1/9 | 9/9 |
+| *How does my life rune Isa show itself in this reading?* (návrh ownera) | 1/9 („in this reading“) | 2/9 | 7/9 |
+
+Owner: *„zase tak doslova používá in this picture… co takhle (in this reading)“* → nasazeno „…in this reading?“.
+
+## 4. Odpověď na oblast VE STEJNÉM volání jako čtení (sol), n = 5 na jazyk
+
+Čtení + pokyn *„also, separately… answer this question … in one or two short sentences … separate field "area"“*; odpověď je
+samostatné pole JSONu (nenamlouvá se), vyplněno 5/5 v obou jazycích.
+
+| | jen čtení (tab. 2) | čtení + odpověď na oblast v JEDNOM volání | totéž jako samostatný Ask |
+|---|---|---|---|
+| EN | $0,0035 | $0,0040 (vstup 1317, výstup 139) → **+$0,0005** | +$0,0031 |
+| IS | $0,0062 | $0,0068 (vstup 2437, výstup 191) → **+$0,0006** | +$0,0057 |
+
+Samostatný Ask (ať ho zadá uživatel, nebo se pošle sám) platí znovu celý vstup — systémový prompt a text čtení. Ve stejném volání
+se platí jen výstup odpovědi. **Netvrdí se:** že je odpověď stejně dobrá — ve stejném volání spíš popisuje obraz znovu (*„You can
+picture a house where the lights go out…“*), samostatný Ask má vlastní pravidla. Čtení vyšla o pár znaků delší (EN 357 proti 329,
+IS 365 proti 353) — při n = 5 a jiných obrazech to není prokázané.

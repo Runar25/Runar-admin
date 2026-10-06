@@ -89,6 +89,9 @@ for (const L of ['en', 'is']) {
   // obrazu hned DRUHÝ, před „What does X mean in this reading?“.
   rekni(a[1] === glob('tp')('ask_h_explain', { rune: jm(R('Jera')) }),
         L + '  single: druhý tip je výklad runy bez obrazu — ' + JSON.stringify(a[1] || ''));
+  // 2026-10-06 (KUKY): se životní runou je třetí tip „…show itself in this reading?“ místo „What does X mean in this reading?“.
+  rekni(a[2] === glob('tp')('ask_h_life_show', { life: jm(R('Gebo')) }) && !a.includes(glob('tp')('ask_h_rune', { rune: jm(R('Jera')) })),
+        L + '  single se životní runou: třetí tip přenese životní runu do čtení — ' + JSON.stringify(a[2] || ''));
 
   // ── 2) životní runa BYLA tažena → nesmí se nabídnout ─────────────────────────
   // „Jak mě ovlivňuje moje životní runa Gebo" u čtení, kde Gebo padla, je otázka sama na

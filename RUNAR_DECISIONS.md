@@ -8550,3 +8550,13 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Pozdravy** (*„Good to see you, {name}."*, *„…again"*) v `UI_TEXT` (`greet_hello`, `greet_again`); jméno nepřihlášeného z
   `TIERS.free_trial` přes `tierLabel`. IS *„Gaman að sjá þig"* (bez slovesa, nerozparsováno) → *„Það er gaman að sjá þig"*.
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka „Hlášky nad čtením" uzavřena).
+
+## 2026-10-06 (6) — Ask: „How does my life rune {life} show itself in this reading?“ místo „What does X mean in this reading?“
+
+- **Rozhodl:** KUKY 2026-10-06 *„přidej show itself… místo what does X mean. Zase tak doslova používá in this picture… How does my
+  life rune Isa show itself in this reading? co takhle."* **Provedl:** CODE-tune.
+- **Co:** u single se životní runou (netaženou) je třetí tip `ask_h_life_show` (IS *„Hvernig birtist lífsrúnin {life} í þessum
+  lestri?"*, is-grammar-qa čisté, korpus *„birtist í þessum"* 220). Bez životní runy a u spreadu zůstává význam runy.
+- **Měřeno** (sol, API, README eval složky, kolo 3): *„…in this reading?"* opakuje frázi z otázky 1/9, *„…in this picture?"* 2/9;
+  vazba na obraz 7/9 a 9/9. Kontrola `verify_ask_hints` hlídá třetí místo (stará nabídka → FAIL).
+- Affected doc(s): žádný.
