@@ -8692,3 +8692,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Zápis do produkční DB** automatický režim CODE zastavil → owner povolí příkaz `node scripts/nacti_cteni.js`, nebo pustí SQL sám
   (hromadné uzavření starých hlášení před 6. 10. a označení dnešních — SQL v hlášení ownerovi).
 - Affected doc(s): `CLAUDE.md` §29, `memory/nacti-cteni-a-reporty.md` (v témže commitu).
+
+## 2026-10-06 (16) — Thurisaz: trn „tears“ místo „snags“ (v5.02)
+
+- **Rozhodl:** KUKY 2026-10-06 *„chci změnit snag na roztrhnout. Kde jde o to, jakou sílu má v runě ten trn mít. Podle toho mají být zvolená
+  slova. Model je opakuje, a my teda potřebujeme říkat směr, tedy odkud má brát.“* **Provedl:** CODE-tune.
+- **Proč:** „snag“ znamená i vytaženou nit (Wiktionary *„a pulled thread or yarn, as in cloth“*) — sol z obrazu dělal nit (čtení 00bd8b0e,
+  43a1fce2); owner prověřoval, jestli ji nedělá úhel *„Open on the smallest detail“* — nedělá, nese ji slovo obrazu. Trn Thurisazu má mít sílu.
+- **Co:** EN *„A thorn tears your sleeve one step short of the gully's edge.“* (Ngram: *thorns tore*, *thorn tore*, *tore his sleeve*);
+  IS *„Þyrnir rífur ermina einu skrefi frá gilbrúninni.“* (rífa + 4. p., ISLEX *„hann datt og reif buxurnar“*, korpus *reif buxurnar* 48;
+  is-grammar-qa čisté). Význam *caution / aðgát* beze změny. Bez identitní brány, na ownerovo slovo (vzor Kenaz 2026-10-04 (1)).
+- ⚠️ Id obrazu se mění (IS znění) → ownerův výběr obrazu (📌) u Thurisazu je potřeba zvolit znovu.
+- Affected doc(s): žádný.

@@ -790,7 +790,12 @@ var RUNE_IMAGES = [
   // once“ JE Dagaz); Wunjo zeď a Berkana plachta pryč (krátké 1/3, dlouhé jen 2/3).
   ['Uruz', 'bright', 'Þú leggst á steininn í túninu og hann mjakast.', 'You lean into the boulder in the home field, and it shifts.', 'styrkur', 'strength', 'P'],
   ['Thurisaz', 'any', 'Þrætan við borðið þagnar, einu orði frá því að upp úr sjóði.', 'The quarrel at the table goes quiet, one word short of boiling over.', 'þröskuldur', 'threshold', 'D', '', '', '', 'lf'],
-  ['Thurisaz', 'any', 'Þyrnir krækir í ermina einu skrefi frá gilbrúninni.', 'A thorn snags your sleeve one step short of the gully\'s edge.', 'aðgát', 'caution', 'P'],
+  // 2026-10-06 (KUKY „chci změnit snag na roztrhnout. Kde jde o to, jakou sílu má v runě ten trn mít. Podle toho mají být zvolená
+  // slova. Model je opakuje…“): „snags“ → „tears“, „krækir í“ → „rífur“. „Snag“ znamená i vytaženou nit (Wiktionary: „a pulled thread
+  // or yarn, as in cloth“) — sol z něj dělal nit 2/2 (čtení 00bd8b0e, 43a1fce2) a trn neměl sílu Thurisazu. EN doloženo v knihách
+  // (Ngram: „thorns tore“, „thorn tore“, „tore his sleeve“); IS rífa + 4. p. (ISLEX „hann datt og reif buxurnar“, korpus „reif buxurnar“
+  // 48), is-grammar-qa čisté. Bez identitní brány, na ownerovo slovo (vzor: Kenaz, DECISIONS 2026-10-04 (1)).
+  ['Thurisaz', 'any', 'Þyrnir rífur ermina einu skrefi frá gilbrúninni.', 'A thorn tears your sleeve one step short of the gully\'s edge.', 'aðgát', 'caution', 'P'],
   ['Wunjo', 'any', 'Morguninn eftir rifrildið hlæið þið bæði að því sama.', 'The morning after the quarrel, you both laugh at the same thing.', 'sátt', 'harmony', 'D', '', '', '', 'lf'],
   // 2026-10-05 (KUKY „přepsat trajekt“): „On the wedding day, the storm keeps the ferry in harbour.“ nesl vlastní příběh (svatba, hosté),
   // bouře v něm jen zdržela a krupobití si model dodal sám; podoba oblasti „generace“ se na svatbu přilepila (čtení 948649a5:
