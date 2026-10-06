@@ -9,7 +9,8 @@
 //   ČTENÍ (single): obraz opsaný (≥ 4 slova za sebou) · význam z hlavičky doslova · sloveso po jménu runy · podoba oblasti opsaná
 //     (≥ 3 slova) · pokyn úhlu / konce opsaný (≥ 4 slova) · fráze, které se opakují ve ≥ 30 % čtení
 //   ASK: slova otázky zopakovaná v odpovědi · ozvěny pokynů („drawn“, „does not say“, „leaves … open“, „not a promise / verdict“) ·
-//     opakované fráze
+//     opakované fráze · STEJNÝ ZAČÁTEK odpovědí na týž tip (první tři slova, jméno runy = [runa]; od 2026-10-06 — každé znění tipu
+//     má na solu svůj stálý začátek, např. „[runa] does not say why this appears now“ 9/9, a trojice slov z otázky ho nevidí)
 // ⚠ = vstup se vrací ve ≥ 50 % případů (n ≥ 3) — to je „viditelný problém“, na který má CODE ownera upozornit.
 // Ve výstupu jen čísla a fráze z malých písmen (žádná jména, žádné otázky uživatelů) — tabulka smí do veřejného repa.
 //
@@ -31,6 +32,29 @@ const ANG = { en: G('READING_ANGLES'), is: G('READING_ANGLES_IS') };
 const END = { en: { heavy: G('ENDING_HEAVY'), open: G('ENDING_OPEN') }, is: { heavy: G('ENDING_HEAVY_IS'), open: G('ENDING_OPEN_IS') } };
 
 const arg = (k) => { const i = process.argv.indexOf(k); return i !== -1 ? process.argv[i + 1] : null; };
+// Tipy Asku z UI_TEXT (EN i IS): otázka se přiřadí k šabloně, {rune}/{life}/{area} = cokoli. Zdroj znění = translations (§20).
+const UI = G('UI_TEXT');
+const _esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const SABLONY = [];
+for (const L of ['en', 'is']) for (const k of Object.keys(UI[L] || {}).filter((k) => /^ask_h_/.test(k))) {
+  const t = UI[L][k]; if (typeof t !== 'string') continue;
+  const kusy = t.replace(/[?.]\s*$/, '').split(/\{(?:rune|life|area)\}/).map(_esc);
+  SABLONY.push({ k, re: new RegExp('^\\s*' + kusy.join('(.+?)') + '\\s*[?.]?\\s*$', 'i') });
+}
+const JMENA_RUN = new Set(RUNES.flatMap((r) => [r.n, String(r.is_n || '').replace(/\s*\(.*$/, '')]).filter(Boolean).map((x) => x.toLowerCase()));
+function zacatek(a) {   // první tři slova odpovědi; oslovení jménem pryč, jméno runy = [runa], jiné jméno → null (repo je veřejné)
+  const s = String(a).trim().replace(/^[A-ZÁÐÉÍÓÚÝÞÆÖ][a-záðéíóúýþæö]+,\s+/, '');
+  const w = s.split(/\s+/).slice(0, 3).map((x) => x.replace(/[’']s$/, '').replace(/[^A-Za-záðéíóúýþæöÁÐÉÍÓÚÝÞÆÖ']/g, ''));
+  if (w.length < 3) return null;
+  const out = [];
+  for (let i = 0; i < w.length; i++) {
+    const x = w[i]; if (!x) return null;
+    if (JMENA_RUN.has(x.toLowerCase())) { out.push('[runa]'); continue; }
+    if (i > 0 && x !== x.toLowerCase()) return null;
+    out.push(x.toLowerCase());
+  }
+  return out.join(' ');
+}
 const slova = (s) => String(s || '').toLowerCase().replace(/[’']/g, "'").replace(/[^a-záðéíóúýþæöäü' ]+/gi, ' ').split(/\s+/).filter(Boolean);
 const STOP = new Set('the a an of in on to this that is are be what does do my me i you your it its how why with for about and or not no as at by from into than then there their they them he she his her we our was were has have had'.split(' '));
 function nejdelsiShoda(zdroj, cil) {   // nejdelší souvislý úsek slov zdroje, který stojí i v cíli
@@ -96,7 +120,8 @@ function rozber(rows) {
       const ac = ' ' + slova(a).join(' ') + ' ';
       let ozvena = '';
       for (let i = 0; i + 3 <= qz.length && !ozvena; i++) { const g = qz.slice(i, i + 3); if (g.filter((w) => !STOP.has(w)).length >= 1 && ac.indexOf(' ' + g.join(' ') + ' ') !== -1) ozvena = g.join(' '); }
-      R.ask.push({ model: String((f.usage && f.usage.model) || model).replace('claude-', ''), ozvena, pokyny: POKYNY.filter(([, re]) => re.test(a)).map(([jm]) => jm), text: a });
+      let tip = null; for (const s of SABLONY) if (s.re.test(q)) { tip = s.k; break; }
+      R.ask.push({ model: String((f.usage && f.usage.model) || model).replace('claude-', ''), ozvena, pokyny: POKYNY.filter(([, re]) => re.test(a)).map(([jm]) => jm), text: a, tip, zac: zacatek(a) });
     }
   }
   return R;
@@ -131,6 +156,15 @@ function souhrn(R) {
   radekM('Ask: slova otázky zopakovaná', A, (x) => !!x.ozvena,
     [...new Set(A.filter((x) => x.ozvena).map((x) => '„' + x.ozvena + '“'))].slice(0, 3).join(' · '));
   for (const [jm] of POKYNY) radekM('Ask: ' + jm, A, (x) => x.pokyny.indexOf(jm) !== -1, '');
+  // Stejný začátek na týž tip: řádek jen tam, kde se nějaký začátek opakuje (≥ 2) a tip má n ≥ 3.
+  const poTipu = {};
+  A.forEach((x) => { if (x.tip) (poTipu[x.tip] = poTipu[x.tip] || []).push(x); });
+  for (const [tip, xs] of Object.entries(poTipu).sort((a, b) => b[1].length - a[1].length)) {
+    const c = {}; xs.forEach((x) => { if (x.zac) c[x.zac] = (c[x.zac] || 0) + 1; });
+    const top = Object.entries(c).sort((a, b) => b[1] - a[1])[0];
+    if (xs.length < 3 || !top || top[1] < 2) continue;
+    radekM('Ask ' + tip + ': stejný začátek „' + top[0] + '…“', xs, (x) => x.zac === top[0], '');
+  }
   const rc = opakovane(C.map((x) => x.text), 0.3), ra = opakovane(A.map((x) => x.text), 0.3);
   const modely = {}; C.concat(A).forEach((x) => { modely[x.model] = (modely[x.model] || 0) + 1; });
   return { tabulka: '| vstup → výstup | vše | sol | opus | poznámka |\n|---|---|---|---|---|\n' + out.join('\n'), varovani: var_, rc, ra, modely, n: C.length, na: A.length };
@@ -190,8 +224,14 @@ if (process.argv.includes('--test')) {
   ok(/„drawn“[^|]*\| 3\/3/.test(t) && /does not say“ \| 3\/3/.test(t), 'Ask: ozvěny „drawn“ a „does not say“ 3/3');
   ok(X.varovani.length >= 5 && X.varovani.every((v) => v.indexOf('⚠') === -1), 'varování vznikla (≥ 5) a nesou čísla');
   ok(!/kuky|isa is/.test(JSON.stringify(X.rc).toLowerCase()), 'opakované fráze bez jmen');
+  // 2026-10-06: stejný začátek na týž tip — tři odpovědi na „Why is this showing up now?“, dvě začnou stejně (jméno runy se liší),
+  // jedna jinak; oslovení jménem na začátku se nesmí dostat do tabulky.
+  const rowsT = ['Hagalaz', 'Algiz', 'Sowilo'].map((n, i) => ({ lang: 'en', rune_name: n, area: 'spread', model: 'gpt-6-sol',
+    follow_up: [{ q: 'Why is this showing up now?', a: [n + ' does not say why this appears now.', 'Kuky, ' + n + ' does not say why.', 'The moment holds still.'][i] }] }));
+  const T = souhrn(rozber(rowsT)).tabulka;
+  ok(/⚠ Ask ask_h_now: stejný začátek „\[runa\] does not…“ \| 2\/3/.test(T) && !/kuky/i.test(T), 'Ask: stejný začátek na týž tip 2/3 (jméno runy jako [runa], oslovení pryč)');
   if (fail) { console.log('\n' + fail + ' selhalo'); process.exit(1); }
-  console.log('\nOK    monitor ozvěn: obraz, význam, sloveso, podoba oblasti, otázka Asku a ozvěny pokynů poznány na smyšlených čteních');
+  console.log('\nOK    monitor ozvěn: obraz, význam, sloveso, podoba oblasti, otázka Asku, ozvěny pokynů a stejný začátek na týž tip poznány na smyšlených čteních');
   process.exit(0);
 }
 const rows = nacti();
