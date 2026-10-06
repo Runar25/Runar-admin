@@ -151,11 +151,19 @@ function _paintImgPin() {
   var p = IMG_PIN[runa] || {}, row = null;
   for (var i = 0; i < rows.length; i++) if (_imgId(rows[i]) === p.img) row = rows[i];
   var zkr = function (s) { s = String(s || ''); return s.length > 64 ? s.slice(0, 64) + '…' : s; };
+  // Ve výběru jsou VŠECHNY obrazy runy, i mimo sezónu (volba sezónu přeskočí). 2026-10-06 (KUKY „chtěl bych tam mít i ty mimo
+  // sezónní obrazy“): byly tam, ale jen s kódem „cold/bright“ → čitelná sezóna a značka, který obraz teď los nenabídne.
+  var ted = _seasonBucket(new Date().getMonth() + 1);
+  var sezona = function (x) {
+    var lbl = x[1] === 'cold' ? t('img_pin_cold') : x[1] === 'bright' ? t('img_pin_bright') : '';
+    var mimo = (RUNE_IMG_SEASONS[x[1]] || RUNE_IMG_SEASONS.any).indexOf(ted) === -1;
+    return (lbl ? ' · ' + lbl : '') + (mimo ? ' · ' + t('img_pin_offseason') : '');
+  };
   if (si) {
     si.innerHTML = '<option value="">— ' + escapeHtml(t('img_pin_random')) + ' —</option>' + rows.map(function (x) {
       var id = _imgId(x);
       return '<option value="' + escapeHtml(id) + '"' + (row && _imgId(row) === id ? ' selected' : '') + '>' +
-        escapeHtml(zkr(isIs ? x[2] : x[3]) + ' · ' + x[1]) + '</option>';
+        escapeHtml(zkr(isIs ? x[2] : x[3]) + sezona(x)) + '</option>';
     }).join('');
   }
   var alt = row ? String(row[isIs ? 4 : 5] || '').split('|') : [];

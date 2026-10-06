@@ -39,6 +39,12 @@ S._paintImgPin();
 rekni(el['img-pin'].style.display === 'flex', 'admin s vybranou runou volbu vidí');
 rekni(el['img-pin-img'].innerHTML.indexOf('selected') !== -1 && el['img-pin-img'].innerHTML.indexOf('The squall strikes') !== -1, 'uložený obraz je ve výběru označen');
 rekni(el['img-pin-vyz'].style.display === '' && (el['img-pin-vyz'].innerHTML.match(/<option/g) || []).length === 3, 'obraz se dvěma významy nabídne „střídat“ + 2 významy');
+// 2026-10-06: ve výběru jsou i obrazy mimo sezónu a jsou poznat (v červenci je „cold“ poryv mimo sezónu, „any“ obraz ne)
+const vol = el['img-pin-img'].innerHTML.split('<option').slice(2);
+const opt = (zac) => vol.find((o) => o.indexOf(zac) !== -1) || '';
+rekni(vol.length === IM.filter((r) => r[0] === 'Hagalaz').length, 'výběr nabízí všechny obrazy runy včetně mimosezónních (' + vol.length + ')');
+rekni(opt('The squall strikes').indexOf('not this time of year') !== -1 && opt('The squall strikes').indexOf('in winter') !== -1
+  && opt('The river swells').indexOf('not this time of year') === -1, 'mimosezónní obraz je označen, celoroční ne');
 vm.runInContext('currentUser = { email: "nekdo@example.com" };', S);
 S._paintImgPin();
 rekni(vm.runInContext('IMG_PIN', S) === null && el['img-pin'].style.display === 'none', 'ne-admin: volba skrytá a IMG_PIN prázdný (los jako vždy)');
