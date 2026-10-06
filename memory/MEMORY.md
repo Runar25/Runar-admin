@@ -130,6 +130,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [review-everything-first-pass.md](review-everything-first-pass.md) — revize textů: přečti VŠE v obou jazycích napoprvé, jeden seznam, opravy jako hotové věty
 - [runar-not-public-yet.md](runar-not-public-yet.md) — Rúnar není veřejně spuštěný; návrhy pro agndofa.is nesmí posílat zákazníky do appky
 - [is-grammar-adjective-gender.md](is-grammar-adjective-gender.md) — nejdřív rod podstatného, pak skloňuj přídavné
+- [en-formulace-overit-zdrojem.md](en-formulace-overit-zdrojem.md) — anglickou formulaci (sloveso u runy) ověř korpusem textů o runách jako IS; „Fehu exposes“ prošlo bez ověření, v korpusu 0×
 - [is-vazba-check.md](is-vazba-check.md) — islandskou vazbu (rekce/pád/kolokace/idiom) ověř `is-vazba.py` (nútímamálsorðabók API + korpus), vrstva nad BÍN, nehádej
 - [runar-tree-engine-lab.md](runar-tree-engine-lab.md) — historie iterací enginu (boughs přestavba = regrese)
 - [runar-trunk-incremental-rule.md](runar-trunk-incremental-rule.md) — schválenou verzi měnit přírůstkově + snapshot
