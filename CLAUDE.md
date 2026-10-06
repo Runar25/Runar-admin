@@ -302,6 +302,15 @@ při obhajobě zásahu, není to důvod.
 pro escape značky: *„Holá značka musí nést DŮVOD a DATUM."* Tam se to zavedlo proto, že 35 holých
 značek umlčelo červenou a nikdo nepoznal, která je legitimní. Beze změny principu, jen širší plocha.
 
+### §29 — Hlášení z appky: načíst → označit přečtené → udělat → hotové uzavřít, nehotové do BACKLOGu (platí pro VŠECHNY session)
+KUKY 2026-10-06: *„konečně začni označovat tak, abych je každá session i po compactu rozpoznala, že jsou hotová… načteš je, označ
+jako přečtené, uděláme je, co se neudělá, je backlog!“* Do té doby se stav hlášení v DB neměnil — 194 „new“ i po vyřešení, a každá
+session je četla znovu jako nová.
+- **Stav hlášení v DB (`bug_reports.status`) je jediný zdroj** (§20): `new` = nikdo nečetl · `triaged` = přečteno · `fixed` = hotovo.
+- **Načíst = `node scripts/nacti_cteni.js`** — ukáže jen `new` a hned je označí `triaged`. Hotové: `--hotovo <id8> "<co, commit>"`.
+  Nehotové: položka v `RUNAR_BACKLOG.md` + `--backlog <id8> "<položka>"`. Nikdy neřešit hlášení, které už `new` není.
+- **✦ Keep = „nechat“** — uložený text, ne úkol; jen se označí přečtený.
+
 ---
 
 ## Tier systém

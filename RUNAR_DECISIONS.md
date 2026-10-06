@@ -8680,3 +8680,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   výběrů. Karta čtení ukazuje začátek textu úhlu (celý v bublině) a esenční řádek. Popisky bere z kódu, znění se neopisuje (§20).
 - **Hlídá:** smoke ㉵ — filtr úhlu, esence se slovesem i bez, popisky z kódu (4/4 mutace chyceny).
 - Affected doc(s): žádný.
+
+## 2026-10-06 (15) — Hlášení z appky: načíst → označit přečtené → udělat → hotové uzavřít, nehotové do BACKLOGu (CLAUDE.md §29)
+
+- **Rozhodl:** KUKY 2026-10-06 *„konečně začni označovat tak, abych je kurva každá session i po compactu rozpoznala, že jsou hotová… načteš
+  je, označ jako přečtené, uděláme je, co se neudělá, je backlog! … keep znamená nechat!“* **Provedl:** CODE-tune.
+- **Proč:** stav hlášení v DB se neměnil — 194 „new“ i po vyřešení; já jsem je pak ownerovi ukázal jako „208 otevřených“.
+- **Co:** stav `bug_reports.status` je jediný zdroj (`new` nikdo nečetl · `triaged` přečteno · `fixed` hotovo). `scripts/nacti_cteni.js`
+  ukáže jen `new` a hned je označí `triaged`; `--hotovo <id8> "<co, commit>"` uzavře; `--backlog <id8> "<položka>"` odkáže na BACKLOG.
+  ✦ Keep = „nechat“ (uložený text, ne úkol). Pravidlo pro všechny session → `CLAUDE.md` §29, memory `nacti-cteni-a-reporty`.
+- **Zápis do produkční DB** automatický režim CODE zastavil → owner povolí příkaz `node scripts/nacti_cteni.js`, nebo pustí SQL sám
+  (hromadné uzavření starých hlášení před 6. 10. a označení dnešních — SQL v hlášení ownerovi).
+- Affected doc(s): `CLAUDE.md` §29, `memory/nacti-cteni-a-reporty.md` (v témže commitu).

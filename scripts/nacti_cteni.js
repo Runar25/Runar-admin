@@ -7,7 +7,12 @@
 // CO DĚLÁ (vše od posledního zápisu monitoru — značka „do:“ v docs/monitor/ozveny.md; bez značky 2 dny zpět):
 //   1) nová čtení → CELÉ řádky do souboru MIMO repo (nesou jména a otázky lidí; repo je veřejné) — ten soubor CODE čte
 //   2) monitor ozvěn --nove --zapis → tabulka do docs/monitor/ozveny.md + ⚠ k ohlášení
-//   3) hlášení z appky (bug_reports) od téže chvíle → jen do terminálu (texty uživatelů do repa nepatří, RUNAR_PRIVACY.md)
+//   3) hlášení z appky (bug_reports) se stavem „new“ (NEPŘEČTENÁ, bez ohledu na datum) → do terminálu (texty lidí do repa nepatří,
+//      RUNAR_PRIVACY.md) a hned se OZNAČÍ jako přečtená („triaged“). Stav v DB je jediný zdroj (§20): každá session i po compactu
+//      vidí jen to, co ještě nikdo nečetl. KUKY 2026-10-06: „načteš je, označ jako přečtené, uděláme je, co se neudělá, je backlog!“
+//      Hotové:   node scripts/nacti_cteni.js --hotovo <id8> "<co se udělalo, commit>"   → „fixed“
+//      Nehotové: node scripts/nacti_cteni.js --backlog <id8> "<položka v RUNAR_BACKLOG.md>" → zůstane „triaged“ s odkazem
+//      ✦ Keep = „nechat“ (uložený text, ne úkol) — označí se přečtené a dál se neřeší.
 //   node scripts/nacti_cteni.js [--od 2026-10-06] [--vystup <soubor.json>] [--bez-zapisu]
 //   --bez-zapisu = monitor jen vypíše, nepřipíše do tabulky (zkušební běh — neposune značku pro ownerovo příští „načti“)
 'use strict';
@@ -24,6 +29,21 @@ function dotaz(sql) {
   const src = cp.execSync('supabase db query --linked "' + sql.replace(/"/g, '\\"') + '"', { cwd: ROOT, encoding: 'utf8', maxBuffer: 128 * 1024 * 1024 });
   const j = JSON.parse(src.slice(src.search(/[\[{]/)));
   return Array.isArray(j) ? j : j.rows;
+}
+const sqlText = (t) => String(t || '').replace(/'/g, "''");
+// --hotovo / --backlog: jedno hlášení podle prvních znaků id (musí sedět právě jedno)
+for (const [prep, stav, popis] of [['--hotovo', 'fixed', 'hotovo'], ['--backlog', 'triaged', 'backlog']]) {
+  const id = arg(prep);
+  if (!id) continue;
+  const pozn = process.argv[process.argv.indexOf(prep) + 2] || '';
+  if (!/^[0-9a-f-]{6,36}$/i.test(id) || !pozn.trim()) { console.log('Použití: ' + prep + ' <id8> "<poznámka>"'); process.exit(1); }
+  const kolik = dotaz("select count(*) as n from bug_reports where id::text like '" + id + "%'");
+  if (Number(kolik[0] && kolik[0].n) !== 1) { console.log('Id „' + id + '“ nesedí na právě jedno hlášení (' + (kolik[0] && kolik[0].n) + ').'); process.exit(1); }
+  const r = dotaz("update bug_reports set status='" + stav + "'" + (stav === 'fixed' ? ', resolved_at=now()' : '')
+    + ", notes=coalesce(nullif(notes,'') || ' · ', '') || '" + new Date().toISOString().slice(0, 10) + ' ' + popis + ': ' + sqlText(pozn) + "'"
+    + " where id::text like '" + id + "%' returning id, status");
+  console.log((r[0] ? r[0].id.slice(0, 8) + ' → ' + r[0].status : 'nic') + ' (' + popis + ')');
+  process.exit(0);
 }
 const od = arg('--od') || znacka() || new Date(Date.now() - 2 * 864e5).toISOString();
 const odSql = od.replace(/'/g, '');
@@ -53,14 +73,22 @@ if (cteni.length) {
   if (r.status !== 0) console.log('   ⚠ monitor skončil chybou: ' + kratce(r.stderr, 300));
 }
 
-// 3) hlášení
-const rep = dotaz("select created_at, type, status, message, flagged_text, suggested_replacement, screen_context, locale, app_version "
-  + "from bug_reports where created_at > '" + odSql + "' order by created_at");
-const otevrene = dotaz("select count(*) as n from bug_reports where status is distinct from 'fixed'");
-console.log('\n══ HLÁŠENÍ od ' + od.slice(0, 16) + ': ' + rep.length + ' (otevřených celkem ' + ((otevrene[0] && otevrene[0].n) || '?') + ')');
+// 3) hlášení — NEPŘEČTENÁ (stav „new“), bez ohledu na datum
+const rep = dotaz("select id, created_at, type, status, message, flagged_text, suggested_replacement, screen_context, locale, app_version "
+  + "from bug_reports where status = 'new' order by created_at");
+const rozdelana = dotaz("select count(*) as n from bug_reports where status = 'triaged' and type <> 'keep'");
+console.log('\n══ HLÁŠENÍ NOVÁ (nepřečtená): ' + rep.length + ' · přečtená a nehotová: ' + ((rozdelana[0] && rozdelana[0].n) || 0)
+  + ' (hotová: --hotovo, nehotová do BACKLOGu: --backlog)');
 for (const x of rep) {
-  console.log('\n· ' + String(x.created_at).slice(0, 16) + ' · ' + x.type + ' · ' + x.status + (x.locale ? ' · ' + x.locale : '') + (x.screen_context ? ' · ' + kratce(x.screen_context, 40) : ''));
+  console.log('\n· ' + x.id.slice(0, 8) + ' · ' + String(x.created_at).slice(0, 16) + ' · ' + (x.type === 'keep' ? 'keep (nechat)' : x.type) + (x.locale ? ' · ' + x.locale : '') + (x.screen_context ? ' · ' + kratce(x.screen_context, 40) : ''));
   if (x.message) console.log('  zpráva: ' + kratce(x.message, 400));
   if (x.flagged_text) console.log('  označeno: ' + kratce(x.flagged_text, 300));
   if (x.suggested_replacement) console.log('  návrh: ' + kratce(x.suggested_replacement, 200));
+}
+// Přečteno → „triaged“ (keep s poznámkou „nechat“). Zkušební běh (--bez-zapisu) nic neoznačí.
+if (rep.length && !process.argv.includes('--bez-zapisu')) {
+  const ids = rep.map((x) => "'" + x.id + "'").join(',');
+  dotaz("update bug_reports set status='triaged', notes=coalesce(nullif(notes,'') || ' · ', '') || '" + new Date().toISOString().slice(0, 10)
+    + " přečteno' || case when type='keep' then ' (keep — nechat)' else '' end where id in (" + ids + ") and status='new' returning id");
+  console.log('\n   ' + rep.length + ' hlášení označeno jako přečtená (triaged).');
 }
