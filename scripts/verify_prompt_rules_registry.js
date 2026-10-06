@@ -93,6 +93,8 @@ const DATA = /^(PERSON|DRAWN|SEEKER|LIFE|AREA|SEEKING|INTENTION|QUESTION|REALM|E
     // registroval jen ten ram, ktery postaveny prompt zrovna vylosoval, a druhy cervenal pri
     // dalsim behu. Tataz trida vady jako u kazdeho losu bez zaznamu.
     (L === 'is' ? glob('ESSENCE_FRAMES_IS') : glob('ESSENCE_FRAMES') || []).forEach((a, i) => pridej(L, 'esence[' + i + ']', a));
+    // 2026-10-06: rámce pro sol (jen EN) — fixture jede na Opus, takže by je registr jinak nikdy neviděl.
+    if (L !== 'is') (glob('ESSENCE_FRAMES_SOL') || []).forEach((a, i) => pridej(L, 'esence_sol[' + i + ']', a));
     // 2026-09-22: ram Prazdne runy — neni v losu (plyne z runy), fixture ho nikdy nepostavi.
     pridej(L, 'esence[blank]', L === 'is' ? glob('ESSENCE_BLANK_IS') : glob('ESSENCE_BLANK'));
     // 2026-09-30: pokyn k obrazu se zvířetem (IMG_POSTAVA) — jen u 11 obrazů; fixture ho nevylosuje, takže by ho registr nikdy neviděl.

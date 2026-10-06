@@ -1,0 +1,650 @@
+[
+ {
+  "runa": "Hagalaz",
+  "rameno": "A0",
+  "k": 0,
+  "sloveso": "names",
+  "slovo": true,
+  "opis": 1,
+  "slov": 55
+ },
+ {
+  "runa": "Hagalaz",
+  "rameno": "A0",
+  "k": 1,
+  "sloveso": "names",
+  "slovo": true,
+  "opis": 1,
+  "slov": 60
+ },
+ {
+  "runa": "Hagalaz",
+  "rameno": "A0",
+  "k": 2,
+  "sloveso": "names",
+  "slovo": true,
+  "opis": 1,
+  "slov": 64
+ },
+ {
+  "runa": "Hagalaz",
+  "rameno": "A1",
+  "k": 0,
+  "sloveso": "names",
+  "slovo": false,
+  "opis": 1,
+  "slov": 63
+ },
+ {
+  "runa": "Hagalaz",
+  "rameno": "A1",
+  "k": 1,
+  "sloveso": "names",
+  "slovo": false,
+  "opis": 1,
+  "slov": 61
+ },
+ {
+  "runa": "Hagalaz",
+  "rameno": "A1",
+  "k": 2,
+  "sloveso": "names",
+  "slovo": true,
+  "opis": 1,
+  "slov": 63
+ },
+ {
+  "runa": "Hagalaz",
+  "rameno": "G0",
+  "k": 0,
+  "sloveso": "shows",
+  "slovo": true,
+  "opis": 1,
+  "slov": 64
+ },
+ {
+  "runa": "Hagalaz",
+  "rameno": "G0",
+  "k": 1,
+  "sloveso": "shows",
+  "slovo": true,
+  "opis": 1,
+  "slov": 60
+ },
+ {
+  "runa": "Hagalaz",
+  "rameno": "G0",
+  "k": 2,
+  "sloveso": "shows",
+  "slovo": true,
+  "opis": 1,
+  "slov": 59
+ },
+ {
+  "runa": "Hagalaz",
+  "rameno": "G1",
+  "k": 0,
+  "sloveso": "holds",
+  "slovo": false,
+  "opis": 1,
+  "slov": 63
+ },
+ {
+  "runa": "Hagalaz",
+  "rameno": "G1",
+  "k": 1,
+  "sloveso": "holds",
+  "slovo": false,
+  "opis": 1,
+  "slov": 68
+ },
+ {
+  "runa": "Hagalaz",
+  "rameno": "G1",
+  "k": 2,
+  "sloveso": "holds",
+  "slovo": false,
+  "opis": 2,
+  "slov": 61
+ },
+ {
+  "runa": "Hagalaz",
+  "rameno": "H0",
+  "k": 0,
+  "sloveso": "names",
+  "slovo": true,
+  "opis": 1,
+  "slov": 57
+ },
+ {
+  "runa": "Hagalaz",
+  "rameno": "H0",
+  "k": 1,
+  "sloveso": "names",
+  "slovo": true,
+  "opis": 1,
+  "slov": 63
+ },
+ {
+  "runa": "Hagalaz",
+  "rameno": "H0",
+  "k": 2,
+  "sloveso": "names",
+  "slovo": true,
+  "opis": 1,
+  "slov": 57
+ },
+ {
+  "runa": "Hagalaz",
+  "rameno": "H1",
+  "k": 0,
+  "sloveso": "interrupts",
+  "slovo": false,
+  "opis": 1,
+  "slov": 55
+ },
+ {
+  "runa": "Hagalaz",
+  "rameno": "H1",
+  "k": 1,
+  "sloveso": "interrupts",
+  "slovo": false,
+  "opis": 1,
+  "slov": 62
+ },
+ {
+  "runa": "Hagalaz",
+  "rameno": "H1",
+  "k": 2,
+  "sloveso": "interrupts",
+  "slovo": false,
+  "opis": 1,
+  "slov": 60
+ },
+ {
+  "runa": "Fehu",
+  "rameno": "A0",
+  "k": 0,
+  "sloveso": "speaks of",
+  "slovo": true,
+  "opis": 1,
+  "slov": 66
+ },
+ {
+  "runa": "Fehu",
+  "rameno": "A0",
+  "k": 1,
+  "sloveso": "in",
+  "slovo": true,
+  "opis": 1,
+  "slov": 72
+ },
+ {
+  "runa": "Fehu",
+  "rameno": "A0",
+  "k": 2,
+  "sloveso": "speaks of",
+  "slovo": true,
+  "opis": 1,
+  "slov": 60
+ },
+ {
+  "runa": "Fehu",
+  "rameno": "A1",
+  "k": 0,
+  "sloveso": "names",
+  "slovo": true,
+  "opis": 1,
+  "slov": 62
+ },
+ {
+  "runa": "Fehu",
+  "rameno": "A1",
+  "k": 1,
+  "sloveso": "gives",
+  "slovo": true,
+  "opis": 2,
+  "slov": 65
+ },
+ {
+  "runa": "Fehu",
+  "rameno": "A1",
+  "k": 2,
+  "sloveso": "names",
+  "slovo": true,
+  "opis": 1,
+  "slov": 62
+ },
+ {
+  "runa": "Fehu",
+  "rameno": "G0",
+  "k": 0,
+  "sloveso": "shows",
+  "slovo": true,
+  "opis": 1,
+  "slov": 59
+ },
+ {
+  "runa": "Fehu",
+  "rameno": "G0",
+  "k": 1,
+  "sloveso": "shows",
+  "slovo": true,
+  "opis": 1,
+  "slov": 66
+ },
+ {
+  "runa": "Fehu",
+  "rameno": "G0",
+  "k": 2,
+  "sloveso": "—",
+  "slovo": true,
+  "opis": 1,
+  "slov": 60
+ },
+ {
+  "runa": "Fehu",
+  "rameno": "G1",
+  "k": 0,
+  "sloveso": "holds",
+  "slovo": false,
+  "opis": 2,
+  "slov": 67
+ },
+ {
+  "runa": "Fehu",
+  "rameno": "G1",
+  "k": 1,
+  "sloveso": "holds",
+  "slovo": false,
+  "opis": 1,
+  "slov": 62
+ },
+ {
+  "runa": "Fehu",
+  "rameno": "G1",
+  "k": 2,
+  "sloveso": "holds",
+  "slovo": false,
+  "opis": 1,
+  "slov": 64
+ },
+ {
+  "runa": "Fehu",
+  "rameno": "H0",
+  "k": 0,
+  "sloveso": "concerns",
+  "slovo": true,
+  "opis": 1,
+  "slov": 56
+ },
+ {
+  "runa": "Fehu",
+  "rameno": "H0",
+  "k": 1,
+  "sloveso": "speaks of",
+  "slovo": true,
+  "opis": 2,
+  "slov": 59
+ },
+ {
+  "runa": "Fehu",
+  "rameno": "H0",
+  "k": 2,
+  "sloveso": "speaks of",
+  "slovo": true,
+  "opis": 1,
+  "slov": 59
+ },
+ {
+  "runa": "Fehu",
+  "rameno": "H1",
+  "k": 0,
+  "sloveso": "counts",
+  "slovo": true,
+  "opis": 2,
+  "slov": 65
+ },
+ {
+  "runa": "Fehu",
+  "rameno": "H1",
+  "k": 1,
+  "sloveso": "counts",
+  "slovo": false,
+  "opis": 1,
+  "slov": 68
+ },
+ {
+  "runa": "Fehu",
+  "rameno": "H1",
+  "k": 2,
+  "sloveso": "gathers",
+  "slovo": false,
+  "opis": 1,
+  "slov": 62
+ },
+ {
+  "runa": "Wunjo",
+  "rameno": "A0",
+  "k": 0,
+  "sloveso": "names",
+  "slovo": true,
+  "opis": 1,
+  "slov": 62
+ },
+ {
+  "runa": "Wunjo",
+  "rameno": "A0",
+  "k": 1,
+  "sloveso": "names",
+  "slovo": true,
+  "opis": 3,
+  "slov": 59
+ },
+ {
+  "runa": "Wunjo",
+  "rameno": "A0",
+  "k": 2,
+  "sloveso": "names",
+  "slovo": true,
+  "opis": 1,
+  "slov": 55
+ },
+ {
+  "runa": "Wunjo",
+  "rameno": "A1",
+  "k": 0,
+  "sloveso": "names",
+  "slovo": true,
+  "opis": 1,
+  "slov": 55
+ },
+ {
+  "runa": "Wunjo",
+  "rameno": "A1",
+  "k": 1,
+  "sloveso": "names",
+  "slovo": false,
+  "opis": 4,
+  "slov": 65
+ },
+ {
+  "runa": "Wunjo",
+  "rameno": "A1",
+  "k": 2,
+  "sloveso": "names",
+  "slovo": false,
+  "opis": 1,
+  "slov": 62
+ },
+ {
+  "runa": "Wunjo",
+  "rameno": "G0",
+  "k": 0,
+  "sloveso": "shows",
+  "slovo": true,
+  "opis": 1,
+  "slov": 65
+ },
+ {
+  "runa": "Wunjo",
+  "rameno": "G0",
+  "k": 1,
+  "sloveso": "shows",
+  "slovo": true,
+  "opis": 1,
+  "slov": 59
+ },
+ {
+  "runa": "Wunjo",
+  "rameno": "G0",
+  "k": 2,
+  "sloveso": "shows",
+  "slovo": true,
+  "opis": 1,
+  "slov": 57
+ },
+ {
+  "runa": "Wunjo",
+  "rameno": "G1",
+  "k": 0,
+  "sloveso": "holds",
+  "slovo": false,
+  "opis": 4,
+  "slov": 66
+ },
+ {
+  "runa": "Wunjo",
+  "rameno": "G1",
+  "k": 1,
+  "sloveso": "holds",
+  "slovo": false,
+  "opis": 4,
+  "slov": 59
+ },
+ {
+  "runa": "Wunjo",
+  "rameno": "G1",
+  "k": 2,
+  "sloveso": "holds",
+  "slovo": false,
+  "opis": 4,
+  "slov": 60
+ },
+ {
+  "runa": "Wunjo",
+  "rameno": "H0",
+  "k": 0,
+  "sloveso": "speaks of",
+  "slovo": true,
+  "opis": 1,
+  "slov": 66
+ },
+ {
+  "runa": "Wunjo",
+  "rameno": "H0",
+  "k": 1,
+  "sloveso": "gives",
+  "slovo": true,
+  "opis": 1,
+  "slov": 64
+ },
+ {
+  "runa": "Wunjo",
+  "rameno": "H0",
+  "k": 2,
+  "sloveso": "names",
+  "slovo": true,
+  "opis": 3,
+  "slov": 61
+ },
+ {
+  "runa": "Wunjo",
+  "rameno": "H1",
+  "k": 0,
+  "sloveso": "marks",
+  "slovo": false,
+  "opis": 3,
+  "slov": 67
+ },
+ {
+  "runa": "Wunjo",
+  "rameno": "H1",
+  "k": 1,
+  "sloveso": "rests",
+  "slovo": false,
+  "opis": 4,
+  "slov": 61
+ },
+ {
+  "runa": "Wunjo",
+  "rameno": "H1",
+  "k": 2,
+  "sloveso": "marks",
+  "slovo": false,
+  "opis": 4,
+  "slov": 60
+ },
+ {
+  "runa": "Uruz",
+  "rameno": "A0",
+  "k": 0,
+  "sloveso": "shows",
+  "slovo": true,
+  "opis": 1,
+  "slov": 59
+ },
+ {
+  "runa": "Uruz",
+  "rameno": "A0",
+  "k": 1,
+  "sloveso": "speaks of",
+  "slovo": true,
+  "opis": 3,
+  "slov": 60
+ },
+ {
+  "runa": "Uruz",
+  "rameno": "A0",
+  "k": 2,
+  "sloveso": "speaks of",
+  "slovo": true,
+  "opis": 4,
+  "slov": 65
+ },
+ {
+  "runa": "Uruz",
+  "rameno": "A1",
+  "k": 0,
+  "sloveso": "names",
+  "slovo": true,
+  "opis": 4,
+  "slov": 59
+ },
+ {
+  "runa": "Uruz",
+  "rameno": "A1",
+  "k": 1,
+  "sloveso": "gives",
+  "slovo": true,
+  "opis": 3,
+  "slov": 62
+ },
+ {
+  "runa": "Uruz",
+  "rameno": "A1",
+  "k": 2,
+  "sloveso": "names",
+  "slovo": true,
+  "opis": 4,
+  "slov": 62
+ },
+ {
+  "runa": "Uruz",
+  "rameno": "G0",
+  "k": 0,
+  "sloveso": "shows",
+  "slovo": true,
+  "opis": 1,
+  "slov": 59
+ },
+ {
+  "runa": "Uruz",
+  "rameno": "G0",
+  "k": 1,
+  "sloveso": "shows",
+  "slovo": true,
+  "opis": 4,
+  "slov": 60
+ },
+ {
+  "runa": "Uruz",
+  "rameno": "G0",
+  "k": 2,
+  "sloveso": "shows",
+  "slovo": true,
+  "opis": 3,
+  "slov": 64
+ },
+ {
+  "runa": "Uruz",
+  "rameno": "G1",
+  "k": 0,
+  "sloveso": "holds",
+  "slovo": true,
+  "opis": 4,
+  "slov": 59
+ },
+ {
+  "runa": "Uruz",
+  "rameno": "G1",
+  "k": 1,
+  "sloveso": "holds",
+  "slovo": true,
+  "opis": 4,
+  "slov": 71
+ },
+ {
+  "runa": "Uruz",
+  "rameno": "G1",
+  "k": 2,
+  "sloveso": "holds",
+  "slovo": true,
+  "opis": 1,
+  "slov": 58
+ },
+ {
+  "runa": "Uruz",
+  "rameno": "H0",
+  "k": 0,
+  "sloveso": "names",
+  "slovo": true,
+  "opis": 1,
+  "slov": 58
+ },
+ {
+  "runa": "Uruz",
+  "rameno": "H0",
+  "k": 1,
+  "sloveso": "speaks of",
+  "slovo": true,
+  "opis": 4,
+  "slov": 64
+ },
+ {
+  "runa": "Uruz",
+  "rameno": "H0",
+  "k": 2,
+  "sloveso": "speaks of",
+  "slovo": true,
+  "opis": 4,
+  "slov": 62
+ },
+ {
+  "runa": "Uruz",
+  "rameno": "H1",
+  "k": 0,
+  "sloveso": "brings",
+  "slovo": true,
+  "opis": 4,
+  "slov": 56
+ },
+ {
+  "runa": "Uruz",
+  "rameno": "H1",
+  "k": 1,
+  "sloveso": "brings",
+  "slovo": true,
+  "opis": 1,
+  "slov": 57
+ },
+ {
+  "runa": "Uruz",
+  "rameno": "H1",
+  "k": 2,
+  "sloveso": "names",
+  "slovo": true,
+  "opis": 1,
+  "slov": 61
+ }
+]

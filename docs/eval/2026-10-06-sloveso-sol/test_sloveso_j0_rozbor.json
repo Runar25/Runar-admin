@@ -1,0 +1,110 @@
+[
+ {
+  "runa": "Hagalaz",
+  "rameno": "J0",
+  "k": 0,
+  "sloveso": "exposes",
+  "slovo": false,
+  "opis": 1,
+  "slov": 65
+ },
+ {
+  "runa": "Hagalaz",
+  "rameno": "J0",
+  "k": 1,
+  "sloveso": "exposes",
+  "slovo": true,
+  "opis": 1,
+  "slov": 55
+ },
+ {
+  "runa": "Hagalaz",
+  "rameno": "J0",
+  "k": 2,
+  "sloveso": "exposes",
+  "slovo": true,
+  "opis": 1,
+  "slov": 61
+ },
+ {
+  "runa": "Fehu",
+  "rameno": "J0",
+  "k": 0,
+  "sloveso": "marks",
+  "slovo": true,
+  "opis": 1,
+  "slov": 54
+ },
+ {
+  "runa": "Fehu",
+  "rameno": "J0",
+  "k": 1,
+  "sloveso": "holds",
+  "slovo": true,
+  "opis": 1,
+  "slov": 61
+ },
+ {
+  "runa": "Fehu",
+  "rameno": "J0",
+  "k": 2,
+  "sloveso": "holds",
+  "slovo": true,
+  "opis": 2,
+  "slov": 62
+ },
+ {
+  "runa": "Wunjo",
+  "rameno": "J0",
+  "k": 0,
+  "sloveso": "marks",
+  "slovo": false,
+  "opis": 1,
+  "slov": 62
+ },
+ {
+  "runa": "Wunjo",
+  "rameno": "J0",
+  "k": 1,
+  "sloveso": "holds",
+  "slovo": true,
+  "opis": 3,
+  "slov": 60
+ },
+ {
+  "runa": "Wunjo",
+  "rameno": "J0",
+  "k": 2,
+  "sloveso": "holds",
+  "slovo": true,
+  "opis": 3,
+  "slov": 59
+ },
+ {
+  "runa": "Uruz",
+  "rameno": "J0",
+  "k": 0,
+  "sloveso": "holds",
+  "slovo": true,
+  "opis": 1,
+  "slov": 57
+ },
+ {
+  "runa": "Uruz",
+  "rameno": "J0",
+  "k": 1,
+  "sloveso": "holds",
+  "slovo": true,
+  "opis": 1,
+  "slov": 60
+ },
+ {
+  "runa": "Uruz",
+  "rameno": "J0",
+  "k": 2,
+  "sloveso": "marks",
+  "slovo": true,
+  "opis": 4,
+  "slov": 57
+ }
+]

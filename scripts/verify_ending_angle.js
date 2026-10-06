@@ -134,10 +134,14 @@ for (const L of ['en', 'is']) {
     { jm: 'esencni ram', fn: vm.runInContext('_essenceFrame', S), pool: vm.runInContext(L === 'is' ? 'ESSENCE_FRAMES_IS' : 'ESSENCE_FRAMES', S), klic: 'essence' },
     { jm: 'rozpocet delky', fn: vm.runInContext('_lengthBudget', S), pool: vm.runInContext(L === 'is' ? 'LENGTH_BUDGETS_IS' : 'LENGTH_BUDGETS', S), klic: 'len' },
   ];
+  // 2026-10-06: rámce pro sol (EN) — s READ_ENGINE='sol' se losují ony, s 'opus' nikdy; _promptDraws je pozná.
+  if (L !== 'is') dalsi.push({ jm: 'esencni ram (sol)', fn: (l) => { vm.runInContext('READ_ENGINE = "sol";', S); const x = vm.runInContext('_essenceFrame', S)(l); vm.runInContext('READ_ENGINE = "opus";', S); return x; },
+    pool: vm.runInContext('ESSENCE_FRAMES_SOL', S), klic: 'essence' });
   for (const d of dalsi) {
     const videno = new Set();
     for (let i = 0; i < 2000; i++) videno.add(d.fn(L));
-    rekni(videno.size === d.pool.length,
+    // 2026-10-06: i to, že padají VARIANTY TÉHOŽ POOLU — samotný počet prošel, když sol dostal rámce Opusu (mutace).
+    rekni(videno.size === d.pool.length && [...videno].every((x) => d.pool.indexOf(x) !== -1),
       L + '  ' + d.jm + ': vsech ' + d.pool.length + ' variant padlo (videno ' + videno.size + ')');
     let chyb = 0;
     d.pool.forEach((t2, i) => {
@@ -145,6 +149,15 @@ for (const L of ['en', 'is']) {
       if (!dr || dr[d.klic] !== i) { chyb++; console.log('    ' + d.jm + '[' + i + '] -> ' + (dr && dr[d.klic])); }
     });
     rekni(chyb === 0, L + '  ' + d.jm + ': _promptDraws pozna vsechny (' + d.pool.length + ')');
+  }
+  if (L !== 'is') {   // Opus nikdy nedostane rámec pro sol (a naopak)
+    const sol = vm.runInContext('ESSENCE_FRAMES_SOL', S), op = vm.runInContext('ESSENCE_FRAMES', S);
+    let cizi = 0;
+    for (let i = 0; i < 400; i++) { if (sol.indexOf(vm.runInContext('_essenceFrame', S)(L)) !== -1) cizi++; }
+    vm.runInContext('READ_ENGINE = "sol";', S);
+    for (let i = 0; i < 400; i++) { if (op.indexOf(vm.runInContext('_essenceFrame', S)(L)) !== -1) cizi++; }
+    vm.runInContext('READ_ENGINE = "opus";', S);
+    rekni(cizi === 0, L + '  esencni ram: Opus nikdy rámec pro sol, sol nikdy rámec pro Opus (' + cizi + ')');
   }
 
   // (8) UMISTENI JMENA: kazda varianta padne; varianta „vubec" je POSLEDNI a zamerne vetsinova

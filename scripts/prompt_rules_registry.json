@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-10-06",
- "prompt_version": "v4.98-zivotni-ask",
+ "prompt_version": "v4.99-sloveso-sol",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -200,6 +200,18 @@
    "lang": "en",
    "zdroj": "esence[1]",
    "zacatek": "THE ESSENCE LINE: after the picture, one short line that names the run"
+  },
+  {
+   "hash": "141a0a4c84c3",
+   "lang": "en",
+   "zdroj": "esence_sol[0]",
+   "zacatek": "THE ESSENCE LINE: after the picture, one short line that brings the ru"
+  },
+  {
+   "hash": "94f6bc1eff20",
+   "lang": "en",
+   "zdroj": "esence_sol[1]",
+   "zacatek": "THE ESSENCE LINE: after the picture, one short line that brings the ru"
   },
   {
    "hash": "93cc96440bbc",

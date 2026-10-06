@@ -8560,3 +8560,18 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Měřeno** (sol, API, README eval složky, kolo 3): *„…in this reading?"* opakuje frázi z otázky 1/9, *„…in this picture?"* 2/9;
   vazba na obraz 7/9 a 9/9. Kontrola `verify_ask_hints` hlídá třetí místo (stará nabídka → FAIL).
 - Affected doc(s): žádný.
+
+## 2026-10-06 (7) — Sol: definiční věta s vlastním slovesem místo „<Runa> names…“ (v4.99, jen EN, Opus beze změny)
+
+- **Rozhodl:** KUKY 2026-10-06 *„udělej malou změnu slovesa pro sol a otestuj"* (na předávku CODE-read k úkolu E). **Provedl:** CODE-tune.
+- **Proč:** sol bere sloveso definiční věty ze slov esenčního rámce — [1] *„names the rune once"* → *„Hagalaz names…"*, [0] *„say what the
+  rune means"* → names / speaks of (CODE-read, EVAL_LOG 2026-10-06 (1)–(2): DB sol names 14/33, Opus 0/147).
+- **Měřeno** (sol přes API, produkční cesta, `docs/eval/2026-10-06-sloveso-sol/`, 4 runy × 3): dnes [0] names 6 · speaks of 4, [1] names 10;
+  [1] *„brings the rune in once and, in a verb of your own, gives…"* → interrupts 3, counts 2, marks 2, brings 2, gathers 1, rests 1,
+  names 1; [0] s tímtéž a *„keep the line on the rune's own sense"* místo *„say what the rune means"* → holds 6, exposes 3, marks 3.
+  Samo *„in a verb of your own"* v dnešním [0] nepomohlo (names 10/12). Nejčastější sloveso 6/24 místo names 16/24; holé slovo aspektu
+  v textu méně (4/12 u [1]). Věty dál říkají smysl runy (*„Fehu marks wealth that stays useful when it moves between hands."*).
+- **Co:** `ESSENCE_FRAMES_SOL` (EN) vedle `ESSENCE_FRAMES`; `_essenceFrame` je losuje jen při `READ_ENGINE = 'sol'` (vzor `IMAGE_SEEING`),
+  `_promptDraws` je pozná (týž index). Kontrola mostu/losu: sol a Opus si rámce nepletou (mutace → FAIL) a padají varianty TÉHOŽ poolu.
+- **Hranice:** jen EN, 4 runy × 1 obraz. IS rámce beze změny (sloveso v IS neměřeno).
+- Affected doc(s): žádný (měření v README eval složky).
