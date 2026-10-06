@@ -1,0 +1,146 @@
+[
+ {
+  "runa": "Hagalaz",
+  "rameno": "F0",
+  "k": 0,
+  "sloveso": "names",
+  "slovo": false,
+  "opis": 1,
+  "slov": 65
+ },
+ {
+  "runa": "Hagalaz",
+  "rameno": "F0",
+  "k": 1,
+  "sloveso": "—",
+  "slovo": true,
+  "opis": 1,
+  "slov": 57
+ },
+ {
+  "runa": "Hagalaz",
+  "rameno": "F1",
+  "k": 0,
+  "sloveso": "names",
+  "slovo": false,
+  "opis": 1,
+  "slov": 61
+ },
+ {
+  "runa": "Hagalaz",
+  "rameno": "F1",
+  "k": 1,
+  "sloveso": "names",
+  "slovo": false,
+  "opis": 1,
+  "slov": 59
+ },
+ {
+  "runa": "Fehu",
+  "rameno": "F0",
+  "k": 0,
+  "sloveso": "names",
+  "slovo": true,
+  "opis": 3,
+  "slov": 60
+ },
+ {
+  "runa": "Fehu",
+  "rameno": "F0",
+  "k": 1,
+  "sloveso": "speaks of",
+  "slovo": false,
+  "opis": 2,
+  "slov": 66
+ },
+ {
+  "runa": "Fehu",
+  "rameno": "F1",
+  "k": 0,
+  "sloveso": "names",
+  "slovo": false,
+  "opis": 2,
+  "slov": 62
+ },
+ {
+  "runa": "Fehu",
+  "rameno": "F1",
+  "k": 1,
+  "sloveso": "names",
+  "slovo": false,
+  "opis": 2,
+  "slov": 72
+ },
+ {
+  "runa": "Wunjo",
+  "rameno": "F0",
+  "k": 0,
+  "sloveso": "holds",
+  "slovo": false,
+  "opis": 1,
+  "slov": 67
+ },
+ {
+  "runa": "Wunjo",
+  "rameno": "F0",
+  "k": 1,
+  "sloveso": "speaks of",
+  "slovo": false,
+  "opis": 1,
+  "slov": 64
+ },
+ {
+  "runa": "Wunjo",
+  "rameno": "F1",
+  "k": 0,
+  "sloveso": "names",
+  "slovo": false,
+  "opis": 1,
+  "slov": 63
+ },
+ {
+  "runa": "Wunjo",
+  "rameno": "F1",
+  "k": 1,
+  "sloveso": "names",
+  "slovo": false,
+  "opis": 3,
+  "slov": 63
+ },
+ {
+  "runa": "Uruz",
+  "rameno": "F0",
+  "k": 0,
+  "sloveso": "names",
+  "slovo": true,
+  "opis": 3,
+  "slov": 57
+ },
+ {
+  "runa": "Uruz",
+  "rameno": "F0",
+  "k": 1,
+  "sloveso": "speaks of",
+  "slovo": true,
+  "opis": 1,
+  "slov": 66
+ },
+ {
+  "runa": "Uruz",
+  "rameno": "F1",
+  "k": 0,
+  "sloveso": "holds",
+  "slovo": true,
+  "opis": 3,
+  "slov": 58
+ },
+ {
+  "runa": "Uruz",
+  "rameno": "F1",
+  "k": 1,
+  "sloveso": "names",
+  "slovo": true,
+  "opis": 4,
+  "slov": 62
+ }
+]

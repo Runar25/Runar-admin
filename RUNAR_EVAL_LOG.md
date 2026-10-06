@@ -6105,3 +6105,34 @@ fráze 0/10 (n malé). Hypotéza „holé slovo zve vzorec“ **pro Opus padla**
 **Důsledek pro lab:** zadání chtělo čtení psát „tady“ (subagent / CODE-read), ne přes API. Claude vzorec nedělá (Opus 0/89, subagent
 produkční vady nereprodukuje — EVAL_LOG 2026-09-19 (3)) → takový test by měřil model, který vadu nemá, a nic by nerozhodl. Rozhodne owner:
 test na solu přes API (centy), nebo bez něj.
+
+## 2026-10-06 (2) — Úkol E na solu (API): vzorec „<Runa> <sloveso> <význam>“ dělá ZADÁNÍ esence, sloveso určuje znění rámce, slovo dodá aspekt
+
+**Owner:** *„ano, pusť test na solu přes API“* (navazuje na 2026-10-06 (1)). gpt-6-sol jako proxy (reasoning none, 700, explicit cache),
+produkční cesta: builder (READ_ENGINE = sol → věta za obrazem pro sol) + ✦ + připomínka délky. 4 runy s jednoslovným aspektem, pevný
+obraz a los na runu: Hagalaz *disruption* (výpadek proudu) · Fehu *wealth* (ovce z hor) · Wunjo *belonging* (sedneš si k nim) · Uruz
+*strength* (zvedneš konec). EN, 2 čtení na buňku, 80 čtení, $0,29, 2,7 s/čtení. Skripty `docs/eval/2026-10-06-definicni-veta/`.
+| rameno (jedna páka) | sloveso po jménu runy | holé slovo aspektu v textu | opis fráze ≥ 4 slova |
+|---|---|---|---|
+| A0 produkce, rámec [0] | speaks of 4 · names 3 | 8/8 | — |
+| A1 produkce, rámec [1] | **names 8** | 6/8 | — |
+| B0 rámec [0] ve znění PŘED v4.81 | **shows 8** (names 0) | 8/8 | — |
+| C1 rámec [1] bez slova „names“ | names 7 · speaks of 1 | 7/8 | — |
+| D0/D1 aspekt jako fráze ze scény | names 11 · speaks of 3 · holds 2 | 6/16 | **9/16** (*„Hagalaz names the force no one steers“*) |
+| E0/E1 OBRÁCENĚ: aspekt zdůrazněný | names 9 · speaks of 4 · gives 2 · shows 1 | 16/16 | — |
+| F0/F1 OBRÁCENĚ: aspekt z hlavičky PRYČ | names 10 · speaks of 3 · holds 2 | 6/16 | — |
+⭐ **1. Definiční věta „<Runa> <sloveso> <význam>“ je v 78 z 80 čtení v KAŽDÉM rameni** (zbylá 2 = *„In Hagalaz, disruption…“*, definice v jiném tvaru) — i bez aspektu (F: *„Hagalaz names a break in
+what usually holds“*, *„Fehu names wealth that has grown…“*). Dělá ji **zadání esenčního řádku** (řekni, co runa znamená), ne slovo aspektu —
+totéž, co EVAL_LOG 2026-09-08 („šablonu dělá ZADÁNÍ, ne příklad“). Hypotéza „holé slovo aspektu zve VZOREC“ **padla** (F i E beze změny).
+⭐ **2. Sloveso určuje znění rámce, ne slovo „names“ v něm:** [1] → *names* 8/8, a bez slova „names“ v rámci 7/8 (potvrzuje nález CODE-tune 1);
+starý [0] → *shows* 8/8; dnešní [0] → *speaks of / names*. **DB potvrzuje:** sol před v4.84 *holds 4, is 2, lets, marks, carries, draws, opens,
+leaves* (slovesa tehdejšího rámce [1] „moves, holds, opens, carries“), od v4.84 *names 14, speaks of 3, shows 2*. Zlom v DB (2026-10-06 (1)) =
+změna slovesa, ne vznik vzorce.
+⭐ **3. Slovo v předmětu dodá aspekt:** holé slovo v textu 14/16 (A), zdůrazněné 16/16 (E), bez aspektu 6/16 (F: Hagalaz *disruption* 1/4,
+Fehu *wealth* 1/4, Wunjo 0/4, Uruz *strength* 4/4 — jádro runy sol zná sám). **Fráze místo slova jen vymění slovo za opsanou frázi** (9/16).
+Ownerovo „pořád disruption“ = aspekt *disruption* v hlavičce → sol ho doslova dosadí do definiční věty.
+**Útok §27:** půlka × půlka (k = 0 × 1) *names* 19/32 × 19/32. **Hranice:** jen sol, EN, 4 runy × 1 obraz, 2 čtení na buňku; Opus vzorec
+nedělá (DB 0/147), takže nic z toho neplatí pro produkci uživatelů.
+**Co z toho plyne (návrh, rozhodne owner):** (a) tvar věty nehýbe aspekt ani slovo „names“ — hýbe jím znění esenčního rámce (sloveso),
+vzorec sám zůstane, dokud zadání chce „řekni, co runa znamená“; (b) „disruption“ přestane padat jen bez aspektu v hlavičce — ale aspekt drží
+identitu run u solu (EVAL_LOG 2026-09-23 (3)) a jde i do Asku → neodebírat naslepo; (c) pestrost slova už řeší sáček významů (kroky A–D).
