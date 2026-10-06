@@ -8669,3 +8669,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Proč:** Rúnar ho z podstaty odmítá (zrcadlo nepotvrzuje, DECISIONS 2026-09-25); dosud se ukazoval jen při méně než 6 tipech.
 - **Co:** u hledání Confirmation žádný tip z hledání — řádek se vynechá a nic ho nenahradí; `ask_h_seek_confirm` pryč z `UI_TEXT` (EN i IS).
 - Affected doc(s): žádný (test tipů `verify_ask_hints.js` upraven v témže commitu).
+
+## 2026-10-06 (14) — Shrine, databáze čtení: výběr čtení podle úhlu a esenčního řádku
+
+- **Rozhodl:** KUKY 2026-10-06 *„do shrine v reading chci ještě přidat angle, essence line, abych si mohl vybrat čtení na základě téhle
+  selekce“* — owner prověřoval, jestli „nit“ v obraze Thurisazu dělá úhel *„Open on the smallest detail“* (nedělá: nit je i při jiném
+  úhlu, nese ji obraz *„A thorn snags your sleeve…“*). **Provedl:** CODE-tune.
+- **Co:** dva nové výběry vedle oblasti a hledání — **Úhel** (index `READING_ANGLES`, v nabídce i text úhlu; islandský pool má tytéž úhly
+  ve stejném pořadí) a **Esenční řádek** (index rámce; u solu od v5.01 i vylosované sloveso, `prompt_draws.verb`). Počty jako u ostatních
+  výběrů. Karta čtení ukazuje začátek textu úhlu (celý v bublině) a esenční řádek. Popisky bere z kódu, znění se neopisuje (§20).
+- **Hlídá:** smoke ㉵ — filtr úhlu, esence se slovesem i bez, popisky z kódu (4/4 mutace chyceny).
+- Affected doc(s): žádný.

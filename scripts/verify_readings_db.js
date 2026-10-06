@@ -37,6 +37,11 @@ Object.assign(DATA[1], { area: AR.is[iF], seeking: SK.is[iC] });
 Object.assign(DATA[2], { area: 'Inner Growth', seeking: 'General Guidance' });
 Object.assign(DATA[3], { area: '', seeking: '' });
 DATA[2].prompt_draws.pin = 1;   // 2026-10-06: čtení na obraze, který zvolil admin
+// 2026-10-06 večer: úhel a esenční řádek (u solu v5.01 i sloveso). DATA[0] = sol [0] + „represents“, DATA[1] = [1], DATA[2] = úhel 4 + [0].
+Object.assign(DATA[0].prompt_draws, { essence: 0, verb: 0 });
+Object.assign(DATA[1].prompt_draws, { essence: 1 });
+Object.assign(DATA[2].prompt_draws, { essence: 0, angle: 4 });
+const ANG = vm.runInContext('READING_ANGLES', S), SLOV = vm.runInContext('ESSENCE_VERBS_SOL', S);
 const T = S.__rdTest;
 T.setRune('Hagalaz'); T.setRows(DATA); T.renderAll();
 const sum = el['rd-summary'].innerHTML;
@@ -69,9 +74,21 @@ rekni(el['rd-count'].textContent === '2 z 4', 'oblast + hledání, islandské �
 S.setRdFilter('seek', 'General Guidance');
 rekni(el['rd-count'].textContent === '0 z 4', 'jiné hledání v téže oblasti nic nepustí (' + el['rd-count'].textContent + ')');
 S.setRdFilter('area', ''); S.setRdFilter('seek', '');
+S.setRdFilter('angle', 'U1');
+rekni(el['rd-count'].textContent === '2 z 4', 'filtr úhlu: úhel 1 → 2 čtení (' + el['rd-count'].textContent + ')');
+rekni(el['rd-angle'].innerHTML.indexOf(ANG[1].slice(0, 30)) !== -1 && el['rd-angle'].innerHTML.indexOf(ANG[4].slice(0, 30)) !== -1,
+  'volby úhlu nesou text úhlu z READING_ANGLES');
+S.setRdFilter('ess', 'E0·0');
+rekni(el['rd-count'].textContent === '1 z 4', 'úhel 1 + esence [0] se slovesem → 1 čtení (' + el['rd-count'].textContent + ')');
+rekni(el['rd-ess'].innerHTML.indexOf(SLOV[0]) !== -1, 'volba esence ukazuje vylosované sloveso solu („' + SLOV[0] + '“)');
+S.setRdFilter('angle', ''); S.setRdFilter('ess', 'E0');
+rekni(el['rd-count'].textContent === '1 z 4', 'esence [0] bez slovesa je jiná volba než [0] + sloveso (' + el['rd-count'].textContent + ')');
+S.setRdFilter('ess', '');
+const k4 = el['readings-list'].innerHTML.split('class="rd-item"').find((k) => k.indexOf('gull') !== -1) || '';
+rekni(k4.indexOf('úhel [4] ' + ANG[4].slice(0, 20)) !== -1 && k4.indexOf('esence [0]') !== -1, 'karta čtení ukazuje text úhlu a esenční řádek');
 const karty = el['readings-list'].innerHTML.split('class="rd-item"');
 rekni(karty.filter((k) => k.indexOf('📌') !== -1).length === 1 && karty.some((k) => k.indexOf('📌') !== -1 && k.indexOf('gull') !== -1),
   'čtení na obraze zvoleném adminem má 📌, ostatní ne');
 
 if (fail) { console.log('\n' + fail + ' selhalo'); process.exit(1); }
-console.log('\nOK    databáze čtení: obraz EN+IS v jednom řádku, výběr obrazu, poznámky a ✦ Keep, filtry (i oblast a hledání napříč jazyky) a hledání sedí');
+console.log('\nOK    databáze čtení: obraz EN+IS v jednom řádku, výběr obrazu, poznámky a ✦ Keep, filtry (oblast a hledání napříč jazyky, úhel, esenční řádek) a hledání sedí');

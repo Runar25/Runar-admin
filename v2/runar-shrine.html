@@ -531,6 +531,9 @@ textarea::placeholder{color:var(--dim);}
       <!-- 2026-10-05 (KUKY „přidej filtr oblasti a hledání“): týž obraz × táž oblast × hledání — jak ho model řekne pokaždé -->
       <select id="rd-area" onchange="setRdFilter('area', this.value)"><option value="">Všechny oblasti</option></select>
       <select id="rd-seek" onchange="setRdFilter('seek', this.value)"><option value="">Všechna hledání</option></select>
+      <!-- 2026-10-06 (KUKY „do shrine v reading chci ještě přidat angle, essence line“): výběr čtení podle úhlu a esenčního řádku -->
+      <select id="rd-angle" onchange="setRdFilter('angle', this.value)"><option value="">Všechny úhly</option></select>
+      <select id="rd-ess" onchange="setRdFilter('ess', this.value)"><option value="">Všechny esenční řádky</option></select>
       <div class="pill" id="rd-f-notes" onclick="toggleRdFilter('notes')">💬 S poznámkou</div>
       <div class="pill" id="rd-f-keep" onclick="toggleRdFilter('keep')">✦ Uloženo</div>
       <input id="rd-q" type="search" placeholder="Hledat v textu, Ascích a poznámkách…" oninput="setRdFilter('q', this.value)">

@@ -15,7 +15,7 @@
   var _testersOnly = false;
   var _wired = false;
   var _rune = '';                 // '' = posledních 100 čtení všech run; runa = až 500 čtení té runy
-  var _f = { img: '', kws: '', model: '', area: '', seek: '', notes: false, keep: false, q: '' };
+  var _f = { img: '', kws: '', model: '', area: '', seek: '', angle: '', ess: '', notes: false, keep: false, q: '' };
   var _rows = [];
   var SPREADY = ['NORNS', 'KRIZ', 'HORSESHOE', 'YGGDRASIL'];
   var REP_IKONA = { keep: '✦', other: '🚩', visual: '🎨', replace: '✏️', rephrase: '✏️', pattern: '🔁', crash: '💥' };
@@ -65,7 +65,26 @@
   }
   function oblast(r) { return nadEN(typeof AREAS !== 'undefined' ? AREAS : null, r.aol || (r.area === 'spread' ? '' : r.area)); }
   function hledani(r) { return nadEN(typeof SEEKS !== 'undefined' ? SEEKS : null, r.seeking); }
-  var KLIC = { img: function (r) { return obraz(r).key; }, kws: vyznam, model: model, area: oblast, seek: hledani };
+  // 2026-10-06 (KUKY „do shrine v reading chci ještě přidat angle, essence line, abych si mohl vybrat čtení na základě téhle selekce“
+  // — owner prověřoval, jestli „nit“ v obraze dělá úhel „Open on the smallest detail“). Úhel = index do READING_ANGLES (islandský
+  // pool má tytéž úhly ve stejném pořadí); esenční řádek = index rámce, u solu od v5.01 i vylosované sloveso (prompt_draws.verb).
+  // Popisky bere z kódu (READING_ANGLES, ESSENCE_FRAMES, ESSENCE_VERBS_SOL) — znění se sem neopisuje (§20).
+  function _je(v) { return v !== undefined && v !== null && v !== ''; }
+  function uhel(r) { var d = r.prompt_draws || {}; return _je(d.angle) ? 'U' + d.angle : ''; }
+  function uhelPopis(r) {
+    var d = r.prompt_draws || {};
+    return '[' + d.angle + '] ' + ((typeof READING_ANGLES !== 'undefined' && READING_ANGLES[d.angle]) || '');
+  }
+  function esence(r) { var d = r.prompt_draws || {}; return _je(d.essence) ? 'E' + d.essence + (_je(d.verb) ? '·' + d.verb : '') : ''; }
+  function esencePopis(r) {
+    var d = r.prompt_draws || {};
+    if (d.essence === 'blank') return 'prázdná runa (vlastní rámec)';
+    var fr = (typeof ESSENCE_FRAMES !== 'undefined' && ESSENCE_FRAMES[d.essence]) || '';
+    var m = /one short line that ([^—.,]+)/.exec(fr);
+    var sl = (_je(d.verb) && typeof ESSENCE_VERBS_SOL !== 'undefined') ? ESSENCE_VERBS_SOL[d.verb] : '';
+    return '[' + d.essence + '] ' + (m ? m[1].trim() : '') + (sl ? ' · sol „' + sl + '“' : '');
+  }
+  var KLIC = { img: function (r) { return obraz(r).key; }, kws: vyznam, model: model, area: oblast, seek: hledani, angle: uhel, ess: esence };
   function reporty(r) { return Array.isArray(r.reports) ? r.reports : []; }
   function maPoznamku(r) { return reporty(r).some(function (x) { return x.type !== 'keep' && String(x.message || '').trim(); }); }
   function maKeep(r) { return reporty(r).some(function (x) { return x.type === 'keep'; }); }
@@ -80,6 +99,8 @@
     if (bez !== 'model' && _f.model && model(r) !== _f.model) return false;
     if (bez !== 'area' && _f.area && oblast(r) !== _f.area) return false;
     if (bez !== 'seek' && _f.seek && hledani(r) !== _f.seek) return false;
+    if (bez !== 'angle' && _f.angle && uhel(r) !== _f.angle) return false;
+    if (bez !== 'ess' && _f.ess && esence(r) !== _f.ess) return false;
     if (_f.notes && !maPoznamku(r)) return false;
     if (_f.keep && !maKeep(r)) return false;
     if (_f.q && hledatV(r).indexOf(_f.q.toLowerCase()) === -1) return false;
@@ -209,6 +230,8 @@
     naplnVyber('rd-model', 'Všechny modely', 'model', model);
     naplnVyber('rd-area', 'Všechny oblasti', 'area', oblast);   // oblast a hledání při změně runy zůstávají — srovnání napříč runami
     naplnVyber('rd-seek', 'Všechna hledání', 'seek', hledani);
+    naplnVyber('rd-angle', 'Všechny úhly', 'angle', uhelPopis);
+    naplnVyber('rd-ess', 'Všechny esenční řádky', 'ess', esencePopis);
     renderSouhrn();
     render(_rows.filter(function (r) { return prosel(r); }));
   }
@@ -253,7 +276,8 @@
       var skladba = [
         model(r) !== '—' ? '<span class="rd-tag">' + esc(model(r)) + '</span>' : '',
         vyznam(r) ? '<span class="rd-tag">význam: ' + esc(vyznam(r)) + '</span>' : '',
-        d.angle !== undefined ? '<span class="rd-tag">úhel ' + esc(d.angle) + '</span>' : '',
+        uhel(r) ? '<span class="rd-tag" title="' + esc(uhelPopis(r)) + '">úhel ' + esc(uhelPopis(r).length > 64 ? uhelPopis(r).slice(0, 64) + '…' : uhelPopis(r)) + '</span>' : '',
+        esence(r) ? '<span class="rd-tag" title="esenční řádek">esence ' + esc(esencePopis(r)) + '</span>' : '',
         d.area_face !== undefined ? '<span class="rd-tag">podoba ' + esc(d.area_face) + '</span>' : '',
         d.pin ? '<span class="rd-tag" title="obraz zvolil admin (2026-10-06) — nebyl to los">📌 obraz zvolen</span>' : '',
       ].filter(Boolean).join('');
