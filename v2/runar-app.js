@@ -377,15 +377,13 @@ function showTopbarGreeting() {
   greetingShown = true;
   const el = document.getElementById('topbar-greeting');
   if (!el) return;
-  const is = lang === 'is';
   let msg = '';
   if (!currentUser) {
-    msg = is ? 'Gaman að sjá þig, Gestur.' : 'Good to see you, Visitor.';
+    msg = tp('greet_hello', { name: tierLabel('free_trial', lang) });   // 2026-10-06: z UI_TEXT; jméno Visitor/Gestur z TIERS
   } else {
     const n = displayName();
     const returning = userTier === 'rune_seeker' || userTier === 'standard' || userTier === 'premium';
-    msg = is ? (returning ? `Gaman að sjá þig aftur, ${n}.` : `Gaman að sjá þig, ${n}.`)
-             : (returning ? `Good to see you again, ${n}.` : `Good to see you, ${n}.`);
+    msg = tp(returning ? 'greet_again' : 'greet_hello', { name: n });
   }
   el.textContent = msg;
   setTimeout(() => el.classList.add('show'), DELAY_TOAST_IN);
@@ -395,9 +393,8 @@ function showTopbarGreeting() {
 function showHeroGreeting() {
   const el = document.getElementById('hero-greeting');
   if (!el || !currentUser) return;
-  const is = lang === 'is';
   const n = displayName();
-  el.textContent = is ? `Gaman að sjá þig, ${n}.` : `Good to see you, ${n}.`;
+  el.textContent = tp('greet_hello', { name: n });
   setTimeout(() => el.classList.add('show'), DELAY_GREETING);
 }
 
@@ -641,42 +638,14 @@ function openSidePanel() {
 
 
 // ─── ROTATING HERO PHRASES ───────────────────────────────
-const HERO_PHRASES = {
-  en: [
-    "You have returned. Good. The stones have been keeping something for you.",
-    "Close your eyes for a moment. Then draw. The right rune never misses its mark.",
-    "I have been sitting with these stones a long time. They know you better than you think.",
-    "Something brought you here today. It was not accident. Draw, and we will see what it was.",
-    "The rune you draw is rarely the one you expected. That is the point.",
-    "Before you draw — breathe. The stones read stillness as clearly as questions.",
-    "I have watched seekers come through darkness, doubt, and full moons. The runes receive all of it. Draw freely.",
-    "You do not need to know the question clearly. The rune will find what is asking.",
-    "Some days the stone speaks loudly. Other days it whispers. Either way — it speaks.",
-    "The runes have no bad days. They simply tell the truth. Are you ready for that today?",
-    "Whatever you carry through the door — leave it on the table. The reading begins from here.",
-    "Draw when you are ready. There is no wrong moment — only the one you chose.",
-  ],
-  is: [
-    // 🇮🇸 TO BE REVIEWED BY NATIVE SPEAKER
-    "Þú snýrð aftur. Gott. Steinarnir geymdu eitthvað fyrir þig.",
-    "Lokaðu augunum. Dragðu síðan. Rétta rúnin finnur alltaf leiðina.",
-    "Ég hef setið með þessa steina lengi. Þeir þekkja þig betur en þú veist.",
-    "Eitthvað leiddi þig hingað í dag — ekki tilviljun. Dragðu, og við sjáum hvað það var.",
-    "Rúnin sem þú dregur er sjaldan sú sem þú bjóst við. Þetta er einmitt málið.",
-    "Andaðu áður en þú dregur. Steinarnir lesa kyrrð jafn vel og spurningar.",
-    "Ég hef séð leitendur koma — í myrkri, í efa, undir fullu tungli. Rúnirnar taka á móti öllu. Dragðu.",
-    "Þú þarft ekki skýra spurningu. Rúnin finnur það sem er að leita.",
-    "Suma daga talar steinninn hátt. Aðra daga hvíslar hann. En hann talar alltaf.",
-    "Rúnirnar hafa engar slæmar stundir. Þær segja bara það sem er. Ertu tilbúinn?",
-    "Hvað sem þú berð með þér — settu það niður. Lesturinn hefst hér.",
-    "Dragðu þegar þú ert tilbúinn. Engin stund er röng — aðeins sú sem þú velur.",
-  ],
-};
-
-// Pick once per session, stays the same if language switches
+// 2026-10-06 (KUKY „opravíme ty losované… věty jsou natvrdo v kódu místo v překladech; taky vyřeš“): věty bydlí v UI_TEXT
+// (`hero_phrases`, EN a IS na stejných indexech — přepnutí jazyka ukáže překlad téže věty). Pět vět tvrdilo osud nebo že runy
+// znají člověka („It was not accident“, „The right rune never misses its mark“, „They know you better than you think“, „They
+// simply tell the truth“, „The stones have been keeping something for you“) — proti citátu o řádek níž i proti RUNAR_DESIGN
+// „zrcadlo, ne orákulum“; přepsány. IS „tilbúinn“ (jen mužský rod) nahrazeno „þegar þér hentar“.
 let _heroPhrase = null;
 function getHeroPhrase() {
-  const pool = HERO_PHRASES[lang] || HERO_PHRASES.en;
+  const pool = t('hero_phrases');
   if (_heroPhrase === null) {
     _heroPhrase = Math.floor(Math.random() * pool.length);
   }
@@ -826,9 +795,7 @@ function updateUIText() {
   updateSidePanelLang();
   setText('ui-sub', getHeroPhrase());
   const heroQuote = document.getElementById('hero-quote');
-  if (heroQuote) heroQuote.innerHTML = lang === 'is'
-    ? '"Rúnirnar spá ekki um örlög þín.<br>Þær minna þig á veginn<br>sem þú gengur þegar."'
-    : '"The runes do not predict your fate.<br>They remind you of the path<br>you already walk."';
+  if (heroQuote) heroQuote.innerHTML = t('hero_quote');   // 2026-10-06: z UI_TEXT (IS dřív „spá ekki um“ — správně „spá fyrir um“)
   // reader-card1-lbl and reader-note are set by _updateReadingForm() — not here
   _updateDobLabel();
   _updateAreaSeekLabels();

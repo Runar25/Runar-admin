@@ -25,6 +25,8 @@ BAD_PATTERNS = [
     # segjum þetta ekki svona á íslensku." V promptu to pak zustalo dva tydny, protoze
     # z reportu nevedla zadna cesta do pravidel. Tenhle radek je ta cesta.
     ('ríður vindinum',  'svífur hátt',  'kalk z EN "riding the wind"; rodily mluvci 2026-08-02'),
+    # 2026-10-06: citát nad čtením měl „Rúnirnar spá ekki um örlög þín“ — vazba je „spá fyrir um“ (Risamálheild 8477, „spá um örlög“ 0).
+    ('spá ekki um örlög', 'spá ekki fyrir um örlög', 'vazba spá fyrir um; citát nad čtením 2026-10-06'),
     # 2026-09-23: kolokace a shoda z testu modelu (EVAL_LOG 2026-09-22 (1)/(2), 2026-09-23 (4)); kazda s korpusem.
     # Proc tady a ne v _MODEL_OUTPUT_ARCHIVE: islandsky text obrazu (RUNE_IMAGES) a promptu pisou AGENTI a presne
     # tyhle kolokace agent napise — je to i zdrojovy regres, ne jen vystup modelu (DECISIONS 2026-09-23 (6)).

@@ -8533,3 +8533,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   `RUNAR_PROMPT_VERSION` v4.98-zivotni-ask.
 - **Hranice:** jedna životní runa (Isa), 3 tažené runy, jen EN a jen sol. Jak to dělá Opus, nezměřeno.
 - Affected doc(s): žádný (měření vlastní README eval složky; EVAL_LOG odkazuje).
+
+## 2026-10-06 (5) — Hlášky nad čtením: losované věty bez osudu, citát pryč ze Stromu, texty v překladech, islandština opravená
+
+- **Rozhodl:** KUKY 2026-10-06 *„ok necháme jak je, ale opravíme ty losované. Ze stromu ji smažeme. Zkontroluj IS, věty jsou natvrdo
+  v kódu místo v překladech; taky vyřeš."* **Provedl:** CODE-tune.
+- **Losované věty** (`hero_phrases` v `UI_TEXT`, EN a IS na stejných indexech): přepsáno pět, které tvrdily osud nebo že runy znají
+  člověka — proti citátu o řádek níž i proti `RUNAR_DESIGN.md` „zrcadlo, ne orákulum": *„It was not accident"*, *„The right rune
+  never misses its mark"*, *„They know you better than you think"*, *„They simply tell the truth"*, *„The stones have been keeping
+  something for you"* (a *„You have returned"* i pro nového návštěvníka). Osmá (*„The rune will find what is asking"*) přepsána na
+  zrcadlo. IS: *„tilbúinn"* (jen mužský rod) → *„þegar þér hentar"*; *„andartak"* nerozparsováno → *„í smástund"*; vše
+  is-grammar-qa čisté, vazby v korpusu. Značka *„TO BE REVIEWED BY NATIVE SPEAKER"* pryč (§19.2).
+- **Citát** *„The runes do not predict your fate…"* zůstává nad čtením (`hero_quote`), ze záložky Strom smazán (`tree_closing_quote`
+  pryč z HTML, CSS, `runar-tree.js` i překladů). **IS chyba:** *„Rúnirnar spá ekki um örlög þín"* — vazba je *spá fyrir um* (korpus
+  8477, *„spá um örlög"* 0) → *„spá ekki fyrir um"*; přidáno do `check-is.py` BAD_PATTERNS. *„…sem þú gengur þegar"* → *„nú þegar"*.
+- **Pozdravy** (*„Good to see you, {name}."*, *„…again"*) v `UI_TEXT` (`greet_hello`, `greet_again`); jméno nepřihlášeného z
+  `TIERS.free_trial` přes `tierLabel`. IS *„Gaman að sjá þig"* (bez slovesa, nerozparsováno) → *„Það er gaman að sjá þig"*.
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka „Hlášky nad čtením" uzavřena).

@@ -311,7 +311,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .tree-toggle-arrow.open{transform:rotate(45deg);}
 .tree-static-open{font-family:'Cinzel',serif;font-size:0.85em;letter-spacing:0.5px;color:var(--muted);padding:12px 0 4px;}
 .tree-reading-text{font-size:1.05em;line-height:1.8;color:var(--white);padding:12px 0 20px;font-style:italic;}
-.tree-closing-quote{border-top:1px solid var(--border);padding:18px 0 8px;text-align:center;color:var(--muted);font-size:0.9em;line-height:1.7;}
 .tree-reveal-intro{text-align:center;font-style:italic;color:var(--muted);font-size:0.95em;line-height:1.7;padding:8px 16px 20px;}
 .btn-gold{background:var(--gold);color:#0a0c12;font-family:'Cinzel',serif;font-size:0.75em;letter-spacing:1.5px;padding:14px 28px;border:none;cursor:pointer;width:100%;transition:opacity 0.2s;}
 .btn-gold:hover{opacity:0.88;}

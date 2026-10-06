@@ -508,8 +508,8 @@ function _showTreeReading(rune, runeName, isIs) {
   var existsEl = document.getElementById('tree-reading-exists');
   if (!existsEl) return;
   existsEl.style.display = 'block';
-  var _cq = document.getElementById('tree-closing-quote-text');
-  if (_cq) _cq.innerHTML = t('tree_closing_quote');
+  // 2026-10-06 (KUKY „ze stromu ji smažeme“): citát „The runes do not predict your fate…“ na konci záložky Strom pryč — týž citát
+  // stojí nad čtením (hero_quote v UI_TEXT).
   var nm = document.getElementById('tree-rune-name-exists');
   var gl = document.getElementById('tree-rune-glyph-exists');
   var lbl = document.getElementById('tree-rune-label-exists');

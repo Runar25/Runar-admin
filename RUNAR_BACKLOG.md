@@ -1098,7 +1098,7 @@ A cokoli v datech mimo repo. To zachytí jen měření na výstupu modelu.
 
 ## Nálezy z workflow — k triáži
 
-### Hlášky nad čtením: losovaná věta + pozdrav + pevný citát — owner se ptá, proč dvě (KUKY 2026-10-06) — čeká na ownera (CODE-tune)
+### ✅ Hlášky nad čtením: losovaná věta + pozdrav + pevný citát (KUKY 2026-10-06) — VYŘEŠENO (DECISIONS 2026-10-06 (5))
 Report 2026-10-06 10:08: *„Trochu mi připadá, že není úplně důvod je takhle rozdělovat… Kolik jich je na střídání? Nebylo by lepší je
 spojit do jednoho místo dvou? Proč jsou tam, kde jsou?"* Stav kódu: `#ui-sub` = jedna z 12 vět `HERO_PHRASES` (`v2/runar-app.js`,
 los při načtení) · `#hero-greeting` = *„Good to see you, <jméno>."* · `#hero-quote` = pevný citát *„The runes do not predict your
