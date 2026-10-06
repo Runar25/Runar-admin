@@ -8484,3 +8484,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   formát k4 odmítá abstraktní významy a bere konkrétní (EVAL_LOG 2026-10-05 (3)); abstraktní význam je to, co čtení nese.
   Totéž platí pro *transformation* u stromu a střechy Hagalazu (po kroku B padá v polovině čtení).
 - Affected doc(s): `RUNAR_BACKLOG.md` (9 rozporů uzavřeno).
+
+## 2026-10-06 (2) — Výběr obrazu pro admina: týž obraz runy víckrát pro testování
+
+- **Rozhodl:** KUKY 2026-10-06 *„přidej výběr obrazu pro admina"*. Jeho test: *„chci víckrát vidět stejný obraz… a jestli ho při
+  stejné area a seeking řekne stejně, nebo udělá něco jinak."* Sáček mu dával pokaždé jiný obraz (7 čtení Hagalaz × Family & Home ×
+  Confirmation = 7 obrazů). **Provedl:** CODE-tune.
+- **Co:** pod mřížkou run (reader) jen pro admina: výběr obrazu vybrané runy a u obrazu s víc významy i výběr významu
+  („střídat" = sáček jako dosud). Volba je per runa v localStorage toho prohlížeče a platí, dokud ji admin nevrátí na „náhodně" — i
+  ve spreadu, kde ta runa padne. Zvolený obraz přeskočí sezónu, oblast i sáček; sáček se nečerpá, takže po vypnutí los pokračuje, kde
+  byl. Čtení na zvoleném obraze nese `prompt_draws.pin = 1` a databáze čtení ho označí 📌 (nebyl to los — do statistik obrazů nepatří).
+  Popisky EN i IS (`img_pin_*`), IS is-grammar-qa 0 nálezů.
+- **Ověřeno:** smoke ㉶ (`scripts/verify_image_pin.js`) produkční cestou: UI → `IMG_PIN` → `_seasonalImagery` → prompt → `_drawsSPinem`;
+  mutace 6/6 chyceny (2 další jsou v dosažitelných stavech bez rozdílu — důvod v hlavičce kontroly). ㉵ +1 (📌). Prohlížeč (lokálně):
+  ne-admin volbu nevidí; admin u Hagalazu 8 obrazů, u řeky výběr významu; prompt nese zvolený obraz i význam; mobil 375 px bez
+  přetečení. **Neověřeno:** přihlášený admin v produkci (owner).
+- Affected doc(s): žádný (mechaniku vlastní komentář u `IMG_PIN` v `runar-character.js`).

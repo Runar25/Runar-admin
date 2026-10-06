@@ -851,6 +851,8 @@ function updateUIText() {
   setText('draw-another-btn', t('draw_another'));
   setText('start-over-btn', t('start_over'));
   setText('sol-toggle-lbl', t('sol_toggle'));   // staticky popisek prepinace GPT-6 sol (jen admin ho vidi)
+  setText('img-pin-lbl', t('img_pin_lbl'));     // staticky popisek volby obrazu (jen admin ji vidi, 2026-10-06)
+  var _ipBox = document.getElementById('img-pin'); if (_ipBox) _ipBox.title = t('img_pin_title');
   setText('read-guide-lbl', t('guide_title'));   // staticky nadpis navodu — od 2026-09-23 v zalozce cteni
   setText('audio-player-lbl', t('voice_player_lbl'));
   setText('ask-lbl', t('ask_lbl'));
@@ -1181,6 +1183,7 @@ function buildGrid() {
       grid.querySelectorAll('.rb').forEach(b => b.classList.remove('on'));
       btn.classList.add('on');
       readerRune = r;
+      if (typeof _paintImgPin === 'function') _paintImgPin();   // 2026-10-06: volba obrazu pro admina patří k vybrané runě
       document.getElementById('reader-rune-info').innerHTML = runeSvg(r, { frame: false, cls: 'rune-svg-fl' }) + ' ' + escapeHtml(rn(r)) + ' — ' + escapeHtml(rk(r));
       var _bsp = document.getElementById('btn-speak');
       if (_bsp) {

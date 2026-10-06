@@ -403,6 +403,13 @@
       <p class="note" id="draw-note">Close your eyes. Hold your question. Then choose the rune that calls to you.</p>
       <div class="rune-grid" id="reader-grid"></div>
       <div class="rune-info" id="reader-rune-info"></div>
+      <!-- Jen admin (2026-10-06, KUKY „přidej výběr obrazu pro admina“): týž obraz vybrané runy víckrát pro testování.
+           Maluje _paintImgPin() v runar-reading.js; proč a jak to platí — komentář u IMG_PIN v runar-character.js. -->
+      <div class="img-pin" id="img-pin" style="display:none;">
+        <span class="img-pin-lbl" id="img-pin-lbl">Image for this rune (test)</span>
+        <select class="journal-filter-select" id="img-pin-img" onchange="setImgPin()"></select>
+        <select class="journal-filter-select" id="img-pin-vyz" onchange="setImgPin()" style="display:none;"></select>
+      </div>
       <button class="btn-random" id="btn-random" onclick="drawRandomRune()">ᚲ LET THE RUNES DECIDE</button>
       <button class="btn-full" id="btn-speak" onclick="readRune()" disabled>HEAR RÚNAR SPEAK</button>
     </div>

@@ -230,6 +230,7 @@ function updateAuthUI() {
   updateAuthLabel();
   updateBanners();
   if (typeof _paintSolToggle === 'function') _paintSolToggle();   // GPT-6 sol jen pro admina (2026-09-24)
+  if (typeof _paintImgPin === 'function') _paintImgPin();         // volba obrazu jen pro admina (2026-10-06)
 }
 
 // ── SPECIFIC QUESTION GATE ────────────────────────────────

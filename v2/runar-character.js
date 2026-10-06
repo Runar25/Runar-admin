@@ -836,6 +836,25 @@ function _runeImageCandidates(drawn, bucket) {
 // EN a spready ho plni a ignoruji.
 var _imgAspektIS = '';
 var _imgAspektEN = '';
+// 2026-10-06 VÝBĚR OBRAZU PRO ADMINA (KUKY „přidej výběr obrazu pro admina“). Owner testuje jednu runu opakovaně a chce TENTÝŽ
+// obraz víckrát — při stejné oblasti a hledání vidět, co z něj model udělá. Sáček mu dával pokaždé jiný (jeho 7 čtení
+// Hagalaz × Family & Home × Confirmation = 7 obrazů). IMG_PIN = { runa: { img: _imgId obrazu, vyz: index významu | '' } };
+// plní ho JEN reader pro admina (_paintImgPin v runar-reading.js), jinde zůstává null. Zvolený obraz přeskočí sezónu, oblast
+// i sáček. _imgPinPouzit = poslední stavěný prompt jel na zvoleném obrazu → prompt_draws.pin (databáze čtení ho označí 📌).
+var IMG_PIN = null;
+var _imgPinPouzit = false;
+function _imgId(row) { return row[0] + '|' + row[2].slice(0, 24); }   // identita obrazu pro sáček i volbu: IS sloupec = oba jazyky
+function _imgPinRow(drawn) {
+  if (!IMG_PIN) return null;
+  var list = (Array.isArray(drawn) ? drawn : [drawn]).filter(Boolean);
+  for (var i = 0; i < list.length; i++) {
+    var p = IMG_PIN[list[i].n];
+    if (!p || !p.img) continue;
+    for (var j = 0; j < RUNE_IMAGES.length; j++)
+      if (RUNE_IMAGES[j][0] === list[i].n && _imgId(RUNE_IMAGES[j]) === p.img) return { row: RUNE_IMAGES[j], vyz: p.vyz };
+  }
+  return null;
+}
 // 2026-09-30 (KUKY „1 ano nasaď“ + „12 ano“): index 9 „postava“ v RUNE_IMAGES = zvíře v hlavní roli obrazu (11 řádků).
 // Uživatel obraz NEVIDÍ. Čtení, které zvíře nepojmenuje, mu dá „she/he“ bez předchůdce, nebo ho do zvířete posadí
 // (report 2026-09-28 15:17: „podle Asku jsem pochopil, že ten sheepdog jsem já“). Proto pokyn hned za obraz:
@@ -930,6 +949,7 @@ function _seasonalImagery(lang, drawn, area) {
   _imgAspektIS = '';
   _imgAspektEN = '';
   _imgPostava = false;
+  _imgPinPouzit = false;
   var placePair = null;   // [is, en] misto pro radek s jadrem; null = uplny obraz bez mista
   var m = new Date().getMonth() + 1;
   var bucket = _seasonBucket(m);
@@ -943,7 +963,8 @@ function _seasonalImagery(lang, drawn, area) {
   // Mění se jen ZDROJ textu (sloupec), výběr kandidátů ani sáček ne.
   var runePhrase = '';
   {
-    var cand = _imgPodleOblasti(_runeImageCandidates(drawn, bucket), area);   // 2026-10-03: oblast vyřadí obrazy jiných oblastí
+    var pin = _imgPinRow(drawn);   // 2026-10-06: admin zvolil obraz → přeskočí sezónu, oblast i sáček (IMG_PIN výš)
+    var cand = pin ? [pin.row] : _imgPodleOblasti(_runeImageCandidates(drawn, bucket), area);   // 2026-10-03: oblast vyřadí obrazy jiných oblastí
     if (cand.length) {
       // Sáček musí mít klíč per SADA run, ne jeden společný: `_seasonBagPick` filtruje uložený
       // zbytek podle aktuálních ids, takže sdílený klíč se při každé jiné runě vyprázdnil
@@ -962,7 +983,7 @@ function _seasonalImagery(lang, drawn, area) {
           lastImg = localStorage.getItem('seasonlast_' + runeKey) || '';
         }
       } catch (e) {}
-      var cIds = cand.map(function (row) { return row[0] + '|' + row[2].slice(0, 24); });
+      var cIds = cand.map(_imgId);
       var vyradit = lastImg ? [lastImg] : [];   // nikdy tentyz obraz hned po sobe (report #6)
       if (lastMotif) cand.forEach(function (row, i) { if ((row[7] || '') === lastMotif) vyradit.push(cIds[i]); });
       // Poslední obraz téže runy z DENÍKU — i když padl na jiném zařízení (text je v jazyce toho čtení, proto IS i EN sloupec).
@@ -970,14 +991,19 @@ function _seasonalImagery(lang, drawn, area) {
         var s = _imgServerLast[row[0]];
         if (s && (_imgNorm(row[2]) === s || _imgNorm(row[3]) === s) && vyradit.indexOf(cIds[i]) === -1) vyradit.push(cIds[i]);
       });
-      var cPick = _seasonBagPick(bucket, runeKey, cIds, vyradit);
-      var hit = cand[cIds.indexOf(cPick)] || cand[Math.floor(Math.random() * cand.length)];
-      try {
-        if (typeof localStorage !== 'undefined') {
-          localStorage.setItem('seasonmotif_' + runeKey, hit[7] || '');
-          localStorage.setItem('seasonlast_' + runeKey, cIds[cand.indexOf(hit)]);
-        }
-      } catch (e) {}
+      // Zvolený obraz sáček NEčerpá ani nepřepisuje „poslední obraz“ — po vypnutí volby los pokračuje, kde byl.
+      var hit = pin ? pin.row : null;
+      if (!hit) {
+        var cPick = _seasonBagPick(bucket, runeKey, cIds, vyradit);
+        hit = cand[cIds.indexOf(cPick)] || cand[Math.floor(Math.random() * cand.length)];
+        try {
+          if (typeof localStorage !== 'undefined') {
+            localStorage.setItem('seasonmotif_' + runeKey, hit[7] || '');
+            localStorage.setItem('seasonlast_' + runeKey, cIds[cand.indexOf(hit)]);
+          }
+        } catch (e) {}
+      }
+      _imgPinPouzit = !!pin;
       // id sáčku zůstává odvozené z IS sloupce (výš), takže týž obraz má tutéž
       // identitu v obou jazycích — ochrana proti opakování se jazykem nerozpadá.
       runePhrase = (lang === 'is' ? hit[2] : hit[3]).replace(/\.$/, '');   // věta pokračuje, tečka by ji rozťala
@@ -989,8 +1015,11 @@ function _seasonalImagery(lang, drawn, area) {
       // 2026-08-22 se u řeky a poryvu rozešli (řeka EN 2× disruption + 1× nature force, IS 2× náttúruöfl + 1× umbreyting;
       // poryv EN 3/3 disruption, IS 3/3 náttúruöfl) — oba významy na scénu sedí. Obraz s jediným významem los nečerpá.
       var aIS = String(hit[4] || '').split('|'), aEN = String(hit[5] || '').split('|'), aI = 0;
-      if (aIS.length > 1 && aIS.length === aEN.length)
-        aI = Number(_seasonBagPick('vyznam', cIds[cand.indexOf(hit)], aIS.map(function (x, i) { return String(i); }))) || 0;
+      if (aIS.length > 1 && aIS.length === aEN.length) {
+        var pv = (pin && pin.vyz !== '' && pin.vyz != null) ? Number(pin.vyz) : NaN;   // admin zvolil i význam
+        aI = (pv >= 0 && pv < aIS.length) ? pv
+          : (Number(_seasonBagPick('vyznam', cIds[cand.indexOf(hit)], aIS.map(function (x, i) { return String(i); }))) || 0);
+      }
       _imgAspektIS = (aIS[aI] || '').trim();
       _imgAspektEN = (aEN[aI] || '').trim();
       _imgPostava = hit[9] === 'postava';   // zvíře v hlavní roli → pokyn za obraz (IMG_POSTAVA)

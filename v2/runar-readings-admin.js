@@ -255,6 +255,7 @@
         vyznam(r) ? '<span class="rd-tag">význam: ' + esc(vyznam(r)) + '</span>' : '',
         d.angle !== undefined ? '<span class="rd-tag">úhel ' + esc(d.angle) + '</span>' : '',
         d.area_face !== undefined ? '<span class="rd-tag">podoba ' + esc(d.area_face) + '</span>' : '',
+        d.pin ? '<span class="rd-tag" title="obraz zvolil admin (2026-10-06) — nebyl to los">📌 obraz zvolen</span>' : '',
       ].filter(Boolean).join('');
       var skladbaHtml = (o.key || skladba) ? '<div class="rd-skladba">' +
         (o.key ? '<div class="rd-obraz" title="' + esc(o.title) + '">🖼 ' + esc(o.label) + '</div>' : '') + skladba + '</div>' : '';

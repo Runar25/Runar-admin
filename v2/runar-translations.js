@@ -75,6 +75,11 @@ const UI_TEXT = {
     gpt_review_btn:   'GPT-6 luna',   // model = supabase/functions/gpt-review MODEL (2026-09-24 sol -> luna, cena)
     // Přepínač čtení přes GPT-6 sol — jen admin, test (2026-09-24, DECISIONS 2026-09-24 (17)).
     sol_toggle:       'Read with GPT-6 sol (test)',
+    // Výběr obrazu pro admina (2026-10-06) — týž obraz vybrané runy víckrát pro testování.
+    img_pin_lbl:      'Image for this rune (test)',
+    img_pin_random:   'chosen at random',
+    img_pin_vyz_auto: 'meanings take turns',
+    img_pin_title:    'The same image stays with this rune until you choose another.',
     gpt_review_wait:  'GPT-6 luna is reading…',
     gpt_review_err:   'GPT-6 luna did not answer: {msg}',
     report_type:      'Type',
@@ -506,6 +511,10 @@ const UI_TEXT = {
     report_flagging:  'Tilkynni:',
     gpt_review_btn:   'GPT-6 luna',
     sol_toggle:       'Lestur með GPT-6 sol (prófun)',
+    img_pin_lbl:      'Mynd fyrir þessa rún (prófun)',
+    img_pin_random:   'valin af handahófi',
+    img_pin_vyz_auto: 'merkingarnar skiptast á',
+    img_pin_title:    'Sama myndin gildir um þessa rún þar til þú velur aðra.',
     gpt_review_wait:  'GPT-6 luna er að lesa…',
     gpt_review_err:   'GPT-6 luna svaraði ekki: {msg}',
     report_type:      'Tegund',

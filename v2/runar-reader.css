@@ -596,6 +596,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 /* Přepínač GPT-6 sol pod „Begin the reading" — jen admin (2026-09-24). Týž tichý štítek jako ostatní admin prvky. */
 .sol-toggle{display:flex;align-items:center;gap:8px;margin-top:14px;font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:1.5px;color:var(--muted);cursor:pointer;}
 .sol-toggle input{accent-color:var(--gold);margin:0;cursor:pointer;}
+/* 2026-10-06 výběr obrazu pro admina — popisek jako .sol-toggle, výběry jako .journal-filter-select (existující vzhled) */
+.img-pin{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:12px;}
+.img-pin-lbl{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:1.5px;color:var(--muted);}
+.img-pin select{max-width:100%;}
 .gpt-review-out{margin-top:12px;font-size:0.95em;line-height:1.55;color:var(--white);white-space:pre-wrap;}
 /* Ask Rúnar — follow-up Q&A (Premium, one question per reading) */
 #ask-runar{margin-top:22px;padding-top:20px;border-top:1px solid rgba(255,191,0,0.14);}

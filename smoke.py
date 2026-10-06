@@ -787,6 +787,17 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola databaze cteni probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# ㉶ Výběr obrazu pro admina (CODE-tune 2026-10-06, KUKY „přidej výběr obrazu pro admina“): admin vybere runě obraz (a význam)
+# a ten drží i mimo sezónu a oblast, single i spread; sáček obrazů runy se nečerpá; ne-admin volbu nemá; prompt_draws nese pin.
+print('\n' + chr(0x3276) + ' VYBER OBRAZU PRO ADMINA (verify_image_pin.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_image_pin.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola vyberu obrazu probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

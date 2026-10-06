@@ -136,6 +136,52 @@ function toggleSol(on) {
   try { localStorage.setItem('runar_engine', on ? 'sol' : ''); } catch (e) {}
   _paintSolToggle();
 }
+// ─── Výběr obrazu pro admina (2026-10-06, KUKY „přidej výběr obrazu pro admina“) ────────────────────
+// Proč a jak se volba použije: komentář u IMG_PIN v runar-character.js. Volba je per runa v localStorage ('runar_img_pin')
+// a platí, dokud ji admin nevrátí na „náhodně“ — i ve spreadech, kde ta runa padne. Ne-admin = vždy los (IMG_PIN null).
+function _imgPinMapa() { try { return JSON.parse(localStorage.getItem('runar_img_pin') || '{}') || {}; } catch (e) { return {}; } }
+function _paintImgPin() {
+  var box = document.getElementById('img-pin'), si = document.getElementById('img-pin-img'), sv = document.getElementById('img-pin-vyz');
+  var admin = !!(currentUser && isAdmin(currentUser.email));
+  IMG_PIN = admin ? _imgPinMapa() : null;
+  if (!box) return;
+  if (!admin || !readerRune) { box.style.display = 'none'; return; }
+  var runa = readerRune.n, isIs = lang === 'is';
+  var rows = RUNE_IMAGES.filter(function (row) { return row[0] === runa; });
+  var p = IMG_PIN[runa] || {}, row = null;
+  for (var i = 0; i < rows.length; i++) if (_imgId(rows[i]) === p.img) row = rows[i];
+  var zkr = function (s) { s = String(s || ''); return s.length > 64 ? s.slice(0, 64) + '…' : s; };
+  if (si) {
+    si.innerHTML = '<option value="">— ' + escapeHtml(t('img_pin_random')) + ' —</option>' + rows.map(function (x) {
+      var id = _imgId(x);
+      return '<option value="' + escapeHtml(id) + '"' + (row && _imgId(row) === id ? ' selected' : '') + '>' +
+        escapeHtml(zkr(isIs ? x[2] : x[3]) + ' · ' + x[1]) + '</option>';
+    }).join('');
+  }
+  var alt = row ? String(row[isIs ? 4 : 5] || '').split('|') : [];
+  if (sv) {
+    sv.style.display = alt.length > 1 ? '' : 'none';
+    sv.innerHTML = '<option value="">' + escapeHtml(t('img_pin_vyz_auto')) + '</option>' + alt.map(function (a, i) {
+      return '<option value="' + i + '"' + (String(p.vyz) === String(i) ? ' selected' : '') + '>' + escapeHtml(a.trim()) + '</option>';
+    }).join('');
+  }
+  box.style.display = 'flex';
+}
+function setImgPin() {
+  if (!(currentUser && isAdmin(currentUser.email)) || !readerRune) return;
+  var si = document.getElementById('img-pin-img'), sv = document.getElementById('img-pin-vyz');
+  var m = _imgPinMapa(), img = si ? si.value : '';
+  if (img) m[readerRune.n] = { img: img, vyz: (m[readerRune.n] && m[readerRune.n].img === img && sv) ? sv.value : '' };
+  else delete m[readerRune.n];
+  try { localStorage.setItem('runar_img_pin', JSON.stringify(m)); } catch (e) {}
+  _paintImgPin();
+}
+// Co si prompt vylosoval + značka, že obraz zvolil admin (los to nebyl — databáze čtení ho označí 📌).
+function _drawsSPinem(prompt, lang) {
+  var d = _promptDraws(prompt, lang);
+  if (d && typeof _imgPinPouzit !== 'undefined' && _imgPinPouzit) d.pin = 1;
+  return d;
+}
 // ─── Složení čtení pro report (jen admin, 2026-09-25) ───────────────────────────────────
 // KUKY (report 08:41): „líbilo by se mi vidět v reportu jen pro adminy, z čeho se to čtení složilo“. Čte se zpětně
 // z hotového promptu (_promptDraws — tentýž zápis, který jde do DB), takže je to přesně to, co model dostal.
@@ -356,7 +402,7 @@ async function _generateReading() {
     prompt_version: RUNAR_PROMPT_VERSION, address: userGender, reading_mode: _readingMode,
     // Co si prompt vylosoval (úhel · obraz · tvar konce · umístění jména). Bez toho
     // nejde u reálného čtení říct, která páka za výsledek může — viz _promptDraws.
-    draws: _promptDraws(prompt, lang)
+    draws: _drawsSPinem(prompt, lang)
   } : null;
   _lastReadingId = null;
   const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens, shouldUseCredit(), SPREAD_COSTS.single.credits, _journal);
@@ -1376,7 +1422,7 @@ async function _generateSpreadReading(o) {
     area: 'spread', aol: u.area || null, seeking: u.seeking || null, intention: u.intention || null,
     question: u.question || null, life_rune: (u.lifeRune && u.lifeRune.n) || null,
     rune_display: _runeDisplay, prompt_version: RUNAR_PROMPT_VERSION, address: userGender,
-    reading_mode: _readingMode, draws: _promptDraws(prompt, lang)
+    reading_mode: _readingMode, draws: _drawsSPinem(prompt, lang)
   } : null;
   _lastReadingId = null;
   // Zakladaci Norny: zdarma a BEZ HLASU (hlas = 95 % ceny cteni, proto se nekona).

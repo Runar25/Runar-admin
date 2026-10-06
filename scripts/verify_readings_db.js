@@ -36,6 +36,7 @@ Object.assign(DATA[0], { area: 'Family & Home', seeking: 'Confirmation' });
 Object.assign(DATA[1], { area: AR.is[iF], seeking: SK.is[iC] });
 Object.assign(DATA[2], { area: 'Inner Growth', seeking: 'General Guidance' });
 Object.assign(DATA[3], { area: '', seeking: '' });
+DATA[2].prompt_draws.pin = 1;   // 2026-10-06: čtení na obraze, který zvolil admin
 const T = S.__rdTest;
 T.setRune('Hagalaz'); T.setRows(DATA); T.renderAll();
 const sum = el['rd-summary'].innerHTML;
@@ -68,6 +69,9 @@ rekni(el['rd-count'].textContent === '2 z 4', 'oblast + hledání, islandské �
 S.setRdFilter('seek', 'General Guidance');
 rekni(el['rd-count'].textContent === '0 z 4', 'jiné hledání v téže oblasti nic nepustí (' + el['rd-count'].textContent + ')');
 S.setRdFilter('area', ''); S.setRdFilter('seek', '');
+const karty = el['readings-list'].innerHTML.split('class="rd-item"');
+rekni(karty.filter((k) => k.indexOf('📌') !== -1).length === 1 && karty.some((k) => k.indexOf('📌') !== -1 && k.indexOf('gull') !== -1),
+  'čtení na obraze zvoleném adminem má 📌, ostatní ne');
 
 if (fail) { console.log('\n' + fail + ' selhalo'); process.exit(1); }
 console.log('\nOK    databáze čtení: obraz EN+IS v jednom řádku, výběr obrazu, poznámky a ✦ Keep, filtry (i oblast a hledání napříč jazyky) a hledání sedí');
