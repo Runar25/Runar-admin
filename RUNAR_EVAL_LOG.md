@@ -6203,3 +6203,32 @@ runa jako jméno přes `rnPrompt`; aspekt `prompt_draws.kws`.
 „does not say" stejné (7 × 6) — nerozhodnuto. Se správným vstupem je pojistky o něco víc (P0 11 × 9 v kole 1).
 **Dopad na pokus A a B (CODE-tune, EVAL_LOG 2026-10-06 (4)):** běžely na témže vstupu s ✦ — P0–P7 i slova tipů platí jen pro čtení
 s ✦ na konci; P6 („čtení bez posledního řádku" = bez mostu, ✦ zůstal) je třeba přeměřit se vstupem bez ✦. → handoff CODE-tune.
+
+## 2026-10-06 (7) — „THE RUNE does not say…" odpovídá na rámec v Asku, kde runa NESE obsah („carries the sense", „what the runes hold") — 8/30 → 1/30
+
+**Owner (oprava zadání po (5)/(6)):** *„nevím, co je se slovesem say! Já se neptal na sloveso say… ptal jsem se na ‚the rune does not say‘…
+hledáme něco, kde se říká, aby popsal runu… je to něco, co ta runa dělá, říká, ukazuje… tohle je EN gramatika. Pokud to nevíš, najdi si to."*
+CODE-read testy (5)/(6) měřily jen sloveso *say* v pokynu — špatně pochopená hypotéza.
+**Gramatika (ověřeno):** Wiktionary *say*, význam 4 *„To indicate in a written form"* — *„The sign says it's 50 kilometres to Paris"*, *„What time
+does it say on the clock?"* (Cambridge a Merriam-Webster vrátily 403). *„X does not say"* = X jako nápis / ukazatel, který podává informaci;
+odpověď „neříká" přijde, když se ptáme na víc, než ukazatel uvádí.
+**Kde Ask dělá z runy takový zdroj (vstup jako v produkci):** hlavička `RP_ASK.aspect` *„In this reading Raidho carries the sense of the road. Its
+other senses are …"* · pravidla *„say what the runes of this reading actually hold"*, *„Say what the runes of this reading hold, in the terms of
+their own question"*, *„answer plainly in its terms, from the runes of this reading"* · ve čtení esenční věta (*„Raidho concerns the direction…"*).
+**Test** (`docs/eval/2026-10-06-ask-pojistka/ask_zdroj.js`, `rozbor_podmet.js`; sol jako callSol, vstup bez ✦, 3 ownerova čtení × 2 tipy × 5 = n 30,
+$0,28): **X** = runa nikde jako nositel obsahu (hlavička *„Here: the road; also movement, …"*, pravidla *„stay with this reading"*, *„Explain this
+reading in the terms of their own question"*, bez *„from the runes"*) · **Y** = obráceně, runa výslovně *„says"* (*„Raidho says: the road…"*, *„say what
+the runes of this reading say"*).
+| rameno | podmět RUNA + does not say/show/tell/settle | jiný podmět (čtení, obraz, mohyly, it) | pojistka celkem |
+|---|---|---|---|
+| P0 produkce | **8/30** (půlky 3/5) | 12/30 | 22/30 |
+| **X** runa nic nenese | **1/30** (Fisher p = 0,026) | 11/30 | 18/30 |
+| Y runa „says" | 5/30 | 13/30 | 20/30 |
+Kolo (6) přepočítané týmž nástrojem: P0 3/18 · V (bez *say*) 2/18 · **R (*„say what the runes say"*) 7/18**. Příklady P0: *„The rune does not settle which
+is happening here"* · *„Kuky, Sowilo does not show you a fixed destination"* (3× doslova). X: jediný *„Raidho does not say which course is right"*.
+⭐ **Závěr:** ownerova hypotéza platí pro **runu jako podmět**: když prompt runu nerámuje jako nositele obsahu, *„the rune / <Runa> does not say / show"*
+skoro zmizí (8 → 1, p = 0,026); zesílený rámec ji drží (Y 5, R 7). **Pojistka sama nezmizí** — přejde na jiný podmět (*„The reading does not say which
+is happening between you"*, *„The cairns … do not tell you whether it still fits"*, 11–13/30 ve všech ramenech): ten díl odpovídá na **most čtení**
+(možnost „may be X, or Y") × zákaz verdiktu a na tip *„{area} — can you make this image clearer?"* (pojistka hlavně u něj).
+**Hranice:** EN, sol, 3 čtení, 2 tipy; X mění hlavičku i tři pravidla naráz — která z nich nese většinu, nerozlišeno; znění X je testovací
+(do produkce jen ověřené anglické znění — memory `en-formulace-overit-zdrojem`). Opus netestován.

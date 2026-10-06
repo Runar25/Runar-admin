@@ -1,0 +1,2342 @@
+[
+ {
+  "v": "P0",
+  "h": "area",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Inner Growth — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "For inner growth, Raidho points to a difference between moving and choosing your direction. The cairns mark a road you can still follow, but they do not tell you whether it still fits. The grass between the stones shows that even a settled path can change. The question is not how far you have come, but whether continuing feels like a choice or a habit.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1209,
+   "completion_tokens": 77,
+   "total_tokens": 1286,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "area",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Inner Growth — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "For inner growth, Raidho points to a difference between choosing a direction and staying with it because it is familiar. The next cairn is visible, so the road has not vanished. The grass between the stones suggests that even a well-marked path changes over time. The question here is not whether you keep moving, but whether this road still fits what you mean to follow.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1209,
+   "completion_tokens": 79,
+   "total_tokens": 1288,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "area",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Inner Growth — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "The cairns mark a road you can recognize, but they do not tell you whether it still fits. For inner growth, Raidho points to the difference between a direction you choose now and one you keep because you chose it before. The grass between the stones makes room for change in something that looks settled. The question is not how far you have come, but whether this road still belongs to you.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1209,
+   "completion_tokens": 84,
+   "total_tokens": 1293,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "area",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Inner Growth — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "The cairns mark a route, but they do not tell you whether it still fits. The grass caught in the stone is a small sign of change: even a familiar marker does not stay quite the same. In terms of inner growth, Raidho points to the difference between moving by habit and moving in a direction you still recognize as yours. The reading leaves that distinction with you; it does not decide which road is right.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1209,
+   "completion_tokens": 89,
+   "total_tokens": 1298,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "area",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Inner Growth — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "The two cairns mark a road you can see, but the space between them is open ground. Raidho asks whether continuing still fits the direction you want to take. For inner growth, the distinction is between a choice you still make and a choice you keep repeating because it is familiar. The image does not say which is true for you.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1209,
+   "completion_tokens": 72,
+   "total_tokens": 1281,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "area",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Love & Relationships — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "In a relationship, Algiz points to the space between care and caution. Your attentiveness may help someone feel safe. It may also leave them unsure whether you welcome their closeness. The reading does not say that your caution is misplaced, or that the other person means harm. It holds both possibilities in view.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1211,
+   "completion_tokens": 66,
+   "total_tokens": 1277,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "area",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Love & Relationships — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "In love, Algiz’s protection may look like noticing a change in someone’s voice before you speak about what you feel. That care can make room for trust, but the same watchfulness can leave someone unsure whether they are welcome close to you. The reading holds both possibilities without saying which one fits.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1211,
+   "completion_tokens": 64,
+   "total_tokens": 1275,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "area",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Love & Relationships — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "In love, Algiz holds the space between care and distance. Your watchfulness may help you notice when a boundary matters. Someone close to you may also read that same watchfulness as a sign that they are not welcome. The image does not say which reading is right. It holds both possibilities without asking you to set protection aside.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1211,
+   "completion_tokens": 70,
+   "total_tokens": 1281,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "area",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Love & Relationships — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "In a relationship, Algiz holds the difference between guarding a bond and keeping someone at a distance. Your watchfulness may help you notice when care is needed. The same watchfulness may be hard for someone close to you to read, even when you mean no harm. The rune does not settle which is happening here.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1211,
+   "completion_tokens": 67,
+   "total_tokens": 1278,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "area",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Purpose & Path — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "Kuky, Sowilo does not show you a fixed purpose or a full path ahead. It gives just enough light to distinguish what holds your attention now. That may be work you still care about, or a question your present direction leaves unanswered. The image leaves room for either.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1224,
+   "completion_tokens": 59,
+   "total_tokens": 1283,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "area",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Love & Relationships — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "In love, Algiz holds a question about how protection appears between two people. Your watchfulness may give someone a sense of safety, while your quiet may leave them unsure whether there is room to come close. The reading does not say that your guard is misplaced, or that the other person means harm. It holds both possibilities in view: care can be felt as shelter, and it can be mistaken for distance.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1211,
+   "completion_tokens": 86,
+   "total_tokens": 1297,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "area",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Purpose & Path — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "Kuky, Sowilo does not show you a fixed destination. It shows enough light to see what is close: a piece of work that holds your attention, or a question about your direction that remains when other concerns fade. In this reading, purpose may be less about seeing the whole path than recognizing what gives you reason to keep going.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1224,
+   "completion_tokens": 71,
+   "total_tokens": 1295,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "area",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Purpose & Path — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "Kuky, Sowilo does not show you a fixed destination. Its light makes the ground nearest you visible, while the distance remains unclear. In terms of purpose, that may mean you can see what gives your effort meaning without knowing where it leads. An old question may also become hard to set aside. The reading leaves open which of these is clearer from where you stand.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1224,
+   "completion_tokens": 78,
+   "total_tokens": 1302,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "area",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Purpose & Path — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "Kuky, Sowilo does not show you a whole path. It casts enough light to make one part of it visible. In terms of purpose, that may be work that still holds your attention, or a question about it that no longer sits quietly. The reading does not say which matters more. It leaves that distinction with you.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1224,
+   "completion_tokens": 70,
+   "total_tokens": 1294,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "area",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Purpose & Path — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "Sowilo gives you light enough to see what is close, not a view of the whole path. For your purpose, that may mean a piece of work that still holds your attention, or a question you keep returning to. The image does not say which direction is right. It places clarity beside the will to continue, without saying you need to have everything settled first.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1224,
+   "completion_tokens": 78,
+   "total_tokens": 1302,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "expl",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Explain Raidho without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Raidho is about the direction you are moving in, not movement for its own sake. In this reading, it raises a question about a path you once chose: does it still fit, or does it continue because it is familiar? You may find a natural rhythm in continuing, or you may find that right action points elsewhere. The rune does not settle that question for you.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1206,
+   "completion_tokens": 79,
+   "total_tokens": 1285,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "expl",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Explain Raidho without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Raidho is about the direction you take, not movement for its own sake. In this reading, a path you chose earlier may still be familiar without still being right for you. The rune leaves that question open: are you continuing because the direction still fits, or because it is the one you know?",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1206,
+   "completion_tokens": 64,
+   "total_tokens": 1270,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "expl",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Explain Raidho without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Raidho is about direction, not simply movement. In this reading, it asks whether a path you chose earlier still fits you now. Continuing may have become a habit, but the rune does not say you must change course. It leaves that question open.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1206,
+   "completion_tokens": 54,
+   "total_tokens": 1260,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "expl",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Explain Raidho without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Raidho is about direction, not movement for its own sake. In this reading, you may be following a path because it once made sense to you. The rune leaves open whether that path still fits. Its sense of right action is not a fixed rule; it concerns how your direction and your pace meet what matters to you now.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1206,
+   "completion_tokens": 70,
+   "total_tokens": 1276,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "expl",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Explain Raidho without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Raidho is about the direction of a path already underway. In this reading, you may be continuing with a choice that once suited you, even as your reasons for it change. The question it holds is whether that direction still fits you, rather than whether you can keep going.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1206,
+   "completion_tokens": 59,
+   "total_tokens": 1265,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "expl",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Explain Algiz without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Algiz holds protection through attention, not through shutting everything out. Your watchfulness may show someone that you care about what matters. It may also leave them unsure whether you feel safe with them. The reading holds both possibilities without deciding which one fits.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1207,
+   "completion_tokens": 53,
+   "total_tokens": 1260,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "expl",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Explain Algiz without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Algiz holds protection that stays attentive without shutting everything out. Your caution may help you guard what matters, while someone else may experience it as distance. The reading does not settle which view is right. It leaves room for both.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1207,
+   "completion_tokens": 49,
+   "total_tokens": 1256,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "expl",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Explain Algiz without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Algiz speaks of protection through awareness. Your care for what matters may show as watchfulness, though another person may read that same watchfulness as distance. The rune does not say you are closed off or that the other person means harm. It holds the difference between staying attentive and shutting someone out.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1207,
+   "completion_tokens": 63,
+   "total_tokens": 1270,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "expl",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Explain Algiz without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Algiz holds protection through awareness, not withdrawal. Your watchfulness can help you notice what matters, but someone else may experience it as distance even when they mean no harm. The reading does not say your caution is misplaced. It leaves room for both your need for shelter and another person’s wish to feel close.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1207,
+   "completion_tokens": 66,
+   "total_tokens": 1273,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "expl",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Explain Algiz without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Algiz speaks of protection through awareness, not through shutting everything out. In this reading, your watchfulness may help you care for what matters. To someone who means no harm, that same watchfulness may feel like distance. The rune holds both possibilities without saying which one fits.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1207,
+   "completion_tokens": 59,
+   "total_tokens": 1266,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "expl",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Explain Sowilo without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Sowilo is the sun rune. In this reading, it speaks of clarity that may be enough to keep you moving, even without certainty about what lies ahead. Its sense of will and life force is not a promise of victory. What becomes clear may be a reason to continue, or a question you have not yet settled.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1220,
+   "completion_tokens": 69,
+   "total_tokens": 1289,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "expl",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Explain Sowilo without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Sowilo is the sun rune. Here it speaks of clarity: you may see enough to understand what matters, even if you cannot see far ahead. Its sense of will is not a promise of victory. It leaves room for a new understanding to sustain you, or for an old question to become harder to overlook.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1220,
+   "completion_tokens": 67,
+   "total_tokens": 1287,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "expl",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Explain Sowilo without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Sowilo carries clarity and the will to continue. Here, it does not promise victory or a clear view of everything ahead. It points to what you may be able to see now: a reason to keep going, or a question that needs your attention.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1220,
+   "completion_tokens": 55,
+   "total_tokens": 1275,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "expl",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Explain Sowilo without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Sowilo is the sun rune. In this reading, it holds clarity and the will to continue, without promising certainty about what lies ahead. You may see enough to recognise what matters now, even if the wider course remains unclear. That clarity could come from something newly understood, or from a question you have had for some time.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1220,
+   "completion_tokens": 70,
+   "total_tokens": 1290,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "h": "expl",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Explain Sowilo without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Sowilo means sun. In this reading, it points to clarity that may help you continue, even when you cannot see far ahead. Its sense of victory is not a promised outcome. It is the possibility of seeing what matters now, including a question you may have set aside.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1220,
+   "completion_tokens": 60,
+   "total_tokens": 1280,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "area",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Inner Growth — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "The cairns mark a route, but they do not tell you whether it still suits you. The grass caught between the stones makes the place feel lived in, not fixed forever. For inner growth, Raidho points to the difference between moving with purpose and continuing because the road is familiar. Clarity here may be a clearer sense of why you remain on that road.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1178,
+   "completion_tokens": 77,
+   "total_tokens": 1255,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "area",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Inner Growth — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "The cairns mark a road you can follow, but they do not tell you why you still follow it. In terms of inner growth, the distinction is between a choice that still fits you and one you repeat because it is familiar. Raidho holds that question without settling it. The grass caught in the stones leaves room for something living beside a fixed route.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1178,
+   "completion_tokens": 75,
+   "total_tokens": 1253,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "area",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Inner Growth — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "The cairns mark a route you can still follow. The grass between the stones shows that even a familiar marker can change with time. For inner growth, the question is not whether you can keep going, but whether the direction still fits the person you are now. Raidho leaves that question open; it does not say the road is wrong.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1178,
+   "completion_tokens": 72,
+   "total_tokens": 1250,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "area",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Inner Growth — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "The two cairns mark a road you can follow. The grass caught in the nearer one is small, but it has grown where the stones leave room. For inner growth, Raidho points to the difference between moving because a choice still fits you and moving because you made it once. Clarity here is not a verdict about the road. It is the question of whether your direction still feels like your own.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1178,
+   "completion_tokens": 85,
+   "total_tokens": 1263,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "area",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Love & Relationships — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "In a relationship, Algiz can look like care shown through attention: you notice what might hurt someone, and you make room for safety. That same watchfulness may also make it hard for another person to tell whether you welcome their closeness. The reading does not say which is happening between you. It holds both possibilities.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1180,
+   "completion_tokens": 68,
+   "total_tokens": 1248,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "area",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Love & Relationships — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "In love, Algiz makes room for both care and caution. You may show care by noticing what feels safe and what needs protecting. Someone close to you might value that steadiness, yet find it hard to tell when you welcome them nearer. The reading holds both possibilities without deciding which one fits.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1180,
+   "completion_tokens": 63,
+   "total_tokens": 1243,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "area",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Love & Relationships — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "In love, Algiz makes a distinction between keeping yourself safe and keeping someone at a distance. You may take time to see whether a person treats your boundaries with care. That can be a form of protection, though from their side it may feel as if there is no room to come closer. The reading does not say which is happening. It leaves that difference in view.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1180,
+   "completion_tokens": 78,
+   "total_tokens": 1258,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "area",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Inner Growth — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "The cairns mark a route, but they do not tell you whether it still fits. The grass between the stones makes the path feel lived-in rather than fixed. For inner growth, Raidho points to the difference between choosing a direction and continuing because it is familiar. Clarity may lie in seeing that difference, without needing to settle it at once.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1178,
+   "completion_tokens": 74,
+   "total_tokens": 1252,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "area",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Love & Relationships — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "In love, Algiz can look like a boundary that protects a bond without shutting someone out. You may be careful about who comes close, or someone close to you may read that care as distance. The reading does not say which is happening. It holds both possibilities: your watchfulness can make room for trust, and it can make your warmth harder to see.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1180,
+   "completion_tokens": 76,
+   "total_tokens": 1256,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "area",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Love & Relationships — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "In love, Algiz can show the difference between keeping someone safe and keeping them at a distance. Your care may appear in how closely you notice what affects them. That same watchfulness may make it hard for them to tell whether you welcome their closeness. The reading leaves both possibilities open.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1180,
+   "completion_tokens": 62,
+   "total_tokens": 1242,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "area",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Purpose & Path — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "Kuky, the picture does not show a whole path. It shows enough light to make one part of it visible. In terms of purpose, Sowilo points to clarity rather than a fixed destination: you may see what gives your effort life, or notice a question that makes the direction you are taking harder to ignore. The reading leaves which of those matters to you.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1193,
+   "completion_tokens": 77,
+   "total_tokens": 1270,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "area",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Purpose & Path — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "Kuky, Sowilo’s light reaches only part of the scene. In terms of purpose, the reading does not point to one fixed calling or a complete route. It suggests that clarity may be enough to show what matters next, even when the longer path stays uncertain. The will to continue may come from seeing a possibility more clearly, or from recognizing a question that still needs your attention.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1193,
+   "completion_tokens": 81,
+   "total_tokens": 1274,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "area",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Purpose & Path — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "Sowilo’s light shows what is near, not the whole road. For your purpose, that may mean a direction becomes clearer before you know where it leads. An old question you have set aside may deserve as much attention as a new possibility. The reading does not say which one matters more. It leaves you with what you can see now, and with the difference between wanting certainty and having enough clarity to continue.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1193,
+   "completion_tokens": 87,
+   "total_tokens": 1280,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "area",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Purpose & Path — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "Sowilo gives you enough light to see what is close, not a map of everything ahead. For purpose and path, the image points to a difference between knowing your destination and seeing what matters now. You may find that a familiar question needs your attention, or that one part of your work has become clearer. The reading leaves open which of these, if either, fits where you stand.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1193,
+   "completion_tokens": 82,
+   "total_tokens": 1275,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "area",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Purpose & Path — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "Kuky, the light in this reading shows only what is close enough to make out. For your path, that may mean a direction becomes clearer without a clear view of where it ends. Sowilo speaks to the will to continue, but it does not tell you what that will rests on. It may be a purpose you can name, or a question that no longer sits quietly in the background.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1193,
+   "completion_tokens": 83,
+   "total_tokens": 1276,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "expl",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Explain Raidho without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Raidho concerns how you move along a path, not movement for its own sake. In this reading, the distinction is between continuing because a direction still fits and continuing because it is familiar. A choice you once made may still be sound, or it may no longer serve the same purpose. Raidho leaves that distinction with you.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1175,
+   "completion_tokens": 69,
+   "total_tokens": 1244,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "expl",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Explain Raidho without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Raidho speaks to the direction of something already in motion. In this reading, the question is not whether you keep moving. It is whether the path you once chose still fits where you are now. A choice can remain familiar even when your reasons for it have changed.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1175,
+   "completion_tokens": 57,
+   "total_tokens": 1232,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "expl",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Explain Raidho without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Raidho is about movement with direction, not movement for its own sake. In this reading, the question is whether a path you chose earlier still fits you now. Continuing it may feel familiar, but familiarity alone does not make it the right direction.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1175,
+   "completion_tokens": 53,
+   "total_tokens": 1228,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "expl",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Explain Raidho without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Raidho is about how you move along a path you have already chosen. In this reading, it raises a distinction between continuing because the direction still fits and continuing because it is familiar. Your earlier choice matters, but it does not settle what that choice means to you now.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1175,
+   "completion_tokens": 58,
+   "total_tokens": 1233,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "expl",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Explain Algiz without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Algiz speaks of protection through awareness rather than withdrawal. Your watchfulness may help you care for what matters, but another person may experience it as distance. The reading holds both possibilities without deciding which fits you.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1176,
+   "completion_tokens": 45,
+   "total_tokens": 1221,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "expl",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Explain Algiz without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Algiz is a rune of protection. In this reading, it points to being attentive to what matters without shutting everyone out. Your watchfulness may be seen as care, but it may also feel like distance to someone who means you no harm. The rune leaves room for both.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1176,
+   "completion_tokens": 59,
+   "total_tokens": 1235,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "expl",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Explain Raidho without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Raidho is about movement with direction, not movement for its own sake. In this reading, the distinction is between a path you once chose and a path that still fits you now. Continuing can have its own rhythm, even when the reason for continuing has changed. Raidho does not say which course is right. It leaves you with the question of whether your direction still feels chosen.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1175,
+   "completion_tokens": 80,
+   "total_tokens": 1255,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "expl",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Explain Algiz without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Algiz is a rune of protection. In this reading, it means staying aware of what matters to you without shutting everyone out. Your caution may come across as care, but it may also feel like distance to someone who means you no harm. The reading leaves room for both.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1176,
+   "completion_tokens": 59,
+   "total_tokens": 1235,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "expl",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Explain Algiz without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Algiz is a rune of protection. In this reading, it means staying aware of what matters to you without shutting everyone out. That watchfulness may appear caring to another person, or it may feel like distance to them, even when they mean no harm.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1176,
+   "completion_tokens": 55,
+   "total_tokens": 1231,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "expl",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Explain Algiz without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Algiz speaks of protection through awareness. In this reading, your watchfulness may help you care for what matters without shutting everything out. Someone else may read that same watchfulness as distance, even when you mean no harm. The rune leaves room for both: care can be present, and it can be hard for another person to see.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1176,
+   "completion_tokens": 71,
+   "total_tokens": 1247,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "expl",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Explain Sowilo without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Sowilo is the sun rune. In this reading, it speaks of clarity and the will to continue, not a promise of victory. You may not see the whole way ahead, but something close at hand may become easier to name. That could be a reason to keep going, or a question that still needs your attention.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1189,
+   "completion_tokens": 69,
+   "total_tokens": 1258,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "expl",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Explain Sowilo without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Sowilo is the sun rune. In this reading, it speaks to clarity and the will to continue, not to a promised victory. You may see only part of what lies ahead, yet that part may bring a question into focus. The reading leaves open whether your strength comes from something newly understood or from something you can no longer overlook.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1189,
+   "completion_tokens": 72,
+   "total_tokens": 1261,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "expl",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Explain Sowilo without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Sowilo names the clarity that can help you continue without knowing the whole way ahead. In this reading, victory is not a promised outcome. It may be the moment you see what matters now, including a question you have been able to set aside until this point. The rune leaves open which of those feels closer to your experience.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1189,
+   "completion_tokens": 70,
+   "total_tokens": 1259,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "expl",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Explain Sowilo without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Sowilo names the clarity that may give your will somewhere to rest. In this reading, you do not need to see the whole way ahead for something to become clear. You may notice what still matters to you, or find that an old question deserves your attention. Victory here is not a promised outcome. It is the possibility of seeing enough to understand what keeps you going.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1189,
+   "completion_tokens": 79,
+   "total_tokens": 1268,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "X",
+  "h": "expl",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Explain Sowilo without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Sowilo names clarity and the will that can come with it. In this reading, you do not need to see the whole way ahead for something to become clear. You may recognize what still matters to you, or notice a question you have been setting aside. Victory here does not mean a promised outcome. It may be the moment you can name what keeps you going.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1189,
+   "completion_tokens": 78,
+   "total_tokens": 1267,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "area",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Inner Growth — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "The cairns mark a way forward, but they do not tell you whether it is still yours to follow. Raidho is about movement with a sense of direction, rather than movement kept up from habit. For inner growth, the question is whether a choice you once made still fits the person you are now. The image leaves that question open.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1207,
+   "completion_tokens": 72,
+   "total_tokens": 1279,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "area",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Inner Growth — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "The two cairns mark a path you can follow, but they do not tell you whether it still fits. The grass between the stones suggests something living in a place that seems fixed. For inner growth, Raidho points to a distinction: you may keep moving because a choice once made still feels binding, or because the direction makes sense to you now. The image leaves that distinction open.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1207,
+   "completion_tokens": 81,
+   "total_tokens": 1288,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "area",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Inner Growth — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "The cairns mark a route you can still follow, but Raidho asks whether that route still fits. For inner growth, the distinction is between moving because a choice once made sense and moving because it makes sense now. The reading does not say which path is right for you. It brings that difference into view.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1207,
+   "completion_tokens": 66,
+   "total_tokens": 1273,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "area",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Inner Growth — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "The cairns mark a route, but they do not say whether it still fits you. The grass caught between the stones has grown there while the markers stayed in place. For inner growth, Raidho draws that distinction: a choice you made before may still shape your days, even if your reasons for making it have changed. The question is not whether you can keep moving, but whether the road still suits the person walking it.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1207,
+   "completion_tokens": 89,
+   "total_tokens": 1296,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "area",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Inner Growth — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "The cairns mark a direction, but they do not say why you still follow it. The grass caught in the stones gives the first cairn a lived-in look: a choice can become familiar without remaining right for you. Raidho does not say you must leave the road. It asks whether the direction you once chose still fits the way you move now.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1207,
+   "completion_tokens": 75,
+   "total_tokens": 1282,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "area",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Love & Relationships — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "In love, Algiz speaks of care that stays alert. Your watchfulness may help a bond feel safe, yet another person may read the same pause as distance. The image does not say that either reading is wrong. It leaves room for the difference between protecting what matters to you and keeping someone at a distance.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1209,
+   "completion_tokens": 66,
+   "total_tokens": 1275,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "area",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Love & Relationships — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "In love, Algiz shows how protection can look from both sides. Your watchfulness may help you notice when something feels unsafe. To someone who means you no harm, the same watchfulness may feel like distance. The reading does not say you are too guarded, or that anyone deserves your trust. It holds that difference in view.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1209,
+   "completion_tokens": 70,
+   "total_tokens": 1279,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "area",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Love & Relationships — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "In love, Algiz speaks of protection without shutting someone out. Your watchfulness may help a relationship feel safe, but it may also make your care hard to see. The image holds that tension: you can be attentive to someone and still seem distant to them. It does not say which is happening between you and another person.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1209,
+   "completion_tokens": 69,
+   "total_tokens": 1278,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "area",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Love & Relationships — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "In love, Algiz points to the difference between care and distance. Your watchfulness may protect a bond when something feels uncertain. It may also leave someone unsure whether they are welcome near you. The reading does not say that you are too guarded, or that the other person is safe. It holds both possibilities open.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1209,
+   "completion_tokens": 67,
+   "total_tokens": 1276,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "area",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Love & Relationships — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "In love, Algiz speaks of a boundary that protects a bond without shutting someone out. Your attention may feel like care to another person, or it may feel like you are keeping your distance. The image does not say which is happening between you. It holds both possibilities: shelter and space.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1209,
+   "completion_tokens": 62,
+   "total_tokens": 1271,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "area",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Purpose & Path — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "Sowilo does not show you a full route or a fixed purpose. It points to enough clarity to see what matters now. That may be work that gives you energy, or a question about your direction that remains when other concerns fade. The distinction here is between seeing your whole path and seeing what holds your attention in the present.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1222,
+   "completion_tokens": 70,
+   "total_tokens": 1292,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "area",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Purpose & Path — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "Kuky, Sowilo does not show you a full path. It speaks to the part you can see now. For your purpose, that may be a piece of work that still holds your attention, or a question about your direction that keeps returning. Clarity here is not certainty about where you will end up. It is a clearer view of what gives your effort meaning.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1222,
+   "completion_tokens": 78,
+   "total_tokens": 1300,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "area",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Purpose & Path — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "Sowilo makes the picture clearer without showing the whole path. For your purpose, the light falls on what gives you the will to continue. That may be work whose value you can see more clearly, or a question about your direction that no longer stays in the background. The reading does not say which one is yours. It leaves that distinction with you.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1222,
+   "completion_tokens": 75,
+   "total_tokens": 1297,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "area",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Purpose & Path — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "Sowilo speaks to purpose as something you can see clearly enough to give it your effort, even if the whole path remains out of view. That clarity may be a piece of work that still holds your attention, or a question about your direction that keeps returning. Neither tells you where you must end up. The reading leaves open what matters enough to keep your will engaged.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1222,
+   "completion_tokens": 78,
+   "total_tokens": 1300,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "area",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Purpose & Path — can you make this image clearer?",
+  "sablona": "{area} — can you make this image clearer?",
+  "text": "Kuky, Sowilo does not show your whole path or name a single purpose. It speaks of clarity enough to see what is in front of you. A task you can give your strength to may come into focus. So may a question that makes your present direction harder to accept without thought. Either could show you what matters now, without telling you how far it leads.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1222,
+   "completion_tokens": 78,
+   "total_tokens": 1300,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "expl",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Explain Raidho without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Raidho concerns the direction of a path you are already on. It holds movement and rhythm, but it also asks whether continuing still fits the reason you chose that path. In this reading, right action is not the same as keeping pace. A path can be familiar without being right for you now.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1204,
+   "completion_tokens": 63,
+   "total_tokens": 1267,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "expl",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Explain Raidho without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Raidho is about direction, not movement for its own sake. You may have chosen a course for good reasons, yet the habit of following it can outlast those reasons. The reading leaves open whether the road still fits you.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1204,
+   "completion_tokens": 49,
+   "total_tokens": 1253,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "expl",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Explain Raidho without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Raidho speaks of movement with a direction, not movement for its own sake. In this reading, the question is whether the course you follow still fits what matters to you now. A choice that once made sense does not have to remain the right one simply because you have kept to it.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1204,
+   "completion_tokens": 61,
+   "total_tokens": 1265,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "expl",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Explain Raidho without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Raidho concerns the direction of a path already begun. Its movement has a rhythm, but continuing is not always the same as moving rightly. In this reading, you may find that a choice you once made still shapes your days, even if it no longer fits as it did. The rune leaves that question open.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1204,
+   "completion_tokens": 66,
+   "total_tokens": 1270,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "expl",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Explain Algiz without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Algiz speaks of protection through awareness, not withdrawal. It also carries a sense of shelter and connection to what you hold sacred. In this reading, your watchfulness may be seen as care for what matters, or as distance by someone who means no harm. The rune does not decide which it is.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1205,
+   "completion_tokens": 64,
+   "total_tokens": 1269,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "expl",
+  "z": 0,
+  "runa": "Raidho",
+  "otazka": "Explain Raidho without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Raidho is about the direction of a path already underway. You may still be following it because you chose it once, even if it no longer fits as it did. Its movement is not simply a matter of keeping on; it also concerns whether the direction still makes sense to you.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1204,
+   "completion_tokens": 60,
+   "total_tokens": 1264,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "expl",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Explain Algiz without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Algiz speaks of protection through awareness. It does not mean shutting everyone out. In this reading, your watchfulness may show care for what matters to you, while someone else may experience it as distance. You can hold that possibility without deciding which view is right.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1205,
+   "completion_tokens": 56,
+   "total_tokens": 1261,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "expl",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Explain Algiz without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Algiz speaks of protection through awareness, not through shutting everything out. In this reading, your watchfulness may show others that you care about what matters to you. It may also feel like distance to someone who means no harm. Algiz can also speak of shelter and a connection to something sacred, without promising that you are safe from every hurt.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1205,
+   "completion_tokens": 73,
+   "total_tokens": 1278,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "expl",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Explain Algiz without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Algiz speaks of protection that remains attentive rather than shutting everything out. Your watchfulness may help you care for what matters. It may also appear as distance to someone who means you no harm. Its link to shelter and higher powers does not promise safety; it leaves room for support beyond what you can provide alone.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1205,
+   "completion_tokens": 66,
+   "total_tokens": 1271,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "expl",
+  "z": 0,
+  "runa": "Algiz",
+  "otazka": "Explain Algiz without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Algiz speaks of protection through awareness, not withdrawal. Your watchfulness may help you notice what needs care, but someone else may experience it as distance. The reading holds both possibilities without deciding which is true. Algiz can also speak of shelter or a connection to something sacred, but it does not promise that you cannot be hurt.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1205,
+   "completion_tokens": 70,
+   "total_tokens": 1275,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "expl",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Explain Sowilo without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Sowilo names clarity and the will that can come with it. In this reading, victory does not mean a guaranteed outcome. It may mean seeing what matters now, even when you cannot see what follows. That clarity may come from something new, or from a question that still needs your attention.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1218,
+   "completion_tokens": 63,
+   "total_tokens": 1281,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "expl",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Explain Sowilo without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Sowilo names the sun, and in this reading it speaks of clarity and the will to continue. It does not promise victory or a clear view of everything ahead. What matters may be what you can see now: a reason to keep going, or a question that needs your attention.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1218,
+   "completion_tokens": 61,
+   "total_tokens": 1279,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "expl",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Explain Sowilo without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Sowilo is the rune of the sun. In this reading, it speaks of clarity and the will to continue, not certainty about what comes next. You may see enough to recognise what matters now, even if you cannot see where it leads. That clarity may concern a new possibility or a question you have set aside. Victory here does not mean a promised outcome.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1218,
+   "completion_tokens": 77,
+   "total_tokens": 1295,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "expl",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Explain Sowilo without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Sowilo is the sun rune. Here, it speaks of clarity and the will to continue, not a promise of victory. You may see only part of what lies ahead. What becomes clear now may be enough to show you what matters, even if an old question remains.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1218,
+   "completion_tokens": 59,
+   "total_tokens": 1277,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "Y",
+  "h": "expl",
+  "z": 0,
+  "runa": "Sowilo",
+  "otazka": "Explain Sowilo without the image.",
+  "sablona": "Explain {rune} without the image.",
+  "text": "Sowilo is the sun rune. In this reading, it speaks of clarity and the will to continue, not a promise of victory. You may see enough to recognize what matters now without knowing what lies farther ahead. That clarity may come from something new, or from an old question that remains unanswered.",
+  "finish": "stop",
+  "usage": {
+   "prompt_tokens": 1218,
+   "completion_tokens": 64,
+   "total_tokens": 1282,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ }
+]
