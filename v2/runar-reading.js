@@ -992,11 +992,12 @@ function _askHints() {
   // OSOBNÍ SLOT (2026-09-25, KUKY „přidáváme další větu… nepůjdeme přes 7“): s vlastní otázkou „jak to souvisí s tím, na co jsem
   // se ptal“, bez ní „How does this reading affect me?“ — týž vzor jako časový slot níž (přesnější věta přebírá místo).
   out.push(u.question ? t('ask_h_asked') : t('ask_h_me'));
-  // CASOVY SLOT: „proc zrovna ted" je nejobecnejsi otazka po case. Kdyz si clovek zamer
-  // zvolil, prebira ten slot presnejsi veta — ne dalsi radek navic.
+  // CASOVY SLOT: jen kdyz si clovek zvolil zamer — pak veta k nemu.
+  // 2026-10-06 (KUKY „odstranit“): bez záměru už žádný tip. „Why is this showing up now?“ se ptal po PŘÍČINĚ (znamení), kterou
+  // NO COLD READING zakazuje — sol začal odpověď odmítnutím 9/9 („Algiz does not say why this appears now“), náhrady „Why does this
+  // matter now?“ 8/9 a „What in this belongs to now?“ 8/9 ozvěna (docs/eval/2026-10-06-ask-otazky, pokus B).
   var _zi = _intentIdx(u.intention);
-  out.push(_zi >= 0 ? t(['ask_h_when_now', 'ask_h_when_ahead', 'ask_h_when_past'][_zi])
-                    : t('ask_h_now'));
+  if (_zi >= 0) out.push(t(['ask_h_when_now', 'ask_h_when_ahead', 'ask_h_when_past'][_zi]));
   var _hi = _seekIdx(u.seeking);
   // 2026-09-25 (KUKY): „Does this confirm what I already feel?“ Rúnar z podstaty odmítá (zrcadlo nepotvrzuje) → jen když
   // otázek není dost (méně než 6); jinak se řádek vynechá, nic ho nenahrazuje.

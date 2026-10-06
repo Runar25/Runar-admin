@@ -8646,3 +8646,18 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hlídá:** smoke ㉷ — samotest: obraz v 1. větě, „does not say“ → řádek promptu Asku se slovem *say*, sloveso z losu 2/3 → ⚠.
 - **Netvrdí se:** že „odkud“ najde příčinu. Najde řádek, který nese tatáž slova — kandidáta na obrácenou páku (§25), ne důkaz.
 - Affected doc(s): žádný (co a proč měří vlastní hlavička skriptu).
+
+## 2026-10-06 (12) — Ask: tip „Why is this showing up now?“ odstraněn; „Where does this get hard?“ místo „…about the hard part?“ (EN + IS)
+
+- **Rozhodl:** KUKY 2026-10-06 *„odstranit“* · *„opravit“* · *„ok“* (k pokusu B). **Provedl:** CODE-tune.
+- **Proč** (sol, API, `docs/eval/2026-10-06-ask-otazky`, EVAL_LOG 2026-10-06 (4)): *„Why is this showing up now?“* se ptá po příčině
+  (znamení), kterou NO COLD READING zakazuje — odpověď začala odmítnutím 9/9 (*„Algiz does not say why this appears now“*); náhrady
+  *„Why does this matter now?“* 8/9, *„What in this belongs to now?“* ozvěna 8/9. *„What does this say about the hard part?“* vracel
+  *„the hard part“* 9/9; *„Where does this get hard?“* 0/9 a bez stálého začátku.
+- **Co:** bez záměru už žádný časový tip (se záměrem dál `ask_h_when_*`); `ask_h_now` pryč z `UI_TEXT` (EN i IS).
+  `ask_h_seek_challenge`: EN *„Where does this get hard?“*, IS *„Hvar verður þetta erfitt?“* — is-grammar-qa čisté, korpus *„hvar verður
+  þetta“* 48 · *„verður þetta erfitt“* 354 (*„hvar reynir á“* 0 → nepoužito). IS tip na solu neměřen.
+- **Vedlejší účinek** (pravidlo 2026-09-25 beze změny): *„Does this confirm what I already feel?“* se ukazuje, jen když je tipů méně než 6.
+  Se životní runou a bez záměru je jich teď 5 → u hledání Confirmation se potvrzovací tip nově ukáže (dřív ho vytlačil „Why now“).
+  Otázka na ownera, jestli ho tam chce — Rúnar ho podle pravidel taky odmítá.
+- Affected doc(s): žádný (test tipů `verify_ask_hints.js` upraven v témže commitu).

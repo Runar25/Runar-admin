@@ -146,15 +146,16 @@ for (const L of ['en', 'is']) {
   rekni(bez.includes(T.ask_h_image), L + '  oblast nezvolena → holý tip na obraz zůstává');
   rekni(so.length === bez.length, L + '  oblast NEPŘIDALA řádek (' + bez.length + ' → ' + so.length + ')');
 
-  // záměr: každá ze tří hodnot má vlastní větu a přebírá časový řádek
+  // záměr: každá ze tří hodnot má vlastní větu. 2026-10-06 (KUKY „odstranit“): obecné „Why is this showing up now?“ pryč —
+  // bez záměru časový řádek není vůbec (tip žádal příčinu, kterou pravidla zakazují; sol začal odmítnutím 9/9).
   const ocek = [T.ask_h_when_now, T.ask_h_when_ahead, T.ask_h_when_past];
   for (let i = 0; i < 3; i++) {
     const sz = hinty(L, [R('Jera')], R('Gebo'), '', '', ZAM[i]);
     rekni(sz.includes(ocek[i]), L + '  záměr „' + ZAM[i] + '" → „' + ocek[i] + '"');
-    rekni(!sz.includes(T.ask_h_now), L + '  záměr „' + ZAM[i] + '" → obecné „proč teď" zmizelo');
-    rekni(sz.length === bez.length, L + '  záměr „' + ZAM[i] + '" NEPŘIDAL řádek');
+    rekni(sz.length === bez.length + 1, L + '  záměr „' + ZAM[i] + '" přidá právě časový řádek');
   }
-  rekni(bez.includes(T.ask_h_now), L + '  záměr nezvolen → obecné „proč teď" zůstává');
+  rekni(!bez.some((x) => ocek.includes(x)) && T.ask_h_now === undefined && !bez.some((x) => /showing up now|kemur þetta upp/i.test(x)),
+        L + '  záměr nezvolen → žádný časový tip (ani odstraněné „proč teď")');
 
   // pilulka vybraná v druhém jazyce musí dát TÙŽ větu — index, ne shoda řetězce
   const druhy = L === 'en' ? 'is' : 'en';
@@ -164,8 +165,8 @@ for (const L of ['en', 'is']) {
 
   // neznámá hodnota nesmí shodit ani vyrobit prázdný tip
   const sx = hinty(L, [R('Jera')], R('Gebo'), '', '', 'naprosto neznamy zamer');
-  rekni(sx.includes(T.ask_h_now) && sx.length === bez.length,
-        L + '  neznámý záměr → spadne zpátky na obecné „proč teď"');
+  rekni(sx.length === bez.length && !sx.some((x) => ocek.includes(x)),
+        L + '  neznámý záměr → žádný časový tip (jako bez záměru)');
 
   // strop: i když je vybráno ÚPLNĚ VŠECHNO, seznam musí zůstat do sedmi
   // (2026-09-25: 6 → 7 — owner chtěl tip „Explain <runa> without the image“, který se nabízí u každého čtení)
@@ -236,7 +237,9 @@ for (const L of ['en', 'is']) {
   // Uložené ve druhém jazyce se musí trefit taky — index, ne shoda řetězce.
   const hlD = hinty(L, [R('Jera')], null, '', '', '', glob('SEEKS')[L === 'en' ? 'is' : 'en'][2]);
   // …a s plným seznamem (životní runa) se vynechá a nic ho nenahradí.
-  const hlPln = hinty(L, [R('Jera')], R('Gebo'), '', '', '', HL[2]);
+  // 2026-10-06: plný seznam (6) teď dělá životní runa + ZÁMĚR — bez záměru časový tip zmizel („Why is this showing up now?“
+  // odstraněn), seznam bez záměru má 5 a potvrzovací tip se podle pravidla „jen když otázek není dost“ ukáže.
+  const hlPln = hinty(L, [R('Jera')], R('Gebo'), '', '', ZAM, HL[2]);
   rekni(!hlPln.includes(T.ask_h_seek_confirm) && !hlPln.includes(T.ask_h_unseen) && hlPln.length === 6,
         L + '  „Confirmation“ při dostatku otázek (6) vynechá potvrzovací tip');
   // položená otázka se v dalším Asku znovu nenabídne (KUKY 2026-09-25)

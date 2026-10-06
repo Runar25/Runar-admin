@@ -1154,18 +1154,22 @@ NO COLD READING, všechny tři naráz, „never predicts / does not guarantee" v
 **poslední řádek čtení** vyndaný ze vstupu (13/18 → 7/18, p = 0,09 — naznačeno): odpověď přebírá tvar dvou možností z mostu.
 Pokyn „neopakuj, jak čtení skončilo" nepomohl (15/18). **Oprava v promptu není** — čtení z Asku vyndat nejde. Další krok je velký
 zásah → lab CODE-read, nebo nechat; rozhodne owner. Podmět *„the picture"* je jen jedna z podob téže pojistky.
+**→ CODE-read (owner 2026-10-06: *„zkusíme, jestli to nenajde CODE-read… musí se identifikovat ta věta samotná"*).** Ownerova hypotéza:
+*„the rune does not say…"* odpovídá na něco, co stojí PŘESNĚ v instrukci Asku — *„say what the runes … hold"*. Pravidlo o prostých slovech
+(*„Say what the runes of this reading hold, in the terms of their own question"*) žádná z mých variant neodebrala → první test pro CODE-read.
+Monitor ozvěn tenhle řádek od 2026-10-06 ukazuje sám („odkud" u ozvěny pokynu).
 
-### Slova tipů Asku — pokus B 2026-10-06, ČEKÁ NA OWNERA (CODE-tune)
+### Slova tipů Asku — pokus B 2026-10-06 — tipy vyřešeny (DECISIONS 2026-10-06 (12)), zbývá otázka a IS (CODE-tune)
 Měřeno na solu, EN, 3 čtení × 3 (`docs/eval/2026-10-06-ask-otazky/README.md`). Každé znění tipu má svůj stálý začátek odpovědi;
 jiná slova formuli přesunou, neodstraní (směr → `RUNAR_DESIGN.md` „Slova, která dáváme modelu", body 4–5).
-- **`ask_h_now`** *„Why is this showing up now?"* → 9/9 odpovědí začne odmítnutím *„[runa] does not say why…"* (ptá se po příčině,
-  kterou NO COLD READING zakazuje). Náhrady *„Why does this matter now?"* (8/9) a *„What in this belongs to now?"* (8/9 *„What
-  belongs to now is…"*) nepomohly. **Owner: o co se má tip ptát?** Pak 2–3 znění na solu a IS.
-- **`ask_h_seek_challenge`** *„What does this say about the hard part?"* → *„the hard part"* 9/9. Nejlíp vyšlo *„Where does this get
-  hard?"* (0/9, žádný převažující začátek, pojistka 4/9). Čeká na ano ownera + IS znění ověřené (is-grammar-qa, is-vazba).
+- ✅ **`ask_h_now`** *„Why is this showing up now?"* — **odstraněn** (owner *„odstranit"*); odpověď začínala odmítnutím 9/9.
+- ✅ **`ask_h_seek_challenge`** → *„Where does this get hard?"* / IS *„Hvar verður þetta erfitt?"* (owner *„opravit"*, *„ok"*).
+- ⚠️ **OWNER:** *„Does this confirm what I already feel?"* se podle pravidla 2026-09-25 ukazuje jen při méně než 6 tipech. Bez časového
+  tipu má seznam se životní runou a bez záměru 5 → u hledání Confirmation se teď ukáže. Rúnar ho podle pravidel taky odmítá — nechat?
 - **`ask_h_rune`** a **`ask_h_image`** — náhrady nebyly lepší (jen přesunuly formuli), zůstávají.
-- **IS strana změn 2026-10-06 neměřena:** IS rámce esence (v4.99 jen EN) a v IS Asku pořád *„Rúnir sem dregnar voru"* /
-  *„dregnu rúnirnar"* (v5.00 jen EN). Změřit, jestli sol dělá totéž v islandštině, než se na IS sáhne.
+- **IS strana změn 2026-10-06 neměřena:** IS rámce esence (v4.99 a v5.01 jen EN) a v IS Asku pořád *„Rúnir sem dregnar voru"* /
+  *„dregnu rúnirnar"* (v5.00 jen EN). Změřit, jestli sol dělá totéž v islandštině, než se na IS sáhne. Islandská slovesa definiční
+  věty (*merkir, táknar, stendur fyrir…*) ověřit korpusem Risamálheild stejně jako anglická (DECISIONS 2026-10-06 (10)).
 
 ### Prompt × návody výrobců (Anthropic Opus 5, OpenAI GPT-6) — nálezy 2026-10-04, ČEKÁ NA OWNERA, co s nimi (CODE-tune)
 ⭐ **KUKY 2026-10-05: velké body (4, 5, 6, 8) a přestavba promptu → LAB CODE-read, ne produkce** (DECISIONS 2026-10-05 (3)).
