@@ -1112,7 +1112,7 @@ k EN; `_promptDraws.kws` musí dál zapisovat, který padl (databáze čtení ho
   flow/intuition, Othila home/heritage, Ehwaz trust/partnership…) — hotoví kandidáti na dva významy bez nového souzení.
 - Tvar definiční věty (*„Hagalaz names X"*) víc významů nezmění — to je prompt → lab CODE-read.
 **Kolo k4 (2026-10-05, DECISIONS 2026-10-05 (9)–(11)):** B hotovo pro Hagalaz (+1 význam na obraz), C hotovo u 6 obrazů,
-D 7 nových obrazů. **Čeká na ownera — 9 rozporů** (k4 odmítlo 0/4 význam, který vybrali srpnoví soudci): Isa hodiny *waiting* ·
+D 7 nových obrazů. **9 rozporů ROZHODNUTO 2026-10-06** (DECISIONS 2026-10-06 (1): Othila opravena, zbytek beze změny) — byly to: Isa hodiny *waiting* ·
 Laguz ledovcová řeka *the unconscious* · Nauthiz pletení *growth through challenge* · Ingwaz semínko *innri þróun* · Dagaz
 probuzení *turning point* · Raidho cesta *movement* · Ansuz havran a dopis *rödd* · Othila zřícenina *heritage*/*hefðir*; a u
 Hagalazu *transformation* (strom 0/4, střecha 1+1). Návrhy náhrad v DECISIONS (10). Formát k4 (víc významů) se od srpnového

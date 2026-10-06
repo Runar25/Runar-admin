@@ -8471,3 +8471,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hlídá smoke ㉳ (g):** každé tažení na větvi svého elementu, pásma a strany (strana i nezávisle z oblasti v logu); větev se
   stranou nakreslená na té straně. Mutace (prohozené strany) 69 porušení. `tree_diag.js limbjump` teď počítá podle klíče větve.
 - Affected doc(s): `RUNAR_TREE_MAP.md` §3, §4, §5, §9, §12, §13 · `RUNAR_TREE.md` §3 · `RUNAR_BACKLOG.md` — v tomto commitu.
+
+## 2026-10-06 (1) — Rozpory z kola k4: Othila opravena, osm dalších obrazů beze změny (owner)
+
+- **Rozhodl:** KUKY 2026-10-06 *„Othilu oprav, 1–8 nech"* — k návrhu v DECISIONS 2026-10-05 (10). **Provedl:** CODE-tune.
+- **Othila (zřícenina statku, která drží teplo vzpomínek):** EN nesl *heritage*, IS *heimili* (domov) — dvě různé věci v obou
+  jazycích. Teď *home | heritage* = *heimili | arfur*: home 4/4, heritage EN 2/2 a jeho smyslový protějšek *arfur* IS 2/2 (v
+  `k`/`k_is` stojí heritage proti *hefðir* = tradice, a ten islandští soudci nevzali). Párování podle smyslu, smoke ㉤ ho ukazuje
+  žlutě (jiné pořadí klíčů). `RUNAR_PROMPT_VERSION` v4.97-othila.
+- **Beze změny (owner):** Isa hodiny *waiting* · Laguz ledovcová řeka *the unconscious* · Nauthiz pletení *growth through challenge* ·
+  Dagaz probuzení *turning point* · Raidho cesta *movement* · Ingwaz semínko *innri þróun* · Ansuz havran a dopis *rödd*. Důvod:
+  formát k4 odmítá abstraktní významy a bere konkrétní (EVAL_LOG 2026-10-05 (3)); abstraktní význam je to, co čtení nese.
+  Totéž platí pro *transformation* u stromu a střechy Hagalazu (po kroku B padá v polovině čtení).
+- Affected doc(s): `RUNAR_BACKLOG.md` (9 rozporů uzavřeno).
