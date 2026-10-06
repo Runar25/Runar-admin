@@ -723,7 +723,11 @@ var RUNE_IMAGES = [
   ['Sowilo','cold','Sólin nær loks niður í dalinn og lýsir upp bæinn litla stund.','The sun finally reaches down into the valley and lights up the farm for a little while.','sól','sun','P'],
   // 2026-09-23 (staticky popis Sowilo: „osviti cestu, takze najednou vidis, kde stojis… ted to muzes videt"): vsech 5 obrazu Sowilo bylo „slunce se objevi", zadny tohle. Sowilo 3/3 („kdyz slunce vyjde" davalo 2/3 — svitani = Dagaz).
   ['Sowilo','any','Í sólskininu sést hvar þú stendur í hlíðinni.','In the sunshine you can see where you stand on the slope.','skýrleiki','clarity','P'],
-  ['Raidho','any','Hver varða sést frá þeirri síðustu','cairns, each in sight of the next','leið','the road','P','','jadro'],
+  // 2026-10-06 (KUKY „ten home field se mi nelíbí… říct, že je to trail nebo in the mountains“): jádro „cairns, each in sight of
+  // the next“ bralo místo z pastevecké sady (okraj domácí louky, svah nad farmou, louky, řeka) — mohyly ale stojí jen na horských
+  // cestách. Celý obraz s místem napevno; IS korpus: „gömlu leiðinni“ 46 · „leiðinni yfir“ 847 · „yfir heiðina“ 1329 · „hver varða“ 11
+  // · „frá þeirri síðustu“ 70; is-grammar-qa čisté.
+  ['Raidho','any','Á gömlu leiðinni yfir heiðina sést hver varða frá þeirri síðustu.','On the old route over the mountain heath, each cairn can be seen from the last.','leið','the road','P'],
   ['Raidho','any','Vegurinn hverfur fyrir næstu beygju','a road vanishing round the next bend','leið','movement','P','','jadro'],
   // 2026-09-23 (KUKY: „pokud by zmrzl, ma to byt v prvni vete, ne na konci"): obraz byl klid, ne led; model si led pridal az v posledni vete. Led ted stoji prvni. Isa 3/3.
   ['Isa','any','Undir ísnum heyrist enn í læknum.','Under the ice the stream can still be heard.','ís','ice','E'],
@@ -815,7 +819,8 @@ var RUNE_IMAGES = [
   ['Wunjo', 'cold', 'Í heita pottinum í frostinu hlæja allir að sömu sögunni.', 'In the hot pot under the frost, everyone laughs at the same story.', 'gleði|hamingja', 'joy|happiness', 'D'],
   ['Wunjo', 'any', 'Hundurinn hleypur á móti þér að hliðinu og getur ekki hætt að dilla skottinu.', 'The dog runs to meet you at the gate and cannot stop wagging.', 'gleði|hamingja', 'joy|happiness', 'D'],   // bez „postava“: v obraze je „you“ (smoke ㊱ — čtenář je ve scéně)
   ['Berkana', 'any', 'Á gluggakistunni teygja smáplönturnar sig að birtunni.', 'On the windowsill the seedlings stretch toward the light.', 'þroski', 'growth', 'D'],
-  ['Berkana', 'any', 'Þú vökvar græðlinginn og lætur hann svo í friði.', 'You water the cutting and then leave it alone.', 'umhyggja', 'nurturing', 'D'],
+  // 2026-10-06 vyřazeno (KUKY „úplně špatný obraz!!!“, čtení 9f30468b): „You water the cutting and then leave it alone“ zní jako
+  // pokyn, co dělat — čtení z něj udělalo lekci o péči („enough care… enough space… without your hand always near it“).
 ];
 
 // Obrazy pro runy, které padly, a které se hodí do TÉTO části roku.

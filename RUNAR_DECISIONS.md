@@ -8500,3 +8500,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   ne-admin volbu nevidí; admin u Hagalazu 8 obrazů, u řeky výběr významu; prompt nese zvolený obraz i význam; mobil 375 px bez
   přetečení. **Neověřeno:** přihlášený admin v produkci (owner).
 - Affected doc(s): žádný (mechaniku vlastní komentář u `IMG_PIN` v `runar-character.js`).
+
+## 2026-10-06 (3) — Obrazy z reportů: Berkana se zaléváním řízku pryč; mohyly Raidha na staré cestě přes horské vřesoviště
+
+- **Rozhodl:** KUKY 2026-10-06 *„jeď 2, 3"* (k reportům 15:47 *„úplně špatný obraz!!!"* a 14:40 *„ten home field se mi nelíbí… říct, že
+  je to trail nebo in the mountains"*). **Provedl:** CODE-tune.
+- **Berkana** *„You water the cutting and then leave it alone."* (přidán včera v kroku D) vyřazen: zní jako pokyn, co dělat, a čtení
+  z něj udělalo lekci o péči. Berkaně v zimě zůstávají 3 obrazy.
+- **Raidho** — jádro *„cairns, each in sight of the next"* bralo místo z pastevecké sady (okraj domácí louky, svah nad farmou…),
+  mohyly ale stojí jen na horských cestách. Teď celý obraz: *„Á gömlu leiðinni yfir heiðina sést hver varða frá þeirri síðustu."* /
+  *„On the old route over the mountain heath, each cairn can be seen from the last."* (IS korpus + is-grammar-qa čisté). Raidhu
+  zůstávají 2 jádra s losovaným místem.
+- **Ověřeno:** smoke obrazů zelené; golden proti HEAD = 1 změna (islandský obraz mohyl), nic jiného. Golden základna obnovena — od
+  kroku D (2026-10-05 (11)) byla zastaralá (nové obrazy posunuly losy v 18 fixturách), nikdo ji neobnovil.
+- Affected doc(s): žádný.
