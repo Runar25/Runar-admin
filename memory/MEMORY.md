@@ -92,6 +92,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [pathspec-nesmi-byt-prazdny.md](pathspec-nesmi-byt-prazdny.md) — pathspec v proměnné z padlého && řetězce = prázdný → commit vezme CELÝ index (i cizí staged)
 - [napred-dohledej-co-uz-je.md](napred-dohledej-co-uz-je.md) — před měřením/novou položkou/nástrojem prohledej PRICING/DECISIONS/BACKLOG a git log ostatních lane; paralelní session to často už udělaly
 - [parallel-code-sessions-collision.md](parallel-code-sessions-collision.md) — víc Code session ve sdíleném stromě; pathspec commit, patch do scratchpadu, status před sáhnutím
+- [test-vstup-jako-v-produkci.md](test-vstup-jako-v-produkci.md) — test formulace přes API: napřed vytiskni jeden hotový prompt a porovnej s produkcí ([object Object] dal falešný závěr)
 - [prompt-directive-makes-model-copy.md](prompt-directive-makes-model-copy.md) — "pouzij tenhle text" v promptu = model ho opise doslova; ramuj jako zdroj (12 % -> 56 %, p=0,002)
 - [falsify-by-reversing-the-lever.md](falsify-by-reversing-the-lever.md) — hypotezu "pridej X" testuj tak, ze X jeste UBERES; obracena predpoved musi platit (CLAUDE.md §25)
 - [loading-a-page-proves-existence-not-authenticity.md](loading-a-page-proves-existence-not-authenticity.md) — nacteni URL overi ze existuje, ne ze je prava; zjisti kdo ji vlastni a jestli jsou ucty skutecne
@@ -122,7 +123,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [find-a-gap-close-it-now.md](find-a-gap-close-it-now.md) — najdeš díru → zavři ji v témže tahu; na vylepšení vlastních kontrol a paměti souhlas nepotřebuješ
 - [fix-substance-not-shape.md](fix-substance-not-shape.md) — security/metering: oprav podstatu ne tvar; ověř, že díra nejde obejít jinudy (2× stejná chyba)
 - [copy-always-in-runar-voice.md](copy-always-in-runar-voice.md) — veškerá copy VŽDY hlasem Rúnara (přečti charakter), nikdy slepé generické vymýšlení; spíš stručně
-- [read-design-before-voice-work.md](read-design-before-voice-work.md) — než sáhneš na hlas/prompt: RUNAR_DESIGN.md „Kdo je Rúnar" + specifikace nálad; jinak přepisuješ rozhodnuté
+- [read-design-before-voice-work.md](read-design-before-voice-work.md) — než sáhneš na hlas/prompt: RUNAR_DESIGN.md „Kdo je Rúnar" + nálady; vstup promptu / tip Asku → sekce „Slova, která dáváme modelu"
 - [prompt-map-artifact.md](prompt-map-artifact.md) — vizuální reference mapa Rúnarova promptu (artifact URL); snapshot, pravda = kód
 - [cowork-handoff-quality-bar.md](cowork-handoff-quality-bar.md) — standard pro Cowork content/research/eval handoffy: 12 návyků (závěr napřed, živé ověření, značka původu, přiznané mezery)
 - [runar-project.md](runar-project.md) — vyprázdněno 2026-07-18, jen rozcestník

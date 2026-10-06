@@ -14,6 +14,9 @@ co určuje **jak Rúnar mluví**, přečti **napřed**:
 1. `RUNAR_DESIGN.md` sekce **„Kdo je Rúnar"** (zhruba ř. 14–152) — kánon hlasu
 2. `RUNAR_BACKLOG.md` **„Nálady — specifikaci PŘEPSALY důkazy"** (~ř. 251–263)
 3. `RUNAR_DECISIONS.md` — `grep -n "nálad\|hlas\|voice" RUNAR_DECISIONS.md`
+4. Píšeš **vstup do promptu nebo tip Asku** (pokyn, štítek, rámec, otázku)? → `RUNAR_DESIGN.md` sekce
+   **„Slova, která dáváme modelu"** — co model se slovy udělá (sol je vrací doslova, sloveso přichází z pokynu,
+   tip má stálý začátek odpovědi). Přidáno 2026-10-06 (KUKY: *„ať to nezůstane zapomenuté"*).
 
 **Why:** KUKY 2026-08-16, po tom, co jsem během jednoho dne **čtyřikrát** navrhl něco už
 rozhodnutého: *„jak tě mám donutit si nastudovat projekt Rúnar???"* Konkrétně:
