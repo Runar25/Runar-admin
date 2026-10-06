@@ -122,6 +122,13 @@ function odkud(fraze, druh, klic) {   // kde v pevném textu promptu fráze stoj
   const sdili = poradi(B.filter((b) => w.every((x) => b.kmeny.has(x))));
   return sdili.length ? 'v promptu slova „' + w.join(', ') + '“: ' + fmt(sdili, w) : 'v promptu není → zvyk modelu (nebo vstup, který monitor nezná)';
 }
+// Otázka runy = 4. odstavec popisu runy v Kolekci (UI_TEXT[lang].coll_rune), za dvojtečkou — týž výřez jako _runeQuestion.
+function otazkaRuny(runa, L) {
+  const o = (UI[L] && UI[L].coll_rune && UI[L].coll_rune[runa]) || [];
+  const p = Array.isArray(o) ? String(o[3] || '') : '';
+  const i = p.indexOf(':');
+  return (i !== -1 ? p.slice(i + 1) : p).trim();
+}
 function telo(t) { let b = String(t || ''); try { const j = JSON.parse(b.slice(b.indexOf('['), b.lastIndexOf(']') + 1)); b = j.map((x) => x.text).join(' '); } catch (e) {} return b.split('✦')[0].trim(); }
 function sloveso(text, runa) {
   const m = text.match(new RegExp('\\b' + runa + "(?:’s|'s)?\\s+(\\w+)(?:\\s+(of|as|to))?", 'i'));
@@ -177,6 +184,9 @@ function rozber(rows) {
       if (d.angle !== undefined && ANG[L][d.angle]) { x.uhel = nejdelsiShoda(ANG[L][d.angle], t); x.uhel.kde = x.uhel.n >= 4 ? kdeVeta(t, x.uhel.kus) : null; vstupy.push(ANG[L][d.angle]); }
       const em = String(d.ending || '').match(/^(heavy|open)(\d+)$/);
       if (em && END[L][em[1]][Number(em[2])]) { const et = END[L][em[1]][Number(em[2])]; x.konec = nejdelsiShoda(et, t); x.konec.kde = x.konec.n >= 4 ? kdeVeta(t, x.konec.kus) : null; vstupy.push(et); }
+      // Otázka runy (_runeQuestion): jen single a jen bez vlastní otázky tazatele — tak ji dává builder (runar-character.js).
+      const oq = r.question ? '' : otazkaRuny(r.rune_name, L);
+      if (oq) { x.otazka = nejdelsiShoda(oq, t); x.otazka.kde = x.otazka.n >= 3 ? kdeVeta(t, x.otazka.kus) : null; vstupy.push(oq); }
       x.vstupy = ' ' + slova(vstupy.join(' ')).join(' ') + ' ';
       x.text = t;
       R.cteni.push(x);
@@ -227,6 +237,8 @@ function souhrn(R) {
   radekM('nejčastější sloveso po jménu runy (' + (top.length ? top[0][0] : '—') + ')', C.filter((x) => x.sloveso), (x) => top.length && x.sloveso === top[0][0], top.slice(0, 4).map(([k, n]) => k + ' ' + n).join(', '));
   radekM('podoba oblasti opsaná (≥ 3 slova)', s((x) => x.oblast), (x) => x.oblast.n >= 3,
     [...new Set(s((x) => x.oblast && x.oblast.n >= 3).map((x) => '„' + x.oblast.kus + '“'))].slice(0, 3).join(' · ') + ' ' + rozlozeni(C.map((x) => x.oblast && x.oblast.kde)));
+  radekM('otázka runy z Kolekce opsaná (≥ 3 slova)', s((x) => x.otazka), (x) => x.otazka.n >= 3,
+    [...new Set(s((x) => x.otazka && x.otazka.n >= 3).map((x) => '„' + x.otazka.kus + '“'))].slice(0, 3).join(' · ') + ' ' + rozlozeni(C.map((x) => x.otazka && x.otazka.kde)));
   radekM('pokyn úhlu opsaný (≥ 4 slova)', s((x) => x.uhel), (x) => x.uhel.n >= 4, rozlozeni(C.map((x) => x.uhel && x.uhel.kde)));
   radekM('pokyn konce opsaný (≥ 4 slova)', s((x) => x.konec), (x) => x.konec.n >= 4, rozlozeni(C.map((x) => x.konec && x.konec.kde)));
   radekM('Ask: slova otázky zopakovaná', A, (x) => !!x.ozvena,
@@ -246,10 +258,9 @@ function souhrn(R) {
   // ODKUD: u každé opakované fráze napřed vstup toho čtení (u Asku text čtení), pak pevný text promptu.
   const zdroje = [];
   const zVstupu = (fr, xs, pole) => { const f = ' ' + slova(fr).join(' ') + ' '; return xs.filter((x) => (x[pole] || '').indexOf(f) !== -1).length; };
-  for (const [fr, n] of rc) { const v = zVstupu(fr, C, 'vstupy');
-    zdroje.push('„' + fr + '“ ve čteních ' + n + '× — ' + (v ? 'ze vstupu toho čtení ' + v + '× · ' : '') + (odkud(fr, 'čtení') || 'jen výplňová slova')); }
-  for (const [fr, n] of ra) { const v = zVstupu(fr, A, 'cteni');
-    zdroje.push('„' + fr + '“ v Ascích ' + n + '× — ' + (v ? 'z textu čtení ' + v + '× · ' : '') + (odkud(fr, 'ask') || 'jen výplňová slova')); }
+  const spolu = (v, kde, o) => v ? kde + ' ' + v + '×' + (/^v promptu (přesně|slova)/.test(o) ? ' · ' + o : '') : (o || 'jen výplňová slova');
+  for (const [fr, n] of rc) zdroje.push('„' + fr + '“ ve čteních ' + n + '× — ' + spolu(zVstupu(fr, C, 'vstupy'), 'ze vstupu toho čtení', odkud(fr, 'čtení')));
+  for (const [fr, n] of ra) zdroje.push('„' + fr + '“ v Ascích ' + n + '× — ' + spolu(zVstupu(fr, A, 'cteni'), 'z textu čtení', odkud(fr, 'ask')));
   for (const [jm, , klic] of POKYNY) { const n = A.filter((x) => x.pokyny.indexOf(jm) !== -1).length;
     if (n) zdroje.push('Ask ' + jm + ' ' + n + '× — ' + odkud(jm.replace(/[„“]/g, ''), 'ask', klic)); }
   return { tabulka: '| vstup → výstup | vše | sol | opus | poznámka |\n|---|---|---|---|---|\n' + out.join('\n'), varovani: var_, rc, ra, modely, n: C.length, na: A.length, zdroje };
@@ -332,8 +343,17 @@ if (process.argv.includes('--test')) {
   // …a obráceně: převzal 3/3 → žádné ⚠ (u běžného řádku by 3/3 varovalo — tady je návrat ZÁMĚR).
   const TS3 = souhrn(rozber(rowsS.slice(0, 2).concat([Object.assign({}, rowsS[0])])));
   ok(/\| sloveso z losu hned za jménem runy \(záměr, v5\.01\) \| 3\/3/.test(TS3.tabulka) && !/⚠ sloveso z losu/.test(TS3.tabulka), 'sloveso z losu 3/3 → bez ⚠ (záměr splněn)');
+  // 2026-10-06: otázka runy z Kolekce — Thurisaz ji má („…you do not strike back?“); čtení bez vlastní otázky ji opíše v poslední větě,
+  // čtení S vlastní otázkou ji v promptu nemá → nepočítá se. Opakovaná fráze z ní se přiřadí ke vstupu, ne ke zvyku modelu.
+  const oqT = otazkaRuny('Thurisaz', 'en');
+  const rowsQ = [0, 1, 2].map((i) => ({ lang: 'en', rune_name: 'Thurisaz', area: 'Inner Growth', aol: 'Inner Growth', model: 'gpt-6-sol', question: i === 2 ? 'Should I go?' : '',
+    prompt_draws: {}, short_text: 'A thorn holds your sleeve at the edge. Thurisaz represents caution. What appears if you do not strike back?', follow_up: [] }));
+  const XQ = souhrn(rozber(rowsQ));
+  ok(/do not strike back/.test(oqT) && /otázka runy z Kolekce opsaná[^|]*\| 2\/2 [^\n]*věta posl\.: 2/.test(XQ.tabulka), 'otázka runy: 2/2 (čtení s vlastní otázkou se nepočítá), v poslední větě');
+  ok(XQ.zdroje.some((z) => /strike back[^\n]*ze vstupu toho čtení/.test(z)) && !XQ.zdroje.some((z) => /strike back[^\n]*zvyk modelu/.test(z)),
+    'opakovaná fráze z otázky runy → „ze vstupu toho čtení“, ne zvyk modelu');
   if (fail) { console.log('\n' + fail + ' selhalo'); process.exit(1); }
-  console.log('\nOK    monitor ozvěn: obraz, význam, sloveso (i z losu), podoba oblasti, otázka Asku, ozvěny pokynů, stejný začátek na týž tip, KDE a ODKUD poznány na smyšlených čteních');
+  console.log('\nOK    monitor ozvěn: obraz, význam, sloveso (i z losu), podoba oblasti, otázka runy, otázka Asku, ozvěny pokynů, stejný začátek na týž tip, KDE a ODKUD poznány na smyšlených čteních');
   process.exit(0);
 }
 const rows = nacti();
