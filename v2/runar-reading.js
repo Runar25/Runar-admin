@@ -975,13 +975,11 @@ function _askHints() {
   // 2026-10-06 (KUKY report 14:32 „posunout na první místo… uživatel by měl v nabídce vidět prvně ty, co mají nejlepší odpověď“
   // + „životní bude pořád první“): hned za životní runu, před „What does X mean in this reading?“.
   out.push(!many && dr[0] ? tp('ask_h_explain', { rune: rnSplit(dr[0]).name }) : t('ask_h_explain_all'));
-  // 2026-10-06 (KUKY „přidej show itself… místo what does X mean“ + „…show itself in this reading? co takhle“): u single se
-  // životní runou (netaženou) místo „What does X mean in this reading?“ otázka, která životní runu přenese do obrazu. Sol (API,
-  // docs/eval/2026-10-06-ask-zivotni-runa, kolo 3, n = 9): „…in this reading?“ frázi z otázky opakuje 1/9 („…in this picture?“ 2/9),
-  // vazba na obraz 7/9. Bez životní runy a u spreadu zůstává význam runy.
-  out.push(!many && dr[0] ? (life && !lifeDrawn ? tp('ask_h_life_show', { life: rnSplit(life).name })
-                                                : tp('ask_h_rune', { rune: rnSplit(dr[0]).name }))
-                          : t('ask_h_runes'));
+  // Třetí řádek: význam tažené runy. 2026-10-06 večer (KUKY nad nabídkou: „proč je tak otázka na life rune 2×? jedna tam nemá co
+  // dělat.“): se životní runou (netaženou) se VYNECHÁ — na životní runu se ptá už první tip a „What does X mean in this reading?“ by
+  // zdvojil druhý („Explain X without the image“). Do té doby tu stál druhý tip na životní runu („…show itself in this reading?“).
+  if (many) out.push(t('ask_h_runes'));
+  else if (dr[0] && !(life && !lifeDrawn)) out.push(tp('ask_h_rune', { rune: rnSplit(dr[0]).name }));
   // Obraz nese KAZDE cteni (150/150 dvojic) — a kdyz si clovek vybral oblast, tentyz radek
   // ji rovnou pojmenuje. Prompt oblast zna, ale ma zakazane ji vyslovit; tady se na ni
   // smi zeptat nahlas. Popisek uz je v aktualnim jazyce (_syncPillLang v runar-app.js).

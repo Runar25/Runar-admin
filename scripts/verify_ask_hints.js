@@ -89,9 +89,11 @@ for (const L of ['en', 'is']) {
   // obrazu hned DRUHÝ, před „What does X mean in this reading?“.
   rekni(a[1] === glob('tp')('ask_h_explain', { rune: jm(R('Jera')) }),
         L + '  single: druhý tip je výklad runy bez obrazu — ' + JSON.stringify(a[1] || ''));
-  // 2026-10-06 (KUKY): se životní runou je třetí tip „…show itself in this reading?“ místo „What does X mean in this reading?“.
-  rekni(a[2] === glob('tp')('ask_h_life_show', { life: jm(R('Gebo')) }) && !a.includes(glob('tp')('ask_h_rune', { rune: jm(R('Jera')) })),
-        L + '  single se životní runou: třetí tip přenese životní runu do čtení — ' + JSON.stringify(a[2] || ''));
+  // 2026-10-06 večer (KUKY „proč je tak otázka na life rune 2×? jedna tam nemá co dělat“): se životní runou JEDEN tip na ni (první)
+  // a žádné „What does X mean in this reading?“ (zdvojilo by „Explain X without the image“).
+  rekni(a.filter((x) => /life rune|lífsrún/i.test(x)).length === 1 && glob('UI_TEXT')[L].ask_h_life_show === undefined
+        && !a.includes(glob('tp')('ask_h_rune', { rune: jm(R('Jera')) })),
+        L + '  single se životní runou: jediný tip na životní runu, význam runy jen jako výklad bez obrazu');
 
   // ── 2) životní runa BYLA tažena → nesmí se nabídnout ─────────────────────────
   // „Jak mě ovlivňuje moje životní runa Gebo" u čtení, kde Gebo padla, je otázka sama na

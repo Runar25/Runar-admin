@@ -428,8 +428,6 @@ const UI_TEXT = {
     ask_h_life_all:     'How does my life rune {life} affect this reading?',
     // 2026-10-06 (KUKY): u single se tip ptá na taženou runu jménem — sol bez ozvěny „drawn“ 0/6 (docs/eval/2026-10-06-ask-zivotni-runa)
     ask_h_life_rune:    'How does my life rune {life} affect {rune} in this reading?',
-    // 2026-10-06 (KUKY): místo „What does X mean in this reading?“ u single se životní runou — sol frázi opakuje 1/9, obraz 7/9
-    ask_h_life_show:    'How does my life rune {life} show itself in this reading?',
     ask_btn:            'ASK',
     ask_thinking:       'Rúnar listens…',
     ask_teaser:         'Your own questions to Rúnar open with {tier}.',   // 2026-09-25 KUKY (stavba jako q_teaser)
@@ -870,7 +868,6 @@ const UI_TEXT = {
     ask_h_seek_reflect: 'Hvað er þetta að biðja mig að staldra við?',
     ask_h_life_all:     'Hvernig hefur lífsrúnin {life} áhrif á þennan lestur?',
     ask_h_life_rune:    'Hvernig hefur lífsrúnin {life} áhrif á {rune} í þessum lestri?',   // 2026-10-06: is-grammar-qa čisté
-    ask_h_life_show:    'Hvernig birtist lífsrúnin {life} í þessum lestri?',   // 2026-10-06: is-grammar-qa čisté, korpus „birtist í þessum“ 220
     ask_btn:            'SPYRJA',
     ask_thinking:       'Rúnar hlustar…',
     ask_teaser:         'Eigin spurningar þínar til Rúnars opnast með {tier}.',

@@ -8704,3 +8704,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   is-grammar-qa čisté). Význam *caution / aðgát* beze změny. Bez identitní brány, na ownerovo slovo (vzor Kenaz 2026-10-04 (1)).
 - ⚠️ Id obrazu se mění (IS znění) → ownerův výběr obrazu (📌) u Thurisazu je potřeba zvolit znovu.
 - Affected doc(s): žádný.
+
+## 2026-10-06 (17) — Ask: jen jeden tip na životní runu („…show itself in this reading?“ pryč)
+
+- **Rozhodl:** KUKY 2026-10-06 nad nabídkou tipů: *„proč je tak otázka na life rune 2×? jedna tam nemá co dělat.“* **Provedl:** CODE-tune.
+- **Proč:** odpoledne jsem *„How does my life rune {life} show itself in this reading?“* dal místo *„What does X mean in this reading?“*
+  (2026-10-06 (6)) a první tip *„How does my life rune {life} affect {rune} in this reading?“* nechal — u single se životní runou tak byly
+  dva tipy na životní runu.
+- **Co:** zůstává první (*„…affect {rune} in this reading?“*, životní runa vždy první). Třetí řádek se u single se (netaženou) životní runou
+  vynechá — *„What does X mean in this reading?“* se nevrací, zdvojil by druhý tip *„Explain X without the image“*. Bez životní runy a u
+  spreadu beze změny. `ask_h_life_show` pryč z `UI_TEXT` (EN i IS).
+- Affected doc(s): žádný (test tipů `verify_ask_hints.js` upraven v témže commitu).
