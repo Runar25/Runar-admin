@@ -6,7 +6,8 @@ Navazuje na `docs/eval/2026-10-06-ask-otazky/` (CODE-tune, pokus A) — týž ha
 | soubor | co |
 |---|---|
 | `ask_say.js` | P0 produkce · V obě věty „say what the runes … hold" jiným slovesem · R obráceně „say plainly what the runes … say"; gpt-6-sol jako callSol, n = 18 na rameno |
-| `ask_say.json` | 54 odpovědí |
+| `ask_say.json` | kolo 1 — 54 odpovědí, ⚠️ vstup S řádkem ✦ (produkce ho Asku neposílá) |
+| `ask_say_kolo2.json` | kolo 2 — 54 odpovědí, vstup jako v produkci (✦ odříznutý); `KOLO1=1` vrátí starý vstup |
 
 Vstupní čtení (ownerova, nesou jméno) jen lokálně: `C:\Users\zkuku\runar-eval\oblast\ask3.json`.
 Rozbor: `node ../2026-10-06-ask-otazky/rozbor_slova.js ask_say.json`.

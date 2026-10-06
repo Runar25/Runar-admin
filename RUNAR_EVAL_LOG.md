@@ -6183,3 +6183,23 @@ say whether it still fits you"* ← konec Raidha *„You may be outgrowing a pat
 (Do not mirror · NO COLD READING · „may be") → nejkratší poctivá odpověď je „runa neříká, které". Není to slovo v pokynu, je to **tvar
 mostu × zákaz verdiktu**.
 **Hranice:** EN, sol, tři čtení, dva tipy; Opus netestován. **Neodebráno** zůstává: *„speak from what the picture holds"* a slova tipů.
+⚠️ **VSTUP BYL ŠPATNĚ — opraveno v záznamu 2026-10-06 (6).** Čísla v tabulce výš jsou z čtení S řádkem ✦ (produkce ho před Askem odřízne).
+
+## 2026-10-06 (6) — OPRAVA vstupu Asku v labu: čtení z DB nese řádek ✦, produkce ho Asku neposílá → přeměřeno
+
+**Jak se našlo:** owner po záznamu (5): *„pokud jsi jen splnil úkol… bez toho, abys to ověřil…"* → kontrola vstupu proti produkci
+(`memory/test-vstup-jako-v-produkci.md`). `ownerových readings.short_text` končí řádkem myšlenky (*„✦ When you look back, where have your steps
+led?"*), ale `askRunar` posílá `readerTexts[lang].short`, z něhož `_splitThought` (`runar-reading.js` ~451) ✦ odřízne. **Harness pokusu A
+CODE-tune (`docs/eval/2026-10-06-ask-otazky/ask_slova.js`) i můj `ask_say.js` (kolo 1) dávaly Asku čtení S ✦** — poslední řádek vstupu byla
+otázka ✦, ne most. Ostatní argumenty sedí s produkcí: korekce — všech 28 řádků je IS, EN blok je v produkci prázdný (test [] = produkce);
+runa jako jméno přes `rnPrompt`; aspekt `prompt_draws.kws`.
+**Přeměřeno se vstupem jako v produkci** (`ask_say.js`, výstup `ask_say_kolo2.json`, $0,17, n = 18):
+| rameno | pojistka celkem | doslova „does not say" |
+|---|---|---|
+| P0 produkce | 11/18 | 6 |
+| V obě „say what the runes … hold" jiným slovesem | 12/18 | 7 |
+| R obráceně, víc *say* | 16/18 | 7 |
+**Závěr (5) platí:** výměna slovesa nesnížila nic (V ≈ P0) → **není to sloveso *say***. R o něco výš (16 × 11; Fisher p ≈ 0,12), doslovné
+„does not say" stejné (7 × 6) — nerozhodnuto. Se správným vstupem je pojistky o něco víc (P0 11 × 9 v kole 1).
+**Dopad na pokus A a B (CODE-tune, EVAL_LOG 2026-10-06 (4)):** běžely na témže vstupu s ✦ — P0–P7 i slova tipů platí jen pro čtení
+s ✦ na konci; P6 („čtení bez posledního řádku" = bez mostu, ✦ zůstal) je třeba přeměřit se vstupem bez ✦. → handoff CODE-tune.

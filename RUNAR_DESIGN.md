@@ -1393,8 +1393,8 @@ doslova — a pokaždé?* Sol bere vstup jako materiál k přepsání, Opus spí
 6. **Pokyn neodklidí, co leží ve vstupu.** Pojistka „the rune does not say which“ přebírá tvar posledního řádku čtení (dvě
    možnosti): pět domněnek o pravidlech vyvráceno, pokyn „neopakuj, jak čtení skončilo“ ji nesnížil, vyndaný řádek ano
    (naznačeno, p = 0,09). Páka je ve vstupu, ne v zákazu. → tamtéž. **Doplněno 2026-10-06 (CODE-read):** ani sloveso *say* v pravidlech
-   Asku (*„say what the runes … hold“* 2×) to není — jiné sloveso 10/18 × produkce 9/18, doslovné „does not say“ 3 × 3; táž produkce
-   9/18 × 13/18 v jiném běhu → ±4 z 18 je šum. → `RUNAR_EVAL_LOG.md` 2026-10-06 (5).
+   Asku (*„say what the runes … hold“* 2×) to není — se vstupem jako v produkci jiné sloveso 12/18 × produkce 11/18, doslovné
+   „does not say“ 7 × 6. ⚠️ Pokus A i kolo 1 běžely na čtení S řádkem ✦, který produkce Asku neposílá → `RUNAR_EVAL_LOG.md` 2026-10-06 (5) a (6).
 7. **Seznam navíc nepomůže.** Klíče životní runy „jako pozadí“ nic měřitelného nepřidaly a sol je neodříkal.
    → `docs/eval/2026-10-06-ask-zivotni-runa/README.md`, tab. 1 (⚠️ kolo s rozbitým jménem tažené runy — platí jen uvnitř kola).
 8. **Opus body 1–3 nedělá** (monitor 0/13 · 0/11 · 0/16), pojistku z bodu 6 dělá taky, méně. Formulace se proto testuje na

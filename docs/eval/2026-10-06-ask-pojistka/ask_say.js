@@ -51,7 +51,12 @@ async function sol(system, prompt) {
   for (const [vk, zmeny] of Object.entries(VARIANTY)) for (const [hk, zt] of Object.entries(OTAZKY)) for (const c of cteni) {
     const dr = runa(c.rune_name), pd = typeof c.prompt_draws === 'string' ? JSON.parse(c.prompt_draws) : (c.prompt_draws || {});
     const q = zt.replace('{rune}', dr.n).replace('{area}', c.area || '');
-    let pr = S.buildAskPrompt(c.short_text, q, S.rnPrompt(dr), 'en', [], life,
+    // 2026-10-06 OPRAVA VSTUPU (CODE-read, po kontrole proti produkci): DB short_text končí řádkem myšlenky ✦, ale produkce ho
+    // před Askem odřízne (runar-reading.js _splitThought → readerTexts[lang].short). Kolo 1 (ask_say.json) i pokus A CODE-tune
+    // posílaly čtení S ✦ → poslední řádek vstupu byla otázka ✦, ne most. Kolo 2 = vstup jako v produkci. KOLO1=1 vrátí starý vstup.
+    const cteniText = process.env.KOLO1 ? c.short_text : c.short_text.split(/\n\s*✦/)[0].trim();
+    if (!process.env.KOLO1 && cteniText.includes('✦')) throw new Error('✦ zůstal ve vstupu');
+    let pr = S.buildAskPrompt(cteniText, q, S.rnPrompt(dr), 'en', [], life,
       { area: c.area, intention: c.intention, seeking: c.seeking, question: c.question }, { mode: 'single', runy: [S.rnPrompt(dr)] }, pd.kws || '', []);
     if (/\[object Object\]|undefined/.test(pr)) throw new Error('rozbitý vstup v promptu');
     for (const [z, na] of zmeny) { if (pr.split(z).length !== 2) throw new Error('nenalezeno právě jednou: ' + z.slice(0, 60)); pr = pr.split(z).join(na); }
