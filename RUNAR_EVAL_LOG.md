@@ -6076,3 +6076,32 @@ obrazů. **Proto 0/4 z tohoto formátu NENÍ důkaz, že význam na obraz nesed�
 **Důsledek pro použití:** 4/4 z tohoto formátu je dobrý doklad PRO význam, 0/4 slabý doklad PROTI. Přidané významy kroku B
 (*hail*, *nature force*) jsou z té konkrétní strany — sledovat v ownerově testování, jestli čtení s nimi nezní plošeji.
 **Hranice:** n = 2 soudci (stejný model) × 32 obrazů × 2 jazyky; brána jen EN text (IS parita psaním + is-grammar-qa).
+
+## 2026-10-06 (1) — Úkol E: „<Runa> names <význam>“ dělá SOL, ne Opus — a objevuje se až od v4.84 (DB, 193 čtení)
+
+**Zadání (handoff CODE-tune proti 8d25148, KUKY „pořád disruption“):** hypotéza „holé slovo aspektu v hlavičce (`focus on: disruption`)
+zve definiční vzorec“. Napřed nejlevnější měření: ownerova EN single čtení s `prompt_draws.kws` (n = 193, 2026-08-10 → 2026-10-05),
+skript `docs/eval/2026-10-06-definicni-veta/mereni_db.js` (data jen lokálně). Vzorec přísně = *<Runa> (names|is|speaks of|means|marks|
+stands for) [the|a] <aspekt>*; „names“ = *<Runa> names* kdekoli.
+| | n | přísný vzorec | „names“ |
+|---|---|---|---|
+| **gpt-6-sol** | 33 | **10 (30 %)** | **14 (42 %)** |
+| Opus 4.8 | 121 | 1 | 0 |
+| Opus 5 | 26 | 0 | 0 |
+| sol · Hagalaz | 11 | 8 | **10** |
+| sol · ostatní runy | 22 | 2 | 4 |
+| Opus 5 · Hagalaz | 9 | 0 | 0 |
+| Opus 4.8 + 5 · aspekt jedno slovo | 89 | 1 | 0 |
+⭐ **1. Vzorec je zvyk solu.** Opus (4.8 i 5) ho nedělá ani s holým jednoslovným aspektem (0/89 „names“) a Opus 5 ani u Hagalazu (0/9).
+Uživatelé čtou na Opus 5 → ownerovo „pořád disruption“ vzniká v jeho čteních přes admin přepínač sol.
+⭐ **2. U solu zlom v čase:** verze ≤ v4.80 „names“ **0/13**, od v4.84 **14/22** (v4.89: 10/11). Kandidáti mezi v4.80 a v4.84:
+**v4.81 (2026-09-30)** esenční rámec [0] *„say what the rune means in its own terms, not what happens in the scene“* (výslovně definice);
+rámec [1] má od v4.63 *„names the rune once“* (slovo *names*). Z DB nerozlišitelné — čtení po zlomu jsou z velké části Hagalaz (owner ho
+testuje opakovaně), takže se plete verze × runa × aspekt (*disruption* 6/13, *clearing* 2/4).
+**3. Tvar aspektu:** u solu 1 slovo 10/23 × fráze 0/10 přísně — ale 1slovné sol čtení jsou z půlky Hagalaz; sol mimo Hagalaz 1 slovo 2/12 ×
+fráze 0/10 (n malé). Hypotéza „holé slovo zve vzorec“ **pro Opus padla** (0/89), pro sol **nerozhodnuta**.
+**Útok §27:** půlka × půlka (sudá × lichá čtení v čase) přísně 5 × 6 — metrika stabilní; rozdíly mezi modely jsou řádově větší.
+**Hranice:** jen ownerova EN čtení, sol n = 33; regex nevidí parafráze (*„Hagalaz is what…“* bez aspektu).
+**Důsledek pro lab:** zadání chtělo čtení psát „tady“ (subagent / CODE-read), ne přes API. Claude vzorec nedělá (Opus 0/89, subagent
+produkční vady nereprodukuje — EVAL_LOG 2026-09-19 (3)) → takový test by měřil model, který vadu nemá, a nic by nerozhodl. Rozhodne owner:
+test na solu přes API (centy), nebo bez něj.
