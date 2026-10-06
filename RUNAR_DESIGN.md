@@ -1362,3 +1362,43 @@ a co dělá problémy“. Důvod: obrazy kola 3 měly medián 17 slov (starší 
 6. **Co je vědomě NEvyřešené:** závěr spreadů (vlastní stavba per spread, NE kopie mostu ze single — viz backlog) ·
    tvar esence (spona „<Runa> is" — dělá ji dvojice pokynů „pojmenuj + řekni, co dělá"; řešení = los rámů, znění je
    obsah ownera) · umístění jména člověka mimo esenční větu · LIST RUNY (6 polí) · volba modelu až po pravidlech.
+
+## Slova, která dáváme modelu — směr pro formulace (KUKY 2026-10-06)
+
+*Changelog: 2026-10-06 založeno — owner: „byl bych rád, kdybys z toho, co jsi teď zjistil, něco vyvodil — ne s tím, že takhle
+to vždy musí být, ale je to určitý směr. Lepší než hádat… ať to nezůstane zapomenuté.“ Důvod: tři nálezy jednoho dne (sloveso
+z rámce, „drawn“ z pokynu, ozvěna otázky) měly společný kořen a žily jen v DECISIONS a EVAL_LOGu, kde je při psaní promptu nikdo nehledá.*
+
+**Je to směr, ne zákon.** Bod platí, dokud ho měření nevyvrátí; nový nález sem patří jako bod s dokladem a hranicí (model, n).
+Čísla bydlí v odkazech, tady jen tolik, aby bylo vidět, proč bod stojí.
+
+**Otázka u každého slova, které píšeme do promptu nebo do tipu Asku:** *vadilo by mi, kdyby se tohle slovo objevilo ve výstupu
+doslova — a pokaždé?* Sol bere vstup jako materiál k přepsání, Opus spíš jako pokyn.
+
+1. **Co dáme solu, objeví se ve výstupu.** Význam z hlavičky stojí ve čtení doslova u solu 17/33, u Opusu 0/13. Vstup pro sol
+   piš tak, aby byl v pořádku i doslova. → `docs/monitor/ozveny.md`
+2. **Sloveso pro dané místo přichází ze znění pokynu.** Rámec esence se slovem „names“ → „Hagalaz names…“; rámec „in a verb of
+   your own“ → pestrost. Kde má být pestrost, nepiš do pokynu konkrétní slovo pro to místo — popiš, co má věta udělat.
+   → `RUNAR_DECISIONS.md` 2026-10-06 (7) · EN, sol.
+3. **Slovo z pokynu nebo štítku se vysloví.** „Runes drawn: X“ → „Algiz is the rune drawn here… Isa was not drawn“; po výměně
+   za „of this reading“ ozvěna 11/18 → 3/18. Štítek je taky text. → `RUNAR_DECISIONS.md` 2026-10-06 (8).
+4. **Slova tipu se vrátí jako začátek odpovědi — každé znění má svůj stálý začátek.** Jiná slova formuli přesunou, neodstraní;
+   pravidlo „začni odpovědí, ne slovy otázky“ nepomohlo. Vybírej znění, jehož návrat ve výstupu nevadí, a začátky hlídej
+   v monitoru. → `RUNAR_EVAL_LOG.md` 2026-10-06 (4).
+5. **Tip, který žádá, co pravidla zakazují, začne odmítnutím.** „Why is this showing up now?“ se ptá po příčině (znamení) →
+   9/9 „[runa] does not say why…“. Než tip napíšeš, ověř, že na něj Rúnar podle pravidel smí odpovědět. → tamtéž.
+6. **Pokyn neodklidí, co leží ve vstupu.** Pojistka „the rune does not say which“ přebírá tvar posledního řádku čtení (dvě
+   možnosti): pět domněnek o pravidlech vyvráceno, pokyn „neopakuj, jak čtení skončilo“ ji nesnížil, vyndaný řádek ano
+   (naznačeno, p = 0,09). Páka je ve vstupu, ne v zákazu. → tamtéž.
+7. **Seznam navíc nepomůže.** Klíče životní runy „jako pozadí“ nic měřitelného nepřidaly a sol je neodříkal.
+   → `docs/eval/2026-10-06-ask-zivotni-runa/README.md`, tab. 1 (⚠️ kolo s rozbitým jménem tažené runy — platí jen uvnitř kola).
+8. **Opus body 1–3 nedělá** (monitor 0/13 · 0/11 · 0/16), pojistku z bodu 6 dělá taky, méně. Formulace se proto testuje na
+   modelu, na kterém poběží.
+
+**Starší body téže rodiny** (vlastní je memory, tady jen ukazatel): „použij tenhle text“ → opíše se doslova
+(`memory/prompt-directive-makes-model-copy.md`) · oprava odebírá vadu, přidaný požadavek se stane formulí
+(`memory/oprava-promptu-odebira-vadu.md`) · nepojmenuj, co hned zakážeš (`memory/prompt-nepojmenuj-co-hned-zakazes.md`).
+
+**Jak se to ověřuje:** test formulace jde produkční cestou se vstupem jako v produkci — jeden hotový prompt vytisknout a porovnat
+(`memory/test-vstup-jako-v-produkci.md`); obrácená páka (CLAUDE.md §25) dřív než přidávání. Po nasazení hlídá monitor ozvěn
+(`scripts/monitor_ozveny.js --nove --zapis`), co se vrací doslova a jak začínají odpovědi na týž tip.
