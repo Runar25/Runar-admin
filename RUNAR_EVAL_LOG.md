@@ -6232,3 +6232,27 @@ is happening between you"*, *„The cairns … do not tell you whether it still 
 (možnost „may be X, or Y") × zákaz verdiktu a na tip *„{area} — can you make this image clearer?"* (pojistka hlavně u něj).
 **Hranice:** EN, sol, 3 čtení, 2 tipy; X mění hlavičku i tři pravidla naráz — která z nich nese většinu, nerozlišeno; znění X je testovací
 (do produkce jen ověřené anglické znění — memory `en-formulace-overit-zdrojem`). Opus netestován.
+
+## 2026-10-06 (8) — Ask pojistka PŘEMĚŘENA se vstupem jako v produkci (bez ✦): nese ji most čtení × zákazy verdiktu; oprava (4)
+
+**Proč:** předávka CODE-read (EVAL_LOG 2026-10-06 (6)) — `docs/eval/2026-10-06-ask-otazky/ask_slova.js` posílal Asku čtení z DB i s řádkem ✦,
+produkce ho Asku neposílá (`readerTexts.short`, `_splitThought`). Harness opraven (✦ se odřízne, pojistka hlídá), sol jako callSol, táž tři
+ownerova čtení, tipy „{area} — can you make this image clearer?“ a „Explain {rune} without the image.“, **n = 30 na rameno** (3 × 2 × 5).
+| rameno | pojistka celkem | podmět runa | podmět čtení/obraz | Fisher × P0 |
+|---|---|---|---|---|
+| P0 produkce | 26/30 | 9/30 | 13/30 | — |
+| P1 bez věty o možnostech | 24/30 | 7/30 | 14/30 | 0,73 |
+| P2 bez věty o zrcadlení | 23/30 | 6/30 | 12/30 | 0,51 |
+| P3 bez NO COLD READING | 18/30 | 9/30 | 6/30 | **0,039** |
+| P4 P1 + P2 + P3 | 17/30 | 4/30 | 8/30 | **0,020** |
+| P5 charakter bez „never predicts… / does not guarantee… / Never hand… a conclusion“ | 14/30 | 4/30 | 11/30 | **0,002** |
+| P6 čtení bez poslední věty (most) | 14/30 | 6/30 | 7/30 | **0,002** |
+| P7 „…or how it ended“ | 22/30 | 6/30 | 10/30 | 0,33 |
+| HLAVA hlavička aspektu bez „carries the sense“ (znění CODE-read) | 25/30 | 8/30 | 13/30 | 1,00 |
+| PRAVIDLA tři pravidla bez „what the runes … hold / from the runes“ (znění CODE-read) | 14/30 | 4/30 | 8/30 | **0,002** |
+Půlka proti půlce (§27) drží u všech významných ramen (P5 7/15 · 7/15, P6 7/15 · 7/15, PRAVIDLA 7/15 · 7/15; P0 12/15 · 14/15).
+**Závěr:** pojistku nese **most čtení × pokyny, které zakazují verdikt** (charakter, NO COLD READING, pravidla Asku s runou jako nositelem) —
+každá páka zvlášť ji sníží zhruba na polovinu, hlavička aspektu sama nic. ⚠️ **Oprava (4):** „pět domněnek vyvráceno“ a „P6 naznačeno, p = 0,09“
+platilo jen pro vstup s ✦. Pokus B (slova tipů) se se správným vstupem **nepřeměřil** — owner běh zastavil (velikost vzorku bez jeho souhlasu,
+memory `cheapest-deciding-measurement-first`); jeho čísla v README platí jen pro vstup s ✦. Kolo „drawn“ (zivotni.js, taky s ✦) nepřeměřeno.
+**Hranice:** EN, sol, tři čtení, dva tipy. Výsledky mimo repo (nesou jméno), rozbor `rozbor_slova.js`.

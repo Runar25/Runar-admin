@@ -1158,6 +1158,11 @@ zásah → lab CODE-read, nebo nechat; rozhodne owner. Podmět *„the picture"*
 *„the rune does not say…"* odpovídá na něco, co stojí PŘESNĚ v instrukci Asku — *„say what the runes … hold"*. Pravidlo o prostých slovech
 (*„Say what the runes of this reading hold, in the terms of their own question"*) žádná z mých variant neodebrala → první test pro CODE-read.
 Monitor ozvěn tenhle řádek od 2026-10-06 ukazuje sám („odkud" u ozvěny pokynu).
+**2026-10-06 večer — PŘEMĚŘENO se vstupem jako v produkci** (EVAL_LOG 2026-10-06 (8), CODE-read (6)–(7)): produkce 26/30; na polovinu ji sníží
+každá z pák — most čtení, charakter (*never predicts / does not guarantee / never hand a conclusion*), tři pravidla Asku s runou jako
+„nositelem“, NO COLD READING; hlavička aspektu sama ne. **Návrh k rozhodnutí ownera:** přeformulovat tři pravidla Asku (testovací znění CODE-read
+*„stay with this reading“* / *„Explain this reading in the terms of their own question“* / bez *„from the runes“*: 26 → 14/30) — znění před
+nasazením ověřit zdrojem (memory `en-formulace-overit-zdrojem`).
 
 ### Slova tipů Asku — pokus B 2026-10-06 — tipy vyřešeny (DECISIONS 2026-10-06 (12), (13)), zbývá IS (CODE-tune)
 Měřeno na solu, EN, 3 čtení × 3 (`docs/eval/2026-10-06-ask-otazky/README.md`). Každé znění tipu má svůj stálý začátek odpovědi;
@@ -1169,6 +1174,24 @@ jiná slova formuli přesunou, neodstraní (směr → `RUNAR_DESIGN.md` „Slova
 - **IS strana změn 2026-10-06 neměřena:** IS rámce esence (v4.99 a v5.01 jen EN) a v IS Asku pořád *„Rúnir sem dregnar voru"* /
   *„dregnu rúnirnar"* (v5.00 jen EN). Změřit, jestli sol dělá totéž v islandštině, než se na IS sáhne. Islandská slovesa definiční
   věty (*merkir, táknar, stendur fyrir…*) ověřit korpusem Risamálheild stejně jako anglická (DECISIONS 2026-10-06 (10)).
+
+### Ask: oblast znamená v Asku jen název — odpovědi „obecně“ (hlášení c748c744 a 71d03c9b, 2026-10-06), ČEKÁ NA OWNERA (CODE-tune)
+Owner (15:21, Raidho · Healing & Wellbeing): *„otázka v Asku healing and wellbeing se promítne… je to takové obecně. Měli bychom říct, co to
+vlastně otázka healing and well being znamená. Možná můžeme otázku i změnit.“* (15:29, Perth · Career): *„taky vidím, jak je v tomhle čtení
+umístit otázku v area do závěrečné věty“* (*„could a skill shaped by years of practice be showing itself…“*). Stav: čtení dostane JEDNU podobu
+oblasti (`AREA_FACES`, `prompt_draws.area_face`, např. *„the pace that can be kept“*), Ask jen název oblasti a tip *„{area} — can you make this
+image clearer?“* → odpověď o oblasti obecně. Návrh: (1) Ask dostane tutéž podobu oblasti, jakou mělo čtení; (2) tip se ptá na tu podobu.
+Ověřit nejmenším vzorkem, rozhodne owner.
+
+### Ask: životní runa Isa se do některých čtení nehodí — nabídnout ji modelu jinak (hlášení dc8e301a, 2026-10-06), ČEKÁ (CODE-tune)
+Owner: *„Isa nemusí být jen stillness, ale taky jen pauza… model si k tomu asi sám cestu nenajde… musíme mu to trochu servírovat.“* Měřeno
+dřív: klíče Isy „jako pozadí“ nic nepřidaly (README ask-zivotni-runa, tab. 1 — kolo s rozbitým vstupem). Otevřené.
+
+### Sol opisuje otázku runy z Kolekce do konce čtení („do not strike back“, 2026-10-06), ČEKÁ NA OWNERA (CODE-tune)
+Monitor ozvěn: otázka runy opsaná ≥ 3 slova 3/6 (Thurisaz *„you do not strike back“*, Berkana *„to grow at its own pace“*), vždy poslední věta.
+`_runeQuestion` ji dává jako zdroj s *„say it in your own words“* — sol ji přesto opíše (pokyn neodklidí vstup, RUNAR_DESIGN „Slova…“ bod 6).
+Owner: *„opakuje něco, na co by měl vymyslet fráze?“* Návrh: ověřit nejmenším vzorkem, jestli konec bez otázky runy (jen pro sol) nese runu
+dál; jinak dát směr otázky místo jejích slov (obsah ownera).
 
 ### Prompt × návody výrobců (Anthropic Opus 5, OpenAI GPT-6) — nálezy 2026-10-04, ČEKÁ NA OWNERA, co s nimi (CODE-tune)
 ⭐ **KUKY 2026-10-05: velké body (4, 5, 6, 8) a přestavba promptu → LAB CODE-read, ne produkce** (DECISIONS 2026-10-05 (3)).

@@ -8,6 +8,9 @@ přes `vm`); měnil se jen blok životní runy a otázka. Vstupní čtení = tř
 Sowilo půlnoční slunce) — **jsou mimo repo** (nesou jméno), skripty `zivotni.js` a `cena.js` je čtou ze scratchpadu.
 Spotřeba všech 126 volání: 169 805 vstupních a 8 619 výstupních tokenů = **$0,43**.
 
+> ⚠️ **Vstup s ✦ (zjištěno 2026-10-06 večer):** všechna kola Asku tady dostávala čtení i s posledním řádkem myšlenky ✦, který produkce Asku
+> neposílá. Srovnání ramen uvnitř kola platí pro ten vstup; se vstupem jako v produkci se nepřeměřilo (`RUNAR_EVAL_LOG.md` 2026-10-06 (8)).
+
 ## 1. Ask k životní runě (Isa), n = 6 na buňku (3 čtení × 2)
 
 > ⚠️ **Tabulka 1 a kola 2–3 mají ROZBITÝ VSTUP** (oprava 2026-10-06, DECISIONS 2026-10-06 (8)): test posílal do

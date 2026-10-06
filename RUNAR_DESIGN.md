@@ -1390,13 +1390,15 @@ doslova — a pokaždé?* Sol bere vstup jako materiál k přepsání, Opus spí
    v monitoru. → `RUNAR_EVAL_LOG.md` 2026-10-06 (4).
 5. **Tip, který žádá, co pravidla zakazují, začne odmítnutím.** „Why is this showing up now?“ se ptá po příčině (znamení) →
    9/9 „[runa] does not say why…“. Než tip napíšeš, ověř, že na něj Rúnar podle pravidel smí odpovědět. → tamtéž.
-6. **Pokyn neodklidí, co leží ve vstupu.** Pojistka „the rune does not say which“ přebírá tvar posledního řádku čtení (dvě
-   možnosti): pět domněnek o pravidlech vyvráceno, pokyn „neopakuj, jak čtení skončilo“ ji nesnížil, vyndaný řádek ano
-   (naznačeno, p = 0,09). Páka je ve vstupu, ne v zákazu. → tamtéž. **Doplněno 2026-10-06 (CODE-read):** ani sloveso *say* v pravidlech
-   Asku (*„say what the runes … hold“* 2×) to není — se vstupem jako v produkci jiné sloveso 12/18 × produkce 11/18, doslovné
-   „does not say“ 7 × 6. ⚠️ Pokus A i kolo 1 běžely na čtení S řádkem ✦, který produkce Asku neposílá → `RUNAR_EVAL_LOG.md` 2026-10-06 (5) a (6). **„THE RUNE does not say“ je ale rámec:** hlavička Asku *„<runa> carries the sense of …“* a pravidla
-   *„what the runes … hold“* dělají z runy nositele obsahu (*say* = „to indicate in a written form“, jako nápis); bez toho rámce runa jako podmět
-   pojistky 8/30 → 1/30, pojistka přejde na „the reading / the image“. → `RUNAR_EVAL_LOG.md` 2026-10-06 (7).
+6. **Pojistka je tvar vstupu × zákazy v pokynech, ne jedna věta.** Se vstupem jako v produkci (bez ✦, n = 30 na rameno) má produkce
+   „does not say / leaves open / not a promise“ v 26/30 odpovědí Asku. Zhruba na polovinu ji sníží **každá** z těchto pák zvlášť: čtení
+   bez mostu „may be X, or Y“ (14) · charakter bez „never predicts / does not guarantee / never hand a conclusion“ (14) · tři pravidla Asku
+   bez runy jako „nositele“ (14) · bez NO COLD READING (18). Nepohne s ní hlavička aspektu (25), věta o možnostech (24), o zrcadlení (23)
+   ani pokyn „neopakuj, jak čtení skončilo“ (22) — **pokyn neodklidí, co leží ve vstupu.** „THE RUNE does not say“ (runa jako podmět)
+   nese rámec runy jako nositele obsahu: bez něj 8/30 → 1/30 (CODE-read). Zákazy verdiktu jsou kánon a zůstávají; páky jsou v tom, co
+   dostane jako vstup, a ve formulaci „nositele“. → `RUNAR_EVAL_LOG.md` 2026-10-06 (6), (7) a (8).
+   ⚠️ Do večera 2026-10-06 tu stálo „pět domněnek o pravidlech vyvráceno, vyndaný řádek naznačeno“ — měřeno na vstupu s řádkem ✦,
+   který produkce Asku neposílá. Neplatí.
 7. **Seznam navíc nepomůže.** Klíče životní runy „jako pozadí“ nic měřitelného nepřidaly a sol je neodříkal.
    → `docs/eval/2026-10-06-ask-zivotni-runa/README.md`, tab. 1 (⚠️ kolo s rozbitým jménem tažené runy — platí jen uvnitř kola).
 8. **Opus body 1–3 nedělá** (monitor 0/13 · 0/11 · 0/16), pojistku z bodu 6 dělá taky, méně. Formulace se proto testuje na

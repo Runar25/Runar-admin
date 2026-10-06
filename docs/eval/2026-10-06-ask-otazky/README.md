@@ -9,6 +9,11 @@ jméno — `rnPrompt`), v5.00. Vstupní čtení = tři ownerova čtení z 2026-1
 oblast vyplněná, životní runa Isa) — **jsou mimo repo** (nesou jméno), skripty je berou jako argument.
 Spotřeba: 288 volání = **$0,88**.
 
+> ⚠️ **VSTUP S ✦ (oprava 2026-10-06 večer, našel CODE-read):** pokusy A a B posílaly Asku čtení z DB i s posledním řádkem myšlenky ✦,
+> který produkce Asku neposílá (`readerTexts.short` po `_splitThought`). **Pokus A je přeměřený se správným vstupem** (n = 30 na rameno)
+> → `RUNAR_EVAL_LOG.md` 2026-10-06 (8): pojistka v produkci 26/30, sníží ji most, charakter, pravidla Asku i NO COLD READING — tabulka 2
+> níž platí jen pro vstup s ✦. **Pokus B se nepřeměřil** (owner běh zastavil kvůli velikosti vzorku); jeho čísla platí jen pro vstup s ✦.
+
 ## 1. Rozbor ownerových Asků od 2026-09-25 (124 odpovědí)
 Tabulka → `ask_audit_od_2026-09-25.md` (`node ask_audit.js <export.json> 2026-09-25`). Hlavní nálezy:
 - **Pojistka** *„the rune / reading does not say…"*, *„leaves … open"*, *„not a promise / verdict"* ve 40 ze 124 odpovědí
