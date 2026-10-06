@@ -714,6 +714,8 @@
   (jedna změna naráz, ať jde poznat, co co udělalo).
   ➕ **2026-10-05, doklad k podobě [2] *generace*:** trajekt × Family & Home (čtení 948649a5, `area_face: 2`) →
   *„The crossing was planned by one generation and is waited on by another."* — owner: *„špatně chápe"*. Viz položka „Trajekt".
+  ➕ **2026-10-06, třetí doklad [2]:** nový obraz bouře se svíčkami × Family & Home (čtení f680ee96, sol, `area_face: 2`) →
+  *„The table where older and younger hands meet stands in the dark."* a k tomu vymyšlená *„empty chair"*.
 - [x] **Opus 5 s přemýšlením `low` — NE** (KUKY 2026-10-04: *„nevypadá to lépe, takže ne"*, DECISIONS 2026-10-04 (4)). Pilot EVAL_LOG 2026-10-04 (3):
   63 slov × dnes 71, ~6 s × 4 s, $0,0148 × $0,0105; **1/6 čtení useknuté** na stropu 700 → pro produkci tvar
   `thinking: {type: "adaptive"}` + `output_config: {effort: "low"}` a `max_tokens` s rezervou na přemýšlení (claude-proxy).
@@ -1095,6 +1097,16 @@ Rozpory, které nejsou textové — dvě instrukce, které si neodporují slovy,
 A cokoli v datech mimo repo. To zachytí jen měření na výstupu modelu.
 
 ## Nálezy z workflow — k triáži
+
+### Hlášky nad čtením: losovaná věta + pozdrav + pevný citát — owner se ptá, proč dvě (KUKY 2026-10-06) — čeká na ownera (CODE-tune)
+Report 2026-10-06 10:08: *„Trochu mi připadá, že není úplně důvod je takhle rozdělovat… Kolik jich je na střídání? Nebylo by lepší je
+spojit do jednoho místo dvou? Proč jsou tam, kde jsou?"* Stav kódu: `#ui-sub` = jedna z 12 vět `HERO_PHRASES` (`v2/runar-app.js`,
+los při načtení) · `#hero-greeting` = *„Good to see you, <jméno>."* · `#hero-quote` = pevný citát *„The runes do not predict your
+fate…"*. **Vady (§22):** (1) citát žije na 4 místech — `runar-app.js` (updateUIText), `runar-reader.html` ×2 (hero + konec záložky
+Strom), `UI_TEXT.tree_closing_quote` (§20); (2) `HERO_PHRASES` a pozdravy jsou natvrdo v `runar-app.js` místo `UI_TEXT` (§10);
+(3) islandské `HERO_PHRASES` nesou *„TO BE REVIEWED BY NATIVE SPEAKER"* — neověřené, proti §2/§19.2; (4) několik losovaných vět
+tvrdí osud, který citát o řádek níž popírá (*„It was not accident"*, *„The right rune never misses its mark"*). Obsah rozhodne owner
+(příp. Cowork); CODE pak sjednotí do `UI_TEXT` a ověří islandštinu.
 
 ### Směr: jeden obraz, víc významů (KUKY 2026-10-05) — krok A nasazen (v4.95), B a C čekají (CODE-tune)
 Owner: *„nature force ho hodí i pro řeku. Jde mi spíš o to, že by bylo fajn, kdyby nějaký obraz mohl být popsán různými meanings.
