@@ -6142,3 +6142,19 @@ identitu run u solu (EVAL_LOG 2026-09-23 (3)) a jde i do Asku → neodebírat na
 **Data a tabulky:** `docs/eval/2026-10-06-ask-zivotni-runa/README.md` (jediné místo čísel). Co z toho plyne: DECISIONS 2026-10-06
 (4). Cena (sol, n = 5 na jazyk, bez cache, hlas jen z textu čtení): EN čtení + hlas $0,0200, s automatickým Askem na oblast
 $0,0231; IS $0,0415 → $0,0472. Ask platí hlavně vstup (systémový prompt + čtení), krátká odpověď šetří jen ~$0,0003.
+
+## 2026-10-06 (4) — Ask: odkud je pojistka „the rune does not say…“ a co dělají slova tipů (sol, API, 288 volání)
+
+**Data a tabulky:** `docs/eval/2026-10-06-ask-otazky/README.md` (jediné místo čísel); rozbor ownerových Asků
+`docs/eval/2026-10-06-ask-otazky/ask_audit_od_2026-09-25.md`. Co z toho plyne pro psaní promptu: `RUNAR_DESIGN.md`, sekce „Slova, která dáváme modelu".
+- **Pojistka** („does not say / leaves … open / not a promise“, 40 ze 124 ownerových Asků, oba modely): **pět domněnek
+  vyvrácených obrácenou pákou** — věta o možnostech, o zrcadlení, NO COLD READING, všechny tři naráz, „never predicts /
+  does not guarantee“ v charakteru (13/18 → 14, 12, 12, 16, 13). Pohnul s ní jen **poslední řádek čtení** (most dvou
+  možností) vyndaný ze vstupu: 13/18 → 7/18, všechna tři čtení stejným směrem, p = 0,09 → naznačeno, neprokázáno.
+  Pokyn „neopakuj, jak čtení skončilo“ nepomohl (15/18). Oprava zatím není — čtení z Asku vyndat nejde.
+- **Slova tipů:** každé znění má na solu svůj stálý začátek odpovědi; jiná slova formuli přesunou, neodstraní.
+  „Why is this showing up now?“ začne odmítnutím 9/9 (ptá se po příčině, kterou pravidla zakazují); „…the hard part?“
+  vrátí „the hard part“ 9/9. Pravidlo „Begin with the answer itself…“ ozvěnu nezměnilo. Nejlíp vyšlo „Where does this get hard?“.
+- **Nástroj:** trojice slov z otázky nevidí přeskupenou ani jednoslovnou ozvěnu ani zápor otázky → monitor ozvěn počítá
+  od teď i stejný začátek odpovědí na týž tip.
+- **Hranice:** EN, sol, tři ownerova čtení, n = 9–18 na buňku. IS a Opus netestovány.
