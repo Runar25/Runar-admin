@@ -6158,3 +6158,28 @@ $0,0231; IS $0,0415 → $0,0472. Ask platí hlavně vstup (systémový prompt + 
 - **Nástroj:** trojice slov z otázky nevidí přeskupenou ani jednoslovnou ozvěnu ani zápor otázky → monitor ozvěn počítá
   od teď i stejný začátek odpovědí na týž tip.
 - **Hranice:** EN, sol, tři ownerova čtení, n = 9–18 na buňku. IS a Opus netestovány.
+
+## 2026-10-06 (5) — Ask pojistka „the rune does not say…": NENÍ to sloveso *say* v pravidlech Asku (§25: „není to X")
+
+**Zadání:** handoff CODE-tune proti 5c28c3a — owner: *„musí se identifikovat ta věta samotná… něco jak ‚say what the rune‘ jako ve čtení…
+odpověď modelu vypadá, že je odpověď na něco, co je přesně v instrukci."* V Ask promptu runy „říkají" **přesně ve dvou větách**
+(`runar-character.js` ~2030 *„— say what the runes of this reading actually hold"*, ~2033 *„Say what the runes of this reading hold, in the
+terms of their own question."*; jinde jen *„If the seeker says…"* a NO COLD READING *„never tell"*). Harness CODE-tune (pokus A), táž tři
+ownerova čtení (Raidho · Algiz · Sowilo), tipy *„{area} — can you make this image clearer?"* a *„Explain {rune} without the image."*,
+gpt-6-sol jako callSol, n = 18 na rameno, $0,17. Skript `docs/eval/2026-10-06-ask-pojistka/ask_say.js`, rozbor jejich `rozbor_slova.js`.
+| rameno (jedna páka) | pojistka celkem | z toho doslova „does not say" |
+|---|---|---|
+| P0 produkce | 9/18 | 3 |
+| **V** obě věty jiným slovesem (*„answer from what the runes … hold"*), pravidlo zůstává | 10/18 | 3 |
+| R obráceně — ještě víc *say* (*„say plainly what the runes of this reading say"*) | 12/18 | 5 |
+**Závěr:** vyměnit sloveso nepohnulo ničím (V 10 × P0 9; doslovné „does not say" 3 × 3) → **hypotéza „pojistka odpovídá na *say* v pokynu"
+padla**. R o něco výš (12, „does not say" 5), ale v šumu — viz útok na nástroj.
+**Útok §27 (táž produkce dvakrát):** CODE-tune ráno P0 **13/18**, dnes P0 **9/18** na stejném promptu a čteních → rozdíl ±4 z 18 je šum;
+n = 18 rozliší jen velké změny (jako P6 13 → 7).
+**Na co pojistka odpovídá — z textů:** na **poslední větu čtení, která nabízí možnost**: *„The cairns mark a road you can see, but they do not
+say whether it still fits you"* ← konec Raidha *„You may be outgrowing a path…"*; *„The rune does not say which reading is right"* /
+*„…which is happening here"* ← most ve tvaru dvou možností. Sedí s jedinou pákou, která se pohnula (CODE-tune P6: čtení bez posledního
+řádku 13 → 7/18). Výklad (neměřený jako příčina): čtení končí MOŽNOSTÍ („may be X, or Y"), Ask má vyjasnit a kánon mu zakazuje verdikt
+(Do not mirror · NO COLD READING · „may be") → nejkratší poctivá odpověď je „runa neříká, které". Není to slovo v pokynu, je to **tvar
+mostu × zákaz verdiktu**.
+**Hranice:** EN, sol, tři čtení, dva tipy; Opus netestován. **Neodebráno** zůstává: *„speak from what the picture holds"* a slova tipů.
