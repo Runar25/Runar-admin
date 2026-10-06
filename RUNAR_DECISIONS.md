@@ -8629,3 +8629,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   (v4.99: 59); holé slovo významu v textu 55/56 (definiční věta ho jmenuje).
 - **Hranice:** EN, sol. Opus a islandština beze změny — islandská slovesa se ověří zvlášť korpusem Risamálheild.
 - Affected doc(s): `RUNAR_DESIGN.md` „Slova, která dáváme modelu“ — bod 2 opraven, bod 9 nový (v témže commitu).
+
+## 2026-10-06 (11) — Monitor ozvěn: ve které větě vstup dosedne a odkud se bere opakovaná fráze; rutina „načti čtení a reporty“
+
+- **Rozhodl:** KUKY 2026-10-06 *„informace jako vstup jde do promptu většinou na nějaké místo, 1. věta, 2. věta… ta, která opakuje obecně,
+  ukazuje na něco, co nevkládáme a co je někde napevno — to bys měl taky být schopný identifikovat, podle mapy nebo čehokoliv, co je lepší
+  nápad“* · *„stačí, že to uděláš automaticky, když řeknu načti si čtení a reporty. To, co je v reportech, je taky důležité.“*
+  **Provedl:** CODE-tune.
+- **Co:** monitor u každého vstupu, který se vrátil, ukáže větu čtení (1, 2, …, posl.); kontroluje, že sol převzal sloveso z losu (v5.01;
+  tady se varuje obráceně — pod 80 %); u opakované fráze a ozvěny pokynu hledá zdroj: vstup toho čtení · u Asku text čtení · pevný text
+  promptu (přesně, nebo řádek se všemi jejími plnovýznamovými slovy).
+- **Lepší než mapa:** pevný text se skládá **živě produkčními buildery** (systémový prompt, prompt čtení opus i sol, prompt Asku). Mapa promptu
+  (artifact) je snímek a zastará; builder je vždy ten, co běží.
+- **Rutina:** `node scripts/nacti_cteni.js` — nová čtení od posledního zápisu monitoru do souboru mimo repo, monitor `--nove --zapis`,
+  nová hlášení do terminálu. CODE ji pouští, když owner řekne „načti (si) čtení a reporty“ (memory `nacti-cteni-a-reporty`).
+- **Hlídá:** smoke ㉷ — samotest: obraz v 1. větě, „does not say“ → řádek promptu Asku se slovem *say*, sloveso z losu 2/3 → ⚠.
+- **Netvrdí se:** že „odkud“ najde příčinu. Najde řádek, který nese tatáž slova — kandidáta na obrácenou páku (§25), ne důkaz.
+- Affected doc(s): žádný (co a proč měří vlastní hlavička skriptu).

@@ -11,6 +11,12 @@
 //   ASK: slova otázky zopakovaná v odpovědi · ozvěny pokynů („drawn“, „does not say“, „leaves … open“, „not a promise / verdict“) ·
 //     opakované fráze · STEJNÝ ZAČÁTEK odpovědí na týž tip (první tři slova, jméno runy = [runa]; od 2026-10-06 — každé znění tipu
 //     má na solu svůj stálý začátek, např. „[runa] does not say why this appears now“ 9/9, a trojice slov z otázky ho nevidí)
+//   KDE (od 2026-10-06 večer): u každého vstupu, který se vrátil, VE KTERÉ VĚTĚ čtení stojí (1, 2, …, posl.) — owner: „informace
+//     jako vstup jde do promptu většinou na nějaké místo, 1. věta, 2. věta“.
+//   SLOVESO Z LOSU (v5.01): sol dostane do esenčního rámce „<Runa> <sloveso>“; řádek kontroluje, že ho převzal (záměr → ⚠ při < 80 %).
+//   ODKUD: u opakované fráze a ozvěny pokynu najde, kde v PEVNÉM textu promptu stojí (přesně, nebo řádek s jejími plnovýznamovými
+//     slovy), a jestli nepřišla ze vstupu toho čtení (obraz, oblast…) nebo u Asku z textu čtení. Pevný text se skládá ŽIVĚ
+//     produkčními buildery (systémový prompt, prompt čtení opus/sol, prompt Asku) — mapa promptu je snímek, builder je vždy aktuální.
 // ⚠ = vstup se vrací ve ≥ 50 % případů (n ≥ 3) — to je „viditelný problém“, na který má CODE ownera upozornit.
 // Ve výstupu jen čísla a fráze z malých písmen (žádná jména, žádné otázky uživatelů) — tabulka smí do veřejného repa.
 //
@@ -22,7 +28,7 @@
 const fs = require('fs'), vm = require('vm'), path = require('path'), cp = require('child_process');
 const ROOT = path.join(__dirname, '..'), D = path.join(ROOT, 'v2') + path.sep;
 const S = { console: { log() {}, warn() {}, error() {} }, document: { getElementById: () => null, querySelector: () => null, querySelectorAll: () => [] },
-  localStorage: { getItem: () => null, setItem() {} } };
+  localStorage: { getItem: () => null, setItem() {}, removeItem() {} } };
 S.window = S; S.globalThis = S; vm.createContext(S);
 for (const f of ['runar-config.js', 'runar-runes.js', 'runar-translations.js', 'runar-character.js', 'runar-utils.js'])
   vm.runInContext(fs.readFileSync(D + f, 'utf8') + '\n;\n', S);
@@ -66,16 +72,67 @@ function nejdelsiShoda(zdroj, cil) {   // nejdelší souvislý úsek slov zdroje
   }
   return { n: best, kus };
 }
+const vetyTextu = (t) => String(t || '').split(/(?<=[.!?])\s+/).map((v) => v.trim()).filter(Boolean);
+function kdeVeta(t, kus) {   // ve které větě textu stojí úsek „kus“: '1', '2', … ; poslední věta = 'posl.'
+  if (!kus) return null;
+  const v = vetyTextu(t), k = ' ' + slova(kus).join(' ') + ' ';
+  for (let i = 0; i < v.length; i++) if ((' ' + slova(v[i]).join(' ') + ' ').indexOf(k) !== -1) return (i === v.length - 1 && i > 0) ? 'posl.' : String(i + 1);
+  return null;
+}
+const rozlozeni = (kdes) => { const c = {}; kdes.filter(Boolean).forEach((k) => { c[k] = (c[k] || 0) + 1; });
+  const e = Object.entries(c).sort((a, b) => (a[0] === 'posl.') - (b[0] === 'posl.') || a[0] - b[0]);
+  return e.length ? 'věta ' + e.map(([k, n]) => k + ': ' + n).join(' · ') : ''; };
+const SLOVESA_LOS = (() => { try { return G('ESSENCE_VERBS_SOL'); } catch (e) { return []; } })();
+// ODKUD: pevný text promptu po řádcích, složený produkčními buildery (vzorek čtení přes runy, oblasti, hledání; opus i sol).
+const kmen = (w) => (w.length > 3 ? w.replace(/(ing|ed|es|s|e)$/, '') : w);
+let _bloky = null;
+function bloky() {
+  if (_bloky) return _bloky;
+  const out = [], vid = new Set(), SK = G('SEEKS');
+  const pridej = (druh, text) => { let sek = '';
+    String(text || '').split('\n').forEach((r) => { const t = r.trim(); if (!t) return;
+      if (/^[A-ZÁÐÉÍÓÚÝÞÆÖ &—,:-]{6,}$/.test(t)) { sek = t; return; }   // nadpis sekce systémového promptu
+      const w = slova(t); if (w.length < 4) return; const k = w.join(' '); if (vid.has(druh + k)) return; vid.add(druh + k);
+      out.push({ druh, sek, text: t, norm: ' ' + k + ' ', kmeny: new Set(w.map(kmen)) }); }); };
+  for (const L of ['en', 'is']) {
+    pridej('čtení', S.buildSysPrompt(null, L)); pridej('ask', S.buildSysPrompt(null, L));
+    for (const eng of ['opus', 'sol']) {
+      vm.runInContext('READ_ENGINE = "' + eng + '"; lang = "' + L + '";', S);
+      for (let i = 0; i < 8; i++)
+        pridej('čtení', S.buildReadingPrompt({ name: 'Anna', area: AREAS[L][i % AREAS[L].length], seeking: SK[L][i % SK[L].length], question: '', intention: '' }, RUNES[(i * 5) % 24], L, []));
+    }
+    vm.runInContext('READ_ENGINE = "opus";', S);
+    pridej('ask', S.buildAskPrompt('READING TEXT.', 'QUESTION TEXT?', 'Fehu', L, [], RUNES[10],
+      { area: AREAS[L][1], intention: '', seeking: SK[L][2], question: '' }, { mode: 'single', runy: ['Fehu'] }, 'wealth', []));
+  }
+  _bloky = out; return out;
+}
+function odkud(fraze, druh, klic) {   // kde v pevném textu promptu fráze stojí: přesně, nebo řádky se všemi jejími plnovýznamovými slovy
+  const B = bloky().filter((b) => b.druh === druh), fw = slova(fraze), f = ' ' + fw.join(' ') + ' ';
+  const vse = [...new Set(fw.map(kmen))];
+  // úryvek kolem nalezeného místa — začátek řádku by často neukázal, proč tam ten řádek je
+  const uryvek = (b, kmeny) => { const words = b.text.split(/\s+/); let i = words.findIndex((x) => kmeny.includes(kmen(slova(x)[0] || '')));
+    if (i < 0) i = 0; const a = Math.max(0, i - 4); return (b.sek ? b.sek + ' › ' : '') + (a > 0 ? '…' : '') + words.slice(a, a + 12).join(' ') + '…'; };
+  const fmt = (xs, kmeny) => xs.slice(0, 2).map((b) => '„' + uryvek(b, kmeny) + '“').join(' · ') + (xs.length > 2 ? ' (+' + (xs.length - 2) + ')' : '');
+  const poradi = (xs) => xs.map((b) => [b, vse.filter((x) => b.kmeny.has(x)).length]).sort((a, b) => b[1] - a[1]).map(([b]) => b);
+  const presne = B.filter((b) => b.norm.indexOf(f) !== -1);
+  if (presne.length) return 'v promptu přesně: ' + fmt(presne, fw.map(kmen));
+  const w = (klic || fw.filter((x) => !STOP.has(x) && !JMENA_RUN.has(x) && x.length > 2)).map(kmen);
+  if (!w.length) return '';
+  const sdili = poradi(B.filter((b) => w.every((x) => b.kmeny.has(x))));
+  return sdili.length ? 'v promptu slova „' + w.join(', ') + '“: ' + fmt(sdili, w) : 'v promptu není → zvyk modelu (nebo vstup, který monitor nezná)';
+}
 function telo(t) { let b = String(t || ''); try { const j = JSON.parse(b.slice(b.indexOf('['), b.lastIndexOf(']') + 1)); b = j.map((x) => x.text).join(' '); } catch (e) {} return b.split('✦')[0].trim(); }
 function sloveso(text, runa) {
   const m = text.match(new RegExp('\\b' + runa + "(?:’s|'s)?\\s+(\\w+)(?:\\s+(of|as|to))?", 'i'));
   return m ? (m[1] + (m[2] ? ' ' + m[2] : '')).toLowerCase() : '';
 }
+// Třetí položka = plnovýznamová slova, podle kterých „odkud“ hledá řádek promptu, na který ozvěna odpovídá.
 const POKYNY = [
-  ['„drawn“ (runa tažená / netažená)', /\bdrawn here\b|\brune drawn\b|\bwas not drawn\b|\bnot (one of|among) the runes\b|\bwas cast here\b|\bonly [A-Z][a-z]+ was (drawn|cast)\b/i],
-  ['„the rune / reading does not say“', /\b(the )?(rune|runes|reading|picture|image) (does|do) not (say|tell|decide|settle|show)\b/i],
-  ['„leaves … open“', /\bleaves? (that|it|this|the [a-z]+|room for)? ?(question )?open\b|\bleaves room for\b/i],
-  ['„not a promise / verdict / sign“', /\bnot a (promise|verdict|prediction|sign|warning)\b/i],
+  ['„drawn“ (runa tažená / netažená)', /\bdrawn here\b|\brune drawn\b|\bwas not drawn\b|\bnot (one of|among) the runes\b|\bwas cast here\b|\bonly [A-Z][a-z]+ was (drawn|cast)\b/i, ['drawn']],
+  ['„the rune / reading does not say“', /\b(the )?(rune|runes|reading|picture|image) (does|do) not (say|tell|decide|settle|show)\b/i, ['say']],
+  ['„leaves … open“', /\bleaves? (that|it|this|the [a-z]+|room for)? ?(question )?open\b|\bleaves room for\b/i, ['leave', 'open']],
+  ['„not a promise / verdict / sign“', /\bnot a (promise|verdict|prediction|sign|warning)\b/i, ['promise']],
 ];
 function opakovane(texty, min) {   // čtyřslovné fráze z malých písmen ve ≥ min % textů
   const pocty = {};
@@ -98,18 +155,29 @@ function rozber(rows) {
     const model = String(r.model || (r.usage && r.usage.model) || '?').replace('claude-', '');
     if (r.area !== 'spread' && r.short_text) {
       const t = telo(r.short_text), x = { model, L, runa: r.rune_name };
-      if (d.image) x.obraz = nejdelsiShoda(d.image, t);
-      if (d.kws && d.kws.indexOf(',') === -1) x.aspekt = new RegExp('\\b' + d.kws.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i').test(t);
+      const vstupy = [];
+      if (d.image) { x.obraz = nejdelsiShoda(d.image, t); x.obraz.kde = x.obraz.n >= 4 ? kdeVeta(t, x.obraz.kus) : null; vstupy.push(d.image); }
+      if (d.kws && d.kws.indexOf(',') === -1) {
+        x.aspekt = new RegExp('\\b' + d.kws.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i').test(t);
+        x.aspektKde = x.aspekt ? kdeVeta(t, d.kws) : null;
+      }
       x.sloveso = sloveso(t, r.rune_name);
+      if (d.verb !== undefined && SLOVESA_LOS[d.verb]) {   // v5.01: sol dostal sloveso losem — převzal ho hned za jménem runy?
+        const v = SLOVESA_LOS[d.verb];
+        x.los = { v, ok: new RegExp('\\b' + r.rune_name + "(?:’s|'s)?\\s+" + v.replace(/ /g, '\\s+') + '\\b', 'i').test(t) };
+        x.los.kde = x.los.ok ? kdeVeta(t, r.rune_name + ' ' + v) : null;
+      }
       const ai = Math.max(AREAS.en.indexOf(r.aol || r.area), AREAS.is.indexOf(r.aol || r.area));
       if (ai >= 0 && d.area_face !== undefined && FACES[ai] && FACES[ai][d.area_face]) {
         const f = FACES[ai][d.area_face][L] || [];
         const s = [nejdelsiShoda(f[0], t), nejdelsiShoda(f[1], t)].sort((a, b) => b.n - a.n)[0];
-        x.oblast = s;
+        s.kde = s.n >= 3 ? kdeVeta(t, s.kus) : null;
+        x.oblast = s; vstupy.push(f[0], f[1]);
       }
-      if (d.angle !== undefined && ANG[L][d.angle]) x.uhel = nejdelsiShoda(ANG[L][d.angle], t);
+      if (d.angle !== undefined && ANG[L][d.angle]) { x.uhel = nejdelsiShoda(ANG[L][d.angle], t); x.uhel.kde = x.uhel.n >= 4 ? kdeVeta(t, x.uhel.kus) : null; vstupy.push(ANG[L][d.angle]); }
       const em = String(d.ending || '').match(/^(heavy|open)(\d+)$/);
-      if (em && END[L][em[1]][Number(em[2])]) x.konec = nejdelsiShoda(END[L][em[1]][Number(em[2])], t);
+      if (em && END[L][em[1]][Number(em[2])]) { const et = END[L][em[1]][Number(em[2])]; x.konec = nejdelsiShoda(et, t); x.konec.kde = x.konec.n >= 4 ? kdeVeta(t, x.konec.kus) : null; vstupy.push(et); }
+      x.vstupy = ' ' + slova(vstupy.join(' ')).join(' ') + ' ';
       x.text = t;
       R.cteni.push(x);
     }
@@ -121,7 +189,8 @@ function rozber(rows) {
       let ozvena = '';
       for (let i = 0; i + 3 <= qz.length && !ozvena; i++) { const g = qz.slice(i, i + 3); if (g.filter((w) => !STOP.has(w)).length >= 1 && ac.indexOf(' ' + g.join(' ') + ' ') !== -1) ozvena = g.join(' '); }
       let tip = null; for (const s of SABLONY) if (s.re.test(q)) { tip = s.k; break; }
-      R.ask.push({ model: String((f.usage && f.usage.model) || model).replace('claude-', ''), ozvena, pokyny: POKYNY.filter(([, re]) => re.test(a)).map(([jm]) => jm), text: a, tip, zac: zacatek(a) });
+      R.ask.push({ model: String((f.usage && f.usage.model) || model).replace('claude-', ''), ozvena, pokyny: POKYNY.filter(([, re]) => re.test(a)).map(([jm]) => jm), text: a, tip, zac: zacatek(a),
+        cteni: ' ' + slova(telo(r.short_text)).join(' ') + ' ' });
     }
   }
   return R;
@@ -132,9 +201,11 @@ function souhrn(R) {
   // 2026-10-06: zvlášť sol a Opus — chovají se jinak (sloveso „names“ dělá jen sol), smíchaný podíl by vzorec jednoho modelu schoval.
   const SKUP = [['sol', (x) => /^gpt/.test(x.model)], ['opus', (x) => /opus/.test(x.model)]];
   let _rozpad = null;   // nastaví radekM: pro každou skupinu [a, n]
+  let _zamer = false;   // řádek „záměr“: vrátit se MÁ — varuje se obráceně, když se vrací v < 80 %
   const radek = (jm, a, n, pozn) => {
     const bunky = [p(a, n)].concat((_rozpad || []).map(([g, aa, nn]) => p(aa, nn)));
-    const zlute = [[a, n, '']].concat((_rozpad || []).map(([g, aa, nn]) => [aa, nn, ' (' + g + ')'])).filter(([aa, nn]) => nn >= 3 && aa / nn >= 0.5);
+    const zlute = [[a, n, '']].concat((_rozpad || []).map(([g, aa, nn]) => [aa, nn, ' (' + g + ')'])).filter(([aa, nn]) => nn >= 3 && (_zamer ? aa / nn < 0.8 : aa / nn >= 0.5));
+    _zamer = false;
     zlute.forEach(([aa, nn, g]) => var_.push(jm + g + ' ' + p(aa, nn)));
     out.push('| ' + (zlute.length ? '⚠ ' : '') + jm + ' | ' + bunky.join(' | ') + ' | ' + (pozn || '') + ' |');
     _rozpad = null;
@@ -144,15 +215,20 @@ function souhrn(R) {
     radek(jm, kde.filter(f).length, kde.length, pozn);
   };
   const s = (f) => C.filter(f);
-  radekM('obraz opsán (≥ 4 slova za sebou)', s((x) => x.obraz), (x) => x.obraz.n >= 4, '');
-  radekM('význam z hlavičky doslova v textu', s((x) => x.aspekt !== undefined), (x) => x.aspekt === true, '');
+  radekM('obraz opsán (≥ 4 slova za sebou)', s((x) => x.obraz), (x) => x.obraz.n >= 4, rozlozeni(C.map((x) => x.obraz && x.obraz.kde)));
+  radekM('význam z hlavičky doslova v textu', s((x) => x.aspekt !== undefined), (x) => x.aspekt === true, rozlozeni(C.map((x) => x.aspektKde)));
+  if (C.some((x) => x.los)) {
+    _zamer = true;
+    radekM('sloveso z losu hned za jménem runy (záměr, v5.01)', s((x) => x.los), (x) => x.los.ok,
+      rozlozeni(C.map((x) => x.los && x.los.kde)) + ' · ' + Object.entries(C.filter((x) => x.los).reduce((o, x) => { o[x.los.v] = (o[x.los.v] || 0) + 1; return o; }, {})).map(([k, n]) => k + ' ' + n).join(', '));
+  }
   const sl = {}; C.forEach((x) => { if (x.sloveso) sl[x.sloveso] = (sl[x.sloveso] || 0) + 1; });
   const top = Object.entries(sl).sort((a, b) => b[1] - a[1]);
   radekM('nejčastější sloveso po jménu runy (' + (top.length ? top[0][0] : '—') + ')', C.filter((x) => x.sloveso), (x) => top.length && x.sloveso === top[0][0], top.slice(0, 4).map(([k, n]) => k + ' ' + n).join(', '));
   radekM('podoba oblasti opsaná (≥ 3 slova)', s((x) => x.oblast), (x) => x.oblast.n >= 3,
-    [...new Set(s((x) => x.oblast && x.oblast.n >= 3).map((x) => '„' + x.oblast.kus + '“'))].slice(0, 3).join(' · '));
-  radekM('pokyn úhlu opsaný (≥ 4 slova)', s((x) => x.uhel), (x) => x.uhel.n >= 4, '');
-  radekM('pokyn konce opsaný (≥ 4 slova)', s((x) => x.konec), (x) => x.konec.n >= 4, '');
+    [...new Set(s((x) => x.oblast && x.oblast.n >= 3).map((x) => '„' + x.oblast.kus + '“'))].slice(0, 3).join(' · ') + ' ' + rozlozeni(C.map((x) => x.oblast && x.oblast.kde)));
+  radekM('pokyn úhlu opsaný (≥ 4 slova)', s((x) => x.uhel), (x) => x.uhel.n >= 4, rozlozeni(C.map((x) => x.uhel && x.uhel.kde)));
+  radekM('pokyn konce opsaný (≥ 4 slova)', s((x) => x.konec), (x) => x.konec.n >= 4, rozlozeni(C.map((x) => x.konec && x.konec.kde)));
   radekM('Ask: slova otázky zopakovaná', A, (x) => !!x.ozvena,
     [...new Set(A.filter((x) => x.ozvena).map((x) => '„' + x.ozvena + '“'))].slice(0, 3).join(' · '));
   for (const [jm] of POKYNY) radekM('Ask: ' + jm, A, (x) => x.pokyny.indexOf(jm) !== -1, '');
@@ -167,7 +243,16 @@ function souhrn(R) {
   }
   const rc = opakovane(C.map((x) => x.text), 0.3), ra = opakovane(A.map((x) => x.text), 0.3);
   const modely = {}; C.concat(A).forEach((x) => { modely[x.model] = (modely[x.model] || 0) + 1; });
-  return { tabulka: '| vstup → výstup | vše | sol | opus | poznámka |\n|---|---|---|---|---|\n' + out.join('\n'), varovani: var_, rc, ra, modely, n: C.length, na: A.length };
+  // ODKUD: u každé opakované fráze napřed vstup toho čtení (u Asku text čtení), pak pevný text promptu.
+  const zdroje = [];
+  const zVstupu = (fr, xs, pole) => { const f = ' ' + slova(fr).join(' ') + ' '; return xs.filter((x) => (x[pole] || '').indexOf(f) !== -1).length; };
+  for (const [fr, n] of rc) { const v = zVstupu(fr, C, 'vstupy');
+    zdroje.push('„' + fr + '“ ve čteních ' + n + '× — ' + (v ? 'ze vstupu toho čtení ' + v + '× · ' : '') + (odkud(fr, 'čtení') || 'jen výplňová slova')); }
+  for (const [fr, n] of ra) { const v = zVstupu(fr, A, 'cteni');
+    zdroje.push('„' + fr + '“ v Ascích ' + n + '× — ' + (v ? 'z textu čtení ' + v + '× · ' : '') + (odkud(fr, 'ask') || 'jen výplňová slova')); }
+  for (const [jm, , klic] of POKYNY) { const n = A.filter((x) => x.pokyny.indexOf(jm) !== -1).length;
+    if (n) zdroje.push('Ask ' + jm + ' ' + n + '× — ' + odkud(jm.replace(/[„“]/g, ''), 'ask', klic)); }
+  return { tabulka: '| vstup → výstup | vše | sol | opus | poznámka |\n|---|---|---|---|---|\n' + out.join('\n'), varovani: var_, rc, ra, modely, n: C.length, na: A.length, zdroje };
 }
 const TABULKA = path.join(ROOT, 'docs', 'monitor', 'ozveny.md');
 // 2026-10-06: --nove čte značku „<!-- do: … -->“ z poslední sekce tabulky — stav žije v tabulce samé, ne v dalším souboru (§20).
@@ -194,6 +279,7 @@ function vypis(S2, nadpis, doZnacka) {
   let md = '\n## ' + nadpis + '\n\nČtení ' + S2.n + ' · Asků ' + S2.na + ' · modely: ' + Object.entries(S2.modely).map(([m, c]) => m + ' ' + c).join(', ') + '\n\n' + S2.tabulka + '\n';
   if (S2.rc.length) md += '\nOpakované fráze ve čteních (≥ 30 %): ' + S2.rc.map(([t, c]) => '„' + t + '“ ' + c).join(' · ') + '\n';
   if (S2.ra.length) md += 'Opakované fráze v Ascích (≥ 30 %): ' + S2.ra.map(([t, c]) => '„' + t + '“ ' + c).join(' · ') + '\n';
+  if (S2.zdroje && S2.zdroje.length) md += '\n**Odkud se to bere** (vstup čtení / text čtení / pevný text promptu podle živých builderů):\n' + S2.zdroje.map((z) => '- ' + z).join('\n') + '\n';
   md += S2.varovani.length ? '\n**⚠ Upozornit ownera:** ' + S2.varovani.join(' · ') + '\n' : '\nBez varování.\n';
   if (doZnacka) md += '<!-- do: ' + doZnacka + ' -->\n';
   return md;
@@ -224,14 +310,30 @@ if (process.argv.includes('--test')) {
   ok(/„drawn“[^|]*\| 3\/3/.test(t) && /does not say“ \| 3\/3/.test(t), 'Ask: ozvěny „drawn“ a „does not say“ 3/3');
   ok(X.varovani.length >= 5 && X.varovani.every((v) => v.indexOf('⚠') === -1), 'varování vznikla (≥ 5) a nesou čísla');
   ok(!/kuky|isa is/.test(JSON.stringify(X.rc).toLowerCase()), 'opakované fráze bez jmen');
-  // 2026-10-06: stejný začátek na týž tip — tři odpovědi na „Why is this showing up now?“, dvě začnou stejně (jméno runy se liší),
-  // jedna jinak; oslovení jménem na začátku se nesmí dostat do tabulky.
+  // 2026-10-06: stejný začátek na týž tip — tři odpovědi na „What am I not seeing here?“, dvě začnou stejně (jméno runy se liší),
+  // jedna jinak; oslovení jménem na začátku se nesmí dostat do tabulky. (Do večera 2026-10-06 tu stál tip „Why is this showing
+  // up now?“ — owner ho odstranil, šablona z UI_TEXT zmizela a test by tiše přestal nic měřit.)
   const rowsT = ['Hagalaz', 'Algiz', 'Sowilo'].map((n, i) => ({ lang: 'en', rune_name: n, area: 'spread', model: 'gpt-6-sol',
-    follow_up: [{ q: 'Why is this showing up now?', a: [n + ' does not say why this appears now.', 'Kuky, ' + n + ' does not say why.', 'The moment holds still.'][i] }] }));
+    follow_up: [{ q: 'What am I not seeing here?', a: [n + ' does not show what is hidden.', 'Kuky, ' + n + ' does not say more.', 'The moment holds still.'][i] }] }));
   const T = souhrn(rozber(rowsT)).tabulka;
-  ok(/⚠ Ask ask_h_now: stejný začátek „\[runa\] does not…“ \| 2\/3/.test(T) && !/kuky/i.test(T), 'Ask: stejný začátek na týž tip 2/3 (jméno runy jako [runa], oslovení pryč)');
+  ok(/⚠ Ask ask_h_unseen: stejný začátek „\[runa\] does not…“ \| 2\/3/.test(T) && !/kuky/i.test(T), 'Ask: stejný začátek na týž tip 2/3 (jméno runy jako [runa], oslovení pryč)');
+  // 2026-10-06 večer: KDE — obraz stojí v 1. větě všech tří čtení Hagalazu; ODKUD — „does not say“ v Asku najde řádek promptu Asku
+  // se slovem „say“ (pravidla „…say what the runes of this reading…“), ne prompt čtení.
+  ok(/obraz opsán[^\n]*věta 1: 3/.test(t), 'KDE: obraz opsaný v 1. větě 3×');
+  ok(X.zdroje.some((z) => /does not say“ 3× — v promptu slova „say“: [^\n]*say what the runes/i.test(z)), 'ODKUD: „does not say“ → řádek promptu Asku se slovem „say“');
+  // Sloveso z losu (v5.01): tři čtení solu, dvě sloveso převzala, jedno ne → 2/3 < 80 % → ⚠ (záměr nevyšel). Třetí věta sloveso
+  // MÁ, ale ne za jménem runy — počítat se smí jen „<Runa> <sloveso>“ (mutace „sloveso kdekoli v textu“ musí test shodit).
+  const iv = SLOVESA_LOS.indexOf('represents');
+  const rowsS = ['Hagalaz represents disruption no one chose.', 'Hagalaz represents what breaks.', 'Hagalaz names what the storm represents.'].map((tx) => ({
+    lang: 'en', rune_name: 'Hagalaz', area: 'Inner Growth', aol: 'Inner Growth', model: 'gpt-6-sol', prompt_draws: { verb: iv },
+    short_text: 'The hail comes down on the barley. ' + tx + ' What still stands?', follow_up: [] }));
+  const TS = souhrn(rozber(rowsS));
+  ok(iv >= 0 && /⚠ sloveso z losu hned za jménem runy \(záměr, v5\.01\) \| 2\/3[^\n]*věta 2: 2[^\n]*represents 3/.test(TS.tabulka), 'sloveso z losu 2/3 → ⚠ (záměr pod 80 %), ve 2. větě');
+  // …a obráceně: převzal 3/3 → žádné ⚠ (u běžného řádku by 3/3 varovalo — tady je návrat ZÁMĚR).
+  const TS3 = souhrn(rozber(rowsS.slice(0, 2).concat([Object.assign({}, rowsS[0])])));
+  ok(/\| sloveso z losu hned za jménem runy \(záměr, v5\.01\) \| 3\/3/.test(TS3.tabulka) && !/⚠ sloveso z losu/.test(TS3.tabulka), 'sloveso z losu 3/3 → bez ⚠ (záměr splněn)');
   if (fail) { console.log('\n' + fail + ' selhalo'); process.exit(1); }
-  console.log('\nOK    monitor ozvěn: obraz, význam, sloveso, podoba oblasti, otázka Asku, ozvěny pokynů a stejný začátek na týž tip poznány na smyšlených čteních');
+  console.log('\nOK    monitor ozvěn: obraz, význam, sloveso (i z losu), podoba oblasti, otázka Asku, ozvěny pokynů, stejný začátek na týž tip, KDE a ODKUD poznány na smyšlených čteních');
   process.exit(0);
 }
 const rows = nacti();
