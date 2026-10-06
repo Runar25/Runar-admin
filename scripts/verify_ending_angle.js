@@ -134,9 +134,6 @@ for (const L of ['en', 'is']) {
     { jm: 'esencni ram', fn: vm.runInContext('_essenceFrame', S), pool: vm.runInContext(L === 'is' ? 'ESSENCE_FRAMES_IS' : 'ESSENCE_FRAMES', S), klic: 'essence' },
     { jm: 'rozpocet delky', fn: vm.runInContext('_lengthBudget', S), pool: vm.runInContext(L === 'is' ? 'LENGTH_BUDGETS_IS' : 'LENGTH_BUDGETS', S), klic: 'len' },
   ];
-  // 2026-10-06: rámce pro sol (EN) — s READ_ENGINE='sol' se losují ony, s 'opus' nikdy; _promptDraws je pozná.
-  if (L !== 'is') dalsi.push({ jm: 'esencni ram (sol)', fn: (l) => { vm.runInContext('READ_ENGINE = "sol";', S); const x = vm.runInContext('_essenceFrame', S)(l); vm.runInContext('READ_ENGINE = "opus";', S); return x; },
-    pool: vm.runInContext('ESSENCE_FRAMES_SOL', S), klic: 'essence' });
   for (const d of dalsi) {
     const videno = new Set();
     for (let i = 0; i < 2000; i++) videno.add(d.fn(L));
@@ -150,13 +147,28 @@ for (const L of ['en', 'is']) {
     });
     rekni(chyb === 0, L + '  ' + d.jm + ': _promptDraws pozna vsechny (' + d.pool.length + ')');
   }
-  if (L !== 'is') {   // Opus nikdy nedostane rámec pro sol (a naopak)
-    const sol = vm.runInContext('ESSENCE_FRAMES_SOL', S), op = vm.runInContext('ESSENCE_FRAMES', S);
-    let cizi = 0;
-    for (let i = 0; i < 400; i++) { if (sol.indexOf(vm.runInContext('_essenceFrame', S)(L)) !== -1) cizi++; }
+  if (L !== 'is') {
+    // v5.01: rámce pro sol jsou šablony „{R} {V}“ (sloveso z korpusu, ESSENCE_VERBS_SOL). Každá kombinace rámec × sloveso musí padnout,
+    // nesmí padnout nic jiného, _promptDraws pozná rámec i sloveso a Opus nikdy nedostane rámec pro sol (a naopak).
+    const solR = vm.runInContext('ESSENCE_FRAMES_SOL', S), slov = vm.runInContext('ESSENCE_VERBS_SOL', S), op = vm.runInContext('ESSENCE_FRAMES', S);
+    const runa = { n: 'Fehu' }, ef = vm.runInContext('_essenceFrame', S);
+    const ocek = new Map();
+    solR.forEach((t, i) => slov.forEach((v, k) => ocek.set(t.replace('{R}', runa.n).replace('{V}', v), [i, k])));
     vm.runInContext('READ_ENGINE = "sol";', S);
-    for (let i = 0; i < 400; i++) { if (op.indexOf(vm.runInContext('_essenceFrame', S)(L)) !== -1) cizi++; }
+    const videno = new Set();
+    for (let i = 0; i < 3000; i++) videno.add(ef(L, runa));
+    rekni(videno.size === ocek.size && [...videno].every((x) => ocek.has(x)),
+      L + '  esencni ram (sol): vsech ' + ocek.size + ' kombinaci ramec × sloveso padlo a nic jineho (videno ' + videno.size + ')');
+    let chyb = 0;
+    for (const [t, [i, k]] of ocek) {
+      const dr = draws('X' + String.fromCharCode(10) + t + String.fromCharCode(10) + 'Y', L);
+      if (!dr || dr.essence !== i || dr.verb !== k) { chyb++; console.log('    sol ' + i + '/' + k + ' -> ' + (dr && dr.essence) + '/' + (dr && dr.verb)); }
+    }
+    rekni(chyb === 0, L + '  esencni ram (sol): _promptDraws pozna ramec i sloveso (' + ocek.size + ')');
+    let cizi = 0;
+    for (let i = 0; i < 400; i++) { if (op.indexOf(ef(L, runa)) !== -1) cizi++; }
     vm.runInContext('READ_ENGINE = "opus";', S);
+    for (let i = 0; i < 400; i++) { if (ocek.has(ef(L, runa))) cizi++; }
     rekni(cizi === 0, L + '  esencni ram: Opus nikdy rámec pro sol, sol nikdy rámec pro Opus (' + cizi + ')');
   }
 

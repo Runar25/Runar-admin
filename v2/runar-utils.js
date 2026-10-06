@@ -378,11 +378,21 @@ function _promptDraws(prompt, lang) {
       if (p.indexOf(buds[b]) !== -1) { out.len = b; break; }
 
     // Esencni ram (2026-09-20): ktere ze dvou zneni padlo. Tyz vzor jako `ending` a `len`.
-    // 2026-10-06: i rámce pro sol (ESSENCE_FRAMES_SOL) — tentýž index [0]/[1], jinak by sol čtení esenci nezapsala.
-    var ramy = isIs ? [ESSENCE_FRAMES_IS] : [ESSENCE_FRAMES, ESSENCE_FRAMES_SOL];
+    var ramy = isIs ? [ESSENCE_FRAMES_IS] : [ESSENCE_FRAMES];
     for (var e1 = 0; e1 < ramy.length && out.essence === undefined; e1++)
       for (var e2 = 0; e2 < ramy[e1].length; e2++)
         if (p.indexOf(ramy[e1][e2]) !== -1) { out.essence = e2; break; }
+    // v5.01: rámce pro sol jsou šablony „{R} {V}“ — pozná se rámec (essence, tentýž index [0]/[1]) i vylosované sloveso
+    // (verb = index v ESSENCE_VERBS_SOL). Bez `verb` by monitor ozvěn nevěděl, jestli sol vzal sloveso, které dostal.
+    if (!isIs && out.essence === undefined && typeof ESSENCE_FRAMES_SOL !== 'undefined')
+      for (var e3 = 0; e3 < ESSENCE_FRAMES_SOL.length && out.essence === undefined; e3++) {
+        var sp = ESSENCE_FRAMES_SOL[e3].split('{R} {V}');
+        var a0 = p.indexOf(sp[0]); if (a0 === -1) continue;
+        var b0 = p.indexOf(sp[1], a0 + sp[0].length); if (b0 === -1) continue;
+        var zac = p.slice(a0 + sp[0].length, b0);
+        for (var vv = 0; vv < ESSENCE_VERBS_SOL.length; vv++)
+          if (zac.slice(-(ESSENCE_VERBS_SOL[vv].length + 1)) === ' ' + ESSENCE_VERBS_SOL[vv]) { out.essence = e3; out.verb = vv; break; }
+      }
     // Prazdna runa ma ram odvozeny z runy, ne z losu (2026-09-22) — zapis ho, jinak by u Blank
     // chybel vstup a mereni by ho nevidelo (tataz trida vady jako `len` do 2026-09-20).
     if (out.essence === undefined && p.indexOf(isIs ? ESSENCE_BLANK_IS : ESSENCE_BLANK) !== -1) out.essence = 'blank';
@@ -520,17 +530,18 @@ const ESSENCE_FRAMES = [
   'THE ESSENCE LINE: after the picture, one short line that says which side of the rune this picture shows — its sense in plain words a stranger to runes can grasp. The seeker knows only the words of the reading, not the picture behind them: say what the rune means in its own terms, not what happens in the scene. Never a fixed formula. No invented mechanism, no fate. Never tell the seeker what it means for them.',
   'THE ESSENCE LINE: after the picture, one short line that names the rune once and gives the meaning the picture already holds, in plain words a stranger to runes can grasp — let the sentence find its own shape rather than a definition. No invented mechanism, no fate. Never tell the seeker what it means for them.',
 ];
-// ESENČNÍ RÁMCE PRO GPT-6 SOL (2026-10-06, KUKY „udělej malou změnu slovesa pro sol a otestuj“; jen EN, Opus beze změny).
-// Proč: sol bere SLOVESO definiční věty ze slov rámce — [1] „names the rune once“ → „Hagalaz names…“ 10/12, [0] „say what the rune
-// means“ → names 6 + speaks of 4 ze 12 (DB: sol names 14/33, Opus 0/147; CODE-read, EVAL_LOG 2026-10-06 (1)–(2)). Měřeno na solu přes
-// API, produkční cesta (docs/eval/2026-10-06-sloveso-sol, 4 runy × 3): [1] s „brings the rune in once and, in a verb of your own“ →
-// interrupts 3, counts 2, marks 2, brings 2, gathers 1, rests 1, names 1; [0] s tímtéž + „keep the line on the rune's own sense“ místo
-// „say what the rune means“ → holds 6, exposes 3, marks 3. Dohromady nejčastější sloveso 6/24 místo names 16/24. Samo „in a verb of
-// your own“ do dnešního [0] nepomohlo (names 10/12) — sloveso nesla věta „say what the rune means“. Záměr v4.81 (čtenář obraz nevidí,
-// význam runy jejími slovy) zůstává; holé slovo aspektu v textu 10/12 a 4/12 (dnes 12/12 a 8/12).
+// ESENČNÍ RÁMCE PRO GPT-6 SOL (EN; Opus beze změny). Historie: v4.99 (2026-10-06, KUKY „udělej malou změnu slovesa pro sol“) dala
+// solu „in a verb of your own“, protože sol bere sloveso z rámce („names the rune once“ → „Hagalaz names…“ 10/12; DB sol names 14/33).
+// VADA v4.99 (KUKY 2026-10-06: „fehu exposes wealth? … je to správná kombinace slov pro pojmenování runy? … pokud to nevíš, tak si
+// to zjisti“): sol si vybral slovesa, kterými angličtina význam runy neříká. Korpus 49 anglických textů o runách (Wikipedie + 23 webů
+// s výklady run; docs/eval/2026-10-06-sloveso-korpus): marks, exposes, interrupts, counts, gathers 0×, holds 3×; doložené jsou
+// „is the … / is a …“ 60×, represents 21, embodies 12, means 11, symbolizes 8, signifies 6, stands for 4.
+// Od v5.01 rámec nese začátek věty „<Runa> <sloveso>“ a sloveso je los z korpusu (ESSENCE_VERBS_SOL) — sol ho převzal 56/56
+// (4 runy × 7 sloves × 2 rámce, API). „means“ z losu vyřazeno: 2/8 sklouzlo do „Hagalaz means disruption can stop…“ (= „znamená, že“).
+const ESSENCE_VERBS_SOL = ['represents', 'embodies', 'symbolizes', 'signifies', 'stands for', 'is the rune of'];
 const ESSENCE_FRAMES_SOL = [
-  "THE ESSENCE LINE: after the picture, one short line that brings the rune in once and, in a verb of your own, says which side of it this picture holds — its sense in plain words a stranger to runes can grasp. The seeker knows only the words of the reading, not the picture behind them: keep the line on the rune's own sense, not on what happens in the scene. Never a fixed formula. No invented mechanism, no fate. Never tell the seeker what it means for them.",
-  'THE ESSENCE LINE: after the picture, one short line that brings the rune in once and, in a verb of your own, gives the meaning the picture already holds, in plain words a stranger to runes can grasp — let the sentence find its own shape rather than a definition. No invented mechanism, no fate. Never tell the seeker what it means for them.',
+  "THE ESSENCE LINE: after the picture, one short line that begins \"{R} {V}\" and says which side of the rune this picture holds — its sense in plain words a stranger to runes can grasp. The seeker knows only the words of the reading, not the picture behind them: keep the line on the rune's own sense, not on what happens in the scene. No invented mechanism, no fate. Never tell the seeker what it means for them.",
+  'THE ESSENCE LINE: after the picture, one short line that begins "{R} {V}" and gives the meaning the picture already holds, in plain words a stranger to runes can grasp. No invented mechanism, no fate. Never tell the seeker what it means for them.',
 ];
 const ESSENCE_FRAMES_IS = [
   // 2026-09-30 [0] viz EN; is-grammar-qa čisté, korpus: „myndin sjálf“ 415 · „orð textans“ 5 · „sjálft merkir“ 8 · „að baki þeim“ 2425.
@@ -551,8 +562,13 @@ const ESSENCE_BLANK = 'THE ESSENCE LINE: after the picture, one short line that 
 const ESSENCE_BLANK_IS = 'KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem nefnir auðu rúnina einu sinni og segir hvað hún er í þessari mynd — það sem enn er óþekkt, enn óráðið eða vantar þar sem búist var við einhverju. Hún gefur enga merkingu af sjálfri sér; línan lætur opna rýmið standa opið í stað þess að fylla það. Hversdagsleg orð sem ókunnugur skilur. Engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.';
 function _essenceFrame(lang, rune) {
   if (rune && rune.n === 'Blank') return lang === 'is' ? ESSENCE_BLANK_IS : ESSENCE_BLANK;
-  var pool = lang === 'is' ? ESSENCE_FRAMES_IS
-    : ((typeof READ_ENGINE !== 'undefined' && READ_ENGINE === 'sol') ? ESSENCE_FRAMES_SOL : ESSENCE_FRAMES);   // 2026-10-06: sol jiné sloveso
+  // v5.01: sol (EN) dostane začátek věty se jménem runy a slovesem z korpusu — proč viz ESSENCE_VERBS_SOL. Dva losy: rámec, sloveso.
+  if (lang !== 'is' && typeof READ_ENGINE !== 'undefined' && READ_ENGINE === 'sol') {
+    var ram = ESSENCE_FRAMES_SOL[Math.floor(Math.random() * ESSENCE_FRAMES_SOL.length)];
+    var sl = ESSENCE_VERBS_SOL[Math.floor(Math.random() * ESSENCE_VERBS_SOL.length)];
+    return ram.replace('{R}', (rune && rune.n) || 'The rune').replace('{V}', sl);
+  }
+  var pool = lang === 'is' ? ESSENCE_FRAMES_IS : ESSENCE_FRAMES;
   return pool[Math.floor(Math.random() * pool.length)];
 }
 

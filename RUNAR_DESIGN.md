@@ -1368,6 +1368,8 @@ a co dělá problémy“. Důvod: obrazy kola 3 měly medián 17 slov (starší 
 *Changelog: 2026-10-06 založeno — owner: „byl bych rád, kdybys z toho, co jsi teď zjistil, něco vyvodil — ne s tím, že takhle
 to vždy musí být, ale je to určitý směr. Lepší než hádat… ať to nezůstane zapomenuté.“ Důvod: tři nálezy jednoho dne (sloveso
 z rámce, „drawn“ z pokynu, ozvěna otázky) měly společný kořen a žily jen v DECISIONS a EVAL_LOGu, kde je při psaní promptu nikdo nehledá.*
+*2026-10-06 večer: bod 2 opraven, bod 9 přidán — owner: „fehu exposes wealth? … pokud to nevíš, tak si to zjisti“; „in a verb of your
+own“ jsem ohlásil jako zlepšení bez ověření a v korpusu anglických textů o runách ta slovesa nejsou.*
 
 **Je to směr, ne zákon.** Bod platí, dokud ho měření nevyvrátí; nový nález sem patří jako bod s dokladem a hranicí (model, n).
 Čísla bydlí v odkazech, tady jen tolik, aby bylo vidět, proč bod stojí.
@@ -1377,9 +1379,10 @@ doslova — a pokaždé?* Sol bere vstup jako materiál k přepsání, Opus spí
 
 1. **Co dáme solu, objeví se ve výstupu.** Význam z hlavičky stojí ve čtení doslova u solu 17/33, u Opusu 0/13. Vstup pro sol
    piš tak, aby byl v pořádku i doslova. → `docs/monitor/ozveny.md`
-2. **Sloveso pro dané místo přichází ze znění pokynu.** Rámec esence se slovem „names“ → „Hagalaz names…“; rámec „in a verb of
-   your own“ → pestrost. Kde má být pestrost, nepiš do pokynu konkrétní slovo pro to místo — popiš, co má věta udělat.
-   → `RUNAR_DECISIONS.md` 2026-10-06 (7) · EN, sol.
+2. **Sloveso pro dané místo přichází ze znění pokynu.** Rámec esence se slovem „names“ → „Hagalaz names…“. Rámec „in a verb of
+   your own“ nedal pestrost, ale slovesa, kterými angličtina o runách nemluví (marks, exposes — v korpusu 0×). Model sloveso
+   z pokynu převezme, takže v pokynu má stát sloveso **doložené** — od v5.01 los z korpusu, převzato 56/56.
+   → `RUNAR_DECISIONS.md` 2026-10-06 (7) a (10) · EN, sol.
 3. **Slovo z pokynu nebo štítku se vysloví.** „Runes drawn: X“ → „Algiz is the rune drawn here… Isa was not drawn“; po výměně
    za „of this reading“ ozvěna 11/18 → 3/18. Štítek je taky text. → `RUNAR_DECISIONS.md` 2026-10-06 (8).
 4. **Slova tipu se vrátí jako začátek odpovědi — každé znění má svůj stálý začátek.** Jiná slova formuli přesunou, neodstraní;
@@ -1394,6 +1397,8 @@ doslova — a pokaždé?* Sol bere vstup jako materiál k přepsání, Opus spí
    → `docs/eval/2026-10-06-ask-zivotni-runa/README.md`, tab. 1 (⚠️ kolo s rozbitým jménem tažené runy — platí jen uvnitř kola).
 8. **Opus body 1–3 nedělá** (monitor 0/13 · 0/11 · 0/16), pojistku z bodu 6 dělá taky, méně. Formulace se proto testuje na
    modelu, na kterém poběží.
+9. **Angličtina se ověřuje jako islandština — zdrojem, ne pocitem.** Než ohlásíš anglickou formulaci jako dobrou, zjisti, jak se
+   skutečně píše (korpus textů o runách, Google Books Ngram). Rozptyl sloves není správnost. → `docs/eval/2026-10-06-sloveso-korpus/README.md`
 
 **Starší body téže rodiny** (vlastní je memory, tady jen ukazatel): „použij tenhle text“ → opíše se doslova
 (`memory/prompt-directive-makes-model-copy.md`) · oprava odebírá vadu, přidaný požadavek se stane formulí

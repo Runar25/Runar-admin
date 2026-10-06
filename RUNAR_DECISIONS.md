@@ -8611,3 +8611,21 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Netvrdí se:** že každá ozvěna je vada. Význam z hlavičky ve čtení je i definiční věta, kterou owner chce (memory
   `co-dela-cteni-silnym`); varování říká „tohle se opakuje“, ne „tohle je špatně“.
 - Affected doc(s): žádný (nový nástroj; proč a co měří vlastní hlavička skriptu).
+
+## 2026-10-06 (10) — Sol: definiční věta se slovesem doloženým v anglických textech o runách (v5.01) + OPRAVA v4.99
+
+- **Rozhodl:** KUKY 2026-10-06 *„fehu exposes wealth? … je to správná kombinace slov pro pojmenování runy? … něco si myslet nebo
+  vymyslet je hodně slabý! Pokud to nevíš, tak si to zjisti!“* **Provedl:** CODE-tune.
+- ⚠️ **OPRAVA 2026-10-06 (7):** v4.99 (*„in a verb of your own“*) jsem ohlásil jako zlepšení, protože se slovesa rozptýlila (nejčastější
+  6/24 místo *names* 16/24) — **bez ověření, jestli tak angličtina o runách mluví. Nemluví:** v korpusu 49 anglických textů o runách
+  (Wikipedie + 23 webů s výklady) je *marks, exposes, interrupts, counts, gathers, rests, speaks of* **0×**, *holds* 3× (jen *„holds
+  potential“*), *names* jako sloveso 0×. Rozptyl není správnost.
+- **Doloženo** (za jménem runy): *is the … / is a …* 60 · *represents* 21 · *embodies* 12 · *means* 11 · *symbolizes* 8 · *signifies* 6 ·
+  *stands for* 4. Čísla, zdroje a hranice → `docs/eval/2026-10-06-sloveso-korpus/README.md`.
+- **Co:** rámec pro sol začíná *„<Runa> <sloveso>“* a sloveso je los z `ESSENCE_VERBS_SOL` (*represents, embodies, symbolizes,
+  signifies, stands for, is the rune of*); `_promptDraws` zapisuje `verb`. *means* vyřazeno — 2/8 sklouzlo do *„Hagalaz means
+  disruption can stop…“* (= „znamená, že“).
+- **Měřeno** (sol přes API, produkční cesta, 4 runy × 7 sloves × 2 rámce): vylosované sloveso za jménem runy **56/56**; délka 61 slov
+  (v4.99: 59); holé slovo významu v textu 55/56 (definiční věta ho jmenuje).
+- **Hranice:** EN, sol. Opus a islandština beze změny — islandská slovesa se ověří zvlášť korpusem Risamálheild.
+- Affected doc(s): `RUNAR_DESIGN.md` „Slova, která dáváme modelu“ — bod 2 opraven, bod 9 nový (v témže commitu).
