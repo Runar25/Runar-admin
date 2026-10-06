@@ -84,6 +84,10 @@ for (const L of ['en', 'is']) {
   // zmizel. Odhalil to mutační test (konstantní seznam prošel zeleně).
   rekni(a.slice(1).some(x => x.includes(jm(R('Jera')))),
         L + '  single: vedle tipu na životní runu je i tip na význam tažené runy');
+  // 2026-10-06 (KUKY report 14:32 „posunout na první místo… nejlepší odpověď“ + „životní bude pořád první“): výklad runy bez
+  // obrazu hned DRUHÝ, před „What does X mean in this reading?“.
+  rekni(a[1] === glob('tp')('ask_h_explain', { rune: jm(R('Jera')) }),
+        L + '  single: druhý tip je výklad runy bez obrazu — ' + JSON.stringify(a[1] || ''));
 
   // ── 2) životní runa BYLA tažena → nesmí se nabídnout ─────────────────────────
   // „Jak mě ovlivňuje moje životní runa Gebo" u čtení, kde Gebo padla, je otázka sama na

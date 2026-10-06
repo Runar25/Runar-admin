@@ -967,9 +967,11 @@ function _askHints() {
   // sebe" nedava smysl (tentyz test, ktery v promptu dela `_lifeWasDrawn`).
   // 2026-09-25 (KUKY: „aby se to nevztahovalo přesně na runu, ale čtení“) — jedna věta pro single i spread.
   if (life && dr.length && !lifeDrawn) out.push(tp('ask_h_life_all', { life: rnSplit(life).name }));
-  out.push(!many && dr[0] ? tp('ask_h_rune', { rune: rnSplit(dr[0]).name }) : t('ask_h_runes'));
   // 2026-09-25 (KUKY): výklad runy bez obrazu — owner tak Asku dává otázku sám a odpověď „perfektně vysvětluje význam runy“.
+  // 2026-10-06 (KUKY report 14:32 „posunout na první místo… uživatel by měl v nabídce vidět prvně ty, co mají nejlepší odpověď“
+  // + „životní bude pořád první“): hned za životní runu, před „What does X mean in this reading?“.
   out.push(!many && dr[0] ? tp('ask_h_explain', { rune: rnSplit(dr[0]).name }) : t('ask_h_explain_all'));
+  out.push(!many && dr[0] ? tp('ask_h_rune', { rune: rnSplit(dr[0]).name }) : t('ask_h_runes'));
   // Obraz nese KAZDE cteni (150/150 dvojic) — a kdyz si clovek vybral oblast, tentyz radek
   // ji rovnou pojmenuje. Prompt oblast zna, ale ma zakazane ji vyslovit; tady se na ni
   // smi zeptat nahlas. Popisek uz je v aktualnim jazyce (_syncPillLang v runar-app.js).
