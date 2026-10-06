@@ -8592,3 +8592,22 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   11/18 → 3/18, věty *„X is yours, but Y is the rune…"* 8/18 → 2/18; *„ice"* 2/18 → 4/18 (jako povaha Isy, *„the stillness of
   ice"*); vazba na obraz 18/18 → 15/18. Zbytek drží otázka *„…show itself in this reading?"* (2/6 *„only Raidho was cast here"*).
 - Affected doc(s): žádný (README eval složky opraven v témže commitu).
+
+## 2026-10-06 (9) — Monitor ozvěn: co z promptu se vrací doslova ve výstupu, s tabulkou a varováním
+
+- **Rozhodl:** KUKY 2026-10-06 *„víme, jaká tam jsou slova, a jestli… se objeví přesně ta slova. Pokud použije přesně to sloveso nebo
+  podnět skoro pořád, tak to prostě je viditelný problém… potřebuju, aby se to vyhodnocovalo. Klidně automaticky a zapisovat někde do
+  tabulky, kterou vidíš."* **Provedl:** CODE-tune.
+- **Co:** `scripts/monitor_ozveny.js` rozloží každé čtení podle `prompt_draws` zpět na texty, které do něj vstoupily (obraz, význam,
+  podoba oblasti, úhel, konec), a změří, co se z nich vrátilo doslova; u Asku slova otázky a ozvěny pokynů. Sloupce zvlášť sol a Opus
+  (chovají se jinak — smíchaný podíl by vzorec jednoho modelu schoval). Tabulka se připisuje do `docs/monitor/ozveny.md` (`--zapis`).
+- **Práh varování:** vstup se vrací ve **≥ 50 %** případů při **n ≥ 3** → řádek s ⚠ a věta „Upozornit ownera“. Jen čísla a fráze
+  z malých písmen — žádná jména ani otázky uživatelů, tabulka smí do veřejného repa.
+- **Jak se pouští:** `node scripts/monitor_ozveny.js --nove --zapis` — jen čtení od posledního zápisu (značka `do:` na konci sekce
+  tabulky; stav žije v tabulce, ne v dalším souboru). CODE ho pouští při každém načtení nových čtení a ⚠ hlásí ownerovi.
+  **Plně automatický běh zatím ne:** SessionStart hook má 10 s a sdílejí ho všechny CODE session; dotaz do databáze trvá sekundy a při
+  překročení by session přišla o celý kontext po compactu. Až budou chodit čtení od lidí, rozhodne se jinak (plánovač / shrine).
+- **Hlídá:** smoke ㉷ (samotest na smyšlených čteních se známými ozvěnami; databázi nečte).
+- **Netvrdí se:** že každá ozvěna je vada. Význam z hlavičky ve čtení je i definiční věta, kterou owner chce (memory
+  `co-dela-cteni-silnym`); varování říká „tohle se opakuje“, ne „tohle je špatně“.
+- Affected doc(s): žádný (nový nástroj; proč a co měří vlastní hlavička skriptu).

@@ -798,6 +798,17 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola vyberu obrazu probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# ㉷ Monitor ozvěn (CODE-tune 2026-10-06, KUKY „potřebuju, aby se to vyhodnocovalo… zapisovat do tabulky“): co z promptu se vrací
+# doslova ve výstupu. Smoke pouští jen samotest na smyšlených čteních (bez databáze) — monitor musí známé ozvěny poznat.
+print('\n' + chr(0x3277) + ' MONITOR OZVEN (monitor_ozveny.js --test)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'monitor_ozveny.js'), '--test'],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola monitoru ozven probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
