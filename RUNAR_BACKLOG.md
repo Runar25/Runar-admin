@@ -1148,6 +1148,24 @@ what you will find, or that the fog stays away."* → *„Není to obraz, ale js
 Pravděpodobně to přihází z otázky ‚can you make this image clearer?‘. Udělám ještě pár a uvidíme."* Kandidáti (neměřeno): nápověda
 „make this image clearer" (2026-10-03 (12)) a konec první věty RP_ASK *„speak from what the picture holds"* (2026-10-03 (13)).
 Až owner řekne: pilot s *„…from what the runes drawn hold"* místo obrazu, měřit „the picture/image does (not)…" a úhel.
+**2026-10-06 změřeno (sol, `docs/eval/2026-10-06-ask-otazky/README.md`, EVAL_LOG 2026-10-06 (4)):** pojistka *„the rune / reading /
+image does not say…"* je ve 40 ze 124 ownerových Asků a dělá ji i Opus. **Pět domněnek vyvráceno** (věta o možnostech, o zrcadlení,
+NO COLD READING, všechny tři naráz, „never predicts / does not guarantee" v charakteru — 13/18 beze změny). Pohnul s ní jen
+**poslední řádek čtení** vyndaný ze vstupu (13/18 → 7/18, p = 0,09 — naznačeno): odpověď přebírá tvar dvou možností z mostu.
+Pokyn „neopakuj, jak čtení skončilo" nepomohl (15/18). **Oprava v promptu není** — čtení z Asku vyndat nejde. Další krok je velký
+zásah → lab CODE-read, nebo nechat; rozhodne owner. Podmět *„the picture"* je jen jedna z podob téže pojistky.
+
+### Slova tipů Asku — pokus B 2026-10-06, ČEKÁ NA OWNERA (CODE-tune)
+Měřeno na solu, EN, 3 čtení × 3 (`docs/eval/2026-10-06-ask-otazky/README.md`). Každé znění tipu má svůj stálý začátek odpovědi;
+jiná slova formuli přesunou, neodstraní (směr → `RUNAR_DESIGN.md` „Slova, která dáváme modelu", body 4–5).
+- **`ask_h_now`** *„Why is this showing up now?"* → 9/9 odpovědí začne odmítnutím *„[runa] does not say why…"* (ptá se po příčině,
+  kterou NO COLD READING zakazuje). Náhrady *„Why does this matter now?"* (8/9) a *„What in this belongs to now?"* (8/9 *„What
+  belongs to now is…"*) nepomohly. **Owner: o co se má tip ptát?** Pak 2–3 znění na solu a IS.
+- **`ask_h_seek_challenge`** *„What does this say about the hard part?"* → *„the hard part"* 9/9. Nejlíp vyšlo *„Where does this get
+  hard?"* (0/9, žádný převažující začátek, pojistka 4/9). Čeká na ano ownera + IS znění ověřené (is-grammar-qa, is-vazba).
+- **`ask_h_rune`** a **`ask_h_image`** — náhrady nebyly lepší (jen přesunuly formuli), zůstávají.
+- **IS strana změn 2026-10-06 neměřena:** IS rámce esence (v4.99 jen EN) a v IS Asku pořád *„Rúnir sem dregnar voru"* /
+  *„dregnu rúnirnar"* (v5.00 jen EN). Změřit, jestli sol dělá totéž v islandštině, než se na IS sáhne.
 
 ### Prompt × návody výrobců (Anthropic Opus 5, OpenAI GPT-6) — nálezy 2026-10-04, ČEKÁ NA OWNERA, co s nimi (CODE-tune)
 ⭐ **KUKY 2026-10-05: velké body (4, 5, 6, 8) a přestavba promptu → LAB CODE-read, ne produkce** (DECISIONS 2026-10-05 (3)).
