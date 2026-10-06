@@ -1659,12 +1659,15 @@ function _askLifeContext(life, lang) {
   if (lang === 'is')
     // 2026-09-25: věta „hún var ekki dregin núna og lesturinn fjallar ekki um hana“ ven — sol ji opisoval do odpovědi
     // místo vztahu run (report 2026-09-25 09:20, KUKY „odeber větu“). EN větev níž totéž.
+    // 2026-10-06 (KUKY reporty 10:13 a 14:36 „nechápe, proč je spojovat“, „jen zase konec… není potřeba říkat“): pryč i „Snúðu
+    // svo aftur að rúnunum sem dregnar voru“ / „then return to the runes that were drawn“. Sol ji vyslovoval jako větu odpovědi
+    // („Algiz is the rune drawn here: it speaks of protection, not of a bond fixed in ice“). Změřeno na solu přes API (docs/eval/
+    // 2026-10-06-ask-zivotni-runa): ozvěna „drawn“ 6/12 → 0/12 u otázek bez obrazu; led doslova 1/12, seznam klíčů 0, vazba na obraz
+    // tažené runy 10/12. Seznam významů životní runy navíc (varianty V2, V3) nic měřitelného nepřidal → nepřidán.
     return 'LÍFSRÚNIN — leitandinn ber sjálfur ' + rnPrompt(life) + '. Nefndu hana ekki að fyrra bragði. Ef spurningin snýr '
-      + 'að henni, svaraðu út frá henni í einni eða tveimur setningum. Snúðu svo aftur '
-      + 'að rúnunum sem dregnar voru.';   // 2026-09-27: dřív „máttu svara…, og snúa“ (E001)
+      + 'að henni, svaraðu út frá henni í einni eða tveimur setningum.';   // 2026-09-27: dřív „máttu svara…, og snúa“ (E001)
   return 'LIFE RUNE — the seeker carries ' + rnPrompt(life) + ' as their own. Do not bring it up on your own. If their question '
-    + 'reaches for it, you may answer from it in a sentence or two, then return to the runes '
-    + 'that were drawn.';
+    + 'reaches for it, answer from it in a sentence or two.';
 }
 
 // ─── VOICE PROFILE HELPER ──────────────────────────────

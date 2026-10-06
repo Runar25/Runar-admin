@@ -77,8 +77,9 @@ for (const L of ['en', 'is']) {
   const a = hinty(L, [R('Jera')], R('Gebo'), '');
   rekni(a.length >= 4, L + '  single: nápověda má ' + a.length + ' tipů');
   // 2026-09-25 (KUKY: „aby se to nevztahovalo přesně na runu, ale čtení“): první tip jmenuje životní runu a ptá se na ČTENÍ.
-  rekni(a[0] === glob('tp')('ask_h_life_all', { life: jm(R('Gebo')) }),
-        L + '  single: první tip se ptá, jak životní runa ovlivní ČTENÍ — ' + JSON.stringify(a[0] || ''));
+  // 2026-10-06 (KUKY): u single se ptá na TAŽENOU RUNU jménem („…affect Jera in this reading?“), spread dál na čtení.
+  rekni(a[0] === glob('tp')('ask_h_life_rune', { life: jm(R('Gebo')), rune: jm(R('Jera')) }),
+        L + '  single: první tip se ptá, jak životní runa ovlivní taženou runu v tomto čtení — ' + JSON.stringify(a[0] || ''));
   // ⚠️ `a.slice(1)` schválně: první tip je ten o životní runě a jméno tažené runy nese taky,
   // takže `a.some(...)` by tuhle podmínku splnil i tehdy, kdyby tip na význam runy úplně
   // zmizel. Odhalil to mutační test (konstantní seznam prošel zeleně).

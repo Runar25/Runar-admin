@@ -8514,3 +8514,22 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno:** smoke obrazů zelené; golden proti HEAD = 1 změna (islandský obraz mohyl), nic jiného. Golden základna obnovena — od
   kroku D (2026-10-05 (11)) byla zastaralá (nové obrazy posunuly losy v 18 fixturách), nikdo ji neobnovil.
 - Affected doc(s): žádný.
+
+## 2026-10-06 (4) — Ask k životní runě: pryč „return to the runes that were drawn“; tip se ptá na taženou runu jménem (v4.98)
+
+- **Rozhodl:** KUKY 2026-10-06 *„jeď… 4, 5"* + *„jak víš, že to bude fungovat, pokud mu dáš celý seznam významů? Pro tohle API
+  použij"* + *„how my life rune Isa affect this rune (místo run jméno té runy) in this reading"*. **Provedl:** CODE-tune.
+- **Proč:** reporty 10:13 a 14:36 — sol končil Ask k životní runě větou *„Algiz is the rune drawn here: it speaks of protection,
+  not of a bond fixed in ice"* / *„Sowilo is the rune drawn here, so … not on whether the ice breaks"*. Zdroj: věta bloku LIFE RUNE
+  *„then return to the runes that were drawn"* (IS *„Snúðu svo aftur að rúnunum sem dregnar voru"*) — sol pokyn vyslovuje.
+- **Měřeno na solu přes API** (`docs/eval/2026-10-06-ask-zivotni-runa/`, 126 volání, $0,43): bez té věty ozvěna 6/12 → 0/12;
+  seznam významů Isy (jako pozadí i jako věta) nic měřitelného nepřidal a sol ho neodříkal → NEpřidán. Isu sol bere jako význam
+  (stillness / pause 6/6 ve všech variantách), led doslova výjimečně. Otázka *„…affect Raidho in this reading?"*: ozvěna 0/6, led
+  0/6, vazba na obraz 5/6. *„Where is my life rune Isa in this picture?"* nutila model psát *„Isa is not among the runes drawn"*
+  (5/6) — nepoužita; *„How does my life rune Isa show itself in this picture?"* ji do obrazu přenese bez toho (ozvěna 1/6, obraz 6/6).
+- **Co:** blok LIFE RUNE končí *„…answer from it in a sentence or two."* (IS *„…svaraðu út frá henni í einni eða tveimur
+  setningum."*). První tip Asku u single = `ask_h_life_rune` *„How does my life rune {life} affect {rune} in this reading?"* (IS
+  *„Hvernig hefur lífsrúnin {life} áhrif á {rune} í þessum lestri?"*, is-grammar-qa čisté); spready dál `ask_h_life_all`.
+  `RUNAR_PROMPT_VERSION` v4.98-zivotni-ask.
+- **Hranice:** jedna životní runa (Isa), 3 tažené runy, jen EN a jen sol. Jak to dělá Opus, nezměřeno.
+- Affected doc(s): žádný (měření vlastní README eval složky; EVAL_LOG odkazuje).

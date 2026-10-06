@@ -410,6 +410,8 @@ const UI_TEXT = {
     ask_h_seek_challenge: 'What does this say about the hard part?',
     ask_h_seek_reflect: 'What is this asking me to stay with?',
     ask_h_life_all:     'How does my life rune {life} affect this reading?',
+    // 2026-10-06 (KUKY): u single se tip ptá na taženou runu jménem — sol bez ozvěny „drawn“ 0/6 (docs/eval/2026-10-06-ask-zivotni-runa)
+    ask_h_life_rune:    'How does my life rune {life} affect {rune} in this reading?',
     ask_btn:            'ASK',
     ask_thinking:       'Rúnar listens…',
     ask_teaser:         'Your own questions to Rúnar open with {tier}.',   // 2026-09-25 KUKY (stavba jako q_teaser)
@@ -833,6 +835,7 @@ const UI_TEXT = {
     ask_h_seek_challenge: 'Hvað segir þetta um það erfiða?',
     ask_h_seek_reflect: 'Hvað er þetta að biðja mig að staldra við?',
     ask_h_life_all:     'Hvernig hefur lífsrúnin {life} áhrif á þennan lestur?',
+    ask_h_life_rune:    'Hvernig hefur lífsrúnin {life} áhrif á {rune} í þessum lestri?',   // 2026-10-06: is-grammar-qa čisté
     ask_btn:            'SPYRJA',
     ask_thinking:       'Rúnar hlustar…',
     ask_teaser:         'Eigin spurningar þínar til Rúnars opnast með {tier}.',

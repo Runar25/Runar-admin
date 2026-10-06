@@ -6136,3 +6136,9 @@ nedělá (DB 0/147), takže nic z toho neplatí pro produkci uživatelů.
 **Co z toho plyne (návrh, rozhodne owner):** (a) tvar věty nehýbe aspekt ani slovo „names“ — hýbe jím znění esenčního rámce (sloveso),
 vzorec sám zůstane, dokud zadání chce „řekni, co runa znamená“; (b) „disruption“ přestane padat jen bez aspektu v hlavičce — ale aspekt drží
 identitu run u solu (EVAL_LOG 2026-09-23 (3)) a jde i do Asku → neodebírat naslepo; (c) pestrost slova už řeší sáček významů (kroky A–D).
+
+## 2026-10-06 (3) — Sol: Ask k životní runě (5 otázek × 4 bloky) a přesná cena čtení s automatickým Askem na oblast
+
+**Data a tabulky:** `docs/eval/2026-10-06-ask-zivotni-runa/README.md` (jediné místo čísel). Co z toho plyne: DECISIONS 2026-10-06
+(4). Cena (sol, n = 5 na jazyk, bez cache, hlas jen z textu čtení): EN čtení + hlas $0,0200, s automatickým Askem na oblast
+$0,0231; IS $0,0415 → $0,0472. Ask platí hlavně vstup (systémový prompt + čtení), krátká odpověď šetří jen ~$0,0003.

@@ -966,7 +966,11 @@ function _askHints() {
   // sam (2026-09-10). Odpada, kdyz byla tazena: pak je predmetem cteni a „jak ovlivnuje
   // sebe" nedava smysl (tentyz test, ktery v promptu dela `_lifeWasDrawn`).
   // 2026-09-25 (KUKY: „aby se to nevztahovalo přesně na runu, ale čtení“) — jedna věta pro single i spread.
-  if (life && dr.length && !lifeDrawn) out.push(tp('ask_h_life_all', { life: rnSplit(life).name }));
+  // 2026-10-06 (KUKY: „how my life rune Isa affect this rune (místo run jméno té runy) in this reading“): u single se tip ptá na
+  // TAŽENOU RUNU jménem; spread dál na čtení. Sol (API, docs/eval/2026-10-06-ask-zivotni-runa): ozvěna „drawn“ 0/6, led 0/6, vazba
+  // na obraz 5/6. „Where is my life rune Isa in this picture?“ vyvolávala „Isa is not among the runes drawn“ 5/6 → nepoužito.
+  if (life && dr.length && !lifeDrawn) out.push(!many ? tp('ask_h_life_rune', { life: rnSplit(life).name, rune: rnSplit(dr[0]).name })
+                                                      : tp('ask_h_life_all', { life: rnSplit(life).name }));
   // 2026-09-25 (KUKY): výklad runy bez obrazu — owner tak Asku dává otázku sám a odpověď „perfektně vysvětluje význam runy“.
   // 2026-10-06 (KUKY report 14:32 „posunout na první místo… uživatel by měl v nabídce vidět prvně ty, co mají nejlepší odpověď“
   // + „životní bude pořád první“): hned za životní runu, před „What does X mean in this reading?“.
