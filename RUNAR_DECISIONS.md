@@ -8575,3 +8575,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   `_promptDraws` je pozná (týž index). Kontrola mostu/losu: sol a Opus si rámce nepletou (mutace → FAIL) a padají varianty TÉHOŽ poolu.
 - **Hranice:** jen EN, 4 runy × 1 obraz. IS rámce beze změny (sloveso v IS neměřeno).
 - Affected doc(s): žádný (měření v README eval složky).
+
+## 2026-10-06 (8) — Ask bez slova „drawn“ (v5.00, EN) + OPRAVA měření v 2026-10-06 (4)
+
+- **Rozhodl:** KUKY 2026-10-06 *„projdi ostatní otázky v ASK… hledat cesty, zkoušet různá slova"* + report 10:13 *„mluví o tom, že
+  Algiz je ta runa, co byla tažena… nevím, proč je spojovat"*. **Provedl:** CODE-tune.
+- ⚠️ **OPRAVA (2026-10-06 (4)):** tvrzení *„ozvěna drawn 6/12 → 0/12 po odebrání ‚then return to the runes that were drawn‘"* bylo
+  naměřené s rozbitým vstupem — test posílal do `buildAskPrompt` objekt runy místo jména, v promptu stálo *„Runes drawn: [object
+  Object]"*. Se vstupem jako v produkci ta změna sama skoro nic nedělá (ozvěna 15/18 → 14/18). Nasazená zůstává (neškodí), ale
+  příčina byla jinde: slovo *„drawn"* stojí v Asku na pěti místech (*„Runes drawn: X"*, *„the runes drawn actually hold"*, *„what
+  was drawn"*, *„the drawn runes hold"*, *„from the runes that were drawn"*) a sol ho s blokem životní runy převádí na *„Algiz is
+  the rune drawn here… Isa was not drawn"*.
+- **Co:** EN Ask: *„The rune of this reading: X"* (spread *„The runes of this reading: …"*), *„the runes of this reading"* ve třech
+  pravidlech a v bloku oblasti. IS (*„Rúnir sem dregnar voru"*, *„dregnu rúnirnar"*) zatím beze změny — neměřeno.
+- **Měřeno** (sol přes API, vstup jako v produkci, README eval složky kolo 5, 3 otázky na životní runu × 3 čtení × 2): ozvěna *„drawn"*
+  11/18 → 3/18, věty *„X is yours, but Y is the rune…"* 8/18 → 2/18; *„ice"* 2/18 → 4/18 (jako povaha Isy, *„the stillness of
+  ice"*); vazba na obraz 18/18 → 15/18. Zbytek drží otázka *„…show itself in this reading?"* (2/6 *„only Raidho was cast here"*).
+- Affected doc(s): žádný (README eval složky opraven v témže commitu).

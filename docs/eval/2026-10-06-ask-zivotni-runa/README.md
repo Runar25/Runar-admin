@@ -10,6 +10,10 @@ Spotřeba všech 126 volání: 169 805 vstupních a 8 619 výstupních tokenů =
 
 ## 1. Ask k životní runě (Isa), n = 6 na buňku (3 čtení × 2)
 
+> ⚠️ **Tabulka 1 a kola 2–3 mají ROZBITÝ VSTUP** (oprava 2026-10-06, DECISIONS 2026-10-06 (8)): test posílal do
+> `buildAskPrompt` objekt runy místo jména → v promptu *„Runes drawn: [object Object]"*. Srovnání variant mezi sebou platí jen
+> pro tenhle stav; závěr *„věta return to the runes způsobuje ozvěnu"* se se vstupem jako v produkci NEPOTVRDIL (kolo 4 a 5 níž).
+
 Blok `LIFE RUNE` v promptu Asku:
 - **V0** produkce: *„…you may answer from it in a sentence or two, then return to the runes that were drawn.“*
 - **V1** bez *„then return to the runes that were drawn“*
@@ -75,3 +79,15 @@ Samostatný Ask (ať ho zadá uživatel, nebo se pošle sám) platí znovu celý
 se platí jen výstup odpovědi. **Netvrdí se:** že je odpověď stejně dobrá — ve stejném volání spíš popisuje obraz znovu (*„You can
 picture a house where the lights go out…“*), samostatný Ask má vlastní pravidla. Čtení vyšla o pár znaků delší (EN 357 proti 329,
 IS 365 proti 353) — při n = 5 a jiných obrazech to není prokázané.
+
+## 5. Kolo 4 a 5 — vstup jako v produkci („Runes drawn: Raidho…“), n = 6 na buňku
+
+| varianta | ozvěna „drawn“ | „X is yours, but Y is the rune…“ | „ice“ | vazba na obraz |
+|---|---|---|---|---|
+| kolo 4: blok životní runy před v4.98 („…then return to the runes that were drawn“) | 15/18 | — | 3/18 | 16/18 |
+| kolo 4: blok od v4.98 (bez té věty) | 14/18 | — | 3/18 | 17/18 |
+| kolo 5: P0 = produkce v4.99 | 11/18 | 8/18 | 2/18 | 18/18 |
+| kolo 5: P1 = Ask bez slova „drawn“ (5 míst) | **3/18** | **2/18** | 4/18 | 15/18 |
+
+Otázky Q1 *…affect this reading?*, Q2 *…affect Raidho in this reading?*, Q6 *…show itself in this reading?*. Po P1 zbývá hlavně Q6
+(*„only Raidho was cast here“* 2/6) — model si najde synonymum. Nasazeno P1 (v5.00).

@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-10-06",
- "prompt_version": "v4.99-sloveso-sol",
+ "prompt_version": "v5.00-ask-bez-drawn",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -664,10 +664,10 @@
    "zacatek": "You gave the seeker this rune reading:"
   },
   {
-   "hash": "88c1890937ab",
+   "hash": "b4782284ec14",
    "lang": "en",
    "zdroj": "ask",
-   "zacatek": "Runes drawn: Ansuz — messages, wisdom, divine guidance, voice, breath."
+   "zacatek": "The rune of this reading: Ansuz — messages, wisdom, divine guidance, v"
   },
   {
    "hash": "2d4a83d7399a",
@@ -682,7 +682,7 @@
    "zacatek": "They have just read this reading. Do not retell how it opened, where i"
   },
   {
-   "hash": "552848e7c13f",
+   "hash": "b2c104fb0de1",
    "lang": "en",
    "zdroj": "ask",
    "zacatek": "Do not mirror the seeker: if the question asserts or implies something"
@@ -694,13 +694,13 @@
    "zacatek": "If the seeker is thanking you or taking their leave rather than asking"
   },
   {
-   "hash": "e06d424b01aa",
+   "hash": "ac76ef9a9aeb",
    "lang": "en",
    "zdroj": "ask",
    "zacatek": "If the question is not about this reading (small talk, facts, unrelate"
   },
   {
-   "hash": "3e25cb500b25",
+   "hash": "cfd68630d6c8",
    "lang": "en",
    "zdroj": "ask",
    "zacatek": "If the seeker says they do not understand, or asks for it plainly, or "
@@ -718,13 +718,13 @@
    "zacatek": "Output ONLY your answer as flowing prose. No JSON, no headings, no pre"
   },
   {
-   "hash": "fea2301dd465",
+   "hash": "55c835c30fa6",
    "lang": "en",
    "zdroj": "ask",
    "zacatek": "WHAT THIS READING WAS CAST FOR — the seeker named the part of life it "
   },
   {
-   "hash": "5658d3a5b38a",
+   "hash": "f53adc15f3cc",
    "lang": "en",
    "zdroj": "ask",
    "zacatek": "WHAT THIS READING WAS CAST FOR — the seeker named the part of life it "
@@ -736,19 +736,19 @@
    "zacatek": "WHAT THIS READING WAS CAST FOR — They asked this when the reading was "
   },
   {
-   "hash": "a1681cfb7736",
+   "hash": "d6bfff1c5f9d",
    "lang": "en",
    "zdroj": "ask",
    "zacatek": "WHAT THIS READING WAS CAST FOR — the seeker named the part of life it "
   },
   {
-   "hash": "6fcbb1b2299e",
+   "hash": "b5e9c00de2ea",
    "lang": "en",
    "zdroj": "ask",
    "zacatek": "WHAT THIS READING WAS CAST FOR — the seeker named what they came looki"
   },
   {
-   "hash": "842dee43739c",
+   "hash": "0420130ebc8e",
    "lang": "en",
    "zdroj": "ask",
    "zacatek": "WHAT THIS READING WAS CAST FOR — the seeker named the part of life it "
