@@ -17,3 +17,10 @@ repo mezitím měnily dvě další session.
 všech lane; (2) grep tématu v `RUNAR_PRICING.md`, `RUNAR_DECISIONS.md`, `RUNAR_BACKLOG.md`, `scripts/`; (3) teprve pak dělej —
 a jen to, co tam chybí. CLAUDE.md to říká („Před prací si přečti git log druhé lane"); tohle je připomínka, že to platí i
 uprostřed dlouhé session, ne jen na začátku. Souvisí [[parallel-code-sessions-collision]], [[fix-or-log-duplicates-and-errors]].
+
+⛔ **Než navrhneš pokus přes API: napřed data, která už máme** (KUKY 2026-10-07: *„já ti teď řekl zkus tohle, což bylo prakticky
+zadarmo, ale ty za nějakou dobu stejně budeš hledat pokus někde jinde na API, i když ho máš přímo pod nosem“*). Navrhl jsem 18 volání
+na otázku „opisuje sol otázku runy?“ — 264 uložených čtení (produkce + laby) ji zodpovědělo zadarmo a přesněji (visí na tvaru konce).
+Podruhé stejná výtka (poprvé 2026-08-16, archiv dávek). **How to apply:** `node scripts/utils/najdi_cteni.js` s filtry té otázky
+(model, runa, `--text`, `--draws`) — produkce, záloha pokusů, `~/runar-eval`, `eval_out/`, `docs/eval/` najednou. Pokus přes API až
+když data odpověď nemají, a do zprávy napiš, co v datech bylo. Výstupy pokusů se zálohují samy (Stop-hook → `scripts/utils/zaloha_cteni.js`).

@@ -1311,6 +1311,11 @@ rekonstruovatelný z gitu podle `prompt_sha` a `draws` — §20). `--list` vypí
 appka v produkci, tak se to musí vyřešit."* → **teď se nic nepřesouvá**; volba mezi public
 repem a Supabase tabulkou se dělá **PŘED SPUŠTĚNÍM**. Stav archivu k témuž dni: **629
 generovaných** čtení ve 22 dávkách (`--list`) + 301 živých odděleně.
+**2026-10-07 — záloha běží sama, otevřené zůstává jen „mimo počítač“** (KUKY: *„všechna čtení, která uděláme, musíme zálohovat“*,
+DECISIONS 2026-10-07 (2)). Výstupy pokusů od září ležely jen ve scratchpadech; teď je Stop-hook kopíruje do `~/runar-eval/zaloha`
+(`scripts/utils/zaloha_cteni.js`, k 2026-10-07 149 souborů, 8 MB) a `scripts/utils/najdi_cteni.js` prohledá všechno najednou.
+⚠️ Pořád jeden disk. **Rozhodnout (owner):** kam zálohu zrcadlit mimo počítač — soukromé repo na GitHubu, složka OneDrive,
+nebo tabulka v Supabase. Výstupy nesou jméno a stojí na ownerových čteních → veřejné repo ne.
 
 ### PŘED SPUŠTĚNÍM: prompt je veřejný a repem to nespravíš (2026-08-16)
 KUKY: *„public repo. jako že se k nim může kdokoliv z venku dostat? i k promptu? nemělo by to

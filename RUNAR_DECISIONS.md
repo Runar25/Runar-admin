@@ -8736,3 +8736,22 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   **IS beze změny:** neměřeno; v produkci od 24. 9. jen 5 islandských Asků.
 - Golden: změnily se jen `ask_en`, `ask_life_en`, `ask_earlier_en` (dvě řádky pravidel). Registr pravidel zapsán.
 - Affected doc(s): žádný. (Zásady „Slova, která dáváme modelu“, bod 6, popisují měření, ne znění pravidel — beze změny.)
+
+## 2026-10-07 (2) — Záloha všech čtení z pokusů běží sama; hledání v čteních, která už máme, je jeden příkaz
+
+- **Rozhodl:** KUKY 2026-10-07 *„všechna čtení, která uděláme, musíme zálohovat, protože se nám budou hodit… ty za nějakou dobu stejně
+  budeš hledat pokus někde jinde na API, i když ho máš přímo pod nosem.“* **Provedl:** CODE-tune.
+- **Proč:** pravidlo platí od 2026-08-16 (`archive_batches.js`, BACKLOG „Kam trvale s generovanými dávkami“), ale viselo na paměti
+  session — výstupy pokusů od září ležely jen ve scratchpadech (%TEMP%): 30 souborů, mezi nimi 300 odpovědí Asku z 2026-10-06. Týž den
+  se z nich bez jediného volání ověřilo, že v5.03 nezvedla převyprávění, a z 264 uložených čtení vyšla odpověď na otázku, na kterou
+  jsem navrhl pokus za 18 volání (opis otázky runy visí na tvaru konce). Podruhé stejná výtka — poprvé 2026-08-16.
+- **Co:**
+  1. `scripts/utils/zaloha_cteni.js` — výstupy pokusů ze scratchpadů všech session a z `eval_out/` zkopíruje do `~/runar-eval/zaloha`
+     (mimo repo: nesou jméno a stojí na ownerových čteních, DECISIONS 2026-08-08), bez duplicit (sha1 v manifestu), ~0,3 s.
+     Spouští ho **Stop-hook** (`~/.claude/tree-guard.sh`) při konci každého tahu v každé session — tiše a nikdy neblokuje.
+  2. `scripts/utils/najdi_cteni.js` — jedna cesta ke všem čtením: produkce (čtení + Asky), záloha, `~/runar-eval`, `eval_out/`,
+     `docs/eval/`; filtry model / runa / jazyk / text / prompt / losy, seskupení a ukázky. Výstup jen do konzole.
+  3. SessionStart kontext (`~/.claude/runar-context.py`) ho ukazuje jako první krok před pokusem přes API.
+- **Hranice:** záloha leží na stejném disku — chrání před úklidem %TEMP%, ne před ztrátou disku. Kam ji zrcadlit mimo počítač, je
+  otevřené rozhodnutí ownera (BACKLOG „Kam trvale s generovanými dávkami“).
+- Affected doc(s): `RUNAR_BACKLOG.md` („Kam trvale s generovanými dávkami“ — stav) · `memory/napred-dohledej-co-uz-je.md` (v témže commitu).
