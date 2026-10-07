@@ -1,6 +1,6 @@
 ---
 name: full-path-and-numbered-lists
-description: "Kukymu piš ÚPLNÉ cesty k souborům (pracovní adresář je C:\\Users\\zkuku, ne repo) a číslované seznamy tam, kde na pořadí záleží"
+description: "Kukymu piš ÚPLNÉ cesty k souborům (pracovní adresář je C:\\Users\\zkuku, ne repo); v hlášení ownerovi VŠECHNY body a otázky číslované (1, 2, 3…), vždy"
 metadata:
   node_type: memory
   type: feedback
@@ -21,6 +21,11 @@ dát tomu čísla, ne odrážky. Kuky 2026-07-19: *„pokud je něco první, dá
 je to lepší se v tom orientovat!"* Odrážkový seznam se čtyřmi vadami + větou „ta první je
 nejvážnější" pod ním nutí čtenáře dopočítávat, která to je. Čísla to řeknou rovnou.
 
-**How to apply:** každý odkaz na soubor = plná cesta od `C:\`. Každý seznam, kde je pořadí
-informace (priorita, kroky, sekvence nasazení) = číslovaný. Odrážky si nech na výčty,
-kde na pořadí nezáleží.
+⛔ **Hlášení ownerovi = VŠECHNY body očíslované, vždy** (2026-10-07). Kuky: *„všechny tvoje podněty jsou psány
+jako holý text bez označení. 1, 2,... takže reaguju holým textem. Pro mě je to nepřehledné, ale tohle je pořád dokola!
+Jednou ti to řeknu, začneš to dělat dobře a pak zase tohle!“* Odpovídá po číslech — bez čísel musí citovat celé
+věty, a pak není jasné, na co reaguje. Platí i pro body pod tučnými nadpisy: tučný nadpis NENÍ číslo.
+Otázky a návrhy, na které má odpovědět, mají VLASTNÍ čísla (ne „Mám?“ schované uprostřed odstavce).
+
+**How to apply:** každý odkaz na soubor = plná cesta od `C:\`. **Každý bod hlášení a každá otázka = číslo**
+(1, 2, 3 …, průběžně přes celé hlášení, ať „7“ znamená jen jednu věc). Odrážky jen uvnitř bodu.

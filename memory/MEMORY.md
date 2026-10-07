@@ -162,3 +162,4 @@ Snapshot = **historický záznam ke svému datu**, ne popis dneška. Nikdy z ně
 - [snapshots/2026-10-05-lab-co-uz-vime.md](snapshots/2026-10-05-lab-co-uz-vime.md) — CODE-read: LAB přestavby promptu — výtah všeho, co už bylo změřeno k bodům 4/5/6/8 a přemýšlení, s odkazy ← NEJNOVĚJŠÍ
 - [snapshots/2026-09-26-tree-diagnoza-po-castech.md](snapshots/2026-09-26-tree-diagnoza-po-castech.md) — CODE-tree: diagnóza stromu po částech (owner chce po jedné!), část 1 semínko hotová + opravená; další = Norny
 - [snapshots/2026-10-05-tree-proporce-strany-spicka.md](snapshots/2026-10-05-tree-proporce-strany-spicka.md) — CODE-tree: koště a oprava (obrázek 4), kmen roste s rozpětím ramen, čtení jeho stromu z dat (strany 9:4, Raidho nahoře) ← NEJNOVĚJŠÍ
+- [snapshots/2026-10-07-tune-audit-zaloha.md](snapshots/2026-10-07-tune-audit-zaloha.md) — CODE-tune: audit promptu krok 1–3 (první mapa vad), záloha čtení sama, otázka runy z dat; co čeká na ownera ← NEJNOVĚJŠÍ
