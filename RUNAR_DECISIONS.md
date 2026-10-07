@@ -8715,3 +8715,24 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   vynechá — *„What does X mean in this reading?“* se nevrací, zdvojil by druhý tip *„Explain X without the image“*. Bez životní runy a u
   spreadu beze změny. `ask_h_life_show` pryč z `UI_TEXT` (EN i IS).
 - Affected doc(s): žádný (test tipů `verify_ask_hints.js` upraven v témže commitu).
+
+## 2026-10-07 (1) — Ask: runa už není „nositel obsahu“ ve třech pravidlech (v5.03, EN)
+
+- **Rozhodl:** KUKY 2026-10-07 *„ok udělej“* na návrh *„přeformulovat ta tři pravidla (měřeno 26 → 14 z 30). Znění před nasazením ověřím
+  zdrojem.“* **Provedl:** CODE-tune.
+- **Proč:** pojistka *„the rune does not say / show…“* odpovídá na rámec, ve kterém runa NESE obsah jako nápis, který víc neuvádí
+  (Wiktionary *say*, význam 4). V pravidlech Asku ho nesly tři věty. Měřeno (sol, vstup jako v produkci bez ✦, 3 ownerova čtení × 2 tipy × 5,
+  n = 30): pojistka 26/30 → 14/30, podmět runa 9 → 4, půlky 7/15 · 7/15 (`RUNAR_EVAL_LOG.md` 2026-10-06 (7), (8)). Převyprávění čtení se
+  nezvedlo — změřeno z týchž uložených odpovědí, bez nového volání: podíl slov ze čtení 0,136 → 0,129 · úsek ≥ 4 slov ze čtení 2/30 → 3/30 ·
+  délka 56,8 → 57,8 slova.
+- **Co (jen EN):**
+  1. *„— say what the runes of this reading actually hold,“* → *„— stay with this reading,“*
+  2. *„Say what the runes of this reading hold, in the terms of their own question.“* → *„Explain this reading in terms of their own question.“*
+  3. konec bloku o zadání čtení (`_askCastContext`) *„answer plainly in its terms, from the runes of this reading.“* → *„answer plainly in its terms.“*
+- **Znění ověřeno zdrojem** (Google Books Ngram, en-2019, průměr 2000–2019): *stay with this* 0,044 / mil. (doložené i *stay with the story /
+  image / question*) · *in terms of their own* 0,099 — měřené *„in the terms of their own“* má **0**, proto bez členu (jediný rozdíl proti
+  měřenému rameni; s nosičem pojistky nesouvisí, nepřeměřováno) · *answer plainly* 0,003 · *in its terms* 0,065.
+- **Hranice:** sol, EN, tři čtení, dva tipy; Opus netestován. Pojistka nezmizí — zbytek nese most čtení × zákazy verdiktu (EVAL_LOG (8)).
+  **IS beze změny:** neměřeno; v produkci od 24. 9. jen 5 islandských Asků.
+- Golden: změnily se jen `ask_en`, `ask_life_en`, `ask_earlier_en` (dvě řádky pravidel). Registr pravidel zapsán.
+- Affected doc(s): žádný (`RUNAR_DESIGN.md` „Slova, která dáváme modelu“ bod 6 popisuje měření, ne znění pravidel).

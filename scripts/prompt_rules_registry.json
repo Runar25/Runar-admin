@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
- "zapsano": "2026-10-06",
- "prompt_version": "v5.01-sol-sloveso-z-korpusu",
+ "zapsano": "2026-10-07",
+ "prompt_version": "v5.03-ask-runa-nenese",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -682,7 +682,7 @@
    "zacatek": "They have just read this reading. Do not retell how it opened, where i"
   },
   {
-   "hash": "b2c104fb0de1",
+   "hash": "7b5e21a49daa",
    "lang": "en",
    "zdroj": "ask",
    "zacatek": "Do not mirror the seeker: if the question asserts or implies something"
@@ -700,7 +700,7 @@
    "zacatek": "If the question is not about this reading (small talk, facts, unrelate"
   },
   {
-   "hash": "cfd68630d6c8",
+   "hash": "d7dce0efdd7a",
    "lang": "en",
    "zdroj": "ask",
    "zacatek": "If the seeker says they do not understand, or asks for it plainly, or "
@@ -718,13 +718,13 @@
    "zacatek": "Output ONLY your answer as flowing prose. No JSON, no headings, no pre"
   },
   {
-   "hash": "55c835c30fa6",
+   "hash": "35307aa1d285",
    "lang": "en",
    "zdroj": "ask",
    "zacatek": "WHAT THIS READING WAS CAST FOR — the seeker named the part of life it "
   },
   {
-   "hash": "f53adc15f3cc",
+   "hash": "8d99ec4b038a",
    "lang": "en",
    "zdroj": "ask",
    "zacatek": "WHAT THIS READING WAS CAST FOR — the seeker named the part of life it "
@@ -736,19 +736,19 @@
    "zacatek": "WHAT THIS READING WAS CAST FOR — They asked this when the reading was "
   },
   {
-   "hash": "d6bfff1c5f9d",
+   "hash": "2eda161fbc89",
    "lang": "en",
    "zdroj": "ask",
    "zacatek": "WHAT THIS READING WAS CAST FOR — the seeker named the part of life it "
   },
   {
-   "hash": "b5e9c00de2ea",
+   "hash": "6ef85186a885",
    "lang": "en",
    "zdroj": "ask",
    "zacatek": "WHAT THIS READING WAS CAST FOR — the seeker named what they came looki"
   },
   {
-   "hash": "0420130ebc8e",
+   "hash": "5301b7406779",
    "lang": "en",
    "zdroj": "ask",
    "zacatek": "WHAT THIS READING WAS CAST FOR — the seeker named the part of life it "

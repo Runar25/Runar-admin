@@ -331,7 +331,10 @@ if (process.argv.includes('--test')) {
   // 2026-10-06 večer: KDE — obraz stojí v 1. větě všech tří čtení Hagalazu; ODKUD — „does not say“ v Asku najde řádek promptu Asku
   // se slovem „say“ (pravidla „…say what the runes of this reading…“), ne prompt čtení.
   ok(/obraz opsán[^\n]*věta 1: 3/.test(t), 'KDE: obraz opsaný v 1. větě 3×');
-  ok(X.zdroje.some((z) => /does not say“ 3× — v promptu slova „say“: [^\n]*say what the runes/i.test(z)), 'ODKUD: „does not say“ → řádek promptu Asku se slovem „say“');
+  // 2026-10-07 (v5.03, DECISIONS 2026-10-07 (1)): pravidla Asku už „say what the runes of this reading…“ nemají — ODKUD teď najde jen
+  // slabší řádky se „say“. Test hlídá obojí: zdroj se pořád najde v promptu Asku a odkaz na smazané pravidlo nevznikne.
+  ok(X.zdroje.some((z) => /does not say“ 3× — v promptu slova „say“: /i.test(z)) && !X.zdroje.some((z) => /say what the runes/i.test(z)),
+     'ODKUD: „does not say“ → řádek promptu Asku se slovem „say“ (od v5.03 bez „say what the runes…“)');
   // Sloveso z losu (v5.01): tři čtení solu, dvě sloveso převzala, jedno ne → 2/3 < 80 % → ⚠ (záměr nevyšel). Třetí věta sloveso
   // MÁ, ale ne za jménem runy — počítat se smí jen „<Runa> <sloveso>“ (mutace „sloveso kdekoli v textu“ musí test shodit).
   const iv = SLOVESA_LOS.indexOf('represents');
