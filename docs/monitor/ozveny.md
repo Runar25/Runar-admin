@@ -54,3 +54,30 @@ Opakované fráze ve čteních (≥ 30 %): „thorn catches your sleeve“ 2 · 
 
 **⚠ Upozornit ownera:** význam z hlavičky doslova v textu 3/5 · význam z hlavičky doslova v textu (sol) 3/5
 <!-- do: 2026-10-06 21:01:07.129361+00 -->
+
+## 2026-10-07 · čtení po 2026-10-06 21:01 → 2026-10-07 12:28
+
+Čtení 7 · Asků 10 · modely: gpt-6-sol 17
+
+| vstup → výstup | vše | sol | opus | poznámka |
+|---|---|---|---|---|
+| obraz opsán (≥ 4 slova za sebou) | 3/7 | 3/7 | — | věta 1: 2 · 2: 1 |
+| ⚠ význam z hlavičky doslova v textu | 4/7 | 4/7 | — | věta 2: 1 · 3: 2 · posl.: 1 |
+| sloveso z losu hned za jménem runy (záměr, v5.01) | 6/6 | 6/6 | — | věta 2: 2 · 3: 4 · stands for 1, is the rune of 2, represents 2, embodies 1 |
+| nejčastější sloveso po jménu runy (is) | 2/7 | 2/7 | — | is 2, represents 2, stands 1, rune 1 |
+| podoba oblasti opsaná (≥ 3 slova) | 0/5 | 0/5 | — |   |
+| otázka runy z Kolekce opsaná (≥ 3 slova) | 1/7 | 1/7 | — | „you want to go“ věta posl.: 1 |
+| pokyn úhlu opsaný (≥ 4 slova) | 1/7 | 1/7 | — | věta 1: 1 |
+| pokyn konce opsaný (≥ 4 slova) | 0/7 | 0/7 | — |  |
+| Ask: slova otázky zopakovaná | 0/10 | 0/10 | — |  |
+| Ask: „drawn“ (runa tažená / netažená) | 0/10 | 0/10 | — |  |
+| Ask: „the rune / reading does not say“ | 1/10 | 1/10 | — |  |
+| Ask: „leaves … open“ | 4/10 | 4/10 | — |  |
+| Ask: „not a promise / verdict / sign“ | 0/10 | 0/10 | — |  |
+
+**Odkud se to bere** (vstup čtení / text čtení / pevný text promptu podle živých builderů):
+- Ask „the rune / reading does not say“ 1× — v promptu slova „say“: „If the seeker says they do not understand, or asks for it…“ · „HOW YOU SPEAK › …abstract, mystical-sounding lines that say nothing plain — if it cannot be…“ (+1)
+- Ask „leaves … open“ 4× — v promptu není → zvyk modelu (nebo vstup, který monitor nezná)
+
+**⚠ Upozornit ownera:** význam z hlavičky doslova v textu 4/7 · význam z hlavičky doslova v textu (sol) 4/7
+<!-- do: 2026-10-07 12:28:31.960623+00 -->

@@ -215,10 +215,11 @@ function souhrn(R) {
   const SKUP = [['sol', (x) => /^gpt/.test(x.model)], ['opus', (x) => /opus/.test(x.model)]];
   let _rozpad = null;   // nastaví radekM: pro každou skupinu [a, n]
   let _zamer = false;   // řádek „záměr“: vrátit se MÁ — varuje se obráceně, když se vrací v < 80 %
+  let _info = false;    // řádek jen informuje, nevaruje (2026-10-07: návrat je v pořádku, owner ho potvrdil)
   const radek = (jm, a, n, pozn) => {
     const bunky = [p(a, n)].concat((_rozpad || []).map(([g, aa, nn]) => p(aa, nn)));
-    const zlute = [[a, n, '']].concat((_rozpad || []).map(([g, aa, nn]) => [aa, nn, ' (' + g + ')'])).filter(([aa, nn]) => nn >= 3 && (_zamer ? aa / nn < 0.8 : aa / nn >= 0.5));
-    _zamer = false;
+    const zlute = [[a, n, '']].concat((_rozpad || []).map(([g, aa, nn]) => [aa, nn, ' (' + g + ')'])).filter(([aa, nn]) => !_info && nn >= 3 && (_zamer ? aa / nn < 0.8 : aa / nn >= 0.5));
+    _zamer = false; _info = false;
     zlute.forEach(([aa, nn, g]) => var_.push(jm + g + ' ' + p(aa, nn)));
     out.push('| ' + (zlute.length ? '⚠ ' : '') + jm + ' | ' + bunky.join(' | ') + ' | ' + (pozn || '') + ' |');
     _rozpad = null;
@@ -229,7 +230,9 @@ function souhrn(R) {
   };
   const s = (f) => C.filter(f);
   radekM('obraz opsán (≥ 4 slova za sebou)', s((x) => x.obraz), (x) => x.obraz.n >= 4, rozlozeni(C.map((x) => x.obraz && x.obraz.kde)));
-  radekM('význam z hlavičky doslova v textu', s((x) => x.aspekt !== undefined), (x) => x.aspekt === true, rozlozeni(C.map((x) => x.aspektKde)));
+  // 2026-10-07: jen informuje — definiční věta jmenuje runu jejím významem záměrně (v5.01) a owner to pochválil (hlášení 4da5d566).
+  _info = true;
+  radekM('význam z hlavičky doslova v textu (definiční věta, záměr)', s((x) => x.aspekt !== undefined), (x) => x.aspekt === true, rozlozeni(C.map((x) => x.aspektKde)));
   if (C.some((x) => x.los)) {
     _zamer = true;
     radekM('sloveso z losu hned za jménem runy (záměr, v5.01)', s((x) => x.los), (x) => x.los.ok,
@@ -318,7 +321,7 @@ if (process.argv.includes('--test')) {
   const ok = (c, m) => { if (c) console.log('OK    ' + m); else { fail++; console.log('FAIL  ' + m); } };
   const t = X.tabulka;
   ok(/obraz opsán[^|]*\| 3\/4/.test(t), 'obraz opsaný doslova poznán 3/4');
-  ok(/význam z hlavičky doslova v textu \| 3\/4/.test(t), 'holé slovo významu poznáno 3/4');
+  ok(/význam z hlavičky doslova v textu \(definiční věta, záměr\) \| 3\/4/.test(t) && !/⚠ význam z hlavičky/.test(t), 'holé slovo významu poznáno 3/4, bez varování (záměr od v5.01)');
   ok(/nejčastější sloveso po jménu runy \(names\) \| 3\/4 \| 3\/3 \| 0\/1 \| names 3, counts 1/.test(t), 'sloveso „names“ 3/4 (sol 3/3, opus 0/1) a „counts“ 1');
   ok(/podoba oblasti opsaná[^|]*\| 3\/4/.test(t) && t.indexOf('generations before and after') !== -1, 'podoba oblasti opsaná poznána 3/4 i s frází');
   ok(/slova otázky zopakovaná \| 3\/3 \| 3\/3 \| — \| „in this picture“/.test(t), 'Ask: fráze z otázky „in this picture“ 3/3 (sol 3/3)');
