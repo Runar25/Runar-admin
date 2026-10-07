@@ -311,6 +311,20 @@ session je četla znovu jako nová.
   Nehotové: položka v `RUNAR_BACKLOG.md` + `--backlog <id8> "<položka>"`. Nikdy neřešit hlášení, které už `new` není.
 - **✦ Keep = „nechat“** — uložený text, ne úkol; jen se označí přečtený.
 
+### §30 — Nic nesmí viset na paměti session: pravidlo, které se opakovaně porušuje, dělá stroj (platí pro VŠECHNY session)
+KUKY 2026-10-07: *„nikdy nic nechci, aby záviselo na tvé paměti!! to je nejhorší, co se může stát. Ty si to prostě nepamatuješ!!“*
+Session si nepamatuje nic z minulé konverzace ani z doby před compactem. Co se má dít pokaždé, proto nesmí stát jen v paměti nebo v docu —
+musí to buď **udělat skript samo**, nebo **zastavit práci**, když se to vynechá. Dnes hlídá stroj:
+- **Záloha všech čtení z pokusů** → Stop-hook (`scripts/utils/zaloha_cteni.js` → `~/runar-eval/zaloha`).
+- **Pokus přes API** → PreToolUse hook (`~/.claude/runar-api-guard.py`) ho nepustí bez `RUNAR_API_ANO=<počet>`. To se píše až poté, co <!-- doc-links:ok 2026-10-07 hook je uživatelský soubor v ~/.claude, mimo repo -->
+  `node scripts/utils/najdi_cteni.js` ukázal, že odpověď v datech (čtení, která udělal CODE i owner) není nebo je vzorek malý, **a owner
+  k tomu řekl ano**. Když data nestačí, řekni to ownerovi a domluvte se — nenavrhuj rovnou pokus.
+- **Zpráva ownerovi** → Stop-hook (`~/.claude/runar-zprava-check.py`): body a otázky číslované; zpráva s návrhem nebo otázkou na <!-- doc-links:ok 2026-10-07 hook je uživatelský soubor v ~/.claude, mimo repo -->
+  rozhodnutí projde, jen když v témže tahu běžel `node scripts/utils/uz_vime.js <pojmy>` (co už je hotové, zamítnuté, zapsané).
+- **Hlášení z appky** → §29 (`nacti_cteni.js` stav v DB). **Co je hotové, rozhodnuté nebo zapsané, se ownerovi znovu nepředkládá** —
+  vrací se, až se vada objeví v nových čteních a owner na ni upozorní.
+Najdeš nové pravidlo, které se porušilo podruhé? Nepiš ho jen do paměti — přidej mechanismus (hook, kontrola ve smoke, krok skriptu).
+
 ---
 
 ## Tier systém

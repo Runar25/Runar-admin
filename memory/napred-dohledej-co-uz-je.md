@@ -24,3 +24,8 @@ na otázku „opisuje sol otázku runy?“ — 264 uložených čtení (produkce
 Podruhé stejná výtka (poprvé 2026-08-16, archiv dávek). **How to apply:** `node scripts/utils/najdi_cteni.js` s filtry té otázky
 (model, runa, `--text`, `--draws`) — produkce, záloha pokusů, `~/runar-eval`, `eval_out/`, `docs/eval/` najednou. Pokus přes API až
 když data odpověď nemají, a do zprávy napiš, co v datech bylo. Výstupy pokusů se zálohují samy (Stop-hook → `scripts/utils/zaloha_cteni.js`).
+
+⛔ **Než ownerovi něco nahlásíš nebo navrhneš: `node scripts/utils/uz_vime.js <pojmy>`** (2026-10-07). První průchod auditu nahlásil jako
+nové vady věci opravené 25. 9.–6. 10., větu, kterou owner označil za ne-vadu, a znovu navrhl „podobu oblasti jen jednou“ zamítnutou 3. 10.
+KUKY: *„jak to, že nevíš, co jsme už dělali?“* Od teď hlídá stroj (CLAUDE.md §30): API bez `RUNAR_API_ANO` neprojde, zpráva s návrhem
+bez `scripts/utils/uz_vime.js` v tahu taky ne.

@@ -8755,3 +8755,24 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hranice:** záloha leží na stejném disku — chrání před úklidem %TEMP%, ne před ztrátou disku. Kam ji zrcadlit mimo počítač, je
   otevřené rozhodnutí ownera (BACKLOG „Kam trvale s generovanými dávkami“).
 - Affected doc(s): `RUNAR_BACKLOG.md` („Kam trvale s generovanými dávkami“ — stav) · `memory/napred-dohledej-co-uz-je.md` (v témže commitu).
+
+## 2026-10-07 (3) — Nic nesmí viset na paměti session: pokus přes API a zprávu ownerovi hlídá stroj (CLAUDE.md §30)
+
+- **Rozhodl:** KUKY 2026-10-07 *„nikdy nic nechci, aby záviselo na tvé paměti!! … jak do budoucna zaručíš, aby všechno nezáviselo na tvé
+  paměti? … cokoliv se týče hledání něčeho ve čteních, tak jako první max koukat do čtení, která jsi udělal a která jsem já udělal. Pokud
+  tam není nebo vzorek je příliš malý, tak mi řekneš a vymyslíme to.“* **Provedl:** CODE-tune.
+- **Proč:** tři pravidla padala opakovaně, přestože stála v paměti: číslování bodů (owner: *„pořád dokola“*), pokus přes API místo dat
+  (480 volání 2026-10-06; návrh 18 volání 2026-10-07 na otázku, kterou už zodpověděla uložená čtení) a hlášení starých věcí (první průchod
+  auditu 2026-10-07: většina typů vad opravená 25. 9.–6. 10. nebo ownerem rozhodnutá, znovu navržená „podoba oblasti jen jednou“
+  zamítnutá 2026-10-03 (4)).
+- **Co:**
+  1. PreToolUse hook `runar-api-guard.py` (uživatelský, `~/.claude`): příkaz, který volá API modelu, neprojde bez `RUNAR_API_ANO=<počet>`;
+     odmítnutí říká postup — napřed `scripts/utils/najdi_cteni.js`, pak ownerovo ano. Ověřeno živě v session (přímé volání zablokováno).
+  2. Stop hook `runar-zprava-check.py` (přes `tree-guard.sh`): závěrečná zpráva s odrážkami na nejvyšší úrovni nebo otázkou bez čísla,
+     nebo s návrhem bez `scripts/utils/uz_vime.js` v témže tahu, se jednou vrátí k přepsání. 10 testů (odrážky, číslované, návrh s dohledáním
+     i bez, krátká odpověď, opakovaný stop, otázka bez čísla, dohledání jen před ownerovou zprávou, citace s otazníkem, kód).
+  3. `scripts/utils/uz_vime.js`: co už víme — DECISIONS, BACKLOG, EVAL_LOG, DESIGN, CLAUDE.md, memory a poznámky hlášení v DB, se značkou stavu.
+  4. CLAUDE.md §30: pravidlo a seznam toho, co hlídá stroj.
+- **Hranice:** hook nepozná, jestli owner ano opravdu řekl — `RUNAR_API_ANO` píše session; brzda je v tom, že pravidlo stojí přímo
+  u volání. Kontrola zprávy pozná odrážky, otázky a slova návrhu; úsudek „je to staré?“ nenahradí, jen vynutí dohledání.
+- Affected doc(s): `CLAUDE.md` (§30) · `memory/full-path-and-numbered-lists.md` · `memory/napred-dohledej-co-uz-je.md` — v témže commitu.
