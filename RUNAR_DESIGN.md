@@ -1429,4 +1429,4 @@ doslova — a pokaždé?* Sol bere vstup jako materiál k přepsání, Opus spí
 (`scripts/monitor_ozveny.js --nove --zapis`), co se vrací doslova a jak začínají odpovědi na týž tip.
 **Postup zkoušení slov (2026-10-07):** napřed data, která máme (`scripts/utils/najdi_cteni.js`); pak malý pokus — víc znění z úplně
 různých pohledů naráz (např. 5 otázek × 3 čtení × 2), se vstupem jako v produkci; spočítat pojistku, opakování slov otázky a začátky
-odpovědí, a **texty přečíst** — co zní dobře, rozhoduje owner podle textů, ne počty. Anglické znění ověřit zdrojem (bod 9).
+odpovědí, a **texty přečíst** — co zní dobře, rozhoduje owner podle textů, ne počty. Anglické znění ověřit zdrojem (bod 9). Owner 2026-10-07 k prvnímu takovému pokusu (otázka na oblast z pěti pohledů): *„to jsi výborně vyčetl, tohle bychom mohli dělat dál, třeba v jiné podobě, ale ten princip ti sedl.“*
