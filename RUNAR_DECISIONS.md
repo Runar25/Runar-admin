@@ -8776,3 +8776,21 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hranice:** hook nepozná, jestli owner ano opravdu řekl — `RUNAR_API_ANO` píše session; brzda je v tom, že pravidlo stojí přímo
   u volání. Kontrola zprávy pozná odrážky, otázky a slova návrhu; úsudek „je to staré?“ nenahradí, jen vynutí dohledání.
 - Affected doc(s): `CLAUDE.md` (§30) · `memory/full-path-and-numbered-lists.md` · `memory/napred-dohledej-co-uz-je.md` — v témže commitu.
+
+## 2026-10-07 — Guard API pokusů: zavřený obchvat přes proměnnou a vynucený záměr + strop 50
+- **Rozhodl:** KUKY 2026-10-07 *„nikdy, ale nikdy v životě už nechci vidět, že žádáš 480 čtení… vždycky se udělá malý vzorek… ZÁMĚR,
+  co má z toho měření vyjít… PŘEDPOKLAD!“* a *„ty to zapomeneš. Někdo tě musí hlídat!“* **Provedl:** CODE-read (hook vytvořil CODE-tune, výše).
+- **Proč:** pipe-test guardu na tvarech, kterými CODE-read 2026-10-06 skutečně pouštěl API běhy: `D=<adresář>; node "$D/ask_zdroj.js"`
+  guard **PUSTIL** (cestu ke skriptu hledal jen doslova v textu příkazu), stejně tak `node -e "require('…')"` a `bash wrapper.sh`.
+  A s `RUNAR_API_ANO=<cokoli>` pustil jakoukoli velikost bez jediné věty proč — přesně cesta k běhu 480.
+- **Co:** `~/.claude/runar-api-guard.py`:
+  1. dosadí přiřazení v příkazu (`D=…`, `export D=…`, `$D = '…'`, `${D}`), zachytí `node -e require(…)` a projde `.sh` wrapper;
+  2. `RUNAR_API_ANO` musí být číslo a příkaz musí nést `RUNAR_API_ZAMER="…"` (≥ 40 znaků, s větvením když/jinak/→);
+  3. nad 50 volání navíc `RUNAR_API_OWNER="<ownerova slova>"`;
+  4. každý puštěný pokus zapíše do `~/.claude/runar-api-pokusy.log` (čas · počet · skript · záměr) — owner vidí, co se pouštělo, bez paměti session.
+  Pipe-test 16/16 (11 blokovat: absolutní, `$D` ×3, PowerShell `$D`, relativní s cwd, ANO bez záměru, záměr bez větví, 90 bez ownera,
+  `node -e`, bash wrapper · 5 pustit: 18+záměr, 90+záměr+owner, `--dry-run`, `git status`, přiřazení bez API). Živě: guard zablokoval i můj
+  vlastní testovací příkaz, který cestu ke skriptu jen obsahoval.
+- **Hranice:** `RUNAR_API_ZAMER` i `RUNAR_API_OWNER` píše session — hook neověří, že owner ano řekl ani že záměr je dobrý; vynutí, že věta
+  existuje a zůstane v logu. Neobchází se jen tvary výše; skript generovaný za běhu nebo API přes jiný jazyk (curl v .ps1) nezachytí.
+- Affected doc(s): `CLAUDE.md` §30 — v témže commitu.

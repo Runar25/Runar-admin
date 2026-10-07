@@ -319,6 +319,9 @@ musí to buď **udělat skript samo**, nebo **zastavit práci**, když se to vyn
 - **Pokus přes API** → PreToolUse hook (`~/.claude/runar-api-guard.py`) ho nepustí bez `RUNAR_API_ANO=<počet>`. To se píše až poté, co <!-- doc-links:ok 2026-10-07 hook je uživatelský soubor v ~/.claude, mimo repo -->
   `node scripts/utils/najdi_cteni.js` ukázal, že odpověď v datech (čtení, která udělal CODE i owner) není nebo je vzorek malý, **a owner
   k tomu řekl ano**. Když data nestačí, řekni to ownerovi a domluvte se — nenavrhuj rovnou pokus.
+  Spolu s počtem musí příkaz nést `RUNAR_API_ZAMER="<co pokus rozhodne; když tak → …, jinak → …>"`; nad 50 volání navíc
+  `RUNAR_API_OWNER="<ownerova slova>"`. Každý puštěný pokus se zapíše do `~/.claude/runar-api-pokusy.log` (čas, počet, skript, záměr). <!-- doc-links:ok 2026-10-07 log je uživatelský soubor v ~/.claude, mimo repo -->
+  Malý vzorek napřed (KUKY 2026-10-07: *„vždycky se udělá malý vzorek… ZÁMĚR… PŘEDPOKLAD“*).
 - **Zpráva ownerovi** → Stop-hook (`~/.claude/runar-zprava-check.py`): body a otázky číslované; zpráva s návrhem nebo otázkou na <!-- doc-links:ok 2026-10-07 hook je uživatelský soubor v ~/.claude, mimo repo -->
   rozhodnutí projde, jen když v témže tahu běžel `node scripts/utils/uz_vime.js <pojmy>` (co už je hotové, zamítnuté, zapsané).
 - **Hlášení z appky** → §29 (`nacti_cteni.js` stav v DB). **Co je hotové, rozhodnuté nebo zapsané, se ownerovi znovu nepředkládá** —
