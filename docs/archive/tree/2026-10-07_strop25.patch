@@ -1,0 +1,260 @@
+diff --git a/RUNAR_DECISIONS.md b/RUNAR_DECISIONS.md
+index 3326a46..c39e113 100644
+--- a/RUNAR_DECISIONS.md
++++ b/RUNAR_DECISIONS.md
+@@ -8826,3 +8826,28 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze
+   Testy: 5/5 stavů (načetla + zbývá · cizí session · prázdný seznam · jen --hotovo · seznam neexistuje) + starší načtení z téže session
+   neblokuje; dosavadních 10/10 testů zprávy beze změny.
+ - Affected doc(s): `CLAUDE.md` (§29, §30) · `memory/nacti-cteni-a-reporty.md` — v témže commitu.
++
++## 2026-10-07 (6) — Strom (lab): nejvýš 25 hlavních větví; čtení se stranou převezme větev založenou středem; povýšená z vůdčí větve na své straně
++
++- **Rozhodl:** KUKY 2026-10-07 *„více jak 25 run není dobré. mám jich teď 34 a je to špatně, vracíme to k 25.“* Končí tím
++  „povýšených, kolik je třeba“ z 2026-10-05 (12); platí zase zákon z 2026-08-05 („max 25 = 25 run“). **Provedl:** CODE-tree, jen LAB.
++- **Proč měl 32 větví** (jeho strom, 280 čtení): aby každé čtení viselo na svém místě, stačí 24. Osm navíc byly větve založené čtením
++  ze středu (Love, Crossroads, bez oblasti, i zakládací Norny), vedle kterých pak čtení se stranou zakládalo další.
++- **Teď:** (1) **převzetí** — čtení se stranou na element×pásmu, kde visí jen větev založená středem a nakreslená na jeho straně, patří
++  jí (značka místa `adopt`; strana z dat zůstává 0, kresba se nemění; vůdčí větev se nepřevezme); (2) **strop** `MAX_BR` = 25 (počet run):
++  nové místo nad strop vlastní větev nedostane, čtení jde k nejbližší větvi svého elementu (napřed na své straně, nejbližší pásmo);
++  (3) **oprava strany** — povýšená z vůdčí větve (svislá, strana 0) dostávala stranu ze střídání odbočky: Fehu a Dagaz (oheň, místo
++  vpravo) rostly doleva a nesly 19 čtení o světě. Odbočka od strmé matky na své straně navíc nesmí přes svislici.
++- **Změřeno:** jeho strom má 25 větví (15 ramen, 10 povýšených) a 340 z 342 tažení je na svém místě. Dvě visí o pásmo vedle (vzduch dole
++  vpravo → vzduch uprostřed vpravo, přišla po zaplnění stropu). Nakresleno vlevo 11 větví / 184 tažení, vpravo 13 / 149 (dřív 17 / 211
++  a 14 / 122). Stabilita stejná: otočení větvičky > 8° 0 (max 4°), sklouznutí > 8 px 75 (max 48 px), dřív 76 a 47 px. Souběhy
++  na 24 modelových stromech (výchozí posuvníky) 128 → 57, na jeho stromě 3 → 3. Modelové stromy se stropem: do 60 čtení žádné
++  tažení mimo místo, při 150–300 čteních nejvýš 3 % o místo vedle.
++- **Zkoušeno a zahozeno:** (a) strop bez převzetí („kdo dřív přišel, má větev“) — na jeho stromě 36 z 342 tažení mimo místo, 6 ze 7 míst
++  bez větve vpravo; (b) „každá runa založí nejvýš jednu větev“ (pravidlo z 2026-10-03) — 58 z 342 mimo; (c) převzetí, které mění stranu
++  z dat — větev přepla ze „středu“ (strmě u kmene) na boční, větve se stočily až o 66° (Eihwaz, čtení #36) a uchycení sklouzlo až o 127 px.
++- **Hlídá smoke ㉳ (h):** nejvýš 25 hlavních větví; na stropu nejvýš 5 % tažení o místo vedle (verze bez převzetí má 6,4 % → chytí).
++  Nový log „svět“ chytí povýšenou na druhé straně (mutační test: bez pojistky Hagalaz po 20 čteních). Žádný ze dvou původních logů
++  chybu strany nechytil.
++- Odvolává se na: 2026-10-05 (12) (místo = element × pásmo × strana) · 2026-08-05 (zákon 25 = 25).
++- Affected doc(s): `RUNAR_TREE_MAP.md` (§3 převzetí a strop, §9 strana povýšené, §12 smoke) — v témže commitu.
+diff --git a/RUNAR_TREE_MAP.md b/RUNAR_TREE_MAP.md
+index 5d5ee06..abe73c3 100644
+--- a/RUNAR_TREE_MAP.md
++++ b/RUNAR_TREE_MAP.md
+@@ -33,7 +33,9 @@
+ - **Místo = element × pásmo zóny × strana** (`bandOf`; strana = oblast: nitro vlevo, svět vpravo, Love/Crossroads/bez oblasti = střed). Oheň/voda/vzduch/země tři pásma, stín dvě (na hranách). Pravidla → `RUNAR_TREE.md` §3, §5.
+ - **Každé čtení jde na SVÉ místo** (od 2026-10-05; KUKY „každé čtení, každé!!! mám ji přesně tam, kam patří“). Místo založí první čtení, které tam patří — jakákoli runa elementu (dá větvi tvar; jedna runa může být na víc větvích). Střed stranu nezakládá: přidá se k větvi elementu v tom pásmu (KUKY); když žádná není, založí ji uprostřed. Hlídá smoke ㉳ (g).
+ - **Rameno s vlastním pramenem** = první místo elementu×pásma (nejvýš `maxMains` = 14 pramenů), vznikne **jen když se vejde na kmen**: kapacita = kolik výstupů se vejde na výšku kmene v tu chvíli nad podlahu `exitFloor`, když se levá a pravá střídají (na rameno polovina `exitMinPx`; `capSecAt`, tatáž rovnice výšky jako v §2). Nestřídají-li se, nepřidá se rameno — povyroste kmen (§5). Pro elementy bez ramene je místo rezervované (jejich první rameno vznikne vždy).
+-- **Každé další místo** (druhá strana nebo střed téhož pásma; pásmo, pro které už není pramen) = **povýšená větev** z ramene téhož elementu, které je na straně místa (nejbližší pásmo). Nemá-li element na té straně žádné rameno, dostane místo **vlastní výstup z kmene** (rameno bez pramene: vyjde z kmene na své straně, pramen sdílí uvnitř kmene; bez kořene). Povýšených tolik, kolik míst čtení potřebují (KUKY 2026-10-05). Dřív „sousední zóna“: runa s ramenem poslala další čtení jinam (KUKYho strom: 5).
++- **Každé další místo** (druhá strana nebo střed téhož pásma; pásmo, pro které už není pramen) = **povýšená větev** z ramene téhož elementu, které je na straně místa (nejbližší pásmo). Nemá-li element na té straně žádné rameno, dostane místo **vlastní výstup z kmene** (rameno bez pramene: vyjde z kmene na své straně, pramen sdílí uvnitř kmene; bez kořene). Dřív „sousední zóna“: runa s ramenem poslala další čtení jinam (KUKYho strom: 5).
++- **Převzetí** (2026-10-07): čtení se stranou přijde na element×pásmo, kde visí jen větev založená středem (Love/Crossroads/bez oblasti, zakládací Norny) nakreslená na jeho straně → ta větev je jeho místem (značka `adopt`), další se nezakládá. Strana z dat zůstává 0, takže kostra `FR` i kresba se nemění. Vůdčí větev se nepřevezme.
++- **Strop 25 hlavních větví** (`MAX_BR` = počet run; KUKY 2026-10-07, do té doby „povýšených, kolik je třeba“): je-li jich 25, nové místo vlastní větev nedostane — čtení jde k nejbližší větvi svého elementu (napřed na své straně, nejbližší pásmo; při shodě ta s víc čteními). Kolik tažení tak visí o místo vedle, hlídá smoke ㉳ (§12).
+ - **Větvičky** = čtení: každé čtení jde do stromu svého ramene (`attachR`): na rameni nejvýš `twigMax`, pak o patro níž do větvičky s nejmenším podstromem.
+ - ~~Povýšení podle prahu~~ (runa tažená dost často; nejvýš 2 na rameno, tempo `gradEvery`) — **zrušeno 2026-10-05**: povýšená větev = místo čtení, ne odměna za četnost.
+ - **Promítne se:** počet ramen a pramenů v kmeni, co roste na kterém rameni, délka ramene (§7), povýšené větve (§9).
+@@ -75,7 +77,7 @@ Směr ramene se po délce mění — **tohle rozhoduje, jestli se ramena potkaj
+ - **Promítne se:** hustota a směr drobných větví; kořeny zrcadlí prvních `mirrorN` větviček (§10).
+ 
+ ## 9. Povýšené větve — `growGrad`
+-- **= místa čtení** (od 2026-10-05): matka = rameno téhož elementu na straně místa; délka a počet čtení = čtení jejího místa (`gradTree.n`); místo odštěpení ze čtení, které místo založilo (stálé); s matkou na druhé straně roste vždy ke své straně; dolní strop směru jako rameno (`softSide`). Čtení povýšené patří jí, ne matce (matku dřív táhla na druhou stranu).
++- **= místa čtení** (od 2026-10-05): matka = rameno téhož elementu na straně místa; délka a počet čtení = čtení jejího místa (`gradTree.n`); místo odštěpení ze čtení, které místo založilo (stálé); s matkou na druhé straně **nebo svislou (vůdčí)** roste vždy ke své straně; odbočka od matky na své straně nesmí přes svislici (zastaví se těsně na své straně) — obojí 2026-10-07; dolní strop směru jako rameno (`softSide`). Strana místa = strana z dat, nebo převzetí (`adopt`, §3). Čtení povýšené patří jí, ne matce (matku dřív táhla na druhou stranu).
+ - Nemají vlastní pramen ani kořen: součást pramene matky; matka je od kořene po místo odštěpení tlustší. Místo odštěpení: zóna jejích čtení do chvíle povýšení + rozdělovač míst (odstup od větviček matky). Úhel: od směru matky v místě odštěpení odbočí o stálý úhel (`GREL`) na stranu, která se určí jednou, v čtení povýšení (`_GTURN`: u strmé matky ven, u vodorovné nahoru; druhá povýšená téže matky a sousedé na téže straně se střídají). Ke svému úhlu se stočí přes 15 % své délky (rameno z kmene přes `limbBendU`, výchozí 45 %) — pomalé stočení ji vedlo souběžně s matkou. Délka: praxe × náběh × `gradLen`.
+ 
+ ## 10. Kořeny — `buildRootFor`, `mirrorTwig`
+@@ -86,7 +88,7 @@ Směr ramene se po délce mění — **tohle rozhoduje, jestli se ramena potkaj
+ - **Posuvníky** jsou jen ty s viditelným účinkem (audit `tree_diag.js sliders`, `DEFAULTS=1` = výchozí hodnoty, jak je vidí KUKY); ODLOŽENO = kůra.
+ 
+ ## 12. Kontroly
+-- **Smoke ㉳** `scripts/verify_tree_mista.js` (lab, výchozí posuvníky): výstupy ramen na stejné straně aspoň `exitMinPx`, levé–pravé polovinu, žádné rameno pod podlahou, **každé čtení na svém místě** (element, pásmo, strana — strana i nezávisle z oblasti v logu; větev se stranou nakreslená na té straně), větve na rodiči od sebe, každý nakreslený tah klikatelný, nejvýš 15 pramenů, inspekce = log.
++- **Smoke ㉳** `scripts/verify_tree_mista.js` (lab, výchozí posuvníky): výstupy ramen na stejné straně aspoň `exitMinPx`, levé–pravé polovinu, žádné rameno pod podlahou, **každé čtení na svém místě** (element, pásmo, strana — strana i nezávisle z oblasti v logu; větev se stranou nakreslená na té straně), větve na rodiči od sebe, každý nakreslený tah klikatelný, nejvýš 15 pramenů, inspekce = log, **nejvýš 25 hlavních větví** a na stropu nejvýš 5 % tažení o místo vedle. Tři logy: všude, minulost, **svět** (oblasti hlavně svět — přidán 2026-10-07, jediný z nich ukáže povýšenou na druhé straně, když selže pravidlo strany v §9).
+ - **Detektor překryvu** `scripts/utils/tree_overlap.js`: pro dvojice ramen a povýšených větví vzdálenost jejich čar po délce proti součtu polovin tloušťky (bez paty u kmene a místa odštěpení); úsek pod 25° = souběh (překryv), jinak protnutí. Zatím jen nástroj — do smoke až po opravě. ⚠️ **Hranice 25° je hrubá:** mělké křížení pod 21–24° (~20 px) hlásí jako souběh, i když jsou obě větve vidět (KUKYho strom 2026-10-03: Gebo + Uruz, Hagalaz + Eihwaz — ověřeno výřezem). Hraniční nález se ověřuje okem.
+ - Ruční: `scripts/utils/tree_diag.js` (`zony`, `misto`, `klik`, `jump2`, `limbjump`, `scen`, `zscen`, `sliders`) · `scripts/utils/tree_render.js` — KUKYho strom z několika verzí labu vedle sebe do PNG (před hlášením každé změny stromu, DECISIONS 2026-10-03 (15)). · `scripts/utils/tree_read.js` — strom přečtený z dat (strany, ramena zdola nahoru, špička, proč) — podklad pro popis ownerovi.
+ 
+diff --git a/build_crown_composer.py b/build_crown_composer.py
+index f0f4d1b..d676e06 100644
+--- a/build_crown_composer.py
++++ b/build_crown_composer.py
+@@ -544,7 +544,7 @@ HTML = r"""<!DOCTYPE html>
+           zrod:0.3, dorust:4,   /* 2026-09-29: nova vetev se rodi mala a doroste za `dorust` cteni */
+           gradLen:1,   /* o kolik je graduant delsi nez bezna odbocka (1.35 = drivejsi stav) */
+           gradStrand:1, gradStrandW:0.65, gradGap:2.2,   /* VERZE B: graduant = vlastni pramen (0 = verze A, dnesni stav) */   /* F9: kolik tazeni = dalsi odbocka · strop na vetev · rozestup opakovani */   /* F7: kam po delce vetve sedaji odbocky / graduanti */
+-          canopy:0.5, diversity:0.4, readingEvery:3, vigorMature:25, maxMains:14, gradFrac:0.33, gradEvery:12,   /* maxMains = pramenu v kmeni (2026-10-05: povysenych kolik je treba, KUKY); gradFrac/gradEvery uz nic nedelaji (povyseni podle mista) */
++          canopy:0.5, diversity:0.4, readingEvery:3, vigorMature:25, maxMains:14, gradFrac:0.33, gradEvery:12,   /* maxMains = pramenu v kmeni; hlavnich vetvi celkem nejvys 25 (MAX_BR ve stableAssign, KUKY 2026-10-07 — 2026-10-05 bylo "povysenych kolik je treba"); gradFrac/gradEvery uz nic nedelaji (povyseni podle mista) */
+           bendN:0.65, bendK:8, bendStr:1, exitMinPx:30, limbBendU:0.45, limbTip:1, hwRatio:0.75,   /* hwRatio (2026-10-05, KUKY "strom musi zaroven rust do vysky s tim, jak roste do sirky"): kmen aspon hwRatio × rozpeti ramen; 0,75 = KUKYho strom kolem 20. cteni */   /* tvar ramen = ranni (2026-10-03 KUKY "a je to koste": 0,15 / 0,5 proti prekryvum delalo tuhe vodorovne klacky) */   /* exitMinPx (2026-10-03, KUKY "30px min." + obrazek 4): rozestup vystupu ramen na STEJNE strane; leve a prave se stridaji v polovine */
+             /* TIHA (2026-10-03): neutralni rozevreni ramene · kolik cteni ho ohne napul · sila; maxMains 10 -> 25 = 14 mist element×zona + 11 povyseni (KUKY) */
+           variace:0.7, textura:0.85,
+@@ -1294,6 +1294,7 @@ HTML = r"""<!DOCTYPE html>
+     /* STRANA CTENI = OBLAST (osa B, RUNAR_TREE.md §3): nitro vlevo, svet vpravo; Love, Crossroads a bez oblasti = stred (0). */
+     var SIDE_A={ healing:-1, family:-1, inner:-1, purpose:1, career:1, spirituality:1 }, sideOfRd=function(rd){ return (rd && SIDE_A[rd.area]) || 0; };
+     var placeRd=[];   /* misto kazdeho cteni (element|pasmo|strana) — pro kontrolu smoke ㉳ */
++    var MAX_BR=B.RUNES.length;   /* nejvys 25 hlavnich vetvi = 25 run (KUKY 2026-10-07, viz STROP nize) */
+     var sideIx={}, gplace={}, nStr=function(){ var n=0; for(var q=0;q<slots.length;q++){ if(slots[q].mother==null) n++; } return n; };
+     /* misto = element × pasmo × strana. mother==null = rameno s VLASTNIM pramenem (nejvys jedno na element×pasmo), jinak rameno
+        pro druhou stranu / stred tehoz pasma: vyjde z kmene na sve strane, pramen sdili s matkou ("jedno, dokud se neoddeli"). */
+@@ -1356,10 +1357,36 @@ HTML = r"""<!DOCTYPE html>
+     for(var i=(fnd?1:0); i<log.length; i++){ var rs=log[i].runes||[]; drawSec[i]=[]; drawOwn[i]=[]; capAdd(log[i]); var capI=capSecAt(i), sI=sideOfRd(log[i]);
+       for(var j=0;j<rs.length;j++){ var el=rs[j].el, rk=rs[j].rune, z=readZone(log[i], j, rk), b=bandOf(el, z), pk=el+'|'+b, qs=secIx[pk], sd=sI, tq=null, tg=null, fresh=false;
+         (placeRd[i]=placeRd[i]||[])[j]=pk+'|'+sd;
+-        if(qs!=null && (sd===0 || slots[qs].side===sd)) tq=qs;                                   /* rameno elementu×pasma (stred se pridava) */
++        if(qs!=null && (sd===0 || (slots[qs].side||slots[qs].adopt)===sd)) tq=qs;                                   /* rameno elementu×pasma (stred se pridava) */
+         else if(sd!==0 && sideIx[pk+'|'+sd]!=null) tq=sideIx[pk+'|'+sd];                         /* vlastni vystup tohoto mista */
+         else if(gplace[pk+'|'+sd]!=null) tg=gplace[pk+'|'+sd];                                   /* povysena vetev tohoto mista */
+         else if(sd===0 && qs==null){ var pm=pickMid(pk); if(pm){ if(pm.q!=null) tq=pm.q; else tg=pm.g; } }   /* stred: k vetvi tehoz pasma */
++        /* PREVZETI (2026-10-07): cteni se stranou prijde na element×pasmo, kde visi jen vetev ZALOZENA STREDEM (Love, Crossroads, bez
++           oblasti, zakladaci Norny) a ta je nakreslena na jeho strane -> vetev prevezme (cteni toho mista na ni patri), nezaklada vedle
++           ni dalsi. Prevzeti je jen ZNACKA MISTA (`adopt`): strana z dat zustava 0, takze kostra FR i kresba vetve se nemeni. Prvni verze
++           (tyz den) menila stranu z dat -> vetev prepla ze "stredu" (strme u kmene) na bocni: na KUKYho strome se vetve stocily az o
++           66° (Eihwaz povysena z Othily, cteni #36) a uchyceni vetvicek sklouzlo az o 127 px (drive nejvys 47 px).
++           KUKYho strom: 8 vetvi zalozenych stredem a vedle nich dalsi z cteni se stranou = 32 vetvi; aby kazde cteni viselo na svem
++           miste, staci 24. Vudci (svisly vrchol kmene) se neprevezme — je to stred. */
++        if(tq==null && tg==null && sd!==0){
++          for(var q6=0; q6<slots.length && tq==null; q6++){ if(slots[q6].el!==el || slots[q6].band!==b || slots[q6].side || slots[q6].adopt || slots[q6].nornName==='skuld' || drawSideOf(q6)!==sd) continue;
++            slots[q6].adopt=sd; tq=q6; }
++          for(var g6=0; g6<grads.length && tq==null && tg==null; g6++){ var G6=grads[g6]; if(G6.band!==b || G6.side || G6.adopt || ((RBK[G6.rune]||{}).el)!==el || drawSideOf(G6.p)!==sd) continue;
++            G6.adopt=sd; gplace[pk+'|'+sd]=g6; tg=g6; }
++        }
++        /* STROP 25 HLAVNICH VETVI (2026-10-07, KUKY: "vice jak 25 run neni dobre. mam jich ted 34 a je to spatne, vracime to k 25";
++           puvodne 2026-10-03 "14 ramen + az 11 povysenych = 25 run", 2026-10-05 "povysenych kolik je treba" -> jeho lab 32–34 vetvi).
++           Je-li vetvi 25, nove misto vlastni vetev nedostane: cteni jde k nejblizsi vetvi sveho elementu — napred na sve strane
++           (nejblizsi pasmo), jinak na druhe; pri shode ta, ktera nese vic cteni. Zmereno s PREVZETIM: KUKYho strom 25 vetvi a 0 cteni
++           mimo misto; modelove stromy do 60 cteni nic, 150–300 cteni 0–18 tazeni z ~500 (do 3 %) o pasmo vedle. Bez prevzeti by
++           strop na jeho strome odsunul 36 z 342 tazeni (6 ze 7 mist bez vetve vpravo — kdo driv prisel, ten mel vetev). */
++        if(tq==null && tg==null && slots.length+grads.length>=MAX_BR){ var capB=null, capD=1e9;
++          for(var q8=0; q8<slots.length; q8++){ if(slots[q8].el!==el) continue;
++            var d8=((sd!==0 && drawSideOf(q8)!==sd) ? 10 : 0) + 3*Math.abs(slots[q8].band-b) - Math.min(2.9, ownN[q8]/100); if(d8<capD){ capD=d8; capB={ q:q8 }; } }
++          for(var g8=0; g8<grads.length; g8++){ var G8=grads[g8]; if(((RBK[G8.rune]||{}).el)!==el) continue;
++            var d9=((sd!==0 && (G8.side||G8.adopt||drawSideOf(G8.p))!==sd) ? 10 : 0) + 3*Math.abs(G8.band-b) - Math.min(2.9, gradTree[g8].n/100); if(d9<capD){ capD=d9; capB={ g:g8 }; } }
++          if(capB){ if(capB.q!=null) tq=capB.q; else tg=capB.g; }
++        }
+         if(tq==null && tg==null){ fresh=true; var nq=nearSec(el, b);
+           var missEl=0; ['fire','water','air','earth','shadow'].forEach(function(e9){ if(nearSec(e9, 0)<0) missEl++; });
+           if(qs==null && ((nStr()<maxN && nStr()+missEl<capI) || nq<0)) tq=newSec(el, b, rk, i, log[i], j, null, sd, null);   /* rameno s pramenem */
+@@ -1378,7 +1405,7 @@ HTML = r"""<!DOCTYPE html>
+       out.runeK=sl.runeK; out.norn=sl.norn; out.nornName=sl.nornName; out.band=sl.band;
+       out.bornIdx=(sl.bornIdx==null)?null:sl.bornIdx;   /* ctení, kdy pramen vznikl (zakladaci = null = od semínka) */
+       out.birthArea=sl.area||null; out.birthInt=sl.intention||null;
+-      out.side=sl.side||0; out.noStrand=(sl.mother!=null); out.mother=sl.mother;   /* misto: strana z dat; rameno bez vlastniho pramene */
++      out.side=sl.side||0; out.adopt=sl.adopt||0; out.noStrand=(sl.mother!=null); out.mother=sl.mother;   /* misto: strana z dat; rameno bez vlastniho pramene */
+       out.count=secN[q]; out.ownN=ownN[q]; out.runeCnt=secCnt[q];
+       /* aett (charakter rustu) = aett ZAKLADAJICI runy, pevne. Prevazujici aett cteni na rameni se pri remize prepinal
+          a s nim krivost i zdvih spicky: spicka Perthova ramene skakala o 41 px tam a zpet (KUKYho strom #211, #247). */
+@@ -1488,8 +1515,8 @@ HTML = r"""<!DOCTYPE html>
+     var targetN=seed ? 0 : Math.max(1, Math.round(crownT.maxMains));     /* strop = maxMains */
+     var branchEls=stableAssign(vlog, els, targetN);
+     /* KONTROLA MISTA (smoke ㉳, 2026-10-05): misto kazdeho cteni a misto vetve, na ktere visi */
+-    window._PLACE={ rd:branchEls.placeRd||[], own:branchEls.drawOwn||[], sec:branchEls.map(function(b){ return { el:b.el, band:b.band, side:b.side||0, noStrand:!!b.noStrand }; }),
+-      grads:(branchEls.grads||[]).map(function(g){ return { el:(RBK[g.rune]||{}).el, band:g.band, side:g.side||0 }; }) };
++    window._PLACE={ rd:branchEls.placeRd||[], own:branchEls.drawOwn||[], sec:branchEls.map(function(b){ return { el:b.el, band:b.band, side:b.side||b.adopt||0, noStrand:!!b.noStrand }; }),
++      grads:(branchEls.grads||[]).map(function(g){ return { el:(RBK[g.rune]||{}).el, band:g.band, side:g.side||g.adopt||0 }; }) };
+     var mainsN=seed ? 0 : Math.max(1, branchEls.length);   /* ZONY: ramena = zalozena mista element × zona (strop maxMains hlida stableAssign) */
+     trunkT.strandMax=seed ? 3 : mainsN;   /* F0b: pramen = runa, 1:1 · seminko: 3 zakladaci prameny bez runy */
+     /* VERZE B: kazdy graduant si objedna VLASTNI pramen. Musi se to vedet PRED buildTrunk,
+@@ -1530,7 +1557,7 @@ HTML = r"""<!DOCTYPE html>
+          11 povysenych maji mit stejny pramen s temi 14") — kmen ma jen mista element × zona; vetev vyroste z matky (niz). */
+       var perP={};
+       (branchEls.grads||[]).forEach(function(G, gi){ perP[G.p]=(perP[G.p]||0)+1;
+-        gradStrands.push({ p:G.p, rune:G.rune, u:0.4, slot:perP[G.p]-1, name:G.name, at:G.at, gi:gi, side:G.side, band:G.band, kind:G.kind }); });
++        gradStrands.push({ p:G.p, rune:G.rune, u:0.4, slot:perP[G.p]-1, name:G.name, at:G.at, gi:gi, side:G.side, adopt:G.adopt, band:G.band, kind:G.kind }); });
+       gradStrands.forEach(function(G){ _ownMain[G.rune]=1; });
+     }
+     /* VYSKY VYSTUPU predem (2026-10-01): engine kmene je potrebuje, aby kmen zuzoval podle pramenu, ktere
+@@ -1990,8 +2017,17 @@ HTML = r"""<!DOCTYPE html>
+       gAng=sAngN + gTurn*GREL;   /* strma matka -> ven, vodorovna -> nahoru */
+       /* MISTO NA DRUHE STRANE (2026-10-05): povysena patri na stranu sveho mista (GS.side z dat). Kdyby ji odbocka od matky poslala
+          jinam, roste rovnou ke sve strane (kostra FR ma jeji stranu z dat + tiha jejich cteni). */
+-      if(GS.side && pSide && pSide!==GS.side) gAng=softSide((gLP.ang!=null) ? gLP.ang : gFrame+lifeLean*0.6, -Math.PI/2);   /* matka na druhe strane: vzdy ke sve strane (stale) */
++      /* i kdyz je matka VUDCI (svisla, pSide 0) — 2026-10-07, KUKYho strom: Fehu (ohen nahore) a Dagaz (ohen uprostred) rostly z vudci
++         a stridani odbocky (slot/sideRank) je poslalo DOLEVA, ackoli jejich misto je vpravo: 19 cteni o svete nakreslenych vlevo
++         (podil na "leva strana pretizena"). Drive podminka `pSide &&` vudci vynechala. Smoke ㉳ to nechytil: na jeho logach
++         nastalo jen u stromu "svet" (Hagalaz po 20 ctenich) — ten log tam ted je. */
++      var GSd=GS.side||GS.adopt||0;   /* strana mista: z dat, nebo prevzeta (adopt) */
++      if(GSd && pSide!==GSd) gAng=softSide((gLP.ang!=null) ? gLP.ang : gFrame+lifeLean*0.6, -Math.PI/2);   /* matka na druhe strane nebo svisla: vzdy ke sve strane (stale) */
+       gAng=softSide(gAng, -Math.PI/2);   /* dolni strop jako u ramene (~100°): s matkou s tihou dolu visela az na −155° (Ehwaz z Raidha) */
++      /* STRANA MISTA I PRI ODBOCCE OD MATKY NA SVE STRANE (2026-10-07): u strme matky poslala odbocka "nahoru" (gTurn) vetev za
++         svislici na druhou stranu nez jeji misto (modelovy strom "svet" po 20 ctenich: Hagalaz −93° z matky −58°; smoke ㉳).
++         Spojite: ne opacna odbocka (pri malem pootoceni matky by skocila o ~60°), ale zastaveni tesne na sve strane svislice. */
++      if(GSd && (((gAng+Math.PI/2)>=0) ? 1 : -1)!==GSd) gAng=-Math.PI/2+GSd*0.02;
+       gSide=((gAng+Math.PI/2)>=0) ? 1 : -1;
+       /* Vyrusta ve smeru rodice a oblouckem se stoci do smeru sveho cile (V4b: nejvys ~110°, prebytek = natoceni zacatku). */
+       var gDev=gAng-sAng; while(gDev>Math.PI) gDev-=2*Math.PI; while(gDev<-Math.PI) gDev+=2*Math.PI;
+diff --git a/scripts/verify_tree_mista.js b/scripts/verify_tree_mista.js
+index ca1b1e9..d54278d 100644
+--- a/scripts/verify_tree_mista.js
++++ b/scripts/verify_tree_mista.js
+@@ -6,7 +6,7 @@
+ // (vychozi posuvniky labu): vystupy ramen z kmene 6–10 px od sebe, 19 dvojic pod 10 px; 25 pramenu v kmeni a 44 + 11
+ // neklikatelnych tahu. Kontrola na VYSLEDKU (nakreslene body), ne na tvaru kodu.
+ //
+-// Protlaci lab (build_crown_composer.py -> crown-composer.html, vychozi posuvniky) dvema pevnymi logy a v nekolika
++// Protlaci lab (build_crown_composer.py -> crown-composer.html, vychozi posuvniky) tremi pevnymi logy a v nekolika
+ // okamzicich rustu overi:
+ //   (a) vystupy ramen z kmene jsou od sebe aspon MIN_EXIT px, kdyz miri na STEJNOU stranu, a aspon MIN_EXIT_LR px mezi
+ //       levym a pravym ramenem (a od vudci vetve) — KUKY 2026-10-03 "30px min.", pak obrazek 4: 30 px vsude nechalo na
+@@ -19,12 +19,19 @@
+ //   (g) KAZDE CTENI NA SVEM MISTE (KUKY 2026-10-05: "kazde cteni, kazde!!! mam ji presne tam, kam patri"): kazde tazeni visi na
+ //       vetvi sveho elementu a sveho pasma zony, a ma-li cteni stranu (oblast nitro/svet), i na sve strane; vetev se stranou je
+ //       NAKRESLENA na te strane (uhel). Data z labu (window._PLACE), strana kresby z picku. Drive ~80 cteni na opacne strane.
++//   (h) hlavnich vetvi nejvys MAX_BR = 25 (KUKY 2026-10-07: "vice jak 25 run neni dobre … vracime to k 25"). Kdyz je strom na
++//       stropu, nove misto vlastni vetev nedostane a cteni visi na nejblizsi vetvi SVEHO elementu — (g) to pak pocita zvlast,
++//       a takovych tazeni smi byt nejvys CAP_OFF (5 %): s prevzetim vetve zalozene stredem je to na modelovych stromech do 3 %,
++//       bez nej (kdo driv prisel, ten mel vetev) 10,5 % na KUKYho strome — prah hlida, aby se to nevratilo.
++//       Log "svet" (oblasti hlavne svet) pridan 2026-10-07: povysena vetev z vudci (svisle) vetve sla na druhou stranu nez jeji
++//       misto (KUKYho strom: Fehu a Dagaz, 19 cteni o svete vlevo); ze dvou puvodnich logu to nechytil zadny, tenhle po 20 ctenich.
+ //   (f) zadne rameno nevychazi pod podlahou FLOOR (vychozi exitFloor 0,22) — KUKY 2026-10-03 "spodni vetev skoro u zeme"
+ //       (rameno na 17 % kmene: rozestup se nevesel a podlaha ustoupila; ted misto toho povyroste kmen).
+ //
+ //   node scripts/verify_tree_mista.js            (TREE_LAB_HTML=<cesta> = jina kopie labu, napr. pro mutacni test)
+ const path = require('path'), cp = require('child_process'), fs = require('fs');
+ const ROOT = path.resolve(__dirname, '..');
++const MAX_BR = 25, CAP_OFF = 0.05;   // (h): 25 run = nejvys 25 hlavnich vetvi; pri stropu nejvys 5 % tazeni na vetvi vedle sveho mista
+ const MIN_EXIT = 29, MIN_EXIT_LR = 14, MIN_SIB = 4, MAX_STRANDS = 15, FLOOR = 0.215;   // FLOOR: vychozi exitFloor 0,22 minus zaokrouhleni; MIN_EXIT: KUKY 2026-10-03 "30px min." (drive 10 — mene nez sirka kmene); MIN_EXIT_LR: levo-pravo = polovina (obrazek 4)
+ const sideOf = m => (m.idx === 0) ? 0 : (Math.cos(m.ang) >= 0 ? 1 : -1);   // strana = kam rameno skutecne miri (nakresleny uhel), vudci 0
+ let html = process.env.TREE_LAB_HTML || null;
+@@ -35,19 +42,20 @@ if (!html) {   // lab neni v gitu (generuje ho builder) -> postavit cerstvy
+ const { labRun } = require('./utils/tree_diag.js');
+ const B = labRun.branch;
+ const RB = B.RUNES.filter(r => r.k !== 'odinn'), AI = ['healing', 'family', 'inner'], AM = ['love', 'crossroads'], AO = ['purpose', 'career', 'spirituality'];
+-const gen = (seed, sc, N) => { let s = seed; const rnd = () => (s = (s * 1103515245 + 12345) >>> 0) / 4294967296;
++const gen = (seed, sc, N, sa) => { let s = seed; const rnd = () => (s = (s * 1103515245 + 12345) >>> 0) / 4294967296;
+   const pick3 = (p, a, b, c) => { const x = rnd(); return x < p[0] ? a() : (x < p[0] + p[1] ? b() : c()); };
+   const one = arr => () => arr[Math.floor(rnd() * arr.length)];
+   const intn = () => pick3(sc, () => 'past', () => 'present', () => 'decision');
+-  const area = () => pick3(sc, one(AI), one(AM), one(AO));
++  const area = () => pick3(sa || sc, one(AI), one(AM), one(AO));   // sa = rozlozeni oblasti (nitro/stred/svet), jinak jako sc
+   const seek = () => pick3(sc, one(['insight', 'reflection']), one(['clarity', 'confirmation']), () => 'general');
+   const pick = n => { const pool = RB.slice(), rs = []; for (let i = 0; i < n; i++) { const r = pool.splice(Math.floor(rnd() * pool.length), 1)[0]; rs.push({ rune: r.k, el: r.el }); } return rs; };
+   const log = [{ spread: 'norns', runes: pick(3), area: area(), intention: intn(), seeking: seek() }];
+   for (let i = 1; i < N; i++) { const x = rnd(); log.push({ spread: x < 0.8 ? 'single' : 'compass', runes: pick(x < 0.8 ? 1 : 5), area: area(), intention: intn(), seeking: seek() }); }
+   return log; };
+-const LOGS = [['vsude', gen(3933, [1 / 3, 1 / 3, 1 / 3], 300)], ['minulost', gen(3000, [0.6, 0.2, 0.2], 300)]];
++const LOGS = [['vsude', gen(3933, [1 / 3, 1 / 3, 1 / 3], 300)], ['minulost', gen(3000, [0.6, 0.2, 0.2], 300)],
++  ['svet', gen(4111, [1 / 3, 1 / 3, 1 / 3], 300, [0.15, 0.15, 0.7])]];   // svet: viz (h) — povysena z vudci vetve na druhe strane
+ const NS = [20, 60, 150, 300];
+-const fails = []; let worstE = 1e9, worstLR = 1e9, worstS = 1e9, maxStr = 0, runs = 0;
++const fails = []; let worstE = 1e9, worstLR = 1e9, worstS = 1e9, maxStr = 0, runs = 0, maxBr = 0, worstCap = 0;
+ LOGS.forEach(([nm, log]) => NS.forEach(n => {
+   const r = labRun(log.slice(0, n), html, null); runs++;
+   const mains = r.picks.filter(m => !m.gradOf && m.exitX != null);
+@@ -70,12 +78,17 @@ LOGS.forEach(([nm, log]) => NS.forEach(n => {
+   const sub = log.slice(0, n);
+   const PL = r.sb._PLACE;
+   if (!PL) fails.push('lab nevystavuje misto cteni (_PLACE) — kontrola mist nebezi');
+-  else { let off = 0, ex = '', offS = 0;
++  else { let off = 0, ex = '', offS = 0, capOff = 0, draws = 0;
++    const nBr = PL.sec.length + PL.grads.length; maxBr = Math.max(maxBr, nBr);
++    if (nBr > MAX_BR) fails.push(nm + ' po ' + n + ': ' + nBr + ' hlavnich vetvi (strop ' + MAX_BR + ')');
+     const SIDE = { healing: -1, family: -1, inner: -1, purpose: 1, career: 1, spirituality: 1 };   // osa B (RUNAR_TREE.md §3), nezavisle na labu; logy zacinaji Nornami -> poradi cteni = poradi v labu
+     PL.rd.forEach((row, i) => (row || []).forEach((key, j) => { if (key == null) return; const [el, b, sd] = key.split('|'), o = (PL.own[i] || [])[j];
+       const br = (o == null) ? null : (o >= 100 ? PL.grads[o - 100] : PL.sec[o]);
+-      if (!br || br.el !== el || String(br.band) !== b || (+sd !== 0 && br.side !== +sd)) { off++; if (!ex) ex = ' (cteni #' + (i + 1) + ' ' + key + ' visi na ' + (br ? br.el + '|' + br.band + '|' + br.side : 'nicem') + ')'; }
+-      const exp = SIDE[(sub[i] || {}).area] || 0; if (exp && br && br.side !== exp) offS++; }));
++      const capped = nBr >= MAX_BR && br && br.el === el; draws++;   // (h) na stropu: na nejblizsi vetvi sveho elementu
++      if (!br || br.el !== el || String(br.band) !== b || (+sd !== 0 && br.side !== +sd)) { if (capped) capOff++; else { off++; if (!ex) ex = ' (cteni #' + (i + 1) + ' ' + key + ' visi na ' + (br ? br.el + '|' + br.band + '|' + br.side : 'nicem') + ')'; } }
++      const exp = SIDE[(sub[i] || {}).area] || 0; if (exp && br && br.side !== exp && !capped) offS++; }));
++    worstCap = Math.max(worstCap, capOff / Math.max(1, draws));
++    if (capOff > CAP_OFF * draws) fails.push(nm + ' po ' + n + ': na stropu ' + MAX_BR + ' vetvi visi ' + capOff + ' z ' + draws + ' tazeni mimo sve misto (nejvys ' + Math.round(CAP_OFF * 100) + ' %)');
+     if (off) fails.push(nm + ' po ' + n + ': ' + off + ' tazeni mimo sve misto' + ex);
+     if (offS) fails.push(nm + ' po ' + n + ': ' + offS + ' tazeni se stranou z oblasti visi na vetvi druhe strany');
+     r.allPicks.forEach(p => { if (typeof p.k !== 'number' || !p.meta) return; const br = (p.k >= 100) ? PL.grads[p.k - 100] : PL.sec[p.k];
+@@ -97,5 +110,5 @@ LOGS.forEach(([nm, log]) => NS.forEach(n => {
+   if (sn == null) fails.push(nm + ' po ' + n + ': pocet pramenu v kmeni nejde precist');
+   else if (sn > MAX_STRANDS) fails.push(nm + ' po ' + n + ': ' + sn + ' pramenu v kmeni (max ' + MAX_STRANDS + ' — povysene vetve nemaji vlastni pramen)');
+ }));
+-if (fails.length) { fails.slice(0, 12).forEach(f => console.log('   ' + f)); console.log('strom: ' + fails.length + ' poruseni (vetve ze stejneho mista / pod podlahou / cteni mimo sve misto / neklikatelne / prameny navic / inspekce neodpovida logu)'); process.exit(1); }
+-console.log('strom (lab): ' + runs + ' stromu — vystupy ramen na stejne strane aspon ' + worstE.toFixed(0) + ' px, levo-pravo aspon ' + worstLR.toFixed(0) + ' px, zadne pod podlahou, kazde cteni na svem miste, vetve na rodici aspon ' + worstS.toFixed(1) + ' px, vse klikatelne, inspekce = log, nejvys ' + maxStr + ' pramenu v kmeni');
++if (fails.length) { fails.slice(0, 12).forEach(f => console.log('   ' + f)); console.log('strom: ' + fails.length + ' poruseni (vetve ze stejneho mista / pod podlahou / cteni mimo sve misto / vetvi nad strop / neklikatelne / prameny navic / inspekce neodpovida logu)'); process.exit(1); }
++console.log('strom (lab): ' + runs + ' stromu — vystupy ramen na stejne strane aspon ' + worstE.toFixed(0) + ' px, levo-pravo aspon ' + worstLR.toFixed(0) + ' px, zadne pod podlahou, kazde cteni na svem miste (na stropu nejvys ' + (worstCap * 100).toFixed(1) + ' % o misto vedle), nejvys ' + maxBr + ' hlavnich vetvi, vetve na rodici aspon ' + worstS.toFixed(1) + ' px, vse klikatelne, inspekce = log, nejvys ' + maxStr + ' pramenu v kmeni');
