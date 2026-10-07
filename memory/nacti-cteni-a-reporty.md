@@ -25,3 +25,8 @@ vyřešená, jen jejich stav v DB nikdo neměnil. Rozhodnutí → `RUNAR_DECISIO
 3. Každé hlášení dotáhni: hotovo → `--hotovo`; ne → BACKLOG + `--backlog`. Texty lidí do repa nepiš (veřejné).
 4. Zápis do DB potřebuje povolení příkazu `node scripts/nacti_cteni.js` (automatický režim zápis do produkční DB jinak zastaví).
 5. Monitor „odkud“ je kandidát, ne důkaz — ověř obrácenou pákou ([[falsify-by-reversing-the-lever]]).
+
+⛔ **Zápis hned po načtení — hlídá stroj** (2026-10-07). KUKY: *„prostě si piš po načtení reportů, co jsme udělali, protože já se pak nechci
+zabývat tím, že vytáhneš něco 14 dní starého a myslíš, že to máme snad řešit!“* Každé načtené hlášení dostane v tomtéž tahu
+`--hotovo <id8> "<co se udělalo>"` nebo `--backlog <id8> "<položka>"`; seznam nezapsaných vede `nacti_cteni.js` a Stop-hook tah neukončí,
+dokud v něm něco zbývá (CLAUDE.md §29).

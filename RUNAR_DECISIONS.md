@@ -8813,3 +8813,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   otázka runy zůstává (1/38 opis); sledovat v monitoru.
 - Odvolává se na: 2026-09-24 (16) (otázka runy jako zdroj poslední věty) — platí dál pro konce-výroky.
 - Affected doc(s): `RUNAR_DESIGN.md` („Stavba Single" — z čeho most vyrůstá; „Slova, která dáváme modelu" bod 10) — v témže commitu.
+
+## 2026-10-07 (5) — Načtená hlášení musí mít zápis v tomtéž tahu; hlídá Stop-hook
+
+- **Rozhodl:** KUKY 2026-10-07 *„prostě si piš po načtení reportů, co jsme udělali, protože já se pak nechci zabývat tím, že vytáhneš něco
+  14 dní starého a myslíš, že to máme snad řešit!“* **Provedl:** CODE-tune.
+- **Proč:** §29 říká „hotové --hotovo, nehotové --backlog“, ale hlídal to jen úsudek session. První průchod auditu 2026-10-07 pak bral
+  hlášení od 25. 9. jako nové nálezy.
+- **Co:** `scripts/nacti_cteni.js` vede seznam načtených hlášení bez zápisu (`~/.claude/runar-hlaseni-k-zapisu.json`, mimo repo; keep se
+  nezapisuje); `--hotovo` / `--backlog` z něj hlášení odebere. Stop hook `runar-zprava-check.py` session, která hlášení načetla, tah
+  neukončí, dokud v seznamu něco zbývá — jen tu session a jen načtení, ze kterého seznam vznikl (časové okno), cizí session neblokuje.
+  Testy: 5/5 stavů (načetla + zbývá · cizí session · prázdný seznam · jen --hotovo · seznam neexistuje) + starší načtení z téže session
+  neblokuje; dosavadních 10/10 testů zprávy beze změny.
+- Affected doc(s): `CLAUDE.md` (§29, §30) · `memory/nacti-cteni-a-reporty.md` — v témže commitu.

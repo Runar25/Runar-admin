@@ -309,6 +309,9 @@ session je četla znovu jako nová.
 - **Stav hlášení v DB (`bug_reports.status`) je jediný zdroj** (§20): `new` = nikdo nečetl · `triaged` = přečteno · `fixed` = hotovo.
 - **Načíst = `node scripts/nacti_cteni.js`** — ukáže jen `new` a hned je označí `triaged`. Hotové: `--hotovo <id8> "<co, commit>"`.
   Nehotové: položka v `RUNAR_BACKLOG.md` + `--backlog <id8> "<položka>"`. Nikdy neřešit hlášení, které už `new` není.
+- **Zápis hned po načtení** (KUKY 2026-10-07: *„prostě si piš po načtení reportů, co jsme udělali“*): každé načtené hlášení dostane
+  v tomtéž tahu `--hotovo` nebo `--backlog` (i „čeká na ownera: …“). Seznam nezapsaných vede `nacti_cteni.js`; Stop-hook tah neukončí,
+  dokud v něm něco zbývá.
 - **✦ Keep = „nechat“** — uložený text, ne úkol; jen se označí přečtený.
 
 ### §30 — Nic nesmí viset na paměti session: pravidlo, které se opakovaně porušuje, dělá stroj (platí pro VŠECHNY session)
@@ -324,7 +327,7 @@ musí to buď **udělat skript samo**, nebo **zastavit práci**, když se to vyn
   Malý vzorek napřed (KUKY 2026-10-07: *„vždycky se udělá malý vzorek… ZÁMĚR… PŘEDPOKLAD“*).
 - **Zpráva ownerovi** → Stop-hook (`~/.claude/runar-zprava-check.py`): body a otázky číslované; zpráva s návrhem nebo otázkou na <!-- doc-links:ok 2026-10-07 hook je uživatelský soubor v ~/.claude, mimo repo -->
   rozhodnutí projde, jen když v témže tahu běžel `node scripts/utils/uz_vime.js <pojmy>` (co už je hotové, zamítnuté, zapsané).
-- **Hlášení z appky** → §29 (`nacti_cteni.js` stav v DB). **Co je hotové, rozhodnuté nebo zapsané, se ownerovi znovu nepředkládá** —
+- **Hlášení z appky** → §29 (`nacti_cteni.js` stav v DB; zápis hned po načtení hlídá týž Stop-hook). **Co je hotové, rozhodnuté nebo zapsané, se ownerovi znovu nepředkládá** —
   vrací se, až se vada objeví v nových čteních a owner na ni upozorní.
 Najdeš nové pravidlo, které se porušilo podruhé? Nepiš ho jen do paměti — přidej mechanismus (hook, kontrola ve smoke, krok skriptu).
 

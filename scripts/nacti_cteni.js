@@ -31,6 +31,12 @@ function dotaz(sql) {
   return Array.isArray(j) ? j : j.rows;
 }
 const sqlText = (t) => String(t || '').replace(/'/g, "''");
+// Načtená hlášení BEZ zápisu, co se s nimi stalo (2026-10-07, KUKY: „prostě si piš po načtení reportů, co jsme udělali“). Soubor
+// mimo repo; --hotovo / --backlog z něj hlášení odebere a Stop-hook (~/.claude/runar-zprava-check.py) session, která hlášení načetla,
+// tah neukončí, dokud v něm něco zbývá. Keep („nechat“) se nezapisuje — jeho zápis je samo označení přečtené.
+const K_ZAPISU = path.join(os.homedir(), '.claude', 'runar-hlaseni-k-zapisu.json');
+const kZapisu = () => { try { return JSON.parse(fs.readFileSync(K_ZAPISU, 'utf8')); } catch (e) { return {}; } };
+const ulozKZapisu = (o) => { try { fs.writeFileSync(K_ZAPISU, JSON.stringify(o, null, 1)); } catch (e) {} };
 // --hotovo / --backlog: jedno hlášení podle prvních znaků id (musí sedět právě jedno)
 for (const [prep, stav, popis] of [['--hotovo', 'fixed', 'hotovo'], ['--backlog', 'triaged', 'backlog']]) {
   const id = arg(prep);
@@ -43,6 +49,10 @@ for (const [prep, stav, popis] of [['--hotovo', 'fixed', 'hotovo'], ['--backlog'
     + ", notes=coalesce(nullif(notes,'') || ' · ', '') || '" + new Date().toISOString().slice(0, 10) + ' ' + popis + ': ' + sqlText(pozn) + "'"
     + " where id::text like '" + id + "%' returning id, status");
   console.log((r[0] ? r[0].id.slice(0, 8) + ' → ' + r[0].status : 'nic') + ' (' + popis + ')');
+  const kz = kZapisu(); let zbyva = 0;
+  for (const k of Object.keys(kz)) { if (k.indexOf(id) === 0) delete kz[k]; else zbyva++; }
+  ulozKZapisu(kz);
+  if (zbyva) console.log('   ještě bez zápisu: ' + zbyva + ' (' + Object.keys(kz).map((k) => k.slice(0, 8)).join(', ') + ')');
   process.exit(0);
 }
 const od = arg('--od') || znacka() || new Date(Date.now() - 2 * 864e5).toISOString();
@@ -91,4 +101,9 @@ if (rep.length && !process.argv.includes('--bez-zapisu')) {
   dotaz("update bug_reports set status='triaged', notes=coalesce(nullif(notes,'') || ' · ', '') || '" + new Date().toISOString().slice(0, 10)
     + " přečteno' || case when type='keep' then ' (keep — nechat)' else '' end where id in (" + ids + ") and status='new' returning id");
   console.log('\n   ' + rep.length + ' hlášení označeno jako přečtená (triaged).');
+  const kz = kZapisu();
+  for (const x of rep) if (x.type !== 'keep') kz[x.id] = { nacteno: new Date().toISOString().slice(0, 16), zprava: kratce(x.message || x.flagged_text, 80) };
+  ulozKZapisu(kz);
+  const n = Object.keys(kz).length;
+  if (n) console.log('   ⚠ K zápisu (' + n + '): ke každému --hotovo <id8> "<co se udělalo>", nebo --backlog <id8> "<položka>". Dokud něco zbývá, Stop-hook tah neukončí.');
 }
