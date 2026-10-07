@@ -6256,3 +6256,29 @@ každá páka zvlášť ji sníží zhruba na polovinu, hlavička aspektu sama n
 platilo jen pro vstup s ✦. Pokus B (slova tipů) se se správným vstupem **nepřeměřil** — owner běh zastavil (velikost vzorku bez jeho souhlasu,
 memory `cheapest-deciding-measurement-first`); jeho čísla v README platí jen pro vstup s ✦. Kolo „drawn“ (zivotni.js, taky s ✦) nepřeměřeno.
 **Hranice:** EN, sol, tři čtení, dva tipy. Výsledky mimo repo (nesou jméno), rozbor `rozbor_slova.js`.
+
+## 2026-10-07 (1) — Audit promptu, krok 1–3 (první průchod): typy vad v čteních od nasazení solu (25. 9. – 6. 10.)
+
+Owner: *„pusť se do auditu promptu… podotýkám, že náš model vytváří čtení."* Metoda a vstupní data → `docs/eval/2026-10-07-audit-promptu/README.md`.
+Vzorek: 79 single čtení (sol 52, Opus 27; EN 77, IS 2) · 13 spreadů · 131 Asků · 106 ownerových hlášení (74 obsah, 16 „keep", 15 vzhled,
+1 pád). Hlášení seskupená, všechna single čtení přečtená, počty strojem (`monitor_ozveny.js --od 2026-09-25`) tam, kde vadu spočítat jde.
+
+| typ vady | počet | odkud v promptu |
+|---|---|---|
+| 1. konec čtení znovu položí otázku runy z Kolekce | opis ≥ 3 slov 20/79 (sol 13/52 · Opus 7/27), 18× v poslední větě; u solu s otázkovým koncem ≥ 4 slova 4/14 proti 1/38 s výrokem (Fisher jednostranně p = 0,015); parafráze nepočítány | `_runeQuestion`: jedna pevná věta na runu v uvozovkách pod pokynem konce |
+| 2. myšlenka ✦ u téže runy na stejné téma | Hagalaz 20/23 (*what remains / still standing / roots*), Raidho 5/5 (*when you look back … your steps*) | `THOUGHT_ODSTAVEC`: jeden pevný odstavec Kolekce na runu |
+| 3. podoba oblasti vložená doslova | ≥ 3 slova 12/69 (sol 11/44), 10× v poslední větě; 4 ownerova hlášení (*the people one belongs to* „nezní to dobře") | podoba stojí v promptu 2× — přistání i cíl konce (EVAL 2026-10-03 (1), (2)) |
+| 4. obraz převzatý doslova | ≥ 4 slova 23/79 (sol 18/52), 17× v 1. větě | obraz jako zdroj čtení; owner: *„obraz se použije jednou"* |
+| 5. význam z hlavičky doslova | 26/79 (sol 23/52), věta 2–3 | hlavička *focus on: <aspekt>* + rámec esenční věty |
+| 6. slovo, které v zadání není | *grey* 3× (Dagaz 2, Hagalaz 1), *roots*, *electricity*, *home-field*; 5 ownerových hlášení | neurčeno — dohledat (úhel „open with what is out of sight", obraz) |
+| 7. tvrzení o člověku nebo jeho nitru | ručně ~7/79; 1 ownerovo hlášení | — (most „may be" a NO COLD READING drží většinu) |
+| 8. definiční věta mimo podstatu runy | Blank *the stone that bears no mark*, Berkana *that crossing*, Raidho *worth noticing*; 3 hlášení | rámec esence × aspekt |
+| 9. ozvěna zákazu verdiktu ve čtení | 4/79, vše Hagalaz (*not a verdict*, *not a punishment*) | zákazy verdiktu (kánon) |
+| Ask: pojistka | *does not say* 27 · *leaves … open* 20 · *not a promise / verdict* 11 ze 131 (vše před v5.03) | most čtení × zákazy verdiktu (EVAL 2026-10-06 (8)) |
+| Ask: oblast obecně · druhý Ask opakuje | 2 + 2 ownerova hlášení | Ask zná jen název oblasti |
+
+**Společný kořen 1–5:** text, který dáváme pevně na runu nebo na oblast (otázka runy, odstavec Kolekce, podoba oblasti, obraz, aspekt),
+se vrací doslova nebo jako totéž téma. Nejvíc je to vidět při opakovaném tahu téže runy. Souvisí s bodem 5 „Data uvnitř pokynů"
+(BACKLOG „Prompt × návody výrobců").
+**Hranice:** 87 z 92 čtení je ownerových, Hagalaz 25×; islandsky 4 čtení — IS tímhle průchodem neauditována. Typy 6–8 jsou ruční první
+průchod jednoho čtenáře; Asky zatím jen strojem a z hlášení, ne přečtené.
