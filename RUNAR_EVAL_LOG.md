@@ -6282,3 +6282,8 @@ se vrací doslova nebo jako totéž téma. Nejvíc je to vidět při opakovaném
 (BACKLOG „Prompt × návody výrobců").
 **Hranice:** 87 z 92 čtení je ownerových, Hagalaz 25×; islandsky 4 čtení — IS tímhle průchodem neauditována. Typy 6–8 jsou ruční první
 průchod jednoho čtenáře; Asky zatím jen strojem a z hlášení, ne přečtené.
+⚠️ **OPRAVA téhož dne (owner: *„hlásíš spoustu starých věcí… jak to, že nevíš, co jsme už dělali?“*):** průchod bral všech 106 hlášení od 25. 9.
+včetně vyřízených a nálezy neporovnal se záznamy. Typ 6 (*grey*, *roots*, *home-field*) a typ 8 (Blank, Berkana) byly **opravené už
+2026-09-25 až 10-06**; typ 7 stál na větě, kterou owner 2026-09-25 označil za **NE-vadu**; typ 3 a zdroj ✦ (typ 2) owner **rozhodl**
+2026-10-03; *electricity* je z obrazu Hagalazu. Platné zůstávají počty typů 1, 4, 5, 9 a Asku. Stav po položkách → BACKLOG „Audit promptu
+2026-10-07 — zapsané nálezy“. Od teď se nález před hlášením dohledává (`scripts/utils/uz_vime.js`) a Stop-hook zprávu s návrhem bez toho nepustí.

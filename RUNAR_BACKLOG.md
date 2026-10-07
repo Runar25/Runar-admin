@@ -1192,6 +1192,25 @@ Monitor ozvěn: otázka runy opsaná ≥ 3 slova 3/6 (Thurisaz *„you do not st
 `_runeQuestion` ji dává jako zdroj s *„say it in your own words“* — sol ji přesto opíše (pokyn neodklidí vstup, RUNAR_DESIGN „Slova…“ bod 6).
 Owner: *„opakuje něco, na co by měl vymyslet fráze?“* Návrh: ověřit nejmenším vzorkem, jestli konec bez otázky runy (jen pro sol) nese runu
 dál; jinak dát směr otázky místo jejích slov (obsah ownera).
+**2026-10-07 — odpověď z dat, bez API** (owner: *„napřed to zjistit na datech, co máme“*): opis visí na **tvaru konce**. Sol s koncem-otázkou
+otázku runy znovu položí (≥ 4 slova 4/14), s koncem-výrokem ji převede do vlastních vět (1/38; Fisher p = 0,015). Sol **bez** otázky runy
+(lab 2026-09-22, 28 konců-otázek) runu dál nese — ptá se jejím významem (*„Could protection there mean noticing without closing the gate?“*
+u Algizu), jen v ustálených tvarech *„Could…“*. ⇒ data stačí, test přes API netřeba. **Rozhodne owner:** u konce-otázky otázku runy
+nedávat (u ostatních konců zůstane). Čísla → EVAL_LOG 2026-10-07 (1).
+
+### Audit promptu 2026-10-07 — zapsané nálezy. NEOTVÍRAT znovu, dokud se vada neobjeví v nových čteních a owner na ni neupozorní (CODE-tune)
+KUKY 2026-10-07: *„určitě teď už nic neměň… je teď zapiš, až se objeví znova a já na ně upozorním, tak se s tím něco udělá.“* Stav každé
+položky dohledán (`node scripts/utils/uz_vime.js`); měření → EVAL_LOG 2026-10-07 (1) i s opravou.
+1. ✅ **Už opravené dřív** — *grey hour* (v4.57, 2026-09-25) · *roots* (svět z hlavičky pryč, v4.58) · Blank *„the stone that bears no mark“*
+   (v4.59) · Berkana *„that crossing“* (2026-09-28) · *home-field* u Raidha (2026-10-06). V prvním průchodu auditu stály jako nové — omyl.
+2. ✖ **Není vada** (owner 2026-09-25): *„You see the room more clearly…“* je popis scény, ne tvrzení o člověku. „Tvrzení o člověku ~7/79“
+   z prvního průchodu stálo na stejném omylu — zrušeno.
+3. 🔄 **Rozhodnuto ownerem:** podoba oblasti ve čtení zůstává, jak je (DECISIONS 2026-10-03 (4): *„D1 a D2 taky nic“*) · zdroj myšlenky ✦
+   = odstavec Kolekce (2026-10-03) — stejné téma ✦ u téže runy je jeho důsledek a řadu takových ✦ si owner uložil jako keep.
+4. ℹ **Vysvětleno, ne vada:** *electricity* v ✦ u Hagalazu = z obrazu *„The power goes out in the storm…“*.
+5. [ ] **Jen zapsané, owner je nehlásil:** Opus začíná větu o runě *„<runa> is…“* 19/25 · Ask na *„How does this reading affect me?“*
+   začíná stejně (*„[runa] speaks of…“*) 3/6 · ozvěna zákazu verdiktu ve čtení 4/79 (Hagalaz *„not a verdict / not a punishment“*) ·
+   Ask pojistka po v5.03 (zbytek nese most × zákazy verdiktu, EVAL 2026-10-06 (8)).
 
 ### Prompt × návody výrobců (Anthropic Opus 5, OpenAI GPT-6) — nálezy 2026-10-04, ČEKÁ NA OWNERA, co s nimi (CODE-tune)
 ⭐ **KUKY 2026-10-05: velké body (4, 5, 6, 8) a přestavba promptu → LAB CODE-read, ne produkce** (DECISIONS 2026-10-05 (3)).

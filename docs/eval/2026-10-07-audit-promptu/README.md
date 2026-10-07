@@ -28,6 +28,10 @@ Text promptu se čte až potom: u každého typu vady se hledá, který pokyn ne
 4. Návody výrobců (Anthropic Opus 5, OpenAI GPT-6) → už porovnáno 2026-10-04, `RUNAR_BACKLOG.md` „Prompt × návody výrobců".
 
 ## Postup
+0. **Napřed, co už je hotové** — u každého nálezu `node scripts/utils/uz_vime.js <pojmy>` (DECISIONS, BACKLOG, EVAL_LOG, hlášení v DB).
+   Hotové, zamítnuté a ownerem rozhodnuté se nehlásí jako nález. První průchod 2026-10-07 tenhle krok neměl a většinu typů vad
+   tvořily věci opravené nebo rozhodnuté v září a začátkem října (oprava v EVAL_LOG 2026-10-07 (1)).
+   Hlášení se berou jen otevřená (stav `new`/`triaged` bez poznámky o vyřízení), ne všechna od data.
 1. **Data** — čtení a Asky od nasazení solu (2026-09-25) + ownerova hlášení za totéž období. Export mimo repo
    (`~/runar-eval/audit-2026-10-07/`, osobní data). Kdokoli to zopakuje: `node scripts/utils/najdi_cteni.js --od 2026-09-25`.
 2. **Ownerova hlášení = první vrstva kódování** — owner je čte jako uživatel a hlásí vadu i chválu; seskupit do typů.
