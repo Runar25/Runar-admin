@@ -280,7 +280,8 @@ function nacti() {
     const znacka = process.argv.includes('--nove') ? posledniZnacka() : null;
     const od = arg('--od') || new Date(Date.now() - 864e5).toISOString().slice(0, 10);
     const kde = znacka ? "drawn_at > '" + znacka.replace(/'/g, '') + "'" : "drawn_at >= '" + od.replace(/'/g, '') + "'";
-    const sql = "select id, drawn_at, lang, rune_name, area, aol, short_text, follow_up, prompt_draws, prompt_version, usage->>'model' as model from readings where " + kde + " order by drawn_at";
+    // 2026-10-07: + question — bez ní monitor bral otázku runy jako vstup i u čtení s vlastní otázkou (builder ji tam nedává).
+    const sql = "select id, drawn_at, lang, rune_name, area, aol, question, short_text, follow_up, prompt_draws, prompt_version, usage->>'model' as model from readings where " + kde + " order by drawn_at";
     src = cp.execSync('supabase db query --linked "' + sql.replace(/"/g, '\\"') + '"', { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
   }
   const j = JSON.parse(src.slice(src.search(/[\[{]/)));
