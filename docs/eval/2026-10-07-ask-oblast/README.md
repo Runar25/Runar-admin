@@ -10,7 +10,7 @@ a *„teď to dělat nebudeme… budeme dělat čtení a zjišťovat“* (žádn
 
 Vstup: tři ownerova čtení z 2026-10-06 (sol) — Raidho · Healing & Wellbeing (podoba *the pace that can be kept*), Perth · Career &
 Creativity (*skill and the long practice behind it*), Algiz · Love & Relationships (*being seen through another person's eyes*). Čtení i odpovědi
-nesou jméno → mimo repo (`~/runar-eval/audit-2026-10-07/cteni.json`, `~/runar-eval/ask-oblast-2026-10-07.json`).
+nesou jméno → mimo repo (`~/runar-eval/audit-2026-10-07/cteni.json`, `~/runar-eval/ask-oblast-2026-10-07.json`). <!-- doc-links:ok 2026-10-07 osobní data záměrně mimo repo (nesou jméno, ownerova čtení) -->
 
 Otázky (štítek oblasti zůstává jako nadpis — DECISIONS 2026-09-11):
 - **B0** dnešní tip *„{area} — can you make this image clearer?“* (s podobou v promptu — srovnání, ne produkce)
