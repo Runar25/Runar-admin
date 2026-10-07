@@ -33,6 +33,16 @@ okamžitě!!! nedovolil jsem ti tak velký vzorek!!!“* Zastaveno na 442.
 s ownerovým výslovným ano** k té velikosti — souhlas s tématem ani dřívější „použij API“ není souhlas s velikostí vzorku. Raději
 nejmenší vzorek, který rozhodne (n = 9–18 na rameno), a ukázat; zvětšovat až na jeho slovo.
 
+⛔ **2026-10-07 — ZÁMĚR A PŘEDPOKLAD, NE VELIKOST.** CODE-read v předávce doporučil „přeměřit, n ≥ 30 na rameno kvůli šumu“ a sám
+pustil 90 volání bez ptaní; z toho vyrostl běh 480. KUKY: *„nikdy, ale nikdy v životě už nechci vidět, že žádáš 480 čtení… vždycky
+se udělá malý vzorek!… kdo zaručí, že na velkém vzorku najdeš, co hledáš?… to, že to předtím udělal špatně, NENÍ odpověď!… ZÁMĚR, co
+má z toho měření vyjít — to je hlavní myšlenka! PŘEDPOKLAD! ne jen že si udělám 480 čtení.“*
+**Pravidlo (tvrdé):** než navrhnu nebo pustím JAKÉKOLI měření (i v předávce jiné session), napíšu tři věty:
+(1) **záměr** — jakou otázku to rozhodne; (2) **předpoklad** — co čekám v každém rameni a co udělám, když vyjde tak / onak;
+(3) **proč právě tolik** — nejmenší vzorek, který tu otázku rozhodne. „Šum“, „větší n“ ani „předtím to bylo špatně“ nejsou záměr.
+Vždy začít malým vzorkem (pár čtení na rameno), ukázat, a zvětšit jen s ownerovým ano a jen když malý vzorek ukázal směr, který
+stojí za ověření. Do předávek nepsat „n ≥ 30“ bez záměru — jiná session to vezme jako zadání.
+
 **How to apply:**
 1. **Nejdřív to, co už leží.** Produkční data, git, existující export, jeden grep. Nula agentů.
 2. **Napiš predikci a její cenu:** „když vyjde X, dělám A; když Y, končím." Nemáš-li druhou

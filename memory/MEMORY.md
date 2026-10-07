@@ -75,7 +75,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [read-token-from-clipboard.md](read-token-from-clipboard.md) — eval token si načti ze schránky sám; owner ho do souboru nevkládá
 - [runar-api-key-file.md](runar-api-key-file.md) — Anthropic klíč bydlí v `~/.claude/runar-api-key.txt`, generátor si ho vezme sám; ownera nežádat
 - [cteni-generuj-tady-ne-pres-api.md](cteni-generuj-tady-ne-pres-api.md) — testovací čtení piš SÁM v konverzaci, ne přes API; prompt dál stav produkční cestou a slepé souzení dělej subagentem
-- [full-path-and-numbered-lists.md](full-path-and-numbered-lists.md) - uplna cesta k souboru (pracovni adresar je C:/Users/zkuku, ne repo) + cislovane seznamy tam, kde zalezi na poradi
+- [full-path-and-numbered-lists.md](full-path-and-numbered-lists.md) - uplna cesta k souboru + ⛔ VSECHNY body a otazky hlaseni ownerovi CISLOVANE prubezne (odpovida po cislech; tucny nadpis neni cislo)
 - [ask-owner-for-checks-you-cannot-run.md](ask-owner-for-checks-you-cannot-run.md) - co Code sam neoveri (prod DB, prihlasena appka), vyzadat po ownerovi, nededukovat
 - [dont-invent-fact-critical.md](dont-invent-fact-critical.md) — 🔒 fakt / 📜 lore chybějící v kánonu → zastav a flagni, nikdy nedomýšlej
 - [function-not-ceremony.md](function-not-ceremony.md) — nestavět proces pro uspokojení; nepomůže-li reálně, říct to a vynechat
@@ -117,7 +117,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [always-show-reading-samples.md](always-show-reading-samples.md) — ownerovi vždy ukázat konkrétní TEXT čtení a k němu instrukce, které do čtení vstoupily
 - [testovani-jedne-runy-je-zamer.md](testovani-jedne-runy-je-zamer.md) — owner testuje jednu runu opakovaně schválně; jeho „pořád stejné X“ nevysvětluj jeho metodou, dohledej konkrétní případ
 - [write-for-owner-not-process.md](write-for-owner-not-process.md) — ownerovi piš důležité/výsledek, ne proces „co jsi řekl / co budu hledat"
-- [cheapest-deciding-measurement-first.md](cheapest-deciding-measurement-first.md) — ⛔ 2026-09-24 3× spálený limit ownera: obsah dělám SÁM, agenti max 3–5 a víc jen s odhadem tokenů a ownerovým ano; API nad ~50 volání jen s jeho ano (2026-10-06: 480 bez ptaní); spadlý běh nepouštět znovu bez ptaní
+- [cheapest-deciding-measurement-first.md](cheapest-deciding-measurement-first.md) — ⛔ 2026-09-24 3× spálený limit ownera: obsah dělám SÁM, agenti max 3–5 a víc jen s odhadem tokenů a ownerovým ano; API nad ~50 volání jen s jeho ano (2026-10-06: 480 bez ptaní); před KAŽDÝM měřením záměr + předpoklad + proč tolik, vždy malý vzorek (2026-10-07); spadlý běh nepouštět znovu bez ptaní
 - [work-efficiently-ask-if-simpler.md](work-efficiently-ask-if-simpler.md) — než spustíš těžký nástroj, zeptej se, jestli to nejde jednodušeji; dlouhý běh protlačí compactem a zabije úkol
 - [decisions-are-directions-not-locks.md](decisions-are-directions-not-locks.md) — rozhodnutí = směr + varování při rozporu, ne zámek navždy
 - [fix-or-log-duplicates-and-errors.md](fix-or-log-duplicates-and-errors.md) — duplikát/chyba → hned opravit, nebo zapsat do BACKLOGu; netiše přejít
