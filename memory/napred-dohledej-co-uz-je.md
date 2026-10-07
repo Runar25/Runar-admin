@@ -29,3 +29,8 @@ když data odpověď nemají, a do zprávy napiš, co v datech bylo. Výstupy po
 nové vady věci opravené 25. 9.–6. 10., větu, kterou owner označil za ne-vadu, a znovu navrhl „podobu oblasti jen jednou“ zamítnutou 3. 10.
 KUKY: *„jak to, že nevíš, co jsme už dělali?“* Od teď hlídá stroj (CLAUDE.md §30): API bez `RUNAR_API_ANO` neprojde, zpráva s návrhem
 bez `scripts/utils/uz_vime.js` v tahu taky ne.
+
+⛔ **Doklad ownerovi jen z čtení pod dnešním promptem** (2026-10-07). Čtení z pokusu 22. 9. jsem uvedl jako doklad, jak sol končí bez
+otázky runy. KUKY: *„příklad z 22. 9. je tak starý, že to nezmíním.“* Prompt se mezitím změnil mnohokrát. **How to apply:** jako doklad
+ber čtení z posledních dní / posledních verzí promptu (`najdi_cteni.js` ukazuje verzi a datum). Starší jen výjimečně a s výslovnou
+poznámkou proč — a když aktuální data nestačí, řekni to ownerovi a domluvte se.
