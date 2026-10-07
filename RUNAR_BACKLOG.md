@@ -1182,6 +1182,16 @@ umístit otázku v area do závěrečné věty“* (*„could a skill shaped by 
 oblasti (`AREA_FACES`, `prompt_draws.area_face`, např. *„the pace that can be kept“*), Ask jen název oblasti a tip *„{area} — can you make this
 image clearer?“* → odpověď o oblasti obecně. Návrh: (1) Ask dostane tutéž podobu oblasti, jakou mělo čtení; (2) tip se ptá na tu podobu.
 Ověřit nejmenším vzorkem, rozhodne owner.
+**2026-10-07 — lab hotový, produkce beze změny** (owner: *„teď to dělat nebudeme… budeme dělat čtení a zjišťovat“*). Pět pohledů otázky
+(EVAL_LOG 2026-10-07 (2)): owner po textech *„těžkost a všední den znějí nejlíp“* — *„{area} — where does this get hard for me?“* a
+*„{area} — where might I notice this in my days?“* (pojistka 1/6 proti 4/6 u dnešního tipu). Otevřené: jestli a kdy tip v appce změnit
+(IS znění vymyslet a ověřit; délka tipu na mobilu — BACKLOG „Tři tipy přetékají…“; *„You might notice…“* jako stálý začátek).
+
+### Glyf životní runy nad čtením: klepnutí rozbliká i text vedle (hlášení e9897395, 2026-10-07) (CODE-tune)
+Owner: *„Když kliknu na glyf runy, problikne i celý text vedle… Tohle dělá jen tady. Normálně reaguje jen glyf… Má to být všude stejné.“*
+Prvek: `#reader-badge` (`_renderLifeBadge`, `v2/runar-reading.js`) — glyf má třídu `rlbl-glyph` jako glyfy v textu čtení, okno s významem
+dělá `v2/runar-rune-popup.js`. Příčina neurčená (kandidáti: zvýraznění klepnutí v mobilním prohlížeči na řádku `display:flex`, okno
+s významem přes text). Opravit až s ověřením v prohlížeči v mobilním zobrazení, ne naslepo.
 
 ### Ask: životní runa Isa se do některých čtení nehodí — nabídnout ji modelu jinak (hlášení dc8e301a, 2026-10-06), ČEKÁ (CODE-tune)
 Owner: *„Isa nemusí být jen stillness, ale taky jen pauza… model si k tomu asi sám cestu nenajde… musíme mu to trochu servírovat.“* Měřeno

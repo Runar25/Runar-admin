@@ -1371,6 +1371,8 @@ to vždy musí být, ale je to určitý směr. Lepší než hádat… ať to nez
 z rámce, „drawn“ z pokynu, ozvěna otázky) měly společný kořen a žily jen v DECISIONS a EVAL_LOGu, kde je při psaní promptu nikdo nehledá.*
 *2026-10-06 večer: bod 2 opraven, bod 9 přidán — owner: „fehu exposes wealth? … pokud to nevíš, tak si to zjisti“; „in a verb of your
 own“ jsem ohlásil jako zlepšení bez ověření a v korpusu anglických textů o runách ta slovesa nejsou.*
+*2026-10-07: bod 10 (vzorová věta jen ověřená) a bod 5 rozšířen o to, JAK otázku položit — owner: „plyne z toho pro tebe něco, co by mělo být
+zapsáno? … tohle teď budeme pořád řešit. Slovíčka a slovíčka.“ K tomu postup zkoušení slov níž (víc pohledů, texty čte owner).*
 
 **Je to směr, ne zákon.** Bod platí, dokud ho měření nevyvrátí; nový nález sem patří jako bod s dokladem a hranicí (model, n).
 Čísla bydlí v odkazech, tady jen tolik, aby bylo vidět, proč bod stojí.
@@ -1382,7 +1384,8 @@ doslova — a pokaždé?* Sol bere vstup jako materiál k přepsání, Opus spí
    piš tak, aby byl v pořádku i doslova. → `docs/monitor/ozveny.md`
 2. **Sloveso pro dané místo přichází ze znění pokynu.** Rámec esence se slovem „names“ → „Hagalaz names…“. Rámec „in a verb of
    your own“ nedal pestrost, ale slovesa, kterými angličtina o runách nemluví (marks, exposes — v korpusu 0×). Model sloveso
-   z pokynu převezme, takže v pokynu má stát sloveso **doložené** — od v5.01 los z korpusu, převzato 56/56.
+   z pokynu převezme, takže v pokynu má stát sloveso **doložené** — od v5.01 los z korpusu, převzato 56/56. Owner 2026-10-07 nad čtením
+   *„Ingwaz is the rune of potential held…“*: *„model k tomu pak přidá správné pokračování. Potřebuje popostrčit a pak už si s tím dokáže poradit.“*
    → `RUNAR_DECISIONS.md` 2026-10-06 (7) a (10) · EN, sol.
 3. **Slovo z pokynu nebo štítku se vysloví.** „Runes drawn: X“ → „Algiz is the rune drawn here… Isa was not drawn“; po výměně
    za „of this reading“ ozvěna 11/18 → 3/18. Štítek je taky text. → `RUNAR_DECISIONS.md` 2026-10-06 (8).
@@ -1391,6 +1394,12 @@ doslova — a pokaždé?* Sol bere vstup jako materiál k přepsání, Opus spí
    v monitoru. → `RUNAR_EVAL_LOG.md` 2026-10-06 (4).
 5. **Tip, který žádá, co pravidla zakazují, začne odmítnutím.** „Why is this showing up now?“ se ptá po příčině (znamení) →
    9/9 „[runa] does not say why…“. Než tip napíšeš, ověř, že na něj Rúnar podle pravidel smí odpovědět. → tamtéž.
+   **Totéž platí skrytě pro otázku na VÝZNAM nebo VLIV** — *„what does this reading mean for it?“*, *„how does Raidho affect it?“* (u oblasti)
+   žádá závěr o životě člověka, který pravidla zakazují, a sol ho nahradí pojistkou (4–5/6). Otázka na **chvíli, kde se to ukáže**
+   (*„where might I notice this in my days?“*), nebo na **to, co je těžké** (*„where does this get hard for me?“*), je zodpověditelná v mezích
+   pravidel: konkrétní odpovědi, pojistka 1/6. Owner 2026-10-07: *„těžkost a všední den znějí nejlíp.“* Vztah dvou run (*„How does my life
+   rune Isa affect Raidho…“*) je v pořádku — ptá se na runy, ne na verdikt o životě. Pozor na bod 4: *„You might notice…“* začínalo 6/6.
+   → `RUNAR_EVAL_LOG.md` 2026-10-07 (2).
 6. **Pojistka je tvar vstupu × zákazy v pokynech, ne jedna věta.** Se vstupem jako v produkci (bez ✦, n = 30 na rameno) má produkce
    „does not say / leaves open / not a promise“ v 26/30 odpovědí Asku. Zhruba na polovinu ji sníží **každá** z těchto pák zvlášť: čtení
    bez mostu „may be X, or Y“ (14) · charakter bez „never predicts / does not guarantee / never hand a conclusion“ (14) · tři pravidla Asku
@@ -1418,3 +1427,6 @@ doslova — a pokaždé?* Sol bere vstup jako materiál k přepsání, Opus spí
 **Jak se to ověřuje:** test formulace jde produkční cestou se vstupem jako v produkci — jeden hotový prompt vytisknout a porovnat
 (`memory/test-vstup-jako-v-produkci.md`); obrácená páka (CLAUDE.md §25) dřív než přidávání. Po nasazení hlídá monitor ozvěn
 (`scripts/monitor_ozveny.js --nove --zapis`), co se vrací doslova a jak začínají odpovědi na týž tip.
+**Postup zkoušení slov (2026-10-07):** napřed data, která máme (`scripts/utils/najdi_cteni.js`); pak malý pokus — víc znění z úplně
+různých pohledů naráz (např. 5 otázek × 3 čtení × 2), se vstupem jako v produkci; spočítat pojistku, opakování slov otázky a začátky
+odpovědí, a **texty přečíst** — co zní dobře, rozhoduje owner podle textů, ne počty. Anglické znění ověřit zdrojem (bod 9).

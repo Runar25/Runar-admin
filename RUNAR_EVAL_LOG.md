@@ -6308,3 +6308,4 @@ pojistkou (*„Raidho does not promise healing or set a timetable“*). Otázka 
 v mezích pravidel — odpovědi jsou konkrétní (*„a day when you have less energy than you expected, yet still have room for what matters“*),
 pojistka 1/6. P4 ale začíná pokaždé stejně (bod 4 zásad „Slova, která dáváme modelu“). P3 drží obraz i podobu, pojistka napůl.
 **Hranice:** n = 6 na otázku, tři čtení, sol, EN; B0 tu nese podobu v promptu (produkce ne). Kvalitu posuzuje owner — texty ukázané v hlášení.
+**Owner po přečtení textů (2026-10-07):** *„těžkost a všední den znějí nejlíp.“* Zásada → `RUNAR_DESIGN.md` „Slova, která dáváme modelu“ bod 5.
