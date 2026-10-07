@@ -1,18 +1,20 @@
-# Snapshot 2026-10-07 — CODE-tune: audit promptu (krok 1–3), záloha čtení, otázka runy z dat
+# Snapshot 2026-10-07 — CODE-tune: §30 „nic na paměti“, audit zapsaný se stavem, otázka runy z dat
 
-Historický záznam ke dni, ne stav. Rozhodnutí → `RUNAR_DECISIONS.md` 2026-10-07 (1)–(2) · měření → `RUNAR_EVAL_LOG.md` 2026-10-07 (1) ·
-metoda auditu → `docs/eval/2026-10-07-audit-promptu/README.md` · otevřené → `RUNAR_BACKLOG.md`.
+Historický záznam ke dni, ne stav. Rozhodnutí → `RUNAR_DECISIONS.md` 2026-10-07 (1)–(3) · nálezy auditu se stavem → `RUNAR_BACKLOG.md`
+„Audit promptu 2026-10-07 — zapsané nálezy“ · měření → `RUNAR_EVAL_LOG.md` 2026-10-07 (1) i s opravou · pravidlo → `CLAUDE.md` §30.
 
 ## Uprostřed čeho jsme
-- **Audit promptu** (owner: „pusť se do auditu… náš model vytváří čtení“): krok 1–3 hotový — data od nasazení solu, ownerova hlášení
-  seskupená, všechna single čtení přečtená, první mapa vad s počty. **Další krok:** přečíst Asky (131) a spready (13) stejně;
-  dohledat příčinu typů 6–8 (*grey*, *roots*, *electricity* — úhel „out of sight“? obraz?); inventura pravidel jen tam, kam vedou vady.
-- Data auditu mimo repo: `~/runar-eval/audit-2026-10-07/` (cteni.json, hlaseni.json). Zopakovat: `najdi_cteni.js --od 2026-09-25`.
-- **Čeká na ownera** (otázky v hlášení 2026-10-07): potvrdit nebo opravit typy vad · otázka runy u otázkového konce (návrh: u konce [2]
-  ji nedávat, nebo dát směr místo slov) · oblast v Asku spojit s tím, že podoba oblasti stojí ve čtení 2× · kam zálohu mimo počítač.
-- **Oblast v Asku** (owner „zkus to“) NEZAČATO — audit ukázal podobu oblasti ve čtení 2× a doslova (typ 3); navrženo řešit spolu.
+- **Čeká na ownera:** u konce-otázky otázku runy nedávat? (data stačí: 28 konců-otázek solu bez ní z 22. 9. runu nesou) — BACKLOG
+  „Sol opisuje otázku runy…“. Bez jeho ano nic neměnit.
+- **Oblast v Asku** — owner 2026-10-06 „ok zkus to“ (Ask dostane tutéž podobu oblasti jako čtení, tip se ptá na ni). NEZAČATO.
+  Ve čtení se nic nemění (podoba tam zůstává, DECISIONS 2026-10-03 (4)). Pokus jen nejmenší a s počtem/cenou ve zprávě.
+- **Audit:** nic neměnit (owner „určitě teď už nic neměň“). Nové nálezy jen zapsat; otevírat, až se vada objeví znovu a owner upozorní.
+
+## Co dnes vzniklo a hlídá samo
+- Stop-hook: záloha čtení z pokusů (`zaloha_cteni.js`) + kontrola zprávy (číslování; návrh jen po `uz_vime.js` v témže tahu).
+- PreToolUse hook: API jen s `RUNAR_API_ANO=<počet>` (napřed `najdi_cteni.js`, pak ownerovo ano).
 
 ## Past dne
-- Push zablokoval smoke ⑮: jméno docu v závorce řádku `Affected doc(s)` = slib, že se doc změní. Když se nemění, jméno tam nepiš.
-- Sdílený strom: commit CODE-read 0997ead vzal i můj necommitnutý řádek v `memory/MEMORY.md` (tady neškodné).
-- Kontrola, která běží jen v pracovním stromě, nevidí vady vázané na commit (⑮ porovnává commity) — smoke před commitem ≠ pre-push.
+- První průchod auditu bral všechna hlášení od 25. 9. včetně vyřízených a nálezy nedohledal → owner: *„hlásíš spoustu starých věcí“*.
+- Push zablokoval smoke ⑮: jméno docu v závorce řádku `Affected doc(s)` = slib, že se doc změní.
+- doc-links: soubor v `~/.claude` potřebuje značku `doc-links:ok` s důvodem na TÉŽE řádce jako odkaz; skript v repu plnou cestou.
