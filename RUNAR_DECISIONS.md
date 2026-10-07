@@ -8735,4 +8735,4 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hranice:** sol, EN, tři čtení, dva tipy; Opus netestován. Pojistka nezmizí — zbytek nese most čtení × zákazy verdiktu (EVAL_LOG (8)).
   **IS beze změny:** neměřeno; v produkci od 24. 9. jen 5 islandských Asků.
 - Golden: změnily se jen `ask_en`, `ask_life_en`, `ask_earlier_en` (dvě řádky pravidel). Registr pravidel zapsán.
-- Affected doc(s): žádný (`RUNAR_DESIGN.md` „Slova, která dáváme modelu“ bod 6 popisuje měření, ne znění pravidel).
+- Affected doc(s): žádný. (Zásady „Slova, která dáváme modelu“, bod 6, popisují měření, ne znění pravidel — beze změny.)
