@@ -6287,3 +6287,24 @@ včetně vyřízených a nálezy neporovnal se záznamy. Typ 6 (*grey*, *roots*,
 2026-09-25 až 10-06**; typ 7 stál na větě, kterou owner 2026-09-25 označil za **NE-vadu**; typ 3 a zdroj ✦ (typ 2) owner **rozhodl**
 2026-10-03; *electricity* je z obrazu Hagalazu. Platné zůstávají počty typů 1, 4, 5, 9 a Asku. Stav po položkách → BACKLOG „Audit promptu
 2026-10-07 — zapsané nálezy“. Od teď se nález před hlášením dohledává (`scripts/utils/uz_vime.js`) a Stop-hook zprávu s návrhem bez toho nepustí.
+
+## 2026-10-07 (2) — Otázka na oblast v Asku z pěti pohledů: „kde si toho všimnu“ a „kde je to těžké“ bez pojistky, „co to znamená“ s ní
+
+Owner: *„zkus to. Jen anglicky a zkus víc variant otázky… z úplně rozdílných pohledů.“* Lab, produkce beze změny. Harness, otázky a vstup
+→ `docs/eval/2026-10-07-ask-oblast/README.md`. Sol, v5.04, podoba oblasti připsaná v promptu u všech ramen, 3 ownerova čtení × 2 = n 6 na otázku.
+**Data napřed:** v produkci 31 Asků na oblast (bez podoby v promptu, skoro všechny s dnešním tipem), pojistka v 19/31.
+
+| otázka | pojistka | ozvěna otázky | podoba v odpovědi | slova ze čtení | ø slov | začátek |
+|---|---|---|---|---|---|---|
+| B0 dnešní tip (*make this image clearer*) | 4/6 | 0/6 | 4/6 | 0,27 | 63 | různý |
+| P1 runa → oblast (*how does {rune} affect it*) | 4/6 | 3/6 | 4/6 | 0,28 | 54 | *„In this reading, [runa] does not…“* |
+| P2 výklad (*what does this reading mean for it*) | 5/6 | 0/6 | 4/6 | 0,26 | 58 | *„For healing and…“* |
+| P3 podoba (*how does this image relate to {face}*) | 3/6 | 3/6 | 6/6 | 0,33 | 59 | různý, od obrazu |
+| P4 všední den (*where might I notice this in my days*) | **1/6** | 0/6 | 4/6 | 0,25 | 55 | ⚠ *„You might notice…“* 6/6 |
+| P5 těžkost (*where does this get hard for me*) | **1/6** | 0/6 | 4/6 | 0,30 | 59 | *„The hard part…“* 2× |
+
+**Co z toho je vidět:** otázka po VÝZNAMU nebo VLIVU (P1, P2) tlačí odpověď k verdiktu, který pravidla zakazují — sol začne nebo skončí
+pojistkou (*„Raidho does not promise healing or set a timetable“*). Otázka po POZOROVATELNÉ chvíli (P4) nebo TĚŽKOSTI (P5) je zodpověditelná
+v mezích pravidel — odpovědi jsou konkrétní (*„a day when you have less energy than you expected, yet still have room for what matters“*),
+pojistka 1/6. P4 ale začíná pokaždé stejně (bod 4 zásad „Slova, která dáváme modelu“). P3 drží obraz i podobu, pojistka napůl.
+**Hranice:** n = 6 na otázku, tři čtení, sol, EN; B0 tu nese podobu v promptu (produkce ne). Kvalitu posuzuje owner — texty ukázané v hlášení.
