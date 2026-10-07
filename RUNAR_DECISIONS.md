@@ -8794,3 +8794,22 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hranice:** `RUNAR_API_ZAMER` i `RUNAR_API_OWNER` píše session — hook neověří, že owner ano řekl ani že záměr je dobrý; vynutí, že věta
   existuje a zůstane v logu. Neobchází se jen tvary výše; skript generovaný za běhu nebo API přes jiný jazyk (curl v .ps1) nezachytí.
 - Affected doc(s): `CLAUDE.md` §30 — v témže commitu.
+
+## 2026-10-07 (4) — Konec ve tvaru otázky už nedostává otázku runy z Kolekce (v5.04, EN i IS)
+
+- **Rozhodl:** KUKY 2026-10-07 k otázce *„Mám u čtení, která končí otázkou, otázku runy z Kolekce modelu nedávat? U ostatních konců by
+  zůstala.“*: *„jinak ano. Nemá tam co dělat, jelikož ji model opisuje a nebere jako vzorovou větu. Pokud chceš někde použít vzorovou
+  větu, musíš zjistit, jak se píše, jinak to vypadá, že nevíš, co děláš.“* **Provedl:** CODE-tune.
+- **Proč:** konec čtení se losuje; u tvaru „End on one question…“ sol otázku runy znovu položil skoro doslova. Produkce 25. 9.–6. 10.
+  (sol, single bez vlastní otázky): ≥ 4 slova z otázky runy u konce-otázky 4/14, u konce-výroku 1/38 (Fisher jednostranně p = 0,015).
+  Thurisaz 6. 10.: Kolekce *„what will appear if, this time, you do not strike back?“* → čtení *„If you do not strike back this time,
+  what might come into view?“*; Raidho a Berkana totéž. Z výroku ji sol převádí do vlastních vět (Hagalaz *„what falls… what remains“*).
+- **Co:** `_konecSOtazkouRuny` (`runar-utils.js`) — otázka runy se k pokynu konce přidá jen bez vlastní otázky tazatele a ne u tvaru
+  `ENDING_OTAZKA` (index 2 ve všech čtyřech poolech). Los konce zůstává na stejném místě v pořadí losů. Monitor ozvěn ji u čtení od v5.04
+  s koncem-otázkou nebere jako vstup; registr pravidel tu kombinaci neregistruje.
+- **Ověřeno:** produkční builder s pevným losem 8/8 (EN i IS × výrok/otázka × s vlastní otázkou i bez) · golden: změnily se jen
+  `single_noq_en/is` a `single_sol_en/is` (pevný los padá na konec-otázku), o větu s otázkou runy · test monitoru (nový případ v5.04).
+- **Hranice:** rozhoduje data z produkce (sol, EN); Opus a IS přímo neměřené — změna jen ubírá vstup, nic nepřidává. U konců-výroků
+  otázka runy zůstává (1/38 opis); sledovat v monitoru.
+- Odvolává se na: 2026-09-24 (16) (otázka runy jako zdroj poslední věty) — platí dál pro konce-výroky.
+- Affected doc(s): `RUNAR_DESIGN.md` („Stavba Single" — z čeho most vyrůstá; „Slova, která dáváme modelu" bod 10) — v témže commitu.

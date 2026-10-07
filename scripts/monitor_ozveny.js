@@ -185,7 +185,10 @@ function rozber(rows) {
       const em = String(d.ending || '').match(/^(heavy|open)(\d+)$/);
       if (em && END[L][em[1]][Number(em[2])]) { const et = END[L][em[1]][Number(em[2])]; x.konec = nejdelsiShoda(et, t); x.konec.kde = x.konec.n >= 4 ? kdeVeta(t, x.konec.kus) : null; vstupy.push(et); }
       // Otázka runy (_runeQuestion): jen single a jen bez vlastní otázky tazatele — tak ji dává builder (runar-character.js).
-      const oq = r.question ? '' : otazkaRuny(r.rune_name, L);
+      // 2026-10-07 (v5.04): ani u konce ve tvaru otázky — tam ji builder od té doby nedává (_konecSOtazkouRuny). Starší čtení
+      // (do v5.03) ji tam měla; rozlišuje se podle verze promptu, ať se starý opis nepřestane počítat jako opis ze vstupu.
+      const v504 = /^v(\d+)\.(\d+)/.exec(r.prompt_version || ''), poV504 = v504 && (Number(v504[1]) * 100 + Number(v504[2]) >= 504);
+      const oq = (r.question || (poV504 && /^(heavy|open)2$/.test(String(d.ending || '')))) ? '' : otazkaRuny(r.rune_name, L);
       if (oq) { x.otazka = nejdelsiShoda(oq, t); x.otazka.kde = x.otazka.n >= 3 ? kdeVeta(t, x.otazka.kus) : null; vstupy.push(oq); }
       x.vstupy = ' ' + slova(vstupy.join(' ')).join(' ') + ' ';
       x.text = t;
@@ -353,6 +356,10 @@ if (process.argv.includes('--test')) {
   const rowsQ = [0, 1, 2].map((i) => ({ lang: 'en', rune_name: 'Thurisaz', area: 'Inner Growth', aol: 'Inner Growth', model: 'gpt-6-sol', question: i === 2 ? 'Should I go?' : '',
     prompt_draws: {}, short_text: 'A thorn holds your sleeve at the edge. Thurisaz represents caution. What appears if you do not strike back?', follow_up: [] }));
   const XQ = souhrn(rozber(rowsQ));
+  // 2026-10-07 (v5.04): konec ve tvaru otázky otázku runy nedostává → u čtení z v5.04+ s koncem [2] se nepočítá; starší ano.
+  const rowsQ2 = [rowsQ[0], Object.assign({}, rowsQ[1], { prompt_version: 'v5.04-x', prompt_draws: { ending: 'heavy2' } })];
+  const XQ2 = souhrn(rozber(rowsQ2));
+  ok(/otázka runy z Kolekce opsaná[^|]*\| 1\/1 /.test(XQ2.tabulka), 'otázka runy: čtení v5.04+ s koncem-otázkou se nepočítá (1/1)');
   ok(/do not strike back/.test(oqT) && /otázka runy z Kolekce opsaná[^|]*\| 2\/2 [^\n]*věta posl\.: 2/.test(XQ.tabulka), 'otázka runy: 2/2 (čtení s vlastní otázkou se nepočítá), v poslední větě');
   ok(XQ.zdroje.some((z) => /strike back[^\n]*ze vstupu toho čtení/.test(z)) && !XQ.zdroje.some((z) => /strike back[^\n]*zvyk modelu/.test(z)),
     'opakovaná fráze z otázky runy → „ze vstupu toho čtení“, ne zvyk modelu');

@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-10-07",
- "prompt_version": "v5.03-ask-runa-nenese",
+ "prompt_version": "v5.04-konec-otazka-bez-otazky-runy",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -118,12 +118,6 @@
    "zacatek": "End on one line that holds out two things this may be {L}, each a stat"
   },
   {
-   "hash": "6430c956f600",
-   "lang": "en",
-   "zdroj": "zakonceni_open[2]+otazka",
-   "zacatek": "End on one question that holds out what this may be {L} — asked as a p"
-  },
-  {
    "hash": "5b790dcf9110",
    "lang": "en",
    "zdroj": "zakonceni_open[3]+otazka",
@@ -146,12 +140,6 @@
    "lang": "en",
    "zdroj": "zakonceni_heavy[1]+otazka",
    "zacatek": "End on one line that holds out two things this may be {L}, each a stat"
-  },
-  {
-   "hash": "6bf7c5f08c9f",
-   "lang": "en",
-   "zdroj": "zakonceni_heavy[2]+otazka",
-   "zacatek": "End on one question that holds out what this may be {L} — asked as a p"
   },
   {
    "hash": "7b8877ed217a",
@@ -1114,12 +1102,6 @@
    "zacatek": "Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið {L}, hvort "
   },
   {
-   "hash": "f803b8de5edc",
-   "lang": "is",
-   "zdroj": "zakonceni_open[2]+otazka",
-   "zacatek": "Endaðu á einni spurningu sem spyr hvað þetta gæti verið {L} — sem mögu"
-  },
-  {
    "hash": "84b11c526cc9",
    "lang": "is",
    "zdroj": "zakonceni_open[3]+otazka",
@@ -1142,12 +1124,6 @@
    "lang": "is",
    "zdroj": "zakonceni_heavy[1]+otazka",
    "zacatek": "Endaðu á einni línu sem nefnir tvennt sem þetta gæti verið {L}, hvort "
-  },
-  {
-   "hash": "e79a3457cb95",
-   "lang": "is",
-   "zdroj": "zakonceni_heavy[2]+otazka",
-   "zacatek": "Endaðu á einni spurningu sem spyr hvað þetta gæti verið {L} — sem mögu"
   },
   {
    "hash": "37cfb7f9c32f",

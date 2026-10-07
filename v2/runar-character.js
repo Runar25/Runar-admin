@@ -1988,9 +1988,9 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     hasQ ? S.qBranch(rnPromptAcc(drawn), drawn.g, _questionSafe(u.question)) : S.noqBranch(rnPromptAcc(drawn), drawn.g, worldRef),
     // 2026-09-20: most bere REJSTRIK (tvar) a OBLAST (kam dosedne) misto uhlu — uhel
     // potreboval jen zrusena vyluka uhel[6] x open[1].
-    _endingShape(drawn, lang, u.seeking, u.area, areaFace, hasQ)   // hasQ: 2026-09-26 návrat k otázce jen s otázkou
-      // 2026-09-24: otázka runy jako zdroj poslední věty — jen bez vlastní otázky tazatele (_runeQuestion, runar-utils.js).
-      + (hasQ ? '' : _runeQuestion(drawn, lang)),
+    // hasQ: 2026-09-26 návrat k otázce jen s otázkou. Otázka runy jako zdroj poslední věty (2026-09-24) — jen bez vlastní otázky tazatele
+    // a od 2026-10-07 ne u konce ve tvaru otázky (sol ji tam opisoval) → _konecSOtazkouRuny, runar-utils.js.
+    _konecSOtazkouRuny(_endingShape(drawn, lang, u.seeking, u.area, areaFace, hasQ), drawn, lang, hasQ),
     // Čočka životní runy (v4.4–v4.59) z builderu ODEBRÁNA 2026-09-26 (úklid) — od v4.60 byla vypnutá (životní runa jen
     // v Asku); _lensContext zůstává jako laboratorní funkce, návrat jen podle §26.
     S.closing(u.name) + (S.langInstr ? S.langInstr : '') + getCorrPrompt(lang, corrections),

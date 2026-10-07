@@ -1338,7 +1338,8 @@ a co dělá problémy“. Důvod: obrazy kola 3 měly medián 17 slov (starší 
    ⚠️ **Dvě možnosti = pravidlo pro čočku životní runy** — čočka se projeví jako jedna z možností, nejmenovaná.
    **Z čeho most vyrůstá (od v4.53, KUKY 2026-09-24 „zkus to"):** z **otázky runy** — té, kterou končí ownerův popis
    runy a text v Kolekci. Model ji dostane jako zdroj, ne jako větu k vyslovení; jen single a jen bez vlastní otázky
-   tazatele. Proč a měření → `RUNAR_DECISIONS.md` 2026-09-24 (16).
+   tazatele. Proč a měření → `RUNAR_DECISIONS.md` 2026-09-24 (16). **Od v5.04 ne u konce ve tvaru otázky** — tam ji sol znovu
+   položil skoro doslova (`RUNAR_DECISIONS.md` 2026-10-07 (4)).
    **Znění vlastní KÓD, doc ho neopisuje (§20):** `SEEK_SHAPE` · `AREA_FACES` (podoby oblastí, od 2026-09-25) · `ENDING_OPEN/HEAVY(_IS)` ·
    `_runeQuestion` v `v2/runar-utils.js`, výjimka v `_domainContext` (`runar-character.js`). Nasazeno v4.36 + v4.37.
    Oba pooly mají tytéž tvary ve stejném pořadí, takže **každý tvar má i těžký protějšek** — těžkost runy
@@ -1405,6 +1406,10 @@ doslova — a pokaždé?* Sol bere vstup jako materiál k přepsání, Opus spí
    modelu, na kterém poběží.
 9. **Angličtina se ověřuje jako islandština — zdrojem, ne pocitem.** Než ohlásíš anglickou formulaci jako dobrou, zjisti, jak se
    skutečně píše (korpus textů o runách, Google Books Ngram). Rozptyl sloves není správnost. → `docs/eval/2026-10-06-sloveso-korpus/README.md`
+10. **Vzorová věta v promptu musí být ověřená, jak se píše — jinak ji tam nedávej.** Hotová věta se nebere jako vzor, ale opíše se:
+   otázka runy z Kolekce pod pokynem „konči otázkou“ se vrátila skoro doslova (*„If you do not strike back this time, what might come
+   into view?“*, 4/14). KUKY 2026-10-07: *„pokud chceš někde použít vzorovou větu, musíš zjistit, jak se píše, jinak to vypadá, že nevíš,
+   co děláš.“* → `RUNAR_DECISIONS.md` 2026-10-07 (4).
 
 **Starší body téže rodiny** (vlastní je memory, tady jen ukazatel): „použij tenhle text“ → opíše se doslova
 (`memory/prompt-directive-makes-model-copy.md`) · oprava odebírá vadu, přidaný požadavek se stane formulí

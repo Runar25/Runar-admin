@@ -765,6 +765,20 @@ function _endingShape(drawn, lang, seeking, area, face, hasQ) {
 // schválené v obou jazycích. Uvozovací část před dvojtečkou („Perhaps it asks:“) se odřízne.
 // Jen SINGLE a jen bez vlastní otázky tazatele: když se ptá sám, konec patří jeho otázce (§13 — spready
 // a čtení životní runy mají jiný konec a sem nevedou).
+// 2026-10-07 (KUKY: „jinak ano. Nemá tam co dělat, jelikož ji model opisuje a nebere jako vzorovou větu.“): konec ve tvaru OTÁZKY
+// ([ENDING_OTAZKA] ve všech čtyřech poolech) otázku runy NEDOSTANE. Sol ji tam znovu položí skoro doslova — produkce 25. 9.–6. 10.:
+// ≥ 4 slova z otázky runy u konce-otázky 4/14, u konce-výroku 1/38 (Fisher p = 0,015), např. Thurisaz *„If you do not strike back this
+// time, what might come into view?“* (Kolekce *„what will appear if, this time, you do not strike back?“*). Owner k tomu: když chceš
+// v promptu vzorovou větu, musí být ověřené, jak se píše — otázka z Kolekce vzorem pro konec čtení být nemá. Ostatní konce ji dál mají
+// (z výroku ji sol převádí do vlastních vět). Evaluační pořadí losů se nemění: konec se losuje na stejném místě jako dřív.
+var ENDING_OTAZKA = 2;
+function _konecSOtazkouRuny(konec, drawn, lang, hasQ) {
+  if (hasQ) return konec;
+  var pools = lang === 'is' ? [ENDING_OPEN_IS, ENDING_HEAVY_IS] : [ENDING_OPEN, ENDING_HEAVY];
+  for (var i = 0; i < pools.length; i++)
+    if (String(konec).indexOf(pools[i][ENDING_OTAZKA].split('{L}')[0]) === 0) return konec;
+  return konec + _runeQuestion(drawn, lang);
+}
 function _runeQuestion(rune, lang) {
   if (!rune || typeof UI_TEXT === 'undefined') return '';
   var blok = UI_TEXT[lang === 'is' ? 'is' : 'en'];
