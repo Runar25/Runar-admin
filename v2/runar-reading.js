@@ -344,14 +344,21 @@ function _renderLifeBadge(life) {
     var note = document.getElementById('badge-life-note');
     // KÁMEN (KUKY 2026-09-23: „změnit glyf životních run na naše glyfy“) — dřív holá linka podle §5 z 2026-07-14.
     if (g) {
-      g.innerHTML = runeSvg(life, { frame: true, cls: 'badge-stone' });
+      // 2026-10-07 (hlášení e9897395, Android Chrome: „když kliknu na glyf runy, problikne i celý text vedle… normálně reaguje jen
+      // glyf“): do té doby byl klepací (rlbl-glyph) sám #badge-life-g — prvek flex řádku. Teď je klepací glyf VNOŘENÝ inline span
+      // jako v hlavičce čtení (_paintReadingHeader výš) a řádek má vypnuté zvýraznění klepnutí (runar-reader.css .badge-life).
+      g.classList.remove('rlbl-glyph'); g.removeAttribute('data-rune'); g.removeAttribute('data-kw');
+      var gl = document.createElement('span');
+      gl.className = 'rlbl-glyph';
+      gl.setAttribute('data-rune', rn(life));
+      gl.setAttribute('data-kw', rk(life));
+      gl.innerHTML = runeSvg(life, { frame: true, cls: 'badge-stone' });
+      g.textContent = '';
+      g.appendChild(gl);
       // 2026-09-25 (reporty KUKY: okno s významem po klepnutí + „stejné vlastnosti jako ty ostatní“): TÁŽ třída
       // `rlbl-glyph` jako glyfy v textu čtení (a jako životní runa ve stromě, runar-tree.js) — dá okno s významem
       // (runar-rune-popup.js), kurzor i jemné ztmavnutí při najetí (runar-reader.css). Bez data-seg: životní runa
       // v textu čtení segment nemá, zvýraznění textu se přeskočí.
-      g.classList.add('rlbl-glyph');
-      g.setAttribute('data-rune', rn(life));
-      g.setAttribute('data-kw', rk(life));
     }
     if (n) n.textContent = rn(life);
     if (note) note.textContent = t('badge_life_note');

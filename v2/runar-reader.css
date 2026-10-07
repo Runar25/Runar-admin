@@ -570,6 +570,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .badge-life .badge-life-g{font-size:1.15em;line-height:1;color:var(--gold);opacity:0.82;}
 .badge-life .badge-life-name{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:2px;color:#c9b77a;}
 .badge-life .badge-life-note{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:2px;color:#6f7c92;margin-left:auto;}
+/* 2026-10-07 (hlášení e9897395, Android Chrome: „když kliknu na glyf runy, problikne i celý text vedle… normálně reaguje jen glyf“):
+   klepací glyf je vnořený inline span jako v hlavičce čtení (_renderLifeBadge). Řádek nemá zvýraznění klepnutí; glyf si nechává
+   výchozí (initial) jako glyfy jinde. Velikost a ztmavnutí při najetí zůstávají, jaké byly (0,82 × 0,88 ≈ 0,72 jako .rlbl-glyph:hover). */
+.badge-life{-webkit-tap-highlight-color:transparent;}
+.badge-life .rlbl-glyph{font-size:inherit;line-height:1;-webkit-tap-highlight-color:initial;}
+.badge-life .rlbl-glyph:hover{opacity:0.88;}
 
 /* ── READING OUTPUT ── */
 .layer1{background:#0a0e18;padding:20px;margin-bottom:16px;}

@@ -1202,7 +1202,9 @@ Ověřit nejmenším vzorkem, rozhodne owner.
 *„{area} — where might I notice this in my days?“* (pojistka 1/6 proti 4/6 u dnešního tipu). Otevřené: jestli a kdy tip v appce změnit
 (IS znění vymyslet a ověřit; délka tipu na mobilu — BACKLOG „Tři tipy přetékají…“; *„You might notice…“* jako stálý začátek).
 
-### Glyf životní runy nad čtením: klepnutí rozbliká i text vedle (hlášení e9897395, 2026-10-07) (CODE-tune)
+### ✅ OPRAVENO 2026-10-07 — Glyf životní runy nad čtením: klepnutí rozbliká i text vedle (hlášení e9897395) (CODE-tune)
+**Oprava** (owner: *„oprav to blikání glyfu životní runy“*): klepací glyf je vnořený inline span jako v hlavičce čtení a řádek nemá zvýraznění
+klepnutí. V prohlížeči ověřeno myší (okno s významem drží, vzhled stejný, řádek o 1 px vyšší); zvýraznění prstem emulátor neukáže — **na telefonu ověří owner**.
 Owner: *„Když kliknu na glyf runy, problikne i celý text vedle… Tohle dělá jen tady. Normálně reaguje jen glyf… Má to být všude stejné.“*
 Prvek: `#reader-badge` (`_renderLifeBadge`, `v2/runar-reading.js`) — glyf má třídu `rlbl-glyph` jako glyfy v textu čtení, okno s významem
 dělá `v2/runar-rune-popup.js`. Příčina neurčená (kandidáti: zvýraznění klepnutí v mobilním prohlížeči na řádku `display:flex`, okno
