@@ -421,6 +421,20 @@
 - [ ] ⭐ **Strom (lab): shluk větví budoucnosti a světa nahoře vpravo** (CODE-tree, 2026-10-05, po DECISIONS (12)). Každé čtení je teď na svém místě a strom má tvar diagonály z kánonu (nitro + minulost vlevo dole, svět + budoucnost vpravo nahoře) — a právě nahoře vpravo se sbíhají strmá ramena budoucnosti a jejich povýšené větve: souběhy na KUKYho stromě 13 (dřív 2), na 24 modelových ~93 (dřív 62). Kandidáti: rozestup povýšených podél matky a jejich odbočka od sousedních větví (ne jen od matky), úhly povýšených na straně jako u ramen (pořadí), délka povýšených. Měřit `ovtypes`/`tree_overlap.js` + `tree_render.js`; tvar ramen z kmene neměnit.
 - [x] **Strom (lab): seeking na koncích větviček** — v labu od 2026-10-09 po obrázku (DECISIONS 2026-10-09 (12)); patch
   `docs/archive/tree/2026-10-09_nanecisto_seeking.patch` je historie.
+- [ ] **Strom (lab): větvičky jen na jedné straně větve + povýšená svisle** (CODE-tree, 2026-10-09, KUKY: *„proč se tady u Nauthiz objevily
+  větvičky jen a pouze na levé straně“*). Strana větvičky se bere z oblasti (`sideOf` → `AREA_LAT`: nitro doleva, svět doprava na plátně);
+  od 2026-10-09 (11) nese levá větev skoro jen nitro, takže všechny její větvičky míří doleva (Nauthiz z Othily: 15 čtení, 11 nitro, 3 bez
+  oblasti, 1 Love; všech 5 přímých větviček vlevo). Oblast tak rozhoduje dvakrát. Navíc ta Nauthiz roste −1° (pojistka strany z 2026-10-07
+  ji zastavila u svislice, odbočka od Othily by šla doprava) → hřeben. Návrh pro ownera: větvičky střídavě kolem větve; povýšená místo
+  zastavení u svislice odbočí na druhou stranu matky. Nanečisto před zapnutím.
+- [ ] **Strom (lab): `AREA_LAT` odporuje „oblast = strana“** (CODE-tree, nalezeno 2026-10-09). Tabulka v `runar-branch.js` (sdílená
+  s aplikací) bere Love −0,75 (nitro), Spirituality −0,20 (skoro střed), Crossroads +0,10 — kánon (`RUNAR_TREE.md` §3) má Love a Crossroads
+  bez strany a Spirituality ve světě. Čte ji strana větvičky (`sideOf`), natočení ramene za čteními (`latOf` / `areaSide`) i lateral
+  větvičky v enginu. Druhá kopie téže informace (§20) → srovnat s `SIDE_A` ve `stableAssign`, s golden-verify kresby.
+- [ ] **Strom (lab): vpravo Fehu (přítomnost) na 89 % kmene nad Algizem (budoucnost) na 65 %** (CODE-tree, nalezeno 2026-10-09 čtením
+  KUKYho stromu, 388 čtení). Obě ramena vznikla už v prvních 20 čteních (13 ramen naráz po založení) a výšky se pak nehnou (po 20, 40,
+  80, 160, 388 čteních pořád 89 a 65) — pořadí ramen podle výšky se nemění, takže rameno zrozené vysoko tam zůstane, i když jeho čtení
+  patří doprostřed. Kandidát: zrod do mezery zóny (2026-10-05) platí i pro ramena z prvních čtení; měřit `tree_read.js` + `tree_diag.js jump2`.
 - [ ] **Strom (lab): záloha výšky bez záměru — jen kdyby svět runy neseděl** (CODE-tree, 2026-10-09; nízká priorita, nestavět bez ownera).
   Dnes: čtení bez záměru dostane výšku podle světa runy (Hel dole, Midgard střed, Asgard nahoře). Druhá možnost, kterou owner chce mít
   po ruce (KUKY: *„už máme vytvořenou zálohu pro případ, že mi to nebude sedět“*) = zóna, kde je strom zatím nejslabší (roste od zóny
