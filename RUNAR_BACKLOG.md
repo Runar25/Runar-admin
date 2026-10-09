@@ -430,6 +430,11 @@
   **Nanečisto hotové 2026-10-09** (KUKY: *„12. ano udělej to nanečisto … přesně takhle to je“*; *„tady Dagaz taky … projdi to“*), patch
   `docs/archive/tree/2026-10-09_nanecisto_vetvicky.patch`: jeho strom dnes 4 větve s přímými větvičkami jen na jedné straně (Algiz 5:0,
   Nauthiz* 0:5, Dagaz* 5:0, Perth* 0:5; * = povýšená) a 1 svislá povýšená (Nauthiz) → nanečisto 0 a 0.
+- [ ] **Strom: popis větve Rúnarovým hlasem — směr schválen, zatím koncept** (CODE-tree, 2026-10-09; DECISIONS 2026-10-09 (14)). KUKY:
+  *„tohle je směr. Rúnarovým hlasem to bude znít jinak, ale zkus to“* · *„není až tak důležité, kolikrát člověk dostal nějakou runu … může to
+  spíš určovat pořadí, v jakém bude výklad těch run jako jednoho spojení … jako takový spread. jde o ten význam run“* · zvířata stromu
+  *„spíš nad plán, budeme je zkoušet“*. Pravidla: kotví na tom, na co se člověk ptal (oblast, záměr); počty se neříkají, četnost určuje
+  pořadí run ve výkladu; zvíře jen podle kánonu (`RUNAR_DESIGN.md` „Bytosti“); do aplikace přes CODE-tune/Cowork v EN i IS.
 - [ ] **Strom (lab): povýšená ze střední zóny visí v koruně kvůli matce** (CODE-tree, nalezeno 2026-10-09). Nauthiz z Othily má místo
   verdandi (12 z 15 čtení „teď“), ale vyrůstá z Othily (skuld, 85 % kmene) — jediného zemního ramene vlevo (matka = rameno téhož živlu
   na straně místa, nejbližší pásmo). Owner ji pak čte jako budoucnost (*„když je tak vysoko na stromě … je to koukání do budoucnosti?“*).
