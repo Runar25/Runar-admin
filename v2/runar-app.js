@@ -187,7 +187,7 @@ function recordTreeReading(spreadKind, runeObjs, area, intention) {
 }
 
 // saveReading / saveSpreadReading REMOVED — the reading journal is now written
-// SERVER-SIDE by claude-proxy (atomic with the credit deduction), so a charged reading
+// SERVER-SIDE by claude-proxy (same request, right after the deduction — not one transaction), so a charged reading
 // is always journaled even if the app is killed before the response arrives. The client
 // sends the reading meta via callProxy(..., journal); the proxy composes + inserts it.
 // recordTreeReading (localStorage tree log) stays client-side, called from the reader flow.

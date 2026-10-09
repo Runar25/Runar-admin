@@ -1685,6 +1685,44 @@ Kdyby ano, je to jedna věta do `qBranch` — a měří se stejným testem (pod�
 ⚠️ Souvisí se Skuld: tam se taky ztrácí **kladná** půlka pokynu („můžeš jít jinak", 10/20).
 Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je vzor, ne dvě náhody.
 
+## Kontrola architektury po částech (od 2026-10-09, CODE-read; postup DECISIONS 2026-10-09 (15))
+Každá část: co o ní tvrdí komentáře, `CLAUDE.md`, DECISIONS a smoke → proti kódu. Rozpor Code rovnou opraví; co potřebuje
+ownera, stojí tady pod **PRO OWNERA**. Pořadí: claude-proxy → ostatní edge funkce → DB → appka → prompt → strom → docy.
+
+### Část 1 — claude-proxy (`supabase/functions/claude-proxy/index.ts`, 958 ř., přečteno celé 2026-10-09)
+**Platí (ověřeno v kódu):** anonym → 401 před voláním modelu · rate limit 10/60 s na uživatele · admin z JWT (e-mail, kopie hlídá
+smoke ㉪) · strop délky promptu 8000 / Ask 12000 / system 8000 · `max_tokens` strop 2500 · `spread_cost` sanitizace 1..9 (smoke ⑨ ji
+útočí) · odečet AŽ po textu z modelu · měsíční strop jen pro čtení, ne pravý Ask a rituály (zrcadlo `MONTHLY_LIMITS`, `ASKS_PER_READING`,
+`NAME_LORE_LIMIT` hlídá smoke ⑨) · rituály (životní runa, založení, rozbor jména) zdarma a s kontrolou „už existuje“ · sol napřed pro
+všechny, Claude jen při výpadku solu nebo `engine:'opus'` od admina · Claude fallback jen při přetížení, ne při timeoutu ·
+`composeReading` = zrcadlo klienta (smoke ⑦) · založení stromu i rozbor jména CAS (souběh zapíše jednou).
+**Opraveno rovnou (jen popis, chování beze změny):**
+1. Hlavička: „Forwards to Claude API“ → sol + Claude záloha · „free_trial (anonymous) — frontend handles trial“ → anonym 401 ·
+   vrstvy A/B/C popsané jako živé → vypnuté od 2026-07-04 (tohle CODE-read 2026-10-09 opsal do přehledu architektury) ·
+   rate limit „or IP for anonymous“ pryč (anonym sem nedojde).
+2. „free readings: SINGLE RUNE ONLY (spread_cost must be 1)“ — nevynucuje se → komentář říká pravdu a odkazuje sem (bod 1 níž).
+3. `spread_cost` „= number of runes“ (2×) → jednotky ze `SPREAD_COSTS` (Yggdrasil 9 run = 5).
+4. „deník atomicky s odečtem / charged ⇔ journaled“ — jsou to DVA zápisy → opraveno v proxy, v `CLAUDE.md` („Reading systém“)
+   a ve 4 komentářích klienta (`runar-app.js`, `runar-reading.js`).
+5. `resave` „nikdy nebylo strženo“ → nemusí platit (bod 2 níž).
+6. Poznámka „přepnutí na gpt-6.1-sol = jen SOL_MODEL“ — dnes by 6.1 s `SOL_EFFORTS` none/minimal tiše padal na Claude → varování.
+7. Varování „nasadit až po migraci `prompt_draws`“ — migrace běží (produkční čtení sloupec nesou) → pryč.
+8. Mrtvá `getISOWeekKey()` (týdenní příděl skončil 2026-06-12) odstraněna.
+Nasazená funkce se od repa liší jen těmito komentáři a mrtvou funkcí — samostatný deploy netřeba, půjde s příštím.
+
+**PRO OWNERA:**
+1. 🟠 **Čtení zdarma dá i spread.** Nový Rune Seeker (`free_balance` 1) si vybere Yggdrasil → klient pošle `use_credit:false`
+   (`shouldUseCredit()` hledí jen na `free_balance`) → proxy jde do free větve, která `spread_cost` nečte → Yggdrasil za jedno volné
+   čtení. Poctivá cesta z UI, ne podvrh. Design říká „Single zdarma, spready za kredity“ (`RUNAR_DESIGN.md` Spreads per tier).
+   Navržená oprava (NEprovedena — mění peníze a chce nasazení): v proxy `if (use_credit || spreadCost > 1)` → placená větev; kdo
+   má kredity, zaplatí kredity a volné čtení mu zůstane na single; kdo nemá, dostane 402 `no_credits`. Pokus 2026-08-03 (#4) skončil
+   regresí „402 i s kredity“ — tahle podoba ji nemá, protože s kredity jde do placené větve. Podvrh klientem (#4, „Proxy Fáze 2“ v sekci
+   C výš) tím vyřešený NENÍ — ten je architektonický a dál otevřený. Dopad dnes: jedno čtení na účet.
+2. ⚪ **`credits_used` může lhát.** Odečet a zápis jsou dva zápisy; když zápis selže, klient čtení pošle přes `resave` a to
+   uloží `credits_used = false`, i když kredit stržen byl. Shrine pak ukáže „free“. Jen štítek, peníze se nepletou. Stačí vědět.
+3. ⚪ **Návštěvník:** `CLAUDE.md` („Spread systém → Gating“) píše „Visitor … má Single 1×“, proxy ale anonyma odmítne (401) a komentář
+   tam říká „Visitor has only the static Rune Collection“. Co návštěvník v appce opravdu vidí, ověří část 4 (appka).
+
 ## 2026-08-16 — otevřené po zavedení registru `direct`
 
 - **Změřit registry párováním podle vloženého obrazu.** První řez (12 čtení) je zmatený:

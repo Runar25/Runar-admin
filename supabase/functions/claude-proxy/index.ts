@@ -1,20 +1,21 @@
 // Supabase Edge Function: claude-proxy
-// Forwards to Claude API. Enforces tier logic:
-//   free_trial (anonymous) — frontend handles trial count (localStorage)
+// Forwards to the reading model (GPT-6 sol, Claude as fallback — see GPT-6 SOL below). Enforces tier logic:
+//   anonymous — rejected with 401 before any model call (see SECURITY in the handler); the visitor has no live reading
 //   rune_seeker — BALANCE SYSTEM (model B, 2026-06-12):
 //     free_balance in user_profiles: 1 at onboarding, NO replenish (no weekly drip)
-//     free readings: SINGLE RUNE ONLY (spread_cost must be 1)
-//     paid credits: any spread, cost = spread_cost param
+//     free readings: meant for a SINGLE rune — ⚠️ NOT enforced here: the free branch does not look at spread_cost,
+//       so a spread sent with use_credit:false costs one free_balance (RUNAR_BACKLOG.md „Kontrola architektury — claude-proxy“)
+//     paid credits: any spread, cost = spread_cost param (reading units from SPREAD_COSTS, not runes)
 //     -> only error this path returns is no_credits (402); no weekly/monthly error
 //   standard / premium — monthly cast cap (MONTHLY_LIMITS); a follow-up (ask) does not count
-// Rate limit: 10 requests / 60s per user (or IP for anonymous)
-// Tree context: injected into system prompt for tree-active readings (Vrstva A)
-// Session state: derived from tree + time, shapes reading tone (Vrstva B)
-// Voice scale: 0-20 user preference injected as tonal instruction (Vrstva C)
+// Rate limit: 10 requests / 60s per logged-in user (anonymous never gets this far)
+// Vrstvy A/B/C (tree context, session state, voice scale) — OFF since 2026-07-04 (ENABLE_DYNAMIC_CONTEXT below);
+//   the code stays for a validated return. (Until 2026-10-09 this header described them as live — CODE-read copied
+//   that into an architecture overview the same day.)
 //
 // CREDIT SAFETY (2026-07-04): the balance/credit is deducted ONLY AFTER a
 //   verified-successful reading. Eligibility is checked up front (402 if the
-//   seeker cannot afford it) but the actual deduction runs after Claude returns
+//   seeker cannot afford it) but the actual deduction runs after the model returns
 //   real text — so a transient failure never costs a credit.
 // RESILIENCE (2026-07-04): the Claude fetch has an AbortController timeout and
 //   retries transient upstream errors (429/5xx/529) with backoff, then returns a
@@ -57,15 +58,7 @@ function sb() {
   );
 }
 
-// ── ISO week key (e.g. "2026-W22") ───────────────────────────────────────────
-function getISOWeekKey(date: Date): string {
-  const d = new Date(date);
-  d.setUTCHours(0, 0, 0, 0);
-  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
-  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-  const weekNo = Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
-  return `${d.getUTCFullYear()}-W${String(weekNo).padStart(2, "0")}`;
-}
+// (getISOWeekKey odstraněn 2026-10-09: nikdo ho nevolal — týdenní příděl skončil s modelem B 2026-06-12.)
 
 // ── Vrstva A: tree context ────────────────────────────────────────────────────
 function buildTreeContext(tree: Record<string, unknown>): string {
@@ -276,6 +269,9 @@ async function callClaudeWithRetry(
 // (EVAL_LOG 2026-10-02 (1)). 2026-10-03 owner: 6.1 zatím NE (dražší, sol 6 se ještě ladí) — proxy zůstává na 6-sol.
 // (Do 2026-10-04: přepnutí na 6.1 = SOL_MODEL + ["low"]; od 2026-10-04 je `low` i u 6 → stačí SOL_MODEL.)
 // Časový strop 50 s: když sol selže pozdě, fallback na Claude (55 s na pokus) se musí vejít do limitu funkce.
+// ⚠️ Přepnutí na gpt-6.1-sol NENÍ „jen SOL_MODEL“ (jak tvrdí řádky níž z 2026-10-04): 6.1 nepřijme 'none' ani 'minimal'
+//   (400), takže s dnešním SOL_EFFORTS by každé volání tiše spadlo na Claude. Pro 6.1 i SOL_EFFORTS = ["low"].
+//   (Nalezeno kontrolou architektury 2026-10-09: poznámky z doby, kdy SOL_EFFORTS bylo ["low"], přežily návrat na none.)
 // 2026-10-04 (KUKY „vidím že čtení potřebuju s low“, DECISIONS 2026-10-04 (3)): sol 6 přemýšlí na `low` (dřív none/minimal).
 // Pilot EVAL_LOG 2026-10-04 (3): čtení 58 slov, přemýšlení 230–380 tok., ~6 s, $0,0057; useknuté 0/6. Přemýšlení se POČÍTÁ do
 // max_completion_tokens → SOL_REASONING_HEADROOM navíc, jinak by u Asku (strop 320) mohlo sníst odpověď. gpt-6.1-sol: stejná
@@ -350,7 +346,7 @@ type DeductPlan =
   | { kind: "monthly"; used: number; cost: number; mKey: string }
   | { kind: "none" };
 
-// Apply the deduction AFTER Claude returned real text. Returns the remaining
+// Apply the deduction AFTER the model returned real text. Returns the remaining
 // credit balance for a paid reading (undefined otherwise).
 // `ref` = klientske id cteni (journal.id, existuje uz PRED odectem) — jde do ledgeru
 // jako p_ref, at ma kazdy odecet sve cteni. `reason` odlisi reading/ask.
@@ -413,8 +409,10 @@ function composeReading(raw: string): string {
 // ── Durable journal write, idempotent — used by the live path AND the resave retry ──
 // Reading insert is keyed on the client-generated id (a duplicate = code 23505 = already saved,
 // so a retry never double-inserts). Ask follow-up is deduped by ask_entry_id. `creditsUsed` is
-// server-authoritative (never trusted from the client): resave passes false = an outage reading
-// is free (it was never charged, since the deduction is a DB write that failed with the insert).
+// server-authoritative (never trusted from the client): resave passes false. ⚠️ That is only a guess:
+// the deduction and the insert are SEPARATE writes (deduction first), so a reading whose insert failed
+// may have been charged and still lands with credits_used = false (2026-10-09 kontrola architektury;
+// until then this said the deduction „failed with the insert“, which the code does not guarantee).
 async function persistJournal(
   journal: any, userId: string, text: string, creditsUsed: boolean,
   usage: Record<string, unknown> | null = null,
@@ -459,8 +457,8 @@ async function persistJournal(
         // Co si prompt pro tohle čtení vylosoval (úhel/obraz/konec/jméno). Klient to
         // čte zpětně z hotového promptu (_promptDraws). Bez toho nejde u reálného
         // čtení říct, která páka za výsledek může.
-        // ⚠️ Vyžaduje sloupec `prompt_draws jsonb` — sql/2026-08-10_readings_prompt_draws.sql.
-        //    Nasadit AŽ po té migraci: bez sloupce by insert selhal a čtení by se přestala ukládat.
+        // Sloupec `prompt_draws jsonb` — sql/2026-08-10_readings_prompt_draws.sql (spuštěno: produkční
+        // čtení ho nesou, najdi_cteni.js --draws 2026-10-09; varování „nasadit až po migraci“ odstraněno).
         prompt_draws:   journal.draws ?? null,
         // Co cteni STALO + ktery model z retezce odpovedel. Claude to vraci u kazde
         // odpovedi a do 2026-08-15 se to zahazovalo. Bez toho nejde rict ani cenu,
@@ -497,7 +495,7 @@ serve(async (req: Request) => {
       max_tokens  = 600,
       use_credit  = false,
       mode        = "",
-      spread_cost = 1,     // number of credits/balance to deduct (= number of runes)
+      spread_cost = 1,     // reading units to deduct (SPREAD_COSTS — Yggdrasil 9 runes costs 5; sanitised below)
       journal     = null,  // reading meta to persist server-side (null = do not save)
       engine      = "",    // 'opus' = admin chce Claude místo solu (od 2026-10-09; do té doby 'sol' = admin chtěl sol). Ne-adminovi se ignoruje.
     } = body;
@@ -538,7 +536,8 @@ serve(async (req: Request) => {
     // nikdy nebezi -> crafted request projde KOLEM mesicniho stropu i odectu (audit
     // 2026-08-03 CRITICAL, opraveno 2026-08-22). Server cenu podle typu zatim odvodit
     // neumi (typ spreadu v requestu neni — navazny krok v BACKLOGu), proto: cele cislo,
-    // podlaha 1, strop 9 (vic run nez Yggdrasil zadne cteni nema).
+    // podlaha 1, strop 9 (vic run nez Yggdrasil zadne cteni nema; cena v jednotkach je nejvys 5 — strop je volny nahoru,
+    // podvrh nad cenu by jen preplatil).
     const spreadCost = Math.min(9, Math.max(1, Math.round(Number(spread_cost)) || 1));
 
     // ── Auth & tier check ──
@@ -727,7 +726,7 @@ serve(async (req: Request) => {
 
     if (userTier === "rune_seeker" && !isRitual) {
       if (use_credit) {
-        // ── Paid credit reading — spread_cost = runes = credits ──
+        // ── Paid credit reading — spread_cost = reading units from SPREAD_COSTS (not runes) ──
         const cost = spreadCost;   // sanitizovano vys — NaN/zaporne/Infinity neprojde
         if (creditsBalance < cost) {
           return json({ error: "no_credits", message: "Not enough credits. Redeem a reading gift card or upgrade." }, 402);
@@ -888,9 +887,11 @@ serve(async (req: Request) => {
     const creditsRemaining = await applyDeduction(deductPlan, userId,
       mode === "ask" ? "ask" : "reading", journal?.id ?? null);
 
-    // ── Persist to the journal SERVER-SIDE, atomic with the deduction ──
-    // A charged reading is ALWAYS journaled — even if the app is backgrounded/killed
-    // before it could receive the response (charged <=> journaled). The client passes the
+    // ── Persist to the journal SERVER-SIDE, in the same request right after the deduction ──
+    // Not one transaction (2026-10-09: until then this said „atomic … charged <=> journaled“): the
+    // deduction and the insert are two writes. It survives the app being backgrounded/killed (the
+    // server does it, not the client); if the insert itself fails, the client re-sends via
+    // mode:'resave' — see persistJournal for what that does to credits_used. The client passes the
     // reading meta; the model text is composed + stored here. Non-fatal: a save failure
     // must never break a reading that already succeeded (logged for the keeper).
     // The client sends a `journal` either for a reading (insert) or an Ask Rúnar follow-up

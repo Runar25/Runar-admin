@@ -314,7 +314,7 @@ async function _generateReading() {
   var _dR = _lengthReminder(lang); if (_dR) prompt += '\n' + _dR;
   _lastGen = { sys: sys, prompt: prompt, lang: lang, kind: 'single' };   // pro rozbor GPT-6 sol (jen admin)
 
-  // Journal meta for the SERVER-SIDE save (proxy persists atomically with the deduction).
+  // Journal meta for the SERVER-SIDE save (proxy saves it right after the deduction; two writes, not atomic).
   // Only for a logged-in user saving their own reading; null = do not save.
   // 'someone' readings are stored only for TESTERS (test data for the shrine) — a normal user's
   // third-party reading is never stored (that person never consented). Journal filters them out.
@@ -374,7 +374,7 @@ async function _generateReading() {
     incTrialCount();
     updateAuthUI();
   } else {
-    // Journal is saved SERVER-SIDE by the proxy (atomic with the credit deduction) so a
+    // Journal is saved SERVER-SIDE by the proxy (right after the credit deduction) so a
     // charged reading is always journaled — even if the app is backgrounded before this
     // point. Here we only refresh local views: tree log (localStorage) + journal + balance.
     if (_readingMode === 'mine') {
@@ -1347,7 +1347,7 @@ async function _generateSpreadReading(o) {
   var _thS = _thoughtFor(o.kind, o.runes, lang); if (_thS) prompt += '\n' + _thS;   // 2026-09-30: myšlenka ✦ (Kříž, Norny; od 2026-10-03 i Horseshoe a Yggdrasil)
   _lastGen = { sys: sys, prompt: prompt, lang: lang, kind: o.kind };   // pro rozbor GPT-6 sol (jen admin)
 
-  // Journal meta for the SERVER-SIDE save (proxy persists atomically with the deduction).
+  // Journal meta for the SERVER-SIDE save (proxy saves it right after the deduction; two writes, not atomic).
   var _runeDisplay = o.runes.map(function (r) { return ((r.g || '') + ' ' + (rn(r) || '').toUpperCase()).trim(); }).join(' · ');
   var _journalS = (currentUser && (_readingMode === 'mine' || isTester)) ? {
     kind: 'spread', id: _uuid(), rune_name: o.kind, rune_glyph: '✦', lang: lang,
@@ -1405,7 +1405,7 @@ async function _generateSpreadReading(o) {
   if (lbl) _paintReadingHeader();
 
   if (currentUser) {
-    // Journal saved SERVER-SIDE by the proxy (atomic with the deduction). Refresh local views.
+    // Journal saved SERVER-SIDE by the proxy (right after the deduction). Refresh local views.
     if (_readingMode === 'mine') { recordTreeReading(o.kind, o.runes, readerUser.area, readerUser.intention); loadJournal(); }
     await syncFreeBalance(currentUser.id);
   } else { incTrialCount(); updateAuthUI(); }

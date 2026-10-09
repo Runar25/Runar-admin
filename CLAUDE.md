@@ -364,7 +364,7 @@ Co databáze sama neřekne, a proto bydlí tady:
 ## Reading systém — stav
 
 **Unified format**: 1 plynoucí blok, žádné `|||`. `layer1-lbl` = glyf + jméno runy.
-`_readingMode` = `'mine'` (ukládá — journal píše SERVER-SIDE claude-proxy, atomicky s odečtem kreditu; klient jen loadJournal) | `'someone'` (neukládá).
+`_readingMode` = `'mine'` (ukládá — journal píše SERVER-SIDE claude-proxy hned po odečtu kreditu — dva zápisy, ne jedna transakce (do 2026-10-09 tu stálo „atomicky“); klient jen loadJournal) | `'someone'` (neukládá).
 `u.area/seeking/intention/question` → `parts[]` → Claude. Norns axis: `_intentionContext(intention,lang)` v runar-character.js.
 
 **Délky čtení**: zdroj pravdy = buildery v `runar-character.js` (RP_* packy + `closing()` věty). Docs čísla NEopakují — když měníš délku, uprav builder + přepočítej pricing (RUNAR_PRICING.md). Délka = znaky = EL náklad. Jméno ne vždy na začátek; životní runa jen kontext.
