@@ -17,8 +17,10 @@ Stack: HTML + CSS + vanilla JS · Supabase (projekt v `runar-config.js` SB_URL) 
 ```
 runar-config.js       — TIERS, RUNAR_MODES, TIER_LIMITS, SPREAD_COSTS, SPREAD_CONFIG, VOCAB,
                         VOICE_PROFILES + ACTIVE_VOICE_PROFILE (hlas), ADMIN_EMAILS, HEAVY_RUNES
-                        (úplný výčet má soubor sám — 27 konstant; doc ho neopisuje, §20)
+                        (úplný výčet má soubor sám; doc ho neopisuje, §20 — do 2026-10-09 tu stál i jejich počet)
 runar-runes.js        — 25 Elder Futhark + calcLifeRune()
+runar-names.js        — severská jména: seznam, který rozhoduje o rozboru jména (ne model) · jen reader
+runar-names-registry.js — Mannanafnaskrá (GENEROVANÉ scripts/import_mannanafnaskra.js, needitovat) · jen reader
 runar-translations.js — UI_TEXT {en, is} + t()  ← Edit tool OK
 runar-character.js    — DEF_CHAR_EN/IS, buildSysPrompt(), RP_* packs + buildReadingPrompt()
                          + spread dispatchers, buildLifeRunePrompt(), getCorrPrompt()
@@ -33,6 +35,8 @@ runar-rune-popup.js   — ťuknutí na glyf runy ve čtení → popup se jménem
 runar-helper.js       — nápověda „?" (bublina: glyf-tap, Ask) + hesla zrcadla v UI_TEXT · jen reader
 runar-readings-admin.js — shrine: prohlížeč čtení (edge fn list-readings)
 runar-reports-admin.js  — shrine: prohlížeč hlášení (edge fn list-reports)
+runar-voice-admin.js    — shrine: záložka VOICE, stav ElevenLabs (edge fn voice-usage)
+runar-help.html · runar-privacy.html — statické stránky (návod, zásady soukromí)
 runar-reader.html     — produkční app  ← Edit tool OK
 runar-reader.css      — styly          ← Edit tool OK
 runar-shrine.html     — admin app      ← Edit tool OK pro HTML
@@ -44,7 +48,7 @@ dočasné dokumenty a POC/experiment HTML → `docs/archive/` · patch skript �
 
 ### Load order
 ```
-runar-config.js → runar-runes.js → runar-translations.js → runar-character.js
+runar-config.js → runar-runes.js → [reader: runar-names.js → runar-names-registry.js] → runar-translations.js → runar-character.js
 → runar-utils.js → runar-svgs.js
 → [reader]: runar-journal.js
             → tree-lab-trunk-composer/runar-trunk.js → tree-lab-branch-composer/runar-branch.js
@@ -97,7 +101,7 @@ Auto-bump: git pre-commit hook (hooks/pre-commit.py). Po fresh clone: `python -X
 Ruční bump pokud je sw.js already staged před commitem.
 
 ### §5 — UI invarianty
-`--dim` NIKDY pro text · reader-content se NIKDY neskrývá
+`--dim` NIKDY pro text (smí jen ikony, šipky, oddělovače a placeholdery — `runar-reader.css`, KUKY 2026-09-24) · reader-content se NIKDY neskrývá
 (hodnoty tokenů bydlí v `runar-reader.css`, doc je neopisuje — §20)
 Runa ᚱ: vždy zlatá, NIKDY s ozdobami (◌ ᚱ ◌ zakázáno)
 **Runové glyfy = JEDEN zdroj kresby (RUNE_SVGS), rámování dle ROLE** — přes helper `runeSvg(rune,{frame})` (runar-utils.js, §3). Pravidlo (KUKY 2026-07-14): **`frame:true` = KÁMEN pro runy, které TAHÁŠ/DRŽÍŠ** (draw grid, kolekce, kolekce detail, reading strip single+spread, spread sloty, journal karty; **od 2026-09-14 i hlavička HOTOVÉHO čtení životní runy** — KUKY: „má tam být stejný svg glyf jako je u single a spreadu", DECISIONS 2026-09-14 (3)); **od 2026-09-23 i ŽIVOTNÍ RUNA VŠUDE** — odznak ve čtení i záložka Life Rune (ukázka/výzva/načítání); KUKY: „změnit glyf životních run na naše glyfy“, DECISIONS 2026-09-23 (15)); **`frame:false` = HOLÁ linka (#D6A85C) jen pro textové popisky (rune-info)**. NIKDY font glyf jako primární (nekonzistentní napříč zařízeními). Blank = orámované prázdno (kámen = prázdný kámen · holá = zlatý obrys), NIKDY `○`. Holá runa = jen hlavní tah (keep-mapa `RUNE_BARE_KEEP`, ozdůbky pryč). Tap popup kopíruje `g.innerHTML` (SVG), ne textContent. ᚱ brand = ZVLÁŠŤ (font, chrome v HTML, neřeší se přes runeSvg).

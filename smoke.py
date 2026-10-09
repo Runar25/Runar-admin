@@ -809,6 +809,19 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola monitoru ozven probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# ㉸ Text natvrdo podle jazyka (CODE-read 2026-10-09, kontrola architektury — DECISIONS 2026-10-09 (15)): §10 zakazuje text
+# v logice, ale `lang === 'is' ? '…' : '…'` kontrola ② nevidí a v2/ jich měl 57. Ráčna: počet na soubor nesmí stoupnout.
+print('\n' + chr(0x3278) + ' TEXT NATVRDO PODLE JAZYKA (verify_lang_ternary.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_lang_ternary.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+r2 = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_lang_ternary.js'), '--test'],
+                    capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0 and r2.returncode == 0
+output = (r2.stdout + r.stdout + r.stderr + r2.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola textu natvrdo probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

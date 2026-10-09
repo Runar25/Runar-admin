@@ -7,11 +7,12 @@
 //   RUNAR_MODES, READING_ANGLES, FREE_TRIAL_LIMIT, FREE_REGISTERED_LIMIT,
 //   DELAY_TRIAL_END, DELAY_SCROLL, DELAY_ERROR_RESET
 // Depends on functions: t(), callProxy(), buildSysPrompt(),
-//   getCorrPrompt(), stream(), checkStaticAudio(),
+//   getCorrPrompt(), stream(),
 //   shouldUseCredit(), canUseVoice(), syncFreeBalance(),
 //   loadJournal(), updateAuthUI(), setSt(), showToast(), incTrialCount(),
-//   getTrialCount(), elVoiceId(), elModel(),
-//   EL_PROXY, EL_VOICE_SETTINGS
+//   getTrialCount(), EL_PROXY
+// (2026-10-09: checkStaticAudio, elVoiceId, elModel, EL_VOICE_SETTINGS ze seznamu pryč — tenhle soubor je nevolá; hlas a model
+//  volí server, elevenlabs-proxy.)
 // ═══════════════════════════════════════════════════════
 
 // ─── READING CORE ────────────────────────────────────────
@@ -232,9 +233,10 @@ function _renderSegments(elId, segs) {
   });
 }
 
-// One source for reading-flow error copy (§18). claude-proxy returns only
-// rate_limited | no_credits; model B has no weekly drip / monthly reset,
-// so those old error branches are gone.
+// One source for reading-flow error copy (§18). claude-proxy vrací víc kódů (too_long, unauthorized, overloaded, empty,
+// unavailable, ask_limit…); vlastní text mají jen tři níž, zbytek dostane err_generic. ⚠️ Patří sem i `unauthorized` —
+// návštěvník po tahu runy čte „Rúnar odpočívá, zkus to znovu“, ačkoli mu čtení nepřijde nikdy (RUNAR_BACKLOG.md
+// „Kontrola architektury“, část 1 bod 3). Do 2026-10-09 tu stálo „claude-proxy returns only rate_limited | no_credits“.
 function _readingErrMsg(errorType) {
   if (errorType === 'rate_limited')  return t('err_rate_limited');
   if (errorType === 'no_credits')    return tp('err_no_credits', { card: vl('card', lang) });

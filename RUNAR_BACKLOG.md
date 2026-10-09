@@ -1763,6 +1763,37 @@ nepoužitá konstanta islandského hlasu označena · `tree-update` „volá ji 
    posílat hlášení a pingat Slack. A hlášení nesou jméno testera (ručně zadané, 0 e-mailů z 241) a výřez čtení, bez vazby na účet →
    přežijí smazání účtu; `RUNAR_PRIVACY.md` o `bug_reports` nepíše nic. Rozhodnout: nechat / jen přihlášení / doba uchování.
 
+### Část 4 — appka (pravidla `CLAUDE.md` pro klienta + hlavičky souborů, 2026-10-09)
+**Platí:** §12 žádné `email.split('@')` · §5 `reader-content` se neskrývá, `--dim` jen u ikon, šipek, oddělovačů a placeholderů
+(výjimku z 2026-09-24 nesl jen CSS komentář → doplněna do §5) · §14 `updateUIText()` nastavuje statické texty a dynamické nechá
+vlastním funkcím · jednotný formát čtení bez `|||` · spready návštěvníkovi zamčené (toast „Sign in“).
+**Opraveno rovnou:** hlavička `runar-reading.js` (4 závislosti, které soubor nevolá) · komentář `_readingErrMsg` („proxy vrací jen
+rate_limited | no_credits“ — vrací víc, včetně `unauthorized` návštěvníka) · výčet tierů u `userTier` · mrtvá `checkStaticAudio()`
+(nikdo ji nevolal od rozdělení monolitu) · **nová kontrola smoke ㉸**: větve `lang === 'is' ? '…'` nesmí přibývat (bod 10).
+
+**PRO OWNERA:**
+10. ⚪ **57 textů natvrdo podle jazyka** (`lang === 'is' ? '…' : '…'` — app 26, utils 8, auth 7, reading 7, character 4, tree 3,
+    config 1, runes 1): záložky, brány návštěvníka, souhlas, přihlašovací okno. §10 je zakazuje, kontrola ② je neviděla. Od teď je
+    drží ráčna ㉸ (nesmí přibýt). Přepis do `UI_TEXT` = práce CODE-tune s ověřenou islandštinou — kdy, rozhodne owner.
+11. ⚪ Mrtvé drobnosti: `EL_VOICE_SETTINGS` v configu nikdo nečte (server má vlastní nastavení hlasu); shrine posílá do
+    `elevenlabs-proxy` `voice_id`/`model_id`, které server záměrně ignoruje. Neškodí.
+
+### Část 5 — prompt (tvrzení `CLAUDE.md` §2 a „Reading systém“, 2026-10-09)
+**Platí:** tři vrstvy (system · prompt · korekce v promptu), post-processor `applyISCorrections` pryč (zbyl jen komentář o odchodu) ·
+`buildSysPromptV2` v produkci nikdo nevolá (jen lab skripty) · `SEASON_POOLS` jen jako sáček. Hlídá je smoke ⑥ ⑧ ㉚ ㉜ a audit promptu
+2026-10-07 (sekce výš). **Opraveno:** nic. **Pro ownera:** nic.
+
+### Část 6 — strom
+Patří CODE-tree (owner: „strom s CODE-tree, protože je jeho“) — Code-read jen to, co je vidět z appky: záložka Strom je jen pro
+admina (`runar-auth.js`, 2026-09-11), `renderLivingTree()` pouští i testery — ti se k ní ale nedostanou, ta větev je dnes mrtvá.
+Neškodí; až CODE-tree strom pustí testerům, stačí odkrýt záložku. **Pro ownera:** nic.
+
+### Část 7 — docy proti kódu
+**Opraveno rovnou (`CLAUDE.md`):** tabulka souborů bez `runar-names.js`, `runar-names-registry.js`, `runar-voice-admin.js`,
+`runar-help.html`, `runar-privacy.html` → doplněno · pořadí načítání bez jmen → doplněno podle `runar-reader.html` · „27 konstant“
+v configu (číslo v docu, §20) → pryč · §5 výjimka `--dim` · „Gating: Visitor má Single 1×“ → stav produkce · „deník atomicky
+s odečtem“ → dva zápisy · §16 nový postup. **Pro ownera:** nic navíc.
+
 ## 2026-08-16 — otevřené po zavedení registru `direct`
 
 - **Změřit registry párováním podle vloženého obrazu.** První řez (12 čtení) je zmatený:

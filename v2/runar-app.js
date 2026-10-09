@@ -15,7 +15,7 @@ const sb = supabase.createClient(SB_URL, SB_KEY);
 let lang           = APP.default_lang;
 let activeChar     = null;
 let currentUser    = null;
-let userTier       = 'free';    // 'free' | 'credits' | 'standard' | 'premium'
+let userTier       = 'free';    // DB: free_trial | rune_seeker | standard | premium ('free' = výchozí před načtením profilu; 2026-10-09 opraven výčet)
 let userCredits    = 0;         // credits_balance from user_profiles
 let userFreeBalance = 0;        // free_balance: 1 at registration, no replenish (model B)
 let readerUser     = {};
@@ -1327,19 +1327,8 @@ function canUseVoice() {
   return !!tier.voice_monthly;
 }
 
-// ─── STREAM ──────────────────────────────────────────────
-// ─── STATIC AUDIO CHECK ──────────────────────────────────
-async function checkStaticAudio(drawn, l) {
-  const { data: rows } = await sb.from('runar_static_audio')
-    .select('audio_url, version').eq('rune_name', drawn.n).eq('lang', l).eq('ready', true);
-  if (rows && rows.length > 0) {
-    const pick = rows[Math.floor(Math.random() * rows.length)];
-    document.getElementById('runar-audio').src = pick.audio_url;
-    _capReset();
-    document.getElementById('audio-player').classList.add('visible');
-    setSt('st-voice', `♪ ${rows.length > 1 ? `v${pick.version} · ` : ''}static`);
-  }
-}
+// (checkStaticAudio() odstraněna 2026-10-09, kontrola architektury: od rozdělení monolitu dc17cc9 ji nikdo nevolal —
+//  statické audio přehrává Kolekce sama, runar-journal.js a loadCollection().)
 
 // ─── HIGHER PATH TOGGLE ─────────────────────────────────
 function toggleHigherPath() {

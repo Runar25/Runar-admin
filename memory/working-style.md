@@ -92,7 +92,8 @@ Smoke test §10 chytí jen typické patterny. Po změně VOCAB (nebo jiném pře
 ```
 grep -n "\bold_term\b" runar-app.js runar-auth.js runar-reading.js runar-tree.js runar-gathering.js runar-reader.html
 ```
-Hardcoded výskyty mimo translations.js / VOCAB nejsou smoke testem zachyceny.
+Hardcoded výskyty mimo translations.js / VOCAB nejsou smoke testem zachyceny — kromě větví `lang === 'is' ? '…' : '…'`:
+ty od 2026-10-09 hlídá ráčna smoke ㉸ (`scripts/verify_lang_ternary.js`, počet na soubor nesmí stoupnout; stav tam v BASELINE).
 
 ## Vocab/tier termíny natvrdo — known offenders (to fix)
 Pravidlo: CLAUDE.md §15 — název karty/jednotky/spá + tier jména VŽDY z VOCAB/TIERS
