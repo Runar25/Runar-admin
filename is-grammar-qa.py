@@ -80,12 +80,12 @@ def main():
     if not texts:
         print('No input. Usage: python -X utf8 is-grammar-qa.py <file | --text "...">')
         return
-    codes = Counter(); flagged = 0; unparsed = []; suppressed = Counter()
+    codes = Counter(); flagged = 0; unparsed = []; suppressed = Counter(); api_err = []
     for i, t in enumerate(texts, 1):
         try:
             anns = check(t)
         except Exception as e:
-            print('  [%d] API error: %s' % (i, e)); continue
+            print('  [%d] API error: %s' % (i, e)); api_err.append(i); continue
         real = []
         for a in anns:
             if a['code'] in LOW_SIGNAL:
@@ -117,6 +117,11 @@ def main():
         for _i, _t in unparsed:
             print('    [%d] %s' % (_i, (_t[:80] + '…') if len(_t) > 80 else _t))
     print('U001 = unknown word (possible neologism) · S00x = spelling · rest = grammar.')
+    # 2026-10-09: nezkontrolovaný text se nesmí tvářit jako čistý (§19.2) — počet nahlas a nenulový exit kód.
+    if api_err:
+        print('\n⚠ %d z %d NEZKONTROLOVÁNO (chyba API: %s) — výsledek NENÍ čistý, zopakuj později.'
+              % (len(api_err), len(texts), ', '.join('[%d]' % k for k in api_err)))
+        sys.exit(2)
     print('FLAG-ONLY — §19.2: rewrite until the tool understands it. Fixes -> prompt or runar_corrections.')
 
 if __name__ == '__main__':
