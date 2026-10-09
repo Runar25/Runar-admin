@@ -8978,3 +8978,28 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   na jméno čeká na ownera (`RUNAR_BACKLOG.md`).
 - Odvolává se na: 2026-10-09 (1).
 - Affected doc(s): `RUNAR_BACKLOG.md` (podoby psané jako vedlejší věta — návrh) — v témže commitu.
+
+## 2026-10-09 (10) — Strom: každý vstup má jednu práci, co chybí, doplní strom sám (směr schválen, zatím jen nanečisto)
+
+- **Rozhodl:** KUKY 2026-10-09. Otázka: *„vyrovnaný člověk má vyrovnaný strom, člověk inklinující nějakým směrem by se strom měl tím
+  směrem naklánět … někdo táhne jen oblast, někdo žádnou … kdo se víc ptá, dostane víc odpovědí … každá možnost musí být možná.“* Na
+  tabulku níž: *„8. ano · 9. ano, udělej to nanečisto. všechno zatím nanečisto, nebudeme to pořád měnit, když mi to můžeš napřed ukázat ·
+  10. zatím necháme, jak je · 11. až po obrázcích.“* **Provedl:** CODE-tree — jen nanečisto (scratch kopie labu), lab v repu beze změny.
+- **Proč:** oblast dnes rozhoduje dvakrát, o straně i o výšce (nitro dolů, svět nahoru) → vyrovnaný člověk dostane šikmý strom: na jeho
+  stromě (všech 8 oblastí 22–37×) je vlevo v koruně 0 z 98 tažení; jednotlivé čtení z nitra se do koruny nedostane nikdy. Kdo oblast
+  nevyplní, tomu stranu dá svět runy a čtení se lepí na větve, které už rostou → modelový člověk „nic“: vpravo 156–192 tažení, vlevo
+  65–71, jen 14 větví (3 náhody po 200 čteních).
+- **Směr (tabulka):** strana = oblast; bez oblasti, Love, Crossroads = **lehčí strana** (kde zatím visí méně tažení; místo vůdčí větve
+  zůstává střed; na stropu 25 se přidá k existující větvi svého živlu a zóny). Výška = záměr (+ seeking); bez záměru = svět runy (Hel dole,
+  Midgard střed, Asgard nahoře) — druhá možnost (nejslabší zóna) jen popsaná v `RUNAR_BACKLOG.md`. Rozklady: hlavně pozice v rozkladu.
+  Pořád platí 2026-10-05 (12) „Love/Crossroads/bez oblasti se přidají k větvi elementu“ — mění se jen, ke které.
+- **Změřeno nanečisto** (tažení po nakreslených stranách, pásma dole/střed/koruna): jeho strom vlevo 168 (41/33/26 %), vpravo 161
+  (39/29/32 %), dnes 184 (51/37/13) a 149 (17/44/39). Modeloví lidé (200 čtení): jen oblast vlevo 28/42/30, vpravo 35/36/29 (dnes vlevo
+  78 % dole, vpravo 70 % v koruně); nic 132 : 131 tažení a 25 větví (dnes 71 : 192 a 14); jen záměr 122 : 122 (dnes 168 : 76).
+  Seeking strom skoro nemění: jeho strom 39/30/32 % se seekingem, 38/30/32 bez něj.
+- **Cena:** kdo vyplňuje oblast, zaplní až 28 míst (4 živly × 3 zóny × 2 strany + stín 2 × 2); strop 25 pak pošle část čtení o zónu vedle
+  — jeho strom 17 z 342 (dnes 2), modeloví lidé 3–9 %. Smoke ㉳ na nanečisto prošel (na stropu nejvýš 4,7 %, dnes 3,0 %).
+- **Kde to je:** patch `docs/archive/tree/2026-10-09_nanecisto_strany.patch` (`git apply` na `build_crown_composer.py`).
+- Mění kánon „diagonála příběhu“ (`RUNAR_TREE.md` §3) — přepíše se až se zapnutím. Odvolává se na: 2026-10-05 (12) · 2026-07-09
+  („ke kmeni / od něj“ = vyváženost).
+- Affected doc(s): `RUNAR_BACKLOG.md` (Strom (lab): čeká na ownera, bod 1 a 4) — v témže commitu.
