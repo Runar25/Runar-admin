@@ -11,6 +11,7 @@
 //   node scripts/utils/stats.js            # posledních 30 dní
 //   node scripts/utils/stats.js --dny 90
 //   node scripts/utils/stats.js --json     # strojově, pro pozdější graf
+//   node scripts/utils/stats.js --testeri  # jen čtení a hlas testerů (bez adminů); jde kombinovat s --dny/--html/--json
 const { execSync } = require('child_process');
 const fs = require('fs'), os = require('os'), path = require('path');
 
@@ -36,25 +37,37 @@ function q(sql) {
 
 const OD = "now() - interval '" + DNY + " days'";
 
+// Skupina: admin (ADMIN_EMAILS z v2/runar-config.js — jediny zdroj, §20) > tester (user_profiles.is_tester) > uzivatel.
+// Owner 2026-09-24: „kolik nas stoji cteni — admin zvlast, testeri zvlast, uzivatele zvlast". Tiskne se jen soucet za skupinu.
+const ADMINI = (fs.readFileSync(path.join(__dirname, '..', '..', 'v2', 'runar-config.js'), 'utf8').match(/const ADMIN_EMAILS\s*=\s*\[([^\]]*)\]/) || [, ''])[1]
+  .split(',').map(s => s.trim().replace(/^['"]|['"]$/g, '')).filter(e => /^[^\s'@]+@[^\s'@]+$/.test(e));
+if (!ADMINI.length) { console.error('  ✗ ADMIN_EMAILS v runar-config.js nenalezen — skupiny by byly spatne'); process.exit(1); }
+// 2026-10-09 (KUKY „ok přidej filtr“, hlášení 83f2d16c: „monitorovat, jak nám pálí tokeny, v jaký čas dělají hlavně čtení… kdy je
+// rush hour“): --testeri = všechny přehledy čtení a hlasu jen z účtů testerů (user_profiles.is_tester) BEZ adminů — admin účty mají
+// is_tester taky (ověřeno 2026-09-11). Stav předplatného ElevenLabs (snímek, období EL) se nefiltruje: patří účtu, ne lidem.
+const TESTERI = argv.includes('--testeri');
+const jenT = (sloupec) => TESTERI ? ' and ' + sloupec + ' in (select p.id from public.user_profiles p join auth.users u on u.id = p.id'
+  + " where p.is_tester and u.email not in (" + ADMINI.map(e => "'" + e + "'").join(',') + '))' : '';
+
 const celkem = q('select count(*) n, count(distinct user_id) lidi,' +
-  ' min(drawn_at)::date od, max(drawn_at)::date do from public.readings;')[0];
+  ' min(drawn_at)::date od, max(drawn_at)::date do from public.readings where true' + jenT('user_id') + ';')[0];
 
 const denne = q('select drawn_at::date den, count(*) n, count(distinct user_id) lidi' +
-  ' from public.readings where drawn_at >= ' + OD + ' group by 1 order by 1;');
+  ' from public.readings where drawn_at >= ' + OD + jenT('user_id') + ' group by 1 order by 1;');
 
 const hodiny = q("select extract(hour from drawn_at at time zone 'Atlantic/Reykjavik')::int h," +
-  ' count(*) n from public.readings where drawn_at >= ' + OD + ' group by 1 order by 1;');
+  ' count(*) n from public.readings where drawn_at >= ' + OD + jenT('user_id') + ' group by 1 order by 1;');
 
 const dny = q("select trim(to_char(drawn_at at time zone 'Atlantic/Reykjavik','Day')) d," +
   " extract(isodow from drawn_at at time zone 'Atlantic/Reykjavik')::int i, count(*) n" +
-  ' from public.readings where drawn_at >= ' + OD + ' group by 1,2 order by 2;');
+  ' from public.readings where drawn_at >= ' + OD + jenT('user_id') + ' group by 1,2 order by 2;');
 
 const jazyk = q('select coalesce(lang,'+"'?'"+') lang, count(*) n from public.readings' +
-  ' where drawn_at >= ' + OD + ' group by 1 order by 2 desc;');
+  ' where drawn_at >= ' + OD + jenT('user_id') + ' group by 1 order by 2 desc;');
 
 const kvalita = q('select count(*) n, count(prompt_draws) s_draws,' +
   ' count(*) filter (where spread_data is not null) spready' +
-  ' from public.readings where drawn_at >= ' + OD + ';')[0];
+  ' from public.readings where drawn_at >= ' + OD + jenT('user_id') + ';')[0];
 
 // ── Náklady a cache (CODE-read 2026-09-24) ──────────────────────────────────────────────
 // PŘESNÁ cena z `readings.usage` (tokeny, které API vrátilo u každého čtení; proxy je ukládá od 2026-08-15)
@@ -76,15 +89,10 @@ if (Math.abs(cenaUsage({ model: 'claude-opus-4-8', input_tokens: 1692, output_to
 if (Math.abs(cenaUsage({ model: 'gpt-6-sol', prompt_tokens: 1000, prompt_tokens_details: { cached_tokens: 200 }, completion_tokens: 100 }) - 0.00264) > 1e-9) { console.error('  ✗ výpočet ceny OpenAI rozbitý'); process.exit(1); }
 // ... se zapisem: 1000 vstup (200 z cache, 700 zapis) + 100 vystup = (100·2 + 200·0,2 + 700·2,5 + 100·10) / 1 M = 0,00299 USD.
 if (Math.abs(cenaUsage({ model: 'gpt-6-sol', prompt_tokens: 1000, prompt_tokens_details: { cached_tokens: 200, cache_write_tokens: 700 }, completion_tokens: 100 }) - 0.00299) > 1e-9) { console.error('  ✗ výpočet zápisu do cache OpenAI rozbitý'); process.exit(1); }
-// Skupina: admin (ADMIN_EMAILS z v2/runar-config.js — jediny zdroj, §20) > tester (user_profiles.is_tester) > uzivatel.
-// Owner 2026-09-24: „kolik nas stoji cteni — admin zvlast, testeri zvlast, uzivatele zvlast". Tiskne se jen soucet za skupinu.
-const ADMINI = (fs.readFileSync(path.join(__dirname, '..', '..', 'v2', 'runar-config.js'), 'utf8').match(/const ADMIN_EMAILS\s*=\s*\[([^\]]*)\]/) || [, ''])[1]
-  .split(',').map(s => s.trim().replace(/^['"]|['"]$/g, '')).filter(e => /^[^\s'@]+@[^\s'@]+$/.test(e));
-if (!ADMINI.length) { console.error('  ✗ ADMIN_EMAILS v runar-config.js nenalezen — skupiny by byly spatne'); process.exit(1); }
 const usageRows = q("select coalesce(r.lang,'?') lang, r.area, r.usage, r.follow_up, case when u.email in (" + ADMINI.map(e => "'" + e + "'").join(',')
   + ") then 'admin' when coalesce(p.is_tester, false) then 'tester' else 'uzivatel' end skupina"
   + ' from public.readings r left join auth.users u on u.id = r.user_id left join public.user_profiles p on p.id = r.user_id'
-  + ' where r.drawn_at >= ' + OD + ' and r.usage is not null;');
+  + ' where r.drawn_at >= ' + OD + ' and r.usage is not null' + jenT('r.user_id') + ';');
 const naklady = { skupiny: {}, podleSkupin: {}, ask: { n: 0, usd: 0, bez: 0 }, askModel: {}, neznamy: [] };
 for (const r of usageRows) {
   for (const f of (r.follow_up || [])) {
@@ -114,7 +122,7 @@ const EL_TARIF = { starter: 6, creator: 22, pro: 99, scale: 299, business: 990 }
 const hlasRows = q("select v.source, coalesce(v.lang,'?') lang, v.model, case when u.email in (" + ADMINI.map(e => "'" + e + "'").join(',')
   + ") then 'admin' when coalesce(p.is_tester, false) then 'tester' else 'uzivatel' end skupina, count(*) n, sum(v.chars) chars"
   + ' from public.voice_usage v left join auth.users u on u.id = v.user_id left join public.user_profiles p on p.id = v.user_id'
-  + ' where v.created_at >= ' + OD + ' group by 1,2,3,4;');
+  + ' where v.created_at >= ' + OD + jenT('v.user_id') + ' group by 1,2,3,4;');
 const snimek = q('select taken_at, source, tier, status, character_count, character_limit, next_reset_at from public.voice_quota_snapshots order by taken_at desc limit 1;')[0] || null;
 // Naše znaky v AKTUÁLNÍM období EL (od posledního resetu) — k porovnání s čítačem EL: rozdíl = hlas mimo aplikaci
 // (EL web, testy) nebo generování z doby před voice_usage.
@@ -131,7 +139,7 @@ for (const r of hlasRows) {
 }
 // Kolik čtení přišlo do 5 min (a do 1 h) po PŘEDCHOZÍM čtení v témže jazyce — systémový prompt je pro všechny
 // uživatele téhož jazyka stejný, takže cachi drží teplou kdokoli. To je strop zásahů cache při dnešním provozu.
-const casy = q("select coalesce(lang,'?') lang, extract(epoch from drawn_at) t from public.readings where drawn_at >= " + OD + ' order by drawn_at;');
+const casy = q("select coalesce(lang,'?') lang, extract(epoch from drawn_at) t from public.readings where drawn_at >= " + OD + jenT('user_id') + ' order by drawn_at;');
 naklady.odstupy = {};
 { const posl = {};
   for (const r of casy) { const o = naklady.odstupy[r.lang] = naklady.odstupy[r.lang] || { n: 0, do5: 0, do60: 0 };
@@ -181,7 +189,7 @@ if (HTML_OUT) {
     + '.note{color:var(--dim);font-size:13px;border-left:2px solid #26303e;padding-left:12px;margin-top:8px}'
     + '@media(prefers-color-scheme:light){:root{--bg:#faf8f3;--fg:#1a1a1a;--dim:#6b7280;--card:#fff}.ax{stroke:#d8d3c8}}'
     + '</style><div class=wrap>';
-  h += '<h1>Rúnar — provoz</h1><p class=sub>Posledních '+DNY+' dní · vygenerováno '
+  h += '<h1>Rúnar — provoz'+(TESTERI?' · jen testeři':'')+'</h1><p class=sub>Posledních '+DNY+' dní · vygenerováno '
     + new Date().toISOString().slice(0,16).replace('T',' ')+' · <code>node scripts/utils/stats.js --html</code></p>';
   const spicka = hodiny.slice().sort((a,b)=>b.n-a.n)[0];
   h += '<div class=cards>'
@@ -206,13 +214,13 @@ if (HTML_OUT) {
 }
 
 if (JSON_OUT) {
-  console.log(JSON.stringify({ dny: DNY, celkem, denne, hodiny, tydne: dny, jazyk, kvalita, naklady, hlas }, null, 1));
+  console.log(JSON.stringify({ dny: DNY, testeri: TESTERI, celkem, denne, hodiny, tydne: dny, jazyk, kvalita, naklady, hlas }, null, 1));
   process.exit(0);
 }
 
 const bar = (n, max, sirka) => '█'.repeat(Math.max(n > 0 ? 1 : 0, Math.round(n / (max || 1) * sirka)));
 
-console.log('\n  ══ RÚNAR — provoz, posledních ' + DNY + ' dní ══\n');
+console.log('\n  ══ RÚNAR — provoz, posledních ' + DNY + ' dní' + (TESTERI ? ' · JEN TESTEŘI (bez adminů)' : '') + ' ══\n');
 console.log('  celkem v DB: ' + celkem.n + ' čtení · ' + celkem.lidi + ' lidí · ' + celkem.od + ' → ' + celkem.do);
 
 const vObdobi = denne.reduce((a, r) => a + Number(r.n), 0);
