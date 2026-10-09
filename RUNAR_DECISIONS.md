@@ -8826,3 +8826,24 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   Testy: 5/5 stavů (načetla + zbývá · cizí session · prázdný seznam · jen --hotovo · seznam neexistuje) + starší načtení z téže session
   neblokuje; dosavadních 10/10 testů zprávy beze změny.
 - Affected doc(s): `CLAUDE.md` (§29, §30) · `memory/nacti-cteni-a-reporty.md` — v témže commitu.
+
+## 2026-10-09 (1) — Dvě podoby oblastí, které tvrdily délku o životě tazatele, pryč (v5.05, EN i IS)
+
+- **Rozhodl:** KUKY 2026-10-08, hlášení 0aeb00a5 u čtení Mannaz (Purpose & Path): *„Area face ‚an aim pursued for a long time‘ — není
+  dobře zvolené. Model z toho bere časový horizont a ve čtení použije ‚you have pursued for years‘. No chance we know something like
+  that.“* **Provedl:** CODE-tune (rozšířeno na sourozence se stejnou vadou, podle dat níž).
+- **Proč:** podoba oblasti (`AREA_FACES`) jde do řádku oblasti i do cíle mostu; slovo z ní model vysloví (`RUNAR_DESIGN.md` „Slova,
+  která dáváme modelu“). Dvě podoby nesly DÉLKU nebo PRAXI, kterou o člověku nevíme, a model z ní udělal tvrzení o jeho minulosti.
+  Produkce, všechna čtení s těmito podobami: Purpose & Path [3] 2/2 (*„The aim you have carried this long…“*, *„…an aim you have pursued
+  for years“*) · Career & Creativity [4] *„skill and the long practice behind it“* 3/3 (*„a skill shaped by years of practice“*, *„your
+  long practice may be your own“*, *„Your practiced skill…“*).
+- **Co:** `AREA_FACES` (`runar-utils.js`) bez Purpose [3] a Career [4], EN i IS (IS nesly totéž: *„lengi“*, *„langri æfingu“*). Obě byly
+  poslední v seznamu oblasti, takže indexy ostatních podob v `prompt_draws.area_face` u starých čtení platí dál. Purpose má teď 3 podoby,
+  Career 4 (pravidlo 3–5 drží). `RUNAR_PROMPT_VERSION` → `v5.05-podoby-bez-delky`, registr pravidel přepsán (4 řádky ubyly, žádná nepřibyla).
+- **Ověřeno:** `verify_ending_angle.js` — všechny zbylé podoby padají (4/3/4/4/3/3/3/3), řádek oblasti a most nesou tutéž · golden 42/42
+  beze změny (golden oblasti Purpose/Career nelosuje) · `check-is.py` čisté. Nic se nepřidává, změna jen ubírá vstup.
+- **Hranice:** ostatní podoby nic o délce netvrdí; některé předpokládají činnost (*„what the seeker is making“*) — to owner nehlásil a data
+  k tomu nemám, netknuto. Sledovat v monitoru „podoba oblasti opsaná“.
+- Odvolává se na: 2026-09-25 (1) (podoby oblastí nasazené, owner *„po pár dnech vyhodnotíme“*).
+- Affected doc(s): žádný — znění podob vlastní kód a doky ho neopisují.
+
