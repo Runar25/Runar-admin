@@ -140,6 +140,9 @@ const POKYNY = [
   ['„the rune / reading does not say“', /\b(the )?(rune|runes|reading|picture|image) (does|do) not (say|tell|decide|settle|show)\b/i, ['say']],
   ['„leaves … open“', /\bleaves? (that|it|this|the [a-z]+|room for)? ?(question )?open\b|\bleaves room for\b/i, ['leave', 'open']],
   ['„not a promise / verdict / sign“', /\bnot a (promise|verdict|prediction|sign|warning)\b/i, ['promise']],
+  // 2026-10-09 (KUKY: „‚…recognize it, or not.‘ odstraníme ‚or not‘… ostatní jsou cajk“): ocas obojím směrem. Vzácný (produkce 1/148,
+  // lab 0/300) — hlídá se tady; když se začne vracet, teprve pak pokus (RUNAR_BACKLOG.md, audit 2026-10-07 bod 6).
+  ['„…, or not“', /\bor not\b/i, ['or not']],   // klíč celý: samo „not“ našlo každé „Do not…“ v promptu
 ];
 function opakovane(texty, min) {   // čtyřslovné fráze z malých písmen ve ≥ min % textů
   const pocty = {};

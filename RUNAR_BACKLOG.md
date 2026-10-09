@@ -421,16 +421,19 @@
 - [ ] ⭐ **Strom (lab): shluk větví budoucnosti a světa nahoře vpravo** (CODE-tree, 2026-10-05, po DECISIONS (12)). Každé čtení je teď na svém místě a strom má tvar diagonály z kánonu (nitro + minulost vlevo dole, svět + budoucnost vpravo nahoře) — a právě nahoře vpravo se sbíhají strmá ramena budoucnosti a jejich povýšené větve: souběhy na KUKYho stromě 13 (dřív 2), na 24 modelových ~93 (dřív 62). Kandidáti: rozestup povýšených podél matky a jejich odbočka od sousedních větví (ne jen od matky), úhly povýšených na straně jako u ramen (pořadí), délka povýšených. Měřit `ovtypes`/`tree_overlap.js` + `tree_render.js`; tvar ramen z kmene neměnit.
 - [ ] ⭐ **Strom (lab): čeká na ownera — vyvážený strom, posílení větviček** (CODE-tree, 2026-10-07, hlášení 2e6aa64d). Owner chce
   každou vizuální změnu napřed vidět (KUKY 2026-10-07: *„to že ty řekneš, že jsi něco opravil, mě nezajímá, pokud jsem ti na vizuální věc
-  nedal svůj pohled“*). Body 2 a 3 schválil po obrázku 2026-10-09 a jsou v labu (DECISIONS 2026-10-09 (3)); 1 a 4 čekají.
-  Změřeno na jeho stromě (280 čtení, 342 tažení):
-  1. **Vlevo nahoru nic:** jednotlivé čtení z nitra (Healing/Family/Inner Growth) se do horní zóny nedostane nikdy (nejvýš 0,25, pásmo
-     začíná na 0,33) — oblast se počítá do výšky (váha 0,3) a seeking táhne jen dolů. Vlevo 57/43/0 % (dole/střed/nahoře), vpravo
-     13/49/38 %. Oblast jen pro stranu: vlevo 41/28/32, vpravo 37/34/29; poloviční váha (0,15): vlevo 51/32/17, vpravo 37/34/29.
-     Mění kánon „diagonála příběhu“ (`RUNAR_TREE.md` §3) → rozhoduje owner.
+  nedal svůj pohled“*; 2026-10-09: *„všechno zatím nanečisto“*). Body 2 a 3 schválil po obrázku 2026-10-09 a jsou v labu
+  (DECISIONS 2026-10-09 (3)); 1 a 4 čekají.
+  1. **Vyvážený strom — plán schválen, nanečisto hotové** (DECISIONS 2026-10-09 (10): tabulka vstupů, čísla, cena). Patch
+     `docs/archive/tree/2026-10-09_nanecisto_strany.patch` (`git apply`) — oblast jen strana + čtení bez strany na lehčí stranu. Čeká na
+     ownerův pohled na obrázky; pak rozhodne o seekingu (dnes táhne jen dolů a strom skoro nemění). **Záloha výšky bez záměru:** dnes
+     svět runy (Hel dole, Midgard střed, Asgard nahoře); druhá možnost, kdyby neseděla (KUKY: *„už máme vytvořenou zálohu pro případ,
+     že mi to nebude sedět“*) = zóna, kde je strom zatím nejslabší (roste od zóny k zóně) — zatím nepostavená, jen popsaná tady.
+     Mění kánon „diagonála příběhu“ (`RUNAR_TREE.md` §3) — přepsat až při zapnutí.
   2. ✅ **Strop 25** — v labu od 2026-10-09 (DECISIONS 2026-10-09 (3); patch `docs/archive/tree/2026-10-07_strop25.patch` je historie).
   3. ✅ **Chyba strany** (Fehu a Dagaz vlevo s 19 čteními o světě) — opravená v labu 2026-10-09, smoke ㉳ má log „svět“, který ji chytí.
   4. **Posílení větviček** (návrh z hlášení): přesné opakování (runa + oblast + seeking + záměr) 310 → 281 větviček; tatáž runa na téže
      větvi 310 → 123 — na větvi pak nejvýš 6 run (element má 5–6 run, stín 3), takže limit 3/4/5 run by se dotkl 19/16/4 z 32 větví.
+     Nanečisto ukázané 2026-10-09 (stejná runa na téže větvi posílí svou větvičku; se stropem 25: 317 → 105 větviček) — čeká na ownera.
 - [ ] **Strom (lab): sklouznutí úchytů při zrodu ramene podle zóny až 47 px** (2026-10-05): sousedé se rozestoupí v jednom čtení (rychlé kroky). Kdyby to bylo vidět jako skok, rozložit rozestoupení do pár čtení s ramenem, které se rodí malé.
 - [ ] **Lab: mrtvé úhly povýšených z vějíře** (CODE-tree, 2026-10-03). V časové smyčce `build_crown_composer.py` se pro povýšené počítá strana a cílový úhel (`gIx`, `gN`, `gSv`, `gSl`, `gZ`, `gSd`, `gS0`, `liveG`, `tgA['g'+j]`, `gAngQ` → `_GANG`) a nic to nečte — úhel povýšené bere `growGrad` od směru matky (`_GTURN`). Smazat s golden-verify (stejná kresba na KUKYho a modelových stromech).
 - [ ] **Lab RŮST: „expanze šířka / mohutnost“ ukazuje mrtvé hodnoty** (CODE-tree, nalezeno 2026-10-03 při mapování). `wExp` a `mExp` se spočítají (`effCanopy`, `girth`) a nikde se nepoužijí (`RUNAR_TREE_MAP.md` §2). Buď zapojit (co mají velké spready vody/země a stínu na stromě znamenat, rozhodne owner), nebo z RŮST vyřadit.
@@ -1239,9 +1242,11 @@ položky dohledán (`node scripts/utils/uz_vime.js`); měření → EVAL_LOG 202
 6. [ ] **Ask pojistka — owner na ni upozornil 2026-10-08** (hlášení 744028f4): *„It leaves room for you to recognize it, or not… nevím, jestli
    je úplně třeba říkat ‚or not‘.“* Po v5.03 změnila hlavně tvar: *„leave(s) room for…“* v produkci 9/82 → 8/17 (p = 0,001), podíl pojistky
    beze změny (72 % → 71 %, n = 17). Měřák labu ten tvar neviděl, účinek v5.03 byl nadsazený (28 → 20 ze 30, ne 26 → 14) → EVAL_LOG
-   2026-10-09 (1). Jednou větou se to nespraví — nese ji víc zákazů verdiktu naráz. **Další krok rozhodne owner:** lab CODE-read na zákazy
-   předpovědi v charakteru (*never predicts / does not guarantee / never hand a conclusion* — nejsilnější nepoužitá páka, 28 → 19 ze 30;
-   je to kánon hlasu), nebo nechat.
+   2026-10-09 (1). Jednou větou se to nespraví — nese ji víc zákazů verdiktu naráz.
+   **Owner 2026-10-09 k příkladům:** *„‚…recognize it, or not.‘ odstraníme ‚or not‘. Stačí říct, že to člověk v sobě musí najít. Když to
+   nenajde, tak to nenajde, ale to mu my říkat nemusíme. Ostatní jsou cajk.“* → vadí jen ocas obojím směrem, ostatní pojistky ne.
+   Ocas je vzácný: produkce 1 ze 148 Asků od 2026-09-25, lab 2026-10-06 0 ze 300 — pokus by neměl co měřit. **Hlídá ho monitor ozvěn**
+   (řádek „Ask: …, or not“ od 2026-10-09). Až se začne vracet, teprve pak lab CODE-read (předávka připravena v konverzaci 2026-10-09).
 
 ### Haiku 5.5 (vyšel 2026-10-07) — kde by šel použít; srovnání s lunou čeká na ownerovo ano (hlášení b4365ead) (CODE-tune)
 Owner: *„Zjisti všechno o Haiku 5.5… Nabízí se nám nějaké možnosti, jak tyhle levné modely používat? Jak by se dal porovnat s Luna 6?“*
