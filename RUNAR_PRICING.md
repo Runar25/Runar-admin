@@ -108,8 +108,9 @@ Worst-case cost per reading-unit is the **single** (358 chars/unit); all spreads
 
 Owner 2026-08-17: **sonnet-5 zrušit jako fallback** (nepředvídatelný thinking, viz níž). Kandidáti
 dál: opus-4-8 (produkce), opus-4-7, opus-5, sonnet-4-5. Výčet modelů vlastní `MODELS`
-v `claude-proxy/index.ts` — tady se NEOPISUJE (§20). ⏳ Odstranění z chainu = kód (CODE-tune) +
-deploy: `index.ts:674`, plus zmínky `docs/runar-prompt-map.html`, `sql/2026-08-15_readings_usage.sql`.
+v `claude-proxy/index.ts` — tady se NEOPISUJE (§20). ✅ Sonnet 5 z řetězu odstraněn a nasazen týž den (proxy v59,
+snapshot `memory/snapshots/2026-08-17-sonnet5-drop-deployed.md`; do 2026-10-09 tu stálo „⏳ … `index.ts:674`“). Od 2026-10-09
+čte všechny GPT-6 sol a Claude je záloha (DECISIONS 2026-10-09 (13)) — tabulka níž je historické měření Claude modelů.
 
 Změřeno simulátorem (single „Fehu", **májový/úsporný prompt**, n=2, dnešní ceník: opus $5/$25 ·
 sonnet-5 $2/$10 zaváděcí do 31.8. · sonnet-4-5 $3/$15). **Čísla jsou NECACHOVANÁ** (čerstvý request).

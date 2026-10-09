@@ -613,7 +613,9 @@
 - [x] ⚠️ **CRITICAL — metering přes `Math.max(1, x)` s NaN** — OPRAVENO 2026-08-22 (sanitizace celé číslo 1..9 na jednom místě; kontrola ⑨ ji adversariálně spouští, falzifikováno proti staré proxy). Původně: (odhaleno audit 2026-08-03, PRE-EXISTUJÍCÍ, ne z #4): nečíselná cena od klienta (`spread_cost:"constructor"` / `spread_cost:{}`) → `Math.max(1, x)` = **NaN**. NaN poráží VŠECHNY kontroly: `creditsBalance < NaN` = false → přeskočí zůstatek; odečítací smyčka `for(i=0;i<NaN;i++)` = 0 odečteno → **neomezená čtení zdarma** pro přihlášeného rune_seekera z 0 zůstatku (jediný limit = 10/min rate). Stejně padá i monthly cap (`used+NaN>limit` = false). Expozice teď ~0 (žádní veřejní users, jen test-účet), ale **fix nutný před launchem**: cenu validovat jako kladné celé číslo (`Number.isInteger(cost) && cost>=1`), jinak 400. Jednořádkový, ale nasadit až po rozhodnutí o #4 (souvisí). Report: `tasks/wqxu3uuar.output`.
 - [ ] **Proxy Fáze 2 — zbývající díry z auditu 2026-08-02** (visitor už zavřen; tyhle jsou pro PŘIHLÁŠENÉ): **#2b** hlas na zaplacené čtení — ⚠️ POKUS 2026-08-03 **VRÁCEN** (voice gate rozbil hlas u tree/life-rune čtení — ta nenastavují `_lastReadingId`; proxy zpět na Fázi 1, klient zpět na `{text,lang}`). `readings`→SELECT-only ZŮSTALO (samostatný reálný fix). Znovu JEN po zmapování VŠECH voice cest (reader · tree/life-rune · someone) + reálném E2E testu na živém toku · **#3** `mode=life_rune` gate čte sloupec, který server nikdy nezapíše → replay = free Opus; zrcadlit founding CAS · **#4** ⚠️ POKUS 2026-08-03 (server oceňuje podle slugu) **VRÁCEN** — cena/metering NEJDE postavit na klientem deklarovaných metadatech (`spread_cost`/slug), dokud prompt staví KLIENT a server ho nekontroluje (server nezná pravý spread). Spoof se jen přesunul číslo→slug + přidal regresi (nový RS s `free_balance` → 402 na spread). Skutečný fix = server staví prompt ze strukturovaných vstupů (runy+typ) nebo metering na server-vlastněném signálu → architektonické, owner (§21). Report: `tasks/wqxu3uuar.output` · **#6/#7** `tree-update` věří `credits_used` + `short_text/deep_text` od klienta (neměřené Haiku) → odvodit ze saved readings row.
 - [ ] **#2b navazující flagy** (2026-08-03): „someone" čtení se neukládá → nemá `reading_id` → hlas zablokován (rozhodnout: přijmout, nebo claude-proxy vytvoří voice-gate řádek) · premium „question gate" (THE SITUATION) je jen KLIENTSKY — server otázku od nižšího tieru neodmítne (ne money-díra, jen produktová brána) · až bude tester tier: voice gate musí navíc kontrolovat `is_tester`+redeem (dnes hlas na každé zaplacené čtení = OK pro současné tiery).
-- [ ] **Proxy defense-in-depth** (audit 2026-08-02, ne urgentní): bound fail-open větve (monthly cap `:530`, ritual precheck `:508`) · legitAsk concurrency race (1 extra free ask) · ověřit tělo `check_rate_limit` RPC (audit nečetl) · client visitor gate → „registruj se" CTA místo volání proxy.
+- [ ] **Proxy defense-in-depth** (audit 2026-08-02, ne urgentní): bound fail-open větve (monthly cap `:530`, ritual precheck `:508`) · legitAsk concurrency race (1 extra free ask) · ~~ověřit tělo `check_rate_limit` RPC (audit nečetl)~~ ✅ ověřeno 2026-10-09 (kontrola architektury, živá definice): pevné okno,
+atomický upsert, úklid starších než hodina; stejně tak `use_credit` (atomické odečtení jen při zůstatku > 0, jinak −1),
+`use_free_balance` (CAS), `bump_month_units` (atomické) — sedí s komentáři v `claude-proxy` · client visitor gate → „registruj se" CTA místo volání proxy.
 
 ---
 
@@ -1806,7 +1808,22 @@ Neškodí; až CODE-tree strom pustí testerům, stačí odkrýt záložku. **Pr
 **Opraveno rovnou (`CLAUDE.md`):** tabulka souborů bez `runar-names.js`, `runar-names-registry.js`, `runar-voice-admin.js`,
 `runar-help.html`, `runar-privacy.html` → doplněno · pořadí načítání bez jmen → doplněno podle `runar-reader.html` · „27 konstant“
 v configu (číslo v docu, §20) → pryč · §5 výjimka `--dim` · „Gating: Visitor má Single 1×“ → stav produkce · „deník atomicky
-s odečtem“ → dva zápisy · §16 nový postup. **Pro ownera:** nic navíc.
+s odečtem“ → dva zápisy · §16 nový postup. `RUNAR_PRICING.md`: „⏳ odstranění Sonnetu z řetězu“ (hotové 2026-08-17) → ✅ + že
+dnes čte sol. **Pro ownera:** nic navíc.
+
+### Část 8 — stránky pro uživatele (`runar-help.html`, `runar-privacy.html`, 2026-10-09)
+**Platí:** kredity nevyprší a patří k účtu · měsíční čtení se obnoví 1. den měsíce (server počítá kalendářní měsíc UTC) · deník
+Rune Seekera = posledních 5 (`TIER_LIMITS.rune_seeker.journal_entries`).
+**Opraveno:** nic — obojí čeká na rozhodnutí, která už leží.
+
+**PRO OWNERA:**
+12. 🟠 **Stránky slibují, co už neplatí — obojí patří k už otevřeným rozhodnutím, nic nového nerozhoduj zvlášť:**
+    - `runar-help.html` „VISITOR — 1 reading, no account needed“ (EN 2×, IS 1×) → po rozhodnutí bodu 3 (co návštěvník po tahu uvidí).
+    - `runar-help.html` FAQ „Is Rúnar an AI? — shaped by Claude, made by Anthropic“ (EN i IS) a `runar-privacy.html` „Anthropic (AI
+      readings)“ — od 2026-10-09 píše čtení OpenAI. Stránka soukromí už čeká na tebe (DECISIONS 2026-10-09 (13), bod b); ⚠️ hotové
+      návrhy textů (`docs/inbox/2026-09-30-navrh-textu-soukromi.md`, části A a B) počítají jen s Anthropicem — před „publikovat“
+      je potřeba verze s OpenAI (část C pro souhlas testerů ji už má). FAQ k tomu patří.
+    Obě stránky drží angličtinu dvakrát (statické HTML + slovník v JS) — při úpravě opravit obojí.
 
 ## 2026-08-16 — otevřené po zavedení registru `direct`
 
