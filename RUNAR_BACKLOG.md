@@ -1718,6 +1718,10 @@ Nasazená funkce se od repa liší jen těmito komentáři a mrtvou funkcí — 
    má kredity, zaplatí kredity a volné čtení mu zůstane na single; kdo nemá, dostane 402 `no_credits`. Pokus 2026-08-03 (#4) skončil
    regresí „402 i s kredity“ — tahle podoba ji nemá, protože s kredity jde do placené větve. Podvrh klientem (#4, „Proxy Fáze 2“ v sekci
    C výš) tím vyřešený NENÍ — ten je architektonický a dál otevřený. Dopad dnes: jedno čtení na účet.
+   **Fix má i klientskou půlku** (CODE-tune 2026-10-09, ověřil v klientovi): `shouldUseCredit()` (`runar-app.js`) cenu spreadu
+   nezná a čte ji i `canUseVoice()`. Se samotnou serverovou podmínkou by Rune Seeker s `free_balance` 1 a 0 kredity dostal na spread
+   402, i když klient spread nabízí jako zdarma. Rozhodnout tedy celek: server + `shouldUseCredit()` podle `SPREAD_COSTS` (+ dopad na
+   hlas) + texty, které spread Rune Seekerovi nabízejí. Kód nikdo nemění, dokud owner nerozhodne.
 2. ⚪ **`credits_used` může lhát.** Odečet a zápis jsou dva zápisy; když zápis selže, klient čtení pošle přes `resave` a to
    uloží `credits_used = false`, i když kredit stržen byl. Shrine pak ukáže „free“. Jen štítek, peníze se nepletou. Stačí vědět.
 3. 🟠 **Návštěvník si vytáhne runu a dostane obecnou chybu.** Živé čtení nepřihlášenému proxy odmítá od 2026-08-02 (401,
@@ -1779,7 +1783,7 @@ rate_limited | no_credits“ — vrací víc, včetně `unauthorized` návštěv
     `elevenlabs-proxy` `voice_id`/`model_id`, které server záměrně ignoruje. Neškodí.
 
 ### Část 5 — prompt (tvrzení `CLAUDE.md` §2 a „Reading systém“, 2026-10-09)
-**Platí:** tři vrstvy (system · prompt · korekce v promptu), post-processor `applyISCorrections` pryč (zbyl jen komentář o odchodu) ·
+**Platí:** tři vrstvy (system · prompt · korekce v promptu), post-processor `applyISCorrections` pryč (zbyl jen komentář o odchodu) · <!-- check-docs:ok 2026-10-09 cituje odstraněný post-processor jako odstraněný (ověření kontrolou architektury) -->
 `buildSysPromptV2` v produkci nikdo nevolá (jen lab skripty) · `SEASON_POOLS` jen jako sáček. Hlídá je smoke ⑥ ⑧ ㉚ ㉜ a audit promptu
 2026-10-07 (sekce výš). **Opraveno:** nic. **Pro ownera:** nic.
 
