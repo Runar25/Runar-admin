@@ -6309,3 +6309,28 @@ v mezích pravidel — odpovědi jsou konkrétní (*„a day when you have less 
 pojistka 1/6. P4 ale začíná pokaždé stejně (bod 4 zásad „Slova, která dáváme modelu“). P3 drží obraz i podobu, pojistka napůl.
 **Hranice:** n = 6 na otázku, tři čtení, sol, EN; B0 tu nese podobu v promptu (produkce ne). Kvalitu posuzuje owner — texty ukázané v hlášení.
 **Owner po přečtení textů (2026-10-07):** *„těžkost a všední den znějí nejlíp.“* Zásada → `RUNAR_DESIGN.md` „Slova, která dáváme modelu“ bod 5.
+
+## 2026-10-09 (1) — Pojistka v Asku po v5.03 změnila hlavně TVAR: „leaves room for…“; měřák labu ten tvar neviděl (oprava 2026-10-06 (8))
+
+**Proč:** owner 2026-10-08 (hlášení 744028f4) u Asku na Laguz: *„It leaves room for you to recognize it, or not. Z čeho se tvoří na
+konci obě možnosti… nevím, jestli je úplně třeba říkat ‚or not‘.“* Monitor ten den: „leaves … open“ 3/7 Asků, *„v promptu není“*.
+**Útok na měřák (§27):** regex labu (`docs/eval/2026-10-06-ask-otazky/rozbor_slova.js` `RE_DNS`) bere *does not say / tell / settle / show /
+decide*, *leaves … open* a *not a promise / verdict*, ale **ne** *leave(s) room for…*, *keeps … open*, *both possibilities*, *does not point /
+prove / promise*. Přepočet týchž dat užším-ale-úplnějším detektorem (všechny shody přečteny; vyřazeno *makes room for the other's pace* —
+obsah, ne pojistka):
+| data | n | regex labu | detektor s „leaves room for“ | z toho *leave(s) room for* |
+|---|---|---|---|---|
+| lab 2026-10-06 (8) P0 produkce | 30 | 26 | 28 | 3 |
+| lab PRAVIDLA = znění v5.03 | 30 | 14 | 20 (P0 × PRAVIDLA p = 0,021) | 8 (p = 0,18) |
+| lab P5 charakter bez zákazů předpovědi | 30 | 14 | 19 | 2 |
+| lab P6 čtení bez poslední věty | 30 | 14 | 22 | 4 |
+| produkce sol, čtení < v5.03 (25. 9. – 7. 10.) | 82 | 54 | 59 (72 %) | 9 (11 %) |
+| produkce sol, čtení ≥ v5.03 (7. – 8. 10.) | 17 | 6 | 12 (71 %, p = 1,0) | 8 (47 %, p = 0,001) |
+**Závěr:** v5.03 v labu pojistku snížilo **míň, než stálo** (28 → 20 místo 26 → 14) a část poklesu byl přesun do *„leaves room for…“*.
+V produkci je podíl pojistky stejný a *„leaves room for…, or not“* je teď její hlavní tvar — ownerovo *„or not“* je přesně ona.
+Žádná z pák 2026-10-06 (8) ji neodstraní (všechny 19–22 ze 30); nejsilnější je charakter bez *„never predicts / does not guarantee /
+never hand a conclusion“* (P5).
+**Hranice:** produkce po v5.03 = 17 ownerových Asků na 10 čteních, jiná skladba otázek než před (otázky na význam, „…with the past“) →
+srovnání podílu je předběžné; tvar *leaves room for* drží i v labu se stejnými otázkami (3 → 8, n. s.). Rozhodnutí v5.03 se tím nemění —
+podmět „the rune“ (ownerova původní výtka) ubyl (8 → 1, p = 0,026, `docs/eval/2026-10-06-ask-pojistka/`). Detektor pro příští lab: tenhle
+přepočet, ne `RE_DNS`. Data mimo repo (`~/runar-eval/zaloha/2026-10-06_12b7cce8_v2_A.json`, export Asků z DB). <!-- doc-links:ok 2026-10-09 osobní data mimo repo (nesou jméno), DECISIONS 2026-08-08 -->

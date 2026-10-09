@@ -8847,3 +8847,13 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - Odvolává se na: 2026-09-25 (1) (podoby oblastí nasazené, owner *„po pár dnech vyhodnotíme“*).
 - Affected doc(s): žádný — znění podob vlastní kód a doky ho neopisují.
 
+## 2026-10-09 (2) — v5.03 zůstává; jeho změřený účinek na pojistku v Asku je opravený (tvar, ne četnost)
+
+- **Co:** žádná změna kódu. Podklad rozhodnutí 2026-10-07 (1) — *„pojistka 26/30 → 14/30“* — změřil regex, který nevidí *„leave(s) room
+  for…“*. S detektorem, který ho vidí: lab 28 → 20 ze 30; v produkci podíl pojistky stejný (72 % → 71 %, n = 17) a *„leaves room for…,
+  or not“* je teď její hlavní tvar (11 % → 47 %). Čísla a hranice → `RUNAR_EVAL_LOG.md` 2026-10-09 (1).
+- **Proč zápis sem:** kdo čte 2026-10-07 (1), vezme 26 → 14 jako fakt a postaví na něm další páku.
+- **Co platí dál:** v5.03 splnilo, kvůli čemu vzniklo — podmět *„the rune does not say“* ubyl (8 → 1 ze 30). Owner na nový tvar ukázal
+  hlášením 744028f4 (*„nevím, jestli je úplně třeba říkat ‚or not‘“*); další krok rozhoduje owner → `RUNAR_BACKLOG.md`, audit 2026-10-07, bod 6.
+- Odvolává se na: 2026-10-07 (1).
+- Affected doc(s): `RUNAR_BACKLOG.md` (audit promptu 2026-10-07, bod 6) — v témže commitu.

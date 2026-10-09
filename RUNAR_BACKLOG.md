@@ -1202,9 +1202,11 @@ Ověřit nejmenším vzorkem, rozhodne owner.
 *„{area} — where might I notice this in my days?“* (pojistka 1/6 proti 4/6 u dnešního tipu). Otevřené: jestli a kdy tip v appce změnit
 (IS znění vymyslet a ověřit; délka tipu na mobilu — BACKLOG „Tři tipy přetékají…“; *„You might notice…“* jako stálý začátek).
 
-### ✅ OPRAVENO 2026-10-07 — Glyf životní runy nad čtením: klepnutí rozbliká i text vedle (hlášení e9897395) (CODE-tune)
+### ✅ OPRAVENO 2026-10-07, OVĚŘENO 2026-10-09 — Glyf životní runy nad čtením: klepnutí rozbliká i text vedle (hlášení e9897395) (CODE-tune)
 **Oprava** (owner: *„oprav to blikání glyfu životní runy“*): klepací glyf je vnořený inline span jako v hlavičce čtení a řádek nemá zvýraznění
-klepnutí. V prohlížeči ověřeno myší (okno s významem drží, vzhled stejný, řádek o 1 px vyšší); zvýraznění prstem emulátor neukáže — **na telefonu ověří owner**.
+klepnutí. V prohlížeči ověřeno myší (okno s významem drží, vzhled stejný, řádek o 1 px vyšší); zvýraznění prstem emulátor neukáže.
+**Owner na telefonu 2026-10-09:** *„glyf je už v pohodě… teď jsem to zkusil a je to v pohodě!“* Hlášení 24c6c548 z 8. 10. (*„stále problikla“*)
+bylo ze starého kódu, i když neslo `v564` — proč verze v hlášení klame, viz položka „Hlášení nese verzi nasazenou…“ níž.
 Owner: *„Když kliknu na glyf runy, problikne i celý text vedle… Tohle dělá jen tady. Normálně reaguje jen glyf… Má to být všude stejné.“*
 Prvek: `#reader-badge` (`_renderLifeBadge`, `v2/runar-reading.js`) — glyf má třídu `rlbl-glyph` jako glyfy v textu čtení, okno s významem
 dělá `v2/runar-rune-popup.js`. Příčina neurčená (kandidáti: zvýraznění klepnutí v mobilním prohlížeči na řádku `display:flex`, okno
@@ -1236,8 +1238,21 @@ položky dohledán (`node scripts/utils/uz_vime.js`); měření → EVAL_LOG 202
    = odstavec Kolekce (2026-10-03) — stejné téma ✦ u téže runy je jeho důsledek a řadu takových ✦ si owner uložil jako keep.
 4. ℹ **Vysvětleno, ne vada:** *electricity* v ✦ u Hagalazu = z obrazu *„The power goes out in the storm…“*.
 5. [ ] **Jen zapsané, owner je nehlásil:** Opus začíná větu o runě *„<runa> is…“* 19/25 · Ask na *„How does this reading affect me?“*
-   začíná stejně (*„[runa] speaks of…“*) 3/6 · ozvěna zákazu verdiktu ve čtení 4/79 (Hagalaz *„not a verdict / not a punishment“*) ·
-   Ask pojistka po v5.03 (zbytek nese most × zákazy verdiktu, EVAL 2026-10-06 (8)).
+   začíná stejně (*„[runa] speaks of…“*) 3/6 · ozvěna zákazu verdiktu ve čtení 4/79 (Hagalaz *„not a verdict / not a punishment“*).
+6. [ ] **Ask pojistka — owner na ni upozornil 2026-10-08** (hlášení 744028f4): *„It leaves room for you to recognize it, or not… nevím, jestli
+   je úplně třeba říkat ‚or not‘.“* Po v5.03 změnila hlavně tvar: *„leave(s) room for…“* v produkci 9/82 → 8/17 (p = 0,001), podíl pojistky
+   beze změny (72 % → 71 %, n = 17). Měřák labu ten tvar neviděl, účinek v5.03 byl nadsazený (28 → 20 ze 30, ne 26 → 14) → EVAL_LOG
+   2026-10-09 (1). Jednou větou se to nespraví — nese ji víc zákazů verdiktu naráz. **Další krok rozhodne owner:** lab CODE-read na zákazy
+   předpovědi v charakteru (*never predicts / does not guarantee / never hand a conclusion* — nejsilnější nepoužitá páka, 28 → 19 ze 30;
+   je to kánon hlasu), nebo nechat.
+
+### Haiku 5.5 (vyšel 2026-10-07) — kde by šel použít; srovnání s lunou čeká na ownerovo ano (hlášení b4365ead) (CODE-tune)
+Owner: *„Zjisti všechno o Haiku 5.5… Nabízí se nám nějaké možnosti, jak tyhle levné modely používat? Jak by se dal porovnat s Luna 6?“*
+Ceník Anthropicu (platform.claude.com/docs/en/about-claude/pricing, ověřeno 2026-10-09): cenou stejný jako gpt-6-luna, desetina Haiku 4.5;
+prompt nad 100 000 tokenů je dražší (u nás nikdy). Haiku 4.5 je v repu jen v edge fn `tree-update`, kterou appka nevolá.
+Kandidáti: rozbor čtení (dnes luna, `gpt-review`) · třídění hlášení testerů · `tree-update`, až ho CODE-tree oživí. Čtení a Ask ne:
+model je proti hlasu malá část ceny a islandština malého modelu neověřená. **Další krok jen s ownerovým ano (§30):** Haiku 5.5 × luna
+na rozboru týchž čtení (lunin rozbor je uložený v `gpt_reviews`), malý vzorek, texty vedle sebe pro ownera.
 
 ### Prompt × návody výrobců (Anthropic Opus 5, OpenAI GPT-6) — nálezy 2026-10-04, ČEKÁ NA OWNERA, co s nimi (CODE-tune)
 ⭐ **KUKY 2026-10-05: velké body (4, 5, 6, 8) a přestavba promptu → LAB CODE-read, ne produkce** (DECISIONS 2026-10-05 (3)).
@@ -2330,6 +2345,31 @@ Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
 - [ ] **Rozhodnout o čtyřech stávajících účtech.** Dnes: všechny mají `is_tester = true`, ale
       `tier = 'rune_seeker'` — **premium nemá nikdo** (ověřeno 2026-09-11). Když nepojedou taky
       jako premium, jejich nálezy nepůjdou srovnat s novými.
+- [ ] **Testeři hlásí čtení A Ask → potřebují tier s Askem** (zjištěno 2026-10-09 k hlášení 83f2d16c). Nový účet je Rune Seeker a ten má
+      Ask jen jako ukázku (`TIERS.rune_seeker.asks_per_reading`). Owner chce od testerů *„text čtení a Ask“* → testerům nastavit standard
+      nebo premium (počty čtení a Asků vlastní `TIERS` v `runar-config.js`) tímtéž SQL jako „Označit testery“. Rozhodne owner: který tier
+      a jestli platí i pro čtyři stávající účty (položka výš).
+- [ ] **Hlášení pro testery (KUKY 2026-10-09, hlášení 83f2d16c) — ČEKÁ NA SCHVÁLENÍ PLÁNU** (CODE-tune). Owner: *„Replace text? Není asi
+      potřeba. Řešení bude až na straně code… spíš ikona pro gramatiku či reword. Repeated phrase asi taky není potřeba. Ostatní můžou
+      zůstat… keep this [jen admin]. Tester bude mít v reportu jen text čtení a Ask. Neuvidí technické věci jako model, z čeho se skládá
+      prompt.“* Dnes (`v2/runar-reporter.js`): typy pro všechny stejné (Replace text · Reword · Repeated phrase · Visual · Error · Other ·
+      ✦ Keep) · bez označeného textu se bere **celá obrazovka** i s formulářem a tlačítky · složení čtení (model, prompt…) už je jen pro admina.
+      Návrh: tester vidí typy Grammar · Wrong word / Reword · Visual · Error · Other; Replace, Repeated phrase a Keep jen admin; zachycený text
+      = čtení + Ask, ne celá obrazovka. Návaznost: *Známkování čtení testery* (2026-08-16, otevřené — na co se ptát) a §29 (zápis hlášení).
+- [ ] **Přihlášení bez Gmailu a uzavřený test (KUKY 2026-10-09, podklad z Claude chatu) — ČEKÁ NA OWNERA** (CODE-tune). E-mailové
+      přihlášení (magic link) **je v appce hotové**, jen vypnuté (`AUTH_EMAIL_ENABLED`), dokud nebude vlastní SMTP — viz „Vyřešit doručení
+      přihlášení“ výš (rozhodnuto Brevo, ne Resend). Proti hromadné registraci: Supabase hook **Before User Created** (plán Free i Pro,
+      ověřeno 2026-10-09 v dokumentaci Supabase) jako Postgres funkce nad tabulkou povolených e-mailů — odmítne vznik účtu, který na
+      seznamu není, i přes Google; existující účty se přihlásí dál. Kód: tabulka + funkce v `sql/`, hezká hláška pro odmítnutého v
+      `runar-auth.js`; hook v dashboardu zapne owner. Varianta bez SMTP (účty s heslem zakládá owner + formulář s heslem) je víc kódu
+      a druhá cesta vedle magic linku. ⚠️ **iPhone:** aplikace přidaná na plochu nesdílí úložiště se Safari (WebKit bug 181849) a odkaz
+      z e-mailu se otevře v Safari → přihlášení odkazem skončí v Safari, ne v aplikaci. **Šestimístný kód** opsaný v aplikaci (Supabase
+      `signInWithOtp` + `verifyOtp`, šablona e-mailu s `{{ .Token }}`) to obchází a funguje i na Androidu → doporučeno místo odkazu.
+      Zdroj zčásti fóra vývojářů — ověřit na skutečném iPhonu.
+- [ ] **Hlášení nese verzi nasazenou, ne tu, která v telefonu běží** (2026-10-09, CODE-tune, §22). `runar-reporter.js` bere `app_version`
+      z čerstvě staženého `sw.js`, ale stránka jede na JS ze staré cache, dokud se nenačte znovu (SW: JS cache-first). Doklad: hlášení 24c6c548
+      (8. 10.) neslo `v564` a popisovalo chybu opravenou ve v564; owner 9. 10. po novém načtení: v pořádku. S testery by to mátlo diagnózu.
+      Oprava: verzi zapsat přímo do kódu (pre-commit hook ji při bumpu `sw.js` přepíše i v reporteru) a do hlášení dávat obě.
 
 ## Ověřit naživo, než rozešleš odkaz
 
