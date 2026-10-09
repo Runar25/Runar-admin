@@ -8933,3 +8933,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hranice:** tok kódu ověřen jen v náhledu (vzhled, kroky); skutečný e-mail s kódem ověří owner, až poběží Brevo. Jak Supabase předá
   zprávu hooku při návratu z Google, neověřeno — appka hledá „closed_test“, jinak ukáže obecnou hlášku s popisem chyby.
 - Affected doc(s): `RUNAR_BACKLOG.md` (Musí být hotové PŘED prvním cizím přihlášením) — v témže commitu.
+
+## 2026-10-09 (7) — Hero, druhé kolo: pozdrav pod Rúnarem pryč, proužek se otáčí (dolů ke čtení ↔ nahoru k Rúnarovi)
+
+- **Rozhodl:** KUKY 2026-10-09 se screenshoty: *„good to see you again je nahoře v liště. Takže to pod Rúnarem ‚good to see you‘ odstranit
+  a tím se nám proužek se šipkou posune do hlavní obrazovky, kde ho chci vždy mít. To je právě to ulehčení pro uživatele… a když ho použiji
+  a skočí dolů, tak na druhé straně by měla být šipka nahoru a při kliknutí najet zase zpět k Rúnarovi.“* **Provedl:** CODE-tune.
+- **Co:** `#hero-greeting` a `showHeroGreeting` pryč (pozdrav zůstává v horní liště, `showTopbarGreeting`). Proužek `#hero-down` je jeden
+  a otáčí se podle polohy: dokud je na obrazovce níž, šipka dolů → sjede tak, že proužek stojí hned pod horní lištou nad záložkami čtení;
+  u lišty (nebo nad ní) šipka nahoru → zpět na začátek k Rúnarovi. Čtečka obrazovky: *„Back up to Rúnar“* / *„Aftur upp til Rúnars“*
+  (korpus „aftur upp“ 20 637, „til Rúnars“ 155).
+- **Ověřeno v náhledu 412×915:** proužek 750–790 px (dřív se pozdravem níž) · dolů → proužek přesně pod lištou (47 = 47 px), šipka
+  nahoru · nahoru → začátek stránky (0 px), šipka zpět dolů.
+- **Hranice:** když člověk sám odroluje dál, proužek odjede s obsahem (není přilepený); šipka nahoru je na „druhé straně“, ne všude.
+- Odvolává se na: 2026-10-09 (4).
+- Affected doc(s): žádný — rozložení hero vlastní kód.
+

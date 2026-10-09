@@ -214,7 +214,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     z-index:2;
     background:linear-gradient(to bottom, transparent 0, var(--bg) 48px);
   }
-  .hero-greeting{margin-bottom:14px;font-size:1em;}
   .hero-quote{margin:0 auto 22px;border-left:none;border-top:1px solid rgba(125,88,56,0.35);padding:16px 0 0;text-align:center;max-width:100%;font-size:0.95em;}
 }
 @media(max-width:420px){
@@ -247,10 +246,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .hero-down:focus-visible{outline:1px solid rgba(255,191,0,0.55);outline-offset:-4px;}
 @keyframes heroDown{0%,100%{transform:translateY(-2px);}50%{transform:translateY(2px);}}
 @media(prefers-reduced-motion:reduce){.hero-down svg{animation:none;}}
-
-/* ── HERO GREETING ── */
-.hero-greeting{font-size:1.08em;font-style:italic;color:var(--gold);opacity:0;margin-bottom:22px;transition:opacity 1.1s ease;line-height:1.6;}
-.hero-greeting.show{opacity:0.88;}
+/* 2026-10-09 (KUKY: „na druhé straně by měla být šipka nahoru a při kliknutí najet zase zpět k Rúnarovi“): když proužek stojí u horní
+   lišty, šipka se otočí nahoru (třídu .nahoru přepíná _heroDownStav v runar-app.js). Otáčí se cesta, ne svg — svg nese houpání. */
+.hero-down svg path{transform-box:fill-box;transform-origin:50% 50%;transition:transform 0.25s ease;}
+.hero-down.nahoru svg path{transform:rotate(180deg);}
+/* 2026-10-09: pozdrav pod Rúnarem (.hero-greeting) pryč — stojí v horní liště (#topbar-greeting). */
 
 /* ── NAME PROMPT MODAL ── */
 .name-overlay{position:fixed;inset:0;background:rgba(10,12,18,0.9);z-index:200;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}

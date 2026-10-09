@@ -49,7 +49,6 @@ const FREE_REGISTERED_LIMIT = TIER_LIMITS.rune_seeker.onboarding;  // 1
 const DELAY_NAME_PROMPT  = 1200; // ms after login before name prompt appears
 const DELAY_RELOAD       = 1200; // ms after sign-out before page reloads
 const DELAY_TRIAL_END    = 8000; // ms after last free reading before join prompt
-const DELAY_GREETING     =  600; // ms before hero greeting fades in
 const DELAY_TOAST_IN     =  200; // ms before toast slides in
 const DURATION_TOAST     = 4700; // ms toast stays visible
 const DELAY_FOCUS        =  100; // ms before input receives focus
@@ -152,7 +151,6 @@ async function fetchUserProfile(userId) {
   if (activeAppTab === 'tree' && typeof updateTreeTab === 'function') updateTreeTab();
   updateAuthUI();
   showTopbarGreeting();
-  showHeroGreeting();
   if (typeof _updateReadingForm === 'function') _updateReadingForm();
   // Ask for name if not set yet (delay so UI settles first)
   if (!userName) setTimeout(showNamePrompt, DELAY_NAME_PROMPT);
@@ -390,13 +388,8 @@ function showTopbarGreeting() {
   setTimeout(() => el.classList.remove('show'), DURATION_TOAST);
 }
 
-function showHeroGreeting() {
-  const el = document.getElementById('hero-greeting');
-  if (!el || !currentUser) return;
-  const n = displayName();
-  el.textContent = tp('greet_hello', { name: n });
-  setTimeout(() => el.classList.add('show'), DELAY_GREETING);
-}
+// 2026-10-09 (KUKY): showHeroGreeting pryč — pozdrav pod Rúnarem opakoval ten z horní lišty (showTopbarGreeting) a odsouval
+// proužek dolů ke čtení (#hero-down) z první obrazovky.
 
 // ── NAME PROMPT ──────────────────────────────────────────
 // ── DVE JMENA (2026-09-12) ─────────────────────────────────────────────────
@@ -486,7 +479,6 @@ async function saveName() {
   const lbl = document.getElementById('auth-user-label');
   if (lbl) lbl.textContent = userName;
   updateDropdown();
-  showHeroGreeting();
   greetingShown = false;
   showTopbarGreeting();
   if (typeof _updateReadingForm === 'function') _updateReadingForm();
@@ -645,16 +637,37 @@ function openSidePanel() {
 // „zrcadlo, ne orákulum“; přepsány. IS „tilbúinn“ (jen mužský rod) nahrazeno „þegar þér hentar“.
 let _heroPhrase = null;
 // 2026-10-09 (KUKY: „proužek, na který při kliknutí se celá obrazovka posune na runy pod ní… tak aby nebyla potřeba prstem
-// posouvat, abych se dostal dolů na čtení“): klepnutí na proužek pod hero (#hero-down) sjede k záložkám čtení. Odečítá se
-// lepící horní lišta (.topbar, position:sticky), jinak by záložky zůstaly schované pod ní. Bez animace, když si ji člověk vypnul.
-function scrollToReading() {
-  var cil = document.querySelector('.app');
-  if (!cil) return;
+// posouvat, abych se dostal dolů na čtení“ · druhé kolo: „když ho použiji a skočí dolů, tak na druhé straně by měla být šipka
+// nahoru a při kliknutí najet zase zpět k Rúnarovi“). Proužek (#hero-down) je JEDEN a otáčí se: dokud stojí pod lištou níž na
+// obrazovce, ukazuje dolů a sjede tak, že zůstane hned pod lepící horní lištou (.topbar) nad záložkami čtení; jakmile je u lišty
+// nebo nad ní, ukazuje nahoru a vrátí stránku k Rúnarovi (začátek). Bez animace, když si ji člověk vypnul.
+function _heroDownNahoru() {
+  var p = document.getElementById('hero-down');
+  if (!p) return false;
   var lista = document.querySelector('.topbar');
-  var y = cil.getBoundingClientRect().top + window.pageYOffset - (lista ? lista.offsetHeight : 0);
-  var bezPohybu = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  window.scrollTo({ top: Math.max(0, y), behavior: bezPohybu ? 'auto' : 'smooth' });
+  return p.getBoundingClientRect().top <= (lista ? lista.offsetHeight : 0) + 4;
 }
+function _heroDownStav() {
+  var p = document.getElementById('hero-down');
+  if (!p) return;
+  var nahoru = _heroDownNahoru();
+  if (p.classList.contains('nahoru') === nahoru) return;
+  p.classList.toggle('nahoru', nahoru);
+  p.setAttribute('aria-label', t(nahoru ? 'hero_up_aria' : 'hero_down_aria'));
+}
+function scrollToReading() {
+  var p = document.getElementById('hero-down');
+  if (!p) return;
+  var lista = document.querySelector('.topbar');
+  var cil = _heroDownNahoru() ? 0 : p.getBoundingClientRect().top + window.pageYOffset - (lista ? lista.offsetHeight : 0);
+  var bezPohybu = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.scrollTo({ top: Math.max(0, cil), behavior: bezPohybu ? 'auto' : 'smooth' });
+}
+var _heroDownRaf = 0;
+window.addEventListener('scroll', function () {
+  if (_heroDownRaf) return;
+  _heroDownRaf = requestAnimationFrame(function () { _heroDownRaf = 0; _heroDownStav(); });
+}, { passive: true });
 
 function getHeroPhrase() {
   const pool = t('hero_phrases');
@@ -811,7 +824,7 @@ function updateUIText() {
   if (heroQ) heroQ.innerHTML = t('hero_quote');
   if (heroQm) heroQm.innerHTML = t('hero_quote').replace(/<br\s*\/?>/gi, ' ');
   var heroDown = document.getElementById('hero-down');
-  if (heroDown) heroDown.setAttribute('aria-label', t('hero_down_aria'));
+  if (heroDown) heroDown.setAttribute('aria-label', t(heroDown.classList.contains('nahoru') ? 'hero_up_aria' : 'hero_down_aria'));
   // reader-card1-lbl and reader-note are set by _updateReadingForm() — not here
   _updateDobLabel();
   _updateAreaSeekLabels();
@@ -859,8 +872,6 @@ function updateUIText() {
   _updateGenderVisibility();
   // Dynamic reader/tree/panel strings must refresh on language switch too
   if (typeof _updateReadingForm === 'function') _updateReadingForm();
-  var _hg = document.getElementById('hero-greeting');
-  if (_hg && _hg.classList.contains('show') && typeof showHeroGreeting === 'function') showHeroGreeting();
   setText('tree-dob-btn', t('tree_reveal_btn') + ' →');
   setText('sp-signout-btn', t('sign_out'));
   var _tgq = document.getElementById('tree-growth-quote');
