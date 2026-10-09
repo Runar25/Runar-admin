@@ -20,7 +20,7 @@
 10. **Kreslení** — auto-fit na plátno, kůra / WebGL; **inspekce**, **přehled větví**, text **RŮST**.
 
 ## 1. Vstup čtení → zóna (`readZone`)
-- Zóna jednoho tažení na ose urð −1 … skuld +1: záměr · seeking (vážený průměr vyplněných), pozice v rozkladu ji určuje, bez kontextu svět runy. **Oblast do výšky nevstupuje** (od 2026-10-09; dřív váha 0,3 → šikmý strom). Mapa vstupů → `RUNAR_TREE.md` §3.
+- Zóna jednoho tažení na ose urð −1 … skuld +1: **záměr**, pozice v rozkladu ji určuje, bez kontextu svět runy. **Oblast ani seeking do výšky nevstupují** (od 2026-10-09; oblast dřív 0,3 → šikmý strom, seeking 0,2 jen dolů → strom skoro neměnil; seeking je teď na koncích větviček, §8). Mapa vstupů → `RUNAR_TREE.md` §3.
 - **Promítne se:** do kterého pásma (a tedy ramene) čtení jde · výška ramene · ohyb ramene (tíha) · výška stromu.
 - Strana čtení (nitro/svět) = **oblast** (`AREA_LAT`); bez oblasti svět runy jen mírně (`latOf`). **Promítne se:** překlopení a natočení ramene, strana větvičky na rodiči.
 
@@ -75,6 +75,7 @@ Směr ramene se po délce mění — **tohle rozhoduje, jestli se ramena potkaj�
 
 ## 8. Větvičky na ramenech — `repKids` + `growBranch` (level ≥ 1)
 - Každá větvička = jedno čtení (tvar své runy). **Místo** na rodiči: rytmus runy rodiče + pořadí zrodu (zlatý řez), přímé větvičky ramene přes rozdělovač míst (`freeSpot`: odstup od starších i od povýšených). **Strana**: oblast čtení (nitro/svět) vůči směru rodiče, jinak střídavě. **Úhel**: tečna rodiče ± stálá odbočka. **Velikost**: zrod malá, doroste za `dorust` čtení, dál s čteními na ní; tvar řídí záměr/oblast čtení (steering).
+- **Konec větvičky podle seekingu** (od 2026-10-09): lab předá `seekTip` větvičkám (level ≥ 1, ramenům ne), engine (`runar-branch.js`) otočí konec — Clarity nahoru, Reflection dolů (nejvýš 0,6 rad, plynule od poloviny délky), Confirmation rovně (menší oblouk, vlnění i zdvih), Insight zalomení (0,5 rad kolem 62–72 % délky), General jeden z nich podle semínka větvičky. Tvar konce (`eTipc`) dál dává runa. Bez `seekTip` (aplikace) engine beze změny.
 - **Promítne se:** hustota a směr drobných větví; kořeny zrcadlí prvních `mirrorN` větviček (§10).
 
 ## 9. Povýšené větve — `growGrad`
@@ -89,7 +90,7 @@ Směr ramene se po délce mění — **tohle rozhoduje, jestli se ramena potkaj�
 - **Posuvníky** jsou jen ty s viditelným účinkem (audit `tree_diag.js sliders`, `DEFAULTS=1` = výchozí hodnoty, jak je vidí KUKY); ODLOŽENO = kůra.
 
 ## 12. Kontroly
-- **Smoke ㉳** `scripts/verify_tree_mista.js` (lab, výchozí posuvníky): výstupy ramen na stejné straně aspoň `exitMinPx`, levé–pravé polovinu, žádné rameno pod podlahou, **každé čtení na svém místě** (element, pásmo, strana — strana i nezávisle z oblasti v logu; větev se stranou nakreslená na té straně), větve na rodiči od sebe, každý nakreslený tah klikatelný, nejvýš 15 pramenů, inspekce = log, **nejvýš 25 hlavních větví** a na stropu nejvýš 5 % tažení o místo vedle. Tři logy: všude, minulost, **svět** (oblasti hlavně svět — přidán 2026-10-07, jediný z nich ukáže povýšenou na druhé straně, když selže pravidlo strany v §9).
+- **Smoke ㉳** `scripts/verify_tree_mista.js` (lab, výchozí posuvníky): výstupy ramen na stejné straně aspoň `exitMinPx`, levé–pravé polovinu, žádné rameno pod podlahou, **každé čtení na svém místě** (element, pásmo, strana — strana i nezávisle z oblasti v logu; větev se stranou nakreslená na té straně), větve na rodiči od sebe, každý nakreslený tah klikatelný, nejvýš 15 pramenů, inspekce = log, **nejvýš 25 hlavních větví** a na stropu nejvýš 5 % tažení o místo vedle; (i) oblast a (k) seeking nehýbou výškou, (j) strom bez oblasti vyvážený, (l) konce větviček podle seekingu (engine i celá cesta labem). Tři logy: všude, minulost, **svět** (oblasti hlavně svět — přidán 2026-10-07, jediný z nich ukáže povýšenou na druhé straně, když selže pravidlo strany v §9).
 - **Detektor překryvu** `scripts/utils/tree_overlap.js`: pro dvojice ramen a povýšených větví vzdálenost jejich čar po délce proti součtu polovin tloušťky (bez paty u kmene a místa odštěpení); úsek pod 25° = souběh (překryv), jinak protnutí. Zatím jen nástroj — do smoke až po opravě. ⚠️ **Hranice 25° je hrubá:** mělké křížení pod 21–24° (~20 px) hlásí jako souběh, i když jsou obě větve vidět (KUKYho strom 2026-10-03: Gebo + Uruz, Hagalaz + Eihwaz — ověřeno výřezem). Hraniční nález se ověřuje okem.
 - Ruční: `scripts/utils/tree_diag.js` (`zony`, `misto`, `klik`, `jump2`, `limbjump`, `scen`, `zscen`, `sliders`) · `scripts/utils/tree_render.js` — KUKYho strom z několika verzí labu vedle sebe do PNG (před hlášením každé změny stromu, DECISIONS 2026-10-03 (15)). · `scripts/utils/tree_read.js` — strom přečtený z dat (strany, ramena zdola nahoru, špička, proč) — podklad pro popis ownerovi.
 

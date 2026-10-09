@@ -49,7 +49,7 @@ Dvě **spojité, prolínající se** osy. Box (runa/oblast) do zóny jen *míř�
 |---|---|---|---|---|---|
 | záměr (intention) | Understanding the past | Right now | Decision ahead | 0,5 | **lab (KROK 4)**: všechna čtení; aplikace zatím jen starý model |
 | ~~oblast (area)~~ | ~~Healing · Family · Inner Growth~~ | ~~Love · Crossroads~~ | ~~Purpose · Career · The Unseen~~ | — | **do výšky nevstupuje od 2026-10-09** (lab) — oblast určuje jen stranu (osa B níž); dřív 0,3 → šikmý strom (DECISIONS 2026-10-09 (11)) |
-| seeking | Insight into Challenge · Reflection | Clarity · Confirmation | — (General Guidance neutrální) | 0,2 | **lab (KROK 4)** — výběr v labu; aplikace ho stromu zatím **nepředává** (CODE-tune) |
+| ~~seeking~~ | ~~Insight into Challenge · Reflection~~ | ~~Clarity · Confirmation~~ | — | — | **do výšky nevstupuje od 2026-10-09** (lab) — projevuje se na **konci větvičky** (§4); dřív 0,2 a jen dolů, strom skoro neměnil (DECISIONS 2026-10-09 (12)). Aplikace ho stromu zatím **nepředává** (CODE-tune) |
 | bez kontextu: svět runy | Hel | Midgard | Asgard | záloha (mírně ±0,6) | **lab (KROK 4)** |
 | pozice v rozkladu | Norny 1. · Kříž dole / za · Podkova minulost / vnitřní stav · Yggdrasil 6–9 | Norny 2. · Kříž střed · Podkova přítomnost / překážky · Yggdrasil 4–5 | Norny 3. · Kříž nahoře / před · Podkova skryté / vnější síly / výsledek · Yggdrasil 1–3 | pozice 0,6 + kontext 0,4 | **lab (KROK 4)**; `norns_axis` v configu má jen Yggdrasil (tabulky pozic jsou v labu `POS_Z`) |
 | ~~element (jemně v zóně)~~ | ~~stín −0,25 · země −0,15 · voda −0,05~~ | | ~~vzduch +0,10 · oheň +0,15~~ | — | **zrušeno 2026-10-03 (KROK 5)** — pořadí ramen v pásmu dává zóna čtení, ne element (KUKY: „rozprostření elementů není systematické“) |
@@ -82,7 +82,8 @@ Do 2026-10-09 tu stála **„diagonála příběhu“** (nitro ke kořenům, sv�
 | **Norns osa** (§3A) | ZÓNA = výška (kořeny/střed/koruna) |
 | **area** | STRANA (dovnitř vlevo / ven vpravo) |
 | **element** | BARVA + mikro-výška + úhel (šířka) |
-| **runa** | TVAR / silueta — ✅ ŽIVÉ od 2026-07-19 · hystereze prahu 2 (2026-07-21) proti blikání kolem remízy |
+| **runa** | TVAR / silueta — ✅ ŽIVÉ od 2026-07-19 · hystereze prahu 2 (2026-07-21) proti blikání kolem remízy · **tvar konce** větvičky (vidlička / tupý / zúžený / nahoru) |
+| **seeking** | **KAM MÍŘÍ KONEC** větvičky (lab, 2026-10-09; KUKY: *„by se mohl projevit na každé runě, u které bude“*): Clarity nahoru · Reflection dolů ke kořenům · Confirmation rovně ve směru větve · Insight into Challenge zalomený konec · General jeden z těch čtyř (stálý pro větvičku). Na ramena ne. |
 | **ætt** | sekundární charakter růstu |
 | **spread** | KOMPLEXITA (single=uzel · Norns=3 kořeny · Kříž=větev+4 · Horseshoe=větvená · Yggdrasil=roční prsten) |
 | **počet vyplněných polí** | VÁHA / mohutnost |

@@ -201,6 +201,12 @@ function buildBranch(spec, T) {
   var wobAmp = (T.wobble * (0.7 + wobBoost) + sGnarl) * eWob;
   var tipLift = T.tipLift * eTip * sTip;
   if (eTipc==='up') tipLift *= 1.8;                          /* upturned tip */
+  /* 2026-10-09 (zapnuto po obrazku, KUKY "zapni to v labu"; DECISIONS 2026-10-09 (12)) (KUKY: seeking "by se mohl projevit na kazde rune, u ktere bude"): spec.seekTip meni, KAM miri konec
+     vetvicky; tvar konce (eTipc) dal urcuje runa. Bez seekTip (aplikace, ramena) beze zmeny. */
+  var seekK = spec.seekTip || null, SEEK_MAX = 0.6, straightK = 1, kinkK = 0;
+  if (seekK === 'general') seekK = ['clarity','reflection','confirmation','insight'][(hashStr('seek' + (spec.seed||0)) >>> 0) % 4];
+  if (seekK === 'confirmation') { tipLift *= 0.3; straightK = 0.35; }   /* rovne ve smeru vetve */
+  else if (seekK === 'insight') kinkK = 0.5;                             /* zalomeny konec */
 
   var L = T.length * role.len * eLen * sLen * (1 + (rnd() - 0.5) * 2 * T.jitter);
   var w0 = T.width * role.width * arch.widthMul;
@@ -212,7 +218,11 @@ function buildBranch(spec, T) {
   var twist = (spec.twist != null) ? spec.twist : 0;
   var twPh = rnd() * 6.283;
   var pts = integrate(ox, oy, L, 30,
-    function(u){ var a = branchAngle(u, base, theta0, arc, wob1, wob2, wobAmp, tipLift, spec.bendU);
+    function(u){ var a = branchAngle(u, base, theta0, arc * straightK, wob1, wob2, wobAmp * (straightK < 1 ? 0.5 : 1), tipLift, spec.bendU);
+                 if (seekK === 'clarity' || seekK === 'reflection') {   /* konec se stoci nahoru / dolu, nejvys SEEK_MAX */
+                   var tgt = (seekK === 'clarity') ? -Math.PI / 2 : ((a < -Math.PI / 2) ? -1.5 * Math.PI : 0.5 * Math.PI);
+                   a += Math.max(-SEEK_MAX, Math.min(SEEK_MAX, tgt - a)) * smooth((u - 0.55) / 0.45); }
+                 if (kinkK) a -= side * kinkK * smooth((u - 0.62) / 0.10);
                  return a + twist * Math.sin(u * 2.0 * Math.PI + twPh) * smooth(u); },
     0.45, 1.0, w0, w1, taper);
 

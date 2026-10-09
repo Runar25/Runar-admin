@@ -282,7 +282,7 @@ HTML = r"""<!DOCTYPE html>
     if(rd.intention!=null && INT_Z[rd.intention]!=null){ s2+=0.5*INT_Z[rd.intention]; w2+=0.5; }
     /* 2026-10-09 (zapnuto po obrazku, KUKY "zapni to v labu"; DECISIONS 2026-10-09 (11)): oblast do vysky nevstupuje — urcuje jen stranu (KUKY: "vyrovnany clovek ma vyrovnany strom").
        Drive vaha 0,3: nitro dolu, svet nahoru -> vyrovnany clovek dostal sikmy strom (KUKYho strom: vlevo v korune 0 z 98 tazeni). */
-    if(rd.seeking!=null && SEEK_Z[rd.seeking]!=null){ s2+=0.2*SEEK_Z[rd.seeking]; w2+=0.2; }
+    /* 2026-10-09 (zapnuto po obrazku, KUKY "zapni to v labu"; DECISIONS 2026-10-09 (12)): seeking do vysky nevstupuje — projevi se na konci vetvicky (spec.seekTip v runar-branch.js). */
     var ctx=w2 ? s2/w2 : null, pt=POS_Z[rd.spread], pz=(pt && pos!=null && pt[pos]!=null) ? pt[pos] : null;
     if(pz!=null) return (ctx!=null) ? 0.6*pz+0.4*ctx : pz;
     if(ctx!=null) return ctx;
@@ -1104,7 +1104,8 @@ HTML = r"""<!DOCTYPE html>
     var g=B.buildBranch({ rune:rune, role:role, seed:seed, baseAng:baseAng, dev:dev, ox:ox, oy:oy, twist:cfg.twist,
                           bendU:(level===0 && cfg.limbBendU!=null) ? cfg.limbBendU : undefined,   /* napojeni ramene: po jake casti delky dojede na svuj uhel (engine bez nej 0,45) */
                           side:(level===0 && cfg._side!=null) ? cfg._side : undefined,   /* strana ohybu ramene (LR4) */
-                          area:st0?STEER_AREA[st0.area]:undefined, intention:st0?STEER_INT[st0.intention]:undefined }, TT);
+                          area:st0?STEER_AREA[st0.area]:undefined, intention:st0?STEER_INT[st0.intention]:undefined,
+                          seekTip:(level>=1 && selfInfo && selfInfo.seeking) ? selfInfo.seeking : undefined }, TT);   /* 2026-10-09 (zapnuto po obrazku, KUKY "zapni to v labu"; DECISIONS 2026-10-09 (12)): seeking -> konec vetvicky */
     var pts=g.paths[0].pts;
     var f=w0Want/(pts[0].w||1);
     for(var i=0;i<pts.length;i++){ pts[i].w*=f; pts[i].depth=depthZ; pts[i].ct=lerp(cfg.ctNear,cfg.ctFar,pts[i].t); }

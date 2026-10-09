@@ -419,15 +419,12 @@
 - [ ] **Strom (lab): souběhy větví na modelových stromech** (CODE-tree, 2026-10-03, DECISIONS (15), (16)). Na 24 modelových stromech (`ovtypes`) 158 souběhů (ráno 250, s „koštětem“ 49 — tvar ramen, který KUKY odmítl). „Povýšená podél matky“ vyřešená (146 → 18, DECISIONS (16); nepomohlo: dřívější odštěpení, úhel od špičky matky, menší zdvih špičky povýšené). Dvě ramena na stejné straně 74 → 21 (DECISIONS 2026-10-05 (4)); všech souběhů 62. **Zbývá:** dvě ramena na stejné straně (21), povýšená + povýšená (16), povýšená + jiné rameno (15). Každý kandidát změřit oběma směry páky + `scripts/utils/tree_render.js` (KUKYho strom i modelový), tvar ramen z kmene NEMĚNIT. Na KUKYho stromě dnes žádný (dvě mělká křížení, obě větve vidět).
 - [x] **Strom (lab): strany nevyvážené / rameno do první volné mezery / čtení mimo své místo** — vyřešeno 2026-10-05 (DECISIONS (12)): místo = element × pásmo × strana, strana z dat, zrod podle zóny.
 - [ ] ⭐ **Strom (lab): shluk větví budoucnosti a světa nahoře vpravo** (CODE-tree, 2026-10-05, po DECISIONS (12)). Každé čtení je teď na svém místě a strom má tvar diagonály z kánonu (nitro + minulost vlevo dole, svět + budoucnost vpravo nahoře) — a právě nahoře vpravo se sbíhají strmá ramena budoucnosti a jejich povýšené větve: souběhy na KUKYho stromě 13 (dřív 2), na 24 modelových ~93 (dřív 62). Kandidáti: rozestup povýšených podél matky a jejich odbočka od sousedních větví (ne jen od matky), úhly povýšených na straně jako u ramen (pořadí), délka povýšených. Měřit `ovtypes`/`tree_overlap.js` + `tree_render.js`; tvar ramen z kmene neměnit.
-- [ ] ⭐ **Strom (lab): seeking na větvičkách — čeká na ownera** (CODE-tree, 2026-10-09). KUKY: *„seeking by se mohl projevit na každé
-  runě, u které bude. clarity větev více nahoru, reflection více dolů ke kořenům, general náhodně podle toho, co se vylosuje za typ konce
-  větve … confirmation a insight into challenge navrhni.“* Nejdřív nanečisto s obrázkem (owner chce každou vizuální změnu napřed vidět).
-  **Nanečisto hotové 2026-10-09**, patch `docs/archive/tree/2026-10-09_nanecisto_seeking.patch` (`git apply`; builder + `runar-branch.js`):
-  seeking do výšky nevstupuje; konec větvičky: clarity se stočí nahoru, reflection dolů (nejvýš 0,6 rad), **návrh** confirmation = rovně
-  ve směru větve, insight = zalomený konec; general = jeden z těch čtyř (stálý podle větvičky). Tvar konce (vidlička/tupý…) dál dává runa;
-  bez `seekTip` (aplikace, ramena) engine beze změny. První verze stáčela konce přímo ke svislici → smyčky; teď omezené otočení.
-  **Záloha výšky bez záměru:** dnes svět runy (Hel dole, Midgard střed, Asgard nahoře); druhá možnost, kdyby neseděla (KUKY: *„už máme
-  vytvořenou zálohu pro případ, že mi to nebude sedět“*) = zóna, kde je strom zatím nejslabší (roste od zóny k zóně) — nepostavená, jen popsaná.
+- [x] **Strom (lab): seeking na koncích větviček** — v labu od 2026-10-09 po obrázku (DECISIONS 2026-10-09 (12)); patch
+  `docs/archive/tree/2026-10-09_nanecisto_seeking.patch` je historie.
+- [ ] **Strom (lab): záloha výšky bez záměru — jen kdyby svět runy neseděl** (CODE-tree, 2026-10-09; nízká priorita, nestavět bez ownera).
+  Dnes: čtení bez záměru dostane výšku podle světa runy (Hel dole, Midgard střed, Asgard nahoře). Druhá možnost, kterou owner chce mít
+  po ruce (KUKY: *„už máme vytvořenou zálohu pro případ, že mi to nebude sedět“*) = zóna, kde je strom zatím nejslabší (roste od zóny
+  k zóně). Nepostavená, jen popsaná; DECISIONS 2026-10-09 (10).
 - [x] **Strom (lab): vyvážený strom, strop 25, posílení větviček** (hlášení 2e6aa64d, 2026-10-07 → 10-09): strop 25 a oprava strany
   (DECISIONS 2026-10-09 (3)); oblast jen strana + čtení bez strany na lehčí stranu (DECISIONS 2026-10-09 (10), (11)); posílení větviček
   stejnou runou **zamítnuto** (KUKY 2026-10-09: *„nechame jak je. strom je sice méně přehledný, ale bez malých větviček to zase nevypadá

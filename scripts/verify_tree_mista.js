@@ -25,6 +25,10 @@
 //   (j) STROM BEZ OBLASTI JE VYVAZENY (2026-10-09): cteni bez strany jdou na lehci stranu, takze clovek, ktery oblast nevyplnuje,
 //       ma na obou nakreslenych stranach podobne tazeni (pomer aspon MIN_LR). Drive stranu zakladal svet runy a cteni se lepila na
 //       prvni vetev zony -> modelove 71 : 192.
+//   (k) SEEKING NEHYBE VYSKOU (2026-10-09, KUKY: seeking "by se mohl projevit na kazde rune, u ktere bude"): dve cteni bez zameru,
+//       lisi se jen seekingem (Insight × Clarity), padnou do tehoz pasma. Drive Insight/Reflection stahovaly vysku dolu (vaha 0,2).
+//   (l) KONEC VETVICKY PODLE SEEKINGU: engine (Clarity konec vys, Reflection niz nez bez seekingu) i cela cesta labem (tentyz log
+//       jednou se samymi Clarity, jednou Reflection -> konce vetvicek v prumeru vys). Hlida, ze lab seekTip vetvickam opravdu preda.
 //   (h) hlavnich vetvi nejvys MAX_BR = 25 (KUKY 2026-10-07: "vice jak 25 run neni dobre … vracime to k 25"). Kdyz je strom na
 //       stropu, nove misto vlastni vetev nedostane a cteni visi na nejblizsi vetvi SVEHO elementu — (g) to pak pocita zvlast,
 //       a takovych tazeni smi byt nejvys CAP_OFF (5 %): s prevzetim vetve zalozene stredem je to na modelovych stromech do 3 %,
@@ -132,5 +136,25 @@ let iMsg = '', jMsg = '';
   const ratio = Math.min(nL, nR) / Math.max(1, nL, nR);
   if (ratio < MIN_LR) fails.push('(j) strom bez oblasti nevyvazeny: vlevo ' + nL + ', vpravo ' + nR + ' tazeni (pomer ' + ratio.toFixed(2) + ', min ' + MIN_LR + ')');
   else jMsg = 'bez oblasti vlevo ' + nL + ' : vpravo ' + nR; }
+/* (k) seeking nehybe vyskou: Norny + dve cteni Fehu bez zameru, Insight × Clarity */
+let kMsg = '', lMsg = '';
+{ const twin = LOGS[0][1].slice(0, 1).concat([{ spread: 'single', runes: [{ rune: 'fehu', el: 'fire' }], area: null, intention: null, seeking: 'insight' },
+                                              { spread: 'single', runes: [{ rune: 'fehu', el: 'fire' }], area: null, intention: null, seeking: 'clarity' }]);
+  const P3 = labRun(twin, html, null).sb._PLACE, kA = ((P3.rd[1] || [])[0] || '').split('|')[1], kB = ((P3.rd[2] || [])[0] || '').split('|')[1];
+  if (kA == null || kB == null) fails.push('(k) nejde precist pasmo dvou cteni');
+  else if (kA !== kB) fails.push('(k) seeking hybe vyskou: Insight -> pasmo ' + kA + ', Clarity -> pasmo ' + kB);
+  else kMsg = 'seeking nehybe vyskou'; }
+/* (l) konec vetvicky podle seekingu: engine + cela cesta labem */
+{ const T0 = { length: 40, width: 3, curve: 0.8, taper: 1, wobble: 0.45, tipLift: 0.35, jitter: 0, steer: 1, subScale: 0, leaf: 0, cx: 0, baseY: 0 };   /* tatáž pole jako TT v labu (growBranch) */
+  const tipUp = sk => { const p = B.buildBranch({ rune: 'raidho', role: 'twig', seed: 7, baseAng: -0.6, dev: 0.5, ox: 0, oy: 0, seekTip: sk }, T0).paths[0].pts,
+    a = p[p.length - 2], b = p[p.length - 1]; return -(b.y - a.y) / Math.max(1e-9, Math.hypot(b.x - a.x, b.y - a.y)); };
+  const u0 = tipUp(undefined), uC = tipUp('clarity'), uR = tipUp('reflection');
+  if (!(uC > u0 + 0.05 && uR < u0 - 0.05)) fails.push('(l) engine: konec vetvicky nereaguje na seeking (bez ' + u0.toFixed(2) + ', Clarity ' + uC.toFixed(2) + ', Reflection ' + uR.toFixed(2) + ')');
+  const L40 = LOGS[0][1].slice(0, 40), mk = sk => L40.map(rd => Object.assign({}, rd, { seeking: sk }));
+  const upLab = lg => { let sum = 0, cnt = 0; labRun(lg, html, null).allPicks.forEach(p => { if (!p.meta || !p.meta.twig || !p.pts || p.pts.length < 2) return;
+    const a = p.pts[p.pts.length - 2], b = p.pts[p.pts.length - 1], L = Math.hypot(b.x - a.x, b.y - a.y); if (L > 0) { sum += -(b.y - a.y) / L; cnt++; } }); return cnt ? sum / cnt : 0; };
+  const lc = upLab(mk('clarity')), lr = upLab(mk('reflection'));
+  if (!(lc > lr + 0.05)) fails.push('(l) lab: konce vetvicek s Clarity nejsou vys nez s Reflection (' + lc.toFixed(2) + ' vs ' + lr.toFixed(2) + ') — preda lab seekTip?');
+  else lMsg = 'konce vetvicek: Clarity ' + lc.toFixed(2) + ' > Reflection ' + lr.toFixed(2); }
 if (fails.length) { fails.slice(0, 12).forEach(f => console.log('   ' + f)); console.log('strom: ' + fails.length + ' poruseni (vetve ze stejneho mista / pod podlahou / cteni mimo sve misto / vetvi nad strop / neklikatelne / prameny navic / inspekce neodpovida logu)'); process.exit(1); }
-console.log('strom (lab): ' + runs + ' stromu — vystupy ramen na stejne strane aspon ' + worstE.toFixed(0) + ' px, levo-pravo aspon ' + worstLR.toFixed(0) + ' px, zadne pod podlahou, kazde cteni na svem miste (na stropu nejvys ' + (worstCap * 100).toFixed(1) + ' % o misto vedle), nejvys ' + maxBr + ' hlavnich vetvi, vetve na rodici aspon ' + worstS.toFixed(1) + ' px, vse klikatelne, inspekce = log, nejvys ' + maxStr + ' pramenu v kmeni, ' + iMsg + ', ' + jMsg);
+console.log('strom (lab): ' + runs + ' stromu — vystupy ramen na stejne strane aspon ' + worstE.toFixed(0) + ' px, levo-pravo aspon ' + worstLR.toFixed(0) + ' px, zadne pod podlahou, kazde cteni na svem miste (na stropu nejvys ' + (worstCap * 100).toFixed(1) + ' % o misto vedle), nejvys ' + maxBr + ' hlavnich vetvi, vetve na rodici aspon ' + worstS.toFixed(1) + ' px, vse klikatelne, inspekce = log, nejvys ' + maxStr + ' pramenu v kmeni, ' + iMsg + ', ' + jMsg + ', ' + kMsg + ', ' + lMsg);

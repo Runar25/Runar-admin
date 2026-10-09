@@ -9020,3 +9020,26 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - Odvolává se na: 2026-10-09 (10) · 2026-10-05 (12).
 - Affected doc(s): `RUNAR_TREE.md` (§3 osa B, tabulka výšky) · `RUNAR_TREE_MAP.md` (§1, §3) · `RUNAR_BACKLOG.md` (položka uzavřena, nová
   „seeking na větvičkách“) — v témže commitu.
+
+## 2026-10-09 (12) — Strom (lab): seeking už nehýbe výškou, ukazuje se na konci každé větvičky
+
+- **Rozhodl:** KUKY 2026-10-09: *„seeking by se mohl projevit na každé runě, u které bude. clarity větev více nahoru, reflection více dolů
+  ke kořenům, general náhodně podle toho, co se vylosuje za typ konce větve … confirmation a insight into challenge navrhni.“* Po obrázku
+  nanečisto: *„7. ano je to dobrý · 8. ano · 9. zapni to v labu.“* **Provedl:** CODE-tree, jen LAB.
+- **Proč:** ve výšce měl seeking váhu 0,2 a táhl jen dolů (Insight, Reflection) — strom skoro neměnil (jeho strom 39/30/32 % se seekingem,
+  38/30/32 bez něj) a vidět nebyl.
+- **Teď:** výšku dává jen záměr (bez něj svět runy, rozklad pozice). Konec větvičky (lab předá `seekTip`, ramenům ne): **Clarity** se stočí
+  nahoru, **Reflection** dolů ke kořenům (nejvýš 0,6 rad, od poloviny délky), **Confirmation** rovně ve směru větve (návrh CODE-tree:
+  potvrzení = pokračuje, kam už roste), **Insight into Challenge** zalomený konec (návrh CODE-tree: obrůstá překážku), **General** jeden
+  z těch čtyř podle semínka větvičky (stálý). Tvar konce (vidlička / tupý / zúžený / nahoru) dál dává runa. Engine `runar-branch.js` je
+  sdílený s aplikací — bez `seekTip` beze změny a aplikace ho nepředává.
+- **Zkoušeno a zahozeno:** stočení konce přímo ke svislici (bez stropu) — konce mířící doleva se stočily do smyček.
+- **Změřeno (jeho strom):** zónu změnila 4 z 342 tažení (2 Reflection, 2 Insight, všechna nahoru); výšky 102 tažení s Insight/Reflection se
+  trochu zvedly, takže se výstupy větví rozestoupily jinak (největší: Algiz vpravo 80 → 65 % kmene, Othila vlevo 76 → 85 %) — owner si
+  všiml „přeskupily se nějaké větve“; chyba to není. Větví dál 25, každé čtení na svém místě.
+- **Hlídá smoke ㉳:** (k) dvě čtení bez záměru lišící se jen seekingem (Insight × Clarity) padnou do téhož pásma; (l) engine: konec
+  s Clarity výš a s Reflection níž než bez seekingu; lab: týž log se samými Clarity má konce větviček v průměru výš než se samými
+  Reflection (0,77 : −0,12). Mutační test: seeking zpět ve výšce → (k) „Insight → pásmo −1, Clarity → 0“; lab nepředá `seekTip` → (l) 0,39 : 0,39.
+- Odvolává se na: 2026-10-09 (10), (11).
+- Affected doc(s): `RUNAR_TREE.md` (§3 tabulka výšky, §4 signály) · `RUNAR_TREE_MAP.md` (§1, §8, §12) · `RUNAR_BACKLOG.md` (seeking
+  uzavřeno, záloha výšky zvlášť) — v témže commitu.
