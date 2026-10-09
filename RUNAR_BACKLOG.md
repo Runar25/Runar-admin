@@ -1820,10 +1820,9 @@ Rune Seekera = posledních 5 (`TIER_LIMITS.rune_seeker.journal_entries`).
 **PRO OWNERA:**
 12. 🟠 **Stránky slibují, co už neplatí — obojí patří k už otevřeným rozhodnutím, nic nového nerozhoduj zvlášť:**
     - `runar-help.html` „VISITOR — 1 reading, no account needed“ (EN 2×, IS 1×) → po rozhodnutí bodu 3 (co návštěvník po tahu uvidí).
-    - `runar-help.html` FAQ „Is Rúnar an AI? — shaped by Claude, made by Anthropic“ (EN i IS) a `runar-privacy.html` „Anthropic (AI
-      readings)“ — od 2026-10-09 píše čtení OpenAI. Stránka soukromí už čeká na tebe (DECISIONS 2026-10-09 (13), bod b); ⚠️ hotové
-      návrhy textů (`docs/inbox/2026-09-30-navrh-textu-soukromi.md`, části A a B) počítají jen s Anthropicem — před „publikovat“
-      je potřeba verze s OpenAI (část C pro souhlas testerů ji už má). FAQ k tomu patří.
+    - ✅ *(CODE-tune 2026-10-09, owner „8. doplň“)* `runar-privacy.html` jmenuje OpenAI a USA (text A + OpenAI, obě kopie EN) a FAQ
+      `runar-help.html` „Is Rúnar an AI?“ říká GPT od OpenAI, Claude jen při výpadku (EN i IS). Zbývá jen zásady na agndofa.is
+      (znění B v `RUNAR_PRIVACY.md` — doplnit OpenAI stejně jako A; publikuje owner).
     Obě stránky drží angličtinu dvakrát (statické HTML + slovník v JS) — při úpravě opravit obojí.
 
 ## 2026-08-16 — otevřené po zavedení registru `direct`

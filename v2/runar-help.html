@@ -324,7 +324,8 @@ const CONTENT = {
       { q: 'Can I use my credits on different devices?', a: 'Yes. Credits are tied to your account, not your phone or browser.' },
       { q: 'My code isn\'t working.',              a: 'Make sure you are signed in. Codes look like FEHU-XXXX-XXXX. If it still fails, write to info@agndofa.is.' },
       { q: 'When do my monthly readings reset?',   a: 'On the first day of every month. The app will let you know when they renew.' },
-      { q: 'Is Rúnar an AI?',                      a: 'Rúnar\'s words are shaped by Claude, made by Anthropic. His voice is rendered by ElevenLabs. His character — the imagery, the philosophy, the way he speaks — was written by the people behind Agndofa. The intelligence is artificial. The intention is not.' },
+      // 2026-10-09: čtení píše GPT od OpenAI, Claude jen při výpadku (DECISIONS 2026-10-09 (13)); do té doby „shaped by Claude, made by Anthropic“.
+      { q: 'Is Rúnar an AI?',                      a: 'Rúnar\'s words are shaped by GPT, made by OpenAI — or by Claude, made by Anthropic, when OpenAI is unavailable. His voice is rendered by ElevenLabs. His character — the imagery, the philosophy, the way he speaks — was written by the people behind Agndofa. The intelligence is artificial. The intention is not.' },
       { q: 'How do I delete my account?',          a: 'Open the menu in Rúnar and choose Delete Account. Everything is removed instantly — account, readings, journal. This cannot be undone.' },
     ],
   },
@@ -376,7 +377,7 @@ const CONTENT = {
       { q: 'Get ég notað kreditana á mismunandi tækjum?', a: 'Já. Kreditarnir eru bundnir við reikninginn þinn, ekki tækið.' },
       { q: 'Kóðinn minn virkar ekki.',             a: 'Gakktu úr skugga um að þú sért skráður inn. Kóðar líta svona út: FEHU-XXXX-XXXX. Ef það virkar enn ekki, skrifaðu á info@agndofa.is.' },
       { q: 'Hvenær endurnýjast mánaðarlegir lestrar?', a: 'Fyrsta dag hvers mánaðar. Appið lætur þig vita þegar þeir endurnýjast.' },
-      { q: 'Er Rúnar gervigreind?',                a: 'Orð Rúnars eru mótuð af Claude frá Anthropic. Rödd hans er þjónað af ElevenLabs. Persóna hans var skrifuð af fólkinu á bak við Agndofa. Greindinn er gervi. Tilgangurinn er það ekki.' },
+      { q: 'Er Rúnar gervigreind?',                a: 'Orð Rúnars eru mótuð af GPT frá OpenAI — eða af Claude frá Anthropic þegar OpenAI svarar ekki. ElevenLabs ljær honum rödd. Persóna hans var skrifuð af fólkinu á bak við Agndofa. Greindin er gervi. Tilgangurinn er það ekki.' },
       { q: 'Hvernig eyði ég reikningnum mínum?',   a: 'Opnaðu valmyndina í Rúnar og veldu Eyða reikningi. Allt er fjarlægt samstundis — reikningur, lestrar, dagbók. Þetta er óafturkræft.' },
     ],
   },
