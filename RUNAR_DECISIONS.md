@@ -8857,3 +8857,30 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   hlášením 744028f4 (*„nevím, jestli je úplně třeba říkat ‚or not‘“*); další krok rozhoduje owner → `RUNAR_BACKLOG.md`, audit 2026-10-07, bod 6.
 - Odvolává se na: 2026-10-07 (1).
 - Affected doc(s): `RUNAR_BACKLOG.md` (audit promptu 2026-10-07, bod 6) — v témže commitu.
+
+## 2026-10-09 (3) — Strom (lab): nejvýš 25 hlavních větví; čtení se stranou převezme větev založenou středem; povýšená z vůdčí větve na své straně
+
+- **Rozhodl:** KUKY 2026-10-07 *„více jak 25 run není dobré. mám jich teď 34 a je to špatně, vracíme to k 25.“* a po obrázku před/po
+  2026-10-09 *„13. ano. 25 · 14. ano“* (strop 25 · oprava strany Fehu a Dagaz). Končí tím „povýšených, kolik je třeba“ z 2026-10-05 (12);
+  platí zase zákon z 2026-08-05 („max 25 = 25 run“). Mezitím (7. → 9. 10.) bylo vše stažené z labu, protože owner chce každou vizuální
+  změnu napřed vidět. **Provedl:** CODE-tree, jen LAB.
+- **Proč měl 32 větví** (jeho strom, 280 čtení): aby každé čtení viselo na svém místě, stačí 24. Osm navíc byly větve založené čtením
+  ze středu (Love, Crossroads, bez oblasti, i zakládací Norny), vedle kterých pak čtení se stranou zakládalo další.
+- **Teď:** (1) **převzetí** — čtení se stranou na element×pásmu, kde visí jen větev založená středem a nakreslená na jeho straně, patří
+  jí (značka místa `adopt`; strana z dat zůstává 0, kresba se nemění; vůdčí větev se nepřevezme); (2) **strop** `MAX_BR` = 25 (počet run):
+  nové místo nad strop vlastní větev nedostane, čtení jde k nejbližší větvi svého elementu (napřed na své straně, nejbližší pásmo);
+  (3) **oprava strany** — povýšená z vůdčí větve (svislá, strana 0) dostávala stranu ze střídání odbočky: Fehu a Dagaz (oheň, místo
+  vpravo) rostly doleva a nesly 19 čtení o světě. Odbočka od strmé matky na své straně navíc nesmí přes svislici.
+- **Změřeno:** jeho strom 25 větví (15 ramen, 10 povýšených), 340 z 342 tažení na svém místě; dvě o pásmo vedle (vzduch dole vpravo →
+  vzduch uprostřed vpravo, přišla po zaplnění stropu). Nakresleno vlevo 11 větví / 184 tažení, vpravo 13 / 149 (dřív 17 / 211 a 14 / 122).
+  Stabilita stejná: otočení větvičky > 8° 0 (max 4°), sklouznutí > 8 px 75 (max 48 px), dřív 76 a 47. Souběhy na 24 modelových stromech
+  (výchozí posuvníky) 128 → 57, na jeho stromě 3 → 3. Modelové stromy se stropem: do 60 čtení žádné tažení mimo místo, při 150–300
+  čteních nejvýš 3 % o místo vedle.
+- **Zkoušeno a zahozeno:** (a) strop bez převzetí („kdo dřív přišel, má větev“) — na jeho stromě 36 z 342 tažení mimo místo, 6 ze 7 míst
+  bez větve vpravo; (b) „každá runa založí nejvýš jednu větev“ (pravidlo z 2026-10-03) — 58 z 342 mimo; (c) převzetí, které mění stranu
+  z dat — větev přepla ze „středu“ (strmě u kmene) na boční, větve se stočily až o 66° (Eihwaz, čtení #36) a uchycení sklouzlo až o 127 px.
+- **Hlídá smoke ㉳ (h):** nejvýš 25 hlavních větví; na stropu nejvýš 5 % tažení o místo vedle (verze bez převzetí má 6,4 % → chytí).
+  Nový log „svět“ chytí povýšenou na druhé straně (mutační test: bez pojistky Hagalaz po 20 čteních); dva původní logy chybu nechytily.
+- Odvolává se na: 2026-10-05 (12) (místo = element × pásmo × strana) · 2026-08-05 (zákon 25 = 25).
+- Affected doc(s): `RUNAR_TREE_MAP.md` (§3 převzetí a strop, §9 strana povýšené, §12 smoke) · `RUNAR_BACKLOG.md` (položka „čeká na
+  ownera“: body 2 a 3 hotové) — v témže commitu.

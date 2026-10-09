@@ -544,7 +544,7 @@ HTML = r"""<!DOCTYPE html>
           zrod:0.3, dorust:4,   /* 2026-09-29: nova vetev se rodi mala a doroste za `dorust` cteni */
           gradLen:1,   /* o kolik je graduant delsi nez bezna odbocka (1.35 = drivejsi stav) */
           gradStrand:1, gradStrandW:0.65, gradGap:2.2,   /* VERZE B: graduant = vlastni pramen (0 = verze A, dnesni stav) */   /* F9: kolik tazeni = dalsi odbocka · strop na vetev · rozestup opakovani */   /* F7: kam po delce vetve sedaji odbocky / graduanti */
-          canopy:0.5, diversity:0.4, readingEvery:3, vigorMature:25, maxMains:14, gradFrac:0.33, gradEvery:12,   /* maxMains = pramenu v kmeni (2026-10-05: povysenych kolik je treba, KUKY); gradFrac/gradEvery uz nic nedelaji (povyseni podle mista) */
+          canopy:0.5, diversity:0.4, readingEvery:3, vigorMature:25, maxMains:14, gradFrac:0.33, gradEvery:12,   /* maxMains = pramenu v kmeni; hlavnich vetvi celkem nejvys 25 (MAX_BR ve stableAssign, KUKY 2026-10-07 — 2026-10-05 bylo "povysenych kolik je treba"); gradFrac/gradEvery uz nic nedelaji (povyseni podle mista) */
           bendN:0.65, bendK:8, bendStr:1, exitMinPx:30, limbBendU:0.45, limbTip:1, hwRatio:0.75,   /* hwRatio (2026-10-05, KUKY "strom musi zaroven rust do vysky s tim, jak roste do sirky"): kmen aspon hwRatio × rozpeti ramen; 0,75 = KUKYho strom kolem 20. cteni */   /* tvar ramen = ranni (2026-10-03 KUKY "a je to koste": 0,15 / 0,5 proti prekryvum delalo tuhe vodorovne klacky) */   /* exitMinPx (2026-10-03, KUKY "30px min." + obrazek 4): rozestup vystupu ramen na STEJNE strane; leve a prave se stridaji v polovine */
             /* TIHA (2026-10-03): neutralni rozevreni ramene · kolik cteni ho ohne napul · sila; maxMains 10 -> 25 = 14 mist element×zona + 11 povyseni (KUKY) */
           variace:0.7, textura:0.85,
@@ -1294,6 +1294,7 @@ HTML = r"""<!DOCTYPE html>
     /* STRANA CTENI = OBLAST (osa B, RUNAR_TREE.md §3): nitro vlevo, svet vpravo; Love, Crossroads a bez oblasti = stred (0). */
     var SIDE_A={ healing:-1, family:-1, inner:-1, purpose:1, career:1, spirituality:1 }, sideOfRd=function(rd){ return (rd && SIDE_A[rd.area]) || 0; };
     var placeRd=[];   /* misto kazdeho cteni (element|pasmo|strana) — pro kontrolu smoke ㉳ */
+    var MAX_BR=B.RUNES.length;   /* nejvys 25 hlavnich vetvi = 25 run (KUKY 2026-10-07, viz STROP nize) */
     var sideIx={}, gplace={}, nStr=function(){ var n=0; for(var q=0;q<slots.length;q++){ if(slots[q].mother==null) n++; } return n; };
     /* misto = element × pasmo × strana. mother==null = rameno s VLASTNIM pramenem (nejvys jedno na element×pasmo), jinak rameno
        pro druhou stranu / stred tehoz pasma: vyjde z kmene na sve strane, pramen sdili s matkou ("jedno, dokud se neoddeli"). */
@@ -1356,10 +1357,36 @@ HTML = r"""<!DOCTYPE html>
     for(var i=(fnd?1:0); i<log.length; i++){ var rs=log[i].runes||[]; drawSec[i]=[]; drawOwn[i]=[]; capAdd(log[i]); var capI=capSecAt(i), sI=sideOfRd(log[i]);
       for(var j=0;j<rs.length;j++){ var el=rs[j].el, rk=rs[j].rune, z=readZone(log[i], j, rk), b=bandOf(el, z), pk=el+'|'+b, qs=secIx[pk], sd=sI, tq=null, tg=null, fresh=false;
         (placeRd[i]=placeRd[i]||[])[j]=pk+'|'+sd;
-        if(qs!=null && (sd===0 || slots[qs].side===sd)) tq=qs;                                   /* rameno elementu×pasma (stred se pridava) */
+        if(qs!=null && (sd===0 || (slots[qs].side||slots[qs].adopt)===sd)) tq=qs;                                   /* rameno elementu×pasma (stred se pridava) */
         else if(sd!==0 && sideIx[pk+'|'+sd]!=null) tq=sideIx[pk+'|'+sd];                         /* vlastni vystup tohoto mista */
         else if(gplace[pk+'|'+sd]!=null) tg=gplace[pk+'|'+sd];                                   /* povysena vetev tohoto mista */
         else if(sd===0 && qs==null){ var pm=pickMid(pk); if(pm){ if(pm.q!=null) tq=pm.q; else tg=pm.g; } }   /* stred: k vetvi tehoz pasma */
+        /* PREVZETI (2026-10-07): cteni se stranou prijde na element×pasmo, kde visi jen vetev ZALOZENA STREDEM (Love, Crossroads, bez
+           oblasti, zakladaci Norny) a ta je nakreslena na jeho strane -> vetev prevezme (cteni toho mista na ni patri), nezaklada vedle
+           ni dalsi. Prevzeti je jen ZNACKA MISTA (`adopt`): strana z dat zustava 0, takze kostra FR i kresba vetve se nemeni. Prvni verze
+           (tyz den) menila stranu z dat -> vetev prepla ze "stredu" (strme u kmene) na bocni: na KUKYho strome se vetve stocily az o
+           66° (Eihwaz povysena z Othily, cteni #36) a uchyceni vetvicek sklouzlo az o 127 px (drive nejvys 47 px).
+           KUKYho strom: 8 vetvi zalozenych stredem a vedle nich dalsi z cteni se stranou = 32 vetvi; aby kazde cteni viselo na svem
+           miste, staci 24. Vudci (svisly vrchol kmene) se neprevezme — je to stred. */
+        if(tq==null && tg==null && sd!==0){
+          for(var q6=0; q6<slots.length && tq==null; q6++){ if(slots[q6].el!==el || slots[q6].band!==b || slots[q6].side || slots[q6].adopt || slots[q6].nornName==='skuld' || drawSideOf(q6)!==sd) continue;
+            slots[q6].adopt=sd; tq=q6; }
+          for(var g6=0; g6<grads.length && tq==null && tg==null; g6++){ var G6=grads[g6]; if(G6.band!==b || G6.side || G6.adopt || ((RBK[G6.rune]||{}).el)!==el || drawSideOf(G6.p)!==sd) continue;
+            G6.adopt=sd; gplace[pk+'|'+sd]=g6; tg=g6; }
+        }
+        /* STROP 25 HLAVNICH VETVI (2026-10-07, KUKY: "vice jak 25 run neni dobre. mam jich ted 34 a je to spatne, vracime to k 25";
+           puvodne 2026-10-03 "14 ramen + az 11 povysenych = 25 run", 2026-10-05 "povysenych kolik je treba" -> jeho lab 32–34 vetvi).
+           Je-li vetvi 25, nove misto vlastni vetev nedostane: cteni jde k nejblizsi vetvi sveho elementu — napred na sve strane
+           (nejblizsi pasmo), jinak na druhe; pri shode ta, ktera nese vic cteni. Zmereno s PREVZETIM: KUKYho strom 25 vetvi a 0 cteni
+           mimo misto; modelove stromy do 60 cteni nic, 150–300 cteni 0–18 tazeni z ~500 (do 3 %) o pasmo vedle. Bez prevzeti by
+           strop na jeho strome odsunul 36 z 342 tazeni (6 ze 7 mist bez vetve vpravo — kdo driv prisel, ten mel vetev). */
+        if(tq==null && tg==null && slots.length+grads.length>=MAX_BR){ var capB=null, capD=1e9;
+          for(var q8=0; q8<slots.length; q8++){ if(slots[q8].el!==el) continue;
+            var d8=((sd!==0 && drawSideOf(q8)!==sd) ? 10 : 0) + 3*Math.abs(slots[q8].band-b) - Math.min(2.9, ownN[q8]/100); if(d8<capD){ capD=d8; capB={ q:q8 }; } }
+          for(var g8=0; g8<grads.length; g8++){ var G8=grads[g8]; if(((RBK[G8.rune]||{}).el)!==el) continue;
+            var d9=((sd!==0 && (G8.side||G8.adopt||drawSideOf(G8.p))!==sd) ? 10 : 0) + 3*Math.abs(G8.band-b) - Math.min(2.9, gradTree[g8].n/100); if(d9<capD){ capD=d9; capB={ g:g8 }; } }
+          if(capB){ if(capB.q!=null) tq=capB.q; else tg=capB.g; }
+        }
         if(tq==null && tg==null){ fresh=true; var nq=nearSec(el, b);
           var missEl=0; ['fire','water','air','earth','shadow'].forEach(function(e9){ if(nearSec(e9, 0)<0) missEl++; });
           if(qs==null && ((nStr()<maxN && nStr()+missEl<capI) || nq<0)) tq=newSec(el, b, rk, i, log[i], j, null, sd, null);   /* rameno s pramenem */
@@ -1378,7 +1405,7 @@ HTML = r"""<!DOCTYPE html>
       out.runeK=sl.runeK; out.norn=sl.norn; out.nornName=sl.nornName; out.band=sl.band;
       out.bornIdx=(sl.bornIdx==null)?null:sl.bornIdx;   /* ctení, kdy pramen vznikl (zakladaci = null = od semínka) */
       out.birthArea=sl.area||null; out.birthInt=sl.intention||null;
-      out.side=sl.side||0; out.noStrand=(sl.mother!=null); out.mother=sl.mother;   /* misto: strana z dat; rameno bez vlastniho pramene */
+      out.side=sl.side||0; out.adopt=sl.adopt||0; out.noStrand=(sl.mother!=null); out.mother=sl.mother;   /* misto: strana z dat; rameno bez vlastniho pramene */
       out.count=secN[q]; out.ownN=ownN[q]; out.runeCnt=secCnt[q];
       /* aett (charakter rustu) = aett ZAKLADAJICI runy, pevne. Prevazujici aett cteni na rameni se pri remize prepinal
          a s nim krivost i zdvih spicky: spicka Perthova ramene skakala o 41 px tam a zpet (KUKYho strom #211, #247). */
@@ -1488,8 +1515,8 @@ HTML = r"""<!DOCTYPE html>
     var targetN=seed ? 0 : Math.max(1, Math.round(crownT.maxMains));     /* strop = maxMains */
     var branchEls=stableAssign(vlog, els, targetN);
     /* KONTROLA MISTA (smoke ㉳, 2026-10-05): misto kazdeho cteni a misto vetve, na ktere visi */
-    window._PLACE={ rd:branchEls.placeRd||[], own:branchEls.drawOwn||[], sec:branchEls.map(function(b){ return { el:b.el, band:b.band, side:b.side||0, noStrand:!!b.noStrand }; }),
-      grads:(branchEls.grads||[]).map(function(g){ return { el:(RBK[g.rune]||{}).el, band:g.band, side:g.side||0 }; }) };
+    window._PLACE={ rd:branchEls.placeRd||[], own:branchEls.drawOwn||[], sec:branchEls.map(function(b){ return { el:b.el, band:b.band, side:b.side||b.adopt||0, noStrand:!!b.noStrand }; }),
+      grads:(branchEls.grads||[]).map(function(g){ return { el:(RBK[g.rune]||{}).el, band:g.band, side:g.side||g.adopt||0 }; }) };
     var mainsN=seed ? 0 : Math.max(1, branchEls.length);   /* ZONY: ramena = zalozena mista element × zona (strop maxMains hlida stableAssign) */
     trunkT.strandMax=seed ? 3 : mainsN;   /* F0b: pramen = runa, 1:1 · seminko: 3 zakladaci prameny bez runy */
     /* VERZE B: kazdy graduant si objedna VLASTNI pramen. Musi se to vedet PRED buildTrunk,
@@ -1530,7 +1557,7 @@ HTML = r"""<!DOCTYPE html>
          11 povysenych maji mit stejny pramen s temi 14") — kmen ma jen mista element × zona; vetev vyroste z matky (niz). */
       var perP={};
       (branchEls.grads||[]).forEach(function(G, gi){ perP[G.p]=(perP[G.p]||0)+1;
-        gradStrands.push({ p:G.p, rune:G.rune, u:0.4, slot:perP[G.p]-1, name:G.name, at:G.at, gi:gi, side:G.side, band:G.band, kind:G.kind }); });
+        gradStrands.push({ p:G.p, rune:G.rune, u:0.4, slot:perP[G.p]-1, name:G.name, at:G.at, gi:gi, side:G.side, adopt:G.adopt, band:G.band, kind:G.kind }); });
       gradStrands.forEach(function(G){ _ownMain[G.rune]=1; });
     }
     /* VYSKY VYSTUPU predem (2026-10-01): engine kmene je potrebuje, aby kmen zuzoval podle pramenu, ktere
@@ -1990,8 +2017,17 @@ HTML = r"""<!DOCTYPE html>
       gAng=sAngN + gTurn*GREL;   /* strma matka -> ven, vodorovna -> nahoru */
       /* MISTO NA DRUHE STRANE (2026-10-05): povysena patri na stranu sveho mista (GS.side z dat). Kdyby ji odbocka od matky poslala
          jinam, roste rovnou ke sve strane (kostra FR ma jeji stranu z dat + tiha jejich cteni). */
-      if(GS.side && pSide && pSide!==GS.side) gAng=softSide((gLP.ang!=null) ? gLP.ang : gFrame+lifeLean*0.6, -Math.PI/2);   /* matka na druhe strane: vzdy ke sve strane (stale) */
+      /* i kdyz je matka VUDCI (svisla, pSide 0) — 2026-10-07, KUKYho strom: Fehu (ohen nahore) a Dagaz (ohen uprostred) rostly z vudci
+         a stridani odbocky (slot/sideRank) je poslalo DOLEVA, ackoli jejich misto je vpravo: 19 cteni o svete nakreslenych vlevo
+         (podil na "leva strana pretizena"). Drive podminka `pSide &&` vudci vynechala. Smoke ㉳ to nechytil: na jeho logach
+         nastalo jen u stromu "svet" (Hagalaz po 20 ctenich) — ten log tam ted je. */
+      var GSd=GS.side||GS.adopt||0;   /* strana mista: z dat, nebo prevzeta (adopt) */
+      if(GSd && pSide!==GSd) gAng=softSide((gLP.ang!=null) ? gLP.ang : gFrame+lifeLean*0.6, -Math.PI/2);   /* matka na druhe strane nebo svisla: vzdy ke sve strane (stale) */
       gAng=softSide(gAng, -Math.PI/2);   /* dolni strop jako u ramene (~100°): s matkou s tihou dolu visela az na −155° (Ehwaz z Raidha) */
+      /* STRANA MISTA I PRI ODBOCCE OD MATKY NA SVE STRANE (2026-10-07): u strme matky poslala odbocka "nahoru" (gTurn) vetev za
+         svislici na druhou stranu nez jeji misto (modelovy strom "svet" po 20 ctenich: Hagalaz −93° z matky −58°; smoke ㉳).
+         Spojite: ne opacna odbocka (pri malem pootoceni matky by skocila o ~60°), ale zastaveni tesne na sve strane svislice. */
+      if(GSd && (((gAng+Math.PI/2)>=0) ? 1 : -1)!==GSd) gAng=-Math.PI/2+GSd*0.02;
       gSide=((gAng+Math.PI/2)>=0) ? 1 : -1;
       /* Vyrusta ve smeru rodice a oblouckem se stoci do smeru sveho cile (V4b: nejvys ~110°, prebytek = natoceni zacatku). */
       var gDev=gAng-sAng; while(gDev>Math.PI) gDev-=2*Math.PI; while(gDev<-Math.PI) gDev+=2*Math.PI;

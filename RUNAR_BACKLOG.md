@@ -419,19 +419,16 @@
 - [ ] **Strom (lab): souběhy větví na modelových stromech** (CODE-tree, 2026-10-03, DECISIONS (15), (16)). Na 24 modelových stromech (`ovtypes`) 158 souběhů (ráno 250, s „koštětem“ 49 — tvar ramen, který KUKY odmítl). „Povýšená podél matky“ vyřešená (146 → 18, DECISIONS (16); nepomohlo: dřívější odštěpení, úhel od špičky matky, menší zdvih špičky povýšené). Dvě ramena na stejné straně 74 → 21 (DECISIONS 2026-10-05 (4)); všech souběhů 62. **Zbývá:** dvě ramena na stejné straně (21), povýšená + povýšená (16), povýšená + jiné rameno (15). Každý kandidát změřit oběma směry páky + `scripts/utils/tree_render.js` (KUKYho strom i modelový), tvar ramen z kmene NEMĚNIT. Na KUKYho stromě dnes žádný (dvě mělká křížení, obě větve vidět).
 - [x] **Strom (lab): strany nevyvážené / rameno do první volné mezery / čtení mimo své místo** — vyřešeno 2026-10-05 (DECISIONS (12)): místo = element × pásmo × strana, strana z dat, zrod podle zóny.
 - [ ] ⭐ **Strom (lab): shluk větví budoucnosti a světa nahoře vpravo** (CODE-tree, 2026-10-05, po DECISIONS (12)). Každé čtení je teď na svém místě a strom má tvar diagonály z kánonu (nitro + minulost vlevo dole, svět + budoucnost vpravo nahoře) — a právě nahoře vpravo se sbíhají strmá ramena budoucnosti a jejich povýšené větve: souběhy na KUKYho stromě 13 (dřív 2), na 24 modelových ~93 (dřív 62). Kandidáti: rozestup povýšených podél matky a jejich odbočka od sousedních větví (ne jen od matky), úhly povýšených na straně jako u ramen (pořadí), délka povýšených. Měřit `ovtypes`/`tree_overlap.js` + `tree_render.js`; tvar ramen z kmene neměnit.
-- [ ] ⭐ **Strom (lab): čeká na ownera — vyvážený strom, strop 25, posílení větviček** (CODE-tree, 2026-10-07, hlášení 2e6aa64d). Nic z toho
-  není v labu; owner chce každou vizuální změnu napřed vidět (KUKY 2026-10-07: *„to že ty řekneš, že jsi něco opravil, mě nezajímá, pokud jsem
-  ti na vizuální věc nedal svůj pohled“*). Změřeno na jeho stromě (280 čtení, 342 tažení):
+- [ ] ⭐ **Strom (lab): čeká na ownera — vyvážený strom, posílení větviček** (CODE-tree, 2026-10-07, hlášení 2e6aa64d). Owner chce
+  každou vizuální změnu napřed vidět (KUKY 2026-10-07: *„to že ty řekneš, že jsi něco opravil, mě nezajímá, pokud jsem ti na vizuální věc
+  nedal svůj pohled“*). Body 2 a 3 schválil po obrázku 2026-10-09 a jsou v labu (DECISIONS 2026-10-09 (3)); 1 a 4 čekají.
+  Změřeno na jeho stromě (280 čtení, 342 tažení):
   1. **Vlevo nahoru nic:** jednotlivé čtení z nitra (Healing/Family/Inner Growth) se do horní zóny nedostane nikdy (nejvýš 0,25, pásmo
      začíná na 0,33) — oblast se počítá do výšky (váha 0,3) a seeking táhne jen dolů. Vlevo 57/43/0 % (dole/střed/nahoře), vpravo
      13/49/38 %. Oblast jen pro stranu: vlevo 41/28/32, vpravo 37/34/29; poloviční váha (0,15): vlevo 51/32/17, vpravo 37/34/29.
      Mění kánon „diagonála příběhu“ (`RUNAR_TREE.md` §3) → rozhoduje owner.
-  2. **Strop 25** (KUKY *„vracíme to k 25“*) je připravený jako patch `docs/archive/tree/2026-10-07_strop25.patch` (`git apply`; nese
-     i návrh záznamu DECISIONS s měřením): čtení se stranou převezme větev založenou středem (značka místa, kresba se nemění) + strop
-     `MAX_BR`. Jeho strom 25 větví, 340/342 tažení na místě; bez převzetí by strop odsunul 36/342. Čeká na ownerův pohled na obrázek před/po.
-  3. **Chyba strany (zatím neopravená v labu):** povýšená z vůdčí větve dostává stranu ze střídání odbočky — Fehu a Dagaz (oheň, místo
-     vpravo) rostou doleva s 19 čteními o světě; na modelovém stromě „svět“ Hagalaz po 20 čteních. Smoke ㉳ to nechytá (jeho dva logy to
-     nevyvolají). Oprava + log „svět“ do smoke jsou v témže patchi.
+  2. ✅ **Strop 25** — v labu od 2026-10-09 (DECISIONS 2026-10-09 (3); patch `docs/archive/tree/2026-10-07_strop25.patch` je historie).
+  3. ✅ **Chyba strany** (Fehu a Dagaz vlevo s 19 čteními o světě) — opravená v labu 2026-10-09, smoke ㉳ má log „svět“, který ji chytí.
   4. **Posílení větviček** (návrh z hlášení): přesné opakování (runa + oblast + seeking + záměr) 310 → 281 větviček; tatáž runa na téže
      větvi 310 → 123 — na větvi pak nejvýš 6 run (element má 5–6 run, stín 3), takže limit 3/4/5 run by se dotkl 19/16/4 z 32 větví.
 - [ ] **Strom (lab): sklouznutí úchytů při zrodu ramene podle zóny až 47 px** (2026-10-05): sousedé se rozestoupí v jednom čtení (rychlé kroky). Kdyby to bylo vidět jako skok, rozložit rozestoupení do pár čtení s ramenem, které se rodí malé.
