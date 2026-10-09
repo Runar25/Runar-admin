@@ -422,6 +422,10 @@
 - [ ] ⭐ **Strom (lab): seeking na větvičkách — čeká na ownera** (CODE-tree, 2026-10-09). KUKY: *„seeking by se mohl projevit na každé
   runě, u které bude. clarity větev více nahoru, reflection více dolů ke kořenům, general náhodně podle toho, co se vylosuje za typ konce
   větve … confirmation a insight into challenge navrhni.“* Nejdřív nanečisto s obrázkem (owner chce každou vizuální změnu napřed vidět).
+  **Nanečisto hotové 2026-10-09**, patch `docs/archive/tree/2026-10-09_nanecisto_seeking.patch` (`git apply`; builder + `runar-branch.js`):
+  seeking do výšky nevstupuje; konec větvičky: clarity se stočí nahoru, reflection dolů (nejvýš 0,6 rad), **návrh** confirmation = rovně
+  ve směru větve, insight = zalomený konec; general = jeden z těch čtyř (stálý podle větvičky). Tvar konce (vidlička/tupý…) dál dává runa;
+  bez `seekTip` (aplikace, ramena) engine beze změny. První verze stáčela konce přímo ke svislici → smyčky; teď omezené otočení.
   **Záloha výšky bez záměru:** dnes svět runy (Hel dole, Midgard střed, Asgard nahoře); druhá možnost, kdyby neseděla (KUKY: *„už máme
   vytvořenou zálohu pro případ, že mi to nebude sedět“*) = zóna, kde je strom zatím nejslabší (roste od zóny k zóně) — nepostavená, jen popsaná.
 - [x] **Strom (lab): vyvážený strom, strop 25, posílení větviček** (hlášení 2e6aa64d, 2026-10-07 → 10-09): strop 25 a oprava strany
