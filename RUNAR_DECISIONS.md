@@ -9166,3 +9166,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   UI už ale volné čtení na spread nepustí a server ho nepustí ani s podvrženým `use_credit:false`, pokud je `spread_cost` pravdivý.
 - Odvolává se na: 2026-10-09 (15) (kontrola architektury).
 - Affected doc(s): `RUNAR_BACKLOG.md` (Kontrola architektury, body 1 a 4) — v témže commitu.
+
+## 2026-10-09 (19) — Strom: popis větve významem jejích run je SMĚR (ne úkol); počty se neříkají, četnost určuje pořadí výkladu
+
+- **Rozhodl:** KUKY 2026-10-09: *„není až tak důležité, kolikrát člověk dostal nějakou runu … může to spíš určovat pořadí, v jakém bude
+  výklad těch run jako jednoho spojení, jednoho velkého výkladu několika run. jakoby takový spread. ale jde o ten význam run“* a *„bude to
+  chtít nějakou práci, aby to znělo dobře, ale je to zajímavé dostatečně, že nad tím můžu uvažovat. zapíšeme to jako směr. teď používáme
+  pro výklad GPT sol 6, takže to bude znít jinak než Opus.“* Zvířata stromu: *„spíš nad plán, budeme je zkoušet“*.
+- **Směr:** popis větve = jeden výklad run, které na ní rostou (jako spread); kotví na tom, na co se člověk ptal (2026-08-14); počty run se
+  člověku neříkají, četnost jen určuje pořadí; zvíře jen podle kánonu a až později. Koncept textu psal Claude — skutečný popis by psal
+  model výkladu (dnes GPT-6 sol), ladit se musí na něm. Do aplikace přes CODE-tune/Cowork v EN i IS.
+- **Teď v labu:** jen data v inspekci (2026-10-09 (14)). Nic dalšího se nestaví, dokud owner nerozhodne.
+- Odvolává se na: 2026-10-09 (14) · 2026-08-14 (zrcadlo, ne orákulum).
+- Affected doc(s): `RUNAR_BACKLOG.md` (Strom: popis větve Rúnarovým hlasem) — v témže commitu.

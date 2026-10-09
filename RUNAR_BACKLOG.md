@@ -435,6 +435,8 @@
   spíš určovat pořadí, v jakém bude výklad těch run jako jednoho spojení … jako takový spread. jde o ten význam run“* · zvířata stromu
   *„spíš nad plán, budeme je zkoušet“*. Pravidla: kotví na tom, na co se člověk ptal (oblast, záměr); počty se neříkají, četnost určuje
   pořadí run ve výkladu; zvíře jen podle kánonu (`RUNAR_DESIGN.md` „Bytosti“); do aplikace přes CODE-tune/Cowork v EN i IS.
+  KUKY 2026-10-09: *„bude to chtít nějakou práci, aby to znělo dobře … zapíšeme to jako směr. teď používáme pro výklad GPT sol 6, takže to
+  bude znít jinak než Opus“* — koncept psal Claude; skutečný popis by psal model výkladu (dnes GPT-6 sol), ladit se musí na něm.
 - [ ] **Strom (lab): povýšená ze střední zóny visí v koruně kvůli matce** (CODE-tree, nalezeno 2026-10-09). Nauthiz z Othily má místo
   verdandi (12 z 15 čtení „teď“), ale vyrůstá z Othily (skuld, 85 % kmene) — jediného zemního ramene vlevo (matka = rameno téhož živlu
   na straně místa, nejbližší pásmo). Owner ji pak čte jako budoucnost (*„když je tak vysoko na stromě … je to koukání do budoucnosti?“*).
@@ -445,6 +447,12 @@
   `docs/archive/tree/2026-10-09_nanecisto_vyska.patch`) → Nauthiz vlevo 63 %, vpravo 52 % kmene, ale z kmene vychází 24 větví místo 14
   (povýšená zbude 1), strom užší a vyšší, větve jako příčky; smoke ㉳ projde. Odštěp níž na matce nepomůže (matka vychází z kmene vysoko).
   Čeká na ownera: (b), nebo nechat a v popisu říkat, že visí z matky.
+  KUKY 2026-10-09: *„musíme najít řešení. může se ten problém nějak odstranit na začátku při vzniku stromu? třeba tím, že se drží místo pro
+  ten element, dokud se neobjeví?“* → (c) **držet místo** (patch `docs/archive/tree/2026-10-09_nanecisto_rezerva.patch`): první čtení živlu
+  × zóny založí vlastní pramen i na krátkém kmeni (bez kapacity `capSecAt`; kmen se rozestoupí / povyroste). Jeho strom: Nauthiz vlevo
+  60 % (teď), výstupů z kmene 17 (dnes 14, (b) 24); větví mimo svou zónu 9/22 (dnes 12, (b) 3); modelové stromy 6–9/21–22 (dnes 7–11,
+  (b) 2–3); mladý strom (20 čtení) skoro beze změny; smoke ㉳ projde. Zbytek mimo zónu = povýšené pro druhou stranu zóny (matka na té
+  straně v jiné zóně, např. Nauthiz vpravo z Uruzu 25 %) a Fehu z prvních čtení.
 - [ ] **Strom (lab): `AREA_LAT` odporuje „oblast = strana“** (CODE-tree, nalezeno 2026-10-09). Tabulka v `runar-branch.js` (sdílená
   s aplikací) bere Love −0,75 (nitro), Spirituality −0,20 (skoro střed), Crossroads +0,10 — kánon (`RUNAR_TREE.md` §3) má Love a Crossroads
   bez strany a Spirituality ve světě. Čte ji strana větvičky (`sideOf`), natočení ramene za čteními (`latOf` / `areaSide`) i lateral
