@@ -6332,5 +6332,5 @@ V produkci je podíl pojistky stejný a *„leaves room for…, or not“* je te
 never hand a conclusion“* (P5).
 **Hranice:** produkce po v5.03 = 17 ownerových Asků na 10 čteních, jiná skladba otázek než před (otázky na význam, „…with the past“) →
 srovnání podílu je předběžné; tvar *leaves room for* drží i v labu se stejnými otázkami (3 → 8, n. s.). Rozhodnutí v5.03 se tím nemění —
-podmět „the rune“ (ownerova původní výtka) ubyl (8 → 1, p = 0,026, `docs/eval/2026-10-06-ask-pojistka/`). Detektor pro příští lab: tenhle
-přepočet, ne `RE_DNS`. Data mimo repo (`~/runar-eval/zaloha/2026-10-06_12b7cce8_v2_A.json`, export Asků z DB). <!-- doc-links:ok 2026-10-09 osobní data mimo repo (nesou jméno), DECISIONS 2026-08-08 -->
+podmět „the rune“ (ownerova původní výtka) ubyl (8 → 1, p = 0,026, `docs/eval/2026-10-06-ask-pojistka/`). Detektor pro příští lab:
+`scripts/utils/pojistka.js` (tenhle přepočet; na datech labu dává P0 28/30 a PRAVIDLA 20/30 jako tabulka výš), ne `RE_DNS`. Data mimo repo (`~/runar-eval/zaloha/2026-10-06_12b7cce8_v2_A.json`, export Asků z DB). <!-- doc-links:ok 2026-10-09 osobní data mimo repo (nesou jméno), DECISIONS 2026-08-08 -->

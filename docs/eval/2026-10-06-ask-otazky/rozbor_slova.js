@@ -23,6 +23,8 @@ function ngramy(q, jmena) {
   }
   return [...out];
 }
+// ⚠️ 2026-10-09: RE_DNS NEVIDÍ „leave(s) room for…“ — po v5.03 hlavní tvar pojistky (RUNAR_EVAL_LOG.md 2026-10-09 (1)). Čísla
+// v README tohoto pokusu i v EVAL_LOG 2026-10-06 (8) platí pro tenhle regex; nový pokus ať bere scripts/utils/pojistka.js.
 const RE_DNS = /\b(does|do|did) not (say|tell|settle|show|decide)\b|\bleaves? [^.?!]{0,30}\bopen\b|\bnot a (promise|verdict|prediction|sign|warning)\b/i;
 const SL = "(?:does|do|did)\\s?n[o'’]?t\\s+(?:say|tell|show|settle|decide|name|promise)\\b";
 const reRuna = (r) => new RegExp('\\b(?:the runes?|' + r + ')\\s+' + SL, 'i');
