@@ -1724,7 +1724,7 @@ všechny, Claude jen při výpadku solu nebo `engine:'opus'` od admina · Claude
 Nasazená funkce se od repa liší jen těmito komentáři a mrtvou funkcí — samostatný deploy netřeba, půjde s příštím.
 
 **PRO OWNERA:**
-1. 🟠 **Čtení zdarma dá i spread.** Nový Rune Seeker (`free_balance` 1) si vybere Yggdrasil → klient pošle `use_credit:false`
+1. ✅ *(opraveno a nasazeno 2026-10-09, CODE-tune — server i klient, owner „opravit obě chyby“; DECISIONS 2026-10-09 „Volné čtení jen na single…“)* 🟠 **Čtení zdarma dá i spread.** Nový Rune Seeker (`free_balance` 1) si vybere Yggdrasil → klient pošle `use_credit:false`
    (`shouldUseCredit()` hledí jen na `free_balance`) → proxy jde do free větve, která `spread_cost` nečte → Yggdrasil za jedno volné
    čtení. Poctivá cesta z UI, ne podvrh. Design říká „Single zdarma, spready za kredity“ (`RUNAR_DESIGN.md` Spreads per tier).
    Navržená oprava (NEprovedena — mění peníze a chce nasazení): v proxy `if (use_credit || spreadCost > 1)` → placená větev; kdo
@@ -1753,7 +1753,7 @@ počítá se až po úspěšném hlasu · `redeem-code` 5 pokusů / 15 min na IP
 nepoužitá konstanta islandského hlasu označena · `tree-update` „volá ji appka po každém čtení“ → appka ji nevolá, ale je nasazená.
 
 **PRO OWNERA:**
-4. 🔴 **Dárkový kód se po smazání účtu dá uplatnit znovu.** `delete-account` nuluje `gift_codes.used_by`, `redeem-code` hlídalo jen
+4. ✅ *(nasazeno 2026-10-09, CODE-tune — owner „opravit obě chyby“; shrine od téhož dne počítá jako použitý i kód s `used_at`)* 🔴 **Dárkový kód se po smazání účtu dá uplatnit znovu.** `delete-account` nuluje `gift_codes.used_by`, `redeem-code` hlídalo jen
    `used_by` → kód je zase „nepoužitý“. V produkci teď **2 takové kódy** (`used_by` null, `used_at` vyplněné; dotaz 2026-10-09).
    **Opraveno v repu** (`redeem-code` hlídá i `used_at`, v kontrole i v CAS) — **čeká na nasazení**:
    `supabase functions deploy redeem-code --project-ref pmitxjvkeovijreepror --no-verify-jwt`. Po nasazení jsou ty 2 kódy zavřené samy.

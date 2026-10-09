@@ -836,7 +836,7 @@ async function loadBatches() {
   const el = document.getElementById('gc-batches'); if (!el) return;
   el.textContent = 'Loading…';
   const { data, error } = await sb.from('gift_codes')
-    .select('batch_id, credits, used_by, created_at')
+    .select('batch_id, credits, used_by, used_at, created_at')
     .order('created_at', { ascending: false });
   if (error) { el.textContent = 'Error: ' + error.message; return; }
 
@@ -846,7 +846,8 @@ async function loadBatches() {
     const b = row.batch_id || '(no batch)';
     if (!batches[b]) batches[b] = { total: 0, used: 0, credits: row.credits, date: row.created_at };
     batches[b].total++;
-    if (row.used_by) batches[b].used++;
+    // Použitý = used_by NEBO used_at (2026-10-09): delete-account nuluje used_by, used_at nechá — stejně jako redeem-code (923b248).
+    if (row.used_by || row.used_at) batches[b].used++;
   });
 
   if (!Object.keys(batches).length) { el.textContent = 'No codes yet.'; return; }

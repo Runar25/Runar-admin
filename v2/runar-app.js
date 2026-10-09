@@ -1312,18 +1312,27 @@ async function callProxy(sys, prompt, maxTokens, use_credit = false, credit_cost
   } catch (e) { console.error('callProxy:', e && e.message); return { error: 'network_error' }; }
 }
 
-// Vrátí true pokud je třeba použít kredit (monthly slot vyčerpán)
-function shouldUseCredit() {
+// Vrátí true, pokud čtení za `cena` jednotek (SPREAD_COSTS, výchozí 1 = single) platí Rune Seeker kreditem.
+// 2026-10-09: volné čtení je jen na single — spread (cena > 1) jde vždy z kreditů, stejně jako na serveru (claude-proxy, BACKLOG
+// „Kontrola architektury“ bod 1). Do té doby funkce cenu neznala a spread šel jako volné čtení, kdykoli měl free_balance > 0.
+function shouldUseCredit(cena) {
   if (userTier !== 'rune_seeker') return false;
+  if ((cena || 1) > 1) return true;
   return userFreeBalance <= 0;
+}
+// Má Rune Seeker na čtení za `cena` jednotek? (2026-10-09 — aby se nedostatek kreditů ukázal PŘED tahem run, ne jako 402 po něm.)
+function lacksCredits(cena) {
+  if (!currentUser || userTier !== 'rune_seeker') return false;
+  var c = cena || 1;
+  return shouldUseCredit(c) ? userCredits < c : false;
 }
 
 // Vrátí true pokud může aktuální uživatel slyšet dynamický hlas Rúnara.
 // Logika čte TIERS config — stačí flipnout flag v runar-config.js.
 // Připraveno pro budoucí gating (např. Visitor jen 1 hlasité čtení ze 3).
-function canUseVoice() {
+function canUseVoice(cena) {   // cena čtení jako u shouldUseCredit — placený spread se řídí voice_credits (2026-10-09)
   const tier = TIERS[userTier] || TIERS.free_trial;
-  if (shouldUseCredit()) return !!tier.voice_credits;
+  if (shouldUseCredit(cena)) return !!tier.voice_credits;
   return !!tier.voice_monthly;
 }
 

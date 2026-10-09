@@ -9144,3 +9144,25 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   seznamu pro ni; podmínky ElevenLabs nezkoumány — text o nich říká jen, co se posílá a kam. Zásady na agndofa.is (znění B) zatím bez OpenAI.
 - Odvolává se na: 2026-10-09 (13), 2026-09-11 (8).
 - Affected doc(s): `RUNAR_BACKLOG.md` (Podklad k přechodu — stav) — v témže commitu.
+
+## 2026-10-09 (18) — Volné čtení jen na single (spread vždy z kreditů); dárkový kód smazaného účtu už nejde uplatnit znovu
+
+- **Rozhodl:** KUKY 2026-10-09: *„opravit obě chyby, co našel code-read“* (RUNAR_BACKLOG.md „Kontrola architektury — claude-proxy“,
+  body 1 a 4). **Provedl:** CODE-tune; oprava redeem-code je od CODE-read (923b248), CODE-tune ji nasadil.
+- **Proč:** (1) Nový Rune Seeker si za své jedno volné čtení vzal poctivým UI i spread (třeba Yggdrasil za 5 jednotek): klient posílal
+  `use_credit:false`, kdykoli měl `free_balance > 0`, a free větev proxy cenu nečetla. Design říká „Single zdarma, spready za kredity“.
+  (2) `delete-account` nuluje `gift_codes.used_by`, `redeem-code` hlídalo jen `used_by` → kód smazaného účtu byl zase „nepoužitý“
+  (v produkci 2 takové z 80).
+- **Co:**
+  - `claude-proxy`: Rune Seeker se `spread_cost > 1` jde placenou větví i s `use_credit:false` (každý spread v `SPREAD_COSTS` stojí
+    2–5 jednotek, single 1). Kdo kredity má, zaplatí jimi a volné čtení mu zůstane na single; kdo nemá, dostane 402 `no_credits`.
+  - Klient: `shouldUseCredit(cena)` a `canUseVoice(cena)` znají cenu čtení; nové `lacksCredits(cena)` zastaví Rune Seekera, který na
+    zvolené čtení nemá, už ve `startReading` — před tahem run, ne 402 po něm (týká se i placeného spreadu s nedostatkem kreditů, který
+    dřív došel až k 402).
+  - `redeem-code` (CODE-read): použitý = `used_by` NEBO `used_at`, v kontrole i v atomickém zápisu. Shrine počítá dávky stejně.
+- **Ověřeno:** 9 stavů klienta v prohlížeči (Rune Seeker volné/kredity × single/Norny/Yggdrasil, premium) — volné čtení jen na single,
+  spread bez kreditů zastaven před tahem, premium nikdy. Smoke. Nasazené funkce stažené zpět = repo.
+- **Hranice:** podvrh klientem (#4, „Proxy Fáze 2“) tím vyřešený NENÍ — server dál věří typu čtení z klienta (`spread_cost`); poctivé
+  UI už ale volné čtení na spread nepustí a server ho nepustí ani s podvrženým `use_credit:false`, pokud je `spread_cost` pravdivý.
+- Odvolává se na: 2026-10-09 (15) (kontrola architektury).
+- Affected doc(s): `RUNAR_BACKLOG.md` (Kontrola architektury, body 1 a 4) — v témže commitu.

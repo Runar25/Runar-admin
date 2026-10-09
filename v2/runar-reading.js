@@ -432,11 +432,11 @@ function _showTrialEnd() {
 
 function startReading() {
   if (!currentUser && getTrialCount() >= FREE_TRIAL_LIMIT) { _showTrialEnd(); return; }
-  // Only block rune_seeker who has used their free reading AND has no credits left.
+  // Rune Seeker without enough for THIS reading is stopped here, before the draw. Single: free reading or ≥ 1 credit.
+  // Spread: credits ≥ its price — 2026-10-09 the free reading stopped covering spreads (lacksCredits / shouldUseCredit in
+  // runar-app.js, same rule in claude-proxy); until then a spread without credits got through to a 402 after the runes were drawn.
   // Rune Walker / Rune Wanderer / Admin are never blocked here.
-  if (currentUser && userTier === 'rune_seeker'
-      && userFreeBalance <= 0
-      && userCredits <= 0) {
+  if (lacksCredits((SPREAD_COSTS[_SPREAD_COST_KEY[_spreadMode] || 'single'] || {}).credits)) {
     updateAuthUI();
     setSt('st-setup', _readingErrMsg('no_credits'));
     return;
@@ -1366,7 +1366,7 @@ async function _generateSpreadReading(o) {
   // vyraz byl vzdy false a zakladani se nespustilo ani jednou.
   var _isFounding = (o.kind === 'NORNS' && typeof _foundingPending !== 'undefined' && _foundingPending);
   var res = await callProxy(sys, prompt, o.tokens,
-                            _isFounding ? false : shouldUseCredit(),
+                            _isFounding ? false : shouldUseCredit(o.credits),   // cena spreadu: volné čtení jen na single (2026-10-09)
                             _isFounding ? 0 : o.credits,
                             _journalS, _isFounding ? 'founding' : '');
   if (_lastGen && res && res.model) _lastGen.model = res.model;
@@ -1420,7 +1420,7 @@ async function _generateSpreadReading(o) {
   // U zalozeni se hlas NENABIZI — je to textovy ritual a jeho bezplatnost stoji
   // prave na tom, ze se TTS nekona. (Skryte tlacitko neni ochrana, jen dusledna
   // nabidka; EL proxy o typu cteni nevi — zapsano v RUNAR_DECISIONS.)
-  if (canUseVoice() && !_isFounding) {
+  if (canUseVoice(o.credits) && !_isFounding) {
     if (vBtn) { vBtn.disabled = false; vBtn.style.display = ''; }
   } else {
     if (vBtn) { vBtn.disabled = true; vBtn.style.display = 'none'; }

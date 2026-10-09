@@ -3,8 +3,8 @@
 //   anonymous — rejected with 401 before any model call (see SECURITY in the handler); the visitor has no live reading
 //   rune_seeker — BALANCE SYSTEM (model B, 2026-06-12):
 //     free_balance in user_profiles: 1 at onboarding, NO replenish (no weekly drip)
-//     free readings: meant for a SINGLE rune — ⚠️ NOT enforced here: the free branch does not look at spread_cost,
-//       so a spread sent with use_credit:false costs one free_balance (RUNAR_BACKLOG.md „Kontrola architektury — claude-proxy“)
+//     free readings: SINGLE rune only — a spread (spread_cost > 1) takes the paid path even with use_credit:false
+//       (2026-10-09; until then the free branch ignored spread_cost and one free_balance bought e.g. a Yggdrasil)
 //     paid credits: any spread, cost = spread_cost param (reading units from SPREAD_COSTS, not runes)
 //     -> only error this path returns is no_credits (402); no weekly/monthly error
 //   standard / premium — monthly cast cap (MONTHLY_LIMITS); a follow-up (ask) does not count
@@ -725,7 +725,12 @@ serve(async (req: Request) => {
     }
 
     if (userTier === "rune_seeker" && !isRitual) {
-      if (use_credit) {
+      // 2026-10-09 (KUKY „opravit obě chyby, co našel code-read“; BACKLOG „Kontrola architektury — claude-proxy“ bod 1): volné čtení
+      // je jen na single. Spread (spreadCost > 1 — každý spread v SPREAD_COSTS stojí 2–5 jednotek, single 1) jde placenou větví i
+      // s use_credit:false. Do té doby free větev cenu nečetla a nový Rune Seeker si za své jedno volné čtení poctivým UI vzal třeba
+      // Yggdrasil (klient posílal use_credit:false, kdykoli měl free_balance > 0). Kdo kredity má, zaplatí jimi a volné čtení mu
+      // zůstane na single; kdo nemá, dostane 402 no_credits — klient to od téhož dne pozná už před tahem (startReading).
+      if (use_credit || spreadCost > 1) {
         // ── Paid credit reading — spread_cost = reading units from SPREAD_COSTS (not runes) ──
         const cost = spreadCost;   // sanitizovano vys — NaN/zaporne/Infinity neprojde
         if (creditsBalance < cost) {
