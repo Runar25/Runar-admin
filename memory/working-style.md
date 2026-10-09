@@ -416,10 +416,8 @@ Task bez Output B je **nedokončený**, pokud změnil rozhodnutí nebo chování
 - Workflow pravidlo → tenhle soubor · Design → `RUNAR_DESIGN.md`
 - **Technický stav NIKAM** — vlastní ho kód a `git log` (§20). Do docu nepatří.
 
-**Reconciliation check** (owner-triggered, ne autonomní):
-- Scope: jeden soubor nebo jeden modul
-- Code přečte doc + kód → vypíše divergence (doc-stale / code-drifted / match)
-- Code navrhuje, Kuky rozhoduje — Code nikdy neopravuje autonomně
+**Reconciliation check** → vlastník je `CLAUDE.md` §16 (tady se neopisuje — do 2026-10-09 tu stála kopie „Code nikdy neopravuje
+autonomně“, která po ownerově změně postupu odporovala §16; DECISIONS 2026-10-09 (15)).
 
 ---
 

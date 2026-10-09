@@ -9090,3 +9090,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   kořeny); pro střed (teď) kánon zvíře nemá — nevymýšlí se.
 - Odvolává se na: 2026-08-14 (zrcadlo, ne orákulum) · 2026-10-09 (11).
 - Affected doc(s): `RUNAR_BACKLOG.md` (povýšená ze střední zóny visí v koruně; větvičky nanečisto) — v témže commitu.
+
+## 2026-10-09 (15) — Kontrola architektury po částech: Code rozpory sám ověří a opraví, ownerovi jen seznam toho, co potřebuje jeho
+- **Rozhodl:** KUKY 2026-10-09 *„ověříš si, že to máš všechno správně, a opravíš; pokud potřebuje můj zásah, zapíšeme a pokračuješ. Budeš
+  na tom dělat přes noc a ráno vyřešíme problémy, pokud nějaké budou.“* **Provede:** CODE-read, první část `claude-proxy`.
+- **Proč:** CODE-read v popisu architektury dvakrát opsal hlavičku `claude-proxy` místo kódu (záložní řetěz modelů, vypnutý kontext stromu);
+  hlavička byla zastaralá podruhé (oprava 2026-10-04 a znovu 68f53c3). Owner chce projít všechny části, a starý §16 („vypiš a STOP“)
+  by ho nutil rozsuzovat každou banalitu.
+- **Co:** §16 Reconciliation: Code rozpor ověří a opraví sám; rozhodnutí, nasazení a produkční DB jdou do seznamu pro ownera a práce běží dál.
+  Pro tuto kontrolu CODE-read smí opravovat i soubory lane CODE-tune (výslovně owner) — po jedné, s důvodem u změny (§28), CODE-tune ví předem.
+  Pořadí částí a postup → návrh v konverzaci 2026-10-09; nálezy a seznam pro ownera → `RUNAR_BACKLOG.md` „Kontrola architektury“.
+- **Hranice:** edge funkce Code nenasazuje — změna kódu `claude-proxy` je v repu, nasazení jde do seznamu pro ownera.
+- Affected doc(s): `CLAUDE.md` (§16) — v témže commitu.
