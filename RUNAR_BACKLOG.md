@@ -2086,7 +2086,9 @@ bez toho není slepé skórování slepé).
   Bez nich se o výsledku nesmí tvrdit nic.
   **Rozhodnutí:** kvalita↑ v B i C ∧ copy≈A ∧ bez konvergence → teprve pak architektura.
   Kvalita↑ jen v B (same-rune) = model si bere věty, ne způsob → NEÚSPĚCH.
-- [ ] **DUPLIKÁT (§20 + §10): věta „The runes do not predict your fate" je v kódu 4×** —
+- [x] ✅ **VYŘEŠENO 2026-10-09 (CODE-tune):** citát žije jen v `UI_TEXT.hero_quote` (EN i IS); kopie ve Stromu pryč
+  2026-10-06, v `runar-app.js` už je klíč, poslední natvrdo zapsaná v `runar-reader.html` vyndána. Původní znění položky:
+- ~~**DUPLIKÁT (§20 + §10): věta „The runes do not predict your fate" je v kódu 4×**~~ —
   `v2/runar-translations.js:236` (`tree_closing_quote`, správný vlastník) · `v2/runar-app.js:747`
   (natvrdo jako fallback) · `v2/runar-reader.html:159` a `:587` (natvrdo 2×). Změna znění by se
   musela dělat na čtyřech místech a tři z nich grep na klíč nenajde. Oprava: HTML i app brát

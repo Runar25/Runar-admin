@@ -156,18 +156,22 @@
         <div class="hero-eyebrow" id="hero-eyebrow-m">THE RUNE KEEPER</div>
         <div class="hero-title" id="ui-title-m">Rúnar</div>
       </div>
+      <!-- 2026-10-09 (KUKY): citát na mobilu u Rúnarovy hlavy; text plní updateUIText z hero_quote (týž klíč jako sloupec textu) -->
+      <blockquote class="hero-quote hero-quote-m" id="hero-quote-m"></blockquote>
     </div>
     <div class="hero-text-col">
       <div class="hero-eyebrow hero-desk-only" id="hero-eyebrow">THE RUNE KEEPER</div>
       <h1 class="hero-title hero-desk-only" id="ui-title">Rúnar</h1>
       <p class="hero-sub" id="ui-sub">Draw a rune. Hear the old tongue speak.</p>
       <p class="hero-greeting" id="hero-greeting"></p>
-      <blockquote class="hero-quote" id="hero-quote">
-        "The runes do not predict your fate.<br>
-        They remind you of the path<br>you already walk."
-      </blockquote>
+      <!-- text jen z UI_TEXT.hero_quote (updateUIText); 2026-10-09 natvrdo zapsaná kopie pryč (§20) -->
+      <blockquote class="hero-quote" id="hero-quote"></blockquote>
     </div>
   </div>
+  <!-- 2026-10-09 (KUKY „proužek, na který při kliknutí se celá obrazovka posune na runy pod ní“): sjede k záložkám čtení -->
+  <button type="button" class="hero-down" id="hero-down" onclick="scrollToReading()" aria-label="Scroll down to the reading">
+    <svg viewBox="0 0 24 12" aria-hidden="true" focusable="false"><path d="M2 2l10 8 10-8"/></svg>
+  </button>
 </section>
 
 <!-- ═══ APP ═══ -->

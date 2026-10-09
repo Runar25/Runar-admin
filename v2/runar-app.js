@@ -644,6 +644,18 @@ function openSidePanel() {
 // simply tell the truth“, „The stones have been keeping something for you“) — proti citátu o řádek níž i proti RUNAR_DESIGN
 // „zrcadlo, ne orákulum“; přepsány. IS „tilbúinn“ (jen mužský rod) nahrazeno „þegar þér hentar“.
 let _heroPhrase = null;
+// 2026-10-09 (KUKY: „proužek, na který při kliknutí se celá obrazovka posune na runy pod ní… tak aby nebyla potřeba prstem
+// posouvat, abych se dostal dolů na čtení“): klepnutí na proužek pod hero (#hero-down) sjede k záložkám čtení. Odečítá se
+// lepící horní lišta (.topbar, position:sticky), jinak by záložky zůstaly schované pod ní. Bez animace, když si ji člověk vypnul.
+function scrollToReading() {
+  var cil = document.querySelector('.app');
+  if (!cil) return;
+  var lista = document.querySelector('.topbar');
+  var y = cil.getBoundingClientRect().top + window.pageYOffset - (lista ? lista.offsetHeight : 0);
+  var bezPohybu = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.scrollTo({ top: Math.max(0, y), behavior: bezPohybu ? 'auto' : 'smooth' });
+}
+
 function getHeroPhrase() {
   const pool = t('hero_phrases');
   if (_heroPhrase === null) {
@@ -794,8 +806,14 @@ function updateUIText() {
   setText('ui-title-m', 'Rúnar');
   updateSidePanelLang();
   setText('ui-sub', getHeroPhrase());
-  const heroQuote = document.getElementById('hero-quote');
-  if (heroQuote) heroQuote.innerHTML = t('hero_quote');   // 2026-10-06: z UI_TEXT (IS dřív „spá ekki um“ — správně „spá fyrir um“)
+  // 2026-10-06: z UI_TEXT (IS dřív „spá ekki um“ — správně „spá fyrir um“). 2026-10-09: dvě místa (sloupec textu na desktopu,
+  // pole u Rúnarovy hlavy na mobilu — runar-reader.css .hero-quote-m), jeden klíč. V úzkém poli místo <br> mezera: zalomení
+  // nese i mezeru mezi slovy, skryté přes CSS by slepilo „fate.They“ (náhled 412×915, 2026-10-09).
+  var heroQ = document.getElementById('hero-quote'), heroQm = document.getElementById('hero-quote-m');
+  if (heroQ) heroQ.innerHTML = t('hero_quote');
+  if (heroQm) heroQm.innerHTML = t('hero_quote').replace(/<br\s*\/?>/gi, ' ');
+  var heroDown = document.getElementById('hero-down');
+  if (heroDown) heroDown.setAttribute('aria-label', t('hero_down_aria'));
   // reader-card1-lbl and reader-note are set by _updateReadingForm() — not here
   _updateDobLabel();
   _updateAreaSeekLabels();

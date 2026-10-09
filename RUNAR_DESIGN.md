@@ -153,7 +153,7 @@ označil za použitelné, **ne za nasazené** — nasazení je samostatné rozho
 TÉŽ figuru — *popření + „ve skutečnosti dělá tohle"*. Dvě takové na jedné obrazovce zní jako
 šablona; je to táž vada, která se u čtení měří jako „mechanické".
 
-**V produkci už běží** (`tree_closing_quote` v `runar-translations.js`):
+**V produkci už běží** (`hero_quote` v `runar-translations.js`, hero nad čtením; ze Stromu pryč 2026-10-06):
 > „The runes do not predict your fate. They remind you of the path you already walk."
 
 **Zásoba k použití:**
@@ -192,9 +192,9 @@ Rúnarovy věty:
   *„Rúnirnar ákveða ekki leið þína… þær hjálpa þér að muna hana."*
   — do 2026-08-15 bydlela **jen v promptu** (`DEF_CHAR.philosophy`), tedy na jediném místě, kam
   nepatřila. Zatím se nikde nezobrazuje; je volná k použití.
-- *„The runes do not predict your fate…"* — **viditelná v produktu** (hero, závěr stromu).
-  Zdroj pravdy = `UI_TEXT`/`tree_closing_quote`; inline kopie v `runar-app.js` a `runar-reader.html`
-  jsou známý duplikát (§20) → `RUNAR_BACKLOG.md`.
+- *„The runes do not predict your fate…"* — **viditelná v produktu** (hero nad čtením).
+  Zdroj pravdy = `UI_TEXT.hero_quote`; jiná kopie v kódu od 2026-10-09 není (poslední natvrdo
+  zapsaná v `runar-reader.html` pryč, duplikát v `RUNAR_BACKLOG.md` uzavřen).
 
 Přirozené ukotvení v hlase:
 *"Viděl jsem..." / "V zemi kde..." / "V čase kdy..." / "Ti, kdo přišli před námi..."*

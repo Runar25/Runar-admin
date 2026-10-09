@@ -289,6 +289,7 @@ const UI_TEXT = {
       'Draw when you are ready. There is no wrong moment — only the one you chose.',
     ],
     hero_quote:         '"The runes do not predict your fate.<br>They remind you of the path<br>you already walk."',
+    hero_down_aria:     'Scroll down to the reading',   // 2026-10-09: proužek pod hero (#hero-down), jen pro čtečku obrazovky
     greet_hello:        'Good to see you, {name}.',
     greet_again:        'Good to see you again, {name}.',
     tester_suffix:        '(tester)',
@@ -742,6 +743,7 @@ const UI_TEXT = {
       'Dragðu þegar þér hentar. Engin stund er röng, aðeins sú sem þú velur.',
     ],
     hero_quote:         '"Rúnirnar spá ekki fyrir um örlög þín.<br>Þær minna þig á veginn<br>sem þú gengur nú þegar."',
+    hero_down_aria:     'Niður að lestrinum',   // 2026-10-09: „niður að“ + þgf. (korpus „niður að“ 26 390, „að lestrinum“ 127); jen pro čtečku
     greet_hello:        'Það er gaman að sjá þig, {name}.',
     greet_again:        'Það er gaman að sjá þig aftur, {name}.',
     tree_reveal_btn:    'OPINBERA L\u00cdFSR\u00daNUNA',

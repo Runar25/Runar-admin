@@ -8884,3 +8884,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - Odvolává se na: 2026-10-05 (12) (místo = element × pásmo × strana) · 2026-08-05 (zákon 25 = 25).
 - Affected doc(s): `RUNAR_TREE_MAP.md` (§3 převzetí a strop, §9 strana povýšené, §12 smoke) · `RUNAR_BACKLOG.md` (položka „čeká na
   ownera“: body 2 a 3 hotové) — v témže commitu.
+
+## 2026-10-09 (4) — Hero: na mobilu citát u Rúnarovy hlavy, pod hero proužek, který sjede ke čtení
+
+- **Rozhodl:** KUKY 2026-10-09 se screenshotem: citát *„přesunout do míst s rámečkem u Rúnarovy hlavy, tak aby tam pasoval a nepřekrýval
+  Rúnarovu hlavu“* · *„chci, aby byl nějaký proužek, na který při kliknutí se celá obrazovka posune na runy pod ní… tak aby nebyla potřeba
+  prstem posouvat, abych se dostal dolů na čtení“* · rámeček s větou nad pozdravem *„zatím nic“*. **Provedl:** CODE-tune.
+- **Co:** do 768 px stojí citát (`UI_TEXT.hero_quote`) v tmavém poli vpravo nahoře v portrétu (nad hlavou), pod portrétem zmizí; desktop
+  beze změny (sloupec textu). Pod hero proužek se zlatou linkou a šipkou (`#hero-down`, `scrollToReading` v `runar-app.js`): klepnutí sjede
+  k záložkám čtení, lepící horní lišta se odečte; bez animace, když si ji člověk vypnul. Citát má jediný zdroj — poslední natvrdo zapsaná
+  kopie v `runar-reader.html` pryč (duplikát z 2026-09-06 uzavřen).
+- **Ověřeno v náhledu:** 412×915 a 360×740 (EN i IS): citát ve třech řádcích nad hlavou, proužek na první obrazovce (dole 734 z 740 px),
+  klepnutí → záložky přesně pod lištou (0 px rozdíl); 1280×800 beze změny. Čtečka obrazovky: *„Scroll down to the reading“* /
+  *„Niður að lestrinum“* (korpus „niður að“ 26 390, „að lestrinum“ 127; is-grammar-qa týž den nedostupné — chyba API).
+- **Hranice:** citát se teď objeví až po startu skriptů (dřív anglický výchozí text v HTML, který islandským uživatelům na chvíli ukázal
+  angličtinu). Na telefonu ověří owner.
+- Affected doc(s): `RUNAR_DESIGN.md` (citát — kde bydlí a jediný zdroj) — v témže commitu.
