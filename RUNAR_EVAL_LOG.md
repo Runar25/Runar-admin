@@ -6334,3 +6334,23 @@ never hand a conclusion“* (P5).
 srovnání podílu je předběžné; tvar *leaves room for* drží i v labu se stejnými otázkami (3 → 8, n. s.). Rozhodnutí v5.03 se tím nemění —
 podmět „the rune“ (ownerova původní výtka) ubyl (8 → 1, p = 0,026, `docs/eval/2026-10-06-ask-pojistka/`). Detektor pro příští lab:
 `scripts/utils/pojistka.js` (tenhle přepočet; na datech labu dává P0 28/30 a PRAVIDLA 20/30 jako tabulka výš), ne `RE_DNS`. Data mimo repo (`~/runar-eval/zaloha/2026-10-06_12b7cce8_v2_A.json`, export Asků z DB). <!-- doc-links:ok 2026-10-09 osobní data mimo repo (nesou jméno), DECISIONS 2026-08-08 -->
+
+## 2026-10-09 (2) — Rozbor čtení: Haiku 5.5 × gpt-6-luna na stejném vstupu (5 čtení) — Haiku s přemýšlením 1 platný nález, luna 0 ze 7
+
+**Proč:** owner (hlášení b4365ead): *„Zjisti všechno o Haiku 5.5… Jak by se dal Haiku porovnat s Luna 6?“*, *„13. ano porovnej“*.
+**Vstup:** uložené luniny rozbory (`gpt_reviews`) vstup nemají — zadání čtení se neukládá — proto 5 nových čtení produkční cestou
+(`buildReadingPrompt` + `_thoughtLine` + `_lengthReminder`, sol, EN: Laguz · Mannaz · Ehwaz · Ingwaz · Thurisaz) a všichni soudci dostali
+payload jako `_gptReviewPayload` (rubrika B–F česky, bez ✦ — jako tehdy v appce). 20 volání: 5 sol + 5 luna + 10 Haiku.
+Skutečné vady v těch čteních (přečteno): opis podoby oblasti *„what gives … the will to continue“* (Mannaz, Ingwaz), opis otázky runy
+*„…you do not strike back“* (Thurisaz).
+| soudce | cena za 5 | čas / rozbor | platné nálezy | neplatné / sporné | poznámka |
+|---|---|---|---|---|---|
+| gpt-6-luna (reasoning none) | $0,0008 | ~2 s | 0 | 7 | „doslovný opis“, který doslovný není; „chybí ✦“ (rozbor ✦ nedostal); sebevyvracející nález |
+| Haiku 5.5, výchozí (přemýšlí sám) | $0,0040 | 5–8 s | 1 (opis otázky runy) | 0 | 1 000–1 580 výstupních tokenů na 1–2 věty; 1× slovo rusky („руну“) v češtině |
+| Haiku 5.5, `thinking: disabled` | $0,0019 | 3–5 s | 0 | 9 | vypisuje i prázdné kategorie (rubrika zakazuje), opis otázky runy přehlédl; 1× „руна“ |
+Opis podoby oblasti nenašel nikdo. Vstupní tokeny Haiku ~1,45× luny na tentýž text (jiný tokenizér) — proto i „bez přemýšlení“ dráž.
+**Závěr:** pro rozbor je kandidát jen Haiku 5.5 s přemýšlením (přesnější než luna, ~0,08 c za rozbor); bez přemýšlení je horší než luna.
+Riziko: azbuka v českém výstupu (2 z 10 rozborů). **Vedlejší nález opraven:** rozbor nedostával řádek ✦, i když ho zadání chce → od dneška
+ho dostává (`_gptReviewPayload`). Pro `tree-update` plyne: Haiku 5.5 s `max_tokens` 200 jen s `thinking: disabled` (jinak prázdný text).
+**Hranice:** n = 5, EN, jeden běh; kvalitu posuzoval CODE-tune čtením (owner čte texty — stránka vedle sebe mimo repo). Ceny
+z ceníku Anthropicu / OpenAI k 2026-10-09. Data mimo repo: `~/runar-eval/haiku-luna-2026-10-09.json`. <!-- doc-links:ok 2026-10-09 data mimo repo (texty čtení), skript ve scratchpadu session -->

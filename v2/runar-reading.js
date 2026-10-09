@@ -101,6 +101,11 @@ function _gptReviewPayload() {
   if (!_lastGen) return null;
   var txt = (readerTexts[_lastGen.lang] && readerTexts[_lastGen.lang].short) || '';
   if (!txt) return null;
+  // 2026-10-09: + řádek ✦, jak ho člověk vidí. Bez něj rozbor hlásil „chybí řádek ✦“ (zadání ho chce, text ho neměl) — srovnání
+  // luna × Haiku 5.5 týž den (luna 1× z 5). ✦ se vykresluje zvlášť (_paintThought), v readerTexts není.
+  var _thEl = document.getElementById('reading-thought');
+  var _thT = (_thEl && _thEl.style.display !== 'none') ? (_thEl.textContent || '').trim() : '';
+  if (_thT) txt += '\n' + _thT;
   // Rúnarův systémový prompt se NEPOSÍLÁ (2026-09-24, cena: −31 % vstupu, nálezy stejné) — rubrika stačí.
   var u = '=== 1. ZADÁNÍ TOHOTO ČTENÍ (' + _lastGen.kind + ', jazyk ' + _lastGen.lang + ') ===\n' + _lastGen.prompt +
           '\n\n=== 2. HOTOVÉ ČTENÍ ===\n' + txt;
