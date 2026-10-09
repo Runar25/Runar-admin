@@ -1,0 +1,25 @@
+--- a/build_crown_composer.py
++++ b/build_crown_composer.py
+@@ -1169,7 +1169,9 @@
+          stranu navrch a vyvazeni lide meli strom 43–47 % vlevo (tree_diag scen, i s nahodnym datem narozeni). */
+       var cSide=((((ci?ci.slot:c) + (hashStr(String(rune))&1))%2)===0)?1:-1;
+       var jig=(((seed*7+cs*101)>>>0)%100)/100;
+-      if(ci && ci.side){ var aOff=0.40+0.30*jig;   /* oblast: nitro doleva / svet doprava (smer na platne) */
++      /* NANECISTO 2026-10-09: strana vetvicky uz ne podle oblasti — oblast urcila stranu VETVE (2026-10-09 (11)), takze na leve vetvi
++         nesla skoro jen nitro a vsechny vetvicky mirily doleva (Nauthiz z Othily: 5 z 5). Ted stridave kolem vetve (cSide ze slotu). */
++      if(false && ci && ci.side){ var aOff=0.40+0.30*jig;   /* oblast: nitro doleva / svet doprava (smer na platne) */
+         /* V4 (2026-10-02): strana z DAT cteni, ne z geometrie. Drive volba podle smeru rodice (cos) — u vetvi miricich
+            nahoru dava totez (po smeru hodin = doprava), ale u skoro vodorovne vetve (zeme 65–80°) se s kazdym
+            pootocenim preklapela (12 skoku az 88° na KUKYho strome). */
+@@ -1756,7 +1758,10 @@
+         gradStrands.forEach(function(G, j){ if(gTurnQ[j]==null && G.at<=i3 && hh[G.p]!=null && angQ[G.p]!=null){   /* smer odbocky: jednou, pri povyseni */
+           var mB=angQ[G.p]+Math.PI/2, mS=(Math.abs(mB)<0.05) ? ((FR[100+j]||{}).side||1) : (mB>0 ? 1 : -1), rk=0;
+           ordL.forEach(function(q){ if(q!==G.p && sdQ[q]===mS && hh[q]>hh[G.p]) rk++; });
+-          gTurnQ[j]=((Math.abs(mB)<0.75) ? mS : -mS)*((G.slot===1) ? -1 : 1)*((rk%2===1) ? -1 : 1); } });
++          gTurnQ[j]=((Math.abs(mB)<0.75) ? mS : -mS)*((G.slot===1) ? -1 : 1)*((rk%2===1) ? -1 : 1);
++          /* NANECISTO 2026-10-09: odbocka nesmi poslat vetev pres svislici na druhou stranu jejiho mista -> opacna odbocka (jednou, stale).
++             Drive ji pojistka v growGrad zastavila svisle (Nauthiz z Othily −1°: hreben). */
++          var gsd9=G.side||G.adopt||0; if(gsd9){ var aP9=angQ[G.p]+gTurnQ[j]*0.6; if((((aP9+Math.PI/2)>=0) ? 1 : -1)!==gsd9) gTurnQ[j]=-gTurnQ[j]; } } });
+         var liveG=[]; gradStrands.forEach(function(G, j){ if(G.at<=i3 && hh[G.p]!=null){ liveG.push(j);
+           var frg=FR[100+j]||{ side:0, mag:0 }, tg=-Math.PI/2 + lifeLean*0.6 + (gS0[j] ? gSd[j]*bendMag(frg.mag, gZ[j], gN[j]) : 0) + (crownT.areaSide||0)*(gSl[j]/(gN[j]+K0s));
+           tgA['g'+j]=softSide(tg, -Math.PI/2); } });

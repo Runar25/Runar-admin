@@ -501,6 +501,19 @@ HTML = r"""<!DOCTYPE html>
           (t.pramen?'<b style="color:var(--gold)"> + VLASTNI PRAMEN AZ DO KORENE</b>':'')+
           ((t.kids&&t.kids.length)?(D(' &rarr; nese ')+t.kids.map(function(x){ return A(x.pick,x.name); }).join(', ')):'')+'<br>'; });
       } else H+='<br>'+D('zatim na nem nic neroste — dalsi cteni tohoto elementu v teto zone sem pridaji vetvicky')+'<br>';
+      if(m.rdl && m.rdl.length){   /* VETEV JAKO CELEK — z cteni, ktera na vetvi visi (zadny model) */
+        var AR9={ healing:'Healing', family:'Family', inner:'Inner Growth', love:'Love', crossroads:'Crossroads', purpose:'Purpose', career:'Career', spirituality:'Spirituality' };
+        var IT9={ past:'minulost', present:'ted', decision:'rozhodnuti' };
+        var cnt9=function(f){ var o={}; m.rdl.forEach(function(x){ var v=f(x); o[v]=(o[v]||0)+1; });
+          return Object.keys(o).sort(function(a,b){ return o[b]-o[a]; }).map(function(k9){ return k9+' '+o[k9]; }).join(' · '); };
+        H+='<br><b style="color:var(--gold)">VETEV JAKO CELEK</b><br>'+
+           D('na co se ptala cteni ('+m.rdl.length+'): ')+cnt9(function(x){ return x.area ? (AR9[x.area]||x.area) : 'bez oblasti'; })+'<br>'+
+           D('zamer: ')+cnt9(function(x){ return x.it ? (IT9[x.it]||x.it) : 'bez zameru'; })+D(' · seeking: ')+cnt9(function(x){ return x.sk||'bez'; })+'<br>'+
+           D('prvnich 5 run (jak rostly): ')+m.rdl.slice(0,5).map(function(x){ return '#'+(x.i+1)+' '+(RBK[x.rk]?RBK[x.rk].name:x.rk); }).join(', ')+'<br>';
+        var rc9={}; m.rdl.forEach(function(x){ rc9[x.rk]=(rc9[x.rk]||0)+1; });
+        Object.keys(rc9).sort(function(a,b){ return rc9[b]-rc9[a]; }).slice(0,3).forEach(function(rk9){ var R9=RBK[rk9]||{}, kw9=KW[R9.g];
+          H+='&nbsp;<b>'+(R9.name||rk9)+'</b> '+rc9[rk9]+'&times; '+D(kw9 ? ('— '+kw9.k) : '')+'<br>'; });
+      }
       H+='<br><b style="color:var(--gold)">KOREN</b><br>'+D(m.gradOf ? ('sdili pramen i koren matky ('+m.gradOf+') — matka je az k mistu odstepeni tlustsi') : m.rootDev==null
           ? 'smer z world+element runy + strana ze seedu pramene (rozevreni = 0)'
           : 'rizene rozevreni podle polohy pramene (dev '+N(m.rootDev,2)+')')+'<br>';
@@ -1533,6 +1546,10 @@ HTML = r"""<!DOCTYPE html>
     var targetN=seed ? 0 : Math.max(1, Math.round(crownT.maxMains));     /* strop = maxMains */
     var branchEls=stableAssign(vlog, els, targetN);
     /* KONTROLA MISTA (smoke ㉳, 2026-10-05): misto kazdeho cteni a misto vetve, na ktere visi */
+    /* VETEV JAKO CELEK (2026-10-09, KUKY: "jak by se dala tahle vetev popsat svym vyznamem … popsat Nauthiz jako celek" -> "13. ano"):
+       cteni kazde hlavni vetve v poradi zrodu (runa, oblast, zamer, seeking) pro inspekci. Klic = drawOwn (rameno q, povysena 100+j). */
+    var _RDL={}; (branchEls.drawOwn||[]).forEach(function(row, i9){ (row||[]).forEach(function(o9, j9){ if(o9==null || !vlog[i9]) return;
+      (_RDL[o9]=_RDL[o9]||[]).push({ i:i9, rk:((vlog[i9].runes||[])[j9]||{}).rune, area:vlog[i9].area||null, it:vlog[i9].intention||null, sk:vlog[i9].seeking||null }); }); });
     window._PLACE={ rd:branchEls.placeRd||[], own:branchEls.drawOwn||[], sec:branchEls.map(function(b){ return { el:b.el, band:b.band, side:b.side||b.adopt||0, noStrand:!!b.noStrand }; }),
       grads:(branchEls.grads||[]).map(function(g){ return { el:(RBK[g.rune]||{}).el, band:g.band, side:g.side||g.adopt||0 }; }) };
     var mainsN=seed ? 0 : Math.max(1, branchEls.length);   /* ZONY: ramena = zalozena mista element × zona (strop maxMains hlida stableAssign) */
@@ -1974,7 +1991,7 @@ HTML = r"""<!DOCTYPE html>
               zone:(be.band!=null ? bandWord(be.el, be.band) : null), zoneS:(be.band!=null ? (be.el==='shadow' ? 'hrana' : ['urd','verd','skuld'][be.band+1]) : null),
               exitX:ex.x, exitY:ex.y, tp:trunkPart.length, fanPart:ang-angLP,   /* tp = kolik bodu v pts je koren+kmen (detektor prekryvu bere jen vetev) */
               secN:be.count, ownN:be.ownN, bendMag:LP.mag, bendZ:LP.z, bendN0:mag0,
-              runeTot:_runeTot[brune.k]||null, bornRd:be.bornIdx, nGrad:gradStrands.filter(function(G){ return G.p===k; }).length,
+              runeTot:_runeTot[brune.k]||null, bornRd:be.bornIdx, rdl:_RDL[k]||[], nGrad:gradStrands.filter(function(G){ return G.p===k; }).length,
               born:born, strandAge:strandAge, domV:domV, sizeF:sizeF, lenF:lenF, rootDev:rdevUsed,
               tw:twRunes.map(function(t){ return { name:(RBK[t.k]?RBK[t.k].name:t.k), n:t.n||0, g:t.g, grad:!!t.grad, rep:t.rep||0, pick:('t'+k+'_'+t.k+(t.id!=null?('_'+t.id):(t.rep?('_'+t.rep):''))),
                 born:(t.born!=null?t.born:null),
@@ -2069,8 +2086,8 @@ HTML = r"""<!DOCTYPE html>
           name:GS.name, g:(RBK[GS.rune]?RBK[GS.rune].g:null), count:par.be.count, idx:mainsN+j, runeN:gN,
           frac:par.frac, eFrac:par.frac, intPart:0, gapPart:0, norn:null, splitU:GS.u, gradOf:par.name,
           ang:gAng, eAng:gFrame, leanPart:lifeLean*0.6, areaPart:gAng-gFrame-lifeLean*0.6, bal:gLB, lrS:gLP.s, lrS0:gfr.side, lrSw:gLP.sw,
-          zone:(par.be.band!=null ? bandWord(par.el, par.be.band) : null), zoneS:'povys.', gradAt:GS.at, bendMag:gLP.mag, bendZ:gLP.z, bendN0:gfr.mag, ownN:gN,
-          splitX:sp.x, splitY:sp.y, gradOfK:GS.p, runeTot:_runeTot[GS.rune]||null,
+          zone:(GS.band!=null ? bandWord(par.el, GS.band) : (par.be.band!=null ? bandWord(par.el, par.be.band) : null)), zoneS:'povys.'   /* 2026-10-09: zona MISTA povysene (GS.band), ne matky — Nauthiz z Othily ukazovala skuld misto verdandi */, gradAt:GS.at, bendMag:gLP.mag, bendZ:gLP.z, bendN0:gfr.mag, ownN:gN,
+          splitX:sp.x, splitY:sp.y, gradOfK:GS.p, runeTot:_runeTot[GS.rune]||null, rdl:_RDL[k]||[],
           born:gBorn, strandAge:gAge, domV:1, sizeF:gPf*gEmg, lenF:gLen, rootDev:null,
           tw:gKids.map(function(t){ return { name:(RBK[t.k]?RBK[t.k].name:t.k), n:t.n||0, g:t.g, grad:false, rep:1, born:(t.born!=null?t.born:null),
             pick:('t'+k+'_'+t.k+(t.id!=null?('_'+t.id):'')), kids:[] }; }) } }); }

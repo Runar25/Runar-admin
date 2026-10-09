@@ -9075,3 +9075,18 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   text jen s ownerovým ano); (c) zásady na agndofa.is (znění B) — totéž.
 - Odvolává se na: 2026-09-24 (17), 2026-09-11 (8).
 - Affected doc(s): `RUNAR_PRIVACY.md` (Co jde k modelu) · `RUNAR_BACKLOG.md` (GPT-6 sol jako model čtení) — v témže commitu.
+
+## 2026-10-09 (14) — Strom (lab): inspekce větve „Větev jako celek“; zóna povýšené větve = její místo
+
+- **Rozhodl:** KUKY 2026-10-09 k návrhu popisovat větev významem jejích run: *„13. ano“* (datová část v inspekci, bez modelu) a *„10. to se mi
+  líbí. tohle je směr. Rúnarovým hlasem to bude znít jinak, ale zkus to“*. **Provedl:** CODE-tree, jen LAB.
+- **Co:** inspekce hlavní větve (rameno i povýšená) má blok **VĚTEV JAKO CELEK**: na co se čtení na ní ptala (oblasti, záměr, seeking
+  s počty), prvních 5 run v pořadí, jak rostly, a 3 nejčastější runy s jejich slovy z `runar-runes.js`. Seznam čtení větve (`_RDL`) se staví
+  jednou v drawu z `branchEls.drawOwn`; smoke ㉳ (e) hlídá, že sedí s počtem čtení na větvi (mutačně ověřeno).
+- **Oprava:** inspekce povýšené větve ukazovala zónu MATKY (Nauthiz z Othily: „skuld (budoucnost)“, ač její místo je verdandi a 12 z 15
+  čtení je „teď“) — owner ji pak četl jako budoucnost. Teď zóna místa. Kresba ji dál věší z matky v koruně → `RUNAR_BACKLOG.md`.
+- **Text Rúnarovým hlasem** (koncept, ne do aplikace): kotví na tom, na co se člověk ptal (2026-08-14 „vzorce kotví na vstupu, runy jsou
+  šum“); zvíře jen podle kánonu (`RUNAR_DESIGN.md` „Bytosti“, `RUNAR_TREE.md`: orel = koruna / „k čemu se pořád vztahuješ“, Níðhöggr =
+  kořeny); pro střed (teď) kánon zvíře nemá — nevymýšlí se.
+- Odvolává se na: 2026-08-14 (zrcadlo, ne orákulum) · 2026-10-09 (11).
+- Affected doc(s): `RUNAR_BACKLOG.md` (povýšená ze střední zóny visí v koruně; větvičky nanečisto) — v témže commitu.

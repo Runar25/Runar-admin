@@ -115,7 +115,8 @@ LOGS.forEach(([nm, log]) => NS.forEach(n => {
     if (m.twig) { if (m.born == null || !sub[m.born]) fails.push(nm + ' po ' + n + ': vetvicka ' + m.name + ' nevi, ze ktereho cteni vznikla');
       else if (!(sub[m.born].runes || []).some(x => nameOf[x.rune] === m.name)) fails.push(nm + ' po ' + n + ': vetvicka ' + m.name + ' tvrdi cteni #' + (m.born + 1) + ', ale v nem jeji runa neni');
       if (m.runeTot == null) fails.push(nm + ' po ' + n + ': vetvicka ' + m.name + ' bez poctu tazeni'); }
-    else if (typeof p.k === 'number' && m.runeTot == null) fails.push(nm + ' po ' + n + ': rameno ' + m.name + ' bez poctu tazeni'); });
+    else if (typeof p.k === 'number' && m.runeTot == null) fails.push(nm + ' po ' + n + ': rameno ' + m.name + ' bez poctu tazeni');
+    if (!m.twig && typeof p.k === 'number' && m.ownN != null && (!m.rdl || m.rdl.length !== m.ownN)) fails.push(nm + ' po ' + n + ': vetev ' + m.name + ' — "vetev jako celek" ma ' + (m.rdl ? m.rdl.length : 'zadna') + ' cteni, na vetvi jich visi ' + m.ownN); });   // 2026-10-09: blok VETEV JAKO CELEK v inspekci
   const sm = /prameny (\d+)/.exec(r.grow), sn = sm ? +sm[1] : null; if (sn != null) maxStr = Math.max(maxStr, sn);
   if (sn == null) fails.push(nm + ' po ' + n + ': pocet pramenu v kmeni nejde precist');
   else if (sn > MAX_STRANDS) fails.push(nm + ' po ' + n + ': ' + sn + ' pramenu v kmeni (max ' + MAX_STRANDS + ' — povysene vetve nemaji vlastni pramen)');

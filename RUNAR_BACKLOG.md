@@ -427,6 +427,14 @@
   oblasti, 1 Love; všech 5 přímých větviček vlevo). Oblast tak rozhoduje dvakrát. Navíc ta Nauthiz roste −1° (pojistka strany z 2026-10-07
   ji zastavila u svislice, odbočka od Othily by šla doprava) → hřeben. Návrh pro ownera: větvičky střídavě kolem větve; povýšená místo
   zastavení u svislice odbočí na druhou stranu matky. Nanečisto před zapnutím.
+  **Nanečisto hotové 2026-10-09** (KUKY: *„12. ano udělej to nanečisto … přesně takhle to je“*; *„tady Dagaz taky … projdi to“*), patch
+  `docs/archive/tree/2026-10-09_nanecisto_vetvicky.patch`: jeho strom dnes 4 větve s přímými větvičkami jen na jedné straně (Algiz 5:0,
+  Nauthiz* 0:5, Dagaz* 5:0, Perth* 0:5; * = povýšená) a 1 svislá povýšená (Nauthiz) → nanečisto 0 a 0. Čeká na ownerův pohled.
+- [ ] **Strom (lab): povýšená ze střední zóny visí v koruně kvůli matce** (CODE-tree, nalezeno 2026-10-09). Nauthiz z Othily má místo
+  verdandi (12 z 15 čtení „teď“), ale vyrůstá z Othily (skuld, 85 % kmene) — jediného zemního ramene vlevo (matka = rameno téhož živlu
+  na straně místa, nejbližší pásmo). Owner ji pak čte jako budoucnost (*„když je tak vysoko na stromě … je to koukání do budoucnosti?“*).
+  Inspekce už ukazuje zónu místa (opraveno 2026-10-09), kresba ne. Možnosti k rozhodnutí: odštěp níž na matce podle zóny místa; vlastní
+  výstup z kmene, když je matka o dvě pásma vedle (strop 25 dovolí-li); nechat a říkat, že visí z matky.
 - [ ] **Strom (lab): `AREA_LAT` odporuje „oblast = strana“** (CODE-tree, nalezeno 2026-10-09). Tabulka v `runar-branch.js` (sdílená
   s aplikací) bere Love −0,75 (nitro), Spirituality −0,20 (skoro střed), Crossroads +0,10 — kánon (`RUNAR_TREE.md` §3) má Love a Crossroads
   bez strany a Spirituality ve světě. Čte ji strana větvičky (`sideOf`), natočení ramene za čteními (`latOf` / `areaSide`) i lateral
