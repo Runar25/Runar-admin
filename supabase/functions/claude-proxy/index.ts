@@ -21,12 +21,14 @@
 //   clean 503 with a friendly message instead of leaking a platform 503 or
 //   masking overload as a 400.
 // MODEL FALLBACK (2026-07-10): on a SUSTAINED overload of a model (all retries
-//   exhausted), fall through the chain Opus 4.8 -> Opus 4.7 -> Sonnet 5 before giving
-//   up, so even a broad Anthropic overload returns a reading instead of a 503. Sonnet
-//   is the last-resort safety net (more capacity, slightly lesser IS quality). A
-//   genuine 4xx (bad request) never falls through.
-// GPT-6 SOL (2026-09-24): admin smí číst přes gpt-6-sol (body.engine = 'sol', rozhoduje isAdmin z JWT);
-//   selže-li, čtení jde na MODELS výš a usage nese model, který opravdu běžel. Viz callSol().
+//   exhausted), fall through the Claude chain in MODELS (at the call site below) before
+//   giving up, so even a broad Anthropic overload returns a reading instead of a 503. A
+//   genuine 4xx (bad request) never falls through. The chain lives ONLY in MODELS — until
+//   2026-10-09 this header listed it (Opus 4.8 -> 4.7 -> Sonnet 5) and outlived two changes
+//   of it (found by CODE-read 2026-10-09; §20).
+// GPT-6 SOL (2026-09-24 admin test; od 2026-10-09 VŠICHNI, DECISIONS 2026-10-09 (13)): každé volání modelu jde
+//   napřed na gpt-6-sol; admin si přepínačem vyžádá Claude (body.engine = 'opus', rozhoduje isAdmin z JWT).
+//   Selže-li sol, čtení jde na MODELS a usage nese model, který opravdu běžel. Viz callSol().
 // Deploy: supabase functions deploy claude-proxy --project-ref pmitxjvkeovijreepror --no-verify-jwt
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
@@ -262,11 +264,12 @@ async function callClaudeWithRetry(
   return { ok: false, status: lastStatus, error: lastError };
 }
 
-// ── GPT-6 sol jako čtecí engine — JEN admin (2026-09-24, DECISIONS 2026-09-24 (17)) ──────────
-// Owner pár dní čte v appce přes sol; CODE-read pak z prompt_draws postaví tytéž prompty pro Opus 5 a nechá
-// je slepě soudit (krok 4). Klient posílá engine:'sol', ROZHODUJE server (isAdmin z JWT, ne klient).
-// Soukromí: jen adminova vlastní čtení — pro kohokoli dalšího musí RUNAR_PRIVACY.md jmenovat OpenAI jako
-// zpracovatele (táž podmínka jako gpt-review). Vrací null při jakékoli chybě → čtení jde na Claude.
+// ── GPT-6 sol jako čtecí engine — od 2026-10-09 PRO VŠECHNY (DECISIONS 2026-10-09 (13)) ──────────
+// 2026-09-24 – 2026-10-08 jen admin (test, DECISIONS 2026-09-24 (17)); krok 4 (srovnání s Opus 5) dělal owner sám čtením.
+// Krok 5, KUKY 2026-10-09: „začínáme používat výhradně GPT sol 6 pro čtení. Opus 5 bude přepínač pro adminy.“
+// Engine ROZHODUJE server (useSol níž), klient posílá jen adminovu volbu 'opus'. Soukromí: OpenAI (USA) jako zpracovatele
+// jmenuje souhlas testerů (UI_TEXT.*.tcm_body), souhlas daný na starém znění vynulován v témže nasazení — týž krok jako
+// 2026-09-11 (8). Vrací null při jakékoli chybě → čtení jde na Claude.
 // reasoning_effort: u gpt-6-sol bylo 'none' (jako gpt-review: přemýšlení stálo víc než polovinu výstupu).
 // 2026-10-02 gpt-6.1-sol (KUKY „vyšel sol 6.1, zkusíme ho“): 'none' ani 'minimal' NEpřijme (400 unsupported_value,
 // ověřeno voláním API) → nejnižší je 'low'. Test 3 čtení: přemýšlení 190–330 tokenů, cena čtení ~0,0042 → ~0,0063 USD
@@ -496,7 +499,7 @@ serve(async (req: Request) => {
       mode        = "",
       spread_cost = 1,     // number of credits/balance to deduct (= number of runes)
       journal     = null,  // reading meta to persist server-side (null = do not save)
-      engine      = "",    // 'sol' = GPT-6 sol místo Claude — platí JEN pro admina (callSol, 2026-09-24)
+      engine      = "",    // 'opus' = admin chce Claude místo solu (od 2026-10-09; do té doby 'sol' = admin chtěl sol). Ne-adminovi se ignoruje.
     } = body;
     // life_rune_reset (2026-09-14) nevola Clauda, prompt nema — stejna vyjimka jako resave.
     // Nalezeno sondou na zivem endpointu: reset s prazdnym promptem koncil 400 pred auth.
@@ -800,14 +803,19 @@ serve(async (req: Request) => {
     if (baseSystem)      systemParts.push({ type: "text", text: baseSystem, cache_control: { type: "ephemeral" } });
     if (dynamicContext)  systemParts.push({ type: "text", text: dynamicContext });
 
-    // ── GPT-6 sol (jen admin) — při chybě níž normální cesta přes Claude ──
+    // ── GPT-6 sol — od 2026-10-09 každé volání modelu (DECISIONS 2026-10-09 (13)); při chybě níž normální cesta přes Claude ──
     let data: any = null;
     let text = "";
     // 2026-09-28 (KUKY: „ano zapisovat, ať víme“): doba odpovědi a pokusy do usage — druhý Ask u Mannaz trval dlouho a z dat
     // nešlo říct proč (usage neslo jen model, který nakonec odpověděl).
     const t0 = Date.now();
     const tries: string[] = [];
-    if (engine === "sol" && isAdmin) {
+    // Sem dojdou jen režimy, které volají model (resave a life_rune_reset se vrátily výš): čtení, spready, založení, Ask,
+    // životní runa i rozbor jména. Všechny jdou na sol — KUKY „výhradně“, a souhlas testerů jmenuje Anthropic jen jako zálohu:
+    // kdyby sem kterýkoli režim šel mimo sol bez výpadku, text souhlasu by přestal platit. Opus 5 jen admin (engine 'opus' —
+    // srovnávací přepínač; ne-admin by si jinak za stejný kredit vybral model 2,5× dražší za token).
+    const useSol = !(isAdmin && engine === "opus");
+    if (useSol) {
       const openaiKey = Deno.env.get("OPENAI_API_KEY");
       const sol = openaiKey ? await callSol(baseSystem + dynamicContext, String(prompt ?? ""), cappedMaxTokens, openaiKey) : null;
       if (sol) { text = sol.text; data = { model: SOL_MODEL, usage: sol.usage }; tries.push("sol"); }

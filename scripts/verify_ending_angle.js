@@ -130,6 +130,10 @@ for (const L of ['en', 'is']) {
   rekni(spatne === 0, L + '  _promptDraws pozna tvar i s vlozenou frazi (24 kombinaci)');
 
   // (7) ESENCNI RAM + ROZPOCET DELKY: kazda polozka poolu padne a je zpetne poznana
+  // 2026-10-09: výchozí READ_ENGINE je 'sol' (všichni, DECISIONS 2026-10-09 (13)). Tenhle řádek hlídá pool OPUSU (u EN jiný
+  // než u solu), proto engine nastaví výslovně. Do 2026-10-08 se spoléhal na výchozí 'opus' a po přepnutí viděl 12 rámců
+  // solu místo 2 rámců Opusu. Pool solu hlídá blok níž (nastavuje si 'sol' sám).
+  vm.runInContext('READ_ENGINE = "opus";', S);
   var dalsi = [
     { jm: 'esencni ram', fn: vm.runInContext('_essenceFrame', S), pool: vm.runInContext(L === 'is' ? 'ESSENCE_FRAMES_IS' : 'ESSENCE_FRAMES', S), klic: 'essence' },
     { jm: 'rozpocet delky', fn: vm.runInContext('_lengthBudget', S), pool: vm.runInContext(L === 'is' ? 'LENGTH_BUDGETS_IS' : 'LENGTH_BUDGETS', S), klic: 'len' },

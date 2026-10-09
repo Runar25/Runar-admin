@@ -59,7 +59,9 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 // v4.17 (2026-09-10): Ask zna zivotni runu. Do te doby ji `buildAskPrompt` nedostaval, takze
 //    odpoved na „jak me ovlivnuje moje zivotni runa" si model musel domyslet. Prompt ji ted nese
 //    jako tichy fakt — Runar ji nevyslovi sam od sebe, jen kdyz se na ni clovek zepta.
-const RUNAR_PROMPT_VERSION = 'v5.06-podoby-zpet-bez-long';
+// v5.07 (2026-10-09): čtení pro všechny přes GPT-6 sol — výchozí READ_ENGINE 'sol' dává každému větu za obrazem a esenční
+//    rámec pro sol (do té doby jen admin). Čtení před/po přepnutí se podle téhle verze rozliší. DECISIONS 2026-10-09 (13).
+const RUNAR_PROMPT_VERSION = 'v5.07-sol-pro-vsechny';
 
 // Mesicni strop hlasu. KUKY 2026-09-11: „limit na hlas max 5 na mesic — je to spis
 // ochutnavka nez aby to porad vyuzivali." ElevenLabs se plati po znacich a jedine, co ho

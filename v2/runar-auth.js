@@ -229,7 +229,7 @@ function updateAuthUI() {
   updateTabVisibility();
   updateAuthLabel();
   updateBanners();
-  if (typeof _paintSolToggle === 'function') _paintSolToggle();   // GPT-6 sol jen pro admina (2026-09-24)
+  if (typeof _paintOpusToggle === 'function') _paintOpusToggle(); // Opus 5 jen pro admina (od 2026-10-09; do té doby přepínač solu)
   if (typeof _paintImgPin === 'function') _paintImgPin();         // volba obrazu jen pro admina (2026-10-06)
 }
 

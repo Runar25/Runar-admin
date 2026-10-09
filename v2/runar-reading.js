@@ -52,23 +52,26 @@ var _lastGen = null;   // { sys, prompt, lang, kind } posledního vygenerovanéh
 var _askLog = [];      // [{ q, a, lang }] výměny v Asku k tomuto čtení — od 2026-10-04 předchozí výměna pro další Ask (_askBuild)
 // 2026-10-09: rozbor čtení modelem GPT (tlačítko „GPT-6 luna“, edge fn gpt-review) ZRUŠEN 2026-10-09 (KUKY „Lunu už nepoužívám… zrušit úplně“). Rubrika, payload a tlačítko
 // žijí v gitu (naposledy commit 893a622), návrat jen očištěný (§26).
-// ─── GPT-6 sol jako čtecí engine (jen admin, 2026-09-24, DECISIONS 2026-09-24 (17)) ─────────────
-// Owner pár dní čte přes sol, pak CODE-read postaví tytéž prompty pro Opus 5 a nechá je slepě soudit.
-// Volba žije v localStorage (jen tenhle prohlížeč); READ_ENGINE čtou buildery i callProxy. Ne-admin = vždy opus,
-// i kdyby v localStorage něco zůstalo. Server sol stejně pustí jen adminovi — tohle je pohodlí, ne brána.
-function _paintSolToggle() {
-  var box = document.getElementById('sol-toggle'), cb = document.getElementById('sol-toggle-cb');
+// ─── Opus 5 jako čtecí engine (jen admin) — od 2026-10-09 čtou všichni přes GPT-6 sol ─────────────
+// 2026-09-24 – 2026-10-08 opačně: přepínač zapínal sol (test, DECISIONS 2026-09-24 (17)). Od 2026-10-09 (KUKY „začínáme
+// používat výhradně GPT sol 6 pro čtení. Opus 5 bude přepínač pro adminy“, DECISIONS 2026-10-09 (13)) čte sol každý a
+// přepínač vrací adminovi Opus 5 — u všech čtení i Asku, životní runy a rozboru jména.
+// Volba žije v localStorage (jen tenhle prohlížeč); READ_ENGINE čtou buildery i callProxy. Ne-admin = vždy sol,
+// i kdyby v localStorage něco zůstalo. Server Opus stejně pustí jen adminovi — tohle je pohodlí, ne brána.
+// Klíč 'runar_engine' zůstal; hodnota 'sol' z doby testu teď znamená totéž co prázdná (sol).
+function _paintOpusToggle() {
+  var box = document.getElementById('opus-toggle'), cb = document.getElementById('opus-toggle-cb');
   var admin = !!(currentUser && isAdmin(currentUser.email));
   var on = false;
-  if (admin) { try { on = localStorage.getItem('runar_engine') === 'sol'; } catch (e) {} }
-  READ_ENGINE = on ? 'sol' : 'opus';
+  if (admin) { try { on = localStorage.getItem('runar_engine') === 'opus'; } catch (e) {} }
+  READ_ENGINE = on ? 'opus' : 'sol';
   if (box) box.style.display = admin ? 'flex' : 'none';
   if (cb) cb.checked = on;
 }
-function toggleSol(on) {
+function toggleOpus(on) {
   if (!(currentUser && isAdmin(currentUser.email))) return;
-  try { localStorage.setItem('runar_engine', on ? 'sol' : ''); } catch (e) {}
-  _paintSolToggle();
+  try { localStorage.setItem('runar_engine', on ? 'opus' : ''); } catch (e) {}
+  _paintOpusToggle();
 }
 // ─── Výběr obrazu pro admina (2026-10-06, KUKY „přidej výběr obrazu pro admina“) ────────────────────
 // Proč a jak se volba použije: komentář u IMG_PIN v runar-character.js. Volba je per runa v localStorage ('runar_img_pin')

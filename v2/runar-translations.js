@@ -86,8 +86,9 @@ const UI_TEXT = {
     report_who_save:  'Save',
     // 2026-09-25: náhled reportu ukazuje celý zachycený text, zvláštní řádek o přiloženém Asku (report_ask_attached) odešel.
     report_flagging:  'Reporting:',
-    // Přepínač čtení přes GPT-6 sol — jen admin, test (2026-09-24, DECISIONS 2026-09-24 (17)).
-    sol_toggle:       'Read with GPT-6 sol (test)',
+    // Přepínač čtení přes Opus 5 — jen admin (od 2026-10-09 čtou všichni přes GPT-6 sol, DECISIONS 2026-10-09 (13));
+    // do 2026-10-08 opačně: 'Read with GPT-6 sol (test)'. Jméno modelu hlídá smoke ㉴ proti MODELS v claude-proxy.
+    opus_toggle:      'Read with Opus 5 (test)',
     // Výběr obrazu pro admina (2026-10-06) — týž obraz vybrané runy víckrát pro testování.
     img_pin_lbl:      'Image for this rune (test)',
     img_pin_random:   'chosen at random',
@@ -247,7 +248,8 @@ const UI_TEXT = {
     optout_saved_off: 'Done \u2014 your readings will not be used for analysis',
     optout_err: 'Could not save \u2014 please try again',
     tcm_title: 'YOU ARE A R\u00daNAR TESTER',
-    tcm_body: 'To help us make the readings better, we store the readings you draw and review their text and the details you enter, to improve the quality of Rúnar. For a reading to exist at all, its text is sent to Anthropic, and the voice to ElevenLabs — both in the United States. What we keep is stored in the EU, we never sell it, and you can ask us to delete it at any time. You can stop testing whenever you like.',
+    // 2026-10-09: čtení píše OpenAI, Anthropic jen jako záloha (DECISIONS 2026-10-09 (13)); znění = docs/inbox/2026-09-30-navrh-textu-soukromi.md C.
+    tcm_body: 'To help us make the readings better, we store the readings you draw and review their text and the details you enter, to improve the quality of Rúnar. For a reading to exist at all, the details you enter are sent to OpenAI, which writes it (or to Anthropic, if OpenAI is unavailable), and its text to ElevenLabs for the voice — all in the United States. Neither OpenAI nor Anthropic uses them to train its models, and each keeps them for no more than 30 days, to check for misuse. What we keep is stored in the EU, we never sell it, and you can ask us to delete it at any time. You can stop testing whenever you like.',
     tcm_agree: 'I AGREE',
     visitor_label:      'VISITOR',
     tree_signin_note:   'Sign in to discover your life rune.',
@@ -562,7 +564,7 @@ const UI_TEXT = {
     report_who_ph:    'Nafn eða upphafsstafir',
     report_who_save:  'Vista',
     report_flagging:  'Tilkynni:',
-    sol_toggle:       'Lestur með GPT-6 sol (prófun)',
+    opus_toggle:      'Lestur með Opus 5 (prófun)',
     img_pin_lbl:      'Mynd fyrir þessa rún (prófun)',
     img_pin_random:   'valin af handahófi',
     img_pin_vyz_auto: 'merkingarnar skiptast á',
@@ -720,7 +722,7 @@ const UI_TEXT = {
     optout_saved_off: '\u00cd lagi \u2014 lestrarnir \u00fe\u00ednir ver\u00f0a ekki nota\u00f0ir til greiningar',
     optout_err: 'Ekki t\u00f3kst a\u00f0 vista \u2014 reyndu aftur',
     tcm_title: '\u00de\u00da ERT PR\u00d3FARI FYRIR R\u00daNAR',
-    tcm_body: 'Til að hjálpa okkur að bæta lestrana geymum við lestrana sem þú dregur og förum yfir texta þeirra og upplýsingarnar sem þú slærð inn. Til að lestur verði til er texti hans sendur til Anthropic, og röddin til ElevenLabs — hvort tveggja í Bandaríkjunum. Það sem við geymum er geymt innan EES, við seljum það aldrei, og þú getur beðið um að því verði eytt hvenær sem er. Þú getur hætt að prófa hvenær sem þér hentar.',
+    tcm_body: 'Til að hjálpa okkur að bæta lestrana geymum við lestrana sem þú dregur og förum yfir texta þeirra og upplýsingarnar sem þú slærð inn. Til að lestur verði til eru upplýsingarnar sem þú slærð inn sendar til OpenAI, sem semur hann. Ef OpenAI svarar ekki fara þær til Anthropic. Texti lestursins fer til ElevenLabs sem ljær honum rödd. Öll þessi fyrirtæki eru í Bandaríkjunum. Hvorki OpenAI né Anthropic notar þær til að þjálfa gervigreind sína, og hvort um sig geymir þær ekki lengur en í 30 daga til að fylgjast með misnotkun. Það sem við geymum er geymt innan EES, við seljum það aldrei, og þú getur beðið um að því verði eytt hvenær sem er. Þú getur hætt að prófa hvenær sem þér hentar.',
     tcm_agree: '\u00c9g sam\u00feykki',
     visitor_label:      'GESTUR',
     tree_signin_note:   'Skr\u00e1\u00f0u þig til a\u00f0 uppgötva l\u00edfsr\u00fanuna þ\u00edna.',

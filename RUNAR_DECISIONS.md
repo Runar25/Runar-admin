@@ -9043,3 +9043,35 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - Odvolává se na: 2026-10-09 (10), (11).
 - Affected doc(s): `RUNAR_TREE.md` (§3 tabulka výšky, §4 signály) · `RUNAR_TREE_MAP.md` (§1, §8, §12) · `RUNAR_BACKLOG.md` (seeking
   uzavřeno, záloha výšky zvlášť) — v témže commitu.
+
+## 2026-10-09 (13) — Čtení pro všechny přes GPT-6 sol, Opus 5 = přepínač admina (krok 5 přechodu na sol, v5.07)
+
+- **Rozhodl:** KUKY 2026-10-09: *„začínáme používat výhradně GPT sol 6 pro čtení. Opus 5 bude přepínač pro adminy. Produkce se mění
+  na SOL 6.“* **Provedl:** CODE-tune.
+- **Proč:** krok 5 postupu z 2026-09-24 (17) (všude / jen EN / vůbec). Owner čte přes sol od 2026-09-24 a srovnání s Opus 5 (krok 4)
+  dělal sám průběžně (KUKY 2026-09-30). Výměna změřená 2026-09-22 (EVAL_LOG 2026-09-22 (2)): soudci dali lepší čtení Opusu 5 (11 : 3),
+  sol psal čistší islandštinu (tvrdé chyby na 10 IS textů: sol 0, Opus 5 5); od té doby se prompt ladil na sol. Cena za token 2,5× nižší.
+- **Co:**
+  - `claude-proxy`: KAŽDÉ volání modelu jde napřed na gpt-6-sol — čtení, spready, založení, Ask, životní runa i rozbor jména. Claude
+    (řetěz `MODELS`) jen při výpadku solu, nebo když admin pošle `engine: 'opus'` (rozhoduje isAdmin z JWT; ne-adminovi se ignoruje —
+    jinak by si za stejný kredit vybral dražší model). Do 2026-10-08 naopak: sol jen admin, jen čtení, založení a Ask.
+  - Klient: výchozí `READ_ENGINE = 'sol'` → každý dostane variantu promptu pro sol (věta za obrazem „one detail“, v EN esenční rámec
+    pro sol), kterou dosud měl jen admin. Přepínač „Read with Opus 5 (test)“ (`opus_toggle`, jen admin) vrací Opus u všech volání.
+  - Životní runa a rozbor jména na solu dosud neběžely. Jdou na sol taky: owner řekl „výhradně“ a souhlas testerů jmenuje Anthropic
+    jen jako zálohu — kdyby šly na Claude i bez výpadku, text souhlasu by přestal platit. Admin je srovná přepínačem.
+  - Souhlas testerů `tcm_body` EN+IS = znění C z `docs/inbox/2026-09-30-navrh-textu-soukromi.md` (OpenAI čtení píše, Anthropic záloha,
+    ElevenLabs hlas, vše USA; netrénují na tom, drží nejvýš 30 dní). `tester_consent_at` vynulován u 3 účtů, které souhlasily se
+    starým zněním (owner 2026-09-30 „3. ano — v témže nasazení“; týž krok jako 2026-09-11 (8)).
+  - `RUNAR_PROMPT_VERSION` → `v5.07-sol-pro-vsechny` (čtení před a po přepnutí se podle verze rozliší).
+  - Smoke: ㉴ hlídá štítek přepínače Opus proti prvnímu modelu `MODELS` (a že starý klíč `sol_toggle` nežije); ㉨ si engine nastaví
+    výslovně a ㉜ normalizuje runu a sloveso v rámci solu na šablonu — obě po přepnutí výchozího enginu padaly.
+  - Hlavička `claude-proxy` už řetěz modelů nevypisuje, jen odkazuje na `MODELS` — tvrdila „Opus 4.8 → 4.7 → Sonnet 5“ (CODE-read, §20).
+- **Ověřeno:** golden — 24 ze 42 promptů změněno a všechny jen větou za obrazem (+ EN esenční rámec); nová varianta `single_opus_*`
+  je bajtově dosavadní produkce; systémový prompt, Ask, životní runa a rozbor jména beze změny. Smoke 59/59. Prohlížeč: návštěvník
+  sol bez přepínače · admin vypnuto = sol (pole engine se neposílá) · zapnuto = `opus` u všech 5 režimů · ne-admin s `opus`
+  v localStorage = sol. Útok na ㉴: štítek s jiným modelem i vrácený `sol_toggle` → exit 1.
+- **Nehotové, čeká na ownera:** (a) DPA OpenAI — owner 2026-09-30 slíbil podepsat před přepnutím; (b) stránka soukromí v appce
+  (`v2/runar-privacy.html`) OpenAI nejmenuje — texty A z 2026-09-30 jsou psané jen na Anthropic a čekají na „publikovat“ (právní
+  text jen s ownerovým ano); (c) zásady na agndofa.is (znění B) — totéž.
+- Odvolává se na: 2026-09-24 (17), 2026-09-11 (8).
+- Affected doc(s): `RUNAR_PRIVACY.md` (Co jde k modelu) · `RUNAR_BACKLOG.md` (GPT-6 sol jako model čtení) — v témže commitu.

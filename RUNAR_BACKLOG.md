@@ -660,7 +660,13 @@
   překladů; DECISIONS 2026-09-28 (1)); stará logika je v gitu (`git log -- v2/runar-gathering.js`). Zbývá **nová podoba** (čeká na `detectPatterns()` výš).
 - [ ] **`data-i18n` refactor** — nejrobustnější prevence zaseklé angličtiny (dnes ruční wiring v updateUIText).
 - [ ] Ask Rúnar v2 — journal 7denní okno + asked-flag (persistence HOTOVÁ).
-- [ ] **GPT-6 sol jako model Rúnarova čtení** (KUKY 2026-09-23: „další krok bude nechat udělat GPT čtení Rúnara, ale ještě na tom pracujeme — dát to do backlogu“). Předstupeň hotový: admin tlačítko „GPT-6 sol“ = rozbor čtení (edge fn `gpt-review`). Evaly modelu vede CODE-read (`RUNAR_EVAL_LOG.md` 2026-09-22+). Pozor: islandská gramatika u solu je slabší (korektor: 3 škody na 30 čtení).
+- [ ] **GPT-6 sol jako model Rúnarova čtení** — ✅ **NASAZENO PRO VŠECHNY 2026-10-09** (krok 5 = „všude“; KUKY *„začínáme používat
+  výhradně GPT sol 6 pro čtení. Opus 5 bude přepínač pro adminy“*, DECISIONS 2026-10-09 (13)). **Zbývá:** soukromí na straně ownera
+  (DPA, stránka soukromí, zásady — „Stav 2026-10-09“ v podbodu „Podklad k přechodu“ níž) a první týden sledovat islandštinu živých
+  čtení (is-grammar-qa). (KUKY 2026-09-23: „další krok bude nechat udělat GPT čtení Rúnara, ale ještě na tom pracujeme — dát to do backlogu“.)
+  Evaly modelu vede CODE-read (`RUNAR_EVAL_LOG.md` 2026-09-22+). ⚠️ *Opraveno 2026-10-09 (§22):* do té doby tu stálo „islandská
+  gramatika u solu je slabší (korektor: 3 škody na 30 čtení)“ — ty 3 škody ale udělal sol jako KOREKTOR cizích čtení (EVAL_LOG
+  2026-09-23 (5)); jako autor měl na 10 IS textech 0 tvrdých chyb proti 5 u Opusu 5 (EVAL_LOG 2026-09-22 (2)).
   ⏸ **Owner 2026-09-24: „připravit pomalu, až zase řeknu" — nezačínat bez pokynu.** Co musí být hotové (CODE-read, měřeno —
   EVAL_LOG 2026-09-22 (1)–(3), 2026-09-23 (6)–(9)): (1) glosa v IS hlavičce — oprava ke zdroji `RUNES[].is_n` (položka „GLOSA
   V ISLANDSKÉ HLAVIČCE"); (2) opis obrazu — věta „one detail" u solu pomohla (převyprávění 20 → 12 z 28); (3) Norns identita
@@ -697,6 +703,9 @@
   **Owner 2026-09-30:** (1) ano — DPA podepíše owner před přepnutím · (2) ano → texty EN+IS připraveny, ověřené:
   `docs/inbox/2026-09-30-navrh-textu-soukromi.md` (appka runar-privacy.html + agndofa.is + tcm_body pro přepnutí) — čeká na právní
   kontrolu a „publikovat“ · (3) ano — souhlas testerů vynulovat v témže nasazení, které přepne · (4) HOTOVO v4.82 (DECISIONS (11)).
+  **Stav 2026-10-09 — přepnuto (DECISIONS 2026-10-09 (13)):** (3) ✅ souhlas `tcm_body` = znění C, `tester_consent_at` vynulován
+  u 3 účtů · (c) ✅ proxy · (1) DPA OpenAI — **čeká na ownera** (slíbil podepsat před přepnutím) · (2) texty A (appka) a B (agndofa.is)
+  jsou psané jen na Anthropic → **doplnit OpenAI a nasadit, až owner řekne „publikovat“** (dnes `v2/runar-privacy.html` OpenAI nejmenuje).
 - [ ] **OTEVŘENÉ Z 23.–24. 9. — sepsáno 2026-09-24 na ownerovo „nezapomněli jsme na něco, co leží v chatu?"** (CODE-tune; zdroj: `docs/archive/2026-09-23-rozbor-reportu.md` + chat)
   **Čeká na ownerovo rozhodnutí** (otázky z rozboru, dosud bez odpovědi):
   1. ✅ *(owner 2026-09-24: ANO, když mluví skrze obraz nebo o prostředí, které má každý; tvrzení = činnost, kterou člověk nejspíš nemá, a stav v prostředí podaný jako fakt — Isa „the talk has gone flat“ je špatně; DECISIONS 2026-09-24 (15) + (19), rubrika A)* Smí 3. věta čtení říct, co se děje v oblasti tazatele (pochválené Perth/Kenaz to dělají, pravidlo to dnes povoluje jen v poslední větě jako možnost)?
@@ -1272,7 +1281,9 @@ a 2 z 10 rozborů s ruským slovem v češtině. `tree-update` přepnut na Haiku
 ✅ **Rozhodnuto 2026-10-09 (KUKY):** rozbor čtení *„zrušit úplně“* (luna se nepoužívá, Haiku místo ní nebude) — tlačítko i edge fn
 `gpt-review` pryč, DECISIONS 2026-10-09 (8). Třídění hlášení modelem *„ok, neřešit“*. Zůstává: `tree-update` na Haiku 5.5.
 
-### Podoby oblastí psané jako vedlejší věta se opisují doslova — návrh přepisu, ČEKÁ NA OWNERA (CODE-tune, 2026-10-09)
+### Podoby oblastí psané jako vedlejší věta se opisují doslova — návrh přepisu: owner NEDĚLAT, SLEDOVAT (CODE-tune, 2026-10-09)
+⏸ **KUKY 2026-10-09:** *„14. nej to zapis. budeme dal testovat a pokud to nejak vyskoci tak na to zareagujeme.“* → přepis se nedělá;
+vrátit se k tomu, až se doslovný opis podoby objeví v nových čteních a owner na něj upozorní (§30: ownerovi to znovu nepředkládat).
 Owner k v5.05: *„u pozor… proto jsme trénovali, jak věty napsat správně, aby je model lépe používal. Najdi to a navrhni změny.“*
 Data (EVAL_LOG 2026-10-09 (3), produkce EN, malý vzorek): opis ≥ 4 slova u Purpose [2] *„what gives someone the will to continue“* 2/4
 (*„What gives you the will to continue may be…“*), Healing [1] *„what gives strength back“* 2/5, Healing [2] *„the pace that can be kept“*
@@ -2387,6 +2398,11 @@ Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
       vložit `{{ .Token }}` · (4) e-maily testerů do `allowed_emails` (SQL v hlavičce `sql/2026-10-09_uzavreny_test.sql`) · (5) Authentication
       → Hooks → Before User Created → `public.hook_before_user_created`. Pak CODE přepne `AUTH_EMAIL_ENABLED` a projde s ownerem první
       přihlášení kódem. Neověřeno: jak Supabase předá zprávu hooku při návratu z Google (appka hledá „closed_test“, jinak obecná hláška).
+      **Stav 2026-10-09:** (5) ✅ hook zapnut ownerem (Before User Created → Postgres → `public.hook_before_user_created`) · (4) ✅ pět
+      testerů v `allowed_emails` · (1) účet Brevo ✅, doména agndofa.is v Brevu přidaná, ale **4 DNS záznamy u ISNIC zatím nejsou**
+      (ověřeno dotazem přímo na `forwarding00.isnic.is`: zóna naposledy změněna 2025-10-15). Záznamy: TXT `@` brevo-code · CNAME
+      `brevo1._domainkey` → `b1.agndofa-is.dkim.brevo.com` · CNAME `brevo2._domainkey` → `b2.agndofa-is.dkim.brevo.com` · TXT `_dmarc`
+      (hodnoty TXT celé z Brevo). Přidávají se v isnic.is → Mínar síður → agndofa.is (áframsending umí vlastní CNAME a TXT od 2017).
 - [ ] **Hlášení nese verzi nasazenou, ne tu, která v telefonu běží** (2026-10-09, CODE-tune, §22). `runar-reporter.js` bere `app_version`
       z čerstvě staženého `sw.js`, ale stránka jede na JS ze staré cache, dokud se nenačte znovu (SW: JS cache-first). Doklad: hlášení 24c6c548
       (8. 10.) neslo `v564` a popisovalo chybu opravenou ve v564; owner 9. 10. po novém načtení: v pořádku. S testery by to mátlo diagnózu.

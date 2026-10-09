@@ -54,7 +54,20 @@ function pravidla() {
     let t = String(text || '').replace(/\s+/g, ' ').trim();
     (hlavicky[lang] || []).forEach((h) => { if (h && t.indexOf(h) === 0) t = h.trim(); });
     (jmenaVarianty[lang] || []).forEach((v) => { if (v && t.indexOf(v) !== -1) t = t.replace(v, '').replace(/\s+/g, ' ').trim(); });
+    if (lang !== 'is') t = normalizujSol(t);
     if (t.length > 20) ven.push({ lang, zdroj, text: normalizujCil(t, lang) });
+  };
+  // 2026-10-09: rámec pro sol nese runu a sloveso z losu („Ansuz signifies“) — to jsou DATA, schvaluje se šablona „{R} {V}“
+  // (registruje ji pool esence_sol níž). Do 2026-10-08 fixture jela na Opusu a rámec solu v postaveném promptu nebyl; po
+  // přepnutí výchozího enginu na sol (DECISIONS 2026-10-09 (13)) se každým během registroval jiný tvar a příští běh červenal.
+  const solSlovesa = (glob('ESSENCE_VERBS_SOL') || []).slice().sort((a, b) => b.length - a.length);
+  const jmenaRun = RUNES.map((r) => r.n).sort((a, b) => b.length - a.length);
+  const normalizujSol = (t) => {
+    for (const r of jmenaRun) for (const v of solSlovesa) {
+      const s = '"' + r + ' ' + v + '"';
+      if (t.indexOf(s) !== -1) return t.split(s).join('"{R} {V}"');
+    }
+    return t;
   };
   // Most nese od v4.36 cil podle oblasti ({L} -> „in a slow change in the seeker" atd.).
   // Sablona s {L} je to, co se schvaluje a registruje; konkretni cil je DATA, stejne jako
@@ -95,7 +108,8 @@ const DATA = /^(PERSON|DRAWN|SEEKER|LIFE|AREA|SEEKING|INTENTION|QUESTION|REALM|E
     // registroval jen ten ram, ktery postaveny prompt zrovna vylosoval, a druhy cervenal pri
     // dalsim behu. Tataz trida vady jako u kazdeho losu bez zaznamu.
     (L === 'is' ? glob('ESSENCE_FRAMES_IS') : glob('ESSENCE_FRAMES') || []).forEach((a, i) => pridej(L, 'esence[' + i + ']', a));
-    // 2026-10-06: rámce pro sol (jen EN) — fixture jede na Opus, takže by je registr jinak nikdy neviděl.
+    // 2026-10-06: rámce pro sol (jen EN). Od 2026-10-09 je sol výchozí engine a fixture je staví sama; pool zůstává, protože
+    // postavený prompt vylosuje jen JEDEN ze dvou rámců (a runu se slovesem normalizuje normalizujSol výš na šablonu).
     if (L !== 'is') (glob('ESSENCE_FRAMES_SOL') || []).forEach((a, i) => pridej(L, 'esence_sol[' + i + ']', a));
     // 2026-09-22: ram Prazdne runy — neni v losu (plyne z runy), fixture ho nikdy nepostavi.
     pridej(L, 'esence[blank]', L === 'is' ? glob('ESSENCE_BLANK_IS') : glob('ESSENCE_BLANK'));

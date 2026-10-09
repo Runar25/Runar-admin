@@ -846,7 +846,7 @@ function updateUIText() {
   setText('layer2-lbl', t('layer2_lbl'));
   setText('draw-another-btn', t('draw_another'));
   setText('start-over-btn', t('start_over'));
-  setText('sol-toggle-lbl', t('sol_toggle'));   // staticky popisek prepinace GPT-6 sol (jen admin ho vidi)
+  setText('opus-toggle-lbl', t('opus_toggle'));   // staticky popisek prepinace Opus 5 (jen admin ho vidi; do 2026-10-08 prepinac solu)
   setText('img-pin-lbl', t('img_pin_lbl'));     // staticky popisek volby obrazu (jen admin ji vidi, 2026-10-06)
   var _ipBox = document.getElementById('img-pin'); if (_ipBox) _ipBox.title = t('img_pin_title');
   setText('read-guide-lbl', t('guide_title'));   // staticky nadpis navodu — od 2026-09-23 v zalozce cteni
@@ -1286,9 +1286,10 @@ async function callProxy(sys, prompt, maxTokens, use_credit = false, credit_cost
     const res  = await fetch(PROXY, {
       method: 'POST', headers,
       body: JSON.stringify({ system: sys, prompt, max_tokens: maxTokens, use_credit, spread_cost: credit_cost, journal, mode,
-        // GPT-6 sol (jen admin, 2026-09-24): jen čtení (single, spready, založení) a Ask — jejich prompty nesou
-        // větu za obrazem podle READ_ENGINE. Životní runa a rozbor jména zůstávají na Claude. Server bez admina ignoruje.
-        engine: (typeof READ_ENGINE !== 'undefined' && READ_ENGINE === 'sol' && (mode === '' || mode === 'ask' || mode === 'founding')) ? 'sol' : undefined })
+        // Engine (od 2026-10-09 sol pro všechny, DECISIONS 2026-10-09 (13)): posílá se jen adminova volba 'opus' — u každého
+        // volání modelu, i životní runy a rozboru jména. Co jde na sol, rozhoduje server; ne-admina s 'opus' ignoruje.
+        // (Do 2026-10-08 se posílalo 'sol', jen u čtení, založení a Asku.)
+        engine: (typeof READ_ENGINE !== 'undefined' && READ_ENGINE === 'opus') ? 'opus' : undefined })
     });
     const data = await res.json();
 

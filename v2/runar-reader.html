@@ -322,11 +322,12 @@
         <p class="q-teaser-txt" id="q-teaser-txt">Deeper questions open with Rune Walker.</p>
       </div>
       <button class="btn-full" id="begin-btn" data-i18n="begin_btn" onclick="startReading()">BEGIN THE READING</button>
-      <!-- Jen admin (2026-09-24, DECISIONS 2026-09-24 (17)): čtení i Ask přes GPT-6 sol místo Opus 5 — test.
-           Zobrazuje _paintSolToggle() v runar-reading.js; server sol pustí jen adminovi. -->
-      <label class="sol-toggle" id="sol-toggle" style="display:none;">
-        <input type="checkbox" id="sol-toggle-cb" onchange="toggleSol(this.checked)">
-        <span id="sol-toggle-lbl">Read with GPT-6 sol (test)</span>
+      <!-- Jen admin (od 2026-10-09, DECISIONS 2026-10-09 (13)): všichni čtou přes GPT-6 sol, přepínač vrací adminovi Opus 5.
+           Do 2026-10-08 opačně — přepínač zapínal sol (test, DECISIONS 2026-09-24 (17)).
+           Zobrazuje _paintOpusToggle() v runar-reading.js; server Opus pustí jen adminovi. -->
+      <label class="opus-toggle" id="opus-toggle" style="display:none;">
+        <input type="checkbox" id="opus-toggle-cb" onchange="toggleOpus(this.checked)">
+        <span id="opus-toggle-lbl">Read with Opus 5 (test)</span>
       </label>
       <div class="status" id="st-setup"></div>
     </div>

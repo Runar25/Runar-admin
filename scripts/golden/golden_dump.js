@@ -71,11 +71,14 @@ var samplecorr = [{ from:'Arctic', to:'Norðurljós', lang:'both', context:'test
   grab('single_'+L,      function(){ return buildReadingPrompt(u, drawn, L, []); });
   var _bagPred = _bagSave();
   grab('single_noq_'+L,  function(){ return buildReadingPrompt(u2, drawn, L, []); });
-  // 2026-09-24: varianta enginu GPT-6 sol (jen admin) — věta za obrazem má doplněk „one detail“ (IMAGE_SEEING).
+  // 2026-09-24: varianta druhého enginu — věta za obrazem se liší (IMAGE_SEEING), v EN i esenční rámec (_essenceFrame).
   // Bez tohoto klíče by změna té varianty prošla jako „0 změn“. Staví se ze STEJNÉHO stavu sáčku obrazů jako
-  // single_noq (liší se tedy jen tou větou) a sáček se pak vrátí, aby se ostatní otisky nepohnuly.
+  // single_noq (liší se tedy jen enginem) a sáček se pak vrátí, aby se ostatní otisky nepohnuly.
+  // 2026-10-09 obráceno (DECISIONS 2026-10-09 (13)): výchozí READ_ENGINE je 'sol' (všichni), druhá varianta = 'opus' (admin).
+  // Engine se vrací na PŮVODNÍ hodnotu, ne natvrdo: do 2026-10-08 tu stálo „finally { READ_ENGINE = 'opus' }“ (bez zpětných apostrofů — kód tu žije v šablonovém řetězci), což by po
+  // změně výchozí hodnoty tiše přepnulo všechny otisky za tímhle řádkem na Opus.
   var _bagPo = _bagSave(); _bagLoad(_bagPred);
-  grab('single_sol_'+L,  function(){ READ_ENGINE = 'sol'; try { return buildReadingPrompt(u2, drawn, L, []); } finally { READ_ENGINE = 'opus'; } });
+  grab('single_opus_'+L, function(){ var _e = READ_ENGINE; READ_ENGINE = 'opus'; try { return buildReadingPrompt(u2, drawn, L, []); } finally { READ_ENGINE = _e; } });
   _bagLoad(_bagPo);
   grab('single_corr_'+L, function(){ return buildReadingPrompt(u, drawn, L, samplecorr); });
   grab('single_selflife_'+L, function(){ return buildReadingPrompt(u, u.lifeRune, L, []); });
