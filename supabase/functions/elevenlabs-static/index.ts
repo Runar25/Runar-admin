@@ -9,7 +9,7 @@ import { logVoice } from "../_shared/voice_usage.ts"
 
 const EL_API_KEY     = Deno.env.get('ELEVENLABS_API_KEY')
 const EL_VOICE_ID_EN = '2UI8v2ibbwQTijaYAte1'
-const EL_VOICE_ID_IS = '4E6WbDOme312uWJ8z4pv'
+const EL_VOICE_ID_IS = '4E6WbDOme312uWJ8z4pv'   // NEPOUŽITO (2026-10-09 kontrola): oba jazyky mluví hlasem EN, viz resolvedVoiceId níž
 const EL_MODEL_EN    = 'eleven_multilingual_v2'
 const EL_MODEL_IS    = 'eleven_v3'
 const SB_URL       = Deno.env.get('SUPABASE_URL')

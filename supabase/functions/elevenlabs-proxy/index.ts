@@ -1,6 +1,6 @@
 // Supabase Edge Function: elevenlabs-proxy
 // Real-time TTS — returns base64 audio blob.
-// Rate limit: 5 req/min per user (or IP for anonymous)
+// Rate limit: 5 req/min per logged-in user (anonymous is rejected with 401 — 2026-10-09: „or IP for anonymous“ pryč, neplatilo)
 // Deploy: supabase functions deploy elevenlabs-proxy --project-ref pmitxjvkeovijreepror --no-verify-jwt
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
@@ -42,7 +42,7 @@ serve(async (req) => {
   try {
     if (!EL_API_KEY) return json({ error: "ELEVENLABS_API_KEY not set" }, 500);
 
-    // ── Auth (optional — rate limit key differs) ──
+    // ── Auth (required — anonymous gets 401 below; until 2026-10-09 this said „optional“) ──
     const authHeader = req.headers.get("Authorization");
     let userId: string | null = null;
 

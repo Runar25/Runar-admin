@@ -1720,8 +1720,48 @@ Nasazená funkce se od repa liší jen těmito komentáři a mrtvou funkcí — 
    C výš) tím vyřešený NENÍ — ten je architektonický a dál otevřený. Dopad dnes: jedno čtení na účet.
 2. ⚪ **`credits_used` může lhát.** Odečet a zápis jsou dva zápisy; když zápis selže, klient čtení pošle přes `resave` a to
    uloží `credits_used = false`, i když kredit stržen byl. Shrine pak ukáže „free“. Jen štítek, peníze se nepletou. Stačí vědět.
-3. ⚪ **Návštěvník:** `CLAUDE.md` („Spread systém → Gating“) píše „Visitor … má Single 1×“, proxy ale anonyma odmítne (401) a komentář
-   tam říká „Visitor has only the static Rune Collection“. Co návštěvník v appce opravdu vidí, ověří část 4 (appka).
+3. 🟠 **Návštěvník si vytáhne runu a dostane obecnou chybu.** Živé čtení nepřihlášenému proxy odmítá od 2026-08-02 (401,
+   DECISIONS 2026-08-02 „Fáze 1“ — návštěvník má jen statickou kolekci run). Appka mu ale záložku čtení ukáže, tah dovolí
+   (`readRune` → `_generateReading` → `callProxy` bez přihlášení) a 401 přeloží na `err_generic`. Známé jako „client visitor gate →
+   registruj se místo volání proxy“ (sekce C, „Proxy defense-in-depth“), dosud neudělané. `CLAUDE.md` („Gating“) psal „Visitor má
+   Single 1×“ — opraveno na stav produkce (§20: vyhrává produkce). Rozhodnout: co má návštěvník po tahu vidět (výzva k registraci?).
+
+### Část 2 — ostatní edge funkce (přečteno celé 2026-10-09; nasazený seznam a verze `supabase functions list`)
+**Platí:** všechny vyžadují přihlášení; admin-only funkce (`elevenlabs-static`, `voice-usage`, `list-readings`, `list-reports`) ověřují
+e-mail z JWT · `list-readings` skrývá čtení lidí s `analytics_opt_out` · `notify-report` posílá do Slacku jen metadata (ne text ani
+identitu) a tajemství `WEBHOOK_SECRET` je nastavené · `reset-tree` jen pro `is_tester` · strop hlasu 5/měsíc = zrcadlo configu (smoke ⑨),
+počítá se až po úspěšném hlasu · `redeem-code` 5 pokusů / 15 min na IP, označení kódu CAS · `delete-account` maže kaskádou
+`user_profiles`, `readings`, `tree_state` (ověřeno v `pg_constraint`), evidence kreditu a hlasu zůstává anonymní (`RUNAR_PRIVACY.md`).
+**Opraveno rovnou:** `elevenlabs-proxy` hlavička „or IP for anonymous“ a „Auth (optional)“ → anonym 401 · `elevenlabs-static`
+nepoužitá konstanta islandského hlasu označena · `tree-update` „volá ji appka po každém čtení“ → appka ji nevolá, ale je nasazená.
+
+**PRO OWNERA:**
+4. 🔴 **Dárkový kód se po smazání účtu dá uplatnit znovu.** `delete-account` nuluje `gift_codes.used_by`, `redeem-code` hlídalo jen
+   `used_by` → kód je zase „nepoužitý“. V produkci teď **2 takové kódy** (`used_by` null, `used_at` vyplněné; dotaz 2026-10-09).
+   **Opraveno v repu** (`redeem-code` hlídá i `used_at`, v kontrole i v CAS) — **čeká na nasazení**:
+   `supabase functions deploy redeem-code --project-ref pmitxjvkeovijreepror --no-verify-jwt`. Po nasazení jsou ty 2 kódy zavřené samy.
+5. ⚪ **`tree-update` je nasazená, appka ji nevolá** — a zavolat ji může každý přihlášený bez rate limitu a bez stropu délky textu
+   (platí Haiku, zapíše `tree_state`, `credits_used` bere od klienta = známé #6/#7 v sekci C). Data se dnes nikam nepoužijí (vrstvy
+   A/B/C vypnuté). Volba: stáhnout, dokud ji CODE-tree neoživí (`supabase functions delete tree-update`), nebo nechat.
+6. ⚪ `elevenlabs-proxy` vrací klientovi text chyby ElevenLabs (`claude-proxy` příčiny záměrně skrývá) a měsíční čítač hlasu není
+   atomický (souběžné požadavky můžou započíst méně; rate limit 5/min to drží malé). Banalita, stačí vědět.
+
+### Část 3 — databáze (živě přes `supabase db query --linked`, jen čtení, 2026-10-09)
+**Platí:** RLS zapnuté na všech 15 tabulkách · `readings` klient jen čte své (zápis jen server) · `credit_ledger`, `rate_limits`,
+`voice_*`, `gpt_reviews` bez politik = klient nic · peněžní funkce (`add_credits`, `use_credit`, `use_free_balance`, `bump_month_units`,
+`append_follow_up`, `check_rate_limit`) anon ani přihlášený volat NESMÍ · živé granty sloupců `user_profiles` = seznam smoke ⑩
+(14 sloupců + `id`) · cizí klíče: `user_profiles`, `readings`, `tree_state`, `gpt_reviews` kaskáda, `voice_usage` set null,
+`gift_codes` bez akce (proto ho `delete-account` nuluje ručně → bod 4).
+**Opraveno rovnou:** nic — databázi Code nemění.
+
+**PRO OWNERA:**
+7. ⚪ **Seznam adminů žije i v 5 RLS politikách** (`gift_codes`, `knowledge_base`, `runar_character`, `runar_corrections`,
+   `runar_static_audio`); smoke ㉪ je vědomě nehlídá (SQL = historie, ne běžící kód). Při změně adminů je nutné přepsat i je.
+8. ⚪ **`user_profiles` má dvě totožné politiky** („Users manage own profile“ a „own profile“, obě ALL, `auth.uid() = id`). Neškodí,
+   jen duplikát. Úklid (spustí owner): `drop policy "own profile" on public.user_profiles;`
+9. ⚪ **`bug_reports`:** vložit hlášení smí i nepřihlášený (politika INSERT, role public, `CHECK true`) — kdo zná veřejný klíč, může
+   posílat hlášení a pingat Slack. A hlášení nesou jméno testera (ručně zadané, 0 e-mailů z 241) a výřez čtení, bez vazby na účet →
+   přežijí smazání účtu; `RUNAR_PRIVACY.md` o `bug_reports` nepíše nic. Rozhodnout: nechat / jen přihlášení / doba uchování.
 
 ## 2026-08-16 — otevřené po zavedení registru `direct`
 

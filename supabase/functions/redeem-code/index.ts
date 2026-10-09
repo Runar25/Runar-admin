@@ -54,12 +54,14 @@ serve(async (req) => {
     const normalized = code.trim().toUpperCase();
     const { data: gift, error: fetchErr } = await sb()
       .from("gift_codes")
-      .select("code, credits, rune_name, used_by")
+      .select("code, credits, rune_name, used_by, used_at")
       .eq("code", normalized)
       .maybeSingle();
 
     if (fetchErr || !gift) return json({ error: "Code not found" }, 404);
-    if (gift.used_by)       return json({ error: "Code already used" }, 409);
+    // Použitý = used_by NEBO used_at (2026-10-09, kontrola architektury). delete-account nuluje used_by (FK bez kaskády),
+    // used_at nechá — dokud se hlídalo jen used_by, kód smazaného účtu šel uplatnit znovu (v produkci 2 takové kódy).
+    if (gift.used_by || gift.used_at) return json({ error: "Code already used" }, 409);
 
     // ── Atomic: mark as used (race-condition guard via .is null filter) ──
     const { data: markedRows, error: markErr } = await sb()
@@ -67,6 +69,7 @@ serve(async (req) => {
       .update({ used_by: user.id, used_at: new Date().toISOString() })
       .eq("code", normalized)
       .is("used_by", null)
+      .is("used_at", null)   // viz výš: kód smazaného účtu má used_by null, ale used_at drží
       .select();   // returns updated rows — empty array = someone else won the race
 
     if (markErr) return json({ error: "Failed to redeem: " + markErr.message }, 500);

@@ -1,6 +1,8 @@
 // Supabase Edge Function: tree-update
 // Post-reading background extraction — updates tree_state for the user.
-// Called fire-and-forget from frontend after a reading is saved.
+// ⚠️ Appka ji dnes NEVOLÁ (TREE_UPDATE v runar-config.js je jen adresa), ale nasazená je — volat ji může každý přihlášený
+// (bez rate limitu a stropu délky textu; RUNAR_BACKLOG.md „Kontrola architektury“, část 2). Do 2026-10-09 tu stálo
+// „Called fire-and-forget from frontend after a reading is saved“.
 // Never blocks the user — errors are swallowed silently.
 //
 // Tree activation rules:
