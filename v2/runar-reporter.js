@@ -5,7 +5,16 @@
 (function () {
   var TESTER_KEY = 'bug_tester', QUEUE_KEY = 'bug_queue';
   // 2026-09-30 (KUKY bod 6): „keep“ = uložit dobré čtení / větu pro vizuály — ne chyba, proto přes celou šířku a poslední.
-  var TYPES = ['replace', 'rephrase', 'pattern', 'visual', 'crash', 'other', 'keep'];
+  // 2026-10-09 (KUKY, hlášení 83f2d16c: „Replace text? Není asi potřeba. Řešení, co uděláme, bude až na straně code! Ne tím, že tu
+  // někdo napíše svůj názor. Spíš ikona pro gramatiku či reword. Repeated phrase asi taky není potřeba“; „15. keep jen admin“):
+  // tester hlásí gramatiku a špatně použitá slova, admin má dál všechno. Typ „grammar“ potřebuje sql/2026-10-09_bug_reports_grammar.sql
+  // (bez ní DB hlášení odmítne a zůstane ve frontě zařízení). „rephrase“ se testerovi jmenuje „Wrong word“ (LBL_TESTER).
+  var TYPES_ADMIN = ['replace', 'rephrase', 'grammar', 'pattern', 'visual', 'crash', 'other', 'keep'];
+  var TYPES_TESTER = ['grammar', 'rephrase', 'visual', 'crash', 'other'];
+  var LBL_TESTER = { rephrase: 'report_t_wrongword' };
+  function _jeAdmin() {
+    return typeof currentUser !== 'undefined' && !!currentUser && typeof isAdmin === 'function' && isAdmin(currentUser.email);
+  }
   var APP_VERSION = 'unknown';
   var cap = { text: '', source: 'screen', key: '', ctx: '' };
   var curType = '';
@@ -45,7 +54,18 @@
       cap.ctx = tab + (idEl ? ' · #' + idEl.id : '') + (tab === 'reading' ? rid : '');
     } else {
       var pane = document.getElementById('apane-' + tab);
-      cap.text = (pane ? (pane.innerText || '') : '').trim();
+      // 2026-10-09 (KUKY, hlášení 83f2d16c: „Tester bude mít v reportu jen text čtení a Ask. Neuvidí technické věci“): ne-admin
+      // na záložce čtení posílá jen čtení (+ ✦) a Ask (připojí se níž), ne celou obrazovku s formulářem a tlačítky. Bez čtení na
+      // obrazovce (hlášení vzhledu) zůstává celá obrazovka. Admin beze změny (obrazovka + složení čtení).
+      var cteniT = (!_jeAdmin() && tab === 'reading' && typeof readerTexts !== 'undefined' && typeof lang !== 'undefined'
+        && readerTexts[lang] && readerTexts[lang].short) || '';
+      if (cteniT) {
+        var thEl = document.getElementById('reading-thought');
+        var thT = (thEl && thEl.style.display !== 'none') ? (thEl.textContent || '').trim() : '';
+        cap.text = cteniT.trim() + (thT ? '\n' + thT : '');
+      } else {
+        cap.text = (pane ? (pane.innerText || '') : '').trim();
+      }
       // Složení čtení (jen admin, 2026-09-25) jde na konec a strop 5000 se mu uvolní předem — jinak by ho uřízl.
       var slozeni = (tab === 'reading' && typeof _slozeniCteni === 'function') ? _slozeniCteni() : '';
       var MAX = slozeni ? 5000 - slozeni.length - 2 : 5000;
@@ -151,10 +171,17 @@
     document.getElementById('br-cancel').addEventListener('click', closePanel);
     document.getElementById('br-send').addEventListener('click', submit);
     document.getElementById('br-name-save').addEventListener('click', saveName);
-    var types = document.getElementById('br-types');
-    TYPES.forEach(function (tp) {
+  }
+
+  // Tlačítka typů podle toho, kdo hlásí — skládá se při každém otevření (přihlášení dobíhá až po startu reportéru).
+  function renderTypes() {
+    var admin = _jeAdmin(), types = document.getElementById('br-types');
+    if (!types) return;
+    types.innerHTML = '';
+    (admin ? TYPES_ADMIN : TYPES_TESTER).forEach(function (tp) {
       var b = document.createElement('button');
       b.className = 'br-type'; b.type = 'button'; b.dataset.type = tp;
+      b.textContent = L((!admin && LBL_TESTER[tp]) || ('report_t_' + tp));
       b.addEventListener('click', function () { pickType(tp); });
       types.appendChild(b);
     });
@@ -173,9 +200,6 @@
     document.getElementById('br-send').textContent = L('report_send');
     document.getElementById('br-cancel').textContent = L('report_cancel');
     btn.title = L('report_btn'); btn.setAttribute('aria-label', L('report_btn'));
-    Array.prototype.forEach.call(document.querySelectorAll('.br-type'), function (b) {
-      b.textContent = L('report_t_' + b.dataset.type);
-    });
   }
 
   function pickType(tp) {
@@ -189,6 +213,7 @@
 
   function openPanel() {
     applyText();
+    renderTypes();
     var hasName = !!(localStorage.getItem(TESTER_KEY) || '').trim();
     document.getElementById('br-name-step').classList.toggle('br-hide', hasName);
     document.getElementById('br-form').classList.toggle('br-hide', !hasName);

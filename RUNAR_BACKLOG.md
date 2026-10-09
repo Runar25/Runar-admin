@@ -1250,6 +1250,11 @@ prompt nad 100 000 tokenů je dražší (u nás nikdy). Haiku 4.5 je v repu jen 
 Kandidáti: rozbor čtení (dnes luna, `gpt-review`) · třídění hlášení testerů · `tree-update`, až ho CODE-tree oživí. Čtení a Ask ne:
 model je proti hlasu malá část ceny a islandština malého modelu neověřená. **Další krok jen s ownerovým ano (§30):** Haiku 5.5 × luna
 na rozboru týchž čtení (lunin rozbor je uložený v `gpt_reviews`), malý vzorek, texty vedle sebe pro ownera.
+**2026-10-09 ZMĚŘENO** (owner *„13. ano porovnej“*, EVAL_LOG 2026-10-09 (2)): na 5 čteních Haiku 5.5 s přemýšlením 1 platný nález
+a 0 neplatných, luna 0 platných a 7 neplatných, Haiku bez přemýšlení horší než luna. Haiku ~5× dráž než luna (pořád < 0,1 c za rozbor)
+a 2 z 10 rozborů s ruským slovem v češtině. `tree-update` přepnut na Haiku 5.5 bez přemýšlení (owner *„předělat haiku 4.5 na 5.5“*).
+**Čeká na ownera:** přepnout tlačítko rozboru na Haiku 5.5 s přemýšlením, nebo nechat lunu. Třídění hlášení modelem zatím ne — viz
+odpověď ownerovi 2026-10-09 (typ volí tester sám, skupiny umí kód zadarmo; model až při počtu, který kód nezvládne).
 
 ### Prompt × návody výrobců (Anthropic Opus 5, OpenAI GPT-6) — nálezy 2026-10-04, ČEKÁ NA OWNERA, co s nimi (CODE-tune)
 ⭐ **KUKY 2026-10-05: velké body (4, 5, 6, 8) a přestavba promptu → LAB CODE-read, ne produkce** (DECISIONS 2026-10-05 (3)).
@@ -2338,33 +2343,26 @@ Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
 - [x] ~~**`WEBHOOK_SECRET`**~~ — NASTAVIL CODE 2026-09-11. Hlavicka i secret, v tomhle poradi
       (obracene by reporter na chvili odmital vlastni webhook). Zbyva jen smazat tu sondovou
       zpravu ve Slacku — na to Code nema nastroj.
-- [ ] **Označit testery.** Až pošleš e-maily, CODE dodá SQL, které si UUID dohledá samo a
-      **selže bez zápisu**, když se někdo ještě nepřihlásil. ⚠️ Řádek v `user_profiles` vzniká
-      až prvním loginem — označovat jde až potom.
-- [ ] **Rozhodnout o čtyřech stávajících účtech.** Dnes: všechny mají `is_tester = true`, ale
-      `tier = 'rune_seeker'` — **premium nemá nikdo** (ověřeno 2026-09-11). Když nepojedou taky
-      jako premium, jejich nálezy nepůjdou srovnat s novými.
-- [ ] **Testeři hlásí čtení A Ask → potřebují tier s Askem** (zjištěno 2026-10-09 k hlášení 83f2d16c). Nový účet je Rune Seeker a ten má
-      Ask jen jako ukázku (`TIERS.rune_seeker.asks_per_reading`). Owner chce od testerů *„text čtení a Ask“* → testerům nastavit standard
-      nebo premium (počty čtení a Asků vlastní `TIERS` v `runar-config.js`) tímtéž SQL jako „Označit testery“. Rozhodne owner: který tier
-      a jestli platí i pro čtyři stávající účty (položka výš).
-- [ ] **Hlášení pro testery (KUKY 2026-10-09, hlášení 83f2d16c) — ČEKÁ NA SCHVÁLENÍ PLÁNU** (CODE-tune). Owner: *„Replace text? Není asi
-      potřeba. Řešení bude až na straně code… spíš ikona pro gramatiku či reword. Repeated phrase asi taky není potřeba. Ostatní můžou
-      zůstat… keep this [jen admin]. Tester bude mít v reportu jen text čtení a Ask. Neuvidí technické věci jako model, z čeho se skládá
-      prompt.“* Dnes (`v2/runar-reporter.js`): typy pro všechny stejné (Replace text · Reword · Repeated phrase · Visual · Error · Other ·
-      ✦ Keep) · bez označeného textu se bere **celá obrazovka** i s formulářem a tlačítky · složení čtení (model, prompt…) už je jen pro admina.
-      Návrh: tester vidí typy Grammar · Wrong word / Reword · Visual · Error · Other; Replace, Repeated phrase a Keep jen admin; zachycený text
-      = čtení + Ask, ne celá obrazovka. Návaznost: *Známkování čtení testery* (2026-08-16, otevřené — na co se ptát) a §29 (zápis hlášení).
-- [ ] **Přihlášení bez Gmailu a uzavřený test (KUKY 2026-10-09, podklad z Claude chatu) — ČEKÁ NA OWNERA** (CODE-tune). E-mailové
-      přihlášení (magic link) **je v appce hotové**, jen vypnuté (`AUTH_EMAIL_ENABLED`), dokud nebude vlastní SMTP — viz „Vyřešit doručení
-      přihlášení“ výš (rozhodnuto Brevo, ne Resend). Proti hromadné registraci: Supabase hook **Before User Created** (plán Free i Pro,
-      ověřeno 2026-10-09 v dokumentaci Supabase) jako Postgres funkce nad tabulkou povolených e-mailů — odmítne vznik účtu, který na
-      seznamu není, i přes Google; existující účty se přihlásí dál. Kód: tabulka + funkce v `sql/`, hezká hláška pro odmítnutého v
-      `runar-auth.js`; hook v dashboardu zapne owner. Varianta bez SMTP (účty s heslem zakládá owner + formulář s heslem) je víc kódu
-      a druhá cesta vedle magic linku. ⚠️ **iPhone:** aplikace přidaná na plochu nesdílí úložiště se Safari (WebKit bug 181849) a odkaz
-      z e-mailu se otevře v Safari → přihlášení odkazem skončí v Safari, ne v aplikaci. **Šestimístný kód** opsaný v aplikaci (Supabase
-      `signInWithOtp` + `verifyOtp`, šablona e-mailu s `{{ .Token }}`) to obchází a funguje i na Androidu → doporučeno místo odkazu.
-      Zdroj zčásti fóra vývojářů — ověřit na skutečném iPhonu.
+- [x] ✅ **Označit testery — dělá databáze (2026-10-09).** Tester na seznamu `allowed_emails` (role `tester`) dostane při vzniku profilu
+      `tier = 'premium'` a `is_tester` (trigger, `sql/2026-10-09_uzavreny_test.sql`; ověřeno testem s návratem transakce). Kdo se
+      přihlásil dřív, než byl na seznamu → dorovnávací `update` v hlavičce téhož SQL.
+- [x] ✅ **Čtyři stávající účty zůstávají, jak jsou** (KUKY 2026-10-09: dva admini a dva účty *„na testování slabších účtů Rune Seeker“*).
+- [x] ✅ **Testeři = premium** (KUKY 2026-10-09: *„budou mít možnosti jako premium, jen omezené hlasy, čtení necháme na 75, když tak
+      dobijeme kreditem“*). Rune Seeker má Ask jen jako ukázku, takže by hlásit Ask nemohli. Hlas má strop `VOICE_MONTHLY_LIMIT` pro všechny.
+- [x] ✅ **Hlášení pro testery — HOTOVO 2026-10-09** (DECISIONS 2026-10-09 (5)): tester Grammar · Wrong word · Visual · Error · Other,
+      admin navíc Replace text, Repeated phrase, ✦ Keep; tester posílá jen čtení (+ ✦) a Ask. Návaznost: *Známkování čtení testery*
+      (2026-08-16, otevřené — na co se ptát).
+- [ ] **Hlášení pro běžné uživatele bude úplně jiné — probrat před spuštěním** (KUKY 2026-10-09: *„čistě z uživatelského pohledu to, co
+      může trápit běžného uživatele. Teď nevím, co se do takového reportu obyčejně dává. To probereme před spuštěním.“*). Dnes vidí každý
+      ne-admin typy pro testery.
+- [ ] **Přihlášení bez Gmailu a uzavřený test — KÓD A SQL HOTOVÉ 2026-10-09, ČEKÁ NA OWNERA** (DECISIONS 2026-10-09 (6)). V appce:
+      e-mail → šestimístný kód (proč kód: aplikace na ploše iPhonu nesdílí úložiště se Safari, WebKit bug 181849), hláška pro účet mimo
+      seznam (e-mail i návrat z Google). V DB (puštěno 2026-10-09): `allowed_emails`, `hook_before_user_created`, trigger tester → premium.
+      **Owner, v tomhle pořadí:** (1) účet Brevo, doména agndofa.is, DNS záznamy od Brevo u ISNIC (viz „Vyřešit doručení přihlášení“ výš)
+      · (2) Supabase → Authentication → SMTP: údaje z Brevo · (3) Authentication → Emails: do šablon „Magic Link“ i „Confirm signup“
+      vložit `{{ .Token }}` · (4) e-maily testerů do `allowed_emails` (SQL v hlavičce `sql/2026-10-09_uzavreny_test.sql`) · (5) Authentication
+      → Hooks → Before User Created → `public.hook_before_user_created`. Pak CODE přepne `AUTH_EMAIL_ENABLED` a projde s ownerem první
+      přihlášení kódem. Neověřeno: jak Supabase předá zprávu hooku při návratu z Google (appka hledá „closed_test“, jinak obecná hláška).
 - [ ] **Hlášení nese verzi nasazenou, ne tu, která v telefonu běží** (2026-10-09, CODE-tune, §22). `runar-reporter.js` bere `app_version`
       z čerstvě staženého `sw.js`, ale stránka jede na JS ze staré cache, dokud se nenačte znovu (SW: JS cache-first). Doklad: hlášení 24c6c548
       (8. 10.) neslo `v564` a popisovalo chybu opravenou ve v564; owner 9. 10. po novém načtení: v pořádku. S testery by to mátlo diagnózu.

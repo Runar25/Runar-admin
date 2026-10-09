@@ -4,7 +4,7 @@
 // `sb` client (global const from the shrine inline script). Classic script.
 (function () {
   var FN = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/list-reports';
-  var REP_EMOJI = { replace: '✏️', rephrase: '✏️', pattern: '🔁', visual: '🎨', crash: '💥', other: '🚩', keep: '✦' };   // keep = uložená dobrá věta (2026-09-30)
+  var REP_EMOJI = { replace: '✏️', rephrase: '✏️', pattern: '🔁', grammar: '🔤', visual: '🎨', crash: '💥', other: '🚩', keep: '✦' };   // keep = uložená dobrá věta (2026-09-30)
   var _filter = 'new';
   var _wired = false;
 

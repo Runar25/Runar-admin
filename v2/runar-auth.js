@@ -348,8 +348,8 @@ function openUpgradeModal() {
 function openAuthModal() {
   document.getElementById('auth-modal').classList.add('open');
   document.getElementById('auth-modal-body').style.display = 'block';
-  document.getElementById('auth-modal-success').style.display = 'none';
   setSt('st-auth', '');
+  _authCodeStep(!!_authCodeEmail);   // 2026-10-09: rozdělaný kód zůstává (člověk si šel pro e-mail a vrátil se)
   // Viditelnost e-mailove casti se nastavuje PRI KAZDEM otevreni (jedno misto), ne jednou pri startu.
   const emailOn = typeof AUTH_EMAIL_ENABLED === 'undefined' || !!AUTH_EMAIL_ENABLED;
   const emailBlock = document.getElementById('auth-email-block');
@@ -449,19 +449,74 @@ async function signInWithGoogle() {
   if (error) setSt('st-auth', error.message, 'err');
 }
 
-async function sendMagicLink() {
-  const email = document.getElementById('auth-email').value.trim();
-  if (!email) { setSt('st-auth', 'Please enter your email.', 'err'); return; }
-  setSt('st-auth', 'Sending…');
-  const cleanUrl = window.location.origin + window.location.pathname;
-  const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: cleanUrl } });
-  if (error) {
-    const msg = (error.status === 429 || /rate/i.test(error.message))
-      ? 'Too many requests — please wait a moment, or use Google sign-in above.'
-      : error.message;
-    setSt('st-auth', msg, 'err'); return;
+// ─── PŘIHLÁŠENÍ E-MAILEM: ŠESTIMÍSTNÝ KÓD (2026-10-09) ─────────────────────────────────────
+// KUKY „11. ok udělej“ / „16. ano“ (přihlášení testerů bez Gmailu: Brevo + seznam povolených e-mailů + kód). Do té doby tu byl magic
+// link. Proč kód: aplikace přidaná na plochu iPhonu nesdílí úložiště se Safari (WebKit bug 181849) a odkaz z e-mailu se otevře v Safari
+// — přihlášení odkazem by skončilo mimo aplikaci. Kód opsaný v aplikaci funguje všude. Supabase: signInWithOtp pošle e-mail, verifyOtp
+// (type 'email') ho ověří; šablona e-mailu musí obsahovat {{ .Token }} (dashboard → Authentication → Emails, „Magic Link“ i „Confirm
+// signup“). Blok je vidět až s AUTH_EMAIL_ENABLED (runar-config.js) — vestavěný mailer Supabase cizím adresám nedoručí.
+// „closed_test“ = hook uzavřeného testu (sql/2026-10-09_uzavreny_test.sql) odmítl e-mail, který není na seznamu.
+var _authCodeEmail = '';
+function _authMsg(err) {
+  var m = String((err && err.message) || err || '');
+  if (/closed_test/i.test(m)) return t('auth_closed_test');
+  if ((err && err.status === 429) || /rate|too many/i.test(m)) return t('auth_rate');
+  return tp('auth_failed', { msg: m });
+}
+function _authCodeStep(on) {
+  var a = document.getElementById('auth-step-email'), b = document.getElementById('auth-step-code');
+  if (a) a.hidden = !!on;
+  if (b) b.hidden = !on;
+  var note = document.getElementById('auth-code-note');
+  if (note) note.textContent = on ? tp('auth_code_sent', { email: _authCodeEmail }) : '';
+  if (on) setTimeout(function () { var k = document.getElementById('auth-code'); if (k) k.focus(); }, DELAY_FOCUS);
+}
+async function sendLoginCode() {
+  var email = (document.getElementById('auth-email').value || '').trim().toLowerCase();
+  if (!email) { setSt('st-auth', t('auth_email_need'), 'err'); return; }
+  setSt('st-auth', t('auth_sending'));
+  var res = await sb.auth.signInWithOtp({ email: email, options: { shouldCreateUser: true } });
+  if (res.error) { setSt('st-auth', _authMsg(res.error), 'err'); return; }
+  _authCodeEmail = email;
+  var k = document.getElementById('auth-code'); if (k) k.value = '';
+  setSt('st-auth', '');
+  _authCodeStep(true);
+}
+async function verifyLoginCode() {
+  var code = (document.getElementById('auth-code').value || '').replace(/\D/g, '');
+  if (!_authCodeEmail || code.length !== 6) { setSt('st-auth', t('auth_code_bad'), 'err'); return; }
+  setSt('st-auth', t('auth_checking'));
+  var res = await sb.auth.verifyOtp({ email: _authCodeEmail, token: code, type: 'email' });
+  if (res.error) {
+    setSt('st-auth', /closed_test/i.test(res.error.message || '') ? t('auth_closed_test') : t('auth_code_bad'), 'err');
+    return;
   }
-  document.getElementById('auth-modal-body').style.display = 'none';
-  document.getElementById('auth-modal-success').style.display = 'block';
+  _authCodeEmail = '';
+  setSt('st-auth', '');
+  _authCodeStep(false);
+  closeAuthModal();   // přihlášení převezme onAuthStateChange (runar-app.js) — SIGNED_IN
+}
+function authCodeBack() {
+  _authCodeEmail = '';
+  setSt('st-auth', '');
+  _authCodeStep(false);
+}
+// Enter v poli odešle krok (bez inline JS v HTML).
+document.addEventListener('keydown', function (e) {
+  if (e.key !== 'Enter' || !e.target) return;
+  if (e.target.id === 'auth-email') { e.preventDefault(); sendLoginCode(); }
+  else if (e.target.id === 'auth-code') { e.preventDefault(); verifyLoginCode(); }
+});
+// Návrat z Google s chybou (např. hook uzavřeného testu odmítl nový účet): Supabase vrací ?error=…&error_description=… (u implicit toku
+// v hash). Bez tohohle by člověk skončil na hlavní stránce bez vysvětlení. Volá se při startu (runar-app.js), adresa se vyčistí.
+function _authRedirectError() {
+  var q = new URLSearchParams(window.location.search);
+  var h = new URLSearchParams(String(window.location.hash || '').replace(/^#/, ''));
+  var err = q.get('error') || h.get('error');
+  if (!err) return;
+  var desc = q.get('error_description') || h.get('error_description') || err;
+  history.replaceState({}, document.title, window.location.pathname);
+  openAuthModal();
+  setSt('st-auth', /closed_test/i.test(desc) ? t('auth_closed_test') : tp('auth_failed', { msg: desc }), 'err');
 }
 

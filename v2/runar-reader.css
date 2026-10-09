@@ -726,10 +726,13 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .modal-sub{font-size:0.9em;color:var(--muted);font-style:italic;margin-bottom:20px;line-height:1.7;}
 .modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--dim);font-size:1.2em;cursor:pointer;}
 .modal-close:hover{color:var(--white);}
-.modal-success{text-align:center;padding:16px 0;}
-.modal-success-icon{font-size:2em;margin-bottom:10px;}
-.modal-success-txt{font-family:'Cinzel',serif;font-size:0.75em;letter-spacing:1.5px;color:var(--teal);}
-.modal-success-note{font-size:0.88em;color:var(--muted);font-style:italic;margin-top:8px;line-height:1.6;}
+/* 2026-10-09: přihlášení e-mailem šestimístným kódem (runar-auth.js sendLoginCode/verifyLoginCode) — plocha „MAGIC LINK SENT“
+   (.modal-success) pryč. Popisek .auth-lbl = dosavadní inline styl „YOUR EMAIL“. Text kroků --muted (§5: --dim nikdy pro text). */
+.auth-lbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--gold);display:block;margin-bottom:8px;}
+.auth-code-note{font-style:italic;color:var(--muted);margin:0 0 14px;line-height:1.6;overflow-wrap:anywhere;}
+.txt.auth-code{text-align:center;letter-spacing:0.45em;font-size:1.3em;}
+.auth-code-back{display:block;margin:12px auto 0;padding:4px 8px;background:none;border:0;color:var(--muted);font-family:inherit;font-size:0.92em;text-decoration:underline;cursor:pointer;}
+.auth-code-back:hover,.auth-code-back:focus-visible{color:var(--gold);}
 
 /* ── GOOGLE SIGN IN ── */
 .btn-google{width:100%;padding:13px 16px;background:#fff;color:#3c3c3c;border:none;font-family:'Cinzel',serif;font-size:0.78em;letter-spacing:1.5px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;margin-bottom:4px;}

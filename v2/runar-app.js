@@ -761,10 +761,9 @@ function _updateGateTexts() {
   if (activeAppTab === 'journal' && _journalCache.length > 0) renderJournal(_journalCache);
   // Single-source text updates for elements not covered elsewhere
   setText('redeem-btn', lang === 'is' ? 'INNLEYSA' : 'REDEEM');
-  // Podnadpis slibuje magic link jen tehdy, kdyz e-mailove prihlaseni opravdu je (AUTH_EMAIL_ENABLED).
+  // Podnadpis slibuje e-mail jen tehdy, kdyz e-mailove prihlaseni opravdu je (AUTH_EMAIL_ENABLED). 2026-10-09: kód místo odkazu.
   setText('auth-modal-sub', (typeof AUTH_EMAIL_ENABLED !== 'undefined' && !AUTH_EMAIL_ENABLED)
-    ? t('auth_modal_sub_google')
-    : (lang === 'is' ? 'Ekkert lykilorð þarf — töfralykill kemur í pósthólfið þitt.' : 'No password needed — a magic link will arrive in your inbox.'));
+    ? t('auth_modal_sub_google') : t('auth_modal_sub_code'));
   const _consentEl = document.getElementById('auth-consent-txt');
   if (_consentEl) _consentEl.innerHTML = lang === 'is'
     ? 'Með því að halda áfram samþykkir þú <a href="runar-privacy.html" target="_blank" rel="noopener">persónuverndarstefnu okkar</a>. Við geymum aðeins það sem þarf til að muna lestrana þín. Engin rakning, engar auglýsingar.'
@@ -772,13 +771,12 @@ function _updateGateTexts() {
   // Auth-modal static strings (co-located with sub/consent; §6 keeps RÚNAR + Google)
   setText('auth-modal-title', lang === 'is' ? 'GAKKTU INN Í HEIM RÚNARS' : "ENTER RÚNAR'S WORLD");
   setText('auth-google-lbl',  lang === 'is' ? 'HALDA ÁFRAM MEÐ GOOGLE' : 'CONTINUE WITH GOOGLE');
-  setText('auth-email-lbl',   lang === 'is' ? 'NETFANGIÐ ÞITT' : 'YOUR EMAIL');
-  setText('auth-magic-btn',   lang === 'is' ? 'SENDA TÖFRALYKIL' : 'SEND MAGIC LINK');
-  setText('auth-success-txt', lang === 'is' ? 'TÖFRALYKILL SENDUR' : 'MAGIC LINK SENT');
-  var _asn = document.getElementById('auth-success-note');
-  if (_asn) _asn.innerHTML = lang === 'is'
-    ? 'Athugaðu póstinn þinn og smelltu á tengilinn til að ganga inn.<br>Þessi síða opnast sjálfkrafa.'
-    : 'Check your email and click the link to enter.<br>This page will open automatically.';
+  // 2026-10-09: e-mailový blok z UI_TEXT (kód místo odkazu — runar-auth.js sendLoginCode); zelená plocha „MAGIC LINK SENT“ pryč.
+  setText('auth-email-lbl',   t('auth_email_lbl'));
+  setText('auth-magic-btn',   t('auth_code_send'));
+  setText('auth-code-lbl',    t('auth_code_lbl'));
+  setText('auth-code-btn',    t('auth_code_enter'));
+  setText('auth-code-back',   t('auth_code_back'));
   buildPills();
 }
 
@@ -1491,6 +1489,9 @@ window.addEventListener('DOMContentLoaded', async () => {
   // Restore address gender from localStorage
   userGender = localStorage.getItem('runar_gender') || 'hk';
   _updateGenderPills();
+
+  // 2026-10-09: návrat z Google s chybou (hook uzavřeného testu) → vysvětlit v modalu, ne mlčet (runar-auth.js)
+  if (typeof _authRedirectError === 'function') _authRedirectError();
 
   // Magic link callback
   const urlParams = new URLSearchParams(window.location.search);

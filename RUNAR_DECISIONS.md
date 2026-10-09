@@ -8900,3 +8900,36 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hranice:** citát se teď objeví až po startu skriptů (dřív anglický výchozí text v HTML, který islandským uživatelům na chvíli ukázal
   angličtinu). Na telefonu ověří owner.
 - Affected doc(s): `RUNAR_DESIGN.md` (citát — kde bydlí a jediný zdroj) — v témže commitu.
+
+## 2026-10-09 (5) — Hlášení pro testery: Grammar a Wrong word místo Replace a Repeated phrase; tester posílá jen čtení a Ask
+
+- **Rozhodl:** KUKY 2026-10-09 (hlášení 83f2d16c): *„Replace text? Není asi potřeba. Řešení, co uděláme, bude až na straně code! Ne tím,
+  že tu někdo napíše svůj názor. Spíš ikona pro gramatiku či reword. Repeated phrase asi taky není potřeba… Tester bude mít v reportu jen
+  text čtení a Ask. Neuvidí technické věci jako model, z čeho se skládá prompt.“* K návrhu: *„15. keep jen admin, ano podle bodu 8“*.
+  **Provedl:** CODE-tune.
+- **Co:** `runar-reporter.js` skládá typy při každém otevření podle toho, kdo hlásí: tester (každý ne-admin) Grammar · Wrong word
+  (= `rephrase`) · Visual · Error · Other; admin navíc Replace text, Repeated phrase a ✦ Keep. Nový typ `grammar` v DB
+  (`sql/2026-10-09_bug_reports_grammar.sql`, puštěno PŘED nasazením reportéru). Ne-admin na záložce čtení posílá jen text čtení (+ ✦)
+  a Ask, ne celou obrazovku; bez čtení na obrazovce (hlášení vzhledu) dál celou. Složení čtení vidí dál jen admin.
+  Ikona 🔤 pro `grammar` v obou přehledech hlášení ve shrine. Rozbor GPT dostává i řádek ✦ (EVAL_LOG 2026-10-09 (2)).
+- **Hranice:** hlášení pro běžné uživatele bude jiné (*„čistě z uživatelského pohledu… to probereme před spuštěním“*) → `RUNAR_BACKLOG.md`.
+- Affected doc(s): `RUNAR_BACKLOG.md` (Musí být hotové PŘED prvním cizím přihlášením — hlášení pro testery) — v témže commitu.
+
+## 2026-10-09 (6) — Uzavřený test: seznam povolených e-mailů (hook), testeři automaticky premium, přihlášení e-mailem kódem
+
+- **Rozhodl:** KUKY 2026-10-09 nad podkladem z Claude chatu (přihlášení testerů bez Gmailu): *„11. ok udělej“* · *„16. ano“* (Brevo +
+  seznam + šestimístný kód) · *„14. premium… stávající jsou 2 admini a dva účty… na testování slabších účtů Rune Seeker“* · k tierům:
+  *„budou mít možnosti jako premium, jen omezené hlasy, čtení necháme na 75, když tak dobijeme kreditem“*. **Provedl:** CODE-tune.
+- **Proč takhle:** poskytovatel SMTP rozhodnut 2026-09-12 (Brevo, EU; Resend zamítnut jako třetí americký zpracovatel) — návrh chatu
+  s Resend proto ne. Hook „Before User Created“ je na plánu Free i Pro (dokumentace Supabase, 2026-10-09) a jako jediný zavře vznik
+  účtu i přes Google. Kód místo odkazu: aplikace na ploše iPhonu nesdílí úložiště se Safari (WebKit bug 181849), odkaz z e-mailu by
+  přihlásil Safari, ne aplikaci. Tester → premium dělá databáze při vzniku profilu, ne ruční SQL po prvním přihlášení (§30).
+- **Co:** `sql/2026-10-09_uzavreny_test.sql` — `allowed_emails` (role `tester` / `member`), `hook_before_user_created` (e-mail mimo seznam
+  → odmítnutí „closed_test“), trigger na `user_profiles` (tester → `premium` + `is_tester`). `runar-auth.js` — e-mail → kód (`signInWithOtp`
+  + `verifyOtp`), hláška pro odmítnutý účet i při návratu z Google; texty modalu z `UI_TEXT` (EN i IS, dřív natvrdo). `AUTH_EMAIL_ENABLED`
+  zůstává `false`, dokud owner nenastaví Brevo. Stávající čtyři účty beze změny (dva admini, dva na testování Rune Seeker).
+- **Čeká na ownera:** účet Brevo + DNS u ISNIC + SMTP v Supabase · šablona e-mailu s `{{ .Token }}` · seznam testerů do `allowed_emails`
+  · zapnout hook v dashboardu. Pak CODE přepne `AUTH_EMAIL_ENABLED`.
+- **Hranice:** tok kódu ověřen jen v náhledu (vzhled, kroky); skutečný e-mail s kódem ověří owner, až poběží Brevo. Jak Supabase předá
+  zprávu hooku při návratu z Google, neověřeno — appka hledá „closed_test“, jinak ukáže obecnou hlášku s popisem chyby.
+- Affected doc(s): `RUNAR_BACKLOG.md` (Musí být hotové PŘED prvním cizím přihlášením) — v témže commitu.

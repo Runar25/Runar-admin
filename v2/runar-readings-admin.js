@@ -18,7 +18,7 @@
   var _f = { img: '', kws: '', model: '', area: '', seek: '', angle: '', ess: '', notes: false, keep: false, q: '' };
   var _rows = [];
   var SPREADY = ['NORNS', 'KRIZ', 'HORSESHOE', 'YGGDRASIL'];
-  var REP_IKONA = { keep: '✦', other: '🚩', visual: '🎨', replace: '✏️', rephrase: '✏️', pattern: '🔁', crash: '💥' };
+  var REP_IKONA = { keep: '✦', other: '🚩', visual: '🎨', replace: '✏️', rephrase: '✏️', pattern: '🔁', grammar: '🔤', crash: '💥' };   // grammar: hlášení testerů 2026-10-09
 
   // Shared escapeHtml is loaded (runar-utils.js); fall back to identity-safe if not.
   function esc(s) { return (typeof escapeHtml === 'function') ? escapeHtml(s) : String(s == null ? '' : s); }

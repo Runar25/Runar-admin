@@ -43,6 +43,21 @@ const UI_TEXT = {
     sign_out:             'SIGN OUT',
     auth_or:              'or',
     auth_modal_sub_google: 'No password needed — continue with Google.',
+    // 2026-10-09: přihlášení e-mailem šestimístným kódem (runar-auth.js sendLoginCode) — viditelné až s AUTH_EMAIL_ENABLED
+    auth_modal_sub_code:  'No password needed — you will get a six-digit code by email.',
+    auth_email_lbl:       'YOUR EMAIL',
+    auth_code_send:       'SEND CODE',
+    auth_code_sent:       'A code is on its way to {email}. Enter it here.',
+    auth_code_lbl:        'CODE',
+    auth_code_enter:      'ENTER',
+    auth_code_back:       'Use a different email',
+    auth_code_bad:        'That code did not work. Check it, or ask for a new one.',
+    auth_closed_test:     'Rúnar is still being tested. This email is not on the list.',
+    auth_email_need:      'Please enter your email.',
+    auth_sending:         'Sending…',
+    auth_checking:        'Checking the code…',
+    auth_rate:            'Too many attempts — wait a little, or use Google above.',
+    auth_failed:          'Sign-in did not work: {msg}',
     q_teaser:             'Deeper questions open with {tier}.',
     journal_teaser:       'Every reading you have ever taken is kept. Move to {tier} to open your full journal.',
     journal_teaser_count: 'Every reading you have ever taken is kept — {count} in total. Move to <strong style="color:var(--gold);font-style:normal;">{tier}</strong> to open your full journal.',   // 2026-09-30: dřív natvrdo v runar-journal.js
@@ -93,6 +108,8 @@ const UI_TEXT = {
     report_t_crash:   'Error / crash',
     report_t_other:   'Other',
     report_t_keep:    '✦ Keep this',   // 2026-09-30 (KUKY bod 6): uložit dobré čtení / větu pro vizuály
+    report_t_grammar: 'Grammar',       // 2026-10-09: typ pro testery (hlášení 83f2d16c)
+    report_t_wrongword: 'Wrong word',  // 2026-10-09: testerovi se tak jmenuje typ rephrase (admin dál „Reword“)
     report_msg:       'What is wrong?',
     report_msg_ph:    'A short note',
     report_repl_lbl:  'Correct text',
@@ -505,6 +522,23 @@ const UI_TEXT = {
     sign_out:             'SKRÁ ÚT',
     auth_or:              'eða',
     auth_modal_sub_google: 'Ekkert lykilorð þarf — haltu áfram með Google.',
+    // 2026-10-09: kód místo odkazu. Korpus (Risamálheild): „sex stafa“ 116 · „kóða í tölvupósti“ 10 · „var sendur á“ 1430 ·
+    // „inn kóðann“ 130 · „sláðu inn“ 432 · „annað netfang“ 80 · „virkaði ekki“ 9918 · „biðja um nýjan“ 58 · „enn í prófun“ 13 ·
+    // „ekki á listanum“ 1460 · „of margar tilraunir“ 11 · „bíddu aðeins“ 671 · „hér fyrir ofan“ 15011 · „ganga inn“ 8694.
+    auth_modal_sub_code:  'Ekkert lykilorð þarf — þú færð sex stafa kóða í tölvupósti.',
+    auth_email_lbl:       'NETFANGIÐ ÞITT',
+    auth_code_send:       'SENDA KÓÐA',
+    auth_code_sent:       'Kóði var sendur á {email}. Sláðu inn kóðann hér.',
+    auth_code_lbl:        'KÓÐINN',
+    auth_code_enter:      'GANGA INN',
+    auth_code_back:       'Nota annað netfang',
+    auth_code_bad:        'Kóðinn virkaði ekki. Athugaðu hann eða biddu um nýjan.',
+    auth_closed_test:     'Rúnar er enn í prófun. Þetta netfang er ekki á listanum.',
+    auth_email_need:      'Sláðu inn netfangið þitt.',
+    auth_sending:         'Sendi…',
+    auth_checking:        'Athuga kóða…',
+    auth_rate:            'Of margar tilraunir — bíddu aðeins eða notaðu Google hér fyrir ofan.',
+    auth_failed:          'Innskráning tókst ekki: {msg}',
     q_teaser:             'Dýpri spurningar opnast með {tier}.',
     journal_teaser:       'Sérhver lestur sem þú hefur tekið er geymdur. Farðu yfir í {tier} til að opna fulla króniku þína.',
     journal_teaser_count: 'Sérhver lestur sem þú hefur tekið er geymdur — {count} samtals. Farðu yfir í <strong style="color:var(--gold);font-style:normal;">{tier}</strong> til að opna fulla króniku þína.',   // {tier} ve 4. pádě (tierLabel)
@@ -550,6 +584,8 @@ const UI_TEXT = {
     report_t_crash:   'Villa / hrun',
     report_t_other:   'Annað',
     report_t_keep:    '✦ Geyma þetta',
+    report_t_grammar: 'Málfræði',      // 2026-10-09; korpus „málfræði“ 5813
+    report_t_wrongword: 'Rangt orð',   // 2026-10-09; korpus „rangt orð“ 122
     report_msg:       'Hvað er að?',
     report_msg_ph:    'Stutt athugasemd',
     report_repl_lbl:  'Réttur texti',
