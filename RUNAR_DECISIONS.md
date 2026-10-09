@@ -9118,3 +9118,29 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   a slily se do jedné (Raidho 3:0 místo 5 střídavě).
 - Odvolává se na: 2026-10-09 (11) · 2026-10-07 (pojistka strany povýšené).
 - Affected doc(s): `RUNAR_TREE.md` (§4 strana větvičky) · `RUNAR_TREE_MAP.md` (§8, §9, §12) · `RUNAR_BACKLOG.md` (položka uzavřena) — v témže commitu.
+
+## 2026-10-09 (17) — Stránka soukromí v appce jmenuje OpenAI a USA; DPA s OpenAI se nepodepisuje
+
+- **Rozhodl:** KUKY 2026-10-09: *„8. doplň“* · k DPA: *„7. mám skutečně něco podepisovat? zjisti to. Já si myslím, že jsem udělal, co
+  jsem měl, ale podpis nikdo po mě nechtěl.“* **Provedl:** CODE-tune.
+- **Proč:** od 2026-10-09 (13) čtení píše OpenAI, ale stránka „Who else sees it“ uváděla jen Anthropic bez země a u Supabase tvrdila
+  *„Your data never leaves the European Economic Area“*, přestože čtení jde do USA. Běžný uživatel souhlas nedává, takže stránka je
+  pro něj jediné místo, kde se to dozví.
+- **Co:** `v2/runar-privacy.html`, sekce 4 EN+IS (statická záloha v HTML i texty v JS — nesou TÝŽ text): Supabase *„What we store stays
+  in the EEA“* · **OpenAI** (USA; co se posílá, u životní runy den a měsíc narození; netrénuje; drží nejvýš 30 dní, výjimky zákon
+  a nahlášené zneužití) · Anthropic (USA; jen při výpadku OpenAI; maže do 30 dní) · věta o standardních smluvních doložkách EU ·
+  ElevenLabs (USA; jen když se pustí hlas). Znění = A z `docs/inbox/2026-09-30-navrh-textu-soukromi.md` + OpenAI. Při tom opraveny
+  dvě islandské chyby na téže stránce: *„Engin gögn eru deilt“* → *„Engum gögnum er deilt“* (deila chce 3. pád), *„Lögmætur hagsmunir“*
+  → *„Lögmætir hagsmunir“* (korpus 0 × 66). Datum stránky → říjen 2026.
+- **DPA:** nepodepisuje se. Text DPA (účinné 1. 1. 2026, ověřeno na openai.com 2026-10-09): *„supplements, and is incorporated into, the
+  OpenAI Services Agreement… By clicking 'I agree,' accepting the Order Form, or using the Services, Customer agrees to this
+  Agreement.“* Pro zákazníka z EHP je smluvní stranou OpenAI Ireland Ltd. Tlačítko „Execute Data Processing Agreement“ je jen pro toho,
+  kdo chce podepsanou kopii. 2026-10-09 (13) a BACKLOG vedly podpis jako úkol ownera — to byla chyba, opravena tady.
+- **Ověřeno:** IS korpusem Risamálheild (yfirlestur týž den nedostupný): *„miðlun persónuupplýsinga til“* 77 × *„flutningur
+  persónuupplýsinga“* 16 (miðlun = ustálený výraz) · *„í báðum tilvikum“* 3651 · *„miðlun upplýsinganna“* 109 · *„sömu upplýsingar“* 945 ·
+  *„fær sömu“* 402 · *„geymir þær“* 120 · *„stöðluðum samningsskilmálum“* 31; zbytek ověřen 2026-09-30. Prohlížeč: obě řeči se
+  vykreslí, datum se přepne s jazykem.
+- **Hranice:** právní kontrola před veřejným spuštěním platí dál; islandský termín pro SCC (*samningsskilmálar* × *samningsákvæði*) je na
+  seznamu pro ni; podmínky ElevenLabs nezkoumány — text o nich říká jen, co se posílá a kam. Zásady na agndofa.is (znění B) zatím bez OpenAI.
+- Odvolává se na: 2026-10-09 (13), 2026-09-11 (8).
+- Affected doc(s): `RUNAR_BACKLOG.md` (Podklad k přechodu — stav) — v témže commitu.

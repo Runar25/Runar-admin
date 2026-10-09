@@ -724,8 +724,9 @@ atomický upsert, úklid starších než hodina; stejně tak `use_credit` (atomi
   `docs/inbox/2026-09-30-navrh-textu-soukromi.md` (appka runar-privacy.html + agndofa.is + tcm_body pro přepnutí) — čeká na právní
   kontrolu a „publikovat“ · (3) ano — souhlas testerů vynulovat v témže nasazení, které přepne · (4) HOTOVO v4.82 (DECISIONS (11)).
   **Stav 2026-10-09 — přepnuto (DECISIONS 2026-10-09 (13)):** (3) ✅ souhlas `tcm_body` = znění C, `tester_consent_at` vynulován
-  u 3 účtů · (c) ✅ proxy · (1) DPA OpenAI — **čeká na ownera** (slíbil podepsat před přepnutím) · (2) texty A (appka) a B (agndofa.is)
-  jsou psané jen na Anthropic → **doplnit OpenAI a nasadit, až owner řekne „publikovat“** (dnes `v2/runar-privacy.html` OpenAI nejmenuje).
+  u 3 účtů · (c) ✅ proxy · (1) ✅ DPA OpenAI se **nepodepisuje** — platí používáním služby (ověřeno v textu DPA 2026-10-09, DECISIONS
+  2026-10-09 „Stránka soukromí…“) · (2) ✅ text A (appka, `v2/runar-privacy.html`) doplněn o OpenAI a nasazen 2026-10-09 (KUKY „8. doplň“) ·
+  zbývá **B (zásady na agndofa.is, znění v `RUNAR_PRIVACY.md`)** — doplnit OpenAI stejně jako A; publikuje owner na svém webu.
 - [ ] **OTEVŘENÉ Z 23.–24. 9. — sepsáno 2026-09-24 na ownerovo „nezapomněli jsme na něco, co leží v chatu?"** (CODE-tune; zdroj: `docs/archive/2026-09-23-rozbor-reportu.md` + chat)
   **Čeká na ownerovo rozhodnutí** (otázky z rozboru, dosud bez odpovědi):
   1. ✅ *(owner 2026-09-24: ANO, když mluví skrze obraz nebo o prostředí, které má každý; tvrzení = činnost, kterou člověk nejspíš nemá, a stav v prostředí podaný jako fakt — Isa „the talk has gone flat“ je špatně; DECISIONS 2026-09-24 (15) + (19), rubrika A)* Smí 3. věta čtení říct, co se děje v oblasti tazatele (pochválené Perth/Kenaz to dělají, pravidlo to dnes povoluje jen v poslední větě jako možnost)?

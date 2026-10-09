@@ -161,9 +161,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
     <div class="help-block">
       <div class="help-block-body" id="s4-body">
         <p>We share only what is necessary, and only with these processors:</p>
-        <p><strong>Supabase</strong> (database &amp; authentication) — servers in EU West (Ireland). Your data never leaves the European Economic Area. <a href="https://supabase.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">supabase.com/privacy</a></p>
-        <p><strong>Anthropic</strong> (AI readings) — your question and the rune drawn are sent to generate your reading. Anthropic does not store your data for training. <a href="https://www.anthropic.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">anthropic.com/privacy</a></p>
-        <p><strong>ElevenLabs</strong> (voice) — text of your reading is sent only when voice is active. <a href="https://elevenlabs.io/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">elevenlabs.io/privacy</a></p>
+        <p><strong>Supabase</strong> (database &amp; authentication) — servers in EU West (Ireland). What we store stays in the European Economic Area. <a href="https://supabase.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">supabase.com/privacy</a></p>
+        <p><strong>OpenAI</strong> (AI readings, United States) — to write your reading we send the details you enter (your name if you give one, your choices and your question) and the runes drawn; for your life rune, also your day and month of birth. OpenAI does not use them to train its models and keeps them for no more than 30 days to check for misuse, unless the law requires longer or they are flagged for misuse. <a href="https://openai.com/policies/privacy-policy/" target="_blank" style="color:var(--gold);opacity:0.8;">openai.com/policies/privacy-policy</a></p>
+        <p><strong>Anthropic</strong> (AI readings, United States) — receives the same details only when OpenAI is unavailable. Anthropic does not use them to train its models and deletes them within 30 days, unless the law requires longer or they are flagged for misuse. <a href="https://www.anthropic.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">anthropic.com/privacy</a></p>
+        <p>In both cases, the transfer to the United States rests on the EU standard contractual clauses.</p>
+        <p><strong>ElevenLabs</strong> (voice, United States) — the text of your reading is sent only when you play the voice. <a href="https://elevenlabs.io/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">elevenlabs.io/privacy</a></p>
         <p>No data is sold. No data is shared with advertisers or data brokers. Ever.</p>
       </div>
     </div>
@@ -222,7 +224,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
     <a href="mailto:info@agndofa.is">info@agndofa.is</a>
   </div>
 
-  <p class="updated" id="updated-line">Last updated: May 2026</p>
+  <p class="updated" id="updated-line">Last updated: October 2026</p>
 
 </div><!-- .app -->
 
@@ -263,11 +265,16 @@ const C = {
              <p><strong>Consent</strong> — for optional features such as voice and language preferences.</p>
              <p>We do not use your data for advertising, profiling, or automated decision-making.</p>`,
 
+    // 2026-10-09: OpenAI jako zpracovatel (čtení píše od 2026-10-09 gpt-6-sol, DECISIONS 2026-10-09 (13) bod (b); KUKY 2026-10-09 „8. doplň“). Do té doby tu stál jen
+    // Anthropic bez země a u Supabase „Your data never leaves the EEA“, přestože čtení jde do USA. Znění = A z
+    // docs/inbox/2026-09-30-navrh-textu-soukromi.md + OpenAI. Statická záloha v HTML výš nese TÝŽ text — měnit obojí.
     s4Lbl:  'WHO ELSE SEES IT',
     s4Body: `<p>We share only what is necessary, and only with these processors:</p>
-             <p><strong>Supabase</strong> (database &amp; authentication) — servers in EU West (Ireland). Your data never leaves the European Economic Area. <a href="https://supabase.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">supabase.com/privacy</a></p>
-             <p><strong>Anthropic</strong> (AI readings) — your question and the rune drawn are sent to generate your reading. Anthropic does not store your data for training. <a href="https://www.anthropic.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">anthropic.com/privacy</a></p>
-             <p><strong>ElevenLabs</strong> (voice) — text of your reading is sent only when voice is active. <a href="https://elevenlabs.io/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">elevenlabs.io/privacy</a></p>
+             <p><strong>Supabase</strong> (database &amp; authentication) — servers in EU West (Ireland). What we store stays in the European Economic Area. <a href="https://supabase.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">supabase.com/privacy</a></p>
+             <p><strong>OpenAI</strong> (AI readings, United States) — to write your reading we send the details you enter (your name if you give one, your choices and your question) and the runes drawn; for your life rune, also your day and month of birth. OpenAI does not use them to train its models and keeps them for no more than 30 days to check for misuse, unless the law requires longer or they are flagged for misuse. <a href="https://openai.com/policies/privacy-policy/" target="_blank" style="color:var(--gold);opacity:0.8;">openai.com/policies/privacy-policy</a></p>
+             <p><strong>Anthropic</strong> (AI readings, United States) — receives the same details only when OpenAI is unavailable. Anthropic does not use them to train its models and deletes them within 30 days, unless the law requires longer or they are flagged for misuse. <a href="https://www.anthropic.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">anthropic.com/privacy</a></p>
+             <p>In both cases, the transfer to the United States rests on the EU standard contractual clauses.</p>
+             <p><strong>ElevenLabs</strong> (voice, United States) — the text of your reading is sent only when you play the voice. <a href="https://elevenlabs.io/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">elevenlabs.io/privacy</a></p>
              <p>No data is sold. No data is shared with advertisers or data brokers. Ever.</p>`,
 
     s5Lbl:   'YOUR RIGHTS',
@@ -298,7 +305,7 @@ const C = {
 
     contactLbl:  'QUESTIONS ABOUT YOUR DATA',
     contactBody: 'If something is unclear, or you wish to exercise any of your rights, speak directly to us.',
-    updated:     'Last updated: May 2026',
+    updated:     'Last updated: October 2026',
   },
 
   is: {
@@ -328,16 +335,18 @@ const C = {
     s3Lbl:  'ÁSTÆÐAN FYRIR GEYMSLU',
     s3Body: `<p>Við vinnslu gagna þinna byggist á eftirfarandi lagalegum grundvelli samkvæmt 6. gr. GDPR:</p>
              <p><strong>Samningur</strong> — til að veita þér lestrar, dagbók og reikningseiginleika sem þú hefur óskað eftir.</p>
-             <p><strong>Lögmætur hagsmunir</strong> — til að koma í veg fyrir misnotkun á fríum lestrartíðni og til að halda þjónustunni áreiðanlegri.</p>
+             <p><strong>Lögmætir hagsmunir</strong> — til að koma í veg fyrir misnotkun á fríum lestrartíðni og til að halda þjónustunni áreiðanlegri.</p>
              <p><strong>Samþykki</strong> — fyrir valkvæða eiginleika eins og rödd og tungumálastillingar.</p>
              <p>Við notum ekki gögn þín í auglýsingar, snið eða sjálfvirka ákvarðanatöku.</p>`,
 
     s4Lbl:  'HVERJIR SJÁ ÞAÐ',
     s4Body: `<p>Við deilum aðeins því sem nauðsynlegt er, og aðeins með þessum vinnsluaðilum:</p>
-             <p><strong>Supabase</strong> (gagnagrunnur og auðkenning) — þjónar í Vestur-Evrópu (Írland). Gögn þín fara aldrei út fyrir Evrópska efnahagssvæðið. <a href="https://supabase.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">supabase.com/privacy</a></p>
-             <p><strong>Anthropic</strong> (gervigreind) — spurning þín og tekin rún eru send til að mynda lestur þinn. Anthropic geymir ekki gögn þín til þjálfunar. <a href="https://www.anthropic.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">anthropic.com/privacy</a></p>
-             <p><strong>ElevenLabs</strong> (rödd) — texti lesturs þíns er sendur aðeins þegar rödd er virk. <a href="https://elevenlabs.io/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">elevenlabs.io/privacy</a></p>
-             <p>Engin gögn eru seld. Engin gögn eru deilt með auglýsendum eða gagnasölum. Aldrei.</p>`,
+             <p><strong>Supabase</strong> (gagnagrunnur og auðkenning) — þjónar í Vestur-Evrópu (Írland). Það sem við geymum helst innan Evrópska efnahagssvæðisins. <a href="https://supabase.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">supabase.com/privacy</a></p>
+             <p><strong>OpenAI</strong> (gervigreind, Bandaríkin) — til að semja lesturinn sendum við upplýsingarnar sem þú slærð inn (nafn þitt ef þú gefur það upp, val þitt og spurningu) og rúnirnar sem dregnar eru, og fyrir lífsrúnina einnig fæðingardag og mánuð. OpenAI notar þær ekki til að þjálfa gervigreind sína og geymir þær ekki lengur en í 30 daga til að fylgjast með misnotkun, nema lög krefjist lengri tíma eða þær séu merktar sem misnotkun. <a href="https://openai.com/policies/privacy-policy/" target="_blank" style="color:var(--gold);opacity:0.8;">openai.com/policies/privacy-policy</a></p>
+             <p><strong>Anthropic</strong> (gervigreind, Bandaríkin) — fær sömu upplýsingar, aðeins ef OpenAI svarar ekki. Anthropic notar þær ekki til að þjálfa gervigreind sína og eyðir þeim innan 30 daga, nema lög krefjist lengri tíma eða þær séu merktar sem misnotkun. <a href="https://www.anthropic.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">anthropic.com/privacy</a></p>
+             <p>Í báðum tilvikum byggist miðlun upplýsinganna til Bandaríkjanna á stöðluðum samningsskilmálum ESB.</p>
+             <p><strong>ElevenLabs</strong> (rödd, Bandaríkin) — texti lesturs þíns er aðeins sendur þegar þú spilar röddina. <a href="https://elevenlabs.io/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">elevenlabs.io/privacy</a></p>
+             <p>Engin gögn eru seld. Engum gögnum er deilt með auglýsendum eða gagnasölum. Aldrei.</p>`,
 
     s5Lbl:   'RÉTTINDI ÞÍN',
     s5Intro: 'Samkvæmt GDPR tilheyra þér þessi réttindi. Þau eru ekki forréttindi — þau eru þín samkvæmt lögum.',
@@ -367,7 +376,7 @@ const C = {
 
     contactLbl:  'SPURNINGAR UM GÖGN ÞÍN',
     contactBody: 'Ef eitthvað er óljóst, eða þú vilt nýta réttindi þín, talaðu beint við okkur.',
-    updated:     'Síðast uppfært: maí 2026',
+    updated:     'Síðast uppfært: október 2026',
   },
 };
 
