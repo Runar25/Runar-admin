@@ -25,6 +25,9 @@
 //   (j) STROM BEZ OBLASTI JE VYVAZENY (2026-10-09): cteni bez strany jdou na lehci stranu, takze clovek, ktery oblast nevyplnuje,
 //       ma na obou nakreslenych stranach podobne tazeni (pomer aspon MIN_LR). Drive stranu zakladal svet runy a cteni se lepila na
 //       prvni vetev zony -> modelove 71 : 192.
+//   (m) VETVICKY KOLEM VETVE (2026-10-09, KUKY: "vetvicky by se stridaly kolem vetve na obe strany, protoze stranu vetve uz urcila
+//       oblast"): zadna hlavni vetev s aspon 3 primymi vetvickami nema vsechny na jedne strane (strana = kam vetvicka miri od smeru
+//       rodice v miste uchyceni). Drive strana podle oblasti -> na leve vetvi skoro jen nitro -> KUKYho strom 4 jednostranne vetve.
 //   (k) SEEKING NEHYBE VYSKOU (2026-10-09, KUKY: seeking "by se mohl projevit na kazde rune, u ktere bude"): dve cteni bez zameru,
 //       lisi se jen seekingem (Insight × Clarity), padnou do tehoz pasma. Drive Insight/Reflection stahovaly vysku dolu (vaha 0,2).
 //   (l) KONEC VETVICKY PODLE SEEKINGU: engine (Clarity konec vys, Reflection niz nez bez seekingu) i cela cesta labem (tentyz log
@@ -107,6 +110,16 @@ LOGS.forEach(([nm, log]) => NS.forEach(n => {
   const drawn = r.sb._DA ? r.sb._DA() : null, picked = new Set(r.allPicks.map(p => p.pts));
   if (!drawn) fails.push('lab neda seznam nakreslenych tahu (_DA) — kontrola klikatelnosti nebezi');
   else { const bad = drawn.filter(L => !picked.has(L.pts)); if (bad.length) fails.push(nm + ' po ' + n + ': ' + bad.length + ' nakreslenych tahu nejde kliknout (' + [...new Set(bad.map(L => L.src || '?'))].join(', ') + ')'); }
+  /* (m) vetvicky kolem vetve: prime vetvicky kazde hlavni vetve, strana od smeru rodice (vektorovy soucin) */
+  { const par = {}; r.allPicks.forEach(p => { if (typeof p.k === 'number' && p.meta && !p.meta.twig && !p.meta.root && p.pts && p.pts.length > 2 && !par[p.k]) par[p.k] = { pts: p.pts, name: p.meta.name }; });
+    const cnt = {}, seenT = new Set();
+    r.allPicks.forEach(p => { const m = p.meta; if (!m || !m.twig || m.plevel !== 0 || !p.pts || p.pts.length < 2) return; const pa = par[m.parentKey]; if (!pa) return;
+      const id = m.parentKey + '|' + m.slot + '|' + m.name + '|' + m.born; if (seenT.has(id)) return; seenT.add(id);   /* slot: dve vetvicky z tehoz cteni (rozklad) maji tentyz born */
+      const s0 = p.pts[0], s1 = p.pts[Math.min(4, p.pts.length - 1)]; let bi = 0, bd = 1e18;
+      pa.pts.forEach((q, i) => { const d = (q.x - s0.x) ** 2 + (q.y - s0.y) ** 2; if (d < bd) { bd = d; bi = i; } });
+      const a = pa.pts[Math.max(0, bi - 1)], b = pa.pts[Math.min(pa.pts.length - 1, bi + 1)], cr = (b.x - a.x) * (s1.y - s0.y) - (b.y - a.y) * (s1.x - s0.x);
+      const o = cnt[m.parentKey] = cnt[m.parentKey] || { name: pa.name, A: 0, B: 0 }; if (cr >= 0) o.A++; else o.B++; });
+    Object.values(cnt).forEach(o => { if (o.A + o.B >= 3 && (o.A === 0 || o.B === 0)) fails.push(nm + ' po ' + n + ': vetev ' + o.name + ' ma vsech ' + (o.A + o.B) + ' primych vetvicek na jedne strane'); }); }
   /* (e) inspekce proti logu */
   const tot = {}, nameOf = {}; B.RUNES.forEach(x => { nameOf[x.k] = x.name; });
   sub.forEach(rd => (rd.runes || []).forEach(x => { tot[nameOf[x.rune]] = (tot[nameOf[x.rune]] || 0) + 1; }));

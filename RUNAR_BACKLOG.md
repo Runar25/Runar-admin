@@ -421,7 +421,7 @@
 - [ ] ⭐ **Strom (lab): shluk větví budoucnosti a světa nahoře vpravo** (CODE-tree, 2026-10-05, po DECISIONS (12)). Každé čtení je teď na svém místě a strom má tvar diagonály z kánonu (nitro + minulost vlevo dole, svět + budoucnost vpravo nahoře) — a právě nahoře vpravo se sbíhají strmá ramena budoucnosti a jejich povýšené větve: souběhy na KUKYho stromě 13 (dřív 2), na 24 modelových ~93 (dřív 62). Kandidáti: rozestup povýšených podél matky a jejich odbočka od sousedních větví (ne jen od matky), úhly povýšených na straně jako u ramen (pořadí), délka povýšených. Měřit `ovtypes`/`tree_overlap.js` + `tree_render.js`; tvar ramen z kmene neměnit.
 - [x] **Strom (lab): seeking na koncích větviček** — v labu od 2026-10-09 po obrázku (DECISIONS 2026-10-09 (12)); patch
   `docs/archive/tree/2026-10-09_nanecisto_seeking.patch` je historie.
-- [ ] **Strom (lab): větvičky jen na jedné straně větve + povýšená svisle** (CODE-tree, 2026-10-09, KUKY: *„proč se tady u Nauthiz objevily
+- [x] **Strom (lab): větvičky jen na jedné straně větve + povýšená svisle** — v labu od 2026-10-09 (KUKY „9. zapnout“, DECISIONS 2026-10-09 (16)). (CODE-tree, 2026-10-09, KUKY: *„proč se tady u Nauthiz objevily
   větvičky jen a pouze na levé straně“*). Strana větvičky se bere z oblasti (`sideOf` → `AREA_LAT`: nitro doleva, svět doprava na plátně);
   od 2026-10-09 (11) nese levá větev skoro jen nitro, takže všechny její větvičky míří doleva (Nauthiz z Othily: 15 čtení, 11 nitro, 3 bez
   oblasti, 1 Love; všech 5 přímých větviček vlevo). Oblast tak rozhoduje dvakrát. Navíc ta Nauthiz roste −1° (pojistka strany z 2026-10-07
@@ -429,7 +429,7 @@
   zastavení u svislice odbočí na druhou stranu matky. Nanečisto před zapnutím.
   **Nanečisto hotové 2026-10-09** (KUKY: *„12. ano udělej to nanečisto … přesně takhle to je“*; *„tady Dagaz taky … projdi to“*), patch
   `docs/archive/tree/2026-10-09_nanecisto_vetvicky.patch`: jeho strom dnes 4 větve s přímými větvičkami jen na jedné straně (Algiz 5:0,
-  Nauthiz* 0:5, Dagaz* 5:0, Perth* 0:5; * = povýšená) a 1 svislá povýšená (Nauthiz) → nanečisto 0 a 0. Čeká na ownerův pohled.
+  Nauthiz* 0:5, Dagaz* 5:0, Perth* 0:5; * = povýšená) a 1 svislá povýšená (Nauthiz) → nanečisto 0 a 0.
 - [ ] **Strom (lab): povýšená ze střední zóny visí v koruně kvůli matce** (CODE-tree, nalezeno 2026-10-09). Nauthiz z Othily má místo
   verdandi (12 z 15 čtení „teď“), ale vyrůstá z Othily (skuld, 85 % kmene) — jediného zemního ramene vlevo (matka = rameno téhož živlu
   na straně místa, nejbližší pásmo). Owner ji pak čte jako budoucnost (*„když je tak vysoko na stromě … je to koukání do budoucnosti?“*).

@@ -9102,3 +9102,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   Pořadí částí a postup → návrh v konverzaci 2026-10-09; nálezy a seznam pro ownera → `RUNAR_BACKLOG.md` „Kontrola architektury“.
 - **Hranice:** edge funkce Code nenasazuje — změna kódu `claude-proxy` je v repu, nasazení jde do seznamu pro ownera.
 - Affected doc(s): `CLAUDE.md` (§16) — v témže commitu.
+
+## 2026-10-09 (16) — Strom (lab): větvičky se střídají kolem větve; povýšená neroste svisle
+
+- **Rozhodl:** KUKY 2026-10-09: *„větvičky by se střídaly kolem větve na obě strany, protože stranu větve už určila oblast. přesně takhle to
+  je“* (nanečisto) a po obrázku *„9. zapnout“*. **Provedl:** CODE-tree, jen LAB.
+- **Proč:** strana větvičky se brala z oblasti (nitro doleva, svět doprava) a od 2026-10-09 (11) nese levá větev skoro jen nitro → všechny
+  její větvičky na jednu stranu (jeho strom: Algiz 5:0, Nauthiz 0:5, Dagaz 5:0, Perth 0:5). Oblast rozhodovala dvakrát. Povýšenou Nauthiz
+  zastavila pojistka strany u svislice (−1°) → hřeben.
+- **Teď:** strana větvičky střídavě kolem větve (slot + runa rodiče); odbočka povýšené (`gTurnQ`, jednou při povýšení) se rovnou otočí, kdyby
+  větev poslala přes svislici na druhou stranu místa — zastavení u svislice už jen pojistka. Jeho strom: jednostranných větví 4 → 0,
+  svislých povýšených 1 → 0.
+- **Hlídá smoke ㉳ (m):** žádná hlavní větev s aspoň 3 přímými větvičkami jen na jedné straně (strana od směru rodiče v místě uchycení).
+  Mutační test: stará verze 12 porušení. Vlastní chyba kontroly opravena hned: dvě větvičky z téhož čtení (rozklad) měly tentýž klíč
+  a slily se do jedné (Raidho 3:0 místo 5 střídavě).
+- Odvolává se na: 2026-10-09 (11) · 2026-10-07 (pojistka strany povýšené).
+- Affected doc(s): `RUNAR_TREE.md` (§4 strana větvičky) · `RUNAR_TREE_MAP.md` (§8, §9, §12) · `RUNAR_BACKLOG.md` (položka uzavřena) — v témže commitu.
