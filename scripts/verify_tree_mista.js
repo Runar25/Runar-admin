@@ -19,6 +19,12 @@
 //   (g) KAZDE CTENI NA SVEM MISTE (KUKY 2026-10-05: "kazde cteni, kazde!!! mam ji presne tam, kam patri"): kazde tazeni visi na
 //       vetvi sveho elementu a sveho pasma zony, a ma-li cteni stranu (oblast nitro/svet), i na sve strane; vetev se stranou je
 //       NAKRESLENA na te strane (uhel). Data z labu (window._PLACE), strana kresby z picku. Drive ~80 cteni na opacne strane.
+//   (i) OBLAST NEHYBE VYSKOU (2026-10-09, KUKY: "vyrovnany clovek ma vyrovnany strom"): dve cteni, ktera se lisi JEN oblasti
+//       (nitro × svet, tyz zamer), padnou do tehoz pasma. Do 2026-10-09 vstupovala oblast do vysky (vaha 0,3) a cteni z nitra se
+//       do koruny nedostalo nikdy (KUKYho strom: vlevo v korune 0 z 98 tazeni).
+//   (j) STROM BEZ OBLASTI JE VYVAZENY (2026-10-09): cteni bez strany jdou na lehci stranu, takze clovek, ktery oblast nevyplnuje,
+//       ma na obou nakreslenych stranach podobne tazeni (pomer aspon MIN_LR). Drive stranu zakladal svet runy a cteni se lepila na
+//       prvni vetev zony -> modelove 71 : 192.
 //   (h) hlavnich vetvi nejvys MAX_BR = 25 (KUKY 2026-10-07: "vice jak 25 run neni dobre … vracime to k 25"). Kdyz je strom na
 //       stropu, nove misto vlastni vetev nedostane a cteni visi na nejblizsi vetvi SVEHO elementu — (g) to pak pocita zvlast,
 //       a takovych tazeni smi byt nejvys CAP_OFF (5 %): s prevzetim vetve zalozene stredem je to na modelovych stromech do 3 %,
@@ -31,7 +37,7 @@
 //   node scripts/verify_tree_mista.js            (TREE_LAB_HTML=<cesta> = jina kopie labu, napr. pro mutacni test)
 const path = require('path'), cp = require('child_process'), fs = require('fs');
 const ROOT = path.resolve(__dirname, '..');
-const MAX_BR = 25, CAP_OFF = 0.05;   // (h): 25 run = nejvys 25 hlavnich vetvi; pri stropu nejvys 5 % tazeni na vetvi vedle sveho mista
+const MAX_BR = 25, CAP_OFF = 0.05, MIN_LR = 0.75;   // MIN_LR: (j) mensi : vetsi strana u stromu bez oblasti   // (h): 25 run = nejvys 25 hlavnich vetvi; pri stropu nejvys 5 % tazeni na vetvi vedle sveho mista
 const MIN_EXIT = 29, MIN_EXIT_LR = 14, MIN_SIB = 4, MAX_STRANDS = 15, FLOOR = 0.215;   // FLOOR: vychozi exitFloor 0,22 minus zaokrouhleni; MIN_EXIT: KUKY 2026-10-03 "30px min." (drive 10 — mene nez sirka kmene); MIN_EXIT_LR: levo-pravo = polovina (obrazek 4)
 const sideOf = m => (m.idx === 0) ? 0 : (Math.cos(m.ang) >= 0 ? 1 : -1);   // strana = kam rameno skutecne miri (nakresleny uhel), vudci 0
 let html = process.env.TREE_LAB_HTML || null;
@@ -110,5 +116,21 @@ LOGS.forEach(([nm, log]) => NS.forEach(n => {
   if (sn == null) fails.push(nm + ' po ' + n + ': pocet pramenu v kmeni nejde precist');
   else if (sn > MAX_STRANDS) fails.push(nm + ' po ' + n + ': ' + sn + ' pramenu v kmeni (max ' + MAX_STRANDS + ' — povysene vetve nemaji vlastni pramen)');
 }));
+/* (i) oblast nehybe vyskou: Norny + dve cteni Fehu se zamerem "rozhodnuti", jedno z nitra, druhe ze sveta */
+let iMsg = '', jMsg = '';
+{ const twin = LOGS[0][1].slice(0, 1).concat([{ spread: 'single', runes: [{ rune: 'fehu', el: 'fire' }], area: 'inner', intention: 'decision', seeking: null },
+                                              { spread: 'single', runes: [{ rune: 'fehu', el: 'fire' }], area: 'purpose', intention: 'decision', seeking: null }]);
+  const P1 = labRun(twin, html, null).sb._PLACE, bA = ((P1.rd[1] || [])[0] || '').split('|')[1], bB = ((P1.rd[2] || [])[0] || '').split('|')[1];
+  if (bA == null || bB == null) fails.push('(i) nejde precist pasmo dvou cteni');
+  else if (bA !== bB) fails.push('(i) oblast hybe vyskou: nitro -> pasmo ' + bA + ', svet -> pasmo ' + bB + ' (tyz zamer)');
+  else iMsg = 'oblast nehybe vyskou'; }
+/* (j) strom bez oblasti: 150 cteni z logu "vsude" s oblasti vymazanou; tazeni podle nakreslene strany vetve (vudci se nepocita) */
+{ const noArea = LOGS[0][1].slice(0, 150).map(rd => Object.assign({}, rd, { area: null }));
+  const r2 = labRun(noArea, html, null), P2 = r2.sb._PLACE, vote = {};
+  r2.allPicks.forEach(p => { if (typeof p.k !== 'number' || !p.meta || p.meta.twig || p.meta.root || p.meta.idx === 0) return; const v = vote[p.k] = vote[p.k] || [0, 0]; v[Math.cos(p.meta.ang) >= 0 ? 1 : 0]++; });
+  let nL = 0, nR = 0; P2.own.forEach(row => (row || []).forEach(o => { const v = (o == null) ? null : vote[o]; if (!v) return; if (v[1] >= v[0]) nR++; else nL++; }));
+  const ratio = Math.min(nL, nR) / Math.max(1, nL, nR);
+  if (ratio < MIN_LR) fails.push('(j) strom bez oblasti nevyvazeny: vlevo ' + nL + ', vpravo ' + nR + ' tazeni (pomer ' + ratio.toFixed(2) + ', min ' + MIN_LR + ')');
+  else jMsg = 'bez oblasti vlevo ' + nL + ' : vpravo ' + nR; }
 if (fails.length) { fails.slice(0, 12).forEach(f => console.log('   ' + f)); console.log('strom: ' + fails.length + ' poruseni (vetve ze stejneho mista / pod podlahou / cteni mimo sve misto / vetvi nad strop / neklikatelne / prameny navic / inspekce neodpovida logu)'); process.exit(1); }
-console.log('strom (lab): ' + runs + ' stromu — vystupy ramen na stejne strane aspon ' + worstE.toFixed(0) + ' px, levo-pravo aspon ' + worstLR.toFixed(0) + ' px, zadne pod podlahou, kazde cteni na svem miste (na stropu nejvys ' + (worstCap * 100).toFixed(1) + ' % o misto vedle), nejvys ' + maxBr + ' hlavnich vetvi, vetve na rodici aspon ' + worstS.toFixed(1) + ' px, vse klikatelne, inspekce = log, nejvys ' + maxStr + ' pramenu v kmeni');
+console.log('strom (lab): ' + runs + ' stromu — vystupy ramen na stejne strane aspon ' + worstE.toFixed(0) + ' px, levo-pravo aspon ' + worstLR.toFixed(0) + ' px, zadne pod podlahou, kazde cteni na svem miste (na stropu nejvys ' + (worstCap * 100).toFixed(1) + ' % o misto vedle), nejvys ' + maxBr + ' hlavnich vetvi, vetve na rodici aspon ' + worstS.toFixed(1) + ' px, vse klikatelne, inspekce = log, nejvys ' + maxStr + ' pramenu v kmeni, ' + iMsg + ', ' + jMsg);

@@ -280,7 +280,8 @@ HTML = r"""<!DOCTYPE html>
   var ELEM_Z={ fire:0.15, air:0.10, water:-0.05, earth:-0.15, shadow:-0.25 };
   function readZone(rd, pos, rk){ if(!rd) return 0; var s2=0, w2=0;
     if(rd.intention!=null && INT_Z[rd.intention]!=null){ s2+=0.5*INT_Z[rd.intention]; w2+=0.5; }
-    if(rd.area!=null && AREA_Z[rd.area]!=null){ s2+=0.3*AREA_Z[rd.area]; w2+=0.3; }
+    /* 2026-10-09 (zapnuto po obrazku, KUKY "zapni to v labu"; DECISIONS 2026-10-09 (11)): oblast do vysky nevstupuje — urcuje jen stranu (KUKY: "vyrovnany clovek ma vyrovnany strom").
+       Drive vaha 0,3: nitro dolu, svet nahoru -> vyrovnany clovek dostal sikmy strom (KUKYho strom: vlevo v korune 0 z 98 tazeni). */
     if(rd.seeking!=null && SEEK_Z[rd.seeking]!=null){ s2+=0.2*SEEK_Z[rd.seeking]; w2+=0.2; }
     var ctx=w2 ? s2/w2 : null, pt=POS_Z[rd.spread], pz=(pt && pos!=null && pt[pos]!=null) ? pt[pos] : null;
     if(pz!=null) return (ctx!=null) ? 0.6*pz+0.4*ctx : pz;
@@ -1354,10 +1355,26 @@ HTML = r"""<!DOCTYPE html>
     var pickMid=function(pk){ var best=null, bn=-1;
       [-1,1].forEach(function(s2){ var q2=sideIx[pk+'|'+s2]; if(q2!=null && ownN[q2]>bn){ bn=ownN[q2]; best={ q:q2 }; } });
       [-1,1,0].forEach(function(s2){ var g2=gplace[pk+'|'+s2]; if(g2!=null && gradTree[g2].n>bn){ bn=gradTree[g2].n; best={ g:g2 }; } }); return best; };
+    /* 2026-10-09 (zapnuto po obrazku, KUKY "zapni to v labu"; DECISIONS 2026-10-09 (11)): LEHCI STRANA = ta, na jejichz vetvich zatim visi mene tazeni (strana z dat, prevzeti, jinak kresba). */
+    var lightSide=function(){ var mL=0, mR=0;
+      for(var q5=0;q5<slots.length;q5++){ if(slots[q5].nornName==='skuld') continue; var s5=slots[q5].side||slots[q5].adopt||drawSideOf(q5); if(s5<0) mL+=ownN[q5]; else mR+=ownN[q5]; }
+      for(var g5=0;g5<grads.length;g5++){ var s6=grads[g5].side||grads[g5].adopt||drawSideOf(grads[g5].p); if(s6<0) mL+=gradTree[g5].n; else mR+=gradTree[g5].n; }
+      return (mL<=mR) ? -1 : 1; };
     for(var i=(fnd?1:0); i<log.length; i++){ var rs=log[i].runes||[]; drawSec[i]=[]; drawOwn[i]=[]; capAdd(log[i]); var capI=capSecAt(i), sI=sideOfRd(log[i]);
       for(var j=0;j<rs.length;j++){ var el=rs[j].el, rk=rs[j].rune, z=readZone(log[i], j, rk), b=bandOf(el, z), pk=el+'|'+b, qs=secIx[pk], sd=sI, tq=null, tg=null, fresh=false;
         (placeRd[i]=placeRd[i]||[])[j]=pk+'|'+sd;
-        if(qs!=null && (sd===0 || (slots[qs].side||slots[qs].adopt)===sd)) tq=qs;                                   /* rameno elementu×pasma (stred se pridava) */
+        /* 2026-10-09 (zapnuto po obrazku, KUKY "zapni to v labu"; DECISIONS 2026-10-09 (11)): cteni bez strany (bez oblasti, Love, Crossroads) jde na LEHCI stranu a tam na misto sveho zivlu
+           a zony (pridat se / prevzit / zalozit jako cteni se stranou). Misto vudci vetve zustava stred. Na stropu 25 nezaklada:
+           prida se k existujici vetvi sveho zivlu a zony, pokud mozno na lehci strane. Drive: pridalo se k vetvi, ktera v te zone
+           uz byla, a zakladalo stranu podle sveta runy -> strom lidi bez oblasti krivy (vpravo 156–192 tazeni, vlevo 65–71). */
+        if(sd===0 && !(qs!=null && slots[qs].nornName==='skuld')){ var ls=lightSide();
+          if(slots.length+grads.length<MAX_BR) sd=ls;
+          else { var hit=null;
+            if(qs!=null && (slots[qs].side||slots[qs].adopt||drawSideOf(qs))===ls) hit={ q:qs };
+            if(!hit && sideIx[pk+'|'+ls]!=null) hit={ q:sideIx[pk+'|'+ls] };
+            if(!hit && gplace[pk+'|'+ls]!=null) hit={ g:gplace[pk+'|'+ls] };
+            if(hit){ if(hit.q!=null) tq=hit.q; else tg=hit.g; } } }
+        if(tq!=null || tg!=null){} else if(qs!=null && (sd===0 || (slots[qs].side||slots[qs].adopt)===sd)) tq=qs;                                   /* rameno elementu×pasma (stred se pridava) */
         else if(sd!==0 && sideIx[pk+'|'+sd]!=null) tq=sideIx[pk+'|'+sd];                         /* vlastni vystup tohoto mista */
         else if(gplace[pk+'|'+sd]!=null) tg=gplace[pk+'|'+sd];                                   /* povysena vetev tohoto mista */
         else if(sd===0 && qs==null){ var pm=pickMid(pk); if(pm){ if(pm.q!=null) tq=pm.q; else tg=pm.g; } }   /* stred: k vetvi tehoz pasma */

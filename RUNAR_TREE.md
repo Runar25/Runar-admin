@@ -48,7 +48,7 @@ Dvě **spojité, prolínající se** osy. Box (runa/oblast) do zóny jen *míř�
 | vstup čtení | DOLE — urð (minulost, co tě utvořilo) | STŘED — verðandi (teď) | NAHOŘE — skuld (kam míříš) | váha | postaveno (2026-10-01) |
 |---|---|---|---|---|---|
 | záměr (intention) | Understanding the past | Right now | Decision ahead | 0,5 | **lab (KROK 4)**: všechna čtení; aplikace zatím jen starý model |
-| oblast (area) | Healing · Family · Inner Growth | Love · Crossroads | Purpose · Career · The Unseen (ve stromě klíč `spirituality`) | 0,3 | **lab (KROK 4)** — výška i strana |
+| ~~oblast (area)~~ | ~~Healing · Family · Inner Growth~~ | ~~Love · Crossroads~~ | ~~Purpose · Career · The Unseen~~ | — | **do výšky nevstupuje od 2026-10-09** (lab) — oblast určuje jen stranu (osa B níž); dřív 0,3 → šikmý strom (DECISIONS 2026-10-09 (11)) |
 | seeking | Insight into Challenge · Reflection | Clarity · Confirmation | — (General Guidance neutrální) | 0,2 | **lab (KROK 4)** — výběr v labu; aplikace ho stromu zatím **nepředává** (CODE-tune) |
 | bez kontextu: svět runy | Hel | Midgard | Asgard | záloha (mírně ±0,6) | **lab (KROK 4)** |
 | pozice v rozkladu | Norny 1. · Kříž dole / za · Podkova minulost / vnitřní stav · Yggdrasil 6–9 | Norny 2. · Kříž střed · Podkova přítomnost / překážky · Yggdrasil 4–5 | Norny 3. · Kříž nahoře / před · Podkova skryté / vnější síly / výsledek · Yggdrasil 1–3 | pozice 0,6 + kontext 0,4 | **lab (KROK 4)**; `norns_axis` v configu má jen Yggdrasil (tabulky pozic jsou v labu `POS_Z`) |
@@ -60,15 +60,16 @@ Dvě **spojité, prolínající se** osy. Box (runa/oblast) do zóny jen *míř�
 **Osa B — DOVNITŘ / VEN (strana):**
 `vlevo = nitro (innangard) ↔ střed = liminál ↔ vpravo = svět (útangard)`
 Řídí **area of life.** (innangarðr = ohrazený domov / bezpečí; útangarðr = divočina za plotem = vnější svět — severská hranice „uvnitř / venku".)
-⭐ **Od 2026-10-05 (lab) je strana součástí MÍSTA čtení** (element × pásmo × strana) a **každé čtení visí na svém místě** — KUKY: *„strom je zrcadlem čtení člověka … runa nemá svoje pevné místo, to má element skrze zóny … každé čtení, každé!!! mám ji přesně tam, kam patří.“* Love, Crossroads a čtení bez oblasti stranu nezakládají (přidají se k větvi elementu v tom pásmu). Mechanika → `RUNAR_TREE_MAP.md` §3, rozhodnutí → `RUNAR_DECISIONS.md` 2026-10-05 (12).
+⭐ **Od 2026-10-05 (lab) je strana součástí MÍSTA čtení** (element × pásmo × strana) a **každé čtení visí na svém místě** — KUKY: *„strom je zrcadlem čtení člověka … runa nemá svoje pevné místo, to má element skrze zóny … každé čtení, každé!!! mám ji přesně tam, kam patří.“* Mechanika → `RUNAR_TREE_MAP.md` §3, rozhodnutí → `RUNAR_DECISIONS.md` 2026-10-05 (12).
+⭐ **Od 2026-10-09 (lab): každý vstup má jednu práci, co chybí, doplní strom sám** — KUKY: *„vyrovnaný člověk má vyrovnaný strom … kdo se víc ptá, dostane víc odpovědí … každá možnost musí být možná.“* Oblast určuje **jen stranu** (do výšky nevstupuje). Love, Crossroads a čtení bez oblasti vlastní stranu nemají → jdou na **lehčí stranu** (kde zatím visí méně čtení) a tam se přidají k větvi svého živlu v té zóně. Rozhodnutí → `RUNAR_DECISIONS.md` 2026-10-09 (10), (11).
 
-**Pole oblastí (padají samy → diagonála příběhu):**
+**Pole oblastí (strana):**
 ```
-koruna + ven    →   Purpose · Career · Spirituality   (kam míříš)
-   střed        →   Love · Crossroads                 (kde stojíš)
-kořeny + nitro  →   Healing · Family · Inner Growth    (odkud jdeš)
+vlevo · nitro      →   Healing · Family · Inner Growth    (odkud jdeš)
+bez strany         →   Love · Crossroads · bez oblasti     (kde stojíš → lehčí strana)
+vpravo · svět      →   Purpose · Career · Spirituality     (kam míříš)
 ```
-Rohy (budoucnost+nitro, minulost+svět) = volné pro vzácnější kombinace.
+Do 2026-10-09 tu stála **„diagonála příběhu“** (nitro ke kořenům, svět ke koruně, oblast i ve výšce s váhou 0,3; rohy „pro vzácnější kombinace“). Zrušena, protože roh vlevo nahoře nebyl vzácný, ale **nedosažitelný** (jednotlivé čtení z nitra nejvýš 0,25, koruna od 0,33) a vyrovnaný člověk dostal šikmý strom — KUKYho strom se všemi 8 oblastmi skoro stejně často měl vlevo v koruně 0 z 98 tažení.
 
 **Element = kostra, ne Norns zóna:** seskupuje větve (kořeny→kmen→koruna), dává **barvu** a rodinu + spoluurčuje úhel/šířku odchodu. **NEurčuje výšku** — tu řídí intention (osa A). **5 barev-elementů: Fire · Water · Air · Earth · Shadow** — Shadow = studené/skryté runy (Isa/Hagalaz/Perth/Eihwaz/Blank; váže se na cold-steering ve čtení). **Life Rune NENÍ barva-element — je to KMEN = ty.**
 **Runa = tvar/silueta** (která runa kterou větev drží → §5). **Ætt = charakter růstu** — z tématu ættu: Freya (svět/tělo/radost) → plynulé · Heimdall (osud/skryté/cyklus) → gnarled/uzlovité · Týr (řád/dokončení) → řízené. Ætt NEurčuje výšku.

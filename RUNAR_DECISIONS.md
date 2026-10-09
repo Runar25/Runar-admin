@@ -9003,3 +9003,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - Mění kánon „diagonála příběhu“ (`RUNAR_TREE.md` §3) — přepíše se až se zapnutím. Odvolává se na: 2026-10-05 (12) · 2026-07-09
   („ke kmeni / od něj“ = vyváženost).
 - Affected doc(s): `RUNAR_BACKLOG.md` (Strom (lab): čeká na ownera, bod 1 a 4) — v témže commitu.
+
+## 2026-10-09 (11) — Strom (lab): ZAPNUTO — oblast jen strana, čtení bez strany na lehčí stranu; posílení větviček zamítnuto
+
+- **Rozhodl:** KUKY 2026-10-09 po obrázcích nanečisto: *„8. ano zapni to v labu, strom vypadá mnohem lépe než teď. je viditelně vyšší,
+  takže se do něj všechno lépe vejde a vizuálně taky vypadá jako strom.“* K větvičkám: *„10. ne. necháme jak je. strom je sice méně
+  přehledný, ale bez malých větviček to zase nevypadá jako strom.“* **Provedl:** CODE-tree, jen LAB.
+- **Co:** patch z 2026-10-09 (10) použit beze změny (`docs/archive/tree/2026-10-09_nanecisto_strany.patch`): `readZone` bez oblasti,
+  `lightSide` pro čtení bez strany (místo vůdčí větve zůstává střed; na stropu 25 se přidá k existující větvi živlu a zóny). Čísla a cena
+  (na stropu víc čtení o zónu vedle: jeho strom 17 z 342) → 2026-10-09 (10).
+- **Hlídá smoke ㉳:** (i) dvě čtení lišící se jen oblastí (nitro × svět, týž záměr) padnou do téhož pásma; (j) strom z logu bez oblastí
+  má na obou nakreslených stranách aspoň 0,75 : 1 tažení (dnes 125 : 124). Mutační test: oblast zpět ve výšce → (i) „nitro → pásmo 0,
+  svět → pásmo 1“; bez lehčí strany → (j) 171 : 78.
+- **Kánon:** „diagonála příběhu“ v `RUNAR_TREE.md` §3 nahrazena „oblast = strana“ (s důvodem, proč odešla).
+- **Seeking:** zatím beze změny (ve výšce 0,2, jen dolů); owner chce jeho projev na větvičkách → nanečisto, `RUNAR_BACKLOG.md`.
+- Odvolává se na: 2026-10-09 (10) · 2026-10-05 (12).
+- Affected doc(s): `RUNAR_TREE.md` (§3 osa B, tabulka výšky) · `RUNAR_TREE_MAP.md` (§1, §3) · `RUNAR_BACKLOG.md` (položka uzavřena, nová
+  „seeking na větvičkách“) — v témže commitu.
