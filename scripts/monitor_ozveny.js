@@ -142,7 +142,9 @@ const POKYNY = [
   ['„not a promise / verdict / sign“', /\bnot a (promise|verdict|prediction|sign|warning)\b/i, ['promise']],
   // 2026-10-09 (KUKY: „‚…recognize it, or not.‘ odstraníme ‚or not‘… ostatní jsou cajk“): ocas obojím směrem. Vzácný (produkce 1/148,
   // lab 0/300) — hlídá se tady; když se začne vracet, teprve pak pokus (RUNAR_BACKLOG.md, audit 2026-10-07 bod 6).
-  ['„…, or not“', /\bor not\b/i, ['or not']],   // klíč celý: samo „not“ našlo každé „Do not…“ v promptu
+  // Jen ocas věty („…recognize it, or not.“): /\bor not\b/ chytal i obsah („whether you look or not“, „or not at all“) — ze 1204
+  // uložených Asků 18 shod, ocas 1 (CODE-read 2026-10-09, ověřeno). Klíč celý: samo „not“ by našlo každé „Do not…“ v promptu.
+  ['„…, or not“', /,\s*or not[.?!]/i, ['or not']],
 ];
 function opakovane(texty, min) {   // čtyřslovné fráze z malých písmen ve ≥ min % textů
   const pocty = {};
