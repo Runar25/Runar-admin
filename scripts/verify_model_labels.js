@@ -5,9 +5,9 @@
 // admina dál hlásil „GPT-6 sol“. Jméno modelu žije na serveru (konstanta v edge funkci), štítek v překladech — dvě místa, která
 // spolu nikdo nehlídal. Pravidlo, které musí hlídat člověk, spadne na ownera → kontrola (CLAUDE.md, mechanika lanes).
 //
-// CO SE TU TVRDÍ: štítek přepínače čtení přes sol (UI_TEXT.*.sol_toggle, EN i IS) nese jméno modelu SOL_MODEL z claude-proxy
-// a tlačítko rozboru (UI_TEXT.*.gpt_review_btn) jméno MODEL z gpt-review. Jméno pro člověka = id bez „gpt-“:
-// gpt-6-sol → „GPT-6 sol“, gpt-6.1-sol → „GPT-6.1 sol“, gpt-6-luna → „GPT-6 luna“.
+// CO SE TU TVRDÍ: štítek přepínače čtení přes sol (UI_TEXT.*.sol_toggle, EN i IS) nese jméno modelu SOL_MODEL z claude-proxy.
+// Jméno pro člověka = id bez „gpt-“: gpt-6-sol → „GPT-6 sol“, gpt-6.1-sol → „GPT-6.1 sol“.
+// 2026-10-09: druhá půlka (tlačítko rozboru × MODEL z gpt-review) pryč — rozbor zrušen (KUKY „Lunu už nepoužívám… zrušit úplně“).
 // NETVRDÍ se, že nasazená proxy = repo (to se ověřuje stažením při deployi).
 //
 //   node scripts/verify_model_labels.js
@@ -17,11 +17,8 @@ let fail = 0;
 const rekni = (ok, popis) => { if (ok) console.log('  ✓ ' + popis); else { fail++; console.log('  ✗ ' + popis); } };
 
 const proxy = fs.readFileSync(ROOT + 'supabase/functions/claude-proxy/index.ts', 'utf8');
-const review = fs.readFileSync(ROOT + 'supabase/functions/gpt-review/index.ts', 'utf8');
 const sol = (proxy.match(/^const SOL_MODEL = "([^"]+)"/m) || [])[1];
-const luna = (review.match(/^const MODEL = "([^"]+)"/m) || [])[1];
 rekni(!!sol, 'claude-proxy: SOL_MODEL nalezen (' + sol + ')');
-rekni(!!luna, 'gpt-review: MODEL nalezen (' + luna + ')');
 
 const S = { console: { log() {}, warn() {}, error() {} } }; S.window = S; S.globalThis = S;
 S.document = { getElementById: () => null, querySelector: () => null, querySelectorAll: () => [] };
@@ -32,10 +29,9 @@ const UI = vm.runInContext('UI_TEXT', S);
 const jmeno = (id) => String(id || '').replace(/^gpt-(\d+(?:\.\d+)?)-([a-z]+)$/, 'GPT-$1 $2');
 
 for (const L of ['en', 'is']) {
-  const st = (UI[L] || {}).sol_toggle || '', gr = (UI[L] || {}).gpt_review_btn || '';
+  const st = (UI[L] || {}).sol_toggle || '';
   rekni(sol && st.indexOf(jmeno(sol)) !== -1, L + ' sol_toggle „' + st + '“ nese „' + jmeno(sol) + '“');
-  rekni(luna && gr.indexOf(jmeno(luna)) !== -1, L + ' gpt_review_btn „' + gr + '“ nese „' + jmeno(luna) + '“');
 }
 
 if (fail) { console.log('\nFAIL — štítek modelu v UI neodpovídá modelu v edge funkci (' + fail + '×). Změníš-li model, změň i štítek v runar-translations.js.'); process.exit(1); }
-console.log('\nOK    štítek modelu: přepínač sol = ' + jmeno(sol) + ', rozbor = ' + jmeno(luna) + ' — EN i IS sedí s edge funkcemi');
+console.log('\nOK    štítek modelu: přepínač sol = ' + jmeno(sol) + ' — EN i IS sedí s claude-proxy');

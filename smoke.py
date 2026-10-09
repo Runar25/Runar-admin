@@ -653,7 +653,7 @@ prvni = radky[-1] if radky else 'kontrola cisel probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
 # Seznam adminů je natvrdo v configu klienta i v každé admin edge funkci (ty config načíst nemůžou).
-# 2026-09-23 přibyla sedmá kopie (gpt-review) — shodu dřív nehlídalo nic.
+# 2026-09-23 přibyla sedmá kopie (gpt-review, zrušen 2026-10-09) — shodu dřív nehlídalo nic.
 print('\n' + chr(0x326A) + ' SEZNAM ADMINŮ VŠUDE STEJNÝ (verify_admin_emails.js)')
 r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_admin_emails.js')],
                    capture_output=True, text=True, encoding='utf-8')

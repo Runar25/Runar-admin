@@ -1,9 +1,12 @@
 ---
 name: gpt-rozbor-neni-zavazny
-description: Rozbor čtení od GPT (luna/sol) je jen podnět, ne nález — nic podle něj neměnit bez ověření a ownerova souhlasu; obrazy čte špatně
+description: Rozbor čtení od GPT (luna/sol) byl jen podnět, ne nález — tlačítko zrušeno 2026-10-09; princip platí pro každého GPT soudce
 metadata:
   type: feedback
 ---
+
+⚠️ **2026-10-09: tlačítko rozboru i edge fn `gpt-review` ZRUŠENY** (KUKY *„Lunu už nepoužívám… zrušit úplně“*, DECISIONS 2026-10-09 (8)).
+Uložené rozbory v `gpt_reviews` zůstaly. Princip níž platí dál pro každý model, který čtení posuzuje (soudce v labu, rubriky).
 
 **KUKY 2026-09-25:** *„gpt analýza není pro nás závazná bez odsouhlasení! cokoliv řekne, se musí prověřit před tím, než se začne něco měnit. obrazy nečte moc dobře."*
 

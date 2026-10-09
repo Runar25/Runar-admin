@@ -112,7 +112,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [oprava-promptu-odebira-vadu.md](oprava-promptu-odebira-vadu.md) — vadu v promptu odeber; přidaný požadavek se v textu projeví jako formule
 - [prompt-nepojmenuj-co-hned-zakazes.md](prompt-nepojmenuj-co-hned-zakazes.md) — prompt, který něco pojmenuje a hned to zakáže vyslovit, hlídá slovo, které tam sám napsal; odeber nálepku, ne přidej hlídače
 - [rozkaz-a-studene-cteni-hranice.md](rozkaz-a-studene-cteni-hranice.md) — „Look…" jako vstup do obrazu ani fyzický důsledek dřiny („knuckles have learned") NEJSOU porušení kánonu; porušení = rada do života / tvrzení o nitru
-- [gpt-rozbor-neni-zavazny.md](gpt-rozbor-neni-zavazny.md) — rozbor od GPT (luna/sol) je jen podnět; nic neměnit bez ověření a ownerova ano; obrazy čte špatně
+- [gpt-rozbor-neni-zavazny.md](gpt-rozbor-neni-zavazny.md) — rozbor od GPT byl jen podnět (tlačítko zrušeno 2026-10-09); princip platí pro každého soudce
 - [nacti-cteni-a-reporty.md](nacti-cteni-a-reporty.md) — owner řekne „načti čtení a reporty“ → `node scripts/nacti_cteni.js` (čtení + monitor ozvěn + hlášení); ⚠ a hlášení ohlas s textem
 - [always-show-reading-samples.md](always-show-reading-samples.md) — ownerovi vždy ukázat konkrétní TEXT čtení a k němu instrukce, které do čtení vstoupily
 - [testovani-jedne-runy-je-zamer.md](testovani-jedne-runy-je-zamer.md) — owner testuje jednu runu opakovaně schválně; jeho „pořád stejné X“ nevysvětluj jeho metodou, dohledej konkrétní případ

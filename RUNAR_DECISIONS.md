@@ -8949,3 +8949,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - Odvolává se na: 2026-10-09 (4).
 - Affected doc(s): žádný — rozložení hero vlastní kód.
 
+## 2026-10-09 (8) — Rozbor čtení modelem GPT zrušen (tlačítko „GPT-6 luna“ i edge fn gpt-review)
+
+- **Rozhodl:** KUKY 2026-10-09: *„10. zrušit, Lunu už nepoužívám“* a k otázce, jestli tlačítko přepnout na Haiku 5.5 (EVAL_LOG
+  2026-10-09 (2)): *„14. zrušit úplně“*. **Provedl:** CODE-tune.
+- **Co:** z appky pryč tlačítko a rubrika rozboru (`runar-reading.js`, HTML, CSS, `GPT_REVIEW`/`GPT_REVIEW_LANG` v configu, klíče
+  `gpt_review_*` EN i IS); edge fn `gpt-review` odebrána z repa a z projektu. Smoke ㉴ hlídá dál jen štítek přepínače čtení přes GPT-6 sol.
+  Přepínač „Read with GPT-6 sol (test)“ zůstává — je to jiná věc (čtení, ne rozbor).
+- **Zůstává:** tabulka `gpt_reviews` s uloženými rozbory (data se nemažou). Princip „rozbor modelu je podnět, ne nález“ platí dál pro
+  každého soudce (`memory/gpt-rozbor-neni-zavazny.md`).
+- Odvolává se na: 2026-09-23 (vznik tlačítka), 2026-09-24 (8) (sol → luna), 2026-09-25 (4) (ukládání rozborů).
+- Affected doc(s): `RUNAR_PRIVACY.md` (rozbory GPT) · `RUNAR_BACKLOG.md` (Haiku 5.5) — v témže commitu.

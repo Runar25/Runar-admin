@@ -86,8 +86,6 @@ const UI_TEXT = {
     report_who_save:  'Save',
     // 2026-09-25: náhled reportu ukazuje celý zachycený text, zvláštní řádek o přiloženém Asku (report_ask_attached) odešel.
     report_flagging:  'Reporting:',
-    // GPT-6 sol rozbor čtení — jen admin (KUKY 2026-09-23). Název modelu se nepřekládá.
-    gpt_review_btn:   'GPT-6 luna',   // model = supabase/functions/gpt-review MODEL (2026-09-24 sol -> luna, cena)
     // Přepínač čtení přes GPT-6 sol — jen admin, test (2026-09-24, DECISIONS 2026-09-24 (17)).
     sol_toggle:       'Read with GPT-6 sol (test)',
     // Výběr obrazu pro admina (2026-10-06) — týž obraz vybrané runy víckrát pro testování.
@@ -98,8 +96,6 @@ const UI_TEXT = {
     img_pin_cold:     'in winter',
     img_pin_bright:   'spring to autumn',
     img_pin_offseason: 'not this time of year',
-    gpt_review_wait:  'GPT-6 luna is reading…',
-    gpt_review_err:   'GPT-6 luna did not answer: {msg}',
     report_type:      'Type',
     report_t_replace: 'Replace text',
     report_t_rephrase:'Reword',
@@ -566,7 +562,6 @@ const UI_TEXT = {
     report_who_ph:    'Nafn eða upphafsstafir',
     report_who_save:  'Vista',
     report_flagging:  'Tilkynni:',
-    gpt_review_btn:   'GPT-6 luna',
     sol_toggle:       'Lestur með GPT-6 sol (prófun)',
     img_pin_lbl:      'Mynd fyrir þessa rún (prófun)',
     img_pin_random:   'valin af handahófi',
@@ -575,8 +570,6 @@ const UI_TEXT = {
     img_pin_cold:     'að vetri',
     img_pin_bright:   'frá vori til hausts',
     img_pin_offseason: 'ekki á þessum árstíma',
-    gpt_review_wait:  'GPT-6 luna er að lesa…',
-    gpt_review_err:   'GPT-6 luna svaraði ekki: {msg}',
     report_type:      'Tegund',
     report_t_replace: 'Skipta út texta',
     report_t_rephrase:'Umorða',

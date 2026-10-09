@@ -704,7 +704,7 @@
   13. ✅ *(hotovo 2026-09-24)* Několik textů v appce má barvu `--dim`, kterou §5 pro text zakazuje.
   14. ⏸ *(owner: měřit na živých Ascích — slova obrazu v uložených odpovědích před/po odebrání věty)* Ask: pravidlo proti studenému čtení v něm nese „Describe the image" — čtvrtý zámek do čtení, neměřen (DECISIONS 2026-09-23 (13)).
   15. ⏸ *(owner: zatím nechat, bude jich víc k opravě)* Statická čtení (Kolekce, s hlasem) vznikla před popisy run — Dagaz popisu odporuje (položka níž); projít i ostatní 24 proti popisům.
-  **Hlídat po živém testování:** Opus 5 (délka Norns, Ask, `readings.usage.model`) · kvalita rozboru gpt-6-luna (vymýšlí výtky?) · dva Asky (krok 1, jen admin) → pak server + `ASK_MULTI_LIVE` · ~35 nových obrazů z 23.–24. 9. ve skutečných čteních.
+  **Hlídat po živém testování:** Opus 5 (délka Norns, Ask, `readings.usage.model`) · ~~kvalita rozboru gpt-6-luna~~ (rozbor zrušen 2026-10-09) · dva Asky (krok 1, jen admin) → pak server + `ASK_MULTI_LIVE` · ~35 nových obrazů z 23.–24. 9. ve skutečných čteních.
 - [ ] **Obraz × oblast ve čtení — NEVYŘEŠENO** (ownerovy reporty 2026-10-01/02; owner 2026-10-03: *„problém tím vyřešený není“*). Čtení obraz
   převypráví a oblast připojí zvláštní větou, často slovy podoby oblasti (*„Among your people“*). Zkoušeno a horší nebo stejné než A:
   B, B2, C (karta), D1, D2 (DECISIONS 2026-10-03 (4)). Nasazen jen výběr obrazu podle oblasti (řeší střet, ne stavbu). Další páka podle
@@ -1253,8 +1253,8 @@ na rozboru týchž čtení (lunin rozbor je uložený v `gpt_reviews`), malý vz
 **2026-10-09 ZMĚŘENO** (owner *„13. ano porovnej“*, EVAL_LOG 2026-10-09 (2)): na 5 čteních Haiku 5.5 s přemýšlením 1 platný nález
 a 0 neplatných, luna 0 platných a 7 neplatných, Haiku bez přemýšlení horší než luna. Haiku ~5× dráž než luna (pořád < 0,1 c za rozbor)
 a 2 z 10 rozborů s ruským slovem v češtině. `tree-update` přepnut na Haiku 5.5 bez přemýšlení (owner *„předělat haiku 4.5 na 5.5“*).
-**Čeká na ownera:** přepnout tlačítko rozboru na Haiku 5.5 s přemýšlením, nebo nechat lunu. Třídění hlášení modelem zatím ne — viz
-odpověď ownerovi 2026-10-09 (typ volí tester sám, skupiny umí kód zadarmo; model až při počtu, který kód nezvládne).
+✅ **Rozhodnuto 2026-10-09 (KUKY):** rozbor čtení *„zrušit úplně“* (luna se nepoužívá, Haiku místo ní nebude) — tlačítko i edge fn
+`gpt-review` pryč, DECISIONS 2026-10-09 (8). Třídění hlášení modelem *„ok, neřešit“*. Zůstává: `tree-update` na Haiku 5.5.
 
 ### Prompt × návody výrobců (Anthropic Opus 5, OpenAI GPT-6) — nálezy 2026-10-04, ČEKÁ NA OWNERA, co s nimi (CODE-tune)
 ⭐ **KUKY 2026-10-05: velké body (4, 5, 6, 8) a přestavba promptu → LAB CODE-read, ne produkce** (DECISIONS 2026-10-05 (3)).

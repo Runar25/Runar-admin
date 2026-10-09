@@ -1,6 +1,6 @@
 // verify_admin_emails.js — všechny kopie seznamu adminů musí být shodné s v2/runar-config.js.
 // Proč (2026-09-23): ADMIN_EMAILS je natvrdo v configu klienta a v každé edge funkci, která pouští jen
-// admina (claude-proxy, list-readings, list-reports, elevenlabs-static, tree-update, gpt-review). Edge
+// admina (claude-proxy, list-readings, list-reports, elevenlabs-static, tree-update; gpt-review zrušen 2026-10-09). Edge
 // funkce config klienta načíst nemůžou, takže kopie jsou nutné — ale nic nehlídalo, že jsou stejné.
 // Rozejdou-li se, admin v jedné funkci projde a v jiné ne (nebo naopak projde někdo, kdo už admin není).
 // Mimo záběr: SQL migrace v sql/ (RLS politiky s e-maily) — to jsou historické soubory, ne běžící kód.

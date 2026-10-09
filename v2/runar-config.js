@@ -13,12 +13,9 @@ const EL_PROXY  = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/elevenl
 const EL_STATIC = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/elevenlabs-static';
 const TREE_UPDATE = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/tree-update';
 const RESET_TREE  = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/reset-tree';
-// Rozbor čtení modelem gpt-6-sol — jen admin (KUKY 2026-09-23). Edge funkce nesahá na kredity ani deník.
-const GPT_REVIEW  = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/gpt-review';
 // ASK_MULTI_LIVE ODEBRÁN 2026-09-26 (úklid): byl to vypínač náběhu dvou Asků (2026-09-24/25); od spuštění kdo smí Ask a kolikrát
 // říká jen TIERS.*.asks_per_reading (zrcadlo serverového ASKS_PER_READING v claude-proxy, shodu hlídá smoke ⑨).
-// Jazyk rozboru GPT-6 sol podle admina (KUKY 2026-09-24: „anglicky pro Sigrún“). Kdo tu není, dostane češtinu.
-const GPT_REVIEW_LANG = { 'info@agndofa.is': 'en' };
+// 2026-10-09: GPT_REVIEW a GPT_REVIEW_LANG pryč — rozbor čtení modelem GPT (tlačítko „GPT-6 luna“, edge fn gpt-review) ZRUŠEN 2026-10-09 (KUKY „Lunu už nepoužívám… zrušit úplně“).
 // Future proxies go here:
 // const NOTIFY_PROXY = '...functions/v1/notify';
 // const LUNAR_PROXY  = '...functions/v1/lunar-context';
