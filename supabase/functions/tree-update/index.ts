@@ -103,6 +103,9 @@ serve(async (req) => {
       "- forbidden_next: specific images/phrases from THIS reading that would feel repetitive next time";
 
     // ── Call Claude Haiku (cheap, fast, background) ──
+    // 2026-10-09 (KUKY „předělat haiku 4.5 na 5.5“): claude-haiku-4-5 → claude-haiku-5-5. Ceník Anthropicu (ověřeno týž den,
+    // platform.claude.com/docs/en/about-claude/pricing): do 100 000 tokenů v promptu desetina ceny 4.5. Appka tuhle funkci zatím
+    // nevolá (TREE_UPDATE v runar-config.js je jen adresa) — změna je příprava, až ji CODE-tree oživí.
     const anthropicKey = Deno.env.get("ANTHROPIC_API_KEY");
     if (!anthropicKey) return json({ ok: false, error: "API key missing" }, 500);
 
@@ -114,8 +117,11 @@ serve(async (req) => {
         "anthropic-version": "2023-06-01",
       },
       body: JSON.stringify({
-        model:      "claude-haiku-4-5",
+        model:      "claude-haiku-5-5",
         max_tokens: 200,
+        // Bez tohohle Haiku 5.5 přemýšlí sám a na stropu 200 tokenů vrátí prázdný text (změřeno 2026-10-09: 1035–1580 výstupních
+        // tokenů na odpověď o 1–2 větách). Vytažení vzorců z čtení přemýšlení nepotřebuje.
+        thinking:   { type: "disabled" },
         messages:   [{ role: "user", content: extractPrompt }],
       }),
     });
