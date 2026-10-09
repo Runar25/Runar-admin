@@ -433,8 +433,13 @@
 - [ ] **Strom (lab): povýšená ze střední zóny visí v koruně kvůli matce** (CODE-tree, nalezeno 2026-10-09). Nauthiz z Othily má místo
   verdandi (12 z 15 čtení „teď“), ale vyrůstá z Othily (skuld, 85 % kmene) — jediného zemního ramene vlevo (matka = rameno téhož živlu
   na straně místa, nejbližší pásmo). Owner ji pak čte jako budoucnost (*„když je tak vysoko na stromě … je to koukání do budoucnosti?“*).
-  Inspekce už ukazuje zónu místa (opraveno 2026-10-09), kresba ne. Možnosti k rozhodnutí: odštěp níž na matce podle zóny místa; vlastní
-  výstup z kmene, když je matka o dvě pásma vedle (strop 25 dovolí-li); nechat a říkat, že visí z matky.
+  Inspekce už ukazuje zónu místa (opraveno 2026-10-09), kresba ne. KUKY 2026-10-09: *„5. opravit … takže dole nemá žádný element, z kterého
+  může vyrůstat?“* — vlevo je jediné zemní rameno Othila nahoře; zemní rameno „teď“ nevzniklo, protože v době prvního takového čtení (#25)
+  neměl krátký kmen místo na nový pramen. **Nanečisto změřeno:** (a) vlastní výstup z kmene, když je matka o DVĚ zóny vedle → Nauthiz se
+  nehne (Othila je o jednu zónu, jen vysoko na kmeni); (b) vlastní výstup, když je matka v JINÉ zóně (patch
+  `docs/archive/tree/2026-10-09_nanecisto_vyska.patch`) → Nauthiz vlevo 63 %, vpravo 52 % kmene, ale z kmene vychází 24 větví místo 14
+  (povýšená zbude 1), strom užší a vyšší, větve jako příčky; smoke ㉳ projde. Odštěp níž na matce nepomůže (matka vychází z kmene vysoko).
+  Čeká na ownera: (b), nebo nechat a v popisu říkat, že visí z matky.
 - [ ] **Strom (lab): `AREA_LAT` odporuje „oblast = strana“** (CODE-tree, nalezeno 2026-10-09). Tabulka v `runar-branch.js` (sdílená
   s aplikací) bere Love −0,75 (nitro), Spirituality −0,20 (skoro střed), Crossroads +0,10 — kánon (`RUNAR_TREE.md` §3) má Love a Crossroads
   bez strany a Spirituality ve světě. Čte ji strana větvičky (`sideOf`), natočení ramene za čteními (`latOf` / `areaSide`) i lateral
