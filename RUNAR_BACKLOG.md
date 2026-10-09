@@ -1256,6 +1256,14 @@ a 2 z 10 rozborů s ruským slovem v češtině. `tree-update` přepnut na Haiku
 ✅ **Rozhodnuto 2026-10-09 (KUKY):** rozbor čtení *„zrušit úplně“* (luna se nepoužívá, Haiku místo ní nebude) — tlačítko i edge fn
 `gpt-review` pryč, DECISIONS 2026-10-09 (8). Třídění hlášení modelem *„ok, neřešit“*. Zůstává: `tree-update` na Haiku 5.5.
 
+### Podoby oblastí psané jako vedlejší věta se opisují doslova — návrh přepisu, ČEKÁ NA OWNERA (CODE-tune, 2026-10-09)
+Owner k v5.05: *„u pozor… proto jsme trénovali, jak věty napsat správně, aby je model lépe používal. Najdi to a navrhni změny.“*
+Data (EVAL_LOG 2026-10-09 (3), produkce EN, malý vzorek): opis ≥ 4 slova u Purpose [2] *„what gives someone the will to continue“* 2/4
+(*„What gives you the will to continue may be…“*), Healing [1] *„what gives strength back“* 2/5, Healing [2] *„the pace that can be kept“*
+1/2; podoby jako holé jméno (*„slow change“*, *„making and shaping“*) 0. Zásady „Slova, která dáváme modelu“ bod 1 a 3.
+**Návrh:** vedlejší věty přepsat na krátké jméno (kandidáti napřed přes Ngram, pak sol 2–3 podoby × 6 čtení, texty ownerovi). Vrácené
+podoby z 2026-10-09 (9) jsou už psané tak, že doslovný opis zní přirozeně. Rozhodne owner, jestli a kdy.
+
 ### Prompt × návody výrobců (Anthropic Opus 5, OpenAI GPT-6) — nálezy 2026-10-04, ČEKÁ NA OWNERA, co s nimi (CODE-tune)
 ⭐ **KUKY 2026-10-05: velké body (4, 5, 6, 8) a přestavba promptu → LAB CODE-read, ne produkce** (DECISIONS 2026-10-05 (3)).
 Do produkce jen malé ověřené opravy přes CODE-tune, po jedné. Body 1–3 a myšlenka ≤ 12 slov už jsou v produkci (v4.92–v4.94).

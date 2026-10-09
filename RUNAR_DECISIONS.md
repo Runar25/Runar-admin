@@ -8960,3 +8960,21 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   každého soudce (`memory/gpt-rozbor-neni-zavazny.md`).
 - Odvolává se na: 2026-09-23 (vznik tlačítka), 2026-09-24 (8) (sol → luna), 2026-09-25 (4) (ukládání rozborů).
 - Affected doc(s): `RUNAR_PRIVACY.md` (rozbory GPT) · `RUNAR_BACKLOG.md` (Haiku 5.5) — v témže commitu.
+
+## 2026-10-09 (9) — Podoby Purpose [3] a Career [4] zpět, bez „long“ (v5.06, EN i IS)
+
+- **Rozhodl:** KUKY 2026-10-09: *„7. your practical skill je úplně v pohodě. Každý člověk je má, není to nic konkrétního… purpose vrátit
+  a career taky, ale upravené“* · *„13. ano“* (ověřit na solu). **Provedl:** CODE-tune.
+- **Proč:** v5.05 (2026-10-09 (1)) obě podoby vyndal, protože tvrdily délku o životě tazatele. Vadou bylo slovo *„long“*, ne podoba —
+  návrat očištěný (§26): bez něj 0 z 20 čtení solu tvrdí čas (EVAL_LOG 2026-10-09 (3)).
+- **Co:** Purpose [3] *„an aim being pursued“* / *„in an aim the seeker is pursuing“* (IS *„markmiði sem stefnt er að“* / *„í markmiði
+  sem leitandinn stefnir að“*) · Career [4] *„skill and the practice behind it“* / *„in the seeker's skill and the practice behind it“*
+  (IS *„kunnáttu og æfingu sem liggur að baki henni“* / beze změny). Indexy [3] a [4] jako dřív. `RUNAR_PROMPT_VERSION` →
+  `v5.06-podoby-zpet-bez-long`, registr pravidel přepsán.
+- **Zkoušeno a nepoužito:** *„an aim in view“* (opisovalo se 3/6, neohrabaně) · *„a skill put to use“* (zateklo do věty o runě).
+- **Ověřeno:** `verify_ending_angle.js` — všechny podoby padají (4/4/5/4/3/3/3/3) · golden 42/42 beze změny · IS korpusem (Risamálheild:
+  „stefnt er að“ 10 652, „æfingu sem“ 705, „að baki henni“ 1 027).
+- **Navrženo, nenasazeno:** podoby psané jako vedlejší věta se opisují doslova častěji (Purpose [2] 2/4, Healing [1] 2/5) — přepis
+  na jméno čeká na ownera (`RUNAR_BACKLOG.md`).
+- Odvolává se na: 2026-10-09 (1).
+- Affected doc(s): `RUNAR_BACKLOG.md` (podoby psané jako vedlejší věta — návrh) — v témže commitu.

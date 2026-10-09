@@ -628,9 +628,13 @@ const AREA_FACES = [
     { en: ['what gives someone the will to continue', 'in what gives the seeker the will to continue'],
       is: ['því sem gefur manneskju vilja til að halda áfram', 'í því sem gefur leitandanum vilja til að halda áfram'] },
     // 2026-10-09 (hlášení KUKY 0aeb00a5: „model z toho bere časový horizont… ‚you have pursued for years‘. No chance we know
-    // something like that.“): podoba [3] „an aim pursued for a long time“ (IS „markmiði sem lengi hefur verið stefnt að“) VYNDÁNA —
-    // tvrdila délku o životě tazatele. V produkci ji to řeklo 2 ze 2 čtení s touto podobou („The aim you have carried this long…“,
-    // „…an aim you have pursued for years“). Tatáž vada u Career [4] níž. Byla poslední → indexy ostatních podob v DB beze změny.
+    // something like that.“): do v5.04 tu stálo „an aim pursued for a long time“ (IS „markmiði sem lengi hefur verið stefnt að“) —
+    // tvrdilo délku o životě tazatele (produkce 2 ze 2 čtení: „The aim you have carried this long…“, „…pursued for years“), v5.05 pryč.
+    // NÁVRAT OČIŠTĚNÝ (§26, KUKY „purpose vrátit… ale upravené“, v5.06): bez „long“. Sol, 6 čtení na znění (DECISIONS 2026-10-09 (9)):
+    // „an aim being pursued“ 0/6 tvrzení o čase, doslovný opis ≥ 4 slova 1/6 („Perhaps an aim you are pursuing has room…“); zkoušené
+    // „an aim in view“ taky 0/6 času, ale opis 3/6 a neohrabaně („For an aim in view, the jar…“) → nepoužito. Index [3] jako dřív.
+    { en: ['an aim being pursued', 'in an aim the seeker is pursuing'],
+      is: ['markmiði sem stefnt er að', 'í markmiði sem leitandinn stefnir að'] },
   ],
   // Career & Creativity
   // 2026-09-26 (KUKY: „v obraze malování, člověk se zeptá na Career & Creativity… Rúnar použije slovo work“; handoff CODE-read
@@ -647,9 +651,14 @@ const AREA_FACES = [
       is: ['því sem er að verða til', 'í því sem leitandinn er að skapa'] },
     { en: ['an idea not yet made real', 'in an idea the seeker has not yet made real'],
       is: ['hugmynd sem enn er ekki orðin að veruleika', 'í hugmynd sem leitandinn hefur ekki enn gert að veruleika'] },
-    // 2026-10-09: podoba [4] „skill and the long practice behind it“ (IS „kunnáttu og langri æfingu…“) VYNDÁNA — tatáž vada jako
-    // Purpose [3] výš: v produkci 3 ze 3 čtení s ní tvrdila praxi tazatele („a skill shaped by years of practice“, „your long practice
-    // may be your own“, „Your practiced skill…“). Byla poslední → indexy ostatních podob v DB beze změny.
+    // 2026-10-09: do v5.04 „skill and the long practice behind it“ (IS „kunnáttu og langri æfingu…“) — tatáž vada jako Purpose [3]:
+    // produkce 3 ze 3 tvrdila léta praxe („a skill shaped by years of practice“, „your long practice may be your own“), v5.05 pryč.
+    // NÁVRAT OČIŠTĚNÝ (§26, v5.06): jen bez „long“ — owner: „your practical skill je úplně v pohodě, každý člověk je má“. Sol, 4 čtení:
+    // 0/4 tvrzení o čase, opis 0/4 („how your skill grows through practice“). Zkoušené „a skill put to use“ zateklo i do věty o runě
+    // („Fehu signifies the value of what can be put to use“) → nepoužito. Pozor: „years of practice“ je v angličtině běžná kolokace
+    // (Ngram 0,2 / mil.) — sledovat v monitoru. Index [4] jako dřív.
+    { en: ['skill and the practice behind it', 'in the seeker\'s skill and the practice behind it'],
+      is: ['kunnáttu og æfingu sem liggur að baki henni', 'í kunnáttu leitandans og æfingunni sem liggur að baki'] },
   ],
   // Healing & Wellbeing
   [

@@ -6354,3 +6354,23 @@ Riziko: azbuka v českém výstupu (2 z 10 rozborů). **Vedlejší nález oprave
 ho dostává (`_gptReviewPayload`). Pro `tree-update` plyne: Haiku 5.5 s `max_tokens` 200 jen s `thinking: disabled` (jinak prázdný text).
 **Hranice:** n = 5, EN, jeden běh; kvalitu posuzoval CODE-tune čtením (owner čte texty — stránka vedle sebe mimo repo). Ceny
 z ceníku Anthropicu / OpenAI k 2026-10-09. Data mimo repo: `~/runar-eval/haiku-luna-2026-10-09.json`. <!-- doc-links:ok 2026-10-09 data mimo repo (texty čtení), skript ve scratchpadu session -->
+
+## 2026-10-09 (3) — Podoby oblastí: vrácené Purpose [3] a Career [4] bez „long“ (sol, 20 čtení) + které podoby se opisují doslova
+
+**Proč:** owner k v5.05 (podoby s délkou pryč): *„purpose vrátit a career taky, ale upravené… u pozor. Proto jsme trénovali, jak věty
+napsat správně, aby je model lépe používal. Najdi to a navrhni změny.“* · *„13. ano“* (ověřit na solu).
+**Napřed data (produkce EN od 2026-09-25, 80 čtení s podobou, 1–6 na podobu):** doslovný opis podoby ≥ 4 slova nejčastěji u podob
+psaných jako vedlejší věta — Purpose [2] *„what gives someone the will to continue“* 2/4 (*„What gives you the will to continue may
+be…“*), Healing [1] *„what gives strength back“* 2/5, Healing [2] *„the pace that can be kept“* 1/2; podoby jako holé jméno (*„slow
+change“*, *„making and shaping“*, *„going and direction“*) 0. Vzorek malý — kandidát, ne nález.
+**Pokus** (produkční cesta, sol, EN, podoba vynucená v sandboxu, Kuky/Isa, General Guidance; tvrzení o čase = years/long/decades/
+lifetime/always/since v těle čtení):
+| podoba | n | tvrzení o čase | opis ≥ 4 slova | poznámka |
+|---|---|---|---|---|
+| Purpose „an aim in view“ (idiom, Ngram 0,02 / mil.) | 6 | 0 | 3 | obrat skoro v každém čtení, místy neohrabaně (*„For an aim in view, the jar…“*) |
+| Purpose „an aim being pursued“ → **nasazeno** | 6 | 0 | 1 | přirozeně (*„Perhaps an aim you are pursuing has room…“*) |
+| Career „skill and the practice behind it“ → **nasazeno** | 4 | 0 | 0 | *„how your skill grows through practice“* |
+| Career „a skill put to use“ | 4 | 0 | 0 | zateklo do věty o runě (*„Fehu signifies the value of what can be put to use“*) |
+**Závěr:** délku nesl „long“ — bez něj 0 z 20. „years of practice“ je v angličtině běžná kolokace (Ngram 0,2 / mil.) → sledovat
+v monitoru u Career [4]. **Hranice:** EN, sol, n = 4–6 na znění, jedna dávka; IS jen ověřena korpusem (is-grammar-qa týž den
+nedostupné). Data mimo repo: `~/runar-eval/podoby-bez-delky-2026-10-09.json`, `…-p3b-…json`. <!-- doc-links:ok 2026-10-09 data mimo repo (texty čtení), skript ve scratchpadu session -->
