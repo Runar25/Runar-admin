@@ -1409,6 +1409,10 @@ doslova — a pokaždé?* Sol bere vstup jako materiál k přepsání, Opus spí
    dostane jako vstup, a ve formulaci „nositele“. → `RUNAR_EVAL_LOG.md` 2026-10-06 (6), (7) a (8).
    ⚠️ Do večera 2026-10-06 tu stálo „pět domněnek o pravidlech vyvráceno, vyndaný řádek naznačeno“ — měřeno na vstupu s řádkem ✦,
    který produkce Asku neposílá. Neplatí.
+   ⚠️ **2026-10-09: čísla výš počítal měřák, který neviděl „leave(s) room for…“** — a právě do toho tvaru se pojistka přesouvá. S detektorem,
+   který ho vidí (`scripts/utils/pojistka.js`): produkce 28/30 · charakter bez zákazů 19 · tři pravidla (= v5.03) 20 · bez mostu 22 ·
+   bez NO COLD READING 22. Žádná páka ji neodklidí, **ubraný tvar se vrátí jiným slovem** (v produkci po v5.03 „leaves room for“
+   11 % → 47 %, podíl pojistky stejný). → `RUNAR_EVAL_LOG.md` 2026-10-09 (1).
 7. **Seznam navíc nepomůže.** Klíče životní runy „jako pozadí“ nic měřitelného nepřidaly a sol je neodříkal.
    → `docs/eval/2026-10-06-ask-zivotni-runa/README.md`, tab. 1 (⚠️ kolo s rozbitým jménem tažené runy — platí jen uvnitř kola).
 8. **Opus body 1–3 nedělá** (monitor 0/13 · 0/11 · 0/16), pojistku z bodu 6 dělá taky, méně. Formulace se proto testuje na
