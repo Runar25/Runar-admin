@@ -1242,6 +1242,8 @@ položky dohledán (`node scripts/utils/uz_vime.js`); měření → EVAL_LOG 202
    nenajde, tak to nenajde, ale to mu my říkat nemusíme. Ostatní jsou cajk.“* → vadí jen ocas obojím směrem, ostatní pojistky ne.
    Ocas je vzácný: produkce 1 ze 148 Asků od 2026-09-25, lab 2026-10-06 0 ze 300 — pokus by neměl co měřit. **Hlídá ho monitor ozvěn**
    (řádek „Ask: …, or not“ od 2026-10-09). Až se začne vracet, teprve pak lab CODE-read (předávka připravena v konverzaci 2026-10-09).
+   Monitor počítá jen ocas věty `/,\s*or not[.?!]/` — holé „or not“ chytalo i obsah (Kenaz 2026-09-23 *„close to the flame, or not at
+   all“*; 18 shod z 1204 Asků, ocas z nich 1). Předávku převzal CODE-read 2026-10-09; podmínka ten den nesplněná (jediný případ = Laguz 744028f4).
 
 ### Haiku 5.5 (vyšel 2026-10-07) — kde by šel použít; srovnání s lunou čeká na ownerovo ano (hlášení b4365ead) (CODE-tune)
 Owner: *„Zjisti všechno o Haiku 5.5… Nabízí se nám nějaké možnosti, jak tyhle levné modely používat? Jak by se dal porovnat s Luna 6?“*
