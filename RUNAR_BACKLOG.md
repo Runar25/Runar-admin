@@ -2054,6 +2054,15 @@ Ask „jen premium“ → poznámka `ASKS_PER_READING`.
 ✅ gitignorovaná složka `_cowork_snap/` (snímek 22 souborů ke commitu 92255b9, 2026-07-21; nic ji nepřegenerovává)
 — diffem ověřeno, že se všech 22 shoduje s gitem, nic jedinečného. Je 2,5 měsíce stará (obsahuje i smazaný starý modul Gatheringu)
 a kdo ji čte, čte starý stav. ✅ **Smazáno 2026-10-10** (owner: *„9. smaž“*); obnovitelné z `git show 92255b9:<cesta>`.
+**`runar-help.html` — co Část 8 nechytila (2026-10-10):** tabulka souborů a pořadí načítání v `CLAUDE.md` = skutečné `v2/` (ověřeno).
+- ⚪ **Pro CODE-tune (copy):** (a) „How a reading works“ slibuje čtení **ve dvou vrstvách** (krátká + hlubší) a „nit mezi taženou a
+  životní runou“ — čtení je jeden plynoucí blok (CLAUDE.md „Unified format“) a životní runa ze čtení odešla 2026-09-25 (jen Ask);
+  EN statické HTML ř. ~125 + slovník ř. ~289, IS ř. ~343. (b) „Rúnar's voice“: „v Kolekci zazní předtočený **tón**, vždy stejný,
+  nota, ne čtení“ — Kolekce ukáže **text** a přehrávač, Rúnar ho **mluví**, verze se losuje (`runar-app.js` `pick = rows[random]`).
+- 🟡 **PRO OWNERA — ceny balíčků kreditů:** nápověda (tabulka v HTML, od 2026-05-20) a `RUNAR_PRICING.md` (od 2026-06-03) se liší:
+  nápověda 4 balíčky (Seeker 10 = 2.690 kr, Wanderer 20 = 5.050 kr, Elder **50** = 11.900 kr + ceny v €), PRICING 5 balíčků
+  (Seeker 2.490 · Wanderer 4.490 · Elder **30** = 6.490 · Master 50 = 9.990, bez €). Shoda jen Starter 5 = 1.490. Novější je PRICING,
+  ale fyzické karty můžou mít natištěno — **která tabulka platí?** Pak ji drží jedno místo (§20) a nápověda ji čte.
 
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
