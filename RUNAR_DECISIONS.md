@@ -9860,3 +9860,23 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   nemá); moje BACKLOG část 38 („per-účet dárky … 5 hlasů/měsíc“). Opraveno: BACKLOG 17 (c) a 38 (CODE-read); appka + nápověda + komentář
   → CODE-tune. Návrh mechanismu (§30): `verify_tier_features.js` ať odmítne u tieru bez `monthly_readings` větu s měsíčním počtem hlasů.
 - Affected doc(s): `RUNAR_BACKLOG.md` části 17, 38 — v témže commitu.
+
+## 2026-10-10 (43) — GreynirCorrect u nás (is-greynir.py) s týdenní kontrolou aktualizací; nasazen delete-account v8
+
+- **Rozhodl:** KUKY 2026-10-10: *„GreynirCorrect pomůže nám? co je zdarma je dobré, pokud to funguje“* → *„1. ano, nasaď 2. ano,
+  nainstaluj. nastav jeho pravidelnou kontrolu aktualizací!“*; model Icegrams (213 MB, víc než ohlášených 60 MB) zvlášť: *„Ano, stáhni“*.
+- **Co (GreynirCorrect):** prostředí `~/runar-eval/greynir-venv` (reynir-correct 4.2.0, reynir 3.9.0, islenska 1.5.0, tokenizer 3.6.4,
+  icegrams 2.0.0, z PyPI) + model Icegrams z oficiálního vydání Miðeind na GitHubu (ověřený kontrolním součtem) v `%LOCALAPPDATA%\icegrams`.
+  Nástroj `is-greynir.py` (kořen repa) se sám přepne do prostředí; text neodchází ven.
+- **Změřeno:** samotest 12/12 — 4 překlepy přesně i s opravou (S004), 2 nerozebrané věty (E001: rod „ákveðin hlutir“, „nafnlægt“), 6
+  správných vět z produkce bez nálezu. Nevidí shodu, kde je chybný tvar zároveň platným jiným tvarem („Fjöldi lestrar“, „1 lestrar“),
+  a idiomy. **Na našich textech falešné poplachy** (lífsrúnar → lífbrúnar, prófari, lýst → líst, malé „evrópska“, „þar til hún“) —
+  vypsané v hlavičce nástroje; nález je podezření, rozhoduje GPT (`is-gpt-check.py`) a korpus (`is-vazba.py --freq`).
+- **Aktualizace:** úloha Windows „Runar - GreynirCorrect aktualizace“ každé pondělí 4:30 (spustí se i dodatečně) → `is-greynir.py
+  --aktualizace`: nová verze na PyPI → aktualizovat → samotest → když neprojde, vrátit předchozí verze; zápis do
+  `~/runar-eval/greynir-venv/aktualizace.log` a stavu. Kdo nástroj spustí, uvidí varování, když kontrola selhala nebo je starší 14 dní.
+  **Ověřeno:** tokenizer schválně snížen na 3.6.3 → úloha ho zvedla na 3.6.4 a samotest prošel; běh z Plánovače úloh výsledek 0.
+  Vrácení při neprošlém samotestu je přečtené, ne vyzkoušené (chybná verze balíčku k dispozici není).
+- **Nasazeno (git nevidí):** `delete-account` verze 8 (mazání e-mailu z `allowed_emails`, 656a739). Před nasazením stažena běžící verze —
+  shodná s repem před změnou; po nasazení stažena znovu — shodná s HEAD; `verify_jwt` zůstává vypnuté; bez přihlášení 401.
+- Affected doc(s): `CLAUDE.md` §2 (nástroje) — v témže commitu; odvolává se na (39).

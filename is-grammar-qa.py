@@ -82,7 +82,8 @@ def read_inputs():
 
 def main():
     print('is-grammar-qa.py je mrtvý (Yfirlestur API zaniklo 2026-10, přesměrování na Málstaður bez API).\n'
-          'Použij: python -X utf8 is-gpt-check.py --text "…"  (soubor: text na řádek) · idiomy a obraty: python -X utf8 is-vazba.py --freq "…"')
+          'Použij: python -X utf8 is-greynir.py --text "…" (GreynirCorrect lokálně, zdarma) · python -X utf8 is-gpt-check.py --text "…"\n'
+          '(GPT) · idiomy a obraty: python -X utf8 is-vazba.py --freq "…"')
     sys.exit(2)
     texts = read_inputs()
     if not texts:

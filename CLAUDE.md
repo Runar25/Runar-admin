@@ -79,7 +79,7 @@ k přeložení; kalk z EN (vazba, slovosled, obraz) je vada, ne východisko. IS 
 překládá. „Líp to neumím" NENÍ přípustná odpověď: styl a hlas je řemeslo — udělá se a ověří (níže).
 Flaguje se **jen chybějící 🔒 fakt / 📜 lore** (§23), NIKDY vlastní formulace; Sigrún není fronta
 na nedodělky (§19.2).
-**Platí pro Code i Cowork:** IS se dělá **hotová a ověřená** (`check-is` / `is-gpt-check.py` / `is-vazba.py --freq`; do 2026-10-10 Yfirlestur přes is-grammar-qa — jeho API zaniklo), nikdy odhadem ani odkladem na rodilého mluvčího (§19.2). → [[is-done-together-not-for-sigrun]]
+**Platí pro Code i Cowork:** IS se dělá **hotová a ověřená** (`check-is` / `is-greynir.py` lokálně zdarma / `is-gpt-check.py` / `is-vazba.py --freq`; do 2026-10-10 Yfirlestur přes is-grammar-qa — jeho API zaniklo), nikdy odhadem ani odkladem na rodilého mluvčího (§19.2). → [[is-done-together-not-for-sigrun]]
 **Vazba ≠ tvar — rekci/pád/kolokaci/idiom NEHÁDEJ (vrstva NAD BÍN).** BÍN dá jen tvary; vazbu ověř nástrojem `python -X utf8 is-vazba.py <slovo>` (Íslensk nútímamálsorðabók JSON API + Risamálheild korpus), nikdy odhadem, z Wiktionary ani „pohledem". Recept + limity + zdroje → [[is-vazba-check]].
 Každé Claude generování v IS má **3 vrstvy** (všechny v promptu — korekce se řeší v kontextu):
 ```js
