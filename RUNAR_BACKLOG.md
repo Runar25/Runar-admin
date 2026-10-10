@@ -2703,12 +2703,10 @@ Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
       ručně do „Magic Link“ i „Confirm signup“). Zbývá: owner — SMTP v Supabase + obě šablony; pak CODE zapne `AUTH_EMAIL_ENABLED`.
       ✅ **2026-10-10:** owner SMTP i šablony nastavil („hotovo“) → `AUTH_EMAIL_ENABLED = true` (DECISIONS 2026-10-10 „Přihlášení e-mailem…“).
       Zbývá: owner vyzkouší první přihlášení kódem (doručení CODE ověřit neumí) · doporučeno: DKIM pro Google u runar@therunekeeper.com.
-      ⚠️ **2026-10-10 odpoledne: kód se NEODESÍLÁ.** Owner poslal snímek „Error sending magic link email“ (svůj účet). V DB není žádné
-      úspěšné odeslání (ověřeno 13:15 UTC): `auth.users.recovery_sent_at` prázdné u všech účtů (magic link neodešel nikdy), poslední
-      `confirmation_sent_at` 2026-05-16, žádný nový účet za 3 dny. Chyba vzniká při předání e-mailu do Brevo (SMTP) nebo v šabloně, ne
-      v appce. Přesný důvod je jen v Supabase → Logs → Auth (řádek s „Error sending“) → **čeká na ownera**. Časté u Brevo: SMTP login
-      musí být Brevo login `…@smtp-brevo.com` (ne e-mail účtu), heslo SMTP klíč `xsmtpsib-…` (ne API klíč `xkeysib-…`), nový účet
-      bez aktivace transakčních e-mailů. Do té doby přihlášení kódem nefunguje nikomu (Google ano).
+      ✅ **2026-10-10: přihlášení kódem FUNGUJE** (ověřeno v DB: kód odeslán 16:59:11, přihlášení 16:59:33, `user_metadata.lang` = `en`).
+      Dvě příčiny: (1) v Supabase SMTP host `smtp-replay.brevo.com` místo `smtp-relay` — DNS ho nezná, každé odeslání padalo
+      („Error sending magic link email“, owner opravil); (2) Supabase posílá 8 číslic, appka brala 6 (DECISIONS 2026-10-10 (10)).
+      E-mail s kódem jde v jazyce appky (DECISIONS 2026-10-10 (11)); šablonu owner vložil 16:5x, fallback (účet bez jazyka) ověřen.
 - [ ] **Hlášení nese verzi nasazenou, ne tu, která v telefonu běží** (2026-10-09, CODE-tune, §22). `runar-reporter.js` bere `app_version`
       z čerstvě staženého `sw.js`, ale stránka jede na JS ze staré cache, dokud se nenačte znovu (SW: JS cache-first). Doklad: hlášení 24c6c548
       (8. 10.) neslo `v564` a popisovalo chybu opravenou ve v564; owner 9. 10. po novém načtení: v pořádku. S testery by to mátlo diagnózu.
