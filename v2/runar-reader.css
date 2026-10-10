@@ -505,6 +505,13 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .note{font-size:0.9em;color:var(--muted);font-style:italic;line-height:1.7;margin-bottom:14px;}
 .txt{width:100%;background:transparent;border:none;border-bottom:1px solid var(--border2);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.1em;padding:10px 0;}
 .txt:focus{outline:none;border-bottom-color:var(--gold);}
+/* Automatické vyplňování prohlížeče nesmí pole přebarvit (KUKY 2026-10-10: „když zapisuju jméno… celé okno zbělá… všechno má být
+   stejné jako všude jinde“). Chrome dává vyplněnému poli světle modré pozadí a černý text vlastním stylem, který se běžně přepsat nedá:
+   barva textu přes -webkit-text-fill-color, pozadí se „nepřechází“ (přechod odložený na dny), takže zůstane naše. Platí pro všechna pole. */
+input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus,input:-webkit-autofill:active{
+  -webkit-text-fill-color:var(--white);caret-color:var(--white);transition:background-color 600000s 0s,color 600000s 0s;}
+/* Firefox barví vyplněné pole filtrem (žlutavě). Samostatné pravidlo: neznámá pseudotřída by ve starším prohlížeči zahodila celé pravidlo výš. */
+input:autofill{filter:none;}
 .txt::placeholder{color:var(--dim);}
 /* 2026-09-08: ukazky formulace se PROLINAJI (KUKY: 1 s prichod, 3 s stani, 1 s odchod).
    Fade jde pres ::placeholder, ne pres prekryvny prvek — prekryv by se musel trefit do
