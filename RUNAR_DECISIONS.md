@@ -9915,3 +9915,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Mechanismus (§30):** `verify_tier_features.js` (6) protlačí nastavení hlasu až do věty a obrací páky (bez hlasu z karty / k volnému
   čtení / bez volného čtení / hlas vypnutý); na původním configu padá 13×. Nápověda: odstavec s počtem hlasů musí nést omezení.
 - Affected doc(s): `RUNAR_BACKLOG.md` část 17 (c) a 39 — v témže commitu; `RUNAR_PRIVACY.md` (zásady v appce už rozbor uvádějí) — v témže commitu.
+
+## 2026-10-10 (46) — Náklady GPT korektury islandštiny se zapisují u každého volání; zbytek islandské nápovědy opraven (inneign)
+
+- **Rozhodl:** KUKY 2026-10-10: *„chci aby jsi mapoval kolik přesně stojí oprava IS pomocí GPT.“* Do té doby is-gpt-check.py tokeny
+  z odpovědi API zahazoval; hlídač API věděl jen, kdy běžel.
+- **Co:** is-gpt-check.py zapíše hned po každé odpovědi API (ještě před čtením obsahu — i nečitelná odpověď byla zaplacená) tokeny do
+  `~/runar-eval/is-gpt-check-naklady.jsonl` a na konci běhu vypíše jeho cenu. Cenu počítá výpočet appky (readingCostUsd nad
+  MODEL_PRICES), ne vlastní kopie. Souhrn celkem / po dnech / na text: `node scripts/utils/is_gpt_naklady.js`.
+- **Změřeno (první 3 zapsaná volání):** 30 textů nápovědy $0.0341 (vstup 1622 tok., výstup 3001, z toho přemýšlení 2230), 16 textů
+  $0.0099, 3 texty $0.0029 — celkem $0.0469, asi $0.001 na text; ~70 % výstupu je přemýšlení modelu (reasoning medium).
+  **Hranice:** 4 dřívější běhy (2026-10-10 22:59–23:40) usage nezapsaly — cena neznámá, souhrn je vypisuje zvlášť, nedopočítává je.
+- **Nápověda po cestě (dokončení (45)):** GPT našel na 30 IS textech 6 vad (např. „HVAÐ FÆR ÞÚ“ místo „FÆRÐ“, „Báðar eru velkomnar“,
+  kalky v úvodu a kontaktu, „Agndofa búð“) a GreynirCorrect neznámé „kreditarnir“ — BÍN zná „kredit“ jen ve středním rodě, korpus 0×;
+  appka i zásady říkají „inneign“ (9567×) → nápověda sjednocena na inneign, štítek „lesturarkort“ → Rúnakort (VOCAB.card). V appce
+  `rs_credits_desc` ještě nesl kalk „frjáls spá“. Chybné tvary do `BAD_PATTERNS`.
+- Affected doc(s): `RUNAR_BACKLOG.md` část 39 (zbytek islandské nápovědy) — v témže commitu.

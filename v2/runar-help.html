@@ -336,28 +336,28 @@ const CONTENT = {
     'tp-sub':        'LEIÐARVÍSIR & SPURNINGAR',
     'back-btn':      '← TIL BAKA',
     'h-title':       'VELKOMIN Í HRING RÚNARS',
-    'h-sub':         'Leiðarvísir fyrir þá sem hafa fundið leið hingað. Taktu það sem gagnast. Skildu eftir það sem gerir það ekki.',
+    'h-sub':         'Leiðarvísir fyrir þá sem hafa fundið leið hingað. Taktu það sem gagnast þér og skildu hitt eftir.',
     's1-lbl':        'HVERNIG LESTUR VIRKAR',
-    's1-body':       `<p>Þú kemur með spurningu — eða án hennar. Báðar eru velkomnar.</p>
-      <p>Áður en steinarnir tala spyr Rúnar nokkurra hluta: nafns þíns, þess sviðs lífsins sem þú ert að ganga í gegnum, og hvað þú ert að leita að. Ekki til að dæma. Til að hlusta nákvæmar.</p>
+    's1-body':       `<p>Þú mátt koma með spurningu — eða koma án hennar. Hvort tveggja er velkomið.</p>
+      <p>Áður en steinarnir tala spyr Rúnar þig nokkurra spurninga. Hann spyr um nafnið þitt, um það svið lífsins sem þú ert að fást við og um það sem þú leitar að. Ekki til að dæma, heldur til að hlusta betur.</p>
       <p>Síðan dregurðu. Ein rún af tuttugu og fimm — Auða rúnin, rún hins óþekkta, er ein þeirra. Það sem kemur á eftir er einn samfelldur lestur: það sem rúnin ber þér í dag, sagt í gegnum eina mynd.</p>
       <p><em>Rúnirnar ákveða ekki leið þína. Þær hjálpa þér að muna hana.</em></p>`,
     's2-lbl':        'REIKNINGUR ÞINN',
-    'th-tier':       'STIG', 'th-what': 'HVAÐ FÆR ÞÚ',
+    'th-tier':       'STIG', 'th-what': 'HVAÐ FÆRÐ ÞÚ',
     'td-visitor':    'Dragðu rún og sjáðu hver kemur til þín; fimm rúnir í Safni rúna og lífsrúnin þín standa þér opnar. Rúnar les í rúnirnar fyrir þá sem ganga með honum — skráning er ókeypis.',
     'td-seeker':     tierFeatures('rune_seeker', 'is').join(' '),
-    'td-card':       'Kreditarnir renna aldrei út og fylgja reikningnum þínum á milli tækja.',   // 2026-10-10: viz EN; dřív „lestrar eru gengnar“ (rod), „lesturarkort“
+    'td-card':       'Inneignin rennur aldrei út og fylgir reikningnum þínum á milli tækja.',   // 2026-10-10: viz EN; inneign jako v appce a zásadách (vypůjčené kredit BÍN zná jen ve středním rodě)
     'td-standard':   tierFeatures('standard', 'is').join(' '),
     'td-premium':    tierFeatures('premium', 'is').join(' '),
-    's3-lbl':        'LESTURARKORT',
+    's3-lbl':        'RÚNAKORT',   // 2026-10-10: jméno karty = VOCAB.card
     's3-physical-title': 'LÍKAMLEGT KORT',
-    's3-physical-body':  `<p>Fæst í Agndofa búð á Íslandi og á netinu á <a href="https://agndofa.is" target="_blank" style="color:var(--gold);opacity:0.85;">agndofa.is</a>. Lítið kort með einstökum kóða. Innleysið í appinu — kreditarnir bætast við samstundis.</p>`,
+    's3-physical-body':  `<p>Fæst í verslun Agndofa á Íslandi og á netinu á <a href="https://agndofa.is" target="_blank" style="color:var(--gold);opacity:0.85;">agndofa.is</a>. Lítið kort með einstökum kóða. Innleystu kóðann í appinu — inneignin bætist við samstundis.</p>`,
     's3-online-title':   'NETKAUP',
-    's3-online-body':    `<p>Kreditarnir verða fljótlega tiltækir til kaups beint í gegnum appið, án líkamlegs korts.</p>`,
+    's3-online-body':    `<p>Brátt verður hægt að kaupa inneign beint í appinu, án þess að kaupa kort.</p>`,
     's3-redeem-title':   'HVERNIG Á AÐ INNLEYSA',
-    's3-redeem-body':    `<p>Skráðu þig inn → opnaðu valmyndina → ýttu á <strong>+ Gjafakort</strong> → sláðu inn kóðann → INNLEYSA. Kreditarnir bætast við samstundis. Þeir renna aldrei út. Þeir fylgja reikningnum þínum.</p>`,
+    's3-redeem-body':    `<p>Skráðu þig inn → opnaðu valmyndina → ýttu á <strong>+ Gjafakort</strong> → sláðu inn kóðann → INNLEYSA. Inneignin bætist við samstundis. Hún rennur aldrei út og fylgir reikningnum þínum.</p>`,
     's3-price-title':    'VERÐLISTI',
-    'pt-card': 'KORT', 'pt-credits': 'KREDITARNIR',
+    'pt-card': 'KORT', 'pt-credits': 'INNEIGN',
     's4-lbl':  'RÖDD RÚNARS',
     's4-body': `<p>Í safninu á hver rún sín eigin orð frá Rúnari — þú getur lesið þau og hlustað á þau í rödd hans. Tekin upp fyrirfram. Kennsla hans um rúnina, ekki lesturinn þinn.</p>
       <p>Rúnar getur líka lesið spána þína upphátt. Engin upptaka — í hvert skipti öðruvísi, og alltaf hans eigin rödd.</p>
@@ -374,10 +374,10 @@ const CONTENT = {
       <p>Til að eyða reikningnum þínum, opnaðu valmyndina og veldu <strong>Eyða reikningi</strong>. Allt er fjarlægt samstundis. Lestu fulla <a href="runar-privacy.html" style="color:var(--gold);opacity:0.85;">persónuverndarstefnu</a> okkar.</p>`,
     's8-lbl':     'ALGENGAR SPURNINGAR',
     'contact-lbl':  'SPURNINGAR & ENDURGJÖF',
-    'contact-text': 'Eitthvað líður ekki vel, eða þú vilt deila einhverju. Við lesum allt.',
+    'contact-text': 'Skrifaðu okkur ef eitthvað er ekki eins og það á að vera eða ef þú vilt deila einhverju. Við lesum allt.',
     faq: [
-      { q: 'Renna kreditarnir út?',                a: 'Aldrei. Þeir eru þínir þar til þú notar þá.' },
-      { q: 'Get ég notað kreditana á mismunandi tækjum?', a: 'Já. Kreditarnir eru bundnir við reikninginn þinn, ekki tækið.' },
+      { q: 'Rennur inneignin út?',                 a: 'Aldrei. Hún er þín þar til þú notar hana.' },
+      { q: 'Get ég notað inneignina á mismunandi tækjum?', a: 'Já. Inneignin er bundin við reikninginn þinn, ekki tækið.' },
       { q: 'Kóðinn minn virkar ekki.',             a: 'Gakktu úr skugga um að þú sért skráður inn. Kóðar líta svona út: FEHU-XXXX-XXXX. Ef það virkar enn ekki, skrifaðu á runar@therunekeeper.com.' },
       { q: 'Hvenær endurnýjast mánaðarlegir lestrar?', a: 'Fyrsta dag hvers mánaðar. Appið lætur þig vita þegar þeir endurnýjast.' },
       { q: 'Er Rúnar gervigreind?',                a: 'Orð Rúnars eru mótuð af GPT frá OpenAI — eða af Claude frá Anthropic þegar OpenAI svarar ekki. ElevenLabs ljær honum rödd. Persóna hans var skrifuð af fólkinu á bak við Agndofa. Greindin er gervi. Tilgangurinn er það ekki.' },

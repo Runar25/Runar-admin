@@ -71,6 +71,14 @@ BAD_PATTERNS = [
     ('sína eigin myndir', 'sínar eigin myndir', 'myndir = ž. mn. č.; korpus 0 × 122'),
     ('fulla króniku',    'alla dagbókina',    'pravopis króníka + kalk „full chronicle“'),
     ('full kronika',     '(check context)',   'pravopis króníka'),
+    # 2026-10-10 zbytek nápovědy a appky (is-gpt-check + GreynirCorrect + korpus):
+    ('frjáls spá',       'ókeypis spá',       'kalk z EN "free" (rs_credits_desc)'),
+    ('kreditarn',        'inneign',           'kredit je v BÍN jen střední rod; korpus „kreditarnir“ 0 × „inneign“ 9567'),
+    ('kreditan',         'inneignina',        'totéž ve 4. pádě'),
+    ('lesturarkort',     'Rúnakort',          'chybná složenina (lestur → lestrar-); jméno karty = VOCAB.card'),
+    ('Innleysið',        'Innleystu',         'appka tyká: rozkaz 2. os. j. č.'),
+    ('HVAÐ FÆR ÞÚ',      'HVAÐ FÆRÐ ÞÚ',      'fá: þú færð'),
+    ('Báðar eru velkomnar', 'Hvort tveggja er velkomið', 'otázka a její absence nejsou dvě ženská jména'),
     # 2026-10-10: „frjáls“ = svobodný, ne „zdarma“ (= ókeypis). Kalk z EN „free reading“ stál v onboarding_label_is, TIER_FEATURES
     # a rs_exhausted_* — korpus „frjáls spá“ 0×, „ókeypis aðgangur“ 596×.
     ('ein frjáls',       'ein ókeypis',       'kalk z EN "free": zdarma = ókeypis'),

@@ -18,11 +18,19 @@
 #   python -X utf8 is-gpt-check.py <soubor>           · text na řádek
 #   python -X utf8 is-gpt-check.py --samotest         · obhajoba nástroje: známé chyby musí najít, správné věty nechat
 # Volá API → hlídač ~/.claude/runar-api-guard.py chce RUNAR_API_ANO=<počet volání> a RUNAR_API_ZAMER=„…“ (1 volání = až 40 textů).
-import io, sys, os, json, urllib.request, urllib.error
+# Náklady (KUKY 2026-10-10 „chci aby jsi mapoval kolik přesně stojí oprava IS pomocí GPT“): každé zaplacené volání se zapíše SAMO —
+# tokeny, které vrátilo API, do ~/runar-eval/is-gpt-check-naklady.jsonl; cenu počítá výpočet appky (readingCostUsd nad MODEL_PRICES)
+# přes scripts/utils/is_gpt_naklady.js. Na konci běhu se vypíše cena běhu; souhrn: node scripts/utils/is_gpt_naklady.js.
+# Zapisuje se HNED po odpovědi, ještě před čtením obsahu — i volání, jehož odpověď pak nejde přečíst, bylo zaplacené.
+import io, sys, os, json, time, subprocess, urllib.request, urllib.error
 
 MODEL = 'gpt-6-sol'
 KLIC = os.path.join(os.path.expanduser('~'), '.claude', 'runar-openai-key.txt')
 DAVKA = 40
+TU = os.path.dirname(os.path.abspath(__file__))
+ZAZNAM = os.path.join(os.path.expanduser('~'), 'runar-eval', 'is-gpt-check-naklady.jsonl')
+REZIM = 'text'      # main() přepíše: samotest | text | soubor | stdin — kvůli souhrnu
+BEH = []            # náklady volání tohoto běhu (usd může být None, když ceník model nezná)
 
 ZADANI = """You are a meticulous native Icelandic proofreader (málfarsráðgjafi) checking short UI texts and legal notices for an app.
 For each numbered text, report ONLY definite errors that a careful native speaker would correct:
@@ -54,12 +62,53 @@ def zavolej(texty):
             d = json.load(r)
     except urllib.error.HTTPError as e:
         raise RuntimeError('HTTP %d: %s' % (e.code, e.read().decode('utf-8', 'replace')[:300]))
+    zapis_naklady(d, len(texty))
     obsah = d['choices'][0]['message']['content']
     vys = json.loads(obsah)['vysledky']
     podle = {int(v['cislo']): v.get('chyby') or [] for v in vys}
     if sorted(podle) != list(range(1, len(texty) + 1)):
         raise RuntimeError('odpověď nepokrývá všechny texty: ' + str(sorted(podle)))
     return [podle[i + 1] for i in range(len(texty))]
+
+
+def zapis_naklady(d, n_textu):
+    """Tokeny z odpovědi → cena (výpočet appky) → řádek do záznamu. Chyba zápisu korekturu nezastaví, jen se ohlásí."""
+    u = dict(d.get('usage') or {})
+    u['model'] = MODEL   # cena podle modelu, který jsme objednali; API může vrátit jméno s datem verze (model_api)
+    usd = None
+    try:
+        r = subprocess.run(['node', os.path.join(TU, 'scripts', 'utils', 'is_gpt_naklady.js'), '--cena', json.dumps(u)],
+                           capture_output=True, text=True, timeout=60)
+        usd = None if r.stdout.strip() in ('', 'null') else float(r.stdout.strip())
+    except Exception as e:
+        print('⚠ cenu se nepodařilo spočítat (%s) — tokeny se zapíšou, souhrn ji dopočítá' % e)
+    radek = {'cas': time.strftime('%Y-%m-%d %H:%M:%S'), 'model': MODEL, 'model_api': d.get('model'), 'rezim': REZIM,
+             'texty': n_textu, 'usage': u, 'usd': usd, 'zamer': os.environ.get('RUNAR_API_ZAMER', '')[:300]}
+    if not d.get('usage'):
+        print('⚠ API nevrátilo usage — cena tohoto volání neznámá')
+    BEH.append(radek)
+    try:
+        os.makedirs(os.path.dirname(ZAZNAM), exist_ok=True)
+        with io.open(ZAZNAM, 'a', encoding='utf-8') as f:
+            f.write(json.dumps(radek, ensure_ascii=False) + '\n')
+    except Exception as e:
+        print('⚠ záznam nákladů se nepodařilo zapsat (%s): %s' % (ZAZNAM, e))
+
+
+def vypis_cenu():
+    if not BEH:
+        return
+    known = [r['usd'] for r in BEH if r['usd'] is not None]
+    u = [r['usage'] for r in BEH]
+    vstup = sum(x.get('prompt_tokens', 0) for x in u)
+    cache = sum((x.get('prompt_tokens_details') or {}).get('cached_tokens', 0) for x in u)
+    vystup = sum(x.get('completion_tokens', 0) for x in u)
+    prem = sum((x.get('completion_tokens_details') or {}).get('reasoning_tokens', 0) for x in u)
+    cena = ('$%.4f' % sum(known)) + ('' if len(known) == len(BEH) else ' + %d volání bez ceny' % (len(BEH) - len(known)))
+    n = sum(r['texty'] for r in BEH)
+    texty = '%d %s' % (n, 'text' if n == 1 else 'texty' if 2 <= n <= 4 else 'textů')
+    print('Cena běhu: %s · %d volání · %s · tokeny: vstup %d (z cache %d), výstup %d (z toho přemýšlení %d). '
+          'Souhrn: node scripts/utils/is_gpt_naklady.js' % (cena, len(BEH), texty, vstup, cache, vystup, prem))
 
 
 def zkontroluj(texty):
@@ -104,7 +153,9 @@ def tiskni(vysledky):
 
 
 def main():
+    global REZIM
     a = sys.argv[1:]
+    REZIM = 'samotest' if a[:1] == ['--samotest'] else 'text' if a[:1] == ['--text'] else 'soubor' if a else 'stdin'
     if a and a[0] == '--samotest':
         texty = [t for t, _ in SAMOTEST]
         try:
@@ -133,9 +184,12 @@ def main():
     except Exception as e:
         print('NEZKONTROLOVÁNO — %s — výsledek NENÍ čistý.' % e); sys.exit(2)
     n = tiskni(vys)
-    print('\n%d textů, %d s nálezem (model %s).' % (len(texty), n, MODEL))
+    print('\n%d %s, %d s nálezem (model %s).' % (len(texty), 'text' if len(texty) == 1 else 'texty' if 2 <= len(texty) <= 4 else 'textů', n, MODEL))
     sys.exit(1 if n else 0)
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    finally:
+        vypis_cenu()   # i po chybě a po sys.exit — zaplacené volání se ukáže vždy
