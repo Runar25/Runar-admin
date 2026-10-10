@@ -9757,3 +9757,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   (support.google.com/drive/answer/2375102); že tam končí i smazání přes Drive pro počítač, dokumentace výslovně neříká — proto „may“.
 - **Hranice:** maže se s denní zálohou; když je počítač vypnutý, smaže se při příštím běhu. Islandština čeká na Yfirlestur (nedostupný).
 - Affected doc(s): `RUNAR_PRIVACY.md` (bod 5), `RUNAR_BACKLOG.md` část 33 — v témže commitu.
+
+## 2026-10-10 (37) — Návštěvník po tahu vidí u runy popis jejího tvaru ze Safn rúna
+
+- **Rozhodl:** KUKY 2026-10-10: *„můžeme pro visitora po tažení runy bez textu přidat vedle runy text popisu tvaru runy, co máme v rune
+  collection“* (snímek kolekce jako vzor vzhledu).
+- **Co:** v pruhu s taženou runou (po „DRAW THIS RUNE“) je u návštěvníka kámen vlevo a vpravo jméno runy a pod ním popis tvaru —
+  text z `UI_TEXT.coll_shape` (týž jako v kolekci, jedno místo), vzhled `.coll-detail-shape`. Kreslí ho `_paintReadingHeader`, takže po
+  přepnutí jazyka přijde v novém jazyce. Přihlášený popis nevidí (dostane čtení).
+- **Ověřeno v prohlížeči:** počítač i mobil, EN i IS (Perth/Perþ); styl popisu změřený shodně s kolekcí (Cormorant kurzíva 14,72 px,
+  řádkování 27,23 px, `--muted`); přepnutí jazyka po tahu; přihlášený bez popisu; ㉼ OK, smoke 66/66.
+- Affected doc(s): —

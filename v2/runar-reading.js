@@ -206,8 +206,16 @@ function _paintReadingHeader() {
   var runy = _hdr.runes.map(function (r, i) {
     return '<span class="rlbl-glyph" data-rune="' + rn(r) + '" data-kw="' + rk(r) + '" data-seg="' + i + '">' + runeSvg(r, { frame: true, cls: 'rlbl-stone' }) + '</span>';
   });
+  // Návštěvník čtení nedostane — po tahu má u runy aspoň popis jejího tvaru ze Safn rúna (KUKY 2026-10-10: „můžeme pro visitora po
+  // tažení runy bez textu přidat vedle runy text popisu tvaru runy, co máme v rune collection“). Text = UI_TEXT.coll_shape (jedno
+  // místo, §20), vzhled = .coll-detail-shape. Kreslí se tady, ne v _showVisitorJoin, aby po přepnutí jazyka přišel v novém (§14).
+  var _tv = (_hdr.single && !currentUser) ? t('coll_shape') : null;
+  var tvar = (_tv && typeof _tv === 'object' && _tv[_hdr.runes[0].n]) || '';
   el.innerHTML = _hdr.single
-    ? runy[0] + '<span class="rlbl-name">' + rn(_hdr.runes[0]).toUpperCase() + '</span>' + _castLineHtml(_hdr.cast)
+    ? (tvar
+        ? '<span class="rlbl-s-tvarem">' + runy[0] + '<span class="rlbl-tvar-sl"><span class="rlbl-name">' + rn(_hdr.runes[0]).toUpperCase()
+          + '</span><span class="rlbl-tvar">' + escapeHtml(tvar) + '</span></span></span>'
+        : runy[0] + '<span class="rlbl-name">' + rn(_hdr.runes[0]).toUpperCase() + '</span>') + _castLineHtml(_hdr.cast)
     : runy.join('<span class="rlbl-sep">·</span>') + _castLineHtml(_hdr.cast);
   el.classList.remove('pulsing');
   if (!_hdr.single && l1) l1.textContent = t('layer1_lbl');
