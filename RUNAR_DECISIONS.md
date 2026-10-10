@@ -9308,3 +9308,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   chybí (SPF stačí, DMARC projde) — doporučeno doplnit.
 - Odvolává se na: 2026-10-09 (6).
 - Affected doc(s): `RUNAR_BACKLOG.md` (Přihlášení bez Gmailu a uzavřený test) — v témže commitu.
+
+## 2026-10-10 (7) — Kontakt pro dotazy k Rúnarovi = runar@therunekeeper.com; schránku třídí Claude, odesílá jen s ownerovým ano
+
+- **Rozhodl:** KUKY 2026-10-10: *„vytvořili jsme pracovní e-mail u Google runar@therunekeeper.com pro komunikaci s testery… jsi schopný
+  si tu korespondenci přebírat, až jí bude hodně, a sortovat?“* · *„5. ano, udělej všechno“* · *„je potřeba, aby i u noreply bylo jasně
+  viditelné, kam může uživatel poslat dotaz!“* **Provedl:** CODE-tune.
+- **Co:** nápověda (karta „Questions & feedback“ a FAQ u nefunkčního kódu, EN i IS) → `runar@therunekeeper.com` (do té doby
+  info@agndofa.is). E-mail s přihlašovacím kódem nese výrazný řádek *„Spurningar? Skrifaðu á runar@therunekeeper.com — ekki svara
+  þessum pósti.“* / *„Questions? Write to runar@therunekeeper.com — please do not reply to this email.“* — odesílatel zůstává
+  `noreply@`. Stránka soukromí dál `info@agndofa.is` (správce údajů je Agndofa ehf.).
+- **Schránka:** Gmail konektor připojený k runar@therunekeeper.com; štítky Testeři · Přihlášení · Chyby · Nápady · Ostatní. Claude třídí,
+  shrnuje a píše koncepty odpovědí; **neodešle nic bez ownerova výslovného ano** a filtr založí jen s ním. Postup → memory
+  `schranka-runar-gmail` (aby nevisel na paměti session, §30).
+- **Ověřeno:** nápověda EN i IS v prohlížeči; IS řádku v e-mailu korpusem („ekki svara þessum“ 95, „svara þessum pósti“ 213).
+  Šablonu v Supabase musí owner vložit znovu (zdroj `supabase/templates/prihlaseni-kod.html`).
+- Odvolává se na: 2026-10-10 (6).
