@@ -631,7 +631,10 @@
             <input class="num" id="tree-dob-m" type="number" placeholder="Month" min="1" max="12"   oninput="this.value=this.value.slice(0,2);if(+this.value>12)this.value=12;if(+this.value<0)this.value=''">
             <!-- 2026-10-09: pole roku pryč — rok se nezadává (report 58a0c728); runa ani islandský měsíc ho nepotřebují. -->
           </div>
-          <button class="btn-full sec" onclick="setTreeDOB()" style="max-width:300px;margin:16px auto 0;display:block;white-space:nowrap;" id="tree-dob-btn">REVEAL MY LIFE RUNE →</button>
+          <button class="btn-full sec" onclick="setTreeDOB()" style="max-width:300px;margin:16px auto 0;display:block;white-space:nowrap;" id="tree-dob-btn">REVEAL YOUR LIFE RUNE →</button>
+          <!-- 2026-10-10: text přepisuje updateUIText z UI_TEXT tree_reveal_btn (EN „REVEAL YOUR LIFE RUNE“, IS „OPINBERA LÍFSRÚNUNA“);
+               tady stálo „MY“ — rozešlo se s UI_TEXT a Cowork z toho vyvodil, že je tlačítko natvrdo anglicky (HANDOFF64 B1). -->
+
         </div>
 
         <!-- State: RS teaser (has DOB, not Standard+) -->
