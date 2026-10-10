@@ -9,6 +9,10 @@
 // Stavy: po načtení · po návratu do Spá z každé záložky · Start over (resetReader) · další tah (drawAnother) · přepnutí jazyka ·
 // simulovaný přihlášený (currentUser podvržený jen v prohlížeči testu; nic se nenačítá ani neukládá): Spá s fotkou, po startu tahu
 // všech pět výkladů. Samotest na konci: kontrola sama rozbije Norny a fotku a musí to poznat.
+// Chyby JS za běhu (od 2026-10-10): každá nezachycená výjimka během celého běhu — i při načítání stránky, v setTimeout a v promise
+// (Runtime.exceptionThrown) — je vada. Důvod: při úklidu mrtvého kódu (g) prošla ㉼ OK i na stromě, kde start appky padal na
+// ReferenceError (vrácené volání smazaného _initPrivacyBanner v DOMContentLoaded) — fotka, záložky i runy stály, jen zbytek startu
+// se nespustil. Samotest: volání neexistující funkce v setTimeout musí kontrola zachytit.
 // Neumí: skutečné přihlášení, mobilní rozložení, hlas, čtení přes proxy (návštěvník proxy nevolá a test tah neodesílá).
 // Spuštění: node scripts/verify_zaklad_produkce.js
 'use strict';
@@ -46,15 +50,23 @@ async function prohlizec() {
   const [port, cesta] = fs.readFileSync(soubor, 'utf8').trim().split('\n');
   const ws = new WebSocket('ws://127.0.0.1:' + port + cesta.trim());
   await new Promise((ok, err) => { ws.onopen = ok; ws.onerror = () => err(new Error('DevTools WebSocket se nepřipojil')); });
-  let id = 0; const cekaji = new Map();
-  ws.onmessage = (e) => { const m = JSON.parse(e.data); if (m.id && cekaji.has(m.id)) { cekaji.get(m.id)(m); cekaji.delete(m.id); } };
+  let id = 0; const cekaji = new Map(); const vyjimky = [];
+  ws.onmessage = (e) => {
+    const m = JSON.parse(e.data);
+    if (m.id && cekaji.has(m.id)) { cekaji.get(m.id)(m); cekaji.delete(m.id); }
+    else if (m.method === 'Runtime.exceptionThrown') vyjimky.push(m.params.exceptionDetails);   // nezachycená chyba JS (i v setTimeout a v promise)
+  };
   const posli = (method, params, sessionId) => new Promise((resolve, reject) => {
     const i = ++id; cekaji.set(i, (m) => (m.error ? reject(new Error(method + ': ' + m.error.message)) : resolve(m.result)));
     ws.send(JSON.stringify({ id: i, method, params: params || {}, sessionId }));
   });
   const zavri = () => { try { ws.close(); } catch (e) {} try { proc.kill(); } catch (e) {} try { fs.rmSync(dir, { recursive: true, force: true }); } catch (e) {} };
-  return { posli, zavri };
+  return { posli, zavri, vyjimky };
 }
+const popisVyjimky = (d) => {
+  const t = (d.exception && d.exception.description) || d.text || '?';
+  return t.split('\n')[0] + (d.url ? ' (' + d.url.replace(/^.*\/v2\//, '') + ':' + (d.lineNumber + 1) + ')' : '');
+};
 
 // Měření základu — běží V PROHLÍŽEČI. Vrací seznam chyb (prázdný = v pořádku). Jediné místo, kde je základ vyjmenovaný.
 const ZAKLAD = String.raw`(function (stav) {
@@ -86,6 +98,7 @@ async function main() {
       if (r.exceptionDetails) throw new Error('chyba v appce: ' + (r.exceptionDetails.exception && r.exceptionDetails.exception.description || r.exceptionDetails.text));
       return r.result.value;
     };
+    await b.posli('Runtime.enable', {}, sessionId);   // od teď chodí Runtime.exceptionThrown — i z načítání stránky
     await b.posli('Page.navigate', { url }, sessionId);
     let pripraveno = false;
     for (let i = 0; i < 120 && !pripraveno; i++) {
@@ -119,14 +132,20 @@ async function main() {
     await cekej(300);
     const st = await ev(ZAKLAD + '("samotest")');
     if (!sabot || !st.some((c) => /mode-btn-norns/.test(c)) || !st.some((c) => /fotka skrytá/.test(c))) chyby.push('SAMOTEST: kontrola nepoznala skryté Norny nebo fotku — ' + JSON.stringify(st));
+    // Samotest chyb za běhu: volání funkce, která neexistuje, mimo ev() (v setTimeout) — musí ho zachytit Runtime.exceptionThrown
+    await ev("setTimeout(function () { __zakladSamotestNeexistuje(); }, 0); 1");
+    await cekej(400);
+    const sam = b.vyjimky.filter((d) => /__zakladSamotestNeexistuje/.test(popisVyjimky(d)));
+    if (!sam.length) chyby.push('SAMOTEST: kontrola nepoznala chybu JS za běhu (volání neexistující funkce v setTimeout)');
+    b.vyjimky.filter((d) => !sam.includes(d)).forEach((d) => chyby.push('chyba JS za běhu: ' + popisVyjimky(d)));
   } finally {
     b.zavri(); srv.close();
   }
   if (chyby.length) {
     chyby.forEach((c) => console.log('  ' + c));
-    console.log('FAIL  základ produkce: ' + chyby.length + ' vad — fotka, záložky, výklady a runy nesmí z appky zmizet (KUKY 2026-10-10)');
+    console.log('FAIL  základ produkce: ' + chyby.length + ' vad — fotka, záložky, výklady a runy nesmí z appky zmizet a appka nesmí padat (KUKY 2026-10-10)');
     process.exit(1);
   }
-  console.log('OK    základ produkce v prohlížeči: fotka, 4 záložky, 5 výkladů, 25 run (tah i Safn rúna) — 9 stavů návštěvníka i přihlášeného, samotest chytá skryté Norny i fotku');
+  console.log('OK    základ produkce v prohlížeči: fotka, 4 záložky, 5 výkladů, 25 run (tah i Safn rúna), žádná chyba JS za běhu — 9 stavů návštěvníka i přihlášeného, samotest chytá skryté Norny, fotku i chybu JS');
 }
 main().catch((e) => { console.log('FAIL  základ produkce: ' + e.message); process.exit(1); });
