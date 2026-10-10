@@ -1987,6 +1987,18 @@ se liší komentáři z kontroly 2026-10-09 (kód stejný, nasazovat netřeba). 
     data zůstanou, e-mail týden předem). Dnes nehrozí (denní provoz; nejspíš i denní záloha — jestli se dotazy přes CLI počítají
     jako aktivita, dokumentace neříká). Zmizí s přechodem na Pro před produkcí (DECISIONS 2026-10-10 (9)).
 
+### Část 16 — webhook hlášení, tabulky po zrušených funkcích, README (2026-10-10)
+**Platí:** trigger `notify-report` na `bug_reports` posílá hlavičku s tajemstvím a funkce odpovídá 200 (`net._http_response`,
+6 posledních odpovědí, víc pg_net nedrží). `runar_character` používá appka i shrine; `rate_limits` a `allowed_emails` čtou DB funkce.
+**Opraveno rovnou:** `README.md` popisoval nástroj z verze 1 (shrine jako appka, 2 funkce místo 10, korekce „na každý výstup“ —
+post-processor je pryč od 2026-08-09, návody na jazyk a tarif neodpovídaly kódu, neexistující `index.html`) → krátký rozcestník,
+který nic neopisuje a odkazuje na vlastníky (§20).
+
+**PRO OWNERA:**
+19. ⚪ **Dvě tabulky bez kódu:** `knowledge_base` (3 výklady run z května, záložka Teach už do ní nepíše) a `gpt_reviews` (6 rozborů
+    GPT z adminových čtení; funkce zrušena 2026-10-09, zápis v `RUNAR_PRIVACY.md`). Nic na nich nevisí; smazat nebo nechat jako historii
+    rozhodne owner (data maže owner). Obě jsou v denní záloze.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
