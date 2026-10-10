@@ -448,7 +448,7 @@ function startReading() {
   var knownUser = isMine && userName && _lifeRuneNum;
   // Use stored name if own reading and name is known
   var name = knownUser ? userName : document.getElementById('r-name').value.trim();
-  if (!name) name = lang === 'is' ? 'þú' : 'you';
+  if (!name) name = t('name_you');   // §12; 2026-10-10 z UI_TEXT
   // Life rune from DB (own reading) or null (reading for someone else)
   var lifeRune = (isMine && _lifeRuneNum) ? RUNES[_lifeRuneNum - 1] : null;
   readerUser = { name, d: null, m: null, y: null, lifeRune,
@@ -611,7 +611,7 @@ async function readRune() {
   if (_spreadMode === 'kriz') {
     // Tier check — block Visitor (anonymous) only
     if (!currentUser) {
-      showToast(lang === 'is' ? 'Skráðu þig inn til að nota Áttavitann.' : 'Sign in to use the Compass spread.');
+      showToast(t('signin_spread_kriz'));   // 2026-10-10: texty toastů z UI_TEXT (ráčna ㉸)
       _setSpreadMode('single'); return;
     }
     if (_spreadCount(_spread5Runes) === 5 && !readerRune) {
@@ -635,7 +635,7 @@ async function readRune() {
   if (_spreadMode === 'horseshoe') {
     // Tier check — block Visitor (anonymous) only; rune_seeker can use with rune readings
     if (!currentUser) {
-      showToast(lang === 'is' ? 'Skráðu þig inn til að nota Skeifuna.' : 'Sign in to use the Horseshoe spread.');
+      showToast(t('signin_spread_horseshoe'));
       _setSpreadMode('single'); return;
     }
     if (_spreadCount(_spread7Runes) === 7 && !readerRune) {
@@ -659,7 +659,7 @@ async function readRune() {
   if (_spreadMode === 'yggdrasil') {
     // Visitor gate — block anonymous only; all signed-in tiers can access (RS via credits)
     if (!currentUser) {
-      showToast(lang === 'is' ? 'Skráðu þig inn til að nota Yggdrasil.' : 'Sign in to use Yggdrasil.');
+      showToast(t('signin_spread_yggdrasil'));
       _setSpreadMode('single'); return;
     }
     // Seasonal info: full power Dec 14–28, reading available year-round
@@ -667,7 +667,7 @@ async function readRune() {
     var _ygM = _ygNow.getMonth() + 1;
     var _ygD = _ygNow.getDate();
     if (!(_ygM === 12 && _ygD >= 14 && _ygD <= 28) && !isAdmin(currentUser.email)) {
-      showToast(lang === 'is' ? 'Yggdrasil er opinn — en krafturinn er mestur 14.–28. desember.' : 'Yggdrasil is open — its full power returns December 14–28.');
+      showToast(t('yggdrasil_power_toast'));
     }
     if (_spreadCount(_spread9Runes) === 9 && !readerRune) {
       document.getElementById('reader-rune-card').style.display = 'none';
@@ -690,7 +690,7 @@ async function readRune() {
   if (_spreadMode === 'norns') {
     // Visitor gate — block anonymous users
     if (!currentUser) {
-      showToast(lang === 'is' ? 'Skráðu þig inn til að nota Nornirnar.' : 'Sign in to use the Norns spread.');
+      showToast(t('signin_spread_norns'));
       _setSpreadMode('single'); return;
     }
     if (_spreadCount(_spread3Runes) === 3 && !readerRune) {
@@ -1275,7 +1275,7 @@ async function generateVoice() {
         ? tp('err_voice_month', { n: (typeof VOICE_MONTHLY_LIMIT !== 'undefined' ? VOICE_MONTHLY_LIMIT : 5) })
         : res.status === 429
         ? t('err_rate_limited')
-        : (lang === 'is' ? 'Rödd Rúnars hvílir — reyndu aftur eftir andartak.' : 'The voice of Rúnar is resting — please try again in a moment.');
+        : t('voice_resting');
       setSt('st-voice', msg, 'err');
       btn.textContent = t('voice_btn'); btn.disabled = false; return;
     }

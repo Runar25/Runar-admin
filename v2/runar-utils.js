@@ -804,10 +804,15 @@ function _runeQuestion(rune, lang) {
   var i = p.indexOf(':');
   var q = (i !== -1 ? p.slice(i + 1) : p).trim();
   if (!q) return '';
-  return lang === 'is'
-    ? ' Láttu hana eiga rót í spurningu rúnarinnar („' + q + '“) en segðu hana með þínum eigin orðum.'
-    : " Let it grow out of the rune's question (\"" + q + "\"), but say it in your own words.";
+  var r = RUNE_Q_LINE[lang === 'is' ? 'is' : 'en'];
+  return r[0] + q + r[1];
 }
+// Věta s otázkou runy — 2026-10-10 (ráčna ㉸) z větve `lang === 'is' ? …` do dat po jazycích; bajty promptu beze změny.
+// [0] = text před otázkou, [1] = za ní.
+var RUNE_Q_LINE = {
+  is: [' Láttu hana eiga rót í spurningu rúnarinnar („', '“) en segðu hana með þínum eigin orðum.'],
+  en: [" Let it grow out of the rune's question (\"", "\"), but say it in your own words."],
+};
 
 // ─── VARIABILITY POOLS (V2) ──────────────────────────────────────
 // DEAD CODE (kept for history, NOT wired). WHY / WHO / WHEN:

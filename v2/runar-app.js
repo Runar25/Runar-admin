@@ -367,8 +367,8 @@ function _initPrivacyBanner() {}
 
 function displayName() {
   if (userName) return userName;
-  if (currentUser) return lang === 'is' ? 'þú' : 'you';
-  return lang === 'is' ? 'Gestur' : 'Visitor';
+  if (currentUser) return t('name_you');          // §12; 2026-10-10 z UI_TEXT (dřív natvrdo)
+  return tierLabel('free_trial', lang);             // jméno tieru z TIERS (§15) — Visitor / Gestur
 }
 
 function showTopbarGreeting() {
@@ -701,9 +701,10 @@ function _updateAreaSeekLabels() {
   const _isVisitor = !currentUser;
   const _isRSnoCredits = currentUser && userTier === 'rune_seeker' && userCredits <= 0;
   const _lockHint = _isVisitor
-    ? ' <span class="visitor-lock-hint">' + (lang === 'is' ? '· Gerast Leitandi til að opna' : '· Become a Rune Seeker to unveil') + '</span>'
+    ? ' <span class="visitor-lock-hint">' + tp('lock_become_rs', { tier: tierLabel('rune_seeker', lang) }) + '</span>'
     : _isRSnoCredits
-      ? ' <span class="visitor-lock-hint">' + (lang === 'is' ? '· Reading Gift Card opnar allt' : '· Reading Gift Card unveils all') + '</span>'
+      // 2026-10-10: jméno karty z VOCAB (§15) — dřív natvrdo „Reading Gift Card“, jinde v appce „Rune Reading Card“
+      ? ' <span class="visitor-lock-hint">' + tp('lock_card_unveils', { card: vl('card', lang) }) + '</span>'
       : '';
   const _optSpan = _isVisitor ? '' : ' <span class="opt">'+t('opt')+'</span>';
   // 2026-09-29 (report KUKY 11:32): „+“ za popiskem rozbalí jednu větu, co volba ve čtení dělá (toggleFormHint níž).
@@ -739,27 +740,24 @@ function _updateTrialTexts() {
 // Journal gate, auth modal consent, journal re-render, buildPills
 function _updateGateTexts() {
   // Journal tab label
-  setText('atab-journal', lang === 'is' ? '◌ LESTRAR' : '◌ JOURNAL');
+  // 2026-10-10 (ráčna ㉸, DECISIONS 2026-10-10 (1) bod 5): texty z UI_TEXT, znění beze změny.
+  setText('atab-journal', t('atab_journal'));
   // Journal gate — Visitor teaser
   const jgTxt = document.getElementById('journal-gate-txt');
-  if (jgTxt) jgTxt.innerHTML = lang === 'is'
-    ? 'Þú ert hér <strong>Gestur</strong>.<br>Dagbókin geymir hvern lestur svo enginn glatist.<br>Hún opnast þegar þú gerist <strong>Leitandi</strong> — skráning er ókeypis.'
-    : 'You walk here as a <strong>Visitor</strong>.<br>The journal keeps every reading, so none is lost.<br>It opens when you become a <strong>Rune Seeker</strong> — free to join.';
-  setText('journal-gate-btn', lang === 'is' ? 'GERAST LEITANDI →' : 'BECOME A RUNE SEEKER →');
+  if (jgTxt) jgTxt.innerHTML = t('journal_gate_txt');
+  setText('journal-gate-btn', t('become_rs_btn'));
   // Re-render journal if it's open (picks up new lang labels)
   if (activeAppTab === 'journal' && _journalCache.length > 0) renderJournal(_journalCache);
   // Single-source text updates for elements not covered elsewhere
-  setText('redeem-btn', lang === 'is' ? 'INNLEYSA' : 'REDEEM');
+  setText('redeem-btn', t('redeem_btn'));
   // Podnadpis slibuje e-mail jen tehdy, kdyz e-mailove prihlaseni opravdu je (AUTH_EMAIL_ENABLED). 2026-10-09: kód místo odkazu.
   setText('auth-modal-sub', (typeof AUTH_EMAIL_ENABLED !== 'undefined' && !AUTH_EMAIL_ENABLED)
     ? t('auth_modal_sub_google') : t('auth_modal_sub_code'));
   const _consentEl = document.getElementById('auth-consent-txt');
-  if (_consentEl) _consentEl.innerHTML = lang === 'is'
-    ? 'Með því að halda áfram samþykkir þú <a href="runar-privacy.html" target="_blank" rel="noopener">persónuverndarstefnu okkar</a>. Við geymum aðeins það sem þarf til að muna lestrana þín. Engin rakning, engar auglýsingar.'
-    : 'By continuing, you agree to our <a href="runar-privacy.html" target="_blank" rel="noopener">Privacy Policy</a>. We store only what is needed to remember your readings. No tracking, no ads.';
+  if (_consentEl) _consentEl.innerHTML = t('auth_consent_txt');   // IS: „lestrana þín“ → „lestrana þína“ (2026-10-10)
   // Auth-modal static strings (co-located with sub/consent; §6 keeps RÚNAR + Google)
-  setText('auth-modal-title', lang === 'is' ? 'GAKKTU INN Í HEIM RÚNARS' : "ENTER RÚNAR'S WORLD");
-  setText('auth-google-lbl',  lang === 'is' ? 'HALDA ÁFRAM MEÐ GOOGLE' : 'CONTINUE WITH GOOGLE');
+  setText('auth-modal-title', t('auth_modal_title'));
+  setText('auth-google-lbl',  t('auth_google_lbl'));
   // 2026-10-09: e-mailový blok z UI_TEXT (kód místo odkazu — runar-auth.js sendLoginCode); zelená plocha „MAGIC LINK SENT“ pryč.
   setText('auth-email-lbl',   t('auth_email_lbl'));
   setText('auth-magic-btn',   t('auth_code_send'));
@@ -783,12 +781,12 @@ function updateUIText() {
   // _updateReadingForm NE — text by pri prepnuti jazyka zustal anglicky.
   // `data-i18n` v HTML preklad nedela; cte ho jen runar-reporter.js.
   setText('reader-disclaimer', t('disclaimer'));
-  setText('atab-reading',    lang === 'is' ? '✦ SPÁ' : '✦ RUNE READING');
-  setText('atab-collection', lang === 'is' ? '◈ SAFN RÚNA' : '◈ RUNES COLLECTION');
-  setText('atab-tree', lang === 'is' ? '◈ TRÉ LÍFSINS' : '◈ TREE OF LIFE');
-  setText('atab-liferune', lang === 'is' ? '✧ LÍFSRÚNIN' : '✧ LIFE RUNE');
-  setText('hero-eyebrow',   lang === 'is' ? 'RÚNAVÖRÐURINN' : 'THE RUNE KEEPER');
-  setText('hero-eyebrow-m', lang === 'is' ? 'RÚNAVÖRÐURINN' : 'THE RUNE KEEPER');
+  setText('atab-reading',    t('atab_reading'));      // 2026-10-10: záložky a nadpis z UI_TEXT (ráčna ㉸)
+  setText('atab-collection', t('atab_collection'));
+  setText('atab-tree',       t('atab_tree'));
+  setText('atab-liferune',   t('atab_liferune'));
+  setText('hero-eyebrow',    t('hero_eyebrow'));
+  setText('hero-eyebrow-m',  t('hero_eyebrow'));
   setText('ui-title',   'Rúnar');
   setText('ui-title-m', 'Rúnar');
   updateSidePanelLang();

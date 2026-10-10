@@ -1103,10 +1103,13 @@ function _profileRule(jmeno, lang, key) {
 // mechanismus, ne GPT styl): jeden proud se dosud spolehal na 'one flow' a nahodu.
 // Zadna vzorova veta ani sloveso — obsah prechodu zustava na modelu.
 // IS overeno: vefur [n m] (tkalcovsky smysl dolozen), upptalning [n f], skilja vid.
+// 2026-10-10 (ráčna ㉸): znění v datech po jazycích, jedna cesta kódu (§18) — bajty promptu beze změny.
+var SPREAD_THREAD = {
+  is: 'Hver rúna heldur áfram þar sem sú á undan skildi við — einn samfelldur vefur, aldrei upptalning.',
+  en: 'Each rune takes up what the one before it left off — one continuous weave, never a list.',
+};
 function _spreadThread(lang) {
-  return lang === 'is'
-    ? 'Hver rúna heldur áfram þar sem sú á undan skildi við — einn samfelldur vefur, aldrei upptalning.'
-    : 'Each rune takes up what the one before it left off — one continuous weave, never a list.';
+  return SPREAD_THREAD[lang === 'is' ? 'is' : 'en'];
 }
 
 // `rune` (2026-09-22): tazena runa, at Prazdna runa dostane svuj ram — viz ESSENCE_BLANK v utils.
@@ -2226,6 +2229,11 @@ function _askPositions(mode, lang) {
   return (S && (S.positions || S.labels)) || null;
 }
 
+// Hlavička bloku pozic v Asku — 2026-10-10 (ráčna ㉸) z větve `lang === 'is' ? …` do dat po jazycích; bajty beze změny.
+var ASK_POSITIONS_HEAD = {
+  is: 'STÖÐURNAR Í LESTRINUM — leitandinn sér þær nefndar á skjánum, svo spurningin getur snúið að hverri þeirra:',
+  en: 'POSITIONS IN THIS READING — the seeker sees these named on screen, so a question may reach for any one of them:',
+};
 // `spread` = { mode: 'kriz'|..., runy: ['Jera', ...] } v poradi tazeni.
 // Single vraci '' — zadne pozice nema a prazdna hlavicka by byla sum.
 function _askSpreadContext(spread, lang) {
@@ -2241,11 +2249,7 @@ function _askSpreadContext(spread, lang) {
     radky.push(String(stitky[i]).replace(/\s*:\s*$/, '') + ': ' + runy[i]);
   }
   if (!radky.length) return '';
-  return (lang === 'is'
-    ? 'STÖÐURNAR Í LESTRINUM — leitandinn sér þær nefndar á skjánum, svo spurningin '
-      + 'getur snúið að hverri þeirra:'
-    : 'POSITIONS IN THIS READING — the seeker sees these named on screen, so a question '
-      + 'may reach for any one of them:') + '\n' + radky.join('\n');
+  return ASK_POSITIONS_HEAD[lang === 'is' ? 'is' : 'en'] + '\n' + radky.join('\n');
 }
 
 // ─── ROZBOR JMENA ────────────────────────────────────────────────

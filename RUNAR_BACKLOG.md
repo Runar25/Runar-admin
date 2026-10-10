@@ -1818,7 +1818,7 @@ rate_limited | no_credits“ — vrací víc, včetně `unauthorized` návštěv
 (nikdo ji nevolal od rozdělení monolitu) · **nová kontrola smoke ㉸**: větve `lang === 'is' ? '…'` nesmí přibývat (bod 10).
 
 **PRO OWNERA:**
-10. ⚪ **Texty natvrdo podle jazyka — skutečně 44, ne 57** (první ráčna počítala i `lang === 'is' ? 'is' : 'en'`, což je jen
+10. ✅ *(HOTOVO 2026-10-10: app, reading → UI_TEXT; character, utils → data po jazycích, bajty promptu beze změny; ráčna ㉸ = 0 všude — CODE-tune)* ⚪ **Texty natvrdo podle jazyka — skutečně 44, ne 57** (první ráčna počítala i `lang === 'is' ? 'is' : 'en'`, což je jen
     výběr jazykového bloku dat, ne text — opraveno 2026-10-10). ➜ owner „opravit všechno“, rozdělení s CODE-tune:
     ✅ CODE-read 2026-10-10: `runar-auth.js` 7 (hlášky dárkového kódu) + `runar-tree.js` 3 (životní runa, oslovení) → `UI_TEXT`,
     znění beze změny (ověřeno: nový `t()`/`tp()` dává týž text EN i IS). CODE-tune: `runar-app.js` 24 + `runar-reading.js` 7.

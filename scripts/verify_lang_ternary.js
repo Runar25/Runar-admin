@@ -17,9 +17,8 @@ const RE = /\b(lang|lng|l|_lang)\s*===\s*['"]is['"]\s*\?\s*(['"`])(?!is\2\s*:\s*
 // 2026-10-09 runar-app.js 26 → 24: CODE-tune smazal mrtvý blok starého data ve formuláři čtení (dob-lbl, report 58a0c728).
 // 2026-10-10: přepočet bez výběru jazyka; auth 7 → 0 a tree 3 → 0 přesunuty do UI_TEXT (CODE-read). character 2 a utils 1
 // jsou text PROMPTU (patří do jazykových balíčků RP_*, doména CODE-tune), ne UI.
-const BASELINE = {
-  'runar-app.js': 24, 'runar-character.js': 2, 'runar-reading.js': 7, 'runar-utils.js': 1,
-};
+// 2026-10-10 CODE-tune: app 24 → 0, reading 7 → 0 (UI_TEXT), character 2 → 0, utils 1 → 0 (data po jazycích) — ráčna vyprázdněna.
+const BASELINE = {};
 const pocet = (txt) => (txt.match(RE) || []).length;
 
 if (process.argv.includes('--test')) {
