@@ -1897,6 +1897,11 @@ escapují každé pole (`escapeHtml` / `esc`). **Opraveno rovnou:** záložka ž
 životní runy, text založení a rozbor jména (od modelu; `life_rune_text` smí klient zapsat i sám) → `escapeHtml`. Dopad byl jen na
 vlastní účet; v uložených textech 0 HTML značek, vzhled beze změny. **Pro ownera:** nic.
 
+### Část 12 — tajné klíče a veřejné repo (2026-10-10)
+**Platí:** v repu jsou jen dva JWT a oba mají roli `anon` (`v2/runar-config.js`, `show_corrections.py` — veřejný klíč, tak má být).
+Celá historie gitu (všechny větve) bez klíče Anthropic (`sk-ant-api`), OpenAI (`sk-proj-`), Slack webhooku i serverového JWT
+(`service_role` hledáno v base64 na třech posunech). Tajemství edge funkcí jsou jen v Supabase secrets. **Pro ownera:** nic.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
