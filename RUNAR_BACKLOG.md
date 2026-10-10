@@ -437,6 +437,8 @@
   pořadí run ve výkladu; zvíře jen podle kánonu (`RUNAR_DESIGN.md` „Bytosti“); do aplikace přes CODE-tune/Cowork v EN i IS.
   KUKY 2026-10-09: *„bude to chtít nějakou práci, aby to znělo dobře … zapíšeme to jako směr. teď používáme pro výklad GPT sol 6, takže to
   bude znít jinak než Opus“* — koncept psal Claude; skutečný popis by psal model výkladu (dnes GPT-6 sol), ladit se musí na něm.
+  KUKY 2026-10-10: *„větší počet spíš dává větší váhu ve čtení. jelikož je dominantní, je to čistě hypotéza! je potřeba to zkusit na čteních.
+  dokud nejsou čtení pořádně otestovaná, nic není takhle to bude.“* → četnost = váha (dominance) runy ve výkladu, ne jen pořadí; hypotéza k ověření.
 - [ ] **Strom (lab): povýšená ze střední zóny visí v koruně kvůli matce** (CODE-tree, nalezeno 2026-10-09). Nauthiz z Othily má místo
   verdandi (12 z 15 čtení „teď“), ale vyrůstá z Othily (skuld, 85 % kmene) — jediného zemního ramene vlevo (matka = rameno téhož živlu
   na straně místa, nejbližší pásmo). Owner ji pak čte jako budoucnost (*„když je tak vysoko na stromě … je to koukání do budoucnosti?“*).
@@ -453,6 +455,8 @@
   60 % (teď), výstupů z kmene 17 (dnes 14, (b) 24); větví mimo svou zónu 9/22 (dnes 12, (b) 3); modelové stromy 6–9/21–22 (dnes 7–11,
   (b) 2–3); mladý strom (20 čtení) skoro beze změny; smoke ㉳ projde. Zbytek mimo zónu = povýšené pro druhou stranu zóny (matka na té
   straně v jiné zóně, např. Nauthiz vpravo z Uruzu 25 %) a Fehu z prvních čtení.
+  ✅ **(c) držet místo zapnuto v labu 2026-10-10** (KUKY „7. ano zapni to v labu“, DECISIONS 2026-10-10 (4)). Zbývá druhá strana zóny
+  (povýšená z matky v jiné zóně) — KUKY se ptá, jestli je zóna to nejlepší řešení (2026-10-10, bod 4) → návrh modelu podle definice Yggdrasilu.
 - [ ] **Strom (lab): `AREA_LAT` odporuje „oblast = strana“** (CODE-tree, nalezeno 2026-10-09). Tabulka v `runar-branch.js` (sdílená
   s aplikací) bere Love −0,75 (nitro), Spirituality −0,20 (skoro střed), Crossroads +0,10 — kánon (`RUNAR_TREE.md` §3) má Love a Crossroads
   bez strany a Spirituality ve světě. Čte ji strana větvičky (`sideOf`), natočení ramene za čteními (`latOf` / `areaSide`) i lateral

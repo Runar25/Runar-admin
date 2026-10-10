@@ -9267,3 +9267,28 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   přežije překreslení; e-mail v menu po přihlášení; pozdrav EN i IS; citát 23 px od kraje; hlášení admina bez čtení = prázdný text,
   se čtením = jen čtení.
 - Affected doc(s): žádný jiný doc tohle nevlastní (chování popisuje kód a tenhle záznam).
+
+## 2026-10-10 (4) — Strom (lab): místo živlu × zóny se drží — první čtení založí vlastní větev z kmene i na krátkém kmeni
+
+- **Rozhodl:** KUKY 2026-10-09 *„musíme najít řešení. může se ten problém nějak odstranit na začátku při vzniku stromu? třeba tím, že se drží
+  místo pro ten element, dokud se neobjeví?“*, po obrázku 2026-10-10 *„7. ano zapni to v labu“*. **Provedl:** CODE-tree, jen LAB.
+- **Proč:** kapacita krátkého kmene (`capSecAt`) pustila jen tolik pramenů, kolik se v tu chvíli vešlo; zbytek visel jako povýšená z ramene
+  v jiné zóně. KUKYho Nauthiz: první zemní čtení „teď“ (#25) přišlo na krátký kmen → povýšená z Othily v koruně (85 % kmene), ač je „teď“.
+- **Teď:** pramen pro místo živel × zóna vznikne vždy (strop 25 a nejvýš 14 pramenů zůstávají); místo udělá časová smyčka (zrod do mezery
+  zóny, rozestoupení, růst kmene). Jeho strom: Nauthiz vlevo 60 % kmene (teď); výstupů z kmene 17 (dřív 14); větví mimo svou zónu 9/22
+  (dřív 12); mladý strom (20 čtení) skoro beze změny. Zbývá druhá strana zóny (povýšená z matky v jiné zóně, např. Nauthiz vpravo z Uruzu).
+- **Zkoušeno:** vlastní výstup pro každou povýšenou v jiné zóně než matka (24 výstupů z kmene, mimo zónu 3/22) — patch
+  `docs/archive/tree/2026-10-09_nanecisto_vyska.patch`, owner nevybral; vlastní výstup jen „o dvě zóny vedle“ Nauthiz nepohne.
+- **Hlídá smoke ㉳ (n):** každé použité místo živel × zóna má vlastní pramen, dokud není strop 25 a pramenů je méně než 14 (stará verze
+  padá na mladých stromech po 20 čteních: 12 míst, 11 pramenů).
+- Odvolává se na: 2026-10-03 (kapacita kmene) · 2026-10-09 (3), (11).
+- Affected doc(s): `RUNAR_TREE_MAP.md` (§3, §12) · `RUNAR_BACKLOG.md` (povýšená ze střední zóny) — v témže commitu.
+
+## 2026-10-10 (5) — Upřesnění 2026-10-09 (19): víc tahů jedné runy = spíš větší váha ve výkladu větve (hypotéza)
+
+- **Rozhodl:** KUKY 2026-10-10 *„větší počet spíš dává větší váhu ve čtení. jelikož je dominantní, je to čistě hypotéza! je potřeba to zkusit na
+  čteních. dokud nejsou čtení pořádně otestovaná, nic není takhle to bude.“*
+- **Co se mění:** 2026-10-09 (19) říkalo „četnost jen určuje pořadí“. Platí: počty se člověku neříkají; runa tažená na větvi častěji je ve
+  výkladu dominantní (větší váha), ne jen první v pořadí. Obojí je hypotéza — rozhodne se až na otestovaných čteních (výklad dnes GPT-6 sol).
+- Odvolává se na: 2026-10-09 (19).
+- Affected doc(s): `RUNAR_BACKLOG.md` (Strom: popis větve Rúnarovým hlasem) — v témže commitu.

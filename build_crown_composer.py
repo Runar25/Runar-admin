@@ -1422,7 +1422,10 @@ HTML = r"""<!DOCTYPE html>
         }
         if(tq==null && tg==null){ fresh=true; var nq=nearSec(el, b);
           var missEl=0; ['fire','water','air','earth','shadow'].forEach(function(e9){ if(nearSec(e9, 0)<0) missEl++; });
-          if(qs==null && ((nStr()<maxN && nStr()+missEl<capI) || nq<0)) tq=newSec(el, b, rk, i, log[i], j, null, sd, null);   /* rameno s pramenem */
+          /* 2026-10-10 (zapnuto po obrazku, KUKY "7. ano zapni to v labu"; DECISIONS 2026-10-10 (4)): misto zivel × zona se drzi — prvni cteni
+             zalozi pramen i na kratkem kmeni (bez kapacity capI). Drive kapacita pustila jen tolik pramenu, kolik se v te chvili veslo, a zbytek
+             sel jako povysena z ramene v jine zone (KUKYho Nauthiz: prvni zemni cteni "ted" #25 -> povysena z Othily v korune, 85 % kmene). */
+          if(qs==null && (nStr()<maxN || nq<0)) tq=newSec(el, b, rk, i, log[i], j, null, sd, null);   /* rameno s pramenem */
           else if(sd!==0 && motherOnSide(el, b, sd)<0) tq=newSec(el, b, rk, i, log[i], j, null, sd, (qs!=null) ? qs : nearStr(el, b));   /* element na te strane nema rameno: vlastni vystup z kmene, pramen sdili */
           else { var mo=motherOnSide(el, b, sd); if(mo<0) mo=(qs!=null) ? qs : nearSec(el, b); tg=grads.length; gplace[pk+'|'+sd]=tg;                                    /* povysena vetev mista */
             grads.push({ p:mo, rune:rk, at:i, crossAt:i, name:(RBK[rk]?RBK[rk].name:rk), side:sd, band:b, kind:(qs!=null) ? 'side' : 'band' });

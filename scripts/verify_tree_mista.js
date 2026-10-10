@@ -25,6 +25,9 @@
 //   (j) STROM BEZ OBLASTI JE VYVAZENY (2026-10-09): cteni bez strany jdou na lehci stranu, takze clovek, ktery oblast nevyplnuje,
 //       ma na obou nakreslenych stranach podobne tazeni (pomer aspon MIN_LR). Drive stranu zakladal svet runy a cteni se lepila na
 //       prvni vetev zony -> modelove 71 : 192.
+//   (n) DRZET MISTO (2026-10-10, KUKY: "tim, ze se drzi misto pro ten element, dokud se neobjevi"): kazde misto zivel × zona, ktere
+//       cteni pouzila, ma vlastni pramen (rameno z kmene), dokud strom neni na stropu 25 a pramenu je mene nez 14. Drive kapacita
+//       kratkeho kmene pustila jen nekolik pramenu a zbytek visel jako povysena z ramene v jine zone (KUKYho Nauthiz v korune).
 //   (m) VETVICKY KOLEM VETVE (2026-10-09, KUKY: "vetvicky by se stridaly kolem vetve na obe strany, protoze stranu vetve uz urcila
 //       oblast"): zadna hlavni vetev s aspon 3 primymi vetvickami nema vsechny na jedne strane (strana = kam vetvicka miri od smeru
 //       rodice v miste uchyceni). Drive strana podle oblasti -> na leve vetvi skoro jen nitro -> KUKYho strom 4 jednostranne vetve.
@@ -94,6 +97,9 @@ LOGS.forEach(([nm, log]) => NS.forEach(n => {
   else { let off = 0, ex = '', offS = 0, capOff = 0, draws = 0;
     const nBr = PL.sec.length + PL.grads.length; maxBr = Math.max(maxBr, nBr);
     if (nBr > MAX_BR) fails.push(nm + ' po ' + n + ': ' + nBr + ' hlavnich vetvi (strop ' + MAX_BR + ')');
+    { const elb = new Set(); PL.rd.forEach(row => (row || []).forEach(k => { if (k) elb.add(k.split('|').slice(0, 2).join('|')); }));   // (n)
+      const strands = PL.sec.filter(b => !b.noStrand).length;
+      if (nBr < MAX_BR && strands < Math.min(14, elb.size)) fails.push(nm + ' po ' + n + ': mist zivel × zona ' + elb.size + ', vlastnich pramenu jen ' + strands + ' (drzet misto)'); }
     const SIDE = { healing: -1, family: -1, inner: -1, purpose: 1, career: 1, spirituality: 1 };   // osa B (RUNAR_TREE.md §3), nezavisle na labu; logy zacinaji Nornami -> poradi cteni = poradi v labu
     PL.rd.forEach((row, i) => (row || []).forEach((key, j) => { if (key == null) return; const [el, b, sd] = key.split('|'), o = (PL.own[i] || [])[j];
       const br = (o == null) ? null : (o >= 100 ? PL.grads[o - 100] : PL.sec[o]);
