@@ -498,7 +498,9 @@
   měli jsme tam ty věci, kdy seeking nebo co to bylo tvarovalo větve určitým způsobem, by to mělo platit i pro hlavní větve, jinak bude strom
   vypadat stejně od začátku, ale je to živý organismus, který se mění a tvaruje“*). S rameny strana × zóna dává výšku, úhel a délku ramene jeho
   místo — posuvníky tíha, natočení za oblastí, čas → výška a max ramen teď ramena neovlivní (`RUNAR_TREE_MAP.md` §5, §13). Návrh ownerovi
-  2026-10-10 (CODE-tree), čeká na odpověď. DECISIONS 2026-10-10 (38).
+  2026-10-10 (CODE-tree). KUKY: *„aby se celá větev tvarovala“*, křížení nevadí, vadí souběh → **nanečisto a) + b)** (patch
+  `docs/archive/tree/2026-10-10_nanecisto_zivy_tvar.patch`): délka podle čtení místa, seeking tvaruje celou větev; souběhů jako dnes (3).
+  Čeká na ownerův pohled. DECISIONS 2026-10-10 (38), (41).
 - [ ] **Strom (lab): Berkanin kořen má větvičky nad zemí** (CODE-tree, nalezeno 2026-10-10 při pokusu s kořeny). Na KUKYho stromě dnes jedna
   větvička kořene Berkany vyleze 42 px nad zem (v pokusu se 25 kořeny tři, až 72 px) — ostatní runy ne. Příčina asi tvar runy v branch composeru
   (větvičky Berkany míří vzhůru i u kořene). Ověřit v `runar-branch.js` (`RUNE_CHAR` / `RUNE_TUNE` berkano) a rozhodnout s ownerem — kořen se
@@ -2291,7 +2293,7 @@ běžného uživatele se NEUKLÁDÁ: klient pošle `journal` jen u `mine` nebo u
 **Doloženo dnes 3×:** moje rozdělaná ㉸ zablokovala push CODE-tune (b2f50b7) · jejich necommitnutý `setRuneText` (㉣) můj · rozdělaná práce
 CODE-tree (㉳, 61 porušení) push CODE-tune (11c3bc3). Pokaždé smoke hlásil chybu v kódu, který se vůbec nepushoval; session pak čekala nebo
 psala ostatním. `hooks/pre-push.py` pouští `smoke.py` přímo nad pracovním stromem.
-- 🟡 **PRO OWNERA — návrh (§21, vč. kritiky):** hook před pushem udělá DOČASNOU čistou kopii pushovaného commitu (`git worktree add --detach
+- ✅ *(KUKY 2026-10-10 „3. ano, udělej to“ → hotovo CODE-read, DECISIONS 2026-10-10 (40); + smoke ㉿, `.gitattributes`)* **návrh:** hook před pushem udělá DOČASNOU čistou kopii pushovaného commitu (`git worktree add --detach
   <tmp> <commit>`), smoke pustí v ní a kopii smaže. Sdílený strom zůstává jeden — tohle NENÍ zamítnutý „worktree pro každou session“
   (DECISIONS 2026-07-19), jen pár sekund uvnitř hooku. **Háčky:** ⑪/⑫ hledají soubory zapomenuté MIMO git — v čisté kopii nejsou z principu,
   ty dál nad skutečným stromem · cena = checkout (repo s `docs/eval` ~1 000 souborů, odhad pár sekund) · ㉼ (prohlížeč) ověřit, že běží

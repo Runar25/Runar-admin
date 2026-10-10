@@ -9807,3 +9807,39 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   ověřit podporu) a ownerovo ano. Pravidla bez GPT; vhodný jako druhá vrstva.
 - Affected doc(s): `CLAUDE.md` §2, `RUNAR_POPISY_RUN.md`, memory `is-done-together-not-for-sigrun`, `read-design-before-voice-work`,
   `RUNAR_BACKLOG.md` — v témže commitu.
+
+## 2026-10-10 (40) — Pre-push smoke v dočasné čisté kopii pushovaného commitu, ne nad sdíleným stromem
+
+- **Kdo / proč:** KUKY na návrh CODE-read (kontrola architektury část 37): *„3. ano, udělej to.“* Smoke před pushem běžel nad
+  SDÍLENÝM pracovním stromem → rozdělaná práce kterékoli session blokovala push všem (2026-10-10 3×: ㉸, ㉣, ㉳ — pokaždé chyba
+  v kódu, který se nepushoval) a naopak push mohl projít jen díky necommitnuté opravě, která v pushi nebyla.
+- **Co:** `hooks/pre-push.py` vytvoří `git worktree add --detach <tmp> <pushovaný commit>`, pustí smoke tam (kořen přes `RUNAR_ROOT`),
+  kopii smaže. Kontroly neverzovaných souborů (`verify_canonical_files.js`, `verify_memory_index.js`) běží navíc nad sdíleným stromem.
+  Nejde-li kopie vytvořit, hook pustí smoke postaru a řekne to. **Sdílený strom zůstává jeden** — to NENÍ zamítnutý „worktree pro každou
+  session“ (2026-07-19), kopie žije jen po dobu hooku (~40 s celkem).
+- **Aby to nebylo jen na oko:** 46 skriptů kontrol mělo cestu k repu natvrdo (v kopii by četly sdílený strom) → `process.env.RUNAR_ROOT ||
+  '<cesta>'` (Python `os.environ.get('RUNAR_ROOT', …)`); bez proměnné beze změny. Nový **smoke ㉿** (`verify_runar_root.js`) hlídá, ať se
+  pevná cesta nevrátí (výjimka `.git/` a značka `sdileny-strom:ok`). ⑯ hledá negitované soubory i ve sdíleném stromě.
+- **Vedlejší nález (opraveno):** `core.autocrlf=true` převáděl při checkoutu `v2/vendor/supabase.min.js` na CRLF → otisk SRI nesedí →
+  prohlížeč knihovnu zablokuje → appka nenaběhne. Produkce (GitHub Pages, blob s LF) v pořádku, ale každý čerstvý checkout na Windows
+  (i budoucí nasazení z Windows) by byl rozbitý. Nový `.gitattributes`: `v2/vendor/** -text`, `*.woff2 binary`.
+- **Ověřeno:** smoke v čisté kopii 66/66; útok obrácenou pákou — chyba podstrčená do kopie (mrtvý klíč UI_TEXT) smoke shodí, sdílený strom
+  netknutý; hook od začátku do konce na testovacím commitu (`commit-tree`, nikam nepushnut) — smoke v kopii, kontroly neverzovaných nad
+  sdíleným, kopie uklizená. **Provedl:** CODE-read. Affected doc(s): `RUNAR_BACKLOG.md` část 37 (odškrtnuto v témže commitu).
+
+## 2026-10-10 (41) — Strom: živý tvar větví nanečisto — délka podle čtení místa, seeking tvaruje celou větev; souběh hlídat, křížení ne
+
+- **Rozhodl:** KUKY 2026-10-10 k návrhu (38): *„5. mně nejde o to, aby se zvedl konec, ale aby se celá větev tvarovala. 6. ramena se začnou křížit.
+  chceš říct, že tohle se doteď nedělo? … řekl jsem, že je to problém? já snad mluvil o překrývání, a to není křížení. takže to vem v potaz.
+  7. ano, udělej a) a b) nanečisto.“* **Provedl:** CODE-tree, nanečisto (lab beze změny).
+- **Platí:** křížení větví není chyba; chyba je **souběh** (překrytí — jedna větev schová druhou), měří ho `scripts/utils/tree_overlap.js`.
+- **a)** délka ramene = praxe jeho MÍSTA (rameno + jeho vedlejší) × patro (dole delší) × náběh mladého pramene; vrchol × 0,75. Dřív medián
+  praxe všech ramen → všechna ramena rostla stejně.
+- **b)** převažující seeking čtení větve tvaruje CELOU větev (rameno i vedlejší, každou podle jejích čtení): Clarity se po celé délce stáčí
+  vzhůru, Reflection dolů, Confirmation se narovná (napůl), Insight se zalomí (loket nahoru, pak zpět). Síla = podíl převažujícího seekingu
+  × kolik čtení (mladá větev skoro nic) — strom se s čteními mění. Ohne se páteř větve před větvičkami, takže větvičky i vedlejší jdou s ní;
+  vedlejší se řídí skutečným směrem ohnutého ramene (od základního úhlu ramene: souběhy 3 → 8).
+- **Změřeno** (patch `docs/archive/tree/2026-10-10_nanecisto_zivy_tvar.patch`): souběhů na jeho stromě 3 (dnes v labu 3); tentýž strom se samým
+  Clarity 3, Reflection 5, Confirmation 5 (s plným narovnáním 15, nejdelší 117 px), Insight 3. Jeho seeking je smíšený (převažující podíl
+  25–35 procent), proto je tvar na jeho stromě jemný; strom se samým jedním seekingem se liší zřetelně. Čeká na ownerův pohled.
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka „živý tvar ramen“) — v témže commitu; `RUNAR_TREE.md` §4 až se zapnutím.
