@@ -21,7 +21,7 @@ live in testing — never an automated hand-off.
 
 **How a correction becomes a rule:** for each fix, record **„…" → „…"** plus one line of *why*.
 Each confirmed fix becomes one prompt-rule in the IS grammar block (`v2/runar-character.js` —
-grammar's single home, §20), or a `runar_corrections` row if corrections are re-enabled. The
+grammar's single home, §20), or a `runar_corrections` row (live: `getCorrPrompt` puts every row into the prompt — layer 3, CLAUDE.md §2). <!-- 2026-10-10 CODE-read: until then this said „if corrections are re-enabled“ — only the blind post-processor was ever off (removed 2026-08-09); corrections in the prompt never stopped. --> The
 categories below are the scan-guide and hold illustrative examples; the operative rule lives
 with the grammar, never duplicated here.
 
