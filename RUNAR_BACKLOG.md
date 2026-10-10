@@ -488,6 +488,11 @@
   (nejnižší ~80°, nejvyšší ~20° od svislice). Výsledek: koruna široký oblouk (~2× širší než vysoká), ale větve dlouhé a řídké, vršek slabý,
   boční větve visí, kořeny drobné; smoke ㉳ (m) 1 porušení. Krok 1 sám (bez úhlů) dal plochý deštník. Další kroky k rozhodnutí: kořeny do
   dolního půloblouku, hustší a kratší koruna, konce větví vzhůru, kratší kmen; střet s „délka = praxe“ a „výška roste se šířkou“ (hwRatio).
+- [ ] ⭐ **Strom (lab): návrh „rameno = strana × zóna, vedlejší = další živly“ — umístění nanečisto** (CODE-tree, 2026-10-10). KUKY *„jak to vyřešíme
+  technicky?“* → *„13. ano“*. Patch `docs/archive/tree/2026-10-10_nanecisto_rameno_strana_zona.patch` (funkce `slotAssign` místo `stableAssign`): 6 ramen
+  (strana × zóna) + vrchol, vedlejší = další živly (kapacita 3 / 3 / 2, vrchol 2), další živel jako větvičky na rameni, bez strany na lehčí stranu.
+  Na jeho stromě 25 větví, 19 % tažení jako větvičky na rameni jiného živlu, výšky stálé od 30 čtení. **Další kroky:** ownerův pohled → přepsat
+  smoke ㉳ na nová pravidla → zapnout v labu → port do aplikace. DECISIONS 2026-10-10 (34).
 - [ ] **Strom (lab): Berkanin kořen má větvičky nad zemí** (CODE-tree, nalezeno 2026-10-10 při pokusu s kořeny). Na KUKYho stromě dnes jedna
   větvička kořene Berkany vyleze 42 px nad zem (v pokusu se 25 kořeny tři, až 72 px) — ostatní runy ne. Příčina asi tvar runy v branch composeru
   (větvičky Berkany míří vzhůru i u kořene). Ověřit v `runar-branch.js` (`RUNE_CHAR` / `RUNE_TUNE` berkano) a rozhodnout s ownerem — kořen se
@@ -2257,9 +2262,9 @@ dárkový kód. `user_profiles` drží navíc (stav 2026-10-10, 4 profily):
   `founding_reading_id` · **hlas** `voice_month_key/count` · **volby** `analytics_opt_out`, `is_tester`, `tester_consent_at` ·
   **rok narození** `dob_year` — od 2026-10-09 se nezadává (DECISIONS (20)), ale **3 ze 4** starých účtů ho mají uložený (interně
   `RUNAR_PRIVACY.md`: „semínko tvaru stromu“; veřejně nikde).
-- 🟡 **PRO OWNERA (a):** doplnit do veřejné tabulky řádky pro oslovení, severské jméno a rozbor jména, uložené texty (životní runa,
+- ✅ *(KUKY 2026-10-10 „4. ano“, DECISIONS (35); text EN + IS → CODE-tune)* **(a):** doplnit do veřejné tabulky řádky pro oslovení, severské jméno a rozbor jména, uložené texty (životní runa,
   rozbor), počet hlasových čtení a volby soukromí/testera (EN + IS → CODE-tune). Doporučení: ano — tabulka má říkat, co držíme.
-- 🟡 **PRO OWNERA (b):** rok narození 3 starých účtů — **smazat** (rok se nezadává, slib „den a měsíc“), napřed CODE-tree potvrdí, že strom
+- ✅ *(KUKY 2026-10-10 „nechat, jsou to admin účty“, DECISIONS (35); data admin účtů nejsou nález — memory `admin-ucty-nejsou-nalez`)* **(b):** rok narození 3 starých účtů — **smazat** (rok se nezadává, slib „den a měsíc“), napřed CODE-tree potvrdí, že strom
   semínko bez roku zvládne; nebo ho nechat a uvést. Doporučení: smazat (zápis do DB = owner, SQL připravím).
 
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků

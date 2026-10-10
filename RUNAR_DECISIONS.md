@@ -9712,3 +9712,33 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno v prohlížeči:** 0 požadavků na jsDelivr v readeru i shrine, `supabase.createClient` k dispozici, klient vznikl, appka
   volá Supabase API; jediné 404 = registrace SW na produkční cestě `/Runar-admin/` (lokálně neexistuje, i před změnou).
 - **Provedl:** CODE-read. Affected doc(s): `RUNAR_BACKLOG.md` část 34 (odškrtnuto v témže commitu).
+
+## 2026-10-10 (34) — Strom: návrh „rameno = strana × zóna, vedlejší = další živly“ — umístění nanečisto (krok 1)
+
+- **Rozhodl:** KUKY 2026-10-10: *„změnili jsme, jak budou hlavní větve a povýšené větve do sebe zapadat. jak to vyřešíme technicky?“* → návrh →
+  *„13. ano“*. K čtení bez zařazení: *„už jsme říkali, pokud nemá zařazení, tak bude kolovat jeho umístění. stejně jako kdyby člověk udělal jen čtení runy
+  bez area, seeking atd.“* (= lehčí strana, 2026-10-09 (10)/(11)). K kapacitě: *„proč by na něco nemělo zbýt místo?“* **Provedl:** CODE-tree, nanečisto.
+- **Návrh:** rameno = strana × zóna (vlevo / vpravo × Urð / Verðandi / Skuld) — založí ho první čtení, které tam patří; vrchol = zakládací Skuld
+  a čtení bez strany v Skuld (místo vůdčí větve zůstává střed); ostatní bez strany kolují na lehčí stranu, bez záměru zónu dá svět runy. Vedlejší
+  větev = další živel v tom místě, kdo přijde dřív, má ji dřív; kapacita Urð 3, Verðandi 3, Skuld 2, vrchol 2 (2 × (4+4+3) + 3 = 25). Další živel
+  už vlastní větev nemá a jeho čtení rostou jako větvičky přímo na rameni — místo má každé čtení. Výška, úhel a délka ramene z jeho místa (levá
+  a pravá se v zóně střídají, která níž, dá životní runa a datum), vedlejší na rameni na pevném místě podle pořadí, kořeny jako (26)/(30).
+- **Mění (zatím jen nanečisto):** povýšená větev visí na rameni téže strany a zóny, ne na rameni téhož živlu (2026-10-03: „povýšené pořád
+  vyrůstají ze svého živlu“); místo živel × zóna × strana a časová smyčka výšek ramen (2026-10-05, 2026-10-10 (4)) nahrazeny pevnými místy.
+- **Změřeno na jeho stromě** (patch `docs/archive/tree/2026-10-10_nanecisto_rameno_strana_zona.patch`): 25 větví (6 ramen + vrchol, 18 vedlejších),
+  7 pramenů; ze 484 tažení 274 na vedlejší větvi svého živlu, 119 na rameni svého živlu, 91 (19 procent) jako větvičky na rameni jiného živlu.
+  Růst 30 → 388 čtení: výšky ramen se nemění (26–76 procent kmene), po 30 čteních už 22 větví. Vrchol zkrácen na délku horních ramen (s 47
+  čteními „Skuld bez strany“ vyrostl do vysoké špice). Kontrola ㉳ hlídá stará pravidla — před zapnutím přepsat. Čeká na ownerův pohled.
+- Affected doc(s): `RUNAR_BACKLOG.md` (nová položka) — v témže commitu; `RUNAR_TREE.md` §3/§4 až se zapnutím.
+
+## 2026-10-10 (35) — Stránka soukromí vyjmenuje všechny ukládané údaje; data admin účtů nejsou nález (rok narození zůstává)
+
+- **Kdo / proč:** KUKY na otázky CODE-read (kontrola architektury část 35 — veřejná tabulka údajů × sloupce DB): *„4. ano. 5. nechat,
+  jsou to admin účty. už to někam zapiš, tohle upřesňuju asi po desáté.“*
+- **(a) Tabulka údajů** na stránce soukromí (`v2/runar-privacy.html`, EN + IS) dostane řádky pro to, co appka ukládá a tabulka dosud
+  neuváděla: oslovení (Hann/Hún/Hán), severské jméno a rozbor jména, uložené texty (čtení životní runy, rozbor), počet hlasových čtení
+  za měsíc, volby soukromí a testera. Text píše CODE-tune.
+- **(b) Rok narození 3 starých účtů zůstává** — jsou to admin účty (owner a jeho testovací). **Obecně: data admin účtů nejsou nález
+  o soukromí uživatelů** a ownerovi se jako otázka nepředkládají; nález se týká kódu a slibů (co appka uloží novému uživateli).
+  Pravidlo → memory `admin-ucty-nejsou-nalez`. (Do té doby to nebylo zapsané nikde, proto se otázka opakovala.)
+- Affected doc(s): `RUNAR_PRIVACY.md` (poznámka u roku narození), `RUNAR_BACKLOG.md` část 35 — v témže commitu; `v2/runar-privacy.html` → CODE-tune.
