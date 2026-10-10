@@ -1,4 +1,4 @@
-// Čtení pro analýzu kvality bez odhlášených uživatelů — vrací SQL poddotaz pojmenovaný `readings`, použij místo `from readings`.
+// Čtení pro analýzu kvality bez odhlášených uživatelů — vrací SQL poddotaz pojmenovaný `readings`, v SQL ho dej tam, kde by stála tabulka readings.
 // Zdroj filtru je JEDEN: scripts/utils/cteni_analyza.sql (důvod tam). 2026-10-10, kontrola architektury část 31 (CODE-read).
 'use strict';
 const fs = require('fs'), path = require('path');
