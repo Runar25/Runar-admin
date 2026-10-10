@@ -9473,3 +9473,21 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   §10/§14 drobnosti, otázka na formulář návštěvníka.
 - Affected doc(s): `RUNAR_BACKLOG.md` (kontrola architektury část 1 bod 3 hotovo; nová sekce se zbytkem) — v témže commitu.
 - Odvolává se na: 2026-10-10 (1).
+
+## 2026-10-10 (17) — Strom: kořeny mají být zrcadlem koruny i ve stavbě (kořen rovně dolů, mělčí); délka větví nesouvisí se stářím; pokus „patra 4 / 3 / 2“ nanečisto
+
+- **Rozhodl:** KUKY 2026-10-10 k nanečisto „spodní o 1/3“ (15): *„u kořenů. měly by být zrcadlo stromu. nevidím třeba vůbec kořen, který jde přímo [dolů] …
+  kořeny budou vypadat jinak i tím, co budou formovat, nepůjdou tak do hloubky, ale alespoň tohle by tam už mohlo být“*; ke stáří větví: *„máš pravdu.
+  neodpovídá to stáří.“* (spodní větve na jeho stromě nevznikly první: Spearman výška × pořadí vzniku −0,28; první tři větve ze zakládajících Noren
+  jsou ve 48, 63 a 98 % kmene, Uruz 25 % přišla až s 24. čtením). Pak: *„nejsem si jistý, že tak jak to máme teď udělané je správně. zkusíme
+  experiment … spodní větev bude mít až 4 vedlejší větve, nad ní až 3, nad ní až 2 … až budeme mít všech 25 použitých. spodní nejširší … nebude to
+  sedět elementama … jde mi teď o vizuální, jen to poskládej tak, aby to sedělo.“* **Provedl:** CODE-tree, jen nanečisto.
+- **Směr:** kořeny = zrcadlo koruny i ve stavbě — hlavní kořen ramene míří pod týmž úhlem od svislice dolů, vedlejší kořeny tam, kde vedlejší větve,
+  vůdčí větev má kořen rovně dolů; kořeny mělčí než koruna a „budou vypadat jinak“. Délka větve se stářím neřídí (stáří nese tloušťka, F5 2026-08-07).
+- **Pokus nanečisto** (patch `docs/archive/tree/2026-10-10_nanecisto_patra.patch`): 25 větví (ramena + povýšené) přeskládáno na 3 patra po dvou +
+  vůdčí: rameno + 4 / + 3 / + 2 vedlejší (2 × (5 + 4 + 3) + 1 = 25); strana z dat (oblast), patro podle průměrné zóny čtení, rameno patra = větev
+  s nejvíc čteními; délky ramen ×1,33 / ×1,17 / ×1,0; vedlejší střídavě nahoru / dolů; kořeny stlačené do hloubky na 55 %. Cestou: prameny
+  ležely v kmeni podle pořadí a ramena se křížila (dráha teď podle strany a patra, spodní patro hned u středu); pramen spodního ramene se 4
+  vedlejšími byl 1,9× tlustší a kmen vypadal jako lyra, ověřeno i v labu v prohlížeči (zesílení matky vedlejšími jen čtvrtinou). Kmen užší než
+  dnes (7 pramenů místo 17); živel a zóna o místě větve nerozhodují. Čeká na ownerův pohled.
+- Affected doc(s): `RUNAR_TREE.md` §2 (kořeny: zrcadlo i ve stavbě), `RUNAR_BACKLOG.md` (nová položka) — v témže commitu.

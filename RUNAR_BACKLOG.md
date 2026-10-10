@@ -469,6 +469,14 @@
   `docs/archive/tree/2026-10-10_nanecisto_spodni.patch`: délka × (1 + 1/3 × (1 − t)), t = výška výstupu na kmeni (nejnižší +1/3, nejvyšší +0;
   povýšená podle výšky odbočky); kořen × (1 + 1/3 × s), s = jak moc míří do strany pod povrchem. Změřeno na jeho stromě: Kenaz 22 % ×1,33 …
   Dagaz 98 % ×1,00; kmen trochu povyroste (drží poměr k rozpětí, `hwRatio`); smoke ㉳ projde. Čeká na ownerův pohled.
+  KUKY 2026-10-10: *„nejsem si jistý, že tak jak to máme teď udělané je správně“* — místo odpovědi pokus „patra 4 / 3 / 2“ (níž).
+- [ ] ⭐ **Strom (lab): pokus „patra 4 / 3 / 2“ + kořeny jako zrcadlo — nanečisto** (CODE-tree, 2026-10-10). KUKY: *„spodní větev bude mít až 4
+  vedlejší větve, nad ní až 3, nad ní až 2 … až budeme mít všech 25 použitých. spodní nejširší … jde mi teď o vizuální“*; kořeny *„měly by být
+  zrcadlo stromu … kořen, který jde přímo dolů … nepůjdou tak do hloubky“*. Patch `docs/archive/tree/2026-10-10_nanecisto_patra.patch`: 25 větví
+  → 3 patra po dvou + vůdčí (rameno + 4 / + 3 / + 2), strana z dat, patro podle průměrné zóny čtení, rameno patra = větev s nejvíc čteními; délky
+  ramen ×1,33 / ×1,17 / ×1,0; vedlejší střídavě nahoru / dolů; kořen ramene pod týmž úhlem dolů, vedlejší kořeny ve stejných místech, vůdčí =
+  kořen rovně dolů, pod zemí stlačeno na 55 %. Opraveno cestou: křížení pramenů v kmeni, kmen jako lyra (pramen se 4 vedlejšími 1,9× tlustší).
+  Kmen užší (7 pramenů místo 17); živel a zóna o místě nerozhodují (DECISIONS 2026-10-10 (17)). Čeká na ownerův pohled.
 - [x] ✖ **Strom: obrys stromu života (dóm) — ZAMÍTNUTO** (KUKY 2026-10-10: *„chybí tomu úplně všechno. je to zrůda! … takže ne. není to dobré
   a žádná oprava tvého návrhu to nezlepší“*). Nevracet konce větví na kruh ani vějíř podle výšky. Původně (CODE-tree, 2026-10-10). KUKY s pěti obrázky stromu života: *„spodní větve
   jako nejstarší, největší a nejdelší. koruna více zarovnaná do půloblouku, u kořenů to samé. to naše vypadá jako strom, ale my neděláme
