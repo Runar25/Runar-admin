@@ -1,29 +1,19 @@
-# memory/ — jediný zdroj sdílené paměti (§17)
+# memory/ — sdílená paměť projektu Rúnar
 
-Tato složka je **kanonická paměť** projektu Rúnar. Obě AI session ji čtou i zapisují:
+Tahle složka je **jediná** auto-paměť všech session (CODE i Cowork). Platformní pamětové složky obou aplikací jsou
+**junction** na ni — fyzicky jeden soubor, git ho verzuje. Pravidlo a mechanika vlastní `CLAUDE.md` §17; tady se neopisují (§20).
 
-- **Claude Code** (Tree/engine session) — auto-načítá z `…\.claude\projects\C--Users-zkuku\memory\`
-- **Cowork / Claude app** (Main/reading session) — auto-načítá z `…\AppData\Roaming\Claude\memory\`
+- **Index a rozcestník** (kde co bydlí, Session Start Protocol) → [MEMORY.md](MEMORY.md)
+- **Jak spolu pracujeme** → [working-style.md](working-style.md)
+- **Snapshoty** (`snapshots/`) = historický záznam ke svému datu, ne popis dneška.
 
-Obě tyto platformní cesty jsou **junction** (adresářový odkaz) na tuhle jednu složku
-v repu. Takže **oba agenti fyzicky čtou/zapisují stejné soubory**, git to verzuje →
-žádný sync skript, žádný drift. Kdo se co dozví, ví i ten druhý.
-
-## Obsah
-- `MEMORY.md` — hlavní index (Session Start Protocol, rozhodnutí, index souborů + snapshotů + Tree paměť)
-- `working-style.md` — workflow pravidla (Explore→Plan→Implement, IS gramatika, atd.)
-- `runar-project.md` — stack, soubory, tiery, DB, edge funkce
-- `snapshots/` — datované snapshoty session
-- `runar-tree-*.md`, `is-grammar-adjective-gender.md`, `runar-trunk-incremental-rule.md` — frontmatter paměti Tree session
-
-`CLAUDE.md`, `RUNAR_DESIGN.md`, `RUNAR_PRICING.md`, `RUNAR_DECISIONS.md` **zůstávají v rootu repa**
-(čtou se on-demand, ne jako auto-paměť) — sem nepatří.
-
-## Kdyby paměť někdy vypadala prázdná / zastaralá
-Nejspíš appka svou memory složku znovu vytvořila a rozbila junction. Oprava (jednou):
+## Paměť vypadá prázdná nebo zastaralá
+Nejspíš appka svou složku znovu vytvořila a rozbila junction. Oprava (idempotentní, skutečnou složku před nahrazením zazálohuje):
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\memory\relink-memory.ps1
 ```
 
-Skript je idempotentní a skutečnou složku před nahrazením zazálohuje (`…memory.bak-<čas>`).
+<!-- 2026-10-10 (CODE-read, kontrola architektury — zastaralá místa): do té doby tu stálo „obě AI session" s prohozenými rolemi
+     (Code = Tree, Cowork = Main), `runar-project.md` jako sklad stacku/tierů/DB (vyprázdněn 2026-07-18) a `MEMORY.md` jako místo
+     pro rozhodnutí (ta vlastní RUNAR_DECISIONS.md). Mechanika junctionu byla převyprávěná z CLAUDE.md §17 → nahrazena odkazem. -->

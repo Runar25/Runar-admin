@@ -2039,6 +2039,13 @@ na `*.md`, který v repu není (⑯ hlídá jen dokumenty). Záměrné zmínky n
 rozbor jména „pouze Premium“, tabulka stromu podle tarifů) → opraveno s odkazem na vlastníky a s vyznačením, co tam stálo.
 Pro CODE-tune (⚪): `buildLifeRuneBase(…, isPremium)` parametr nepoužívá — mrtvý (nebo chybějící) rozdíl Premium; `RUNAR_PRICING.md`
 tabulky nákladů nesou štítek „Claude API“, čte ale GPT-6 sol (levnější) — přepočet a štítky patří k pricingu.
+`RUNAR_DESIGN.md`: „Standard+“ u Kříže a Horseshoe pryč; tabulka faktorů čtení vedla životní runu jako čočku (odešla 2026-09-25)
+a „spready TODO / `RP_SINGLE.priority`“ (spready doménu i rejstřík mají, pole v kódu není) · `memory/README.md` přepsán na rozcestník
+(„dvě session“ s prohozenými rolemi, `runar-project.md` jako sklad) · BACKLOG: položka „PRICING model na Opus“ → cíl je sol; hotový
+Ask „jen premium“ → poznámka `ASKS_PER_READING`.
+🟡 **PRO OWNERA:** gitignorovaná složka `_cowork_snap/` (snímek 22 souborů ke commitu 92255b9, 2026-07-21; nic ji nepřegenerovává)
+— diffem ověřeno, že se všech 22 shoduje s gitem, nic jedinečného. Je 2,5 měsíce stará (obsahuje i smazaný `runar-gathering.js`)
+a kdo ji čte, čte starý stav. Smazat? (Obnovitelné kdykoli z `git show 92255b9:<cesta>`.)
 
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
