@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: 19d97179-39e7-4098-bebb-c437e7df8e6e
-  modified: 2026-08-09T22:43:13.656Z
+  modified: 2026-10-10T18:07:03.671Z
 ---
 
 Repo běží s VÍCE Code session naráz ve **sdíleném pracovním stromě a sdíleném git indexu** (ne jen víc
@@ -33,6 +33,9 @@ souboru dvěma session neřeší nic než worktree.
   PŘED commitem.** Je-li počet větší než tvoje změna, přebytek je cizí — commitni ho vědomě a řekni to,
   nebo počkej, až to druhá session zaveze. NEopravuj, cos sebral — je to jejich lane, jejich slib.
   `RUNAR_DECISIONS.md` tuhle kolizi GARANTUJE: připisuje do něj každá lane. Vždy `git pull` → append → pathspec.
+  **Kontrola a commit v JEDNOM příkazu** — 2026-10-10 (`c81b4da`): `git diff --stat` ukázal moje 4 řádky v BACKLOGu, o dvě
+  volání později commit sebral 7 (CODE-read mezitím dopsal 3). Hlídat těsně před commitem, např.
+  `test "$(git diff --numstat -- RUNAR_BACKLOG.md | cut -f1)" = "4" && git -c user.name=… commit …`.
 - **Patch nástroj = VLASTNÍ gitignored slot session** (`scripts/_patch.py`=CODE-tree, `scripts/_patch_tune.py`=CODE-tune;
   gitignored → `git add -A` ho nesebere; NIKDY sdílený slot mezi session). I tak kolabuje se dvěma session
   v jedné lane. Viz §1 / [[one-patch-script-path]].
