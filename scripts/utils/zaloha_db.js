@@ -11,6 +11,8 @@
 //      vytvoří se při prvním běhu; owner si ho MUSÍ uložit i jinam, bez něj je záloha k ničemu);
 //   4. statické audio jen když se změnilo (otisk seznamu runar_static_audio) — mění se zřídka a má ~21 MB;
 //   5. ověření archivu (`7z t`) a řádek do logu. Při chybě exit 1.
+//   6. po úspěšné nové záloze smaže archivy DB starší než 30 dní — lokálně i na Drive (lhůta ze zásad soukromí, 2026-10-10).
+//   node scripts/utils/zaloha_db.js --test-lhuta → samotest mazání v dočasných složkách (záloha neběží, nic skutečného se nemaže).
 // Data nesou osobní údaje → nic z toho nejde do repa; skript sám žádné tajemství neobsahuje.
 //   node scripts/utils/zaloha_db.js            → cíl z RUNAR_ZALOHA_CIL, jinak ~/runar-eval/zaloha-db/archiv
 //   node scripts/utils/zaloha_db.js --cil <složka>
@@ -59,6 +61,27 @@ function heslo() {
 function zabal(archiv, soubory, h) {
   execFileSync(SEVENZ, ['a', '-t7z', '-mx=9', '-mhe=on', '-p' + h, archiv, ...soubory], { stdio: 'ignore' });
   execFileSync(SEVENZ, ['t', '-p' + h, archiv], { stdio: 'ignore' });   // ověř, že jde otevřít
+}
+
+// Lhůta záloh 30 dní (KUKY 2026-10-10 „7. ano, 30 dní“). Do té doby se archivy nemazaly vůbec — data smazaného účtu (e-mail, čtení)
+// v nich zůstala natrvalo, zatímco zásady slibují „Delete your account… Everything goes“ (nález CODE-tune při psaní zásad, BACKLOG
+// část 33). Maže se JEN archiv databáze `runar-db-RRRR-MM-DD.7z`, datum z názvu (čas změny Drive při synchronizaci přepisuje); archiv
+// ze dne D zmizí v den D+30. Audio archivy osobní údaje nenesou a vznikají jen při změně — nemažou se. Běží až po úspěšné nové záloze.
+// Co se smaže na Drive, padá do jeho koše; koš Google maže sám po 30 dnech (support.google.com/drive/answer/2375102).
+const LHUTA_DNI = 30;
+function smazStare(dnes, slozky) {
+  const hranice = new Date(Date.parse(dnes + 'T00:00:00Z') - (LHUTA_DNI - 1) * 86400000).toISOString().slice(0, 10);
+  const smazano = [];
+  for (const dir of slozky) {
+    if (!fs.existsSync(dir)) continue;
+    for (const f of fs.readdirSync(dir)) {
+      const m = /^runar-db-(\d{4}-\d{2}-\d{2})\.7z$/.exec(f);
+      if (!m || m[1] >= hranice || m[1] === dnes) continue;
+      fs.unlinkSync(path.join(dir, f));
+      smazano.push(path.join(dir, f));
+    }
+  }
+  return smazano;
 }
 
 // Kopie na Drive; když disk není (Drive pro počítač neběží / účet odpojen), chyba → exit 1 a řádek v logu, ať to není tiché.
@@ -110,6 +133,7 @@ async function main() {
     zabal(archivDb, fs.readdirSync(tmp).map((f) => path.join(tmp, f)), h);
     naDrive(archivDb);
     log('DB ok → ' + archivDb + ' (' + fs.statSync(archivDb).size + ' B; ' + Object.entries(souhrn).map(([k, v]) => k + ' ' + v).join(', ') + ')');
+    smazStare(DEN, [CIL, DRIVE]).forEach((f) => log('smazána záloha starší než ' + LHUTA_DNI + ' dní: ' + f));
 
     // Audio jen při změně: otisk = seznam (jazyk, runa, verze, adresa, změna)
     const audio = JSON.parse(fs.readFileSync(path.join(tmp, 'public.runar_static_audio.json'), 'utf8'));
@@ -133,5 +157,22 @@ async function main() {
   } finally {
     fs.rmSync(tmp, { recursive: true, force: true });   // dočasná nešifrovaná data pryč (cesta z mkdtemp, nikdy prázdná)
   }
+}
+// Samotest lhůty: skutečná smazStare na dvou dočasných složkách (lokální + „Drive“), nikdy na CIL/DRIVE.
+if (process.argv.includes('--test-lhuta')) {
+  const dnes = '2026-11-15';
+  const jmena = ['runar-db-2026-11-15.7z', 'runar-db-2026-10-17.7z', 'runar-db-2026-10-16.7z', 'runar-db-2026-10-01.7z',
+    'runar-audio-2026-09-01.7z', 'runar-db-2026-09-01.7z.bak', 'jiny.txt'];
+  const slozky = [fs.mkdtempSync(path.join(os.tmpdir(), 'runar-lhuta-a-')), fs.mkdtempSync(path.join(os.tmpdir(), 'runar-lhuta-b-'))];
+  slozky.forEach((d) => jmena.forEach((j) => fs.writeFileSync(path.join(d, j), 'x')));
+  const smazano = smazStare(dnes, slozky).map((f) => path.basename(f)).sort();
+  const zbylo = slozky.map((d) => fs.readdirSync(d).sort().join(','));
+  slozky.forEach((d) => fs.rmSync(d, { recursive: true, force: true }));
+  // archiv z 10-16 je v den 11-15 starý 30 dní → pryč; z 10-17 (29 dní) zůstává; audio, .bak a cizí soubor nikdy
+  const cekano = ['runar-db-2026-10-01.7z', 'runar-db-2026-10-01.7z', 'runar-db-2026-10-16.7z', 'runar-db-2026-10-16.7z'];
+  const ok = JSON.stringify(smazano) === JSON.stringify(cekano) && zbylo[0] === zbylo[1]
+    && zbylo[0] === 'jiny.txt,runar-audio-2026-09-01.7z,runar-db-2026-09-01.7z.bak,runar-db-2026-10-17.7z,runar-db-2026-11-15.7z';
+  console.log((ok ? 'OK    ' : 'FAIL  ') + 'lhůta ' + LHUTA_DNI + ' dní k ' + dnes + ': smazáno ' + JSON.stringify(smazano) + '; zůstalo ' + zbylo[0]);
+  process.exit(ok ? 0 : 1);
 }
 main().catch((e) => { log('CHYBA: ' + e.message); process.exit(1); });

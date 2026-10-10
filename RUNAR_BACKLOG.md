@@ -2236,10 +2236,11 @@ Ověřeno: poddotaz dá 564 = 564 (nikdo odhlášený) a při předstíraném od
   → prohlížeč KAŽDÉHO návštěvníka pošle Googlu svou IP; stránka soukromí Google nejmenuje. Německý soud (LG München I, 2022-01-20)
   tohle uznal za porušení GDPR. Písma jsou pod licencí OFL → dají se hostovat u nás (`v2/fonts/` + `@font-face`, + do precache `sw.js`).
   Doporučení CODE-read: hostovat u sebe (CODE-tune), stáhnout soubory písem = s ownerovým ano.
-- ⚪ **Pro ownera — jak dlouho držet zálohy (nález CODE-tune 2026-10-10 při psaní zásad):** `zaloha_db.js` staré archivy nemaže (lokálně
-  ani na Drive) → data smazaného účtu (e-mail, čtení) v zálohách zůstanou natrvalo, zatímco zásady slibují „Delete your account… Everything
-  goes“ a u e-mailu i čtení „Until account deleted“. Potřeba: lhůta (návrh CODE-tune 30 dní) + mazání starších archivů ve skriptu + věta
-  do zásad („zálohy držíme N dní; smazaný účet z nich zmizí nejpozději za N dní“). Do té doby zásady lhůtu neuvádějí.
+- ✅ *(KUKY 2026-10-10 „7. ano, 30 dní“ → CODE-tune: `zaloha_db.js` maže archivy DB starší než 30 dní lokálně i na Drive, samotest
+  `--test-lhuta`; zásady EN + IS „Each copy is deleted after 30 days…“ a u výmazu „from our encrypted backups within 30 days“; DECISIONS
+  2026-10-10 (36).)* ~~**Pro ownera — jak dlouho držet zálohy:**~~ `zaloha_db.js` staré archivy nemazal → data smazaného účtu v zálohách
+  natrvalo, zásady přitom slibují „Everything goes“. **Hranice:** maže se s denní zálohou — když je počítač vypnutý, smaže se při příštím
+  běhu; smazané z Drive může ještě až 30 dní ležet v koši Google (stojí v zásadách).
 - ✅ *(KUKY 2026-10-10 „teď a, s Hetznerem b“, DECISIONS (32); text do zásad EN + IS → CODE-tune, hotovo 2026-10-10)* **(b) — záloha DB na Google Drive** (zavedená 2026-10-10, DECISIONS (9), CODE-read): stránka slibuje „What we store stays
   in the EEA“ a Google mezi zpracovateli není; Google Drive umístění v EHP nezaručuje. Archiv je šifrovaný (AES-256, heslo jen u nás) —
   jestli to z pohledu GDPR přenos osobních údajů je, CODE nerozhodne (§23). Možnosti: (1) doplnit do zásad „šifrované zálohy na Google

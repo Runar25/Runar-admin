@@ -9742,3 +9742,18 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   o soukromí uživatelů** a ownerovi se jako otázka nepředkládají; nález se týká kódu a slibů (co appka uloží novému uživateli).
   Pravidlo → memory `admin-ucty-nejsou-nalez`. (Do té doby to nebylo zapsané nikde, proto se otázka opakovala.)
 - Affected doc(s): `RUNAR_PRIVACY.md` (poznámka u roku narození), `RUNAR_BACKLOG.md` část 35 — v témže commitu; `v2/runar-privacy.html` → CODE-tune.
+
+## 2026-10-10 (36) — Zálohy databáze se drží 30 dní; zásady to říkají (EN i IS)
+
+- **Rozhodl:** KUKY 2026-10-10 na otázku CODE-tune: *„7. ano, 30 dní“*. Podnět: při psaní zásad (32 b) se ukázalo, že
+  `scripts/utils/zaloha_db.js` archivy nemazal — data smazaného účtu (e-mail, čtení) by v zálohách zůstala natrvalo, zatímco zásady
+  slibují „Delete your account… Everything goes“.
+- **Co:** skript po úspěšné nové záloze smaže archivy DB (`runar-db-RRRR-MM-DD.7z`, datum z názvu) starší než 30 dní — lokálně i na
+  Google Drive; archiv ze dne D zmizí v den D+30. Audio archivy (bez osobních údajů, jen při změně) zůstávají. Zásady: u Google
+  „Each copy is deleted after 30 days; Google may keep a deleted copy in its trash for up to 30 more days“ (IS „Hverju afriti er eytt
+  eftir 30 daga…“), u výmazu „Everything goes — from our encrypted backups within 30 days“.
+- **Ověřeno:** samotest `node scripts/utils/zaloha_db.js --test-lhuta` (skutečná funkce na dočasných složkách: 30denní pryč, 29denní
+  a dnešní zůstávají, audio a cizí soubory nikdy); stránka zásad v EN i IS. Koš Google Drive maže po 30 dnech
+  (support.google.com/drive/answer/2375102); že tam končí i smazání přes Drive pro počítač, dokumentace výslovně neříká — proto „may“.
+- **Hranice:** maže se s denní zálohou; když je počítač vypnutý, smaže se při příštím běhu. Islandština čeká na Yfirlestur (nedostupný).
+- Affected doc(s): `RUNAR_PRIVACY.md` (bod 5), `RUNAR_BACKLOG.md` část 33 — v témže commitu.

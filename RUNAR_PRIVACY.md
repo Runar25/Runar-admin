@@ -32,7 +32,8 @@ opt-outu (ne opt-in brána). Výslovný souhlas jen u testerů — a ti CHTĚJÍ
 5. **Data v EU** (Supabase eu-west-1) — nikdy nesypat osobní čtení mimo EU (Slack/US = jen anonymizované).
    **Výjimka (KUKY 2026-10-10, DECISIONS 2026-10-10 (32)):** šifrovaná denní záloha DB na Google Drive (7z AES-256, heslo jen u nás) —
    Drive umístění v EHP nezaručuje, proto stojí v zásadách mezi zpracovateli (`v2/runar-privacy.html`, EN i IS). S přechodem na Hetzner
-   zálohy jen v EHP a kopie na Drive se vypne. Jak dlouho se zálohy drží, zatím rozhodnuto není → `RUNAR_BACKLOG.md` část 33.
+   zálohy jen v EHP a kopie na Drive se vypne. Zálohy se drží **30 dní** (KUKY 2026-10-10 „7. ano, 30 dní“; maže `scripts/utils/zaloha_db.js`), smazaný soubor může ještě
+   až 30 dní ležet v koši Google Drive — obojí stojí v zásadách.
 6. **'someone' čtení (třetí osoba) = JEN u testerů.** Čtení „FOR SOMEONE" nese jméno třetí osoby v textu a ta nic neodsouhlasila → u testera testovací data krytá souhlasem; u běžného usera se NEUKLÁDÁ vůbec. Journal usera je nikdy nezobrazí (`reading_mode='someone'`).
 
 ---
