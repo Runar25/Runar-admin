@@ -2051,9 +2051,9 @@ tabulky nákladů nesou štítek „Claude API“, čte ale GPT-6 sol (levnějš
 a „spready TODO / `RP_SINGLE.priority`“ (spready doménu i rejstřík mají, pole v kódu není) · `memory/README.md` přepsán na rozcestník
 („dvě session“ s prohozenými rolemi, `runar-project.md` jako sklad) · BACKLOG: položka „PRICING model na Opus“ → cíl je sol; hotový
 Ask „jen premium“ → poznámka `ASKS_PER_READING`.
-🟡 **PRO OWNERA:** gitignorovaná složka `_cowork_snap/` (snímek 22 souborů ke commitu 92255b9, 2026-07-21; nic ji nepřegenerovává)
+✅ gitignorovaná složka `_cowork_snap/` (snímek 22 souborů ke commitu 92255b9, 2026-07-21; nic ji nepřegenerovává)
 — diffem ověřeno, že se všech 22 shoduje s gitem, nic jedinečného. Je 2,5 měsíce stará (obsahuje i smazaný starý modul Gatheringu)
-a kdo ji čte, čte starý stav. Smazat? (Obnovitelné kdykoli z `git show 92255b9:<cesta>`.)
+a kdo ji čte, čte starý stav. ✅ **Smazáno 2026-10-10** (owner: *„9. smaž“*); obnovitelné z `git show 92255b9:<cesta>`.
 
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
