@@ -2044,7 +2044,7 @@ a „spready TODO / `RP_SINGLE.priority`“ (spready doménu i rejstřík mají,
 („dvě session“ s prohozenými rolemi, `runar-project.md` jako sklad) · BACKLOG: položka „PRICING model na Opus“ → cíl je sol; hotový
 Ask „jen premium“ → poznámka `ASKS_PER_READING`.
 🟡 **PRO OWNERA:** gitignorovaná složka `_cowork_snap/` (snímek 22 souborů ke commitu 92255b9, 2026-07-21; nic ji nepřegenerovává)
-— diffem ověřeno, že se všech 22 shoduje s gitem, nic jedinečného. Je 2,5 měsíce stará (obsahuje i smazaný `runar-gathering.js`)
+— diffem ověřeno, že se všech 22 shoduje s gitem, nic jedinečného. Je 2,5 měsíce stará (obsahuje i smazaný starý modul Gatheringu)
 a kdo ji čte, čte starý stav. Smazat? (Obnovitelné kdykoli z `git show 92255b9:<cesta>`.)
 
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
