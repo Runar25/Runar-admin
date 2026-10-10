@@ -2638,6 +2638,9 @@ Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
       ⚠️ **DMARC už existuje** (výchozí GoDaddy `v=DMARC1; p=quarantine; …`, ověřeno 2026-10-10) — druhý `_dmarc` nepřidávat, nanejvýš
       upravit ten jeden. Odesílatel v Supabase SMTP např. `noreply@therunekeeper.com` (schránka netřeba). Pak CODE ověří DNS, zapne
       `AUTH_EMAIL_ENABLED` a s ownerem projde první přihlášení kódem.
+      ✅ **2026-10-10:** Brevo doménu therunekeeper.com ověřilo samo přes GoDaddy (Authenticated + Branded, subdoména `runar`; DNS ověřeno:
+      brevo-code, DKIM b1/b2, jeden DMARC). Šablona e-mailu s kódem = `supabase/templates/prihlaseni-kod.html` (zdroj; do Supabase se vkládá
+      ručně do „Magic Link“ i „Confirm signup“). Zbývá: owner — SMTP v Supabase + obě šablony; pak CODE zapne `AUTH_EMAIL_ENABLED`.
 - [ ] **Hlášení nese verzi nasazenou, ne tu, která v telefonu běží** (2026-10-09, CODE-tune, §22). `runar-reporter.js` bere `app_version`
       z čerstvě staženého `sw.js`, ale stránka jede na JS ze staré cache, dokud se nenačte znovu (SW: JS cache-first). Doklad: hlášení 24c6c548
       (8. 10.) neslo `v564` a popisovalo chybu opravenou ve v564; owner 9. 10. po novém načtení: v pořádku. S testery by to mátlo diagnózu.
