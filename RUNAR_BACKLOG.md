@@ -2058,7 +2058,7 @@ a kdo ji čte, čte starý stav. ✅ **Smazáno 2026-10-10** (owner: *„9. sma�
   životní runou“ — čtení je jeden plynoucí blok (CLAUDE.md „Unified format“) a životní runa ze čtení odešla 2026-09-25 (jen Ask);
   EN statické HTML ř. ~125 + slovník ř. ~289, IS ř. ~343. (b) „Rúnar's voice“: „v Kolekci zazní předtočený **tón**, vždy stejný,
   nota, ne čtení“ — Kolekce ukáže **text** a přehrávač, Rúnar ho **mluví**, verze se losuje (`runar-app.js` `pick = rows[random]`).
-- ⚪ **Pro CODE-tune (c) — hlas slibuje víc, než server pustí:** `TIER_FEATURES` klíč `voice` (`runar-config.js`) píše „Rúnar's voice
+- ✅ *(CODE-tune 2026-10-10, b2f50b7: „up to {VOICE_MONTHLY_LIMIT} … each month“, IS přepsán s korpusem; td-card bez hlasu)* **(c) — hlas slibuje víc, než server pustí:** `TIER_FEATURES` klíč `voice` (`runar-config.js`) píše „Rúnar's voice
   reads every reading aloud“ / „…les hverja … upphátt“ a nápověda „When you use a reading card, Rúnar speaks your reading aloud“
   (s4 odst. 2, `td-card`). Server ale pustí hlas **nejvýš `VOICE_MONTHLY_LIMIT` za měsíc, plošně všem** (`elevenlabs-proxy`, KUKY
   2026-09-11 „spíš ochutnávka“) a na kartu vázaný není. Číslo do textu přes `VOICE_MONTHLY_LIMIT` (§8), ne natvrdo.
@@ -2066,7 +2066,7 @@ a kdo ji čte, čte starý stav. ✅ **Smazáno 2026-10-10** (owner: *„9. sma�
   nápověda 4 balíčky (Seeker 10 = 2.690 kr, Wanderer 20 = 5.050 kr, Elder **50** = 11.900 kr + ceny v €), PRICING 5 balíčků
   (Seeker 2.490 · Wanderer 4.490 · Elder **30** = 6.490 · Master 50 = 9.990, bez €). Shoda jen Starter 5 = 1.490. Novější je PRICING,
   ale fyzické karty můžou mít natištěno — **která tabulka platí?** Pak ji drží jedno místo (§20) a nápověda ji čte.
-- ⚪ **Pro CODE-tune (d):** tabulka balíčků v `v2/runar-help.html` (statické HTML + `pt-*` v EN i IS) podle DECISIONS 2026-10-10 (22) —
+- ✅ *(CODE-tune 2026-10-10, b2f50b7: `CARD_PACKS` v configu, nápověda z nich skládá tabulku, € pryč; zpětně ověřeno CODE-read — hodnoty = DECISIONS (22); `RUNAR_PRICING.md` převeden na odkaz)* **(d):** tabulka balíčků v `v2/runar-help.html` (statické HTML + `pt-*` v EN i IS) podle DECISIONS 2026-10-10 (22) —
   5 řádků, ISK z `RUNAR_PRICING.md`, € sloupec pryč (€ ceny owner neurčil). Ideálně balíčky jako data v configu a nápověda je čte (§20),
   ať je druhá kopie pryč úplně.
 
@@ -2076,7 +2076,7 @@ JS z cache — po převzetí nové verze se appka jednou sama obnoví (`controll
 s novým HTML trvá jen do toho reloadu · manifest (rozsah, start, ikony) sedí s cestami.
 **Opraveno (CODE-read):** ráčna ㉸ viděla jen větev `lang === 'is' ? '…'`, která ZAČÍNÁ uvozovkou. Teď čte celou islandskou větev
 (literály na nejvyšší úrovni, ne klíče v argumentech, ne komentáře) → našla dvě, BASELINE je drží.
-- ⚪ **Pro CODE-tune (e):** `runar-tree.js` ~476 — řádek volných čtení v záložce životní runy má EN i IS větu natvrdo
+- ✅ *(CODE-tune 2026-10-10, 0d0386c: `tree_rs_free_line` v UI_TEXT, `openUpgradeModal` smazán, BASELINE {}; ověřeno CODE-read — ㉸ „žádný v žádném souboru“)* **(e):** `runar-tree.js` ~476 — řádek volných čtení v záložce životní runy má EN i IS větu natvrdo
   (`vn(...) + ' fyrir venjulegar dregnar rúnir'` / `' available for regular draws'`) → UI_TEXT + `tp()` s `{casts}`; IS ověřit (§2).
   `runar-auth.js` ~334 `openUpgradeModal` — nikdo ho nevolá (grep), text natvrdo; smazat. Po obou snížit BASELINE v `verify_lang_ternary.js`.
 

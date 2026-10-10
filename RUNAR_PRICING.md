@@ -212,20 +212,13 @@ Decoupled from rune count (old model was 1 rune = 1 credit).
 ## Credit Packages (Rune Seeker purchases)
 
 Credits are priced to make Standard subscription clearly more attractive.
-Engaged user (50 single/month = 50 credits) at Elder price = 9.990 ISK vs Standard 3.490 ISK → saves ~6.500 ISK/mo.
 
-| Package | Credits | ISK | ISK/credit |
-|---------|---------|-----|------------|
-| Starter | 5 | 1.490 ISK | 298 ISK |
-| Seeker | 10 | 2.490 ISK | 249 ISK |
-| Walker | 20 | 4.490 ISK | 225 ISK |
-| Wanderer | 30 | 6.490 ISK | 216 ISK |
-| Elder | 50 | 9.990 ISK | 200 ISK |
+**Balíčky (jména, počty kreditů, ISK) vlastní `CARD_PACKS` v `v2/runar-config.js`** — nápověda z nich skládá tabulku. Tady se
+neopisují (§20). Cena za kredit klesá s velikostí balíčku; nejlevnější kredit je v největším balíčku.
+*2026-10-10: jména a ceny rozhodl KUKY (DECISIONS 2026-10-10 (22)); do té doby tu stála tabulka (a v `runar-help.html` druhá,
+starší — Elder 50 = 11.900 kr, ceny v €). Od b2f50b7 (CODE-tune) je jediným místem config.*
 
-*Jména balíčků KUKY 2026-10-10 (DECISIONS 2026-10-10 (22)): Master → Elder, přibyl Walker; ceny beze změny z 2026-06-03.
-Tahle tabulka je jediné místo balíčků — `v2/runar-help.html` měl do té doby vlastní starší tabulku (Elder 50 = 11.900 kr, ceny v €).*
-
-Credit value unchanged (200–298 ISK/credit). Under the new scale a credit buys a single reading; spreads cost 2–5 credits.
+A credit buys a single reading; spread prices in credits = `SPREAD_COSTS`.
 A subscriber pays ~65–70 ISK/reading-unit (see below) — ~3× cheaper than the cheapest credit. This is the upgrade argument — real math.
 
 ---
@@ -249,7 +242,7 @@ Exchange rates (June 2026): €1 = 143.6 ISK / $1 = 123.5 ISK. ISK prices are fi
 
 ### Standard value vs credits
 Engaged user (50 single/month = 50 credits):
-- At Master credit price: 9.990 ISK/month
+- At the price of the largest credit pack (`CARD_PACKS`, 50 credits): 9.990 ISK/month
 - Standard subscription: 3.490 ISK/month
 - **User saves ~6.500 ISK/month on Standard**
 
