@@ -404,6 +404,12 @@ const TIER_FEATURES = [
 ];
 // Kdo stojí „nad“ kým: řádky shodné se základem se složí do jedné věty.
 const TIER_FEATURES_BASE = { premium: 'standard' };
+// Ta jedna věta po jazycích (2026-10-10 sem z tierFeatures, kde stála `L === 'is' ? … : …` natvrdo). Data, ne UI_TEXT — výpis skládá
+// i runar-help.html, který překlady nenačítá. IS: jméno tieru v 1. pádě, je podmětem („Leitandi hefur“).
+const TIER_FEATURES_ALL = {
+  en: function (jm) { return 'Everything a ' + jm + ' has.'; },
+  is: function (jm) { return 'Allt sem ' + jm + ' hefur.'; },
+};
 function tierFeatures(id, lang) {
   var L = lang === 'is' ? 'is' : 'en';
   var radky = function (tid) {
@@ -420,7 +426,7 @@ function tierFeatures(id, lang) {
   var maVse = jehoR.every(function (r) { return mojeK.indexOf(r.key) !== -1; });
   if (!maVse || navic.length === moje.length) return moje.map(function (r) { return r.text; });
   var jm = L === 'is' ? TIERS[zakl].label_is : TIERS[zakl].label;
-  var vse = L === 'is' ? 'Allt sem ' + jm + ' hefur.' : 'Everything a ' + jm + ' has.';
+  var vse = TIER_FEATURES_ALL[L](jm);
   // „Everything …“ hned za první řádek, když je to počet čtení (nejdůležitější věc tieru); jinak na začátek
   return navic.length && navic[0].key === 'month'
     ? [navic[0].text, vse].concat(navic.slice(1).map(function (r) { return r.text; }))

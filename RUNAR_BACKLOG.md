@@ -2190,7 +2190,12 @@ podezřele čisté číslo → ověřeno protipříkladem: podstrčené dvě nev
 `isIs ? '…' : '…'` (zkratka `var isIs = lang === 'is'`) a jiná jména jazykové proměnné (`L`, `_lifeRuneLang`) ㉸ neviděla — tři živé
 UI texty prošly zeleně (CODE-tune je přesunul, e9c1e96). **Opraveno (CODE-read, 15a5103):** zkratky si kontrola najde sama; hodnota CSS,
 jméno klíče ani locale se nepočítají (samotest).
-- ⚪ **Pro CODE-tune (i):** ráčna drží 25 větví — `runar-auth.js` 2 (návod k instalaci Safari/Chrome, UI) · `runar-config.js` 1 („Allt sem …
+- ✅ *(CODE-tune 2026-10-10: UI část — auth 2 → 0 (UI_TEXT `install_body_ios`/`install_body_other`), config 1 → 0 (`TIER_FEATURES_ALL`
+  v configu, ne v UI_TEXT: výpis tierů skládá i nápověda, která překlady nenačítá). Znění beze změny: okno instalace EN/IS × iOS/jiný
+  a `tierFeatures` 6 tierů × 2 jazyky před a po shodné. BASELINE snížena.)* **(i) UI část.**
+- ⚪ **Pro CODE-tune (i), zbytek:** `runar-character.js` 15 + `runar-utils.js` 7 (text a značky promptu → jazykové balíčky; změna
+  builderu = golden-verify, §18.3). Po přesunu snížit BASELINE.
+- ~~**Pro CODE-tune (i):**~~ ráčna drží 25 větví — `runar-auth.js` 2 (návod k instalaci Safari/Chrome, UI) · `runar-config.js` 1 („Allt sem …
   hefur“ ve výpisu tierů, UI) · `runar-character.js` 15 + `runar-utils.js` 7 (text a značky promptu → jazykové balíčky). Po přesunu snížit BASELINE.
 
 ### Část 30 — kořen `docs/`: co tam leží jako živé (2026-10-10)

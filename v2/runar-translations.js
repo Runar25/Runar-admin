@@ -209,6 +209,8 @@ const UI_TEXT = {
     become_rs_btn:      'BECOME A RUNE SEEKER \u2192',
     install_title:      'INSTALL R\u00daNAR',
     got_it_btn:         'GOT IT',
+    install_body_ios:   'In Safari: tap the <strong>Share</strong> button (□↑) at the bottom of your screen, then select <strong>Add to Home Screen</strong> and tap <strong>Add</strong>.',   // 2026-10-10: dřív natvrdo v installPWA (runar-auth.js)
+    install_body_other: 'In Chrome or Brave: tap the <strong>⋮ menu</strong> in the top right and select <strong>Install app</strong> or <strong>Add to Home Screen</strong>.',
     sp_account_title:   'YOUR ACCOUNT',
     sp_guide_link:      '? GUIDE & FAQ',
     sp_higher_path:     'UPGRADE YOUR JOURNEY',   // 2026-09-29 KUKY: „dáme Upgrade your journey“ (dřív THE JOURNEY BEYOND)
@@ -693,6 +695,8 @@ const UI_TEXT = {
     become_rs_btn:      'GERAST LEITANDI \u2192',
     install_title:      'SETJA INN R\u00daNAR',
     got_it_btn:         'SKILI\u00d0',
+    install_body_ios:   'Í Safari: ýttu á <strong>Deila</strong> táknið (□↑) neðst á skjánum, veldu síðan <strong>Bæta við heimaskjá</strong> og ýttu á <strong>Bæta við</strong>.',   // 2026-10-10: viz EN; znění beze změny
+    install_body_other: 'Í Chrome eða Brave: ýttu á <strong>⋮ valmynd</strong> efst til hægri og veldu <strong>Setja upp forrit</strong> eða <strong>Bæta við heimaskjá</strong>.',
     sp_account_title:   'REIKNINGUR \u00dEINN',
     sp_guide_link:      '? LEI\u00d0BEININGAR & SPURNINGAR',
     sp_higher_path:     'TAKTU FERÐINA LENGRA',   // 2026-09-29 viz EN; obrat „taka X lengra“ (korpus 158×), dřív FERÐIN HANDAN

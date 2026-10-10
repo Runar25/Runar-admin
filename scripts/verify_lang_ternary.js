@@ -45,7 +45,8 @@ function hlavy(txt) {
 // 2026-10-10 CODE-tune: obě pryč — tree → UI_TEXT tree_rs_free_line, auth openUpgradeModal smazán (nikdo ho nevolal). Ráčna zase na nule.
 // 2026-10-10 CODE-read: zkratky + další jména jazykové proměnné (viz výš) → nový stav. auth = návod k instalaci (Safari/Chrome, UI),
 // config = „Allt sem … hefur“ ve výpisu tierů (UI), character + utils = text a značky PROMPTU (balíčky RP_*, doména CODE-tune).
-const BASELINE = { 'runar-auth.js': 2, 'runar-character.js': 15, 'runar-config.js': 1, 'runar-utils.js': 7 };
+// 2026-10-10 CODE-tune: auth 2 → 0 (návod k instalaci → UI_TEXT install_body_*), config 1 → 0 (věta výpisu tierů → TIER_FEATURES_ALL).
+const BASELINE = { 'runar-character.js': 15, 'runar-utils.js': 7 };
 // Literály na nejvyšší úrovni islandské větve; větev končí `:`, `;` nebo `,` mimo závorky, nebo zavřením vnější závorky.
 function litVeVetvi(txt, from) {
   const out = [];

@@ -287,22 +287,14 @@ async function installPWA() {
     if (outcome === 'accepted') { _installPrompt = null; _updateInstallBtn(); }
   } else {
     // iOS or no prompt available — show instructions
-    const isIs = lang === 'is';
     const title = document.getElementById('install-modal-title');
     const body  = document.getElementById('install-modal-body');
     const btn   = document.getElementById('install-modal-btn');
     if (title) title.textContent = t('install_title');
     if (btn)   btn.textContent   = t('got_it_btn');
     if (body) {
-      if (_isIOS()) {
-        body.innerHTML = isIs
-          ? 'Í Safari: ýttu á <strong>Deila</strong> táknið (□↑) neðst á skjánum, veldu síðan <strong>Bæta við heimaskjá</strong> og ýttu á <strong>Bæta við</strong>.'
-          : 'In Safari: tap the <strong>Share</strong> button (□↑) at the bottom of your screen, then select <strong>Add to Home Screen</strong> and tap <strong>Add</strong>.';
-      } else {
-        body.innerHTML = isIs
-          ? 'Í Chrome eða Brave: ýttu á <strong>⋮ valmynd</strong> efst til hægri og veldu <strong>Setja upp forrit</strong> eða <strong>Bæta við heimaskjá</strong>.'
-          : 'In Chrome or Brave: tap the <strong>⋮ menu</strong> in the top right and select <strong>Install app</strong> or <strong>Add to Home Screen</strong>.';
-      }
+      // 2026-10-10 z UI_TEXT (dřív `isIs ? … : …` natvrdo; ㉸ to vidí od rozšíření o zkratky), znění beze změny
+      body.innerHTML = t(_isIOS() ? 'install_body_ios' : 'install_body_other');
     }
     document.getElementById('install-modal').classList.add('open');
   }
