@@ -2263,7 +2263,9 @@ dárkový kód. `user_profiles` drží navíc (stav 2026-10-10, 4 profily):
   `founding_reading_id` · **hlas** `voice_month_key/count` · **volby** `analytics_opt_out`, `is_tester`, `tester_consent_at` ·
   **rok narození** `dob_year` — od 2026-10-09 se nezadává (DECISIONS (20)), ale **3 ze 4** starých účtů ho mají uložený (interně
   `RUNAR_PRIVACY.md`: „semínko tvaru stromu“; veřejně nikde).
-- ✅ *(KUKY 2026-10-10 „4. ano“, DECISIONS (35); text EN + IS → CODE-tune)* **(a):** doplnit do veřejné tabulky řádky pro oslovení, severské jméno a rozbor jména, uložené texty (životní runa,
+- ✅ *(KUKY 2026-10-10 „4. ano“, DECISIONS (35); text EN + IS → CODE-tune, hotovo 2026-10-10: tabulka 14 řádků EN i IS, u čtení i otázky
+  Asku; po cestě opravená islandština tabulky — úvod (rod „ákveðin hlutir“), „Fjöldi lestra“, „Inneign“, „gert nafnlaust“. Yfirlestur
+  nedostupný → dlužná kontrola v „Kontrola návštěvníka“ bod 7.)* **(a):** doplnit do veřejné tabulky řádky pro oslovení, severské jméno a rozbor jména, uložené texty (životní runa,
   rozbor), počet hlasových čtení a volby soukromí/testera (EN + IS → CODE-tune). Doporučení: ano — tabulka má říkat, co držíme.
 - ✅ *(KUKY 2026-10-10 „nechat, jsou to admin účty“, DECISIONS (35); data admin účtů nejsou nález — memory `admin-ucty-nejsou-nalez`)* **(b):** rok narození 3 starých účtů — **smazat** (rok se nezadává, slib „den a měsíc“), napřed CODE-tree potvrdí, že strom
   semínko bez roku zvládne; nebo ho nechat a uvést. Doporučení: smazat (zápis do DB = owner, SQL připravím).
@@ -3198,7 +3200,9 @@ Podklad: `docs/archive/2026-09-23-audit-obrazu.md`. Owner je potřebuje vysvětl
    „út úr hringnum“ 116; bez rodu.)* ~~**Toast při odhlášení natvrdo anglicky:**~~ `showToast('YOU HAVE LEFT THE CIRCLE')` i v islandské appce.
    ⚪ **Dlužná kontrola Yfirlestur:** 2026-10-10 byla služba nedostupná (is-grammar-qa „NEZKONTROLOVÁNO“) pro nové islandské věty —
    `signed_out_toast`, `journal_load_err` („Ekki tókst að sækja spárnar þínar — athugaðu nettenginguna og reyndu aftur.“) a v zásadách
-   soukromí věty o záloze na Google Drive (Supabase „…að undanskildu öryggisafritinu sem lýst er hér að neðan“ a celý odstavec Google).
+   soukromí věty o záloze na Google Drive (Supabase „…að undanskildu öryggisafritinu sem lýst er hér að neðan“ a celý odstavec Google,
+   lhůta „Hverju afriti er eytt eftir 30 daga…“, výmaz „…úr dulkóðuðu öryggisafritunum okkar innan 30 daga“) a celá tabulka „Hvað er
+   geymt“ (úvod + 6 nových řádků + opravené Fjöldi lestra / Inneign / gert nafnlaust).
    Ověřeny jen korpusem (obraty s doklady v komentáři patche) a vzorem nasazených vět. Pustit `python -X utf8 is-grammar-qa.py --text "…"`
    znovu; flag = přepsat.
 8. ❓ **Čtení pro návštěvníka (čeká na ownera):** owner 2026-10-10 *„text je pro nás v pohodě, ať dostane čuchnout bez registrace…
