@@ -2062,10 +2062,13 @@ a kdo ji čte, čte starý stav. ✅ **Smazáno 2026-10-10** (owner: *„9. sma�
   reads every reading aloud“ / „…les hverja … upphátt“ a nápověda „When you use a reading card, Rúnar speaks your reading aloud“
   (s4 odst. 2, `td-card`). Server ale pustí hlas **nejvýš `VOICE_MONTHLY_LIMIT` za měsíc, plošně všem** (`elevenlabs-proxy`, KUKY
   2026-09-11 „spíš ochutnávka“) a na kartu vázaný není. Číslo do textu přes `VOICE_MONTHLY_LIMIT` (§8), ne natvrdo.
-- 🟡 **PRO OWNERA — ceny balíčků kreditů:** nápověda (tabulka v HTML, od 2026-05-20) a `RUNAR_PRICING.md` (od 2026-06-03) se liší:
+- ✅ *(rozhodnuto 2026-10-10, DECISIONS 2026-10-10 (22): Starter 5 · Seeker 10 · Walker 20 · Wanderer 30 · Elder 50, ceny 3. 6.; `RUNAR_PRICING.md` opraven)* **ceny balíčků kreditů:** nápověda (tabulka v HTML, od 2026-05-20) a `RUNAR_PRICING.md` (od 2026-06-03) se liší:
   nápověda 4 balíčky (Seeker 10 = 2.690 kr, Wanderer 20 = 5.050 kr, Elder **50** = 11.900 kr + ceny v €), PRICING 5 balíčků
   (Seeker 2.490 · Wanderer 4.490 · Elder **30** = 6.490 · Master 50 = 9.990, bez €). Shoda jen Starter 5 = 1.490. Novější je PRICING,
   ale fyzické karty můžou mít natištěno — **která tabulka platí?** Pak ji drží jedno místo (§20) a nápověda ji čte.
+- ⚪ **Pro CODE-tune (d):** tabulka balíčků v `v2/runar-help.html` (statické HTML + `pt-*` v EN i IS) podle DECISIONS 2026-10-10 (22) —
+  5 řádků, ISK z `RUNAR_PRICING.md`, € sloupec pryč (€ ceny owner neurčil). Ideálně balíčky jako data v configu a nápověda je čte (§20),
+  ať je druhá kopie pryč úplně.
 
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí

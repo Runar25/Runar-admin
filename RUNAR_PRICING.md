@@ -212,15 +212,18 @@ Decoupled from rune count (old model was 1 rune = 1 credit).
 ## Credit Packages (Rune Seeker purchases)
 
 Credits are priced to make Standard subscription clearly more attractive.
-Engaged user (50 single/month = 50 credits) at Master price = 9.990 ISK vs Standard 3.490 ISK → saves ~6.500 ISK/mo.
+Engaged user (50 single/month = 50 credits) at Elder price = 9.990 ISK vs Standard 3.490 ISK → saves ~6.500 ISK/mo.
 
 | Package | Credits | ISK | ISK/credit |
 |---------|---------|-----|------------|
 | Starter | 5 | 1.490 ISK | 298 ISK |
 | Seeker | 10 | 2.490 ISK | 249 ISK |
-| Wanderer | 20 | 4.490 ISK | 225 ISK |
-| Elder | 30 | 6.490 ISK | 216 ISK |
-| Master | 50 | 9.990 ISK | 200 ISK |
+| Walker | 20 | 4.490 ISK | 225 ISK |
+| Wanderer | 30 | 6.490 ISK | 216 ISK |
+| Elder | 50 | 9.990 ISK | 200 ISK |
+
+*Jména balíčků KUKY 2026-10-10 (DECISIONS 2026-10-10 (22)): Master → Elder, přibyl Walker; ceny beze změny z 2026-06-03.
+Tahle tabulka je jediné místo balíčků — `v2/runar-help.html` měl do té doby vlastní starší tabulku (Elder 50 = 11.900 kr, ceny v €).*
 
 Credit value unchanged (200–298 ISK/credit). Under the new scale a credit buys a single reading; spreads cost 2–5 credits.
 A subscriber pays ~65–70 ISK/reading-unit (see below) — ~3× cheaper than the cheapest credit. This is the upgrade argument — real math.

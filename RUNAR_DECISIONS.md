@@ -9560,3 +9560,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   x beze změny (šířka = koruna), hloubka = výška nad zemí × 0,5 (kmen pod nejnižším ramenem × 0,2), mírné vlnění, ať to není přesná kopie;
   ověřeno v labu v prohlížeči. Čeká na ownerův pohled.
 - Affected doc(s): `RUNAR_TREE.md` §2 (kořeny), `RUNAR_BACKLOG.md` (položka pokusu) — v témže commitu.
+
+## 2026-10-10 (22) — Balíčky kreditů: Starter 5 · Seeker 10 · Walker 20 · Wanderer 30 · Elder 50, ceny z 2026-06-03
+
+- **Kdo / proč:** KUKY na otázku CODE-read (kontrola architektury, nápověda × `RUNAR_PRICING.md` se rozcházely v cenách i počtu
+  balíčků): *„starter 5, seeker 10, walker 20, wanderer 30, Elder 50. Master se tím stává Elder. jinak platí ceny 3.6.“*
+- **Rozhodnuto:** pět balíčků, jména výš; ceny = tabulka z 2026-06-03 (`RUNAR_PRICING.md` „Credit Packages“), jen přejmenované
+  (dřívější Elder 30 = dnešní Wanderer, Master 50 = Elder). Starší tabulka v `v2/runar-help.html` (od 2026-05-20: Elder 50 = 11.900 kr,
+  Wanderer 20 = 5.050 kr, ceny v €) neplatí.
+- **⚠️ Kritický pohled (§21):** „Walker“ a „Wanderer“ jsou zároveň části jmen tarifů (`TIERS.*.label`) — balíček Wanderer (30 kreditů)
+  a tarif s „Wanderer“ v názvu jsou různé věci; v UI je drž od sebe (u balíčku vždy počet kreditů). Ceny v € nápověda měla, rozhodnutí
+  je nemá → € sloupec v nápovědě pryč, dokud owner € ceny neurčí (nedomýšlet, §23).
+- **Affected doc(s):** `RUNAR_PRICING.md` (tabulka balíčků) — v témže commitu; `v2/runar-help.html` (tabulka) → CODE-tune
+  (`RUNAR_BACKLOG.md` část 17).
