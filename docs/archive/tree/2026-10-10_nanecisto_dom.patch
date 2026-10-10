@@ -1,0 +1,53 @@
+--- a/build_crown_composer.py
++++ b/build_crown_composer.py
+@@ -1110,6 +1110,9 @@
+         runeN:(be.runeCnt&&be.runeCnt[runeK])||null } }); }
+   }
+ 
++  /* NANECISTO DOM 2026-10-10: koeficient delky, aby konec vetve (start S, konec T) dosahl na kruh se stredem C a polomerem Rw */
++  function domF(S, T, Rw){ var Cx=trunkT.cx, Cy=trunkT.groundY, b=Math.hypot(S.x-Cx, S.y-Cy), d=Math.hypot(T.x-Cx, T.y-Cy);
++    if(d-b<1 || Rw<=b) return 1; return Math.max(0.35, Math.min(4, (Rw-b)/(d-b))); }
+   function growBranch(out, cfg, ox, oy, baseAng, dev, role, rune, seed, lenScale, w0Want, depthZ, level, sizeFactor, childRunes, selfInfo){
+     var TT={ length:cfg.length*lenScale, width:cfg.width, curve:cfg.curve, taper:cfg.taper, wobble:cfg.wobble,
+              tipLift:cfg.tipLift*((level===0 && cfg.limbTip!=null) ? cfg.limbTip : 1), jitter:cfg.jitter, steer:cfg.steer, subScale:0, leaf:0, cx:ox, baseY:oy };   /* limbTip: zdvih spicky RAMEN (level 0) zvlast od vetvicek */
+@@ -1899,6 +1902,10 @@
+           var LP=limbPath(memb, lifeLean*0.6, mag0, side0, vlog, be.bornIdx||0);
+           var angLP=softSide((LP.ang!=null) ? LP.ang : ang0, -Math.PI/2);           /* jen dolni strop (~100°) */
+           var ang=(k>0 && _ANG[k]!=null) ? _ANG[k] : angLP;   /* VEJIR: uhel ze spolecneho vypoctu vsech ramen (vysky v drawu) */
++          /* NANECISTO DOM 2026-10-10: vejir podle poradi vysky na kmeni (kazda strana zvlast): nejnizsi ~80°, nejvyssi ~20° od svislice */
++          if(k>0){ var sd8=((ang+Math.PI/2)>=0) ? 1 : -1, mine8=FRAC[k], lo8=0, n8=0;
++             for(var q8b=1; q8b<mainsN; q8b++){ if(q8b===k || FRAC[q8b]==null || _ANG[q8b]==null) continue; if((((_ANG[q8b]+Math.PI/2)>=0)?1:-1)!==sd8) continue; n8++; if(FRAC[q8b]<mine8) lo8++; }
++             var t8=n8 ? lo8/n8 : 0.5; ang=-Math.PI/2 + sd8*(1.40-1.05*t8); }
+           var tiltR=ang-ang0;                                                       /* tuhe otoceni hotoveho ramene */
+           var LB={ b:LP.b, n:LP.n, c:LP.c };
+           var iAx=(be.birthInt!=null && INT_AXIS[be.birthInt]!=null) ? INT_AXIS[be.birthInt] : 0;
+@@ -1981,9 +1988,13 @@
+           if(k>0 && gUp<1e9){ var dlt=Math.max(0.03, Math.abs(ang-tang)), Lpx=mcfg.length*2.4*lenF, wSep=1.5*ex.w+4;
+             var bU0=(mcfg.limbBendU!=null) ? mcfg.limbBendU : 0.45;
+             mcfg.limbBendU=Math.max(0.7*bU0, Math.min(bU0, 0.8*Math.sqrt(dlt*gUp*gUp*gUp/wSep)/Math.max(1, Lpx))); }   /* nejvys o 30 % rychleji: plny rychly odklon delal z ramen tuhe klacky (koste) */
+-          var _cStart=crown.length;   /* vse, co growBranch prida, patri TETO vetvi -> otagovat k */
++          var _cStart=crown.length, _p0=_pick.length;   /* vse, co growBranch prida, patri TETO vetvi -> otagovat k */
+           var mainLimb=growBranch(crown, mcfg, ex.x, ex.y, tang, ang-tang, 'main', brune.k,   /* V4b: roste rovnou do sveho smeru (drive kostra + tuhe otoceni -> smycky) */
+                      (dobSeed ^ (k*0x9e37))>>>0, lenF, ex.w, ex.depth, 0, sizeF, twRunes);
++          if(mainLimb){ var Rd9=1.35*(trunkT.groundY-trunkT.topY), w9=0.85+0.15*clamp(((be.ownN!=null)?be.ownN:be.count)/Math.max(1,branchEls.mx||1), 0, 1);   /* NANECISTO DOM */
++            var f9=domF(mainLimb.pts[0], mainLimb.pts[mainLimb.pts.length-1], Rd9*w9);
++            if(Math.abs(f9-1)>0.02){ crown.length=_cStart; _pick.length=_p0;
++              mainLimb=growBranch(crown, mcfg, ex.x, ex.y, tang, ang-tang, 'main', brune.k, (dobSeed ^ (k*0x9e37))>>>0, lenF*f9, ex.w, ex.depth, 0, sizeF, twRunes); } }
+           /* V4b: tuhe otoceni (rotateFrom) zruseno — viz hlavicka patche; strana ohybu je pevna (mcfg._side). */
+           /* verze B: patef vetve se za chvili prepise (dole se k ni prilepi kmen), takze
+              kopie TED. Graduant se po ni povede zevnitr az k mistu, kde se odlepi. */
+@@ -2085,9 +2096,13 @@
+       gcfg.limbBendU=Math.min(0.15, (crownT.limbBendU!=null) ? crownT.limbBendU : 0.45);
+       var gLen=gPf*gEmg*(crownT.gradLen||1);
+       var gRt=(branchEls.gradTree||[])[GS.gi], gKids=gRt ? repKids(gRt, vlog.length, bandLoHi(par.el, par.be.band||0)) : [];   /* cteni od povyseni */
+-      var _gStart=crown.length;
++      var _gStart=crown.length, _gp0=_pick.length;
+       var gLimb=growBranch(crown, gcfg, sp.x, sp.y, gBase, gDev, 'main', GS.rune, (dobSeed ^ (k*0x9e37))>>>0,
+                            gLen, sp.w*0.85, sp.depth+0.01, 0, gPf*gEmg, gKids);
++      if(gLimb){ var Rg9=1.35*(trunkT.groundY-trunkT.topY), wg9=0.85+0.15*clamp(gN/Math.max(1,branchEls.mx||1), 0, 1);   /* NANECISTO DOM */
++        var fg9=domF(gLimb.pts[0], gLimb.pts[gLimb.pts.length-1], Rg9*wg9);
++        if(Math.abs(fg9-1)>0.02){ crown.length=_gStart; _pick.length=_gp0;
++          gLimb=growBranch(crown, gcfg, sp.x, sp.y, gBase, gDev, 'main', GS.rune, (dobSeed ^ (k*0x9e37))>>>0, gLen*fg9, sp.w*0.85, sp.depth+0.01, 0, gPf*gEmg, gKids); } }
+       for(var gc=_gStart; gc<crown.length; gc++){ crown[gc].k=k; crown[gc].age01=clamp(gAge/Math.max(1,trunkT.matureDays),0,1); }
+       if(gLimb){ gLimb.src='vetev'; gLimb.k=k;
+         _pick.push({ k:k, pts:gLimb.pts, meta:{ el:par.el, aett:par.be.aett, world:(RBK[GS.rune]?RBK[GS.rune].world:par.be.world),

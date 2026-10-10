@@ -463,6 +463,15 @@
   stromě; v1 mířila jen na cíl pramene a páry vyšly 46–201 px od sebe). Jeho strom: mimo svou zónu 2/22 (dnes 9), výstupů z kmene 24
   (dnes 17), povýšená 1; smoke ㉳ projde. Strom užší a vyšší, větve kratší a vodorovnější v párech (mladý strom jako mladý jasan / jehličnan).
   Zbývá Tiwaz 89 % (pořadí z prvních čtení). Čeká na ownerovo porovnání s dneškem.
+- [ ] ⭐ **Strom: obrys stromu života (dóm) — owner ukázal předlohy** (CODE-tree, 2026-10-10). KUKY s pěti obrázky stromu života: *„spodní větve
+  jako nejstarší, největší a nejdelší. koruna více zarovnaná do půloblouku, u kořenů to samé. to naše vypadá jako strom, ale my neděláme
+  obyčejný strom. má být taky vizuálně hezký.“* Předlohy: koruna = horní půlkruh, kořeny = dolní, zem = průměr (kruhové 2, 3, 5); nízké
+  větve nejdelší a do strany, horní kratší vzhůru; kmen krátký, větví se brzy. **Nanečisto krok 1+2** (patch
+  `docs/archive/tree/2026-10-10_nanecisto_dom.patch`): (1) konec každé hlavní větve dotažen na kruh se středem u paty kmene (R = 1,35 ×
+  výška kmene; počet čtení jen ±15 % — délka přestává být hlavně „praxe“, F5 2026-08-07); (2) úhel hlavní větve podle pořadí výšky na kmeni
+  (nejnižší ~80°, nejvyšší ~20° od svislice). Výsledek: koruna široký oblouk (~2× širší než vysoká), ale větve dlouhé a řídké, vršek slabý,
+  boční větve visí, kořeny drobné; smoke ㉳ (m) 1 porušení. Krok 1 sám (bez úhlů) dal plochý deštník. Další kroky k rozhodnutí: kořeny do
+  dolního půloblouku, hustší a kratší koruna, konce větví vzhůru, kratší kmen; střet s „délka = praxe“ a „výška roste se šířkou“ (hwRatio).
 - [ ] **Strom (lab): `AREA_LAT` odporuje „oblast = strana“** (CODE-tree, nalezeno 2026-10-09). Tabulka v `runar-branch.js` (sdílená
   s aplikací) bere Love −0,75 (nitro), Spirituality −0,20 (skoro střed), Crossroads +0,10 — kánon (`RUNAR_TREE.md` §3) má Love a Crossroads
   bez strany a Spirituality ve světě. Čte ji strana větvičky (`sideOf`), natočení ramene za čteními (`latOf` / `areaSide`) i lateral
