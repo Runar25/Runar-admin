@@ -75,3 +75,8 @@ Ne „mám ho v kontextu" — kontext je snímek k času přečtení, ne stav re
 `runar-character.js`, `runar-config.js` a proxy, do kterých sahá `[tune]` několikrát denně.
 Levná pojistka před tvrzením o čísle nebo znění: `git pull` + čerstvý `grep` na tu jednu řádku.
 
+**Rozdělaná úprava KONTROLY ve sdíleném stromě shodí push všem** (2026-10-10, CODE-read): pre-push smoke běží nad pracovním
+stromem, ne nad commitem. Mezistav ㉸ (falešně hlásil komentáře) shodil CODE-tune push b2f50b7 — a obráceně jejich necommitnutý
+`setRuneText` shodil můj. **Úpravu skriptu ve `scripts/` nebo `smoke.py` dolaď v kopii ve scratchpadu** (`node <kopie> --test` +
+běh nad repem) a do stromu ji zapiš až hotovou, rovnou s commitem. Když tě shodí cizí rozdělaná práce: nepouštěj `--no-verify`,
+napiš té session s výpisem a počkej.
