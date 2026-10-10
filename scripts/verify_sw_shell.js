@@ -15,7 +15,7 @@
 //
 //   node scripts/verify_sw_shell.js
 const fs = require('fs');
-const D = 'C:/Users/zkuku/Downloads/Runar-admin/v2/';
+const D = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/v2/';
 
 let fail = 0;
 const rekni = (ok, popis) => { if (ok) console.log('  ✓ ' + popis); else { fail++; console.log('  ✗ ' + popis); } };

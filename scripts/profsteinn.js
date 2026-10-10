@@ -140,7 +140,7 @@ function vypis(radky, v) {
     const runa = arg('rune', '') ? ['--rune', arg('rune')] : [];
     cp.execFileSync('node', ['scripts/utils/gen_direct.js', '--spread', 'single', '--lang', L,
       '--n', n, '--tag', 'profsteinn', ...runa], { stdio: 'inherit' });
-    const soubor = 'C:/Users/zkuku/Downloads/Runar-admin/eval_out/archive/gen-single-' + L + '-profsteinn.jsonl';
+    const soubor = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/eval_out/archive/gen-single-' + L + '-profsteinn.jsonl';
     radky = fs.readFileSync(soubor, 'utf8').trim().split('\n').map(x => JSON.parse(x))
       .filter(z => z.reading_text && !z.error)
       .map(z => ({ rune: z.runes[0], lang: z.lang, text: z.reading_text }));

@@ -19,7 +19,7 @@
 // Idempotentní: druhé spuštění na týž runId nic nepřepíše a řekne to.
 const fs = require('fs'), path = require('path');
 
-const REPO = 'C:/Users/zkuku/Downloads/Runar-admin';
+const REPO = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '';
 const SESS = process.env.CLAUDE_SESSION_DIR ||
   'C:/Users/zkuku/.claude/projects/C--Users-zkuku';
 

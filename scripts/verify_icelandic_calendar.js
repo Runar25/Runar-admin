@@ -15,7 +15,7 @@
 //
 //   node scripts/verify_icelandic_calendar.js
 const fs = require('fs'), vm = require('vm');
-const D = 'C:/Users/zkuku/Downloads/Runar-admin/v2/';
+const D = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/v2/';
 const S = { console: { log() {}, warn() {}, error() {} }, Math, JSON, Date,
   document: { getElementById: () => null, querySelector: () => null, querySelectorAll: () => [], addEventListener() {} },
   localStorage: { getItem: () => null, setItem() {} }, navigator: {}, setTimeout: () => 0 };

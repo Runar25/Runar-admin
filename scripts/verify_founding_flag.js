@@ -16,7 +16,7 @@
 //
 //   node scripts/verify_founding_flag.js
 const fs = require('fs');
-const SRC = 'C:/Users/zkuku/Downloads/Runar-admin/v2/runar-reading.js';
+const SRC = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/v2/runar-reading.js';
 const s = fs.readFileSync(SRC, 'utf8');
 
 // 1) jakou vlastnost rozpoznání zakládání čte?

@@ -4,7 +4,7 @@
 // Prázdné/neznámé = červená. Aktuální štítky jsou PROVIZORNÍ (CODE-tune dle kritérií,
 // 2026-08-23) — Cowork celý pool přeštítkuje svým souborem a provizor přepíše.
 const fs = require('fs'), vm = require('vm');
-const D = 'C:/Users/zkuku/Downloads/Runar-admin/v2/';
+const D = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/v2/';
 const S = { console: { log() {}, warn() {}, error() {} } };
 S.window = S; S.globalThis = S; S.document = { getElementById: () => null };
 vm.createContext(S);

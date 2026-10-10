@@ -7,7 +7,7 @@
 //      "journey" zakazuje 2x a "ferðalag" 2x. Nalezeno 2026-08-15.
 // Zakaz zaseje token. Proto se to hlida strojove, ne pozornosti.
 const fs = require('fs'), vm = require('vm');
-const D = 'C:/Users/zkuku/Downloads/Runar-admin/v2/';
+const D = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/v2/';
 const s = { console }; s.window = s; s.globalThis = s; vm.createContext(s);
 vm.runInContext(fs.readFileSync(D + 'runar-config.js', 'utf8'), s);
 vm.runInContext(fs.readFileSync(D + 'runar-runes.js', 'utf8') + ';__R=RUNES;', s);
@@ -174,7 +174,7 @@ const SPEC_DOC = 'RUNAR_BACKLOG.md „Nálady — specifikaci PŘEPSALY důkazy"
 // Specifikace musi EXISTOVAT. Kdyby ji nekdo smazal nebo prejmenoval, tahle kontrola
 // by tise hlidala pravidla, ktera uz nikdo nevlastni — a to je horsi nez zadna kontrola.
 const specTxt = (() => {
-  try { return fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/RUNAR_BACKLOG.md', 'utf8'); }
+  try { return fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/RUNAR_BACKLOG.md', 'utf8'); }
   catch (e) { return ''; }
 })();
 if (specTxt.indexOf('specifikaci PŘEPSALY důkazy') === -1) {

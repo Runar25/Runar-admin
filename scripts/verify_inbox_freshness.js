@@ -15,7 +15,7 @@
 //   node scripts/verify_inbox_freshness.js
 const { execSync } = require('child_process');
 
-const R = 'C:/Users/zkuku/Downloads/Runar-admin';
+const R = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '';
 const DIR = 'docs/inbox/';
 
 // ── laditelné prahy ─────────────────────────────────────────────────────────

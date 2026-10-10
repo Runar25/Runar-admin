@@ -4,7 +4,7 @@
 // motivu a dva stejně pojmenované motivy nesmí přijít hned po sobě (pro tutéž sadu run).
 // §19: kontrola protlačí známý stav PRODUKČNÍ cestou a ověří výsledek, ne tvar kódu.
 const fs = require('fs'), vm = require('vm');
-const D = 'C:/Users/zkuku/Downloads/Runar-admin/v2/';
+const D = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/v2/';
 
 // sandbox s falešným localStorage — guard i sáček ho používají
 const uloz = {};

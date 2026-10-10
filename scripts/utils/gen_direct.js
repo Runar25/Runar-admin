@@ -50,7 +50,7 @@ if (!DRY && JE_OPENAI && !KEY_OAI) {
 // vsechny ty texty se migraci presunuly do produkce, takze tady uz byly druhou kopii.
 // Generator ted jede VZDY po produkcni ceste; menit se da jen to, co produkce nevlastni
 // (ktera runa, jaka oblast, vypnuty uhel).
-const D = 'C:/Users/zkuku/Downloads/Runar-admin/v2/';
+const D = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/v2/';
 const S = { console: { log() {}, warn() {}, error() {} } };
 S.window = S; S.globalThis = S; S.lang = LANG;
 S.document = { getElementById: () => null, querySelector: () => null };
@@ -205,7 +205,7 @@ async function jedno(i) {
 }
 
 (async () => {
-  const OUT = path.join('C:/Users/zkuku/Downloads/Runar-admin/eval_out/archive',
+  const OUT = path.join((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/eval_out/archive',
     'gen-' + SPREAD + '-' + LANG + '-' + MODEL.replace(/[^a-z0-9.-]/gi, '') + (MATRIX ? '-' + MATRIX : '') + (BEZ_OBL ? '-bezoblasti' : '')
     + (BEZ_UHLU ? '-bezuhlu' : '') + (DRY ? '-dryrun' : '') + '-' + TAG + '.jsonl');
   console.log('  ' + SPREAD + ' · ' + LANG + ' · n=' + N + ' · ' + pocet + ' run · max_tokens ' + tokeny

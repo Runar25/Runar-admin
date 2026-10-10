@@ -14,7 +14,7 @@
 //   node scripts/verify_escape_marks.js
 const { execSync } = require('child_process');
 const fs = require('fs');
-const R = 'C:/Users/zkuku/Downloads/Runar-admin';
+const R = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '';
 
 const TAGS = ['check-docs', 'doc-links', 'doc-values'];
 // Jen SKUTEČNÁ značka = uvnitř HTML komentáře. Doc, který o značkách MLUVÍ (v backtickách,

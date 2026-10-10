@@ -14,7 +14,7 @@
 //   node scripts/verify_pill_lang.js
 const fs = require('fs');
 const vm = require('vm');
-const DIR = 'C:/Users/zkuku/Downloads/Runar-admin/v2/';
+const DIR = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/v2/';
 
 const retez = new Proxy(function () {}, { get: () => retez, apply: () => retez });
 const sandbox = {

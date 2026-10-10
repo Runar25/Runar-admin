@@ -11,7 +11,7 @@
 //   `git show <commit>:build_crown_composer.py` s DST jinam.
 const fs = require('fs'), zlib = require('zlib');
 const { labRun } = require('./tree_diag.js');
-const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
 if (process.env.LOGFILE) st.log = JSON.parse(fs.readFileSync(process.env.LOGFILE, 'utf8'));   // LOGFILE = jiny log (JSON pole cteni), napr. modelovy strom
 const LOGN = process.env.LOGN ? +process.env.LOGN : st.log.length;
 const out = process.argv[2], specs = process.argv.slice(3).map(s => { const [lbl, html, cf, ln] = s.split('|'); return { lbl, html: html === '-' ? null : html, cf: cf ? JSON.parse(cf) : {}, logn: ln ? +ln : LOGN }; });

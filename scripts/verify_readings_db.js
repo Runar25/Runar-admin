@@ -5,7 +5,7 @@
 // apostrofem nesmí rozbít klik (onclick nese pořadové číslo, ne text).
 //   node scripts/verify_readings_db.js
 const vm = require('vm'), fs = require('fs');
-const D = 'C:/Users/zkuku/Downloads/Runar-admin/v2/';
+const D = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/v2/';
 const el = {};
 const mk = (id) => (el[id] = el[id] || { id, innerHTML: '', textContent: '', value: '', options: [], style: {},
   classList: { toggle() {}, add() {}, remove() {} }, scrollIntoView() {} });

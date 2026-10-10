@@ -8,7 +8,7 @@
 //   node scripts/verify_contract_wiring.js
 const fs = require('fs');
 const vm = require('vm');
-const DIR = 'C:/Users/zkuku/Downloads/Runar-admin/v2/';
+const DIR = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/v2/';
 const files = ['runar-config.js', 'runar-runes.js', 'runar-utils.js', 'runar-character.js'];
 
 const M = {}; Object.getOwnPropertyNames(Math).forEach(k => { M[k] = Math[k]; }); M.random = () => 0.5;
@@ -289,7 +289,7 @@ for (const L of ['en', 'is']) {
 // Tvar chyby z 2026-07-19: runar-tree.js predal `corrections` do buildLifeRunePrompt()
 // A ZAROVEN si sam pripojil getCorrPrompt(). Dynamicka cast tohle nikdy neuvidi —
 // vola buildery primo, ne pres volajici. Proto staticky.
-const V2 = 'C:/Users/zkuku/Downloads/Runar-admin/v2/';
+const V2 = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/v2/';
 const CALL = /\bbuild\w*Prompt\s*\([^;]*\bcorrections\b[^;]*\)/;
 // Deklarace NENI volani. Dispecer `function buildLifeRunePrompt(..., corrections)` ma
 // getCorrPrompt primo v tele — to je jeho ulohou (jedno misto, §18). Bez teto vyjimky

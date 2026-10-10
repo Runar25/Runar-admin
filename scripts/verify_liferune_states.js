@@ -16,7 +16,7 @@
 //   node scripts/verify_liferune_states.js
 const fs = require('fs');
 const vm = require('vm');
-const DIR = 'C:/Users/zkuku/Downloads/Runar-admin/v2/';
+const DIR = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/v2/';
 
 // Minimální DOM: prvky se vyrábějí na požádání, takže se tu nemusí udržovat jejich seznam
 // (ten by se rozešel s HTML při první úpravě).

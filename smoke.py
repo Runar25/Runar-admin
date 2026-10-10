@@ -7,8 +7,8 @@
 
 import subprocess, sys, os, re
 
-BASE = r'C:\Users\zkuku\Downloads\Runar-admin\v2'
-ROOT = r'C:\Users\zkuku\Downloads\Runar-admin'
+BASE = os.environ.get('RUNAR_ROOT', r'C:\Users\zkuku\Downloads\Runar-admin') + r'\v2'
+ROOT = os.environ.get('RUNAR_ROOT', r'C:\Users\zkuku\Downloads\Runar-admin') + r''
 
 JS_FILES = [
     'runar-config.js',
@@ -874,6 +874,19 @@ passed = r.returncode == 0 and r2.returncode == 0
 output = (r2.stdout + r.stdout + r.stderr + r2.stderr).strip()
 radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola odhlaseni z analyzy probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
+# ㉿ Kořen repa z RUNAR_ROOT (CODE-read 2026-10-10, BACKLOG část 37): pre-push pouští smoke v čisté kopii pushovaného commitu;
+# skript s pevnou cestou k repu by tam tiše kontroloval sdílený strom (s cizí rozdělanou prací) a oprava by byla jen na oko.
+print('\n' + chr(0x327F) + ' KOŘEN REPA Z RUNAR_ROOT (verify_runar_root.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_runar_root.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+r2 = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_runar_root.js'), '--test'],
+                    capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0 and r2.returncode == 0
+output = (r2.stdout + r.stdout + r.stderr + r2.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola korene repa probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
 # ㉻ Runy písmem (CODE-tune 2026-10-10, KUKY bod 11 „nahradit našimi glyfy“; §5): klíče UI_TEXT s runou na začátku jen přes

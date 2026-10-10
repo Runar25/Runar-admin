@@ -17,7 +17,7 @@
 const { execSync } = require('child_process');
 const fs = require('fs');
 
-const R = 'C:/Users/zkuku/Downloads/Runar-admin';
+const R = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '';
 const cfg = fs.readFileSync(R + '/v2/runar-config.js', 'utf8');
 
 // platná jména tierů = to, co je PRÁVĚ TEĎ v configu

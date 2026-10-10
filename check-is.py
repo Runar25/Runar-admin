@@ -10,7 +10,7 @@
 
 import os, re, glob, sys
 
-BASE = r'C:\Users\zkuku\Downloads\Runar-admin\v2'
+BASE = os.environ.get('RUNAR_ROOT', r'C:\Users\zkuku\Downloads\Runar-admin') + r'\v2'
 
 # Auto-discover every IS-bearing source file (no hand-maintained list to drift).
 _SKIP = {'runar-svgs.js'}  # pure SVG data, no IS prose

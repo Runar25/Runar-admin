@@ -17,7 +17,7 @@ const { execSync } = require('child_process');
 const fs   = require('fs');
 const path = require('path');
 
-const R = 'C:/Users/zkuku/Downloads/Runar-admin';
+const R = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '';
 
 const tracked = execSync('git ls-files', { cwd: R, encoding: 'utf8', maxBuffer: 1 << 26 })
   .trim().split('\n').map(s => s.trim()).filter(Boolean);
@@ -29,7 +29,10 @@ const byPath = new Set(tracked);
 // `.claude/settings.json` (gitignored), untracked .py skripty v kořeni (konvence
 // ownera, 2026-07-17: „ty untracked .py skripty v rootu nechávám"). Odkaz na ně
 // není mrtvý — soubor tam je. Kontrola má hlídat prázdno, ne stav indexu.
-const onDisk = (rel) => { try { return fs.existsSync(path.join(R, rel)); } catch (e) { return false; } };
+// 2026-10-10: pre-push pouští smoke v ČISTÉ kopii commitu (RUNAR_ROOT) — negitované soubory tam z principu nejsou, ale ve sdíleném
+// stromě ano a odkaz na ně platí dál; proto se dívá i tam.
+const SDILENY = 'C:/Users/zkuku/Downloads/Runar-admin';   // sdileny-strom:ok 2026-10-10 negitované soubory leží jen ve sdíleném stromě
+const onDisk = (rel) => { try { return fs.existsSync(path.join(R, rel)) || fs.existsSync(path.join(SDILENY, rel)); } catch (e) { return false; } };
 
 // Živá dokumentace. RUNAR_DECISIONS.md a snapshots/ smí odkazovat na věci, které
 // mezitím zanikly — jsou to záznamy k datu, ne návod, kam jít teď.

@@ -27,7 +27,7 @@
 //   node scripts/verify_ending_angle.js
 'use strict';
 const fs = require('fs'), vm = require('vm');
-const D = 'C:/Users/zkuku/Downloads/Runar-admin/v2/';
+const D = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/v2/';
 const S = { console: { log() {}, warn() {}, error() {} } };
 S.window = S; S.globalThis = S;
 S.document = { getElementById: () => null, querySelector: () => null, querySelectorAll: () => [] };

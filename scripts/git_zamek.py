@@ -16,7 +16,7 @@
 # (poslední dokončená operace = vodítko, kdo byl aktivní). Čte ho smoke ㉞.
 import io, os, subprocess, sys, time
 
-ROOT = r'C:\Users\zkuku\Downloads\Runar-admin'
+ROOT = os.environ.get('RUNAR_ROOT', r'C:\Users\zkuku\Downloads\Runar-admin') + r''
 ZAMEK = os.path.join(ROOT, '.git', 'index.lock')
 LOG = os.path.join(ROOT, '.git', 'runar-zamky.log')
 PRAH_S = 10 * 60   # 10 minut — dosavadní sirotci meli 60-80+ minut

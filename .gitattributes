@@ -1,0 +1,4 @@
+# Cizí knihovny s otiskem SRI: git nesmí měnit konce řádků (core.autocrlf=true by při checkoutu na Windows dal LF→CRLF,
+# otisk by nesedl a prohlížeč knihovnu zablokuje — appka nenaběhne). Zjištěno 2026-10-10 (CODE-read) v čisté kopii pro pre-push smoke.
+v2/vendor/** -text
+*.woff2 binary

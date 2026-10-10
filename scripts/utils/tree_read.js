@@ -7,7 +7,7 @@
 //   node scripts/utils/tree_read.js [cesta-k-labu.html]
 const fs = require('fs');
 const { labRun } = require('./tree_diag.js');
-const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
 const HTML = process.argv[2] && process.argv[2] !== '-' ? process.argv[2] : null;
 const r = labRun(st.viewN != null ? st.log.slice(0, st.viewN) : st.log, HTML, st), G = 660;
 const deg = a => Math.round((a + Math.PI / 2) * 57.3);

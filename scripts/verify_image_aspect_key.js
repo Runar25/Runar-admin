@@ -17,7 +17,7 @@
 //
 //   node scripts/verify_image_aspect_key.js
 const fs = require('fs'), vm = require('vm');
-const D = 'C:/Users/zkuku/Downloads/Runar-admin/v2/';
+const D = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/v2/';
 const S = { console: { log() {}, warn() {}, error() {} }, Math, JSON, Date };
 S.window = S; S.globalThis = S; S.document = { getElementById: () => null };
 vm.createContext(S);

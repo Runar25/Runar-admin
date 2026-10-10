@@ -26,7 +26,7 @@
 //   node scripts/verify_write_surface.js
 
 const fs = require('fs');
-const R = 'C:/Users/zkuku/Downloads/Runar-admin/';
+const R = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/';
 
 const TABLE = 'user_profiles';
 const GRANT_SQL = 'sql/2026-07-16_user_profiles_column_grants.sql';

@@ -6,7 +6,7 @@
 // subscriber silently keeps the old cap). Fails loudly on any mismatch.
 //   node scripts/verify_monthly_limits.js
 const fs = require('fs');
-const R = 'C:/Users/zkuku/Downloads/Runar-admin/';
+const R = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/';
 
 const cfg = fs.readFileSync(R + 'v2/runar-config.js', 'utf8');
 const proxy = fs.readFileSync(R + 'supabase/functions/claude-proxy/index.ts', 'utf8');

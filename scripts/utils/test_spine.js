@@ -2,7 +2,7 @@
 // v Supabase aktivni vlastni postava. Testuje se CELY zivotni cyklus toho pole
 // (chybi / je prazdne / je vyplnene), ne jen dobry pripad.
 const fs = require('fs'), vm = require('vm');
-const D = 'C:/Users/zkuku/Downloads/Runar-admin/v2/';
+const D = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/v2/';
 const s = { console }; s.window = s; s.globalThis = s; vm.createContext(s);
 ['runar-config.js', 'runar-runes.js', 'runar-utils.js', 'runar-character.js']
   .forEach(f => vm.runInContext(fs.readFileSync(D + f, 'utf8'), s));

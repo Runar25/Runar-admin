@@ -15,7 +15,7 @@ import glob, io, json, os, re, subprocess, sys
 # Čtení bez odhlášených z analýzy — jediný zdroj scripts/utils/cteni_analyza.sql (RUNAR_PRIVACY.md bod 4, 2026-10-10)
 CTENI = ' '.join(l.strip() for l in open(__import__('os').path.join(__import__('os').path.dirname(__import__('os').path.abspath(__file__)), 'utils', 'cteni_analyza.sql'), encoding='utf-8') if l.strip() and not l.strip().startswith('--'))
 
-ROOT = r'C:\Users\zkuku\Downloads\Runar-admin'
+ROOT = os.environ.get('RUNAR_ROOT', r'C:\Users\zkuku\Downloads\Runar-admin') + r''
 
 # ── 1. BAD_PATTERNS z check-is.py (vlastník zůstává tam) ─────────────────────
 src = io.open(os.path.join(ROOT, 'check-is.py'), encoding='utf-8').read()

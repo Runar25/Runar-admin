@@ -17,7 +17,7 @@
 //
 //   node scripts/verify_owned_before_tier.js
 const fs = require('fs');
-const SRC = 'C:/Users/zkuku/Downloads/Runar-admin/v2/runar-tree.js';
+const SRC = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/v2/runar-tree.js';
 
 const s = fs.readFileSync(SRC, 'utf8');
 const start = s.indexOf('function updateTreeTab()');

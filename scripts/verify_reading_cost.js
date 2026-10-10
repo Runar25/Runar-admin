@@ -8,7 +8,7 @@
 //   node scripts/verify_reading_cost.js
 'use strict';
 const fs = require('fs'), vm = require('vm');
-const D = 'C:/Users/zkuku/Downloads/Runar-admin/v2/';
+const D = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/v2/';
 const prvky = {};
 const mk = (id) => (prvky[id] = prvky[id] || { id, style: {}, innerHTML: '', textContent: '', classList: { add() {}, remove() {}, toggle() {} } });
 const S = { console: { log() {}, warn() {}, error() {} },

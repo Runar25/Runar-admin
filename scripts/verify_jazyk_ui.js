@@ -27,7 +27,7 @@
 //
 //   node scripts/verify_jazyk_ui.js           · node scripts/verify_jazyk_ui.js --test (kontrola sama sebe)
 const fs = require('fs'), vm = require('vm'), cp = require('child_process');
-const ROOT = 'C:/Users/zkuku/Downloads/Runar-admin/';
+const ROOT = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/';
 const CZ = /[ěščřžůťďňĚŠČŘŽŮŤĎŇ]/;
 // Česká slova bez písmen z CZ. NEPATŘÍ sem slova, která má i angličtina nebo islandština („model“, „limit“, „evidence“), ani
 // „ve“ (anglické „you've“ se rozpadne na „you“ + „ve“). Seznam vznikl z češtiny, kterou kontrola při zavedení minula.

@@ -12,7 +12,7 @@
 //   node scripts/verify_tier_features.js
 'use strict';
 const fs = require('fs'), vm = require('vm');
-const D = 'C:/Users/zkuku/Downloads/Runar-admin/v2/';
+const D = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/v2/';
 let fail = 0;
 const rekni = (ok, popis) => { if (ok) console.log('OK    ' + popis); else { fail++; console.log('FAIL  ' + popis); } };
 const nacti = () => { const S = { console }; S.window = S; vm.createContext(S); vm.runInContext(fs.readFileSync(D + 'runar-config.js', 'utf8'), S); return S; };

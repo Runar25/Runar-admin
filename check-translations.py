@@ -7,7 +7,7 @@
 
 import re, sys, os
 
-BASE = r'C:\Users\zkuku\Downloads\Runar-admin\v2'
+BASE = os.environ.get('RUNAR_ROOT', r'C:\Users\zkuku\Downloads\Runar-admin') + r'\v2'
 PATH = os.path.join(BASE, 'runar-translations.js')
 
 with open(PATH, 'r', encoding='utf-8') as f:

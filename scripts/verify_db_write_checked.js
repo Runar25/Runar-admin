@@ -15,7 +15,7 @@
 //   node scripts/verify_db_write_checked.js
 const fs = require('fs');
 const path = require('path');
-const V2 = 'C:/Users/zkuku/Downloads/Runar-admin/v2';
+const V2 = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/v2';
 
 // runar-tree-prod.js is generated (build_tree_production.py) and does not write.
 const SKIP = new Set(['runar-tree-prod.js']);

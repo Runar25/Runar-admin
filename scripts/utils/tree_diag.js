@@ -6,7 +6,7 @@
 // Postup a vysledky vlastni RUNAR_BACKLOG.md (Tree sekce) + RUNAR_TREE.md, ne tenhle soubor.
 // Pouziti: node tree_diag.js <cast>
 const fs = require('fs'), vm = require('vm');
-const DIR = 'C:/Users/zkuku/Downloads/Runar-admin/v2/';
+const DIR = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/v2/';
 const sb = { Math, JSON, console, devicePixelRatio: 1 };
 sb.window = sb; sb.globalThis = sb; sb.self = sb;
 vm.createContext(sb);
@@ -253,7 +253,7 @@ if (cast === 'lab2b') {
 
 if (cast === 'own') {
   // Owneruv ulozeny strom (_tree_state.json, tlacitko ULOZIT -> Code): tentyz log I posuvniky.
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   const r = labRun(st.log, null, st);
   console.log(r.grow.slice(0, 160));
   console.log('HLAVNI VETVE (vystup z kmene):');
@@ -265,7 +265,7 @@ if (cast === 'own') {
   gs.slice(0, 6).forEach(p => console.log('   graduant', p.k, JSON.stringify(p.meta).slice(0, 200)));
 }
 if (cast === 'own2') {
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   const r = labRun(st.log, null, st);
   const shown = new Set(); r.picks.forEach(m => { shown.add(m.name); (m.tw || []).forEach(t => shown.add(t.name)); });
   const drawn = {}; st.log.forEach((rd, i) => rd.runes.forEach(x => { const n = B.RUNES.filter(q => q.k === x.rune)[0].name;
@@ -281,7 +281,7 @@ if (cast === 'model') {
   // KONTROLA NOVEHO MODELU (2026-09-28) na ownerove ulozenem strome, s jeho posuvniky.
   // Kazde pravidlo = jedno overeni na VYSLEDKU (co se nakreslilo), ne na kodu.
   const HTML = process.argv[3] || null;
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   const log = st.log, r = labRun(log, HTML, st);
   const nm = k => B.RUNES.filter(q => q.k === k)[0].name;
   console.log(r.grow.slice(0, 110));
@@ -347,7 +347,7 @@ if (cast === 'jump') {
   // PRESKAKOVANI: prehraj ownerov strom po jednom cteni a zmer, o kolik se pohne to, co UZ
   // existovalo (spicka hlavni vetve a odbocek; klic = runa). Pohyb kvuli rustu je v poradku
   // jen maly a plynuly; skok = velky pohyb jednim ctenim. fit = auto-zmenseni obrazu.
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, JSON.parse(process.argv[3] || '{}')) });
   const snap = n => { const r = labRun(st.log.slice(0, n), process.env.JH || null, inj); const o = {};
     r.allPicks.forEach(p => { if (!p.pts || !p.pts.length || String(p.k).startsWith('r')) return;
@@ -369,7 +369,7 @@ if (cast === 'jump') {
   const fits = rows.filter(r => r.dfit !== 0).length; console.log('kroku, kdy se zmenilo auto-zmenseni celeho obrazu:', fits);
 }
 if (cast === 'injtest') {
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   for (const iz of [0, 0.12, 0.4]) { const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { intZone: iz }) });
     const r = labRun(st.log, null, inj); console.log('intZone', iz, '->', r.picks.map(m => m.name + ' ' + Math.round(m.frac * 100) + '% int' + (m.intPart != null ? m.intPart.toFixed(3) : '?')).join(' | ')); }
 }
@@ -377,7 +377,7 @@ if (cast === 'grow') {
   // RUSTOVY STROM (2026-09-28) na ownerove strome: kazde tazeni = vetev, max `twigMax` deti,
   // nova vetev mala, materska se jen prodluzuje (nikdy nezkrati).
   const HTML = process.argv[3] || null;
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, zrod: 0.3, dorust: 4 }) });
   const arc = pts => { let a = 0; for (let i = 1; i < pts.length; i++) a += Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y); return a; };
   const r = labRun(st.log, HTML, inj);
@@ -404,7 +404,7 @@ if (cast === 'jump2') {
   // PRESKAKOVANI presneji: skok = OTOCENI existujici vetve nebo SKLOUZNUTI jejiho uchyceni.
   // Prodlouzeni (spicka jde dal ve svem smeru) je rust, ne skok. Vetev = odbocka (klic t...).
   const HTML = process.argv[3] || null;
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, zrod: 0.3, dorust: 4 }, process.env.LRCFG ? JSON.parse(process.env.LRCFG) : {}) });
   const snap = n => { const o = {}; labRun(st.log.slice(0, n), HTML, inj).allPicks.forEach(p => {
       if (!String(p.k).startsWith('t') || !p.pts || p.pts.length < 2) return;
@@ -421,7 +421,7 @@ if (cast === 'jump2') {
 if (cast === 'sliders') {
   // AUDIT POSUVNIKU (2026-09-28, KUKY: "projdi posuvniky a odstran ty, co nic nedelaji"). Kazdy
   // posuvnik min -> max na ownerove strome; zmena = tvar (bunky mrizky 4 px) + barva (fillStyle).
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   const html = fs.readFileSync(DIR + 'tree-lab-crown-composer/crown-composer.html', 'utf8');
   const panels = []; const re = /makeTune\('([a-z-]+)',\s*\[([\s\S]*?)\]\s*,\s*(crownT|trunkT|rootsT)\)/g; let m;
   while ((m = re.exec(html))) { const arr = eval('[' + m[2] + ']'); arr.forEach(a => panels.push({ panel: m[1], obj: m[3], key: a[0], min: a[1], max: a[2], lbl: a[4] })); }
@@ -448,7 +448,7 @@ if (cast === 'stage1') {
   // KROK 1 (2026-09-29): vetve z opakovani jako twigy. Na ownerove strome: pocet vetvi vs tazeni,
   // velikost a zakriveni (proti verzi a8fe597, ktera se mu libila), strana podle oblasti.
   const HTML = process.argv[3] || null;
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5 }) });
   const arc = pts => { let a = 0; for (let i = 1; i < pts.length; i++) a += Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y); return a; };
   const r = labRun(st.log, HTML, inj);
@@ -472,7 +472,7 @@ if (cast === 'stage1') {
 if (cast === 'stage2') {
   // KROK 2 (2026-09-29): graduant = vlastni pramen + samostatna hlavni vetev. Na ownerove strome.
   const HTML = process.argv[3] || null;
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, maxMains: 10, gradStrand: 1 }) });
   const arc = pts => { let a = 0; for (let i = 1; i < pts.length; i++) a += Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y); return a; };
   const r = labRun(st.log, HTML, inj);
@@ -489,7 +489,7 @@ if (cast === 'sides') {
   // Hmota vetvi (delka) vlevo/vpravo od kmene vs. podil cteni o NITRU / SVETU. Ownerov strom +
   // 4 modelovi lide (Norny + 150 cteni): prevazne nitro · prevazne svet · vyvazeny · bez oblasti.
   const HTML = process.argv[3] || null;
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   const RB = B.RUNES.filter(r => r.k !== 'odinn');
   const INNER = ['healing', 'family', 'inner'], OUTER = ['purpose', 'career', 'spirituality'], MID = ['love', 'crossroads'];
   const arc = pts => { let a = 0; for (let i = 1; i < pts.length; i++) a += Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y); return a; };
@@ -520,7 +520,7 @@ if (cast === 'limbs') {
   // KTERA RAMENA ROZHODUJI O STRANE (2026-09-29): pro kazde rameno (hlavni vetev) jeho uhel od svislice,
   // cim byl urcen, a jeho vetve z cteni rozdelene podle oblasti (nitro/svet/stred/bez) + kam padla hmota.
   const HTML = process.argv[3] || null;
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   if (process.env.SYN) { const [sd, a, b, c] = process.env.SYN.split(',').map(Number); let s = sd; const rnd = () => (s = (s * 1103515245 + 12345) >>> 0) / 4294967296;
     const I = ['healing', 'family', 'inner'], O = ['purpose', 'career', 'spirituality'], M = ['love', 'crossroads'], RB = B.RUNES.filter(r => r.k !== 'odinn');
     const area = () => { const x = rnd(); if (x < a) return I[Math.floor(rnd() * 3)]; if (x < a + b) return O[Math.floor(rnd() * 3)]; if (x < a + b + c) return M[Math.floor(rnd() * 2)]; return null; };
@@ -556,7 +556,7 @@ if (cast === 'lreval') {
   // a kolik ramen (krome vudciho) stoji skoro svisle (< 8° — riziko "chuchvalce nahoru").
   // Konfigurace: LRCFG='{"lrBirth":0,"areaSide":0.8}' (prepise crownT). HTML = argv[3].
   const HTML = process.argv[3] || null;
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   const over = process.env.LRCFG ? JSON.parse(process.env.LRCFG) : {};
   const RB = B.RUNES.filter(r => r.k !== 'odinn');
   const INNER = ['healing', 'family', 'inner'], OUTER = ['purpose', 'career', 'spirituality'], MID = ['love', 'crossroads'];
@@ -592,7 +592,7 @@ if (cast === 'lreval') {
 if (cast === 'limbjump') {
   // Kde se RAMENO otoci o vic nez 5° mezi dvema ctenimi (a proc: rovnovaha b pred/po, pocet cteni).
   const HTML = process.argv[3] || null;
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   const over = process.env.LRCFG ? JSON.parse(process.env.LRCFG) : {};
   const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, zrod: 0.3, dorust: 4 }, over) });
   // podle KLICE vetve (k), ne jmena runy: od 2026-10-05 nese tutez runu vic vetvi a podle jmena se porovnavaly ruzne (falesna otoceni)
@@ -608,7 +608,7 @@ if (cast === 'limbjump') {
 if (cast === 'at') {
   // Jeden beh labu na prvnich N ctenich KUKYho stromu (N z env NS="56,57"); ladici vypisy __BB z HTML kopie.
   const HTML = process.argv[3] || null;
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, zrod: 0.3, dorust: 4 }) });
   (process.env.NS || '56,57').split(',').map(Number).forEach(n => { console.log('--- N=' + n); labRun(st.log.slice(0, n), HTML, inj); });
 }
@@ -617,7 +617,7 @@ if (cast === 'scen') {
   // vyvijet podle moznosti, co muzou nastat"). 6 typu lidi x 20 nahodnych lidi, strom po 10/50/150/300
   // cteni: kolik hmoty lezi vlevo (nitro) a kolik ramen se preklopilo. Zapise scratch JSON (argv[4]).
   const HTML = process.argv[3] && process.argv[3] !== '-' ? process.argv[3] : null, OUT = process.argv[4] || null;
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   const SC = [
     { id: 'vyvazeny', nm: 'vyvážený (35 % nitro · 35 % svět · 30 % střed)', a: [0.35, 0.35, 0.30] },
     { id: 'mirne_nitro', nm: 'mírně nitro (50 · 30 · 20)', a: [0.50, 0.30, 0.20] },
@@ -670,7 +670,7 @@ if (cast === 'biasdig') {
   // ODKUD JE VYCHYLKA VPRAVO u lidi bez oblasti (2026-09-30): hmota rozdelena podle strany KOSTRY ramene
   // (vlevo / vudci / vpravo) a podle toho, kde skutecne lezi (x < 280 / x >= 280). 20 lidi, 300 cteni.
   const HTML = process.argv[3] && process.argv[3] !== '-' ? process.argv[3] : null;
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, maxMains: 10, gradStrand: 1 }) });
   const RB = B.RUNES.filter(r => r.k !== 'odinn');
   const arc = pts => { let a = 0; for (let i = 1; i < pts.length; i++) a += Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y); return a; };
@@ -692,7 +692,7 @@ if (cast === 'biasdig') {
 if (cast === 'leader') {
   // Vudci vetev u lidi bez oblasti: smer, cast "zivotni runa", natoceni, kde lezi spicka vuci zakladu.
   const HTML = process.argv[3] && process.argv[3] !== '-' ? process.argv[3] : null;
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, maxMains: 10, gradStrand: 1 }) });
   if (process.env.RUNE) inj.rune = process.env.RUNE;
   const RB = B.RUNES.filter(r => r.k !== 'odinn');
@@ -709,7 +709,7 @@ if (cast === 'tiers') {
   // lidi: kde ramena vychazeji z kmene (vyska 0 = zem, 1 = vrchol kmene), pod jakym uhlem, a jak je hmota
   // vetvi rozlozena po vyskach (podil v pasmech po 0,2 vysky kmene; nad 1 = koruna nad vrcholem kmene).
   const HTML = process.argv[3] && process.argv[3] !== '-' ? process.argv[3] : null;
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, maxMains: 10, gradStrand: 1 }, process.env.LRCFG ? JSON.parse(process.env.LRCFG) : {}) });
   const RB = B.RUNES.filter(r => r.k !== 'odinn'), I = ['healing', 'family', 'inner'], O = ['purpose', 'career', 'spirituality'], M = ['love', 'crossroads'], IN = ['past', 'present', 'decision'];
   const gen = (seed, mix, N, ints) => { let s = seed; const rnd = () => (s = (s * 1103515245 + 12345) >>> 0) / 4294967296;
@@ -743,7 +743,7 @@ if (cast === 'zscen') {
   // 12 lidi, strom po 10/50/150/300 cteni: vyska stromu (od zeme po vrch koruny, px), kolik hmoty je u korenu
   // (spodnich 45 % vysky stromu), nahore (nad 75 %), median vystupu ramen; plus strana. JSON -> argv[4].
   const HTML = process.argv[3] && process.argv[3] !== '-' ? process.argv[3] : null, OUT = process.argv[4] || null;
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, maxMains: 10, gradStrand: 1 }, process.env.LRCFG ? JSON.parse(process.env.LRCFG) : {}) });
   const SC = [
     { id: 'minulost', nm: 'minulost, rodina, nitro (60 % čtení)', int: [0.6, 0.2, 0.2], area: [0.6, 0.2, 0.2], seek: [0.6, 0.2, 0.2] },
@@ -791,7 +791,7 @@ if (cast === 'zscen') {
 if (cast === 'twigat') {
   // Ladeni jedne vetvicky mezi dvema ctenimi: KEYS="t2_dagaz_62_3,t2_dagaz" NS="84,85"
   const HTML = process.argv[3] && process.argv[3] !== '-' ? process.argv[3] : null;
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, zrod: 0.3, dorust: 4 }, process.env.LRCFG ? JSON.parse(process.env.LRCFG) : {}) });
   const keys = (process.env.KEYS || '').split(',');
   (process.env.NS || '84,85').split(',').map(Number).forEach(n => { const r = labRun(st.log.slice(0, n), HTML, inj);
@@ -805,7 +805,7 @@ if (cast === 'gaps') {
   // kmene: sirka svazku (od kraje ke kraji) a kolik z ni je skutecne pokryto prameny (1,00 = zadna mezera).
   // Potrebuje HTML s haky window.__ALL (cesta jako argv[3]).
   const HTML = process.argv[3];
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, maxMains: 10, gradStrand: 1 }) });
   const LOGS = [['KUKY', st.log]];
   if (process.env.SEEDS) { const RB = B.RUNES.filter(r => r.k !== 'odinn'); process.env.SEEDS.split(',').map(Number).forEach(sd => { let s = sd; const rnd = () => (s = (s * 1103515245 + 12345) >>> 0) / 4294967296;
@@ -829,7 +829,7 @@ if (cast === 'prefound') {
   // ZALOZENI AZ PO CTENICH (2026-10-03): 20 cteni bez Noren, pak Norny, pak 30 cteni. Strom pred Nornami = seminko,
   // po nich musi obsahovat VSECHNA cteni (vetvi tolik, kolik je tazeni) a zakladaci runy jsou prvni tri ramena.
   const HTML = process.argv[3] && process.argv[3] !== '-' ? process.argv[3] : null;
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, maxMains: 10, gradStrand: 1 }) });
   const RB = B.RUNES.filter(r => r.k !== 'odinn'); let s = 777; const rnd = () => (s = (s * 1103515245 + 12345) >>> 0) / 4294967296;
   const one = () => { const r = RB[Math.floor(rnd() * RB.length)]; return { rune: r.k, el: r.el }; };
@@ -845,7 +845,7 @@ if (cast === 'zony') {
   // jen maxMains 25 (14 + 11, KUKY) a twigMax 5; (2) jak pribyvaji ramena pri prehrani; (3) modelovi lide (5 typu × NSEED):
   // kolik ramen a pramenu po N ctenich, vysky a uhly po pasmech (tiha), povyseni, cteni na sousedni zone.
   const HTML = process.argv[3] && process.argv[3] !== '-' ? process.argv[3] : null;
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   const CF = Object.assign({}, st.crownT, { twigMax: 5, maxMains: 25, gradStrand: 1 }, process.env.LRCFG ? JSON.parse(process.env.LRCFG) : {});
   const inj = Object.assign({}, st, { crownT: CF });
   const dv = a => Math.round((a + Math.PI / 2) * 180 / Math.PI);   // od svislice, + vpravo
@@ -899,7 +899,7 @@ if (cast === 'zony') {
 if (cast === 'limbat') {
   // Ladeni ramene mezi ctenimi: K="13" NS="246,247" -> smer, delka, vyska, spicka, tw (LRCFG jako jinde)
   const HTML = process.argv[3] && process.argv[3] !== '-' ? process.argv[3] : null;
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, zrod: 0.3, dorust: 4 }, process.env.LRCFG ? JSON.parse(process.env.LRCFG) : {}) });
   const K = (process.env.K || '0').split(',').map(Number);
   (process.env.NS || '246,247').split(',').map(Number).forEach(n => { const r = labRun(st.log.slice(0, n), HTML, inj);
@@ -909,7 +909,7 @@ if (cast === 'limbat') {
 if (cast === 'lrdbg') {
   // Kam jde hmota mladeho/stareho stromu po ramenech (ZONY 2026-10-03): typ TYPE (a = [nitro, svet, stred]), N cteni, SEEDS.
   const HTML = process.argv[3] && process.argv[3] !== '-' ? process.argv[3] : null;
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, maxMains: 25, gradStrand: 1 }, process.env.LRCFG ? JSON.parse(process.env.LRCFG) : {}) });
   const A = JSON.parse(process.env.A || '[0.35,0.35,0.30]'), N = +(process.env.N || 10);
   if (process.env.RUNE) inj.rune = process.env.RUNE;   // jina zivotni runa (vyboulen kmene)
@@ -934,7 +934,7 @@ if (cast === 'zattack') {
   // UTOK NA ZONY (2026-10-03): okrajove pripady — Norny se 2–3 runami stinu, strop maxMains 9 (stara hodnota ownera),
   // povyseni vypnute, cteni pred zalozenim = jako po jednom po Nornach, zadne zalozeni = seminko, demo bez logu.
   const HTML = process.argv[3] && process.argv[3] !== '-' ? process.argv[3] : null;
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   const base = { twigMax: 5, maxMains: 25, gradStrand: 1 };
   const inj = cf => Object.assign({}, st, { crownT: Object.assign({}, st.crownT, base, cf || {}) });
   const K = n => B.RUNES.filter(r => r.name === n)[0]; const R = n => ({ rune: K(n).k, el: K(n).el });
@@ -967,7 +967,7 @@ if (cast === 'klik') {
   // co sam uzivatel nevytvoril"). Kazdy nakresleny tah musi patrit nejake klikatelne casti (stejne pole bodu jako v _pick).
   // Plus pocet pramenu v kmeni (nejvys 14) a povysenych vetvi. KUKYho strom + prehrani po krocich.
   const HTML = process.argv[3] && process.argv[3] !== '-' ? process.argv[3] : null;
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   const inj = Object.assign({}, st, { crownT: Object.assign({}, st.crownT, { twigMax: 5, maxMains: 25, gradStrand: 1 }, process.env.LRCFG ? JSON.parse(process.env.LRCFG) : {}) });
   (process.env.NS || '3,10,30,60,100,200,' + st.log.length).split(',').map(Number).forEach(n => {
     const r = labRun(st.log.slice(0, n), HTML, inj), drawn = r.sb._DA ? r.sb._DA() : [], picked = new Set(r.allPicks.map(p => p.pts));
@@ -983,7 +983,7 @@ if (cast === 'misto') {
   // (b) na jednom rodici (rameno, povysena, vetvicka): zacatky jeho primych vetvi. Posuvniky: VYCHOZI labu (tak je ma KUKY
   // v prohlizeci) nebo SLIDERS=kuky (jeho ulozene). KUKYho log prehrany po krocich + modelovi lide (NSEED).
   const HTML = process.argv[3] && process.argv[3] !== '-' ? process.argv[3] : null;
-  const st = JSON.parse(fs.readFileSync('C:/Users/zkuku/Downloads/Runar-admin/_tree_state.json', 'utf8'));
+  const st = JSON.parse(fs.readFileSync((process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/_tree_state.json', 'utf8'));
   const CF = process.env.SLIDERS === 'kuky' ? Object.assign({}, st.crownT, { twigMax: 5, maxMains: 25, gradStrand: 1 }) : {};
   const inj = { crownT: Object.assign(CF, process.env.LRCFG ? JSON.parse(process.env.LRCFG) : {}), trunkT: process.env.SLIDERS === 'kuky' ? st.trunkT : {}, rootsT: process.env.SLIDERS === 'kuky' ? st.rootsT : {}, rune: st.rune, dob: st.dob };
   const MINX = +(process.env.MINX || 10), MINT = +(process.env.MINT || 3);

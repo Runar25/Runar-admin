@@ -13,7 +13,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const V2 = 'C:/Users/zkuku/Downloads/Runar-admin/v2';
+const V2 = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/v2';
 const TAG = /\[(kánon|Agndofa)/;   // bracket + provenance word (kryje i [kánon-ish, [Agndofa:)
 
 const files = fs.readdirSync(V2).filter(f => f.endsWith('.js') || f.endsWith('.html'));

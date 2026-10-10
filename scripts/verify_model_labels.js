@@ -15,7 +15,7 @@
 //
 //   node scripts/verify_model_labels.js
 const fs = require('fs'), vm = require('vm');
-const ROOT = 'C:/Users/zkuku/Downloads/Runar-admin/';
+const ROOT = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/';
 let fail = 0;
 const rekni = (ok, popis) => { if (ok) console.log('  ✓ ' + popis); else { fail++; console.log('  ✗ ' + popis); } };
 
