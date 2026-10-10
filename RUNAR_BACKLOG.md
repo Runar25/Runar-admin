@@ -2330,6 +2330,16 @@ okno přihlášení) „We store only what is needed to remember your readings�
 a tabulka údajů má 14 řádků; věta to zužuje. Srovnat se zásadami (žádné nové rozhodnutí). Drobnost: `journal_teaser` „Every reading you
 have ever taken is kept“ — čtení „pro někoho“ se u běžného uživatele neukládá.
 
+### Část 40 — slib „chyba nestojí kredit“ × souběh požadavků (`claude-proxy`, 2026-10-10, čtení kódu)
+**Platí:** odečet běží až po skutečném textu (`applyDeduction`, ř. ~892) — chyba upstreamu, 2xx s chybou i prázdný text vrátí 503/400 bez
+odečtu; sol: prázdná odpověď → `null` → Claude cesta se stejnými kontrolami. Slib z hlavičky drží ve všech cestách (volné / kredit / měsíční).
+- ⚪ **Pro CODE-tune (m) — díra v penězích, před veřejným spuštěním:** oprávnění se ověřuje NA ZAČÁTKU (`free_balance > 0`, kredity ≥ cena,
+  `used < strop`), odečet až PO vygenerování; CAS v `use_free_balance` / `use_credit` / `bump_month_units` brání jen dvojímu odečtu, ne
+  dvojímu čtení. Kdo pošle souběžně víc požadavků (rate limit pustí 10/min), dostane až ~10 čtení za jedno volné čtení nebo jeden kredit
+  a předplatitel přetáhne měsíční strop. **Závěr z kódu, naostro neověřeno** (stálo by peníze a zápisy do produkce). Oprava: REZERVOVAT na
+  začátku (atomicky odečíst / zvýšit čítač) a při chybě VRÁTIT — slib „chyba nestojí kredit“ zůstane. Money-critical → E2E test všech
+  cest (čtení, spready, Ask, životní runa, rozbor jména) PŘED nasazením (poučení z #2b 2026-08-03); nasazení pouští owner.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
