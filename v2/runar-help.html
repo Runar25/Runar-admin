@@ -122,7 +122,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
       <div class="help-block-body" id="s1-body">
         <p>You come with a question — or without one. Both are welcome.</p>
         <p>Before the stones speak, Rúnar asks a few things: your name, the area of life you are moving through, and what you are seeking. Not to judge. To listen more precisely.</p>
-        <p>Then you draw. One rune from twenty-five — plus the Blank, the rune of the unknown. What follows comes in two layers. The first is short and direct — the core of what the rune carries for you today. The second goes deeper, drawing on Norse mythology, the imagery of Iceland, and the thread between your drawn rune and your life rune.</p>
+        <p>Then you draw. One rune from twenty-five — the Blank among them, the rune of the unknown. What follows is one reading, in a single flow: what the rune carries for you today, told through one image.</p>
         <p><em>The runes do not decide your path. They help you remember it.</em></p>
       </div>
     </div>
@@ -215,7 +215,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
     <div class="help-section-label" id="s4-lbl">RÚNAR'S VOICE</div>
     <div class="help-block">
       <div class="help-block-body" id="s4-body">
-        <p>When you draw a rune in the collection, a sound plays — a pre-recorded tone of that rune's presence. Always the same. A note, not a reading.</p>
+        <p>In the collection, every rune has Rúnar's own words about it — you can read them and listen to them in his voice. Recorded in advance. His teaching about the rune, not your reading.</p>
         <p>When you use a reading card, Rúnar speaks your reading aloud. Not a recording. Generated in the moment, shaped around your specific words. Each time different. Each time his.</p>
       </div>
     </div>
@@ -284,9 +284,11 @@ const CONTENT = {
     'h-title':       'WELCOME TO RÚNAR\'S CIRCLE',
     'h-sub':         'A guide for those who have found their way here. Take what is useful. Leave what is not.',
     's1-lbl':        'HOW A READING WORKS',
+    // 2026-10-10 (s1, s4): pryč „two layers / life rune“ (čtení = jeden blok, životní runa jen v Asku — DECISIONS 2026-09-25 (7)),
+    // Blank se nepočítá dvakrát (25 run včetně něj) a kolekce = Rúnarův text a hlas, ne „tón“. Statické HTML výš nese totéž.
     's1-body':       `<p>You come with a question — or without one. Both are welcome.</p>
       <p>Before the stones speak, Rúnar asks a few things: your name, the area of life you are moving through, and what you are seeking. Not to judge. To listen more precisely.</p>
-      <p>Then you draw. One rune from twenty-five — plus the Blank, the rune of the unknown. What follows comes in two layers. The first is short and direct — the core of what the rune carries for you today. The second goes deeper, drawing on Norse mythology, the imagery of Iceland, and the thread between your drawn rune and your life rune.</p>
+      <p>Then you draw. One rune from twenty-five — the Blank among them, the rune of the unknown. What follows is one reading, in a single flow: what the rune carries for you today, told through one image.</p>
       <p><em>The runes do not decide your path. They help you remember it.</em></p>`,
     's2-lbl':        'YOUR ACCOUNT',
     'th-tier':       'TIER', 'th-what': 'WHAT YOU GET',
@@ -307,7 +309,7 @@ const CONTENT = {
     'pt-card': 'CARD', 'pt-credits': 'CREDITS',
     'pt-starter': 'Starter', 'pt-seeker': 'Seeker', 'pt-wanderer': 'Wanderer', 'pt-elder': 'Elder',
     's4-lbl':  'RÚNAR\'S VOICE',
-    's4-body': `<p>When you draw a rune in the collection, a sound plays — a pre-recorded tone of that rune's presence. Always the same. A note, not a reading.</p>
+    's4-body': `<p>In the collection, every rune has Rúnar's own words about it — you can read them and listen to them in his voice. Recorded in advance. His teaching about the rune, not your reading.</p>
       <p>When you use a reading card, Rúnar speaks your reading aloud. Not a recording. Generated in the moment, shaped around your specific words. Each time different. Each time his.</p>`,
     's5-lbl':  'YOUR JOURNAL',
     's5-body': `<p>Every reading you take is remembered. As a Rune Seeker, your last five readings wait in the journal — the rune drawn, the date, the area, the words spoken.</p>
@@ -340,7 +342,7 @@ const CONTENT = {
     's1-lbl':        'HVERNIG LESTUR VIRKAR',
     's1-body':       `<p>Þú kemur með spurningu — eða án hennar. Báðar eru velkomnar.</p>
       <p>Áður en steinarnir tala spyr Rúnar nokkurra hluta: nafns þíns, þess sviðs lífsins sem þú ert að ganga í gegnum, og hvað þú ert að leita að. Ekki til að dæma. Til að hlusta nákvæmar.</p>
-      <p>Síðan dregurðu. Ein rún af tuttugu og fimm — auk Auðar, rúnar hins óþekkta. Það sem kemur á eftir kemur í tveimur lögum. Fyrsta lagið er stutt og beinlínis. Annað lagið fer dýpra, sækir í norrænar goðsagnir og myndir af Íslandi.</p>
+      <p>Síðan dregurðu. Ein rún af tuttugu og fimm — Auða rúnin, rún hins óþekkta, er ein þeirra. Það sem kemur á eftir er einn samfelldur lestur: það sem rúnin ber þér í dag, sagt í gegnum eina mynd.</p>
       <p><em>Rúnirnar ákveða ekki leið þína. Þær hjálpa þér að muna hana.</em></p>`,
     's2-lbl':        'REIKNINGUR ÞINN',
     'th-tier':       'STIG', 'th-what': 'HVAÐ FÆR ÞÚ',
@@ -360,7 +362,7 @@ const CONTENT = {
     'pt-card': 'KORT', 'pt-credits': 'KREDITARNIR',
     'pt-starter': 'Byrjandi', 'pt-seeker': 'Leitandinn', 'pt-wanderer': 'Ráfari', 'pt-elder': 'Eldri',
     's4-lbl':  'RÖDD RÚNARS',
-    's4-body': `<p>Þegar þú dregur rún í safninu heyrist hljóð — fyrirfram tekið upp til að gefa til kynna nærveru þeirrar rúnar. Alltaf það sama. Tónn, ekki lestur.</p>
+    's4-body': `<p>Í safninu á hver rún sín eigin orð frá Rúnari — þú getur lesið þau og hlustað á þau í rödd hans. Tekin upp fyrirfram. Kennsla hans um rúnina, ekki lesturinn þinn.</p>
       <p>Þegar þú notar lesturarkort talar Rúnar lesturinn þinn upphátt. Ekki upptaka. Myndað í augnablikinu, mótað í kringum sérstakar orðin þín. Í hvert skipti öðruvísi. Í hvert skipti hans.</p>`,
     's5-lbl':  'DAGBÓK ÞÍN',
     's5-body': `<p>Sérhver lestur sem þú tekur er muninn. Sem Leitandi bíða síðustu fimm lestrar þínir í dagbókinni — rúnin sem dregin var, dagsetningin, svæðið, orðin.</p>
