@@ -58,6 +58,7 @@ const UI_TEXT = {
     auth_sending:         'Sending…',
     auth_checking:        'Checking the code…',
     auth_rate:            'Too many attempts — wait a little, or use Google above.',
+    auth_code_wait:       'Your code is on its way. You can ask for a new one after a minute.',   // 2026-10-10: druhý kód do minuty
     auth_failed:          'Sign-in did not work: {msg}',
     q_teaser:             'Deeper questions open with {tier}.',
     journal_teaser:       'Every reading you have ever taken is kept. Move to {tier} to open your full journal.',
@@ -571,6 +572,8 @@ const UI_TEXT = {
     auth_sending:         'Sendi…',
     auth_checking:        'Athuga kóða…',
     auth_rate:            'Of margar tilraunir — bíddu aðeins eða notaðu Google hér fyrir ofan.',
+    // korpus: „er á leiðinni“ 14448 · „nýjan kóða“ 15 · „má biðja um“ 76 · „eftir mínútu“ 189 · „kóðinn er á“ 12
+    auth_code_wait:       'Kóðinn er á leiðinni. Nýjan kóða má biðja um eftir mínútu.',
     auth_failed:          'Innskráning tókst ekki: {msg}',
     q_teaser:             'Dýpri spurningar opnast með {tier}.',
     journal_teaser:       'Sérhver lestur sem þú hefur tekið er geymdur. Farðu yfir í {tier} til að opna fulla króniku þína.',

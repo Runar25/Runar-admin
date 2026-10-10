@@ -9406,3 +9406,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno v náhledu se skutečnou nahrávkou:** přehrání, pauza tlačítkem, posun na 50 % (9,94 s z 19,88 s), konec → návrat na začátek,
   zastavení → přehrávač prázdný. Posuvník růstu stromu (`#tree-seek`) nese tutéž třídu, takže má taky čárku.
 - Odvolává se na: —
+
+## 2026-10-10 (13) — Druhý kód do minuty: appka řekne „kód je na cestě, nový za minutu“, ne „moc pokusů“
+
+- **Proč:** owner žádal o kód podruhé do minuty a appka ukázala „Of margar tilraunir“ — vypadalo to, že islandský e-mail nefunguje
+  (KUKY: *„IS nefunguje“* → *„asi jsem byl moc rychlý“*). Supabase v tu chvíli vrací 429 `over_email_send_rate_limit` se zprávou
+  „For security purposes, you can only request this after N seconds“ (ověřeno požadavkem 17:40:28). Pravidlo „jeden kód za minutu“
+  je v Supabase → SMTP → Minimum interval per user (60 s); hodinový limit e-mailů projektu je 30 a nebyl to on. **Provedl:** CODE-tune.
+- **Co:** `_authMsg` (runar-auth.js) tenhle případ pozná podle zprávy a ukáže `auth_code_wait`: EN „Your code is on its way. You can ask
+  for a new one after a minute.“ · IS „Kóðinn er á leiðinni. Nýjan kóða má biðja um eftir mínútu.“ (korpus: „er á leiðinni“ 14448,
+  „nýjan kóða“ 15, „má biðja um“ 76, „eftir mínútu“ 189). Ostatní 429 dál „moc pokusů“.
+- **Ověřeno:** v náhledu čtyři tvary chyby × dva jazyky — minuta, hodinový limit, chyba odeslání, adresa mimo seznam — každá dostane svou hlášku.
+- Odvolává se na: 2026-10-10 (11).

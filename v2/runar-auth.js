@@ -454,6 +454,9 @@ var _authCodeEmail = '';
 function _authMsg(err) {
   var m = String((err && err.message) || err || '');
   if (/closed_test/i.test(m)) return t('auth_closed_test');
+  // 2026-10-10: druhý kód do minuty (Supabase „…only request this after N seconds“, 429) není „moc pokusů“ — kód je na cestě.
+  // Owner na tom narazil a myslel, že nefunguje islandština (DECISIONS 2026-10-10 (13)).
+  if (/request this after/i.test(m)) return t('auth_code_wait');
   if ((err && err.status === 429) || /rate|too many/i.test(m)) return t('auth_rate');
   return tp('auth_failed', { msg: m });
 }
