@@ -2242,7 +2242,7 @@ Ověřeno: poddotaz dá 564 = 564 (nikdo odhlášený) a při předstíraném od
 nenačítá · obrázek Rúnara jde z našeho Supabase úložiště (Irsko) · písma od 2026-10-10 u nás (DECISIONS (32)).
 - 🟡 **PRO OWNERA:** knihovna `supabase-js` se v readeru i shrine načítá z `cdn.jsdelivr.net` → stejně jako dřív písma od Googlu dostane
   jsDelivr IP každého návštěvníka a zásady ho nejmenují. Navíc: když jsDelivr nejede, appka se nespustí, a SW knihovnu nepředukládá.
-  Doporučení CODE-read: hostovat u nás jako písma — TENTÝŽ soubor 2.117.3, ověřený stávajícím otiskem SRI (`v2/vendor/supabase.min.js`),
+  Doporučení CODE-read: hostovat u nás jako písma — TENTÝŽ soubor 2.117.3, ověřený stávajícím otiskem SRI (`v2/vendor/supabase.min.js`), <!-- doc-links:ok 2026-10-10 navrhovaná cesta, soubor zatím není -->
   + do precache `sw.js`; `scripts/utils/supabase_js_pin.js` upravit, ať při povýšení stáhne soubor k nám.
 
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
