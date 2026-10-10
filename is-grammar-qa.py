@@ -19,6 +19,11 @@
 # for commercial use. WARNING (2025 research): generative/grammar correctors OVER-correct
 # poetic text — NEVER auto-apply these to a reading; flag only, human judges.
 
+# ⚠️ 2026-10-10 MRTVÉ: https://yfirlestur.is/correct.api trvale přesměrovává (HTTP 301) na malstadur.mideind.is/malfridur — Miðeind
+# přesunul Yfirlestur do placeného produktu Málstaður bez veřejného API (ověřeno na jeho stránce). Skript dostával HTML a hlásil všechno
+# „NEZKONTROLOVÁNO“. Náhrada (KUKY 2026-10-10 „GPT dělá dobrou IS“): is-gpt-check.py, obhájený samotestem; idiomy a obraty dál
+# is-vazba.py --freq. Kód níž zůstává kvůli historii — main() hned odkáže na náhradu.
+
 import io, sys, os, re, json, time, urllib.request, urllib.parse
 from collections import Counter
 
@@ -76,6 +81,9 @@ def read_inputs():
     return [ln.strip() for ln in sys.stdin if ln.strip()]
 
 def main():
+    print('is-grammar-qa.py je mrtvý (Yfirlestur API zaniklo 2026-10, přesměrování na Málstaður bez API).\n'
+          'Použij: python -X utf8 is-gpt-check.py --text "…"  (soubor: text na řádek) · idiomy a obraty: python -X utf8 is-vazba.py --freq "…"')
+    sys.exit(2)
     texts = read_inputs()
     if not texts:
         print('No input. Usage: python -X utf8 is-grammar-qa.py <file | --text "...">')

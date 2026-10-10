@@ -11,7 +11,7 @@ Leave NOTHING for Sigrún. Not "IS draft → Sigrún", not "noted for Sigrún", 
 
 **Why:** Kuky pushed back twice (2026-07-14) — first "IS děláme spolu", then firmly "nic nenecháváš pro Sigrún... zapamatuj si to". Punting to Sigrún treats IS as second-class and offloads ownership. IS is primary (CLAUDE.md §2) and must be right, by us.
 
-**How to apply:** After any IS work, run is-grammar-qa; for each flag, investigate (BÍN lemma lookup, is-corr-qa, declension) and CLOSE it with a verdict in the response — never with "for Sigrún". A GreynirCorrect false-positive (e.g. it confuses `lestur`=reading with `lest`=train) is closed by confirming the correct form, not by deferring. Related: [[working-style]], [[paste-sql-explicitly]].
+**How to apply:** After any IS work, run `is-gpt-check.py` (GPT; replaced is-grammar-qa 2026-10-10 when the Yfirlestur API died) and `is-vazba.py --freq` for idioms (GPT misses grammatical calques); for each flag, investigate (BÍN lemma lookup, is-corr-qa, declension) and CLOSE it with a verdict in the response — never with "for Sigrún". A GreynirCorrect false-positive (e.g. it confuses `lestur`=reading with `lest`=train) is closed by confirming the correct form, not by deferring. Related: [[working-style]], [[paste-sql-explicitly]].
 
 **Ani Coworku.** KUKY 2026-08-14: *IS zvládáš, není potřeba takové věci posílat Coworku.*
 Islandské znění instrukce v promptu si CODE napíše a ověří SÁM — `is-vazba.py` na vazbu,

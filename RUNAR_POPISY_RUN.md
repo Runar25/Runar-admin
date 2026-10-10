@@ -19,7 +19,7 @@ Texty jsou **ownerovy, zapsané doslovně** — CODE je needituje (obsah = domé
    v `RUNAR_DECISIONS.md`, ne tichý import.
 
 ⚠️ **Jazyk: čeština je PRACOVNÍ zdroj, ne produkční text.** Až z toho poroste UI text nebo prompt,
-islandština se **píše nativně** a ověřuje (`is-vazba.py`, `is-grammar-qa.py`) — nikdy jako překlad
+islandština se **píše nativně** a ověřuje (`is-vazba.py`, `is-gpt-check.py` — do 2026-10-10 `is-grammar-qa.py`, jeho API zaniklo) — nikdy jako překlad
 téhle češtiny (§2: „IS se VYMÝŠLÍ, ne překládá"). Totéž platí pro angličtinu.
 
 **Společný tvar, který popisy drží** (pozorování, ne pravidlo — pravidlo vznikne, až jich bude 25+):

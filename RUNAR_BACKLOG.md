@@ -714,7 +714,9 @@ atomický upsert, úklid starších než hodina; stejně tak `use_credit` (atomi
 - [ ] **Readings viewer: flag/annotate** — dnes view-only (`initReadingsTab` = prázdný stub). Potřebuje review tabulku (owner ALTER).
 - [~] **R1 ledger -> i KOSTRY** — konkretni dolozena vada je OPRAVENA (jmenny slot `[klauze], Kuky, [obraz]` -> pooled placement, commit 7dd1b9f + ending shape 1cf115c/57e8324). Zustava vlastni ask: rozsirit no-repeat LEDGER i na KOSTRY vet — dnes je kostra nahodna, bez pameti mezi ctenimi.
 - [ ] **is-grammar-qa nad uloženými IS výstupy** → E001 do pojmenované fronty (§19.2 žádné tiché zelené). Korpus existuje.
-- [ ] **⚠️ `is-grammar-qa.py` je mrtvý: API Yfirlestur přestěhované** (2026-10-10, CODE-tune, §22). `https://yfirlestur.is/correct.api`
+- [x] *(CODE-tune 2026-10-10, DECISIONS 2026-10-10 (39): Málstaður veřejné API nemá — jen editor (zdarma 400 znaků) a předplatné;
+  náhrada `is-gpt-check.py` (GPT, KUKY „GPT dělá dobrou IS“), obhájený samotestem; `is-grammar-qa.py` hned odkáže na náhradu.)*
+  **⚠️ `is-grammar-qa.py` je mrtvý: API Yfirlestur přestěhované** (2026-10-10, CODE-tune, §22). `https://yfirlestur.is/correct.api`
   vrací **301 → `https://malstadur.mideind.is/malfridur`** (webová aplikace Málstaður od Miðeind, Cloudflare), takže skript místo JSON
   dostane HTML a hlásí 46 z 46 „NEZKONTROLOVÁNO“ (to dělá správně — §19.2, žádné tiché zelené). `is-vazba.py` (nútímamálsorðabók
   + Risamálheild) funguje dál. Zjistit: má Málstaður API, za jakých podmínek (klíč, cena, zpracování dat), a podle toho skript
@@ -3217,7 +3219,10 @@ Podklad: `docs/archive/2026-09-23-audit-obrazu.md`. Owner je potřebuje vysvětl
    místech a shrine přidat do smoke ㉻ (dnes ho záměrně vynechává).
 7. ✅ *(CODE-tune 2026-10-10: UI_TEXT `signed_out_toast`, IS „ÞÚ HEFUR STIGIÐ ÚT ÚR HRINGNUM“ — korpus „stigið út úr“ 427,
    „út úr hringnum“ 116; bez rodu.)* ~~**Toast při odhlášení natvrdo anglicky:**~~ `showToast('YOU HAVE LEFT THE CIRCLE')` i v islandské appce.
-   ⚪ **Dlužná kontrola Yfirlestur:** 2026-10-10 byla služba nedostupná (is-grammar-qa „NEZKONTROLOVÁNO“) pro nové islandské věty —
+   ✅ *(CODE-tune 2026-10-10: zkontrolováno novým `is-gpt-check.py` — 18 textů, 4 nálezy posouzené: 3 opravené v zásadách („Gögnin sem
+   við geymum eru innan…“ místo dvojznačného „helst“, „gert ópersónugreinanlegt“, „Svo enginn fari yfir hámark á mánuði“ místo kalku
+   „mánaðarlegar heimildir“), 1 ponechaný záměrně („það sem það ber“ = hlas appky, „Hvað ber nafnið mitt?“); opravy znovu čisté.)*
+   ~~**Dlužná kontrola Yfirlestur:**~~ 2026-10-10 byla služba nedostupná (is-grammar-qa „NEZKONTROLOVÁNO“) pro nové islandské věty —
    `signed_out_toast`, `journal_load_err` („Ekki tókst að sækja spárnar þínar — athugaðu nettenginguna og reyndu aftur.“) a v zásadách
    soukromí věty o záloze na Google Drive (Supabase „…að undanskildu öryggisafritinu sem lýst er hér að neðan“ a celý odstavec Google,
    lhůta „Hverju afriti er eytt eftir 30 daga…“, výmaz „…úr dulkóðuðu öryggisafritunum okkar innan 30 daga“) a celá tabulka „Hvað er

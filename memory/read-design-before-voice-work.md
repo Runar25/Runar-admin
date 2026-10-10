@@ -38,5 +38,5 @@ hook (`~/.claude/runar-context.py`, mapa typ úkolu → povinný doc). <!-- doc-
 ⚠️ **A žádná ukázková věta bez ověření.** Copy se píše hlasem Rúnara a **v EN nebo IS**,
 nikdy jako česká improvizace do chatu — appka češtinu nemá. Kandidáta prožeň
 `measure_readings.js --rules` (čte zákazy přímo z promptu), IS navíc `is-vazba.py`
-a `is-grammar-qa.py`. Souvisí: [[copy-always-in-runar-voice]], [[dont-invent-fact-critical]],
+a `is-gpt-check.py` (do 2026-10-10 `is-grammar-qa.py`, API Yfirlestur zaniklo). Souvisí: [[copy-always-in-runar-voice]], [[dont-invent-fact-critical]],
 [[measure-dont-eyeball]].

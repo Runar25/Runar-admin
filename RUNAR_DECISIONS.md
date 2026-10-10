@@ -9788,3 +9788,22 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   i pro hlavní větve … je to živý organismus, který se mění a tvaruje“* → návrh ownerovi, `RUNAR_BACKLOG.md`. Posuvníky, které teď ramena
   neovlivní (tíha, natočení za oblastí, čas čtení → výška, max ramen), čekají na to rozhodnutí.
 - Affected doc(s): `RUNAR_TREE.md` §3 · `RUNAR_TREE_MAP.md` §0, §3, §5, §9, §10, §12, §13 · `RUNAR_BACKLOG.md` — v témže commitu.
+
+## 2026-10-10 (39) — Islandskou gramatiku kontroluje GPT (is-gpt-check.py); Yfirlestur API zaniklo
+
+- **Rozhodl:** KUKY 2026-10-10: *„zjisti příčinu. najdi jiné lepší řešení. GPT dělá dobrou IS.“*
+- **Příčina:** `https://yfirlestur.is/correct.api` trvale přesměrovává (HTTP 301) na `malstadur.mideind.is/malfridur` — Miðeind přesunul
+  Yfirlestur do placeného produktu Málstaður. Veřejné API Málstaður nemá (jeho stránka: editor zdarma do 400 znaků, předplatné; o API
+  nic). `is-grammar-qa.py` dostával HTML místo JSON → vše „NEZKONTROLOVÁNO“. Totéž dnes zapsala jiná CODE-tune session (BACKLOG).
+- **Co:** `is-gpt-check.py` (kořen repa) — text(y) jde modelu `gpt-6-sol` (týž, který píše čtení) se zadáním rodilého korektora; vrací
+  jen jisté chyby (pád, rod, číslo, shoda, vazba, pravopis, neexistující slovo, kalk) jako JSON. Selže-li API → „NEZKONTROLOVÁNO“, ne
+  čisté (§19.2). `is-grammar-qa.py` hned odkáže na náhradu. Idiomy dál `is-vazba.py --freq` (korpus).
+- **Obhájeno (§27):** samotest z 10 vět — všechny 4 gramatické chyby, které dnes ležely v produkci, nalezl přesně (rod „ákveðin hlutir“,
+  „Fjöldi lestrar“, „nafnlægt“, „1 lestrar“); 5 správných vět z produkce bez falešného nálezu. **Slepé místo doložené:** gramaticky správný
+  doslovný idiom („ríður vindinum“, nahlášený rodilou mluvčí) nepoznal → zůstává v samotestu jako vypsané slepé místo, kryje ho korpus.
+- **Hned použito:** 18 dnešních nových IS textů → 3 opravy v zásadách (dvojznačné „helst“, „ópersónugreinanlegt“, kalk „mánaðarlegar
+  heimildir“), 1 nález ponechán (hlas appky „það sem það ber“); opravy znovu čisté. Celkem 4 volání API.
+- **Druhá možnost, neudělaná:** GreynirCorrect (otevřený motor Yfirlesturu) jde spustit lokálně — chtělo by instalaci balíčků (Python 3.13,
+  ověřit podporu) a ownerovo ano. Pravidla bez GPT; vhodný jako druhá vrstva.
+- Affected doc(s): `CLAUDE.md` §2, `RUNAR_POPISY_RUN.md`, memory `is-done-together-not-for-sigrun`, `read-design-before-voice-work`,
+  `RUNAR_BACKLOG.md` — v témže commitu.
