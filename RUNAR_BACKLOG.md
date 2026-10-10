@@ -620,6 +620,10 @@
 - [ ] **Runtime testy peníze-kritických edge funkcí** (deno test: deduct až po úspěchu · hranice měsíčního stropu · idempotence · anonymous nedostane placené). Dnes 0 runtime testů, jen 24 statických.
 - [ ] **CI brána** (GitHub Actions: smoke.py + deno test na push/PR do main). Dnes jediná brána = lokální hook (jde obejít --no-verify).
 - [ ] **Zálohy / DR** pro Supabase DB (peníze + PII): ověřit PITR, runbook kadence + restore, jednou nasucho vyzkoušet.
+  ⚠️ **Stav 2026-10-10 (CODE-read, `supabase backups list`): žádná záloha neexistuje** — `backups: []`, `pitr_enabled: false`.
+  Deníky, kredity, profily i hlášení nemají kopii; `scripts/utils/zaloha_cteni.js` zálohuje jen čtení z pokusů, ne produkci.
+  Volba (owner): placený tarif Supabase s denními zálohami (cena podle ceníku Supabase), nebo vlastní pravidelný `supabase db dump`
+  do soukromého úložiště mimo repo (nese osobní údaje → šifrovat). → i `RUNAR_BACKLOG.md` „Kontrola architektury“, bod 16.
 - [ ] **Monitoring / alerting** (error rate + fail-open události → Slack/Sentry). Dnes jen pull logy.
 - [ ] **Staging / preview** prostředí pro migrace + edge fn (dnes vše proti prod DB).
 - [ ] **Deploy / rollback runbook** pro edge funkce (živý stav je mimo git, neviditelný).
@@ -1901,6 +1905,11 @@ vlastní účet; v uložených textech 0 HTML značek, vzhled beze změny. **Pro
 **Platí:** v repu jsou jen dva JWT a oba mají roli `anon` (`v2/runar-config.js`, `show_corrections.py` — veřejný klíč, tak má být).
 Celá historie gitu (všechny větve) bez klíče Anthropic (`sk-ant-api`), OpenAI (`sk-proj-`), Slack webhooku i serverového JWT
 (`service_role` hledáno v base64 na třech posunech). Tajemství edge funkcí jsou jen v Supabase secrets. **Pro ownera:** nic.
+
+### Část 13 — zálohy databáze (2026-10-10)
+**PRO OWNERA:**
+16. 🔴 **Produkční databáze nemá žádnou zálohu** (`supabase backups list`: prázdný seznam, obnova k okamžiku vypnutá). Kdyby se
+    databáze poškodila nebo omylem smazala, deníky, kredity a profily jsou pryč. Podrobnosti a volby → sekce C „Zálohy / DR“.
 
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
