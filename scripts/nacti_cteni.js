@@ -17,6 +17,7 @@
 //   --bez-zapisu = monitor jen vypíše, nepřipíše do tabulky (zkušební běh — neposune značku pro ownerovo příští „načti“)
 'use strict';
 const fs = require('fs'), os = require('os'), path = require('path'), cp = require('child_process');
+const CTENI = require('./utils/cteni_analyza.js');   // čtení bez odhlášených z analýzy — RUNAR_PRIVACY.md bod 4 (2026-10-10)
 const ROOT = path.join(__dirname, '..');
 const arg = (k) => { const i = process.argv.indexOf(k); return i !== -1 ? process.argv[i + 1] : null; };
 const TABULKA = path.join(ROOT, 'docs', 'monitor', 'ozveny.md');
@@ -61,7 +62,7 @@ const kratce = (s, n) => { const t = String(s || '').replace(/\s+/g, ' ').trim()
 
 // 1) čtení
 const cteni = dotaz("select id, drawn_at, lang, rune_name, area, aol, seeking, intention, question, reading_mode, life_rune, short_text, follow_up, "
-  + "prompt_draws, prompt_version, usage from readings where drawn_at > '" + odSql + "' order by drawn_at");
+  + "prompt_draws, prompt_version, usage from " + CTENI + " where drawn_at > '" + odSql + "' order by drawn_at");
 const vystup = arg('--vystup') || path.join(os.tmpdir(), 'runar_cteni_' + new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-') + '.json');
 fs.writeFileSync(vystup, JSON.stringify(cteni, null, 1));
 const poModelu = {}, poJazyku = {}; let asku = 0;

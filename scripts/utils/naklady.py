@@ -24,7 +24,7 @@ select count(*) as n,
   sum((usage->>'output_tokens')::int) as vystup,
   sum(coalesce((usage->>'cache_read_input_tokens')::int,0)) as cache_cteni,
   sum(coalesce((usage->>'cache_creation_input_tokens')::int,0)) as cache_zapis
-from readings where usage is not null""")[0]
+from readings where usage is not null""")[0]  # opt-out:ok 2026-10-10 náklady a účetnictví — patří všechna čtení
 
 cena = sum(SAZBY[k] * (celek[k] or 0) / 1e6 for k in SAZBY)
 print('ČTENÍ S USAGE (od 15. 8.): %d   ·   Claude cena celkem: $%.3f   ·   na čtení: $%.4f'
@@ -36,12 +36,12 @@ print('\nPO DNECH (posledních 10):')
 for r in dotaz("""
 select to_char(drawn_at,'YYYY-MM-DD') as den, count(*) as n,
   sum(coalesce((usage->>'output_tokens')::int,0)) as vystup
-from readings group by 1 order by den desc limit 10"""):
+from readings group by 1 order by den desc limit 10"""):  # opt-out:ok 2026-10-10 náklady a účetnictví — patří všechna čtení
     print('  %s  %3d čtení   výstup %s tok.' % (r['den'], r['n'], r['vystup']))
 
 print('\nŠPIČKY (hodina UTC = islandský čas, celá historie):')
 for r in dotaz("""
 select to_char(drawn_at,'HH24') as h, count(*) as n
-from readings group by 1 order by n desc limit 5"""):
+from readings group by 1 order by n desc limit 5"""):  # opt-out:ok 2026-10-10 náklady a účetnictví — patří všechna čtení
     print('  %s:00  %3d čtení' % (r['h'], r['n']))
 print('\n(pozn.: zatím převážně testovací provoz — špičky jsou z velké části vlastní ladění)')

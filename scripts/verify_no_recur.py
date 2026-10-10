@@ -12,6 +12,8 @@
 # postupu (viz hlavička scripts/profsteinn.js).
 #   python -X utf8 scripts/verify_no_recur.py
 import glob, io, json, os, re, subprocess, sys
+# Čtení bez odhlášených z analýzy — jediný zdroj scripts/utils/cteni_analyza.sql (RUNAR_PRIVACY.md bod 4, 2026-10-10)
+CTENI = ' '.join(l.strip() for l in open(__import__('os').path.join(__import__('os').path.dirname(__import__('os').path.abspath(__file__)), 'utils', 'cteni_analyza.sql'), encoding='utf-8') if l.strip() and not l.strip().startswith('--'))
 
 ROOT = r'C:\Users\zkuku\Downloads\Runar-admin'
 
@@ -38,7 +40,7 @@ opravene = dotaz("select flagged_text, resolved_at from bug_reports "
                  "and flagged_text is not null and length(flagged_text) >= 8")
 
 # ── 3. plochy: čtení v DB + commitnuté dávky ────────────────────────────────
-cteni = dotaz("select drawn_at, coalesce(deep_text, short_text, '') as t from readings "
+cteni = dotaz("select drawn_at, coalesce(deep_text, short_text, '') as t from " + CTENI + " "
               "where coalesce(deep_text, short_text, '') <> '' order by drawn_at")
 davky = []
 for p in glob.glob(os.path.join(ROOT, 'docs', 'eval', '**', '*.jsonl'), recursive=True):

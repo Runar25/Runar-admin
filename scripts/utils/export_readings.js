@@ -108,7 +108,7 @@ select json_build_object(
   'follow_up',      r.follow_up,
   'ts',             r.drawn_at
 )::text as j
-from public.readings r
+from public.readings r  -- opt-out:ok 2026-10-10 filtr má vlastní: join user_profiles + analytics_opt_out = false (ř. ~83)
 left join public.user_profiles p on p.id = r.user_id
 left join auth.users u           on u.id = r.user_id
 where ${where.join(' and ')}

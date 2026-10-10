@@ -26,6 +26,7 @@
 //   node scripts/monitor_ozveny.js --test   (smoke ㉷: smyšlená čtení se známými ozvěnami musí být poznána)
 'use strict';
 const fs = require('fs'), vm = require('vm'), path = require('path'), cp = require('child_process');
+const CTENI = require('./utils/cteni_analyza.js');   // čtení bez odhlášených z analýzy — RUNAR_PRIVACY.md bod 4 (2026-10-10)
 const ROOT = path.join(__dirname, '..'), D = path.join(ROOT, 'v2') + path.sep;
 const S = { console: { log() {}, warn() {}, error() {} }, document: { getElementById: () => null, querySelector: () => null, querySelectorAll: () => [] },
   localStorage: { getItem: () => null, setItem() {}, removeItem() {} } };
@@ -292,7 +293,7 @@ function nacti() {
     const od = arg('--od') || new Date(Date.now() - 864e5).toISOString().slice(0, 10);
     const kde = znacka ? "drawn_at > '" + znacka.replace(/'/g, '') + "'" : "drawn_at >= '" + od.replace(/'/g, '') + "'";
     // 2026-10-07: + question — bez ní monitor bral otázku runy jako vstup i u čtení s vlastní otázkou (builder ji tam nedává).
-    const sql = "select id, drawn_at, lang, rune_name, area, aol, question, short_text, follow_up, prompt_draws, prompt_version, usage->>'model' as model from readings where " + kde + " order by drawn_at";
+    const sql = "select id, drawn_at, lang, rune_name, area, aol, question, short_text, follow_up, prompt_draws, prompt_version, usage->>'model' as model from " + CTENI + " where " + kde + " order by drawn_at";
     src = cp.execSync('supabase db query --linked "' + sql.replace(/"/g, '\\"') + '"', { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
   }
   const j = JSON.parse(src.slice(src.search(/[\[{]/)));

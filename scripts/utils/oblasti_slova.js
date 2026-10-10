@@ -13,9 +13,10 @@
 // Spuštění (z kořene repa):  node scripts/utils/oblasti_slova.js [--od v4.47]
 //   --od vX.Y  … jen čtení s prompt_version od téhle verze (bez parametru v4.39, od kdy platí dnešní stavba čtení)
 const { execSync } = require('child_process');
+const CTENI = require('./cteni_analyza.js');   // čtení bez odhlášených z analýzy — RUNAR_PRIVACY.md bod 4 (2026-10-10)
 const arg = process.argv.indexOf('--od');
 const OD = arg !== -1 ? process.argv[arg + 1] : 'v4.39';
-const SQL = "select lang, area, prompt_version, short_text from readings " +
+const SQL = "select lang, area, prompt_version, short_text from " + CTENI + " " +
             "where area is not null and area not in ('spread','gathering','') and short_text is not null";
 const raw = execSync('supabase db query --linked "' + SQL + '"', { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64e6 });
 const rows = JSON.parse(raw.slice(raw.indexOf('{'))).rows;

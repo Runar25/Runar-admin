@@ -1,7 +1,8 @@
 // Průměrná délka čtení — počítá se z DB, nikam se nezapisuje (§20: číslo vlastní data, ne doc).
 // Použití:  node scripts/delky_cteni.js <export.json>
 // Export: supabase db query --linked "select lang, rune_name, prompt_version,
-//   coalesce(nullif(deep_text,''), short_text) as txt from readings" > export.json
+//   coalesce(nullif(deep_text,''), short_text) as txt from <obsah scripts/utils/cteni_analyza.sql>" > export.json
+//   (2026-10-10: poddotaz místo tabulky — bez čtení odhlášených z analýzy, RUNAR_PRIVACY.md bod 4)
 // Vypíše: počet slov (průměr/medián/min/max) po verzích promptu a celkem; Single EN, spready vynechá.
 'use strict';
 const fs = require('fs');

@@ -30,6 +30,7 @@
 //   node scripts/utils/archive_batches.js --force <soubor>      přepsat už zarchivované
 // ═══════════════════════════════════════════════════════
 const fs = require('fs'), path = require('path'), os = require('os');
+const CTENI = require('./cteni_analyza.js');   // čtení bez odhlášených z analýzy — RUNAR_PRIVACY.md bod 4 (2026-10-10)
 const { execSync } = require('child_process');
 
 const R = path.resolve(__dirname, '../..');
@@ -75,7 +76,7 @@ if (has('--production')) {
   const sql = "select id, rune_name, lang, area, seeking, intention, drawn_at, prompt_version, " +
     "prompt_draws, spread_data is not null as is_spread, " +
     "coalesce(short_text,'') as short_text, coalesce(deep_text,'') as deep_text " +
-    "from public.readings where coalesce(short_text,'') <> '' order by drawn_at;";
+    "from " + CTENI + " where coalesce(short_text,'') <> '' order by drawn_at;";
   const tmp = path.join(os.tmpdir(), 'runar_arch_' + process.pid + '.sql');
   fs.writeFileSync(tmp, sql, 'utf8');
   let rows;

@@ -47,6 +47,7 @@
 //   node scripts/utils/find_seeds.js --json           strojový výstup
 // ═══════════════════════════════════════════════════════
 const fs = require('fs'), vm = require('vm'), os = require('os'), path = require('path');
+const CTENI = require('./cteni_analyza.js');   // čtení bez odhlášených z analýzy — RUNAR_PRIVACY.md bod 4 (2026-10-10)
 const { execSync } = require('child_process');
 
 const ARGS = process.argv.slice(2);
@@ -615,7 +616,7 @@ if (has('--specificity')) {
     ? loadJsonl(src).map(r => ({ rune_name: r.rune_name, lev: r[LEV] || '', txt: r.txt }))
     : q("select rune_name, coalesce(" + (LEV === 'seeking' ? 'seeking' : LEV === 'intention' ? 'intention' : 'area') +
         ",'') as lev, coalesce(short_text,'') || ' ' || coalesce(deep_text,'') as txt " +
-        "from public.readings where lang = '" + LANG.replace(/[^a-z]/gi, '') + "' " +
+        "from " + CTENI + " where lang = '" + LANG.replace(/[^a-z]/gi, '') + "' " +
         "and coalesce(area,'') <> 'spread' and coalesce(short_text,'') <> '';")
   ).filter(r => r.lev && String(r.lev).trim() && r.txt);
   if (!rows.length) { console.error('zadna cteni s vyplnenym `' + LEV + '`'); process.exit(1); }
@@ -686,7 +687,7 @@ if (has('--kws')) {
   } else {
     rws = q("select rune_name, prompt_draws->>'kws' as kws, " +
       "coalesce(short_text,'') || ' ' || coalesce(deep_text,'') as txt " +
-      "from public.readings where lang = '" + LANG.replace(/[^a-z]/gi, '') + "' " +
+      "from " + CTENI + " where lang = '" + LANG.replace(/[^a-z]/gi, '') + "' " +
       "and prompt_draws ? 'kws' and coalesce(area,'') <> 'spread';");
     label = 'produkce · lang=' + LANG;
   }
@@ -705,13 +706,13 @@ const LSAFE = LANG.replace(/[^a-z]/gi, '');
 const rows = q(
   "select id, area, seeking, intention, rune_name, " +
   "coalesce(short_text,'') || ' ' || coalesce(deep_text,'') as txt " +
-  "from public.readings where lang = '" + LSAFE + "' " +
+  "from " + CTENI + " where lang = '" + LSAFE + "' " +
   "and coalesce(area,'') <> 'spread' and coalesce(short_text,'') <> '';"
 );
 // ⚠️ Marker spreadu je `area='spread'`, NE `spread_data`. Sloupec `spread_data` je u vsech
 // spreadu prazdny — nikdo do nej nepise (zapsano v RUNAR_BACKLOG.md). Prvni verze filtrovala
 // podle nej a propustila vsech 63 spreadu do skenu.
-const nSpread = (q("select count(*) as c from public.readings where lang = '" + LSAFE +
+const nSpread = (q("select count(*) as c from " + CTENI + " where lang = '" + LSAFE +
   "' and coalesce(area,'') = 'spread';")[0] || {}).c || 0;
 if (!rows.length) { console.error('Zadna cteni pro lang=' + LANG); process.exit(1); }
 

@@ -50,24 +50,24 @@ const jenT = (sloupec) => TESTERI ? ' and ' + sloupec + ' in (select p.id from p
   + " where p.is_tester and u.email not in (" + ADMINI.map(e => "'" + e + "'").join(',') + '))' : '';
 
 const celkem = q('select count(*) n, count(distinct user_id) lidi,' +
-  ' min(drawn_at)::date od, max(drawn_at)::date do from public.readings where true' + jenT('user_id') + ';')[0];
+  ' min(drawn_at)::date od, max(drawn_at)::date do from public.readings where true' + jenT('user_id') + ';')[0];  // opt-out:ok 2026-10-10 provozní souhrny (objem, časy, jazyky), ne analýza kvality textu
 
 const denne = q('select drawn_at::date den, count(*) n, count(distinct user_id) lidi' +
-  ' from public.readings where drawn_at >= ' + OD + jenT('user_id') + ' group by 1 order by 1;');
+  ' from public.readings where drawn_at >= ' + OD + jenT('user_id') + ' group by 1 order by 1;');  // opt-out:ok 2026-10-10 provozní souhrny (objem, časy, jazyky), ne analýza kvality textu
 
 const hodiny = q("select extract(hour from drawn_at at time zone 'Atlantic/Reykjavik')::int h," +
-  ' count(*) n from public.readings where drawn_at >= ' + OD + jenT('user_id') + ' group by 1 order by 1;');
+  ' count(*) n from public.readings where drawn_at >= ' + OD + jenT('user_id') + ' group by 1 order by 1;');  // opt-out:ok 2026-10-10 provozní souhrny (objem, časy, jazyky), ne analýza kvality textu
 
 const dny = q("select trim(to_char(drawn_at at time zone 'Atlantic/Reykjavik','Day')) d," +
   " extract(isodow from drawn_at at time zone 'Atlantic/Reykjavik')::int i, count(*) n" +
-  ' from public.readings where drawn_at >= ' + OD + jenT('user_id') + ' group by 1,2 order by 2;');
+  ' from public.readings where drawn_at >= ' + OD + jenT('user_id') + ' group by 1,2 order by 2;');  // opt-out:ok 2026-10-10 provozní souhrny (objem, časy, jazyky), ne analýza kvality textu
 
-const jazyk = q('select coalesce(lang,'+"'?'"+') lang, count(*) n from public.readings' +
+const jazyk = q('select coalesce(lang,'+"'?'"+') lang, count(*) n from public.readings' +  // opt-out:ok 2026-10-10 provozní souhrny (objem, časy, jazyky), ne analýza kvality textu
   ' where drawn_at >= ' + OD + jenT('user_id') + ' group by 1 order by 2 desc;');
 
 const kvalita = q('select count(*) n, count(prompt_draws) s_draws,' +
   ' count(*) filter (where spread_data is not null) spready' +
-  ' from public.readings where drawn_at >= ' + OD + jenT('user_id') + ';')[0];
+  ' from public.readings where drawn_at >= ' + OD + jenT('user_id') + ';')[0];  // opt-out:ok 2026-10-10 provozní souhrny (objem, časy, jazyky), ne analýza kvality textu
 
 // ── Náklady a cache (CODE-read 2026-09-24) ──────────────────────────────────────────────
 // PŘESNÁ cena z `readings.usage` (tokeny, které API vrátilo u každého čtení; proxy je ukládá od 2026-08-15)
@@ -91,7 +91,7 @@ if (Math.abs(cenaUsage({ model: 'gpt-6-sol', prompt_tokens: 1000, prompt_tokens_
 if (Math.abs(cenaUsage({ model: 'gpt-6-sol', prompt_tokens: 1000, prompt_tokens_details: { cached_tokens: 200, cache_write_tokens: 700 }, completion_tokens: 100 }) - 0.00299) > 1e-9) { console.error('  ✗ výpočet zápisu do cache OpenAI rozbitý'); process.exit(1); }
 const usageRows = q("select coalesce(r.lang,'?') lang, r.area, r.usage, r.follow_up, case when u.email in (" + ADMINI.map(e => "'" + e + "'").join(',')
   + ") then 'admin' when coalesce(p.is_tester, false) then 'tester' else 'uzivatel' end skupina"
-  + ' from public.readings r left join auth.users u on u.id = r.user_id left join public.user_profiles p on p.id = r.user_id'
+  + ' from public.readings r left join auth.users u on u.id = r.user_id left join public.user_profiles p on p.id = r.user_id'  // opt-out:ok 2026-10-10 provozní souhrny (objem, časy, jazyky), ne analýza kvality textu
   + ' where r.drawn_at >= ' + OD + ' and r.usage is not null' + jenT('r.user_id') + ';');
 const naklady = { skupiny: {}, podleSkupin: {}, ask: { n: 0, usd: 0, bez: 0 }, askModel: {}, neznamy: [] };
 for (const r of usageRows) {
@@ -139,7 +139,7 @@ for (const r of hlasRows) {
 }
 // Kolik čtení přišlo do 5 min (a do 1 h) po PŘEDCHOZÍM čtení v témže jazyce — systémový prompt je pro všechny
 // uživatele téhož jazyka stejný, takže cachi drží teplou kdokoli. To je strop zásahů cache při dnešním provozu.
-const casy = q("select coalesce(lang,'?') lang, extract(epoch from drawn_at) t from public.readings where drawn_at >= " + OD + jenT('user_id') + ' order by drawn_at;');
+const casy = q("select coalesce(lang,'?') lang, extract(epoch from drawn_at) t from public.readings where drawn_at >= " + OD + jenT('user_id') + ' order by drawn_at;');  // opt-out:ok 2026-10-10 provozní souhrny (objem, časy, jazyky), ne analýza kvality textu
 naklady.odstupy = {};
 { const posl = {};
   for (const r of casy) { const o = naklady.odstupy[r.lang] = naklady.odstupy[r.lang] || { n: 0, do5: 0, do60: 0 };

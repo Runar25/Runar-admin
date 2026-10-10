@@ -2206,6 +2206,16 @@ Vegvísir je na pár dní odložený (owner 2026-10-10: „pořád se na něm pr
 na vlastníka stavu (sekce „Vegvísir“ výš) a na DECISIONS 2026-09-27 (3) (4) (6); u krajin a momentů i dřívější odložení (3).
 Do archivu nejdou — jsou podklad pro návrat (§26).
 
+### Část 31 — sliby zásad soukromí × kód: odhlášení z analýzy (2026-10-10)
+**Platí:** přepínač v appce zapisuje `user_profiles.analytics_opt_out`; `list-readings` (prohlížeč čtení ve shrine) i
+`export_readings.js` odhlášené vynechávají. Dnes odhlášených **0 ze 4** — škoda nevznikla.
+**Opraveno (CODE-read):** 11 skriptů četlo `readings` napřímo bez filtru — i ty, které dělají právě analýzu kvality (`nacti_cteni`,
+`monitor_ozveny`, `najdi_cteni`, `oblasti_slova`, `find_seeds`, `archive_batches`, `oblouk`, `verify_no_recur`, návod v `delky_cteni`).
+Filtr má teď JEDNO místo `scripts/utils/cteni_analyza.sql` (+ `cteni_analyza.js`), skripty ho čtou místo tabulky. Náklady a provozní
+souhrny (`naklady.py`, `stats.js`) čtou všechna čtení se značkou `opt-out:ok <datum> <důvod>`. Hlídá **smoke ㉾** (`verify_opt_out.js`).
+Ověřeno: poddotaz dá 564 = 564 (nikdo odhlášený) a při předstíraném odhlášení všech 0; `verify_no_recur.py`, `oblasti_slova.js`,
+`stats.js` naostro běží; `nacti_cteni.js` jen syntaxe (označuje hlášení — nespouštět naprázdno).
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.

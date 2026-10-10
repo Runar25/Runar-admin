@@ -8,13 +8,15 @@
 #   PLNÝ OBLOUK (návrat + proměna) · NÁVRAT BEZ PROMĚNY · BEZ NÁVRATU
 # Použití: python -X utf8 scripts/oblouk.py [--days N]   (default 7)
 import json, re, subprocess, sys
+# Čtení bez odhlášených z analýzy — jediný zdroj scripts/utils/cteni_analyza.sql (RUNAR_PRIVACY.md bod 4, 2026-10-10)
+CTENI = ' '.join(l.strip() for l in open(__import__('os').path.join(__import__('os').path.dirname(__import__('os').path.abspath(__file__)), 'utils', 'cteni_analyza.sql'), encoding='utf-8') if l.strip() and not l.strip().startswith('--'))
 
 days = 7
 if '--days' in sys.argv:
     days = int(sys.argv[sys.argv.index('--days') + 1])
 
 SQL = ("select to_char(drawn_at,'YYYY-MM-DD HH24:MI') as t, rune_name, lang, deep_text as txt "
-       "from readings where nullif(deep_text,'') is not null "
+       "from " + CTENI + " where nullif(deep_text,'') is not null "
        "and drawn_at >= now() - interval '%d days' order by drawn_at" % days)
 
 def spust():

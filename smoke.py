@@ -863,6 +863,19 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola mrtvych klicu probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# ㉾ Odhlášení z analýzy (CODE-read 2026-10-10, kontrola architektury část 31): zásady slibují, že čtení odhlášených se do
+# analýzy nedostanou; 11 skriptů četlo readings napřímo a filtr nemělo. Čtení pro analýzu jdou přes scripts/utils/cteni_analyza.sql.
+print('\n' + chr(0x327E) + ' ODHLÁŠENÍ Z ANALÝZY VE SKRIPTECH (verify_opt_out.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_opt_out.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+r2 = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_opt_out.js'), '--test'],
+                    capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0 and r2.returncode == 0
+output = (r2.stdout + r.stdout + r.stderr + r2.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola odhlaseni z analyzy probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ㉻ Runy písmem (CODE-tune 2026-10-10, KUKY bod 11 „nahradit našimi glyfy“; §5): klíče UI_TEXT s runou na začátku jen přes
 # setRuneText a stránky readeru bez run písmem (kromě ᚱ). Při zavedení našla i ᛜ na stránce soukromí, kterou nikdo nehlásil.
 print('\n' + chr(0x327B) + ' RUNY PÍSMEM (verify_rune_glyphs.js)')

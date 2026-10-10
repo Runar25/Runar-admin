@@ -15,6 +15,7 @@
 //   Výstup jen do konzole: texty nesou jména a ownerova čtení, do repa nepatří (DECISIONS 2026-08-08).
 'use strict';
 const fs = require('fs'), path = require('path'), os = require('os'), cp = require('child_process');
+const CTENI = require('./cteni_analyza.js');   // čtení bez odhlášených z analýzy — RUNAR_PRIVACY.md bod 4 (2026-10-10)
 const REPO = path.resolve(__dirname, '..', '..');
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i !== -1 && process.argv[i + 1] !== undefined ? process.argv[i + 1] : d; };
 const ma = (k) => process.argv.includes(k);
@@ -87,7 +88,7 @@ if (!ma('--jen-db')) {
 }
 if (!ma('--bez-db')) {
   try {
-    const sql = "select id, drawn_at, lang, rune_name, area, question, short_text, follow_up, prompt_draws, prompt_version, usage->>'model' as model from readings where drawn_at >= '"
+    const sql = "select id, drawn_at, lang, rune_name, area, question, short_text, follow_up, prompt_draws, prompt_version, usage->>'model' as model from " + CTENI + " where drawn_at >= '"
       + String(F.od).replace(/'/g, '') + "' order by drawn_at";
     const src = cp.execSync('supabase db query --linked "' + sql.replace(/"/g, '\\"') + '"', { cwd: REPO, encoding: 'utf8', maxBuffer: 256 * 1024 * 1024, stdio: ['ignore', 'pipe', 'ignore'] });
     const j = JSON.parse(src.slice(src.search(/[\[{]/))); const rows = Array.isArray(j) ? j : j.rows;
