@@ -9626,3 +9626,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   79 % koruny (jen hlavní 71 %, dnes 63 %), hloubka 40 % výšky koruny (dnes 39 %). Nad zem lezou 3 větvičky Berkanina kořene až 72 px — totéž
   dělá Berkana i dnes (42 px), tvar její runy → `RUNAR_BACKLOG.md`. Čeká na ownerův pohled.
 - Affected doc(s): `RUNAR_TREE.md` §2 (kořeny), `RUNAR_BACKLOG.md` (položka pokusu + Berkanin kořen) — v témže commitu.
+
+## 2026-10-10 (27) — Strom: kořen nejde nahoru do koruny — co by vylezlo nad zem nebo se vracelo k povrchu, se natočí hlouběji (jen směr, nanečisto)
+
+- **Rozhodl:** KUKY 2026-10-10 k pokusu s kořenem pro každou větev (26): *„měly by jít trochu do hloubky. ty, co jdou nahoru do koruny.“*
+  **Provedl:** CODE-tree, jen nanečisto.
+- **Pravidlo:** když kořen nebo jeho větvička vyleze nad zem, nebo se koncem vrací k povrchu (do 15 px pod zemí a stoupá), natočí se celý kořen
+  o 30 % blíž ke svislici dolů a postaví se znovu (nejvýš 8×). Mění se jen směr (DECISIONS (23)): runa, délka, ohyb i větvičky zůstávají.
+- **Změřeno na jeho stromě** (patch `docs/archive/tree/2026-10-10_nanecisto_ramena_koreny.patch`): natočeny 2 kořeny ze 25 — Perthin o jeden krok,
+  Berkanin o sedm (její větvičky rostou vzhůru); větviček nad zemí 3 → 0 (dnes v labu 1); šířka kořenů 79 → 69 procent koruny, hloubka beze
+  změny (40 procent výšky koruny). Čeká na ownerův pohled.
+- Affected doc(s): `RUNAR_TREE.md` §2 (kořeny), `RUNAR_BACKLOG.md` (položka pokusu, Berkanin kořen) — v témže commitu.
