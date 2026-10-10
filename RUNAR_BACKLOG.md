@@ -1859,6 +1859,24 @@ zápisy do `gift_codes`, `runar_corrections`, `runar_character`, `runar_static_a
 **Opraveno rovnou:** náhled hlasu (teach) volal `elevenlabs-proxy` bez přihlášení → proxy ho od 2026-08-02 odmítal (401) a tlačítko
 nefungovalo; teď posílá token jako sousední generování statického audia. **Pro ownera:** nic.
 
+### Část 10 — úložiště, přihlašování, git hooky, pomocné skripty (2026-10-10)
+**Platí:** hook `hook_before_user_created` pustí registraci jen e-mailům z `allowed_emails` (uzavřený test) · trigger
+`profile_tester_from_allowlist` dá testerovi premium a `is_tester` · `guard_life_rune_immutable` brání přepsat životní runu
+z klienta · `ledger_user_profiles` zapisuje do `credit_ledger` i smazání účtu, přechod měsíce a změnu tarifu · git hooky v
+`.git/hooks` jen volají `hooks/*.py` z repa (vždy aktuální) · z pomocných skriptů zapisuje do DB jen `scripts/nacti_cteni.js`
+(id ověřené regexem, text escapovaný).
+**Opraveno rovnou:** nic.
+
+**PRO OWNERA:**
+13. 🔴 **Do úložiště smí nahrát soubor kdokoli.** Politika `service_role_upload 1rtepqd_0` na `storage.objects` (INSERT, role public,
+    `WITH CHECK true`, bez omezení bucketu) → s veřejným klíčem z appky jde nahrát cokoli do veřejných `runar-audio` a `runar-images`
+    (bez stropu velikosti i typu). Zneužití zatím žádné (55 + 1 souborů, poslední nahrání v květnu). Politika je zbytečná:
+    jediné nahrávání (`elevenlabs-static`) jde přes service role, která RLS obchází. SQL pro ownera:
+    `drop policy "service_role_upload 1rtepqd_0" on storage.objects;`
+14. ⚪ **Smazání verze audia ve shrine nesmaže soubor** (`deleteVersion` → `storage.remove`): na `storage.objects` není pravidlo DELETE,
+    chyba skončí v konzoli a soubor zůstane. Dnes 2 soubory v `runar-audio` bez záznamu v `runar_static_audio`. Volba: pravidlo
+    „admin smí mazat v `runar-audio`“, nebo sirotky smazat ručně.
+
 ## 2026-08-16 — otevřené po zavedení registru `direct`
 
 - **Změřit registry párováním podle vloženého obrazu.** První řez (12 čtení) je zmatený:
