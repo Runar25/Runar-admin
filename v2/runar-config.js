@@ -89,12 +89,8 @@ const EL_MODEL_IS = 'eleven_v3';              // IS model — detekuje islandšt
 function elVoiceId(lang) { return lang === 'is' ? EL_VOICE_ID_IS : EL_VOICE_ID_EN; }
 function elModel(lang)   { return lang === 'is' ? EL_MODEL_IS    : EL_MODEL_EN; }
 
-const EL_VOICE_SETTINGS = {
-  stability:        0.75,
-  similarity_boost: 0.85,
-  style:            0.35,
-  use_speaker_boost: true,
-};
+// 2026-10-10: EL_VOICE_SETTINGS pryč — nikdo je nečetl. Nastavení hlasu (stability, similarity_boost, style, speaker boost) platí
+// to v edge funkcích elevenlabs-proxy a elevenlabs-static; tady stála třetí stejná kopie (§20). Dvě kopie na serveru → BACKLOG část 21.
 
 // ─── RÚNAR MODES ────────────────────────────────────────
 // Each mode has its own prompt assembly, token limit, and UI flow.

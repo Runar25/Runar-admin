@@ -100,8 +100,9 @@ Svaraðu einungis á íslensku — allur textinn á íslensku.`,
 // const DEF_CHAR_DK = { identity: `...`, ... };
 // const DEF_CHAR_DE = { identity: `...`, ... };
 
-// ─── DEFAULT ALIAS ──────────────────────────────────────
-const DEF_CHAR = DEF_CHAR_EN;
+// 2026-10-10: alias `const DEF_CHAR = DEF_CHAR_EN` pryč — nikdo ho nečetl a sváděl k `{ ...DEF_CHAR }`, které v labu pro `is`
+// složilo anglický prompt bez islandské gramatiky (2026-08-17, komentář v loadChar v runar-shrine.html). Výchozí postava = podle
+// jazyka DEF_CHAR_EN / DEF_CHAR_IS.
 
 // ═══════════════════════════════════════════════════════
 // RÚNAR V2 — CONTEXTUAL INTELLIGENCE

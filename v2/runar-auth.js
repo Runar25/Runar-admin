@@ -3,12 +3,12 @@
 // Authentication UI: banners, gates, modals, PWA install,
 // sign-in, redeem, delete account.
 // Depends on globals: lang, currentUser, userTier, userCredits,
-//   activeAppTab, sb, FREE_TRIAL_LIMIT, FREE_REGISTERED_LIMIT,
-//   DELAY_FOCUS, DELAY_SCROLL, DELAY_NAME_PROMPT, DELAY_RELOAD,
-//   DELAY_ERROR_RESET
-// Depends on functions: t(), getTrialCount(),
+//   activeAppTab, sb, FREE_REGISTERED_LIMIT, DELAY_FOCUS, DELAY_SCROLL
+// Depends on functions: t(),
 //   updateQuestionGate(), showAppTab(), fetchUserProfile(),
-//   setSt(), showToast(), showNamePrompt(), displayName()
+//   setSt(), showToast(), displayName()
+// (2026-10-10: FREE_TRIAL_LIMIT a getTrialCount ze seznamu pryč — už neexistují; DELAY_NAME_PROMPT, DELAY_RELOAD,
+//  DELAY_ERROR_RESET a showNamePrompt() taky — tenhle soubor je nečte.)
 // ═══════════════════════════════════════════════════════
 
 // ─── ADMIN CHECK ─────────────────────────────────────────

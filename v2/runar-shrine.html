@@ -1040,7 +1040,7 @@ async function loadChar() {
     const { data } = await sb.from('runar_character').select('*').eq('active', true).order('created_at', { ascending: false }).limit(1).maybeSingle();
     if (data) { activeChar = data; return; }
   } catch (e) {}
-  // NE `{ ...DEF_CHAR }` — to je alias na DEF_CHAR_EN a rozprostreny objekt ma VSECHNY klice,
+  // NE `{ ...DEF_CHAR }` — to byl alias na DEF_CHAR_EN (odstranen 2026-10-10) a rozprostreny objekt ma VSECHNY klice,
   // takze v buildSysPrompt prebije i islandsky vychozi znak po znaku: lab pak pro `is` skladal
   // anglicky prompt vcetne „Respond only in English" a BEZ bloku ÍSLENSK MÁLFRÆÐI (zmereno
   // 2026-08-17: 3780 vs 4855 znaku). Produkce to nikdy nedelala (`data || null`), lab ano —

@@ -4,15 +4,15 @@
 // main audio player (cap), voice generation.
 // Depends on globals: lang, currentUser, userTier, readerUser,
 //   readerRune, readerTexts, activeChar, corrections, sb,
-//   RUNAR_MODES, READING_ANGLES, FREE_TRIAL_LIMIT, FREE_REGISTERED_LIMIT,
-//   DELAY_TRIAL_END, DELAY_SCROLL, DELAY_ERROR_RESET
-// Depends on functions: t(), callProxy(), buildSysPrompt(),
-//   getCorrPrompt(), stream(),
+//   RUNAR_MODES, READING_ANGLES, READING_ANGLES_IS, DELAY_SCROLL
+// Depends on functions: t(), callProxy(), buildSysPrompt(), stream(),
 //   shouldUseCredit(), canUseVoice(), syncFreeBalance(),
-//   loadJournal(), updateAuthUI(), setSt(), showToast(), incTrialCount(),
-//   getTrialCount(), EL_PROXY
+//   loadJournal(), updateAuthUI(), setSt(), showToast(), EL_PROXY
 // (2026-10-09: checkStaticAudio, elVoiceId, elModel, EL_VOICE_SETTINGS ze seznamu pryč — tenhle soubor je nevolá; hlas a model
 //  volí server, elevenlabs-proxy.)
+// (2026-10-10: pryč i FREE_TRIAL_LIMIT, DELAY_TRIAL_END, incTrialCount, getTrialCount (zkušební počítadlo odstraněno,
+//  runar-app.js u konstant) a FREE_REGISTERED_LIMIT, DELAY_ERROR_RESET, getCorrPrompt — tenhle soubor je nečte; korekce
+//  skládají buildery v runar-character.js. READING_ANGLES(_IS) bydlí v runar-utils.js.)
 // ═══════════════════════════════════════════════════════
 
 // ─── READING CORE ────────────────────────────────────────
@@ -372,9 +372,9 @@ async function _generateReading() {
   _lastDrawn = [readerRune];
   readerTexts[lang] = { short: reading, deep: '' };
 
-  // Count reading — anonymous trial or logged-in free tier
+  // Po čtení obnov panel; přihlášenému i strom, deník a zůstatek. Návštěvník sem nedojde — místo čtení dostane výzvu
+  // k registraci (_showVisitorJoin, return před voláním proxy).
   if (!currentUser) {
-    incTrialCount();
     updateAuthUI();
   } else {
     // Journal is saved SERVER-SIDE by the proxy (right after the credit deduction) so a
@@ -416,8 +416,8 @@ async function _generateReading() {
 // Návštěvník po tahu runy (2026-10-10, DECISIONS 2026-10-10 (1) bod 1 — KUKY „návštěvník po tahu uvidí výzvu k registraci“).
 // Proxy nepřihlášeného odmítá od 2026-08-02 (401) a appka mu do té doby po tahu ukázala „Rúnar odpočívá“. Teď runu vidí v hlavičce
 // (glyf + jméno; ťuknutím na glyf se otevře její význam, runar-rune-popup.js) a místo čtení kartu trial-end s výzvou stát se
-// Rune Seekerem (texty visitor_join_* v _updateTrialTexts). Zkušební počítadlo (getTrialCount) už nic nehradí — návštěvník
-// může tahat kolikrát chce, čtení nedostane nikdy.
+// Rune Seekerem (texty visitor_join_* v _updateTrialTexts). Zkušební počítadlo nic nehradilo a je pryč (2026-10-10, runar-app.js
+// u konstant) — návštěvník může tahat kolikrát chce, čtení nedostane nikdy.
 function _showVisitorJoin() {
   var ld = document.getElementById('reading-loading'); if (ld) ld.style.display = 'none';
   var os = document.getElementById('out-short'); if (os) os.innerHTML = '';
@@ -1383,7 +1383,7 @@ async function _generateSpreadReading(o) {
     // Journal saved SERVER-SIDE by the proxy (right after the deduction). Refresh local views.
     if (_readingMode === 'mine') { recordTreeReading(o.kind, o.runes, readerUser.area, readerUser.intention); loadJournal(); }
     await syncFreeBalance(currentUser.id);
-  } else { incTrialCount(); updateAuthUI(); }
+  } else { updateAuthUI(); }
 
   await stream(o.outId, text);
   _renderSegments(o.outId, _lastSegs);

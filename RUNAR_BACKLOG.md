@@ -2112,7 +2112,13 @@ _randomRegister/_randomPlacement` + jejich pooly (ve `runar-utils.js`, „NEVER 
 (adresa nenasazené `tree-update`, kód pro CODE-tree) · `PATTERN_WINDOW`, `TRANSFORMATION_PAIRS` (čekají na `detectPatterns`).
 **Opraveno (CODE-read):** komentář u mrtvých poolů v `runar-utils.js` posílal do `SEASON_POOLS` jako „produkční obraznosti“ — ty se do
 čtení nedostanou (CLAUDE.md „Obraznost“); teď `RUNE_IMAGES`. Jen komentář.
-- ⚪ **Pro CODE-tune (g):** (1) `runar-app.js` `FREE_TRIAL_LIMIT`, `DELAY_TRIAL_END` — zkušební čtení návštěvníka zrušené (od 2026-08-02,
+- ✅ *(CODE-tune 2026-10-10: (1)–(5) pryč; po cestě i zbytek zkušebního počítadla — `getTrialCount`/`incTrialCount` se jen zapisovaly,
+  `?reset_trial=1` — druhá kopie `t()` v `runar-app.js` (přebíjela stejnou z utils) a zastaralé hlavičky závislostí v reading/auth.
+  (6) `AETTY` ponecháno jako rezervované pro `detectPatterns` (komentář u definice, jako `PATTERN_WINDOW`); CLAUDE.md ho omylem vedl
+  pod configem, opraveno. Smoke ㉼ teď chytá i chybu JS za běhu — bez toho by prošlo vrácené volání smazané funkce při startu appky.)*
+  ⚪ **Zbývá ze (4):** nastavení hlasu (`voice_settings`) stojí dvakrát na serveru — `elevenlabs-proxy` a `elevenlabs-static`. Oprava =
+  přesun do `supabase/functions/_shared/` (vzor `voice_usage.ts`) a nasazení obou funkcí; do té doby se změna hlasu musí udělat na obou.
+- ~~**Pro CODE-tune (g):**~~ (1) `runar-app.js` `FREE_TRIAL_LIMIT`, `DELAY_TRIAL_END` — zkušební čtení návštěvníka zrušené (od 2026-08-02,
   `TIER_LIMITS.free_trial.onboarding` sám říká „historické“); hlavičky `runar-auth.js:6` a `runar-reading.js:7–8` je dál vypisují.
   (2) `_updatePrivacyBannerText`, `dismissPrivacyBanner` (nikdo nevolá) a `_initPrivacyBanner` (volá se, ale je prázdný) — mrtvý řetěz
   starého banneru. (3) `DEF_CHAR` = alias na `DEF_CHAR_EN`, nikdo ho nečte (shrine ho jen zmiňuje v komentáři). (4) `EL_VOICE_SETTINGS`

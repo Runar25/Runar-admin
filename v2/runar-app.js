@@ -39,16 +39,15 @@ let voiceGenerated = {};  // { en: bool, is: bool }
 let pendingLang    = null;
 let corrections    = [];
 
-const FREE_TRIAL_LIMIT      = TIER_LIMITS.free_trial.onboarding;   // 1
+// 2026-10-10: zkušební počítadlo návštěvníka pryč (FREE_TRIAL_LIMIT, DELAY_TRIAL_END, getTrialCount/incTrialCount, ?reset_trial=1).
+// Návštěvník čtení nedostane — proxy ho odmítá od 2026-08-02 a výzva k registraci přichází hned po tahu runy (DECISIONS 2026-10-10 (1));
+// počítadlo se jen zapisovalo, nikdo ho nečetl. Vrátí-li se čtení pro návštěvníka (RUNAR_BACKLOG.md „Kontrola návštěvníka: co zbylo“
+// bod 8), limit patří na server, ne do localStorage, které si každý smaže.
 const FREE_REGISTERED_LIMIT = TIER_LIMITS.rune_seeker.onboarding;  // 1
 
-// Reading angles — randomly injected per reading to force variability
-// Each angle pushes Claude to a different entry point and metaphor source
-// IS reading angles — same 8 entry points, written directly in Icelandic.
 // ─── TIMING CONSTANTS ───────────────────────────────────
 const DELAY_NAME_PROMPT  = 1200; // ms after login before name prompt appears
 const DELAY_RELOAD       = 1200; // ms after sign-out before page reloads
-const DELAY_TRIAL_END    = 8000; // ms after last free reading before join prompt
 const DELAY_TOAST_IN     =  200; // ms before toast slides in
 const DURATION_TOAST     = 4700; // ms toast stays visible
 const DELAY_FOCUS        =  100; // ms before input receives focus
@@ -58,9 +57,6 @@ const DURATION_SAVED     = 2500; // ms "saved" indicator stays visible
 const DELAY_FOUNDING_TO_TREE = 4000; // ms — jak dlouho po zalozeni nechat uzivatele u vykladu,
                                      // nez se prepne do stromu, kde na nej ceka vysledek
 
-
-function getTrialCount() { return parseInt(localStorage.getItem('runar_trial_count') || '0'); }
-function incTrialCount() { localStorage.setItem('runar_trial_count', String(getTrialCount() + 1)); }
 
 async function fetchUserProfile(userId) {
   profileLoaded = false;
@@ -402,10 +398,9 @@ function showCachedReading(l) {
 }
 
 // ─── UI TEXT ─────────────────────────────────────────────
-function t(key) { return (UI_TEXT[lang]?.[key]) || UI_TEXT.en[key] || key; }
-function _updatePrivacyBannerText() {}
-function dismissPrivacyBanner() {}
-function _initPrivacyBanner() {}
+// t() bydlí v runar-utils.js. 2026-10-10 odsud pryč druhá, stejná kopie (app.js se načítá později, takže přebíjela tu z utils — dvě
+// místa téhož, §20) a prázdné _initPrivacyBanner / _updatePrivacyBannerText / dismissPrivacyBanner: prázdné byly od rozdělení
+// HTML (89c8e18), banner soukromí appka nemá.
 
 function displayName() {
   if (userName) return userName;
@@ -1477,13 +1472,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
 // ─── INIT ────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', async () => {
-  // Hidden admin reset: ?reset_trial=1 clears visitor trial counter (dev/testing)
-  if (new URLSearchParams(window.location.search).get('reset_trial') === '1') {
-    localStorage.removeItem('runar_trial_count');
-    history.replaceState({}, document.title, window.location.pathname);
-    showToast('Trial count reset.');
-  }
-
   // Restore language from localStorage (before auth, so UI is correct immediately)
   const savedLang = localStorage.getItem('runar_lang');
   if (savedLang && savedLang !== lang) {
@@ -1564,7 +1552,6 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   updateAuthUI();
   updateUIText();
-  _initPrivacyBanner();
   // Greetings for anonymous visitors (logged-in users get them via fetchUserProfile)
   if (!currentUser) { showTopbarGreeting(); }
 });

@@ -350,6 +350,9 @@ const SEEKS = {
 
 // ─── AETTY — THREE FAMILIES OF THE FUTHARK ─────────────
 // Used for: pattern detection, visual pulse, Gathering triggers
+// Used by: plánovaný detectPatterns() (BACKLOG, The Gathering) — zatím ho nic nečte, stejně jako PATTERN_WINDOW a TRANSFORMATION_PAIRS.
+// 2026-10-10 ponecháno jako rezervované (BACKLOG část 21 bod 6): data ætt jsou kánon, ne kód navíc; smazat je by předjímalo rozhodnutí
+// o Gathering.
 // Blank/Odin has no Aett — outside the Futhark structure
 const AETTY = {
   freya: {

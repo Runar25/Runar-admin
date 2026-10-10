@@ -118,7 +118,6 @@ function t(key) {
   return (UI_TEXT[lang] && UI_TEXT[lang][key]) || UI_TEXT.en[key] || key;
 }
 
-// Legacy DB tier aliases -> canonical (§18: one place for the free/credits mapping)
 function spreadLabel(kind, lang) {
   // Spread cteni ukladaji rune_name = interni kind (KRIZ/NORNS/HORSESHOE/YGGDRASIL).
   // User-facing jmeno zije v spread_mode_* (per lang) -> ukaz ho v jazyce CTENI.
@@ -130,6 +129,8 @@ function spreadLabel(kind, lang) {
   return v || String(kind || '').toUpperCase();
 }
 
+// Legacy DB tier aliases -> canonical (§18: one place for the free/credits mapping)
+// (2026-10-10 přesunuto sem — stálo nad spreadLabel, který se mezi ně později vklínil.)
 function normalizeTier(tier) {
   return (tier === 'free' || tier === 'credits') ? 'rune_seeker' : tier;
 }
