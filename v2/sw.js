@@ -1,8 +1,8 @@
-// Rúnar Service Worker — v614
+// Rúnar Service Worker — v615
 // HTML: network-first (always fresh). JS/CSS/icons: cache-first (fast, offline ok).
 // External (Supabase, ElevenLabs, fonts): pass-through, never intercepted.
 
-const CACHE = 'runar-v614';
+const CACHE = 'runar-v615';
 const JS_SHELL = [
   '/Runar-admin/v2/runar-reader.css',
   '/Runar-admin/v2/runar-utils.js',
@@ -27,6 +27,14 @@ const JS_SHELL = [
   '/Runar-admin/v2/runar-reporter.js',
   '/Runar-admin/v2/runar-rune-popup.js',
   '/Runar-admin/v2/runar-helper.js',
+  // 2026-10-10: písma u nás (dřív fonts.googleapis.com — externí, SW je nechytal); bez precache by offline padala na systémové písmo.
+  '/Runar-admin/v2/fonts/fonts.css',
+  '/Runar-admin/v2/fonts/cinzel-latin-ext.woff2',
+  '/Runar-admin/v2/fonts/cinzel-latin.woff2',
+  '/Runar-admin/v2/fonts/cormorant-garamond-italic-latin-ext.woff2',
+  '/Runar-admin/v2/fonts/cormorant-garamond-italic-latin.woff2',
+  '/Runar-admin/v2/fonts/cormorant-garamond-latin-ext.woff2',
+  '/Runar-admin/v2/fonts/cormorant-garamond-latin.woff2',
   '/Runar-admin/v2/manifest.json',
   '/Runar-admin/v2/icons/apple-touch-icon.png',
   '/Runar-admin/v2/icons/web-app-manifest-192x192.png',

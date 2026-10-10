@@ -9685,3 +9685,18 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   Start over (fotka i formulář zpět); smoke ㉼ hlídá i tah návštěvníka (11 stavů).
 - **Neplatí:** (18) „návštěvník rovnou k tahu runy (bez formuláře)“.
 - Affected doc(s): `RUNAR_BACKLOG.md` („Kontrola návštěvníka“ bod 5) — v témže commitu.
+
+## 2026-10-10 (32) — Písma hostujeme u nás; zálohy na Google Drive do zásad (teď), s Hetznerem jen v EHP
+
+- **Kdo / proč:** KUKY na otázky CODE-read (kontrola architektury část 33 — slib „data zůstávají v EHP“): *„2. ano, hostuj u nás.
+  3. teď a, s hetznerem b. tohle se bude měnit, až předplatíme buď supabase, nebo hetzner.“*
+- **(a) Písma:** Cinzel + Cormorant Garamond (licence OFL 1.1, texty `v2/fonts/OFL-*.txt`) leží v `v2/fonts/` (sady latin + latin-ext —
+  EN/IS, þ ð æ ö jsou v latin), `v2/fonts/fonts.css` je čte; reader, nápověda, soukromí i shrine odkazují na něj místo
+  `fonts.googleapis.com`, `sw.js` je má v precache. Do té doby prohlížeč každého návštěvníka posílal Googlu svou IP a zásady Google
+  nejmenovaly (LG München I, 2022-01-20). **Ověřeno v prohlížeči:** 0 požadavků na Google ve všech 4 stránkách, načtené 4 řezy, islandské
+  znaky pokryté. **Provedl:** CODE-read.
+- **(b) Zálohy:** šifrovaná denní záloha DB na Google Drive (DECISIONS 2026-10-10 (9)) jde **teď do zásad** jako zpracovatel a věta
+  „What we store stays in the EEA“ se upraví (text EN + IS píše CODE-tune). **S přechodem na Hetzner** zálohy jen v EHP (Storage Box,
+  Německo) a kopie na Drive se vypne. Mezera vznikla rozhodnutím (9), které zásady neřešilo.
+- **Platí, dokud se nepředplatí Supabase Pro nebo Hetzner** — pak se zálohy i jejich místo přehodnotí (owner).
+- Affected doc(s): `RUNAR_BACKLOG.md` část 33 (odškrtnuto v témže commitu); `RUNAR_PRIVACY.md` + `v2/runar-privacy.html` (b) → CODE-tune.

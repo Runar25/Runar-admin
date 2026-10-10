@@ -2227,11 +2227,11 @@ Ověřeno: poddotaz dá 564 = 564 (nikdo odhlášený) a při předstíraném od
 ### Část 33 — slib „data zůstávají v EHP“ × kam data opravdu tečou (2026-10-10)
 **Platí:** Supabase projekt je v `eu-west-1` (Irsko) — sedí se stránkou soukromí i nápovědou. Čtení do USA (OpenAI, záloha Anthropic) a hlas
 (ElevenLabs) stránka uvádí.
-- 🟡 **PRO OWNERA (a) — písma Google:** reader, nápověda, soukromí i shrine načítají Cinzel a Cormorant Garamond z `fonts.googleapis.com`
+- ✅ *(KUKY 2026-10-10 „hostuj u nás“ → hotovo CODE-read, DECISIONS 2026-10-10 (32); ověřeno v prohlížeči: 0 požadavků na Google)* **(a) — písma Google:** reader, nápověda, soukromí i shrine načítají Cinzel a Cormorant Garamond z `fonts.googleapis.com`
   → prohlížeč KAŽDÉHO návštěvníka pošle Googlu svou IP; stránka soukromí Google nejmenuje. Německý soud (LG München I, 2022-01-20)
   tohle uznal za porušení GDPR. Písma jsou pod licencí OFL → dají se hostovat u nás (`v2/fonts/` + `@font-face`, + do precache `sw.js`).
   Doporučení CODE-read: hostovat u sebe (CODE-tune), stáhnout soubory písem = s ownerovým ano.
-- 🟡 **PRO OWNERA (b) — záloha DB na Google Drive** (zavedená 2026-10-10, DECISIONS (9), CODE-read): stránka slibuje „What we store stays
+- ✅ *(KUKY 2026-10-10 „teď a, s Hetznerem b“, DECISIONS (32); text do zásad EN + IS → CODE-tune)* **(b) — záloha DB na Google Drive** (zavedená 2026-10-10, DECISIONS (9), CODE-read): stránka slibuje „What we store stays
   in the EEA“ a Google mezi zpracovateli není; Google Drive umístění v EHP nezaručuje. Archiv je šifrovaný (AES-256, heslo jen u nás) —
   jestli to z pohledu GDPR přenos osobních údajů je, CODE nerozhodne (§23). Možnosti: (1) doplnit do zásad „šifrované zálohy na Google
   Drive“ · (2) zálohy jen v EHP — při přesunu na Hetzner Storage Box (Německo) a Drive kopii vypnout. Doporučení: teď (1), s Hetznerem (2).
