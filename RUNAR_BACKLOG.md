@@ -470,12 +470,13 @@
   povýšená podle výšky odbočky); kořen × (1 + 1/3 × s), s = jak moc míří do strany pod povrchem. Změřeno na jeho stromě: Kenaz 22 % ×1,33 …
   Dagaz 98 % ×1,00; kmen trochu povyroste (drží poměr k rozpětí, `hwRatio`); smoke ㉳ projde. Čeká na ownerův pohled.
   KUKY 2026-10-10: *„nejsem si jistý, že tak jak to máme teď udělané je správně“* — místo odpovědi pokus „patra 4 / 3 / 2“ (níž).
-- [ ] ⭐ **Strom (lab): pokus „2 × (4+4+3) + 3 vrchol“ + kořeny jako kopie koruny — nanečisto** (CODE-tree, 2026-10-10). KUKY nejdřív *„spodní
-  větev bude mít až 4 vedlejší větve, nad ní až 3, nad ní až 2 … jde mi teď o vizuální“* (pokus v párech, patch `…_patra.patch`), pak *„změň na
-  4+4+3+3“* → *„2x(4+4+3)+3 vrchol“*; kořeny *„má to být skoro kopie koruny, jen nepůjde tak hluboko! šířka bude stejná jako koruna“*. Patch
-  `docs/archive/tree/2026-10-10_nanecisto_ramena.patch`: 6 ramen střídavě vlevo a vpravo (26–76 % kmene), na straně rameno + 3, + 3, + 2, vrchol
-  + 2; délky ×1,33 → ×1,0; kořeny = každý tah koruny zrcadlený pod zem (šířka = koruna, hloubka × 0,5). Kmen užší (7 pramenů místo 17); živel
-  a zóna o místě nerozhodují (DECISIONS 2026-10-10 (17), (21)). Čeká na ownerův pohled.
+- [ ] ⭐ **Strom (lab): pokus „2 × (4+4+3) + 3 vrchol“, kořeny původní a jen natočené — nanečisto** (CODE-tree, 2026-10-10). KUKY nejdřív *„spodní
+  větev bude mít až 4 vedlejší větve, nad ní až 3, nad ní až 2 … jde mi teď o vizuální“* (pokus v párech, `…_patra.patch`), pak *„2x(4+4+3)+3
+  vrchol“*; kořeny *„normálně je rozprostři, žádná mezera kolem prostřední … nepůjde tak hluboko … šířka bude stejná jako koruna“* a hned *„nemáš
+  měnit, jak se dělají kořeny … máš jen měnit směr“* (kopie koruny ✖, `…_ramena.patch` jen historie). Patch
+  `docs/archive/tree/2026-10-10_nanecisto_ramena_koreny.patch`: 6 ramen střídavě vlevo a vpravo (26–76 % kmene), na straně rameno + 3, + 3, + 2,
+  vrchol + 2; délky ×1,33 → ×1,0; kořeny původní, směr vůdčí dolů a na straně 52° / 34° / 17°. Kořeny 71 % šířky koruny (dnes 63 %). **Otevřené:**
+  plná šířka koruny jen s delšími kořeny (změna kořene) — čeká na ownera. DECISIONS 2026-10-10 (17), (21), (23).
 - [x] ✖ **Strom: obrys stromu života (dóm) — ZAMÍTNUTO** (KUKY 2026-10-10: *„chybí tomu úplně všechno. je to zrůda! … takže ne. není to dobré
   a žádná oprava tvého návrhu to nezlepší“*). Nevracet konce větví na kruh ani vějíř podle výšky. Původně (CODE-tree, 2026-10-10). KUKY s pěti obrázky stromu života: *„spodní větve
   jako nejstarší, největší a nejdelší. koruna více zarovnaná do půloblouku, u kořenů to samé. to naše vypadá jako strom, ale my neděláme

@@ -9573,3 +9573,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   je nemá → € sloupec v nápovědě pryč, dokud owner € ceny neurčí (nedomýšlet, §23).
 - **Affected doc(s):** `RUNAR_PRICING.md` (tabulka balíčků) — v témže commitu; `v2/runar-help.html` (tabulka) → CODE-tune
   (`RUNAR_BACKLOG.md` část 17).
+
+## 2026-10-10 (23) — Strom: kořeny se nepředělávají — každý pramen má svůj kořen s vlastním designem, mění se jen směr; „kopie koruny“ ✖ (opravuje (21))
+
+- **Rozhodl:** KUKY 2026-10-10 ke kořenům jako kopii koruny z (21): *„ty nemáš měnit, jak se dělají kořeny, podělal jsi to. vrať to zpět. kořeny mají
+  svůj design … změnil jsi to bez ohledu na to, že máš jen měnit směr kořenů, ne to, jak jsou dělány. každý pramen má svůj kořen a s tím kořenem se dá
+  pohnout, ale nepředělává se. kroutí se, ohýbá se.“* **Provedl:** CODE-tree, nanečisto.
+- **Platí:** kořen = vlastní kořen pramene (`buildRootFor`: runa pramene, jeho větvičky, zrcadlené odbočky F10, tloušťka). Smí se natočit; kroutí
+  se a ohýbá podle své stavby. Délka, ohyb, vlnění, tloušťka ani počet se v pokusech nemění. Rozložení kořenů má zrcadlit korunu (rozprostřené,
+  bez mezery kolem prostředního, mělčí) — jen směrem.
+- ✖ **Nevracet:** (21) „každý tah koruny zrcadlený pod zem“ — nahradil stavbu kořenů (patch `…_ramena.patch` jen jako historie); (17) pokus se
+  stlačením do hloubky, přidanými vedlejšími kořeny, narovnaným kůlovým kořenem a menším ohybem — taky změna stavby.
+- **Pokus teď** (patch `docs/archive/tree/2026-10-10_nanecisto_ramena_koreny.patch`): koruna jako v (21), 2 × (4+4+3) + 3; kořeny původní, jen směr —
+  vůdčí dolů, na každé straně kořen nejnižšího ramene 52°, dalšího 34°, nejvyššího 17° od svislice. Změřeno na jeho stromě: kořeny 71 % šířky koruny
+  (dnes 63 %), hloubka 39 % výšky koruny (dnes 39 %), kořínků nad zemí 3 z 64 (dnes 1 ze 125); kořenů je 7 (prameny), dnes 17. Se směrem 60°
+  stejná šířka a 5 kořínků nad zemí. Na plnou šířku koruny by musely být kořeny delší — to už je změna kořene, čeká na ownera.
+- Affected doc(s): `RUNAR_TREE.md` §2 (kořeny), `RUNAR_BACKLOG.md` (položka pokusu) — v témže commitu.
