@@ -104,6 +104,16 @@ function updateAuthLabel() {
   }
 }
 
+// „+“ u počítadla Rune Seekera (2026-10-10, hlášení bc1ab90e) — vysvětlení se rozbalí a sbalí. Stav přežije překreslení banneru
+// (updateBanners mění jen text, ne viditelnost). Znak a otočení = .tree-toggle-arrow, jako u založení stromu.
+function toggleFreeNote() {
+  var tx = document.getElementById('free-user-text'), ar = document.getElementById('free-user-arrow');
+  if (!tx) return;
+  var otevrit = tx.style.display === 'none';
+  tx.style.display = otevrit ? '' : 'none';
+  if (ar) ar.classList.toggle('open', otevrit);
+}
+
 // ── updateBanners — trial / free / credits banners + gates ───────────────────
 function updateBanners() {
   const banner      = document.getElementById('trial-banner');
@@ -131,14 +141,16 @@ function updateBanners() {
     // ── Rune Seeker — FREE_REGISTERED_LIMIT free reading(s) + paid credits ──
     creditsBanner.style.display = 'none';
     const remaining = Math.max(0, userFreeBalance);
-    const isIs      = lang === 'is';
+    // 2026-10-10 (KUKY, hlášení bc1ab90e + e9b05776: „Rámeček být nemusí. Nechal bych jen počet rune reading a text vložíme do plus“):
+    // počítadlo ukazuje, kolik čtení zbývá CELKEM (volné + kredity), jako menu pod jménem; vysvětlení je za „+“ (toggleFreeNote).
+    const celkemTxt = tp('rs_credits_counter', { units: vn('unit', remaining + Math.max(0, userCredits), lang) });
 
     if (remaining > 0) {
       // Má volné měsíční sloty
       freeBanner.style.display = 'block';
       const cntEl = document.getElementById('free-user-count');
       if (cntEl) {
-        cntEl.textContent = tp('rs_banner_counter', { casts: vn('cast', remaining, lang) });
+        cntEl.textContent = celkemTxt;
         cntEl.className = 'tn-counter' + (remaining === 1 ? ' warn' : '');
       }
       const txtEl = document.getElementById('free-user-text');
@@ -156,7 +168,7 @@ function updateBanners() {
       freeBanner.style.display = 'block';
       const cntEl = document.getElementById('free-user-count');
       if (cntEl) {
-        cntEl.textContent = tp('rs_credits_counter', { units: vn('unit', userCredits, lang) });
+        cntEl.textContent = celkemTxt;
         cntEl.className = 'tn-counter';
       }
       const txtEl = document.getElementById('free-user-text');
@@ -173,7 +185,7 @@ function updateBanners() {
       content.style.display     = 'block';
       const cntEl = document.getElementById('free-user-count');
       if (cntEl) {
-        cntEl.textContent = tp('rs_banner_counter', { casts: vn('cast', 0, lang) });
+        cntEl.textContent = celkemTxt;
         cntEl.className = 'tn-counter warn';
       }
       const txtEl = document.getElementById('free-user-text');
@@ -231,6 +243,10 @@ function updateAuthUI() {
   updateBanners();
   if (typeof _paintOpusToggle === 'function') _paintOpusToggle(); // Opus 5 jen pro admina (od 2026-10-09; do té doby přepínač solu)
   if (typeof _paintImgPin === 'function') _paintImgPin();         // volba obrazu jen pro admina (2026-10-06)
+  // 2026-10-10 (KUKY, hlášení eae3bf84: „Rune Seeker neměl pod svým jménem e-mail. Menu nejsou napříč uživateli stejná“): menu pod
+  // jménem (úroveň, e-mail, počet čtení) se plní tady, při KAŽDÉ změně přihlášení. Do té doby jen při uložení jména a překreslení
+  // bočního panelu — kdo se přihlásil a nic dalšího neudělal, měl v menu prázdný e-mail.
+  if (typeof updateDropdown === 'function') updateDropdown();
 }
 
 // ── SPECIFIC QUESTION GATE ────────────────────────────────

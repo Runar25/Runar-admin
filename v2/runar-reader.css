@@ -229,7 +229,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 @media(max-width:768px){
   .hero-text-col .hero-quote{display:none;}
   .hero-quote.hero-quote-m{
-    display:block;position:absolute;top:8vw;right:4vw;width:42vw;max-width:none;z-index:5;
+    /* right 4vw → 6vw (2026-10-10, KUKY hlášení 588187cc: „Je příliš blízko okraje hrany mobilu… Jak se to měří?“): měří se
+       v procentech šířky obrazovky — 4vw = 15 px na telefonu široký 375 px, 6vw = 22 px, stejně jako text pod Rúnarem (#ui-sub). */
+    display:block;position:absolute;top:8vw;right:6vw;width:42vw;max-width:none;z-index:5;
     margin:0;padding:0;border:0;text-align:right;
     font-size:clamp(12px,3.3vw,17px);line-height:1.5;color:rgba(242,245,247,0.78);
     text-shadow:0 1px 10px rgba(0,0,0,0.95),0 0 24px rgba(0,0,0,0.85);text-wrap:balance;
@@ -480,6 +482,13 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .tn-counter.exhausted{color:#e07070!important;}
 .tn-text{font-size:0.95em;font-style:italic;color:var(--muted);line-height:1.85;margin-bottom:18px;}
 .tn-text strong,.tn-text b{color:var(--gold);font-style:normal;font-weight:400;}
+/* 2026-10-10 (KUKY, hlášení bc1ab90e: „Rámeček pro tenhle text být nemusí… Celý rámeček a text zabírá moc místa“): Rune Seeker
+   vidí jen počet čtení na jedné řádce, vysvětlení se rozbalí přes „+“ — týž znak a otočení jako .tree-toggle-arrow. */
+.tier-notice.tn-compact{background:none;border:0;padding:0;margin:0 0 18px;}
+.tn-compact .tn-row{display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.tn-compact .tn-counter{margin-bottom:0;}
+.tn-compact .tree-toggle-arrow{margin-left:0;}
+.tn-compact .tn-text{margin:12px 0 0;}
 .tn-btn{font-size:0.58em;padding:10px 24px;}
 .tier-notice.curious .tn-btn{border-color:rgba(255,191,0,0.35);}
 

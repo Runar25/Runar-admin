@@ -9244,3 +9244,26 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   (bez API) a přečíst nahlas — rozhodnutí je jeho.
 - Odvolává se na: 2026-09-25 (svět runy z hlavičky pryč, živly tehdy zůstaly).
 - Affected doc(s): `RUNAR_BACKLOG.md` (Životní runa: element „Shadow“ splývá s významy) — v témže commitu.
+
+## 2026-10-10 (3) — UI z hlášení: počet čtení jedním číslem bez rámečku, menu pod jménem vždy plné, hlášení bez formuláře
+
+- **Rozhodl:** KUKY 2026-10-10, hlášení 26cac032, 588187cc, bc1ab90e, e9b05776, eae3bf84, 6998c9be. **Provedl:** CODE-tune.
+- **Co a proč:**
+  - **Počet čtení** (bc1ab90e: *„Rámeček pro tenhle text být nemusí. Nechal bych jen počet rune reading a text vložíme do plus“*;
+    e9b05776: *„Pokud je free reading pryč, tak je pryč a není potřeba ho uvádět… 9 rune readings remain“*): nad formulářem i v menu pod
+    jménem jedno číslo — kolik čtení zbývá CELKEM (volné + kredity), z `rs_credits_counter` + VOCAB. Bez rámečku, vysvětlení za „+“
+    (týž znak jako `.tree-toggle-arrow`). Menu do té doby natvrdo *„0 free readings remaining · 9 credits“*.
+  - **Menu pod jménem** (eae3bf84: *„Rune Seeker neměl pod svým jménem e-mail. Menu nejsou napříč uživateli stejná“*): plní se při každé
+    změně přihlášení (`updateAuthUI` → `updateDropdown`). Do té doby jen při uložení jména a překreslení bočního panelu — po pouhém
+    přihlášení zůstal e-mail prázdný.
+  - **Pozdrav v liště** (26cac032): bez jména — jméno stojí hned vedle.
+  - **Citát na mobilu** (588187cc: *„příliš blízko okraje… Jak se to měří?“*): 6 % šířky obrazovky od kraje místo 4 % (22 px místo 15 px
+    na telefonu širokém 375 px — stejně jako text pod Rúnarem).
+  - **Hlášení** (6998c9be: *„Ani jako admin nepotřebuji vidět každou položku, co je v menu… Jen čtení, Asky, text k vyšetřování“*):
+    záložka čtení posílá i adminovi jen čtení (+ ✦) a Ask (složení čtení dál jen admin); formulář a menu se nezachytávají vůbec —
+    bez čtení zůstane text prázdný, místo nese `ctx`. Ostatní záložky beze změny. Mění rozhodnutí 2026-10-09 (hlášení 83f2d16c), kde
+    obrazovka bez čtení zůstávala celá.
+- **Ověřeno v prohlížeči (mobil 375 px):** tři stavy Rune Seekera (1 volné · 9 kreditů · 0) — počítadlo, „+“ se rozbalí, sbalí a stav
+  přežije překreslení; e-mail v menu po přihlášení; pozdrav EN i IS; citát 23 px od kraje; hlášení admina bez čtení = prázdný text,
+  se čtením = jen čtení.
+- Affected doc(s): žádný jiný doc tohle nevlastní (chování popisuje kód a tenhle záznam).

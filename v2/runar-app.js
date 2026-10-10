@@ -377,12 +377,14 @@ function showTopbarGreeting() {
   const el = document.getElementById('topbar-greeting');
   if (!el) return;
   let msg = '';
+  // 2026-10-10 (KUKY, hlášení 26cac032: „Hláška good to see you again může být asi beze jména… v horní liště, kde se objevuje,
+  // je i jméno uživatele stále viditelné“): pozdrav bez jména — jméno stojí hned vedle (auth-user-label). Do té doby {name}
+  // (u návštěvníka jméno tieru „Visitor“).
   if (!currentUser) {
-    msg = tp('greet_hello', { name: tierLabel('free_trial', lang) });   // 2026-10-06: z UI_TEXT; jméno Visitor/Gestur z TIERS
+    msg = t('greet_hello');
   } else {
-    const n = displayName();
     const returning = userTier === 'rune_seeker' || userTier === 'standard' || userTier === 'premium';
-    msg = tp(returning ? 'greet_again' : 'greet_hello', { name: n });
+    msg = t(returning ? 'greet_again' : 'greet_hello');
   }
   el.textContent = msg;
   setTimeout(() => el.classList.add('show'), DELAY_TOAST_IN);
@@ -1356,13 +1358,11 @@ function updateDropdown() {
   if (emailEl) emailEl.textContent = currentUser.email;
   if (balEl) {
     if (normalizeTier(userTier) === 'rune_seeker') {
-      const rem  = Math.max(0, userFreeBalance);
-      const credPart = userCredits > 0
-        ? (isIs ? ' · ' + userCredits + ' lestur' : ' · ' + userCredits + ' credit' + (userCredits !== 1 ? 's' : ''))
-        : '';
-      balEl.textContent = isIs
-        ? rem + ' frjáls lestur eftir' + credPart
-        : rem + ' free reading' + (rem !== 1 ? 's' : '') + ' remaining' + credPart;
+      // 2026-10-10 (KUKY, hlášení e9b05776: „Pokud je free reading pryč, tak je pryč a není potřeba ho uvádět… 9 rune readings
+      // remain“): jedno číslo — kolik čtení zbývá celkem (volné + kredity), stejně jako počítadlo nad formulářem (updateBanners).
+      // Texty z UI_TEXT + VOCAB (§10, §15); do té doby natvrdo „0 free readings remaining · 9 credits“ / „frjáls lestur“.
+      const celkem = Math.max(0, userFreeBalance) + Math.max(0, userCredits);
+      balEl.textContent = tp('rs_credits_counter', { units: vn('unit', celkem, lang) });
       balEl.style.display = '';
     } else {
       balEl.style.display = 'none';

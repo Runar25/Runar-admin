@@ -305,8 +305,8 @@ const UI_TEXT = {
     hero_quote:         '"The runes do not predict your fate.<br>They remind you of the path<br>you already walk."',
     hero_down_aria:     'Scroll down to the reading',   // 2026-10-09: proužek pod hero (#hero-down), jen pro čtečku obrazovky
     hero_up_aria:       'Back up to Rúnar',             // 2026-10-09: týž proužek u horní lišty (šipka nahoru)
-    greet_hello:        'Good to see you, {name}.',
-    greet_again:        'Good to see you again, {name}.',
+    greet_hello:        'Good to see you.',   // 2026-10-10: bez jména (hlášení 26cac032) — jméno stojí vedle v liště
+    greet_again:        'Good to see you again.',
     tester_suffix:        '(tester)',
     tier_soon:            '— coming soon',   // 2026-09-26: z runar-app.js (§10), poznámka u tieru v panelu účtu
     tester_reset_btn:     'RESET TREE (TESTER)',
@@ -785,8 +785,8 @@ const UI_TEXT = {
     hero_quote:         '"Rúnirnar spá ekki fyrir um örlög þín.<br>Þær minna þig á veginn<br>sem þú gengur nú þegar."',
     hero_down_aria:     'Niður að lestrinum',   // 2026-10-09: „niður að“ + þgf. (korpus „niður að“ 26 390, „að lestrinum“ 127); jen pro čtečku
     hero_up_aria:       'Aftur upp til Rúnars', // 2026-10-09: korpus „aftur upp“ 20 637, „til Rúnars“ 155 (til + ef.)
-    greet_hello:        'Það er gaman að sjá þig, {name}.',
-    greet_again:        'Það er gaman að sjá þig aftur, {name}.',
+    greet_hello:        'Það er gaman að sjá þig.',
+    greet_again:        'Það er gaman að sjá þig aftur.',
     tree_reveal_btn:    'OPINBERA L\u00cdFSR\u00daNUNA',
     tester_suffix:        '(pr\u00f3fari)',
     tier_soon:            '\u2014 br\u00e1\u00f0lega',

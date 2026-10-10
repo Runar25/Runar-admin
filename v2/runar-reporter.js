@@ -57,12 +57,18 @@
       // 2026-10-09 (KUKY, hlášení 83f2d16c: „Tester bude mít v reportu jen text čtení a Ask. Neuvidí technické věci“): ne-admin
       // na záložce čtení posílá jen čtení (+ ✦) a Ask (připojí se níž), ne celou obrazovku s formulářem a tlačítky. Bez čtení na
       // obrazovce (hlášení vzhledu) zůstává celá obrazovka. Admin beze změny (obrazovka + složení čtení).
-      var cteniT = (!_jeAdmin() && tab === 'reading' && typeof readerTexts !== 'undefined' && typeof lang !== 'undefined'
+      // 2026-10-10 (KUKY, hlášení 6998c9be: „Ani jako admin nepotřebuji vidět každou položku, co je v menu, když otevřu report. Jen
+      // čtení, Asky, text, který je k vyšetřování“): čtení (+ ✦) a Ask platí i pro admina (složení čtení mu zůstává níž) a formulář
+      // s menu ze záložky čtení se nezachytává vůbec — bez čtení na obrazovce zůstane text prázdný, místo hlášení nese ctx (#id).
+      // Ostatní záložky (deník, kolekce, strom) beze změny.
+      var cteniT = (tab === 'reading' && typeof readerTexts !== 'undefined' && typeof lang !== 'undefined'
         && readerTexts[lang] && readerTexts[lang].short) || '';
       if (cteniT) {
         var thEl = document.getElementById('reading-thought');
         var thT = (thEl && thEl.style.display !== 'none') ? (thEl.textContent || '').trim() : '';
         cap.text = cteniT.trim() + (thT ? '\n' + thT : '');
+      } else if (tab === 'reading') {
+        cap.text = '';
       } else {
         cap.text = (pane ? (pane.innerText || '') : '').trim();
       }

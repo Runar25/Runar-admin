@@ -226,10 +226,14 @@
     <button class="tn-btn btn-upgrade" onclick="openAuthModal()" id="tn-visitor-btn"></button>
   </div>
 
-  <!-- THE CURIOUS NOTICE -->
-  <div class="tier-notice curious" id="free-user-banner" style="display:none;">
-    <div class="tn-counter" id="free-user-count"></div>
-    <p class="tn-text" id="free-user-text"></p>
+  <!-- THE CURIOUS NOTICE — 2026-10-10 (KUKY, hlášení bc1ab90e: „Rámeček pro tenhle text být nemusí. Nechal bych jen počet rune
+       reading a text vložíme do plus vedle remaining“): bez rámečku, jedna řádka s počtem, vysvětlení za „+“ (toggleFreeNote). -->
+  <div class="tier-notice curious tn-compact" id="free-user-banner" style="display:none;">
+    <div class="tn-row" onclick="toggleFreeNote()">
+      <span class="tn-counter" id="free-user-count"></span>
+      <span class="tree-toggle-arrow" id="free-user-arrow">+</span>
+    </div>
+    <p class="tn-text" id="free-user-text" style="display:none;"></p>
     <button class="btn-full sec" onclick="toggleRedeem()" id="tn-curious-btn" style="margin-top:18px;"></button>
   </div>
 
