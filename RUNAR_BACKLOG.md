@@ -2299,6 +2299,14 @@ psala ostatním. `hooks/pre-push.py` pouští `smoke.py` přímo nad pracovním 
   ty dál nad skutečným stromem · cena = checkout (repo s `docs/eval` ~1 000 souborů, odhad pár sekund) · ㉼ (prohlížeč) ověřit, že běží
   i z dočasné cesty. **Bez toho** zůstává dnešní stav: kdo má rozdělané, zablokuje ostatní, a jediný obchvat je `--no-verify`.
 
+### Část 38 — přihlašování a registrace (veřejné `/auth/v1/settings`, 2026-10-10, jen čtení)
+**Platí:** zapnuté jen Google a e-mail (kód), telefon/SMS ne · e-mail se potvrzuje (`mailer_autoconfirm: false`) · registrace otevřená
+(`disable_signup: false`) — záměr, návštěvník dostává výzvu „joining is free“.
+- ⚪ **Před veřejným spuštěním (nic teď, jen ať se na to nezapomene):** otevřená registrace + per-účet dárky (volné čtení, 5 hlasů/měsíc)
+  = zakládání účtů zdarma dává čtení i hlas. Hlas na libovolný text je známý (#2b „Proxy Fáze 2“), levnější placení přes `spread_cost`
+  taky (#4). Navíc zvážit **CAPTCHA při registraci** (Supabase umí Cloudflare Turnstile / hCaptcha přímo v Auth — přepínač + klíč, v appce
+  jeden token u přihlášení). Útratu dnes drží stropy u poskytovatelů (část 15) a rate limity.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
