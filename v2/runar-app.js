@@ -1484,11 +1484,11 @@ window.addEventListener('DOMContentLoaded', async () => {
   // 2026-10-09: návrat z Google s chybou (hook uzavřeného testu) → vysvětlit v modalu, ne mlčet (runar-auth.js)
   if (typeof _authRedirectError === 'function') _authRedirectError();
 
-  // Magic link callback
+  // Návrat z přihlášení přes Google (?code=, PKCE). Do 2026-10-10 tu stálo „Magic link callback“ a natvrdo anglické „SIGNING IN…“.
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.has('code')) {
     const btn = document.getElementById('auth-action-btn');
-    if (btn) { btn.textContent = 'SIGNING IN…'; btn.disabled = true; }
+    if (btn) { btn.textContent = t('auth_signing_in'); btn.disabled = true; }
   }
 
   // Auth state — getSession() restores session from localStorage on refresh

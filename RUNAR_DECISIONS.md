@@ -9418,3 +9418,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   „nýjan kóða“ 15, „má biðja um“ 76, „eftir mínútu“ 189). Ostatní 429 dál „moc pokusů“.
 - **Ověřeno:** v náhledu čtyři tvary chyby × dva jazyky — minuta, hodinový limit, chyba odeslání, adresa mimo seznam — každá dostane svou hlášku.
 - Odvolává se na: 2026-10-10 (11).
+
+## 2026-10-10 (14) — Po přechodu na kód: shrine jen přes Google, nápověda a texty bez „magic link“
+
+- **Proč:** nález CODE-read (kontrola architektury): šablona e-mailu posílá jen kód, shrine ale čekal na odkaz a pole na kód neměl →
+  přihlášení e-mailem do shrine nefungovalo; nápověda a výchozí text v appce slibovaly odkaz. **Provedl:** CODE-tune.
+- **Co:** (1) shrine: e-mail pryč, zůstává Google — oba admini ho mají (auth.identities: kuk… email+google, inf… google); druhý
+  přihlašovací dialog (`#auth-modal`, `sendMagicLink`) nic neotevíralo, smazán. (2) nápověda EN/IS: kód místo odkazu; pryč i nepravdivé
+  „e-mail je jediné, co uchováváme / čtení vidíte jen vy“ (uchováváme i čtení a údaje z formuláře — zásady soukromí, okno souhlasu).
+  (3) reader: výchozí podtitulek přihlášení = UI_TEXT; tlačítko při návratu z Google přes UI_TEXT (IS „AUGNABLIK…“, do té doby natvrdo
+  „SIGNING IN…“). (4) IS „Ekkert lykilorð þarf“ (korpus 0×) → „Það þarf ekkert lykilorð“ („það þarf ekkert“ 4383×). (5) `weekly_drip`
+  z TIER_LIMITS pryč — mrtvé od modelu B (2026-06-12), nic ho nečetlo.
+- **Hranice:** admin bez účtu Google se do shrine nedostane — dnes žádný není; kdyby přibyl, pole na kód jako v readeru.
+- **Zbývá (BACKLOG, kontrola architektury část 1 bod 3):** boční panel návštěvníka slibuje čtení zdarma bez účtu — nové znění čeká na ownera.
+- Odvolává se na: 2026-10-10 (11).

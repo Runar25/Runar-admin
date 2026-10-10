@@ -1842,6 +1842,10 @@ Nasazená funkce se od repa liší jen těmito komentáři a mrtvou funkcí — 
    (`readRune` → `_generateReading` → `callProxy` bez přihlášení) a 401 přeloží na `err_generic`. Známé jako „client visitor gate →
    registruj se místo volání proxy“ (sekce C, „Proxy defense-in-depth“), dosud neudělané. `CLAUDE.md` („Gating“) psal „Visitor má
    Single 1×“ — opraveno na stav produkce (§20: vyhrává produkce). Rozhodnout: co má návštěvník po tahu vidět (výzva k registraci?).
+   ⚠️ **Zbytek (CODE-tune 2026-10-10, §22):** boční panel návštěvníka (`TIER_LIMITS.free_trial.panel_props`, runar-config.js) pořád
+   slibuje *„Your first reading is a gift. · No account, no payment.“* / *„Fyrsti lesturinn er gjöf. · Enginn reikningur, engin
+   greiðsla.“* — od 2026-10-10 neplatí (bez účtu žádné čtení). Navíc IS *„þegar þú ert tilbúinn“* má mužský rod, appka přitom oslovuje
+   podle zvoleného rodu. Nové znění je obsah → **čeká na ownera / Cowork**; CODE pak přepíše a ověří IS.
 
 ### Část 2 — ostatní edge funkce (přečteno celé 2026-10-09; nasazený seznam a verze `supabase functions list`)
 **Platí:** všechny vyžadují přihlášení; admin-only funkce (`elevenlabs-static`, `voice-usage`, `list-readings`, `list-reports`) ověřují
@@ -2018,6 +2022,9 @@ z léta, „SW v109“, formát bez ✦) a jednorázová předávka `DOCSYNC_HAN
 Google funguje), nápověda slibuje odkaz (EN 2×, IS 1×), výchozí text okna v `runar-reader.html`; mrtvé pole `weekly_drip` v `TIER_LIMITS`.
 **Bez nálezu:** odkazy v `memory/` (zástupná jména, gitignorované sloty, historie stromu); `docs/findings/` jsou datované záznamy běhů.
 Nepřezkoumáno: `docs/TREE_BRIEF_CODE_2026-07-04.md` a `RUNAR_TREE_RENDER.md` (strom = CODE-tree).
+**Mechanismus (§30), aby to nehlídala pozornost:** nová smoke ㉺ `scripts/verify_code_doc_refs.js` — komentář v kódu nesmí odkazovat
+na `*.md`, který v repu není (⑯ hlídá jen dokumenty). Záměrné zmínky nesou `doc-links:ok <datum> <důvod>`. Cestou opraveno `CLAUDE.md` §16:
+„RUNAR_DOC_SYNC.md je v docs/archive/“ — není, archiv má jen `RUNAR_DOC_SYNC_CODE.md`.
 
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí

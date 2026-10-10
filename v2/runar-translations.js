@@ -57,6 +57,7 @@ const UI_TEXT = {
     auth_email_need:      'Please enter your email.',
     auth_sending:         'Sending…',
     auth_checking:        'Checking the code…',
+    auth_signing_in:      'SIGNING IN…',   // 2026-10-10: tlačítko při návratu z Google, do té doby natvrdo v runar-app.js
     auth_rate:            'Too many attempts — wait a little, or use Google above.',
     auth_code_wait:       'Your code is on its way. You can ask for a new one after a minute.',   // 2026-10-10: druhý kód do minuty
     auth_failed:          'Sign-in did not work: {msg}',
@@ -555,11 +556,11 @@ const UI_TEXT = {
     reading_mode_someone: 'FYRIR AÐRA',
     sign_out:             'SKRÁ ÚT',
     auth_or:              'eða',
-    auth_modal_sub_google: 'Ekkert lykilorð þarf — haltu áfram með Google.',
+    auth_modal_sub_google: 'Það þarf ekkert lykilorð — haltu áfram með Google.',   // 2026-10-10: „Ekkert lykilorð þarf“ korpus 0×
     // 2026-10-09: kód místo odkazu. Korpus (Risamálheild): „sex stafa“ 116 · „kóða í tölvupósti“ 10 · „var sendur á“ 1430 ·
     // „inn kóðann“ 130 · „sláðu inn“ 432 · „annað netfang“ 80 · „virkaði ekki“ 9918 · „biðja um nýjan“ 58 · „enn í prófun“ 13 ·
     // „ekki á listanum“ 1460 · „of margar tilraunir“ 11 · „bíddu aðeins“ 671 · „hér fyrir ofan“ 15011 · „ganga inn“ 8694.
-    auth_modal_sub_code:  'Ekkert lykilorð þarf — þú færð kóða í tölvupósti.',   // 2026-10-10 bez „sex stafa“: kód má 8 číslic
+    auth_modal_sub_code:  'Það þarf ekkert lykilorð — þú færð kóða í tölvupósti.',   // 2026-10-10 bez „sex stafa“: kód má 8 číslic
     auth_email_lbl:       'NETFANGIÐ ÞITT',
     auth_code_send:       'SENDA KÓÐA',
     auth_code_sent:       'Kóði var sendur á {email}. Sláðu inn kóðann hér.',
@@ -571,6 +572,7 @@ const UI_TEXT = {
     auth_email_need:      'Sláðu inn netfangið þitt.',
     auth_sending:         'Sendi…',
     auth_checking:        'Athuga kóða…',
+    auth_signing_in:      'AUGNABLIK…',   // „augnablik“ korpus 16690; „skrái þig inn“ 0
     auth_rate:            'Of margar tilraunir — bíddu aðeins eða notaðu Google hér fyrir ofan.',
     // korpus: „er á leiðinni“ 14448 · „nýjan kóða“ 15 · „má biðja um“ 76 · „eftir mínútu“ 189 · „kóðinn er á“ 12
     auth_code_wait:       'Kóðinn er á leiðinni. Nýjan kóða má biðja um eftir mínútu.',

@@ -326,7 +326,7 @@ const TIER_LIMITS = {
   // When any value changes, update here only. Výpis featur tierů se skládá sám — TIER_FEATURES + tierFeatures() níž.
   free_trial: {
     onboarding:   1,     // historické (zkušební čtení návštěvníka) — od 2026-10-10 nic nehradí, viz _showVisitorJoin
-    weekly_drip:  0,
+    // weekly_drip odebráno 2026-10-10 ze všech tierů: mrtvé od modelu B (2026-06-12), nic ho nečetlo (nález CODE-read)
     panel_props: {
       en: ['Your first reading is a gift.', 'No account, no payment.', 'Step further when you are ready.'],
       is: ['Fyrsti lesturinn er gjöf.', 'Enginn reikningur, engin greiðsla.', 'Farðu lengra þegar þú ert tilbúinn.'],
@@ -334,7 +334,6 @@ const TIER_LIMITS = {
   },
   rune_seeker: {
     onboarding:   1,     // 1 free reading at registration
-    weekly_drip:  null,  // no weekly drip
     journal_entries: 5,
     onboarding_label_en: 'one free reading',
     onboarding_label_is: 'ein frjáls spá',
@@ -342,12 +341,10 @@ const TIER_LIMITS = {
   },
   standard: {
     onboarding:    null,
-    weekly_drip:   null,
     journal_entries: null,
   },
   premium: {
     onboarding:    null,
-    weekly_drip:   null,
     journal_entries: null,
   },
 };
