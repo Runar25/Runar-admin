@@ -1,9 +1,9 @@
 <!--
   Šablona e-mailu s přihlašovacím kódem — vkládá se ručně do Supabase (dashboard → Authentication → Emails → Templates),
   do OBOU šablon: „Magic Link“ (přihlášení existujícího účtu) i „Confirm signup“ (první přihlášení nového účtu).
-  Appka přihlašuje kódem (signInWithOtp + verifyOtp, DECISIONS 2026-10-09 (6)) — šablona proto MUSÍ nést {{ .Token }},
+  Appka přihlašuje kódem (signInWithOtp + verifyOtp, DECISIONS 2026-10-09 (6)) — šablona proto MUSÍ nést .Token,
   délku kódu určuje Supabase (Email OTP Length; 2026-10-10 posílá 8 číslic, appka bere 6–10),
-  odkaz {{ .ConfirmationURL }} se nepoužívá (aplikace na ploše iPhonu nesdílí úložiště se Safari).
+  odkaz .ConfirmationURL se nepoužívá (aplikace na ploše iPhonu nesdílí úložiště se Safari).
   Předmět (Subject): Rúnar · kóðinn þinn / your code
   Odesílatel: noreply@therunekeeper.com přes Brevo SMTP (doména therunekeeper.com ověřená v Brevu 2026-10-10).
   Proč tady: text šablony žije jen v dashboardu Supabase a 2026-10-09 se ztratil z konverzace (§30 — nic na paměti session).
@@ -13,16 +13,37 @@
   2026-10-10: + řádek „kam s dotazem“ (KUKY: „je potřeba, aby i u noreply bylo jasně viditelné, kam může uživatel poslat dotaz“) —
   odesílatel zůstává noreply@, dotazy jdou na runar@therunekeeper.com (Google Workspace). IS: „ekki svara þessum“ 95,
   „svara þessum pósti“ 213; „skrifaðu á“ = totéž znění jako FAQ v nápovědě.
+  2026-10-10 odpoledne: JAZYK PODLE APPKY (KUKY: „e-mail přijde uživateli podle jeho mutace v apce“; dvojí řádek „Questions?“
+  pod sebou byl matoucí). Jazyk čte z user_metadata.lang — appka ho tam zapisuje (runar-app.js _ulozJazykUctu; nový účet si
+  ho nese ze signInWithOtp data.lang). „en“ → jen anglicky · jiný jazyk → jen islandsky · jazyk neznámý (starší účet, Google)
+  → oba jazyky, každý se svým řádkem „kam s dotazem“. Uvnitř bloku with je tečka jazyk, proto kód jako $.Token.
+  `with` místo přímého `eq .Data.lang`: chybějící klíč by v `eq` mohl šablonu shodit → žádný e-mail by neodešel.
+  Po vložení OVĚŘIT: kód s appkou v EN, v IS a z účtu bez jazyka — dorazí a jazyk sedí.
+  V TÉTO HLAVIČCE NESMÍ BÝT DVOJITÉ SLOŽENÉ ZÁVORKY — Supabase je čte jako šablonu i v komentáři (2026-10-10: holé „with“
+  bez argumentu by šablonu shodilo a kód by nikomu neodešel).
 -->
-<div style="font-family:Georgia,'Times New Roman',serif;max-width:460px;margin:0 auto;padding:28px 24px;color:#1b1f2a;line-height:1.6">
+{{ with .Data.lang }}{{ if eq . "en" }}<div style="font-family:Georgia,'Times New Roman',serif;max-width:460px;margin:0 auto;padding:28px 24px;color:#1b1f2a;line-height:1.6">
+  <p style="font-size:12px;letter-spacing:3px;color:#a07a2c;margin:0 0 18px">RÚNAR</p>
+  <p style="margin:0 0 6px">Rúnar is waiting for you. Enter this code in the app:</p>
+  <p style="font-size:30px;letter-spacing:8px;font-weight:bold;margin:14px 0">{{ $.Token }}</p>
+  <p style="font-size:14px;color:#555;margin:0 0 24px">The code is valid only for a short while. If you did not ask for it, you can ignore this email.</p>
+  <hr style="border:0;border-top:1px solid #e3ddd0;margin:0 0 18px">
+  <p style="font-size:15px;margin:0"><strong>Questions?</strong> Write to <a href="mailto:runar@therunekeeper.com" style="color:#a07a2c">runar@therunekeeper.com</a> — please do not reply to this email.</p>
+</div>{{ else }}<div style="font-family:Georgia,'Times New Roman',serif;max-width:460px;margin:0 auto;padding:28px 24px;color:#1b1f2a;line-height:1.6">
+  <p style="font-size:12px;letter-spacing:3px;color:#a07a2c;margin:0 0 18px">RÚNAR</p>
+  <p style="margin:0 0 6px">Rúnar bíður þín. Sláðu inn kóðann í appinu:</p>
+  <p style="font-size:30px;letter-spacing:8px;font-weight:bold;margin:14px 0">{{ $.Token }}</p>
+  <p style="font-size:14px;color:#555;margin:0 0 24px">Kóðinn gildir aðeins í skamma stund. Ef þú baðst ekki um hann geturðu hunsað þennan tölvupóst.</p>
+  <hr style="border:0;border-top:1px solid #e3ddd0;margin:0 0 18px">
+  <p style="font-size:15px;margin:0"><strong>Spurningar?</strong> Skrifaðu á <a href="mailto:runar@therunekeeper.com" style="color:#a07a2c">runar@therunekeeper.com</a> — ekki svara þessum pósti.</p>
+</div>{{ end }}{{ else }}<div style="font-family:Georgia,'Times New Roman',serif;max-width:460px;margin:0 auto;padding:28px 24px;color:#1b1f2a;line-height:1.6">
   <p style="font-size:12px;letter-spacing:3px;color:#a07a2c;margin:0 0 18px">RÚNAR</p>
   <p style="margin:0 0 6px">Rúnar bíður þín. Sláðu inn kóðann í appinu:</p>
   <p style="font-size:30px;letter-spacing:8px;font-weight:bold;margin:14px 0">{{ .Token }}</p>
-  <p style="font-size:14px;color:#555;margin:0 0 24px">Kóðinn gildir aðeins í skamma stund. Ef þú baðst ekki um hann geturðu hunsað þennan tölvupóst.</p>
+  <p style="font-size:14px;color:#555;margin:0 0 12px">Kóðinn gildir aðeins í skamma stund. Ef þú baðst ekki um hann geturðu hunsað þennan tölvupóst.</p>
+  <p style="font-size:15px;margin:0 0 24px"><strong>Spurningar?</strong> Skrifaðu á <a href="mailto:runar@therunekeeper.com" style="color:#a07a2c">runar@therunekeeper.com</a> — ekki svara þessum pósti.</p>
   <hr style="border:0;border-top:1px solid #e3ddd0;margin:0 0 24px">
-  <p style="margin:0 0 6px">Rúnar is waiting for you. Enter this code in the app.</p>
-  <p style="font-size:14px;color:#555;margin:6px 0 0">The code is valid only for a short while. If you did not ask for it, you can ignore this email.</p>
-  <hr style="border:0;border-top:1px solid #e3ddd0;margin:24px 0 18px">
-  <p style="font-size:15px;margin:0 0 6px"><strong>Spurningar?</strong> Skrifaðu á <a href="mailto:runar@therunekeeper.com" style="color:#a07a2c">runar@therunekeeper.com</a> — ekki svara þessum pósti.</p>
+  <p style="margin:0 0 6px">Rúnar is waiting for you. Enter the code above in the app.</p>
+  <p style="font-size:14px;color:#555;margin:0 0 12px">The code is valid only for a short while. If you did not ask for it, you can ignore this email.</p>
   <p style="font-size:15px;margin:0"><strong>Questions?</strong> Write to <a href="mailto:runar@therunekeeper.com" style="color:#a07a2c">runar@therunekeeper.com</a> — please do not reply to this email.</p>
-</div>
+</div>{{ end }}

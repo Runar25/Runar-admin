@@ -250,7 +250,7 @@ const ADMIN_EMAILS = ['kukula@agndofa.is', 'info@agndofa.is'];
 const AUTH_EMAIL_ENABLED = true;
 // ─── APP SETTINGS ───────────────────────────────────────
 const APP = {
-  default_lang:    'en',
+  default_lang:    'is',   // 2026-10-10 KUKY „nastavit mutaci apky primárně na IS, jako první“ — do té doby 'en'
   supported_langs: ['en', 'is'],
   stream_delay_ms: 25,        // word-by-word stream speed
   version:         '0.1.0',  // increment on significant changes

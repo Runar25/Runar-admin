@@ -9373,3 +9373,21 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Opravuje:** 2026-10-10 (6) a 2026-10-09 (6) psaly „šestimístný kód“ — délku určuje Supabase, ne appka.
 - Affected doc(s): `supabase/templates/prihlaseni-kod.html` (hlavička).
 - Odvolává se na: 2026-10-10 (6).
+
+## 2026-10-10 (11) — Appka startuje islandsky; e-mail s přihlašovacím kódem přijde v jazyce appky
+
+- **Rozhodl:** KUKY 2026-10-10: *„nastavit mutaci apky primárně na IS, jako první!“* · *„e-mail přijde uživateli podle jeho mutace
+  v apce! půjde to udělat?“* · ke dvěma řádkům „Questions?“ pod sebou v e-mailu: *„tohle je matoucí!“* **Provedl:** CODE-tune.
+- **Co:** (1) `APP.default_lang` = `'is'` (do té doby `'en'`); anglicky mluvící si jazyk přepne v menu (☰ → LANGUAGE → EN).
+  (2) Účet mladší 10 minut přebírá jazyk, ve kterém se člověk přihlásil — sloupec `user_profiles.lang` má v DB výchozí `'en'`
+  a bez toho by nového islandského testera po prvním přihlášení přepnul do angličtiny. (3) Jazyk účtu se zrcadlí do
+  `user_metadata.lang` z jediného místa (`_ulozJazykUctu`, runar-app.js) — šablona Supabase vidí jen user_metadata, naše
+  tabulky ne; nový účet ho má už od `signInWithOtp` (`data.lang`). (4) Šablona e-mailu: `en` → jen anglicky, jiný jazyk →
+  jen islandsky, jazyk neznámý (starší účet, Google) → oba, každý se svým řádkem „kam s dotazem“.
+- **Hranice:** existující účet, který přepne jazyk až odhlášený, dostane kód v jazyce svého posledního přihlášení (Supabase
+  u existujícího účtu data z požadavku nepřevezme). Předmět e-mailu zůstává dvojjazyčný. Šablonu musí owner vložit do Supabase
+  (Magic Link i Confirm signup) — do té doby chodí dvojjazyčná.
+- **Ověřeno:** náhled bez uložené volby → IS, přepínač IS svítí; kontrola kódu: 6, 8 i 10 číslic jde na server, 5 a 11 appka
+  odmítne; smoke 61/61. Šablonu (Go) lokálně ověřit nejde — ověří ji první e-maily po vložení (EN, IS, účet bez jazyka).
+- Affected doc(s): `supabase/templates/prihlaseni-kod.html` (zdroj šablony, hlavička).
+- Odvolává se na: 2026-10-10 (10).

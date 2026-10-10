@@ -469,7 +469,9 @@ async function sendLoginCode() {
   var email = (document.getElementById('auth-email').value || '').trim().toLowerCase();
   if (!email) { setSt('st-auth', t('auth_email_need'), 'err'); return; }
   setSt('st-auth', t('auth_sending'));
-  var res = await sb.auth.signInWithOtp({ email: email, options: { shouldCreateUser: true } });
+  // data.lang: nový účet si ho nese od založení → první e-mail s kódem přijde v jazyce appky (KUKY 2026-10-10). Existující
+  // účet data ignoruje (Supabase) — tomu jazyk zrcadlí _ulozJazykUctu (runar-app.js) po každém přihlášení a přepnutí jazyka.
+  var res = await sb.auth.signInWithOtp({ email: email, options: { shouldCreateUser: true, data: { lang: lang } } });
   if (res.error) { setSt('st-auth', _authMsg(res.error), 'err'); return; }
   _authCodeEmail = email;
   var k = document.getElementById('auth-code'); if (k) k.value = '';

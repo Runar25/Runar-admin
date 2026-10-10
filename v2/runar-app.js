@@ -132,11 +132,14 @@ async function fetchUserProfile(userId) {
       // Priority: localStorage (active user choice) > DB default
       // If localStorage has a lang that matches current lang → user chose it while logged out;
       // save it to DB instead of overriding with the DB default ('en').
+      // 2026-10-10: appka startuje v IS, sloupec lang má v DB výchozí 'en' → účet mladší 10 minut (právě založený, žádnou vlastní
+      // volbu v DB ještě nemá) přebírá jazyk, ve kterém se člověk přihlásil. Jinak by nového islandského testera přepnul do angličtiny.
+      const novyUcet = !!(currentUser && currentUser.created_at && (Date.now() - Date.parse(currentUser.created_at) < 10 * 60 * 1000));
       if (data.lang && data.lang !== lang) {
         const localLang = localStorage.getItem('runar_lang');
-        if (localLang && localLang === lang) {
-          // User chose a language while logged out — persist to their profile, keep it
-          sb.from('user_profiles').update({ lang: localLang }).eq('id', userId).then(r => { if (r && r.error) console.error('persist lang failed:', r.error.message); });
+        if ((localLang && localLang === lang) || novyUcet) {
+          // User chose a language while logged out (or the account was just created) — persist to their profile, keep it
+          _ulozJazykUctu(lang);
         } else {
           // DB has a meaningful preference (set on another device) — apply it
           lang = data.lang;
@@ -145,6 +148,7 @@ async function fetchUserProfile(userId) {
           updateUIText();
         }
       }
+      _ulozJazykUctu(lang, true);   // jazyk, ve kterém appka po přihlášení běží → user_metadata (šablona e-mailu s kódem)
     }
   } catch(e) { console.warn('fetchUserProfile:', e.message); }
   profileLoaded = true;
@@ -262,7 +266,7 @@ function setLang(l) {
   if (l === lang) return;
   localStorage.setItem('runar_lang', l);
   // Save to profile async (best-effort)
-  if (currentUser) sb.from('user_profiles').update({ lang: l }).eq('id', currentUser.id).then(r => { if (r && r.error) console.error('persist lang switch failed:', r.error.message); });
+  _ulozJazykUctu(l);
   const outputVisible = document.getElementById('reader-output')?.style.display !== 'none';
   // Only the reading tab treats a language switch as "re-speak the reading". On
   // collection/journal/tree the user is browsing -> fall through so the visible
@@ -292,6 +296,18 @@ function applyLangToggle(l) {
   const isBtn = document.getElementById('sp-btn-is');
   if (enBtn) enBtn.classList.toggle('active', l === 'en');
   if (isBtn) isBtn.classList.toggle('active', l === 'is');
+}
+
+// Jazyk účtu — JEDINÉ místo zápisu. Zdroj pravdy je user_profiles.lang; user_metadata.lang je jeho kopie JEN pro šablonu e-mailu
+// s přihlašovacím kódem (supabase/templates/prihlaseni-kod.html): šablona Supabase vidí user_metadata, naše tabulky ne.
+// 2026-10-10, KUKY: „e-mail přijde uživateli podle jeho mutace v apce“. Bez kopie chodí kód dvojjazyčně. jenMeta = profil nechat.
+function _ulozJazykUctu(l, jenMeta) {
+  if (!currentUser) return;
+  if (!jenMeta) sb.from('user_profiles').update({ lang: l }).eq('id', currentUser.id)
+    .then(r => { if (r && r.error) console.error('persist lang failed:', r.error.message); });
+  const meta = currentUser.user_metadata || {};
+  if (meta.lang !== l) sb.auth.updateUser({ data: { lang: l } })
+    .then(r => { if (r && r.error) console.warn('lang → user_metadata failed:', r.error.message); });
 }
 
 // ─── ADDRESS GENDER (modern Icelandic: kk / kvk / hk=han) ────────────────
@@ -1463,6 +1479,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     applyLangToggle(lang);
     updateSidePanelLang();
   }
+  applyLangToggle(lang);   // 2026-10-10: výchozí jazyk je IS — i bez uložené volby, jinak by svítilo EN z HTML
 
   // Restore address gender from localStorage
   userGender = localStorage.getItem('runar_gender') || 'hk';
