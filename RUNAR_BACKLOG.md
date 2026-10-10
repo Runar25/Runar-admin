@@ -2268,6 +2268,12 @@ dárkový kód. `user_profiles` drží navíc (stav 2026-10-10, 4 profily):
 - ✅ *(KUKY 2026-10-10 „nechat, jsou to admin účty“, DECISIONS (35); data admin účtů nejsou nález — memory `admin-ucty-nejsou-nalez`)* **(b):** rok narození 3 starých účtů — **smazat** (rok se nezadává, slib „den a měsíc“), napřed CODE-tree potvrdí, že strom
   semínko bez roku zvládne; nebo ho nechat a uvést. Doporučení: smazat (zápis do DB = owner, SQL připravím).
 
+### Část 36 — souhlas testera a čtení „pro někoho“ (sliby `RUNAR_PRIVACY.md` body 1–6, 2026-10-10)
+**Platí:** text souhlasu testera (`tcm_body`, EN + IS) jmenuje OpenAI, Anthropic i ElevenLabs; souhlasy se po změně znění 2026-10-09
+vynulovaly a dávaly znovu (stav účtů = admin, nehodnotí se — memory `admin-ucty-nejsou-nalez`) · čtení „pro někoho“ (třetí osoba)
+běžného uživatele se NEUKLÁDÁ: klient pošle `journal` jen u `mine` nebo u testera (`runar-reading.js` ~332, ~1344), deník tahá jen
+`mine`/null (`runar-journal.js`) — bod 6 sedí. Nic k opravě.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
