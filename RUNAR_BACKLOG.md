@@ -2610,6 +2610,12 @@ Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
       (ověřeno dotazem přímo na `forwarding00.isnic.is`: zóna naposledy změněna 2025-10-15). Záznamy: TXT `@` brevo-code · CNAME
       `brevo1._domainkey` → `b1.agndofa-is.dkim.brevo.com` · CNAME `brevo2._domainkey` → `b2.agndofa-is.dkim.brevo.com` · TXT `_dmarc`
       (hodnoty TXT celé z Brevo). Přidávají se v isnic.is → Mínar síður → agndofa.is (áframsending umí vlastní CNAME a TXT od 2017).
+      **2026-10-10 — doména změněna:** KUKY *„mám pro Rúnara doménu, budeme to řešit přes ni“* → **therunekeeper.com** (GoDaddy, NS
+      `domaincontrol.com`), agndofa.is pro e-mail už ne (z Brevo ji lze smazat, u ISNIC se nic nepřidávalo). Postup: Brevo → přidat doménu
+      therunekeeper.com (vygeneruje nové hodnoty) → GoDaddy → Domain → DNS → Add New Record (TXT `@` brevo-code, 2× CNAME DKIM).
+      ⚠️ **DMARC už existuje** (výchozí GoDaddy `v=DMARC1; p=quarantine; …`, ověřeno 2026-10-10) — druhý `_dmarc` nepřidávat, nanejvýš
+      upravit ten jeden. Odesílatel v Supabase SMTP např. `noreply@therunekeeper.com` (schránka netřeba). Pak CODE ověří DNS, zapne
+      `AUTH_EMAIL_ENABLED` a s ownerem projde první přihlášení kódem.
 - [ ] **Hlášení nese verzi nasazenou, ne tu, která v telefonu běží** (2026-10-09, CODE-tune, §22). `runar-reporter.js` bere `app_version`
       z čerstvě staženého `sw.js`, ale stránka jede na JS ze staré cache, dokud se nenačte znovu (SW: JS cache-first). Doklad: hlášení 24c6c548
       (8. 10.) neslo `v564` a popisovalo chybu opravenou ve v564; owner 9. 10. po novém načtení: v pořádku. S testery by to mátlo diagnózu.
