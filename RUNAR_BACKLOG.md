@@ -463,7 +463,13 @@
   stromě; v1 mířila jen na cíl pramene a páry vyšly 46–201 px od sebe). Jeho strom: mimo svou zónu 2/22 (dnes 9), výstupů z kmene 24
   (dnes 17), povýšená 1; smoke ㉳ projde. Strom užší a vyšší, větve kratší a vodorovnější v párech (mladý strom jako mladý jasan / jehličnan).
   Zbývá Tiwaz 89 % (pořadí z prvních čtení). Čeká na ownerovo porovnání s dneškem.
-- [ ] ⭐ **Strom: obrys stromu života (dóm) — owner ukázal předlohy** (CODE-tree, 2026-10-10). KUKY s pěti obrázky stromu života: *„spodní větve
+- [ ] ⭐ **Strom (lab): spodní větve o 1/3 delší, směrem nahoru rovnoměrně méně; zrcadlově kořeny — nanečisto** (CODE-tree, 2026-10-10). KUKY:
+  *„jen třeba o 1/3 prodluž spodní větve, ale to zvětšení musí jít postupně nahoru. rovnoměrně … zrcadlově to platí i pro kořeny“*. Patch
+  `docs/archive/tree/2026-10-10_nanecisto_spodni.patch`: délka × (1 + 1/3 × (1 − t)), t = výška výstupu na kmeni (nejnižší +1/3, nejvyšší +0;
+  povýšená podle výšky odbočky); kořen × (1 + 1/3 × s), s = jak moc míří do strany pod povrchem. Změřeno na jeho stromě: Kenaz 22 % ×1,33 …
+  Dagaz 98 % ×1,00; kmen trochu povyroste (drží poměr k rozpětí, `hwRatio`); smoke ㉳ projde. Čeká na ownerův pohled.
+- [x] ✖ **Strom: obrys stromu života (dóm) — ZAMÍTNUTO** (KUKY 2026-10-10: *„chybí tomu úplně všechno. je to zrůda! … takže ne. není to dobré
+  a žádná oprava tvého návrhu to nezlepší“*). Nevracet konce větví na kruh ani vějíř podle výšky. Původně (CODE-tree, 2026-10-10). KUKY s pěti obrázky stromu života: *„spodní větve
   jako nejstarší, největší a nejdelší. koruna více zarovnaná do půloblouku, u kořenů to samé. to naše vypadá jako strom, ale my neděláme
   obyčejný strom. má být taky vizuálně hezký.“* Předlohy: koruna = horní půlkruh, kořeny = dolní, zem = průměr (kruhové 2, 3, 5); nízké
   větve nejdelší a do strany, horní kratší vzhůru; kmen krátký, větví se brzy. **Nanečisto krok 1+2** (patch

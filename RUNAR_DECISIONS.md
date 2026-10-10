@@ -9432,3 +9432,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hranice:** admin bez účtu Google se do shrine nedostane — dnes žádný není; kdyby přibyl, pole na kód jako v readeru.
 - **Zbývá (BACKLOG, kontrola architektury část 1 bod 3):** boční panel návštěvníka slibuje čtení zdarma bez účtu — nové znění čeká na ownera.
 - Odvolává se na: 2026-10-10 (11).
+
+## 2026-10-10 (15) — Strom: „dóm“ zamítnut; místo něj jen spodní větve o 1/3 delší, rovnoměrně nahoru, zrcadlově kořeny (nanečisto)
+
+- **Rozhodl:** KUKY 2026-10-10 k nanečisto „dómu“ (konce hlavních větví dotažené na kruh + vějíř podle výšky na kmeni): *„chybí tomu úplně všechno.
+  je to zrůda! mně stačí jen prodloužit o trochu spodní větve … takže ne. není to dobré a žádná oprava tvého návrhu to nezlepší. jen třeba o 1/3
+  prodluž spodní větve, ale to zvětšení musí jít postupně nahoru. rovnoměrně … zrcadlově to platí i pro kořeny.“* Předlohy stromu života ukázal
+  owner předtím (koruna v půloblouku, nízké větve nejdelší). **Provedl:** CODE-tree, jen nanečisto.
+- **Zamítnuto (nevracet):** konce větví na kruh se středem u paty kmene; vějíř úhlů podle pořadí výšky; obojí mění strom celý a kořeny nechalo
+  drobné. Patch `docs/archive/tree/2026-10-10_nanecisto_dom.patch` zůstává jen jako historie.
+- **Nanečisto teď:** délka hlavní větve × (1 + 1/3 × (1 − t)) podle výšky výstupu na kmeni (nejnižší +1/3, nejvyšší +0, povýšená podle výšky
+  odbočky); kořen × (1 + 1/3 × s) podle toho, jak moc míří do strany pod povrchem. Jeho strom: Kenaz 22 % ×1,33 … Dagaz 98 % ×1,00. Patch
+  `docs/archive/tree/2026-10-10_nanecisto_spodni.patch`; čeká na ownerův pohled.
+- Affected doc(s): `RUNAR_BACKLOG.md` (dóm zamítnut, nová položka „spodní větve o 1/3“) — v témže commitu.

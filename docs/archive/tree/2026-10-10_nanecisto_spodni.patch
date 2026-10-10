@@ -1,0 +1,30 @@
+--- a/build_crown_composer.py
++++ b/build_crown_composer.py
+@@ -1832,6 +1832,9 @@
+         if(Math.abs(rdev)<0.04) rdev=(k%2?0.04:-0.04);
+         rSpec.dev=rdev; rdevUsed=rdev; }
+       var rG=B.buildBranch(rSpec, rTT);   /* KROK 2: koren = vlastni runa pramene (runeK), rovne dolu */
++      /* NANECISTO 2026-10-10 (zrcadlove): koren, ktery miri do strany pod povrchem, az o 1/3 delsi; kolmo dolu beze zmeny. */
++      { var rp9=rG.paths[0].pts, t9=rp9[rp9.length-1], s9=Math.min(1, Math.abs(Math.atan2(t9.x-rbase.x, Math.max(1e-6, t9.y-rbase.y)))/(Math.PI/2));
++        if(s9>0.03){ rTT.length*=1+(1/3)*s9; rG=B.buildBranch(rSpec, rTT); } }
+       var rspine=rG.paths[0].pts, rf=rbase.w/((rspine[0].w)||1), rdepth=rbase.depth+0.0007*k;
+       for(var ri=0;ri<rspine.length;ri++){ var rtt=rspine[ri].t;
+         rspine[ri].w*=rf*(1+(rootsT.junctionThick-1)*Math.pow(1-rtt,2)); rspine[ri].depth=rbase.depth; rspine[ri].ct=lerp(rootsT.ctNear,rootsT.ctFar,rtt); }
+@@ -1981,6 +1984,8 @@
+           if(k>0 && gUp<1e9){ var dlt=Math.max(0.03, Math.abs(ang-tang)), Lpx=mcfg.length*2.4*lenF, wSep=1.5*ex.w+4;
+             var bU0=(mcfg.limbBendU!=null) ? mcfg.limbBendU : 0.45;
+             mcfg.limbBendU=Math.max(0.7*bU0, Math.min(bU0, 0.8*Math.sqrt(dlt*gUp*gUp*gUp/wSep)/Math.max(1, Lpx))); }   /* nejvys o 30 % rychleji: plny rychly odklon delal z ramen tuhe klacky (koste) */
++          /* NANECISTO 2026-10-10: spodni vetve o 1/3 delsi, smerem nahoru rovnomerne mene (nahore +0). */
++          var fmn9=1, fmx9=0; for(var q9=0;q9<FRAC.length;q9++){ if(FRAC[q9]!=null){ fmn9=Math.min(fmn9,FRAC[q9]); fmx9=Math.max(fmx9,FRAC[q9]); } } var mB9=function(f){ return 1+(1/3)*(1-clamp((f-fmn9)/Math.max(1e-6,fmx9-fmn9),0,1)); }; lenF*=mB9(frac);
+           var _cStart=crown.length;   /* vse, co growBranch prida, patri TETO vetvi -> otagovat k */
+           var mainLimb=growBranch(crown, mcfg, ex.x, ex.y, tang, ang-tang, 'main', brune.k,   /* V4b: roste rovnou do sveho smeru (drive kostra + tuhe otoceni -> smycky) */
+                      (dobSeed ^ (k*0x9e37))>>>0, lenF, ex.w, ex.depth, 0, sizeF, twRunes);
+@@ -2085,6 +2090,8 @@
+       gcfg.limbBendU=Math.min(0.15, (crownT.limbBendU!=null) ? crownT.limbBendU : 0.45);
+       var gLen=gPf*gEmg*(crownT.gradLen||1);
+       var gRt=(branchEls.gradTree||[])[GS.gi], gKids=gRt ? repKids(gRt, vlog.length, bandLoHi(par.el, par.be.band||0)) : [];   /* cteni od povyseni */
++      /* NANECISTO 2026-10-10: povysena podle vysky odbocky na kmeni (tataz stupnice jako ramena). */
++      var fmn9=1, fmx9=0; for(var q9=0;q9<FRAC.length;q9++){ if(FRAC[q9]!=null){ fmn9=Math.min(fmn9,FRAC[q9]); fmx9=Math.max(fmx9,FRAC[q9]); } } var mB9=function(f){ return 1+(1/3)*(1-clamp((f-fmn9)/Math.max(1e-6,fmx9-fmn9),0,1)); }; gLen*=mB9(clamp((trunkT.groundY-sp.y)/Math.max(1,trunkT.groundY-trunkT.topY),0,1));
+       var _gStart=crown.length;
+       var gLimb=growBranch(crown, gcfg, sp.x, sp.y, gBase, gDev, 'main', GS.rune, (dobSeed ^ (k*0x9e37))>>>0,
+                            gLen, sp.w*0.85, sp.depth+0.01, 0, gPf*gEmg, gKids);
