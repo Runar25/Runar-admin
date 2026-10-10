@@ -1478,6 +1478,28 @@ DECISIONS 2026-10-07 (2)). Výstupy pokusů od září ležely jen ve scratchpad
 ⚠️ Pořád jeden disk. **Rozhodnout (owner):** kam zálohu zrcadlit mimo počítač — soukromé repo na GitHubu, složka OneDrive,
 nebo tabulka v Supabase. Výstupy nesou jméno a stojí na ownerových čteních → veřejné repo ne.
 
+### Kam s databází, promptem a hostingem — podklady pro rozhodnutí (CODE-read 2026-10-10, owner „tohle zapíšeme“)
+Nic z toho zatím není rozhodnuté. Owner: *„Hetzner — vlastní server pro prompt a databázi. Hledali jsme nejlepší a nejlevnější
+řešení“*; v červnovém rozpočtu (`RUNAR_PRICING.md`) stojí obojí, Hetzner server i Supabase Pro.
+1. **Ceny ověřené 2026-10-10:** Hetzner CX23 (2 jádra, 4 GB) 5,49 €, CX33 (4 jádra, 8 GB) 8,49 € měsíčně bez DPH, od 15. 6. 2026
+   (oficiální ceník docs.hetzner.com, „Price adjustment“; od dubna dvakrát zdraženo). Supabase Pro od 25 $: denní zálohy 7 dní, bez
+   uspávání, 8 GB DB; obnova k okamžiku (PITR) +100 $ měsíčně a je **volitelná** — z denní zálohy jde obnovit bez ní (supabase.com/pricing,
+   supabase.com/docs/guides/platform/backups).
+2. **Hetzner = postavit znovu celý backend** (přihlašování Google + e-mailový kód + hook uzavřeného testu, RLS, 10 edge funkcí,
+   úložiště), nebo vlastní Supabase v Dockeru (≥ 8 GB → CX33), a provoz (zálohy, aktualizace, certifikáty, výpadky) na nás. Úspora
+   proti Supabase Pro ~15 € měsíčně.
+3. **Prompt neschová server, ale dvojice:** stavba promptu v serverové funkci + soukromé repo. Supabase edge funkce to umí.
+4. **Zálohy bez PITR:** Supabase Pro (denní, 7 dní, v ceně) + vlastní pravidelný export mimo Supabase (skript ruční zálohy 2026-10-10)
+   do soukromého úložiště, šifrovaně — delší historie a kopie nezávislá na účtu u Supabase. Obnovu jednou nanečisto vyzkoušet.
+   Nejlevnější varianta do spuštění: zůstat na Free + vlastní export (Free nezálohuje a po týdnu nečinnosti projekt uspí).
+5. **GitHub má dvě role:** úložiště kódu (soukromé repo jde i zdarma) a hosting appky (GitHub Pages). Pages ze soukromého repa jen
+   s placeným GitHubem (Pro a výš; docs.github.com „About GitHub Pages“); jinak hosting jinde (např. Cloudflare Pages — podmínky
+   pro soukromé repo na free plánu ověřit při výběru).
+6. **Víc postav (charakterů):** jakmile se prompt skládá na serveru, postava může být data v DB (tabulka `runar_character` existuje,
+   je prázdná) — nová postava bez nového kódu appky. Na GitHubu ani hostingu to nezávisí.
+Pořadí podle CODE-read: Supabase Pro (nebo Free + export) → soukromé repo + hosting → prompt na server (mapa závislostí CODE-read,
+přestavba CODE-tune). Rozhoduje owner.
+
 ### PŘED SPUŠTĚNÍM: prompt je veřejný a repem to nespravíš (2026-08-16)
 KUKY: *„public repo. jako že se k nim může kdokoliv z venku dostat? i k promptu? nemělo by to
 být ošetřené, až půjde appka ven?"*
