@@ -674,6 +674,12 @@ atomický upsert, úklid starších než hodina; stejně tak `use_credit` (atomi
 - [ ] **Readings viewer: flag/annotate** — dnes view-only (`initReadingsTab` = prázdný stub). Potřebuje review tabulku (owner ALTER).
 - [~] **R1 ledger -> i KOSTRY** — konkretni dolozena vada je OPRAVENA (jmenny slot `[klauze], Kuky, [obraz]` -> pooled placement, commit 7dd1b9f + ending shape 1cf115c/57e8324). Zustava vlastni ask: rozsirit no-repeat LEDGER i na KOSTRY vet — dnes je kostra nahodna, bez pameti mezi ctenimi.
 - [ ] **is-grammar-qa nad uloženými IS výstupy** → E001 do pojmenované fronty (§19.2 žádné tiché zelené). Korpus existuje.
+- [ ] **⚠️ `is-grammar-qa.py` je mrtvý: API Yfirlestur přestěhované** (2026-10-10, CODE-tune, §22). `https://yfirlestur.is/correct.api`
+  vrací **301 → `https://malstadur.mideind.is/malfridur`** (webová aplikace Málstaður od Miðeind, Cloudflare), takže skript místo JSON
+  dostane HTML a hlásí 46 z 46 „NEZKONTROLOVÁNO“ (to dělá správně — §19.2, žádné tiché zelené). `is-vazba.py` (nútímamálsorðabók
+  + Risamálheild) funguje dál. Zjistit: má Málstaður API, za jakých podmínek (klíč, cena, zpracování dat), a podle toho skript
+  přepsat, nebo kontrolu gramatiky nahradit. Owner se na totéž 2026-10-10 ptal Cowork-read („zjisti, proč není API IS dostupné“) —
+  napřed srovnat s jejím zjištěním, ať se to nedělá dvakrát.
 - [x] **Zvětšit SEASON_POOLS** — BEZPŘEDMĚTNÉ (ověřeno 2026-08-12). Položka tvrdila „tenké sady: darkening/bright 5, autumn/cold 6" — **naměřeno 12 a 10**, nejmenší sada má 8. A hlavně: od v1.6 vybírá obrazy `RUNE_IMAGES` klíčované runou pro **oba** jazyky, takže na `SEASON_POOLS` se propadne jen runa bez kandidáta — **0 ze 150 kombinací**. Zvětšovat je nemá co řešit.
 - [x] **Eval harness v gitu** — HOTOVO. Položka tvrdila, že `scripts/utils/` není verzovaný (zjištěno 2026-07-19); dnes je tam **11 trackovaných souborů** včetně `gen_batch.js`, `measure_readings.js`, `lint_readings.js`, `export_readings.js`, `compare_readings.js`.
 - [ ] **Report 3 odpovědí Coworku** (ověřeno, jen poslat): IS few-shoty JSOU islandské (`VOICE_PROFILES` config:392, `.is` bloky) · D-14 = jeden generický builder + RP_* packy · délky spreadů JSOU tvrdá čísla v `closing()`.
