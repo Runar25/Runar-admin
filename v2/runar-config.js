@@ -244,7 +244,10 @@ const ADMIN_EMAILS = ['kukula@agndofa.is', 'info@agndofa.is'];
 // false = v prihlaseni jen Google. Vestaveny mailer Supabase dorucuje JEN clenum tymu projektu
 // (overeno v dokumentaci 2026-09-12), takze cizi clovek by magic link nikdy nedostal.
 // Zapnout az PO nastaveni vlastniho SMTP (rozhodnuto: Brevo, EU) v Supabase → Auth → SMTP.
-const AUTH_EMAIL_ENABLED = false;
+// 2026-10-10 ZAPNUTO (KUKY „hotovo“): SMTP Brevo (smtp-relay.brevo.com, odesílatel noreply@therunekeeper.com — doména ověřená
+// v Brevu, DKIM brevo1/brevo2), šablony „Magic Link“ i „Confirm signup“ s {{ .Token }} = supabase/templates/prihlaseni-kod.html.
+// Kdo smí založit účet, hlídá hook hook_before_user_created (allowed_emails, uzavřený test, DECISIONS 2026-10-09 (6)).
+const AUTH_EMAIL_ENABLED = true;
 // ─── APP SETTINGS ───────────────────────────────────────
 const APP = {
   default_lang:    'en',

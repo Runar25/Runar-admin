@@ -9292,3 +9292,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   výkladu dominantní (větší váha), ne jen první v pořadí. Obojí je hypotéza — rozhodne se až na otestovaných čteních (výklad dnes GPT-6 sol).
 - Odvolává se na: 2026-10-09 (19).
 - Affected doc(s): `RUNAR_BACKLOG.md` (Strom: popis větve Rúnarovým hlasem) — v témže commitu.
+
+## 2026-10-10 (6) — Přihlášení e-mailem (šestimístným kódem) zapnuto; doména pro e-mail therunekeeper.com
+
+- **Rozhodl:** KUKY 2026-10-10: *„mám pro Rúnara doménu, budeme to řešit přes ni“* · po nastavení SMTP a šablon *„hotovo“*.
+  **Provedl:** owner (Brevo, GoDaddy, Supabase), CODE-tune (ověření DNS, šablona, přepínač).
+- **Co:** `AUTH_EMAIL_ENABLED = true` — v přihlášení vedle Google pole pro e-mail a kód. Odesílá Supabase přes Brevo SMTP
+  (`smtp-relay.brevo.com`), odesílatel `noreply@therunekeeper.com`; doména therunekeeper.com ověřená v Brevu (DKIM brevo1/brevo2,
+  značková subdoména `runar`, DNS u GoDaddy zkontrolováno). Šablony „Magic Link“ i „Confirm signup“ nesou `{{ .Token }}` — zdroj textu
+  `supabase/templates/prihlaseni-kod.html` (IS + EN, IS ověřeno korpusem). Kdo smí založit účet, dál hlídá
+  `hook_before_user_created` (uzavřený test, 2026-10-09 (6)). agndofa.is pro e-mail opuštěna (u ISNIC se nic nepřidávalo).
+- **Ověřeno:** DNS (brevo-code, DKIM, jeden DMARC `p=quarantine` od GoDaddy, SPF přes GoDaddy na Google); přihlašovací okno
+  v prohlížeči ukazuje e-mail a „SEND CODE“. **Neověřeno:** skutečné doručení kódu — první přihlášení zkouší owner.
+- **Pracovní schránka:** `runar@therunekeeper.com` (Google Workspace, MX u Googlu) pro testery a kontakt. Podpis DKIM pro Google zatím
+  chybí (SPF stačí, DMARC projde) — doporučeno doplnit.
+- Odvolává se na: 2026-10-09 (6).
+- Affected doc(s): `RUNAR_BACKLOG.md` (Přihlášení bez Gmailu a uzavřený test) — v témže commitu.
