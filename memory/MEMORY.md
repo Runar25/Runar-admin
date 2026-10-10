@@ -108,6 +108,7 @@ Intake (NENÍ pravda): `docs/inbox/` · Mrtvá (scratch): mimo index.
 - [prompt-nepojmenuj-co-hned-zakazes.md](prompt-nepojmenuj-co-hned-zakazes.md) — prompt, který něco pojmenuje a hned to zakáže vyslovit, hlídá slovo, které tam sám napsal; odeber nálepku, ne přidej hlídače
 - [rozkaz-a-studene-cteni-hranice.md](rozkaz-a-studene-cteni-hranice.md) — „Look…" jako vstup do obrazu ani fyzický důsledek dřiny („knuckles have learned") NEJSOU porušení kánonu; porušení = rada do života / tvrzení o nitru
 - [gpt-rozbor-neni-zavazny.md](gpt-rozbor-neni-zavazny.md) — rozbor od GPT byl jen podnět (tlačítko zrušeno 2026-10-09); princip platí pro každého soudce
+- [strop-serveru-neni-narok.md](strop-serveru-neni-narok.md) — limit v proxy ≠ co tier dostane; nárok ověř tokem appky (Rune Seeker: 1 čtení = 1 hlas, jednou)
 - [admin-ucty-nejsou-nalez.md](admin-ucty-nejsou-nalez.md) — data admin účtů (rok narození, staré volby) nejsou nález o soukromí; ownerovi nehlásit, rok zůstává
 - [nacti-cteni-a-reporty.md](nacti-cteni-a-reporty.md) — owner řekne „načti čtení a reporty“ → `node scripts/nacti_cteni.js` (čtení + monitor ozvěn + hlášení); ⚠ a hlášení ohlas s textem
 - [schranka-runar-gmail.md](schranka-runar-gmail.md) — schránka runar@therunekeeper.com: třídit přes Gmail konektor do štítků, odpovědi jen jako koncepty, nic neodeslat bez ownerova ano
